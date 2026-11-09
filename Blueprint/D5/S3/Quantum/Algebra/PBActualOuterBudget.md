@@ -44,6 +44,18 @@ This coordinate application preserves the fixed original a,b,d, including d=D(a,
 
 This is a conditional actual-outer lemma at the readout scope needed by the saturation argument and its scalar-overlap or scalar-square-difference consumer. It does not construct a prescribed-character extension or its nonzero central fibre, discharge the complete B interface, prove the arbitrary original operator-square identity, or close any raw atom. The original C-star representation and static operational bridges retain their own hypotheses. No completion, invertibility, equal-square restriction, D homogeneity, D additivity, quotient descent, or outer-output closure is asserted.
 
+## A twisted response with every positive two-table reading
+
+Let A, B and C be selfadjoint elements of a unital complex C-star algebra, with the actual C-star norm of C at most one. Define J(A,B)=(AB+BA)/2 and the particular response Dhat(C;A,B)=i(ACB-BCA)/2. Taking adjoints gives a selfadjoint response, and swapping A and B negates it. For every positive complex-linear functional phi, its values on J(A,B), Dhat(C;A,B), A squared and B squared are real; the last two are nonnegative. Positivity here requires neither phi(1)=1 nor phi(1)>0.
+
+Set P=(1+C)/2 and Q=(1-C)/2. The selfadjoint norm bounds give -1<=C<=1, so P and Q are positive and P+Q=1. For the two labels a0=A, a1=B, write GP(i,j)=phi(ai P aj) and GQ(i,j)=phi(ai Q aj). Both matrices are positive semidefinite. Indeed CStarAlgebra.nonneg_iff_eq_star_mul_self supplies P=star(r) r; the vectors phi.toPreGNS(r ai) have GP as their Gram matrix by PositiveLinearMap.preGNS_inner_def. Apply Matrix.posSemidef_gram, and use the same construction for Q. This uses a seminormed pre-inner-product space, so null vectors and the zero functional require no quotient choice or division.
+
+The exact directed two-table is GP plus the transpose of GQ. Its diagonal entries are phi(A squared) and phi(B squared). Its upper entry is phi(APB+BQA)=phi(J(A,B))-i phi(Dhat(C;A,B)); its lower entry is phi(BPA+AQB)=phi(J(B,A))-i phi(Dhat(C;B,A)). Matrix.PosSemidef.transpose and Matrix.PosSemidef.add therefore give positivity. Interchanging A and B gives the other orientation with the same C and the same phi. The two-by-two determinant is nonnegative, yielding phi(J(A,B)) squared plus phi(Dhat(C;A,B)) squared at most phi(A squared) times phi(B squared).
+
+For full finite complex matrices, the norm is the Euclidean operator norm supplied by Matrix.Norms.L2Operator, not the entrywise or Frobenius norm. Every finite dimension is allowed, including zero dimension. A complex-linear functional nonnegative on all positive semidefinite matrices is precisely a positive linear map for this order: PositiveLinearMap.mk₀ packages that assumption. Thus zero and unnormalized functionals are included. In a density representation, every positive semidefinite rho is allowed without a trace-one, invertibility or full-support condition, so singular rho is included as well.
+
+This application of positive Gram matrices supplies the P2 budget for the displayed Dhat alone. It does not impose PB, identify an arbitrary original response with Dhat, or use additivity of the original response. Applying it to several specified rows pays those rows' positive readings; the existence of a full original PB model and any constraints joining different actual calls remain separate mathematical obligations. A positive functional used in this argument is a mathematical readout and supplies no additional physical preparation.
+
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Algebra/PBActualOuterBudget.actual_outer_budget`
