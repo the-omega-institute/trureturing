@@ -90,7 +90,7 @@ private theorem quadratic_read (J : E →ₗ[ℝ] E →ₗ[ℝ] E) (D : E → E 
 
 /-- Exact original cone positivity transfers the whole Hermitian two-table to
 any mathematical positive functional, including the zero functional. -/
-private theorem positive_table_transfer {P : Type*}
+theorem positive_table_transfer {P : Type*}
     (J : E →ₗ[ℝ] E →ₗ[ℝ] E) (D : E → E → E)
     (C : Set E) (p : P → E →ₗ[ℝ] ℝ)
     (hexact : ∀ a, a ∈ C ↔ ∀ q, 0 ≤ p q a)
