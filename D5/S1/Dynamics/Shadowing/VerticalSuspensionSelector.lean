@@ -344,9 +344,9 @@ private theorem shift_zpow {X : Type*} [PseudoMetricSpace X] (f : X → X)
 /-- The weak crossing convention retains both charts at a zero seam. -/
 def Crossing (v : ℤ → ℝ) (j : ℤ) : Prop := v j ≤ 0 ∧ 0 ≤ v (j + 1)
 
-private def ForwardSign (v : ℤ → ℝ) : Prop := ∀ j, 0 ≤ v j → 0 < v (j + 1)
+def ForwardSign (v : ℤ → ℝ) : Prop := ∀ j, 0 ≤ v j → 0 < v (j + 1)
 
-private theorem nonnegative_after {v : ℤ → ℝ} (hv : ForwardSign v)
+theorem nonnegative_after {v : ℤ → ℝ} (hv : ForwardSign v)
     {i j : ℤ} (hij : i ≤ j) (hi : 0 ≤ v i) : 0 ≤ v j := by
   have hn : ∀ n : ℕ, 0 ≤ v (i + n) := by
     intro n
@@ -358,17 +358,17 @@ private theorem nonnegative_after {v : ℤ → ℝ} (hv : ForwardSign v)
     ring
   simpa only [he] using hn (j - i).toNat
 
-private theorem positive_after {v : ℤ → ℝ} (hv : ForwardSign v)
+theorem positive_after {v : ℤ → ℝ} (hv : ForwardSign v)
     {i j : ℤ} (hij : i < j) (hi : 0 ≤ v i) : 0 < v j := by
   have hp := hv (j - 1) (nonnegative_after hv (show i ≤ j - 1 by omega) hi)
   simpa using hp
 
-private theorem negative_before {v : ℤ → ℝ} (hv : ForwardSign v)
+theorem negative_before {v : ℤ → ℝ} (hv : ForwardSign v)
     {i j : ℤ} (hij : i < j) (hj : v j ≤ 0) : v i < 0 := by
   by_contra hi
   exact (not_lt_of_ge hj) (positive_after hv hij (le_of_not_gt hi))
 
-private theorem crossing_classification {v : ℤ → ℝ} (hv : ForwardSign v) :
+theorem crossing_classification {v : ℤ → ℝ} (hv : ForwardSign v) :
     (∀ j, v j < 0) ∨ (∀ j, 0 < v j) ∨ ∃ j, Crossing v j := by
   classical
   by_cases hn : ∀ j, v j < 0
@@ -397,7 +397,7 @@ private theorem crossing_classification {v : ℤ → ℝ} (hv : ForwardSign v) :
     omega
   exact hneg.le
 
-private theorem crossing_separation {v : ℤ → ℝ} (hv : ForwardSign v)
+theorem crossing_separation {v : ℤ → ℝ} (hv : ForwardSign v)
     {i j : ℤ} (hi : Crossing v i) (hj : Crossing v j) :
     i = j ∨ (i + 1 = j ∧ v j = 0) ∨ (j + 1 = i ∧ v i = 0) := by
   have hupper : j ≤ i + 1 := by
@@ -417,7 +417,7 @@ private theorem crossing_separation {v : ℤ → ℝ} (hv : ForwardSign v)
     have he : j + 1 = i := by omega
     exact ⟨he, le_antisymm hi.1 (he ▸ hj.2)⟩
 
-private theorem crossing_local_range {v : ℤ → ℝ} (hv : ForwardSign v)
+theorem crossing_local_range {v : ℤ → ℝ} (hv : ForwardSign v)
     {a b j : ℤ} (ha : v a < 0) (hb : 0 < v b) (hj : Crossing v j) :
     a ≤ j ∧ j < b := by
   constructor
