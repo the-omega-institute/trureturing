@@ -3289,3 +3289,312 @@ $$
 一般原目标仍须在同一 $a,b,c,y,d_s,d_b,d_c,\delta,w$ 上，生产有检测力的实际PB返回和预算，而不是新增公理、局域化供应者或将等价目标换名。若进一步采用两向量或矩阵式标签，仍须同时支付所需标签确属原 $E$ 的供应，以及保留 $\eta_i$ 与全部六个实际输出后的相消和返回；环境中可插值不等于原Jordan域内可取得。139.3没有允许丢弃 $q_i\circ\eta_i$，140.2没有给检测平方的零预算，141.1也不排除依赖非零 $w$、非状态保持读取或其他相关相消的生产路线。
 
 ## 追加锚（本行以下为增补区）
+
+## 142. 固定实权重的实际演员差与共同运输条件
+
+**定义 142.1（完整测试域与原配平的约定）。** 本组的一般原目标仍取138.1及141.3的全部前件、来源和量词。只为检验一条普遍的块运输规则，另取一个给定含单位复C*代数 $\mathcal M$ 的完整自伴原域
+
+$$
+E_{\rm test}=\mathcal M_{\rm sa},\qquad u=1,\qquad
+x\circ z=(xz+zx)/2,\qquad D(x,z)=i[x,z]/2.
+\tag{142.1}
+$$
+
+这里和下文的每个嵌套 $D$ 都是这一份总映射的值。原评价可取全部正泛函限制及其全部非负质量倍数，不将数学正泛函认作物理准备。本卷135.2、141.1及[半有限卷SF98.3、SF103.1](AURIC_SEMIFINITE_ORIGINAL_RESPONSE_AND_CENTRAL_POLAR_GEOMETRY.md#103-每个中央取向的反向静态后果与可积域)已给标准模型的完整数学对应：$x\circ z-iD(x,z)=xz$，全部有限复Gram正性给原二表和P2，相加实Gram给A2及全部排列的指定零向量，效果平方给同一个有理小窗A3。对全部原三元组的FULLPB亦已成立。这些既有模型事实只作为下文应用的前件，不是新增分类。
+
+为不混淆元素与正读取，写
+
+$$
+\begin{aligned}
+\mathcal Q(x,z)&=x^2+z^2+2D(x,z)=(x+iz)^*(x+iz),\\
+\mathrm{PB}(a;x,z):\quad
+v&=D(a,x)-a\circ z,\qquad k=a\circ x+D(a,z),\\
+(x^\epsilon,z^\epsilon)&=(x+\epsilon v,z+\epsilon k),\qquad
+Z=x+iz,\quad Z^\epsilon=(1+\epsilon ia)Z,
+\quad\epsilon\in\{1,-1\}.
+\end{aligned}
+\tag{142.2}
+$$
+
+每个单调用满足 $\mathcal Q(x^+,z^+)=\mathcal Q(x^-,z^-)=Z^*(1+a^2)Z$。这是同一调用两端的相等，不是它们与 $\mathcal Q(x,z)$ 相等，也没有给不同调用的交叉项配平。$\mathcal Q$ 的正性是完整测试域中的结论；对一般原 $D$ 不由此加入输出平方正性或响应线性。
+
+**定理 142.2（实际块的固定标量权重判据，作为循环障碍的中间计算）。** 固定有限个自伴演员 $a_1,\ldots,a_n$ 和实数 $c_1,\ldots,c_n$。对于任意独立选择的原列 $Z_l=x_l+iz_l\in\mathcal M$，令
+
+$$
+U^\epsilon=\sum_{l=1}^n c_l(1+\epsilon ia_l)Z_l.
+$$
+
+则有准确元素恒等式
+
+$$
+\boxed{(U^+)^*U^+-(U^-)^*U^-
+=2i\sum_{l,m=1}^n c_lc_m Z_l^*(a_m-a_l)Z_m.}
+\tag{142.3}
+$$
+
+对每份独立原列选择都配平，当且仅当全部活动演员相同，即
+
+$$
+\bigl[(U^+)^*U^+=(U^-)^*U^-\text{ 对所有 }Z_1,\ldots,Z_n\bigr]
+\quad\Longleftrightarrow\quad
+\bigl[a_l=a_m\text{ 只要 }c_lc_m\ne0\bigr].
+\tag{142.4}
+$$
+
+证明。置 $S=\sum_lc_lZ_l$、$A=\sum_lc_la_lZ_l$，则 $U^\epsilon=S+\epsilon iA$，直接相乘给
+
+$$
+(U^+)^*U^+-(U^-)^*U^-
+=2i(S^*A-A^*S)
+=2i\sum_{l,m}c_lc_mZ_l^*(a_m-a_l)Z_m.
+$$
+
+对角项为零，活动演员相同时其余项也为零。反之，取两个活动指标 $l,j$，令 $h=a_j-a_l=h^*$，选择真正原列
+
+$$
+Z_l=c_l^{-1}1,\qquad Z_j=c_j^{-1}ih,\qquad Z_k=0\ (k\notin\{l,j\}).
+$$
+
+完整自伴原域保证这都是合法复坐标。两项交叉和为
+
+$$
+2i\{1^*h(ih)+(ih)^*(-h)1\}=-4h^2.
+$$
+
+若普遍配平，便有 $h^2=0$；C*范数恒等式给 $h=0$。空活动支撑及单点活动支撑的条件均为真，零权重的演员完全不受约束；负权重已由上面实数公式包含。未对未知函数作极化；极化只用于已知的结合平方。∎
+
+同一中间计算允许一个明确的中央约定：若 $J\in Z(\mathcal M)$、$J^*=-J$、$J^2=-1$，取 $D_J(x,z)=J[x,z]/2$、$Z=x+Jz$。每个 $Z\in\mathcal M$ 的唯一自伴坐标为 $x=(Z+Z^*)/2$、$z=-J(Z-Z^*)/2$，且 $\mathcal Q_J=Z^*Z$、$Z^\epsilon=(1+\epsilon Ja)Z$。式(142.3)中 $i$ 全部换成 $J$；必要性选择 $Z_j=Jh/c_j$，仍得 $-4h^2$。此处只断言完整域、中央 $J$ 及实标量权重下的这个恒等式和判据。
+
+142.4量化独立原列，并不把下文由同一旧表生成的六列当作独立。因此它本身还不足以判定实际循环；143–144保留循环的全部依赖后直接计算。
+
+## 143. 同一总响应生成的三循环与六张配对调用
+
+**定义 143.1（原三调用及其字面关联）。** 在142.1的测试类中，固定原 $A,B,y$，先读取同一份
+
+$$
+O=D(A,B),\qquad G=D(A,y),\qquad J_0=D(B,y).
+$$
+
+对每个 $\tau\in\{1,-1\}$，取三张实际原调用 $\mathrm{PB}(A;B,y)$、$\mathrm{PB}(B;y,A)$、$\mathrm{PB}(y;A,B)$ 的同一个 $\tau$ 端点：
+
+$$
+\begin{aligned}
+R_1&=B+\tau(O-A\circ y),& S_1&=y+\tau(A\circ B+G),\\
+R_2&=y+\tau(J_0-B\circ A),& S_2&=A+\tau(B\circ y-O),\\
+R_3&=A+\tau(-G-y\circ B),& S_3&=B+\tau(y\circ A-J_0).
+\end{aligned}
+\tag{143.1}
+$$
+
+$J_0$ 是实际旧回复，不是142的中央 $J$。下文所有指标模三，$R_4=R_1,S_4=S_1$；$\tau$ 暂省于下标。再读取
+
+$$
+M_j=D(R_j,S_j),\qquad K_j=D(R_j,S_{j+1})\qquad(j=1,2,3).
+\tag{143.2}
+$$
+
+接着的六张调用及两个符号的全部端点为
+
+$$
+\begin{aligned}
+\mathsf X_j&=\mathrm{PB}(R_j;S_j,S_{j+1}),\\
+X_j^\epsilon&=\bigl(S_j+\epsilon(M_j-R_j\circ S_{j+1}),\
+S_{j+1}+\epsilon(R_j\circ S_j+K_j)\bigr),\\
+\mathsf Y_j&=\mathrm{PB}(S_{j+1};R_{j+1},R_j),\\
+Y_j^\epsilon&=\bigl(R_{j+1}+\epsilon(-M_{j+1}-R_j\circ S_{j+1}),\
+R_j+\epsilon(S_{j+1}\circ R_{j+1}-K_j)\bigr),\\
+N_j^\epsilon&=D((X_j^\epsilon)_1,(X_j^\epsilon)_2),\qquad
+Z_j^\epsilon=D((Y_j^\epsilon)_1,(Y_j^\epsilon)_2).
+\end{aligned}
+\tag{143.3}
+$$
+
+第二调用的内回复正是 $D(S_{j+1},R_{j+1})=-M_{j+1}$ 与 $D(S_{j+1},R_j)=-K_j$，不是新选的自由量。相同的 $M_j,K_j$ 在相邻调用中保持字面同一；输入偶然相等时，同一总 $D$ 也必须给相同值。全部零标签、重复标签及其出现重数都保留。
+
+**定理 143.2（全部三参数、两个循环符号的实际回复）。** 取任意给定非零 $\mathrm{II}_1$ 因子 $\mathcal R$ 及其忠实正规归一有限迹 $\operatorname{tr}_{\mathcal R}$，令
+
+$$
+\mathcal M=M_2(\mathbb C)\,\overline\otimes\,\mathcal R,
+\qquad E_{\rm test}=\mathcal M_{\rm sa},\qquad
+(A,B,y)=(\alpha\sigma_x,\beta_0\sigma_y,\gamma\sigma_z),
+\quad\alpha,\beta_0,\gamma\in\mathbb R.
+\tag{143.4}
+$$
+
+横线张量积是von Neumann张量积；每个Pauli矩阵均指其与 $1_{\mathcal R}$ 的张量。$\mathcal M$ 仍是 $\mathrm{II}_1$ 因子，归一迹为 $\tfrac12\operatorname{Tr}_2\otimes\operatorname{tr}_{\mathcal R}$，故没有非零type I中央直和项。这是SF98、SF103的完整continuous类的 $Q=1$ 标准取向实例。$\beta_0$ 是本条的实参数，与145的检测态 $\beta$ 区分。
+
+实际旧回复及三个端点准确为
+
+$$
+\begin{gathered}
+O=-\alpha\beta_0\sigma_z,\qquad
+G=\alpha\gamma\sigma_y,\qquad J_0=-\beta_0\gamma\sigma_x,\\
+R_1=\beta_0\sigma_y-\tau\alpha\beta_0\sigma_z,\qquad
+S_1=\gamma\sigma_z+\tau\alpha\gamma\sigma_y,\\
+R_2=\gamma\sigma_z-\tau\beta_0\gamma\sigma_x,\qquad
+S_2=\alpha\sigma_x+\tau\alpha\beta_0\sigma_z,\\
+R_3=\alpha\sigma_x-\tau\alpha\gamma\sigma_y,\qquad
+S_3=\beta_0\sigma_y+\tau\beta_0\gamma\sigma_x.
+\end{gathered}
+\tag{143.5}
+$$
+
+为同时列出全部进一步回复，写 $a_1=\alpha,a_2=\beta_0,a_3=\gamma$，$\sigma_1=\sigma_x,\sigma_2=\sigma_y,\sigma_3=\sigma_z$。对任意循环指标 $j$，置
+
+$$
+p=a_j,\quad q=a_{j+1},\quad r=a_{j+2},\qquad
+d_j=p^2q^2,\quad F_j=1+q^2(1+p^2),\quad G_j=1+p^2(1+q^2).
+$$
+
+则无除法的全部公式是
+
+$$
+\begin{aligned}
+R_j&=q\sigma_{j+1}-\tau pq\sigma_{j+2},&
+S_j&=r\sigma_{j+2}+\tau pr\sigma_{j+1},\\
+R_j\circ S_j&=0,& R_j\circ S_{j+1}&=-d_j1,\\
+M_j&=-qr(1+p^2)\sigma_j,\\
+K_j&=-\tau pq^2\sigma_j+\tau p^2q\sigma_{j+1}+pq\sigma_{j+2},\\
+X_j^\epsilon&=(S_j+\epsilon(M_j+d_j1),\ S_{j+1}+\epsilon K_j),\\
+Y_j^\epsilon&=(R_{j+1}+\epsilon(-M_{j+1}+d_j1),\ R_j-\epsilon K_j),\\
+N_j^\epsilon
+&=-p^2qr\sigma_j-prF_j\sigma_{j+1}
+ +\tau p^2rF_j\sigma_{j+2}-\epsilon d_jS_j,\\
+Z_j^\epsilon
+&=qrG_j\sigma_j+pq^2r\sigma_{j+1}
+ +\tau q^2rG_j\sigma_{j+2}-\epsilon d_jR_{j+1}.
+\end{aligned}
+\tag{143.6}
+$$
+
+证明。对实向量 $v,w\in\mathbb R^3$，Pauli乘法给
+
+$$
+(v\cdot\sigma)\circ(w\cdot\sigma)=(v\cdot w)1,
+\qquad D(v\cdot\sigma,w\cdot\sigma)=-(v\times w)\cdot\sigma.
+\tag{143.7}
+$$
+
+原三元组的两两Jordan乘积为零；其三个叉积给143.5，再代入143.1。固定正循环顺序 $(j,j+1,j+2)$，$R_j,S_j$ 的向量是 $(0,q,-\tau pq)$、$(0,\tau pr,r)$，内积为零，负叉积为 $(-qr(1+p^2),0,0)$。$S_{j+1}$ 的向量是 $(p,0,\tau pq)$，故它与 $R_j$ 的内积为 $-p^2q^2$，负叉积为 $(-\tau pq^2,\tau p^2q,pq)$。这逐项给出内值和六张实际端点。
+
+端点中的实标量单位项与一切交换，不影响旧响应。$X_j^\epsilon$ 两个坐标的向量依次为
+
+$$
+\begin{aligned}
+v_X&=(-\epsilon qr(1+p^2),\ \tau pr,\ r),\\
+w_X&=(p(1-\epsilon\tau q^2),\ \epsilon\tau p^2q,\ pq(\tau+\epsilon)).
+\end{aligned}
+$$
+
+逐坐标计算负叉积得到
+
+$$
+-v_X\times w_X
+=(-p^2qr,\ -prF_j-\epsilon\tau p^3q^2r,\
+\tau p^2rF_j-\epsilon p^2q^2r),
+$$
+
+正是 $N_j^\epsilon$。$Y_j^\epsilon$ 的向量依次为
+
+$$
+\begin{aligned}
+v_Y&=(-\tau qr,\ \epsilon pr(1+q^2),\ r),\\
+w_Y&=(\epsilon\tau pq^2,\ q(1-\epsilon\tau p^2),\ -pq(\tau+\epsilon)),\\
+-v_Y\times w_Y
+&=(qrG_j+\epsilon\tau p^2q^3r,\ pq^2r,\
+\tau q^2rG_j-\epsilon p^2q^2r),
+\end{aligned}
+$$
+
+即所列 $Z_j^\epsilon$。因此所有十二个外回复都由同一个总 $D$ 实际算出，绝非先指定配平差再任意填表。作为符号和因子的另一核对，由这些式子直接有
+
+$$
+N_j^+-N_j^-=-2d_jS_j,\qquad
+Z_j^+-Z_j^-=-2d_jR_{j+1}.
+\tag{143.8}
+$$
+
+FULLPB右侧也分别给这两个值：第一张表的两项为 $-2S_j\circ(M_j+d_j1)-2S_{j+1}\circ K_j$，其中 $S_j\circ M_j=S_{j+1}\circ K_j=0$；第二张表用 $R_{j+1}\circ M_{j+1}=R_j\circ K_j=0$ 得同样结论。所有式子是对全部实参数和两个 $\tau$ 的多项式恒等式，不排除任何零值或重合。∎
+
+## 144. 实际六列的非零混合漂移及三种聚合
+
+**定理 144.1（整个实际三参数类的求和障碍）。** 对143.1–143.6的每个 $\tau$，写
+
+$$
+\begin{gathered}
+L=\sum_{j=1}^3(R_j+S_j)
+=2(\alpha\sigma_x+\beta_0\sigma_y+\gamma\sigma_z),\\
+c_0=\alpha^2\beta_0^2+\beta_0^2\gamma^2+\gamma^2\alpha^2,\\
+C_{\rm own}=\sum_j R_j\circ S_j=0,\qquad
+C_{\rm cross}=\sum_jR_j\circ S_{j+1}=-c_0 1,\\
+\mathcal B_\tau^\epsilon=\sum_{j=1}^3(X_j^\epsilon+Y_j^\epsilon).
+\end{gathered}
+$$
+
+有序对按坐标相加，且
+
+$$
+\mathcal B_\tau^\epsilon=(L-2\epsilon C_{\rm cross},\ L+2\epsilon C_{\rm own})
+=(L+2\epsilon c_0 1,L).
+\tag{144.1}
+$$
+
+定义混合部分时扣除六张单表能量，准确取
+
+$$
+C_{{\rm mix},\tau}^\epsilon
+=\mathcal Q(\mathcal B_\tau^\epsilon)
+-\sum_{j=1}^3\{\mathcal Q(X_j^\epsilon)+\mathcal Q(Y_j^\epsilon)\}.
+\tag{144.2}
+$$
+
+则
+
+$$
+\boxed{\ C_{{\rm mix},\tau}^+-C_{{\rm mix},\tau}^-
+=\mathcal Q(\mathcal B_\tau^+)-\mathcal Q(\mathcal B_\tau^-)
+=8c_0L.\ }
+\tag{144.3}
+$$
+
+证明。143.5中的 $\tau$ 项按循环相消，给 $L$；143.6的Jordan内积给两个 $C$。一般地，143.3的第一坐标增量之和为
+
+$$
+\sum_j\{M_j-R_j\circ S_{j+1}-M_{j+1}-R_j\circ S_{j+1}\}
+=-2C_{\rm cross},
+$$
+
+第二坐标为 $\sum_j\{R_j\circ S_j+K_j+S_{j+1}\circ R_{j+1}-K_j\}=2C_{\rm own}$。这里消掉的是同一实际 $M,K$ 的出现，不是把 $D$ 作用于一个和拆开。六张单表各由FULLPB给零漂移，所以144.2的差就是求和表能量之差。两坐标 $L+2\epsilon c_01,L$ 交换，实际回复 $D(L+2\epsilon c_01,L)=0$。故
+
+$$
+\mathcal Q(\mathcal B_\tau^\epsilon)
+=(L+2\epsilon c_01)^2+L^2
+=2L^2+4\epsilon c_0L+4c_0^21,
+$$
+
+取差得144.3。特别 $L^2=4(\alpha^2+\beta_0^2+\gamma^2)1$；$L=0$ 当且仅当三参数全零，而 $c_0=0$ 当且仅当至多一个参数非零。因此漂移非零恰在至少两个参数非零时。端点或回复之间的偶然相同不改变实际相加的重数，退化情形全部保留。∎
+
+**推论 144.2（两个循环符号与读取约定）。** 两个 $\tau$ 各自的漂移都是 $8c_0L$。若先分别取能量再相加，漂移为 $16c_0L$；若对这两个能量取半和，漂移为 $8c_0L$；若把两个符号共十二个端点对先全部相加，再取一次能量，则
+
+$$
+\sum_{\tau=\pm1}\mathcal B_\tau^\epsilon
+=(2L+4\epsilon c_01,2L),\qquad
+\Delta\mathcal Q=32c_0L.
+\tag{144.4}
+$$
+
+证明。前两项直接相加及除以二。最后的和等于 $2\mathcal B_\tau^\epsilon$；在当前已知标准响应中 $\mathcal Q(2x,2z)=4\mathcal Q(x,z)$，得到最后的因子。这里没有对一般未知 $D$ 使用齐次性。∎
+
+元素不等与每份正读取不等须分开。置 $r_0=(\alpha^2+\beta_0^2+\gamma^2)^{1/2}$。非零漂移时 $r_0>0$，取 $2\times2$ 矩阵中 $\alpha\sigma_x+\beta_0\sigma_y+\gamma\sigma_z$ 的 $+r_0$ 单位特征向量 $v_+$，令
+
+$$
+\phi_+(T)=(\langle v_+,\cdot\,v_+\rangle\otimes\operatorname{tr}_{\mathcal R})(T).
+$$
+
+这是质量一的数学正读取，$\phi_+(8c_0L)=16c_0r_0>0$。负特征向量读取给相反号，归一迹读取则因 $L$ 无迹而给零。对任意 $m\ge0$，$m\phi_+$ 保持实际质量 $m$，读取为 $16mc_0r_0$；$m=0$ 时仍保留该零分支。因而反例是否被某份读取看见，不等于其算子漂移是否非零；尤其不能只用有限迹的零读数宣告块恒等式成立。
+
+**定义 144.3（被否定规则的准确量词）。** 144.1否定的是所有实际三元组、全部参数与循环符号上，六张等权配对表的原始求和能量普遍零漂移。它在完整非零 $\mathrm{II}_1$ 测试类内已经失败；既有完整continuous分类并不修复这条规则。142.4则指出独立列普遍运输恰需要共同活动演员。二者不否定P2或FULLPB：此处它们对每个原输入和每个质量均成立。
+
+这份标准响应本来可加，故任何真实加性缺陷 $\delta$ 及 $K_y\delta$ 都为零。没有把它作为非零真缺陷模型，也未断言143的三元组能够成为一份 $w\ne0$ 检测网络中的实际外层出现。没有排除依赖非零 $w$ 的条件预算、非线性或算子权重、特定原列的额外相消，尤其没有排除145的十二个外层出现按其 $\chi$ 权重共同相消。边界只撤去“单表配平或完整块正性足够推出这个普遍求和等距”的推理步骤；一般原目标的充分性与完整量子起源均不由此裁决。
+
+## 追加锚（本行以下为增补区）
