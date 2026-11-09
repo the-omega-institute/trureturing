@@ -3015,3 +3015,336 @@ them. These are ordinary conditional proofs without a newly
 performed numerical instance or Lean verification.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 19. A finite source-specific forward state on the acquired path
+
+**Definition 19.1 (a certified finite forward chart).** Retain the
+complete source of Assumption 1.1, including the complex non-Friedrichs
+endpoint and its operator and form domains, the source trace, the
+normalized $h$, the original $e$-start, the first read at $2d$, later
+gaps $d$, the labels $\{0,1,3,B\}$, and fresh conditional noise. Let
+
+$$
+L_y z=P(f_yz),\qquad z_\varepsilon=g,\qquad
+z_{uy}=L_yz_u
+\tag{19.1}
+$$
+
+be the exact forward relation of [OPPM, (2.1)--(2.5)]. It is a
+source relation: $z_u=p(u)\pi_u$ and
+
+$$
+p(uv)=\langle z_u,F_v\rangle_m,qquad
+\|L_y\|_{L^2(m)\to L^2(m)}\le1 .
+\tag{19.2}
+$$
+
+The last inequality uses the actual $0\le f_y\le1$ and the
+self-adjoint Markov contraction $P$; it is not a uniform likelihood
+floor.
+
+Choose a finite linearly independent family of real rational box steps
+$(\varphi_1,\ldots,\varphi_r)$, supported in a finite punctured
+localization, and write $S(\theta)=\sum_i\theta_i\varphi_i$. The
+finite Gram computation supplies a rational $\lambda_->0$ with
+
+$$
+\lambda_-\|a\|_2^2\le
+\left\|S(a)\right\|_m^2
+\quad(a\in\mathbb R^r).
+\tag{19.3}
+$$
+
+For every $y\in\mathcal L$ and basis index $i$, a finite reference
+calculation returns a rational column $A_y e_i$ and a rational residual
+$\varepsilon_{y,i}\ge0$ such that
+
+$$
+\left\|L_y\varphi_i-S(A_ye_i)\right\|_m
+   \le\varepsilon_{y,i}.
+\tag{19.4}
+$$
+
+The certificate for (19.4) is assembled from the existing source
+services, rather than from an uncomputed operator name. At the
+accepted bracket $J=[L,U]$, use the trial $t_0,c_0$ and the clipped
+emissions of (5.1). Here $H_i(J)$ denotes the finite heat-time modulus
+returned by the same reference heat service for the rational input
+$\varphi_i$ over $J$. For each step, the already computed heat modulus
+$H_i(J)$ and the emission errors
+
+$$
+E^{\rm em}_3=e_f,\qquad E^{\rm em}_B=0,\qquad
+E^{\rm em}_0=E^{\rm em}_1=e_f/2
+\tag{19.5}
+$$
+
+give the parameter part
+
+$$
+\varepsilon^{\rm par}_{y,i}
+ =H_i(J)+\|\varphi_i\|_{\infty}E^{\rm em}_y.
+\tag{19.6}
+$$
+
+The finite raw step for the trial action, its global residual, the
+finite Gram solve, and outward rational coefficient error give
+$\varepsilon^{\rm act}_{y,i}$. The returned number is
+
+$$
+\varepsilon_{y,i}=\varepsilon^{\rm par}_{y,i}
+                  +\varepsilon^{\rm act}_{y,i}.
+\tag{19.7}
+$$
+
+Every term in (19.6)--(19.7) is a generated rational number. In
+particular the bracket and calibration errors are paid before the
+action certificate is accepted. The cases $0,1$ use the exact affine
+identity $f_0=f_1=(3/2)f_B-(1/2)f_3$; $B$ has no parameter emission
+error. A finite action chart is called **next-label ready** when
+(19.3)--(19.7) have passed for all four labels.
+
+The initial chart additionally contains a rational $\theta_0$, a
+finite raw residual and a rational $\varepsilon_0$ with
+
+$$
+\|g-S(\theta_0)\|_m\le\varepsilon_0.
+\tag{19.8}
+$$
+
+The raw-name and dense rational-step searches of §§3--5 produce
+(19.8) with any prescribed positive target on the same calibration
+event. Thus the finite chart stores an evaluated state, not the name
+of the exact initial density.
+
+**Lemma 19.2 (the source-specific closure estimate).** Let
+$y_0\ldots y_{t-1}$ be the labels actually acquired from the original
+prefix, and define, only after each such acquisition,
+
+$$
+\theta_{j+1}=A_{y_j}\theta_j,\qquad
+\widehat z_j=S(\theta_j),\qquad
+\Delta_0=\varepsilon_0,
+\quad
+\Delta_{j+1}=\Delta_j+\sum_i|\theta_{j,i}|\varepsilon_{y_j,i}.
+\tag{19.9}
+$$
+
+Then, on the common event used for the accepted bracket,
+
+$$
+ z_{y_0\cdots y_{j-1}}=z_j,qquad
+\|z_j-\widehat z_j\|_m\le\Delta_j
+\quad(0\le j\le t).
+\tag{19.10}
+$$
+
+The numbers $\theta_j$ and $\Delta_j$ are finite rational data. A
+finite coefficient envelope $B_0=\|\theta_0\|_1$ and
+$B_{j+1}=\|A_{y_j}\|_1B_j$ is a generated work certificate for the
+right side of (19.9).
+
+*Proof.* The identity in (19.10) is induction from (19.1). If it holds
+at $j$, (19.2), linearity, and (19.4) give
+
+$$
+\begin{aligned}
+\|z_{j+1}-\widehat z_{j+1}\|_m
+&\le \|L_{y_j}(z_j-\widehat z_j)\|_m
+ +\left\|\sum_i\theta_{j,i}\bigl(L_{y_j}\varphi_i
+                   -S(A_{y_j}e_i)\bigr)\right\|_m\\
+&\le\Delta_j+\sum_i|\theta_{j,i}|\varepsilon_{y_j,i}
+ =\Delta_{j+1}.
+\end{aligned}
+$$
+
+This is the additional source-specific estimate: the same finite chart
+is closed under the four original emission/heat actions up to an
+evaluated residual. It is not the exact Bayes recurrence, a renamed
+row, or a finite frozen-word computation. The induction also shows
+why a state is advanced only on the label actually returned by the
+source.$\square$
+
+**Proposition 19.3 (finite search for a reached-prefix chart).** Fix a
+finite actually acquired prefix $u$, a finite horizon $H$, and a positive
+rational target $\delta$. On the common calibration event, a fair search
+through rational punctured box-step families, their finite Gram tests,
+initial residual tests, the four action certificates (19.4), and the
+finite readout tests finds a chart for which
+
+$$
+\Delta_{|u|}<\delta,\qquad E_{|u|}^H<\delta,
+$$
+
+The search tests the denominator only through the finite interval guard
+(19.12); it does not receive the positive mass $p(u)$ as an input. The
+search uses no row acquired for $u$ or for any other reached history.
+
+*Proof.* The finite list $z_{u_{\le j}}$ is a list of $L^2(m)$ vectors.
+Rational box steps supported away from the exceptional point are dense
+for each of them, and the raw-name searches of §§3--5 give evaluated
+residuals for the required initial density, multiplications and heat
+steps. Enlarge one common basis to contain rational approximants for
+this finite list and for the four actions of every basis element used
+by the replay. The Gram lower bound (19.3) and finite interval solves
+then give (19.4), with all residuals as small as prescribed. There are
+only $|u|$ replay steps and $4^H$ readout words, so the accumulated
+bounds in (19.9) and (19.11) tend to zero under joint refinement.
+Since $p(u)>0$, eventually $a_t^->0$ and (19.12) holds with strict
+slack. Fair enumeration recognizes that finite successful tuple. If a
+basis is enlarged after a label has already been acquired, all earlier
+labels are replayed; no old approximation is promoted by declaration.
+$\square$
+
+**Theorem 19.4 (generated normalized readout at an actual cut).** Fix
+a finite horizon $H\ge1$ and an actually acquired prefix
+$u=y_0\cdots y_{t-1}$. Using (19.9), compute rational numbers
+$\widehat a_t$ and $\widehat b_t(v)$ for $|v|=H$ by finite rational
+integration of the retained box step $\widehat z_t$ against $1$ and
+against the clipped finite word approximation from (5.1). Let
+$\mu_t,\chi_{t,v}\ge0$ be their evaluated integration and word-action
+errors, so that
+
+$$
+\left|p(u)-\widehat a_t\right|\le d_t:=\Delta_t+\mu_t,
+\qquad
+\left|p(uv)-\widehat b_t(v)\right|
+ \le e_{t,v}:=\Delta_t+\chi_{t,v}.
+\tag{19.11}
+$$
+
+The word-action error includes the inherited parameter error of the
+finite word and the global rational-step residual; because
+$0\le F_v\le1$, the state residual in (19.10) contributes exactly
+$\Delta_t$. Require the generated denominator guard
+
+$$
+ a_t^-:=\widehat a_t-d_t>0,qquad
+ E_t^H:=\sum_{|v|=H}\frac{e_{t,v}+d_t}{a_t^-}<\frac12.
+\tag{19.12}
+$$
+
+Put $q_t(v)=p(uv)/p(u)$ and
+$\widetilde q_t(v)=\widehat b_t(v)/\widehat a_t$. Then
+
+$$
+|q_t(v)-\widetilde q_t(v)|
+ \le\frac{e_{t,v}+d_t}{a_t^-}.
+\tag{19.13}
+$$
+
+Define the actual probability row supplied by the finite state as
+
+$$
+\rho_t(v)=
+ \frac{\max\{\widetilde q_t(v),0\}}
+ {\displaystyle\sum_{|w|=H}\max\{\widetilde q_t(w),0\}} .
+\tag{19.14}
+$$
+
+The denominator in (19.14) is positive by (19.12), and finite rational
+sorting, positive-part evaluation and division generate the row. On
+the same common event,
+
+$$
+\operatorname{TV}(\rho_t,q_t)\le E_t^H.
+\tag{19.15}
+$$
+
+*Proof.* Since $p(u)>0$, (19.12) implies
+$\widehat a_t\ge a_t^->0$ and the elementary quotient identity gives
+(19.13). Summing it gives
+$\|\widetilde q_t-q_t\|_1\le E_t^H$. The positive-part map is
+1-Lipschitz in $\ell^1$, so if $s=\sum_v\max\{\widetilde q_t(v),0\}$,
+then $|s-1|\le E_t^H$ and $s>0$. Therefore
+
+$$
+\|\rho_t-q_t\|_1
+\le\|\rho_t-\widetilde q_t^+\|_1
+   +\|\widetilde q_t^+-q_t\|_1
+\le |s-1|+E_t^H\le2E_t^H,
+$$
+
+which is (19.15). No lower bound is assumed uniformly over labels or
+histories; the positive denominator is generated at the reached cut.
+The row is attached to the complete original prefix $u$, not to a
+comparison suffix or a reinitialized stationary sample.$\square$
+
+**Corollary 19.5 (the independent current-row input for OPPM9).** Let
+$C$ be a finite causal cut at which all labels through $C$ have actually
+been acquired, retained and replayed in a next-label-ready chart. Set
+$u=Y_{<C}$ and use Theorem 19.4 to obtain $\rho_C$ at horizon $H$.
+If the selected OPPM9 description has reached-history comparison event
+
+$$
+\operatorname{TV}({\bf R}_C^H,Q_{W_{\kappa,C-T_\kappa}}^H)
+ \le\epsilon_\kappa,
+\tag{19.16}
+$$
+
+then the same event and the generated certificate give
+
+$$
+\operatorname{TV}(\rho_C,Q_{W_{\kappa,C-T_\kappa}}^H)
+ \le \epsilon_\kappa+E_C^H.
+\tag{19.17}
+$$
+
+Thus (19.17) is a concrete instance of OPPM9 equation (9.24), with
+$\zeta_C=E_C^H$ and $\xi_C=\epsilon_\kappa$ before any actual output rounding; any such rounding is added to $\xi_C$. The new
+row is produced from the finite evaluated forward state and the next
+actually acquired original labels; no acquired exact or approximate
+row for each reached history is an input.
+
+*Proof.* Theorem 19.4 gives
+$\operatorname{TV}(\rho_C,{\bf R}_C^H)\le E_C^H$. Apply the triangle
+inequality to (19.16). OPPM9's common-event construction already
+charges the failure of (19.16); the deterministic state and readout
+tests add no statistical event.$\square$
+
+**Definition 19.6 (refinement, resources and exact limits).** A chart
+refinement may enlarge the rational step family, recompute its Gram
+lower bound, recompute all four action columns, and replay the
+complete retained prefix from $e$. A refined chart never retroactively
+certifies an earlier state or row. Every replayed label, source read,
+retained prefix, matrix coefficient, residual test, parameter bracket,
+failed strict test, rational division, positive-part sort, row entry
+and working bit is charged. At cut $C$, the state stores the basis
+descriptions, $r$ coefficients, the four $r$ action columns and their
+residual certificates; a horizon-$H$ readout adds $4^H$ integrations,
+normalizer tests and row entries. The bit widths and $r$ may grow.
+
+The state begins with the original prefix and every subsequent update
+uses the actual next label. All previously acquired menus, permissions,
+source references and joint-source relations remain attached to the
+record and are not replaced by the chart. A continuing source may produce labels while
+reference computation, replay, serialization or output is pending; all
+such labels and their buffering remain the inherited paid premises of
+[SRO, Definition 21.1] and [OWGR, §21]. No capture rate, queue bound,
+finite completion, lawful output port, all-arrival assimilation or
+throughput condition is supplied. The construction does not add a
+sensor, reset, control, parameter input, exact posterior oracle, or
+stationary source preparation. It also supplies no native-source or
+AURIC correspondence.
+
+**Definition 19.7 (attribution and literature boundary).** Markov
+contraction, finite Gram projection, residual propagation and
+positive-part simplex normalization are mature tools. The source
+specific content here is the evaluated closure certificate
+(19.4)--(19.10), which uses FEA's calibrated clipped emissions,
+full-domain reference transport and paid rational step services on
+the original diffusion. OPPM2 supplies the exact filtering
+correspondence, OPPM7 supplies the existing acquired calibration and
+finite word catalogues, and OPPM9 supplies the all-later-cut comparison
+event. Their results are reused under their original hypotheses and
+are not republished as new theorems.
+
+This section is a `repo-derived` conditional numerical supplier. It
+does not claim a physical executor, a uniform likelihood floor, a
+source-uniform error or rate bound, finite completion, or worldwide
+literature priority. No new Lean verification is asserted.
+
+[OPPM]: RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_PASSIVE_PREDICTIVE_MEMORY.md
+
+## 追加锚（本行以下为增补区）
