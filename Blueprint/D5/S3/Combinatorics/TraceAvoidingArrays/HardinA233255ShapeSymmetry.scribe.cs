@@ -32,8 +32,11 @@ internal sealed class HardinA233255ShapeSymmetryDocument : IScribeDocumentDefini
                 + "Proper boundaries have distinct first two labels.", DescribeRole.Definition),
             Node("shapeEquiv", "Complete boundary enumeration", "A proved equivalence identifies the sixteen indices "
                 + "with the actual canonical-boundary subtype, including representatives missing the third label.", DescribeRole.Definition),
-            Node("classOf", "Successor class", "Normalize by first and second labels, then take the unique index "
-                + "in the complete enumeration.", DescribeRole.Definition),
+            Node("classOf", "Successor class", "For any six-cell boundary, normalize its labels, then test "
+                + "representatives zero through fourteen in order, returning the first matching index or "
+                + "fifteen if none matches. For a proper boundary, the normalized word has a unique matching "
+                + "representative among all sixteen, and this lookup returns its index. For a nonproper "
+                + "boundary, the fallback need not identify a matching representative.", DescribeRole.Definition),
             Node("K", "Actual compatible-row matrix", "Entry i,j counts proper seven-cell pair rows compatible "
                 + "with representative i whose six-cell suffix has canonical class j.", DescribeRole.Definition),
             Node("F", "Completed-scanner vector", "At height m this is 128 to the power m times K to the power m "
