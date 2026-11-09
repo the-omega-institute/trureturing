@@ -7,13 +7,13 @@
    digest: Terminal interval coordinates and actual right-filtration multiplicities. -/
 
 import D5.S3.HomologicalAlgebra.Persistence.ZigzagNaturalLift
-import D5.S3.HomologicalAlgebra.FilteredVectorSpaceComplement
 import Mathlib.Algebra.Category.ModuleCat.Ulift
 import Mathlib.Algebra.Category.ModuleCat.Biproducts
 import Mathlib.Algebra.Category.ModuleCat.Products
 import Mathlib.CategoryTheory.Limits.FunctorCategory.Finite
 import Mathlib.CategoryTheory.Limits.FunctorCategory.Shapes.Products
 import Mathlib.CategoryTheory.Preadditive.FunctorCategory
+import Mathlib.CategoryTheory.PathCategory.MorphismProperty
 import Mathlib.LinearAlgebra.FiniteDimensional.Basic
 import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 import Mathlib.Data.List.Pairwise
@@ -47,11 +47,9 @@ private def supportedEquiv (b i : ℕ) (h : b ≤ i) :
 /-- Identity between two supported vertices; zero whenever an endpoint is absent. -/
 def intervalMap (b s t : ℕ) :
     intervalSpace (K := K) b s ⟶ intervalSpace (K := K) b t :=
-  if hs : b ≤ s then
-    if ht : b ≤ t then
-      ModuleCat.ofHom ((supportedEquiv b t ht).toLinearMap.comp
-        (supportedEquiv b s hs).symm.toLinearMap)
-    else 0
+  if h : b ≤ s ∧ b ≤ t then
+    ModuleCat.ofHom ((supportedEquiv b t h.2).toLinearMap.comp
+      (supportedEquiv b s h.1).symm.toLinearMap)
   else 0
 
 /-- Terminal intervals use the native path category of `D`, including its actual arrows. -/
@@ -112,9 +110,7 @@ def filtrationInclusion (D : Zigzag.{u, v} K) (n : ℕ) (i : Fin (n + 1)) :
 
 /-- The quotient is taken inside the actual next layer, along its actual subtype map. -/
 abbrev successiveFactor (D : Zigzag.{u, v} K) (n : ℕ) (i : Fin (n + 1)) :=
-  terminalFiltrationLayer D n i.succ ⧸
-    (terminalFiltrationLayer D n i.castSucc).comap
-      (terminalFiltrationLayer D n i.succ).subtype
+  terminalFiltrationLayer D n i.succ ⧸ LinearMap.range (filtrationInclusion D n i)
 
 /-- Birth order appends at an actual forward arrow and prepends at an actual backward arrow. -/
 def birthList (D : Zigzag.{u, v} K) : ℕ → List ℕ
@@ -571,7 +567,8 @@ private theorem factor_dimension (D : Zigzag.{u, v} K) (n : ℕ)
     Module.finrank K (successiveFactor D n i) =
       subspaceDim (terminalFiltrationLayer D n i.succ) -
         subspaceDim (terminalFiltrationLayer D n i.castSucc) := by
-  rw [Submodule.finrank_quotient,
+  unfold successiveFactor filtrationInclusion
+  rw [Submodule.range_inclusion, Submodule.finrank_quotient,
     (Submodule.comapSubtypeEquivOfLe (layer_monotone D n (Fin.castSucc_le_succ i))).finrank_eq]
   rfl
 
@@ -665,63 +662,61 @@ private noncomputable def coordinateProductEquiv {J : Type} (birth : J → ℕ) 
         infer_instance
       exact Subsingleton.elim _ _
 
+set_option backward.isDefEq.respectTransparency false in
+set_option backward.isDefEq.respectTransparency.types false in
 private theorem value_forward {J : Type} (birth : J → ℕ) (j : J) (i : ℕ)
     (x : Coordinates (K := K) birth i) :
     valueProjection birth j (i + 1) (coordinateInclusion birth i x) =
       (intervalMap.{u, v} (K := K) (birth j) i (i + 1)).hom (valueProjection birth j i x) := by
   classical
   by_cases h0 : birth j ≤ i <;> by_cases h1 : birth j ≤ i + 1
-  · simp only [valueProjection, intervalMap, dif_pos h0, dif_pos h1, LinearMap.comp_apply,
-      LinearEquiv.coe_coe, ModuleCat.hom_ofHom, LinearMap.proj_apply,
-      coordinateInclusion, dif_pos h0]
-    exact congrArg (supportedEquiv (K := K) (birth j) (i + 1) h1)
-      ((supportedEquiv (K := K) (birth j) i h0).symm_apply_apply _).symm
+  · simp only [valueProjection, intervalMap, dif_pos h0, dif_pos h1,
+      dif_pos (And.intro h0 h1), dif_pos (And.intro h1 h0)]
+    simp only [dif_pos h0, dif_pos h1, ModuleCat.hom_ofHom,
+      LinearMap.comp_apply, LinearEquiv.coe_coe, LinearMap.proj_apply]
+    dsimp only [coordinateInclusion]
+    change (supportedEquiv (K := K) (birth j) (i + 1) h1)
+        (ULift.up (if h : birth j ≤ i then x ⟨j, h⟩ else 0)) =
+      (supportedEquiv (K := K) (birth j) (i + 1) h1)
+        ((supportedEquiv (K := K) (birth j) i h0).symm
+          ((supportedEquiv (K := K) (birth j) i h0) (ULift.up (x ⟨j, h0⟩))))
+    rw [dif_pos h0, LinearEquiv.symm_apply_apply]
   · omega
-  · simp only [valueProjection, intervalMap, dif_neg h0, dif_pos h1, LinearMap.comp_apply,
-      LinearEquiv.coe_coe, LinearMap.proj_apply, coordinateInclusion, dif_neg h0,
-      LinearMap.zero_apply]
+  · have hz : intervalMap.{u,v} (K := K) (birth j) i (i + 1) = 0 := by
+      simp [intervalMap, h0]
+    rw [hz]
+    simp only [valueProjection, dif_pos h1, LinearMap.comp_apply,
+      LinearEquiv.coe_coe, LinearMap.proj_apply, ModuleCat.hom_zero, LinearMap.zero_apply]
     change (supportedEquiv (K := K) (birth j) (i + 1) h1)
       (ULift.up (if h : birth j ≤ i then x ⟨j, h⟩ else 0)) = 0
     simp [h0]
+    rfl
   · simp [valueProjection, intervalMap, intervalSpace, coordinateInclusion, h0, h1]
     rfl
 
+set_option backward.isDefEq.respectTransparency false in
+set_option backward.isDefEq.respectTransparency.types false in
 private theorem value_backward {J : Type} (birth : J → ℕ) (j : J) (i : ℕ)
     (x : Coordinates (K := K) birth (i + 1)) :
     valueProjection birth j i (coordinateProjection birth i x) =
       (intervalMap.{u, v} (K := K) (birth j) (i + 1) i).hom (valueProjection birth j (i + 1) x) := by
   classical
   by_cases h0 : birth j ≤ i <;> by_cases h1 : birth j ≤ i + 1
-  · simp only [valueProjection, intervalMap, dif_pos h0, dif_pos h1, LinearMap.comp_apply,
-      LinearEquiv.coe_coe, ModuleCat.hom_ofHom, LinearMap.proj_apply, coordinateProjection]
-    exact congrArg (supportedEquiv (K := K) (birth j) i h0)
-      ((supportedEquiv (K := K) (birth j) (i + 1) h1).symm_apply_apply _).symm
+  · simp only [valueProjection, intervalMap, dif_pos h0, dif_pos h1,
+      dif_pos (And.intro h0 h1), dif_pos (And.intro h1 h0)]
+    simp only [dif_pos h0, dif_pos h1, ModuleCat.hom_ofHom,
+      LinearMap.comp_apply, LinearEquiv.coe_coe, LinearMap.proj_apply]
+    dsimp only [coordinateProjection]
+    change (supportedEquiv (K := K) (birth j) i h0) (ULift.up (x ⟨j, h1⟩)) =
+      (supportedEquiv (K := K) (birth j) i h0)
+        ((supportedEquiv (K := K) (birth j) (i + 1) h1).symm
+          ((supportedEquiv (K := K) (birth j) (i + 1) h1) (ULift.up (x ⟨j, h1⟩))))
+    rw [LinearEquiv.symm_apply_apply]
   · omega
   · simp [valueProjection, intervalMap, intervalSpace, h0, h1]
     rfl
   · simp [valueProjection, intervalMap, intervalSpace, h0, h1]
     rfl
-
-private theorem path_naturality {V : Type*} [Quiver V] {C : Type*} [Category* C]
-    (F G : Paths V ⥤ C) (a : ∀ i, F.obj i ⟶ G.obj i)
-    (he : ∀ (i j : V) (e : i ⟶ j),
-      F.map ((Paths.of V).map e) ≫ a ((Paths.of V).obj j) =
-        a ((Paths.of V).obj i) ≫ G.map ((Paths.of V).map e)) :
-    ∀ (i j : Paths V) (p : i ⟶ j), F.map p ≫ a j = a i ≫ G.map p := by
-  intro i j p
-  refine Paths.induction (P := fun {i j} p => F.map p ≫ a j = a i ≫ G.map p) ?_ ?_ p
-  · intro i; rw [F.map_id, G.map_id]; exact (Category.id_comp _).trans (Category.comp_id _).symm
-  · intro i j k q e ih
-    calc
-      F.map (q ≫ (Paths.of V).map e) ≫ a ((Paths.of V).obj k) =
-          F.map q ≫ (F.map ((Paths.of V).map e) ≫ a ((Paths.of V).obj k)) := by
-            rw [F.map_comp]; exact Category.assoc _ _ _
-      _ = F.map q ≫ (a ((Paths.of V).obj j) ≫ G.map ((Paths.of V).map e)) := by rw [he]
-      _ = (F.map q ≫ a ((Paths.of V).obj j)) ≫ G.map ((Paths.of V).map e) :=
-        (Category.assoc _ _ _).symm
-      _ = (a ((Paths.of V).obj i) ≫ G.map q) ≫ G.map ((Paths.of V).map e) := by rw [ih]
-      _ = a ((Paths.of V).obj i) ≫ G.map (q ≫ (Paths.of V).map e) := by
-        rw [G.map_comp]; exact Category.assoc _ _ _
 
 private def coefficientComponent (D : Zigzag.{u, v} K) (n : ℕ)
     (A : CoordinateSystem D n) (j : A.index) (i : Paths (Vertex D n)) :
@@ -734,13 +729,8 @@ private def coefficientComponent (D : Zigzag.{u, v} K) (n : ℕ)
 
 private def coefficient (D : Zigzag.{u, v} K) (n : ℕ)
     (A : CoordinateSystem D n) (j : A.index) :
-    liftedDiagram D n ⟶ terminalInterval D n ⟨A.birth j, Nat.lt_succ_of_le (A.bound j)⟩ where
-  app := coefficientComponent D n A j
-  naturality := by
-    intro i k p
-    refine path_naturality (liftedDiagram D n)
-      (terminalInterval D n ⟨A.birth j, Nat.lt_succ_of_le (A.bound j)⟩)
-      (coefficientComponent D n A j) ?_ i k p
+    liftedDiagram D n ⟶ terminalInterval D n ⟨A.birth j, Nat.lt_succ_of_le (A.bound j)⟩ :=
+  Paths.liftNatTrans (coefficientComponent D n A j) (by
     intro i k e
     cases e with
     | forward i f actual =>
@@ -758,7 +748,7 @@ private def coefficient (D : Zigzag.{u, v} K) (n : ℕ)
         (intervalMap.{u, v} (A.birth j) (i.val + 1) i.val).hom
           (valueProjection A.birth j (i.val + 1) (A.equiv i.succ x.down))
       exact (congrArg (valueProjection A.birth j i.val)
-        (A.backward i g actual x.down)).trans (value_backward A.birth j i.val _)
+        (A.backward i g actual x.down)).trans (value_backward A.birth j i.val _))
 
 private theorem positive_decomposition (D : Zigzag.{u, v} K) (n : ℕ)
     (hs : RightStreamlined D n)
