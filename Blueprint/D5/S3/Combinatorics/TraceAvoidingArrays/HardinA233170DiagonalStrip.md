@@ -20,7 +20,7 @@ Finset.univ ranges over every function on the displayed finite cell domain. Fin.
 
 **Theorem 1.2 (The complete rational formal power series).**
 
-$$\operatorname{PowerSeries}.\operatorname{mk}\left(\lambda n: Nat \mapsto (\operatorname{a}\left(n\right): Rat)\right) = 2 \cdot X \cdot \left(5 - 240 \cdot X + 2048 \cdot (X)^{2}\right) \cdot ((\left(1 - 16 \cdot X\right) \cdot \left(1 - 112 \cdot X + 1024 \cdot (X)^{2}\right)))^{\neg 1} \operatorname{in} \operatorname{PowerSeries}\left(Rat\right)$$
+$$\operatorname{PowerSeries}.\operatorname{mk}\left(\lambda n: Nat \mapsto (\operatorname{a}\left(n\right): Rat)\right) = 2 \cdot X \cdot \left(5 - 240 \cdot X + 2048 \cdot (X)^{2}\right) \cdot ((\left(1 - 16 \cdot X\right) \cdot \left(1 - 112 \cdot X + 1024 \cdot (X)^{2}\right)))^{-1} \operatorname{in} \operatorname{PowerSeries}\left(Rat\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233170DiagonalStrip.result` (`✓ std3`). ∎
 
@@ -30,7 +30,7 @@ $$\operatorname{PowerSeries}.\operatorname{mk}\left(\lambda n: Nat \mapsto (\ope
 
 *Commentary.*
 
-The private finite_certificate verifies preservation of valid boundary states, the first two continuation weights and the next-step identity, and first-row totals 10, 800 and 78336. The private continuation_recurrence proves, by induction for every continuation length, the recurrence with coefficients 128, -2816 and 16384. The literal counting bridge transports it to a(n+4)=128 a(n+3)-2816 a(n+2)+16384 a(n+1) for every natural n. Coefficient comparison retains the numerator, and formal inversion is valid because the denominator has constant coefficient one. Thus the identity includes every positive height and the initial coefficients, rather than only an eventual recurrence.
+The private finite_certificate verifies preservation of valid boundary states, the first two continuation weights and the next-step identity, and first-row aggregation totals 10, 800 and 78336. The private continuation_recurrence proves, by induction for every continuation length, the recurrence with coefficients 128, -2816 and 16384. The literal counting bridge transports it to a(n+4)=128 a(n+3)-2816 a(n+2)+16384 a(n+1) for every natural n. Coefficient comparison retains the numerator, and formal inversion is valid because the denominator has constant coefficient one. Thus the identity includes every positive height and the initial coefficients, rather than only an eventual recurrence.
 
 The scanner Seen, good and finish is reused from HardinA233175PairStrip. The width-independent widthNormal, widthLegal, widthStep, widthV, widthTotal and width_counting_bridge, together with colour_bond_iff, are reused from HardinA233251TriangleStrip. Pair labels are BooleanRankThreeK4.beta, with fibres {0,5}, {1,4}, {2,3}. These reused results supply the literal transfer interface; the four-column continuation certificate and its unbounded induction supply the new combinatorial content. The assertion is about finite combinatorial counts and rational formal series. It makes no claim of global priority.
 
