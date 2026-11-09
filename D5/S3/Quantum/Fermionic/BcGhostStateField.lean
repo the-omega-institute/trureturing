@@ -9,24 +9,23 @@
 /-
 Copyright (c) 2025 Scott Carnahan. All rights reserved.
 Released under Apache 2.0 license as described in the repository root LICENSE.
-The pointwise finite normal-product construction below adapts
-D5.S3.VertexAlgebra.FieldNormalProduct (ScottCarnahan/vertexAlg,
-revision 4453e34ec390e82a0c789c731ada8f9a6e86bdea), with a scalar in the
-reverse-ordered half. The ghost word construction uses the original occupation
-carrier, not a transported vertex algebra. The intended all-state locality and
-signed iterate theorem remain separate obligations until proved below.
+The signed normal product and its translation covariance are supplied by
+SignedFieldNormalProductLocality and SignedFieldResidueLocality. Their generic
+finite-support calculus retains the attributed ScottCarnahan/vertexAlg source.
+The occupation-word construction uses the original countable Fock carrier.
 -/
 
 /-
 proof_shape: stateField_creation, stateField_translation, stateField_parity: content
-escape_witness: Sorted actual occupation creators and signed normal products construct
-all coefficients. Finite-support telescopes give creation and original translation;
-actual CAR parity extends to arbitrary finite state sums.
+escape_witness: Sorted actual occupation creators construct all word coefficients.
+Creation and the original Ward identities connect this construction to the actual
+vacuum and translation; actual CAR parity extends to arbitrary finite state sums.
 admission_basis: escape-witness
 -/
 
 import D5.S3.Quantum.Fermionic.BcGhostVirasoro
 import D5.S3.VertexAlgebra.FieldNormalProduct
+import D5.S3.VertexAlgebra.SignedFields.SignedFieldResidueLocality
 import Mathlib.Data.Finset.Sort
 
 /-! Actual ghost fields, signed normal ordering and the occupation basis. -/
@@ -46,87 +45,8 @@ private noncomputable def signedNormalMinusOne (sign : ℂ) (left right : Vertex
     {operator : VertexOperator ℂ Fock // ∀ index vector,
       (operator [[index]]) vector =
         (∑ᶠ offset : ℕ, (left [[-(offset : ℤ) - 1]]) ((right [[index + offset]]) vector)) +
-        sign • (∑ᶠ offset : ℕ, (right [[index - offset - 1]]) ((left [[offset]]) vector))} := by
-  classical
-  have leftFinite (index : ℤ) (vector : Fock) : Function.HasFiniteSupport
-      (fun offset : ℕ => (left [[-(offset : ℤ) - 1]]) ((right [[index + offset]]) vector)) := by
-    refine BddAbove.finite (bddAbove_def.mpr ?_)
-    refine ⟨(-((HahnModule.of ℂ).symm (right vector)).order - index).toNat, ?_⟩
-    intro offset member
-    contrapose! member
-    have vanish : (right [[index + offset]]) vector = 0 := by
-      apply VertexOperator.ncoeff_eq_zero_of_lt_order
-      omega
-    simp [vanish]
-  have rightFinite (index : ℤ) (vector : Fock) : Function.HasFiniteSupport
-      (fun offset : ℕ => (right [[index - offset - 1]]) ((left [[offset]]) vector)) := by
-    refine BddAbove.finite (bddAbove_def.mpr ?_)
-    refine ⟨(-((HahnModule.of ℂ).symm (left vector)).order - 1).toNat, ?_⟩
-    intro offset member
-    contrapose! member
-    have vanish : (left [[offset]]) vector = 0 := by
-      apply VertexOperator.ncoeff_eq_zero_of_lt_order
-      omega
-    simp [vanish]
-  let coefficient (index : ℤ) : Module.End ℂ Fock := {
-    toFun vector :=
-      (∑ᶠ offset : ℕ, (left [[-(offset : ℤ) - 1]]) ((right [[index + offset]]) vector)) +
-      sign • (∑ᶠ offset : ℕ, (right [[index - offset - 1]]) ((left [[offset]]) vector))
-    map_add' first second := by
-      simp only [map_add]
-      rw [finsum_add_distrib (leftFinite index first) (leftFinite index second),
-        finsum_add_distrib (rightFinite index first) (rightFinite index second)]
-      module
-    map_smul' scalar vector := by
-      simp only [map_smul]
-      rw [← smul_finsum' scalar (leftFinite index vector),
-        ← smul_finsum' scalar (rightFinite index vector)]
-      simp only [RingHom.id_apply, id_eq]
-      module }
-  have bounded (vector : Fock) :
-      BddBelow (Function.support (fun power : ℤ => coefficient (-power - 1) vector)) := by
-    let cutoff : ℕ := (-((HahnModule.of ℂ).symm (left vector)).order - 1).toNat
-    let orders : Finset ℤ := (Finset.range (cutoff + 1)).image
-      (fun offset : ℕ => ((HahnModule.of ℂ).symm
-        (right ((left [[(offset : ℤ)]]) vector))).order - (offset : ℤ) - 1)
-    let lower : ℤ := min ((HahnModule.of ℂ).symm (right vector)).order
-      (orders.min' (by
-        apply Finset.image_nonempty.mpr
-        exact ⟨0, Finset.mem_range.mpr (by omega)⟩))
-    refine ⟨lower, ?_⟩
-    intro power member
-    by_contra notLower
-    have small : power < lower := lt_of_not_ge notLower
-    have firstZero : ∀ offset : ℕ,
-        (left [[-(offset : ℤ) - 1]]) ((right [[-power - 1 + offset]]) vector) = 0 := by
-      intro offset
-      have vanish : (right [[-power - 1 + offset]]) vector = 0 := by
-        apply VertexOperator.ncoeff_eq_zero_of_lt_order
-        dsimp [lower] at small
-        omega
-      simp [vanish]
-    have secondZero : ∀ offset : ℕ,
-        (right [[-power - 1 - offset - 1]]) ((left [[offset]]) vector) = 0 := by
-      intro offset
-      by_cases within : offset ≤ cutoff
-      · have inOrders : ((HahnModule.of ℂ).symm
-            (right ((left [[offset]]) vector))).order - offset - 1 ∈ orders := by
-          exact Finset.mem_image.mpr ⟨offset, Finset.mem_range.mpr (by omega), rfl⟩
-        have bound := Finset.min'_le orders _ inOrders
-        apply VertexOperator.ncoeff_eq_zero_of_lt_order
-        dsimp [lower] at small
-        omega
-      · have vanish : (left [[offset]]) vector = 0 := by
-          apply VertexOperator.ncoeff_eq_zero_of_lt_order
-          dsimp [cutoff] at within
-          omega
-        simp [vanish]
-    exact member (by simp [coefficient, firstZero, secondZero])
-  refine ⟨VertexOperator.of_coeff (fun power => coefficient (-power - 1)) bounded, ?_⟩
-  intro index vector
-  rw [VertexOperator.ncoeff_of_coeff]
-  rw [show -(-index - 1) - 1 = index by omega]
-  rfl
+        sign • (∑ᶠ offset : ℕ, (right [[index - offset - 1]]) ((left [[offset]]) vector))} :=
+  D5.S3.VertexAlgebra.SignedFieldNormalProductLocality.signedNormalMinusOne sign left right
 
 private theorem signedNormal_translation (sign : ℂ) (translation : Module.End ℂ Fock)
     (left right : VertexOperator ℂ Fock)
@@ -139,242 +59,25 @@ private theorem signedNormal_translation (sign : ℂ) (translation : Module.End 
     translation * ((signedNormalMinusOne sign left right).1 [[index]]) -
         ((signedNormalMinusOne sign left right).1 [[index]]) * translation =
       -(index : ℂ) • ((signedNormalMinusOne sign left right).1 [[index - 1]]) := by
-  classical
-  have forwardFinite (first second : VertexOperator ℂ Fock) (start finish : ℤ) (vector : Fock) :
-      Function.HasFiniteSupport
-        (fun offset : ℕ => (first [[start - offset]]) ((second [[finish + offset]]) vector)) := by
-    refine BddAbove.finite (bddAbove_def.mpr ?_)
-    refine ⟨(-((HahnModule.of ℂ).symm (second vector)).order - finish).toNat, ?_⟩
-    intro offset member
-    contrapose! member
-    have vanish : (second [[finish + offset]]) vector = 0 := by
-      apply VertexOperator.ncoeff_eq_zero_of_lt_order
-      omega
-    simp [vanish]
-  have reverseFinite (first second : VertexOperator ℂ Fock) (start : ℤ) (vector : Fock) :
-      Function.HasFiniteSupport
-        (fun offset : ℕ => (first [[start - offset]]) ((second [[offset]]) vector)) := by
-    refine BddAbove.finite (bddAbove_def.mpr ?_)
-    refine ⟨(-((HahnModule.of ℂ).symm (second vector)).order - 1).toNat, ?_⟩
-    intro offset member
-    contrapose! member
-    have vanish : (second [[offset]]) vector = 0 := by
-      apply VertexOperator.ncoeff_eq_zero_of_lt_order
-      omega
-    simp [vanish]
-  let zeroSucc : Option ℕ ≃ ℕ := {
-    toFun value := match value with | none => 0 | some offset => offset + 1
-    invFun value := match value with | 0 => none | offset + 1 => some offset
-    left_inv value := by cases value <;> rfl
-    right_inv value := by cases value <;> rfl }
-  have shiftSum (term : ℕ → Fock) (finite : Function.HasFiniteSupport term) (atZero : term 0 = 0) :
-      ∑ᶠ offset : ℕ, term offset = ∑ᶠ offset : ℕ, term (offset + 1) := by
-    rw [← finsum_comp_equiv zeroSucc]
-    rw [finsum_option]
-    · simp [zeroSucc, atZero]
-    · change Function.HasFiniteSupport (fun offset : ℕ => term (offset + 1))
-      exact finite.fun_comp_of_injective (g := fun offset : ℕ => offset + 1)
-        (fun first second equality => Nat.add_right_cancel equality)
-  have productLaw (first second : ℤ) :
-      translation * ((left [[first]]) * (right [[second]])) -
-          ((left [[first]]) * (right [[second]])) * translation =
-        -(first : ℂ) • ((left [[first - 1]]) * (right [[second]])) +
-        -(second : ℂ) • ((left [[first]]) * (right [[second - 1]])) := by
-    calc
-      _ = (translation * (left [[first]]) - (left [[first]]) * translation) *
-          (right [[second]]) + (left [[first]]) *
-          (translation * (right [[second]]) - (right [[second]]) * translation) := by
-            noncomm_ring
-      _ = _ := by
-        rw [leftLaw, rightLaw]
-        simp [Algebra.smul_mul_assoc, Algebra.mul_smul_comm]
-  have reverseLaw (first second : ℤ) :
-      translation * ((right [[first]]) * (left [[second]])) -
-          ((right [[first]]) * (left [[second]])) * translation =
-        -(first : ℂ) • ((right [[first - 1]]) * (left [[second]])) +
-        -(second : ℂ) • ((right [[first]]) * (left [[second - 1]])) := by
-    calc
-      _ = (translation * (right [[first]]) - (right [[first]]) * translation) *
-          (left [[second]]) + (right [[first]]) *
-          (translation * (left [[second]]) - (left [[second]]) * translation) := by
-            noncomm_ring
-      _ = _ := by
-        rw [rightLaw, leftLaw]
-        simp [Algebra.smul_mul_assoc, Algebra.mul_smul_comm]
-  apply LinearMap.ext
-  intro vector
-  let firstTerm (offset : ℕ) : Fock :=
-    ((offset : ℂ) + 1) • (left [[-(offset : ℤ) - 2]]) ((right [[index + offset]]) vector)
-  let secondTerm (offset : ℕ) : Fock :=
-    -((index : ℂ) + offset) •
-      (left [[-(offset : ℤ) - 1]]) ((right [[index + offset - 1]]) vector)
-  let thirdTerm (offset : ℕ) : Fock :=
-    -((index : ℂ) - offset - 1) • (right [[index - offset - 2]]) ((left [[offset]]) vector)
-  let fourthTerm (offset : ℕ) : Fock :=
-    -(offset : ℂ) • (right [[index - offset - 1]]) ((left [[(offset : ℤ) - 1]]) vector)
-  have forwardReindex (offset : ℕ) : (-1 : ℤ) - offset = -(offset : ℤ) - 1 := by omega
-  have reverseReindex (offset : ℕ) : index - 2 - offset = index - offset - 2 := by omega
-  have finiteFirst : Function.HasFiniteSupport firstTerm := by
-    have finite := (forwardFinite left right (-2) index vector).smul_right
-      (fun offset : ℕ => (offset : ℂ) + 1)
-    simpa only [Pi.smul_def', firstTerm,
-      show ∀ offset : ℕ, (-2 : ℤ) - offset = -(offset : ℤ) - 2 by
-      intro offset; omega] using finite
-  have finiteSecond : Function.HasFiniteSupport secondTerm := by
-    have finite := (forwardFinite left right (-1) (index - 1) vector).smul_right
-      (fun offset : ℕ => -((index : ℂ) + offset))
-    simpa only [Pi.smul_def', secondTerm, sub_add_eq_add_sub, forwardReindex] using finite
-  have finiteThird : Function.HasFiniteSupport thirdTerm := by
-    have finite := (reverseFinite right left (index - 2) vector).smul_right
-      (fun offset : ℕ => -((index : ℂ) - offset - 1))
-    simpa only [Pi.smul_def', thirdTerm, reverseReindex] using finite
-  have finiteFourth : Function.HasFiniteSupport fourthTerm := by
-    refine (((reverseFinite right left (index - 2) vector).image
-      (fun offset => offset + 1)).insert 0).subset ?_
-    intro offset member
-    cases offset with
-    | zero => simp
-    | succ offset =>
-      apply Set.mem_insert_of_mem
-      refine ⟨offset, ?_, rfl⟩
-      intro vanish
-      apply member
-      simp only [fourthTerm, Nat.cast_add, Nat.cast_one]
-      rw [show index - ((offset : ℤ) + 1) - 1 = index - 2 - offset by omega,
-        show (offset : ℤ) + 1 - 1 = offset by omega]
-      change -(offset + 1 : ℂ) •
-        (right [[index - 2 - offset]]) ((left [[offset]]) vector) = 0
-      change (right [[index - 2 - offset]]) ((left [[offset]]) vector) = 0 at vanish
-      rw [vanish, smul_zero]
-  have commuteSum (terms : ℕ → Module.End ℂ Fock)
-      (finite : ∀ input, Function.HasFiniteSupport (fun offset => terms offset input)) :
-      translation (∑ᶠ offset, terms offset vector) -
-        ∑ᶠ offset, terms offset (translation vector) =
-        ∑ᶠ offset, (translation * terms offset - terms offset * translation) vector := by
-    rw [map_finsum translation (finite vector),
-      ← finsum_sub_distrib ((finite vector).fun_comp (map_zero translation))
-        (finite (translation vector))]
-    rfl
-  have expansion :
-      (translation * ((signedNormalMinusOne sign left right).1 [[index]]) -
-          ((signedNormalMinusOne sign left right).1 [[index]]) * translation) vector =
-        (∑ᶠ offset, firstTerm offset) + (∑ᶠ offset, secondTerm offset) +
-          sign • ((∑ᶠ offset, thirdTerm offset) + (∑ᶠ offset, fourthTerm offset)) := by
-    change translation (((signedNormalMinusOne sign left right).1 [[index]]) vector) -
-      ((signedNormalMinusOne sign left right).1 [[index]]) (translation vector) = _
-    rw [(signedNormalMinusOne sign left right).2, (signedNormalMinusOne sign left right).2, map_add, map_smul]
-    rw [show ∀ first second third fourth : Fock,
-      (first + sign • second) - (third + sign • fourth) =
-        (first - third) + sign • (second - fourth) by intros; module]
-    have firstCommute := commuteSum
-      (fun offset => (left [[-(offset : ℤ) - 1]]) * (right [[index + offset]]))
-        (by
-          intro input
-          simpa only [Module.End.mul_apply,
-            show ∀ offset : ℕ, (-1 : ℤ) - offset = -(offset : ℤ) - 1 by intro offset; omega]
-            using (forwardFinite left right (-1) index input))
-    have secondCommute := commuteSum
-      (fun offset => (right [[index - offset - 1]]) * (left [[offset]]))
-        (by
-          intro input
-          simpa only [Module.End.mul_apply,
-            show ∀ offset : ℕ, index - 1 - offset = index - offset - 1 by intro offset; omega]
-            using (reverseFinite right left (index - 1) input))
-    change translation (∑ᶠ offset : ℕ,
-      (left [[-(offset : ℤ) - 1]]) ((right [[index + offset]]) vector)) -
-      (∑ᶠ offset : ℕ,
-        (left [[-(offset : ℤ) - 1]]) ((right [[index + offset]]) (translation vector))) = _
-      at firstCommute
-    change translation (∑ᶠ offset : ℕ,
-      (right [[index - offset - 1]]) ((left [[offset]]) vector)) -
-      (∑ᶠ offset : ℕ,
-        (right [[index - offset - 1]]) ((left [[offset]]) (translation vector))) = _
-      at secondCommute
-    rw [firstCommute, secondCommute]
-    simp_rw [productLaw, reverseLaw, LinearMap.add_apply, LinearMap.smul_apply,
-      Module.End.mul_apply, Int.cast_natCast]
-    have firstEquality (offset : ℕ) :
-        -((-(offset : ℤ) - 1 : ℤ) : ℂ) •
-          (left [[-(offset : ℤ) - 1 - 1]]) ((right [[index + offset]]) vector) +
-        -((index + offset : ℤ) : ℂ) •
-          (left [[-(offset : ℤ) - 1]]) ((right [[index + offset - 1]]) vector) =
-        firstTerm offset + secondTerm offset := by
-      dsimp [firstTerm, secondTerm]
-      rw [show -(offset : ℤ) - 1 - 1 = -(offset : ℤ) - 2 by omega]
-      simp only [Int.cast_neg, Int.cast_sub, Int.cast_add, Int.cast_natCast, Int.cast_one]
-      rw [show -(-(offset : ℂ) - 1) = (offset : ℂ) + 1 by ring]
-    have secondEquality (offset : ℕ) :
-        -((index - offset - 1 : ℤ) : ℂ) •
-          (right [[index - offset - 1 - 1]]) ((left [[offset]]) vector) +
-        -(offset : ℂ) •
-          (right [[index - offset - 1]]) ((left [[(offset : ℤ) - 1]]) vector) =
-        thirdTerm offset + fourthTerm offset := by
-      dsimp [thirdTerm, fourthTerm]
-      rw [show index - (offset : ℤ) - 1 - 1 = index - offset - 2 by omega]
-      simp only [Int.cast_sub, Int.cast_natCast, Int.cast_one]
-    simp only [firstEquality, secondEquality]
-    rw [finsum_add_distrib finiteFirst finiteSecond,
-      finsum_add_distrib finiteThird finiteFourth]
-  have firstShift : (∑ᶠ offset, firstTerm offset) =
-      ∑ᶠ offset : ℕ, (offset : ℂ) •
-        (left [[-(offset : ℤ) - 1]]) ((right [[index + offset - 1]]) vector) := by
-    let shifted (offset : ℕ) := (offset : ℂ) •
-      (left [[-(offset : ℤ) - 1]]) ((right [[index + offset - 1]]) vector)
-    have finite : Function.HasFiniteSupport shifted := by
-      simpa only [shifted, Pi.smul_def', sub_add_eq_add_sub, forwardReindex] using
-        ((forwardFinite left right (-1) (index - 1) vector).smul_right
-          (fun offset : ℕ => (offset : ℂ)))
-    rw [shiftSum shifted finite (by simp [shifted])]
-    apply finsum_congr
-    intro offset
-    dsimp [shifted, firstTerm]
-    rw [Nat.cast_add, Nat.cast_one,
-      show -((offset : ℤ) + 1) - 1 = -(offset : ℤ) - 2 by omega,
-      show index + ((offset : ℤ) + 1) - 1 = index + offset by omega]
-  have fourthShift : (∑ᶠ offset, fourthTerm offset) =
-      ∑ᶠ offset : ℕ, -((offset : ℂ) + 1) •
-        (right [[index - offset - 2]]) ((left [[offset]]) vector) := by
-    rw [shiftSum fourthTerm finiteFourth (by simp [fourthTerm])]
-    apply finsum_congr
-    intro offset
-    dsimp [fourthTerm]
-    rw [Nat.cast_add, Nat.cast_one,
-      show index - ((offset : ℤ) + 1) - 1 = index - offset - 2 by omega,
-      show (offset : ℤ) + 1 - 1 = offset by omega]
-  rw [expansion, firstShift, fourthShift]
-  rw [← finsum_add_distrib
-      (by simpa only [Pi.smul_def', sub_add_eq_add_sub, forwardReindex] using
-        ((forwardFinite left right (-1) (index - 1) vector).smul_right
-          (fun offset : ℕ => (offset : ℂ))))
-      finiteSecond,
-    ← finsum_add_distrib finiteThird
-      (by simpa only [Pi.smul_def', reverseReindex] using
-        ((reverseFinite right left (index - 2) vector).smul_right
-          (fun offset : ℕ => -((offset : ℂ) + 1))))]
-  simp only [secondTerm, thirdTerm]
-  simp_rw [← add_smul, show ∀ offset : ℕ, (offset : ℂ) + -((index : ℂ) + offset) =
-      -(index : ℂ) by intro offset; ring,
-    show ∀ offset : ℕ, -((index : ℂ) - offset - 1) + -((offset : ℂ) + 1) =
-      -(index : ℂ) by intro offset; ring]
-  rw [← smul_finsum' (-(index : ℂ))
-      (by simpa only [sub_add_eq_add_sub, forwardReindex]
-        using (forwardFinite left right (-1) (index - 1) vector)),
-    ← smul_finsum' (-(index : ℂ))
-      (by simpa only [reverseReindex] using (reverseFinite right left (index - 2) vector)),
-    ]
-  change _ = -(index : ℂ) • ((signedNormalMinusOne sign left right).1 [[index - 1]]) vector
-  rw [(signedNormalMinusOne sign left right).2]
-  rw [smul_add, smul_comm sign (-(index : ℂ))]
-  congr 1
-  · congr 1
-    apply finsum_congr
-    intro offset
-    rw [show index - 1 + offset = index + offset - 1 by omega]
-  · congr 2
-    apply finsum_congr
-    intro offset
-    rw [show index - 1 - offset - 1 = index - offset - 2 by omega]
-
+  have zeroDerivative : dividedDerivative 0 left = left := by
+    apply LinearMap.ext
+    intro vector
+    simp [dividedDerivative, LaurentSeries.hasseDeriv_zero]
+  have normal : (D5.S3.VertexAlgebra.SignedFieldResidueLocality.residueField
+      sign (-1) left right).operator =
+      (signedNormalMinusOne sign left right).1 := by
+    have result :=
+      D5.S3.VertexAlgebra.SignedFieldResidueLocality.negativeResidue
+      sign left right 0
+    change (D5.S3.VertexAlgebra.SignedFieldResidueLocality.residueField
+      sign (-1) left right).operator =
+        (D5.S3.VertexAlgebra.SignedFieldNormalProductLocality.signedNormalMinusOne
+          sign (dividedDerivative 0 left) right).1 at result
+    rw [zeroDerivative] at result
+    exact result
+  simpa only [normal] using
+    D5.S3.VertexAlgebra.SignedFieldResidueLocality.residue_translation
+      sign (-1) left right translation leftLaw rightLaw index
 
 private def generatingMode (species : Bool) (n : ℤ) : Module.End ℂ Fock :=
   if species then c (n + 2) else b (n - 1)
@@ -758,25 +461,11 @@ theorem stateField_translation :
 
 private theorem forward_finite (A B : VertexOperator ℂ Fock) (start finish : ℤ) (v : Fock) :
     Function.HasFiniteSupport (fun i : ℕ => (A [[start - i]]) ((B [[finish + i]]) v)) := by
-  refine BddAbove.finite (bddAbove_def.mpr ?_)
-  refine ⟨(-((HahnModule.of ℂ).symm (B v)).order - finish).toNat, ?_⟩
-  intro i hi
-  contrapose! hi
-  have hz : (B [[finish + i]]) v = 0 := by
-    apply VertexOperator.ncoeff_eq_zero_of_lt_order
-    omega
-  simp [hz]
+  exact D5.S3.VertexAlgebra.SignedFieldNormalProductLocality.forward_finite A B start finish v
 
 private theorem reverse_finite (A B : VertexOperator ℂ Fock) (start : ℤ) (v : Fock) :
     Function.HasFiniteSupport (fun i : ℕ => (A [[start - i]]) ((B [[i]]) v)) := by
-  refine BddAbove.finite (bddAbove_def.mpr ?_)
-  refine ⟨(-((HahnModule.of ℂ).symm (B v)).order - 1).toNat, ?_⟩
-  intro i hi
-  contrapose! hi
-  have hz : (B [[i]]) v = 0 := by
-    apply VertexOperator.ncoeff_eq_zero_of_lt_order
-    omega
-  simp [hz]
+  exact D5.S3.VertexAlgebra.SignedFieldNormalProductLocality.reverse_finite A B start v
 
 private theorem signedNormal_parity (sign x y : ℂ) (A B : VertexOperator ℂ Fock)
     (hA : ∀ n : ℤ, parity * (A [[n]]) = x • ((A [[n]]) * parity))
