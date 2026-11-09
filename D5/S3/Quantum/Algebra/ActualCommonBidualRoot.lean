@@ -34,7 +34,6 @@ variable {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V]
 private def realLift (F : StrongDual ℝ (StrongDual ℝ V)) :
     StrongDual ℝ (V →L[ℝ] ℂ) :=
   F.comp (Complex.reCLM.postcomp V)
-
 private lemma realLift_norm (F : StrongDual ℝ (StrongDual ℝ V)) :
     ‖realLift F‖ ≤ ‖F‖ := by
   have hr : ‖Complex.reCLM.postcomp V‖ ≤ 1 :=
@@ -48,7 +47,6 @@ private lemma realLift_norm (F : StrongDual ℝ (StrongDual ℝ V)) :
 private def lift (F : StrongDual ℝ (StrongDual ℝ V)) :
     StrongDual ℂ (V →L[ℝ] ℂ) :=
   (realLift F).extendRCLike
-
 private lemma lift_apply (F : StrongDual ℝ (StrongDual ℝ V))
     (c : V →L[ℝ] ℂ) :
     lift F c = (F (reCLM.comp c) : ℂ) + I * (F (imCLM.comp c) : ℂ) := by
@@ -59,14 +57,12 @@ private lemma lift_apply (F : StrongDual ℝ (StrongDual ℝ V))
   change (F (reCLM.comp c) : ℂ) - I * (F (reCLM.comp (I • c)) : ℂ) = _
   rw [hi, map_neg, Complex.ofReal_neg]
   ring
-
 private lemma lift_bound (F : StrongDual ℝ (StrongDual ℝ V))
     (c : V →L[ℝ] ℂ) : ‖lift F c‖ ≤ ‖F‖ * ‖c‖ := by
   calc
     ‖lift F c‖ ≤ ‖realLift F‖ * ‖c‖ :=
       StrongDual.norm_extendRCLike_bound (𝕜 := ℂ) (realLift F) c
     _ ≤ ‖F‖ * ‖c‖ := mul_le_mul_of_nonneg_right (realLift_norm F) (norm_nonneg c)
-
 private lemma lift_conj (F : StrongDual ℝ (StrongDual ℝ V))
     (c : V →L[ℝ] ℂ) :
     lift F (Complex.conjCLE.toContinuousLinearMap.comp c) = conj (lift F c) := by
@@ -91,7 +87,6 @@ def coefficient (π : A →⋆ₐ[ℂ] (H →L[ℂ] H))
   (((innerSL ℂ ξ).comp
     ((ContinuousLinearMap.apply ℂ H η).comp (representationCLM π))).restrictScalars ℝ).comp
       i.toContinuousLinearMap
-
 private lemma coefficient_apply (π : A →⋆ₐ[ℂ] (H →L[ℂ] H))
     (i : V →ₗᵢ[ℝ] A) (ξ η : H) (x : V) :
     coefficient π i ξ η x = inner ℂ ξ (π (i x) η) := rfl
@@ -110,7 +105,6 @@ private lemma coefficient_norm (π : A →⋆ₐ[ℂ] (H →L[ℂ] H))
         (mul_le_mul_of_nonneg_right (NonUnitalStarAlgHom.norm_apply_le π (i x))
           (norm_nonneg η)) (norm_nonneg ξ)
     _ = (‖ξ‖ * ‖η‖) * ‖x‖ := by rw [i.norm_map]; ring
-
 private def form (π : A →⋆ₐ[ℂ] (H →L[ℂ] H)) (i : V →ₗᵢ[ℝ] A)
     (F : StrongDual ℝ (StrongDual ℝ V)) : H →ₗ⋆[ℂ] H →ₗ[ℂ] ℂ where
   toFun ξ := {
@@ -146,7 +140,6 @@ private def form (π : A →⋆ₐ[ℂ] (H →L[ℂ] H)) (i : V →ₗᵢ[ℝ] A
     change lift F (coefficient π i (z • ξ) η) =
       conj z • lift F (coefficient π i ξ η)
     rw [hc, map_smul]
-
 private lemma form_bound (π : A →⋆ₐ[ℂ] (H →L[ℂ] H)) (i : V →ₗᵢ[ℝ] A)
     (F : StrongDual ℝ (StrongDual ℝ V)) (ξ η : H) :
     ‖form π i F ξ η‖ ≤ ‖F‖ * ‖ξ‖ * ‖η‖ := by
@@ -155,7 +148,6 @@ private lemma form_bound (π : A →⋆ₐ[ℂ] (H →L[ℂ] H)) (i : V →ₗ�
     _ ≤ ‖F‖ * (‖ξ‖ * ‖η‖) :=
       mul_le_mul_of_nonneg_left (coefficient_norm π i ξ η) (norm_nonneg F)
     _ = ‖F‖ * ‖ξ‖ * ‖η‖ := (mul_assoc _ _ _).symm
-
 private lemma form_hermitian (π : A →⋆ₐ[ℂ] (H →L[ℂ] H)) (i : V →ₗᵢ[ℝ] A)
     (hi : ∀ x, IsSelfAdjoint (i x)) (F : StrongDual ℝ (StrongDual ℝ V)) (ξ η : H) :
     form π i F η ξ = conj (form π i F ξ η) := by
@@ -169,7 +161,6 @@ private lemma form_hermitian (π : A →⋆ₐ[ℂ] (H →L[ℂ] H)) (i : V →�
       _ = conj (inner ℂ ξ (π (i x) η)) := (inner_conj_symm _ _).symm
   change lift F (coefficient π i η ξ) = conj (lift F (coefficient π i ξ η))
   rw [hc, lift_conj]
-
 variable [PartialOrder A] [StarOrderedRing A]
 
 /-- Coefficient representation in each actual unnormalized GNS. -/
@@ -225,14 +216,11 @@ private theorem original_gns_exists_unique (i : V →ₗᵢ[ℝ] A)
   intro ξ
   exact (hS.2.2.1 ξ η).trans (heval ξ η).symm
 
-
 end ActualGNSCoefficientViaExtension
-
 
 noncomputable section
 open scoped ComplexOrder ComplexConjugate
 open Complex InnerProductSpace
-
 namespace ActualGNSFamilyNorming
 
 open ActualGNSCoefficientViaExtension
@@ -241,7 +229,6 @@ open D5.S3.Quantum.Algebra.CentralPositiveFunctionalExtension
 
 variable {V A : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V]
 variable [CStarAlgebra A] [PartialOrder A] [StarOrderedRing A]
-
 private def selected (i : V →ₗᵢ[ℝ] A) (hi : ∀ x, IsSelfAdjoint (i x))
     (ψ : A →ₚ[ℂ] ℂ) (F : StrongDual ℝ (StrongDual ℝ V)) :
     ψ.GNS →L[ℂ] ψ.GNS :=
@@ -253,7 +240,6 @@ private lemma selected_inner (i : V →ₗᵢ[ℝ] A) (hi : ∀ x, IsSelfAdjoint
       (F (reCLM.comp (coefficient ψ.gnsStarAlgHom i ξ η)) : ℂ) +
         I * (F (imCLM.comp (coefficient ψ.gnsStarAlgHom i ξ η)) : ℂ) :=
   (Classical.choose_spec (original_gns_exists_unique i hi ψ F)).1.2.2.1 ξ η
-
 /-- Real linearity in the original bidual, for each fixed actual positive GNS.
 The positive functional is an index, not a linear variable. -/
 def gnsLinear (i : V →ₗᵢ[ℝ] A) (hi : ∀ x, IsSelfAdjoint (i x))
@@ -278,7 +264,6 @@ def gnsLinear (i : V →ₗᵢ[ℝ] A) (hi : ∀ x, IsSelfAdjoint (i x))
     rw [← Complex.coe_smul, inner_smul_right, selected_inner, selected_inner]
     simp only [ContinuousLinearMap.smul_apply, smul_eq_mul, Complex.ofReal_mul]
     ring
-
 /-- The real-linear map retains the self-adjoint coefficient specification. -/
 private theorem gnsLinear_spec (i : V →ₗᵢ[ℝ] A) (hi : ∀ x, IsSelfAdjoint (i x))
     (ψ : A →ₚ[ℂ] ℂ) (F : StrongDual ℝ (StrongDual ℝ V)) :
@@ -289,7 +274,6 @@ private theorem gnsLinear_spec (i : V →ₗᵢ[ℝ] A) (hi : ∀ x, IsSelfAdjoi
       (∀ x : V, F = NormedSpace.inclusionInDoubleDual ℝ V x →
         gnsLinear i hi ψ F = ψ.gnsStarAlgHom (i x)) :=
   (Classical.choose_spec (original_gns_exists_unique i hi ψ F)).1
-
 private lemma vacuum_inner (ψ : A →ₚ[ℂ] ℂ) (a : A) :
     inner ℂ (cyclicVector ψ) (ψ.gnsStarAlgHom a (cyclicVector ψ)) = ψ a := by
   change inner ℂ ((ψ.toPreGNS 1) : ψ.GNS)
@@ -309,7 +293,6 @@ private lemma vacuum_norm_sq (ψ : A →ₚ[ℂ] ℂ) :
 /-- Actual restriction of a positive continuous ambient functional to original labels. -/
 def restriction (i : V →ₗᵢ[ℝ] A) (ψ : A →P[ℂ] ℂ) : StrongDual ℝ V :=
   reCLM.comp ((ψ.toContinuousLinearMap.restrictScalars ℝ).comp i.toContinuousLinearMap)
-
 private lemma vacuum_read (i : V →ₗᵢ[ℝ] A) (hi : ∀ x, IsSelfAdjoint (i x))
     (ψ : A →P[ℂ] ℂ) (F : StrongDual ℝ (StrongDual ℝ V)) :
     (inner ℂ (cyclicVector ψ.toPositiveLinearMap)
@@ -326,7 +309,6 @@ private lemma vacuum_read (i : V →ₗᵢ[ℝ] A) (hi : ∀ x, IsSelfAdjoint (i
   have h := congrArg Complex.re ((gnsLinear_spec i hi ψ.toPositiveLinearMap F).2.2.1
     (cyclicVector ψ.toPositiveLinearMap) (cyclicVector ψ.toPositiveLinearMap))
   simpa [hc] using h
-
 private lemma vacuum_bound (i : V →ₗᵢ[ℝ] A) (hi : ∀ x, IsSelfAdjoint (i x))
     (ψ : A →P[ℂ] ℂ) (F : StrongDual ℝ (StrongDual ℝ V))
     (r : ℝ) (hT : ‖gnsLinear i hi ψ.toPositiveLinearMap F‖ ≤ r) :
@@ -346,7 +328,6 @@ private lemma vacuum_bound (i : V →ₗᵢ[ℝ] A) (hi : ∀ x, IsSelfAdjoint (
     _ = ‖T‖ * ‖Ω‖ ^ 2 := by ring
     _ ≤ r * ‖Ω‖ ^ 2 := mul_le_mul_of_nonneg_right hT (sq_nonneg ‖Ω‖)
     _ = r * (ψ 1).re := by rw [hm]
-
 /-- The bounded inverse uses the same actual inverse function and inherited norms. -/
 
 private lemma positive_pair (i : V →ₗᵢ[ℝ] A) (hi : ∀ x, IsSelfAdjoint (i x))
@@ -381,7 +362,6 @@ private lemma positive_pair (i : V →ₗᵢ[ℝ] A) (hi : ∀ x, IsSelfAdjoint 
   have h := hagree (e x)
   change φ (e.symm (e x)) = (ψplus (i x)).re - (ψminus (i x)).re at h
   simpa [restriction] using h
-
 /-- All radii, all unnormalized positive continuous functionals, original bidual.
 No positive mass is divided out, including when either or both masses are zero. -/
 private theorem all_positive_continuous_norming
@@ -419,7 +399,6 @@ private theorem all_positive_norming (i : V →ₗᵢ[ℝ] A) (hi : ∀ x, IsSel
 
 end ActualGNSFamilyNorming
 
-
 noncomputable section
 open scoped ComplexOrder ComplexConjugate
 open Complex InnerProductSpace
@@ -427,7 +406,6 @@ open ActualGNSCoefficientViaExtension
 
 namespace ActualGNSJordanProduct
 variable {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V]
-
 /-- Bounded scalar rows: row S φ x y = φ (S x y). -/
 def rows (S : V →L[ℝ] V →L[ℝ] V) :
     StrongDual ℝ V →L[ℝ] V →L[ℝ] StrongDual ℝ V :=
@@ -442,7 +420,6 @@ def complexRows (S : V →L[ℝ] V →L[ℝ] V) :
 def arens (S : V →L[ℝ] V →L[ℝ] V)
     (F G : StrongDual ℝ (StrongDual ℝ V)) : StrongDual ℝ (StrongDual ℝ V) :=
   F.comp ((ContinuousLinearMap.compL ℝ V (StrongDual ℝ V) ℝ G).comp (rows S))
-
 private lemma arens_apply (S : V →L[ℝ] V →L[ℝ] V)
     (F G : StrongDual ℝ (StrongDual ℝ V)) (φ : StrongDual ℝ V) :
     arens S F G φ = F (G.comp (rows S φ)) := rfl
@@ -451,7 +428,6 @@ private lemma arens_apply (S : V →L[ℝ] V →L[ℝ] V)
 def evalC (F : StrongDual ℝ (StrongDual ℝ V)) : (V →L[ℝ] ℂ) →L[ℝ] ℂ :=
   Complex.ofRealCLM.comp (F.comp (Complex.reCLM.postcomp V)) +
     I • Complex.ofRealCLM.comp (F.comp (Complex.imCLM.postcomp V))
-
 private lemma evalC_apply (F : StrongDual ℝ (StrongDual ℝ V)) (c : V →L[ℝ] ℂ) :
     evalC F c = (F (reCLM.comp c) : ℂ) + I * (F (imCLM.comp c) : ℂ) := rfl
 
@@ -482,7 +458,6 @@ private lemma evalC_arens (S : V →L[ℝ] V →L[ℝ] V)
     ext y
     rfl
   rw [evalC_apply, evalC_apply, hr, hi, arens_apply, arens_apply]
-
 variable {A : Type*} [CStarAlgebra A] [PartialOrder A] [StarOrderedRing A]
 
 /-- Select the operator determined by the original coefficient functional. -/
@@ -500,7 +475,6 @@ private lemma operator_coeff (i : V →ₗᵢ[ℝ] A) (hi : ∀ x, IsSelfAdjoint
     inner ℂ ξ (operator i hi ψ F η) =
       evalC F (coefficient ψ.gnsStarAlgHom i ξ η) :=
   (Classical.choose_spec (original_gns_exists_unique i hi ψ F)).1.2.2.1 ξ η
-
 /-- Fix x first. Each of its two ordered factors becomes an original coefficient. -/
 private lemma coefficient_rows (i : V →ₗᵢ[ℝ] A) (hi : ∀ x, IsSelfAdjoint (i x))
     (S : V →L[ℝ] V →L[ℝ] V)
@@ -525,7 +499,6 @@ private lemma coefficient_rows (i : V →ₗᵢ[ℝ] A) (hi : ∀ x, IsSelfAdjoi
     (fun z : ℂ => (1 / 2 : ℝ) •
       (z + inner ℂ ξ (ψ.gnsStarAlgHom (i y) (ψ.gnsStarAlgHom (i x) η))))
     (((hi x).map ψ.gnsStarAlgHom).isSymmetric ξ (ψ.gnsStarAlgHom (i y) η)).symm
-
 /-- Apply G only after the original row identity; use actual selfadjoint GNS operators. -/
 private lemma evaluated_rows (i : V →ₗᵢ[ℝ] A) (hi : ∀ x, IsSelfAdjoint (i x))
     (S : V →L[ℝ] V →L[ℝ] V)
@@ -549,7 +522,6 @@ private lemma evaluated_rows (i : V →ₗᵢ[ℝ] A) (hi : ∀ x, IsSelfAdjoint
     (congrArg₂ (fun z w : ℂ => z + w)
       (((hi x).map ψ.gnsStarAlgHom).isSymmetric ξ (operator i hi ψ G η))
       ((operator_sa i hi ψ G).isSymmetric ξ (ψ.gnsStarAlgHom (i x) η)).symm)
-
 /-- All complex coefficients of the actual first Arens product, on arbitrary V. -/
 private theorem arens_coefficients (i : V →ₗᵢ[ℝ] A) (hi : ∀ x, IsSelfAdjoint (i x))
     (S : V →L[ℝ] V →L[ℝ] V)
