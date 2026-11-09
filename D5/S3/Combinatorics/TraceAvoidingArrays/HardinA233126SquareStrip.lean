@@ -4,7 +4,7 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233126SquareStrip.result; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233126SquareStrip.finite_certificate
-   digest: The recurrence for literal normalized five-column square strips. -/
+   digest: Hardin’s recurrence for literal normalized five-column square strips. -/
 
 /-
 admission_basis: open-problem-resolution (#28572; Proved)
@@ -44,6 +44,40 @@ D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge.rowFinish
 statement_id: sha256:ded50bd8c5de69b5b2324e575fee135f275ae05b5bb30b328b0e5c0313d86b07
 D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge.rowWeight
 statement_id: sha256:076a03b0e19556ba67d0faed8d8d552fb3d55e6c40992d9c52c88faad85e373a
+Row: proof_shape=bind-only; consumers=rowLegal, bonds, a, classCount, firstCount, colour_sum
+rowLegal: proof_shape=bind-only; consumers=a, counting_bridge, classCount, firstCount, valid_next
+bonds: proof_shape=bind-only; consumers=a, bonds_iff, counting_bridge
+decidableRowLegal: proof_shape=bind-only; consumers=a, classCount, firstCount, valid_next
+decidableBonds: proof_shape=bind-only; consumers=a, counting_bridge
+a: proof_shape=bind-only; consumers=a_eq_w, shifted_count, result
+labels: proof_shape=bind-only; consumers=bonds_iff, v, total, classCount, firstCount, initial_valid
+compatible: proof_shape=bind-only; consumers=bonds_iff, v, classCount, valid_next
+decidableCompatible: proof_shape=bind-only; consumers=v, classCount
+bonds_iff: proof_shape=bind-only; consumers=counting_bridge
+v: proof_shape=bind-only; consumers=counting_bridge, v_eq_w, a_eq_w
+total: proof_shape=bind-only; consumers=counting_bridge, a_eq_w
+counting_bridge: proof_shape=bind-only; consumers=a_eq_w
+Valid: proof_shape=bind-only; consumers=valid_next, row_counts, initial_valid, finite_certificate
+decidableValid: proof_shape=bind-only; consumers=valid_next, row_counts, initial_valid
+boundaryClass: proof_shape=bind-only; consumers=classCount, firstCount, row_counts, v_eq_w
+transfer: proof_shape=bind-only; consumers=row_counts, finite_certificate, w, distribution_step
+valid_next: proof_shape=bind-only; consumers=v_eq_w
+classCount: proof_shape=bind-only; consumers=class_fibres, row_counts, finite_certificate, v_eq_w
+firstCount: proof_shape=bind-only; consumers=initial_counts, finite_certificate, a_eq_w
+class_fibres: proof_shape=bind-only; consumers=row_counts
+label_sum: proof_shape=bind-only; consumers=row_counts
+row_counts: proof_shape=bind-only; consumers=finite_certificate
+initial_valid: proof_shape=bind-only; consumers=a_eq_w
+colour_sum: proof_shape=bind-only; consumers=initial_counts
+initial_counts: proof_shape=bind-only; consumers=finite_certificate
+finite_certificate: proof_shape=bind-only; consumers=v_eq_w, a_eq_w
+w: proof_shape=bind-only; consumers=v_eq_w, a_eq_w, shifted_count, result
+v_eq_w: proof_shape=bind-only; consumers=a_eq_w
+a_eq_w: proof_shape=bind-only; consumers=shifted_count
+distribution: proof_shape=bind-only; consumers=distribution_step, shifted_count, result
+distribution_step: proof_shape=bind-only; consumers=shifted_count
+shifted_count: proof_shape=bind-only; consumers=result
+result: proof_shape=bind-only; consumers=terminal result (#28572)
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
@@ -71,7 +105,7 @@ attribute [local instance 2000] Pi.instFintype
 abbrev Row := Fin 5 → Fin 6
 
 def rowLegal (c : Row) : Prop :=
-  ∀ j : Fin 5, c j.castSucc ≠ c j.succ ∧ (c j.castSucc).val + (c j.succ).val ≠ 5
+  ∀ j : Fin 4, c j.castSucc ≠ c j.succ ∧ (c j.castSucc).val + (c j.succ).val ≠ 5
 
 def bonds (c d : Row) : Prop :=
   ∀ j : Fin 5, c j ≠ d j ∧ (c j).val + (d j).val ≠ 5
@@ -121,7 +155,9 @@ def transfer (i k : Fin 7) : ℤ :=
 private theorem valid_next : ∀ s p, Valid s p → ∀ c : Row,
     rowLegal c ∧ compatible p c ∧ good s c → Valid (finish s c) (labels c) := by
   have hv : ∀ (s : Seen) (c : Row), s.1 = true → rowLegal c → good s c →
-      Valid (finish s c) (labels c) := by decide +kernel
+      Valid (finish s c) (labels c) := by
+    simp only [Fin.forall_fin_succ_pi, Fin.forall_fin_zero_pi]
+    decide +kernel
   intro s p hp c hc
   exact hv s c hp.1 hc.1 hc.2.2
 
@@ -170,9 +206,23 @@ private theorem row_counts : ∀ s p, Valid s p → ∀ k,
 private theorem initial_valid : ∀ c : Row,
     c 0 = 0 ∧ rowLegal c ∧ good (false, false) c →
       Valid (finish (false, false) c) (labels c) := by
+  simp only [Fin.forall_fin_succ_pi, Fin.forall_fin_zero_pi]
   decide +kernel
 
+private theorem colour_sum (g : Row → ℤ) :
+    (∑ c, g c) = ∑ a : Fin 6, ∑ b : Fin 6, ∑ c : Fin 6, ∑ d : Fin 6, ∑ e : Fin 6,
+      g ![a, b, c, d, e] := by
+  let e : Row ≃ Fin 6 × Fin 6 × Fin 6 × Fin 6 × Fin 6 :=
+    { toFun := fun q => (q 0, q 1, q 2, q 3, q 4)
+      invFun := fun t => ![t.1, t.2.1, t.2.2.1, t.2.2.2.1, t.2.2.2.2]
+      left_inv := by intro q; ext j; fin_cases j <;> rfl
+      right_inv := by rintro ⟨a, b, c, d, e⟩; rfl }
+  rw [← e.symm.sum_comp, Fintype.sum_prod_type]
+  simp only [Fintype.sum_prod_type]
+  rfl
+
 private theorem initial_counts : ∀ k, firstCount k = ![8, 0, 8, 4, 8, 4, 4] k := by
+  simp only [firstCount, colour_sum]
   decide +kernel
 
 /-- The exact single-row transitions and first-row distribution. -/
@@ -249,7 +299,9 @@ private theorem shifted_count (r : Fin 7) (n : ℕ) :
   induction r using Fin.induction generalizing n with
   | zero => exact a_eq_w n
   | succ r ih =>
-    rw [show n + r.succ.val + 1 = (n + 1) + r.castSucc.val + 1 by omega, ih]
+    rw [show n + r.succ.val + 1 = (n + 1) + r.castSucc.val + 1 by
+      simp only [Fin.val_succ, Fin.val_castSucc]
+      omega, ih]
     simp only [w, Finset.mul_sum]
     rw [Finset.sum_comm]
     simp_rw [← mul_assoc, ← Finset.sum_mul, ← distribution_step]
@@ -259,10 +311,21 @@ theorem result (n : ℕ) :
     (a (n + 7) : ℤ) = 544 * a (n + 6) - 82944 * a (n + 5) +
       5144576 * a (n + 4) - 146800640 * a (n + 3) +
       1879048192 * a (n + 2) - 8589934592 * a (n + 1) := by
-  rw [shifted_count (6 : Fin 7) n, shifted_count (5 : Fin 7) n,
-    shifted_count (4 : Fin 7) n, shifted_count (3 : Fin 7) n,
-    shifted_count (2 : Fin 7) n, shifted_count (1 : Fin 7) n,
-    shifted_count (0 : Fin 7) n]
+  have h0 := shifted_count (0 : Fin 7) n
+  have h1 := shifted_count (1 : Fin 7) n
+  have h2 := shifted_count (2 : Fin 7) n
+  have h3 := shifted_count (3 : Fin 7) n
+  have h4 := shifted_count (4 : Fin 7) n
+  have h5 := shifted_count (5 : Fin 7) n
+  have h6 := shifted_count (6 : Fin 7) n
+  change (a (n + 1) : ℤ) = _ at h0
+  change (a (n + 2) : ℤ) = _ at h1
+  change (a (n + 3) : ℤ) = _ at h2
+  change (a (n + 4) : ℤ) = _ at h3
+  change (a (n + 5) : ℤ) = _ at h4
+  change (a (n + 6) : ℤ) = _ at h5
+  change (a (n + 7) : ℤ) = _ at h6
+  rw [h6, h5, h4, h3, h2, h1, h0]
   simp only [distribution, Fin.sum_univ_succ, Matrix.cons_val_zero, Matrix.cons_val_succ,
     Matrix.cons_val_fin_one, Fin.isValue]
   ring
