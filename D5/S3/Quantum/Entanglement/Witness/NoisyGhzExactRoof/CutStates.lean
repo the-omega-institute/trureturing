@@ -125,10 +125,6 @@ theorem cutProduct_biseparable {n d : ℕ} (a : Finset (Fin n)) (ha : a.Nonempty
     simp only [hA, hB, and_self, and_false, false_and, ite_true, ite_false, mul_zero, zero_mul, forall_const, true_and]
   all_goals simp
 
-private lemma phaseCharacter_normSq {d : ℕ} (v θ : Fin d → ZMod 3) :
-    Complex.normSq (phaseCharacter v θ) = 1 := by
-  simp [phaseCharacter, ZMod.stdAddChar_apply]
-
 private lemma pairCharacter_apply {d : ℕ} (i j : Fin d) (θ : Fin d → ZMod 3) :
     phaseCharacter (pairCoefficient i j) θ = ZMod.stdAddChar (θ i - θ j) := by
   unfold phaseCharacter pairCoefficient

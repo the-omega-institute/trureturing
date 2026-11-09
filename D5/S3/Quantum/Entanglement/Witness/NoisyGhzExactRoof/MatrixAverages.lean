@@ -259,11 +259,6 @@ theorem twoMeanOptimum_max {d : ℕ} (hd : 2 ≤ d) {f y : ℝ}
     congr 1
     nlinarith
 
-private lemma twoMeanOptimum_nonneg {d : ℕ} (hd : 2 ≤ d) {f y : ℝ}
-    (hf : 0 ≤ f) (hfy : f ≤ y) : 0 ≤ twoMeanOptimum d f y := by
-  rw [twoMeanOptimum_max hd hf hfy]
-  positivity
-
 /-- The diagonal projector onto the constant computational words. -/
 def constantProjector (n d : ℕ) : Matrix (Word (Fin d) n) (Word (Fin d) n) ℂ := by
   classical

@@ -227,11 +227,6 @@ theorem supporting_line {n d : ℕ} (hn : 2 ≤ n) (hd : 2 ≤ d)
   field_simp
   <;> ring
 
-private lemma mean_add {n d : ℕ}
-    (ρ A B : Matrix (Word (Fin d) n) (Word (Fin d) n) ℂ) :
-    observableMean ρ (A + B) = observableMean ρ A + observableMean ρ B := by
-  simp [observableMean, mul_add, trace_add]
-
 lemma mean_sub {n d : ℕ}
     (ρ A B : Matrix (Word (Fin d) n) (Word (Fin d) n) ℂ) :
     observableMean ρ (A - B) = observableMean ρ A - observableMean ρ B := by

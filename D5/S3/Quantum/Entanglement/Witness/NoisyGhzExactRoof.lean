@@ -212,7 +212,7 @@ theorem noisy_gap_endpoints {n d : ℕ} (hn : 3 ≤ n) (hd : 3 ≤ d) :
       (noisy_exact_roof hn hd (le_refl 0) (by norm_num)).1]
     simp [noisyF,noisyY]
   · intro p hpW hp1
-    have hp := (noisy_parameter_data hn hd).2.2.2.2.1.le.trans hpW
+    have hp := (witness_threshold_formula hn hd).2.1.le.trans hpW
     have hz := noisy_optimum_zero hn hd hpW
     have hDF : (d : ℝ)*noisyF n d p ≤ noisyY n d p := by
       by_contra h
@@ -247,10 +247,11 @@ theorem star_certificate_gap {n d : ℕ} (hn : 3 ≤ n) (hd : 3 ≤ d) :
   rw [noisyDensity_matrix] at hc
   have hQ : observableMean (noisyGhz n d (starProbability n d)) (complementProjector n d) =
       starProbability n d*(1-(supportRank n d : ℝ)/wordCount n d) := by
-    rw [complementProjector,mean_sub,← noisyDensity_matrix (by omega) (by omega) _ hp.le hp1,
-      mean_one,noisyDensity_matrix,(noisy_means (by omega) (by omega) _).2]
-    unfold noisyY
-    ring
+    have h := (observable_correspondence
+      (noisyDensity (by omega) (by omega) (starProbability n d) hp.le hp1)).1
+    rw [noisyDensity_matrix,(noisy_means (by omega) (by omega) _).2] at h
+    unfold noisyY at h
+    linarith
   change -(d-1 : ℝ)/(d*(d-2 : ℝ))*witnessValue n d (starProbability n d)+
     1/((d : ℝ)^2*(d-2 : ℝ))*observableMean (noisyGhz n d (starProbability n d)) (complementProjector n d)-
     1/((d : ℝ)^2*(d-2 : ℝ)) ≤ _ at hc
