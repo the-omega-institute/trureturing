@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/HardinA233176Ladder
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: none
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233176Ladder.result; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233176Ladder.finite_certificate
    digest: Barker's integer generating function for the normalized three-row exclusion ladder. -/
 /-
 admission_basis: open-problem-resolution (#28235; Proved)
