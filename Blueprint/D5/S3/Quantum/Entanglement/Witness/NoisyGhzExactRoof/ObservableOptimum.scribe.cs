@@ -17,6 +17,14 @@ internal sealed class NoisyGhzExactRoofObservableOptimumDocument : IScribeDocume
             Paragraph(Text("Source uncertainty retained: the released scalar-difference wording modulo three is not used. Characters are functions on the independent phase-coordinate group. The literal all-real-slope displayed antecedent formula is not a universal supplier; witness_optimum is proved against the actual hatE definition. These observations do not amend an upstream text.")),
             Paragraph(Text("The all-parameter roof uses explicit finite matrix ensembles in two closed regimes: the source basis/cut-phase/Q ensemble below p_W and an actual biseparable threshold/computational ensemble above p_W. Equality is derived from full matrix reconstruction, finite-ensemble upper bounds and the universal two-mean lower bound. The d=2 statement is only the preserved operator boundary. Graph-witness improvement, broad noise robustness, general unfaithfulness and singlet-witness conjectures are outside this result.")),
             Describe.Lean(
+                DescribeId.Create("noisy-ghz-support-rank-bounds"),
+                DeclarationHandle.Create(Prefix + "support_rank_bounds"),
+                H("Strict support-rank inequalities"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Antecedent),
+                Blocks(Paragraph(Text("For n,d at least three, d<R<M. The strict upper bound uses the actual computational word qWord outside P."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("noisy-ghz-chi-attainment"),
                 DeclarationHandle.Create(Prefix + "chi_attainment"),
                 H("The source constant-sector pure optimizer"),
@@ -32,14 +40,8 @@ internal sealed class NoisyGhzExactRoofObservableOptimumDocument : IScribeDocume
                 AssessedProvenance.FromRepo(Antecedent),
                 Blocks(Paragraph(Text("For every density state, y=1-q and f=(1-q)/d-w. Thus the two G,P means encode exactly the two W,Q measurements."))),
                 DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("noisy-ghz-two-mean-attainment"),
-                DeclarationHandle.Create(Prefix + "two_mean_attainment"),
-                H("Attained all-state two-mean minimum"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(Antecedent),
-                Blocks(Paragraph(Text("Every feasible pair has an actual density operator and the explicit three-component normalized ensemble twoMeanWeights/twoMeanStates. Their matrix sum, both means, average entanglement and exact roof are proved. The zero branch uses computational products, including qWord=|0,1,2,0,...>; the positive branch mixes chi with qWord. This optimizer is not asserted to be the noisy matrix."))),
-                DescribeRole.Theorem),
+            Paragraph(Text("For every n,d>=3 and every pair 0<=f<=y<=1, including y=0 and f=y, twoMeanWeights and twoMeanStates give an actual attained all-state minimum. All three weights are nonnegative, their sum is one, and every state is unit. Let sigma be TwoMeanBound.ensembleDensity of these weights and states. Its entire complex matrix is the weighted sum of their rank-one densities; its G mean is exactly f, its P mean is exactly y, its original finite-ensemble geometricMeasure is twoMeanOptimum d f y, and the weighted average of the actual pure measures is that same value. These are eight assertions: full matrix equality, G mean, P mean, roof equality, weight nonnegativity, weight sum, unit states, and average cost. The optimizer is an actual DensityState and need not be noisy GHZ.")),
+            Paragraph(Text("The construction has both closed branches. If d*f<=y, use weights (d*f,y-d*f,1-y) on a constant computational vector, the twoSymbolWord vector and the qWord vector. Otherwise y>0 and F=f/y lies in [1/d,1]; use weights (y,1-y,0) on chiVector with optimalAlpha/optimalBeta at F and two copies of qWord. The private two_mean_ensemble_data proves normalization, means and pure cost in both branches. The density matrix identity follows from ensembleDensity; trace_average supplies both means; finite_ensemble_upper gives the roof upper bound and two_mean_lower gives the reverse inequality. Thus the construction covers the whole feasible triangle, including its degenerate edges, using the original objects and roof.")),
             Describe.Lean(
                 DescribeId.Create("noisy-ghz-witness-optimum"),
                 DeclarationHandle.Create(Prefix + "witness_optimum"),

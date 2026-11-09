@@ -514,5 +514,177 @@ lemma orthogonal_positive {n d : ℕ} (hn : 0 < n) (hd : 0 < d) :
   exact ⟨(hG.sub_of_mul_eq_left hP hgp).nonneg.posSemidef,
     hP.one_sub_nonneg.posSemidef⟩
 
+/-- Nonempty cuts excluding the first party; their complements are the
+anchored representatives of nontrivial unordered bipartitions. -/
+def SourceCut (n : ℕ) (hn : 0 < n) :=
+  {s : Finset (Fin n) // s ∈ ((Finset.univ.erase ⟨0,hn⟩).powerset.erase ∅)}
+
+lemma sourceCut_nonempty {n : ℕ} (hn : 0 < n) (s : SourceCut n hn) : s.1.Nonempty := by
+  have h : s.1 ≠ ∅ := (Finset.mem_erase.mp s.2).1
+  exact Finset.nonempty_iff_ne_empty.mpr h
+
+private lemma sourceCut_first {n : ℕ} (hn : 0 < n) (s : SourceCut n hn) :
+    (⟨0,hn⟩ : Fin n) ∉ s.1 := by
+  have hsub := Finset.mem_powerset.mp (Finset.mem_erase.mp s.2).2
+  intro h
+  exact (Finset.mem_erase.mp (hsub h)).1 rfl
+
+lemma sourceCut_complement {n : ℕ} (hn : 0 < n) (s : SourceCut n hn) : s.1ᶜ.Nonempty :=
+  ⟨⟨0,hn⟩, Finset.mem_compl.mpr (sourceCut_first hn s)⟩
+
+instance sourceCutFintype (n : ℕ) (hn : 0 < n) : Fintype (SourceCut n hn) := by
+  classical
+  unfold SourceCut
+  infer_instance
+
+/-- Exactly one anchored representative for each nontrivial unordered cut. -/
+theorem sourceCut_card {n : ℕ} (hn : 0 < n) : Fintype.card (SourceCut n hn) = cutCount n := by
+  classical
+  change Fintype.card ↥((Finset.univ.erase (⟨0,hn⟩ : Fin n)).powerset.erase ∅) = _
+  rw [Fintype.card_coe, Finset.card_erase_of_mem]
+  · simp [cutCount, Finset.card_powerset]
+  · simp
+
+/-- Distinct ordered local symbols for a nonconstant cut word. -/
+def OffPair (d : ℕ) := {ij : Fin d × Fin d // ij.1 ≠ ij.2}
+
+instance offPairFintype (d : ℕ) : Fintype (OffPair d) := by
+  classical
+  unfold OffPair
+  infer_instance
+
+/-- The word corresponding to one anchored cut and one distinct symbol pair. -/
+def sourceCutWord {n d : ℕ} (hn : 0 < n) (s : SourceCut n hn) (ij : OffPair d) : Word (Fin d) n :=
+  s.1.piecewise (fun _ => ij.1.2) (fun _ => ij.1.1)
+
+private lemma sourceCutWord_first {n d : ℕ} (hn : 0 < n) (s : SourceCut n hn) (ij : OffPair d) :
+    sourceCutWord hn s ij ⟨0,hn⟩ = ij.1.1 := by
+  classical
+  simp [sourceCutWord, sourceCut_first hn s]
+
+private lemma sourceCutWord_nonconstant {n d : ℕ} (hn : 0 < n) (s : SourceCut n hn) (ij : OffPair d) :
+    ¬ ∃ j : Fin d, ∀ i, sourceCutWord hn s ij i = j := by
+  classical
+  rintro ⟨j,hj⟩
+  have hfirst := hj ⟨0,hn⟩
+  rw [sourceCutWord_first] at hfirst
+  obtain ⟨k,hk⟩ := sourceCut_nonempty hn s
+  have hsecond := hj k
+  simp only [sourceCutWord, Finset.piecewise, hk, ite_true] at hsecond
+  exact ij.2 (hfirst.trans hsecond.symm)
+
+private lemma sourceCutWord_supported {n d : ℕ} (hn : 0 < n) (s : SourceCut n hn) (ij : OffPair d) :
+    (Finset.univ.image (sourceCutWord hn s ij)).card ≤ 2 :=
+  join_support s.1 ij.1.2 ij.1.1
+
+private lemma sourceCutWord_mem {n d : ℕ} (hn : 0 < n) (s : SourceCut n hn) (ij : OffPair d)
+    (k : Fin n) : k ∈ s.1 ↔ sourceCutWord hn s ij k ≠ sourceCutWord hn s ij ⟨0,hn⟩ := by
+  classical
+  rw [sourceCutWord_first]
+  by_cases hk : k ∈ s.1 <;> simp [sourceCutWord, hk, ij.2, Ne.symm ij.2]
+
+/-- Constant words and uniquely anchored nonconstant two-symbol cut words. -/
+def SupportIndex (n d : ℕ) (hn : 0 < n) := Fin d ⊕ (SourceCut n hn × OffPair d)
+
+instance supportIndexFintype (n d : ℕ) (hn : 0 < n) : Fintype (SupportIndex n d hn) := by
+  unfold SupportIndex
+  infer_instance
+
+def supportIndexWord {n d : ℕ} (hn : 0 < n) : SupportIndex n d hn → Word (Fin d) n
+  | .inl j => fun _ => j
+  | .inr x => sourceCutWord hn x.1 x.2
+
+lemma supportIndexWord_injective {n d : ℕ} (hn : 0 < n) :
+    Function.Injective (supportIndexWord (d := d) hn) := by
+  classical
+  intro x y h
+  cases x with
+  | inl i =>
+    cases y with
+    | inl j => exact congrArg Sum.inl (constant_word_injective hn h)
+    | inr y =>
+      exact (sourceCutWord_nonconstant hn y.1 y.2 ⟨i, fun k => (congrFun h k).symm⟩).elim
+  | inr x =>
+    cases y with
+    | inl j =>
+      exact (sourceCutWord_nonconstant hn x.1 x.2 ⟨j, fun k => congrFun h k⟩).elim
+    | inr y =>
+      have hs : x.1 = y.1 := by
+        apply Subtype.ext
+        ext k
+        rw [sourceCutWord_mem hn x.1 x.2 k, sourceCutWord_mem hn y.1 y.2 k]
+        change sourceCutWord hn x.1 x.2 k ≠ sourceCutWord hn x.1 x.2 ⟨0,hn⟩ ↔
+          sourceCutWord hn y.1 y.2 k ≠ sourceCutWord hn y.1 y.2 ⟨0,hn⟩
+        exact iff_of_eq (congrArg (fun z => z k ≠ z ⟨0,hn⟩) h)
+      have hij : x.2 = y.2 := by
+        apply Subtype.ext
+        apply Prod.ext
+        · simpa only [supportIndexWord, sourceCutWord_first] using congrFun h ⟨0,hn⟩
+        · obtain ⟨k,hk⟩ := sourceCut_nonempty hn x.1
+          have hky : k ∈ y.1.1 := hs ▸ hk
+          simpa [supportIndexWord, sourceCutWord, hk, hky] using congrFun h k
+      exact congrArg Sum.inr (Prod.ext hs hij)
+
+lemma supportIndexWord_supported {n d : ℕ} (hn : 0 < n) (z : SupportIndex n d hn) :
+    (Finset.univ.image (supportIndexWord hn z)).card ≤ 2 := by
+  classical
+  cases z with
+  | inl j =>
+    haveI : Nonempty (Fin n) := ⟨⟨0,hn⟩⟩
+    simp [supportIndexWord, Finset.image_const]
+  | inr x => exact sourceCutWord_supported hn x.1 x.2
+
+lemma supportIndexWord_surjective {n d : ℕ} (hn : 0 < n) (x : Word (Fin d) n)
+    (hx : (Finset.univ.image x).card ≤ 2) : ∃ z : SupportIndex n d hn, supportIndexWord hn z = x := by
+  classical
+  by_cases hc : ∃ j : Fin d, ∀ k, x k = j
+  · obtain ⟨j,hj⟩ := hc
+    exact ⟨.inl j, (funext hj).symm⟩
+  · let i := x ⟨0,hn⟩
+    obtain ⟨k,hki⟩ : ∃ k, x k ≠ i := by
+      by_contra h
+      apply hc
+      refine ⟨i, ?_⟩
+      intro k
+      exact not_ne_iff.mp (not_exists.mp h k)
+    let j := x k
+    have hij : i ≠ j := Ne.symm hki
+    have hsub : ({i,j} : Finset (Fin d)) ⊆ Finset.univ.image x := by
+      intro l hl
+      simp only [Finset.mem_insert, Finset.mem_singleton] at hl
+      rcases hl with rfl | rfl
+      · exact Finset.mem_image.mpr ⟨⟨0,hn⟩, Finset.mem_univ _, rfl⟩
+      · exact Finset.mem_image.mpr ⟨k, Finset.mem_univ _, rfl⟩
+    have himage : Finset.univ.image x = {i,j} :=
+      (Finset.eq_of_subset_of_card_le hsub (by simpa [hij] using hx)).symm
+    let s : Finset (Fin n) := Finset.univ.filter (fun k => x k ≠ i)
+    have hs0 : s ≠ ∅ := by
+      exact Finset.nonempty_iff_ne_empty.mp ⟨k, Finset.mem_filter.mpr ⟨Finset.mem_univ _,hki⟩⟩
+    have hss : s ⊆ Finset.univ.erase ⟨0,hn⟩ := by
+      intro l hl
+      obtain ⟨_,hl⟩ := Finset.mem_filter.mp hl
+      apply Finset.mem_erase.mpr
+      refine ⟨?_, Finset.mem_univ _⟩
+      intro h
+      exact hl (congrArg x h)
+    let c : SourceCut n hn := ⟨s, Finset.mem_erase.mpr ⟨hs0,Finset.mem_powerset.mpr hss⟩⟩
+    refine ⟨.inr (c,⟨(i,j),hij⟩), ?_⟩
+    funext l
+    have hl : x l ∈ ({i,j} : Finset (Fin d)) := by
+      rw [← himage]
+      exact Finset.mem_image.mpr ⟨l,Finset.mem_univ _,rfl⟩
+    simp only [Finset.mem_insert, Finset.mem_singleton] at hl
+    rcases hl with hl | hl <;> simp [supportIndexWord, sourceCutWord, Finset.piecewise, c, s, hl, hij, Ne.symm hij]
+
+/-- Exact disjoint enumeration of the computational support of P. -/
+def supportIndexEquiv {n d : ℕ} (hn : 0 < n) :
+    SupportIndex n d hn ≃ {x : Word (Fin d) n // (Finset.univ.image x).card ≤ 2} :=
+  Equiv.ofBijective (fun z => ⟨supportIndexWord hn z, supportIndexWord_supported hn z⟩)
+    ⟨fun _ _ h => supportIndexWord_injective hn (congrArg Subtype.val h), by
+      rintro ⟨x,hx⟩
+      obtain ⟨z,hz⟩ := supportIndexWord_surjective hn x hx
+      exact ⟨z,Subtype.ext hz⟩⟩
+
+
 end
 end D5.S3.Quantum.Entanglement.Witness.NoisyGhzExactRoof

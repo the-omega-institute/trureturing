@@ -22,6 +22,28 @@ namespace D5.S3.Quantum.Entanglement.Witness.NoisyGhzExactRoof
 
 noncomputable section
 
+private lemma offPair_card (d : ℕ) : Fintype.card (OffPair d) = d * (d - 1) := by
+  classical
+  let e : OffPair d ≃ (i : Fin d) × {j : Fin d // i ≠ j} :=
+    { toFun := fun x => ⟨x.1.1, x.1.2, x.2⟩
+      invFun := fun x => ⟨(x.1,x.2.1), x.2.2⟩
+      left_inv := by intro x; rfl
+      right_inv := by intro x; rfl }
+  rw [Fintype.card_congr e, Fintype.card_sigma]
+  have h (i : Fin d) : Fintype.card {j : Fin d // i ≠ j} = d - 1 := by
+    rw [Fintype.card_subtype_compl (fun j : Fin d => i = j)]
+    simp
+  simp [h]
+
+/-- The support rank is the source formula d+K d(d-1), in every dimension. -/
+theorem support_rank_card {n d : ℕ} (hn : 0 < n) :
+    Fintype.card {x : Word (Fin d) n // (Finset.univ.image x).card ≤ 2} = supportRank n d := by
+  rw [← Fintype.card_congr (supportIndexEquiv (d := d) hn)]
+  simp [SupportIndex, Fintype.card_sum, Fintype.card_prod, sourceCut_card hn,
+    offPair_card, supportRank]
+  ring
+
+
 /-- Finite positive metrics, including the affine certificate family. -/
 def metric (n d : ℕ) (a b : ℝ) :
     Matrix (Word (Fin d) n) (Word (Fin d) n) ℂ :=

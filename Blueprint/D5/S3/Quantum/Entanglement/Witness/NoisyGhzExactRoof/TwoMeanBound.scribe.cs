@@ -17,6 +17,14 @@ internal sealed class NoisyGhzExactRoofTwoMeanBoundDocument : IScribeDocumentDef
             Paragraph(Text("Source uncertainty retained: the released scalar-difference wording modulo three is not used. Characters are functions on the independent phase-coordinate group. The literal all-real-slope displayed antecedent formula is not a universal supplier; witness_optimum is proved against the actual hatE definition. These observations do not amend an upstream text.")),
             Paragraph(Text("The all-parameter roof uses explicit finite matrix ensembles in two closed regimes: the source basis/cut-phase/Q ensemble below p_W and an actual biseparable threshold/computational ensemble above p_W. Equality is derived from full matrix reconstruction, finite-ensemble upper bounds and the universal two-mean lower bound. The d=2 statement is only the preserved operator boundary. Graph-witness improvement, broad noise robustness, general unfaithfulness and singlet-witness conjectures are outside this result.")),
             Describe.Lean(
+                DescribeId.Create("noisy-ghz-support-rank-card"),
+                DeclarationHandle.Create(Prefix + "support_rank_card"),
+                H("Full disjoint support enumeration"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Antecedent),
+                Blocks(Paragraph(Text("A proved bijection enumerates words using at most two symbols by constants plus anchored cuts times distinct ordered symbol pairs. Its cardinal is d+K*d*(d-1)."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("noisy-ghz-metric-roof-bound"),
                 DeclarationHandle.Create(Prefix + "metric_roof_bound"),
                 H("Finite positive-metric supporting family"),

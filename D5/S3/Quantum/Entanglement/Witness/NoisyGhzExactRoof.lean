@@ -286,48 +286,6 @@ theorem support_rank_binomial {n d : ℕ} (hn : 0 < n) (hd : 0 < d) :
     _ = d+Nat.choose d 2*(2*(2^(n-1)-1)) := by ring
     _ = _ := by rw [← hsub]
 
-private lemma chi_at_one {n d : ℕ} (hn : 0 < n) (j : Fin d) :
-    chiVector hn j (optimalAlpha d 1) (optimalBeta d 1) = ghz n d := by
-  classical
-  have ha : optimalAlpha d 1 = 1/Real.sqrt d := by simp [optimalAlpha]
-  have hb : optimalBeta d 1 = 1/Real.sqrt d := by simp [optimalBeta]
-  rw [ha,hb]
-  ext x
-  by_cases hx : ∃ i : Fin d, ∀ k, x k = i
-  · obtain ⟨i,hi⟩ := hx
-    have he := funext hi
-    subst x
-    have hc : ∃ k : Fin d, ∀ l : Fin n, (fun _ : Fin n => i) l = k := ⟨i,fun _ => rfl⟩
-    simp [chiVector,constantVector_apply,ghz,one_div,hc]
-  · rw [chiVector,constantVector_off hn _ _ hx]
-    simp [ghz,hx]
-
-/-- The actual GHZ vector attains the left spectral endpoint, with its
-pure all-cut measure and the original witness conjugate value. -/
-theorem ghz_left_endpoint {n d : ℕ} (hn : 3 ≤ n) (hd : 3 ≤ d) :
-    geometricMeasurePure (ghz n d) = (d-1 : ℝ)/d ∧
-      readout (witnessOp n d) (ghz n d) = -(d-1 : ℝ)/d ∧
-      epsilonWitness n d (-(d-1 : ℝ)/d) = (d-1 : ℝ)/d := by
-  have hdR : (3 : ℝ) ≤ d := by exact_mod_cast hd
-  have hdpos : (0 : ℝ) < d := by linarith
-  have hF : 1/(d : ℝ) ≤ 1 := (div_le_one hdpos).mpr (by linarith)
-  have h := chi_attainment hn hd (⟨0,by omega⟩ : Fin d) hF (le_refl 1)
-  rw [chi_at_one] at h
-  have hv : twoMeanOptimum d 1 1 = (d-1 : ℝ)/d := by
-    rw [twoMeanOptimum,if_neg (by linarith),twoMeanValue]
-    simp
-    ring
-  refine ⟨h.2.2.2.trans hv,?_,?_⟩
-  · rw [witnessOp,expectation_sub,expectation_smul,h.2.1,h.2.2.1]
-    field_simp
-    <;> ring
-  · have hw : -(d-1 : ℝ)/d ≤ 1/(d : ℝ) := by
-      rw [neg_div]
-      have hnonneg : 0 ≤ (d-1 : ℝ)/d := div_nonneg (by linarith) hdpos.le
-      exact (neg_nonpos.mpr hnonneg).trans (div_nonneg (by norm_num) hdpos.le)
-    rw [witness_optimum hn hd (le_refl _) hw]
-    have he : 1/(d : ℝ)-(-(d-1 : ℝ)/d) = 1 := by field_simp <;> ring
-    rw [he,hv]
 
 end
 end D5.S3.Quantum.Entanglement.Witness.NoisyGhzExactRoof

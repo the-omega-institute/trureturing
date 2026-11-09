@@ -363,6 +363,25 @@ lemma qWord_outside {n d : ℕ} (hn : 3 ≤ n) (hd : 3 ≤ d) :
   have h := Finset.card_le_card hsub
   omega
 
+/-- Strict rank inequalities use the actual missing computational Q-vector. -/
+theorem support_rank_bounds {n d : ℕ} (hn : 3 ≤ n) (hd : 3 ≤ d) :
+    d < supportRank n d ∧ supportRank n d < wordCount n d := by
+  have hp : 1 < 2 ^ (n - 1) := by
+    have he : n - 1 ≠ 0 := by omega
+    exact Nat.one_lt_pow he (by norm_num)
+  have hk : 0 < cutCount n := by unfold cutCount; omega
+  constructor
+  · unfold supportRank
+    have hh : 0 < cutCount n * d * (d - 1) := Nat.mul_pos (Nat.mul_pos hk (by omega)) (by omega)
+    omega
+  · have h := Fintype.card_lt_of_injective_of_notMem
+      (fun x : {x : Word (Fin d) n // (Finset.univ.image x).card ≤ 2} => x.1)
+      Subtype.val_injective (b := qWord (n := n) hd) (by
+        rintro ⟨x,hx⟩
+        exact (qWord_outside hn hd) (hx ▸ x.2))
+    rw [support_rank_card (by omega)] at h
+    simpa [wordCount, Word] using h
+
 private lemma qWord_nonconstant {n d : ℕ} (hn : 3 ≤ n) (hd : 3 ≤ d) :
     ¬ ∃ j : Fin d, ∀ i, qWord (n := n) hd i = j := by
   rintro ⟨j, hj⟩
@@ -504,35 +523,6 @@ private lemma two_mean_ensemble_data {n d : ℕ} (hn : 3 ≤ n) (hd : 3 ≤ d)
         add_zero, hE, hzero, mul_zero, zero_mul]
       exact (twoMean_scaling hy0).symm
 
-/-- Every feasible pair of means is realized by an actual density operator
-and the explicit finite normalized ensemble above, with roof equal to the
-universal lower bound. This is an attained all-state minimum. -/
-theorem two_mean_attainment {n d : ℕ} (hn : 3 ≤ n) (hd : 3 ≤ d)
-    {f y : ℝ} (hf : 0 ≤ f) (hfy : f ≤ y) (hy : y ≤ 1) :
-    ∃ σ : D5.S3.Quantum.Foundation.FiniteStateChannel.DensityState (Word (Fin d) n),
-      CStarMatrix.ofMatrix.symm σ.1 = ∑ i, twoMeanWeights d f y i •
-        rankOneDensity (twoMeanStates hn hd f y i) ∧
-      observableMean (CStarMatrix.ofMatrix.symm σ.1) (rankOneDensity (ghz n d)) = f ∧
-      observableMean (CStarMatrix.ofMatrix.symm σ.1) (supportProjector n d) = y ∧
-      geometricMeasure (CStarMatrix.ofMatrix.symm σ.1) = twoMeanOptimum d f y ∧
-      (∀ i, 0 ≤ twoMeanWeights d f y i) ∧ (∑ i, twoMeanWeights d f y i) = 1 ∧
-      (∀ i, IsUnitState (twoMeanStates hn hd f y i)) ∧
-      (∑ i, twoMeanWeights d f y i * geometricMeasurePure (twoMeanStates hn hd f y i)) =
-        twoMeanOptimum d f y := by
-  obtain ⟨hp, hs, hu, hG, hP, hE⟩ := two_mean_ensemble_data hn hd hf hfy hy
-  let σ := ensembleDensity (twoMeanWeights d f y) (twoMeanStates hn hd f y) hp hs hu
-  have he : CStarMatrix.ofMatrix.symm σ.1 = ∑ i, twoMeanWeights d f y i •
-      rankOneDensity (twoMeanStates hn hd f y i) := rfl
-  have hfσ : observableMean (CStarMatrix.ofMatrix.symm σ.1) (rankOneDensity (ghz n d)) = f := by
-    rw [he, trace_average]; exact hG
-  have hyσ : observableMean (CStarMatrix.ofMatrix.symm σ.1) (supportProjector n d) = y := by
-    rw [he, trace_average]; exact hP
-  refine ⟨σ, he, hfσ, hyσ, ?_, hp, hs, hu, hE⟩
-  apply le_antisymm
-  · rw [he]
-    exact (finite_ensemble_upper (by omega) (by omega) _ _ hp hs hu).trans_eq hE
-  · have h := two_mean_lower hn hd σ
-    rwa [hfσ, hyσ] at h
 
 private lemma metric_intercept_nonpos {d : ℕ} (hd : 2 ≤ d) {t : ℝ} (ht : 1 ≤ t) :
     1 - metricB d t + (metricB d t - metricA d t) / d ≤ 0 := by
