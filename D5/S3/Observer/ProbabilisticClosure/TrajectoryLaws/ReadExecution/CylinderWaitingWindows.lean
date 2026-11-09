@@ -76,7 +76,7 @@ private theorem prefix_event_limit (p q : List (Fin 4) → ℝ)
   have h := hn.div (hlimit w) hq.ne'
   apply h.congr'
   exact Eventually.of_forall fun m => by
-    simp only [prefixed, List.append_assoc]
+    simp only [Pi.div_apply, prefixed, List.append_assoc]
     rw [← Finset.mul_sum, mul_div_mul_left _ _ (pow_ne_zero m (by norm_num : (4 : ℝ) ≠ 0))]
 
 /-- An abstract finite-cylinder supplier for source equations 13.5--13.10.
@@ -159,6 +159,8 @@ theorem finite_full_word_common_cut
     simp only [prefixed, noMarkerWord, List.length_append, List.length_replicate,
       List.length_ofFn, Nat.sub_add_cancel (hall i).1]
   · intro i j hij
+    change prefixed (t - n i) (noMarkerWord (w i)) =
+      prefixed (t - n j) (noMarkerWord (w j)) at hij
     by_contra hne
     have hd := waiting_disjoint b hb H hne
     have hbound : (∑ v ∈ waitingFutures H (b i.castSucc) (b i.succ),
