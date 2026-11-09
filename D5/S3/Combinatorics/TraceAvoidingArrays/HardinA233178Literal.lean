@@ -6,6 +6,21 @@
    utility: none
    digest: Literal five-row source arrays and their ordered scanner fibres. -/
 
+/-
+admission_basis: escape-witness (unfrozen source correspondence)
+escape_witness: two_colour_unique (unbounded column induction and initial-column propagation)
+proof_shape: scanner_count=bind-only, consumed by symmetrized_count and source_count;
+source_count=content; chromatic_source_count=content after inlining the new source bridge.
+Private bind-only helpers are consumed by scanner_count, source_count or chromatic_source_count.
+The structural uniqueness helper is consumed by absence_count on source_count's live path.
+utility none: these are unbounded source-cardinality correspondences, not bounded enumeration,
+checker infrastructure, numerical premises or certified positive finite instances.
+Direct reused sources are HardinA233255LiteralBridge.scanner_fibres,
+HardinA233178Normalization.result and HardinA233251TriangleStrip.colour_bond_iff.
+The source is the pinned revision of OEIS A233178 cited by Library/Automata/hardin2013a233178.md.
+No corresponding theory volume was found in the source-identifier and relation search.
+-/
+
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233178Normalization
 
 /-! The source predicates retain every literal restriction independently of the transfer. -/

@@ -6,6 +6,24 @@
    utility: none
    digest: Literal all-width five-row recurrence through exact source cardinalities. -/
 
+/-
+admission_basis: staged open-problem-resolution candidate for preregistered issue #28580.
+No freeze, final OpenProblemResolutionClaim or project settlement is supplied here.
+proof_shape: count_transfer=bind-only (array/column equivalence and generic continuation count),
+consumed by chromatic_recurrence and result;
+chromatic_recurrence=bind-only, consumed by scaled_recurrence and result;
+result=content after inlining the new literal source-cardinality bridge.
+columnEquiv, column_apply and arrayEquiv feed proper_columns and count_transfer;
+proper_columns and tail_iff_good feed count_transfer;
+count_transfer feeds chromatic_recurrence; scaled_recurrence feeds result.
+The final exact source bridge is HardinA233178Literal.chromatic_source_count.
+Generic propagation reuses the original TransferMatrix.cont_matrix and scalarRelationShift.
+utility none: this module proves an unbounded literal recurrence by source bijections and
+algebra; the numerical certificate belongs to the consumed HardinA233178Chromatic module.
+No exact full-E supplier was found in the acquired bounded searches; third-party search
+remains incomplete and this unit makes no global-priority claim.
+-/
+
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233178Literal
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233178Chromatic
 
@@ -14,10 +32,13 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233178Chromatic
 open scoped BigOperators
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233178Recurrence
 
+attribute [local instance] Classical.propDecidable
+
 open HardinA233178Literal (Array Edges Proper chromaticCount a FullE)
 open HardinA233178Chromatic (Column colour Bond T v)
 
-private def columnEquiv : Column ≃ (Fin 5 → Fin 3) := finFunctionFinEquiv.symm
+private def columnEquiv : Column ≃ (Fin 5 → Fin 3) :=
+  (finFunctionFinEquiv (m := 3) (n := 5)).symm
 
 private theorem column_apply (p : Column) (r : Fin 5) : columnEquiv p r = colour p r := rfl
 
@@ -26,16 +47,22 @@ private def arrayEquiv (n : ℕ) : (Fin n → Column) ≃ Array n 3 where
   invFun q j := columnEquiv.symm (fun r => q (r,j))
   left_inv f := by
     funext j
+    have he : (fun r => colour (f j) r) = columnEquiv (f j) := by
+      funext r
+      exact (column_apply _ _).symm
+    change columnEquiv.symm (fun r => colour (f j) r) = f j
+    rw [he]
     exact columnEquiv.symm_apply_apply (f j)
   right_inv q := by
     funext p
-    exact congrFun (columnEquiv.apply_symm_apply (fun r => q (r,p.2))) p.1
+    simpa only [column_apply] using
+      congrFun (columnEquiv.apply_symm_apply (fun r => q (r,p.2))) p.1
 
-private theorem proper_columns (n : ℕ) (f : Fin (n+1) → Column) :
+private theorem proper_columns (n : ℕ) (f : Fin (n + 1) → Column) :
     Proper (arrayEquiv (n+1) f) ↔
       TransferMatrix.good Bond (fun _ _ _ => True) (List.ofFn f) := by
   rw [TransferMatrix.good_iff_local]
-  simp only [List.length_ofFn, implies_true, forall_const, and_true]
+  simp only [List.length_ofFn, implies_true, and_true]
   have get (i : ℕ) (hi : i < n+1) :
       (List.ofFn f).getD i default = f ⟨i,hi⟩ := by
     rw [List.getD_eq_getElem (List.ofFn f) default (by simpa using hi), List.getElem_ofFn]
@@ -45,11 +72,12 @@ private theorem proper_columns (n : ℕ) (f : Fin (n+1) → Column) :
     intro r s hrs
     exact hp (r,⟨i,by omega⟩) (s,⟨i+1,hi⟩) ⟨rfl,hrs⟩
   · intro hf p q he
-    have hi : p.2.val + 1 < n+1 := by have := q.2.isLt; omega
+    have hi : p.2.val + 1 < n+1 := by have := q.2.isLt; have := he.1; omega
     have hg := hf p.2.val hi
     rw [get _ p.2.isLt, get _ hi] at hg
     have hq : (⟨p.2.val+1,hi⟩ : Fin (n+1)) = q.2 := Fin.ext he.1.symm
-    exact hq ▸ hg p.1 q.1 he.2
+    change colour (f p.2) p.1 ≠ colour (f q.2) q.1
+    simpa only [hq] using hg p.1 q.1 he.2
 
 private theorem tail_iff_good (a b : Column) (cs : List Column) :
     TransferMatrix.tailGood (fun _ _ => True) (fun _ b c => Bond b c) a b cs ↔
@@ -62,6 +90,7 @@ private theorem tail_iff_good (a b : Column) (cs : List Column) :
     | nil => simp [TransferMatrix.good, TransferMatrix.tailGood]
     | cons d ds => simp [TransferMatrix.good, TransferMatrix.tailGood]
 
+set_option maxHeartbeats 1000000 in
 /-- The complete finite-domain cardinality bridge, uniform in the width. -/
 theorem count_transfer (n : ℕ) :
     chromaticCount (n+1) = dotProduct (1 : Column → ℤ) (v n) := by
@@ -83,9 +112,15 @@ theorem count_transfer (n : ℕ) :
   simp_rw [hc]
   have hT (a b : Column) (_ : True) (s : Column) :
       (∑ c : Column, if True ∧ Bond b c ∧ c = s then (1:ℤ) else 0) = T b s := by
-    simp [T]
+    calc
+      _ = ∑ c : Column, if c = s then (if Bond b c then (1:ℤ) else 0) else 0 := by
+        apply Finset.sum_congr rfl
+        intro c _
+        by_cases hc : c = s <;> by_cases hb : Bond b c <;> simp [hc,hb]
+      _ = T b s := by rw [Finset.sum_ite_eq']; simp only [Finset.mem_univ, ite_true]; rfl
   have hm (p : Column) := TransferMatrix.cont_matrix (fun _ _ : Column => True)
-    (fun _ b c => Bond b c) (fun _ b => b) T hT n p p trivial
+    (fun _ b c => Bond b c) (fun _ b => b) T
+    (by intro a b hab s; simpa only [true_and] using hT a b hab s) n p p trivial
   simp_rw [hm]
   simp only [dotProduct, Pi.one_apply, one_mul, v]
 

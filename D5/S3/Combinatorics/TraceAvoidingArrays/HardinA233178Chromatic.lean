@@ -3,8 +3,20 @@
    mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Chromatic
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: none
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Recurrence.result; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233178Chromatic.result
    digest: Exact height-five three-label continuation recurrence. -/
+
+/-
+admission_basis: consumed auxiliary of the unfrozen literal FullE unit; no independent content claim
+proof_shape: bind-only for every theorem, including result and all finite certificate helpers.
+escape_witness: none
+moves_exact and moves_nodup feed step_fast; table_base and table_steps_fast feed table_steps;
+step_fast and table_steps feed powers_table; table_certificate and powers_table feed
+vector_certificate; vector_certificate feeds result. These helpers are on the live path from
+HardinA233178Recurrence.result through chromatic_recurrence to this result.
+The numerical premise is the complete finite vector relation, proved before its arbitrary shifts.
+The entry tests, vectors and coefficients are mathematical certificate data, not copied OEIS code.
+-/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix
 import Mathlib.Tactic.FinCases
