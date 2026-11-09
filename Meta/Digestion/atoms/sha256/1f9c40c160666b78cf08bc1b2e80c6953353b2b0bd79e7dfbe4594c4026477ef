@@ -1,0 +1,25 @@
+**定义 55.2（Q1 与 Q2 的精确形式）。** Q1 是一个连续反对称双线性读数 $\omega:W\times W\to\mathbb R$，满足
+
+$$
+\omega(u,v)=-\omega(v,u),
+\qquad
+|\omega(u,v)|\le C\|u\|\|v\|.
+$$
+
+其有限支撑对偶读数为
+
+$$
+D_\omega(u)=
+\sup_{\substack{v\in W\\\|v\|>0}}
+\frac{|\omega(u,v)|}{\|v\|}.
+$$
+
+Q2 要求
+
+$$
+D_\omega(u)^2=\|u\|^2\qquad(u\in W).
+\tag{S}
+$$
+
+这里是上确界，不要求最大值在 $W$ 内取得。
+

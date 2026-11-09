@@ -1,0 +1,29 @@
+**定理 55.7（与射影平坦接口的分层关系）。** C4-H 的中心性给出
+
+$$
+JC=CJ
+\quad\Longleftrightarrow\quad
+C\text{ 对 }(a+ib)u=au+bJu\text{ 复线性}.
+$$
+
+它本身不推出 §54 的射影平坦性。若另行满足
+
+$$
+U_{yz}U_{xy}=c(x,y,z)U_{xz},
+\qquad c(x,y,z)\in U(1),
+$$
+
+则中心性把比较缺陷识别为复数中心，并由四对象结合律得到 §54 的 2-cocycle 条件；完整 pair groupoid 上该 cocycle 仍可被重新选相平凡化。故逻辑顺序是
+
+$$
+\text{Q0}\to\text{C4-H}\to\text{复线性运输},
+$$
+
+以及独立的
+
+$$
+\text{射影平坦性}\to U(1)\text{ cocycle}.
+$$
+
+两条箭头不能合并成一个已证明的推导。
+
