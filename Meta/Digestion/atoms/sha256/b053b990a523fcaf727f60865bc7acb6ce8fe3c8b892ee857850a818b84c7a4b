@@ -1,0 +1,50 @@
+### 18.2. 相位支撑与跨侧关系的同一组系数
+
+沿用 §2 的符号规范，写纯态振幅为 $\sqrt{p_S}e^{-i\theta_S}$。在相位群 $\mathbb R/2\pi\mathbb Z$ 内令
+
+$$
+\Phi_A=\sum_{B\subseteq A}(-1)^{|A|-|B|}\theta_B,
+\qquad N_A|S\rangle=x_A(S)|S\rangle.
+$$
+
+16.1 的整数单位三角变换可直接在这个加法群上使用，所以
+
+$$
+\theta_S=\sum_{A\subseteq S}\Phi_A,\qquad
+U_\theta=e^{-i\Phi_\varnothing}
+\prod_{\substack{A\in\Sigma_G\\A\ne\varnothing}}e^{-i\Phi_AN_A}.
+$$
+
+这里每个等号均按模 $2\pi$ 理解，因整数逆而没有额外覆盖。这消费 §11.2 的相位反演，不重新把相位反演作为独立经典结果。
+
+若只允许对角门乘积，并把“支撑于 $B$”定义为相位仅依赖 $S\cap B$，那么支撑大小至多 $k$ 的这些门恰能产生所有高于 $k$ 阶的 $\Phi_A$ 为零的对角门，整体相位除外。充分性由显示乘积分解给出；必要性在诱导图 $G[B]$ 的合法模式上展开每个局部门，只含 $A\subseteq B$ 的系数，而对角门相乘只相加这些系数。这个结论没有许可非对角编译、辅助系统或任意控制，不能由它推出一般电路复杂度下界。
+
+现在取独立顶点集 $I=L\sqcup R$，两侧均非空，其余位置固定为空。因为 $I$ 的所有子集都合法，得到完整逻辑立方体
+
+$$
+H_I\simeq(\mathbb C^2)^{\otimes|I|}.
+$$
+
+另行许可 $|+\rangle^{\otimes|I|}$ 的相干制备及上述门。输出关于 $L|R$ 可分，恰在所有同时接触两侧的 $\Phi_A$、$A\subseteq I$ 均为零时成立。其直接验证消费 §8.10 的四角秩判据：系数矩阵
+
+$$
+C_{u,v}=2^{-|I|/2}e^{-i\theta_{u\cup v}},\qquad u\subseteq L,\ v\subseteq R
+$$
+
+全部元素非零；秩一等价于每个锚四角满足
+
+$$
+\theta_{u\cup v}-\theta_u-\theta_v+\theta_\varnothing=0.
+$$
+
+代入关系展开，恰剩 $\sum_{A\subseteq u\cup v,\ A\cap L\ne\varnothing,\ A\cap R\ne\varnothing}\Phi_A$。若这些和全部为零，对 $u\subseteq L,v\subseteq R$ 作包含反演，逐个得到跨侧系数零；反向立即成立。这一逻辑立方体的张量划分不宣称一般有约束图的全空间天然按顶点分成张量积。
+
+对实读出 $f$，若实际另供 $U_f(t)=e^{-it\operatorname{diag}(f)}$，则
+
+$$
+\mathbb E_pf=\sum_Ac_A(f)\mu_A,\qquad
+\Phi_A(t)=t\,c_A(f)\pmod{2\pi}.
+$$
+
+因此同一个系数在总体统计中控制目标对关系矩的线性响应，在这个额外相位执行器中控制相位。三点链的逻辑双位取 $I=\{1,3\}$，唯一跨侧系数是 §15 的 $J_f$，可分恰在 $tJ_f\in2\pi\mathbb Z$。加法、乘积读出及其四角谱已由 §15.3、§15.5 给出，不将它们重复作为新算例，也不将该特定对角门结果扩大成关于所有量子计算的判断。
+
