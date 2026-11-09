@@ -167,7 +167,7 @@ private theorem denom_pos (q : (Set.Icc (0 : ℝ) 1)) : 0 < 1 + (q : ℝ)^2 + (q
   nlinarith [q.property.1, sq_nonneg (q : ℝ)]
 
 private theorem coeff_nonneg (q : (Set.Icc (0 : ℝ) 1)) : 0 ≤ 1 - (q : ℝ)^2 := by
-  nlinarith [q.property.1, q.property.2]
+  exact sub_nonneg.mpr ((sq_le_one_iff₀ q.property.1).mpr q.property.2)
 
 private theorem weight_bound (q : (Set.Icc (0 : ℝ) 1)) (Y : Matrix (Fin 2) (Fin 2) ℂ) : weight q Y ≤ ‖(Finset.univ.expect ∘ Matrix.diag) Y‖ + 2 * ‖centeredEffect Y‖ := by
   unfold weight
@@ -199,15 +199,13 @@ private theorem bodyNorm_zero : bodyNorm 0 = 0 := by
   · simpa [center_formula] using cent_le 0
 
 private theorem cent_add (Y Z : Matrix (Fin 2) (Fin 2) ℂ) : (Finset.univ.expect ∘ Matrix.diag) (Y+Z) = (Finset.univ.expect ∘ Matrix.diag) Y + (Finset.univ.expect ∘ Matrix.diag) Z := by
-  simp only [center_formula]
-  simp [add_div]
+  exact Finset.expect_add_distrib Finset.univ (fun i => Y i i) (fun i => Z i i)
 
 private theorem rest_add (Y Z : Matrix (Fin 2) (Fin 2) ℂ) : centeredEffect (Y+Z) = centeredEffect Y + centeredEffect Z := by
   simp [centeredEffect, add_div, add_smul]; abel
 
 private theorem cent_smul (r : ℝ) (Y : Matrix (Fin 2) (Fin 2) ℂ) : (Finset.univ.expect ∘ Matrix.diag) (r • Y) = r • (Finset.univ.expect ∘ Matrix.diag) Y := by
-  simp only [center_formula]
-  simp [Matrix.trace_smul]; ring
+  exact (Finset.smul_expect r Finset.univ (fun i => Y i i)).symm
 
 private theorem rest_smul (r : ℝ) (Y : Matrix (Fin 2) (Fin 2) ℂ) : centeredEffect (r • Y) = r • centeredEffect Y := by
   ext i j; simp [centeredEffect, Matrix.trace_smul, smul_sub, Matrix.smul_apply]; ring
@@ -242,7 +240,7 @@ private theorem bodyNorm_smul (r : ℝ) (Y : Matrix (Fin 2) (Fin 2) ℂ) : bodyN
 
 private theorem trace_conj (U Y : Matrix (Fin 2) (Fin 2) ℂ) (hU : U ∈ Matrix.unitaryGroup (Fin 2) ℂ) :
     Matrix.trace (U * Y * star U) = Matrix.trace Y := by
-  rw [Matrix.trace_mul_cycle, (Matrix.mem_unitaryGroup_iff'.mp hU), one_mul]
+  exact Matrix.trace_units_conj (Unitary.toUnits ⟨U,hU⟩) Y
 
 private theorem cent_conj (U Y : Matrix (Fin 2) (Fin 2) ℂ) (hU : U ∈ Matrix.unitaryGroup (Fin 2) ℂ) :
     (Finset.univ.expect ∘ Matrix.diag) (U * Y * star U) = (Finset.univ.expect ∘ Matrix.diag) Y := by
