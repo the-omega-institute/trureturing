@@ -8,7 +8,7 @@
 
 /-
 admission_basis: open-problem-resolution (#28306; Proved)
-escape_witness: none
+escape_witness: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233124SquareStrip.v_eq_w (reduction of the boundary-state continuation counts to the class vector at every height, by induction)
 Single-row numerical premises are consumed by the unbounded class induction.
 Direct frozen dependency:
 D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.Seen
@@ -89,11 +89,11 @@ initial_valid: proof_shape=bind-only; consumers=a_eq_w
 initial_counts: proof_shape=bind-only; consumers=finite_certificate
 finite_certificate: proof_shape=bind-only; consumers=v_eq_w, a_eq_w
 w: proof_shape=bind-only; consumers=v_eq_w, a_eq_w, recurrence, result
-v_eq_w: proof_shape=bind-only; consumers=a_eq_w
-a_eq_w: proof_shape=bind-only; consumers=recurrence, result
-recurrence: proof_shape=bind-only; consumers=result
+v_eq_w: proof_shape=content; consumers=a_eq_w
+a_eq_w: proof_shape=content; consumers=recurrence, result
+recurrence: proof_shape=content; consumers=result
 zero_count: proof_shape=bind-only; consumers=result
-result: proof_shape=bind-only; consumers=terminal result (#28306)
+result: proof_shape=content; consumers=terminal result (#28306)
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
