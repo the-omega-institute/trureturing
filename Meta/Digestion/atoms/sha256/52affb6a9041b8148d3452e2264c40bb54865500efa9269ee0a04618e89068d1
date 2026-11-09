@@ -1,0 +1,16 @@
+**定理 33.2（纯化存在与本质唯一性）。** 在第 29 节的复合张量几何中，定义 33.1 不需要新增公理。若
+
+$$
+\rho_A=\sum_{i=1}^{r}\lambda_i|i\rangle\langle i|,
+\qquad \lambda_i>0,
+\qquad \sum_i\lambda_i=1,
+$$
+
+取 $B$ 的正交基 $|i\rangle_B$，则
+
+$$
+|\Psi_{AB}\rangle=\sum_{i=1}^{r}\sqrt{\lambda_i}\,|i\rangle_A\otimes|i\rangle_B
+$$
+
+给出纯化。任意另一种最小纯化的 Schmidt 系数相同；Schmidt 基在简并子空间内的变化由一个辅助酉吸收，故两种纯化满足定义 33.1 的酉关系。证毕。
+
