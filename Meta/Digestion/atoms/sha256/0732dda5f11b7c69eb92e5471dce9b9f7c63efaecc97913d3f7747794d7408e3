@@ -1,0 +1,27 @@
+**定义 2.2（全部输入的原 PB）。** 对每个实际 $a,b,d\in E$，只用同一个原总映射定义
+
+$$
+\begin{gathered}
+v=D(a,b)-a\circ d,\qquad w=a\circ b+D(a,d),\\
+r_\pm=b\pm v,\qquad s_\pm=d\pm w.
+\end{gathered}
+\tag{2.4}
+$$
+
+对全部原评价要求
+
+$$
+\gamma\bigl(r_+^2+s_+^2+2D(r_+,s_+)\bigr)
+=\gamma\bigl(r_-^2+s_-^2+2D(r_-,s_-)\bigr).
+\tag{2.5}
+$$
+
+这是 PT(128.4) 的原 PB；由分离性和已知 Jordan 平方展开，等价元素式准确为
+
+$$
+D(b+v,d+w)-D(b-v,d-w)=-2b\circ v-2d\circ w.
+\tag{2.6}
+$$
+
+展开的只有已知平方，没有展开未知 $D$ 对输入和的作用。称1.1–1.2与2.1–2.2的全量词数学条件为 $\mathsf H_n(A)$。七项实际来源另按第11章逐项合取，不以数学模型选择删改其原对象。
+
