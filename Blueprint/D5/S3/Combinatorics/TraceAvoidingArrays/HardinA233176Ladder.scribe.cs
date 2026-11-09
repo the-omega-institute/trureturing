@@ -28,6 +28,32 @@ internal sealed class HardinA233176LadderDocument : IScribeDocumentDefinition
                 + "rank is Fin.val(row)*n+Fin.val(column). Fin.val is the explicit natural "
                 + "coercion throughout. Nat.div denotes natural quotient division and "
                 + "Nat.mod denotes its nonnegative remainder.")),
+            Def("seen", "seen", "Scanner level encoding", SeenFormula(),
+                "A level records whether colours one and two have already occurred."),
+            Def("next", "next", "Scanner level update", NextFormula(),
+                "The maximum retains the current level and incorporates the next colour."),
+            Thm("advance-seen", "advance_seen", "Encoding commutes with advance",
+                AdvanceSeenFormula(),
+                "For every allowed colour, the Boolean scanner update agrees with the level update."),
+            Thm("next-mono", "next_mono", "A scanner step preserves the level order",
+                NextMonoFormula(), "Scanning one colour never decreases the level."),
+            Thm("label-next", "label_next", "An allowed label is below the new level",
+                LabelNextFormula(), "The pair label is bounded by the updated scanner level."),
+            Def("end-level", "endLevel", "Scanner over an arbitrary finite word",
+                EndLevelFormula(),
+                "The two defining equations scan the empty word and a word with a first cell. "
+                + "The word length is arbitrary and independent of the number of array rows."),
+            Thm("end-level-mono", "endLevel_mono", "A complete scan preserves the level order",
+                EndLevelMonoFormula(), "The final level is at least the initial level."),
+            Thm("finish-seen", "finish_seen", "Encoding commutes with a complete scan",
+                FinishSeenFormula(),
+                "A good word gives the same final record in the Boolean and level encodings."),
+            Def("digit", "digit", "Ternary digit extraction", DigitFormula(),
+                "Natural quotient and remainder produce a value in Fin 3, including when the divisor is zero."),
+            Thm("weighted-sum", "weighted_sum", "Repeated keys as integer weights",
+                WeightedSumFormula(),
+                "Each key e/9 is repeated e%9 times. The multiplicity is explicitly cast "
+                + "from natural numbers to integers before multiplication."),
             Def("normal", "normal", "Row-major normalization", NormalFormula(),
                 "Every 2, 3 or 4 has a strictly earlier 1; every 3 has a strictly earlier "
                 + "2. The existential cell has the same typed finite domain as the "
@@ -82,6 +108,96 @@ internal sealed class HardinA233176LadderDocument : IScribeDocumentDefinition
             Blocks(Paragraph(Text(prose))), DescribeRole.Theorem,
             new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233176"),
                 ResolutionKind.Proved));
+
+    private const string ScannerPrefix =
+        "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.";
+
+    private static Formula Scanner(string name, params Formula[] args) =>
+        Call(ScannerPrefix + name, args);
+
+    private static Formula SeenFormula()
+    {
+        var s = V("s");
+        return All("s", Fin(D(3)), Eq(Own("seen", s),
+            Pair(Call("decide", Parenthesized(Lt(D(0), Val(s)))),
+                Call("decide", Parenthesized(Lt(D(1), Val(s)))))));
+    }
+
+    private static Formula NextFormula()
+    {
+        var s = V("s"); var x = V("x"); var level = Fin(D(3));
+        return All("s", level, All("x", Fin(D(6)), Eq(Own("next", s, x),
+            Call("max", s, If(Eq(x, Typed(D(1), Fin(D(6)))), Typed(D(1), level),
+                If(Eq(x, Typed(D(2), Fin(D(6)))), Typed(D(2), level), Typed(D(0), level)))))));
+    }
+
+    private static Formula AdvanceSeenFormula()
+    {
+        var s = V("s"); var x = V("x");
+        return All("s", Fin(D(3)), All("x", Fin(D(6)),
+            Imp(Scanner("allowed", Own("seen", s), x),
+                Eq(Scanner("advance", Own("seen", s), x), Own("seen", Own("next", s, x))))));
+    }
+
+    private static Formula NextMonoFormula() =>
+        All("s", Fin(D(3)), All("x", Fin(D(6)), Le(V("s"), Own("next", V("s"), V("x")))));
+
+    private static Formula LabelNextFormula()
+    {
+        var s = V("s"); var x = V("x");
+        return All("s", Fin(D(3)), All("x", Fin(D(6)),
+            Imp(Scanner("allowed", Own("seen", s), x),
+                Le(Call("D5.S3.Observer.Separation.BooleanRankThreeK4.beta", x), Own("next", s, x)))));
+    }
+
+    private static Formula EndLevelFormula()
+    {
+        var n = V("n"); var s = V("s"); var f = V("f");
+        var empty = All("s", Fin(D(3)), All("f", Arrow(Fin(D(0)), Fin(D(6))),
+            Eq(Own("endLevel", s, f), s)));
+        var step = All("n", Q("Nat"), All("s", Fin(D(3)),
+            All("f", Arrow(Fin(Add(n, D(1))), Fin(D(6))),
+                Eq(Own("endLevel", s, f), Own("endLevel",
+                    Own("next", s, App(f, Typed(D(0), Fin(Add(n, D(1)))))), Call("Fin.tail", f))))));
+        return And(empty, step);
+    }
+
+    private static Formula EndLevelMonoFormula() =>
+        All("n", Q("Nat"), All("s", Fin(D(3)), All("f", Arrow(Fin(V("n")), Fin(D(6))),
+            Le(V("s"), Own("endLevel", V("s"), V("f"))))));
+
+    private static Formula FinishSeenFormula()
+    {
+        var s = V("s"); var f = V("f");
+        return All("n", Q("Nat"), All("s", Fin(D(3)), All("f", Arrow(Fin(V("n")), Fin(D(6))),
+            All("h", Scanner("good", Own("seen", s), f),
+                Eq(Scanner("finish", Own("seen", s), f), Own("seen", Own("endLevel", s, f)))))));
+    }
+
+    private static Formula DigitFormula()
+    {
+        var k = V("k"); var d = V("d"); var quotient = Call("Nat.div", k, d);
+        var bound = Typed(Seq(Q("by"), Sp, Q("omega")), Lt(D(0), D(3)));
+        return All("k", Q("Nat"), All("d", Q("Nat"), Eq(Own("digit", k, d),
+            Typed(Call("Fin.mk", Call("Nat.mod", quotient, D(3)),
+                Call("Nat.mod_lt", quotient, bound)), Fin(D(3))))));
+    }
+
+    private static Formula WeightedSumFormula()
+    {
+        var es = V("es"); var g = V("g"); var e = V("e");
+        var repeats = Fn("e", Q("Nat"),
+            Call("List.replicate", Call("Nat.mod", e, D(9)), Call("Nat.div", e, D(9))));
+        var weight = Typed(Call("Nat.cast", Call("Nat.mod", e, D(9))), Q("Int"));
+        return All("es", Call("List", Q("Nat")), All("g", Arrow(Q("Nat"), Q("Int")), Eq(
+            Call("List.sum", Call("List.map", g, Call("List.flatMap", repeats, es))),
+            Call("List.sum", Call("List.map", Fn("e", Q("Nat"),
+                Mul(weight, App(g, Call("Nat.div", e, D(9))))), es)))));
+    }
+
+    private static Formula If(Formula condition, Formula yes, Formula no) =>
+        Parenthesized(Seq(Q("if"), Sp, Parenthesized(condition), Sp,
+            Q("then"), Sp, Parenthesized(yes), Sp, Q("else"), Sp, Parenthesized(no)));
 
     private static Formula NormalFormula()
     {
@@ -154,8 +270,16 @@ internal sealed class HardinA233176LadderDocument : IScribeDocumentDefinition
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Q(string name) => Seq(name.Split('.').SelectMany((part, i) =>
-        i == 0 ? new[] { Seq(Operatorname, Grp(V(part))) }
-            : new[] { Dot, Seq(Operatorname, Grp(V(part))) }).ToArray());
+        i == 0 ? new[] { NamePart(part) }
+            : new[] { Dot, NamePart(part) }).ToArray());
+    private static Formula NamePart(string name)
+    {
+        var words = name.Split('_');
+        Formula result = V(words[^1]);
+        for (var i = words.Length - 2; i >= 0; --i)
+            result = Seq(V(words[i]), Underscore, Grp(result));
+        return Seq(Operatorname, Grp(result));
+    }
     private static Formula Own(string name, params Formula[] args) =>
         App(Q(LeanPrefix + name), args);
     private static Formula Call(string name, params Formula[] args) => App(Q(name), args);
