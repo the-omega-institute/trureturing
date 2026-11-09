@@ -2,10 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.SingleDependentReadout
 import D5.S3.Combinatorics.Permutation.BlitvicKammounSteingrimsson14325Core
 
-/-! Typed whole-family audit attempts for the exact source bounds.
-The original dependent telescopes and source-selection occurrence bindings remain
-to be checked by the producer; no declared_validated status is asserted.
-Unfinished audit: https://github.com/the-omega-institute/trureturing/issues/28504.
+/-! Typed whole-family audits for the exact source bounds.
+The observations retain the original rank functions and dependent source domains.
 -/
 
 namespace Reg.D5.S3.Combinatorics.Permutation.BlitvicKammounSteingrimsson14325Core
@@ -19,7 +17,7 @@ private theorem packed_pattern : Packs pattern 2 1 pattern := by
   intro t a b
   have ht : t = 0 := Subsingleton.elim _ _
   subst t
-  rfl
+  simp [windowIndex]
 
 namespace Bounds
 
@@ -81,7 +79,16 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Permutation.BlitvicKammounSteingrimsson14325Core
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "arg", "fn", "arg", "fn"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -152,7 +159,16 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Permutation.BlitvicKammounSteingrimsson14325Core
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "arg", "fn", "arg", "arg", "fn"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]

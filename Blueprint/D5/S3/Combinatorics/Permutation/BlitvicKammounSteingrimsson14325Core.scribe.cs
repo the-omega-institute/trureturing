@@ -7,6 +7,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Permutation;
 internal sealed class BlitvicKammounSteingrimsson14325CoreDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Permutation/BlitvicKammounSteingrimsson14325Core.";
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/PermutationPatterns/blitvickammounsteingrimsson2026patterns");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The prescribed 14325 comparisons force the first and last ranks for every positive packing size.",
@@ -23,12 +25,12 @@ internal sealed class BlitvicKammounSteingrimsson14325CoreDocument : IScribeDocu
                 + "directions of this comparison translation. The private chain_bounds "
                 + "then proves by induction on the number of windows that every "
                 + "position lies between a₀ and bⱼ in rank.")),
-            Node("packing_bounds", "Bounds for every rank assignment",
+            Node("packing_bounds", "Bounds for every rank assignment", BoundsFormula(),
                 "For every natural j≥1, every rank function w satisfying Packs, and "
                 + "every position x, w(0)≤w(x)≤w(3j+1). Injectivity is not required. "
                 + "Appending a window adds three positions, and its chain orders all "
                 + "three between the old lower endpoint and the new upper endpoint."),
-            Node("packing_extrema", "Forced ranks in actual source permutations",
+            Node("packing_extrema", "Forced ranks in actual source permutations", ExtremaFormula(),
                 "For every natural j≥1 and every actual permutation w satisfying "
                 + "Packs, w(0)=0 and w(3j+1)=3j+1. Surjectivity supplies a position "
                 + "with rank zero and one with the greatest rank; packing_bounds "
@@ -41,9 +43,32 @@ internal sealed class BlitvicKammounSteingrimsson14325CoreDocument : IScribeDocu
                 + "theorems prove endpoint constraints and do not claim that cardinality "
                 + "identity, either modular conclusion, or completion of issue 28504.")))));
 
-    private static DocumentBlock Node(string name, string title, string prose) =>
+    private static DocumentBlock Node(string name, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create("bks14325-" + name.Replace('_', '-')),
             DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromAuthor(Disp(new Formula.Apply(F.Id(name), [F.Id("j"), F.Id("w")]))),
-            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+            StatementSource.FromAuthor(formula),
+            AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+
+    private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
+    private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
+    private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
+    private static Formula Call(string f, params Formula[] a) => new Formula.Apply(F.Id(f), [.. a]);
+    private static Formula Natural => Seq(Mathbb, Grp(F.Id("N")));
+    private static Formula Length => Add(D(5), Mul(Sub(F.Id("j"), D(1)), D(3)));
+    private static Formula Last => Add(Mul(D(3), F.Id("j")), D(1));
+    private static Formula Finite => Call("Fin", Length);
+    private static Formula W(Formula x) => Call("w", x);
+    private static Formula All(string v, Formula type, Formula body) =>
+        Seq(Forall, Sp, F.Id(v), Colon, Sp, type, Comma, Sp, body);
+    private static Formula Imply(Formula a, Formula b) => Seq(Open, a, Close, Sp, Implies, Sp, b);
+    private static Formula Equal(Formula a, Formula b) => Seq(a, Sp, Eq, Sp, b);
+    private static Formula Both(Formula a, Formula b) => Seq(Open, a, Close, Sp, Land, Sp, Open, b, Close);
+    private static Formula Guarded(Formula wType, Formula conclusion) =>
+        All("j", Natural, Imply(Seq(D(1), Sp, Leq, Sp, F.Id("j")), All("w", wType,
+            Imply(Call("Packs", F.Id("pattern"), D(2), F.Id("j"), F.Id("w")), conclusion))));
+    private static Formula BoundsFormula() => Disp(Guarded(new Formula.TypeArrow(Finite, Finite),
+        All("x", Finite, Both(Seq(W(D(0)), Sp, Leq, Sp, W(F.Id("x"))),
+            Seq(W(F.Id("x")), Sp, Leq, Sp, W(Last))))));
+    private static Formula ExtremaFormula() => Disp(Guarded(Call("Perm", Finite),
+        Both(Equal(W(D(0)), D(0)), Equal(W(Last), Last))));
 }

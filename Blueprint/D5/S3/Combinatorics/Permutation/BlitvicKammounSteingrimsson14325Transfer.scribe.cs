@@ -34,10 +34,7 @@ internal sealed class BlitvicKammounSteingrimsson14325TransferDocument : IScribe
             Describe.Lean(DescribeId.Create("bks14325-odd-row-recurrence"),
                 DeclarationHandle.Create(Prefix + "odd_row_recurrence"),
                 H("Odd arguments over the ring of residues modulo four"),
-                StatementSource.FromAuthor(Disp(Seq(Forall, Sp, F.Id("n"), Comma, Sp, F.Id("k"),
-                    Colon, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp,
-                    new Formula.Apply(F.Id("b"), [F.Id("n+2"), F.Id("2k+1")]), Sp, Eq, Sp,
-                    new Formula.Apply(F.Id("oddTransfer"), [F.Id("b(n+1)"), F.Id("k")])))),
+                StatementSource.FromAuthor(OddFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("In ZMod 4 the exact formula is "
                     + "bₙ₊₂(2k+1)=−∑₁≤r≤k bₙ₊₁(2r+1)+(2k+1)bₙ₊₁(2k+3). "
@@ -60,4 +57,17 @@ internal sealed class BlitvicKammounSteingrimsson14325TransferDocument : IScribe
                 + "all but these indices; the exact-exception converse is the stronger "
                 + "registered interpretation. This contribution does not settle it or "
                 + "the full target. The narrower issue 21304 remains unchanged.")))));
+
+    private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
+    private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
+    private static Formula B(Formula n, Formula k) => new Formula.Apply(new Formula.Subscript(F.Id("b"), n), [k]);
+    private static Formula OddFormula()
+    {
+        var n = F.Id("n"); var k = F.Id("k"); var r = F.Id("r");
+        var sum = Seq(new Formula.Subscript(Sum, Seq(D(1), Sp, Leq, Sp, r, Sp, Leq, Sp, k)), Sp,
+            B(Add(n, D(1)), Add(Mul(D(2), r), D(1))));
+        return Disp(Seq(Forall, Sp, n, Comma, Sp, k, Colon, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp,
+            B(Add(n, D(2)), Add(Mul(D(2), k), D(1))), Sp, Eq, Sp, Minus, sum, Sp, Plus, Sp,
+            Mul(Add(Mul(D(2), k), D(1)), B(Add(n, D(1)), Add(Mul(D(2), k), D(3))))));
+    }
 }

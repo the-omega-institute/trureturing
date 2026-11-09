@@ -3,8 +3,7 @@ import Reg.Support.SingleDependentReadout
 import D5.S3.Combinatorics.Permutation.BlitvicKammounSteingrimsson14325Transfer
 
 /-! Typed audit families preserve the whole row functions and original telescopes.
-Source-selection binding remains required for the odd recurrence registration.
-Unfinished audit: https://github.com/the-omega-institute/trureturing/issues/28504.
+The enrolled readouts select the actual row functions in the source statements.
 -/
 
 namespace Reg.D5.S3.Combinatorics.Permutation.BlitvicKammounSteingrimsson14325Transfer
@@ -138,7 +137,16 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Permutation.BlitvicKammounSteingrimsson14325Transfer
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]

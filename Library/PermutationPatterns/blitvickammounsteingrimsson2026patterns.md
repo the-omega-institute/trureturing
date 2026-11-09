@@ -5,11 +5,13 @@ year: 2026
 title: "Permutations, Pattern Covers, Posets and Positivity: Part I: Patterns and Posets"
 doi: 10.48550/arXiv.2610.29846
 url: https://arxiv.org/abs/2610.29846v1
-claim: "Conjecture 7.1 concerns the maximum packing count; Section 7 item 10 proposes polynomial product factors for 135289467 with overlap 3."
+claim: "Conjecture 7.1 concerns the maximum packing count; Section 7 items 10 and 11 concern 135289467 with overlap 3 and modular regularities of 14325 with overlap 2."
 strata_touched:
   - D5/S3/Combinatorics/Permutation/PackingMaximumRefutation
   - D5/S3/Combinatorics/Permutation/BlitvicKammounSteingrimsson135289467Core
   - D5/S3/Combinatorics/Permutation/BlitvicKammounSteingrimsson135289467Product
+  - D5/S3/Combinatorics/Permutation/BlitvicKammounSteingrimsson14325Core
+  - D5/S3/Combinatorics/Permutation/BlitvicKammounSteingrimsson14325Transfer
 license: citation-only
 triage: anchor
 ---
@@ -111,3 +113,65 @@ this fixed-pattern assertion. Completeness of that screen is
 ASSUMED-UNVERIFIED; unpublished work and the authors' cited manuscript
 in preparation were not read. The packing correspondence and the
 binomial shuffle count are prior results, without a novelty claim.
+
+## Pattern 14325 with overlap two
+
+Section 7, item 11 states:
+
+> A curiosity in the enumeration for 14325 with overlap 2 is that all the
+> numbers are congruent to 6 mod 10, except when $j=2^k-1$, those are
+> congruent to 1.
+
+Its continuation states:
+
+> Another apparent regularity in this is that 4 seems to divide all but
+> those for which $j=2^i+2^p-1$ where $0\le p\le i$, such as 8,9,11,15.
+
+For every natural $j\ge1$, let $A_j$ count actual permutations of
+$[3j+2]$ with the prescribed length-five windows starting at $1+3t$,
+$0\le t<j$, matching every comparison of 14325. Additional occurrences
+are allowed. There is no symmetry quotient or avoidance condition.
+The full candidate registered in issue
+[28504](https://github.com/the-omega-institute/trureturing/issues/28504)
+requires $A_j\bmod10=1$ when $j+1=2^k$ for some $k\ge1$ and $6$
+otherwise. It also requires
+
+$$
+4\nmid A_j\quad\Longleftrightarrow\quad
+\exists i,p\in\mathbb N,\ p\le i\ \land\ j+1=2^i+2^p.
+$$
+
+Both $p=0$ and $p=i$ belong to this candidate. There is no assertion at
+$j=0$. The printed continuation does not explicitly state the converse
+as an iff; exact exceptions are the stronger registered interpretation,
+which must be proved in both directions. The earlier issue
+[21304](https://github.com/the-omega-institute/trureturing/issues/21304)
+concerns only the modulo-ten proposal. Its original criteria, unresolved
+status and historical resource boundaries are preserved; it is not a
+settlement of the full item.
+
+The source-structure module uses the existing literal `Packs` predicate.
+Writing $a_t,b_t,c_t$ for positions $3t,3t+1,3t+2$, respectively, each
+window is equivalent to
+$a_t<a_{t+1}<c_t<b_t<b_{t+1}$. These chains force every rank between
+$a_0$ and $b_j$. In an actual permutation those two positions therefore
+have ranks zero and $3j+1$. This establishes the endpoint constraints,
+without claiming a cardinality formula.
+
+The transfer module defines $b_1(k)=1$ and
+$b_{n+1}(k)=\sum_{r=1}^k r b_n(r+2)$ on all natural arguments.
+Its universal algebraic results are $b_n(3)=1$ in $\mathbb Z/5\mathbb Z$
+for all $n\ge1$, and
+
+$$
+b_{n+1}(2k+1)=-\sum_{r=1}^k b_n(2r+1)
+ +(2k+1)b_n(2k+3)\quad\text{in }\mathbb Z/4\mathbb Z
+$$
+
+for $n\ge1$ and $k\ge0$. Identifying $A_j$ with $b_j(3)$ still requires
+the exact endpoint-removal and first-column insertion/deletion
+bijections. The simultaneous formal-series solution, its Catalan
+coefficient identity, and both binary exception-set characterizations
+remain separate mathematical obligations. Neither modular assertion
+for the actual count is claimed as a result here. These contributions
+carry no claim of worldwide priority or an exhaustive literature screen.
