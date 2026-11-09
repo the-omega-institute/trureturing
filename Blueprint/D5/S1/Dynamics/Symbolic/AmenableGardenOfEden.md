@@ -28,7 +28,7 @@ $$\begin{aligned}\forall u: \operatorname{Universe}(),\forall v: \operatorname{U
 
 *Commentary.*
 
-Two configurations with finite disagreement and equal complete images must be equal. Equality of images is equality at every group element.
+The disagreement set is exactly {g | x(g)≠y(g)}. Two configurations with finite disagreement and equal complete images must be equal. Equality of images is equality at every group element.
 
 **Definition 1.3 (Jointly realized image patterns).**
 
@@ -72,7 +72,7 @@ The collar of the actual disagreement core D is D∪D*S⁻¹*S. Every neighborho
 
 **Theorem 1.6 (Surjectivity is equivalent to finite-disagreement preinjectivity).**
 
-$$\begin{aligned}\forall u: \operatorname{Universe}(),\forall v: \operatorname{Universe}(),\forall A: \operatorname{Type}(u),\forall G: \operatorname{Type}(v),[\operatorname{Group}(G)],\\{}[\operatorname{Finite}(A)],\\\operatorname{NeBot}(\operatorname{maxFoelner}(G^{\mathrm{op}}, \operatorname{Measure.count}(G))) \Rightarrow\\\forall S: \operatorname{Finset}(G),\forall \varphi: ((S \to A) \to A),\\\operatorname{Function.Surjective}(\operatorname{localMap}(S, \varphi)) \iff \operatorname{Preinjective}(S, \varphi)\end{aligned}$$
+$$\begin{aligned}\forall u: \operatorname{Universe}(),\forall v: \operatorname{Universe}(),\forall A: \operatorname{Type}(u),\forall G: \operatorname{Type}(v),[\operatorname{Group}(G)],\\{}[\operatorname{Finite}(A)],\\\operatorname{MeasurableSpace}(G):=\operatorname{discrete}(),\\\operatorname{NeBot}(\operatorname{maxFoelner}(G^{\mathrm{op}}, \operatorname{Measure.count}(G))) \Rightarrow\\\forall S: \operatorname{Finset}(G),\forall \varphi: ((S \to A) \to A),\\\operatorname{Function.Surjective}(\operatorname{localMap}(S, \varphi)) \iff \operatorname{Preinjective}(S, \varphi)\end{aligned}$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Dynamics/Symbolic/AmenableGardenOfEden.garden_of_eden` (`✓ std3`). ∎
 
