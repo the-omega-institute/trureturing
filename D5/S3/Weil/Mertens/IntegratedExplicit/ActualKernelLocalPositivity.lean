@@ -93,7 +93,7 @@ lemma K_zero : K 0 = firstLiMass := by
   rw [hT, Real.log_mul (by norm_num : (2 : ℝ) ≠ 0) Real.pi_ne_zero]
   ring
 
-private lemma K_zero_pos : 0 < K 0 := by
+lemma K_zero_pos : 0 < K 0 := by
   rw [K_zero, firstLiMass]
   linarith [D5.S3.Zeros.Endpoints.FirstLiCoefficientPositivity.first_li_coefficient_pos]
 
@@ -203,7 +203,7 @@ lemma K_continuous : Continuous K := by
   exact (show Continuous (fun t : ℝ => Real.exp (-|t| / 2)) by fun_prop).mul
     (((U_exp_continuous.comp continuous_abs).sub continuous_const).add hT)
 
-private lemma exp_ratio_limit :
+lemma exp_ratio_limit :
     Tendsto (fun t : ℝ => t / (Real.exp (2 * t) - 1)) (𝓝[>] 0) (𝓝 (1 / 2)) := by
   have hd := (((hasDerivAt_id (0 : ℝ)).const_mul 2).exp).tendsto_slope_zero_right
   have hh : Tendsto (fun t : ℝ => (Real.exp (2 * t) - 1) / t) (𝓝[>] 0) (𝓝 2) := by
@@ -258,7 +258,7 @@ lemma D1_atBot : Tendsto D1 (𝓝[>] 0) atBot := by
   dsimp [D1]
   ring
 
-private lemma weighted_D1_limit :
+lemma weighted_D1_limit :
     Tendsto (fun t : ℝ => t * D1 t) (𝓝[>] 0) (𝓝 0) := by
   have hb : Continuous (fun t : ℝ => K t / 2 - Real.exp (t / 2) +
       Real.exp (-t / 2) * Real.log (2 * Real.pi)) :=
@@ -272,7 +272,7 @@ private lemma weighted_D1_limit :
   · ext t; dsimp [D1]; ring
   · simp
 
-private lemma weighted_D2_limit :
+lemma weighted_D2_limit :
     Tendsto (fun t : ℝ => t * D2 t) (𝓝[>] 0) (𝓝 (1 / 2)) := by
   have hK : Tendsto K (𝓝[>] 0) (𝓝 (K 0)) :=
     (K_continuous.tendsto 0).mono_left nhdsWithin_le_nhds
