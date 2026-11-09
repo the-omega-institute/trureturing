@@ -1,0 +1,21 @@
+**命题 31.3（只保持局部正性的最小反例）。** 转置映射 $\tau(X)=X^{\mathsf T}$ 把单系统正算子送到正算子，但不是完全比较保持。对 Bell 态
+
+$$
+|\Omega\rangle=\frac{|00\rangle+|11\rangle}{\sqrt2}
+$$
+
+有
+
+$$
+(\tau\otimes\mathrm{id})(|\Omega\rangle\langle\Omega|)
+=\frac12
+\begin{pmatrix}
+1&0&0&0\\
+0&0&1&0\\
+0&1&0&0\\
+0&0&0&1
+\end{pmatrix},
+$$
+
+其特征值为 $1/2,1/2,1/2,-1/2$。负特征值就是一个联合自比较为负的方向；所以单独检查每个系统不能保护关系的关系。
+
