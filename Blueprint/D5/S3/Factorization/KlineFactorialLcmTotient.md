@@ -22,6 +22,10 @@ $$\forall j \in \mathrm{Int},\; 1 \le j \Rightarrow a\left(nth\left(Prime, toNat
 
 *Proof.* Machine-checked in Lean as `D5/S3/Factorization/KlineFactorialLcmTotient.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a025527-kline-prime-minus-one-totient-quotient` (proved) by `D5/S3/Factorization/KlineFactorialLcmTotient.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a025527-kline-prime-minus-one-totient-quotient","declaration_gid":"D5/S3/Factorization/KlineFactorialLcmTotient.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Fred Daniel Kline (2017). *OEIS A025527: n!/lcm(1,2,...,n), prime-minus-one totient quotient conjecture*. URL: <https://oeis.org/A025527/internal>.
