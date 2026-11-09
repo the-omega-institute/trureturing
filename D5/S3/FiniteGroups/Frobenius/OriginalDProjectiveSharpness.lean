@@ -274,13 +274,14 @@ private theorem rho_not_projective : ¬ Module.Projective k[G] rho.asModule := b
   let p : Rep.of (rho.comp H.subtype) ⟶ Rep.trivial k H k :=
     Rep.ofHom ⟨LinearMap.proj 0, by
       intro h
-      ext v
+      apply LinearMap.ext
+      intro v
       change ((rho.comp H.subtype) h v) 0 = v 0
       rw [Representation.isTrivial_apply]⟩
   let q : Rep.leftRegular k H ⟶ Rep.trivial k H k :=
     Rep.leftRegularHom (Rep.trivial k H k) 1
   have hq (h : H) (a : k) : q.hom (MonoidAlgebra.single h a) = a := by
-    simp [q, Rep.leftRegularHom_hom_single, smul_eq_mul]
+    simp [q, smul_eq_mul]
   haveI : Epi q := (Rep.epi_iff_surjective q).mpr fun a =>
     ⟨MonoidAlgebra.single 1 a, hq 1 a⟩
   let f := Projective.factorThru p q
@@ -302,11 +303,11 @@ private theorem rho_not_projective : ¬ Module.Projective k[G] rho.asModule := b
     rw [hsum]
     simp only [hc, Finset.sum_const, Finset.card_univ]
     rw [← Nat.card_eq_fintype_card, card_H]
-    change (7 : k) * z.coeff 1 = 0
-    norm_num
+    rw [nsmul_eq_mul, show ((7 : ℕ) : k) = 0 by decide, zero_mul]
   have hone : q.hom z = 1 := by
     have he := congrArg (fun t => t.hom e₀) hf
-    simpa [z, p, e₀] using he
+    change q.hom z = 1 at he
+    exact he
   exact (zero_ne_one : (0 : k) ≠ 1) (hzero.symm.trans hone)
 
 /-- An actual nonprojective irreducible module satisfies every original-D
@@ -322,7 +323,7 @@ theorem originalD_counterexample :
   refine ⟨inferInstance, DihedralGroup.nat_card, inferInstance, rho_irreducible,
     inferInstance, fixed_rotation_is_one, rotation_restriction_nontrivial,
     inferInstance, card_H, H_acts_trivially, card_N, ?_, rho_not_projective⟩
-  rw [card_N]
-  norm_num
+  rw [card_N, show ((21 : ℕ) : k) = 0 by decide]
+  exact not_isUnit_zero
 
 end D5.S3.FiniteGroups.OriginalDProjectiveSharpness
