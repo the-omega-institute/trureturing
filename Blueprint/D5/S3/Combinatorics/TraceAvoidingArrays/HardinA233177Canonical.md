@@ -66,19 +66,7 @@ $$\forall (C: \operatorname{Type}), ([\operatorname{Fintype}\left(C\right)], [\o
 
 Normalization is canonical form with fixed first sides.
 
-**Definition 1.6 (First occurrence of a label).**
-
-$$\forall (C: \operatorname{Type}), ([\operatorname{LT}\left(C\right)], \forall (K: \operatorname{Type}), (\forall (P: C \to K), (\forall (i: C), (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233177Canonical}.\operatorname{First}\left(P, i\right) = (\forall (j: C), ((j < i) \Rightarrow (P\left(j\right) \ne P\left(i\right))))))))$$
-
-*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.First` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-First occurrence of a label.
-
-**Definition 1.7 (Individual-colour lifts of a fixed pair pattern).**
+**Definition 1.6 (Individual-colour lifts of a fixed pair pattern).**
 
 $$\forall (C: \operatorname{Type}), ([\operatorname{LT}\left(C\right)], \forall (P: C \to \operatorname{Fin}\left(3\right)), (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233177Canonical}.\operatorname{Fibre}\left(P\right) = \{f: C \to \operatorname{Fin}\left(6\right) // ((\forall (i: C), (\operatorname{D5}.\operatorname{S3}.\operatorname{Observer}.\operatorname{Separation}.\operatorname{BooleanRankThreeK4}.\operatorname{beta}\left(f\left(i\right)\right) = P\left(i\right))) \land (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233177Canonical}.\operatorname{FirstSides}\left(f\right)))\}))$$
 
@@ -90,7 +78,7 @@ $$\forall (C: \operatorname{Type}), ([\operatorname{LT}\left(C\right)], \forall 
 
 Individual-colour lifts of a fixed pair pattern.
 
-**Theorem 1.8 (Exact number of lifts).**
+**Theorem 1.7 (Exact number of lifts).**
 
 $$\forall (C: \operatorname{Type}), ([\operatorname{Fintype}\left(C\right)], [\operatorname{LinearOrder}\left(C\right)], \forall (P: C \to \operatorname{Fin}\left(3\right)), (\operatorname{Nat}.\operatorname{card}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233177Canonical}.\operatorname{Fibre}\left(P\right)\right) = 2^{(\operatorname{Fintype}.\operatorname{card}\left(C\right)) - (\operatorname{Nat}.\operatorname{card}\left(\operatorname{Set}.\operatorname{range}\left(P\right)\right))}))$$
 
@@ -102,7 +90,7 @@ $$\forall (C: \operatorname{Type}), ([\operatorname{Fintype}\left(C\right)], [\o
 
 Exact number of lifts.
 
-**Theorem 1.9 (Six patterns per canonical representative).**
+**Theorem 1.8 (Six patterns per canonical representative).**
 
 $$\forall (C: \operatorname{Type}), ([\operatorname{Fintype}\left(C\right)], [\operatorname{LinearOrder}\left(C\right)], \forall (S: \left(C \to \operatorname{Fin}\left(3\right)\right) \to \operatorname{Prop}), ((\forall (e: \operatorname{Equiv}.\operatorname{Perm}\left(\operatorname{Fin}\left(3\right)\right)), (\forall (P: C \to \operatorname{Fin}\left(3\right)), ((S\left(\operatorname{Function}.\operatorname{comp}\left(e, P\right)\right)) \Leftrightarrow (S\left(P\right))))) \Rightarrow ((\forall (P: C \to \operatorname{Fin}\left(3\right)), ((S\left(P\right)) \Rightarrow (\exists (i: C), (\exists (j: C), (P\left(i\right) \ne P\left(j\right)))))) \Rightarrow (\operatorname{Nat}.\operatorname{card}\left(\{P: C \to \operatorname{Fin}\left(3\right) // (S\left(P\right))\}\right) = (6) \cdot (\operatorname{Nat}.\operatorname{card}\left(\{P: C \to \operatorname{Fin}\left(3\right) // ((S\left(P\right)) \land (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233177Canonical}.\operatorname{Canonical}\left(P\right)))\}\right))))))$$
 
@@ -114,7 +102,7 @@ $$\forall (C: \operatorname{Type}), ([\operatorname{Fintype}\left(C\right)], [\o
 
 Six patterns per canonical representative.
 
-**Theorem 1.10 (Weighted canonical-pattern count).**
+**Theorem 1.9 (Weighted canonical-pattern count).**
 
 $$\forall (C: \operatorname{Type}), ([\operatorname{Fintype}\left(C\right)], [\operatorname{LinearOrder}\left(C\right)], \forall (z: C), ((\forall (i: C), (z \le i)) \Rightarrow (\forall (S: \left(C \to \operatorname{Fin}\left(3\right)\right) \to \operatorname{Prop}), (\operatorname{Nat}.\operatorname{card}\left(\{f: C \to \operatorname{Fin}\left(6\right) // ((S\left(\operatorname{Function}.\operatorname{comp}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Observer}.\operatorname{Separation}.\operatorname{BooleanRankThreeK4}.\operatorname{beta}, f\right)\right)) \land ((f\left(z\right) = (0: \operatorname{Fin}\left(6\right))) \land (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233177Canonical}.\operatorname{Normal}\left(f\right))))\}\right) = \operatorname{Finset}.\operatorname{sum}\left((\operatorname{Finset}.\operatorname{univ}: \operatorname{Finset}\left(\{P: C \to \operatorname{Fin}\left(3\right) // ((S\left(P\right)) \land (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233177Canonical}.\operatorname{Canonical}\left(P\right)))\}\right)), (\lambda (P: \{P: C \to \operatorname{Fin}\left(3\right) // ((S\left(P\right)) \land (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233177Canonical}.\operatorname{Canonical}\left(P\right)))\}) \mapsto 2^{(\operatorname{Fintype}.\operatorname{card}\left(C\right)) - (\operatorname{Nat}.\operatorname{card}\left(\operatorname{Set}.\operatorname{range}\left(\operatorname{Subtype}.\operatorname{val}\left(P\right)\right)\right))})\right)))))$$
 
@@ -132,7 +120,6 @@ The complementary pairs are the fibres {0,5}, {1,4}, {2,3} of D5.S3.Observer.Sep
 
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.Canonical`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.Fibre`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.First`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.FirstSides`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.Normal`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.canonical_exists_unique`

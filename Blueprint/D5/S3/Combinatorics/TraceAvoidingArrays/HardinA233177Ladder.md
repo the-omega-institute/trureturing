@@ -14,6 +14,8 @@ $$\forall (n: \operatorname{Nat}), (\forall (A: (\operatorname{Fin}\left(4\right
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A233177: complementary-pair exclusion on a four-row ladder*. URL: <https://oeis.org/A233177>.
+
 *Commentary.*
 
 Row-major predecessor conditions.
@@ -25,6 +27,8 @@ $$\forall (n: \operatorname{Nat}), (\forall (A: (\operatorname{Fin}\left(4\right
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Ladder.Legal` (`✓ std3`).
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A233177: complementary-pair exclusion on a four-row ladder*. URL: <https://oeis.org/A233177>.
 
 *Commentary.*
 
@@ -50,6 +54,8 @@ $$\forall (n: \operatorname{Nat}), ((2 \le n) \Rightarrow ((48) \cdot ((\operato
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A233177: complementary-pair exclusion on a four-row ladder*. URL: <https://oeis.org/A233177>.
+
 *Commentary.*
 
 The canonical-form counting bridge.
@@ -64,6 +70,8 @@ $$(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatornam
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A233177: complementary-pair exclusion on a four-row ladder*. URL: <https://oeis.org/A233177>.
+
 *Commentary.*
 
 The first permitted recurrence instance.
@@ -75,6 +83,8 @@ $$\forall (n: \operatorname{Nat}), ((\operatorname{D5}.\operatorname{S3}.\operat
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Ladder.result` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A233177: complementary-pair exclusion on a four-row ladder*. URL: <https://oeis.org/A233177>.
 
 *Commentary.*
 
