@@ -66,7 +66,10 @@ internal sealed class LarotondaReyNormingFlatnessRefutationDocument : IScribeDoc
                         + "docs/reports/larotonda-rey-2023-problem-3-13-norming-commutation-flatness. Its command is python3 check.py, reported exit 0; "
                         + "check.py has SHA-256 f7feab60bc4bf9d55c5e29519c0b61eb0c57fe13222bd476cc8069ab8d33775d. "
                         + "Those calculations concern the gauge; they supply no additional theorem identifying it with the polar supremum."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("larotonda-rey-problem-3-13"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(string id, string declaration, string title,
         Formula formula, AssessedProvenance provenance, string prose) =>

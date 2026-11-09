@@ -94,6 +94,10 @@ $$\neg \left(\forall \left(n: \mathbb{N}\right), \left(\left(0 < n\right) \Right
 
 *Proof.* Machine-checked in Lean as `D5/S3/HilbertOperators/LarotondaReyNormingFlatnessRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/larotonda-rey-problem-3-13` (refuted) by `D5/S3/HilbertOperators/LarotondaReyNormingFlatnessRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"larotonda-rey-problem-3-13","declaration_gid":"D5/S3/HilbertOperators/LarotondaReyNormingFlatnessRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Gabriel Larotonda and Iván Rey (2023). *Weakly invariant norms: Geometry of spheres in the space of skew-Hermitian matrices*. DOI: [10.1016/j.laa.2023.08.023](https://doi.org/10.1016/j.laa.2023.08.023). URL: <https://arxiv.org/abs/2302.05957v1>.
