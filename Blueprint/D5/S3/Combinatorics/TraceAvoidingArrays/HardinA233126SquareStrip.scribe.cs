@@ -85,7 +85,9 @@ internal sealed class HardinA233126SquareStripDocument : IScribeDocumentDefiniti
                     + "this quintic by x-32 gives precisely the six coefficients in the "
                     + "recurrence. The integer calculation therefore applies to the literal "
                     + "filtered count for every n+7, with n a natural number."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233126"),
+                    ResolutionKind.Proved)))));
 
 
     private static DocumentBlock Entry(string id, string declaration, string title,
