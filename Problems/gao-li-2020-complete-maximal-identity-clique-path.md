@@ -22,7 +22,7 @@ Issue [#26439](https://github.com/the-omega-institute/trureturing/issues/26439) 
 
 $\forall i,j\in\mathbb N,\quad i\ge2\ \Longrightarrow\ j\ge2\ \Longrightarrow\ \bigl[(\forall s\in V(G),\ m_s\in L_s\mathbb Z^{V(G)\setminus\{s\}})\ \Longleftrightarrow\ (i=4\ \land\ j=2)\bigr].$
 
-The candidate contains `result : claim` for exactly this proposition. Compilation against the current base remains unverified.
+The candidate contains `result : claim` for exactly this proposition. Current scoped compilation checks this integer-image statement; external-problem admission remains unverified.
 
 ## Motivation
 
@@ -63,26 +63,26 @@ A mismatch between the source property and the encoded lattice condition would i
 - the degree in the original graph, cast from $\mathbb N$ to $\mathbb Z$ before subtracting one;
 - an existential integer vector with no requirement that its firings form a legal nonnegative firing sequence.
 
-The source supplies the interpretation: $m_G$ is recurrent, equivalence to zero means membership in the reduced integer Laplacian image, and the recurrent identity is the recurrent representative of the zero class (`Paper/Preliminaries.tex`, lines 29, 157–172 and 192–196; `Paper/CMIP.tex`, lines 27–32). Since $m_G$ is already recurrent, that membership identifies it with the recurrent identity. This sandpile interpretation is not formalized in the module; the conclusion of `result` is the displayed integer-image proposition, whose current-base verification remains pending. The bounds $i,j\ge2$ and the quantifier over every sink are part of that proposition.
+The source supplies the interpretation: $m_G$ is recurrent, equivalence to zero means membership in the reduced integer Laplacian image, and the recurrent identity is the recurrent representative of the zero class (`Paper/Preliminaries.tex`, lines 29, 157–172 and 192–196; `Paper/CMIP.tex`, lines 27–32). Since $m_G$ is already recurrent, that membership identifies it with the recurrent identity. This sandpile interpretation is not formalized in the module; the conclusion of `result` is the displayed integer-image proposition, whose current scoped compilation is established while external-problem admission remains unverified. The bounds $i,j\ge2$ and the quantifier over every sink are part of that proposition.
 
 ## Evidence
 
 The candidate source is `D5/S3/StatisticalMechanics/SandpileCompleteMaximalIdentity.lean` and contains `result : claim`, the two definitions and eleven private proof helpers described above. The complete proof source is retained without theorem reproof or bounded substitution.
 
-Current-base compilation, axiom closure, source-bound Reg evidence and independent admission review remain unverified. This dossier supplies no current Frozen membership or declaration-statement identity; those belong to the canonical producer and writer.
+Current scoped compilation, axiom closure and source-bound Reg evidence are available. Independent external-problem admission remains unverified. This dossier supplies no current Frozen membership or declaration-statement identity; those belong to the canonical producer and writer.
 
 The three reused owner theorems retain their original proofs: `path_neighbor_sum`, `bounded_continuant_endpoint` and `real_recurrence_growth`. Their Reg source mirrors and the settlement mirror are retained for current verification. The `path_neighbor_sum` four-slot audit remains unfinished under [#26503](https://github.com/the-omega-institute/trureturing/issues/26503), with the reported `IE-C050` / `source.unsafe_or_external` dependent-if diagnostic and missing `declared_validated` evidence. The linked-issue exception in CLAUDE.md §3.9 permits disclosure of this unfinished audit during further mathematical delivery; the issue supplies no `declared_validated` evidence.
 
 ## Triage
 
-Tier 1 conjecture of a 2020 preprint published in Discrete Applied Mathematics in 2021, preregistered in issue #26439 before any Lean.
-`theorem`; proposed resolution `proved`, pending current-base verification and independent admission review.
+Tier 1 conjecture of a 2020 preprint published in Discrete Applied Mathematics in 2021. Issue #26439 precedes the first committed source scaffold in the visible Git history. This history does not establish registration before every uncommitted Lean probe; the pre-probe eligibility condition remains `ASSUMED-UNVERIFIED`.
+`theorem`; proposed resolution `proved`, with current scoped compilation established and independent external-problem admission unresolved.
 
 The candidate seeks admission under the open-problem-resolution basis of CLAUDE.md §3.2, using #26439. No corresponding theory volume or digestion atom was identified in the scoped source qualification; that receiving-route conclusion must be rechecked if a corresponding volume is found before the canonical writer.
 
 ### Mathematical content of the candidate
 
-**Conclusion of `result` (current-base verification pending):** for every $i,j\in\mathbb N$ with $i,j\ge2$, the degree-minus-one vector belongs to the reduced integer Laplacian image for every sink of $K_i\square P_j$ if and only if $i=4$ and $j=2$.
+**Conclusion of `result` (current scoped compilation established; external-problem admission unverified):** for every $i,j\in\mathbb N$ with $i,j\ge2$, the degree-minus-one vector belongs to the reduced integer Laplacian image for every sink of $K_i\square P_j$ if and only if $i=4$ and $j=2$.
 
 **Computed, not formalized.** None.
 
