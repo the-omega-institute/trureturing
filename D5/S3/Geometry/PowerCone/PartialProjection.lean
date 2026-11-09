@@ -36,14 +36,18 @@ theorem quadrant_eq_interior : quadrant = interior closedQuadrant := by
       rw [Metric.mem_ball]
       have h : u.1-ε/2-u.1 = -(ε/2) := by ring
       have hd : dist (u.1-ε/2,u.2) u = ε/2 := by
-        simp [Prod.dist_eq,Real.dist_eq,h,abs_of_pos he,he.le]
+        simp only [Prod.dist_eq, Real.dist_eq, h, abs_neg, abs_of_pos he,
+          sub_self, abs_zero]
+        exact max_eq_left he.le
       rw [hd]
       linarith)
     have hy := hball (show (u.1,u.2-ε/2) ∈ Metric.ball u ε by
       rw [Metric.mem_ball]
       have h : u.2-ε/2-u.2 = -(ε/2) := by ring
       have hd : dist (u.1,u.2-ε/2) u = ε/2 := by
-        simp [Prod.dist_eq,Real.dist_eq,h,abs_of_pos he,he.le]
+        simp only [Prod.dist_eq, Real.dist_eq, h, abs_neg, abs_of_pos he,
+          sub_self, abs_zero]
+        exact max_eq_right he.le
       rw [hd]
       linarith)
     exact ⟨by have := hx.1; linarith,by have := hy.2; linarith⟩
@@ -144,10 +148,10 @@ theorem feasible_lift_tendsto {c : ℝ} (hc : 0 < c) (hc1 : c < 1)
     (hz : ∀ n, (u n,z n) ∈ coneInterior c) :
     Tendsto (fun n => (u n,z n)) atTop (𝓝 (b,0)) := by
   have hw : Tendsto (fun n => weight c (u n).1 (u n).2) atTop (𝓝 0) := by
-    have h := (((Real.continuous_rpow_const hc.le).tendsto b.1).comp hu.fst).mul
-      (((Real.continuous_rpow_const (sub_pos.mpr hc1).le).tendsto b.2).comp hu.snd)
+    have h := (((Real.continuous_rpow_const hc.le).tendsto b.1).comp hu.fst_nhds).mul
+      (((Real.continuous_rpow_const (sub_pos.mpr hc1).le).tendsto b.2).comp hu.snd_nhds)
     have hzero : b.1^c * b.2^(1-c) = 0 := weight_eq_zero_at_quadrantBoundary hc hc1 hb
-    simpa only [weight,hzero] using h
+    simpa only [Function.comp_apply, weight, hzero] using h
   have hnorm : Tendsto (fun n => ‖z n‖) atTop (𝓝 0) :=
     squeeze_zero (fun _ => norm_nonneg _) (fun n => (hz n).2.2.le) hw
   have hzero : Tendsto z atTop (𝓝 0) := tendsto_zero_iff_norm_tendsto_zero.mpr hnorm
@@ -172,7 +176,7 @@ theorem scalar_fiber_smul {c t : ℝ} (ht : 0 < t) {u : ℝ × ℝ}
     Real.norm_eq_abs,abs_mul,abs_of_pos ht,weight_smul ht hu]
   constructor
   · intro h
-    exact ⟨hu.1,hu.2,(mul_lt_mul_left ht).mp h.2.2⟩
+    exact ⟨hu.1,hu.2,(mul_lt_mul_iff_of_pos_left ht).mp h.2.2⟩
   · intro h
     exact ⟨mul_pos ht hu.1,mul_pos ht hu.2,mul_lt_mul_of_pos_left h.2.2 ht⟩
 
