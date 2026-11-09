@@ -6,7 +6,43 @@ NormalScalarTranspose
 
 The carrier is the original finite-charge direct sum of complex oscillator polynomials. B is complex bilinear, with its input order retained. No half-current or tensor carrier, symmetry, nondegeneracy, positivity, rank restriction, or all-source invariance is assumed. The normal product and divided derivative retain the Carnahan/native adaptation attribution of FieldNormalProduct. This is a classical finite normal-order calculation; no literature novelty is claimed.
 
-**Definition 1.1 (insertion).**
+**Definition 1.1 (coefficient).**
+
+Lean statement: `D5/S3/VertexAlgebra/SourceBPZ/NormalScalarTranspose.coefficient`
+
+*Formalization.* `D5/S3/VertexAlgebra/SourceBPZ/NormalScalarTranspose.coefficient` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The existing scalar coefficient is integer choose(-k-1,p) cast to the complex numbers, for every natural p and signed integer k.
+
+**Theorem 1.2 (derivative_mode).**
+
+Lean statement: `D5/S3/VertexAlgebra/SourceBPZ/NormalScalarTranspose.derivative_mode`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/SourceBPZ/NormalScalarTranspose.derivative_mode` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every actual lattice, coordinate, natural derivative order and signed integer mode, the divided derivative mode is coefficient(p,m-p) times the actual neutralMode at m-p. This original supporting proof is consumed by the scalar insertion calculation and OriginalWord finite rectangles; it is not new BPZ content.
+
+**Theorem 1.3 (coefficient_zero_band).**
+
+Lean statement: `D5/S3/VertexAlgebra/SourceBPZ/NormalScalarTranspose.coefficient_zero_band`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/SourceBPZ/NormalScalarTranspose.coefficient_zero_band` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural p and integer k with -p<=k<0, coefficient(p,k) is zero. This original integer binomial supporting proof is consumed by both scalar interval calculations.
+
+**Definition 1.4 (insertion).**
 
 Lean statement: `D5/S3/VertexAlgebra/SourceBPZ/NormalScalarTranspose.insertion`
 
@@ -18,7 +54,7 @@ Lean statement: `D5/S3/VertexAlgebra/SourceBPZ/NormalScalarTranspose.insertion`
 
 For every lattice D, coordinate i, natural derivative order p and actual vertex operator F, insertion is the actual normalMinusOne of dividedDerivative p (neutralField D i) with F. Thus its source oscillator is h_i(-(p+1)); it is not a newly reflected field.
 
-**Theorem 1.2 (consumed_normal_product_form).**
+**Theorem 1.5 (consumed_normal_product_form).**
 
 Lean statement: `D5/S3/VertexAlgebra/SourceBPZ/NormalScalarTranspose.consumed_normal_product_form`
 
@@ -38,6 +74,9 @@ The consumer is the cons step of the original wordField BPZ induction: F is the 
 
 ## References
 
+- Truth anchor: `D5/S3/VertexAlgebra/SourceBPZ/NormalScalarTranspose.coefficient`
+- Truth anchor: `D5/S3/VertexAlgebra/SourceBPZ/NormalScalarTranspose.coefficient_zero_band`
 - Truth anchor: `D5/S3/VertexAlgebra/SourceBPZ/NormalScalarTranspose.consumed_normal_product_form`
+- Truth anchor: `D5/S3/VertexAlgebra/SourceBPZ/NormalScalarTranspose.derivative_mode`
 - Truth anchor: `D5/S3/VertexAlgebra/SourceBPZ/NormalScalarTranspose.insertion`
 - Dependency: [D5/S3/VertexAlgebra/LatticeSugawaraCurrents](../LatticeSugawaraCurrents.md)

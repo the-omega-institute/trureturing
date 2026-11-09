@@ -1,0 +1,24 @@
+**定义 55.3（所有强度均保持的同一原余量）。** 对任意原 $h$-奇自伴 $z\in E$、$hz=-zh$，及任意实 $R$，完整复用运输续卷118.3，固定
+
+$$
+\begin{gathered}
+x=c+z,\qquad k=hc=h\circ x,\qquad
+t=D(h,z)=iQhz,\\
+g=D(Rh,x),\qquad r=g-Rt\in E,\\
+[h,r]=0,\qquad ht=-th,\qquad z\circ t=0,\qquad k^2=c^2,\\
+v=c^2\circ r-c\circ(c\circ r)\in E.
+\end{gathered}
+\tag{55.5}
+$$
+
+$r$ 始终来自这一次实际旧输出；没有把 $D(Rh,c+z)$ 拆成两个旧值。$v$ 是同一原Jordan缺陷，不要求它为正。虽然环境中有 $4v=[c,[c,r]]$，$[c,r]$ 一般不是原自伴标签，不能送入55.4的原核。另完整消费118.3已经在第一实际框架下支付的零行
+
+$$
+[h,y]=0\quad\Longrightarrow\quad
+D(\alpha u+\beta h,y)=0
+\qquad(\alpha,\beta\in\mathbb R,\ y\in E),
+\tag{55.6}
+$$
+
+以及原反对称性和P2给出的零首输入值；不删去这些既有结论上游使用的PB。
+
