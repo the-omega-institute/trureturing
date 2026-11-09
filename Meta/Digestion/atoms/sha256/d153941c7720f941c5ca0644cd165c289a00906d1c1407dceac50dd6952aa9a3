@@ -1,0 +1,104 @@
+**定理 27.1（带单位偏置的完整反射混合行）。** 保持[中央续卷196.1](AURIC_CENTRAL_RESPONSE_SQUARE_AND_RADIAL_CONSISTENCY_CONTINUATION.md) 的完整原候选、182.1–182.2的实际 $h,e,j,s,H,Q$ 和199.2全部七项原来源合同。对全部实 $R,\mu,\lambda,\nu$ 及任意原 $h$-奇 $z$，准确有
+
+$$
+\boxed{D(Rh,\mu u+\lambda h+\nu s+z)=R\,iQhz
+       =R\,D(h,\mu u+\lambda h+\nu s+z).}
+\tag{27.1}
+$$
+
+不要求 $z$ 为纯 $s$-奇偶，不要求 $z^2$ 中央、可逆或有限谱，不增加旧 $D$ 的可加、齐次、连续、单位平移或商下降。原域、准确锥、全部原正读取及全部质量、A1–A3、全部P2和完整PB保持不变。
+
+证明。$R=0$ 由原零输入P2成立；$\nu=0$ 直接复用中央续卷166.1。以下 $R\nu\ne0$，保持同一实际输入和输出，定义
+
+$$
+c=\mu u+\lambda h+\nu s,\quad x=c+z,\quad
+k=hc=\mu h+\lambda u+\nu H,\quad
+t=iQhz,\quad g=D(Rh,x)=Rt+r.
+\tag{27.2}
+$$
+
+中央续卷163.1给 $[h,r]=0$；不能在此调用只对 $\mu=0$ 支付的192.1。记 $P_a^\pm(y)=(y\pm aya)/2$，$r_{\rm o}=P_s^-r$。$h,s$ 交换，故其有限奇偶投影交换，且 $r_{\rm o}$ 仍为 $h$-偶。
+
+先对任意实 $\alpha,\beta$ 调用实际PB $(Rh,x,Rk+\beta h+\alpha u)$。中央续卷189.1给内值 $D(Rh,Rk+\beta h+\alpha u)=0$；完整位移和两份外层为
+
+$$
+\begin{gathered}
+v=g-R^2c-R\beta u-R\alpha h,\qquad w=Rk,\\
+A_+=(1-R^2)c+z+g-R\beta u-R\alpha h,\quad
+B_+=2Rk+\beta h+\alpha u,\\
+A_-=(1+R^2)c+z-g+R\beta u+R\alpha h,\quad
+B_-=\beta h+\alpha u.
+\end{gathered}
+\tag{27.3}
+$$
+
+只展开已知Jordan乘法，利用 $x\circ h=k$、$h\circ k=c$、$k^2=c^2$，得到准确差值
+
+$$
+D(A_+,B_+)-D(A_-,B_-)=K+2R\beta z,\qquad
+K=-2x\circ g+2R^2z\circ c.
+\tag{27.4}
+$$
+
+取 $\beta=-2R\mu$，则 $B_+=(2R\lambda+\alpha)u+2R\nu H$，而 $B_-=\beta h+\alpha u$。置真正原输出 $W_\alpha=D(B_-,A_-)$。原反对称性把27.4改写成
+
+$$
+-D(B_+,A_+)+W_\alpha=K+2R\beta z.
+\tag{27.5}
+$$
+
+中央续卷163.1在实际第二框架 $(H,e,sj)$ 上给 $P_H^-D(B_+,A_+)=2R\nu iQH P_H^-A_+$。$A_+$ 的 $h$-偶、$s$-奇部分恰是 $r_{\rm o}$，所以其对应输出投影为 $2R\nu iQH r_{\rm o}$。另一方面，$z,t$ 为 $h$-奇且 $z\circ t=0$，故 $P_h^+K=-2c\circ r$，其 $s$-奇部分是 $-2(\mu u+\lambda h)r_{\rm o}$；这里 $s\circ r_{\rm o}=0$，只用了 $[h,r]=0$。因此27.5给
+
+$$
+P_h^+P_s^-W_\alpha
+=2\bigl[R\nu iQH-(\mu u+\lambda h)\bigr]r_{\rm o}
+=:L,
+\tag{27.6}
+$$
+
+右侧与 $\alpha$ 无关；没有声称整个 $W_\alpha$ 不变。
+
+对 $\epsilon=\pm1$ 置数学投影 $p_\epsilon=(u+\epsilon h)/2$，在27.3–27.6选择 $\alpha_\epsilon=-\epsilon\beta$。于是 $B_-p_\epsilon=p_\epsilon B_-=0$。对任意环境正泛函 $\omega$，合法原正读取 $\phi_\epsilon(a)=\omega(p_\epsilon a p_\epsilon)$ 在实际表 $(B_-,A_-,W_{\alpha_\epsilon})$ 的第一平方上为零；P2和正泛函分离给 $p_\epsilon W_{\alpha_\epsilon}p_\epsilon=0$。因 $p_\epsilon$ 与 $s$ 交换，对此式取 $s$-奇投影，27.6便给 $p_\epsilon Lp_\epsilon=0$。$L$ 为 $h$-偶，两符号合起来得 $L=0$。这一步消去的是同一固定投影值，不是在角上定义新响应。
+
+令 $T_0=\mu u+\lambda h$。$T_0$ 与 $Q,H$ 交换，且 $(iQH)^2=-u$；从27.6的 $L=0$，在环境中左乘 $-R\nu iQH-T_0$，得到
+
+$$
+\bigl[(R\nu)^2u+T_0^2\bigr]r_{\rm o}=0.
+\tag{27.7}
+$$
+
+再左乘 $p_\epsilon$，系数为严格正实数 $(R\nu)^2+(\mu+\epsilon\lambda)^2$，所以 $p_\epsilon r_{\rm o}=0$，即 $r_{\rm o}=0$。从而 $[s,r]=[c,r]=0$。所有除法只对所写严格正实数进行；不引入原逆元。
+
+再取27.3的 $\beta=0$。中央续卷161.5消去第二外层 $D(A_-,\alpha u)$，故对全部实 $\alpha$，同一个实际原输出满足 $D(A_+,2Rk+\alpha u)=K$。四个数学联合投影和偏移取为
+
+$$
+q_{\epsilon,\delta}=\tfrac14(u+\epsilon h)(u+\delta s),\qquad
+\alpha_{\epsilon,\delta}
+=-2R(\mu\epsilon+\lambda+\nu\epsilon\delta),
+\qquad \epsilon,\delta\in\{1,-1\}.
+\tag{27.8}
+$$
+
+第二输入在对应角上归零。与前面相同的合法正读取和P2给 $q_{\epsilon,\delta}Kq_{\epsilon,\delta}=0$。此时 $c,r$ 都与 $h,s$ 交换，且 $z\circ t=0$，故27.4中除 $-2cr$ 外的项均为 $h$-奇；四角压缩消去它们，却完整保留 $cr$。因此
+
+$$
+0=\sum_{\epsilon,\delta}q_{\epsilon,\delta}Kq_{\epsilon,\delta}=-2cr.
+\tag{27.9}
+$$
+
+最后消费中央续卷176.1–176.3的同一支撑机制，保留当前强度。实际PB $(x,Rh,0)$ 准确给
+
+$$
+D(Rh-g,Rk)-D(Rh+g,-Rk)=2Rhr.
+\tag{27.10}
+$$
+
+同一个正读取对两张实际表使用P2及三角不等式，约去非零 $R$ 的显式平方因子，得到
+
+$$
+|\phi(hr)|^2\le\phi(c^2)\,[R^2\phi(u)+\phi(g^2)].
+\tag{27.11}
+$$
+
+这是176.5相同的两根式估计，不假定 $D$ 的强度齐次。对任意环境归一数学态 $\omega$ 取 $\phi(a)=\omega(rar)$；27.9给 $rc^2r=(cr)^*(cr)=0$，所以27.11迫使 $\omega(hr^3)=0$。这些态分离固定自伴元素，结合 $[h,r]=0$ 及 $h^2=u$ 给 $hr^3=0$、$r^3=0$，自伴性遂给 $r=0$；不要求任何算子代数意义的正常性，也未除以读取质量。取 $R=1$ 再得27.1第二等号。零角、零质量、负系数、$\mu=0$、退化联合角及非完备无限原域均已包含。∎
+

@@ -2507,3 +2507,340 @@ $$
 本条没有判定实际 $b$ 是否满足 (43.1)，不改变 §42 的取得边界条件结论，也不把方法障碍升级为原端点反例。尤其 (43.24) 是随截断变化的谱能量下界，不是同一实际 $\vartheta(H)-H$ 在原负阶段的谐和占用下界；没有从它推出 $\sum_{H\in\mathcal H_-}1/H=\infty$。无条件半端点的 $\sum_H\eta_H/H$ 发散仍未由此支付。能否用同一实际谱的小坏集估计，或整体谱自然尺度的联合估计，接回原负阶段及端点预算，仍是实际未付的桥；本条没有声称这些替代路线已经可行。即使端点标量预算发散，§41 的实际 CM 方向跨块联合桥仍须另付，实际 $\nu(R_{1/2}(\alpha))$ 满测仍未裁定。全部这些边界均针对原实际点对、全部有限地方、同一 $q_H$ 和同一个成功整数，没有以替代过滤或随机模型消除原问题。
 
 ## 追加锚（本行以下为增补区）
+
+## 44. 完整真实 ζ 谱的截平正能量参与长度消费者
+
+**定义 44.1（同一实际谱、同一窗口与同一显式公式余项）。** 保持定义 43.1 的全部原数据：实际 CM 点对、全部有限地方、实际共同周期 $q_H$、原 $h,\rho,M,a_0,Y,\nu$、实际方向 $\alpha$ 及每个事件使用的同一个成功整数。原过滤仍为 $\beta=0,c_0=1,\gamma=1/2$；下面的 $\beta_n$ 只表示所选零点的实部。假设
+
+$$
+ b=\sup_{\rho\in\mathcal Z}\operatorname{Re}\rho>\frac12,
+ \qquad \operatorname{Re}\rho<b\quad(\rho\in\mathcal Z),
+$$
+
+其中 $\mathcal Z$ 是非平凡零点的不同位置集合，$m_\rho$ 是位置 $\rho$ 的实际重数。取实际零点
+
+$$
+ \rho_n=\beta_n+iG_n,
+ \qquad \beta_n\to b,
+ \qquad G_n\to\infty,
+$$
+
+并固定 $p>2$ 与 $0<\kappa<1$，令
+
+$$
+ T_n=G_n^p,
+ \quad t_n=\log T_n,
+ \quad r=\kappa^{-1},
+ \quad I_n=[t_n,rt_n],
+ \quad L_n=(r-1)t_n,
+ \quad \delta_n=b-\beta_n.
+ \tag{44.1}
+$$
+
+这里允许 $b=1$；不要求 $\rho_n$ 是截断谱中实部最右的根，也不假设简单零点、LI、统一频差或随机独立。对每个 $n$，按不同位置求和、在系数中只计一次实际重数，定义完整截断谱
+
+$$
+ S_n(y)=
+ \sum_{\substack{\rho\in\mathcal Z\\|\operatorname{Im}\rho|\le T_n}}
+ c_\rho e^{(\rho-\beta_n)y},
+ \qquad c_\rho=\frac{m_\rho}{\rho}.
+ \tag{44.2}
+$$
+
+共轭位置和重数均保留，故 $c_{\bar\rho}=\overline{c_\rho}$ 且 $S_n(y)\in\mathbb R$。这是完整真实谱，未删除移动共轭对，也没有为不同窗口更换零点集合、相位、$\psi$ 或原过滤。令
+
+$$
+ e^{-\beta_n y}\bigl(\psi(e^y)-e^y\bigr)
+   =-S_n(y)+R_n(y)
+ \qquad (y\in I_n),
+ \tag{44.3}
+$$
+
+把 $R_n$ 定义为这一条同一实际 $\psi$ 的截断显式公式余项，并置
+
+$$
+ h_n(y)=e^{-\beta_n y},
+ \qquad
+ E_n=\int_{I_n}\bigl(|R_n(y)|+h_n(y)\bigr)^2\,dy.
+ \tag{44.4}
+$$
+
+$h_n$ 只支付固定阈值 $2$ 的归一化成本；以后取整数部分时的 $x-H<1$ 也保留为同一实际取整成本。
+
+**引理 44.2（完整谱的两侧指数与余项支付）。** 在定义 44.1 下，令
+
+$$
+ Q_n=\int_{I_n}(S_n(y)_+)^2\,dy,
+ \qquad
+ M_n^\pm=\frac1{L_n}\int_{I_n}(S_n(y)_\pm)^2\,dy.
+ \tag{44.5}
+$$
+
+则 $Q_n>0$ 对充分大的 $n$ 成立，并且
+
+$$
+ \lim_{n\to\infty}\frac{\log M_n^+}{\log T_n}
+ =
+ \lim_{n\to\infty}\frac{\log M_n^-}{\log T_n}=0.
+ \tag{44.6}
+$$
+
+此外，Devin 的同一截断显式公式给出
+
+$$
+ \frac{E_n}{L_n}
+ \ll
+ t_n^2T_n^{-1+2\delta_n/\kappa}
+ +(t_n^4+1)T_n^{-2\beta_n}.
+ \tag{44.7}
+$$
+
+因此 $E_n/Q_n\to0$。
+
+**证明。** (44.6) 是定理 43.2 的高斯定位、固定旧根有限消去和同一窗口 Cauchy--Schwarz 推理在完整和 $S_n$ 上的直接复用。完整和仍满足相同的单位高度零点计数
+
+$$
+ \sum_{|\operatorname{Im}\rho|\le T_n}|c_\rho|\ll\log^2(T_n+2),
+$$
+
+并且共轭配对使其为实值。正高斯的整线均值和窗外尾分别按 (43.10)--(43.13) 估计；固定任意实部 $b-\varepsilon$ 的旧根，用 (43.15)--(43.21) 的有限多项式消去固定低谱，再让高谱由高斯频率衰减支付。选中的 $\rho_n,\bar\rho_n$ 最终高于该固定低谱，是否比它们更靠右不影响恒等式
+
+$$
+ e^{(\beta_n-\rho_*)y}e^{(\rho-\beta_n)y}=e^{(\rho-\rho_*)y}.
+$$
+
+于是正、负两侧各有 $T_n^{-\eta}$ 的下界，而实部上界给出任意固定 $T_n^\eta$ 的上界；先固定旧根再令 $\varepsilon\downarrow0$ 即得 (44.6)。这只复用 §43 已交付的证明组织，没有把移动根当作最右根。
+
+对 (44.7)，直接使用 Devin，*Chebyshev’s bias for analytic $L$-functions*，arXiv:1706.06394v4，Proposition 4.5 的 (4)--(8)：其中的 $\varepsilon(x,T_n)$ 已是 $T_n<|\operatorname{Im}\rho|\le e^y$ 的实际高谱尾，因此 (44.7) 不再另加一份高零点尾。因 $\beta_n\to b>1/2$，任取足够小的
+
+$$
+ 0<\eta<\min\left\{\frac12,\frac{2b-1}{2}\right\}
+$$
+
+后，(44.7) 给 $E_n/L_n\ll T_n^{-1+\eta}$，而 (44.6) 给 $Q_n/L_n\ge T_n^{-\eta}$，故
+
+$$
+ \frac{E_n}{Q_n}\ll T_n^{-1+2\eta}\longrightarrow0.
+ \tag{44.8}
+$$
+
+这一步把同一实际显式公式余项、固定阈值和取整前的常数成本付清；它没有证明完整谱的长度证书发散。$\square$
+
+**定义 44.3（截平高度与正能量参与长度）。** 写
+
+$$
+ X_n(y)=(S_n(y)_+)^2,
+ \qquad
+ C_n(z)=\int_{I_n}\min\{X_n(y),z\}\,dy \quad(z>0).
+ \tag{44.9}
+$$
+
+若 $Q_n>0$，连续性和 $C_n(0)=0<C_n(\|X_n\|_\infty)=Q_n$ 给出唯一的
+$z_n\in(0,\|X_n\|_\infty)$ 使
+
+$$
+ C_n(z_n)=\frac{Q_n}{2}.
+ \tag{44.10}
+$$
+
+其唯一性只用有限指数和的连续性：对 $0\le z_1<z_2<\|X_n\|_\infty$，$X_n>z_1$ 的开邻域具有正长度。定义截平正能量参与长度
+
+$$
+ \Lambda_n=\frac{C_n(z_n)}{z_n}=\frac{Q_n}{2z_n}.
+ \tag{44.11}
+$$
+
+$z_n$ 截平的是同一完整谱在同一原窗口中的正能量高度，不删除任何根，也不替换 $\psi$、原过滤或取整规则。
+
+**定理 44.4（截平消费者及四阶强证书）。** 设选取的窗口族 $\{I_n\}$ 两两不交。定义
+
+$$
+ u_n(y)=|R_n(y)|+h_n(y),
+ \qquad
+ B_n=\{y\in I_n:S_n(y)>2u_n(y)\}.
+ \tag{44.12}
+$$
+
+则充分大的 $n$ 有
+
+$$
+ \boxed{
+ \frac{Q_n^2}{V_n}\le\Lambda_n\le L_n,
+ \qquad
+ V_n:=\int_{I_n}(S_n(y)_+)^4\,dy.
+ }
+ \tag{44.13}
+$$
+
+并且当 $E_n\le Q_n/16$ 时
+
+$$
+ |B_n|\ge\frac{\Lambda_n}{2}
+ \ge\frac{Q_n^2}{2V_n}.
+ \tag{44.14}
+$$
+
+因此任一条下列充分条件都给出同一个原负整数阶段的谐和发散：
+
+$$
+ \sum_n\Lambda_n=\infty,
+ \qquad\text{或更强的}\qquad
+ \sum_n\frac{Q_n^2}{V_n}=\infty.
+ \tag{44.15}
+$$
+
+在每个条件下，均有
+
+$$
+ \sum_{\substack{H\ge7\\\vartheta(H)<H}}\frac1H=\infty,
+ \tag{44.16}
+$$
+
+并由 §34.1 的同一严格负阶段窗口得到每个比较方向 $\omega\in\mathbb T^2$ 的
+
+$$
+ \sum_{j\ge j_0}g_j^{(1/2)}(\omega)=\infty.
+ \tag{44.17}
+$$
+
+**证明。** 对任意 $x,z>0$，有
+
+$$
+ (x-z)_+\le\frac{x^2}{4z},
+$$
+
+因为 $x\ge z$ 时等价于 $(x-2z)^2\ge0$。取 $z=V_n/(2Q_n)$，便有
+
+$$
+ C_n(z)\ge Q_n-\frac{V_n}{4z}=\frac{Q_n}{2}.
+$$
+
+由 (44.10) 的唯一性，$z_n\le V_n/(2Q_n)$，从而
+$\Lambda_n=Q_n/(2z_n)\ge Q_n^2/V_n$；另一方面 $C_n(z_n)\le L_nz_n$，故 $\Lambda_n\le L_n$。
+
+在 $I_n\setminus B_n$ 上，$X_n\le4u_n^2$，所以
+
+$$
+ \int_{B_n}\min\{X_n,z_n\}
+ \ge C_n(z_n)-4E_n
+ \ge\frac{Q_n}{4}
+ \qquad(E_n\le Q_n/16).
+ \tag{44.18}
+$$
+
+除以 $z_n$ 得 (44.14)。这比直接用四阶 Hölder 保留更多信息：$Q_n^2/V_n$ 只是截平长度的一个强制下界，$\Lambda_n$ 允许极高而极稀的正尖峰被截去。
+
+在 $B_n$ 上，由 (44.3)、(44.4) 和 $h_n=e^{-\beta_n y}$，有
+
+$$
+ \psi(e^y)-e^y
+ =e^{\beta_n y}(-S_n(y)+R_n(y))<-2.
+ \tag{44.19}
+$$
+
+令 $x=e^y$、$H=\lfloor x\rfloor$。同一个实际阶梯函数满足
+$\vartheta(H)\le\psi(H)\le\psi(x)$，且 $0\le x-H<1$，故
+
+$$
+ \vartheta(H)-H< -2+(x-H)<-1<0.
+ \tag{44.20}
+$$
+
+没有为每个窗口另取整数；所有 $B_n$ 都落在同一个实际集合
+
+$$
+ D=\{y:\psi(e^y)-e^y<-2\}.
+ \tag{44.21}
+$$
+
+对 $Y$ 足够大，按唯一胞 $[\log H,\log(H+1))$ 分割并使用
+$\log(1+1/H)\le1/H$，得到
+
+$$
+ |D\cap[\log7,Y]|
+ \le O(1)+
+ \sum_{\substack{7\le H\le e^Y\\\vartheta(H)<H}}\frac1H.
+ \tag{44.22}
+$$
+
+由于窗口不交，(44.14) 与 (44.15) 使 $\sum_n|B_n|=\infty$；取越来越大的前缀应用 (44.22)，即得 (44.16)。最后复用 §34.1：每个充分大的 $H$、每个方向同时有一个两两不交窗口族的贡献至少 $c_{1/2}/H$。对 $H$ 求和即为 (44.17)；等价地，这是 §40.9 在 $\gamma=1/2$ 的原半端点消费者。这正是原负 $\vartheta$ 阶段的长度消费者，未把方法障碍改写成端点反例。$\square$
+
+**单窗、互不相交与重叠的量词。** (44.15) 的求和必须在不交窗口上进行；若窗口重叠，裸和会把同一对数时间重复计数，不能推出 (44.16)。单窗证书沿子列无界则足够：由 $\Lambda_n\le L_n$ 且 $t_n\to\infty$，可递归选取 $n_k$ 使 $I_{n_k}$ 两两不交且 $\Lambda_{n_k}\ge k$，于是其和发散；$Q_n^2/V_n$ 同理。反向则不成立：每窗证书恒为 $1$ 的不交族已有发散和，却没有单窗无界。若只有有界重叠，需先按重叠常数付账，不能静默套用 (44.22)。
+
+**严格性例子（一般函数类，不是 ζ 反例）。** 取不交区间 $I_n$，令 $t_n=R^n$、$R>1/\kappa$，$L_n=(r-1)t_n$。在每个区间的两半上先取 $S_n=+1$ 与 $S_n=-1$；再在正半的一小段、负半的同长度一小段上分别改为 $+A_n$、$-A_n$，其中
+
+$$
+ d_n=e^{-3\sqrt{t_n}},
+ \qquad A_n=e^{\sqrt{t_n}}.
+$$
+
+它保持均值为零，且 $\|S_n\|_\infty=e^{o(t_n)}$。直接计算给出
+
+$$
+ Q_n=\frac{L_n}{2}+o(1),
+ \qquad
+ V_n\asymp d_nA_n^4=e^{\sqrt{t_n}},
+ \qquad
+ \frac{Q_n^2}{V_n}\asymp L_n^2e^{-\sqrt{t_n}},
+ \tag{44.23}
+$$
+
+故四阶和收敛。另一方面，解 (44.10) 得 $z_n=1/2+o(1)$，所以 $\Lambda_n=L_n/2+o(L_n)$，其不交和发散。这个例子只说明极稀尖峰会破坏四阶参与长度而不破坏截平参与长度；它没有 ζ 的零点系数、实部联合分布或显式公式，也不是实际 ζ 的反例。
+
+**完整四频接口与当前文献边界。** 令 $\sigma_j=\operatorname{Re}\rho_j$、$\gamma_j=\operatorname{Im}\rho_j$，并置
+
+$$
+ a=\sigma_1+\sigma_2+\sigma_3+\sigma_4-4\beta_n,
+ \qquad
+ \omega=\gamma_1+\gamma_2-\gamma_3-\gamma_4,
+$$
+
+$$
+ K_n(z)=\int_{I_n}e^{zy}\,dy
+ =e^{zt_n}\frac{e^{zL_n}-1}{z},
+ \qquad K_n(0)=L_n.
+ \tag{44.24}
+$$
+
+因 $S_n$ 实值，$W_n:=\int_{I_n}S_n(y)^4dy=\int|S_n(y)|^4dy$ 的精确展开为
+
+$$
+ W_n=
+ \sum_{\rho_1,\ldots,\rho_4}
+ c_{\rho_1}c_{\rho_2}
+ \overline{c_{\rho_3}c_{\rho_4}}
+ K_n(a+i\omega),
+ \qquad
+ V_n\le W_n,
+ \tag{44.25}
+$$
+
+其中四个指标都遍历同一个 $|\operatorname{Im}\rho_j|\le T_n$ 的完整实际谱，重数已经在每个 $c_\rho$ 中计入。精确核满足
+
+$$
+ |K_n(a+i\omega)|
+ \le e^{\max\{at_n,a(t_n+L_n)\}}
+ \min\left\{L_n,\frac2{|a+i\omega|}\right\},
+ \tag{44.26}
+$$
+
+约定 $2/0=+\infty$。因此定义绝对值充分上界
+
+$$
+ U_n=\sum_{\rho_1,\ldots,\rho_4}
+ |c_{\rho_1}c_{\rho_2}c_{\rho_3}c_{\rho_4}|
+ |K_n(a+i\omega)|,
+$$
+
+则 $V_n\le W_n\le U_n$；若某个两两不交窗口族满足
+$\sum_nQ_n^2/U_n=\infty$，也足以消费 (44.15)。这是可能很强的绝对值条件，不允许把真实相位抵消删掉后声称它不存在。
+
+必须同时保留四项的实部 $a$、原相位 $e^{i\omega t_n}$、趋于 $1/L_n$ 的近共振尺度 $|\omega|\lesssim1/L_n$ 以及正部 $Q_n$ 的归一化。只计固定单位频率窗口的四元组，或只取各边缘实部/频率的分别最优值，都没有给出 (44.25) 所需的同一四元组界。Tao--Trudgian--Yang，*New exponent pairs, zero density estimates, and zero additive energy estimates: a systematic approach*，arXiv:2501.16779v1，Definition 56、Remark 57 及 Theorems 63--64 研究实际 ζ 零点的单位尺度无权加法能量；它提供相关工具线索，却没有支付这里带同窗核、阻尼系数、真实相位与正侧归一化的 $Q_n^2/V_n$ 或 $\Lambda_n$ 发散。固定尺度的幂指数不能静默代入本题随 $n$ 缩小的 $1/L_n$ 频差。
+
+**来源、复用范围与未决边界。** §43 的定义、同一窗口高斯抽取和两侧指数是本条 (44.6) 的直接上游；§34.1 的严格原负阶段窗口支付 (44.17)，§40.9 的准确相位路线和 §41 的实际 CM 跨块联合桥保持原状。Devin，*Chebyshev’s bias for analytic $L$-functions*，arXiv:1706.06394v4，Proposition 4.5 (4)--(8)，是 (44.3)--(44.8) 的同一实际 $\psi$ 显式公式和截断高谱尾输入。Tao--Trudgian--Yang 的上述结果只作为四频检索方向和适用边界，不被当作本条已支付的定理。高斯积分、有限多项式消根、Cauchy--Schwarz、截平不等式和整数胞估计都是成熟中间工具；本条新增的消费者是：在完整实际谱上把 $\Lambda_n$ 或 $Q_n^2/V_n$ 的同窗、不交发散接回原负 $\vartheta$ 整数谐和与全方向几何预算。
+
+本条没有证明真实 ζ 在 $b>1/2$ 且边界未取得时存在满足 $\sum\Lambda_n=\infty$ 的不交窗口，也没有证明较强的 $\sum Q_n^2/V_n=\infty$。它没有把 $Q_n/L_n=T_n^{-o(1)}$ 或 $\|S_n\|_\infty=e^{o(t_n)}$ 误报成发散：这些读数至多给单窗尺度，不能排除长度证书的可和衰减。无条件半端点的实际相位和谐和条件仍未由本条支付；即便 (44.17) 对所有方向成立，§41 所列同一 $Y$ 上实际 CM 方向的联合桥和 $\nu(R_{1/2}(\alpha))$ 满测问题仍未解。所有结论继续使用原 $q_H$、全部有限地方、原点对和同一个成功整数。
+
+用白话说，完整谱路线保留了所有真实零点，不再要求选中的高根控制余谱。§43 的高斯抽取只说明两侧能量在 $T_n$ 的幂指数上不能太小；Devin 的显式公式则说明同一窗口内的实际余项和固定阈值成本相对正能量趋于零。剩下的真实问题是正能量占据了多长的对数时间。$Q_n^2/V_n$ 对极高尖峰很敏感，截平后的 $\Lambda_n$ 把这些尖峰截掉，保留一半正能量对应的长度；若在不重复计时的窗口族上其和发散，就把同一实际 $\psi$ 的负值压到同一个整数 $H$，得到原 $\vartheta(H)<H$ 的无穷谐和，再消费 §34.1 的全方向窗口。真实 ζ 是否满足这个截平发散条件，仍需要保留四频近共振、实部、系数相位和正侧归一化的联合估计；文献线索尚未替它付款，实际无条件半端点和 CM 满测也仍未裁定。
+
+## 追加锚（本行以下为增补区）
