@@ -154,4 +154,40 @@ theorem resonant_target_word_natural_prefix_strict {w ell k m : ℕ}
     by simpa only [zero_add] using hS.1,
     by simpa only [zero_add] using hS.2⟩
 
+/-/ The adaptive resonant lift is a permutation with zero endpoint charges and
+    every natural prefix stays in both target strips. -/
+theorem resonant_target_word_of_source_strict {w ell k m : ℕ}
+    (hw : 1 ≤ w) (hell : 1 ≤ ell) (hm : m = 2 ^ ell)
+    (hdiv : w ∣ m - 1) (hlarge : 3 * w + 1 ≤ m) (hkl : ell < k)
+    (word : List (Fin (k + 1))) (hsource : resonantSourceWord k w word) :
+    let orientation :=
+      resonantAdaptiveOrientation w ell k m (by omega : ell ≤ k) word
+    (resonantLiftWord word orientation).Perm (List.finRange (k + ell + 1)) ∧
+      ((resonantLiftWord word orientation).map
+          (resonantTargetFirst k ell w)).sum = 0 ∧
+      ((resonantLiftWord word orientation).map
+          (resonantTargetSecond k ell w)).sum = 0 ∧
+      ∀ n : ℕ,
+        0 ≤ (((resonantLiftWord word orientation).take n).map
+              (resonantTargetFirst k ell w)).sum ∧
+        (((resonantLiftWord word orientation).take n).map
+              (resonantTargetFirst k ell w)).sum ≤ resonantTargetH k ell ∧
+        0 ≤ (((resonantLiftWord word orientation).take n).map
+              (resonantTargetSecond k ell w)).sum ∧
+        (((resonantLiftWord word orientation).take n).map
+              (resonantTargetSecond k ell w)).sum ≤ resonantTargetN k ell := by
+  dsimp only
+  let orientation :=
+    resonantAdaptiveOrientation w ell k m (by omega : ell ≤ k) word
+  have hend := resonant_target_word_endpoint_of_source hw hell hm hdiv hlarge
+    (by omega : ell ≤ k) word hsource orientation
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · simpa [orientation] using hend.1
+  · simpa [orientation] using hend.2.1
+  · simpa [orientation] using hend.2.2
+  · intro n
+    simpa [orientation] using
+      (resonant_target_word_natural_prefix_strict hw hell hm hdiv hlarge hkl
+        word hsource n)
+
 end D5.S3.Combinatorics.Circle.FourNegative.ResonantUniversalInsertion
