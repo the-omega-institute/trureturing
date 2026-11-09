@@ -173,7 +173,7 @@ internal sealed class FiniteElementaryCollapseDocument : IScribeDocumentDefiniti
                 SourceText("Exact authored Lean field: " + rawContract)));
 
     // Preserve decoded multiline quotations using one valid TextRun per source line.
-    // Quotations are commentary; theorem statements must come from Lean projection.
+    // Authored quotations are exposition; declaration handles identify the Lean source.
     private static DocumentBlock SourceText(string value) => value.Contains('\n')
         ? new DocumentBlock.Section(H("Source text"), Blocks(Array.ConvertAll(
             value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? " " : line)))))
