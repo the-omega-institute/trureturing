@@ -119,14 +119,16 @@ internal sealed class HardinA233123SquareStripDocument : IScribeDocumentDefiniti
     {
         var n = V("n"); var a = V("A");
         return All("n", Nat(), All("A", ArrayType(n), Eq(Self("Legal", a),
-            Call(Transfer + "widthLegal", Self("rowLegal"), Self("bonds"), a))));
+            Call(Transfer + "widthLegal", Qualified(Root + "rowLegal"),
+                Qualified(Root + "bonds"), a))));
     }
 
     private static Formula CountFormula()
     {
         var n = V("n");
         var predicate = Fn("A", ArrayType(n),
-            Call(Transfer + "widthLegal", Self("rowLegal"), Self("bonds"), V("A")));
+            Call(Transfer + "widthLegal", Qualified(Root + "rowLegal"),
+                Qualified(Root + "bonds"), V("A")));
         var univ = Typed(Qualified("Finset.univ"), Call("Finset", ArrayType(n)));
         return All("n", Nat(), Eq(Self("a", n),
             Call("Finset.card", Call("Finset.filter", predicate, univ))));
@@ -217,14 +219,11 @@ internal sealed class HardinA233123SquareStripDocument : IScribeDocumentDefiniti
         Seq(LambdaLower, Sp, V(name), Colon, Sp, type, Sp, Mapsto, Sp, Parenthesized(body));
     private static Formula All(string name, Formula type, Formula body) =>
         Seq(Forall, Sp, V(name), Colon, Sp, type, Comma, Sp, Parenthesized(body));
-    private static Formula Ex(string name, Formula type, Formula body) =>
-        Seq(Exists, Sp, V(name), Colon, Sp, type, Comma, Sp, Parenthesized(body));
     private static Formula SumOver(string name, Formula type, Formula body) =>
         Seq(Sum, Underscore, Grp(V(name), Colon, Sp, type), Sp, Parenthesized(body));
     private static Formula Eq(Formula a, Formula b) =>
         Seq(Parenthesized(a), Sp, F.Eq, Sp, Parenthesized(b));
     private static Formula Ne(Formula a, Formula b) => Seq(a, Sp, Neq, Sp, b);
-    private static Formula Lt(Formula a, Formula b) => Seq(a, Sp, F.Lt, Sp, b);
     private static Formula And(Formula a, Formula b) =>
         Seq(Parenthesized(a), Sp, Land, Sp, Parenthesized(b));
     private static Formula Imp(Formula a, Formula b) =>

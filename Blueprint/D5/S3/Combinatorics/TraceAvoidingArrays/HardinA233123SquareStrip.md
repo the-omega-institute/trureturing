@@ -36,7 +36,7 @@ The same column index is used in both consecutive rows.
 
 **Definition 1.3 (The literal array predicate).**
 
-$$\forall n: \operatorname{Nat}, (\forall A: ((\operatorname{Fin}\left(n\right)) \times (\operatorname{Fin}\left(2\right))) \to \operatorname{Fin}\left(6\right), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233123SquareStrip}.\operatorname{Legal}\left(A\right)) = ((\exists i: \operatorname{Fin}\left(n\right), (((\operatorname{Fin}.\operatorname{val}\left(i\right)) = (0)) \land ((A\left((i, (0: \operatorname{Fin}\left(2\right)))\right)) = ((0: \operatorname{Fin}\left(6\right)))))) \land ((\forall i: \operatorname{Fin}\left(n\right), (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233123SquareStrip}.\operatorname{rowLegal}\left(\lambda j: \operatorname{Fin}\left(2\right) \mapsto (A\left((i, j)\right))\right))) \land ((\forall i: \operatorname{Fin}\left(n\right), (\forall h: \operatorname{Fin}.\operatorname{val}\left(i\right) + 1 < n, (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233123SquareStrip}.\operatorname{bonds}\left(\lambda j: \operatorname{Fin}\left(2\right) \mapsto (A\left((i, j)\right)), \lambda j: \operatorname{Fin}\left(2\right) \mapsto (A\left(((\operatorname{Fin}.\operatorname{mk}\left(\operatorname{Fin}.\operatorname{val}\left(i\right) + 1, h\right): \operatorname{Fin}\left(n\right)), j)\right))\right)))) \land (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233251TriangleStrip}.\operatorname{widthNormal}\left((\operatorname{Bool}.\operatorname{false}, \operatorname{Bool}.\operatorname{false}), \lambda i: \operatorname{Fin}\left(n\right) \mapsto (\lambda j: \operatorname{Fin}\left(2\right) \mapsto (A\left((i, j)\right)))\right)))))))$$
+$$\forall n: \operatorname{Nat}, (\forall A: ((\operatorname{Fin}\left(n\right)) \times (\operatorname{Fin}\left(2\right))) \to \operatorname{Fin}\left(6\right), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233123SquareStrip}.\operatorname{Legal}\left(A\right)) = (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233251TriangleStrip}.\operatorname{widthLegal}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233123SquareStrip}.\operatorname{rowLegal}, \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233123SquareStrip}.\operatorname{bonds}, A\right))))$$
 
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233123SquareStrip.Legal` (`✓ std3`).
 
@@ -46,11 +46,11 @@ $$\forall n: \operatorname{Nat}, (\forall A: ((\operatorname{Fin}\left(n\right))
 
 *Commentary.*
 
-The first-cell existential fails when n is zero. The shared widthNormal definition says that, at cell (i,j), each required predecessor is at (r,t) with r<i or r=i and t<j. The initial seen flags are both false.
+Legal is the published widthLegal predicate specialized to rowLegal and bonds. The first-cell existential fails when n is zero. The shared widthNormal definition says that, at cell (i,j), each required predecessor is at (r,t) with r<i or r=i and t<j. The initial seen flags are both false.
 
 **Definition 1.4 (The literal filtered count).**
 
-$$\forall n: \operatorname{Nat}, ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233123SquareStrip}.\operatorname{a}\left(n\right)) = (\operatorname{Finset}.\operatorname{card}\left(\operatorname{Finset}.\operatorname{filter}\left(\lambda A: ((\operatorname{Fin}\left(n\right)) \times (\operatorname{Fin}\left(2\right))) \to \operatorname{Fin}\left(6\right) \mapsto (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233123SquareStrip}.\operatorname{Legal}\left(A\right)), (\operatorname{Finset}.\operatorname{univ}: \operatorname{Finset}\left(((\operatorname{Fin}\left(n\right)) \times (\operatorname{Fin}\left(2\right))) \to \operatorname{Fin}\left(6\right)\right))\right)\right)))$$
+$$\forall n: \operatorname{Nat}, ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233123SquareStrip}.\operatorname{a}\left(n\right)) = (\operatorname{Finset}.\operatorname{card}\left(\operatorname{Finset}.\operatorname{filter}\left(\lambda A: ((\operatorname{Fin}\left(n\right)) \times (\operatorname{Fin}\left(2\right))) \to \operatorname{Fin}\left(6\right) \mapsto (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233251TriangleStrip}.\operatorname{widthLegal}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233123SquareStrip}.\operatorname{rowLegal}, \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233123SquareStrip}.\operatorname{bonds}, A\right)), (\operatorname{Finset}.\operatorname{univ}: \operatorname{Finset}\left(((\operatorname{Fin}\left(n\right)) \times (\operatorname{Fin}\left(2\right))) \to \operatorname{Fin}\left(6\right)\right))\right)\right)))$$
 
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233123SquareStrip.a` (`✓ std3`).
 
@@ -58,7 +58,7 @@ $$\forall n: \operatorname{Nat}, ((\operatorname{D5}.\operatorname{S3}.\operator
 
 *Commentary.*
 
-Every function from Fin n times Fin 2 to Fin 6 occurs in Finset.univ. Filtering by Legal and taking its cardinality is the sequence definition. Thus a 0 = 0 by the first-cell condition.
+Every function from Fin n times Fin 2 to Fin 6 occurs in Finset.univ. Filtering by the owner widthLegal predicate and taking its cardinality is the sequence definition. Thus a 0 = 0 by the first-cell condition.
 
 **Definition 1.5 (Boundary compatibility).**
 
