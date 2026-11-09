@@ -174,11 +174,44 @@ b_{n+1}(2k+1)=-\sum_{r=1}^k b_n(2r+1)
  +(2k+1)b_n(2k+3)\quad\text{in }\mathbb Z/4\mathbb Z
 $$
 
-for $n\ge1$ and $k\ge0$. Identifying $A_j$ with $b_j(3)$ still requires
-the first-column insertion/deletion bijection on the grid, including
-the first-$z$ state and its insertion multiplicities. The simultaneous
-formal-series solution, its Catalan
-coefficient identity, and both binary exception-set characterizations
-remain separate mathematical obligations. Neither modular assertion
-for the actual count is claimed as a result here. These contributions
-carry no claim of worldwide priority or an exhaustive literature screen.
+for $n\ge1$ and $k\ge0$. The simultaneous odd-argument formal series
+are $UV^m$ at argument $4m+1$ and $V^{m+1}$ at argument $4m+3$, where
+$C$ is the ordinary Catalan series over $\mathbb Z/4\mathbb Z$,
+$V=3C^2-2$ and $U=1+XV$. These series satisfy the complete reduced
+recurrence and have constant coefficient one. Coefficient induction
+therefore gives
+
+$$
+b_j(3)\equiv 3C_j\pmod4\qquad(j\ge2),
+$$
+
+with the separate initial value $b_1(3)=1$. The natural-to-residue
+row correspondence is proved by induction on the transfer.
+The existing binary Catalan theorem supplies the dyadic parity rule.
+Together with the modulo-five invariant, it proves the exact modulo-ten
+rule for every natural transfer row:
+
+$$
+b_j(3)\bmod10=
+\begin{cases}1,&j+1=2^k\text{ for some }k\ge1,\\
+6,&\text{otherwise.}\end{cases}
+$$
+
+Writing $s(m)$ for the sum of the binary digits of $m$, binary induction
+proves $s(m+1)+v_2(m+1)=s(m)+1$. Pinned Kummer's theorem and
+$(m+1)C_m=\binom{2m}{m}$ then imply $v_2(C_m)+1=s(m+1)$.
+The exact characterization of $s(m)\le2$ for $m\ge2$ as
+$m=2^i+2^p$, $p\le i$, includes the equal-exponent and exponent-zero
+cases. It proves both directions of the modulo-four exception rule for
+all transfer rows, with $j\ge1$:
+
+$$
+4\nmid b_j(3)\quad\Longleftrightarrow\quad
+\exists i,p\in\mathbb N,\ p\le i\ \land\ j+1=2^i+2^p.
+$$
+
+Identifying $A_j$ with $b_j(3)$ still requires the universal
+insertion/deletion bijection on the grid, including its rank state and
+exact insertion multiplicities. Neither modular assertion for the
+actual count is claimed as a result here. These contributions carry no
+claim of worldwide priority or an exhaustive literature screen.

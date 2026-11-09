@@ -73,7 +73,7 @@ internal sealed class BlitvicKammounSteingrimsson14325TransferDocument : IScribe
                     Mathbb, Grp(F.Id("N")), Comma, Sp,
                     new Formula.Apply(F.Id("mod"), [new Formula.Apply(F.Id("rowNat"), [F.Id("n"), D(3)]), D(10)]), Sp, Eq, Sp, F.Id("dyadicResidue"), Grp(Add(F.Id("n"), D(2)))))),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The source row index is j=n+1, so the exception "
+                Blocks(Paragraph(Text("The notation dyadicResidue(m) means one if m=2ᵏ for some k≥1, and six otherwise. The source row index is j=n+1, so the exception "
                     + "is precisely j+1=2ᵏ with k≥1. For a positive row index, reduce "
                     + "the Catalan formula from ZMod 4 to ZMod 2 through the canonical "
                     + "ring homomorphism. The existing binary_catalan theorem then "
@@ -83,6 +83,32 @@ internal sealed class BlitvicKammounSteingrimsson14325TransferDocument : IScribe
                     + "arithmetic combines the two residues to obtain one or six "
                     + "modulo ten. This theorem concerns natural transfer rows only; "
                     + "it assumes no recurrence for the actual packing count."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("bks14325-transfer-mod-four-exact"),
+                DeclarationHandle.Create(Prefix + "row_mod_four_iff"),
+                H("The exact two-power exception set for transfer rows"),
+                StatementSource.FromAuthor(Disp(Seq(Forall, Sp, F.Id("n"), Colon, Sp,
+                    Mathbb, Grp(F.Id("N")), Comma, Sp,
+                    F.Id("fourNondivides"), Grp(new Formula.Apply(F.Id("rowNat"), [F.Id("n"), D(3)])),
+                    Sp, Iff, Sp, Exists, Sp, F.Id("i"), Comma, F.Id("p"), Colon, Sp,
+                    Mathbb, Grp(F.Id("N")), Comma, Sp, F.Id("p"), Sp, Leq, Sp, F.Id("i"),
+                    Sp, F.Id("and"), Sp, Add(F.Id("n"), D(2)), Sp, Eq, Sp,
+                    Add(new Formula.Power(D(2), F.Id("i")), new Formula.Power(D(2), F.Id("p")))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every n≥0, four fails to divide row ℕ n 3 "
+                    + "exactly when n+2 is a sum of two powers of two with p≤i. "
+                    + "The same-exponent case represents a single power of two; "
+                    + "the p=0 case represents odd integers with two occupied bits. "
+                    + "Let s(m) be the sum of the base-two digits of m. The proof "
+                    + "establishes s(m+1)+v₂(m+1)=s(m)+1 by binary induction. "
+                    + "Kummer's imported digit-sum formula gives v₂(binomial(2m,m))=s(m); "
+                    + "the imported identity (m+1)Cₘ=binomial(2m,m) then yields "
+                    + "v₂(Cₘ)+1=s(m+1). A separate binary induction and a direct "
+                    + "shift calculation characterize s(m)≤2, for m≥2, as the exact "
+                    + "two-power set. The Catalan row formula and the unit three "
+                    + "transfer this characterization to every positive row; the "
+                    + "initial row supplies the equal-exponent pair i=p=0. "
+                    + "Both implications hold universally. The relation to actual "
+                    + "permutations still awaits the grid-to-row bijection."))), DescribeRole.Theorem),
             Paragraph(Text("The source target counts actual permutations of [3j+2], j≥1, "
                 + "whose prescribed length-five windows at starts 1+3t, 0≤t<j, have "
                 + "pattern 14325. Extra occurrences are allowed. Applying this invariant "
@@ -94,7 +120,7 @@ internal sealed class BlitvicKammounSteingrimsson14325TransferDocument : IScribe
                 + "if and only if j+1=2ⁱ+2ᵖ with 0≤p≤i. The equal-exponent and p=0 "
                 + "boundaries are included. The printed continuation says four divides "
                 + "all but these indices; the exact-exception converse is the stronger "
-                + "registered interpretation. This contribution does not settle it or "
+                + "registered interpretation. The transfer-row results do not settle it for actual counts or "
                 + "the full target. The narrower issue 21304 remains unchanged.")))));
 
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);

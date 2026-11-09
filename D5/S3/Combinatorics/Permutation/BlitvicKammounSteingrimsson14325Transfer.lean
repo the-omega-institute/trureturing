@@ -7,6 +7,7 @@
    digest: Universal modular invariants of the overlap-two grid transfer. -/
 
 import D5.S1.Recurrence.Invariants.CatalanCompositionSquareParity
+import Mathlib.NumberTheory.Padics.PadicVal.Basic
 import Mathlib.RingTheory.PowerSeries.Catalan
 import Mathlib.Tactic.LinearCombination
 import Mathlib.Data.ZMod.Basic
@@ -328,6 +329,167 @@ theorem row_mod_ten (n : ℕ) :
   · have := h2.mpr h
     omega
   · have hn : row ℕ n 3 % 2 ≠ 1 := mt h2.mp h
+    omega
+
+private def bitSum (n : ℕ) : ℕ := (Nat.digits 2 n).sum
+
+private theorem bitSum_even (n : ℕ) : bitSum (2 * n) = bitSum n := by
+  by_cases hn : n = 0
+  · simp [hn, bitSum]
+  · simp [bitSum, Nat.digits_base_mul (by decide : 1 < 2) (by omega : 0 < n)]
+
+private theorem bitSum_odd (n : ℕ) : bitSum (2 * n + 1) = bitSum n + 1 := by
+  unfold bitSum
+  rw [show 2 * n + 1 = 1 + 2 * n by omega,
+    show Nat.digits 2 (1 + 2 * n) = 1 :: Nat.digits 2 n from
+      Nat.digits_add 2 (by decide) 1 n (by decide) (Or.inl (by decide))]
+  simp [bitSum, Nat.add_comm]
+
+private theorem bitSum_pos (n : ℕ) (hn : 0 < n) : 0 < bitSum n := by
+  have hnil : Nat.digits 2 n ≠ [] := Nat.digits_ne_nil_iff_ne_zero.mpr (by omega)
+  exact List.sum_pos_iff_exists_pos_nat.mpr
+    ⟨_, List.getLast_mem hnil, Nat.pos_of_ne_zero (Nat.getLast_digit_ne_zero 2 (by omega))⟩
+
+private theorem bitSum_shift (k n : ℕ) (hn : 0 < n) : bitSum (2 ^ k * n) = bitSum n := by
+  simp [bitSum, Nat.digits_base_pow_mul (by decide : 1 < 2) hn]
+
+private theorem bitSum_pow (k : ℕ) : bitSum (2 ^ k) = 1 := by
+  simpa [bitSum] using bitSum_shift k 1 (by decide)
+
+private theorem bitSum_increment (n : ℕ) :
+    bitSum (n + 1) + padicValNat 2 (n + 1) = bitSum n + 1 := by
+  induction n using Nat.strong_induction_on with
+  | h n ih =>
+    by_cases he : n % 2 = 0
+    · have hn : n = 2 * (n / 2) := by omega
+      have hv : padicValNat 2 (n + 1) = 0 := padicValNat.eq_zero_of_not_dvd (by
+        intro hd
+        have := Nat.mod_eq_zero_of_dvd hd
+        omega)
+      rw [hv, hn, bitSum_even, bitSum_odd, add_zero]
+    · have hn : n = 2 * (n / 2) + 1 := by omega
+      have hi := ih (n / 2) (by omega)
+      have hv : padicValNat 2 (n + 1) = 1 + padicValNat 2 (n / 2 + 1) := by
+        rw [show n + 1 = 2 * (n / 2 + 1) by omega,
+          padicValNat.mul (by decide : 2 ≠ 0) (by omega), padicValNat_self]
+      have hb : bitSum (n + 1) = bitSum (n / 2 + 1) := by
+        rw [show n + 1 = 2 * (n / 2 + 1) by omega, bitSum_even]
+      have hb0 : bitSum n = bitSum (n / 2) + 1 := by
+        calc
+          bitSum n = bitSum (2 * (n / 2) + 1) := congrArg bitSum hn
+          _ = _ := bitSum_odd _
+      rw [hv, hb, hb0]
+      omega
+
+private theorem bitSum_eq_one (n : ℕ) : bitSum n = 1 ↔ ∃ k : ℕ, n = 2 ^ k := by
+  constructor
+  · intro hb
+    induction n using Nat.strong_induction_on with
+    | h n ih =>
+      by_cases he : n % 2 = 0
+      · have hn : n = 2 * (n / 2) := by omega
+        have hp : 0 < n := by
+          by_contra hnp
+          have hz : n = 0 := by omega
+          subst n
+          norm_num [bitSum] at hb
+        have hm := hb
+        rw [hn, bitSum_even] at hm
+        obtain ⟨k, hk⟩ := ih (n / 2) (by omega) hm
+        exact ⟨k + 1, by rw [hn, hk, pow_succ]; omega⟩
+      · have hn : n = 2 * (n / 2) + 1 := by omega
+        have hm : bitSum (n / 2) = 0 := by rw [hn, bitSum_odd] at hb; omega
+        have hz : n / 2 = 0 := by
+          by_contra hz
+          have := bitSum_pos (n / 2) (by omega)
+          omega
+        exact ⟨0, by simp; omega⟩
+  · rintro ⟨k, rfl⟩
+    exact bitSum_pow k
+
+private theorem bitSum_le_two (n : ℕ) (hn : 2 ≤ n) :
+    bitSum n ≤ 2 ↔ ∃ i p : ℕ, p ≤ i ∧ n = 2 ^ i + 2 ^ p := by
+  constructor
+  · intro hb
+    induction n using Nat.strong_induction_on with
+    | h n ih =>
+      by_cases hn2 : n = 2
+      · exact ⟨0, 0, by omega, by omega⟩
+      by_cases he : n % 2 = 0
+      · have hne : n = 2 * (n / 2) := by omega
+        have hm := hb
+        rw [hne, bitSum_even] at hm
+        obtain ⟨i, p, hpi, hp⟩ := ih (n / 2) (by omega) (by omega) hm
+        refine ⟨i + 1, p + 1, by omega, ?_⟩
+        rw [hne, hp, pow_succ, pow_succ]
+        omega
+      · have hne : n = 2 * (n / 2) + 1 := by omega
+        have hm : bitSum (n / 2) = 1 := by
+          have hpos := bitSum_pos (n / 2) (by omega)
+          rw [hne, bitSum_odd] at hb
+          omega
+        obtain ⟨k, hk⟩ := (bitSum_eq_one (n / 2)).mp hm
+        refine ⟨k + 1, 0, by omega, ?_⟩
+        rw [hne, hk, pow_succ]
+        omega
+  · rintro ⟨i, p, hpi, rfl⟩
+    obtain ⟨d, rfl⟩ := Nat.exists_eq_add_of_le hpi
+    cases d with
+    | zero =>
+      have he : 2 ^ (p + 0) + 2 ^ p = 2 ^ (p + 1) := by simp only [Nat.add_zero, pow_succ]; omega
+      rw [he, bitSum_pow]
+      decide
+    | succ d =>
+      have he : 2 ^ (p + (d + 1)) + 2 ^ p = 2 ^ p * (2 * 2 ^ d + 1) := by
+        rw [pow_add, pow_succ]; ring
+      rw [he, bitSum_shift p _ (by omega), bitSum_odd, bitSum_pow]
+
+private theorem catalan_ne_zero (n : ℕ) : catalan n ≠ 0 := by
+  intro hz
+  have h := succ_mul_catalan_eq_centralBinom n
+  rw [hz, mul_zero] at h
+  exact Nat.centralBinom_ne_zero n h.symm
+
+private theorem catalan_valuation (n : ℕ) :
+    padicValNat 2 (catalan n) + 1 = bitSum (n + 1) := by
+  have h := sub_one_mul_padicValNat_choose_eq_sub_sum_digits' (p := 2) (k := n) (n := n)
+  have hs : (Nat.digits 2 (n + n)).sum = bitSum n := by
+    simpa only [bitSum, two_mul] using bitSum_even n
+  have hcentral : padicValNat 2 n.centralBinom = bitSum n := by
+    change (2 - 1) * padicValNat 2 ((n + n).choose n) = bitSum n + bitSum n - _ at h
+    rw [hs] at h
+    simpa [Nat.centralBinom, two_mul] using h
+  have hp := congrArg (padicValNat 2) (succ_mul_catalan_eq_centralBinom n)
+  rw [padicValNat.mul (by omega) (catalan_ne_zero n), hcentral] at hp
+  have hi := bitSum_increment n
+  omega
+
+/-- Both directions of the two-power exception rule for natural transfer rows,
+    including equal exponents and the exponent-zero boundary. -/
+theorem row_mod_four_iff (n : ℕ) :
+    (¬ 4 ∣ row ℕ n 3) ↔ ∃ i p : ℕ, p ≤ i ∧ n + 2 = 2 ^ i + 2 ^ p := by
+  cases n with
+  | zero =>
+    constructor
+    · intro _; exact ⟨0, 0, by omega, by decide⟩
+    · intro _; change ¬ 4 ∣ 1; decide
+  | succ n =>
+    have hr := row_catalan_mod_four n
+    have hz : (row ℕ (n + 1) 3 : ZMod 4) = 0 ↔ (catalan (n + 2) : ZMod 4) = 0 := by
+      rw [hr]
+      constructor
+      · intro h
+        have hh := congrArg (fun x : ZMod 4 => 3 * x) h
+        simpa only [← mul_assoc, show (3 : ZMod 4) * 3 = 1 by decide,
+          one_mul, mul_zero] using hh
+      · intro h; rw [h, mul_zero]
+    rw [← ZMod.natCast_eq_zero_iff, hz, ZMod.natCast_eq_zero_iff]
+    have hv := catalan_valuation (n + 2)
+    rw [show n + 2 + 1 = n + 1 + 2 by omega] at hv
+    have hd : 4 ∣ catalan (n + 2) ↔ 2 ≤ padicValNat 2 (catalan (n + 2)) := by
+      simpa using (padicValNat_dvd_iff_le (p := 2) (catalan_ne_zero (n + 2)) (n := 2))
+    rw [hd, not_le]
+    rw [← bitSum_le_two (n + 1 + 2) (by omega)]
     omega
 
 end D5.S3.Combinatorics.Permutation.BlitvicKammounSteingrimsson14325Transfer

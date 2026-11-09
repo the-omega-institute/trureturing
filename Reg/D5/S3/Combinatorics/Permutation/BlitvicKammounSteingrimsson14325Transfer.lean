@@ -295,4 +295,76 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 
 end ModTen
 
+namespace ExactFour
+
+open Classical
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℕ → ℕ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ n => row ℕ n) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => fun _ => 0) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law r := ∀ n : ℕ, (¬ 4 ∣ r.readout () () n 3) ↔ ∃ i p : ℕ, p ≤ i ∧ n + 2 = 2 ^ i + 2 ^ p
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hh := h 0
+  change (¬ 4 ∣ 0) ↔ ∃ i p : ℕ, p ≤ i ∧ 0 + 2 = 2 ^ i + 2 ^ p at hh
+  have he : ∃ i p : ℕ, p ≤ i ∧ 0 + 2 = 2 ^ i + 2 ^ p := ⟨0, 0, by omega, by decide⟩
+  exact (hh.mpr he) (dvd_zero 4)
+
+def family : Registration arena (type_of% @row_mod_four_iff) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨row_mod_four_iff, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    refine ⟨(), 0, 1, ?_⟩
+    intro h
+    have hh := congrFun h 0
+    change (1 : ℕ) = 0 at hh
+    exact (by decide : (1 : ℕ) ≠ 0) hh
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@row_mod_four_iff) (Realization signature) Type Unit where
+  unitName := `Reg.D5.S3.Combinatorics.Permutation.BlitvicKammounSteingrimsson14325Transfer.ExactFour.unit
+  realizationName := `Reg.D5.S3.Combinatorics.Permutation.BlitvicKammounSteingrimsson14325Transfer.ExactFour.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ n => row ℕ n) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Permutation.BlitvicKammounSteingrimsson14325Transfer
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "fn", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end ExactFour
+
 end Reg.D5.S3.Combinatorics.Permutation.BlitvicKammounSteingrimsson14325Transfer
