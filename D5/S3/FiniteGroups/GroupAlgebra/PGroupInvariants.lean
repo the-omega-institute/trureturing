@@ -12,12 +12,7 @@ import Mathlib.Data.Nat.Find
 import Mathlib.RepresentationTheory.Invariants
 import Mathlib.RepresentationTheory.Irreducible
 
-set_option autoImplicit false
-
 /-!
-UNCOMPILED source candidate: no elaboration, kernel, axiom-closure, audit or
-delivery claim is made by this file.
-
 The least ideal power annihilating a supplied nonzero vector produces a
 nonzero vector killed by the ideal. Applied to the actual augmentation kernel,
 the existing cardinal nilpotence bound gives a fixed vector. Normality makes
@@ -30,6 +25,8 @@ The nilpotent-action mechanism is classical. The existing Library note
 webb2016pgroups supports the reused augmentation-nilpotence input; it is not
 claimed to state each full telescope below verbatim. No novelty is claimed.
 -/
+
+set_option autoImplicit false
 
 namespace D5.S3.FiniteGroups.GroupAlgebra.PGroupInvariants
 
@@ -61,7 +58,7 @@ theorem exists_nonzero_killed_by_ideal
   obtain ⟨m, hm⟩ := Nat.exists_eq_succ_of_ne_zero hn0
   have hprev : ¬ kills m := Nat.find_min hex (by rw [hm]; exact Nat.lt_succ_self m)
   change ¬ ∀ a : A, a ∈ I ^ m → a • x = 0 at hprev
-  push_neg at hprev
+  push Not at hprev
   obtain ⟨a, ha, hax⟩ := hprev
   refine ⟨a • x, hax, ?_⟩
   intro b hb
@@ -83,7 +80,7 @@ theorem exists_nonzero_mem_invariants_of_isPGroup
   classical
   let I : Ideal (MonoidAlgebra R P) :=
     RingHom.ker (MonoidAlgebra.lift R R P (1 : P →* R)).toRingHom
-  letI : I.IsTwoSided := by dsimp [I]; infer_instance
+  have : I.IsTwoSided := by dsimp [I]; infer_instance
   have hnil : ∃ n : ℕ, I ^ n = ⊥ := by
     refine ⟨Nat.card P, ?_⟩
     exact PGroupAugmentation.augmentation_ideal_pow_card (R := R) p hP
@@ -123,16 +120,16 @@ theorem isTrivial_restrict_normal_p_subgroup
     (p : ℕ) [Fact p.Prime] [CharP k p]
     (ρ : Representation k G V) [ρ.IsIrreducible]
     (P : Subgroup G) [P.Normal] [Finite P] (hP : IsPGroup p P) :
-    (ρ.comp P.subtype).IsTrivial := by
+    Representation.IsTrivial (ρ.comp P.subtype) := by
   classical
-  letI : Nontrivial V :=
+  let : Nontrivial V :=
     D5.S3.FiniteGroups.FiniteCharacterAlgebra.Representation.IsIrreducible.nontrivial
       (ρ := ρ) inferInstance
   obtain ⟨x, hx⟩ := exists_ne (0 : V)
   obtain ⟨y, hy, hyfix⟩ :=
     exists_nonzero_mem_invariants_of_isPGroup p hP (ρ.comp P.subtype) x hx
   let W : Subrepresentation ρ :=
-    { toSubmodule := (ρ.comp P.subtype).invariants
+    { toSubmodule := Representation.invariants (ρ.comp P.subtype)
       apply_mem_toSubmodule := by
         intro g v hv
         exact Representation.le_comap_invariants ρ P g hv }
@@ -141,14 +138,14 @@ theorem isTrivial_restrict_normal_p_subgroup
     have hyW : y ∈ W := hyfix
     rw [hbot] at hyW
     change y ∈ (⊥ : Submodule k V) at hyW
-    exact hy (Submodule.mem_bot.mp hyW)
+    exact hy (by simpa only [Submodule.mem_bot] using hyW)
   have htop : W = ⊤ := (eq_bot_or_eq_top W).resolve_left hW
   refine ⟨fun g => LinearMap.ext fun v => ?_⟩
   have hvW : v ∈ W := by
     rw [htop]
     change v ∈ (⊤ : Submodule k V)
     exact Submodule.mem_top
-  have hvfix : v ∈ (ρ.comp P.subtype).invariants := hvW
+  have hvfix : v ∈ Representation.invariants (ρ.comp P.subtype) := hvW
   exact (Representation.mem_invariants (ρ.comp P.subtype) v).mp hvfix g
 
 end D5.S3.FiniteGroups.GroupAlgebra.PGroupInvariants

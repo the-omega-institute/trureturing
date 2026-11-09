@@ -2,7 +2,6 @@ using static StrataLint.Scribe.DefinitionDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.FiniteGroups.GroupAlgebra;
 
-// UNCOMPILED source candidate; neither Lean checking nor Scribe emission has run.
 internal sealed class PGroupInvariantsDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Webb =

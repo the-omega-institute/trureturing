@@ -12,18 +12,7 @@ import Mathlib.LinearAlgebra.Pi
 import Mathlib.LinearAlgebra.Projection
 import Mathlib.RepresentationTheory.Subrepresentation
 
-set_option autoImplicit false
-
 /-!
-UNCOMPILED source candidate: no elaboration, kernel, axiom-closure, audit,
-Scribe-emission or delivery claim is made by this file.
-
-The PGroupInvariants import is the intended future canonical path. Its input
-theorem is presently saved only as an UNCOMPILED source candidate in the
-sibling normal-p-fixed-vector-source-candidate directory, not installed at
-that path in the read-only main checkout. This file does not replace or
-modify that prerequisite.
-
 Choose an ordinary linear retraction r onto the invariants and set
 F(v)(h) = r (rho(h)(v)). The representation multiplication convention gives
 F(rho(g)(v))(h) = F(v)(h * g), so the kernel is a subrepresentation. A nonzero
@@ -36,9 +25,11 @@ with no enumeration, checker, numerical reduction or certified finite
 instance; hence utility none. The mechanism and the dimension and regular-
 representation consequences explained in Scribe are classical mathematics.
 The existing Library note webb2016pgroups supports the augmentation input to
-the saved fixed-vector theorem, not an exact citation of this full embedding
+the fixed-vector theorem, not an exact citation of this full embedding
 telescope. No novelty or independent-consensus claim is made.
 -/
+
+set_option autoImplicit false
 
 namespace D5.S3.FiniteGroups.GroupAlgebra.PGroupInvariantEmbedding
 
