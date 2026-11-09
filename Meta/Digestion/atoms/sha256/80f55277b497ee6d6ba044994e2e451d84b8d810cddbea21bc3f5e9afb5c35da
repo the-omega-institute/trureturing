@@ -1,0 +1,41 @@
+**定理 53.2（反对称读数的 Riesz 延拓判据）。** 以下两项等价：
+
+1. 存在唯一有界实线性算子 $A:H\to H$，满足
+   $$
+   \omega(u,v)=g(A[u],[v])
+   \qquad(u,v\in V);
+   $$
+2. 同时满足：
+   $$
+   \omega(n,v)=0\quad(n\in N,v\in V),
+   \tag{Z}
+   $$
+   $$
+   |\omega(u,v)|\le C\sqrt{\kappa(u,u)}\sqrt{\kappa(v,v)}
+   \quad(u,v\in V)
+   \tag{B}
+   $$
+   对某个有限常数 $C$ 成立。
+
+**证明。** 若 $A$ 存在，则 $[n]=0$ 给出 (Z)，而 Hilbert 空间 Cauchy–Schwarz 不等式给出 (B)，其中 $C=\|A\|$。反之，(Z) 使
+
+$$
+\widetilde\omega([u],[v])=\omega(u,v)
+$$
+
+与代表元选择无关；(B) 使其对 $H_0=V/N$ 连续。固定 $[u]$，映射 $[v]\mapsto\widetilde\omega([u],[v])$ 是有界线性泛函，Riesz 表示定理给出唯一 $A[u]\in H$，满足
+
+$$
+g(A[u],[v])=\widetilde\omega([u],[v]).
+$$
+
+并且 $\|A[u]\|\le C\|[u]\|$。故 $A$ 在稠密子空间上有界，唯一连续延拓到 $H$。证毕。
+
+反对称性进一步给出
+
+$$
+A^*=-A.
+$$
+
+这只是旋转型算子的必要结构；它允许任意小的范数和非平凡核，尚未产生复结构。
+

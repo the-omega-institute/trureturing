@@ -1,0 +1,40 @@
+**定理 53.4（有限读数闭环全局化）。** 在定理 53.2 的条件下，以下三项等价：
+
+1. $A^2=-I$；
+2. 对所有 $u\in V$，
+   $$
+   D_\omega(u)^2=\kappa(u,u);
+   \tag{S}
+   $$
+3. 对所有 $u\in V$，
+   $$
+   \sup_{\substack{v\in V\\\kappa(v,v)>0}}
+   \frac{\omega(u,v)^2}{\kappa(v,v)}
+   =\kappa(u,u).
+   \tag{S'}
+   $$
+
+**证明。** (2) 与 (3) 只是定义展开。由 $D_\omega(u)=\|A[u]\|$，(2) 给出 $\|A[u]\|=\|[u]\|$ 对所有 $[u]\in H_0$ 成立。稠密性和连续性把它延拓到 $H$，故 $A^*A=I$。结合 $A^*=-A$ 得
+
+$$
+-A^2=A^*A=I,
+$$
+
+即 $A^2=-I$。反向由 $A^*=-A$ 和 $A^2=-I$ 得 $A^*A=I$，所以 $D_\omega(u)^2=\kappa(u,u)$。证毕。
+
+这个条件的关键是“测试向量允许扩大支撑”：$A[u]$ 通常属于完备化而不属于同一个有限子空间，故不能只在固定有限矩阵内部寻找最大化向量。若 $F\subset X$ 有限，记 $K_F=(\kappa(x_i,x_j))$、$W_F=(\omega(x_i,x_j))$，则延拓有界性写成
+
+$$
+|a^{\mathsf T}W_Fb|\le C\sqrt{a^{\mathsf T}K_Fa}\sqrt{b^{\mathsf T}K_Fb},
+$$
+
+而饱和条件必须允许 $b$ 在所有包含 $F$ 的更大有限集合 $G$ 上变化：
+
+$$
+\sup_{G\supseteq F,\,b\in\mathbb R^G}
+\frac{(a^{\mathsf T}W_{F,G}b)^2}{b^{\mathsf T}K_Gb}
+=a^{\mathsf T}K_Fa.
+$$
+
+因此它是原始有限读数的条件，但不是某一个固定阶数行列式的局部检验。
+

@@ -1,0 +1,20 @@
+**定义 53.1（有限关系数据）。** 令 $V=\mathbb R^{(X)}$ 是原始对象集合 $X$ 的有限支撑自由空间。给定实对称半正定双线性形式 $\kappa$ 和实反对称双线性形式 $\omega$：
+
+$$
+\kappa(u,v)=\kappa(v,u),
+\qquad
+\kappa(u,u)\ge0,
+\qquad
+\omega(u,v)=-\omega(v,u).
+$$
+
+令
+
+$$
+N=\{u\in V:\kappa(u,u)=0\},
+\qquad
+H=\overline{V/N},
+$$
+
+并用 $g$ 表示商空间及其完备化上的内积。
+
