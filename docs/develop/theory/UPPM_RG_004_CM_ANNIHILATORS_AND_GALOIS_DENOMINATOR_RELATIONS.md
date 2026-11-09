@@ -3454,3 +3454,467 @@ $$
 ---
 
 ## 追加锚（本行以下为增补区）
+
+## 71. 原乘积曲面的 Hermitian 极化与椭圆纤维旗
+
+**定义 71.1（原曲面、极化与单中心几何量）。** 保持定义 51.1、53.1 的原八次全实域 $F$、$K=F(i)$、$[K:\mathbb Q]=16$、原曲线 $E_0:y^2=x^3-x$、原作用 $[i](x,y)=(-x,iy)$ 和原独立点 $P_1,P_2$。本节 $a,b$ 只表示矩阵条目，与定义 53.1 中固定 $F$ 的根号生成元不混用。置
+
+$$
+\begin{gathered}
+\mathcal O=\mathbb Z[i],\qquad A=E_0\times E_0,\qquad o=(O,O),\\
+C_1=E_0\times\{O\},\qquad C_2=\{O\}\times E_0,\\
+H=\begin{pmatrix}a&z\\\bar z&b\end{pmatrix},\qquad
+a,b\in\mathbb Z_{>0},\quad z\in\mathcal O,\quad
+d=ab-|z|^2>0.
+\end{gathered}
+\tag{71.1}
+$$
+
+几何体积、消失阶与旗均在固定嵌入 $K\hookrightarrow\mathbb C$ 后的曲面上取值；它们不带 $[K:\mathbb Q]$ 因子。令 $\Theta=\mathcal O_{E_0}(O)$，$p_j$ 为投影，$f_z(Q_1,Q_2)=Q_1+[z]Q_2$，取定义于 $K$ 的对称线丛
+
+$$
+\mathscr L_H=
+p_1^*\Theta^{\otimes(a-1)}\otimes
+p_2^*\Theta^{\otimes(b-|z|^2)}\otimes f_z^*\Theta.
+\tag{71.2}
+$$
+
+负张量次幂按对偶解释。采用乘积主极化下的经典 NS–Hermitian/Rosati 对应：$f_z^*\Theta$ 的矩阵为 $\left(\begin{smallmatrix}1&z\\\bar z&|z|^2\end{smallmatrix}\right)$，正定矩阵对应 ample 类，半正定矩阵对应 nef 类；阿贝尔曲面上的伪有效锥等于 nef 锥。因此 (71.2) 是 $H$ 的对称 ample 代表，并有
+
+$$
+L_H^2=2d,\qquad L_H\cdot C_1=a,\qquad
+L_H\cdot C_2=b,\qquad C_1^2=C_2^2=0,\quad C_1\cdot C_2=1.
+\tag{71.3}
+$$
+
+这里 $L_H$ 表示 $\mathscr L_H$ 的数值类；下文体积也适用于任意 $\mathscr L_H\otimes\xi$，$\xi\in\operatorname{Pic}^0(A_{\mathbb C})$。这些经典对应是本消费者的输入，不另作一般 NS 分类的结论。
+
+令 $\pi:B=\operatorname{Bl}_oA\to A$，$E_o$ 为约化例外曲线，定义
+
+$$
+D_t=\pi^*L_H-tE_o,\qquad
+\beta_H=\frac1{2d}\int_0^\infty\operatorname{vol}_B(D_t)\,dt.
+\tag{71.4}
+$$
+
+这是同一个原点的 expected-vanishing 系数。$d$ 是矩阵行列式，$2d$ 是曲面自交数和体积；两者均不是轨道高度的迹，也不是中心的数目。
+
+**定理 71.2（任意扭曲下的完整矩形与真实点阶比较）。** 对旗 $A\supset C_1\supset\{o\}$，任意 $\xi\in\operatorname{Pic}^0(A_{\mathbb C})$ 都有
+
+$$
+\Delta_{C_1,o}(\mathscr L_H\otimes\xi)
+=[0,d/a]\times[0,a].
+\tag{71.5}
+$$
+
+若 $s\ne0$ 是 $\mathscr L_H^{\otimes m}\otimes\eta$ 的截面，$m\ge1$，$\eta\in\operatorname{Pic}^0(A_{\mathbb C})$ 任意，而 $\nu(s)=(j,\ell)$ 是此旗的值，则
+
+$$
+0\le j\le md/a,\qquad 0\le\ell\le ma,\qquad
+\operatorname{ord}_o(s)\le j+\ell\le m(a+d/a).
+\tag{71.6}
+$$
+
+交换两个因子还给出矩形 $[0,d/b]\times[0,b]$ 和界 $\operatorname{ord}_o(s)\le m(b+d/b)$。
+
+**证明。** $C_1$ 的矩阵为 $\left(\begin{smallmatrix}0&0\\0&1\end{smallmatrix}\right)$，所以 $L_H-tC_1$ 的矩阵及其行列式为
+
+$$
+\begin{pmatrix}a&z\\\bar z&b-t\end{pmatrix},\qquad d-at.
+\tag{71.7}
+$$
+
+它在 $0\le t<d/a$ 正定，在 $t=d/a$ 半正定，而在 $t>d/a$ 不伪有效。故曲线方向的 big 阈值正好是 $d/a$。在此前的整个开区间，Zariski 负部为零，正部与 $C_1$ 的交数恒为 $a$。
+
+这里直接使用 Lazarsfeld–Mustaţă，[*Convex Bodies Associated to Linear Series*, arXiv:0805.4559v1](https://arxiv.org/abs/0805.4559v1)，Theorem 6.4 及其证明、Example 6.5，原文页 43–45。其输入是光滑复射影曲面、big 有理除子和可容许曲线旗；下边界是 $\operatorname{ord}_o(N_t|_{C_1})$，上边界是在其上加 $P_t\cdot C_1$。本处曲线光滑、线丛 ample，$N_t=0$，故两边界分别为 $0,a$。Example 6.5 使用阿贝尔曲面上这些类的 nef 性，不是任意曲面的无负部断言。Theorem 6.4 对终端边界取连续闭包，因此包括 $t=d/a$ 的整条边；不要求端点处每个扭曲都具有同样的截面。该文 Proposition 4.1(i) 的数值不变性使任意 $\xi$ 给出同一矩形，证明 (71.5)。
+
+对单个截面，除去其沿 $C_1$ 的恰好 $j$ 重分量，得到 $\mathscr L_H^{\otimes m}\otimes\eta(-jC_1)$ 的有效除子及其非零限制截面。有效数值类必须 nef，(71.7) 给出 $j\le md/a$；限制线丛在椭圆曲线上的次数是 $ma$，其非零截面在 $o$ 的阶至多 $ma$。这一步不依赖 $\eta$，也包括数值行列式为零的端点。
+
+在 $o$ 取正则参数 $(u,v)$，其中 $C_1=(u=0)$，并用线丛的局部单位标架写
+
+$$
+s=u^jg(u,v),\qquad
+g(0,v)=c v^\ell+\text{更高次项},\qquad c\ne0.
+\tag{71.8}
+$$
+
+于是 $\operatorname{ord}_o(s)=j+\operatorname{ord}_o(g)\le j+\ell$。一般不能取等号：局部函数 $u+v^r$ 在此旗下的值为 $(0,r)$，而当 $r>1$ 时真实点阶只有 $1$。本证明比较的是截面的两个已定义量，没有把 $j+\ell$ 另定义为点过滤。交换因子重复同一消费者中的对应即可。$\square$
+
+## 72. 原点过滤的质量、端点与 Hermitian 上界
+
+**定义 72.1（整数点阶的实参数过滤）。** 固定任意 $\xi\in\operatorname{Pic}^0(A_{\mathbb C})$，置 $\mathscr M=\mathscr L_H\otimes\xi$、$V_m=H^0(A,\mathscr M^{\otimes m})$。对 $\lambda\in\mathbb R$ 定义
+
+$$
+\mathcal F^\lambda V_m
+=H^0\bigl(A,\mathscr M^{\otimes m}\otimes
+                 \mathfrak m_o^{\max\{0,\lceil\lambda\rceil\}}\bigr).
+\tag{72.1}
+$$
+
+此处 $\mathfrak m_o$ 是原点的真实极大理想。$V_0=\mathbb C$ 取相同的阶零约定。记 $N_m=\dim V_m$，$e_{m,1},\ldots,e_{m,N_m}$ 为该过滤的非负整数跳值，记
+
+$$
+\begin{gathered}
+\mathsf M_m=\sum_{r=1}^{N_m}e_{m,r}
+=\sum_{k\ge1}h^0(A,\mathscr M^{\otimes m}\otimes\mathfrak m_o^k),\\
+V_m^{(t)}=\mathcal F^{mt}V_m,\qquad
+G(x,y)=\sup\{t:(x,y)\in\Delta(V_\bullet^{(t)})\}.
+\end{gathered}
+\tag{72.2}
+$$
+
+最后的 $G$ 是此点过滤的凹变换，不是预先指定的线性函数。
+
+**定理 72.2（原几何消费者的过滤质量公式与上界）。** 定义 72.1 的过滤递减、左连续、乘法相容，并且
+
+$$
+0\le e_{m,r}\le Cm,\qquad
+C=\min\{a+d/a,b+d/b\},\qquad N_m=dm^2.
+\tag{72.3}
+$$
+
+它满足以下相同归一化的等式与不等式：
+
+$$
+\begin{aligned}
+\beta_H
+&=\lim_{m\to\infty}\frac{\mathsf M_m}{mN_m}
+=\frac1d\int_{[0,d/a]\times[0,a]}G(x,y)\,dx\,dy,\\
+0\le G(x,y)&\le x+y,\\
+0<\beta_H
+&\le\min\left\{\frac{a+d/a}{2},\frac{b+d/b}{2}\right\}
+\le\frac{a+b}{2}.
+\end{aligned}
+\tag{72.4}
+$$
+
+若 $z\ne0$，最后一个不等式严格。本结论适用于任意固定 $\xi$；甚至逐次数任取 $\eta_m\in\operatorname{Pic}^0(A_{\mathbb C})$，以 $H^0(A,\mathscr L_H^{\otimes m}\otimes\eta_m)$ 的真实点阶定义质量，所得归一化极限仍为 $\beta_H$。
+
+**证明（过滤的适用条件与极限）。** 原点局部环的关联分次环是二元多项式环，乘积的点阶等于点阶之和，因此 (72.1) 乘法相容。取上整使它左连续；对 $\lambda\le0$ 它等于整个 $V_m$，所以逐次左有界。由 (71.6)，$\lambda>Cm$ 时它为零，这给出线性右有界，而不是仅仅逐次有限。$\mathscr M$ ample，故完整级数包含 ample 子级数。阿贝尔曲面的典范丛平凡，消没定理与 Riemann–Roch 给出 $N_m=(mL_H)^2/2=dm^2$，对每个 $m\ge1$ 和任意数值平凡扭曲均成立。
+
+所用质量定理是 Boucksom–Chen，[*Okounkov Bodies of Filtered Linear Series*, arXiv:0911.2923v1](https://arxiv.org/abs/0911.2923v1)，§1.2–§1.3，特别是 Theorem 1.9、Remark 1.10(i) 和 Corollary 1.11，原文页 6–11。Theorem 1.9 要求包含 ample 子级数、乘法过滤、逐次左有界、线性右有界；它对 $m^{-2}\sum_r\delta_{e_{m,r}/m}$ 给出向 $G_*\mathrm{Leb}$ 的弱收敛。Corollary 1.11 的质量是正跳值之和，除数为 $m^3$，不是 $mN_m$；本处所有跳值非负，再用 $N_m/m^2=d$ 才变成 (72.4) 的概率均值。因此
+
+$$
+\lim_{m\to\infty}\frac{\mathsf M_m}{m^3}
+=\int_\Delta G
+=\int_0^\infty\operatorname{area}\bigl(\Delta(V_\bullet^{(t)})\bigr)\,dt.
+\tag{72.5}
+$$
+
+还须将 (72.5) 接回 (71.4)。对整数 $k\ge0$，blowup 的理想推前给出精确等式
+
+$$
+H^0(A,\mathscr M^{\otimes m}\otimes\mathfrak m_o^k)
+=H^0(B,\pi^*\mathscr M^{\otimes m}(-kE_o)).
+\tag{72.6}
+$$
+
+令 $c=\sup_{m,s\ne0}\operatorname{ord}_o(s)/m\le C$；Boucksom–Chen Lemma 1.4 将此上确界识别为其渐近 $e_{\max}$。对有理 $0\le t<c$，其 Lemma 1.6 保证 $V_\bullet^{(t)}$ 仍包含 ample 子级数；§1.1 的体积公式给出全部次数的 $\dim V_m^{(t)}/m^2$ 极限，且此极限严格为正。限于 $mt\in\mathbb Z$ 的次数，(72.6) 是 $\pi^*\mathscr M-tE_o$ 的完整有理除子级数；正的二次增长先表明该有理类 big，再用 Lazarsfeld–Mustaţă Theorem 2.3 得到
+
+$$
+\lim_{m\to\infty}\frac{\dim V_m^{(t)}}{m^2}
+=\operatorname{area}(\Delta(V_\bullet^{(t)}))
+=\frac12\operatorname{vol}_B(D_t).
+\tag{72.7}
+$$
+
+反过来，若有理 $D_t$ big，由 big 锥的开性可略增 $t$ 而仍 big；其足够可除次数的非零截面经 (72.6) 表明 $c>t$。故 $c$ 恰为 $D_t$ 的 big 阈值。$t>c$ 时过滤为零；在 $t=c$，从左侧的 (72.7) 和体积在边界连续且为零得到相同零极限。对任意实 $t$，用两侧有理数及过滤单调性夹逼，得到 (72.7) 的相应维数极限。体积的数值不变性、big 锥内部连续性及边界连续延拓，分别采用上述 Lazarsfeld–Mustaţă Proposition 4.1、Corollary 4.12 和 Remark 4.13；$\pi^*\xi$ 数值平凡，故右端确实是 $D_t$，不残留 $\xi$。
+
+所有被积维数除以 $m^2$ 均不超过 $d$，且在 $t>C$ 为零。因此支配收敛以及取整区间 $((k-1)/m,k/m]$ 给出
+
+$$
+\frac{\mathsf M_m}{m^3}
+=\int_0^C\frac{\dim\mathcal F^{mt}V_m}{m^2}\,dt
+\longrightarrow\frac12\int_0^\infty\operatorname{vol}_B(D_t)\,dt
+=d\beta_H.
+\tag{72.8}
+$$
+
+这也说明端点的阶零截面、临界层或上整差一层均没有额外的质量因子。由于 $\pi^*L_H-tE_o$ 对足够小的正 $t$ ample，积分严格为正。
+
+**证明（旗与点过滤的桥及边界）。** 若 $s\in V_m^{(t)}\setminus\{0\}$，由真实的点阶条件和 (71.6)，
+
+$$
+t\le\frac{\operatorname{ord}_o(s)}m
+\le\frac{\nu_1(s)+\nu_2(s)}m.
+\tag{72.9}
+$$
+
+半平面 $x+y\ge t$ 闭且凸，故包含这些归一化旗值生成的整个凸体：
+
+$$
+\Delta(V_\bullet^{(t)})
+\subset[0,d/a]\times[0,a]\cap\{x+y\ge t\}.
+\tag{72.10}
+$$
+
+对定义 (72.2) 中的 $t$ 取上确界，得到 $G\le x+y$；$G\ge0$ 因为 $\mathcal F^0V_m=V_m$。闭包步骤保证矩形边上也不会出现越过 $x+y$ 的值，并未断言逆包含或 $G=x+y$。Boucksom–Chen 的 Lebesgue 测度取凸体内部；矩形边界面积为零，$G$ 又被 $C$ 一致控制，故距离矩形边界小于 $\varepsilon$ 的带状层在积分中的贡献随 $\varepsilon\downarrow0$ 趋于零。端点扭曲导致有无截面的差异不能据此被升级成内部过滤的等号，亦不会改变 (72.5)–(72.8) 的归一化。
+
+矩形面积为 $d$，其坐标和的面积均值为 $(d/a+a)/2$，所以
+
+$$
+\beta_H\le\frac1d\int_0^{d/a}\int_0^a(x+y)\,dy\,dx
+=\frac{d/a+a}{2}.
+\tag{72.11}
+$$
+
+换用 $C_2$ 旗得到另一上界；两旗的凹变换可以不同，但 (72.8) 的质量和 $\beta_H$ 相同。最后
+
+$$
+\frac{a+d/a}{2}=\frac{a+b}{2}-\frac{|z|^2}{2a},\qquad
+\frac{b+d/b}{2}=\frac{a+b}{2}-\frac{|z|^2}{2b},
+\tag{72.12}
+$$
+
+证明所述严格性。
+
+**证明（任意逐次 $\operatorname{Pic}^0$ 扭曲）。** 固定 $\xi$ 时上述证明已完全适用。若逐次扭曲不构成级数，不直接对它们使用乘法过滤定理。使用 ample 线丛族的一致 Serre 消没：存在固定整数 $r\ge1$，使 $\mathscr L_H^{\otimes r}\otimes\eta$ 对每个 $\eta\in\operatorname{Pic}^0(A)$ 均有一个在 $o$ 不消失的截面。此标准输入可在 $A\times\operatorname{Pic}^0(A)$ 上对 Poincaré 线丛及 $\{o\}\times\operatorname{Pic}^0(A)$ 的理想应用相对 Serre 消没取得；相对 ample 的 $\mathscr L_H$ 给出同一个 $r$，纤维上的评价映射满射。
+
+分别取 $\eta$ 与 $\eta^{-1}$ 的这种截面相乘，因其在 $o$ 是单位，对每个 $k\ge0$ 和 $m>r$ 得到保留真实点阶的单射
+
+$$
+\begin{aligned}
+H^0((m-r)L_H\otimes\mathfrak m_o^k)
+&\lhook\joinrel\longrightarrow
+H^0(\mathscr L_H^{\otimes m}\otimes\eta\otimes\mathfrak m_o^k)\\
+&\lhook\joinrel\longrightarrow
+H^0((m+r)L_H\otimes\mathfrak m_o^k).
+\end{aligned}
+\tag{72.13}
+$$
+
+这里两端的加法记号指 $\mathscr L_H$ 的张量幂。对 $k\ge1$ 求维数和，夹在未扭曲的 $\mathsf M_{m-r}$ 与 $\mathsf M_{m+r}$ 之间。以 $m^3$ 归一化，(72.8) 和 $(m\pm r)^3/m^3\to1$ 给出相同极限 $d\beta_H$，一致于 $\eta$。分母维数仍恰为 $dm^2$，故逐次任取 $\eta_m$ 亦得到 (72.4)。这同时处理了取整或限制过程中留下的任意数值平凡扭曲。$\square$
+
+## 73. 乘积极化的等号与原独立轨道的临界系数
+
+**定理 73.1（产品情形的完整体积及扭曲端层）。** 当 $z=0$ 时，$L_H=aC_2+bC_1$。令 $u=\min(a,b)$、$v=\max(a,b)$，则
+
+$$
+\operatorname{vol}_B(D_t)=
+\begin{cases}
+2ab-t^2,&0\le t\le u,\\
+2ab-2ut+u^2,&u\le t\le v,\\
+(a+b-t)^2,&v\le t\le a+b,\\
+0,&t\ge a+b,
+\end{cases}
+\qquad
+\beta_H=\frac{a+b}{2}.
+\tag{73.1}
+$$
+
+该体积与任意 $\operatorname{Pic}^0$ 扭曲无关。若 $\mathscr L_H^{\otimes m}\otimes\eta=p_1^*T_1\otimes p_2^*T_2$，$\deg T_1=ma$、$\deg T_2=mb$，令
+
+$$
+\epsilon_j=
+\begin{cases}
+1,&T_j\simeq\mathcal O_{E_0}((\deg T_j)O),\\
+0,&\text{否则},
+\end{cases}
+\tag{73.2}
+$$
+
+则真实点过滤的有限次质量还满足
+
+$$
+\frac{\mathsf M_m(\eta)}{m\,abm^2}
+=\frac{a+b}{2}-\frac1m
++\frac{\epsilon_1}{am^2}+\frac{\epsilon_2}{bm^2}.
+\tag{73.3}
+$$
+
+**证明（完整 Zariski 接口）。** 设 $a\le b$，另一个次序交换因子。记 $C_j'=\pi^*C_j-E_o$、$B_*=\pi^*(C_1+C_2)-E_o$。两条 $C_j'$ 自交为 $-1$，互交为零，且 $B_*\cdot C_j'=0$、$B_*^2=1$。$B_*$ 是 nef：与 $E_o$ 的交数为 $1$；对不同于两条坐标纤维的不可约曲线 $T$，局部交数给出 $C_j\cdot T\ge\operatorname{mult}_oT$，所以 $B_*\cdot T'\ge0$；坐标纤维的交数为零。
+
+在三个区间的 Zariski 正负部依次是
+
+$$
+\begin{array}{c|c|c}
+\text{区间}&N_t&P_t\\ \hline
+[0,a]&0&(a-t)\pi^*C_2+(b-t)\pi^*C_1+tB_*\\
+[a,b]&(t-a)C_1'&(b-t)\pi^*C_1+aB_*\\
+[b,a+b]&(t-a)C_1'+(t-b)C_2'&(a+b-t)B_* .
+\end{array}
+\tag{73.4}
+$$
+
+每个 $P_t$ 都是上述 nef 类的非负组合，与其 $N_t$ 的每个分量正交；非空负部的交矩阵是负定对角阵。因此它们确实是 Zariski 分解，不是仅有形式上的平方展开。曲面体积等于 $P_t^2$，给出 (73.1) 的前三段；$t>a+b$ 时 $D_t\cdot B_*=a+b-t<0$，故不伪有效。边界 $t=a+b$ 的正部为零，体积也为零。数值平凡扭曲不改变分解的数值类及体积。
+
+**证明（实际点阶与产品等号）。** $\operatorname{Pic}^0(E_0\times E_0)$ 是两个因子的 $\operatorname{Pic}^0$ 之积，故任意 $\eta$ 都有定理中的分解。椭圆曲线上次数 $r>0$ 的线丛 $T$ 满足
+
+$$
+h^0(T(-kO))=
+\begin{cases}
+r-k,&0\le k<r,\\
+\epsilon,&k=r,\\
+0,&k>r,
+\end{cases}
+\quad
+\sum_{k\ge1}h^0(T(-kO))=\frac{r(r-1)}2+\epsilon.
+\tag{73.5}
+$$
+
+这里 $\epsilon$ 恰是次数零线丛 $T(-rO)$ 是否平凡的指标，不能在任意扭曲下把它恒取为 $1$。这是曲线 Riemann–Roch 的直接内部输入。
+
+取两个因子的点阶适配基，它们各有不同的首项次数。Künneth 张量基在局部参数 $(x,y)$ 中首项为不同单项式 $x^{r_i}y^{s_j}$。同一总次数内也没有相同首单项式可供抵消，所以它是乘积曲面真实总阶的适配基，跳值恰为 $r_i+s_j$。于是总质量等于
+
+$$
+mb\left(\frac{ma(ma-1)}2+\epsilon_1\right)
++ma\left(\frac{mb(mb-1)}2+\epsilon_2\right).
+\tag{73.6}
+$$
+
+这证明 (73.3)，尤其包括 $ma=1$ 或 $mb=1$ 及最高阶端层的全部情况。极限经 (72.8) 给出 $\beta_H=(a+b)/2$，并与 (73.4) 的完整体积积分一致。用白话说，交叉项为零时确实可以将两条曲线的消失阶相加；一般交叉极化只保留 (72.9) 的单向控制，不能照搬这个张量基。$\square$
+
+**定义 73.2（保持原独立实现的轨道及高度）。** 固定原共同周期 $q=q_{H_*}=q(H_*,H_*;M)$，令 $m\in\mathbb Z\setminus\{0\}$，取同一个实际点
+
+$$
+Y_{q,m}=([qm]P_1,[qm]P_2)\in A(F),\qquad
+h_0=\widehat h(P_1)=\widehat h(P_2)>0.
+\tag{73.7}
+$$
+
+$H_*$ 仅为原周期的截止参数，$H$ 始终为 (71.1) 的极化矩阵。用 (71.2) 定义的对称线丛取典范高度 $\widehat h_{L_H}$；其限制到每个 $\Theta$ 因子使用原 002 的 $\widehat h$ 归一化。
+
+**定理 73.3（单中心系数的精确优化）。** 对全部 (71.1) 的 Gaussian Hermitian 极化，原实际独立轨道满足
+
+$$
+\widehat h_{L_H}(Y_{q,m})=(a+b)h_0q^2m^2,
+\qquad
+\frac{\widehat h_{L_H}(Y_{q,m})}{\beta_H}
+\ge2h_0q^2m^2.
+\tag{73.8}
+$$
+
+第二式在 $z=0$ 时取等号，在 $z\ne0$ 时严格。因此在这一固定轨道和单中心 expected-vanishing 系数的比较中，
+
+$$
+\sup_H\frac{\beta_H}{\operatorname{tr}H}=\frac12,
+\qquad
+\inf_H\frac{\operatorname{tr}H}{\beta_H}=2,
+\tag{73.9}
+$$
+
+最优值由任意产品极化达到。这是声明的系数优化，不是原数域 gcd 的小量定理，也不是对所有 Ru–Vojta 方法的排除结论。
+
+**证明。** 直接复用 [002 (16.20)–(16.21)](UPPM_RG_002_DIOPHANTINE_DEFINITIONS_RELATIONAL_COMPILATION_AND_STOPPING_BOUNDARIES.md#16-实际共同周期的二次对数主阶交叉因子吸收与加权入口余项)：原四个实际方向 $(P_1,[i]P_1,P_2,[i]P_2)$ 的典范高度二次型为 $h_0\sum_{k=1}^4x_k^2$。因此 $\langle P_1,P_2\rangle=\langle P_1,[i]P_2\rangle=0$，并且 $\widehat h([z]P_2)=|z|^2h_0$。这保留了原两个独立点，未引入 $P_2=[i]P_1$。
+
+对任意 $Q_1,Q_2$，(71.2) 的函子性和高度的可加性给出
+
+$$
+\begin{aligned}
+\widehat h_{L_H}(Q_1,Q_2)
+&=(a-1)\widehat h(Q_1)+(b-|z|^2)\widehat h(Q_2)
+  +\widehat h(Q_1+[z]Q_2)\\
+&=a\widehat h(Q_1)+b\widehat h(Q_2)
+  +2\langle Q_1,[z]Q_2\rangle.
+\end{aligned}
+\tag{73.10}
+$$
+
+代入 (73.7)，交叉配对逐项为零，得到高度等式。它是迹而不是行列式，使用绝对典范高度，所以从 $F$ 到 $K$ 不再乘 $2$ 或 $16$。换取同一 NS 类的其他对称代表只差对称的 $\operatorname{Pic}^0$ 扭曲，即二挠扭曲，其典范高度为零；任意非对称扭曲的几何 $\beta$ 已由定理 72.2 处理，不将其一般 Weil 高度冒称为这个二次型。
+
+以正数 $\beta_H$ 除 (73.10)，再用 (72.4)、(72.12) 和 (73.1)，得到 (73.8)–(73.9)。新增关系是成熟 NS、曲面旗和过滤质量输入与原四方向高度之间的这个 repo-derived 消费者，不主张这些输入的一般定理为新结果。
+
+用白话说，交叉极化并未降低原独立轨道的迹高度，却使此处可用的单中心 $\beta$ 严格小于迹的一半；产品极化已达到这一受限比较的最佳比值。该比较没有提供移动有限位集上的算术逼近不等式、异常闭集对原轨道的控制、无穷地方及坏地方的统一费用，或原全地方共同分母小量。尤其本卷 (70.5) 的剩余质量条件与原覆盖目标并不由 (73.8) 关闭。$\square$
+
+## 74. 固定 CM 同源 grid 的归一化与原坐标读法
+
+**定义 74.1（固定同源的完整中心概形）。** 固定 $0\ne\alpha\in\mathcal O$，记 $n=N(\alpha)=\alpha\bar\alpha$，定义于原 $K$ 上的同源为
+
+$$
+\Phi_\alpha=[\alpha]\times[\alpha]:A\longrightarrow A,
+\qquad Z_\alpha=\Phi_\alpha^{-1}(o)
+=\ker[\alpha]\times\ker[\alpha].
+\tag{74.1}
+$$
+
+这里单个椭圆曲线同源 $[\alpha]$ 的度为 $n$，乘积同源的度为 $n^2$；$Z_\alpha$ 是次数 $n^2$ 的有限 étale $K$-概形，有 $n^2$ 个几何点，但这些点不要求逐个 $K$ 有理。令 $\pi_Z:B_Z=\operatorname{Bl}_{Z_\alpha}A\to A$，$E_Z$ 为整个中心理想定义的例外除子；在代数闭包上它是全部 $n^2$ 条例外曲线之和，各重数为 $1$。定义同一极化下的系数
+
+$$
+\beta_{Z_\alpha}(L_H)
+=\frac1{2d}\int_0^\infty
+   \operatorname{vol}_{B_Z}(\pi_Z^*L_H-tE_Z)\,dt.
+\tag{74.2}
+$$
+
+此过滤在每个几何中心都要求至少同一个阶；其理想是 $\mathcal I_{Z_\alpha}^k$，不是把单中心系数相加后另除中心数。
+
+**定理 74.2（grid 与单中心的精确同源接口）。** 对定义 74.1 的固定同源及全部 (71.1) 的极化，
+
+$$
+\Phi_\alpha^*L_H\equiv nL_H,\qquad
+\beta_{Z_\alpha}(\Phi_\alpha^*L_H)=\beta_H,\qquad
+\beta_{Z_\alpha}(L_H)=\frac{\beta_H}{n}.
+\tag{74.3}
+$$
+
+对原同一个 $Y_{q,m}$ 及 $X_{\alpha,q,m}=\Phi_\alpha(Y_{q,m})$，精确的系数比较为
+
+$$
+\begin{aligned}
+\widehat h_{L_H}(X_{\alpha,q,m})
+&=n\operatorname{tr}(H)h_0q^2m^2,\\
+\frac{\widehat h_{L_H}(Y_{q,m})}{\beta_{Z_\alpha}(L_H)}
+&=\frac{\widehat h_{L_H}(X_{\alpha,q,m})}{\beta_H}
+=\frac{\widehat h_{\Phi_\alpha^*L_H}(Y_{q,m})}
+        {\beta_{Z_\alpha}(\Phi_\alpha^*L_H)}
+\ge2n h_0q^2m^2.
+\end{aligned}
+\tag{74.4}
+$$
+
+等号的极化恰为 $z=0$。这些恒等式保留完整 $K$-中心的下降，不将非 $K$ 有理中心删去，也不把它们作为 $n^2$ 个独立的 $K$ 有理逼近目标。
+
+**证明（有限 étale 基变换与体积）。** 标量 Gaussian 作用在 Hermitian 矩阵上给出 $\bar\alpha H\alpha=nH$，故首个数值等式成立，其自交数为 $2n^2d$。有限平坦基变换下 Rees 代数与 blowup 相容，得到笛卡尔方块
+
+$$
+\begin{array}{ccc}
+B_Z&\xrightarrow{\widetilde\Phi_\alpha}&B\\
+\pi_Z\downarrow&&\downarrow\pi\\
+A&\xrightarrow{\Phi_\alpha}&A .
+\end{array}
+\qquad
+\widetilde\Phi_\alpha^*E_o=E_Z.
+\tag{74.5}
+$$
+
+$\widetilde\Phi_\alpha$ 仍是度 $n^2$ 的有限 étale 映射。应用有限满射回拉的标准体积公式，在同一 $t$ 下有
+
+$$
+\begin{aligned}
+\operatorname{vol}_{B_Z}
+ (\pi_Z^*\Phi_\alpha^*L_H-tE_Z)
+&=n^2\operatorname{vol}_B(\pi^*L_H-tE_o),\\
+\operatorname{vol}_A(\Phi_\alpha^*L_H)&=n^2\operatorname{vol}_A(L_H).
+\end{aligned}
+\tag{74.6}
+$$
+
+积分后两个 $n^2$ 正好相消，得到 $\beta_{Z_\alpha}(\Phi_\alpha^*L_H)=\beta_H$。对固定中心，曲面体积的二次齐次性和变量替换 $t=cs$ 则给出
+
+$$
+\beta_{Z_\alpha}(cL_H)=c\,\beta_{Z_\alpha}(L_H)
+\qquad(c>0).
+\tag{74.7}
+$$
+
+由数值等价 $\Phi_\alpha^*L_H\equiv nL_H$，得到 (74.3) 的最后一式。整个计算将映射度 $n^2$、几何中心数 $n^2$、NS 伸缩 $n$ 和积分参数的伸缩分别保留；$n$ 不是再平方的极化倍数。
+
+**证明（原点阶、坐标及下降）。** 平坦回拉给出 $\mathfrak m_o\mathcal O_A=\mathcal I_{Z_\alpha}$，并与取幂相容。在每个几何中心，étale 性使两个完成局部环在选定分支后同构，因此回拉截面的单点消失阶等于原点消失阶；对全部分支同时要求它，正是 (74.2) 的完整 grid 理想。比较过滤可按定理 72.2 的方法在相应 blowup 上进行；几何恒等式 (74.5)–(74.6) 已直接给出所需体积系数，不需将不同中心的最优截面拼成一个截面。
+
+以原坐标逐项写，
+
+$$
+X_{\alpha,q,m}=([\alpha qm]P_1,[\alpha qm]P_2)
+=[\alpha q]([m]P_1,[m]P_2).
+\tag{74.8}
+$$
+
+(73.10) 和原 (16.21) 给出其高度为 $n\operatorname{tr}(H)h_0q^2m^2$。典范高度的函子性又给出 $\widehat h_{\Phi_\alpha^*L_H}(Y)=\widehat h_{L_H}(\Phi_\alpha Y)$，所以 (74.3) 逐项导出 (74.4)，并由定理 73.3 判定等号。
+
+所有中心及其理想的并在 $K$ 上定义，Galois 作用只排列几何中心；blowup、完整例外除子及回拉等式已在 $K$ 上存在。因而体积计算可以在 $\mathbb C$ 上完成而保留下降。若改用局部 Weil 函数，理想的函子性仅给出固定同源下 $\lambda_{Z_\alpha}(Y)=\lambda_o(\Phi_\alpha Y)+O(1)$ 的相容读法；这一步既不把 $K$ 上的地方权重改成几何中心计数，也不保证整模型在整除 $n$ 的地方 étale，更不提供随 $\alpha$ 移动的统一误差。
+
+用白话说，拉回后看到更多中心，同时也拉大了极化；只数中心而忘记极化与积分参数，会产生一个虚假的额外收益。固定 $\alpha$ 时，完整 grid 的系数读法与 $X=[\alpha q]P$ 的单原点读法准确相同。本定理只给这个固定同源消费者；它没有增加原全地方 gcd 小量、任意移动同源的统一算术估计或原覆盖结论。$\square$
+
+---
+
+## 追加锚（本行以下为增补区）
