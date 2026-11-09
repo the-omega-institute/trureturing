@@ -1,0 +1,18 @@
+**定义 26.1（正的二元群胚比较公理）。** 令 $P$ 为准备对象集，$\mathsf{Pair}(P)$ 为其二元群胚：箭头是 $(a,b):a\to b$，反向箭头为 $(b,a)$。一个比较振幅是函数
+
+$$
+\kappa:P\times P\longrightarrow\mathbb C
+$$
+
+满足以下三条：
+
+1. **单位与反向：** $\kappa(a,a)=1$，且 $\kappa(b,a)=\overline{\kappa(a,b)}$；
+2. **有限自比较正性：** 对任意有限序列 $a_1,\ldots,a_n$ 和任意 $z_1,\ldots,z_n\in\mathbb C$，
+   $$
+   \operatorname{Self}_\kappa(z):=
+   \sum_{i,j=1}^{n}\overline{z_i}\,\kappa(a_i,a_j)\,z_j\ge0;
+   $$
+3. **同一对象相容：** 重复对象或删去重复对象只按同一二次型的限制处理，不产生新的比较值。
+
+第二条是整条公理的核心压缩：它没有先说“存在 Hilbert 空间”，只说任何有限形式叠加的自比较不能为负。它等价于每一张有限比较表都是正半定 Gram 表；因此它仍然承载第 22 章的全部数学内容，只把“正核”改写成内生的自比较约束。
+
