@@ -370,6 +370,10 @@ $$\forall (a:\operatorname {Type}), (\forall (b:\operatorname {Type}), ([\operat
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/GeorgeTomamichelMaximalCorrelation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/george-tomamichel-2025-am-gm-maximal-correlation` (proved) by `D5/S3/Quantum/GeorgeTomamichelMaximalCorrelation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"george-tomamichel-2025-am-gm-maximal-correlation","declaration_gid":"D5/S3/Quantum/GeorgeTomamichelMaximalCorrelation.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Ian George and Marco Tomamichel (2025). *A Unified Approach to Quantum Contraction and Correlation Coefficients*. DOI: [10.48550/arXiv.2505.15281](https://doi.org/10.48550/arXiv.2505.15281). URL: <https://arxiv.org/abs/2505.15281v3>.

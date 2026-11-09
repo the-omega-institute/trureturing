@@ -46,13 +46,14 @@ internal sealed class GeorgeTomamichelMaximalCorrelationDocument : IScribeDocume
             Node("endpoint-claim", "claim", "The endpoint proposition", Eqn(Q("claim"), ClaimBody()),
                 "Section VII, page 66: “Does there exist a quantum state ρ_AB such that µ_AM(A : B)_ρ < 1 and µ_GM(A : B)_ρ = 1?” Here rho is a positive semidefinite trace-one complex matrix on a product of finite index types. The displayed implication answers the question negatively, including states with singular marginals.", true, DescribeRole.Definition),
             Node("endpoint-result", "result", "Coincidence at maximal correlation one", ClaimBody(),
-                "Compressing to the marginal supports preserves the geometric feasible values. At geometric correlation one, a centered fixed vector gives a nontrivial projection commuting with the marginal state. A partner projection has the same marginal and joint probability p, with 0 < p < 1. Centering both projections and dividing by sqrt(p(1-p)) gives arithmetic correlation one. The arithmetic Cauchy–Schwarz bound supplies the matching upper bound.", false, DescribeRole.Theorem))));
+                "Compressing to the marginal supports preserves the geometric feasible values. At geometric correlation one, a centered fixed vector gives a nontrivial projection commuting with the marginal state. A partner projection has the same marginal and joint probability p, with 0 < p < 1. Centering both projections and dividing by sqrt(p(1-p)) gives arithmetic correlation one. The arithmetic Cauchy–Schwarz bound supplies the matching upper bound.", false, DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("george-tomamichel-2025-am-gm-maximal-correlation"), ResolutionKind.Proved)))));
 
-    private static DocumentBlock.Describe Node(string id, string name, string title, Formula formula, string prose, bool literature, DescribeRole role) =>
+    private static DocumentBlock.Describe Node(string id, string name, string title, Formula formula, string prose, bool literature, DescribeRole role, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create("D5/S3/Quantum/GeorgeTomamichelMaximalCorrelation." + name),
             H(title), StatementSource.FromAuthor(Disp(formula)),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolution);
     private static Formula ClaimBody() => FiniteTypes(All("rho", MatrixOf(Product(X("a"), X("b"))),
         Imp(Call("Matrix.PosSemidef", X("rho")), Imp(Eqn(Call("Matrix.trace", X("rho")), D(1)),
             Imp(Eqn(Call("muGM", X("rho")), D(1)), Eqn(Call("muAM", X("rho")), D(1)))))));
