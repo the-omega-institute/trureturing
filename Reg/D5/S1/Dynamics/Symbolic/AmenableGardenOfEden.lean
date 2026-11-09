@@ -86,7 +86,7 @@ def codeFamily : Registration codeArena.{u,v}
     have hc := congrArg ULift.down (congrFun he (1 : G))
     cases hc
 
-def registration_code : Contract.Registration
+def registration_code : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S1.Dynamics.Symbolic.AmenableGardenOfEden.garden_of_eden.{u,v})
     (Realization codeSignature.{u,v}) Unit Unit where
   unitName := `Reg.D5.S1.Dynamics.Symbolic.AmenableGardenOfEden.code
@@ -239,7 +239,7 @@ def countFamily : Registration countArena.{u,v}
     change 2 ≤ Nat.card (ImagePatterns S φp {1}) at hl
     omega
 
-def registration_count : Contract.Registration
+def registration_count : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S1.Dynamics.Symbolic.AmenableGardenOfEden.collision_replacement_count.{u,v})
     (Realization countSignature.{u,v}) Unit Unit where
   unitName := `Reg.D5.S1.Dynamics.Symbolic.AmenableGardenOfEden.count

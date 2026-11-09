@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S1.Dynamics.Symbolic;
 
@@ -6,6 +8,37 @@ internal sealed class AmenableGardenOfEdenDocument : IScribeDocumentDefinition
 {
     private const string Owner = "D5/S1/Dynamics/Symbolic/AmenableGardenOfEden.";
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Entropy/wacker2016gardeneden");
+
+    private static Formula Id(string s) => s == "φ" ? Varphi : F.Id(s);
+    private static Formula Arr(Formula a, Formula b) => Seq(Open, a, Sp, To, Sp, b, Close);
+    private static Formula Call(string s, params Formula[] args)
+    {
+        var name = new List<Formula>();
+        foreach (var part in s.Split('.'))
+        {
+            if (name.Count > 0) name.Add(Dot);
+            name.Add(Id(part));
+        }
+        var items = new List<Formula> { s == "φ" ? Varphi : Seq(Operatorname, Grp(Seq([.. name]))), Open };
+        for (var i = 0; i < args.Length; i++)
+        {
+            if (i > 0) items.AddRange([Comma, Sp]);
+            items.Add(args[i]);
+        }
+        items.Add(Close);
+        return Seq([.. items]);
+    }
+    private static Formula All(string s, Formula t) => Seq(Forall, Sp, Id(s), Colon, Sp, t, Comma);
+    private static Formula St(params Formula[] lines) => Disp(new Formula.Aligned([.. lines]));
+    private static Formula Config => Arr(Id("G"), Id("A"));
+    private static Formula Rule => Arr(Arr(Id("S"), Id("A")), Id("A"));
+    private static Formula Setup => Seq(All("u", Call("Universe")), All("v", Call("Universe")),
+        All("A", Call("Type", Id("u"))), All("G", Call("Type", Id("v"))),
+        OpenBracket, Call("Group", Id("G")), CloseBracket, Comma);
+    private static Formula LocalSetup => Seq(All("S", Call("Finset", Id("G"))), All("φ", Rule));
+    private static Formula Code(Formula x) => Call("localMap", Id("S"), Id("φ"), x);
+    private static Formula Mul(Formula x, Formula y) => Seq(x, Sp, Star, Sp, y);
+    private static Formula Coord => Mul(Seq(Id("t"), Caret, Grp(Minus, D(1))), Id("g"));
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Surjectivity and finite-disagreement preinjectivity coincide for full cellular maps over every finite alphabet on every discrete group with a nontrivial right counting Følner filter.",
@@ -15,22 +48,37 @@ internal sealed class AmenableGardenOfEdenDocument : IScribeDocumentDefinition
             + "Configurations are all functions G → A; the group need not be countable, finitely generated or commutative. "
             + "The neighborhood may be empty or asymmetric. Empty and singleton alphabets are included.")),
         Describe.Lean(DescribeId.Create("full-local-map"), DeclarationHandle.Create(Owner + "localMap"),
-            H("The full local map"), StatementSource.FromLean(),
+            H("The full local map"), StatementSource.FromAuthor(St(Setup, LocalSetup,
+                Seq(All("x", Config), All("g", Id("G")), Call("localMap", Id("S"), Id("φ"), Id("x"), Id("g")),
+                    Sp, Eq, Sp, Call("φ", Seq(Open, Id("s"), Sp, Mapsto, Sp,
+                        Call("x", Mul(Id("g"), Id("s"))), Close))))),
             AssessedProvenance.FromLiterature(Source), Blocks(
                 Paragraph(Text("The neighborhood coordinates multiply on the right. Left translation of a configuration therefore commutes with the map."))),
             DescribeRole.Definition),
         Describe.Lean(DescribeId.Create("finite-disagreement-preinjectivity"), DeclarationHandle.Create(Owner + "Preinjective"),
-            H("Preinjectivity on finite disagreements"), StatementSource.FromLean(),
+            H("Preinjectivity on finite disagreements"), StatementSource.FromAuthor(St(Setup, LocalSetup,
+                Seq(Call("Preinjective", Id("S"), Id("φ")), Sp, Iff),
+                Seq(All("x", Config), All("y", Config), Call("Set.Finite", Call("disagreement", Id("x"), Id("y"))),
+                    Sp, Rightarrow, Sp, Code(Id("x")), Sp, Eq, Sp, Code(Id("y")), Sp, Rightarrow, Sp,
+                    Id("x"), Sp, Eq, Sp, Id("y")))),
             AssessedProvenance.FromLiterature(Source), Blocks(
                 Paragraph(Text("Two configurations with finite disagreement and equal complete images must be equal. "
                     + "Equality of images is equality at every group element."))), DescribeRole.Definition),
         Describe.Lean(DescribeId.Create("actual-image-patterns"), DeclarationHandle.Create(Owner + "ImagePatterns"),
-            H("Jointly realized image patterns"), StatementSource.FromLean(),
+            H("Jointly realized image patterns"), StatementSource.FromAuthor(St(Setup, LocalSetup,
+                Seq(All("F", Call("Finset", Id("G"))), All("p", Arr(Id("F"), Id("A"))),
+                    Id("p"), Sp, InMacro, Sp, Call("ImagePatterns", Id("S"), Id("φ"), Id("F")), Sp, Iff),
+                Seq(Exists, Sp, Id("x"), Colon, Sp, Config, Comma, All("f", Id("F")),
+                    Call("p", Id("f")), Sp, Eq, Sp, Call("localMap", Id("S"), Id("φ"), Id("x"), Id("f"))))),
             AssessedProvenance.FromLiterature(Source), Blocks(
                 Paragraph(Text("ImagePatterns(S,φ,F) is the range of x ↦ (f ↦ Φ(x)(f)) on all complete configurations x. "
                     + "One x must realize all coordinates of a pattern simultaneously."))), DescribeRole.Definition),
         Describe.Lean(DescribeId.Create("left-coordinate-replacement"), DeclarationHandle.Create(Owner + "writePattern"),
-            H("Replace a pattern on a left translate"), StatementSource.FromLean(),
+            H("Replace a pattern on a left translate"), StatementSource.FromAuthor(St(Setup,
+                Seq(All("C", Call("Finset", Id("G"))), All("p", Arr(Id("C"), Id("A"))),
+                    All("t", Id("G")), All("x", Config), All("g", Id("G"))),
+                Seq(Call("writePattern", Id("C"), Id("p"), Id("t"), Id("x"), Id("g")), Sp, Eq, Sp,
+                    Call("ite", Seq(Coord, Sp, InMacro, Sp, Id("C")), Call("p", Coord), Call("x", Id("g")))))),
             AssessedProvenance.FromLiterature(Source), Blocks(
                 Paragraph(Text("On the translate t*C the new value at g is p(t⁻¹*g); outside that translate it is the original value. "
                     + "The coordinate t⁻¹*g is unique and keeps the order of multiplication explicit."))), DescribeRole.Definition),

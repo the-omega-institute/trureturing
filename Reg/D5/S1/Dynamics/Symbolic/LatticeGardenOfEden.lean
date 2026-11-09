@@ -295,7 +295,7 @@ def logFamily : Registration logArena
     rw [Real.log_one]
     exact (ne_of_gt (Real.log_pos (by norm_num : (1 : ℝ) < 2))).symm
 
-def registration_log : Contract.Registration
+def registration_log : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S1.Dynamics.Symbolic.LatticeGardenOfEden.logarithmic_packing_bound)
     (Realization logSignature) Unit Unit where
   unitName := `Reg.D5.S1.Dynamics.Symbolic.LatticeGardenOfEden.log
