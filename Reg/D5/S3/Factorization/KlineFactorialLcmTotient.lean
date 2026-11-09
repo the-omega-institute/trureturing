@@ -58,7 +58,7 @@ def source_registration : Registration arena (arena.Law actual) where
     simp only [show (1 : ℤ).toNat - 1 = 0 from rfl,
       show (3 : ℤ).toNat - 1 = 2 from rfl,
       Nat.nth_prime_zero_eq_two, Nat.nth_prime_two_eq_five]
-    norm_num [a, Nat.lcmUpto,
+    norm_num [a, Nat.lcmUpto, lcm_eq_nat_lcm, Nat.lcm,
       show Finset.Icc 1 1 = {1} from by decide,
       show Finset.Icc 1 4 = {1, 2, 3, 4} from by decide]
 
