@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Sector skew symmetry and the finite braiding convolution.
-   -/
+   digest: Sector skew symmetry and the finite braiding convolution. -/
 
 import D5.S3.VertexAlgebra.Sectors.LatticeSectorBorcherds
 import D5.S3.VertexAlgebra.StateField.SkewSymmetry
