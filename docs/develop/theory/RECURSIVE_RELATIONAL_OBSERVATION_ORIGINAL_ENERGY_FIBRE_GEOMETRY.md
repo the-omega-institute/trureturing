@@ -2553,3 +2553,316 @@ statement are [FEA, §§15–16] under their stated conditional
 source and resource premises.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 18. All depths of a fixed legal packet bank leave positive factor loss
+
+**Definition 18.1 (the bank, retained observations and terminal scope).**
+Retain Assumption 1.1, Definition 12.1 and the represented exhaustive
+packet family of Definitions 15.1 and 16.1. Fix any original finite
+$a,\eta,d>0$ and any fixed finite bank $\mathcal P$ of represented
+legal packets. Empty banks, repeated packets and packets whose
+scalar support misses the positive range of $b$ are allowed.
+For $B\in\mathcal P$ let its cutoff be $\phi_B$, its declared
+outer interval be $I_{2,B}$, and its first-type leaf be
+$V_B=\phi_B(b)b$. Let $\mathcal T(\mathcal P)$ be **all** finite
+binary trees with these leaves and the sole internal operation
+$\Gamma_d$, with no depth or size bound. It is empty when the bank
+is empty. Define
+
+$$
+\begin{gathered}
+\Sigma_{\mathcal P}
+ =\overline{\sigma\bigl(b,r,\iota(C):C\in\mathcal T(\mathcal P)\bigr)}^{\,m},
+\qquad H_{\mathcal P}=L^2(\Sigma_{\mathcal P},m),\\
+E_{\mathcal P}=\mathbb E_m[\,\cdot\mid\Sigma_{\mathcal P}],
+\qquad r=(1+\gamma)^{-1},\qquad \iota(x)=x/\sqrt{1+x^2}.
+\end{gathered}
+\tag{18.1}
+$$
+
+Completion is with respect to the same original probability $m$;
+$L^2$ and conditional expectation may be complex. Any measurable
+terminal processing of the entire countable observation tuple is
+allowed, including limits whenever they define measurable outputs.
+The retained global $b,r$ are observations, not additional leaves.
+Terminal outputs are not fed back into $\Gamma_d$ in this grammar.
+Each finite tree has the compactness, full-domain and recovered
+multiplier properties of Theorem 12.2. Neither global $b$ nor global
+$r$ is required to belong to $D(K)$ or to the full form domain.
+
+**Theorem 18.2 (a new first packet defeats the entire completed
+bank factor).** Under Definition 18.1, for every such source and
+bank there exist a represented legal packet with cutoff $\psi$,
+$U=\psi(b)b$, one pure height-two tree
+
+$$
+c\in\left\{\Gamma_d(U,\Gamma_d(U,U)),\quad
+ \Gamma_d(\Gamma_d(U,U),\Gamma_d(U,U))\right\},
+\tag{18.2}
+$$
+
+and a strictly positive rational $\Delta$ such that
+
+$$
+\inf_{F\in H_{\mathcal P}}\|\iota(c)-F\|_m^2
+ =\|\iota(c)-E_{\mathcal P}\iota(c)\|_m^2\ge\Delta>0.
+\tag{18.3}
+$$
+
+The new packet can have its entire outer closure disjoint from
+all bank outer closures. In particular
+$\Sigma_{\mathcal P}\subsetneq\Sigma_\infty$ under Theorem
+16.4's hypotheses. The choice of packet, of the two trees and of
+the gap depends on the source and bank. No uniform positive gap,
+source-uniform cost or absolute minimality is asserted.
+
+*Proof: simultaneous locality at every depth.* Choose a rational
+$\beta>0$ so small that
+
+$$
+\beta<s_d,\qquad
+[0,\beta]\cap\overline I_{2,B}=\varnothing
+\quad(B\in\mathcal P).
+\tag{18.4}
+$$
+
+This is possible because $s_d>0$ and finitely many legal outer
+closures avoid zero; for the empty bank the second condition is
+vacuous. Set $A_\beta=\{p\in M:0<b(p)<\beta\}$.
+It is nonempty and open, by positivity and exterior decay (2.3),
+and has positive $m$-measure since $h>0$ on $M$. All bank leaves
+vanish on this open set. For smooth functions, locality gives
+
+$$
+\operatorname{supp}\Gamma_d(f,g)
+ \subseteq\operatorname{supp}f\cap\operatorname{supp}g.
+\tag{18.5}
+$$
+
+Indeed outside either closed support the corresponding function
+and every first derivative vanish on a neighborhood. Induction
+on a finite tree proves that every bank tree vanishes on the
+same $A_\beta$. Equivalently all its supports lie in the fixed
+compact union $\bigcup_B\operatorname{supp}V_B$; the induction
+has no bound on its number of steps. There are countably many
+finite trees, so all of them vanish there simultaneously, also
+modulo any permitted countable family of null repairs.
+
+On $A_\beta$ the trace of the uncompleted observation sigma
+algebra is exactly that of $\sigma(b,r)$. To see explicitly why
+this controls arbitrary completed terminal functions, enumerate
+all bank-tree encodings and put $Y=(b,r,\iota(C_1),\ldots)$.
+For a finite or empty list the same argument uses the corresponding
+finite product. An element $F\in H_{\mathcal P}$ has an
+uncompleted measurable version modulo an $m$-null set. The
+Doob–Dynkin factorization on the standard Borel countable product
+gives a Borel $H$ with $F=H(Y)$ almost everywhere. Thus on
+$A_\beta$ it equals $H(b,r,0,0,\ldots)$ almost everywhere.
+Since $\gamma\ge0$ and $r=(1+\gamma)^{-1}>0$, it has there a
+Borel version $H_\beta(b,\gamma)$. This restriction argument
+uses $A_\beta\in\sigma(b)$, and holds for the full completed
+factor, not just cylinder functions or a linear span.
+
+*Proof: a rank-three chart in the unused band.* Theorem 9.1
+supplies one fixed $\kappa\in\{\mathcal C,\mathcal D\}$ for
+which $(b,\gamma,\kappa)$ has rank three almost everywhere
+on the actual rotationally reduced source. Its proof uses a
+nontrivial analytic determinant on the connected reduced domain.
+Consequently the nonempty open band $A_\beta\cap\mathcal U$
+contains a point of that rank. The band meets $\mathcal U$
+by positivity and decay along points off the axis; its positive
+local density also rules out its being contained in the null
+rank-deficient set. Choose rational nested packet intervals with
+outer closure inside $(0,\beta)$ and with this point's $b$ value
+inside $I_0$. Definition 9.2 of [FEA] supplies their represented
+cutoff $\psi$. This packet is legal by (18.4), is distinct from
+every bank packet, and is one of the exhaustive choices.
+
+On a neighborhood of the chosen point, $U=b$, and, with
+$W=\Gamma_d(U,U)$,
+
+$$
+W=\gamma,\qquad
+\Gamma_d(U,W)=\mathcal C,\qquad
+\Gamma_d(W,W)=\mathcal D.
+\tag{18.6}
+$$
+
+Select $c$ according to $\kappa$. Since $\iota'>0$, the map
+$(b,\gamma,z)$ with $z=\iota(c)$ still has rank three there.
+Adjoin one raw coordinate $x_l$ to obtain an invertible
+four-dimensional chart $\Psi=(b,\gamma,z,x_l)$ on a small
+punctured neighborhood contained in $A_\beta$. Shrink its image
+to an open rectangle $R_1\times R_2\times R_3\times R_4$ with
+positive rational side lengths and compact closure in that chart.
+The positive smooth original raw density $h^2$ and a finite
+upper bound on $|\det D\Psi|$ give a positive rational
+$\lambda$ such that the pushforward of the **restricted same
+measure** dominates
+
+$$
+(b,\gamma,z)_*(\mathbf1_{A_\beta}m)
+ \ \ge\lambda\,\mathbf1_{R_1\times R_2\times R_3}(y)\,dy.
+\tag{18.7}
+$$
+
+For example restrict to the inverse of the four-rectangle and
+integrate its fourth coordinate. No assumption about other source
+sheets or a global joint density is involved. The finite construction
+and generated bounds for this rectangle are [FEA, Theorem 17.2].
+Only existence of a positive rational minorant is needed here.
+
+For every $F\in H_{\mathcal P}$ its restricted version above
+therefore satisfies
+
+$$
+\begin{aligned}
+\|z-F\|_m^2
+ &\ge\int_{A_\beta}|z-H_\beta(b,\gamma)|^2dm\\
+ &\ge\lambda\int_{R_1\times R_2}\int_{R_3}
+            |v-H_\beta(y_1,y_2)|^2\,dv\,dy_1dy_2\\
+ &\ge\lambda|R_1||R_2||R_3|^3/12.
+\end{aligned}
+\tag{18.8}
+$$
+
+The last inequality is the interval midpoint square calculation
+of [FEA, (11.8)]; for a complex terminal value its imaginary
+square is an additional nonnegative term. Take any positive
+rational $\Delta$ at most half this lower bound. The orthogonal
+projection identity gives (18.3). The new encoded tree belongs
+to $\Sigma_\infty$ by Theorems 12.2 and 16.4 and does not
+belong to $H_{\mathcal P}$, proving the strict inclusion.
+No finite-menu truncation of $\mathcal T(\mathcal P)$ was
+made. $\square$
+
+## 19. Full-source heat and the task-faithful boundary of a finite bank
+
+**Theorem 19.1 (no fixed finite bank factor reduces the original
+heat).** Under Definition 18.1, for every original finite positive
+triple and every finite legal bank, including the empty one,
+
+$$
+E_{\mathcal P}T_d\ne T_dE_{\mathcal P}
+\quad\text{on the full }L^2(m).
+\tag{19.1}
+$$
+
+In particular that factor reduces neither the original full
+semigroup nor its full generator.
+
+*Proof.* If the projection commuted with $T_d=e^{-dK}$, it would
+commute with its spectral projections. The injective Borel
+correspondence $\lambda\mapsto e^{-d\lambda}$ on $[0,\infty)$
+then makes it commute with every spectral projection of the same
+nonnegative self-adjoint $K$. There is no zero-eigenspace of
+$T_d$ to lose under the inverse correspondence. In particular it
+preserves $D(K)$ and commutes with $K$ there: the spectral integral
+for $\|Kf\|^2$ is unchanged under this reducing decomposition.
+Thus $f\in H_{\mathcal P}\cap D(K)$ implies $Kf\in H_{\mathcal P}$.
+
+Use the new packet of Theorem 18.2. Its $U=\psi(b)b$ is bounded
+and $\Sigma_{\mathcal P}$-measurable, although it is not a leaf
+of the fixed bank grammar. Both $U$ and $U^2$ are in
+$C_c^\infty(M)\subset D(K)$. This inclusion follows because
+their $h$-multiples are in $\mathcal D_0\subset D(H)$.
+For any compact smooth $f,g$, [W, Lemma 22.2] says that their
+multipliers preserve the **entire complex** $D(K)$, with
+$hfu\in D(\overline S)$ and $A(hfu)=C(hfu)=0$ for every
+$u\in D(K)$. The local product identity is consequently an
+identity for this full operator, both pointwise on $M$ and in
+$L^2(m)$:
+
+$$
+\Gamma_d(f,g)=\frac d2\bigl(fKg+gKf-K(fg)\bigr).
+\tag{19.2}
+$$
+
+All terms for compact smooth $f,g$ are $L^2$; these functions
+also lie in $\mathscr V_0$ and have source trace zero. No
+Friedrichs replacement or punctured-core assertion enters (19.2).
+
+Reduction and (19.2) with $f=g=U$ give
+$W=\Gamma_d(U,U)\in H_{\mathcal P}$. Indeed $KU,K(U^2)$
+are in that space and multiplication by bounded measurable $U$
+preserves it. The actual $W$ is bounded compact smooth by
+Theorem 12.2. Hence $UW,W^2\in C_c^\infty(M)\cap H_{\mathcal P}$
+are also in the full $D(K)$. Applying (19.2) to $(U,W)$ and
+$(W,W)$ gives both trees in (18.2) in $H_{\mathcal P}$.
+Their bounded Borel encodings would be measurable for the same
+completed factor. This contradicts (18.3). The argument never
+applies $K$ to global $b,r$ or $\gamma$. It retains the original
+$A=\rho C$ endpoint, its distinct $C=0$ selector, the full form,
+normalized zero state and nonpolar source trace. $\square$
+
+**Corollary 19.2 (a necessary boundary enlargement for this
+consumer).** Any completed sub-sigma algebra containing
+$\Sigma_{\mathcal P}$ whose conditional-expectation projection
+commutes with the original $T_d$ must contain the new
+$\iota(c)$ of Theorem 18.2 modulo $m$-null sets. Arbitrarily
+deep pure compositions of the fixed bank, followed by arbitrary
+measurable terminal processing, have squared error at least
+$\Delta$ for that same-source target.
+
+*Proof.* The full-domain argument (19.2) in any such larger
+factor includes $U$, then $W$, then both height-two trees and
+their encodings. Equation (18.3) proves the error assertion for
+every allowed terminal output in $L^2$. Thus the bank factor
+cannot be a sufficient heat boundary for this task. This does not
+assert that adjoining this one tree is heat closed, that its
+squared gap is optimal, or that a smallest finite enlargement
+exists. If terminal maps, new cutoffs or global $b,r$ were
+instead admitted as new $\Gamma_d$ inputs, a different grammar
+would result; no obstruction for that changed grammar is proved
+here. $\square$
+
+**Definition 19.3 (source correspondence and mathematical
+attribution of the bank obstruction).** Proposition 15.3 excludes
+a fixed finite compact menu by two exterior points. Theorems
+18.2–19.1 instead quantify over every finite seed bank at all
+finite depths and over the whole completed measurable factor,
+even after global $b,r$ are retained. Their additional relation
+is the unused positive-level band, its restricted positive-measure
+rank-three chart, and the resulting full-factor loss and heat
+failure. Theorem 9.1 supplies actual rank for all positive triples;
+Theorems 12.2 and 16.2–16.4 supply compact domains, the existing
+first-type compiler and the exhaustive quotient; Theorem 17.1
+continues to supply its finite high-mass inverse. None is proved
+again or counted as a new classification or new inverse.
+
+Locality, Doob–Dynkin factorization, change of variables, interval
+variance and self-adjoint spectral calculus are mature intermediate
+facts, used with the hypotheses above and as in Theorem 9.1,
+Corollary 10.3 and [FEA, §11]. The bank obstruction and its paid
+certificate [FEA, §§17–18] are `repo-derived` conditional
+consequences for this original source, without a world-priority
+or new kernel-verification claim. The finite certificate consumes
+an actual newly selected legal relation, not an arbitrary coding
+or an interpretation of free algebra.
+
+The correspondence [W, Theorem 5.2] transports the same $b,r$,
+cutoffs, every $\Gamma$ node, completed measure and projection
+loss to the reference member $(1,1,\tau)$ with $\tau=a^2d/\eta$.
+It also transports the full endpoint, operator/form domains and
+source trace, and intertwines the actual $T_d$ with reference
+$T_\tau$. The factor and its obstruction therefore concern the
+same original $G=H^1\times\mathbb R$, not a separate process.
+A fixed local bank needs separately supplied new observations or
+operations to meet the indicated task; composition alone in this
+grammar does not supply them. Neither the energy operation nor its
+metric is derived from bare $\alpha,\beta$ tree syntax.
+
+The original $e$-start, first $2d$ read, subsequent $d$ gaps,
+$0,1,3,B$ emissions, actual calibration and conditional fresh
+noise remain unchanged. Existential separation, sound finite
+certification, sourcewise eventual finite acquisition and an
+actual-return interface are distinct statements. The first three
+have the stated analytic, numerical and paid-resource premises;
+no hidden-point features, new sensor, reset, control, exact law
+from a finite record, physical parameter name or free throughput
+are supplied. Assimilating every label between record endpoint
+$S$ and actual return $C$, and full mutual recovery of space,
+legal continuation, boundary and memory, remain unresolved.
+
+## 追加锚（本行以下为增补区）

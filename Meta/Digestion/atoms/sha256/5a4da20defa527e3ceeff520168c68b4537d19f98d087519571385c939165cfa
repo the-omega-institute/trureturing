@@ -1,0 +1,8 @@
+**附注 490.8（二阶 Brownian 结构）。** 引理 490.2 的证明说明：在 (490.2) 下，关于概率测度 $dx/((b-a)X)$ 在 $[aX,bX]$ 上平均，归一化增量 $s\mapsto D_{sh}(x)/\sqrt{h\log(X/h)}$ 的二阶矩核趋于 $\min(s,t)$，即标准 Brownian 运动的协方差；素数计数的 Brownian（Hurst 指数 $1/2$）预期见 Gorodetsky–Matomäki–Radziwiłł–Rodgers [On the variance of squarefree integers in short intervals and arithmetic progressions, Geom. Funct. Anal. 31 (2021), 111–149] §1.2，$x^\theta$ 窗中方差的 $1-\theta$ 因子见 Montgomery–Soundararajan [Primes in short intervals, Comm. Math. Phys. 252 (2004), 589–617] p.8。若再设 von Koch 界，则 $\int_{aX}^{bX}D_{sh}(x)\,dx=\int_{bX}^{bX+sh}E-\int_{aX}^{aX+sh}E=O(h\sqrt X\log^2X)$，归一化均值为 $O\bigl(\sqrt{h/X}\log^{3/2}X\bigr)=o(1)$，故中心化协方差有同一极限。对 $E=\psi-\mathrm{id}$，$E$ 在紧区间上有界变差，$D_{sh}(x)=\int_{(x,x+sh]}dE(t)$，绝对 Fubini 给出
+
+$$
+F_{h,g}(x)=\int_{(x,x+h]}G_g\Bigl(\frac{t-x}h\Bigr)\,dE(t),
+$$
+
+其中连续部分为 $-\int_x^{x+h}G_g((t-x)/h)\,dt=-h\int_0^1s\,g(s)\,ds$，与 $F_{h,g}(x)=\int_0^1g(s)\bigl(\psi(x+sh)-\psi(x)-sh\bigr)ds$ 的漂移项一致；于是 $Q(g)=\|G_g\|_{L^2(0,1)}^2$ 是这一短窗线性统计在该协方差下的二次能量。本节只用到二阶结构；高阶混合矩、有限维高斯分布与紧性都不在本节结论之内，本节不给出随机过程意义下的收敛。
+
