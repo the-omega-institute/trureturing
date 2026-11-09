@@ -114,7 +114,7 @@ theorem pairCount_ge_three (H : Subgroup G) (hH : H ≠ ⊥) (hr : 0 < pairCount
     simp
   by_cases ha : a = 1
   · have hb : b ≠ 1 := hnon.resolve_left (by simpa using ha)
-    
+
     have hs : ({(1,b),(b,1),(b,b)} : Finset (G × G)).card = 3 := by simp [hb, Ne.symm hb]
     rw [← hs]
     apply Finset.card_le_card
