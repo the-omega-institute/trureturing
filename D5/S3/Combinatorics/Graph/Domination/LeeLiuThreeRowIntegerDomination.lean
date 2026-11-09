@@ -419,7 +419,7 @@ private theorem pad_end {m n : ℕ} (f : Fin m × Fin n → ℕ) : pad f (n + 1)
   funext i
   simp [pad_apply]
 
-private theorem path_neighbor_sum {n : ℕ} (f : Fin n → ℕ) (j : Fin n) :
+theorem path_neighbor_sum {n : ℕ} (f : Fin n → ℕ) (j : Fin n) :
     ∑ k ∈ (pathGraph n).neighborFinset j, f k =
       (if h : 0 < j.val then f ⟨j.val - 1, by omega⟩ else 0) +
       (if h : j.val + 1 < n then f ⟨j.val + 1, h⟩ else 0) := by
