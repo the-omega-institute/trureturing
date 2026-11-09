@@ -7,7 +7,14 @@
    digest: Exact height-five three-label continuation recurrence. -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix
-import Mathlib.Tactic
+import Mathlib.Tactic.FinCases
+import Mathlib.Tactic.NormNum
+import Mathlib.Tactic.Ring
+import Mathlib.Algebra.BigOperators.Fin
+import Lean.Elab.Tactic.Omega
+
+set_option maxRecDepth 100000
+set_option maxHeartbeats 0
 
 /-! The three-label transfer is an auxiliary count, not the normalized six-colour source count. -/
 open scoped BigOperators
@@ -305,8 +312,7 @@ private theorem step_fast (w : Column → ℤ) (p : Column) :
   rw [← List.sum_toFinset _ (moves_nodup p)]
   exact Finset.sum_subset (Finset.subset_univ _) (by
     intro q _ hq
-    simp only [List.mem_toFinset] at hq
-    simp [hq])
+    exact if_neg (by simpa using hq))
 
 set_option maxRecDepth 30000 in
 set_option maxHeartbeats 0 in
@@ -335,7 +341,9 @@ private theorem table_certificate : ∀ p : Column,
 private theorem vector_certificate :
     (T ^ (1+10)).mulVec (1 : Column → ℤ) =
       ∑ j : Fin 10, coefficients j • (T ^ (1+j.val)).mulVec (1 : Column → ℤ) := by
-  rw [powers_table (11 : Fin 12)]
+  change (T ^ 11).mulVec (1 : Column → ℤ) = _
+  have h11 : (T ^ 11).mulVec (1 : Column → ℤ) = table 11 := powers_table (11 : Fin 12)
+  rw [h11]
   have h (j : Fin 10) : (T ^ (1+j.val)).mulVec (1 : Column → ℤ) =
       table ⟨1+j.val, by omega⟩ := powers_table ⟨1+j.val, by omega⟩
   simp_rw [h]
@@ -354,7 +362,9 @@ theorem result (w : Column → ℤ) (n : ℕ) :
       514 * dotProduct w (v (n+4)) + 192 * dotProduct w (v (n+3)) +
       72 * dotProduct w (v (n+2)) - 36 * dotProduct w (v (n+1)) := by
   have h := TransferMatrix.scalarRelationShift T w 10 1 coefficients vector_certificate n
-  simpa [coefficients, Fin.sum_univ_succ, v, add_assoc, add_comm, add_left_comm,
-    sub_eq_add_neg, mul_comm] using h
+  norm_num [coefficients, Fin.sum_univ_succ, Nat.add_assoc] at h
+  change dotProduct w ((T ^ (n+11)).mulVec 1) = _
+  dsimp only [v]
+  convert h using 1 <;> ring
 
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233178Chromatic
