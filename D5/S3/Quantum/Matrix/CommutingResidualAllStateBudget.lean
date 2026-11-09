@@ -64,7 +64,7 @@ private theorem det_x : x.det = 3 := by
   have hs4 : (Real.sqrt 2 : ℂ)^4 = 4 := by calc
     _ = ((Real.sqrt 2 : ℂ)^2)^2 := by ring
     _ = 4 := by rw [hs]; norm_num
-  norm_num [hs4]
+  norm_num [hs4,hs]
 
 private def f (w : ℂ) : ℂ := w^4+2*w^2+3
 
@@ -74,16 +74,28 @@ private theorem determinant_certificate (p q : ℝ) :
         q^2/32*((p^2+q^2+3)^2+4*p^2+2) + q^4/4096 : ℝ) := by
   have hs : (Real.sqrt 2 : ℂ)^2 = 2 := by exact_mod_cast sqrt_two_sq
   have hn : (Real.sqrt 2 : ℂ) ≠ 0 := by exact_mod_cast sqrt_two_ne
+  have hr4 : Real.sqrt 2 ^ 4 = 4 := by
+    calc
+      _ = (Real.sqrt 2 ^ 2)^2 := by ring
+      _ = 4 := by rw [sqrt_two_sq]; norm_num
+  have hr6 : Real.sqrt 2 ^ 6 = 8 := by
+    calc
+      _ = (Real.sqrt 2 ^ 2)^3 := by ring
+      _ = 8 := by rw [sqrt_two_sq]; norm_num
+  have hr8 : Real.sqrt 2 ^ 8 = 16 := by
+    calc
+      _ = (Real.sqrt 2 ^ 2)^4 := by ring
+      _ = 16 := by rw [sqrt_two_sq]; norm_num
   simp [pencil,NonsingularPencilStateBudget.pencil,Matrix.det_succ_row_zero,
     Matrix.det_fin_three,Matrix.det_fin_two,Matrix.submatrix_apply,
     h,x,r,c,k,t,z,g,eta,Matrix.mul_apply,Fin.sum_univ_succ,Fin.succAbove,Matrix.one_apply,
     f,Complex.normSq_apply,Complex.conj_ofReal,Complex.conj_I,map_div₀,map_sub,map_one]
   apply Complex.ext <;> simp [Complex.mul_re,Complex.mul_im,Complex.div_re,
-    Complex.div_im,Complex.normSq_apply,Complex.I_re,Complex.I_im,←Complex.ofReal_pow]
-  all_goals simp only [←Complex.ofReal_pow,Complex.ofReal_re,Complex.ofReal_im]
+    Complex.div_im,Complex.normSq_apply,Complex.I_re,Complex.I_im,pow_succ]
+  all_goals try simp only [←Complex.ofReal_pow,Complex.ofReal_re,Complex.ofReal_im]
   all_goals field_simp
   all_goals ring_nf
-  all_goals norm_num [show (4:ℕ)=2*2 from rfl, show (6:ℕ)=2*3 from rfl, show (8:ℕ)=2*4 from rfl, pow_mul, sqrt_two_sq]
+  all_goals norm_num [hr4,hr6,hr8,sqrt_two_sq]
   all_goals ring
 
 private theorem determinant_positive (p q : ℝ) : 0 < (pencil p q).det.re := by
@@ -197,5 +209,8 @@ theorem result : ¬ claim := by
       simpa [← hk,← ht,g,hφ] using h)
   have hh := congrArg (fun M : A => M 0 0) hrr
   norm_num [hz,Matrix.one_apply] at hh
+
+#print axioms witness
+#print axioms result
 
 end D5.S3.Quantum.Matrix.CommutingResidualAllStateBudget
