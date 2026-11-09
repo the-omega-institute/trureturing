@@ -1,0 +1,23 @@
+**定义 64.2（尺度化第二标签族）。** 令 $m=n-2\ge1$，在固定数学商坐标内置
+
+$$
+Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\qquad
+T=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+Y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\qquad P=I_2\oplus0_m.
+$$
+
+取实 $\alpha,t,s$ 满足 $\alpha ts\ne0$，以及任意自伴 $B\in H_m(\mathbb C)$，记
+
+$$
+\begin{gathered}
+A=sZ\oplus0_m,\qquad R=(\alpha Z+tT)\oplus B,
+\qquad F=\alpha A,\\
+b=\|B\|,\qquad L=\|R\|=\max\{\sqrt{\alpha^2+t^2},b\},\\
+\mathfrak b_0=|t|+|s|L,\qquad
+\mathfrak b_1=\sqrt{|t|^2(1+|s|)^2+s^2b^2/4}.
+\end{gathered}
+\tag{64.5}
+$$
+
+对每一对实际 $r,a\in E$ 满足 $\pi r=R,\pi a=A$，第三标签始终取实际 $c=\alpha a$。这里改变 $s$ 是选择另一个实际输入的像，不是对未知旧响应作齐次搬运。
+
