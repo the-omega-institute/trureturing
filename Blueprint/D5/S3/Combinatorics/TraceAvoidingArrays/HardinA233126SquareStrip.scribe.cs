@@ -83,7 +83,7 @@ internal sealed class HardinA233126SquareStripDocument : IScribeDocumentDefiniti
                     + "this quintic by x-32 gives precisely the six coefficients in the "
                     + "recurrence. The integer calculation therefore applies to the literal "
                     + "filtered count for every n+7, with n a natural number."))),
-                DescribeRole.Theorem)))));
+                DescribeRole.Theorem))));
 
 
     private static DocumentBlock Entry(string id, string declaration, string title,
@@ -268,7 +268,6 @@ internal sealed class HardinA233126SquareStripDocument : IScribeDocumentDefiniti
         new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Subtract, Parenthesized(b));
     private static Formula Mul(Formula a, Formula b) =>
         new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Multiply, Parenthesized(b));
-    private static Formula Pow(Formula a, byte b) => new Formula.Power(Parenthesized(a), D(b));
     private static Formula All(string n, Formula type, Formula body) =>
         Seq(Forall, Sp, Typed(V(n), type), Comma, Sp, Parenthesized(body));
     private static Formula Fn(string n, Formula type, Formula body) =>
