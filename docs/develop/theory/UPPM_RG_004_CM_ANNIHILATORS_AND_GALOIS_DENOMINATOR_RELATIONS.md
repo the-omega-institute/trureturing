@@ -4342,3 +4342,273 @@ $U_{j,p}=[q]P_{j,p}-T_{j,p}$ 又将得到代数点，仍矛盾。零点已被非
 ---
 
 ## 追加锚（本行以下为增补区）
+
+## 77. 原 Hurwitz 支持上的代数替换与全部关系预算
+
+**定义 77.1（固定接口与代数替换的量词）。** 固定定义 75.1、定理 75.2 的全部参数、原 Hurwitz 元 $u=(1+i+j+k)/2$、左 $\mathcal O$ 模、理想、互异素数 $p=p_I$、实际挠点、$\theta_I$ 和嵌入 $\iota_p:M\hookrightarrow L_p$；原 $r_0$ 和支持均不变。仍有
+
+$$
+\mathcal R=\mathcal O\oplus\mathcal O u,\qquad
+N_{\mathcal R}(\alpha+\beta u)
+=S+\operatorname{Re}((1-i)\alpha\bar\beta)<2S,
+\quad S=|\alpha|^2+|\beta|^2>0.
+\tag{77.1}
+$$
+
+以 $U_{1,p}^{\ast}=\exp(p)$、$U_{2,p}^{\ast}=\exp(p\iota_p(\sqrt2))$ 记原形式点，以 $D_{\ast}(x)$ 记 (75.8) 的原 $D_{\mathrm{full}}(x)$。记 $\mathscr P(x)=\{p_I:x\in I\}$；由 (75.4)，它有限，非空时每项有 $r\mid N_{\mathcal R}(x)$、$r\le N_{\mathcal R}(x)<2S$。
+
+固定 $0<c<1$，并在任何关系之前，给原支持指定正数 $\epsilon_p$，满足 $\sum_p\epsilon_p<A/100$。例如按 §75 的理想顺序给支持编号 $k\ge1$，可取 $\epsilon_{p_k}=A2^{-k}/200$。每个 $p$ 的精度 $m_p$、代数点对及其在 $L_p$ 的共同嵌入都只选一次，随后供全部 $\alpha,\beta\in\mathcal O$ 使用；不同 $p$ 的点和数域允许不同。以下 $\log$ 均由 $dx/(2y)$ 归一化，$v_p(p)=1$，所有高度均为绝对对数高度。
+
+**定理 77.2（同圆盘代数点同时承接短关系与长关系）。** 在定义 77.1 的固定支持上，存在上述一次选定的数据，使每个 $p$ 有
+
+$$
+V_{j,p}\in U_p(1)\cap E_0(\overline{\mathbb Q}\cap L_p),\qquad
+P^{\mathrm{alg}}_{j,p}\in E_0(\overline{\mathbb Q}\cap L_p),\qquad
+[q]P^{\mathrm{alg}}_{j,p}=T_{j,p}+V_{j,p}\quad(j=1,2).
+\tag{77.2}
+$$
+
+这里 $\overline{\mathbb Q}\cap L_p$ 表示 $L_p$ 中代数于 $\mathbb Q$ 的元素；同一 $p$ 的所有点均取这个共同实现。两个 $V_{j,p}$ 在 $\mathcal O$ 模意义下模挠独立，且 $v_p(\log V_{j,p})=1$。对每个非零 $x=\alpha+\beta u$，始终研究原来的乘 $q$ 关系
+
+$$
+S^{\mathrm{alg}}_p(x)
+=[q]([\alpha]P^{\mathrm{alg}}_{1,p}+[\beta]P^{\mathrm{alg}}_{2,p}).
+\tag{77.3}
+$$
+
+它非零，进入第一形式群当且仅当 $x\in I$。进入时令 $L_p(x)=\alpha\log V_{1,p}+\beta\log V_{2,p}$，则
+
+$$
+\begin{gathered}
+b^{\mathrm{alg}}_p(x)=v_p(L_p(x)),\\
+S\le p^{cm_p}\ \Longrightarrow\quad
+b^{\mathrm{alg}}_p(x)=b^{\ast}_p(x)
+:=1+v_p(\iota_p(\alpha+\beta\sqrt2)),\\
+S\ge p^{cm_p}\ \Longrightarrow\quad
+b^{\mathrm{alg}}_p(x)\log p\le\epsilon_p S.
+\end{gathered}
+\tag{77.4}
+$$
+
+不进入时深度为零。由此，对全部非零关系同时成立
+
+$$
+D_{\mathrm{alg}}(x):=\sum_{p\in\mathscr P(x)}b^{\mathrm{alg}}_p(x)\log p
+\le D_{\ast}(x)+AS/100,\qquad D_{\mathrm{alg}}(x)\le AS.
+\tag{77.5}
+$$
+
+HKT 所用中间域可取绝对次数恰为 $8$ 的 $K_{p,m_p}$。最终点对共同域有安全界
+
+$$
+\begin{gathered}
+[\mathbb Q(P^{\mathrm{alg}}_{1,p},P^{\mathrm{alg}}_{2,p}):\mathbb Q]
+\le 8q^4[\mathbb Q(E_0[qr]):\mathbb Q],\\
+\widehat h(P^{\mathrm{alg}}_{j,p})=\widehat h(V_{j,p})/q^2.
+\end{gathered}
+\tag{77.6}
+$$
+
+此次数界与精度无关，允许依赖 $q,r$。对每个正整数 $n$，共同整数入口和深度仍为
+
+$$
+\begin{gathered}
+\rho_p=r,\qquad c_p=r^2,\qquad d_p=1,\\
+\bigl([qn]P^{\mathrm{alg}}_{j,p}\in U_p(1)\text{ 对 }j=1,2\bigr)
+\ \Longleftrightarrow\ r\mid n,\\
+b_p([qn]P^{\mathrm{alg}}_{j,p})=1+v_p(n)\quad(r\mid n,\ j=1,2).
+\end{gathered}
+\tag{77.7}
+$$
+
+故 (75.9) 的 $B_{\mathrm{sel}},F_{\mathrm{sel}},V_{\mathrm{sel}}$ 在代数替换后逐项相同，保留 (75.10) 的两个上界及正三次尾部
+
+$$
+V_{\mathrm{sel}}(R)=\frac{4\gamma}{21\zeta(3)}R^3
++O_{q,A,H_{\mathrm{cut}},r_0}(R^2+(\log R)^6).
+\tag{77.8}
+$$
+
+**证明（Gaussian CRT 与同支形式点）。** 先固定任一原支持素数 $p$，暂令整数 $m\ge1$ 任意；以下构造和界对所有 $m$ 使用同一组常数。把两个目标点写为 $(x_j^{\ast},y_j^{\ast})$。由 $v_p(\log U_j^{\ast})=1$ 和 (75.15)，有 $v_p(t(U_j^{\ast}))=1$；好整模型在原点的展开 $x=t^{-2}(1+O(t))$、$y=-t^{-3}(1+O(t))$ 给出 $v_p(x_j^{\ast})=-2$、$v_p(y_j^{\ast})=-3$。
+
+令 $\lambda_1=2+i$、$\lambda_2=3+2i$，其范数分别为 $5,13$。原 $p>5$ 且 $p\equiv3\pmod4$，故 $p,\lambda_1,\lambda_2$ 两两互素。惰性且不分歧给出 $\mathcal O/(p^m)\simeq\mathcal O_{L_p}/p^m$。在 $\mathcal O$ 中同时规定
+
+$$
+\begin{aligned}
+A_{jm}&\equiv p^2x_j^{\ast}\pmod{p^m}\quad(j=1,2),\\
+(A_{1m},A_{2m})&\equiv(p^2\lambda_1,\,2p^2)\pmod{\lambda_1^2},\\
+(A_{1m},A_{2m})&\equiv(2p^2,\,p^2\lambda_2)\pmod{\lambda_2^2},\\
+x_{jm}&=A_{jm}/p^2.
+\end{aligned}
+\tag{77.9}
+$$
+
+第一行只是指定 $p^2x_j^{\ast}$ 的有限剩余类，不要求该目标坐标代数。Gaussian CRT 给出解类。模理想的生成元为 $p^m\lambda_1^2\lambda_2^2$；在其 Gaussian 方格的中心基本区域取代表元，有 $|A_{jm}|\le65p^m$。于是
+
+$$
+h(x_{jm})\le h(A_{jm})+2\log p\le m\log p+C_p,
+\qquad x_{jm}/x_j^{\ast}\in1+p^m\mathcal O_{L_p}.
+\tag{77.10}
+$$
+
+这里及下文 $C_p$ 可扩大，但只依赖固定 $p$ 和固定曲线，与 $m,S,\alpha,\beta$ 无关。由第一行的单位剩余类，$v_p(x_{jm})=-2$。令 $f(X)=X^3-X$；写成 $f(X)=X^3(1-X^{-2})$，得
+
+$$
+f(x_{jm})/f(x_j^{\ast})\in1+p^m\mathcal O_{L_p}.
+$$
+
+因 $p$ 为奇数，Hensel 引理给出这个比值在 $1+p^m\mathcal O_{L_p}$ 中的唯一平方根。取 $y_{jm}/y_j^{\ast}$ 为它，便有 $y_{jm}^2=f(x_{jm})\in\mathbb Q(i)$、$v_p(y_{jm})=-3$。所以 $y_{jm}$ 虽由同支条件选出，却是 $L_p$ 中的代数数。置 $V_{jm}=(x_{jm},y_{jm})$，则 $V_{jm}\in U_p(1)$，并有
+
+$$
+\frac{t(V_{jm})}{t(U_j^{\ast})}\in1+p^m\mathcal O_{L_p},\qquad
+v_p(\ell_{jm}-\ell_j^{\ast})\ge m+1,
+\quad \ell_{jm}:=\log V_{jm},\quad
+(\ell_1^{\ast},\ell_2^{\ast})=(p,p\iota_p(\sqrt2)).
+\tag{77.11}
+$$
+
+第二个断言用的是差的保赋值性：整形式群中 $t(V-U)=(t(V)-t(U))H(t(V),t(U))$，其中 $H\in\mathcal O_{L_p}[[X,Y]]$、$H(0,0)=1$；这是从形式减法在 $X=Y$ 时为零及线性项 $X-Y$ 得到的整除。故 $v_p(t(V-U))=v_p(t(V)-t(U))\ge m+1$，再对点差使用 (75.15)。只比较两点各自的对数赋值不能代替这一步。(77.11) 还给出 $v_p(\ell_{jm})=1$，所以 $V_{jm}$ 非挠；这里不需要第三个辅助素数。
+
+**证明（独立平方类与全部非零线性形式）。** 在 $\lambda_1,\lambda_2$ 处，分母 $p^2$ 是单位。(77.9) 使 $x_{1m}\equiv\lambda_1\bmod\lambda_1^2$、$x_{2m}\equiv2\bmod\lambda_1^2$，在 $\lambda_2$ 处交换角色。$f(2)=6$ 在两处均为单位，且 $f(X)=X(X-1)(X+1)$ 在 $X\equiv\lambda_a\bmod\lambda_a^2$ 时恰有赋值 $1$。因此
+
+$$
+\begin{pmatrix}
+v_{\lambda_1}(f(x_{1m}))&v_{\lambda_1}(f(x_{2m}))\\
+v_{\lambda_2}(f(x_{1m}))&v_{\lambda_2}(f(x_{2m}))
+\end{pmatrix}
+=\begin{pmatrix}1&0\\0&1\end{pmatrix}.
+\tag{77.12}
+$$
+
+对任何平方乘积取这两个赋值，说明 $f(x_{1m}),f(x_{2m})$ 在 $\mathbb Q(i)^\times/\mathbb Q(i)^{\times2}$ 中独立。故
+$K_{p,m}=\mathbb Q(i,y_{1m},y_{2m})$ 在 $\mathbb Q(i)$ 上为双二次扩张，绝对次数为 $8$，有分别只翻转一个 $y_{jm}$ 符号的两个自同构。它们固定 $\mathcal O$，分别把一个 $V_{jm}$ 变为其负点、另一个保持不动。若 $[\alpha]V_{1m}+[\beta]V_{2m}$ 为挠点，对两个翻转分别作差，得到 $[2\alpha]V_{1m}$、$[2\beta]V_{2m}$ 均为挠点。非零 Gaussian 整数的作用是有限核同源，所以非挠性迫使 $\alpha=\beta=0$。这是模挠独立性；不把这些域自同构当作连续局部自同构作用于对数。
+
+对全部非零 $(\alpha,\beta)$，形式点 $[\alpha]V_{1m}+[\beta]V_{2m}$ 因而非零。(75.15) 的单射及 $\mathcal O$ 等变性给出
+
+$$
+L=\alpha\ell_{1m}+\beta\ell_{2m}\ne0.
+\tag{77.13}
+$$
+
+**证明（已发表双椭圆对数界及全部参数）。** 使用 Hirata-Kohno–Takada，[*Linear forms in two elliptic logarithms in the p-adic case*，Kyushu J. Math. **64** (2010), 239–260，DOI 10.2206/kyushujm.64.239，Assumptions 2.1–2.2、Theorem 2.1、Corollary 2.1，印刷页 242–243](https://www.jstage.jst.go.jp/article/kyushujm/64/2/64_2_239/_pdf)。该原发表结论对 $\eta\in K$、$u_1,u_2$ 在严格圆盘 $|u|<p^{-1/(p-1)}$ 中，要求 $\phi^2(u_j),\phi(u_j)/\phi'(u_j)\in K$；若 $\Delta=\eta u_1-u_2\ne0$，则
+
+$$
+|\Delta|_p>
+\exp\{-1.16\cdot10^{35}a_1a_2h_3g^3d^6\log E^{\ast}\}.
+\tag{77.14}
+$$
+
+这正是 Theorem 2.1 的非零情形 Corollary 2.1，不借用任何未发表的多对数估计。其坐标为 $\exp(u)=(1/\phi(u)^2,-\phi'(u)/\phi(u)^3)$，所以在 $u_j=\ell_{jm}$ 时
+
+$$
+\phi^2(u_j)=1/x_{jm},\qquad
+\phi(u_j)/\phi'(u_j)=-x_{jm}/y_{jm}\in K_{p,m}.
+$$
+
+原文 §3、Definition 3.1、印刷页 244–245 以 $t=-X/Y$ 及 $dX/(2Y)$ 定义逆函数对数；直接对上述坐标求微分也得 $dx/(2y)=du$，故这里没有相差 $2$ 的对数规范。$|u_j|_p=p^{-1}<p^{-1/(p-1)}$，且 $K_{p,m}$ 在所选嵌入下的完成为 $L_p$：它含 $\mathbb Q(i)$，后者的完成已经是 $L_p$，而它本身包含在 $L_p$ 中。
+
+原文定义 $h_j=\widehat h_{\mathrm{HKT}}(\exp(u_j))$、$a_j=\max(1,h_j)$，印刷页 242 写的是 $\widehat h_{\mathrm{HKT}}(P)=\frac12\lim_n4^{-n}h([2^n]P)$。为准确支付记号规范，另以 $\widehat h$ 表示 Silverman，[*The Arithmetic of Elliptic Curves*，第二版，VIII.9、Remark 9.2、Theorem 9.3(a)–(e)，印刷页 248–249](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf) 的 $\frac12\lim_n4^{-n}h(x([2^n]P))$。取偶函数 $x$、$\deg x=2$，其在全部 $E_0(\overline{\mathbb Q})$ 上的界为
+
+$$
+2\widehat h(V_{jm})=h(x_{jm})+O_{E_0}(1),\qquad
+0<\widehat h(V_{jm})\le C_p(1+m).
+\tag{77.15}
+$$
+
+$O_{E_0}(1)$ 不依赖移动的数域；正性由非挠性及同一 Theorem 9.3(d)。若 HKT 的 $h(P)$ 用横坐标高度，则两个半归一化相同；若严格按其页 241 的射影点高度读取，则本曲线上 $h(x:y:1)=\frac32h(x)+O_{E_0}(1)$，从而 $\widehat h_{\mathrm{HKT}}=\frac32\widehat h$。后一高度比较在有限地方由 $y^2=x^3-x$ 及 $|x|>1$ 时 $|y|=|x|^{3/2}$ 得到，在无穷地方由同式得有界差。因而两种记号下均有 $0<h_j\le C_p(1+m)$；以下保留这个安全上界，不把两个 $h(P)$ 记号未经比较直接等同。对 HKT 的曲线参数取 $A_E=1,B_E=0$，则 $h_4=\max\{1,h(1,A_E,B_E)\}=1$。其余参数逐一为
+
+$$
+\begin{gathered}
+\rho=p^{-1/(p-1)},\quad
+E^{\ast}=\rho/\max(|u_1|_p,|u_2|_p)=p^{1-1/(p-1)}>1,\\
+D=[K_{p,m}:\mathbb Q]=8,\qquad
+d=\max\{1,8/\log E^{\ast}\},\\
+g=\max\{1,h_4,\log h_1,\log h_2,\log d\}
+\le C_p(1+\log(1+m)),\qquad a_1a_2\le C_p(1+m)^2.
+\end{gathered}
+\tag{77.16}
+$$
+
+若 $\alpha\beta\ne0$，取 $\eta=-\alpha/\beta\in\mathbb Q(i)\subset K_{p,m}$、$\Delta=-L/\beta$，则 (77.13) 保证 $\Delta\ne0$。由 Gaussian 整数的绝对高度，$h(\eta)\le h(\alpha)+h(\beta)\le\log S$，所以 $h_3=\max(1,h(\eta))\le1+\log S$。将 (77.15)–(77.16) 代入 (77.14)，并准确加回
+$v_p(\beta)\log p\le\frac12\log |N_{\mathbb Q(i)/\mathbb Q}(\beta)|\le\frac12\log S$，得到
+
+$$
+v_p(L)\log p\le C_p(1+m)^2(1+\log(1+m))^3(1+\log S).
+\tag{77.17}
+$$
+
+若一个系数为零，另一个记为 $a\ne0$，直接有 $v_p(L)=1+v_p(a)$，并以惰性 $p$ 的 Gaussian 范数得 $2v_p(a)\log p\le\log|a|^2\le\log S$。故扩大同一 $C_p$ 后 (77.17) 仍成立。此处未对可能超越的 $\ell_{jm}$ 应用 Liouville；用到的范数只作用于 Gaussian 系数。所有 $p$ 都使用同一个已发表定理，$C_p$ 对各个任意大的固定 $p$ 有限；没有在 $m$ 内隐藏额外的域次数或常数依赖，也不要求这些 $C_p$ 对无限支持有统一上界。
+
+**证明（实际挠原像、形式除法与最终点域）。** 把 §75 已固定的实际 $qr$ 挠原像记为 $S^{\mathrm{tor}}_{j,p}$，故 $[q]S^{\mathrm{tor}}_{j,p}=T_{j,p}$。其存在性沿用 (75.14) 后的论证：$[q]:E_0[qr]\to E_0[r]$ 在 $(\mathbb Z/qr)^2$ 上的像恰有 $r^2$ 个元素，故满射；全部这些挠点都在 $L_p$，不要求 $\gcd(q,r)=1$。
+
+由 $p\nmid q$，$[q]$ 在 $U_p(1)$ 上为自同构，令唯一的形式原像为 $W_{jm}=[q]^{-1}V_{jm}$。它代数的理由是有限纤维：特征零的 $[q]:E_0\to E_0$ 是次数 $q^2$ 的有限态射，代数点的全部几何原像都代数。更精确地，取
+$F_{p,m}=K_{p,m}\mathbb Q(E_0[qr])$ 并用当前局部嵌入实现它；每个 $W_{jm}$ 的坐标剩余域在 $F_{p,m}$ 上次数至多 $q^2$。先加入一个再加入另一个，纤维次数界仍为 $q^2$，所以
+
+$$
+[F_{p,m}(W_{1m},W_{2m}):\mathbb Q]
+\le8q^4[\mathbb Q(E_0[qr]):\mathbb Q].
+$$
+
+置 $P^{\mathrm{alg}}_{j,p,m}=S^{\mathrm{tor}}_{j,p}+W_{jm}$，便有 (77.2)、(77.6) 的次数界。Silverman VIII.9.3 的二次律和挠平移不变性给出 $\widehat h(P^{\mathrm{alg}}_{j,p,m})=\widehat h(W_{jm})=\widehat h(V_{jm})/q^2$。HKT 始终只对 $V_{jm}$ 使用次数 $8$；没有断言非挠点的除点自动位于 $K_{p,m}(E_0[q])$。
+
+这个构造不在挠点处取 $x/y$、不除以挠点的 $y$。原约化为 $O$ 的情形原样包括；$r$ 为奇数时 $T_j$ 中的二挠点只能是 $O$，但当 $q$ 为偶数时，$qr$ 挠原像允许非零二挠点，亦无需任何坐标例外。
+
+**证明（原入口与短关系的精确深度）。** 由 (77.2) 及原 $\theta_I$，(77.3) 的约化仍为 $\theta_I(x+I)$，故入口恰为 $x\in I$。进入时 $[\alpha]T_{1,p}+[\beta]T_{2,p}$ 为约化零的素于 $p$ 挠点，因约化在这种挠点上单射，它实际等于 $O$。因此
+
+$$
+S^{\mathrm{alg}}_p(x)=[\alpha]V_{1m}+[\beta]V_{2m},\qquad
+b^{\mathrm{alg}}_p(x)=v_p(\alpha\ell_{1m}+\beta\ell_{2m}).
+\tag{77.18}
+$$
+
+非零性由 (77.13)；不进入时约化非零，亦不是 $O$。未乘 $q$ 的关系可能另有 $q$ 挠余项，不是 (77.18) 的研究对象。深度是 $v_p(L)$，没有再额外加 $1$。
+
+令 $z=\iota_p(\alpha+\beta\sqrt2)\ne0$。原四次数域 $M$ 在该处剩余次数为 $2$，所以直接用 (75.19) 的四个共轭和整性有
+
+$$
+2v_p(z)\log p\le\log|N_{M/\mathbb Q}(\alpha+\beta\sqrt2)|
+\le2\log(3S).
+$$
+
+由 (77.11) 和系数整性，$L-pz$ 的赋值至少为 $m+1$。若 $S\le p^{cm}$，则
+$v_p(pz)\le1+cm+\log3/\log p$。预先要求 $(1-c)m>\log3/\log p$，使此上界严格小于 $m+1$；强三角不等式便给 $v_p(L)=v_p(pz)=b_p^{\ast}(x)$。这一步同时处理短关系中的一系数为零及任何深度，不逐关系提高精度。
+
+**证明（长关系与一次精度选择）。** 记 $H(m)=(1+m)^2(1+\log(1+m))^3$。对实数 $S\ge T\ge1$，函数 $(1+\log S)/S$ 单调不增，故 (77.17) 给出
+
+$$
+\frac{v_p(L)\log p}{S}
+\le C_p H(m)\frac{1+cm\log p}{p^{cm}}
+\quad(S\ge p^{cm}).
+\tag{77.19}
+$$
+
+固定 $p,c$ 后，右侧随 $m\to\infty$ 趋于零，因为分子至多为多项式乘对数幂而分母指数增长。因此存在只依赖 $p,c,\epsilon_p$ 的阈值，使所有足够大 $m$ 的右侧都不超过 $\epsilon_p$；这是对整个新深度的上界，不使用旧深度的反向估计。
+
+在任何关系之前，再选一个统一实数 $S_0\ge1$，使
+
+$$
+(4\gamma+A/100)S+\log(3S)\le AS\quad(S\ge S_0).
+\tag{77.20}
+$$
+
+它存在，因为 $\gamma=A/1000$、$4\gamma+A/100<A$ 且 $\log(3S)/S\to0$。对每个原支持素数一次选定整数 $m_p\ge1$，使 (77.19) 的右侧不超过 $\epsilon_p$、$(1-c)m_p>\log3/\log p$，并有 $p^{cm_p}\ge S_0$。所有要求都是各自有限的下阈值，故可同时满足。现在才固定上述 CRT 代表元、同支平方根及形式原像，写 $V_{j,p}=V_{j,m_p}$、$P^{\mathrm{alg}}_{j,p}=P^{\mathrm{alg}}_{j,p,m_p}$。这些选择不涉及随后输入的 $\alpha,\beta,S$。
+
+对每条关系，每个进入素数或属短范围而深度精确保留，或属长范围而整个新深度的代价不超过 $\epsilon_p S$；边界同时满足两种结论。因 $b_p^{\ast}\ge0$，逐项均有
+$b_p^{\mathrm{alg}}\log p\le b_p^{\ast}\log p+\epsilon_p S$。对有限的 $\mathscr P(x)$ 求和，得 (77.5) 的第一式。若 $S<S_0$，每个素数都在短范围，故 $D_{\mathrm{alg}}=D_{\ast}\le AS$，直接复用原预算。若 $S\ge S_0$，则原 (75.8) 与 (77.20) 给出
+
+$$
+D_{\mathrm{alg}}\le D_{\ast}+AS/100
+\le4\gamma S+\log(3S)+AS/100\le AS.
+$$
+
+空支持时直接为零；非空支持仍有 $r\le N_{\mathcal R}(x)<2S$。没有为吸收误差增加 $r_0$、改变截止或删去任何原素数。
+
+**证明（共同整数倍与原尾部）。** $[q]P^{\mathrm{alg}}_{j,p}$ 的约化仍为原 $\widetilde T_{j,p}$，两个约化联合 $\mathcal O$ 生成全部 $E_0[r]$。故同时被整数 $n$ 消去当且仅当 $r\mid n$。进入时挠部分实际为零，形式对数是 $n\ell_{j,m_p}$；由其单位深度 $v_p(\ell_{j,m_p})=1$，两个深度均为 $1+v_p(n)$。在 $n=r$ 时 $p\nmid r$，深度为 $1$，于是 (77.7) 全部成立。原支持、$\rho_p,c_p,d_p$ 和 $\log p$ 完全相同，故直接复用 (75.9)–(75.10)，无需重新选择素数或重新证明尾部计数。
+
+文献承担的输入是 Gaussian CRT、Hensel 与 §75 已引用的实际挠点和形式群，以及上述原发表 HKT 下界和 Silverman 高度定理。这里的新增共同消费者是：在原 Hurwitz 支持上，一次选取逐素数代数点，以有限精度保留全部短关系，再以双对数下界同时控制全部长关系，并保住完整预算及原正三次尾部；这是 repo-derived 综合推导，不主张文献首次性。
+
+用白话说，在每个素数的同一个小圆盘内，可以先挑好一对真正的代数点，让有限规模的所有关系保持原深度，再用已发表的估计支付其余全部关系。因此，§76 对精确指定代数对数的非代数性结论仍成立，而代数替换已不受那个精确障碍阻挡。这里每个素数虽然都用代数点，素数改变时点对和数域仍可改变；这没有提供原 $F/K$ 中的一对共同点、Galois 运输或原 $V_H=o(q_H^2R^3)$ 的判定，也没有给出原尾部反例、原全局覆盖或物理量子起源证明。逐素数代数性与共同全局来源是两个不同的结论。$\square$
+
+---
+
+## 追加锚（本行以下为增补区）
