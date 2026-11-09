@@ -1,0 +1,10 @@
+**定义 51.4（直接复值关系核）。** 另一条更短的表示路线是直接给出复值核 $h:X\times X\to\mathbb C$，满足
+
+$$
+h(y,x)=\overline{h(x,y)},
+\qquad
+\sum_{i,j}\overline{a_i}a_jh(x_i,x_j)\ge0
+$$
+
+对所有有限复组合。称此为 Q1。复正核的零空间商和完备化直接给出最小复 Hilbert 表示 $K$，并满足 $h(x,y)=\langle\phi(x),\phi(y)\rangle_K$。
+
