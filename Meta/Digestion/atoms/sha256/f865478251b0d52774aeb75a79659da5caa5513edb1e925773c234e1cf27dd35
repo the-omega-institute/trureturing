@@ -1,0 +1,36 @@
+**定理 45.2（Choi 正性和 Kraus 表示）。** 定义 45.1 的第一条等价于 Choi 矩阵
+
+$$
+J_\Phi=(\operatorname{id}_A\otimes\Phi)\bigl(|\Omega\rangle\langle\Omega|\bigr)
+$$
+
+正半定，其中 $|\Omega\rangle=\sum_i e_i\otimes e_i$。若
+
+$$
+J_\Phi=\sum_\alpha\lambda_\alpha|v_\alpha\rangle\langle v_\alpha|,
+\qquad \lambda_\alpha\ge0,
+$$
+
+把 $\sqrt{\lambda_\alpha}v_\alpha$ 按向量化反变换为算子 $K_\alpha$，则
+
+$$
+\Phi(\rho)=\sum_\alpha K_\alpha\rho K_\alpha^*.
+$$
+
+并且
+
+$$
+\sum_\alpha K_\alpha^*K_\alpha=I_A
+$$
+
+当且仅当 $\Phi$ 保迹；若只要求不增迹，则左边 $\le I_A$。
+
+**证明。** 完全正性直接给出 $J_\Phi\succeq0$，因为它是一个最大纠缠正态在辅助稳定映射下的像。反向地，$J_\Phi\succeq0$ 的谱分解给出上述 $K_\alpha$；对任意正半定 $X$，将 $X$ 写成有限平方和并使用 $J_\Phi$ 的正性，可得 $(\operatorname{id}_C\otimes\Phi)(X)\succeq0$，故 $\Phi$ 完全正。对 Kraus 式取迹，得到
+
+$$
+\operatorname{Tr}\Phi(\rho)
+=\operatorname{Tr}\left(\rho\sum_\alpha K_\alpha^*K_\alpha\right),
+$$
+
+于是对所有 $\rho$ 保迹恰好等价于算子和为 $I_A$。证毕。
+
