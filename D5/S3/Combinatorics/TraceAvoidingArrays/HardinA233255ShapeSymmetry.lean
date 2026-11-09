@@ -240,12 +240,14 @@ private theorem incomplete_step (n : ℕ) (p : Boundary)
       have hw := (unfinished_row q).2
       by_cases ht : hasTwo q
       · have hne : q ≠ absentRow p := fun h => hs.2.1 (h ▸ ht)
-        simp only [hl, ite_true, hf, hw, ht, hne, ite_false, add_zero]
+        simp only [if_pos hl, hf, hw, if_pos ht, if_neg hne, add_zero]
         ring
       · have he := hs.2.2 q hl ht
-        have hb : labelBoundary q = p := by rw [he]; rfl
-        simp only [hl, ite_true, hf, hw, ht, ite_false, he, hb]
-        simp only [eq_self, ite_true]
+        subst q
+        simp only [if_pos hs.1, (unfinished_row (absentRow p)).1,
+          (unfinished_row (absentRow p)).2, if_neg hs.2.1, if_pos rfl]
+        change 2 * (128 * pairV n (true, false) p) = 128 * pairV n (true, true) p +
+          128 * (2 * pairV n (true, false) p - pairV n (true, true) p)
         ring
     · have hne : q ≠ absentRow p := fun h => hl (h ▸ hs.1)
       simp [hl, hne]
@@ -299,13 +301,14 @@ private theorem initial_aggregation (n : ℕ) :
       (if initialFull q then 16 * F n (classOf q) else 0) := by
     have h := initial_row q
     by_cases ha : q = alternating'
-    · have hh := h.1 ha
-      simp only [hh.1, ite_true, hh.2.1, hh.2.2, ha, h.2.2.2 ha, ite_false, add_zero]
+    · subst q
+      have hh := h.1 rfl
+      simp only [if_pos hh.1, hh.2.1, hh.2.2, if_pos rfl, if_neg (h.2.2.2 rfl), add_zero]
     · by_cases hf : initialFull q
       · have hh := h.2.1 hf
         have hl := hf.1
-        simp only [hl, ite_true, hh.2.1, hh.2.2, completed_transfer_bridge n q hh.1,
-          ha, ite_false, hf, zero_add]
+        simp only [if_pos hl, hh.2.1, hh.2.2, completed_transfer_bridge n q hh.1,
+          if_neg ha, if_pos hf, zero_add]
       · by_cases hl : rowProper (Fin.cons 0 q)
         · simp [hl, h.2.2.1 hl ha hf, ha, hf]
         · simp [hl, ha, hf]
@@ -313,7 +316,7 @@ private theorem initial_aggregation (n : ℕ) :
   rw [Finset.sum_add_distrib]
   simp only [Finset.sum_ite_eq', Finset.mem_univ, ite_true]
   congr 1
-  conv_rhs => simp_rw [← initial_mass, Finset.sum_mul]
+  simp_rw [← initial_mass, Finset.sum_mul]
   rw [Finset.sum_comm]
   apply Finset.sum_congr rfl
   intro q _

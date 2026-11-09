@@ -38,7 +38,20 @@ internal sealed class HardinA233255ShapeSymmetryDocument : IScribeDocumentDefini
                 + "height and every proper labelled six-cell boundary, the original completed-scanner continuation "
                 + "equals F at its canonical class. The induction groups actual compatible pair rows by their "
                 + "successor class. It does not presume a scalar count identity or fit a recurrence. The unfinished "
-                + "scanner sector and anchored initial multiplicities are separate obligations.", DescribeRole.Theorem))));
+                + "scanner sector and anchored initial multiplicities are handled below.", DescribeRole.Theorem),
+            Node("literal_canonical_bridge", "Original literal count at every positive height", "For every natural m, "
+                + "the individual-array count at height m plus one equals 16 times 128 to the power m plus "
+                + "32 times the sum of F at m over all sixteen actual canonical boundaries. "
+                + "The unfinished scanner has seen colour one but not colour two. Its boundary is one of the "
+                + "two alternating words on labels zero and one. There is exactly one compatible proper row "
+                + "avoiding label two, with 128 lifts and the same suffix. Every row containing label two has "
+                + "64 lifts and completes the scanner; all seven cells, including the discarded first cell, "
+                + "participate in this test. Induction gives twice the unfinished continuation equal to the "
+                + "completed continuation plus 128 to the power m. The anchored first-row fibres contribute "
+                + "32 unfinished lifts at the alternating shape, 16 completed lifts there, and 32 completed "
+                + "lifts at each other shape. These disjoint literal fibres yield the formula without an "
+                + "orbit quotient. The recurrence still requires its finite vector certificate and unbounded "
+                + "polynomial propagation.", DescribeRole.Theorem))));
 
     private static DocumentBlock Node(string name, string title, string prose, DescribeRole role) =>
         Describe.Lean(DescribeId.Create(name.Replace("_", "-").ToLowerInvariant()),
