@@ -12,6 +12,15 @@ license: citation-only
 triage: anchor
 ---
 
+## Verified locator
+
+DOI: `10.48550/arXiv.2501.06124`. Fixed-version URL:
+https://arxiv.org/abs/2501.06124v1. These identify the arXiv source below;
+the Problem 3.10 locator is printed page 13, native HTML anchor
+[`S3.Thmtheorem10`](https://arxiv.org/html/2501.06124v1#S3.Thmtheorem10).
+Verification is limited to this arXiv version and its stated source locations;
+it does not verify the journal body or journal rights.
+
 The fixed source is arXiv:2501.06124v1. Problem 3.10 is on printed page 13:
 “Is there any finite group G such that B(G) does not satisfy Hansen-Vukičević
 conjecture?” Its native HTML anchor is `S3.Thmtheorem10`.

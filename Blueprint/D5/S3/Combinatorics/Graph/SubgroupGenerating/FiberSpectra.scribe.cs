@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.SubgroupGenerating;
 
@@ -20,8 +22,38 @@ internal sealed class FiberSpectraDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Owner + "sgb_spectrum"), H("All subgroup blocks and all four spectra"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("For every finite group and each of the four matrix kinds, the literal graphSpectrum of sgbGraph G equals the multiset sum over every subgroup H of starValues(r_H,kind). An explicit equivalence takes each complete component fiber to Unit disjoint-union PairFiber H. Entries of the actual matrices vanish between different components and equal the star entries inside a component. Block-triangular characteristic-polynomial factorization and characteristic-root transport establish all multiplicities. The index includes zero fibers, whose isolated centers contribute zero eigenvalues."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("sgb-fiberspectra-degree-pair"),
+                DeclarationHandle.Create(Owner + "degree_pair"), H("The degree of every ordered pair"),
+                StatementSource.FromAuthor(DegreeFormula(true)), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For every finite group and every ordered pair p, with the original Fintype instance for its neighbor-set subtype, the degree of Sum.inl p in the literal sgbGraph is one. Repeated entries are allowed. This is the original supplier declaration; its proof is unchanged."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("sgb-fiberspectra-degree-subgroup"),
+                DeclarationHandle.Create(Owner + "degree_subgroup"), H("The degree of every subgroup"),
+                StatementSource.FromAuthor(DegreeFormula(false)), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For every finite group and every subgroup H, with the original Fintype instance for its neighbor-set subtype, the degree of Sum.inr H in the literal sgbGraph is pairCount H. Every subgroup is included, also when its generating-pair fiber is empty. This is the original supplier declaration; its proof is unchanged."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("sgb-fiberspectra-edge-count"),
                 DeclarationHandle.Create(Owner + "edge_count"), H("One actual edge per ordered pair"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("The literal graph has exactly card(G)^2 unordered edges. Every pair vertex has degree one, each subgroup center has degree r_H, and the handshake identity combined with the complete pair partition gives the count."))), DescribeRole.Theorem))));
+
+    private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
+    private static Formula Call(string name, params Formula[] args) =>
+        new Formula.Apply(Named(name), [.. args]);
+    private static Formula QCall(string owner, string name, params Formula[] args) =>
+        new Formula.Apply(Seq(Named(owner), Dot, Named(name)), [.. args]);
+    private static Formula All(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+    private static Formula DegreeFormula(bool pair)
+    {
+        Formula G = F.Id("G"), x = F.Id(pair ? "p" : "H");
+        Formula vertex = QCall("Sum", pair ? "inl" : "inr", x);
+        Formula graph = Call("sgbGraph", G);
+        Formula domain = pair ? QCall("Prod", "mkType", G, G) : Call("Subgroup", G);
+        if (pair) domain = Seq(G, Times, G);
+        Formula equality = new Formula.Relation(
+            QCall("SimpleGraph", "degree", graph, vertex), FormulaRelationOperator.Equal,
+            pair ? D(1) : Call("pairCount", x));
+        return Disp(All("G", Named("Type"), All("groupG", Call("Group", G),
+            All("finiteG", Call("Fintype", G), All(pair ? "p" : "H", domain,
+                All("finiteNeighbors", Call("Fintype", QCall("SimpleGraph", "neighborSet", graph, vertex)), equality))))));
+    }
 }
