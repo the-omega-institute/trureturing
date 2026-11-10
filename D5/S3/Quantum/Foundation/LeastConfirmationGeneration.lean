@@ -16,9 +16,9 @@ import Mathlib.Tactic.Abel
 All carriers and probe sets are arbitrary; no finite catalog or inner product is assumed.
 The maximum-attainment field is an explicit interface, not a compactness theorem.
 The positive-dual generation argument uses strictly growing spans of zero probes.
-proof_shape: generate_aux, frame_bound, positive_dual_generation: content.
+proof_shape: peel, generate_aux, frame_bound, positive_dual_generation: content.
 proof_shape: zeros_le_ker: bind-only; consumer: peel.
-proof_shape: peel, weighted_zero: bind-only; consumer: generate_aux.
+proof_shape: weighted_zero: bind-only; consumer: generate_aux.
 proof_shape: zero_symm: bind-only; consumers: weighted_diagonal, positive_dual_generation.
 proof_shape: weighted_diagonal: bind-only; consumer: positive_dual_generation.
 admission_basis: escape-witness; generate_aux uses the strict growth of zero-probe spans
