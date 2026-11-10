@@ -128,8 +128,9 @@ private theorem raw_first_hasDerivAt {X t : ℝ} (hX : 4 < X) (ht : X / 2 ≤ t)
       ((Real.hasDerivAt_log ht0.ne').div_const (X * log X))
   convert hd using 1
   · ext u
-    simp only [one_div]
-  · field_simp [ht0.ne', hX0.ne', hL.ne',
+    simp only [one_div, Pi.sub_apply, Pi.add_apply, Pi.inv_apply, id_eq]
+  · simp only [Pi.add_apply, Pi.inv_apply, id_eq, zero_add]
+    field_simp [ht0.ne', hX0.ne', hL.ne',
       (show t + 1 ≠ 0 by positivity)]
     <;> ring
 
@@ -158,8 +159,10 @@ private theorem raw_first_derivative_bound {X t : ℝ} (hX : 4 < X)
   have hnonpos : -1 / (t * (t + 1)) - 1 / (X * log X * t) ≤ 0 := by
     have ha : 0 ≤ 1 / (t * (t + 1)) := by positivity
     have hb : 0 ≤ 1 / (X * log X * t) := by positivity
+    simp only [neg_div]
     linarith
   rw [abs_of_nonpos hnonpos]
+  simp only [neg_div]
   linarith
 
 private theorem raw_first_bound_at_root {X r t : ℝ} (hX : 4 < X)
@@ -208,6 +211,7 @@ private theorem ordered_prefix_bound {X r : ℝ} (hX : 4 < X)
       Chebyshev.theta (Q : ℝ) - Chebyshev.theta (P : ℝ) := by
     have hsub : Nat.primesLE P ⊆ Nat.primesLE Q := Nat.primesLE_mono hPQ
     rw [Chebyshev.theta_eq_sum_primesLE, Chebyshev.theta_eq_sum_primesLE]
+    apply eq_sub_iff_add_eq.mpr
     simpa [W, block] using (sum_sdiff hsub (f := fun p : ℕ => log (p : ℝ)))
   have hcount : (W.card : ℝ) * log (X / 2) ≤
       Chebyshev.theta (Q : ℝ) - Chebyshev.theta (P : ℝ) := by
