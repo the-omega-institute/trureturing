@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: A supported cutoff weight yields a uniform discrete fourth power bound. -/
+   digest: Mean-square prime correlations: A supported cutoff weight yields a uniform discrete fourth power bound. -/
 
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.DiscreteFourthAssembly
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.CutoffWeights
@@ -22,7 +22,7 @@ set_option autoImplicit false
 theorem uniform_discrete_fourth_bound (SS : Finset ℕ → ℝ) (α β M : ℝ)
     (hα : 0 < α) (hαβ : α < β) (hβ : β < 1 / 4)
     (hSS : SS ∅ = 1) (hSS1 : ∀ d, SS {d} = 1)
-    (hHL : HL4 SS β) (hcor : IntervalCorrelations SS) (hM : 1 ≤ M) :
+    (hMS : MeanSquareHL4 SS β) (hcor : IntervalCorrelations SS) (hM : 1 ≤ M) :
     ∃ C : ℝ, 0 ≤ C ∧ ∀ᶠ N : ℝ in atTop,
       ∀ H : ℕ, N ^ α ≤ (H : ℝ) → (H : ℝ) ≤ N ^ β →
       ∀ a b : ℝ, 0 ≤ a → a ≤ b → b ≤ M →
@@ -39,7 +39,7 @@ theorem uniform_discrete_fourth_bound (SS : Finset ℕ → ℝ) (α β M : ℝ)
           using ht) _
       _ = _ := by norm_num
   refine ⟨3 + 3 * M ^ 2, by positivity, ?_⟩
-  filter_upwards [eventual_discrete_fourth SS α β M hα hαβ hβ hSS hSS1 hHL hcor hM
+  filter_upwards [eventual_discrete_fourth SS α β M hα hαβ hβ hSS hSS1 hMS hcor hM
     1 zero_lt_one, range_geometry α β M hα (by linarith) (by linarith)]
     with N hfourth hgeom
   intro H hHlo hHhi a b ha hab hb
