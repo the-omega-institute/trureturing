@@ -51,7 +51,7 @@ reciprocal_lift_smul: proof_shape: bind-only; escape_witness: none; consumers: r
 Direct frozen dependencies: none.
 reciprocal_lift_injective: proof_shape: bind-only; escape_witness: none; consumers: MPR2_reflection.
 Direct frozen dependencies: none.
-trace_minpoly_degree: proof_shape: content; escape_witness: none; consumers: primitive_trace_bridge.
+trace_minpoly_degree: proof_shape: content; escape_witness: trace_minpoly_degree; consumers: primitive_trace_bridge.
 Direct frozen dependencies: none.
 zeta_trace: proof_shape: bind-only; escape_witness: none; consumers: MPR2_reflection, MPR2_bridge.
 Direct frozen dependencies:
@@ -72,7 +72,7 @@ normalizedCyclo_constant: proof_shape: bind-only; escape_witness: none; consumer
 Direct frozen dependencies: none.
 cycloUnit: proof_shape: definition; escape_witness: none; consumers: cyclotomic_moebius_series, cycloUnit_prod, cyclotomic_initial, cycloUnit_val.
 Direct frozen dependencies: none.
-cycloUnit_val: proof_shape: bind-only; escape_witness: none; consumers: cycloUnit_prod, cyclotomic_initial.
+cycloUnit_val: proof_shape: bind-only; escape_witness: none; consumers: cyclotomic_initial.
 Direct frozen dependencies: none.
 oneSubXPowUnit: proof_shape: definition; escape_witness: none; consumers: cyclotomic_moebius_series, cycloUnit_prod, cyclotomic_initial, oneSubXPowUnit_val.
 Direct frozen dependencies: none.
@@ -88,32 +88,32 @@ cyclotomic_index: proof_shape: bind-only; escape_witness: none; consumers: cyclo
 Direct frozen dependencies: none.
 nilpotent_unit_zpow: proof_shape: bind-only; escape_witness: none; consumers: cyclotomic_initial.
 Direct frozen dependencies: none.
-cyclotomic_initial: proof_shape: content; escape_witness: none; consumers: cyclotomic_half_difference.
+cyclotomic_initial: proof_shape: content; escape_witness: cyclotomic_initial; consumers: cyclotomic_half_difference.
 Direct frozen dependencies: none.
-primitive_trace_bridge: proof_shape: content; escape_witness: none; consumers: MPR2_reflection, MPR2_bridge.
+primitive_trace_bridge: proof_shape: content; escape_witness: trace_minpoly_degree; consumers: MPR2_reflection, MPR2_bridge.
 Direct frozen dependencies: none.
-MPR2_bridge: proof_shape: content; escape_witness: none; consumers: MPR2_reflection_coeff, MPR2_reflection, result.
+MPR2_bridge: proof_shape: content; escape_witness: primitive_trace_bridge; consumers: MPR2_reflection_coeff, MPR2_reflection, result.
 Direct frozen dependencies:
 D5/S3/Arith/InterlaceFan/Cyclotomic.zeta.eq_1; statement_id: sha256:4dbb1a5f4ecfb71781c968b4f51e3f9fca799113d5fcb9d0016744e44ccba9e8
 D5/S3/Arith/InterlaceFan/Cyclotomic.evalCos._proof_1; statement_id: sha256:81c71ee02d2f72b171fc58aaa25c773cb2970afdc3859889e24aec286d6db5ae
 D5/S3/Arith/InterlaceFan/Cyclotomic.zeta; statement_id: sha256:e8aa7909f91dd6e576ae9c0ca5fc87df493a148eddedc7a3d512d1874731ac68
-MPR2_reflection: proof_shape: content; escape_witness: none; consumers: MPR2_reflection_coeff.
+MPR2_reflection: proof_shape: content; escape_witness: primitive_trace_bridge; consumers: MPR2_reflection_coeff.
 Direct frozen dependencies:
 D5/S3/Arith/InterlaceFan/Cyclotomic.zeta.eq_1; statement_id: sha256:4dbb1a5f4ecfb71781c968b4f51e3f9fca799113d5fcb9d0016744e44ccba9e8
 D5/S3/Arith/InterlaceFan/Cyclotomic.evalCos._proof_1; statement_id: sha256:81c71ee02d2f72b171fc58aaa25c773cb2970afdc3859889e24aec286d6db5ae
 D5/S3/Arith/InterlaceFan/Cyclotomic.zeta; statement_id: sha256:e8aa7909f91dd6e576ae9c0ca5fc87df493a148eddedc7a3d512d1874731ac68
-MPR2_reflection_coeff: proof_shape: content; escape_witness: none; consumers: result.
+MPR2_reflection_coeff: proof_shape: content; escape_witness: primitive_trace_bridge; consumers: result.
 Direct frozen dependencies:
 D5/S3/Arith/InterlaceFan/Cyclotomic.zeta.eq_1; statement_id: sha256:4dbb1a5f4ecfb71781c968b4f51e3f9fca799113d5fcb9d0016744e44ccba9e8
 D5/S3/Arith/InterlaceFan/Cyclotomic.evalCos._proof_1; statement_id: sha256:81c71ee02d2f72b171fc58aaa25c773cb2970afdc3859889e24aec286d6db5ae
 D5/S3/Arith/InterlaceFan/Cyclotomic.zeta; statement_id: sha256:e8aa7909f91dd6e576ae9c0ca5fc87df493a148eddedc7a3d512d1874731ac68
 coefficient_consequences: proof_shape: bind-only; escape_witness: none; consumers: result.
 Direct frozen dependencies: none.
-cyclotomic_half_difference: proof_shape: content; escape_witness: none; consumers: result.
+cyclotomic_half_difference: proof_shape: content; escape_witness: cyclotomic_initial; consumers: result.
 Direct frozen dependencies: none.
 degree_from_lift: proof_shape: bind-only; escape_witness: none; consumers: result.
 Direct frozen dependencies: none.
-result: proof_shape: content; escape_witness: none; consumers: settling result.
+result: proof_shape: content; escape_witness: cyclotomic_half_difference; consumers: settling result.
 Direct frozen dependencies:
 D5/S3/Arith/InterlaceFan/Cyclotomic.zeta.eq_1; statement_id: sha256:4dbb1a5f4ecfb71781c968b4f51e3f9fca799113d5fcb9d0016744e44ccba9e8
 D5/S3/Arith/InterlaceFan/Cyclotomic.evalCos._proof_1; statement_id: sha256:81c71ee02d2f72b171fc58aaa25c773cb2970afdc3859889e24aec286d6db5ae
@@ -523,7 +523,7 @@ private theorem cycloUnit_prod (n : ℕ) (hn : 0 < n) :
   apply Units.val_injective
   change (Units.coeHom _ (∏ i ∈ n.divisors, cycloUnit i)) = _
   rw [map_prod]
-  simp only [Units.coeHom_apply, cycloUnit_val, oneSubXPowUnit_val n hn]
+  simp only [Units.coeHom_apply, oneSubXPowUnit_val n hn]
   exact normalizedCyclo_prod n hn
 
 private theorem cyclotomic_moebius_series (n : ℕ) (hn : 1 < n) :
