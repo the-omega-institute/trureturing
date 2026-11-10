@@ -1,0 +1,4 @@
+**对应 16.3（复用范围与数学来源）。**定理 8.2 的 $\mathrm{UC}\Leftrightarrow\mathrm{BR}$、本卷第 4 节与所引续卷第 4 节的群上二次函数及 Hilbert 推导，均在原来确切前件下复用。引理 2.1 的同时标记等距、续卷命题 5.4 的有号三次机制及有限或全局有界非负核为零的结论，也不在此计作新的迫出结果。定理 12.2 的归一化接口、仿射单位轨道非零读数、纯等式商见证，以及原始 $6^n$ 界对指定 $8^n$ 反对称轮廓的障碍，是本仓推导（repo-derived）；定理 13.1 使用经典的逐坐标紧性抽取，不作紧性方法或文献优先权主张。
+
+交换群二次方程的文献结论仍是 Peter de Place Friis、Henrik Stetkær，*On the quadratic functional equation on groups*，Publ. Math. Debrecen 69/1–2，65–93，[DOI 10.5486/pmd.2006.3270](https://doi.org/10.5486/pmd.2006.3270)，第 65–67 页 Theorem 1.2；[原始论文](https://publi.math.unideb.hu/paper/1111/download/)要求交换定义域群、唯一二可除的交换值群，以及群二次方程。这是已有群入口处的 literature-attested 前置，不是任意 magma 或任意仿射标记下的迫出定理；本节各原始项上的新结论不以它补足尚未取得的群结构。
+
