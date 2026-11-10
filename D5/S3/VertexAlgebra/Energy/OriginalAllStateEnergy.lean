@@ -35,7 +35,7 @@ open private normD_smul normD_sum_le from
 open private wordWeight wordOrder wordConstant wordConstant_nonneg wordOrder_le
   occurrence_weight seeded_word_energy_le negative_grade_eq_zero from
   D5.S3.VertexAlgebra.Energy.OriginalWordEnergy
-open private energy_bound_of_grades energy_power_grade stateEnergies_nonneg from
+open private energy_bound_of_grades energy_power_grade from
   D5.S3.VertexAlgebra.Energy.OriginalNeutralEnergy
 open private totalChargedConstant totalChargedConstant_pos
   charged_pre_relaxation_grade_le from
