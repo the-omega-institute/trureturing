@@ -150,6 +150,7 @@ private theorem translated_transverse_hom (hD : (gramReal D).PosDef)
   rw [transverse_translation D B C hC hCe hD]
   simp [scalarTranslation, MvPolynomial.smul_eq_C_mul]
 
+set_option maxRecDepth 4096 in
 /-- Each actual transverse creation coefficient contracts to exactly one
 inverse field power with the rational Schur binomial coefficient. -/
 theorem transverse_creation_coefficient (hD : (gramReal D).PosDef)
@@ -169,12 +170,14 @@ theorem transverse_creation_coefficient (hD : (gramReal D).PosDef)
     (PowerSeries.binomialSeries (R := ℚ) (Polynomial (Oscillator D)) (schur D B C a b))
   have hs := congrArg (PowerSeries.map T.toRingHom)
     (creationExponential_separation D B C hC hCe b 0)
-  rw [map_mul, PowerSeries.map_map, PowerSeries.map_map] at hs
-  change PowerSeries.map T.toRingHom f =
+  rw [map_mul] at hs
+  have hs' : PowerSeries.map T.toRingHom f =
     PowerSeries.map (T.comp (longitudinalPolynomial D B C hC hCe)).toRingHom f *
-      PowerSeries.map (T.comp (transversePolynomial D B C hC hCe)).toRingHom g at hs
+      PowerSeries.map (T.comp (transversePolynomial D B C hC hCe)).toRingHom g := by
+    convert hs using 1 <;>
+      first | rfl | (congr 1 <;> apply PowerSeries.ext <;> intro i <;> rfl)
   rw [translated_longitudinal D B C hC hCe,
-    translated_transverse_hom D B C hC hCe hD] at hs
+    translated_transverse_hom D B C hC hCe hD] at hs'
   have hk := creationExponential_factorization D B C hC hCe hD a b 0 0
   change PowerSeries.map T.toRingHom f = PowerSeries.map L.toRingHom f * K at hk
   have hu : IsUnit (PowerSeries.map L.toRingHom f) := by
@@ -183,7 +186,7 @@ theorem transverse_creation_coefficient (hD : (gramReal D).PosDef)
       rw [PowerSeries.coeff_map, LatticeSugawaraConformal.exponential_constant F β, map_one]
     rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply, hc]
     exact isUnit_one
-  have hm := hu.mul_left_cancel (hs.symm.trans hk)
+  have hm := hu.mul_left_cancel (hs'.symm.trans hk)
   let ev : Oscillator D →ₐ[ℂ] ℂ := aeval (fun _ : Index D => (0 : ℂ))
   have hret (q : Polynomial ℂ) : Polynomial.map ev.toRingHom (R q) = q := by
     apply Polynomial.ext
@@ -197,8 +200,17 @@ theorem transverse_creation_coefficient (hD : (gramReal D).PosDef)
       algebraMap ℚ (Polynomial (Oscillator D)) (Ring.choose (schur D B C a b) j) by
         simp [K, PowerSeries.coeff_rescale, PowerSeries.binomialSeries_coeff,
           Algebra.smul_def]] at hj
-  simpa [correction, Algebra.smul_def, Polynomial.algebraMap_apply,
-    MvPolynomial.algebraMap_apply, ev, neg_pow, mul_comm, mul_left_comm] using hj
+  have hrat (r : ℚ) : Polynomial.map ev.toRingHom
+      (algebraMap ℚ (Polynomial (Oscillator D)) r) = Polynomial.C (r : ℂ) := by
+    rw [RingHom.map_rat_algebraMap]
+    exact RingHom.congr_fun (Subsingleton.elim
+      (algebraMap ℚ (Polynomial ℂ)) (Polynomial.C.comp (algebraMap ℚ ℂ))) r
+  rw [Polynomial.map_mul, Polynomial.map_pow, Polynomial.map_neg,
+    Polynomial.map_X, hrat] at hj
+  rw [hj]
+  simp only [neg_pow, correction, Polynomial.smul_eq_C_mul, map_mul, map_pow, map_neg,
+    map_one]
+  ring
 
 end
 end D5.S3.VertexAlgebra.LatticeCosetCreationSeparation
