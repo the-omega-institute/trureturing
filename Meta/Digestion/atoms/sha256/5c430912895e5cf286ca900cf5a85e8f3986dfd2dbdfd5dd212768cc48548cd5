@@ -1,0 +1,34 @@
+**命题 C-26.29（两类闭合消费者与历史递归的边界）。** 在假设 C-26.28 真已供应时，已有精确递归为
+
+<p>Ξ<sup>(𝑛+1)</sup><sub>ℎ𝑎,𝑘𝑏</sub>=𝐾<sub>𝑎|ℎ</sub>Ξ<sup>(𝑛)</sup><sub>ℎ𝑘</sub>𝐾<sub>𝑏|𝑘</sub><sup>†</sup>.</p>
+
+它不能由五个边设置的经典占位路径权或任意选定的非对角块替代。
+
+证明。输出历史基正交及各 ℎ 的完备式给 𝑉<sub>𝑛</sub><sup>†</sup>𝑉<sub>𝑛</sub>=𝐼，故 𝑉<sub>𝑛</sub>Ω<sub>𝑛</sub>𝑉<sub>𝑛</sub><sup>†</sup> 正且迹一；逐块展开得到上式。若分支有隐藏 Kraus 指标 𝜇，须保留实际共同环境，或以 (𝑎,𝜇) 作扩展等距标签；分支 CP 映射本身不决定历史间相位。会再作用的旧环境不能当作下一轮新准备环境，同一未来合同须保留相应联合块。
+
+若把五个不相容设置的全部未执行结果都放入同一非负 𝒞<sub>5</sub> 经典路径图，则命题 C-26.5 必然给占位和不超过二，不能表示命题 C-26.15 的 √(5) 数据。静态图列出关系与允许设置，却不授予观察者一份全部未执行设置的共同结果。保留首末位的经典有限任务边界也不压缩任意相干历史。
+
+当前同源消费关系可写为四个相互有条件连接的公式：
+
+<p>∑<sub>𝑖</sub>ℎ<sub>𝑖</sub>=𝑁−2∑<sub>𝑖</sub>𝑏<sub>𝑖</sub>,<br>
+𝒫<sub>2𝑚+1</sub><sup>cl</sup>=𝒬<sub>2𝑚+1</sub><sup>edge</sup>∩{∑<sub>𝑖</sub>𝑢<sub>𝑖</sub>≤𝑚},<br>
+𝒵<sub>𝑁</sub><sup>cyc</sup>(𝜆)=tr(𝑊<sub>𝑁</sub>𝑄<sub>ex</sub>)=𝜂<sub>+</sub><sup>𝑁</sup>+𝜂<sub>−</sub><sup>𝑁</sup>,<br>
+2&lt;√(5)&lt;5/2 （共同经典、共同投影、仅边均值三个域）.</p>
+
+前两式是二值周期支持及其共同律的证书；第三式是已供齐次活动权的同源双端闭合响应；第四式比较另供量子投影系统与前述经典任务。内部消元保留双端关联，闭合用同一个切口加入首尾守卫，整数及均值证书检验是否仍有共同经典源；量子设置提供另一种共同正性结构。
+
+同一读数存在多份共同来源，与给定局部读数根本不存在共同经典来源，是不同结论。前者可能靠补充联合记录细化来源，后者不能靠在原经典模型内随意添一个联合参数解决。FIB 五模式提供局部模板，周期任务要求其各次使用承担共同来源与闭合条件；只有所供设置、效果、状态及历史合同允许的实验，才是实际可消费的数据。证毕。
+
+[C26-R1]: https://github.com/the-omega-institute/trureturing/blob/16fe96bd80df2ea7d9b9283793e16dfe6119e76b/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md
+[C26-R2]: https://github.com/the-omega-institute/trureturing/blob/16fe96bd80df2ea7d9b9283793e16dfe6119e76b/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md
+[C26-R3]: https://github.com/the-omega-institute/trureturing/blob/16fe96bd80df2ea7d9b9283793e16dfe6119e76b/docs/develop/theory/AURIC_FIB_SEAMS_CYCLES_ARITHMETIC_BOUNDARY_RECONSTRUCTION.md
+[C26-R4]: https://github.com/the-omega-institute/trureturing/blob/16fe96bd80df2ea7d9b9283793e16dfe6119e76b/docs/develop/theory/AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md
+[C26-R5]: https://github.com/the-omega-institute/trureturing/blob/16fe96bd80df2ea7d9b9283793e16dfe6119e76b/docs/develop/theory/AURIC_FIB_HISTORY_RECORDS_TIME_ARROW.md
+[C26-L1]: https://arxiv.org/abs/0706.0126v4
+[C26-L2]: https://arxiv.org/abs/1401.7081v1
+[C26-L3]: https://arxiv.org/abs/1211.5825v3
+
+[C26-A1]: AURIC_FIB_ATOM_OBSERVER_AND_ARITHMETIC_RELATIONS.md#1-有序原子五种选择与标准窗口
+[C26-A2]: AURIC_FIB_ATOM_OBSERVER_AND_ARITHMETIC_RELATIONS.md#2-三均值关联纤维与目标差分
+[C26-A16]: AURIC_FIB_ATOM_OBSERVER_AND_ARITHMETIC_RELATIONS.md#16-同一有序前缀的接缝余数组成图
+

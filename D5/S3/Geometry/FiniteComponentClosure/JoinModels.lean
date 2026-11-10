@@ -29,7 +29,6 @@ open private
 open private
   bouquetInclusion
   bouquetInclusion_base
-  vertexComplex
   bouquetVertex_face
   mem_bouquetComplex
   bouquetInclusion_intersection

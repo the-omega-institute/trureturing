@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin;
 
@@ -10,6 +12,21 @@ internal sealed class CompleteMertensPeakDocument : IScribeDocumentDefinition
         "Complete cumulative and literal arithmetic-kernel peaks locate strict finite Robin violations.",
         H("Complete Mertens peaks and finite Robin witnesses"),
         Blocks(
+            Describe.Lean(DescribeId.Create("complete-mangoldt-le-neg-e3"),
+                DeclarationHandle.Create(Prefix + "complete_mangoldt_le_neg_E3"),
+                H("The complete Mangoldt ledger lies below the prime-only ledger"),
+                StatementSource.FromAuthor(Disp(new Formula.Bind(FormulaQuantifier.ForAll,
+                    FormulaIdentifier.Create("x"), Seq(Mathbb, Grp(F.Id("R"))),
+                    new Formula.Logic(new Formula.Relation(D(2), FormulaRelationOperator.LessThanOrEqual,
+                        F.Id("x")), FormulaLogicOperator.Implies,
+                        new Formula.Relation(new Formula.FunctionCall(FormulaIdentifier.Create("E2Lambda"),
+                            [F.Id("x")]), FormulaRelationOperator.LessThanOrEqual,
+                            new Formula.Negate(new Formula.FunctionCall(FormulaIdentifier.Create("E3"),
+                                [F.Id("x")]))))))), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every real x>=2, Mertens.E2Lambda(x)<=-Mertens.E3(x). "
+                    + "The left side retains all Mangoldt prime powers, while E3 is prime-only. "
+                    + "The comparison is unconditional and supplies the direction needed with "
+                    + "the complete weighted-tail identity."))), DescribeRole.Theorem),
             Describe.Lean(
             DescribeId.Create("unconditional-complete-mertens-ledger"),
             DeclarationHandle.Create("D5/S3/Arith/Robin/CompleteMertensPeak.complete_mertens_ledger"),

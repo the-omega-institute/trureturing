@@ -1,0 +1,16 @@
+**命题 99.3（嵌套兼容只比较同一个旧值）。** 若 $0\ne p\le g\in\mathcal F_\tau$，则
+
+$$
+Q_p=pQ_g,\qquad \widehat Q_p=z_p\widehat Q_g.
+\tag{99.9}
+$$
+
+证明。$pQ_g$ 中央于 $pMp$、自伴且平方为 $p$；把99.7的 $g$ 角公式用于任意 $a,b\in(pMp)_{\rm sa}$，它给这同一个旧 $D(a,b)$ 的公式。SM79.3在 $p$ 角的唯一性遂给 $Q_p=pQ_g$。也可在 $pMp$ 内取实际反交换框架 $h^2=k^2=p$、$hk=-kh$，使用其角单位的恢复式直接核对：
+
+$$
+i hkD(h,k)=i hk(iQ_ghk)=pQ_g=Q_p.
+\tag{99.10}
+$$
+
+这里 $(hk)^2=-p$；没有称 $h$ 为 $g$ 角反射，没有把 $h^2=p$ 改成 $g$，也不需要声称 $h$ 在 $gMg$ 中中心平衡。由 $Q_g=\widehat Q_gg$ 得 $Q_p=\widehat Q_gp$；99.4的单射性给提升式99.9。∎
+

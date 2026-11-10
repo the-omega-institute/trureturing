@@ -1,0 +1,18 @@
+**定义 C-58.1.1（实际字母、合法词与端点）。** 令
+$\mathcal W=\{000,100,010,101,001\}$，字母按低到高书写；特别地，
+同一窗的两端同时为一的 $101$ 属于 $\mathcal W$。对
+$w=(w_0,\ldots,w_{n-1})\in\mathcal W^n$，写 $\ell_i(w)$ 与
+$h_i(w)$ 为 $w_i$ 的最低位与最高位。令 $\operatorname{Legal}_0(w)$
+表示把这些三位字母首尾相接所得的完整位词，以初始前位 0 执行相邻一位禁止规则
+而不进入错误态。于是
+$$
+ \operatorname{Legal}_0(w)\;\Longleftrightarrow\;
+ h_i(w)\ell_{i+1}(w)=0\;(0\leq i<n-1).
+ \tag{C58.1}
+$$
+定义
+$$
+ L_n^+=\{w\in\mathcal W^n:\operatorname{Legal}_0(w),\ w_{n-1}\ne000\}.
+ \tag{C58.2}
+$$
+

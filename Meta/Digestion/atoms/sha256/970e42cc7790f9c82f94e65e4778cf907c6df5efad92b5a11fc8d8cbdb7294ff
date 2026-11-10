@@ -1,0 +1,95 @@
+**定理 2.1（全 PB 多项式运输的实根当且仅当）。** 取任意 $n\ge2$，设 $f\in\mathbb R[T]\setminus\{0\}$ 且 $f(0)=0$，取 $A,B\in M_n(\mathbb C)_{\rm sa}$ 使 $Z_0=A+\mathrm iB\ne0$。令
+
+$$
+\mathcal O_f(Z_0)=
+\left\{f(t)(cA-sB,\ sA+cB):c^2+s^2=1\right\}.
+\tag{2.1}
+$$
+
+则
+
+$$
+\boxed{
+\operatorname{Comp}_{\mathcal H_n}(fA,fB)=\mathcal O_f(Z_0)
+\quad\Longleftrightarrow\quad
+f\text{ 的全部复根都是实根（按重数计）。}}
+\tag{2.2}
+$$
+
+证明。先设所有根实。考虑任意相邻边，并按端点方向写成
+
+$$
+ (I_n+\varepsilon\mathrm i p)Z=fZ_0,
+\qquad p\in E_n,\quad Z=q+\mathrm i r.
+\tag{2.3}
+$$
+
+令 $M_\varepsilon=I_n+\varepsilon\mathrm i p$。在每个实数 $s$ 处，$M_\varepsilon(s)$ 可逆，因为 $p(s)$ Hermitian。若 $\xi\in\mathbb R$ 是 $f$ 的根，重数为 $m$，则在局部商环
+
+$$
+\mathbb C[T]/((T-\xi)^m)
+$$
+
+中，$\det M_\varepsilon(\xi)\ne0$ 使其行列式的类为单位，伴随矩阵公式给 $M_\varepsilon$ 的类可逆，而右端的类为零，所以 (2.3) 给出 $Z\equiv0\pmod{(T-\xi)^m}$。这一步只是有限多项式环中的可逆矩阵消元；它没有在原域加入 $\xi$ 或调用未知响应。所有根均实且相互素的根因子合并后，得到逐矩阵元的整除关系
+
+$$
+Z=fW,\qquad W\in M_n(\mathbb C[T]).
+\tag{2.4}
+$$
+
+把 (2.4) 代回 (2.3) 并在多项式环中消去非零的 $f$，得
+
+$$
+M_\varepsilon W=Z_0.
+\tag{2.5}
+$$
+
+同 (1.7)，$W$ 在整条实轴有界，故 $W=C$ 为常矩阵。零点给出 (1.8)，另一端仍由 (1.9) 变成同一轮廓乘以模一标量。对任意有限路径归纳，得到分量包含于 (2.1)。
+
+反向仍只需标量演员。给定任意模一 $\rho\ne-1$，取 $\mu\in\mathbb R$ 使 $\rho=(1-\mathrm i\mu)/(1+\mathrm i\mu)$，并令
+
+$$
+Z=\frac{f(t)}{1+\mathrm i\mu}Z_0.
+$$
+
+由于 $f(0)=0$，其 Hermitian 实部和虚部属于 $E_n$，(1.2) 给出从 $fZ_0$ 到 $\rho fZ_0$ 的一条边；$-1$ 仍由两边得到。因此实根条件下 (2.2) 成立。
+
+现在设 $f$ 有非实根 $a+\mathrm ib$，其中 $b>0$。写
+
+$$
+f(T)=g(T)((T-a)^2+b^2),
+\qquad g\in\mathbb R[T],\qquad g(0)=0,
+\tag{2.6}
+$$
+
+最后一个等式由 $f(0)=0$ 与 $a^2+b^2>0$ 得到。取合法的实标量演员
+
+$$
+p(T)=\frac{T-a}{b}I_n
+$$
+
+和复矩阵多项式
+
+$$
+Z(T)=-\mathrm i b\,g(T)(T-a+\mathrm ib)Z_0.
+\tag{2.7}
+$$
+
+因为 $g(0)=0$，把 $Z$ 的点态 Hermitian 实部、虚部分别记为 $q,r$ 后，$q,r\in E_n$；这里 $`Z^*`$ 只表示逐点共轭转置。直接相乘给
+
+$$
+(I_n+\mathrm i p)Z=fZ_0,
+\qquad
+(I_n-\mathrm i p)Z=-g(T)(T-a+\mathrm ib)^2Z_0.
+\tag{2.8}
+$$
+
+故 (2.8) 是一条合法的全 PB 边，而第二端不在 (2.1)。若它等于某个常数 $\rho fZ_0$，在 $Z_0$ 的任一非零矩阵元上取值并在多项式环中约去非零的 $g$，便会要求
+
+$$
+-\frac{(T-a+\mathrm ib)^2}{(T-a)^2+b^2}
+=-\frac{T-a+\mathrm ib}{T-a-\mathrm ib}
+$$
+
+为常数，这是不可能的。于是一个全 PB 边就离开了整体轮廓，(2.2) 的“仅当”成立。∎
+

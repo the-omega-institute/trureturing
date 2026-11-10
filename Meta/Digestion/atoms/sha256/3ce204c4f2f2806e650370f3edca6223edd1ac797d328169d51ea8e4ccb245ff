@@ -1,0 +1,45 @@
+**推论 27.2（实际无限奇数阶段 UHF）。** 设 $B=\overline{\bigcup_nB_n}$ 是无限 UHF，$B_n\cong M_{d_n}(\mathbb C)$，各 $d_n$ 为奇数；特别包括 $M_{3^\infty}$。若 $D$ 满足 §27.1 的完整 $\mathsf H_A(D)$，则定理 27.1 对所有 $x,y\in B$ 且 $\operatorname{sp}(x^*x+y^*y)$ 有限成立，不要求该 Gram 可逆，也不要求 $x,y$ 属于任何原有限阶段。
+
+**证明。** $p=E_{11}+E_{22}$ 在实际有限阶段 $A_n=M_3(B_n)$ 中的秩为 $2d_n$，因而为偶数。W119.2–119.3、W120.2 把完整原候选的所有原评价标签、原质量（包括零与非正常质量）、准确锥、单位、范数、A1/P2、A2、A3 及每一个实际 PB 逐值限制到整个 $pAp$；AH71.2 与 AH72.1 因而给出整个 $pAp$ 的同一符号 $\sigma$。这一步不要求 $D$ 保持任何有限阶段。
+
+若 $c_0=0$，结论已由定理 27.1 的零槽分支给出。以下 $e_c\ne0$。使用 AH67.2 式 (67.3) 的成熟近投影酉共轭构造：存在实际酉 $w\in B$、某 $N$ 和实际 $e_0\in B_N$，使 $we_cw^*=e_0$。令 $k=\operatorname{rank}_{B_N}(e_0)\ge1$，并对 $n\ge N$ 定义
+$$
+ C_n=w^*e_0B_ne_0w\subset e_cBe_c.
+$$
+这是实际递增的整个角子代数，单位为 $e_c$，且
+$$
+ C_n\cong M_{k\,d_n/d_N}(\mathbb C),\qquad
+ e_cBe_c=\overline{\bigcup_{n\ge N}C_n}^{\|\cdot\|}. \tag{27.5}
+$$
+密度只来自 $e_0B_ne_0$ 在 $e_0Be_0$ 中的压缩密度及实际酉共轭；没有把未知 $D$ 对任何逼近列取极限。因 $d_n$ 无界，$e_cBe_c$ 非交换。
+
+§27.2 的实际矩阵单位 $P_0,u,u^*,Q$ 给出整个角的明确同构
+$$
+ \Phi:M_2(e_cBe_c)\longrightarrow PAP,\qquad
+ \Phi((z_{ij}))=u\iota(z_{11})u^*+u\iota(z_{12})+\iota(z_{21})u^*+\iota(z_{22}). \tag{27.6}
+$$
+逆坐标为
+$$
+ \Phi^{-1}(T)=
+ \begin{pmatrix}\iota^{-1}(u^*Tu)&\iota^{-1}(u^*TQ)\\
+ \iota^{-1}(QTu)&\iota^{-1}(QTQ)\end{pmatrix}. \tag{27.7}
+$$
+四个坐标确在 $QAQ$ 中，且 $P_0+Q=P$；逐项相乘即证 $\Phi$ 覆盖整个 $PAP$。由 (27.5) 得实际递增有限全矩阵子代数
+$$
+ \mathcal A_n^P=\Phi(M_2(C_n))\cong M_{2k\,d_n/d_N}(\mathbb C),\qquad
+ 1_{\mathcal A_n^P}=P,\qquad
+ PAP=\overline{\bigcup_{n\ge N}\mathcal A_n^P}^{\|\cdot\|}. \tag{27.8}
+$$
+它们的阶数全为偶数。W119–120 的完整实际角限制适用于这个具体 $P$，所以 AH70.1 直接作用于实际载体 $PAP$ 和同一个限制 $D_P$，给出某个 $\sigma_P$ 的整个角分类。这里没有假定 $D$ 对 $\Phi$ 协变，也没有假定输出落在 $\mathcal A_n^P$。
+
+为比较符号，取 $n$ 使 $k\,d_n/d_N\ge2$，在实际 $C_n$ 中取自伴 $a_0,\beta_0$ 使 $[a_0,\beta_0]\ne0$，并令
+$$
+ \alpha=u\iota(a_0)u^*,\qquad \beta=u\iota(\beta_0)u^*.
+$$
+则 $\alpha,\beta\in P_0AP_0\subseteq pAp\cap PAP$，且交换子非零。两份整个角分类对同一原输出给出
+$$
+ D(\alpha,\beta)=\frac{\sigma i}{2}[\alpha,\beta]
+ =\frac{\sigma_P i}{2}[\alpha,\beta],\qquad \sigma_P=\sigma. \tag{27.9}
+$$
+故定理 27.1 的全部前件已由实际模型支付。注意这里没有声称 $P$ 或 $e_c$ 位于某个原有限阶段；只有 AH67.2 式 (67.3) 的实际酉共轭和 (27.5) 的实际角模型被使用。∎
+

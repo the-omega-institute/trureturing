@@ -1,0 +1,78 @@
+**定理 25.2（有限总右 Gram 双边族）。** 在定义 25.1 下，对全部实 $R$，同一个实际旧输出满足
+
+$$
+\boxed{\begin{aligned}
+D(Rh,b)&=K_\sigma(Rh,b)\\
+&=\frac{\sigma iR}{2}
+\bigl(E_{13}x-E_{31}x^*-E_{23}y+E_{32}y^*\bigr).
+\end{aligned}}
+\tag{25.3}
+$$
+
+系数是任意满足该输入限制的完成元素；无需 $x,y$ 正规、彼此交换、右 Gram 相等或位于某个有限矩阵阶段。
+
+证明。零代数、$R=0$ 或 $x=y=0$ 时直接用零槽；在非零代数中后者不属可逆 $c_0$ 的分支，仍保留其原零输入结论。以下设 $B\ne0,R\ne0$ 且 $c_0$ 正可逆有限谱。由 $v^*v=\iota(c_0)$、$pv=v=vq$、$qv=vp=0$，已知乘法准确给
+
+$$
+\begin{gathered}
+u^*u=q,\quad u^2=0,\quad P_0=uu^*\le p,
+\quad P_0q=0,\quad v=ud,\quad v^*=du^*,\\
+b=ud+du^*,\qquad
+b^2=u\iota(c_0)u^*+\iota(c_0),\qquad
+f=f^*,\quad f^2=P,\quad fb=-bf.
+\end{gathered}
+\tag{25.4}
+$$
+
+特别 $P_0$ 是原代数中的实际投影。$b$ 在 $PAP$ 中的逆为 $u\iota(c_0^{-1/2})+\iota(c_0^{-1/2})u^*$：两种乘法次序均给 $P_0+q=P$。因此其表示中的核准确为 $(1-P)\mathcal H$。
+
+为明确有限谱的实际实现，令 $z_j=1_{\{\mu_j\}}(c_0)\in B$、$r_j=\iota(z_j)$，并取
+
+$$
+\begin{gathered}
+P_j=ur_ju^*+r_j,\qquad H_j=ur_j+r_ju^*,\\
+H_j=H_j^*,\quad H_j^2=P_j,\quad
+\sum_jP_j=P,\quad bP_j=\sqrt{\mu_j}\,H_j,\\
+l_j=(P_j+H_j)/2,\quad m_j=(P_j-H_j)/2,\qquad
+b=\sum_j\sqrt{\mu_j}(l_j-m_j).
+\end{gathered}
+\tag{25.5}
+$$
+
+不同 $P_j$ 正交；$l_j,m_j$ 是正交的实际谱投影，且 $fl_j=m_jf$。这些等式证明 $b$ 的角内谱正是 $\{\pm\sqrt{\mu_j}:1\le j\le N\}$，并支付定理 24.1 的有限谱及实际反对易前件。没有把归一化的 $b$ 代入未知 $D$。
+
+现在固定 $a=Rh$、$g=D(a,b)$。第一遍直接消费 7.1，使用实际 $h,e$、整个 $pAp$ 的分类及完整环境输入 $b$：
+
+$$
+g=K_\sigma(a,b)+r,\qquad
+r=r^*\in pAp,\qquad[h,r]=0.
+\tag{25.6}
+$$
+
+第二遍对实际有序对 $(b,a)$ 使用定理 24.1，整个角为 $PAP$、实际反对易元为 $f$，给
+
+$$
+D(b,a)=K_\sigma(b,a)+s,\qquad
+s=s^*\in PAP,\qquad[b,s]=0.
+\tag{25.7}
+$$
+
+这里 $D$ 的首输入就是整个 $b$，未提取 $\sqrt{\mu_j}$、$c_0^{1/2}$ 或任何谱投影。反对称性只比较同一旧表的反向值，得 $r=-s$。故
+
+$$
+r\in PAP,\quad[b,r]=0,\quad qr=rq=0,\qquad
+r=PrP=P_0rP_0.
+\tag{25.8}
+$$
+
+在 $[b,r]=0$ 左乘 $q$，由 $qb=du^*$、$qr=0$ 得
+
+$$
+0=q[b,r]=du^*r.
+\tag{25.9}
+$$
+
+$d$ 在 $qAq$ 中的逆是 $\iota(c_0^{-1/2})$，而 $u^*r=qu^*r$，所以 $u^*r=0$。再用 $r=P_0r=uu^*r$ 得 $r=0$，证明 (25.3)。
+
+若恰有一条边为零而 $c_0$ 仍可逆，上述 $u^*u=q$ 和全部等式照常成立：从未求 $x$ 或 $y$ 的逆，也未除以其范数。若允许退化的 $c_0=0$，则两个正元之和为零及 C* 恒等式给 $x=y=0$，仍由零槽得同式。这里没有覆盖其余非可逆总右 Gram。∎
+
