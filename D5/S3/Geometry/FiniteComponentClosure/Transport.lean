@@ -551,7 +551,8 @@ private def spherePath (d : ℕ) (hd : 0 < d)
     exact ((joinPath (spherePoint d) (twoPoint true) (e.symm x)).map e.continuous).cast
       (e.apply_symm_apply x).symm hbase.symm
 
-private def nativeCylinder {V : Type*} [Fintype V] [DecidableEq V]
+/-- The native vertex-cylinder data, shared by the actual based consumers. -/
+def nativeCylinder {V : Type*} [Fintype V] [DecidableEq V]
     (M : PreAbstractSimplicialComplex V) (a : V) (ha : ({a} : Finset V) ∈ M) :
     SingletonRetractionBasedInverse.CylinderRetraction
       (FiniteVertexCylinder.vertexPoint M a ha) where
