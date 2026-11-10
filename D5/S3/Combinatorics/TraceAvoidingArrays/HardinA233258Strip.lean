@@ -63,7 +63,7 @@ open scoped BigOperators
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233258Strip
 open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
 open D5.S3.Combinatorics.TraceAvoidingArrays
-open HardinA233176Ladder (normal)
+open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233176Ladder (normal)
 
 def Legal {n : ℕ} (A : Fin 3 × Fin n → Fin 6) : Prop :=
   (∃ j : Fin n, j.val = 0 ∧ A (0, j) = 0) ∧
