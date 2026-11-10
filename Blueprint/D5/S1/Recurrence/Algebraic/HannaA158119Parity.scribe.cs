@@ -9,7 +9,7 @@ internal sealed class HannaA158119ParityDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S1/Recurrence/Algebraic/HannaA158119Parity.";
 
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Recurrence/hanna2009a158119");
+        LibraryNoteRef.Create("D5/L/RecurrenceAlgebraic/hanna2009a158119");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Parity of the original factorial-product OGF, its reversion quotient, and its unsigned even coefficients.",

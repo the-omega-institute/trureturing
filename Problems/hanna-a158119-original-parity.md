@@ -33,7 +33,7 @@ a sibling weight, or a conditional source-identification result cannot settle it
 ## Gap
 
 The pinned source and related literature are identified in
-`Library/Recurrence/hanna2009a158119.md`. Within that bounded corpus no explicit
+`Library/RecurrenceAlgebraic/hanna2009a158119.md`. Within that bounded corpus no explicit
 supplier of the complete original-square-weight assertion was found.
 The closest inspected prior proves the quartic-weight A338634 analogue and
 gives general common-opener/matching background; it is related prior work.
