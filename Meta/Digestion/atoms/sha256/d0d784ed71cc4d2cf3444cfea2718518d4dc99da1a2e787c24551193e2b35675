@@ -1,0 +1,19 @@
+## 17. Conditional raw-execution deductions for the live-epoch argument
+
+The following auxiliaries separate the pathwise mechanism in Section 6 from the source and observer realization needed in Sections 2 and 3. They allow arbitrary natural zero counts and, for probability statements, a countable measurable state space. Their hypotheses do not assert that the original two stationary sources and one common compliant observer have already been realized by these data.
+
+For arbitrary types $S,R$, a terminal set $L\subseteq S$, an update $F:S\times\{0,1\}\times R\to S$, an initial state $z$, a coin sequence $r:\mathbb N\to R$, a wait $u\in\mathbb N$, and gaps $v:\mathbb N\to\mathbb N$, define
+
+$$
+\begin{aligned}
+c_0&=u+1,&c_{n+1}&=c_n+v_n+1,\\
+X_t&=\mathbf1_{\{\exists n\le t:\ c_n=t+1\}},&Z_0&=z,\\
+Z_{t+1}&=E(Z_t,X_t,r_t),&Y_n&=Z_{c_n},\\
+E(s,b,r)&=\begin{cases}s,&s\in L,\\F(s,b,r),&s\notin L,\end{cases}
+&Q(T)&=\sum_{t<T}X_t.
+\end{aligned}
+\tag{17.1}
+$$
+
+Thus the update receives only the current state, current bit and current coin. The clock is an analytical sampling index, and $Q(T)$ counts exactly already read ticks. Write $\operatorname{hit}_L(H)$ for the least $t\in\mathbb N$ with $H_t\in L$, with value $\mathrm{none}$ if no such $t$ exists; a finite value is written $\mathrm{some}(t)$.
+

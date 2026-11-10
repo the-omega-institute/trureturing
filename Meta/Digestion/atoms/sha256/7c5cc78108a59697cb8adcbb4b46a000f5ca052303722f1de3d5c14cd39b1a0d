@@ -1,0 +1,35 @@
+**定义 26.1（原全称问题与剩余域）。** 固定每个 $\sigma$，令 $\mathfrak F_\sigma$ 为 (17.1) 的全部有限输入中，$s=\rho\operatorname{diag}(1,-2)\oplus0_m$、$\rho\ne0$ 且原 P2 对完整 $M_{m+2}(\mathbb C)$ 上全部正泛函成立的输入集合。$m$ 任意有限，$B,D_{\rm env}$ 任意 Hermitian，$V$ 任意；不附加关于未知总响应 $D$ 的任何假设。原有限类的非零残量全 PB 集合仍定义为
+
+$$
+\mathfrak A_\sigma=
+\{(B,V,D_{\rm env},\rho)\in\mathfrak F_\sigma:
+\mathcal G_\sigma(x,\phi)\le0
+\text{ 对每个实际 }x=x^*=PxP\text{ 及全部 }\phi\ge0\}.
+\tag{26.1}
+$$
+
+定理 8.1、13.1 已给 $\mathfrak F_\sigma$ 的完整 P2 参数条件，未给 (26.1) 的全 PB 分类。令 $\mathfrak D_{\rm old}$ 是本卷定理 19.1、20.1，以及[区间卷定理 12.3](AURIC_INTERVAL_ORIGINAL_RESPONSE_AND_VARIABLE_PROJECTION_TRANSPORT.md#123-原全部探针的参数完备结论)、承载卷[定理 41.2](https://github.com/the-omega-institute/trureturing/blob/caf0f3b3064a987b753b67aaa3836d6d86e73f75/docs/develop/theory/AURIC_FULL_PB_POLYNOMIAL_TRANSPORT_AND_REAL_ROOT_RIGIDITY.md#412-两个明确斜率的有限充分定理)、[定理 42.2](https://github.com/the-omega-institute/trureturing/blob/caf0f3b3064a987b753b67aaa3836d6d86e73f75/docs/develop/theory/AURIC_FULL_PB_POLYNOMIAL_TRANSPORT_AND_REAL_ROOT_RIGIDITY.md#422-零探针刚性及明确的有限反证读取) 各自准确排除域与 $\mathfrak F_\sigma$ 的并交；这些既有结论直接引用。令 $\mathfrak D_{\rm pos}$ 是 (24.1) 的域与 $\mathfrak F_\sigma$ 的交，定义
+
+$$
+\mathfrak R_\sigma=
+\mathfrak F_\sigma\setminus(\mathfrak D_{\rm old}\cup\mathfrak D_{\rm pos}).
+\tag{26.2}
+$$
+
+完整目标仍是判定 $\mathfrak A_\sigma$ 是否为空。其未决不等式准确为：对 $\mathfrak R_\sigma$ 的每份数据，判定是否存在同一个原探针和同一个原正泛函，使
+
+$$
+|\phi(L)|>
+\sqrt{\phi(R_+^2)\phi(S_+^2)-\phi(R_+\circ S_+)^2}
++\sqrt{\phi(R_-^2)\phi(S_-^2)-\phi(R_-\circ S_-)^2}.
+\tag{26.3}
+$$
+
+若有非零残量满足全部 PB，则须在同一份数据上对每个实际探针及全部原正泛函证明 (26.3) 的反向非严格不等式；零质量和任意有限质量同在此量词内。$\rho=0$ 的充分性直接由 §1 的标准零残量结果承担。
+
+$\mathfrak R_\sigma$ 中明确保留：平衡零模秩一在既有排除域与 (24.1) 之外的全部输入；实际总耦合满行秩 $\operatorname{rank}V=2$ 在这些域之外的输入；零模耦合秩零、归一化 Schur 矩阵平衡且非对角的其余输入。在总秩一形状 (23.1) 中，超平面外或 $\delta=0$ 的未覆盖成员仍属于这一目标：定理 23.1 只表明它们没有左端非零的共同零预算接触，未断言 PB 成立。定理 22.3 对满行秩输入给出同样的方法边界；定理 24.1、25.1 只在其明确域中提供正预算违反。
+
+(26.1)–(26.3) 的每个平方与乘积始终在原 $M_{m+2}(\mathbb C)$ 中计算。本卷 (17.7)、(17.15) 提供的是共同原读取与正密度提升，定理 18.1 的非约化障碍仍禁止将其改成普通 $M_6$ 的压缩平方分类。[双角卷定理 44.2](AURIC_FULL_PB_TWO_CORNER_POSITIVE_CERTIFICATE_CONTINUATION.md#44-两个完整角约束同一输出的三项正证书) 依赖完整原 $\mathsf H_A(D)$ 和两个整个角的共同符号，不能代替此固定输出目标的前件。
+
+这里的环境面积底界、共同接触穷尽及小正边预算差额是上述原标签中的 $\texttt{repo-derived}$ 推导；实 Gram 与正交投影只作为其中的成熟中间工具。§§6、15、18、21 的完整来源身份和递归固定物理合同仍按原全文解释。一般原关系的 $E_+^D=E_-^D$、$N\omega(\varepsilon)^2\to0$、完整 $\mathsf H$／任意总响应 $D$ 及固定物理来源的共同实现仍是独立未决义务。(26.1) 不将协变、正则性、齐次、单位平移、商或压缩自然性增为前件，也不由数学向量和探针生成物理来源。
+
