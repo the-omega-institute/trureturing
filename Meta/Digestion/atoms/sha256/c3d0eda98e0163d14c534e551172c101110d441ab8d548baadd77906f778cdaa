@@ -1,0 +1,19 @@
+**Lemma 11.1 (normalized compact law spaces).** The spaces in (11.2) are convex and compact in TV. Every one of their laws has zero mass at its infinite outcome. The residual maps are TV-continuous, with the bounds
+
+$$
+\operatorname{TV}(\mathcal R_B(Q),\mathcal R_B(Q'))
+ \le\frac{10}{3}\operatorname{TV}(Q,Q'),
+$$
+
+$$
+\operatorname{TV}(\mathcal R_A(W),\mathcal R_A(W'))
+ \le6\operatorname{TV}(W,W').
+\tag{11.5}
+$$
+
+**Proof.** The emission and tail inequalities are affine closed constraints in the probability simplex. From each sequence of laws choose a subsequence on which every completed-word coordinate converges. For each $L$, the finite p set $\{w_{n,i}:n<L\}$ has complement $T_p(L)$ of mass at most $\lambda^L$. At suspension include beta in the finite set; its complement has mass at most $b\lambda^L$. The coordinate limits therefore have total mass one: their finite-set masses approach one uniformly as $L$ increases. Set the infinite coordinate to zero. Its value is also forced by $\Pr(\infty_s)\le\Pr(T_s(L))\to0$.
+
+On a fixed finite set the subsequence converges in $\ell^1$. Outside that set the sum of the two tail masses bounds its $\ell^1$ difference by $2\lambda^L$, or $2b\lambda^L$. Thus the convergence is in complete-law TV. All inequalities survive this convergence. This proves sequential compactness, hence compactness in the metric spaces. The same affine constraints show that barycentres of Borel probability measures on either space remain in that space, by countable summation of coordinates. No mass is removed and no completion conditioning is used.
+
+For normalized laws $P,P'$ and a common conditioning event of probability at least $q$ in $P'$, the conditional event difference is at most $2\operatorname{TV}(P,P')/q$, as proved in [CLIP, Theorem 3.1]. Apply this with the beta cylinder and $q=3/5$, or the alpha cylinder and $q=1/3$, and delete the next block. This gives (11.5). These are maps to the full opposite probability simplex, so continuity does not assume the additional opposite-space tail bounds. $\square$
+
