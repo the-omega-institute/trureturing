@@ -1,0 +1,133 @@
+**定理 23.1（接触超平面、全部探针与正密度）。** 取 §19 的实际耦合形状，但不预设其接触超平面或 $\delta\ne0$：
+
+$$
+\begin{gathered}
+V=Uv\ell^*,\quad v=(1,\sqrt2)^{\mathsf T},\quad
+U=\operatorname{diag}(\zeta_1,\zeta_2),\quad |\zeta_j|=1,\\
+B=UB_0U^*,\quad B_0=\begin{pmatrix}a&z\\\bar z&d\end{pmatrix},\quad
+\alpha=\|P_{\ker D_{\rm env}}\ell\|>0,\quad
+s=\rho\operatorname{diag}(1,-2)\oplus0_m,\\
+u_0=(-2\sqrt2,1)^{\mathsf T},\quad p_0=(1,2\sqrt2)^{\mathsf T},\quad
+w_0=4\sqrt2a-3z,\quad\delta=2a-\sqrt2\operatorname{Re}z.
+\end{gathered}
+\tag{23.1}
+$$
+
+这里 $a,d,\rho\in\mathbb R$，$z\in\mathbb C$，$D_{\rm env}$ 任意有限 Hermitian，$\sigma$ 分别固定。对任意实际 $x=x_A\oplus0_m$，向量 $\xi=(u,y)$ 的两笔原预算同时为零，当且仅当以下两种情形之一成立：
+
+$$
+u=0,\qquad \ell^*y=0;
+\tag{23.2}
+$$
+
+或存在 $\lambda\in\mathbb C\setminus\{0\}$、$\beta\in\mathbb R$ 使
+
+$$
+\begin{gathered}
+d+4a-3\sqrt2\operatorname{Re}z=0,\qquad
+u=\lambda Uu_0,\qquad x_A=\beta Up_0p_0^*U^*,\\
+\ell^*y=\lambda\bigl(w_0-2\sigma i\sqrt2\beta\bigr).
+\end{gathered}
+\tag{23.3}
+$$
+
+$D_{\rm env}y$ 不受额外约束。对固定 $x$，令 $\mathcal M_x$ 为如下复子空间：若超平面等式成立且 $x_A=\beta Up_0p_0^*U^*$，则
+
+$$
+\mathcal M_x=\{(\lambda Uu_0,y):\lambda\in\mathbb C,
+\ \ell^*y=\lambda(w_0-2\sigma i\sqrt2\beta)\};
+\tag{23.4}
+$$
+
+其余情形令 $\mathcal M_x=0\oplus\ker\ell^*$。任意正密度的准确条件与读取为
+
+$$
+\boxed{\phi\in\mathcal Z_\sigma(x)\ \Longleftrightarrow\
+\operatorname{ran}\Theta\subseteq\mathcal M_x,\qquad
+\phi(L)=\frac{16\rho\delta}{9}\phi(P)\quad(\phi\in\mathcal Z_\sigma(x)).}
+\tag{23.5}
+$$
+
+特别地，(23.3) 的向量读取是 $\phi_\xi(L)=16\rho\delta|\lambda|^2$；(23.2) 的读取为零。这些断言不以 P2 为前件。
+
+证明。由 (22.2)，共同零预算向量必须满足
+
+$$
+V^*Cu=\ell v^*CU^*u=0.
+$$
+
+$\ell\ne0$，而 $\ker(v^*C)=\mathbb C u_0$，所以 $u=\lambda Uu_0$。$\lambda=0$ 时，(22.8)–(22.9) 的同一计算仍适用，强制 $Vy=0$，等价于 $\ell^*y=0$；反向与零读取也由该计算给出。
+
+以下设 $\lambda\ne0$。两份 $R_\pm\xi$ 的环境部分均为零，两份 $S_\pm\xi$ 的环境部分则同为 $V^*u+D_{\rm env}y$。它们投影到环境零模后的值是
+
+$$
+P_{\ker D_{\rm env}}(V^*u+D_{\rm env}y)
+=-\sqrt2\lambda P_{\ker D_{\rm env}}\ell\ne0.
+\tag{23.6}
+$$
+
+零实 Gram 的两个向量实线性相关；一向量的环境部分为零、另一向量的环境部分非零时，前一向量只能为零。故两份 $R_\pm\xi$ 都为零，相加相减得到
+
+$$
+x\xi=0,\qquad (h-k)\xi=0.
+\tag{23.7}
+$$
+
+Hermitian 二阶矩阵 $U^*x_AU$ 消去 $u_0$，因而准确为 $\beta p_0p_0^*$，$\beta\in\mathbb R$。这是 $u_0^\perp=\mathbb C p_0$ 上的一维 Hermitian 作用。由 $p_0^*Cu_0=2\sqrt2$，有
+
+$$
+h\xi=-\frac{\sigma i}{2}xc\xi
+=(-\sigma i\sqrt2\beta\lambda Up_0,0).
+\tag{23.8}
+$$
+
+记 $K_0=C\circ B_0$。$k\xi$ 的演员部分为 $U(\lambda K_0u_0+C v\ell^*y/2)$，其中 $Cv=p_0$，环境部分为零。将 $k\xi=h\xi$ 左乘 $u_0^*U^*$，得到
+
+$$
+0=u_0^*K_0u_0=8a+2d-6\sqrt2\operatorname{Re}z.
+\tag{23.9}
+$$
+
+这正是 (23.3) 的超平面。该等式下，(19.10) 的原矩阵恒等式给
+
+$$
+K_0u_0=-w_0p_0/2.
+\tag{23.10}
+$$
+
+故 $k\xi=h\xi$ 的剩余标量方程准确为 (23.3) 的最后一式。反向地，(23.3)、(23.8)–(23.10) 给 $x\xi=0$、$k\xi=h\xi$，从而两份 $R$ 都消去 $\xi$，两笔预算确为零。这个反向不需要约束 $D_{\rm env}y$。由于 $\alpha>0$，(23.3) 的环境方程始终有解：令 $q_0=P_{\ker D_{\rm env}}\ell/\alpha$，可取
+
+$$
+y=\lambda(w_0-2\sigma i\sqrt2\beta)q_0/\alpha.
+\tag{23.11}
+$$
+
+这也表明超平面上每个这样的探针都有非零演员接触。
+
+为计算左端，(23.7) 给 $h\xi=-\sigma i r\xi$、$tc\xi=2h\xi-ct\xi$，所以
+
+$$
+(r+g_\sigma)\xi=\sigma i ct\xi+s\xi,\qquad
+\phi_\xi(L)=-2\operatorname{Re}((t\xi)^*s\xi).
+\tag{23.12}
+$$
+
+后式中 $\operatorname{Re}(\sigma i(t\xi)^*ct\xi)=0$，第一项 $x\xi$ 也为零。复用 (19.11)–(19.14) 的演员计算，记其中的演员列为 $T$，则
+
+$$
+(t\xi)_{\rm actor}=\lambda U(T-2\sigma i\sqrt2\beta v),\qquad
+\operatorname{Re}(T^*CZu_0)=-8\delta,\quad Z=\operatorname{diag}(1,-1).
+\tag{23.13}
+$$
+
+这些是超平面上的矩阵恒等式，不对 $\delta$ 作除法，故也适用于 $\delta=0$。$v^*CZu_0=-4\sqrt2$ 为实数，故 (23.13) 中新增的纯虚系数不改变 (23.12) 的实部，得到 $16\rho\delta|\lambda|^2$。$s\xi$ 只有演员分量，因此任意 $D_{\rm env}y$ 都未被忽略或改写。
+
+最后，(23.2)–(23.3) 中的全部向量恰组成 (23.4) 所定义的 $\mathcal M_x$，且 $R_\pm$ 均消去这个子空间。若总密度的两笔预算为零，(17.15) 强制每个谱向量属于 $\mathcal M_x$，因而支撑包含于它；反向由 $R_\pm$ 消去支撑直接得到。谱向量写成 $(\lambda_jUu_0,y_j)$，其中纯环境情形取 $\lambda_j=0$，则
+
+$$
+\phi(P)=9\sum_j|\lambda_j|^2,\qquad
+\phi(L)=16\rho\delta\sum_j|\lambda_j|^2.
+$$
+
+这就是 (23.5)，也包括零密度与任意混合质量。∎
+

@@ -1,0 +1,49 @@
+**Lemma 17.1 (Raw stopping correspondence).** For every choice of the types and data in (17.1), for every $T$ with $\operatorname{hit}_L(Z)=\mathrm{some}(T)$ there exists $N$ such that
+
+$$
+\begin{gathered}
+\operatorname{hit}_L(Y)=\mathrm{some}(N),\qquad Y_N=Z_T,\qquad T\le c_N,\\
+\forall n<N:\ c_n<T,\qquad N\le Q(T),\qquad Q(T)\le T,\\
+N=0\ \Longleftrightarrow\ T\le u+1.
+\end{gathered}
+\tag{17.2}
+$$
+
+Moreover $\operatorname{hit}_L(Z)=\mathrm{none}$ if and only if $\operatorname{hit}_L(Y)=\mathrm{none}$. No probability law or eventual stopping is assumed.
+
+Proof. Induction on $t-T$ shows that $Z_t=Z_T$ for every $t\ge T$ once $Z_T\in L$. Since $c_n\ge n+1$, choose the least $N$ with $T\le c_N$. Absorption and first-hit minimality give the first four conclusions. For each $n<N$, the position $c_n-1<T$ is an actual tick; strict increase of $c_n$ makes these positions distinct. They inject into the ticks counted by $Q(T)$, whose positions are contained in $\{0,\ldots,T-1\}$. The endpoint equivalence follows from $c_0=u+1$. A terminal epoch is a terminal raw state, while a finite raw hit supplies a terminal epoch by this construction, proving the nontermination equivalence. $\square$
+
+For the probability auxiliaries, the following deterministic-coordinate rectangle condition will be denoted $\mathcal R(P,I,\tau,K,\xi,\eta,w,f,\rho)$. Let $\Omega,S,R$ have measurable spaces; $P$ is a measure on $\Omega$, $I:\Omega\to S$, $\tau:\Omega\to\mathbb N$, $K:\Omega\to\mathbb N^{\mathbb N}$ and $\xi:\Omega\to R^{\mathbb N}$ are maps, $\eta$ is a probability mass function on $S$, $w,f$ are probability mass functions on $\mathbb N$, and $\rho$ is a probability measure on $R$. For $a=(u,v)\in\mathbb N\times\mathbb N^{\{0,\ldots,n-1\}}$, put
+
+$$
+\begin{aligned}
+H_{n,a}&=\{\omega:\tau(\omega)=u,\ K_j(\omega)=v_j\text{ for every }j<n\},\\
+R_l(\omega)&=(I(\omega),(\xi_j(\omega))_{j<l}),\\
+B_{l,r}(\omega)&=(\xi_{l+j}(\omega))_{j<r}.
+\end{aligned}
+\tag{17.3}
+$$
+
+Here $\eta$ also denotes its induced measure when used in a product measure. The condition $\mathcal R$ is the following equality for every $n,l,r\in\mathbb N$, every $a=(u,v)$ of that finite type, and all measurable $D\subseteq S\times R^{\{0,\ldots,l-1\}}$ and $B\subseteq R^{\{0,\ldots,r-1\}}$:
+
+$$
+P\bigl(H_{n,a}\cap R_l^{-1}(D)\cap B_{l,r}^{-1}(B)\bigr)
+=w(u)\left(\prod_{j<n}f(v_j)\right)
+  (\eta\otimes\rho^{\otimes l})(D)\,\rho^{\otimes r}(B).
+\tag{17.4}
+$$
+
+Both coin intervals have deterministic offset and length. In particular (17.4) contains no epoch transition or random-cut law as a premise. Empty tuples and zero lengths have their usual one-point product measure and empty product one. All measure equalities below take values in $[0,\infty]$.
+
+For rows $A,C:S\to\operatorname{PMF}(S)$ define $A^{[0]}(s)=\delta_s$ and $A^{[k+1]}(s)=A^{[k]}(s)\mathbin{\mathrm{bind}}A$, and put
+
+$$
+J_k(s)=A^{[k]}(s)\mathbin{\mathrm{bind}}C,
+\qquad
+\nu=w\mathbin{\mathrm{bind}}\left(u\mapsto
+       \eta\mathbin{\mathrm{bind}}(s\mapsto J_u(s))\right).
+\tag{17.5}
+$$
+
+For each $\omega$, use the literal run (17.1) with $(z,r,u,v)=(I(\omega),\xi(\omega),\tau(\omega),K(\omega))$, and denote its sampled states by $Y_n(\omega)$.
+
