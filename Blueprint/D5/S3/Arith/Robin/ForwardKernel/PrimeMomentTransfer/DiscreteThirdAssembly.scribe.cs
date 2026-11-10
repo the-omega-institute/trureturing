@@ -20,7 +20,7 @@ internal sealed class DiscreteThirdAssemblyDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "Let zero be less than alpha, alpha less than beta, and beta less than one quarter. "
                         + "Assume the singular series equals one on the empty set and on every singleton, "
-                        + "satisfies the strong four-point Hardy-Littlewood bound at exponent beta, "
+                        + "satisfies the four-point mean-square correlation bound at exponent beta, "
                         + "and satisfies the interval correlation estimates. Fix an endpoint window M at least one. "
                         + "For every positive delta, all sufficiently large real N have the following property: "
                         + "for every natural length H between N to the power alpha and N to the power beta, "
