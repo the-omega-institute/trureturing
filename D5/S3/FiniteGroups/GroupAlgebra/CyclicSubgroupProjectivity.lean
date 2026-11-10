@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/FiniteGroups/GroupAlgebra/CyclicSubgroupProjectivity
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/FiniteGroups/GroupAlgebra/CyclicNormOne, D5/S3/FiniteGroups/GroupAlgebra/ProjectiveConjugationTrace, mathlib/module/Mathlib.GroupTheory.SpecificGroups.Cyclic, mathlib/module/Mathlib.LinearAlgebra.GeneralLinearGroup.Basic]
+   anchors: [mathlib/module/Mathlib.GroupTheory.SpecificGroups.Cyclic, mathlib/module/Mathlib.LinearAlgebra.GeneralLinearGroup.Basic]
    utility: none
    digest: Prime-support subgroups detect projectivity for every finite cyclic group over arbitrary commutative coefficients. -/
 
