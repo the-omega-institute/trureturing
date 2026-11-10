@@ -2048,3 +2048,491 @@ $\mathfrak R_\sigma$ 中明确保留：平衡零模秩一在既有排除域与 (
 这里的环境面积底界、共同接触穷尽及小正边预算差额是上述原标签中的 $\texttt{repo-derived}$ 推导；实 Gram 与正交投影只作为其中的成熟中间工具。§§6、15、18、21 的完整来源身份和递归固定物理合同仍按原全文解释。一般原关系的 $E_+^D=E_-^D$、$N\omega(\varepsilon)^2\to0$、完整 $\mathsf H$／任意总响应 $D$ 及固定物理来源的共同实现仍是独立未决义务。(26.1) 不将协变、正则性、齐次、单位平移、商或压缩自然性增为前件，也不由数学向量和探针生成物理来源。
 
 ## 新增锚（本行以下为后续增补区）
+
+## 27. 全有限类的联合探针与环境系数判据
+
+### 27.1 原空间像与实系数矩阵
+
+**定义 27.1（联合二次型）。** 准确沿用定义 17.1 的任意有限输入 (17.1)、本卷 (1.1)–(1.2)，以及[承载卷定义 41.1](https://github.com/the-omega-institute/trureturing/blob/caf0f3b3064a987b753b67aaa3836d6d86e73f75/docs/develop/theory/AURIC_FULL_PB_POLYNOMIAL_TRANSPORT_AND_REAL_ROOT_RIGIDITY.md#411-原完整问题与较弱的固定输出接口)的原标签。固定一个 $\sigma\in\{1,-1\}$，记
+
+$$
+C=\operatorname{diag}(1,2),\qquad S_A=\operatorname{diag}(s_1,s_2),\qquad
+s=S_A\oplus0_m,\qquad g_\sigma=\frac{\sigma i}{2}[c,t]+s.
+\tag{27.1}
+$$
+
+$B,D_{\rm env}$ 任意 Hermitian，$V$ 任意，$s_1,s_2$ 为任意实数；此处不假设 P2。$D_{\rm env}$ 始终只是同一个已知输入 $t$ 的环境矩阵。
+
+直接取定义 17.1 的 $\mathcal E_0\subseteq\mathbb C^m$ 和 $\mathcal H_0=\mathbb C^2\oplus\mathcal E_0$。定理 17.2 已给出 $d:=\dim_{\mathbb C}\mathcal E_0\le4$ 及逐预算、逐质量的全正泛函等价。选定该子空间的一组复正交归一基，以等距嵌入 $F:\mathbb C^d\to\mathbb C^m$ 表示，定义实线性坐标
+
+$$
+Y(v)=F(v_1+i v_{d+1},\ldots,v_d+i v_{2d})^{\mathsf T},
+\qquad v\in\mathbb R^{2d}.
+\tag{27.2}
+$$
+
+$d=0$ 时 $v$ 为空、$Y=0$。对 $a\in\mathbb R^4$ 定义全部 Hermitian 演员探针的坐标
+
+$$
+X(a)=\begin{pmatrix}a_1&a_3+i a_4\\a_3-i a_4&a_2\end{pmatrix},\qquad
+H_\sigma(X)=\frac{\sigma i}{2}[C,X],\qquad J_C(X)=C\circ X.
+\tag{27.3}
+$$
+
+以下把原 $\mathcal H=\mathbb C^2\oplus\mathbb C^m$ 当作实 Hilbert 空间，只使用其实内积
+$\langle z,w\rangle_{\mathbb R}=\operatorname{Re}(z^*w)$，范数仍为原复 Hilbert 范数。固定任意单位演员方向 $u\in\mathbb C^2$，不要求它的任一坐标非零。令
+
+$$
+n=5+2d\le13,\qquad z=(a,v,\tau)\in\mathbb R^n.
+$$
+
+定义下列从 $\mathbb R^n$ 到原 $\mathcal H$ 的实线性映射；每个像都保留其演员与环境分量：
+
+$$
+\begin{aligned}
+\mathcal Xz&=(X(a)u,0),&
+\mathcal H_\sigma z&=(H_\sigma(X(a))u,0),&
+\mathcal Jz&=(J_C(X(a))u,0),\\
+\mathcal Tz&=(\tau Bu+VY(v),\ \tau V^*u+D_{\rm env}Y(v)),\\
+\mathcal Kz&=(\tau(C\circ B)u+\tfrac12 CVY(v),\ \tfrac\tau2 V^*Cu),\\
+\mathcal G_sz&=(\tau(\tfrac{\sigma i}{2}[C,B]+S_A)u
+                      +\tfrac{\sigma i}{2}CVY(v),\ -\tfrac{\sigma i\tau}{2}V^*Cu).
+\end{aligned}
+\tag{27.4}
+$$
+
+对 $\delta\in\{1,-1\}$，再置
+
+$$
+\begin{gathered}
+\mathcal R_\delta=\mathcal X+\delta(\mathcal H_\sigma-\mathcal K),\qquad
+\mathcal S_{\delta,s}=\mathcal T+\delta(\mathcal J+\mathcal G_s),\\
+\ell_s(z)=-2\langle\mathcal Xz,(\mathcal H_\sigma-\mathcal K)z\rangle_{\mathbb R}
+           -2\langle\mathcal Tz,(\mathcal J+\mathcal G_s)z\rangle_{\mathbb R}.
+\end{gathered}
+\tag{27.5}
+$$
+
+若 $\mathcal A,\mathcal B$ 是这类实线性映射，记
+$\operatorname{Sym}(\mathcal A,\mathcal B)
+=(\mathcal A^{\mathsf T}\mathcal B+\mathcal B^{\mathsf T}\mathcal A)/2$，其中转置对上述原实内积取伴随。令
+
+$$
+\mathscr L_s=-2\operatorname{Sym}(\mathcal X,\mathcal H_\sigma-\mathcal K)
+              -2\operatorname{Sym}(\mathcal T,\mathcal J+\mathcal G_s),
+\qquad z^{\mathsf T}\mathscr L_sz=\ell_s(z).
+$$
+
+索引 $\theta$ 只含下列变量：
+
+$$
+\theta=(u,\epsilon,\alpha_+,\alpha_-,\beta_+,\beta_-),\qquad
+\|u\|=1,\quad\epsilon\in\{1,-1\},\quad
+0<\alpha_+,\alpha_-<\infty,\quad\beta_+,\beta_-\in\mathbb R.
+\tag{27.6}
+$$
+
+这里的 $\epsilon$ 是绝对值的两个实符号，与固定的取向 $\sigma$ 分开。对每个 $\theta$ 定义实对称系数矩阵
+
+$$
+\boxed{\quad
+\mathscr Q_{\sigma,s}(\theta)=
+\sum_{\delta=\pm1}\left[
+\alpha_\delta\mathcal R_\delta^{\mathsf T}\mathcal R_\delta
++\alpha_\delta^{-1}
+ (\mathcal S_{\delta,s}-\beta_\delta\mathcal R_\delta)^{\mathsf T}
+ (\mathcal S_{\delta,s}-\beta_\delta\mathcal R_\delta)
+\right]-2\epsilon\mathscr L_s .\quad}
+\tag{27.7}
+$$
+
+矩阵的阶数为 $n\le13$，其条目由 (27.2)–(27.5) 的原空间实内积唯一确定。$(a,v,\tau)$ 是构造系数时的二次型变量，不属于索引 $\theta$，也不是额外的探针或读取量词。换取 $\mathcal E_0$ 的另一组复正交归一基只在 $v$ 坐标上作实正交变换，故 (27.7) 相应作合同变换；其半正定性不变，原 $B,V,D_{\rm env}$ 并未被替换。
+
+### 27.2 全部原 PB 的充要条件与有限失败见证
+
+**定理 27.2（联合消元的全称系数判据）。** 对定义 27.1 的每份有限输入、每个分别固定的 $\sigma$，以下两项等价：
+
+1. 每个实际 $x=x^*=PxP$ 和完整 $M_{m+2}(\mathbb C)$ 上每个正复线性泛函 $\phi$ 都满足原 PB，即
+
+   $$
+   |\phi(L)|\le\sqrt{B_\phi(R_+,S_+)}+\sqrt{B_\phi(R_-,S_-)}.
+   \tag{27.8}
+   $$
+
+2. 对 (27.6) 的每个 $\theta$ 都有 $\mathscr Q_{\sigma,s}(\theta)\succeq0$。
+
+这里不假设 P2，不要求任何环境块、系数块或 Gram 矩阵可逆。对每个指定有限质量 $\mu>0$，第一项可以等价地只量化 $\phi(I_{m+2})=\mu$；所得条件仍是同一第二项。质量 $0$ 时正泛函只有零泛函，(27.8) 总是零等式，本身不对系数矩阵加条件。因此量化全部非负有限质量与第二项等价，并完整保留零质量。
+
+每个 (27.7) 也有如下等价的广义 Schur 写法。按最后一个坐标分块，记
+
+$$
+\mathscr Q_{\sigma,s}(\theta)=
+\begin{pmatrix}A&b\\b^{\mathsf T}&\gamma\end{pmatrix}.
+$$
+
+则该系数测试准确等价于
+
+$$
+A\succeq0,\qquad b\in\operatorname{ran}A,\qquad
+\gamma-b^{\mathsf T}A^\dagger b\ge0.
+\tag{27.9}
+$$
+
+$A^\dagger$ 是这个实对称矩阵的谱 Moore–Penrose 逆。不得在 $A$ 奇异时删掉中间的值域条件。
+
+如果任何一个有限索引 $\theta$ 的系数测试失败，则在同一份不变的 $B,V,D_{\rm env},s,\sigma$ 上存在一个有限实际 Hermitian 角探针和一个原全空间向量泛函，使 (27.8) 严格失败。对每个指定 $\mu>0$ 都能在同一探针上取得质量恰为 $\mu$ 的严格失败；所用泛函的两笔预算和左端始终属于同一个实际实现。
+
+证明。首先确认 (27.4)–(27.5) 所编码的是原算子像。$\tau=1$ 时令
+
+$$
+x=X(a)\oplus0_m,\qquad \eta=(u,Y(v))\in\mathcal H_0.
+$$
+
+原全空间块乘法直接给
+
+$$
+\begin{gathered}
+\mathcal Xz=x\eta,\quad\mathcal H_\sigma z=h\eta,\quad
+\mathcal Jz=r\eta,\quad\mathcal Tz=t\eta,\quad
+\mathcal Kz=k\eta,\quad\mathcal G_sz=g_\sigma\eta,\\
+\mathcal R_\delta z=R_\delta\eta,\qquad
+\mathcal S_{\delta,s}z=S_\delta\eta,\qquad
+\ell_s(z)=\phi_\eta(L).
+\end{gathered}
+\tag{27.10}
+$$
+
+尤其 $\mathcal T$ 中的 $D_{\rm env}Y(v)$、$\mathcal K$ 和 $\mathcal G_s$ 中的环境像全部保留。对任何原自伴 $U,W$，已有的原像恒等式给
+
+$$
+\phi_\eta(U^2)=\|U\eta\|^2,\qquad
+\phi_\eta(U\circ W)=\langle U\eta,W\eta\rangle_{\mathbb R}.
+\tag{27.11}
+$$
+
+这计算的是 $U,W$ 的原全空间乘积，不是它们压缩后的平方或乘积。$\mathcal H_0$ 不必约化它们，命题 18.1 的障碍仍保留。
+
+所消费的变分恒等式是成熟的二阶实 Gram 行列式／算术几何平均关系。为包含退化情形，在这里给出全部所需代数。对同一实 Hilbert 空间中的 $U,W$，置
+
+$$
+a_0=\|U\|^2,\qquad b_0=\langle U,W\rangle_{\mathbb R},\qquad
+c_0=\|W\|^2,\qquad\Delta=a_0c_0-b_0^2\ge0.
+$$
+
+则
+
+$$
+2\sqrt\Delta=
+\inf_{\alpha>0,\ \beta\in\mathbb R}
+\left(\alpha\|U\|^2+\alpha^{-1}\|W-\beta U\|^2\right).
+\tag{27.12}
+$$
+
+确实，$a_0>0$ 时配方为
+
+$$
+\alpha a_0+\alpha^{-1}\left(
+a_0(\beta-b_0/a_0)^2+\Delta/a_0\right)\ge2\sqrt\Delta.
+$$
+
+若 $\Delta>0$，取 $\beta=b_0/a_0$、$\alpha=\sqrt\Delta/a_0$ 达到等号。若 $\Delta=0$，对任意给定 $e>0$，取同一 $\beta$、$\alpha=e/a_0$ 就使该式等于 $e$。$a_0=0$ 时 $U=0$、$b_0=\Delta=0$；若 $c_0>0$，取 $\alpha=c_0/e$ 使该式等于 $e$，若 $c_0=0$ 则任意参数都给零。故所有零 Gram 情形都包括在内，而且每个正容差都由有限参数实现，无须假设下确界取到。
+
+现在对固定的同一 $x,\eta$，将 (27.12) 分别用于 (27.10) 的两对像。每次只有两个实变分参数，所有像仍由共同的 $a,v$ 决定。于是 (27.8) 对这个 $x,\phi_\eta$ 成立，当且仅当对两个 $\epsilon$ 和全部四个变分参数有
+
+$$
+\begin{aligned}
+&\sum_{\delta=\pm1}\left[
+\alpha_\delta\|\mathcal R_\delta z\|^2
++\alpha_\delta^{-1}\|\mathcal S_{\delta,s}z-\beta_\delta\mathcal R_\delta z\|^2
+\right]-2\epsilon\ell_s(z)\\
+&\hspace{30mm}=z^{\mathsf T}\mathscr Q_{\sigma,s}(\theta)z\ge0,
+\qquad z=(a,v,1).
+\end{aligned}
+\tag{27.13}
+$$
+
+这里取两份数值下确界之和，只是在同一固定实现上使用两次 (27.12)；不分别选择探针、向量、环境或质量，也不交换任何极小与极大。
+
+对固定 $\theta$，(27.13) 对全部 $a,v$ 成立，当且仅当 $\mathscr Q_{\sigma,s}(\theta)\succeq0$。一个方向显然；另一个方向对任意 $\tau\ne0$ 使用齐次化恒等式
+
+$$
+z^{\mathsf T}\mathscr Q_{\sigma,s}(\theta)z
+=\tau^2\,(a/\tau,v/\tau,1)^{\mathsf T}
+\mathscr Q_{\sigma,s}(\theta)(a/\tau,v/\tau,1),
+\tag{27.14}
+$$
+
+再由有限二次型的连续性包括 $\tau=0$。这一步同时消去全部四个真实探针坐标和全部 $2d$ 个环境读取坐标，不把它们换成彼此无关的优化变量。
+
+还须处理读取向量的演员分量。对任意 $\eta=(w,y)\in\mathcal H_0$，若 $w\ne0$，则
+
+$$
+\eta=\|w\|\,(u,y/\|w\|),\qquad u=w/\|w\|.
+$$
+
+向量泛函按 $\|w\|^2$ 缩放，PB 两边都按这个相同因子缩放，故单位 $u$ 的测试穷尽所有此类向量，没有除以某个演员坐标。若 $w=0$，原定义直接给
+
+$$
+x\eta=h\eta=r\eta=s\eta=0,\qquad
+g_\sigma\eta=(\tfrac{\sigma i}{2}CVy,0),\qquad
+t\eta=(Vy,D_{\rm env}y),
+$$
+
+所以 $\phi_\eta(L)=-2\operatorname{Re}((Vy)^*(\sigma i CVy/2))=0$，PB 自动成立。这也包含零向量。轴向 $u=e_1,e_2$、空环境和全部奇异块均未被删去。
+
+定理 17.2 的 (17.7) 已将每个原探针在 $\mathcal H_0$ 全部向量上的 PB，与原全代数全部正复线性泛函上的 PB 等价，其 (17.15)–(17.16) 支付混合密度提升；直接消费这条结论，不另加 P2。它没有删掉环境密度块。结合 (27.13)–(27.14) 和刚才的演员分量分析，得到本定理的充要关系。对任意固定 $\mu>0$，任一非零正泛函均可乘以唯一正因子而成为质量 $\mu$，PB 的根与左端都一次齐次，故质量限制不改变判据。$\mu=0$ 时正密度的非负谱值之和为零，只能是零密度，给出所述零等式。
+
+为说明 (27.9) 在奇异处没有缺项，使用成熟的广义 Schur 判别，其来源为 Higham，[*What Is the Schur Complement of a Matrix?*](https://nhigham.com/2023/06/01/what-is-the-schur-complement-of-a-matrix/)，Generalized Schur Complement，Theorem 1。所需实对称特例也可完整验证如下。半正定性首先给 $A\succeq0$。若 $b\notin\operatorname{ran}A=(\ker A)^\perp$，可取 $k\in\ker A$ 使 $b^{\mathsf T}k\ne0$；向量 $(qk,1)$ 上的值是 $2q b^{\mathsf T}k+\gamma$，某个有限实 $q$ 即使它为负。故值域条件必要。在值域条件下，对任何 $w\in\mathbb R^{n-1}$、$\tau\in\mathbb R$ 有准确配方
+
+$$
+\begin{aligned}
+w^{\mathsf T}Aw+2\tau b^{\mathsf T}w+\gamma\tau^2
+&=(w+\tau A^\dagger b)^{\mathsf T}A(w+\tau A^\dagger b)\\
+&\quad+(\gamma-b^{\mathsf T}A^\dagger b)\tau^2.
+\end{aligned}
+\tag{27.15}
+$$
+
+由谱定义 $AA^\dagger b=b$，这个恒等式成立；取 $w=-A^\dagger b,\tau=1$ 又给最后标量条件的必要性。这证明 (27.9)，包括 $A=0$。
+
+最后从系数失败提取一个实际严格见证。令 $Q=\mathscr Q_{\sigma,s}(\theta)$，取有限实向量 $z_0=(a,v,\tau)$ 使 $z_0^{\mathsf T}Qz_0<0$。若 $\tau=0$，令 $e_n$ 为最后一个坐标向量，并记
+
+$$
+\kappa_0=-z_0^{\mathsf T}Qz_0>0,\qquad
+M=2|e_n^{\mathsf T}Qz_0|+|e_n^{\mathsf T}Qe_n|,\qquad
+h_0=\frac{\kappa_0}{2(\kappa_0+M)}>0.
+$$
+
+取 $z_1=z_0+h_0e_n$。因为 $h_0\le1/2$，
+$z_1^{\mathsf T}Qz_1\le-\kappa_0+h_0M<-\kappa_0/2$，且其最后坐标非零。若原 $\tau\ne0$，直接取 $z_1=z_0$。将 $z_1$ 的坐标仍记为 $(a,v,\tau)$，定义一次有限的原探针与向量
+
+$$
+x=X(a/\tau)\oplus0_m,\qquad
+\eta=(u,Y(v/\tau)).
+\tag{27.16}
+$$
+
+(27.13)–(27.14) 及 (27.12) 的下界给
+
+$$
+\epsilon\phi_\eta(L)>
+\frac12\sum_{\delta=\pm1}
+\left[\alpha_\delta\|R_\delta\eta\|^2
++\alpha_\delta^{-1}\|S_\delta\eta-\beta_\delta R_\delta\eta\|^2\right]
+\ge\sum_{\delta=\pm1}\sqrt{B_{\phi_\eta}(R_\delta,S_\delta)}.
+\tag{27.17}
+$$
+
+因此原 PB 严格失败。$\eta$ 的演员分量为单位 $u$，所以它非零且质量有限。对每个给定 $\mu>0$ 使用同一 $x$ 和
+
+$$
+\xi_\mu=\frac{\sqrt\mu}{\|\eta\|}\eta,\qquad
+\phi_{\xi_\mu}(I)=\mu,
+\tag{27.18}
+$$
+
+严格差额按 $\mu/\|\eta\|^2$ 缩放。这里是一个已经取得的有限见证，不是无穷探针极限，也不要求退化 Gram 的变分下确界取到。反向地，若单位演员读取上的原 PB 有严格差额，则 (27.12) 中每笔误差小于这个差额的有限参数就使 (27.13) 严格为负；故充要关系也没有遗漏只在退化根处出现的失败。∎
+
+### 27.3 保持同一泛函的两笔严格正预算
+
+**定理 27.3（有限探针扰动的共同正预算见证）。** 在定理 27.2 的同一有限类中，若全部原 PB 不成立，则对每个指定有限 $\mu>0$，存在一个实际有限角探针 $x'$ 和一个质量为 $\mu$ 的原全空间向量泛函 $\phi$，使
+
+$$
+B_\phi(R_+(x'),S_+(x'))>0,\qquad
+B_\phi(R_-(x'),S_-(x'))>0,
+$$
+
+且原 PB 在 $x',\phi$ 上严格失败。准确地，可以先取 (27.16)–(27.18) 的严格见证，保持其中的 $\phi$ 完全不变，只作一次有限探针扰动 $x'=x+\lambda j$，其中
+
+$$
+j=J\oplus0_m,\qquad J=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+\tag{27.19}
+$$
+
+$\lambda$ 可取在零的任意充分小邻域中一个实际非零实数。输入 $t$、残量、取向、两个预算的泛函及其质量均不改变。
+
+证明。由定理 27.2，全部 PB 失败给一个系数失败及 (27.16)–(27.18) 的有限严格见证。写 $\phi=\phi_\xi$、$\xi=(w,y)$，则 $w\ne0$。在同一 $\xi$ 上，$x+\lambda j$ 的每份原作用像关于实 $\lambda$ 都是仿射的，因此
+
+$$
+p_\delta(\lambda)=B_{\phi_\xi}(R_\delta(x+\lambda j),S_\delta(x+\lambda j))
+\tag{27.20}
+$$
+
+是处处非负的实多项式，次数至多四。其四次系数来自两份原像的最高次项
+
+$$
+A_\delta=((J+\delta H_\sigma(J))w,0),\qquad
+C_\delta=(\delta\tfrac32Jw,0).
+$$
+
+由于 $H_\sigma(J)=\sigma i\left(\begin{smallmatrix}0&-1\\1&0\end{smallmatrix}\right)/2$，直接乘法有
+
+$$
+\begin{gathered}
+J_C(J)=\tfrac32J,\qquad
+\|Jw\|^2=\|w\|^2,\qquad
+\|H_\sigma(J)w\|^2=\tfrac14\|w\|^2,\\
+\langle Jw,H_\sigma(J)w\rangle_{\mathbb R}=0,\\
+\|A_\delta\|^2=\tfrac54\|w\|^2,\qquad
+\|C_\delta\|^2=\tfrac94\|w\|^2,\qquad
+\langle A_\delta,C_\delta\rangle_{\mathbb R}
+=\delta\tfrac32\|w\|^2.
+\end{gathered}
+$$
+
+故 (27.20) 的四次系数准确是
+
+$$
+\|A_\delta\|^2\|C_\delta\|^2
+-\langle A_\delta,C_\delta\rangle_{\mathbb R}^2
+=\frac9{16}\|w\|^4>0
+\qquad(\delta=1,-1).
+\tag{27.21}
+$$
+
+这是原像随探针变化的最高次系数，不是删去常数环境像后的预算替代式。两多项式均非零，各自实零点有限。原严格差额
+
+$$
+\lambda\longmapsto
+|\phi_\xi(L(x+\lambda j))|-\sqrt{p_+(\lambda)}-\sqrt{p_-(\lambda)}
+$$
+
+连续，在 $0$ 为正，故在零的某个开邻域内仍严格为正。该开邻域去掉两多项式的有限零点及 $0$ 后非空；任取其中一个有限 $\lambda$，两多项式因非负且不为零而同时严格为正，原差额也仍严格为正。这样一次选择同时支付两根，泛函始终是同一个 $\phi_\xi$。此论证适用于演员轴方向、$m=0$ 及任意奇异环境；没有用渐近序列代替取得的探针。质量零只给零等式，不能成为严格见证。∎
+
+### 27.4 固定输入上平衡残量的值域与二次依赖
+
+**定理 27.4（平衡残量的精确值域／二次条件）。** 固定任意同一 $B,V,D_{\rm env}$ 和一个 $\sigma$，令
+
+$$
+T_A=\operatorname{diag}(1,-2),\qquad s=\rho T_A\oplus0_m,\qquad\rho\in\mathbb R.
+\tag{27.22}
+$$
+
+保持定义 27.1 的 $\mathcal E_0,F$ 及索引族不变。对每个 $\theta$，其系数矩阵准确有形式
+
+$$
+\mathscr Q_{\sigma,\rho T_A}(\theta)=
+\begin{pmatrix}
+A&b_0+\rho b_1\\
+(b_0+\rho b_1)^{\mathsf T}&\gamma_0+\rho\gamma_1+\rho^2\kappa
+\end{pmatrix},
+\tag{27.23}
+$$
+
+其中 $A,b_0,b_1,\gamma_0,\gamma_1,\kappa$ 均不依赖 $\rho$，并且
+
+$$
+A\succeq0,\qquad b_0\in\operatorname{ran}A,\qquad
+q_0:=\gamma_0-b_0^{\mathsf T}A^\dagger b_0\ge0,\qquad
+\kappa=(\alpha_+^{-1}+\alpha_-^{-1})\|T_Au\|^2>0.
+\tag{27.24}
+$$
+
+定义实系数
+
+$$
+q_1=\gamma_1-2b_1^{\mathsf T}A^\dagger b_0,\qquad
+q_2=\kappa-b_1^{\mathsf T}A^\dagger b_1.
+\tag{27.25}
+$$
+
+则这个固定输入在残量 (27.22) 下满足全部原 PB，当且仅当对每个 $\theta$ 同时有
+
+$$
+\boxed{\qquad
+\rho(I-AA^\dagger)b_1=0,\qquad
+q_0+\rho q_1+\rho^2q_2\ge0.
+\qquad}
+\tag{27.26}
+$$
+
+对 $\rho\ne0$，第一条准确等价于 $b_1\in\operatorname{ran}A$。若某个索引不满足该值域条件，则同一固定 $B,V,D_{\rm env}$ 的全部非零 $\rho$ 都不能满足全部 PB，并分别具有定理 27.2–27.3 的有限严格正预算见证。这里不对尚未分类的 $q_1,q_2$ 赋予符号，也不据 (27.26) 断言 PB 允许的 $\rho$ 集合为区间。
+
+证明。令 $e_n$ 仍为最后一个坐标向量，置
+
+$$
+w_u=(T_Au,0)\in\mathcal H,\qquad
+\mathcal Wz=(e_n^{\mathsf T}z)w_u,\qquad
+\mathcal M_\delta=\mathcal S_{\delta,0}-\beta_\delta\mathcal R_\delta.
+$$
+
+(27.4)–(27.5) 给出准确的残量依赖
+
+$$
+\begin{gathered}
+\mathcal G_{\rho T_A}=\mathcal G_0+\rho\mathcal W,\qquad
+\mathcal S_{\delta,\rho T_A}=\mathcal S_{\delta,0}+\delta\rho\mathcal W,\\
+\mathscr L_{\rho T_A}=\mathscr L_0-2\rho\operatorname{Sym}(\mathcal T,\mathcal W).
+\end{gathered}
+\tag{27.27}
+$$
+
+所以 (27.7) 展开为
+
+$$
+\begin{gathered}
+\mathscr Q_{\sigma,\rho T_A}
+=\mathscr Q_{\sigma,0}+\rho(e_n h^{\mathsf T}+h e_n^{\mathsf T})
++\rho^2\kappa e_ne_n^{\mathsf T},\\
+h=\sum_{\delta=\pm1}\delta\alpha_\delta^{-1}
+     \mathcal M_\delta^{\mathsf T}w_u+2\epsilon\mathcal T^{\mathsf T}w_u,
+\qquad
+\kappa=\sum_{\delta=\pm1}\alpha_\delta^{-1}\|w_u\|^2.
+\end{gathered}
+\tag{27.28}
+$$
+
+所有转置与像仍取原空间实内积。令 $b_1$ 为 $h$ 的前 $n-1$ 个坐标、$\gamma_1=2e_n^{\mathsf T}h$，并按 (27.23) 分解 $\mathscr Q_{\sigma,0}$，即得全部系数公式。特别是残量只改变最后一行与列，前块 $A$ 无 $\rho$ 依赖；$\|T_Au\|^2=|u_1|^2+4|u_2|^2>0$ 给 $\kappa>0$。
+
+$s=0$ 的全部原 PB 直接复用 §1 的标准零残量结果，不重新证明标准映射的因式分解。由定理 27.2，$\mathscr Q_{\sigma,0}(\theta)\succeq0$ 对全部索引成立。将既有零残量结论代入 (27.9)，便得到 (27.24) 的 $A\succeq0$、$b_0\in\operatorname{ran}A$ 和 $q_0\ge0$。
+
+现在对 (27.23) 使用 (27.9)。其实值域条件为
+
+$$
+(I-AA^\dagger)(b_0+\rho b_1)=0.
+$$
+
+因 $b_0$ 已在值域内，这准确化成 (27.26) 的第一条。剩下的标量广义 Schur 补准确为
+
+$$
+\begin{aligned}
+&\gamma_0+\rho\gamma_1+\rho^2\kappa
+-(b_0+\rho b_1)^{\mathsf T}A^\dagger(b_0+\rho b_1)\\
+&\hspace{25mm}=q_0+\rho q_1+\rho^2q_2,
+\end{aligned}
+$$
+
+即得第二条与全部 PB 的充要关系。$\rho=0$ 时两条自动成立；任意非零 $\rho$ 时，值域失败已经使系数矩阵非正。定理 27.2–27.3 随即给出所述同一输入上的有限见证。$\kappa>0$ 只属于未消元矩阵的最后对角系数，不能替代对消元后二次系数 $q_2$ 的判断。∎
+
+### 27.5 与固定 P2 的准确交及剩余目标
+
+**推论 27.5（既有 P2 平衡域上的全 PB 表达式）。** 对每个分别固定的 $\sigma$，定义 26.1 的集合准确满足
+
+$$
+\begin{aligned}
+\mathfrak A_\sigma
+=\{(B,V,D_{\rm env},\rho)\in\mathfrak F_\sigma:\ &
+\rho(I-AA^\dagger)b_1=0,\\
+&q_0+\rho q_1+\rho^2q_2\ge0
+\text{ 对每个 }\theta\text{ 成立}\}.
+\end{aligned}
+\tag{27.29}
+$$
+
+其中所有系数均为该份同一输入在定理 27.4 中的系数，不可从不同输入或不同环境度量拼接。更一般的对角标量残量问题中，P2 已在零模耦合秩二、不平衡秩一及秩零非 Schur 平衡分支迫使 $s=0$；其余只须将定理 27.4 与既有平衡分支的准确 P2 区间取交。若同时要求两个取向，则分别形成各自条件再取交，不能删除 $\sigma$ 依赖。
+
+特别地，对任何已在 $\mathfrak F_\sigma$ 中的输入，若某个系数测试失败，定理 27.2–27.3 给出的同一实际输入在每个指定正质量上仍满足全部原 P2，却有同一个原泛函下两笔严格正预算的 PB 严格违反。
+
+证明。固定 P2 的整个有限分类直接取定理 13.1；其中零模秩零的分类与区间直接取定理 8.1。它们已经将可能的非零对角残量准确限制为 (27.22) 及其各自区间，不是此处新增的 P2 结论。在每份被保留的同一输入上，定理 27.4 恰好等价于全部原 PB，故与定义 26.1 合取就是 (27.29)。系数失败时应用定理 27.2–27.3，只选择原探针与原泛函，既不改变输入，也不改变 P2 的任何条件或全称量词，故得到最后的同时实现断言。其余刚性分支由这些既有定理及 §1 的零残量充分性处理。两个取向的断言分别应用同一证明。∎
+
+**约定 27.6（判据的范围与数学来源）。** (27.7)、(27.26)、(27.29) 是连续全称系数族；单位方向和四个有限变分参数仍须全部量化。它们没有成为有限清单，也不是普通 $M_6$ 或 $M_{13}$ 的算子分类、替代可观测量代数或一份已排除的新参数元组。$13$ 是共同实二次型系数矩阵的阶数上界，原算子仍属于 $M_{m+2}(\mathbb C)$，原 $m$ 任意有限，且所有像、平方、Jordan 乘积及泛函都取自该同一完整实现。
+
+本节新增的 $\texttt{repo-derived}$ 应用关系是：在既有共同读取截面上，将两个原 PB 根的变分关系与四个实际 Hermitian 探针坐标、全部环境读取坐标联合齐次化，得到 (27.7) 的充要条件；由其失败取得同一原实现的有限见证；由 (27.21) 保持同一泛函而同时使两笔预算严格为正；并将平衡残量精确保留为 (27.26) 的值域与二次条件。定理 17.2 的截面、同时读取恒等式及全正密度提升、命题 18.1 的压缩平方障碍，以及定理 8.1、13.1 的完整 P2 分类均为直接复用。§§19–25、运输卷定理 12.3 与承载卷定理 41.2、42.2 的既有排除域保持原有范围，不重复证明或作为新增内容。
+
+实 Gram／Cauchy–Schwarz、二阶行列式的变分写法与算术几何平均、实二次型齐次化、有限维谱分解、广义 Schur 补和 Moore–Penrose 逆均为成熟数学。(27.12)、(27.15) 只给出本节承重推导实际消费的完整辅助证明，不作为新的通用定理。广义 Schur 判别准确沿上述 Higham 的 Theorem 1；伪逆的谱定义、最小范数背景沿 §15 的 Penrose 引文，亦见 Higham，[*What Is the Pseudoinverse of a Matrix?*](https://nhigham.com/2023/07/25/what-is-the-pseudoinverse-of-a-matrix/)中 Moore–Penrose 条件及奇异值分解公式。原正泛函与 Gram 背景仍沿 §§5、11、18 的来源。本节不作历史优先权或文献穷尽主张。
+
+对一般输入，尚未判定 (27.26) 全部值域条件与二次不等式的符号分类，也未判定 (27.29) 是否含有任何非零残量。因此原有限类的 $\mathfrak A_\sigma$ 是否为空、特别是剩余域 $\mathfrak R_\sigma$ 上是否每份输入都可取得严格正预算违反，仍为未决；这里没有给出非零残量的全部 PB 模型。已知共同零预算接触的边界继续直接由定理 22.3、23.1 承担。
+
+本节不对未知总响应添加正则性、可加性、齐次性、协变性、单位平移中性、压缩、商或自然性前件，也不把已知 $D_{\rm env}$ 当作它。原一般混合输入、共同实现义务 $\mathcal E_+^D=\mathcal E_-^D$、稳定性目标 $N_\omega(\varepsilon)^2\to0$、完整原 $\mathsf H$／总 $D$ 以及 §§6、15、18、21 的同一递归钉版实际物理来源全文均保持原范围与未决义务。有限矩阵读取与数学探针不供应原实际准备、评价标签、完整菜单、typed 仪器、全部合法历史、CountRead 或全输入／全未来 Return，也不以较强完整 $\mathsf H$ 的分类代替固定输出接口。
+
+## 新增锚（本行以下为后续增补区）
