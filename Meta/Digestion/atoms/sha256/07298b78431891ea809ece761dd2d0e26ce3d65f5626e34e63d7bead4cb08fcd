@@ -1,0 +1,64 @@
+**定义 33.1（相反谱对附近的固定输出类）。** 固定 $0\le M<\infty$、$\lambda_*>0$ 及 $\varepsilon\ge0$。$\mathfrak F_{M,\lambda_*}(\varepsilon)$ 的数据为含单位复 $C^*$-代数 $A$、投影 $P$、实际角 $C=PAP$、$c,c^\flat\in C_{\rm sa}$、$t,g\in A_{\rm sa}$、正交投影 $l,m\le P$、$e=e^*\in C$，以及 $\sigma\in\{1,-1\}$、$\lambda\in\mathbb R$，满足
+
+$$
+\begin{gathered}
+e^2=l+m,\qquad el=me,\\
+c^\flat l=lc^\flat=\lambda l,\qquad
+c^\flat m=mc^\flat=-\lambda m,\\
+\lambda_*\le|\lambda|\le M,\qquad
+\|c\|,\|c^\flat\|,\|t\|\le M,\qquad
+\|c-c^\flat\|\le\varepsilon,\qquad\|g\|\le M^2.
+\end{gathered}
+$$
+
+自伴性和 $e^2=l+m$ 给 $e=(l+m)e(l+m)$。$c^\flat$ 在 $P-l-m$ 上没有额外谱条件。置
+
+$$
+\jmath=\sigma i,\qquad j=\jmath(l-m)e,\qquad n=2l,
+\qquad K_\sigma(x,y)=\frac{\jmath}{2}[x,y].
+$$
+
+除 (33.1) 外，对每个有限 $T,\alpha\in\mathbb R$、分别对两条轴
+
+$$
+x=Te+\alpha n\quad\hbox{和}\quad x=Tj+\alpha n,
+$$
+
+令
+
+$$
+\begin{gathered}
+h=K_\sigma(c,x),\quad r=c\circ x,\quad k=c\circ t,\\
+R_+=x+h-k,\quad R_-=x-h+k,\\
+S_+=t+r+g,\quad S_-=t-r-g,\\
+L=-2x\circ(h-k)-2t\circ(r+g).
+\end{gathered}
+$$
+
+要求全部数学正泛函同时满足显式标量 PB 预算
+
+$$
+|\phi(L)|\le
+\sqrt{B_\phi(R_+,S_+)}+\sqrt{B_\phi(R_-,S_-)}
+\qquad(\phi\ge0).
+\tag{33.2}
+$$
+
+每个被开式非负，所有 $\alpha$ 依赖均保留在实际标签和 $L$ 中。实际 $\mathsf H_A(D)$ 元组若整个 $C$ 已按 (28.3) 以同一 $\sigma$ 分类，则 $D(c,x)=K_\sigma(c,x)$，原 $\operatorname{PB}(c;x,t)$ 与两份实际外层 P2 正好给 (33.2)。这个固定输出类允许更大的普通元素集合：它只保留 $g$、已知乘法和上述不等式，不携带响应映射，也不携带 $D(c^\flat,t)$。
+
+定义
+
+$$
+\omega_{M,\lambda_*}(\varepsilon)=
+\sup_{\mathfrak F_{M,\lambda_*}(\varepsilon)}
+\bigl\|l\bigl(g-K_\sigma(c,t)\bigr)(1-l)\bigr\|,
+\tag{33.3}
+$$
+
+空类的上确界取 $0$。因 $\|K_\sigma(c,t)\|\le\|c\|\,\|t\|\le M^2$，有
+
+$$
+0\le\omega_{M,\lambda_*}(\varepsilon)\le2M^2.
+\tag{33.4}
+$$
+
