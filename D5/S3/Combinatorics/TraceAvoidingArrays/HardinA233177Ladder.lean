@@ -85,7 +85,7 @@ def Legal {n : ℕ} (A : Fin 4 × Fin n → Fin 6) : Prop :=
       A (r, j) ≠ A (s, ⟨j.val + 1, h⟩) ∧
         (A (r, j)).val + (A (s, ⟨j.val + 1, h⟩)).val ≠ 5) ∧ normal A
 
-private instance instDecidableNormal {n : ℕ} (A : Fin 4 × Fin n → Fin 6) :
+instance instDecidableNormal {n : ℕ} (A : Fin 4 × Fin n → Fin 6) :
     Decidable (normal A) := inferInstanceAs (Decidable (∀ _, _ ∧ _))
 
 private instance instDecidableLegal {n : ℕ} (A : Fin 4 × Fin n → Fin 6) :
@@ -138,7 +138,7 @@ private theorem literal_card {n : ℕ} (hn : 0 < n) :
   ext A
   simp only [Finset.mem_filter, Finset.mem_univ, true_and, legal_iff hn]
 
-private noncomputable def used {n : ℕ} (P : Fin 4 × Fin n → Fin 3) : ℕ :=
+noncomputable def used {n : ℕ} (P : Fin 4 × Fin n → Fin 3) : ℕ :=
   Nat.card (Set.range P)
 
 private theorem used_eq_card {n : ℕ} (P : Fin 4 × Fin n → Fin 3) :
