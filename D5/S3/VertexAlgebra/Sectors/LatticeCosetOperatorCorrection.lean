@@ -162,10 +162,13 @@ private theorem mixed_injection (d : Fin e → ℤ)
     rw [mixedState_single, injection_single, multiply_single, mul_comm]
 
 /-- The full actual two-source composition differs from iterated compression
-by precisely the Schur binomial correction, for every original state and
-integer mode. The ambient symmetric even block form need not be positive. -/
+by precisely the Schur binomial correction, with finite summand support,
+for every original state and integer mode. The ambient symmetric even block form need not be positive. -/
 theorem intermediate_projection_correction (hD : (gramReal D).PosDef)
     (a b c : Fin e → ℤ) (u v w : Carrier D) (p q : ℤ) :
+    Function.HasFiniteSupport (fun j : ℕ => correction D B C a b j •
+      compressed D B C hC hCe a (b+c) u (p-j)
+        (compressed D B C hC hCe b c v (q+j) w)) ∧
     projection D B C hC hCe (a+b+c)
       (((Y (ambient D e B C hC hCe) (injection D B C hC hCe a u))[[p]])
         (((Y (ambient D e B C hC hCe) (injection D B C hC hCe b v))[[q]])
@@ -173,6 +176,7 @@ theorem intermediate_projection_correction (hD : (gramReal D).PosDef)
       ∑ᶠ j : ℕ, correction D B C a b j •
         compressed D B C hC hCe a (b+c) u (p-j)
           (compressed D B C hC hCe b c v (q+j) w) := by
+  refine ⟨correction_finite D B C hC hCe a b c u v w p q, ?_⟩
   rw [inner_creation_expansion D B C hC hCe hD b c v w q, add_assoc]
   let L := (projection D B C hC hCe (a+(b+c))).comp
     ((Y (ambient D e B C hC hCe) (injection D B C hC hCe a u))[[p]])

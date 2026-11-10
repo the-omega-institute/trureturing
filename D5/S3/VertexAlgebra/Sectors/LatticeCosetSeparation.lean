@@ -28,7 +28,7 @@ open scoped BigOperators VertexOperator
 
 noncomputable section
 
-open private gram_longitudinal_complex weightedPartial_mul weightedPartial_variable
+open private gram_longitudinal_complex
   old_current_pairing injection_single projection_single polynomialProjection_injection
   from D5.S3.VertexAlgebra.Sectors.LatticeCosetCompression
 open private transverse_pairing from D5.S3.VertexAlgebra.Sectors.LatticeCosetTransverse
@@ -64,12 +64,12 @@ private theorem partial_transverse (hD : (gramReal D).PosDef)
       (transverse D B C hC hCe j k) = 0 := by
   classical
   simp only [transverse, map_sub, map_sum, map_smul]
-  rw [weightedPartial_variable (ambient D e B C hC hCe) (i.castAdd e)
+  rw [LatticeActualAnnihilation.annihilate_X (ambient D e B C hC hCe) (i.castAdd e)
     (j.natAdd D.rank) r k]
-  simp_rw [weightedPartial_variable (ambient D e B C hC hCe) (i.castAdd e)]
+  simp_rw [LatticeActualAnnihilation.annihilate_X (ambient D e B C hC hCe) (i.castAdd e)]
   by_cases hr : r = k
   · simp only [hr, ↓reduceIte, ambient, Fin.addCases_left, Fin.addCases_right]
-    simp only [MvPolynomial.smul_eq_C_mul, ← map_mul, ← map_sum]
+    simp only [smul_smul, MvPolynomial.smul_eq_C_mul, mul_one, ← map_mul, ← map_sum]
     rw [show (∑ t, (longitudinal D B t j : ℂ) * (D.G i t : ℂ)) = (B i j : ℂ) by
       simpa only [mul_comm] using gram_longitudinal_complex D B hD i j]
     exact sub_self _
@@ -84,7 +84,7 @@ private theorem partial_transversePolynomial (hD : (gramReal D).PosDef)
   | C z => simp [transversePolynomial, weightedPartial]
   | add p q hp hq => simp only [map_add, hp, hq, add_zero]
   | mul_X p x hp =>
-    rw [map_mul, weightedPartial_mul, hp, zero_mul, zero_add]
+    rw [map_mul, LatticeActualAnnihilation.annihilate_mul, hp, zero_mul, zero_add]
     simp only [transversePolynomial, aeval_X]
     rw [partial_transverse D B C hC hCe hD, mul_zero]
 
@@ -102,10 +102,10 @@ private theorem partial_injection (i : Fin D.rank) (r : ℕ) (f : Oscillator D) 
         polynomialInjection D B C hC hCe (weightedPartial D i r (X x)) := by
       simp only [polynomialInjection, rename_X]
       rcases x with ⟨j,k⟩
-      rw [weightedPartial_variable (ambient D e B C hC hCe) (i.castAdd e)
-        (j.castAdd e) r k, weightedPartial_variable D i j r k]
+      rw [LatticeActualAnnihilation.annihilate_X (ambient D e B C hC hCe) (i.castAdd e)
+        (j.castAdd e) r k, LatticeActualAnnihilation.annihilate_X D i j r k]
       split_ifs <;> simp [ambient]
-    simp only [map_mul, weightedPartial_mul, map_add, hp, hx]
+    simp only [map_mul, LatticeActualAnnihilation.annihilate_mul, map_add, hp, hx]
 
 /-- Every actual old current acts only on the longitudinal target factor,
 including arbitrary transverse polynomials and all integer modes. -/
@@ -135,7 +135,7 @@ theorem current_mixed_polynomial (hD : (gramReal D).PosDef)
     · simp only [neutralPolynomialMode, hm, hz, ↓reduceIte]
       change ((m : ℂ) • weightedPartial (ambient D e B C hC hCe) (i.castAdd e)
         (m-1).toNat) _ = _
-      simp only [LinearMap.smul_apply, weightedPartial_mul, partial_injection,
+      simp only [LinearMap.smul_apply, LatticeActualAnnihilation.annihilate_mul, partial_injection,
         partial_transversePolynomial D B C hC hCe hD, mul_zero, add_zero]
       simp [LatticeDualCosetModule.shiftedCurrentPolynomial, hm, hz, weightedPartial,
         map_smul, smul_mul_assoc]
@@ -254,7 +254,7 @@ private theorem current_transverse_mul (hD : (gramReal D).PosDef)
         change (m : ℂ) • weightedPartial _ (i.castAdd e) (m-1).toNat
           (transverse D B C hC hCe j k * f) =
             transverse D B C hC hCe j k * ((m : ℂ) • weightedPartial _ _ _ f)
-        rw [weightedPartial_mul, partial_transverse D B C hC hCe hD]
+        rw [LatticeActualAnnihilation.annihilate_mul, partial_transverse D B C hC hCe hD]
         simp [mul_smul_comm]
   exact DFunLike.congr_fun he v
 

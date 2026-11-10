@@ -120,23 +120,6 @@ private theorem gram_longitudinal_complex (hD : (gramReal D).PosDef)
     ∑ k, (D.G i k : ℂ) * (longitudinal D B k j : ℂ) = (B i j : ℂ) := by
   exact_mod_cast gram_longitudinal D B hD i j
 
-private theorem weightedPartial_mul (F : LatticeData) (i : Fin F.rank) (r : ℕ)
-    (p q : Oscillator F) :
-    weightedPartial F i r (p*q) =
-      weightedPartial F i r p * q + p * weightedPartial F i r q := by
-  simp only [weightedPartial, LinearMap.sum_apply, LinearMap.smul_apply,
-    Derivation.coeFn_coe, pderiv_mul, smul_add, Finset.sum_add_distrib,
-    smul_mul_assoc, mul_smul_comm, Finset.sum_mul, Finset.mul_sum]
-
-private theorem weightedPartial_variable (F : LatticeData) (i j : Fin F.rank)
-    (r k : ℕ) :
-    weightedPartial F i r (X (j,k)) = if r = k then MvPolynomial.C (F.G i j : ℂ) else 0 := by
-  classical
-  by_cases h : r = k
-  · subst k
-    simp [weightedPartial, pderiv_X, Pi.single_apply, Prod.mk.injEq, Algebra.smul_def]
-  · simp [weightedPartial, pderiv_X, Prod.mk.injEq, h]
-
 private theorem projectionVariable_partial (hD : (gramReal D).PosDef)
     (i : Fin D.rank) (r : ℕ) (x : Index (ambient D e B C hC hCe)) :
     weightedPartial D i r (projectionVariable D B C hC hCe x) =
@@ -146,15 +129,13 @@ private theorem projectionVariable_partial (hD : (gramReal D).PosDef)
   rcases x with ⟨j,k⟩
   induction j using Fin.addCases with
   | left j =>
-    simpa [projectionVariable, ambient] using weightedPartial_variable D i j r k
+    simpa [projectionVariable, ambient, MvPolynomial.smul_eq_C_mul] using LatticeActualAnnihilation.annihilate_X D i j r k
   | right j =>
     simp only [projectionVariable, Fin.addCases_right, map_sum, map_smul,
-      weightedPartial_variable, ambient, Fin.addCases_left]
+      LatticeActualAnnihilation.annihilate_X, ambient, Fin.addCases_left]
     by_cases h : r = k
-    · simp only [h, ↓reduceIte]
-      change (∑ t : Fin D.rank, (longitudinal D B t j : ℂ) •
-        MvPolynomial.C (D.G i t : ℂ)) = MvPolynomial.C (B i j : ℂ)
-      simp only [MvPolynomial.smul_eq_C_mul, ← map_mul, ← map_sum]
+    · simp only [h, ↓reduceIte, smul_smul, MvPolynomial.smul_eq_C_mul,
+        mul_one, ← map_mul, ← map_sum]
       congr 1
       simpa only [mul_comm] using gram_longitudinal_complex D B hD i j
     · simp [h]
@@ -175,11 +156,11 @@ theorem projection_weightedPartial (hD : (gramReal D).PosDef)
     have hx : polynomialProjection D B C hC hCe
         (weightedPartial (ambient D e B C hC hCe) (i.castAdd e) r (X x)) =
         weightedPartial D i r (polynomialProjection D B C hC hCe (X x)) := by
-      rw [weightedPartial_variable, show polynomialProjection D B C hC hCe (X x) =
+      rw [LatticeActualAnnihilation.annihilate_X, show polynomialProjection D B C hC hCe (X x) =
         projectionVariable D B C hC hCe x by simp [polynomialProjection],
         projectionVariable_partial D B C hC hCe hD]
-      split_ifs <;> simp
-    simp only [weightedPartial_mul, map_add, map_mul, hp, hx]
+      split_ifs <;> simp [MvPolynomial.smul_eq_C_mul]
+    simp only [LatticeActualAnnihilation.annihilate_mul, map_add, map_mul, hp, hx]
 
 private theorem old_current_pairing (i : Fin D.rank)
     (n : Charge (ambient D e B C hC hCe)) :
@@ -239,23 +220,6 @@ private theorem projection_single (a : Fin e → ℤ)
   classical
   simp [projection]
   split_ifs <;> simp
-
-/-- The chosen polynomial substitution retracts every original state. -/
-theorem projection_injection (a : Fin e → ℤ) (v : Carrier D) :
-    projection D B C hC hCe a (injection D B C hC hCe a v) = v := by
-  have h : (projection D B C hC hCe a).comp (injection D B C hC hCe a) =
-      LinearMap.id := by
-    apply Finsupp.lhom_ext
-    intro n p
-    rw [LinearMap.comp_apply, injection_single, projection_single]
-    have he : externalCharge D B C hC hCe (liftCharge D B C hC hCe a n) = a := by
-      funext j
-      simp [externalCharge, liftCharge]
-    have ho : oldCharge D B C hC hCe (liftCharge D B C hC hCe a n) = n := by
-      funext i
-      simp [oldCharge, liftCharge]
-    simp [he, ho, polynomialProjection_injection]
-  exact DFunLike.congr_fun h v
 
 /-- Statewise inner truncation, before multiplication by any rational binomial. -/
 theorem compressed_high_modes (a b : Fin e → ℤ) (u v : Carrier D) (q : ℤ) :

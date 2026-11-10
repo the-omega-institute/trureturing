@@ -75,7 +75,13 @@ def arena : Arena where
 
 theorem source_bridge :
     (type_of% (@_root_.D5.S3.VertexAlgebra.LatticeCosetOperatorCorrection.intermediate_projection_correction)) ↔
-      arena.Law actual := Iff.rfl
+      arena.Law actual := by
+  constructor
+  · intro h D e B C hC hCe hD a b c u v w p q
+    exact (h D B C hC hCe hD a b c u v w p q).2
+  · intro h D e B C hC hCe hD a b c u v w p q
+    exact ⟨correction_finite D B C hC hCe a b c u v w p q,
+      h D B C hC hCe hD a b c u v w p q⟩
 
 theorem source_actual : arena.Law actual :=
   source_bridge.mp

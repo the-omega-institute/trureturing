@@ -22,11 +22,6 @@ abbrev sourceScope_projection_current_polynomial :=
 theorem source_actual_projection_current_polynomial : sourceScope_projection_current_polynomial :=
   @_root_.D5.S3.VertexAlgebra.LatticeCosetCompression.projection_current_polynomial
 
-abbrev sourceScope_projection_injection :=
-  type_of% (@_root_.D5.S3.VertexAlgebra.LatticeCosetCompression.projection_injection)
-theorem source_actual_projection_injection : sourceScope_projection_injection :=
-  @_root_.D5.S3.VertexAlgebra.LatticeCosetCompression.projection_injection
-
 abbrev sourceScope_compressed_high_modes :=
   type_of% (@_root_.D5.S3.VertexAlgebra.LatticeCosetCompression.compressed_high_modes)
 theorem source_actual_compressed_high_modes : sourceScope_compressed_high_modes :=

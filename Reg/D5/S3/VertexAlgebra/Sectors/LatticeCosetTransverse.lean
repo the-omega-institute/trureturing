@@ -16,11 +16,6 @@ abbrev sourceScope_transverse_translation :=
 theorem source_actual_transverse_translation : sourceScope_transverse_translation :=
   @_root_.D5.S3.VertexAlgebra.LatticeCosetTransverse.transverse_translation
 
-abbrev sourceScope_transverse_polynomial_translation :=
-  type_of% (@_root_.D5.S3.VertexAlgebra.LatticeCosetTransverse.transverse_polynomial_translation)
-theorem source_actual_transverse_polynomial_translation : sourceScope_transverse_polynomial_translation :=
-  @_root_.D5.S3.VertexAlgebra.LatticeCosetTransverse.transverse_polynomial_translation
-
 abbrev sourceScope_creationSeries_difference :=
   type_of% (@_root_.D5.S3.VertexAlgebra.LatticeCosetTransverse.creationSeries_difference)
 theorem source_actual_creationSeries_difference : sourceScope_creationSeries_difference :=

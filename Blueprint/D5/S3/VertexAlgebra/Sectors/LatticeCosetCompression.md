@@ -184,19 +184,7 @@ Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeCosetCompression.projection_
 
 For positive definite original D, every old i, arbitrary ambient charge n, integer mode m and ambient polynomial p, projection of the original ambient current mode equals shiftedCurrentPolynomial on the projected p. The original charge is oldCharge(n), and its integral dual-pairing shift is B times externalCharge(n). This includes negative creation modes, the shifted zero mode and positive annihilation modes.
 
-**Theorem 1.16 (projection_injection).**
-
-Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeCosetCompression.projection_injection`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeCosetCompression.projection_injection` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For every external a and every original finite-charge state v, P_a(J_a(v)) equals v. The polynomial substitution fixes all original variables, including when either rank is zero.
-
-**Theorem 1.17 (compressed_high_modes).**
+**Theorem 1.16 (compressed_high_modes).**
 
 Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeCosetCompression.compressed_high_modes`
 
@@ -208,7 +196,7 @@ Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeCosetCompression.compressed_
 
 For every external a,b, arbitrary original u,v and integer q, there is a natural N such that Z_ab(u,q+j)v is zero whenever N is at most j. This is actual statewise truncation with no degree restriction on u or v.
 
-**Theorem 1.18 (correction_finite).**
+**Theorem 1.17 (correction_finite).**
 
 Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeCosetCompression.correction_finite`
 
@@ -220,7 +208,7 @@ Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeCosetCompression.correction_
 
 For all external a,b,c, arbitrary original u,v,w and integers p,q, the proposed correction summand (-1)^j choose(s(a,b),j) times Z_(a,b+c)(u,p-j)(Z_(b,c)(v,q+j)w) has finite support on natural j. The inner actual field supplies the cutoff.
 
-The field conventions and classical construction are those of Bakalov-Kac, math/0402315v1, section 4.1. The imported native normal products and residue constructions retain their Carnahan Apache-2.0 attribution. These definitions and truncation bounds do not establish the intermediate-projection product identity, phase descent, analytic CFT or any string-theory or AdS/CFT realization.
+The field conventions and classical construction are those of Bakalov-Kac, math/0402315v1, section 4.1. The imported native normal products and residue constructions retain their Carnahan Apache-2.0 attribution. These definitions and truncation bounds supply the prerequisites and exact finite summand support used by LatticeCosetOperatorCorrection. Phase descent, analytic CFT and string-theory or AdS/CFT realization are outside these statements.
 
 ## References
 
@@ -239,7 +227,6 @@ The field conventions and classical construction are those of Bakalov-Kac, math/
 - Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeCosetCompression.projection`
 - Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeCosetCompression.projectionVariable`
 - Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeCosetCompression.projection_current_polynomial`
-- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeCosetCompression.projection_injection`
 - Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeCosetCompression.projection_weightedPartial`
 - Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeCosetCompression.schur`
 - Dependency: [D5/S3/VertexAlgebra/Characters/LatticeDiscriminantTheta](../Characters/LatticeDiscriminantTheta.md)

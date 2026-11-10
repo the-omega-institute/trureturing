@@ -162,27 +162,6 @@ theorem transverse_translation (hD : (gramReal D).PosDef)
   simp only [sub_smul, map_sub] at hscalar
   linear_combination -Polynomial.X^(k+1) * hscalar
 
-/-- Every polynomial in transverse oscillators is contracted by the same
-native substitution. No bound on the polynomial degree or frequency is used. -/
-theorem transverse_polynomial_translation (hD : (gramReal D).PosDef)
-    (a : Fin e → ℤ) (n : Charge D) (p : MvPolynomial (Fin e × ℕ) ℂ) :
-    Polynomial.map (polynomialProjection D B C hC hCe).toRingHom
-        (translatedPolynomial (ambient D e B C hC hCe) (liftCharge D B C hC hCe a n)
-          (aeval (fun x : Fin e × ℕ => transverse D B C hC hCe x.1 x.2) p)) =
-      aeval (fun x : Fin e × ℕ =>
-        -Polynomial.C ((transversePair D B C a x.1 : ℂ) • (1 : Oscillator D)) *
-          Polynomial.X^(x.2+1)) p := by
-  rw [← translatedProjection_apply]
-  have h : (translatedProjection D B C hC hCe (liftCharge D B C hC hCe a n)).comp
-      (aeval (fun x : Fin e × ℕ => transverse D B C hC hCe x.1 x.2)) =
-      aeval (fun x : Fin e × ℕ =>
-        -Polynomial.C ((transversePair D B C a x.1 : ℂ) • (1 : Oscillator D)) *
-          Polynomial.X^(x.2+1)) := by
-    apply MvPolynomial.algHom_ext
-    intro x
-    simpa using transverse_translation D B C hC hCe hD a n x.1 x.2
-  exact DFunLike.congr_fun h p
-
 /-- Translate only after projecting the ambient polynomial. The old variable
 shifts are still the actual ambient pairings, including the external charge. -/
 def longitudinalTranslation (A : Charge (ambient D e B C hC hCe)) :
