@@ -25,7 +25,7 @@ internal sealed class RowIterationDocument : IScribeDocumentDefinition
             Node("rowhistorycertificate", "rowHistoryCertificate", "rowHistoryCertificate",
                 "Recursive native main/core lists for the coupled row class. Both lists are those of the real compiler; there is no separate assumed schedule or critical endpoint in this construction.", DescribeRole.Definition),
             Node("rowhistory-statistics", "rowHistory_statistics", "rowHistory_statistics",
-                "At EVERY finite row stage there are exactly two distinct critical faces, each of size 2n+1. This is consumed row-level source content, and requires the still missing graph binding before it can be advertised as the graph theorem.", DescribeRole.Theorem),
+                "At EVERY finite row stage there are exactly two distinct critical faces, each of size 2n+1. This is a row-level statement. Its interpretation for graph data uses the separate graph and physical-history correspondence.", DescribeRole.Theorem),
             Node("rowhistorycriticalschedule", "rowHistoryCriticalSchedule", "rowHistoryCriticalSchedule",
                 "Critical labels are recursively specified from the actual K4 seed and literal wheel label substitution, independently of rowHistoryCertificate.", DescribeRole.Definition),
             Node("rowhistoryvertexschedule", "rowHistoryVertexSchedule", "rowHistoryVertexSchedule",
