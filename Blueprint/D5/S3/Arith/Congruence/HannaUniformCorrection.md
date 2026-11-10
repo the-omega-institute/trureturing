@@ -128,7 +128,7 @@ Lean statement: `D5/S3/Arith/Congruence/HannaUniformCorrection.exponent_prime`
 
 Subtracting actual divisor ghosts at p and one gives p*c_s(p)=p^s-p. Integer cancellation yields p^(s-1)-1.
 
-The proper-divisor budget keeps a full additive n margin. Complementary proper divisors lie among the integers from two through n. Mathlib supplies the finite reciprocal-square estimate; no infinite numerical approximation or finite enumeration is used. Both following estimates are consumed bind-only helpers of exponent_bounds and do not supply an independent host-admission witness.
+The proper-divisor budget keeps a full additive n margin. Complementary proper divisors lie among the integers from two through n. Mathlib supplies the finite reciprocal-square estimate; no infinite numerical approximation or finite enumeration is used. The square estimate yields the power estimate, which supplies the proper-divisor bound in exponent_bounds.
 
 **Theorem 1.11 (Square budget).**
 

@@ -40,7 +40,7 @@ Lean statement: `D5/S3/Arith/Congruence/HannaPrimePowerCorrection.bounded_power_
 
 *Commentary.*
 
-For every natural exponent s at least two and every bounded integer correction sequence, divisibility of the corrected-weight differences at successive powers of every prime forces a(p^r)=p-1 for all positive r. The base step uses a(1)=0 and the residue at p. Higher steps use s*(r-1)>=r and uniqueness of the bounded residue. This is the single generalized induction in the original square-proof owner; the original square statement and the uniform integer-weight family consume it. It is a consumed bind-only generalization relative to the frozen square result: subtracting the square-weight difference from the s-weight difference preserves divisibility, by p at the first step and by p^r at higher steps. It supplies no new host-admission witness. The known square result is due to Su; no literature novelty is inferred.
+For every natural exponent s at least two and every bounded integer correction sequence, divisibility of the corrected-weight differences at successive powers of every prime forces a(p^r)=p-1 for all positive r. The base step uses a(1)=0 and the residue at p. Higher steps use s*(r-1)>=r and uniqueness of the bounded residue. The square specialization and the uniform integer-weight family both use this induction. Subtracting the square-weight difference from the s-weight difference preserves divisibility, by p at the first step and by p^r at higher steps. The known square result is due to Su; no literature novelty is inferred.
 
 **Theorem 1.4 (All positive prime powers).**
 
