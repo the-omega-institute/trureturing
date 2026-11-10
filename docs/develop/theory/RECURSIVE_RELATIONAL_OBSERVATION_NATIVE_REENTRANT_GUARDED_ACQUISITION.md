@@ -1587,7 +1587,8 @@ source model. None is claimed to be compiled or Lean-kernel certified.
 
 The mature record/replay principle is literature-attested, rather than
 claimed as new: O'Callahan et al., *Engineering Record And Replay For
-Deployability*, [§2.1](https://arxiv.org/pdf/1610.02144), requires all inputs
+Deployability: Extended Technical Report*, arXiv:1705.05937v1,
+[§2.1, Summary](https://arxiv.org/pdf/1705.05937v1#page=2), requires all inputs
 and nondeterminism crossing the chosen boundary to be captured. Here the
 boundary is the fixed deterministic resident graph and its actual INs;
 Lemmas 11.3, 11.4, 12.2 and 14.1 establish the particular capture facts.
