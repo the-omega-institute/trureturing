@@ -1,0 +1,111 @@
+**定理 24.1（任意有限环境中的严格正预算排除域）。** 保持原输入 (19.1)，设
+
+$$
+B_{11}=\rho/2,\qquad B_{12}=b,\qquad
+0<|\rho|\le\tfrac12,\qquad |b|\le1,\qquad
+0<q:=\|V^*e_1\|\le\rho^2/16,\qquad
+s=\rho\operatorname{diag}(1,-2)\oplus0_m.
+\tag{24.1}
+$$
+
+不限制 $B_{22}$、第二演员环境边或 $D_{\rm env}$。对每个分别固定的 $\sigma$，取同一实际探针与单位向量
+
+$$
+x_\sigma=\begin{pmatrix}
+5\rho/2&(2+3\sigma i)b\\
+(2-3\sigma i)\bar b&0
+\end{pmatrix}\oplus0_m,\qquad
+\xi=e_1\oplus0_m.
+\tag{24.2}
+$$
+
+则两笔原预算均严格为正，并且
+
+$$
+\boxed{\mathcal G_\sigma(x_\sigma,\phi_\xi)>\rho^2/16.}
+\tag{24.3}
+$$
+
+该断言不要求 P2。对每个给定质量 $\mu>0$，同一探针和 $\sqrt\mu\xi$ 的预算差额严格大于 $\mu\rho^2/16$，两预算仍严格为正；零泛函满足原 PB 的零等式。
+
+证明。探针是 (20.2) 在 $a=\rho/2$ 时的既有演员探针：$u=5\rho/2$、$\eta=2-3\sigma i$。只复用 (20.5)–(20.8) 的演员计算；环境作用列仍须取当前实际非零边。置
+
+$$
+w=V^*e_1,\qquad
+ a_+=(2\rho,(2-2\sigma i)\bar b)^{\mathsf T},\qquad
+ a_-=(3\rho,(2-4\sigma i)\bar b)^{\mathsf T}.
+$$
+
+原块乘法给同一个 $\xi$ 上的完整四列：
+
+$$
+\begin{array}{ll}
+R_+\xi=(a_+,-w/2),&S_+\xi=(2a_+,(1-\sigma i/2)w),\\
+R_-\xi=(a_-,w/2),&S_-\xi=(-a_-,(1+\sigma i/2)w).
+\end{array}
+\tag{24.4}
+$$
+
+特别是两份 $S$ 的环境平方均保留 $(5/4)q^2$，不适用 (20.9) 的零边断言。令
+
+$$
+A_+=\|a_+\|^2=4\rho^2+8|b|^2,\qquad
+A_-=\|a_-\|^2=9\rho^2+20|b|^2.
+\tag{24.5}
+$$
+
+由 (24.4) 得原平方及实配对
+
+$$
+\begin{array}{lll}
+\phi_\xi(R_+^2)=A_++q^2/4,&
+\phi_\xi(S_+^2)=4A_++5q^2/4,&
+\phi_\xi(R_+\circ S_+)=2A_+-q^2/2,\\
+\phi_\xi(R_-^2)=A_-+q^2/4,&
+\phi_\xi(S_-^2)=A_-+5q^2/4,&
+\phi_\xi(R_-\circ S_-)=-A_-+q^2/2.
+\end{array}
+\tag{24.6}
+$$
+
+相乘相减，准确得到
+
+$$
+\begin{aligned}
+B_{\phi_\xi}(R_+,S_+)&=\tfrac{17}{4}A_+q^2+\tfrac1{16}q^4,\\
+B_{\phi_\xi}(R_-,S_-)&=\tfrac52 A_-q^2+\tfrac1{16}q^4.
+\end{aligned}
+\tag{24.7}
+$$
+
+$q>0$、$\rho\ne0$ 保证两者严格正。
+
+左端也在同一个原向量上读取。$x\xi$ 没有环境分量，故 (20.10) 的第一项演员实部不变；第二项比零边情形只多
+
+$$
+\operatorname{Re}\bigl(w^*(-\sigma i w/2)\bigr)=0.
+$$
+
+因此原定义仍给
+
+$$
+\phi_\xi(L)=-2(\rho/2)\rho=-\rho^2.
+\tag{24.8}
+$$
+
+这里没有删去 $t\xi$ 或 $g_\sigma\xi$ 的环境分量。
+
+由 (24.1)，$A_+\le9$、$A_-\le89/4$、$q\le1/64$。于是
+
+$$
+\begin{gathered}
+\tfrac{17}{4}A_++q^2/16
+\le153/4+1/65536<49,\\
+\tfrac52 A_-+q^2/16
+\le445/8+1/65536<64.
+\end{gathered}
+\tag{24.9}
+$$
+
+结合 (24.7)，两根之和严格小于 $7q+8q=15q\le15\rho^2/16$；(24.8) 给出 (24.3)。最后，正倍数泛函下 $B$ 为二次齐次、其根和 $\phi(L)$ 为一次齐次，故同一严格差额按 $\mu$ 缩放。∎
+
