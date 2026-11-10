@@ -18,9 +18,9 @@ Col: proof_shape=bind-only; consumers=column, compatible, instDecidableCompatibl
 column: proof_shape=bind-only; consumers=compatible, column_relabel, gridEquiv, column_grid
 compatible: proof_shape=bind-only; consumers=instDecidableCompatible, compatible_relabel, representative_rows, quotient_rows, initial_weights, grid_good, count_transfer
 instDecidableCompatible: proof_shape=bind-only; consumers=representative_rows, initial_weights
-cls: proof_shape=bind-only; consumers=class_relabel, class_rep, representative_rows, quotient_rows, initial_weights, grid_good, count_transfer
-Q: proof_shape=bind-only; consumers=representative_rows, quotient_rows, grid_good, count_transfer, table_steps, powers_table, power_polynomial, recurrence_core
-weights: proof_shape=bind-only; consumers=initial_weights, grid_good, count_transfer, initial_values, recurrence_core
+cls: proof_shape=bind-only; consumers=class_relabel, class_rep, representative_rows, quotient_rows, initial_weights, count_transfer
+Q: proof_shape=bind-only; consumers=representative_rows, quotient_rows, count_transfer, table_steps, powers_table, power_polynomial, recurrence_core
+weights: proof_shape=bind-only; consumers=initial_weights, count_transfer, initial_values, recurrence_core
 representatives: proof_shape=bind-only; consumers=class_rep, representative_rows, quotient_rows
 relabel: proof_shape=bind-only; consumers=column_relabel, compatible_relabel, class_relabel, class_rep, quotient_rows
 column_relabel: proof_shape=bind-only; consumers=compatible_relabel
@@ -32,7 +32,7 @@ quotient_rows: proof_shape=content; consumers=count_transfer
 initial_weights: proof_shape=content; consumers=count_transfer
 gridEquiv: proof_shape=bind-only; consumers=column_grid, grid_good, count_transfer
 column_grid: proof_shape=bind-only; consumers=grid_good
-grid_good: proof_shape=bind-only; consumers=count_transfer
+grid_good: proof_shape=content; consumers=count_transfer
 count_transfer: proof_shape=content; consumers=initial_values, recurrence_core
 W: proof_shape=bind-only; consumers=table_zero, table_steps, powers_table, power_polynomial, initial_values
 coefficients: proof_shape=bind-only; consumers=power_polynomial, recurrence_core
