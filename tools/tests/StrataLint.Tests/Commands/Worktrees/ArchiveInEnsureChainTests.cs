@@ -10,6 +10,96 @@ namespace StrataLint.Tests;
 public sealed partial class LeanCacheEnsureCommandTests
 {
     [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void ProductionCleanupWarningPreservesInstalledArchiveThroughEnsure(bool warm)
+        => AssertProductionCleanupWarning(warm, backup: false);
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void ProductionBackupCleanupWarningPreservesInstalledArchiveThroughEnsure(bool warm)
+        => AssertProductionCleanupWarning(warm, backup: true);
+
+    private static void AssertProductionCleanupWarning(bool warm, bool backup)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var setup = new TemporaryDirectory();
+        var manifest = System.Text.Json.Nodes.JsonNode.Parse(LeanCacheFixtureFile.Manifest())!;
+        manifest["packages"]![0]!["rev"] = "0123456789abcdef0123456789abcdef01234567";
+        var manifestText = manifest.ToJsonString();
+        File.WriteAllText(Path.Combine(setup.Path, "lake-manifest.json"), manifestText);
+        StrataLint.TestSupport.RegPackageFixture.Write(setup.Path);
+        LeanCacheStamp.Write(Path.Combine(setup.Path, ".lake"),
+            LeanPinSet.Create([], System.Text.Encoding.UTF8.GetBytes(manifestText)));
+        MathlibProjectionFixture.Write(Path.Combine(setup.Path, ".lake"));
+        var files = Directory.EnumerateFiles(setup.Path, "*", SearchOption.AllDirectories)
+            .ToDictionary(path => Path.GetRelativePath(setup.Path, path).Replace('\\', '/'), File.ReadAllText);
+        var request = Path.Combine(setup.Path, "native-setup.json");
+        File.WriteAllText(request, JsonSerializer.Serialize(files));
+        var root = TestRepositoryLayout.FindRoot();
+        var result = TestProcessRunner.Run("python3", ["-B",
+            Path.Combine(root, "tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_contract.py"),
+            backup ? "--ensure-backup-cleanup" : "--ensure-cleanup", Path.Combine(root, "tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll"),
+            request, warm ? "warm" : "cold"], root, TimeSpan.FromSeconds(90), 1024 * 1024);
+        Assert.True(result.ExitCode == 0, System.Text.Encoding.UTF8.GetString(result.StandardOutput)
+            + System.Text.Encoding.UTF8.GetString(result.StandardError));
+    }
+
+    [Fact]
+    public void FinalEnsureObservationDistinguishesWarmFallbackFromRequiredBuild()
+    {
+        var names = new[] { "TRURETURING_MAINTENANCE_SCRIPT", "TRURETURING_MAINTENANCE_REPOSITORY",
+            "TRURETURING_MAINTENANCE_LOG_DIR", "TRURETURING_MAINTENANCE_RUN_ID" };
+        var previous = names.ToDictionary(name => name, Environment.GetEnvironmentVariable);
+        try
+        {
+            foreach (var warm in new[] { false, true })
+            {
+                using var repository = new TemporaryDirectory();
+                var fixture = new EnsureArchiveFixture(repository.Path, "observed-fallback");
+                MathlibProjectionFixture.Write(Path.Combine(fixture.Target, ".lake"));
+                if (warm)
+                {
+                    fixture.WriteProjectOlean();
+                    File.SetLastWriteTimeUtc(Path.Combine(fixture.Target, ".lake", "build", "lib", "lean", "Warm.olean"),
+                        TestEnvironmentBridge.UtcNow().AddHours(-7));
+                }
+                var scripts = Path.Combine(repository.Path, "tools", "scripts");
+                File.Copy(Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "scripts", "maintenance_log.py"),
+                    Path.Combine(scripts, "maintenance_log.py"));
+                Environment.SetEnvironmentVariable(names[0], "ensure-cache");
+                Environment.SetEnvironmentVariable(names[1], fixture.Target);
+                Environment.SetEnvironmentVariable(names[2], Path.Combine(repository.Path, "logs"));
+                Environment.SetEnvironmentVariable(names[3], null);
+                StrataLint.Engine.MaintenanceLogAdapter.Start();
+                var runner = new RecordingWorktreeProcessRunner
+                {
+                    ArchiveReceipt = "LEAN_CACHE_FETCH {\"status\":\"miss\",\"reason\":\"private detail\"}\n",
+                    ArchiveExitCode = 1,
+                };
+                var receipt = fixture.Ensure(runner);
+                Assert.Equal(1, runner.ArchiveInvocations);
+                Assert.Equal("miss", receipt.GetProperty("archive_status").GetString());
+                StrataLint.Engine.MaintenanceLogAdapter.Finish(0);
+                var rows = File.ReadAllLines(Path.Combine(repository.Path, "logs", "ensure-cache.jsonl"));
+                using var final = JsonDocument.Parse(rows[^1]);
+                Assert.Equal(0, final.RootElement.GetProperty("exit_code").GetInt32());
+                Assert.True(final.RootElement.GetProperty("degraded").GetBoolean());
+                Assert.Equal(warm ? "warm" : "build_required",
+                    final.RootElement.GetProperty("cache_fallback").GetString());
+                Assert.Equal("miss", final.RootElement.GetProperty("archive_status").GetString());
+                Assert.DoesNotContain("private detail", string.Join("\n", rows), StringComparison.Ordinal);
+            }
+        }
+        finally
+        {
+            StrataLint.Engine.MaintenanceLogAdapter.Finish(0);
+            foreach (var (name, value) in previous) Environment.SetEnvironmentVariable(name, value);
+        }
+    }
+
+    [Theory]
     [InlineData(null, 2580)]
     [InlineData("21600", 21720)]
     public void ArchiveFetchUsesDefaultOrConfiguredEnclosingBudget(string? configured, int expectedSeconds)

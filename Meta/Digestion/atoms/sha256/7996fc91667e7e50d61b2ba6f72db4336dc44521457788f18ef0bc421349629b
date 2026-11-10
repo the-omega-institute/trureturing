@@ -1,0 +1,38 @@
+#### 定理 3.2：C129 的单余量续表
+
+设 $G\succeq0$，则
+
+$$
+\begin{pmatrix}G&b\\b^*&c\end{pmatrix}\succeq0
+\quad\Longleftrightarrow\quad
+b\in\operatorname{Ran}G,\qquad \delta=c-b^*G^+b\ge0,
+\tag{S}
+$$
+
+其中 $G^+$ 是 Moore–Penrose 逆，$c$ 为实数。几何上，新向量唯一分成
+
+$$
+x_{\rm new}=p+r,\quad p\in H_{\rm old},\quad r\perp H_{\rm old},
+\quad \|p\|^2=b^*G^+b,\quad \|r\|^2=\delta.
+\tag{R}
+$$
+
+这里 $p$ 由旧关系唯一确定，$r$ 的长度确定；最小扩展中的方向只在保持旧空间的等距意义下唯一。
+
+**证明。**
+
+若大矩阵正，取 $u\in\ker G$，在 $(tu,1)$ 上测试二次型，对任意复数 $t$ 的非负性迫使 $`u^*b=0`$。所以 $b\in(\ker G)^\perp=\operatorname{Ran}G$。令 $v=G^+b$；在 $(-v,1)$ 上测试得 $\delta\ge0$。反过来，$Gv=b$ 且
+
+$$
+\begin{pmatrix}G&b\\b^*&c\end{pmatrix}
+=\begin{pmatrix}I&0\\v^*&1\end{pmatrix}
+\begin{pmatrix}G&0\\0&\delta\end{pmatrix}
+\begin{pmatrix}I&v\\0&1\end{pmatrix}\succeq0.
+$$
+
+若旧向量为 $x_i$，取 $p=\sum_i v_i x_i$，再添与全部旧向量正交且平方长度为 $\delta$ 的 $r$，即得到所需表示。
+
+$\square$
+
+**两个不能漏掉的边界。** 一是 $b\in\operatorname{Ran}G$：例如 $G=0,b=1,c=1$ 虽给 $`c-b^*G^+b=1`$，大矩阵仍不正。二是 $\delta=0$ 只表示没有新的独立可见方向，不表示新事件没发生。秩每步增加 $0$ 或 $1$，不能断言每次反思一定加维。该定理及以下表示链均已见于 C129。[\[2\]](#ref-c129)
+

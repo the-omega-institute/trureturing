@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:0665cf9d0c7cfa98943b125b1b002251ac751156c5cd97c16128e00d649085c9
+  normalized_sha256: sha256:0665cf9d0c7cfa98943b125b1b002251ac751156c5cd97c16128e00d649085c9
+cas_ref: sha256:0665cf9d0c7cfa98943b125b1b002251ac751156c5cd97c16128e00d649085c9
+coverage_gids:
+  - gid: D5/S3/Arith/Robin/PriceRecord/NonlinearPrimeExclusion.failure_has_nonlinear_prime_gap
+    target_statement_id: sha256:58d15aba6f710937d4635fb8351fd2d5483cd398fe4a2d05fe6e9da3b34ecdd0
+receipts:
+  unresolved_subitems: []

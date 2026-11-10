@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c919ebc587be9b46c11fb4529449968a2a22030568e6c89075cf0d0a6728d0a1
+  normalized_sha256: sha256:c919ebc587be9b46c11fb4529449968a2a22030568e6c89075cf0d0a6728d0a1
+cas_ref: sha256:c919ebc587be9b46c11fb4529449968a2a22030568e6c89075cf0d0a6728d0a1
+coverage_gids:
+  - gid: D5/S3/Quantum/Algebra/FlatPairJointBlocks.flat_pair_joint_blocks_iff
+    target_statement_id: sha256:2ab94af8aba50eaeac34efdb84a8ad5f45bbdea9248fccee4a16bf6ae8a82816
+receipts:
+  unresolved_subitems: []

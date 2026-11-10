@@ -1,0 +1,79 @@
+**【编者局部说明：保留原式的索引修订】** 原稿同时写 $d_1,\ldots,d_s$、$q_0=0$ 与 (13) 的 $q_{j+1}$，会在首步要求未定义的 $b_0$。保留上面原式 (13)、(14)；以下乘积及 (15)–(17) 统一按一基编号解释为
+
+$$
+q_j=q_{j-1}+(1-q_{j-1})b_j\quad(1\le j\le s),
+\qquad
+\bigl(q_{j-1},(1-q_{j-1})b_j,(1-q_{j-1})(1-b_j)\bigr).
+$$
+
+三项使用更新前的 $q_{j-1}$。式 (9) 前一和有限、后一和仅在 $z_i\ne0$ 时非零，故非零贡献加上 $\Gamma$ 可组成有限列表；零项可保留，空损失也可取单项 $d_1=0$。于是 $1-q_j=\prod_{i=1}^j(1-b_i)$，且 $\sum_i d_i=\Delta+\Gamma$，所以下文的 $q_s$ 与精确乘积一致。这是记号修订，不是删除原公式或另加算术假设。
+<!-- editorial-note:end recursion-index -->
+
+三项非负、总和为 $1$，因此位于 AURIC 金字塔的三角截面内。
+
+由乘积恒等式，
+
+$$
+1-q_s
+=
+\prod_j(1-b_j)
+=
+e^{-\Delta-\Gamma}.
+$$
+
+记
+
+$$
+C=R(N_k)^{1-\theta}R(N_{k+1})^\theta,
+$$
+
+则
+
+<a id="eq-15"></a>
+
+$$
+\boxed{R(m)=C(1-q_s).}
+\tag{15}
+$$
+
+这就是“结果、损失与剩余量”的实际算术关系。
+
+还可以不预先假定链端点安全。令
+
+$$
+\beta(T)
+=
+\log\left(1+\frac{A_0}{(\log T)^3}\right),
+$$
+
+$$
+\overline\beta
+=
+(1-\theta)\beta(T_k)+\theta\beta(T_{k+1}).
+$$
+
+由 Axler 上界，
+
+<a id="eq-16"></a>
+
+$$
+\boxed{
+\Delta+\Gamma\ge\overline\beta
+\Longrightarrow R(m)<1.
+}
+\tag{16}
+$$
+
+等价地，
+
+<a id="eq-17"></a>
+
+$$
+\boxed{
+q_s\ge1-e^{-\overline\beta}
+\Longrightarrow R(m)<1.
+}
+\tag{17}
+$$
+
+<!-- editorial-note:start strict-beta-stop -->

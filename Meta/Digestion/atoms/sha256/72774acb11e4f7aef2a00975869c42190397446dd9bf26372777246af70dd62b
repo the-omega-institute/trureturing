@@ -1,0 +1,50 @@
+**定理 33.2（逐评价、逐三元组的有限恢复公式）。** 在上述准确前件内，对所有原 $\alpha,a,x,y$，有
+
+$$
+\boxed{\displaystyle
+\alpha_{\mathbb C}(\mathcal A(x,a,y))
+=\frac{\Delta_\alpha(a;x,y)-\Delta_\alpha(a;x,-y)}8
++\mathrm i\frac{\Delta_\alpha(a;x+y,0)-\Delta_\alpha(a;x-y,0)}8.}
+\tag{33.4}
+$$
+
+所以两个 PB 差恢复指定原结合子的一个评价分量，四个差恢复实、虚两个评价分量。这里是指定评价下的有限恒等式，不是有限多评价对全部原域的认证。
+
+证明。固定 $\alpha,a$，在原复化上定义半双线性型
+
+$$
+f(z,w)=h_\alpha(\lambda_a z,w)-h_\alpha(z,\lambda_a w).
+$$
+
+$h_\alpha$ 为 Hermitian 型，故 $f(w,z)=-\overline{f(z,w)}$。式 (23.2) 的反乘法共轭身份只用对称 $S$ 和反对称双线性 $D$，故在尚不结合时也给
+
+$$
+f(z,w)=\alpha_{\mathbb C}\bigl((z^*\star a)\star w
+-z^*\star(a\star w)\bigr).
+\tag{33.5}
+$$
+
+特别 $f(x,y)=\alpha_{\mathbb C}(\mathcal A(x,a,y))$。令 $d(z)$ 指 $z=b+\mathrm ic$ 时的 $\Delta_\alpha(a;b,c)$。A23 的代数恒等式 (23.5) 不以 PB 为前件，因此
+
+$$
+d(z)=-4\operatorname{Im}h_\alpha(z,\lambda_a z),
+\qquad f(z,z)=\frac{\mathrm i}{2}d(z).
+\tag{33.6}
+$$
+
+对原实 $x,y$ 只用半双线性与上述反 Hermitian 性展开，得
+
+$$
+\begin{aligned}
+d(x+\mathrm iy)&=d(x)+d(y)+4\operatorname{Re}f(x,y),\\
+d(x-\mathrm iy)&=d(x)+d(y)-4\operatorname{Re}f(x,y),\\
+d(x+y)&=d(x)+d(y)+4\operatorname{Im}f(x,y),\\
+d(x-y)&=d(x)+d(y)-4\operatorname{Im}f(x,y).
+\end{aligned}
+\tag{33.7}
+$$
+
+例如第一式来自 $f(x+\mathrm iy,x+\mathrm iy)=f(x,x)+f(y,y)+\mathrm if(x,y)-\mathrm if(y,x)$；第三式来自两个交叉项的和 $2\mathrm i\operatorname{Im}f(x,y)$。分别相减，结合 $d(x\pm\mathrm iy)=\Delta_\alpha(a;x,\pm y)$ 与 $d(x\pm y)=\Delta_\alpha(a;x\pm y,0)$，即得 (33.4)。这是普通极化的显式应用，不需正定、商、连续左作用、完成中的乘法或原标签独立。∎
+
+如果指定 $R_0(x,a,y)\ne0$，原分离族中存在评价使 (33.4) 的实部不为零，所列两个 PB 差至少一个不为零；$I_0\ne0$ 时同理使用另外两个差。因此非零原结合子有原域中的有限失配见证。反过来，要由这些公式恢复全域结合性，仍须全部原评价、全部原三元组的 PB 与已支付的 $\mathsf P_3$，正是 A23.1；有限差数不把全域量词变成有限检查。
+

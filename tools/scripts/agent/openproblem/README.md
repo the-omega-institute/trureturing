@@ -81,7 +81,7 @@ Every new entry supports `--selftest`. `chains/selftest.py --selftest` covers al
 | --- | --- | --- |
 | `pipeline/supervisor.sh` | 无参数；`OP_STATE`；在持久终端运行 | 每个 `.job` 一个直属子任务，工作目录为主 checkout；日志最后一行 `JOB_EXIT=RC`。STOP、INT、TERM 均先收拢子任务，输出 `SUPERVISOR_WAIT`、`SUPERVISOR_END`。 |
 | `pipeline/watch-jobs.sh` | 无参数；`OP_WATCH_MAX_SECONDS` 默认 6600 | 遇到未见的末行 `JOB_EXIT=RC` 即打印名称与日志尾部并返回；总等待到期输出 `WATCH_TIMEOUT`。 |
-| `pipeline/seat-wait.sh` | `NAME BRIEF WORKTREE STAGE [STAGGER]`；scratch 中 `briefs/process-safety-block.md` | preset 优先；否则等 worktree 空闲、席位容量和优先级后调用本仓 `seat/dispatch.sh`。替换 safety block 的 `__FLIGHT__`，最终输出 `DISPATCH_EXIT=RC`，并传递退出码；读到 `RUNNER_EXIT=RC` 时保留 runner 的失败码。 |
+| `pipeline/seat-wait.sh` | `NAME BRIEF WORKTREE STAGE [STAGGER]`；scratch 中 `briefs/process-safety-block.md` | preset 优先；否则由席位调度的进程安全与容量 gate 后调用本仓 `seat/dispatch.sh`。worktree 的复用资格由 native HEAD 年龄或 stale marker 决定，不由此调度 gate 续期。替换 safety block 的 `__FLIGHT__`，最终输出 `DISPATCH_EXIT=RC`，并传递退出码；读到 `RUNNER_EXIT=RC` 时保留 runner 的失败码。 |
 | `pipeline/sweep-ghost-flights.sh` | 无参数；`OP_SCRATCH`、`SSHX_HOME` | flight 目录存在且成功读取的进程表中无对应 runner 时，追加 `NAME ` 并打印 `TOMBSTONE NAME FLIGHT`。进程表读取失败不结算。 |
 | `pipeline/refresh-if-stale.sh` | `TREE`；`REFRESH_LAG_SECONDS` 默认 10800；`OP_REFRESH_LOCK` 默认 `$OP_STATE/main-lean.lock` | 主 build 的 `.main-built-at` 为 `SHA ISO_TIME`。仅在 tree 无在飞席位且 D5 相对 origin/dev 无改动时，按 stamp 年龄或已有 report semantic version 刷新；更新 `.main-cloned-at`，输出 `CACHE_REFRESH skip…` 或 `CACHE_REFRESH done… rc=0`。主 build 的写入者须使用同一锁。macOS 使用 clonefile，其他系统使用普通复制。 |
 | `pipeline/prep-lane-tree.sh` | `WORKTREE` | fetch 后 fast-forward 无自有提交的 lane，或 merge 干净的分歧 lane；拒绝带自有提交的 dirty 分歧 lane；调用 `make lean-cache-ensure`，输出 `PREP=RC`。 |
@@ -92,9 +92,9 @@ Every new entry supports `--selftest`. `chains/selftest.py --selftest` covers al
 | `pipeline/gptpro-queue.sh` | 无参数；`OP_GPTPRO_QUEUE` 默认 scratch 的 `gptpro-queue.txt`，每行 `LANE ROLE ROUND PR` | 默认读 `briefs/review-LANE-ROLE.md`；可用可执行的 `OP_REVIEW_PREPARE LANE ROLE ROUND PR OUT` 生成含 PR 正文的 brief。串行 broker 调用完成后出队，失败保留首行；输出 `QUEUE_RUN`、`QUEUE_DONE… rc=RC`、`NYX_SEAT_OK`、`QUEUE_EMPTY`。 |
 | `pipeline/common.sh`、`pipeline/selftest.sh` | 前者供 source；后者 `--selftest` | 共用输入验证、锁、进程解析、恢复与 broker 调用；后者运行全部工具的隔离测试。 |
 
-席位 gate 每次读取 `max-seats`；文件不存在时取 `OP_MAX_SEATS`，默认 16，并把同一值作为 `MAX_CODEX` 参数交给 dispatch。移除 `OP_NAME_PREFIX` 后，`review-`、`implb-`、`rework-`、`hotfix-` 优先级为 0；`mirror-`、`impla-`、`fixa-`、`fixb-`、`fix-` 为 1；其他为 2。更高优先级的存活等待者只有在其 worktree 空闲且尚无 runner 时阻挡低优先级者。优先级 2 等满 14400 秒且同类运行席少于两个时可越过优先级等待；`OP_WAIT_SINCE`（兼容 `DWF_WAIT_SINCE`）传入原始 epoch 起点。进程表读取失败为具名错误。WAIT preset 只在三次连续成功读取的进程表均无 runner 后结束；结果取数字最大的 `attempt-N/result.json`。结束时只清理命令包含该 flight attempt 路径且可执行文件名为 Lean、Lake 或 Python 的遗留子任务。
+席位 gate 每次读取 `max-seats`；文件不存在时取 `OP_MAX_SEATS`，默认 16，并把同一值作为 `MAX_CODEX` 参数交给 dispatch。移除 `OP_NAME_PREFIX` 后，`review-`、`implb-`、`rework-`、`hotfix-` 优先级为 0；`mirror-`、`impla-`、`fixa-`、`fixb-`、`fix-` 为 1；其他为 2。更高优先级的存活等待者只有在其进程安全 gate 允许启动且尚无 runner 时阻挡低优先级者；该 gate 只防止同一任务的并发 runner，不决定 worktree 的复用或移除资格。优先级 2 等满 14400 秒且同类运行席少于两个时可越过优先级等待；`OP_WAIT_SINCE`（兼容 `DWF_WAIT_SINCE`）传入原始 epoch 起点。进程表读取失败为具名错误。WAIT preset 只在三次连续成功读取的进程表均无 runner 后结束；结果取数字最大的 `attempt-N/result.json`。结束时只清理命令包含该 flight attempt 路径且可执行文件名为 Lean、Lake 或 Python 的遗留子任务。
 
-pipeline 的容量判据只有席位 cap 和 worktree 占用，不读取 CPU 负载或 Lean 进程数。`seat/dispatch.sh` 是独立依赖，其自身门策略由该入口负责；调用方须使用满足运行要求的 dispatch 版本。`OP_POLL_SECONDS` 默认 30，`OP_LOCK_ROUNDS` 默认 120，`OP_GATE_ROUNDS` 默认 1440，`OP_RUNNER_POLL_SECONDS` 默认 5，`OP_REFRESH_LOCK_ROUNDS` 默认 480。锁等待有界，未取得锁不会继续执行；锁由取得者释放。等待或停止期间的子任务由同一脚本 wait 收拢。
+pipeline 的容量判据只有席位 cap 和同一任务的并发进程安全 gate，不读取 CPU 负载或 Lean 进程数；worktree 复用和移除仍只按 native HEAD 年龄与 stale marker 决定。`seat/dispatch.sh` 是独立依赖，其自身门策略由该入口负责；调用方须使用满足运行要求的 dispatch 版本。`OP_POLL_SECONDS` 默认 30，`OP_LOCK_ROUNDS` 默认 120，`OP_GATE_ROUNDS` 默认 1440，`OP_RUNNER_POLL_SECONDS` 默认 5，`OP_REFRESH_LOCK_ROUNDS` 默认 480。调度 gate 锁等待有界，未取得锁不会继续执行；锁由取得者释放。等待或停止期间的子任务由同一脚本 wait 收拢。
 
 启动验证使用具名 `PIPELINE_*` 诊断：10 用法错误，11 必需输入缺失，12 工具缺失或版本不符，13 输入值无效，14 已有 job 或身份冲突，15 锁或 gate 到期，16 I/O、Git 或进程读取失败。prep 的 3–6 保留 fetch、fast-forward、merge conflict 和 dirty 分歧状态；实际子命令的失败码由对应入口传出。
 

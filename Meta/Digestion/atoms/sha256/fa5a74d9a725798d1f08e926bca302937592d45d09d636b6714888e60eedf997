@@ -1,0 +1,24 @@
+**定理 83.1（由读数构造同一个还原核）。** 在82.1–82.3下，规范 $\iota|_E$ 忠实，并且
+
+$$
+\mathfrak n_{\mathcal F}=\ker H
+=\{w\in B:\ell(w)=0\ (\ell\in\mathcal L)\}
+\tag{83.1}
+$$
+
+是满足 $B=V_0\oplus_{\mathbb C}\mathfrak n_{\mathcal F}$ 的双边星理想。它由已固定的读数唯一决定。74.1因此定义同一原 $E$ 上的响应，取得原PY+R、同一原pre-$C^\ast$代数、准确原锥、范数和全部正评价。
+
+证明。82.1和原评价分离先给忠实性：$\iota(a)=0$ 蕴含全部 $\alpha(a)=0$，所以 $a=0$。若 $v=\iota(a)+i\iota(b)$ 且 $H(v)=0$，则对每个具名 $f_\alpha$ 有 $\alpha(a)+i\alpha(b)=0$，故 $a=b=0$。所以 $\ker H\cap V_0=0$，唯一性没有另外预付。
+
+$\mathfrak n_{\mathcal F}$ 是复线性子空间。若 $w$ 在其中，对任意 $b\in B$、任意生成读数 $g(l\,\cdot\,r)$，有 $g(lbw r)=0$ 和 $g(lwbr)=0$，因为 $lb$、$br$ 仍在 $B$。因此 $bw,wb$ 仍在其中。又
+
+$$
+\overline{g(lw^\ast r)}=g^\#(r^\ast w l^\ast),
+$$
+
+$g^\#$ 仍是允许的生成读数，故 $w^\ast$ 也在核中。这给双边星理想性。
+
+只需证明每个生成词都有 $V_0$ 代表。长度零和一已经成立。长度 $n\ge2$ 的词为 $a_1\cdots a_n$。82.3给 $v=\sum_jc_j\iota(b_j)\in V_0$，使 $\iota(a_1)\iota(a_2)-v\in\mathfrak n_{\mathcal F}$。右乘余下的词仍在理想中。替换后各项长度至多 $n-1$，归纳取得原代表。有限复线性和也有代表，所以 $B=V_0+\mathfrak n_{\mathcal F}$。与交为零合并即得直和。不同相邻约化顺序的结果有同一轮廓，故由唯一性相等；不需要另付终止重写语法或diamond公理。
+
+现在准确复用74.1：$P(w)$ 是同轮廓的唯一原代表，$\iota(D(a,b))=iP([\iota(a),\iota(b)])/2$。理想商给结合，原Jordan对称部分不变，PY使用 $P(P(c)^2)=P(c^2)$；27.2给原范数和完成。这里没有按坐标逐点相乘读数轮廓：一般 $\alpha(ab)\ne\alpha(a)\alpha(b)$。轮廓像的乘法是 $H(x)\diamond H(y)=H(xy)$，其良定义性由核的理想性取得。∎
+

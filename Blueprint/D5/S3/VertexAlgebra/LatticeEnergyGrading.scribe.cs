@@ -217,6 +217,33 @@ internal sealed class LatticeEnergyGradingDocument : IScribeDocumentDefinition
                         + "homogeneity or positivity is assumed."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("latticeenergygrading-gradeprojection-self-of-grade"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeEnergyGrading.gradeProjection_eq_self_of_mem_grade"),
+                H("Projection fixes its homogeneous grade"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For every D, integer n and v in grade(D,n), gradeProjection(D,n,v)=v. "
+                    + "This existing supplier proof is reused by the full actual Zhu quotient and energy consumers."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("latticeenergygrading-gradeprojection-zero-of-other-grade"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeEnergyGrading.gradeProjection_zero_of_mem_grade_ne"),
+                H("Projection kills a different homogeneous grade"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("For every D, integers n and m with m!=n, and v in grade(D,m), "
+                    + "gradeProjection(D,n,v)=0. The existing proof is exposed at this common supplier without duplication."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("latticeenergygrading-stateenergies-nonneg"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeEnergyGrading.stateEnergies_nonneg"),
+                H("Positive Gram matrix gives nonnegative state energies"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text("Under hD, every integer E in stateEnergies(D,v) satisfies 0<=E, for any original state v. "
+                    + "This reused proof supplies natural energy induction; it asserts no new mathematical-content claim."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("latticeenergygrading-sum-gradeprojections"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeEnergyGrading.sum_gradeProjections"),
                 H("Finite reconstruction of every actual state"),
@@ -266,6 +293,9 @@ internal sealed class LatticeEnergyGradingDocument : IScribeDocumentDefinition
                     Paragraph(Text("Carrier(D) ~= direct sum over n:Z of grade(D,n) as C-linear spaces. This equivalence is the inverse "
                         + "of the canonical sum of actual subtype inclusions, using the proved internality."))),
                 DescribeRole.Definition),
+            Paragraph(Text("Four-slot escape registration for the exposed projection and nonnegative-support helpers, if "
+                + "selected by the public-declaration delta, remains unfinished under "
+                + "https://github.com/the-omega-institute/trureturing/issues/28685. No declared_validated status is claimed.")),
             Paragraph(Text("Bakalov-Kac, Twisted Modules over Lattice Vertex Algebras, arXiv math/0402315v1 (19 February 2004): "
                 + "section 4.1, printed/PDF page 8, equations (4.3)-(4.5), gives the charge/Fock carrier; page 9, "
                 + "Theorem 4.1 and (4.16), gives the dual-basis conformal vector; page 4, Definition 2.2 and "

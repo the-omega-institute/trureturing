@@ -1,0 +1,26 @@
+All-prime residually finite p-groups
+Copyright 2026 Kenta Kitamura
+
+This formalization, mathematical exploration, proof development, and documentation
+were produced by Kenta Kitamura with assistance from ChatGPT and OpenAI Codex using
+GPT-6 Astra and GPT-6.1 sol, and Claude Code using Claude Opus 5.5.
+
+This distribution includes or adapts work from:
+
+* OpenAI, openai/math, commit 1581d4cbdd69a0faf34b2089614fe2a814316a6a.
+  The 63 vendored OAI modules are unchanged. See lean/upstream/provenance.json
+  and lean/upstream/OpenAI-LICENSE.
+* The Tau Ceti contributors, TauCetiProject/TauCeti, commits
+  4f1a681d10b8371c56bc49158b0481d18bd949f5 and
+  d5a37097e93f6289425d25632df6c8bf00d749c0 (conjugation calculation).
+  See lean/upstream/TauCeti-provenance.json,
+  lean/upstream/TauCeti-Conjugation-provenance.json and TauCeti-LICENSE.
+* Yunzhou Xie and contributors, Vilin97/lean-pool, commit
+  01db1d7049cf9668bda1e9e106875ee1278b43e6.
+  See lean/upstream/LeanPool-provenance.json and LeanPool-LICENSE.
+* The Mathlib community. Mathlib is a pinned dependency, not vendored here.
+  Its source and license are distributed by leanprover-community/mathlib4.
+
+The original notices and adaptation descriptions in individual Lean files are
+retained. See docs/ATTRIBUTION.md for the scope of reuse. No endorsement by the
+upstream authors is implied.

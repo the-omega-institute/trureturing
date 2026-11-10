@@ -1,0 +1,4 @@
+**引理 497.2（四阶冻结与一致矩界）。** 设 $(\mathrm L_4)$。固定 $M\ge1$、$L\ge0$。
+
+(i) 对 $a\in C^1([1,2])$，$0\le a\le M$，$|a'|\le L$，令 $f_{a,X}(x)=D_{h\,a(x/X)}(x)$。则对充分大的 $X$（门槛只依赖 $E,\alpha,\theta,\beta,M,L$），$\mathbb E_{\mu_X}\bigl|f_{a,X}/\sqrt{h\log X}\bigr|^4\le K_M:=1312\,C_4M^2/\log2$；特别地 $\sup_{0\le c\le M}\mathbb E_{\mu_X}|\widetilde B_X(c)|^4\le K_M$。
+

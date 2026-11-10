@@ -169,6 +169,8 @@ os.execv({real_git}, [{real_git}, *sys.argv[1:]])
         material.write_bytes(payload)
         write(self.bin / "sitecustomize.py", '''
 import errno, json, os, pathlib, sys, tarfile
+sys.path.insert(0, os.environ["FAKE_RELEASE_HELPER"])
+import lean_cache_release_io
 def observe(frame, event, arg):
     if event == "call" and frame.f_code.co_name == "restore_snapshot":
         root, stage = frame.f_locals["root"], frame.f_locals["stage"]
@@ -177,8 +179,8 @@ def observe(frame, event, arg):
                  local_assets=frame.f_locals.get("local_assets"))))
         sys.setprofile(None)
 sys.setprofile(observe)
-original_extract = tarfile.TarFile.extractall
-def extract(archive, path, *args, **kwargs):
+original_extract = lean_cache_release_io.extract_members
+def extract(archive, path, members, deadline):
     downloaded = pathlib.Path(archive.name).parent
     manifest = json.loads((downloaded / "manifest.json").read_text())
     stage = downloaded.parent
@@ -194,19 +196,20 @@ def extract(archive, path, *args, **kwargs):
     pathlib.Path(os.environ["FAKE_SPACE_READING"]).write_text(json.dumps(reading))
     if source_bytes + resident + unpacked > budget:
         raise OSError(errno.ENOSPC, "verification transport exhausted the restore workspace")
-    result = original_extract(archive, path, *args, **kwargs)
+    result = original_extract(archive, path, members, deadline)
     reading["actual_unpacked"] = sum(p.stat().st_size for p in pathlib.Path(path).rglob("*") if p.is_file())
     reading["payload_inode"] = (pathlib.Path(path) / "build/lib/lean/D5/A.olean").stat().st_ino
     pathlib.Path(os.environ["FAKE_SPACE_READING"]).write_text(json.dumps(reading))
     return result
-tarfile.TarFile.extractall = extract
+lean_cache_release_io.extract_members = extract
 ''')
         reading = self.root / "space-reading.json"
         entry = self.root / "restore-entry.json"
         write(self.root / ".lake/packages/keep", "dependency")
         source = (self.root / "D5/A.lean").read_bytes()
         result = self.verification("publish", PYTHONPATH=str(self.bin), FAKE_SPACE_READING=str(reading),
-                                   FAKE_SOURCE_ROOT=str(self.root.resolve()), FAKE_RESTORE_ENTRY=str(entry))
+                                   FAKE_SOURCE_ROOT=str(self.root.resolve()), FAKE_RESTORE_ENTRY=str(entry),
+            FAKE_RELEASE_HELPER=str(self.publisher.parent))
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
         self.assertIn('"status":"published"', result.stdout)
         self.assertEqual(payload, material.read_bytes())
@@ -252,6 +255,8 @@ tarfile.TarFile.extractall = extract
         write(self.bin / "sitecustomize.py", '''
 import errno, fcntl, hashlib, json, os, pathlib, shutil, sys, tarfile
 if sys.argv[0].endswith("lean_cache_release.py"):
+    sys.path.insert(0, os.environ["FAKE_RELEASE_HELPER"])
+    import lean_cache_release_io
     root = pathlib.Path(os.environ["FAKE_SOURCE_ROOT"])
     build = root / ".lake/build"
     failure = os.environ["FAKE_LIFETIME_FAILURE"]
@@ -269,7 +274,7 @@ if sys.argv[0].endswith("lean_cache_release.py"):
             else:
                 raise AssertionError("source cache guard released during " + operation)
     original_remove, original_rename = shutil.rmtree, pathlib.Path.rename
-    original_extract = tarfile.TarFile.extractall
+    original_extract = lean_cache_release_io.extract_members
     def remove(path, *args, **kwargs):
         path = pathlib.Path(path)
         operation = ("retire" if path == build else "cleanup" if path.parent == root / ".lake"
@@ -286,14 +291,15 @@ if sys.argv[0].endswith("lean_cache_release.py"):
             if failure == "handoff":
                 raise OSError(errno.EIO, "injected handoff")
         return original_rename(source, target)
-    def extract(archive, path, *args, **kwargs):
+    def extract(archive, path, members, deadline):
         guarded("extract")
         if failure == "extract":
             raise OSError(errno.ENOSPC, "injected extract")
-        return original_extract(archive, path, *args, **kwargs)
+        return original_extract(archive, path, members, deadline)
     def forbid(*args, **kwargs):
         raise AssertionError("verification cannot copy or hardlink a local build")
-    shutil.rmtree, pathlib.Path.rename, tarfile.TarFile.extractall = remove, rename, extract
+    shutil.rmtree, pathlib.Path.rename = remove, rename
+    lean_cache_release_io.extract_members = extract
     shutil.copytree, os.link = forbid, forbid
     if failure == "not-installed":
         def occupy(frame, event, arg):
@@ -305,7 +311,8 @@ if sys.argv[0].endswith("lean_cache_release.py"):
         sys.setprofile(occupy)
 ''')
         return dict(PYTHONPATH=str(self.bin), FAKE_SOURCE_ROOT=str(self.root.resolve()),
-                    FAKE_LIFETIME_FAILURE=failure, FAKE_LIFETIME_LOG=str(self.root / "lifetime-events"))
+                    FAKE_LIFETIME_FAILURE=failure, FAKE_LIFETIME_LOG=str(self.root / "lifetime-events"),
+                    FAKE_RELEASE_HELPER=str(self.publisher.parent))
 
     def test_native_verification_holds_writer_through_handoff_and_all_owned_cleanup(self):
         self.verification_fixture()

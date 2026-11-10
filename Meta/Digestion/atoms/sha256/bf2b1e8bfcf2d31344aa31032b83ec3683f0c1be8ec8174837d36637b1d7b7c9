@@ -1,0 +1,45 @@
+**定理 44.2（原二到十三维包含的共同有限字覆盖）。** 对每个 $L$ 上的正三元组 $E_0,E_1,E_2\succeq0$、$\sum_kE_k=I_L$ 及每个 $\varepsilon>0$，存在一个原七地址有限正向未来 $f\in\mathsf W$，使
+
+$$
+\max_{S\subseteq\{0,1,2\}}
+\left\|e_{f,S}-\sum_{k\in S}E_k\right\|_{\rm op}
+\le2\varepsilon.
+\tag{44.4}
+$$
+
+同一个 $f$ 适用于全部三组、全部并组及每一个实际 B45 制备前缀；包括任意零效果、降秩、特征值一和三元组边界。不要求数学目标酉或有限字 $f$ 保持 $L$ 不变。
+
+证明。复用 II121.2 证明的正平方根与等距扩张论证，重新代入这里的域和维数。由三个投影的秩 $5,3,5$ 均不小于 $\dim L=2$，可在原 $H$ 内各选等距 $W_k:L\to\operatorname{ran}\Pi_k$，$W_j^*W_k=\delta_{jk}I_L$。令
+
+$$
+V_E=\sum_{k=0}^2W_k\sqrt{E_k}:L\to H,
+\qquad V_E^*V_E=I_L,\qquad V_E^*\Pi_kV_E=E_k.
+\tag{44.5}
+$$
+
+零或奇异 $E_k$ 的正平方根同样存在，未取逆。原包含 $\iota$ 与 $V_E$ 是同一个 $H$ 中的两个二维等距；分别把其像的正交基补成整个 $H$ 的基，即得数学酉 $U_E:H\to H$，满足 $U_E\iota=V_E$。两边十一维正交补均属于原 $H$，没有新增载体。
+
+现在直接消费 II77.2 在整个原 $H$ 上、算符范数射影拓扑中的七门密度：存在一个有限正字 $f$ 及一个共同单位标量 $\lambda$，使
+
+$$
+\|K_f-\lambda U_E\|_{\rm op}<\varepsilon.
+\tag{44.6}
+$$
+
+该来源的密度已经以正字表述；若用含逆的群字表示，同一原门的 $K_j^{-1}=K_j^9$ 将它逐项改成正向调用。这里只需逐目标、逐精度的有限存在性。
+
+置 $B=K_f\iota$、$C=\lambda V_E$，二者皆为等距且 $\|B-C\|<\varepsilon$。对任一并组，$\Pi_S$ 仍是一个范数至多一的正交投影，故
+
+$$
+\begin{aligned}
+e_{f,S}-\sum_{k\in S}E_k
+ &=B^*\Pi_SB-C^*\Pi_SC\\
+ &=(B-C)^*\Pi_SB+C^*\Pi_S(B-C),\\
+\left\|e_{f,S}-\sum_{k\in S}E_k\right\|_{\rm op}
+ &\le2\|B-C\|_{\rm op}<2\varepsilon.
+\end{aligned}
+\tag{44.7}
+$$
+
+因此并组无需累加三个误差，空组和全组的误差实际上为零。$U_E,f$ 的选择只依赖目标三元组和精度，不依赖前缀 $a$。所有边界均已由同一构造覆盖。∎
+

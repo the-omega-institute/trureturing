@@ -19,7 +19,6 @@
 # Native watchers own CI lifetimes; only discovery and transport retries are
 # bounded. A completed run without a terminal required verdict is incomplete.
 # Existing mirror PRs/branches are reused, never force-pushed or recreated.
-# One OS-held operation scope per integration follower; descendants inherit it.
 # Example: tools/scripts/agent/integration-mirror.sh \
 #   --integration integration-regprog-0912 --since 748360e3dd32 --dry-run
 # This transport does not certify workflow versions, performance, push runs or
@@ -32,7 +31,7 @@ PROTOCOL="$(cd "$(dirname "${BASH_SOURCE[0]}")/../worktree" && pwd -P)/worktree_
 RETRY_ATTEMPTS=30 RETRY_INTERVAL=15
 original_arguments=("$@")
 integration='' since='' state='' max=0 dry_run=0 checks_under_test=''
-mirrored=0 pending=0 scratch='' worktree='' lock=''
+mirrored=0 pending=0 scratch='' worktree=''
 merge='' original_pr=0 mirror_pr=0 head='' base='' verdicts='[]'
 repo='' output=''
 
@@ -69,7 +68,12 @@ run() {
   local step=$1 rc=0
   shift
   log "$step"
-  "$@" >"$scratch/command.log" 2>&1 || rc=$?
+  if [[ "$step" == worktree ]]; then
+    # The native protocol's stdout is JSON; advisory reminders stay on stderr.
+    "$@" >"$scratch/command.log" || rc=$?
+  else
+    "$@" >"$scratch/command.log" 2>&1 || rc=$?
+  fi
   output=$(cat "$scratch/command.log")
   if (( rc != 0 )); then log "$step exit=$rc $output" >&2; fi
   return "$rc"
@@ -179,8 +183,8 @@ if [[ -e "$state" ]]; then
 fi
 if (( dry_run == 0 )); then
   if [[ -z "${MIRROR_OPERATION_HELD:-}" ]]; then
-    exec python3 -B "$PROTOCOL" --source "$root" with --path "$root" \
-      --operation "integration-mirror:$integration" -- env MIRROR_OPERATION_HELD=1 \
+    exec python3 -B "$PROTOCOL" --source "$root" with --path "$root" -- \
+      env MIRROR_OPERATION_HELD=1 \
       /bin/bash "${BASH_SOURCE[0]}" "${original_arguments[@]}"
   fi
 fi

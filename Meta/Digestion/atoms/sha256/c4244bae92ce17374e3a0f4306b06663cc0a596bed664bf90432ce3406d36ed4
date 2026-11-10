@@ -1,0 +1,37 @@
+**约定 C-84.1（闭概率纤维与纯振幅完成）。** 沿用 C-76 的正交五模式载体，固定次序和占位词
+
+$$
+\Sigma=(0,1,2,3,13)
+=\bigl(F[\mathrm{null}],F[1],F[2],F[3],F[1,3]\bigr),
+\qquad (000,100,010,001,101).
+$$
+
+另给纯振幅 $\psi_s=\sqrt{p_s}e^{-i\theta_s}$，$\sum_s p_s=1$。
+本组固定三个可见均值及底面质量
+
+$$
+X=p_1+p_{13},\qquad Y=p_3+p_{13},\qquad Z=p_2,\qquad
+r=1-Z,\qquad 0<r<1,\quad 0<X,Y<r.
+\tag{C84.1}
+$$
+
+以 $\kappa=p_{13}$ 为隐藏概率，完整反解为
+
+$$
+p_\kappa=(r-X-Y+\kappa,\ X-\kappa,\ 1-r,\ Y-\kappa,\ \kappa).
+\tag{C84.2}
+$$
+
+允许合法零概率的闭纤维区间为
+
+$$
+[\kappa_-,\kappa_+],\qquad
+\kappa_-=\max(0,X+Y-r),\qquad
+\kappa_+=\min(X,Y).
+\tag{C84.3}
+$$
+
+四底角分别非负恰给这四个不等式；中模式因 $r<1$ 严格正。
+以下“全正”指五概率全正，等价于 $\kappa_-<\kappa<\kappa_+$。
+零振幅处不把 $\theta_s$ 当作内在坐标，含相位的端点表达均由实际振幅或内部连续延伸解释。
+

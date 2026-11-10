@@ -1,0 +1,4 @@
+直接和核对应正交替代项；张量核的最小实现满足 $\mathcal H_{D\otimes E}\simeq\mathcal H_D\otimes\mathcal H_E$，由标准基向量对的内积相乘直接验证。这给“静态谱关系构成 Hilbert 空间”一个精确有限版本，但所给对象必须是正相干核，裸图的邻接与存在关系没有决定该核。
+
+<a id="thm-square"></a>
+

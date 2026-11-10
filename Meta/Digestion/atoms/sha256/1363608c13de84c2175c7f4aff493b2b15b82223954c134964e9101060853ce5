@@ -1,0 +1,87 @@
+**Proposition 171.1 (a legal terminal compensator for the $003$ coordinate).** Replace the representative $b$ in (134.7) by the pointwise rotation-invariant representative $\beta$ of Appendix III Proposition 136.2; all $m$-classes and residual coordinates are unchanged. Let $0\ne v\in V=\ker\Lambda_{134}$ be bounded and real. Then there are a Borel set $E\subset G$ invariant under the circle action, a number $\varepsilon>0$, and positive scalars $s_t$ for $0<|t|<\varepsilon$ such that, with
+
+$$
+w_t=-s_t\mathbf 1_E
+\tag{171.1}
+$$
+
+the tuple $u^{(t;v,w_t)}$ of (158.1) is a pointwise legal simplex tuple on all of $G$ and
+
+$$
+\Delta\bigl(u^{(t;v,w_t)}\bigr)_{003}=0.
+\tag{171.2}
+$$
+
+Moreover, if
+
+$$
+A=q_{003}(v),\quad
+B=\mathcal C(f_0,f_0,\mathbf 1_E),\quad
+L=\mathcal C(v,f_0,\mathbf 1_E)+\mathcal C(f_0,v,\mathbf 1_E),\quad
+C=\mathcal C(v,v,\mathbf 1_E),
+\tag{171.3}
+$$
+
+then $A>0$, $B>0$, and one may choose
+
+$$
+s_t=\frac{A}{B+tL+t^2C},
+\qquad
+s_t\longrightarrow\frac AB>0\quad(t\to0).
+\tag{171.4}
+$$
+
+Thus the actual perturbation $t^2w_t$ tends to zero in $L^\infty$, while the compensator coefficient itself has a strictly positive limiting cost.
+
+*Proof.* Since $f_3=c\beta>0$ everywhere and $m(G)=1$, there is a $\delta>0$ for which the invariant Borel set
+
+$$
+E=\{x:f_3(x)\ge\delta\}
+\tag{171.5}
+$$
+
+has positive $m$-measure. Let
+
+$$
+\psi_0=P\bigl(f_0P(gf_0)\bigr).
+$$
+
+The positivity-improvement argument in Proposition 158.3 gives $\psi_0>0$ almost everywhere, so
+
+$$
+B=\int_E\psi_0\,dm>0.
+\tag{171.6}
+$$
+
+Proposition 134.2 gives $A=q_{003}(v)>0$. The boundedness of $v$, $f_0$, $g$ and the $L^2$ contraction of $P$ makes $L$ and $C$ finite. Hence for all sufficiently small $|t|$,
+
+$$
+B+tL+t^2C>B/2.
+\tag{171.7}
+$$
+
+Define $s_t$ by (171.4). Substitution of (171.1) into the exact expansion (158.2) gives
+
+$$
+\begin{aligned}
+\Delta\bigl(u^{(t;v,w_t)}\bigr)_{003}
+ &=t^2\left[A-s_tB\right]
+   -t^3s_tL-t^4s_tC\\
+ &=t^2\left[A-s_t(B+tL+t^2C)\right]=0.
+\end{aligned}
+\tag{171.8}
+$$
+
+Because $s_t\to A/B$, reduce $\varepsilon$ so that
+
+$$
+|t|\,\|v\|_\infty\le\frac14,
+\qquad
+t^2s_t\le\min\left\{\delta,\frac14\right\}
+\tag{171.9}
+$$
+
+for $0<|t|<\varepsilon$. Equation (134.8) then gives $u_0,u_1\ge0$. On $E$, $u_3=f_3-t^2s_t\ge0$, and off $E$ it equals $f_3>0$. Finally $u_B=1/4+t^2s_t$ lies between $0$ and $1$; all four coordinates sum to one by (158.1). Thus the tuple is legal on all of $G$. The limit in (171.4) is immediate. This proves (171.2) and the stated cost. $\square$
+
+In particular, every nonzero rotation-odd class supplied by Proposition 170.1 admits this exact one-coordinate compensation. The result cancels only the $003$ coordinate; it does not cancel the other $63$ coordinates, establish a full-law partition, produce an $H43$ witness, or settle SRS$\text{-}20$, $F_{64}$, a physical successor or a Lean/kernel theorem.
+

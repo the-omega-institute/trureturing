@@ -25,6 +25,9 @@ internal sealed class HannaDiagonalDerivativeParityDocument : IScribeDocumentDef
                     + "of the displayed nonlinear series from t(n). At f=0 this retains "
                     + "exactly the positive coefficients of t.",
                 DescribeRole.Definition, AssessedProvenance.FromRepo()),
+            Node("euler", "The Euler derivative", EulerFormula(),
+                "For any commutative coefficient ring, Euler differentiation multiplies the formal derivative by the indeterminate.",
+                DescribeRole.Definition, AssessedProvenance.FromRepo()),
             Node("IsDiagonal", "An arbitrary diagonal forcing sequence", IsDiagonalFormula(),
                 "The diagonal derivative coefficient at positive index n equals n times the rational forcing value t(n). "
                 + "The constant coefficient of the solution is zero.", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
@@ -70,6 +73,16 @@ internal sealed class HannaDiagonalDerivativeParityDocument : IScribeDocumentDef
         Describe.Lean(DescribeId.Create("a375449-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
             provenance, Blocks(Paragraph(Text(prose))), role, resolution);
+
+    private static Formula EulerFormula()
+    {
+        Formula r = F.Id("R"), f = F.Id("f");
+        Formula series = Call("PowerSeries", r);
+        return Disp(Seq(Bound("R", Seq(F.Id("Type"), Star)),
+            OpenBracket, Call("CommRing", r), CloseBracket, Comma, Sp,
+            Bound("f", series), Equal(Call("euler", f),
+                Mul(F.Id("X"), Call("derivative", f)))));
+    }
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Call(string name, params Formula[] arguments) =>

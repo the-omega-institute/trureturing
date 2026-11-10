@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:87a9448ad585c0b6dd6b96f6bbe0db2c18228390e2d6196f0648b00324fd3538
+  normalized_sha256: sha256:87a9448ad585c0b6dd6b96f6bbe0db2c18228390e2d6196f0648b00324fd3538
+cas_ref: sha256:87a9448ad585c0b6dd6b96f6bbe0db2c18228390e2d6196f0648b00324fd3538
+coverage_gids:
+  - gid: D5/S3/Quantum/SpinChains/BooleanCollectiveLadders.primitive_multiplicity
+    target_statement_id: sha256:06627ba2a79e60c5a333b6f411c0b833a8045c2e9dbc7164782b1bf74fe2b7fa
+receipts:
+  unresolved_subitems: []

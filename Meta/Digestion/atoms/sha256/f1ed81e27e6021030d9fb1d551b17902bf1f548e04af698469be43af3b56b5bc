@@ -1,0 +1,38 @@
+**定理 39.2（局部平面的取向相容）。** 在 $\mathscr A_\xi$ 中，每个具有非零剩余法向的自由秩二正交平面，都有一个严格的符号 $\theta\in\{1,-1\}$，使 $\widehat K(x,y)=\theta(x\times y)$；全部这些符号相同。
+
+证明。下文省帽，横线表示剩余实数值。若 $\bar x\ne0$，则 $\rho=x\cdot x$ 是局部单位。对任意单位 $u$，核平移允许以局部系数剪切。有限初等分解
+
+$$
+W(u)=\begin{pmatrix}1&u\\0&1\end{pmatrix}
+\begin{pmatrix}1&0\\-u^{-1}&1\end{pmatrix}
+\begin{pmatrix}1&u\\0&1\end{pmatrix},\qquad
+W(u)W(-1)=\operatorname{diag}(u,u^{-1})
+$$
+
+给 $K(ux,u^{-1}y)=K(x,y)$ 及 $K(ux,y)=K(x,uy)$。记 $G=K(x,\cdot)$，NN 给
+
+$$
+G(uGy)=uH_xy=G(G(uy)).
+$$
+
+再施 $G$，差 $G(uy)-uGy$ 既在 $\ker H_x$ 又正交 $x$；其 $H_x$ 值为 $-\rho$ 乘该差，因此差为零。反对称给第一槽单位齐次。局部环上的可逆二阶矩阵含一单位主元，有限消元把它分解为剪切、交换和单位缩放；每一步的剩余输入仍独立，故
+
+$$
+K(\alpha x+\beta y,\gamma x+\delta y)
+=(\alpha\delta-\beta\gamma)K(x,y)
+\tag{39.2}
+$$
+
+对独立剩余值的输入与任意可逆系数矩阵成立。
+
+若 $n\cdot n$ 为单位，则 $P_n=\{v:n\cdot v=0\}$ 为自由秩二模；例如 $n_3$ 为单位时可取基 $e_1-(n_1/n_3)e_3,e_2-(n_2/n_3)e_3$。任一平面基 $x,y$ 的叉积平方范数是单位。正交性给 $K(x,y)=s(x\times y)$，面积给 $s^2=1$。局部环中 $2$ 可逆，$s$ 的剩余值为正一或负一，相应另一因子 $s+1$ 或 $s-1$ 为单位，所以 $s=1$ 或 $s=-1$ 作为局部环元严格成立。式 (39.2) 使该符号与基无关，记为 $\theta(n)$。
+
+若 $n\cdot m=0$ 且两平方范数为单位，置 $a=n\times m$、$b=(n\times a)/(a\cdot a)$。已知叉积代数给 $a\times b=n$、$a\times n=(n\cdot n)m$ 与 $H_ab=a\times n$。于是 NN 与已付实齐次给
+
+$$
+a\times n=K(a,K(a,b))
+=\theta(n)\theta(m)(a\times n).
+$$
+
+平方范数可逆使 $\theta(n)=\theta(m)$。任意非零剩余法向 $n$ 可选常数轴 $e_i$ 使 $\bar n\times e_i\ne0$；$m=n\times e_i$ 同时正交两者，所以 $\theta(n)=\theta(m)=\theta(e_i)$。三常数轴彼此正交，全部符号遂相同。整个局部证明在 CS 后未再消费 Jacobi。∎
+

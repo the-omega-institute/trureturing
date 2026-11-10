@@ -1,0 +1,14 @@
+**定义 2.1（二元复正关系）。**
+
+在固定复相位约定下，对两个向量 $u,v$ 取
+$a=\|u\|^2$、$b=\|v\|^2$、$c=\langle v,u\rangle$，内积对第一变量共轭线性。
+其关系矩阵为
+
+$$
+G=\begin{pmatrix}a&\bar c\\c&b\end{pmatrix}\ge0,\qquad N=\operatorname{Tr} G.
+$$
+
+更一般地，本稿直接把非零 $G\in M_2(\mathbb C)_+$ 作为二元正关系接口。
+
+<a id="thm:gram"></a>
+

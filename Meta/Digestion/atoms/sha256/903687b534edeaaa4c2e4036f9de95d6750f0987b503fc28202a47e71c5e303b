@@ -1,0 +1,4 @@
+## 200. Full radical rank meets a pointwise boundary
+
+The coefficient body in Section 199 separates residual closure from pointwise legality, but its full-column-rank stratum can still be empty. The relevant distinction is between a uniformly interior lift and a lift that is forced onto the boundary of one or more pointwise simplex inequalities.
+

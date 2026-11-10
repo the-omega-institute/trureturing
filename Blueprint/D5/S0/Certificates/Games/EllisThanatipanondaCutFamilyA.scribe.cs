@@ -14,6 +14,10 @@ internal sealed class EllisThanatipanondaCutFamilyADocument : IScribeDocumentDef
         "Every Family A cut-set has nim-sequence (0, 1)^c (+2).",
         H("Ellis–Thanatipanonda Conjecture 1: Family A"),
         Blocks(
+            Node("et-xs", "The XOR of a finite list", "xs", XsFormula(),
+                DescribeRole.Definition, AssessedProvenance.FromRepo(Source),
+                "The function xs takes the right fold of natural bitwise XOR, starting at zero. "
+                + "It forms the nim-sum used in the option estimates."),
             Node("et-nim", "The nim-sequence of cut", "G", GFormula(),
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source),
                 "Page 2: “Fixing a cut-set C, we write G(n) to denote the nim-value of the "
@@ -67,6 +71,15 @@ internal sealed class EllisThanatipanondaCutFamilyADocument : IScribeDocumentDef
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(Disp(formula)), provenance,
             Blocks(Paragraph(Text(prose))), role, resolution);
+
+    private static Formula XsFormula()
+    {
+        var l = F.Id("l");
+        var xor = Lam("a", Nat(), Lam("b", Nat(),
+            App(Qualified("HXor", "hXor"), F.Id("a"), F.Id("b"))));
+        return All("l", Call("List", Nat()), Equal(Call("xs", l),
+            App(Qualified("List", "foldr"), xor, Num(0), l)));
+    }
 
     private static Formula GFormula()
     {

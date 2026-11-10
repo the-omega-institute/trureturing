@@ -1,0 +1,6 @@
+**定义 341.1（承重来源与新增综合）。** 仓内来源固定于 [`a36e4c0700e7cfa4c51e676356af67156c416d02`](https://github.com/the-omega-institute/trureturing/tree/a36e4c0700e7cfa4c51e676356af67156c416d02)。母卷 2.5、10.2、30.1、67.1–67.3 供应同一原全事件的充分大实际参考；前卷 202.1、246.1 供应整个原对象的高秩分离和全部静态中心对。本卷 320.1 的无迹前件缺席证明供应整输出局部性，321.1 供应完整来源的径向残余及 $F_U\circ l=0$，323–330 供应全域尺度、同一 sigma 及完整消费者。新推导不把含额外迹前件的旧局部性陈述用作无迹删除的入口。
+
+D’Ariano–Lo Presti，*Imprinting Complete Information about a Quantum Channel on Its Output State*，DOI [10.1103/PhysRevLett.91.047902](https://doi.org/10.1103/PhysRevLett.91.047902)，[作者原文第 1 页 (2)–(5)](https://www.qubit.it/~lopresti/PRLfaith.pdf)，使用最大纠缠向量化和同基转置。这里只消费这些 $\texttt{literature-attested}$ 矩阵工具；334.2 证明中的指标恒等式与有限矩阵检验是成熟中间步骤，不单独取得原创地位。原文的通道忠实性、反演及层析资源不作为本题的原实际供应。Brešar–Špenko [arXiv:1307.2260v1，Lemma 3.2](https://arxiv.org/html/1307.2260v1#S3.Thmtheorem2) 仍只作为既有 320.1 的交换多线性迹中间来源，不把 primitive 条件未经证明地复化。
+
+新增承重综合是：用原充分参考构成完整来源的匹配差，识别只须消去 $F_U\circ h_A$，以单目标一颗原子的至多 $m_A-1$ 条来源配平返回整个原 $A$，再对全部原对象恢复两份完整量子与过程理论。其地位是 $\texttt{repo-derived}$，不据文献检索未命中主张优先权。配平值的补偿／基独立性和 339.1 的局部隐藏方向给出该综合的准确范围。
+

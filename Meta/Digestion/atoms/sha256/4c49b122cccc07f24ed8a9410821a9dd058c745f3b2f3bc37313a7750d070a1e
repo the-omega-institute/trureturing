@@ -1,0 +1,32 @@
+**定义 173.2（同一读取与原配平）。** 对任意数学正实泛函 $\phi$，沿用123.2
+
+$$
+\begin{gathered}
+B_\phi(a,b)=\phi(a^2)\phi(b^2)-\phi(a\circ b)^2,\qquad
+|\phi D(a,b)|^2\le B_\phi(a,b),\\
+\nu=D(a,b)-a\circ q,\qquad \omega=a\circ b+D(a,q),\\
+D(b+\nu,q+\omega)-D(b-\nu,q-\omega)
+=-2b\circ\nu-2q\circ\omega.
+\end{gathered}
+\tag{173.3}
+$$
+
+每对输出比较共用同一个 $\phi$。准确锥接口使环境态、正延拓及正二次
+读取可以如此读原表；它们不是实际准备。P2的左侧是输出均值的平方，
+不是 $\phi(D(a,b)^2)$。取比例输入直接得
+
+$$
+D(a,\lambda a)=D(a,0)=0\qquad(a\in E,\ \lambda\in\mathbb R).
+\tag{173.4}
+$$
+
+下一定理只需150.1的较小部分
+
+$$
+[h,c]=0\quad\Longrightarrow\quad[h,D(h,c)]=0.
+\tag{173.5}
+$$
+
+它不另假设标量行，也不假设 $[c,D(h,c)]=0$。所有完成、谱、支撑、根和
+逆元仅用于已知乘法及数学读取，从不作为新的 $D$ 输入。
+

@@ -6,7 +6,19 @@ All-state original-source BPZ
 
 The pairing is the complex bilinear OriginalSourcePairing.sourcePairing on the original finite-charge oscillator-polynomial Carrier. The field is literally LatticeAllStateField.Y. D ranges over every symmetric even integral LatticeData for which the integer determinant is a unit, including rank zero and indefinite Gram matrices. The grade is the exact signed coefficient-support grade of LatticePositiveEnergy; no positivity or finite dimension of that grade is required.
 
-**Theorem 1.1 (Canonical all-state BPZ).**
+**Theorem 1.1 (Polynomial flow of an original oscillator variable).**
+
+Lean statement: `D5/S3/VertexAlgebra/SourceBPZ/AllStateTranspose.flow_X_polynomial`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/SourceBPZ/AllStateTranspose.flow_X_polynomial` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every lattice D, charge alpha, coordinate i and natural order p, flowPolynomial applied to X(i,p) is the finite sum of monomials z^(p-s) with coefficient choose(p+1,s+1) times X(i,s), for s from zero through p, plus z^(p+1) times the charge coefficient bilinear(unitCharge i,alpha). No inverse Gram matrix or transpose supplier is assumed. This original support proof is consumed by polynomialPair_insertion and by the arbitrary-bilinear-form OriginalWord choice expansion; public visibility adds no new mathematical result.
+
+**Theorem 1.2 (Canonical all-state BPZ).**
 
 Lean statement: `D5/S3/VertexAlgebra/SourceBPZ/AllStateTranspose.sourcePairing_allState`
 
@@ -28,6 +40,7 @@ This is standard lattice vertex-algebra invariant-form theory, using Bakalov--Ka
 
 ## References
 
+- Truth anchor: `D5/S3/VertexAlgebra/SourceBPZ/AllStateTranspose.flow_X_polynomial`
 - Truth anchor: `D5/S3/VertexAlgebra/SourceBPZ/AllStateTranspose.sourcePairing_allState`
 - Dependency: [D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule](../Sectors/LatticeDualCosetModule.md)
 - Dependency: [D5/S3/VertexAlgebra/Sectors/LatticeSectorIntertwiner](../Sectors/LatticeSectorIntertwiner.md)

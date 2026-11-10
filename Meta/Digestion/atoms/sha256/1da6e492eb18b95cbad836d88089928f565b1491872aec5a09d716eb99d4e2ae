@@ -1,0 +1,19 @@
+**定义 8.1（Odd blocks and the unchanged carrier）。** Let $H$ satisfy
+Definition 7.1's graph hypotheses, and require its order $m\geq2$ to be
+even. Let $s=2S\geq3$ be odd, so $S\in\tfrac12+\mathbb Z$ and
+$S\geq3/2$. Use $B_i,\Omega,G_s$, the complete complex Boolean space
+$\mathcal H_k$, positive token adjacency $K=K_k$, and the original
+$P_{\mathrm{sym}}$ of Definitions 1.1–1.2, with the integer
+$k=ms/2=mS$. Define
+
+$$
+E_H(s)=\lambda_{\min}(K),\qquad
+g(H,s)=\lambda_{\min}(K|_{\ker P_{\mathrm{sym}}})-E_H(s).
+\tag{8.1}
+$$
+
+These are full-space energies. Block permutations commute with $K$,
+so the two projection subspaces reduce it. No flat-mode hypothesis is
+imposed. The nonsymmetric space is nonempty, as also follows from the
+spin sectors in the proof below.
+
