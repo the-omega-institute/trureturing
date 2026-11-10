@@ -1,0 +1,18 @@
+**定义 22.2（完整原三标签复正性 $\mathsf P_3$）。** 沿用 A1.2 的
+
+$$
+g_\alpha(a,b)=\alpha(S(a,b))-\mathrm i\alpha(D(a,b)).
+$$
+
+条件 $\mathsf P_3$ 是对每个 $\alpha\in\mathcal P$、每个 $(a_1,a_2,a_3)\in E^3$，同一个实际矩阵满足
+
+$$
+G_\alpha(a_1,a_2,a_3)=[g_\alpha(a_j,a_k)]_{j,k=1}^3\succeq0,
+\qquad
+\sum_{j,k=1}^3\overline{z_j}z_k g_\alpha(a_j,a_k)\ge0
+\quad(z\in\mathbb C^3).
+\tag{22.1}
+$$
+
+这里的 PSD 包括 Hermitian 性，采用第一槽共轭线性的约定；两条有向非对角项都取原 $D$ 的实际值。检查整个 $\mathbb C^3$，包括任意复相位、退化标签、零系数及所有原实线性组合，不只检查实对角、两两主子式或某个零和面。标签可以落在任意维原 $E$ 中，三标签不限制原空间维数。
+

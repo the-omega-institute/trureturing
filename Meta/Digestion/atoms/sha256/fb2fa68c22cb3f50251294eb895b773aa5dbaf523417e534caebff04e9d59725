@@ -1,0 +1,2 @@
+**定义 78.3（成熟来源与综合边界）。** 规范包络、普遍映射及一般粘合公式复用Hanche-Olsen–Størmer，[*Jordan operator algebras*](https://hanche.folk.ntnu.no/joa/joa-m.pdf)，Theorem7.1.8及Remark7.4.15；任意总映射的恢复复用27.2，其Bunce、因子表示和动力对应条件不删。Alfsen–Shultz，[*Orientation in operator algebras*](https://pmc.ncbi.nlm.nih.gov/articles/PMC22571/)，Theorem1、Theorem6、Corollary7只在各自JB/JBW范围承担成熟接口；它们不直接替代原有限词理想结论。商代数、线性截面、双中央化子和中央符号均非新发明。这里的组合推导是同一旧 $D$ 与具体原还原核的双向对应、准确原有限词纤维积、最小取向载体及77.1原域过滤边界；不把普遍性质的包装当作历史新发现，不主张穷尽文献或原创优先权。纸面推导和仓库CI不冒称Lean kernel证明。
+

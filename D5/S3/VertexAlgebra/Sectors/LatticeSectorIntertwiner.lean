@@ -48,13 +48,13 @@ def inclusion (D : LatticeData) (δ : Charge D) : Sector D δ →ₗ[ℂ] Carrie
 def projection (D : LatticeData) (δ : Charge D) : Carrier D →ₗ[ℂ] Sector D δ :=
   Finsupp.lapply δ
 
-private def chargeSpace (D : LatticeData) (δ : Charge D) : Submodule ℂ (Carrier D) :=
+def chargeSpace (D : LatticeData) (δ : Charge D) : Submodule ℂ (Carrier D) :=
   LinearMap.range (Finsupp.lsingle δ)
 
 private theorem chargeSpace_single (D : LatticeData) (δ : Charge D) (v : Oscillator D) :
     Finsupp.single δ v ∈ chargeSpace D δ := ⟨v, rfl⟩
 
-private theorem word_charge (D : LatticeData) (α β : Charge D)
+theorem word_charge (D : LatticeData) (α β : Charge D)
     (w : List (Index D)) (n : ℤ) (v : Oscillator D) :
     ((wordField D α w)[[n]]) (Finsupp.single β v) ∈ chargeSpace D (α + β) := by
   classical

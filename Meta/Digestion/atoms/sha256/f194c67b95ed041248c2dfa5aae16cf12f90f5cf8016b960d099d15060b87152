@@ -1,0 +1,37 @@
+**推论 82.1（有限族入口及窗口几何）。** 保持 81.1 的完整原候选。若原有限族 $v_1,\ldots,v_n\in V_h$ 满足
+
+$$
+v_i\circ v_j=(M_0)_{ij}u+(M_1)_{ij}R,
+\qquad M_0,M_1\in\operatorname{Sym}_n(\mathbb R),\quad M_1>0,
+\quad R\in E\setminus\mathbb Ru,
+\tag{82.1}
+$$
+
+则它们实线性无关，81.2 在其原实线性包上成立。对任意非零窗口 $W$，$R$ 在
+
+$$
+\mathcal B=C^*(u,h,W,G(W))
+\tag{82.2}
+$$
+
+中中央。每份有限 $F\subset W$ 都有 (81.12) 的共同原轴；$(h,e_i,G(e_i))$ 两两 Jordan 正交，平方为 $u,S_i,S_i$。任意原二点 $v,w\in W$ 的响应 Gram 和混合斜关系由 (81.3) 给出，而同一旧 $D(v,w)$ 的正交与面积直接复用 18.2。
+
+证明。若 $\sum_i t_iv_i=0$，平方及 $u,R$ 的独立性给 $t^{\mathsf T}M_1t=0$，正定性使 $t=0$。对 $w=\sum_i t_iv_i$ 定义 $q_k(w)=t^{\mathsf T}M_kt$，便得到 (81.2)，可消费 81.2。这份有限多输入共同线性不同于 18.2 对单个二输入响应的面积。
+
+当 $W\ne0$，对每个非零 $w\in W$ 都有
+
+$$
+R=\frac{w^2-q_0(w)u}{q_1(w)}.
+\tag{82.3}
+$$
+
+$w$ 与 $w^2$ 交换，$G(w)$ 与自身平方 $G(w)^2=w^2$ 交换，$h\circ w=0$ 又使 $h$ 与 $w^2$ 交换。因此 $R$ 与所有 $w,G(w),h$ 交换，且 (82.3) 使 $R\in\mathcal B$，故 $R\in Z(\mathcal B)$。三轴的正交及平方直接来自 (81.5)、(81.12)。最后，任意 $(v,w)$ 的完整 Jordan Gram 由 (81.11) 写成一份 $M_0u+M_1R$，18.2 对这份实际原对适用，给
+
+$$
+v\circ D(v,w)=w\circ D(v,w)=0,\qquad
+D(v,w)^2=v^2w^2-(v\circ w)^2.
+\tag{82.4}
+$$
+
+此处使用的是已付面积，不把它计作新的共同线性。∎
+

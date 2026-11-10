@@ -1,0 +1,16 @@
+**定理 53.1（原因子上统一平方误差界的准确限制）。** 在 43.2 恢复的同一个 II₁ 原因子中，存在有限个原输出 $t_1,\ldots,t_m$ 和 $C>0$ 使
+
+$$
+\|p-q\|_2^2\le C\sum_{j=1}^m\|D(p,t_j)-D(q,t_j)\|_2^2
+\qquad(p,q\in A_D)
+\tag{53.1}
+$$
+
+当且仅当这个原因子是满因子。这里 $\|x\|_2^2=\tau(x^*x)$ 用原数学迹；满性指每个一致有界中央网都在该范数下渐近为标量，非可分背景中不把网偷换成序列。
+
+证明。先消费成熟 Connes 谱隙定理的不要求可分性的版本：满 II₁ 因子等价于存在有限酉元 $u_j$ 和 $\kappa>0$，使 $\|x-\tau(x)1\|_2^2\le\kappa\sum_j\|u_jx-xu_j\|_2^2$ 对全部 $x\in M$。准确可读来源是 Houdayer，*Spectral gap in von Neumann algebras and applications*，[Lecture 3, Theorem 3.3](https://cyrilhoudayer.com/wp-content/uploads/2018/08/houdayer-spectral-gap1.pdf)，其中明确不要求可分前对偶；满性的网定义见 Definition 1.1。这里只消费该已知结论，不将其重写为新的谱隙定理。
+
+写 $u_j=a_j+\mathrm ib_j$，取 $h_j=a_j-\tau(a_j)1$、$k_j=b_j-\tau(b_j)1$。43.2 的原输出覆盖保证这些无迹自伴元都是单个旧 $D$ 输出。对 $v=p-q\in V$，三角平方界和 $D(v,t)=\varepsilon\mathrm i[v,t]/2$ 给 $\|[u_j,v]\|_2^2\le8(\|D(v,h_j)\|_2^2+\|D(v,k_j)\|_2^2)$，故这些原测试满足 (53.1)，可取 $C=8\kappa$。
+
+反向若 (53.1) 成立，取任一一致有界中央网 $x_\lambda$，把其实部和虚部分别去迹。它们都在 $V=A_D$，与每个固定 $t_j$ 的交换子趋零；在 (53.1) 中与 $q=0$ 比较，给这两个无迹部分的 $L^2$ 范数趋零，遂有 $\|x_\lambda-\tau(x_\lambda)1\|_2\to0$。这正是满性。这里的新增应用是对同一原输出与旧关系的统一误差合同作出准确判别；不把满性加入适用于全部量子载体的公理。∎
+

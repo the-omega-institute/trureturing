@@ -1,0 +1,22 @@
+**定义 60.1（原条件与方向窗口）。** 保持 16.1、32.1 的同一原 $(E,C,u,N,\mathcal P,S,D)$、A1–A3、准确决定锥的分离正实评价、全部 P2 和完整 PB。A1 仍为全部原有向 Hermitian 二表正性，A2 仍为相加三表及其排列的实部半正定与 $(1,-1,-1)$ 零二次值，A3 仍为 $S(u,u)=u$ 和同一个固定正有理小窗口上的平方收缩。消费已经取得的 $S=\circ$、自身 JB 完成 $X$ 及忠实含单位等距准确锥 JC 包含；原 $E$ 可以不完备，不要求填满环境的自伴部。全部数学正读取的 P2 与全部原三标签的 PB 为
+
+$$
+\begin{aligned}
+|\phi D(a,b)|^2&\le\phi(a^2)\phi(b^2)-\phi(a\circ b)^2,\\
+\nu&=D(a,b)-a\circ c,\qquad
+\omega=a\circ b+D(a,c),\\
+D(b+\nu,c+\omega)-D(b-\nu,c-\omega)
+&=-2b\circ\nu-2c\circ\omega.
+\end{aligned}
+\tag{60.1}
+$$
+
+原 $D$ 不另加可加、输入齐次、连续、可测、一般单位或中央平移、商下降、输出闭合、完成延拓、$\mathsf F$ 或原 R。全部实际来源和七项消费者完整保持 58.3。以下只选择已知 Jordan 几何中的一个实线性子空间
+
+$$
+W\subset E,\qquad x^2\in\mathbb Ru\quad(x\in W).
+\tag{60.2}
+$$
+
+这是条件定理的适用窗口，不替换完整候选；不要求 $W$ 有限维、在完成中闭或满足 $D(W,W)\subset W$。
+

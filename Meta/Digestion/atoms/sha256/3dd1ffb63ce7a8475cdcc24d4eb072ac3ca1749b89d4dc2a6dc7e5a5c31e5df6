@@ -1,0 +1,13 @@
+**假设 C-12.1（另供纯底面双量子位）。** $`r\gt 0`$，在条件 𝑧=0 下真实供应归一化纯态，其系数矩阵为
+
+
+```math
+𝒜=\frac1{\sqrt r}\begin{pmatrix}
+\sqrt{p_0}e^{i\theta_0}&\sqrt{p_3}e^{i\theta_3}\\
+\sqrt{p_1}e^{i\theta_1}&\sqrt{p_{13}}e^{i\theta_{13}}
+\end{pmatrix}.
+```
+
+
+行、列是两个端点的 0,1 标签。此条件模型不供应顶点与底面的相干，也不等于原树酉表示。四底角正时定义 $`\Phi=\theta_0+\theta_{13}-\theta_1-\theta_3\pmod{2\pi}`$。
+

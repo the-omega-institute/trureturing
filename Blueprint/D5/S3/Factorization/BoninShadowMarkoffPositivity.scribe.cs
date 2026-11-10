@@ -56,6 +56,11 @@ internal sealed class BoninShadowMarkoffPositivityDocument : IScribeDocumentDefi
                 + "Sections 2 and 5, with every finite word after the mandatory r, l moves. "
                 + "Arbitrary independent permutations at the root are outside this assertion.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("real_recurrence_growth", "Growth of a rational recurrence", RecurrenceGrowthFormula(),
+                "A rational sequence with coefficient at least three, positive first term, and initially "
+                + "increasing terms bounded by the coefficient times the preceding term remains positive, "
+                + "strictly increasing, and subject to the same bound at every index.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("result", "The exact positivity region", Disp(ClaimBody()),
                 "The shifted shadows 3x − σa, with σ the sum of the initial shadows, satisfy "
                 + "a cone invariant under both mutations. This proves positivity throughout "
@@ -73,7 +78,7 @@ internal sealed class BoninShadowMarkoffPositivityDocument : IScribeDocumentDefi
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance,
         OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
-        DescribeId.Create("bonin-shadow-" + name.ToLowerInvariant()),
+        DescribeId.Create("bonin-shadow-" + name.ToLowerInvariant().Replace('_', '-')),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
         provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
@@ -123,6 +128,22 @@ internal sealed class BoninShadowMarkoffPositivityDocument : IScribeDocumentDefi
             Tuple(D(0), D(0)), Tuple(Div(D(1), D(2)), D(0)),
             Tuple(D(1), D(1)), Tuple(D(0), D(2)),
         ]))));
+
+    private static Formula RecurrenceGrowthFormula()
+    {
+        var k = F.Id("k"); var n = F.Id("n");
+        Formula T(Formula index) => Apply(F.Id("t"), index);
+        Formula LE(Formula a, Formula b) =>
+            new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+        var recurrence = All(["n"], N(), Equal(T(Add(n, D(2))),
+            new Formula.Binary(Mul(k, T(Add(n, D(1)))), FormulaBinaryOperator.Subtract, T(n))));
+        var conclusion = All(["n"], N(), And(Lt(D(0), T(n)),
+            And(Lt(T(n), T(Add(n, D(1)))), LE(T(Add(n, D(1))), Mul(k, T(n))))));
+        return Disp(All(["t"], new Formula.TypeArrow(N(), Q()), All(["k"], Q(),
+            Implies(LE(D(3), k), Implies(Lt(D(0), T(D(0))),
+                Implies(Lt(T(D(0)), T(D(1))), Implies(LE(T(D(1)), Mul(k, T(D(0)))),
+                    Implies(recurrence, conclusion))))))));
+    }
 
     private static Formula ClaimFormula() => Disp(Iff(Call("claim"), ClaimBody()));
 

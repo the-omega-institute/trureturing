@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:aa8ae77247ede11b185037f6bc416bc7704068005a49fcfc5fd3f6f9d4b9cd24
+  normalized_sha256: sha256:aa8ae77247ede11b185037f6bc416bc7704068005a49fcfc5fd3f6f9d4b9cd24
+cas_ref: sha256:aa8ae77247ede11b185037f6bc416bc7704068005a49fcfc5fd3f6f9d4b9cd24
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义1.2规定同一实响应空间、对称含幺双线性乘法、分离实线性评价、评价定义的锥与质量、序单位界及原总映射D，并定义g_alpha。非负质量和序界属于所固定背景的前提；未断言任意给定数据满足它们。零、重复、全部实缩放及平移标签的范围和数学标签不等于实际操作的限制均为约定。本条只声明背景、符号和适用范围，不证明定理2.1，不证明该背景的实际实现。
+    previous_atom_id: df6aa090db80898d811f745f9f4412c2916e84cc8dd3e809c4bafd1224b4cfa3
+    next_atom_id: ac4d31af14a22dbdcbaa27246a4c36b00091149cf441321f42ff1d43ca823655

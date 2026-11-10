@@ -700,3 +700,3990 @@ model and give no physical-memory consequence or Lean-kernel claim.
 [CL]: RECURSIVE_RELATIONAL_OBSERVATION_COMMON_LIVE_CONES_AND_PRIVATE_DEMAND_CAPACITY.md
 
 ## 追加锚（本行以下为增补区）
+
+## 29. Axis hit-gap-three histories and their paid short exits
+
+**Definition 29.1 (actual axis pair and positive short exits).** Fix
+any positive increasing position tuple and any one original graph
+satisfying Assumption 21.1 for that tuple. The graph may depend on the
+tuple. Let two actual live histories end at the same state $q$, with
+exposed assignments $\sigma:S\to\{0,1\}$ and
+$\rho:T\to\{0,1\}$ and respective cells $(0,z),(3,w)$.
+Thus $K\ge4$, $\sigma\equiv0$, and $\rho$ has three ones. Put
+
+$$
+\begin{gathered}
+X=S\setminus T,\quad Y=T\setminus S,\quad
+I=S\cap T,\quad U=[n]\setminus(S\cup T),\\
+a=|X|,\quad b=|Y|,\quad u=|U|,\quad
+\beta=|\{j\in Y:\rho_j=1\}|,\quad v=K-3,\\
+D=\{j\in I:\sigma_j=0,\ \rho_j=1\},\\
+d_-=z,\quad d_+=3+w,\qquad C_Z=\sum_{i\in Z}c_i.
+\end{gathered}
+\tag{SI.181}
+$$
+
+A state $r$ has **positive short exits** if there is a branch path
+starting with reply zero at $r$ and ending at terminal $\mathsf0$
+after at most two queries, and a branch path starting with reply one
+at $r$ and ending at terminal $\mathsf1$ after at most two queries.
+These are two existential paths in the installed graph. Each includes
+the query at $r$ and, possibly, one query at its running successor.
+They need not describe all continuations from $r$. A particular
+witness path may be inconsistent with some other incoming history.
+
+**Theorem 29.2 (axis discrimination with one query of slack).** For
+every pair of Definition 29.1,
+
+$$
+\begin{gathered}
+D\ne\varnothing,\quad |D|=3-\beta,\quad
+1\le a\le b\le3,\quad C_X\le C_Y,\quad u\ge v,\\
+\Delta_d:=d_+-d_-=b-a\in\{0,1\},\\
+\mathcal J_3=[v,\min(u,K-1-\beta)]\cap\mathbb Z
+                 \ne\varnothing.
+\end{gathered}
+\tag{SI.182}
+$$
+
+For every assignment $\tau:U\to\{0,1\}$ of weight in
+$\mathcal J_3$, form the two completions
+
+$$
+\begin{array}{c|cccc}
+ &I&X&Y&U\\ \hline
+\theta^-&0&0&\rho|_Y&\tau\\
+\theta^+&\rho|_I&0&\rho|_Y&\tau.
+\end{array}
+\tag{SI.183}
+$$
+
+Their outputs are respectively zero and one. Starting at $q$, their
+first different reply occurs at a state $r$ querying some $j\in D$.
+Let $k$ be the number of queries strictly before this discriminator
+in their common continuation, and let $\ell_-,\ell_+$ be the actual
+numbers of queries strictly after it on the respective complete runs.
+Then, with
+
+$$
+M=b+u-2=n-z-2,\qquad e=k-M,
+$$
+
+one has
+
+$$
+e\ge0,\qquad e+\ell_-\le1,\qquad
+\Delta_d+e+\ell_+\le1.
+\tag{SI.184}
+$$
+
+In particular $r$ has positive short exits. If $d_+=d_-+1$,
+then $e=\ell_+=0$ and $\delta(r,1)=\mathsf1$.
+If $e=1$, both tails are empty and $r$ is a positive terminal
+literal gate. Every tail in these conclusions is paid on its own
+actual input.
+
+More explicitly, write $C_{\rm pre}$ for the complete charge of the
+$k$ common queries, counting every repeated query, and $C_-,C_+$
+for the charges of the actual tails. The original letter caps give
+
+$$
+\begin{aligned}
+C_{\rm pre}+c_j+C_-&\le C_Y+C_U,\\
+C_{\rm pre}+c_j+C_+&\le C_X+C_U.
+\end{aligned}
+\tag{SI.185}
+$$
+
+Proof. The histories are distinct. Their supports are incomparable
+by the supplied exclusions in SI Section 2, so $a,b\ge1$.
+[SI, Lemma 11.3][SI] says that their exposed assignments are
+incompatible. Because the lower assignment is entirely zero, this
+requires an upper one in $I$. Thus $D\ne\varnothing$ and
+$|D|=3-\beta$, in particular $\beta\le2$.
+
+We first recover the interval separation and one-sided exchange used
+in [PE, Theorems 3.1 and 7.2][PE], directly for these Boolean
+histories. There is no integer in
+
+$$
+[0,u]\cap[K-b,K-1]\cap[v-a,v-1].
+\tag{SI.186}
+$$
+
+Indeed, give $U$ a common assignment of such a weight. After exposing
+all of $U$, both histories would still be live: their remaining
+thresholds would lie respectively between one and $b$, and between
+one and $a$. Before that, their counts are bounded by these final
+live counts. While both are live, their common queried coordinate
+must be fresh for both by SI Theorem 2.2, hence belong to $U$.
+They therefore follow a common fresh continuation through $U$.
+Halting while live is incorrect; after exhausting $U$, another
+common fresh query is impossible. This proves (SI.186) using actual
+completions and fixed successors.
+
+The two intervals
+$[\max(0,K-b),\min(u,K-1)]$ and
+$[\max(0,v-a),\min(u,v-1)]$ are nonempty by incoming liveness
+and $a,b\ge1$. The second upper endpoint is no greater than the
+first. Their disjointness places the second interval strictly below
+the first. The first lower endpoint must therefore be $K-b>0$,
+and the second upper endpoint must be $v-1<u$. It follows that
+$K\ge b+1$, $v\le u$ and $v-1<K-b$, hence $b\le3$.
+
+For the one-sided exchange, start from the upper history and answer
+every fresh $X$ query zero. On first exposures in $U$, answer one
+on the first $v-1$ and zero on the rest. This adaptive description
+constructs a single input: each answer fixes a previously unread
+coordinate. Before the first $v-1$ exposures in $U$ are finished,
+there are at most $a\le a+u-v$ additional zeros and fewer than
+$v$ additional ones. Afterwards there are exactly $K-1$ ones
+in total, and every remaining unread coordinate is zero and is
+needed for the negative certificate. Thus the upper run remains
+live until its last unread coordinate. Freshness makes its suffix
+query exactly $X\cup U$ once. It has used all $n$ queries and
+must halt immediately at terminal zero.
+
+Replay that suffix from the lower history, keeping the same $U$
+assignment and giving $Y$ arbitrary values. Every queried $X$
+coordinate has its old lower value zero; the suffix never queries
+$I$ or $Y$. This is an actual completion of the lower history and
+follows the entire suffix by stationarity. Its weight is at most
+$b+v-1\le K-1$, consistent with its zero output. Its full query
+count and charge are
+
+$$
+z+a+u=n+a-b,\qquad
+C_S+C_X+C_U=W+C_X-C_Y.
+$$
+
+Applying both caps to this same replayed input proves $a\le b$
+and $C_X\le C_Y$. This argument pays for the repeats in $X$;
+it uses no equality of distinct subset sums.
+
+Since $u\ge v$ and $\beta\le2$, one has
+$K-1-\beta\ge K-3=v$, proving the nonemptiness of
+$\mathcal J_3$. Each vector in (SI.183) extends its respective
+actual incoming history. Its weight is $\beta+|\tau|\le K-1$
+or $3+|\tau|\ge K$. Opposite correct outputs force a first
+different reply in their common continuation. The vectors differ
+only in $D$, so the discriminator queries $j\in D$, with replies
+zero and one in that order.
+
+This is an old-coordinate query on both runs. Freshness therefore
+implies that both histories are already certified immediately before
+it. The negative input has exposed at least $L$ distinct zeros and
+the positive input at least $K$ distinct ones. In the common
+continuation before this query put
+
+$$
+\begin{aligned}
+B_0&=\{i\in Y:\rho_i=0,\ i\text{ was queried there}\},\\
+U_0&=\{i\in U:\tau_i=0,\ i\text{ was queried there}\},\\
+U_1&=\{i\in U:\tau_i=1,\ i\text{ was queried there}\}.
+\end{aligned}
+$$
+
+The lower run's new zeros can only be in $B_0\cup U_0$;
+the upper run's new ones can only be in $U_1$, because every
+$X$ value is zero. Consequently
+
+$$
+|B_0|+|U_0|\ge L-z,\qquad |U_1|\ge K-3,
+\qquad k\ge|B_0|+|U_0|+|U_1|\ge n-z-2=M.
+\tag{SI.187}
+$$
+
+These are joint certificates from one common continuation, as in
+PE Theorem 7.2; repeats cannot enlarge the sets or lower $k$.
+The exact incoming query counts are $d_-,d_+$ by SI Theorem 2.2.
+The full counts on these two actual inputs are therefore
+
+$$
+d_-+k+1+\ell_-=n-1+e+\ell_-,\qquad
+d_++k+1+\ell_+=n-1+(b-a)+e+\ell_+.
+$$
+
+The query caps give (SI.184). Since $b-a\ge0$, they also force
+$b-a\in\{0,1\}$. The two actual discriminator branches now
+halt at their respective terminals in at most one further query,
+giving the positive short exits. If $b-a=1$, (SI.184) forces
+$e=\ell_+=0$; if $e=1$, it forces both tails empty. Fixed
+successors give the asserted terminal edges. Finally the complete
+charges are $C_S+C_{\rm pre}+c_j+C_-$ and
+$C_T+C_{\rm pre}+c_j+C_+$. Subtracting the respective incoming
+charges from their own caps gives (SI.185). $\square$
+
+## 30. Every live occurrence of a state with positive short exits
+
+**Theorem 30.1 (global two-by-two localization).** On any graph of
+Assumption 21.1 with $K\ge4$, a state with positive short exits
+can be live only in the cells
+
+$$
+\Pi_4=\{K-2,K-1\}\times\{L-2,L-1\}.
+\tag{SI.188}
+$$
+
+If its reply-one successor is terminal $\mathsf1$, its possible
+live cells reduce to the rightmost two cells
+
+$$
+\Pi_R=\{K-1\}\times\{L-2,L-1\}.
+\tag{SI.189}
+$$
+
+These assertions concern every actual live occurrence anywhere in
+the graph, including occurrences unrelated to the pair that supplied
+the short exits. All such occurrences have depth at least $n-3$.
+
+Proof. Take any live occurrence of the state, with counts $(h,z)$.
+Its queried coordinate is fresh. Suppose $z\le L-3$. On reply
+zero the history remains live. The zero short exit cannot be an
+immediate terminal, since a live history has completions of both
+outputs. Its running successor, if any, must query another fresh
+coordinate by SI Theorem 2.2. The indicated next answer on the
+short path is therefore consistent with some actual completion of
+this incoming history. That path returns zero with at most $z+2<L$
+exposed zeros. But every partial assignment with fewer than $L$
+zeros has a positive completion, contradicting correctness. Thus
+$z\ge L-2$.
+
+Similarly, if $h\le K-3$, reply one leaves the history live.
+The positive short path then returns one after at most two fresh
+exposures, with fewer than $K$ ones. The exposed assignment has
+a negative completion, another contradiction. Hence $h\ge K-2$.
+Liveness supplies the opposite inequalities $h\le K-1$ and
+$z\le L-1$, proving (SI.188). If reply one goes directly to
+terminal one, the same reasoning with one exposure requires
+$h+1\ge K$, so $h=K-1$, proving (SI.189).
+The minimum depth in (SI.188) is $K+L-4=n-3$. The argument
+uses freshness only at occurrences that are live; it imposes none
+on certified traffic. $\square$
+
+**Proposition 30.2 (short exits do not give a two-query algorithm).**
+The ordinary fixed-order threshold grid satisfies Assumption 21.1
+and has a live state with positive short exits whose residual cannot
+be computed by any deterministic algorithm using at most two queries
+on every completion. That state is not a terminal literal gate. The grid
+itself has no shared host of distinct count cells.
+
+Proof. Install one state for each $(h,z)\in V$, querying coordinate
+$h+z+1$ in the fixed order $1,\ldots,n$. Send each reply to its
+updated cell while live and to the correct terminal on reaching a
+threshold. Every run queries a prefix of this order once, so both
+caps hold with the original costs. Each state has only its named
+count cell.
+
+At $(K-2,L-2)$ there are three unread coordinates $x,y,t$,
+and the residual is majority of three. Replies $x=y=0$ lead to
+terminal zero, and $x=y=1$ to terminal one. Both paths use two
+queries. Both successors after the first query are running, so the
+state is not a literal gate. Any two-query algorithm for this
+residual can be answered with one zero and one one on distinct
+coordinates; the remaining coordinate then changes the answer.
+A repeated query supplies still less information. Thus a uniform
+two-query algorithm is impossible. This example distinguishes the
+short-exit property from stronger continuation properties; it does
+not realize an axis collision of Definition 29.1. $\square$
+
+## 31. Natural representatives and genuine excess capacity
+
+**Definition 31.1 (coordinate disagreements on one graph).** Let
+$A_0$ be the unique all-zero-axis support at cell $(0,L-1)$.
+For any finite family $\mathcal E$ of actual axis pairs of
+Definition 29.1, let $D_e$ be its sets (SI.181), and define the
+coordinate transversal number by
+
+$$
+\tau_3(\mathcal E)=
+\min\{|H|:H\subseteq[n],\ H\cap D_e\ne\varnothing
+                                      \ (e\in\mathcal E)\},
+\qquad \nu=|Q\setminus Q_{\rm live}|.
+\tag{SI.190}
+$$
+
+Every $D_e$ is nonempty by Theorem 29.2 and is contained in
+$A_0$, since the support of every $(0,z)$ history is an initial
+support of the unique all-zero axis. Set $\tau_3(\varnothing)=0$.
+This is a coordinate transversal, distinct from the signed
+transversal $\tau$ of Definition 26.1.
+
+**Theorem 31.2 (excess, rather than gross, capacity).** With
+Definition 31.1,
+
+$$
+\nu+\sum_{p\in\Pi_4}(b_p-1)\ge\tau_3(\mathcal E).
+\tag{SI.191}
+$$
+
+If every pair in a subfamily $\mathcal E_R$ has unequal incoming
+depths, then
+
+$$
+\nu+\sum_{p\in\Pi_R}(b_p-1)\ge\tau_3(\mathcal E_R).
+\tag{SI.192}
+$$
+
+For $K=4$ every actual shared-history pair with hit gap three is
+an axis pair of Definition 29.1, so (SI.191) covers all such pairs.
+
+Proof. First exclude actual natural representatives in each possible
+live cell. For $p=(h,t)\in\Pi_4$ follow the reply word
+$0^t1^h$ from the fixed start, and denote its host by $q_p$.
+Every prefix remains live, so SI Theorem 2.2 realizes this as an
+actual live history. Its support contains $A_0$. For $t=L-1$
+this follows from its first $L-1$ zero replies. For $t=L-2$,
+its next query, answered one, is exactly the query that the all-zero
+axis answers zero to complete $A_0$. There is at least one such
+one reply since $h\ge K-2\ge2$. Thus in both cases freshness
+at $q_p$ implies
+
+$$
+i(q_p)\notin A_0.
+\tag{SI.193}
+$$
+
+Let $\mathcal P$ be the set of installed states with positive
+short exits and labels in $A_0$, and let $H_P$ be their set of
+coordinate labels. For every $e\in\mathcal E$, Theorem 29.2
+supplies one of these states with label in $D_e$. Therefore
+$|H_P|\ge\tau_3(\mathcal E)$ and $|\mathcal P|\ge|H_P|$.
+Theorem 30.1 classifies all live occurrences of every member of
+$\mathcal P$. Equation (SI.193) excludes $q_p$ in every possible
+cell, giving the actual set containment
+
+$$
+\mathcal P\subseteq
+(Q\setminus Q_{\rm live})\ \cup\!
+       \bigcup_{p\in\Pi_4}(F_p\setminus\{q_p\}).
+\tag{SI.194}
+$$
+
+The union bound now gives
+$\tau_3(\mathcal E)\le|\mathcal P|
+ \le\nu+\sum_{p\in\Pi_4}(b_p-1)$, proving (SI.191).
+The subtraction of one in each cell is justified by its actual
+excluded host, rather than by a gross bound on live states.
+
+For $\mathcal E_R$, Theorem 29.2 supplies states in $\mathcal P$
+whose reply-one edge is terminal one. Restrict $\mathcal P$ to
+these states. Their labels meet all $D_e$ for $e\in\mathcal E_R$,
+and Theorem 30.1 restricts their possible live cells to $\Pi_R$.
+The same natural representatives and union bound prove (SI.192).
+Finally, the live hit rows when $K=4$ are $0,1,2,3$, so a hit
+gap of three necessarily has lower row zero and upper row three.
+No injection from pairs to states, or from pairs to labels, was used.
+A single state may serve many pairs. $\square$
+
+## 32. Pinning short-exit states behind an actual common cut
+
+**Theorem 32.1 (common-cut strengthening).** On a graph of
+Assumption 21.1 with $K\ge4$, let $T_a$ be an actual common
+support at depth $a\le n-3$. Let $\mathcal E$ be a finite
+positive-short disagreement family in the following precise sense:
+each member has a nonempty coordinate set $D_e\subseteq T_a$,
+and an installed state with positive short exits whose label is in
+$D_e$. Then, writing $\tau_3(\mathcal E)$ for the coordinate
+transversal number of these sets,
+
+$$
+\nu\ge\tau_3(\mathcal E).
+\tag{SI.195}
+$$
+
+In particular this applies to every family of Definition 31.1 whose
+$D_e$ lie in $T_a$. The short-exit hypothesis in the general
+statement is supplied by Theorem 29.2 in that application.
+
+Proof. Any installed positive-short state with label in $T_a$
+is globally never-live. Otherwise Theorem 30.1 puts an actual
+live occurrence at depth $d\ge n-3\ge a$. Its actual live
+ancestor at depth $a$ has support $T_a$, so its own support
+contains $T_a$. This is the ancestry part of [SI, Lemma 9.2][SI],
+also when $d=a$. Freshness forbids its fixed label from lying in
+$T_a$, a contradiction. Consequently the labels of globally
+never-live positive-short states in $T_a$ form a hitting set for
+the $D_e$. Its cardinality is at most $\nu$, proving (SI.195).
+The argument excludes all live occurrences, rather than charging a
+state merely because its discriminating occurrence was certified.
+$\square$
+
+**Corollary 32.2 (automatic pinning in the nine-input gap $(3,9)$).**
+Let $n=9$, $K=4$, $L=6$, and let $B=(3,9)$ be an actual
+consecutive common-support gap. Consider any finite family of
+actual hit-gap-three pairs with equal incoming depths, two private
+coordinates on each side, and both incoming cells in $V_B$.
+Every pair has incoming cells $(0,5),(3,2)$ and
+
+$$
+S\cap T=T_3,\qquad \varnothing\ne D_e\subseteq T_3.
+\tag{SI.196}
+$$
+
+Thus this family satisfies (SI.195).
+
+Proof. The lower row is zero, so these are pairs of Definition 29.1.
+Write $d=|S|=|T|$. The actual common depth three and incoming
+depth $d>3$ imply $T_3\subseteq S\cap T$ by SI Lemma 9.2.
+The two private coordinates on each side require $d-3\ge2$.
+The lower axis is live, so $d=z\le L-1=5$. Hence $d=5$,
+and $|S\cap T|=d-2=3$ forces $S\cap T=T_3$.
+The incoming counts and (SI.196) follow, with nonemptiness from
+SI Lemma 11.3 as in Theorem 29.2. Apply Theorem 32.1 at
+$a=3\le9-3$. This is conditional on actual pairs; it does not
+assert that the family is nonempty or that such a gap is realizable.
+$\square$
+
+## 33. The same-graph nine-input counting consumer
+
+**Corollary 33.1 (exact capacity pool and a sufficient condition).**
+Retain Assumption 21.1 with $n=9$, $K=4$, $L=6$, and an
+actual consecutive terminal gap $B=(a,9)$, $a\in\{1,2,3\}$.
+Fix the original position tuple and its graph separately, as in
+Corollary 27.1. Choose either
+
+$$
+\Pi=\Pi_4=\{2,3\}\times\{4,5\},\qquad\text{or}\qquad
+\Pi=\Pi_R=\{3\}\times\{4,5\},
+$$
+
+and on this same graph put
+
+$$
+\begin{aligned}
+R&=E_{\rm cut}+\sum_{C\in\mathcal B,\ C\ne B}(E_C-D_C),\\
+E_B^{\setminus\Pi}&=\sum_{p\in V_B\setminus\Pi}(b_p-1),\\
+C_\Pi&=\nu+\sum_{p\in\Pi}(b_p-1).
+\end{aligned}
+\tag{SI.197}
+$$
+
+Let $\mathcal E_3$ be any axis family with incoming cells in
+$V_B$; for the choice $\Pi_R$, require all its pairs to have
+unequal incoming depths. Write $t_3=\tau_3(\mathcal E_3)$.
+Optionally take a signed literal-gate family of Definition 26.1 on
+this graph, with incoming cells in $V_B$, and write $t_{\rm lit}$
+for its signed transversal number. Also optionally take a family
+of Theorem 32.1 on this graph and write $t_{\rm cut}$ for its
+coordinate transversal number. Empty families have transversal
+number zero. Then $R\ge0$, $b_{(3,5)}\ge2$, and
+
+$$
+\begin{aligned}
+m&=24+R+E_B^{\setminus\Pi}-D_B+C_\Pi,\\
+C_\Pi&\ge\max\{1,t_3,t_{\rm lit}-1,t_{\rm cut}+1\}.
+\end{aligned}
+\tag{SI.198}
+$$
+
+The exact remaining condition for $m\ge24$ on this graph is
+
+$$
+R+E_B^{\setminus\Pi}+C_\Pi\ge D_B.
+\tag{SI.199}
+$$
+
+A clearly sufficient, possibly stronger condition is
+
+$$
+R+E_B^{\setminus\Pi}+
+       \max\{1,t_3,t_{\rm lit}-1,t_{\rm cut}+1\}\ge D_B.
+\tag{SI.200}
+$$
+
+Proof. The nonnegativity of $R$ and $b_{(3,5)}\ge2$ are the
+same-graph conclusions proved in Corollary 27.1: every other gap
+has span at most three, and depth eight is internal and noncommon
+with unique cell $(3,5)$. Both choices of $\Pi$ lie in $V_B$
+and contain this cell. Split $E_B$ into its $\Pi$ and
+$V_B\setminus\Pi$ sums in the exact incidence identity
+[SI, Theorem 9.3, (SI.32)][SI],
+$m-24=R+E_B-D_B+\nu$. This gives the equality in (SI.198).
+
+The corner excess alone gives $C_\Pi\ge b_{(3,5)}-1\ge1$.
+Theorem 31.2 gives $C_\Pi\ge t_3$, using (SI.192) for
+$\Pi_R$. Theorem 26.2 gives
+$b_{(3,5)}+\nu\ge t_{\rm lit}$, and hence
+$C_\Pi\ge t_{\rm lit}-1$. Theorem 32.1 gives
+$\nu\ge t_{\rm cut}$; its never-live states are disjoint
+from the corner's live hosts, so
+$C_\Pi\ge t_{\rm cut}+(b_{(3,5)}-1)\ge t_{\rm cut}+1$.
+These are lower bounds on one capacity pool, so their maximum is
+valid. Adding the transversal bounds to one another is not justified:
+the same states and labels can serve the different families.
+
+For comparison with (SI.178)--(SI.179), the exact relation is
+
+$$
+\begin{aligned}
+C_\Pi&=b_{(3,5)}+\nu-1+
+                   \sum_{p\in\Pi\setminus\{(3,5)\}}(b_p-1),\\
+E_B^\circ&=E_B^{\setminus\Pi}+
+                   \sum_{p\in\Pi\setminus\{(3,5)\}}(b_p-1).
+\end{aligned}
+\tag{SI.201}
+$$
+
+Thus (SI.199) is exactly (SI.179), with its natural hosts already
+subtracted in the new pool. Rearranging the equality proves its
+equivalence to $m\ge24$, and the lower bound in (SI.198) proves
+the sufficiency of (SI.200). No gross four-cell host count is added
+to the older terminal-gate count. In the situation of Corollary 32.2,
+its $t_{\rm cut}$ is automatically available for the family there.
+$\square$
+
+## 34. Mathematical sources and the remaining quantified condition
+
+**Proposition 34.1 (scope of the transfer).** The preceding conclusions
+hold for every original increasing position tuple, separately for
+every graph satisfying Assumption 21.1 for that tuple. They preserve
+both pointwise caps, adaptive coordinate orders, union cycles and
+paid post-certification queries. They supply conditional counting
+criteria, without establishing (SI.200) for every terminal pool.
+The whole-table condition (SI.166), [CP, (CP.28)][CP], and the
+unrestricted nine-input conclusion $m_{\rm exec}=24$ therefore
+remain unproved by these criteria. There is no physical-memory
+consequence.
+
+Proof and source correspondence. SI Theorem 2.2 supplies actual
+freshness, exact live prefix depths and the unique zero axis; SI
+Lemma 11.3 supplies actual-history incompatibility and hence the
+nonempty positive disagreement $D$. SI Lemma 9.2 supplies actual
+common cuts and support envelopes. The paired-completion, joint
+certificate and original-cost arguments are those of PE Theorems
+3.1 and 7.2, specialized and proved in Boolean form in Theorem
+29.2. The new restrictions used for counting are the global live
+localization in Theorem 30.1, exclusion of the natural representative
+in every cell in Theorem 31.2, and common-cut pinning in Theorem
+32.1. Transversal counting is the ordinary hitting-set principle;
+the exact consumer is the existing SI incidence identity.
+
+The short paths are witnessed by actual paired runs, but only two
+existential exits are transferred to other histories. Proposition
+30.2 disproves the stronger uniform two-query interpretation. A
+certified discriminator occurrence alone is not a globally new or
+never-live state; the exclusions in Sections 30--32 are what permit
+the stated capacity charges. Neither the number of pairs nor their
+separately attainable certificates can replace a coordinate
+transversal or the joint certificates (SI.187).
+
+The bounded primary-source comparisons retain their exact
+hypotheses. [Bryant, Section 2, Definition 1][Bryant] requires a
+strict increase of the variable index on every edge to a nonterminal
+child, and explicitly derives acyclicity from that restriction.
+[Cook, Edmonds, Medabalimi and Pitassi, Section 2.1][CEMP] starts
+with an acyclic nondeterministic branching program; semantic
+read-once requires every consistent path from its start to its
+accepting state to query each variable at most once. These hypotheses
+are absent here and provide no size-preserving normalization of the
+allowed certified traffic. The deductions above are relative to the
+stated repository suppliers, with no worldwide novelty assertion.
+
+For the all-position lower-bound target, the remaining obligation is
+to prove the exact condition (SI.199), or a sufficient condition such
+as (SI.200), for every permitted graph for every original tuple.
+No such uniform bound on its deficit or transversals has been
+established here. The common-cut strengthening uses an actual
+$T_a$ at $a\le n-3$; the formal endpoint $T_n=[n]$ supplies
+no substitute for that premise. Counting the graph's installed
+states also supplies none of the separately priced representation
+or service resources needed for a physical-memory statement.
+$\square$
+
+## 追加锚（本行以下为增补区）
+
+
+## 35. Common-input compatibility of saturated and axis completions
+
+**Definition 35.1 (constructed inputs and absolute query indices).**
+Fix one graph of Assumption 21.1 with $K\ge4$. For a qualifying
+pair of Definition 25.1 and an assignment of its $U$ with weight
+in (SI.168), denote the two particular vectors (SI.171) by
+$x^-,x^+$, and their discriminator state from Theorem 25.3 by
+$r_2$. Independently choose an actual axis pair of Definition 29.1
+on this same graph and an assignment of its own $U$ with weight
+in (SI.182). Denote its particular vectors (SI.183) by $y^-,y^+$
+and its discriminator by $r_3$. Use $d_-,d_+,k,\ell_-,\ell_+$
+for this axis pair as in Theorem 29.2, and write
+
+$$
+\Delta=d_+-d_-,\qquad
+\varepsilon=k-(n-d_--2).
+\tag{SI.202}
+$$
+
+Thus $\Delta\in\{0,1\}$ and $\varepsilon$ is the nonnegative
+integer called $e$ in (SI.184). No equality between the incoming
+states, supports or depths of the two separately chosen pairs is
+assumed. A common input means equality of the whole Boolean
+vectors on $[n]$, evaluated from the fixed start of this one graph.
+It does not mean only equal weights or equal exposed counts.
+
+For an actual input $x$ let $q_t(x)$ be its running state at its
+$t$-th query, let $i_t(x)=i(q_t(x))$, and put
+$S_{<t}(x)=\{i_s(x):1\le s<t\}$, for
+$1\le t\le t_P(x)$. A query is old on this input precisely when
+$i_t(x)\in S_{<t}(x)$. These are indices of the actual run, not
+extra changing configuration.
+
+**Theorem 35.2 (colour freshness and common-input exclusion).**
+For every choice in Definition 35.1 both $x^-$ and $x^+$ use
+exactly $n$ queries, with final state $r_2$. Their pre-final
+queries satisfy the separate implications
+
+$$
+\begin{aligned}
+1\le t<n,\quad x^-_{i_t(x^-)}=0
+   &\ \Longrightarrow\ i_t(x^-)\notin S_{<t}(x^-),\\
+1\le t<n,\quad x^+_{i_t(x^+)}=1
+   &\ \Longrightarrow\ i_t(x^+)\notin S_{<t}(x^+).
+\end{aligned}
+\tag{SI.203}
+$$
+
+The compatibility restrictions on the two same-output comparisons
+are as follows.
+
+1. If $y^-=x^-$, then $r_3=r_2$ is a positive terminal literal
+   gate and
+
+$$
+\Delta=0,\qquad\varepsilon=1,\qquad
+\ell_-=\ell_+=0,\qquad t_P(y^-)=t_P(y^+)=n.
+\tag{SI.204}
+$$
+
+2. If $y^+=x^+$, then $r_3=r_2$ is again a positive terminal
+   literal gate and
+
+$$
+(\Delta,\varepsilon)\in\{(0,1),(1,0)\},\qquad
+\ell_-=\ell_+=0,\qquad
+ t_P(y^-)=n-\Delta,\quad t_P(y^+)=n.
+\tag{SI.205}
+$$
+
+In particular, when this chosen $r_2$ has negative sign, neither
+same-output equality can hold. Both signs in Definition 26.1 remain
+permitted for qualifying pairs in general.
+
+More precisely, let $\mathcal E_2$ be any signed family of
+Definition 26.1 and let $\mathcal E_{3,R}$ be any family of
+Definition 29.1 whose pairs have unequal incoming depths, all on
+this same graph. Let $\mathcal X_2^-$ be exactly the set of negative
+vectors (SI.171) from $\mathcal E_2$, over every permitted
+assignment in (SI.168), and let $\mathcal X_{3,R}^-$ be exactly
+the set of negative vectors (SI.183) from $\mathcal E_{3,R}$, over
+every permitted assignment in (SI.182). Then
+
+$$
+\mathcal X_2^-\cap\mathcal X_{3,R}^-=\varnothing.
+\tag{SI.206}
+$$
+
+For the choice $\Pi_R$ in Corollary 33.1, this excludes a joint-demand
+route that uses one negative actual input as both a saturated
+literal-family completion and an unequal-depth axis-family
+completion. It supplies no additive installed-state capacity bound.
+
+Proof. Reuse the precise equality conclusion of Theorem 25.3.
+The incoming prefixes each use $d$ fresh queries, the common
+continuation before the discriminator has exactly $u+1$ queries,
+and its coordinates are exactly the disjoint sets $A,B,U_0,U_1$
+of (SI.169), each queried once there. The discriminator is query
+$n=d+u+2$ on both complete runs and is followed immediately by
+termination. Every earlier query in either incoming prefix is fresh
+by SI Theorem 2.2.
+
+On $x^-$ the coordinates in $A$ have value one and those in $B$
+have value zero. Thus the zero queries in this common continuation
+are precisely $B\cup U_0$. Both sets lie outside its incoming
+support $S$, and distinctness in (SI.169) makes each of these zero
+queries fresh relative to all earlier queries of this actual run.
+On $x^+$ the one queries in the common continuation are precisely
+$A\cup U_1$. These sets lie outside its incoming support $T$ and
+are likewise queried once there. This proves both implications in
+(SI.203), including queries in the incoming prefixes. The argument
+does not assert freshness of pre-final ones on $x^-$ or of
+pre-final zeros on $x^+$: $A$ is old on the former and $B$ is old
+on the latter whenever the respective set is nonempty. The final
+coordinate is old on both inputs; its sign is exactly the sign
+specified in Theorem 25.3, with no positivity assumption.
+
+For the axis pair, Theorem 29.2 places the discriminator at an old
+coordinate of both incoming supports, with replies zero on $y^-$
+and one on $y^+$. Its absolute query numbers on those inputs are
+respectively
+
+$$
+N_-=d_-+k+1=n-1+\varepsilon,\qquad
+N_+=d_++k+1=n-1+\Delta+\varepsilon.
+\tag{SI.207}
+$$
+
+Both queries actually occur, and both numbers are at most $n$.
+These are occurrence numbers on the actual runs; the graph need
+not assign one depth to an installed state.
+
+Suppose first that $y^-=x^-$. The axis discriminator is an old
+zero query on this input. Equation (SI.203) forbids its occurring
+before query $n$, so $N_-=n$ and $\varepsilon=1$. Its state is
+$q_n(x^-)=r_2$, by determinism on the same whole input. Since
+$r_2$ is a signed terminal literal gate and this zero reply returns
+the correct output zero, its sign is positive. Its two fixed
+successors are therefore the two output terminals, giving
+$\ell_-=\ell_+=0$. The inequality
+$\Delta+\varepsilon+\ell_+\le1$ in (SI.184) now forces
+$\Delta=0$. Equation (SI.207) gives (SI.204).
+
+Suppose instead that $y^+=x^+$. This time the axis discriminator
+is an old one query on the shared input. The second implication
+of (SI.203) forces $N_+=n$. Hence
+$\Delta+\varepsilon=1$ and its state is $q_n(x^+)=r_2$.
+Its one reply returns the correct output one, so the signed gate
+$r_2$ must be positive. Both tails are empty because its fixed
+successors are terminals. The possibilities $\Delta\in\{0,1\}$
+and (SI.207) give exactly (SI.205). In particular the case
+$\Delta=1,\varepsilon=0$ is not eliminated by this argument;
+this necessary-case possibility asserts no graph realizing it.
+The gate-sign conclusion in both cases proves the negative-sign
+exclusion. For every unequal-depth axis pair, (SI.182) gives
+$\Delta=1$. Applying (SI.204) to each proposed common negative
+input proves (SI.206), including empty families. No analogous
+positive-family disjointness is inferred from (SI.205).
+
+The source correspondence uses the actual histories throughout.
+SI Theorem 2.2 supplies live freshness and exact incoming depths;
+SI Lemma 11.3 supplies the incompatibility used in Theorem 29.2.
+PE Theorem 7.2 supplies the paired vectors and joint certificates,
+with its $(p,y,V,Q)$ corresponding to
+$(\alpha,\beta,K-g,K-h)$ for the gap-two pair. Theorem 25.3
+specializes these vectors to (SI.171) and saturates the common
+continuation; (SI.169) yields the colour-specific consequence
+(SI.203). For the axis pair the correspondence is
+$(p,y,V,Q)=(0,\beta,K-3,K)$, and Theorem 29.2 supplies (SI.183),
+the old positive discriminator and the slack inequalities
+(SI.184). Arbitrary opposite-output extensions of the incoming
+histories need not have the form (SI.171) or (SI.183) and are not
+covered by this comparison. The original letter-cap inequalities
+(SI.174) and (SI.185) continue to apply separately on their own
+actual inputs; identifying one vector neither concatenates runs
+nor combines independently minimized charges.
+
+The precise counting consumer is Corollary 33.1 with $n=9$, $K=4$,
+$L=6$, $B=(a,9)$, $a\in\{1,2,3\}$ and $\Pi=\Pi_R$.
+Take $\mathcal E_2$ to be its optional signed family giving
+$t_{\rm lit}$ and $\mathcal E_{3,R}$ its unequal-depth axis
+family giving $t_3$, with both families' incoming cells in $V_B$.
+Equation (SI.206) rules out identifying their negative witnessing
+inputs in an attempted joint charge toward (SI.199). It does not
+make their installed discriminator images disjoint: distinct inputs
+can have the same discriminator state and label. In particular a positive
+terminal literal gate already has positive short exits, as in
+Definitions 25.2 and 29.1. Neither equality of the two input
+vectors nor a shared incoming history is required for an installed
+state to serve different pairs. PE Proposition 9.1 gives precisely
+this state-reuse boundary. Thus the maximum in (SI.198), rather
+than an unsupported sum of its separate transversal demands,
+remains the supplied capacity bound. A separation of the installed
+state images, or another joint lower bound that pays for their
+intersection, is an additional obligation.
+
+This is a repo-derived restriction comparing the two constructed
+completion families. Deterministic indistinguishability, threshold
+certificates and equality in a query budget are inherited
+arguments; no new general hitting-set inequality is used.
+The ordered graphs of [Bryant Section 2, Definition 1][Bryant] require
+strictly increasing variable indices on nonterminal edges.
+The acyclic programs and semantic read-once accepting paths of
+[Cook, Edmonds, Medabalimi and Pitassi Section 2.1][CEMP] also have
+hypotheses absent from Assumption 21.1. Those sources supply no
+normalization of its certified traffic for this proof, and no
+worldwide novelty assertion is made.
+
+The argument holds separately for every original positive increasing
+position tuple and every permitted graph for that tuple. It keeps
+both pointwise caps, adaptive orders, paid certified queries and
+union cycles. It proves neither existence of either collision family
+nor a uniform deficit bound for (SI.199) or (SI.200). The whole-table
+condition (SI.166), CP.28 and unrestricted $m_{\rm exec}=24$
+remain unresolved; no physical-memory consequence or Lean-kernel
+verification is asserted. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 36. Exact separated histories and the cut-pinned obstruction
+
+**Definition 36.1 (separated demands in one actual terminal gap).**
+Fix one graph of Assumption 21.1 with $n=9$, $K=4$, $L=6$,
+and an actual consecutive common-support gap $B=(3,9)$.
+Let $T_3$ be its actual depth-three common support, and let $A_0$
+be its unique zero-axis support at $(0,5)$, as in Definition 31.1.
+Thus $|T_3|=3$, $|A_0|=5$, and $T_3\subseteq A_0$.
+Put
+
+$$
+\Omega_\perp=([9]\times\{-\})\ \cup\
+                  (([9]\setminus A_0)\times\{+\}).
+\tag{SI.208}
+$$
+
+Let $\mathcal E_\perp$ be a finite family of Definition 26.1
+whose incoming cells lie in $V_B$ and for which
+$\mathcal D_e\subseteq\Omega_\perp$ for every member. Write
+$t_\perp=\tau(\mathcal E_\perp)$. Independently choose an actual
+axis family $\mathcal E_3$ of Definition 31.1 with incoming cells
+in $V_B$, and write $t_3=\tau_3(\mathcal E_3)$.
+An axis family is called cut-pinned here when all its $D_e$ lie
+in $T_3$; Theorem 32.1 then applies to this very family.
+Corollary 32.2 supplies this property when its equal-depth and
+two-private-coordinate hypotheses hold.
+
+For comparison also choose a signed family $\mathcal E_{\rm lit}$
+with incoming cells in $V_B$ containing $\mathcal E_\perp$,
+and a family $\mathcal E_{\rm cut}$ of Theorem 32.1 on this graph.
+Write their transversal numbers as $t_{\rm lit}$ and $t_{\rm cut}$.
+Different members of the cut family may use different actual common
+cuts of depth at most six. All these cuts have depth at most three
+because $B$ is consecutive, so their supports lie in $T_3$.
+The conclusion of Theorem 32.1 still holds for their union:
+its proof places every supplying state globally in the never-live
+pool. Empty families are allowed, with transversal number zero.
+
+The comparison with every available literal or cut family can be made
+by taking all qualifying actual literal pairs with incoming cells in
+$V_B$, and the singleton sets $\{j\}$ for every label $j\in T_3$
+of an installed state with positive short exits, respectively.
+The first choice is finite by SI Lemma 11.3. The second is a family
+of Theorem 32.1 at $T_3$; its transversal is the number of these
+labels. It dominates any other cut-family transversal because those
+same labels meet every such demand. In particular
+$t_{\rm lit}\ge t_\perp$ and $0\le t_{\rm cut}\le3$.
+These choices concern one installed graph, without identifying
+histories, states or independently chosen inputs.
+
+**Theorem 36.2 (complete local classification and the two paid patterns).**
+For an actual qualifying pair with incoming cells in $V_B$,
+the condition $\mathcal D_e\subseteq\Omega_\perp$ holds if and only
+if its data have the following form. Its incoming depth and cells are
+
+$$
+d=6,\qquad (h,z)=(1,5),\qquad (g,w)=(3,3),
+\tag{SI.209}
+$$
+
+and, with the notation of Definition 25.1,
+
+$$
+\begin{gathered}
+I=T_3\sqcup\{j\},\qquad j\notin A_0,\qquad
+\sigma|_{T_3}=\rho|_{T_3},\qquad
+(\sigma_j,\rho_j)=(0,1),\\
+\mathcal D_e=\{(j,+)\},\qquad
+U=\{u_0\},\qquad \eta=1,\qquad
+|\sigma^{-1}(1)\cap T_3|=1 .
+\end{gathered}
+\tag{SI.210}
+$$
+
+Both actual incoming histories query $j$ at their fourth query.
+The private assignments are necessarily $X\equiv0$ on the lower
+history and $Y=\{y_0,y_1\}$ with upper values $0,1$.
+
+More generally, to distinguish the two private-one alternatives,
+consider an actual qualifying pair satisfying (SI.209) with
+$I=T_3\sqcup\{j\}$, equal assignments on $T_3$ and
+$(\sigma_j,\rho_j)=(0,1)$, without imposing $j\notin A_0$.
+There are two possible count patterns. In pattern A the common
+assignment on $T_3$ is all zero, $X=\{x,x_0\}$ has lower values
+$1,0$, and $Y$ has upper values $1,1$. In pattern B the common
+assignment on $T_3$ has one one, $X$ has lower values $0,0$,
+and $Y=\{y_0,y_1\}$ has upper values $0,1$.
+Pattern A forces $j\in A_0$ and is therefore excluded from the
+separated family. Pattern B is the only retained separated pattern;
+its actual existence is not asserted.
+
+For any actual pair of this broader form, in pattern A the only
+assignment permitted by (SI.168) is $u_0=0$.
+On the two particular inputs (SI.171), the common suffix queries
+$u_0,x,j$, in this order, with replies $(0,1,0)$ and $(0,1,1)$.
+In pattern B that assignment is $u_0=1$, and the common suffix
+queries $u_0,y_0,j$, in this order, with replies $(1,0,0)$ and
+$(1,0,1)$. In both patterns these inputs have weights three and
+four, use exactly nine queries, and finish at a positive terminal
+literal gate labelled $j$. Their original letter caps are equivalent
+to the respective inequalities
+
+$$
+\begin{array}{ll}
+\mathrm A:&c_x+c_j\le\min(C_X,C_Y),\\
+\mathrm B:&c_{y_0}+c_j\le\min(C_X,C_Y).
+\end{array}
+\tag{SI.211}
+$$
+
+The original all-input caps also require the one-sided exchange
+conditions
+
+$$
+\begin{array}{ll}
+\mathrm A:&C_Y\le C_X,\qquad c_x+c_j\le C_Y,\\
+\mathrm B:&C_X\le C_Y,\qquad c_{y_0}+c_j\le C_X .
+\end{array}
+\tag{SI.212}
+$$
+
+Consequently $c_j<c_{x_0}$ in pattern A and $c_j<c_{y_1}$ in
+pattern B. None of these cost conditions is asserted sufficient
+for an entire graph or for all completions of the incoming histories.
+
+Proof. First exclude lower hit row zero. Such a lower history has
+an all-zero support $S$ contained in $A_0$, by the unique zero axis
+and liveness. Every disagreement in $I\subseteq S$ is then positive
+and lies in $A_0$. The disagreement set is nonempty by
+$\eta>0$, contradicting (SI.208). The only other possible hit rows
+are $h=1$, $g=3$, since $g=h+2\le3$. Liveness gives
+$d-1=z\le5$, so $d\le6$.
+
+Both incoming depths are greater than three. Actual ancestry at the
+common cut, SI Lemma 9.2, gives $T_3\subseteq I$. Since
+$|I|=d-2$, depth four is impossible. At depth five one has
+$I=T_3\subseteq A_0$, where separation forbids positive
+disagreements. But
+
+$$
+\sum_{i\in I}(\rho_i-\sigma_i)
+       =(3-\beta)-(1-\alpha)=2+\alpha-\beta=\eta>0
+$$
+
+requires a positive disagreement. This excludes depth five as well.
+Thus $d=6$, giving (SI.209), $|I|=4$ and $|U|=1$.
+Write $I=T_3\sqcup\{j\}$. The required positive disagreement
+must be at $j$, and separation forces $j\notin A_0$.
+Its contribution to the displayed sum is one. Every contribution
+on $T_3$ is nonpositive; positivity of the integer sum therefore
+forces all of them to vanish. This proves all assertions of
+(SI.210) except the last one.
+
+Let $r$ be the common number of ones on $T_3$. The lower total is
+one and its $j$ value is zero, so $r\in\{0,1\}$. The private
+one counts are
+
+$$
+\alpha=1-r,\qquad \beta=2-r .
+$$
+
+For $r=0$ these give pattern A; for $r=1$ they give pattern B,
+including all choices of the common one and of the private
+coordinates. These same equations classify the broader actual pairs
+in the statement, whose intersection assignments have been specified.
+
+The actual common prefix now decides which pattern can be separated.
+The two incoming histories have identical exposed assignments on
+$T_3$. Every actual live depth-three history has support $T_3$.
+Complete the two incoming assignments to full inputs. From the fixed
+start these inputs follow identical first three queries: each query
+belongs to $T_3$, and they give it the same reply. Hence they reach
+the same depth-three state. Its next coordinate lies in both incoming
+supports, because both histories continue to depth six. Freshness
+places it outside $T_3$, so it must be the sole element $j$ of
+$I\setminus T_3$. Thus $j$ is query four on both histories.
+If $r=0$, the first three replies are all zero. Query four is then
+the fourth coordinate of the actual all-zero axis, and lies in $A_0$.
+This contradicts separation. Therefore $r=1$, proving the last
+assertion of (SI.210) and excluding pattern A in that scope.
+For the broader pairs the same argument proves the asserted
+implication from pattern A to $j\in A_0$. Conversely, the stated
+separated data of pattern B have exactly the disagreement $(j,+)$
+with $j\notin A_0$, proving the equivalence for actual qualifying
+pairs. This does not construct their incoming paths.
+
+Here $u=v=1$. Substitution into (SI.168) gives
+$\mathcal J=\{r\}$. Substitution into (SI.171) gives weights
+$1+\beta+r=3$ and $3+\alpha+r=4$. Apply Theorem 25.3
+to precisely these inputs. Its equality (SI.169) requires one new
+zero for the lower certificate and one new one for the upper
+certificate before the discriminator, using exactly two queries.
+In pattern A there is no old zero in $Y$ and $u_0=0$,
+so those two coordinates must be $u_0$ and $x$. In pattern B
+there is no old one in $X$ and $u_0=1$, so they must be
+$y_0$ and $u_0$. The first query at the common live state must
+be fresh for both incoming histories; their common unread set is
+exactly $\{u_0\}$. This fixes the orders asserted above.
+The unique differing coordinate is $j$, so Theorem 25.3 makes it
+the final query, with positive sign.
+
+Write $v_0=x$ in pattern A and $v_0=y_0$ in pattern B.
+The complete charges on the two actual paired inputs are exactly
+
+$$
+C_S+c_{u_0}+c_{v_0}+c_j,\qquad
+C_T+c_{u_0}+c_{v_0}+c_j .
+$$
+
+As $W-C_S=C_Y+c_{u_0}$ and
+$W-C_T=C_X+c_{u_0}$, their separate caps are equivalent to
+$c_{v_0}+c_j\le C_Y$ and $c_{v_0}+c_j\le C_X$.
+This is (SI.211). The certificates are the joint certificates of
+this fixed shared suffix, not independently minimized witnesses.
+
+For completeness, the one-sided replay of PE Theorem 3.1 gives
+the additional inequalities in (SI.212) directly on actual Boolean
+inputs. In pattern A complete the lower history by setting all of
+$Y\cup U$ to one. It starts at $(1,5)$ and stays live until
+all three unread coordinates have been queried once. Freshness and
+correctness force these queries; the nine-query cap forces immediate
+termination afterwards. Replay this same suffix from the upper
+history, setting $u_0=1$ and retaining its old all-one $Y$.
+It queries only $Y\cup U$, so arbitrary values on $X$ extend
+it to an actual upper input following those fixed successors.
+Its full charge is
+
+$$
+C_T+C_Y+c_{u_0}=W+C_Y-C_X .
+$$
+
+The letter cap on that very input proves $C_Y\le C_X$.
+In pattern B complete the upper history by setting all of $X\cup U$
+to zero. Starting at $(3,3)$, it stays live until those three
+fresh zeros have all been read, and then halts by the query cap.
+Replay the suffix from the lower history with its old all-zero $X$
+and $u_0=0$. Any assignment on $Y$ completes this actual run;
+its charge is $C_S+C_X+c_{u_0}=W+C_X-C_Y$.
+Its own letter cap gives $C_X\le C_Y$. Combining these replays
+with (SI.211) yields (SI.212). They pay for the old $Y$ or $X$
+queries on the replayed input, including certified traffic.
+Finally $c_x+c_j\le C_X=c_x+c_{x_0}$ in pattern A, and
+$c_{y_0}+c_j\le C_Y=c_{y_0}+c_{y_1}$ in pattern B.
+The coordinates are distinct and individual costs are strictly
+increasing, so the resulting weak inequalities are strict.
+
+The source correspondence is SI Theorem 2.2 for actual depths,
+zero-axis uniqueness and live freshness; SI Lemma 9.2 for containment
+of $T_3$; and Definition 25.1 for the private sizes and $\eta$.
+PE Theorem 7.2 has parameters
+$(p,y,V,Q)=(\alpha,\beta,1,3)$ here; its paired vectors and
+joint certificates are the ones specialized in Theorem 25.3.
+Equations (SI.169) and (SI.174) supply the exact suffix and the
+two original-cost charges, while the last replays are PE's one-sided
+exchange argument. This is a repo-derived restriction of the original
+model, not a claim that threshold certificates or replay arguments
+are new. $\square$
+
+**Corollary 36.3 (same-graph strictness test and cut-pinned exclusion).**
+Retain Definition 36.1 and the choice $\Pi=\Pi_4$ in
+Corollary 33.1. On this same graph put
+
+$$
+\begin{gathered}
+\lambda=(b_{(2,4)}-1)+(b_{(2,5)}-1)+(b_{(3,4)}-1),\qquad
+\gamma=b_{(3,5)}-1,\\
+C=C_{\Pi_4}=\nu+\lambda+\gamma,\qquad
+M_{\rm mix}=t_3+t_\perp-1,\\
+M_0=\max\{2,t_3,t_{\rm lit},t_{\rm cut}+2\},\qquad
+M_1=\max\{M_0,t_{\rm cut}+t_\perp\}.
+\end{gathered}
+\tag{SI.213}
+$$
+
+Then $\lambda\ge1$, $\gamma\ge1$, and
+
+$$
+\begin{gathered}
+t_\perp=|\{j_e:e\in\mathcal E_\perp\}|\le3,\qquad
+C\ge\max\{M_1,M_{\rm mix}\},\\
+m=24+R+E_B^{\setminus\Pi_4}-D_B+C .
+\end{gathered}
+\tag{SI.214}
+$$
+
+The numerical comparison $M_{\rm mix}>M_0$ is equivalent to
+
+$$
+t_\perp\ge2,\qquad
+t_3+t_\perp\ge t_{\rm cut}+4,\qquad
+t_{\rm lit}\le t_3+t_\perp-2 .
+\tag{SI.215}
+$$
+
+In particular it requires $t_3\ge2$. After also including the
+joint cut bound in $M_1$, the exact comparison is
+
+$$
+M_{\rm mix}>M_1
+\quad\Longleftrightarrow\quad
+t_\perp\ge2,\qquad t_3\ge t_{\rm cut}+2,\qquad
+t_{\rm lit}\le t_3+t_\perp-2 .
+\tag{SI.216}
+$$
+
+These are necessary and sufficient conditions for comparison of the
+specified expressions, conditional on their actual graph and families.
+They are necessary conditions for a strict consumer of these bounds,
+without sufficient conditions for realizing that graph. Any strict
+profile has $t_\perp\in\{2,3\}$ and must supply that many distinct
+fourth-query labels from actual depth-three histories with one one
+on $T_3$, each with the surviving paid pattern of Theorem 36.2.
+
+If $\mathcal E_3$ is cut-pinned, there is instead the stronger bound
+
+$$
+C\ge t_3+t_\perp .
+\tag{SI.217}
+$$
+
+Thus its proposed mixed expression is never a strict improvement once
+this applicable cut bound is included. If the cut comparison includes
+this axis family, or uses the complete-cut choice of Definition 36.1,
+then $t_3\le t_{\rm cut}\le3$, and already
+
+$$
+M_{\rm mix}=t_3+t_\perp-1\le t_{\rm cut}+2\le M_0 .
+\tag{SI.218}
+$$
+
+In particular, in the additional scope of Corollary 32.2 the proposed
+mixed expression cannot beat even $M_0$. Four coordinates outside
+$A_0$ do not supply four possible separated singleton labels:
+the actual depth-three prefixes restrict their number to three.
+
+Proof. Depth seven is internal to the consecutive gap and is
+noncommon. Its live cells are precisely $(2,5),(3,4)$. The diagonal
+criterion of SI Definition 9.1 and Theorem 4.1 gives support
+multiplicity at least two in one of these cells; SI Theorem 2.2
+therefore gives
+
+$$
+(b_{(2,5)}-1)+(b_{(3,4)}-1)\ge1 .
+$$
+
+Depth eight is also noncommon, with unique live cell $(3,5)$,
+so $\gamma\ge1$ by the same criterion. This proves $\lambda\ge1$.
+Theorem 36.2 makes every separated disagreement set a positive
+singleton outside the five-element $A_0$, so its transversal is
+exactly its number of distinct labels. For each $a\in T_3$ there
+is a unique actual depth-three history with assignment one at $a$
+and zero on $T_3\setminus\{a\}$. To see existence, complete that
+assignment arbitrarily and run the graph: all depth-three prefixes
+are live and have support $T_3$. Uniqueness follows by deterministic
+induction on its three fresh queries. Denote its host by $r_a$.
+Theorem 36.2 shows that every separated pair with common one at $a$
+has
+
+$$
+j_e=i(r_a)\notin A_0,\qquad
+\{j_e:e\in\mathcal E_\perp\}
+      \subseteq\{i(r_a):a\in T_3\}\setminus A_0 .
+$$
+
+There are only three such histories; their hosts or labels can
+coincide, which can only decrease the number of distinct labels.
+This proves $t_\perp\le3$. Distinct demanded labels require distinct
+actual depth-three hosts as well as the distinct final gates.
+
+Reuse Theorems 26.2, 31.2 and 32.1. They give, respectively,
+$\nu+b_{(3,5)}\ge t_{\rm lit}$, $C\ge t_3$ and
+$\nu\ge t_{\rm cut}$. Consequently
+
+$$
+C\ge2,\qquad
+C\ge t_{\rm lit}+\lambda-1\ge t_{\rm lit},\qquad
+C\ge t_{\rm cut}+\lambda+\gamma\ge t_{\rm cut}+2 .
+\tag{SI.219}
+$$
+
+Together these give $C\ge M_0$. In particular comparing only with
+$\max\{1,t_3,t_{\rm lit}-1,t_{\rm cut}+1\}$ from (SI.198)
+does not test strictness against these source-derived diagonal bounds.
+
+Here is the finite union argument for the separated demands.
+Let $\mathcal P_3$ consist of all installed states with positive
+short exits and labels in $A_0$. The proof of Theorem 31.2 gives
+$|\mathcal P_3|\ge t_3$ and places it in the never-live pool
+together with $F_p\setminus\{q_p\}$ for $p\in\Pi_4$,
+where $q_p$ are its actual natural representatives.
+Let $\mathcal G_\perp$ be all installed terminal literal gates with
+signed labels in $\Omega_\perp$. Theorem 25.3 makes their labels
+meet every $\mathcal D_e$, so $|\mathcal G_\perp|\ge t_\perp$.
+In the present scope the positive gates with labels outside $A_0$
+already suffice, by Theorem 36.2.
+
+The state sets $\mathcal P_3$ and $\mathcal G_\perp$ are disjoint.
+A negative terminal literal gate cannot have positive short exits:
+its zero edge already ends at terminal one. A positive gate in
+$\mathcal G_\perp$ has label outside $A_0$.
+By Theorem 25.3 all live occurrences of any literal gate are at the
+corner. Thus their union is contained in
+
+$$
+(Q\setminus Q_{\rm live})\ \cup\ F_{(3,5)}\
+\cup\!\!\bigcup_{p\in\Pi_4\setminus\{(3,5)\}}
+                       (F_p\setminus\{q_p\}).
+$$
+
+The sum of the displayed pool sizes is $C+1$, even if some pools
+intersect. The union bound gives
+$t_3+t_\perp\le C+1$, proving $C\ge M_{\rm mix}$.
+This is ordinary separated-set counting, not an injection from
+histories or completion vectors to installed states.
+
+There is a further applicable count when a cut family is present.
+Let $\mathcal P_{\rm cut}$ consist of the positive-short states with
+labels in $T_3$. The common-cut argument of Theorem 32.1 puts
+every such state globally in $Q\setminus Q_{\rm live}$.
+Their labels meet the cut family, so
+$|\mathcal P_{\rm cut}|\ge t_{\rm cut}$. Their labels lie in
+$A_0$, hence $\mathcal P_{\rm cut}$ is disjoint from
+$\mathcal G_\perp$. The union is now contained just in
+$(Q\setminus Q_{\rm live})\cup F_{(3,5)}$, giving
+
+$$
+\nu+b_{(3,5)}\ge t_{\rm cut}+t_\perp,\qquad
+C\ge t_{\rm cut}+t_\perp+\lambda-1
+                       \ge t_{\rm cut}+t_\perp .
+\tag{SI.220}
+$$
+
+This proves $C\ge M_1$. If the axis family itself is cut-pinned,
+the same $\mathcal P_{\rm cut}$ meets all its $D_e$ by
+Theorems 29.2 and 32.1, so its size is at least $t_3$.
+Replacing $t_{\rm cut}$ by $t_3$ in that very union count proves
+(SI.217), irrespective of the optional cut family's choice.
+It follows directly that $M_{\rm mix}$ is smaller than this valid
+bound by one. With a cut family containing the axis family,
+monotonicity of transversals gives $t_{\rm cut}\ge t_3$;
+the complete-cut choice also gives this inequality by its hitting
+set of available labels in $T_3$.
+
+All transversal numbers are integers. The comparison with the $t_3$
+branch of $M_0$ gives $t_\perp\ge2$; comparison with
+$t_{\rm cut}+2$ gives $t_3+t_\perp\ge t_{\rm cut}+4$;
+comparison with $t_{\rm lit}$ gives the last inequality of
+(SI.215). The middle inequality also beats the constant branch two.
+These implications reverse, proving (SI.215).
+As $t_{\rm lit}\ge t_\perp$, its last inequality forces $t_3\ge2$.
+Adding comparison with $t_{\rm cut}+t_\perp$ requires exactly
+$t_3\ge t_{\rm cut}+2$. Together with $t_\perp\ge2$
+this already implies the middle inequality of (SI.215), proving
+the equivalence (SI.216).
+
+In the cut-pinned scope, $t_3\le t_{\rm cut}\le3$ and
+$t_\perp\le3$ give (SI.218) directly. Equivalently
+$t_3+t_\perp\le t_{\rm cut}+3$, contradicting the middle
+condition of (SI.215). Equation (SI.217) supplies a further
+valid bound larger than $M_{\rm mix}$ by one without needing
+to select the optional cut family. Thus omitting applicable cut
+demands cannot certify a gain, and one axis demand cannot suffice
+even for the general numerical strictness test.
+
+Finally the equality for $m$ in (SI.214) is exactly (SI.198),
+using SI Theorem 9.3 on this graph; $R\ge0$ is supplied by
+Corollary 33.1. Thus
+$R+E_B^{\setminus\Pi_4}+\max\{M_1,M_{\rm mix}\}\ge D_B$
+is a sufficient condition for $m\ge24$, whereas (SI.199) with
+the actual $C$ remains the exact condition. For a proposed mixed
+term to make this substitution strict, its actual families must
+first satisfy (SI.216), and any further available graph-specific
+bound, including the versions with $\lambda,\gamma$ retained in
+(SI.219)--(SI.220), must also be beaten. Selecting smaller comparison
+families cannot establish strictness against the complete choices.
+The proof supplies no graph realizing (SI.216) and no uniform
+inequality covering the full deficit $D_B$.
+
+The new model restriction is Theorem 36.2 and its cut-pinned
+strictness obstruction; the finite unions, diagonal excess and exact
+incidence arithmetic above reuse Sections 25--33 and SI's diagonal
+criterion as intermediate facts. This is a repo-derived consequence
+of the stated suppliers. The bounded classical comparisons remain
+those with Bryant Section 2, Definition 1 and Cook, Edmonds,
+Medabalimi and Pitassi Section 2.1: their ordered or acyclic and
+semantic read-once hypotheses supply no normalization of the present
+graph. No literature priority assertion is needed.
+
+The classification (SI.209)--(SI.212) uses the actual cut $T_3$;
+it is not transferred to gaps $(1,9)$ or $(2,9)$.
+The mixed consumer here uses $\Pi_4$, not the unequal-depth
+$\Pi_R$ axis consumer. The general axis family in Definition 36.1
+need not satisfy Corollary 32.2; (SI.217) is conditional on
+cut-pinning and is not an exclusion of every general-axis realization.
+All assertions hold separately for each original positive increasing
+position tuple and each permitted graph for that tuple. They retain
+fixed successors, actual histories and cuts, both pointwise caps,
+adaptive orders, paid certified traffic and union cycles.
+Neither actual graph existence nor nonexistence is concluded.
+The whole-table condition (SI.166), CP.28 and the unrestricted
+nine-input minimum remain outside the proved consequences. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 37. One-host concentration and the complete cut-capacity comparison
+
+**Definition 37.1 (the actual axis class of a fixed graph).** Fix any
+original positive increasing position tuple and any one graph satisfying
+Assumption 21.1 for that tuple, with $K\ge4$, $L\ge3$ and
+$n=K+L-1$. In particular, correctness and termination hold on every
+$\theta\in\{0,1\}^n$, and both original pointwise bounds
+$t_P(\theta)\le n$ and $J_P(\theta)\le W$ hold on that same input,
+with $c_i=s_i+4$. The graph may depend on the tuple. All installed
+states count; coordinate order is adaptive, labels and successors are
+fixed, certified repeats remain paid, and inconsistent paths and cycles
+in the union graph remain permitted.
+
+Write $(S_z^0,q_z)$ for the support and host of the unique actual
+zero-axis history at $(0,z)$, $0\le z\le L-1$, and retain
+$A_0=S_{L-1}^0$ from Definition 31.1. Let
+$\mathcal A$ be the complete class of actual pairs of Definition 29.1
+on this graph. For $e\in\mathcal A$, write its counts as
+$(0,z_e),(3,w_e)$, its supports and upper assignment as
+$S_e,T_e,\rho_e$, and put
+
+$$
+\begin{gathered}
+X_e=S_e\setminus T_e,\qquad Y_e=T_e\setminus S_e,\qquad
+I_e=S_e\cap T_e,\\
+\delta_e=3+w_e-z_e,\qquad
+D_e=\{j\in I_e:\rho_e(j)=1\}.
+\end{gathered}
+\tag{SI.221}
+$$
+
+Membership in $\mathcal A$ requires the two actual histories at one
+installed state, not just these numerical data. It is a finite class:
+each live prefix has at most $n-1$ fresh queries, and there are finitely
+many Boolean inputs and prefixes. Repeated copies of a demand do not
+change its transversal number.
+
+**Theorem 37.2 (actual zero-axis concentration).** Every pair
+$e\in\mathcal A$ extends by exactly $L-1-z_e$ common zero replies
+along the installed lower zero-axis path to $q_{L-1}$. Both histories
+remain actual and live throughout. Their final counts are
+
+$$
+(0,L-1),\qquad (3,L-4+\delta_e),\qquad
+\delta_e\in\{0,1\},
+\tag{SI.222}
+$$
+
+and their disagreement set is exactly $D_e$.
+
+If $\mathcal A\ne\varnothing$, there is one support $T^*$ for
+all actual live three-hit histories at $q_{L-1}$, and one value
+$\delta\in\{0,1\}$ common to all $\delta_e$. Define
+
+$$
+\begin{gathered}
+X^*=A_0\setminus T^*,\qquad Y^*=T^*\setminus A_0,\qquad
+J=A_0\cap T^*,\\
+\alpha=|X^*|,\qquad b=|Y^*|,\qquad
+\beta_e=|\{j\in Y_e:\rho_e(j)=1\}|.
+\end{gathered}
+\tag{SI.223}
+$$
+
+Here $\alpha$ denotes private cardinality; cut depths below are denoted
+by $s$. For every original pair, with $C_e=A_0\setminus S_e$,
+
+$$
+\begin{gathered}
+C_e\cap(S_e\cup T_e)=\varnothing,\qquad
+A_0=S_e\sqcup C_e,\qquad T^*=T_e\sqcup C_e,\\
+X_e=X^*,\qquad Y_e=Y^*,\qquad
+J=I_e\sqcup C_e,\qquad
+\varnothing\ne D_e\subseteq I_e\subseteq J.
+\end{gathered}
+\tag{SI.224}
+$$
+
+The extended upper assignment is zero on $C_e$. In particular,
+
+$$
+\begin{gathered}
+1\le\alpha\le b\le3,\qquad b-\alpha=\delta,\qquad
+C_{X^*}\le C_{Y^*},\qquad |T^*|=L-1+\delta,\\
+|J|=L-1-\alpha\le L-2,\qquad
+|D_e|=3-\beta_e,\qquad 0\le\beta_e\le\min\{b,2\},\\
+|[n]\setminus(A_0\cup T^*)|=K-b\ge K-3.
+\end{gathered}
+\tag{SI.225}
+$$
+
+For every actual common-support cut $T_s$ at a depth $s\le L-1$,
+
+$$
+T_s\subseteq J,\qquad
+|J\setminus T_s|=L-1-\alpha-s\le L-2-s.
+\tag{SI.226}
+$$
+
+Thus a nonempty axis class forces such a cut depth to satisfy
+$s\le L-2$. For an actual common-support depth $s>L-1$, both
+$A_0$ and $T^*$ are contained in $T_s$, so
+$J\setminus T_s=\varnothing$. These are conditional assertions about
+actual cuts; no support at the adjoined formal endpoint is used as an
+actual history.
+
+Proof. Fix an actual pair $e$ and abbreviate $z=z_e$, $w=w_e$.
+Theorem 29.2 gives $\delta_e\in\{0,1\}$. Put
+$r=L-1-z\ge0$. At the $t$-th step of the proposed common zero
+continuation, $0\le t\le r$, its intended counts are
+$(0,z+t)$ and $(3,w+t)$. The lower zero count is at most $L-1$,
+and
+
+$$
+w+t\le w+r=L-4+\delta_e\le L-3.
+$$
+
+The upper hit count is $3\le K-1$. All these counts are nonnegative:
+in particular the last upper zero count equals $w+r$, with $w,r\ge0$.
+Both histories and, for $t<r$, both zero children are live.
+
+Actuality follows inductively, not from treating a syntactic path as an
+input. Initially the histories end at $q_z$. Suppose their actual
+extensions share $q_{z+t}$. SI Theorem 2.2 makes its fixed queried
+coordinate fresh for each history, hence outside the union of their
+currently exposed supports. Giving it value zero is consistent separately
+with each exposed assignment. Each new assignment has a full Boolean
+completion following the corresponding prefix. Since both new count
+pairs are live, the installed zero successor is running, and that single
+successor is the next zero-axis host $q_{z+t+1}$. This proves the
+induction through $r$, including $r=0$ without any extra step.
+
+Let $C_e$ be the queried coordinates in this continuation. Freshness
+makes them distinct and disjoint from $S_e\cup T_e$. The lower
+extension is the unique zero-axis history of length $L-1$, so
+$C_e=A_0\setminus S_e$ and $A_0=S_e\sqcup C_e$. The final
+upper support is $T_e\sqcup C_e$. Both histories give every added
+coordinate value zero. Their old intersection assignments are unchanged;
+therefore their final disagreement set is exactly $D_e$, with no
+coordinate removed, added or relabelled. The two full input completions
+need not coincide: the incoming assignments can be incompatible.
+
+Suppose $\mathcal A$ is nonempty, and choose one of these final upper
+histories to define $T^*$. Apply the existing equal-hit support exclusion
+[PE, Lemma 4.1][PE] through its Boolean interface in SI Section 2.
+Every other final upper history has three hits at the same installed
+state $q_{L-1}$, so its support must be $T^*$. The same supplied
+exclusion applies to any other actual live three-hit history at that
+state, whether or not it arose from the selected continuation. There
+is no additional rigidity lemma here. Exact live depths from SI
+Theorem 2.2 now give
+$|T^*|=3+w_e+r=L-1+\delta_e$, fixing the single value $\delta$.
+
+Taking differences and intersections in
+$A_0=S_e\sqcup C_e$ and $T^*=T_e\sqcup C_e$, with
+$C_e$ disjoint from both old supports, proves (SI.224). Theorem 29.2
+on the original pairs supplies the private-size and cost inequalities
+in (SI.225). Its nonempty disagreement has size $3-\beta_e$;
+the upper private assignment is unchanged. Counting $A_0$ gives
+$|J|=L-1-\alpha$, and counting
+$A_0\cup T^*=A_0\sqcup Y^*$ gives the last equality in (SI.225).
+
+If $s\le L-1$ is an actual common-support depth, both final live
+histories have actual ancestors at depth $s$, since their depths are
+$L-1$ and $L-1+\delta$. SI Lemma 9.2 puts $T_s$ in each
+final support. Hence $T_s\subseteq J$; its cardinality $s$ proves
+(SI.226). For $s>L-1$, integrality and $\delta\le1$ give
+$s\ge L\ge L-1+\delta$. Extend both final histories live to
+that actual common depth by SI Lemma 9.2. Their old supports are
+contained in its common support $T_s$, proving the remaining claim.
+
+All feasible depths and private cardinalities are covered by this
+argument. An existing pair necessarily has
+$3-\delta\le z_e\le L-1$ and $w_e=z_e+\delta-3$.
+The necessary private-size candidates are
+$(\alpha,b)\in\{(1,1),(2,2),(3,3)\}$ for $\delta=0$ and
+$(\alpha,b)\in\{(1,2),(2,3)\}$ for $\delta=1$, additionally
+subject to $|J|\ge1$ and every actual-cut restriction above. This
+list asserts no realization of any candidate. If $\mathcal A$ is
+empty, no $T^*,X^*,Y^*,J,\alpha,b$ or $\delta$ is manufactured;
+all selected axis families have transversal zero. If only a selected
+family is empty, the graph-owned sets still exist when $\mathcal A$
+is nonempty. The argument modifies no installed state and removes no
+paid visit from any run. $\square$
+
+**Corollary 37.3 (the complete cut slice of an actual family).** Suppose
+$\mathcal A\ne\varnothing$, and let $T_s$ be an actual common
+support with $s\le L-1$. For any selected actual axis family
+$\mathcal E\subseteq\mathcal A$, define
+
+$$
+\begin{gathered}
+\mathcal C_s(\mathcal E)=
+ \{D_e:e\in\mathcal E,\ D_e\subseteq T_s\},\qquad
+ t_s(\mathcal E)=\tau(\mathcal C_s(\mathcal E)),\\
+\tau_3(\mathcal E)\le t_s(\mathcal E)+|J\setminus T_s|,
+\qquad \nu\ge t_s(\mathcal E).
+\end{gathered}
+\tag{SI.227}
+$$
+
+Here $\tau$ on a family of coordinate sets means its ordinary
+coordinate transversal, not a signed literal transversal. Empty slices
+have transversal zero.
+
+Proof. Choose a minimum hitting set $H_s$ for the full slice
+$\mathcal C_s(\mathcal E)$, inside $T_s$. Such a choice is
+possible because all its edges are subsets of $T_s$; for an empty
+slice take $H_s=\varnothing$. Every edge not in the slice contains
+a coordinate outside $T_s$, and every edge lies in $J$ by Theorem
+37.2. Consequently $H_s\cup(J\setminus T_s)$ meets every edge
+of $\mathcal E$, proving the first inequality. Also
+$s\le L-1\le n-3$ since $K\ge4$. Every edge retained in the
+slice is a whole actual demand, with its positive-short supplier from
+Theorem 29.2. Theorem 32.1 therefore gives $\nu\ge t_s(\mathcal E)$.
+No supplier is claimed for a truncated set $D_e\cap T_s$: such an
+intersection need not contain the supplied label. $\square$
+
+**Definition 37.4 (three complete cut comparisons).** Now specialize to
+one graph of Assumption 21.1 with $n=9$, $K=4$, $L=6$, and an
+actual consecutive terminal gap $B=(3,9)$. Retain its actual $T_3$,
+$|T_3|=3$, and $A_0$, $|A_0|=5$. Let $\mathcal A_B$ be all
+actual axis pairs with both incoming cells in $V_B$, and choose any
+$\mathcal E_3\subseteq\mathcal A_B$ with
+$t_3=\tau_3(\mathcal E_3)$. Define separately
+
+$$
+\begin{aligned}
+\mathcal C(\mathcal E_3)&=
+ \{D_e:e\in\mathcal E_3,\ D_e\subseteq T_3\},&
+ t_C(\mathcal E_3)&=\tau(\mathcal C(\mathcal E_3)),\\
+\mathcal C_{\rm all}&=
+ \{D_e:e\in\mathcal A_B,\ D_e\subseteq T_3\},&
+ t_C^{\rm all}&=\tau(\mathcal C_{\rm all}).
+\end{aligned}
+\tag{SI.228}
+$$
+
+The first is the complete cut slice of the chosen family: it omits none
+of that family's cut-contained demands. The second is the graph-complete
+actual axis cut slice in this gap. Both consist of actual whole demands,
+with the actual witnesses of Theorem 29.2.
+
+A third comparison uses all available positive-short labels, independently
+of whether an axis pair demands them. Put
+
+$$
+\begin{gathered}
+Z_+=\{j\in[9]:\text{an installed state with label }j
+                         \text{ has positive short exits}\},\\
+Z_{\rm cut}=Z_+\cap T_3,\qquad Z_A=Z_+\cap A_0,\qquad
+\mathcal C_{\rm av}=\{\{j\}:j\in Z_{\rm cut}\},\\
+c=\tau(\mathcal C_{\rm av})=|Z_{\rm cut}|.
+\end{gathered}
+\tag{SI.229}
+$$
+
+Every singleton in $\mathcal C_{\rm av}$ has its defining installed
+positive-short supplier. Thus it is a valid Theorem 32.1 demand at
+$T_3$, without an assertion that it is an actual axis disagreement.
+Equivalently one can take all nonempty $D\subseteq T_3$ satisfying
+$D\cap Z_{\rm cut}\ne\varnothing$; this larger valid cut family
+has the same transversal $c$ because it contains precisely those
+available singletons as singleton members.
+
+Retain an arbitrary optional cut family $\mathcal E_{\rm cut}$ of
+Definition 36.1 and its $t_{\rm cut}$. It need not be an axis
+subfamily. A cut subfamily of $\mathcal C_{\rm all}$ has transversal
+at most $t_C^{\rm all}$, but no ordering of a general optional
+$t_{\rm cut}$ and $t_C^{\rm all}$ is built into the definitions.
+Available labels in $Z_A\setminus J$, when $J$ exists, can come
+from other or unused installed states and are not deleted.
+
+**Theorem 37.5 (the single-exception cut lift).** In Definition 37.4,
+if any actual axis pair exists on the graph, its concentrated intersection
+satisfies
+
+$$
+T_3\subseteq J,\qquad |J|=5-\alpha,\qquad
+\varepsilon:=|J\setminus T_3|=2-\alpha\in\{0,1\}.
+\tag{SI.230}
+$$
+
+In particular $\alpha\in\{1,2\}$. If $\alpha=2$, then
+$J=T_3$ and all actual axis demands are cut-pinned, including any
+unequal-depth pairs with $(\alpha,b)=(2,3)$. Every such pair in
+$\mathcal A_B$ has lower depth $z_e=5$. If $\alpha=1$, there
+is one graph-owned coordinate $x$ with $J=T_3\sqcup\{x\}$.
+For every selected $\mathcal E_3$,
+
+$$
+\begin{gathered}
+t_C(\mathcal E_3)\le t_C^{\rm all}\le c\le3,
+\qquad \nu\ge c,\qquad t_{\rm cut}\le c,\\
+t_3\le t_C(\mathcal E_3)+\varepsilon
+     \le t_C^{\rm all}+\varepsilon
+     \le c+\varepsilon\le c+1,\qquad t_3\le |Z_A|.
+\end{gathered}
+\tag{SI.231}
+$$
+
+If no axis pair exists, set $\varepsilon=0$ for these numerical
+inequalities only; all axis slices are empty and $t_3=0$.
+No upper support is required in that case.
+
+Proof. Apply (SI.226) at the actual depth three. It gives
+$T_3\subseteq J$ and $|J\setminus T_3|=5-\alpha-3$.
+Since $\alpha\ge1$, its nonnegative value is zero or one, proving
+(SI.230). For a pair in $V_B$, its lower live depth is four or
+five. Actual ancestry at $T_3$ gives $T_3\subseteq I_e$.
+If $\alpha=2$, then $|I_e|=z_e-2\ge3$, so $z_e=5$;
+this argument does not require equal upper and lower depths.
+
+Corollary 37.3 at $s=3$ proves the first bound for $t_3$ using
+the complete chosen-family slice. Explicitly, every edge outside that
+slice contains the same $x$ if $\varepsilon=1$; if
+$\varepsilon=0$, no such edge exists. Add that one coordinate to a
+minimum hitting set of the slice. Inclusion of the two actual slices
+gives $t_C(\mathcal E_3)\le t_C^{\rm all}$. For each edge of
+$\mathcal C_{\rm all}$, Theorem 29.2 supplies a positive-short
+label in that whole edge, hence in $Z_{\rm cut}$. Thus
+$t_C^{\rm all}\le c$. Theorem 32.1 applies to every available
+singleton at $T_3$, giving $\nu\ge c$, and $c\le|T_3|=3$.
+The equality $\tau(\mathcal C_{\rm av})=c$ also follows directly:
+each singleton forces its own coordinate into a hitting set, and their
+union hits the entire family.
+
+For a general optional cut family in Definition 36.1, every applicable
+cut has depth at most six, hence at most three by consecutiveness of
+$B=(3,9)$. The actual common supports form a chain, so each of these
+supports lies in $T_3$. Each optional demand therefore has a supplier
+with label in that demand and in $Z_{\rm cut}$. The set
+$Z_{\rm cut}$ hits every optional demand, proving $t_{\rm cut}\le c$.
+It does not make that optional family an axis subfamily. Taking all the
+available singleton labels attains the maximum transversal over these
+allowed cut families.
+
+For every actual axis demand, Theorem 29.2 supplies a label in $D_e$,
+and Theorem 37.2 places $D_e$ in $J\subseteq A_0$. Thus
+$Z_+\cap J$ hits every selected axis edge, and $Z_A$ does too.
+More explicitly,
+
+$$
+t_3\le |Z_+\cap J|
+   =c+|(Z_+\cap J)\setminus T_3|
+   \le c+\varepsilon.
+$$
+
+This does not assert $|Z_A|\le c+1$: labels in $A_0\setminus J$
+need not belong to any axis demand. The empty cases follow from the
+zero transversal convention. If the chosen family is cut-pinned, then
+$t_3=t_C(\mathcal E_3)$, independent of an optional family's
+choice. For an arbitrary optional subfamily, (SI.231) supplies no
+replacement of $t_C(\mathcal E_3)$ or $c$ by its possibly smaller
+$t_{\rm cut}$. Such a replacement would discard the completeness
+premise; no actual-graph counterexample to it is asserted here.
+$\square$
+
+**Proposition 37.6 (paid private sizes and the one-hit-prefix restriction).**
+In Definition 37.4 every actual selected axis family satisfies
+
+$$
+t_3\le3.
+\tag{SI.232}
+$$
+
+More precisely, in the $\alpha=1$ case, $b\in\{1,2\}$.
+If $b=1$, every axis demand has size three and $t_3\le2$.
+If $b=2$, every axis demand has size at least two. If
+$\alpha=1$ and $t_3=3$, then every separated family
+$\mathcal E_\perp$ of Definition 36.1 on this same graph obeys
+
+$$
+t_\perp\le2.
+\tag{SI.233}
+$$
+
+Proof. The private-set bounds are those of Theorem 37.2. The paid
+supplier used here is the upper-private-one implication in
+[Support Barriers, Lemma 2.3][SB37], equivalently the Boolean
+instance of [PE, Theorem 3.1(2)--(3)][PE]. In its notation the
+correspondence is
+
+$$
+(k,h,g,S,T,X,Y,U,a,b)
+  =(4,0,3,S_e,T_e,X^*,Y^*,[9]\setminus(S_e\cup T_e),\alpha,b).
+$$
+
+The original $c_i$ are unchanged. The lower private bits are all zero,
+so the supplied lower-private-zero implication is already applicable.
+If all upper private bits are one, the other supplied implication gives
+$b\le\alpha$ and $C_{Y^*}\le C_{X^*}$; together the two give
+$b=\alpha$ and equality of the two private costs. These are the
+published one-sided exchanges, used as intermediate facts.
+
+The native/Boolean interface here does not identify arbitrary native
+histories by a count label. SI Convention 1.3 lifts this original
+Boolean graph unchanged to the selected literals after the paid profile
+front. Each of the present Boolean histories becomes an actual selected
+cube history there, with the same $S_e,T_e,\rho_e$, the same fixed
+selected successors, and original selected costs. The lift's simultaneous
+native bounds are $n+1,W+3$, with its profile charge included; PE
+Theorem 3.1 has $n=9,k=4$ in its permitted range. Support Barriers
+Lemma 2.3 states precisely the Boolean implications at bounds $n,W$.
+Thus the supplied conclusion concerns this graph and its actual
+completions, including the paid private repeats in the exchanged suffix.
+It assumes neither subset-sum nonresonance nor free certified traffic.
+
+If $\alpha=2$, then $J=T_3$ has size three, and $t_3\le3$
+follows immediately. Suppose $\alpha=1$. For $b=1$, an actual
+pair with $\beta_e=1$ would have all upper private bits one.
+The supplied exchanges would force $C_{X^*}=C_{Y^*}$ for two
+nonempty disjoint singletons. Their coordinates differ, while the
+individual original costs are distinct, a contradiction. Hence
+$\beta_e=0$ for every pair, and $|D_e|=3-\beta_e=3$.
+Every two-element subset of the four-element $J$ meets every such
+three-element edge, proving $t_3\le2$. Equality of general subset
+sums is not excluded or used in this singleton argument.
+
+For $b=2$, the case $\beta_e=2$ would instead have all upper
+private bits one and force $2=b\le\alpha=1$, another contradiction.
+Thus $\beta_e\le1$, so every actual edge has size at least two
+inside the four-element $J$. Every three-element subset of $J$
+meets every such edge. This proves (SI.232), including the empty
+family, and excludes precisely the indicated upper-private-one cases.
+
+Now assume $\alpha=1$ and $t_3=3$. The $b=1$ case is
+impossible, so $b=2$, $J=T_3\sqcup\{x\}$, and the selected
+actual edges all have size at least two. No two-element subset
+$H\subseteq J$ can hit every selected edge. Therefore some actual
+$D_e$ is disjoint from $H$, hence contained in the two-element
+$J\setminus H$. Its minimum size forces
+$D_e=J\setminus H$. As $H$ ranges over all two-element subsets,
+this proves that all six two-element subsets of $J$ occur as actual
+demands in $\mathcal E_3$. They are consequences of its assumed
+actual transversal value, not postulated formal patterns.
+
+In particular, for every $u\in T_3$ there is an actual pair with
+$D_e=\{x,u\}$. Extend it to $q_5$ by Theorem 37.2. Its upper
+assignment on $T_3$ is one at $u$ and zero at the other two
+coordinates: on $J$ the upper ones are exactly $D_e$, since the
+added coordinates $C_e$ are all zero. Its upper final support is
+$T^*$, with $|T^*|=6$. The actual depth-three ancestor of this
+upper history has support $T_3$ and that one-hit assignment.
+
+For each $u\in T_3$, let $r_u$ be the unique actual depth-three
+host with this assignment, as in the proof of Corollary 36.3.
+Its uniqueness is deterministic: two completions agreeing on $T_3$
+follow the same first three queries, each in their depth-three support
+$T_3$, with the same replies. Existence here is also witnessed by the
+actual upper history just obtained. Its next coordinate is fresh, and
+is read before that history's final depth six, so
+
+$$
+i(r_u)\in T^*\setminus T_3\qquad(u\in T_3).
+\tag{SI.234}
+$$
+
+Theorem 36.2 and Corollary 36.3 say that every separated singleton
+label is $i(r_u)\notin A_0$ for one of these three actual one-hit
+prefixes. Combining this fact with (SI.234) gives
+
+$$
+\{j_e:e\in\mathcal E_\perp\}
+ \subseteq\{i(r_u):u\in T_3\}\setminus A_0
+ \subseteq T^*\setminus A_0=Y^*.
+$$
+
+The last set has size $b=2$. The separated transversal equals the
+number of distinct such singleton labels by Corollary 36.3, proving
+(SI.233). Coincident hosts or labels only reduce that number. All
+prefixes, final supports and separated labels refer to this one actual
+graph. No existence of a graph with $t_3=3$ is asserted. $\square$
+
+**Corollary 37.7 (complete-cut redundancy and the exact capacity consumer).**
+Retain Definition 37.4 and the separated and literal families of
+Definition 36.1, with $\mathcal E_{\rm lit}$ containing
+$\mathcal E_\perp$. Write $p=t_\perp$, so
+$0\le p\le3$ and $t_{\rm lit}\ge p$. Use the same actual
+$\lambda,\gamma,C=\nu+\lambda+\gamma$ of (SI.213), with
+$\lambda\ge1$, $\gamma\ge1$, and define the comparisons using
+all available cut labels by
+
+$$
+\begin{gathered}
+M_0(c)=\max\{2,t_3,t_{\rm lit},c+2\},\qquad
+M_1(c)=\max\{M_0(c),c+p\},\\
+M_{\rm mix}=t_3+p-1.
+\end{gathered}
+\tag{SI.235}
+$$
+
+On this same graph the retained-diagonal bound is
+
+$$
+\begin{aligned}
+C&\ge\lambda+\max\{t_{\rm lit}-1,c+\gamma,c+p-1\}\\
+ &\ge\max\{t_{\rm lit},c+2,c+p\}
+   =M_1(c),\\
+M_0(c)&=\max\{t_{\rm lit},c+2\},\qquad
+M_1(c)=\max\{t_{\rm lit},c+\max\{2,p\}\},\\
+M_{\rm mix}&\le c+p\le M_1(c).
+\end{aligned}
+\tag{SI.236}
+$$
+
+Thus both the $t_3$ branch of the complete $M_0$ comparison and
+the extra mixed branch after the complete $M_1$ comparison are
+universally redundant. The same redundancy after $M_1$ holds when
+$c$ is replaced throughout by $t_C^{\rm all}$ or by
+$t_C(\mathcal E_3)$, using the corresponding complete valid cut
+family for its capacity bound.
+
+For comparison with $M_0(c)$ alone, the strongest restriction supplied
+by these relations and Proposition 37.6 is the exact conditional test
+
+$$
+\begin{gathered}
+M_{\rm mix}\le M_0(c)+1,\\
+M_{\rm mix}>M_0(c)
+\quad\Longleftrightarrow\quad
+(c,t_3,p,t_{\rm lit})=(1,2,3,3).
+\end{gathered}
+\tag{SI.237}
+$$
+
+This equivalence compares the expressions for actual graph/family data.
+It does not assert a graph realizing the displayed tuple. In that
+conditional tuple $M_0(c)=3$ and $M_{\rm mix}=M_1(c)=4$.
+Universal $M_{\rm mix}\le M_0(c)$ is not concluded.
+
+Proof. For each $j\in Z_{\rm cut}$ choose one installed
+positive-short state with fixed label $j$. Different labels require
+different states. Theorem 32.1 puts every chosen state globally in
+$Q\setminus Q_{\rm live}$, giving $\nu\ge c$.
+For each distinct singleton label demanded by $\mathcal E_\perp$,
+choose one supplying positive terminal literal gate from Theorem 25.3.
+There are $p$ such chosen gates by Theorem 36.2 and Corollary 36.3.
+Their fixed labels lie outside $A_0$, whereas the $c$ cut states
+have labels in $T_3\subseteq A_0$. These two chosen state sets
+are therefore disjoint.
+
+Every live occurrence of a chosen literal gate is at the corner
+$(3,5)$, by Theorem 25.3. Consequently their disjoint union is
+contained in $(Q\setminus Q_{\rm live})\cup F_{(3,5)}$.
+Its cardinality gives the actual same-graph inequality
+
+$$
+c+p\le\nu+b_{(3,5)}=\nu+\gamma+1.
+\tag{SI.238}
+$$
+
+A gate supplying several demands is chosen once per distinct required
+label; a state belongs to just one chosen set here. In particular a
+never-live gate is not charged again as a separate corner resource.
+The source literal-family bound is
+$t_{\rm lit}\le\nu+b_{(3,5)}=\nu+\gamma+1$ by Theorem 26.2.
+Together with $\nu\ge c$ and (SI.238), these give respectively
+
+$$
+C\ge t_{\rm lit}+\lambda-1,\qquad
+C\ge c+\lambda+\gamma,\qquad
+C\ge c+p+\lambda-1.
+$$
+
+Their maximum is the first line of (SI.236). These are three lower
+bounds on one pool; their transversal contributions have not been added.
+Using only $\lambda,\gamma\ge1$ gives its second line. By
+Theorem 37.5, $t_3\le c+1<c+2$, and $c+2\ge2$.
+The simplifications of $M_0(c)$ and $M_1(c)$ follow, as does
+$M_{\rm mix}\le c+p$. For either complete actual slice in
+(SI.228), Corollary 37.3 supplies $t_3\le t_C+1$, Theorem
+32.1 supplies $\nu\ge t_C$, and the identical disjoint union
+argument supplies $t_C+p\le\nu+b_{(3,5)}$. Thus the same
+$M_1$ domination holds without identifying either $t_C$ with $c$.
+
+For the strict $M_0(c)$ comparison, $p\le3$ and $t_3\le c+1$
+first give $M_{\rm mix}\le c+3\le M_0(c)+1$.
+Strictness over its $c+2$ branch requires
+$t_3+p\ge c+4$. The two upper bounds force $p=3$ and
+$t_3=c+1$. Strictness over $t_{\rm lit}$ is then exactly
+$t_{\rm lit}\le c+2$. Conversely these three integer conditions
+give $M_{\rm mix}=c+3>M_0(c)=c+2$.
+
+Now $t_{\rm lit}\ge p=3$ implies $c\ge1$, and
+$t_3\le3$ from Proposition 37.6 implies $c\le2$.
+If $c=2$, then $t_3=3$. The case $\alpha=2$ would be
+cut-pinned and give $t_3\le c$, impossible. Hence $\alpha=1$,
+and (SI.233) gives $p\le2$, also impossible. It follows that
+$c=1$, $t_3=2$ and
+$3=p\le t_{\rm lit}\le c+2=3$, proving the forward implication
+of (SI.237). Conversely the displayed tuple directly gives the stated
+values $3,4,4$, proving the reverse implication as a comparison of
+expressions. If the axis class is empty, $t_3=0$ and none of these
+strictness conditions can arise. If the selected axis family is
+cut-pinned, $t_3\le c$ and
+$M_{\rm mix}\le c+p-1\le c+2\le M_0(c)$ instead.
+
+For an arbitrary optional $t_{\rm cut}$, its $M_0$ or $M_1$
+can be smaller than the complete comparison. The proof neither replaces
+$c$ by every optional selection in $t_3\le c+1$, nor claims
+$M_{\rm mix}\le M_1(t_{\rm cut})$ for every such choice.
+It proves that the complete applicable cut bound on this same graph
+already absorbs the mixed term. Omitting available demands cannot
+establish a gain against all applicable capacity bounds. $\square$
+
+**Proposition 37.8 (unchanged unrestricted deficit and source boundaries).**
+In the scope of Corollary 37.7 the exact incidence identity is still
+
+$$
+\begin{gathered}
+m=24+R+E_B^{\setminus\Pi_4}-D_B+C,\qquad R\ge0,\\
+m\ge24\quad\Longleftrightarrow\quad
+R+E_B^{\setminus\Pi_4}+C\ge D_B.
+\end{gathered}
+\tag{SI.239}
+$$
+
+A sufficient substitution supplied by (SI.236) is
+
+$$
+R+E_B^{\setminus\Pi_4}
+ +\lambda+\max\{t_{\rm lit}-1,c+\gamma,c+p-1\}\ge D_B.
+\tag{SI.240}
+$$
+
+The weaker sufficient substitution uses
+$\max\{t_{\rm lit},c+\max\{2,p\}\}$ in place of the retained
+$\lambda,\gamma$ expression. None of the foregoing inequalities
+establishes either sufficient substitution uniformly for every permitted
+graph and original tuple.
+
+Proof and mathematical correspondence. Equation (SI.239) is Corollary
+33.1 with $\Pi=\Pi_4$, or (SI.214), on the same installed graph.
+Substitution of its actual capacity lower bound (SI.236) proves the
+sufficiency of (SI.240), without replacing any of the other incidence
+terms. In particular no new transversal equality or relation bounds the
+full unrestricted $D_B$ by these resources.
+
+The substantive composition in this section is the actual continuation
+to a single zero-axis host, preservation of both private sets, the
+resulting common intersection with at most one coordinate outside the
+actual cut, and its complete-cut capacity consumer. SI Theorem 2.2
+supplies exact live depths, actual fixed successors, freshness and the
+unique zero axis. Theorem 29.2 supplies the required depth slack,
+nonempty disagreements and actual short-exit witnesses. PE Lemma 4.1,
+through SI Section 2, supplies equal-hit support rigidity directly;
+it is not reproved as new content. SI Lemma 9.2 supplies the actual
+ancestors and common-cut support chain. The paid refinement uses the
+already published upper-private-one exchange in Support Barriers
+Lemma 2.3 and PE Theorem 3.1, with the parameter and source mapping
+in Proposition 37.6. Theorem 36.2 supplies the actual one-hit prefixes
+and their fixed fourth-query labels; the extra restriction (SI.233)
+uses those prefixes of actual edges forced by $t_3=3$. Sections
+26, 30--33 and 36 supply gate localization, cut pinning, diagonal
+excess and the finite same-graph capacity unions.
+
+These are repo-derived paper deductions from the cited suppliers.
+The overlap already supplied by equal-hit rigidity, one-sided exchanges,
+short-exit witnesses and cut-pinned counting is retained as such. The
+classical comparison remains bounded by [Bryant, Section 2, Definition
+1][Bryant] and [Cook, Edmonds, Medabalimi and Pitassi, Section
+2.1][CEMP]: strict increase of variable indices in the former and
+acyclicity with semantic read-once restrictions on consistent accepting
+paths in the latter are additional model hypotheses. Neither supplies
+this graph with a size-preserving normalization, and neither justifies
+removing paid certified queries. The concentration and prefix deductions
+use actual histories of the original graph throughout; ordinary
+hypergraph transversals and finite union bounds do not assert that every
+formal edge pattern or numerical capacity profile is realizable. No
+worldwide novelty or physical-memory conclusion is attached to these
+paper deductions.
+
+The remaining requirement is a uniform proof of the exact inequality
+in (SI.239), or another sufficient condition paying its full deficit.
+The whole-table condition (SI.166), [CP, (CP.28)][CP] and the
+unrestricted nine-input minimum $24$ remain unresolved by this section.
+The $T_3$ and prefix conclusions here are not transferred to terminal
+gaps $(1,9)$ or $(2,9)$, and the complete mixed comparison here uses
+$\Pi_4$, not the separate unequal-depth $\Pi_R$ consumer.
+Every assertion is quantified separately over every original position
+tuple and every permitted graph for that tuple. $\square$
+
+[SB37]: FIB_NATIVE_SUPPORT_BARRIERS_AND_SHORT_BLOCK_COMPENSATION.md
+
+## 追加锚（本行以下为增补区）
+
+## 38. Uniform compensation of the actual terminal gap $(3,9)$
+
+**Definition 38.1 (the actual nine-input gap and its row excesses).**
+Fix one positive increasing original position tuple and one graph
+satisfying Assumption 21.1 with
+
+$$
+n=9,\qquad K=4,\qquad L=6,\qquad B=(3,9).
+$$
+
+Thus
+
+$$
+V_B=\{(0,4),(0,5),(1,3),(1,4),(1,5),
+(2,2),(2,3),(2,4),(2,5),
+(3,1),(3,2),(3,3),(3,4),(3,5)\}.
+$$
+
+These are exactly the cells of the gap. Put
+
+$$
+\begin{aligned}
+U&=\sum_{w=1}^{3}(b_{(3,w)}-1),
+&L_1&=\sum_{z=3}^{5}(b_{(1,z)}-1),\\
+\lambda&=(b_{(2,4)}-1)+(b_{(2,5)}-1)+(b_{(3,4)}-1),
+&\gamma&=b_{(3,5)}-1.
+\end{aligned}
+\tag{SI.241}
+$$
+
+The symbols $U$ and $L_1$ here are sums of row excesses, not unread
+coordinate sets. A row-$r/s$ host means a state hosting a cell in
+hit row $r$ and a cell in hit row $s$; $(h,z)$ always denotes an
+individual count cell. All quantities are for this one graph; no
+optimizer or graph is selected independently for a different term.
+
+**Lemma 38.2 (zero-axis persistence and the complete necessary row
+spectrum).** Let $q_z$ be the unique all-zero-axis host at cell $(0,z)$.
+Any actual row-$0/2$ sharing in $V_B$ has equal incoming depth and zero
+counts differing by two.  Consequently its only possible types are
+
+$$
+(0,4)\sim(2,2),\qquad (0,5)\sim(2,3).
+\tag{SI.242}
+$$
+
+The set of row-$0/2$ hosts is therefore one of
+
+$$
+\varnothing,\qquad\{q_5\},\qquad\{q_4,q_5\}.
+\tag{SI.243}
+$$
+
+If $q_4$ is a row-$0/2$ host, its fresh one-successor hosts
+$(1,4)\sim(3,2)$; if $q_5$ is a row-$0/2$ host, its fresh one-successor
+hosts $(1,5)\sim(3,3)$.  The two successors are distinct installed
+states.  A row-$0/3$ sharing at any host is incompatible with a
+row-$0/2$ sharing anywhere in this graph.
+
+If no row-$0/2$ host is present, a row-$0/3$ host can only have one of the
+four types
+
+$$
+\begin{gathered}
+(0,4)\sim(3,1),\quad (0,4)\sim(3,2),\\
+(0,5)\sim(3,2),\quad (0,5)\sim(3,3),
+\end{gathered}
+\tag{SI.244}
+$$
+
+and one graph-wide value $\delta\in\{0,1\}$ is used: the first and
+third types occur when $\delta=0$, and the second and fourth when
+$\delta=1$.  The only remaining row pair is row-$1/3$, with the six necessary
+types
+
+$$
+\begin{gathered}
+(1,3)\sim(3,1),\\
+(1,4)\sim(3,1),\quad(1,4)\sim(3,2),\\
+(1,5)\sim(3,1),\quad(1,5)\sim(3,2),\quad(1,5)\sim(3,3).
+\end{gathered}
+\tag{SI.245}
+$$
+
+No listed type is asserted to be attained.  Every host has at most two
+cells.
+
+Proof. The local support and equal-hit exclusions in [SI, (SI.7)][SI]
+give a hit gap and a zero gap of at least two. A row-zero history in
+this gap is the unique zero-axis history at its zero count, so its host
+is $q_4$ or $q_5$. For a row-$0/2$ pair write its cells as
+$(0,z),(2,w)$, its supports as $S,T$, and
+$a=|S\setminus T|$, $b=|T\setminus S|$. These supports are
+incomparable. Every lower private bit is zero, so the one-sided
+exchange [PE, Theorem 3.1(1)][PE], under the native correspondence
+[SI, Convention 1.3][SI], gives $a\le b$. The actual depth law
+[SI, Theorem 2.2(1)][SI] therefore gives
+
+$$
+|T|-|S|=b-a=2+w-z\ge0.
+$$
+
+But (SI.7) gives $z-w\ge2$, so the same expression is at most
+zero. Thus $|T|=|S|$, $a=b$ and $z-w=2$, proving (SI.242).
+
+Continue either pair by $5-z$ common zero replies. At each step the
+fixed query is fresh for both live histories by SI Theorem 2.2, hence
+outside the union of their current supports. Assigning it zero is
+consistent separately with both exposed assignments, and each has a
+full Boolean completion following that prefix. The lower counts stay
+$(0,z+t)$, and the upper counts stay $(2,w+t)$, for
+$0\le t\le5-z$. They are live throughout: the lower zero count is
+at most five and the final upper zero count is $w+5-z=3$.
+The common fixed zero successor is therefore the actual next zero-axis
+host. In particular a $q_4$ sharing forces a $q_5$ sharing, giving
+(SI.243). On the next fresh query, reply one.  The two fixed successors are live cells
+$(1,4),(3,2)$ at $q_4$ and $(1,5),(3,3)$ at $q_5$.  The hosts $q_4$
+and $q_5$ are distinct because repeating a state on the all-zero run
+would make that actual run cycle.  Their one-successors are distinct:
+otherwise the same installed state would host two equal-hit row-one
+histories at different support depths, forbidden by [PE, Lemma 4.1][PE]
+and the supplied equal-hit support rigidity.
+
+Every row-$0/3$ pair, wherever it occurs, also survives the common zero
+continuation to $q_5$: its upper row has three hits and, by (SI.7), at
+most three zeros there.  A row-$0/2$ pair survives to the same $q_5$.
+The common state would then host both row-two and row-three histories,
+contradicting their required hit separation in (SI.7).  This proves the
+global incompatibility assertion.
+
+The row-$0/3$ list is the specialization of the actual axis
+[Theorem 29.2](#29-axis-hit-gap-three-histories-and-their-paid-short-exits).
+Its depth difference is the single graph-wide offset
+$\delta\in\{0,1\}$ of
+[Theorem 37.2](#37-one-host-concentration-and-the-complete-cut-capacity-comparison), so
+only two of the four displayed numerical types are available on one
+graph. The row gap restrictions then leave exactly the six row-$1/3$
+types in (SI.245).  Finally, three cells at one host would require
+three pairwise hit gaps at least two inside the four rows
+$0,1,2,3$, which is impossible; cells in one row with equal hits are
+also excluded.  This proves the at-most-two assertion. $\square$
+
+**Proposition 38.3 (incidence bounds in the two actual regimes).** Let
+$E=E_B$ and $D=D_B$.  Then
+
+$$
+E\ge5,\qquad \lambda\ge1,\qquad\gamma\ge1,\qquad
+U+L_1\le E-2.
+\tag{SI.246}
+$$
+
+If the row-$0/2$ host set is empty and $A$ is the number of
+row-$0/3$ hosts, then $A\le2$ and
+
+$$
+D\le3+U,\qquad D\le3+L_1+A,\qquad E\ge D.
+\tag{SI.247}
+$$
+
+When $A=0$, the last inequality is strict by one: $D\le E-1$.
+
+If the row-$0/2$ host set is nonempty, then row-$0/3$ sharing is globally
+absent, $A\in\{1,2\}$ is the number of row-$0/2$ hosts, and, writing
+$N_{13}$ for the number of row-$1/3$ hosts,
+
+$$
+D=A+N_{13},\qquad
+N_{13}\le\min\{3+U,3+L_1\},\qquad D\le E+1.
+\tag{SI.248}
+$$
+
+The only positive raw deficits allowed by these inequalities are the
+conditional necessary profiles
+
+$$
+(E,D)=(5,6)\quad\hbox{or}\quad(E,D)=(6,7),
+\tag{SI.249}
+$$
+
+and either profile requires $A=2$, hence an actual $q_4$ host.  These
+profiles are numerical necessities only; no graph realizing either is
+constructed.
+
+Proof. The diagonal criterion for a noncommon consecutive depth gives
+one excess on each of depths $4,5,6,7,8$. The five witnesses are
+distinct cells, proving $E\ge5$. Depth seven gives
+
+$$
+(b_{(2,5)}-1)+(b_{(3,4)}-1)\ge1,
+$$
+
+and depth eight gives $b_{(3,5)}-1\ge1$, so
+$\lambda,\gamma\ge1$. The four cell sets summed in
+
+$$
+U+L_1+\lambda+\gamma
+$$
+
+are pairwise disjoint: they are respectively row three with $z=1,2,3$,
+row one with $z=3,4,5$, the three cells $(2,4),(2,5),(3,4)$, and
+the cell $(3,5)$. Hence no baseline excess or overlap is counted twice,
+and (SI.246) follows. The counts $U,L_1,D,E$ are nonnegative
+integers; in particular
+
+$$
+\min(U,L_1)\le\left\lfloor\frac{U+L_1}{2}\right\rfloor
+ \le\left\lfloor\frac{E-2}{2}\right\rfloor.
+$$
+
+In the no-row-$0/2$ regime, every shared host is either a row-$0/3$ host
+or a row-$1/3$ host. The row-zero hosts are among $q_4,q_5$, and the
+single offset in Lemma 38.2 leaves $A\le2$. Each shared host consumes
+one distinct row-three host in the cells $(3,1),(3,2),(3,3)$, so
+$D\le3+U$. The row-$1/3$ hosts consume distinct row-one hosts, while
+the row-$0/3$ hosts need not do so, giving
+$D\le3+L_1+A$.
+
+If $D\ge E+1$, these two bounds imply
+$U\ge E-2$ and $L_1+A\ge E-2$. Together with (SI.246), this gives
+$E-2\ge2E-4-A$, hence $E\le A+2\le4$, contradicting $E\ge5$.
+Thus $E\ge D$. If $A=0$, then
+
+$$
+D\le3+\min(U,L_1)
+ \le3+\left\lfloor\frac{E-2}{2}\right\rfloor\le E-1.
+$$
+
+The last comparison holds at $E=5$ because the floor is one; for
+$E\ge6$ it follows from $(E-2)/2\le E-4$.
+
+In the row-$0/2$ regime Lemma 38.2 excludes every row-$0/3$ host, so
+$D=A+N_{13}$. The two row host counts give the two bounds on
+$N_{13}$ in (SI.248), and (SI.246) gives
+
+$$
+D\le A+3+\left\lfloor\frac{E-2}{2}\right\rfloor.
+$$
+
+The preceding floor comparison gives $D\le E$ when $A=1$, and
+$D\le E+1$ when $A=2$. For $A=2$ and $E\ge7$, one also has
+$\lfloor(E-2)/2\rfloor\le E-5$: at $E=7$ the floor is two,
+and for $E\ge8$ use $(E-2)/2\le E-5$. Hence $D\le E$ for
+$E\ge7$. At $E=5,6$ the respective integral upper bounds are six
+and seven. Consequently $D>E$ requires exactly (SI.249), requires
+$A=2$, and therefore requires the actual $q_4$ host by (SI.243).
+These implications assert no attainment of either profile. $\square$
+
+**Theorem 38.4 (the actual $q_4$ residual pays one global unit).**
+Assume the residual case of Proposition 38.3, so the actual graph has
+both $(0,4)\sim(2,2)$ at $q_4$ and $(0,5)\sim(2,3)$ at $q_5$.  Let
+$T_3$ be the common depth-three support.  The $q_4$ pair has supports
+
+$$
+S=T_3\sqcup\{x\},\qquad T=T_3\sqcup\{y\},\qquad x\ne y,
+\tag{SI.250}
+$$
+
+with the lower assignment zero. Write $\rho:T\to\{0,1\}$ for the
+upper assignment. The upper private bit is zero, and there is a
+two-element set
+
+$$
+D_0=\{j\in T_3:\rho_j=1\},\qquad |D_0|=2,
+\tag{SI.251}
+$$
+
+which is the whole disagreement set of the pair.
+
+There is an installed positive terminal literal gate labelled by some
+$j\in D_0$.  It is a paid state: it is absent from both incoming
+histories, and the two incoming histories have four queries each.  For
+the PE Theorem 7.2 instance its exact parameters are
+
+$$
+(n,k,h,g,a,b,u,Q,V,p,y_{\rm PE})
+   =(9,4,0,2,1,1,4,4,2,0,0),
+\tag{SI.252}
+$$
+
+so
+
+$$
+\Delta=2,\qquad \varepsilon=1,\qquad e=1,\qquad D=2,\qquad
+J=\{2,3\}.
+\tag{SI.253}
+$$
+
+For a common unread assignment of weight two, the joint certificate
+uses exactly two new negative zeros and exactly two new positive ones
+in disjoint query classes. All four common queries and the
+discriminator are paid. The discriminator is query nine, and both
+successors are the corresponding output terminals.
+
+Proof. Since $B=(3,9)$ is an actual common-support gap, every
+actual live depth-three ancestor has support $T_3$. The two actual
+incoming histories at $q_4$ have depth four by Lemma 38.2 and
+[SI, Theorem 2.2(1)][SI]. Ancestry in [SI, Lemma 9.2][SI] gives
+$T_3\subseteq S\cap T$, with $|S|=|T|=4$ and $|T_3|=3$.
+Thus each support adds exactly one coordinate outside $T_3$.
+The support-incomparability exclusion in (SI.7) forces these coordinates
+to be different: if $x=y$, the two supports would be equal despite
+unequal hits. This proves the disjoint-union form (SI.250) from the
+actual histories. If the upper private coordinate $y$ had value one, then
+the lower-private-zero and upper-private-one implications of [PE,
+Theorem 3.1][PE] would give both $c_x\le c_y$ and $c_y\le c_x$.
+Since $x\ne y$ and the original costs are strictly increasing, this is
+impossible. Thus $y$ is zero; the upper's two ones are exactly the
+two coordinates in (SI.251).
+
+Apply [PE, Theorem 7.2][PE] directly to this singleton-private pair.
+The lower and upper completions agree on $x,y$ and on an unread set
+$U_c$ of size four, and use a common assignment of weight two. Their
+weights are two and four. The parameter substitution is (SI.252);
+the $D$ in (SI.253) is PE's common-coordinate discrepancy, distinct
+from the incidence count
+$D_B$. The clipped interval is
+
+$$
+[\max(0,2-0),\min(4,4-0-1)]\cap\mathbb Z=\{2,3\},
+$$
+
+and the discrepancy is positive.  Theorem 7.2 gives a first
+different reply at an old coordinate $j\in D_0$.
+
+For the chosen weight-two assignment, the negative completion has four
+old zeros and needs two further zeros. The positive completion has two
+old ones and needs two further ones. The joint certificate classes have
+$A_1=\varnothing$ (because $p=0$) and are
+
+$$
+B_0\cup U_0\quad\hbox{and}\quad U_1,
+$$
+
+where $B_0\subseteq\{y\}$, and $U_0,U_1$ are subsets of the zero
+and one coordinate classes of the common assignment, respectively. The exact inequalities of [PE, (PE.26)][PE]
+give at least two distinct coordinates in each class and at most four
+total distinct coordinates in these classes. Hence each class has size
+two, and the classes are disjoint. Let $k_{\rm pre}$ be the actual
+number of paid common query visits from $q_4$ strictly before the
+first discriminator, and let $\ell_-,\ell_+$ count the actual query visits
+strictly after it on the two completions. Four distinct queried
+coordinates imply $k_{\rm pre}\ge4$; (PE.26) counts coordinate
+sets, not these visit numbers. Each incoming history has exactly four
+queries, so the original query cap on each of the paired actual
+completions gives separately
+
+$$
+4+k_{\rm pre}+1+\ell_-\le9,\qquad
+4+k_{\rm pre}+1+\ell_+\le9.
+$$
+
+Since all visit numbers are nonnegative, $k_{\rm pre}=4$ and
+$\ell_-=\ell_+=0$. Thus the four certificate coordinates account
+for exactly the four common visits, with no additional repeat or other
+query in that segment. These are the two actual runs of this one
+paired completion; all certified visits remain paid and no independent
+certificate optimizer is substituted.
+
+The discriminator is query $4+4+1=9$. Both successors are therefore
+terminal, with the zero successor terminal zero and the one successor
+terminal one. This is a genuine positive terminal literal gate, not merely a certified
+occurrence. The gate's state is absent from both incoming histories by
+the paid-discriminator conclusion of Theorem 7.2.
+
+Let $C_{\rm pre}$ be the complete original letter charge of the four
+common queries, including every paid repeat, and let
+$C_Z=\sum_{i\in Z}c_i$.  The two original runs have, separately,
+
+$$
+\begin{aligned}
+C_S+C_{\rm pre}+c_j&\le W,\\
+C_T+C_{\rm pre}+c_j&\le W.
+\end{aligned}
+\tag{SI.254}
+$$
+
+Because $S=T_3\sqcup\{x\}$ and $T=T_3\sqcup\{y\}$, these are
+equivalent to the single displayed bound, with both sides retained:
+
+$$
+C_{\rm pre}+c_j
+ \le C_{U_c}+c_y,\qquad
+C_{\rm pre}+c_j
+ \le C_{U_c}+c_x,\qquad
+C_{\rm pre}+c_j\le C_{U_c}+\min(c_x,c_y).
+\tag{SI.255}
+$$
+
+The Boolean-to-native lift is literal under [SI, Convention 1.3][SI]:
+coordinate $i$ keeps its native selected label and fixed successors,
+its charge is the same $c_i=s_i+4$, the supports $T_3\sqcup\{x\}$,
+$T_3\sqcup\{y\}$ and $U_c$ retain their assignments, and the PE
+discriminator label $j$ is the native query-$j$ literal.  The profile
+front is invoked once on each lifted run; its paid overhead is recorded
+separately from the selected-state history, and the complete reader and
+latches stay the separate services supplied by Convention 1.3.
+
+Under [SI, Convention 1.3][SI], the separate native profile service
+adds its paid $+3$ letter charge and $+1$ query to each lifted run:
+
+$$
+\begin{aligned}
+C_S+C_{\rm pre}+c_j+3&\le W+3,\\
+C_T+C_{\rm pre}+c_j+3&\le W+3,\\
+4+4+1+1&\le9+1.
+\end{aligned}
+\tag{SI.256}
+$$
+
+The profile and reader services remain separate priced services of that
+convention; no service charge is merged into the selected-state pool.
+The two-private-coordinate statement of
+[Theorem 25.3](#25-two-private-coordinate-equality-and-terminal-literal-gates)
+does not cover this singleton-private pair; the gate here is supplied by
+the direct PE Theorem 7.2 instance above.
+
+Let $\mathcal E_0$ be the one-member common-cut family with demand
+$D_0$. The positive terminal literal gate has positive short exits,
+$D_0\subseteq T_3$, and
+
+$$
+\tau_3(\mathcal E_0)=1.
+$$
+
+The general common-cut strengthening
+[Theorem 32.1](#32-pinning-short-exit-states-behind-an-actual-common-cut),
+at depth $3\le9-3$, therefore gives
+
+$$
+\nu\ge1.
+\tag{SI.257}
+$$
+
+This is a global never-live conclusion: Theorem 32.1 excludes every
+live occurrence by ancestry and freshness. A single certified gate
+occurrence on the paired inputs would not by itself justify charging
+the state to $Q\setminus Q_{\rm live}$, and no terminal-block-only
+unused-state substitution is made. $\square$
+
+**Corollary 38.5 (uniform actual compensation and the exact consumer).**
+For every positive increasing original position tuple and every graph
+satisfying unchanged Assumption 21.1 with an actual terminal gap
+$B=(3,9)$,
+
+$$
+E_B+\nu\ge D_B.
+\tag{SI.258}
+$$
+
+More precisely, if the row-$0/2$ host set is empty then $E_B\ge D_B$
+already; if it is nonempty, Proposition 38.3 gives either
+$E_B\ge D_B$ or one of the two conditional profiles (SI.249), and
+Theorem 38.4 supplies $\nu\ge1$ in the latter case.
+
+Writing
+
+$$
+R=E_{\rm cut}+\sum_{C\in\mathcal B,\ C\ne B}(E_C-D_C)\ge0,
+$$
+
+the same-graph identity is
+
+$$
+m=24+R+E_B-D_B+\nu,
+\qquad
+m\ge24\ \Longleftrightarrow\ R+E_B+\nu\ge D_B.
+\tag{SI.259}
+$$
+
+For $\Pi_4=\{2,3\}\times\{4,5\}$, put
+
+$$
+E_B^{\rm(outside\,\Pi_4)}
+ =E_B-\lambda-\gamma.
+$$
+
+Then the stronger local compensation (SI.258) is equivalently
+
+$$
+E_B^{\rm(outside\,\Pi_4)}+(\nu+\lambda+\gamma)\ge D_B,
+\tag{SI.260}
+$$
+
+which is sufficient for $m\ge24$ because $R\ge0$. The exact
+same-graph $\Pi_4$ threshold condition retains $R$:
+
+$$
+m\ge24\ \Longleftrightarrow
+R+E_B^{\rm(outside\,\Pi_4)}+(\nu+\lambda+\gamma)\ge D_B.
+$$
+
+The full state count is
+
+$$
+m=24+R+E_B^{\rm(outside\,\Pi_4)}-D_B+\nu+\lambda+\gamma.
+\tag{SI.261}
+$$
+
+Proof. If there is no row-$0/2$ sharing, use (SI.247). If there is such
+sharing and $D_B>E_B$, (SI.249) applies and the actual $q_4$ pair
+exists; (SI.257) then gives $E_B+\nu\ge D_B$. The exact identity is
+[SI, Theorem 9.3, (SI.32)][SI], while $R\ge0$ is the supplied
+compensation for all other consecutive gaps of length at most three.
+The decomposition of $E_B$ into the four cells of $\Pi_4$ and its
+complement is disjoint. Thus (SI.260) rewrites (SI.258), while
+(SI.261) rewrites the identity in (SI.259). Keeping $R$ gives the
+exact threshold equivalence; (SI.260) supplies the stronger sufficient
+compensation. No independently optimized bounds are added. $\square$
+
+The result is quantified separately for every original position tuple
+and every permitted graph. It retains adaptive coordinate order, fixed
+labels and successors, all installed states, paid certified repeats,
+both original pointwise caps, and inconsistent union cycles. The
+sharing types and deficit profiles are necessary possibilities only;
+no existence or attainment assertion is made. The composition reuses
+the base-volume suppliers [SI, Theorems 2.2, 4.1, 9.3 and 9.4][SI],
+[PE, Theorems 3.1 and 7.2][PE], and this continuation's
+[Theorem 29.2](#29-axis-hit-gap-three-histories-and-their-paid-short-exits),
+[Theorem 32.1](#32-pinning-short-exit-states-behind-an-actual-common-cut)
+and [Theorem 37.2](#37-one-host-concentration-and-the-complete-cut-capacity-comparison).
+The singleton gate is outside the two-private-coordinate hypotheses of
+[Theorem 25.3](#25-two-private-coordinate-equality-and-terminal-literal-gates).
+The bounded comparisons with Bryant, Section 2, Definition 1, and Cook--Edmonds--Medabalimi--
+Pitassi, Section 2.1, retain their stronger ordered, acyclic or
+read-once premises and provide no normalization of this model.
+
+This closes the actual $(3,9)$ incidence deficit consumer. It does not
+settle the whole-table condition (SI.166), CP.28, the unrestricted
+minimum beyond this gap, or the terminal gaps $(1,9)$ and $(2,9)$.
+No physical-memory or worldwide novelty conclusion follows, and no
+claim is made about the existence of a graph realizing either
+conditional profile. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 39. The exact four-cell incidence identity for the two earlier terminal gaps
+
+**Definition 39.1 (actual four-cell incidences).** Fix a positive integer
+tuple $s_1<\cdots<s_9$ and one graph satisfying unchanged
+Assumption 21.1, with $c_i=s_i+4$, $W=\sum_i c_i$, $K=4$ and
+$L=6$. Suppose its complete common-support cut list has consecutive
+terminal gap $B=(a,9)$, where $a\in\{1,2\}$. All host and support
+families below are the actual families of that graph. Put
+
+$$
+\begin{gathered}
+C=\{(3,0),(3,1),(3,2),(3,3)\}\subset V_B,\qquad e_p=b_p-1,\\
+E=E_B,\qquad D=D_B,\qquad
+E_{\rm out}=\sum_{p\in V_B\setminus C}e_p,\\
+\xi_w=\bigl|\{q\in F_{(3,w)}:
+ q\notin F_p\text{ for every }p\in V\setminus\{(3,w)\}\}\bigr|,
+\qquad \xi=\sum_{w=0}^3\xi_w,\\
+\nu=|Q\setminus Q_{\rm live}|,\qquad
+\epsilon_*=1-\xi_0.
+\end{gathered}
+$$
+
+Let $s$ be the number of installed states hosting both a row-zero
+cell and a row-two cell in $V_B$. This lower-case $s$ is a host
+count, distinct from the original positions $s_i$. A state counted by
+$\xi_w$ can have several histories at its cell, but no second
+distinct live count cell anywhere in the graph. The term $\nu$ also
+refers to the entire graph, not just to histories in $B$.
+
+**Lemma 39.2 (partition of the actual shared hosts).** Every host has
+at most two distinct live cells. The four sets $F_{(3,w)}$, $0\le w\le3$,
+are pairwise disjoint, and the row-$0/2$ hosts are disjoint from their
+union. On this same graph,
+
+$$
+\begin{aligned}
+D&=s+\sum_{w=0}^3\bigl(b_{(3,w)}-\xi_w\bigr),\\
+E&=\sum_{w=0}^3\bigl(b_{(3,w)}-1\bigr)+E_{\rm out},\\
+D-E&=s+4-\xi-E_{\rm out}.
+\end{aligned}
+\tag{SI.262}
+$$
+
+Moreover $\epsilon_*\in\{0,1\}$, and it is exactly the indicator
+that the unique actual host of $(3,0)$ also hosts a second cell.
+
+Proof. The local exclusions [SI, (SI.7) and Theorem 2.2][SI] forbid
+different cells in one hit row from sharing. Different rows at one
+host must be separated by at least two. Three such rows cannot fit
+in $\{0,1,2,3\}$, proving the at-most-two assertion. The only possible
+row pairs are $0/2$, $0/3$ and $1/3$.
+
+In either pair involving row three, the lower cell has at most five
+zeros and the upper cell has at least two fewer. Its row-three cell
+is therefore in $C$. Equal-hit rigidity makes the four host families
+of $C$ pairwise disjoint. A row-$0/2$ host cannot belong to any of
+them, since this would put rows two and three at one state. Thus the
+shared hosts are precisely the disjoint union of the $s$ row-$0/2$
+hosts and the hosts in these four families which have a second cell.
+
+The localization [SI, Theorem 9.3][SI] excludes any second cell at
+a cut or in another gap. Consequently the global definition of
+$\xi_w$ removes exactly the unshared hosts in this partition, and
+each remaining host contributes exactly one to $D$. Subtracting the
+two incidence sums proves (SI.262). Finally
+$b_{(3,0)}=1$ by the actual axis assertion of SI Theorem 2.2, so
+$\xi_0$ is one or zero according as this host is unshared or shared.
+These are counts of one incidence structure; no separate graph or
+independently optimized host table is used. $\square$
+
+## 40. Actual zero-axis forks and the depth-six alternative
+
+**Lemma 40.1 (the complete row-$0/2$ suffix).** Write $q_z$ for the
+unique actual all-zero-axis host at $(0,z)$. Every actual row-$0/2$
+sharing, anywhere in this nine-input graph, has the form
+
+$$
+(0,z)\sim(2,z-2)\quad\text{at }q_z,
+\qquad z\in\{3,4,5\}.
+\tag{SI.263}
+$$
+
+The set $Z$ of its actual depths satisfies
+
+$$
+Z\in\{\varnothing,\{5\},\{4,5\},\{3,4,5\}\},
+\qquad s=|Z|.
+\tag{SI.264}
+$$
+
+If $Z\ne\varnothing$, there is no row-$0/3$ shared host anywhere
+in the graph. The alternatives in (SI.264) are necessary possibilities,
+without an assertion that any is attained.
+
+Proof. Consider actual incoming histories with cells $(0,z),(2,w)$
+and supports $S,T$ at a shared host. The support exclusions in SI
+Section 2 make $S,T$ incomparable. Write
+$\alpha=|S\setminus T|>0$ and $\beta=|T\setminus S|>0$.
+Every old lower-private bit is zero. Apply the one-sided private
+exchange [PE, Theorem 3.1(1)][PE] through [SI, Convention 1.3][SI].
+It gives $\alpha\le\beta$. Actual live depths and the zero-gap
+restriction give
+
+$$
+0\le\beta-\alpha=|T|-|S|=2+w-z\le0.
+\tag{SI.265}
+$$
+
+Thus both incoming depths are $z$, $w=z-2$, and initially
+$2\le z\le5$.
+
+Depth one has the actual common support $T_1$, consisting of the
+fixed first queried coordinate. At a proposed $q_2$ pair, the two
+incomparable size-two supports must therefore be
+$T_1\sqcup\{x\}$ and $T_1\sqcup\{y\}$ for distinct $x,y$.
+The lower private bit is zero, and the upper history at $(2,0)$ is
+all one. Both pure-polarity implications of PE Theorem 3.1 give
+$c_x=c_y$, contradicting the strict increase of the individual
+original costs. This excludes $q_2$ without a distinct-subset-sum
+assumption. In a gap starting at two, isolation of the actual cut
+would also exclude sharing at that depth.
+
+At any remaining pair append common zero replies until the lower
+cell reaches $(0,5)$. Each next fixed query is fresh for both live
+histories, hence outside the union of their current supports. Giving
+it zero is consistent separately with each history and gives each
+an actual total completion. At step $t$ the cells are
+$(0,z+t),(2,z-2+t)$; both remain live for $0\le t\le5-z$.
+Their fixed zero successor is the next actual zero-axis host.
+Consequently a pair at $q_z$ forces every later pair through $q_5$.
+These hosts are distinct, since repetition on the actual all-zero
+run would contradict termination. This proves (SI.263)--(SI.264).
+All these depths are internal to either gap under consideration.
+
+Any row-$0/3$ pair likewise follows actual common zero replies to
+$q_5$. Its upper final zero count is $w+5-z\le3$, by (SI.7),
+so it stays live. If $Z\ne\varnothing$, a row-$0/2$ pair supplies
+at $q_5$ an actual row-two history, while this proposed pair supplies
+an actual row-three history. Their hit gap one contradicts (SI.7).
+The two histories need not be jointly compatible inputs: the local
+exclusion concerns actual histories at the same installed state.
+This proves the global row-$0/3$ exclusion. $\square$
+
+**Lemma 40.2 (reserves from real parents and siblings).** Suppose
+$Z\ne\varnothing$. For each $z\in Z$, put
+
+$$
+g_z=e_{(1,z-1)}+e_{(2,z-2)},\qquad
+e_6=e_{(1,5)}+e_{(2,4)}.
+$$
+
+Then
+
+$$
+g_z\ge1\quad(z\in Z),\qquad e_6+\xi_3\ge1.
+\tag{SI.266}
+$$
+
+The cell pairs contributing the different $g_z$ are disjoint, at
+depths $z\in\{3,4,5\}$, and are disjoint from the two $e_6$
+cells at depth six. They all lie outside $C$.
+
+Proof. Let $S_z$ be the zero-axis support at $q_z$, and $T_z$ the
+support of an actual upper $(2,z-2)$ history there. These supports
+are incomparable. The actual predecessor $q_{z-1}$ on the zero axis
+has live children $(0,z)$ and $(1,z-1)$ with the same support
+$S_z$, by the fixed-successor law [SI, Theorem 2.2(3)][SI].
+
+If $g_z=0$, both of its cells have one host and hence one support,
+using $b_p\ge a_p\ge1$. The sole support at $(1,z-1)$ is
+therefore $S_z$. Take an actual history at $(1,z-2)$, which exists
+by SI Theorem 2.2(1). Its two live children have cells
+$(1,z-1),(2,z-2)$ and equal supports. Their singleton support
+families force the sole upper support to be $S_z$ as well. In
+particular $T_z=S_z$, contradicting unequal-hit equal-support
+exclusion at $q_z$. Thus $g_z\ge1$. The row-one and row-two host
+families used in these reserves are themselves pairwise disjoint:
+equal-hit distinct cells and hit gap one are both excluded by (SI.7).
+
+For the depth-six assertion it suffices to consider $e_6=0$.
+Both $(1,5)$ and $(2,4)$ then have singleton host and support
+families. The live children of any actual $(1,4)$ history show
+that their sole supports coincide; call that support $H$. Now take
+an actual $(2,3)$ history. Its zero-child at $(2,4)$ and one-child
+at $(3,3)$ have the same support, necessarily $H$. Thus there is
+an actual $(3,3)$ host with support $H$.
+
+By Lemma 40.1 this host cannot share with row zero. The only other
+possible partner is $(1,5)$: (SI.7) requires a row-one partner to
+have at least five zeros. But the sole support of $(1,5)$ is $H$,
+and equal supports with unequal hits cannot share. This particular
+$(3,3)$ host is therefore unshared globally, so $\xi_3\ge1$.
+This proves the second inequality of (SI.266) directly from actual
+parent forks, without postulating a numerical profile at depth six.
+The disjointness of the stated cell pairs follows from their depths
+and rows. $\square$
+
+## 41. Raw compensation of $(1,9)$ and the sole axis deficit of $(2,9)$
+
+**Theorem 41.1 (both actual incidence bounds).** Under Definition 39.1,
+
+$$
+\begin{array}{ll}
+B=(1,9):&D_B\le E_B,\\
+B=(2,9):&D_B\le E_B+\epsilon_*.
+\end{array}
+\tag{SI.267}
+$$
+
+These bounds hold separately for every permitted original graph and
+every original position tuple, in both regimes $Z=\varnothing$ and
+$Z\ne\varnothing$.
+
+Proof. Every internal depth of a consecutive gap is noncommon. The
+actual-parent diagonal criterion [SI, Theorem 4.1 and Definition
+9.1][SI] therefore gives at least one cell on that diagonal with
+$a_p\ge2$, hence $e_p\ge1$ by SI Theorem 2.2. This criterion
+uses real sibling histories to connect adjacent cells; it has no
+singleton premise on the parent diagonal.
+
+First suppose $Z=\varnothing$, so $s=0$. Depth seven consists
+of $(2,5),(3,4)$ and depth eight consists of $(3,5)$, all outside
+$C$. Each supplies an outside-$C$ unit. At depth three the only
+cell in $C$ is $(3,0)$, whose axis host count is exactly one and
+whose excess is zero. Thus every unit of excess on depth three is
+outside $C$; its noncommonness supplies at least one such unit.
+For $B=(1,9)$ depth two is also internal and entirely outside $C$.
+These are distinct diagonals, giving
+
+$$
+\begin{array}{ll}
+B=(1,9):&E_{\rm out}\ge4,\\
+B=(2,9):&E_{\rm out}\ge3.
+\end{array}
+\tag{SI.268}
+$$
+
+Equation (SI.262) now gives respectively $D-E\le-\xi\le0$
+and $D-E\le1-\xi\le1-\xi_0=\epsilon_*$.
+
+Suppose next $Z\ne\varnothing$. Use the actual $g_z$ reserves
+of Lemma 40.2, the two $e_6$ cells, and the noncommon diagonals
+seven and eight. For $B=(1,9)$ include the noncommon depth-two
+reserve as well. All these cell sets lie outside $C$ and are
+pairwise disjoint, so
+
+$$
+\begin{array}{ll}
+B=(1,9):&E_{\rm out}\ge s+3+e_6,\\
+B=(2,9):&E_{\rm out}\ge s+2+e_6.
+\end{array}
+\tag{SI.269}
+$$
+
+For $Z=\{5\},\{4,5\},\{3,4,5\}$, respectively, $s=1,2,3$.
+In the first gap the three resulting lower bounds are
+$4+e_6,5+e_6,6+e_6$; in the second they are
+$3+e_6,4+e_6,5+e_6$. In particular depth three is not charged
+again when $g_3$ already uses its cells. Distinct cells suffice for
+adding these terms of $E_{\rm out}$; no independently attainable
+minimum or additional allocation of installed states is presumed.
+
+Substitute (SI.269) into the exact identity (SI.262), and use
+$e_6+\xi_3\ge1$ and $\xi\ge\xi_0+\xi_3$. For the first gap,
+
+$$
+D-E\le1-\xi-e_6\le0;
+$$
+
+for the second,
+
+$$
+D-E\le2-\xi-e_6\le1-\xi_0=\epsilon_*.
+$$
+
+Together with (SI.268), these prove both bounds. The reserves are
+actual host excesses on the same graph, and the host/support
+uniqueness used to obtain them is that of SI Theorem 2.2, not a
+count-label relaxation. $\square$
+
+## 42. A terminal-zero discriminator behind the actual depth-two cut
+
+**Lemma 42.1 (one-sided global exclusion).** In a graph of
+Assumption 21.1 with $n=9$, $K=4$, suppose depth two is actually
+common, with support $T_2$. If an installed state $q_{\rm d}$ satisfies
+
+$$
+i(q_{\rm d})\in T_2,\qquad \delta(q_{\rm d},0)=\mathsf0,
+$$
+
+then $q_{\rm d}\notin Q_{\rm live}$. There is no condition on its
+one-successor or on the length of any positive tail.
+
+Proof. At a proposed live occurrence of $q_{\rm d}$, write its counts as
+$(h',z')$. Its query is fresh by [SI, Theorem 2.2][SI], so reply
+zero is an actual consistent extension. If $z'\le4$, its child
+counts satisfy $h'\le3$, $z'+1\le5$ and are still live. A
+correct graph cannot go directly to terminal zero there. Thus any
+live occurrence would have $z'=5$ and depth at least five.
+
+Every prefix of that live history is live. Its actual depth-two
+ancestor has support $T_2$, so its present support contains $T_2$
+by ancestry, as in [SI, Lemma 9.2][SI]. The label $i(q_{\rm d})$ would
+already be exposed, contradicting freshness. This excludes every
+live occurrence, including those on inputs other than any used to
+exhibit $q_{\rm d}$. $\square$
+
+**Theorem 42.2 (the one global charge for the actual gap $(2,9)$).**
+For Definition 39.1 with $B=(2,9)$,
+
+$$
+\nu\ge\epsilon_*,\qquad E_B+\nu\ge D_B.
+\tag{SI.270}
+$$
+
+Proof. If $\epsilon_*=0$, the first assertion is immediate and
+Theorem 41.1 gives the second. Suppose $\epsilon_*=1$, and let
+$r_*$ be the unique host of $(3,0)$. Choose an actual partner
+history at its second cell. Let $T$ be the upper axis support,
+all of whose three bits are one, and $S$ the partner support.
+
+The actual upper ancestor at depth two has the common support
+$T_2$, so $T=T_2\sqcup\{y\}$. The partner has hit row zero or
+one and at least two zeros by (SI.7). Its depth is at least two;
+it cannot lie on the common cut, whose hosts are isolated by SI
+Lemma 9.2. Hence it is later than that cut, and actual ancestry
+gives $T_2\subseteq S$. Incomparability now forces
+
+$$
+I=S\cap T=T_2,\qquad Y=T\setminus S=\{y\}.
+\tag{SI.271}
+$$
+
+The old upper bit at $y$ is one. If the partner were in row zero,
+all its private bits would be zero. Both pure-polarity implications
+of [PE, Theorem 3.1][PE] would give
+$|S\setminus T|=|Y|=1$ and equality of their costs. These are
+different singleton coordinates, so their costs cannot be equal.
+The partner must therefore be $(1,z)$ for some $2\le z\le5$.
+
+Put $X=S\setminus T$ and $U=[9]\setminus(S\cup T)$.
+Then $|X|=z-1$, $|Y|=1$, $|U|=7-z$. Let $p$ be the number
+of old lower ones in $X$, initially $p\in\{0,1\}$. If $p=0$,
+the same two pure-polarity implications again force the private
+sides to be distinct singletons of equal cost. Thus $p=1$.
+The lower assignment on $I=T_2$ is all zero, and the upper one
+is all one. Only individual-coordinate distinctness was used in
+these exclusions, never distinctness of general subset sums.
+
+Apply [PE, Theorem 7.2][PE] to these actual histories under the
+literal lift [SI, Convention 1.3][SI]. To distinguish PE's private
+sizes and discrepancy from the gap quantities, the exact substitution is
+
+$$
+\begin{gathered}
+(n,k,h,g,a_{\rm PE},b_{\rm PE},u_{\rm PE},Q_{\rm PE},V_{\rm PE})
+ =(9,4,1,3,z-1,1,7-z,3,1),\\
+p_{\rm PE}=1,\qquad y_{\rm PE}=1,\qquad
+\Delta_{\rm PE}=2,\qquad \varepsilon_{\rm PE}=1,\\
+e_{\rm PE}=1,\qquad D_{\rm PE}=2,\qquad
+J=[0,1]\cap\mathbb Z.
+\end{gathered}
+\tag{SI.272}
+$$
+
+Here $Q_{\rm PE}$ and $V_{\rm PE}$ denote PE's residual thresholds,
+not the installed state set or the cell rectangle. In particular
+$1\in J$ and $|U|\ge2$. Choose any assignment $\tau$ of weight
+one on $U$. With $\eta_S,\eta_T$ the old assignments, PE's
+two completions are exactly
+
+$$
+\begin{array}{c|cccc|c}
+ &I&X&Y&U&\text{total weight}\\ \hline
+\theta^-&\eta_S|_I&\eta_S|_X&\eta_T|_Y&\tau&3\\
+\theta^+&\eta_T|_I&\eta_S|_X&\eta_T|_Y&\tau&5.
+\end{array}
+\tag{SI.273}
+$$
+
+The first extends the actual lower history and the second the
+actual upper history. They agree on $X,Y,U$ and differ only on
+$I=T_2$, so their first different reply after the shared state
+queries a coordinate $j\in T_2$, with respective replies zero
+and one. Let $q_{\rm d}$ be this paid discriminator state. PE Theorem 7.2
+supplies both completions as actual sources, their joint certificate
+classes, and the fact that $q_{\rm d}$ is absent from both incoming state
+histories, including their common endpoint. This last fact also
+follows because a repeated entire changing state on either fixed
+completed input would repeat forever. It alone does not make $q_{\rm d}$
+globally never live.
+
+Both continued histories are certified strictly before this old
+coordinate query: a live history could only query a fresh coordinate.
+In PE's joint classes strictly before the discriminator, $B_0$ is
+empty because the upper-private bit at $y$ is one. Its inequalities
+(PE.26) specialize to
+
+$$
+|U_0|\ge6-z,\qquad |A_1|+|U_1|\ge1,
+\tag{SI.274}
+$$
+
+where $A_1$ consists of lower-private ones exposed on this common
+continuation, and $U_0,U_1$ of its unread zero and one coordinates.
+The three classes are pairwise disjoint and come from this same
+paired continuation. The negative certificate must acquire its
+$6-z$ new zeros there; the positive certificate must acquire at
+least one new one in $A_1\cup U_1$.
+
+Let $k_{\rm pre}$ count all actual paid visits from $r_*$ strictly
+before $q_{\rm d}$, including repeats. Distinct queried coordinates in
+(SI.274) require distinct visits, so $k_{\rm pre}\ge7-z$.
+Let $\ell_-,\ell_+$ be the numbers of paid visits strictly after
+the discriminator on the respective inputs. The incoming live
+histories have exactly $z+1$ and three queries. Apply the original
+query cap separately to each complete input:
+
+$$
+\begin{aligned}
+(z+1)+k_{\rm pre}+1+\ell_-&\le9,\\
+3+k_{\rm pre}+1+\ell_+&\le9.
+\end{aligned}
+\tag{SI.275}
+$$
+
+The first bound and $k_{\rm pre}\ge7-z$ force
+
+$$
+k_{\rm pre}=7-z,\qquad \ell_-=0,\qquad
+\ell_+\le z-2.
+\tag{SI.276}
+$$
+
+Thus $q_{\rm d}$ is query nine on $\theta^-$ and its fixed zero successor
+is terminal zero. The positive tail bound is zero, one, two or
+three visits when $z=2,3,4,5$, respectively. In particular no
+positive-short-exit hypothesis is obtained or needed.
+
+The original letter cap is also retained on each input. For any
+coordinate set $A$ write $C_A=\sum_{i\in A}c_i$. Let $C_{\rm pre}$
+be the full charge of the $k_{\rm pre}$ common visits, including
+repeats, and $C_+$ the full charge of the positive tail. The two
+actual complete runs give separately
+
+$$
+\begin{aligned}
+C_S+C_{\rm pre}+c_j&\le W,
+&C_{\rm pre}+c_j&\le c_y+C_U,\\
+C_T+C_{\rm pre}+c_j+C_+&\le W,
+&C_{\rm pre}+c_j+C_+&\le C_X+C_U.
+\end{aligned}
+\tag{SI.277}
+$$
+
+The right-hand inequalities are the corresponding left-hand ones
+after subtracting only that input's own incoming charge. Nothing
+is added or cancelled between different inputs. The PE classes
+bound actual paid visits from below; repeats and other visits are
+included, rather than replaced by the costs of independent certificate
+minimizers.
+
+For completeness, the native instance used here is precisely the
+full-fiber lift in [SI, Convention 1.3][SI] and [WTF, Theorem
+4.1][WTF]. Coordinate $i$ retains its fixed absolute shortest
+literal $a_i=LLL L^{s_i}R$, charge $c_i=s_i+4$, and fixed
+successors: branch uses the Boolean-one successor, while alpha,
+beta and absent use the Boolean-zero successor. The simultaneous
+cube realizes the two vectors in (SI.273) with all original row
+disequalities. Every word on that cube is constant or reads one
+coordinate, in the disjoint address families of [PE, Definition
+2.1, (PE.2)][PE]; no observation combines coordinates.
+
+On each of these lifted cube runs the profile front is its own paid
+one-query, three-letter prefix. Thus (SI.275)--(SI.277) become
+
+$$
+\begin{aligned}
+(z+1)+k_{\rm pre}+1+1&=10,\\
+3+k_{\rm pre}+1+\ell_++1&\le10,\\
+C_S+C_{\rm pre}+c_j+3&\le W+3,\\
+C_T+C_{\rm pre}+c_j+C_++3&\le W+3.
+\end{aligned}
+\tag{SI.278}
+$$
+
+These are separate bounds on the same two original source runs.
+The Boolean terminals correspond to the original-entry latches;
+all Boolean installed states are retained, including unused states,
+and the two profile states and $r$ mandated further latches have
+their supplied separate counts.
+The original eight-state reader, complete entries, acquired row,
+authentication, permission and service assumptions remain exactly
+those of SI Convention 1.3 and WTF Assumption 1.5. A mathematical
+completion supplies no free certificate or operation to the table.
+
+Finally $i(q_{\rm d})=j\in T_2$ and
+$\delta(q_{\rm d},0)=\mathsf0$. Lemma
+42.1 excludes every live occurrence of this actual installed state
+throughout the graph. Consequently $q_{\rm d}\in Q\setminus Q_{\rm live}$
+and $\nu\ge1=\epsilon_*$. This is one global state charge; no
+additivity over pairs or discriminators is asserted. Combine it with
+Theorem 41.1 to obtain (SI.270). $\square$
+
+## 43. The unrestricted original nine-input threshold-four minimum
+
+**Theorem 43.1 (the minimum at both original pointwise caps).** For
+every positive increasing original integer position tuple
+$s_1<\cdots<s_9$, put $c_i=s_i+4$ and $W=\sum_{i=1}^9c_i$.
+Among all graphs of Assumption 21.1 computing threshold four with
+both bounds $t_P(\theta)\le9$ and $J_P(\theta)\le W$ on every
+input, the minimum installed running-state count is
+
+$$
+m_{\rm exec}(c,4)=24.
+\tag{SI.279}
+$$
+
+The competitor class retains adaptive coordinate order, fixed labels
+and successors, all installed states, paid certified queries and
+repeats, and possibly inconsistent cycles in the union graph. There
+is no all-history, read-once, acyclic, normalization or scalar-realization
+premise.
+
+Proof. Fix any one such graph and its complete actual cut list.
+Let $B$ be its unique terminal gap and retain exactly
+
+$$
+\begin{gathered}
+R=E_{\rm cut}+\sum_{A\in\mathcal B,\ A\ne B}(E_A-D_A)\ge0,\\
+m=24+R+E_B-D_B+\nu,\\
+m\ge24\quad\Longleftrightarrow\quad R+E_B+\nu\ge D_B.
+\end{gathered}
+\tag{SI.280}
+$$
+
+The identity is [SI, Theorem 9.3, (SI.32)][SI], with its never-live
+count $u=\nu$. The nonnegativity of $R$ follows from Corollary
+23.2 on this same graph. Corollaries 23.2--23.3 show that the only
+possible positive-deficit terminal locations are $(1,9),(2,9),(3,9)$.
+All other terminal locations have $E_B\ge D_B$ already. For the
+three remaining alternatives the compensation is
+
+$$
+\begin{array}{c|c|c}
+\text{one actual terminal gap}&\text{incidence bound}&\text{global charge}\\ \hline
+(1,9)&D_B\le E_B&\nu\ge0\\
+(2,9)&D_B\le E_B+\epsilon_*&\nu\ge\epsilon_*\\
+(3,9)&D_B\le E_B+\nu&\text{Corollary 38.5}.
+\end{array}
+\tag{SI.281}
+$$
+
+The first line is Theorem 41.1 and the second is Theorems 41.1
+and 42.2. The last line reuses Corollary 38.5 at its exact original
+$n=9,K=4,L=6$, actual-gap and cost hypotheses. There is only one
+gap ending at nine. These lines are alternatives for that gap,
+so the single global $\nu$ is used at most once. They are never
+summed over the three locations or over local collisions. Every
+case has $E_B-D_B+\nu\ge0$, and (SI.280), with its exact $R$,
+gives $m\ge24$.
+
+For the matching upper reuse the grid of [PCA, Theorem 26.1][PCA]
+and [CP, Definition 4.1 and Corollary 4.2][CP]. Its Boolean graph
+has the 24 distinct running states
+
+$$
+\begin{gathered}
+q_{h,z}\quad(0\le h\le3,\ 0\le z\le5),\qquad
+i(q_{h,z})=h+z+1,\\
+\delta(q_{h,z},1)=
+\begin{cases}\mathsf1,&h=3,\\q_{h+1,z},&h<3,\end{cases}
+\qquad
+\delta(q_{h,z},0)=
+\begin{cases}\mathsf0,&z=5,\\q_{h,z+1},&z<5.\end{cases}
+\end{gathered}
+\tag{SI.282}
+$$
+
+Start at $q_{0,0}$. Induction on the actual run identifies its
+subscripts with the numbers of observed ones and zeros. It stops at
+the fourth one or sixth zero and therefore computes threshold four.
+Every input queries a prefix of coordinates $1,\ldots,9$, each
+once, so it pays at most nine queries and at most $W$ letters for
+the very same original tuple. The input with its first three bits
+one and remaining six zero uses all nine coordinates and attains
+both maxima. Thus the same two pointwise caps admit 24 installed
+running states, proving (SI.279).
+
+The parameter correspondence for the native suppliers remains the
+given equivalence
+$\mathsf N_{A,4,r}(H,p,\ell)\Longleftrightarrow
+\mathsf B_{c,4}(H-4-r,p-1,\ell-3)$ of SI Convention 1.3.
+The grid lift has $24+4+r$ preparation states and caps
+$10,W+3$, with the original latches and the separate reader and
+services. This uses the supplied full-fiber lift and selected-subsequence
+projection, not a new realization or acquisition theorem.
+
+The new incidence identity, actual parent/sibling reserves, B1/B2
+compensation and one-sided terminal-zero deduction are repo-derived
+consequences of the cited suppliers. Actual host/support uniqueness,
+fixed siblings, diagonal common supports and exact cut accounting
+are reused from SI Theorems 2.2, 4.1 and 9.3; the corresponding
+parent-diagonal and bookkeeping overlap is also explicit in
+[FIB support barriers, Section 3 and its attribution in Section
+9][SB]. The pure-polarity inequalities and the joint completions
+and certificates are PE Theorems 3.1 and 7.2. The terminal-location
+reduction and B3 compensation are Corollaries 23.2--23.3 and 38.5;
+the attaining grid is PCA Theorem 26.1. Those ingredients are not
+additional new lower bounds here.
+
+For the bounded library comparison, the private `contract_run` and
+`filtered_resources` and the public `literal_moore_feasibility` in
+[NativeLiteralMoore][NLM] concern contraction of one actual trace and
+joint resource feasibility for an acquired-code row model. Their
+trace filtering and code-dependent entry statements do not supply
+this fixed-start nine-input threshold incidence inequality. This
+comparison does not assert absence of a theorem in other libraries.
+
+The literature comparisons retain exactly the scope of Section 24:
+[Bryant, Section 2, Definition 1][Bryant] imposes increasing variable
+indices on nonterminal edges, while [Cook, Edmonds, Medabalimi and
+Pitassi, Section 2.1][CEMP] defines acyclic branching programs and
+its semantic read-once condition concerns consistent accepting paths.
+Neither provides a size-preserving normalization for the paid certified
+traffic allowed here. These are bounded applicability comparisons,
+not unrestricted lower-bound premises or a worldwide priority claim.
+
+The conclusion specializes the collective condition (SI.166) and
+[CP, (CP.28)][CP] only at $n=9,K=4,L=6$. Their universal forms,
+including other sizes with $\min(K,L)=4$, remain additional
+unproved assertions. The theorem is an installed-state and execution
+statement under the supplied services, with no kernel-certification,
+physical-memory or further native-service realization conclusion.
+$\square$
+
+[SB]: FIB_NATIVE_SUPPORT_BARRIERS_AND_SHORT_BLOCK_COMPENSATION.md
+[NLM]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/FiniteMenu/NativeLiteralMoore.lean
+[PCA]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PRESCRIBED_CODE_ACQUISITION.md
+[WTF]: RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_WEIGHTED_THRESHOLD_FRONTIER.md
+
+## 追加锚（本行以下为增补区）
+
+## 44. Two middle rows and a globally unshared third-row host
+
+**Definition 44.1 (uniform actual-support data).** Fix an integer
+$L\ge4$, put $K=4$, $n=L+3$, and fix arbitrary positive increasing
+integer positions $s_1<\cdots<s_n$, with $c_i=s_i+4$ and
+$W=\sum_i c_i$. Fix one complete graph of Assumption 21.1. Thus
+every input separately satisfies both $t_P\le n$ and $J_P\le W$.
+All installed states count; fixed labels and successors, adaptive
+order, paid certified queries and repeats, and possibly inconsistent
+cycles in the union graph retain their original meanings.
+
+Use the actual incidence families of Definition 21.2 and
+[SI, Definition 2.1][SI]. For every live cell $p$ put $e_p=b_p-1$.
+For $0\le w\le L-3$ define
+
+$$
+\begin{aligned}
+\xi_w&=\bigl|\{q\in F_{(3,w)}:
+ q\notin F_p\text{ for all }p\in V\setminus\{(3,w)\}\}\bigr|,\\
+g_w&=e_{(1,w+2)}+e_{(2,w+1)},\qquad
+\nu=|Q\setminus Q_{\rm live}|.
+\end{aligned}
+\tag{SI.283}
+$$
+
+The condition defining $\xi_w$ excludes a second distinct live count
+cell anywhere in this same graph, while allowing several histories at
+the indicated cell. It does not exclude certified visits elsewhere.
+The count $\nu$ is one global installed-state pool.
+
+**Lemma 44.2 (a two-cell support barrier).** For all
+$0\le w\le L-4$,
+
+$$
+g_w+\xi_w\ge1.
+\tag{SI.284}
+$$
+
+If the graph has no row-$0/3$ shared host anywhere, then also
+$g_{L-3}+\xi_{L-3}\ge1$.
+
+Proof. All $e_p$ and $\xi_w$ are nonnegative integers. If $g_w>0$
+the assertion follows. Otherwise the two cells $(1,w+2)$ and
+$(2,w+1)$ each have one host and hence one support, by
+[SI, Theorem 2.2][SI]. Take an actual history at $(1,w+1)$.
+Its fixed zero and one successors are these two cells; both children
+are live and have the same support. Denote their common singleton
+support by $H$, of size $d=w+3$.
+
+First suppose $w\le L-4$. The actual zero-axis history at
+$(0,w+2)$ has live children $(0,w+3)$ and $(1,w+2)$, so the
+unique zero-axis support at depth $d$ is also $H$. Take an actual
+history at $(2,w)$. Its zero child is at $(2,w+1)$, with support
+$H$, and its one child supplies a host $r\in F_{(3,w)}$ with
+that same support $H$. All these histories exist by SI Theorem 2.2;
+they are actual fixed-successor extensions, not independently
+assigned support labels.
+
+Every zero-axis support is nested with $H$, since the axis is one
+actual zero-reply path. The nested-support and equal-support
+exclusions [SI, Section 2, (SI.7)][SI] therefore forbid $r$ from
+sharing with row zero. If $r$ shared with row one at $(1,z)$,
+(SI.7) would require $z\ge w+2$. This partner history has depth
+at least $d$ and at most one old one. Its actual ancestor at depth
+$d$ is consequently at $(0,d)$ or $(1,d-1)$. Both cells have
+support $H$, as just proved. The partner's support thus contains
+$H$. Equality is excluded by unequal hits, and proper containment
+by the nested-support exclusion. Row two is excluded by hit gap one;
+another cell in row three is excluded by equal-hit rigidity.
+Therefore $r$ has no second distinct live cell and $\xi_w\ge1$.
+
+For $w=L-3$, the first sibling argument still gives the singleton
+support $H$ of $(1,L-1)$ and $(2,L-2)$, and the second parent
+still supplies an actual $(3,L-3)$ host with support $H$. Its only
+possible row-one partner is $(1,L-1)$, again excluded by equal
+supports and unequal hits. Row-zero sharing is excluded by the
+additional hypothesis. The other row exclusions are unchanged.
+Thus this host is globally unshared and $\xi_{L-3}\ge1$.
+This last argument uses no zero-axis history at depth $L$: such a
+history is not live.
+
+The actual sibling and singleton-support steps are those of
+SI Theorems 2.2 and 4.1, also used in [SB, Section 3][SB]. Unlike
+[SI, Theorem 15.2][SI], the hypothesis $g_w=0$ concerns only two
+cells at one depth. The conclusion supplies one globally unshared
+third-row host there; it assumes no singleton interior rectangle.
+$\square$
+
+## 45. One actual axis suffix and uniform terminal reserves
+
+**Definition 45.1 (one terminal gap and its exact remainder).** In
+Definition 44.1 suppose the complete actual common-support cut list
+has consecutive terminal gap $B=(a,n)$ with
+$1\le a\le L-3$. Put
+
+$$
+\begin{gathered}
+r_0=\max(0,a-2),\qquad
+C=\{(3,w):r_0\le w\le L-3\}\subset V_B,\\
+t=|C|=L-2-r_0,\qquad
+\xi=\sum_{w=r_0}^{L-3}\xi_w,\qquad
+E_{\rm out}=\sum_{p\in V_B\setminus C}e_p,\qquad
+\iota=\mathbf1_{\{a=1\}},\\
+R=E_{\rm cut}+\sum_{A\in\mathcal B,\ A\ne B}(E_A-D_A)\ge0.
+\end{gathered}
+\tag{SI.285}
+$$
+
+Write $q_z$ for the unique actual host at $(0,z)$. Let $Z$ be the
+set of depths at which $q_z$ also hosts a row-two cell, anywhere
+in the graph, and put $s=|Z|$. This $s$ counts hosts and is distinct
+from the positions $s_i$. The sign of $R$ is Corollary 23.2. The
+supplied identity (SI.164), without discarding any other contribution,
+is
+
+$$
+m-4L=R+\nu+E_B-D_B.
+\tag{SI.286}
+$$
+
+**Lemma 45.2 (the continuing actual row-$0/2$ suffix).** Every
+row-$0/2$ sharing has the form
+
+$$
+(0,z)\sim(2,z-2)\text{ at }q_z,\qquad 3\le z\le L-1.
+\tag{SI.287}
+$$
+
+Either $Z=\varnothing$, or for some
+$z_0\ge\max(3,a+1)$,
+
+$$
+Z=\{z_0,z_0+1,\ldots,L-1\},\qquad s=L-z_0.
+\tag{SI.288}
+$$
+
+If $Z\ne\varnothing$, no row-$0/3$ sharing occurs anywhere.
+All row-$0/2$ hosts then belong to $Q_B$ and are distinct.
+
+Proof. This extends the actual-axis argument of Lemma 40.1 with
+its original private-exchange supplier. For actual shared histories
+at $(0,z),(2,w)$ with supports $S,T$, write
+$\alpha=|S\setminus T|>0$, $\beta=|T\setminus S|>0$.
+The lower private bits are all zero. [PE, Theorem 3.1(1)][PE],
+applied through [SI, Convention 1.3][SI], gives
+$\alpha\le\beta$. Actual live depths and (SI.7) give
+
+$$
+0\le\beta-\alpha=|T|-|S|=2+w-z\le0.
+\tag{SI.289}
+$$
+
+Hence $w=z-2$ and the two histories both have depth $z$.
+At $z=2$ both supports contain the fixed depth-one support $T_1$.
+Incomparability makes them $T_1\sqcup\{x\}$ and
+$T_1\sqcup\{y\}$ for different coordinates $x,y$. The upper
+history is all one. Both pure-polarity implications of PE Theorem
+3.1 then force $c_x=c_y$, contrary to the strictly increasing
+individual costs. This uses no uniqueness of subset sums, and proves
+$z\ge3$.
+
+Append common zero replies until the lower history reaches
+$(0,L-1)$. At step $j$, the two cells are
+$(0,z+j),(2,z-2+j)$, both live for $0\le j\le L-1-z$.
+Each query is fresh for both occurrences, hence outside the union
+of their supports. Its zero reply extends each history consistently,
+and each extended assignment has an actual total completion.
+The fixed zero successor is the next $q_{z+j+1}$. Thus the sharing
+depths form the stated suffix. A cut host cannot share with a
+different cell, by [SI, Lemma 9.2][SI]. If the suffix began at or
+before $a$, it would contain such a forbidden sharing at $q_a$.
+Therefore $z_0>a$. All these equal-depth pairs lie inside $B$.
+Their axis hosts are distinct: a repeated entire state on the actual
+all-zero run would violate termination.
+
+A proposed row-$0/3$ pair at $(0,z),(3,w)$ likewise extends by
+common zero replies to $q_{L-1}$. Its upper zero count there is
+$w+L-1-z\le L-3$, by (SI.7), so both histories remain live.
+If $Z\ne\varnothing$, this would put row-two and row-three
+histories at the same $q_{L-1}$, contrary to hit gap one. The
+histories need only be separately actual; no joint compatibility
+of their old assignments is asserted. $\square$
+
+**Theorem 45.3 (uniform actual-support terminal deficit).** For the
+one graph of Definition 45.1 the exact incidence partition is
+
+$$
+\begin{aligned}
+D_B&=s+\sum_{w=r_0}^{L-3}(b_{(3,w)}-\xi_w),\\
+E_B&=\sum_{w=r_0}^{L-3}(b_{(3,w)}-1)+E_{\rm out},\\
+D_B-E_B&=s+t-\xi-E_{\rm out}.
+\end{aligned}
+\tag{SI.290}
+$$
+
+The support reserves satisfy
+
+$$
+E_{\rm out}+\xi\ge
+\begin{cases}
+t+1+\iota,&Z=\varnothing,\\
+t+2+\iota,&Z\ne\varnothing.
+\end{cases}
+\qquad
+D_B-E_B\le
+\begin{cases}
+-1-\iota,&Z=\varnothing,\\
+s-2-\iota,&Z\ne\varnothing.
+\end{cases}
+\tag{SI.291}
+$$
+
+In particular every terminal gap of span six has raw compensation
+$D_B\le E_B$, without a charge to $\nu$. For arbitrary lower cuts,
+the following raw envelopes hold:
+
+$$
+D_B-E_B\le
+\begin{cases}
+L-6,&a=1,\\
+L-5,&a=2,\\
+L-a-3,&3\le a\le L-3.
+\end{cases}
+\tag{SI.292}
+$$
+
+Proof. By (SI.7) the only row pairs at a shared host are $0/2$,
+$0/3$ and $1/3$. A host has at most two distinct live cells, since
+three pairwise separated hit rows cannot fit in $\{0,1,2,3\}$.
+Every shared row-three cell has $w\le L-3$; if it lies in $B$,
+its depth $3+w>a$ also gives $w\ge r_0$. The families
+$F_{(3,w)}$ are pairwise disjoint and disjoint from row-$0/2$
+hosts. [SI, Theorem 9.3][SI] confines each shared host to one
+gap. Therefore the globally defined $\xi_w$ removes exactly the
+unshared hosts of these families inside $B$. Lemma 45.2 puts all
+row-$0/2$ hosts in $B$. Each shared host contributes one to $D_B$.
+This is precisely the partition argument of Lemma 39.2, with $t$
+cells instead of four, and proves (SI.290). It is reused accounting,
+not an assumption that numerical incidences are realizable.
+
+For each $r_0\le w\le L-4$, Lemma 44.2 gives one reserve
+$g_w+\xi_w\ge1$. There are $t-1$ such indices. Their $g_w$
+use different pairs of row-one and row-two cells, at distinct depths
+$w+3\in[r_0+3,L-1]$. These cells all lie inside $B$ and outside
+$C$. Their $\xi_w$ use distinct families in $C$.
+
+The internal depths $L+1$ and $L+2=n-1$ are not common, since
+$a,n$ are consecutive cuts. By the local diagonal criterion
+[SI, Theorem 4.1 and Definition 9.1][SI], each has a cell with
+$a_p\ge2$ and hence $e_p\ge1$. Every cell on these two diagonals
+is outside $C$, whose depths are at most $L$. These give two
+further excess units, disjoint from all the preceding $g_w$.
+If $a=1$, depth two is internal and noncommon as well; all its
+cells lie outside $C$ and outside those reserves. It gives another
+unit. Thus $E_{\rm out}+\xi\ge(t-1)+2+\iota$.
+
+If $Z\ne\varnothing$, Lemma 45.2 excludes row-$0/3$ sharing
+globally, so the last assertion of Lemma 44.2 gives the additional
+reserve $g_{L-3}+\xi_{L-3}\ge1$. Its $g$ cells have depth
+$L$, distinct from every previous $g$ and both final diagonals;
+its $\xi$ family is the remaining one in $C$. Hence
+$E_{\rm out}+\xi\ge t+2+\iota$. Substitution in (SI.290)
+proves (SI.291). All reserve sums count disjoint excess terms or
+disjoint unshared-host families on this one graph.
+
+When $Z\ne\varnothing$, (SI.288) gives $s\le L-3$ for
+$a=1,2$, and $s\le L-a-1$ for $a\ge3$. This proves
+(SI.292) in that branch. In the empty branch the stronger bound
+$-1-\iota$ implies the same envelopes: their right sides are at
+least $-2$ for $a=1$, at least zero for $a=2$, and nonnegative
+for $a\ge3$ over the stated ranges.
+
+At span six, $a=L-3$. If $L\ge5$, then $a\ge2$ and
+$s\le L-\max(3,a+1)\le2$, so (SI.291) gives $D_B-E_B\le0$.
+For $L=4$, $a=1$, one instead has $s\le1$ and
+$D_B-E_B\le-2$; the empty branch has the same bound.
+These exhaust the span-six edge cases. $\square$
+
+## 46. A single global charge and the installed-state bound
+
+**Lemma 46.1 (the early depth-two suffix pays one global state).**
+In Definition 45.1, if $a=2$ and $Z$ begins at $z_0=3$, then
+$\nu\ge1$ for every allowed $L$ and original cost tuple.
+
+Proof. The histories at $q_3$ have cells $(0,3),(2,1)$ and
+supports $S,T$ of size three. The actual common depth-two support
+$T_2$ is contained in both. Incomparability forces
+$S=T_2\sqcup\{x\}$, $T=T_2\sqcup\{y\}$ with $x\ne y$.
+The lower assignment is zero on all of $S$. If the upper bit at
+$y$ were one, both pure-polarity implications of [PE, Theorem
+3.1][PE] would force $c_x=c_y$. Thus that bit is zero and the
+upper assignment is one on both coordinates of $T_2$.
+
+Put $I=T_2$, $X=\{x\}$, $Y=\{y\}$ and
+$U=[n]\setminus(S\cup T)$, so $|U|=L-1$. Write
+$\alpha=|X|$, $\beta=|Y|$ for PE's private sizes. The exact parameters
+in [PE, Definition 7.1 and Theorem 7.2][PE] are
+
+$$
+\begin{gathered}
+(k,h,g,\alpha,\beta,u_{\rm PE},p_{\rm PE},y_{\rm PE})
+ =(4,0,2,1,1,L-1,0,0),\\
+Q_{\rm PE}=4,\quad V_{\rm PE}=2,\quad D_{\rm PE}=2,
+\qquad J=[2,\min(L-1,3)]\cap\mathbb Z.
+\end{gathered}
+\tag{SI.293}
+$$
+
+In particular $2\in J$. Choose any assignment $\tau$ of weight
+two on $U$. The paired completions agree on $X,Y,U$, being zero
+on $X,Y$ and equal to $\tau$ on $U$; on $I$ they are respectively
+all zero and all one. They extend the actual incoming histories,
+have respective weights two and four, and require opposite outputs.
+Their first different reply after $q_3$ queries some $j\in T_2$,
+with replies zero and one. Denote this paid state by $q_{\rm d}$.
+These are completions of one fixed graph, supplied through the
+literal lift of SI Convention 1.3; no alternate graph is chosen.
+
+For clarity, that lift installs every Boolean state, including unused
+ones, at its fixed literal $LLL L^{s_i}R$, of length $c_i$;
+branch follows its one edge and alpha, beta and absent follow its
+zero edge. PE's simultaneous cube realizes every Boolean vector
+with the original repeated occurrences, disequalities and guards.
+Each lifted cube run has its own paid profile query of length three.
+Removing this front recovers exactly the Boolean histories and
+their paid coordinate visits. Thus PE's joint certificate classes
+refer to this same actual Boolean continuation and its original costs.
+The original latches, separate eight-state reader and supplied
+services remain those of SI Convention 1.3 and WTF Assumption 1.5;
+the lift is used here only for the actual-source correspondence.
+
+Both inputs are certified strictly before the old-coordinate query
+$j$: otherwise live freshness would forbid that query. On the
+common continuation before $q_{\rm d}$, the negative history must
+acquire $L-3$ new zeros in $Y\cup U$, while the positive history
+must acquire two new ones in $U$. These coordinate classes are
+disjoint. This is also the exact specialization of PE.26, with
+$A_1=\varnothing$, $B_0\subseteq Y$, and the same $U_0,U_1$.
+Consequently the number $k_{\rm pre}$ of all common paid visits
+strictly before $q_{\rm d}$ satisfies $k_{\rm pre}\ge L-1$.
+Repeats are still counted as visits and cannot increase the number
+of distinct certificate coordinates.
+
+Each incoming live history has paid exactly three queries. Let
+$\ell_-,\ell_+$ count all visits strictly after the discriminator
+on its respective input. The two original query caps give separately
+
+$$
+3+k_{\rm pre}+1+\ell_-\le L+3,\qquad
+3+k_{\rm pre}+1+\ell_+\le L+3.
+\tag{SI.294}
+$$
+
+Hence $k_{\rm pre}=L-1$ and both tails vanish. Correctness and
+fixed successors force
+$\delta(q_{\rm d},0)=\mathsf0$ and
+$\delta(q_{\rm d},1)=\mathsf1$.
+The letter caps remain separate as well. With $C_A=\sum_{i\in A}c_i$
+and $C_{\rm pre}$ the charge of all common visits, they say
+
+$$
+\begin{aligned}
+C_S+C_{\rm pre}+c_j&\le W,\\
+C_T+C_{\rm pre}+c_j&\le W,\\
+C_{\rm pre}+c_j&\le C_U+\min(c_x,c_y).
+\end{aligned}
+\tag{SI.295}
+$$
+
+The last line is the conjunction of the first two after subtracting
+only each input's own prefix cost. No cost from one input pays for
+another, and no certified query is free.
+
+It remains to exclude every possible live occurrence of this state,
+not just its two incoming histories. At a proposed live occurrence
+with counts $(h',z')$, its fresh zero query could terminate at zero
+only if $z'=L-1$: for $z'\le L-2$ that child is still live.
+Its depth is therefore at least $L-1\ge3$. Its actual depth-two
+ancestor has support $T_2$, so its current support contains $T_2$.
+But its label $j\in T_2$ must be fresh, a contradiction.
+Thus $q_{\rm d}\in Q\setminus Q_{\rm live}$ and $\nu\ge1$.
+This is one global charge. The one-sided exclusion is the uniform
+form of the argument in Lemma 42.1; the source of the paired inputs
+and certificates is PE Theorem 7.2, not an extra state-count premise.
+$\square$
+
+**Theorem 46.2 (the uniform original installed-state interval).** For
+every $L\ge4$ and every original cost tuple of Definition 44.1,
+every graph of Assumption 21.1 with $K=4$, $n=L+3$ satisfies
+
+$$
+m\ge4L-\max(0,L-6),\qquad
+4L-\max(0,L-6)\le m_{\rm exec}(c,4)\le4L.
+\tag{SI.296}
+$$
+
+In particular, for every $L\ge7$,
+
+$$
+3L+6\le m_{\rm exec}(c,4)\le4L.
+\tag{SI.297}
+$$
+
+Proof. Work on one arbitrary graph. If its terminal gap has
+$D_B\le E_B$, (SI.164) and Corollary 23.2 give $m\ge4L$.
+Otherwise Corollary 23.2 places it in Definition 45.1, and
+Theorem 45.3 already excludes span six. If $Z=\varnothing$,
+(SI.291) again gives $m\ge4L$. In the remaining branch retain
+the exact $R$ and the single $\nu$ in (SI.286). Then
+
+$$
+m-4L\ge R+\nu+2+\iota-s.
+\tag{SI.298}
+$$
+
+For $L\ge7$ the following alternatives exhaust all lower cuts.
+If $a=1$, $s\le L-3$, and the right side is at least
+$R+6-L$. If $a\ge3$, $s\le L-a-1$, and it is at least
+$R+a+3-L\ge R+6-L$. If $a=2$ and $s\le L-4$,
+it is likewise at least $R+6-L$. The only remaining case is
+$a=2$, $s=L-3$, equivalently $z_0=3$. Lemma 46.1 then
+gives $\nu\ge1$, so (SI.298) is at least $R+6-L$ as well.
+The global pool is used only in this one alternative, never once
+per pair or once per cut. Thus $m\ge3L+6$.
+
+For $L=4,5$, the only terminal gaps not already compensated by
+Corollary 23.2 have span at least six, hence respectively $a=1$
+or $a\in\{1,2\}$. The bounds (SI.291) and
+$s\le L-\max(3,a+1)$ give $D_B\le E_B$ in each case.
+For $L=6$, reuse Theorem 43.1 at its exact original hypotheses;
+its lower bound is $24$. No new proof of that equality is needed.
+These give the first inequality of (SI.296) in the remaining range.
+
+The upper bound and nonemptiness of the minimization class are the
+existing original grid of [PCA, Theorem 26.1][PCA] and
+[CP, Definition 4.1 and Corollary 4.2][CP], with $K=4$,
+$n-k+1=L$. It has $4L$ Boolean running states, reads a prefix
+of the original coordinates once, and obeys both original caps on
+each input. Taking the minimum of the pointwise graph lower bound
+proves (SI.296)--(SI.297). No relaxed incidence profile is used as
+a realizable graph, and no assertion of attainability of the lower
+endpoint when $L\ge7$ is made.
+
+The numerical consumer is the same installed-state minimum as
+[CP, (CP.28)][CP]. CP's bound
+$2n+\max(K,L)-4$ is $3L+2$ here; (SI.297) increases this
+lower bound by four for every $L\ge7$. Theorem 43.1 supplies the
+already determined $L=6$ value. The support reserves in Lemma 44.2
+and their disjoint all-cut sum in Theorem 45.3 are the additional
+mathematical deductions; (SI.164), the PE certificates, and the grid
+are reused suppliers. $\square$
+
+**Corollary 46.3 (the opposite threshold-four pole).** For every
+$K\ge4$, $n=K+3$, every original cost tuple, and threshold
+$k=K$ with zero threshold $L=4$,
+
+$$
+4K-\max(0,K-6)\le m_{\rm exec}(c,K)\le4K.
+\tag{SI.299}
+$$
+
+In particular $3K+6\le m_{\rm exec}(c,K)\le4K$ for $K\ge7$.
+Raw terminal span-six compensation holds in this orientation too.
+
+Proof. Use exactly the input complementation, reply interchange and
+terminal interchange of Corollary 23.1. They preserve each actual
+state sequence, fixed coordinate labels, installed count, query
+count and original weighted charge. The transformed thresholds are
+$(K',L')=(4,K)$; supports and cuts are unchanged and count cells
+transpose. Apply Theorems 45.3 and 46.2 to this graph and transpose
+back. This is an application of the supplied symmetry, not a
+second independent lower-bound optimization. $\square$
+
+## 47. The quantified long-chain compensation boundary
+
+**Definition 47.1 (the remaining chain relation).** For a graph in
+Definition 45.1 with $Z\ne\varnothing$ define the nonnegative
+integer
+
+$$
+\kappa=E_{\rm out}+\xi-(t+2+\iota)\ge0.
+\tag{SI.300}
+$$
+
+The support theorem and the reused exact accounting now give, on
+this very graph,
+
+$$
+m-4L=R+\nu+\kappa+2+\iota-s.
+\tag{SI.301}
+$$
+
+Consequently a strict saving $m<4L$ requires
+$s\ge R+\nu+\kappa+3+\iota$. In particular the empty-axis
+case and every suffix with $s\le2+\iota$ are already excluded.
+Raw span-six compensation further restricts a possible saving to
+$1\le a\le L-4$.
+
+The unresolved sufficient and necessary relation for the remaining
+graphs is the following universally quantified assertion: for every
+$L\ge7$, every original positive increasing cost tuple, and every
+Assumption 21.1 graph whose consecutive terminal gap has
+$1\le a\le L-4$ and nonempty suffix (SI.288),
+
+$$
+R+\nu+\kappa\ge s-2-\iota.
+\tag{SI.302}
+$$
+
+This is the residual form of (SI.166) after the proved support
+reserves, not an additional established inequality. All other cases
+have already been compensated. Thus (SI.302) for these actual graphs
+would give $m_{\rm exec}(c,4)=4L$ throughout the remaining family;
+neither that universal conclusion nor its negation is asserted here.
+
+The actual structure still available to a proof of (SI.302) is the
+single chain $q_{z_0},\ldots,q_{L-1}$. For each $z$ in this
+chain its fixed one-successor hosts the two actual live children
+$(1,z),(3,z-2)$ of the histories at $q_z$. These are separately
+consistent source extensions with the same next coordinate; their
+old supports and assignments are inherited, not newly chosen
+incidence data. To obtain (SI.302) one must control the aggregate
+excess or globally distinct never-live witnesses of this chain
+beyond the reserves already subtracted in $\kappa$. A local paid
+discriminator can be live elsewhere or reused by several collisions,
+as [PE, Section 9][PE] explicitly permits. A proof therefore needs
+a relation on their joint actual supports and fixed successors;
+counting one new installed state for each pair is not justified.
+No finite graph violating the full comparison is supplied by this
+necessary condition.
+
+The preceding deductions are repo-derived from the stated original
+suppliers. The bounded overlap includes SI Theorems 2.2, 4.1,
+9.3 and 15.2, PE Theorems 3.1 and 7.2, the actual-axis and
+one-sided arguments of Sections 39--43, and the support and block
+interfaces of [SB, Sections 3 and 9][SB]. The private
+`contract_run` and `filtered_resources` and public
+`literal_moore_feasibility` of [NativeLiteralMoore][NLM] concern
+contraction of one actual trace, same-trace resource comparison and
+code-dependent entry in an acquired-row model. They do not supply
+the fixed-start whole-graph chain relation (SI.302).
+
+The primary-literature scope remains an applicability comparison:
+[Bryant, Section 2, Definition 1][Bryant] requires strictly increasing
+variable indices on nonterminal edges; [Cook, Edmonds, Medabalimi
+and Pitassi, Section 2.1][CEMP] assumes an acyclic graph and bounds
+variable occurrences on consistent accepting paths in its semantic
+read-once class. Neither condition follows from Assumption 21.1.
+These references give no unrestricted lower-bound premise here.
+The deductions make no worldwide priority claim and concern
+installed states at the original execution caps, without a physical
+memory or service-realization conclusion.
+
+## 追加锚（本行以下为增补区）
+
+## 48. 实际第三行见证与继承后继的联合支撑界
+
+**定义 48.1（同一原图的链、私有坐标与实际回复词）。** 固定定义 44.1
+中的任意 $L\ge4$、$n=L+3$、正整数位置 $s_1<\cdots<s_n$ 及原成本
+$c_i=s_i+4$。固定满足假设 21.1 的一张完整图 $P$：每个同一输入均分别满足
+查询上限 $n$ 与字母上限 $W=\sum_i c_i$。保留所有安装状态、固定起点、
+坐标与后继、自适应次序、付费认证后查询及重复，以及可能不一致的 union cycles。
+设定义 45.1 的连续终端 gap 为 $B=(a,n)$，$1\le a\le L-3$，且
+$Z=\{z_0,\ldots,L-1\}\ne\varnothing$。沿用其 $R,t,r_0,\iota,s$，
+定义 44.1 的 $e_p,g_w,\xi_w,\nu$ 及定义 47.1 的 $\kappa$，不另分配这些量。
+
+记 $S_z$ 为实际零轴在 $q_z$ 的支撑，$0\le z\le L-1$。
+在 $q_{z_0}$ 选择一条实际 $(2,z_0-2)$ 历史，支撑为 $T_{z_0}$。
+两支撑不可比较，故可固定 $x\in S_{z_0}\setminus T_{z_0}$。
+按引理 45.2 沿共同零后继延伸所选上侧历史，得到 $T_z$，$z\in Z$。
+每次查询均在两条当时支撑之外，并把同一坐标加入两支撑。因此
+
+$$
+\begin{gathered}
+T_z=T_{z_0}\cup(S_z\setminus S_{z_0}),\qquad
+x\in S_z\setminus T_z\quad(z\in Z),\\
+r_z=\delta(q_z,1),\qquad
+\widehat S_z=S_z\cup\{i(q_z)\},\qquad
+\widehat T_z=T_z\cup\{i(q_z)\},\\
+(1,z,\widehat S_z,r_z),\quad(3,z-2,\widehat T_z,r_z)
+\quad\text{均由实际活历史见证},\qquad
+x\notin\widehat T_z.
+\end{gathered}
+\tag{SI.303}
+$$
+
+上式四元组依次记录 hits、zeros、支撑和宿主。特别地，$z=L-1$ 时
+$\widehat S_z,\widehat T_z$ 是实际 one-children 的支撑，未引入深度 $L$
+的活零轴。引理 45.2 同时给出全图无 row-$0/3$ sharing。
+
+回复词 $0^u1^v$ 只指从 $P$ 的原固定起点依次取得这些回复的实际前缀，
+不指定被查询坐标。本文所用词的每个前缀都满足 hits 小于四、zeros 小于 $L$；
+[SI，定理 2.2][SI] 的 freshness 和固定后继律使其逐步具有一致的实际完成。
+定义整数区间
+
+$$
+\mathcal W=\{w\in\mathbb Z:z_0-1\le w\le L-3\},\qquad
+\mathcal J=\{z\in\mathbb Z:z_0+1\le z\le L-1\}.
+\tag{SI.304}
+$$
+
+它们均有 $s-1$ 个元素；$s=1$ 时均为空。由
+$z_0\ge\max(3,a+1)$，$\mathcal W\subseteq\{r_0,\ldots,L-3\}$。
+
+**定理 48.2（避开指定宿主的第三行注入与第二行额外支撑）。** 对定义 48.1
+中的任意同一原图，有
+
+$$
+\begin{aligned}
+\sum_{w\in\mathcal W}\xi_w+
+\sum_{z\in\mathcal J}e_{(1,z)}&\ge s-1,\\
+e_{(2,w+1)}&\ge1\qquad(w\in\mathcal W),\\
+\sum_{w\in\mathcal W}(g_w+\xi_w)&\ge2(s-1).
+\end{aligned}
+\tag{SI.305}
+$$
+
+本定理的支撑与后继供应为 [SI，定理 2.2 及 (SI.7)][SI]、引理 45.2。
+新增内容是以下实际宿主注入及其与第二行支撑的联合计数；有限集合的注入计数本身
+是通常的基数原理。它不要求每次碰撞具有不同的付费辨别器。
+
+证明。对每个 $w\in\mathcal W$，取实际词 $0^w111$ 的末端宿主 $v_w$。
+其活 cell 为 $(3,w)$，支撑包含 $S_{w+1}$，因而包含 $x$。
+不同 $w$ 的 $v_w$ 互异，否则同一宿主具有相同 hits、不同 zeros 的两条活历史，
+违反 (SI.7)。若 $v_w$ 全局不共享，则计入 $\xi_w$。
+若它还宿主另一个活 cell，无 row-$0/3$ sharing 排除 row zero，
+hit gap one 排除 row two，同 hits 排斥排除另一 row-three cell。
+因此唯一可能的另一 cell 是 $(1,z)$，且 (SI.7) 强迫
+
+$$
+z\ge w+2\ge z_0+1,\qquad z\le L-1,
+\quad\text{即 }z\in\mathcal J.
+\tag{SI.306}
+$$
+
+对这样的 $z$，指定宿主 $r_z$ 已由 (SI.303) 宿主 $(3,z-2)$。
+若 $z>w+2$，等式 $v_w=r_z$ 会把两个不同的 row-three cells 放在同一宿主，
+与同 hits 排斥矛盾。若 $z=w+2$，这两个 row-three cells 相同，
+但 $v_w$ 的上述支撑含 $x$，而 $r_z$ 的继承支撑 $\widehat T_z$ 不含 $x$。
+[SI，定理 2.2(2)][SI] 禁止同一 cell、同一宿主具有两个不同支撑。
+故在两种情形均有
+
+$$
+v_w\ne r_z,\qquad
+v_w\in F_{(1,z)}\setminus\{r_z\}.
+\tag{SI.307}
+$$
+
+各 $F_{(1,z)}$ 彼此不交，其删去指定宿主后的大小恰为 $e_{(1,z)}$。
+这些集合与全局不共享的 row-three 宿主集合不交；不同 $w$ 的后一集合也不交。
+于是互异的实际状态 $v_w$ 注入这些容量之并，证明 (SI.305) 的第一行。
+这里没有把 $F_{(1,z)}$ 的完整大小冒充其额外容量。
+
+再对每个 $w\in\mathcal W$，取实际词 $0^{w+1}11$ 的末端历史。
+其 cell 为 $(2,w+1)$。它在前 $w+2$ 次查询后的支撑恰为 $S_{w+2}$，
+因为 $0^{w+1}1$ 与零轴的 $0^{w+2}$ 是同一实际前缀的两个活 children。
+故末端支撑包含 $S_{w+2}$，从而含 $x$。
+当 $w\le L-4$，相同 cell 在 $q_{w+3}$ 有继承支撑 $T_{w+3}$，不含 $x$。
+当 $w=L-3$，从 $q_{L-1}$ 的实际上侧 $(2,L-3)$ 历史取零回复，得到
+
+$$
+(2,L-2,\widehat T_{L-1},\delta(q_{L-1},0)),\qquad
+x\notin\widehat T_{L-1}.
+\tag{SI.308}
+$$
+
+这是活的 row-two child；不需要其下侧零回复仍活。
+在两种情形，同一 row-two cell 都有一条含 $x$ 和一条不含 $x$ 的实际支撑。
+[SI，定理 2.2][SI] 因而给出 $a_{(2,w+1)}\ge2$、
+$b_{(2,w+1)}\ge2$，证明第二行。
+
+最后 $w\mapsto w+2$ 是 $\mathcal W$ 到 $\mathcal J$ 的双射，故
+
+$$
+\begin{aligned}
+\sum_{w\in\mathcal W}(g_w+\xi_w)
+&=\sum_{z\in\mathcal J}e_{(1,z)}
+  +\sum_{w\in\mathcal W}\xi_w
+  +\sum_{w\in\mathcal W}e_{(2,w+1)}\\
+&\ge(s-1)+(s-1).
+\end{aligned}
+\tag{SI.309}
+$$
+
+第一行注入只使用 row-one 额外宿主与全局不共享的 row-three 宿主；
+第二行使用不同 cells 的 row-two excess。后者与前者是不同的求和项，
+没有把一份已支付另一需求的容量再次相加。所有历史、支撑及后继都属于最初固定的
+$P$；没有合并独立优化器或重新指定支撑。$\square$
+
+## 49. 完整原链的额外 reserve 与终端 gap 补偿
+
+**定理 49.1（原长链的统一严格补偿）。** 对定义 48.1 的每张原图，保留
+完整 $R$ 与唯一全局 $\nu$，有
+
+$$
+\boxed{\quad
+\kappa\ge s-1,\qquad
+E_B-D_B\ge1+\iota,\qquad
+m-4L\ge R+\nu+1+\iota.
+\quad}
+\tag{SI.310}
+$$
+
+特别地，(SI.302) 对其中每个 $L\ge7$、每个原成本元组、
+每个 $1\le a\le L-4$ 及每条非空实际后缀均成立。
+
+证明。记 $H_w=g_w+\xi_w$，$r_0\le w\le L-3$。
+共有 $t$ 个下标，其中 $s-1$ 个属于 $\mathcal W$。
+对这些下标用定理 48.2，对其余下标用引理 44.2；其末端版本适用，
+因为引理 45.2 已排除全图的 row-$0/3$ sharing。于是
+
+$$
+\sum_{w=r_0}^{L-3}H_w
+\ge 2(s-1)+\bigl(t-(s-1)\bigr)=t+s-1.
+\tag{SI.311}
+$$
+
+定理 45.3 的 reserve 划分在此原图上仍逐项适用。
+$g_w$ 使用 row-one 与 row-two 的不同 cells，深度为 $w+3\le L$；
+$\xi_w$ 使用 $C$ 中不同的全局不共享 row-three 宿主族。
+两个内部非共同对角线 $L+1,L+2$ 各提供一个 $E_{\rm out}$ 单位，
+与所有这些 $g_w$ 分离；当 $a=1$ 时，深度二另提供一个分离单位 $\iota$。
+因此复用该划分并保留 (SI.311) 中的全部额外量，得到
+
+$$
+E_{\rm out}+\xi
+\ge\sum_{w=r_0}^{L-3}H_w+2+\iota
+\ge t+s+1+\iota.
+\tag{SI.312}
+$$
+
+按 (SI.300) 减去 $t+2+\iota$，即得 $\kappa\ge s-1$。
+再将它分别代入同图恒等式 (SI.290) 与 (SI.301)：
+
+$$
+\begin{aligned}
+E_B-D_B&=\kappa+2+\iota-s\ge1+\iota,\\
+m-4L&=R+\nu+\kappa+2+\iota-s\ge R+\nu+1+\iota.
+\end{aligned}
+\tag{SI.313}
+$$
+
+由于 $R,\nu\ge0$，也有 $R+\nu+\kappa\ge s-1\ge s-2-\iota$，
+这正给出 (SI.302) 的全部量词。全局 $\nu$ 只在原恒等式中出现一次，
+没有按碰撞或下标分摊；证明甚至不需消耗它或 $R$ 来支付该链。
+$s=1$ 时 (SI.311) 的加强下标集为空，同一推导仍成立。
+
+本定理是定理 48.2 与既有 disjoint reserve 的同图综合推论，属于
+repo-derived 数学推导；引理 44.2、定理 45.3 的基准 reserve、
+(SI.301)、$3L+6$ 下界及 span-six 结论均作为既有供应使用。
+新增承重步骤是 (SI.307)--(SI.309) 的联合实际容量，而非重复局部付费证书。
+$\square$
+
+## 50. 原 min$(K,L)=4$ 家族的执行最小值
+
+**定理 50.1（原双上限下的完整阈值四家族）。** 设 $K,L\ge4$、
+$\min(K,L)=4$、$n=K+L-1$。对每个正整数位置元组
+$s_1<\cdots<s_n$，令 $c_i=s_i+4$、$W=\sum_i c_i$。
+则每张满足假设 21.1、在每个同一输入上分别满足 $t_P\le n$ 与 $J_P\le W$
+的完整原图至少有 $KL$ 个安装运行状态，并且
+
+$$
+\boxed{m_{\rm exec}(c,K)=KL.}
+\tag{SI.314}
+$$
+
+这里的最小值严格采用 [CP，定义 4.1][CP]，仍计入未使用安装状态、
+认证后付费查询和重复；不附加 read-once、无环、子集和唯一性或服务实现假设。
+
+证明。先取 $K=4$。$L=4,5,6$ 的精确值复用定理 46.2。
+对 $L\ge7$，反设一张原图有 $m<4L$。
+推论 23.2 已补偿所有非终端 gaps，并把唯一可能的正 deficit 定位为连续终端
+$B=(a,n)$，$1\le a\le L-3$。这正是定义 45.1 的范围。
+若 $Z=\varnothing$，定理 45.3 给出 $D_B\le E_B$；
+若 $Z\ne\varnothing$，定理 49.1 给出更强的 $E_B-D_B\ge1+\iota$。
+两种情形都与正 deficit 矛盾。故任意此类原图均有 $m\ge4L$。
+此论证复用 (SI.164) 的完整原图计数，未舍弃其他 gaps、cut excess 或未活状态。
+
+[PCA，定理 26.1][PCA] 的原固定次序 grid 对每个相同的原成本元组安装
+$4L$ 个 Boolean 运行状态，在每个输入上查询一个无重复坐标前缀，
+同时满足 $n,W$ 两个上限。它是原问题中已有的可行图，故
+$m_{\rm exec}(c,4)\le4L$。上下界合并给出 $K=4$ 时的 (SI.314)。
+
+若 $L=4$、$K\ge4$，用推论 23.1 的输入互补，并逐状态交换回复与输出终端。
+变换后的阈值参数为 $(K',L')=(4,K)$；固定起点、坐标、安装状态及每个对应输入的
+实际状态序列不变。因此查询数与原加权收费分别保持，两上限仍对同一对应输入成立。
+应用已经证明的 $K'=4$ 结论并变换回来，得到 $m_{\rm exec}(c,K)=4K$。
+这不是对两张分别优化的图合并资源界。
+
+式 (SI.314) 解决 [CP，(CP.28)][CP] 的整个 $\min(K,L)=4$ 子族；
+$\min(K,L)\ge5$ 的 CP.28 仍未由此论证决定。
+[CP，推论 4.2][CP] 与 [SI，约定 1.3][SI] 的原 full-fiber 对应仍将同一最小值
+送到原准备状态数 $KL+4+r$，其各次 paid profile front 与原 literal 成本保持原义。
+该对应继续以原来源纤维、原完整 entry、独立 reader 和所给服务为前提；
+安装状态基数不决定物理内存、服务实现或另一个无限预算最小值。
+
+本定理是原执行模型内的 repo-derived 结论；grid、互补对称、小规模精确值和
+原 native offset 均为供应，新增下界依赖定理 48.2 的实际联合支撑界。
+文献适用范围仍有明确区别：[Bryant，§2 定义 1][Bryant] 要求非终端边上的变量
+下标严格增加；[Cook、Edmonds、Medabalimi、Pitassi，§2.1][CEMP] 使用无环图，
+其 semantic read-once 类还限制每条一致 accepting path 的变量出现次数。
+这些限制均未加入假设 21.1，也未将相应受限模型下界迁移到这里。
+上述有限注入和实际后继论证不主张全球文献优先性。$\square$
+
+## 追加锚（本行以下为增补区）

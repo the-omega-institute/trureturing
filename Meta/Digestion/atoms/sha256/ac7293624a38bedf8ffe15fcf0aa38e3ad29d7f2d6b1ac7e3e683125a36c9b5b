@@ -1,0 +1,16 @@
+**定义 11.1（中心纤维与边界分层）。** 令 $\widehat{\mathfrak B}_{y,z}$ 为 $\mathfrak B_{y,z}$ 的非零不可约 *-表示类。由 10.2 和 Schur 引理，任一 $\pi\in\widehat{\mathfrak B}_{y,z}$ 有唯一 $r,t\in\mathbb R$ 使
+
+$$
+\pi(\mathsf R)=rI,\qquad \pi(\mathsf T)=tI.
+\tag{11.1}
+$$
+
+记 $s=4r-t$。$\Sigma_{y,z}$ 是中央子代数 $Z_0=C^*(u,\mathsf R,\mathsf T)$ 的字符空间，以字符在 $(\mathsf R,\mathsf T)$ 上的值作坐标；非零对象时它是紧集，可含连续部分。由 10.2，
+
+$$
+\Sigma_{y,z}\subset\{(r,t):r\ge0,\ 0\le t\le4r\}.
+\tag{11.2}
+$$
+
+对 $(r,t)\in\Sigma_{y,z}$，令 $\mathfrak B_{r,t}$ 为按该中心字符取的商，即模去由 $\mathsf R-ru,\mathsf T-tu$ 生成的闭理想。每个这样的商非零：中心字符有态延伸，而其延伸态的 GNS 循环向量被这两份中央关系消灭，故整个循环表示均被它们消灭。反向，每个不可约表示限制到 $Z_0$ 都是字符；每个非零纤维商也有不可约表示。因此 $\Sigma_{y,z}$ 正是 (11.1) 的全部可能坐标。商只读取诊断代数，不定义原 $D$ 的商响应。
+

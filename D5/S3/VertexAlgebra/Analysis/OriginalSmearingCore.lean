@@ -20,13 +20,11 @@ noncomputable section
 open scoped BigOperators InnerProductSpace Topology VertexOperator
 namespace D5.S3.VertexAlgebra.Analysis.OriginalSmearing
 open LatticeGeneratingFieldLocality LatticeAllStateField LatticePositiveEnergy SmoothCircleFourier
-open private chargeSpace word_charge from
-  D5.S3.VertexAlgebra.Sectors.LatticeSectorIntertwiner
-open private embed_dense embed_injective inclusion_embed inclusion_injective projection_embed
+open D5.S3.VertexAlgebra.LatticeSectorIntertwiner
+  (chargeSpace word_charge)
+open private embed_injective inclusion_embed inclusion_injective projection_embed
   projection_inclusion truncation_algebraic truncation_tendsto from
   D5.S3.VertexAlgebra.Analysis.OriginalSobolev
-open private modeExtension_embed from
-  D5.S3.VertexAlgebra.Analysis.OriginalModeExtension
 open private smear_apply vector_summable from
   D5.S3.VertexAlgebra.Analysis.OriginalInfiniteSmearing
 open private finite_in_domain field_eval smoothDomain_dense field_formal

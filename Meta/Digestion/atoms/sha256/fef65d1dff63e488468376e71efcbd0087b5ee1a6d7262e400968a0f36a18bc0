@@ -1,0 +1,26 @@
+#### 推论 3.8：恢复的是原 $q$
+
+在实双线性乘法、$\mathsf S+\mathsf E+\mathsf N+\mathsf U_q$ 下，
+
+$$
+q(x+y)+q(x-y)=2q(x)+2q(y)
+$$
+
+对原 $\mathcal A$ 的所有 $x,y$ 成立，并且
+
+$$
+\mathcal B(x,y):=\frac14\bigl(q(x+y)-q(x-y)\bigr)
+$$
+
+为半正实双线性型，$\mathcal B(x,x)=q(x)$， $\operatorname{rad}\mathcal B=N$。 此结论的证明只使用 $\mathsf U_q$ 中的左单位部分。
+
+**证明。**
+
+依次构造 $A_0$ 及其完成 $B$，在 $B$ 中用上面两条定理得到平行四边形和内积。 将恒等式限制回 $A_0$，再经原商映射拉回 $\mathcal A$，得到所列原函数公式。 核为 $N$，因为商中内积正定。 整个过程没有改变原乘法、原 $q$ 或原零读出等价关系。
+
+$\square$
+
+证明采用通常实、复分析，包括 Neumann 级数、Liouville 定理，以及 Hahn–Banach 的连续泛函分离结论。这些属于明示数学基础；谱证明中的辅助 $i$ 并非原物理幅度已经拥有复结构。原幅度的复结构在下一节由原见证对导出。
+
+<a id="section-4"></a>
+

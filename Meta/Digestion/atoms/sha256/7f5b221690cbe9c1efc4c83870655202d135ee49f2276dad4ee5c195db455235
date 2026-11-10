@@ -1,0 +1,18 @@
+#### 推论 6.3：归一化二元二次式
+
+若 $r,s\in W$ 为单位方向，则
+
+$$
+q(\alpha r+\beta s)
+=\alpha^2+2B(r,s)\alpha\beta+\beta^2,
+\qquad -2\le2B(r,s)\le2.
+$$
+
+当 $r\perp s$ 时，$q(\alpha r+\beta s)=1$ 的全部解构成平面圆； 一个已指定的非零直角三角形归一化只确定其中一个点。
+
+**证明。**
+
+极化恒等式给二次式，Cauchy–Schwarz 给系数范围。 正交时归一方程为 $\alpha^2+\beta^2=1$， 映射 $(\alpha,\beta)\mapsto\alpha r+\beta s$ 是平面的等距映射。 给定两条直角边的长度并除以斜边，只给这个方程的一组解。
+
+$\square$
+

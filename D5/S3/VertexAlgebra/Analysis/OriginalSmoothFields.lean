@@ -27,8 +27,6 @@ set_option backward.isDefEq.respectTransparency false
 noncomputable section
 namespace D5.S3.VertexAlgebra.Analysis.OriginalSmearing
 open LatticeGeneratingFieldLocality SmoothCircleFourier
-open private modeConstant_pos from
-  D5.S3.VertexAlgebra.Analysis.OriginalModeExtension
 open private operator_absolute smear_vector_bound smear_paper_bound from
   D5.S3.VertexAlgebra.Analysis.OriginalInfiniteSmearing
 open private smoothDomain_dense field_formal field_le_opposite_adjoint field_closable eta_cocycle from
