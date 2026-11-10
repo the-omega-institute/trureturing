@@ -33,6 +33,11 @@ open private injection_single from D5.S3.VertexAlgebra.Sectors.LatticeCosetCompr
 open private multiplication_recursion from D5.S3.VertexAlgebra.Sectors.LatticeDualCosetModule
 open private derivative_modes from D5.S3.VertexAlgebra.LatticeAllStateField
 
+private theorem map_finsum_linear {V W : Type} [AddCommGroup V] [Module ℂ V]
+    [AddCommGroup W] [Module ℂ W] (L : V →ₗ[ℂ] W) (f : ℕ → V)
+    (hf : Function.HasFiniteSupport f) :
+    L (∑ᶠ i, f i) = ∑ᶠ i, L (f i) := L.toAddMonoidHom.map_finsum hf
+
 private theorem high_modes_finite {V W : Type} [AddCommGroup V] [Module ℂ V]
     [AddCommGroup W] [Module ℂ W]
     (A : VertexOperator ℂ V) (F : ℕ → V →ₗ[ℂ] W) (m : ℤ) (v : V) :

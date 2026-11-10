@@ -133,9 +133,9 @@ private theorem creationCoeff_separation (b : Fin e → ℤ) (n : Charge D) (t :
   let g := creationExponential (externalLattice C hC hCe) b
   change creationCoeff F β t = ∑ᶠ j : ℕ, L (creationCoeff F β (t-j)) * T (PowerSeries.coeff j g)
   by_cases ht : t < 0
-  · rw [creationCoeff, dif_pos ht]
+  · rw [creationCoeff, dite_eq_left ht]
     symm
-    apply finsum_eq_zero
+    apply finsum_eq_zero_of_forall_eq_zero
     intro j
     simp [creationCoeff, show t-(j : ℤ) < 0 by omega]
   · have hsub : Function.support (fun j : ℕ =>
@@ -145,7 +145,7 @@ private theorem creationCoeff_separation (b : Fin e → ℤ) (n : Charge D) (t :
       apply Finset.mem_range.mpr
       by_contra hn
       exact hj (by simp [creationCoeff, show t-(j : ℤ) < 0 by omega])
-    rw [finsum_eq_sum_of_support_subset _ hsub, creationCoeff, dif_neg ht]
+    rw [finsum_eq_sum_of_support_subset _ hsub, creationCoeff, dite_eq_right ht]
     rw [creationExponential_separation D B C hC hCe b n, PowerSeries.coeff_mul]
     rw [← Finset.Nat.sum_antidiagonal_swap]
     rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk]

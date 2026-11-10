@@ -25,7 +25,7 @@ open scoped BigOperators VertexOperator
 
 noncomputable section
 
-open private high_modes_finite from D5.S3.VertexAlgebra.Sectors.LatticeCosetFieldSeparation
+open private high_modes_finite map_finsum_linear from D5.S3.VertexAlgebra.Sectors.LatticeCosetFieldSeparation
 
 private theorem finite_rows {V : Type} [AddCommGroup V]
     (f : ℕ → ℕ → V) (hf : Function.HasFiniteSupport (Function.uncurry f)) :
@@ -34,7 +34,7 @@ private theorem finite_rows {V : Type} [AddCommGroup V]
   intro i hi
   by_contra hn
   apply hi
-  apply finsum_eq_zero
+  apply finsum_eq_zero_of_forall_eq_zero
   intro j
   by_contra hj
   exact hn ⟨(i,j), hj, rfl⟩
@@ -44,8 +44,11 @@ private theorem finite_swap {V : Type} [AddCommGroup V]
     (∑ᶠ i, ∑ᶠ j, f i j) = ∑ᶠ j, ∑ᶠ i, f i j := by
   have hg : Function.HasFiniteSupport (fun ij : ℕ × ℕ => f ij.2 ij.1) :=
     hf.comp_of_injective (Equiv.prodComm ℕ ℕ).injective
-  rw [← finsum_curry (Function.uncurry f) hf,
-    ← finsum_curry (fun ij : ℕ × ℕ => f ij.2 ij.1) hg]
+  have h₁ : (∑ᶠ ij : ℕ × ℕ, f ij.1 ij.2) = ∑ᶠ i, ∑ᶠ j, f i j :=
+    finsum_curry (Function.uncurry f) hf
+  have h₂ : (∑ᶠ ij : ℕ × ℕ, f ij.2 ij.1) = ∑ᶠ j, ∑ᶠ i, f i j :=
+    finsum_curry (fun ij : ℕ × ℕ => f ij.2 ij.1) hg
+  rw [← h₁, ← h₂]
   exact (finsum_comp_equiv (Equiv.prodComm ℕ ℕ)).symm
 
 private theorem normal_separation {V W : Type} [AddCommGroup V] [Module ℂ V]
@@ -89,7 +92,7 @@ private theorem normal_separation {V W : Type} [AddCommGroup V] [Module ℂ V]
       intro hz
       exact hij (by simp only [pos, hz, map_zero])
     have hfj : K j (((f)[[m-(i : ℤ)-1+j]]) (((a)[[i]]) g)) ≠ 0 := by
-      convert hij using 1 <;> congr 3 <;> omega
+      simpa only [pos, show m+(j : ℤ)-i-1 = m-i-1+j by omega] using hij
     exact Set.mem_iUnion.mpr ⟨i, Set.mem_iUnion.mpr ⟨hai, j, hfj, rfl⟩⟩
   have hleft : (∑ᶠ i : ℕ, ((A)[[-(i : ℤ)-1]]) (((F)[[m+i]]) (J g))) =
       ∑ᶠ j : ℕ, K j (∑ᶠ i : ℕ, ((a)[[-(i : ℤ)-1]]) (((f)[[m+j+i]]) g)) := by
@@ -97,23 +100,21 @@ private theorem normal_separation {V W : Type} [AddCommGroup V] [Module ℂ V]
       _ = ∑ᶠ i : ℕ, ∑ᶠ j : ℕ, neg i j := by
         apply finsum_congr
         intro i
-        rw [hF, (((A)[[-(i : ℤ)-1]])).toAddMonoidHom.map_finsum
+        rw [hF, map_finsum_linear ((A)[[-(i : ℤ)-1]]) _
           (high_modes_finite f K (m+i) g)]
         apply finsum_congr
         intro j
         rw [hneg]
-        rfl
       _ = ∑ᶠ j : ℕ, ∑ᶠ i : ℕ, neg i j := finite_swap neg hn
       _ = _ := by
         apply finsum_congr
         intro j
-        rw [(K j).toAddMonoidHom.map_finsum
+        rw [map_finsum_linear (K j) _
           (high_modes_finite f (fun i => ((a)[[-(i : ℤ)-1]])) (m+j) g)]
         apply finsum_congr
         intro i
         dsimp only [neg]
-        congr 3
-        omega
+        rw [show m+(i : ℤ)+j = m+j+i by omega]
   have hright : (∑ᶠ i : ℕ, ((F)[[m-i-1]]) (((A)[[i]]) (J g))) =
       ∑ᶠ j : ℕ, K j (∑ᶠ i : ℕ, ((f)[[m+j-i-1]]) (((a)[[i]]) g)) := by
     calc
@@ -124,13 +125,12 @@ private theorem normal_separation {V W : Type} [AddCommGroup V] [Module ℂ V]
         apply finsum_congr
         intro j
         dsimp only [pos]
-        congr 3
-        omega
+        rw [show m-(i : ℤ)-1+j = m+j-i-1 by omega]
       _ = ∑ᶠ j : ℕ, ∑ᶠ i : ℕ, pos i j := finite_swap pos hp
       _ = _ := by
         apply finsum_congr
         intro j
-        rw [(K j).toAddMonoidHom.map_finsum (by
+        rw [map_finsum_linear (K j) _ (by
           simpa only [zero_add] using high_modes_finite a
             (fun i => ((f)[[m+j-i-1]])) 0 g)]
   have hn' : Function.HasFiniteSupport (fun j =>
@@ -139,20 +139,19 @@ private theorem normal_separation {V W : Type} [AddCommGroup V] [Module ℂ V]
       (hn.comp_of_injective (Equiv.prodComm ℕ ℕ).injective)
     convert h using 1
     funext j
-    rw [(K j).toAddMonoidHom.map_finsum
+    rw [map_finsum_linear (K j) _
       (high_modes_finite f (fun i => ((a)[[-(i : ℤ)-1]])) (m+j) g)]
     apply finsum_congr
     intro i
     dsimp only [neg]
-    congr 3
-    omega
+    rw [show m+(i : ℤ)+j = m+j+i by omega]
   have hp' : Function.HasFiniteSupport (fun j =>
       K j (∑ᶠ i : ℕ, ((f)[[m+j-i-1]]) (((a)[[i]]) g))) := by
     have h := finite_rows (fun j i => pos i j)
       (hp.comp_of_injective (Equiv.prodComm ℕ ℕ).injective)
     convert h using 1
     funext j
-    rw [(K j).toAddMonoidHom.map_finsum (by
+    rw [map_finsum_linear (K j) _ (by
       simpa only [zero_add] using high_modes_finite a (fun i => ((f)[[m+j-i-1]])) 0 g)]
   rw [(normalMinusOne A F).2, hleft, hright, ← finsum_add_distrib hn' hp']
   apply finsum_congr
