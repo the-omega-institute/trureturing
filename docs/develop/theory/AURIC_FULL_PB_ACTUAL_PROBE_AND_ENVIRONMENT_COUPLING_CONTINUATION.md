@@ -297,3 +297,253 @@ P2 的二阶矩阵可以改写成一族正算子铅笔：先把 $t$ 减去一个
 $d=0$、消元后仍有非零交叉项以及一般算子值块的情形都未由这个家族证明解决。一般算子块仍须证明 §5 的联合读取张成确实分离两个实际块；两条秩一计算没有支付这条一般桥。即使残量在已有纤维上都读成零，也不能直接宣布整个 $pAp$、$qAq$ 中的残量为零。全部探针预算能否在一般情形补足这一步仍是 OPEN。
 
 ## 追加锚（本行以下为增补区）
+
+
+## 8. 有限可逆环境的 Schur 谱分类
+
+### 8.1 输入与结论
+
+把前两维的真角写成 $C=\operatorname{diag}(c_1,c_2)$，其中 $c_1,c_2>0$，并允许一个有限环境块：
+
+$$
+c=\begin{pmatrix}C&0\\0&0_m\end{pmatrix},\qquad
+t=\begin{pmatrix}B&V\\V^*&D\end{pmatrix},\qquad
+s=\begin{pmatrix}\operatorname{diag}(s_1,s_2)&0\\0&0_m\end{pmatrix},
+$$
+
+其中 $B=B^*\in M_2(\mathbb C)$，$D=D^*\in M_m(\mathbb C)$ 可为不定或负定但必须可逆，$V\in M_{2,m}(\mathbb C)$，其中 $s_1,s_2\in\mathbb R$；$m=0$ 时所有环境块按空矩阵解释。置
+
+$$
+H=B-VD^{-1}V^*,\qquad A=C^{-1/2}HC^{-1/2},\qquad
+g=K_\sigma(c,t)+s,\quad \sigma\in\{1,-1\}.
+\tag{8.1}
+$$
+
+这里的 $D^{-1}$ 只出现在已知输入 $t$ 的 Schur 消元中，不是对未知总映射或物理响应作压缩。
+
+**定理 8.1（可逆有限环境上的固定 P2 谱分类）。** 对全部正泛函的固定 P2（等价地，前述标量正算子铅笔对所有实 $x,y$ 非负）有如下互斥分类。
+这里的“固定”是对给定的取向 $\sigma$；若另要求两个取向同时成立，应将相应的两个闭区间取交集。
+
+1. 若 $A_{11}\ne A_{22}$，或 $A_{12}=0$，则固定 P2 成立当且仅当 $s=0$。
+2. 若 $A_{11}=A_{22}=\alpha$ 且 $\beta:=|A_{12}|>0$，取酉矩阵 $U$ 使
+  
+  $$
+  U^*AU=\Lambda:=\operatorname{diag}(\alpha+\beta,\alpha-\beta),\qquad
+  Z=\operatorname{diag}(1,-1),\qquad
+  \omega=(U^*ZU)_{12}.
+  $$
+  
+  则 $\lvert\omega\rvert=1$，并且固定 P2 成立当且仅当存在 $\rho\in\mathbb R$ 使
+  
+  $$
+  \operatorname{diag}(s_1,s_2)=\operatorname{diag}(c_1\rho,-c_2\rho),\qquad
+  G=U^*C^{-1/2}\begin{bmatrix}I_2&-VD^{-1}\end{bmatrix},\qquad
+  Q=(GG^*)^{-1}=\begin{pmatrix}q_1&h\\\overline h&q_2\end{pmatrix},
+  $$
+  
+  $$
+  R=\sqrt{q_1q_2},\qquad \Delta=R^2-|h|^2>0,\qquad J=\operatorname{Im}(\overline h\,\omega),
+  $$
+  
+  且满足下列两个等价的锐条件：
+  
+  $$
+  \left|h+\frac{i\sigma\rho\,\omega}{2\beta}\right|+\frac{|\rho|}{2\beta}\le R,
+\tag{8.2}
+  $$
+  
+  $$
+  -\frac{\beta\Delta}{R+\sigma J}\le \rho\le
+  \frac{\beta\Delta}{R-\sigma J}.
+\tag{8.3}
+  $$
+
+在第二种情形中，$Q$ 由实际环境和环境耦合的列空间共同决定，不能只从 $H$ 读取。因为 $\lvert J\rvert\le\lvert h\rvert<R$，(8.3) 的两个分母严格为正；$\Delta>0$ 还说明区间包含非零内点。因而每一个平衡的非对角 Schur 输入都有一段真正的非零固定-P2 残量，而不是只有零点。端点也包括在内。第一种情形包含旧的对角 Schur 子类；当 $m=0$ 且 $A$ 平衡非对角时，它退化为 PB34.1 的两块标量区间。
+
+### 8.2 广义特征向量的刚性分支
+
+令 $u_1,u_2$ 是 $A$ 的正交归一特征向量，$Au_j=\lambda_j u_j$。相应的原空间向量为
+
+$$
+\xi_j=\begin{pmatrix}C^{-1/2}u_j\\-D^{-1}V^*C^{-1/2}u_j\end{pmatrix},\qquad
+(t-\lambda_j c)\xi_j=0.
+\tag{8.4}
+$$
+
+由 ENV3.1，$0=\xi_j^*s\xi_j=u_j^*S_0u_j$，其中
+
+$$
+S_0=C^{-1/2}\operatorname{diag}(s_1,s_2)C^{-1/2}=\operatorname{diag}(s_1/c_1,s_2/c_2).
+$$
+
+若 $\lambda_1\ne\lambda_2$，置 $a_j=|(u_j)_1|^2$。两个零对角条件是
+
+$$
+\begin{pmatrix}a_1&1-a_1\\a_2&1-a_2\end{pmatrix}\begin{pmatrix}s_1/c_1\\s_2/c_2\end{pmatrix}=0,\qquad
+\det=a_1-a_2=\frac{A_{11}-A_{22}}{\lambda_1-\lambda_2}.
+\tag{8.5}
+$$
+
+所以 $A_{11}\ne A_{22}$ 时两行确实可逆，严格得到 $s_1=s_2=0$；这不是“泛型”说法。若 $A_{12}=0$，坐标向量本身就是广义特征向量，分别给出 $s_1=s_2=0$。若特征值重复，则 $A$ 是标量矩阵，从而已经落入 $A_{12}=0$ 的分支。$s=0$ 时 (2.2) 直接是 $X^*X$，故反向蕴含也成立。
+
+## 9. 平衡分支的圆与锐区间
+
+### 9.1 Schur 行、正性与圆参数
+
+在 $A_{11}=A_{22}=\alpha$、$\beta>0$ 时，$Z$ 与 $A-\alpha I$ 反交换。故
+
+$$
+U^*ZU=\begin{pmatrix}0&\omega\\\overline\omega&0\end{pmatrix},\qquad |\omega|=1,
+\tag{9.1}
+$$
+
+而 (8.4) 的两个零对角条件给出且仅给出
+
+$$
+S_0=\rho Z,\qquad \operatorname{diag}(s_1,s_2)=\operatorname{diag}(c_1\rho,-c_2\rho).
+\tag{9.2}
+$$
+
+令 $w=x+i\sigma y$ 非实。Schur 消元给出 $X(w)=t-wc$ 可逆，且其前两行为
+
+$$
+C^{-1/2}U(\Lambda-wI)^{-1}G,\qquad
+G=U^*C^{-1/2}\begin{bmatrix}I_2&-VD^{-1}\end{bmatrix}.
+\tag{9.3}
+$$
+
+$G$ 满行秩二：右边的方括号含有 $I_2$，左边的两个因子可逆。因此 $Q=(GG^*)^{-1}$ 正定，$\Delta>0$。
+
+把 (2.2) 对 $X(w)^{-1}$ 作合同变换，并将 $\ker G$ 与 $G^*$ 的最小范数截面分开，得到
+
+$$
+F_w\ge0\quad\Longleftrightarrow\quad Q+M(w)\ge0,
+\tag{9.4}
+$$
+
+其中 $M(w)$ 的对角为零，而
+
+$$
+M_{12}(w)=\sigma\rho\,\omega\,k(w),\qquad
+k(w)=\frac{2\operatorname{Im}w}{(\alpha+\beta-\overline w)(\alpha-\beta-w)}.
+\tag{9.5}
+$$
+
+(9.4) 的“当且仅当”是精确的：给定 $u=Gz$，$z^*z$ 的最小值是 $u^*Qu$；沿 $\ker G$ 的分量只增加范数。因此二维正性恰好是
+
+$$
+|h+\sigma\rho\,\omega\,k(w)|\le R.
+\tag{9.6}
+$$
+
+直接倒数可得
+
+$$
+\frac1{k(w)}=\frac{(\operatorname{Re}w-\alpha)^2+(\operatorname{Im}w)^2-\beta^2}{2\operatorname{Im}w}-i\beta.
+\tag{9.7}
+$$
+
+取 $\operatorname{Re}w=\alpha$，正的 $\operatorname{Im}w$ 使 (9.7) 的实部遍历 $\mathbb R$；所以所有非实 $w$ 的 $k(w)$ 恰好遍历
+
+$$
+\left|k-\frac{i}{2\beta}\right|=\frac1{2\beta},\qquad k\ne0.
+\tag{9.8}
+$$
+
+闭包补上 $k=0$，而 $|h|<R$ 已自动满足该点。圆上的最大值给出
+
+$$
+\sup_{(9.8)}|h+\sigma\rho\omega k|
+=\left|h+\frac{i\sigma\rho\omega}{2\beta}\right|+\frac{|\rho|}{2\beta},
+\tag{9.9}
+$$
+
+这正是 (8.2)。当 $w$ 为实数时，原多项式没有逆矩阵问题：$F_w=X(w)^*X(w)\ge0$，包括两个实根；也可由非实点的连续极限得到同一结论。整个论证没有把实根处的不可逆性替换成未知响应的极限。
+
+### 9.2 从圆 containment 到闭区间
+
+用 $J=\operatorname{Im}(\overline h\,\omega)$ 展开 (8.2) 的平方，且保留其必要的 $R-|\rho|/(2\beta)\ge0$，得到
+
+$$
+R|\rho|-\sigma J\rho\le\beta(R^2-|h|^2)=\beta\Delta.
+\tag{9.10}
+$$
+
+对 $\rho\ge0$ 和 $\rho\le0$ 分别整理，恰为 (8.3)；反向平方时 (9.10) 同时保证被平方的两边非负，故没有丢失符号条件。相位变换 $U\mapsto U\operatorname{diag}(e^{i\theta_1},e^{i\theta_2})$ 同时把 $h,\omega$ 乘以同一个相位，(8.2) 与 $J$ 不变；按 $\alpha+\beta,\alpha-\beta$ 的有序标记固定交换自由度。
+
+这也给出越过区间的明确反例。若 (8.3) 失败，则圆上存在 $k$ 使 $|h+\sigma\rho\omega k|>R$；若唯一最大点是被闭包删去的 $k=0$，取其附近的非零圆点即可。由 (9.7) 取到一个非实 $w$，令 $M=M(w)$。此时 $Q+M$ 的行列式为 $q_1q_2-|h+\sigma\rho\omega k|^2<0$，取 $u$ 使 $u^*(Q+M)u<0$，再令 $z=G^*Qu$，则 $Gz=u$ 且
+
+$$
+z^*(I+G^*MG)z=u^*(Q+M)u<0.
+$$
+
+最后取原空间向量 $\xi=X(w)^{-1}z$，就有 $\xi^*F_w\xi<0$。因此区间外不是未检验的数值猜测，而是由一个非实铅笔点和一个具体的数学向量反向击穿 P2；反之 (9.4)–(9.9) 对所有非实点成立，再加实轴上的平方项，完成充分性。
+
+## 10. 一个真实三维、非零环境边的精确实例
+
+取
+
+$$
+c=\operatorname{diag}(1,2,0),\qquad D=(1),\qquad V=\begin{pmatrix}1&0\end{pmatrix},\qquad
+B=\begin{pmatrix}1&\sqrt2\\\sqrt2&0\end{pmatrix},
+$$
+
+即
+
+$$
+t=\begin{pmatrix}1&\sqrt2&1\\\sqrt2&0&0\\1&0&1\end{pmatrix}.
+\tag{10.1}
+$$
+
+这里 $H=\left(\begin{smallmatrix}0&\sqrt2\\\sqrt2&0\end{smallmatrix}\right)$，故
+
+$$
+A=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+U=\frac1{\sqrt2}\begin{pmatrix}1&1\\1&-1\end{pmatrix},\qquad
+\omega=1.
+$$
+
+直接由 (9.3) 得
+
+$$
+G=\frac1{\sqrt2}\begin{pmatrix}1&1/\sqrt2&-1\\1&-1/\sqrt2&-1\end{pmatrix},\qquad
+Q=\begin{pmatrix}5/4&-3/4\\-3/4&5/4\end{pmatrix}.
+\tag{10.2}
+$$
+
+所以 $R=5/4$、$\Delta=1$、$J=0$，而对
+
+$$
+s=\rho\,\operatorname{diag}(1,-2,0)
+$$
+
+固定 P2 的准确范围为
+
+$$
+|\rho|\le\frac45.
+\tag{10.3}
+$$
+
+这是一条真正的角—环境连线（$V\ne0$）上的非零残量区间；它不是把第三坐标删除后得到的二维玩具，也没有用任何未知总映射。它只说明该实际矩阵族的固定 P2 几何，不能升级为完整 $\mathsf H_A(D)$ 或全部 PB 的分类。
+
+## 11. 与既有支付结果、成熟工具和完整来源的边界
+
+定理 8.1 消费 ENV2.1 的标量正铅笔等价、ENV3.1 的实广义特征纤维消去和 ENV4.1 的有限 $M_3$ 对角 Schur 刚性；$m=0$ 的平衡两块端点沿 PB34.1。PB42 的 balanced $d=0$ star fixed-P2 例子以及 incoming transport §10 已有的真实非零原探针，已经分别说明 shifted-star 区域 $\lambda\ne0,\ 0<|\rho|\le\min(1/4,|\lambda|)$ 中不能把固定 P2 偷换成 all-probe implication；本节只复用其边界，不重复或冒称新发现。AH42.4（PB22.1）已经支付有限三维的 FULL-$\mathsf H$ 分类；这里的有限环境 Schur 推导不计作新的 FULL-$\mathsf H$ 结果。
+
+有限维谱定理、Schur 补、正 Hermitian 二表、Gram/Cauchy–Schwarz、正泛函分离、最小范数截面、二维行列式和圆的最大模估计是成熟工具；其一般背景沿本卷 §5 和原卷 §36.3 所引 Hanche-Olsen–Størmer、Gelfand–Naimark、Segal、Blackadar 及标准有限维线性代数。把这些工具按 $C\oplus0_m$ 的实际输入、$G$ 的环境行和 (9.8) 的圆重新组织，是本仓库的 repo-derived synthesis；不作历史优先权、文献穷尽或独立外部原创声明，也不把成熟工具的来源归为本节特定族的作者。
+
+旧的对角 Schur 情形正是 $A_{12}=0$ 的第一分支。新的内容只扩展到标量秩一正角、可逆有限环境和实际输入条目；奇异 $D$、仍有非零 Schur 交叉项的一般块、算子值角残量、任意 $C^*$-代数及全部 PB 探针仍未付。$Q$ 的出现也说明未知环境不能被只看 $H$ 的压缩替代：环境列空间改变正性半径。所有零、不等、次归一或非正常质量仍沿 ENV2.1 的正泛函等价处理，不对质量作除法。
+
+严格的局部简化是：无穷多个复参数铅笔测试被压缩为“谱是否平衡”与一个显式圆 containment/闭区间；它没有减少完整原量子来源的任何前件。全部原准备、事件、过程、参考与副本、相关联合、零与不等质量、时钟和单位、控制与 ready/flags、完整记录、失败、停止、销毁、未来、Return、固定支持、full-menu 和中间切口仍由 §6 的同一 $\mathcal C_{47}^{\mathrm{pin}}$ 逐项承担。当前 concurrent finite-PB 与 OTF8 文稿不供应原分析器来源，本节不引入 CountRead、native-control 或任何类似假设；实际 analyzer、CountRead、Return supplier 以及 all-PB-probe classification 仍是分离的 OPEN 义务。数学特征向量和 GNS 也不生产物理准备、Born 菜单、CP/Kraus、复制、相干控制或共同正作用量；没有新的量子 axiom candidate 被提出。
+
+## 12. 中文直观说明
+
+把 $c$ 想成只在真角的两格亮起、在环境格上归零的刻度盘。$D$ 虽然可以有负方向，只要它可逆，就能在输入矩阵里做一次诚实的 Schur 消元：环境对两格的影响被完整地留在 $H=B-VD^{-1}V^*$ 和随后出现的行矩阵 $G$ 中。这里没有把未知规则、实验仪器或物理环境压缩掉；只是把同一个已知 $t$ 的线性方程解开。
+
+若归一化后的 $A$ 有两个不同的对角读数，或者根本没有交叉项，两个广义特征方向分别把残量读成零，因而两格都不能留下余量。唯一能留下余量的几何，是两格的对角读数完全相等、但它们仍以非零交叉相连。那时残量只能一正一负地平衡，写成 $\rho Z$；这正是老的两块标量区间为什么不是错误，而是唯一可能的非刚性。
+
+平衡以后，所有复数参数 $w$ 不再产生一片无法整理的测试海洋。Schur 行把它们变成 $k(w)$，而 $1/k(w)$ 在一条水平直线上移动，所以 $k(w)$ 正好绕一条圆走。环境和两格的实际列空间给出一个固定的正性椭圆 $Q$；圆上的每一个点都必须落在这个椭圆允许的弦内，最大偏移就是“中心距离加半径”。把这个几何不等式平方，就得到带方向项 $J$ 的左右两个精确端点。越过端点时，圆上有一个明确的非实 $w$，并且最小范数的反解向量直接把 $F_w$ 读成负数。
+
+三维实例中，第三格确实通过 $V$ 接到第一格，残量仍可在 $|\rho|\le4/5$ 的闭区间内存在。这说明“有真实环境边”与“固定 P2 已经刚性”并不矛盾，也说明环境的列空间会改变允许半径。它只是一条固定输入的代数结算：要回到 Omega 的完整量子起源，仍必须找到原始准备、事件、完整仪器、共同相关联合、全历史与未来、真实 Return 和 CountRead 的逐项来源。既有 shifted-star 的 all-probe 反例边界和完整三维 FULL-$\mathsf H$ 支付各自保持原身份，不能被这个圆或这个向量替代。
+
+## 新增锚（本行以下为后续增补区）
