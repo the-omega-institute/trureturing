@@ -2311,3 +2311,229 @@ $$
 定义 38.1 的对称 Hilbert 背景、纯相位 $F$ 与两种 $P_3$ 前件没有从每个原始完整 (R) 模型取得；因此对应 37.3 的更大蕴涵仍未解决。对应 37.2 的全部实际来源前件继续保留，本节没有完成量子起源。
 
 ## 追加锚（三个有向比较族的单侧返回分类；本行以下为增补区）
+
+## 39. 支配残差的端点均值与有限插入矩形
+
+**定义 39.1（原标签上的标记插入）。**取定义 38.1 的全部前件：$M$ 是带真实双侧单位 $1$ 的任意 magma，$U:M\to M$ 任意，$H$ 是任意维复 Hilbert 空间，$\omega=\exp(2\pi i/3)$，且 $F:M\to H$ 满足
+
+$$
+F1=0,\qquad F(a\cdot b)=Fa+Fb,\qquad F(Ua)=\omega Fa.
+\tag{39.1}
+$$
+
+处处有限的实函数 $D:M^2\to\mathbb R$ 对全部 $a,b,u,v\in M$ 满足
+
+$$
+\begin{aligned}
+D(b,a)&=-D(a,b),& |D(a,b)|&\le\|Fa-Fb\|^2,\\
+\sum_{k=0}^2D\bigl(a\cdot(U^ku),b\cdot(U^kv)\bigr)
+&=3D(a,b)+3D(u,v).
+\end{aligned}
+\tag{39.2}
+$$
+
+对整数 $j\ge0$，置 $p_j=U^j1$、$P_j(a)=a\cdot p_j$；两个第三标记规则分别为
+
+$$
+D(P_3(a),b)=D(a,b),\qquad D(a,P_3(b))=D(a,b)
+\qquad(a,b\in M).
+\tag{39.3}
+$$
+
+所有变量取实际标签，保留原有次序、二叉括号、单位标签与重复标签。不假设乘法结合、$U$ 保乘法或满射、$F$ 单射，亦不假设 $D$ 沿 $F$ 的纤维下降。$P_3$ 由 $U^31$ 定义，不将它等同于 $P_1$ 的三次复合。Hilbert 背景和纯相位规则 (39.1) 是假设；三相指数的个数不限制 $H$ 的维数。
+
+**定理 39.2（两端均值与四种基本混合矩形）。**在定义 39.1 的全部条件下，对每个有序标签对 $a,b\in M$，有
+
+$$
+\begin{aligned}
+D(P_1(a),b)+D(P_2(a),b)&=2D(a,b),\\
+D(a,P_1(b))+D(a,P_2(b))&=2D(a,b).
+\end{aligned}
+\tag{39.4}
+$$
+
+并且对每个 $i,j\in\{1,2\}$，同时有
+
+$$
+D(P_i(a),P_j(b))-D(P_i(a),b)-D(a,P_j(b))+D(a,b)=0.
+\tag{39.5}
+$$
+
+**证明。**由 (39.1) 对 $j$ 归纳，$F(p_j)=\omega^jF1=0$，所以 $F(P_j(a))=Fa$。支配界给 $D(1,1)=D(p_1,1)=D(1,p_1)=0$。
+
+固定任意实际标签 $a_0,b_0$，令 $\xi=Fa_0$、$\eta=Fb_0$，取整个有序纤维对
+
+$$
+E=\{(a,b)\in M^2:Fa=\xi,\ Fb=\eta\},\qquad
+h=D|_E,\qquad \|h\|_\infty\le C:=\|\xi-\eta\|^2<\infty.
+\tag{39.6}
+$$
+
+在实 Banach 空间 $\ell^\infty(E;\mathbb R)$ 上，对 $j=1,2,3$ 定义
+
+$$
+(L_jg)(a,b)=g(P_j(a),b),\qquad
+(R_jg)(a,b)=g(a,P_j(b)).
+\tag{39.7}
+$$
+
+插入保持各端的 $F$ 值，故这些都是线性压缩算子。任意 $L_i$ 与任意 $R_j$ 交换，因为两种复合在 $(a,b)$ 上均取值 $g(P_i(a),P_j(b))$；不假设同端点的两个插入算子交换。式 (39.3) 给 $L_3h=h$ 与 $R_3h=h$。
+
+在完整四变量关系中依次取 $(u,v)=(1,1),(p_1,1),(1,p_1)$，保留全部实际乘积，得到
+
+$$
+\begin{aligned}
+D(a,b)+D(a\cdot p_1,b\cdot p_1)+D(a\cdot p_2,b\cdot p_2)
+&=3D(a,b),\\
+D(a\cdot p_1,b)+D(a\cdot p_2,b\cdot p_1)+D(a\cdot p_3,b\cdot p_2)
+&=3D(a,b),\\
+D(a,b\cdot p_1)+D(a\cdot p_1,b\cdot p_2)+D(a\cdot p_2,b\cdot p_3)
+&=3D(a,b).
+\end{aligned}
+\tag{39.8}
+$$
+
+这里第零项只约简真实单位；$U(p_1)=p_2$、$U^2(p_1)=p_3$ 只是一元迭代。第二式末项用第一端点的 (39.3)，第三式末项另用第二端点的 (39.3)，于是
+
+$$
+\begin{aligned}
+(L_1R_1+L_2R_2)h&=2h,\\
+(L_1+L_2R_1+R_2)h&=3h,\\
+(R_1+L_1R_2+L_2)h&=3h.
+\end{aligned}
+\tag{39.9}
+$$
+
+这些等式作用于 $h$，不作为整个函数空间上的算子恒等式。
+
+置
+
+$$
+S=\frac{L_1+L_2}{2},\qquad T=\frac{R_1+R_2}{2},\qquad
+Q_S=\frac{I+2S}{3},\qquad Q_T=\frac{I+2T}{3}.
+\tag{39.10}
+$$
+
+$S,T$ 是交换的压缩算子，$Q_S,Q_T$ 亦然。将 (39.9) 三式相加，得
+
+$$
+(4ST+2S+2T)h=8h,\qquad
+Q_SQ_Th=\frac{I+2S+2T+4ST}{9}h=h.
+\tag{39.11}
+$$
+
+以下用经典二项式公式与有限加权 Cauchy–Schwarz 给出取极限所需的中间估计。对任意实 Banach 空间上的线性压缩算子 $Z$，令 $Q_Z=(I+2Z)/3$。对每个整数 $n\ge0$，有
+
+$$
+\|(I-Z)Q_Z^n\|\le\frac{3}{\sqrt{2(n+1)}}.
+\tag{39.12}
+$$
+
+确实，置 $q=2/3$，令 $b_{n,k}=\binom nkq^k(1-q)^{n-k}$ 当 $0\le k\le n$，区间外置零。有限二项式展开给
+
+$$
+(I-Z)Q_Z^n=\sum_{k=0}^{n+1}(b_{n,k}-b_{n,k-1})Z^k.
+\tag{39.13}
+$$
+
+写 $N=n+1$、$c_k=\binom Nkq^k(1-q)^{N-k}$。直接约去阶乘得
+
+$$
+b_{n,k}-b_{n,k-1}=\frac{Nq-k}{Nq(1-q)}c_k
+\qquad(0\le k\le N),
+\tag{39.14}
+$$
+
+包括 $k=0,N$ 两端。多项式 $(1-q+qt)^N$ 在 $t=1$ 的取值及一、二阶导数给
+
+$$
+\sum_{k=0}^Nc_k=1,\quad
+\sum_{k=0}^Nkc_k=Nq,\quad
+\sum_{k=0}^Nk(k-1)c_k=N(N-1)q^2,\quad
+\sum_{k=0}^N(k-Nq)^2c_k=Nq(1-q).
+\tag{39.15}
+$$
+
+因此加权 Cauchy–Schwarz 给
+
+$$
+\sum_{k=0}^N|b_{n,k}-b_{n,k-1}|
+\le\frac{\sqrt{\bigl(\sum_kc_k\bigr)\bigl(\sum_k(k-Nq)^2c_k\bigr)}}{Nq(1-q)}
+=\frac{3}{\sqrt{2N}}.
+\tag{39.16}
+$$
+
+结合 $\|Z^k\|\le1$ 和 (39.13) 即证 (39.12)，对每个 $n\ge0$ 均成立。
+
+由 (39.11) 和交换性，对全部 $n\ge0$ 都有 $h=Q_S^nQ_T^nh$。用 (39.12) 分别取 $Z=S,T$，并用另一算子幂的压缩性，得到
+
+$$
+\|(I-S)h\|_\infty\le\frac{3\|h\|_\infty}{\sqrt{2(n+1)}},\qquad
+\|(I-T)h\|_\infty\le\frac{3\|h\|_\infty}{\sqrt{2(n+1)}}.
+\tag{39.17}
+$$
+
+所有插入历史均留在同一个 $E$，共享 (39.6) 的同一个有限界 $C$。令 $n\to\infty$，得 $Sh=h$、$Th=h$，即两个端点均值恒等式在整个 $E$ 上成立。没有为不同 $n$ 更换来源或支配常数，也不需要 $M$ 上的拓扑。
+
+最后置 $\delta_i=L_i-I$、$\varepsilon_j=R_j-I$，$i,j\in\{1,2\}$。均值等式给 $(\delta_1+\delta_2)h=0$ 与 $(\varepsilon_1+\varepsilon_2)h=0$。只用异端点交换，分别在前一式上作用 $\varepsilon_j$、在后一式上作用 $\delta_i$，得到
+
+$$
+\delta_2\varepsilon_jh=-\delta_1\varepsilon_jh,\qquad
+\delta_i\varepsilon_2h=-\delta_i\varepsilon_1h.
+\tag{39.18}
+$$
+
+展开 (39.9) 的第一式，并消去两端均值项，得
+
+$$
+(\delta_1\varepsilon_1+\delta_2\varepsilon_2)h=0.
+\tag{39.19}
+$$
+
+式 (39.18) 又给 $\delta_2\varepsilon_2h=\delta_1\varepsilon_1h$，故 $2\delta_1\varepsilon_1h=0$，继而四个 $\delta_i\varepsilon_jh$ 全部为零。在 $(a_0,b_0)$ 取值即为 (39.5)，两个均值同样给 (39.4)。$a_0,b_0$ 任意，所以结论覆盖全部原标签及两种端点次序。
+
+若 $\xi=\eta$，则 $C=0$ 且 $h=0$，上述证明仍成立，没有除以 $C$。这也包含零维 Hilbert 空间；任意维数、非单射 $F$、重复标签和线性相关的像均不改变论证。证毕。
+
+**推论 39.3（任意有限插入字的混合矩形）。**在定义 39.1 的全部条件下，对字母表 $\{1,2\}$ 上的有限字递归定义
+
+$$
+W_{\varnothing}(a)=a,\qquad W_{wi}(a)=P_i(W_w(a))=W_w(a)\cdot p_i.
+\tag{39.20}
+$$
+
+对任意两个有限字 $w,z$（允许空字）及全部实际 $a,b\in M$，有
+
+$$
+D(W_w(a),W_z(b))-D(W_w(a),b)-D(a,W_z(b))+D(a,b)=0.
+\tag{39.21}
+$$
+
+**证明。**在定理 39.2 的同一个实际纤维对 $E$ 上，若 $w=i_1\cdots i_m$、$z=j_1\cdots j_\ell$，令
+
+$$
+L_w=L_{i_1}\cdots L_{i_m},\qquad R_z=R_{j_1}\cdots R_{j_\ell},
+\qquad L_{\varnothing}=R_{\varnothing}=I.
+\tag{39.22}
+$$
+
+由拉回的复合次序，$L_wg(a,b)=g(W_w(a),b)$、$R_zg(a,b)=g(a,W_z(b))$，恰好保留 (39.20) 中逐次插入的括号和字母顺序。有限望远镜恒等式给
+
+$$
+\begin{aligned}
+L_w-I&=\sum_{r=1}^m L_{i_1}\cdots L_{i_{r-1}}(L_{i_r}-I),\\
+R_z-I&=\sum_{s=1}^{\ell} R_{j_1}\cdots R_{j_{s-1}}(R_{j_s}-I).
+\end{aligned}
+\tag{39.23}
+$$
+
+不需要同端点交换。将两个有限和相乘并作用于 $h$，仅用异端点交换，每一项成为
+
+$$
+L_{i_1}\cdots L_{i_{r-1}}R_{j_1}\cdots R_{j_{s-1}}
+(L_{i_r}-I)(R_{j_s}-I)h=0,
+\tag{39.24}
+$$
+
+其中最后的零是定理 39.2 在整个 $E$ 上的四种矩形恒等式。因此 $(L_w-I)(R_z-I)h=0$，在任意 $(a,b)\in E$ 取值即得 (39.21)。若有空字，对应有限和为空，结论同样成立。证毕。
+
+## 追加锚（三个有向比较族的单侧返回分类；本行以下为增补区）
