@@ -1,0 +1,17 @@
+**定义 48.1（固定符号残差）。** 固定一个普通数 $\sigma=\pm1$，令 $j=\sigma i$。对每个实际 $W\in A$，定义
+
+$$
+x(W)=(W+W^*)/2,\quad y_\sigma(W)=(W-W^*)/(2j),
+\quad W=x(W)+j y_\sigma(W),
+\quad F_\sigma(W)=D(x(W),y_\sigma(W))-K_\sigma(x(W),y_\sigma(W)).
+\tag{48.1}
+$$
+
+这是真正原标签上的残差，不先下降为某个纤维算子的函数。直接乘法给
+
+$$
+x(W)^2+y_\sigma(W)^2+2D(x(W),y_\sigma(W))
+=W^*W+2F_\sigma(W).
+\tag{48.2}
+$$
+
