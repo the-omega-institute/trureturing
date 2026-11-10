@@ -29,6 +29,7 @@ internal sealed class HalvingPartitionProfileDocument : IScribeDocumentDefinitio
             Node("lengthIntervalEquiv_length", "Exact source declaration: theorem lengthIntervalEquiv_length (m : ℕ) (hm : 2 ≤ m) (p : SourceLists (2 ^ m + 1)) : p.val.length = m - thresholdCount m + (lengthIntervalEquiv m hm p).val", DescribeRole.Theorem),
             Node("sum_source_lengths", "Exact source declaration: theorem sum_source_lengths {A : Type*} [AddCommMonoid A] (m : ℕ) (hm : 2 ≤ m) (f : ℕ → A) : ∑ p : SourceLists (2 ^ m + 1), f p.val.length = ∑ i : Fin (thresholdCount m + 3), f (m - thresholdCount m + i.val)", DescribeRole.Theorem),
             Node("totalParts", "Exact source declaration: noncomputable def totalParts (n : ℕ) : ℕ := ∑ p : SourceLists n, p.val.length", DescribeRole.Definition),
+            Node("totalParts_eq_derivative", "For every n, totalParts n = (lengthPolynomial n).derivative.eval 1. The exact length polynomial is consumed through this derivative in the total-parts proof.", DescribeRole.Theorem),
             Node("totalParts_twice", "Exact source declaration: theorem totalParts_twice (m : ℕ) (hm : 2 ≤ m) : 2 * totalParts (2 ^ m + 1) = (thresholdCount m + 3) * (2 * m + 2 - thresholdCount m)", DescribeRole.Theorem),
             Node("totalParts_dyadic", "Exact source declaration: theorem totalParts_dyadic (m : ℕ) (hm : 2 ≤ m) : totalParts (2 ^ m + 1) = (thresholdCount m + 3) * m + 3 - thresholdCount m * (thresholdCount m + 1) / 2", DescribeRole.Theorem))));
 

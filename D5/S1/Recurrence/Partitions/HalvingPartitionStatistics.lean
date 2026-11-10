@@ -97,6 +97,15 @@ theorem lengthResidueCount_balanced (m b : ℕ) (hm : 2 ≤ m) (hb : 0 < b)
     lengthResidueCount (2 ^ m + 1) b r.val ≤
       lengthResidueCount (2 ^ m + 1) b s.val + 1 := by
   classical
+  have sameLength (p q : SourceLists (2 ^ m + 1))
+      (he : p.val.length = q.val.length) : p = q := by
+    let fiber := {x : SourceLists (2 ^ m + 1) // x.val.length = p.val.length}
+    have hc : Nat.card fiber = 1 := by
+      change lengthCount (2 ^ m + 1) p.val.length = 1
+      rw [lengthCount_dyadic m p.val.length hm]
+      exact if_pos ((source_length_support m p.val.length hm).mp ⟨p, rfl⟩)
+    have hu : Subsingleton fiber := (Nat.card_eq_one_iff_unique.mp hc).1
+    exact congrArg Subtype.val (hu.elim (⟨p, rfl⟩ : fiber) ⟨q, he.symm⟩)
   let d := if r.val ≤ s.val then s.val - r.val else b + s.val - r.val
   have hd : d < b := by dsimp [d]; split_ifs <;> omega
   have hmod (x : ℕ) (hx : x % b = r.val) : (x + d) % b = s.val := by
@@ -120,7 +129,7 @@ theorem lengthResidueCount_balanced (m b : ℕ) (hm : 2 ≤ m) (hb : 0 < b)
   have hinj : Function.Injective f := by
     intro p q he
     apply Subtype.ext
-    apply source_length_injective m
+    apply sameLength
     change p.val.val.length = q.val.val.length
     by_cases hp : p.val.val.length + d ≤ m + 2
     · have hq : q.val.val.length + d ≤ m + 2 := by

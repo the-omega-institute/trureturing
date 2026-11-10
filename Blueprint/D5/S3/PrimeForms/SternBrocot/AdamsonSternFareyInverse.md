@@ -18,7 +18,55 @@ $$\forall n \in \mathbb{N},\; \operatorname{stern}\left(n\right) = \begin{cases}
 
 The initial values are 0 and 1. At a larger even index the value is copied from half the index; at an odd index the two neighboring values at half the index are added.
 
-**Definition 1.2 (The mediant of two coordinate pairs).**
+**Theorem 1.2 (stern_zero).**
+
+Lean statement: `D5/S3/PrimeForms/SternBrocot/AdamsonSternFareyInverse.stern_zero`
+
+*Proof.* Machine-checked in Lean as `D5/S3/PrimeForms/SternBrocot/AdamsonSternFareyInverse.stern_zero` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+stern 0 = 0. These recursion facts were already proved locally in the original Farey arguments; exposing them here preserves those consumers and permits direct reuse by the halving deficit proof.
+
+**Theorem 1.3 (stern_one).**
+
+Lean statement: `D5/S3/PrimeForms/SternBrocot/AdamsonSternFareyInverse.stern_one`
+
+*Proof.* Machine-checked in Lean as `D5/S3/PrimeForms/SternBrocot/AdamsonSternFareyInverse.stern_one` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+stern 1 = 1. These recursion facts were already proved locally in the original Farey arguments; exposing them here preserves those consumers and permits direct reuse by the halving deficit proof.
+
+**Theorem 1.4 (stern_even).**
+
+Lean statement: `D5/S3/PrimeForms/SternBrocot/AdamsonSternFareyInverse.stern_even`
+
+*Proof.* Machine-checked in Lean as `D5/S3/PrimeForms/SternBrocot/AdamsonSternFareyInverse.stern_even` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+∀ n : ℕ, stern (2*n) = stern n. These recursion facts were already proved locally in the original Farey arguments; exposing them here preserves those consumers and permits direct reuse by the halving deficit proof.
+
+**Theorem 1.5 (stern_odd).**
+
+Lean statement: `D5/S3/PrimeForms/SternBrocot/AdamsonSternFareyInverse.stern_odd`
+
+*Proof.* Machine-checked in Lean as `D5/S3/PrimeForms/SternBrocot/AdamsonSternFareyInverse.stern_odd` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+∀ n : ℕ, stern (2*n+1) = stern n + stern (n+1). These recursion facts were already proved locally in the original Farey arguments; exposing them here preserves those consumers and permits direct reuse by the halving deficit proof.
+
+**Definition 1.6 (The mediant of two coordinate pairs).**
 
 $$\forall a \in \mathbb{N} \times \mathbb{N}, b \in \mathbb{N} \times \mathbb{N},\; \operatorname{mediant}\left(a, b\right) = (a_{1} + b_{1}, a_{2} + b_{2})$$
 
@@ -30,7 +78,7 @@ $$\forall a \in \mathbb{N} \times \mathbb{N}, b \in \mathbb{N} \times \mathbb{N}
 
 The mediant adds the numerators and adds the denominators.
 
-**Definition 1.3 (Full mediant rows).**
+**Definition 1.7 (Full mediant rows).**
 
 $$\begin{aligned}\forall j \in \mathbb{N},\; \operatorname{fareyRow}\left(0, j\right) = \begin{cases}(0, 1) & j = 0\\(1, 1) & j \ne 0\end{cases}\\\forall m \in \mathbb{N},\; \forall j \in \mathbb{N},\; \operatorname{fareyRow}\left(m + 1, j\right) = \begin{cases}\operatorname{fareyRow}\left(m, (j / 2)\right) & j \bmod 2 = 0\\\operatorname{mediant}\left(\operatorname{fareyRow}\left(m, (j / 2)\right), \operatorname{fareyRow}\left(m, (j / 2) + 1\right)\right) & j \bmod 2 \ne 0\end{cases}\end{aligned}$$
 
@@ -42,7 +90,7 @@ $$\begin{aligned}\forall j \in \mathbb{N},\; \operatorname{fareyRow}\left(0, j\r
 
 The initial row has endpoints (0,1) and (1,1). Refinement copies the old entries into even positions and inserts the mediant of adjacent entries into each intervening odd position.
 
-**Definition 1.4 (The level-by-level entry selector).**
+**Definition 1.8 (The level-by-level entry selector).**
 
 $$\forall r \in \mathbb{N},\; \operatorname{fareyEntry}\left(r\right) = \begin{cases}(0, 1) & r = 0\\(1, 1) & r = 1\\\operatorname{fareyRow}\left(\left(\operatorname{log}_{2}\right)\left(r - 1\right) + 1, 2 \cdot ((r - 1) - 2^{\left(\operatorname{log}_{2}\right)\left(r - 1\right)}) + 1\right) & 1 < r\end{cases}$$
 
@@ -54,7 +102,7 @@ $$\forall r \in \mathbb{N},\; \operatorname{fareyEntry}\left(r\right) = \begin{c
 
 After the two endpoints, each block consists of the new mediants from one refinement. The floor logarithm locates the block, and the odd row position locates its mediant.
 
-**Definition 1.5 (Farey-tree numerators).**
+**Definition 1.9 (Farey-tree numerators).**
 
 $$\forall r \in \mathbb{N},\; \operatorname{fareyNum}\left(r\right) = (\operatorname{fareyEntry}\left(r\right))_{1}$$
 
@@ -66,7 +114,7 @@ $$\forall r \in \mathbb{N},\; \operatorname{fareyNum}\left(r\right) = (\operator
 
 The first coordinate gives the A007305 numerator at the same index.
 
-**Definition 1.6 (Farey-tree denominators).**
+**Definition 1.10 (Farey-tree denominators).**
 
 $$\forall r \in \mathbb{N},\; \operatorname{fareyDen}\left(r\right) = (\operatorname{fareyEntry}\left(r\right))_{2}$$
 
@@ -78,7 +126,7 @@ $$\forall r \in \mathbb{N},\; \operatorname{fareyDen}\left(r\right) = (\operator
 
 The second coordinate gives the A007306 denominator at the same index.
 
-**Theorem 1.7 (Adamson's modular inverse relation).**
+**Theorem 1.11 (Adamson's modular inverse relation).**
 
 $$\forall n \in \mathbb{N},\; (0 < n) \Rightarrow (\operatorname{stern}\left(n\right) \cdot \operatorname{fareyNum}\left(n + 1\right) \bmod \operatorname{fareyDen}\left(n + 1\right) = 1 \bmod \operatorname{fareyDen}\left(n + 1\right))$$
 
@@ -103,3 +151,7 @@ The coordinates of each mediant row are Stern values. The adjacent-column determ
 - Truth anchor: `D5/S3/PrimeForms/SternBrocot/AdamsonSternFareyInverse.mediant`
 - Truth anchor: `D5/S3/PrimeForms/SternBrocot/AdamsonSternFareyInverse.result`
 - Truth anchor: `D5/S3/PrimeForms/SternBrocot/AdamsonSternFareyInverse.stern`
+- Truth anchor: `D5/S3/PrimeForms/SternBrocot/AdamsonSternFareyInverse.stern_even`
+- Truth anchor: `D5/S3/PrimeForms/SternBrocot/AdamsonSternFareyInverse.stern_odd`
+- Truth anchor: `D5/S3/PrimeForms/SternBrocot/AdamsonSternFareyInverse.stern_one`
+- Truth anchor: `D5/S3/PrimeForms/SternBrocot/AdamsonSternFareyInverse.stern_zero`

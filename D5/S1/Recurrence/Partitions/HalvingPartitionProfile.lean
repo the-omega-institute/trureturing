@@ -7,7 +7,7 @@
    digest: Exact length fibers and length enumerators for the actual halving lists at every dyadic successor. -/
 
 import D5.S1.Recurrence.Partitions.HalvingPartitionNonregularity
-import Mathlib.Algebra.Polynomial.Basic
+import Mathlib.Algebra.Polynomial.Derivative
 
 /-! Length fibers and finite source enumerators. -/
 
@@ -239,23 +239,73 @@ theorem sum_source_lengths {A : Type*} [AddCommMonoid A]
 /-- The total number of parts counts the lengths of the actual lists. -/
 noncomputable def totalParts (n : ℕ) : ℕ := ∑ p : SourceLists n, p.val.length
 
-/-- An integral identity before any subtraction or division. -/
+/-- Total parts is the derivative at one of the actual length polynomial. -/
+theorem totalParts_eq_derivative (n : ℕ) :
+    totalParts n = (lengthPolynomial n).derivative.eval 1 := by
+  classical
+  simp [totalParts, lengthPolynomial,
+    Polynomial.derivative_X_pow, Polynomial.eval_finsetSum]
+
+private def thresholdIndexEquiv (m : ℕ) (hm : 2 ≤ m) :
+    Threshold m ≃ Fin (thresholdCount m) where
+  toFun r := ⟨r.val.val - 1, by
+    have hs := ((threshold_iff_le_count m r.val.val).mp r.prop).2
+    have hp := r.prop.1
+    omega⟩
+  invFun i := ⟨⟨i.val + 1, by have := thresholdCount_lt m hm; omega⟩,
+    (threshold_iff_le_count m (i.val + 1)).mpr ⟨by omega, by omega⟩⟩
+  left_inv r := by
+    apply Subtype.ext
+    apply Fin.ext
+    change r.val.val - 1 + 1 = r.val.val
+    have := r.prop.1
+    omega
+  right_inv i := by
+    apply Fin.ext
+    simp
+
+/-- An integral identity before any subtraction or division. The length
+polynomial is genuinely consumed through its derivative; the threshold sum
+is reindexed by the literal positive threshold interval. -/
 theorem totalParts_twice (m : ℕ) (hm : 2 ≤ m) :
     2 * totalParts (2 ^ m + 1) =
       (thresholdCount m + 3) * (2 * m + 2 - thresholdCount m) := by
   classical
-  have hl := sum_source_lengths m hm (fun x : ℕ => x)
-  change totalParts (2 ^ m + 1) = _ at hl
-  rw [hl, Fin.sum_univ_eq_sum_range]
-  rw [Finset.sum_add_distrib]
-  simp only [Finset.sum_const, Finset.card_range, smul_eq_mul]
-  have hs := Finset.sum_range_id_mul_two (thresholdCount m + 3)
   have hr := thresholdCount_lt m hm
-  rw [show thresholdCount m + 3 - 1 = thresholdCount m + 2 by omega] at hs
-  have hA : m - thresholdCount m + thresholdCount m = m := by omega
-  have hB : 2 * m + 2 - thresholdCount m + thresholdCount m = 2 * m + 2 := by omega
-  have hAmul := congrArg (fun x => (thresholdCount m + 3) * x) hA
-  have hBmul := congrArg (fun x => (thresholdCount m + 3) * x) hB
+  have hparts : totalParts (2 ^ m + 1) =
+      3 * m + 3 + ∑ r : Threshold m, (m - r.val.val) := by
+    rw [totalParts_eq_derivative, lengthPolynomial_dyadic m hm]
+    simp [Polynomial.derivative_add, Polynomial.derivative_mul,
+      Polynomial.derivative_X_pow,
+      Polynomial.eval_finsetSum]
+    omega
+  have hs : (∑ r : Threshold m, (m - r.val.val)) =
+      ∑ i : Fin (thresholdCount m), (m - (i.val + 1)) := by
+    have h := (thresholdIndexEquiv m hm).symm.sum_comp
+      (fun r : Threshold m => m - r.val.val)
+    change (∑ i : Fin (thresholdCount m), (m - (i.val + 1))) =
+      ∑ r : Threshold m, (m - r.val.val) at h
+    exact h.symm
+  have hcancel : (∑ i : Fin (thresholdCount m), (m - (i.val + 1))) +
+      (∑ i : Fin (thresholdCount m), (i.val + 1)) = thresholdCount m * m := by
+    rw [← Finset.sum_add_distrib]
+    have he : ∀ i : Fin (thresholdCount m), m - (i.val + 1) + (i.val + 1) = m := by
+      intro i
+      have := i.isLt
+      omega
+    simp only [he, Finset.sum_const, Finset.card_univ, Fintype.card_fin, smul_eq_mul]
+  have htri : 2 * (∑ i : Fin (thresholdCount m), (i.val + 1)) =
+      thresholdCount m * (thresholdCount m + 1) := by
+    rw [Fin.sum_univ_eq_sum_range (fun i : ℕ => i + 1) (thresholdCount m),
+      Finset.sum_add_distrib]
+    simp only [Finset.sum_const, Finset.card_range, smul_eq_mul, mul_one]
+    have ht := Finset.sum_range_id_mul_two (thresholdCount m)
+    by_cases hz : thresholdCount m = 0
+    · simp [hz]
+    · nlinarith [Nat.sub_add_cancel (show 1 ≤ thresholdCount m by omega)]
+  rw [hparts, hs]
+  have hsub : 2 * m + 2 - thresholdCount m + thresholdCount m = 2 * m + 2 := by omega
+  have hmul := congrArg (fun x => (thresholdCount m + 3) * x) hsub
   nlinarith
 
 /-- The manuscript formula uses exact natural subtraction and integer division. -/

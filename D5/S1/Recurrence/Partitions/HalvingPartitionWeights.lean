@@ -158,6 +158,10 @@ theorem weightedCount_zero {R : Type*} [CommRing R] (t : R) : weightedCount t 0 
 theorem weightedCount_one {R : Type*} [CommRing R] (n : ℕ) :
     weightedCount (1 : R) n = (count n : R) := by
   classical
-  simp [weightedCount, count, Nat.card_eq_fintype_card]
+  by_cases hn : n = 0
+  · subst n
+    rw [weightedCount_zero, result.2.2.2.2.2]
+    simp
+  · simp [weightedCount, count, Nat.card_eq_fintype_card]
 
 end D5.S1.Recurrence.Partitions.HalvingPartitionNonregularity
