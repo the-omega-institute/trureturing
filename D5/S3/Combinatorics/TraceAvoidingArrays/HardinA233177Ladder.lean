@@ -138,7 +138,7 @@ private theorem literal_card {n : ℕ} (hn : 0 < n) :
   ext A
   simp only [Finset.mem_filter, Finset.mem_univ, true_and, legal_iff hn]
 
-private noncomputable def used {n : ℕ} (P : Fin 4 × Fin n → Fin 3) : ℕ :=
+noncomputable def used {n : ℕ} (P : Fin 4 × Fin n → Fin 3) : ℕ :=
   Nat.card (Set.range P)
 
 private theorem used_eq_card {n : ℕ} (P : Fin 4 × Fin n → Fin 3) :
