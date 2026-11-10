@@ -1,4 +1,6 @@
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233258Strip
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233258PairTransfer
+import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
 

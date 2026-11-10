@@ -8,6 +8,46 @@
 /-
 admission_basis: open-problem-resolution (#28806; Proved)
 escape_witness: columns_constant, two_label_classification, canonical_two_card
+Frozen canonical-form applications in a_sum and L_card are instantiations.
+The three-row graph classification supplies the new counting content.
+normal: proof_shape=bind-only; consumers=Legal, instDecidableNormal, normal_iff
+Legal: proof_shape=bind-only; consumers=instDecidableLegal, a, legal_iff
+instDecidableNormal: proof_shape=bind-only; consumers=instDecidableLegal
+instDecidableLegal: proof_shape=bind-only; consumers=a
+a: proof_shape=bind-only; consumers=literal_card, zero_one, result
+cellOrder: proof_shape=bind-only; consumers=RowNormal, Canon, row_major_lt, a_sum, L_card
+RowNormal: proof_shape=bind-only; consumers=normal_iff, legal_iff, literal_card
+Canon: proof_shape=bind-only; consumers=alternating_canon, canon_two_eq, CanonicalPatterns
+row_major_lt: proof_shape=bind-only; consumers=normal_iff
+normal_iff: proof_shape=bind-only; consumers=legal_iff
+legal_iff: proof_shape=bind-only; consumers=literal_card
+literal_card: proof_shape=bind-only; consumers=a_sum
+used: proof_shape=bind-only; consumers=used_eq_card, used_two_or_three, omitted_label, alternating_used, canon_two_eq, canonical_two_card, a_sum, weighted_count
+used_eq_card: proof_shape=bind-only; consumers=used_two_or_three, alternating_used
+proper_relabel: proof_shape=bind-only; consumers=L_card
+proper_two_labels: proof_shape=bind-only; consumers=used_two_or_three, L_card
+columns_constant: proof_shape=content; consumers=two_label_classification
+alternating: proof_shape=bind-only; consumers=alternating_proper, two_label_classification, alternating_used, alternating_canon, canon_two_eq, canonical_two_card
+alternating_proper: proof_shape=bind-only; consumers=canonical_two_card
+two_label_classification: proof_shape=content; consumers=canon_two_eq
+used_two_or_three: proof_shape=bind-only; consumers=weighted_count
+omitted_label: proof_shape=bind-only; consumers=canon_two_eq
+alternating_used: proof_shape=bind-only; consumers=canonical_two_card
+alternating_canon: proof_shape=content; consumers=canonical_two_card
+canon_two_eq: proof_shape=content; consumers=canonical_two_card
+CanonicalPatterns: proof_shape=bind-only; consumers=canonical_two_card, a_sum, L_card, weighted_count, counting_bridge
+canonical_two_card: proof_shape=content; consumers=weighted_count
+a_sum: proof_shape=bind-only; consumers=weighted_count
+L_card: proof_shape=bind-only; consumers=counting_bridge
+weighted_count: proof_shape=content; consumers=counting_bridge
+counting_bridge: proof_shape=content; consumers=scale_recurrence, initial
+scale_recurrence: proof_shape=content; consumers=finite_certificate, recurrence
+finite_certificate: proof_shape=content; consumers=recurrence
+recurrence: proof_shape=content; consumers=generating_function, result
+zero_one: proof_shape=content; consumers=initial
+initial: proof_shape=content; consumers=generating_function
+generating_function: proof_shape=content; consumers=result
+result: proof_shape=content; consumers=external result of #28806
 -/
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
 import D5.S3.Observer.Separation.BooleanRankThreeK4
@@ -359,9 +399,9 @@ theorem counting_bridge {n : ℕ} (hn : 2 ≤ n) :
   ring
 
 private theorem scale_recurrence (m : ℕ) (hm : 2 ≤ m)
-    (h : (L (m+3) : ℤ) + 6 = 6 * ((L (m+2) : ℤ) + 6) -
-      7 * ((L (m+1) : ℤ) + 6) + 2 * ((L m : ℤ) + 6)) :
-    (a (m+3) : ℤ) = 48 * (a (m+2) : ℤ) - 448 * (a (m+1) : ℤ) +
+    (h : (L (m + 3) : ℤ) + 6 = 6 * ((L (m + 2) : ℤ) + 6) -
+      7 * ((L (m + 1) : ℤ) + 6) + 2 * ((L m : ℤ) + 6)) :
+    (a (m + 3) : ℤ) = 48 * (a (m + 2) : ℤ) - 448 * (a (m + 1) : ℤ) +
       1024 * (a m : ℤ) := by
   have hb (i : ℕ) : 48 * (a (m+i) : ℤ) =
       (8 : ℤ)^m * 8^i * ((L (m+i) : ℤ) + 6) := by
@@ -416,7 +456,7 @@ private theorem initial (k : Fin 6) :
   rw [p3] at h3
   have hz0 : (a 0 : ℤ) = 0 := by exact_mod_cast zero_one.1
   have hz1 : (a 1 : ℤ) = 11 := by exact_mod_cast zero_one.2
-  norm_num only [reducePow] at h0 h1 h2 h3
+  norm_num only at h0 h1 h2 h3
   fin_cases k <;> norm_num <;> linarith only [h0, h1, h2, h3, hz0, hz1]
 
 open PowerSeries in

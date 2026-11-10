@@ -7,7 +7,42 @@
    digest: Five column orbits count three-row horizontal and antidiagonal pair patterns. -/
 /-
 admission_basis: open-problem-resolution (#28806; Proved)
-escape_witness: representative_rows, class_rep, initial_weights, power_polynomial
+escape_witness: class_rep, representative_rows, initial_weights
+direct_frozen_dependencies: []
+reused_unfrozen: TransferMatrix.cardMatrix, TransferMatrix.good_iff_local,
+  TransferMatrix.tabulatedPowers, TransferMatrix.scalarRelationShift
+Proper: proof_shape=bind-only; consumers=instDecidableProper, L, grid_good
+instDecidableProper: proof_shape=bind-only; consumers=L
+L: proof_shape=bind-only; consumers=count_transfer, initial_values, recurrence_core, recurrence
+Col: proof_shape=bind-only; consumers=column, compatible, instDecidableCompatible, cls, representatives, relabel, column_relabel, compatible_relabel, class_relabel, class_rep, representative_rows, quotient_rows, initial_weights, gridEquiv, count_transfer
+column: proof_shape=bind-only; consumers=compatible, column_relabel, gridEquiv, column_grid
+compatible: proof_shape=bind-only; consumers=instDecidableCompatible, compatible_relabel, representative_rows, quotient_rows, initial_weights, grid_good, count_transfer
+instDecidableCompatible: proof_shape=bind-only; consumers=representative_rows, initial_weights
+cls: proof_shape=bind-only; consumers=class_relabel, class_rep, representative_rows, quotient_rows, initial_weights, grid_good, count_transfer
+Q: proof_shape=bind-only; consumers=representative_rows, quotient_rows, grid_good, count_transfer, table_steps, powers_table, power_polynomial, recurrence_core
+weights: proof_shape=bind-only; consumers=initial_weights, grid_good, count_transfer, initial_values, recurrence_core
+representatives: proof_shape=bind-only; consumers=class_rep, representative_rows, quotient_rows
+relabel: proof_shape=bind-only; consumers=column_relabel, compatible_relabel, class_relabel, class_rep, quotient_rows
+column_relabel: proof_shape=bind-only; consumers=compatible_relabel
+compatible_relabel: proof_shape=bind-only; consumers=quotient_rows
+class_relabel: proof_shape=bind-only; consumers=quotient_rows
+class_rep: proof_shape=content; consumers=quotient_rows
+representative_rows: proof_shape=content; consumers=quotient_rows
+quotient_rows: proof_shape=content; consumers=count_transfer
+initial_weights: proof_shape=content; consumers=count_transfer
+gridEquiv: proof_shape=bind-only; consumers=column_grid, grid_good, count_transfer
+column_grid: proof_shape=bind-only; consumers=grid_good
+grid_good: proof_shape=bind-only; consumers=count_transfer
+count_transfer: proof_shape=content; consumers=initial_values, recurrence_core
+W: proof_shape=bind-only; consumers=table_zero, table_steps, powers_table, power_polynomial, initial_values
+coefficients: proof_shape=bind-only; consumers=power_polynomial, recurrence_core
+table_zero: proof_shape=bind-only; consumers=powers_table
+table_steps: proof_shape=bind-only; consumers=powers_table
+powers_table: proof_shape=bind-only; consumers=power_polynomial, initial_values
+power_polynomial: proof_shape=bind-only; consumers=recurrence_core
+initial_values: proof_shape=content; consumers=recurrence, HardinA233258Strip.finite_certificate, HardinA233258Strip.initial
+recurrence_core: proof_shape=content; consumers=recurrence
+recurrence: proof_shape=content; consumers=HardinA233258Strip.recurrence
 -/
 import D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix
 import Mathlib.Tactic
