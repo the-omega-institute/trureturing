@@ -149,9 +149,7 @@ lemma actual_local_gap_sum_le_defect {z : ℝ} (hz : 1 < z) {n : ℕ} (hn : 1 �
     unfold actualDefect
     rw [hpressure, golden_resource_objective_sum_on (referencePrice z) hU T hUT,
       golden_resource_objective_sum_on (referencePrice z) hn T hnT, sum_sub_distrib]
-    apply sum_congr rfl
-    intro p hp
-    rw [hc p]
+    simp_rw [hc]
   rw [hsum]
   exact sum_le_sum_of_subset_of_nonneg hST (fun p hp _ =>
     sub_nonneg.mpr (count_maximal hlam (hprime p hp) _))

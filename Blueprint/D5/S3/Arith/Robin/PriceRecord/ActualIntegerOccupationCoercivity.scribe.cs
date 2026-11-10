@@ -44,8 +44,7 @@ internal sealed class ActualIntegerOccupationCoercivityDocument : IScribeDocumen
                     + "single extraction of the existing unrestricted supremum/factorization "
                     + "argument. Both common_support_charge and actual_first_layer_charge "
                     + "consume it on their disjoint H union X. The unit, absent primes, "
-                    + "primes beyond z and unbounded exponents remain in scope. These Scribe "
-                    + "additions and the extracted source remain uncompiled proposals."))),
+                    + "primes beyond z and unbounded exponents remain in scope."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("actual-integer-quantitative-occupation-defect"),

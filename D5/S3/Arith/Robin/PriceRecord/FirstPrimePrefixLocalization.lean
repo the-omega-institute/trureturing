@@ -9,9 +9,7 @@
 import D5.S3.Arith.Robin.PriceRecord.ActualIntegerOccupationCoercivity
 import D5.S3.Arith.Robin.OriginalEndpointPrimeTail
 
-/- UNCOMPILED SOURCE PROPOSAL against native StageA 29bd12ff.
-Requires only this packet's consumed finite-local-gap owner extraction.
-No source hash, textual check, or ordinary argument is kernel acceptance.
+/- The first-layer charge consumes the common finite local-gap bound.
 All prime factors and exponents are those of the original positive integer.
 No record price or record hypothesis is needed in this module. -/
 
@@ -34,33 +32,33 @@ open D5.S3.Arith.Robin.PriceRecord.QuantitativePrimeAbel
 open D5.S3.Arith.Robin.OriginalEndpointPrimeTail (largestPrime)
 
 -- Missing first layers pay their actual marginal, even at n=1.
-private lemma missing_first_loss {λ : ℝ} (hλ : 0 < λ) {p : ℕ} (hp : p.Prime) :
-    log p * (goldenLayerMarginal p 1 - λ) ≤
-      goldenPrimeLocalObjective λ p (optimalLayerCount λ p) -
-        goldenPrimeLocalObjective λ p 0 := by
-  have hm := count_maximal hλ hp 1
-  have hs := golden_prime_local_objective_diff hp λ 0
+private lemma missing_first_loss {lam : ℝ} (hlam : 0 < lam) {p : ℕ} (hp : p.Prime) :
+    log p * (goldenLayerMarginal p 1 - lam) ≤
+      goldenPrimeLocalObjective lam p (optimalLayerCount lam p) -
+        goldenPrimeLocalObjective lam p 0 := by
+  have hm := count_maximal hlam hp 1
+  have hs := golden_prime_local_objective_diff hp lam 0
   norm_num only [zero_add] at hs
   nlinarith
 
 -- Later occupied layers cannot cancel the loss of a negative first layer.
-private lemma occupied_first_loss {λ : ℝ} (hλ : 0 < λ) {p a : ℕ} (hp : p.Prime)
-    (ha : 1 ≤ a) (hg : goldenLayerMarginal p 1 ≤ λ) :
-    log p * (λ - goldenLayerMarginal p 1) ≤
-      goldenPrimeLocalObjective λ p (optimalLayerCount λ p) -
-        goldenPrimeLocalObjective λ p a := by
-  have hdown : AntitoneOn (goldenPrimeLocalObjective λ p) (Set.Ici 1) := by
+private lemma occupied_first_loss {lam : ℝ} (hlam : 0 < lam) {p a : ℕ} (hp : p.Prime)
+    (ha : 1 ≤ a) (hg : goldenLayerMarginal p 1 ≤ lam) :
+    log p * (lam - goldenLayerMarginal p 1) ≤
+      goldenPrimeLocalObjective lam p (optimalLayerCount lam p) -
+        goldenPrimeLocalObjective lam p a := by
+  have hdown : AntitoneOn (goldenPrimeLocalObjective lam p) (Set.Ici 1) := by
     apply antitoneOn_of_add_one_le Set.ordConnected_Ici
     intro k _ hk _
     change 1 ≤ k at hk
-    have hmk : goldenLayerMarginal p (k + 1) ≤ λ := by
+    have hmk : goldenLayerMarginal p (k + 1) ≤ lam := by
       have hlt : 1 < k + 1 := by omega
       exact (golden_layer_strict_decrease hp (by norm_num) hlt).le.trans hg
-    have hs := golden_prime_local_objective_diff hp λ k
+    have hs := golden_prime_local_objective_diff hp lam k
     have hlog : 0 ≤ log (p : ℝ) := log_natCast_nonneg p
     nlinarith [mul_nonpos_of_nonpos_of_nonneg (sub_nonpos.mpr hmk) hlog]
-  have hmax := count_maximal hλ hp 0
-  have hstep := golden_prime_local_objective_diff hp λ 0
+  have hmax := count_maximal hlam hp 0
+  have hstep := golden_prime_local_objective_diff hp lam 0
   have hcomp := hdown (by norm_num) ha ha
   norm_num only [zero_add] at hstep
   nlinarith
@@ -76,7 +74,7 @@ theorem actual_first_layer_charge {z : ℝ} (hz : 1 < z) {n : ℕ} (hn : 1 ≤ n
       ρ ≤ referencePrice z - goldenLayerMarginal p 1) :
     ρ * ((∑ p ∈ H, log p) + ∑ p ∈ X, log p) ≤ actualDefect z n := by
   classical
-  have hλ : 0 < referencePrice z :=
+  have hlam : 0 < referencePrice z :=
     one_div_pos.mpr (mul_pos (by linarith) (log_pos hz))
   let gap : ℕ → ℝ := fun p =>
     goldenPrimeLocalObjective (referencePrice z) p
@@ -85,7 +83,7 @@ theorem actual_first_layer_charge {z : ℝ} (hz : 1 < z) {n : ℕ} (hn : 1 ≤ n
   have hh : ∀ p ∈ H, ρ * log p ≤ gap p := by
     intro p hp
     have h := hH p hp
-    have hc := missing_first_loss hλ h.1
+    have hc := missing_first_loss hlam h.1
     dsimp [gap]
     rw [h.2.1]
     nlinarith [mul_le_mul_of_nonneg_right h.2.2 (log_natCast_nonneg p)]
@@ -93,7 +91,7 @@ theorem actual_first_layer_charge {z : ℝ} (hz : 1 < z) {n : ℕ} (hn : 1 ≤ n
     intro p hp
     have h := hX p hp
     have hg : goldenLayerMarginal p 1 ≤ referencePrice z := by linarith [h.2.2]
-    have hc := occupied_first_loss hλ h.1 h.2.1 hg
+    have hc := occupied_first_loss hlam h.1 h.2.1 hg
     dsimp [gap]
     nlinarith [mul_le_mul_of_nonneg_right h.2.2 (log_natCast_nonneg p)]
   calc
@@ -329,7 +327,8 @@ theorem eventually_first_prefix_windows (A : ℕ) {e : ℝ} (he : 0 < e)
       |Chebyshev.theta y - y| ≤ y / log y ^ (A + 1) := by
     filter_upwards [(theta_error_log_power (A + 1)).bound (by norm_num : (0 : ℝ) < 1),
       eventually_gt_atTop (1 : ℝ)] with y hy hy1
-    have hpos : 0 ≤ y / log y ^ (A + 1) := by positivity
+    have hpos : 0 ≤ y / log y ^ (A + 1) :=
+      div_nonneg (by linarith) (pow_nonneg (log_pos hy1).le _)
     simpa only [Real.norm_eq_abs, one_mul, abs_of_nonneg hpos] using hy
   obtain ⟨T, hT⟩ := eventually_atTop.mp hθev
   have hsmall : Tendsto (fun z : ℝ => log z ^ A / z) atTop (𝓝 0) := by

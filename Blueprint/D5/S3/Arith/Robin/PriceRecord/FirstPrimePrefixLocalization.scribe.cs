@@ -1,8 +1,9 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin.PriceRecord;
 
-// UNCOMPILED source proposal. No emission, registration, or kernel claim.
 internal sealed class FirstPrimePrefixLocalizationDocument : IScribeDocumentDefinition
 {
     private const string Prefix =
@@ -13,7 +14,7 @@ internal sealed class FirstPrimePrefixLocalizationDocument : IScribeDocumentDefi
         H("First prime prefix and the same actual pressure"),
         Blocks(
             Paragraph(Text(
-                "This source proposal is uncompiled. It concerns the canonical objective "
+                "The theorem concerns the canonical objective "
                 + "goldenResourceObjective(referencePrice(z),n), where referencePrice(z)=1/(z log z). "
                 + "The canonical actualPressure is the supremum over ALL positive integers, "
                 + "and actualDefect is that SAME pressure minus the SAME integer's objective. "
@@ -71,7 +72,7 @@ internal sealed class FirstPrimePrefixLocalizationDocument : IScribeDocumentDefi
                 DescribeId.Create("bounded-actual-defect-all-log-prefix-localization"),
                 DeclarationHandle.Create(Prefix + "bounded_defect_first_prefix_localization"),
                 H("All positive prime-prefix integers, one uniform threshold"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                StatementSource.FromAuthor(TargetFormula()), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For every A in Nat, K>=0 and epsilon>0, there exists Z>=2 BEFORE all real z>=Z "
                     + "and all n>=1. Assume n.primeFactors=primesLE(largestPrime(n)) and "
@@ -87,7 +88,44 @@ internal sealed class FirstPrimePrefixLocalizationDocument : IScribeDocumentDefi
             Paragraph(Text(
                 "The StageA proof and its original quantitative second-layer theorem remain at their owner. "
                 + "Only one finite-support decomposition is extracted there and consumed by both layers. "
-                + "All Lean elaboration, axiom closure, Scribe validation, native checks and publication remain "
-                + "future root integration. No RH, Robin sign, sharpness, novelty or CI acceptance is asserted."))
+                + "The result is unconditional relative to the existing global theta error theorem. "
+                + "No RH, Robin sign, sharpness or historical novelty is asserted."))
         )));
+
+    private static Formula TargetFormula()
+    {
+        Formula a = F.Id("A"), k = F.Id("K"), e = F.Id("epsilon");
+        Formula z = F.Id("z"), threshold = F.Id("Z"), n = F.Id("n");
+        Formula support = new Formula.Relation(Call("primeFactors", n),
+            FormulaRelationOperator.Equal, Call("primesLE", Call("largestPrime", n)));
+        Formula budget = Le(Mul(Mul(Call("sqrt", z), Call("log", z)),
+            Call("actualDefect", z, n)), k);
+        Formula distance = new Formula.Absolute(Mul(new Formula.Power(Call("log", z), a),
+            new Formula.Binary(new Formula.Fraction(Call("largestPrime", n), z),
+                FormulaBinaryOperator.Subtract, D(1))));
+        Formula conclusion = new Formula.Relation(distance, FormulaRelationOperator.LessThan, e);
+        Formula integers = All("n", Naturals(), Implies(Le(D(1), n),
+            Implies(support, Implies(budget, conclusion))));
+        Formula scales = All("z", Reals(), Implies(Le(threshold, z), integers));
+        Formula eventual = new Formula.Bind(FormulaQuantifier.Exists,
+            FormulaIdentifier.Create("Z"), Reals(), And(Le(D(2), threshold), scales));
+        return Disp(All("A", Naturals(), All("K", Reals(), Implies(Le(D(0), k),
+            All("epsilon", Reals(), Implies(new Formula.Relation(D(0),
+                FormulaRelationOperator.LessThan, e), eventual))))));
+    }
+
+    private static Formula Call(string name, params Formula[] args) =>
+        new Formula.Apply(F.Id(name), [.. args]);
+    private static Formula All(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+    private static Formula Le(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+    private static Formula And(Formula a, Formula b) =>
+        new Formula.Logic(a, FormulaLogicOperator.And, b);
+    private static Formula Implies(Formula a, Formula b) =>
+        new Formula.Logic(a, FormulaLogicOperator.Implies, b);
+    private static Formula Mul(Formula a, Formula b) =>
+        new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
+    private static Formula Reals() => Seq(Mathbb, Grp(F.Id("R")));
+    private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
 }
