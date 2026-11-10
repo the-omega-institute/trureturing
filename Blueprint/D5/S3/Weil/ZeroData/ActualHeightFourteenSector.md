@@ -1,22 +1,22 @@
-# Six-Pole Strip Kernel Comparison
+# Generic Finite Reciprocal-Product Sector Calculus
 
 ## Abstract
 
-Six-Pole Strip Kernel Comparison
+Generic finite reciprocal-product sector calculus
 
-**Theorem 1.1 (Six-Pole Strip Kernel Comparison).**
+**Theorem 1.1 (Strict decrease in the height parameter).**
 
-$$\forall rho \in \mathbb{C},\; 0 < \operatorname{re}\left(\mathit{rho}\right) \Rightarrow \left(\operatorname{re}\left(\mathit{rho}\right) < 1 \Rightarrow \left(100 < \operatorname{im}\left(\mathit{rho}\right)^{2} \Rightarrow \left(0 < \operatorname{h14Weight}\left(\mathit{rho}\right) \land \left(\operatorname{im}\left(\mathit{rho}\right)^{2} \le 196 \Rightarrow \frac{345650537}{72636 \cdot 10^{18} + 763553532703907200} \le 2 \cdot \operatorname{h14Weight}\left(\mathit{rho}\right)\right)\right)\right)\right)$$
+$$\operatorname{StrictAntiOn}\left(\operatorname{weight}\left(\right), \operatorname{Ioi}\left(\operatorname{threshold}\left(\right)\right)\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Weil/ZeroData/ActualHeightFourteenSector.h14_kernel_bounds` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/ZeroData/ActualHeightFourteenSector.strictAntiOn_weight_u` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-Here q=rho*(1-rho) and h14Weight(rho)=Re(1/(q*(q+30)*(q+56)*(q+90)*(q+132)*(q+182))). For every complex rho in the open strip with imaginary square above 100, the six-pole reciprocal kernel is positive. If the imaginary square is at most 196, twice its weight is at least 345650537/72636763553532703907200. The generic polar-angle and derivative proofs compare u and p on the closed auxiliary strip. The actual strip and height-ten premises are paid by the original exhaustive zero family at the final application; both signs and all multiplicities remain present.
+For every positive finite index size, every nonnegative shift family, and every p in the closed interval [0,1/4], the real part of the reciprocal product is strictly decreasing in u above the explicit threshold 4*(N+1)^2/pi^2. The proof supplies the reusable polar-angle positivity, u- and p-derivative signs, the endpoint continuity argument, and the signed-imaginary-part reduction. No six-pole constants or zeta data occur in this generic source.
 
 ## References
 
-- Truth anchor: `D5/S3/Weil/ZeroData/ActualHeightFourteenSector.h14_kernel_bounds`
+- Truth anchor: `D5/S3/Weil/ZeroData/ActualHeightFourteenSector.strictAntiOn_weight_u`
 - Dependency: [D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds](ActualReciprocalSquareBounds.md)

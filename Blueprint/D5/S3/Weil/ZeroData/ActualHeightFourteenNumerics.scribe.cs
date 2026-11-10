@@ -31,6 +31,28 @@ internal sealed class ActualHeightFourteenNumericsDocument : IScribeDocumentDefi
         return new Formula.Relation(value, FormulaRelationOperator.LessThanOrEqual, upper);
     }
 
+    private static Formula Less(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
+    private static Formula Le(Formula a, Formula b) =>
+        new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+    private static Formula Then(Formula a, Formula b) =>
+        new Formula.Logic(a, FormulaLogicOperator.Implies, b);
+
+    private static Formula Bounds()
+    {
+        var rho = DefinitionDsl.Id("rho");
+        var real = Call("re", rho);
+        var square = new Formula.Power(Call("im", rho), N(2));
+        var weight = Call("h14Weight", rho);
+        var denominator = Add(Mul(N(72636), new Formula.Power(N(10), N(18))), N(763553532703907200));
+        var lower = Div(N(345650537), denominator);
+        var conclusion = new Formula.Logic(Less(N(0), weight), FormulaLogicOperator.And,
+            Then(Le(square, N(196)), Le(lower, Mul(N(2), weight))));
+        return new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("rho"),
+            Seq(Mathbb, Grp(FormulaDsl.Id("C"))),
+            Then(Less(N(0), real), Then(Less(real, N(1)), Then(Less(N(100), square), conclusion))));
+    }
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Complete Signed Zeta Resolvent Estimate",
         H("Complete Signed Zeta Resolvent Estimate"),
@@ -40,5 +62,12 @@ internal sealed class ActualHeightFourteenNumericsDocument : IScribeDocumentDefi
             H("Complete Signed Zeta Resolvent Estimate"), StatementSource.FromAuthor(Disp(Estimate())),
             AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text("The complete von Mangoldt series is split at 64. Every omitted term is retained: positive coefficients use the integral tail, and negative coefficients use nonnegativity. Rational logarithm and Euler constant bounds yield the exact signed scalar upper bound consumed by h14Mass_upper and actual_height_gt_fourteen. The first Li mass is supplied by the original owner, and no height or mass conclusion is a premise."))),
+            DescribeRole.Theorem),
+        Describe.Lean(
+            DescribeId.Create("actualheightfourteennumericskernel"),
+            DeclarationHandle.Create("D5/S3/Weil/ZeroData/ActualHeightFourteenNumerics.h14_kernel_bounds"),
+            H("Concrete six-pole kernel bounds"), StatementSource.FromAuthor(Disp(Bounds())),
+            AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("The six shifts 0, 30, 56, 90, 132, and 182 are now consumed in this numerical owner. The generic Sector calculus supplies positivity and monotonicity; the exact six-pole evaluation gives the full lower constant with every sign and multiplicity preserved. The open-strip and height-ten premises are discharged by the existing complete zero-data source."))),
             DescribeRole.Theorem))));
 }

@@ -3,11 +3,10 @@
    mirror-B: none(waiver:evidence-not-specified-by-formal-manifest)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=numeric-reduction; basis=consumer=D5/S3/Weil/ZeroData/ActualHeightFourteen.actual_height_gt_fourteen; premises=D5/S3/Weil/ZeroData/ActualHeightFourteenNumerics.h14_evaluatedMass_upper,D5/S3/Weil/ZeroData/ActualHeightFourteenSector.h14_kernel_bounds
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Weil/ZeroData/ActualHeightFourteen.actual_height_gt_fourteen; premises=D5/S3/Weil/ZeroData/ActualHeightFourteenNumerics.h14_evaluatedMass_upper,D5/S3/Weil/ZeroData/ActualHeightFourteenNumerics.h14_kernel_bounds
    digest: Exclude every actual ordinate through fourteen and bound the full occurrence inverse-square mass. -/
 
 import D5.S3.Weil.ZeroData.ActualHeightFourteenNumerics
-import D5.S3.Weil.ZeroData.ActualHeightFourteenSector
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

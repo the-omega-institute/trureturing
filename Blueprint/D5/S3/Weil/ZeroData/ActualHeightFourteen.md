@@ -47,4 +47,3 @@ For a source zero put u = Im(zero n)^2. The height theorem gives u > 196; the st
 - Truth anchor: `D5/S3/Weil/ZeroData/ActualHeightFourteen.actual_height_gt_fourteen`
 - Truth anchor: `D5/S3/Weil/ZeroData/ActualHeightFourteen.actual_inverse_square_mass_le_height_fourteen`
 - Dependency: [D5/S3/Weil/ZeroData/ActualHeightFourteenNumerics](ActualHeightFourteenNumerics.md)
-- Dependency: [D5/S3/Weil/ZeroData/ActualHeightFourteenSector](ActualHeightFourteenSector.md)

@@ -1,10 +1,10 @@
 /- GID: D5/S3/Weil/ZeroData/ActualHeightFourteenSector
-   generality: I
+   generality: G
    mirror-B: none(waiver:evidence-not-specified-by-formal-manifest)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=numeric-reduction; basis=consumer=D5/S3/Weil/ZeroData/ActualHeightFourteen.actual_height_gt_fourteen; premises=D5/S3/Weil/ZeroData/ActualHeightFourteenSector.six_pair_value
-   digest: Positivity and a uniform lower bound for the six-pole strip kernel. -/
+   utility: none
+   digest: Generic polar-angle positivity, derivative monotonicity, and signed reduction for finite reciprocal products. -/
 
 import D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds
 
@@ -31,15 +31,15 @@ namespace H14Sector
 open scoped BigOperators Topology
 open Set Complex
 
-private def stripImaginary (u p : ℝ) : ℝ := Real.sqrt (u * (1 - 4 * p))
+def stripImaginary (u p : ℝ) : ℝ := Real.sqrt (u * (1 - 4 * p))
 
-private def factor {N : ℕ} (c : Fin N → ℝ) (u p : ℝ) (j : Fin N) : ℂ :=
+def factor {N : ℕ} (c : Fin N → ℝ) (u p : ℝ) (j : Fin N) : ℂ :=
   ((u + p + c j : ℝ) : ℂ) + (stripImaginary u p : ℂ) * I
 
-private def reciprocalProduct {N : ℕ} (c : Fin N → ℝ) (u p : ℝ) : ℂ :=
+def reciprocalProduct {N : ℕ} (c : Fin N → ℝ) (u p : ℝ) : ℂ :=
   ∏ j, (factor c u p j)⁻¹
 
-private def weight {N : ℕ} (c : Fin N → ℝ) (u p : ℝ) : ℝ :=
+def weight {N : ℕ} (c : Fin N → ℝ) (u p : ℝ) : ℝ :=
   (reciprocalProduct c u p).re
 
 private def angle {N : ℕ} (c : Fin N → ℝ) (u p : ℝ) (j : Fin N) : ℝ :=
@@ -51,7 +51,7 @@ private def totalAngle {N : ℕ} (c : Fin N → ℝ) (u p : ℝ) : ℝ :=
 private def amplitude {N : ℕ} (c : Fin N → ℝ) (u p : ℝ) : ℝ :=
   ∏ j, ‖factor c u p j‖⁻¹
 
-private def threshold (N : ℕ) : ℝ := 4 * ((N : ℝ) + 1) ^ 2 / Real.pi ^ 2
+def threshold (N : ℕ) : ℝ := 4 * ((N : ℝ) + 1) ^ 2 / Real.pi ^ 2
 
 private lemma factor_re {N : ℕ} (c : Fin N → ℝ) (u p : ℝ) (j : Fin N) :
     (factor c u p j).re = u + p + c j := by simp [factor]
@@ -212,7 +212,7 @@ private theorem reciprocalProduct_div_polar {N : ℕ} {c : Fin N → ℝ} {u p :
   rw [hn]
   exact he
 
-private theorem weight_pos {N : ℕ} {c : Fin N → ℝ} {u p : ℝ}
+theorem weight_pos {N : ℕ} {c : Fin N → ℝ} {u p : ℝ}
     (hc : ∀ j, 0 ≤ c j) (hu : 0 < u) (hp : p ∈ Icc 0 (1 / 4))
     (hsector : ((N : ℝ) + 1) / Real.sqrt u < Real.pi / 2) :
     0 < weight c u p := by
@@ -443,7 +443,7 @@ private lemma continuousAt_weight_p {N : ℕ} {c : Fin N → ℝ} {u p : ℝ}
     exact (hfac.inv₀ (factor_ne_zero hc hu hp j)).tendsto
   exact Complex.continuous_re.continuousAt.comp hF
 
-private theorem strictAntiOn_weight_u {N : ℕ} {c : Fin N → ℝ} {p : ℝ}
+theorem strictAntiOn_weight_u {N : ℕ} {c : Fin N → ℝ} {p : ℝ}
     (hN : 0 < N) (hc : ∀ j, 0 ≤ c j) (hp : p ∈ Icc 0 (1 / 4)) :
     StrictAntiOn (fun u : ℝ => weight c u p) (Ioi (threshold N)) := by
   have hparam : ∀ u ∈ Ioi (threshold N), 0 < u ∧
@@ -470,7 +470,7 @@ private theorem strictAntiOn_weight_u {N : ℕ} {c : Fin N → ℝ} {p : ℝ}
     have humem := interior_subset hu
     exact deriv_weight_u_neg hN hc (hparam u humem).1 hp (hparam u humem).2
 
-private theorem strictMonoOn_weight_p {N : ℕ} {c : Fin N → ℝ} {u : ℝ}
+theorem strictMonoOn_weight_p {N : ℕ} {c : Fin N → ℝ} {u : ℝ}
     (hc : ∀ j, 0 ≤ c j) (hz : ∃ j₀, c j₀ = 0)
     (hu : 0 < u)
     (hsector : ((N : ℝ) + 1) / Real.sqrt u < Real.pi / 2) :
@@ -505,7 +505,7 @@ private theorem reciprocalProduct_signed_conj {N : ℕ} (c : Fin N → ℝ) (x b
   simp only [Complex.star_def, map_prod, map_inv₀, map_add, map_mul,
     Complex.conj_ofReal, Complex.conj_I, Complex.ofReal_neg, mul_neg, neg_mul]
 
-private theorem real_product_signed_reduction {N : ℕ} (c : Fin N → ℝ) (u p b : ℝ)
+theorem real_product_signed_reduction {N : ℕ} (c : Fin N → ℝ) (u p b : ℝ)
     (hb : b ^ 2 = u * (1 - 4 * p)) :
     (∏ j : Fin N, (((u + p + c j : ℝ) : ℂ) + (b : ℂ) * I)⁻¹).re =
       weight c u p := by
@@ -521,108 +521,5 @@ private theorem real_product_signed_reduction {N : ℕ} (c : Fin N → ℝ) (u p
 
 
 end H14Sector
-
-namespace H14Sector
-private def shifts : Fin 6 → ℝ := ![0, 30, 56, 90, 132, 182]
-
-private lemma shifts_nonneg : ∀ j, 0 ≤ shifts j := by
-  intro j
-  fin_cases j <;> norm_num [shifts]
-
-private lemma shifts_zero : ∃ j, shifts j = 0 := ⟨0, by norm_num [shifts]⟩
-
-private lemma six_phase {u : ℝ} (hu : 100 < u) :
-    ((6 : ℝ) + 1) / Real.sqrt u < Real.pi / 2 := by
-  have hs : 10 < Real.sqrt u := by
-    apply (Real.lt_sqrt (by norm_num : (0 : ℝ) ≤ 10)).2
-    norm_num
-    exact hu
-  have hrat : (7 : ℝ) / Real.sqrt u < 7 / 10 :=
-    div_lt_div_of_pos_left (by norm_num) (by norm_num) hs
-  norm_num only at *
-  linarith [Real.pi_gt_three]
-
-private lemma six_threshold : threshold 6 < 100 := by
-  have hpi2 : 0 < Real.pi ^ 2 := by positivity
-  change 4 * ((6 : ℝ) + 1) ^ 2 / Real.pi ^ 2 < 100
-  apply (div_lt_iff₀ hpi2).2
-  nlinarith [Real.pi_gt_three, sq_nonneg (Real.pi - 3)]
-
-private theorem six_positive {u p : ℝ} (hu : 100 < u) (hp : p ∈ Set.Icc 0 (1 / 4)) :
-    0 < weight shifts u p := by
-  exact weight_pos shifts_nonneg (by linarith) hp (six_phase hu)
-
-private theorem six_lower {u p : ℝ} (hu : 100 < u) (hupper : u ≤ 196)
-    (hp : p ∈ Set.Icc 0 (1 / 4)) :
-    weight shifts 196 0 ≤ weight shifts u p := by
-  have ha := strictAntiOn_weight_u (by decide : 0 < 6) shifts_nonneg hp
-  have hleft : u ∈ Set.Ioi (threshold 6) := lt_trans six_threshold hu
-  have hright : (196 : ℝ) ∈ Set.Ioi (threshold 6) := by
-    exact lt_trans six_threshold (by norm_num)
-  have hucomp : weight shifts 196 p ≤ weight shifts u p :=
-    ha.antitoneOn hleft hright hupper
-  have hm := strictMonoOn_weight_p shifts_nonneg shifts_zero
-    (by norm_num : (0 : ℝ) < 196) (six_phase (by norm_num : (100 : ℝ) < 196))
-  have hpcomp : weight shifts 196 0 ≤ weight shifts 196 p :=
-    hm.monotoneOn (by norm_num : (0 : ℝ) ∈ Set.Icc 0 (1 / 4)) hp hp.1
-  exact hpcomp.trans hucomp
-
-private theorem six_pair_value : 2 * weight shifts 196 0 =
-    (345650537 : ℝ) / 72636763553532703907200 := by
-  norm_num [weight, reciprocalProduct, factor, stripImaginary, shifts,
-    Fin.prod_univ_succ, Complex.inv_re, Complex.inv_im, Complex.normSq,
-    Complex.mul_re, Complex.mul_im]
-end H14Sector
-
-def h14Kernel (rho : ℂ) : ℂ :=
-  1 / ((rho * (1 - rho)) * (rho * (1 - rho) + 30) *
-    (rho * (1 - rho) + 56) * (rho * (1 - rho) + 90) *
-    (rho * (1 - rho) + 132) * (rho * (1 - rho) + 182))
-
-def h14Weight (rho : ℂ) : ℝ := (h14Kernel rho).re
-
-
-private theorem h14Weight_sector (rho : ℂ) :
-    h14Weight rho = H14Sector.weight H14Sector.shifts (rho.im ^ 2)
-      (rho.re * (1 - rho.re)) := by
-  have hb : (rho.im * (1 - 2 * rho.re)) ^ 2 =
-      rho.im ^ 2 * (1 - 4 * (rho.re * (1 - rho.re))) := by ring
-  have he : rho * (1 - rho) =
-      ((rho.im ^ 2 + rho.re * (1 - rho.re) : ℝ) : ℂ) +
-        ((rho.im * (1 - 2 * rho.re) : ℝ) : ℂ) * Complex.I := by
-    apply Complex.ext <;>
-      simp only [Complex.add_re, Complex.add_im, Complex.mul_re, Complex.mul_im,
-        Complex.I_re, Complex.I_im, Complex.sub_re, Complex.sub_im,
-        ← Complex.ofReal_pow, Complex.ofReal_re, Complex.ofReal_im,
-        Complex.one_re, Complex.one_im] <;> ring
-  rw [← H14Sector.real_product_signed_reduction H14Sector.shifts
-    (rho.im ^ 2) (rho.re * (1 - rho.re)) (rho.im * (1 - 2 * rho.re)) hb]
-  have hprod : (∏ j : Fin 6,
-      (((rho.im ^ 2 + rho.re * (1 - rho.re) + H14Sector.shifts j : ℝ) : ℂ) +
-        ((rho.im * (1 - 2 * rho.re) : ℝ) : ℂ) * Complex.I)) =
-      (rho * (1 - rho)) * (rho * (1 - rho) + 30) *
-        (rho * (1 - rho) + 56) * (rho * (1 - rho) + 90) *
-        (rho * (1 - rho) + 132) * (rho * (1 - rho) + 182) := by
-    simp [H14Sector.shifts, Fin.prod_univ_succ, he]
-    <;> push_cast <;> ring
-  rw [Finset.prod_inv_distrib, hprod]
-  simp only [h14Weight, h14Kernel, one_div]
-
-
-/-- The full strip kernel is positive above height ten; below height fourteen
-its doubled weight dominates the exact conjugate-pair lower bound. -/
-theorem h14_kernel_bounds (rho : ℂ) (h0 : 0 < rho.re) (h1 : rho.re < 1)
-    (hu : 100 < rho.im ^ 2) :
-    0 < h14Weight rho ∧
-      (rho.im ^ 2 ≤ 196 →
-        345650537 / 72636763553532703907200 ≤ 2 * h14Weight rho) := by
-  obtain ⟨hp, hp4⟩ := heightRefinement_strip_product_bounds h0 h1
-  constructor
-  · rw [h14Weight_sector]
-    exact H14Sector.six_positive hu ⟨hp.le, hp4⟩
-  · intro hupper
-    have hl := H14Sector.six_lower hu hupper ⟨hp.le, hp4⟩
-    rw [← h14Weight_sector] at hl
-    linarith only [hl, H14Sector.six_pair_value]
 
 end D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds
