@@ -1,0 +1,22 @@
+**定义 10.1（保持全部原标签的参数区域）。** 沿用(9.1)–(9.3)的已给矩阵乘法、伴随、正锥及数学正复线性泛函，局部记 $A=\mathcal A_\star$、$P=P_\star$、$C_\star=PAP$。探针域始终是 $(C_\star)_{\rm sa}$，不是整个 $A_{\rm sa}$。取
+
+$$
+\lambda\ne0,\qquad 0<|\rho|\le\min\{1/4,|\lambda|\},\qquad
+q=-\operatorname{sgn}(\lambda\rho)\in\{1,-1\}.
+\tag{10.1}
+$$
+
+同一数据仍为 $t=t_0+\lambda c$、$s=\rho d$、$g=K_\sigma(c,t)+s$。为明确本节所检验的接口，再列出
+
+$$
+\begin{gathered}
+h=K_\sigma(c,x),\quad r=c\circ x,\quad k=c\circ t,\qquad
+R_\pm=x\pm(h-k),\quad S_\pm=t\pm(r+g),\\
+L_x=-2x\circ(h-k)-2t\circ(r+g),\qquad
+B_\phi(U,V)=\phi(U^2)\phi(V^2)-\phi(U\circ V)^2.
+\end{gathered}
+\tag{10.2}
+$$
+
+这里不引入未知总映射 $D$、已指定的外响应或以 $t$ 为演员的预算，也不给输入连续性、响应缩放、协变性、压缩自然性或单位平移中性。两条环境边保留在每个原标签中。
+

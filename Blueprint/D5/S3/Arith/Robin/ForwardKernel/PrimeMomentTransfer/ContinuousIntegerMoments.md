@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/ContinuousI
 
 *Commentary.*
 
-For 0<alpha<beta<1/4, a normalized singular series satisfying HL4(beta) and the interval correlation estimates has vanishing continuous cubic mixed moments, uniformly for integer H in [N^alpha,N^beta], interval endpoints in [0,M], and supported bounded variation weights. The absolute error is at most B*delta eventually whenever the supremum-plus-variation bound is B.
+For 0<alpha<beta<1/4 and M>=1, a singular series equal to one on the empty set and singletons and satisfying MeanSquareHL4(SS,beta) and the interval correlation estimates has vanishing continuous cubic mixed moments, uniformly for integer H in [N^alpha,N^beta], interval endpoints in [0,M], and supported bounded variation weights. For every delta>0, the absolute error is at most B*delta eventually whenever the supremum-plus-variation bound is B.
 
 **Theorem 1.2 (Integer-length fourth moment).**
 
@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/ContinuousI
 
 *Commentary.*
 
-Under the same singular series, Hardy–Littlewood and interval correlation hypotheses, the continuous fourth mixed moment at integer H approaches the integral of the weight times kappa(N,H)^2 times the sum of the three overlap pairings. The error is uniformly at most B*delta on each polynomial length band and bounded endpoint window.
+Under the same singular series, mean-square and interval correlation hypotheses, the continuous fourth mixed moment at integer H approaches the integral of the weight times kappa(N,H)^2 times the sum of the three overlap pairings. The error is uniformly at most B*delta on each polynomial length band and bounded endpoint window.
 
 ## References
 

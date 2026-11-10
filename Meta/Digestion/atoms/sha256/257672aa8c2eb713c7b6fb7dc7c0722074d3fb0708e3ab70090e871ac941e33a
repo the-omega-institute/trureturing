@@ -1,0 +1,71 @@
+### 9.4 两笔复亏量、真实面积与有限扰动
+
+**证明，零余量时的严格余量。** 在复向量上定义实 Gram 面积与复 Gram 行列式
+
+$$
+\mathcal A(y,z)=\sqrt{\|y\|^2\|z\|^2-(\operatorname{Re}(y^*z))^2},\qquad
+\Delta(y,z)=\|y\|^2\|z\|^2-|y^*z|^2.
+\tag{9.21}
+$$
+
+实正交投影给 $\mathcal A(y,z)=\|y\|\|\Pi_{y,\mathbb R}z\|$，并包括 $y=0$ 地给出
+
+$$
+|\mathcal A(y,z+w)-\mathcal A(y,z)|\le\|y\|\|w\|.
+\tag{9.22}
+$$
+
+向量泛函 $\phi_\xi(U)=\xi^*U\xi$ 满足 $\sqrt{B_{\phi_\xi}(U,V)}=\mathcal A(U\xi,V\xi)$。取 $\|\xi\|=1$、$y=k\xi$、$\eta=y/\|y\|$、$b_\pm=(t\pm g_0)\xi$；由 $k$ 可逆，$\|y\|\ge I_\lambda^{-1}$。又
+
+$$
+b_\pm=\|y\|(\mathsf A_\lambda\pm i\sigma\mathsf H_\lambda)\eta,
+\qquad
+\Delta(y,b_+)+\Delta(y,b_-)
+=2\|y\|^4(\|u_\eta\|^2+\|v_\eta\|^2)
+\ge\frac1{72\kappa_\lambda^2I_\lambda^6(T_\lambda^2+j^2)}.
+\tag{9.23}
+$$
+
+等号由到 $\eta$ 复正交补的投影和平行四边形恒等式给出；没有丢掉环境分量。记 $a_\pm=\mathcal A(y,b_\pm)$、$q_\pm=\operatorname{Im}(y^*b_\pm)$，则
+
+$$
+a_\pm^2-q_\pm^2=\Delta(y,b_\pm),\quad
+0\le|q_\pm|\le a_\pm\le N_\lambda(T_\lambda+j),\quad
+ a_\pm-|q_\pm|\ge\frac{\Delta(y,b_\pm)}{2N_\lambda(T_\lambda+j)}.
+\tag{9.24}
+$$
+
+末式在 $a_\pm+|q_\pm|>0$ 时由平方差分解得到；该和为零时两边均零。零 Gram 情形没有删去。
+
+为区分探针下标与余量，记 $L_0^{(0)}=-\{t,g_0\}$。由 $\{t,[c,t]\}=[c,t^2]$、$[k,t]=[c,t^2]/2$，准确有
+
+$$
+L_0^{(0)}=-\sigma i[k,t],\qquad
+\phi_\xi(L_0^{(0)})=\sigma(q_++q_-).
+\tag{9.25}
+$$
+
+这只是 $\mathsf F$(39.7) 的已知标准 PB 在零探针处的恒等式。结合(9.23)–(9.25)及标量三角不等式，得到
+
+$$
+\mathcal A(k\xi,(t+g_0)\xi)+\mathcal A(k\xi,(t-g_0)\xi)
+-|\phi_\xi(L_0^{(0)})|
+\ge(a_+-|q_+|)+(a_--|q_-|)\ge m_\lambda.
+\tag{9.26}
+$$
+
+新推断是用一个可逆交换子同时控制两笔复 Cauchy–Schwarz 亏量，从而取得真实预算的严格统一余量；并非重证标准零余量预算。
+
+**证明，支付两侧扰动。** 现在恢复 $s=\rho d$，$\|s\|=2|\rho|$。由(9.22)，两笔右端面积的总下降至多
+
+$$
+2\|k\xi\|\|s\xi\|\le4N_\lambda|\rho|.
+$$
+
+左端 $L_0=L_0^{(0)}-\{t,s\}$ 的绝对读数增加至多 $\|\{t,s\}\|\le4T_\lambda|\rho|$。故每个单位向量的完整原零探针余量至少为
+
+$$
+m_\lambda-4(T_\lambda+N_\lambda)|\rho|\ge m_\lambda/2.
+\tag{9.27}
+$$
+

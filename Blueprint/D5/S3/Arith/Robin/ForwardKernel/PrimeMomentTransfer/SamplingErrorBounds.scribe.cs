@@ -26,6 +26,6 @@ internal sealed class SamplingErrorBoundsDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Assume the normalized singular series values, HL4 and the interval correlation bounds, with 0<alpha<beta<1/4 and M>=1. There is C>=1 such that, for every positive delta and all sufficiently large N, both normalized continuous and floor sampled increments belong to L4 on [1,2], both fourth integrals are at most C, and their fourth difference integral is at most delta^4, uniformly in natural H between N^alpha and N^beta and 0<=a<=b<=M."))),
+                    "Assume singular-series values one on the empty set and singletons, MeanSquareHL4(SS,beta) and the interval correlation bounds, with 0<alpha<beta<1/4 and M>=1. There is C>=1 such that, for every positive delta and all sufficiently large N, both normalized continuous and floor sampled increments belong to L4 on [1,2], both fourth integrals are at most C, and their fourth difference integral is at most delta^4, uniformly in natural H between N^alpha and N^beta and 0<=a<=b<=M."))),
                 DescribeRole.Theorem))));
 }
