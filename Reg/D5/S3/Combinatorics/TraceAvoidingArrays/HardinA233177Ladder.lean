@@ -389,7 +389,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
       path := #["body", "body", "body", "fn", "arg"]
       stateBinder := 2
       functionOperand := false
-      stateOperand := none
+      stateOperand := some #["arg"]
       booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
@@ -462,7 +462,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
       path := #["body", "body", "fn", "arg"]
       stateBinder := 1
       functionOperand := false
-      stateOperand := none
+      stateOperand := some #["arg"]
       booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
