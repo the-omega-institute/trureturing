@@ -81,7 +81,7 @@ noncomputable def selectionCardRegistration :
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.Graph.StarForming.CycleParameters
     definition := none
-    coordinates := #[]
+    coordinates := #[0]
     readouts := #[{
       path := #["body","fn","arg"]
       stateBinder := 0
