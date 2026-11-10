@@ -325,10 +325,10 @@ remain open.
 
 ### The complete scalar200 basis refutation
 
-This is the full finite scalar counterexample carried by the existing
-owner exposition. It is source-faithful and native-verified privately on
-Mac Studio, while its source remains unpublished and unadmitted. It does
-not add a second resolution marker to this dossier.
+This is the full finite scalar counterexample included in the existing
+owner's Draft source, with current source-bound scoped native evidence and
+frozen scalar membership. Whole current acceptance remains incomplete. It
+does not add a second resolution marker to this dossier.
 
 Fix $n=200$, $K=10^9$ and $s=\sqrt{K^2+1}$. In the standard orthonormal
 basis $e_0,\ldots,e_{199}$, put
