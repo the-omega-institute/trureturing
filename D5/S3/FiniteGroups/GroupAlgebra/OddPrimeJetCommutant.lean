@@ -4,8 +4,21 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [D5/S3/FiniteGroups/GroupAlgebra/OddPrimeJetDeformation]
    utility: none
-   digest: Actual-action logarithm and generated-algebra bridge for the commutant. -/
+   digest: Full actual-action Fp-linear commutant, unique Toeplitz coordinates, multiplication and units. -/
 import D5.S3.FiniteGroups.GroupAlgebra.OddPrimeJetDeformation
+import Mathlib.RingTheory.Nilpotent.Basic
+
+/-!
+# The full commutant of the original odd-prime jet action
+
+The original polynomial representation is retained on `Polynomial.degreeLT K p`.
+Only prime-field linearity is imposed on its endomorphisms. The lower blocks
+are scalars and the highest block is an arbitrary prime-field-linear map.
+
+The divided-monomial centralizer computation is classical. The original-action
+logarithm and polynomial suppliers are reused from `OddPrimeJetDeformation`;
+nilpotent-unit calculus is reused from pinned Mathlib. No novelty is asserted.
+-/
 
 set_option autoImplicit false
 
@@ -78,7 +91,7 @@ private theorem commutesJet_original (q : K →ₗ[F] K) (X : V →ₗ[F] V)
   intro n hn
   rw [hs, hpow]
 
- theorem actual_commutant_iff_jet (q : K →ₗ[F] K) (X : V →ₗ[F] V) :
+theorem actual_commutant_iff_jet (q : K →ₗ[F] K) (X : V →ₗ[F] V) :
     commutesOriginal (p := p) (K := K) q X ↔
       commutesJet (p := p) (K := K) q X := by
   constructor
@@ -181,9 +194,9 @@ def topMap (T : K →ₗ[F] K) : V →ₗ[F] V :=
     ((T.comp ((coefficientZero (p := p) (K := K)).restrictScalars F)).comp
       (((D).restrictScalars F) ^ (p - 1)))
 
-def toeplitz (a : ℕ → K) (T : K →ₗ[F] K) : V →ₗ[F] V :=
-  (∑ r ∈ range (p - 1), scalarMap (p := p) (K := K) (a r) *
-      ((D).restrictScalars F) ^ r) + topMap (p := p) (K := K) T
+def toeplitz (a : Fin (p - 1) → K) (T : K →ₗ[F] K) : V →ₗ[F] V :=
+  (∑ r : Fin (p - 1), scalarMap (p := p) (K := K) (a r) *
+      ((D).restrictScalars F) ^ r.val) + topMap (p := p) (K := K) T
 
 private theorem divided_top_power (j : ℕ) (hj : j < p) (z : K) :
     (D ^ (p - 1 - j))
@@ -336,14 +349,6 @@ private theorem top_input_smul (a z : K) :
   simpa [smul_eq_mul] using
     (dividedMonomial (p - 1) (by have hp : 2 < p := Fact.out; omega)).map_smul a z
 
-private theorem top_input_derivative (z : K) :
-    D (topInput (p := p) (K := K) z) =
-      dividedMonomial (p - 2) (by have hp : 2 < p := Fact.out; omega) z := by
-  change D (dividedMonomial (p - 1) _ z) = _
-  simpa only [show p - 2 + 1 = p - 1 by have hp : 2 < p := Fact.out; omega] using
-    dividedMonomial_succ (p := p) (K := K) (p - 2)
-      (by have hp : 2 < p := Fact.out; omega) z
-
 private theorem top_derivative_smul (X : V →ₗ[F] V)
     (hD : ∀ v, X (D v) = D (X v))
     (hM : ∀ (a : K) (v : V), X (a • D v) = a • D (X v)) :
@@ -396,15 +401,6 @@ private theorem scalarMap_derivative (a : K) (v : V) :
     scalarMap (p := p) (K := K) a (D v) =
       D (scalarMap (p := p) (K := K) a v) := by
   simp [scalarMap_apply, map_smul]
-
-private theorem scalarMap_derivative_pow (a : K) (n : ℕ) (v : V) :
-    scalarMap (p := p) (K := K) a ((D ^ n) v) =
-      (D ^ n) (scalarMap (p := p) (K := K) a v) := by
-  induction n with
-  | zero => rfl
-  | succ n ih =>
-      rw [pow_succ', Module.End.mul_apply, Module.End.mul_apply,
-        scalarMap_derivative, ih]
 
 private theorem scalar_term_topInput (a : K) (j : Fin p) (z : K) :
     scalarMap (p := p) (K := K) a
@@ -553,11 +549,6 @@ private theorem topMap_scalar_derivative (T : K →ₗ[F] K) (a : K) (v : V) :
   rw [hzero, smul_zero]
   simp
 
-private theorem derivative_topMap (T : K →ₗ[F] K) (v : V) :
-    D (topMap (p := p) (K := K) T v) = 0 := by
-  simp only [topMap, LinearMap.comp_apply, LinearMap.restrictScalars_apply]
-  exact constant_derivative _
-
 private theorem toeplitzDegree_scalar_derivative (c : Fin p → K)
     (T : K →ₗ[F] K) (a : K) (v : V) :
     toeplitzDegree (p := p) (K := K) c T (a • D v) =
@@ -586,5 +577,500 @@ theorem actual_commutant_normal_form (q : K →ₗ[F] K) (hq1 : q 1 = 0)
       normal_form_of_generated X hD hM⟩
   · rintro ⟨c, T, hc, rfl⟩
     exact ⟨toeplitzDegree_derivative c T, toeplitzDegree_scalar_derivative c T⟩
+
+private theorem factorial_ne_zero (j : Fin p) : (j.val.factorial : K) ≠ 0 := by
+  haveI : CharP K p := charP_of_injective_algebraMap (algebraMap F K).injective p
+  rw [Ne, CharP.cast_eq_zero_iff K p]
+  exact fun h => (not_le_of_gt j.isLt) ((Fact.out : p.Prime).dvd_factorial.mp h)
+
+private theorem divided_sum_coefficient (f : Fin p → K) (j : Fin p) :
+    ((∑ i : Fin p, dividedMonomial i.val i.isLt (f i) : V) : K[X]).coeff j.val =
+      f j * (j.val.factorial : K)⁻¹ := by
+  classical
+  simp only [Submodule.coe_sum]
+  change Polynomial.lcoeff K j.val (∑ i : Fin p,
+    (dividedMonomial i.val i.isLt (f i) : K[X])) = _
+  rw [map_sum, Finset.sum_eq_single j]
+  · simp [dividedMonomial, smul_eq_mul]
+  · intro b hb hbj
+    have hne : j.val ≠ b.val := fun h => hbj (Fin.ext h.symm)
+    simp [dividedMonomial, hne]
+  · simp
+
+private theorem divided_sum_injective (f g : Fin p → K)
+    (h : (∑ i : Fin p, dividedMonomial i.val i.isLt (f i)) =
+      ∑ i : Fin p, dividedMonomial i.val i.isLt (g i)) : f = g := by
+  funext j
+  have hc := congrArg (fun v : V => (v : K[X]).coeff j.val) h
+  rw [divided_sum_coefficient, divided_sum_coefficient] at hc
+  exact (mul_right_cancel₀ (inv_ne_zero (factorial_ne_zero j))) hc
+
+/-- Both the scalar coordinates and the unrestricted top endomorphism are unique. -/
+theorem toeplitzDegree_injective (c d : Fin p → K) (hc : c 0 = 0) (hd : d 0 = 0)
+    (T U : K →ₗ[F] K)
+    (h : toeplitzDegree (p := p) c T = toeplitzDegree d U) : c = d ∧ T = U := by
+  classical
+  have hcoords (z : K) := congrArg (fun X : V →ₗ[F] V => X (topInput z)) h
+  simp only [toeplitzDegree_topInput c hc, toeplitzDegree_topInput d hd] at hcoords
+  have he (z : K) := congrFun (divided_sum_injective _ _ (hcoords z))
+  constructor
+  · funext j
+    by_cases hj : j = 0
+    · subst j; exact hc.trans hd.symm
+    · simpa only [if_neg hj, mul_one] using he 1 j
+  · apply LinearMap.ext
+    intro z
+    simpa using he z (0 : Fin p)
+
+/-- Explicit coordinates of the full commutant; no finite-dimensional hypothesis. -/
+def coordinatesEquiv (q : K →ₗ[F] K) (hq1 : q 1 = 0) :
+    {X : V →ₗ[F] V // commutesOriginal q X} ≃
+      ({c : Fin p → K // c 0 = 0} × (K →ₗ[F] K)) where
+  toFun X := (⟨commutantFamily X.val, by simp [commutantFamily]⟩, topCoefficient X.val 0)
+  invFun c := ⟨toeplitzDegree c.1.val c.2,
+    (actual_commutant_normal_form q hq1 _).mpr ⟨c.1.val, c.2, c.1.property, rfl⟩⟩
+  left_inv X := by
+    apply Subtype.ext
+    exact (normal_form_of_generated X.val
+      ((actual_commutant_generated_bridge q hq1 X.val).mp X.property).1
+      ((actual_commutant_generated_bridge q hq1 X.val).mp X.property).2).symm
+  right_inv c := by
+    have hgen := (actual_commutant_generated_bridge q hq1 (toeplitzDegree c.1.val c.2)).mp
+      ((actual_commutant_normal_form q hq1 _).mpr ⟨_, _, c.1.property, rfl⟩)
+    have h := toeplitzDegree_injective _ _ (by simp [commutantFamily]) c.1.property
+      _ _ (normal_form_of_generated _ hgen.1 hgen.2).symm
+    exact Prod.ext (Subtype.ext h.1) h.2
+
+private theorem derivative_commutes_end_pow (X : V →ₗ[F] V)
+    (hD : ∀ v, X (D v) = D (X v)) (n : ℕ) (v : V) :
+    (X ^ n) (D v) = D ((X ^ n) v) := by
+  induction n with
+  | zero => rfl
+  | succ n ih =>
+      simp only [pow_succ', Module.End.mul_apply]
+      rw [ih, hD]
+
+private theorem nilpotent_of_constants_zero (X : V →ₗ[F] V)
+    (hD : ∀ v, X (D v) = D (X v))
+    (hc : ∀ z, X (constantLinear z) = 0) : X ^ p = 0 := by
+  have hkill : ∀ n (v : V), (D ^ n) v = 0 → (X ^ n) v = 0 := by
+    intro n
+    induction n with
+    | zero => intro v hv; exact hv
+    | succ n ih =>
+        intro v hv
+        have hker : D ((X ^ n) v) = 0 := by
+          rw [← derivative_commutes_end_pow X hD]
+          apply ih
+          simpa only [pow_succ, Module.End.mul_apply] using hv
+        have he : (X ^ n) v = constantLinear (((X ^ n) v : K[X]).coeff 0) :=
+          Subtype.ext (derivative_kernel _ hker)
+        rw [pow_succ', Module.End.mul_apply, he, hc]
+  apply LinearMap.ext
+  intro v
+  apply hkill
+  rw [derivative_pow_prime]
+  rfl
+
+private theorem derivative_pow_constant (n : ℕ) (hn : 0 < n) (z : K) :
+    (D ^ n) (constantLinear z) = 0 := by
+  obtain ⟨n, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : n ≠ 0)
+  rw [pow_succ, Module.End.mul_apply, constant_derivative, map_zero]
+
+def leadingIndex : Fin p := ⟨p - 1, by have hp : 2 < p := Fact.out; omega⟩
+
+private theorem toeplitzDegree_constant (c : Fin p → K) (T : K →ₗ[F] K) (z : K) :
+    toeplitzDegree (p := p) c T (constantLinear z) =
+      constantLinear (c (leadingIndex (p := p)) * z) := by
+  classical
+  have hp : 2 < p := Fact.out
+  have htop : topMap (p := p) T (constantLinear z) = 0 := by
+    simp only [topMap, LinearMap.comp_apply, restricted_derivative_pow_local]
+    rw [derivative_pow_constant (p - 1) (by omega)]
+    simp
+  simp only [toeplitzDegree, LinearMap.add_apply, LinearMap.sum_apply,
+    Module.End.mul_apply, htop, add_zero]
+  rw [Finset.sum_eq_single (leadingIndex (p := p))]
+  · simp only [leadingIndex, Nat.sub_self, pow_zero, Module.End.one_apply,
+      scalarMap_apply]
+    simpa only [leadingIndex, smul_eq_mul] using (constantLinear (p := p) (K := K)).map_smul
+      (c (leadingIndex (p := p))) z |>.symm
+  · intro b hb hbl
+    have hlt : b.val < p - 1 := by
+      have hne : b.val ≠ p - 1 := fun h => hbl (Fin.ext h)
+      omega
+    rw [restricted_derivative_pow_local, derivative_pow_constant _ (by omega), map_zero]
+  · simp
+
+private theorem scalarMap_isUnit (a : K) (ha : a ≠ 0) :
+    IsUnit (scalarMap (p := p) (K := K) a) := by
+  refine ⟨⟨scalarMap a, scalarMap a⁻¹, ?_, ?_⟩, rfl⟩
+  · apply LinearMap.ext
+    intro v
+    simp [Module.End.mul_apply, scalarMap_apply, smul_smul, ha]
+  · apply LinearMap.ext
+    intro v
+    simp [Module.End.mul_apply, scalarMap_apply, smul_smul, ha]
+
+/-- The invertibility criterion concerns actual F-linear operators, even when K is infinite. -/
+theorem toeplitzDegree_isUnit_iff (c : Fin p → K) (T : K →ₗ[F] K) :
+    IsUnit (toeplitzDegree (p := p) c T) ↔ c (leadingIndex (p := p)) ≠ 0 := by
+  let X := toeplitzDegree (p := p) c T
+  let a := c (leadingIndex (p := p))
+  have hnonzero : constantLinear (p := p) (K := K) 1 ≠ (0 : V) := by
+    intro h
+    have hh := congrArg (fun v : V => (v : K[X]).coeff 0) h
+    simpa [constantLinear] using hh
+  letI : Nontrivial V := ⟨⟨constantLinear 1, 0, hnonzero⟩⟩
+  constructor
+  · intro hX ha
+    have hn : IsNilpotent X := ⟨p, nilpotent_of_constants_zero X
+      (toeplitzDegree_derivative c T) (by
+        intro z
+        simp only [X, toeplitzDegree_constant, ha, zero_mul, map_zero])⟩
+    exact hn.not_isUnit hX
+  · intro ha
+    have ha' : a ≠ 0 := ha
+    let Z : V →ₗ[F] V := scalarMap a⁻¹ * X - 1
+    have hZD (v : V) : Z (D v) = D (Z v) := by
+      simp only [Z, LinearMap.sub_apply, Module.End.mul_apply, Module.End.one_apply,
+        map_sub, X, toeplitzDegree_derivative, scalarMap_derivative]
+    have hZc (z : K) : Z (constantLinear z) = 0 := by
+      simp only [Z, LinearMap.sub_apply, Module.End.mul_apply, Module.End.one_apply,
+        X, toeplitzDegree_constant, scalarMap_apply]
+      rw [← (constantLinear (p := p) (K := K)).map_smul]
+      simp [a, smul_eq_mul, ha]
+    have hn : IsNilpotent Z := ⟨p, nilpotent_of_constants_zero Z hZD hZc⟩
+    have hu := (scalarMap_isUnit (p := p) a ha).mul hn.isUnit_one_add
+    have he : scalarMap (p := p) a * (1 + Z) = X := by
+      apply LinearMap.ext
+      intro v
+      simp [Z, Module.End.mul_apply, scalarMap_apply, smul_sub, smul_add,
+        smul_smul, ha']
+    rwa [he] at hu
+
+def fieldScalar (a : K) : K →ₗ[F] K :=
+  (Algebra.lsmul F K K a).restrictScalars F
+
+private theorem scalar_power_mul (a b : K) (r s : ℕ) :
+    (scalarMap (p := p) a * ((D).restrictScalars F) ^ r) *
+        (scalarMap b * ((D).restrictScalars F) ^ s) =
+      scalarMap (a * b) * ((D).restrictScalars F) ^ (r + s) := by
+  apply LinearMap.ext
+  intro v
+  simp only [Module.End.mul_apply, scalarMap_apply, restricted_derivative_pow_local,
+    map_smul, smul_smul]
+  rw [pow_add, Module.End.mul_apply]
+
+private theorem scalar_power_top (a : K) (r : ℕ) (T : K →ₗ[F] K) :
+    (scalarMap (p := p) a * ((D).restrictScalars F) ^ r) * topMap T =
+      if r = 0 then topMap ((fieldScalar a).comp T) else 0 := by
+  split_ifs with hr
+  · subst r
+    apply LinearMap.ext
+    intro v
+    simp only [Module.End.mul_apply, pow_zero, Module.End.one_apply, topMap,
+      LinearMap.comp_apply, LinearMap.restrictScalars_apply, scalarMap_apply]
+    exact ((constantLinear (p := p) (K := K)).map_smul a _).symm
+  · apply LinearMap.ext
+    intro v
+    simp only [Module.End.mul_apply, topMap, LinearMap.comp_apply,
+      LinearMap.restrictScalars_apply, restricted_derivative_pow_local]
+    rw [derivative_pow_constant r (by omega), map_zero]
+    rfl
+
+private theorem top_scalar_power (T : K →ₗ[F] K) (a : K) (r : ℕ) :
+    topMap (p := p) T * (scalarMap a * ((D).restrictScalars F) ^ r) =
+      if r = 0 then topMap (T.comp (fieldScalar a)) else 0 := by
+  split_ifs with hr
+  · subst r
+    apply LinearMap.ext
+    intro v
+    simp only [Module.End.mul_apply, pow_zero, Module.End.one_apply, topMap,
+      LinearMap.comp_apply, LinearMap.restrictScalars_apply, scalarMap_apply,
+      restricted_derivative_pow_local, map_smul]
+    rfl
+  · apply LinearMap.ext
+    intro v
+    have hp : 2 < p := Fact.out
+    have hz : (D ^ (p - 1)) ((D ^ r) v) = 0 := by
+      rw [← Module.End.mul_apply, ← pow_add,
+        pow_eq_zero_of_le (by omega : p ≤ (p - 1) + r) (derivative_pow_prime (p := p) (K := K))]
+      rfl
+    simp only [Module.End.mul_apply, topMap, LinearMap.comp_apply,
+      LinearMap.restrictScalars_apply, restricted_derivative_pow_local,
+      scalarMap_apply, map_smul, hz, smul_zero, map_zero, LinearMap.zero_apply]
+
+private theorem top_top (T U : K →ₗ[F] K) :
+    topMap (p := p) T * topMap U = 0 := by
+  apply LinearMap.ext
+  intro v
+  simp only [Module.End.mul_apply, topMap, LinearMap.comp_apply,
+    LinearMap.restrictScalars_apply, restricted_derivative_pow_local]
+  rw [derivative_pow_constant (p - 1) (by have hp : 2 < p := Fact.out; omega)]
+  simp
+
+private theorem topMap_add (T U : K →ₗ[F] K) :
+    topMap (p := p) (T + U) = topMap T + topMap U := by
+  apply LinearMap.ext
+  intro v
+  simp [topMap]
+
+private theorem scalar_part_top (c : Fin p → K) (U : K →ₗ[F] K) :
+    (∑ j : Fin p, scalarMap (p := p) (c j) * ((D).restrictScalars F) ^ (p - 1 - j.val)) *
+        topMap U = topMap ((fieldScalar (c (leadingIndex (p := p)))).comp U) := by
+  classical
+  rw [Finset.sum_mul, Finset.sum_eq_single (leadingIndex (p := p))]
+  · simpa only [leadingIndex, Nat.sub_self, pow_zero, mul_one, ite_true] using
+      scalar_power_top (p := p) (c (leadingIndex (p := p))) 0 U
+  · intro b hb hbl
+    have hne : p - 1 - b.val ≠ 0 := by
+      have hb' := b.isLt
+      have hne' : b.val ≠ p - 1 := fun h => hbl (Fin.ext h)
+      omega
+    rw [scalar_power_top, if_neg hne]
+  · simp
+
+private theorem top_scalar_part (T : K →ₗ[F] K) (c : Fin p → K) :
+    topMap (p := p) T *
+        (∑ j : Fin p, scalarMap (c j) * ((D).restrictScalars F) ^ (p - 1 - j.val)) =
+      topMap (T.comp (fieldScalar (c (leadingIndex (p := p))))) := by
+  classical
+  rw [Finset.mul_sum, Finset.sum_eq_single (leadingIndex (p := p))]
+  · simpa only [leadingIndex, Nat.sub_self, pow_zero, mul_one, ite_true] using
+      top_scalar_power (p := p) T (c (leadingIndex (p := p))) 0
+  · intro b hb hbl
+    have hne : p - 1 - b.val ≠ 0 := by
+      have hb' := b.isLt
+      have hne' : b.val ≠ p - 1 := fun h => hbl (Fin.ext h)
+      omega
+    rw [top_scalar_power, if_neg hne]
+  · simp
+
+private theorem multiplication_expansion (c d : Fin p → K) (T U : K →ₗ[F] K) :
+    toeplitzDegree (p := p) c T * toeplitzDegree d U =
+      (∑ i : Fin p, ∑ k : Fin p,
+        scalarMap (c i * d k) * ((D).restrictScalars F) ^
+          ((p - 1 - i.val) + (p - 1 - k.val))) +
+      topMap ((fieldScalar (c (leadingIndex (p := p)))).comp U +
+        T.comp (fieldScalar (d (leadingIndex (p := p))))) := by
+  simp only [toeplitzDegree, add_mul, mul_add]
+  rw [scalar_part_top, top_scalar_part, top_top, add_zero, topMap_add]
+  simp only [Finset.sum_mul, Finset.mul_sum, scalar_power_mul]
+  rw [Finset.sum_comm]
+  abel
+
+private theorem derivative_coefficient (j : Fin p) (w : V) :
+    coefficientZero ((D ^ j.val) w) =
+      (j.val.factorial : K) * (w : K[X]).coeff j.val := by
+  change ((D ^ j.val) w : K[X]).coeff 0 = _
+  rw [derivative_pow_coe_local, coeff_iterate_derivative]
+  simp [Nat.descFactorial_eq_factorial_mul_choose]
+
+private theorem topCoefficient_toeplitzDegree (c : Fin p → K) (hc : c 0 = 0)
+    (T : K →ₗ[F] K) (j : Fin p) (z : K) :
+    topCoefficient (toeplitzDegree (p := p) c T) j z =
+      if j = 0 then T z else c j * z := by
+  classical
+  rw [topCoefficient_apply, derivative_coefficient, toeplitzDegree_topInput c hc,
+    divided_sum_coefficient]
+  have hf := factorial_ne_zero (K := K) j
+  field_simp
+
+private theorem topInput_derivative_coefficient (n : ℕ) (z : K) :
+    coefficientZero ((D ^ n) (topInput (p := p) (K := K) z)) =
+      if n = p - 1 then z else 0 := by
+  classical
+  change ((D ^ n) (topInput (p := p) (K := K) z) : K[X]).coeff 0 = _
+  rw [derivative_pow_coe_local, coeff_iterate_derivative]
+  by_cases hn : n = p - 1
+  · subst n
+    simp [topInput, dividedMonomial, Nat.descFactorial_eq_factorial_mul_choose,
+      smul_eq_mul]
+    have hf := factorial_ne_zero (K := K) (leadingIndex (p := p))
+    dsimp only [leadingIndex] at hf
+    field_simp
+  · simp [topInput, dividedMonomial, hn, Nat.descFactorial_eq_factorial_mul_choose]
+
+private theorem topCoefficient_scalar_power (a : K) (r : ℕ) (j : Fin p) (z : K) :
+    topCoefficient (scalarMap (p := p) a * ((D).restrictScalars F) ^ r) j z =
+      if j.val + r = p - 1 then a * z else 0 := by
+  rw [topCoefficient_apply]
+  simp only [Module.End.mul_apply, scalarMap_apply, restricted_derivative_pow_local,
+    map_smul]
+  rw [← Module.End.mul_apply, ← pow_add, topInput_derivative_coefficient]
+  split_ifs <;> simp [smul_eq_mul]
+
+private theorem topCoefficient_topMap (T : K →ₗ[F] K) (j : Fin p) (z : K) :
+    topCoefficient (topMap (p := p) T) j z = if j = 0 then T z else 0 := by
+  rw [topCoefficient_apply, topMap_topInput, dividedMonomial_zero]
+  by_cases hj : j = 0
+  · subst j; simp [coefficientZero, constantLinear]
+  · rw [derivative_pow_constant j.val (by
+      have hne : j.val ≠ 0 := fun h => hj (Fin.ext h)
+      omega), map_zero, if_neg hj]
+
+private theorem topCoefficient_add (X Y : V →ₗ[F] V) (j : Fin p) (z : K) :
+    topCoefficient (X + Y) j z = topCoefficient X j z + topCoefficient Y j z := by
+  simp [topCoefficient, map_add]
+
+private theorem topCoefficient_sum {ι : Type*} (s : Finset ι)
+    (f : ι → V →ₗ[F] V) (j : Fin p) (z : K) :
+    topCoefficient (∑ i ∈ s, f i) j z = ∑ i ∈ s, topCoefficient (f i) j z := by
+  simp [topCoefficient, map_sum]
+
+/-- Scalar convolution, indexed by output divided degree rather than shift. -/
+def productFamily (c d : Fin p → K) (j : Fin p) : K :=
+  if j = 0 then 0 else ∑ i : Fin p, ∑ k : Fin p,
+    if i.val + k.val = p - 1 + j.val then c i * d k else 0
+
+def topConvolution (c d : Fin p → K) : K :=
+  ∑ i : Fin p, ∑ k : Fin p,
+    if i.val + k.val = p - 1 then c i * d k else 0
+
+/-- Composition order is output scalar after U, and T after input scalar. -/
+def productTop (c d : Fin p → K) (T U : K →ₗ[F] K) : K →ₗ[F] K :=
+  (fieldScalar (c (leadingIndex (p := p)))).comp U +
+    T.comp (fieldScalar (d (leadingIndex (p := p)))) + fieldScalar (topConvolution c d)
+
+private theorem product_coordinate (c d : Fin p → K) (T U : K →ₗ[F] K)
+    (j : Fin p) (z : K) :
+    topCoefficient (toeplitzDegree (p := p) c T * toeplitzDegree d U) j z =
+      if j = 0 then productTop c d T U z else productFamily c d j * z := by
+  classical
+  rw [multiplication_expansion, topCoefficient_add]
+  simp only [topCoefficient_sum, topCoefficient_scalar_power, topCoefficient_topMap]
+  have he (i k : Fin p) :
+      (j.val + (p - 1 - i.val + (p - 1 - k.val)) = p - 1) ↔
+        i.val + k.val = p - 1 + j.val := by
+    have hi := i.isLt
+    have hk := k.isLt
+    omega
+  simp_rw [he]
+  by_cases hj : j = 0
+  · subst j
+    simp only [Fin.val_zero, Nat.add_zero, ite_true, productTop,
+      LinearMap.add_apply, LinearMap.comp_apply]
+    change (∑ i : Fin p, ∑ k : Fin p,
+      if i.val + k.val = p - 1 then (c i * d k) * z else 0) +
+        (c (leadingIndex (p := p)) * U z + T (d (leadingIndex (p := p)) * z)) =
+      c (leadingIndex (p := p)) * U z + T (d (leadingIndex (p := p)) * z) +
+        topConvolution c d * z
+    simp only [topConvolution, Finset.sum_mul, ite_mul, zero_mul]
+    ring
+  · simp only [if_neg hj, productFamily, add_zero]
+    simp only [Finset.sum_mul, ite_mul, zero_mul]
+
+/-- Explicit multiplication of the unique scalar and arbitrary-top normal forms. -/
+theorem toeplitzDegree_mul (c d : Fin p → K) (T U : K →ₗ[F] K) :
+    toeplitzDegree (p := p) c T * toeplitzDegree d U =
+      toeplitzDegree (productFamily c d) (productTop c d T U) := by
+  refine commuting_ext _ _ ?_ (toeplitzDegree_derivative _ _) ?_
+  · intro v
+    simp only [Module.End.mul_apply]
+    rw [toeplitzDegree_derivative, toeplitzDegree_derivative]
+  · intro z
+    rw [top_coefficient_reconstruct, top_coefficient_reconstruct]
+    apply Finset.sum_congr rfl
+    intro j hj
+    congr 1
+    rw [product_coordinate, topCoefficient_toeplitzDegree _ (by simp [productFamily])]
+
+def shiftFamily (a : Fin (p - 1) → K) (j : Fin p) : K :=
+  if h : j.val = 0 then 0 else a ⟨p - 1 - j.val, by have hj := j.isLt; omega⟩
+
+private theorem shiftFamily_zero (a : Fin (p - 1) → K) : shiftFamily a (0 : Fin p) = 0 := by
+  simp [shiftFamily]
+
+private theorem toeplitz_as_degree (a : Fin (p - 1) → K) (T : K →ₗ[F] K) :
+    toeplitz (p := p) a T = toeplitzDegree (shiftFamily a) T := by
+  classical
+  have hp : 2 < p := Fact.out
+  unfold toeplitz toeplitzDegree
+  apply congrArg (fun A : V →ₗ[F] V => A + topMap T)
+  rw [← Finset.sum_erase_add _ _ (Finset.mem_univ (0 : Fin p))]
+  have hz : scalarMap (p := p) (K := K) 0 = 0 := by
+    apply LinearMap.ext
+    intro v
+    simp [scalarMap_apply]
+  simp only [shiftFamily_zero, hz, zero_mul, add_zero]
+  refine Finset.sum_bij (fun (r : Fin (p - 1)) _ => (⟨p - 1 - r.val, by have hr := r.isLt; omega⟩ : Fin p))
+    ?_ ?_ ?_ ?_
+  · intro r hr
+    have hr' := r.isLt
+    simp only [Finset.mem_erase, Finset.mem_univ, and_true]
+    intro h
+    have hh := congrArg Fin.val h
+    simp only [Fin.val_zero] at hh
+    omega
+  · intro r hr s hs h
+    have hr' := r.isLt
+    have hs' := s.isLt
+    apply Fin.ext
+    have hh := congrArg Fin.val h
+    change p - 1 - r.val = p - 1 - s.val at hh
+    omega
+  · intro j hj
+    have hj0 : j.val ≠ 0 := by
+      intro h
+      exact (Finset.mem_erase.mp hj).1 (Fin.ext h)
+    refine ⟨⟨p - 1 - j.val, by have hj' := j.isLt; omega⟩, Finset.mem_univ _, ?_⟩
+    apply Fin.ext
+    have hj' := j.isLt
+    dsimp
+    omega
+  · intro r hr
+    have hr' := r.isLt
+    have hn : p - 1 - r.val ≠ 0 := by omega
+    have he : p - 1 - (p - 1 - r.val) = r.val := by omega
+    simp only [shiftFamily, dif_neg hn, he]
+
+private theorem shiftFamily_surjective (c : Fin p → K) (hc : c 0 = 0) :
+    ∃ a : Fin (p - 1) → K, shiftFamily a = c := by
+  refine ⟨fun r => c ⟨p - 1 - r.val, by have hr := r.isLt; omega⟩, ?_⟩
+  funext j
+  by_cases hj : j.val = 0
+  · have he : j = 0 := Fin.ext hj
+    subst j
+    simp [shiftFamily_zero, hc]
+  · simp only [shiftFamily, dif_neg hj]
+    congr 1
+    apply Fin.ext
+    have hj' := j.isLt
+    dsimp
+    omega
+
+private theorem shiftFamily_injective (a b : Fin (p - 1) → K)
+    (h : shiftFamily a = shiftFamily b) : a = b := by
+  funext r
+  have hr := r.isLt
+  have hj : p - 1 - r.val < p := by omega
+  have hn : p - 1 - r.val ≠ 0 := by omega
+  have he := congrFun h (⟨p - 1 - r.val, hj⟩ : Fin p)
+  have hh : p - 1 - (p - 1 - r.val) = r.val := by omega
+  simpa only [shiftFamily, dif_neg hn, hh] using he
+
+/-- Unique lower-Toeplitz scalars and a completely arbitrary top End_Fp(K) map,
+for the actual labeled original action. -/
+theorem actual_commutant_iff_unique_toeplitz (q : K →ₗ[F] K) (hq1 : q 1 = 0)
+    (X : V →ₗ[F] V) :
+    commutesOriginal (p := p) q X ↔
+      ∃! C : (Fin (p - 1) → K) × (K →ₗ[F] K), X = toeplitz C.1 C.2 := by
+  constructor
+  · intro hX
+    obtain ⟨c, T, hc, he⟩ := (actual_commutant_normal_form q hq1 X).mp hX
+    obtain ⟨a, ha⟩ := shiftFamily_surjective c hc
+    refine ⟨(a, T), ?_, ?_⟩
+    · change X = toeplitz a T
+      rw [toeplitz_as_degree, ha]; exact he
+    · rintro ⟨b, U⟩ hU
+      have h := toeplitzDegree_injective (shiftFamily b) (shiftFamily a)
+        (shiftFamily_zero b) (shiftFamily_zero a) U T (by
+          rw [← toeplitz_as_degree, ← toeplitz_as_degree, ← hU, toeplitz_as_degree, ha]
+          exact he)
+      exact Prod.ext (shiftFamily_injective b a h.1) h.2
+  · rintro ⟨⟨a, T⟩, h, _⟩
+    apply (actual_commutant_normal_form q hq1 X).mpr
+    exact ⟨shiftFamily a, T, shiftFamily_zero a, h.trans (toeplitz_as_degree a T)⟩
 
 end D5.S3.FiniteGroups.GroupAlgebra.OddPrimeJetCommutant
