@@ -67,12 +67,9 @@ internal sealed class PrimeOccupationDefectDocument : IScribeDocumentDefinition
                     + "not an enumeration, checker, numerical reduction or finite "
                     + "certified instance; utility kind is none.")),
                 Paragraph(Text(
-                    "This packet contains proposed proof scripts only. It has not "
-                    + "been elaborated, kernel checked, audited for axioms, registered, "
-                    + "compiled as CSharp, admitted or officially accepted. The "
-                    + "literal complete-surplus application and the privately reused "
-                    + "full-residual proof are supplied separately as transient exact "
-                    + "checks. No formal sharpness construction or RH conclusion "
-                    + "is asserted, and no literature novelty claim is made."))),
+                    "The estimate asserts no attainment or sharpness construction, "
+                    + "no RH conclusion and no literature novelty. The bounded "
+                    + "mass hypothesis controls the total selected mass, with no "
+                    + "restriction to the comparison intervals."))),
             DescribeRole.Theorem))));
 }

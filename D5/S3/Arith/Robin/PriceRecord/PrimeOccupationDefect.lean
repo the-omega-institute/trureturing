@@ -13,9 +13,8 @@ import Mathlib.Order.Filter.Finite
 import Mathlib.Tactic
 
 /-!
-SOURCE PROPOSAL ONLY. No elaboration, kernel, admission or native result is
-asserted by this file. Only `uniform_prime_occupation_defect` is a proposed
-public theorem. Every private lemma is consumed on its proof path.
+The uniform theorem controls arbitrary finite prime selections.
+Every private lemma is consumed on its proof path.
 
 Two endpoint prices give an exact finite dual. Its two slopes converge to
 the same number. The bounded *total* theta mass pays their discrepancy;
@@ -72,7 +71,8 @@ private theorem interval_add (a b c : ℝ) (hab : a ≤ b) (hbc : b ≤ c)
     simp only [primeInterval, mem_union, mem_filter, mem_Ioc]
     have h1 := Nat.floor_mono hab
     have h2 := Nat.floor_mono hbc
-    omega
+    by_cases hp : p.Prime <;> simp_all only [hp, and_true, and_false, or_false, false_or]
+      <;> omega
   have hd : Disjoint (primeInterval a b) (primeInterval b c) := by
     apply disjoint_left.mpr
     intro p hp hq
@@ -87,7 +87,8 @@ private theorem interval_theta (a b : ℝ) (hab : a ≤ b) :
     ext p
     simp only [mem_union, Nat.mem_primesLE, primeInterval, mem_filter, mem_Ioc]
     have h := Nat.floor_mono hab
-    omega
+    by_cases hp : p.Prime <;> simp_all only [hp, and_true, and_false, or_false, false_or]
+      <;> omega
   have hd : Disjoint (Nat.primesLE ⌊a⌋₊) (primeInterval a b) := by
     apply disjoint_left.mpr
     intro p hp hq
@@ -130,7 +131,7 @@ private theorem prime_price_compare {x u : ℝ} (hx : 1 < x) (hu : 1 < u)
       _ = priceAt x * Real.log u * u ^ 2 := by dsimp [priceAt]; ring
 
 /-- Select all positive gains, while all omitted gains have the opposite sign.
-This is only a consumed finite-sum helper, not proposed standalone content. -/
+This finite-sum helper is consumed by the endpoint dual. -/
 private theorem select_bound (S I : Finset ℕ) (f : ℕ → ℝ)
     (houtside : ∀ p ∈ S, p ∉ I → f p ≤ 0)
     (hinside : ∀ p ∈ I, 0 ≤ f p) :
@@ -255,34 +256,39 @@ private theorem scaled_tail_limit {c : ℝ} (hc : 0 < c) :
     ((log_sqrt_scale hc).const_mul c) (by positivity : c * (1 / 2 : ℝ) ≠ 0)
   have hh := (normalized_tail_limit hc).mul hratio
   norm_num only [one_mul] at hh
-  convert hh.congr' (by
-    filter_upwards [eventually_gt_atTop (1 : ℝ),
-      (Real.tendsto_sqrt_atTop.const_mul_atTop hc).eventually
-        (eventually_gt_atTop (1 : ℝ))] with z hz hcz
-    have hs : Real.sqrt z ≠ 0 := (Real.sqrt_pos.mpr (by linarith : 0 < z)).ne'
-    have hl : Real.log z ≠ 0 := (Real.log_pos hz).ne'
-    have hcl : Real.log (c * Real.sqrt z) ≠ 0 := (Real.log_pos hcz).ne'
-    dsimp [scale]
-    field_simp [hc.ne', hs, hl, hcl]) using 1 <;> field_simp [hc.ne'] <;> ring
+  have hlim : 1 / (c * (1 / 2 : ℝ)) = 2 / c := by ring
+  rw [hlim] at hh
+  apply hh.congr'
+  filter_upwards [eventually_gt_atTop (1 : ℝ),
+    (Real.tendsto_sqrt_atTop.const_mul_atTop hc).eventually
+      (eventually_gt_atTop (1 : ℝ))] with z hz hcz
+  have hs : Real.sqrt z ≠ 0 := (Real.sqrt_pos.mpr (by linarith : 0 < z)).ne'
+  have hl : Real.log z ≠ 0 := (Real.log_pos hz).ne'
+  have hcl : Real.log (c * Real.sqrt z) ≠ 0 := (Real.log_pos hcz).ne'
+  dsimp [scale]
+  field_simp [hc.ne', hs, hl, hcl]
+  <;> ring
 
 private theorem beta_limit {c : ℝ} (hc : 0 < c) :
     Tendsto (beta c) atTop (𝓝 (2 / c ^ 2)) := by
   have hh := (tendsto_const_nhds (x := (1 : ℝ))).div
     ((log_sqrt_scale hc).const_mul (c ^ 2))
       (by positivity : c ^ 2 * (1 / 2 : ℝ) ≠ 0)
-  convert hh.congr' (by
-    filter_upwards [eventually_gt_atTop (1 : ℝ),
-      (Real.tendsto_sqrt_atTop.const_mul_atTop hc).eventually
-        (eventually_gt_atTop (1 : ℝ))] with z hz hcz
-    have hz0 : 0 < z := by linarith
-    have hs := Real.sq_sqrt hz0.le
-    have hsn : Real.sqrt z ≠ 0 := (Real.sqrt_pos.mpr hz0).ne'
-    have hnum : Real.sqrt z * (Real.sqrt z * Real.log z) = z * Real.log z := by
-      rw [← mul_assoc, ← pow_two, hs]
-    dsimp [beta, scale, priceAt]
-    rw [hnum, mul_pow, hs]
-    field_simp [hc.ne', hz0.ne', (Real.log_pos hz).ne', (Real.log_pos hcz).ne']
-    <;> ring) using 1 <;> field_simp [hc.ne'] <;> ring
+  have hlim : 1 / (c ^ 2 * (1 / 2 : ℝ)) = 2 / c ^ 2 := by ring
+  rw [hlim] at hh
+  apply hh.congr'
+  filter_upwards [eventually_gt_atTop (1 : ℝ),
+    (Real.tendsto_sqrt_atTop.const_mul_atTop hc).eventually
+      (eventually_gt_atTop (1 : ℝ))] with z hz hcz
+  have hz0 : 0 < z := by linarith
+  have hs := Real.sq_sqrt hz0.le
+  have hsn : Real.sqrt z ≠ 0 := (Real.sqrt_pos.mpr hz0).ne'
+  have hnum : Real.sqrt z * (Real.sqrt z * Real.log z) = z * Real.log z := by
+    rw [← mul_assoc, ← pow_two, hs]
+  dsimp [beta, scale, priceAt]
+  rw [hnum, mul_pow, hs]
+  <;> field_simp [hc.ne', hz0.ne', (Real.log_pos hz).ne', (Real.log_pos hcz).ne']
+  <;> ring
 
 private theorem scaled_interval_limit {a c : ℝ} (ha : 0 < a) (hac : a ≤ c) :
     Tendsto (fun z : ℝ => scale z * squareSum (a * Real.sqrt z) (c * Real.sqrt z))
@@ -312,6 +318,12 @@ private theorem intercept_limit {A C : ℝ} (hA : 0 < A)
   have hthetaC := (theta_sqrt_scale hC).sub (theta_sqrt_scale hr)
   have hh := (((beta_limit hA).mul hthetaA).sub (scaled_interval_limit hA hAr)).add
     ((scaled_interval_limit hr hrC).sub ((beta_limit hC).mul hthetaC))
+  have hlim :
+      (2 / A ^ 2) * (Real.sqrt 2 - A) - (2 / A - 2 / Real.sqrt 2) +
+        ((2 / Real.sqrt 2 - 2 / C) - (2 / C ^ 2) * (C - Real.sqrt 2)) =
+      (2 / A ^ 2) * (Real.sqrt 2 - A) - (2 / A - 2 / Real.sqrt 2) +
+        (2 / Real.sqrt 2 - 2 / C) - (2 / C ^ 2) * (C - Real.sqrt 2) := by ring
+  rw [hlim] at hh
   apply hh.congr'
   filter_upwards [eventually_gt_atTop (0 : ℝ)] with z hz
   have hs : Real.sqrt z ≠ 0 := (Real.sqrt_pos.mpr hz).ne'
@@ -379,11 +391,13 @@ private theorem profile_endpoints {b : ℝ} (hb : 0 ≤ b) :
     have hi : (1 : ℝ) ≤ 2 / A ^ 2 :=
       (le_div_iff₀ (sq_pos_of_pos hA)).mpr (by nlinarith only [hA2])
     linarith only [hi]
+  have hinv2 : 2 / A ^ 2 + 2 / C ^ 2 = 2 := by
+    linear_combination 2 * hinv
   have hτ1 : τ < 1 := by
-    have hi : 0 < 1 / C ^ 2 := by positivity
+    have hi : 0 < 2 / C ^ 2 := by positivity
     dsimp [τ]
-    linarith only [hinv, hi]
-  have hτC : 1 - 2 / C ^ 2 = τ := by dsimp [τ]; linarith only [hinv]
+    linarith only [hinv2, hi]
+  have hτC : 1 - 2 / C ^ 2 = τ := by dsimp [τ]; linarith only [hinv2]
   have hTP : T ^ 2 = P * (P + 2) := by nlinarith only [hP2, hT2]
   have hroot : Real.sqrt ((s + 3) ^ 3 / (s + 1)) = T * (P + 2) / P := by
     have hR0 : 0 ≤ (s + 3) ^ 3 / (s + 1) := by positivity
@@ -393,7 +407,7 @@ private theorem profile_endpoints {b : ℝ} (hb : 0 ≤ b) :
       calc
         _ = T ^ 2 * (P + 2) ^ 2 / P ^ 2 := by ring
         _ = (P * (P + 2)) * (P + 2) ^ 2 / P ^ 2 := by rw [hTP]
-        _ = (P + 2) ^ 3 / P := by field_simp [hP.ne']; ring
+        _ = (P + 2) ^ 3 / P := by field_simp [hP.ne'] <;> ring
         _ = _ := by dsimp [P]; ring
     have hpos : 0 ≤ T * (P + 2) / P := by positivity
     nlinarith only [hR2, heq, hRpos, hpos]
@@ -409,7 +423,8 @@ private theorem profile_continuous : Continuous profile := by
   have hs : Continuous (fun b : ℝ => Real.sqrt (1 + b ^ 2)) :=
     (continuous_const.add (continuous_id.pow 2)).sqrt
   exact (((hs.add continuous_const).pow 3).div (hs.add continuous_const)
-    (fun b => by positivity)).sqrt.sub continuous_const
+    (fun b => ne_of_gt (add_pos_of_nonneg_of_pos
+      (Real.sqrt_nonneg (1 + b ^ 2)) zero_lt_one))).sqrt.sub continuous_const
 
 /-- One fixed dual line, uniform over all prime selections of bounded mass.
 The slopes retain the finite alpha_z correction until their limits are taken. -/
@@ -429,22 +444,23 @@ private theorem eventual_supporting_line {M b A C τ η : ℝ}
   have hC : 0 < C := hr.trans_le hrC
   have hr2 : (Real.sqrt 2) ^ 2 = 2 := Real.sq_sqrt (by norm_num)
   have hμH : Tendsto (fun z => beta A z - beta (Real.sqrt 2) z) atTop (𝓝 τ) := by
-    convert (beta_limit hA).sub (beta_limit hr) using 1 <;> rw [hr2] <;> linarith
+    simpa only [hr2, div_self (by norm_num : (2 : ℝ) ≠ 0), hτA] using
+      (beta_limit hA).sub (beta_limit hr)
   have hμX : Tendsto (fun z => beta (Real.sqrt 2) z - beta C z) atTop (𝓝 τ) := by
-    convert (beta_limit hr).sub (beta_limit hC) using 1 <;> rw [hr2] <;> linarith
+    simpa only [hr2, div_self (by norm_num : (2 : ℝ) ≠ 0), hτC] using
+      (beta_limit hr).sub (beta_limit hC)
   let I := τ * b - profile b
   have hIeq :
       (2 / A ^ 2) * (Real.sqrt 2 - A) - (2 / A - 2 / Real.sqrt 2) +
         (2 / Real.sqrt 2 - 2 / C) - (2 / C ^ 2) * (C - Real.sqrt 2) =
           τ * b - profile b := by
-    rw [← hG, ← hdiff, ← hτA]
-    have hτeq : 2 / A ^ 2 + 2 / C ^ 2 = 2 := by linarith only [hτA, hτC]
     have hrinv : 2 / Real.sqrt 2 = Real.sqrt 2 := by
       apply (div_eq_iff hr.ne').mpr
       nlinarith only [hr2]
-    simp only [hrinv]
-    field_simp [hA.ne', hC.ne'] at hτeq ⊢
-    linear_combination (Real.sqrt 2 - C) * hτeq
+    have haid : 2 / A ^ 2 = τ + 1 := by linarith only [hτA]
+    have hcid : 2 / C ^ 2 = 1 - τ := by linarith only [hτC]
+    rw [haid, hcid, hrinv, ← hG, ← hdiff]
+    ring
   have hI : Tendsto (intercept A C) atTop (𝓝 I) := by
     simpa only [hIeq] using intercept_limit hA hAr hrC
   let err := fun z => (M + 1) *
@@ -478,15 +494,17 @@ private theorem eventual_supporting_line {M b A C τ η : ℝ}
       |beta A z - beta (Real.sqrt 2) z - τ| * (M + 1) := by
     calc
       _ ≤ |beta A z - beta (Real.sqrt 2) z - τ| * u :=
-        mul_le_mul_of_nonneg_right (by linarith [neg_le_abs
-          (beta A z - beta (Real.sqrt 2) z - τ)]) hu
+        mul_le_mul_of_nonneg_right (by
+          have hh := neg_le_abs (beta A z - beta (Real.sqrt 2) z - τ)
+          linarith only [hh]) hu
       _ ≤ _ := mul_le_mul_of_nonneg_left huM (abs_nonneg _)
   have h2 : (τ - (beta (Real.sqrt 2) z - beta C z)) * v ≤
       |beta (Real.sqrt 2) z - beta C z - τ| * (M + 1) := by
     calc
       _ ≤ |beta (Real.sqrt 2) z - beta C z - τ| * v :=
-        mul_le_mul_of_nonneg_right (by linarith [neg_le_abs
-          (beta (Real.sqrt 2) z - beta C z - τ)]) hv
+        mul_le_mul_of_nonneg_right (by
+          have hh := neg_le_abs (beta (Real.sqrt 2) z - beta C z - τ)
+          linarith only [hh]) hv
       _ ≤ _ := mul_le_mul_of_nonneg_left hvM (abs_nonneg _)
   have h3 := le_abs_self (intercept A C z - I)
   dsimp [err] at he
@@ -521,9 +539,8 @@ theorem uniform_prime_occupation_defect (M : ℝ) (hM : 0 ≤ M)
   let U : Q → Set ℝ := fun b =>
     {x | profile x < profile b + τ b * (x - b) + ε / 2}
   have hopen (b : Q) : IsOpen (U b) := by
-    apply isOpen_lt profile_continuous
-    exact continuous_const.add ((continuous_const.mul
-      (continuous_id.sub continuous_const)).add continuous_const)
+    change IsOpen {x : ℝ | profile x < profile b + τ b * (x - b) + ε / 2}
+    exact isOpen_lt profile_continuous (by fun_prop)
   have hcover : Q ⊆ ⋃ b : Q, U b := by
     intro b hb
     apply Set.mem_iUnion.mpr

@@ -1,1 +1,0 @@
-WIP: integrate exact bounded-mass prime occupation proof candidate
