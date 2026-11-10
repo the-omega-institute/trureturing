@@ -6,8 +6,10 @@
    utility: none
    digest: Generic polar-angle positivity, derivative monotonicity, and signed reduction for finite reciprocal products. -/
 
+import Mathlib.Analysis.CStarAlgebra.Classes
 import Mathlib.Analysis.Calculus.Deriv.MeanValue
 import Mathlib.Analysis.Complex.RealDeriv
+import Mathlib.Analysis.InnerProductSpace.Basic
 import Mathlib.Analysis.Real.Pi.Bounds
 import Mathlib.Analysis.SpecialFunctions.Complex.Arg
 import Mathlib.Analysis.SpecialFunctions.Sqrt
