@@ -266,22 +266,16 @@ variable {I₁ I₂ J : Type*} {c₁ : ComplexShape I₁} {c₂ : ComplexShape I
 def flipMap (φ : K ⟶ L) : K.flip ⟶ L.flip :=
   (HomologicalComplex₂.flipFunctor C c₁ c₂).map φ
 
+set_option backward.isDefEq.respectTransparency false in
 /-- Naturality of the flip symmetry isomorphism `totalFlipIso` with respect to a bicomplex
 morphism `φ : K ⟶ L`: the totalization of `φ` and of its flip are related by conjugation. -/
 @[reassoc]
 lemma totalFlipIso_hom_naturality (φ : K ⟶ L) :
     (K.totalFlipIso c).hom ≫ HomologicalComplex₂.total.map φ c =
       HomologicalComplex₂.total.map (flipMap φ) c ≫ (L.totalFlipIso c).hom := by
-  letI : ((HomologicalComplex₂.flipFunctor C c₁ c₂).obj K).HasTotal c :=
-    inferInstanceAs (K.flip.HasTotal c)
-  letI : ((HomologicalComplex₂.flipFunctor C c₁ c₂).obj L).HasTotal c :=
-    inferInstanceAs (L.flip.HasTotal c)
-  change (K.totalFlipIso c).hom ≫ HomologicalComplex₂.total.map φ c =
-    HomologicalComplex₂.total.map ((HomologicalComplex₂.flipFunctor C c₁ c₂).map φ) c ≫
-      (L.totalFlipIso c).hom
   ext j i₂ i₁ hj
   simp only [HomologicalComplex.comp_f, HomologicalComplex₂.ιTotal_totalFlipIso_f_hom_assoc,
-    HomologicalComplex₂.ιTotal_map_assoc, HomologicalComplex₂.flipFunctor_map_f_f,
+    HomologicalComplex₂.ιTotal_map_assoc, flipMap, HomologicalComplex₂.flipFunctor_map_f_f,
     HomologicalComplex₂.ιTotal_totalFlipIso_f_hom]
   erw [Linear.units_smul_comp, HomologicalComplex₂.ιTotal_map, Linear.comp_units_smul]
   rfl
