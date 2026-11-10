@@ -7,6 +7,7 @@
    digest: Unrestricted Frobenius top maps embedded in the actual original kernel. -/
 import D5.S3.FiniteGroups.GroupAlgebra.OddPrimeJetRadicalGroup
 import Mathlib.GroupTheory.Commutator.Basic
+import Mathlib.GroupTheory.Solvable
 
 /-! The linearized coordinate supplier is adapted upstream CFSG mathematics;
 its attribution and license remain in FiniteJetCoefficients. -/
@@ -15,6 +16,7 @@ noncomputable section
 namespace D5.S3.FiniteGroups.GroupAlgebra.OddPrimeJetTop
 open Polynomial Module OddPrimeJetDeformation OddPrimeJetCommutant
 open OddPrimeJetRadical OddPrimeJetRadicalGroup OddPrimeJetGroup FiniteJetCoefficients
+open FiniteJetClassification
 open scoped BigOperators commutatorElement
 universe u
 variable {p : ℕ} [Fact p.Prime] [Fact (2 < p)]
@@ -456,11 +458,101 @@ private theorem actual_commutator_cardinality (q : K →ₗ[F] K) (hq : q 1 = 0)
   rw [actual_commutator_eq q hq hn hK]
   exact offDiagonalTop_cardinality q hq hn hK
 
-/-- The exact actual commutator subgroup and its order. -/
+private theorem abelian_original_label (q : K →ₗ[F] K)
+    (hcomm : IsMulCommutative (originalGroup (p := p) q))
+    (z : originalGroup (p := p) q) : z.val.2 = 1 := by
+  letI := hcomm
+  let ρ := originalRepresentation (p := p) q
+  let t (g : Multiplicative K) : originalGroup (p := p) q :=
+    ⟨(LinearMap.GeneralLinearGroup.toLinearEquiv (ρ.asGroupHom g), 1), by
+      intro a v
+      change ρ g (ρ a v) = ρ a (ρ g v)
+      exact congrArg (fun T : Module.End F V => T v)
+        ((ρ.map_mul g a).symm.trans
+          ((congrArg ρ (mul_comm g a)).trans (ρ.map_mul a g)))⟩
+  ext g
+  apply faithful_action (p := p) q
+  apply LinearMap.ext
+  intro v
+  have he := congrArg (fun w : originalGroup (p := p) q =>
+    w.val.1 (z.val.1.symm v)) (mul_comm' z (t g))
+  change z.val.1 (ρ g (z.val.1.symm v)) = ρ g (z.val.1 (z.val.1.symm v)) at he
+  rw [z.property, LinearEquiv.apply_symm_apply] at he
+  exact he
+
+/-- The actual original group is nonabelian for every normalized parameter,
+including the prime-field boundary and the smallest odd prime. -/
+theorem original_derived_one_ne_bot (q : K →ₗ[F] K) (hq : q 1 = 0)
+    (hn : 1 ≤ n) (hK : Fintype.card K = p ^ n) :
+    derivedSeries (originalGroup (p := p) q) 1 ≠ ⊥ := by
+  intro hbot
+  have hcomm : IsMulCommutative (originalGroup (p := p) q) :=
+    (commutator_eq_bot_iff _).mp hbot
+  by_cases h1 : n = 1
+  · subst n
+    let A : Fin (1 - 1) → K := fun i => Fin.elim0 i
+    have hQ : Q (p := p) 1 A = 0 := by
+      ext x
+      change (coefficientMap (p := p) 1 A).val x = 0
+      rw [coefficientMap_apply]
+      simp
+    have hq0 : q = 0 := by
+      obtain ⟨B, hB⟩ := (coefficientMap_bijective hn hK).surjective ⟨q, hq⟩
+      have he : Q (p := p) 1 B = q := congrArg Subtype.val hB
+      rw [← he]
+      ext x
+      change (coefficientMap (p := p) 1 B).val x = 0
+      rw [coefficientMap_apply]
+      simp
+    let φ : Multiplicative K ≃* Multiplicative K :=
+      { toFun := fun x => Multiplicative.ofAdd (-x.toAdd)
+        invFun := fun x => Multiplicative.ofAdd (-x.toAdd)
+        left_inv := by intro x; simp
+        right_inv := by intro x; simp
+        map_mul' := by intro x y; change -(x.toAdd + y.toAdd) = -x.toAdd + -y.toAdd; abel }
+    let c : Kˣ := Units.mk0 (-1) (neg_ne_zero.mpr one_ne_zero)
+    obtain ⟨P, hP⟩ := (FiniteJetClassification.fixed_automorphism_coefficients_iff
+      hn hK A A φ).mpr ⟨c, 1, by intro a; simp [φ, c], by intro i; exact Fin.elim0 i⟩
+    let z : originalGroup (Q (p := p) 1 A) := ⟨(P, φ), hP⟩
+    have hparam : q = Q (p := p) 1 A := hq0.trans hQ.symm
+    have hcommQ : IsMulCommutative (originalGroup (Q (p := p) 1 A)) :=
+      hparam ▸ hcomm
+    have hlabel := abelian_original_label (Q (p := p) 1 A)
+      hcommQ z
+    have hneg := congrArg (fun f : Multiplicative K ≃* Multiplicative K =>
+      (f (Multiplicative.ofAdd 1)).toAdd) hlabel
+    have he : (-1 : K) = 1 := hneg
+    have htwo : (2 : K) = 0 := by
+      calc
+        (2 : K) = 1 + 1 := by norm_num
+        _ = (-1) + 1 := by rw [he]
+        _ = 0 := neg_add_cancel 1
+    letI : CharP K p := charP_of_injective_algebraMap (algebraMap F K).injective p
+    exact (Nat.not_dvd_of_pos_of_lt (by decide : 0 < 2) (Fact.out : 2 < p))
+      ((CharP.cast_eq_zero_iff K p 2).mp htwo)
+  · letI := hcomm
+    have hu : commutator ((project (p := p) (K := K) q).ker) = ⊥ :=
+      (commutator_eq_bot_iff _).mpr inferInstance
+    have hc := actual_commutator_cardinality q hq hn hK
+    rw [hu, Subgroup.card_bot] at hc
+    have hpow : 1 < p ^ (n * (n - 1)) :=
+      Nat.one_lt_pow (Nat.ne_of_gt (Nat.mul_pos (by omega) (by omega)))
+        (Fact.out : p.Prime).one_lt
+    omega
+
+#print axioms original_derived_one_ne_bot
+
+/-- The exact actual kernel structure and the nonabelian original-group boundary. -/
 theorem actual_commutator_structure (q : K →ₗ[F] K) (hq : q 1 = 0) (hn : 1 ≤ n) (hK : Fintype.card K = p^n) :
     commutator ((project (p := p) (K := K) q).ker) = offDiagonalTop q hq hn hK ∧
-    Nat.card (commutator ((project (p := p) (K := K) q).ker)) = p^(n*(n-1)) :=
-  ⟨actual_commutator_eq q hq hn hK, actual_commutator_cardinality q hq hn hK⟩
+    Nat.card (commutator ((project (p := p) (K := K) q).ker)) = p^(n*(n-1)) ∧
+    (∀ x y : actualPrincipalUnits (p := p) q hq, x*y = y*x) ∧
+    (∀ x : actualPrincipalUnits (p := p) q hq, x^p = 1) ∧
+    Nat.card (actualPrincipalUnits (p := p) q hq) = p^(n*(p-2)+n*n) ∧
+    derivedSeries (originalGroup (p := p) q) 1 ≠ ⊥ := by
+  obtain ⟨hcomm, hpow, hcard⟩ := actual_principal_unit_structure q hq hK
+  exact ⟨actual_commutator_eq q hq hn hK, actual_commutator_cardinality q hq hn hK,
+    hcomm, hpow, hcard, original_derived_one_ne_bot q hq hn hK⟩
 
 #print axioms actual_commutator_structure
 
@@ -469,4 +561,6 @@ theorem actual_commutator_structure (q : K →ₗ[F] K) (hq : q 1 = 0) (hn : 1 �
 #print axioms scalar_difference_range
 
 #print axioms offDiagonalTop_cardinality
+
+
 end D5.S3.FiniteGroups.GroupAlgebra.OddPrimeJetTop
