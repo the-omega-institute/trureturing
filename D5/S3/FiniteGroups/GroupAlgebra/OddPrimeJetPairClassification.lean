@@ -38,7 +38,7 @@ private theorem pair_log (q r : K →ₗ[F] K) (φ : E ≃* E) (P : V ≃ₗ[F] 
   simp_rw [hφ]
   exact polynomial_log_action r (automorphismLinear (p := p) φ a) (P v)
 
-private theorem commutes_pow (U : V ≃ₗ[F] V)
+theorem commutes_pow (U : V ≃ₗ[F] V)
     (hD : ∀ v, U (D v) = D (U v)) (n : ℕ) (v : V) :
     U ((D^n) v) = (D^n) (U v) := by
   induction n with
@@ -46,11 +46,11 @@ private theorem commutes_pow (U : V ≃ₗ[F] V)
   | succ n ih =>
     rw [pow_succ', Module.End.mul_apply, Module.End.mul_apply, hD, ih]
 
-private def topShear : Module.End K V :=
+def topShear : Module.End K V :=
   (dividedMonomial 1 (by have : 2 < p := Fact.out; omega)).comp
     (coefficientZero.comp (D^(p-1)))
 
-private theorem top_derivative (v : V) :
+theorem top_derivative (v : V) :
     (D^(p-1)) v = constantLinear (coefficientZero ((D^(p-1)) v)) := by
   apply Subtype.ext
   apply OddPrimeJetDeformation.derivative_kernel
@@ -58,18 +58,18 @@ private theorem top_derivative (v : V) :
     Nat.sub_add_cancel (by have : 2 < p := Fact.out; omega), derivative_pow_prime]
   rfl
 
-private theorem topShear_derivative (v : V) : topShear (D v) = 0 := by
+theorem topShear_derivative (v : V) : topShear (D v) = 0 := by
   have hp : 2 < p := Fact.out
   change dividedMonomial 1 _ (coefficientZero ((D^(p-1)) (D v))) = 0
   rw [← Module.End.mul_apply, ← pow_succ, Nat.sub_add_cancel (by omega : 1 ≤ p),
     derivative_pow_prime, LinearMap.zero_apply, map_zero, map_zero]
 
-private theorem derivative_topShear (v : V) : D (topShear v) = (D^(p-1)) v := by
+theorem derivative_topShear (v : V) : D (topShear v) = (D^(p-1)) v := by
   change D (dividedMonomial (0+1) _ _) = _
   rw [dividedMonomial_succ, dividedMonomial_zero]
   exact (top_derivative v).symm
 
-private theorem top_topShear (v : V) : (D^(p-1)) (topShear v) = 0 := by
+theorem top_topShear (v : V) : (D^(p-1)) (topShear v) = 0 := by
   exact dividedMonomial_one_top _
 
 private theorem topShear_top (v : V) : topShear ((D^(p-1)) v) = 0 := by
@@ -79,7 +79,7 @@ private theorem topShear_top (v : V) : topShear ((D^(p-1)) v) = 0 := by
     pow_eq_zero_of_le (by omega : p ≤ (p-1)+(p-1)) derivative_pow_prime,
     LinearMap.zero_apply, map_zero, map_zero]
 
-private def shear (b : K) : V ≃ₗ[K] V := by
+def shear (b : K) : V ≃ₗ[K] V := by
   let T : Module.End K V := topShear
   have hT : T*T = 0 := by
     apply LinearMap.ext
@@ -93,7 +93,7 @@ private def shear (b : K) : V ≃ₗ[K] V := by
         smul_mul_assoc, mul_smul_comm, smul_smul, hT, smul_zero] <;> abel
   exact LinearEquiv.ofLinearMap (f := 1+b • T) (g := 1-b • T) hi.1 hi.2
 
-private theorem shear_operator (b x y : K) (v : V) :
+theorem shear_operator (b x y : K) (v : V) :
     shear b (x • D v + y • (D^(p-1)) v) =
       x • D (shear b v) + (y-b*x) • (D^(p-1)) (shear b v) := by
   change (x • D v + y • (D^(p-1)) v) +
@@ -105,7 +105,7 @@ private theorem shear_operator (b x y : K) (v : V) :
     smul_zero, add_zero, smul_add, sub_smul, smul_smul]
   module
 
-private theorem diagonalScale_pow (c : K) (hc : c ≠ 0) (n : ℕ) (v : V) :
+theorem diagonalScale_pow (c : K) (hc : c ≠ 0) (n : ℕ) (v : V) :
     diagonalScale c hc ((D^n) v) = (c⁻¹)^n • (D^n) (diagonalScale c hc v) := by
   induction n with
   | zero => simp
@@ -197,11 +197,11 @@ private theorem normalized_data (q s : K →ₗ[F] K) (e : K ≃ₗ[F] K)
   rw [hz, sub_sub_cancel, σ.apply_symm_apply]
 
 
-private def coefficientAutomorphism (σ : K ≃ₐ[F] K) : V ≃ₗ[F] V :=
+def coefficientAutomorphism (σ : K ≃ₐ[F] K) : V ≃ₗ[F] V :=
   let e := (degreeLTEquiv K p).restrictScalars F
   e.trans ((LinearEquiv.piCongrRight fun _ : Fin p => σ.toLinearEquiv).trans e.symm)
 
-private theorem coefficientAutomorphism_coeff (σ : K ≃ₐ[F] K) (v : V) (n : ℕ) :
+theorem coefficientAutomorphism_coeff (σ : K ≃ₐ[F] K) (v : V) (n : ℕ) :
     (coefficientAutomorphism σ v : K[X]).coeff n = σ ((v : K[X]).coeff n) := by
   by_cases hn : n < p
   · change (degreeLTEquiv K p) (coefficientAutomorphism σ v) ⟨n,hn⟩ = _
@@ -212,7 +212,7 @@ private theorem coefficientAutomorphism_coeff (σ : K ≃ₐ[F] K) (v : V) (n : 
         (by exact_mod_cast (by omega : p ≤ n)))
     rw [hz, hz, map_zero]
 
-private theorem coefficientAutomorphism_smul (σ : K ≃ₐ[F] K) (a : K) (v : V) :
+theorem coefficientAutomorphism_smul (σ : K ≃ₐ[F] K) (a : K) (v : V) :
     coefficientAutomorphism σ (a • v) = σ a • coefficientAutomorphism σ v := by
   apply Subtype.ext
   apply Polynomial.ext
@@ -220,7 +220,7 @@ private theorem coefficientAutomorphism_smul (σ : K ≃ₐ[F] K) (a : K) (v : V
   simp only [coefficientAutomorphism_coeff, Submodule.coe_smul, coeff_smul,
     smul_eq_mul, map_mul]
 
-private theorem coefficientAutomorphism_derivative (σ : K ≃ₐ[F] K) (v : V) :
+theorem coefficientAutomorphism_derivative (σ : K ≃ₐ[F] K) (v : V) :
     coefficientAutomorphism σ (D v) = D (coefficientAutomorphism σ v) := by
   apply Subtype.ext
   apply Polynomial.ext
