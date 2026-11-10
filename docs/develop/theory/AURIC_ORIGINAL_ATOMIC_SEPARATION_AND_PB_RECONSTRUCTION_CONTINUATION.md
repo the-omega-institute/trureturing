@@ -3815,3 +3815,581 @@ C*理想与谱的对应、理想表示的唯一非退化延拓、不可约分离
 [ECT-AS]: https://pmc.ncbi.nlm.nih.gov/articles/PMC22571/
 
 ## 追加锚（本行以下为增补区）
+
+## 59. 完整 CAR 原域与辅助不减约窗
+
+**定义 59.1（同一原候选与数学引文）。** 保持42.2的完整原候选 $\mathsf H_A(D)$：$A$ 是已给的含单位复C*代数，$E=A_{\rm sa}$，$S(a,b)=a\circ b=(ab+ba)/2$，$C=A_+$，$u=1$，$N(a)=\|a\|$。同一原正实线性评价族 $\mathcal P$ 分离 $E$ 并准确决定锥；原世界、原标签、每份原评价和全部质量 $m_\gamma=\gamma(1)$ 保持，包括零、不等、次归一及原表示意义下的非正常评价。$D:E^2\to E$ 是同一个任意总映射。全部原有向二表为
+
+$$
+\begin{pmatrix}
+\gamma(a^2)&\gamma(a\circ b)-i\gamma D(a,b)\\
+\gamma(a\circ b)-i\gamma D(b,a)&\gamma(b^2)
+\end{pmatrix}\succeq0
+\qquad(a,b\in E,\ \gamma\in\mathcal P).
+\tag{59.1}
+$$
+
+A2仍要求全部相加三表 $(a+b,a,b)$ 及其排列的实部在整个 $\mathbb R^3$ 上半正定，并有对应的相加零方向。A3仍要求 $1^2=1$，以及同一个固定有理 $0<\vartheta\le1$ 上的全部 $0\le a\le\vartheta1\Rightarrow a^2\le a$。对每个实际原三元组 $(h;a,b)$，完整PB准确为
+
+$$
+\begin{gathered}
+v=D(h,a)-h\circ b,\qquad w=h\circ a+D(h,b),\\
+D(a+v,b+w)-D(a-v,b-w)=-2a\circ v-2b\circ w.
+\end{gathered}
+\tag{59.2}
+$$
+
+不增加复三表正性，不预给 $D$ 的可加、齐次、连续、可测、协变、单位平移、输出闭合、商下降或双对偶延拓。以下数学引文固定取 `75ad65c4dd9ea2d5e066bed6910b76267a8258e6`；各引文内部递归纳入的上游身份仍按其自身定义解释。
+
+| 原数学来源 | 直接消费的准确结论 |
+| --- | --- |
+| [中央卷16.2、62.1、77.1–77.2](AURIC_CENTRAL_RESPONSE_SQUARE_AND_RADIAL_CONSISTENCY.md) | 正交面积产生实际三轴；整个标量平方片的原仿射双线性，不预要求输出闭合。 |
+| [中央续卷134.1、159.1](AURIC_CENTRAL_RESPONSE_SQUARE_AND_RADIAL_CONSISTENCY_CONTINUATION.md) | 实际框架的全环境中央取向与两个框架的交叠交换子律。 |
+| 中央续卷163.1、182.2 | 任意原第二输入的仿射首轴横向投影；实际反射框架的旧第三值及同一取向。 |
+| [运输续卷118.1–118.3、119.1](AURIC_ORIGINAL_POLYNOMIAL_PB_TRANSPORT_AND_FIBER_BOUNDARIES_CONTINUATION.md) | 第一框架下的固定偶余量；完整原条件下 $[c,r]=0\Longleftrightarrow r=0$。 |
+| [谱混合卷55.6](AURIC_SPECTRAL_MIXED_RESPONSES_AND_DIRECT_WINDOW_BOUNDARIES.md) | 原偶第二输入的整条仿射轴零行。 |
+| 本卷43.1、48.1–48.2；[配平续卷142.1](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md) | 同表正读取；两份实际内值已知后的准确Cayley运输；含奇异矩阵的有限极分解。 |
+
+上述运输续卷与配平续卷的名称只定位本表数学引文，不改变28.1及57.1内部缩写的含义。本节不调用42.4的本质连续迹前件，也不把完整von Neumann原域上的定理套给CAR的范数原域。
+
+由43.1，任意数学正实泛函 $\phi$ 都可读取同一张原二表，且
+
+$$
+\begin{gathered}
+D(b,a)=-D(a,b),\qquad D(0,a)=D(a,0)=0,\\
+|\phi D(a,b)|^2\le\phi(a^2)\phi(b^2)-\phi(a\circ b)^2,\\
+\|D(a,b)\|\le\|a\|\|b\|.
+\end{gathered}
+\tag{59.3}
+$$
+
+最后一式只需对数学态读取，再用自伴范数的态分离：$\phi(a^2)\le\|a\|^2\phi(1)$，另一平方同理。正读取先由全部原评价及准确锥取得，不把数学态加入实际准备族，也不除以任何原质量。既有全单位行另给 $D(s1,a)=0$，其中 $s\in\mathbb R$、$a\in E$。
+
+**定义 59.2（固定原输出及辅助供应）。** 固定一份实际框架
+
+$$
+\begin{gathered}
+h^2=e^2=j^2=1,\qquad he=-eh,\quad hj=-jh,\quad ej=-je,\\
+j=D(h,e),\qquad Q=ihej\in Z(A),\quad Q^*=Q,\quad Q^2=1.
+\end{gathered}
+\tag{59.4}
+$$
+
+实际指元素属于同一原域，不指已取得物理操作。中央续卷134.1供应这里的 $Q$。任取原自伴 $c,z$，$[h,c]=0$、$hz=-zh$，并取实数 $R$。运输续卷118.3供应
+
+$$
+\begin{gathered}
+x=c+z,\quad t=D(h,z)=iQhz,\quad g=D(Rh,x),\quad r=g-Rt,\\
+[h,r]=0,\qquad ht=-th,\qquad z\circ t=0.
+\end{gathered}
+\tag{59.5}
+$$
+
+$x,t,g,r$ 在以下全部分割中固定。谱混合卷55.6还给
+
+$$
+[h,y]=0\quad\Longrightarrow\quad
+D(\alpha1+\beta h,y)=0
+\qquad(\alpha,\beta\in\mathbb R,\ y\in E).
+\tag{59.6}
+$$
+
+设一族有限正迹 $\mathcal T$ 分离 $A$ 的正元素，记 $m_\tau=\tau(1)$、$\|b\|_{2,\tau}^2=\tau(b^*b)$，允许零迹。给定固定 $L>0$；对趋于无穷的整数 $N$，供应两两正交的实际投影 $q_{\epsilon k}$，$\epsilon=\pm1$、$1\le k\le N$，以及实中心 $|a_k|\le L$，满足
+
+$$
+\begin{gathered}
+\sum_{\epsilon,k}q_{\epsilon k}=1,\qquad
+hq_{\epsilon k}=\epsilon q_{\epsilon k},\\
+d_N=\sum_{\epsilon,k}a_kq_{\epsilon k},\qquad
+\Delta_N=c-d_N,\qquad\|\Delta_N\|\le\kappa_N.
+\end{gathered}
+\tag{59.7}
+$$
+
+零窗仍保留索引。不要求 $[c,q_{\epsilon k}]=0$ 或 $[c,d_N]=0$；供应可以只依赖 $c,h,N$。这些供应条件用于60.1的一般充分定理；61.1在CAR中实际证明它们，不将其另列为CAR公理。
+
+## 60. 不减约误差的全部矩形块与迹预算
+
+**定理 60.1（同一原反射行的不减约窗估计）。** 在59.1–59.2下，固定 $R\ne0$，令
+
+$$
+\begin{gathered}
+C_0=\|c\|,\quad Z_0=\|z\|,\quad G_0=\|g\|,\quad\rho=\|r\|,\\
+M=(1+R^2)C_0+Z_0+G_0+2R^2L,\qquad
+K=M+\rho/|R|+(1+R^2)L.
+\end{gathered}
+\tag{60.1}
+$$
+
+每个所给分割及每份 $\tau\in\mathcal T$ 都满足
+
+$$
+\boxed{\begin{aligned}
+\|[d_N,r]\|_{2,\tau}^2
+&\le4\kappa_N^2K^2(N-1)m_\tau,\\
+\|[c,r]\|_{2,\tau}
+&\le2\kappa_N\sqrt{m_\tau}\bigl(K\sqrt{N-1}+\rho\bigr).
+\end{aligned}}
+\tag{60.2}
+$$
+
+若 $N\kappa_N^2\to0$，则同一个原余量 $r=0$，从而
+
+$$
+D(Rh,c+z)=RiQhz=\frac{iQ}{2}[Rh,c+z].
+\tag{60.3}
+$$
+
+$R=0$ 时同式由零槽成立。常数不含随分割变动的未知响应，并有完全已知的界
+
+$$
+\begin{gathered}
+G_0\le|R|(C_0+Z_0),\qquad \|t\|=Z_0,\qquad
+\rho\le|R|(C_0+2Z_0),\\
+K\le(2+R^2+|R|)C_0+(3+|R|)Z_0+(1+3R^2)L.
+\end{gathered}
+\tag{60.4}
+$$
+
+证明。固定 $N,\epsilon$ 及 $k\ne l$，简记 $q_k=q_{\epsilon k}$、$q_l=q_{\epsilon l}$、$q=q_k+q_l$、$a=a_k$、$b=a_l$、$\Delta=\Delta_N$。在同一原域中取
+
+$$
+\begin{gathered}
+p'=q_k+eq_ke,\quad s=1-2p',\quad H=hs,\\
+T=R\epsilon(a+b)1+R(b-a)H,\qquad V=T-2Rhc.
+\end{gathered}
+\tag{60.5}
+$$
+
+$eq_ke=2e\circ(e\circ q_k)-q_k$ 是原标签，处于相反 $h$ 角。因此 $p'$ 为投影，$s^2=1$、$[s,h]=[s,e]=0$，且 $Hq_k=-\epsilon q_k$、$Hq_l=\epsilon q_l$。中央续卷182.2准确给实际旧值 $D(H,e)=sj$ 及同一 $Q$；其182.1参数可取背景 $s$、$\lambda=0,\nu=1,z_0=0$。这仅供应第二框架，不替换当前目标 $c$。中央续卷163.1于是给
+
+$$
+P_H^-D(T,y)=R(b-a)iQH P_H^-y,
+\qquad P_H^-y=(y-HyH)/2
+\quad(y\in E).
+\tag{60.6}
+$$
+
+该式包含 $a=b$；没有使用换轴协变或未知首槽齐次。
+
+由于 $T-Rhc$ 是 $h$-偶，59.6支付实际内值 $D(Rh,T-Rhc)=0$。另一内值始终为固定的 $g$。完整PB取字面三元组 $(Rh;x,T-Rhc)$，定义
+
+$$
+\begin{gathered}
+A_+=x+g+R^2c-RhT,\qquad
+A_-=x-g-R^2c+RhT,\\
+\mathcal J=-2x\circ g-2R^2z\circ c+2Rz\circ(hT),\qquad
+O=D(V,A_-).
+\end{gathered}
+\tag{60.7}
+$$
+
+PB及反对称性准确给
+
+$$
+O=D(T,A_+)+\mathcal J.
+\tag{60.8}
+$$
+
+这里只展开已知Jordan乘法；其中的抵消为
+
+$$
+c\circ(hT)=(hcT+hTc)/2=T\circ(hc),
+$$
+
+它只需 $[h,c]=[h,T]=0$，不需 $[c,T]=0$。
+
+所选角上 $Tq_k=2R\epsilon aq_k$、$Tq_l=2R\epsilon bq_l$，故有一侧的准确等式和序界
+
+$$
+\begin{gathered}
+Vq=-2Rh\Delta q,\qquad qV^2q\le4R^2\kappa_N^2q,\\
+\|T\|\le |R|(|a+b|+|b-a|)\le2|R|L,
+\qquad\|A_-\|\le M.
+\end{gathered}
+\tag{60.9}
+$$
+
+不要求 $q$ 减约 $V$。对每个数学正泛函 $\omega$，用原正读取 $\phi(y)=\omega(qyq)$ 读取实际表 $(V,A_-,O)$。59.3给
+
+$$
+|\omega(qOq)|^2\le
+4R^2\kappa_N^2M^2\omega(q)^2.
+$$
+
+由角 $qAq$ 中的态序分离，得 $\|qOq\|\le2|R|\kappa_NM$。若 $q=0$ 结论直接成立。令 $m_k=\tau(q_k)$、$m_l=\tau(q_l)$；对 $O_{kl}=q_kOq_l$，分别估计 $O_{kl}^*O_{kl}$、$O_{kl}O_{kl}^*$，迹循环性给
+
+$$
+\|O_{kl}\|_{2,\tau}
+\le2|R|\kappa_NM\sqrt{\min(m_k,m_l)}.
+\tag{60.10}
+$$
+
+现在保留不减约造成的两笔误差。令 $X=q_krq_l$、$\Delta_{kl}=q_k\Delta q_l$、$\eta=\epsilon R(a-b)$。因 $z,t$ 为 $h$-奇、$r,c,hT$ 为 $h$-偶、$z\circ t=0$，逐项有
+
+$$
+\begin{gathered}
+q_kA_+q_l=X+(1+R^2)\Delta_{kl},\\
+q_k\mathcal Jq_l=-(cr+rc)_{kl}
+=-(a+b)X-(\Delta r+r\Delta)_{kl}.
+\end{gathered}
+\tag{60.11}
+$$
+
+$q_k,q_l$ 的 $H$ 符号相反，所以60.6读取60.8得到完整矩形恒等式
+
+$$
+\boxed{\begin{aligned}
+O_{kl}={}&[i\eta Q-(a+b)1]X\\
+&+i\eta(1+R^2)Q\Delta_{kl}
+-(\Delta r+r\Delta)_{kl}.
+\end{aligned}}
+\tag{60.12}
+$$
+
+尤其不能把 $q_kA_+q_l$ 写成 $X$。最后一项准确包含所有窗间耦合：若 $q_\alpha$ 遍历59.7的全部 $2N$ 个窗，则
+
+$$
+(\Delta r+r\Delta)_{kl}
+=\sum_\alpha
+(q_k\Delta q_\alpha r q_l+q_krq_\alpha\Delta q_l).
+\tag{60.13}
+$$
+
+此和包括其他同号窗及全部异号窗；其中为零的块由实际奇偶性消失，不由删去索引消失。
+
+$Q^*=Q,Q^2=1$ 给
+
+$$
+\|[i\eta Q-(a+b)1]X\|_{2,\tau}^2
+=(\eta^2+(a+b)^2)\|X\|_{2,\tau}^2.
+\tag{60.14}
+$$
+
+对任一有界 $B$，迹循环性给
+$\|q_kBq_l\|_{2,\tau}\le\|B\|\sqrt{\min(m_k,m_l)}$。
+分别用 $\|\Delta\|\le\kappa_N$、$\|\Delta r+r\Delta\|\le2\kappa_N\rho$，60.10–60.14的三角不等式给
+
+$$
+\begin{aligned}
+|a-b|\|X\|_{2,\tau}
+&\le\kappa_N\{2M+2\rho/|R|+(1+R^2)|a-b|\}
+\sqrt{\min(m_k,m_l)}\\
+&\le2\kappa_NK\sqrt{\min(m_k,m_l)}.
+\end{aligned}
+\tag{60.15}
+$$
+
+只约去非零的 $|R|$，不除以 $a-b$ 或 $a+b$。重心、零心、相反中心和零窗都包括在内。
+
+$[h,r]=0$ 使异号 $h$ 角的 $r$ 块为零；$[d_N,r]$ 的同号块为 $(a_k-a_l)q_{\epsilon k}rq_{\epsilon l}$，对角块为零。不同矩形在迹半范数中正交。全部有序矩形的预算准确为
+
+$$
+\begin{gathered}
+\|[d_N,r]\|_{2,\tau}^2
+=\sum_{\epsilon,k\ne l}|a_k-a_l|^2
+\|q_{\epsilon k}rq_{\epsilon l}\|_{2,\tau}^2,\\
+\sum_{\epsilon,k\ne l}\min(m_{\epsilon k},m_{\epsilon l})
+\le(N-1)\sum_{\epsilon,l}m_{\epsilon l}
+=(N-1)m_\tau.
+\end{gathered}
+\tag{60.16}
+$$
+
+这证明60.2第一式。另在整个代数中一次性估计
+
+$$
+\|[\Delta_N,r]\|_{2,\tau}
+\le2\kappa_N\|r\|_{2,\tau}
+\le2\kappa_N\rho\sqrt{m_\tau}.
+\tag{60.17}
+$$
+
+与 $[c,r]=[d_N,r]+[\Delta_N,r]$ 合并即给第二式，没有漏掉 $N-1$。$N\kappa_N^2\to0$ 时，同一固定非负数 $\tau([c,r]^*[c,r])$ 被任意小的预算所界，故为零。迹族分离正元素，得 $[c,r]=0$；运输续卷119.1在同一 $R,c,z,x,g,r$ 上才给 $r=0$。这里完整消费该处的字符读取和余量支撑证明，不把交换性本身误当作余量消失。60.4由59.3及 $t=iQhz$ 直接给出。零迹、零窗及 $N=1$ 的估计亦保持。∎
+
+## 61. CAR 内部供应及所有实际反射的共同符号
+
+**定理 61.1（CAR 的全部原反射行）。** 在59.1下，若已给载体准确为
+
+$$
+A=\overline{\bigcup_{n\ge1}A_n}^{\|\cdot\|},\qquad
+A_n=\bigotimes_{k=1}^nM_2(\mathbb C),
+\qquad a\longmapsto a\otimes1,
+\tag{61.1}
+$$
+
+则存在一个共同普通数 $\sigma\in\{1,-1\}$，使每个实际 $h,e\in E$ 满足 $h^2=e^2=1$、$he=-eh$ 时，对全部实 $R$、全部原 $b\in E$ 都有
+
+$$
+\boxed{D(Rh,b)=\frac{\sigma i}{2}[Rh,b].}
+\tag{61.2}
+$$
+
+此处CAR是完整原载体前件，不是从裸 $\Omega$ 推出的结论。
+
+证明。先在本证明内部供应60.1所需的成熟C*结构。相容有限矩阵归一迹 $2^{-n}\operatorname{Tr}$ 在稠密并上给有界正迹，延为 $A$ 的迹态 $\tau$。有限张量偏迹给正含单位压缩 $E_n:A\to A_n$；它们保持 $\tau$、为 $A_n$ 双模映射，并有 $E_n(a)\to a$ 的范数收敛。这些事实先在局部张量上成立，再由压缩性及稠密性成立于全 $A$。若 $a\ge0$、$\tau(a)=0$，则 $E_n(a)\ge0$ 且有限矩阵迹为零，所以 $E_n(a)=0$，从而 $a=0$。故单份 $\tau$ 已忠实。若 $a\in Z(A)$，双模性使 $E_n(a)$ 在 $A_n$ 中中央，故 $E_n(a)=\tau(a)1$；范数收敛给
+
+$$
+Z(A)=\mathbb C1.
+\tag{61.3}
+$$
+
+该数学归一迹不改变任何原评价或原质量。
+
+再供应原 $h$-偶背景的有限谱逼近。所用近投影酉共轭与压缩只是成熟函数演算的中间步骤。任意原投影 $p$，取有限阶段自伴 $b$，$\|b-p\|<\varepsilon<1/4$。谱位于 $\{0,1\}$ 的 $\varepsilon$ 邻域，有限矩阵投影 $p_0=1_{(1/2,\infty)}(b)$ 满足 $\|p_0-p\|<2\varepsilon<1$。令
+
+$$
+v=p_0p+(1-p_0)(1-p)=1+(p_0-p)(2p-1),
+\qquad u=v(v^*v)^{-1/2}.
+\tag{61.4}
+$$
+
+$v$ 可逆，$vp=p_0v$，且 $v^*v$ 与 $p$ 交换；故 $u$ 酉且 $upu^*=p_0$。若自伴 $c$ 与 $p$ 交换，在包含 $p_0$ 的后续矩阵阶段中逼近 $ucu^*$，再用含单位正压缩
+
+$$
+y\longmapsto p_0yp_0+(1-p_0)y(1-p_0)
+$$
+
+保持逼近。其值为与 $p_0$ 交换的有限谱自伴元；共轭回去，得到与 $p$ 交换的原有限谱元逼近 $c$。取 $p=(1+h)/2$，便供应任意原偶 $c$；共轭只构造已知标签，不宣称 $D$ 协变。连续谱没有被换成原背景的精确本征窗。
+
+固定 $L=\|c\|+1$。对每个 $N$ 选与 $h$ 交换的有限谱 $\widetilde c_N$，使
+
+$$
+\|c-\widetilde c_N\|<\min(1/2,L/N),\qquad
+\|\widetilde c_N\|<L.
+$$
+
+把 $[-L,L]$ 分成 $N$ 个长度 $2L/N$ 的半开区间，最后一段包含右端点，中心为 $a_k=-L+(2k-1)L/N$。将 $\widetilde c_N$ 的有限谱投影按区间及 $h$ 符号分组，得到59.7的实际 $q_{\epsilon k}$。它们是有限谱函数演算与 $(1+\epsilon h)/2$ 的乘积，均属于原 $A$。因此
+
+$$
+\|c-d_N\|\le2L/N=\kappa_N,
+\qquad N\kappa_N^2=4L^2/N\longrightarrow0.
+\tag{61.5}
+$$
+
+原有限谱值可任意多，分组后仍准确只有 $2N$ 个索引。窗减约 $\widetilde c_N,h$，不宣称减约 $c$。
+
+对任意所述 $h,e$，中央卷16.2的正交面积式使 $j=D(h,e)$ 满足59.4的实际三轴条件。中央续卷134.1及61.3给 $Q=\sigma_B1$。对每个原 $b$，用 $c=(b+hbh)/2$、$z=(b-hbh)/2$，并用61.5、忠实迹及60.1，得
+
+$$
+D(Rh,b)=R i\sigma_Bhz=\frac{i\sigma_B}{2}[Rh,b].
+\tag{61.6}
+$$
+
+尚须说明不同框架为何同号。框架的 $h,e$ 生成一个实际含单位 $M_2$ 子代数 $B$；$j=i\sigma_Bhe$ 已属于其中。中央卷62.1、77.1–77.2给此四维窗的整张原表，所以 $B$ 中任意Pauli轴对的框架都具有同一符号 $\sigma_B$。两个这样的子代数若不逐元素交换，由Pauli基张成性可选各自一根轴 $h_1,h_2$，使 $[h_1,h_2]\ne0$。中央续卷159.1给
+
+$$
+(\sigma_{B_1}-\sigma_{B_2})[h_1,h_2]=0,
+$$
+
+所以两符号相同。若它们逐元素交换，各选Pauli对 $(h_1,e_1)$、$(h_2,e_2)$。原自伴对合 $b=e_1e_2$ 同时反交换于 $h_1,h_2$；$(b,h_1)$ 生成第三个实际含单位 $M_2$。将159.1分别用于 $b,h_1$ 和 $b,h_2$，两交换子均非零，第三个窗便将两符号接通。首个张量因子保证至少存在一窗。于是所有实际框架共用同一 $\sigma$，证明61.2。∎
+
+## 62. 两份原内行与有限矩阵相位的准确生成
+
+**定理 62.1（全部局部酉元保持同一原残差）。** 在61.1的完整条件下，取其共同 $\sigma$，置 $\jmath=\sigma i$、$K_\sigma(a,b)=\jmath[a,b]/2$。对每个原 $W\in A$，准确复用48.1定义
+
+$$
+X(W)=(W+W^*)/2,\quad Y(W)=(W-W^*)/(2\jmath),\qquad
+F(W)=D(X(W),Y(W))-K_\sigma(X(W),Y(W)).
+\tag{62.1}
+$$
+
+则对每个有限阶段酉元及任意原 $W$，
+
+$$
+\boxed{F(UW)=F(W)
+\qquad(U\in\bigcup_n\mathcal U(A_n)).}
+\tag{62.2}
+$$
+
+证明。先支付每个相位的实际PB。若 $H$ 是某有限阶段内迹零的自伴酉元，正负本征空间等维；交换两组正交基给该阶段内实际 $e^2=1$、$He=-eH$。因此61.2供应全部 $D(RH,a)=K_\sigma(RH,a)$，第二输入 $a$ 遍历整个原 $E$，不只遍历有限阶段。$H=1$ 时由全单位零行供应同式。
+
+任取 $\alpha\in[-\pi,\pi]$，令 $r=\sigma\tan(\alpha/4)H$、$C_r=(1+\jmath r)(1-\jmath r)^{-1}$。参数有限且模不超过一；已知乘法的函数演算给
+
+$$
+C_r=\cos(\alpha/2)1+i\sin(\alpha/2)H,
+\qquad C_r^2=e^{i\alpha H}.
+\tag{62.3}
+$$
+
+对每个当前原标签 $T\in A$，取实际逆标签
+
+$$
+(1-\jmath r)^{-1}T=X+\jmath Y,\qquad X,Y\in E.
+$$
+
+上述整行分别给这两份实际内值
+
+$$
+D(r,X)=K_\sigma(r,X),\qquad D(r,Y)=K_\sigma(r,Y).
+\tag{62.4}
+$$
+
+直接应用48.2得 $F(C_rT)=F(T)$。再对当前标签 $C_rT$ 重新取逆标签的两份原实虚部，并逐份用同一整行支付62.4，第二次48.2给
+
+$$
+F(e^{i\alpha H}T)=F(C_r^2T)=F(T).
+\tag{62.5}
+$$
+
+包括 $\alpha=\pm\pi$；没有正切极点。每次两个未知内误差都是由整行准确为零，没有以极限消除任一误差。
+
+现在只用一个有限相位分解。固定 $U\in\mathcal U(A_n)$，有限维谱定理给已知矩阵酉元 $V$ 及 $\theta_\epsilon\in[-\pi,\pi]$，使
+
+$$
+U=V\operatorname{diag}(e^{i\theta_\epsilon})V^*,
+\qquad\epsilon\in\{\pm1\}^n.
+$$
+
+对 $S\subset\{1,\ldots,n\}$ 定义
+
+$$
+\chi_S(\epsilon)=\prod_{k\in S}\epsilon_k,\quad
+\alpha_S=2^{-n}\sum_\epsilon\theta_\epsilon\chi_S(\epsilon),\quad
+H_S=V\operatorname{diag}(\chi_S)V^*.
+\tag{62.6}
+$$
+
+有限字符正交式 $2^{-n}\sum_\epsilon\chi_S(\epsilon)\chi_T(\epsilon)=\delta_{ST}$ 给 $\theta_\epsilon=\sum_S\alpha_S\chi_S(\epsilon)$，并且 $|\alpha_S|\le\pi$。这些已知 $H_S$ 彼此交换，故准确有
+
+$$
+U=\prod_{S\subset\{1,\ldots,n\}}e^{i\alpha_SH_S}.
+\tag{62.7}
+$$
+
+$H_\varnothing=1$，其余 $H_S$ 都是配平反射；其实际伴轴可直接取 $V$ 共轭某个 $S$ 中位置的张量Pauli翻转。这里 $V$ 仅用于制造已知标签，不使用旧 $D$ 的协变性。把62.5依次用于有限乘积的每个当前原标签，至多 $2^{n+1}$ 次准确Cayley运输便给62.2。没有稠密子群到未知函数的连续延拓，也不要求步数关于 $n$ 一致有界。∎
+
+## 63. 全部原 CAR 输入的同响应双向分类
+
+**定理 63.1（唯一共同符号与全部原对）。** 对61.1的完整CAR原域及59.1的原评价资料，
+
+$$
+\boxed{\quad
+\mathsf H_A(D)
+\quad\Longleftrightarrow\quad
+\exists!\,\sigma\in\{1,-1\}\ 
+\forall a,b\in A_{\rm sa},\qquad
+D(a,b)=\frac{\sigma i}{2}[a,b].\quad}
+\tag{63.1}
+$$
+
+两种符号各自满足全部原关系及全部原质量，存在唯一性指给定同一 $D$ 的符号唯一。
+
+证明。正向使用61.1的共同符号及62.1的同一 $F$。59.3和已知交换子范数界给每份实际 $Z$ 的逐点预算
+
+$$
+\|F(Z)\|\le2\|X(Z)\|\|Y(Z)\|.
+\tag{63.2}
+$$
+
+固定最初原 $W$。任意 $\varepsilon>0$，取有限阶段 $B\in A_n$，$\|W-B\|<\varepsilon$。配平续卷142.1所用的有限矩阵极分解在奇异情形也给实际酉元 $U\in A_n$，$UB\ge0$：例如 $B=V\Sigma W_0^*$ 的奇异值分解给 $U=W_0V^*$；零奇异值处补成完整正交基，不要求一般无限代数中的极部分可酉补全。置 $Z=UW$，则
+
+$$
+\begin{gathered}
+F(Z)=F(W),\qquad \|X(Z)\|\le\|W\|,\\
+Y(Z)=Y(U(W-B)),\qquad \|Y(Z)\|<\varepsilon.
+\end{gathered}
+\tag{63.3}
+$$
+
+第一式由有限条准确PB运输取得，其余只用已知乘法和取实虚部的范数压缩。于是同一固定原输出满足
+
+$$
+\|F(W)\|=\|F(UW)\|\le2\|W\|\varepsilon
+\qquad\text{对每个 }\varepsilon>0.
+\tag{63.4}
+$$
+
+故 $F(W)=0$；$W=0$ 亦由零槽包括。对任意原 $a,b$ 取 $W=a+\jmath b$，便得63.1右端。Pauli对的交换子非零，故符号唯一。本证明没有把 $D(X(Z),Y(Z))$ 换成 $D(UB,0)$，没有令输入极限穿过 $D$，也没有在双对偶上调用 $D$。
+
+反向固定任一符号并定义 $D=K_\sigma$。对自伴原输入，$S-iD$ 在 $\sigma=1$ 时为 $ab$，在 $\sigma=-1$ 时为 $ba$。任一有向二表的复二次型因此分别为 $\gamma_{\mathbb C}(Z^*Z)$ 或 $\gamma_{\mathbb C}(ZZ^*)$，$Z=z_1a+z_2b$，均非负；Hermitian性及两种次序也同时成立。A2的全部实三表二次值为 $\gamma((\sum_lt_la_l)^2)$，指定相加向量给零平方；全部排列相同。A3由原谱序给出，保留原固定 $\vartheta$。
+
+任取原三元组 $(h;a,b)$，用该同一映射形成59.2的实际 $v,w$。置 $W=a+\jmath b$，已知乘法准确给
+
+$$
+(a\pm v)+\jmath(b\pm w)=(1\pm\jmath h)W,
+$$
+
+从而
+
+$$
+\begin{aligned}
+(a\pm v)^2+(b\pm w)^2+2D(a\pm v,b\pm w)
+&=((1\pm\jmath h)W)^*((1\pm\jmath h)W)\\
+&=W^*(1+h^2)W.
+\end{aligned}
+\tag{63.5}
+$$
+
+两份真正外层的平方相同，完整原PB成立，不只成立于辅助窗网络。每份原评价随后读取这些元素等式，没有质量归一，也未删去零、不等或非正常评价。∎
+
+## 64. 同一乘法、量子对应及递归全文来源边界
+
+**推论 64.1（原代数及全部质量的静态后果）。** 在63.1下，自伴输入上的 $a\star b=a\circ b-iD(a,b)$ 双复线性延成同一原复空间上的乘法
+
+$$
+x\star y=\frac{xy+yx}{2}+\frac\sigma2(xy-yx)
+=\begin{cases}xy,&\sigma=1,\\yx,&\sigma=-1.\end{cases}
+\tag{64.1}
+$$
+
+它给 $A$ 或 $A^{\rm op}$ 的C*结构，保持原伴随、锥、单位和范数。原 $D$ 的实双线性、范数连续性、任意单位平移中性及闭理想上的核平移不变性都是识别后的结论。对任意有限原输入，全部旧复Gram表为正，并满足原R：
+
+$$
+\begin{gathered}
+\sum_{k,l}\overline z_kz_l
+\{\gamma(a_k\circ a_l)-i\gamma D(a_k,a_l)\}
+=\gamma_{\mathbb C}(Z^*\star Z)\ge0,
+\qquad Z=\sum_lz_la_l,\\
+(a\circ b)\circ c-D(D(a,b),c)
+=a\circ(b\circ c)-D(a,D(b,c)).
+\end{gathered}
+\tag{64.2}
+$$
+
+每份原评价有数学GNS表示，向量质量准确为 $\|\xi_\gamma\|^2=m_\gamma$；它们的直和忠实、保单位、等距并反映原锥，零质量给零向量。
+
+证明。64.1是63.1的直接代入；两种乘法都结合且有同一自伴平方，所以C*范数、正锥及单位保持。64.2第一式为正平方展开，第二式为结合律实部。GNS及正泛函延拓在这同一结构上应用，原评价分离使直和忠实，完全沿55.1–55.2的成熟后端，不用它反推未知 $D$ 的线性。该表示像不必为全 $B(H)$；CAR载体、数学Hilbert表示、Fock表示的选择和实际准备是不同前件。∎
+
+**定义 64.2（不缩减的同源合同）。** $\mathcal C_{47}^{\rm pin}(\Omega;S,D)$ 严格就是28.1及57.1所规定的同一谓词：SQ47.1–47.13全部定义、公式、量词与每项递归纳入的固定上游全文同时合取，其内部版本逐层保持。只将它消费的被选静态入口接到同一CAR对象及64.1–64.2；原根、全部静默和其他静态分支不改为CAR。下述对应是该全文合同的消费者说明，不替代其中任何充分前件。
+
+**命题 64.3（同响应代入与量子结构的条件范围）。** 在59.1的原评价背景和已给CAR载体下，
+
+$$
+\mathsf H_A(D)\wedge\mathcal C_{47}^{\rm pin}(\Omega;S,D)
+\quad\Longleftrightarrow\quad
+\exists!\sigma\in\{\pm1\}:\ 
+D=K_\sigma\ \wedge\ 
+\mathcal C_{47}^{\rm pin}(\Omega;S,K_\sigma).
+\tag{64.3}
+$$
+
+63.1供应标准量子运动学的相容复结合代数、正泛函、全部有限正Gram和数学Hilbert实现。实际可观测量、概率、复合、过程及动力学继续准确受以下原来源约束。
+
+1. 复Hilbert与相干叠加要求同一个 $\Omega/\mathrm{native}$、具名可取得标签、指定跨评价全词共同 $K/J/q$、parent/ready、合法控制与实际相干准备。64.1不制造这些来源或全 $B(H)$ 的可取得像。
+2. Born公式只在原事件绑定的实际完整菜单 $\sum_ke_k=1$ 且 $m_\gamma>0$ 时为 $p_\gamma(k)=\gamma(e_k)/m_\gamma$；角菜单还需其实际条件化与正角质量。零、不等、次归一质量及中心、经典、不等维和静默支保留。一般CAR态不自动为某固定物理表示中的正常密度算子；无限菜单的正常性、指定前对偶和收敛仍须来源。
+3. 张量解释要求同一个实际非零相关联合、忠实同向交换局部腿、联合生成与分离、所需重数、全部相关输入及递归同源参考。61.1的数学张量阶段及共同符号不生产该实际联合；相同边缘或分别可达亦不代付。
+4. typed CP与Kraus要求整台实际箭头的未归一回溯、合法typed前后接、反变复合、typed分区、全未来自然性与箭头下降，以及原完整参考路线。系统、整个环境、所有成功／失败／细记录／port／post-port输出和每份输出的每个仍合法未来，都在每层参考的范围内；全部实际投影、真支持及支持内补、准确支持运输、相关输入的交织夹界、每个所需有限深度和每个要求的正精度均保持。
+5. 仪器、TP、更新与Lüders要求完整typed菜单、原接受端、整个环境和上述全部输出未来、真正分组遗忘、AC、精确 $N_u$、X/Xs、原平方根词及各自接受条件。TP另需完整单位分区，Lüders另需同一完整输出的像内射线保持与校准；零和失败分支不删，只在严格正的实际输出质量处归一。一般CAR代数的CP映射不自动取得全 $B(H)$ 的Kraus或迹类公式。
+6. 全部合法顺序、自适应、并行历史及每份完整输出的每个仍合法未来，整个环境、细记录和泄漏、停止／拒绝／销毁、真正遗忘、同数两侧及同数逆向真实Return、读后同一完整活动输入、负提升两活路及相干聚合、完整CountRead producer均保留。精确正生成与闭正生成不混同；无限记录、可数可加、正常性和指定前对偶各守原前件。数学算子相同不合并原程序、读取次序、原 $q$ 零集或未来权限；未定义请求不补成零箭头。
+7. 动力、物理钟、能量与共同尺度要求保持原域的实际流、真实相位和门序列、同一可逆过程及实际逆、物理钟与单位、适用强连续酉实现、一般无界生成元定义域、Hamiltonian能量解释、共同仪器及同一正 $\hbar$。数学指数、证明中的逆元、迹和有限因子数都不生产这些来源；向量或密度微分公式仍限原生成元域、正常性及可微范围。
+
+证明。63.1的正向允许在原谓词中对同一 $D$ 作相等代入，反向由其完整逆向给 $\mathsf H_A(K_\sigma)$，所以64.3成立。其余逐项是28.1全文合同的原消费者条件；64.1–64.2只供应其中已识别的静态入口，未删去任何量词。因而64.3不单独断言合同已获实现，也不从CAR载体推出裸世界的全部量子物理来源。∎
+
+## 65. 承重连接、成熟工具与二元几何
+
+**定义 65.1（推导身份与适用边界）。** 60.12的两项不减约误差、60.15–60.17的全窗迹预算，及其与61.5、62.2、63.4的连接，是本组相对于所引原结果的 $\texttt{repo-derived}$ 综合：从同一完整PB与原正预算识别全部CAR旧响应。标量平方片、中央框架、交叠符号、实际反射、横向投影、偶零行、运输续卷119.1及本卷48.2均是已付工具，不另计为新定理靶。有限谱逼近、近投影的极共轭、压缩、忠实迹、标量中心、有限字符正交、谱定理、矩阵极分解和GNS均仅作为证明内部的成熟步骤。
+
+成熟C*函数演算、正压缩、态分离和态延拓沿58.2及运输续卷120.1的Blackadar，[*Operator Algebras*](https://bruceblackadar.com/Mathematics/Cycr.pdf)使用；61.4–61.5给当前所需的具体参数构造。Alfsen–Shultz，[*Orientation in operator algebras*](https://pmc.ncbi.nlm.nih.gov/articles/PMC22571/)，PNAS **95**，6596–6601，DOI `10.1073/pnas.95.12.6596`，Dynamical Correspondences及Theorem 1，是取向与相容乘法的成熟背景；其dynamical correspondence定义已要求线性赋值进入skew order derivations，不能据它给任意总 $D$ 偷加线性。本组不主张历史原创、文献穷尽或外部开放问题解决。
+
+60.1可用于其他完整含单位C*域，只要同一实际框架、正分离有限迹及59.7的供应率成立；其一般结论只是该反射整行。任意首输入分类另需准确相位运输和固定输出的虚部预算。61.1的完整CAR供应支付了这两项，不把一般C*域、真稠密原Jordan子域、非迹域或双对偶自动列入结论。所需数学假设变少的准确意义是：在已给CAR载体内，有限谱窗、迹、统一符号、全部第二输入反射行、相位生成和极近似都已成为推论；完整A1–A3/P2/PB、准确原锥及全部原量词没有减少，也没有独立公理最少性的主张。
+
+**命题 65.2（二元预算与有限三标签一致性的图景）。** 在63.1的范围内，二元正表与完整有限三标签配平将旧响应的自由度缩为同一个二值取向；其几何可由“薄板、接缝、封签”准确描述。
+
+证明。把每一对原标签想成一块带方向的薄板：二元正表规定它能承载的有向响应大小，板的平方越薄，允许的预算越小；完整PB则要求三件实际标签产生的两种接缝，回到同一张旧表时配平。对一份连续背景，不必把它切成与它完全交换的砖。只把已知背景近似为有限谱板，再按固定宽度分窗；窗与真正背景之间留下的边差，正是60.12中的 $\Delta$ 项与全部跨窗耦合。把这两笔差和全部 $N-1$ 迹成本一起付清，分割越细仍能把同一个固定交换残差压到零，119.1再消去同一个原余量。这里消失的是旧答案，不是另换一张连续表。
+
+反射行锁定以后，仍不能把任意首输入拆开并对未知 $D$ 求和。把一对原输入合成 $W$，把它的固定残差想成贴在 $W$ 上的封签。每次已支付两份内行的Cayley接缝都原封不动地运输这枚封签；有限字符分解把每个局部矩阵酉元准确拼成这些接缝。再取贴近 $W$ 的一份有限矩阵副本，只用副本选酉方向，却把该方向真正施于原 $W$：副本落到正轴，原对象的虚部便只剩任意小的范数误差。63.2给这份真实虚部的预算；固定封签若有非零重量，总有一次有限精度已容不下它，所以63.4迫使它为零。全表只余通常或相反的同一乘法方向。
+
+这份简洁来自准确运输和预算，而不是未知函数的连续性、局部闭合或完成延拓。正反两个方向都保留全部原质量。数学薄板和酉接缝也不制造准备、完整Born菜单、共同相关联合、整台仪器的全部输出未来、递归参考、真实返回或物理钟；这些准确仍由64.2的同一全文来源合同承担。∎
+
+## 追加锚（本行以下为增补区）
