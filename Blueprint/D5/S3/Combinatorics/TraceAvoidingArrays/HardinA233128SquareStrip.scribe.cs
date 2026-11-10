@@ -29,7 +29,11 @@ internal sealed class HardinA233128SquareStripDocument : IScribeDocumentDefiniti
                 "All counts use the literal filter in HardinA233128Rows. All names below "
                 + "are full Lean names. Fin.val is the natural value of a finite index. "
                 + "Nat.div denotes natural quotient and Nat.mod its nonnegative remainder; "
-                + "neither occurs in the formulas.")),
+                + "neither occurs in the formulas. At width 7 the generic "
+                + "width_counting_bridge applies with rowLegal, labels, compatible and "
+                + "bonds. The colour_bond_iff theorem identifies each vertical bond with "
+                + "inequality of complementary-pair labels, while widthNormal supplies "
+                + "the row-major precedence conditions.")),
             Describe.Lean(DescribeId.Create("certificate"),
                 DeclarationHandle.Create(Gid + "finite_certificate"), H("Single-row certificate"),
                 StatementSource.FromAuthor(Disp(Certificate())),

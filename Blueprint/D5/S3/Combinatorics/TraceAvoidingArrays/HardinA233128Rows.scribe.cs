@@ -146,7 +146,7 @@ internal sealed class HardinA233128RowsDocument : IScribeDocumentDefinition
                 Tree(depth + 1, 2 * code), Tree(depth + 1, 2 * code + 1));
         }
         return All("s", Seen(), All("p", PairRow(),
-            Eq(Call(Root + "boundaryClass", s, p), Conditional(Proj(s, false), 
+            Eq(Call(Root + "boundaryClass", s, p), Conditional(Proj(s, false),
                 Tree(0, 0), K(0)))));
     }
 

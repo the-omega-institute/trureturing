@@ -180,7 +180,7 @@ private theorem initial_fibres (k : Fin 21) :
     if c 0 = 0 ∧ good (false, false) c then
       (if rowProper (fun j => beta (c j)) ∧
         boundaryClass (finish (false, false) c) (labels c) = k then 1 else 0) else 0
-  rw [hr]
+  simp only [hr]
   by_cases hg : good (false, false) c <;> by_cases hz : c 0 = 0 <;> simp [hg, hz]
 
 private theorem initial_counts : ∀ k, firstCount k =
