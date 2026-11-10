@@ -9,8 +9,10 @@
 import Mathlib.Analysis.Calculus.InverseFunctionTheorem.Analytic
 import Mathlib.Topology.MetricSpace.Contracting
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.InverseDeriv
 import D5.S3.Analytic.OriginalHalfBinomialIntegral
 import Mathlib.Analysis.Complex.CauchyIntegral
+import Mathlib.Analysis.Real.Pi.Bounds
 import D5.S3.Analytic.PowerSeries.ScalarComposition
 import D5.S3.Analytic.Fourier.PositiveDefiniteImaginaryAxis
 
@@ -20,7 +22,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
 noncomputable section
 open Filter Metric
-open scoped Topology PowerSeries
+open scoped Topology PowerSeries NNReal ENNReal
 
 namespace D5.S3.Analytic.PowerSeries.DottieInverseSeries
 
@@ -88,7 +90,7 @@ private lemma step_lipschitz (w : ℂ) :
   apply (convex_closedBall (0 : ℂ) (1 : ℝ)).lipschitzOnWith_of_nnnorm_hasDerivWithin_le
     (f' := fun z => (1 - Complex.cos z) / 2)
   · intro z hz
-    dsimp only [inverseStep]
+    change HasDerivWithinAt (fun t : ℂ => (w + t - Complex.sin t) / 2) _ _ z
     convert
       (((hasDerivAt_const z w).add (hasDerivAt_id z)).sub
         (Complex.hasDerivAt_sin z)).div_const 2 |>.hasDerivWithinAt using 1 <;> simp
@@ -124,7 +126,10 @@ private lemma inverse_exists (w : ℂ) (hw : ‖w‖ < 7 / 4) :
 private lemma sineForward_inj : Set.InjOn sineForward (Metric.closedBall 0 1) := by
   intro x hx y hy he
   have hxfix : inverseStep (sineForward x) x = x := by dsimp [inverseStep, sineForward]; ring
-  have hyfix : inverseStep (sineForward x) y = y := by rw [he]; dsimp [inverseStep, sineForward]; ring
+  have hyfix : inverseStep (sineForward x) y = y := by
+    rw [he]
+    dsimp [inverseStep, sineForward]
+    ring
   have h := (step_lipschitz (sineForward x)).dist_le_mul x hx y hy
   rw [hxfix, hyfix] at h
   have hd : dist x y = 0 := by have := dist_nonneg (x := x) (y := y); norm_num at h; linarith
@@ -157,8 +162,9 @@ private lemma selectedInverse_analytic (w : ℂ) (hw : ‖w‖ < 7 / 4) :
   let x := selectedInverse w
   have hx := selectedInverse_spec w hw
   have ha := sineForward_analytic x
-  have hd := sineForward_deriv_ne_zero x (mem_closedBall.mpr
-    (le_of_lt (mem_ball.mp hx.1)))
+  have hd := sineForward_deriv_ne_zero x (by
+    have hxnorm : ‖x‖ < 1 := by simpa only [mem_ball, dist_zero_right] using hx.1
+    exact hxnorm.le)
   let l := ha.hasStrictDerivAt.localInverse sineForward (deriv sineForward x) x hd
   have hl : AnalyticAt ℂ l w := by
     rw [← hx.2]
@@ -204,8 +210,13 @@ private def endpointFunction (y : ℂ) : ℂ := Complex.sin (selectedInverse (y 
 private lemma endpointFunction_analytic (y : ℂ) (hy : ‖y‖ < 7 / 2) :
     AnalyticAt ℂ endpointFunction y := by
   have hr : ‖y / 2‖ < 7 / 4 := by rw [norm_div, Complex.norm_ofNat]; linarith
-  exact Complex.analyticAt_sin.comp
-    ((selectedInverse_analytic (y / 2) hr).comp (analyticAt_id.div_const 2))
+  have hlin : AnalyticAt ℂ (fun z : ℂ => z / 2) y :=
+    (analyticAt_id : AnalyticAt ℂ (fun z : ℂ => z) y).div_const
+  have hsel : AnalyticAt ℂ (fun z : ℂ => selectedInverse (z / 2)) y :=
+    AnalyticAt.comp (f := fun z : ℂ => z / 2) (x := y)
+      (selectedInverse_analytic (y / 2) hr) hlin
+  exact AnalyticAt.comp (f := fun z : ℂ => selectedInverse (z / 2))
+    (x := y) Complex.analyticAt_sin hsel
 
 private lemma endpointFunction_zero : endpointFunction 0 = 0 := by
   simp [endpointFunction, selectedInverse_zero]
@@ -214,8 +225,10 @@ private lemma endpointFunction_real (y : ℝ) (hy : |y| < 7 / 2) :
     (endpointFunction y).im = 0 := by
   have hr : |y / 2| < 7 / 4 := by rw [abs_div, abs_of_pos (by norm_num : (0 : ℝ) < 2)]; linarith
   have hs := selectedInverse_real (y / 2) hr
+  have hs' : (selectedInverse ((y : ℂ) / 2)).im = 0 := by
+    simpa only [Complex.ofReal_div, Complex.ofReal_ofNat] using hs
   have he : selectedInverse ((y : ℂ) / 2) = ((selectedInverse ((y : ℂ) / 2)).re : ℂ) := by
-    apply Complex.ext <;> simp [← Complex.ofReal_div, hs]
+    apply Complex.ext <;> simp [hs']
   dsimp [endpointFunction]
   rw [he]
   exact Complex.sin_ofReal_im _
@@ -228,7 +241,9 @@ private lemma endpointFunction_expansion :
     exact (endpointFunction_analytic z (by
       have hz' : ‖z‖ ≤ 13 / 4 := by simpa using hz
       linarith)).differentiableAt.differentiableWithinAt
-  exact ⟨_, hd.hasFPowerSeriesOnBall (R := (13 / 4 : ℝ≥0)) (by norm_num)⟩
+  refine ⟨cauchyPowerSeries endpointFunction 0 (13 / 4 : ℝ≥0), ?_⟩
+  convert hd.hasFPowerSeriesOnBall (R := (13 / 4 : ℝ≥0)) (by norm_num) using 1
+  norm_num
 
 private lemma arcsine_hasSum (x : ℝ) (hx : |x| < 1) :
     HasSum (fun n : ℕ =>
@@ -248,8 +263,8 @@ private lemma arcsine_hasSum (x : ℝ) (hx : |x| < 1) :
       ((continuousOn_const.sub (continuousOn_id.pow 2)).sqrt)
     intro t ht'
     apply ne_of_gt (Real.sqrt_pos.mpr _)
-    have := lt_of_le_of_lt (ht t ht') hx
-    nlinarith [sq_abs t]
+    change 0 < 1 - t ^ 2
+    exact sub_pos.mpr ((sq_lt_one_iff_abs_lt_one _).mpr (lt_of_le_of_lt (ht t ht') hx))
   have hi : (∫ t in (0 : ℝ)..x, 1 / Real.sqrt (1 - t ^ 2)) = Real.arcsin x := by
     convert intervalIntegral.integral_eq_sub_of_hasDerivAt
       (fun t ht' => Real.hasDerivAt_arcsin
@@ -259,7 +274,9 @@ private lemma arcsine_hasSum (x : ℝ) (hx : |x| < 1) :
     simp
   have hsum : Summable (fun n : ℕ => |x| ^ (2 * n)) := by
     simpa [pow_mul] using summable_geometric_of_norm_lt_one
-      (show ‖|x| ^ 2‖ < 1 by rw [Real.norm_eq_abs, abs_of_nonneg (sq_nonneg _)]; nlinarith)
+      (show ‖|x| ^ 2‖ < 1 by
+        rw [Real.norm_eq_abs, abs_of_nonneg (sq_nonneg _)]
+        exact (sq_lt_one_iff_abs_lt_one _).mpr (by simpa using hx))
   have hs := intervalIntegral.hasSum_integral_of_dominated_convergence
     (μ := MeasureTheory.volume) (a := 0) (b := x)
     (F := fun (n : ℕ) (t : ℝ) => b n * t ^ (2 * n))
@@ -277,14 +294,78 @@ private lemma arcsine_hasSum (x : ℝ) (hx : |x| < 1) :
     intervalIntegrable_const
     (MeasureTheory.ae_of_all _ fun t ht' => by
       have htx := lt_of_le_of_lt (ht t (Set.uIoc_subset_uIcc ht')) hx
-      have ht2 : t ^ 2 < 1 := by nlinarith [sq_abs t]
+      have ht2 : t ^ 2 < 1 := (sq_lt_one_iff_abs_lt_one _).mpr htx
       simpa [b, pow_mul] using
         OriginalHalfBinomialIntegral.binomial_hasSum (t ^ 2) (sq_nonneg t) ht2)
   rw [hi] at hs
   convert hs using 1
   ext n
   rw [intervalIntegral.integral_const_mul, integral_pow]
-  simp
+  simp only [zero_pow (by omega : 2 * n + 1 ≠ 0), sub_zero,
+    Nat.cast_mul, Nat.cast_ofNat]
+  dsimp [b]
+  ring
+
+private lemma alpha_real_odd (n : ℕ) :
+    (alpha (2 * n + 1) : ℝ) = OriginalHalfBinomialIntegral.b n / (2 * n + 1) := by
+  simp only [alpha, show (2 * n + 1) / 2 = n by omega,
+    show (2 * n + 1) % 2 = 1 by omega, one_ne_zero, ↓reduceIte]
+  push_cast
+  dsimp [OriginalHalfBinomialIntegral.b, Nat.centralBinom]
+  field_simp
+
+private lemma alpha_real_bound (n : ℕ) : ‖(alpha n : ℝ)‖ ≤ 1 := by
+  by_cases he : n % 2 = 0
+  · simp [alpha, he]
+  · obtain ⟨k, hk⟩ : ∃ k, n = 2 * k + 1 := ⟨n / 2, by omega⟩
+    rw [hk, alpha_real_odd, Real.norm_eq_abs, abs_of_nonneg (by
+      exact div_nonneg (OriginalHalfBinomialIntegral.b_nonneg k) (by positivity))]
+    apply (div_le_one (by positivity : (0 : ℝ) < 2 * k + 1)).mpr
+    have := OriginalHalfBinomialIntegral.b_le_one k
+    linarith [(Nat.cast_nonneg k : (0 : ℝ) ≤ k)]
+
+private lemma arcsine_expansion :
+    HasFPowerSeriesAt Real.arcsin
+      (PowerSeries.toFMS ℝ (arcsine.map (Rat.castHom ℝ))) 0 := by
+  let p := PowerSeries.toFMS ℝ (arcsine.map (Rat.castHom ℝ))
+  have hp : (1 : ℝ≥0∞) ≤ p.radius := by
+    simpa using p.le_radius_of_bound 1 (r := 1) (fun n => by
+      simpa [p, PowerSeries.toFMS, FormalMultilinearSeries.ofScalars_norm,
+        PowerSeries.coeff_map, arcsine] using alpha_real_bound n)
+  refine ⟨1, hp, by norm_num, ?_⟩
+  intro x hx
+  have hx' : |x| < 1 := by
+    simpa [edist_dist, dist_zero_right, Real.norm_eq_abs, ENNReal.ofReal_lt_one] using hx
+  have hall : HasSum (fun n : ℕ => (alpha n : ℝ) * x ^ n) (0 + Real.arcsin x) := by
+    apply HasSum.even_add_odd
+    · simp [alpha]
+    · convert arcsine_hasSum x hx' using 1
+      ext n
+      rw [alpha_real_odd]
+      ring
+  simpa [p, PowerSeries.toFMS, FormalMultilinearSeries.ofScalars_apply_eq, arcsine,
+    PowerSeries.coeff_map, smul_eq_mul, mul_comm] using hall
+
+private lemma endpointFunction_inverse (y : ℝ) (hy : |y| < 7 / 2) :
+    2 * (endpointFunction y).re + 2 * Real.arcsin (endpointFunction y).re = y := by
+  have hr : |y / 2| < 7 / 4 := by
+    rw [abs_div, abs_of_pos (by norm_num : (0 : ℝ) < 2)]
+    linarith
+  have hs : (selectedInverse ((y : ℂ) / 2)).im = 0 := by
+    simpa using selectedInverse_real (y / 2) hr
+  let x := (selectedInverse ((y : ℂ) / 2)).re
+  have he : selectedInverse ((y : ℂ) / 2) = (x : ℂ) := by
+    apply Complex.ext <;> simp [x, hs]
+  have hG := selectedInverse_spec ((y : ℂ) / 2) (by
+    rw [norm_div, Complex.norm_ofNat, Complex.norm_real, Real.norm_eq_abs]
+    linarith)
+  have hx : |x| < 1 := by simpa [he] using hG.1
+  have hF : x + Real.sin x = y / 2 := by
+    simpa [sineForward, he, Complex.sin_ofReal_re] using congrArg Complex.re hG.2
+  have hH : (endpointFunction y).re = Real.sin x := by simp [endpointFunction, he, Complex.sin_ofReal_re]
+  rw [hH, Real.arcsin_sin (by linarith [abs_le.mp hx.le, Real.pi_gt_three])
+    (by linarith [le_abs_self x, Real.pi_gt_three])]
+  linarith
 
 end D5.S3.Analytic.PowerSeries.DottieInverseSeries
 
