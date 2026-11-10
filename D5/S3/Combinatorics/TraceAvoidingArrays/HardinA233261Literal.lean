@@ -142,8 +142,10 @@ private theorem columns_constant {n : ℕ} (hn : 2 ≤ n)
   · exact (adjacent 0).symm
   · exact (adjacent 1).symm.trans (adjacent 0).symm
   · exact (adjacent 2).symm.trans ((adjacent 1).symm.trans (adjacent 0).symm)
-  · exact (adjacent 3).symm.trans ((adjacent 2).symm.trans ((adjacent 1).symm.trans (adjacent 0).symm))
-  · exact (adjacent 4).symm.trans ((adjacent 3).symm.trans ((adjacent 2).symm.trans ((adjacent 1).symm.trans (adjacent 0).symm)))
+  · exact (adjacent 3).symm.trans
+      ((adjacent 2).symm.trans ((adjacent 1).symm.trans (adjacent 0).symm))
+  · exact (adjacent 4).symm.trans ((adjacent 3).symm.trans
+      ((adjacent 2).symm.trans ((adjacent 1).symm.trans (adjacent 0).symm)))
 
 private def alternating (n : ℕ) (a b : Fin 3) : Fin 6 × Fin n → Fin 3 :=
   fun p => if p.2.val % 2 = 0 then a else b
@@ -686,6 +688,7 @@ private def successors (a : Col) : List Col :=
 private def next (a : Col) : Finset Col := (successors a).toFinset
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 20000000 in
+-- Check the complete raw successor list at each of the 729 columns.
 set_option maxSynthPendingDepth 100 in
 private theorem row_certificate : ∀ a : Col,
     allCols.filter (fun b => decide (compatible a b)) = successors a := by
@@ -754,25 +757,22 @@ private theorem count_transfer (n : ℕ) :
   refine TransferMatrix.cardMatrix compatible (fun _ _ _ => True) (fun _ b => b)
     T weights ?_ ?_ n
   · intro a b _ s
-    change (∑ c : Col, if compatible b c ∧ True ∧ c = s then (1 : ℤ) else 0) =
-      if compatible b s then 1 else 0
-    calc
-      _ = ∑ c : Col, if c = s then (if compatible b s then (1 : ℤ) else 0) else 0 := by
-        apply Finset.sum_congr rfl
-        intro c _
-        by_cases hc : c = s <;> simp [hc]
-      _ = _ := by simp only [Finset.sum_ite_eq', Finset.mem_univ, ite_true]
+    rw [Finset.sum_eq_single s]
+    · by_cases h : compatible b s <;> simp [T, h]
+    · intro c _ hcs
+      simp [hcs]
+    · intro hs
+      exact (hs (Finset.mem_univ s)).elim
   · intro s
-    change (∑ a : Col, ∑ b : Col, if compatible a b ∧ b = s then (1 : ℤ) else 0) =
-      ∑ a : Col, if compatible a s then 1 else 0
+    unfold weights
     apply Finset.sum_congr rfl
     intro a _
-    calc
-      _ = ∑ b : Col, if b = s then (if compatible a s then (1 : ℤ) else 0) else 0 := by
-        apply Finset.sum_congr rfl
-        intro b _
-        by_cases hb : b = s <;> simp [hb]
-      _ = _ := by simp only [Finset.sum_ite_eq', Finset.mem_univ, ite_true]
+    rw [Finset.sum_eq_single s]
+    · by_cases h : compatible a s <;> simp [h]
+    · intro b _ hbs
+      simp [hbs]
+    · intro hs
+      exact (hs (Finset.mem_univ s)).elim
 
 end CountBridge
 private def cls (a : Col) : Fin 122 :=
@@ -1202,16 +1202,16 @@ private theorem count_transfer_one (n : ℕ) :
   rw [count_transfer, weights_dot, Matrix.mulVec_mulVec, ← pow_succ']
 
 private theorem pair_tail (n : ℕ) : (L (n+17) : ℤ) + 6 =
-    31 * ((L (n+16) : ℤ)+6) -
-      313 * ((L (n+15) : ℤ)+6) +
-      1321 * ((L (n+14) : ℤ)+6) -
-      1611 * ((L (n+13) : ℤ)+6) -
-      6132 * ((L (n+12) : ℤ)+6) +
-      27761 * ((L (n+11) : ℤ)+6) -
-      48692 * ((L (n+10) : ℤ)+6) +
-      44852 * ((L (n+9) : ℤ)+6) -
-      21344 * ((L (n+8) : ℤ)+6) +
-      4128 * ((L (n+7) : ℤ)+6) := by
+    31 * ((L (n+16) : ℤ) + 6) -
+      313 * ((L (n+15) : ℤ) + 6) +
+      1321 * ((L (n+14) : ℤ) + 6) -
+      1611 * ((L (n+13) : ℤ) + 6) -
+      6132 * ((L (n+12) : ℤ) + 6) +
+      27761 * ((L (n+11) : ℤ) + 6) -
+      48692 * ((L (n+10) : ℤ) + 6) +
+      44852 * ((L (n+9) : ℤ) + 6) -
+      21344 * ((L (n+8) : ℤ) + 6) +
+      4128 * ((L (n+7) : ℤ) + 6) := by
   have h := TransferMatrix.scalarRelationShift T (1 : Col → ℤ)
     10 6 coefficients power_polynomial n
   have ht (k : ℕ) : dotProduct (1 : Col → ℤ)
@@ -1225,30 +1225,30 @@ private theorem pair_tail (n : ℕ) : (L (n+17) : ℤ) + 6 =
   linear_combination h
 
 private theorem scale_recurrence (m : ℕ) (hm : 2 ≤ m)
-    (h : (L (m+10) : ℤ)+6 =
-      31 * ((L (m+9) : ℤ)+6) -
-      313 * ((L (m+8) : ℤ)+6) +
-      1321 * ((L (m+7) : ℤ)+6) -
-      1611 * ((L (m+6) : ℤ)+6) -
-      6132 * ((L (m+5) : ℤ)+6) +
-      27761 * ((L (m+4) : ℤ)+6) -
-      48692 * ((L (m+3) : ℤ)+6) +
-      44852 * ((L (m+2) : ℤ)+6) -
-      21344 * ((L (m+1) : ℤ)+6) +
-      4128 * ((L (m+0) : ℤ)+6)) :
-    (a (m+10) : ℤ) =
-      1984 * (a (m+9) : ℤ) -
-      1282048 * (a (m+8) : ℤ) +
-      346292224 * (a (m+7) : ℤ) -
-      27028094976 * (a (m+6) : ℤ) -
-      6584184864768 * (a (m+5) : ℤ) +
-      1907721393668096 * (a (m+4) : ℤ) -
-      214149680718675968 * (a (m+3) : ℤ) +
-      12624715655426342912 * (a (m+2) : ℤ) -
-      384499321786383466496 * (a (m+1) : ℤ) +
-      4759259971017064316928 * (a (m+0) : ℤ) := by
+    (h : (L (m + 10) : ℤ) + 6 =
+      31 * ((L (m + 9) : ℤ) + 6) -
+      313 * ((L (m + 8) : ℤ) + 6) +
+      1321 * ((L (m + 7) : ℤ) + 6) -
+      1611 * ((L (m + 6) : ℤ) + 6) -
+      6132 * ((L (m + 5) : ℤ) + 6) +
+      27761 * ((L (m + 4) : ℤ) + 6) -
+      48692 * ((L (m + 3) : ℤ) + 6) +
+      44852 * ((L (m + 2) : ℤ) + 6) -
+      21344 * ((L (m + 1) : ℤ) + 6) +
+      4128 * ((L (m + 0) : ℤ) + 6)) :
+    (a (m + 10) : ℤ) =
+      1984 * (a (m + 9) : ℤ) -
+      1282048 * (a (m + 8) : ℤ) +
+      346292224 * (a (m + 7) : ℤ) -
+      27028094976 * (a (m + 6) : ℤ) -
+      6584184864768 * (a (m + 5) : ℤ) +
+      1907721393668096 * (a (m + 4) : ℤ) -
+      214149680718675968 * (a (m + 3) : ℤ) +
+      12624715655426342912 * (a (m + 2) : ℤ) -
+      384499321786383466496 * (a (m + 1) : ℤ) +
+      4759259971017064316928 * (a (m + 0) : ℤ) := by
   have hb (i : ℕ) : 48 * (a (m+i) : ℤ) =
-      (64 : ℤ)^m * 64^i * ((L (m+i) : ℤ)+6) := by
+      (64 : ℤ)^m * 64^i * ((L (m+i) : ℤ) + 6) := by
     rw [← pow_add]
     exact counting_bridge (by omega)
   have h0 := hb 0
