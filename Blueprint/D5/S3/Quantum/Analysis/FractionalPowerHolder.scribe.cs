@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Analysis;
 internal sealed class FractionalPowerHolderDocument : IScribeDocumentDefinition
 {
     private static readonly Formula A = F.Id("A"), Aa = F.Id("a"), B = F.Id("b"), P = F.Id("p");
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/QuantumBounds/kittanehkosaki1987");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/HilbertOperators/kittanehkosaki1987powers");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Fractional powers are uniformly Holder continuous on the positive cone.",

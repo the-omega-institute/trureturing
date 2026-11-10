@@ -1,5 +1,5 @@
 ---
-bibkey: kittanehkosaki1987
+bibkey: kittanehkosaki1987powers
 authors: Fuad Kittaneh; Hideki Kosaki
 year: 1987
 title: Inequalities for the Schatten p-norm V
