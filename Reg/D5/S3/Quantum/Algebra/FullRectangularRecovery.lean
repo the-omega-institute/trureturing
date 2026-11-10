@@ -1,6 +1,8 @@
 import D5.S3.Quantum.Algebra.FullRectangularRecovery
 import Reg.Support.DependentFamily
 
+/-! Exact source-family equivalences for rectangular recovery and its analytic lemmas. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -38,7 +40,7 @@ abbrev arena : Arena where
   signature := signature
   Law R := ∀ (p : Parameters.{u}) (e x : p.A), IsStarProjection e →
     (R.readout () p (e,x) ↔ x = e * x * e)
-theorem bridge : (type_of% (@corner_mem_iff.{u})) ↔ arena.Law actual := by
+theorem bridge : (type_of% (@corner_mem_iff.{u})) ↔ arena.{u}.Law actual := by
   constructor
   · intro h p e x he
     exact h e he x
@@ -62,7 +64,7 @@ abbrev arena : Arena where
   signature := signature
   Law R := ∀ (p : Parameters.{u}) (φ : p.A →P[ℂ] ℂ) (a : p.A), IsSelfAdjoint a →
     R.readout () p (φ,a) = ((R.readout () p (φ,a)).re : ℂ)
-theorem bridge : (type_of% (@positive_real.{u})) ↔ arena.Law actual := by
+theorem bridge : (type_of% (@positive_real.{u})) ↔ arena.{u}.Law actual := by
   constructor
   · intro h p
     exact @h p.A _ _ _
@@ -78,7 +80,7 @@ abbrev arena : Arena where
   Law R := ∀ (p : Parameters.{u}) (φ : p.A →P[ℂ] ℂ) (a : p.A), IsSelfAdjoint a →
     -‖a‖ * (R.readout () p (φ,1)).re ≤ (R.readout () p (φ,a)).re ∧
       (R.readout () p (φ,a)).re ≤ ‖a‖ * (R.readout () p (φ,1)).re
-theorem bridge : (type_of% (@positive_re_bounds.{u})) ↔ arena.Law actual := by
+theorem bridge : (type_of% (@positive_re_bounds.{u})) ↔ arena.{u}.Law actual := by
   constructor
   · intro h p
     exact @h p.A _ _ _
@@ -103,7 +105,7 @@ abbrev arena : Arena where
   Law R := ∀ (p : Parameters.{u}) (a : p.A), IsSelfAdjoint a → a ≠ 0 →
     ∃ (φ : p.A →P[ℂ] ℂ) (s : ℝ),
       φ 1 = 1 ∧ φ a = (s : ℂ) ∧ s ^ 2 = R.readout () p a ^ 2
-theorem bridge : (type_of% (@exists_norming_state.{u})) ↔ arena.Law actual := by
+theorem bridge : (type_of% (@exists_norming_state.{u})) ↔ arena.{u}.Law actual := by
   constructor
   · intro h p
     exact @h p.A _ _ _
@@ -131,7 +133,7 @@ abbrev arena : Arena where
     ∀ (a : p.A), IsSelfAdjoint a → ∀ s : ℝ, φ a = (s : ℂ) → s ^ 2 = ‖a‖ ^ 2 →
       ∀ x : p.A, R.readout false p (φ,a,x) = (s : ℂ) * φ x ∧
         R.readout true p (φ,a,x) = (s : ℂ) * φ x
-theorem bridge : (type_of% (@norming_state_multiplication.{u})) ↔ arena.Law actual := by
+theorem bridge : (type_of% (@norming_state_multiplication.{u})) ↔ arena.{u}.Law actual := by
   constructor
   · intro h p
     exact @h p.A _ _ _
@@ -157,7 +159,7 @@ abbrev arena : Arena where
   Law R := ∀ (p : Parameters.{u}) (φ : p.A →P[ℂ] ℂ), φ 1 = 1 →
     ∀ (a : p.A), IsSelfAdjoint a → ∀ s : ℝ, φ a = (s : ℂ) → s ^ 2 = ‖a‖ ^ 2 →
       ∀ C : p.A, R.readout () p (φ,a,C) = ((‖a‖ ^ 2 : ℝ) : ℂ) * φ C
-theorem bridge : (type_of% (@norming_state_sandwich.{u})) ↔ arena.Law actual := by
+theorem bridge : (type_of% (@norming_state_sandwich.{u})) ↔ arena.{u}.Law actual := by
   constructor
   · intro h p
     exact @h p.A _ _ _
@@ -176,12 +178,13 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature := realize signature (fun _ _ U => U * star U) (fun e => nomatch e)
+def actual : Realization signature := realize signature
+  (fun _ _ U => U * star U) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (p : Parameters.{u}) (e U : p.A), IsStarProjection e → e * U = U →
     R.readout () p U ∈ cornerSpace e
-theorem bridge : (type_of% (@rowGram_mem.{u})) ↔ arena.Law actual := by
+theorem bridge : (type_of% (@rowGram_mem.{u})) ↔ arena.{u}.Law actual := by
   constructor
   · intro h p
     exact @h p.A _ _ _
@@ -200,7 +203,8 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature := realize signature (fun _ _ z => ‖z.1 * z.2‖) (fun e => nomatch e)
+def actual : Realization signature := realize signature
+  (fun _ _ z => ‖z.1 * z.2‖) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (p : Parameters.{u}) (e f a U : p.A) (he : IsStarProjection e)
@@ -215,7 +219,7 @@ abbrev arena : Arena where
             _ = e * U * f := by simp only [← mul_assoc, hee]
             _ = U := hU.symm)⟩).re) →
     ‖a‖ ^ 2 / Real.sqrt κ ≤ R.readout () p (a,U)
-theorem bridge : (type_of% (@full_rectangular_recovery.{u})) ↔ arena.Law actual := by
+theorem bridge : (type_of% (@full_rectangular_recovery.{u})) ↔ arena.{u}.Law actual := by
   constructor
   · intro h p
     exact @h p.A _ _ _
