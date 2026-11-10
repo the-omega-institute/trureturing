@@ -6,6 +6,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.QuantumChannels.ContractionGeometry;
 
 internal sealed class NorthPoleBallCriterionDocument : IScribeDocumentDefinition
 {
+    private static DocumentBlock Display(Formula x) => new DocumentBlock.DisplayFormula(Disp(x));
     private static Formula Sq(Formula x) => Seq(Open, x, Close, Caret, D(2));
     private static Formula AllReal(Formula x, Formula body) => Seq(
         Forall, Sp, x, InMacro, Sp, Mathbb, Grp(F.Id("R")), Comma, Sp, body);
@@ -16,8 +17,8 @@ internal sealed class NorthPoleBallCriterionDocument : IScribeDocumentDefinition
     private static Formula ImageRadius => Sum(Sum(
         Sq(Product(Lambda, F.Id("x"))), Sq(Product(Lambda, F.Id("y")))), Sq(Axis));
     private static Formula Exponent(Formula x) => Seq(F.Id("e"), Caret, Grp(x));
-    private static Formula Time(int i) => Seq(F.Id("T"), Underscore, D(i));
-    private static Formula Decay(int i) => Exponent(Seq(Minus, Frac, Grp(F.Id("t")), Grp(Time(i))));
+    private static Formula Time(byte i) => Seq(F.Id("T"), Underscore, D(i));
+    private static Formula Decay(byte i) => Exponent(Seq(Minus, Frac, Grp(F.Id("t")), Grp(Time(i))));
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The exact unit-ball criterion for an axial affine map fixing the north pole gives the "
@@ -51,7 +52,7 @@ internal sealed class NorthPoleBallCriterionDocument : IScribeDocumentDefinition
                         "For sufficiency, the squared transverse radius is first multiplied by "
                         + "lambda squared, bounded by a, and then bounded using the input ball. "
                         + "The remaining axial defect is nonnegative:")),
-                    Disp(Seq(
+                    Display(Seq(
                         Product(F.Id("a"), Seq(Open, D(1), Minus, Sq(F.Id("z")), Close)),
                         Plus, Sq(Axis), Sp, Eq, Sp, D(1), Minus,
                         Product(Product(F.Id("a"), Seq(Open, D(1), Minus, F.Id("a"), Close)),
@@ -61,7 +62,7 @@ internal sealed class NorthPoleBallCriterionDocument : IScribeDocumentDefinition
                         + "height deficit delta below. It is at most one. The sphere point has "
                         + "y equal to zero, z equal to one minus delta, and x equal to the square "
                         + "root of delta times two minus delta.")),
-                    Disp(Seq(Delta, Sp, Eq, Sp, Frac,
+                    Display(Seq(Delta, Sp, Eq, Sp, Frac,
                         Grp(Sq(Lambda), Minus, F.Id("a")), Grp(Sq(Lambda), Plus, D(1)))),
                     Paragraph(Text(
                         "Its image has squared radius exceeding one by delta times the bracket "
@@ -70,24 +71,24 @@ internal sealed class NorthPoleBallCriterionDocument : IScribeDocumentDefinition
                         + "squared minus a and is strictly positive. Thus a specific sphere point "
                         + "violates preservation whenever the criterion fails; no infinitesimal "
                         + "approximation is needed.")),
-                    Disp(Seq(Product(Delta, Seq(Open,
+                    Display(Seq(Product(Delta, Seq(Open,
                         D(2), Open, Sq(Lambda), Minus, F.Id("a"), Close, Minus,
                         Delta, Open, Sq(Lambda), Minus, Sq(F.Id("a")), Close,
                         Close)), Sp, Gt, Sp, D(0)))),
                 DescribeRole.Theorem),
-            H("Exponential relaxation in the same affine model"),
+            new DocumentBlock.Section(H("Exponential relaxation in the same affine model"), Blocks(
             Paragraph(Text(
                 "Assume positive real longitudinal time T one, transverse time T two, and "
                 + "observation time t. Set a and lambda to the following exponential factors, "
                 + "and assume that the very same map preserves the entire closed unit ball:")),
-            Disp(Seq(F.Id("a"), Sp, Eq, Sp, Decay(1), Comma, Sp,
+            Display(Seq(F.Id("a"), Sp, Eq, Sp, Decay(1), Comma, Sp,
                 Lambda, Sp, Eq, Sp, Decay(2))),
             Paragraph(Text(
                 "The axial factor lies strictly between zero and one. The criterion gives "
                 + "the following exact chain; injectivity and monotonicity of the real "
                 + "exponential and cancellation of positive time and denominators justify "
                 + "each step:")),
-            Disp(Seq(Exponent(Seq(Minus, Frac, Grp(D(2), F.Id("t")), Grp(Time(2)))),
+            Display(Seq(Exponent(Seq(Minus, Frac, Grp(D(2), F.Id("t")), Grp(Time(2)))),
                 Sp, Leq, Sp, Decay(1), Sp, Iff, Sp,
                 Minus, Frac, Grp(D(2), F.Id("t")), Grp(Time(2)), Sp, Leq, Sp,
                 Minus, Frac, Grp(F.Id("t")), Grp(Time(1)), Sp, Iff, Sp,
@@ -100,12 +101,12 @@ internal sealed class NorthPoleBallCriterionDocument : IScribeDocumentDefinition
                 + "Pure amplitude damping has lambda squared equal to a and saturates the bound. "
                 + "This concerns a fixed north pole, a zero-temperature axial drift and an "
                 + "isotropic transverse factor. It does not extend that physical model to "
-                + "every environment or identify ball preservation with complete positivity.")),
-            H("Additional dephasing requires a product envelope"),
+                + "every environment or identify ball preservation with complete positivity.")))),
+            new DocumentBlock.Section(H("Additional dephasing requires a product envelope"), Blocks(
             Paragraph(Text(
                 "If an additional nonnegative dephasing rate k is supplied together with the "
                 + "product-envelope assumption, exponential factors multiply as follows:")),
-            Disp(Seq(Decay(2), Sp, Eq, Sp,
+            Display(Seq(Decay(2), Sp, Eq, Sp,
                 Product(Exponent(Seq(Minus, Frac, Grp(F.Id("t")), Grp(D(2), Time(1)))),
                     Exponent(Seq(Minus, F.Id("k"), F.Id("t")))), Comma, Sp,
                 F.Id("k"), Sp, Geq, Sp, D(0))),
@@ -116,5 +117,5 @@ internal sealed class NorthPoleBallCriterionDocument : IScribeDocumentDefinition
                 + "geometric preservation alone does not supply that relation. For physical "
                 + "context see Krantz et al., A quantum engineer's guide to superconducting "
                 + "qubits, arXiv:1904.06560v3, equations 40–43 and the adjacent qualification "
-                + "on exponential individual decay functions.")))));
+                + "on exponential individual decay functions.")))))));
 }
