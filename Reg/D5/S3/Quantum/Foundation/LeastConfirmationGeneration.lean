@@ -23,10 +23,10 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature.{u} :=
-  realize signature (fun _ _ l => l.length) (fun e => nomatch e)
+  realize signature (fun _ _ l => l.length) (fun e => Empty.elim e)
 
 def rejected : Realization signature.{u} :=
-  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+  realize signature (fun _ _ _ => 1) (fun e => Empty.elim e)
 
 abbrev arena : Arena where
   signature := signature.{u}
@@ -57,13 +57,13 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
 
 private theorem dependence : ObservationalDependence signature.{u} actual := by
   intro i
-  let k : signature.{u}.Params := ⟨ULift.{u} ℝ, Set.univ⟩
-  let a : ℝ × k.2 := (1, ⟨ULift.up 1, Set.mem_univ _⟩)
+  let k : signature.{u}.Params := ⟨ULift.{u} ℝ, {ULift.up 1}⟩
+  let a : ℝ × k.2 := (1, ⟨ULift.up 1, Set.mem_singleton _⟩)
   refine ⟨k, [], [a], ?_⟩
   simp [actual, realize]
 
 def family : Registration arena.{u} (type_of% @positive_dual_generation.{u}) where
-  actual := actual
+  actual := realize signature.{u} (fun _ _ l => l.length) (fun e => Empty.elim e)
   bridge := Iff.rfl
   variation := ⟨@positive_dual_generation.{u}, rejected, rejected_law⟩
   sensitivity := by
@@ -87,7 +87,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature.{u} (fun _ _ l => l.length) (fun e => nomatch e))
+  readout := some (realize signature.{u} (fun _ _ l => l.length) (fun e => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
