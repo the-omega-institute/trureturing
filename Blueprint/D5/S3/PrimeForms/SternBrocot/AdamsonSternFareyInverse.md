@@ -4,6 +4,8 @@
 
 Stern's diatomic values invert the next Farey-tree numerator modulo its denominator.
 
+The newly public declarations in this source owner have unfinished information-escape audits: complete mirrored realization, variation, sensitivity, observational dependence and current source-binding evidence are missing. The exact per-target records and missing evidence are listed in https://github.com/the-omega-institute/trureturing/issues/28691 under CLAUDE section 3.9. This audit exception supplies no mathematical proof or independent final acceptance.
+
 All indices n, m, j and r are natural numbers; a and b are pairs of natural numerator and denominator coordinates, with subscripts 1 and 2 denoting their projections. The function stern is Stern's diatomic sequence, mediant adds both coordinates, and fareyRow(m,j) is position j in the full mediant row m, whose valid positions are 0 through 2^m. The total definition below also specifies values outside these positions. The pair fareyEntry(r) has numerator fareyNum(r) and denominator fareyDen(r). Entries 0 and 1 are 0/1 and 1/1; subsequent entries list each level's new mediants in increasing order in [0,1]. At r = 2^m + j with 1 <= j <= 2^m, the selected position is fareyRow(m+1,2(j-1)+1). The operator log_2 is the natural floor logarithm, with log_2(0)=0; / is natural-number division, subtraction is truncated at zero, and mod is the natural remainder. Only Adamson's inverse sentence is settled here; Yurramendi's frequency conjecture, Torres's conjectures and other Farey-tree properties are not claimed.
 
 **Definition 1.1 (Stern's diatomic sequence).**

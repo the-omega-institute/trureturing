@@ -4,6 +4,8 @@
 
 HalvingPartitionWeightedNonregularity
 
+The full binary and power-base weighted audits compile their realization, variation, sensitivity and dependence proofs, but current source binding is declared_unresolved with IE-C050 source.dictionary_or_proof_coordinate. The other new public audits in this owner remain missing. The exact per-target records and missing evidence are listed in https://github.com/the-omega-institute/trureturing/issues/28691 under CLAUDE section 3.9. This audit exception supplies no mathematical proof or independent final acceptance.
+
 All weighted results hold for every nonzero commutative unital ring R, including positive characteristic and zero divisors, and every t in R. The weighted difference has impulses 1 and 1-t for m≥3. The separately proved unweighted difference includes m=2 and gives exactly 2^r consecutive zeros between jumps. The monic recurrence contradiction never divides by t or a recurrence coefficient. The representation base ranges over every 2^h with h≥1. Alekseyev (2026), Theorem 5, Lemma 2 and Corollary 15 retain their antecedent credit; OEIS antecedents are Kimberling and Heinz. The later note is by Haobo Ma then Wenlin Zhang, CC BY 4.0. General deficit digit formulas, exact fixed-length maxima, general weighted coefficients, other partition bases, A349553 minimal inputs and general-input unimodality remain open. Existing atlas-lean and Mathlib licenses are retained; no global novelty claim is made.
 
 **Definition 1.1 (weightedTail).**

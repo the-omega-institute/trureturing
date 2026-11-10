@@ -14,6 +14,7 @@ internal sealed class HalvingPartitionNonregularityDocument : IScribeDocumentDef
         "The exact halving-partition count admits no finite integral family closed under both decimations.",
         H("Halving partitions and unrestricted finite integer families"),
         Blocks(
+            Paragraph(Text("The historical integer result remains declared_validated. The full arbitrary-ring audit compiles its realization, variation, sensitivity and dependence proofs, but current source binding is declared_unresolved with IE-C050 source.dictionary_or_proof_coordinate. Newly exposed supplier audits are unfinished. The exact per-target records and missing evidence are listed in https://github.com/the-omega-institute/trureturing/issues/28691 under CLAUDE section 3.9. This audit exception supplies no mathematical proof or independent final acceptance.")),
             Paragraph(Text("Alekseyev's Halving Partitions and Hyperbinary Expansions, "
                 + "arXiv:2611.01243v1, Definition 1 and section 6, supplies the source count "
                 + "and asks whether it is 2-regular. The source objects here are actual ordered "

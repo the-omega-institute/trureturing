@@ -139,10 +139,11 @@ theorem weightedCount_dyadic {R : Type*} [CommRing R]
       t ^ (m - 3) + t ^ (m - 2) + t ^ (m - 1) +
         ∑ r : Threshold m, t ^ (m - r.val.val - 2 ^ r.val.val - 2) := by
   classical
-  unfold weightedCount
-  simp only [← evenSteps_eq_count]
-  rw [sum_source_dyadic m hm, Fintype.sum_sum_type, Fin.sum_univ_three]
-  simp [codeSource_steps]
+  have he : (weightedLengthPolynomial t (2 ^ m + 1)).eval 1 =
+      weightedCount t (2 ^ m + 1) := by
+    simp [weightedLengthPolynomial, weightedCount, Polynomial.eval_finsetSum]
+  rw [← he, weightedLengthPolynomial_dyadic t m hm]
+  simp [Polynomial.eval_finsetSum]
 
 /-- Empty input has exactly the unique empty list and weight one. -/
 theorem weightedCount_zero {R : Type*} [CommRing R] (t : R) : weightedCount t 0 = 1 := by

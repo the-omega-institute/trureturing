@@ -4,6 +4,8 @@
 
 The exact halving-partition count admits no finite integral family closed under both decimations.
 
+The historical integer result remains declared_validated. The full arbitrary-ring audit compiles its realization, variation, sensitivity and dependence proofs, but current source binding is declared_unresolved with IE-C050 source.dictionary_or_proof_coordinate. Newly exposed supplier audits are unfinished. The exact per-target records and missing evidence are listed in https://github.com/the-omega-institute/trureturing/issues/28691 under CLAUDE section 3.9. This audit exception supplies no mathematical proof or independent final acceptance.
+
 Alekseyev's Halving Partitions and Hyperbinary Expansions, arXiv:2611.01243v1, Definition 1 and section 6, supplies the source count and asks whether it is 2-regular. The source objects here are actual ordered lists of positive integers. The virtual predecessor is the total n. Every finite length is admitted, repeated entries remain distinct list positions, and terminal ones may repeat. At zero the only object is the empty list.
 
 **Definition 1.1 (The two possible values of a half).**
@@ -206,7 +208,7 @@ Lean statement: `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.power
 
 The original-place source supplier is shared by the actual length and weighted proofs. The list, order, sum constraint and original quantifiers are preserved.
 
-Exact source statement: def powerWord : ℕ → ℕ → List ℕ | _, 0 => [] | 0, l + 1 => 1 :: powerWord 0 l | m + 1, l + 1 => 2 ^ m :: powerWord m l /-- The first j rounded-up values, followed by the deterministic lower branch. -/ def oddWord : ℕ → ℕ → ℕ → List ℕ | _, _, 0 => [] | 0, _, l + 1 => 1 :: powerWord 0 l | m + 1, 0, l + 1 => 2 ^ m :: powerWord m l | m + 1, j + 1, l + 1 => (2 ^ m + 1) :: oddWord m j l theorem powerWord_length (m l : ℕ) : (powerWord m l).length = l
+Exact source declaration: def powerWord : ℕ → ℕ → List ℕ | _, 0 => [] | 0, l + 1 => 1 :: powerWord 0 l | m + 1, l + 1 => 2 ^ m :: powerWord m l
 
 **Definition 1.17 (oddWord).**
 
@@ -222,7 +224,7 @@ Lean statement: `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.oddWo
 
 The original-place source supplier is shared by the actual length and weighted proofs. The list, order, sum constraint and original quantifiers are preserved.
 
-Exact source statement: def oddWord : ℕ → ℕ → ℕ → List ℕ | _, _, 0 => [] | 0, _, l + 1 => 1 :: powerWord 0 l | m + 1, 0, l + 1 => 2 ^ m :: powerWord m l | m + 1, j + 1, l + 1 => (2 ^ m + 1) :: oddWord m j l theorem powerWord_length (m l : ℕ) : (powerWord m l).length = l
+Exact source declaration: def oddWord : ℕ → ℕ → ℕ → List ℕ | _, _, 0 => [] | 0, _, l + 1 => 1 :: powerWord 0 l | m + 1, 0, l + 1 => 2 ^ m :: powerWord m l | m + 1, j + 1, l + 1 => (2 ^ m + 1) :: oddWord m j l
 
 **Theorem 1.18 (powerWord_length).**
 
@@ -238,7 +240,7 @@ Lean statement: `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.power
 
 The original-place source supplier is shared by the actual length and weighted proofs. The list, order, sum constraint and original quantifiers are preserved.
 
-Exact source statement: theorem powerWord_length (m l : ℕ) : (powerWord m l).length = l
+Exact source declaration: theorem powerWord_length (m l : ℕ) : (powerWord m l).length = l
 
 **Theorem 1.19 (oddWord_length).**
 
@@ -254,7 +256,7 @@ Lean statement: `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.oddWo
 
 The original-place source supplier is shared by the actual length and weighted proofs. The list, order, sum constraint and original quantifiers are preserved.
 
-Exact source statement: theorem oddWord_length (m j l : ℕ) : (oddWord m j l).length = l
+Exact source declaration: theorem oddWord_length (m j l : ℕ) : (oddWord m j l).length = l
 
 **Theorem 1.20 (odd_follows).**
 
@@ -270,7 +272,7 @@ Lean statement: `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.odd_f
 
 The original-place source supplier is shared by the actual length and weighted proofs. The list, order, sum constraint and original quantifiers are preserved.
 
-Exact source statement: theorem odd_follows (m : ℕ) (p : List ℕ) (hp : ∀ x ∈ p, 0 < x) : Follows (2 ^ m + 1) p ↔ ∃ j, j ≤ m ∧ j ≤ p.length ∧ p = oddWord m j p.length
+Exact source declaration: theorem odd_follows (m : ℕ) (p : List ℕ) (hp : ∀ x ∈ p, 0 < x) : Follows (2 ^ m + 1) p ↔ ∃ j, j ≤ m ∧ j ≤ p.length ∧ p = oddWord m j p.length
 
 **Theorem 1.21 (powerWord_sum_short).**
 
@@ -286,7 +288,7 @@ Lean statement: `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.power
 
 The original-place source supplier is shared by the actual length and weighted proofs. The list, order, sum constraint and original quantifiers are preserved.
 
-Exact source statement: theorem powerWord_sum_short (m l : ℕ) (hl : l ≤ m) : (powerWord m l).sum + 2 ^ (m - l) = 2 ^ m
+Exact source declaration: theorem powerWord_sum_short (m l : ℕ) (hl : l ≤ m) : (powerWord m l).sum + 2 ^ (m - l) = 2 ^ m
 
 **Theorem 1.22 (powerWord_sum_long).**
 
@@ -302,7 +304,7 @@ Lean statement: `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.power
 
 The original-place source supplier is shared by the actual length and weighted proofs. The list, order, sum constraint and original quantifiers are preserved.
 
-Exact source statement: theorem powerWord_sum_long (m l : ℕ) (hl : m ≤ l) : (powerWord m l).sum + 1 = 2 ^ m + (l - m)
+Exact source declaration: theorem powerWord_sum_long (m l : ℕ) (hl : m ≤ l) : (powerWord m l).sum + 1 = 2 ^ m + (l - m)
 
 **Theorem 1.23 (oddWord_sum).**
 
@@ -318,7 +320,7 @@ Lean statement: `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.oddWo
 
 The original-place source supplier is shared by the actual length and weighted proofs. The list, order, sum constraint and original quantifiers are preserved.
 
-Exact source statement: theorem oddWord_sum (m j l : ℕ) (hjm : j ≤ m) (hjl : j ≤ l) : (oddWord m j l).sum = (powerWord m l).sum + j
+Exact source declaration: theorem oddWord_sum (m j l : ℕ) (hjm : j ≤ m) (hjl : j ≤ l) : (oddWord m j l).sum = (powerWord m l).sum + j
 
 **Theorem 1.24 (dyadic_source_classification).**
 
@@ -334,7 +336,7 @@ Lean statement: `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.dyadi
 
 The original-place source supplier is shared by the actual length and weighted proofs. The list, order, sum constraint and original quantifiers are preserved.
 
-Exact source statement: theorem dyadic_source_classification (m : ℕ) (p : SourceLists (2 ^ m + 1)) : ∃ j, j ≤ m ∧ j ≤ p.1.length ∧ p.1 = oddWord m j p.1.length ∧ (p.1.length ≤ m → j = 2 ^ (m - p.1.length) + 1) ∧ (m ≤ p.1.length → j + (p.1.length - m) = 2)
+Exact source declaration: theorem dyadic_source_classification (m : ℕ) (p : SourceLists (2 ^ m + 1)) : ∃ j, j ≤ m ∧ j ≤ p.1.length ∧ p.1 = oddWord m j p.1.length ∧ (p.1.length ≤ m → j = 2 ^ (m - p.1.length) + 1) ∧ (m ≤ p.1.length → j + (p.1.length - m) = 2)
 
 **Theorem 1.25 (oddWord_prefix_injective).**
 
@@ -350,7 +352,7 @@ Lean statement: `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.oddWo
 
 The original-place source supplier is shared by the actual length and weighted proofs. The list, order, sum constraint and original quantifiers are preserved.
 
-Exact source statement: theorem oddWord_prefix_injective (m l j k : ℕ) (hjm : j ≤ m) (hjl : j ≤ l) (hkm : k ≤ m) (hkl : k ≤ l) (he : oddWord m j l = oddWord m k l) : j = k
+Exact source declaration: theorem oddWord_prefix_injective (m l j k : ℕ) (hjm : j ≤ m) (hjl : j ≤ l) (hkm : k ≤ m) (hkl : k ≤ l) (he : oddWord m j l = oddWord m k l) : j = k
 
 **Definition 1.26 (Threshold).**
 
@@ -366,7 +368,7 @@ Lean statement: `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.Thres
 
 The original-place source supplier is shared by the actual length and weighted proofs. The list, order, sum constraint and original quantifiers are preserved.
 
-Exact source statement: abbrev Threshold (m : ℕ) := {r : Fin (m + 1) // 1 ≤ r.val ∧ 2 ^ r.val + r.val + 1 ≤ m} abbrev DyadicCode (m : ℕ) := Fin 3 ⊕ Threshold m
+Exact source declaration: abbrev Threshold (m : ℕ) := {r : Fin (m + 1) // 1 ≤ r.val ∧ 2 ^ r.val + r.val + 1 ≤ m}
 
 **Definition 1.27 (DyadicCode).**
 
@@ -382,7 +384,7 @@ Lean statement: `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.Dyadi
 
 The original-place source supplier is shared by the actual length and weighted proofs. The list, order, sum constraint and original quantifiers are preserved.
 
-Exact source statement: abbrev DyadicCode (m : ℕ) := Fin 3 ⊕ Threshold m
+Exact source declaration: abbrev DyadicCode (m : ℕ) := Fin 3 ⊕ Threshold m
 
 **Definition 1.28 (codeParams).**
 
@@ -398,7 +400,7 @@ Lean statement: `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.codeP
 
 The original-place source supplier is shared by the actual length and weighted proofs. The list, order, sum constraint and original quantifiers are preserved.
 
-Exact source statement: def codeParams (m : ℕ) : DyadicCode m → ℕ × ℕ | .inl i => if i = 0 then (m, 2) else if i = 1 then (m + 1, 1) else (m + 2, 0) | .inr r => (m - r.1.val, 2 ^ r.1.val + 1) theorem code_bounds (m : ℕ) (hm : 2 ≤ m) (c : DyadicCode m) : (codeParams m c).2 ≤ m ∧ (codeParams m c).2 ≤ (codeParams m c).1
+Exact source declaration: def codeParams (m : ℕ) : DyadicCode m → ℕ × ℕ | .inl i => if i = 0 then (m, 2) else if i = 1 then (m + 1, 1) else (m + 2, 0) | .inr r => (m - r.1.val, 2 ^ r.1.val + 1)
 
 **Theorem 1.29 (code_bounds).**
 
@@ -414,7 +416,7 @@ Lean statement: `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.code_
 
 The original-place source supplier is shared by the actual length and weighted proofs. The list, order, sum constraint and original quantifiers are preserved.
 
-Exact source statement: theorem code_bounds (m : ℕ) (hm : 2 ≤ m) (c : DyadicCode m) : (codeParams m c).2 ≤ m ∧ (codeParams m c).2 ≤ (codeParams m c).1
+Exact source declaration: theorem code_bounds (m : ℕ) (hm : 2 ≤ m) (c : DyadicCode m) : (codeParams m c).2 ≤ m ∧ (codeParams m c).2 ≤ (codeParams m c).1
 
 **Definition 1.30 (codeSource).**
 
@@ -430,7 +432,7 @@ Lean statement: `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.codeS
 
 The original-place source supplier is shared by the actual length and weighted proofs. The list, order, sum constraint and original quantifiers are preserved.
 
-Exact source statement: def codeSource (m : ℕ) (hm : 2 ≤ m) (c : DyadicCode m) : SourceLists (2 ^ m + 1)
+Exact source declaration: def codeSource (m : ℕ) (hm : 2 ≤ m) (c : DyadicCode m) : SourceLists (2 ^ m + 1) := by let l := (codeParams m c).1 let j := (codeParams m c).2 have hb := code_bounds m hm c refine ⟨oddWord m j l, oddWord_positive m j l, code_total m hm c, ?_⟩ apply (odd_follows m _ (oddWord_positive m j l)).mpr refine ⟨j, hb.1, ?_, ?_⟩ · simpa only [oddWord_length] using hb.2 · rw [oddWord_length]
 
 **Theorem 1.31 (codeSource_bijective).**
 
@@ -446,7 +448,7 @@ Lean statement: `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.codeS
 
 The original-place source supplier is shared by the actual length and weighted proofs. The list, order, sum constraint and original quantifiers are preserved.
 
-Exact source statement: theorem codeSource_bijective (m : ℕ) (hm : 2 ≤ m) : Function.Bijective (codeSource m hm)
+Exact source declaration: theorem codeSource_bijective (m : ℕ) (hm : 2 ≤ m) : Function.Bijective (codeSource m hm)
 
 **Theorem 1.32 (dyadic_source_count).**
 
@@ -462,7 +464,7 @@ Lean statement: `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.dyadi
 
 The original-place source supplier is shared by the actual length and weighted proofs. The list, order, sum constraint and original quantifiers are preserved.
 
-Exact source statement: theorem dyadic_source_count (m : ℕ) (hm : 2 ≤ m) : count (2 ^ m + 1) = 3 + Fintype.card {r : Fin (m + 1) // 1 ≤ r.val ∧ 2 ^ r.val + r.val + 1 ≤ m}
+Exact source declaration: theorem dyadic_source_count (m : ℕ) (hm : 2 ≤ m) : count (2 ^ m + 1) = 3 + Fintype.card {r : Fin (m + 1) // 1 ≤ r.val ∧ 2 ^ r.val + r.val + 1 ≤ m}
 
 **Theorem 1.33 (threshold_mono).**
 
@@ -478,7 +480,7 @@ Lean statement: `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.thres
 
 The original-place source supplier is shared by the actual length and weighted proofs. The list, order, sum constraint and original quantifiers are preserved.
 
-Exact source statement: theorem threshold_mono {r s : ℕ} (h : r ≤ s) : 2 ^ r + r + 1 ≤ 2 ^ s + s + 1
+Exact source declaration: theorem threshold_mono {r s : ℕ} (h : r ≤ s) : 2 ^ r + r + 1 ≤ 2 ^ s + s + 1
 
 **Theorem 1.34 (dyadic_plateau).**
 
@@ -494,7 +496,7 @@ Lean statement: `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.dyadi
 
 The original-place source supplier is shared by the actual length and weighted proofs. The list, order, sum constraint and original quantifiers are preserved.
 
-Exact source statement: theorem dyadic_plateau (m r : ℕ) (hm : 2 ≤ m) (hr : 1 ≤ r) (hlo : 2 ^ r + r + 1 ≤ m) (hhi : m < 2 ^ (r + 1) + (r + 1) + 1) : count (2 ^ m + 1) = 3 + r
+Exact source declaration: theorem dyadic_plateau (m r : ℕ) (hm : 2 ≤ m) (hr : 1 ≤ r) (hlo : 2 ^ r + r + 1 ≤ m) (hhi : m < 2 ^ (r + 1) + (r + 1) + 1) : count (2 ^ m + 1) = 3 + r
 
 **Theorem 1.35 (nonregularity_over).**
 
@@ -510,7 +512,7 @@ Lean statement: `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.nonre
 
 The actual count has no fixed binary matrix representation over every nonzero commutative unital ring, including positive characteristic and zero divisors.
 
-Exact source statement: theorem nonregularity_over (R : Type*) [CommRing R] [Nontrivial R] : ¬ BinaryDecimation.MatrixFamily (fun n => (count n : R))
+Exact source declaration: theorem nonregularity_over (R : Type*) [CommRing R] [Nontrivial R] : ¬ BinaryDecimation.MatrixFamily (fun n => (count n : R))
 
 For m at least two, every source list at total 2^m+1 has one prefix of rounded-up values followed by deterministic powers of two and, when the length exceeds m, a tail of ones. If its length l is at most m, the number j of rounded-up positions satisfies j=2^(m-l)+1. If l is at least m, it satisfies j+(l-m)=2. The exhaustive classification and uniqueness produce a bijection with three base lists of lengths m,m+1,m+2 and one additional list for each positive r satisfying 2^r+r+1≤m. Thus count(2^m+1)=3+#{r≥1:2^r+r+1≤m}. The bound r≤m used in the finite code follows from that inequality and restricts no qualifying r.
 

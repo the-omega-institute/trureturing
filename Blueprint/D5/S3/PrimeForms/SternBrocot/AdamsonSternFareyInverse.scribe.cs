@@ -13,6 +13,7 @@ internal sealed class AdamsonSternFareyInverseDocument : IScribeDocumentDefiniti
         "Stern's diatomic values invert the next Farey-tree numerator modulo its denominator.",
         H("Adamson's Stern-Farey Inverse Relation"),
         Blocks(
+            Paragraph(Text("The newly public declarations in this source owner have unfinished information-escape audits: complete mirrored realization, variation, sensitivity, observational dependence and current source-binding evidence are missing. The exact per-target records and missing evidence are listed in https://github.com/the-omega-institute/trureturing/issues/28691 under CLAUDE section 3.9. This audit exception supplies no mathematical proof or independent final acceptance.")),
             Paragraph(Text(
                 "All indices n, m, j and r are natural numbers; a and b are pairs of natural "
                     + "numerator and denominator coordinates, with subscripts 1 and 2 denoting "

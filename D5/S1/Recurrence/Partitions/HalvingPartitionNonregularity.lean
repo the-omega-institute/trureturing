@@ -493,17 +493,8 @@ theorem nonregularity_over (R : Type*) [CommRing R] [Nontrivial R] :
   let u (n : ℕ) : R := (count (2 ^ (n + 2) + 1) : R)
   let c (n : ℕ) : R := u (n + 1) - u n
   have hc : E.IsSolution c := by
-    intro n
-    have h1 := hE (n + 1)
-    have h0 := hE n
-    dsimp [c, u]
-    change _ = ∑ i : Fin E.order, E.coeffs i *
-      ((count (2 ^ (n + i.val + 1 + 2) + 1) : R) - (count (2 ^ (n + i.val + 2) + 1) : R))
-    simp_rw [mul_sub]
-    rw [Finset.sum_sub_distrib]
-    change _ - _ = _
-    rw [show n + E.order + 1 + 2 = (n + 1) + E.order + 2 by omega]
-    simpa only [Nat.add_assoc, Nat.add_comm, Nat.add_left_comm] using congrArg₂ (· - ·) h1 h0
+    simpa only [c, one_mul] using
+      BinaryDecimation.shifted_sub_solution E u hE (1 : R)
   let r := E.order + 2
   have hr : 1 ≤ r := by dsimp [r]; omega
   have hpow : E.order ≤ 2 ^ r := by
