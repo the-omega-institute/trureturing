@@ -1,0 +1,169 @@
+**定理 41.1（任意仿射漂移下的支配残差消失）。**设 $M$ 是带真实双侧单位 $1$ 的任意 magma，$U:M\to M$ 任意，$H$ 为任意维复 Hilbert 空间，$\omega=\exp(2\pi i/3)$。设映射 $F:M\to H$ 与任意向量 $t\in H$ 满足
+
+$$
+F1=0,\qquad F(ab)=Fa+Fb,\qquad F(Ua)=\omega Fa+t
+\qquad(a,b\in M),
+\tag{41.1}
+$$
+
+并置 $K(a,b)=\|Fa-Fb\|^2$。设处处有限的实函数 $D:M^2\to\mathbb R$ 对全部原标签满足
+
+$$
+\begin{aligned}
+D(b,a)&=-D(a,b),& |D(a,b)|&\le K(a,b),\\
+\sum_{k=0}^2D(a\cdot U^ku,b\cdot U^kv)&=3D(a,b)+3D(u,v),\\
+D(a p_3,b)&=D(a,b),& D(a,b p_3)&=D(a,b),
+\qquad p_j=U^j1.
+\end{aligned}
+\tag{41.2}
+$$
+
+则 $D(a,b)=0$ 对全部 $a,b\in M$ 成立。漂移 $t$ 无须为零；不要求结合律、交换律、$U$ 保乘法或满射、正则性，也不要求 $D$ 沿 $F$ 的纤维下降。
+
+**证明。**置 $c=K+D$。反对称性与全域支配给
+
+$$
+c(a,a)=0,\qquad 0\le c(a,b)\le2K(a,b),\qquad
+\frac{c(a,b)+c(b,a)}2=K(a,b).
+\tag{41.3}
+$$
+
+令 $m=t/(1-\omega)$，则 $F(U^ja)=\omega^jFa+(1-\omega^j)m$。两个端点的共同漂移相消，故
+
+$$
+\sum_{k=0}^2\|(Fa-Fb)+\omega^k(Fu-Fv)\|^2
+=3K(a,b)+3K(u,v).
+\tag{41.4}
+$$
+
+因而 $K,c$ 都满足完整 (R)。又 $F(p_3)=0$，所以 $K$ 有两端第三标记返回；(41.2) 使 $c$ 也有这两个返回。对这个处处非负的实际核，直接复用引理 1.2 得同步等距 $c(Ux,Uy)=c(x,y)$。
+
+固定任意有限带索引来源列 $a_1,\ldots,a_h$；允许重复标签及 $a_i=1$。对 $N\ge1$ 取引理 23.1 的同一个实际右梳
+
+$$
+H_0(a;1)=1,\qquad
+H_N^\sigma(a;1)=a\cdot U^{\sigma_1}
+H_{N-1}^{(\sigma_2,\ldots,\sigma_N)}(a;1),
+\qquad \sigma\in\Sigma_N=\{0,1,2\}^N.
+\tag{41.5}
+$$
+
+记 $s_r=\sum_{i=1}^r\sigma_i$、$s_0=0$，统一选择 $e_\sigma\in\{0,1,2\}$ 使 $s_N+e_\sigma\equiv0\pmod3$，并置
+
+$$
+\Gamma_Na(\sigma)=U^{e_\sigma}H_N^\sigma(a;1).
+\tag{41.6}
+$$
+
+这是原 $M$ 中按所示括号求值的有限历史。在实际数组 magma $M_N=M^{\Sigma_N}$ 上，乘法和 $U_N$ 逐坐标采用原运算，真实单位为常值数组 $\mathbf1$。置
+
+$$
+\begin{aligned}
+c_N(X,Y)&=\frac1{N3^N}\sum_\sigma c(X_\sigma,Y_\sigma),\\
+H_N^{\rm arr}&=\ell^2(\Sigma_N;H),\qquad
+F_N(X)=\left(\frac{F(X_\sigma)}{\sqrt{N3^N}}\right)_\sigma,\\
+t_N&=\left(\frac{t}{\sqrt{N3^N}}\right)_\sigma,
+\qquad \|t_N\|=\frac{\|t\|}{\sqrt N}.
+\end{aligned}
+\tag{41.7}
+$$
+
+于是 $F_N\mathbf1=0$、$F_N(XY)=F_NX+F_NY$、$F_N(U_NX)=\omega F_NX+t_N$。核 $c_N$ 非负、零对角，满足每个完整 (R) 实例及两端第三标记返回，其对称部分为
+
+$$
+K_N(X,Y)=\|F_NX-F_NY\|^2,\qquad 0\le c_N\le2K_N.
+\tag{41.8}
+$$
+
+引理 23.1 的同一右梳平均及同步等距，正如 (23.5)–(23.6)，给
+
+$$
+c_N(\Gamma_Na_i,\Gamma_Na_j)=c(a_i,a_j)
+\qquad(1\le i,j\le h).
+\tag{41.9}
+$$
+
+这里同时保留所有有序比较，并未将 $\Gamma_N$ 断言为原 $M$ 的乘法同态。
+
+还需同一个 Hilbert 映射控制全部这些来源。令
+
+$$
+A_N(\sigma)=\sum_{r=0}^{N-1}\omega^{s_r}.
+\tag{41.10}
+$$
+
+按 (41.5) 的括号展开，漂移项逐层望远镜相消，得到精确式
+
+$$
+\begin{aligned}
+F(H_N^\sigma(a;1))&=A_N(\sigma)Fa+(1-\omega^{s_N})m,\\
+F(\Gamma_Na(\sigma))&=\omega^{e_\sigma}A_N(\sigma)Fa.
+\end{aligned}
+\tag{41.11}
+$$
+
+第二式使用 $s_N+e_\sigma\equiv0$；没有把原漂移设为零。若 $r>l$，有限均匀平均 $\mathbb E_\sigma\omega^{s_r-s_l}=0$，因为独立的一个相位坐标给因子 $(1+\omega+\omega^2)/3=0$。故
+
+$$
+\mathbb E_\sigma|A_N(\sigma)|^2=N,\qquad
+I_Nv=\left(\frac{\omega^{e_\sigma}A_N(\sigma)v}{\sqrt{N3^N}}\right)_\sigma
+\tag{41.12}
+$$
+
+定义一个复线性等距映射 $I_N:H\to H_N^{\rm arr}$，且对全部选定来源同时有 $F_N(\Gamma_Na_i)=I_NFa_i$。这些恒等式包含 $N=1$、非零漂移、零像和重复来源。
+
+令 $\mathcal T_h$ 为有限带索引变量 $x_1,\ldots,x_h$ 上的可数自由含幺 $U$-magma，只施加两条真实单位恒等式。采用定理 23.2 的单位约简正规形；$U1$ 不约简为 $1$。令总求值映射 $\operatorname{ev}_N:\mathcal T_h\to M_N$ 将 $x_i$ 送到 $\Gamma_Na_i$、将形式单位送到真实数组单位，并递归采用实际运算。即使 $a_i=1$ 或两来源读数为零，也不合并这些项。
+
+在同一个项代数上递归定义 $f:\mathcal T_h\to H$ 和 $\lambda:\mathcal T_h\to\mathbb C$：
+
+$$
+\begin{aligned}
+f(1)&=0,& f(x_i)&=Fa_i,& f(st)&=f(s)+f(t),& f(Us)&=\omega f(s),\\
+\lambda_1&=0,& \lambda_{x_i}&=0,& \lambda_{st}&=\lambda_s+\lambda_t,&
+\lambda_{Us}&=\omega\lambda_s+1.
+\end{aligned}
+\tag{41.13}
+$$
+
+两个递归均尊重两条单位约简，所以良定义；没有施加其他项等式。由 (41.7)、(41.11) 及 $I_N$ 的复线性，对项归纳得到
+
+$$
+F_N(\operatorname{ev}_Ns)=I_N f(s)+\lambda_s t_N
+\qquad(s\in\mathcal T_h).
+\tag{41.14}
+$$
+
+对每个固定有序项对 $s,z$，由同一个 $I_N$ 的等距性与 $\|t_N\|\to0$，有
+
+$$
+\begin{aligned}
+K_N(\operatorname{ev}_Ns,\operatorname{ev}_Nz)&\longrightarrow
+K_0(s,z):=\|f(s)-f(z)\|^2,\\
+0\le c_N(\operatorname{ev}_Ns,\operatorname{ev}_Nz)
+&\le2\left(\|f(s)-f(z)\|+|\lambda_s-\lambda_z|\,\|t\|\right)^2.
+\end{aligned}
+\tag{41.15}
+$$
+
+右端对每个固定项对有限且不依赖 $N$；不要求在全部项上有一个共同常数。枚举可数的 $\mathcal T_h^2$，逐坐标取收敛子列，再取同一条 $N_\ell\to\infty$ 的对角子列。记其总极限为 $c_\infty(s,z)$。每条完整 (R) 及两个返回只含有限坐标，故在这个同一真实含幺项模型上共同保留。非负性、零对角、(41.9) 的整个有向矩阵和 (41.8) 的对称部分也同时保留：
+
+$$
+\begin{aligned}
+\frac{c_\infty(s,z)+c_\infty(z,s)}2&=K_0(s,z),&
+0\le c_\infty(s,z)&\le2K_0(s,z),\\
+c_\infty(x_i,x_j)&=c(a_i,a_j).
+\end{aligned}
+\tag{41.16}
+$$
+
+现在才调用定理 40.1。其对象取 $\mathcal T_h$，Hilbert 映射取 (41.13) 的 $f$，残差取 $D_\infty=c_\infty-K_0$。此时 $f1=0$、$f(st)=f(s)+f(t)$、$f(Us)=\omega f(s)$ 确为纯相位；$D_\infty$ 处处有限、反对称且 $|D_\infty|\le K_0$。纯相位 $K_0$ 满足完整 (R)，且 $f(U^31)=0$ 给它的两个第三标记返回。故从同一 $c_\infty$ 减去 $K_0$ 后，每条完整 $(R_D)$ 与两个残差返回也都成立。定理 40.1 的所有前件已在一个真正总模型上取得，遂有 $D_\infty=0$。于是
+
+$$
+c(a_i,a_j)=c_\infty(x_i,x_j)=K_0(x_i,x_j)=K(a_i,a_j).
+\tag{41.17}
+$$
+
+有限带索引来源列任意，给原 $M$ 上全部 $D(a,b)=0$。
+
+若 (41.1) 的本原立方根约定为 $\bar\omega$，先取共轭 Hilbert 空间 $\overline H$ 及典范共轭线性等距映射 $J:H\to\overline H$。它满足 $J(\bar\omega v)=\omega Jv$；故 $JF$ 的相位是定理 40.1 所需的 $\omega$，漂移为 $Jt$，全部范数核不变。这样直接适用上述论证，不假定两个根的约定自动相同。证毕。
+

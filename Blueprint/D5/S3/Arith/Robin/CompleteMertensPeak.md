@@ -4,7 +4,19 @@
 
 Complete cumulative and literal arithmetic-kernel peaks locate strict finite Robin violations.
 
-**Theorem 1.1 (The unconditional full weighted ledger).**
+**Theorem 1.1 (The complete Mangoldt ledger lies below the prime-only ledger).**
+
+$$\forall x \in \mathbb{R},\; 2 \le x \Rightarrow \operatorname{E2Lambda}\left(x\right) \le -\operatorname{E3}\left(x\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/CompleteMertensPeak.complete_mangoldt_le_neg_E3` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real x>=2, Mertens.E2Lambda(x)<=-Mertens.E3(x). The left side retains all Mangoldt prime powers, while E3 is prime-only. The comparison is unconditional and supplies the direction needed with the complete weighted-tail identity.
+
+**Theorem 1.2 (The unconditional full weighted ledger).**
 
 Lean statement: `D5/S3/Arith/Robin/CompleteMertensPeak.complete_mertens_ledger`
 
@@ -24,7 +36,7 @@ Applying complete_mertens_peak with hJY and this derived hLay produces a real t 
 
 The preceding paragraph describes the older hJY-dependent route. The new OriginalLocalA module separately closes the unchanged original implication without hJY via a proved signed endpoint. In particular the all-real JY bound is an additional analytic supplier, not a registration, a numerical sample, or a consequence of the full explicit formula. The separate existing literal-kernel theorem below has its own premise and qualitative finite-time conclusion; it does not supply this specified B0 bound. Neither RH nor existence of an off-critical zero nor an unconditional Robin counterexample is claimed.
 
-**Theorem 1.2 (A finite signed endpoint forces a strict Mertens peak).**
+**Theorem 1.3 (A finite signed endpoint forces a strict Mertens peak).**
 
 Lean statement: `D5/S3/Arith/Robin/CompleteMertensPeak.finite_mertens_peak_of_signed_endpoint`
 
@@ -36,7 +48,7 @@ Lean statement: `D5/S3/Arith/Robin/CompleteMertensPeak.finite_mertens_peak_of_si
 
 For A>=10000 and B>=A, the signed lower bound Q(B)-I(B)/r(B)>-1/(2*sqrt(A)), together with the complete Lay identity and the displayed positive U(A) peak, forces a real t in [A,B] whose actual prefix lcm is strictly greater than 5040 and strictly violates Robin. The finite no-peak contradiction retains the sign of the far endpoint. It uses no JY majorant and proves N<=exp(B*log(B)). OriginalLocalA supplies that signed endpoint at B=exp(y) and pays the original local and global bounds. This is a new alternative to the earlier absolute-tail route; its existing quantitative theorem still retains hJY.
 
-**Theorem 1.3 (A complete cumulative peak gives an actual lcm witness).**
+**Theorem 1.4 (A complete cumulative peak gives an actual lcm witness).**
 
 Lean statement: `D5/S3/Arith/Robin/CompleteMertensPeak.complete_mertens_peak`
 
@@ -60,7 +72,7 @@ The complete weighted Mertens identity relates E₂Λ to I. Completing each prim
 
 Positivity and monotonicity of r bound the absolute far-end difference by twice the unweighted absolute Chebyshev tail. Logarithmic and square-root substitutions reduce that tail to the fifth exponential moment. Comparing with the derivative of -(5/2)*z^5*exp(-4*z/5) bounds the far-end difference by 100*z^5*exp(-4*z/5), which at B is less than 1/(2*sqrt(A)). Integrating 0<=w(t)<=1/t then gives Q(A)>-(4/r(A)+17/2)/sqrt(A), contradicting U(A)=-A*Q(A) and the peak. The existing common_robin_response supplies the actual integer witness and its size bound.
 
-**Theorem 1.4 (A literal complete arithmetic-kernel peak gives a finite Robin violation).**
+**Theorem 1.5 (A literal complete arithmetic-kernel peak gives a finite Robin violation).**
 
 Lean statement: `D5/S3/Arith/Robin/CompleteMertensPeak.actual_kernel_peak_robin_violation`
 
@@ -81,6 +93,7 @@ The quantitative theorem above retains both its exact hypotheses and its explici
 ## References
 
 - Truth anchor: `D5/S3/Arith/Robin/CompleteMertensPeak.actual_kernel_peak_robin_violation`
+- Truth anchor: `D5/S3/Arith/Robin/CompleteMertensPeak.complete_mangoldt_le_neg_E3`
 - Truth anchor: `D5/S3/Arith/Robin/CompleteMertensPeak.complete_mertens_ledger`
 - Truth anchor: `D5/S3/Arith/Robin/CompleteMertensPeak.complete_mertens_peak`
 - Truth anchor: `D5/S3/Arith/Robin/CompleteMertensPeak.finite_mertens_peak_of_signed_endpoint`

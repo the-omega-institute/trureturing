@@ -1,0 +1,21 @@
+**定义30.1（模型及原对象）。** 设 $X$ 为非空紧 Hausdorff 空间，$\mathfrak B\to X$ 为局部平凡含单位复 C* 代数丛，固定纤维 $M_n(\mathbb C)$，$n\ge3$。过渡为连续复线性含单位星自同构。取
+
+$$
+M=\Gamma(X,\mathfrak B),\quad E=M_{\rm sa},\quad C=M_+,\quad
+u=1_{\mathfrak B},\quad N(a)=\sup_{\xi\in X}\|a(\xi)\|,
+\quad S(a,b)=a\circ b=(ab+ba)/2.
+\tag{30.1}
+$$
+
+不假定丛平凡，不给全局矩阵单位。$E$ 是完整自伴截面域，不是局部常值子域、稠密真子域或稠密点上的任意独立标签。原 $\Omega/\mathrm{native}$、全部原正实线性评价 $\gamma\in\mathcal P$ 和质量 $m_\gamma=\gamma(u)$ 保持身份，要求
+
+$$
+a\in C\iff(\forall\gamma\in\mathcal P)\ \gamma(a)\ge0,
+\qquad [(\forall\gamma)\ \gamma(a)=0]\Longrightarrow a=0.
+\tag{30.2}
+$$
+
+零、不等、次归一及非正常原评价均在量词内。数学正读取不被加入原准备族。未知 $D:E^2\to E$ 起初仅为同一个总映射；不预给线性、输入连续、可测、协变、中央局部性或商下降。
+
+令 $L(X)$ 为有开闭邻域基的点集，即每个开邻域都包含一个含该点的开闭邻域。主分类只要求 $\overline{L(X)}=X$；窗口本身不必零维。
+

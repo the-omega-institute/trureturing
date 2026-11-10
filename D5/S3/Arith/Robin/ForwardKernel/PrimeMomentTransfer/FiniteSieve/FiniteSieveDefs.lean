@@ -29,7 +29,7 @@ def sieveFunctional (Q : ℕ+) : (ZMod (Q : ℕ) → ℝ) →ₗ[ℝ] ℝ where
     change (∑ x, c * F x) / (Q : ℝ) = c * ((∑ x, F x) / (Q : ℝ))
     rw [← Finset.mul_sum]
     ring
-private def sieveIntervalSum (Q : ℕ+) (H a b : ℝ) (x : ZMod (Q : ℕ)) : ℝ :=
+def sieveIntervalSum (Q : ℕ+) (H a b : ℝ) (x : ZMod (Q : ℕ)) : ℝ :=
   ∑ d ∈ points H a b, sieveVariable Q d x
 def sieveIntervalMoment {k : ℕ} (Q : ℕ+) (H : ℝ) (a b : Fin k → ℝ) : ℝ :=
   sieveExpectation Q (fun x => ∏ i, sieveIntervalSum Q H (a i) (b i) x)

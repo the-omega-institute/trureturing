@@ -4548,3 +4548,369 @@ $$
 来源与新增范围。有限 Hall 匹配是 literature-attested 中间输入：Philip Hall，*On Representatives of Subsets*，*Journal of the London Mathematical Society* **s1-10** (1) (1935), 26–30，DOI [10.1112/jlms/s1-10.37.26](https://doi.org/10.1112/jlms/s1-10.37.26)；所用有限条件是每个左侧子集的邻集大小至少等于其大小，可参见公开的 [Hall's marriage theorem 条件表述](https://en.wikipedia.org/wiki/Hall%27s_marriage_theorem#Combinatorial_formulation)。真实 $\zeta$ 的 Euler 乘积与 $1$ 处单位留数分别见 NIST [DLMF 25.2(iv), (25.2.11)](https://dlmf.nist.gov/25.2#E11) 与 [DLMF 25.2(i)](https://dlmf.nist.gov/25.2#i)，均为成熟输入。本节的 repo-derived 综合范围是把有限素因子 Hall 条件接到 Euler 因子比较，得到指定遗漏 $q$ 的最优亏损、仅用上极限的单位容量识别，并保留实际 $\zeta$ 正半平面零极点和单位留数的删条件反例；乘法独立作为严格更强的可用充分子类，$H(A)$ 的弱化及其边界是本节新增的算术表述。不把 Hall 或 Euler 公式另列为新成果，也不主张全球文献优先性。
 
 ## 追加锚（本行以下为增补区）
+
+## 49. 原共同周期上移动 CM 组合的统一分母尾部
+
+**定义 49.1（原模型分母、地方权重与移动组合）。** 保持原 002 定义 13.1、17.1 的实际 $F,E_0,P_1,P_2$、全部 $U_v$、指定实嵌入与 $\alpha$。固定原 $M\ge1$，整数阶段 $H\ge2$ 的周期仍为 $q_H=q(H,H;M)$。本节不改变原有限目标空间或成功整数的含义。置
+
+$$
+R_m=[m_1]P_1+[m_2]P_2,\qquad r=\|m\|_2,\qquad
+T_{n,m}=[n]R_m,\qquad
+m\in\mathbb Z^2\setminus\{0\},\quad n\in\mathbb Z\setminus\{0\}.
+\tag{49.1}
+$$
+
+原 (16.21) 给出 $\widehat h(R_m)=h_0r^2$，其中 $h_0>0$，故这些点及其任何非零整数倍均非挠。它们不等于 $O$，横坐标也不为零：在原 $y^2=x^3-x$ 上，$x=0$ 的点为二挠点。由原命题 16.2，$F$ 全实且 $[F:\mathbb Q]=8$。在 $\mathcal O_F$ 中定义互素整理想
+
+$$
+\begin{gathered}
+(x(T))=A(T)B(T)^{-2},\qquad
+b_v(T)=\operatorname{ord}_v B(T)=\tfrac12\max(0,-\operatorname{ord}_v x(T)),\\
+\|I\|=N_{F/\mathbb Q}(I)^{1/8},\qquad
+B(T)^{\le H}=\prod_{p\le H}\prod_{v\mid p}\mathfrak p_v^{b_v(T)},\qquad
+B(T)^{>H}=\prod_{p>H}\prod_{v\mid p}\mathfrak p_v^{b_v(T)}.
+\end{gathered}
+\tag{49.2}
+$$
+
+这里 $(x(T))$ 是主分式理想，不要求 $A(T)$ 或 $B(T)$ 主理想。偶指数来自原整方程：若 $\operatorname{ord}_v x<0$，则 $x^3$ 的赋值严格小于 $x$，所以 $2\operatorname{ord}_v y=3\operatorname{ord}_v x$，迫使 $\operatorname{ord}_v x$ 为偶数。此论证包括二进地方。仍取 $\operatorname{ord}_v(\varpi_v)=1$、$e_v=\operatorname{ord}_v p$、$f_v=[k_v:\mathbb F_p]$，于是 $\sum_{v\mid p}e_vf_v=8$、$N(\mathfrak p_v)=p^{f_v}$。$B$ 始终由原整方程的 $x$ 定义；二进处的 $U_v$ 仍由原先固定的极小整模型定义。
+
+**定理 49.2（全系数、同一周期倍数的分母预算）。** 存在只依赖上述固定原数据的 $C>0$ 和整数 $H_0\ge7$，使所有整数 $H\ge H_0$、所有 $m\in\mathbb Z^2\setminus\{0\}$ 及所有 $n\in q_H\mathbb Z\setminus\{0\}$ 同时满足
+
+$$
+0\le\log\|B(T_{n,m})^{\le H}\|
+\le\log|n|+CH^5r^2,
+\tag{49.3}
+$$
+
+$$
+\left|\log\|B(T_{n,m})^{>H}\|-h_0n^2r^2\right|
+\le C\bigl[H^5r^2+\log(2|n|r)\bigr].
+\tag{49.4}
+$$
+
+特别地，误差对无限的 $n,m$ 范围统一：
+
+$$
+\sup_{\substack{m\in\mathbb Z^2\setminus\{0\}\\n\in q_H\mathbb Z\setminus\{0\}}}
+\left\{\frac{\log\|B(T_{n,m})^{\le H}\|}{h_0n^2r^2}
++\left|\frac{\log\|B(T_{n,m})^{>H}\|}{h_0n^2r^2}-1\right|\right\}
+\le\frac{CH^5}{q_H^2}\longrightarrow0.
+\tag{49.5}
+$$
+
+这些常数不依赖 $m,n$；允许一个系数为零、$n<0$ 及任意大的 $r$。这里逃出的是分母的对数范数质量，不断言小素数不再整除分母。
+
+**证明。** （甲）先在全部实嵌入上支付坐标高度。取通常的绝对对数高度 $h(x)=h([x:1])$。有限处绝对值为 $|a|_v=p^{-\operatorname{ord}_v(a)/e_v}$，其局部次数权重为 $e_vf_v/8$；八个实嵌入各有权重 $1/8$。故乘积公式的归一化给出准确分解
+
+$$
+h(x(T))=2\log\|B(T)\|+a_\infty(T),\qquad
+a_\infty(T)=\frac18\sum_{\sigma:F\hookrightarrow\mathbb R}
+\log\max(1,|x(\sigma T)|)\ge0.
+\tag{49.6}
+$$
+
+每个 $\sigma$ 对点对作带独立符号的排列，故 $\sigma T_{n,m}=T_{n,m^\sigma}$，其中 $m^\sigma$ 是 $m$ 的带独立符号排列，仍有 $\|m^\sigma\|_2=r$、$\|m^\sigma\|_\infty=\|m\|_\infty$。原两点都在 $C=E_0(\mathbb R)^0$，因此所有这些共轭点均在 $C$，可使用原圆坐标。不能只取共同换号的两个系数。
+
+横坐标在 $O$ 有二阶极点，以原不变微分圆坐标作局部参数，$x(S)\|\theta(S)\|_{\mathbb T}^2$ 在 $O$ 附近有有限正极限；离开 $O$ 的紧集上 $x$ 有界。因此存在固定 $C_\infty$，对 $S\in C\setminus\{O\}$ 有 $\max(1,|x(S)|)\le C_\infty\|\theta(S)\|_{\mathbb T}^{-2}$。原 (17.5) 对 $q=|n|$、$J=\|m\|_\infty\ge1$ 及每个 $m^\sigma$ 给出
+
+$$
+\|\theta(\sigma T_{n,m})\|_{\mathbb T}
+=\|n\,m^\sigma\!\cdot\alpha\|_{\mathbb T}
+\ge A(|n|\|m\|_\infty)^{-\mu},\qquad
+0\le a_\infty(T_{n,m})\le C\log(2|n|r).
+\tag{49.7}
+$$
+
+这里实极点展开只作为高度分解的成熟中间步骤；$A,\mu$ 是原 (17.5) 的固定常数，不随移动点重选。由原 (12.7)，$-\log2\le h(x(T))-2\widehat h(T)\le2\log2$。结合 (49.6)、原 (16.21) 与典范高度二次性，得到对所有非零整数 $n$、非零 $m$ 已成立的
+
+$$
+\left|\log\|B(T_{n,m})\|-h_0n^2r^2\right|
+\le C\log(2|n|r),\qquad
+\log\|B(S)\|\le\widehat h(S)+\log2.
+\tag{49.8}
+$$
+
+第二式适用于这里任何非挠 $S\in E_0(F)$，只用 (49.6) 的实项非负及原高度比较，不需要对 $S$ 另设常数。
+
+（乙）在非分歧奇地方使用共同第一层入口。记 $L_p(T)=\frac18\sum_{v\mid p}f_v b_v(T)\log p$，则 $\sum_pL_p(T)=\log\|B(T)\|$。固定 $p\le H$、$p\ne2,7$。原定理 16.3–16.4 给出 $e_v=1$、$n_p\le p^2$、$n_p\mid q_H$，以及 $[n_p]P_j\in U_v(1)$ 对所有 $v\mid p,j$ 成立。因此
+
+$$
+S_{p,m}=[n_p]R_m\in U_v(1),\qquad
+T_{n,m}=[n/n_p]S_{p,m}.
+\tag{49.9}
+$$
+
+此处不声称 $[n_p]P_j\in U_v(H)$。第一层已经足够，因为 $1>e_v/(p-1)$。形式对数在该层保赋值，$x=t^{-2}(1+t\mathcal O_v[[t]])$，所以对任意非零整数 $k$、非零 $S\in U_v(1)$ 有 $b_v([k]S)=b_v(S)+v_p(k)$。这是原形式群原理用于任意该层点的整数乘法，不是只对两个生成元的深度公式。
+
+具体地，整形式群的对数有 $\mathcal L(t)=t+\sum_{j\ge2}a_jt^j/j$、$a_j\in\mathcal O_v$。若 $s=\operatorname{ord}_v t>e_v/(p-1)$，由 $v_p(j)\le(j-1)/(p-1)$ 得 $js-e_vv_p(j)>s$ 对 $j\ge2$ 成立，故 $\operatorname{ord}_v\mathcal L(t)=s$；再用 $\mathcal L([k]t)=k\mathcal L(t)$ 即得赋值增量 $e_vv_p(k)$。整数乘法与取负均保该深层子群。这也说明下文的全部赋值计算适用于负 $k$。
+
+所有 $S_{p,m}$ 非挠，故全局和局部均非零；不存在零形式参数被当作有限赋值的情况。将 (49.9) 的公式按 $v\mid p$ 加权，利用 $\sum_{v\mid p}f_v=8$ 及 (49.8)，得
+
+$$
+\begin{aligned}
+L_p(T_{n,m})
+&=L_p(S_{p,m})+v_p(n/n_p)\log p\\
+&\le h_0n_p^2r^2+\log2+v_p(n)\log p\\
+&\le h_0p^4r^2+\log2+v_p(n)\log p.
+\end{aligned}
+\tag{49.10}
+$$
+
+（丙）在固定的 $2,7$ 处统一选择深层入口。对 $p\in\{2,7\}$、$v\mid p$，设原极小模型坐标为 $x_v$，把固定同构的逆写成 $x=u_v^2x_v+\beta_v$；$u_v\ne0$、$\beta_v\in F_v$ 均已固定。在 $7$ 处就是原模型，可取 $u_v=1,\beta_v=0$。在 $2$ 处不假定原整方程为极小方程，也不假定 $u_v$ 是单位。
+
+选择固定正整数 $s_v$，满足 $s_v>e_v/(p-1)$、$s_v>\operatorname{ord}_v u_v$；若 $\beta_v\ne0$，再要求 $2\operatorname{ord}_v u_v-2s_v<\operatorname{ord}_v\beta_v$。在原 $U_v(s_v)$ 内，极小模型的参数 $t_v$ 给出 $\operatorname{ord}_v x_v=-2\operatorname{ord}_v t_v$，从而
+
+$$
+b_v(S)=\operatorname{ord}_v t_v(\iota_v S)-\operatorname{ord}_v u_v,
+\qquad
+b_v([k]S)=b_v(S)+e_vv_p(k)
+\quad(0\ne k\in\mathbb Z).
+\tag{49.11}
+$$
+
+两式中 $S\ne O$，且 $[k]S$ 非零时使用第二式。形式对数的赋值论证与（乙）相同。坐标比较的误差只是固定的 $-\operatorname{ord}_v u_v$；它不会随 $m$ 增长。一般仿射点上，两种坐标的 $\log\max(1,|x|_v)$ 之差也有固定界，由仿射变换及其逆各用一次非阿基米德三角不等式即得；所选深层将这个有界比较加强为 (49.11) 的准确式。
+
+按原有限商中的阶，固定
+
+$$
+c_p=\operatorname{lcm}_{v\mid p,\ j=1,2}d_{v,j}(s_v)
+\quad(p=2,7),\qquad
+H_0\ge\max\bigl(\{7\}\cup\{s_v:v\mid14\}\bigr).
+\tag{49.12}
+$$
+
+这些阶有限，来自原定义 13.1 的紧群开子群。由 $U_v(H)\subset U_v(s_v)$，$d_{v,j}(s_v)\mid d_{v,j}(H)$；所以 $H\ge H_0$ 时真正有 $c_p\mid q_H\mid n$，而且 $S_{p,m}=[c_p]R_m\in U_v(s_v)$ 对每个 $m$ 同时成立。入口只由两个固定生成元决定，未使用依赖 $R_m$ 的固定点常数。
+
+这些 $S_{p,m}$ 及其非零整数倍仍非挠。由 (49.11) 和全部地方的次数恒等式 $\sum_{v\mid p}e_vf_v=8$，有
+
+$$
+\begin{aligned}
+L_p(T_{n,m})
+&=L_p(S_{p,m})+v_p(n/c_p)\log p\\
+&\le h_0c_p^2r^2+\log2+v_p(n)\log p
+\qquad(p=2,7).
+\end{aligned}
+\tag{49.13}
+$$
+
+这里 $7$ 的分歧和 $2$ 的极小模型都已计入，不删去任何原地方。另由 $q_H$ 的原定义，$[n]P_j\in U_v(H)$ 对 $p\le H$ 的所有 $v,j$ 成立，故 $T_{n,m}\in U_v(H)$；这项深层成员性来自 $n$，没有赋给较小的 $n_p$。
+
+（丁）汇总并检查全部统一量词。将 (49.10)、(49.13) 相加，得到
+
+$$
+\begin{aligned}
+\log\|B(T_{n,m})^{\le H}\|
+&\le\sum_{p\le H}v_p(n)\log p
++h_0r^2\left(c_2^2+c_7^2+\sum_{\substack{p\le H\\p\ne2,7}}p^4\right)
++\pi(H)\log2\\
+&\le\log|n|+CH^5r^2.
+\end{aligned}
+\tag{49.14}
+$$
+
+最后只用 $r\ge1$、$\sum_{j\le H}j^4\le H^5$、$\pi(H)\le H$；不需要素数密度或移动点的额外界。非负性来自整理想范数。(49.8) 减去这一小素数项，并将 $\log|n|$ 吸收到 $\log(2|n|r)$，即得 (49.3)–(49.4)。
+
+为核实 (49.5) 的上确界，置 $N=|n|\ge q_H$。对 $r\ge1$，$\log r/r^2\le1/(2e)$，且 $\log(2N)/N^2$ 在 $N\ge1$ 上递减。因此
+
+$$
+\frac{\log(2Nr)}{N^2r^2}
+\le\frac{\log(2q_H)+1/(2e)}{q_H^2},\qquad
+\frac{H^5}{N^2}\le\frac{H^5}{q_H^2}.
+\tag{49.15}
+$$
+
+原 (16.27) 给出固定 $M$ 下 $\log q_H\sim H^2$，故 $\log(2q_H)=O(H^2)$、$H^5/q_H^2\to0$。(49.3)–(49.4) 除以 $h_0N^2r^2$ 后即得 (49.5)，常数对所有 $n,m$ 统一。$\square$
+
+原共振的准确消费者。在本卷原对偶向量 $(K_H(a-q_Hm\cdot\alpha),r_Hm)$ 中，每个非零 $m$ 对应的实际代数点是 $T_{q_H,m}$，并且 $\theta(T_{q_H,m})=q_Hm\cdot\alpha\pmod{\mathbb Z}$。因此无论它是否为所选的一条短共振，其分母都满足
+
+$$
+\log\|B(T_{q_H,m})^{\le H}\|\le\log q_H+CH^5\|m\|_2^2,
+\qquad
+\log\|B(T_{q_H,m})^{>H}\|
+=h_0q_H^2\|m\|_2^2\bigl(1+O(H^5/q_H^2)\bigr),
+\tag{49.16}
+$$
+
+误差对移动 $m$ 一致。原前两条共振若给出两个非零系数向量，可分别调用同一个结论；原周期倍数 $n=kq_H\ne0$ 也在范围内。这里的分母始终是这些实际点的原 $x$ 分母，并未换比较方向或代数点。总分母的主项是同一高度 $\widehat h(T_{n,m})$，而全部实嵌入只占 $O(\log(2|n|r))$；已要求的有限端深进入仍允许主要高度集中在 $p>H$。
+
+本结论没有给出两份尾部分母的 $\gcd$、同一个地方上的联合下界、相互独立性或原 $p_H(\alpha)$ 的下界。各自的范数质量本身不含支持交叠信息：对不同有理素数 $\ell_1,\ell_2>H$，理想 $(\ell_1)^a,(\ell_2)^b$ 可各有任意大的对数范数，而共同因子仍为单位理想；这只是说明从质量数值到交叠需要新前提，不把这些理想当成原点的实现。一般原非零有限目标只要求成功整数落在相应余类，$n$ 不必属于 $q_H\mathbb Z$，所以不能将 (49.3)–(49.5) 扩称为全部成功整数的结论。原 $\sum_{H:\vartheta(H)<H}1/H$ 的发散、(31.2) 及实际同一 $Y$ 上的满测仍未得到证明。
+
+用白话说，每个移动整数系数组合都有一笔由 $n^2\|m\|_2^2$ 决定的总高度。全部实嵌入靠近无穷远点所造成的坐标增长，只能拿走对数大小的份额。对每个小素数，先用原共同约化阶把两个生成元送进第一形式层，再作整数乘法，新增的分母深度只有该整数的素数指数；入口本身的分母用同一高度预算控制。二进和七进处先选一次对两个生成元都有效的深入口，所有移动组合随即共享它。把这些账相加，小素数所占的比例对全部系数和周期倍数都趋于零，因而主要分母质量必须留在截止之外。这并不说那些大素数对两条共振相同，也不说共振不能发生；要得到原满测，仍须把两条共振及跨块覆盖在同一整数、同一目标上的关系接起来。
+
+来源与新增范围。原 002 的 (12.7)、命题 16.2、定理 16.3–16.4、(16.21)、(16.27) 与 (17.5) 分别供应高度比较、全部实共轭的独立符号排列、共同奇素数入口及其 $p^2$ 界、移动组合的准确典范高度、原周期主阶和全部 $q,m$ 的有限型；本节直接复用这些结论。形式参数展开与深层形式对数是 literature-attested 中间输入，见 Silverman，*The Arithmetic of Elliptic Curves*，第二版，[IV §1、IV.5.5、IV.6.3–6.4、VII.2.2](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf)；实二阶极点及圆一致化见其 VI §1。原定义 13.1 的极小模型和过滤保持不变。
+
+固定点分母的先例为 Marco Streng，*Divisibility sequences for elliptic curves with complex multiplication*，*Algebra & Number Theory* **2** (2), 183–208，DOI [10.2140/ant.2008.2.183](https://doi.org/10.2140/ant.2008.2.183)：(1.1) 使用互素理想 $A B^{-2}$；§2 的命题 2.8 给出足够深层中的局部赋值增长；§3 的定理 3.21 给出固定非挠点的分母高度渐近。这里不将该固定点的误差常数套给随 $m$ 改变的 $R_m$，也不把其强整除性转给两个独立移动组合。本节的 repo-derived 新增是原过滤、共同周期及移动组合的统一高度预算 (49.3)–(49.5)，以及它对原共振点的 (49.16)；经典高度分解、固定点分母定理、形式群和二阶极点不另列为新成果，不主张全球文献优先性。
+
+## 追加锚（本行以下为增补区）
+
+## 50. 原行格约束下的共同尾部纯夹角界与实际剪切族
+
+**定义 50.1（同一整数上的行格与共同质量）。** 全部数据、原整方程、全部有限地方、原 $U_v$、固定 $M$、$q_H$、$h_0$、$T_{n,u}$ 及理想范数严格沿用 §49。取线性独立的整数行 $m,l\in\mathbb Z^2$，并置
+
+$$
+\begin{gathered}
+L=\mathbb Zm+\mathbb Zl,\quad D=|\det(m,l)|=[\mathbb Z^2:L]\ge1,\quad
+r=\|m\|_2,\quad s=\|l\|_2,\\
+\lambda_1(L)=\min_{0\ne z\in L}\|z\|_2,\qquad
+\eta(m,l)=|\sin\varphi(m,l)|=\frac{D}{rs},\\
+J_L(n)=B(T_{n,m})+B(T_{n,l}),\qquad
+\mathcal A_H(n,u)=\log\|B(T_{n,u})^{>H}\|,\qquad
+\mathcal G_H(n,L)=\log\|J_L(n)^{>H}\|.
+\end{gathered}
+\tag{50.1}
+$$
+
+这里 $n\in\mathbb Z\setminus\{0\}$，$u\in\mathbb Z^2\setminus\{0\}$；尾部按 (49.2) 截取，$\varphi\in(0,\pi)$ 是通常实夹角，允许钝角。两个整理想的 gcd 是理想和，各素理想指数为两指数的最小值；不要求任何分母理想为主理想。$J_L(n)$ 暂由所列基定义，基无关性在下面证明。共同尾部允许为单位理想，此时 $\mathcal G_H=0$。
+
+**定理 50.2（§49 的统一共同尾部消费者）。** 对任意非零整数 $n$，$J_L(n)$ 只依赖完整行格 $L$，且对每个 $0\ne z\in L$ 都有
+
+$$
+J_L(n)\mid B(T_{n,z}),\qquad
+\log\|J_L(n)\|\le h_0n^2\lambda_1(L)^2+\log2
+\le\frac2{\sqrt3}h_0n^2D+\log2.
+\tag{50.2}
+$$
+
+存在只依赖固定原数据的 $C_0>0$ 和整数 $H_1$，使置
+
+$$
+\epsilon_H=\frac{C_0H^5}{q_H^2}\le\frac12,\qquad
+C_H=\frac{2/\sqrt3+\log2/(h_0q_H^2)}{1-\epsilon_H}
+\longrightarrow\frac2{\sqrt3}
+\tag{50.3}
+$$
+
+后，对所有整数 $H\ge H_1$、所有 $n\in q_H\mathbb Z\setminus\{0\}$ 及所有独立整数行 $m,l$ 同时成立 $\mathcal A_H(n,m),\mathcal A_H(n,l)>0$ 与
+
+$$
+0\le\frac{\mathcal G_H(n,L)}
+ {\sqrt{\mathcal A_H(n,m)\mathcal A_H(n,l)}}
+\le C_H|\sin\varphi(m,l)|.
+\tag{50.4}
+$$
+
+常数不随 $n,m,l$ 变化；(50.4) 没有独立于夹角的加性误差。(50.2) 不要求 $n\in q_H\mathbb Z$，而 (50.3)–(50.4) 的尾部比例只在所写周期倍数范围断言。
+
+**证明。** 先在本消费者内使用原整方程的经典形式群过滤。固定任意有限地方 $v$，暂把 (49.2) 的 $b_v$ 延拓到局部群：在 $O$ 取 $\widetilde b_v(O)=+\infty$，在非零仿射点取 $\widetilde b_v(S)=\tfrac12\max(0,-\operatorname{ord}_v x(S))$，其中 $x(S)=0$ 时取零。对正整数 $a$，令
+
+$$
+V_v(a)=\{O\}\cup\{S\ne O:\operatorname{ord}_v x(S)\le-2a\}.
+\tag{50.5}
+$$
+
+若 $\operatorname{ord}_v x(S)<0$，原方程 $y^2=x^3-x$ 迫使 $2\operatorname{ord}_v y=3\operatorname{ord}_v x$，故 $t=-x/y$ 满足 $\operatorname{ord}_v t=\widetilde b_v(S)>0$。原整方程在 $O$ 的整形式展开给出 $w=-1/y=t^3(1+t\mathcal O_v[[t]])$、$x=t/w=t^{-2}(1+t\mathcal O_v[[t]])$。更具体地，$w=t^3-tw^2$ 在 $t\in\mathfrak m_v$ 时有唯一 $w\in\mathfrak m_v$ 解；导数 $1+2tw$ 为单位。上述负 $x$ 赋值点有 $w\in\mathfrak m_v$，因而确属这一形式圆盘；反向由展开也得到全部这样的点。
+
+原方程的形式加法 $\mathcal F(X,Y)=X+Y+\text{高次整项}$ 和形式逆元 $\mathfrak i(X)=-X+\text{高次整项}$ 在 $\mathfrak m_v$ 收敛，保每个 $\mathfrak m_v^a$。故 $V_v(a)$ 是原局部椭圆群的子群，且对所有局部点 $S,T$ 有
+
+$$
+\widetilde b_v(S+T)\ge
+\min\{\widetilde b_v(S),\widetilde b_v(T)\},\qquad
+\widetilde b_v([-1]S)=\widetilde b_v(S).
+\tag{50.6}
+$$
+
+当最小值为零时第一式只用非负性；为正时两点在同一 $V_v(a)$，结果为 $O$ 也由 $+\infty$ 约定包括。由此任何正、负或零整数的线性组合都保共同深度。这里仅在负 $x$ 赋值圆盘中使用 $b_v=\operatorname{ord}_v(-x/y)$，不在任意仿射点上使用 $b_v=\max(0,\operatorname{ord}_v(-x/y))$。
+
+这段论证只要求原方程系数整，不要求极小、好约化或 $p\ne2$，所以包括原二进地方及全部分歧地方。$V_v(a)$ 只是证明原 $x$ 分母关系的子群，不替换原先以极小整方程指定的 $U_v(a)$；两者无需相等。此处也没有把 $p\nmid D$ 当成整个局部椭圆群上的可逆性：原 002 §16 的 $p=3$ 两点约化为非零二挠点，$2$ 虽为 $3$ 进单位，$[2]$ 在约化群仍有非零核。
+
+令 $j_v=\min\{b_v(T_{n,m}),b_v(T_{n,l})\}$。对 $z=am+bl\in L$，有 $T_{n,z}=[a]T_{n,m}+[b]T_{n,l}$，所以当 $z\ne0$ 时 (50.6) 给出 $b_v(T_{n,z})\ge j_v$。由原 (16.21)，$\widehat h(T_{n,z})=h_0n^2\|z\|_2^2>0$，故此时点非挠、非零，分母合法。组合过程中 $z=0$ 对应的 $O$ 只参与子群计算，不定义 $B(O)$，也不将零参数的赋值当有限数。
+
+因此在每个素理想上 $j_v\le b_v(T_{n,z})$，得到 (50.2) 的整除式。若 $m',l'$ 是 $L$ 的另一整数基，每个新基行都是旧基行的整数线性组合，故新基两指数的最小值不小于 $j_v$；反过来使用逆整数换基又得相反不等式。两个最小值遂在全部地方相等，证明理想身份的基无关性。这是逐素理想论证，不选择 gcd 的生成元，也不除以行列式。
+
+取最短非零 $z\in L$，刚证的整除与 (49.8)、原 (16.21) 给出
+
+$$
+\log\|J_L(n)\|\le\log\|B(T_{n,z})\|
+\le\widehat h(T_{n,z})+\log2
+=h_0n^2\lambda_1(L)^2+\log2.
+\tag{50.7}
+$$
+
+本消费者所用的二维 Hermite 步骤也可直接写全。最短向量 $z$ 在自由群 $L$ 中为本原元，否则除以大于一的整数仍在 $L$ 而更短。因此以 Bézout 换基把它补成 $L$ 的基 $z,w$。从 $w$ 减去适当整数倍 $z$，可使 $|\langle w,z\rangle|/\|z\|_2\le\|z\|_2/2$。又因 $w\ne0$，最短性给出 $\|w\|_2\ge\|z\|_2$，所以 $w$ 垂直于 $z$ 的分量长度至少为 $\sqrt3\|z\|_2/2$。基平行四边形面积即 $D$，从而
+
+$$
+D\ge\frac{\sqrt3}{2}\|z\|_2^2,
+\qquad \lambda_1(L)^2\le\frac2{\sqrt3}D.
+\tag{50.8}
+$$
+
+这完成任意 $n\ne0$ 的 (50.2)，没有使用周期倍数或尾部渐近。
+
+现在才取 $n\in q_H\mathbb Z\setminus\{0\}$。由 (49.5)，选固定 $C_0,H_1$ 使 (50.3) 成立，且对每个非零整数行 $u$ 同时有
+
+$$
+(1-\epsilon_H)h_0n^2\|u\|_2^2
+\le\mathcal A_H(n,u)
+\le(1+\epsilon_H)h_0n^2\|u\|_2^2.
+\tag{50.9}
+$$
+
+故两份尾部质量都严格为正。尾部截取保理想整除且不增范数，(50.2) 给出 $0\le\mathcal G_H(n,L)\le(2/\sqrt3)h_0n^2D+\log2$。再用 $D\ge1$、$n^2\ge q_H^2$，有
+
+$$
+\begin{aligned}
+\frac{\mathcal G_H(n,L)}{\sqrt{\mathcal A_H(n,m)\mathcal A_H(n,l)}}
+&\le\frac{(2/\sqrt3)h_0n^2D+\log2}
+ {(1-\epsilon_H)h_0n^2rs}\\
+&=\frac{2/\sqrt3+\log2/(h_0n^2D)}{1-\epsilon_H}\,\frac D{rs}
+\le C_H|\sin\varphi(m,l)|.
+\end{aligned}
+\tag{50.10}
+$$
+
+$\epsilon_H\to0$ 与 $q_H\to\infty$ 来自 (49.5) 及原 (16.27)，故 $C_H\to2/\sqrt3$。尤其当行随 $H,n$ 移动而夹角任意小时，$\log2$ 仍已随 $D/(rs)$ 一起吸收，不遗留单独加性项。$\square$
+
+**推论 50.3（单位行格的实际剪切族及较小份额）。** 对每个整数 $k$，取 $m_k=(k,1)$、$l_k=(k+1,1)$，仍使用同一原数据和同一非零整数 $n$。则对任意这样的 $n$ 精确有
+
+$$
+\begin{aligned}
+J_{\mathbb Z^2}(n)
+&=\gcd\bigl(B([n]P_1),B([n]P_2)\bigr)\\
+&=\gcd\bigl(B([n]([k]P_1+P_2)),
+             B([n]([k+1]P_1+P_2))\bigr).
+\end{aligned}
+\tag{50.11}
+$$
+
+这里每个 gcd 都指理想和，截取任意 $>H$ 尾部后身份仍成立。对 (50.3) 的全部 $H\ge H_1$、$n\in q_H\mathbb Z\setminus\{0\}$ 和全部 $k\in\mathbb Z$，还有
+
+$$
+\begin{gathered}
+|\sin\varphi(m_k,l_k)|
+=\frac1{\sqrt{k^2+1}\sqrt{(k+1)^2+1}},\\
+0\le\frac{\mathcal G_H(n,\mathbb Z^2)}
+ {\min\{\mathcal A_H(n,m_k),\mathcal A_H(n,l_k)\}}
+\le\frac{1+\log2/(h_0q_H^2)}
+ {(1-\epsilon_H)\,[1+\min\{k^2,(k+1)^2\}]}
+=O(k^{-2})\quad(|k|\to\infty).
+\end{gathered}
+\tag{50.12}
+$$
+
+$O$ 常数对 $H,n,k$ 统一。这是共同尾部占两份中较小的对数质量之比例，强于只把 (50.4) 原样用于几何平均。
+
+**证明。** 两行行列式为 $-1$，且 $l_k-m_k=(1,0)$、$m_k-k(l_k-m_k)=(0,1)$，故其整数行格恰为 $\mathbb Z^2$。定理 50.2 的换基身份给出 (50.11)，两个新点的高度分别为 $h_0n^2(k^2+1)$、$h_0n^2((k+1)^2+1)$，所以无零点或挠点例外。该格的最短长度为 $1$，由 (50.7) 有 $\mathcal G_H(n,\mathbb Z^2)\le h_0n^2+\log2$；再用 (50.9) 同时下界两份质量，即得 (50.12)。当 $|k|\ge2$ 时，$1+\min\{k^2,(k+1)^2\}\ge k^2/4$，而前面的系数至多 $2(1+\log2/h_0)$，从而所写 $O(k^{-2})$ 对所有移动参数统一。角度恒等式直接来自 $D=1$。$\square$
+
+一般两行不能把几何平均比例直接换成占较小份额的同一纯正弦比例。事实上同一证明支付的是
+
+$$
+\frac{\mathcal G_H(n,L)}{\min\{\mathcal A_H(n,m),\mathcal A_H(n,l)\}}
+\le C_H\frac D{\min\{r^2,s^2\}}
+=C_H|\sin\varphi(m,l)|\max\{r/s,s/r\}.
+\tag{50.13}
+$$
+
+所以除非另有长度比控制，就必须保留这个额外因子；剪切族的 (50.12) 则已直接用其最短向量和两行准确长度支付所需条件。
+
+适用边界。共同质量的这些上界不供应正下界，尤其不保证共同尾部含任何素理想；允许单位理想不等于已证明原点在某个参数上实现单位理想。剪切族确由实际原代数点组成，却不保证这两行同时实现原先选定的前两条短共振系数。上界也不证明相互独立、原 $p_H(\alpha)$ 下界、(31.2)、$\sum_{H:\vartheta(H)<H}1/H$ 发散或同一实际 $Y=C_M\times\mathbb T^2$ 上的满测。一般原非零有限目标的成功整数仍可能只在相应余类中，不能把周期倍数上的 (50.4)、(50.12) 推到那些整数。这里没有把不同整数、不同地方或各自可达的最优值当作同一实现。
+
+用白话说，两份分母共同含有的每一层素理想，都必须随两行的所有整数加减保留下来。因此约束共同部分的不是所选两行各自有多长，而是它们生成的完整行格里最短的非零组合有多短。这个短组合对应同一 $n$ 上的实际非挠点，其高度给共同部分设定上限；二维面积又把短组合的长度压到行列式尺度。§49 同时保证两份尾部各自接近各自的二次高度，除法后就得到绝对正弦界，钝角也一样。整数行列式至少为一，使固定高度常差也能并入正弦系数，所以极小夹角不会被一个固定加性误差淹没。
+
+剪切族把这个关系说得更具体：两行可以一起越来越长、越来越接近平行，但作差后仍是第一坐标方向，再减去整数倍又得到第二坐标方向；完整行格始终没变，共同分母也精确没变。各自行高却按 $k^2$ 增长，于是共同尾部在较小一份中所占比例至多按 $k^{-2}$ 缩小。这只限制“最多共享多少”，没有支付“至少共享多少”、哪些行实际成为共振，以及跨阶段、跨条件的联合覆盖。
+
+来源与新增范围。原 002 的 (16.21)、本卷 (49.5)、(49.8) 分别供应原点组合的准确二次高度、周期倍数上的全系数统一尾部质量和原分母高度上界，本节直接复用。原整方程在单位元的整展开、形式群与各深度子群是 literature-attested 中间步骤，见 Silverman，*The Arithmetic of Elliptic Curves*，第二版，[IV §§1–3，特别是 IV §1 的负 $x$ 赋值像与 IV §3 的子群](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf)。负 $x$ 赋值过滤的先例另见 Streng，*Divisibility sequences for elliptic curves with complex multiplication*，[§2](https://msp.org/ant/2008/2-2/ant-v2-n2-p04-s.pdf)，DOI [10.2140/ant.2008.2.183](https://doi.org/10.2140/ant.2008.2.183)。gcd 的整数换基与二维 Hermite 界都是成熟步骤；后者的常数及 Cassels 的出处可参见 [Hermite constant](https://en.wikipedia.org/wiki/Hermite_constant)，本证明已给出所用二维约化。
+
+数域 gcd 高度的更强小量结论不能无条件借来：Silverman，[*Generalized Greatest Common Divisors, Divisibility Sequences, and Vojta’s Conjecture for Blowups*，定理 3](https://arxiv.org/pdf/math/0407415) 明列 Vojta 前提及例外集合；其 [*Common Divisors of Elliptic Divisibility Sequences over Function Fields*，定理 3](https://arxiv.org/pdf/math/0402016) 的常 $j$ 结论属于特征零函数域，不能改作这里的无条件数域结论。本节只用已写明的短行格高度上界；repo-derived 新增范围是它与 §49 原实际点统一预算的联合消费者 (50.4)，以及同一原数据、同一 $n$ 的实际剪切身份和较小份额界 (50.11)–(50.12)。经典形式群、gcd 换基与 Hermite 步骤不另列为新一般理论，也不主张全球文献优先性。
+
+## 追加锚（本行以下为增补区）
