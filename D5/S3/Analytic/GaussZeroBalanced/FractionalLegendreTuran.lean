@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Analytic/GaussZeroBalanced/FractionalLegendreTuran
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: kind=certified-instance; basis=refutes=D5/S3/Analytic/GaussZeroBalanced/FractionalLegendreTuran.claim; result=D5/S3/Analytic/GaussZeroBalanced/FractionalLegendreTuran.result; claim=D5/S3/Analytic/GaussZeroBalanced/FractionalLegendreTuran.claim
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Analytic/GaussZeroBalanced/FractionalLegendreTuran.claim; result=D5/S3/Analytic/GaussZeroBalanced/FractionalLegendreTuran.result; claim=D5/S3/Analytic/GaussZeroBalanced/FractionalLegendreTuran.claim
    digest: A rational interior counterexample to the fractional Legendre Turan inequality. -/
 
 /-
