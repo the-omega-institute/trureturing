@@ -8,6 +8,20 @@
 /-
 admission_basis: open-problem-resolution (#28883; Proved)
 escape_witness: none
+All declarations are bind-only under the registered external resolution basis.
+a: proof_shape=bind-only; consumers=counting_bridge, finite_certificate, result
+R: proof_shape=bind-only; consumers=v, total, counting_bridge, step_linear, recurrence
+P: proof_shape=bind-only; consumers=v, total, counting_bridge, step_linear, recurrence
+C: proof_shape=bind-only; consumers=v, counting_bridge, step_linear
+v: proof_shape=bind-only; consumers=counting_bridge, vector_certificate, vector_recurrence, recurrence, finite_certificate
+total: proof_shape=bind-only; consumers=counting_bridge, recurrence, finite_certificate
+counting_bridge: proof_shape=bind-only; consumers=recurrence, finite_certificate
+step_linear: proof_shape=bind-only; consumers=vector_recurrence
+vector_certificate: proof_shape=bind-only; consumers=vector_recurrence
+vector_recurrence: proof_shape=bind-only; consumers=recurrence
+recurrence: proof_shape=bind-only; consumers=result
+finite_certificate: proof_shape=bind-only; consumers=result
+result: proof_shape=bind-only; consumers=external result of #28883
 -/
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip

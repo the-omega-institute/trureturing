@@ -72,18 +72,6 @@ internal sealed class HardinA233256RowOneDocument : IScribeDocumentDefinition
         return All("n", Q("Nat"), All("A", Arrow(Product(Fin(D(1)), Fin(n)), Fin(D(6))),
             Eq(Own("Legal", a), And(first, And(bonds, normal)))));
     }
-    private static Formula WidthLegal(Formula a, int k)
-    {
-        var row = Arrow(Fin(Num(k)), Fin(D(6)));
-        var c = V("c"); var d = V("d");
-        Formula At(Formula f, int j) => App(f, Typed(Num(j), Fin(Num(k))));
-        var r = k == 1 ? Fn("_", row, Q("True"))
-            : Fn("c", row, Bond(At(c, 0), At(c, 1)));
-        var e = k == 1 ? Fn("_", row, Fn("_", row, Q("True")))
-            : Fn("c", row, Fn("d", row, Bond(At(c, 1), At(d, 0))));
-        return Call("D5.S3.Combinatorics.TraceAvoidingArrays."
-            + "HardinA233251TriangleStrip.widthLegal", r, e, a);
-    }
     private static Formula Pair(Formula a, Formula b) => Par(Seq(a, Comma, Sp, b));
     private static Formula Product(Formula a, Formula b) => Seq(Par(a), Sp, Times, Sp, Par(b));
     private static Formula Add(Formula a, Formula b) =>

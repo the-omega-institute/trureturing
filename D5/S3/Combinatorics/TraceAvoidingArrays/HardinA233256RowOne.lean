@@ -8,6 +8,30 @@
 /-
 admission_basis: open-problem-resolution (#28883; Proved)
 escape_witness: none
+All declarations are bind-only under the registered external resolution basis.
+Legal: proof_shape=bind-only; consumers=instDecidableLegal, a, transpose_count
+instDecidableLegal: proof_shape=bind-only; consumers=a
+a: proof_shape=bind-only; consumers=transpose_count, counting_bridge, finite_certificate, result
+R: proof_shape=bind-only; consumers=v, total, b, counting_bridge, valid_next, initial_valid, recurrence
+E: proof_shape=bind-only; consumers=instDecidableE, b, transpose_count, counting_bridge
+instDecidableE: proof_shape=bind-only; consumers=b, counting_bridge
+P: proof_shape=bind-only; consumers=v, total, counting_bridge, valid_next, initial_valid
+C: proof_shape=bind-only; consumers=instDecidableC, v, valid_next
+instDecidableC: proof_shape=bind-only; consumers=v
+v: proof_shape=bind-only; consumers=counting_bridge, vector_certificate, vector_recurrence, recurrence, finite_certificate
+total: proof_shape=bind-only; consumers=counting_bridge, recurrence, finite_certificate
+b: proof_shape=bind-only; consumers=transpose_count, counting_bridge
+transpose_count: proof_shape=bind-only; consumers=counting_bridge
+counting_bridge: proof_shape=bind-only; consumers=recurrence, finite_certificate
+Valid: proof_shape=bind-only; consumers=instDecidableValid, valid_next, initial_valid, vector_certificate, vector_recurrence
+instDecidableValid: proof_shape=bind-only; consumers=vector_certificate
+valid_next: proof_shape=bind-only; consumers=vector_recurrence
+initial_valid: proof_shape=bind-only; consumers=recurrence
+vector_certificate: proof_shape=bind-only; consumers=vector_recurrence
+vector_recurrence: proof_shape=bind-only; consumers=recurrence
+recurrence: proof_shape=bind-only; consumers=result
+finite_certificate: proof_shape=bind-only; consumers=result
+result: proof_shape=bind-only; consumers=external result of #28883
 -/
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip

@@ -56,21 +56,6 @@ internal sealed class HardinA233256ColumnTwoDocument : IScribeDocumentDefinition
     }
     private static Formula Bond(Formula a, Formula b) =>
         And(Ne(a, b), Ne(Add(Val(a), Val(b)), D(5)));
-    private static Formula LegalFormula()
-    {
-        var n = V("n"); var a = V("A"); var j = V("j"); var i = V("i"); var h = V("h");
-        Formula At(Formula index) => App(a, Pair(Typed(D(0), Fin(D(1))), index));
-        var x = At(j);
-        var first = Ex("j", Fin(n), And(Eq(Val(j), D(0)), Eq(x, Typed(D(0), Fin(D(6))))));
-        var bonds = All("j", Fin(n), All("h", Lt(Add(Val(j), D(1)), n),
-            Bond(x, At(Typed(Call("Fin.mk", Add(Val(j), D(1)), h), Fin(n))))));
-        var normal = All("j", Fin(n), And(
-            Imp(Or(Eq(x, D(2)), Or(Eq(x, D(3)), Eq(x, D(4)))),
-                Ex("i", Fin(n), And(Lt(i, j), Eq(At(i), D(1))))),
-            Imp(Eq(x, D(3)), Ex("i", Fin(n), And(Lt(i, j), Eq(At(i), D(2)))))));
-        return All("n", Q("Nat"), All("A", Arrow(Product(Fin(D(1)), Fin(n)), Fin(D(6))),
-            Eq(Own("Legal", a), And(first, And(bonds, normal)))));
-    }
     private static Formula WidthLegal(Formula a, int k)
     {
         var row = Arrow(Fin(Num(k)), Fin(D(6)));
