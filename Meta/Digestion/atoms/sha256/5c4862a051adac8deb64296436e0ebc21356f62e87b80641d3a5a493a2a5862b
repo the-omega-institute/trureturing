@@ -1,0 +1,9 @@
+**来源对应 58.2（亲读原文的成熟结构）。**
+
+| 原始文献及版本 | 所用准确陈述 |
+| --- | --- |
+| Bruce Blackadar, *Operator Algebras*, 作者托管PDF，2017-02-08版本，[全文][ECT-Blackadar] | IV.1.4.16–19，印刷页354–355：连续迹、Hausdorff谱、Fell局部秩一；IV.1.7.4–8，页366–367：Hilbert模纤维与局部Morita模型；IV.1.4.27与IV.1.5.8：非可分type I/GCR对应。IV.1.4.29仅用于说明存在CT子商组成列的成熟背景；IV.1.4.30的迹元素警告保持。 |
+| Jacques Dixmier, *Traces sur les C*-algèbres*, Ann. Inst. Fourier **13** (1963), 219–262，[原刊][ECT-Dixmier] | Proposition 9，印刷页241：非零GCR代数含非零连续迹闭双边理想。56.1由此自行给出本质版本。 |
+| Jacques Dixmier、Adrien Douady, *Champs continus d'espaces hilbertiens et de C*-algèbres*, Bull. Soc. Math. France **91** (1963), 227–284，[原刊][ECT-DD] | Lemma 16，页270，及Theorem 7，页271：Fell条件与局部连续Hilbert场的紧算子场；46.1以精确纤维评价和有限Gram逆平方根构造所需框架，不要求局部固定维数或stabilization。 |
+| Michael Forger、Daniel V. Paulino, arXiv:1307.4458v1，[原文][ECT-DH] | Theorem 2，页6：Dauns–Hofmann的中央乘子接口；这里只用53.4的标准C*表述。 |
+| Erik M. Alfsen、Frederic W. Shultz, *Orientation in operator algebras*, PNAS **95** (1998), 6596–6601，[全文][ECT-AS] | Dynamical correspondence的定义已经要求线性赋值进入有界skew order derivations；Theorem 1给相容C*乘法的成熟背景。本文不以它推断任意原 $D$ 的线性；线性在53.2后才取得。 |

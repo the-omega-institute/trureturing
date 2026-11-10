@@ -1,0 +1,71 @@
+**推论 20.7（返回最大值的精确有限系统）。**在定义 20.3 的 $T_2$ 上，对单位正规项置
+
+$$
+|1|=|x|=|y|=1,\qquad |Us|=1+|s|,\qquad
+|s\cdot z|=1+|s|+|z|\quad(s,z\ne1),
+\tag{20.36}
+$$
+
+一般乘积先作单位约简。对 $N\ge1$ 令
+
+$$
+\begin{aligned}
+T_N&=\{s\in T_2:|s|\le N\},\\
+E_N&=T_N\ \cup\ \{a\cdot U^ku:a,u\in T_N,\ 0\le k\le2\}
+\ \cup\ \{P\},\qquad P=x\cdot(U^31).
+\end{aligned}
+\tag{20.37}
+$$
+
+在唯一一组共享实变量 $z_{s,r}$、$(s,r)\in E_N^2$ 上，定义有限系统 $\mathcal P_N$：
+
+$$
+\begin{gathered}
+0\le z_{s,r}\le\kappa(s,r)\quad(s,r\in E_N),\\
+\sum_{k=0}^2z_{a\cdot U^ku,b\cdot U^kv}
+=3z_{a,b}+3z_{u,v}\quad(a,b,u,v\in T_N).
+\end{gathered}
+\tag{20.38}
+$$
+
+不加对称性、任何 $\mathrm C_3$ 行、负型或商识别；所有关系与界使用这同一变量族。置
+
+$$
+m_N=\max_{z\in\mathcal P_N}(z_{P,y}-z_{x,y}).
+\tag{20.39}
+$$
+
+这些系统是非空有界有理多面体，最大值是有理数，并有精确关系
+
+$$
+0\le m_{N+1}\le m_N\le2,\qquad
+\max_{q\in\mathcal A}\Delta(q)=\inf_{N\ge1}m_N.
+\tag{20.40}
+$$
+
+因此 $\mathsf{Eff}$ 恰等价于 $\inf_Nm_N=0$；其失败恰等价于
+
+$$
+\exists\varepsilon\in\mathbb Q_{>0}\ \forall N\ge1\quad
+\exists z^{(N)}\in\mathcal P_N\cap\mathbb Q^{E_N^2}:\qquad
+z^{(N)}_{P,y}-z^{(N)}_{x,y}\ge\varepsilon.
+\tag{20.41}
+$$
+
+其中同一个正有理阈值在所有 $N$ 上固定，不能改成依赖窗口的正阈值。
+
+**证明。**这是 [W 定理 38.4](AURIC_C133_UNANCHORED_MARKER_BOUNDED_ORBITS_CONTINUATION_W.md#38-纯相位支配残差的固定两来源归约与有理穷尽) 的紧有理穷尽在当前事件类中的应用，保留共享变量，去掉该残差类的反对称与返回附加行，并使用当前仿射总核与指定差坐标。具体地，(20.8) 的每个复坐标都在 $\mathbb Z[\omega]$ 中。若差坐标为 $m+n\omega$，$m,n\in\mathbb Z$，则
+
+$$
+|m+n\omega|^2=m^2-mn+n^2.
+\tag{20.42}
+$$
+
+所以每个 $\kappa(s,r)$ 都是非负整数，所有有限行数据有理。零总费用保留为单点界 $z_{s,r}=0$，不合并不同项。零变量族可行；有界有理多面体的线性目标可在有理顶点取到最大值，适用于退化面和零维情形。目标中的两个变量都在 $[0,2]$，故 $0\le m_N\le2$。$E_N\subseteq E_{N+1}$ 且大系统限制后满足小系统，给单调性。
+
+每个总候选 $q\in\mathcal A$ 都限制为所有 $\mathcal P_N$ 的可行点，所以 $\max\Delta\le\inf_Nm_N$。反向，逐个取有限最大点，在未出现的坐标上填零，视为固定盒 (20.18) 中的点。枚举全部有序项对，取一条共同对角子列。每条总界与每条完整 (20.9) 都最终进入某一有限系统，故极限 $q$ 属于 $\mathcal A$。指定差坐标的极限为单调数列的下确界，给 $\Delta(q)=\inf_Nm_N$，从而得 (20.40)。
+
+若该值为正，选一个严格小于它的正有理数 $\varepsilon$，每个窗口的有理最大点满足 (20.41)。反向，若同一正有理阈值对所有窗口可行，在同一固定盒中作上述对角提取，得到 $\Delta(q)\ge\varepsilon>0$ 的总候选；也可由 $m_N\ge\varepsilon$ 及 (20.40) 直接得到。证毕。
+
+此推论没有给出任何 $m_N$ 的值；有限多个窗口的正最大值不能替代总反模型。既未断言某个有限窗就迫出零，也未给出收敛率或有效判定算法。
+
