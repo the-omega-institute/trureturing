@@ -2,7 +2,7 @@
 
 ## Abstract
 
-A sharp uniform theta-weighted occupation estimate for arbitrary prime selections.
+A uniform theta-weighted occupation estimate for arbitrary prime selections.
 
 **Theorem 1.1 (Uniform occupation defect on bounded theta mass).**
 
@@ -29,5 +29,6 @@ The estimate asserts no attainment or sharpness construction, no RH conclusion a
 ## References
 
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/PrimeOccupationDefect.uniform_prime_occupation_defect`
+- Dependency: [D5/S3/Arith/Robin/OriginalEndpointFirstLayerBand](../OriginalEndpointFirstLayerBand.md)
 - Dependency: [D5/S3/Arith/Robin/PriceRecord/PrimeSquareTail](PrimeSquareTail.md)
 - Dependency: [D5/S3/Arith/Robin/PriceRecord/QuantitativePrimeAbel](QuantitativePrimeAbel.md)
