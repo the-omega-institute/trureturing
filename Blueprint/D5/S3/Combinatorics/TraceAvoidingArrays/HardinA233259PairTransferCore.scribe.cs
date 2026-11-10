@@ -80,7 +80,6 @@ internal sealed class HardinA233259PairTransferCoreDocument : IScribeDocumentDef
     private static Formula Or(Formula a,Formula b)=>new Formula.Logic(Parenthesized(a),FormulaLogicOperator.Or,Parenthesized(b));
     private static Formula Imp(Formula a,Formula b)=>new Formula.Logic(Parenthesized(a),FormulaLogicOperator.Implies,Parenthesized(b));
     private static Formula Iff(Formula a,Formula b)=>new Formula.Logic(Parenthesized(a),FormulaLogicOperator.Iff,Parenthesized(b));
-    private static Formula And(Formula a,Formula b)=>new Formula.Logic(Parenthesized(a),FormulaLogicOperator.And,Parenthesized(b));
     private static Formula Eq(Formula a,Formula b)=>new Formula.Relation(a,FormulaRelationOperator.Equal,b);
     private static Formula Ne(Formula a,Formula b)=>new Formula.Relation(a,FormulaRelationOperator.NotEqual,b);
     private static Formula Lt(Formula a,Formula b)=>new Formula.Relation(a,FormulaRelationOperator.LessThan,b);
