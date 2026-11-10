@@ -20,6 +20,15 @@ internal sealed class HardinA233256ColumnTwoDocument : IScribeDocumentDefinition
             Blocks(Paragraph(Text(title + "."))),
             theorem ? DescribeRole.Theorem : DescribeRole.Definition);
 
+    private static DocumentBlock Resolution(string name, string title, Formula formula) =>
+        Describe.Lean(DescribeId.Create(name.Replace("_", "-").ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(title),
+            StatementSource.FromAuthor(Disp(formula)),
+            AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(title + "."))),
+            DescribeRole.Theorem,
+            new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233256-columntwo"), ResolutionKind.Proved));
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Hardin's ColumnTwo recurrence for literal normalized six-colour arrays.",
         H("A233256 ColumnTwo"),
@@ -27,8 +36,7 @@ internal sealed class HardinA233256ColumnTwoDocument : IScribeDocumentDefinition
             Paragraph(Text("For each row, the horizontal bond joins its two cells. The antidiagonal bond joins the right cell to the left cell of the next row. These are all the bonds. Row-major normalization uses the shared scanner. The boundary records the right-cell pair label and the seen-colour flags. Reachable continuations satisfy a quadratic identity with coefficients 20 and minus 64." + " Fin.val denotes the natural value of a finite index or colour. Exact initial counts give the recurrence at its first admissible index; the transfer identity gives every later case.")),
             Node("a", "The literal filtered array count", CountFormula(), literature: true),
             Node("finite_certificate", "Exact initial counts", InitialFormula(), theorem: true),
-            Node("result", "The integer recurrence", ResultFormula(),
-                theorem: true))));
+            Resolution("result", "The integer recurrence", ResultFormula()))));
 
     private static Formula CountFormula()
     {

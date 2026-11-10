@@ -20,6 +20,15 @@ internal sealed class HardinA233256ColumnOneDocument : IScribeDocumentDefinition
             Blocks(Paragraph(Text(title + "."))),
             theorem ? DescribeRole.Theorem : DescribeRole.Definition);
 
+    private static DocumentBlock Resolution(string name, string title, Formula formula) =>
+        Describe.Lean(DescribeId.Create(name.Replace("_", "-").ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(title),
+            StatementSource.FromAuthor(Disp(formula)),
+            AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(title + "."))),
+            DescribeRole.Theorem,
+            new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233256-columnone"), ResolutionKind.Proved));
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Hardin's ColumnOne recurrence for literal normalized six-colour arrays.",
         H("A233256 ColumnOne"),
@@ -27,8 +36,7 @@ internal sealed class HardinA233256ColumnOneDocument : IScribeDocumentDefinition
             Paragraph(Text("One column has no horizontal or antidiagonal bonds. The first cell is zero. Each 2, 3 or 4 has a strictly earlier 1, and each 3 a strictly earlier 2. The public row transfer at width one counts these words. The continuation vectors satisfy a cubic identity with coefficients 12, minus 44 and 48; linearity propagates the finite state identity to all lengths." + " Fin.val denotes the natural value of a finite index or colour. Exact initial counts give the recurrence at its first admissible index; the transfer identity gives every later case.")),
             Node("a", "The literal filtered array count", CountFormula(), literature: true),
             Node("finite_certificate", "Exact initial counts", InitialFormula(), theorem: true),
-            Node("result", "The integer recurrence", ResultFormula(),
-                theorem: true))));
+            Resolution("result", "The integer recurrence", ResultFormula()))));
 
     private static Formula CountFormula()
     {

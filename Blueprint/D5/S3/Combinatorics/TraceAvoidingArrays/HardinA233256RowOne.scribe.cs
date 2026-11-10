@@ -20,6 +20,15 @@ internal sealed class HardinA233256RowOneDocument : IScribeDocumentDefinition
             Blocks(Paragraph(Text(title + "."))),
             theorem ? DescribeRole.Theorem : DescribeRole.Definition);
 
+    private static DocumentBlock Resolution(string name, string title, Formula formula) =>
+        Describe.Lean(DescribeId.Create(name.Replace("_", "-").ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(title),
+            StatementSource.FromAuthor(Disp(formula)),
+            AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(title + "."))),
+            DescribeRole.Theorem,
+            new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233256-rowone"), ResolutionKind.Proved));
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Hardin's RowOne recurrence for literal normalized six-colour arrays.",
         H("A233256 RowOne"),
@@ -28,8 +37,7 @@ internal sealed class HardinA233256RowOneDocument : IScribeDocumentDefinition
             Node("Legal", "The literal path conditions", LegalFormula()),
             Node("a", "The literal filtered array count", CountFormula(), literature: true),
             Node("finite_certificate", "Exact initial counts", InitialFormula(), theorem: true),
-            Node("result", "The integer recurrence", ResultFormula(),
-                theorem: true))));
+            Resolution("result", "The integer recurrence", ResultFormula()))));
 
     private static Formula CountFormula()
     {

@@ -38,6 +38,10 @@ $$\forall (n: \operatorname{Nat}), ((3 \le n) \Rightarrow ((\operatorname{D5}.\o
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233256ColumnTwo.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin233256-columntwo` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233256ColumnTwo.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin233256-columntwo","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233256ColumnTwo.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A233256: horizontal and antidiagonal complementary-pair exclusion*. URL: <https://oeis.org/A233256>.
