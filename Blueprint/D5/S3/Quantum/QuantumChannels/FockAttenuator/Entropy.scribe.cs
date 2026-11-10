@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.QuantumChannels.FockAttenuat
 internal sealed class EntropyDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Quantum/QuantumChannels/FockAttenuator/Entropy.";
-    private static readonly LibraryNoteRef EntropySource = LibraryNoteRef.Create("D5/L/Entropy/wehrl1978entropy");
+    private static readonly LibraryNoteRef EntropySource = LibraryNoteRef.Create("D5/L/QuantumStates/wehrl1978entropy");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The full bosonic attenuator and the coherent-state output-entropy question.",
         H("Entropy"),
