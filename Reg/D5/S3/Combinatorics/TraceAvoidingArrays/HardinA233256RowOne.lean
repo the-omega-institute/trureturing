@@ -13,11 +13,11 @@ attribute [local irreducible] a
 
 namespace Initial
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℕ)
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℤ)
 def actual : Realization signature :=
-  realize signature (fun _ _ n => a n) (fun e => nomatch e)
+  realize signature (fun _ _ n => (a n : ℤ)) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ n => a n + 1) (fun e => nomatch e)
+  realize signature (fun _ _ n => (a n : ℤ) + 1) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
   Law R := R.readout () () 1 = 1 ∧ (R.readout () () 2 = 1 ∧ (R.readout () () 3 = 3 ∧ (R.readout () () 4 = 10)))
@@ -25,11 +25,11 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have ha := finite_certificate.1
   have hb := h.1
-  change a 1 + 1 = 1 at hb
+  change (a 1 : ℤ) + 1 = 1 at hb
   omega
 private theorem actual_dependence :
     actual.readout () () 1 ≠ actual.readout () () 3 := by
-  change a 1 ≠ a 3
+  change (a 1 : ℤ) ≠ (a 3 : ℤ)
   have h := finite_certificate
   omega
 def family : Registration arena (type_of% @finite_certificate) where
@@ -54,7 +54,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ n => a n) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ n => (a n : ℤ)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -67,7 +67,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
       path := #["fn", "arg", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := some #["arg"]
+      stateOperand := some #["arg", "arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
@@ -76,11 +76,11 @@ end Initial
 
 namespace Result
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℕ)
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℤ)
 def actual : Realization signature :=
-  realize signature (fun _ _ n => a n) (fun e => nomatch e)
+  realize signature (fun _ _ n => (a n : ℤ)) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ n => a n + 1) (fun e => nomatch e)
+  realize signature (fun _ _ n => (a n : ℤ) + 1) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
   Law R := (∀ n : ℕ, 4 ≤ n → (R.readout () () n : ℤ) =
@@ -90,11 +90,11 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have ha := finite_certificate.1
   have hb := h.2.1
-  change a 1 + 1 = 1 at hb
+  change (a 1 : ℤ) + 1 = 1 at hb
   omega
 private theorem actual_dependence :
     actual.readout () () 1 ≠ actual.readout () () 3 := by
-  change a 1 ≠ a 3
+  change (a 1 : ℤ) ≠ (a 3 : ℤ)
   have h := finite_certificate
   omega
 def family : Registration arena (type_of% @result) where
@@ -119,7 +119,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ n => a n) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ n => (a n : ℤ)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -129,10 +129,10 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["fn", "arg", "body", "body", "fn", "arg", "arg"]
+      path := #["fn", "arg", "body", "body", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := some #["arg"]
+      stateOperand := some #["arg", "arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none

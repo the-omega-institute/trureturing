@@ -96,22 +96,21 @@ private theorem recurrence (n : ℕ) :
     exact vector_recurrence n _ _
   · simp only [if_neg h, mul_zero, sub_self, zero_add]
 
-theorem finite_certificate : a 1 = 1 ∧ a 2 = 3 ∧ a 3 = 11 ∧ a 4 = 48 := by
-  have h (n : ℕ) := counting_bridge n
+theorem finite_certificate : (a 1 : ℤ) = 1 ∧ (a 2 : ℤ) = 3 ∧ (a 3 : ℤ) = 11 ∧ (a 4 : ℤ) = 48 := by
   have h0 : total (v 0) = 1 := by decide +kernel
   have h1 : total (v 1) = 3 := by decide +kernel
   have h2 : total (v 2) = 11 := by decide +kernel
   have h3 : total (v 3) = 48 := by decide +kernel
   refine ⟨?_, ?_, ?_, ?_⟩
-  · exact_mod_cast ((counting_bridge 0).trans h0)
-  · exact_mod_cast ((counting_bridge 1).trans h1)
-  · exact_mod_cast ((counting_bridge 2).trans h2)
-  · exact_mod_cast ((counting_bridge 3).trans h3)
+  · exact (counting_bridge 0).trans h0
+  · exact (counting_bridge 1).trans h1
+  · exact (counting_bridge 2).trans h2
+  · exact (counting_bridge 3).trans h3
 
 theorem result :
     (∀ n : ℕ, 4 ≤ n → (a n : ℤ) =
       12 * a (n - 1) - 44 * a (n - 2) + 48 * a (n - 3)) ∧
-    (a 1 = 1 ∧ a 2 = 3 ∧ a 3 = 11 ∧ a 4 = 48) := by
+    ((a 1 : ℤ) = 1 ∧ (a 2 : ℤ) = 3 ∧ (a 3 : ℤ) = 11 ∧ (a 4 : ℤ) = 48) := by
   refine ⟨?_, finite_certificate⟩
   intro n hn
   have h := recurrence (n - 4)

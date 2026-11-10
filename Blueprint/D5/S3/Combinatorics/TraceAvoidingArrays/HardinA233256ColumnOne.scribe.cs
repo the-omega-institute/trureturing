@@ -43,7 +43,7 @@ internal sealed class HardinA233256ColumnOneDocument : IScribeDocumentDefinition
     }
     private static Formula InitialFormula()
     {
-        Formula E(int i, int v) => Eq(Own("a", Num(i)), Num(v));
+        Formula E(int i, int v) => Eq(Typed(Own("a", Num(i)), Q("Int")), Num(v));
         return And(E(1, 1), And(E(2, 3), And(E(3, 11), E(4, 48))));
     }
     private static Formula ResultFormula()
@@ -68,7 +68,6 @@ internal sealed class HardinA233256ColumnOneDocument : IScribeDocumentDefinition
         return Call("D5.S3.Combinatorics.TraceAvoidingArrays."
             + "HardinA233251TriangleStrip.widthLegal", r, e, a);
     }
-    private static Formula Pair(Formula a, Formula b) => Par(Seq(a, Comma, Sp, b));
     private static Formula Product(Formula a, Formula b) => Seq(Par(a), Sp, Times, Sp, Par(b));
     private static Formula Add(Formula a, Formula b) =>
         new Formula.Binary(Par(a), FormulaBinaryOperator.Add, Par(b));
@@ -95,20 +94,14 @@ internal sealed class HardinA233256ColumnOneDocument : IScribeDocumentDefinition
         Par(Seq(LambdaLower, Sp, Typed(V(name), type), Sp, Mapsto, Sp, body));
     private static Formula All(string name, Formula type, Formula body) =>
         Seq(Forall, Sp, Typed(V(name), type), Comma, Sp, Par(body));
-    private static Formula Ex(string name, Formula type, Formula body) =>
-        Seq(Exists, Sp, Typed(V(name), type), Comma, Sp, Par(body));
     private static Formula Eq(Formula a, Formula b) =>
         new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula Ne(Formula a, Formula b) =>
         new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
-    private static Formula Lt(Formula a, Formula b) =>
-        new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
     private static Formula Le(Formula a, Formula b) =>
         new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
     private static Formula And(Formula a, Formula b) =>
         new Formula.Logic(Par(a), FormulaLogicOperator.And, Par(b));
-    private static Formula Or(Formula a, Formula b) =>
-        new Formula.Logic(Par(a), FormulaLogicOperator.Or, Par(b));
     private static Formula Imp(Formula a, Formula b) =>
         new Formula.Logic(Par(a), FormulaLogicOperator.Implies, Par(b));
     private static Formula Sub(Formula a, Formula b) =>

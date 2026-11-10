@@ -44,7 +44,7 @@ internal sealed class HardinA233256RowOneDocument : IScribeDocumentDefinition
     }
     private static Formula InitialFormula()
     {
-        Formula E(int i, int v) => Eq(Own("a", Num(i)), Num(v));
+        Formula E(int i, int v) => Eq(Typed(Own("a", Num(i)), Q("Int")), Num(v));
         return And(E(1, 1), And(E(2, 1), And(E(3, 3), E(4, 10))));
     }
     private static Formula ResultFormula()

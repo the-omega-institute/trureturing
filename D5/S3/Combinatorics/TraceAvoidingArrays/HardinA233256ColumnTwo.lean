@@ -110,19 +110,18 @@ private theorem recurrence (n : ℕ) :
     exact vector_recurrence n _ _ (initial_valid c h)
   · simp only [if_neg h, mul_zero, sub_self, zero_add]
 
-theorem finite_certificate : a 1 = 1 ∧ a 2 = 10 ∧ a 3 = 136 := by
-  have h (n : ℕ) := counting_bridge n
+theorem finite_certificate : (a 1 : ℤ) = 1 ∧ (a 2 : ℤ) = 10 ∧ (a 3 : ℤ) = 136 := by
   have h0 : total (v 0) = 1 := by decide +kernel
   have h1 : total (v 1) = 10 := by decide +kernel
   have h2 : total (v 2) = 136 := by decide +kernel
   refine ⟨?_, ?_, ?_⟩
-  · exact_mod_cast ((counting_bridge 0).trans h0)
-  · exact_mod_cast ((counting_bridge 1).trans h1)
-  · exact_mod_cast ((counting_bridge 2).trans h2)
+  · exact (counting_bridge 0).trans h0
+  · exact (counting_bridge 1).trans h1
+  · exact (counting_bridge 2).trans h2
 
 theorem result :
     (∀ n : ℕ, 3 ≤ n → (a n : ℤ) = 20 * a (n - 1) - 64 * a (n - 2)) ∧
-    (a 1 = 1 ∧ a 2 = 10 ∧ a 3 = 136) := by
+    ((a 1 : ℤ) = 1 ∧ (a 2 : ℤ) = 10 ∧ (a 3 : ℤ) = 136) := by
   refine ⟨?_, finite_certificate⟩
   intro n hn
   have h := recurrence (n - 3)
