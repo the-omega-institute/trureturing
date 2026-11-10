@@ -2247,3 +2247,398 @@ $$
 本节的承重新增内容是 (17.7)–(17.39) 的同一有限混合酉构造及统一纸面估计，标为 `repo-derived`；相干 Toeplitz 分解及保单位 CP 范数界复用 OTF004 (25.14)–(25.16)，完整等距和混合压缩语义复用其定理 14.1，精确原曲线及成功解码球冠复用其定义 19.1、推论 19.2。Taylor 余项、Duhamel 恒等式、迹范数收缩与正交直和可加性、平面格点计数只作为这些新推导中的经典中间工具，不单列为新增定理。该数学结论不包含原生实现、物理来源、时钟实现或历史原创性断言。信息—扰动与非对称性广播的相关引文为 Kretschmann–Schlingemann–Werner，[arXiv:quant-ph/0605009v1](https://arxiv.org/html/quant-ph/0605009v1)，Theorem 3、式 (32)–(35)，及 Marvian–Spekkens，[arXiv:1812.08766v2](https://arxiv.org/html/1812.08766v2)，Theorem 1、Proposition 2、Lemma 4；这些条目仅作相关文献定位，不承担本定理的前提，也不作为 (17.4) 的依据。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 18. 混合完整等距输出的二值置信度与精度返回界
+
+**定义 18.1（精确原曲线、完整实际等距及共同效果）。** 对每个正有理数 $0<e\le1/100$，逐项使用 [OTF004 定义 19.1](OTF_004_ENDOGENOUS_OBSERVATION_ATTENTION_CONTROL_AND_COSINE_FEEDBACK.md) 及本卷 (1.1) 的原曲线，所有对数均为自然对数：
+
+$$
+\begin{aligned}
+k_e&=\left\lceil2048e^{-2}\log(18/e)\right\rceil,
+&\ell_e&=\left\lceil32768e^{-4}\log(90/e)\right\rceil,\\
+N_*&=8{,}388{,}608{,}000,
+&N_e&=\max\left\{N_*,\left\lceil\frac{3k_e+2}{10}\right\rceil,
+                    \left\lceil\frac{15\ell_e+1}{18}\right\rceil\right\},\\
+D_e&=\left\lceil\max\{8{,}000{,}000N_e^2,9k_e/e\}\right\rceil,
+&m_e&=D_e-1,\\
+L_e&=10N_e,
+&Q_e&=18N_e+1.
+\end{aligned}
+\tag{18.1}
+$$
+
+置 $m=m_e$、$R=\operatorname{Sym}^{m}(\mathbb C^2)$，$\tau_h$ 是方向 $h\in S^2$ 的归一自旋相干纯态。取任意有限维 Hilbert 空间 $P,K$，任意独立于 $h$ 的密度算子 $\sigma\in\mathcal D(P)$，以及独立于 $h$ 的等距
+
+$$
+U:R\otimes P\longrightarrow R\otimes K.
+\tag{18.2}
+$$
+
+右端必须是这个实现的整个实际输出。$\sigma$ 可以奇异，不限制秩、非零谱或辅助维数，不供应它的纯化。每个实际产生的非参考系统均在 $K$ 内；没有删除输出，也不把形式 Stinespring 环境或 Kraus 指标当作实际生成系统。定义
+
+$$
+\begin{aligned}
+\Omega_h&=U(\tau_h\otimes\sigma)U^\dagger,
+&\omega_h&=\operatorname{Tr}_R\Omega_h,\\
+\delta&=\sup_{h\in S^2}\frac12
+ \|\Omega_h-\tau_h\otimes\omega_h\|_1,
+&D_{\rm tr}(\rho,\eta)&=\tfrac12\|\rho-\eta\|_1.
+\end{aligned}
+\tag{18.3}
+$$
+
+上确界包括全部 $h$，包括下面两条置信带之间的方向；每个比较态使用该输出自身的实际边缘。二值置信度条件是：存在同一个独立于 $h$ 的效果 $0\le E\le I_K$，使
+
+$$
+\begin{aligned}
+\operatorname{Tr}(E\omega_h)&\ge1-e
+&&\text{对每个 }h_y\ge4e,\\
+\operatorname{Tr}(E\omega_h)&\le e
+&&\text{对每个 }h_y\le-4e.
+\end{aligned}
+\tag{18.4}
+$$
+
+这里的效果只是对同一输出的数学条件，没有给原控制器增加读出、参考旋转、逆操作或协变性假设。
+
+**定理 18.2（混合完整等距的二值置信度精度界）。** 在定义 18.1 的全部条件下，对每个正有理 $0<e\le1/100$，
+
+$$
+\delta\ge
+\frac{2/3-2e}{1+144e\sqrt{m_e}/\sqrt{1-16e^2}}
+\ge\frac1{512e\sqrt{m_e}}.
+\tag{18.5}
+$$
+
+常数与 $\dim P$、$\dim K$、$\operatorname{rank}\sigma$、$\sigma$ 的非零特征值及 $E$ 无关。以下给出完整有限维证明；混合压缩及其反全纯导数基线复用 OTF004 定理 14.1 的 (14.4)–(14.8)，局部有界符号估计同时利用符号范数和导数范数。
+
+证明。
+
+### 18.1 混合压缩与两个交叉块
+
+固定 $\tau_h=|v_h\rangle\langle v_h|$ 的归一代表，置
+
+$$
+V_h=U(v_h\otimes I_P)=v_h\otimes F_h+B_h,
+\qquad (\langle v_h|\otimes I_K)B_h=0.
+\tag{18.6}
+$$
+
+$V_h$ 是等距，正交分解后的堆叠算子
+$W_h=\binom{F_h}{B_h}:P\to K\oplus(v_h^\perp\otimes K)$ 也是等距。因此
+
+$$
+F_h^\dagger F_h+B_h^\dagger B_h=I_P,
+\qquad \|F_h\|\le1.
+\tag{18.7}
+$$
+
+令 $\Pi_h=\tau_h\otimes I_K$、$q_h=\operatorname{Tr}(B_h\sigma B_h^\dagger)$。对 (18.3) 的两个态测量效果 $I-\Pi_h$，第二个态在该效果上的概率为零，故 $q_h\le\delta$。置
+$T_h=\Omega_h-\tau_h\otimes\omega_h$，则 $\|T_h\|_1\le2\delta$。用自伴酉 $S_h=2\Pi_h-I$ 提取非对角块：
+
+$$
+\operatorname{offdiag}(T_h)=\frac{T_h-S_hT_hS_h}{2},
+\qquad \|\operatorname{offdiag}(T_h)\|_1\le2\delta.
+\tag{18.8}
+$$
+
+两个非零块互为伴随，其中一个为
+$C_h=(v_h\otimes F_h)\sigma B_h^\dagger$。自伴非对角矩阵的迹范数是 $2\|C_h\|_1$，左乘等距保持奇异值，所以
+
+$$
+\|F_h\sigma B_h^\dagger\|_1\le\delta,
+\qquad \|B_h\sigma F_h^\dagger\|_1\le\delta.
+\tag{18.9}
+$$
+
+再用 $W_h$ 的等距性、伴随的迹范数相同以及两个堆叠块的三角不等式，得到
+
+$$
+\begin{aligned}
+\|B_h\sigma\|_1
+&=\|\sigma B_h^\dagger\|_1
+ =\|W_h\sigma B_h^\dagger\|_1\\
+&\le\|F_h\sigma B_h^\dagger\|_1
+     +\|B_h\sigma B_h^\dagger\|_1\\
+&\le\delta+q_h\le2\delta.
+\end{aligned}
+\tag{18.10}
+$$
+
+此处没有使用 $\sigma^{-1}$，所以奇异混合态不需要另行处理。
+
+### 18.2 同一实际边缘与有界符号
+
+对 $R$ 偏迹消去 (18.6) 的两个交叉项，给出
+
+$$
+\omega_h=F_h\sigma F_h^\dagger+Z_h,
+\qquad Z_h=\operatorname{Tr}_R(B_h\sigma B_h^\dagger)\ge0,
+\qquad \operatorname{Tr}Z_h=q_h\le\delta.
+\tag{18.11}
+$$
+
+对任意 $h,g$，展开
+
+$$
+F_h\sigma F_h^\dagger-F_g\sigma F_g^\dagger
+=(F_h-F_g)\sigma F_h^\dagger
+ +F_g\sigma(F_h^\dagger-F_g^\dagger).
+$$
+
+由 (18.7) 及伴随的迹范数相同，两项的迹范数均不超过
+$\|(F_h-F_g)\sigma\|_1$。因此
+
+$$
+\begin{aligned}
+\tfrac12\|F_h\sigma F_h^\dagger-F_g\sigma F_g^\dagger\|_1
+&\le\|(F_h-F_g)\sigma\|_1,\\
+D_{\rm tr}(\omega_h,\omega_g)
+&\le\|(F_h-F_g)\sigma\|_1+\delta.
+\end{aligned}
+\tag{18.12}
+$$
+
+最后一项来自 $(q_h+q_g)/2\le\delta$，未以比较边缘替换任一个实际 $\omega_h$。
+
+### 18.3 维数无关的反全纯导数界
+
+选任一固定正交 qubit 基底，在对应球极投影坐标上写
+
+$$
+\begin{aligned}
+v(z)&=(1+|z|^2)^{-m/2}(|0\rangle+z|1\rangle)^{\otimes m},\\
+F(z)&=(\langle v(z)|\otimes I_K)U(v(z)\otimes I_P),
+\qquad A(z)=F(z)\sigma.
+\end{aligned}
+\tag{18.13}
+$$
+
+由收缩性及 $\|\sigma\|_1=1$，$\|A(z)\|_1\le1$。采用
+$\partial_{\bar z}=(\partial_x+i\partial_y)/2$，令
+$t(z)=(I-\tau_z)\partial_zv(z)$。归一张量幂的微分给
+
+$$
+\partial_{\bar z}v(z)=-\frac{mz}{2(1+|z|^2)}v(z),
+\qquad \|t(z)\|=\frac{\sqrt m}{1+|z|^2}.
+\tag{18.14}
+$$
+
+在 $F$ 的微分中，bra 与 ket 的平行项相消，留下的正交 bra 恰给
+
+$$
+\partial_{\bar z}F(z)=(\langle t(z)|\otimes I_K)B_z.
+$$
+
+于是 (18.10) 给出
+
+$$
+\|\partial_{\bar z}A(z)\|_1
+\le\frac{2\delta\sqrt m}{1+|z|^2}
+\le2\delta\sqrt m.
+\tag{18.15}
+$$
+
+这些是每个有限坐标圆盘上的光滑有限维矩阵值符号。固定基底的选择只改变证明坐标，不是在实现中旋转参考，也不要求 $U$ 协变。
+
+### 18.4 局部有界符号的边界与面积估计
+
+设 $A$ 是闭圆盘 $\{|z|\le r\}$ 上的有限维迹类矩阵值 $C^1$ 函数，且
+$\sup\|A\|_1\le1$、$\sup\|\partial_{\bar z}A\|_1\le L$。对 $a$ 满足 $d_a=|a|<r$，逐矩阵元的 Cauchy–Pompeiu 公式为 $A(z)=H(z)-T(z)$，其中
+
+$$
+\begin{aligned}
+H(z)&=\frac1{2\pi i}\int_{|\zeta|=r}
+            \frac{A(\zeta)}{\zeta-z}\,d\zeta,\\
+T(z)&=\frac1\pi\int_{|\zeta|<r}
+            \frac{\partial_{\bar\zeta}A(\zeta)}{\zeta-z}\,dA(\zeta).
+\end{aligned}
+\tag{18.16}
+$$
+
+边界核的差为 $a/[\zeta(\zeta-a)]$。把迹范数放入积分，利用边界长度 $2\pi r$ 及 $|\zeta-a|\ge r-d_a$，得
+
+$$
+\|H(a)-H(0)\|_1
+\le\frac1{2\pi}(2\pi r)\frac{d_a}{r(r-d_a)}
+=\frac{d_a}{r-d_a}.
+\tag{18.17}
+$$
+
+面积项在原点满足
+
+$$
+\|T(0)\|_1
+\le\frac L\pi\int_{|\zeta|<r}\frac{dA(\zeta)}{|\zeta|}
+=2Lr.
+\tag{18.18}
+$$
+
+原圆盘包含于以 $a$ 为中心、半径 $r+d_a$ 的圆盘；在后者上积分
+$1/|\zeta-a|$ 恰为 $2\pi(r+d_a)$，故
+
+$$
+\|T(a)\|_1\le2L(r+d_a).
+\tag{18.19}
+$$
+
+合并三个估计，得到这个局部关系的全部常数：
+
+$$
+\|A(a)-A(0)\|_1
+\le\frac{d_a}{r-d_a}+2L(2r+d_a).
+\tag{18.20}
+$$
+
+对 (18.13)–(18.15) 取 $r=4d_a>0$、$L=2\delta\sqrt m$，即有
+
+$$
+\|A(a)-A(0)\|_1
+\le\frac13+36\delta\sqrt m\,d_a.
+\tag{18.21}
+$$
+
+边界积分的固定加项 $1/3$ 保留在式中；这里没有断言 (17.4) 的无条件平方旋转估计。
+
+### 18.5 同一个效果在两条置信带端点上的应用
+
+取
+
+$$
+h_-=(\sqrt{1-16e^2},-4e,0),
+\qquad h_+=(\sqrt{1-16e^2},4e,0).
+\tag{18.22}
+$$
+
+由同一个 $E$ 及迹距离的变分表示，
+
+$$
+D_{\rm tr}(\omega_+,\omega_-)
+\ge\operatorname{Tr}[E(\omega_+-\omega_-)]\ge1-2e.
+\tag{18.23}
+$$
+
+两方向的球面夹角是 $\theta=2\arcsin(4e)$。在 (18.13) 中选择一个固定基底，使 $h_-$ 的坐标为 $0$，$h_+$ 的坐标为正实数
+
+$$
+a=d_a=\tan(\theta/2)=\frac{4e}{\sqrt{1-16e^2}}.
+\tag{18.24}
+$$
+
+因为 (18.3) 对全部方向取上确界，(18.15) 在半径 $4d_a$ 的整个圆盘上成立，包括落在两置信带之间的点。(18.12)、(18.21) 及 (18.23) 于是给
+
+$$
+1-2e\le\delta+\frac13+36\delta\sqrt m\,d_a.
+\tag{18.25}
+$$
+
+移项即得
+
+$$
+\delta\ge\frac{2/3-2e}{1+36\sqrt m\,d_a}
+=\frac{2/3-2e}{1+144e\sqrt m/\sqrt{1-16e^2}},
+\tag{18.26}
+$$
+
+这是 (18.5) 的较强中间界。全置信带假设在这里供应两个端点，没有引入新的解码器。
+
+### 18.6 全部有理精度域与显式绝对常数
+
+对每个 $0<e\le1/100$，有 $\sqrt{1-16e^2}\ge4/5$，所以 $d_a\le5e$，并且 $2/3-2e\ge1/2$。令 $x=e\sqrt m$。精确原曲线满足
+$\log(18/e)>1$、$k_e\ge2048e^{-2}$，且 $m=D_e-1\ge9k_e/e-1$，从而
+
+$$
+me^2\ge9k_e e-e^2\ge18432/e-e^2>1,
+\qquad x\ge1.
+\tag{18.27}
+$$
+
+故 (18.26) 的分母至多
+
+$$
+1+36\sqrt m\,d_a\le1+180x\le181x\le256x.
+$$
+
+结合分子至少 $1/2$，得到
+
+$$
+\delta\ge\frac{1/2}{256x}=\frac1{512e\sqrt{m_e}}.
+\tag{18.28}
+$$
+
+推导没有渐近替换 $m_e$，没有缩小精度窗口，也没有区间延拓或辅助谱限制。$\square$
+
+**命题 18.3（原有理四坐标解码器的必要效果及条件消费者界）。** 保持 OTF004 定义 19.1 和本卷定义 1.1 的全部原合同：同一原解码器对全部允许场 $n$ 和全部 $h$ 达到 $e$ 精度，失败率 $\beta\le e$。在半径 $1/3$ 的开圆盘上取已有合法场
+
+$$
+n_*(x,y)=(x,y,\sqrt{1-x^2-y^2}),
+\qquad D_h(n_*)=(h_y/2,-h_x/4,0,h_y/2).
+\tag{18.29}
+$$
+
+同一原解码器的事件 $\{\widehat D_1>0\}$ 在其既有实际输出上的拉回是一个共同效果 $E$，满足 (18.4)。若这个消费者在 $n_*$ 的同一个完整实际实现确实具有 (18.2) 的独立于 $h$ 的等距及独立混合初始化 $\sigma$，并且右端 $R\otimes K$ 就是其全部实际输出，则
+
+$$
+\overline\delta\ge\delta_{n_*}
+\ge\frac{2/3-2e}{1+144e\sqrt{m_e}/\sqrt{1-16e^2}}
+\ge\frac1{512e\sqrt{m_e}},
+\tag{18.30}
+$$
+
+其中 $\delta_{n_*}=\sup_hD_{\rm tr}(\Omega_{n_*,h},\tau_h\otimes\omega_{n_*,h})$，$\overline\delta$ 仍为同一消费者的原全部场、全部方向最坏返回误差。
+
+证明。场的合法性和 (18.29) 的目标逐项复用 OTF004 推论 19.2：前两坐标保证秩二，原点两轴导数范数为一，闭 $1/4$ 轴段上二阶导数范数为 $(1-t^2)^{-3/2}<2$。在原 $e$ 精度成功事件上，
+
+$$
+\begin{aligned}
+h_y\ge4e&\ \Longrightarrow\quad
+ \widehat D_1\ge h_y/2-e\ge e>0,\\
+h_y\le-4e&\ \Longrightarrow\quad
+ \widehat D_1\le h_y/2+e\le-e<0.
+\end{aligned}
+\tag{18.31}
+$$
+
+原失败率至多 $e$，所以事件的两条概率界正是 (18.4)。事件及原解码器均固定，故它在既有 $K$ 上的效果不依赖 $h$。这只是已有解码事件的分析，不供应二元最优检验或额外原生读出。对另有实际完整等距条件的同一实现应用定理 18.2，并用原最坏场上确界包括 $n_*$，即得 (18.30)。
+
+本命题的原消费者仍使用 (18.1) 的全部取整、最大值和最坏分支预算 $L_e,Q_e$，以及原生前向 $V$ 菜单；参考只准备一次，是唯一含未知 $h$ 的输入，并与非参考初始完整律独立。任意有限独立混合辅助继续允许，不提供纯化。规定终端仍恰为
+$U_{\rm term}=\exp[-id\tau_0J\cdot\sigma/m_e]$，$d=1/64$、$\tau_0=1$，使用在 $+d e_x$ 独立重置且此前未被改动的原场令牌。全部实际探针、场令牌、原生 $H,E$、原始记录、实际副本、记忆、程序、计数器、路由、工作空间、补偿和终端输出继续留在该实现自己的最终 $K$ 内，每个返回比较仍使用自己的实际边缘。证明中的基底变换与积分不属于控制操作。本命题没有构造控制器，也没有给出新的原生预算证书。$\square$
+
+**命题 18.4（旋转反例的置信度诊断与完整接口边界）。** 定理 17.2 的具体有限混合酉族不满足 (18.4)。定理 18.2 及命题 18.3 不恢复 (17.4)，也不把声明约化 CPTP 实现自动变成实际完整等距实现。
+
+证明。在 (17.7)–(17.8) 的该族中，$e=e_J=1/J$ 且 $\|H_w\|\le e/2$，故整个直和酉满足
+
+$$
+\|U_J-I\|\le e/2.
+\tag{18.32}
+$$
+
+对任意输入密度算子 $\rho$，展开
+$U_J\rho U_J^\dagger-\rho=(U_J-I)\rho U_J^\dagger+\rho(U_J^\dagger-I)$，得到
+
+$$
+D_{\rm tr}(U_J\rho U_J^\dagger,\rho)
+\le\|U_J-I\|\le e/2.
+\tag{18.33}
+$$
+
+取 $\rho=\tau_h\otimes\sigma_J$ 并偏迹，因未作用的输入 $K_J$ 边缘为 $\sigma_J$，有
+
+$$
+D_{\rm tr}(\omega_h,\sigma_J)\le e/2,
+\qquad D_{\rm tr}(\omega_h,\omega_g)\le e
+\quad\text{对每个 }h,g.
+\tag{18.34}
+$$
+
+但共同效果的两条置信带要求端点距离至少 $1-2e>e$，所以这个族不能满足 (18.4)。这条诊断直接来自已有构造的范数界，不是定理 18.2 的前提。定理 17.2 对无条件积分平方旋转关系 (17.4) 的反驳完整保留；(18.20)–(18.21) 含固定加项，只在宏观置信跳变下给出 (18.25)，不承担原平方旋转关系。
+
+声明约化 CPTP 消费者仅有其声明的实际端口。为其命名一个形式 Stinespring 环境不能满足 (18.2) 的整个实际输出条件；若另一个实现确实产生额外输出，必须将它们纳入 $K$，并对扩大的输出自身实际边缘重新比较。只有同一个原实现确实具有所需独立初始化与完整等距接口时，(18.30) 才适用。本卷第 1–11 节的有限 CP 供应者、第 12–15 节的固定部分保留族、第 16 节的新鲜点重置必要量及 OTF004 的既有约化 CP 结果，均保留各自前提和结论。
+
+本节不构造实际原生来源、时钟、总因果历史或规定终端实现，不增加参考控制、逆操作、来源或读出能力，不给出匹配的最优常数或上界构造。R5、C133、PB 读支持及 Bargmann 有序分支结果不承担这里的精度、物理来源或完整返回前提。原全部场、原生菜单、终端、资源及来源的完整目标不由此完成；对缺少实际完整等距桥的原约化 CP 消费者没有推出 (18.30)。在本定理的精确前提内，(18.28) 排除任何满足 $e\sqrt{m_e}\,\delta\to0$ 的序列。$\square$
+
+定理 18.2 中的混合压缩、两个交叉块和反全纯导数控制对应 OTF004 定理 14.1 的 (14.4)–(14.8)，实际边缘分解对应 (14.10)–(14.11)；精确曲线、原成功合同和 $n_*$ 目标对应其定义 19.1、推论 19.2。本节的承重新增推导为 `repo-derived`：(18.16)–(18.21) 在与端点间距成比例的圆盘上同时使用 $\|F\sigma\|_1\le1$ 和线性于 $\delta$ 的导数界，以至多 $1/3$ 的边界贡献留下固定置信跳变，再由 $d_a=O(e)$ 得到 $1/e$ 因子。它不同于 OTF004 定理 14.1 的反足全局积分和推论 19.2 的 Hilbert 能量估计。Cauchy–Pompeiu 公式是经典中间工具，所需矩阵迹范数、边界和面积常数已在 (18.16)–(18.20) 中直接给出；本节不作历史原创性或穷尽文献断言。
+
+相关文献的指标与前提各守其范围。Kretschmann–Schlingemann–Werner，[arXiv:quant-ph/0605009v1](https://arxiv.org/html/quant-ph/0605009v1)，Theorem 3、式 (31)–(35)，讨论全通道 cb 范数比较及指定互补 Stinespring 通道，不供应本节的相干输入完整自身边缘返回前提。自旋相干信息—扰动文献 [arXiv:quant-ph/0610246v2](https://arxiv.org/html/quant-ph/0610246v2)，引言及 §III 的式 (8)–(10)，采用操作与估计的平均保真度及协变仪器条件；Marvian–Spekkens，[arXiv:1812.08766v2](https://arxiv.org/html/1812.08766v2)，Theorem 1、Proposition 2、Lemma 4，涉及协变与精确保留；[arXiv:2606.18040v2](https://arxiv.org/html/2606.18040v2)，摘要及引言的信号与操作保真度定义，涉及反平行自旋相干对。这些条目仅是相关数学文献，不将其平均指标、协变性、精确保留或不同输入族迁移为 (18.2)–(18.4) 的假设，也不承担 (18.5) 的证明。
+
+## 追加锚（本行以下为增补区）
