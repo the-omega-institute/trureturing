@@ -11,17 +11,18 @@ internal sealed class HardinA233257StripDocument : IScribeDocumentDefinition
     private static LibraryNoteRef Source => LibraryNoteRef.Create("D5/L/Automata/hardin2013a233257");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Closed form, recurrence and generating function for the antidiagonal pair-exclusion strip.",
+        "Closed form and generating function for the two-row antidiagonal strip.",
         H("The normalized two-row antidiagonal strip"),
         Blocks(
             Paragraph(Text("The strip has horizontal bonds in both rows and a bond from the lower "
                 + "cell of a column to the upper cell of the next column. Bonded colours differ "
                 + "and do not sum to five. The first cell is zero. Row-major order puts the whole "
-                + "upper row before the lower row. The empty coefficient is zero. All formula "
+                + "upper row before the lower row. Normalization is the predicate "
+                + "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.normal. "
+                + "The empty coefficient is zero. All formula "
                 + "names are full Lean names; Fin.val and Int.ofNat display the relevant coercions.")),
-            Node("normal", "Row-major first-occurrence normalization", NormalFormula(), false),
             Node("Legal", "Literal bond and normalization predicate", LegalFormula(), false),
-            Node("a", "Literal filtered count", CountFormula(), false, true),
+            Node("a", "Literal filtered count", CountFormula(), false),
             Node("finite_certificate", "The empty and one-column coefficients", InitialFormula(), true),
             Node("closed_form", "Barker's closed form", ClosedFormula(), true),
             Node("recurrence", "Hardin's integer recurrence", RecurrenceFormula(), true),
@@ -41,11 +42,11 @@ internal sealed class HardinA233257StripDocument : IScribeDocumentDefinition
                 + "and empirical recurrence; Barker stated the closed form and generating function.")))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
-        bool theorem, bool literature = false) =>
+        bool theorem) =>
         Describe.Lean(DescribeId.Create(name.Replace("_", "-").ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)),
-            literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(),
+            theorem ? AssessedProvenance.FromRepo(Source) : AssessedProvenance.FromLiterature(Source),
             Blocks(Paragraph(Text(title + "."))),
             theorem ? DescribeRole.Theorem : DescribeRole.Definition);
 
@@ -54,26 +55,11 @@ internal sealed class HardinA233257StripDocument : IScribeDocumentDefinition
     private static Formula Cells(Formula n) => Seq(Fin(D(2)), Times, Fin(n));
     private static Formula Arrays(Formula n) => Arrow(Parenthesized(Cells(n)), Fin(D(6)));
     private static Formula Pair(Formula r, Formula j) => Parenthesized(Seq(r, Comma, Sp, j));
-    private static Formula Row(Formula p) => Call("Prod.fst", p);
-    private static Formula Col(Formula p) => Call("Prod.snd", p);
-    private static Formula Index(Formula p, Formula n) => Add(Mul(Val(Row(p)), n), Val(Col(p)));
     private static Formula At(Formula a, Formula r, Formula j) => App(a, Pair(r, j));
     private static Formula R(int n) => Typed(Num(n), Fin(D(2)));
     private static Formula Next(Formula j, Formula h) => Call("Fin.mk", Add(Val(j), D(1)), h);
     private static Formula Bond(Formula x, Formula y) =>
         And(Ne(x, y), Ne(Add(Val(x), Val(y)), D(5)));
-
-    private static Formula NormalFormula()
-    {
-        var n = V("n"); var a = V("A"); var p = V("p");
-        var x = App(a, p);
-        Formula Before(int c) => Ex("q", Cells(n),
-            And(Lt(Index(V("q"), n), Index(p, n)), Eq(App(a, V("q")), Colour(c))));
-        var body = All("p", Cells(n), And(
-            Imp(Or(Eq(x, Colour(2)), Or(Eq(x, Colour(3)), Eq(x, Colour(4)))), Before(1)),
-            Imp(Eq(x, Colour(3)), Before(2))));
-        return All("n", N, All("A", Arrays(n), Eq(Own("normal", a), Parenthesized(body))));
-    }
 
     private static Formula LegalFormula()
     {
@@ -83,7 +69,8 @@ internal sealed class HardinA233257StripDocument : IScribeDocumentDefinition
             All("r", Fin(D(2)), Bond(At(a, r, j), At(a, r, Next(j, h)))),
             Bond(At(a, R(1), j), At(a, R(0), Next(j, h))))));
         return All("n", N, All("A", Arrays(n), Eq(Own("Legal", a),
-            Parenthesized(And(first, And(bonds, Own("normal", a)))))));
+            Parenthesized(And(first, And(bonds,
+                Call("D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.normal", a)))))));
     }
 
     private static Formula CountFormula()

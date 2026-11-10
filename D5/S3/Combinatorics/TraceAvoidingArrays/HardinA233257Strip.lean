@@ -4,13 +4,11 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233257Strip.result; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233257Strip.finite_certificate
-   digest: Closed form, recurrence and generating function for the antidiagonal pair-exclusion strip. -/
+   digest: Closed form and generating function for the two-row antidiagonal strip. -/
 /-
 admission_basis: open-problem-resolution (#28792; Proved)
-escape_witness: proper_count (last-column transfer induction), two_count (two-label classification).
-normal: proof_shape=bind-only; consumers=Legal
+escape_witness: two_classification (inductive two-label parity classification).
 Legal: proof_shape=bind-only; consumers=a, literal_card
-decNormal: proof_shape=bind-only; consumers=decLegal
 decLegal: proof_shape=bind-only; consumers=a
 a: proof_shape=bind-only; consumers=literal_card, finite_certificate, weighted_count
 Proper: proof_shape=bind-only; consumers=literal_card, proper_word, two_classification
@@ -23,10 +21,10 @@ step: proof_shape=bind-only; consumers=transfer_certificate, proper_word, proper
 cl: proof_shape=bind-only; consumers=transfer_certificate, proper_count
 T: proof_shape=bind-only; consumers=transfer_certificate, proper_count
 v: proof_shape=bind-only; consumers=transfer_certificate, proper_count
-transfer_certificate: proof_shape=content; consumers=proper_count
+transfer_certificate: proof_shape=bind-only; consumers=proper_count
 proper_word: proof_shape=bind-only; consumers=proper_count
-proper_count: proof_shape=content; consumers=pattern_cards
-finite_certificate: proof_shape=content; consumers=result
+proper_count: proof_shape=bind-only; consumers=pattern_cards
+finite_certificate: proof_shape=bind-only; consumers=result
 used: proof_shape=bind-only; consumers=used_image, used_cases, two_classification, weighted_count
 used_image: proof_shape=bind-only; consumers=used_cases, used_relabel, alt_properties, two_classification
 at_least_two: proof_shape=bind-only; consumers=used_cases, pattern_cards
@@ -34,7 +32,7 @@ used_cases: proof_shape=bind-only; consumers=weighted_count
 relabel: proof_shape=bind-only; consumers=pattern_cards
 used_relabel: proof_shape=bind-only; consumers=pattern_cards
 alt: proof_shape=bind-only; consumers=alt_properties, two_classification, two_count
-alt_properties: proof_shape=content; consumers=two_count
+alt_properties: proof_shape=bind-only; consumers=two_count
 two_classification: proof_shape=content; consumers=two_count
 two_count: proof_shape=content; consumers=pattern_cards
 Patterns: proof_shape=bind-only; consumers=pattern_cards, weighted_count
@@ -44,6 +42,7 @@ closed_form: proof_shape=content; consumers=result
 recurrence: proof_shape=content; consumers=result
 result: proof_shape=content; consumers=terminal result
 -/
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix
@@ -56,23 +55,14 @@ namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233257Strip
 open D5.S3.Combinatorics.TraceAvoidingArrays
 open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
 
-def normal {n : ℕ} (A : Fin 2 × Fin n → Fin 6) : Prop :=
-  ∀ p,
-    ((A p = 2 ∨ A p = 3 ∨ A p = 4) →
-      ∃ q, q.1.val * n + q.2.val < p.1.val * n + p.2.val ∧ A q = 1) ∧
-    (A p = 3 →
-      ∃ q, q.1.val * n + q.2.val < p.1.val * n + p.2.val ∧ A q = 2)
-
 def Legal {n : ℕ} (A : Fin 2 × Fin n → Fin 6) : Prop :=
   (∃ j : Fin n, j.val = 0 ∧ A (0, j) = 0) ∧
   (∀ (j : Fin n) (h : j.val + 1 < n),
     (∀ r : Fin 2, A (r, j) ≠ A (r, ⟨j.val + 1, h⟩) ∧
       (A (r, j)).val + (A (r, ⟨j.val + 1, h⟩)).val ≠ 5) ∧
     (A (1, j) ≠ A (0, ⟨j.val + 1, h⟩) ∧
-      (A (1, j)).val + (A (0, ⟨j.val + 1, h⟩)).val ≠ 5)) ∧ normal A
+      (A (1, j)).val + (A (0, ⟨j.val + 1, h⟩)).val ≠ 5)) ∧ HardinA233175PairStrip.normal A
 
-private instance decNormal {n : ℕ} (A : Fin 2 × Fin n → Fin 6) :
-    Decidable (normal A) := inferInstanceAs (Decidable (∀ _, _ ∧ _))
 private instance decLegal {n : ℕ} (A : Fin 2 × Fin n → Fin 6) :
     Decidable (Legal A) := inferInstanceAs (Decidable (_ ∧ _ ∧ _))
 
@@ -112,7 +102,7 @@ private theorem literal_card {n : ℕ} (hn : 0 < n) :
   congr 1
   ext A
   simp only [Finset.mem_filter, Finset.mem_univ, true_and, Legal, hfirst,
-    normal, RowNormal, HardinA233177Canonical.Normal, horder, Proper,
+    HardinA233175PairStrip.normal, RowNormal, HardinA233177Canonical.Normal, horder, Proper,
     Function.comp_apply, HardinA233251TriangleStrip.colour_bond_iff]
   tauto
 
