@@ -2695,7 +2695,7 @@ $$
 实际来源集合恰为
 
 $$
- S=\{s:Vs=As}=\{x_i,y_i:i\in\mathbb Z}.
+ S=\{s:Vs=As\}=\{x_i,y_i:i\in\mathbb Z\}.
 \tag{22.8}
 $$
 
