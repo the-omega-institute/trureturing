@@ -59,6 +59,14 @@ internal sealed class HardinA233125SquareStripDocument : IScribeDocumentDefiniti
                 "The sum is over all 6^4 individual colour rows with the original scanner."),
             Entry("firstcount", "firstCount", "First-row class distribution", FirstCount(),
                 "The first colour is fixed to zero and both initial scanner flags are false."),
+            Describe.Lean(DescribeId.Create("label-sum"),
+                DeclarationHandle.Create(Gid + "label_sum"), H("Summing over label rows"),
+                StatementSource.FromAuthor(Disp(LabelSum())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "The sum over all four-column label rows equals four nested sums "
+                    + "over the three labels, for every integer-valued function."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("certificate"),
                 DeclarationHandle.Create(Gid + "finite_certificate"), H("Single-row certificate"),
                 StatementSource.FromAuthor(Disp(Certificate())),
@@ -93,6 +101,16 @@ internal sealed class HardinA233125SquareStripDocument : IScribeDocumentDefiniti
             literature ? AssessedProvenance.FromLiterature(Source)
                 : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
+
+    private static Formula LabelSum()
+    {
+        var g = V("g"); var q = V("q");
+        var summand = At(g, Parenthesized(Vector(V("a"), V("b"), V("c"), V("d"))));
+        var nested = SumOver("a", Fin(3), SumOver("b", Fin(3),
+            SumOver("c", Fin(3), SumOver("d", Fin(3), summand))));
+        return All("g", Arrow(Parenthesized(PairRow()), Name("Int")),
+            Eq(SumOver("q", PairRow(), At(g, q)), nested));
+    }
 
     private static Formula DecidableHorizontal()
     {
