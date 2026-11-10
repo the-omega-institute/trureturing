@@ -52,6 +52,7 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
 import D5.S3.Observer.Separation.BooleanRankThreeK4
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233176Ladder
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233258PairTransfer
 import Mathlib.RingTheory.PowerSeries.Basic
 import Mathlib.Tactic
@@ -184,35 +185,16 @@ private theorem two_label_classification {n : ℕ} (hn : 2 ≤ n)
     (P : Fin 3 × Fin n → Fin 3) (hp : Proper P)
     (d : Fin 3) (hd : ∀ i, P i ≠ d) :
     ∃ a b : Fin 3, a ≠ b ∧ P = alternating n a b := by
-  let a := P (0, ⟨0, by omega⟩)
-  let b := P (0, ⟨1, by omega⟩)
-  have hab : a ≠ b := hp ⟨0, by omega⟩ (by change 0 + 1 < n; omega) 0 0 (by decide)
-  have ha : a ≠ d := hd _
-  have hb : b ≠ d := hd _
-  have row_zero : ∀ k (hk : k < n),
-      P (0, ⟨k, hk⟩) = if k % 2 = 0 then a else b := by
-    intro k
-    induction k with
-    | zero => intro hk; rfl
-    | succ k ih =>
-      intro hk
-      have hk' : k < n := by omega
-      have hstep := hp ⟨k, hk'⟩ hk 0 0 (by decide)
-      have hpar : (k + 1) % 2 = 0 ↔ ¬ k % 2 = 0 := by omega
-      have finite_fact : ∀ a b c d : Fin 3,
-          a ≠ d → b ≠ d → c ≠ d → a ≠ c → b ≠ c → a = b := by decide +kernel
-      by_cases hj : k % 2 = 0
-      · have hcur : P (0, ⟨k, hk'⟩) = a := by simpa [hj] using ih hk'
-        rw [hcur] at hstep
-        simpa [hpar, hj] using finite_fact (P (0, ⟨k + 1, hk⟩)) b a d
-          (hd _) hb ha (Ne.symm hstep) (Ne.symm hab)
-      · have hcur : P (0, ⟨k, hk'⟩) = b := by simpa [hj] using ih hk'
-        rw [hcur] at hstep
-        simpa [hpar, hj] using finite_fact (P (0, ⟨k + 1, hk⟩)) a b d
-          (hd _) ha hb (Ne.symm hstep) hab
+  let R : Fin 4 × Fin n → Fin 3 := fun p => P (0, p.2)
+  have hR : HardinA233177PairTransfer.Proper R := by
+    intro j hj r s _
+    exact hp j hj 0 0 (Or.inl rfl)
+  obtain ⟨a, b, hab, hRalt⟩ := HardinA233177Ladder.two_label_classification
+    hn R hR d (fun p => hd (0, p.2))
   refine ⟨a, b, hab, ?_⟩
   funext p
-  exact (columns_constant hn P hp d hd p.2 p.1).trans (row_zero p.2.val p.2.isLt)
+  have h := congrFun hRalt ((0 : Fin 4), p.2)
+  exact (columns_constant hn P hp d hd p.2 p.1).trans h
 
 private theorem used_two_or_three {n : ℕ} (hn : 2 ≤ n)
     (P : Fin 3 × Fin n → Fin 3) (hp : Proper P) : used P = 2 ∨ used P = 3 := by
