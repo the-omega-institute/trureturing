@@ -487,7 +487,7 @@ lemma lastFace_comp_prime {s q : ℕ} (M : DerivedOp s q) :
 
 /-- Post-composition with `D₀` on the right, bundled additively so `map_sum`/`map_zsmul` distribute
 it over the boundary sum. -/
-noncomputable def compRightD0 (q : ℕ) :
+private noncomputable def compRightD0 (q : ℕ) :
     DerivedOp (q + 2) (q + 1) →+ DerivedOp (q + 1) (q + 1) where
   toFun M := M.comp (D0op (q + 1))
   map_zero' := by simp [DerivedOp.comp]
