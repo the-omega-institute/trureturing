@@ -13,6 +13,7 @@ admission_basis: open-problem-resolution (#27303; Proved)
 Direct frozen dependencies: LinearExponentDyadicSupport.pow_change;
 PowerSeriesNormalizedContraction.exists_unique_fixed;
 UnitReversionSquareParity.Agree; HannaLogarithmicPowerClosure.IntegralSeries.
+HannaA181070Integrality.coefficientDivisibility supplies the integer power divisibility.
 The claim expands the existing IntegralSeries predicate; proofs use its owner.
 Declaration classifications (definitions introduce expressions, not proof content):
 squarePowerSum proof_shape: bind-only; consumers: vanishingEquation.
@@ -28,7 +29,6 @@ slope_closed proof_shape: bind-only; consumers: slope_nonzero.
 slope_nonzero proof_shape: bind-only; consumers: source_unique.
 pow_change_minus proof_shape: bind-only; consumers: sum_change.
 sum_change proof_shape: bind-only; consumers: nextCoeff_equation.
-square_derivative proof_shape: bind-only; consumers: last_divisibility.
 last_divisibility proof_shape: bind-only; consumers: nextCoeff_equation.
 cleared proof_shape: bind-only; consumers: cleared_spec.
 cleared_spec proof_shape: bind-only; consumers: nextCoeff_equation.
@@ -50,6 +50,7 @@ import D5.S1.Recurrence.LinearRows.LinearExponentDyadicSupport
 import D5.S1.Recurrence.Invariants.PowerSeriesNormalizedContraction
 import D5.S1.Recurrence.Invariants.UnitReversionSquareParity
 import D5.S1.Recurrence.Algebraic.HannaLogarithmicPowerClosure
+import D5.S1.Recurrence.Algebraic.HannaA181070Integrality
 
 /-! Integer coefficients of three rational square-exponent factorial series. -/
 
@@ -165,25 +166,15 @@ private theorem sum_change {n : ℕ} {F G : PowerSeries ℚ}
   push_cast at hh ⊢
   linear_combination (1 / (Nat.factorial m : ℚ)) * hh
 
-private theorem square_derivative (F : PowerSeries ℤ) (n M : ℕ) (hn : 0 < n) :
-    (n : ℤ) * coeff n (F ^ (M * M)) = (M : ℤ) * M *
-      coeff (n - 1) (F ^ (M * M - 1) * PowerSeries.derivative F) := by
-  have h := congrArg (coeff (n - 1)) (derivative_pow F (M * M))
-  rw [coeff_derivative, Nat.sub_add_cancel hn, mul_assoc] at h
-  have hc : ((M * M : ℕ) : PowerSeries ℤ) = C ((M : ℤ) * M) := by simp
-  rw [hc, coeff_C_mul] at h
-  have hncast : ((n - 1 : ℕ) : ℤ) + 1 = n := by
-    exact_mod_cast Nat.sub_add_cancel hn
-  simpa [mul_comm, hncast] using h
-
 private theorem last_divisibility (F : PowerSeries ℤ) {n M : ℕ}
     (hn : 0 < n) (hM : M = n ∨ M = n + 1 ∨ M = 2 * n) :
     (M : ℤ) ∣ coeff n (F ^ (M * M)) := by
-  have hd := square_derivative F n M hn
+  obtain ⟨d, hdiv⟩ :=
+    D5.S1.Recurrence.Algebraic.HannaA181070Integrality.coefficientDivisibility F (M * M) n
   have hnz : (n : ℤ) ≠ 0 := Int.natCast_ne_zero_iff_pos.mpr hn
   let c := coeff n (F ^ (M * M))
-  let d := coeff (n - 1) (F ^ (M * M - 1) * PowerSeries.derivative F)
-  change (n : ℤ) * c = (M : ℤ) * M * d at hd
+  have hd : (n : ℤ) * c = (M : ℤ) * M * d := by
+    simpa only [Nat.cast_mul] using hdiv
   change (M : ℤ) ∣ c
   rcases hM with hM | hM | hM <;> subst M
   · refine ⟨d, ?_⟩
