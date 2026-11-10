@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowHeadPolynomial
    mirror-E: none(waiver:noncomputational)
    anchors: []
-   utility: none
+   utility: kind=checker; basis=consumer=D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowHeadScalar.half_angle_bound; instance=D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowHeadCertificate.polynomial_nonneg
    digest: Exact scalar polynomial and homogeneous Bernstein evaluation for the K6 head. -/
 import Mathlib.Analysis.SpecialFunctions.Sqrt
 import Mathlib.Tactic

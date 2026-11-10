@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowHeadCertificate/Part11
    mirror-E: none(waiver:noncomputational)
    anchors: []
-   utility: none
+   utility: kind=checker; basis=consumer=D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowHeadCertificate.polynomial_nonneg; instance=D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowHeadCertificate/Part11.box80
    digest: Homogeneous Bernstein identities on the K6 scalar partition. -/
 
 import D5.S3.Quantum.Entanglement.AbsolutePPT.SchmidtStar.SixRowHeadPolynomial
@@ -44,15 +44,15 @@ private def coefficients80 : List (List (List ℕ)) :=
   ]
 
 private theorem identity80 (z k h : ℝ) :
-    (22876792454961/4096)*P z k h = tensor coefficients80 (z-(21/32)) ((87/128)-z) (k-(1/2)) ((5/8)-k) (h-(15/32)) ((9/16)-h) := by
+    (22876792454961 / 4096)*P z k h = tensor coefficients80 (z-(21 / 32)) ((87 / 128)-z) (k-(1 / 2)) ((5 / 8)-k) (h-(15 / 32)) ((9 / 16)-h) := by
   norm_num [tensor, row, coefficients80, P]
   <;> ring
 
 theorem box80 (z k h : ℝ)
-    (hz : (21/32) ≤ z) (hZ : z ≤ (87/128))
-    (hk : (1/2) ≤ k) (hK : k ≤ (5/8))
-    (hh : (15/32) ≤ h) (hH : h ≤ (9/16)) : 0 ≤ P z k h := by
-  have hp := tensor_nonneg coefficients80 (z-(21/32)) ((87/128)-z) (k-(1/2)) ((5/8)-k) (h-(15/32)) ((9/16)-h)
+    (hz : (21 / 32) ≤ z) (hZ : z ≤ (87 / 128))
+    (hk : (1 / 2) ≤ k) (hK : k ≤ (5 / 8))
+    (hh : (15 / 32) ≤ h) (hH : h ≤ (9 / 16)) : 0 ≤ P z k h := by
+  have hp := tensor_nonneg coefficients80 (z-(21 / 32)) ((87 / 128)-z) (k-(1 / 2)) ((5 / 8)-k) (h-(15 / 32)) ((9 / 16)-h)
     (sub_nonneg.mpr hz) (sub_nonneg.mpr hZ)
     (sub_nonneg.mpr hk) (sub_nonneg.mpr hK)
     (sub_nonneg.mpr hh) (sub_nonneg.mpr hH)
@@ -89,15 +89,15 @@ private def coefficients81 : List (List (List ℕ)) :=
   ]
 
 private theorem identity81 (z k h : ℝ) :
-    (22876792454961/16384)*P z k h = tensor coefficients81 (z-(21/32)) ((87/128)-z) (k-(11/16)) ((3/4)-k) (h-(27/64)) ((15/32)-h) := by
+    (22876792454961 / 16384)*P z k h = tensor coefficients81 (z-(21 / 32)) ((87 / 128)-z) (k-(11 / 16)) ((3 / 4)-k) (h-(27 / 64)) ((15 / 32)-h) := by
   norm_num [tensor, row, coefficients81, P]
   <;> ring
 
 theorem box81 (z k h : ℝ)
-    (hz : (21/32) ≤ z) (hZ : z ≤ (87/128))
-    (hk : (11/16) ≤ k) (hK : k ≤ (3/4))
-    (hh : (27/64) ≤ h) (hH : h ≤ (15/32)) : 0 ≤ P z k h := by
-  have hp := tensor_nonneg coefficients81 (z-(21/32)) ((87/128)-z) (k-(11/16)) ((3/4)-k) (h-(27/64)) ((15/32)-h)
+    (hz : (21 / 32) ≤ z) (hZ : z ≤ (87 / 128))
+    (hk : (11 / 16) ≤ k) (hK : k ≤ (3 / 4))
+    (hh : (27 / 64) ≤ h) (hH : h ≤ (15 / 32)) : 0 ≤ P z k h := by
+  have hp := tensor_nonneg coefficients81 (z-(21 / 32)) ((87 / 128)-z) (k-(11 / 16)) ((3 / 4)-k) (h-(27 / 64)) ((15 / 32)-h)
     (sub_nonneg.mpr hz) (sub_nonneg.mpr hZ)
     (sub_nonneg.mpr hk) (sub_nonneg.mpr hK)
     (sub_nonneg.mpr hh) (sub_nonneg.mpr hH)
@@ -134,15 +134,15 @@ private def coefficients82 : List (List (List ℕ)) :=
   ]
 
 private theorem identity82 (z k h : ℝ) :
-    (22876792454961/4096)*P z k h = tensor coefficients82 (z-(21/32)) ((87/128)-z) (k-(5/8)) ((3/4)-k) (h-(15/32)) ((9/16)-h) := by
+    (22876792454961 / 4096)*P z k h = tensor coefficients82 (z-(21 / 32)) ((87 / 128)-z) (k-(5 / 8)) ((3 / 4)-k) (h-(15 / 32)) ((9 / 16)-h) := by
   norm_num [tensor, row, coefficients82, P]
   <;> ring
 
 theorem box82 (z k h : ℝ)
-    (hz : (21/32) ≤ z) (hZ : z ≤ (87/128))
-    (hk : (5/8) ≤ k) (hK : k ≤ (3/4))
-    (hh : (15/32) ≤ h) (hH : h ≤ (9/16)) : 0 ≤ P z k h := by
-  have hp := tensor_nonneg coefficients82 (z-(21/32)) ((87/128)-z) (k-(5/8)) ((3/4)-k) (h-(15/32)) ((9/16)-h)
+    (hz : (21 / 32) ≤ z) (hZ : z ≤ (87 / 128))
+    (hk : (5 / 8) ≤ k) (hK : k ≤ (3 / 4))
+    (hh : (15 / 32) ≤ h) (hH : h ≤ (9 / 16)) : 0 ≤ P z k h := by
+  have hp := tensor_nonneg coefficients82 (z-(21 / 32)) ((87 / 128)-z) (k-(5 / 8)) ((3 / 4)-k) (h-(15 / 32)) ((9 / 16)-h)
     (sub_nonneg.mpr hz) (sub_nonneg.mpr hZ)
     (sub_nonneg.mpr hk) (sub_nonneg.mpr hK)
     (sub_nonneg.mpr hh) (sub_nonneg.mpr hH)
@@ -179,15 +179,15 @@ private def coefficients83 : List (List (List ℕ)) :=
   ]
 
 private theorem identity83 (z k h : ℝ) :
-    (22876792454961/4096)*P z k h = tensor coefficients83 (z-(21/32)) ((87/128)-z) (k-(1/2)) ((5/8)-k) (h-(9/16)) ((21/32)-h) := by
+    (22876792454961 / 4096)*P z k h = tensor coefficients83 (z-(21 / 32)) ((87 / 128)-z) (k-(1 / 2)) ((5 / 8)-k) (h-(9 / 16)) ((21 / 32)-h) := by
   norm_num [tensor, row, coefficients83, P]
   <;> ring
 
 theorem box83 (z k h : ℝ)
-    (hz : (21/32) ≤ z) (hZ : z ≤ (87/128))
-    (hk : (1/2) ≤ k) (hK : k ≤ (5/8))
-    (hh : (9/16) ≤ h) (hH : h ≤ (21/32)) : 0 ≤ P z k h := by
-  have hp := tensor_nonneg coefficients83 (z-(21/32)) ((87/128)-z) (k-(1/2)) ((5/8)-k) (h-(9/16)) ((21/32)-h)
+    (hz : (21 / 32) ≤ z) (hZ : z ≤ (87 / 128))
+    (hk : (1 / 2) ≤ k) (hK : k ≤ (5 / 8))
+    (hh : (9 / 16) ≤ h) (hH : h ≤ (21 / 32)) : 0 ≤ P z k h := by
+  have hp := tensor_nonneg coefficients83 (z-(21 / 32)) ((87 / 128)-z) (k-(1 / 2)) ((5 / 8)-k) (h-(9 / 16)) ((21 / 32)-h)
     (sub_nonneg.mpr hz) (sub_nonneg.mpr hZ)
     (sub_nonneg.mpr hk) (sub_nonneg.mpr hK)
     (sub_nonneg.mpr hh) (sub_nonneg.mpr hH)
@@ -224,15 +224,15 @@ private def coefficients84 : List (List (List ℕ)) :=
   ]
 
 private theorem identity84 (z k h : ℝ) :
-    (22876792454961/4096)*P z k h = tensor coefficients84 (z-(21/32)) ((45/64)-z) (k-(1/2)) ((5/8)-k) (h-(21/32)) ((3/4)-h) := by
+    (22876792454961 / 4096)*P z k h = tensor coefficients84 (z-(21 / 32)) ((45 / 64)-z) (k-(1 / 2)) ((5 / 8)-k) (h-(21 / 32)) ((3 / 4)-h) := by
   norm_num [tensor, row, coefficients84, P]
   <;> ring
 
 theorem box84 (z k h : ℝ)
-    (hz : (21/32) ≤ z) (hZ : z ≤ (45/64))
-    (hk : (1/2) ≤ k) (hK : k ≤ (5/8))
-    (hh : (21/32) ≤ h) (hH : h ≤ (3/4)) : 0 ≤ P z k h := by
-  have hp := tensor_nonneg coefficients84 (z-(21/32)) ((45/64)-z) (k-(1/2)) ((5/8)-k) (h-(21/32)) ((3/4)-h)
+    (hz : (21 / 32) ≤ z) (hZ : z ≤ (45 / 64))
+    (hk : (1 / 2) ≤ k) (hK : k ≤ (5 / 8))
+    (hh : (21 / 32) ≤ h) (hH : h ≤ (3 / 4)) : 0 ≤ P z k h := by
+  have hp := tensor_nonneg coefficients84 (z-(21 / 32)) ((45 / 64)-z) (k-(1 / 2)) ((5 / 8)-k) (h-(21 / 32)) ((3 / 4)-h)
     (sub_nonneg.mpr hz) (sub_nonneg.mpr hZ)
     (sub_nonneg.mpr hk) (sub_nonneg.mpr hK)
     (sub_nonneg.mpr hh) (sub_nonneg.mpr hH)
@@ -269,15 +269,15 @@ private def coefficients85 : List (List (List ℕ)) :=
   ]
 
 private theorem identity85 (z k h : ℝ) :
-    (22876792454961/4096)*P z k h = tensor coefficients85 (z-(21/32)) ((87/128)-z) (k-(5/8)) ((3/4)-k) (h-(9/16)) ((21/32)-h) := by
+    (22876792454961 / 4096)*P z k h = tensor coefficients85 (z-(21 / 32)) ((87 / 128)-z) (k-(5 / 8)) ((3 / 4)-k) (h-(9 / 16)) ((21 / 32)-h) := by
   norm_num [tensor, row, coefficients85, P]
   <;> ring
 
 theorem box85 (z k h : ℝ)
-    (hz : (21/32) ≤ z) (hZ : z ≤ (87/128))
-    (hk : (5/8) ≤ k) (hK : k ≤ (3/4))
-    (hh : (9/16) ≤ h) (hH : h ≤ (21/32)) : 0 ≤ P z k h := by
-  have hp := tensor_nonneg coefficients85 (z-(21/32)) ((87/128)-z) (k-(5/8)) ((3/4)-k) (h-(9/16)) ((21/32)-h)
+    (hz : (21 / 32) ≤ z) (hZ : z ≤ (87 / 128))
+    (hk : (5 / 8) ≤ k) (hK : k ≤ (3 / 4))
+    (hh : (9 / 16) ≤ h) (hH : h ≤ (21 / 32)) : 0 ≤ P z k h := by
+  have hp := tensor_nonneg coefficients85 (z-(21 / 32)) ((87 / 128)-z) (k-(5 / 8)) ((3 / 4)-k) (h-(9 / 16)) ((21 / 32)-h)
     (sub_nonneg.mpr hz) (sub_nonneg.mpr hZ)
     (sub_nonneg.mpr hk) (sub_nonneg.mpr hK)
     (sub_nonneg.mpr hh) (sub_nonneg.mpr hH)
@@ -314,15 +314,15 @@ private def coefficients86 : List (List (List ℕ)) :=
   ]
 
 private theorem identity86 (z k h : ℝ) :
-    (22876792454961/4096)*P z k h = tensor coefficients86 (z-(21/32)) ((45/64)-z) (k-(5/8)) ((3/4)-k) (h-(21/32)) ((3/4)-h) := by
+    (22876792454961 / 4096)*P z k h = tensor coefficients86 (z-(21 / 32)) ((45 / 64)-z) (k-(5 / 8)) ((3 / 4)-k) (h-(21 / 32)) ((3 / 4)-h) := by
   norm_num [tensor, row, coefficients86, P]
   <;> ring
 
 theorem box86 (z k h : ℝ)
-    (hz : (21/32) ≤ z) (hZ : z ≤ (45/64))
-    (hk : (5/8) ≤ k) (hK : k ≤ (3/4))
-    (hh : (21/32) ≤ h) (hH : h ≤ (3/4)) : 0 ≤ P z k h := by
-  have hp := tensor_nonneg coefficients86 (z-(21/32)) ((45/64)-z) (k-(5/8)) ((3/4)-k) (h-(21/32)) ((3/4)-h)
+    (hz : (21 / 32) ≤ z) (hZ : z ≤ (45 / 64))
+    (hk : (5 / 8) ≤ k) (hK : k ≤ (3 / 4))
+    (hh : (21 / 32) ≤ h) (hH : h ≤ (3 / 4)) : 0 ≤ P z k h := by
+  have hp := tensor_nonneg coefficients86 (z-(21 / 32)) ((45 / 64)-z) (k-(5 / 8)) ((3 / 4)-k) (h-(21 / 32)) ((3 / 4)-h)
     (sub_nonneg.mpr hz) (sub_nonneg.mpr hZ)
     (sub_nonneg.mpr hk) (sub_nonneg.mpr hK)
     (sub_nonneg.mpr hh) (sub_nonneg.mpr hH)
@@ -359,15 +359,15 @@ private def coefficients87 : List (List (List ℕ)) :=
   ]
 
 private theorem identity87 (z k h : ℝ) :
-    (22876792454961/16384)*P z k h = tensor coefficients87 (z-(21/32)) ((171/256)-z) (k-(3/4)) ((13/16)-k) (h-(3/8)) ((27/64)-h) := by
+    (22876792454961 / 16384)*P z k h = tensor coefficients87 (z-(21 / 32)) ((171 / 256)-z) (k-(3 / 4)) ((13 / 16)-k) (h-(3 / 8)) ((27 / 64)-h) := by
   norm_num [tensor, row, coefficients87, P]
   <;> ring
 
 theorem box87 (z k h : ℝ)
-    (hz : (21/32) ≤ z) (hZ : z ≤ (171/256))
-    (hk : (3/4) ≤ k) (hK : k ≤ (13/16))
-    (hh : (3/8) ≤ h) (hH : h ≤ (27/64)) : 0 ≤ P z k h := by
-  have hp := tensor_nonneg coefficients87 (z-(21/32)) ((171/256)-z) (k-(3/4)) ((13/16)-k) (h-(3/8)) ((27/64)-h)
+    (hz : (21 / 32) ≤ z) (hZ : z ≤ (171 / 256))
+    (hk : (3 / 4) ≤ k) (hK : k ≤ (13 / 16))
+    (hh : (3 / 8) ≤ h) (hH : h ≤ (27 / 64)) : 0 ≤ P z k h := by
+  have hp := tensor_nonneg coefficients87 (z-(21 / 32)) ((171 / 256)-z) (k-(3 / 4)) ((13 / 16)-k) (h-(3 / 8)) ((27 / 64)-h)
     (sub_nonneg.mpr hz) (sub_nonneg.mpr hZ)
     (sub_nonneg.mpr hk) (sub_nonneg.mpr hK)
     (sub_nonneg.mpr hh) (sub_nonneg.mpr hH)
