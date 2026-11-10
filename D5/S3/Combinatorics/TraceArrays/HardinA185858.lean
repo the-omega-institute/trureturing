@@ -378,9 +378,16 @@ private theorem radical_recurrence (n : ℕ) :
   have hp : (2 + Real.sqrt 13)^2 = 4*(2 + Real.sqrt 13) + 9 := by nlinarith
   have power (r : ℝ) (h : r^2 = 4*r+9) :
       r^(n+3) = 4*r^(n+2)+9*r^(n+1) := by
-    calc
-      r^(n+3) = r^(n+1)*r^2 := by rw [show n+3 = (n+1)+2 by omega, pow_add]
-      _ = 4*r^(n+2)+9*r^(n+1) := by rw [h, show n+2 = (n+1)+1 by omega, pow_succ]; ring
+    let E : LinearRecurrence ℝ := ⟨2, ![9,4]⟩
+    have hr : E.charPoly.IsRoot r := by
+      simp only [LinearRecurrence.charPoly, E, Fin.sum_univ_two,
+        Matrix.cons_val_zero, Matrix.cons_val_one, Fin.isValue,
+        Polynomial.IsRoot.def, Polynomial.eval_sub, Polynomial.eval_add,
+        Polynomial.eval_monomial, Fin.val_zero, Fin.val_one, pow_zero, pow_one,
+        mul_one, one_mul]
+      linarith [h]
+    have hs := (E.geom_sol_iff_root_charPoly r).2 hr (n+1)
+    simpa [E, Fin.sum_univ_two, Nat.add_assoc, add_comm, add_left_comm] using hs
   unfold radical
   rw [power _ hm, power _ hp]
   ring

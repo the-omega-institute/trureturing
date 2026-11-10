@@ -8,7 +8,7 @@ internal sealed class HardinA185858Document : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/TraceArrays/HardinA185858.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/RecurrenceComposition/hardinbarker2018a185858");
+        LibraryNoteRef.Create("D5/L/Certificates/hardinbarker2018a185858");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The number of binary arrays with three columns whose adjacent contiguous three-by-three blocks have different traces, divided by 128, has the generating function and radical expression proposed by Colin Barker for OEIS A185858.",
@@ -62,7 +62,6 @@ internal sealed class HardinA185858Document : IScribeDocumentDefinition
     private static Formula Equal(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula NotEqual(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
     private static Formula AtMost(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
-    private static Formula Less(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
     private static Formula And(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.And, b);
     private static Formula Iff(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Iff, Parenthesized(b));
     private static Formula Implies(Formula a, Formula b) => new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Implies, b);
@@ -79,7 +78,8 @@ internal sealed class HardinA185858Document : IScribeDocumentDefinition
         Formula n = F.Id("n"), b = F.Id("B"), i = F.Id("i"), r = F.Id("r"), c = F.Id("c");
         Formula index = Add(Val(i), Val(r));
         Formula row = Lambda("r", FinType(D(3)),
-            Seq(Langle, index, Comma, Sp, Less(index, Add(n, D(2))), Rangle));
+            Typed(Seq(Langle, index, Comma, Sp, Named("by"), Sp, Named("omega"), Rangle),
+                FinType(Add(n, D(2)))));
         Formula entries = Lambda("r", FinType(Add(n, D(2))),
             Lambda("c", FinType(D(3)), Val(App(b, r, c))));
         Formula trace = QCall("Matrix", "trace", QCall("Matrix", "submatrix", entries, row, Named("id")));
