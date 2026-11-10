@@ -5,6 +5,7 @@
    anchors: [mathlib/module/Mathlib.Topology.Compactness.Compact, mathlib/module/Mathlib.Topology.Piecewise]
    utility: none
    digest: A coordinate collar retracts the entire bottom-or-subcomplex cylinder and gives arbitrary-target homotopy extension. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Geometry.FiniteConeUnionWedge
 import Mathlib.Topology.Compactness.Compact
 import Mathlib.Topology.Piecewise
@@ -24,6 +25,8 @@ open scoped unitInterval ContinuousMap
 open D5.S3.Geometry.FiniteConeCollapse
 
 namespace D5.S3.Geometry.FiniteSubcomplexCylinder
+
+open private realization_closed from D5.S3.Geometry.FiniteConeUnionWedge
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -288,7 +291,7 @@ theorem retraction_fixed (hLK : L ≤ K) (z : Space K × I)
       exact False.elim hx
 
 private theorem subspace_closed : IsClosed (Subspace K L) :=
-  (FiniteConeUnionWedge.realization_closed L).preimage continuous_subtype_val
+  (realization_closed L).preimage continuous_subtype_val
 
 section Extension
 
