@@ -15,6 +15,7 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.FunProp
 import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.Ring
 
