@@ -386,6 +386,8 @@ theorem creationExponential_factorization (hD : (gramReal D).PosDef)
     rw [derivative_map, hsource, map_mul, derivative_map]
   have hg : PowerSeries.derivative (R := Polynomial (Oscillator D)) (f₀*K) =
       (f₀*K) * PowerSeries.derivative (R := Polynomial (Oscillator D)) A := by
+    letI : Algebra (Polynomial (Oscillator D))
+        (PowerSeries (Polynomial (Oscillator D))) := MvPowerSeries.instAlgebra
     have h := (PowerSeries.derivative (R := Polynomial (Oscillator D))).leibniz' f₀ K
     change PowerSeries.derivative (R := Polynomial (Oscillator D)) (f₀*K) =
       f₀ * PowerSeries.derivative (R := Polynomial (Oscillator D)) K +
