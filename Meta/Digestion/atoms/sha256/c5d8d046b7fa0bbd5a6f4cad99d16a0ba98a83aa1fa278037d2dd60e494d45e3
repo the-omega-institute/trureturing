@@ -1,0 +1,59 @@
+**定理 14.3（相干全球泄漏控制实际侧输出）。** 令 $\Lambda:R\to R\otimes K$ 是任意与 $h$ 无关的有限维 CPTP 通道，允许任意固定的混合辅助、因果非 $R$ 处理和终端接触均已吸收进 $\Lambda$。置
+$$
+\Omega_h=\Lambda(\tau_h),\quad\omega_h=\operatorname{Tr}_R\Omega_h,\quad
+p_h=\operatorname{Tr}[((I-\tau_h)\otimes I_K)\Omega_h],
+\tag{14.14}
+$$
+$$
+p_*=\sup_h p_h,\qquad
+\overline\delta=\sup_hD(\Omega_h,\tau_h\otimes\omega_h).
+\tag{14.15}
+$$
+则
+$$
+D(\omega_h,\omega_{-h})
+\le\pi\sqrt{2j\,p_*}+\frac{p_h+p_{-h}}2
+\le\pi\sqrt{2j\,\overline\delta}+\overline\delta
+\tag{14.16}
+$$
+对每个 $h$ 成立。这里没有协变性、纯辅助或实际等距输出假设。
+
+**证明。** 取任一有限 Kraus 表示
+$\Lambda(X)=\sum_rA_rXA_r^\dagger$，$\sum_rA_r^\dagger A_r=I$。它只是同一实际通道的代数表示，$r$ 不加入 $K$。对每个 $h$ 写
+$$
+A_re_h=e_h\otimes f_{r,h}+b_{r,h},\qquad
+(\langle e_h|\otimes I)b_{r,h}=0.
+\tag{14.17}
+$$
+把所有 $f_{r,h}$ 堆叠到 $K\otimes\mathbb C^q$，把所有 $b_{r,h}$ 同样堆叠。则
+$$
+\sum_r\|b_{r,h}\|^2=p_h\le\overline\delta.
+\tag{14.18}
+$$
+使用 (14.7) 的相干符号计算，输入导数中平行分量抵消，正交切向量的范数为 $\sqrt{2j}/(1+|z|^2)$。于是堆叠向量满足
+$$
+\|\partial_{\bar z}f(z)\|
+\le\frac{\sqrt{2j\,p_*}}{1+|z|^2}.
+\tag{14.19}
+$$
+Cauchy–Pompeiu 公式给出
+$$
+\|f_h-f_{-h}\|\le\pi\sqrt{2j\,p_*}.
+\tag{14.20}
+$$
+在 $R$ 上取偏迹会消去交叉项，故实际侧边缘分解为
+$$
+\omega_h=Q_h+Z_h,\quad
+Q_h=\sum_r|f_{r,h}\rangle\langle f_{r,h}|,\quad
+Z_h=\operatorname{Tr}_R\sum_r|b_{r,h}\rangle\langle b_{r,h}|,
+\tag{14.21}
+$$
+其中 $Z_h\ge0$ 且 $\operatorname{Tr}Z_h=p_h$。向量恒有范数不超过一，故
+$$
+\frac12\|Q_h-Q_{-h}\|_1\le\|f_h-f_{-h}\|,
+\qquad
+\frac12\|Z_h-Z_{-h}\|_1\le\frac{p_h+p_{-h}}2.
+\tag{14.22}
+$$
+合并 (14.18)–(14.22) 得 (14.16)。这一步没有把 Kraus 指标变成输出，没有接入初始纯化，也没有选支或后选择。$\square$
+
