@@ -7,7 +7,6 @@
    digest: The complete signed integral oddness assertion for Sun's Hankel determinants. -/
 
 import D5.S3.Combinatorics.Hankel.SunA006077Arithmetic
-import D5.S3.Combinatorics.Hankel.SunA006077Positivity
 
 /-! Positivity and exact integral normalization complete all three residue classes. -/
 

@@ -11,7 +11,7 @@ internal sealed class SunA006077BlocksDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Residue classes modulo three give exact block determinant formulas.", H("The three residue classes"),
         Blocks(Paragraph(Text("Nat denotes the nonnegative integers and Z the integers. Matrix.of is displayed with Fin-sized row and column binders and explicit val projections; det of the empty matrix is one. All floor quotients are natural division.")),
-            Node("d","Unshifted multinomial determinants","D",All("k",Nat,Eq(C("D",V("k")),Det(Hk(V("c"),V("k"),N(0))))),"D(0)=1.",DescribeRole.Definition),
+            Node("d","Unshifted multinomial determinants","D",All("k",Nat,Eq(C("D",V("k")),Det(Hk(V("c"),V("k"))))),"D(0)=1.",DescribeRole.Definition),
             Node("e","Shifted multinomial determinants","E",All("k",Nat,Eq(C("E",V("k")),Det(Hk(V("c"),V("k"),N(1))))),"E(0)=1.",DescribeRole.Definition),
             Node("cross-block-det","A zero lower diagonal block","cross_block_det",All("R",V("Type"),Imp(C("CommRing",V("R")),All("k",Nat,All("A",C("Matrix",C("Fin",V("k")),C("Fin",V("k")),V("R")),All("B",C("Matrix",C("Fin",V("k")),C("Fin",V("k")),V("R")),All("C",C("Matrix",C("Fin",V("k")),C("Fin",V("k")),V("R")),Eq(Det(C("fromBlocks",V("A"),V("B"),V("C"),N(0))),M(M(P(NegOne,V("k")),Det(V("B"))),Det(V("C")))))))))),"For any commutative ring and three k-square matrices A,B,C, the block matrix with rows (A,B) and (C,0) has determinant (-1)^k det(B) det(C). Exchanging its column blocks gives a block triangular matrix; the top left block A is unrestricted.",DescribeRole.Theorem),
             Node("block-zero","The zero residue formula","block_zero",All("m",Nat,Eq(C("W",M(N(3),V("m"))),M(M(P(NegOne,V("m")),C("D",A(V("m"),N(1)))),P(C("E",V("m")),N(2))))),"Group indices by their residues modulo three and apply the same signs to the corresponding rows and columns. The blocks are D of size m+1 and two opposite shifted blocks of size m.",DescribeRole.Theorem),
@@ -33,7 +33,9 @@ internal sealed class SunA006077BlocksDocument : IScribeDocumentDefinition
     private static Formula Nat => V("Nat");
     private static Formula NegOne => new Formula.Negate(N(1));
     private static Formula Hk(Formula b, Formula k, Formula s) => MatrixOf(k, MatrixScalar,
-        Apply(b, s is Formula.Number { Value: 0 } ? Add(CallVal("i"),CallVal("j")) : Add(Add(CallVal("i"),CallVal("j")),s)));
+        Apply(b, Add(Add(CallVal("i"),CallVal("j")),s)));
+    private static Formula Hk(Formula b, Formula k) => MatrixOf(k, MatrixScalar,
+        Apply(b, Add(CallVal("i"),CallVal("j"))));
     private static Formula MatrixOf(Formula size, Formula scalar, Formula entry) => Typed(
         Apply(Qualified("Matrix","of"), LambdaOf("i",C("Fin",size),LambdaOf("j",C("Fin",size),entry))),
         C("Matrix",C("Fin",size),C("Fin",size),scalar));

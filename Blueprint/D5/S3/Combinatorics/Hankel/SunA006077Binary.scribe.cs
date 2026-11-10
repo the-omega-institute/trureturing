@@ -29,7 +29,7 @@ internal sealed class SunA006077BinaryDocument : IScribeDocumentDefinition
     private static Formula Ex(string s, Formula t, Formula f) => new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(s), t, f);
     private static Formula Nat => V("Nat");
     private static Formula Hk(Formula b, Formula k, Formula s) => MatrixOf(k, MatrixScalar,
-        Apply(b, s is Formula.Number { Value: 0 } ? Add(CallVal("i"),CallVal("j")) : Add(Add(CallVal("i"),CallVal("j")),s)));
+        Apply(b, Add(Add(CallVal("i"),CallVal("j")),s)));
     private static Formula MatrixOf(Formula size, Formula scalar, Formula entry) => Typed(
         Apply(Qualified("Matrix","of"), LambdaOf("i",C("Fin",size),LambdaOf("j",C("Fin",size),entry))),
         C("Matrix",C("Fin",size),C("Fin",size),scalar));
