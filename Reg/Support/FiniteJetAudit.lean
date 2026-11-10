@@ -42,15 +42,15 @@ theorem nine_card : Fintype.card Nine.{u} = 3 ^ 2 := by
   rw [← Nat.card_eq_fintype_card]
   simpa only [Nine, Nat.card_ulift] using GaloisField.card 3 2 (by decide)
 
-def nine : Data.{u} := ⟨3, Nine, 2⟩
-def nineSized : SizedData.{u} := ⟨nine, by decide, nine_card⟩
-def nineOdd : OddData.{u} where
+abbrev nine : Data.{u} := ⟨3, Nine, 2⟩
+abbrev nineSized : SizedData.{u} := ⟨nine, by decide, nine_card⟩
+abbrev nineOdd : OddData.{u} where
   toData := nine
   odd := ⟨by decide⟩
-def nineCount : CountData.{u} where
+abbrev nineCount : CountData.{u} where
   toSizedData := nineSized
   odd := ⟨by decide⟩
-def threeCount : CountData.{u} :=
+abbrev threeCount : CountData.{u} :=
   ⟨⟨⟨3, ULift.{u} (ZMod 3), 1⟩, by decide, by simp⟩⟩
 
 theorem tuples_ne : (0 : Fin (2 - 1) → Nine.{u}) ≠ 1 := by

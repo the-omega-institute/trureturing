@@ -35,9 +35,10 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
 private theorem dependence : ObservationalDependence signature.{u} actual := by
   intro i
   obtain ⟨x, hx⟩ := coefficient_values_ne.{u}
-  refine ⟨⟨nine,(fun _ => (1 : Nine.{u}))⟩, x, 0, ?_⟩
+  refine ⟨⟨nine,(fun _ => (1 : Nine.{u}))⟩, x, (0 : Nine.{u}), ?_⟩
   simp only [_root_.D5.S3.FiniteGroups.GroupAlgebra.FiniteJetCoefficients.coefficientMap_apply] at hx
-  norm_num [actual, realize, nine, Pi.one_apply, Pi.zero_apply] at hx ⊢ <;> exact hx
+  simpa [actual, realize, nine,
+    _root_.D5.S3.FiniteGroups.GroupAlgebra.FiniteJetCoefficients.coefficientMap_apply] using hx
 
 def family : Registration arena.{u} (type_of% (@_root_.D5.S3.FiniteGroups.GroupAlgebra.FiniteJetCoefficients.coefficientMap_apply.{u})) where
   actual := actual
