@@ -10,6 +10,202 @@
 admission_basis: open-problem-resolution (#28649; Proved)
 escape_witness: none; every declaration is bind-only. The all-height reduction v_eq_w
 instantiates Function.Semiconj.iterate_right after normalization of finite one-step premises.
+Direct frozen dependencies (declaration statement_ids from scoped-lean-report.json):
+Indented name fragments concatenate without whitespace.
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.Seen
+statement_id: sha256:db13d94501d24f27e6e69604bb633af95ff3309c5698815c44e12d2e52739fce
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.advance
+statement_id: sha256:63e23e390cbc7ee42155ce307351f149d901cd9013daee3d6d2eac775e24af71
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.allowed
+statement_id: sha256:4ee019eb42606605da41b2b090212be244d3bf48d64a2c10dc2d9c6c6f7e6468
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.finish
+statement_id: sha256:ebae2e26fe8811cb0e473a0168c27f49fa151fa2bcecda8ad3ba0c9fabc41a7f
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.finish_fst
+statement_id: sha256:5859cc0f84f4e6a91313521f32ea6d187c4822bb52d4e438939da5e000940bd5
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.finish_snd
+statement_id: sha256:1ada14ea452d6f35f959dbbd5a034265c8c6921cd041422cad27ec166a94d24c
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.good
+statement_id: sha256:f68e874b0a22676cb3053202c645a8ce30010dcd695d55f3e7fce272d4ce5989
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.good_iff
+statement_id: sha256:59d0ffb034f7f2361718e6d2566eb24417785b9a178f6fcb44f336c1199d3d62
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.instDecidableAllowed
+statement_id: sha256:9e135f0d9ab09759e51e42b0ac88f4af874ef89f0e507400af6cd5a57f0dee70
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.colour_bond_iff
+statement_id: sha256:b9273762bbccc68fc56c48c38b8aba02a46a50a53bfbbe70a660fd21867d6be8
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.widthInstDecidableGood
+statement_id: sha256:1b18af22481f3b703bd96b1eff1d82cd4f06b1e61f3b79669043a61a31d15152
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.widthInstDecidableLegal
+statement_id: sha256:6c1f0ba304e14673a1966eca92d67e12ccf8925c940c5ba2391b4b478ac39547
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.widthLegal
+statement_id: sha256:989eff70ea57c1a27e750e36536ea11ddb8f9aa5a27d74dce459fc2432ec52e8
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.widthNormal._proof_1
+statement_id: sha256:3ea64915f32c9d14cb1f8694caa8b29adcc02a50f28a6142292cccc5f150cf1a
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.widthStep
+statement_id: sha256:bd12c5c5928f8822063ec100e0e6e92c5300f5907da4aa64e85595a1ee4c7cb5
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.widthStep.eq_1
+statement_id: sha256:f0e1fc897c2470d95f639750def23fe05e87fb9061f66dd0ca788b6eda04aec4
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.widthTotal
+statement_id: sha256:c4c082551693765b0f6c344f5f6ff825120f019a96ec4d79015c10c10bf774d0
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.widthTotal.eq_1
+statement_id: sha256:98c91caccabbd60e8a6fae4d99818e8a614dfba06487712acc8167120f8e9727
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.widthV
+statement_id: sha256:4f3953ec5d8902b74486197a6f4d782f3fb58c6627a5740a5242632a7560f9ed
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.widthV.eq_2
+statement_id: sha256:02a910fcd311188b871be135dbe86f61c98a47ead76d48f62a22196f30991d60
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.width_counting_bridge
+statement_id: sha256:a6ad861eda2ca48bc91989542e4b7cc27d81aec8df9a91b8db40c9398c577c72
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233254TriangleStrip.Row
+statement_id: sha256:802cb5ae5b1814d265a7f8260b6ae53ed440670a08e01fb25e907eae05cf25e2
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233254TriangleStrip.instDecidableRowLegal
+statement_id: sha256:1e2096782fbf116bcad750d1cf1a85ecfe80c177ff80c8bfc511f3fd3aa73502
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233254TriangleStrip.rowLegal
+statement_id: sha256:2d91f9276780b383fca63c8cbf77e7bd1468b9f2f59f66437cc1fb3f213c3bec
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge.rowFinish
+statement_id: sha256:ded50bd8c5de69b5b2324e575fee135f275ae05b5bb30b328b0e5c0313d86b07
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge.rowWeight
+statement_id: sha256:076a03b0e19556ba67d0faed8d8d552fb3d55e6c40992d9c52c88faad85e373a
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge.scanner_fibres
+statement_id: sha256:63a356389be3d9bf756c53fb12271299a7668c1123562d84a2e34e78a341fc90
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255PairTransfer.Boundary
+statement_id: sha256:246a1b67905a4672aa678850d44d971890f326da2f56a1daefc1c2955945db79
+D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255ShapeSymmetry.full_row
+statement_id: sha256:f81e65c6e42bf750ca73737a7ace4b7b696a7b7a57684908ba1ce134acfcf88c
+D5.S3.Observer.Separation.BooleanRankThreeK4.beta
+statement_id: sha256:1abdc5f3db71567fe05de5aabbe80dddeb5ec5179e4ec7fd49fe71e500518481
+declaration:
+  _private.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.0.D5.S3.
+  Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.WidthRow
+statement_id: sha256:63d18919d9321000a9a3541c82cd4a7aa88a0da2c26ce61e51d7cede756ff789
+Local declaration names and consumers use the surrounding Lean namespace.
+bonds: proof_shape=bind-only; consumers=a
+decidableBonds: proof_shape=bind-only; consumers=a
+a: proof_shape=bind-only; consumers=counting_bridge
+labels: proof_shape=bind-only; consumers=class_fibres
+compatible: proof_shape=bind-only; consumers=class_fibres
+decidableCompatible: proof_shape=bind-only; consumers=classCount
+bonds_iff: proof_shape=bind-only; consumers=counting_bridge
+v: proof_shape=bind-only; consumers=counting_bridge
+total: proof_shape=bind-only; consumers=counting_bridge
+counting_bridge: proof_shape=bind-only; consumers=a_eq_w
+Valid: proof_shape=bind-only; consumers=valid_next
+boundaryClass: proof_shape=bind-only; consumers=row_counts
+transfer: proof_shape=bind-only; consumers=w
+valid_next: proof_shape=bind-only; consumers=v_eq_w
+classCount: proof_shape=bind-only; consumers=class_fibres
+firstCount: proof_shape=bind-only; consumers=first_fibres
+class_fibres: proof_shape=bind-only; consumers=class_fibres_normalized
+class_fibres_normalized: proof_shape=bind-only; consumers=completed_010101
+completed_010101: proof_shape=bind-only; consumers=row_counts
+completed_010102: proof_shape=bind-only; consumers=row_counts
+completed_010120: proof_shape=bind-only; consumers=row_counts
+completed_010121: proof_shape=bind-only; consumers=row_counts
+completed_010201: proof_shape=bind-only; consumers=row_counts
+completed_010202: proof_shape=bind-only; consumers=row_counts
+completed_010210: proof_shape=bind-only; consumers=row_counts
+completed_010212: proof_shape=bind-only; consumers=row_counts
+completed_012010: proof_shape=bind-only; consumers=row_counts
+completed_012012: proof_shape=bind-only; consumers=row_counts
+completed_012020: proof_shape=bind-only; consumers=row_counts
+completed_012021: proof_shape=bind-only; consumers=row_counts
+completed_012101: proof_shape=bind-only; consumers=row_counts
+completed_012102: proof_shape=bind-only; consumers=row_counts
+completed_012120: proof_shape=bind-only; consumers=row_counts
+completed_012121: proof_shape=bind-only; consumers=row_counts
+completed_020101: proof_shape=bind-only; consumers=row_counts
+completed_020102: proof_shape=bind-only; consumers=row_counts
+completed_020120: proof_shape=bind-only; consumers=row_counts
+completed_020121: proof_shape=bind-only; consumers=row_counts
+completed_020201: proof_shape=bind-only; consumers=row_counts
+completed_020202: proof_shape=bind-only; consumers=row_counts
+completed_020210: proof_shape=bind-only; consumers=row_counts
+completed_020212: proof_shape=bind-only; consumers=row_counts
+completed_021010: proof_shape=bind-only; consumers=row_counts
+completed_021012: proof_shape=bind-only; consumers=row_counts
+completed_021020: proof_shape=bind-only; consumers=row_counts
+completed_021021: proof_shape=bind-only; consumers=row_counts
+completed_021201: proof_shape=bind-only; consumers=row_counts
+completed_021202: proof_shape=bind-only; consumers=row_counts
+completed_021210: proof_shape=bind-only; consumers=row_counts
+completed_021212: proof_shape=bind-only; consumers=row_counts
+completed_101010: proof_shape=bind-only; consumers=row_counts
+completed_101012: proof_shape=bind-only; consumers=row_counts
+completed_101020: proof_shape=bind-only; consumers=row_counts
+completed_101021: proof_shape=bind-only; consumers=row_counts
+completed_101201: proof_shape=bind-only; consumers=row_counts
+completed_101202: proof_shape=bind-only; consumers=row_counts
+completed_101210: proof_shape=bind-only; consumers=row_counts
+completed_101212: proof_shape=bind-only; consumers=row_counts
+completed_102010: proof_shape=bind-only; consumers=row_counts
+completed_102012: proof_shape=bind-only; consumers=row_counts
+completed_102020: proof_shape=bind-only; consumers=row_counts
+completed_102021: proof_shape=bind-only; consumers=row_counts
+completed_102101: proof_shape=bind-only; consumers=row_counts
+completed_102102: proof_shape=bind-only; consumers=row_counts
+completed_102120: proof_shape=bind-only; consumers=row_counts
+completed_102121: proof_shape=bind-only; consumers=row_counts
+completed_120101: proof_shape=bind-only; consumers=row_counts
+completed_120102: proof_shape=bind-only; consumers=row_counts
+completed_120120: proof_shape=bind-only; consumers=row_counts
+completed_120121: proof_shape=bind-only; consumers=row_counts
+completed_120201: proof_shape=bind-only; consumers=row_counts
+completed_120202: proof_shape=bind-only; consumers=row_counts
+completed_120210: proof_shape=bind-only; consumers=row_counts
+completed_120212: proof_shape=bind-only; consumers=row_counts
+completed_121010: proof_shape=bind-only; consumers=row_counts
+completed_121012: proof_shape=bind-only; consumers=row_counts
+completed_121020: proof_shape=bind-only; consumers=row_counts
+completed_121021: proof_shape=bind-only; consumers=row_counts
+completed_121201: proof_shape=bind-only; consumers=row_counts
+completed_121202: proof_shape=bind-only; consumers=row_counts
+completed_121210: proof_shape=bind-only; consumers=row_counts
+completed_121212: proof_shape=bind-only; consumers=row_counts
+completed_201010: proof_shape=bind-only; consumers=row_counts
+completed_201012: proof_shape=bind-only; consumers=row_counts
+completed_201020: proof_shape=bind-only; consumers=row_counts
+completed_201021: proof_shape=bind-only; consumers=row_counts
+completed_201201: proof_shape=bind-only; consumers=row_counts
+completed_201202: proof_shape=bind-only; consumers=row_counts
+completed_201210: proof_shape=bind-only; consumers=row_counts
+completed_201212: proof_shape=bind-only; consumers=row_counts
+completed_202010: proof_shape=bind-only; consumers=row_counts
+completed_202012: proof_shape=bind-only; consumers=row_counts
+completed_202020: proof_shape=bind-only; consumers=row_counts
+completed_202021: proof_shape=bind-only; consumers=row_counts
+completed_202101: proof_shape=bind-only; consumers=row_counts
+completed_202102: proof_shape=bind-only; consumers=row_counts
+completed_202120: proof_shape=bind-only; consumers=row_counts
+completed_202121: proof_shape=bind-only; consumers=row_counts
+completed_210101: proof_shape=bind-only; consumers=row_counts
+completed_210102: proof_shape=bind-only; consumers=row_counts
+completed_210120: proof_shape=bind-only; consumers=row_counts
+completed_210121: proof_shape=bind-only; consumers=row_counts
+completed_210201: proof_shape=bind-only; consumers=row_counts
+completed_210202: proof_shape=bind-only; consumers=row_counts
+completed_210210: proof_shape=bind-only; consumers=row_counts
+completed_210212: proof_shape=bind-only; consumers=row_counts
+completed_212010: proof_shape=bind-only; consumers=row_counts
+completed_212012: proof_shape=bind-only; consumers=row_counts
+completed_212020: proof_shape=bind-only; consumers=row_counts
+completed_212021: proof_shape=bind-only; consumers=row_counts
+completed_212101: proof_shape=bind-only; consumers=row_counts
+completed_212102: proof_shape=bind-only; consumers=row_counts
+completed_212120: proof_shape=bind-only; consumers=row_counts
+completed_212121: proof_shape=bind-only; consumers=row_counts
+unseen_010101: proof_shape=bind-only; consumers=row_counts
+unseen_101010: proof_shape=bind-only; consumers=row_counts
+row_counts: proof_shape=bind-only; consumers=finite_certificate
+initial_valid: proof_shape=bind-only; consumers=a_eq_w
+first_fibres: proof_shape=bind-only; consumers=initial_counts
+initial_counts: proof_shape=bind-only; consumers=finite_certificate
+finite_certificate: proof_shape=bind-only; consumers=v_eq_w
+w: proof_shape=bind-only; consumers=shifted_count
+v_eq_w: proof_shape=bind-only; consumers=a_eq_w
+a_eq_w: proof_shape=bind-only; consumers=shifted_count
+distribution: proof_shape=bind-only; consumers=distribution_step
+distribution_step: proof_shape=bind-only; consumers=shifted_count
+shifted_count: proof_shape=bind-only; consumers=result
+distribution_relation: proof_shape=bind-only; consumers=result
+result: proof_shape=bind-only; consumers=terminal result (#28649)
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
