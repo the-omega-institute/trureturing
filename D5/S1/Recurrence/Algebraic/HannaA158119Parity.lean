@@ -166,8 +166,9 @@ theorem result : claim := by
   by_cases hm : m = 0
   · subst m
     have h0 : constantCoeff B = 1 := by
-      rw [B, constantCoeff_subst_of_constantCoeff_zero Q_zero]
-      simpa using F_zero
+      change MvPowerSeries.constantCoeff (F.subst Q) = 1
+      simpa only [Algebra.algebraMap_self, RingHom.id_apply, F_zero] using
+        constantCoeff_subst_of_constantCoeff_zero Q_zero F
     simp [a, coeff_zero_eq_constantCoeff, h0]
   · rw [a, Int.natAbs_odd, ← ZMod.intCast_eq_one_iff_odd]
     have hb := congrArg (coeff (2 * m)) B_mod_two
