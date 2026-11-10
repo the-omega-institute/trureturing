@@ -451,11 +451,13 @@ Hilbert space, a tensor product, an allowed instrument menu, complete
 positivity, a clock or a Hamiltonian. Endpoint reciprocity does not make
 successive physical measurements commute. A [composite premise bridge](barnumwilce2012localtomography.md)
 derives product purity, complete product frames, comparison factorization
-and rank multiplication when S holds on both factors and their locally
-tomographic composite with positive bilinear state/effect products.
-It also derives composite simplicity from a connected local comparison
-graph. Existence of those products, local tomography and local graph
-connectedness remain separate inputs. The process contracts in the
+and rank multiplication under its positive bilinear state/effect product
+contract, including the pairing and unit identities, with S on both
+factors and their locally tomographic composite. It also derives
+composite simplicity when both local comparison graphs are connected;
+for a self-composite, connectedness of its local system suffices.
+Existence of the compatible products, local tomography and the stated
+local graph connectedness remain separate inputs. The process contracts in the
 [spectral strong-symmetry note](barnumhilgert2019spectral.md#complete-conditional-reconstruction-and-its-remaining-contracts)
 remain separate obligations.
 

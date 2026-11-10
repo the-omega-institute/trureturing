@@ -288,8 +288,11 @@ uniqueness of the product embedding. The whole reconstruction remains a
 paper route pending its missing formal bridges.
 
 In ordinary words: independently chosen local reference states give
-mutually distinguishable joint reference states. If they left an extra
-direction, that same direction would escape every possible choice of
-local reference. Local tomography excludes such a direction. The local
-reference lists therefore fill the joint system, and their comparisons
-multiply without adding another axiom.
+mutually distinguishable joint reference states. Their unused positive
+complement of the unit is the same for every choice of complete local
+reference lists. That complement would escape every possible choice of
+local reference, so local tomography forces it to vanish. The product
+lists therefore form complete joint frames, and their comparisons
+multiply without adding another axiom. A complete frame supplies every
+outcome of one reference measurement; it need not linearly span the
+whole state space.
