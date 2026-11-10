@@ -57,7 +57,10 @@ internal sealed class MansanarezPolySwanCumulantNonvanishingRefutationDocument :
             Paragraph(Text("For 0 < p < 1, the law with masses p/2, 1-p and p/2 at -1, 0 and 1 is a symmetric probability law with all moments and a direct three-point moment-determinacy argument. Its cumulants satisfy K₂ = p, K₄ = p - 3p², K₆ = p - 15p² + 30p³ and K₈ = p - 63p² + 420p³ - 630p⁴.")),
             Paragraph(Text("The quartic 56700p⁴ - 56700p³ + 18165p² - 1950p + 41 changes sign between 1/100 and 1/20. At its exact root, K₂, K₄ and K₆ are positive, K₈ is negative, and 21K₆² + 20K₄K₈ = 0. The source recurrence gives the evaluated coefficients a₆ = -140K₄², a₈ = -1008K₄K₆ and a₁₀ = -132(21K₆² + 20K₄K₈), so the m = 5 nonvanishing assertion fails while the earlier signs remain strict.")),
             Paragraph(Text("The source's Remark 1.5 prints -210 T₃T₆ for a₆; the defining recurrence gives -210 T₃T₅. Both mixed terms vanish for the symmetric witness, so the refutation uses the recurrence defined in Lemma 3.4."))),
-        DescribeRole.Theorem);
+        DescribeRole.Theorem,
+        openProblemResolutionClaim: new OpenProblemResolutionClaim(
+            ProblemSlugRef.Create("mps-cumulant-coefficient-nonvanishing"),
+            ResolutionKind.Refuted));
 
     private static Formula V(string name) => F.Id(name);
     private static Formula N => Seq(Mathbb, Grp(F.Id("N")));

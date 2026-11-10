@@ -142,6 +142,10 @@ $$\neg ((\exists R \in (\mathbb{N} \to \operatorname{MvPolynomial}\left(\mathbb{
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/MomentMinors/MansanarezPolySwanCumulantNonvanishingRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mps-cumulant-coefficient-nonvanishing` (refuted) by `D5/S3/Analytic/MomentMinors/MansanarezPolySwanCumulantNonvanishingRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mps-cumulant-coefficient-nonvanishing","declaration_gid":"D5/S3/Analytic/MomentMinors/MansanarezPolySwanCumulantNonvanishingRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul Mansanarez; Guillaume Poly; Yvik Swan (2024). *Derivatives of entropy and the MMSE conjecture*. DOI: [10.1109/TIT.2024.3466566](https://doi.org/10.1109/TIT.2024.3466566). URL: <https://arxiv.org/abs/2311.04831v2>.
