@@ -6,9 +6,6 @@
    utility: none
    digest: The literal Sun finite sum and its sparse Hankel moment transform. -/
 
-import Mathlib.LinearAlgebra.Matrix.Block
-import Mathlib.Algebra.Polynomial.Coeff
-import Mathlib.Algebra.Polynomial.Degree.Support
 import Mathlib.Tactic
 
 /-! Integer moments and finite polynomial translation for Sun's Hankel determinants. -/

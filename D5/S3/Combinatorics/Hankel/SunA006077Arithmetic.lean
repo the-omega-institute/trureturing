@@ -7,7 +7,6 @@
    digest: Integral normalization and binary parity of the multinomial moments. -/
 
 import D5.S3.Combinatorics.Hankel.SunA006077Binary
-import Mathlib.NumberTheory.Padics.PadicVal.Basic
 
 /-! Binomial normalization and the powers of two detected by its parity. -/
 

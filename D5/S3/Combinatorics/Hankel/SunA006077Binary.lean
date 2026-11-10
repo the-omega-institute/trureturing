@@ -7,7 +7,6 @@
    digest: Both shifted Rueppel Hankel determinants equal one in characteristic two. -/
 
 import D5.S3.Combinatorics.Hankel.SunA006077Blocks
-import Mathlib.Data.ZMod.Basic
 
 /-! The ordinary and once-shifted Rueppel determinants modulo two. -/
 

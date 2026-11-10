@@ -7,7 +7,6 @@
    digest: Residue classes split the sparse Sun moment determinants into three blocks. -/
 
 import D5.S3.Combinatorics.Hankel.SunA006077
-import Mathlib.LinearAlgebra.Matrix.SchurComplement
 
 /-! Residue blocks for the sparse moments, with simultaneous row and column signs. -/
 
