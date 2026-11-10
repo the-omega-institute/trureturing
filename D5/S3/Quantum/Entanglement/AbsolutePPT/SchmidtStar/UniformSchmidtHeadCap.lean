@@ -1,6 +1,6 @@
-/- GID: D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtHeadCap
+/- GID: D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/UniformSchmidtHeadCap
    generality: G
-   mirror-B: D5/B/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtHeadCap
+   mirror-B: D5/B/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/UniformSchmidtHeadCap
    mirror-E: none(waiver:symbolic-spectral-inequality)
    anchors: []
    utility: none
@@ -14,7 +14,7 @@ set_option autoImplicit false
 open Matrix Finset
 open scoped ComplexOrder BigOperators
 
-namespace D5.S3.Quantum.Entanglement.AbsolutePPT.UniformSchmidtHeadCap
+namespace D5.S3.Quantum.Entanglement.AbsolutePPT.SchmidtStar.UniformSchmidtHeadCap
 open UniformSchmidtIncidence UniformSchmidtSpectrum UniformSchmidtBell
 open QutritPerturbationAttainment
 noncomputable section
@@ -212,4 +212,4 @@ theorem literal_rank_six_head_cap {m n : ℕ} (hm : 6 ≤ m) (hn : 6 ≤ n)
   linarith
 
 end
-end D5.S3.Quantum.Entanglement.AbsolutePPT.UniformSchmidtHeadCap
+end D5.S3.Quantum.Entanglement.AbsolutePPT.SchmidtStar.UniformSchmidtHeadCap
