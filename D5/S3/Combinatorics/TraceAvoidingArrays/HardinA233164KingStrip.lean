@@ -11,9 +11,12 @@ admission_basis: open-problem-resolution (#28747).
 The independent literal count is the target; the labelled chromatic polynomial
 is already supplied by Chang and Shrock, DOI 10.1103/PhysRevE.62.4650.
 No chromatic-polynomial novelty is asserted.
-proof_shape: bind-only for the finite certificates, boundary and scanner bridges,
-seed congruence and linearity, zero count and algebraic consequences.
-The finite certificates are premises of the all-height continuation induction.
+proof_shape: content for continuation, count_formula, recurrence, closed_formula,
+product_identity and result: live variable-height induction remains after inlining.
+The other nine theorems are consumed bind-only helpers, including both finite
+certificates; their computations are not claimed as novel data.
+Problems/hardin233164.md gives the per-declaration judgements and live consumers.
+The numeric-reduction premises remain finite_certificate and saturated_certificate.
 The only public result collects the full literal-count settlement event.
 -/
 
