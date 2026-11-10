@@ -112,14 +112,6 @@ private theorem restricted_derivative_pow (n : ℕ) (v : V) :
     rw [pow_succ', pow_succ', Module.End.mul_apply, Module.End.mul_apply, ih]
     rfl
 
-private theorem coefficientDerivation_pow (δ : Derivation F K K) (n : ℕ) (v : V) :
-    coefficientDerivation δ ((D^n) v) = (D^n) (coefficientDerivation δ v) := by
-  induction n with
-  | zero => rfl
-  | succ n ih =>
-    rw [pow_succ', Module.End.mul_apply, Module.End.mul_apply,
-      coefficientDerivation_derivative, ih]
-
 private def gaugeNilpotent (δ : Derivation F K K) : Module.End F V :=
   coefficientDerivation δ * ((D).restrictScalars F)^(p-2)
 
