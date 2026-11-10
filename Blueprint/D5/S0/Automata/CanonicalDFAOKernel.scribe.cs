@@ -7,7 +7,7 @@ internal sealed class CanonicalDFAOKernelDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S0/Automata/CanonicalDFAOKernel.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Words/mazhang2026weightedhalving");
+        LibraryNoteRef.Create("D5/L/Automata/mazhang2026weightedhalving");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "CanonicalDFAOKernel", H("CanonicalDFAOKernel"), Blocks(

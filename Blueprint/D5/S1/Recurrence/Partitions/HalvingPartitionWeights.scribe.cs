@@ -7,7 +7,7 @@ internal sealed class HalvingPartitionWeightsDocument : IScribeDocumentDefinitio
 {
     private const string Prefix = "D5/S1/Recurrence/Partitions/HalvingPartitionWeights.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Words/mazhang2026weightedhalving");
+        LibraryNoteRef.Create("D5/L/Automata/mazhang2026weightedhalving");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "HalvingPartitionWeights", H("HalvingPartitionWeights"), Blocks(

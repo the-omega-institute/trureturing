@@ -7,7 +7,10 @@ internal sealed class HalvingPartitionDeficitDocument : IScribeDocumentDefinitio
 {
     private const string Prefix = "D5/S3/Combinatorics/Partitions/HalvingPartitionDeficit.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Words/mazhang2026weightedhalving");
+        LibraryNoteRef.Create("D5/L/Automata/mazhang2026weightedhalving");
+
+    private static readonly LibraryNoteRef Alekseyev =
+        LibraryNoteRef.Create("D5/L/Words/alekseyev2026halving");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "HalvingPartitionDeficit", H("HalvingPartitionDeficit"), Blocks(
@@ -24,5 +27,7 @@ internal sealed class HalvingPartitionDeficitDocument : IScribeDocumentDefinitio
     private static DocumentBlock Node(string name, string statement, DescribeRole role) => Describe.Lean(
         DescribeId.Create("halvingpartitiondeficit-" + name.Replace('_', '-').ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(name), StatementSource.WithoutFormula(),
-        AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(statement))), role);
+        name is "deficit_dyadic" or "deficit_dyadic_dilation"
+            ? AssessedProvenance.FromLiterature(Alekseyev) : AssessedProvenance.FromRepo(Source),
+        Blocks(Paragraph(Text(statement))), role);
 }

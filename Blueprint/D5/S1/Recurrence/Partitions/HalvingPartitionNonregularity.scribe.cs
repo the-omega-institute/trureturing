@@ -173,7 +173,9 @@ internal sealed class HalvingPartitionNonregularityDocument : IScribeDocumentDef
     private static DocumentBlock Supplier(string name, DescribeRole role) => Describe.Lean(
         DescribeId.Create("halving-source-" + name.Replace('_', '-').ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(name), StatementSource.WithoutFormula(),
-        AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(
+        name is "dyadic_source_classification" or "dyadic_source_count"
+            ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
+        Blocks(Paragraph(Text(
             name == "nonregularity_over"
                 ? "The actual count has no fixed binary matrix representation over every nonzero commutative unital ring, including positive characteristic and zero divisors."
                 : "The original-place source supplier is shared by the actual length and weighted proofs. The list, order, sum constraint and original quantifiers are preserved.")), Paragraph(Text(Exact(name)))), role);

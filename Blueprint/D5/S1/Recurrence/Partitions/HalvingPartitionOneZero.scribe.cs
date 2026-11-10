@@ -7,7 +7,10 @@ internal sealed class HalvingPartitionOneZeroDocument : IScribeDocumentDefinitio
 {
     private const string Prefix = "D5/S1/Recurrence/Partitions/HalvingPartitionOneZero.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Words/mazhang2026weightedhalving");
+        LibraryNoteRef.Create("D5/L/Automata/mazhang2026weightedhalving");
+
+    private static readonly LibraryNoteRef Alekseyev =
+        LibraryNoteRef.Create("D5/L/Words/alekseyev2026halving");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "HalvingPartitionOneZero", H("HalvingPartitionOneZero"), Blocks(
@@ -23,5 +26,7 @@ internal sealed class HalvingPartitionOneZeroDocument : IScribeDocumentDefinitio
     private static DocumentBlock Node(string name, string statement, DescribeRole role) => Describe.Lean(
         DescribeId.Create("halvingpartitiononezero-" + name.Replace('_', '-').ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(name), StatementSource.WithoutFormula(),
-        AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(statement))), role);
+        name is "oneZero_count_lower" or "fixed_digit_count_lower"
+            ? AssessedProvenance.FromLiterature(Alekseyev) : AssessedProvenance.FromRepo(Source),
+        Blocks(Paragraph(Text(statement))), role);
 }

@@ -328,9 +328,7 @@ Lean statement: `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.dyadi
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.dyadic_source_classification` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Max A. Alekseyev (2026). *Halving Partitions and Hyperbinary Expansions*. URL: <https://arxiv.org/abs/2611.01243v1>.
+*Citation.* Max A. Alekseyev (2026). *Halving Partitions and Hyperbinary Expansions*. URL: <https://arxiv.org/abs/2611.01243v1>.
 
 *Commentary.*
 
@@ -456,9 +454,7 @@ Lean statement: `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.dyadi
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Partitions/HalvingPartitionNonregularity.dyadic_source_count` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Max A. Alekseyev (2026). *Halving Partitions and Hyperbinary Expansions*. URL: <https://arxiv.org/abs/2611.01243v1>.
+*Citation.* Max A. Alekseyev (2026). *Halving Partitions and Hyperbinary Expansions*. URL: <https://arxiv.org/abs/2611.01243v1>.
 
 *Commentary.*
 

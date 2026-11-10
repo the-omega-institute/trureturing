@@ -7,7 +7,10 @@ internal sealed class HalvingPartitionProfileDocument : IScribeDocumentDefinitio
 {
     private const string Prefix = "D5/S1/Recurrence/Partitions/HalvingPartitionProfile.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Words/mazhang2026weightedhalving");
+        LibraryNoteRef.Create("D5/L/Automata/mazhang2026weightedhalving");
+
+    private static readonly LibraryNoteRef Alekseyev =
+        LibraryNoteRef.Create("D5/L/Words/alekseyev2026halving");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "HalvingPartitionProfile", H("HalvingPartitionProfile"), Blocks(
@@ -37,5 +40,7 @@ internal sealed class HalvingPartitionProfileDocument : IScribeDocumentDefinitio
     private static DocumentBlock Node(string name, string statement, DescribeRole role) => Describe.Lean(
         DescribeId.Create("halvingpartitionprofile-" + name.Replace('_', '-').ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(name), StatementSource.WithoutFormula(),
-        AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(statement))), role);
+        name is "source_length_injective" or "source_length_support" or "lengthCount_dyadic" or "lengthPolynomial_dyadic" or "source_length_interval"
+            ? AssessedProvenance.FromLiterature(Alekseyev) : AssessedProvenance.FromRepo(Source),
+        Blocks(Paragraph(Text(statement))), role);
 }

@@ -28,9 +28,7 @@ Lean statement: `D5/S1/Recurrence/Partitions/HalvingPartitionDilation.count_even
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Partitions/HalvingPartitionDilation.count_even` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Haobo Ma; Wenlin Zhang (2026). *Weighted halving partitions: extending Alekseyev (2026) and answering his Section 6 question negatively (p. 18, arXiv:2611.01243v1)*. URL: <https://github.com/the-omega-institute/trureturing-outreach/releases/tag/outreach-task-shortnote-e1da5d247e1d45546de554c29708119b>.
+*Citation.* Max A. Alekseyev (2026). *Halving Partitions and Hyperbinary Expansions*. URL: <https://arxiv.org/abs/2611.01243v1>.
 
 *Commentary.*
 
@@ -42,9 +40,7 @@ Lean statement: `D5/S1/Recurrence/Partitions/HalvingPartitionDilation.count_even
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Partitions/HalvingPartitionDilation.count_even_dilation` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Haobo Ma; Wenlin Zhang (2026). *Weighted halving partitions: extending Alekseyev (2026) and answering his Section 6 question negatively (p. 18, arXiv:2611.01243v1)*. URL: <https://github.com/the-omega-institute/trureturing-outreach/releases/tag/outreach-task-shortnote-e1da5d247e1d45546de554c29708119b>.
+*Citation.* Max A. Alekseyev (2026). *Halving Partitions and Hyperbinary Expansions*. URL: <https://arxiv.org/abs/2611.01243v1>.
 
 *Commentary.*
 

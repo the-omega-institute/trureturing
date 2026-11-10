@@ -7,7 +7,7 @@ internal sealed class BinaryDecimationDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S1/Recurrence/BinaryDecimation.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Words/mazhang2026weightedhalving");
+        LibraryNoteRef.Create("D5/L/Automata/mazhang2026weightedhalving");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "BinaryDecimation", H("BinaryDecimation"), Blocks(
