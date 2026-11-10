@@ -1,7 +1,7 @@
 /- GID: D5/S3/FiniteGroups/GroupAlgebra/PrimeFieldRankThreeCyclicDimension
    generality: G
-   mirror-B: none(source-only-candidate)
-   mirror-E: none(source-only-candidate)
+   mirror-B: D5/B/S3/FiniteGroups/GroupAlgebra/PrimeFieldRankThreeCyclicDimension
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.RingTheory.LocalRing.Module, mathlib/module/Mathlib.LinearAlgebra.Matrix.ToLin]
    utility: none
    digest: Cyclic projectivity for an actual elementary abelian group of rank three forces prime-field dimension at least 3p. -/
@@ -21,10 +21,8 @@ import Mathlib.Tactic.Push
 import Mathlib.Tactic.Tauto
 
 /-!
-SOURCE ONLY, UNCOMPILED. Mathlib revision 56a005855ea17e0b0958f73ec801ae140b0a1679.
-The rank-two import is the immutable source candidate, not an accepted dependency.
-The accompanying visibility-only patch exposes its geometric_norm_polynomial and
-chain_independent, consumed below by norm_power and truncated_power_basis.
+The geometric-norm polynomial identity and chain-independence argument are
+reused from PrimeFieldCyclicProjectivityDimension in their original owner.
 
 The algebra used here is the ACTUAL group algebra F[Multiplicative F]. We prove
 its locality and construct its (t (p := p))-power basis; no local-ring, free-chain,
@@ -65,7 +63,7 @@ private instance algebra_finite : Module.Finite (F p) (A p) :=
 private def generator : C p := Multiplicative.ofAdd 1
 
 private theorem generator_pow (n : ℕ) :
-    ((generator (p := p))) ^ n = Multiplicative.ofAdd (n : F p) := by
+    (generator (p := p)) ^ n = Multiplicative.ofAdd (n : F p) := by
   simp [generator, ← ofAdd_nsmul, nsmul_eq_mul]
 
 private theorem c_pow (c : C p) : c ^ p = 1 := by
@@ -203,7 +201,7 @@ private theorem norm_power : ((nu (p := p)) : A p) = (t (p := p)) ^ (p - 1) := b
     (PrimeFieldCyclicProjectivityDimension.geometric_norm_polynomial (p := p))
   have henum : (∑ c : C p, MonoidAlgebra.single c (1 : F p)) =
       ∑ i : Fin p, (z (p := p)) ^ (i : ℕ) := by
-    rw [← ((finiteEnumeration (p := p))).sum_comp
+    rw [← (finiteEnumeration (p := p)).sum_comp
       (fun c : C p => MonoidAlgebra.single c (1 : F p))]
     apply Finset.sum_congr rfl
     intro i _
@@ -252,7 +250,7 @@ private noncomputable def truncated_power_basis : Basis (Fin p) (F p) (A p) := b
       (LinearEquiv.refl (F p) (A p))
 
 private theorem algebra_dimension : Module.finrank (F p) (A p) = p := by
-  rw [Module.finrank_eq_card_basis ((truncated_power_basis (p := p)))]
+  rw [Module.finrank_eq_card_basis (truncated_power_basis (p := p))]
   simp
 
 private def direction (a : E p) : C p →* G p where
@@ -298,7 +296,7 @@ private theorem projective_reindex
         | add a b ha hb => simp [map_add, LinearMap.add_apply, ha, hb]
         | smul s a ha =>
           have hr : r (s • a) = s • r a :=
-            (MonoidAlgebra.domCongr (F p) (F p) e.symm).map_smul s a
+            (MonoidAlgebra.domCongr (F p) (F p) e.symm).toLinearEquiv.map_smul s a
           simp only [map_smul, LinearMap.smul_apply, ha, hr] }
   letI := hσ
   exact Module.Projective.of_equiv eV
@@ -378,10 +376,10 @@ private noncomputable def cyclic_coordinates
   σ.asModuleEquiv.symm.trans ((cyclic_basis_two σ hσ hd).equivFun.restrictScalars (F p))
 
 private noncomputable def constantMatrix : M₂ (A p) →ₐ[F p] M₂ (F p) :=
-  ((augmentation (p := p))).mapMatrix
+  (augmentation (p := p)).mapMatrix
 
 private noncomputable def coefficientMatrix : M₂ (A p) →ₗ[F p] M₂ (F p) :=
-  ((firstCoefficient (p := p))).mapMatrix
+  (firstCoefficient (p := p)).mapMatrix
 
 private noncomputable def matrixOperator (B : M₂ (A p)) :
     Module.End (F p) (Fin 2 → A p) := (Matrix.toLin' B).restrictScalars (F p)
@@ -409,11 +407,11 @@ private noncomputable def top : W p →ₗ[F p] (Fin 2 → A p) where
   map_add' x y := by ext i; simp [add_smul]
   map_smul' r x := by ext i; simp [smul_smul]
 
-private theorem bottom_surjective : Function.Surjective ((bottom (p := p))) := by
+private theorem bottom_surjective : Function.Surjective (bottom (p := p)) := by
   intro x
   exact ⟨fun i => algebraMap (F p) (A p) (x i), by ext i; simp [bottom]⟩
 
-private theorem top_injective : Function.Injective ((top (p := p))) := by
+private theorem top_injective : Function.Injective (top (p := p)) := by
   intro x y h
   ext i
   have he : (x i - y i) • ((nu (p := p)) : A p) = 0 := by
@@ -472,8 +470,8 @@ private theorem range_rank_equivalent
       exact ⟨e v, (he v).symm⟩
   rw [hr, LinearEquiv.finrank_map_eq]
 
--- Exact rank identity, not just an upper estimate. The (bottom (p := p)) map is onto
--- and the (top (p := p)) map is one-to-one, including when p=2.
+-- Exact rank identity: the bottom map is onto and the top map is injective,
+-- including when p=2.
 private theorem top_rank_identity (B : M₂ (A p)) :
     Module.finrank (F p) (LinearMap.range ((matrixOperator (p := p)) ((nu (p := p)) • B))) =
       Module.finrank (F p) (LinearMap.range (Matrix.toLin' ((constantMatrix (p := p)) B))) := by
@@ -907,7 +905,7 @@ private theorem reductionKernel_large (R : G p →* M₂ (F p)) :
     omega
 
 private noncomputable def reduced (B : G p →* M₂ (A p)) : G p →* M₂ (F p) :=
-  ((constantMatrix (p := p))).toMonoidHom.comp B
+  (constantMatrix (p := p)).toMonoidHom.comp B
 
 private noncomputable def leading (B : G p →* M₂ (A p)) :
     reductionKernel (reduced B) →ₗ[F p] M₂ (F p) :=
@@ -1069,7 +1067,7 @@ private def rankTwoInclusion : Multiplicative (F p × F p) →* G p where
   map_one' := rfl
   map_mul' g h := by apply Multiplicative.ext; simp
 
-private theorem rankTwoInclusion_injective : Function.Injective ((rankTwoInclusion (p := p))) := by
+private theorem rankTwoInclusion_injective : Function.Injective (rankTwoInclusion (p := p)) := by
   intro g h he
   apply Multiplicative.ext
   apply Prod.ext
@@ -1079,7 +1077,7 @@ private theorem rankTwoInclusion_injective : Function.Injective ((rankTwoInclusi
 /-- Every nonzero finite-dimensional F_p representation of the actual group
 C_p^3 whose restrictions to all actual cyclic subgroups are projective has
 dimension at least 3p. Includes p=2, independent universes, and nonfaithful
-representations. This is candidate source, with no compilation claim. -/
+representations. -/
 theorem three_mul_prime_le_finrank_of_cyclic_projective
     {V : Type uV} [AddCommGroup V] [Module (ZMod p) V]
     [FiniteDimensional (ZMod p) V] [Nontrivial V]
@@ -1092,7 +1090,7 @@ theorem three_mul_prime_le_finrank_of_cyclic_projective
     3 * p ≤ Module.finrank (ZMod p) V := by
   classical
   let rho₂ : Representation (F p) (Multiplicative (F p × F p)) V :=
-    rho.comp ((rankTwoInclusion (p := p)))
+    rho.comp (rankTwoInclusion (p := p))
   have hcyc₂ : ∀ H : Subgroup (Multiplicative (F p × F p)), IsCyclic H →
       Module.Projective (F p)[H] (Representation.asModule (rho₂.comp H.subtype)) :=
     pullback_cyclic_projective rho rankTwoInclusion rankTwoInclusion_injective hcyc
@@ -1128,6 +1126,3 @@ theorem three_mul_prime_le_finrank_of_cyclic_projective
   exact two_block_obstruction B s hs hBs hnorm
 
 end D5.S3.FiniteGroups.GroupAlgebra.PrimeFieldRankThreeCyclicDimension
-
-
-
