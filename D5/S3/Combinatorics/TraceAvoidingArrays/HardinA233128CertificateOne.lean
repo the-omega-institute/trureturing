@@ -19,6 +19,8 @@ GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.PairRow
 statement_id: sha256:e97b1a06b78d944d101465bdc94301416cfe964a1e9cbf900093e9cd04d04132
 GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.rowProper
 statement_id: sha256:be16a774dbabce7949eb6e2bfc0026252c129abfda8a7377875535297a177b53
+row_counts_10: proof_shape=bind-only; consumers=row_counts_one
+row_counts_12: proof_shape=bind-only; consumers=row_counts_one
 row_counts_one: proof_shape=bind-only; consumers=row_counts
 -/
 
@@ -83,15 +85,18 @@ section
 attribute [local irreducible] classCount
 
 set_option maxHeartbeats 4000000 in
-private theorem row_counts_one : ∀ s p, Valid s p → p 0 = 1 → ∀ k,
+-- The finite branching retains each legal label row explicitly.
+private theorem row_counts_10 : ∀ s p, Valid s p → p 0 = 1 → p 1 = 0 → ∀ k,
     classCount s p k = transfer (boundaryClass s p) k := by
   simp only [Fin.forall_fin_succ_pi, Fin.forall_fin_zero_pi]
-  rintro ⟨b1, b2⟩ p0 p1 p2 p3 p4 p5 p6 hp hfirst k
+  rintro ⟨b1, b2⟩ p0 p1 p2 p3 p4 p5 p6 hp hfirst hsecond k
   change p0 = (1 : Fin 3) at hfirst
+  change p1 = (0 : Fin 3) at hsecond
   subst p0
+  subst p1
   cases b1
   · cases hp.1
-  · cases b2 <;> fin_cases p1 <;> simp [Valid, rowProper, Fin.forall_fin_succ] at hp
+  · cases b2 <;> simp [Valid, rowProper, Fin.forall_fin_succ] at hp
     all_goals fin_cases p2 <;> simp at hp
     all_goals fin_cases p3 <;> simp at hp
     all_goals fin_cases p4 <;> simp at hp
@@ -130,6 +135,27 @@ private theorem row_counts_one : ∀ s p, Valid s p → p 0 = 1 → ∀ k,
       | exact completed_1021202 k
       | exact completed_1021210 k
       | exact completed_1021212 k
+      | exact unseen_1010101 k
+
+set_option maxHeartbeats 4000000 in
+-- The finite branching retains each legal label row explicitly.
+private theorem row_counts_12 : ∀ s p, Valid s p → p 0 = 1 → p 1 = 2 → ∀ k,
+    classCount s p k = transfer (boundaryClass s p) k := by
+  simp only [Fin.forall_fin_succ_pi, Fin.forall_fin_zero_pi]
+  rintro ⟨b1, b2⟩ p0 p1 p2 p3 p4 p5 p6 hp hfirst hsecond k
+  change p0 = (1 : Fin 3) at hfirst
+  change p1 = (2 : Fin 3) at hsecond
+  subst p0
+  subst p1
+  cases b1
+  · cases hp.1
+  · cases b2 <;> simp [Valid, rowProper, Fin.forall_fin_succ] at hp
+    all_goals fin_cases p2 <;> simp at hp
+    all_goals fin_cases p3 <;> simp at hp
+    all_goals fin_cases p4 <;> simp at hp
+    all_goals fin_cases p5 <;> simp at hp
+    all_goals fin_cases p6 <;> simp at hp
+    all_goals first
       | exact completed_1201010 k
       | exact completed_1201012 k
       | exact completed_1201020 k
@@ -162,7 +188,17 @@ private theorem row_counts_one : ∀ s p, Valid s p → p 0 = 1 → ∀ k,
       | exact completed_1212102 k
       | exact completed_1212120 k
       | exact completed_1212121 k
-      | exact unseen_1010101 k
+
+private theorem row_counts_one (s : HardinA233175PairStrip.Seen)
+    (p : HardinA233255PairTransfer.PairRow) (hp : Valid s p) (hfirst : p 0 = 1)
+    (k : Fin 21) : classCount s p k = transfer (boundaryClass s p) k := by
+  have hne : p 0 ≠ p 1 := hp.2.1 0
+  have h : ∀ x : Fin 3, x = 1 ∨ x = 0 ∨ x = 2 := by decide +kernel
+  rcases h (p 1) with hbad | hb | hc
+  · exact (hne (hfirst.trans hbad.symm)).elim
+  · exact row_counts_10 s p hp hfirst hb k
+  · exact row_counts_12 s p hp hfirst hc k
+
 end
 
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233128SquareStrip

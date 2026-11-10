@@ -27,22 +27,22 @@ GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.rowProper
 statement_id: sha256:be16a774dbabce7949eb6e2bfc0026252c129abfda8a7377875535297a177b53
 GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255ShapeSymmetry.full_row
 statement_id: sha256:f81e65c6e42bf750ca73737a7ace4b7b696a7b7a57684908ba1ce134acfcf88c
-completed_2010101: proof_shape=bind-only; consumers=row_counts_two
-completed_2010102: proof_shape=bind-only; consumers=row_counts_two
-completed_2010120: proof_shape=bind-only; consumers=row_counts_two
-completed_2010121: proof_shape=bind-only; consumers=row_counts_two
-completed_2010201: proof_shape=bind-only; consumers=row_counts_two
-completed_2010202: proof_shape=bind-only; consumers=row_counts_two
-completed_2010210: proof_shape=bind-only; consumers=row_counts_two
-completed_2010212: proof_shape=bind-only; consumers=row_counts_two
-completed_2012010: proof_shape=bind-only; consumers=row_counts_two
-completed_2012012: proof_shape=bind-only; consumers=row_counts_two
-completed_2012020: proof_shape=bind-only; consumers=row_counts_two
-completed_2012021: proof_shape=bind-only; consumers=row_counts_two
-completed_2012101: proof_shape=bind-only; consumers=row_counts_two
-completed_2012102: proof_shape=bind-only; consumers=row_counts_two
-completed_2012120: proof_shape=bind-only; consumers=row_counts_two
-completed_2012121: proof_shape=bind-only; consumers=row_counts_two
+completed_2010101: proof_shape=bind-only; consumers=row_counts_20
+completed_2010102: proof_shape=bind-only; consumers=row_counts_20
+completed_2010120: proof_shape=bind-only; consumers=row_counts_20
+completed_2010121: proof_shape=bind-only; consumers=row_counts_20
+completed_2010201: proof_shape=bind-only; consumers=row_counts_20
+completed_2010202: proof_shape=bind-only; consumers=row_counts_20
+completed_2010210: proof_shape=bind-only; consumers=row_counts_20
+completed_2010212: proof_shape=bind-only; consumers=row_counts_20
+completed_2012010: proof_shape=bind-only; consumers=row_counts_20
+completed_2012012: proof_shape=bind-only; consumers=row_counts_20
+completed_2012020: proof_shape=bind-only; consumers=row_counts_20
+completed_2012021: proof_shape=bind-only; consumers=row_counts_20
+completed_2012101: proof_shape=bind-only; consumers=row_counts_20
+completed_2012102: proof_shape=bind-only; consumers=row_counts_20
+completed_2012120: proof_shape=bind-only; consumers=row_counts_20
+completed_2012121: proof_shape=bind-only; consumers=row_counts_20
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
