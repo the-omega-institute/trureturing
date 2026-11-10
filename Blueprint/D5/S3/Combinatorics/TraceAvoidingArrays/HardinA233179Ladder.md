@@ -104,7 +104,9 @@ Each column contributes six free side bits. Scaling the pair-pattern relation mu
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233179Ladder.finite_certificate`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233179Ladder.normal`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233179Ladder.result`
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical](HardinA233177Canonical.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Ladder](HardinA233177Ladder.md)
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177PairTransfer](HardinA233177PairTransfer.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233179PairTransfer](HardinA233179PairTransfer.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip](HardinA233251TriangleStrip.md)
 - Dependency: [D5/S3/Observer/Separation/BooleanRankThreeK4](../../Observer/Separation/BooleanRankThreeK4.md)

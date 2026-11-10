@@ -46,7 +46,9 @@ result: proof_shape=bind-only; consumers=terminal result
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
 import D5.S3.Observer.Separation.BooleanRankThreeK4
 import Mathlib.Tactic
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233179PairTransfer
 
 /-! Canonical pair patterns reduce the literal normalization to independent side bits. -/
