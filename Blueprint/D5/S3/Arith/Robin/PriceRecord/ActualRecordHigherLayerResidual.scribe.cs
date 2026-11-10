@@ -22,7 +22,7 @@ internal sealed class ActualRecordHigherLayerResidualDocument : IScribeDocumentD
                 + "Here referencePrice(X)=1/(X log(X)) defines the pressure clock. The original arbitrary mu "
                 + "is never identified with that price. No defect bound, RH, prime short-window premise, "
                 + "support cap, or exponent cap is an assumption.")),
-            H("Exact finite objects and completeness"),
+            Paragraph(Text("Exact finite objects and completeness")),
             Paragraph(Text(
                 "Use the library's actualPressure=sup of goldenResourceObjective(referencePrice(X),n) "
                 + "over all n>=1, and its actualDefect=that pressure minus the objective of the same original "
@@ -144,7 +144,7 @@ internal sealed class ActualRecordHigherLayerResidualDocument : IScribeDocumentD
                         + "correction is hidden. Finally the literal finite decomposition rewrites "
                         + "C2 as actualDefect-C1-D3."))),
                 DescribeRole.Theorem),
-            H("Ordinary full uniform deduction and the exact missing Lean assembly"),
+            Paragraph(Text("Ordinary full uniform deduction and the exact missing Lean assembly")),
             Paragraph(Text(
                 "Choose epsilon>0 and delta=min(1,sqrt(a*epsilon/36)) FIRST. Then "
                 + "9delta^2/a<=epsilon/4. Consume the first conjunct of the FULL proposed "
@@ -192,7 +192,7 @@ internal sealed class ActualRecordHigherLayerResidualDocument : IScribeDocumentD
                 + "does not have a complete Lean proof in this module. Four-slot source-bound audits are "
                 + "separate obligations: a source-law bridge alone does not establish whole-family "
                 + "variation, sensitivity, actual observational dependence or a current producer binding.")),
-            H("5040 application and first-layer boundary"),
+            Paragraph(Text("5040 application and first-layer boundary")),
             Paragraph(Text(
                 "Once the record theorem is actually proved, its 5040 application uses only the existing "
                 + "uniform_actual_least_crossing_price_record and uniform_actual_height_escape, with "
