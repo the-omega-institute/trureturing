@@ -130,7 +130,7 @@ private theorem channel_neg {d m N : ℕ} (A : Circuit d m N)
   change (((-1 : ℂ) ^ N) • (run A U * initialization d m)) * X *
     (((-1 : ℂ) ^ N) • (run A U * initialization d m))ᴴ = _
   simp only [Matrix.conjTranspose_smul, Matrix.smul_mul, Matrix.mul_smul, smul_smul,
-    map_pow, map_neg, map_one, ← pow_add, ← two_mul, pow_mul]
+    ]
   norm_num
   simp [← mul_pow]
 
@@ -148,13 +148,13 @@ private theorem logarithm_admissible (swapped : Bool) :
   constructor
   · apply Matrix.isHermitian_diagonal_iff.mpr
     intro j
-    simp [logarithm, isSelfAdjoint_iff]
+    simp [isSelfAdjoint_iff]
   · intro x hx
     rw [← spectrum.algebraMap_mem_iff ℂ, logarithm, spectrum_diagonal] at hx
     obtain ⟨j, hj⟩ := hx
     have hr := congrArg Complex.re hj
     simp only [Complex.ofReal_re, Algebra.algebraMap_eq_smul_one, Complex.real_smul,
-      Complex.one_re, mul_one] at hr
+      mul_one] at hr
     have hp := Real.pi_gt_three
     split_ifs at hr <;> constructor <;> linarith
 
@@ -169,7 +169,7 @@ private theorem logarithm_exp (swapped : Bool) :
   rw [logarithm, ← Matrix.diagonal_smul, Matrix.exp_diagonal]
   ext i j
   fin_cases i <;> fin_cases j <;> cases swapped <;>
-    simp [oracle, Matrix.diagonal_apply, Pi.smul_apply, smul_eq_mul,
+    simp [oracle, Pi.smul_apply, smul_eq_mul,
       ← Complex.exp_eq_exp_ℂ, mul_comm Complex.I, Complex.exp_pi_div_two_mul_I, h3]
 
 
@@ -252,8 +252,11 @@ private theorem half_exp (swapped : Bool) :
     simp only [Bool.not_false, Bool.not_true, Bool.false_eq_true, not_false_eq_true,
       Bool.true_eq_false, Matrix.diagonal_apply, halfDiagonal, Pi.smul_apply,
       smul_eq_mul, Function.comp_apply] <;>
-    norm_num only [hsmall, hlarge, one_mul, mul_one, mul_zero, if_true, if_false] <;>
+    norm_num only [hsmall, hlarge, one_mul, mul_one, mul_zero, ite_true, ite_false] <;>
     simp [mul_comm]
+  all_goals first
+    | (convert hsmall using 1 <;> congr 1 <;> push_cast <;> ring)
+    | (convert hlarge using 1 <;> congr 1 <;> push_cast <;> ring)
 
 private theorem common_phase_unit : commonPhase * star commonPhase = 1 := by
   change Complex.exp _ * (starRingEnd ℂ) (Complex.exp _) = 1
@@ -275,7 +278,7 @@ private theorem half_channel (m : ℕ) (swapped : Bool) :
     (initialization 2 m * halfDiagonal swapped) * X *
       (initialization 2 m * halfDiagonal swapped)ᴴ
   simp only [Matrix.conjTranspose_smul, Matrix.smul_mul, Matrix.mul_smul, smul_smul]
-  rw [common_phase_unit, one_smul]
+  rw [mul_comm (star commonPhase), common_phase_unit, one_smul]
 
 set_option maxHeartbeats 1600000 in
 private theorem amplified_target (m : ℕ) (swapped : Bool) :
@@ -290,6 +293,52 @@ private theorem amplified_target (m : ℕ) (swapped : Bool) :
       outputDensity, outputVector, Matrix.mul_apply, Fin.sum_univ_two,
       Matrix.vecMulVec, Pi.star_apply, Matrix.conjTranspose_apply,
       Matrix.single_apply] <;>
-    split_ifs <;> simp_all <;> ring
+    (try split_ifs) <;> (try simp_all) <;> ring
+
+
+private theorem amplified_sub {m : ℕ}
+    (φ ψ : MatrixMap (Fin 2) (Fin (m + 1) × Fin 2) ℂ) :
+    kron (φ - ψ) (LinearMap.id : MatrixMap (Fin 2) (Fin 2) ℂ) inputDensity =
+    kron φ (LinearMap.id : MatrixMap (Fin 2) (Fin 2) ℂ) inputDensity -
+      kron ψ (LinearMap.id : MatrixMap (Fin 2) (Fin 2) ℂ) inputDensity := by
+  ext p q
+  simp only [kron_def, LinearMap.sub_apply, Matrix.sub_apply, sub_mul,
+    Finset.sum_sub_distrib]
+
+private theorem no_success {m N : ℕ} (A : Circuit 2 m N) :
+    ¬ Successful A (1 / 2) (1 / 2) (1 / 4) := by
+  intro hs
+  have h0 := hs oracle (logarithm false)
+    (by simpa using (logarithm_exp false).symm)
+    (logarithm_admissible false).1 (logarithm_admissible false).2
+  have h1 := hs (-oracle) (logarithm true)
+    (by simpa using (logarithm_exp true).symm)
+    (logarithm_admissible true).1 (logarithm_admissible true).2
+  rw [channel_neg] at h1
+  have bound (φ : MatrixMap (Fin 2) (Fin (m + 1) × Fin 2) ℂ)
+      (hφ : diamondNorm φ ≤ ENNReal.ofReal (1 / 4 : ℝ)) :
+      traceNorm (kron φ (LinearMap.id : MatrixMap (Fin 2) (Fin 2) ℂ) inputDensity) ≤ 1 / 4 := by
+    apply (ENNReal.ofReal_le_ofReal_iff (by norm_num : (0 : ℝ) ≤ 1 / 4)).mp
+    exact (le_sSup ⟨inputDensity, input_density.1, input_density.2, rfl⟩).trans hφ
+  have b0 := bound _ h0
+  have b1 := bound _ h1
+  rw [amplified_sub, amplified_target] at b0 b1
+  let X := kron (conj (run A oracle * initialization 2 m))
+    (LinearMap.id : MatrixMap (Fin 2) (Fin 2) ℂ) inputDensity
+  change traceNorm (X - outputDensity m false) ≤ 1 / 4 at b0
+  change traceNorm (X - outputDensity m true) ≤ 1 / 4 at b1
+  have he : -(X - outputDensity m false) + (X - outputDensity m true) =
+      outputDensity m false - outputDensity m true := by abel
+  have ht := traceNorm_add_le (-(X - outputDensity m false)) (X - outputDensity m true)
+  rw [he, output_separation, traceNorm_neg] at ht
+  linarith
+
+/-- The prescribed-branch matching upper bound fails for ordinary queries. -/
+theorem result : ¬ claim := by
+  rintro ⟨C, hC, h⟩
+  obtain ⟨m, N, A, _, hs⟩ := h (1 / 2) (1 / 2) (1 / 4)
+    (by norm_num) (by norm_num) (by norm_num) (by norm_num)
+    (by norm_num) (by norm_num) 2 (by norm_num)
+  exact no_success A hs
 
 end Trureturing.OpenProblems.FractionalEvolutionPhase
