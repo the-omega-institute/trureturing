@@ -32,7 +32,7 @@ def bonds (c d : Row) : Prop :=
 abbrev Legal {h : ℕ} (A : Fin h × Fin 7 → Fin 6) : Prop :=
   widthLegal rowLegal bonds A
 
-private instance decidableRowLegal (c : Row) : Decidable (rowLegal c) :=
+instance decidableRowLegal (c : Row) : Decidable (rowLegal c) :=
   inferInstanceAs (Decidable (∀ _, _ ∧ _))
 private instance decidableBonds (c d : Row) : Decidable (bonds c d) :=
   inferInstanceAs (Decidable (∀ _, _ ∧ _))
