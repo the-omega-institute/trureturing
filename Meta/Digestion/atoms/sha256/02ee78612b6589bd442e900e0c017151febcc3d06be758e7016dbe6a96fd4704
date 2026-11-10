@@ -1,0 +1,17 @@
+### 21.4. Consequence for the paired-calibration certificates
+
+The two-flow residual equations in Sections 16--17 are necessary for complete-law compatibility and for the conditional full-vector separator. They do not identify the actual three-stage law $\Xi$. The explicit same-flow family above shows why: equal edge flows can support different successor couplings, and those couplings can have different exact memory minima.
+Thus the next FIB refinement is not another scalar defect. It is a higher-order relation layer:
+
+$$
+\boxed{
+\text{two directional residual flows}
+\;+
+\text{one compatible successor coupling }\Xi
+\;+
+\text{legal update and cost data}.
+}
+$$
+
+Only after this layer is fixed does a finite controller search have the right object to minimize. The scalar return-weight dispersion $D$, the four-moment defect $S$ and the mismatch energies $M_A,M_B$ remain useful necessary coordinates, but none is a substitute for $\Xi$ or for the controller's successor map.
+
