@@ -28,8 +28,8 @@ The helpers are consumed by the single public equivalence.  The fixed free
 cover in `projective_of_free_section` is only a way to use the universe-polymorphic
 projectivity API; it imposes no smallness condition on the original module.
 
-Source-only candidate: this file has not been elaborated or kernel checked.
-The corresponding Scribe explains the coefficient-ring application and its
+The native proof uses the lifting and contraction constructions above.  The
+corresponding Scribe explains the coefficient-ring application and its
 prime-field boundary; no separate application theorem is retained.
 -/
 
@@ -113,10 +113,6 @@ tensor factor.  In particular, its value on `r ⊗ₜ v` is `r ⊗ₜ ρ g v`. -
 def scalarExtension (R : Type uR) [CommRing R] [Algebra k R]
     (ρ : Representation k G V) : Representation R G (R ⊗[k] V) :=
   (Module.End.baseChangeHom k R V).toMonoidHom.comp ρ
-
-@[simp] private theorem scalarExtension_tmul (ρ : Representation k G V)
-    (g : G) (r : R) (v : V) :
-    scalarExtension R ρ g (r ⊗ₜ[k] v) = r ⊗ₜ[k] ρ g v := rfl
 
 -- Coefficient restriction, used only as the right adjoint to scalar extension.
 private def restrictRepresentation {W : Type uW} [AddCommGroup W]
