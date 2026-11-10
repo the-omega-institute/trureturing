@@ -11,6 +11,8 @@ import D5.S3.Geometry.FiniteCyclicNoncoverGreedyBranches
 The index list below is a literal drop/take of the original finRange; neither
 ambient vertices nor native faces are added. -/
 noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 open Finset
 namespace D5.S3.Geometry.FiniteCyclicNoncoverIntervalPaths
 open FiniteCoordinateGreedyMatching FiniteGreedyFamilyTransport
@@ -58,7 +60,7 @@ private theorem segment_append {T : Type*} (f : Nat → T) (lo a b : Nat) :
   induction a generalizing lo with
   | zero => simp [segment]
   | succ a ih => simpa [segment, Nat.add_assoc, Nat.add_left_comm, Nat.add_comm] using
-      congrArg (List.cons (f lo)) (ih (lo+1))
+      (congrArg (List.cons (f lo)) (ih (lo+1)))
 
 private theorem segment_drop {T : Type*} (f : Nat → T) (lo m k : Nat) :
     (segment f lo m).drop k = segment f (lo+k) (m-k) := by
@@ -68,7 +70,7 @@ private theorem segment_drop {T : Type*} (f : Nat → T) (lo m k : Nat) :
     cases m with
     | zero => simp [segment]
     | succ m => simpa [segment, Nat.add_assoc, Nat.add_left_comm, Nat.add_comm] using
-        ih (lo+1) m
+        (ih (lo+1) m)
 
 private theorem segment_take {T : Type*} (f : Nat → T) (lo m k : Nat) (hk : k ≤ m) :
     (segment f lo m).take k = segment f lo k := by
@@ -101,9 +103,12 @@ private theorem full_interval {n : Nat} (hn : 0 < n) :
   · simp [intervalList, segment_length]
   · intro i hi hj
     have hi' : i < n := by simpa using hi
-    simp only [List.getElem_finRange, intervalList, segment_get]
+    rw [List.getElem_finRange]
+    change (⟨i, hi'⟩ : Fin n) = (segment (index hn) 0 n)[i]
+    rw [segment_get _ _ _ _ hi']
     apply Fin.ext
-    simp [index, Nat.mod_eq_of_lt hi']
+    change i = (0 + i) % n
+    simpa only [Nat.zero_add] using (Nat.mod_eq_of_lt hi').symm
 
 private theorem interval_mem {n : Nat} (hn : 0 < n) (lo m : Nat) (h : lo+m ≤ n)
     (i : Fin n) : i ∈ intervalList hn lo m ↔ lo ≤ i.val ∧ i.val < lo+m := by
@@ -145,8 +150,10 @@ theorem intervalList_source {n : Nat} (hn : 0 < n) (lo m : Nat) (h : lo+m ≤ n)
     · simp [interval_length]
     · intro j hj hk
       have hj' : j < m := by simpa [interval_length] using hj
-      simp only [intervalList, segment_get, List.getElem_map, List.getElem_finRange]
+      change (segment (index hn) lo m)[j] = ((List.finRange m).map (intervalEmbedding lo m h))[j]
+      rw [segment_get _ _ _ _ hj', List.getElem_map, List.getElem_finRange]
       apply Fin.ext
+      change (lo+j) % n = lo+j
       exact Nat.mod_eq_of_lt (by omega)
 
 private theorem independent_segment {T : Type*} [Fintype T] [DecidableEq T]
@@ -167,7 +174,7 @@ private theorem independent_segment {T : Type*} [Fintype T] [DecidableEq T]
         cases j with
         | zero => simpa using h0
         | succ j => simpa [Nat.add_assoc, Nat.add_left_comm, Nat.add_comm] using
-            ht j (by omega)
+            (ht j (by omega))
       · intro h
         refine ⟨by simpa using h 0 (by omega), ?_⟩
         intro j hj
@@ -218,14 +225,16 @@ private theorem chosen_segment {T : Type*} [Fintype T] [DecidableEq T]
     | zero => simp [segment, pathChosen]
     | succ m =>
       cases m with
-      | zero => simp [segment, pathChosen]; omega
+      | zero => simp [segment, pathChosen]
       | succ m =>
         cases m with
         | zero =>
           simp only [segment, pathChosen, Finset.mem_singleton]
           constructor
           · intro he; exact ⟨0, by omega, by simpa using he⟩
-          · rintro ⟨j, hj, he⟩; have : j = 0 := by omega; simpa [this] using he
+          · rintro ⟨j, hj, he⟩
+            have hj0 : j = 0 := by omega
+            simpa [hj0] using he
         | succ m =>
           change x ∈ insert (f (lo+1)) (pathChosen (segment f (lo+3) m)) ↔ _
           rw [Finset.mem_insert, ih m (by omega)]
@@ -399,6 +408,7 @@ private theorem suffix_decomposition {n : Nat} (hn : 0 < n) (k lo m : Nat)
   rw [he, segment_append]
   have he' : k+(lo-k) = lo := by omega
   rw [he', segment_append]
+  exact (List.append_assoc _ _ _).symm
 
 /-- The entire ACTUAL original coordinate suffix, including every discarded
 fixed round, is conjugate to the ordered augmented interval run. -/
@@ -440,7 +450,7 @@ theorem survivors_pinnedImage {n : Nat} (hn : 0 < n) (s : Fin n ↪ V)
     rcases hout i (Or.inr hh.1) with hp | hp
     · exact Or.inl (fun a ha => hp a (survivors_subset _ _ ha))
     · exact Or.inr (fun a ha => hp a (survivors_subset _ _ ha))
-  rw [hcomp, survivors_complement, suffix_decomposition hn k lo m hk h,
+  rw [hcomp, survivors_complement, suffix_decomposition hn k lo m hk h, List.append_assoc,
     survivors_append, hpref, survivors_append, hsuff]
   have hadj : survivors F (intervalList hn lo m) =
       (survivors (paths (intervalList hn lo m)) (intervalList hn lo m)).image (fun a => S ∪ a) := by

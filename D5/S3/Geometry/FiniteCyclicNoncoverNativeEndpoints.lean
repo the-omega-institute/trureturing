@@ -11,6 +11,8 @@ import D5.S3.Geometry.FiniteCyclicNoncoverNative
 module from C01, never assumed. Each conjunct exposes an actual native endpoint
 on the same original V. Core freeness is asserted only in standalone C. -/
 noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 open Set Finset
 open scoped unitInterval
 namespace D5.S3.Geometry.FiniteCyclicNoncoverNativeEndpoints
@@ -19,6 +21,7 @@ open FiniteMatchingCoreClosure
 open FiniteAcyclicFaceMatching FiniteRelativeSimplicialCollapse
 open FiniteElementaryCollapse FiniteSimplicialJoin FiniteConeCollapse
 open FiniteCoordinateTruncation FiniteComponentClosure
+open FiniteConeUnionWedge (realizationInclusion)
 open FiniteVertexDominationCollapse (faceSet mem_faceSet)
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -102,8 +105,11 @@ theorem native_zero (q : Nat) (hq : 0 < q) (s : Fin (3*q) ↪ V) :
   · exact ⟨A.main_frames_count ac, A.core_frames_count ac⟩
   · exact ⟨A.main_count ac, A.core_count ac⟩
   · constructor
-    · simpa only [hc] using A.closure_face_count
-    · simpa only [hc] using A.total_count ac
+    · change (faceSet A.X).card = (faceSet A.C).card + 2
+      simpa only [hc] using A.closure_face_count
+    · change (faceSet (noncover (show 0 < 3*q by omega) s)).card =
+        1 + 2 + 2 * ((A.mainPairs ac).length + (A.corePairs ac).length)
+      simpa only [hc] using A.total_count ac
   · intro t x hx v
     exact congrArg (fun y => y.val v) (A.main_fixed ac t x hx)
   · intro t x hx v
@@ -206,8 +212,11 @@ theorem native_one (q : Nat) (hq : 0 < q) (s : Fin (3*q+1) ↪ V) :
   · exact ⟨A.main_frames_count ac, A.core_frames_count ac⟩
   · exact ⟨A.main_count ac, A.core_count ac⟩
   · constructor
-    · simpa only [hc] using A.closure_face_count
-    · simpa only [hc] using A.total_count ac
+    · change (faceSet A.X).card = (faceSet A.C).card + 1
+      simpa only [hc] using A.closure_face_count
+    · change (faceSet (noncover (show 0 < 3*q+1 by omega) s)).card =
+        1 + 1 + 2 * ((A.mainPairs ac).length + (A.corePairs ac).length)
+      simpa only [hc] using A.total_count ac
   · intro t x hx v
     exact congrArg (fun y => y.val v) (A.main_fixed ac t x hx)
   · intro t x hx v
@@ -310,8 +319,11 @@ theorem native_two (q : Nat) (hq : 0 < q) (s : Fin (3*q+2) ↪ V) :
   · exact ⟨A.main_frames_count ac, A.core_frames_count ac⟩
   · exact ⟨A.main_count ac, A.core_count ac⟩
   · constructor
-    · simpa only [hc] using A.closure_face_count
-    · simpa only [hc] using A.total_count ac
+    · change (faceSet A.X).card = (faceSet A.C).card + 1
+      simpa only [hc] using A.closure_face_count
+    · change (faceSet (noncover (show 0 < 3*q+2 by omega) s)).card =
+        1 + 1 + 2 * ((A.mainPairs ac).length + (A.corePairs ac).length)
+      simpa only [hc] using A.total_count ac
   · intro t x hx v
     exact congrArg (fun y => y.val v) (A.main_fixed ac t x hx)
   · intro t x hx v

@@ -11,6 +11,8 @@ import D5.S3.Geometry.FiniteCyclicNoncoverIntervalPaths
 The point is original s0. The independent families occur only inside an exact
 complement-image calculation; the endpoint is the original remainingFaces. -/
 noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 open Finset
 namespace D5.S3.Geometry.FiniteCyclicNoncoverUniversalSurvivors
 open FiniteCoordinateGreedyMatching FiniteGreedyFamilyTransport
@@ -56,32 +58,32 @@ private theorem branchA_image {n : Nat} (hn : 6 ≤ n) (s : Fin n ↪ V) :
       have hv := i.isLt
       by_cases hi0 : i.val = 0
       · have he : i = (⟨0, by omega⟩ : Fin n) := Fin.ext hi0
-        subst i
+        rw [he]
         simpa [point, pointIndex] using hp
       · by_cases hi1 : i.val = 1
         · have he : i = (⟨1, by omega⟩ : Fin n) := Fin.ext hi1
-          subst i
+          rw [he]
           simp [h1]
         · have he : i.val = 2 ∨ i.val = n-1 := by omega
           rcases he with he | he
           · have he' : i = (⟨2, by omega⟩ : Fin n) := Fin.ext he
-            subst i
+            rw [he']
             simp [h2]
           · have he' : i = (⟨n-1, by omega⟩ : Fin n) := Fin.ext he
-            subst i
+            rw [he']
             simp [hl, show n-1 ≠ 0 by omega, show n-1 ≠ 1 by omega]
     · intro i hi hib
       exact hI i hi (by omega)
   · rintro ⟨hs, hpins, hI⟩
-    have hp := (hpins ⟨0, by omega⟩ (Or.inl (by omega))).mpr (by simp [pinsA])
-    have h1 := (hpins ⟨1, by omega⟩ (Or.inl (by omega))).mpr (by simp [pinsA])
+    have hp := (hpins ⟨0, by omega⟩ (Or.inl (by dsimp only; omega))).mpr (by simp [pinsA])
+    have h1 := (hpins ⟨1, by omega⟩ (Or.inl (by dsimp only; omega))).mpr (by simp [pinsA])
     have h2 : s ⟨2, by omega⟩ ∈ a := by
       by_contra hh
-      have hm := (hpins ⟨2, by omega⟩ (Or.inl (by omega))).mp hh
+      have hm := (hpins ⟨2, by omega⟩ (Or.inl (by dsimp only; omega))).mp hh
       simpa [pinsA] using hm
     have hl : s ⟨n-1, by omega⟩ ∈ a := by
       by_contra hh
-      have hm := (hpins ⟨n-1, by omega⟩ (Or.inr (by omega))).mp hh
+      have hm := (hpins ⟨n-1, by omega⟩ (Or.inr (by dsimp only; omega))).mp hh
       simp only [pinsA, Finset.mem_insert, Finset.mem_singleton] at hm
       rcases hm with hm | hm <;> have hv := congrArg Fin.val hm <;> dsimp at hv <;> omega
     exact ⟨hs, hp, h1, h2, hl, fun i hi hib => hI i hi (by omega)⟩
@@ -99,15 +101,15 @@ private theorem branchB_image {n : Nat} (hn : 6 ≤ n) (s : Fin n ↪ V) :
       have hv := i.isLt
       by_cases hi0 : i.val = 0
       · have he : i = (⟨0, by omega⟩ : Fin n) := Fin.ext hi0
-        subst i
+        rw [he]
         simpa [pinsB, point, pointIndex] using hp
       · by_cases hi2 : i.val = 2
         · have he : i = (⟨2, by omega⟩ : Fin n) := Fin.ext hi2
-          subst i
+          rw [he]
           simp [pinsB, h2]
         · by_cases hil : i.val = n-1
           · have he : i = (⟨n-1, by omega⟩ : Fin n) := Fin.ext hil
-            subst i
+            rw [he]
             simp [pinsB, hl]
           · have he : i.val = 1 ∨ i.val = 3 ∨ i.val = n-2 := by omega
             have hia : s i ∈ a := by
@@ -126,9 +128,9 @@ private theorem branchB_image {n : Nat} (hn : 6 ≤ n) (s : Fin n ↪ V) :
     · intro i hi hib
       exact hI i hi (by omega)
   · rintro ⟨hs, hpins, hI⟩
-    have hp := (hpins ⟨0, by omega⟩ (Or.inl (by omega))).mpr (by simp [pinsB])
-    have hl := (hpins ⟨n-1, by omega⟩ (Or.inr (by omega))).mpr (by simp [pinsB])
-    have h2 := (hpins ⟨2, by omega⟩ (Or.inl (by omega))).mpr (by simp [pinsB])
+    have hp := (hpins ⟨0, by omega⟩ (Or.inl (by dsimp only; omega))).mpr (by simp [pinsB])
+    have hl := (hpins ⟨n-1, by omega⟩ (Or.inr (by dsimp only; omega))).mpr (by simp [pinsB])
+    have h2 := (hpins ⟨2, by omega⟩ (Or.inl (by dsimp only; omega))).mpr (by simp [pinsB])
     have hpos (i : Fin n) (hi : i.val = 1 ∨ i.val = 3 ∨ i.val = n-2) : s i ∈ a := by
       have hout : i.val < 4 ∨ 4+(n-6) ≤ i.val := by omega
       by_contra hh
@@ -180,8 +182,8 @@ private theorem read_A_zero (q : Nat) (hq : 2 ≤ q) (s : Fin (3*q) ↪ V) :
   rw [complement_mem, Finset.mem_union, mem_pathChosen_interval (by omega) 3 (3*q-4) (by omega),
     criticalB_formula]
   simp only [pinsA, Finset.mem_insert, Finset.mem_singleton]
-  have he0 : i = (⟨0, by omega⟩ : Fin (3*q)) ↔ i.val = 0 := ⟨fun h => congrArg Fin.val h, Fin.ext⟩
-  have he1 : i = (⟨1, by omega⟩ : Fin (3*q)) ↔ i.val = 1 := ⟨fun h => congrArg Fin.val h, Fin.ext⟩
+  have he0 : i = (⟨0, by omega⟩ : Fin (3*q)) ↔ i.val = 0 := ⟨fun h => congrArg Fin.val h, fun h => Fin.ext h⟩
+  have he1 : i = (⟨1, by omega⟩ : Fin (3*q)) ↔ i.val = 1 := ⟨fun h => congrArg Fin.val h, fun h => Fin.ext h⟩
   rw [he0, he1]
   have hi := i.isLt
   constructor
@@ -201,10 +203,10 @@ private theorem read_B_zero (q : Nat) (hq : 2 ≤ q) (s : Fin (3*q) ↪ V) :
   rw [complement_mem, Finset.mem_union, mem_pathChosen_interval (by omega) 4 (3*q-6) (by omega),
     criticalA_formula]
   simp only [pinsB, Finset.mem_insert, Finset.mem_singleton]
-  have he0 : i = (⟨0, by omega⟩ : Fin (3*q)) ↔ i.val = 0 := ⟨fun h => congrArg Fin.val h, Fin.ext⟩
-  have he2 : i = (⟨2, by omega⟩ : Fin (3*q)) ↔ i.val = 2 := ⟨fun h => congrArg Fin.val h, Fin.ext⟩
+  have he0 : i = (⟨0, by omega⟩ : Fin (3*q)) ↔ i.val = 0 := ⟨fun h => congrArg Fin.val h, fun h => Fin.ext h⟩
+  have he2 : i = (⟨2, by omega⟩ : Fin (3*q)) ↔ i.val = 2 := ⟨fun h => congrArg Fin.val h, fun h => Fin.ext h⟩
   have hel : i = (⟨3*q-1, by omega⟩ : Fin (3*q)) ↔ i.val = 3*q-1 :=
-    ⟨fun h => congrArg Fin.val h, Fin.ext⟩
+    ⟨fun h => congrArg Fin.val h, fun h => Fin.ext h⟩
   rw [he0, he2, hel]
   have hi := i.isLt
   constructor
@@ -224,8 +226,8 @@ private theorem read_A_one (q : Nat) (hq : 2 ≤ q) (s : Fin (3*q+1) ↪ V) :
   rw [complement_mem, Finset.mem_union, mem_pathChosen_interval (by omega) 3 (3*q+1-4) (by omega),
     criticalOne_formula]
   simp only [pinsA, Finset.mem_insert, Finset.mem_singleton]
-  have he0 : i = (⟨0, by omega⟩ : Fin (3*q+1)) ↔ i.val = 0 := ⟨fun h => congrArg Fin.val h, Fin.ext⟩
-  have he1 : i = (⟨1, by omega⟩ : Fin (3*q+1)) ↔ i.val = 1 := ⟨fun h => congrArg Fin.val h, Fin.ext⟩
+  have he0 : i = (⟨0, by omega⟩ : Fin (3*q+1)) ↔ i.val = 0 := ⟨fun h => congrArg Fin.val h, fun h => Fin.ext h⟩
+  have he1 : i = (⟨1, by omega⟩ : Fin (3*q+1)) ↔ i.val = 1 := ⟨fun h => congrArg Fin.val h, fun h => Fin.ext h⟩
   rw [he0, he1]
   have hi := i.isLt
   constructor
@@ -243,10 +245,10 @@ private theorem read_B_two (q : Nat) (hq : 2 ≤ q) (s : Fin (3*q+2) ↪ V) :
   rw [complement_mem, Finset.mem_union, mem_pathChosen_interval (by omega) 4 (3*q+2-6) (by omega),
     criticalTwo_formula]
   simp only [pinsB, Finset.mem_insert, Finset.mem_singleton]
-  have he0 : i = (⟨0, by omega⟩ : Fin (3*q+2)) ↔ i.val = 0 := ⟨fun h => congrArg Fin.val h, Fin.ext⟩
-  have he2 : i = (⟨2, by omega⟩ : Fin (3*q+2)) ↔ i.val = 2 := ⟨fun h => congrArg Fin.val h, Fin.ext⟩
+  have he0 : i = (⟨0, by omega⟩ : Fin (3*q+2)) ↔ i.val = 0 := ⟨fun h => congrArg Fin.val h, fun h => Fin.ext h⟩
+  have he2 : i = (⟨2, by omega⟩ : Fin (3*q+2)) ↔ i.val = 2 := ⟨fun h => congrArg Fin.val h, fun h => Fin.ext h⟩
   have hel : i = (⟨3*q+2-1, by omega⟩ : Fin (3*q+2)) ↔ i.val = 3*q+2-1 :=
-    ⟨fun h => congrArg Fin.val h, Fin.ext⟩
+    ⟨fun h => congrArg Fin.val h, fun h => Fin.ext h⟩
   rw [he0, he2, hel]
   have hi := i.isLt
   constructor
@@ -321,8 +323,8 @@ private theorem split_original {n : Nat} (hn : 6 ≤ n) (s : Fin n ↪ V) :
   let vs := ((List.finRange n).drop 2).map s
   unfold remainingFaces
   rw [original_order hn s]
-  change survivors (remaining (remaining _ (point (by omega) s)) (s ⟨1, by omega⟩)) vs = _
-  rw [second_original hn s]
+  rw [FiniteCoordinateGreedyMatching.survivors,
+    FiniteCoordinateGreedyMatching.survivors, second_original hn s]
   have hp0 : point (show 3 ≤ n by omega) s ∉ vs := suffix_avoids hn s _ (by dsimp [pointIndex]; omega)
   have h1 : s ⟨1, by omega⟩ ∉ vs := suffix_avoids hn s _ (by dsimp; omega)
   have hab : survivors (branchA hn s ∪ branchB hn s) vs =
