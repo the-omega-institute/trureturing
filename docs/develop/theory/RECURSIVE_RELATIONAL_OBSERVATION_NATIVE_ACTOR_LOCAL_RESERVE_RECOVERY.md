@@ -3346,6 +3346,21 @@ a later row's encoded $h$ field. The GP1 table is independent of this
 word's length or value. No future operand, operand count, depth bound,
 encoded operand or common future reserve is initialized.
 
+The public GP block has the seven-Frame format
+$(\mathtt{GP-PUB1},U(h_{\rm ref}),\mathtt{GP1},\operatorname{enc}(V_{\rm GP}),
+\operatorname{enc}(C_{\rm Stop}),\theta_{\rm Stop},U(1))$, with exact
+exhaustion. Here $C_{\rm Stop}$ and $\theta_{\rm Stop}$ are the actual
+original finite Turing table and initial configuration of Definition
+9.1. The GP code encoding is the native row encoding, with no future
+data field. The producer retains this initialized immutable public
+block on 21 with its actual native descriptor on 17. Its reference is
+bound to the actual public initialization copied with the boot/prior
+material. CAP6.3's ordinary initial dependency delivery supplies its
+actor28 block and actual origin descriptor29 before manifest import.
+The separate actual boot binding supplies $\xi$, initial source
+interval and prior references after their construction; none of those
+future allocation addresses is guessed in the public ingress word.
+
 An eligible preparation is a finite beta-derived preparation of §§21–22,
 before outer00, attaining the following pair of designated alternatives
 from its first beta Ready:
@@ -3553,8 +3568,9 @@ I=\operatorname{Tuple}\bigl(
 \tag{GP.2}
 $$
 
-`Pub` contains the actual public initialization, including the separately
-parsed $U(h_{\rm ref})$, prior and boot/controller bindings. `Seed`
+`Pub` contains the actual seven-field `GP-PUB1` block and the actual
+public initialization, prior and boot/controller bindings; its
+$U(h_{\rm ref})$ is parsed separately from row guards. `Seed`
 contains the acquired syntax and its original/local references.
 `Origins` enumerates the local references used for the row/dependency
 projection. Tuples, lists and references use §3's existing Frame/
@@ -3711,13 +3727,17 @@ retains $P$, $c$ and the bindings needed after return.
 
 The word controller writes and seals this packet on 27 by the measured
 native export of Definition 26.2, with its actual CAP descriptor on 29.
-It also exports the new `GP-S1` pending state to 25 before releasing
-the pool. The packet is copied through route49 to a fresh producer
+It also exports the new `GP-S1` pending state to 25 before starting
+the channel, whose pool initially remains at sender $A$.
+The packet is copied through route49 to a fresh producer
 block on 21, with native descriptors on 17, by CAP6.3's complete
 two-stage channel and the actual twelve-port loans/returns. Its complete
 origin remains the actor packet reference. The sender continuation
 waits for the receiver's complete tuple/availability checks and
-acknowledgement; then all twelve work tokens are at the producer.
+acknowledgement. CAP6.3 first returns the pool to sender $A$.
+The GP sender continuation then executes twelve actual TOKs from
+$A$ to the producer and one CTL to the fixed GP dispatch entry.
+Only now are all twelve work tokens at the producer.
 No source call begins during a partial send or token transfer.
 
 The producer bounded-parses the received tuple, checks its GP version,
@@ -3802,8 +3822,9 @@ task or its narrower Native packet grammar.
 then copies that actual immutable packet, including its version and
 whole operand, to the producer's own interval. The recipient reads
 through its own descriptor on 17. It does not dereference actor27.
-The acknowledged send returns the pool to the producer before its
-constructor starts. CAP4.6 explicitly supplies the automatic-mode
+The acknowledged send returns the pool to $A$; its explicit following
+twelve-token transfer and CTL establish the producer constructor's
+entry. CAP4.6 explicitly supplies the automatic-mode
 three-block construction by copies/Appends, including real nonempty
 port bases, descriptors and status work. Applying it to this parsed
 packet gives exactly the requested original frame, without an IN row.
@@ -3876,6 +3897,9 @@ This is computation on acquired public data, not a read of a private
 source or of an unreleased refused candidate. Require the latest
 source event to be the immediately preceding raw graft refusal and
 retain its actual direction and whole $v$.
+Initialize the response list by copying each genuine projected response
+and its actual row reference, including this final raw refusal, into
+the represented state. Earlier input/response blocks remain immutable.
 
 Let $s$ be the replayed current encoded tree. Apply the existing finite
 two-step image parser of ABT Theorem 12.1 to $\operatorname{sh}(s)$,
