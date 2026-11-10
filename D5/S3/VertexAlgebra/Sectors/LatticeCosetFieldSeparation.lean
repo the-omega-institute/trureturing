@@ -16,7 +16,6 @@ operations retain their Carnahan Apache-2.0 attribution. -/
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
-set_option maxHeartbeats 800000
 
 namespace D5.S3.VertexAlgebra.LatticeCosetFieldSeparation
 
@@ -141,13 +140,14 @@ theorem field_transverse_commutator (hD : (gramReal D).PosDef)
             X (x.1.castAdd e, x.2) := by simp [polynomialInjection]
         simp only [injection_single]
         rw [map_mul, hx, mul_comm]
+        rw [injection_single D B C hC hCe a n f]
         exact multiplication_recursion (ambient D e B C hC hCe)
           (x.1.castAdd e, x.2) (liftCharge D B C hC hCe a n)
           (polynomialInjection D B C hC hCe f)
       rw [hrec]
       apply normal_commutator
       · intro t w
-        rw [derivative_modes]
+        rw [derivative_modes (ambient D e B C hC hCe) (x.1.castAdd e, x.2) t]
         simp only [LinearMap.smul_apply,
           current_transverse_mul D B C hC hCe hD, map_smul]
       · exact hf
