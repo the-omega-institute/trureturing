@@ -273,6 +273,75 @@ shows why proper leastness cannot be substituted into that domain. The
 bridge here uses proper $(*)$ and Theorems 2–3, and does not invoke
 Theorem 1's passage to $(**)$.
 
+## Face geometry and the projective interface
+
+The same paper derivation supplies the face interface needed by
+[Barnum–Barrett–Krumm–Müller, arXiv:1508.03107v2](https://arxiv.org/pdf/1508.03107v2),
+Definitions 3.2–3.3, Proposition 3.1 and Theorem 6.1. This is an application
+bridge to their projective, symmetric-transition setting, not an additional
+Lean result or an assumption of filter purity.
+
+Let $U=L^{-1}u$. Every complete frame sums to $U$. For a nonzero cone
+face $F$, choose $x$ in its relative interior and a positive spectral
+expansion $x=\sum_{i\in I}\lambda_i a_i$ with every $\lambda_i>0$.
+Set $s=\sum_{i\in I}a_i$. Positivity and the face property imply
+$a_i\in F$. Bounding the coefficients above and below shows that
+$s$ and $x$ generate the same face, so $s$ also lies in the relative
+interior of $F$. Completion of the frame gives $0\le s\le U$.
+
+The positive functional $B(U-s,\cdot)$ vanishes on $x$, and hence on
+$F$. Conversely, if a pure $q$ has $B(U-s,q)=0$, the proper effect
+$B(s,\cdot)$ confirms $q$. Leastness gives $e_q\le B(s,\cdot)$;
+self-duality makes this $q\le s$, so $q\in F$. Decomposing positive
+vectors into pure rays proves
+
+$$
+F=C\cap(U-s)^{\perp_B},\qquad s=P_FU,
+\tag{10}
+$$
+
+where $P_F$ is the $B$-orthogonal projection onto $\operatorname{span}F$.
+In particular every face is exposed, and its unit $s_F=P_FU$ is
+independent of the chosen interior point and spectral expansion.
+
+Every $v\in\operatorname{span}F$ has a signed expansion inside $F$.
+Indeed, take $t>0$ large enough that $ts_F+v$ is in the relative
+interior of $F$. Its nonzero spectral terms belong to $F$ and their
+unweighted sum is $s_F$ by (10). Subtracting $ts_F$ gives the claimed
+signed expansion in this same face frame. If $B(v,y)\ge0$ for every
+$y\in F$, evaluation on its frame members makes all these signed
+coefficients nonnegative. Thus $F$ is self-dual in its span. The cone is
+perfect in the sense of the cited Definition 3.2.
+
+Consequently $P_F$ is positive: its pairing with each $y\in F$ equals
+$B(x,y)\ge0$ for positive $x$, and face self-duality applies. Moreover
+
+$$
+u(P_Fx)=B(s_F,x)\le B(U,x)=u(x)\qquad(x\in C).
+\tag{11}
+$$
+
+The complementary face is $F^\perp=C\cap s_F^{\perp_B}$, with unit
+$U-s_F$. To see the unit assertion, any pure state in $F^\perp$ is
+orthogonal to the frame used for $s_F$; extend that frame by positive
+residual peeling. Its completing states belong to $F^\perp$ and sum
+to $U-s_F$. Equation (10) then gives $(F^\perp)^\perp=F$.
+The positive projections $P_F,P_{F^\perp}$ have complementary positive
+images and kernels. They are self-adjoint under the order identification
+$L$, so their duals are complemented as well. Equation (11) gives
+normalization contraction. Equality in (11) forces $x\in F$ by (10),
+and then $P_Fx=x$. These are mathematical filters with every exposed face
+as an image; they give projectivity. The cited Proposition 3.1 identifies
+all filters with faces and gives the orthomodular face lattice.
+
+For a face frame, $u(s_F)=B(s_F,s_F)$ is its integer length. Any other
+frame in the face can be completed to a face frame by the same residual
+argument, so this integer is its capacity, the largest jointly
+distinguishable pure-state frame size. None of these steps asserts that
+$P_F$ sends every external pure state to zero or a pure ray. That is the
+remaining condition analyzed in the
+[two-pure-state comparison note](miyaderaimai2007landaupollak.md).
+
 ## What this geometry does and does not select
 
 The derived pairing identifies a pure state with its least confirming
