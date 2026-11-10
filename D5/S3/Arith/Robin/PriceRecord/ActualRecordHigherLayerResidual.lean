@@ -90,14 +90,14 @@ def completeSecondLayerLoss (X : ℝ) (n : ℕ) : ℝ :=
 def completeHigherLayerLoss (X : ℝ) (n : ℕ) : ℝ :=
   ∑ p ∈ lossPrimes X n, ∑ j ∈ Icc 3 (layerCutoff X n p), layerLoss X n p j
 
-private theorem layer_loss_nonneg (X : ℝ) (n p j : ℕ) :
+theorem layer_loss_nonneg (X : ℝ) (n p j : ℕ) :
     0 ≤ layerLoss X n p j := by
   unfold layerLoss
   split_ifs
   · exact sub_nonneg.mpr (le_max_left _ _)
   · simpa using le_max_right (rawLayerMargin X p j) 0
 
-private theorem margin_active_iff {X : ℝ} (hX : 1 < X) {p j : ℕ}
+theorem margin_active_iff {X : ℝ} (hX : 1 < X) {p j : ℕ}
     (hp : p.Prime) (hj : 1 ≤ j) :
     0 < rawLayerMargin X p j ↔ j ≤ optimalLayerCount (referencePrice X) p := by
   have hi := Set.ext_iff.mp
@@ -191,7 +191,7 @@ private theorem local_split_first_two {X : ℝ} (hX : 1 < X) (n : ℕ) {p : ℕ}
     rw [hs, sum_insert (by simp), sum_insert (by simp)]
     ring
 
-private theorem actual_defect_decomposition {X : ℝ} (hX : 1 < X) {n : ℕ}
+theorem actual_defect_decomposition {X : ℝ} (hX : 1 < X) {n : ℕ}
     (hn : 1 ≤ n) :
     actualDefect X n = completeFirstLayerLoss X n + completeSecondLayerLoss X n +
       completeHigherLayerLoss X n := by
