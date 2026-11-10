@@ -1,0 +1,31 @@
+### 20.5 对全部实际输出的自身边缘投影应用
+
+对该完整实际态直接应用有限纯参考投影估计。为明确此处的应用，记 $P_h=\tau_h\otimes I_K$、$Q_h=I-P_h$，把 $\Omega=\Omega_{n,h}$ 分块为
+
+$$
+P_h\Omega P_h=\tau_h\otimes A_0,\qquad
+Q_h\Omega Q_h=B_0,\qquad
+P_h\Omega Q_h=C_0,\qquad p=\operatorname{Tr}B_0.
+\tag{20.32}
+$$
+
+有 $\operatorname{Tr}_R C_0=0$ 和 $\operatorname{Tr}_R\Omega=A_0+\operatorname{Tr}_R B_0$。由正性和标准 Schatten Cauchy–Schwarz 估计，
+
+$$
+\|C_0\|_1\le\sqrt{p(1-p)}.
+\tag{20.33}
+$$
+
+差态的两个对角项 $B_0$ 与 $-\tau_h\otimes\operatorname{Tr}_R B_0$ 具有正交参考支持，各自迹范数为 $p$。两个交叉块的半迹范数贡献至多 $\|C_0\|_1$。故在这一完整 $K$ 上，
+
+$$
+\begin{aligned}
+\frac12\|\Omega-\tau_h\otimes\operatorname{Tr}_R\Omega\|_1
+&\le p+\sqrt{p(1-p)}\\
+&\le2\sqrt p.
+\end{aligned}
+\tag{20.34}
+$$
+
+这是标准投影到自身边缘工具在具体电路上的应用，不主张新增一般定理。它不使用可访问纯化、辅助密度逆或正的最小本征值，故包括所有奇异混合旁观输入。比较对象恰是同一 $\Omega$ 的自身实际 $K$ 边缘，不是旧端口边缘或另选乘积态。迹距离的一般上界为 $1$，联同 (20.31) 即得 $\overline\delta\le B_e$。
+
