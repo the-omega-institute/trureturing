@@ -50,12 +50,9 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233127CertificateZero
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233127CertificateOne
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233127Rows
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
-import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
-import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233254TriangleStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255PairTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255ShapeSymmetry
-import D5.S3.Observer.Separation.BooleanRankThreeK4
 import Mathlib.Tactic.FinCases
 import Lean.Elab.Tactic.Omega
 
@@ -66,14 +63,9 @@ open scoped BigOperators
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233127SquareStrip
 
 open HardinA233175PairStrip (Seen good finish)
-open HardinA233251TriangleStrip
-  (widthLegal widthV widthStep widthTotal width_counting_bridge colour_bond_iff)
-open HardinA233254TriangleStrip (Row rowLegal)
 open HardinA233255PairTransfer (Boundary)
 open HardinA233255LiteralBridge (rowFinish rowWeight scanner_fibres)
-open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
 
-attribute [local instance 2000] HardinA233251TriangleStrip.widthInstDecidableGood
 attribute [local instance 2000] Pi.instFintype
 open HardinA233255ShapeSymmetry (full_row)
 
