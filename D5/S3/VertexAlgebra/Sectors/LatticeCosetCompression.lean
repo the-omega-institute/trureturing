@@ -42,7 +42,7 @@ variable (B : Matrix (Fin D.rank) (Fin e) ℤ) (C : Matrix (Fin e) (Fin e) ℤ)
 variable (hC : ∀ i j, C i j = C j i) (hCe : ∀ i, Even (C i i))
 
 /-- Old coordinates precede all external coordinates. No ambient positivity. -/
-def ambient : LatticeData where
+abbrev ambient : LatticeData where
   rank := D.rank + e
   G i j := Fin.addCases
     (fun k => Fin.addCases (D.G k) (B k) j)

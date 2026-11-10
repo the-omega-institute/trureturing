@@ -120,7 +120,7 @@ private theorem projection_transverse (j : Fin e) (k : ℕ) :
 
 private theorem translatedProjection_variable
     (A : Charge (ambient D e B C hC hCe))
-    (x : Fin (D.rank+e) × ℕ) :
+    (x : Fin (D.rank + e) × ℕ) :
     translatedProjection D B C hC hCe A (X x) =
       Polynomial.C (projectionVariable D B C hC hCe x) -
         Polynomial.C ((bilinear (ambient D e B C hC hCe) A (unitCharge _ x.1) : ℂ) •
@@ -185,7 +185,7 @@ def longitudinalTranslation (A : Charge (ambient D e B C hC hCe)) :
           Polynomial.X^(x.2+1))).comp (polynomialProjection D B C hC hCe)
 
 private theorem translation_difference (hD : (gramReal D).PosDef)
-    (a : Fin e → ℤ) (n : Charge D) (x : Fin (D.rank+e) × ℕ) :
+    (a : Fin e → ℤ) (n : Charge D) (x : Fin (D.rank + e) × ℕ) :
     translatedProjection D B C hC hCe (liftCharge D B C hC hCe a n) (X x) -
       longitudinalTranslation D B C hC hCe (liftCharge D B C hC hCe a n) (X x) =
     Fin.addCases (fun _ => 0) (fun j =>
@@ -251,6 +251,7 @@ theorem creationSeries_difference (hD : (gramReal D).PosDef)
     have hCsmul (z : ℂ) (p : Oscillator D) :
         Polynomial.C (z • p) = z • (Polynomial.C p : Polynomial (Oscillator D)) :=
       map_smul (Polynomial.CAlgHom : Oscillator D →ₐ[ℂ] Polynomial (Oscillator D)) z p
+    trace_state
     simp only [smul_neg, smul_mul_assoc, ← hCsmul, smul_smul,
       ← Finset.sum_neg_distrib, ← Finset.sum_mul, ← map_sum, ← Finset.sum_smul,
       hcast]
