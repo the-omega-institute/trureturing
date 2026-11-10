@@ -3414,3 +3414,587 @@ $$
 本节使用的经典输入是前引 Havlicek v1 的完整四次域 case (B)、$\kappa$ 与 Klein 方程，Ghorpade–Patil–Pillai v1 的外积及分解事实，和 Stacks 09HF、09HI 的纯不可分二次塔；比值与交叠复用本卷 §17。相对于这些输入，本节推导的是原乘法输出的来源绑定、任意固定窗口的秩与实际纤维连接、最小 $(m,n)=(4,8)$，以及 (18.22)–(18.24) 在同一实际域和同一乘法下的两个完整来源集。经典几何本身不在此取得新的名称或首次性主张。
 
 ## 追加锚（本行以下为增补区）
+
+## 19　完整实际来源与窗口的标量恢复
+
+**定义 19.1（带标签来源所要恢复的对象）。** 固定定义 18.1 的同一个实际域扩张 $L/F$：$\operatorname{char}F=2$、$n=[L:F]<\infty$、$L^2\subseteq F$，仍用原映射 $\kappa(u\wedge v)=uv+F$。对 $W\le L$，记
+$$
+[W]_{L^\times}=\{xW:x\in L^\times\}.
+\tag{19.1}
+$$
+这里的恢复问题是：在 $m=\dim_FW$ 已知时，实际子域的集合 $\operatorname{Src}(W)$ 是否唯一决定 (19.1)。来源标签是原 $L$ 内的二次子域本身；观察不包含支撑平面、来源的重数或交空间的维数。
+
+令 $q:L\to L/F$ 为原商映射。对任意实际二次子域集合 $\mathcal S$，置
+$$
+\begin{aligned}
+\Sigma(\mathcal S)
+ &=\{h+F:h\in L\setminus F,\ F(h)\in\mathcal S\},\\
+E(\mathcal S)&=F\bigl(\bigcup_{K\in\mathcal S}K\bigr)\subseteq L,
+\qquad E(\varnothing)=F.
+\end{aligned}
+\tag{19.2}
+$$
+第一项是实际商向量的集合，第二项是由这些实际子域生成的子域。对非零窗口另记实际比值集
+$$
+R(W)=\{u/v:u\in W,\ 0\ne v\in W\}\subseteq L.
+\tag{19.3}
+$$
+
+**定理 19.2（标量不变性与来源所确定的生成域）。** 对任意 $W\le L$ 和 $x\in L^\times$，有
+$$
+\operatorname{Src}(xW)=\operatorname{Src}(W),\qquad
+\Sigma(\operatorname{Src}(W))=\mathcal T_\kappa(W),\qquad
+I_\kappa(W)=\operatorname{span}_F\Sigma(\operatorname{Src}(W)).
+\tag{19.4}
+$$
+若 $W\ne0$，则对每个 $w\in W\setminus\{0\}$，
+$$
+R(W)=F\ \cup\!\bigcup_{K\in\operatorname{Src}(W)}K,
+\qquad
+E(\operatorname{Src}(W))=F(w^{-1}W).
+\tag{19.5}
+$$
+因此右侧的实际生成域与归一化所选的 $w$ 无关。$\operatorname{Src}(W)=\varnothing$ 当且仅当 $\dim_FW\le1$；在这个空集情形仍须保留已知的维数。
+
+证明。对每个实际 $K$，乘以 $x$ 将 $vK\subseteq W$ 与 $(xv)K\subseteq xW$ 双向对应，故保留同一个标签 $K$。定理 18.2、18.4 说明：标签 $F(h)$ 可见，当且仅当指定记录 $h+F$ 由 $W$ 内的一对独立输入实际取得。这给 (19.4) 的第二式；第三式是 (18.7)，没有把线性张成当作完整来源。
+
+若 $h=u/v\notin F$，则 $u,v$ 独立，且 $vF(h)=Fv+Fu\subseteq W$，所以 $h$ 属于 (19.5) 第一式的右侧。若 $h\in K\in\operatorname{Src}(W)$，取 $vK\subseteq W$，便有 $h=(vh)/v\in R(W)$。任一非零 $w\in W$ 又给出 $\alpha=(\alpha w)/w\in R(W)$，其中 $\alpha\in F$。于是第一式成立，包括来源为空的非零窗口。
+
+令 $U=w^{-1}W$，则 $1\in U$。任一 $K\in\operatorname{Src}(U)$ 有 $0\ne v\in U$ 且 $vK\subseteq U$，故 $K\subseteq F(U)$。反过来，对每个 $u\in U\setminus F$，平面 $F+Fu$ 已在 $U$ 内，因而 $F(u)\in\operatorname{Src}(U)$。所以 $E(\operatorname{Src}(U))=F(U)$；再用标量不变性即得第二式。最后，维数至少二时任选两个独立向量就有来源；维数至多一时不能容纳一个二次域的标量副本。$\square$
+
+**定理 19.3（八次生成情形中的四维窗口重建）。** 设 $\dim_FW=4$，且 $E=E(\operatorname{Src}(W))$ 满足 $[E:F]=8$。完全从带标签来源定义
+$$
+\mathfrak B(\mathcal S)=
+\left\{q^{-1}(D):
+\begin{array}{l}
+D\le L/F,\quad\dim_FD=3,\\
+D\setminus\{0\}\subseteq\Sigma(\mathcal S),\\
+q^{-1}(D)\text{ 不是 }L\text{ 的子域}
+\end{array}\right\}.
+\tag{19.6}
+$$
+其中“子域”使用已固定的实际 $L$ 的乘法。则
+$$
+\mathfrak B(\operatorname{Src}(W))
+=\{uW:0\ne u\in W\}
+=\{X\in[W]_{L^\times}:1\in X\}.
+\tag{19.7}
+$$
+这给出整个标量轨道中所有含 $1$ 的代表；(19.6) 没有增加关于 $W$ 的交维数或支撑信息。
+
+证明。先支付 $\kappa_W$ 在这个范围内的单射性。选 $0\ne w\in W$，写
+$$
+U=w^{-1}W=F1+Fa+Fb+Fc.
+$$
+由定理 19.2，$E=F(a,b,c)$。$1,a,b$ 独立，所以 $[F(a,b):F]=4$：先有 $[F(a):F]=2$，再由 $b\notin F(a)$、$b^2\in F$ 得第二个二次扩张。$[E:F]=8$ 则迫使 $c\notin F(a,b)$。逐次二次塔给出 $E$ 的基
+$$
+1,a,b,ab,c,ac,bc,abc.
+\tag{19.8}
+$$
+因此 $\kappa_U$ 的六个基像 $a+F,b+F,c+F,ab+F,ac+F,bc+F$ 独立。乘以 $w$ 对外平方诱导的同构满足
+$$
+\kappa_W(wu\wedge wv)=w^2\kappa_U(u\wedge v),
+\qquad w^2\in F^\times,
+$$
+故 $\kappa_W:\Lambda_F^2W\to I_\kappa(W)$ 也是同构。
+
+现在取 (19.6) 中的 $D$。由 (19.4)，$D\subseteq I_\kappa(W)$。令 $A=\kappa_W^{-1}(D)$，则 $\dim_FA=3$。对每个 $0\ne\xi\in A$，其像属于 $\Sigma(\operatorname{Src}(W))=\mathcal T_\kappa(W)$，故有实际分解向量 $\eta\in\Lambda_F^2W$ 满足 $\kappa_W(\eta)=\kappa_W(\xi)$。单射性给 $\xi=\eta$。于是 $A$ 的每个非零实际 $F$ 向量都可分解。
+
+在这一步直接使用 Ghorpade–Patil–Pillai，[*Decomposable Subspaces, Linear Sections of Grassmann Varieties, and Higher Weights of Grassmann Codes*，arXiv:0710.5161v1](https://arxiv.org/abs/0710.5161v1)，§2 Theorem 6 及其前面的两类 close subspace 定义。该节的底域是任意域；代入其参数 $\ell=2$、$\dim_FV=4$、$r=3$、$V=W$，精确给出且只给出
+$$
+A=u\wedge W\quad(0\ne u\in W),
+\qquad\text{或}\qquad
+A=\Lambda_F^2V\quad(V\le W,\ \dim_FV=3).
+\tag{19.9}
+$$
+这是对原 $F$ 上全分解线性子空间的经典分类，不要求有限域，也不以代数闭包上的几何点替代实际点。
+
+第一种情形有 $q(uW)=D$，且 $u^2\in F^\times$ 使 $F\subseteq uW$。由于 $\dim_FuW=4$，遂有 $q^{-1}(D)=uW$。这个四维空间不能是子域 $H$：若是，则 $W=u^{-1}H$，由 (19.5) 得 $E(\operatorname{Src}(W))=H$，与 $[E:F]=8$ 矛盾。
+
+第二种情形选 $0\ne z\in V$，写 $z^{-1}V=F1+Fp+Ft$。其三个基向量独立，故与前面的二次塔论证相同，$H=F(p,t)$ 是实际四次子域，基为 $1,p,t,pt$。又因 $z^2\in F^\times$，
+$$
+\kappa(\Lambda_F^2V)
+=\operatorname{span}_F\{p+F,t+F,pt+F\}=H/F.
+\tag{19.10}
+$$
+故 $q^{-1}(D)=H$ 是子域。这一类恰被 (19.6) 的最后条件排除。
+
+反过来，每个 $u\wedge W$ 都是三维全分解子空间；其非零向量经 $\kappa_W$ 给出实际来源，故它的像满足 (19.6) 的前两项，而上面的八次生成条件保证其提升不是子域。因此所有 $uW$ 都在左侧，第一处集合等号成立。最后 $1\in uW$，因为 $u^{-1}=u/u^2\in W$。若 $X=xW$ 且 $1\in X$，则 $v=x^{-1}\in W\setminus\{0\}$，从而
+$$
+xW=v^{-1}W=(v^2)^{-1}vW=vW.
+$$
+非零 $F$ 标量不改变 $F$ 子空间，故第二处集合等号也成立。$\square$
+
+**文献应用 19.4（全部四维及以下窗口的准确恢复）。** 对固定的任意有限指数一实际扩张 $L/F$，若 $W,W'\le L$ 且
+$$
+\dim_FW=\dim_FW'=m\le4,
+$$
+则
+$$
+\operatorname{Src}(W)=\operatorname{Src}(W')
+\quad\Longleftrightarrow\quad
+\exists x\in L^\times\;W'=xW.
+\tag{19.11}
+$$
+这包括 $m=0,1$、$n=1$ 及所有允许的低次退化。维数超过 $n$ 的窗口不存在。此处相似结论归于 Zemková，[*Vishik equivalence and similarity of quasilinear p-forms and totally singular quadratic forms*，arXiv:2309.13346v2](https://arxiv.org/html/2309.13346v2)，Definition 3.2、Theorem 4.6 与 Corollary 3.5(ii)，经下面的窗口对应使用；它是定理 19.5 最小性所需的文献应用，不作为新的相似定理。
+
+证明与对象对应。反向已由定理 19.2 给出。$m=0$ 时两个窗口都是 $0$；$m=1$ 时写 $W=Fw$、$W'=Fw'$，便有 $W'=(w'/w)W$。这两类来源都为空，但各自的标量轨道唯一。以下设 $m\ge2$。
+
+在包含原 $L$ 的代数闭包内取 $\Omega=F^{1/2}$，则 $L\subseteq\Omega$ 且 $\Omega^2=F$。若 $w_1,\ldots,w_m$ 是 $W$ 的 $F$-基，在 $\Omega$ 上定义全奇异二次型
+$$
+\varphi_W=\langle w_1,\ldots,w_m\rangle,
+\qquad D_\Omega(\varphi_W)=W.
+\tag{19.12}
+$$
+这里 $D_\Omega$ 是该文的值集。$F$-线性独立性保证 $\varphi_W$ 各向异性；该文 Lemma 2.2 保证其等距类只取决于 $W$，并给出
+$$
+\varphi_{W'}\simeq c\varphi_W
+\quad\Longleftrightarrow\quad W'=cW
+\qquad(c\in\Omega^\times).
+\tag{19.12a}
+$$
+若右侧成立，任取 $0\ne w\in W$ 就有 $c=(cw)/w\in L^\times$。所以形式在 $\Omega$ 上的相似，双向恰对应原 $L^\times$ 标量轨道；没有把目标改成较大域中的轨道或抽象同构。按该文 §2.3 的范数域定义与 (19.5)，还得到
+$$
+N_\Omega(\varphi_W)=F(R(W))
+=E(\operatorname{Src}(W)).
+\tag{19.12b}
+$$
+
+对每个 $h\in\Omega\setminus F$，令 $d_h(W)=\dim_F(W\cap hW)$。因 $h^2\in F$，交空间在 $F(h)$ 下封闭，故 $d_h(W)$ 为偶数。又有 $\Omega(\sqrt h)^2=F(h)$ 及 $F(h)W=W+hW$，因此该文所用缺陷满足
+$$
+\begin{aligned}
+\mathfrak i_{\mathrm d}\bigl((\varphi_W)_{\Omega(\sqrt h)}\bigr)
+&=m-\dim_{F(h)}(W+hW)\\
+&=\tfrac12 d_h(W).
+\end{aligned}
+\tag{19.12c}
+$$
+这里用的是全奇异型的各向异性部分维数等于值集在平方子域上的维数，即该文 Lemma 2.2。若 $h\in\Omega\setminus L$，非零交点会给 $h=u/v\in L$，故此时缺陷为零。若 $h\in F$，则 $\sqrt h\in\Omega$，扩张平凡，缺陷也为零。对 $h\in L\setminus F$，定理 18.4 给出准确的标签对应
+$$
+F(h)\in\operatorname{Src}(W)
+\quad\Longleftrightarrow\quad
+\mathfrak i_{\mathrm d}\bigl((\varphi_W)_{\Omega(\sqrt h)}\bigr)>0.
+\tag{19.12d}
+$$
+来源只给出缺陷是否为正；Zemková 的 Definition 3.2 要求同维数并且对每个 $h\in\Omega$ 缺陷数本身相同，称为弱 Vishik 等价。两者在任意维数下不能直接等同。
+
+现在设两窗口的来源相同，记共同的实际生成域为 $E$。当 $m=2,3$ 时，非零的偶数 $d_h(W)\le m$ 只能为二。因此 (19.12c)–(19.12d) 已给两个形式在每个 $\Omega(\sqrt h)$ 上相同的缺陷。
+
+当 $m=4$ 时，归一化为 $U=w^{-1}W=F1+Fa+Fb+Fc$。由 $1,a,b$ 独立，$F(a,b)$ 是四次域；添入平方在 $F$ 内的 $c$ 后，$E=F(U)$ 的次数只能为四或八。若 $[E:F]=4$，则 $U=E$，故 $W=wE$；于是 $d_h(W)=4$ 恰在 $h\in E\setminus F$ 时成立，其余 $h\notin F$ 的交维数为零。两窗口因而仍有相同的缺陷。若 $[E:F]=8$，则 $d_h(W)=4$ 不可能：它会使 $hW=W$，归一化后的 $U$ 便是含 $1$ 的二维 $F(h)$-空间，写成 $F(h)+F(h)t$；由于 $t^2\in F$，这个空间就是四次域 $F(h,t)$，与 $F(U)=E$ 八次矛盾。因此八次生成时非零的 $d_h$ 仍只能为二。相同来源再次给出全部相同缺陷。这同时检查了 $h$ 在原 $L$ 之外的所有二次测试，故两形式确实满足 Definition 3.2 的全部量词。
+
+最后逐项核对相似定理的前件。$m=2,3$ 的归一化窗口分别生成二次、四次域：后者由 $U=F1+Fa+Fb$ 及 $b\notin F(a)$ 得到。结合 (19.12b)，这些形式的范数次数分别是 $2^{m-1}$；$m=4$、$[E:F]=8$ 时也如此。它们因此满足该文 Definition 2.11 的 minimal 条件，直接由 Theorem 4.6 得到相似。余下 $m=4$、$[E:F]=4$ 时，归一化的值空间是 $E=F(a,b)$，对应形式正是二重 quasi-Pfister 型 $\langle1,a,b,ab\rangle$，由 Corollary 3.5(ii) 得到相似，再撤销归一化。用 (19.12a) 回到原 $L$ 即得 (19.11)。定理 19.3 另给出了由实际标签直接构造所有含 $1$ 的代表的公式 (19.6)–(19.7)；该更具体的重建输出与已有相似结论相容，不使相似结论成为新数学。$\square$
+
+**定理 19.5（完整来源丢窗口的首次失效）。** 在 (18.18) 的同一个实际扩张
+$$
+F=\mathbf F_2(s,t,z),\qquad
+L=F(a,b,c),\qquad a^2=s,\ b^2=t,\ c^2=z,
+$$
+其中 $s,t,z$ 代数独立，取两个实际窗口
+$$
+W_5=\operatorname{span}_F\{1,a,b,c,ab\},\qquad
+W'_5=\operatorname{span}_F\{1,a,b,c,ac\}.
+\tag{19.13}
+$$
+它们满足 $\dim_FW_5=\dim_FW'_5=5$、$[L:F]=8$，并且
+$$
+\operatorname{Src}(W_5)=\operatorname{Src}(W'_5)
+=\{K\subseteq L:[K:F]=2\},
+\qquad W'_5\ne xW_5\quad\text{对所有 }x\in L^\times.
+\tag{19.14}
+$$
+因此，在维数已知的原恢复问题中，首次可能失效的最小窗口维数和最小整体次数分别是
+$$
+m_{\min}=5,\qquad n_{\min}=8,
+\tag{19.15}
+$$
+并由同一对窗口同时达到。
+
+证明。(18.20) 已给出这个实际 $L/F$ 的八个基单项式，故 (19.13) 中各五个向量确实独立。对每个实际 $h\in L\setminus F$，$5+5>8$ 保证 $W_5\cap hW_5\ne0$，对 $W'_5$ 亦然。由定理 18.4，二者都看见该同一个实际标签 $F(h)$。这支付全部二次子域的量词，而非仅比较两个来源子集或线性像。
+
+还须排除所有实际标量。令 $A=F(a,b)=\operatorname{span}_F\{1,a,b,ab\}$，则 $A\subseteq W_5$。假设 $xW_5=W'_5$，其中 $x\ne0$。必有 $xA\subseteq W'_5$，所以 $x,ax,bx,abx$ 都在 $W'_5$ 内。先写
+$$
+x=\alpha+\beta a+\gamma b+\delta c+\varepsilon ac,
+\qquad\alpha,\beta,\gamma,\delta,\varepsilon\in F.
+$$
+由
+$$
+ax=\beta s+\alpha a+\gamma ab+\delta ac+\varepsilon s c
+$$
+及八个基单项式的独立性，$ax\in W'_5$ 迫使 $\gamma=0$。再由
+$$
+bx=\alpha b+\beta ab+\delta bc+\varepsilon abc
+$$
+与 $bx\in W'_5$ 得 $\beta=\delta=\varepsilon=0$。于是 $x=\alpha$，而 $abx=\alpha ab\in W'_5$ 又迫使 $\alpha=0$，与 $x\ne0$ 矛盾。这一障碍是在同一个实际四次子域 $A$ 上得到的；没有改用抽象同构或半线性变换。
+
+这两个窗口的同来源也不等于弱 Vishik 等价。例如同一个实际 $b$ 给出
+$$
+W_5\cap bW_5=A,\qquad
+W'_5\cap bW'_5=F1+Fb.
+\tag{19.14a}
+$$
+第一式由 $W_5=A+Fc$、$bA=A$ 及 $c,bc$ 模去 $A$ 后独立得到；第二式由 $W'_5$ 的基与 $bW'_5=\operatorname{span}_F\{b,ab,t,bc,abc\}$ 逐项比较得到。因此 (19.12c) 在 $\Omega(\sqrt b)$ 上给出的缺陷分别为二与一。Zemková 前引文 Corollary 4.21 回答的 Question Q 采用 Definition 2.14，要求在所有域扩张上缺陷相同，即 full Vishik 等价；该文 Remark 4.19 也明确区分这一条件与弱等价。本例连弱等价都不满足，所以不受 Corollary 4.21 的五维相似结论覆盖。
+
+文献应用 19.4 排除了任意整体次数下全部 $m\le4$ 的反例。另一方面，有限指数一扩张可逐次添入平方在 $F$ 内的元素；每个非平凡步骤的次数都是二，故 $n$ 是二的幂。若 $n<8$，只有 $n=1,2,4$，所有可有的窗口维数都至多四，因而也被文献应用 19.4 排除。这给 (19.15) 的两个独立下界，(19.13) 同时达到它们。$\square$
+
+**定理 19.6（已知维数的必要性及两层信息损失）。** 即使保留实际标签，单独的 $\operatorname{Src}(W)$ 也不决定窗口维数。除 $0$ 与任一一维窗口的共同空来源外，在 (18.18) 的实际四次子域 $A=F(a,b)\subset L$ 内，
+$$
+U_3=F1+Fa+Fb,\qquad U_4=A
+$$
+也有
+$$
+\operatorname{Src}(U_3)=\operatorname{Src}(U_4)
+=\{K\subseteq A:[K:F]=2\},
+\qquad\dim_FU_3=3\ne4=\dim_FU_4.
+\tag{19.16}
+$$
+故 (19.11) 的同维数前件不可省。保留该前件时，线性记录丢来源的最小窗口维数是定理 18.6 的四，而完整来源丢标量窗口的最小窗口维数是定理 19.5 的五；两者的最小整体次数均为八。
+
+证明。若二次标签在 $U_i\subseteq A$ 中可见，取 $vK\subseteq U_i$，则 $v\in A^\times$，故 $K\subseteq A$。反过来，在整个实际扩张 $A/F$ 内，$\dim_FU_3=3>4/2$，所以定理 18.4 给每个二次 $K\subseteq A$ 的可见性；$U_4=A$ 当然也包含它们。于是 (19.16) 成立，异维数排除标量相似。关于两层最小量的结论分别直接引用定理 18.6、18.7 和文献应用 19.4、定理 19.5；它们分别涉及从线性张成恢复来源和从完整来源恢复标量轨道，后者的观察仍不包含交空间维数。$\square$
+
+**定义 19.7（完整来源恢复的数学白话与适用边界）。** 把窗口内任意两个独立方向作实际乘法，每个非零商输出都标出同一个 $L$ 内的一个二次子域。只保留这些输出的线性张成，会把本来没有实际输入对的标签也混进来；这是四维、八次时已经出现的第一层损失。现在保留全部真实标签，并事先知道窗口维数，四维及以下还能找回窗口的标量轨道。四维中最有区别的情形生成八次域：真实标签里所有三维线性片，提升回原 $L$ 后分成两种，一种本身是四次子域，另一种就是原窗口乘以其中的一个非零元素。实际乘法让这两类可以分开，因此不必再知道某个来源出现几次或支撑在哪里。到八次域的五维窗口，任何二次标签都已可见，来源集饱和；(19.13) 的两个窗口却不能由任何非零标量互相移到。全部来源相同由此仍可丢失窗口，这是与线性张成丢来源不同的第二层损失。
+
+本节的低维相似结论 (19.11) 是 Zemková v2 的 Theorem 4.6 与 Corollary 3.5(ii) 的应用；(19.12)–(19.12d) 明确了原窗口、实际来源、缺陷与相似标量的往返。Ghorpade–Patil–Pillai v1 的 Theorem 6 提供 (19.9) 的经典全分解子空间分类，本身也不作为新增结果。相对于这些输入，本节的具体综合内容是：利用同一个实际乘法，将两类全分解子空间的提升分别识别为标量窗口与实际四次子域，得到从标签直接定义的完整代表族 (19.6)–(19.7)；并在同一个实际八次域内给出 (19.13)–(19.14) 的同来源而非相似窗口，以已有低维相似结论和次数二幂性确定 (19.15) 的最小性。这些实际重建和反例结论不由上述相似定理直接给出；这里不主张它们的历史首次性。Havlicek v1 的 case (B) 仍只用于完整四次域的原 $\kappa$ 背景。
+
+若接回原三维入口，仍须具有定义 13.1 的全部 P+K 前件；定理 13.9、13.11 给出的是同一个完整四次域、原指定投影 $\pi$ 和 $V=\ker\pi$。此时 (18.26) 与 $m=3$ 相接，(19.11) 只恢复 $V$ 的标量轨道，不恢复指定投影本身，也不从高次窗口推出新的 P+K。这里的维数、域与记录均为上述代数对象，不给出 Born 规则、物理维数、复数域或全部量子起源的推导。
+
+## 追加锚（本行以下为增补区）
+
+## 20　三方向共同见证的四次稳定部分与首次维数碰撞
+
+**定义 20.1（同一实际来源中的三个维数）。** 固定特征二的域 $F$、有限实际域扩张 $L/F$ 和实际中间域 $K$，满足
+
+$$
+L^2\subseteq F,\qquad [K:F]=4,\qquad n=[L:F].
+$$
+
+固定任意三维 $F$-子空间 $H\le K$，不要求 $1\in H$。对原 $L$ 内任意 $F$-子空间 $W$，定义
+
+$$
+\begin{aligned}
+T=C_H(W)&=\{x\in L:xH\subseteq W\},\\
+C=\operatorname{core}_K(W)&=\{x\in L:xK\subseteq W\},\\
+m&=\dim_F W,\qquad j=\dim_F T,\qquad c=\dim_F C.
+\end{aligned}
+\tag{20.1}
+$$
+
+$C$ 是 $W$ 所含的最大 $K$-线性子空间。这里 $j$ 只是在这一个固定实际 $H$ 上的共同见证空间维数；不包含改变 $H$ 后的全部读数。对 $F$-子空间 $A,B\le L$，$AB$ 表示原乘积 $ab$ 的 $F$-线性张成。因此 $HT$、$KT$ 是实际子空间，不能与两个维数 $j,c$ 混同。
+
+全部量词取原 $L$ 中的实际 $F$-点，乘法始终是原域乘法。窗口的整体标量变化只指 $W\mapsto xW$、$x\in L^\times$，不引入抽象域同构、半线性变化或另一份记录映射。
+
+**定理 20.2（结构桥及十一维以内的恢复）。** 对定义 20.1 的每份 $L,K,H,W$，自然乘法给出 $K$-线性同构
+
+$$
+\begin{aligned}
+\mu:K\otimes_F(T/C)&\longrightarrow KT/C,\\
+k\otimes(t+C)&\longmapsto kt+C.
+\end{aligned}
+\tag{20.2}
+$$
+
+并有实际子空间等式及维数公式
+
+$$
+\begin{aligned}
+W\cap KT&=HT,\\
+\dim_F KT&=4j-3c,\\
+\dim_F HT&=3j-2c.
+\end{aligned}
+\tag{20.3}
+$$
+
+特别地，存在非负整数 $q,t$，满足
+
+$$
+\begin{gathered}
+c=4q,\qquad t=j-c,\qquad j=4q+t,\\
+4q+3t\le m,\qquad 4q+4t\le n,\qquad m+t\le n.
+\end{gathered}
+\tag{20.4}
+$$
+
+于是对全部 $0\le m\le\min\{11,n\}$ 的实际窗口，
+
+$$
+\boxed{\ c=4\left\lfloor\frac j4\right\rfloor\ }.
+\tag{20.5}
+$$
+
+式 (20.4) 是必要界，不将满足这些整数不等式的每个元组都宣告为可达。
+
+证明。先说明包含关系及缩放。由 $1\in K$ 得 $C\subseteq W$；对 $k\in K$，$xK\subseteq W$ 蕴涵 $(kx)K\subseteq W$，所以 $C$ 是 $K$-空间，且 $C\subseteq T$。反之，任何 $K$-子空间 $U\subseteq W$ 均满足 $U\subseteq C$。这证明最大性及 $c\in4\mathbb Z_{\ge0}$。由于 $H$ 含非零元素，还成立 $HC=C$，从而
+
+$$
+C\subseteq HT\subseteq W,\qquad C\subseteq KT.
+\tag{20.6}
+$$
+
+对任意 $h_0\in H\setminus\{0\}$，在同一个实际 $K$ 内置
+
+$$
+H_0=h_0^{-1}H,\qquad W_0=h_0^{-1}W.
+$$
+
+此时 $1\in H_0$，并且逐元素有
+
+$$
+C_{H_0}(W_0)=T,\qquad
+\operatorname{core}_K(W_0)=h_0^{-1}C=C.
+\tag{20.7}
+$$
+
+第一式因为 $xH_0\subseteq W_0$ 恰等价于 $xH\subseteq W$；第二式使用 $h_0\in K^\times$ 和 $C$ 的 $K$-稳定性。因此 $m,j,c$ 均不改变，$K$ 仍是原来的实际子域。更一般地，对 $x\in L^\times$，
+
+$$
+C_H(xW)=xC_H(W),\qquad
+\operatorname{core}_K(xW)=x\operatorname{core}_K(W).
+$$
+
+这些只是原乘法下的整体标量变化。
+
+所需的普通残余复合在这里有直接的来源对应。Eliahou–Lecouvey，[*On linear versions of some addition theorems*，arXiv:0802.3523v1，Proposition 6.5](https://arxiv.org/pdf/0802.3523v1)，对任意有限交换域扩张及维数之和超过总次数的两个非零子空间，给出乘积张成整个域；该命题没有可分性前件。代入其底域 $F$、扩张域 $K$ 及两个子空间 $H,H$，因 $3+3>4$ 得 $HH=K$。结合原乘法的结合律，
+
+$$
+C_H(T)=C_H(C_H(W))=C_{HH}(W)=C.
+\tag{20.8}
+$$
+
+其中中间等号只说 $x h_1h_2\in W$ 对全部 $h_1,h_2\in H$，等价于 $x(HH)\subseteq W$。乘积张成与这条普通复合恒等式仅是中间步骤；它们将 $C$ 解释为共同见证中还能继续满足同一要求的部分。
+
+下面直接对任意原 $H$ 证明结构式，因而不依赖它是否含 $1$。令 $Q=L/W$，$p:L\to Q$ 为商映射。取非零 $F$-线性泛函 $\rho:K\to F$，使 $\ker\rho=H$，再取 $z\in K$ 满足 $\rho(z)=1$。对 $x\in T$ 和 $k\in K$，因 $k-\rho(k)z\in H$，有
+
+$$
+p(kx)=\rho(k)p(zx).
+\tag{20.9}
+$$
+
+由 $zC\subseteq C\subseteq W$，得到定义良好的 $F$-线性映射
+
+$$
+\theta:T/C\longrightarrow Q,\qquad x+C\longmapsto p(zx)
+$$
+
+是单射：若 $p(zx)=0$，(20.9) 给 $p(kx)=0$ 对全部 $k\in K$，即 $x\in C$。
+
+这里使用的配对 $\rho(sk)$ 是经典 Frobenius 乘法配对；其非退化性及乘法自伴随性见 Bachoc–Serra–Zémor，[*Revisiting Kneser's theorem for field extensions*，arXiv:1510.01354v2，§2.2](https://arxiv.org/pdf/1510.01354v2)。该文 §2.3 的饱和空间定义也使用条件 $xS\subseteq XS$。在当前有限扩张 $K/F$ 上，所需非退化性可直接写成：若 $k\ne0$，取 $s=z/k$，就有 $\rho(sk)=1$。这里无需域迹，也无需可分性。
+
+取 $T/C$ 的任意 $F$-基 $t_1+C,\ldots,t_t+C$，其中 $t=j-c$，记 $v_i=p(zt_i)$。由 $\theta$ 单射，$v_1,\ldots,v_t$ 在 $F$ 上独立。若 $k_i\in K$ 且
+
+$$
+\sum_{i=1}^t k_it_i\in C,
+$$
+
+则对每个 $s\in K$，由 $sC\subseteq C\subseteq W$ 及 (20.9)，
+
+$$
+0=p\left(s\sum_i k_it_i\right)
+=\sum_i\rho(sk_i)v_i.
+$$
+
+独立性给 $\rho(sk_i)=0$ 对每个 $s$ 及每个 $i$。上述非退化性迫使所有 $k_i=0$。因此这些原向量的 $K$-张成模去 $C$ 后仍独立，得到实际直和
+
+$$
+KT=C\oplus\bigoplus_{i=1}^t Kt_i.
+\tag{20.10}
+$$
+
+它同时证明 (20.2) 的单射性；满射性则来自 $KT$ 的定义。张量积中的 $T/C$ 只按 $F$-空间使用，不假定它原先已经对 $K$ 稳定。
+
+对 (20.10) 中的向量 $u=c_0+\sum_i k_it_i$，其中 $c_0\in C$，再次使用 (20.9) 得
+
+$$
+u\in W
+\ \Longleftrightarrow\quad
+\sum_i\rho(k_i)v_i=0
+\ \Longleftrightarrow\quad
+k_i\in H\quad\text{对每个 }i.
+$$
+
+又因 $T=C\oplus\operatorname{span}_F\{t_1,\ldots,t_t\}$ 及 $HC=C$，所以
+
+$$
+W\cap KT=C\oplus\bigoplus_{i=1}^t Ht_i=HT.
+\tag{20.11}
+$$
+
+由 $\dim_F K=4$、$\dim_F H=3$，两份直和给出
+
+$$
+\dim_F KT=c+4t=4j-3c,\qquad
+\dim_F HT=c+3t=3j-2c.
+$$
+
+前者至多为 $n$，后者至多为 $m$。此外
+
+$$
+\dim_F(W+KT)=m+\dim_F KT-\dim_F HT=m+t\le n.
+$$
+
+这证明 (20.3)–(20.4)。当 $m\le11$，$c+3t\le m$ 迫使 $0\le t\le3$；将 $j=4q+t$ 除以四，恰有 $q=\lfloor j/4\rfloor$，即 (20.5)。在这个范围，$c$ 只能为 $0,4,8$，而其余必要限制仍由 (20.4) 给出；这里没有添加充分可达性的断言。
+
+所有边界使用同一公式。$W=0$ 时，任取 $0\ne h\in H$，$xh=0$ 迫使 $x=0$，所以 $T=C=0$。$W=L$ 时，$T=C=L$，故 $m=j=c=n$、$t=0$。若 $L=K$，则 $m\le2$ 时没有非零 $x$ 能将三维 $H$ 送入 $W$，所以 $j=c=0$；$m=4$ 时是刚述的全窗口。余下 $m=3$ 时 $C=0$，而 $j=1$：写 $W=\ker\sigma$，$\sigma:K\to F$ 非零，非退化乘法配对将 $K$ 同构到 $K$ 的 $F$-线性对偶；满足 $\sigma(xH)=0$ 的 $x$ 对应于消去 $H$ 的一维泛函空间。因此 $(m,j,c)=(3,1,0)$。这些结论也覆盖任意不含 $1$ 的原 $H$。$\square$
+
+**命题 20.3（同一十六次来源内的两个十二维窗口）。** 取在 $\mathbb F_2$ 上代数独立的 $a,b,u,v$，并固定实际域
+
+$$
+\begin{gathered}
+L=\mathbb F_2(a,b,u,v),\qquad
+F=\mathbb F_2(a^2,b^2,u^2,v^2),\\
+K=F(a,b),\qquad H=\operatorname{span}_F\{1,a,b\},\\
+e_1=1,\qquad e_2=u,\qquad e_3=v,\qquad e_4=uv.
+\end{gathered}
+\tag{20.12}
+$$
+
+则 $L^2=F$、$[L:F]=16$、$[K:F]=4$，且 $e_1,\ldots,e_4$ 是同一 $L$ 的 $K$-基。令 $\lambda:K\to F$ 取基 $1,a,b,ab$ 的 $ab$ 系数。在实际 $K$-子空间
+
+$$
+M=Ke_2\oplus Ke_3\oplus Ke_4
+$$
+
+上定义
+
+$$
+B\left(\sum_{i=2}^4 x_ie_i,\sum_{i=2}^4 y_ie_i\right)
+=\lambda\left(\sum_{i=2}^4 x_iy_i\right).
+$$
+
+取原空间中的子空间
+
+$$
+\begin{aligned}
+r&=ae_2+be_3+ab e_4,\\
+R&=\operatorname{span}_F\{e_2,e_3,e_4,r\}\le M,\\
+Y&=R^{\perp_B}\le M,\\
+W_0&=\bigoplus_{i=1}^4 He_i,\qquad
+W_1=Ke_1\oplus Y.
+\end{aligned}
+\tag{20.13}
+$$
+
+它们在这同一实际 $L,K,H$ 中满足
+
+$$
+\begin{array}{c|ccc|cc}
+ &m&j&c&C_H(W)&\operatorname{core}_K(W)\\ \hline
+W_0&12&4&0&\displaystyle\bigoplus_{i=1}^4 Fe_i&0\\
+W_1&12&4&4&Ke_1&Ke_1.
+\end{array}
+\tag{20.14}
+$$
+
+所以相同的 $m,j$ 在十二维时不能决定 $c$；比较的是这一个固定三维 $H$ 的局部共同见证数。
+
+证明。四个变量指数的奇偶类给出 $L/F$ 的十六个基单项式
+
+$$
+a^{\epsilon_1}b^{\epsilon_2}u^{\epsilon_3}v^{\epsilon_4},
+\qquad \epsilon_i\in\{0,1\}.
+$$
+
+具体地，将任一有理函数的分子分母同乘分母，可使分母成为平方，随后分子按四个指数的奇偶分组，证明张成。若有 $F$-线性关系，清去平方有理函数分母后，不同奇偶类的多项式单项式不能抵消，证明独立。这是本卷命题 13.17、定理 18.6 所用基论证在四个变量上的应用。因此 (20.12) 的域次数、平方域及 $K$-基均确实成立。
+
+对 $W_0$，四个三维分量在原 $K$-基上直和，所以 $m=12$。若 $x\in K$ 且 $xH\subseteq H$，则 $x\in F$：否则 $x^2\in F$ 且 $x\notin F$ 使 $F(x)/F$ 二次，而 $H$ 对 $x$ 稳定就使 $H$ 成为 $F(x)$-向量空间，与 $\dim_FH=3$ 矛盾。这里对 $F(x)$ 的稳定性可直接由 $F(x)=F+Fx$ 得到。反之，$F$ 中每个元素都稳定 $H$。按 $K$-基逐坐标应用，便有
+
+$$
+C_H(W_0)=\bigoplus_{i=1}^4 Fe_i.
+$$
+
+若 $\sum_i x_ie_i\in\operatorname{core}_K(W_0)$，每个非零 $x_i$ 都会给出 $x_iK=K\subseteq H$，不可能。因此 $C=0$，得到表中第一行。
+
+对 $W_1$，配对 $B$ 是非退化、对称、且使全部 $K$-乘法自伴随的 $F$-双线性形式。它逐坐标复用前引 Bachoc–Serra–Zémor §2.2 的 Frobenius 配对；同一一般事实也见 Ueoka–Nagi–Akari–Sui，[*Weak Vishik Equivalence and Linear 2-Basis Blindness for Totally Singular Quadratic Forms*，Zenodo 21758447，Lemma 4.1](https://zenodo.org/records/21758447)。在这里，若某个 $x_i\ne0$，可令 $y_i=x_i^{-1}ab$、其余 $y$ 坐标为零，便得 $B(x,y)=\lambda(ab)=1$，直接核实非退化。自伴随性就是 $B(kx,y)=B(x,ky)$，来自原 $K$ 的交换结合乘法。
+
+$R$ 的四个指定向量独立：前三个分别占三个 $K$-坐标，而 $r$ 的系数 $a,b,ab$ 不能同时是 $F$ 标量。因此 $\dim_FR=4$，非退化性给 $\dim_FY=12-4=8$。本例还可完全写成实际向量的张成：
+
+$$
+Y=\operatorname{span}_F\{
+ e_2,ae_2,e_3,be_3,ae_4,be_4,
+ be_2+e_4,ae_3+e_4\}.
+\tag{20.15}
+$$
+
+确切地，写 $y=x_2e_2+x_3e_3+x_4e_4$，与前三个 $R$ 基向量正交恰要求 $x_i\in H$。若 $x_i=s_i+t_i a+z_i b$，与 $r$ 正交又恰要求 $z_2+t_3+s_4=0$，这就给出 (20.15)。所有系数均在原 $F$ 内。
+
+关键的联合乘积在同一个 $M$ 中计算。记
+
+$$
+A=He_2\oplus He_3\oplus He_4\subseteq HR.
+$$
+
+$\dim_FA=9$，$M/A$ 由三个坐标的 $ab+H$ 张成。对 $h=s+ta+zb\in H$，原乘法及 $a^2,b^2\in F$ 给出
+
+$$
+(ah+H,\ bh+H,\ ab h+H)
+=(z(ab+H),\ t(ab+H),\ s(ab+H)).
+\tag{20.16}
+$$
+
+因此 $h\mapsto hr+A$ 从 $H$ 到 $M/A$ 为同构。由 $HR=A+Hr$ 得
+
+$$
+HR=M.
+\tag{20.17}
+$$
+
+这里的三个坐标使用同一个 $h$；(20.16) 支付的是这份联合映射的满射性。
+
+由于 $1\in H$，$xH\subseteq Y$ 蕴涵 $x\in Y\subseteq M$。所以全部共同见证都在 $M$ 内；由 $K$-乘法自伴随性，逐元素有
+
+$$
+\begin{aligned}
+x\in C_H(Y)
+&\Longleftrightarrow B(hx,r')=0
+ \quad(h\in H,\ r'\in R)\\
+&\Longleftrightarrow x\in(HR)^{\perp_B}.
+\end{aligned}
+$$
+
+结合 (20.17) 及非退化性，得到 $C_H(Y)=0$。于是按 $L=Ke_1\oplus M$ 的原直和，
+
+$$
+C_H(W_1)=Ke_1\oplus C_H(Y)=Ke_1.
+$$
+
+又因 $Ke_1\subseteq\operatorname{core}_K(W_1)\subseteq C_H(W_1)$，其稳定部分恰为 $Ke_1$。最后 $\dim_FW_1=4+8=12$，得到表中第二行。配对 $B$ 只用于指定实际子空间 $Y$，共同见证与稳定部分的条件始终使用原 $L$ 中的 $xH$ 与 $xK$。整个构造均在 (20.12) 的原域内完成。$\square$
+
+**定理 20.4（两个首次失效量）。** 在定义 20.1 的全部实际域及窗口中，若同一 $L,K,H$ 内的两个窗口满足
+
+$$
+m(W)=m(W'),\qquad j(W)=j(W'),\qquad c(W)\ne c(W'),
+$$
+
+则必有
+
+$$
+m(W)\ge12,\qquad [L:F]\ge16.
+\tag{20.18}
+$$
+
+两个下界由命题 20.3 的同一对窗口同时达到。因此最小窗口维数为十二，最小整体次数为十六；这两个最小性均只针对固定 $K,H$ 的读数 $(m,j)$ 对维数 $c$ 的恢复。
+
+证明。设共同见证维数为 $j$，交换窗口名称后令 $c<c'$。两稳定部分的维数均为四的倍数，所以 $c'-c\ge4$。又因 $C'\subseteq T'$，有 $j\ge c'$，因此对稳定部分较小的那个窗口，
+
+$$
+t=j-c\ge c'-c\ge4.
+$$
+
+将它代入定理 20.2 的两个维数公式，得到
+
+$$
+m\ge c+3t\ge12,\qquad
+n\ge c+4t\ge16.
+$$
+
+这是对任意维数窗口的两个独立必要下界。命题 20.3 已在实际指数一域内同时实现 $m=12,n=16$，故二者均为最小值。特别地，当 $n<16$ 时，不论窗口大小如何，都有 $t\le3$，所以 (20.5) 仍成立；本设定下低于十六的允许整体次数只有四与八。$\square$
+
+**定义 20.5（维数读数的数学释义与结论范围）。** 定理 20.2 的含义可由原空间中的分解 (20.10)–(20.11) 直接说明。$C$ 是窗口已完整保留的 $K$-线性部分，每个 $K$ 维度占四个 $F$ 维度；模去它以后，共同见证的每个独立方向 $t_i$ 又占据一个独立的 $K t_i$，而窗口在这份四维空间里恰留下三维 $H t_i$。所以共同见证数由完整部分贡献的 $c$ 与这些剩余方向的个数 $t$ 相加得到，窗口至少要支付 $c+3t$ 个维度。十一维以内的窗口容不下四份这样的三维部分，故 $t$ 只能是除以四的余数，$j$ 中每满四个便恰对应稳定部分的四个维度。
+
+十二维时，$W_0$ 把空间用于四份独立三维部分，给四个共同见证维度，却没有完整的 $K$-稳定部分；$W_1$ 则保留一份完整四维 $K e_1$，余下八维 $Y$ 不容纳任何非零 $xH$，同样给四个共同见证维度。两个窗口大小相同，同一三方向的共同见证数也相同，能继续保留的最大 $K$-稳定部分却不同。这里证明的是两个整数读数不足以决定另一个整数；(20.2) 也没有从维数恢复实际的 $T,C$ 子空间。
+
+所用普通乘积张成来自 Eliahou–Lecouvey Proposition 6.5，乘法配对来自 Bachoc–Serra–Zémor §2.2，饱和的既有定义见同文 §2.3；普通复合与配对只作上述推导的中间步骤，不另作分类结论。Ueoka 等前引文的 Theorem 4.2 是半维子空间及其正交补具有相同全部一次交叠维数的结论，Lemma 6.1 给出其具体八维非相似对，Proposition 6.5 再用一个实际四次子域分离相应乘积张成。命题 20.3 的窗口在十六维中为十二维，$Y$ 在十二维 $M$ 中为八维；它用的是 (20.16) 的联合三坐标计算，不是那份半维对偶对，也没有断言全部一次交叠谱相同。
+
+同样，Zemková，[*Vishik equivalence and similarity of quasilinear p-forms and totally singular quadratic forms*，arXiv:2309.13346v2](https://arxiv.org/pdf/2309.13346v2)，Definition 3.2 的弱等价比较所有单次添根后的缺陷；Corollary 4.21 使用 Definition 2.14 的全等价，比较所有扩域上的缺陷。这里仅比较固定实际 $K,H$ 的一个 $j$，未将它与上述任何一种完整等价条件等同。本节也不求全部 $(m,j,c)$ 的可达性、完整来源谱、完整交叠谱或窗口的标量轨道恢复。
+
+若接回本卷 §13 的三维入口，仍须满足原 P+K 的全部假设，并由该节得到同一完整四次域及指定投影；在 $L=K$、$\dim_FW=3$ 时，这里的维数只是 $(m,j,c)=(3,1,0)$。高次域中的十二维碰撞不改变该入口的三维结论，也不给出 Born 规则、复数域、物理三维或全部量子起源的推导。
+
+## 追加锚（本行以下为增补区）
