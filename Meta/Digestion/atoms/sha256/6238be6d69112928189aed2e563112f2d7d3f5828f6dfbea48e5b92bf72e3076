@@ -1,0 +1,12 @@
+**Theorem 23.4 (All original Type-II occurrences and exact minimum).** Let $w_{II}(n)$ be the original Type-II factor of the actual source at the original index $n$, and use the same $r(n)$. For every $n\ge6$, every suffix $s$ of $r(n)$ and every prefix $t$ of $r(n)$,
+
+$$
+\mathcal T(w_{II}(n),s,t,M^n b_0).
+$$
+
+*Proof.* The original Type-II source occurrence, positivity and context theorems supply the actual source data at parameter $n-6$, with both neighbors in $\{n\bmod6,6\}$. They pay the same two filters for every occurrence. The consecutive-pair and exact-gap argument of Theorem 23.3 applies, now using the attained componentwise minimum $M^n b_0$. The equality $(n-6)+6=n$ keeps the original matrix exponent and phase. The four properties of $\mathcal T$ hold on this whole index domain.
+
+### 23.5. Applicability and provenance
+
+These are repository-derived consequences for the literal dictionary (43) and the original seven-letter source, reusing the original source occurrence and minimum-return theorems. They provide exact decoding and transport, including all occurrences and attaining pairs. The scalar estimates (50), the exhaustive ordinary-exponent argument and its other inputs remain separate obligations; these auxiliary results alone give no complete ordinary-exponent theorem.
+
