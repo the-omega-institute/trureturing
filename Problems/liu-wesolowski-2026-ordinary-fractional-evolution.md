@@ -40,7 +40,7 @@ The positive event would require a universal C and successful circuits for all p
 
 ## Evidence
 
-The exact Lean statement is Trureturing.OpenProblems.FractionalEvolutionPhase.result : Not Trureturing.OpenProblems.FractionalEvolutionPhase.claim. The corresponding Scribe result describes the same literal negation and binds this dossier with ResolutionKind.Refuted. The source anchors are Definitions 1-3, the Section V uncontrolled-access paragraph and Appendix B; the verified TeX locator is in Library/Quantum/liuwesolowskithompsongupira2026fractional.md.
+The exact Lean statement is Trureturing.OpenProblems.FractionalEvolutionPhase.result : Not Trureturing.OpenProblems.FractionalEvolutionPhase.claim. The corresponding Scribe result describes the same literal negation and binds this dossier with ResolutionKind.Refuted. The source anchors are Definitions 1-3, the Section V uncontrolled-access paragraph and Appendix B; the verified TeX locator is in Library/QuantumChannels/liuwesolowskithompsongupira2026fractional.md.
 
 The proof reuses the frozen HarrowParallelChernoffExponentRefutation diamondNorm, FiniteTraceDistance trace-norm inequalities and orthogonal-state separation, and FiniteKrausChannel matrix-map operations. Its pinned Mathlib suppliers cover the list fold, matrix exponentials, spectra and positivity. These are reused results, not claims of a new general method.
 
