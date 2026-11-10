@@ -16,6 +16,10 @@ triage: anchor
 
 # Positive-definite lattice C2 cofiniteness
 
+## Verified locator
+
+<https://github.com/Fedor-Popov/Lean_VOA/blob/013a799ca834a8a6b3afa8129e3e522025b3f45c/VOA/Classification/COne/LatticeC2.lean>
+
 The pinned Lean_VOA source is Fedor K. Popov's
 `VOA/Classification/COne/LatticeC2.lean` at commit
 `013a799ca834a8a6b3afa8129e3e522025b3f45c`. Its theorem
