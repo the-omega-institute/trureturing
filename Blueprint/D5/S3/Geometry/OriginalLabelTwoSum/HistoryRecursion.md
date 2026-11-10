@@ -4478,9 +4478,9 @@ Definitions and proofs are in the paired Lean module.
 
 **Theorem 1.1 (avoiding_corner).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.avoiding_corner`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.avoiding_corner`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.avoiding_corner` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.avoiding_corner` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -4542,9 +4542,9 @@ theorem avoiding_corner (r : Rows V) (a : V) (ha : a ∈ r.ground) :
 
 **Theorem 1.2 (singleton_original_corner).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.singleton_original_corner`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.singleton_original_corner`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.singleton_original_corner` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.singleton_original_corner` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -4578,9 +4578,9 @@ theorem singleton_original_corner (r : Rows V) (A B : Finset V)
 
 **Definition 1.3 (singletonCornerOutput).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.singletonCornerOutput`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.singletonCornerOutput`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.singletonCornerOutput` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.singletonCornerOutput` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -4610,9 +4610,9 @@ def singletonCornerOutput (r : Rows V) (A B : Finset V)
 
 **Theorem 1.4 (local_decreases).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.local_decreases`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.local_decreases`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.local_decreases` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.local_decreases` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -4656,9 +4656,9 @@ theorem local_decreases (W : Finset V) (a b c : V)
 
 **Theorem 1.5 (next_masks).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.next_masks`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.next_masks`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.next_masks` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.next_masks` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -4700,9 +4700,9 @@ theorem next_masks (W A B C D : Finset V) (hA : A ⊆ W) (hB : B ⊆ W)
 
 **Theorem 1.6 (oneLeaf_rows).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.oneLeaf_rows`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.oneLeaf_rows`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.oneLeaf_rows` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.oneLeaf_rows` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -4764,9 +4764,9 @@ theorem oneLeaf_rows (r : Rows V) (a b : V) (ha : a ∈ r.ground)
 
 **Theorem 1.7 (oneLeaf_factor).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.oneLeaf_factor`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.oneLeaf_factor`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.oneLeaf_factor` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.oneLeaf_factor` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -4810,9 +4810,9 @@ theorem oneLeaf_factor (r : Rows V) (a b : V) (ha : a ∈ r.ground)
 
 **Definition 1.8 (oneLeafRowsOutput).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.oneLeafRowsOutput`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.oneLeafRowsOutput`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.oneLeafRowsOutput` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.oneLeafRowsOutput` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -4860,9 +4860,9 @@ def oneLeafRowsOutput (r : Rows V) (a b : V)
 
 **Theorem 1.9 (twoLeaf_factor).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.twoLeaf_factor`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.twoLeaf_factor`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.twoLeaf_factor` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.twoLeaf_factor` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -4972,9 +4972,9 @@ theorem twoLeaf_factor (r : Rows V) (a b c : V)
 
 **Theorem 1.10 (oneLeaf_original_corner).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.oneLeaf_original_corner`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.oneLeaf_original_corner`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.oneLeaf_original_corner` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.oneLeaf_original_corner` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -5014,9 +5014,9 @@ theorem oneLeaf_original_corner (r : Rows V) (A B : Finset V) (hA : A ⊆ r.grou
 
 **Theorem 1.11 (twoLeaf_original_corner).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.twoLeaf_original_corner`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.twoLeaf_original_corner`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.twoLeaf_original_corner` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.twoLeaf_original_corner` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -5068,9 +5068,9 @@ theorem twoLeaf_original_corner (r : Rows V) (A B : Finset V) (hA : A ⊆ r.grou
 
 **Theorem 1.12 (twoLeaf_rows).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.twoLeaf_rows`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.twoLeaf_rows`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.twoLeaf_rows` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.twoLeaf_rows` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -5154,9 +5154,9 @@ theorem twoLeaf_rows (r : Rows V) (a b c : V)
 
 **Definition 1.13 (twoLeafRowsOutput).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.twoLeafRowsOutput`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.twoLeafRowsOutput`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.twoLeafRowsOutput` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.twoLeafRowsOutput` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -5218,9 +5218,9 @@ def twoLeafRowsOutput (r : Rows V) (a b c : V)
 
 **Theorem 1.14 (component_left_leaf).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.component_left_leaf`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.component_left_leaf`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.component_left_leaf` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.component_left_leaf` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -5332,9 +5332,9 @@ theorem component_left_leaf (m : Nat) (hm : 3 ≤ m)
 
 **Theorem 1.15 (unmarked_path_leaf).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.unmarked_path_leaf`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.unmarked_path_leaf`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.unmarked_path_leaf` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.unmarked_path_leaf` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -5534,9 +5534,9 @@ theorem unmarked_path_leaf (m : Nat) (hm : 3 ≤ m)
 
 **Theorem 1.16 (physical_rim_indexed).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.physical_rim_indexed`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.physical_rim_indexed`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.physical_rim_indexed` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.physical_rim_indexed` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -5598,9 +5598,9 @@ theorem physical_rim_indexed {G : Type} (g : GraphData G V) (i : WheelInput g)
 
 **Theorem 1.17 (physical_local_incidence).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.physical_local_incidence`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.physical_local_incidence`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.physical_local_incidence` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.physical_local_incidence` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -5692,9 +5692,9 @@ theorem physical_local_incidence {G : Type} (g : GraphData G V) (i : WheelInput 
 
 **Theorem 1.18 (physical_unmarked_leaf).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.physical_unmarked_leaf`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.physical_unmarked_leaf`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.physical_unmarked_leaf` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.physical_unmarked_leaf` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -5846,9 +5846,9 @@ theorem physical_unmarked_leaf
 
 **Theorem 1.19 (physical_rim_positions).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.physical_rim_positions`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.physical_rim_positions`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.physical_rim_positions` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.physical_rim_positions` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -5920,9 +5920,9 @@ theorem physical_rim_positions {G : Type} (g : GraphData G V) (i : WheelInput g)
 
 **Theorem 1.20 (physical_neighbour_cases).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.physical_neighbour_cases`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.physical_neighbour_cases`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.physical_neighbour_cases` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.physical_neighbour_cases` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -6056,9 +6056,9 @@ theorem physical_neighbour_cases {G : Type} (g : GraphData G V) (i : WheelInput 
 
 **Theorem 1.21 (physical_projected_row_cases).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.physical_projected_row_cases`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.physical_projected_row_cases`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.physical_projected_row_cases` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.physical_projected_row_cases` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -6128,9 +6128,9 @@ theorem physical_projected_row_cases {G : Type} (g : GraphData G V) (i : WheelIn
 
 **Theorem 1.22 (localResidual_update).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.localResidual_update`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.localResidual_update`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.localResidual_update` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.localResidual_update` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -6156,9 +6156,9 @@ theorem localResidual_update (i : WheelInput g) (A B C D : Finset V) :
 
 **Theorem 1.23 (localCorner_decreases).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.localCorner_decreases`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.localCorner_decreases`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.localCorner_decreases` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.localCorner_decreases` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -6258,9 +6258,9 @@ theorem localCorner_decreases (i : WheelInput g) (A B : Finset V) (a b c : V)
 
 **Theorem 1.24 (step_parent_readback).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.step_parent_readback`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.step_parent_readback`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.step_parent_readback` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.step_parent_readback` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -6364,9 +6364,9 @@ theorem step_parent_readback (h : MixedHistory n G g) (i : WheelInput g)
 
 **Definition 1.25 (stepEmptyRowOutput).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.stepEmptyRowOutput`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.stepEmptyRowOutput`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.stepEmptyRowOutput` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.stepEmptyRowOutput` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -6414,9 +6414,9 @@ def stepEmptyRowOutput (h : MixedHistory n G g) (i : WheelInput g)
 
 **Definition 1.26 (stepZeroLocalOutput).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.stepZeroLocalOutput`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.stepZeroLocalOutput`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.stepZeroLocalOutput` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.stepZeroLocalOutput` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -6510,9 +6510,9 @@ def stepZeroLocalOutput (h : MixedHistory n G g) (i : WheelInput g)
 
 **Definition 1.27 (stepUnusedLocalOutput).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.stepUnusedLocalOutput`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.stepUnusedLocalOutput`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.stepUnusedLocalOutput` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.stepUnusedLocalOutput` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -6596,9 +6596,9 @@ def stepUnusedLocalOutput (h : MixedHistory n G g) (i : WheelInput g)
 
 **Definition 1.28 (stepAbsorbedNoRowsOutput).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.stepAbsorbedNoRowsOutput`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.stepAbsorbedNoRowsOutput`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.stepAbsorbedNoRowsOutput` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.stepAbsorbedNoRowsOutput` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -6656,9 +6656,9 @@ def stepAbsorbedNoRowsOutput (h : MixedHistory n G g) (i : WheelInput g)
 
 **Definition 1.29 (stepNoMarkersNoRowsOutput).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.stepNoMarkersNoRowsOutput`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.stepNoMarkersNoRowsOutput`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.stepNoMarkersNoRowsOutput` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.stepNoMarkersNoRowsOutput` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -6730,9 +6730,9 @@ def stepNoMarkersNoRowsOutput (h : MixedHistory n G g) (i : WheelInput g)
 
 **Definition 1.30 (stepSingleMarkerNoRowsOutput).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.stepSingleMarkerNoRowsOutput`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.stepSingleMarkerNoRowsOutput`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.stepSingleMarkerNoRowsOutput` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.stepSingleMarkerNoRowsOutput` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -6826,9 +6826,9 @@ def stepSingleMarkerNoRowsOutput (h : MixedHistory n G g) (i : WheelInput g)
 
 **Definition 1.31 (stepTwinMarkersNoRowsOutput).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.stepTwinMarkersNoRowsOutput`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.stepTwinMarkersNoRowsOutput`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.stepTwinMarkersNoRowsOutput` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.stepTwinMarkersNoRowsOutput` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -6942,9 +6942,9 @@ def stepTwinMarkersNoRowsOutput (h : MixedHistory n G g) (i : WheelInput g)
 
 **Definition 1.32 (stepIntactOutput).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.stepIntactOutput`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.stepIntactOutput`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.stepIntactOutput` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.stepIntactOutput` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -7914,45 +7914,46 @@ def allCornersOutput {n : Nat} {G : Type} {g : GraphData G V}
 
 ## References
 
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.avoiding_corner`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.component_left_leaf`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.local_decreases`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.next_masks`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.oneLeafRowsOutput`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.oneLeaf_factor`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.oneLeaf_original_corner`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.oneLeaf_rows`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.singletonCornerOutput`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.singleton_original_corner`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.twoLeafRowsOutput`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.twoLeaf_factor`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.twoLeaf_original_corner`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.twoLeaf_rows`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves.unmarked_path_leaf`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.localCorner_decreases`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.localResidual_update`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.physical_local_incidence`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.physical_neighbour_cases`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.physical_projected_row_cases`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.physical_rim_indexed`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.physical_rim_positions`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.physical_unmarked_leaf`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.stepAbsorbedNoRowsOutput`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.stepEmptyRowOutput`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.stepIntactOutput`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.stepNoMarkersNoRowsOutput`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.stepSingleMarkerNoRowsOutput`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.stepTwinMarkersNoRowsOutput`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.stepUnusedLocalOutput`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.stepZeroLocalOutput`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps.step_parent_readback`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.allCornersOutput`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.avoiding_corner`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.component_left_leaf`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.localCorner_decreases`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.localResidual_update`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.local_decreases`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.next_masks`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.oneLeafRowsOutput`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.oneLeaf_factor`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.oneLeaf_original_corner`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.oneLeaf_rows`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.physical_local_incidence`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.physical_neighbour_cases`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.physical_projected_row_cases`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.physical_rim_indexed`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.physical_rim_positions`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.physical_unmarked_leaf`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.seedOutput`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.singletonCornerOutput`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.singleton_original_corner`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.stepAbsorbedNoRowsOutput`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.stepEmptyRowOutput`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.stepIntactOutput`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.stepIntactOutput_core_faces`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.stepIntactOutput_main_faces`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.stepNoMarkersNoRowsOutput`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.stepNoRowsOutput`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.stepOutput`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.stepSingleMarkerNoRowsOutput`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.stepTwinMarkersNoRowsOutput`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.stepUnusedLocalOutput`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.stepZeroLocalOutput`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.step_parent_readback`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.twoLeafRowsOutput`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.twoLeaf_factor`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.twoLeaf_original_corner`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.twoLeaf_rows`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion.unmarked_path_leaf`
 - Dependency: [D5/S3/Geometry/OriginalLabelTwoSum/HistoryFactors](HistoryFactors.md)
 - Dependency: [D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests](HistoryForests.md)
 - Dependency: [D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact](HistoryIntact.md)
+- Dependency: [D5/S3/Geometry/OriginalLabelTwoSum/HistoryPhysicalSteps](HistoryPhysicalSteps.md)
 - Dependency: [D5/S3/Geometry/OriginalLabelTwoSum/HistorySeed](HistorySeed.md)

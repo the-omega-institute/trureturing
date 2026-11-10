@@ -4,13 +4,13 @@
 
 Actual maximal-critical protection, path Gamma and ghost-retaining zero fillings on the original wheel grounds.
 
-Every new public API is quoted below with the full literal SOURCE context, telescope, body and qualified owner. There are no new structures, inductives, constructors or projections. The sole imported authorities remain FiniteProtectedDualWord.Symbol/Word/Contract, CollapsePair and Sequence; Filling/Certificate/Rows/compileParent remain the original consumer interfaces. All imported record fields are constructed in the source owner, including its private helpers. The quoted section-variable context is literal source, not an assertion that unused variables become elaborated binders.  The geometric constructions and physical-history correspondence belong to their respective modules; this local interface does not assert an unrestricted all-plane supplier.
+Every new public API is quoted below with the full literal SOURCE context, telescope, body and qualified owner. There are no new structures, inductives, constructors or projections. The sole imported authorities remain FiniteProtectedDualWord.Symbol/Word/Contract, CollapsePair and Sequence; Filling/Certificate/Rows/compileParent remain the original consumer interfaces. All imported record fields are constructed in the source owner, including the helpers in its imported construction modules. The quoted section-variable context is literal source, not an assertion that unused variables become elaborated binders.  The geometric constructions and physical-history correspondence belong to their respective modules; this local interface does not assert an unrestricted all-plane supplier.
 
 **Definition 1.1 (pathContract).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.pathContract`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.pathContract`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.pathContract` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.pathContract` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -38,7 +38,7 @@ def pathContract (m : Nat) (hm : 3 ≤ m) :
 
 ### Source text
 
-Exact SOURCE declaration and body from D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.lean; D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.pathContract
+Exact SOURCE declaration and body from D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.lean; D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.pathContract
 
 def pathContract (m : Nat) (hm : 3 ≤ m) :
 
@@ -62,9 +62,9 @@ Definitions and proofs are in the paired Lean module.
 
 **Theorem 1.2 (pathRoot_rawDual).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.pathRoot_rawDual`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.pathRoot_rawDual`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.pathRoot_rawDual` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.pathRoot_rawDual` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -92,7 +92,7 @@ theorem pathRoot_rawDual (m : Nat) (hm : 3 ≤ m) :
 
 ### Source text
 
-Exact SOURCE declaration and body from D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.lean; D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.pathRoot_rawDual
+Exact SOURCE declaration and body from D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.lean; D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.pathRoot_rawDual
 
 theorem pathRoot_rawDual (m : Nat) (hm : 3 ≤ m) :
 
@@ -108,9 +108,9 @@ Definitions and proofs are in the paired Lean module.
 
 **Definition 1.3 (pathFilling).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.pathFilling`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.pathFilling`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.pathFilling` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.pathFilling` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -136,7 +136,7 @@ def pathFilling (m : Nat) (hm : 3 ≤ m) : Filling (ground m) (pathRoot m hm)
 
 ### Source text
 
-Exact SOURCE declaration and body from D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.lean; D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.pathFilling
+Exact SOURCE declaration and body from D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.lean; D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.pathFilling
 
 def pathFilling (m : Nat) (hm : 3 ≤ m) : Filling (ground m) (pathRoot m hm) := by
 
@@ -234,9 +234,9 @@ Definitions and proofs are in the paired Lean module.
 
 **Definition 1.4 (gammaGood).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.gammaGood`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.gammaGood`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.gammaGood` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.gammaGood` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -264,7 +264,7 @@ def gammaGood (m : Nat) (hm : 3 ≤ m) (hg : goodResidue m) :
 
 ### Source text
 
-Exact SOURCE declaration and body from D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.lean; D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.gammaGood
+Exact SOURCE declaration and body from D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.lean; D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.gammaGood
 
 def gammaGood (m : Nat) (hm : 3 ≤ m) (hg : goodResidue m) :
 
@@ -286,9 +286,9 @@ Definitions and proofs are in the paired Lean module.
 
 **Definition 1.5 (zeroContract).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.zeroContract`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.zeroContract`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.zeroContract` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.zeroContract` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -316,7 +316,7 @@ def zeroContract (m : Nat) (hm : 3 ≤ m) :
 
 ### Source text
 
-Exact SOURCE declaration and body from D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.lean; D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.zeroContract
+Exact SOURCE declaration and body from D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.lean; D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.zeroContract
 
 def zeroContract (m : Nat) (hm : 3 ≤ m) :
 
@@ -392,9 +392,9 @@ Definitions and proofs are in the paired Lean module.
 
 **Definition 1.6 (fill0).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.fill0`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.fill0`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.fill0` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.fill0` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -420,7 +420,7 @@ def fill0 (m : Nat) (hm : 3 ≤ m) : Filling (tailGround m hm) (A0 m hm)
 
 ### Source text
 
-Exact SOURCE declaration and body from D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.lean; D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.fill0
+Exact SOURCE declaration and body from D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.lean; D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.fill0
 
 def fill0 (m : Nat) (hm : 3 ≤ m) : Filling (tailGround m hm) (A0 m hm) := by
 
@@ -522,9 +522,9 @@ Definitions and proofs are in the paired Lean module.
 
 **Theorem 1.7 (fill0_critical).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.fill0_critical`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.fill0_critical`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.fill0_critical` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.fill0_critical` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -552,7 +552,7 @@ theorem fill0_critical (m : Nat) (hm : 3 ≤ m) :
 
 ### Source text
 
-Exact SOURCE declaration and body from D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.lean; D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.fill0_critical
+Exact SOURCE declaration and body from D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.lean; D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.fill0_critical
 
 theorem fill0_critical (m : Nat) (hm : 3 ≤ m) :
 
@@ -570,9 +570,9 @@ Definitions and proofs are in the paired Lean module.
 
 **Theorem 1.8 (A0_rawDual).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.A0_rawDual`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.A0_rawDual`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.A0_rawDual` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.A0_rawDual` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -600,7 +600,7 @@ theorem A0_rawDual (m : Nat) (hm : 3 ≤ m) :
 
 ### Source text
 
-Exact SOURCE declaration and body from D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.lean; D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.A0_rawDual
+Exact SOURCE declaration and body from D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.lean; D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.A0_rawDual
 
 theorem A0_rawDual (m : Nat) (hm : 3 ≤ m) :
 
@@ -610,9 +610,9 @@ theorem A0_rawDual (m : Nat) (hm : 3 ≤ m) :
 
 **Theorem 1.9 (wheelRoot_eq_A1).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.wheelRoot_eq_A1`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.wheelRoot_eq_A1`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.wheelRoot_eq_A1` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.wheelRoot_eq_A1` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -640,7 +640,7 @@ theorem wheelRoot_eq_A1 (m : Nat) (hm : 3 ≤ m) :
 
 ### Source text
 
-Exact SOURCE declaration and body from D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.lean; D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.wheelRoot_eq_A1
+Exact SOURCE declaration and body from D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.lean; D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.wheelRoot_eq_A1
 
 theorem wheelRoot_eq_A1 (m : Nat) (hm : 3 ≤ m) :
 
@@ -676,9 +676,9 @@ theorem wheelRoot_eq_A1 (m : Nat) (hm : 3 ≤ m) :
 
 **Definition 1.10 (excludedCycleContract).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.excludedCycleContract`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.excludedCycleContract`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.excludedCycleContract` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.excludedCycleContract` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -706,7 +706,7 @@ def excludedCycleContract (m : Nat) (hm : 3 ≤ m) (hr : m % 3 ≠ 1) :
 
 ### Source text
 
-Exact SOURCE declaration and body from D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.lean; D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.excludedCycleContract
+Exact SOURCE declaration and body from D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.lean; D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.excludedCycleContract
 
 def excludedCycleContract (m : Nat) (hm : 3 ≤ m) (hr : m % 3 ≠ 1) :
 
@@ -728,9 +728,9 @@ Definitions and proofs are in the paired Lean module.
 
 **Definition 1.11 (fill1Excluded).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.fill1Excluded`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.fill1Excluded`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.fill1Excluded` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.fill1Excluded` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -758,7 +758,7 @@ def fill1Excluded (m : Nat) (hm : 3 ≤ m) (hr : m % 3 ≠ 1) :
 
 ### Source text
 
-Exact SOURCE declaration and body from D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.lean; D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.fill1Excluded
+Exact SOURCE declaration and body from D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.lean; D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.fill1Excluded
 
 def fill1Excluded (m : Nat) (hm : 3 ≤ m) (hr : m % 3 ≠ 1) :
 
@@ -830,9 +830,9 @@ Definitions and proofs are in the paired Lean module.
 
 **Theorem 1.12 (fill1Excluded_critical).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.fill1Excluded_critical`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.fill1Excluded_critical`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.fill1Excluded_critical` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.fill1Excluded_critical` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -860,7 +860,7 @@ theorem fill1Excluded_critical (m : Nat) (hm : 3 ≤ m) (hr : m % 3 ≠ 1) :
 
 ### Source text
 
-Exact SOURCE declaration and body from D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.lean; D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.fill1Excluded_critical
+Exact SOURCE declaration and body from D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.lean; D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.fill1Excluded_critical
 
 theorem fill1Excluded_critical (m : Nat) (hm : 3 ≤ m) (hr : m % 3 ≠ 1) :
 
@@ -1636,7 +1636,6 @@ theorem gamma_iff (m : Nat) (hm : 3 ≤ m) :
 
 ## References
 
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.A0_rawDual`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.collarA`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.collarB`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.collarCore`
@@ -1644,22 +1643,24 @@ theorem gamma_iff (m : Nat) (hm : 3 ≤ m) :
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.collarPivot`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.collarSequence`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.collarUpper`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.excludedCycleContract`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.fill0`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.fill0_critical`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.fill1`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.fill1Excluded`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.fill1Excluded_critical`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.fill1Good`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.fill1_critical`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.gammaGood`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.gamma_iff`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.goodCycleContract`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.goodH`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.pathContract`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.pathFilling`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.pathFilling_critical`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.pathRoot_rawDual`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.wheelRoot_eq_A1`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.zeroContract`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.A0_rawDual`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.excludedCycleContract`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.fill0`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.fill0_critical`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.fill1Excluded`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.fill1Excluded_critical`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.gammaGood`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.pathContract`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.pathFilling`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.pathRoot_rawDual`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.wheelRoot_eq_A1`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.zeroContract`
 - Dependency: [D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/CycleWord](CycleWord.md)
+- Dependency: [D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings](ProtectedFillings.md)

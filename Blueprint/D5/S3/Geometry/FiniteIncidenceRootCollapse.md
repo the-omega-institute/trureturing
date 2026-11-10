@@ -8,9 +8,9 @@ The constructor retains arbitrary Prop-valued incidence, the original ambient an
 
 **Definition 1.1 (State).**
 
-Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.State`
+Lean statement: `D5/S3/Geometry/FiniteIncidenceRootPruning.State`
 
-*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootCollapse.State` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootPruning.State` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -28,9 +28,9 @@ Authored Lean source header:structure State (ρ : I → J → Prop) where
 
 **Definition 1.2 (rowNeighborhood).**
 
-Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.rowNeighborhood`
+Lean statement: `D5/S3/Geometry/FiniteIncidenceRootPruning.rowNeighborhood`
 
-*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootCollapse.rowNeighborhood` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootPruning.rowNeighborhood` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -42,9 +42,9 @@ Authored Lean source header:def rowNeighborhood (ρ : I → J → Prop) (q : Sta
 
 **Theorem 1.3 (mem_rowNeighborhood).**
 
-Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.mem_rowNeighborhood`
+Lean statement: `D5/S3/Geometry/FiniteIncidenceRootPruning.mem_rowNeighborhood`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteIncidenceRootCollapse.mem_rowNeighborhood` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteIncidenceRootPruning.mem_rowNeighborhood` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -62,9 +62,9 @@ Authored Lean source header:@[simp] theorem mem_rowNeighborhood (ρ : I → J �
 
 **Definition 1.4 (incidenceSimplex).**
 
-Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.incidenceSimplex`
+Lean statement: `D5/S3/Geometry/FiniteIncidenceRootPruning.incidenceSimplex`
 
-*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootCollapse.incidenceSimplex` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootPruning.incidenceSimplex` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -76,9 +76,9 @@ Authored Lean source header:def incidenceSimplex (lambda : Finset I) : PreAbstra
 
 **Definition 1.5 (rootK).**
 
-Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.rootK`
+Lean statement: `D5/S3/Geometry/FiniteIncidenceRootPruning.rootK`
 
-*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootCollapse.rootK` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootPruning.rootK` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -104,9 +104,9 @@ Authored Lean source header:def rootK (ρ : I → J → Prop) (q : State ρ) : P
 
 **Theorem 1.6 (mem_rootK).**
 
-Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.mem_rootK`
+Lean statement: `D5/S3/Geometry/FiniteIncidenceRootPruning.mem_rootK`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteIncidenceRootCollapse.mem_rootK` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteIncidenceRootPruning.mem_rootK` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -124,9 +124,9 @@ Authored Lean source header:@[simp] theorem mem_rootK (ρ : I → J → Prop) (q
 
 **Definition 1.7 (incidenceDual).**
 
-Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.incidenceDual`
+Lean statement: `D5/S3/Geometry/FiniteIncidenceRootPruning.incidenceDual`
 
-*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootCollapse.incidenceDual` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootPruning.incidenceDual` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -164,9 +164,9 @@ Authored Lean source header:def incidenceDual (ρ : I → J → Prop) (q : State
 
 **Theorem 1.8 (rootK_dual).**
 
-Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.rootK_dual`
+Lean statement: `D5/S3/Geometry/FiniteIncidenceRootPruning.rootK_dual`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteIncidenceRootCollapse.rootK_dual` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteIncidenceRootPruning.rootK_dual` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -182,9 +182,9 @@ Authored Lean source header:theorem rootK_dual (ρ : I → J → Prop) (q : Stat
 
 **Definition 1.9 (eraseRow).**
 
-Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.eraseRow`
+Lean statement: `D5/S3/Geometry/FiniteIncidenceRootPruning.eraseRow`
 
-*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootCollapse.eraseRow` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootPruning.eraseRow` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -196,9 +196,9 @@ Authored Lean source header:def eraseRow (ρ : I → J → Prop) (q : State ρ) 
 
 **Definition 1.10 (eraseColumn).**
 
-Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.eraseColumn`
+Lean statement: `D5/S3/Geometry/FiniteIncidenceRootPruning.eraseColumn`
 
-*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootCollapse.eraseColumn` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootPruning.eraseColumn` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -210,9 +210,9 @@ Authored Lean source header:def eraseColumn (ρ : I → J → Prop) (q : State �
 
 **Definition 1.11 (singletonChild).**
 
-Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.singletonChild`
+Lean statement: `D5/S3/Geometry/FiniteIncidenceRootPruning.singletonChild`
 
-*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootCollapse.singletonChild` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootPruning.singletonChild` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -224,9 +224,9 @@ Authored Lean source header:def singletonChild (ρ : I → J → Prop) (q : Stat
 
 **Theorem 1.12 (eraseRow_active).**
 
-Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.eraseRow_active`
+Lean statement: `D5/S3/Geometry/FiniteIncidenceRootPruning.eraseRow_active`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteIncidenceRootCollapse.eraseRow_active` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteIncidenceRootPruning.eraseRow_active` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -242,9 +242,9 @@ Authored Lean source header:@[simp] theorem eraseRow_active (ρ : I → J → Pr
 
 **Theorem 1.13 (eraseColumn_rows).**
 
-Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.eraseColumn_rows`
+Lean statement: `D5/S3/Geometry/FiniteIncidenceRootPruning.eraseColumn_rows`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteIncidenceRootCollapse.eraseColumn_rows` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteIncidenceRootPruning.eraseColumn_rows` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -260,9 +260,9 @@ Authored Lean source header:@[simp] theorem eraseColumn_rows (ρ : I → J → P
 
 **Definition 1.14 (RowSubset).**
 
-Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.RowSubset`
+Lean statement: `D5/S3/Geometry/FiniteIncidenceRootPruning.RowSubset`
 
-*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootCollapse.RowSubset` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootPruning.RowSubset` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -274,9 +274,9 @@ Authored Lean source header:def RowSubset (ρ : I → J → Prop) (q : State ρ)
 
 **Definition 1.15 (ColumnSubset).**
 
-Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.ColumnSubset`
+Lean statement: `D5/S3/Geometry/FiniteIncidenceRootPruning.ColumnSubset`
 
-*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootCollapse.ColumnSubset` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootPruning.ColumnSubset` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -288,9 +288,9 @@ Authored Lean source header:def ColumnSubset (ρ : I → J → Prop) (q : State 
 
 **Definition 1.16 (IsolatedColumn).**
 
-Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.IsolatedColumn`
+Lean statement: `D5/S3/Geometry/FiniteIncidenceRootPruning.IsolatedColumn`
 
-*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootCollapse.IsolatedColumn` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootPruning.IsolatedColumn` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -302,9 +302,9 @@ Authored Lean source header:def IsolatedColumn (ρ : I → J → Prop) (q : Stat
 
 **Definition 1.17 (SingletonRow).**
 
-Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.SingletonRow`
+Lean statement: `D5/S3/Geometry/FiniteIncidenceRootPruning.SingletonRow`
 
-*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootCollapse.SingletonRow` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootPruning.SingletonRow` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -316,9 +316,9 @@ Authored Lean source header:def SingletonRow (ρ : I → J → Prop) (q : State 
 
 **Theorem 1.18 (rowSubset_neighborhood).**
 
-Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.rowSubset_neighborhood`
+Lean statement: `D5/S3/Geometry/FiniteIncidenceRootPruning.rowSubset_neighborhood`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteIncidenceRootCollapse.rowSubset_neighborhood` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteIncidenceRootPruning.rowSubset_neighborhood` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -336,9 +336,9 @@ Authored Lean source header:theorem rowSubset_neighborhood (ρ : I → J → Pro
 
 **Theorem 1.19 (columnSubset_neighborhood).**
 
-Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.columnSubset_neighborhood`
+Lean statement: `D5/S3/Geometry/FiniteIncidenceRootPruning.columnSubset_neighborhood`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteIncidenceRootCollapse.columnSubset_neighborhood` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteIncidenceRootPruning.columnSubset_neighborhood` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -356,9 +356,9 @@ Authored Lean source header:theorem columnSubset_neighborhood (ρ : I → J → 
 
 **Theorem 1.20 (rootK_empty_rows).**
 
-Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.rootK_empty_rows`
+Lean statement: `D5/S3/Geometry/FiniteIncidenceRootPruning.rootK_empty_rows`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteIncidenceRootCollapse.rootK_empty_rows` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteIncidenceRootPruning.rootK_empty_rows` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -374,9 +374,9 @@ Authored Lean source header:theorem rootK_empty_rows (ρ : I → J → Prop) (q 
 
 **Theorem 1.21 (rootK_full_rows).**
 
-Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.rootK_full_rows`
+Lean statement: `D5/S3/Geometry/FiniteIncidenceRootPruning.rootK_full_rows`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteIncidenceRootCollapse.rootK_full_rows` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteIncidenceRootPruning.rootK_full_rows` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -396,9 +396,9 @@ Authored Lean source header:theorem rootK_full_rows (ρ : I → J → Prop) (q :
 
 **Theorem 1.22 (rootK_empty_row).**
 
-Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.rootK_empty_row`
+Lean statement: `D5/S3/Geometry/FiniteIncidenceRootPruning.rootK_empty_row`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteIncidenceRootCollapse.rootK_empty_row` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteIncidenceRootPruning.rootK_empty_row` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -416,9 +416,9 @@ Authored Lean source header:theorem rootK_empty_row (ρ : I → J → Prop) (q :
 
 **Theorem 1.23 (rootK_row_erase).**
 
-Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.rootK_row_erase`
+Lean statement: `D5/S3/Geometry/FiniteIncidenceRootPruning.rootK_row_erase`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteIncidenceRootCollapse.rootK_row_erase` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteIncidenceRootPruning.rootK_row_erase` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -438,9 +438,9 @@ Authored Lean source header:theorem rootK_row_erase (ρ : I → J → Prop) (q :
 
 **Theorem 1.24 (rootK_column_delete).**
 
-Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.rootK_column_delete`
+Lean statement: `D5/S3/Geometry/FiniteIncidenceRootPruning.rootK_column_delete`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteIncidenceRootCollapse.rootK_column_delete` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteIncidenceRootPruning.rootK_column_delete` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -460,9 +460,9 @@ Authored Lean source header:theorem rootK_column_delete (ρ : I → J → Prop) 
 
 **Theorem 1.25 (rootK_isolated_cone).**
 
-Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.rootK_isolated_cone`
+Lean statement: `D5/S3/Geometry/FiniteIncidenceRootPruning.rootK_isolated_cone`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteIncidenceRootCollapse.rootK_isolated_cone` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteIncidenceRootPruning.rootK_isolated_cone` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -482,9 +482,9 @@ Authored Lean source header:theorem rootK_isolated_cone (ρ : I → J → Prop) 
 
 **Definition 1.26 (Pruning).**
 
-Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.Pruning`
+Lean statement: `D5/S3/Geometry/FiniteIncidenceRootPruning.Pruning`
 
-*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootCollapse.Pruning` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootPruning.Pruning` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -530,9 +530,9 @@ Authored Lean source header:inductive Pruning (ρ : I → J → Prop) : State ρ
 
 **Definition 1.27 (TerminalTag).**
 
-Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.TerminalTag`
+Lean statement: `D5/S3/Geometry/FiniteIncidenceRootPruning.TerminalTag`
 
-*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootCollapse.TerminalTag` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootPruning.TerminalTag` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -552,9 +552,9 @@ deriving DecidableEq
 
 **Definition 1.28 (TerminalLaw).**
 
-Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.TerminalLaw`
+Lean statement: `D5/S3/Geometry/FiniteIncidenceRootPruning.TerminalLaw`
 
-*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootCollapse.TerminalLaw` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootPruning.TerminalLaw` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -566,9 +566,9 @@ Authored Lean source header:def TerminalLaw (ρ : I → J → Prop) (q : State �
 
 **Definition 1.29 (Witness).**
 
-Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.Witness`
+Lean statement: `D5/S3/Geometry/FiniteIncidenceRootPruning.Witness`
 
-*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootCollapse.Witness` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootPruning.Witness` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -606,9 +606,9 @@ Authored Lean source header:structure Witness (ρ : I → J → Prop) (q : State
 
 **Definition 1.30 (Result).**
 
-Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.Result`
+Lean statement: `D5/S3/Geometry/FiniteIncidenceRootPruning.Result`
 
-*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootCollapse.Result` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootPruning.Result` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -628,9 +628,9 @@ Authored Lean source header:inductive Result (ρ : I → J → Prop) (q : State 
 
 **Definition 1.31 (augmentedTerminal).**
 
-Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.augmentedTerminal`
+Lean statement: `D5/S3/Geometry/FiniteIncidenceRootPruning.augmentedTerminal`
 
-*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootCollapse.augmentedTerminal` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootPruning.augmentedTerminal` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -646,9 +646,9 @@ Authored Lean source header:def augmentedTerminal (ρ : I → J → Prop) (q : S
 
 **Theorem 1.32 (terminal_semantics).**
 
-Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.terminal_semantics`
+Lean statement: `D5/S3/Geometry/FiniteIncidenceRootPruning.terminal_semantics`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteIncidenceRootCollapse.terminal_semantics` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteIncidenceRootPruning.terminal_semantics` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -668,9 +668,9 @@ Authored Lean source header:theorem terminal_semantics (ρ : I → J → Prop) {
 
 **Definition 1.33 (simplexCollapse).**
 
-Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.simplexCollapse`
+Lean statement: `D5/S3/Geometry/FiniteIncidenceRootPruning.simplexCollapse`
 
-*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootCollapse.simplexCollapse` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootPruning.simplexCollapse` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -746,9 +746,9 @@ Authored Lean source header:def simplexCollapse : ∀ (A : Finset I) (p : I), p 
 
 **Definition 1.34 (isolatedCollapse).**
 
-Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.isolatedCollapse`
+Lean statement: `D5/S3/Geometry/FiniteIncidenceRootPruning.isolatedCollapse`
 
-*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootCollapse.isolatedCollapse` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootPruning.isolatedCollapse` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -872,9 +872,9 @@ Authored Lean source header:def isolatedCollapse : ∀ (ρ : I → J → Prop) (
 
 **Definition 1.35 (liftCoreToBase).**
 
-Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.liftCoreToBase`
+Lean statement: `D5/S3/Geometry/FiniteIncidenceRootPruning.liftCoreToBase`
 
-*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootCollapse.liftCoreToBase` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteIncidenceRootPruning.liftCoreToBase` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -898,9 +898,9 @@ Authored Lean source header:def liftCoreToBase (A : Finset I) (C : PreAbstractSi
 
 **Theorem 1.36 (singleton_decomposition).**
 
-Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.singleton_decomposition`
+Lean statement: `D5/S3/Geometry/FiniteIncidenceRootPruning.singleton_decomposition`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteIncidenceRootCollapse.singleton_decomposition` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteIncidenceRootPruning.singleton_decomposition` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -922,9 +922,9 @@ Authored Lean source header:theorem singleton_decomposition (ρ : I → J → Pr
 
 **Theorem 1.37 (singleton_no_apex).**
 
-Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.singleton_no_apex`
+Lean statement: `D5/S3/Geometry/FiniteIncidenceRootPruning.singleton_no_apex`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteIncidenceRootCollapse.singleton_no_apex` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteIncidenceRootPruning.singleton_no_apex` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -944,9 +944,9 @@ Authored Lean source header:theorem singleton_no_apex (ρ : I → J → Prop) (q
 
 **Theorem 1.38 (singleton_apex_of_child_rows).**
 
-Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.singleton_apex_of_child_rows`
+Lean statement: `D5/S3/Geometry/FiniteIncidenceRootPruning.singleton_apex_of_child_rows`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteIncidenceRootCollapse.singleton_apex_of_child_rows` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteIncidenceRootPruning.singleton_apex_of_child_rows` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -966,9 +966,9 @@ Authored Lean source header:theorem singleton_apex_of_child_rows (ρ : I → J �
 
 **Theorem 1.39 (singleton_apex_of_child_face).**
 
-Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.singleton_apex_of_child_face`
+Lean statement: `D5/S3/Geometry/FiniteIncidenceRootPruning.singleton_apex_of_child_face`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteIncidenceRootCollapse.singleton_apex_of_child_face` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteIncidenceRootPruning.singleton_apex_of_child_face` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -1850,52 +1850,53 @@ The named declarations below describe the combinatorial root construction. Equal
 
 ## References
 
-- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.ColumnSubset`
-- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.IsolatedColumn`
-- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.Pruning`
-- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.Result`
-- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.RowSubset`
-- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.SingletonRow`
-- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.State`
-- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.TerminalLaw`
-- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.TerminalTag`
-- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.Witness`
-- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.augmentedTerminal`
 - Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.build`
-- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.columnSubset_neighborhood`
-- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.eraseColumn`
-- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.eraseColumn_rows`
-- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.eraseRow`
-- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.eraseRow_active`
-- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.incidenceDual`
-- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.incidenceSimplex`
-- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.isolatedCollapse`
-- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.liftCoreToBase`
-- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.mem_rootK`
-- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.mem_rowNeighborhood`
 - Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.nativeHomotopy_fixed`
 - Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.nativeInclusion`
 - Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.nativeRetraction`
 - Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.nativeRetraction_inclusion`
 - Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.nativeSDR`
 - Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.rootCertificate`
-- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.rootK`
-- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.rootK_column_delete`
-- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.rootK_dual`
-- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.rootK_empty_row`
-- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.rootK_empty_rows`
-- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.rootK_full_rows`
-- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.rootK_isolated_cone`
-- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.rootK_row_erase`
-- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.rowNeighborhood`
-- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.rowSubset_neighborhood`
-- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.simplexCollapse`
-- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.singletonChild`
-- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.singleton_apex_of_child_face`
-- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.singleton_apex_of_child_rows`
-- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.singleton_decomposition`
-- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.singleton_no_apex`
-- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootCollapse.terminal_semantics`
+- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootPruning.ColumnSubset`
+- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootPruning.IsolatedColumn`
+- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootPruning.Pruning`
+- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootPruning.Result`
+- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootPruning.RowSubset`
+- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootPruning.SingletonRow`
+- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootPruning.State`
+- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootPruning.TerminalLaw`
+- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootPruning.TerminalTag`
+- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootPruning.Witness`
+- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootPruning.augmentedTerminal`
+- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootPruning.columnSubset_neighborhood`
+- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootPruning.eraseColumn`
+- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootPruning.eraseColumn_rows`
+- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootPruning.eraseRow`
+- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootPruning.eraseRow_active`
+- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootPruning.incidenceDual`
+- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootPruning.incidenceSimplex`
+- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootPruning.isolatedCollapse`
+- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootPruning.liftCoreToBase`
+- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootPruning.mem_rootK`
+- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootPruning.mem_rowNeighborhood`
+- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootPruning.rootK`
+- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootPruning.rootK_column_delete`
+- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootPruning.rootK_dual`
+- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootPruning.rootK_empty_row`
+- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootPruning.rootK_empty_rows`
+- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootPruning.rootK_full_rows`
+- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootPruning.rootK_isolated_cone`
+- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootPruning.rootK_row_erase`
+- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootPruning.rowNeighborhood`
+- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootPruning.rowSubset_neighborhood`
+- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootPruning.simplexCollapse`
+- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootPruning.singletonChild`
+- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootPruning.singleton_apex_of_child_face`
+- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootPruning.singleton_apex_of_child_rows`
+- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootPruning.singleton_decomposition`
+- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootPruning.singleton_no_apex`
+- Truth anchor: `D5/S3/Geometry/FiniteIncidenceRootPruning.terminal_semantics`
 - Dependency: [D5/S3/Geometry/FiniteAlexanderDualCollapse](FiniteAlexanderDualCollapse.md)
+- Dependency: [D5/S3/Geometry/FiniteIncidenceRootPruning](FiniteIncidenceRootPruning.md)
 - Dependency: [D5/S3/Geometry/FiniteRelativeSimplicialCollapse](FiniteRelativeSimplicialCollapse.md)
 - Dependency: [D5/S3/Geometry/FiniteVertexDominationCollapse](FiniteVertexDominationCollapse.md)

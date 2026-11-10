@@ -2466,9 +2466,9 @@ Definitions and proofs are in the paired Lean module.
 
 **Definition 1.1 (forced).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.forced`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.forced`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.forced` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.forced` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -2482,9 +2482,9 @@ def forced (r : Rows V) : Finset V := by classical exact r.ground.filter (fun x 
 
 **Theorem 1.2 (mem_forced).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.mem_forced`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.mem_forced`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.mem_forced` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.mem_forced` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -2514,9 +2514,9 @@ The index subtype retains every other original multiplicity and every label. -/
 
 **Definition 1.3 (prune).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.prune`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.prune`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.prune` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.prune` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -2542,9 +2542,9 @@ Definitions and proofs are in the paired Lean module.
 
 **Theorem 1.4 (prune_root).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.prune_root`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.prune_root`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.prune_root` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.prune_root` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -2602,9 +2602,9 @@ Definitions and proofs are in the paired Lean module.
 
 **Theorem 1.5 (empty_row_root).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.empty_row_root`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.empty_row_root`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.empty_row_root` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.empty_row_root` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -2630,9 +2630,9 @@ Definitions and proofs are in the paired Lean module.
 
 **Theorem 1.6 (no_rows_root).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.no_rows_root`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.no_rows_root`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.no_rows_root` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.no_rows_root` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -2658,9 +2658,9 @@ Definitions and proofs are in the paired Lean module.
 
 **Definition 1.7 (localRows).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.localRows`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.localRows`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.localRows` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.localRows` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -2680,9 +2680,9 @@ Definitions and proofs are in the paired Lean module.
 
 **Definition 1.8 (at).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.at`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.at`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.at` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.at` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -2698,9 +2698,9 @@ def «at» (m : Nat) (hm : 3 ≤ m) (i : Fin m) : Label m :=
 
 **Definition 1.9 (position).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.position`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.position`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.position` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.position` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -2716,9 +2716,9 @@ def position (m : Nat) (x : Label m) : Nat :=
 
 **Definition 1.10 (cutRow).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.cutRow`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.cutRow`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.cutRow` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.cutRow` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -2734,9 +2734,9 @@ def cutRow (m : Nat) (hm : 3 ≤ m) (k : Fin (m - 1)) : Finset (Label m) :=
 
 **Theorem 1.11 (projected_row_cases).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.projected_row_cases`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.projected_row_cases`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.projected_row_cases` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.projected_row_cases` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -2834,9 +2834,9 @@ Definitions and proofs are in the paired Lean module.
 
 **Definition 1.12 (alive).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.alive`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.alive`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.alive` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.alive` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -2860,9 +2860,9 @@ Definitions and proofs are in the paired Lean module.
 
 **Definition 1.13 (reducedGraph).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.reducedGraph`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.reducedGraph`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.reducedGraph` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.reducedGraph` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -2890,9 +2890,9 @@ Definitions and proofs are in the paired Lean module.
 
 **Definition 1.14 (interval).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.interval`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.interval`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.interval` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.interval` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -2908,9 +2908,9 @@ def interval (a b : Fin m) : Prop := ∀ k : Fin (m - 1),
 
 **Theorem 1.15 (connected_iff_interval).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.connected_iff_interval`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.connected_iff_interval`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.connected_iff_interval` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.connected_iff_interval` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -2940,9 +2940,9 @@ theorem connected_iff_interval (a b : Fin m) :
 
 **Definition 1.16 (live).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.live`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.live`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.live` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.live` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -2962,9 +2962,9 @@ Definitions and proofs are in the paired Lean module.
 
 **Definition 1.17 (component).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.component`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.component`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.component` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.component` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -2980,9 +2980,9 @@ def component (a : Fin m) : Finset (Fin m) :=
 
 **Definition 1.18 (components).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.components`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.components`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.components` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.components` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -2998,9 +2998,9 @@ def components : Finset (Finset (Fin m)) :=
 
 **Definition 1.19 (block).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.block`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.block`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.block` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.block` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -3016,9 +3016,9 @@ def block (a : Fin m) : Finset (Label m) :=
 
 **Theorem 1.20 (component_partition).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.component_partition`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.component_partition`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.component_partition` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.component_partition` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -3074,9 +3074,9 @@ Thus these are consecutive original intervals, not paths through new shortcuts. 
 
 **Theorem 1.21 (component_consecutive).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.component_consecutive`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.component_consecutive`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.component_consecutive` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.component_consecutive` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -3136,9 +3136,9 @@ Definitions and proofs are in the paired Lean module.
 
 **Theorem 1.22 (block_mem).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.block_mem`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.block_mem`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.block_mem` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.block_mem` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -3180,9 +3180,9 @@ variable (m : Nat) (hm : 3 ≤ m) (A B : Finset (Label m))
 
 **Theorem 1.23 (reduced_row_cases).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.reduced_row_cases`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.reduced_row_cases`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.reduced_row_cases` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.reduced_row_cases` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -3238,9 +3238,9 @@ theorem reduced_row_cases (c : (prune (localRows m hm A B)).chords) :
 
 **Theorem 1.24 (forced_component).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.forced_component`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.forced_component`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.forced_component` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.forced_component` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -3288,9 +3288,9 @@ Definitions and proofs are in the paired Lean module.
 
 **Definition 1.25 (componentRows).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.componentRows`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.componentRows`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.componentRows` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.componentRows` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -3320,9 +3320,9 @@ The existential over starts merely repeats equal components, without altering ro
 
 **Definition 1.26 (componentUnion).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.componentUnion`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.componentUnion`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.componentUnion` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.componentUnion` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -3358,9 +3358,9 @@ is excluded, because that branch is already a simplex. -/
 
 **Theorem 1.27 (component_root).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.component_root`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.component_root`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.component_root` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.component_root` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -3434,9 +3434,9 @@ including when the surviving indexed row type is empty. -/
 
 **Theorem 1.28 (isolated_component).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.isolated_component`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.isolated_component`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.isolated_component` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.isolated_component` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -3488,9 +3488,9 @@ variable (m : Nat) (hm : 3 ≤ m)
 
 **Definition 1.29 (leftEnd).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.leftEnd`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.leftEnd`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.leftEnd` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.leftEnd` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -3504,9 +3504,9 @@ def leftEnd : Fin m := ⟨0, by omega⟩
 
 **Definition 1.30 (rightEnd).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.rightEnd`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.rightEnd`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.rightEnd` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.rightEnd` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -3520,9 +3520,9 @@ def rightEnd : Fin m := ⟨m - 1, by omega⟩
 
 **Theorem 1.31 (endpoints_connected_untouched).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.endpoints_connected_untouched`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.endpoints_connected_untouched`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.endpoints_connected_untouched` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.endpoints_connected_untouched` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -6662,61 +6662,68 @@ injection, earlier families and their support/order, never a desired structural 
 
 ## References
 
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.alive`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.at`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.block`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.block_mem`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.component`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.componentRows`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.componentUnion`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.component_consecutive`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.component_partition`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.component_root`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.components`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.connected_iff_interval`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.cutRow`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.empty_row_root`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.endpoints_connected_untouched`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.forced`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.forced_component`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.interval`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.isolated_component`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.leftEnd`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.live`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.localRows`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.mem_forced`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.no_rows_root`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.position`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.projected_row_cases`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.prune`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.prune_root`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.reducedGraph`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.reduced_row_cases`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents.rightEnd`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.MarkerCase`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.ParentStructure`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.RowCase`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.absent`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.absorbed`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.alive`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.at`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.block`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.block_mem`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.classifyMarkers`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.classifyRows`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.component`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.componentPaths`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.componentRows`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.componentUnion`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.component_consecutive`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.component_edges`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.component_partition`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.component_root`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.components`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.components_cover`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.connected_iff_interval`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.consecutive`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.corner_rows_transport`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.cover`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.cutRow`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.decorated`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.decorated_readback`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.empty_row_root`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.endpoints_connected_untouched`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.forced`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.forcedSingletons`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.forced_component`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.forced_marker_absorbs`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.forest`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.graphRows`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.graph_actual_rows`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.intact`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.interval`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.isolatedGhosts`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.isolated_component`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.leftEnd`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.literalPath`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.live`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.localRoot`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.localRows`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.local_path_root`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.markerNormalForm`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.markerState`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.marker_positions`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.markers`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.mem_forced`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.mk`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.noMarker`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.no_rows_root`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.oneMarker`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.originalGround`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.originalMarkers`
@@ -6729,13 +6736,6 @@ injection, earlier families and their support/order, never a desired structural 
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.physical_corner_transport`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.physical_original_masks`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.physical_parent_readback`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.position`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.projected_row_cases`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.prune`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.prune_root`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.reducedGraph`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.reduced_row_cases`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.rightEnd`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.rowRootForm`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.rowState`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.separated`
@@ -6744,6 +6744,7 @@ injection, earlier families and their support/order, never a desired structural 
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.simplex`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.void`
 - Dependency: [D5/S3/Geometry/OriginalLabelTwoSum/HistoryCorners](HistoryCorners.md)
+- Dependency: [D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents](HistoryForestComponents.md)
 - Dependency: [D5/S3/Geometry/OriginalLabelTwoSum/HistoryMarkers](HistoryMarkers.md)
 - Dependency: [D5/S3/Geometry/OriginalLabelTwoSum/HistoryPaths](HistoryPaths.md)
 - Dependency: [D5/S3/Geometry/OriginalLabelTwoSum/PhysicalMWheel](PhysicalMWheel.md)

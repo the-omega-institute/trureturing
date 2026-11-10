@@ -8,9 +8,9 @@ The standalone based contraction of P is the sole homotopy input. The full bound
 
 **Definition 1.1 (Actual-coordinate attachment input).**
 
-Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.Attachment`
+Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.Attachment`
 
-*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.Attachment` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.Attachment` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -20,9 +20,9 @@ The input consists of native X and P on the unchanged finite ambient type, a non
 
 **Definition 1.2 (A point of the face label type).**
 
-Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.faceInhabited`
+Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.faceInhabited`
 
-*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.faceInhabited` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.faceInhabited` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -32,9 +32,9 @@ Nonempty face data supplies a Nonempty instance for its original-label subtype. 
 
 **Definition 1.3 (The existing L2 simplex).**
 
-Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.Disk`
+Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.Disk`
 
-*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.Disk` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.Disk` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -44,9 +44,9 @@ Disk is the frozen rational owner Simplex on the subtype of original face labels
 
 **Definition 1.4 (The full boundary subspace).**
 
-Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.BDisk`
+Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.BDisk`
 
-*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.BDisk` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.BDisk` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -56,9 +56,9 @@ BDisk is the subtype of disk points having a zero coordinate at some face label.
 
 **Definition 1.5 (The literal realized core in X).**
 
-Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.coreSet`
+Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.coreSet`
 
-*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.coreSet` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.coreSet` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -68,9 +68,9 @@ A point of the original realization of X lies in coreSet exactly when its same c
 
 **Definition 1.6 (The literal realized attached disk).**
 
-Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.diskSet`
+Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.diskSet`
 
-*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.diskSet` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.diskSet` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -80,9 +80,9 @@ A point of X lies in diskSet exactly when its original coordinate vector lies in
 
 **Definition 1.7 (The unchanged core inclusion).**
 
-Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.coreIn`
+Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.coreIn`
 
-*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.coreIn` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.coreIn` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -92,9 +92,9 @@ The existing realizationInclusion is used for P into X, with containment derived
 
 **Definition 1.8 (The actual included basepoint).**
 
-Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.basepoint`
+Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.basepoint`
 
-*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.basepoint` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.basepoint` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -104,9 +104,9 @@ The basepoint of X is the literal core inclusion of the supplied point of P.
 
 **Definition 1.9 (Zero extension into the original X).**
 
-Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.diskIn`
+Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.diskIn`
 
-*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.diskIn` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.diskIn` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -116,9 +116,9 @@ The disk map uses the existing faceCoordinateHomeomorph, extending the L2 face c
 
 **Definition 1.10 (The original attaching map).**
 
-Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.boundaryToCore`
+Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.boundaryToCore`
 
-*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.boundaryToCore` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.boundaryToCore` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -128,9 +128,9 @@ A boundary disk point is sent into P by its unchanged ambient coordinate vector.
 
 **Definition 1.11 (The face-only radial gauge).**
 
-Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.rho`
+Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.rho`
 
-*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.rho` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.rho` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -140,9 +140,9 @@ rho(x)=1-card(face)*min_i(x_i), with the min ranging only over the original face
 
 **Definition 1.12 (Radial expansion with an actual range proof).**
 
-Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.expand`
+Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.expand`
 
-*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.expand` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.expand` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -152,9 +152,9 @@ For u>0 and rho(x)<=u, expansion is b+u inverse times (x-b) in the actual L2 sim
 
 **Definition 1.13 (The moving radial seam).**
 
-Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.cut`
+Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.cut`
 
-*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.cut` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.cut` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -164,9 +164,9 @@ At time s the seam is c_s=1-s/2. It is continuous and lies between one half and 
 
 **Theorem 1.14 (A positive seam denominator).**
 
-Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.cut_pos`
+Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.cut_pos`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.cut_pos` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.cut_pos` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -176,9 +176,9 @@ For every attachment and unit-interval time the seam denominator is positive, fr
 
 **Definition 1.15 (The closed outer radial region).**
 
-Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.outerRegion`
+Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.outerRegion`
 
-*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.outerRegion` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.outerRegion` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -188,9 +188,9 @@ This is the subset of I times the literal simplex where c_s<=rho(x). The inner r
 
 **Definition 1.16 (The actual boundary projection).**
 
-Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.projection`
+Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.projection`
 
-*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.projection` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.projection` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -200,9 +200,9 @@ On the outer region rho is at least one half. The map sends x to b+(x-b)/rho in 
 
 **Definition 1.17 (The bounded outer contraction time).**
 
-Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.outerTime`
+Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.outerTime`
 
-*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.outerTime` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.outerTime` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -212,9 +212,9 @@ The time is 2*rho(x)-2+s in the unit interval. It is zero on the moving seam and
 
 **Definition 1.18 (Closed pasting on the simplex cylinder).**
 
-Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.diskCollar`
+Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.diskCollar`
 
-*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.diskCollar` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.diskCollar` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -224,9 +224,9 @@ On rho<=c_s use disk inclusion after expansion by c_s; on rho>=c_s use the stand
 
 **Definition 1.19 (Closed pasting on the actual attachment cylinder).**
 
-Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.collar`
+Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.collar`
 
-*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.collar` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.collar` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -236,9 +236,9 @@ The core piece is the supplied contraction followed by inclusion, and the disk p
 
 **Definition 1.20 (The literal core collapse).**
 
-Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.Q`
+Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.Q`
 
-*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.Q` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.Q` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -248,9 +248,9 @@ Q is the existing subset collapse of coreSet in the actual realization of X, wit
 
 **Definition 1.21 (The unchanged quotient map).**
 
-Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.q`
+Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.q`
 
-*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.q` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.q` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -260,9 +260,9 @@ q is exactly the existing canonical collapseMap of coreSet. It is not changed by
 
 **Definition 1.22 (The endpoint collar descends).**
 
-Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.quotientInverse`
+Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.quotientInverse`
 
-*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.quotientInverse` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.quotientInverse` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -272,9 +272,9 @@ The inverse Q to X is Quotient.lift of x mapped to collar(1,x). The endpoint sen
 
 **Definition 1.23 (Both based quotient homotopies).**
 
-Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.quotientEquivalence`
+Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.quotientEquivalence`
 
-*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.quotientEquivalence` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.quotientEquivalence` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -284,9 +284,9 @@ The forward map is exactly q and the backward map is quotientInverse. On X use t
 
 **Theorem 1.24 (The whole core restriction).**
 
-Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.collar_core`
+Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.collar_core`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.collar_core` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.collar_core` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -296,9 +296,9 @@ For every time s and actual x in P, collar(s,coreIn(x)) is coreIn(contraction(s,
 
 **Theorem 1.25 (Central representative equation).**
 
-Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.collar_inner`
+Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.collar_inner`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.collar_inner` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.collar_inner` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -308,9 +308,9 @@ For every s and x with rho(x)<=c_s, collar(s,diskIn(x)) equals diskIn(b+(x-b)/c_
 
 **Theorem 1.26 (Outer representative equation).**
 
-Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.collar_outer`
+Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.collar_outer`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.collar_outer` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.collar_outer` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -320,9 +320,9 @@ For every s and x with c_s<=rho(x), collar(s,diskIn(x)) equals the included stan
 
 **Theorem 1.27 (Time zero and the fixed actual point).**
 
-Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.collar_laws`
+Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.collar_laws`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.collar_laws` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.collar_laws` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -332,9 +332,9 @@ The collar is identity on all of X at time zero and fixes the actual included p 
 
 **Theorem 1.28 (Exact quotient and inverse on representatives).**
 
-Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.quotient_representative`
+Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.quotient_representative`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.quotient_representative` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.quotient_representative` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -344,9 +344,9 @@ For every actual X point, quotientEquivalence.forward is the literal setoid clas
 
 **Theorem 1.29 (Inner radial doubling).**
 
-Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.quotientInverse_inner`
+Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.quotientInverse_inner`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.quotientInverse_inner` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.quotientInverse_inner` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -356,9 +356,9 @@ For every disk point with rho<=one half, quotientInverse of its q-class is diskI
 
 **Theorem 1.30 (The inverse center equation).**
 
-Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.quotientInverse_barycenter`
+Lean statement: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.quotientInverse_barycenter`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.quotientInverse_barycenter` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.quotientInverse_barycenter` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -632,43 +632,43 @@ For every disk point, coordinate i in the original face is exactly its input L2 
 
 ## References
 
-- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.Attachment`
-- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.BDisk`
-- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.Disk`
-- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.Q`
-- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.basepoint`
+- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.Attachment`
+- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.BDisk`
+- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.Disk`
+- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.Q`
+- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.basepoint`
+- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.boundaryToCore`
+- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.collar`
+- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.collar_core`
+- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.collar_inner`
+- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.collar_laws`
+- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.collar_outer`
+- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.coreIn`
+- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.coreSet`
+- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.cut`
+- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.cut_pos`
+- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.diskCollar`
+- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.diskIn`
+- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.diskSet`
+- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.expand`
+- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.faceInhabited`
+- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.outerRegion`
+- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.outerTime`
+- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.projection`
+- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.q`
+- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.quotientEquivalence`
+- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.quotientInverse`
+- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.quotientInverse_barycenter`
+- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.quotientInverse_inner`
+- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.quotient_representative`
+- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.rho`
 - Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.boolSphereHomeomorph`
-- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.boundaryToCore`
-- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.collar`
-- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.collar_core`
-- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.collar_inner`
-- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.collar_laws`
-- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.collar_outer`
-- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.coreIn`
-- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.coreSet`
-- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.cut`
-- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.cut_pos`
-- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.diskCollar`
-- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.diskIn`
 - Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.diskIn_coordinates`
-- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.diskSet`
-- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.expand`
-- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.faceInhabited`
 - Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.multiSphereHomeomorph`
 - Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.multiSphere_core`
 - Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.multiSphere_poles`
 - Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.multiSphere_representative`
-- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.outerRegion`
-- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.outerTime`
-- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.projection`
-- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.q`
-- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.quotientEquivalence`
-- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.quotientInverse`
-- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.quotientInverse_barycenter`
-- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.quotientInverse_inner`
 - Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.quotientSimplexHomeomorph`
-- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.quotient_representative`
-- Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.rho`
 - Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.s0Negative`
 - Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.s0Positive`
 - Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.simplexQuotientToQ`
@@ -685,4 +685,5 @@ For every disk point, coordinate i in the original face is exactly its input L2 
 - Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.sphereSouth`
 - Truth anchor: `D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentSphere.sphere_maps`
 - Dependency: [D5/S3/Geometry/FiniteAlexanderDualCollapse](../FiniteAlexanderDualCollapse.md)
+- Dependency: [D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar](AttachmentCollar.md)
 - Dependency: [D5/S3/Geometry/FiniteSimplexBoundarySphere](../FiniteSimplexBoundarySphere.md)

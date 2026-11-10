@@ -1178,9 +1178,9 @@ exactly once. The displayed list equations belong to the constructed value.
 
 **Definition 1.1 (emptyOldIntactOutput).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.emptyOldIntactOutput`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.emptyOldIntactOutput`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.emptyOldIntactOutput` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.emptyOldIntactOutput` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -1278,9 +1278,9 @@ Definitions and proofs are in the paired Lean module.
 
 **Definition 1.2 (mainPairsOf).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.mainPairsOf`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.mainPairsOf`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.mainPairsOf` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.mainPairsOf` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -1304,9 +1304,9 @@ Definitions and proofs are in the paired Lean module.
 
 **Definition 1.3 (corePairsOf).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.corePairsOf`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.corePairsOf`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.corePairsOf` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.corePairsOf` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -1326,9 +1326,9 @@ def corePairsOf {W : Finset V} {K : Family V} : Output W K → List (Finset V ×
 
 **Definition 1.4 (changeOutput_mainPairsOf).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.changeOutput_mainPairsOf`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.changeOutput_mainPairsOf`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.changeOutput_mainPairsOf` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.changeOutput_mainPairsOf` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -1348,9 +1348,9 @@ Exact literal source declaration and body; not elaborated or resolved statement 
 
 **Definition 1.5 (changeOutput_corePairsOf).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.changeOutput_corePairsOf`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.changeOutput_corePairsOf`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.changeOutput_corePairsOf` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.changeOutput_corePairsOf` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -1370,9 +1370,9 @@ Exact literal source declaration and body; not elaborated or resolved statement 
 
 **Definition 1.6 (emptyOldEmbeddedIntactOutput).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.emptyOldEmbeddedIntactOutput`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.emptyOldEmbeddedIntactOutput`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.emptyOldEmbeddedIntactOutput` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.emptyOldEmbeddedIntactOutput` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -1510,9 +1510,9 @@ def emptyOldEmbeddedIntactOutput (m : Nat) (hm : 3 ≤ m) (e : V)
 
 **Definition 1.7 (emptyOldEmbedded_lists).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.emptyOldEmbedded_lists`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.emptyOldEmbedded_lists`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.emptyOldEmbedded_lists` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.emptyOldEmbedded_lists` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -1620,9 +1620,9 @@ theorem emptyOldEmbedded_lists (m : Nat) (hm : 3 ≤ m) (e : V) (J : Family V)
 
 **Definition 1.8 (unitIntactCertificate).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.unitIntactCertificate`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.unitIntactCertificate`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.unitIntactCertificate` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.unitIntactCertificate` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -1786,9 +1786,9 @@ any pair. This applies to both residues where eta exists. -/
 
 **Definition 1.9 (unitIntact_main_faces).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.unitIntact_main_faces`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.unitIntact_main_faces`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.unitIntact_main_faces` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.unitIntact_main_faces` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -1834,9 +1834,9 @@ Definitions and proofs are in the paired Lean module.
 
 **Definition 1.10 (unitIntact_core_faces).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.unitIntact_core_faces`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.unitIntact_core_faces`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.unitIntact_core_faces` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.unitIntact_core_faces` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -1882,9 +1882,9 @@ no certificate of UNIT is manufactured. -/
 
 **Definition 1.11 (goodIntactCertificate).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.goodIntactCertificate`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.goodIntactCertificate`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.goodIntactCertificate` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.goodIntactCertificate` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -1946,9 +1946,9 @@ Definitions and proofs are in the paired Lean module.
 
 **Definition 1.12 (goodVoid_lists).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.goodVoid_lists`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.goodVoid_lists`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.goodVoid_lists` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.goodVoid_lists` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -2002,9 +2002,9 @@ cone, as in the constructed unit terminal, for every original ghost. -/
 
 **Definition 1.13 (goodUnit_lists).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.goodUnit_lists`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.goodUnit_lists`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.goodUnit_lists` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.goodUnit_lists` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -2052,9 +2052,9 @@ wheel coordinates. It differs from the cycle-filling top in this residue. -/
 
 **Definition 1.14 (twoPathTop).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.twoPathTop`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.twoPathTop`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.twoPathTop` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.twoPathTop` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -2070,9 +2070,9 @@ def twoPathTop (m : Nat) (hm : 3 ≤ m) (f : Label m ↪ V) : Finset V :=
 
 **Definition 1.15 (twoZeroSequence).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.twoZeroSequence`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.twoZeroSequence`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.twoZeroSequence` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.twoZeroSequence` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -2110,9 +2110,9 @@ Definitions and proofs are in the paired Lean module.
 
 **Definition 1.16 (twoPathSequence).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.twoPathSequence`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.twoPathSequence`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.twoPathSequence` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.twoPathSequence` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -2156,9 +2156,9 @@ relativeProduct and does not change the local pair order. -/
 
 **Definition 1.17 (twoNormalization).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.twoNormalization`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.twoNormalization`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.twoNormalization` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.twoNormalization` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -2314,9 +2314,9 @@ factor pair, and UNIT is not represented by an empty ordinary lower face. -/
 
 **Definition 1.18 (layerMainFaces).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.layerMainFaces`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.layerMainFaces`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.layerMainFaces` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.layerMainFaces` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -2344,9 +2344,9 @@ cone list. The point-layer pair occurs only for a genuine strong factor. -/
 
 **Definition 1.19 (layerCoreFaces).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.layerCoreFaces`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.layerCoreFaces`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.layerCoreFaces` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.layerCoreFaces` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -2388,9 +2388,9 @@ Definitions and proofs are in the paired Lean module.
 
 **Definition 1.20 (twoIntactCertificate).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.twoIntactCertificate`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.twoIntactCertificate`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.twoIntactCertificate` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.twoIntactCertificate` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -2442,9 +2442,9 @@ def twoIntactCertificate (m : Nat) (hm : 3 ≤ m) (h2 : m % 3 = 2)
 
 **Definition 1.21 (twoIntact_main_faces).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.twoIntact_main_faces`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.twoIntact_main_faces`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.twoIntact_main_faces` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.twoIntact_main_faces` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -2500,9 +2500,9 @@ strip ghost never becomes a newly selectable coordinate point. -/
 
 **Definition 1.22 (twoIntact_core_faces).**
 
-Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.twoIntact_core_faces`
+Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.twoIntact_core_faces`
 
-*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.twoIntact_core_faces` (`✓ std3`).
+*Formalization.* `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.twoIntact_core_faces` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -4120,33 +4120,11 @@ theorem intactOutput_core_faces (m : Nat) (hm : 3 ≤ m) (X : Finset V) (e : V)
 
 ## References
 
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.changeOutput_corePairsOf`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.changeOutput_mainPairsOf`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.corePairsOf`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.emptyOldEmbeddedIntactOutput`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.emptyOldEmbedded_lists`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.emptyOldIntactOutput`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.goodIntactCertificate`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.goodStrong_core_faces`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.goodStrong_main_faces`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.goodUnit_lists`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.goodVoid_lists`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.intactOutput`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.intactOutput_core_faces`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.intactOutput_main_faces`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.layerCoreFaces`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.layerMainFaces`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.mainPairsOf`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.twoIntactCertificate`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.twoIntact_core_faces`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.twoIntact_main_faces`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.twoNormalization`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.twoPathSequence`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.twoPathTop`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.twoZeroSequence`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.unitIntactCertificate`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.unitIntact_core_faces`
-- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.unitIntact_main_faces`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.zeroIntactCertificate`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.zeroIntact_core_faces`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.zeroIntact_core_original`
@@ -4159,9 +4137,32 @@ theorem intactOutput_core_faces (m : Nat) (hm : 3 ≤ m) (X : Finset V) (e : V)
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.zeroOtherTop`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.zeroRecovered`
 - Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntact.zeroZeroSequence`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.changeOutput_corePairsOf`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.changeOutput_mainPairsOf`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.corePairsOf`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.emptyOldEmbeddedIntactOutput`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.emptyOldEmbedded_lists`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.emptyOldIntactOutput`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.goodIntactCertificate`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.goodUnit_lists`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.goodVoid_lists`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.layerCoreFaces`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.layerMainFaces`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.mainPairsOf`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.twoIntactCertificate`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.twoIntact_core_faces`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.twoIntact_main_faces`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.twoNormalization`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.twoPathSequence`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.twoPathTop`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.twoZeroSequence`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.unitIntactCertificate`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.unitIntact_core_faces`
+- Truth anchor: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo.unitIntact_main_faces`
 - Dependency: [D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Consumer](AllMWheel/Consumer.md)
 - Dependency: [D5/S3/Geometry/OriginalLabelTwoSum/HistoryCycles](HistoryCycles.md)
 - Dependency: [D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactLayers](HistoryIntactLayers.md)
 - Dependency: [D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactProduct](HistoryIntactProduct.md)
+- Dependency: [D5/S3/Geometry/OriginalLabelTwoSum/HistoryIntactTwo](HistoryIntactTwo.md)
 - Dependency: [D5/S3/Geometry/OriginalLabelTwoSum/HistoryIsolated](HistoryIsolated.md)
 - Dependency: [D5/S3/Geometry/OriginalLabelTwoSum/HistoryMarkers](HistoryMarkers.md)
