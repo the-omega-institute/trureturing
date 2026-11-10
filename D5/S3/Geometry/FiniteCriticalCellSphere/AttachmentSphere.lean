@@ -30,7 +30,18 @@ open FiniteSimplexBoundarySphere (Simplex E barycenter barycenterPoint
   continuous_minCoord barycenter_gauge BoundaryQuotient)
 
 
-open private D5.S3.Geometry.FiniteCriticalCellSphere.pasteClosed D5.S3.Geometry.FiniteCriticalCellSphere.pasteClosed_left D5.S3.Geometry.FiniteCriticalCellSphere.pasteClosed_right D5.S3.Geometry.FiniteCriticalCellSphere.Attachment.diskRestrict D5.S3.Geometry.FiniteCriticalCellSphere.Attachment.diskIn_restrict D5.S3.Geometry.FiniteCriticalCellSphere.Attachment.restrict_diskIn D5.S3.Geometry.FiniteCriticalCellSphere.Attachment.cover D5.S3.Geometry.FiniteCriticalCellSphere.Attachment.core_closed D5.S3.Geometry.FiniteCriticalCellSphere.Attachment.disk_closed D5.S3.Geometry.FiniteCriticalCellSphere.Attachment.diskIn_mem_core_iff from D5.S3.Geometry.FiniteCriticalCellSphere.AttachmentCollar
+open private
+  pasteClosed
+  pasteClosed_left
+  pasteClosed_right
+  Attachment.diskRestrict
+  Attachment.diskIn_restrict
+  Attachment.restrict_diskIn
+  Attachment.cover
+  Attachment.core_closed
+  Attachment.disk_closed
+  Attachment.diskIn_mem_core_iff
+  from D5.S3.Geometry.FiniteCriticalCellSphere.AttachmentCollar
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 

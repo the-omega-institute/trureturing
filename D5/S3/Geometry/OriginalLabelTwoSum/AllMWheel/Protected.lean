@@ -23,7 +23,16 @@ open scoped BigOperators
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
 
-open private D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.dual_mem D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.word_owner D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.contract_endpoint D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.interval_independent D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.root_word D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.cycle_edge_linear D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.ground_positive D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.cycle_face_proper from D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.ProtectedFillings
+open private
+  dual_mem
+  word_owner
+  contract_endpoint
+  interval_independent
+  root_word
+  cycle_edge_linear
+  ground_positive
+  cycle_face_proper
+  from D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.ProtectedFillings
 
 
 /- A pivot changes from the earlier residue lo+1 to the later residue lo.

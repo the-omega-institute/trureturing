@@ -23,7 +23,18 @@ namespace D5.S3.Geometry.OriginalLabelTwoSum.HistoryForests
 open OriginalLabelTwoSum HistoryCorners AllMWheel
 
 
-open private D5.S3.Geometry.OriginalLabelTwoSum.HistoryForests.position_lt D5.S3.Geometry.OriginalLabelTwoSum.HistoryForests.at_position D5.S3.Geometry.OriginalLabelTwoSum.HistoryForests.at_injective D5.S3.Geometry.OriginalLabelTwoSum.HistoryForests.interval_symm D5.S3.Geometry.OriginalLabelTwoSum.HistoryForests.interval_trans D5.S3.Geometry.OriginalLabelTwoSum.HistoryForests.mem_component D5.S3.Geometry.OriginalLabelTwoSum.HistoryForests.self_component D5.S3.Geometry.OriginalLabelTwoSum.HistoryForests.block_supported D5.S3.Geometry.OriginalLabelTwoSum.HistoryForests.at_leftEnd D5.S3.Geometry.OriginalLabelTwoSum.HistoryForests.at_rightEnd from D5.S3.Geometry.OriginalLabelTwoSum.HistoryForestComponents
+open private
+  position_lt
+  at_position
+  at_injective
+  interval_symm
+  interval_trans
+  mem_component
+  self_component
+  block_supported
+  at_leftEnd
+  at_rightEnd
+  from D5.S3.Geometry.OriginalLabelTwoSum.HistoryForestComponents
 
 
 section Markers

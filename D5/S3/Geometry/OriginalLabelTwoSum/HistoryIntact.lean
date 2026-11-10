@@ -24,7 +24,38 @@ namespace D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntact
 open OriginalLabelTwoSum AllMWheel HistoryLeafCap HistoryIsolated HistoryCycles
 
 
-open private D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntact.join_comm D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntact.join_mono D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntact.join_sup D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntact.facets_single D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntact.tail_subset D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntact.local_support D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntact.local_empty D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntact.base_support D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntact.base_vertex D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntact.base_cone D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntact.local_part D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntact.base_local D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntact.parent_supported D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntact.retargetFilling D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntact.zeroFilling D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntact.zero_collar D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntact.zero_tops D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntact.replaceCertificate D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntact.ground_mainPairsOf D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntact.ground_corePairsOf D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntact.pointFaces D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntact.ground_pointFaces D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntact.changeOutput_pointFaces D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntact.renameOutput_lists D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntact.renameOutput_pointFaces D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntact.layer_main_readback D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntact.layer_strip_readback D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntact.two_layer_main_readback D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntact.two_layer_core_readback D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntact.faces_flatMap from D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntactTwo
+open private
+  join_comm
+  join_mono
+  join_sup
+  facets_single
+  tail_subset
+  local_support
+  local_empty
+  base_support
+  base_vertex
+  base_cone
+  local_part
+  base_local
+  parent_supported
+  retargetFilling
+  zeroFilling
+  zero_collar
+  zero_tops
+  replaceCertificate
+  ground_mainPairsOf
+  ground_corePairsOf
+  pointFaces
+  ground_pointFaces
+  changeOutput_pointFaces
+  renameOutput_lists
+  renameOutput_pointFaces
+  layer_main_readback
+  layer_strip_readback
+  two_layer_main_readback
+  two_layer_core_readback
+  faces_flatMap
+  from D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntactTwo
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 

@@ -32,7 +32,18 @@ attribute [local instance] historyRecursionPropDecidable
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
 
-open private D5.S3.Geometry.OriginalLabelTwoSum.HistoryRecursion.groundOutput D5.S3.Geometry.OriginalLabelTwoSum.HistoryRecursion.corner_supported D5.S3.Geometry.OriginalLabelTwoSum.HistoryRecursion.linked_le_deleted D5.S3.Geometry.OriginalLabelTwoSum.HistoryRecursion.empty_corner_rows D5.S3.Geometry.OriginalLabelTwoSum.HistoryRecursion.join_delta D5.S3.Geometry.OriginalLabelTwoSum.HistoryRecursion.join_comm D5.S3.Geometry.OriginalLabelTwoSum.HistoryRecursion.insertClosedOutput D5.S3.Geometry.OriginalLabelTwoSum.HistoryRecursion.simplexJoinOutput D5.S3.Geometry.OriginalLabelTwoSum.HistoryRecursion.path_at_injective D5.S3.Geometry.OriginalLabelTwoSum.HistoryRecursion.sizeTwo_row_positions from D5.S3.Geometry.OriginalLabelTwoSum.HistoryLocalLeaves
+open private
+  groundOutput
+  corner_supported
+  linked_le_deleted
+  empty_corner_rows
+  join_delta
+  join_comm
+  insertClosedOutput
+  simplexJoinOutput
+  path_at_injective
+  sizeTwo_row_positions
+  from D5.S3.Geometry.OriginalLabelTwoSum.HistoryLocalLeaves
 
 
 private def projectedRimIndexEquiv {G : Type} (g : GraphData G V)

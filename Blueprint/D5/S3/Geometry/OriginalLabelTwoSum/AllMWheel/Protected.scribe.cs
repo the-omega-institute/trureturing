@@ -54,6 +54,20 @@ internal sealed class ProtectedDocument : IScribeDocumentDefinition
     private static string DeclarationPrefix(string name) => name switch
     {
         "A0_rawDual" => "D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.",
+        "_proof_1" => "D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.",
+        "_proof_10" => "D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.",
+        "_proof_11" => "D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.",
+        "_proof_12" => "D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.",
+        "_proof_2" => "D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.",
+        "_proof_3" => "D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.",
+        "_proof_4" => "D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.",
+        "_proof_5" => "D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.",
+        "_proof_6" => "D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.",
+        "_proof_7" => "D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.",
+        "_proof_8" => "D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.",
+        "_proof_9" => "D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.",
+        "congr_simp" => "D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.",
+        "eq_1" => "D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.",
         "excludedCycleContract" => "D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.",
         "fill0" => "D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.",
         "fill0_critical" => "D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.",
@@ -66,5 +80,4 @@ internal sealed class ProtectedDocument : IScribeDocumentDefinition
         "wheelRoot_eq_A1" => "D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.",
         "zeroContract" => "D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings.",
         _ => Prefix
-    };
-}
+    };}

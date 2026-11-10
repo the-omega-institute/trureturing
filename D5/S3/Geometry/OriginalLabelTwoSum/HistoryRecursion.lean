@@ -32,9 +32,17 @@ attribute [local instance] historyRecursionPropDecidable
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
 
-open private D5.S3.Geometry.OriginalLabelTwoSum.HistoryRecursion.groundOutput D5.S3.Geometry.OriginalLabelTwoSum.HistoryRecursion.corner_supported from D5.S3.Geometry.OriginalLabelTwoSum.HistoryLocalLeaves
+open private
+  groundOutput
+  corner_supported
+  from D5.S3.Geometry.OriginalLabelTwoSum.HistoryLocalLeaves
 
-open private D5.S3.Geometry.OriginalLabelTwoSum.HistoryRecursion.projectedRimIndexEquiv D5.S3.Geometry.OriginalLabelTwoSum.HistoryRecursion.projectedRim_ground_image D5.S3.Geometry.OriginalLabelTwoSum.HistoryRecursion.priorOutput D5.S3.Geometry.OriginalLabelTwoSum.HistoryRecursion.linkedOutput from D5.S3.Geometry.OriginalLabelTwoSum.HistoryPhysicalSteps
+open private
+  projectedRimIndexEquiv
+  projectedRim_ground_image
+  priorOutput
+  linkedOutput
+  from D5.S3.Geometry.OriginalLabelTwoSum.HistoryPhysicalSteps
 
 section EarlierHistory
 variable {n : Nat} {G : Type} {g : GraphData G V}
@@ -53,8 +61,12 @@ private theorem groundOutput_corePairsOf {W U : Finset V} {K : Family V}
 
 section IntactOriginalLists
 open AllMWheel HistoryIntact HistoryIntactProduct HistoryIsolated HistoryCycles
-open private zeroFilling from D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntactTwo
-open private goodOneFilling from D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntact
+open private
+  zeroFilling
+  from D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntactTwo
+open private
+  goodOneFilling
+  from D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntact
 
 /-- Literal main list at the actual physical intact terminal.
 The residue-zero expansion consumes the completed ORIGINAL marker readback. -/

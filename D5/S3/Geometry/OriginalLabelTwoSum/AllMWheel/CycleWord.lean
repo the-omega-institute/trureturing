@@ -19,7 +19,12 @@ namespace D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel
 open FiniteProtectedDualWord OriginalLabelTwoSum
 
 
-open private D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.CycleProof.attachFamily D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.CycleProof.facets_mem D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.CycleProof.pairedCone D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.CycleProof.attachWord from D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.CycleWordConstruction
+open private
+  CycleProof.attachFamily
+  CycleProof.facets_mem
+  CycleProof.pairedCone
+  CycleProof.attachWord
+  from D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.CycleWordConstruction
 
 
 

@@ -43,7 +43,18 @@ open FiniteComponentClosure (vertexComplex)
 variable {«I» J : Type*} [Fintype «I»] [DecidableEq «I»] [Fintype J] [DecidableEq J]
 
 
-open private D5.S3.Geometry.FiniteIncidenceRootCollapse.simplex_singleton D5.S3.Geometry.FiniteIncidenceRootCollapse.simplex_empty D5.S3.Geometry.FiniteIncidenceRootCollapse.cone_bot_simplex D5.S3.Geometry.FiniteIncidenceRootCollapse.rootK_le_full D5.S3.Geometry.FiniteIncidenceRootCollapse.fresh_of_active_erase D5.S3.Geometry.FiniteIncidenceRootCollapse.singleton_active D5.S3.Geometry.FiniteIncidenceRootCollapse.cone_sup D5.S3.Geometry.FiniteIncidenceRootCollapse.cone_simplex D5.S3.Geometry.FiniteIncidenceRootCollapse.witness_core_le_endpoint D5.S3.Geometry.FiniteIncidenceRootCollapse.witness_critical_support from D5.S3.Geometry.FiniteIncidenceRootPruning
+open private
+  simplex_singleton
+  simplex_empty
+  cone_bot_simplex
+  rootK_le_full
+  fresh_of_active_erase
+  singleton_active
+  cone_sup
+  cone_simplex
+  witness_core_le_endpoint
+  witness_critical_support
+  from D5.S3.Geometry.FiniteIncidenceRootPruning
 
 
 /-! ### Recursive constructor -/
