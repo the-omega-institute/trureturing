@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowOuterScalar
    mirror-E: none(waiver:noncomputational)
    anchors: []
-   digest: Source-faithful non-middle scalar intervals and retained low-r mass; uncompiled preparation. -/
+   digest: Strict outer scalar intervals with the retained low-r mass. -/
 import D5.S3.Quantum.Entanglement.AbsolutePPT.SchmidtStar.SixRowScalarData
 import D5.S3.Quantum.Entanglement.AbsolutePPT.SchmidtStar.SixRowOuterPolynomial
 set_option autoImplicit false
@@ -50,7 +50,7 @@ theorem cap_interval_strict (r H D a q : ℝ)
     W r H D a q < T138 r := by
   let d := Real.sqrt (20*q)
   have hd : 0 ≤ d := Real.sqrt_nonneg _
-  have hd2 : d^2=20*q := Real.sq_sqrt (by positivity)
+  have hd2 : d^2=20*q := Real.sq_sqrt (mul_nonneg (by norm_num) h.q_nonneg)
   have hDd : D ≤ d := by nlinarith only [hd,hd2,h.tail_cauchy,h.D_nonneg]
   have hDen : 0 < Den r := by dsimp only [Den]; nlinarith only [hrl,hru]
   have hc : 0 ≤ cn r := by dsimp only [cn]; nlinarith only [hrl,hru]
@@ -65,8 +65,9 @@ theorem cap_interval_strict (r H D a q : ℝ)
     have hyid : (137/100:ℝ)*((100/137)*d)=d := by ring
     rw [hxid,hyid] at hh
     have hqeq : q=d^2/20 := by linarith only [hd2]
-    rw [hqeq] at hb2
-    dsimp only [P2,V] at *
+    conv at hb2 => rhs; rw [hqeq]
+    apply (mul_lt_mul_iff_right₀ hDen).mp
+    dsimp only [P2,V] at hh hb2
     nlinarith only [hh,hb2]
   · have hqc : 3/32 ≤ q := le_of_lt (lt_of_not_ge hq)
     have hm := h.mass
@@ -80,15 +81,22 @@ theorem cap_interval_strict (r H D a q : ℝ)
     have hu0 : 0 < P1 r (4-10*r) (T138 r) := by linarith only [hu]
     have hmin : 0 < min (P1 r (3/32) (T138 r)) (P1 r (4-10*r) (T138 r)) :=
       lt_min hl0 hu0
-    have hh := quadratic_lower (-(cn r)/4) (cn r-Den r)
+    have hP (Q : ℝ) : P1 r Q (T138 r) =
+        -(cn r)/4*Q^2+(2*cn r-Den r)*Q+
+        (T138 r*Den r-4*cn r+15*cn r*r^2-Den r*r*(6-15*r)) := by
+      unfold P1 V
+      ring
+    have hh := quadratic_lower (-(cn r)/4) (2*cn r-Den r)
       (T138 r*Den r-4*cn r+15*cn r*r^2-Den r*r*(6-15*r))
       (3/32) (4-10*r) q
       (min (P1 r (3/32) (T138 r)) (P1 r (4-10*r) (T138 r)))
       (by linarith only [hc]) hqc hqu
-      (by dsimp [P1,V]; nlinarith only [min_le_left (P1 r (3/32) (T138 r)) (P1 r (4-10*r) (T138 r))])
-      (by dsimp [P1,V]; nlinarith only [min_le_right (P1 r (3/32) (T138 r)) (P1 r (4-10*r) (T138 r))])
-    dsimp only [P1,V] at *
-    nlinarith only [hh,hmin,hb1]
+      (by rw [← hP]; exact min_le_left _ _)
+      (by rw [← hP]; exact min_le_right _ _)
+    have hp : 0 < P1 r q (T138 r) := hmin.trans_le (by rw [hP q]; exact hh)
+    apply (mul_lt_mul_iff_right₀ hDen).mp
+    unfold P1 at hp
+    linarith only [hp,hb1]
 
 /-- For [0,1/12] the n24 threshold is a weak W bound; its only possible
     equality corner is r=q=0. This does NOT assert W<T138 globally. -/
@@ -97,7 +105,7 @@ theorem low_W_le (r H D a q : ℝ) (h : PhysicalScalarHyp r H D a q)
     W r H D a q ≤ T144 r ∧ (W r H D a q=T144 r → r=0 ∧ q=0) := by
   let d := Real.sqrt (20*q)
   have hd : 0 ≤ d := Real.sqrt_nonneg _
-  have hd2 : d^2=20*q := Real.sq_sqrt (by positivity)
+  have hd2 : d^2=20*q := Real.sq_sqrt (mul_nonneg (by norm_num) h.q_nonneg)
   have hDd : D ≤ d := by nlinarith only [hd,hd2,h.tail_cauchy,h.D_nonneg]
   have hDen : 0 < Den r := by dsimp only [Den]; nlinarith only [h.r_nonneg,hr]
   have hc : 0 ≤ cn r := by dsimp only [cn]; nlinarith only [h.r_nonneg,hr]
@@ -105,22 +113,25 @@ theorem low_W_le (r H D a q : ℝ) (h : PhysicalScalarHyp r H D a q)
   by_cases hq : q ≤ 3/32
   · have hdu : d ≤ 137/100 := by nlinarith only [hd,hd2,hq]
     have hp := p2_low_separation (12*r) ((100/137)*d)
-      (by positivity) (by linarith only [hr]) (by positivity) (by nlinarith only [hdu])
+      (mul_nonneg (by norm_num) h.r_nonneg) (by linarith only [hr])
+      (by positivity) (by nlinarith only [hdu])
     have hxid : (12*r)/12=r := by ring
     have hyid : (137/100:ℝ)*((100/137)*d)=d := by ring
     rw [hxid,hyid] at hp
     have hqeq : q=d^2/20 := by linarith only [hd2]
-    rw [hqeq] at hb2
+    conv at hb2 => rhs; rw [hqeq]
     have hp0 : 0 ≤ P2 r d (T144 r) := by
       nlinarith only [hp,sq_nonneg ((12*r)^2),sq_nonneg (((100/137)*d)^2)]
     have hW : W r H D a q ≤ T144 r := by
-      dsimp only [P2,V] at *
+      apply (mul_le_mul_iff_right₀ hDen).mp
+      dsimp only [P2,V] at hp0 hb2
       nlinarith only [hp0,hb2]
     refine ⟨hW,?_⟩
     intro heq
     have hzero : P2 r d (T144 r) ≤ 0 := by
-      dsimp only [P2,V] at *
-      nlinarith only [hb2,heq]
+      rw [heq] at hb2
+      dsimp only [P2,V] at hb2 ⊢
+      nlinarith only [hb2]
     have hr4 : ((12*r)^2)^2=0 := by
       nlinarith only [hp,hzero,sq_nonneg (((100/137)*d)^2),sq_nonneg ((12*r)^2)]
     have hd4 : ((((100/137)*d)^2)^2)=0 := by
@@ -134,23 +145,31 @@ theorem low_W_le (r H D a q : ℝ) (h : PhysicalScalarHyp r H D a q)
     exact ⟨hr0,by nlinarith only [hd0,hd2]⟩
   · have hqc : 3/32 ≤ q := le_of_lt (lt_of_not_ge hq)
     have hqu := q_le_29_8 r H D a q h
-    have hl := p1_low_cut (12*r) (by positivity) (by linarith only [hr])
-    have hu := p1_low_tail (12*r) (by positivity) (by linarith only [hr])
+    have hx := mul_nonneg (show (0:ℝ) ≤ 12 by norm_num) h.r_nonneg
+    have hl := p1_low_cut (12*r) hx (by linarith only [hr])
+    have hu := p1_low_tail (12*r) hx (by linarith only [hr])
     have hxid : (1/12:ℝ)*(12*r)=r := by ring
     rw [zero_add,hxid] at hl hu
     have hl0 : 0 < P1 r (3/32) (T144 r) := by linarith only [hl]
     have hu0 : 0 < P1 r (29/8) (T144 r) := by linarith only [hu]
     have hmin : 0 < min (P1 r (3/32) (T144 r)) (P1 r (29/8) (T144 r)) := lt_min hl0 hu0
-    have hh := quadratic_lower (-(cn r)/4) (cn r-Den r)
+    have hP (Q : ℝ) : P1 r Q (T144 r) =
+        -(cn r)/4*Q^2+(2*cn r-Den r)*Q+
+        (T144 r*Den r-4*cn r+15*cn r*r^2-Den r*r*(6-15*r)) := by
+      unfold P1 V
+      ring
+    have hh := quadratic_lower (-(cn r)/4) (2*cn r-Den r)
       (T144 r*Den r-4*cn r+15*cn r*r^2-Den r*r*(6-15*r))
       (3/32) (29/8) q
       (min (P1 r (3/32) (T144 r)) (P1 r (29/8) (T144 r)))
       (by linarith only [hc]) hqc hqu
-      (by dsimp [P1,V]; nlinarith only [min_le_left (P1 r (3/32) (T144 r)) (P1 r (29/8) (T144 r))])
-      (by dsimp [P1,V]; nlinarith only [min_le_right (P1 r (3/32) (T144 r)) (P1 r (29/8) (T144 r))])
+      (by rw [← hP]; exact min_le_left _ _)
+      (by rw [← hP]; exact min_le_right _ _)
     have hW : W r H D a q < T144 r := by
-      dsimp only [P1,V] at *
-      nlinarith only [hh,hmin,hb1]
+      have hp : 0 < P1 r q (T144 r) := hmin.trans_le (by rw [hP q]; exact hh)
+      apply (mul_lt_mul_iff_right₀ hDen).mp
+      unfold P1 at hp
+      linarith only [hp,hb1]
     exact ⟨hW.le,fun heq => False.elim (ne_of_lt hW heq)⟩
 
 /-- The retained square closes the r=q=0, W=4 corner at n24.
@@ -181,8 +200,11 @@ theorem continuous_strict (r H D a q : ℝ)
   have hb := mass_energy_envelope r H D a q h
   have hh := quadratic_lower (-1179229/4842) (861068/4842) (-155752/4842)
     (1/3) (79/200) r (1/100) (by norm_num) hrl hru (by norm_num) (by norm_num)
-  dsimp only [T138] at *
-  nlinarith only [hh,hb]
+  have hid : T138 r-(6-15*r)*(6-14*r) =
+      (-1179229/4842)*r^2+(861068/4842)*r+(-155752/4842) := by
+    unfold T138
+    ring
+  linarith only [hh,hb,hid]
 
 /-- Variance region [3/10,1/3]; positive root is constructed, not assumed. -/
 theorem variance_strict (r H D a q : ℝ)
@@ -196,7 +218,12 @@ theorem variance_strict (r H D a q : ℝ)
   have hell : 0 < ell := by dsimp [ell]; linarith only [hru]
   have hp := quadratic_lower (-796913/9684) (511636/9684) (-81509/9684)
     (3/10) (1/3) r (1/100) (by norm_num) hrl hru (by norm_num) (by norm_num)
-  have hP : 0 < T138 r-ell^2-r*ell := by dsimp [T138,ell]; nlinarith only [hp]
+  have hP : 0 < T138 r-ell^2-r*ell := by
+    have hid : T138 r-ell^2-r*ell =
+        (-796913/9684)*r^2+(511636/9684)*r+(-81509/9684) := by
+      unfold T138 ell
+      ring
+    linarith only [hp,hid]
   have hT : 0 < T138 r := by nlinarith only [hP,hell,hrl]
   let t := (Real.sqrt (r^2+4*T138 r)-r)/2
   have hrads := Real.sq_sqrt (show 0 ≤ r^2+4*T138 r by positivity)
@@ -223,7 +250,11 @@ theorem variance_strict (r H D a q : ℝ)
     have hQ0 := quadratic_lower (-126094/1614) (171083/1614) (-39544/1614)
       (3/10) (1/3) r (1/10) (by norm_num) hrl hru (by norm_num) (by norm_num)
     have hQ1 : 0 < 3*T138 r+27*r*ell+225*r^2-36 := by
-      dsimp only [T138,ell]; nlinarith only [hQ0]
+      have hid : 3*T138 r+27*r*ell+225*r^2-36 =
+          (-126094/1614)*r^2+(171083/1614)*r+(-39544/1614) := by
+        unfold T138 ell
+        ring
+      linarith only [hQ0,hid]
     have hrt := mul_pos (show 0 < r by linarith only [hrl]) (sub_pos.mpr htell)
     dsimp only [B] at *
     nlinarith only [hW2,hV,ht2,hQ1,hrt]
@@ -261,8 +292,10 @@ theorem n23_low_strict (j r H D a q : ℝ)
     let u := 2-q/2
     have hd : 0 ≤ d := Real.sqrt_nonneg _
     have ht : 0 ≤ t := Real.sqrt_nonneg _
-    have hd2 : d^2=20*q := Real.sq_sqrt (by positivity)
-    have ht2 : t^2=a+2*r*H+r^2 := Real.sq_sqrt (by positivity)
+    have hd2 : d^2=20*q := Real.sq_sqrt (mul_nonneg (by norm_num) h.q_nonneg)
+    have ht2 : t^2=a+2*r*H+r^2 := Real.sq_sqrt
+      (add_nonneg (add_nonneg h.a_nonneg
+        (mul_nonneg (mul_nonneg (by norm_num) h.r_nonneg) h.H_nonneg)) (sq_nonneg r))
     have hd3 : d ≤ 3 := by nlinarith only [hd,hd2,hq]
     have hDd : D ≤ d := by nlinarith only [h.tail_cauchy,hd2,hd,h.D_nonneg]
     have hu : 71/40 ≤ u := by dsimp [u]; linarith only [hq]

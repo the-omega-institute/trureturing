@@ -14,7 +14,7 @@ internal sealed class SixRowOuterScalarDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowOuterScalar.cap_interval_strict"),
                 H("cap interval strict"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("theorem cap_interval_strict (r H D a q : ℝ) (h : PhysicalScalarHyp r H D a q) (hrl : 1/12 ≤ r) (hru : r ≤ 1/5) : W r H D a q < T138 r"))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("sixrowouter-sixrowouterscalar-low-W-le"),
+            Describe.Lean(DescribeId.Create("sixrowouter-sixrowouterscalar-low-w-le"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowOuterScalar.low_W_le"),
                 H("low W le"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("theorem low_W_le (r H D a q : ℝ) (h : PhysicalScalarHyp r H D a q) (hr : r ≤ 1/12) : W r H D a q ≤ T144 r ∧ (W r H D a q=T144 r → r=0 ∧ q=0)"))), DescribeRole.Theorem),

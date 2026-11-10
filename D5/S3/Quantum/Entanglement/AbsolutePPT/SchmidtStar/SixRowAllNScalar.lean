@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowAllNScalar
    mirror-E: none(waiver:noncomputational)
    anchors: []
-   digest: Parity propagation and odd integral plateau separation; uncompiled preparation. -/
+   digest: Exact parity propagation and odd integer plateau separation. -/
 import D5.S3.Quantum.Entanglement.AbsolutePPT.SchmidtStar.SixRowOuterScalar
 set_option autoImplicit false
 set_option maxRecDepth 4096
@@ -73,7 +73,7 @@ theorem odd_endpoint_identities (N d : ℝ) (hN : 138 ≤ N) :
     Gplus N d = thetaOdd N*(Mplus N d)^2-(2+(2-d)/5)*Mplus N d+
       N*(1+(2-d)/5)-(42*d^2+6*d)/5 := by
   have hn : 35*N+6 ≠ 0 := by linarith only [hN]
-  constructor <;> unfold Gminus Gplus Aminus Bminus Aplus Bplus thetaOdd Mminus Mplus
+  constructor <;> simp only [Gminus,Gplus,Aminus,Bminus,Aplus,Bplus,thetaOdd,Mminus,Mplus]
     <;> field_simp [hn] <;> ring
 
 /-- Shifted positive-coefficient expansions from the manuscript. -/
@@ -142,7 +142,7 @@ theorem odd_center_distances (N d : ℝ) (hN : 138 ≤ N)
     apply (div_le_iff₀ hden).mpr
     linarith only [hN,hd]
   dsimp only [centerOdd,Mminus,Mplus]
-  constructor <;> nlinarith only [hNd,hdsmall,hpen0,hpen1]
+  constructor <;> nlinarith only [hNd,hdsmall,hpen0,hpen1,mul_nonneg hNp.le hd]
 
 /-- Away from the very thin integer region, the odd correction is paid
     by a uniform positive margin. -/
@@ -178,7 +178,8 @@ theorem odd_high_continuous (N r H D a q : ℝ)
       d*(N*(24-7*d)/720-(42*d+6)/5)-
         (12-d)^2/(100*(35*N+12))+(42*d^2+6*d)/5 := by
     dsimp only [kappa,d]
-    ring
+    have hn : 35*N+12 ≠ 0 := by linarith only [hN]
+    field_simp [hn] <;> ring
   rw [T_odd N r hNp,hid]
   nlinarith only [hprod,hpen,hdelta,hpos,hW']
 
@@ -208,6 +209,15 @@ theorem odd_high_integer (N r H D a q : ℝ) (j k : ℤ)
     dsimp [centerOdd,thetaOdd,d]
     field_simp [h1,h2]
     <;> ring
+  have hlin : 2*thetaOdd N*centerOdd N d=2+r := by
+    rw [hcenter]
+    field_simp [ne_of_gt hth]
+  have hdiff (m : ℝ) :
+      thetaOdd N*((M-m)*(M+m-2*centerOdd N d)) =
+        thetaOdd N*M^2-(2+r)*M-(thetaOdd N*m^2-(2+r)*m) := by
+    calc
+      _ = thetaOdd N*M^2-thetaOdd N*m^2-(M-m)*(2*thetaOdd N*centerOdd N d) := by ring
+      _ = _ := by rw [hlin]; ring
   have hW := mass_energy_envelope r H D a q h
   have hW' : W r H D a q ≤ (42*d^2+6*d)/5 := by
     dsimp [d] at *
@@ -224,13 +234,13 @@ theorem odd_high_integer (N r H D a q : ℝ) (j k : ℤ)
       (show 0 ≤ 2*centerOdd N d-Mminus N d-M by linarith only [hc.1,hM])
     have hcmp := mul_nonneg hth.le hprod
     have hG : Gminus N d ≤ gap N (j:ℝ) (thetaOdd N) r H D a q := by
-      rw [hcenter] at hcmp
+      have hh : 0 ≤ thetaOdd N*((M-Mminus N d)*(M+Mminus N d-2*centerOdd N d)) := by
+        convert hcmp using 1 <;> ring
+      rw [hdiff] at hh
       have hrid : r=(2-d)/5 := by dsimp [d]; ring
       dsimp only [gap,energy,M] at *
       rw [← hrid] at hIm
-      have h1 : thetaOdd N*((2+r)/(2*thetaOdd N))=(2+r)/2 := by
-        field_simp [ne_of_gt hth]
-      nlinarith only [hcmp,hIm,hW',h1]
+      nlinarith only [hh,hIm,hW']
     exact ⟨by linarith only [hG,hGm],fun hz => by linarith only [hz,hG,hGm]⟩
   · have hj : k+1 ≤ j := by omega
     have hjr : (k:ℝ)+1 ≤ (j:ℝ) := by exact_mod_cast hj
@@ -242,12 +252,11 @@ theorem odd_high_integer (N r H D a q : ℝ) (j k : ℤ)
     have hprod := mul_nonneg (show 0 ≤ M-Mplus N d by linarith only [hM]) hsum.le
     have hcmp := mul_nonneg hth.le hprod
     have hG : Gplus N d ≤ gap N (j:ℝ) (thetaOdd N) r H D a q := by
-      rw [hcenter] at hcmp
+      rw [hdiff] at hcmp
       have hrid : r=(2-d)/5 := by dsimp [d]; ring
       dsimp only [gap,energy,M] at *
       rw [← hrid] at hIp
-      have h1 : thetaOdd N*((2+r)/(2*thetaOdd N))=(2+r)/2 := by field_simp [ne_of_gt hth]
-      nlinarith only [hcmp,hIp,hW',h1]
+      nlinarith only [hcmp,hIp,hW']
     refine ⟨by linarith only [hG,hGp],?_⟩
     intro hz
     have hdZ : d=0 := hGpz (by linarith only [hG,hGp,hz])
@@ -255,15 +264,14 @@ theorem odd_high_integer (N r H D a q : ℝ) (j k : ℤ)
     obtain ⟨hH,hD,ha,hq,_⟩ := endpoint_zero r H D a q h hrZ
     have hMZ : M=Mplus N d := by
       by_contra hn
-      have hdiff : 0 < M-Mplus N d := sub_pos.mpr (lt_of_le_of_ne hM (Ne.symm hn))
-      have hp : 0 < (M-Mplus N d)*(M+Mplus N d-2*centerOdd N d) := mul_pos hdiff hsum
+      have hmassDiff : 0 < M-Mplus N d := sub_pos.mpr (lt_of_le_of_ne hM (Ne.symm hn))
+      have hp : 0 < (M-Mplus N d)*(M+Mplus N d-2*centerOdd N d) := mul_pos hmassDiff hsum
       have hcmp' := mul_pos hth hp
-      rw [hcenter] at hcmp'
+      rw [hdiff (Mplus N d)] at hcmp'
       have hrid : r=(2-d)/5 := by dsimp [d]; ring
       rw [← hrid] at hIp
-      have h1 : thetaOdd N*((2+r)/(2*thetaOdd N))=(2+r)/2 := by field_simp [ne_of_gt hth]
       dsimp only [gap,energy,M] at *
-      nlinarith only [hcmp',hIp,hW',h1,hz,hGp]
+      nlinarith only [hcmp',hIp,hW',hz,hGp]
     have hjZ : (j:ℝ)=(k:ℝ)+1 := by
       dsimp only [M,mass,Mplus] at hMZ
       rw [hrZ,hH,hD,hdZ] at hMZ
@@ -303,10 +311,12 @@ theorem central_gap_zero (n : ℕ) (hn : 23 ≤ n) :
   · have hmod : n%2=1 := by omega
     have hj : 2*centralIndex n=5*n+1 := by dsimp [centralIndex]; omega
     have hjR : 2*(centralIndex n:ℝ)=5*(n:ℝ)+1 := by exact_mod_cast hj
+    have hj' : (centralIndex n:ℝ)=(5*(n:ℝ)+1)/2 := by linarith only [hjR]
     dsimp [gap,energy,mass,W,theta]
     simp only [he,if_false]
+    rw [hj']
     field_simp [hn1]
-    <;> nlinarith only [hjR]
+    <;> ring
 
 /-- Full all-n scalar theorem. All plateau indices in the actual interval
     remain quantified. This does not extract the physical hypotheses,
@@ -345,11 +355,11 @@ theorem concentrated_scalar (n j : ℕ) (hn : 23 ≤ n)
     · have hstrict : 0 < gap N (j:ℝ) (theta n) r H D a q := by
         by_cases h23 : n=23
         · subst n
-          norm_num [N,theta] at *
+          norm_num [N,theta]
           simpa [th23] using n23_low_strict (j:ℝ) r H D a q h hjR hlow
         by_cases h24 : n=24
         · subst n
-          norm_num [N,theta] at *
+          norm_num [N,theta]
           simpa using n24_low_strict (j:ℝ) r H D a q h hjR hlow
         have hn25 : 25 ≤ n := by omega
         have hn25R : (25:ℝ) ≤ n := by exact_mod_cast hn25

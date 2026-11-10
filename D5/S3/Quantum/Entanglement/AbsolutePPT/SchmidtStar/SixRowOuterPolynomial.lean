@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowOuterPolynomial
    mirror-E: none(waiver:noncomputational)
    anchors: []
-   digest: Fixed short exact tables for the six-row scalar proof; uncompiled preparation. -/
+   digest: Fixed exact polynomial bounds for the six-row scalar proof. -/
 import D5.S3.Quantum.Entanglement.AbsolutePPT.SchmidtStar.SixRowMiddlePolynomial
 set_option autoImplicit false
 set_option maxRecDepth 4096
@@ -182,7 +182,7 @@ theorem quartic_lower (d : ℝ) (hd : 0 ≤ d) (hd' : d ≤ 3) : 1/25 ≤ F d :=
 theorem p2_low_separation (x y : ℝ)
     (hx : 0 ≤ x) (hX : x ≤ 1) (hy : 0 ≤ y) (hY : y ≤ 1) :
     x^4/4+y^4/4 ≤ P2 (x/12) ((137/100)*y) (T144 (x/12)) := by
-  -- Generated below from the SAME low table after subtracting these
+  -- The fixed identity uses the low table after subtracting these
   -- two polynomials coefficientwise, with a literal ring identity.
   exact p2_low_separation_fixed x y hx hX hy hY
 
