@@ -14,6 +14,7 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
 import D5.S3.Observer.Separation.BooleanRankThreeK4
 import Mathlib.Tactic
 
+/-! Transposition identifies the one-row array with a scanned path. -/
 open scoped BigOperators
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233256RowOne
 open HardinA233251TriangleStrip
@@ -28,19 +29,21 @@ def Legal {k : ℕ} (A : Fin 1 × Fin k → Fin 6) : Prop :=
     ((A (0, j) = 2 ∨ A (0, j) = 3 ∨ A (0, j) = 4) →
       ∃ i, i < j ∧ A (0, i) = 1) ∧
     (A (0, j) = 3 → ∃ i, i < j ∧ A (0, i) = 2))
-private instance {k : ℕ} (A : Fin 1 × Fin k → Fin 6) : Decidable (Legal A) :=
+private instance instDecidableLegal {k : ℕ} (A : Fin 1 × Fin k → Fin 6) : Decidable (Legal A) :=
   inferInstanceAs (Decidable (_ ∧ _ ∧ _))
 
 def a (k : ℕ) : ℕ :=
   (Finset.univ.filter (fun A : Fin 1 × Fin k → Fin 6 => Legal A)).card
 
+attribute [local irreducible] a
+
 private abbrev R : (Fin 1 → Fin 6) → Prop := fun _ => True
 private def E (c d : Fin 1 → Fin 6) : Prop := c 0 ≠ d 0 ∧ (c 0).val + (d 0).val ≠ 5
-private instance (c d : Fin 1 → Fin 6) : Decidable (E c d) :=
+private instance instDecidableE (c d : Fin 1 → Fin 6) : Decidable (E c d) :=
   inferInstanceAs (Decidable (_ ∧ _))
 private abbrev P (c : Fin 1 → Fin 6) : Fin 3 := beta (c 0)
 private def C (p : Fin 3) (c : Fin 1 → Fin 6) : Prop := p ≠ beta (c 0)
-private instance (p : Fin 3) (c : Fin 1 → Fin 6) : Decidable (C p c) :=
+private instance instDecidableC (p : Fin 3) (c : Fin 1 → Fin 6) : Decidable (C p c) :=
   inferInstanceAs (Decidable (_ ≠ _))
 private abbrev v := widthV R P C
 private abbrev total := widthTotal R P
@@ -65,7 +68,7 @@ private theorem transpose_count (k : ℕ) : a k = b k := by
       simp only [Fin.forall_fin_one, Fin.exists_fin_one, lt_self_iff_false,
         and_false, or_false, Bool.false_eq_true, false_or]
     change Legal A ↔ widthLegal R E (fun p => A (p.2, p.1))
-    simp only [Legal, widthLegal, R, E, implies_true, and_true, true_and, hn]
+    simp only [Legal, widthLegal, R, E, implies_true, true_and, hn]
   have hc := Fintype.card_congr (Equiv.subtypeEquiv e hf)
   simpa only [a, b, Fintype.card_subtype] using hc
 
@@ -75,7 +78,7 @@ private theorem counting_bridge (n : ℕ) : (a (n + 1) : ℤ) = total (v n) := b
 
 private def Valid (s : Seen) (p : Fin 3) : Prop :=
   (s.2 = true → s.1 = true) ∧ (s.1 = false → p = 0) ∧ (s.2 = false → p ≠ 2)
-private instance (s : Seen) (p : Fin 3) : Decidable (Valid s p) :=
+private instance instDecidableValid (s : Seen) (p : Fin 3) : Decidable (Valid s p) :=
   inferInstanceAs (Decidable ((_ → _) ∧ (_ → _) ∧ (_ → _)))
 private theorem valid_next : ∀ s p c, Valid s p → R c ∧ C p c ∧ good s c →
     Valid (finish s c) (P c) := by decide +kernel
@@ -101,7 +104,7 @@ private theorem vector_recurrence (n : ℕ) : ∀ s p, Valid s p →
     by_cases h : R c ∧ C p c ∧ good s c
     · simp only [h, ite_true]
       exact ih _ _ (valid_next s p c hv h)
-    · simp [h]
+    · simp only [if_neg h, mul_zero, sub_self, zero_add]
 
 private theorem recurrence (n : ℕ) :
     (a (n + 4) : ℤ) = 6 * a (n + 3) - 8 * a (n + 2) := by
@@ -115,7 +118,7 @@ private theorem recurrence (n : ℕ) :
   by_cases h : c 0 = 0 ∧ R c ∧ good (false, false) c
   · simp only [h, ite_true]
     exact vector_recurrence n _ _ (initial_valid c h)
-  · simp [h]
+  · simp only [if_neg h, mul_zero, sub_self, zero_add]
 
 theorem finite_certificate : a 1 = 1 ∧ a 2 = 1 ∧ a 3 = 3 ∧ a 4 = 10 := by
   have h (n : ℕ) := counting_bridge n
@@ -123,11 +126,11 @@ theorem finite_certificate : a 1 = 1 ∧ a 2 = 1 ∧ a 3 = 3 ∧ a 4 = 10 := by
   have h1 : total (v 1) = 1 := by decide +kernel
   have h2 : total (v 2) = 3 := by decide +kernel
   have h3 : total (v 3) = 10 := by decide +kernel
-  have := h 0
-  have := h 1
-  have := h 2
-  have := h 3
-  omega
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · exact_mod_cast ((counting_bridge 0).trans h0)
+  · exact_mod_cast ((counting_bridge 1).trans h1)
+  · exact_mod_cast ((counting_bridge 2).trans h2)
+  · exact_mod_cast ((counting_bridge 3).trans h3)
 
 theorem result :
     (∀ k : ℕ, 4 ≤ k → (a k : ℤ) = 6 * a (k - 1) - 8 * a (k - 2)) ∧
@@ -135,6 +138,8 @@ theorem result :
   refine ⟨?_, finite_certificate⟩
   intro k hk
   have h := recurrence (k - 4)
-  convert h using 1 <;> congr 1 <;> omega
+  simpa only [show k - 4 + 4 = k by omega,
+    show k - 4 + 3 = k - 1 by omega,
+    show k - 4 + 2 = k - 2 by omega] using h
 
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233256RowOne

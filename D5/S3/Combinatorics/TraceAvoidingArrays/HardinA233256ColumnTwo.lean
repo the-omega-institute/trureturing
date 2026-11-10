@@ -14,6 +14,7 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
 import D5.S3.Observer.Separation.BooleanRankThreeK4
 import Mathlib.Tactic
 
+/-! Two-column arrays form a path in row-major order. -/
 open scoped BigOperators
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233256ColumnTwo
 open HardinA233251TriangleStrip
@@ -22,27 +23,30 @@ open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
 
 private def R (c : Fin 2 → Fin 6) : Prop := c 0 ≠ c 1 ∧ (c 0).val + (c 1).val ≠ 5
 private def E (c d : Fin 2 → Fin 6) : Prop := c 1 ≠ d 0 ∧ (c 1).val + (d 0).val ≠ 5
-private instance (c : Fin 2 → Fin 6) : Decidable (R c) :=
+private instance instDecidableR (c : Fin 2 → Fin 6) : Decidable (R c) :=
   inferInstanceAs (Decidable (_ ∧ _))
-private instance (c d : Fin 2 → Fin 6) : Decidable (E c d) :=
+private instance instDecidableE (c d : Fin 2 → Fin 6) : Decidable (E c d) :=
   inferInstanceAs (Decidable (_ ∧ _))
 
 def a (n : ℕ) : ℕ :=
   (Finset.univ.filter (fun A : Fin n × Fin 2 → Fin 6 => widthLegal R E A)).card
 
+attribute [local irreducible] a
+
 private abbrev P (c : Fin 2 → Fin 6) : Fin 3 := beta (c 1)
 private def C (p : Fin 3) (c : Fin 2 → Fin 6) : Prop := p ≠ beta (c 0)
-private instance (p : Fin 3) (c : Fin 2 → Fin 6) : Decidable (C p c) :=
+private instance instDecidableC (p : Fin 3) (c : Fin 2 → Fin 6) : Decidable (C p c) :=
   inferInstanceAs (Decidable (_ ≠ _))
 private abbrev v := widthV R P C
 private abbrev total := widthTotal R P
 
-private theorem counting_bridge (n : ℕ) : (a (n + 1) : ℤ) = total (v n) :=
-  width_counting_bridge R P C E (fun c d => colour_bond_iff (c 1) (d 0)) n
+private theorem counting_bridge (n : ℕ) : (a (n + 1) : ℤ) = total (v n) := by
+  unfold a
+  exact width_counting_bridge R P C E (fun c d => colour_bond_iff (c 1) (d 0)) n
 
 private def Valid (s : Seen) (p : Fin 3) : Prop :=
   s.1 = true ∧ (s.2 = false → p ≠ 2)
-private instance (s : Seen) (p : Fin 3) : Decidable (Valid s p) :=
+private instance instDecidableValid (s : Seen) (p : Fin 3) : Decidable (Valid s p) :=
   inferInstanceAs (Decidable (_ ∧ (_ → _)))
 
 private theorem valid_next : ∀ s p c, Valid s p → R c ∧ C p c ∧ good s c →
@@ -70,7 +74,7 @@ private theorem vector_recurrence (n : ℕ) : ∀ s p, Valid s p →
     by_cases h : R c ∧ C p c ∧ good s c
     · simp only [h, ite_true]
       exact ih _ _ (valid_next s p c hv h)
-    · simp [h]
+    · simp only [if_neg h, mul_zero, sub_self, zero_add]
 
 private theorem recurrence (n : ℕ) :
     (a (n + 3) : ℤ) = 20 * a (n + 2) - 64 * a (n + 1) := by
@@ -83,17 +87,17 @@ private theorem recurrence (n : ℕ) :
   by_cases h : c 0 = 0 ∧ R c ∧ good (false, false) c
   · simp only [h, ite_true]
     exact vector_recurrence n _ _ (initial_valid c h)
-  · simp [h]
+  · simp only [if_neg h, mul_zero, sub_self, zero_add]
 
 theorem finite_certificate : a 1 = 1 ∧ a 2 = 10 ∧ a 3 = 136 := by
   have h (n : ℕ) := counting_bridge n
   have h0 : total (v 0) = 1 := by decide +kernel
   have h1 : total (v 1) = 10 := by decide +kernel
   have h2 : total (v 2) = 136 := by decide +kernel
-  have := h 0
-  have := h 1
-  have := h 2
-  omega
+  refine ⟨?_, ?_, ?_⟩
+  · exact_mod_cast ((counting_bridge 0).trans h0)
+  · exact_mod_cast ((counting_bridge 1).trans h1)
+  · exact_mod_cast ((counting_bridge 2).trans h2)
 
 theorem result :
     (∀ n : ℕ, 3 ≤ n → (a n : ℤ) = 20 * a (n - 1) - 64 * a (n - 2)) ∧
@@ -101,6 +105,8 @@ theorem result :
   refine ⟨?_, finite_certificate⟩
   intro n hn
   have h := recurrence (n - 3)
-  convert h using 1 <;> congr 1 <;> omega
+  simpa only [show n - 3 + 3 = n by omega,
+    show n - 3 + 2 = n - 1 by omega,
+    show n - 3 + 1 = n - 2 by omega] using h
 
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233256ColumnTwo

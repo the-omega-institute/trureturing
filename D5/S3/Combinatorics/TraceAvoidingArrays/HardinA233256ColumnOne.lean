@@ -13,6 +13,7 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
 import Mathlib.Tactic
 
+/-! One-column arrays have no bonds; only first occurrences constrain the words. -/
 open scoped BigOperators
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233256ColumnOne
 open HardinA233251TriangleStrip
@@ -22,23 +23,30 @@ def a (n : ℕ) : ℕ :=
   (Finset.univ.filter (fun A : Fin n × Fin 1 → Fin 6 =>
     widthLegal (fun _ => True) (fun _ _ => True) A)).card
 
+attribute [local irreducible] a
+
 private abbrev R : (Fin 1 → Fin 6) → Prop := fun _ => True
 private abbrev P : (Fin 1 → Fin 6) → Unit := fun _ => ()
 private abbrev C : Unit → (Fin 1 → Fin 6) → Prop := fun _ _ => True
 private abbrev v := widthV R P C
 private abbrev total := widthTotal R P
 
-private theorem counting_bridge (n : ℕ) : (a (n + 1) : ℤ) = total (v n) :=
-  width_counting_bridge R P C (fun _ _ => True) (fun _ _ => Iff.rfl) n
+private theorem counting_bridge (n : ℕ) : (a (n + 1) : ℤ) = total (v n) := by
+  unfold a
+  exact width_counting_bridge R P C (fun _ _ => True) (fun _ _ => Iff.rfl) n
 
 private theorem step_linear (u w z : Seen → Unit → ℤ) (s : Seen) (p : Unit) :
     widthStep R P C (fun s p => 12 * u s p - 44 * w s p + 48 * z s p) s p =
       12 * widthStep R P C u s p - 44 * widthStep R P C w s p +
         48 * widthStep R P C z s p := by
   unfold widthStep
-  simp_rw [ite_add, ite_sub, ← mul_ite, mul_zero]
-  rw [Finset.sum_add_distrib, Finset.sum_sub_distrib]
-  simp only [Finset.mul_sum]
+  rw [Finset.mul_sum, Finset.mul_sum, Finset.mul_sum,
+    ← Finset.sum_sub_distrib, ← Finset.sum_add_distrib]
+  apply Finset.sum_congr rfl
+  intro c _
+  by_cases h : R c ∧ C p c ∧ HardinA233175PairStrip.good s c
+  · simp only [if_pos h]
+  · simp only [if_neg h, mul_zero, sub_self, zero_add]
 
 set_option maxRecDepth 100000 in
 private theorem vector_certificate : ∀ s : Seen, ∀ p : Unit,
@@ -65,10 +73,14 @@ private theorem recurrence (n : ℕ) :
     show n + 3 = (n + 2) + 1 by omega, counting_bridge,
     show n + 2 = (n + 1) + 1 by omega, counting_bridge, counting_bridge]
   unfold total widthTotal
-  simp_rw [vector_recurrence]
-  simp_rw [ite_add, ite_sub, ← mul_ite, mul_zero]
-  rw [Finset.sum_add_distrib, Finset.sum_sub_distrib]
-  simp only [Finset.mul_sum]
+  rw [Finset.mul_sum, Finset.mul_sum, Finset.mul_sum,
+    ← Finset.sum_sub_distrib, ← Finset.sum_add_distrib]
+  apply Finset.sum_congr rfl
+  intro c _
+  by_cases h : c 0 = 0 ∧ R c ∧ HardinA233175PairStrip.good (false, false) c
+  · simp only [h, ite_true]
+    exact vector_recurrence n _ _
+  · simp only [if_neg h, mul_zero, sub_self, zero_add]
 
 theorem finite_certificate : a 1 = 1 ∧ a 2 = 3 ∧ a 3 = 11 ∧ a 4 = 48 := by
   have h (n : ℕ) := counting_bridge n
@@ -76,11 +88,11 @@ theorem finite_certificate : a 1 = 1 ∧ a 2 = 3 ∧ a 3 = 11 ∧ a 4 = 48 := by
   have h1 : total (v 1) = 3 := by decide +kernel
   have h2 : total (v 2) = 11 := by decide +kernel
   have h3 : total (v 3) = 48 := by decide +kernel
-  have := h 0
-  have := h 1
-  have := h 2
-  have := h 3
-  omega
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · exact_mod_cast ((counting_bridge 0).trans h0)
+  · exact_mod_cast ((counting_bridge 1).trans h1)
+  · exact_mod_cast ((counting_bridge 2).trans h2)
+  · exact_mod_cast ((counting_bridge 3).trans h3)
 
 theorem result :
     (∀ n : ℕ, 4 ≤ n → (a n : ℤ) =
@@ -89,6 +101,9 @@ theorem result :
   refine ⟨?_, finite_certificate⟩
   intro n hn
   have h := recurrence (n - 4)
-  convert h using 1 <;> congr 1 <;> omega
+  simpa only [show n - 4 + 4 = n by omega,
+    show n - 4 + 3 = n - 1 by omega,
+    show n - 4 + 2 = n - 2 by omega,
+    show n - 4 + 1 = n - 3 by omega] using h
 
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233256ColumnOne
