@@ -9,22 +9,23 @@
 admission_basis: open-problem-resolution (#28883; Proved)
 escape_witness: none
 All declarations are bind-only under the registered external resolution basis.
+Consumers list direct source references and inferred decidability uses.
 Legal: proof_shape=bind-only; consumers=instDecidableLegal, a, transpose_count
 instDecidableLegal: proof_shape=bind-only; consumers=a
-a: proof_shape=bind-only; consumers=transpose_count, counting_bridge, finite_certificate, result
-R: proof_shape=bind-only; consumers=v, total, b, counting_bridge, valid_next, initial_valid, recurrence
+a: proof_shape=bind-only; consumers=transpose_count, counting_bridge, recurrence, finite_certificate, result
+R: proof_shape=bind-only; consumers=v, total, b, transpose_count, counting_bridge, valid_next, initial_valid, vector_recurrence, recurrence
 E: proof_shape=bind-only; consumers=instDecidableE, b, transpose_count, counting_bridge
 instDecidableE: proof_shape=bind-only; consumers=b, counting_bridge
-P: proof_shape=bind-only; consumers=v, total, counting_bridge, valid_next, initial_valid
-C: proof_shape=bind-only; consumers=instDecidableC, v, valid_next
-instDecidableC: proof_shape=bind-only; consumers=v
-v: proof_shape=bind-only; consumers=counting_bridge, vector_certificate, vector_recurrence, recurrence, finite_certificate
+P: proof_shape=bind-only; consumers=v, total, counting_bridge, valid_next, initial_valid, vector_recurrence
+C: proof_shape=bind-only; consumers=instDecidableC, v, counting_bridge, valid_next, vector_recurrence
+instDecidableC: proof_shape=bind-only; consumers=v, counting_bridge, valid_next, vector_recurrence
+v: proof_shape=bind-only; consumers=counting_bridge, vector_certificate, vector_recurrence, finite_certificate
 total: proof_shape=bind-only; consumers=counting_bridge, recurrence, finite_certificate
-b: proof_shape=bind-only; consumers=transpose_count, counting_bridge
+b: proof_shape=bind-only; consumers=transpose_count
 transpose_count: proof_shape=bind-only; consumers=counting_bridge
 counting_bridge: proof_shape=bind-only; consumers=recurrence, finite_certificate
 Valid: proof_shape=bind-only; consumers=instDecidableValid, valid_next, initial_valid, vector_certificate, vector_recurrence
-instDecidableValid: proof_shape=bind-only; consumers=vector_certificate
+instDecidableValid: proof_shape=bind-only; consumers=valid_next, initial_valid, vector_certificate
 valid_next: proof_shape=bind-only; consumers=vector_recurrence
 initial_valid: proof_shape=bind-only; consumers=recurrence
 vector_certificate: proof_shape=bind-only; consumers=vector_recurrence

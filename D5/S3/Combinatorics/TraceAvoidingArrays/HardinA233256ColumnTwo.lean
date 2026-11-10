@@ -9,17 +9,18 @@
 admission_basis: open-problem-resolution (#28883; Proved)
 escape_witness: none
 All declarations are bind-only under the registered external resolution basis.
+Consumers list direct source references and inferred decidability uses.
 E: proof_shape=bind-only; consumers=instDecidableE, a, counting_bridge
 instDecidableE: proof_shape=bind-only; consumers=a, counting_bridge
-a: proof_shape=bind-only; consumers=counting_bridge, finite_certificate, result
-P: proof_shape=bind-only; consumers=v, total, valid_next, initial_valid
-C: proof_shape=bind-only; consumers=instDecidableC, v, valid_next
-instDecidableC: proof_shape=bind-only; consumers=v
-v: proof_shape=bind-only; consumers=counting_bridge, vector_certificate, vector_recurrence, recurrence, finite_certificate
+a: proof_shape=bind-only; consumers=counting_bridge, recurrence, finite_certificate, result
+P: proof_shape=bind-only; consumers=v, total, counting_bridge, valid_next, initial_valid, vector_recurrence
+C: proof_shape=bind-only; consumers=instDecidableC, v, counting_bridge, valid_next, vector_recurrence
+instDecidableC: proof_shape=bind-only; consumers=v, counting_bridge, valid_next, vector_recurrence
+v: proof_shape=bind-only; consumers=counting_bridge, vector_certificate, vector_recurrence, finite_certificate
 total: proof_shape=bind-only; consumers=counting_bridge, recurrence, finite_certificate
 counting_bridge: proof_shape=bind-only; consumers=recurrence, finite_certificate
 Valid: proof_shape=bind-only; consumers=instDecidableValid, valid_next, initial_valid, vector_certificate, vector_recurrence
-instDecidableValid: proof_shape=bind-only; consumers=vector_certificate
+instDecidableValid: proof_shape=bind-only; consumers=valid_next, initial_valid, vector_certificate
 valid_next: proof_shape=bind-only; consumers=vector_recurrence
 initial_valid: proof_shape=bind-only; consumers=recurrence
 vector_certificate: proof_shape=bind-only; consumers=vector_recurrence
@@ -39,7 +40,6 @@ open scoped BigOperators
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233256ColumnTwo
 open HardinA233251TriangleStrip
 open HardinA233175PairStrip (Seen good finish)
-open HardinA233123SquareStrip (rowLegal)
 open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
 
 private def E (c d : Fin 2 → Fin 6) : Prop := c 1 ≠ d 0 ∧ (c 1).val + (d 0).val ≠ 5
@@ -47,7 +47,7 @@ private instance instDecidableE (c d : Fin 2 → Fin 6) : Decidable (E c d) :=
   inferInstanceAs (Decidable (_ ∧ _))
 
 def a (n : ℕ) : ℕ :=
-  (Finset.univ.filter (fun A : Fin n × Fin 2 → Fin 6 => widthLegal rowLegal E A)).card
+  (Finset.univ.filter (fun A : Fin n × Fin 2 → Fin 6 => widthLegal HardinA233123SquareStrip.rowLegal E A)).card
 
 attribute [local irreducible] a
 
@@ -55,22 +55,22 @@ private abbrev P (c : Fin 2 → Fin 6) : Fin 3 := beta (c 1)
 private def C (p : Fin 3) (c : Fin 2 → Fin 6) : Prop := p ≠ beta (c 0)
 private instance instDecidableC (p : Fin 3) (c : Fin 2 → Fin 6) : Decidable (C p c) :=
   inferInstanceAs (Decidable (_ ≠ _))
-private abbrev v := widthV rowLegal P C
-private abbrev total := widthTotal rowLegal P
+private abbrev v := widthV HardinA233123SquareStrip.rowLegal P C
+private abbrev total := widthTotal HardinA233123SquareStrip.rowLegal P
 
 private theorem counting_bridge (n : ℕ) : (a (n + 1) : ℤ) = total (v n) := by
   unfold a
-  exact width_counting_bridge rowLegal P C E (fun c d => colour_bond_iff (c 1) (d 0)) n
+  exact width_counting_bridge HardinA233123SquareStrip.rowLegal P C E (fun c d => colour_bond_iff (c 1) (d 0)) n
 
 private def Valid (s : Seen) (p : Fin 3) : Prop :=
   s.1 = true ∧ (s.2 = false → p ≠ 2)
 private instance instDecidableValid (s : Seen) (p : Fin 3) : Decidable (Valid s p) :=
   inferInstanceAs (Decidable (_ ∧ (_ → _)))
 
-private theorem valid_next : ∀ s p c, Valid s p → rowLegal c ∧ C p c ∧ good s c →
+private theorem valid_next : ∀ s p c, Valid s p → HardinA233123SquareStrip.rowLegal c ∧ C p c ∧ good s c →
     Valid (finish s c) (P c) := by decide +kernel
 private theorem initial_valid : ∀ c : Fin 2 → Fin 6,
-    c 0 = 0 ∧ rowLegal c ∧ good (false, false) c → Valid (finish (false, false) c) (P c) := by
+    c 0 = 0 ∧ HardinA233123SquareStrip.rowLegal c ∧ good (false, false) c → Valid (finish (false, false) c) (P c) := by
   decide +kernel
 
 set_option maxRecDepth 100000 in
@@ -83,13 +83,13 @@ private theorem vector_recurrence (n : ℕ) : ∀ s p, Valid s p →
   | zero => exact vector_certificate
   | succ n ih =>
     intro s p hv
-    change widthStep rowLegal P C (v (n + 2)) s p =
-      20 * widthStep rowLegal P C (v (n + 1)) s p - 64 * widthStep rowLegal P C (v n) s p
+    change widthStep HardinA233123SquareStrip.rowLegal P C (v (n + 2)) s p =
+      20 * widthStep HardinA233123SquareStrip.rowLegal P C (v (n + 1)) s p - 64 * widthStep HardinA233123SquareStrip.rowLegal P C (v n) s p
     unfold widthStep
     rw [Finset.mul_sum, Finset.mul_sum, ← Finset.sum_sub_distrib]
     apply Finset.sum_congr rfl
     intro c _
-    by_cases h : rowLegal c ∧ C p c ∧ good s c
+    by_cases h : HardinA233123SquareStrip.rowLegal c ∧ C p c ∧ good s c
     · simp only [h, ite_true]
       exact ih _ _ (valid_next s p c hv h)
     · simp only [if_neg h, mul_zero, sub_self, zero_add]
@@ -102,7 +102,7 @@ private theorem recurrence (n : ℕ) :
   rw [Finset.mul_sum, Finset.mul_sum, ← Finset.sum_sub_distrib]
   apply Finset.sum_congr rfl
   intro c _
-  by_cases h : c 0 = 0 ∧ rowLegal c ∧ good (false, false) c
+  by_cases h : c 0 = 0 ∧ HardinA233123SquareStrip.rowLegal c ∧ good (false, false) c
   · simp only [h, ite_true]
     exact vector_recurrence n _ _ (initial_valid c h)
   · simp only [if_neg h, mul_zero, sub_self, zero_add]

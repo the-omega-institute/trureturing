@@ -24,7 +24,7 @@ internal sealed class HardinA233256ColumnOneDocument : IScribeDocumentDefinition
         "Hardin's ColumnOne recurrence for literal normalized six-colour arrays.",
         H("A233256 ColumnOne"),
         Blocks(
-            Paragraph(Text("One column has no horizontal or antidiagonal bonds. The first cell is zero. Each 2, 3 or 4 has a strictly earlier 1, and each 3 a strictly earlier 2. The public row transfer at width one counts these words. Its continuation operator satisfies the polynomial (t-2)(t-4)(t-6); linearity propagates the finite state identity to all lengths.")),
+            Paragraph(Text("One column has no horizontal or antidiagonal bonds. The first cell is zero. Each 2, 3 or 4 has a strictly earlier 1, and each 3 a strictly earlier 2. The public row transfer at width one counts these words. Its continuation operator satisfies the polynomial (t-2)(t-4)(t-6); linearity propagates the finite state identity to all lengths." + " Exact initial counts give the recurrence at its first admissible index; the transfer identity gives every later case.")),
             Node("a", "The literal filtered array count", CountFormula(), literature: true),
             Node("finite_certificate", "Exact initial counts", InitialFormula(), theorem: true),
             Node("result", "The integer recurrence", ResultFormula(),

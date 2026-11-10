@@ -24,7 +24,7 @@ internal sealed class HardinA233256ColumnTwoDocument : IScribeDocumentDefinition
         "Hardin's ColumnTwo recurrence for literal normalized six-colour arrays.",
         H("A233256 ColumnTwo"),
         Blocks(
-            Paragraph(Text("For each row, the horizontal bond joins its two cells. The antidiagonal bond joins the right cell to the left cell of the next row. These are all the bonds. Row-major normalization uses the shared scanner. The boundary records the right-cell pair label and the seen-colour flags. Reachable continuations satisfy the polynomial (t-4)(t-16).")),
+            Paragraph(Text("For each row, the horizontal bond joins its two cells. The antidiagonal bond joins the right cell to the left cell of the next row. These are all the bonds. Row-major normalization uses the shared scanner. The boundary records the right-cell pair label and the seen-colour flags. Reachable continuations satisfy the polynomial (t-4)(t-16)." + " Exact initial counts give the recurrence at its first admissible index; the transfer identity gives every later case.")),
             Node("a", "The literal filtered array count", CountFormula(), literature: true),
             Node("finite_certificate", "Exact initial counts", InitialFormula(), theorem: true),
             Node("result", "The integer recurrence", ResultFormula(),
