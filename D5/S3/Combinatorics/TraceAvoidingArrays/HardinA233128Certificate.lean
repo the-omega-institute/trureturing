@@ -4,7 +4,7 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233128SquareStrip.result; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233128SquareStrip.finite_certificate
-   digest: Exact single-row transitions partitioned by the first boundary label. -/
+   digest: Single-row class counts by the first boundary label. -/
 
 /-
 admission_basis: open-problem-resolution (#28672; Proved)
@@ -16,418 +16,58 @@ DIRECT_FROZEN_DEPENDENCIES
 DECLARATION_CONSUMERS
 -/
 
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233128CertificateA
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233128CertificateB
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233128CertificateC
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233128CertificateD
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233128CertificateZero
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233128CertificateOne
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233128Rows
-import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
-import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255PairTransfer
-import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge
-import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255ShapeSymmetry
-import D5.S3.Observer.Separation.BooleanRankThreeK4
 import Mathlib.Tactic.FinCases
 
 set_option Elab.async false
 set_option maxRecDepth 100000
 
-open scoped BigOperators
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233128SquareStrip
 
-open HardinA233175PairStrip (Seen good finish)
-open HardinA233251TriangleStrip (widthLegal colour_bond_iff)
-open HardinA233255PairTransfer (Row rowLegal PairRow rowProper)
-open HardinA233255LiteralBridge (rowFinish rowWeight scanner_fibres)
-open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
-
-attribute [local instance 2000] HardinA233251TriangleStrip.widthInstDecidableGood
-attribute [local instance 2000] Pi.instFintype
-open private class_fibres_normalized from D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233128CertificateZero
-
-open HardinA233255ShapeSymmetry (full_row)
-
-private theorem completed_2010101 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 0, 1, 0, 1, 0, 1] k =
-      transfer (boundaryClass (true, true) ![2, 0, 1, 0, 1, 0, 1]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2010102 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 0, 1, 0, 1, 0, 2] k =
-      transfer (boundaryClass (true, true) ![2, 0, 1, 0, 1, 0, 2]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2010120 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 0, 1, 0, 1, 2, 0] k =
-      transfer (boundaryClass (true, true) ![2, 0, 1, 0, 1, 2, 0]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2010121 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 0, 1, 0, 1, 2, 1] k =
-      transfer (boundaryClass (true, true) ![2, 0, 1, 0, 1, 2, 1]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2010201 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 0, 1, 0, 2, 0, 1] k =
-      transfer (boundaryClass (true, true) ![2, 0, 1, 0, 2, 0, 1]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2010202 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 0, 1, 0, 2, 0, 2] k =
-      transfer (boundaryClass (true, true) ![2, 0, 1, 0, 2, 0, 2]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2010210 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 0, 1, 0, 2, 1, 0] k =
-      transfer (boundaryClass (true, true) ![2, 0, 1, 0, 2, 1, 0]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2010212 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 0, 1, 0, 2, 1, 2] k =
-      transfer (boundaryClass (true, true) ![2, 0, 1, 0, 2, 1, 2]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2012010 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 0, 1, 2, 0, 1, 0] k =
-      transfer (boundaryClass (true, true) ![2, 0, 1, 2, 0, 1, 0]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2012012 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 0, 1, 2, 0, 1, 2] k =
-      transfer (boundaryClass (true, true) ![2, 0, 1, 2, 0, 1, 2]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2012020 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 0, 1, 2, 0, 2, 0] k =
-      transfer (boundaryClass (true, true) ![2, 0, 1, 2, 0, 2, 0]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2012021 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 0, 1, 2, 0, 2, 1] k =
-      transfer (boundaryClass (true, true) ![2, 0, 1, 2, 0, 2, 1]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2012101 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 0, 1, 2, 1, 0, 1] k =
-      transfer (boundaryClass (true, true) ![2, 0, 1, 2, 1, 0, 1]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2012102 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 0, 1, 2, 1, 0, 2] k =
-      transfer (boundaryClass (true, true) ![2, 0, 1, 2, 1, 0, 2]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2012120 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 0, 1, 2, 1, 2, 0] k =
-      transfer (boundaryClass (true, true) ![2, 0, 1, 2, 1, 2, 0]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2012121 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 0, 1, 2, 1, 2, 1] k =
-      transfer (boundaryClass (true, true) ![2, 0, 1, 2, 1, 2, 1]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2020101 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 0, 2, 0, 1, 0, 1] k =
-      transfer (boundaryClass (true, true) ![2, 0, 2, 0, 1, 0, 1]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2020102 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 0, 2, 0, 1, 0, 2] k =
-      transfer (boundaryClass (true, true) ![2, 0, 2, 0, 1, 0, 2]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2020120 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 0, 2, 0, 1, 2, 0] k =
-      transfer (boundaryClass (true, true) ![2, 0, 2, 0, 1, 2, 0]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2020121 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 0, 2, 0, 1, 2, 1] k =
-      transfer (boundaryClass (true, true) ![2, 0, 2, 0, 1, 2, 1]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2020201 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 0, 2, 0, 2, 0, 1] k =
-      transfer (boundaryClass (true, true) ![2, 0, 2, 0, 2, 0, 1]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2020202 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 0, 2, 0, 2, 0, 2] k =
-      transfer (boundaryClass (true, true) ![2, 0, 2, 0, 2, 0, 2]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2020210 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 0, 2, 0, 2, 1, 0] k =
-      transfer (boundaryClass (true, true) ![2, 0, 2, 0, 2, 1, 0]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2020212 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 0, 2, 0, 2, 1, 2] k =
-      transfer (boundaryClass (true, true) ![2, 0, 2, 0, 2, 1, 2]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2021010 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 0, 2, 1, 0, 1, 0] k =
-      transfer (boundaryClass (true, true) ![2, 0, 2, 1, 0, 1, 0]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2021012 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 0, 2, 1, 0, 1, 2] k =
-      transfer (boundaryClass (true, true) ![2, 0, 2, 1, 0, 1, 2]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2021020 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 0, 2, 1, 0, 2, 0] k =
-      transfer (boundaryClass (true, true) ![2, 0, 2, 1, 0, 2, 0]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2021021 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 0, 2, 1, 0, 2, 1] k =
-      transfer (boundaryClass (true, true) ![2, 0, 2, 1, 0, 2, 1]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2021201 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 0, 2, 1, 2, 0, 1] k =
-      transfer (boundaryClass (true, true) ![2, 0, 2, 1, 2, 0, 1]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2021202 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 0, 2, 1, 2, 0, 2] k =
-      transfer (boundaryClass (true, true) ![2, 0, 2, 1, 2, 0, 2]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2021210 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 0, 2, 1, 2, 1, 0] k =
-      transfer (boundaryClass (true, true) ![2, 0, 2, 1, 2, 1, 0]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2021212 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 0, 2, 1, 2, 1, 2] k =
-      transfer (boundaryClass (true, true) ![2, 0, 2, 1, 2, 1, 2]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2101010 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 1, 0, 1, 0, 1, 0] k =
-      transfer (boundaryClass (true, true) ![2, 1, 0, 1, 0, 1, 0]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2101012 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 1, 0, 1, 0, 1, 2] k =
-      transfer (boundaryClass (true, true) ![2, 1, 0, 1, 0, 1, 2]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2101020 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 1, 0, 1, 0, 2, 0] k =
-      transfer (boundaryClass (true, true) ![2, 1, 0, 1, 0, 2, 0]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2101021 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 1, 0, 1, 0, 2, 1] k =
-      transfer (boundaryClass (true, true) ![2, 1, 0, 1, 0, 2, 1]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2101201 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 1, 0, 1, 2, 0, 1] k =
-      transfer (boundaryClass (true, true) ![2, 1, 0, 1, 2, 0, 1]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2101202 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 1, 0, 1, 2, 0, 2] k =
-      transfer (boundaryClass (true, true) ![2, 1, 0, 1, 2, 0, 2]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2101210 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 1, 0, 1, 2, 1, 0] k =
-      transfer (boundaryClass (true, true) ![2, 1, 0, 1, 2, 1, 0]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2101212 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 1, 0, 1, 2, 1, 2] k =
-      transfer (boundaryClass (true, true) ![2, 1, 0, 1, 2, 1, 2]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2102010 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 1, 0, 2, 0, 1, 0] k =
-      transfer (boundaryClass (true, true) ![2, 1, 0, 2, 0, 1, 0]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2102012 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 1, 0, 2, 0, 1, 2] k =
-      transfer (boundaryClass (true, true) ![2, 1, 0, 2, 0, 1, 2]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2102020 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 1, 0, 2, 0, 2, 0] k =
-      transfer (boundaryClass (true, true) ![2, 1, 0, 2, 0, 2, 0]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2102021 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 1, 0, 2, 0, 2, 1] k =
-      transfer (boundaryClass (true, true) ![2, 1, 0, 2, 0, 2, 1]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2102101 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 1, 0, 2, 1, 0, 1] k =
-      transfer (boundaryClass (true, true) ![2, 1, 0, 2, 1, 0, 1]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2102102 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 1, 0, 2, 1, 0, 2] k =
-      transfer (boundaryClass (true, true) ![2, 1, 0, 2, 1, 0, 2]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2102120 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 1, 0, 2, 1, 2, 0] k =
-      transfer (boundaryClass (true, true) ![2, 1, 0, 2, 1, 2, 0]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2102121 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 1, 0, 2, 1, 2, 1] k =
-      transfer (boundaryClass (true, true) ![2, 1, 0, 2, 1, 2, 1]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2120101 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 1, 2, 0, 1, 0, 1] k =
-      transfer (boundaryClass (true, true) ![2, 1, 2, 0, 1, 0, 1]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2120102 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 1, 2, 0, 1, 0, 2] k =
-      transfer (boundaryClass (true, true) ![2, 1, 2, 0, 1, 0, 2]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2120120 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 1, 2, 0, 1, 2, 0] k =
-      transfer (boundaryClass (true, true) ![2, 1, 2, 0, 1, 2, 0]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2120121 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 1, 2, 0, 1, 2, 1] k =
-      transfer (boundaryClass (true, true) ![2, 1, 2, 0, 1, 2, 1]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2120201 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 1, 2, 0, 2, 0, 1] k =
-      transfer (boundaryClass (true, true) ![2, 1, 2, 0, 2, 0, 1]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2120202 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 1, 2, 0, 2, 0, 2] k =
-      transfer (boundaryClass (true, true) ![2, 1, 2, 0, 2, 0, 2]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2120210 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 1, 2, 0, 2, 1, 0] k =
-      transfer (boundaryClass (true, true) ![2, 1, 2, 0, 2, 1, 0]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2120212 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 1, 2, 0, 2, 1, 2] k =
-      transfer (boundaryClass (true, true) ![2, 1, 2, 0, 2, 1, 2]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2121010 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 1, 2, 1, 0, 1, 0] k =
-      transfer (boundaryClass (true, true) ![2, 1, 2, 1, 0, 1, 0]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2121012 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 1, 2, 1, 0, 1, 2] k =
-      transfer (boundaryClass (true, true) ![2, 1, 2, 1, 0, 1, 2]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2121020 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 1, 2, 1, 0, 2, 0] k =
-      transfer (boundaryClass (true, true) ![2, 1, 2, 1, 0, 2, 0]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2121021 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 1, 2, 1, 0, 2, 1] k =
-      transfer (boundaryClass (true, true) ![2, 1, 2, 1, 0, 2, 1]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2121201 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 1, 2, 1, 2, 0, 1] k =
-      transfer (boundaryClass (true, true) ![2, 1, 2, 1, 2, 0, 1]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2121202 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 1, 2, 1, 2, 0, 2] k =
-      transfer (boundaryClass (true, true) ![2, 1, 2, 1, 2, 0, 2]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2121210 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 1, 2, 1, 2, 1, 0] k =
-      transfer (boundaryClass (true, true) ![2, 1, 2, 1, 2, 1, 0]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
-
-private theorem completed_2121212 : ∀ k : Fin 21,
-    classCount (true, true) ![2, 1, 2, 1, 2, 1, 2] k =
-      transfer (boundaryClass (true, true) ![2, 1, 2, 1, 2, 1, 2]) k := by
-  simp only [class_fibres_normalized, (full_row 7 _).1, (full_row 7 _).2]
-  decide +kernel
+open HardinA233255PairTransfer (rowProper)
+
+open private
+  completed_2010101 completed_2010102 completed_2010120
+  completed_2010121 completed_2010201 completed_2010202
+  completed_2010210 completed_2010212 completed_2012010
+  completed_2012012 completed_2012020 completed_2012021
+  completed_2012101 completed_2012102 completed_2012120
+  completed_2012121
+  from D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233128CertificateA
+
+open private
+  completed_2020101 completed_2020102 completed_2020120
+  completed_2020121 completed_2020201 completed_2020202
+  completed_2020210 completed_2020212 completed_2021010
+  completed_2021012 completed_2021020 completed_2021021
+  completed_2021201 completed_2021202 completed_2021210
+  completed_2021212
+  from D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233128CertificateB
+
+open private
+  completed_2101010 completed_2101012 completed_2101020
+  completed_2101021 completed_2101201 completed_2101202
+  completed_2101210 completed_2101212 completed_2102010
+  completed_2102012 completed_2102020 completed_2102021
+  completed_2102101 completed_2102102 completed_2102120
+  completed_2102121
+  from D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233128CertificateC
+
+open private
+  completed_2120101 completed_2120102 completed_2120120
+  completed_2120121 completed_2120201 completed_2120202
+  completed_2120210 completed_2120212 completed_2121010
+  completed_2121012 completed_2121020 completed_2121021
+  completed_2121201 completed_2121202 completed_2121210
+  completed_2121212
+  from D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233128CertificateD
 
 section
 attribute [local irreducible] classCount
