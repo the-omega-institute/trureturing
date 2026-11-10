@@ -21,6 +21,7 @@ internal sealed class SubcubicIdentificationDocument : IScribeDocumentDefinition
             Node("port", "port", "Exact declaration: def port (i : I) : I × Fin 11.", DescribeRole.Definition),
             Node("coreSlice", "coreSlice", "Exact declaration: def coreSlice (S : Finset (I × Fin 11)) (i : I) : Finset (Fin 10).", DescribeRole.Definition),
             Node("slice", "slice", "Exact declaration: def slice (S : Finset (I × Fin 11)) (i : I) : Finset (Fin 11).", DescribeRole.Definition),
+            Node("core_edges", "core edges", "Exact declaration: theorem core_edges (next : Equiv.Perm I) (i : I) (v w : Fin 10) : (graph next).Adj (core i v) (core i w) ↔ Subcubic.CoreAdj v w.", DescribeRole.Theorem),
             Node("card_slice", "card slice", "Exact declaration: theorem card_slice (S : Finset (I × Fin 11)) (i : I) : (slice S i).card=(coreSlice S i).card+(if port i∈S then 1 else 0).", DescribeRole.Theorem),
             Node("sf_upper", "sf upper", "Exact declaration: theorem sf_upper (next : Equiv.Perm I) : SF (graph next) 2≤7*Fintype.card I.", DescribeRole.Theorem),
             Node("forming", "forming", "Exact declaration: def forming (x : I × Fin 11) : Prop.", DescribeRole.Definition),

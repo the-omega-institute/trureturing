@@ -90,7 +90,19 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/SubcubicIdentification.sl
 
 Exact declaration: def slice (S : Finset (I × Fin 11)) (i : I) : Finset (Fin 11).
 
-**Theorem 1.8 (card slice).**
+**Theorem 1.8 (core edges).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/SubcubicIdentification.core_edges`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/SubcubicIdentification.core_edges` (`✓ std3`). ∎
+
+*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+
+*Commentary.*
+
+Exact declaration: theorem core_edges (next : Equiv.Perm I) (i : I) (v w : Fin 10) : (graph next).Adj (core i v) (core i w) ↔ Subcubic.CoreAdj v w.
+
+**Theorem 1.9 (card slice).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/SubcubicIdentification.card_slice`
 
@@ -102,7 +114,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/SubcubicIdentification.ca
 
 Exact declaration: theorem card_slice (S : Finset (I × Fin 11)) (i : I) : (slice S i).card=(coreSlice S i).card+(if port i∈S then 1 else 0).
 
-**Theorem 1.9 (sf upper).**
+**Theorem 1.10 (sf upper).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/SubcubicIdentification.sf_upper`
 
@@ -114,7 +126,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/SubcubicIdentification.sf
 
 Exact declaration: theorem sf_upper (next : Equiv.Perm I) : SF (graph next) 2≤7*Fintype.card I.
 
-**Definition 1.10 (forming).**
+**Definition 1.11 (forming).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/SubcubicIdentification.forming`
 
@@ -126,7 +138,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/SubcubicIdentification.fo
 
 Exact declaration: def forming (x : I × Fin 11) : Prop.
 
-**Definition 1.11 (failure).**
+**Definition 1.12 (failure).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/SubcubicIdentification.failure`
 
@@ -138,7 +150,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/SubcubicIdentification.fa
 
 Exact declaration: def failure (x : I × Fin 11) : I × Fin 11.
 
-**Theorem 1.12 (forming minimal).**
+**Theorem 1.13 (forming minimal).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/SubcubicIdentification.forming_minimal`
 
@@ -150,7 +162,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/SubcubicIdentification.fo
 
 Exact declaration: theorem forming_minimal (next : Equiv.Perm I) : IsMinimalStarForming (graph next) 2 (Finset.univ.filter forming).
 
-**Theorem 1.13 (sf exact).**
+**Theorem 1.14 (sf exact).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/SubcubicIdentification.sf_exact`
 
@@ -167,6 +179,7 @@ Exact declaration: theorem sf_exact (next : Equiv.Perm I) : SF (graph next) 2=7*
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/SubcubicIdentification.card_slice`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/SubcubicIdentification.core`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/SubcubicIdentification.coreSlice`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/SubcubicIdentification.core_edges`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/SubcubicIdentification.degrees`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/SubcubicIdentification.failure`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/SubcubicIdentification.forming`

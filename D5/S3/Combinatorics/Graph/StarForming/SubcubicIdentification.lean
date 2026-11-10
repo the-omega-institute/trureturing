@@ -70,7 +70,7 @@ private theorem core_injective (i : I) : Function.Injective (core i) := by
   intro v w h
   exact Fin.ext (congrArg (fun x : I × Fin 11 => x.2.val) h)
 
-private theorem core_edges (next : Equiv.Perm I) (i : I) (v w : Fin 10) :
+theorem core_edges (next : Equiv.Perm I) (i : I) (v w : Fin 10) :
     (graph next).Adj (core i v) (core i w) ↔ Subcubic.CoreAdj v w := by
   fin_cases v <;> fin_cases w <;>
     simp [graph,core,neighbors,Subcubic.CoreAdj,Subcubic.Adj,
