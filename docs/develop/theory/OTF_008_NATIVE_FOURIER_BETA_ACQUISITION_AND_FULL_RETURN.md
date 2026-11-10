@@ -1037,3 +1037,491 @@ $$
 证明。$\Phi_{\rm keep}$ 保留 $K_{\rm work}$ 的相干分量；其完整工作分辨交叉块支持 OTF004 式 (26.13)、(26.15) 和规定完成后的 (26.19) 下界。定理 1.2 使用的却是 (3.11) 后的 $\Phi_{{\rm red},e}$：在任何经典 $k$ 记录生成前，对未测量的非参考工作口作声明替换，保留同名固定输出以及所有已经实际生成的其它口。此为定义 26.11 允许的不同通道。迹距离在非参考约化下收缩，保留工作目标的下界并不反向传给它。因而没有把保留工作目标的下界改成下确界 $R(e)$ 的下界，也没有擦除已有原始记录。OTF004 式 (19.11) 的逆 $D_e e^2$ 下界同样与 (10.12) 的上界相容。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 12. 固定有限球冠族的部分工作保留接口
+
+**定义 12.1（公共有理透射率与完整自身边缘）。** 保持定义 1.1 的全部场、初始参考、独立来源、混合旁观记忆、允许控制和资源元组。精度仍为 $e=2^{-r}$、$r\ge r_0$，其中 $r_0$ 恰为 (2.7) 的原整数，不另缩小精度窗口。保持 (1.1)–(1.3) 的 $m,D,s,t,\lambda,D_h(n)$、定义 3.1 的同一个 $K_0,P,J,(g_l,w_l),f_{lk}$、(3.9) 的同一个 $W$，以及第 4–7 节的全部字母、控制、逆和付费前向原生展开。为区别于其它常数，将 (2.6) 的固定整数 $C$ 记为 $C_0$；这是同一个整数。
+
+给定公共有理数 $\eta\in[0,1]$，仅在 (3.11) 的位置、任何经典 $k$ 记录生成之前，改用下列有限非参考 CP 节点。令 $K_+=K_0+1$，在占据数 $0,\ldots,K_0$ 上置
+
+$$
+\begin{aligned}
+B_j|k\rangle
+&=\begin{cases}
+\sqrt{\binom{k}{j}(1-\eta)^j\eta^{k-j}}\,|k-j\rangle,&k\ge j,\\
+0,&k<j,
+\end{cases}\qquad 0\le j\le K_0,\\
+\mathcal L_{\eta,K_0}(X)&=\sum_{j=0}^{K_0}B_jXB_j^\dagger,\\
+\mathcal Q_\eta(X)&=|0\rangle\langle0|_{K_{\rm work}}
+\otimes\mathcal L_{\eta,K_0}(X)_{E_\eta},
+\qquad \dim E_\eta=K_+.
+\end{aligned}
+\tag{12.1}
+$$
+
+端点幂取 $0^0=1$。节点的实际输出恰为同名固定 $K_{\rm work}$ 和新口 $E_\eta$；$j$ 只是代数求和指标，不是实际记录或环境。该节点在每个 $L$ 块上相同。随后仍作同一个完整 $L$ 读出、保留同一 $J_l$ 的全部成分、使用定义 10.1 的原全场采样与有理四坐标解码，并恰接 (10.9)–(10.10)、即 OTF004 定义 17.1 的规定后缀。$E_\eta$ 始终被动保留，不测量、不参与反馈、不恢复、不替换。没有 $k$ 测量或其副本。
+
+记数学获取目标为
+
+$$
+\Phi_\eta=(\operatorname{id}_{R,J}\otimes\mathcal Q_\eta)
+\circ\Phi_{\rm keep},
+\tag{12.2}
+$$
+
+其中 $\Phi_{\rm keep}$ 恰为 OTF004 (26.7) 对本卷固定族的保留相干工作目标，输出因子的顺序按需要作固定置换。记对应的实际原生获取为 $\Gamma_\eta$，其全部规定完成态为 $\Omega_{\eta,n,h}$。最终 $K_\eta$ 包括第 8 节的全部实际非参考口以及 $E_\eta$ 和公共 $\eta$ 的固定程序口。定义
+
+$$
+\Delta_\eta(n,h)=\frac12\left\|
+\Omega_{\eta,n,h}-\tau_h\otimes
+\operatorname{Tr}_R\Omega_{\eta,n,h}\right\|_1.
+\tag{12.3}
+$$
+
+比较态使用此同一运行自己的完整最终边缘。$\eta=0$ 的节点是 (3.11) 附加固定空白 $E_0$，$\eta=1$ 则把原相干工作移至 $E_1$ 并保留同名固定工作口。这是新声明的比较族；(3.11)、定理 1.2 和命题 11.1 的原接口保持其原义。假设某实现另外生成实际环境时，须将其加入输出并另证返回界；该假设不属于 (12.1) 的实际端口合同。
+
+## 13. 固定截断下对全部透射率一致的交叉质量
+
+**定理 13.1（有限族的衰减交叉估计）。** 在定义 12.1 的同一个有限族中，对任意 $h$ 只在证明内选择以 $h$ 为中心的相干坐标，令 $e_0=e_h$、$e_1$ 为第一降低向量，并置
+
+$$
+f_l=f_l(h),\qquad g_l=\partial_{\bar z}f_l(h),\qquad
+H_l=\mathcal L_{\eta,K_0}(|f_l\rangle\langle g_l|),
+\qquad T_\eta=\sum_l\|H_l\|_1.
+\tag{13.1}
+$$
+
+则对每个 $r\ge r_0$、每个 $h$ 和每个 $\eta\in[0,1]$，
+
+$$
+\frac{\sqrt\eta}{2s}-\frac1\lambda
+\le T_\eta\le\frac{A\sqrt\eta}{s}+\frac2\lambda.
+\tag{13.2}
+$$
+
+这里 (12.1) 作为有限通道对实 $\eta$ 也有定义；控制器及有限公共描述的结论仍以有理 $\eta$ 为域。
+
+证明。先明确所复用的真空衰减数学及参数对应。令 $\mathcal H_{\rm osc}=\ell^2(\mathbb N)$，$\mathsf D(\alpha)$ 为单模 Weyl 位移，
+
+$$
+u_\alpha=\mathsf D(\alpha)|0\rangle
+=\left(e^{-|\alpha|^2/2}\frac{\alpha^k}{\sqrt{k!}}\right)_{k\ge0},
+\qquad v_\alpha=\mathsf D(\alpha)|1\rangle
+=(\mathfrak a^\dagger-\bar\alpha)u_\alpha.
+\tag{13.3}
+$$
+
+二者正交且范数为一。真空环境衰减通道 $\mathcal L_\eta$ 取振幅参数 $\sqrt\eta,\sqrt{1-\eta}$，保持模为第一模；其 Fock 作用及全部输入的位移关系复用
+[BeamSplitter 的 `beamUnitary_fock`](../../../D5/S3/Quantum/QuantumChannels/FockAttenuator/BeamSplitter.lean)、
+[DisplacementCovariance 的 `beam_displacement` 与 `partialTrace_pairDisplacement`](../../../D5/S3/Quantum/QuantumChannels/FockAttenuator/DisplacementCovariance.lean)
+及其对应的 [BeamSplitter](../../../Blueprint/D5/S3/Quantum/QuantumChannels/FockAttenuator/BeamSplitter.md)、[DisplacementCovariance](../../../Blueprint/D5/S3/Quantum/QuantumChannels/FockAttenuator/DisplacementCovariance.md) 数学叙述。`Attenuator` 中的 `pureAttenuatorOperator` 取环境概率 $p_0=1$、$p_n=0$（$n>0$）。单独的 `coherent_output_covariance` 只陈述相干输入的结论，不足以作为下面非对角算子的全部依据；所用的是上述任意双模向量的位移传输和偏迹关系。
+
+这些是 `literature-attested` 的既有衰减数学：[Van Herstraeten–Guha–Cerf，arXiv:2312.15623v2](https://arxiv.org/html/2312.15623v2) 的 (44) 给任意输入的位移协变，(45) 给 Fock 环境定义，此处只取真空 $n=0$。来源对应见 [Library 文献条目](../../../Library/QuantumStates/vanherstraeten2024nongaussian.md)；[Hertz 等的损耗文献条目](../../../Library/QuantumChannels/hertz2025lossbeamsplitters.md) 使用同一真空损耗参数。第二模的相位约定不影响偏迹通道。不使用非真空环境不等式或熵最优化命题。
+
+具体地，既有双模位移关系取输入位移 $(\alpha,0)$，输出位移为 $(\sqrt\eta\alpha,\sqrt{1-\eta}\alpha)$；偏迹消去第二模的位移。故对迹类算子 $X$，
+
+$$
+\mathcal L_\eta(\mathsf D(\alpha)X\mathsf D(\alpha)^\dagger)
+=\mathsf D(\sqrt\eta\alpha)\mathcal L_\eta(X)
+\mathsf D(\sqrt\eta\alpha)^\dagger.
+\tag{13.4}
+$$
+
+从任意向量的纯态关系到秩一交叉算子，可对 $|x+i^a y\rangle\langle x+i^a y|$（$a=0,1,2,3$）作极化；再由线性和迹范数连续性延伸到迹类。Fock 公式在真空和一光子上给
+
+$$
+\begin{aligned}
+U_\eta|0,0\rangle&=|0,0\rangle,\\
+U_\eta|1,0\rangle&=\sqrt\eta|1,0\rangle
++\sqrt{1-\eta}|0,1\rangle,\\
+\mathcal L_\eta(|0\rangle\langle1|)&=\sqrt\eta|0\rangle\langle1|,\\
+\mathcal L_\eta(|u_\alpha\rangle\langle v_\alpha|)
+&=\sqrt\eta|u_{\sqrt\eta\alpha}\rangle
+\langle v_{\sqrt\eta\alpha}|.
+\end{aligned}
+\tag{13.5}
+$$
+
+第二行的失去光子项与第一行有正交的第二模向量，因而其交叉偏迹为零；最后一行由 (13.4) 得到。这些双模向量仅用于通道恒等式，不是 (12.1) 生成的额外实际口。一般 Fock 公式同样表明 $\mathcal L_\eta$ 限制到占据 $0,\ldots,K_0$ 的输入时，恰为 (12.1) 的有限和，输出没有更高占据数。
+
+现在固定定义 3.1 的原截断和原求积，令 $f_l^\infty,g_l^\infty$ 为同一求积点上不截断的序列及其 $\partial_{\bar z}$ 导数。归一化因子仍是 (3.3) 的因子。由 (2.5)、$Z_s\ge z_0s^2/2$、$\sum_lw_l=1$ 及 (3.6)，
+
+$$
+\begin{aligned}
+u_{\rm tail}&=\left(\sum_l\|(I-P_K)f_l^\infty\|^2\right)^{1/2}
+\le\frac{C_0}{sK_+},\\
+v_{\rm tail}&=\left(\sum_l\|(I-P_K)g_l^\infty\|^2\right)^{1/2}
+\le\frac{C_0}{s^2K_+}.
+\end{aligned}
+\tag{13.6}
+$$
+
+这里 $P_K$ 截到 $0,\ldots,K_0$；对导数使用中心图关系
+$|(z\circ g_l^{-1})'(0)|=1+|z(g_l^{-1}h)|^2\le2$，因为非零支撑内 $|z(g_l^{-1}h)|<s<1$。$C_0$ 由 (2.6) 同时控制 $\sqrt{2/z_0}M_0$ 和 $2\sqrt{2/z_0}M_1$。球冠边界及支撑外的零延拓在数算子图范数内光滑，图极点不在非零支撑内，所以这些界对全部 $h$ 和标架一致。
+
+由 (3.7) 的 $\|f\|\le1$、$\|g\|\le A/s$，秩一迹范数公式和 Cauchy–Schwarz 给
+
+$$
+\begin{aligned}
+\sum_l\bigl\||f_l^\infty\rangle\langle g_l^\infty|
+-|f_l\rangle\langle g_l|\bigr\|_1
+&\le E_{\rm tail},\\
+E_{\rm tail}&=u_{\rm tail}(A/s+v_{\rm tail})+v_{\rm tail}\\
+&\le\frac{3C_0^2}{s^2K_+}
+\le\frac{3C_0^{-6}s^2}{\lambda}\le\frac1\lambda.
+\end{aligned}
+\tag{13.7}
+$$
+
+中间一步使用 $A\le C_0$、$C_0\ge2$ 和原来的
+$K_+\ge C_0^8\lambda s^{-4}\ge1/s$、$\lambda\ge1$；没有按 $\eta$ 改选截断。把同一分解用于范数乘积，也得到其差的绝对值之和至多 $E_{\rm tail}$。
+
+OTF004 (26.8) 及全纯坐标变换给每个球冠内的标量 $a_l,\kappa_l$，使
+
+$$
+f_l^\infty=a_lu_{\alpha_l},\qquad
+g_l^\infty=a_l\kappa_lv_{\alpha_l},\qquad
+\alpha_l=\frac{\bar w_l'}{1-|w_l'|^2},\quad
+w_l'=z(g_l^{-1}h)/s.
+\tag{13.8}
+$$
+
+这里 $w_l'$ 是局部复坐标，区别于求积权重 $w_l$。在振幅为零处取零向量；平坦边界由连续延拓处理。因此 (13.5) 给
+
+$$
+\|\mathcal L_\eta(|f_l^\infty\rangle\langle g_l^\infty|)\|_1
+=\sqrt\eta\|f_l^\infty\|\,\|g_l^\infty\|.
+\tag{13.9}
+$$
+
+记 $I_\infty=\sum_l\|f_l^\infty\|\,\|g_l^\infty\|$。正交截断不增加每个范数，故由同一有限族的 (3.8) 及 (13.7)，
+
+$$
+\frac1{2s}\le I_\infty
+\le\sum_l\|f_l\|\,\|g_l\|+E_{\rm tail}
+\le A/s+E_{\rm tail}.
+\tag{13.10}
+$$
+
+CPTP 映射对非 Hermitian 迹类算子也收缩迹范数：其伴随为保单位 CP 映射，Schwarz 不等式给算子范数收缩，再用 Schatten 范数对偶。将它用于 (13.7)，由 (13.9) 得
+
+$$
+|T_\eta-\sqrt\eta I_\infty|\le E_{\rm tail}.
+\tag{13.11}
+$$
+
+结合 (13.10)、$0\le\sqrt\eta\le1$ 即为 (13.2)。证明从未除以 $\eta$，故同时覆盖零、端点一及随 $e$ 变化的透射率。所新增的估计是原固定有限球冠族在这一衰减下的交叉质量，不将 (13.4)–(13.5) 的既有通道恒等式作为新增内容。$\square$
+
+## 14. 同一成功原生控制器的部分保留与完整返回
+
+**定理 14.1（全部原场上的定量返回关系）。** 取原 (2.2)–(2.3) 的 $A,B_*$，并置
+
+$$
+c=192,\qquad C_{\rm part}=2\cdot768^2(A^2+B_*+2)+2,
+\qquad r_1=r_0.
+\tag{14.1}
+$$
+
+对每个整数 $r\ge r_1$、$e=2^{-r}$、每个公共有理 $\eta\in[0,1]$、每个定义 1.1 的原始允许场 $n$ 和每个 $h\in S^2$，定义 12.1 的同一个有限控制器在声明的有限 CP 实际端口下满足
+
+$$
+\max\left\{0,192\sqrt{\frac\eta t}-\frac{C_{\rm part}}t\right\}
+\le\Delta_\eta(n,h)
+\le C_{\rm part}\left(\frac1t+\sqrt{\frac\eta t}\right).
+\tag{14.2}
+$$
+
+同一无条件运行还满足原四坐标成功和最坏资源界
+
+$$
+\begin{gathered}
+\Pr[\|\widehat D-D_h(n)\|_\infty>e]\le2e/3,\\
+T_V\le\nu_eq_e+2\le L_e,\qquad
+T_{\rm reset}=15\ell_e+2\le Q_e,\qquad T_R\le\nu_eq_e+3,\\
+q_e=\lceil\log_2(D_eL_e/e)\rceil,\qquad
+\nu_e\le C_\nu e^{-3}\log(2t/e),\qquad \nu_eq_e\le L_e-2.
+\end{gathered}
+\tag{14.3}
+$$
+
+所有分支恰执行一次原规定终端，使用在 $+d e_x$ 独立重置、此前未经改动的场令牌。全部原始记录、实际副本、编译残余和新旧量子口均保留；任意原合同允许的混合旁观辅助保持原独立条件，不供应其纯化。公共程序不依赖实际 $n,h$，且对每个有理 $\eta$ 有有限存储。
+
+证明。以下分别给出改变节点之前的准入、共同领先态、完整后缀的上下界及同一运行的成功和资源。
+
+### 14.1 改变节点之前的完整原生比较
+
+对每个 $k$，$\sum_jB_j^\dagger B_j$ 的第 $k$ 个对角元为
+$\sum_{j=0}^k\binom{k}{j}(1-\eta)^j\eta^{k-j}=1$，非对角元为零。所以 (12.1) 在两个端点也为 CPTP。它只作用于非参考工作，且与 $L$ 读出及仅依赖 $L$ 的实际复制、解码交换。
+
+在施行 (3.11) 之前，(6.4) 的完整逻辑等距与 $W$、固定编译因子的半 diamond 距离至多 $1/(32t)$；(7.11) 在全部相同原生历史空间上再给至多 $1/(32t)$。故先相加，再施行共同的 $\mathcal Q_\eta$ 和同一 $L$ 读出，得到
+
+$$
+D_{\rm tr}\bigl(\Gamma_\eta(\tau_h),
+\Phi_\eta(\tau_h)\otimes\sigma_{e,\eta}\bigr)
+\le\epsilon_e,\qquad \epsilon_e=\frac1{16t}.
+\tag{14.4}
+$$
+
+这里 $\sigma_{e,\eta}$ 是 (8.4) 的固定编译、程序和独立原生记录因子，附加固定公共 $\eta$ 描述。每个标志、非投影块、停止、截止、失败分支和预留未用槽仍在比较空间内。此论证使用改变节点之前的 (6.4)、(7.11)，不反向使用约化后的 (1.7)。其 diamond 比较稳定于全部旧旁观系统。
+
+### 14.2 同一领先态及获取返回
+
+OTF004 (26.5)、引理 26.5 及本卷 (3.10) 对此固定族给
+
+$$
+\begin{aligned}
+\Xi&=\sum_l|e_0\otimes f_l+e_1\otimes g_l/\sqrt m\rangle
+\langle e_0\otimes f_l+e_1\otimes g_l/\sqrt m|
+\otimes|J_l\rangle\langle J_l|,\\
+\Xi&\ge0,\qquad \operatorname{Tr}\Xi\le2,\qquad
+\|\Phi_{\rm keep}(\tau_h)-\Xi\|_1\le B_*/\lambda.
+\end{aligned}
+\tag{14.5}
+$$
+
+将 (12.1) 作用于同一个 $\Xi$，省略共同的固定 $K_{\rm work}$ 因子。令 $F_\eta,G_\eta,H_\eta$ 分别为按正交 $J_l$ 分块的
+$\mathcal L_{\eta,K_0}(|f_l\rangle\langle f_l|)$、
+$\mathcal L_{\eta,K_0}(|g_l\rangle\langle g_l|)$、$H_l$ 的直和，则
+
+$$
+\begin{aligned}
+\Xi_\eta={}&|e_0\rangle\langle e_0|\otimes F_\eta
++\frac{|e_1\rangle\langle e_1|\otimes G_\eta}{m}
++\frac{|e_0\rangle\langle e_1|\otimes H_\eta+\mathrm{h.c.}}{\sqrt m},\\
+F_\eta,G_\eta&\ge0,\quad\operatorname{Tr}F_\eta\le1,
+\quad\operatorname{Tr}G_\eta\le A^2/s^2,
+\quad\|H_\eta\|_1=T_\eta,\\
+\Xi_\eta&\ge0,\qquad
+\|\Phi_\eta(\tau_h)-\Xi_\eta\|_1\le B_*/\lambda.
+\end{aligned}
+\tag{14.6}
+$$
+
+允许未归一化 Hermitian $X$，仍定义
+$\mathcal R_h(X)=\|X-\tau_h\otimes\operatorname{Tr}_RX\|_1/2$。由三角不等式及偏迹收缩，
+
+$$
+|\mathcal R_h(X)-\mathcal R_h(Y)|\le\|X-Y\|_1.
+\tag{14.7}
+$$
+
+写 $\beta_\eta=T_\eta/\sqrt m$、$p_\eta=\operatorname{Tr}G_\eta/m\le A^2/\lambda$。在 (14.6) 中 $F_\eta$ 的乘积项与自己的边缘比较相消；激发对角项的贡献为 $p_\eta$，交叉项的贡献为 $\beta_\eta$。所以
+$\mathcal R_h(\Xi_\eta)\le\beta_\eta+p_\eta$。由 (13.2)、$\lambda\ge1$、$m\ge1$、(14.4)–(14.7)，实际获取返回至多
+
+$$
+\frac{A\sqrt\eta}{\sqrt\lambda}
++\frac{A^2+B_*+2}{\lambda}+\frac1{8t}.
+\tag{14.8}
+$$
+
+最后一项是 $2\epsilon_e$。将独立场采样的全部输出张量上去，再以保留原数据的等距计算最终解码器，保持领先态的交叉范数、正块迹界和迹范数比较。将这些旧口统记为 $M$，包含 $E_\eta$、混合记忆和全部原生、场及算术输出；记实际旧态为 $\rho_{\rm old}$、相应扩充后的领先态仍为 $\Xi_\eta$，则
+
+$$
+\begin{aligned}
+\delta_{\rm old}:=\mathcal R_h(\rho_{\rm old})
+&\le\frac{A\sqrt\eta}{\sqrt\lambda}
++\frac{A^2+B_*+2}{\lambda}+\frac1{8t},\\
+\|\rho_{\rm old}-\Xi_\eta\otimes\sigma_{e,\eta}\|_1
+&\le d_{\rm err}:=\frac{B_*}{\lambda}+\frac1{8t}.
+\end{aligned}
+\tag{14.9}
+$$
+
+后续省略共同的固定因子，其迹为一。独立场态和等距算术不引入维数损失，也不接触 $R$。
+
+### 14.3 完整规定后缀的上界
+
+后缀恰为 (10.9)–(10.10)。它忽略每个旧口，包括 $E_\eta$。具体地，在固定 singlet $BA$ 上作第一个新前向 $V$，在原标签基退相干 $H$，保留 $H,E$、原始符号及实际副本，只在负标签交换 $B,A$；独立重置 $F$ 于 $+d e_x$，施行 (10.9) 的固定 $\widehat\Phi$，再对其 $A$ 作第二个新前向 $V$ 及同样的标签保留。对 $B,A,F$ 作同名输出保留的 $\mathcal E$。最后于 $+d e_x$ 独立重置此前未经改动的 $S_t$，执行一次 $\exp[-idJ\cdot\sigma/m]$，对 $S_t$ 作同名保留的 $\mathcal E$。$\widehat\Phi,\mathcal E$ 的 CP、TP 性使用 OTF004 引理 17.2；不更换其实际输出。
+
+记此完整通道为 $\mathcal S_v$，$v=n(+d e_x)$。OTF004 定理 17.3 对全部 $h,v$ 给
+
+$$
+\begin{aligned}
+\|\mathcal S_v(\tau_h)-\tau_h\otimes\pi_Z\otimes\sigma_1\|_1
+&<73/D,\\
+\mathcal R_h(\mathcal S_v(\tau_h))&<80/D.
+\end{aligned}
+\tag{14.10}
+$$
+
+对 $\rho_{\rm old}$ 和它自己的乘积比较态
+$\tau_h\otimes\operatorname{Tr}_R\rho_{\rm old}$ 施行同一后缀，其距离至多 $\delta_{\rm old}$。在乘积输入上，后缀的输出是
+$\mathcal S_v(\tau_h)\otimes\operatorname{Tr}_R\rho_{\rm old}$；使用 (14.10)，再将比较边缘改为实际最终 $K_\eta$ 边缘，由偏迹收缩另付至多 $\delta_{\rm old}$。因此
+
+$$
+\begin{aligned}
+\Delta_\eta(n,h)&\le2\delta_{\rm old}+80/D\\
+&\le1536A\sqrt{\eta/t}
++\frac{2\cdot768^2(A^2+B_*+2)+5/4}{t}.
+\end{aligned}
+\tag{14.11}
+$$
+
+这里 $80t/D=80me^2/D<80e^2<1$。因 $A\ge1$，(14.1) 的 $C_{\rm part}$ 同时大于 $1536A$ 和 (14.11) 的余项常数，给 (14.2) 的上界。这一比较包含全部新后缀记录。
+
+### 14.4 分离乘积、激发和交叉项的后缀下界
+
+仅作为下界检验，在最终态中偏迹新后缀口，保留所有旧口 $M$。令 $\mathcal F_v=\operatorname{Tr}_{\rm new}\mathcal S_v$、$\gamma=\sqrt m/D$。OTF004 (26.20) 给
+
+$$
+\| (\mathcal F_v\otimes\operatorname{id}_M)(Y)-Y\|_1
+\le40\gamma\|Y\|_1,
+\quad\operatorname{supp}Y\subset\operatorname{span}\{e_0,e_1\}\otimes M.
+\tag{14.12}
+$$
+
+其来源是 (17.12)、(22.9)–(22.11) 的等距望远镜比较：两次原生接触与终端的差分别至多 $6\gamma,6\gamma,8\gamma$，故迹范数常数为 $12+12+16=40$。算子范数界张量任意旧记忆不变；此条件只限制比较输入的支撑，不限制真实输出的降低数，也不要求纯化。
+
+令 $P_h=|e_0\rangle\langle e_0|\otimes I_M$，将 (14.6) 写为 $Y_0+Y_1+Y_c$，依次是乘积对角项、激发对角项和 Hermitian 交叉项。三个估计分别为：由 (14.10) 的尖锐乘积界和 $\operatorname{Tr}F_\eta\le1$，$Y_0$ 经 $\mathcal F_v$ 后的 $P_h/(I-P_h)$ 交叉块范数小于 $80/D$；$Y_1\ge0$ 且迹为 $p_\eta\le A^2/\lambda$，其输出交叉块范数至多该迹；$\|Y_c\|_1=2\beta_\eta$，只对它应用 (14.12)，相对其原交叉块至多付 $80\gamma\beta_\eta$。实际约化输出相对这些项的额外迹范数误差至多 $d_{\rm err}$。所以
+
+$$
+\|P_h\operatorname{Tr}_{\rm new}(\Omega_{\eta,n,h})(I-P_h)\|_1
+\ge(1-80\gamma)\beta_\eta
+-\frac{A^2+B_*}{\lambda}-\frac{80}{D}-\frac1{8t}.
+\tag{14.13}
+$$
+
+这里没有对整个领先态收取一个与 $\eta$ 无关的 $O(m^{-1/2})$ 误差：尖锐补偿只付给乘积项，近恒等误差只乘以衰减后的交叉质量。
+
+原元组给
+$m\ge8{,}000{,}000N_*^2-1>25600$，所以
+$\gamma\le1/\sqrt m$、$1-80\gamma\ge1/2$。又 $\beta_\eta\ge0$，由 (13.2)，
+
+$$
+\begin{aligned}
+\|P_h\operatorname{Tr}_{\rm new}(\Omega_{\eta,n,h})(I-P_h)\|_1
+&\ge\frac{\sqrt\eta}{4\sqrt\lambda}
+-\frac{A^2+B_*+1/2}{\lambda}-\frac{80}{D}-\frac1{8t}\\
+&\ge192\sqrt{\eta/t}
+-\frac{768^2(A^2+B_*+1/2)+9/8}{t}.
+\end{aligned}
+\tag{14.14}
+$$
+
+第一行也使用 $1/(2\sqrt m\lambda)\le1/(2\lambda)$。当 (13.2) 的下界为负时，先使用 $\beta_\eta\ge0$ 和 $1-80\gamma\ge1/2$，再代入该下界，故方向仍正确。
+
+对任一归一化 $RM$ 态 $\rho$，其交叉块 $C=P_h\rho(I-P_h)$ 的极分解给一个 Hermitian、算子范数至多一的纯非对角检验，满足其在 $\rho$ 上的期望为 $2\|C\|_1$，在
+$\tau_h\otimes\rho_M$ 上的期望为零。因此
+
+$$
+\mathcal R_h(\rho)\ge\|P_h\rho(I-P_h)\|_1.
+\tag{14.15}
+$$
+
+偏迹新后缀口将完整乘积比较态送到该约化态自己的乘积比较态。由迹距离收缩，(14.14)–(14.15) 因而是完整 $\Delta_\eta(n,h)$ 的下界；偏迹只用于数学检验，不是控制器操作。$C_{\rm part}$ 大于 (14.14) 的余项常数，且 $\Delta_\eta\ge0$，得到 (14.2) 的下界。
+
+### 14.5 原四坐标成功的同一运行证明
+
+$\mathcal Q_\eta$ 保迹，所以偏迹其选定输出后，其余所有系统的联合边缘与 $\eta=0$ 完全相同，包括原生标志、$L$ 和全部实际经典记录。后续解码、场采样及规定后缀不读取 $E_\eta$ 或固定工作口。因此每个原 $n,h$ 的完整解码律恰为第 10 节的原律，而非只保证某个方向对的二元可区分性。
+
+具体地，按原有理中心舍入取 $\widehat h(l)$，$l=0$ 或无效码取零。由 (10.3)–(10.4) 和原窗口，
+
+$$
+\Pr[\|\widehat h-h\|_\infty>e/16]
+\le K_{\rm risk}/t+4\exp(-t/16384)\le e/3.
+\tag{14.16}
+$$
+
+在 $0,\pm u_e e_x,\pm u_e e_y$ 的三个固定 Pauli 轴各取 $\ell_e$ 次原独立场样本，保留全部 $15\ell_e$ 枚令牌、测后态、原结果、实际副本和均值。每个场坐标估计误差至多 $eu_e/16$ 的共同好事件，其坏概率由原定义给
+
+$$
+30\exp[-\ell_e e^2u_e^2/512]\le e/3.
+\tag{14.17}
+$$
+
+仍令 $\widehat n_0=\widehat n(0)$、
+$\widehat v_a=[\widehat n(u_e e_a)-\widehat n(-u_e e_a)]/(2u_e)$，输出恰为
+
+$$
+\widehat D=\left(
+\frac{\widehat h\cdot[\widehat n_0\times\widehat v_x]}2,
+\frac{\widehat h\cdot[\widehat n_0\times\widehat v_y]}4,
+0,\frac{\widehat h\cdot\widehat v_y}2\right).
+\tag{14.18}
+$$
+
+所有运算有理且精确；旧两坐标解码器和其记录仍保留。轴向 $\|n_{aa}\|_2\le2$ 给中心差分偏差
+$\frac1{2u_e}\int_{-u_e}^{u_e}2|v|\,dv=u_e$。故在两个好事件上，
+
+$$
+\begin{gathered}
+\|\widehat h-h\|_2\le e/8,\qquad
+\|\widehat n_0-n(0)\|_2\le e^2/64,\qquad
+\|\widehat v_a-n_a(0)\|_2\le e/4,\\
+\|\widehat h\|_2,\|\widehat n_0\|_2,\|\widehat v_a\|_2\le2.
+\end{gathered}
+\tag{14.19}
+$$
+
+对 $a=x,y$，展开叉积并用 $\|n(0)\|_2=1$、$\|n_a(0)\|_2\le1$，除以二或四之前的误差至多
+$e/8+2(2e^2/64+e/4)\le11e/16$；最后一个点积的误差至多
+$\bigl(e/8+2(e/4)\bigr)/2=5e/16$。所以四坐标误差分别至多
+$11e/32,11e/64,0,5e/16$，全部小于 $e$。坏事件并集至多 $2e/3$，不要求两个好事件独立。完整后缀保迹且不改已保存解码边缘，故这一成功断言与 (14.2) 是同一无条件运行、全部原始 $n,h$ 上的联合合同。
+
+### 14.6 最坏分支资源、完整口与有限公共描述
+
+唯一改变的 (12.1) 是非参考节点，不增加 $V$、场重置或终端。每个正、逆、受控逻辑字母仍以一个新 $q_e$ 截止前向原生字支付，所有历史和未用槽保留。由定理 7.2，获取至多用 $\nu_eq_e\le L_e-2$ 次 $V$，不使用场重置或终端；原全场部分使用 $15\ell_e$ 次重置、零次 $V$；后缀增加两次 $V$、两次独立重置及恰一次规定终端。于是 (14.3) 成立，其中 $18N_e\ge15\ell_e+1$。没有免费逆、额外直接 $R$ 接触、后选择或期望次数代替最坏分支次数。
+
+最终 $K_\eta$ 包含同名固定工作口、被动 $E_\eta$、测后 $L$ 和全部 $J_l$ 成分；频率、探针、控制、奇偶、投影相位、内外层标志及非投影残余；每个原生槽的 $H,E$、原始 $X$ 读数、实际副本、使用和奇偶位、停止/成功/截止/失败/计数及预留空白口；全部旧混合记忆、程序和路由；全部场令牌、测后态、样本、均值、差分、四坐标解码器、旧解码器和算术工作；以及后缀的 $B,A,F,S_t$、两组新 $H,E$、原始符号及其实际副本、程序、路由、工作和固定替换后的同名量子输出。各式中的数学约化都不是遗漏实际输出的操作。
+
+写 $\eta=p/q$ 为既约分数，$0\le p\le q$、$q\ge1$。可用恰
+$(K_0+1)(K_0+2)/2$ 个平方根有理系数及其指标、公共 $\eta$ 精确描述 (12.1)；系数平方的分子、分母分别为
+
+$$
+\binom{k}{j}p^{k-j}(q-p)^j,\qquad q^k.
+\tag{14.20}
+$$
+
+分子位数至多 $1+K_0(1+\lceil\log_2(q+1)\rceil)$，分母位数至多
+$1+K_0\lceil\log_2(q+1)\rceil$。包括索引和端点约定，一个保守的固定描述界为
+
+$$
+B_\eta=64(K_0+2)^3
+\bigl(\lceil\log_2(q+1)\rceil+\lceil\log_2(K_0+2)\rceil+1\bigr)
+\quad\text{比特}.
+\tag{14.21}
+$$
+
+因此获取空间可在 (8.3) 右端另乘 $K_+2^{B_\eta}$；同名 $K_{\rm work}$ 已在原界内，新 $K_+$ 因子只计 $E_\eta$。公共描述作为固定保留程序因子，不是新随机结果。任意原混合旁观空间的维数仍原样乘在相同比较两边；场和规定后缀保留其原有限因子。原合同没有记忆维数上限，故每个允许参数都有有限实现描述。这里的平方根有理节点是声明的有限 CP 数学操作，不蕴含有效门数、运行时间、能量或额外物理浴的实现结论。
+
+全部常数保持固定，(2.8) 已给 $\lambda\ge\max\{1,A^2,2C_{\rm fail}\}$、原成功风险窗口和原生预算窗口，所以上述证明不需要扩大 $r_0$。这完成 (14.1)–(14.3) 的全部量词。$\square$
+
+## 15. 部分保留族的尺度消费者及适用范围
+
+**推论 15.1（同一族中一阶返回的充要条件）。** 沿任意允许的二进精度序列 $e\to0$ 和任意公共有理透射率序列 $\eta_e\in[0,1]$，对定义 12.1 的同一族、同一原成功解码器和同一规定后缀，
+
+$$
+\sup_{n,h}\Delta_{\eta_e}(n,h)=O(1/t_e)
+\quad\Longleftrightarrow\quad
+\eta_et_e\text{ 有界}.
+\tag{15.1}
+$$
+
+必要性更强：沿任意选定的原始允许 $n_e,h_e$ 序列，只要
+$\Delta_{\eta_e}(n_e,h_e)=O(1/t_e)$，就已有 $\eta_et_e$ 有界。若 $\eta_et_e\to\infty$，则对全部原始 $n,h$ 一致有
+
+$$
+\Delta_{\eta_e}(n,h)=\Theta\!\left(\sqrt{\eta_e/t_e}\right).
+\tag{15.2}
+$$
+
+证明。若 $\eta_et_e\le M$，(14.2) 给
+$t_e\Delta_{\eta_e}(n,h)\le C_{\rm part}(1+\sqrt M)$。反之，若沿某个允许 $n_e,h_e$ 序列有 $t_e\Delta_{\eta_e}(n_e,h_e)\le M$，同一逐点下界给
+
+$$
+192\sqrt{\eta_et_e}\le M+C_{\rm part},\qquad
+\eta_et_e\le\left(\frac{M+C_{\rm part}}{192}\right)^2.
+\tag{15.3}
+$$
+
+渐近 $O$ 界只要求尾部，有限前缀的 $t_e$ 和 $\eta_e$ 也有限，故等价成立。若 $\eta_et_e\to\infty$，将 (14.2) 除以 $\sqrt{\eta_e/t_e}$，则下界余项为
+$C_{\rm part}/\sqrt{\eta_et_e}\to0$，上界为
+$C_{\rm part}(1+1/\sqrt{\eta_et_e})$。特别地，其一致下极限至少为 $192$，给 (15.2)。这为命题 11.1 的保留/约化接口比较提供指定部分保留模型中的完整量化关系；原成功概率、资源和全部自身边缘仍属同一运行。$\square$
+
+**命题 15.2（比较族、基线与来源的边界）。** (14.2)–(15.2) 只约束定义 12.1 的固定有限族和规定完成，不给所有允许控制器的分类或最优性，也不从 OTF004 (19.11) 推出逐点正 $1/t$ 下界。$\eta=0$ 时本结论只给零下界和 $O(1/t)$ 上界；$\eta=1$ 时保留的相干工作在新口上。原生控制器的端口语义、OTF004 §27 的原消费者及本卷第 1–11 节保持各自的声明范围。
+
+证明。(14.2) 的下界对每个原 $n,h$ 成立，但其余项允许 $\eta=0$ 时下界为零。OTF004 (19.11) 则是原控制器比较类的最坏情形下确界 $R(e)$ 的逆 $D_e e^2$ 基线；最坏情形的下界不蕴含每个 $n,h$ 上的同一下界。推论 15.1 的必要性来自 (14.2) 的逐点交叉估计，不使用这样的基线替换。两个端点由 (12.1) 的精确公式得到，不能据此单独推出中间 $\eta$ 的结论；中间族需要 (13.6)–(13.11) 及 (14.13) 的分离估计。
+
+所用真空衰减、位移及一光子恒等式为前引 `literature-attested` 结果；固定球冠截断的 $\eta$ 一致交叉界、改变节点之前的完整原生桥、规定后缀后的逐点返回及原全场消费者的组合是这里的 `repo-derived` 数学应用，不作历史原创性断言。其假设明确选定有限 CP 节点的实际输出，并未给另一个生成额外浴的酉实现证明同一界，亦不声称时间、门、物理来源或宇宙本体结论。$\square$
+
+## 追加锚（本行以下为增补区）
