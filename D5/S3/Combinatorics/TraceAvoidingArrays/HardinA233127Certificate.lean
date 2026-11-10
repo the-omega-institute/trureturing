@@ -10,38 +10,39 @@
 admission_basis: open-problem-resolution (#28649; Proved)
 escape_witness: none; every declaration is bind-only.
 Declaration names use the D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233127SquareStrip namespace.
-completed_201010: proof_shape=bind-only; consumers=row_counts
-completed_201012: proof_shape=bind-only; consumers=row_counts
-completed_201020: proof_shape=bind-only; consumers=row_counts
-completed_201021: proof_shape=bind-only; consumers=row_counts
-completed_201201: proof_shape=bind-only; consumers=row_counts
-completed_201202: proof_shape=bind-only; consumers=row_counts
-completed_201210: proof_shape=bind-only; consumers=row_counts
-completed_201212: proof_shape=bind-only; consumers=row_counts
-completed_202010: proof_shape=bind-only; consumers=row_counts
-completed_202012: proof_shape=bind-only; consumers=row_counts
-completed_202020: proof_shape=bind-only; consumers=row_counts
-completed_202021: proof_shape=bind-only; consumers=row_counts
-completed_202101: proof_shape=bind-only; consumers=row_counts
-completed_202102: proof_shape=bind-only; consumers=row_counts
-completed_202120: proof_shape=bind-only; consumers=row_counts
-completed_202121: proof_shape=bind-only; consumers=row_counts
-completed_210101: proof_shape=bind-only; consumers=row_counts
-completed_210102: proof_shape=bind-only; consumers=row_counts
-completed_210120: proof_shape=bind-only; consumers=row_counts
-completed_210121: proof_shape=bind-only; consumers=row_counts
-completed_210201: proof_shape=bind-only; consumers=row_counts
-completed_210202: proof_shape=bind-only; consumers=row_counts
-completed_210210: proof_shape=bind-only; consumers=row_counts
-completed_210212: proof_shape=bind-only; consumers=row_counts
-completed_212010: proof_shape=bind-only; consumers=row_counts
-completed_212012: proof_shape=bind-only; consumers=row_counts
-completed_212020: proof_shape=bind-only; consumers=row_counts
-completed_212021: proof_shape=bind-only; consumers=row_counts
-completed_212101: proof_shape=bind-only; consumers=row_counts
-completed_212102: proof_shape=bind-only; consumers=row_counts
-completed_212120: proof_shape=bind-only; consumers=row_counts
-completed_212121: proof_shape=bind-only; consumers=row_counts
+completed_201010: proof_shape=bind-only; consumers=row_counts_two
+completed_201012: proof_shape=bind-only; consumers=row_counts_two
+completed_201020: proof_shape=bind-only; consumers=row_counts_two
+completed_201021: proof_shape=bind-only; consumers=row_counts_two
+completed_201201: proof_shape=bind-only; consumers=row_counts_two
+completed_201202: proof_shape=bind-only; consumers=row_counts_two
+completed_201210: proof_shape=bind-only; consumers=row_counts_two
+completed_201212: proof_shape=bind-only; consumers=row_counts_two
+completed_202010: proof_shape=bind-only; consumers=row_counts_two
+completed_202012: proof_shape=bind-only; consumers=row_counts_two
+completed_202020: proof_shape=bind-only; consumers=row_counts_two
+completed_202021: proof_shape=bind-only; consumers=row_counts_two
+completed_202101: proof_shape=bind-only; consumers=row_counts_two
+completed_202102: proof_shape=bind-only; consumers=row_counts_two
+completed_202120: proof_shape=bind-only; consumers=row_counts_two
+completed_202121: proof_shape=bind-only; consumers=row_counts_two
+completed_210101: proof_shape=bind-only; consumers=row_counts_two
+completed_210102: proof_shape=bind-only; consumers=row_counts_two
+completed_210120: proof_shape=bind-only; consumers=row_counts_two
+completed_210121: proof_shape=bind-only; consumers=row_counts_two
+completed_210201: proof_shape=bind-only; consumers=row_counts_two
+completed_210202: proof_shape=bind-only; consumers=row_counts_two
+completed_210210: proof_shape=bind-only; consumers=row_counts_two
+completed_210212: proof_shape=bind-only; consumers=row_counts_two
+completed_212010: proof_shape=bind-only; consumers=row_counts_two
+completed_212012: proof_shape=bind-only; consumers=row_counts_two
+completed_212020: proof_shape=bind-only; consumers=row_counts_two
+completed_212021: proof_shape=bind-only; consumers=row_counts_two
+completed_212101: proof_shape=bind-only; consumers=row_counts_two
+completed_212102: proof_shape=bind-only; consumers=row_counts_two
+completed_212120: proof_shape=bind-only; consumers=row_counts_two
+completed_212121: proof_shape=bind-only; consumers=row_counts_two
+row_counts_two: proof_shape=bind-only; consumers=row_counts
 row_counts: proof_shape=bind-only; consumers=finite_certificate
 -/
 
@@ -272,22 +273,20 @@ section
 attribute [local irreducible] classCount
 
 set_option maxHeartbeats 2000000 in
--- Exhaust the 98 legal boundaries after rejecting the other label rows.
-theorem row_counts : ∀ s p, Valid s p → ∀ k,
+private theorem row_counts_two : ∀ s p, Valid s p → p 0 = 2 → ∀ k,
     classCount s p k = transfer (boundaryClass s p) k := by
   simp only [Fin.forall_fin_succ_pi, Fin.forall_fin_zero_pi]
-  rintro ⟨b1, b2⟩ p0 p1 p2 p3 p4 p5 hp k
+  rintro ⟨b1, b2⟩ p0 p1 p2 p3 p4 p5 hp htwo k
+  change p0 = (2 : Fin 3) at htwo
+  subst p0
   cases b1
   · cases hp.1
-  · cases b2 <;> fin_cases p0 <;> fin_cases p1 <;>
-      simp [Valid, Fin.forall_fin_succ] at hp
+  · cases b2 <;> fin_cases p1 <;> simp [Valid, Fin.forall_fin_succ] at hp
     all_goals fin_cases p2 <;> simp at hp
     all_goals fin_cases p3 <;> simp at hp
     all_goals fin_cases p4 <;> simp at hp
     all_goals fin_cases p5 <;> simp at hp
     all_goals first
-      | exact row_counts_zero _ _ hp rfl k
-      | exact row_counts_one _ _ hp rfl k
       | exact completed_201010 k
       | exact completed_201012 k
       | exact completed_201020 k
@@ -321,5 +320,16 @@ theorem row_counts : ∀ s p, Valid s p → ∀ k,
       | exact completed_212120 k
       | exact completed_212121 k
 end
+
+theorem row_counts : ∀ s p, Valid s p → ∀ k,
+    classCount s p k = transfer (boundaryClass s p) k := by
+  intro s p hp k
+  have hlabel : p 0 = 0 ∨ p 0 = 1 ∨ p 0 = 2 := by
+    have hbound := (p 0).isLt
+    omega
+  rcases hlabel with hz | ho | ht
+  · exact row_counts_zero s p hp hz k
+  · exact row_counts_one s p hp ho k
+  · exact row_counts_two s p hp ht k
 
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233127SquareStrip

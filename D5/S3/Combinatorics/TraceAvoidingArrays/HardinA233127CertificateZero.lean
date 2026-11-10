@@ -325,6 +325,7 @@ theorem row_counts_zero : ∀ s p, Valid s p → p 0 = 0 → ∀ k,
     classCount s p k = transfer (boundaryClass s p) k := by
   simp only [Fin.forall_fin_succ_pi, Fin.forall_fin_zero_pi]
   rintro ⟨b1, b2⟩ p0 p1 p2 p3 p4 p5 hp hzero k
+  change p0 = (0 : Fin 3) at hzero
   subst p0
   cases b1
   · cases hp.1
