@@ -1,0 +1,24 @@
+**推论 45.4（固定代数轨道的两个有向来源探针）。**对 $a\in K$、$u\in S$ 及整数 $j\ge0$，有
+
+$$
+\begin{aligned}
+d(u,V^ja)&=d(u,a),&d(V^ja,u)&=d(a,u),\\
+d(u,p_j)&=q_d(u),&d(p_j,u)&=r_d(u).
+\end{aligned}
+\tag{45.17}
+$$
+
+**证明。**$A^{-j}u$ 是实际来源，且 $V^j(A^{-j}u)=u$。由引理 1.2 的同步 $V$ 等距及 $A^ja=a$，
+
+$$
+\begin{aligned}
+d(u,V^ja)&=d(V^j(A^{-j}u),V^ja)
+=d(A^{-j}u,a)=d(u,a),\\
+d(V^ja,u)&=d(V^ja,V^j(A^{-j}u))
+=d(a,A^{-j}u)=d(a,u).
+\end{aligned}
+\tag{45.18}
+$$
+
+第二行另按实际反序计算，没有用 $d$ 对称。取 $a=e$ 得单位轨道两式。这只提供来源的 $V$ 原像，不提供 $e$ 的 $V$ 原像，也不把 $p_j$ 在其他乘法环境中认作 $e$。证毕。
+

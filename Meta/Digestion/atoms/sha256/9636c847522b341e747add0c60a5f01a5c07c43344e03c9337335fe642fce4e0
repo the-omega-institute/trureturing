@@ -1,0 +1,32 @@
+**Lemma 7.2 (the existing sampler on one simultaneous event).**
+For a valid deterministic branch $l\le\tau$, the packet in
+Definition 7.1 has an event $\mathcal E$ satisfying
+
+$$
+ \begin{gathered}
+ \mathbb P_e(\mathcal E)\ge1-\beta,\qquad
+ \mathcal E=\{\operatorname{TV}(a|_{\mathcal L^N},q|_{\mathcal L^N})
+                    \le t\},\\
+ \mathcal E\Longrightarrow
+ |a(x)-q(x)|\le t\quad(|x|\le N),\qquad |a(3)-c|\le t.
+ \end{gathered}
+ \tag{7.6}
+$$
+
+*Proof.* This is the original nonstationary-start bound [DPCR,
+Theorem 9.4, (9.13)] at word length $N$ and window count $n$.
+The upper bound (7.3) dominates its variance envelope and $D_0^-$
+is a valid lower bound for $d^{\mathrm{orig}}_{1/(4d)}$ by
+(7.2). Its failure bound is at most
+
+$$
+ \frac{4^N}{2t}\sqrt{\frac{V_{n,N}^+}{D_0^-}}\le\beta
+ \tag{7.7}
+$$
+
+by (7.4). Every prefix event is an event of the same length-$N$
+vector, so its probability error is at most TV, simultaneously.
+Finally $q(3)=\int cg_d\,dm=c$. This uses the existing dependent,
+overlapping-window estimate, not independent samples or the
+transient raw frequency as a new exact law. $\square$
+

@@ -1,0 +1,48 @@
+## 25. 数学引文及直接使用范围
+
+**约定 C-25.1（不可变仓库来源）。** 下列链接均指完整提交，章节号属于各原文；[C-R1]–[C-R7] 是 `repo-derived` 来源及其明确引用的成熟理论。五组关系的原来源快照包括 `3a888f3560ee2dcfa9c4109236e60db93b3d48fb`、`9898c68d2fa7ade71e7035b7faa2ef5ae708949f`、`4c02a48d490528e6637c42f280e4d5972a2d3243`、`aed0cc25936de32be5145201bb7f19f64a0ed84d`、`3655cb5f3ef29875a414497a6262b818121e8819`；正文使用下列实际共同接口，不借未提供附件或活动草稿。
+
+| 来源 | 原文与版本 | 本卷直接消费范围 |
+| --- | --- | --- |
+| [C-R1] | [《FIB 关系延拓几何》](https://github.com/the-omega-institute/trureturing/blob/aed0cc25936de32be5145201bb7f19f64a0ed84d/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md) | 定义 1.1–1.3、§3、定义 7.1 与定理 7.2–7.3；原树、组成、原生方向、守卫和空窗 |
+| [C-R2] | [《金字塔：关联纤维与原生接续》](https://github.com/the-omega-institute/trureturing/blob/aed0cc25936de32be5145201bb7f19f64a0ed84d/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md) | §§3–4、定义 8.1、命题 8.7–8.10；概率纤维与同源双窗数量任务 |
+| [C-R3] | [《金字塔基础公式、原子关系与同源接续总表》](https://github.com/the-omega-institute/trureturing/blob/aed0cc25936de32be5145201bb7f19f64a0ed84d/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md) | §§1–7、9、§§11.6–11.11；完整函数、最大熵、真实奇偶档案后继续 |
+| [C-R4] | [《二阶关系完成》](https://github.com/the-omega-institute/trureturing/blob/aed0cc25936de32be5145201bb7f19f64a0ed84d/docs/develop/theory/AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md) | §§39、53、101–110；既有函数／回路、整数中心符号、同组成比较、共同记录与相干历史 |
+| [C-R5] | [《金字塔行列式与原生守卫续接》](https://github.com/the-omega-institute/trureturing/blob/3a888f3560ee2dcfa9c4109236e60db93b3d48fb/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_DETERMINANT_AND_NATIVE_GUARD_CONTINUATION.md) | §§4–5、9–10；Δ、闭域補全及 initialized 奇偶消费者 |
+| [C-R6] | [《局部选择几何》](https://github.com/the-omega-institute/trureturing/blob/aed0cc25936de32be5145201bb7f19f64a0ed84d/docs/develop/theory/FIB_ATOM_LOCAL_CHOICE_GEOMETRY.md) | §§7、9；共同记录相位、带菜单与失败的任务下降 |
+| [C-R7] | [《递归关系观察、空间记录与时序》](https://github.com/the-omega-institute/trureturing/blob/3a888f3560ee2dcfa9c4109236e60db93b3d48fb/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_SPATIAL_RECORDS_CHRONOLOGY.md) | §§18–23；实际前缀取得、保持、交付及独立资源坐标；不免费取得本卷未知律 |
+
+**约定 C-25.2（文献中的中间步骤）。** 以下均 `literature-attested`，只承担表中中间结果；各有限 FIB 域的支撑分类、反演、任务桥和条件响应由前述普通证明给出，不主张全局原创性。
+
+| 来源 | 完整题名、版本与链接 | 精确使用范围 |
+| --- | --- | --- |
+| [C-L1] | Stephen Boyd、Lieven Vandenberghe，[*Convex Optimization*](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf)，2004 年书，作者站修正印刷版，附录 A.5.5，印刷页 650–651 | Schur 补、奇异参考 range 条件；本卷实际投影与递归在 §9 自证 |
+| [C-L2] | Frank Nielsen，[*An elementary introduction to information geometry*](https://arxiv.org/abs/1808.08271v2)，v2；同题扩展出版 [Entropy 22(10), 1100 (2020)](https://doi.org/10.3390/e22101100) | Fisher–Rao、得分、平方根概率嵌入的经典背景；两版本不当作独立证据；§4 的有限信息损失自证 |
+| [C-L3] | Michał Oszmaniec、Daniel J. Brod、Ernesto F. Galvão，[*Measuring relational information between quantum states, and applications*](https://arxiv.org/abs/2109.10006v1)，v1，式 (1) 与 Fig. 1 的 cycle tests | Bargmann 闭路及额外受控循环制备背景；不冒称该文证明本卷五态四角投影概率 |
+| [C-L4] | William K. Wootters，[*Entanglement of Formation of an Arbitrary State of Two Qubits*](https://arxiv.org/abs/quant-ph/9709029v2)，v2，式 (4)、(7) | 纯态 spin-flip concurrence；§12 明确计算 $`2\lvert\det𝒜\rvert`$，不调用未供给混态任务 |
+| [C-L5] | Abhay Ashtekar、Troy A. Schilling，[*Geometrical Formulation of Quantum Mechanics*](https://arxiv.org/abs/gr-qc/9706069v1)，v1，§II | 射线空间度量背景；本文 FS 归一化另定，不移植其物理尺度或声明全局 toric 对应 |
+| [C-L6] | Jesús A. De Loera、Edward D. Kim，[*Combinatorics and Geometry of Transportation Polytopes: An Update*](https://arxiv.org/abs/1307.0124v1)，v1，§2 | 行列边缘与运输多面体背景；其无禁止格一般结果不替代 §17 全纤维可用支持计算 |
+
+**约定 C-25.3（硬核引文的适用条件）。** 文献 [^CE-HC] 的 Theorem 1.1 要求统一活动满足
+
+```math
+\lambda\lt\lambda_c(\Delta+1),
+```
+
+并要求图族的连接常数至多
+
+```math
+\Delta.
+```
+
+本卷只使用该文的硬核模型定义，不调用此强空间混合结论。
+
+[^CE-C]: 《Auric FIB ATOM 金字塔：关联纤维与原生接续》，[固定提交正文](https://github.com/the-omega-institute/trureturing/blob/3655cb5f3ef29875a414497a6262b818121e8819/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md)，定义 1.1、6.3，推导 6.4，定义 8.1–8.2、推导 8.3–8.5、命题 8.7–8.9。消费位置字典、额外相干合同、两读向核、整源因子化与相关历史反例。
+[^CE-D]: 《Auric FIB ATOM 金字塔续篇：行列式、条件拼接与原生守卫接续》，[固定提交正文](https://github.com/the-omega-institute/trureturing/blob/3655cb5f3ef29875a414497a6262b818121e8819/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_DETERMINANT_AND_NATIVE_GUARD_CONTINUATION.md)，推导 4.2–4.3、5.1–5.2、6.1–6.3、7.1，约定 7.2，定义 10.4、命题 10.5–10.7。消费底面行列式与总体协方差区别、正活动条件以及真实档案后继续任务。
+[^CE-F]: 《FIB-ATOM 金字塔：基础公式、原子关系与同源接续总表》，[固定提交正文](https://github.com/the-omega-institute/trureturing/blob/3655cb5f3ef29875a414497a6262b818121e8819/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)，§9.1，定义 11.1–11.3、命题 11.4–11.5、定义 11.6、数学引文 11.7、命题 11.8–11.9、边界 11.11、§12.5。消费概率核的绝对质量、缺失拆分、下一回复表与取得边界。
+[^CE-G]: 《FIB 关系延拓几何》，[固定提交正文](https://github.com/the-omega-institute/trureturing/blob/3655cb5f3ef29875a414497a6262b818121e8819/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md)，定义 3.2–3.3、5.1–5.2、定理 5.3–5.4、定义 7.1、定理 7.2–7.3。消费完整菜单的动态纤维判据、同源权重保持收缩、真实高到低读者和整词方向桥。
+[^CE-S]: 《Auric · FIB-ATOM 续篇：二元来源的三维二阶关系完成》，[固定提交正文](https://github.com/the-omega-institute/trureturing/blob/3655cb5f3ef29875a414497a6262b818121e8819/docs/develop/theory/AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md)，定义 71.1、定理 71.2–71.3，§§107–108、命题 109.3、定义 110.1、定理 110.2、命题 110.3–110.4。消费 Schmidt/SVD、指定等振幅上界、任意支撑振幅的反例及共同制备、记录和可复用环境条件。
+[^CE-R]: 《Auric：FIB-ATOM 续篇——差异边界、记录几何与时间箭头》，[固定提交正文](https://github.com/the-omega-institute/trureturing/blob/3655cb5f3ef29875a414497a6262b818121e8819/docs/develop/theory/AURIC_FIB_HISTORY_RECORDS_TIME_ARROW.md)，定义 125.1、定理 125.2–125.3、假设 125.4–125.5。消费同一有限实现中的权重、具体作用和共同记录分离，及数学兼容性与实际取得的区别。
+[^CE-HC]: Alistair Sinclair、Piyush Srivastava、Yitong Yin，*Spatial mixing and approximation algorithms for graphs with bounded connective constant*，[arXiv:1308.1762v2](https://arxiv.org/abs/1308.1762v2)，§1.1。只消费统一活动硬核独立集模型定义；其 Theorem 1.1 的两个适用条件见约定 C-25.3，此处不调用该强空间混合结论。
+[^CE-VE]: Nathalie Peyrard、Marie-Josée Cros、Simon de Givry、Alain Franc、Stéphane Robin、Régis Sabbadin、Thomas Schiex、Matthieu Vignes，[arXiv:1506.08544v2](https://arxiv.org/abs/1506.08544v2)，§§2.1–2.2、3.2。摘要页题名为 *Exact and approximate inference in graphical models: variable elimination and beyond*；v2 PDF 题名为 *Exact or approximate inference in graphical models: why the choice is dictated by the treewidth, and how variable elimination can be exploited*，是同一版本记录。消费有限因子化、分配律及消元生成邻域因子的步骤，不调用一般图宽度最优性或稠密表成本作为此特殊秩二表示的下界。
+

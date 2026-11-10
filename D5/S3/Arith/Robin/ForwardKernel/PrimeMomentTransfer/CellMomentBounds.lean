@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Cell sampling has measurable normalized increments and uniform fourth moment bounds. -/
+   digest: Mean-square prime correlations: Cell sampling has measurable normalized increments and uniform fourth moment bounds. -/
 
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.DiscreteFourthBound
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.CellQuadrature
@@ -199,13 +199,13 @@ private theorem p_cell_fourth_from_sum (N H M C : ℝ) (hN : 2 ≤ N)
 theorem uniform_cell_fourth (SS : Finset ℕ → ℝ) (α β M : ℝ)
     (hα : 0 < α) (hαβ : α < β) (hβ : β < 1 / 4)
     (hSS : SS ∅ = 1) (hSS1 : ∀ d, SS {d} = 1)
-    (hHL : HL4 SS β) (hcor : IntervalCorrelations SS) (hM : 1 ≤ M) :
+    (hMS : MeanSquareHL4 SS β) (hcor : IntervalCorrelations SS) (hM : 1 ≤ M) :
     ∃ C : ℝ, 1 ≤ C ∧ ∀ᶠ N : ℝ in atTop,
       ∀ H : ℕ, N ^ α ≤ (H : ℝ) → (H : ℝ) ≤ N ^ β →
       ∀ a b : ℝ, 0 ≤ a → a ≤ b → b ≤ M →
         (∫ t in (1 : ℝ)..2, |S H a b ⌊N * t⌋₊ / Real.sqrt ((H : ℝ) * Real.log N)| ^ 4) ≤ C := by
   obtain ⟨C, hC, hdisc⟩ := uniform_discrete_fourth_bound SS α β M
-    hα hαβ hβ hSS hSS1 hHL hcor hM
+    hα hαβ hβ hSS hSS1 hMS hcor hM
   have hp : 0 ≤ (4 * (M + 1)) ^ 4 := by positivity
   refine ⟨C + 9 * (4 * (M + 1)) ^ 4 + 1, by linarith, ?_⟩
   filter_upwards [hdisc, range_geometry α β M hα (by linarith) (by linarith),
