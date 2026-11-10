@@ -16,7 +16,7 @@ internal sealed class CycleWordConstructionDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/CycleWordConstruction.attachFamily"),
                 H("attachFamily"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The actual family obtained by attaching the apex cone to the original subfamily."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("facets_mem"),
+            Describe.Lean(DescribeId.Create("facets-mem"),
                 DeclarationHandle.Create("D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/CycleWordConstruction.facets_mem"),
                 H("facets_mem"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Membership in the facets-generated family agrees with the original downward-closed finite family."))), DescribeRole.Theorem),
