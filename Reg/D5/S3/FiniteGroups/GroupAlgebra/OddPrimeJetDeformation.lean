@@ -27,9 +27,9 @@ private theorem rejected_law : ¬ arena.{uK}.Law rejectedEnd := by
   letI := Reg.Support.OddPrimeJetAudit.testData.{uK}.field
   letI : Fact (Nat.Prime 3) := ⟨by decide⟩
   letI : Fact (2 < 3) := ⟨by decide⟩
-  have hb := hbad (p := 3) (K := Reg.Support.OddPrimeJetAudit.testK.{uK}) 
+  have hb := hbad (p := 3) (K := Reg.Support.OddPrimeJetAudit.testK.{uK})
   have ha := _root_.D5.S3.FiniteGroups.GroupAlgebra.OddPrimeJetDeformation.derivative_pow_prime
-    (p := 3) (K := Reg.Support.OddPrimeJetAudit.testK.{uK}) 
+    (p := 3) (K := Reg.Support.OddPrimeJetAudit.testK.{uK})
   have ht := ha.symm.trans hb
   have hz := congrArg (fun A : Reg.Support.OddPrimeJetAudit.End Reg.Support.OddPrimeJetAudit.testData => A (vectorOne Reg.Support.OddPrimeJetAudit.testData)) (add_left_cancel (ht.symm.trans (add_zero _).symm))
   exact vectorOne_ne_zero Reg.Support.OddPrimeJetAudit.testData hz
