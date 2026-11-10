@@ -34,7 +34,7 @@ internal sealed class ActualZhuAlgebraDocument : IScribeDocumentDefinition
                 H("Representative multiplication"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromLiterature(Source),
-                Blocks(Paragraph(Text("The descended product of the classes of u and v is the class of their original actual star. This bind-only computation interface is consumed by the ring associativity and vacuum unit proofs."))),
+                Blocks(Paragraph(Text("The descended product of the classes of u and v is the class of their original actual star. This representative multiplication identity reduces the quotient associativity and vacuum unit laws to the corresponding identities on original states."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("actualzhualgebra-quotientring"),
@@ -68,7 +68,6 @@ internal sealed class ActualZhuAlgebraDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("The vacuum class and zero are distinct by vacuum_not_mem_zhuO. Together with quotientRing, quotientAlgebra and the existing ActualZhuFinite.positive_definite_zhu_quotient_finite, this supplies a nonzero finite-dimensional associative unital complex algebra on exactly the original full quotient. Finite-dimensionality is reused, not reproved or renamed as new mathematical content."))),
                 DescribeRole.Definition),
-            Paragraph(Text("The quotient ring and algebra construction adapts ZhuRing.lean from Fedor K. Popov, Lean_VOA commit 013a799ca834a8a6b3afa8129e3e522025b3f45c, Apache-2.0. Native Mathlib supplies generic bilinear quotient descent, and all original lattice field, grading, star, literal circle span, two ideal stabilities and associator proofs are reused. This is a literature-attested native port. The grade-zero separation argument retains the exact literal O, not a representation kernel.")),
-            Paragraph(Text("This algebraic construction does not establish rationality, fusion-category structure, anomaly cancellation, analytic conformal field theory, string theory or AdS/CFT. Those bridges require additional mathematics.")),
-            Paragraph(Text("Four-slot escape registration for the new public theorem declarations is unfinished. No declared_validated state or frozen metadata is supplied; the caller owns audit issue handling, canonical freezing and publication.")))));
+            Paragraph(Text("The quotient ring and algebra construction adapts ZhuRing.lean from Fedor K. Popov, Lean_VOA commit 013a799ca834a8a6b3afa8129e3e522025b3f45c, Apache-2.0. Native Lean 4.35 and its pinned Mathlib differ from upstream Lean 4.30 and its Mathlib pin, as recorded in the reference note. Native Mathlib supplies generic bilinear quotient descent, and all original lattice field, grading, star, literal circle span, two ideal stabilities and associator proofs are reused. This is a literature-attested native port. The grade-zero separation argument retains the exact literal O, not a representation kernel.")),
+            Paragraph(Text("The dependent-family audit remains incomplete: exact source reconstruction, an enrolled readout, the actual-positive law, whole-family variation and sensitivity, actual observational dependence and current source binding are still required. See https://github.com/the-omega-institute/trureturing/issues/28745.")))));
 }

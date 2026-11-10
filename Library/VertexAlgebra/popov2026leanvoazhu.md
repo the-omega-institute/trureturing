@@ -134,3 +134,28 @@ and realization. No faithful compiled `Contract.Registration` or
 `declared_validated` status is supplied. Issue #28685 remains specific to
 the prior finite quotient and exposed energy helpers; it does not register
 these product theorems.
+
+## Full quotient algebra
+
+At the same immutable revision,
+[ZhuRing.lean](https://github.com/Fedor-Popov/Lean_VOA/blob/013a799ca834a8a6b3afa8129e3e522025b3f45c/VOA/Modules/ZhuRing.lean)
+supplies the quotient ring construction. The native
+`ActualZhuLeftIdeal` proves the translation residue identity and
+left-argument stability on the original full circle span.
+`ActualZhuAlgebra` descends the original star through both proved ideal
+stabilities and obtains associativity and vacuum units from the native
+associator and creation laws. Grade-zero projection annihilates every
+literal circle while retaining the nonzero vacuum; this does not assert
+gradedness of O. Together with the existing
+`ActualZhuFinite.positive_definite_zhu_quotient_finite`, the result is a
+nonzero finite-dimensional unital complex algebra on exactly
+`Carrier D ⧸ ActualZhuFinite.zhuO D` for positive-definite D, including
+rank zero. The source attribution, license and distinct version pins above
+also apply to this port.
+
+The dependent-family audit for `translation_star_circle`,
+`star_left_mem_zhuO`, `quotientProduct_mk` and `vacuum_not_mem_zhuO`
+remains incomplete: exact reconstruction, an enrolled readout,
+the actual-positive law, whole-family variation and sensitivity,
+actual observational dependence and current source binding are required;
+see <https://github.com/the-omega-institute/trureturing/issues/28745>.
