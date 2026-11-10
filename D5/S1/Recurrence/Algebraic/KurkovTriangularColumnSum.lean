@@ -9,9 +9,9 @@
 import Mathlib.Data.Nat.Find
 import Mathlib.Data.Nat.Factorial.Basic
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Data.Rat.Defs
+import Mathlib.Algebra.BigOperators.Ring.Finset
+import Mathlib.Algebra.Field.Rat
 import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Omega
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
@@ -117,6 +117,7 @@ private theorem array_lawful : IsArray array := by
   · intro n q hn hq
     obtain ⟨m, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : n ≠ 0)
     obtain ⟨r, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : q ≠ 0)
+    simp only [Nat.succ_eq_add_one]
     rw [array]
     congr 1 <;> congr 1 <;> omega
 
@@ -143,7 +144,8 @@ private theorem column_sum (A : ℕ → ℕ → ℕ) (hA : IsArray A)
   | succ n ih =>
     rw [column_step A hA n k hk]
     push_cast
-    rw [ih, sum_range_succ]
+    rw [ih]
+    conv_rhs => rw [sum_range_succ]
     have hfac : ((n + 1 + f k).factorial : ℚ) =
         (n + 1 + f k : ℚ) * ((n + f k).factorial : ℚ) := by
       rw [show n + 1 + f k = (n + f k) + 1 by omega, Nat.factorial_succ]
