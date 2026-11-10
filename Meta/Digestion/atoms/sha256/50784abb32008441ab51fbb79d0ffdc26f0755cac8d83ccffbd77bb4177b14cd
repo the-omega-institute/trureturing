@@ -1,0 +1,17 @@
+**定义 5.1（有限内层多项式与频率轴）。** 令
+
+$$
+N=\left\lceil16\left[6e^{-3/2}+\log(1/\epsilon_{\rm in})+1\right]\right\rceil,
+\qquad p_n(x)=\sum_{j=0}^N\frac{(i|\xi_n|x)^j}{j!}.
+\tag{5.1}
+$$
+
+频率轴记作 $\mathfrak a_n=\xi_n/|\xi_n|$（$n\ne0$），零频率取 $e_z$，以区别于系数向量 $a_n$。对任意单位轴 $\mathfrak a$，令
+
+$$
+A_{\mathfrak a}=\frac{I+2J_{\mathfrak a}}D,\qquad
+B_{\mathfrak a}=\frac{DA_{\mathfrak a}-I}{D+1}
+=\frac{2J_{\mathfrak a}}{m+2}.
+\tag{5.2}
+$$
+
