@@ -9,6 +9,8 @@ namespace Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255PairTransfer
 open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255PairTransfer
 open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge (rowWeight rowFinish)
 open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip (Seen)
+open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip (good finish)
+open _root_.D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
 open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip (widthV)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
@@ -166,5 +168,86 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   familyRecord := none
   options := #[]
 end Literal
+
+namespace FirstFibres
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit
+    (fun _ => Seen → PairRow → ℤ) (fun _ => ℤ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ H => ∑ c : Row,
+    if c 0 = 0 ∧ good (false, false) c then
+      H (finish (false, false) c) (fun j => beta (c j)) else 0) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ p H => actual.readout () p H + 1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ H : Seen → PairRow → ℤ,
+    R.readout () () H = ∑ q : Boundary, rowWeight (false, false) q *
+      H (rowFinish (false, false) q) (Fin.cons 0 q)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have h0 := h (fun _ _ => 0)
+  simp [rejected, actual, realize] at h0
+
+def family : Registration arena (type_of% @first_fibres) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨first_fibres, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    refine ⟨(), (fun _ _ => 0), (fun _ _ => 1), ?_⟩
+    change (∑ c : Row, if c 0 = 0 ∧ good (false, false) c then (0 : ℤ) else 0) ≠
+      ∑ c : Row, if c 0 = 0 ∧ good (false, false) c then (1 : ℤ) else 0
+    simp only [ite_self, Finset.sum_const_zero]
+    apply ne_of_lt
+    refine Finset.sum_pos' ?_ ?_
+    · intro c _
+      split_ifs <;> norm_num
+    · refine ⟨(fun _ => 0), Finset.mem_univ _, ?_⟩
+      have hzero : good (false, false) (fun _ : Fin 7 => (0 : Fin 6)) := by
+        decide +kernel
+      norm_num [hzero]
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@first_fibres) (Realization signature) Type Unit where
+  unitName :=
+    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255PairTransfer.FirstFibres.auditUnit
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255PairTransfer.FirstFibres.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ H => ∑ c : Row,
+    if c 0 = 0 ∧ good (false, false) c then
+      H (finish (false, false) c) (fun j => beta (c j)) else 0) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255PairTransfer
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false, stateOperand := none, booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end FirstFibres
 end
 end Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255PairTransfer
