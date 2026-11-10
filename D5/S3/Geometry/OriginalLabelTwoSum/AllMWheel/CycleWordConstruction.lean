@@ -166,7 +166,7 @@ private theorem erase_lift_dependency {b : V} {U T : Finset V}
 
 
 /-- Union with a cone whose base already belongs to the earlier family. -/
-private def attachFamily (K G : Family V) (b : V) (hGK : G ≤ K) : Family V where
+def attachFamily (K G : Family V) (b : V) (hGK : G ≤ K) : Family V where
   carrier := {s | s ∈ K ∨ ∃ t ∈ G, insert b t = s}
   lower' := by
     intro s t hts hs
@@ -187,7 +187,7 @@ private def attachFamily (K G : Family V) (b : V) (hGK : G ≤ K) : Family V whe
 private theorem mem_attach (K G : Family V) (b : V) (hGK : G ≤ K) (s : Finset V) :
     s ∈ attachFamily K G b hGK ↔ s ∈ K ∨ ∃ t ∈ G, insert b t = s := Iff.rfl
 
-private theorem facets_mem (F : Finset (Finset V))
+theorem facets_mem (F : Finset (Finset V))
     (hl : ∀ s ∈ F, ∀ t, t ⊆ s → t ∈ F) (s : Finset V) :
     s ∈ facets F ↔ s ∈ F := by
   constructor
@@ -197,7 +197,7 @@ private theorem facets_mem (F : Finset (Finset V))
 
 /- A cone paired in increasing base-cardinality. This is consumed by the
    first cycle block, and requires only ordinary finite-family heredity. -/
-private def pairedCone (W : Finset V) (F : Finset (Finset V)) (a : V)
+def pairedCone (W : Finset V) (F : Finset (Finset V)) (a : V)
     (hl : ∀ s ∈ F, ∀ t, t ⊆ s → t ∈ F)
     (hFW : ∀ s ∈ F, s ⊆ W) (haW : a ∈ W) (ha : ∀ s ∈ F, a ∉ s) :
     Word W (attachFamily (facets F) (facets F) a le_rfl) := by
@@ -266,7 +266,7 @@ private def pairedCone (W : Finset V) (F : Finset (Finset V)) (a : V)
 /- Appending a mapped, already proved Word along its actual base inclusion.
    The inclusion G≤K supplies the missing-apex dependencies in earlier blocks.
    This is a private composition lemma, not a second Word authority. -/
-private def attachWord {W X : Finset V} {K G : Family V}
+def attachWord {W X : Finset V} {K G : Family V}
     (d : Word W K) (e : Word X G) (b : V) (hbW : b ∈ W)
     (hGK : G ≤ K) (hbK : ∀ s ∈ K, b ∉ s) :
     Word W (attachFamily K G b hGK) := by

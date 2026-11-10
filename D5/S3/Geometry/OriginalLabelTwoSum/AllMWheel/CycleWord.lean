@@ -19,12 +19,6 @@ namespace D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel
 open FiniteProtectedDualWord OriginalLabelTwoSum
 
 
-open private
-  CycleProof.attachFamily
-  CycleProof.facets_mem
-  CycleProof.pairedCone
-  CycleProof.attachWord
-  from D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.CycleWordConstruction
 
 
 
