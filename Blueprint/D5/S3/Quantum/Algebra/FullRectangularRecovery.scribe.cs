@@ -52,7 +52,7 @@ internal sealed class FullRectangularRecoveryDocument : IScribeDocumentDefinitio
     private static Formula Mul(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Multiply, y);
     private static Formula NegOf(Formula x) => Subtract(D(0), x);
     private static Formula Norm(Formula x) => Call("norm", x);
-    private static Formula Sq(Formula x) => Seq(Open, x, Close, Caret, Grp(D(2)));
+    private static Formula Sq(Formula x) => new Formula.Power(x, D(2));
     private static Formula ReOf(Formula x) => Call("re", x);
     private static Formula SA(Formula x) => Call("IsSelfAdjoint", x);
     private static Formula PosMap() => Call("PositiveContinuousLinearMap", Call("Complex"), Id("A"), Call("Complex"));
@@ -65,46 +65,75 @@ internal sealed class FullRectangularRecoveryDocument : IScribeDocumentDefinitio
         foreach (var n in names.Reverse()) body = All(n, Id("A"), body);
         return body;
     }
-    private static Formula Corner() => Context(Elements(["e", "x"],
-        Imp(Call("IsStarProjection", Id("e")), new Formula.Logic(
-            new Formula.Relation(Id("x"), FormulaRelationOperator.MemberOf, Call("cornerSpace", Id("e"))),
-            FormulaLogicOperator.Iff, Eqn(Id("x"), Mul(Mul(Id("e"), Id("x")), Id("e")))))));
-    private static Formula PositiveReal() => Context(All("phi", PosMap(), Elements(["a"],
-        Imp(SA(Id("a")), Eqn(App(Id("phi"), Id("a")), Call("ofReal", ReOf(App(Id("phi"), Id("a")))))))));
+    private static Formula Corner()
+    {
+        var e = Id("e"); var x = Id("x");
+        var membership = new Formula.Relation(x, FormulaRelationOperator.MemberOf, Call("cornerSpace", e));
+        var equivalence = new Formula.Logic(membership, FormulaLogicOperator.Iff, Eqn(x, Mul(Mul(e, x), e)));
+        return Context(Elements(["e", "x"], Imp(Call("IsStarProjection", e), equivalence)));
+    }
+    private static Formula PositiveReal()
+    {
+        var value = App(Id("phi"), Id("a"));
+        var conclusion = Eqn(value, Call("ofReal", ReOf(value)));
+        return Context(All("phi", PosMap(), Elements(["a"], Imp(SA(Id("a")), conclusion))));
+    }
     private static Formula PositiveBounds()
     {
         var bound = Mul(Norm(Id("a")), ReOf(App(Id("phi"), D(1))));
         var value = ReOf(App(Id("phi"), Id("a")));
-        return Context(All("phi", PosMap(), Elements(["a"], Imp(SA(Id("a")),
-            And(Le(NegOf(bound), value), Le(value, bound))))));
+        var conclusion = And(Le(NegOf(bound), value), Le(value, bound));
+        return Context(All("phi", PosMap(), Elements(["a"], Imp(SA(Id("a")), conclusion))));
     }
-    private static Formula Norming() => Context(Elements(["a"], Imp(SA(Id("a")),
-        Imp(new Formula.Relation(Id("a"), FormulaRelationOperator.NotEqual, D(0)),
-            Ex("phi", PosMap(), Ex("s", Call("Real"), And(Eqn(App(Id("phi"), D(1)), D(1)),
-                And(Eqn(App(Id("phi"), Id("a")), Call("ofReal", Id("s"))), Eqn(Sq(Id("s")), Sq(Norm(Id("a")))))))))));
-    private static Formula NormingContext(Formula body) => Context(All("phi", PosMap(),
-        Imp(Eqn(App(Id("phi"), D(1)), D(1)), Elements(["a"], Imp(SA(Id("a")),
-            All("s", Call("Real"), Imp(Eqn(App(Id("phi"), Id("a")), Call("ofReal", Id("s"))),
-                Imp(Eqn(Sq(Id("s")), Sq(Norm(Id("a")))), body))))))));
-    private static Formula Multiplication() => NormingContext(Elements(["x"], And(
-        Eqn(App(Id("phi"), Mul(Id("a"), Id("x"))), Mul(Call("ofReal", Id("s")), App(Id("phi"), Id("x")))),
-        Eqn(App(Id("phi"), Mul(Id("x"), Id("a"))), Mul(Call("ofReal", Id("s")), App(Id("phi"), Id("x")))))));
-    private static Formula Sandwich() => NormingContext(Elements(["C"],
-        Eqn(App(Id("phi"), Mul(Mul(Id("a"), Id("C")), Id("a"))),
-            Mul(Call("ofReal", Sq(Norm(Id("a")))), App(Id("phi"), Id("C"))))));
-    private static Formula RowGram() => Context(Elements(["e", "U"], Imp(Call("IsStarProjection", Id("e")),
-        Imp(Eqn(Mul(Id("e"), Id("U")), Id("U")), new Formula.Relation(
-            Mul(Id("U"), Call("star", Id("U"))), FormulaRelationOperator.MemberOf, Call("cornerSpace", Id("e")))))));
+    private static Formula Norming()
+    {
+        var conclusion = And(Eqn(App(Id("phi"), D(1)), D(1)),
+            And(Eqn(App(Id("phi"), Id("a")), Call("ofReal", Id("s"))),
+                Eqn(Sq(Id("s")), Sq(Norm(Id("a"))))));
+        var result = Ex("phi", PosMap(), Ex("s", Call("Real"), conclusion));
+        var nonzero = new Formula.Relation(Id("a"), FormulaRelationOperator.NotEqual, D(0));
+        return Context(Elements(["a"], Imp(SA(Id("a")), Imp(nonzero, result))));
+    }
+    private static Formula NormingContext(Formula body)
+    {
+        body = Imp(Eqn(Sq(Id("s")), Sq(Norm(Id("a")))), body);
+        body = Imp(Eqn(App(Id("phi"), Id("a")), Call("ofReal", Id("s"))), body);
+        body = All("s", Call("Real"), body);
+        body = Elements(["a"], Imp(SA(Id("a")), body));
+        body = Imp(Eqn(App(Id("phi"), D(1)), D(1)), body);
+        return Context(All("phi", PosMap(), body));
+    }
+    private static Formula Multiplication()
+    {
+        var right = Mul(Call("ofReal", Id("s")), App(Id("phi"), Id("x")));
+        var leftProduct = Eqn(App(Id("phi"), Mul(Id("a"), Id("x"))), right);
+        var rightProduct = Eqn(App(Id("phi"), Mul(Id("x"), Id("a"))), right);
+        return NormingContext(Elements(["x"], And(leftProduct, rightProduct)));
+    }
+    private static Formula Sandwich()
+    {
+        var left = App(Id("phi"), Mul(Mul(Id("a"), Id("C")), Id("a")));
+        var right = Mul(Call("ofReal", Sq(Norm(Id("a")))), App(Id("phi"), Id("C")));
+        return NormingContext(Elements(["C"], Eqn(left, right)));
+    }
+    private static Formula RowGram()
+    {
+        var e = Id("e"); var u = Id("U");
+        var membership = new Formula.Relation(Mul(u, Call("star", u)),
+            FormulaRelationOperator.MemberOf, Call("cornerSpace", e));
+        return Context(Elements(["e", "U"], Imp(Call("IsStarProjection", e),
+            Imp(Eqn(Mul(e, u), u), membership))));
+    }
     private static Formula Recovery()
     {
         var e = Id("e"); var f = Id("f"); var a = Id("a"); var u = Id("U"); var k = Id("kappa");
         var omega = Call("functional", Id("omega"));
-        var allStates = All("omega", Call("CornerState", e, Id("he")),
-            Le(Sq(Norm(App(omega, a))), Mul(k, ReOf(App(omega, Mul(u, Call("star", u)))))));
-        return Context(Elements(["e", "f", "a", "U"],
-            All("he", Call("IsStarProjection", e), All("hf", Call("IsStarProjection", f),
-                Imp(SA(a), Imp(Eqn(a, Mul(Mul(e, a), e)), Imp(Eqn(u, Mul(Mul(e, u), f)),
-                    All("kappa", Call("Real"), Imp(Lt(D(0), k), Imp(allStates,
-                        Le(Seq(Frac, Grp(Sq(Norm(a))), Grp(Call("sqrt", k))), Norm(Mul(a, u)))))))))))));
+        var squareBound = Le(Sq(Norm(App(omega, a))), Mul(k, ReOf(App(omega, Mul(u, Call("star", u))))));
+        var allStates = All("omega", Call("CornerState", e, Id("he")), squareBound);
+        Formula result = Le(new Formula.Fraction(Sq(Norm(a)), Call("sqrt", k)), Norm(Mul(a, u)));
+        result = All("kappa", Call("Real"), Imp(Lt(D(0), k), Imp(allStates, result)));
+        result = Imp(SA(a), Imp(Eqn(a, Mul(Mul(e, a), e)), Imp(Eqn(u, Mul(Mul(e, u), f)), result)));
+        result = All("he", Call("IsStarProjection", e), All("hf", Call("IsStarProjection", f), result));
+        return Context(Elements(["e", "f", "a", "U"], result));
     }
 }
