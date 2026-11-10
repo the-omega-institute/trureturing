@@ -1,0 +1,37 @@
+**定理 4.1（原单射性和完成忠实性的准确支付）。** (1.5) 给 (1.6)，并且对 $x\in X,y\in I_\lambda$，
+
+$$
+j_\lambda(x\circ y)=\rho_\lambda(x)\circ j_\lambda(y),\qquad
+\|\rho_\lambda(x)\|=
+\|x+\operatorname{ann}_X(I_\lambda)\|_{X/\operatorname{ann}_X(I_\lambda)}.
+\tag{4.1}
+$$
+
+在这些固定坐标中，(1.3) 恰好等价于 $\rho|_E$ 单射，(1.4) 恰好等价于 $\rho$ 在 $X$ 上单射；后一条件给 (1.9)。没有从前一个单射性推断后一条件。
+
+证明。固定 $I=I_\lambda,j=j_\lambda,H=H_\lambda$。复用 [168.1](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md#168-由理想有限压缩构造指定表示) 的相容有限压缩构造及其乘法验证，直到其使用本质性的步骤为止。对每个有限维 $L\subset H$，$e_L=j^{-1}(P_L)\in I$，有
+
+$$
+A_L(x)=j(U_{e_L}x),\quad
+\|A_L(x)\|\le\|x\|,\quad
+P_LA_M(x)P_L=A_L(x)\quad(L\subset M).
+\tag{4.2}
+$$
+
+相容有界 Hermitian 型给唯一 $\rho_\lambda(x)\in B(H)_{\rm sa}$。[168.1](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md#168-由理想有限压缩构造指定表示) 的 ([168.4](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md#168-由理想有限压缩构造指定表示))–([168.5](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md#168-由理想有限压缩构造指定表示)) 只用理想性、Peirce 平方和 $j$ 在 $I$ 上的忠实性；它们不需要 $\operatorname{ann}_X(I)=0$，给 (4.1) 第一式、$\rho_\lambda(x^2)=\rho_\lambda(x)^2$ 以及保单位、保正、收缩和 $\rho_\lambda|_I=j$。同一构造涵盖有限 $H$，包括一维 $H$，此时可取 $L=H$。这些压缩只在完成上的已知 Jordan 运算中使用，未给旧 $D$ 增加输入。
+
+若 $\rho_\lambda(x)=0$，第一式及 $j$ 单射给 $x\circ I=0$。反之，$x\circ I=0$ 使每个 $U_{e_L}x=0$，故全部有限压缩为零，$\rho_\lambda(x)=0$。因此核恰为实际湮灭子。JB 商定理及同态等距定理（Hanche-Olsen–Størmer，Theorem 3.4.2、Proposition 3.4.3、§3.4.4，印刷页 85）给第二式 (4.1)。
+
+对 $\mu\ne\lambda$，$I_\mu\circ I_\lambda=0$，所以 $\rho_\lambda(I_\mu)=0$。因 $J$ 是这些理想的范数闭和，
+
+$$
+\ker\rho=\bigcap_\lambda\operatorname{ann}_X(I_\lambda)
+=\operatorname{ann}_X(J)=\mathcal N,
+\qquad \ker(\rho|_E)=E\cap\mathcal N.
+\tag{4.3}
+$$
+
+各表示收缩，故落在有界乘积。$\mathcal N$ 是闭 Jordan 理想，因为它是这些已构造 Jordan 同态的核的交；这也给其准确理想性，不假定它有原中央投影。2.1 现在给两个分离条件各自的单射性等价。$\mathcal N$ 可以非零而 $E\cap\mathcal N=0$；不能因为 $E$ 稠密就令一个闭核与 $E$ 相交稠密，也不能向 (1.3) 输入 $X\setminus E$ 的元素。
+
+只在加 (1.4) 时继续。若全部 $\rho_\lambda(x)\ge0$，在 $X$ 的单生成连续谱演算中取负部 $x_-=\max(-x,0)$。保单位 Jordan 同态保持该谱演算，使全部 $\rho_\lambda(x_-)=0$。此时 $\ker\rho=0$ 才给 $x_-=0$。这证明联合反映正性。将坐标不等式 $-M1\le\rho_\lambda(x)\le M1$ 拉回，其中 $M=\sup_\lambda\|\rho_\lambda(x)\|$，原序单位范数给 $\|x\|\le M$；收缩性给反向界，故 (1.9) 成立。反过来，(1.9) 的忠实性已迫使 $\mathcal N=0$。若只给 (1.3)，这里的 $x_-$ 一般不在 $E$，该拉回步骤没有依据。∎
+
