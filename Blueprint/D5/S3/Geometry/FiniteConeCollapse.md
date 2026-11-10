@@ -126,7 +126,7 @@ SubcomplexPair.delta_eq_zero_iff: If the minimum is zero, its attaining face con
 
 ## Positive truncation scale
 
-SubcomplexPair.epsilon_pos: One divided by twice (card(V)+1) is positive, including an empty ambient vertex type.
+SubcomplexPair.epsilon_pos: For a SubcomplexPair V, one divided by twice (card(V)+1) is positive. The pair's face witness requires at least one vertex. When V is empty, the unrestricted FiniteSubcomplexCylinder.retraction takes its no-faces branch and projects to the bottom.
 
 **Theorem 1.9 (The total truncation budget).**
 
