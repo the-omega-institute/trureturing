@@ -9,8 +9,8 @@
 /-
 admission_basis: open-problem-resolution (#26750; Refuted)
 Direct frozen dependencies: none (Mathlib only).
-The public result is the designated refutation result (`basis=refutes`) and is exempt from
-four-slot escape registration (CLAUDE.md §3.9).
+Escape audit unfinished for result: https://github.com/the-omega-institute/trureturing/issues/27238.
+The infinite construction has utility: none; no basis=refutes registration exemption is claimed.
 The source predicates and both interval-integral expressions retain the statement of #26750;
 the construction uses Mathlib's normalized bump, convolution, Nat.bodd and Bool.toNat directly.
 The average-existence question is in journal Remark 1, not in arXiv:2608.09809v2.
