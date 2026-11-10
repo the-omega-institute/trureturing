@@ -6,7 +6,7 @@
    utility: none
    digest: Block lattice injections and longitudinal compression of complete native fields. -/
 
-import D5.S3.VertexAlgebra.LatticeActualStateFieldCalculus
+import D5.S3.VertexAlgebra.Sectors.LatticeDualCosetModule
 import D5.S3.VertexAlgebra.Characters.LatticeDiscriminantTheta
 import Mathlib.Algebra.MvPolynomial.Rename
 import Batteries.Tactic.OpenPrivate
@@ -78,7 +78,7 @@ def projectionVariable (x : Index (ambient D e B C hC hCe)) : Oscillator D :=
     (fun j => ∑ i : Fin D.rank, (longitudinal D B i j : ℂ) • X (i, x.2)) x.1
 
 def polynomialProjection : Oscillator (ambient D e B C hC hCe) →ₐ[ℂ] Oscillator D :=
-  eval₂AlgHom ℂ (projectionVariable D B C hC hCe)
+  aeval (projectionVariable D B C hC hCe)
 
 def injection (a : Fin e → ℤ) : Carrier D →ₗ[ℂ] Carrier (ambient D e B C hC hCe) :=
   Finsupp.lsum ℂ (fun n =>
@@ -152,8 +152,9 @@ private theorem projectionVariable_partial (hD : (gramReal D).PosDef)
       weightedPartial_variable, ambient, Fin.addCases_left]
     by_cases h : r = k
     · simp only [h, ↓reduceIte]
-      simp_rw [Algebra.smul_def, ← MvPolynomial.C_mul]
-      rw [← map_sum]
+      change (∑ t : Fin D.rank, (longitudinal D B t j : ℂ) •
+        MvPolynomial.C (D.G i t : ℂ)) = MvPolynomial.C (B i j : ℂ)
+      simp only [MvPolynomial.smul_eq_C_mul, ← map_mul, ← map_sum]
       congr 1
       simpa only [mul_comm] using gram_longitudinal_complex D B hD i j
     · simp [h]
@@ -179,6 +180,41 @@ theorem projection_weightedPartial (hD : (gramReal D).PosDef)
         projectionVariable_partial D B C hC hCe hD]
       split_ifs <;> simp
     simp only [weightedPartial_mul, map_add, map_mul, hp, hx]
+
+private theorem old_current_pairing (i : Fin D.rank)
+    (n : Charge (ambient D e B C hC hCe)) :
+    bilinear (ambient D e B C hC hCe) (unitCharge _ (i.castAdd e)) n =
+      bilinear D (unitCharge D i) (oldCharge D B C hC hCe n) +
+        (B *ᵥ externalCharge D B C hC hCe n) i := by
+  classical
+  simp only [bilinear, unitCharge, ite_mul, one_mul, zero_mul,
+    Finset.sum_ite_eq', Finset.mem_univ, ↓reduceIte]
+  rw [Fin.sum_univ_add]
+  rfl
+
+/-- Every old current, including its shifted zero mode, passes through
+longitudinal compression on arbitrary ambient polynomial states. -/
+theorem projection_current_polynomial (hD : (gramReal D).PosDef)
+    (i : Fin D.rank) (n : Charge (ambient D e B C hC hCe)) (m : ℤ)
+    (p : Oscillator (ambient D e B C hC hCe)) :
+    polynomialProjection D B C hC hCe
+        (neutralPolynomialMode (ambient D e B C hC hCe) (i.castAdd e) n m p) =
+      LatticeDualCosetModule.shiftedCurrentPolynomial D
+        (B *ᵥ externalCharge D B C hC hCe n) 1 i (oldCharge D B C hC hCe n) m
+        (polynomialProjection D B C hC hCe p) := by
+  by_cases hm : m < 0
+  · simp [neutralPolynomialMode, LatticeDualCosetModule.shiftedCurrentPolynomial,
+      hm, polynomialProjection, projectionVariable]
+  · by_cases hz : m = 0
+    · simp [neutralPolynomialMode, LatticeDualCosetModule.shiftedCurrentPolynomial,
+        hm, hz, old_current_pairing, map_smul]
+    · change polynomialProjection D B C hC hCe
+        ((if m < 0 then _ else if m = 0 then _ else
+          (m : ℂ) • weightedPartial (ambient D e B C hC hCe) (i.castAdd e)
+            (m-1).toNat) p) = _
+      simp only [hm, hz, ↓reduceIte, LinearMap.smul_apply, map_smul]
+      rw [projection_weightedPartial D B C hC hCe hD]
+      simp [LatticeDualCosetModule.shiftedCurrentPolynomial, hm, hz, weightedPartial]
 
 private theorem polynomialProjection_injection (p : Oscillator D) :
     polynomialProjection D B C hC hCe (polynomialInjection D B C hC hCe p) = p := by
