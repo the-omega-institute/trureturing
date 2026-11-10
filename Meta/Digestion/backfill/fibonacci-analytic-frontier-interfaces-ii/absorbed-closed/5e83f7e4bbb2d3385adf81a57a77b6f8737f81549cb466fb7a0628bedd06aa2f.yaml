@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:5e83f7e4bbb2d3385adf81a57a77b6f8737f81549cb466fb7a0628bedd06aa2f
+  normalized_sha256: sha256:5e83f7e4bbb2d3385adf81a57a77b6f8737f81549cb466fb7a0628bedd06aa2f
+cas_ref: sha256:5e83f7e4bbb2d3385adf81a57a77b6f8737f81549cb466fb7a0628bedd06aa2f
+coverage_gids:
+  - gid: D5/S3/Arith/Robin/ForwardKernel/MomentTransfer.joint_moment_transfer
+    target_statement_id: sha256:c4ad815bab7bff3a2f8406eaf228e475c103193c6c4378795c44772fff7ad428
+receipts:
+  unresolved_subitems: []

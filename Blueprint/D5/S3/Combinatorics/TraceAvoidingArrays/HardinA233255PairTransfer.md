@@ -80,7 +80,19 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransf
 
 The existing HardinA233251TriangleStrip.widthLegal is applied at width seven with rowLegal and bonds. Its scanner normalization uses strict earlier cells.
 
-**Definition 1.7 (The positive-height literal count).**
+**Definition 1.7 (Decidability of horizontal exclusions).**
+
+$$\forall (c: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233255PairTransfer}.\operatorname{Row}), (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233255PairTransfer}.\operatorname{decidableRowLegal} (c) : \operatorname{Decidable} (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233255PairTransfer}.\operatorname{rowLegal} (c))) = \operatorname{inferInstanceAs} (\operatorname{Decidable} (\forall (j: \operatorname{Fin} (6)), (c (\operatorname{Fin}.\operatorname{castSucc} (j)) \ne c (\operatorname{Fin}.\operatorname{succ} (j))) \land ((\operatorname{Fin}.\operatorname{val} (c (\operatorname{Fin}.\operatorname{castSucc} (j))) + \operatorname{Fin}.\operatorname{val} (c (\operatorname{Fin}.\operatorname{succ} (j)))) \ne 5)))$$
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.decidableRowLegal` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The instance decides the six adjacent horizontal bonds by finite universal quantification and decidable conjunction. Fin.val explicitly reads each colour as a natural number.
+
+**Definition 1.8 (The positive-height literal count).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.a`
 
@@ -92,7 +104,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransf
 
 The filter ranges over individual arrays without a quotient.
 
-**Definition 1.8 (The preceding boundary).**
+**Definition 1.9 (The preceding boundary).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.pairs`
 
@@ -104,7 +116,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransf
 
 Apply the existing complementary-pair map after discarding column zero.
 
-**Definition 1.9 (The literal next-row bond test).**
+**Definition 1.10 (The literal next-row bond test).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.compatible`
 
@@ -116,7 +128,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransf
 
 Every preceding boundary label excludes its bonded next-row label.
 
-**Definition 1.10 (Proper pair words).**
+**Definition 1.11 (Proper pair words).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.rowProper`
 
@@ -128,7 +140,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransf
 
 Consecutive labels differ.
 
-**Definition 1.11 (Compatible pair words).**
+**Definition 1.12 (Compatible pair words).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.labelCompatible`
 
@@ -140,7 +152,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransf
 
 The six cross-row exclusions are expressed in pair labels.
 
-**Definition 1.12 (The successor boundary).**
+**Definition 1.13 (The successor boundary).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.labelBoundary`
 
@@ -152,7 +164,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransf
 
 Discard column zero only after scanning the entire row.
 
-**Definition 1.13 (The exact labelled continuation transfer).**
+**Definition 1.14 (The exact labelled continuation transfer).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.pairV`
 
@@ -164,7 +176,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransf
 
 Each actual pair word is weighted by its scanner fibre. The empty continuation has weight one.
 
-**Theorem 1.14 (All continuation heights).**
+**Theorem 1.15 (All continuation heights).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.continuation_pair_bridge`
 
@@ -176,7 +188,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransf
 
 Induction on the number of rows replaces the individual-colour row sum by the exact scanner-fibre sum. Both initial scanner flags remain arbitrary.
 
-**Theorem 1.15 (The anchored literal readout).**
+**Theorem 1.16 (The anchored literal readout).**
 
 Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.literal_pair_bridge`
 
@@ -198,6 +210,7 @@ The existing literal array decomposition and the continuation identity give this
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.bonds`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.compatible`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.continuation_pair_bridge`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.decidableRowLegal`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.labelBoundary`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.labelCompatible`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.literal_pair_bridge`
