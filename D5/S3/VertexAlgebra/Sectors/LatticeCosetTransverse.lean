@@ -146,11 +146,18 @@ theorem transverse_translation (hD : (gramReal D).PosDef)
   have hCsmul (z : ℂ) (p : Oscillator D) :
       Polynomial.C (z • p) = z • (Polynomial.C p : Polynomial (Oscillator D)) :=
     map_smul (Polynomial.CAlgHom : Oscillator D →ₐ[ℂ] Polynomial (Oscillator D)) z p
-  simp only [transverse, map_sub, map_sum, map_smul, translatedProjection_variable,
-    projectionVariable, Fin.addCases_right, Fin.addCases_left]
-  simp only [smul_sub, Finset.sum_sub_distrib, ← map_sum,
-    ← hCsmul, smul_mul_assoc, ← Finset.sum_mul, ← Finset.sum_smul,
+  have hnew := translatedProjection_variable D B C hC hCe
+    (liftCharge D B C hC hCe a n) (j.natAdd D.rank,k)
+  have hold (i : Fin D.rank) := translatedProjection_variable D B C hC hCe
+    (liftCharge D B C hC hCe a n) (i.castAdd e,k)
+  simp only [projectionVariable, Fin.addCases_right] at hnew
+  simp only [projectionVariable, Fin.addCases_left] at hold
+  unfold transverse
+  rw [map_sub, map_sum, hnew]
+  simp_rw [map_smul, hold]
+  simp only [smul_sub, Finset.sum_sub_distrib, ← hCsmul, ← smul_mul_assoc,
     smul_smul]
+  rw [← map_sum, ← Finset.sum_mul, ← map_sum, ← Finset.sum_smul]
   have hscalar := congrArg (fun z : ℂ => Polynomial.C (z • (1 : Oscillator D))) pair
   simp only [sub_smul, map_sub, ← Finset.sum_smul, smul_smul, map_sum] at hscalar
   linear_combination -Polynomial.X^(k+1) * hscalar
@@ -251,11 +258,10 @@ theorem creationSeries_difference (hD : (gramReal D).PosDef)
     have hCsmul (z : ℂ) (p : Oscillator D) :
         Polynomial.C (z • p) = z • (Polynomial.C p : Polynomial (Oscillator D)) :=
       map_smul (Polynomial.CAlgHom : Oscillator D →ₐ[ℂ] Polynomial (Oscillator D)) z p
-    trace_state
-    simp only [smul_neg, smul_mul_assoc, ← hCsmul, smul_smul,
+    rw [if_neg hq, Nat.sub_add_cancel (Nat.one_le_iff_ne_zero.mpr hq)]
+    simp only [← smul_mul_assoc, smul_neg, ← hCsmul, smul_smul,
       ← Finset.sum_neg_distrib, ← Finset.sum_mul, ← map_sum, ← Finset.sum_smul,
       hcast]
-    rw [Nat.sub_add_cancel (Nat.one_le_iff_ne_zero.mpr hq)]
     simp only [smul_neg, neg_smul]
 
 end
