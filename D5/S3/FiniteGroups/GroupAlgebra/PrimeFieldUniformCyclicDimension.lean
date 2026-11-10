@@ -2,7 +2,8 @@
    generality: G
    mirror-B: D5/B/S3/FiniteGroups/GroupAlgebra/PrimeFieldUniformCyclicDimension
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.GroupTheory.GroupAction.Quotient, mathlib/module/Mathlib.FieldTheory.Finiteness]
+   anchors: [mathlib/module/Mathlib.GroupTheory.GroupAction.Quotient,
+     mathlib/module/Mathlib.FieldTheory.Finiteness]
    utility: none
    digest: Actual cyclic projectivity over the prime field forces finrank at least r*p for C_p^r. -/
 
@@ -18,12 +19,6 @@ import Mathlib.Data.Nat.Prime.Basic
 import Mathlib.Tactic.Ring
 
 /-!
-Source candidate, with native elaboration, kernel verification and Scribe
-execution intentionally unperformed. Repository API parent:
-a54d586e319808ee2d8df122b0f543b3c05b370a.
-Mathlib API revision: 56a005855ea17e0b0958f73ec801ae140b0a1679
-(Lean v4.35.0).
-
 The public norm criterion gives surjectivity of each actual cyclic norm.
 Ordinary field-module projectivity supplies a linear section, and the public
 norm-section equivalence gives d = p * finrank(cyclic invariants).
@@ -49,6 +44,7 @@ variable {p r : ℕ} [Fact p.Prime]
 variable {V : Type uV} [AddCommGroup V] [Module (ZMod p) V]
 
 -- This is the actual underlying-set action, on the vectors themselves.
+@[instance_reducible]
 private def vectorAction (ρ : Representation (ZMod p) (E p r) V) :
     MulAction (E p r) V where
   smul g v := ρ g v
@@ -66,8 +62,8 @@ private theorem elementary_pow (g : E p r) : g ^ p = 1 := by
     funext i
     change p • g.toAdd i = 0
     simp [nsmul_eq_mul]
-  simpa only [Multiplicative.ofAdd_nsmul, Multiplicative.ofAdd_toAdd,
-    Multiplicative.ofAdd_zero] using congrArg Multiplicative.ofAdd h
+  simpa only [ofAdd_nsmul, ofAdd_toAdd,
+    ofAdd_zero] using congrArg Multiplicative.ofAdd h
 
 private theorem actual_order (g : E p r) (hg : g ≠ 1) : orderOf g = p :=
   orderOf_eq_prime (elementary_pow g) hg
@@ -76,8 +72,8 @@ private theorem actual_order (g : E p r) (hg : g ≠ 1) : orderOf g = p :=
 -- subgroup lies in the stabilizer. This does not inspect powers of rho(g).
 private theorem cyclic_mem_invariants_iff
     (ρ : Representation (ZMod p) (E p r) V) (g : E p r) (v : V) :
-    v ∈ (ρ.comp (Subgroup.zpowers g).subtype).invariants ↔ ρ g v = v := by
-  letI : MulAction (E p r) V := vectorAction ρ
+    v ∈ (Representation.invariants (ρ.comp (Subgroup.zpowers g).subtype)) ↔ ρ g v = v := by
+  let : MulAction (E p r) V := vectorAction ρ
   constructor
   · intro hv
     exact (Representation.mem_invariants _ v).mp hv ⟨g, Subgroup.mem_zpowers g⟩
@@ -94,9 +90,10 @@ variable [FiniteDimensional (ZMod p) V]
 private theorem cyclic_finrank (ρ : Representation (ZMod p) (E p r) V)
     (g : E p r) (hg : g ≠ 1)
     (hproj : Module.Projective (ZMod p)[Subgroup.zpowers g]
-      (ρ.comp (Subgroup.zpowers g).subtype).asModule) :
+      (Representation.asModule (ρ.comp (Subgroup.zpowers g).subtype))) :
     Module.finrank (ZMod p) V =
-      p * Module.finrank (ZMod p) (ρ.comp (Subgroup.zpowers g).subtype).invariants := by
+      p * Module.finrank (ZMod p)
+        (Representation.invariants (ρ.comp (Subgroup.zpowers g).subtype)) := by
   classical
   let σ : Representation (ZMod p) (Subgroup.zpowers g) V :=
     ρ.comp (Subgroup.zpowers g).subtype
@@ -118,7 +115,7 @@ private theorem cyclic_finrank (ρ : Representation (ZMod p) (E p r) V)
     exact ⟨v, Subtype.ext hv⟩
   -- Every vector space is free, hence projective over its coefficient field.
   -- This is ordinary field-module projectivity, not a local-free assumption.
-  letI : Module.Projective (ZMod p) σ.invariants := inferInstance
+  let : Module.Projective (ZMod p) σ.invariants := inferInstance
   obtain ⟨L, hL⟩ := Module.projective_lifting_property N
     (LinearMap.id : σ.invariants →ₗ[ZMod p] σ.invariants) hNsurj
   have hsection (w : σ.invariants) : σ.norm (L w) = (w : V) :=
@@ -131,16 +128,16 @@ private theorem cyclic_finrank (ρ : Representation (ZMod p) (E p r) V)
         Module.finrank (ZMod p) (Subgroup.zpowers g → σ.invariants) := e.finrank_eq
     _ = p * Module.finrank (ZMod p) σ.invariants := by
       rw [Module.finrank_pi_fintype]
-      simp only [Finset.sum_const, Finset.card_univ, nsmul_eq_mul, hcard]
+      simp [hcard]
 
 private theorem fixedBy_natCard (ρ : Representation (ZMod p) (E p r) V)
     (g : E p r) (hg : g ≠ 1)
     (hproj : Module.Projective (ZMod p)[Subgroup.zpowers g]
-      (ρ.comp (Subgroup.zpowers g).subtype).asModule)
+      (Representation.asModule (ρ.comp (Subgroup.zpowers g).subtype)))
     (n : ℕ) (hd : Module.finrank (ZMod p) V = p * n) :
-    letI : MulAction (E p r) V := vectorAction ρ
+    let : MulAction (E p r) V := vectorAction ρ
     Nat.card (MulAction.fixedBy V g) = p ^ n := by
-  letI : MulAction (E p r) V := vectorAction ρ
+  let : MulAction (E p r) V := vectorAction ρ
   let σ : Representation (ZMod p) (Subgroup.zpowers g) V :=
     ρ.comp (Subgroup.zpowers g).subtype
   have hdim := cyclic_finrank ρ g hg hproj
@@ -151,8 +148,8 @@ private theorem fixedBy_natCard (ρ : Representation (ZMod p) (E p r) V)
       invFun := fun w => ⟨(w : V), (cyclic_mem_invariants_iff ρ g w).mpr w.property⟩
       left_inv := fun _ => rfl
       right_inv := fun _ => rfl }
-  letI : Fintype σ.invariants :=
-    (Module.finBasis (ZMod p) σ.invariants).fintypeOfFintype
+  let : Fintype σ.invariants :=
+    Module.fintypeOfFintype (Module.finBasis (ZMod p) σ.invariants)
   calc
     Nat.card (MulAction.fixedBy V g) = Nat.card σ.invariants := (Nat.card_congr e).symm
     _ = Fintype.card σ.invariants := Nat.card_eq_fintype_card
@@ -189,22 +186,16 @@ private theorem rank_le_of_burnside_divisibility {p r n : ℕ}
     omega
   have hfdiv : p ^ r ∣ p ^ n * (q - 1) := by
     rw [hshift] at hdiv
-    obtain ⟨k, hk⟩ := hdiv
-    refine ⟨k - p ^ n, ?_⟩
-    rw [Nat.mul_sub_left_distrib]
-    omega
+    exact (Nat.dvd_add_iff_left (dvd_mul_right (p ^ r) (p ^ n))).mpr hdiv
   have hmpos : 0 < (p - 1) * n :=
     Nat.mul_pos (by have := hp.two_le; omega) hn
   have hpdvd : p ∣ q := dvd_pow_self p (Nat.ne_of_gt hmpos)
   have hcop : Nat.Coprime p (q - 1) := by
     apply hp.coprime_iff_not_dvd.mpr
     intro hd
-    obtain ⟨a, ha⟩ := hpdvd
-    obtain ⟨b, hb⟩ := hd
     apply hp.not_dvd_one
-    refine ⟨a - b, ?_⟩
-    rw [Nat.mul_sub_left_distrib]
-    omega
+    apply (Nat.dvd_add_iff_right hd).mpr
+    rwa [hqone]
   have hpow : p ^ r ∣ p ^ n := (hcop.pow_left r).dvd_of_dvd_mul_right hfdiv
   exact (Nat.pow_dvd_pow_iff_le_right hp.one_lt).mp hpow
 
@@ -220,7 +211,7 @@ theorem rank_mul_prime_le_finrank_of_cyclic_projective
     [FiniteDimensional (ZMod p) V] [Nontrivial V]
     (ρ : Representation (ZMod p) (Multiplicative (Fin r → ZMod p)) V)
     (hproj : ∀ H : Subgroup (Multiplicative (Fin r → ZMod p)), IsCyclic H →
-      Module.Projective (ZMod p)[H] (ρ.comp H.subtype).asModule) :
+      Module.Projective (ZMod p)[H] (Representation.asModule (ρ.comp H.subtype))) :
     r * p ≤ Module.finrank (ZMod p) V := by
   classical
   by_cases hr : r = 0
@@ -231,10 +222,10 @@ theorem rank_mul_prime_le_finrank_of_cyclic_projective
   have hg₀ : g₀ ≠ 1 := by
     intro h
     have hi := congrArg (fun x : E p r => x.toAdd ⟨0, hrpos⟩) h
-    have hz : (1 : ZMod p) = 0 := by simpa only [g₀, Multiplicative.toAdd_ofAdd,
-      Multiplicative.toAdd_one, Pi.zero_apply] using hi
+    have hz : (1 : ZMod p) = 0 := by simpa only [g₀, toAdd_ofAdd,
+      toAdd_one, Pi.zero_apply] using hi
     exact one_ne_zero hz
-  let n := Module.finrank (ZMod p) (ρ.comp (Subgroup.zpowers g₀).subtype).invariants
+  let n := Module.finrank (ZMod p) (Representation.invariants (ρ.comp (Subgroup.zpowers g₀).subtype))
   have hd : Module.finrank (ZMod p) V = p * n :=
     cyclic_finrank ρ g₀ hg₀ (hproj _ inferInstance)
   have hdpos : 0 < Module.finrank (ZMod p) V := Module.finrank_pos
@@ -243,9 +234,9 @@ theorem rank_mul_prime_le_finrank_of_cyclic_projective
     have hz : n = 0 := by omega
     rw [hd, hz, mul_zero] at hdpos
     omega
-  letI : Fintype V := (Module.finBasis (ZMod p) V).fintypeOfFintype
-  letI : MulAction (E p r) V := vectorAction ρ
-  letI : Fintype (Quotient (MulAction.orbitRel (E p r) V)) := Fintype.ofFinite _
+  let : Fintype V := Module.fintypeOfFintype (Module.finBasis (ZMod p) V)
+  let : MulAction (E p r) V := vectorAction ρ
+  let : Fintype (Quotient (MulAction.orbitRel (E p r) V)) := Fintype.ofFinite _
   have hcard : Fintype.card (E p r) = p ^ r := by
     rw [Fintype.card_multiplicative, Fintype.card_pi_const, ZMod.card]
   let e₁ : MulAction.fixedBy V (1 : E p r) ≃ V :=
@@ -278,9 +269,8 @@ theorem rank_mul_prime_le_finrank_of_cyclic_projective
         intro g hg
         exact hfix g (Finset.ne_of_mem_erase hg)
       _ = _ := by
-        simp only [Finset.sum_const, nsmul_eq_mul,
-          Finset.card_erase_of_mem (Finset.mem_univ (1 : E p r)),
-          Finset.card_univ, hcard]
+        simp [Finset.sum_const, nsmul_eq_mul,
+          Finset.card_erase_of_mem (Finset.mem_univ (1 : E p r)), hcard]
   have hBurnside := MulAction.sum_card_fixedBy_eq_card_orbits_mul_card_group (E p r) V
   have hdiv : p ^ r ∣ p ^ (p * n) + (p ^ r - 1) * p ^ n := by
     have h : Fintype.card (E p r) ∣
