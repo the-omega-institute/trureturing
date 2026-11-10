@@ -1125,3 +1125,189 @@ $$
 原事件空间 $\Omega$、固定原事件核 $D$、所有原装置、程序、菜单、历史、原始概率与质量，包括零值、失败、停止、记录及返回系数，均保持其原定义。自由项、复数求值及关系商只承担数学论证，不供应实际重置、复制、辅助系统、量子位、角操作、张量联合、充分参考执行、仪器、时间接口或完全正映射的实际来源。可表示性、正性、实际供应与对既定原事件核及过程的识别仍是不同义务；静态定向和实际资源缺口不由这些抽象结果闭合。
 
 ## 追加锚（本行以下为增补区）
+
+## 17. 对称有号种子与两个单位读数
+
+**定义 17.1（复平面上的对称有号全项模型）。**令
+
+$$
+\omega=-\frac12+i\frac{\sqrt3}{2},\qquad
+1+\omega+\omega^2=0,\qquad \omega^3=1.
+$$
+
+取 $M=\mathbb C^2$，单位 $0=(0,0)$，乘法为向量加法，且
+
+$$
+Ux=\omega x+(1,1),\qquad p(t)=(t,t)\quad(t\in\mathbb C).
+$$
+
+在任意 $x,y\in M$ 上置
+
+$$
+E(x,y)=-\frac12\operatorname{Re}\bigl((x_1-y_1)(x_2-y_2)(x_1-x_2+y_1-y_2)\bigr).
+\tag{17.1}
+$$
+
+这是处处有限的实值核；它允许有号取值，因而暂不属于原问题的非负核类。
+
+**定理 17.2（全四变量关系与七项式读数）。**定义 17.1 的 $E$ 对称、零对角，并且对任意 $a,b,u,v\in\mathbb C^2$ 满足完整四变量关系 (R)
+
+$$
+\sum_{k=0}^2E(a+U^ku,b+U^kv)=3E(a,b)+3E(u,v).
+\tag{17.2}
+$$
+
+此外，对任意 $a=(a_1,a_2)$、$z=(z_1,z_2)$ 和 $t\in\mathbb C$，沿用 (8.2) 的七项式有
+
+$$
+H_E(a,p(t);z)=\operatorname{Re}\bigl(t(a_1z_2-a_2z_1)\bigr).
+\tag{17.3}
+$$
+
+特别地，若 $A=(1,0)$、$Z=(0,1)$，则
+
+$$
+H_E(A,p(1);Z)=1,\qquad H_E(A,p(1+\omega);Z)=\frac12.
+\tag{17.4}
+$$
+
+**证明。**由递推直接得到
+
+$$
+U^kx=\omega^kx+\tau_k(1,1),\qquad
+\tau_0=0,\quad\tau_1=1,\quad\tau_2=1+\omega.
+\tag{17.5}
+$$
+
+置
+
+$$
+\begin{aligned}
+X_0&=a_1-b_1,&X_1&=u_1-v_1,\\
+Y_0&=a_2-b_2,&Y_1&=u_2-v_2,\\
+Z_0&=a_1-a_2+b_1-b_2,&Z_1&=u_1-u_2+v_1-v_2.
+\end{aligned}
+$$
+
+公因子 $\tau_k(1,1)$ 在三个差因子中分别消去，故
+
+$$
+\begin{aligned}
+&(a+U^ku)_1-(b+U^kv)_1=X_0+\omega^kX_1,\\
+&(a+U^ku)_2-(b+U^kv)_2=Y_0+\omega^kY_1,\\
+&(a+U^ku)_1-(a+U^ku)_2+(b+U^kv)_1-(b+U^kv)_2
+ =Z_0+\omega^kZ_1.
+\end{aligned}
+$$
+
+因为 $\sum_k\omega^k=\sum_k\omega^{2k}=0$ 且 $\sum_k\omega^{3k}=3$，三次展开给出
+
+$$
+\sum_{k=0}^2(X_0+\omega^kX_1)(Y_0+\omega^kY_1)(Z_0+\omega^kZ_1)
+=3X_0Y_0Z_0+3X_1Y_1Z_1.
+$$
+
+取实部并乘以 $-1/2$ 即得 (17.2)。交换 $x,y$ 时前两个差因子变号而第三个不变，所以 $E(y,x)=E(x,y)$；置 $x=y$ 则三因子乘积为零。
+
+为计算 (17.3)，令
+
+$$
+S=a_1-a_2,\qquad T=z_1-z_2,\qquad A=a_1+a_2,\qquad B=z_1+z_2.
+$$
+
+将 (8.2) 的七项逐项代入 (17.1)，不把 $t$ 限制为实数，复数多项式部分化为
+
+$$
+\begin{aligned}
+&[t(A-B)+t^2](S+T)-[t^2-tB]T-[tA+t^2]S\\
+&\qquad=t(AT-BS).
+\end{aligned}
+$$
+
+而 $AT-BS=-2(a_1z_2-a_2z_1)$，故
+
+$$
+H_E(a,p(t);z)=-\frac12\operatorname{Re}\bigl(t(AT-BS)\bigr)
+=\operatorname{Re}\bigl(t(a_1z_2-a_2z_1)\bigr).
+$$
+
+取 $a=A,z=Z$，有 $a_1z_2-a_2z_1=1$，且 $\operatorname{Re}(1+\omega)=1/2$，得到 (17.4)。证毕。
+
+**定理 17.3（自由项拉回与对称关系商中的两个非成员）。**在定义 12.1 的同一个自由有单位 magma $\mathcal T$ 上，定义结构递归映射
+
+$$
+\eta(1)=0,\qquad \eta(A)=(1,0),\qquad \eta(Z)=(0,1),\qquad
+\eta(s\cdot t)=\eta(s)+\eta(t),\qquad \eta(Vs)=U\eta(s),
+\tag{17.6}
+$$
+
+并置 $E_{\mathcal T}(s,t)=E(\eta(s),\eta(t))$。则 $E_{\mathcal T}$ 是处处有限、对称、零对角并满足全部 (12.4) 的有号核，而且
+
+$$
+E_{\mathcal T}(A\cdot V1,1)=-1,\qquad
+E_{\mathcal T}(Z\cdot V1,1)=1.
+\tag{17.7}
+$$
+
+令 $J_{\mathrm{sym}}$ 为 (14.10) 的 $J$ 与全部交换向量的和：
+
+$$
+J_{\mathrm{sym}}=J+\operatorname{span}_{\mathbb R}
+\{\varepsilon_{s,t}-\varepsilon_{t,s}:s,t\in\mathcal T\}.
+\tag{17.8}
+$$
+
+除 (14.11) 的 $\mathbf h_1=\mathbf h$ 外，定义
+
+$$
+\begin{aligned}
+\mathbf h_2={}&\varepsilon_{A\cdot V^2 1,Z}-\varepsilon_{A,Z}
+-\varepsilon_{V^2 1,Z}+\varepsilon_{1,Z}\\
+&-\varepsilon_{A\cdot V^2 1,1}+\varepsilon_{A,1}+\varepsilon_{V^2 1,1}.
+\end{aligned}
+\tag{17.9}
+$$
+
+则
+
+$$
+\mathbf h_1\notin J_{\mathrm{sym}},\qquad
+\mathbf h_2\notin J_{\mathrm{sym}}.
+\tag{17.10}
+$$
+
+这两个结论分别成立，不断言二者或其混合组合的线性独立性。
+
+**证明。**递归定义 (17.6) 尊重单位规则、加法乘法和 $U$，所以 (17.2) 逐项拉回为 (12.4)，对称性与零对角也随即保留。由 $\eta(V1)=(1,1)$，
+
+$$
+\eta(A\cdot V1)=(2,1),\qquad \eta(Z\cdot V1)=(1,2),
+$$
+
+代入 (17.1) 得 (17.7)。
+
+对有限支撑向量 $q=\sum\lambda_{s,t}\varepsilon_{s,t}$ 定义
+
+$$
+\Lambda(q)=\sum\lambda_{s,t}E_{\mathcal T}(s,t).
+$$
+
+零对角、(12.4) 和 $E_{\mathcal T}(s,t)=E_{\mathcal T}(t,s)$ 分别说明 $\Lambda$ 消灭 $J$、交换生成元以及 $J_{\mathrm{sym}}$。另一方面，(17.3) 与
+
+$$
+\eta(V1)=p(1),\qquad \eta(V^2 1)=p(1+\omega)
+$$
+
+给出
+
+$$
+\Lambda(\mathbf h_1)=1,\qquad \Lambda(\mathbf h_2)=\frac12.
+$$
+
+若任一 $\mathbf h_j$ 属于 $J_{\mathrm{sym}}$，则其 $\Lambda$ 值应为零，矛盾；故 (17.10) 成立。证毕。
+
+**对应 17.4（相位、原问题边界与物理来源）。**式 (17.1) 的交换对称性来自交换端点时两个差因子同时变号、第三个差因子保持不变；它是无序比较读数的候选定义，不是对既有有向模型的所有交换次序的定理，也不是顺序测量的交换性。三次单位根的相消给出全四变量 (R) 的有号解，但负值读数 (17.7) 说明它不满足原问题的非负性，因此不反驳对称非负核的存在，也不推出正性足以得到三角不等式、$\mathrm{UC}$ 或 $\mathrm{BR}$。原有 §8.2 的条件等价、$H$、$T$、$L$、$J$ 及非负 $\mathrm{UC}\Longleftrightarrow\mathrm{BR}$ 范围均保持；W20 所允许的任意统一 $\alpha>0$ 的 $c^\alpha$ 三角条件仍是另行的接口前件。
+
+这里使用的三次单位根相消和有限支撑赋值是经典中间工具；本节新增的承重内容是处处有限的对称有号全项种子、两个单位读数 $1$ 与 $1/2$，以及 (17.10) 的关系张成分离。该种子没有给出非负性、实际事件或过程的来源，也没有补足原事件空间、组成、时间和完整量子接口；完整量子起源候选仍需在这些边界内另行验证。
+
+## 追加锚（本行以下为增补区）
