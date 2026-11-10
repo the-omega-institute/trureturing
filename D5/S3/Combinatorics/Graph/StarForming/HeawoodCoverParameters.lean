@@ -34,7 +34,7 @@ private theorem base_parameters : beta base 2=7 ∧ SF base 2=8 := by
   rw [HeawoodParameters.beta_graph,HeawoodParameters.sf_graph] at h
   exact ⟨h.1.symm,h.2.symm⟩
 
-private theorem base_regular : ∀ v, DegreeCapacity.degree base v=3 := by decide +kernel
+theorem base_regular : ∀ v, DegreeCapacity.degree base v=3 := by decide +kernel
 private theorem base_triangle_free : CoverPullback.TriangleFree base.Adj := by
   unfold CoverPullback.TriangleFree
   decide +kernel

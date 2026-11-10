@@ -78,7 +78,19 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/EqualityCore.regular`
 
 Exact declaration: theorem regular (next : Equiv.Perm I) (x : I × Fin 20) : DegreeCapacity.degree (graph next) x = 3.
 
-**Theorem 1.7 (bipartite).**
+**Definition 1.7 (color).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/EqualityCore.color`
+
+*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/EqualityCore.color` (`✓ std3`).
+
+*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+
+*Commentary.*
+
+Exact declaration: def color (v : Fin 20) : Bool.
+
+**Theorem 1.8 (bipartite).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/EqualityCore.bipartite`
 
@@ -90,7 +102,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/EqualityCore.bipartite`
 
 Exact declaration: theorem bipartite (next : Equiv.Perm I) : (graph next).Colorable 2.
 
-**Definition 1.8 (selected).**
+**Definition 1.9 (selected).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/EqualityCore.selected`
 
@@ -102,7 +114,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/EqualityCore.selected`
 
 Exact declaration: abbrev selected (v : Fin 20) : Prop.
 
-**Definition 1.9 (dissociation).**
+**Definition 1.10 (dissociation).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/EqualityCore.dissociation`
 
@@ -114,7 +126,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/EqualityCore.dissociation
 
 Exact declaration: abbrev dissociation (v : Fin 20) : Prop.
 
-**Definition 1.10 (S).**
+**Definition 1.11 (S).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/EqualityCore.S`
 
@@ -126,7 +138,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/EqualityCore.S`
 
 Exact declaration: def S : Finset (I × Fin 20).
 
-**Definition 1.11 (D).**
+**Definition 1.12 (D).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/EqualityCore.D`
 
@@ -138,7 +150,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/EqualityCore.D`
 
 Exact declaration: def D : Finset (I × Fin 20).
 
-**Theorem 1.12 (D valid).**
+**Theorem 1.13 (D valid).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/EqualityCore.D_valid`
 
@@ -150,7 +162,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/EqualityCore.D_valid`
 
 Exact declaration: theorem D_valid (next : Equiv.Perm I) : IsKIndependent (graph next) 2 D.
 
-**Theorem 1.13 (S minimal).**
+**Theorem 1.14 (S minimal).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/EqualityCore.S_minimal`
 
@@ -162,7 +174,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/EqualityCore.S_minimal`
 
 Exact declaration: theorem S_minimal (next : Equiv.Perm I) : IsMinimalStarForming (graph next) 2 S.
 
-**Theorem 1.14 (selected card).**
+**Theorem 1.15 (selected card).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/EqualityCore.selected_card`
 
@@ -174,7 +186,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/EqualityCore.selected_car
 
 Exact declaration: theorem selected_card : (S : Finset (I × Fin 20)).card = 12 * Fintype.card I.
 
-**Theorem 1.15 (dissociation card).**
+**Theorem 1.16 (dissociation card).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/EqualityCore.dissociation_card`
 
@@ -186,7 +198,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/EqualityCore.dissociation
 
 Exact declaration: theorem dissociation_card : (D : Finset (I × Fin 20)).card = 12 * Fintype.card I.
 
-**Theorem 1.16 (exact parameters).**
+**Theorem 1.17 (exact parameters).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/EqualityCore.exact_parameters`
 
@@ -205,6 +217,7 @@ Exact declaration: theorem exact_parameters (next : Equiv.Perm I) : beta (graph 
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/EqualityCore.S`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/EqualityCore.S_minimal`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/EqualityCore.bipartite`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/EqualityCore.color`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/EqualityCore.dissociation`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/EqualityCore.dissociation_card`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/EqualityCore.edges`

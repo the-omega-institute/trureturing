@@ -11,7 +11,7 @@ open _root_.D5.S3.Combinatorics.Graph.StarFormingDissociationRefutation
 namespace Reg.D5.S3.Combinatorics.Graph.SubQuorum.GridDissociation
 
 abbrev signature : Signature where
-  Params := ℕ × ℕ
+  Params := Σ _ : ℕ, ℕ
   State p := Finset (Fin p.1 × Fin p.2)
   Role := Unit
   finiteRole := inferInstance
@@ -20,10 +20,10 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def observation : ∀ (_ : Unit) (p : ℕ × ℕ), Finset (Fin p.1 × Fin p.2) → ℕ :=
+def observation : ∀ (_ : Unit) (p : Σ _ : ℕ, ℕ), Finset (Fin p.1 × Fin p.2) → ℕ :=
   fun _ _ S => S.card
 
-def noAnchor : ∀ (_ : Empty) (p : ℕ × ℕ), Finset (Fin p.1 × Fin p.2) :=
+def noAnchor : ∀ (_ : Empty) (p : Σ _ : ℕ, ℕ), Finset (Fin p.1 × Fin p.2) :=
   fun e => nomatch e
 
 def actual : Realization signature := realize signature observation noAnchor
@@ -33,7 +33,7 @@ def bad : Realization signature := realize signature (fun _ p _ => formula p.1 p
 abbrev arena : Arena where
   signature := signature
   Law r := ∀ {m n : ℕ} (S : Finset (Fin m × Fin n)), IsKIndependent (graph m n) 2 S →
-    r.readout () (m,n) S ≤ formula m n
+    r.readout () ⟨m,n⟩ S ≤ formula m n
 
 private theorem bad_law : ¬ arena.Law bad := by
   intro h
@@ -60,7 +60,7 @@ def family : Registration arena SourceClaim where
       exact nomatch e
   dependence := by
     intro i
-    refine ⟨(1,1),∅,{(0,0)},?_⟩
+    refine ⟨⟨1,1⟩,∅,{(0,0)},?_⟩
     change (∅ : Finset (Fin 1 × Fin 1)).card ≠ ({(0,0)} : Finset (Fin 1 × Fin 1)).card
     simp
 

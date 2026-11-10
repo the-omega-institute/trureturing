@@ -15,6 +15,7 @@ internal sealed class HeawoodCoverParametersDocument : IScribeDocumentDefinition
         "The complete binary-lift parameter dichotomy", H("The complete binary-lift parameter dichotomy"),
         Blocks(Paragraph(Text("An explicit isomorphism separates cyclic Heawood labels from binary incidence labels. Every signing has SF sixteen. The six original fifteen-sets transport to every connected signing, giving beta fifteen or sixteen; disconnected signings have beta fourteen by actual disjoint-union additivity. This does not decide which of the other four types attain sixteen, or assert a higher-cover optimum.")),
             Node("cyclicIso", "cyclicIso", "Exact declaration: def cyclicIso : HeawoodParameters.graph ≃g base.", DescribeRole.Definition),
+            Node("base_regular", "base regular", "Exact declaration: theorem base_regular : ∀ v, DegreeCapacity.degree base v=3.", DescribeRole.Theorem),
             Node("sf_all", "sf all", "Exact declaration: theorem sf_all (s : Signing) : SF (graph s) 2=16.", DescribeRole.Theorem),
             Node("pack", "pack", "Exact declaration: def pack : (Fin 14 × F2) ≃ Fin 28.", DescribeRole.Definition),
             Node("sixIso", "sixIso", "Exact declaration: def sixIso (k : Fin 6) : graph (HeawoodActions.representative k) ≃g HeawoodCertificates.sixGraph k.", DescribeRole.Definition),

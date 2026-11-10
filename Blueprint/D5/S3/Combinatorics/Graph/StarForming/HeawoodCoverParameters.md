@@ -18,7 +18,19 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCoverParameters.cy
 
 Exact declaration: def cyclicIso : HeawoodParameters.graph ≃g base.
 
-**Theorem 1.2 (sf all).**
+**Theorem 1.2 (base regular).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCoverParameters.base_regular`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/HeawoodCoverParameters.base_regular` (`✓ std3`). ∎
+
+*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+
+*Commentary.*
+
+Exact declaration: theorem base_regular : ∀ v, DegreeCapacity.degree base v=3.
+
+**Theorem 1.3 (sf all).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCoverParameters.sf_all`
 
@@ -30,7 +42,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCoverParameters.sf
 
 Exact declaration: theorem sf_all (s : Signing) : SF (graph s) 2=16.
 
-**Definition 1.3 (pack).**
+**Definition 1.4 (pack).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCoverParameters.pack`
 
@@ -42,7 +54,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCoverParameters.pa
 
 Exact declaration: def pack : (Fin 14 × F2) ≃ Fin 28.
 
-**Definition 1.4 (sixIso).**
+**Definition 1.5 (sixIso).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCoverParameters.sixIso`
 
@@ -54,7 +66,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCoverParameters.si
 
 Exact declaration: def sixIso (k : Fin 6) : graph (HeawoodActions.representative k) ≃g HeawoodCertificates.sixGraph k.
 
-**Theorem 1.5 (connected beta).**
+**Theorem 1.6 (connected beta).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCoverParameters.connected_beta`
 
@@ -66,7 +78,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCoverParameters.co
 
 Exact declaration: theorem connected_beta (s : Signing) (hs : (graph s).Preconnected) : 15 ≤ beta (graph s) 2 ∧ beta (graph s) 2 ≤ 16.
 
-**Theorem 1.6 (disconnected beta).**
+**Theorem 1.7 (disconnected beta).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCoverParameters.disconnected_beta`
 
@@ -78,7 +90,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCoverParameters.di
 
 Exact declaration: theorem disconnected_beta (s : Signing) (hs : ¬ (graph s).Preconnected) : beta (graph s) 2=14.
 
-**Theorem 1.7 (parameters).**
+**Theorem 1.8 (parameters).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCoverParameters.parameters`
 
@@ -92,6 +104,7 @@ Exact declaration: theorem parameters (s : Signing) : SF (graph s) 2=16 ∧ (bet
 
 ## References
 
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCoverParameters.base_regular`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCoverParameters.connected_beta`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCoverParameters.cyclicIso`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCoverParameters.disconnected_beta`
