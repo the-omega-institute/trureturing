@@ -43,9 +43,9 @@ internal sealed class RawDocument : IScribeDocumentDefinition
             Node("raw-ext", "raw_ext", "raw_ext",
                 "The native skeleton determines the raw family only once raw empty membership is supplied. This theorem is used for non-VOID filling and Gamma endpoints.", DescribeRole.Theorem),
             Node("mem-delta", "mem_delta", "mem_delta",
-                "The native skeleton determines the raw family only once raw empty membership is supplied. This theorem is used for non-VOID filling and Gamma endpoints.", DescribeRole.Theorem),
+                "Membership in the raw simplex is precisely subset inclusion in its original ground W. The proof is Iff.rfl by the carrier definition of delta; with W empty, the empty face remains, so delta ∅ is UNIT.", "Exact lexical source context (not a compiled telescope):\nnoncomputable section\nopen Set Finset\nopen scoped unitInterval ContinuousMap\nnamespace D5.S3.Geometry.OriginalLabelTwoSum\nopen FiniteElementaryCollapse FiniteRelativeSimplicialCollapse\nopen FiniteConeCollapse FiniteSimplicialJoin\nvariable {V : Type*} [DecidableEq V]\n\nExact source statement:\n@[simp] theorem mem_delta (W s : Finset V) : s ∈ delta W ↔ s ⊆ W", DescribeRole.Theorem),
             Node("mem-project", "mem_project", "mem_project",
-                "The native skeleton determines the raw family only once raw empty membership is supplied. This theorem is used for non-VOID filling and Gamma endpoints.", DescribeRole.Theorem),
+                "Projection retains exactly the nonempty faces of K. The proof is Iff.rfl from project.faces. Consequently the empty face is discarded even when K contains it, so projection alone does not distinguish VOID from UNIT.", "Exact lexical source context (not a compiled telescope):\nnoncomputable section\nopen Set Finset\nopen scoped unitInterval ContinuousMap\nnamespace D5.S3.Geometry.OriginalLabelTwoSum\nopen FiniteElementaryCollapse FiniteRelativeSimplicialCollapse\nopen FiniteConeCollapse FiniteSimplicialJoin\nvariable {V : Type*} [DecidableEq V]\n\nExact source statement:\n@[simp] theorem mem_project (K : Family V) (s : Finset V) :\n    s ∈ project K ↔ s.Nonempty ∧ s ∈ K", DescribeRole.Theorem),
             Node("root", "Root", "Root",
                 "The full original ground is independent of which singleton faces occur.", DescribeRole.Definition),
             Node("asroot", "asRoot", "asRoot",
@@ -55,9 +55,9 @@ internal sealed class RawDocument : IScribeDocumentDefinition
             Node("root-supported", "root_supported", "root_supported",
                 "Complement roots are supported even when their row family is empty.", DescribeRole.Theorem),
             Node("rawjoin-void", "rawJoin_void", "rawJoin_void",
-                "Complement roots are supported even when their row family is empty.", DescribeRole.Theorem),
+                "VOID is an absorber on both sides of the raw join. Extensionality and expansion of rawJoin eliminate the impossible witness in the bottom factor, including for the empty face; no default empty witness is introduced.", "Exact lexical source context (not a compiled telescope):\nnoncomputable section\nopen Set Finset\nopen scoped unitInterval ContinuousMap\nnamespace D5.S3.Geometry.OriginalLabelTwoSum\nopen FiniteElementaryCollapse FiniteRelativeSimplicialCollapse\nopen FiniteConeCollapse FiniteSimplicialJoin\nvariable {V : Type*} [DecidableEq V]\n\nExact source statement:\n@[simp] theorem rawJoin_void (K : Family V) :\n    rawJoin (⊥ : Family V) K = ⊥ ∧ rawJoin K ⊥ = ⊥", DescribeRole.Theorem),
             Node("rawjoin-unit", "rawJoin_unit", "rawJoin_unit",
-                "Complement roots are supported even when their row family is empty.", DescribeRole.Theorem),
+                "UNIT = delta ∅ is an identity on both sides of the raw join. Expansion of rawJoin and delta forces the simplex witness to be ∅; union with it returns the other face, in either order. This also holds when K itself is VOID.", "Exact lexical source context (not a compiled telescope):\nnoncomputable section\nopen Set Finset\nopen scoped unitInterval ContinuousMap\nnamespace D5.S3.Geometry.OriginalLabelTwoSum\nopen FiniteElementaryCollapse FiniteRelativeSimplicialCollapse\nopen FiniteConeCollapse FiniteSimplicialJoin\nvariable {V : Type*} [DecidableEq V]\n\nExact source statement:\n@[simp] theorem rawJoin_unit (K : Family V) :\n    rawJoin (delta ∅) K = K ∧ rawJoin K (delta ∅) = K", DescribeRole.Theorem),
             Node("join-split", "join_split", "join_split",
                 "Split coordinates are unique on disjoint original grounds.", DescribeRole.Theorem),
             Node("substitute", "substitute", "substitute",
@@ -73,6 +73,12 @@ internal sealed class RawDocument : IScribeDocumentDefinition
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
             role == DescribeRole.Definition ? StatementSource.WithoutFormula() : StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(SourceText(prose)), role);
+
+    private static DocumentBlock Node(string id, string declaration, string title, string prose,
+        string rawContract, DescribeRole role) => Describe.Lean(
+            DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            Blocks(SourceText(prose), SourceText(rawContract)), role);
 
     // TextRun is one line. Keep every quoted source line, including blank separators,
     // as typed text; this is commentary, never a substitute for a Lean projection.

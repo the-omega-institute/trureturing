@@ -17,7 +17,7 @@ internal sealed class CertificatesDocument : IScribeDocumentDefinition
             Node("facets", "facets", "facets",
                 "A finite union of raw simplices, with the empty index family equal to VOID.", DescribeRole.Definition),
             Node("endpoint", "endpoint", "endpoint",
-                "A finite union of raw simplices, with the empty index family equal to VOID.", DescribeRole.Definition),
+                "For B : Family V and critical : Finset (Finset V), endpoint B critical = B ⊔ facets critical: retain B and adjoin every subface of each critical simplex. Thus endpoint B ∅ = B, since facets ∅ = VOID. In particular endpoint (delta ∅) ∅ = delta ∅ = UNIT, which retains the empty face.", DescribeRole.Definition),
             Node("criticaldata", "CriticalData", "CriticalData",
                 "Exact ordinary critical-cell conditions, including ALL proper subfaces.", DescribeRole.Definition),
             Node("filling", "Filling", "Filling",

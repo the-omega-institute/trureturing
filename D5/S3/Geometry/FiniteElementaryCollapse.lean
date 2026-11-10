@@ -103,6 +103,10 @@ theorem retained_le : P.retained ≤ P.ambient := fun _ hs => hs.1
 theorem retained_nonempty {s : Finset V} (hs : s ∈ P.retained) : s.Nonempty :=
   (P.retained.isRelLowerSet_faces hs).1
 
+theorem retained_downward {s t : Finset V} (hs : s ∈ P.retained)
+    (hts : t ⊆ s) (ht : t.Nonempty) : t ∈ P.retained :=
+  (P.retained.isRelLowerSet_faces hs).2 hts ht
+
 @[simp] theorem empty_not_mem_retained : (∅ : Finset V) ∉ P.retained := by
   intro h
   exact Finset.not_nonempty_empty (P.retained_nonempty h)
@@ -284,6 +288,17 @@ def collapseHomotopy :
     funext v
     simp only [mix]
     ring
+
+/-- The homotopy has precisely the reviewed barycentric coordinate formula
+at every point of the ambient realization, without a face-dependent branch. -/
+theorem collapseHomotopy_coordinate (t : I) (x : Space P.ambient) (v : V) :
+    (P.collapseHomotopy (t, x)).val v =
+      x.val v + (if v = P.apex then
+        (t : ℝ) * (P.lower.card : ℝ) * P.minimum x.val else 0) -
+      (if v ∈ P.lower then (t : ℝ) * P.minimum x.val else 0) := by
+  change mix t x.val (P.endpoint x.val) v = _
+  unfold mix endpoint
+  split_ifs <;> ring
 
 /-- The forward map is the proved retraction; its inverse is the actual
 coordinate inclusion, not a replacement homeomorphic model. -/
