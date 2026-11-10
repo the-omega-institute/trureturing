@@ -20,7 +20,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCo
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -46,7 +46,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCo
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -72,7 +72,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCo
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -98,7 +98,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCo
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -124,7 +124,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCo
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -150,7 +150,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCo
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -178,7 +178,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCo
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -206,7 +206,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCo
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -234,7 +234,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCo
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -262,7 +262,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCo
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -292,7 +292,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCo
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -324,7 +324,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCo
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -356,7 +356,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCo
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -388,7 +388,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCo
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -416,7 +416,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCo
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -444,7 +444,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCo
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -472,7 +472,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCo
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -502,7 +502,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCo
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -530,7 +530,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCo
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -556,7 +556,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCo
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -584,7 +584,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCo
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -612,7 +612,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCo
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -642,7 +642,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCo
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -668,7 +668,7 @@ Standalone C-to-point SDR, never claimed relative to the retained cells.
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -694,7 +694,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCo
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -724,7 +724,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCo
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -756,7 +756,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCo
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -782,7 +782,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCo
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -810,7 +810,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCo
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 

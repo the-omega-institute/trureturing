@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Native.cut`
 
 *Commentary.*
 
-Removing upper ideals is always downward closed; freeness is proved before using it as the retained complex of an ordinary pair. 
+Removing upper ideals is always downward closed; freeness is proved before using it as the retained complex of an ordinary pair.
 
 **Theorem 1.2 (cut_empty).**
 
@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Native.cut_empty`
 
 *Commentary.*
 
-Removing upper ideals is always downward closed; freeness is proved before using it as the retained complex of an ordinary pair. 
+Removing upper ideals is always downward closed; freeness is proved before using it as the retained complex of an ordinary pair.
 
 **Theorem 1.3 (cut_cut).**
 
@@ -38,7 +38,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Native.cut_cut`
 
 *Commentary.*
 
-Removing upper ideals is always downward closed; freeness is proved before using it as the retained complex of an ordinary pair. 
+Removing upper ideals is always downward closed; freeness is proved before using it as the retained complex of an ordinary pair.
 
 **Definition 1.4 (emitPair).**
 
@@ -50,7 +50,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Native.emitPair`
 
 *Commentary.*
 
-Populate the actual native pair, using the whole current raw family. 
+Populate the actual native pair, using the whole current raw family.
 
 **Theorem 1.5 (emitPair_retained).**
 
@@ -62,7 +62,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Native.emitPair_retained`
 
 *Commentary.*
 
-The equality is literal deletion of the upper ideal of the lower face. 
+The equality is literal deletion of the upper ideal of the lower face.
 
 **Definition 1.6 (fibreBefore).**
 
@@ -74,7 +74,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Native.fibreBefore`
 
 *Commentary.*
 
-Label-order tie break. The finite enumeration is fixed once per ambient Fintype instance; cardinality is always the primary comparison. 
+Label-order tie break. The finite enumeration is fixed once per ambient Fintype instance; cardinality is always the primary comparison.
 
 **Definition 1.7 (fibres).**
 
@@ -86,7 +86,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Native.fibres`
 
 *Commentary.*
 
-Actual terminating merge-sort, not an assumed fibre schedule. 
+Actual terminating merge-sort, not an assumed fibre schedule.
 
 **Theorem 1.8 (fibres_spec).**
 
@@ -98,7 +98,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Native.fibres_spec`
 
 *Commentary.*
 
-Actual terminating merge-sort, not an assumed fibre schedule. 
+Actual terminating merge-sort, not an assumed fibre schedule.
 
 **Definition 1.9 (rectangle).**
 
@@ -110,7 +110,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Native.rectangle`
 
 *Commentary.*
 
-Public rectangle endpoint and genuine ordered native list. 
+Public rectangle endpoint and genuine ordered native list.
 
 **Theorem 1.10 (rectangle_order).**
 
@@ -122,7 +122,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Native.rectangle_order`
 
 *Commentary.*
 
-The list statement refers to the real pair extraction, and contains no external pair schedule assumption. 
+The list statement refers to the real pair extraction, and contains no external pair schedule assumption.
 
 **Theorem 1.11 (cut_fixed).**
 
@@ -134,7 +134,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Native.cut_fixed`
 
 *Commentary.*
 
-Fixed coordinate consequence of the EXISTING Sequence homotopy. 
+Fixed coordinate consequence of the EXISTING Sequence homotopy.
 
 ## References
 

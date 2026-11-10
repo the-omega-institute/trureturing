@@ -4,7 +4,7 @@
 
 Original-ground finite incidence root-K collapse certificates.
 
-The constructor retains arbitrary Prop-valued incidence, the original ambient and row labels, nonempty ordinary faces, and full parent-base fixedness. Authored source headers below are not compiled telescope or native kind evidence.
+The constructor retains arbitrary Prop-valued incidence, the original ambient and row labels, nonempty ordinary faces, and full parent-base fixedness. The source headers below specify lexical scope.
 
 **Definition 1.1 (State).**
 
@@ -20,7 +20,7 @@ Original ambient vertex and row label types remain fixed. The state stores only 
 
 ### Source text
 
-Authored Lean source header: structure State (ρ : I → J → Prop) where
+Authored Lean source header:structure State (ρ : I → J → Prop) where
 
   active : Finset I
 
@@ -38,7 +38,7 @@ Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.rowNeighborhood`
 
 Classical predicate decidability defines the local neighborhood for arbitrary Prop-valued incidence, without an incidence-decidability hypothesis.
 
-Authored Lean source header: def rowNeighborhood (ρ : I → J → Prop) (q : State ρ) (b : J) : Finset I
+Authored Lean source header:def rowNeighborhood (ρ : I → J → Prop) (q : State ρ) (b : J) : Finset I
 
 **Theorem 1.3 (mem_rowNeighborhood).**
 
@@ -54,7 +54,7 @@ Membership is exactly active support together with incidence in the specified ro
 
 ### Source text
 
-Authored Lean source header: @[simp] theorem mem_rowNeighborhood (ρ : I → J → Prop) (q : State ρ)
+Authored Lean source header:@[simp] theorem mem_rowNeighborhood (ρ : I → J → Prop) (q : State ρ)
 
     (x : I) (b : J) :
 
@@ -72,7 +72,7 @@ Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.incidenceSimplex`
 
 The full nonempty-face simplex on the literal finite subset of the original ambient carrier.
 
-Authored Lean source header: def incidenceSimplex (lambda : Finset I) : PreAbstractSimplicialComplex I
+Authored Lean source header:def incidenceSimplex (lambda : Finset I) : PreAbstractSimplicialComplex I
 
 **Definition 1.5 (rootK).**
 
@@ -88,7 +88,7 @@ Nonempty faces lie in the active complement of an actual row neighborhood. Inact
 
 ### Source text
 
-Authored Lean source header: def rootK (ρ : I → J → Prop) (q : State ρ) : PreAbstractSimplicialComplex I where
+Authored Lean source header:def rootK (ρ : I → J → Prop) (q : State ρ) : PreAbstractSimplicialComplex I where
 
   faces := {s | s.Nonempty ∧ ∃ b ∈ q.rows, s ⊆ q.active \ rowNeighborhood ρ q b}
 
@@ -116,7 +116,7 @@ Exact membership presentation for the original-ground root complex; the existent
 
 ### Source text
 
-Authored Lean source header: @[simp] theorem mem_rootK (ρ : I → J → Prop) (q : State ρ) (s : Finset I) :
+Authored Lean source header:@[simp] theorem mem_rootK (ρ : I → J → Prop) (q : State ρ) (s : Finset I) :
 
     s ∈ rootK ρ q ↔
 
@@ -136,7 +136,7 @@ Nonempty proper active subsets avoiding containment of every row neighborhood.
 
 ### Source text
 
-Authored Lean source header: def incidenceDual (ρ : I → J → Prop) (q : State ρ) :
+Authored Lean source header:def incidenceDual (ρ : I → J → Prop) (q : State ρ) :
 
     PreAbstractSimplicialComplex I where
 
@@ -176,7 +176,7 @@ The fixed-ground Alexander dual of rootK is exactly incidenceDual, including emp
 
 ### Source text
 
-Authored Lean source header: theorem rootK_dual (ρ : I → J → Prop) (q : State ρ) :
+Authored Lean source header:theorem rootK_dual (ρ : I → J → Prop) (q : State ρ) :
 
     FiniteAlexanderDualCollapse.dual q.active (rootK ρ q) = incidenceDual ρ q
 
@@ -192,7 +192,7 @@ Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.eraseRow`
 
 Erase one row label and retain the original active vertex ground.
 
-Authored Lean source header: def eraseRow (ρ : I → J → Prop) (q : State ρ) (c : J) : State ρ
+Authored Lean source header:def eraseRow (ρ : I → J → Prop) (q : State ρ) (c : J) : State ρ
 
 **Definition 1.10 (eraseColumn).**
 
@@ -206,7 +206,7 @@ Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.eraseColumn`
 
 Erase one active column label while retaining the original ambient type and row labels.
 
-Authored Lean source header: def eraseColumn (ρ : I → J → Prop) (q : State ρ) (y : I) : State ρ
+Authored Lean source header:def eraseColumn (ρ : I → J → Prop) (q : State ρ) (y : I) : State ρ
 
 **Definition 1.11 (singletonChild).**
 
@@ -220,7 +220,7 @@ Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.singletonChild`
 
 Erase the singleton apex from the active ground and retain exactly rows whose incidence avoids the apex, using classical decidability.
 
-Authored Lean source header: def singletonChild (ρ : I → J → Prop) (q : State ρ) (a : I) : State ρ
+Authored Lean source header:def singletonChild (ρ : I → J → Prop) (q : State ρ) (a : I) : State ρ
 
 **Theorem 1.12 (eraseRow_active).**
 
@@ -236,7 +236,7 @@ Row erasure preserves the entire active vertex ground definitionally.
 
 ### Source text
 
-Authored Lean source header: @[simp] theorem eraseRow_active (ρ : I → J → Prop) (q : State ρ) (c : J) :
+Authored Lean source header:@[simp] theorem eraseRow_active (ρ : I → J → Prop) (q : State ρ) (c : J) :
 
     (eraseRow ρ q c).active = q.active
 
@@ -254,7 +254,7 @@ Column erasure preserves every literal row label definitionally.
 
 ### Source text
 
-Authored Lean source header: @[simp] theorem eraseColumn_rows (ρ : I → J → Prop) (q : State ρ) (y : I) :
+Authored Lean source header:@[simp] theorem eraseColumn_rows (ρ : I → J → Prop) (q : State ρ) (y : I) :
 
     (eraseColumn ρ q y).rows = q.rows
 
@@ -270,7 +270,7 @@ Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.RowSubset`
 
 The directional incidence condition N(b) contained in N(c), restricted to the active ground.
 
-Authored Lean source header: def RowSubset (ρ : I → J → Prop) (q : State ρ) (b c : J) : Prop
+Authored Lean source header:def RowSubset (ρ : I → J → Prop) (q : State ρ) (b c : J) : Prop
 
 **Definition 1.15 (ColumnSubset).**
 
@@ -284,7 +284,7 @@ Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.ColumnSubset`
 
 Every retained row incident to x is incident to y; this direction allows insertion of x in a face containing y.
 
-Authored Lean source header: def ColumnSubset (ρ : I → J → Prop) (q : State ρ) (x y : I) : Prop
+Authored Lean source header:def ColumnSubset (ρ : I → J → Prop) (q : State ρ) (x y : I) : Prop
 
 **Definition 1.16 (IsolatedColumn).**
 
@@ -298,7 +298,7 @@ Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.IsolatedColumn`
 
 The specified column is incident to no retained row; active support is supplied separately by its consumers.
 
-Authored Lean source header: def IsolatedColumn (ρ : I → J → Prop) (q : State ρ) (x : I) : Prop
+Authored Lean source header:def IsolatedColumn (ρ : I → J → Prop) (q : State ρ) (x : I) : Prop
 
 **Definition 1.17 (SingletonRow).**
 
@@ -312,7 +312,7 @@ Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.SingletonRow`
 
 An actual retained row has local neighborhood exactly the singleton apex.
 
-Authored Lean source header: def SingletonRow (ρ : I → J → Prop) (q : State ρ) (b : J) (a : I) : Prop
+Authored Lean source header:def SingletonRow (ρ : I → J → Prop) (q : State ρ) (b : J) (a : I) : Prop
 
 **Theorem 1.18 (rowSubset_neighborhood).**
 
@@ -328,7 +328,7 @@ Converts row incidence inclusion to inclusion of the actual local neighborhoods.
 
 ### Source text
 
-Authored Lean source header: theorem rowSubset_neighborhood (ρ : I → J → Prop) (q : State ρ)
+Authored Lean source header:theorem rowSubset_neighborhood (ρ : I → J → Prop) (q : State ρ)
 
     {b c : J} (h : RowSubset ρ q b c) :
 
@@ -348,7 +348,7 @@ The conclusion requires active membership of y. Dominated-column input already s
 
 ### Source text
 
-Authored Lean source header: theorem columnSubset_neighborhood (ρ : I → J → Prop) (q : State ρ)
+Authored Lean source header:theorem columnSubset_neighborhood (ρ : I → J → Prop) (q : State ρ)
 
     {x y : I} (hy : y ∈ q.active) (h : ColumnSubset ρ q x y) :
 
@@ -368,7 +368,7 @@ No retained rows gives the ordinary bottom complex, the VOID case.
 
 ### Source text
 
-Authored Lean source header: theorem rootK_empty_rows (ρ : I → J → Prop) (q : State ρ) (h : q.rows = ∅) :
+Authored Lean source header:theorem rootK_empty_rows (ρ : I → J → Prop) (q : State ρ) (h : q.rows = ∅) :
 
     rootK ρ q = ⊥
 
@@ -386,7 +386,7 @@ Nonempty retained rows all equal to the active ground give the ordinary bottom c
 
 ### Source text
 
-Authored Lean source header: theorem rootK_full_rows (ρ : I → J → Prop) (q : State ρ)
+Authored Lean source header:theorem rootK_full_rows (ρ : I → J → Prop) (q : State ρ)
 
     (hn : q.rows.Nonempty)
 
@@ -408,7 +408,7 @@ One empty neighborhood realizes the full simplex on the active ground, without c
 
 ### Source text
 
-Authored Lean source header: theorem rootK_empty_row (ρ : I → J → Prop) (q : State ρ) {b : J}
+Authored Lean source header:theorem rootK_empty_row (ρ : I → J → Prop) (q : State ρ) {b : J}
 
     (hb : b ∈ q.rows) (hempty : rowNeighborhood ρ q b = ∅) :
 
@@ -428,7 +428,7 @@ Erase c when N(b) is contained in N(c). Its complement simplex is already contai
 
 ### Source text
 
-Authored Lean source header: theorem rootK_row_erase (ρ : I → J → Prop) (q : State ρ)
+Authored Lean source header:theorem rootK_row_erase (ρ : I → J → Prop) (q : State ρ)
 
     {b c : J} (hb : b ∈ q.rows) (hc : c ∈ q.rows) (hbc : b ≠ c)
 
@@ -450,7 +450,7 @@ Literal deletion equals the root complex with y erased from active. Both directi
 
 ### Source text
 
-Authored Lean source header: theorem rootK_column_delete (ρ : I → J → Prop) (q : State ρ)
+Authored Lean source header:theorem rootK_column_delete (ρ : I → J → Prop) (q : State ρ)
 
     {x y : I} (hy : y ∈ q.active) (hxy : x ≠ y)
 
@@ -472,7 +472,7 @@ An active isolated column over nonempty rows is an actual cone apex, even when t
 
 ### Source text
 
-Authored Lean source header: theorem rootK_isolated_cone (ρ : I → J → Prop) (q : State ρ)
+Authored Lean source header:theorem rootK_isolated_cone (ρ : I → J → Prop) (q : State ρ)
 
     {x : I} (hx : x ∈ q.active) (hrows : q.rows.Nonempty)
 
@@ -494,7 +494,7 @@ Seven actual structural constructors: VOID, UNIT, empty row, isolated column, re
 
 ### Source text
 
-Authored Lean source header: inductive Pruning (ρ : I → J → Prop) : State ρ → Type
+Authored Lean source header:inductive Pruning (ρ : I → J → Prop) : State ρ → Type
 
   | void (q : State ρ) (hrows : q.rows = ∅) : Pruning ρ q
 
@@ -542,7 +542,7 @@ VOID and UNIT are distinct augmented terminal labels although their ordinary roo
 
 ### Source text
 
-Authored Lean source header: inductive TerminalTag where
+Authored Lean source header:inductive TerminalTag where
 
   | void
 
@@ -562,7 +562,7 @@ Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.TerminalLaw`
 
 VOID records empty rows; UNIT records nonempty rows and full local neighborhoods on the original state.
 
-Authored Lean source header: def TerminalLaw (ρ : I → J → Prop) (q : State ρ) (tag : TerminalTag) : Prop
+Authored Lean source header:def TerminalLaw (ρ : I → J → Prop) (q : State ρ) (tag : TerminalTag) : Prop
 
 **Definition 1.29 (Witness).**
 
@@ -578,7 +578,7 @@ A constructed native sequence, separate collapsible core and supported original 
 
 ### Source text
 
-Authored Lean source header: structure Witness (ρ : I → J → Prop) (q : State ρ) where
+Authored Lean source header:structure Witness (ρ : I → J → Prop) (q : State ρ) where
 
   endpoint : PreAbstractSimplicialComplex I
 
@@ -618,7 +618,7 @@ Either a truthful terminal tag with original-state law and bottom equation, or a
 
 ### Source text
 
-Authored Lean source header: inductive Result (ρ : I → J → Prop) (q : State ρ) where
+Authored Lean source header:inductive Result (ρ : I → J → Prop) (q : State ρ) where
 
   | terminal (tag : TerminalTag) (hK : rootK ρ q = ⊥)
 
@@ -640,7 +640,7 @@ VOID has only ordinary root membership. UNIT restores the empty face solely in t
 
 ### Source text
 
-Authored Lean source header: def augmentedTerminal (ρ : I → J → Prop) (q : State ρ) (tag : TerminalTag)
+Authored Lean source header:def augmentedTerminal (ρ : I → J → Prop) (q : State ρ) (tag : TerminalTag)
 
     (s : Finset I) : Prop
 
@@ -658,7 +658,7 @@ Given the ordinary bottom equation, VOID augmentation is false and UNIT augmenta
 
 ### Source text
 
-Authored Lean source header: theorem terminal_semantics (ρ : I → J → Prop) {q : State ρ}
+Authored Lean source header:theorem terminal_semantics (ρ : I → J → Prop) {q : State ρ}
 
     (tag : TerminalTag) (hK : rootK ρ q = ⊥) (s : Finset I) :
 
@@ -678,7 +678,7 @@ Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.simplexCollapse`
 
 ### Source text
 
-Actual dominated-vertex free-pair sequences recursively erase nonpivot labels, with strictly decreasing active cardinality, ending at the literal pivot vertex complex. In the nonempty erased-ground branch, Classical.choose hrest selects the original label y and Classical.choose_spec hrest proves y ∈ A.erase p. That membership supplies the inequality, native domination and deletion transports, and the strict cardinality decrease. The quotation is the complete authored definition, not kernel or native acceptance.
+Actual dominated-vertex free-pair sequences recursively erase nonpivot labels, with strictly decreasing active cardinality, ending at the literal pivot vertex complex. In the nonempty erased-ground branch, Classical.choose hrest selects the original label y and Classical.choose_spec hrest proves y ∈ A.erase p. That membership supplies the inequality, native domination and deletion transports, and the strict cardinality decrease. The quotation gives the definition and its proof.
 
 Definitions and proofs are in the paired Lean module.
 
@@ -740,7 +740,7 @@ Definitions and proofs are in the paired Lean module.
 
 ### Source text
 
-Authored Lean source header: def simplexCollapse : ∀ (A : Finset I) (p : I), p ∈ A →
+Authored Lean source header:def simplexCollapse : ∀ (A : Finset I) (p : I), p ∈ A →
 
     Sequence (incidenceSimplex A) (vertexComplex p)
 
@@ -756,7 +756,7 @@ Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.isolatedCollapse`
 
 ### Source text
 
-Actual domination sequences erase every nonapex active label, with strictly decreasing active cardinality, and collapse the original cone to its actual apex. Classical.choose hrest selects y on the same ambient type and Classical.choose_spec hrest proves y ∈ q.active.erase x. That membership supplies the native domination and deletion transports and the strict cardinality decrease. The row witness obtained inside hK remains local to an equality proof in Prop. The quotation is the complete authored definition, not kernel or native acceptance.
+Actual domination sequences erase every nonapex active label, with strictly decreasing active cardinality, and collapse the original cone to its actual apex. Classical.choose hrest selects y on the same ambient type and Classical.choose_spec hrest proves y ∈ q.active.erase x. That membership supplies the native domination and deletion transports and the strict cardinality decrease. The row witness obtained inside hK remains local to an equality proof in Prop. The quotation gives the definition and its proof.
 
 Definitions and proofs are in the paired Lean module.
 
@@ -864,7 +864,7 @@ Definitions and proofs are in the paired Lean module.
 
 ### Source text
 
-Authored Lean source header: def isolatedCollapse : ∀ (ρ : I → J → Prop) (q : State ρ) (x : I),
+Authored Lean source header:def isolatedCollapse : ∀ (ρ : I → J → Prop) (q : State ρ) (x : I),
 
     x ∈ q.active → q.rows.Nonempty → IsolatedColumn ρ q x →
 
@@ -884,7 +884,7 @@ Lift a core sequence over the full base, remove the genuine terminal pair only i
 
 ### Source text
 
-Authored Lean source header: def liftCoreToBase (A : Finset I) (C : PreAbstractSimplicialComplex I)
+Authored Lean source header:def liftCoreToBase (A : Finset I) (C : PreAbstractSimplicialComplex I)
 
     (a p : I) (hCD : C ≤ incidenceSimplex A)
 
@@ -910,7 +910,7 @@ With an actual parent apex, every parent face belongs to the full erased-ground 
 
 ### Source text
 
-Authored Lean source header: theorem singleton_decomposition (ρ : I → J → Prop) (q : State ρ)
+Authored Lean source header:theorem singleton_decomposition (ρ : I → J → Prop) (q : State ρ)
 
     {b : J} (a : I) (hsingle : SingletonRow ρ q b a)
 
@@ -934,7 +934,7 @@ Empty filtered child rows forbid the apex in every parent face and yield exactly
 
 ### Source text
 
-Authored Lean source header: theorem singleton_no_apex (ρ : I → J → Prop) (q : State ρ)
+Authored Lean source header:theorem singleton_no_apex (ρ : I → J → Prop) (q : State ρ)
 
     {b : J} (a : I) (hsingle : SingletonRow ρ q b a)
 
@@ -956,7 +956,7 @@ A retained filtered child row supplies an actual apex singleton in the parent ro
 
 ### Source text
 
-Authored Lean source header: theorem singleton_apex_of_child_rows (ρ : I → J → Prop) (q : State ρ)
+Authored Lean source header:theorem singleton_apex_of_child_rows (ρ : I → J → Prop) (q : State ρ)
 
     {b : J} (a : I) (hsingle : SingletonRow ρ q b a)
 
@@ -978,7 +978,7 @@ An actual child face supplies a filtered row, hence an actual parent apex single
 
 ### Source text
 
-Authored Lean source header: theorem singleton_apex_of_child_face (ρ : I → J → Prop) (q : State ρ)
+Authored Lean source header:theorem singleton_apex_of_child_face (ρ : I → J → Prop) (q : State ρ)
 
     {b : J} (a : I) (hsingle : SingletonRow ρ q b a)
 
@@ -998,7 +998,7 @@ Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.build`
 
 ### Source text
 
-Structural recursion on the real Pruning input constructs Result. Parent terminal laws are proved for each row or column transport. The empty-row nonempty-ground branch selects p by Classical.choose hA and obtains p ∈ q.active from Classical.choose_spec hA. Both singleton-row child-terminal branches with U.Nonempty select p by Classical.choose hU and obtain p ∈ U from Classical.choose_spec hU; Finset.mem_of_mem_erase supplies original active membership. The VOID-child branch casts the simplex-collapse main sequence and uses a reflexive separate core sequence. The UNIT-child branch uses a reflexive main sequence and a separate simplex-collapse core sequence, retaining critical singleton {a} and its full boundary laws. Regular singleton lifting uses source and core containments separately, the actual child pivot, explicit critical Option splitting, literal cone/simplex equations, and proper-boundary support. No output or collapse premise is added. The quotation is the complete authored definition, not kernel or native acceptance.
+Structural recursion on the real Pruning input constructs Result. Parent terminal laws are proved for each row or column transport. The empty-row nonempty-ground branch selects p by Classical.choose hA and obtains p ∈ q.active from Classical.choose_spec hA. Both singleton-row child-terminal branches with U.Nonempty select p by Classical.choose hU and obtain p ∈ U from Classical.choose_spec hU; Finset.mem_of_mem_erase supplies original active membership. The VOID-child branch casts the simplex-collapse main sequence and uses a reflexive separate core sequence. The UNIT-child branch uses a reflexive main sequence and a separate simplex-collapse core sequence, retaining critical singleton {a} and its full boundary laws. Regular singleton lifting uses source and core containments separately, the actual child pivot, explicit critical Option splitting, literal cone/simplex equations, and proper-boundary support. No output or collapse premise is added. The quotation gives the definition and its proof.
 
 Definitions and proofs are in the paired Lean module.
 
@@ -1730,7 +1730,7 @@ termination_by structural c
 
 Definitions and proofs are in the paired Lean module.
 
-Authored Lean source header: def build {ρ : I → J → Prop} : {q : State ρ} → (c : Pruning ρ q) → Result ρ q
+Authored Lean source header:def build {ρ : I → J → Prop} : {q : State ρ} → (c : Pruning ρ q) → Result ρ q
 
 **Definition 1.41 (nativeSDR).**
 
@@ -1742,11 +1742,11 @@ Lean statement: `D5/S3/Geometry/FiniteIncidenceRootCollapse.nativeSDR`
 
 *Commentary.*
 
-Delegates the constructed main sequence to the actual relative SDR API; no native run is asserted by this source.
+Applies the relative strong deformation retraction construction to the main sequence.
 
 ### Source text
 
-Authored Lean source header: def nativeSDR {ρ : I → J → Prop} {q : State ρ} (w : Witness ρ q) :
+Authored Lean source header:def nativeSDR {ρ : I → J → Prop} {q : State ρ} (w : Witness ρ q) :
 
     RelativeSDR (rootK ρ q) w.endpoint w.sequence.monotone
 
@@ -1764,7 +1764,7 @@ The literal original-coordinate inclusion of the final endpoint supplied by the 
 
 ### Source text
 
-Authored Lean source header: def nativeInclusion {ρ : I → J → Prop} {q : State ρ} (w : Witness ρ q) :
+Authored Lean source header:def nativeInclusion {ρ : I → J → Prop} {q : State ρ} (w : Witness ρ q) :
 
     C(Space w.endpoint, Space (rootK ρ q))
 
@@ -1782,7 +1782,7 @@ The composed native retraction supplied by the constructed main sequence.
 
 ### Source text
 
-Authored Lean source header: def nativeRetraction {ρ : I → J → Prop} {q : State ρ} (w : Witness ρ q) :
+Authored Lean source header:def nativeRetraction {ρ : I → J → Prop} {q : State ρ} (w : Witness ρ q) :
 
     C(Space (rootK ρ q), Space w.endpoint)
 
@@ -1800,7 +1800,7 @@ The retraction after the literal endpoint inclusion equals the identity, by the 
 
 ### Source text
 
-Authored Lean source header: theorem nativeRetraction_inclusion {ρ : I → J → Prop} {q : State ρ}
+Authored Lean source header:theorem nativeRetraction_inclusion {ρ : I → J → Prop} {q : State ρ}
 
     (w : Witness ρ q) (x : Space w.endpoint) :
 
@@ -1820,7 +1820,7 @@ At every real unit-interval time the native collapse homotopy fixes the complete
 
 ### Source text
 
-Authored Lean source header: theorem nativeHomotopy_fixed {ρ : I → J → Prop} {q : State ρ}
+Authored Lean source header:theorem nativeHomotopy_fixed {ρ : I → J → Prop} {q : State ρ}
 
     (w : Witness ρ q) (t : Set.Icc (0 : ℝ) 1) (x : Space (rootK ρ q))
 
@@ -1842,11 +1842,11 @@ The public structural-certificate entry point invokes the substantive original-g
 
 ### Source text
 
-Authored Lean source header: def rootCertificate {ρ : I → J → Prop} {q : State ρ} (c : Pruning ρ q) :
+Authored Lean source header:def rootCertificate {ρ : I → J → Prop} {q : State ρ} (c : Pruning ρ q) :
 
     Result ρ q
 
-All public named source declarations are described here. Generated constructors, projections and recursors still require the actual native report inventory and exact unique GID resolution. Equal-universe mem_rootK Reg semantics do not audit recursive build, Result, critical data or native maps. Native Lean/kernel and axiom checks, full Scribe and Reg source scope, enrollment, Q/Reg coverage, freeze and digestion, admission, full reports and gates, required remote checks, PR/dev delivery and canonical worktree cleanup remain required. The unrestricted all-plane supplier, ordinary sphere/wedge target, original attached-space quotient consumer and disk collar remain open.
+The named declarations below describe the combinatorial root construction. Equal-universe mem_rootK Reg semantics do not audit recursive build, Result, critical data or native maps. The unrestricted all-plane supplier is a separate obligation. FiniteSimplexBoundarySphere and FiniteCriticalCellSphere.AttachmentSphere provide the explicit simplex boundary, disk collar, attachment quotient and based sphere constructions.
 
 ## References
 

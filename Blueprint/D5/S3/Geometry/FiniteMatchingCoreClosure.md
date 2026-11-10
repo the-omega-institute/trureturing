@@ -20,7 +20,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -44,7 +44,7 @@ Inflation alone forces stabilization by the number of possible faces. This is a 
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -72,7 +72,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -94,7 +94,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -118,7 +118,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -142,7 +142,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -168,7 +168,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -196,7 +196,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -220,7 +220,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -244,7 +244,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -270,7 +270,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -294,7 +294,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -318,7 +318,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -344,7 +344,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -370,7 +370,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -396,7 +396,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -422,7 +422,7 @@ Native nonempty complex; the missing empty face is not a point.
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -446,7 +446,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -472,7 +472,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -498,7 +498,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -524,7 +524,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -548,7 +548,7 @@ Leastness also certifies that no gratuitous faces are introduced.
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -576,7 +576,7 @@ The second invariant is essential: a face at the top allowed dimension can never
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -600,7 +600,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -628,7 +628,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -654,7 +654,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -684,7 +684,7 @@ Exact unmatched data. None of the fields asserts a collapse or topology. The sin
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -724,7 +724,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -748,7 +748,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -772,7 +772,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -796,7 +796,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -820,7 +820,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -844,7 +844,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -868,7 +868,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -892,7 +892,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -916,7 +916,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -940,7 +940,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -964,7 +964,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -988,7 +988,7 @@ Every critical simplex is maximal in the ACTUAL closure.
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -1014,7 +1014,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -1040,7 +1040,7 @@ Delete only the maximal unmatched critical faces, not their boundaries.
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -1064,7 +1064,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -1088,7 +1088,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -1112,7 +1112,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -1136,7 +1136,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -1160,7 +1160,7 @@ Includes the augmented empty subface without treating it as a point.
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -1186,7 +1186,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -1212,7 +1212,7 @@ Literal simplex-attachment equation on the same original ground.
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -1238,7 +1238,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -1264,7 +1264,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -1288,7 +1288,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -1312,7 +1312,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -1336,7 +1336,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -1360,7 +1360,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosu
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -1386,7 +1386,7 @@ In dimension zero the closure is literally discrete; no empty lower pair is used
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 

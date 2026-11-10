@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutTree.Input`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption.
 
 **Definition 1.2 (Carrier).**
 
@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutTree.Carrier`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.Carrier. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.Carrier. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption.
 
 **Definition 1.3 (cut).**
 
@@ -38,7 +38,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutTree.cut`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.cut. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.cut. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption.
 
 **Definition 1.4 (qL).**
 
@@ -50,7 +50,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutTree.qL`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.qL. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.qL. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption.
 
 **Definition 1.5 (qR).**
 
@@ -62,7 +62,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutTree.qR`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.qR. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.qR. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption.
 
 **Theorem 1.6 (qR_a).**
 
@@ -74,7 +74,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutTree.qR_a`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.qR_a. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.qR_a. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption.
 
 **Theorem 1.7 (qR_b).**
 
@@ -86,7 +86,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutTree.qR_b`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.qR_b. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.qR_b. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption.
 
 **Theorem 1.8 (qL_injective).**
 
@@ -98,7 +98,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutTree.qL_injective`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.qL_injective. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.qL_injective. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption.
 
 **Theorem 1.9 (qR_injective).**
 
@@ -110,7 +110,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutTree.qR_injective`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.qR_injective. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.qR_injective. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption.
 
 **Theorem 1.10 (overlap).**
 
@@ -134,7 +134,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutTree.cover`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.cover. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.cover. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption.
 
 **Theorem 1.12 (range_intersection).**
 
@@ -146,7 +146,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutTree.range_intersection`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.range_intersection. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.range_intersection. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption.
 
 **Definition 1.13 (leftEmbedding).**
 
@@ -158,7 +158,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutTree.leftEmbedding`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.leftEmbedding. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.leftEmbedding. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption.
 
 **Definition 1.14 (rightEmbedding).**
 
@@ -170,7 +170,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutTree.rightEmbedding`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.rightEmbedding. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.rightEmbedding. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption.
 
 **Definition 1.15 (tree).**
 
@@ -182,7 +182,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutTree.tree`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.tree. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.tree. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption.
 
 **Theorem 1.16 (adjacency).**
 
@@ -194,7 +194,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutTree.adjacency`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.adjacency. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.adjacency. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption.
 
 **Theorem 1.17 (edgeSet).**
 
@@ -206,7 +206,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutTree.edgeSet`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.edgeSet. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.edgeSet. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption.
 
 **Theorem 1.18 (no_loops).**
 
@@ -218,7 +218,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutTree.no_loops`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.no_loops. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.no_loops. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption.
 
 **Definition 1.19 (leftHom).**
 
@@ -230,7 +230,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutTree.leftHom`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.leftHom. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.leftHom. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption.
 
 **Definition 1.20 (rightHom).**
 
@@ -242,7 +242,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutTree.rightHom`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.rightHom. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.rightHom. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption.
 
 **Definition 1.21 (predicate).**
 
@@ -254,7 +254,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutTree.predicate`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.predicate. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.predicate. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption.
 
 **Theorem 1.22 (predicate_qL).**
 
@@ -266,7 +266,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutTree.predicate_qL`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.predicate_qL. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.predicate_qL. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption.
 
 **Theorem 1.23 (predicate_qR).**
 
@@ -278,7 +278,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutTree.predicate_qR`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.predicate_qR. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.predicate_qR. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption.
 
 **Theorem 1.24 (cut_separated).**
 
@@ -290,7 +290,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutTree.cut_separated`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.cut_separated. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.cut_separated. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption.
 
 **Theorem 1.25 (cut_cover).**
 
@@ -302,7 +302,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutTree.cut_cover`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.cut_cover. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.cut_cover. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption.
 
 **Theorem 1.26 (cut_side_adj).**
 
@@ -314,7 +314,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutTree.cut_side_adj`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.cut_side_adj. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.cut_side_adj. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption.
 
 **Theorem 1.27 (connected).**
 
@@ -326,7 +326,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutTree.connected`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.connected. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.connected. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption.
 
 **Theorem 1.28 (left_bridge).**
 
@@ -338,7 +338,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutTree.left_bridge`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.left_bridge. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.left_bridge. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption.
 
 **Theorem 1.29 (right_bridge).**
 
@@ -350,7 +350,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutTree.right_bridge`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.right_bridge. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.right_bridge. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption.
 
 **Theorem 1.30 (isTree).**
 
@@ -398,7 +398,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutTree.cross_edge_ne`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.cross_edge_ne. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.cross_edge_ne. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption.
 
 **Theorem 1.34 (edge_images_disjoint).**
 
@@ -410,7 +410,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutTree.edge_images_disjoint
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.edge_images_disjoint. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.edge_images_disjoint. Input supplies only the original two trees, distinct terminals, and the declared left edge. Carrier is VL plus fresh right interior. The constructed tree is the image of the actual left edge deletion union the entire right tree. Its IsTree proof uses cut predicates and finite walks, with no finite-vertex assumption.
 
 ## References
 

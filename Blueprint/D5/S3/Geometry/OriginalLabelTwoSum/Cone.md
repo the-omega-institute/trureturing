@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Cone.collapseCone`
 
 *Commentary.*
 
-Every ordinary cone, on the full unchanged original ground, collapses to its actual apex by the descending list of nonempty faces avoiding that apex. 
+Every ordinary cone, on the full unchanged original ground, collapses to its actual apex by the descending list of nonempty faces avoiding that apex.
 
 **Definition 1.2 (terminalGamma).**
 
@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Cone.terminalGamma`
 
 *Commentary.*
 
-Terminal p=e branch with X nonempty: run the supplied right Gamma in the Y-piece, fixing the whole delta(X)*E term, before using an original X-apex. 
+Terminal p=e branch with X nonempty: run the supplied right Gamma in the Y-piece, fixing the whole delta(X)*E term, before using an original X-apex.
 
 **Definition 1.3 (terminalAtInterface).**
 
@@ -38,7 +38,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Cone.terminalAtInterface`
 
 *Commentary.*
 
-Output type records the computed original vertex, not an assumed endpoint. 
+Output type records the computed original vertex, not an assumed endpoint.
 
 ## References
 

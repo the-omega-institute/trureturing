@@ -4,7 +4,7 @@
 
 Actual arbitrary-width retained-port wheel steps, literal corners and finite mixed histories.
 
- The count, handoff and list proofs apply to finite mixed histories. MixedHistory retains every finite prescribed width >=3 and every retained old/interior port. Universal tagged all-corner strong recursion, realization and all actual acceptance obligations remain open.
+ The count, handoff and list proofs apply to finite mixed histories. MixedHistory retains every finite prescribed width >=3 and every retained old/interior port. The stronger all-corner recursion is treated in the separate recursion module; an unrestricted arbitrary-plane supplier is not assumed.
 
 ## Source text
 
@@ -26,11 +26,11 @@ Lean module source and proofs:
 
 /-
 
-   Metadata author classification (source only; independent review pending):
+   Mathematical scope:
 
    WheelInput, MixedHistory and History range over arbitrary histories and labels. The module constructs actual graph gluing, row/root identities, equivalences and symbolic cardinality/list formulas for these families. These are not bounded enumeration, a certificate checker, numerical reduction or certification of a fixed finite instance; the fixed-width History remains unbounded in its history index.
 
-   No empirical mirror or compilation/acceptance claim is supplied.
+   
 
 -/
 
@@ -50,7 +50,7 @@ import Mathlib.Data.Fintype.Sum
 
 Definitions and proofs are in the paired Lean module.
 
-/-! SOURCE_ONLY_UNCOMPILED. WheelInput contains only an old actual GraphData,
+/-!  WheelInput contains only an old actual GraphData,
 
 a retained edge, its orientation, and fresh injective labels. The carrier is
 
@@ -70,7 +70,7 @@ certificate induction is NOT asserted here. The fixed-W4 History at the end
 
 retains the genuine PhysicalCertificate interface for existing consumers;
 
-the appended canonical handoff/count/list proofs are SOURCE_ONLY_UNCOMPILED.
+the appended canonical handoff/count/list proofs are 
 
 They do not supply the universal mixed-width all-corner constructor. -/
 

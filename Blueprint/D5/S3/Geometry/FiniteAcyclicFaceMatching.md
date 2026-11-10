@@ -20,7 +20,7 @@ A positive-length directed walk, with its direction explicit.
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -46,7 +46,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicFaceMatchi
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -70,7 +70,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicFaceMatchi
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -96,7 +96,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicFaceMatchi
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -118,7 +118,7 @@ Every nonempty induced finite subgraph of a DAG has an actual source. The minimi
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -144,7 +144,7 @@ A cover adds exactly one ORIGINAL vertex.
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -166,7 +166,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicFaceMatchi
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -188,7 +188,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicFaceMatchi
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -210,7 +210,7 @@ Only finite combinatorial data: disjoint actual codimension-one pairs. In partic
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -244,7 +244,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicFaceMatchi
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -268,7 +268,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicFaceMatchi
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -294,7 +294,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicFaceMatchi
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -318,7 +318,7 @@ Matched covers point UP; every other cover points DOWN.
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -342,7 +342,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicFaceMatchi
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -366,7 +366,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicFaceMatchi
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -390,7 +390,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicFaceMatchi
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -414,7 +414,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicFaceMatchi
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -440,7 +440,7 @@ A source outside a saturated target must be a LOWER of a matching pair. The conc
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -476,7 +476,7 @@ The source condition proves freeness in the WHOLE current complex. For every ver
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -508,7 +508,7 @@ Construct the native owner pair; no new pair or sequence owner is defined.
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 

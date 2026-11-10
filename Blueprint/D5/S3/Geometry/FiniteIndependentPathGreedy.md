@@ -4,7 +4,7 @@
 
 Augmented independent paths have an exact unbounded three-coordinate greedy recurrence.
 
-The full augmented path family and an unbounded three-coordinate survivor recurrence, with distinct 0/1/2 bases, literal insertion transport, a modulo-three closed recursive selection, and independent-path membership. Lexical section variables are recorded faithfully. Lean may omit unused variables. 
+The full augmented path family and an unbounded three-coordinate survivor recurrence, with distinct 0/1/2 bases, literal insertion transport, a modulo-three closed recursive selection, and independent-path membership. Lexical section variables are recorded faithfully. Lean may omit unused variables.
 
 **Definition 1.1 (paths).**
 

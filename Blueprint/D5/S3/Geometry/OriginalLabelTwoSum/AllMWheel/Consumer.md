@@ -4,7 +4,7 @@
 
 Constructed all-width local fillings and Gamma run the existing original-label parent compiler and literal indexed row transport.
 
-Every new public API is quoted below with the full literal SOURCE context, telescope, body and qualified owner. There are no new structures, inductives, constructors or projections. The sole imported authorities remain FiniteProtectedDualWord.Symbol/Word/Contract, CollapsePair and Sequence; Filling/Certificate/Rows/compileParent remain the original consumer interfaces. All imported record fields are constructed in the source owner, including its private helpers. The quoted section-variable context is literal source, not an assertion that unused variables become elaborated binders. These quotes do not assert emitted telescopes, elaboration, kernel/axiom closure, Scribe/Reg/native acceptance, reports, gates or remote delivery. The unchanged broad geometry and physical/all-plane scope remain open.
+Every new public API is quoted below with the full literal SOURCE context, telescope, body and qualified owner. There are no new structures, inductives, constructors or projections. The sole imported authorities remain FiniteProtectedDualWord.Symbol/Word/Contract, CollapsePair and Sequence; Filling/Certificate/Rows/compileParent remain the original consumer interfaces. All imported record fields are constructed in the source owner, including its private helpers. The quoted section-variable context is literal source, not an assertion that unused variables become elaborated binders.  The geometric constructions and physical-history correspondence belong to their respective modules; this local interface does not assert an unrestricted all-plane supplier.
 
 **Definition 1.1 (rimRowCertificate).**
 

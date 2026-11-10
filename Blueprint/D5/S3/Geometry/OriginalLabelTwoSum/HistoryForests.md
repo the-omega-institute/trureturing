@@ -4,7 +4,7 @@
 
 Literal projected wheel-path rows, redundant supersets, cut intervals and original endpoint markers.
 
-Literal FILTER-before-PROJECT original indexed rows on 2,3,...,m,1; AllMWheel.rim is exactly {1,2}. The actual row graph is decomposed into disjoint consecutive intervals. Forced singleton constraints and isolated residual ghosts remain coordinates. The arbitrary-width cut/walk proof forces empty original masks in the connected-original-endpoints case. The total physical parent-factor readback consumes the computed row and marker cases on arbitrary injective ambient coordinates. Its inputs contain no desired structural result, Output, native certificate or deformation.  Lean/kernel, Scribe, Reg, gates, remote and full universal strong-history completion remain OPEN.
+Literal FILTER-before-PROJECT original indexed rows on 2,3,...,m,1; AllMWheel.rim is exactly {1,2}. The actual row graph is decomposed into disjoint consecutive intervals. Forced singleton constraints and isolated residual ghosts remain coordinates. The arbitrary-width cut/walk proof forces empty original masks in the connected-original-endpoints case. The total physical parent-factor readback consumes the computed row and marker cases on arbitrary injective ambient coordinates. Its inputs contain no desired structural result, Output, native certificate or deformation.  The universal strong-history construction is separate from the local statement here.
 
 ## Source text
 
@@ -26,7 +26,7 @@ Lean module source and proofs:
 
 /-
 
-   SOURCE_ONLY_UNCOMPILED. No strong Output, kernel, native or admission claim. -/
+    No strong Output, kernel, native or admission claim. -/
 
 import D5.S3.Geometry.OriginalLabelTwoSum.HistoryCorners
 
@@ -2476,7 +2476,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.forced`
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 def forced (r : Rows V) : Finset V := by classical exact r.ground.filter (fun x => ∃ c : r.chords, r.row c = {x})
 
@@ -2492,7 +2492,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.mem_forced`
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 @[simp] theorem mem_forced (r : Rows V) (x : V) :
 
@@ -2524,7 +2524,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.prune`
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 def prune (r : Rows V) : Rows V where
 
@@ -2552,7 +2552,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.prune_root`
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 theorem prune_root (r : Rows V) : (prune r).root = r.root := by
 
@@ -2612,7 +2612,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.empty_row_roo
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 theorem empty_row_root (r : Rows V) (c : r.chords) (hc : r.row c = ∅) :
 
@@ -2640,7 +2640,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.no_rows_root`
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 theorem no_rows_root (r : Rows V) (h : IsEmpty r.chords) : r.root = ⊥ := by
 
@@ -2668,7 +2668,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.localRows`
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 def localRows (m : Nat) (hm : 3 ≤ m) (A B : Finset (Label m)) : Rows (Label m) :=
 
@@ -2690,7 +2690,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.at`
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 def «at» (m : Nat) (hm : 3 ≤ m) (i : Fin m) : Label m :=
 
@@ -2708,7 +2708,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.position`
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 def position (m : Nat) (x : Label m) : Nat :=
 
@@ -2726,7 +2726,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.cutRow`
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 def cutRow (m : Nat) (hm : 3 ≤ m) (k : Fin (m - 1)) : Finset (Label m) :=
 
@@ -2744,7 +2744,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.projected_row
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 theorem projected_row_cases (m : Nat) (hm : 3 ≤ m) (A B : Finset (Label m))
 
@@ -2844,7 +2844,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.alive`
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 def alive (k : Fin (m - 1)) : Prop :=
 
@@ -2870,7 +2870,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.reducedGraph`
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 def reducedGraph : SimpleGraph (Fin m) where
 
@@ -2900,7 +2900,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.interval`
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 def interval (a b : Fin m) : Prop := ∀ k : Fin (m - 1),
 
@@ -2918,7 +2918,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.connected_iff
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 theorem connected_iff_interval (a b : Fin m) :
 
@@ -2950,7 +2950,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.live`
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 def live : Finset (Fin m) := Finset.univ.filter
 
@@ -2972,7 +2972,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.component`
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 def component (a : Fin m) : Finset (Fin m) :=
 
@@ -2990,7 +2990,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.components`
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 def components : Finset (Finset (Fin m)) :=
 
@@ -3008,7 +3008,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.block`
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 def block (a : Fin m) : Finset (Label m) :=
 
@@ -3026,7 +3026,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.component_par
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 theorem component_partition (a b : Fin m) (ha : a ∈ live m hm A B)
 
@@ -3084,7 +3084,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.component_con
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 theorem component_consecutive (a x y z : Fin m)
 
@@ -3146,7 +3146,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.block_mem`
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 theorem block_mem (a b : Fin m) : «at» m hm b ∈ block m hm A B a ↔
 
@@ -3190,7 +3190,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.reduced_row_c
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 theorem reduced_row_cases (c : (prune (localRows m hm A B)).chords) :
 
@@ -3248,7 +3248,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.forced_compon
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 theorem forced_component (a : Fin m) (ha : a ∈ live m hm A B)
 
@@ -3298,7 +3298,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.componentRows
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 def componentRows (a : Fin m) : Rows (Label m) where
 
@@ -3330,7 +3330,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.componentUnio
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 def componentUnion : Family (Label m) where
 
@@ -3368,7 +3368,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.component_roo
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 theorem component_root (h0 : ∀ c : (localRows m hm A B).chords,
 
@@ -3444,7 +3444,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.isolated_comp
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 theorem isolated_component (a : Fin m) (ha : a ∈ live m hm A B)
 
@@ -3498,7 +3498,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.leftEnd`
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 def leftEnd : Fin m := ⟨0, by omega⟩
 
@@ -3514,7 +3514,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.rightEnd`
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 def rightEnd : Fin m := ⟨m - 1, by omega⟩
 
@@ -3530,7 +3530,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.endpoints_con
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 theorem endpoints_connected_untouched (A B : Finset (Label m))
 
@@ -3658,7 +3658,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.markers`
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 def markers : Finset (Label m) := rim m hm ∩ (localRows m hm A B).ground
 
@@ -3674,7 +3674,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.MarkerCase`
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 inductive MarkerCase : Type
 
@@ -3736,7 +3736,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.classifyMarke
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 def classifyMarkers (hA : A ⊆ ground m) (hB : B ⊆ ground m) :
 
@@ -3852,7 +3852,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.separated_com
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 theorem separated_components
 
@@ -3892,7 +3892,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.decorated`
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 def decorated {V : Type*} [Fintype V] [DecidableEq V] (f : Label m ↪ V)
 
@@ -3924,7 +3924,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.forced_marker
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 theorem forced_marker_absorbs {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -3978,7 +3978,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.markerNormalF
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 def markerNormalForm {V : Type*} [Fintype V] [DecidableEq V] (f : Label m ↪ V)
 
@@ -4036,7 +4036,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.decorated_rea
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 theorem decorated_readback {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -4136,7 +4136,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.corner_rows_t
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 theorem corner_rows_transport (f : U ↪ V) (r : Rows U) (A B : Finset U) :
 
@@ -4200,7 +4200,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.physical_corn
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 theorem physical_corner_transport (m : Nat) (hm : 3 ≤ m) (f : Label m ↪ V)
 
@@ -4248,7 +4248,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.physical_orig
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 theorem physical_original_masks (m : Nat) (hm : 3 ≤ m) (f : Label m ↪ V)
 
@@ -4300,7 +4300,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.local_path_ro
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 theorem local_path_root (hA : A ⊆ ground m) :
 
@@ -4360,7 +4360,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.component_edg
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 theorem component_edges (a x y : Fin m)
 
@@ -4412,7 +4412,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.graph_actual_
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 theorem graph_actual_rows (a b : Fin m) :
 
@@ -4510,7 +4510,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.components_co
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 theorem components_cover (a : Fin m) : a ∈ live m hm A B ↔
 
@@ -4546,7 +4546,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.original_labe
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 theorem original_labels (x : Label m) : x ∈ (localRows m hm A B).ground ↔
 
@@ -4586,7 +4586,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.marker_positi
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 theorem marker_positions : markers m hm A B ⊆
 
@@ -4626,7 +4626,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.RowCase`
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 inductive RowCase : Type
 
@@ -4650,7 +4650,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.classifyRows`
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 def classifyRows : RowCase m hm A B := by
 
@@ -4686,7 +4686,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.rowRootForm`
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 def rowRootForm : RowCase m hm A B → Family (Label m)
 
@@ -4708,7 +4708,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.parentNormalF
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 def parentNormalForm {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -4736,7 +4736,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.ParentStructu
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 structure ParentStructure {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -4814,7 +4814,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.parentStructu
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 def parentStructure {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -4878,7 +4878,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.physicalDecor
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 def physicalDecorated (m : Nat) (hm : 3 ≤ m) (f : Label m ↪ V)
 
@@ -4914,7 +4914,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests.physical_pare
 
 ### Source text
 
-Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. No assumed classification correctness or native acceptance.
+Exact public source declaration and body. ParentStructure is constructed from actual masks and consumed by physical_parent_readback. The classification is derived from the original masks.
 
 theorem physical_parent_readback (m : Nat) (hm : 3 ≤ m) (f : Label m ↪ V)
 

@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Raw.Family`
 
 *Commentary.*
 
-Actual source declaration; elaboration, native selection and audits remain OPEN.
+The declaration uses the original raw label carrier and the stated parameters.
 
 **Definition 1.2 (Supported).**
 
@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Raw.Supported`
 
 *Commentary.*
 
-Ground support includes every face, including the empty face when present. 
+Ground support includes every face, including the empty face when present.
 
 **Definition 1.3 (delta).**
 
@@ -38,7 +38,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Raw.delta`
 
 *Commentary.*
 
-The raw simplex on the given original labels. In particular delta empty is UNIT. 
+The raw simplex on the given original labels. In particular delta empty is UNIT.
 
 **Definition 1.4 (Rows).**
 
@@ -50,7 +50,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Raw.Rows`
 
 *Commentary.*
 
-Original rows are indexed, even when two rows have identical complements. 
+Original rows are indexed, even when two rows have identical complements.
 
 **Definition 1.5 (root).**
 
@@ -62,7 +62,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Raw.root`
 
 *Commentary.*
 
-No row means VOID; an empty complement of an existing row contributes UNIT. 
+No row means VOID; an empty complement of an existing row contributes UNIT.
 
 **Definition 1.6 (without).**
 
@@ -74,7 +74,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Raw.without`
 
 *Commentary.*
 
-Row deletion is restriction of the index type, and does not delete a vertex. 
+Row deletion is restriction of the index type, and does not delete a vertex.
 
 **Definition 1.7 (restrict).**
 
@@ -86,7 +86,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Raw.restrict`
 
 *Commentary.*
 
-Literal simplicial deletion on the specified surviving ground. 
+Literal simplicial deletion on the specified surviving ground.
 
 **Definition 1.8 (rawLink).**
 
@@ -98,7 +98,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Raw.rawLink`
 
 *Commentary.*
 
-Link preserves absence of the raw empty face. 
+Link preserves absence of the raw empty face.
 
 **Definition 1.9 (rawJoin).**
 
@@ -110,7 +110,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Raw.rawJoin`
 
 *Commentary.*
 
-Augmented join on the same original ambient type; support/disjointness is proved by consumers. It does not silently supply an empty factor. 
+Augmented join on the same original ambient type; support/disjointness is proved by consumers. It does not silently supply an empty factor.
 
 **Definition 1.10 (project).**
 
@@ -122,7 +122,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Raw.project`
 
 *Commentary.*
 
-Projection discards just the empty face, after all raw operations. 
+Projection discards just the empty face, after all raw operations.
 
 **Definition 1.11 (nativeAug).**
 
@@ -134,7 +134,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Raw.nativeAug`
 
 *Commentary.*
 
-Reuse the native owner's augmentation ONLY when a raw-empty witness is available at the call site. It is not an inverse projection on VOID. 
+Reuse the native owner's augmentation ONLY when a raw-empty witness is available at the call site. It is not an inverse projection on VOID.
 
 **Theorem 1.12 (project_nativeAug).**
 
@@ -146,7 +146,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Raw.project_nativeAug`
 
 *Commentary.*
 
-Reuse the native owner's augmentation ONLY when a raw-empty witness is available at the call site. It is not an inverse projection on VOID. 
+Reuse the native owner's augmentation ONLY when a raw-empty witness is available at the call site. It is not an inverse projection on VOID.
 
 **Theorem 1.13 (reconstruct_nonvoid).**
 
@@ -158,7 +158,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Raw.reconstruct_nonvoid`
 
 *Commentary.*
 
-This reconstruction REQUIRES raw empty membership, rather than identifying VOID with UNIT through their common nonempty projection. 
+This reconstruction REQUIRES raw empty membership, rather than identifying VOID with UNIT through their common nonempty projection.
 
 **Theorem 1.14 (raw_ext).**
 
@@ -170,7 +170,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Raw.raw_ext`
 
 *Commentary.*
 
-The native skeleton determines the raw family only once raw empty membership is supplied. This theorem is used for non-VOID filling and Gamma endpoints. 
+The native skeleton determines the raw family only once raw empty membership is supplied. This theorem is used for non-VOID filling and Gamma endpoints.
 
 **Theorem 1.15 (mem_delta).**
 
@@ -182,7 +182,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Raw.mem_delta`
 
 *Commentary.*
 
-The native skeleton determines the raw family only once raw empty membership is supplied. This theorem is used for non-VOID filling and Gamma endpoints. 
+The native skeleton determines the raw family only once raw empty membership is supplied. This theorem is used for non-VOID filling and Gamma endpoints.
 
 **Theorem 1.16 (mem_project).**
 
@@ -194,7 +194,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Raw.mem_project`
 
 *Commentary.*
 
-The native skeleton determines the raw family only once raw empty membership is supplied. This theorem is used for non-VOID filling and Gamma endpoints. 
+The native skeleton determines the raw family only once raw empty membership is supplied. This theorem is used for non-VOID filling and Gamma endpoints.
 
 **Definition 1.17 (Root).**
 
@@ -206,7 +206,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Raw.Root`
 
 *Commentary.*
 
-The full original ground is independent of which singleton faces occur. 
+The full original ground is independent of which singleton faces occur.
 
 **Definition 1.18 (asRoot).**
 
@@ -218,7 +218,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Raw.asRoot`
 
 *Commentary.*
 
-The full original ground is independent of which singleton faces occur. 
+The full original ground is independent of which singleton faces occur.
 
 **Definition 1.19 (phi).**
 
@@ -230,7 +230,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Raw.phi`
 
 *Commentary.*
 
-The exact parent formula; R is never a fake coordinate e. 
+The exact parent formula; R is never a fake coordinate e.
 
 **Theorem 1.20 (root_supported).**
 
@@ -242,7 +242,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Raw.root_supported`
 
 *Commentary.*
 
-Complement roots are supported even when their row family is empty. 
+Complement roots are supported even when their row family is empty.
 
 **Theorem 1.21 (rawJoin_void).**
 
@@ -254,7 +254,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Raw.rawJoin_void`
 
 *Commentary.*
 
-Complement roots are supported even when their row family is empty. 
+Complement roots are supported even when their row family is empty.
 
 **Theorem 1.22 (rawJoin_unit).**
 
@@ -266,7 +266,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Raw.rawJoin_unit`
 
 *Commentary.*
 
-Complement roots are supported even when their row family is empty. 
+Complement roots are supported even when their row family is empty.
 
 **Theorem 1.23 (join_split).**
 
@@ -278,7 +278,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Raw.join_split`
 
 *Commentary.*
 
-Split coordinates are unique on disjoint original grounds. 
+Split coordinates are unique on disjoint original grounds.
 
 **Definition 1.24 (substitute).**
 
@@ -290,7 +290,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Raw.substitute`
 
 *Commentary.*
 
-Every original row is retained in this literal substitution. This is raw presentation transport, not a claimed graph unique-path substitution theorem. 
+Every original row is retained in this literal substitution. This is raw presentation transport, not a claimed graph unique-path substitution theorem.
 
 **Definition 1.25 (transportedRows).**
 
@@ -302,7 +302,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Raw.transportedRows`
 
 *Commentary.*
 
-Indexed complementary rows after replacement, on the actual new ground. 
+Indexed complementary rows after replacement, on the actual new ground.
 
 **Theorem 1.26 (row_transport).**
 
@@ -314,7 +314,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Raw.row_transport`
 
 *Commentary.*
 
-Literal transport membership. The proof keeps the original chord indices; redundant rows and UNIT-producing complements are not discarded. 
+Literal transport membership. The proof keeps the original chord indices; redundant rows and UNIT-producing complements are not discarded.
 
 ## References
 

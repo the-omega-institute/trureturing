@@ -4,7 +4,7 @@
 
 Ordered raw face partitions produce «protected» native collapses on the unchanged ground, including ghosts, VOID and UNIT.
 
-The raw authority is OriginalLabelTwoSum.Family = LowerSet (Finset V). Empty raw membership, original ambient ghosts and the Fintype native instances are preserved. The full word is partitioned into disjoint pairs and possibly empty criticals with earlier-face dependencies. Protection is upward within K and whole-symbol, contains all criticals, and only emitted uppers must be proper. Current carries a true ordered decomposition. Existing native CollapsePair and Sequence witnesses are constructed with exact deletion and terminal equality. 
+The raw authority is OriginalLabelTwoSum.Family = LowerSet (Finset V). Empty raw membership, original ambient ghosts and the Fintype native instances are preserved. The full word is partitioned into disjoint pairs and possibly empty criticals with earlier-face dependencies. Protection is upward within K and whole-symbol, contains all criticals, and only emitted uppers must be proper. Current carries a true ordered decomposition. Existing native CollapsePair and Sequence witnesses are constructed with exact deletion and terminal equality.
 
 **Definition 1.1 (Symbol).**
 

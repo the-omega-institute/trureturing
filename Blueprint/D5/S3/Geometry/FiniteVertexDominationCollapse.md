@@ -4,7 +4,7 @@
 
 A dominated vertex admits a complete original-label finite free-face deletion certificate.
 
-The raw headers below are written in the section V : Type*, Fintype V, DecidableEq V. Unused section instances need not occur in the compiled telescope. K is a native PreAbstractSimplicialComplex, with nonempty faces only. No carrier, purity, connectedness, or realization-nonempty hypothesis is hidden. Canonical finite relative and elementary owners supply the native Sequence and SDR. This is the classical decreasing-face pairing proof, credited to the released CLI79532 ordinary verification, constructive_restricted_result.K_elementary_fold and actual_Ind_F_certificate.graph_fold; no novelty is claimed.
+The raw headers below are written in the section V : Type*, Fintype V, DecidableEq V.Unused section instances need not occur in the compiled telescope.K is a native PreAbstractSimplicialComplex, with nonempty faces only.No carrier, purity, connectedness, or realization-nonempty hypothesis is hidden.Canonical finite relative and elementary owners supply the native Sequence and SDR.This is the classical decreasing-face pairing proof, credited to the releasedCLI79532 ordinary verification, constructive_restricted_result.K_elementary_foldand actual_Ind_F_certificate.graph_fold; no novelty is claimed.
 
 **Definition 1.1 (Extends).**
 
@@ -18,7 +18,7 @@ Lean statement: `D5/S3/Geometry/FiniteVertexDominationCollapse.Extends`
 
 For every face s of K containing v, insert u s is again a face. This is the sole combinatorial extension hypothesis and contains no collapse or geometric endpoint.
 
-Exact attempted Lean contract: def Extends (K : PreAbstractSimplicialComplex V) (u v : V) : Prop
+Exact attempted Lean contract:def Extends (K : PreAbstractSimplicialComplex V) (u v : V) : Prop
 
 **Definition 1.2 (badFaces).**
 
@@ -32,7 +32,7 @@ Lean statement: `D5/S3/Geometry/FiniteVertexDominationCollapse.badFaces`
 
 The finite family consists exactly of original faces containing v and omitting u; the empty face is absent.
 
-Exact attempted Lean contract: def badFaces (K : PreAbstractSimplicialComplex V) (u v : V) : Finset (Finset V)
+Exact attempted Lean contract:def badFaces (K : PreAbstractSimplicialComplex V) (u v : V) : Finset (Finset V)
 
 **Theorem 1.3 (mem_badFaces).**
 
@@ -48,7 +48,7 @@ Membership is exactly the three stated original-face conditions.
 
 ### Source text
 
-Exact attempted Lean contract: @[simp] theorem mem_badFaces (K : PreAbstractSimplicialComplex V) (u v : V)
+Exact attempted Lean contract:@[simp] theorem mem_badFaces (K : PreAbstractSimplicialComplex V) (u v : V)
 
     (s : Finset V) : s ∈ badFaces K u v ↔ s ∈ K ∧ v ∈ s ∧ u ∉ s
 
@@ -64,7 +64,7 @@ Lean statement: `D5/S3/Geometry/FiniteVertexDominationCollapse.faceSet`
 
 All actual nonempty faces of K on V, collected as a finite set.
 
-Exact attempted Lean contract: def faceSet (K : PreAbstractSimplicialComplex V) : Finset (Finset V)
+Exact attempted Lean contract:def faceSet (K : PreAbstractSimplicialComplex V) : Finset (Finset V)
 
 **Theorem 1.5 (mem_faceSet).**
 
@@ -80,7 +80,7 @@ The finite face family has exactly the original complex membership.
 
 ### Source text
 
-Exact attempted Lean contract: @[simp] theorem mem_faceSet (K : PreAbstractSimplicialComplex V) (s : Finset V) :
+Exact attempted Lean contract:@[simp] theorem mem_faceSet (K : PreAbstractSimplicialComplex V) (s : Finset V) :
 
     s ∈ faceSet K ↔ s ∈ K
 
@@ -98,7 +98,7 @@ For distinct u and v, the lower-face family is empty exactly when v is a ghost o
 
 ### Source text
 
-Exact attempted Lean contract: theorem badFaces_empty_iff (K : PreAbstractSimplicialComplex V) (u v : V)
+Exact attempted Lean contract:theorem badFaces_empty_iff (K : PreAbstractSimplicialComplex V) (u v : V)
 
     (huv : u ≠ v) : badFaces K u v = ∅ ↔ Fresh v K
 
@@ -116,7 +116,7 @@ For distinct u and v under Extends, construct a genuine native Sequence from K t
 
 ### Source text
 
-Exact attempted Lean contract: def sequence (K : PreAbstractSimplicialComplex V) (u v : V)
+Exact attempted Lean contract:def sequence (K : PreAbstractSimplicialComplex V) (u v : V)
 
     (huv : u ≠ v) (hExt : Extends K u v) : Sequence K (deletion K v)
 
@@ -134,7 +134,7 @@ The native sequence lower faces, in their actual removal order.
 
 ### Source text
 
-Exact attempted Lean contract: def orderedLowers (K : PreAbstractSimplicialComplex V) (u v : V)
+Exact attempted Lean contract:def orderedLowers (K : PreAbstractSimplicialComplex V) (u v : V)
 
     (huv : u ≠ v) (hExt : Extends K u v) : List (Finset V)
 
@@ -152,7 +152,7 @@ The complete native sequence list of literal lower and upper faces, in removal o
 
 ### Source text
 
-Exact attempted Lean contract: def orderedPairs (K : PreAbstractSimplicialComplex V) (u v : V)
+Exact attempted Lean contract:def orderedPairs (K : PreAbstractSimplicialComplex V) (u v : V)
 
     (huv : u ≠ v) (hExt : Extends K u v) : List (Finset V × Finset V)
 
@@ -170,7 +170,7 @@ Every pair has a nonempty lower containing v, omitting u, and apex exactly u, so
 
 ### Source text
 
-Exact attempted Lean contract: theorem sequence_pair_spec (K : PreAbstractSimplicialComplex V) (u v : V)
+Exact attempted Lean contract:theorem sequence_pair_spec (K : PreAbstractSimplicialComplex V) (u v : V)
 
     (huv : u ≠ v) (hExt : Extends K u v) (P : CollapsePair V)
 
@@ -194,7 +194,7 @@ No original lower face occurs twice.
 
 ### Source text
 
-Exact attempted Lean contract: theorem orderedLowers_nodup (K : PreAbstractSimplicialComplex V) (u v : V)
+Exact attempted Lean contract:theorem orderedLowers_nodup (K : PreAbstractSimplicialComplex V) (u v : V)
 
     (huv : u ≠ v) (hExt : Extends K u v) :
 
@@ -214,7 +214,7 @@ Every original face of K containing v and omitting u occurs, and only such faces
 
 ### Source text
 
-Exact attempted Lean contract: theorem orderedLowers_mem (K : PreAbstractSimplicialComplex V) (u v : V)
+Exact attempted Lean contract:theorem orderedLowers_mem (K : PreAbstractSimplicialComplex V) (u v : V)
 
     (huv : u ≠ v) (hExt : Extends K u v) (s : Finset V) :
 
@@ -234,7 +234,7 @@ For each earlier and later lower face in the list, the later cardinality is at m
 
 ### Source text
 
-Exact attempted Lean contract: theorem orderedLowers_decreasing (K : PreAbstractSimplicialComplex V) (u v : V)
+Exact attempted Lean contract:theorem orderedLowers_decreasing (K : PreAbstractSimplicialComplex V) (u v : V)
 
     (huv : u ≠ v) (hExt : Extends K u v) :
 
@@ -254,7 +254,7 @@ The complete pair list is exactly the ordered lower list mapped to (s, insert u 
 
 ### Source text
 
-Exact attempted Lean contract: theorem orderedPairs_eq (K : PreAbstractSimplicialComplex V) (u v : V)
+Exact attempted Lean contract:theorem orderedPairs_eq (K : PreAbstractSimplicialComplex V) (u v : V)
 
     (huv : u ≠ v) (hExt : Extends K u v) :
 
@@ -276,7 +276,7 @@ No ordered lower-upper pair occurs twice, since its first coordinate determines 
 
 ### Source text
 
-Exact attempted Lean contract: theorem orderedPairs_nodup (K : PreAbstractSimplicialComplex V) (u v : V)
+Exact attempted Lean contract:theorem orderedPairs_nodup (K : PreAbstractSimplicialComplex V) (u v : V)
 
     (huv : u ≠ v) (hExt : Extends K u v) :
 
@@ -296,7 +296,7 @@ A pair (a,b) occurs exactly when a is an original face containing v and omitting
 
 ### Source text
 
-Exact attempted Lean contract: theorem orderedPairs_mem (K : PreAbstractSimplicialComplex V) (u v : V)
+Exact attempted Lean contract:theorem orderedPairs_mem (K : PreAbstractSimplicialComplex V) (u v : V)
 
     (huv : u ≠ v) (hExt : Extends K u v) (a b : Finset V) :
 
@@ -318,7 +318,7 @@ The number of actual native free-pair steps equals the cardinality of the comple
 
 ### Source text
 
-Exact attempted Lean contract: theorem sequence_length (K : PreAbstractSimplicialComplex V) (u v : V)
+Exact attempted Lean contract:theorem sequence_length (K : PreAbstractSimplicialComplex V) (u v : V)
 
     (huv : u ≠ v) (hExt : Extends K u v) :
 
@@ -338,7 +338,7 @@ Every deletion face survives every retained stage, with no connectedness or dime
 
 ### Source text
 
-Exact attempted Lean contract: theorem deletion_le_each_retained (K : PreAbstractSimplicialComplex V) (u v : V)
+Exact attempted Lean contract:theorem deletion_le_each_retained (K : PreAbstractSimplicialComplex V) (u v : V)
 
     (huv : u ≠ v) (hExt : Extends K u v) (P : CollapsePair V)
 
@@ -358,7 +358,7 @@ The frames list has n+1 entries for n original lower faces, including the final 
 
 ### Source text
 
-Exact attempted Lean contract: theorem frames_length (K : PreAbstractSimplicialComplex V) (u v : V)
+Exact attempted Lean contract:theorem frames_length (K : PreAbstractSimplicialComplex V) (u v : V)
 
     (huv : u ≠ v) (hExt : Extends K u v) :
 
@@ -378,7 +378,7 @@ The frame at index zero is literally K.
 
 ### Source text
 
-Exact attempted Lean contract: theorem frames_initial (K : PreAbstractSimplicialComplex V) (u v : V)
+Exact attempted Lean contract:theorem frames_initial (K : PreAbstractSimplicialComplex V) (u v : V)
 
     (huv : u ≠ v) (hExt : Extends K u v) :
 
@@ -398,7 +398,7 @@ The frame at index n is literally deletion K v; the getD default is also explici
 
 ### Source text
 
-Exact attempted Lean contract: theorem frames_terminal (K : PreAbstractSimplicialComplex V) (u v : V)
+Exact attempted Lean contract:theorem frames_terminal (K : PreAbstractSimplicialComplex V) (u v : V)
 
     (huv : u ≠ v) (hExt : Extends K u v) :
 
@@ -420,7 +420,7 @@ For every valid index i including n, membership in the actual ith complex is ori
 
 ### Source text
 
-Exact attempted Lean contract: theorem frame_mem_iff (K : PreAbstractSimplicialComplex V) (u v : V)
+Exact attempted Lean contract:theorem frame_mem_iff (K : PreAbstractSimplicialComplex V) (u v : V)
 
     (huv : u ≠ v) (hExt : Extends K u v) (i : Nat)
 
@@ -446,7 +446,7 @@ The number of original nonempty faces is the number of deletion faces plus twice
 
 ### Source text
 
-Exact attempted Lean contract: theorem face_count (K : PreAbstractSimplicialComplex V) (u v : V)
+Exact attempted Lean contract:theorem face_count (K : PreAbstractSimplicialComplex V) (u v : V)
 
     (huv : u ≠ v) (hExt : Extends K u v) :
 
@@ -466,7 +466,7 @@ If v is a ghost, the chosen certificate has the empty pair list. No empty-lower 
 
 ### Source text
 
-Exact attempted Lean contract: theorem ghost_pairs (K : PreAbstractSimplicialComplex V) (u v : V)
+Exact attempted Lean contract:theorem ghost_pairs (K : PreAbstractSimplicialComplex V) (u v : V)
 
     (huv : u ≠ v) (hExt : Extends K u v) (hf : Fresh v K) :
 
@@ -486,7 +486,7 @@ In the ghost case the complete frames list is [K], including its terminal frame.
 
 ### Source text
 
-Exact attempted Lean contract: theorem ghost_frames (K : PreAbstractSimplicialComplex V) (u v : V)
+Exact attempted Lean contract:theorem ghost_frames (K : PreAbstractSimplicialComplex V) (u v : V)
 
     (huv : u ≠ v) (hExt : Extends K u v) (hf : Fresh v K) :
 
@@ -506,7 +506,7 @@ Use native Sequence.realize to obtain a strong deformation retraction with the l
 
 ### Source text
 
-Exact attempted Lean contract: def sdr (K : PreAbstractSimplicialComplex V) (u v : V)
+Exact attempted Lean contract:def sdr (K : PreAbstractSimplicialComplex V) (u v : V)
 
     (huv : u ≠ v) (hExt : Extends K u v) :
 
@@ -526,7 +526,7 @@ The continuous retraction is the native finite composition of elementary-pair re
 
 ### Source text
 
-Exact attempted Lean contract: def retraction (K : PreAbstractSimplicialComplex V) (u v : V)
+Exact attempted Lean contract:def retraction (K : PreAbstractSimplicialComplex V) (u v : V)
 
     (huv : u ≠ v) (hExt : Extends K u v) : C(Space K, Space (deletion K v))
 
@@ -544,7 +544,7 @@ For every point of the full deletion realization, retraction after the literal r
 
 ### Source text
 
-Exact attempted Lean contract: theorem retraction_inclusion (K : PreAbstractSimplicialComplex V) (u v : V)
+Exact attempted Lean contract:theorem retraction_inclusion (K : PreAbstractSimplicialComplex V) (u v : V)
 
     (huv : u ≠ v) (hExt : Extends K u v) (y : Space (deletion K v)) :
 
@@ -564,7 +564,7 @@ The native relative homotopy runs from the actual identity to the literal inclus
 
 ### Source text
 
-Exact attempted Lean contract: def collapseHomotopy (K : PreAbstractSimplicialComplex V) (u v : V)
+Exact attempted Lean contract:def collapseHomotopy (K : PreAbstractSimplicialComplex V) (u v : V)
 
     (huv : u ≠ v) (hExt : Extends K u v) :
 
@@ -588,7 +588,7 @@ For every time and every ambient point whose vector lies in the deletion realiza
 
 ### Source text
 
-Exact attempted Lean contract: theorem collapseHomotopy_fixed (K : PreAbstractSimplicialComplex V) (u v : V)
+Exact attempted Lean contract:theorem collapseHomotopy_fixed (K : PreAbstractSimplicialComplex V) (u v : V)
 
     (huv : u ≠ v) (hExt : Extends K u v) (t : I) (x : Space K)
 
@@ -610,7 +610,7 @@ The inclusion has exactly the same coordinate vector on the original finite labe
 
 ### Source text
 
-Exact attempted Lean contract: theorem inclusion_coordinates (K : PreAbstractSimplicialComplex V) (v : V)
+Exact attempted Lean contract:theorem inclusion_coordinates (K : PreAbstractSimplicialComplex V) (v : V)
 
     (y : Space (deletion K v)) :
 
@@ -630,7 +630,7 @@ A point of the literal deletion has zero coordinate at the original label v, whi
 
 ### Source text
 
-Exact attempted Lean contract: theorem deletion_coordinate_zero (K : PreAbstractSimplicialComplex V) (v : V)
+Exact attempted Lean contract:theorem deletion_coordinate_zero (K : PreAbstractSimplicialComplex V) (v : V)
 
     (y : Space (deletion K v)) : y.val v = 0
 
@@ -648,7 +648,7 @@ Every point of the actual restricted independence realization has coordinate zer
 
 ### Source text
 
-Exact attempted Lean contract: theorem restricted_coordinate_zero (G : SimpleGraph V) (p : V → Prop)
+Exact attempted Lean contract:theorem restricted_coordinate_zero (G : SimpleGraph V) (p : V → Prop)
 
     (x : Space (restricted G p)) (a : V) (ha : ¬ p a) : x.val a = 0
 
@@ -666,7 +666,7 @@ For actual restricted independence faces, if survivor u is allowed and every all
 
 ### Source text
 
-Exact attempted Lean contract: theorem graph_extends (G : SimpleGraph V) (p : V → Prop) (u v : V)
+Exact attempted Lean contract:theorem graph_extends (G : SimpleGraph V) (p : V → Prop) (u v : V)
 
     (huv : u ≠ v) (hpu : p u)
 
@@ -688,7 +688,7 @@ The literal deletion of v from restricted G p is exactly restricted G (a maps to
 
 ### Source text
 
-Exact attempted Lean contract: theorem restricted_deletion (G : SimpleGraph V) (p : V → Prop) (v : V) :
+Exact attempted Lean contract:theorem restricted_deletion (G : SimpleGraph V) (p : V → Prop) (v : V) :
 
     deletion (restricted G p) v = restricted G (fun a => p a ∧ a ≠ v)
 
@@ -706,7 +706,7 @@ Apply the proved extension lemma to construct the genuine original-label element
 
 ### Source text
 
-Exact attempted Lean contract: def graphSequence (G : SimpleGraph V) (p : V → Prop) (u v : V)
+Exact attempted Lean contract:def graphSequence (G : SimpleGraph V) (p : V → Prop) (u v : V)
 
     (huv : u ≠ v) (hpu : p u)
 
@@ -728,7 +728,7 @@ View the same certificate at the exactly equal restriction-excluding-v endpoint,
 
 ### Source text
 
-Exact attempted Lean contract: def graphRestrictedSequence (G : SimpleGraph V) (p : V → Prop) (u v : V)
+Exact attempted Lean contract:def graphRestrictedSequence (G : SimpleGraph V) (p : V → Prop) (u v : V)
 
     (huv : u ≠ v) (hpu : p u)
 
@@ -750,7 +750,7 @@ Realize that actual graph certificate through the native relative API, fixing th
 
 ### Source text
 
-Exact attempted Lean contract: def graphSDR (G : SimpleGraph V) (p : V → Prop) (u v : V)
+Exact attempted Lean contract:def graphSDR (G : SimpleGraph V) (p : V → Prop) (u v : V)
 
     (huv : u ≠ v) (hpu : p u)
 
@@ -774,7 +774,7 @@ For the actual unrestricted independenceComplex of a simple graph, distinct u an
 
 ### Source text
 
-Exact attempted Lean contract: def independenceSequence (G : SimpleGraph V) (u v : V) (huv : u ≠ v)
+Exact attempted Lean contract:def independenceSequence (G : SimpleGraph V) (u v : V) (huv : u ≠ v)
 
     (hdom : G.neighborSet u ⊆ G.neighborSet v) :
 
@@ -796,13 +796,13 @@ Deleting v from the actual unrestricted independenceComplex is literally the sam
 
 ### Source text
 
-Exact attempted Lean contract: theorem independence_deletion (G : SimpleGraph V) (v : V) :
+Exact attempted Lean contract:theorem independence_deletion (G : SimpleGraph V) (v : V) :
 
     deletion (independenceComplex G).toPreAbstractSimplicialComplex v =
 
       restricted G (fun a => a ≠ v)
 
-The existing coordinate transfer/foldHomotopy/foldEquiv and forest leafEquiv are not re-proved or renamed here. The new content is the actual finite elementary Sequence with original-label pair data and literal deletion fixedness. The simultaneous fold need not equal the successive pairwise homotopy. No universal root-K supplier, unrestricted critical-face construction, sphere quotient, disk collar, or attached-cell branch is discharged by this module. Kernel and axiom-closure checks, faithful Reg source observation, Scribe coverage, all native gates, remote checks, publication and cleanup remain integration work.
+The existing coordinate transfer/foldHomotopy/foldEquiv and forestleafEquiv are not re-proved or renamed here. The new content is the actual finiteelementary Sequence with original-label pair data and literal deletion fixedness.The simultaneous fold need not equal the successive pairwise homotopy.No universal root-K supplier, unrestricted critical-face construction, spherequotient, disk collar, or attached-cell branch is discharged by this module.Kernel and axiom-closure checks, faithful Reg source observation, Scribe coverage,all native gates, remote checks, publication and cleanup remain integration work.
 
 ## References
 

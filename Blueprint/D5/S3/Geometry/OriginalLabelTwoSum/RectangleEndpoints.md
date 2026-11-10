@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/RectangleEndpoints.deletionC
 
 *Commentary.*
 
-Exact deletion-rectangle endpoint, including every empty-fibre case. 
+Exact deletion-rectangle endpoint, including every empty-fibre case.
 
 **Theorem 1.2 (linkCut).**
 
@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/RectangleEndpoints.linkCut`
 
 *Commentary.*
 
-Exact link-rectangle endpoint. L<=D accounts for the fibres already retained in D*delta(Z); an empty projected lower is handled without an ordinary move. 
+Exact link-rectangle endpoint. L<=D accounts for the fibres already retained in D*delta(Z); an empty projected lower is handled without an ordinary move.
 
 **Definition 1.3 (deletionLift).**
 
@@ -38,7 +38,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/RectangleEndpoints.deletionL
 
 *Commentary.*
 
-Endpoint-transported deletion rule consumes its proved raw equality. 
+Endpoint-transported deletion rule consumes its proved raw equality.
 
 **Definition 1.4 (linkLift).**
 
@@ -50,7 +50,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/RectangleEndpoints.linkLift`
 
 *Commentary.*
 
-Endpoint-transported link rule consumes its proved raw equality. 
+Endpoint-transported link rule consumes its proved raw equality.
 
 ## References
 

@@ -4,7 +4,7 @@
 
 Actual original s2 no/yes branches and their later-round restrictions, without altering ambient labels.
 
-The actual original s2 branches, exact free interval predicates, native no/yes restrictions and later-round separation. The interval-to-path-list conjugacy and all-n critical readback remain missing; C02 is absent. Lexical section variables are recorded faithfully. Lean may omit unused variables. 
+The actual original s2 branches, exact free interval predicates, native no/yes restrictions and later-round separation. The interval conjugacy and critical-family formulas are developed in the interval, native and survivor modules. Lexical section variables are recorded faithfully. Lean may omit unused variables.
 
 **Definition 1.1 (branchA).**
 

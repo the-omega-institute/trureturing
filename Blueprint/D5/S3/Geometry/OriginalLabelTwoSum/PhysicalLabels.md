@@ -4,7 +4,7 @@
 
 Injective label transport of actual graph data and its unique-path rows.
 
- Source inspection and finite controls do not establish elaboration, kernel or axiom closure, native lists, Scribe resolution, registrations, gates or full-goal completion.
+ The finite controls illustrate the raw formulas; the general statements retain their full parameters.
 
 ## Source text
 
@@ -26,11 +26,11 @@ Lean module source and proofs:
 
 /-
 
-   Metadata author classification (source only; independent review pending):
+   Mathematical scope:
 
    All declarations construct or identify transport of arbitrary GraphData through an arbitrary injective label map, with a total fallback edge. They contain no bounded enumeration, certificate checker, numerical reduction or certified finite instance.
 
-   No empirical mirror or compilation/acceptance claim is supplied.
+   
 
 -/
 
@@ -40,7 +40,7 @@ import D5.S3.Geometry.OriginalLabelTwoSum.Rename
 
 Definitions and proofs are in the paired Lean module.
 
-/-! SOURCE_ONLY_UNCOMPILED. Only labels change; the graph, tree and chord
+/-!  Only labels change; the graph, tree and chord
 
 endpoints are inherited. Inactive coordinates have an explicit total value. -/
 

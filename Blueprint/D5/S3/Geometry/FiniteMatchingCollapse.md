@@ -20,7 +20,7 @@ Replay an arbitrary native sequence by deleting its actual pair prefix.
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -48,7 +48,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCollapse.
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -72,7 +72,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCollapse.
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -96,7 +96,7 @@ Every actual step removes two distinct nonempty faces.
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -122,7 +122,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCollapse.
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -146,7 +146,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCollapse.
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -170,7 +170,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCollapse.
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -200,7 +200,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCollapse.
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -228,7 +228,7 @@ Actual finite extraction, including its integration invariant: every pair in the
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -262,7 +262,7 @@ A definite finite native sequence, chosen from the construction above.
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -292,7 +292,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCollapse.
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -326,7 +326,7 @@ Native original-coordinate SDR, fixing ALL of the target.
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 

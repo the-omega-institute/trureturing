@@ -4,7 +4,7 @@
 
 The original first round has an isolated vertex and an endpoint-constrained independent complement path; true survivor bases retain arbitrary original labels.
 
-The literal original NC(C_n) first round, native no/yes restrictions, direct injective label transport and genuine n=3/4/5 survivor bases. This does not assert the missing all-n congruence formulas or CriticalData. Lexical section variables are recorded faithfully. Lean may omit unused variables. 
+The literal original NC(C_n) first round, native no/yes restrictions, direct injective label transport and genuine n=3/4/5 survivor bases. The all-n formulas and critical data are treated in the subsequent native and survivor modules. Lexical section variables are recorded faithfully. Lean may omit unused variables.
 
 **Definition 1.1 (TailIndependent).**
 

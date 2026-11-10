@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutWalk.invariant`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutWalk.invariant. Finite walks suffice on arbitrary vertex types. Cut invariants, the true bridge characterization, the two endpoint component cover, and support separation are consumed by CutTree and CutPaths. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutWalk.invariant. Finite walks suffice on arbitrary vertex types. Cut invariants, the true bridge characterization, the two endpoint component cover, and support separation are consumed by CutTree and CutPaths.
 
 **Theorem 1.2 (side_iff).**
 
@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutWalk.side_iff`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutWalk.side_iff. Finite walks suffice on arbitrary vertex types. Cut invariants, the true bridge characterization, the two endpoint component cover, and support separation are consumed by CutTree and CutPaths. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutWalk.side_iff. Finite walks suffice on arbitrary vertex types. Cut invariants, the true bridge characterization, the two endpoint component cover, and support separation are consumed by CutTree and CutPaths.
 
 **Theorem 1.3 (bridge_of_predicate).**
 
@@ -38,7 +38,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutWalk.bridge_of_predicate`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutWalk.bridge_of_predicate. Finite walks suffice on arbitrary vertex types. Cut invariants, the true bridge characterization, the two endpoint component cover, and support separation are consumed by CutTree and CutPaths. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutWalk.bridge_of_predicate. Finite walks suffice on arbitrary vertex types. Cut invariants, the true bridge characterization, the two endpoint component cover, and support separation are consumed by CutTree and CutPaths.
 
 **Theorem 1.4 (separated).**
 
@@ -50,7 +50,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutWalk.separated`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutWalk.separated. Finite walks suffice on arbitrary vertex types. Cut invariants, the true bridge characterization, the two endpoint component cover, and support separation are consumed by CutTree and CutPaths. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutWalk.separated. Finite walks suffice on arbitrary vertex types. Cut invariants, the true bridge characterization, the two endpoint component cover, and support separation are consumed by CutTree and CutPaths.
 
 **Theorem 1.5 (cover).**
 
@@ -62,7 +62,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutWalk.cover`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutWalk.cover. Finite walks suffice on arbitrary vertex types. Cut invariants, the true bridge characterization, the two endpoint component cover, and support separation are consumed by CutTree and CutPaths. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutWalk.cover. Finite walks suffice on arbitrary vertex types. Cut invariants, the true bridge characterization, the two endpoint component cover, and support separation are consumed by CutTree and CutPaths.
 
 **Theorem 1.6 (support_reachable).**
 
@@ -74,7 +74,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutWalk.support_reachable`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutWalk.support_reachable. Finite walks suffice on arbitrary vertex types. Cut invariants, the true bridge characterization, the two endpoint component cover, and support separation are consumed by CutTree and CutPaths. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutWalk.support_reachable. Finite walks suffice on arbitrary vertex types. Cut invariants, the true bridge characterization, the two endpoint component cover, and support separation are consumed by CutTree and CutPaths.
 
 **Theorem 1.7 (append_path).**
 
@@ -86,7 +86,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutWalk.append_path`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutWalk.append_path. Finite walks suffice on arbitrary vertex types. Cut invariants, the true bridge characterization, the two endpoint component cover, and support separation are consumed by CutTree and CutPaths. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutWalk.append_path. Finite walks suffice on arbitrary vertex types. Cut invariants, the true bridge characterization, the two endpoint component cover, and support separation are consumed by CutTree and CutPaths.
 
 **Theorem 1.8 (split_edge).**
 
@@ -98,7 +98,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutWalk.split_edge`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutWalk.split_edge. Finite walks suffice on arbitrary vertex types. Cut invariants, the true bridge characterization, the two endpoint component cover, and support separation are consumed by CutTree and CutPaths. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutWalk.split_edge. Finite walks suffice on arbitrary vertex types. Cut invariants, the true bridge characterization, the two endpoint component cover, and support separation are consumed by CutTree and CutPaths.
 
 **Theorem 1.9 (split_avoids).**
 
@@ -110,7 +110,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutWalk.split_avoids`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutWalk.split_avoids. Finite walks suffice on arbitrary vertex types. Cut invariants, the true bridge characterization, the two endpoint component cover, and support separation are consumed by CutTree and CutPaths. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutWalk.split_avoids. Finite walks suffice on arbitrary vertex types. Cut invariants, the true bridge characterization, the two endpoint component cover, and support separation are consumed by CutTree and CutPaths.
 
 ## References
 

@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Batch.fibreLayers`
 
 *Commentary.*
 
-Literal union of indexed fibre families. Repeated indices are not needed. 
+Literal union of indexed fibre families. Repeated indices are not needed.
 
 **Theorem 1.2 (mem_fibreLayers).**
 
@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Batch.mem_fibreLayers`
 
 *Commentary.*
 
-Membership retains the actual fibre index and local face. 
+Membership retains the actual fibre index and local face.
 
 **Definition 1.3 (batchFibre).**
 
@@ -38,7 +38,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Batch.batchFibre`
 
 *Commentary.*
 
-A finite batch, with actual evolving base (finished N-fibres and unfinished M-fibres). The pair list is precisely the concatenation of the lifted local lists, in the supplied finite index order. 
+A finite batch, with actual evolving base (finished N-fibres and unfinished M-fibres). The pair list is precisely the concatenation of the lifted local lists, in the supplied finite index order.
 
 ## References
 

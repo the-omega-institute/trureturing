@@ -34,7 +34,7 @@ def simplices (H : Finset (Finset V)) : PreAbstractSimplicialComplex V where
 
     exact ⟨hs,fun t hts ht => ⟨ht,q,hq,hts.trans hsq⟩⟩
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.2 (mem_simplices).**
 
@@ -60,7 +60,7 @@ Exact public SOURCE declaration and proof/body:
 
     s ∈ simplices H ↔ s.Nonempty ∧ ∃ q ∈ H, s ⊆ q := Iff.rfl
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.3 (simplices_empty).**
 
@@ -92,7 +92,7 @@ Exact public SOURCE declaration and proof/body:
 
   simp
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.4 (simplices_union).**
 
@@ -130,7 +130,7 @@ Exact public SOURCE declaration and proof/body:
 
   aesop
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.5 (blocked).**
 
@@ -156,7 +156,7 @@ def blocked (H : Finset (Finset V)) (P : CollapsePair V) : Prop :=
 
   ∃ q ∈ H, P.lower ⊆ q
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.6 (skipped).**
 
@@ -186,7 +186,7 @@ def skipped : List (CollapsePair V) → Finset (Finset V) → List (CollapsePair
 
       else skipped ps H
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.7 (emitted).**
 
@@ -216,7 +216,7 @@ def emitted : List (CollapsePair V) → Finset (Finset V) → List (CollapsePair
 
       else P :: emitted ps H
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.8 (advance).**
 
@@ -244,7 +244,7 @@ def advance : List (CollapsePair V) → Finset (Finset V) → Finset (Finset V)
 
   | P :: ps, H => advance ps (if blocked H P then insert P.upper H else H)
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.9 (skippedTops).**
 
@@ -270,7 +270,7 @@ def skippedTops (ps : List (CollapsePair V)) (H : Finset (Finset V)) :
 
     Finset (Finset V) := ((skipped ps H).map CollapsePair.upper).toFinset
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.10 (core).**
 
@@ -298,7 +298,7 @@ def core {K L : PreAbstractSimplicialComplex V} (S : Sequence K L)
 
   L ⊔ simplices (skippedTops S.pairs H)
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.11 (future_upper_in_retained).**
 
@@ -352,7 +352,7 @@ by
 
   exact bound T hQ ((Q.ambient.isRelLowerSet_faces Q.upper_mem).2 hs hn)
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.12 (future_upper_cannot_resurrect).**
 
@@ -390,7 +390,7 @@ theorem future_upper_cannot_resurrect (P : CollapsePair V) {L}
 
   exact ⟨hl,fun hu => hl ((Finset.subset_insert P.apex P.lower).trans hu)⟩
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.13 (core_le).**
 
@@ -428,7 +428,7 @@ theorem core_le {K L} (S : Sequence K L) (H) : core S H ≤ K := by
 
     · exact (ih _).trans P.retained_le
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.14 (core_preserves).**
 
@@ -502,7 +502,7 @@ theorem core_preserves {K L} (S : Sequence K L) (H) {s : Finset V}
 
       · exact hprotect
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.15 (core_exact).**
 
@@ -592,7 +592,7 @@ theorem core_exact {K L} (S : Sequence K L) (H) (s : Finset V) :
 
     · simpa only [if_neg hb,Sequence.pairs,skipped] using ih H
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.16 (core_faces_exact).**
 
@@ -624,7 +624,7 @@ theorem core_faces_exact {K L} (S : Sequence K L) (H) :
 
   exact core_exact S H s
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.17 (restrictPair).**
 
@@ -664,7 +664,7 @@ def restrictPair (P : CollapsePair V) (A : PreAbstractSimplicialComplex V)
 
   free s hs hls := P.free s (hA hs) hls
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.18 (unionPair).**
 
@@ -712,7 +712,7 @@ def unionPair (P : CollapsePair V) (H : Finset (Finset V))
 
     · exact False.elim (h ⟨q,hq,hls.1.trans hsq⟩)
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.19 (protectedReplay).**
 
@@ -776,7 +776,7 @@ def protectedReplay {K L} (S : Sequence K L) (H : Finset (Finset V)) :
 
           rw [core_step,if_neg hb])
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.20 (protectedReplay_pairs).**
 
@@ -820,7 +820,7 @@ theorem protectedReplay_pairs {K L} (S : Sequence K L) (H) :
 
       exact congrArg (List.cons (P.lower,P.upper)) (ih H)
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.21 (standaloneReplay).**
 
@@ -868,7 +868,7 @@ def standaloneReplay {K L} (S : Sequence K L) (H : Finset (Finset V)) :
 
     · exact (ih H).cast (by rw [core_step,if_neg hb]) rfl
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.22 (standaloneReplay_pairs).**
 
@@ -912,7 +912,7 @@ theorem standaloneReplay_pairs {K L} (S : Sequence K L) (H) :
 
       exact ih H
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.23 (standaloneWithTail).**
 
@@ -940,7 +940,7 @@ def standaloneWithTail {K L M} (S : Sequence K L) (H)
 
   (standaloneReplay S H).append tail
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.24 (emitted_nonempty).**
 
@@ -968,7 +968,7 @@ theorem emitted_nonempty {K L} (S : Sequence K L) (H) :
 
   intro P _; exact P.lower_nonempty
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.25 (outside_coface_criterion).**
 
@@ -1020,7 +1020,7 @@ theorem outside_coface_criterion (P : CollapsePair V) (H)
 
     · exact False.elim (h ⟨q,hq,hl.trans hsq⟩)
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.26 (critical_boundary).**
 
@@ -1060,7 +1060,7 @@ theorem critical_boundary {K L} (S : Sequence K L) (H)
 
     exact core_preserves S H (hbd q hq s hn hs) ⟨q,hq,hs.1⟩
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.27 (critical_antichain).**
 
@@ -1098,7 +1098,7 @@ theorem critical_antichain (K : PreAbstractSimplicialComplex V) (H : Finset (Fin
 
     (Finset.ssubset_iff_subset_ne.mpr ⟨hqr,he⟩))
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.28 (scan_append).**
 
@@ -1136,7 +1136,7 @@ theorem scan_append (xs ys : List (CollapsePair V)) (H) :
 
       simp [skipped,emitted,advance,hb,ih,List.cons_append]
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.29 (advance_exact).**
 
@@ -1174,7 +1174,7 @@ theorem advance_exact (xs : List (CollapsePair V)) (H) :
 
         Finset.union_insert,Finset.union_assoc,Finset.union_left_comm,Finset.union_comm]
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.30 (prefix_invariant).**
 
@@ -1214,7 +1214,7 @@ theorem prefix_invariant {K B L : PreAbstractSimplicialComplex V}
 
     ac_rfl
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.31 (native_current_cofaces).**
 
@@ -1250,7 +1250,7 @@ theorem native_current_cofaces (P : CollapsePair V) (s : Finset V) :
 
     · exact ⟨P.upper_mem,Finset.subset_insert P.apex P.lower⟩
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.32 (decision_at_prefix).**
 
@@ -1300,7 +1300,7 @@ theorem decision_at_prefix (xs : List (CollapsePair V)) (H) (P : CollapsePair V)
 
     · exact ⟨Q.upper,Or.inr ⟨Q,hQ,rfl⟩,hl⟩
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.33 (skippedIndexed).**
 
@@ -1334,7 +1334,7 @@ def skippedIndexed : List (CollapsePair V) → Finset (Finset V) → Nat →
 
     else skippedIndexed ps H (n+1)
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.34 (emittedIndexed).**
 
@@ -1368,7 +1368,7 @@ def emittedIndexed : List (CollapsePair V) → Finset (Finset V) → Nat →
 
     else (n,P) :: emittedIndexed ps H (n+1)
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.35 (skippedIndices).**
 
@@ -1394,7 +1394,7 @@ def skippedIndices (ps : List (CollapsePair V)) (H : Finset (Finset V)) : List N
 
   (skippedIndexed ps H 0).map Prod.fst
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.36 (emittedIndices).**
 
@@ -1420,7 +1420,7 @@ def emittedIndices (ps : List (CollapsePair V)) (H : Finset (Finset V)) : List N
 
   (emittedIndexed ps H 0).map Prod.fst
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.37 (indexed_scan).**
 
@@ -1458,7 +1458,7 @@ theorem indexed_scan (ps : List (CollapsePair V)) (H) (n : Nat) :
 
       simp [skippedIndexed,emittedIndexed,skipped,emitted,hb,ih]
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.38 (indexed_bounds).**
 
@@ -1534,7 +1534,7 @@ theorem indexed_bounds (ps : List (CollapsePair V)) (H) (n : Nat) :
 
           constructor <;> omega
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.39 (empty_protection).**
 
@@ -1566,7 +1566,7 @@ theorem empty_protection (ps : List (CollapsePair V)) :
 
   | cons P ps ih => simp [skipped,emitted,blocked,ih]
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.40 (core_empty).**
 
@@ -1592,7 +1592,7 @@ Exact public SOURCE declaration and proof/body:
 
   simp [core,skippedTops,(empty_protection S.pairs).1]
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 ## References
 

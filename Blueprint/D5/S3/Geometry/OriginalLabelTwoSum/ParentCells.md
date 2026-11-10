@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/ParentCells.parentCore`
 
 *Commentary.*
 
-Exact Cout from the ORIGINAL proof, on the full original parent ground. 
+Exact Cout from the ORIGINAL proof, on the full original parent ground.
 
 **Definition 1.2 (parentCritical).**
 
@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/ParentCells.parentCritical`
 
 *Commentary.*
 
-Ordered-index provenance is retained by the compiler schedules; this finite set is the actual output critical family, after proving no unwanted inclusions. 
+Ordered-index provenance is retained by the compiler schedules; this finite set is the actual output critical family, after proving no unwanted inclusions.
 
 **Theorem 1.3 (mem_parentCritical).**
 
@@ -38,7 +38,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/ParentCells.mem_parentCritic
 
 *Commentary.*
 
-Literal critical provenance, consumed by the filling endpoint assembly. 
+Literal critical provenance, consumed by the filling endpoint assembly.
 
 **Definition 1.4 (parentCellData).**
 
@@ -50,7 +50,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/ParentCells.parentCellData`
 
 *Commentary.*
 
-Complete critical-face proof for the COMPUTED Cout. Compiler constructs the main and separate core lists; neither collapse is a hypothesis here. 
+Complete critical-face proof for the COMPUTED Cout. Compiler constructs the main and separate core lists; neither collapse is a hypothesis here.
 
 ## References
 

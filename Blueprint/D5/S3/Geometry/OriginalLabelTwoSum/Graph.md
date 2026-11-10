@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Graph.wheelGraphData`
 
 *Commentary.*
 
-Actual hub-star/rim-interface wheel. The marked e is rim edge 1--2, not a spoke or a coordinate of this right tree. 
+Actual hub-star/rim-interface wheel. The marked e is rim edge 1--2, not a spoke or a coordinate of this right tree.
 
 **Theorem 1.2 (fundamental_rows).**
 
@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Graph.fundamental_rows`
 
 *Commentary.*
 
-These are path-derived rows, not an input equation. 
+These are path-derived rows, not an input equation.
 
 **Theorem 1.3 (wheelOriginalRoot).**
 
@@ -38,7 +38,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Graph.wheelOriginalRoot`
 
 *Commentary.*
 
-Deleting the ACTUAL interface chord row gives E; the full root is A1. 
+Deleting the ACTUAL interface chord row gives E; the full root is A1.
 
 **Definition 1.4 (wheelGraphCertificate).**
 
@@ -50,7 +50,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Graph.wheelGraphCertificate`
 
 *Commentary.*
 
-The native supplier certificates consume this actual graph-derived root. 
+The native supplier certificates consume this actual graph-derived root.
 
 **Definition 1.5 (seedGraphData).**
 
@@ -62,7 +62,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Graph.seedGraphData`
 
 *Commentary.*
 
-The native supplier certificates consume this actual graph-derived root. 
+The native supplier certificates consume this actual graph-derived root.
 
 **Theorem 1.6 (seedOriginalRoot).**
 
@@ -74,7 +74,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Graph.seedOriginalRoot`
 
 *Commentary.*
 
-K4's actual star-tree paths compute the seed row root. 
+K4's actual star-tree paths compute the seed row root.
 
 **Definition 1.7 (seedGraphCertificate).**
 
@@ -86,7 +86,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Graph.seedGraphCertificate`
 
 *Commentary.*
 
-K4's actual star-tree paths compute the seed row root. 
+K4's actual star-tree paths compute the seed row root.
 
 ## References
 

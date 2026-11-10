@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CellLabels.wheelCell`
 
 *Commentary.*
 
-The original wheel transform removes the interface coordinate only when it actually occurs, and uses the new 1-spoke only in that branch. 
+The original wheel transform removes the interface coordinate only when it actually occurs, and uses the new 1-spoke only in that branch.
 
 **Theorem 1.2 (wheelCell_recovery).**
 
@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CellLabels.wheelCell_recover
 
 *Commentary.*
 
-The new first spoke distinguishes the two branches and recovers e. 
+The new first spoke distinguishes the two branches and recovers e.
 
 **Theorem 1.3 (wheelCell_card).**
 
@@ -38,7 +38,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CellLabels.wheelCell_card`
 
 *Commentary.*
 
-Exact +2 in BOTH branches, including an interface critical singleton. 
+Exact +2 in BOTH branches, including an interface critical singleton.
 
 **Theorem 1.4 (wheelCell_count).**
 
@@ -50,7 +50,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CellLabels.wheelCell_count`
 
 *Commentary.*
 
-No critical-face count is lost to image collisions. This is a consequence of the explicit recovery equation, not a count assumption of the compiler. 
+No critical-face count is lost to image collisions. This is a consequence of the explicit recovery equation, not a count assumption of the compiler.
 
 **Definition 1.5 (Label).**
 
@@ -62,7 +62,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CellLabels.Label`
 
 *Commentary.*
 
-The full supply of original labels; a finite prefix uses only finitely many. No Fintype on this infinite pool is assumed by any native collapse. 
+The full supply of original labels; a finite prefix uses only finitely many. No Fintype on this infinite pool is assumed by any native collapse.
 
 **Definition 1.6 (p).**
 
@@ -74,7 +74,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CellLabels.p`
 
 *Commentary.*
 
-The full supply of original labels; a finite prefix uses only finitely many. No Fintype on this infinite pool is assumed by any native collapse. 
+The full supply of original labels; a finite prefix uses only finitely many. No Fintype on this infinite pool is assumed by any native collapse.
 
 **Definition 1.7 (u).**
 
@@ -86,7 +86,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CellLabels.u`
 
 *Commentary.*
 
-The full supply of original labels; a finite prefix uses only finitely many. No Fintype on this infinite pool is assumed by any native collapse. 
+The full supply of original labels; a finite prefix uses only finitely many. No Fintype on this infinite pool is assumed by any native collapse.
 
 **Definition 1.8 (v).**
 
@@ -98,7 +98,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CellLabels.v`
 
 *Commentary.*
 
-The full supply of original labels; a finite prefix uses only finitely many. No Fintype on this infinite pool is assumed by any native collapse. 
+The full supply of original labels; a finite prefix uses only finitely many. No Fintype on this infinite pool is assumed by any native collapse.
 
 **Definition 1.9 (r).**
 
@@ -110,7 +110,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CellLabels.r`
 
 *Commentary.*
 
-Source index j,k denotes the mathematical label r(j+1,k+1). 
+Source index j,k denotes the mathematical label r(j+1,k+1).
 
 **Definition 1.10 (S).**
 
@@ -122,7 +122,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CellLabels.S`
 
 *Commentary.*
 
-Source index j,k denotes the mathematical label r(j+1,k+1). 
+Source index j,k denotes the mathematical label r(j+1,k+1).
 
 **Definition 1.11 (interface).**
 
@@ -134,7 +134,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CellLabels.interface`
 
 *Commentary.*
 
-Source index j,k denotes the mathematical label r(j+1,k+1). 
+Source index j,k denotes the mathematical label r(j+1,k+1).
 
 **Definition 1.12 (first).**
 
@@ -146,7 +146,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CellLabels.first`
 
 *Commentary.*
 
-Source index j,k denotes the mathematical label r(j+1,k+1). 
+Source index j,k denotes the mathematical label r(j+1,k+1).
 
 **Definition 1.13 (second).**
 
@@ -158,7 +158,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CellLabels.second`
 
 *Commentary.*
 
-Source index j,k denotes the mathematical label r(j+1,k+1). 
+Source index j,k denotes the mathematical label r(j+1,k+1).
 
 **Definition 1.14 (ground).**
 
@@ -170,7 +170,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CellLabels.ground`
 
 *Commentary.*
 
-Source index j,k denotes the mathematical label r(j+1,k+1). 
+Source index j,k denotes the mathematical label r(j+1,k+1).
 
 **Theorem 1.15 (critical_recurrence).**
 
@@ -182,7 +182,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CellLabels.critical_recurren
 
 *Commentary.*
 
-The literal closed-chain label formula is consumed by the ORIGINAL conditional critical transform, with no block-diagonal row replacement. 
+The literal closed-chain label formula is consumed by the ORIGINAL conditional critical transform, with no block-diagonal row replacement.
 
 **Theorem 1.16 (critical_sizes).**
 
@@ -194,7 +194,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CellLabels.critical_sizes`
 
 *Commentary.*
 
-Every finite closed prefix has exactly the stated critical sizes. This arithmetic does not instantiate a closed-chain native history or its graph binding. 
+Every finite closed prefix has exactly the stated critical sizes. This arithmetic does not instantiate a closed-chain native history or its graph binding.
 
 **Definition 1.17 (rows).**
 
@@ -206,7 +206,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CellLabels.rows`
 
 *Commentary.*
 
-Coupled original chord rows, retained as an ordered list before root union. This is source preparation for the graph-bound iteration, not that theorem. 
+Coupled original chord rows, retained as an ordered list before root union. This is source preparation for the graph-bound iteration, not that theorem.
 
 ## References
 

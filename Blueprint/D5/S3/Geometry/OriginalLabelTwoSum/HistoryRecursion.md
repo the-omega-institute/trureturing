@@ -4,7 +4,7 @@
 
 Original-mask usable physical leaves, decreasing local solver and mixed-history recursion.
 
-Actual candidate proof bodies for the usable physical leaf, exact all-index incidence, neighbour cases, decreasing local solver and simultaneous all-original-mask MixedHistory recursion. Independent globally expanded recursive schedules beyond the intact branch remain open.
+The physical leaf, all-index incidence, neighbour cases and decreasing local solver support simultaneous all-original-mask MixedHistory recursion. This statement does not identify the resulting constructors with an independently expanded global schedule.
 
 ## Source text
 
@@ -26,13 +26,13 @@ Lean module source and proofs:
 
 /-
 
-   SOURCE_ONLY_UNCOMPILED; no elaboration, kernel, native or delivery acceptance.
+   
 
-   Metadata author classification (source only; independent review pending):
+   Mathematical scope:
 
    The masks, arbitrary-width wheel inputs and MixedHistory remain parameters. The declarations establish family identities and construct Output by well-founded local recursion and history induction. They do not report a bounded computation, run a certificate checker, perform numerical reduction or certify a single finite instance.
 
-   No empirical mirror or compilation/acceptance claim is supplied.
+   
 
 -/
 

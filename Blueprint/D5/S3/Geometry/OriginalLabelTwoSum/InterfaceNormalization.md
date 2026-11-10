@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/InterfaceNormalization.kappa
 
 *Commentary.*
 
-The physical unordered edge of an original chord index. 
+The physical unordered edge of an original chord index.
 
 **Definition 1.2 (D5.S3.Geometry.OriginalLabelTwoSum.GraphData.PhysicalSurvivor).**
 
@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/InterfaceNormalization.Physi
 
 *Commentary.*
 
-Original physical survivor indices, without quotienting any other fiber. 
+Original physical survivor indices, without quotienting any other fiber.
 
 **Definition 1.3 (D5.S3.Geometry.OriginalLabelTwoSum.GraphData.physicalRows).**
 
@@ -38,7 +38,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/InterfaceNormalization.physi
 
 *Commentary.*
 
-Restrict exactly the index type; ground, labels and rows stay original. 
+Restrict exactly the index type; ground, labels and rows stay original.
 
 **Definition 1.4 (D5.S3.Geometry.OriginalLabelTwoSum.GraphData.E_edge).**
 
@@ -50,7 +50,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/InterfaceNormalization.E_edg
 
 *Commentary.*
 
-The unrestricted physical-edge deletion root in the existing raw Family. 
+The unrestricted physical-edge deletion root in the existing raw Family.
 
 **Definition 1.5 (D5.S3.Geometry.OriginalLabelTwoSum.GraphData.UniqueInterface).**
 
@@ -62,7 +62,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/InterfaceNormalization.Uniqu
 
 *Commentary.*
 
-Local U*: uniqueness only over the selected interface, never globally. 
+Local U*: uniqueness only over the selected interface, never globally.
 
 **Theorem 1.6 (D5.S3.Geometry.OriginalLabelTwoSum.GraphData.rows_eq_of_kappa_eq).**
 
@@ -74,7 +74,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/InterfaceNormalization.rows_
 
 *Commentary.*
 
-Equal physical chords have equal actual path-derived rows, including the reversed orientation. This follows from tree path uniqueness, not an input. 
+Equal physical chords have equal actual path-derived rows, including the reversed orientation. This follows from tree path uniqueness, not an input.
 
 **Definition 1.7 (D5.S3.Geometry.OriginalLabelTwoSum.GraphData.normalizeInterface).**
 
@@ -86,7 +86,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/InterfaceNormalization.norma
 
 *Commentary.*
 
-Normalize only the interface fiber: retain c and every noninterface original index. Every other GraphData field is literally inherited. 
+Normalize only the interface fiber: retain c and every noninterface original index. Every other GraphData field is literally inherited.
 
 **Definition 1.8 (D5.S3.Geometry.OriginalLabelTwoSum.GraphData.normalizedChord).**
 
@@ -98,7 +98,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/InterfaceNormalization.norma
 
 *Commentary.*
 
-The retained distinguished index is c itself, with subtype evidence. 
+The retained distinguished index is c itself, with subtype evidence.
 
 **Theorem 1.9 (D5.S3.Geometry.OriginalLabelTwoSum.GraphData.normalized_row).**
 
@@ -110,7 +110,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/InterfaceNormalization.norma
 
 *Commentary.*
 
-Normalization changes no row at any retained original index. 
+Normalization changes no row at any retained original index.
 
 **Theorem 1.10 (D5.S3.Geometry.OriginalLabelTwoSum.GraphData.normalized_distinguished_row).**
 
@@ -122,7 +122,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/InterfaceNormalization.norma
 
 *Commentary.*
 
-The interface's actual path row is preserved. 
+The interface's actual path row is preserved.
 
 **Theorem 1.11 (D5.S3.Geometry.OriginalLabelTwoSum.GraphData.normalized_root).**
 
@@ -134,7 +134,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/InterfaceNormalization.norma
 
 *Commentary.*
 
-The complete raw root is unchanged, including empty-face membership. 
+The complete raw root is unchanged, including empty-face membership.
 
 **Theorem 1.12 (D5.S3.Geometry.OriginalLabelTwoSum.GraphData.normalized_uniqueInterface).**
 
@@ -146,7 +146,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/InterfaceNormalization.norma
 
 *Commentary.*
 
-The normalized presentation has U*, with no restriction on other fibers. 
+The normalized presentation has U*, with no restriction on other fibers.
 
 **Theorem 1.13 (D5.S3.Geometry.OriginalLabelTwoSum.GraphData.uniqueInterface_iff_survivor_indices).**
 
@@ -158,7 +158,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/InterfaceNormalization.uniqu
 
 *Commentary.*
 
-U* is exactly the survivor-index identification. No necessity assertion about accidental equalities of raw face sets is made. 
+U* is exactly the survivor-index identification. No necessity assertion about accidental equalities of raw face sets is made.
 
 **Theorem 1.14 (D5.S3.Geometry.OriginalLabelTwoSum.GraphData.E_edge_eq_without).**
 
@@ -170,7 +170,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/InterfaceNormalization.E_edg
 
 *Commentary.*
 
-Explicit local COROLLARY: physical deletion is one-index deletion under U*. 
+Explicit local COROLLARY: physical deletion is one-index deletion under U*.
 
 **Definition 1.15 (D5.S3.Geometry.OriginalLabelTwoSum.GraphData.normalizedSurvivorEquiv).**
 
@@ -182,7 +182,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/InterfaceNormalization.norma
 
 *Commentary.*
 
-Canonical identity-on-original-indices equivalence after normalized deletion. In particular, duplicate noninterface indices remain distinct. 
+Canonical identity-on-original-indices equivalence after normalized deletion. In particular, duplicate noninterface indices remain distinct.
 
 **Theorem 1.16 (D5.S3.Geometry.OriginalLabelTwoSum.GraphData.normalized_without_root).**
 
@@ -194,7 +194,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/InterfaceNormalization.norma
 
 *Commentary.*
 
-The normalized one-index deletion is precisely E_edge on the same ground. 
+The normalized one-index deletion is precisely E_edge on the same ground.
 
 **Definition 1.17 (D5.S3.Geometry.OriginalLabelTwoSum.physicalTransportedRows).**
 
@@ -206,7 +206,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/InterfaceNormalization.physi
 
 *Commentary.*
 
-Literal corrected row presentation, indexed by old left chords and every original physical right survivor. Its right rows are original actual path rows. 
+Literal corrected row presentation, indexed by old left chords and every original physical right survivor. Its right rows are original actual path rows.
 
 **Theorem 1.18 (D5.S3.Geometry.OriginalLabelTwoSum.normalized_row_transport).**
 
@@ -218,7 +218,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/InterfaceNormalization.norma
 
 *Commentary.*
 
-Both the full right input and the normalized transport output are faithful. The second equality consumes the original row_transport, with the distinguished path row preserved and the deleted-index term replaced by E_edge. 
+Both the full right input and the normalized transport output are faithful. The second equality consumes the original row_transport, with the distinguished path row preserved and the deleted-index term replaced by E_edge.
 
 **Theorem 1.19 (D5.S3.Geometry.OriginalLabelTwoSum.physical_row_transport).**
 
@@ -230,7 +230,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/InterfaceNormalization.physi
 
 *Commentary.*
 
-Unrestricted corrected row-algebra parent formula. There is no assumed graph/root equation here. Binding the physical presentation to the actual glued graph requires the independent G1A construction and path theorem. 
+Unrestricted corrected row-algebra parent formula. There is no assumed graph/root equation here. Binding the physical presentation to the actual glued graph requires the independent G1A construction and path theorem.
 
 **Theorem 1.20 (D5.S3.Geometry.OriginalLabelTwoSum.physical_row_transport_of_unique).**
 
@@ -242,7 +242,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/InterfaceNormalization.physi
 
 *Commentary.*
 
-Local U* COROLLARY of the unrestricted formula; no global injectivity. 
+Local U* COROLLARY of the unrestricted formula; no global injectivity.
 
 **Definition 1.21 (D5.S3.Geometry.OriginalLabelTwoSum.CyclicInterface.next).**
 
@@ -254,7 +254,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/InterfaceNormalization.next`
 
 *Commentary.*
 
-Successor around Fin m, written with an explicit wrap for arithmetic proofs. 
+Successor around Fin m, written with an explicit wrap for arithmetic proofs.
 
 **Theorem 1.22 (D5.S3.Geometry.OriginalLabelTwoSum.CyclicInterface.cyclic_edge_injective).**
 
@@ -266,7 +266,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/InterfaceNormalization.cycli
 
 *Commentary.*
 
-For every m>=3, cyclic unordered edges have unique indices. Reversed endpoint matching would force a two-cycle, excluded by m>=3. 
+For every m>=3, cyclic unordered edges have unique indices. Reversed endpoint matching would force a two-cycle, excluded by m>=3.
 
 **Theorem 1.23 (D5.S3.Geometry.OriginalLabelTwoSum.Wheel.wheel_uniqueInterface).**
 
@@ -278,7 +278,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/InterfaceNormalization.wheel
 
 *Commentary.*
 
-Actual fixed W4 local U*, proved from start/finish via cyclic edges. The general cyclic uniqueness lemma is consumed on the genuine rim endpoints. 
+Actual fixed W4 local U*, proved from start/finish via cyclic edges. The general cyclic uniqueness lemma is consumed on the genuine rim endpoints.
 
 **Theorem 1.24 (D5.S3.Geometry.OriginalLabelTwoSum.Wheel.wheel_E_edge).**
 
@@ -290,7 +290,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/InterfaceNormalization.wheel
 
 *Commentary.*
 
-Physical W4 deletion is the existing literal E, using the local corollary. 
+Physical W4 deletion is the existing literal E, using the local corollary.
 
 **Theorem 1.25 (D5.S3.Geometry.OriginalLabelTwoSum.Wheel.wheel_physical_row_transport).**
 
@@ -302,7 +302,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/InterfaceNormalization.wheel
 
 *Commentary.*
 
-Actual W4 indexing consumes the corrected raw formula with its existing E. This remains row algebra; no actual glued graph theorem is assumed or claimed. 
+Actual W4 indexing consumes the corrected raw formula with its existing E. This remains row algebra; no actual glued graph theorem is assumed or claimed.
 
 ## References
 

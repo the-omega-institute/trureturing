@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalWheel.ambientEdge`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.Wheel.ambientEdge. The released actual fixed W4 graph is installed by an injective map into arbitrary original ambient labels, with an explicit total edge function including all additional ghosts. Actual path rows and physical E_edge are proved and consumed by actual gluing. This is fixed W4, not arbitrary markings, graph histories or a universal supplier. 
+D5.S3.Geometry.OriginalLabelTwoSum.Wheel.ambientEdge. The released actual fixed W4 graph is installed by an injective map into arbitrary original ambient labels, with an explicit total edge function including all additional ghosts. Actual path rows and physical E_edge are proved and consumed by actual gluing. This is fixed W4, not arbitrary markings, graph histories or a universal supplier.
 
 **Theorem 1.2 (ambientEdge_image).**
 
@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalWheel.ambientEdge_im
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.Wheel.ambientEdge_image. The released actual fixed W4 graph is installed by an injective map into arbitrary original ambient labels, with an explicit total edge function including all additional ghosts. Actual path rows and physical E_edge are proved and consumed by actual gluing. This is fixed W4, not arbitrary markings, graph histories or a universal supplier. 
+D5.S3.Geometry.OriginalLabelTwoSum.Wheel.ambientEdge_image. The released actual fixed W4 graph is installed by an injective map into arbitrary original ambient labels, with an explicit total edge function including all additional ghosts. Actual path rows and physical E_edge are proved and consumed by actual gluing. This is fixed W4, not arbitrary markings, graph histories or a universal supplier.
 
 **Definition 1.3 (ambientGraph).**
 
@@ -38,7 +38,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalWheel.ambientGraph`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.Wheel.ambientGraph. The released actual fixed W4 graph is installed by an injective map into arbitrary original ambient labels, with an explicit total edge function including all additional ghosts. Actual path rows and physical E_edge are proved and consumed by actual gluing. This is fixed W4, not arbitrary markings, graph histories or a universal supplier. 
+D5.S3.Geometry.OriginalLabelTwoSum.Wheel.ambientGraph. The released actual fixed W4 graph is installed by an injective map into arbitrary original ambient labels, with an explicit total edge function including all additional ghosts. Actual path rows and physical E_edge are proved and consumed by actual gluing. This is fixed W4, not arbitrary markings, graph histories or a universal supplier.
 
 **Theorem 1.4 (ambient_row).**
 
@@ -50,7 +50,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalWheel.ambient_row`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.Wheel.ambient_row. The released actual fixed W4 graph is installed by an injective map into arbitrary original ambient labels, with an explicit total edge function including all additional ghosts. Actual path rows and physical E_edge are proved and consumed by actual gluing. This is fixed W4, not arbitrary markings, graph histories or a universal supplier. 
+D5.S3.Geometry.OriginalLabelTwoSum.Wheel.ambient_row. The released actual fixed W4 graph is installed by an injective map into arbitrary original ambient labels, with an explicit total edge function including all additional ghosts. Actual path rows and physical E_edge are proved and consumed by actual gluing. This is fixed W4, not arbitrary markings, graph histories or a universal supplier.
 
 **Theorem 1.5 (ambient_uniqueInterface).**
 
@@ -62,7 +62,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalWheel.ambient_unique
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.Wheel.ambient_uniqueInterface. The released actual fixed W4 graph is installed by an injective map into arbitrary original ambient labels, with an explicit total edge function including all additional ghosts. Actual path rows and physical E_edge are proved and consumed by actual gluing. This is fixed W4, not arbitrary markings, graph histories or a universal supplier. 
+D5.S3.Geometry.OriginalLabelTwoSum.Wheel.ambient_uniqueInterface. The released actual fixed W4 graph is installed by an injective map into arbitrary original ambient labels, with an explicit total edge function including all additional ghosts. Actual path rows and physical E_edge are proved and consumed by actual gluing. This is fixed W4, not arbitrary markings, graph histories or a universal supplier.
 
 **Theorem 1.6 (ambient_E_edge).**
 
@@ -74,7 +74,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalWheel.ambient_E_edge
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.Wheel.ambient_E_edge. The released actual fixed W4 graph is installed by an injective map into arbitrary original ambient labels, with an explicit total edge function including all additional ghosts. Actual path rows and physical E_edge are proved and consumed by actual gluing. This is fixed W4, not arbitrary markings, graph histories or a universal supplier. 
+D5.S3.Geometry.OriginalLabelTwoSum.Wheel.ambient_E_edge. The released actual fixed W4 graph is installed by an injective map into arbitrary original ambient labels, with an explicit total edge function including all additional ghosts. Actual path rows and physical E_edge are proved and consumed by actual gluing. This is fixed W4, not arbitrary markings, graph histories or a universal supplier.
 
 **Theorem 1.7 (ambient_without).**
 
@@ -86,7 +86,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalWheel.ambient_withou
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.Wheel.ambient_without. The released actual fixed W4 graph is installed by an injective map into arbitrary original ambient labels, with an explicit total edge function including all additional ghosts. Actual path rows and physical E_edge are proved and consumed by actual gluing. This is fixed W4, not arbitrary markings, graph histories or a universal supplier. 
+D5.S3.Geometry.OriginalLabelTwoSum.Wheel.ambient_without. The released actual fixed W4 graph is installed by an injective map into arbitrary original ambient labels, with an explicit total edge function including all additional ghosts. Actual path rows and physical E_edge are proved and consumed by actual gluing. This is fixed W4, not arbitrary markings, graph histories or a universal supplier.
 
 **Theorem 1.8 (zero_outside_ground).**
 
@@ -98,7 +98,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalWheel.zero_outside_g
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.Wheel.zero_outside_ground. The released actual fixed W4 graph is installed by an injective map into arbitrary original ambient labels, with an explicit total edge function including all additional ghosts. Actual path rows and physical E_edge are proved and consumed by actual gluing. This is fixed W4, not arbitrary markings, graph histories or a universal supplier. 
+D5.S3.Geometry.OriginalLabelTwoSum.Wheel.zero_outside_ground. The released actual fixed W4 graph is installed by an injective map into arbitrary original ambient labels, with an explicit total edge function including all additional ghosts. Actual path rows and physical E_edge are proved and consumed by actual gluing. This is fixed W4, not arbitrary markings, graph histories or a universal supplier.
 
 **Definition 1.9 (ambientGlue).**
 
@@ -110,7 +110,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalWheel.ambientGlue`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.Wheel.ambientGlue. The released actual fixed W4 graph is installed by an injective map into arbitrary original ambient labels, with an explicit total edge function including all additional ghosts. Actual path rows and physical E_edge are proved and consumed by actual gluing. This is fixed W4, not arbitrary markings, graph histories or a universal supplier. 
+D5.S3.Geometry.OriginalLabelTwoSum.Wheel.ambientGlue. The released actual fixed W4 graph is installed by an injective map into arbitrary original ambient labels, with an explicit total edge function including all additional ghosts. Actual path rows and physical E_edge are proved and consumed by actual gluing. This is fixed W4, not arbitrary markings, graph histories or a universal supplier.
 
 **Theorem 1.10 (ambient_actual_root).**
 
@@ -122,7 +122,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalWheel.ambient_actual
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.Wheel.ambient_actual_root. The released actual fixed W4 graph is installed by an injective map into arbitrary original ambient labels, with an explicit total edge function including all additional ghosts. Actual path rows and physical E_edge are proved and consumed by actual gluing. This is fixed W4, not arbitrary markings, graph histories or a universal supplier. 
+D5.S3.Geometry.OriginalLabelTwoSum.Wheel.ambient_actual_root. The released actual fixed W4 graph is installed by an injective map into arbitrary original ambient labels, with an explicit total edge function including all additional ghosts. Actual path rows and physical E_edge are proved and consumed by actual gluing. This is fixed W4, not arbitrary markings, graph histories or a universal supplier.
 
 **Theorem 1.11 (ambient_actual_literal_root).**
 
@@ -134,7 +134,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalWheel.ambient_actual
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.Wheel.ambient_actual_literal_root. The released actual fixed W4 graph is installed by an injective map into arbitrary original ambient labels, with an explicit total edge function including all additional ghosts. Actual path rows and physical E_edge are proved and consumed by actual gluing. This is fixed W4, not arbitrary markings, graph histories or a universal supplier. 
+D5.S3.Geometry.OriginalLabelTwoSum.Wheel.ambient_actual_literal_root. The released actual fixed W4 graph is installed by an injective map into arbitrary original ambient labels, with an explicit total edge function including all additional ghosts. Actual path rows and physical E_edge are proved and consumed by actual gluing. This is fixed W4, not arbitrary markings, graph histories or a universal supplier.
 
 ## References
 

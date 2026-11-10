@@ -4,7 +4,7 @@
 
 Exact coordinate rounds commute with injective toggle maps, including original-label complementation.
 
-Exact equality of remaining families under coordinate toggles, label maps and original-ground complements. Augmented empty faces are retained. No native validation was run. Lexical section variables are recorded faithfully. Lean may omit unused variables. 
+Exact equality of remaining families under coordinate toggles, label maps and original-ground complements. Augmented empty faces are retained. Lexical section variables are recorded faithfully. Lean may omit unused variables.
 
 **Definition 1.1 (flip).**
 

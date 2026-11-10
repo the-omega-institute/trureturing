@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CompilerStages.selectFilling
 
 *Commentary.*
 
-Select the actual P0/P1 or Q0/Q1 filling from the original critical-face interface test. 
+Select the actual P0/P1 or Q0/Q1 filling from the original critical-face interface test.
 
 **Definition 1.2 (parentFillingStage).**
 
@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CompilerStages.parentFilling
 
 *Commentary.*
 
-Construct the filling-main stage on the ACTUAL parent after child replay. The list is assembled from all P0/P1 lists; its target families are computed. 
+Construct the filling-main stage on the ACTUAL parent after child replay. The list is assembled from all P0/P1 lists; its target families are computed.
 
 **Definition 1.3 (parentCollarStage).**
 
@@ -38,7 +38,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CompilerStages.parentCollarS
 
 *Commentary.*
 
-Construct all Q0/Q1 collar lists on Cout ALONE. Every emitted coface is checked against the other collars; the retained parent critical cells are absent from the domain of this Sequence. 
+Construct all Q0/Q1 collar lists on Cout ALONE. Every emitted coface is checked against the other collars; the retained parent critical cells are absent from the domain of this Sequence.
 
 **Theorem 1.4 (parentFillingStage_orderedPairs).**
 
@@ -50,7 +50,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CompilerStages.parentFilling
 
 *Commentary.*
 
-Global ordered expansion of the filling-main batch. `fibres` is the real cardinality/finite-enumeration comparator, so this records descending critical order rather than an arbitrary permutation. 
+Global ordered expansion of the filling-main batch. `fibres` is the real cardinality/finite-enumeration comparator, so this records descending critical order rather than an arbitrary permutation.
 
 **Theorem 1.5 (parentCollarStage_orderedPairs).**
 
@@ -62,7 +62,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CompilerStages.parentCollarS
 
 *Commentary.*
 
-Global ordered expansion of the collar batch. Its domain is `Cout` alone; the retained critical simplices are not silently inserted into this list. 
+Global ordered expansion of the collar batch. Its domain is `Cout` alone; the retained critical simplices are not silently inserted into this list.
 
 ## References
 

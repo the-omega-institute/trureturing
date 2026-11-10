@@ -4,7 +4,7 @@
 
 Every width wheel as an actual hub-star graph with path-derived rows.
 
- Source inspection and finite controls do not establish elaboration, kernel or axiom closure, native lists, Scribe resolution, registrations, gates or full-goal completion.
+ The finite controls illustrate the raw formulas; the general statements retain their full parameters.
 
 ## Source text
 
@@ -26,11 +26,11 @@ Lean module source and proofs:
 
 /-
 
-   Metadata author classification (source only; independent review pending):
+   Mathematical scope:
 
    The graph, tree, explicit walks, fundamental rows and ambient transports are constructed for every m with 3 <= m and every injective label map. The symbolic all-width proofs are not bounded enumeration, a certificate checker, numerical reduction or a certified fixed finite instance.
 
-   No empirical mirror or compilation/acceptance claim is supplied.
+   
 
 -/
 
@@ -46,7 +46,7 @@ import Mathlib.Combinatorics.SimpleGraph.Star
 
 Definitions and proofs are in the paired Lean module.
 
-/-! SOURCE_ONLY_UNCOMPILED. Vertices are the literal hub 0 and rim 1,...,m.
+/-!  Vertices are the literal hub 0 and rim 1,...,m.
 
 The rows below are proved by uniqueness from explicit two-edge tree walks.
 

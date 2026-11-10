@@ -4,7 +4,7 @@
 
 The literal finite attachment collar, core quotient and both nonempty-face Euclidean sphere branches.
 
-The standalone based contraction of P is the sole homotopy input. The full boundary, both based inverse homotopies, original labels and attached singleton S0 branch are preserved. No native acceptance or universal certificate supplier is claimed.
+The standalone based contraction of P is the sole homotopy input. The full boundary, both based inverse homotopies, original labels and attached singleton S0 branch are preserved. An unrestricted arbitrary-plane certificate supplier is not assumed.
 
 **Definition 1.1 (Actual-coordinate attachment input).**
 

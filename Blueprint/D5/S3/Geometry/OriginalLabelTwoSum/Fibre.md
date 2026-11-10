@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Fibre.liftFibre`
 
 *Commentary.*
 
-Non-VOID local sequences lift over a literal fibre. This is used for Gamma and filling/collar schedules; all ordinary lower faces are still nonempty even when a=empty. No homotopy or parent certificate is an input. 
+Non-VOID local sequences lift over a literal fibre. This is used for Gamma and filling/collar schedules; all ordinary lower faces are still nonempty even when a=empty. No homotopy or parent certificate is an input.
 
 **Theorem 1.2 (liftFibre_pairs).**
 
@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Fibre.liftFibre_pairs`
 
 *Commentary.*
 
-Exact ordered coverage for the ACTUAL native fibre list, including every pair of a supplied Gamma, filling-main or separate collar sequence. 
+Exact ordered coverage for the ACTUAL native fibre list, including every pair of a supplied Gamma, filling-main or separate collar sequence.
 
 ## References
 

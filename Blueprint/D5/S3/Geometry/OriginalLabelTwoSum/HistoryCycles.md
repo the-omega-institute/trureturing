@@ -4,7 +4,7 @@
 
 Actual fill0 and path lists construct every wheel cycle by the proved size-bounded attachment.
 
-For EVERY m>=3, pathRootCertificate is extracted from the proved actual pathRowsOutput, then identified with the original all-m indexed path root. The existing Protected.fill0 executes in Delta(Z), fixing E. eta0_card and the actual path profile discharge both size hypotheses of the exact existing boundedAttachment. cycleCertificate supplies the all-residue strong output, including widths 3,4,5. Main order is fill0 then emitted path pairs; the separate C-ALONE order is the ORIGINAL skipped path subsequence followed by the path separate list. The frozen Protected source is under earlier independent review and is not presumed source-approved.
+For EVERY m>=3, pathRootCertificate is extracted from the proved actual pathRowsOutput, then identified with the original all-m indexed path root. The existing Protected.fill0 executes in Delta(Z), fixing E. eta0_card and the actual path profile discharge both size hypotheses of the exact existing boundedAttachment. cycleCertificate supplies the all-residue strong output, including widths 3,4,5. Main order is fill0 then emitted path pairs; the separate C-ALONE order is the ORIGINAL skipped path subsequence followed by the path separate list. The protected construction supplies the original marked faces and pair order.
 
  No full universal history or broad-goal completion is asserted.
 

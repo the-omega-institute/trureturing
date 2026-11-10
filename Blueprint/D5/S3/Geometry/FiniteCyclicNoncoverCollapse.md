@@ -20,7 +20,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -42,7 +42,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -64,7 +64,7 @@ A face misses the two ORIGINAL endpoints of at least one cyclic rim edge.
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -86,7 +86,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -112,7 +112,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -134,7 +134,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -156,7 +156,7 @@ An actual native vertex, not VOID, UNIT, or a selected point in no space.
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -180,7 +180,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -204,7 +204,7 @@ The cyclic greedy matching uses the given original-label order.
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -228,7 +228,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -252,7 +252,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -274,7 +274,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -300,7 +300,7 @@ Equally spaced two-vertex blocks, expressed by an injective ORIGINAL index map. 
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -326,7 +326,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -350,7 +350,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -376,7 +376,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -404,7 +404,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -430,7 +430,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -452,7 +452,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -474,7 +474,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -496,7 +496,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -518,7 +518,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -542,7 +542,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -566,7 +566,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -590,7 +590,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -614,7 +614,7 @@ Exact approved ORIGINAL one-based formula, not just a cardinality.
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -640,7 +640,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -666,7 +666,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -692,7 +692,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -718,7 +718,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -740,7 +740,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -764,7 +764,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -788,7 +788,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -812,7 +812,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -836,7 +836,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -860,7 +860,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -884,7 +884,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -908,7 +908,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -932,7 +932,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -956,7 +956,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -980,7 +980,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -1004,7 +1004,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -1028,7 +1028,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -1052,7 +1052,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -1076,7 +1076,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -1100,7 +1100,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -1124,7 +1124,7 @@ Small critical-face bases are equations on the actual original labels. They do n
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -1148,7 +1148,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -1172,7 +1172,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -1196,7 +1196,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -1220,7 +1220,7 @@ Explicit ghosts on the original ambient type, never globally retired.
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -1244,7 +1244,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCol
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 

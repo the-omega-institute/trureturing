@@ -16,7 +16,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/PathWord.Symbol`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -34,7 +34,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/PathWord.Word`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -52,7 +52,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/PathWord.Contract`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -70,7 +70,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/PathWord.pathEdges
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -88,7 +88,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/PathWord.pathIndep
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -108,7 +108,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/PathWord.pathIndep
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -126,7 +126,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/PathWord.pathFamil
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -144,7 +144,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/PathWord.mem_pathI
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -166,7 +166,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/PathWord.pathIndep
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -188,7 +188,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/PathWord.mem_pathF
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -208,7 +208,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/PathWord.pathIndep
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -228,7 +228,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/PathWord.pathIndep
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -254,7 +254,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/PathWord.faceBefor
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -272,7 +272,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/PathWord.orderedFa
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -290,7 +290,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/PathWord.orderedFa
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -312,7 +312,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/PathWord.mem_order
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -332,7 +332,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/PathWord.adjoinSym
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -350,7 +350,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/PathWord.adjoinSym
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -370,7 +370,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/PathWord.adjoinSym
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -390,7 +390,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/PathWord.adjoinSym
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -410,7 +410,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/PathWord.mem_adjoi
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -430,7 +430,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/PathWord.pathWord`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -448,7 +448,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/PathWord.pathCriti
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -466,7 +466,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/PathWord.pathWord_
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -484,7 +484,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/PathWord.pathWord_
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -502,7 +502,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/PathWord.pathWord_
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -526,7 +526,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/PathWord.pathWord_
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -566,7 +566,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/PathWord.pathWordD
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -586,7 +586,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/PathWord.duplicate
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -608,7 +608,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/PathWord.criticalF
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -628,7 +628,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/PathWord.pathWord_
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -648,7 +648,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/PathWord.pathWord_
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 

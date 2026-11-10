@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Rectangles.phi_split`
 
 *Commentary.*
 
-Exact split-coordinate membership of the raw parent, including raw empty. 
+Exact split-coordinate membership of the raw parent, including raw empty.
 
 **Definition 1.2 (deletionRectangle).**
 
@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Rectangles.deletionRectangle
 
 *Commentary.*
 
-The deletion rectangle has no assumed local or parent schedule. All cofaces are derived from native child freeness, alpha not in L, and raw E downwardness. 
+The deletion rectangle has no assumed local or parent schedule. All cofaces are derived from native child freeness, alpha not in L, and raw E downwardness.
 
 **Definition 1.3 (linkRectangle).**
 
@@ -38,7 +38,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Rectangles.linkRectangle`
 
 *Commentary.*
 
-A link projection can have an empty alpha. Its raw coface condition is obtained from an actual child e-containing pair by the caller. Every emitted lower is nonempty because each selected tau lies outside delta(Z). 
+A link projection can have an empty alpha. Its raw coface condition is obtained from an actual child e-containing pair by the caller. Every emitted lower is nonempty because each selected tau lies outside delta(Z).
 
 ## References
 

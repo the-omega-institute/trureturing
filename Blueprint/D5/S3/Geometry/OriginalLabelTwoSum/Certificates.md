@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Certificates.facets`
 
 *Commentary.*
 
-A finite union of raw simplices, with the empty index family equal to VOID. 
+A finite union of raw simplices, with the empty index family equal to VOID.
 
 **Definition 1.2 (endpoint).**
 
@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Certificates.endpoint`
 
 *Commentary.*
 
-A finite union of raw simplices, with the empty index family equal to VOID. 
+A finite union of raw simplices, with the empty index family equal to VOID.
 
 **Definition 1.3 (CriticalData).**
 
@@ -38,7 +38,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Certificates.CriticalData`
 
 *Commentary.*
 
-Exact ordinary critical-cell conditions, including ALL proper subfaces. 
+Exact ordinary critical-cell conditions, including ALL proper subfaces.
 
 **Definition 1.4 (Filling).**
 
@@ -50,7 +50,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Certificates.Filling`
 
 *Commentary.*
 
-A local filling need not have a contractible collar. 
+A local filling need not have a contractible collar.
 
 **Definition 1.5 (Certificate).**
 
@@ -62,7 +62,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Certificates.Certificate`
 
 *Commentary.*
 
-A left input carries an actual vertex and ordinary main/core lists. 
+A left input carries an actual vertex and ordinary main/core lists.
 
 **Theorem 1.6 (critical_intersection).**
 
@@ -74,7 +74,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Certificates.critical_inters
 
 *Commentary.*
 
-Actual literal simplex/core intersection, with the empty face retained. 
+Actual literal simplex/core intersection, with the empty face retained.
 
 **Theorem 1.7 (critical_overlap).**
 
@@ -86,7 +86,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Certificates.critical_overla
 
 *Commentary.*
 
-Distinct retained cells meet only in proper boundary faces. 
+Distinct retained cells meet only in proper boundary faces.
 
 ## References
 

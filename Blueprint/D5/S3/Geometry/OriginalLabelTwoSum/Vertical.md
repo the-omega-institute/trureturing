@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Vertical.verticalGamma`
 
 *Commentary.*
 
-Source/endpoints are literal Phi states with the single maximal left fibre removed. No parent collapse, collar, or endpoint equality is an assumption. 
+Source/endpoints are literal Phi states with the single maximal left fibre removed. No parent collapse, collar, or endpoint equality is an assumption.
 
 **Definition 1.2 (verticalVoid).**
 
@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Vertical.verticalVoid`
 
 *Commentary.*
 
-The separate VOID rule uses an original r in nonempty R. The empty right fibre emits lower=a, which is genuinely nonempty; it never collapses UNIT to VOID. 
+The separate VOID rule uses an original r in nonempty R. The empty right fibre emits lower=a, which is genuinely nonempty; it never collapses UNIT to VOID.
 
 ## References
 

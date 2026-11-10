@@ -4,7 +4,7 @@
 
 Public import facade for the substantive attachment-sphere and original-certificate sphere constructions.
 
-This module imports FiniteCriticalCellSphere/AttachmentSphere and FiniteCriticalCellSphere/CertificateSphere. Their companion documents own all 65 original semantic Describe entries. The original Lean declaration namespaces remain unchanged; this facade adds no mathematical declarations. 
+This module imports FiniteCriticalCellSphere/AttachmentSphere and FiniteCriticalCellSphere/CertificateSphere. Their companion documents own all 65 original semantic Describe entries. The original Lean declaration namespaces remain unchanged; this facade adds no mathematical declarations.
 
 ## References
 

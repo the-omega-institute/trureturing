@@ -4,7 +4,7 @@
 
 The literal three-block cycle list is a P02 Word on every original rim.
 
-The selected AllMWheel, PathWord and sole FiniteProtectedDualWord authorities are immutable imports. This file adds no structure and generates no constructor/projection APIs. The full source-stated imported Word contract, including all eight field clauses, is quoted below with its source owner; no emitted telescope is asserted. Kernel/native/Scribe/Reg/gates/remote PR/dev acceptance remain due.
+The selected AllMWheel, PathWord and sole FiniteProtectedDualWord authorities are immutable imports. This file adds no structure and generates no constructor/projection APIs. The full source-stated imported Word contract, including all eight field clauses, is quoted below with its source owner; no emitted telescope is asserted.
 
 ## Source text
 
@@ -38,7 +38,7 @@ structure Word (W : Finset V) (K : Family V) where
 
     ∀ T, T ⊂ S → ∃ σ ∈ «prefix», T ∈ σ.faces
 
-The construction distinguishes the following obligations: protected upward and whole-symbol H with every unexecuted critical; fill0 retaining ghosts, fill1 in every residue; Gamma iff and both obstruction residues; standalone B1/Q1; parent compiler; arbitrary history length distinct from width, markings, physical realizations and all-plane supplier; the arbitrary-plane supplier. In particular m=4 does not justify empty protection. No native selectors, green Reg result or local-fill success is claimed.
+The construction distinguishes the following obligations: protected upward and whole-symbol H with every unexecuted critical; fill0 retaining ghosts, fill1 in every residue; Gamma iff and both obstruction residues; standalone B1/Q1; parent compiler; arbitrary history length distinct from width, markings, physical realizations and all-plane supplier; the arbitrary-plane supplier. In particular m=4 does not justify empty protection. The raw formulas keep the actual compiler choice of Gamma distinct from any preferred witness.
 
 **Theorem 1.1 (mem_cycleIndependentOn).**
 
@@ -50,7 +50,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/CycleWord.mem_cycl
 
 *Commentary.*
 
-Literal SOURCE statement in namespace D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel; proof body is in the source owner. 
+Literal SOURCE statement in namespace D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel; proof body is in the source owner.
 
 ### Source text
 
@@ -70,7 +70,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/CycleWord.cycleInd
 
 *Commentary.*
 
-Literal SOURCE statement in namespace D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel; proof body is in the source owner. 
+Literal SOURCE statement in namespace D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel; proof body is in the source owner.
 
 ### Source text
 
@@ -90,7 +90,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/CycleWord.mem_cycl
 
 *Commentary.*
 
-Literal SOURCE statement in namespace D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel; proof body is in the source owner. 
+Literal SOURCE statement in namespace D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel; proof body is in the source owner.
 
 ### Source text
 
@@ -108,7 +108,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/CycleWord.cycleInd
 
 *Commentary.*
 
-Literal SOURCE statement in namespace D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel; proof body is in the source owner. 
+Literal SOURCE statement in namespace D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel; proof body is in the source owner.
 
 ### Source text
 
@@ -152,7 +152,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/CycleWord.cycleWor
 
 *Commentary.*
 
-Literal SOURCE statement in namespace D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel; proof body is in the source owner. 
+Literal SOURCE statement in namespace D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel; proof body is in the source owner.
 
 ### Source text
 
@@ -170,7 +170,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/CycleWord.cycleWor
 
 *Commentary.*
 
-Literal SOURCE statement in namespace D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel; proof body is in the source owner. 
+Literal SOURCE statement in namespace D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel; proof body is in the source owner.
 
 ### Source text
 
@@ -190,7 +190,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/CycleWord.cycleWor
 
 *Commentary.*
 
-Literal SOURCE statement in namespace D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel; proof body is in the source owner. 
+Literal SOURCE statement in namespace D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel; proof body is in the source owner.
 
 ### Source text
 
@@ -212,7 +212,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/CycleWord.pathChos
 
 *Commentary.*
 
-Literal SOURCE statement in namespace D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel; proof body is in the source owner. 
+Literal SOURCE statement in namespace D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel; proof body is in the source owner.
 
 ### Source text
 
@@ -232,7 +232,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/CycleWord.tailWord
 
 *Commentary.*
 
-Literal SOURCE statement in namespace D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel; proof body is in the source owner. 
+Literal SOURCE statement in namespace D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel; proof body is in the source owner.
 
 ### Source text
 
@@ -252,7 +252,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/CycleWord.cycleWor
 
 *Commentary.*
 
-Literal SOURCE statement in namespace D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel; proof body is in the source owner. 
+Literal SOURCE statement in namespace D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel; proof body is in the source owner.
 
 ### Source text
 
@@ -304,7 +304,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/CycleWord.wheelRoo
 
 *Commentary.*
 
-Literal SOURCE statement in namespace D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel; proof body is in the source owner. 
+Literal SOURCE statement in namespace D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel; proof body is in the source owner.
 
 ### Source text
 

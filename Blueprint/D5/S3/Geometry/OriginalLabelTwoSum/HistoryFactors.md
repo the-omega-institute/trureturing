@@ -28,13 +28,13 @@ import D5.S3.Geometry.OriginalLabelTwoSum.PhysicalHistory
 
 Definitions and proofs are in the paired Lean module.
 
-/-! SOURCE_ONLY_UNCOMPILED. The only geometric input below is the existing
+/-!  The only geometric input below is the existing
 
 `PhysicalHistory.WheelInput g`. The physical root theorem consumed here was
 
 derived from actual unique paths in the selected predecessor sources; those
 
-sources, like this module, remain uncompiled premises of this source attempt.
+sources retain the same original labels and hypotheses.
 
 Definitions and proofs are in the paired Lean module.
 
@@ -1176,7 +1176,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryFactors.oldGround`
 
 *Commentary.*
 
-The actual old tree ground with the physical interface e erased. 
+The actual old tree ground with the physical interface e erased.
 
 **Definition 1.2 (wheelGround).**
 
@@ -1188,7 +1188,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryFactors.wheelGround`
 
 *Commentary.*
 
-All fresh spoke labels, on the same ambient type V. 
+All fresh spoke labels, on the same ambient type V.
 
 **Definition 1.3 (interface).**
 
@@ -1200,7 +1200,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryFactors.interface`
 
 *Commentary.*
 
-Only the images of firstLabel=1 and secondLabel=2. This is not all spokes. 
+Only the images of firstLabel=1 and secondLabel=2. This is not all spokes.
 
 **Definition 1.4 (oldMask).**
 
@@ -1212,7 +1212,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryFactors.oldMask`
 
 *Commentary.*
 
-Intersection of the original mask with the retained old ground. 
+Intersection of the original mask with the retained old ground.
 
 **Definition 1.5 (localMask).**
 
@@ -1224,7 +1224,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryFactors.localMask`
 
 *Commentary.*
 
-Intersection of the original mask with all fresh spokes. 
+Intersection of the original mask with all fresh spokes.
 
 **Definition 1.6 (oldResidual).**
 
@@ -1236,7 +1236,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryFactors.oldResidual`
 
 *Commentary.*
 
-Every retained old label outside both old masks, including ghosts. 
+Every retained old label outside both old masks, including ghosts.
 
 **Definition 1.7 (localResidual).**
 
@@ -1248,7 +1248,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryFactors.localResidual
 
 *Commentary.*
 
-Every local label outside both local masks, including ghosts. 
+Every local label outside both local masks, including ghosts.
 
 **Definition 1.8 (prior).**
 
@@ -1260,7 +1260,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryFactors.prior`
 
 *Commentary.*
 
-J is the old actual row-root corner with masks AX and BX; e remains on its ground. 
+J is the old actual row-root corner with masks AX and BX; e remains on its ground.
 
 **Definition 1.9 (deleted).**
 
@@ -1272,7 +1272,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryFactors.deleted`
 
 *Commentary.*
 
-Dprime uses original masks AX and BX union {e} on g. The theorem proves it is restrict Xprime J by corner_compose. 
+Dprime uses original masks AX and BX union {e} on g. The theorem proves it is restrict Xprime J by corner_compose.
 
 **Definition 1.10 (linked).**
 
@@ -1284,7 +1284,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryFactors.linked`
 
 *Commentary.*
 
-Lprime uses original masks AX union {e} and BX on g. The theorem proves it is rawLink Xprime e J by corner_compose. 
+Lprime uses original masks AX union {e} and BX on g. The theorem proves it is rawLink Xprime e J by corner_compose.
 
 **Definition 1.11 (localRows).**
 
@@ -1296,7 +1296,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryFactors.localRows`
 
 *Commentary.*
 
-The actual ambient wheel rows with exactly its physical interface index removed. Original surviving indices stay distinct. 
+The actual ambient wheel rows with exactly its physical interface index removed. Original surviving indices stay distinct.
 
 **Definition 1.12 (projectedRimRows).**
 
@@ -1308,7 +1308,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryFactors.projectedRimR
 
 *Commentary.*
 
-Eprime filters each original noninterface index by disjointness with AY, then projects its row by BY. No empty, singleton or duplicate projected row is removed. 
+Eprime filters each original noninterface index by disjointness with AY, then projects its row by BY. No empty, singleton or duplicate projected row is removed.
 
 **Definition 1.13 (Readback).**
 
@@ -1320,7 +1320,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryFactors.Readback`
 
 *Commentary.*
 
-The proposition returned from geometric input and masks. It contains the full original residual-ground equation, disjointness, exact mask splits, removed-port absence, J/Dprime/Lprime mask validity and genuine composition readbacks, indexed local-row and face formulas, no-row VOID, raw-empty membership, zero-ground VOID versus UNIT, empty-row simplex, singleton cap, and surviving-marker deletion equations. Its factorization field is the actual physical corner equality, not an input to its constructor. No strong certificate is a field. 
+The proposition returned from geometric input and masks. It contains the full original residual-ground equation, disjointness, exact mask splits, removed-port absence, J/Dprime/Lprime mask validity and genuine composition readbacks, indexed local-row and face formulas, no-row VOID, raw-empty membership, zero-ground VOID versus UNIT, empty-row simplex, singleton cap, and surviving-marker deletion equations. Its factorization field is the actual physical corner equality, not an input to its constructor. No strong certificate is a field.
 
 **Theorem 1.14 (physicalWheelStep_factorization).**
 
@@ -1332,7 +1332,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/HistoryFactors.physicalWheel
 
 *Commentary.*
 
-For every actual GraphData g and WheelInput i (width>=3, any retained old/interior port, arbitrary injective labels), every original disjoint A,B subset the new actual ground yields Readback. The proof consumes physicalWheelStep_root derived from the actual unique-path rows, ambient_without and ambient_row; existing join_split supplies raw coordinate splitting, corner_root supplies literal Eprime, corner_compose supplies the exact predecessor Dprime/Lprime, and singleton_cap supplies the singleton case. The Dprime summand is present if and only if AY misses the TWO interface labels; its family may itself be VOID. A MixedHistory.attach old i therefore uses factors on old, never a same-rank supplier.  No native/Reg/kernel/Scribe/gate/remote acceptance is claimed. 
+For every actual GraphData g and WheelInput i (width>=3, any retained old/interior port, arbitrary injective labels), every original disjoint A,B subset the new actual ground yields Readback. The proof consumes physicalWheelStep_root derived from the actual unique-path rows, ambient_without and ambient_row; existing join_split supplies raw coordinate splitting, corner_root supplies literal Eprime, corner_compose supplies the exact predecessor Dprime/Lprime, and singleton_cap supplies the singleton case. The Dprime summand is present if and only if AY misses the TWO interface labels; its family may itself be VOID. A MixedHistory.attach old i therefore uses factors on old, never a same-rank supplier.
 
 ## References
 

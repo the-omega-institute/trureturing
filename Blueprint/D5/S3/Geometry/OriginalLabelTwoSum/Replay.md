@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Replay.parentOf`
 
 *Commentary.*
 
-Phi applied to the literal deletion and raw link of a child. 
+Phi applied to the literal deletion and raw link of a child.
 
 **Definition 1.2 (replayPair).**
 
@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Replay.replayPair`
 
 *Commentary.*
 
-One child pair, on its actual native ambient, produces a finite native parent sequence. Its source and target are computed Phi states. 
+One child pair, on its actual native ambient, produces a finite native parent sequence. Its source and target are computed Phi states.
 
 **Definition 1.3 (replaySequence).**
 
@@ -38,7 +38,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Replay.replaySequence`
 
 *Commentary.*
 
-Entire native child list, with exact Gamma or actual no-vertical alternative. The optional no-vertical case cannot manufacture a missing Gamma. 
+Entire native child list, with exact Gamma or actual no-vertical alternative. The optional no-vertical case cannot manufacture a missing Gamma.
 
 **Definition 1.4 (orderedPair).**
 
@@ -50,7 +50,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Replay.orderedPair`
 
 *Commentary.*
 
-The ordered native pair datum. It is a projection of the existing `CollapsePair`; no competing pair engine is introduced. 
+The ordered native pair datum. It is a projection of the existing `CollapsePair`; no competing pair engine is introduced.
 
 **Definition 1.5 (orderedPairs).**
 
@@ -62,7 +62,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Replay.orderedPairs`
 
 *Commentary.*
 
-Extract lower and upper faces from the actual native Sequence in constructor order. 
+Extract lower and upper faces from the actual native Sequence in constructor order.
 
 **Theorem 1.6 (orderedPairs_cast).**
 
@@ -74,7 +74,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Replay.orderedPairs_cast`
 
 *Commentary.*
 
-Original-label source declaration consumed by the native compiler and row construction. 
+Original-label source declaration consumed by the native compiler and row construction.
 
 **Theorem 1.7 (orderedPairs_append).**
 
@@ -86,7 +86,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Replay.orderedPairs_append`
 
 *Commentary.*
 
-Original-label source declaration consumed by the native compiler and row construction. 
+Original-label source declaration consumed by the native compiler and row construction.
 
 **Definition 1.8 (rightGammaPairs).**
 
@@ -98,7 +98,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Replay.rightGammaPairs`
 
 *Commentary.*
 
-The right-hand Gamma chosen by the existing Prop-valued permission. This is a source constituent, not the list of a parent/replay output. Nonempty loses the identity of a supplied witness, so we expose the actual choice explicitly. 
+The right-hand Gamma chosen by the existing Prop-valued permission. This is a source constituent, not the list of a parent/replay output. Nonempty loses the identity of a supplied witness, so we expose the actual choice explicitly.
 
 **Definition 1.9 (replayFacePairs).**
 
@@ -110,7 +110,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Replay.replayFacePairs`
 
 *Commentary.*
 
-Replay specified solely on original lower/upper faces and a right Gamma list. No native pair, previous certificate or target sequence is re-extracted. 
+Replay specified solely on original lower/upper faces and a right Gamma list. No native pair, previous certificate or target sequence is re-extracted.
 
 **Definition 1.10 (replayBranchPairs).**
 
@@ -122,7 +122,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Replay.replayBranchPairs`
 
 *Commentary.*
 
-This is the actual branch schedule for one child pair: the descending deletion rectangle, the descending link rectangle, the supplied Gamma schedule after lifting, or the excluded branch. Every nonempty branch is independently specified from the original pair and finite schedule data. 
+This is the actual branch schedule for one child pair: the descending deletion rectangle, the descending link rectangle, the supplied Gamma schedule after lifting, or the excluded branch. Every nonempty branch is independently specified from the original pair and finite schedule data.
 
 **Theorem 1.11 (replayPair_orderedPairs).**
 
@@ -134,7 +134,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Replay.replayPair_orderedPai
 
 *Commentary.*
 
-Ordered pair extraction for the three actual replay constructors. The proof is by the branch split already used by `replayPair`; `pairs_cast` removes endpoint transports, `rectangle_order` discharges the two finite descending enumerations, and `liftFibre_pairs` discharges Gamma. 
+Ordered pair extraction for the three actual replay constructors. The proof is by the branch split already used by `replayPair`; `pairs_cast` removes endpoint transports, `rectangle_order` discharges the two finite descending enumerations, and `liftFibre_pairs` discharges Gamma.
 
 **Theorem 1.12 (replaySequence_orderedPairs).**
 
@@ -146,7 +146,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Replay.replaySequence_ordere
 
 *Commentary.*
 
-The complete replay list is a flat map on the ORIGINAL child faces. The right Gamma is the same classical choice as in the constructor. Membership is used only for the real head/tail pairs in the no-vertical alternative. 
+The complete replay list is a flat map on the ORIGINAL child faces. The right Gamma is the same classical choice as in the constructor. Membership is used only for the real head/tail pairs in the no-vertical alternative.
 
 ## References
 

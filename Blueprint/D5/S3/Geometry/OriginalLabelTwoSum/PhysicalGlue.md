@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.PhysicalGlue`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 **Theorem 1.2 (selected_mem).**
 
@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.selected_mem`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.selected_mem. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.selected_mem. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 **Definition 1.3 (source).**
 
@@ -38,7 +38,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.source`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.source. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.source. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 **Definition 1.4 (input).**
 
@@ -50,7 +50,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.input`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.input. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.input. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 **Definition 1.5 (Carrier).**
 
@@ -62,7 +62,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.Carrier`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.Carrier. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.Carrier. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 **Definition 1.6 (qL).**
 
@@ -74,7 +74,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.qL`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.qL. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.qL. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 **Definition 1.7 (qR).**
 
@@ -86,7 +86,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.qR`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.qR. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.qR. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 **Definition 1.8 (leftKept).**
 
@@ -98,7 +98,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.leftKept`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.leftKept. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.leftKept. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 **Definition 1.9 (rightKept).**
 
@@ -110,7 +110,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.rightKept`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.rightKept. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.rightKept. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 **Definition 1.10 (graph).**
 
@@ -122,7 +122,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.graph`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.graph. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.graph. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 **Theorem 1.11 (graph_adjacency).**
 
@@ -134,7 +134,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.graph_adjacency
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.graph_adjacency. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.graph_adjacency. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 **Theorem 1.12 (graph_edgeSet).**
 
@@ -146,7 +146,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.graph_edgeSet`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.graph_edgeSet. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.graph_edgeSet. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 **Theorem 1.13 (cross_pair).**
 
@@ -158,7 +158,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.cross_pair`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.cross_pair. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.cross_pair. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 **Theorem 1.14 (graph_images_disjoint).**
 
@@ -170,7 +170,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.graph_images_di
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.graph_images_disjoint. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.graph_images_disjoint. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 **Theorem 1.15 (graph_left).**
 
@@ -182,7 +182,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.graph_left`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.graph_left. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.graph_left. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 **Theorem 1.16 (graph_right).**
 
@@ -194,7 +194,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.graph_right`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.graph_right. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.graph_right. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 **Theorem 1.17 (tree_left).**
 
@@ -206,7 +206,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.tree_left`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.tree_left. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.tree_left. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 **Theorem 1.18 (tree_le).**
 
@@ -218,7 +218,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.tree_le`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.tree_le. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.tree_le. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 **Definition 1.19 (labelEdge).**
 
@@ -230,7 +230,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.labelEdge`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.labelEdge. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.labelEdge. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 **Theorem 1.20 (label_left).**
 
@@ -242,7 +242,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.label_left`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.label_left. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.label_left. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 **Theorem 1.21 (label_right).**
 
@@ -254,7 +254,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.label_right`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.label_right. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.label_right. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 **Theorem 1.22 (retained_label_mem).**
 
@@ -266,7 +266,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.retained_label_
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.retained_label_mem. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.retained_label_mem. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 **Theorem 1.23 (active_label_mem).**
 
@@ -278,7 +278,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.active_label_me
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.active_label_mem. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.active_label_mem. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 **Theorem 1.24 (tree_edges).**
 
@@ -290,7 +290,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.tree_edges`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.tree_edges. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.tree_edges. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 **Theorem 1.25 (labels_injective).**
 
@@ -302,7 +302,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.labels_injectiv
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.labels_injective. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.labels_injective. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 **Definition 1.26 (Chords).**
 
@@ -314,7 +314,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.Chords`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.Chords. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.Chords. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 **Definition 1.27 (start).**
 
@@ -326,7 +326,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.start`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.start. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.start. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 **Definition 1.28 (finish).**
 
@@ -338,7 +338,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.finish`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.finish. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.finish. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 **Theorem 1.29 (chord_adj).**
 
@@ -350,7 +350,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.chord_adj`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.chord_adj. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.chord_adj. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 **Theorem 1.30 (chord_not_tree).**
 
@@ -362,7 +362,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.chord_not_tree`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.chord_not_tree. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.chord_not_tree. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 **Theorem 1.31 (chord_cover).**
 
@@ -374,7 +374,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.chord_cover`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.chord_cover. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.chord_cover. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 **Definition 1.32 (data).**
 
@@ -386,7 +386,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.data`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.data. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.data. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 **Theorem 1.33 (left_row).**
 
@@ -398,7 +398,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.left_row`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.left_row. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.left_row. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 **Theorem 1.34 (right_row).**
 
@@ -410,7 +410,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.right_row`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.right_row. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.right_row. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 **Theorem 1.35 (row_family).**
 
@@ -422,7 +422,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.row_family`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.row_family. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.row_family. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 **Theorem 1.36 (root_agreement).**
 
@@ -434,7 +434,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.root_agreement`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.root_agreement. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.root_agreement. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 **Theorem 1.37 (root_formula).**
 
@@ -446,7 +446,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.root_formula`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.root_formula. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.root_formula. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 **Theorem 1.38 (root_formula_of_unique).**
 
@@ -458,7 +458,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.root_formula_of
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.root_formula_of_unique. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.root_formula_of_unique. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 **Definition 1.39 (uniqueChordEquiv).**
 
@@ -470,7 +470,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.uniqueChordEqui
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.uniqueChordEquiv. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.uniqueChordEquiv. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 **Theorem 1.40 (unique_row).**
 
@@ -482,7 +482,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.unique_row`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.unique_row. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.unique_row. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 **Theorem 1.41 (literal_root_agreement).**
 
@@ -494,7 +494,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/PhysicalGlue.literal_root_ag
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.literal_root_agreement. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise. 
+D5.S3.Geometry.OriginalLabelTwoSum.PhysicalGlue.literal_root_agreement. Original left and right GraphData, one genuine retained left edge and one actual right chord are the inputs. The carrier and actual tree come from released CutTree. Every parent GraphData field and its path-derived row/root identity is proved in source. Original left and physical noninterface right indices and the same ambient labels are retained. No desired parent output is a premise.
 
 ## References
 

@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/WheelSupplier.oneStep`
 
 *Commentary.*
 
-Witness the right Gamma permission by the original four pairs, install both filling records and the separate 13/123 collar on fresh labels, then RUN the parent compiler. Its Prop-valued permission makes a classical Gamma choice; the exact expansion below records that choice, without identifying it with its witness. There is no restriction excluding e=current core vertex. 
+Witness the right Gamma permission by the original four pairs, install both filling records and the separate 13/123 collar on fresh labels, then RUN the parent compiler. Its Prop-valued permission makes a classical Gamma choice; the exact expansion below records that choice, without identifying it with its witness. There is no restriction excluding e=current core vertex.
 
 **Theorem 1.2 (oneStep_critical).**
 
@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/WheelSupplier.oneStep_critic
 
 *Commentary.*
 
-The computed critical family has the exact original two-branch transform. 
+The computed critical family has the exact original two-branch transform.
 
 **Theorem 1.3 (oneStep_statistics).**
 
@@ -38,7 +38,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/WheelSupplier.oneStep_statis
 
 *Commentary.*
 
-The native one-step supplier preserves the number of critical faces and increases the size of EACH by exactly two, also when the interface is a critical singleton or the current core vertex. 
+The native one-step supplier preserves the number of critical faces and increases the size of EACH by exactly two, also when the interface is a critical singleton or the current core vertex.
 
 **Definition 1.4 (oneStepMainFrom).**
 
@@ -50,7 +50,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/WheelSupplier.oneStepMainFro
 
 *Commentary.*
 
-Raw-face main substitution. Only previous pair data and critical labels are inputs; filling lists are the actual renamed original wheel operations. 
+Raw-face main substitution. Only previous pair data and critical labels are inputs; filling lists are the actual renamed original wheel operations.
 
 **Definition 1.5 (oneStepSeparateFrom).**
 
@@ -62,7 +62,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/WheelSupplier.oneStepSeparat
 
 *Commentary.*
 
-Raw-face separate substitution: standalone collars, previous core faces, then the full-ground terminal formula. No previous certificate is consulted. 
+Raw-face separate substitution: standalone collars, previous core faces, then the full-ground terminal formula. No previous certificate is consulted.
 
 **Definition 1.6 (oneStepMainSchedule).**
 
@@ -74,7 +74,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/WheelSupplier.oneStepMainSch
 
 *Commentary.*
 
-The compiler instance of the main raw-face substitution. 
+The compiler instance of the main raw-face substitution.
 
 **Definition 1.7 (oneStepSeparateSchedule).**
 
@@ -86,7 +86,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/WheelSupplier.oneStepSeparat
 
 *Commentary.*
 
-The compiler instance of the separate raw-face substitution. 
+The compiler instance of the separate raw-face substitution.
 
 **Theorem 1.8 (oneStep_main_orderedPairs).**
 
@@ -98,7 +98,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/WheelSupplier.oneStep_main_o
 
 *Commentary.*
 
-Both one-step formulas use the Gamma actually chosen by the existing Prop-valued compiler permission, rather than identifying choice with its witness. 
+Both one-step formulas use the Gamma actually chosen by the existing Prop-valued compiler permission, rather than identifying choice with its witness.
 
 **Theorem 1.9 (oneStep_separate_orderedPairs).**
 
@@ -110,7 +110,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/WheelSupplier.oneStep_separa
 
 *Commentary.*
 
-Original-label source declaration consumed by the native compiler and row construction. 
+Original-label source declaration consumed by the native compiler and row construction.
 
 **Theorem 1.10 (oneStep_vertex).**
 
@@ -122,7 +122,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/WheelSupplier.oneStep_vertex
 
 *Commentary.*
 
-The exact terminal choice used by the independent row vertex recursion. 
+The exact terminal choice used by the independent row vertex recursion.
 
 ## References
 

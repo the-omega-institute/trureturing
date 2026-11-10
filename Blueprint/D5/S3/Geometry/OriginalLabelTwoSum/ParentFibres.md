@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/ParentFibres.criticalPart`
 
 *Commentary.*
 
-These are literal X-parts; the removed label e is not an output coordinate. 
+These are literal X-parts; the removed label e is not an output coordinate.
 
 **Definition 1.2 (localWindow).**
 
@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/ParentFibres.localWindow`
 
 *Commentary.*
 
-These are literal X-parts; the removed label e is not an output coordinate. 
+These are literal X-parts; the removed label e is not an output coordinate.
 
 **Definition 1.3 (localBase).**
 
@@ -38,7 +38,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/ParentFibres.localBase`
 
 *Commentary.*
 
-These are literal X-parts; the removed label e is not an output coordinate. 
+These are literal X-parts; the removed label e is not an output coordinate.
 
 **Theorem 1.4 (parent_fibre_base).**
 
@@ -50,7 +50,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/ParentFibres.parent_fibre_ba
 
 *Commentary.*
 
-Boundary and fibre-intersection facts for the COMPUTED Cbase. 
+Boundary and fibre-intersection facts for the COMPUTED Cbase.
 
 **Theorem 1.5 (parent_fibre_cross).**
 
@@ -62,7 +62,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/ParentFibres.parent_fibre_cr
 
 *Commentary.*
 
-Exact cross-fibre exclusion. The one direction that can intersect is the second-kind fibre into a first-kind block, and its right part then lies in Z. 
+Exact cross-fibre exclusion. The one direction that can intersect is the second-kind fibre into a first-kind block, and its right part then lies in Z.
 
 **Theorem 1.6 (parent_initial_fibres).**
 
@@ -74,7 +74,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/ParentFibres.parent_initial_
 
 *Commentary.*
 
-The initial fibre decomposition is PROVED from proper-boundary membership, not assumed as an endpoint or desired parent row equation. 
+The initial fibre decomposition is PROVED from proper-boundary membership, not assumed as an endpoint or desired parent row equation.
 
 ## References
 

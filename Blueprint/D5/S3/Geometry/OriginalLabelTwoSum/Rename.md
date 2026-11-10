@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Rename.renameFamily`
 
 *Commentary.*
 
-Direct image of raw faces, without adjoining empty to a VOID source. 
+Direct image of raw faces, without adjoining empty to a VOID source.
 
 **Theorem 1.2 (project_rename).**
 
@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Rename.project_rename`
 
 *Commentary.*
 
-Projection agrees exactly with the pinned mathlib image-complex API. 
+Projection agrees exactly with the pinned mathlib image-complex API.
 
 **Definition 1.3 (renamePair).**
 
@@ -38,7 +38,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Rename.renamePair`
 
 *Commentary.*
 
-Ordinary free pairs transport through an injective label map. Freeness is proved on all cofaces of the mapped ambient, rather than postulated. 
+Ordinary free pairs transport through an injective label map. Freeness is proved on all cofaces of the mapped ambient, rather than postulated.
 
 **Definition 1.4 (renameSequence).**
 
@@ -50,7 +50,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Rename.renameSequence`
 
 *Commentary.*
 
-Recursive transport of the ACTUAL native list. 
+Recursive transport of the ACTUAL native list.
 
 **Theorem 1.5 (renameSequence_pairs).**
 
@@ -62,7 +62,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Rename.renameSequence_pairs`
 
 *Commentary.*
 
-Exact ordered coverage of the transported ordinary pairs. 
+Exact ordered coverage of the transported ordinary pairs.
 
 **Theorem 1.6 (rename_operations).**
 
@@ -74,7 +74,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Rename.rename_operations`
 
 *Commentary.*
 
-Simplex, intersections and endpoint families are transported literally. 
+Simplex, intersections and endpoint families are transported literally.
 
 **Definition 1.7 (renameFilling).**
 
@@ -86,7 +86,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Rename.renameFilling`
 
 *Commentary.*
 
-A local filling can be installed on any fresh original labels. 
+A local filling can be installed on any fresh original labels.
 
 **Definition 1.8 (renameCertificate).**
 
@@ -98,7 +98,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Rename.renameCertificate`
 
 *Commentary.*
 
-Absolute certificates transport with every original ground/ghost label. 
+Absolute certificates transport with every original ground/ghost label.
 
 ## References
 

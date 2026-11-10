@@ -20,7 +20,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyM
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -42,7 +42,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyM
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -64,7 +64,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyM
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -86,7 +86,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyM
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -108,7 +108,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyM
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -130,7 +130,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyM
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -152,7 +152,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyM
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -174,7 +174,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyM
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -198,7 +198,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyM
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -222,7 +222,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyM
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -244,7 +244,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyM
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -270,7 +270,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyM
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -296,7 +296,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyM
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -318,7 +318,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyM
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -344,7 +344,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyM
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -370,7 +370,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyM
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -394,7 +394,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyM
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -418,7 +418,7 @@ Actual pairing on the NONEMPTY native faces, without any acyclicity field.
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -440,7 +440,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyM
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -462,7 +462,7 @@ Augmented complexes represented literally as finite downward families. The empty
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -494,7 +494,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyM
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -516,7 +516,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyM
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -538,7 +538,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyM
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -560,7 +560,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyM
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -584,7 +584,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyM
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -608,7 +608,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyM
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -632,7 +632,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyM
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -656,7 +656,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyM
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -682,7 +682,7 @@ Exact residual decomposition, including the empty face if it is available.
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -706,7 +706,7 @@ A as a relative difference on the SAME original coordinate type.
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -728,7 +728,7 @@ B as a relative difference without relabelling or dropping its fixed v. All no-v
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -750,7 +750,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyM
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -774,7 +774,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyM
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -798,7 +798,7 @@ The exact augmented/native bridge used by the nonempty greedy algorithm.
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -820,7 +820,7 @@ The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyM
 
 ### Source text
 
-Exact attempted Lean contract: Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Source variable context (not a compiled telescope):
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 

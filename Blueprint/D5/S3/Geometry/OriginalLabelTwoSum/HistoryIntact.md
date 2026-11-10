@@ -4,7 +4,7 @@
 
 Original-coordinate intact terminals, exact excluded-residue normalizations and actual relative product lists.
 
-The canonical predecessor emptyOldIntactOutput is preserved byte for byte. The arbitrary-coordinate empty-old constructor classifies the actual raw family on {e} as VOID, UNIT or its point simplex and maps the real path/cycle native lists; no point is chosen in empty X. On nonempty X, intactOutput has the exact oJ/oL predecessor telescope, dispatched by m modulo three. Residue zero first normalizes to the literal B union Jhat*Delta(eta) union L*Delta(d), with Jhat obtained from the genuine e-to-first-marker coordinate swap. Both actual factor layers are recovered using relativeLayer/twoLayers, with the first and second core strips run on C alone before a single base cone. Label 3 and label 2 are the actual separation witnesses, including m=3. Residue two normalizes to B union L*Delta(d) and uses oneLayer. Good residue consumes the original AllMWheel.oneStep at its real compiler and Gamma hypotheses; VOID and UNIT have explicit constructors. The main/core readback sources for the two excluded residues, the good strong branch, good tags and embedded empty case are included. The selected compiler chooses rightGammaPairs classically; no equality with a preferred concrete Gamma witness is asserted.  The local terminal has not been accepted by an independent source reviewer, Lean kernel or native runner. The projected-forest recursion, all original-corner and physical-history induction obligations remain open.
+The canonical predecessor emptyOldIntactOutput is preserved byte for byte. The arbitrary-coordinate empty-old constructor classifies the actual raw family on {e} as VOID, UNIT or its point simplex and maps the real path/cycle native lists; no point is chosen in empty X. On nonempty X, intactOutput has the exact oJ/oL predecessor telescope, dispatched by m modulo three. Residue zero first normalizes to the literal B union Jhat*Delta(eta) union L*Delta(d), with Jhat obtained from the genuine e-to-first-marker coordinate swap. Both actual factor layers are recovered using relativeLayer/twoLayers, with the first and second core strips run on C alone before a single base cone. Label 3 and label 2 are the actual separation witnesses, including m=3. Residue two normalizes to B union L*Delta(d) and uses oneLayer. Good residue consumes the original AllMWheel.oneStep at its real compiler and Gamma hypotheses; VOID and UNIT have explicit constructors. The main/core readback sources for the two excluded residues, the good strong branch, good tags and embedded empty case are included. The selected compiler chooses rightGammaPairs classically; no equality with a preferred concrete Gamma witness is asserted.  The local terminal is the raw family specified by the preceding endpoint formula. HistoryForests and HistoryRecursion develop the projected-forest and original-corner recursion, with physical histories treated by their paired modules.
 
   Bounded Python face controls are not Lean values and do not prove a universal or physical graph theorem.
 
@@ -50,7 +50,7 @@ excluded-residue normalizations have globally expanded pair lists. The
 
 public intactOutput below has the intended local predecessor telescope.
 
-No elaboration, kernel acceptance or physical-history induction is claimed.
+The physical-history induction is a separate consumer of these local constructions.
 
 -/
 
@@ -3614,7 +3614,7 @@ Definitions and proofs are in the paired Lean module.
 
 actual tag, explicitly in the ORIGINAL oJ/oL lists. No list is permuted. -/
 
-This continuation proves the exact zeroMarkerOutput_lists telescope by ground-transport invariance and the genuine renameSequence_pairs for BOTH native lists. The original zeroIntact_main_faces and zeroIntact_core_faces proofs are preserved and consumed in new original-factor readbacks. The complete intactOutput main and C-ALONE formulas dispatch over every residue and every actual factor tag in the ORIGINAL oJ/oL lists. The marker core point uses the same coordinate swap; tags have no point-layer pair. No native engine, family endpoint, skipped order or theorem premise is changed.  
+This continuation proves the exact zeroMarkerOutput_lists telescope by ground-transport invariance and the genuine renameSequence_pairs for BOTH native lists. The original zeroIntact_main_faces and zeroIntact_core_faces proofs are preserved and consumed in new original-factor readbacks. The complete intactOutput main and C-ALONE formulas dispatch over every residue and every actual factor tag in the ORIGINAL oJ/oL lists. The marker core point uses the same coordinate swap; tags have no point-layer pair. No native engine, family endpoint, skipped order or theorem premise is changed.
 
 **Definition 1.35 (zeroMarkerOutput_lists).**
 

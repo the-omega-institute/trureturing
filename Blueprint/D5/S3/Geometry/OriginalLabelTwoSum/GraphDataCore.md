@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/GraphDataCore.GraphData`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.GraphData. Existing GraphData, path, path_eq and rows declarations are moved verbatim from Graph into this unique owner. Graph imports this owner; CutGraphRows consumes it directly. Arbitrary vertices and the original finite Label assumptions are preserved. 
+D5.S3.Geometry.OriginalLabelTwoSum.GraphData. Existing GraphData, path, path_eq and rows declarations are moved verbatim from Graph into this unique owner. Graph imports this owner; CutGraphRows consumes it directly. Arbitrary vertices and the original finite Label assumptions are preserved.
 
 **Definition 1.2 (path).**
 
@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/GraphDataCore.path`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.GraphData.path. Existing GraphData, path, path_eq and rows declarations are moved verbatim from Graph into this unique owner. Graph imports this owner; CutGraphRows consumes it directly. Arbitrary vertices and the original finite Label assumptions are preserved. 
+D5.S3.Geometry.OriginalLabelTwoSum.GraphData.path. Existing GraphData, path, path_eq and rows declarations are moved verbatim from Graph into this unique owner. Graph imports this owner; CutGraphRows consumes it directly. Arbitrary vertices and the original finite Label assumptions are preserved.
 
 **Theorem 1.3 (path_eq).**
 
@@ -38,7 +38,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/GraphDataCore.path_eq`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.GraphData.path_eq. Existing GraphData, path, path_eq and rows declarations are moved verbatim from Graph into this unique owner. Graph imports this owner; CutGraphRows consumes it directly. Arbitrary vertices and the original finite Label assumptions are preserved. 
+D5.S3.Geometry.OriginalLabelTwoSum.GraphData.path_eq. Existing GraphData, path, path_eq and rows declarations are moved verbatim from Graph into this unique owner. Graph imports this owner; CutGraphRows consumes it directly. Arbitrary vertices and the original finite Label assumptions are preserved.
 
 **Definition 1.4 (rows).**
 
@@ -50,7 +50,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/GraphDataCore.rows`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.GraphData.rows. Existing GraphData, path, path_eq and rows declarations are moved verbatim from Graph into this unique owner. Graph imports this owner; CutGraphRows consumes it directly. Arbitrary vertices and the original finite Label assumptions are preserved. 
+D5.S3.Geometry.OriginalLabelTwoSum.GraphData.rows. Existing GraphData, path, path_eq and rows declarations are moved verbatim from Graph into this unique owner. Graph imports this owner; CutGraphRows consumes it directly. Arbitrary vertices and the original finite Label assumptions are preserved.
 
 ## References
 

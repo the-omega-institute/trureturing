@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutPaths.treePath`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.treePath. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.treePath. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows.
 
 **Theorem 1.2 (treePath_isPath).**
 
@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutPaths.treePath_isPath`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.treePath_isPath. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.treePath_isPath. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows.
 
 **Theorem 1.3 (treePath_eq).**
 
@@ -38,7 +38,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutPaths.treePath_eq`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.treePath_eq. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.treePath_eq. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows.
 
 **Definition 1.4 (leftPath).**
 
@@ -50,7 +50,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutPaths.leftPath`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.leftPath. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.leftPath. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows.
 
 **Definition 1.5 (rightPath).**
 
@@ -62,7 +62,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutPaths.rightPath`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.rightPath. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.rightPath. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows.
 
 **Definition 1.6 (path).**
 
@@ -74,7 +74,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutPaths.path`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.path. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.path. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows.
 
 **Theorem 1.7 (right_path).**
 
@@ -86,7 +86,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutPaths.right_path`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.right_path. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.right_path. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows.
 
 **Theorem 1.8 (right_path_edge_mem).**
 
@@ -98,7 +98,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutPaths.right_path_edge_mem
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.right_path_edge_mem. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.right_path_edge_mem. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows.
 
 **Definition 1.9 (avoidingImage).**
 
@@ -110,7 +110,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutPaths.avoidingImage`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.avoidingImage. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.avoidingImage. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows.
 
 **Theorem 1.10 (avoidingImage_edges).**
 
@@ -122,7 +122,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutPaths.avoidingImage_edges
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.avoidingImage_edges. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.avoidingImage_edges. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows.
 
 **Theorem 1.11 (avoidingImage_isPath).**
 
@@ -134,7 +134,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutPaths.avoidingImage_isPat
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.avoidingImage_isPath. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.avoidingImage_isPath. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows.
 
 **Theorem 1.12 (left_path_avoiding).**
 
@@ -146,7 +146,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutPaths.left_path_avoiding`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.left_path_avoiding. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.left_path_avoiding. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows.
 
 **Definition 1.13 (terminalPath).**
 
@@ -158,7 +158,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutPaths.terminalPath`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.terminalPath. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.terminalPath. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows.
 
 **Theorem 1.14 (terminalPath_isPath).**
 
@@ -170,7 +170,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutPaths.terminalPath_isPath
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.terminalPath_isPath. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.terminalPath_isPath. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows.
 
 **Definition 1.15 (spliceAB).**
 
@@ -182,7 +182,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutPaths.spliceAB`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.spliceAB. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.spliceAB. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows.
 
 **Definition 1.16 (spliceBA).**
 
@@ -194,7 +194,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutPaths.spliceBA`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.spliceBA. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.spliceBA. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows.
 
 **Theorem 1.17 (support_overlap_a).**
 
@@ -206,7 +206,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutPaths.support_overlap_a`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.support_overlap_a. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.support_overlap_a. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows.
 
 **Theorem 1.18 (support_overlap_b).**
 
@@ -218,7 +218,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutPaths.support_overlap_b`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.support_overlap_b. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.support_overlap_b. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows.
 
 **Theorem 1.19 (segments_disjoint).**
 
@@ -230,7 +230,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutPaths.segments_disjoint`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.segments_disjoint. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.segments_disjoint. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows.
 
 **Theorem 1.20 (spliceAB_isPath).**
 
@@ -242,7 +242,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutPaths.spliceAB_isPath`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.spliceAB_isPath. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.spliceAB_isPath. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows.
 
 **Theorem 1.21 (spliceBA_isPath).**
 
@@ -254,7 +254,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutPaths.spliceBA_isPath`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.spliceBA_isPath. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.spliceBA_isPath. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows.
 
 **Theorem 1.22 (spliceAB_edge_mem).**
 
@@ -266,7 +266,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutPaths.spliceAB_edge_mem`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.spliceAB_edge_mem. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.spliceAB_edge_mem. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows.
 
 **Theorem 1.23 (spliceBA_edge_mem).**
 
@@ -278,7 +278,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutPaths.spliceBA_edge_mem`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.spliceBA_edge_mem. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.spliceBA_edge_mem. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows.
 
 **Theorem 1.24 (left_path_using).**
 
@@ -326,7 +326,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/CutPaths.right_path_edgeSet`
 
 *Commentary.*
 
-D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.right_path_edgeSet. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows. 
+D5.S3.Geometry.OriginalLabelTwoSum.CutTree.Input.right_path_edgeSet. Construct actual mapped walks and oriented splices. Support separation proves the splice is a path before uniqueness in the proved tree identifies it. Physical edge replacement and unchanged right paths are consumed by CutGraphRows.
 
 ## References
 

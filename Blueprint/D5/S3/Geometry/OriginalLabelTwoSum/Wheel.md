@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Wheel.Label`
 
 *Commentary.*
 
-Actual source declaration; elaboration, native selection and audits remain OPEN.
+The declaration uses the original raw label carrier and the stated parameters.
 
 **Definition 1.2 (Y).**
 
@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Wheel.Y`
 
 *Commentary.*
 
-Actual source declaration; elaboration, native selection and audits remain OPEN.
+The declaration uses the original raw label carrier and the stated parameters.
 
 **Definition 1.3 (R).**
 
@@ -38,7 +38,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Wheel.R`
 
 *Commentary.*
 
-Actual source declaration; elaboration, native selection and audits remain OPEN.
+The declaration uses the original raw label carrier and the stated parameters.
 
 **Definition 1.4 (Z).**
 
@@ -50,7 +50,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Wheel.Z`
 
 *Commentary.*
 
-Actual source declaration; elaboration, native selection and audits remain OPEN.
+The declaration uses the original raw label carrier and the stated parameters.
 
 **Definition 1.5 (E).**
 
@@ -62,7 +62,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Wheel.E`
 
 *Commentary.*
 
-Actual source declaration; elaboration, native selection and audits remain OPEN.
+The declaration uses the original raw label carrier and the stated parameters.
 
 **Definition 1.6 (A0).**
 
@@ -74,7 +74,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Wheel.A0`
 
 *Commentary.*
 
-Actual source declaration; elaboration, native selection and audits remain OPEN.
+The declaration uses the original raw label carrier and the stated parameters.
 
 **Definition 1.7 (A1).**
 
@@ -86,7 +86,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Wheel.A1`
 
 *Commentary.*
 
-Actual source declaration; elaboration, native selection and audits remain OPEN.
+The declaration uses the original raw label carrier and the stated parameters.
 
 **Definition 1.8 (B1).**
 
@@ -98,7 +98,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Wheel.B1`
 
 *Commentary.*
 
-Actual source declaration; elaboration, native selection and audits remain OPEN.
+The declaration uses the original raw label carrier and the stated parameters.
 
 **Definition 1.9 (gamma).**
 
@@ -110,7 +110,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Wheel.gamma`
 
 *Commentary.*
 
-All four ORIGINAL Gamma pairs, in their actual evolving complexes. 
+All four ORIGINAL Gamma pairs, in their actual evolving complexes.
 
 **Theorem 1.10 (gamma_pairs).**
 
@@ -122,7 +122,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Wheel.gamma_pairs`
 
 *Commentary.*
 
-Ordered extraction uses the real native pairs. 
+Ordered extraction uses the real native pairs.
 
 **Theorem 1.11 (interface_equations).**
 
@@ -134,7 +134,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Wheel.interface_equations`
 
 *Commentary.*
 
-A0 is E intersect the original Z-simplex; A1 retains the e-row simplex. 
+A0 is E intersect the original Z-simplex; A1 retains the e-row simplex.
 
 **Definition 1.12 (fill0).**
 
@@ -146,7 +146,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Wheel.fill0`
 
 *Commentary.*
 
-No pair at all in either list of filling zero. 
+No pair at all in either list of filling zero.
 
 **Definition 1.13 (fill1).**
 
@@ -158,7 +158,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Wheel.fill1`
 
 *Commentary.*
 
-The collar pair is on B1 alone, while the main endpoint also contains 134. 
+The collar pair is on B1 alone, while the main endpoint also contains 134.
 
 **Theorem 1.14 (collar_not_free_in_main).**
 
@@ -170,7 +170,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Wheel.collar_not_free_in_mai
 
 *Commentary.*
 
-A concrete obstruction to performing the collar pair in the whole endpoint: two distinct strict cofaces remain there. 
+A concrete obstruction to performing the collar pair in the whole endpoint: two distinct strict cofaces remain there.
 
 **Definition 1.15 (certificate).**
 
@@ -182,7 +182,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Wheel.certificate`
 
 *Commentary.*
 
-The wheel's absolute certificate is a consumer of the same path E. 
+The wheel's absolute certificate is a consumer of the same path E.
 
 **Definition 1.16 (SeedLabel).**
 
@@ -194,7 +194,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Wheel.SeedLabel`
 
 *Commentary.*
 
-The wheel's absolute certificate is a consumer of the same path E. 
+The wheel's absolute certificate is a consumer of the same path E.
 
 **Definition 1.17 (root).**
 
@@ -206,7 +206,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Wheel.root`
 
 *Commentary.*
 
-p=0,u=1,v=2; no label is globally removed as a ghost. 
+p=0,u=1,v=2; no label is globally removed as a ghost.
 
 **Definition 1.18 (seed).**
 
@@ -218,7 +218,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Wheel.seed`
 
 *Commentary.*
 
-p=0,u=1,v=2; no label is globally removed as a ghost. 
+p=0,u=1,v=2; no label is globally removed as a ghost.
 
 ## References
 

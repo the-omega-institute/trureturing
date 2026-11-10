@@ -16,7 +16,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.Label`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 abbrev Label (m : Nat) := Fin (m + 1)
 
@@ -30,7 +30,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.label`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 def label (m : Nat) (i : Fin m) : Label m
 
@@ -44,7 +44,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.ground`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 def ground (m : Nat) : Finset (Label m)
 
@@ -58,7 +58,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.firstLabel`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 def firstLabel (m : Nat) (hm : 3 ≤ m) : Label m
 
@@ -72,7 +72,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.secondLabel`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 def secondLabel (m : Nat) (hm : 3 ≤ m) : Label m
 
@@ -86,7 +86,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.lastLabel`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 def lastLabel (m : Nat) : Label m
 
@@ -100,7 +100,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.rimIndex`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 def rimIndex (m : Nat) (hm : 0 < m) (i : Fin m) : Fin m
 
@@ -114,7 +114,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.rimEdge`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 def rimEdge (m : Nat) (hm : 0 < m) (i : Fin m) : Finset (Label m)
 
@@ -128,7 +128,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.rimRows`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 def rimRows (m : Nat) (hm : 0 < m) : Rows (Label m)
 
@@ -142,7 +142,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.wheelRoot`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 def wheelRoot (m : Nat) (hm : 0 < m) : Family (Label m)
 
@@ -156,7 +156,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.interfaceRow`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 def interfaceRow (m : Nat) (hm : 3 ≤ m) : Fin m
 
@@ -170,7 +170,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.pathRoot`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 def pathRoot (m : Nat) (hm : 3 ≤ m) : Family (Label m)
 
@@ -184,7 +184,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.rim`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 def rim (m : Nat) (hm : 3 ≤ m) : Finset (Label m)
 
@@ -198,7 +198,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.tailGround`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 def tailGround (m : Nat) (hm : 3 ≤ m) : Finset (Label m)
 
@@ -212,7 +212,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.A0`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 def A0 (m : Nat) (hm : 3 ≤ m) : Family (Label m)
 
@@ -226,7 +226,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.A1`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 def A1 (m : Nat) (hm : 3 ≤ m) : Family (Label m)
 
@@ -240,7 +240,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.starDualCarrier`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -258,7 +258,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.dualIdentity`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 def dualIdentity {V : Type*} [DecidableEq V] (W : Finset V) (K L : Family V) : Prop
 
@@ -272,7 +272,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.labelInterval`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 def labelInterval (m lo : Nat) : (n : Nat) → lo + n ≤ m + 1 → List (Label m)
 
@@ -286,7 +286,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.labelInterval_leng
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -304,7 +304,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.mem_labelInterval`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -322,7 +322,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.labelInterval_nodu
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -340,7 +340,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.labelInterval_edge
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -364,7 +364,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.pathRootPath`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 def pathRootPath (m : Nat) (hm : 3 ≤ m) : List (Label m)
 
@@ -378,7 +378,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.cyclePath`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 def cyclePath (m : Nat) (hm : 3 ≤ m) : List (Label m)
 
@@ -392,7 +392,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.cyclePathTail`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 def cyclePathTail (m : Nat) (hm : 3 ≤ m) : List (Label m)
 
@@ -406,7 +406,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.cyclePathLast`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 def cyclePathLast (m : Nat) (hm : 3 ≤ m) : List (Label m)
 
@@ -420,7 +420,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.pathRootPath_lengt
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -438,7 +438,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.cyclePath_length`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -456,7 +456,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.cyclePathTail_leng
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -474,7 +474,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.cyclePathLast_leng
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -492,7 +492,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.pathRootPath_nodup
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 theorem pathRootPath_nodup (m : Nat) (hm : 3 ≤ m) : (pathRootPath m hm).Nodup
 
@@ -506,7 +506,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.cyclePath_nodup`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 theorem cyclePath_nodup (m : Nat) (hm : 3 ≤ m) : (cyclePath m hm).Nodup
 
@@ -520,7 +520,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.cyclePathTail_nodu
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 theorem cyclePathTail_nodup (m : Nat) (hm : 3 ≤ m) : (cyclePathTail m hm).Nodup
 
@@ -534,7 +534,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.cyclePathLast_nodu
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 theorem cyclePathLast_nodup (m : Nat) (hm : 3 ≤ m) : (cyclePathLast m hm).Nodup
 
@@ -548,7 +548,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.pathRootPath_verti
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -566,7 +566,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.cyclePath_vertices
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -584,7 +584,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.cyclePathTail_vert
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -602,7 +602,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.cyclePathLast_vert
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -620,7 +620,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.pathRootPath_edges
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -642,7 +642,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.cyclePath_edges`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -662,7 +662,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.cyclePathTail_edge
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -682,7 +682,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.cyclePathLast_edge
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -702,7 +702,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.pathRootWordData`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -720,7 +720,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.cycleTailWordData`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -738,7 +738,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.cycleLastWordData`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -756,7 +756,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.cycleEdges`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 def cycleEdges (m : Nat) (hm : 3 ≤ m) : Finset (Finset (Label m))
 
@@ -770,7 +770,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.cycleEdges_mem`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -792,7 +792,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.pathRootPath_row_e
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -814,7 +814,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.cycleIndependentOn
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 def cycleIndependentOn (m : Nat) (hm : 3 ≤ m) : Finset (Finset (Label m))
 
@@ -828,7 +828,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.mapSecond`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 def mapSecond (m : Nat) (hm : 3 ≤ m) : Symbol (Label m) → Symbol (Label m)
 
@@ -842,7 +842,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.mapLast`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 def mapLast (m : Nat) (hm : 3 ≤ m) : Symbol (Label m) → Symbol (Label m)
 
@@ -856,7 +856,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.cycleWord`
 
 *Commentary.*
 
-Actual three-block cycle list consumes the two canonical path Word records. Full cyclic Word validity and all downstream native/filling obligations remain open.
+The three-block cycle list consumes the two canonical path Word records. Its cyclic Word validity and filling constructions are treated by the cycle-word and protected modules.
 
 def cycleWord (m : Nat) (hm : 3 ≤ m) : List (Symbol (Label m))
 
@@ -870,7 +870,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.tailWord`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 def tailWord (m : Nat) (hm : 3 ≤ m) : List (Symbol (Label m))
 
@@ -884,7 +884,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.cycleWord_eq`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -910,7 +910,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.tailWord_eq`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 
@@ -928,7 +928,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.labelsCongruent`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 def labelsCongruent (m r lo : Nat) : Finset (Label m)
 
@@ -942,7 +942,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.tailCritical`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 def tailCritical (m : Nat) (hm : 3 ≤ m) : Finset (Label m)
 
@@ -970,7 +970,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.eta0`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 def eta0 (m : Nat) (hm : 3 ≤ m) : Finset (Label m)
 
@@ -984,7 +984,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.eta1`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 def eta1 (m : Nat) (hm : 3 ≤ m) : Finset (Label m)
 
@@ -998,7 +998,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.goodResidue`
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 def goodResidue (m : Nat) : Prop
 
@@ -1012,7 +1012,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.criticalCardProfil
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 def criticalCardProfile (m : Nat) : Nat × Nat × Nat × Nat
 
@@ -1026,7 +1026,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel.pathRootPath_noCri
 
 *Commentary.*
 
-Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.
+Literal source declaration. The appended lexical scope supplies the original parameters.
 
 ### Source text
 

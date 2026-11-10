@@ -26,7 +26,7 @@ Exact public SOURCE declaration and proof/body:
 
 abbrev Label := Fin 7
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.2 (h).**
 
@@ -50,7 +50,7 @@ Exact public SOURCE declaration and proof/body:
 
 abbrev h : Label := 0
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.3 (a).**
 
@@ -74,7 +74,7 @@ Exact public SOURCE declaration and proof/body:
 
 abbrev a : Label := 1
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.4 (c).**
 
@@ -98,7 +98,7 @@ Exact public SOURCE declaration and proof/body:
 
 abbrev c : Label := 2
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.5 (e).**
 
@@ -122,7 +122,7 @@ Exact public SOURCE declaration and proof/body:
 
 abbrev e : Label := 3
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.6 (one).**
 
@@ -146,7 +146,7 @@ Exact public SOURCE declaration and proof/body:
 
 abbrev one : Label := 4
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.7 (two).**
 
@@ -170,7 +170,7 @@ Exact public SOURCE declaration and proof/body:
 
 abbrev two : Label := 5
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.8 (three).**
 
@@ -194,7 +194,7 @@ Exact public SOURCE declaration and proof/body:
 
 abbrev three : Label := 6
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.9 (left).**
 
@@ -246,7 +246,7 @@ def left : GraphData (Fin 5) Label where
 
   chord_cover := by decide
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.10 (left_rows).**
 
@@ -280,7 +280,7 @@ theorem left_rows (i : Fin 2) : left.rows.row i =
 
   fin_cases i <;> decide
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.11 (parent).**
 
@@ -332,7 +332,7 @@ def parent : GraphData (Fin 7) Label where
 
   chord_cover := by decide
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.12 (parent_rows).**
 
@@ -366,7 +366,7 @@ theorem parent_rows (i : Fin 4) : parent.rows.row i =
 
   fin_cases i <;> decide
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.13 (oldVertex).**
 
@@ -390,7 +390,7 @@ Exact public SOURCE declaration and proof/body:
 
 def oldVertex (v : Fin 5) : Fin 7 := ⟨v.val,by omega⟩
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.14 (physical_attachment).**
 
@@ -422,7 +422,7 @@ theorem physical_attachment : ∀ x y : Fin 7, parent.graph.Adj x y ↔
 
   decide
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.15 (physical_counts).**
 
@@ -452,7 +452,7 @@ theorem physical_counts : Fintype.card (Fin 7) = 7 ∧
 
     parent.ground.card = 6 := by decide
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.16 (physical_edges).**
 
@@ -480,7 +480,7 @@ theorem physical_edges : ∀ x y : Fin 7, parent.graph.Adj x y ↔
 
       s(0,2),s(0,3),s(4,6),s(6,0)} : Finset (Sym2 (Fin 7))) := by decide
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.17 (leftRoot).**
 
@@ -504,7 +504,7 @@ Exact public SOURCE declaration and proof/body:
 
 def leftRoot : Family Label := facets {{a,e},{c,e}}
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.18 (parentRoot).**
 
@@ -530,7 +530,7 @@ def parentRoot : Family Label :=
 
   facets {{a,one,two,three},{c,one,two,three},{a,c,h,one},{a,c,h,two}}
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.19 (left_root).**
 
@@ -566,7 +566,7 @@ theorem left_root : left.rows.root = leftRoot := by
 
     (∃ i : Fin 2, s ⊆ left.ground \ (![{h,a},{h,c}] i)) ↔ s ∈ leftRoot) s
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.20 (parent_root).**
 
@@ -604,7 +604,7 @@ theorem parent_root : parent.rows.root = parentRoot := by
 
       s ∈ parentRoot) s
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.21 (full_grounds).**
 
@@ -632,7 +632,7 @@ theorem full_grounds : left.ground = {h,a,c,e} ∧
 
     h ∈ left.ground ∧ ({h} : Finset Label) ∉ leftRoot ∧ e ∉ parent.ground := by decide
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.22 (B0).**
 
@@ -658,7 +658,7 @@ def B0 : Family Label := facets
 
   {{c,one,two,three},{a,c,h,one},{a,c,h,two}}
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.23 (Bf).**
 
@@ -682,7 +682,7 @@ Exact public SOURCE declaration and proof/body:
 
 def Bf : Family Label := facets {{c,three},{a,c,h,one},{a,c,h,two}}
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.24 (C).**
 
@@ -706,7 +706,7 @@ Exact public SOURCE declaration and proof/body:
 
 def C : Family Label := Bf ⊔ delta {c,one,two}
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.25 (q).**
 
@@ -730,7 +730,7 @@ Exact public SOURCE declaration and proof/body:
 
 def q : Finset Label := {a,one,two}
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.26 (leftSequence).**
 
@@ -758,7 +758,7 @@ def leftSequence : Sequence (project (leftRoot)) (project (delta {c})) :=
 
     (by simp [leftState]) (congrArg project leftFinal)
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.27 (verticalSequence).**
 
@@ -786,7 +786,7 @@ def verticalSequence : Sequence (project (parentRoot)) (project (B0 ⊔ delta q)
 
     (by simp [verticalState]) (congrArg project verticalFinal)
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.28 (baseSequence).**
 
@@ -814,7 +814,7 @@ def baseSequence : Sequence (project (B0)) (project (Bf)) :=
 
     (by simp [baseState]) (congrArg project baseFinal)
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.29 (left_order).**
 
@@ -846,7 +846,7 @@ theorem left_order : leftSequence.pairs.map (fun P => (P.lower,P.upper)) =
 
     CollapsePair.upper] <;> decide
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.30 (base_order).**
 
@@ -880,7 +880,7 @@ theorem base_order : baseSequence.pairs.map (fun P => (P.lower,P.upper)) =
 
     CollapsePair.upper] <;> decide
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.31 (skipped_order).**
 
@@ -910,7 +910,7 @@ theorem skipped_order :
 
   simp [baseSequence,baseStep,Sequence.pairs_cast,Sequence.pairs_append,Sequence.pairs,basePair,emitPair,baseLower,baseApex,baseLowers,baseApices,CollapsePair.upper,FinitePrescribedPairProtection.skipped,FinitePrescribedPairProtection.emitted,FinitePrescribedPairProtection.blocked,q,Finset.subset_iff] <;> decide
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.32 (emitted_order).**
 
@@ -942,7 +942,7 @@ theorem emitted_order :
 
   simp [baseSequence,baseStep,Sequence.pairs_cast,Sequence.pairs_append,Sequence.pairs,basePair,emitPair,baseLower,baseApex,baseLowers,baseApices,CollapsePair.upper,FinitePrescribedPairProtection.skipped,FinitePrescribedPairProtection.emitted,FinitePrescribedPairProtection.blocked,q,Finset.subset_iff] <;> decide
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.33 (scan_indices).**
 
@@ -972,7 +972,7 @@ theorem scan_indices :
 
   simp [baseSequence,baseStep,Sequence.pairs_cast,Sequence.pairs_append,Sequence.pairs,basePair,emitPair,baseLower,baseApex,baseLowers,baseApices,CollapsePair.upper,FinitePrescribedPairProtection.skippedIndices,FinitePrescribedPairProtection.emittedIndices,FinitePrescribedPairProtection.skippedIndexed,FinitePrescribedPairProtection.emittedIndexed,FinitePrescribedPairProtection.blocked,q,Finset.subset_iff] <;> decide
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.34 (core_identity).**
 
@@ -1002,7 +1002,7 @@ theorem core_identity : FinitePrescribedPairProtection.core baseSequence {q} = p
 
   rfl
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.35 (protectedSuffix).**
 
@@ -1028,7 +1028,7 @@ def protectedSuffix : Sequence (project (B0 ⊔ delta q)) (project (C ⊔ delta 
 
   (FinitePrescribedPairProtection.protectedReplay baseSequence {q}).cast base_union_identity endpoint_identity
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.36 (main).**
 
@@ -1054,7 +1054,7 @@ def main : Sequence (project parent.rows.root) (project (C ⊔ delta q)) :=
 
   (verticalSequence.append protectedSuffix).cast (congrArg project parent_root).symm rfl
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.37 (main_order).**
 
@@ -1096,7 +1096,7 @@ theorem main_order : main.pairs.map (fun P => (P.lower,P.upper)) =
 
     verticalLowers,verticalApices,CollapsePair.upper] <;> decide
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.38 (critical_data).**
 
@@ -1160,7 +1160,7 @@ theorem critical_data : CriticalData C {q} := by
 
   · decide
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.39 (coneTail).**
 
@@ -1186,7 +1186,7 @@ def coneTail : Sequence (project Bf) (project (delta {c})) :=
 
   collapseCone parent.ground Bf c (by decide) (by decide) (by decide)
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.40 (collar).**
 
@@ -1212,7 +1212,7 @@ def collar : Sequence (project C) (project Bf) :=
 
   (FinitePrescribedPairProtection.standaloneReplay baseSequence {q}).cast core_identity rfl
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.41 (collar_order).**
 
@@ -1240,7 +1240,7 @@ theorem collar_order : collar.pairs.map (fun P => (P.lower,P.upper)) =
 
   rw [collar,Sequence.pairs_cast,FinitePrescribedPairProtection.standaloneReplay_pairs,skipped_order]
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.42 (separate).**
 
@@ -1264,7 +1264,7 @@ Exact public SOURCE declaration and proof/body:
 
 def separate : Sequence (project C) (project (delta {c})) := collar.append coneTail
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.43 (certificate).**
 
@@ -1308,7 +1308,7 @@ def certificate : Certificate parent.ground parent.rows.root where
 
   separate := separate
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.44 (standalone_cofaces).**
 
@@ -1336,7 +1336,7 @@ theorem standalone_cofaces : ∀ s : Finset Label,
 
       s = {one,two} ∨ s = {c,one,two} := by decide
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.45 (full_endpoint_cofaces).**
 
@@ -1364,7 +1364,7 @@ theorem full_endpoint_cofaces : ∀ s : Finset Label,
 
       s = {one,two} ∨ s = {c,one,two} ∨ s = q := by decide
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.46 (collar_deletion).**
 
@@ -1392,7 +1392,7 @@ theorem collar_deletion : cut C {{one,two}} = Bf := by
 
   exact (by decide : ∀ s : Finset Label, s ∈ cut C {{one,two}} ↔ s ∈ Bf)
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.47 (coneTail_order).**
 
@@ -1424,7 +1424,7 @@ theorem coneTail_order : coneTail.pairs.map (fun P => (P.lower,P.upper)) =
 
     Finset.empty_union]
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.48 (Regression.RLabel).**
 
@@ -1448,7 +1448,7 @@ Exact public SOURCE declaration and proof/body:
 
 abbrev RLabel := Fin 4
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.49 (Regression.initial).**
 
@@ -1472,7 +1472,7 @@ Exact public SOURCE declaration and proof/body:
 
 def initial : Family RLabel := facets {{0,1,2},{0,2,3},{1,2,3}}
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.50 (Regression.critical).**
 
@@ -1496,7 +1496,7 @@ Exact public SOURCE declaration and proof/body:
 
 def critical : Finset RLabel := {0,1,3}
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.51 (Regression.original).**
 
@@ -1524,7 +1524,7 @@ def original : Sequence (project initial) (project (delta {3})) :=
 
     (step 4)).append (step 5)).cast (by simp [state]) (congrArg project finalState)
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.52 (Regression.original_order).**
 
@@ -1556,7 +1556,7 @@ theorem original_order : original.pairs.map (fun P => (P.lower,P.upper)) =
 
     pair,emitPair,lower,apex,lowers,apices,CollapsePair.upper] <;> decide
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.53 (Regression.input_critical_data).**
 
@@ -1582,7 +1582,7 @@ theorem input_critical_data : CriticalData initial {critical} := by
 
   constructor <;> decide
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.54 (Regression.all_skipped).**
 
@@ -1618,7 +1618,7 @@ theorem all_skipped :
 
     FinitePrescribedPairProtection.blocked,critical,Finset.subset_iff] <;> decide
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.55 (Regression.core_is_initial).**
 
@@ -1660,7 +1660,7 @@ theorem core_is_initial : FinitePrescribedPairProtection.core original {critical
 
   decide
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.56 (Regression.forward).**
 
@@ -1686,7 +1686,7 @@ def forward : Sequence (project initial) (project (delta {3})) :=
 
   (FinitePrescribedPairProtection.standaloneReplay original {critical}).cast core_is_initial rfl
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.57 (Regression.forward_order).**
 
@@ -1716,7 +1716,7 @@ theorem forward_order : forward.pairs.map (fun P => (P.lower,P.upper)) =
 
     all_skipped.1]
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.58 (Regression.reverse_first_has_seven).**
 
@@ -1746,7 +1746,7 @@ theorem reverse_first_has_seven :
 
     ¬ ({2} : Finset RLabel) ⊆ critical := by decide
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Theorem 1.59 (Regression.reverse_first_cofaces).**
 
@@ -1776,7 +1776,7 @@ theorem reverse_first_cofaces : ∀ s : Finset RLabel,
 
   decide
 
-FromLean resolves the source-qualified declaration; no catalog, emit, kernel, Reg or admission success is claimed.
+The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 ## References
 

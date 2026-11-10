@@ -4,7 +4,7 @@
 
 Exact original-index interval images and every ordered greedy round commute with fixed pins and original-ground complementation.
 
-Universal proof bodies are attempted source. No compiler, kernel, Scribe/Reg audit or admission was executed. Every handle names its exact D5 source owner. Section variables below are lexical context only, not an asserted compiled telescope. FromLean requests the native projection; no fixture or readout is fabricated.
+The declaration handles name the paired Lean source owners. The displayed section variables give lexical scope; unused variables need not become declaration parameters.
 
 **Definition 1.1 (intervalEmbedding).**
 
