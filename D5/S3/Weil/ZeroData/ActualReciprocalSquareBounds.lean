@@ -1708,7 +1708,12 @@ private theorem h14LogPi : 2289459771 / 2000000000 < Real.log Real.pi := by
     dsimp [p]
     convert Real.pi_gt_d20 using 1 <;> norm_num
   have hm := Real.log_lt_log (by norm_num [p] : 0 < p) hp
-  linarith only [h.1, hr, hm, Real.log_two_gt_d9]
+  have hlogp : 6931471803 / 10000000000 +
+      D5.S3.Arith.GoldenResource.RobinRationalBasis.atanhPartial
+        (D5.S3.Arith.GoldenResource.RobinRationalBasis.atanhParameter (p / 2)) 12 <
+      Real.log p := by
+    linarith only [h.1, Real.log_two_gt_d9]
+  exact lt_trans hr (lt_trans hlogp hm)
 
 private def h14Finite (s : ℕ) : ℝ :=
   Real.log 2 / (2 : ℝ) ^ s +
@@ -2078,12 +2083,16 @@ private theorem h14Tail_antitone (s : ℕ) (hs : 3 ≤ s) :
   intro a ha b hb hab
   exact div_le_div_of_nonneg_right
     (Real.rpow_le_rpow_of_nonpos (by linarith [Set.mem_Ici.mp ha]) hab
-      (by have : (3 : ℝ) ≤ s := by exact_mod_cast hs; linarith)) (by norm_num)
+      (by
+        have hs' : (3 : ℝ) ≤ (s : ℝ) := by exact_mod_cast hs
+        linarith)) (by norm_num)
 
 private theorem h14Tail_integrable (s : ℕ) (hs : 3 ≤ s) :
     MeasureTheory.IntegrableOn (h14Tail s) (Set.Ioi (64 : ℝ)) := by
   exact (integrableOn_Ioi_rpow_of_lt
-    (by have : (3 : ℝ) ≤ s := by exact_mod_cast hs; linarith)
+    (by
+      have hs' : (3 : ℝ) ≤ (s : ℝ) := by exact_mod_cast hs
+      linarith)
     (by norm_num : (0 : ℝ) < 64)).div_const 2
 
 private theorem h14Tail_nonneg (s : ℕ) (x : ℝ) (hx : x ∈ Set.Ioi (64 : ℝ)) :
@@ -2255,7 +2264,7 @@ private lemma angle_bounds {N : ℕ} {c : Fin N → ℝ} {u p : ℝ}
   have hs := Real.sqrt_pos.2 hu
   have hss := Real.sq_sqrt hu.le
   have hratio : stripImaginary u p / (u + p + c j) ≤ 1 / Real.sqrt u := by
-    have hxu : u ≤ u + p + c j := by linarith [hc j]
+    have hxu : u ≤ u + p + c j := by linarith [hp.1, hc j]
     calc
       stripImaginary u p / (u + p + c j) ≤ stripImaginary u p / u :=
         div_le_div_of_nonneg_left hb.1 hu hxu
@@ -2380,10 +2389,11 @@ private theorem weight_pos {N : ℕ} {c : Fin N → ℝ} {u p : ℝ}
   have ht := totalAngle_mem hc hu hp hsector
   have hcos := Real.cos_pos_of_mem_Ioo
     (show totalAngle c u p ∈ Ioo (-(Real.pi / 2)) (Real.pi / 2) from
-      ⟨by linarith [Real.pi_pos], ht.2⟩)
+      ⟨by linarith [Real.pi_pos, ht.1], ht.2⟩)
   have he : weight c u p = amplitude c u p * Real.cos (totalAngle c u p) := by
-    simp [weight, reciprocalProduct_polar hc hu hp.1, Complex.mul_re,
-      Complex.exp_ofReal_mul_I_re, Real.cos_neg]
+    rw [weight, reciprocalProduct_polar hc hu hp.1]
+    simp only [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, zero_mul, sub_zero]
+    rw [Complex.exp_ofReal_mul_I_re, Real.cos_neg]
   rw [he]
   exact mul_pos (amplitude_pos hc hu hp.1) hcos
 
@@ -2404,7 +2414,7 @@ private lemma hasDerivAt_imaginary_u {u p : ℝ} (hu : 0 < u) (hp : p ≤ 1 / 4)
       nlinarith
     have hd' : HasDerivAt (fun v : ℝ => stripImaginary v p)
         ((1 - 4 * p) / (2 * stripImaginary u p)) u := by
-      simpa only [one_mul, stripImaginary] using hd
+      simpa [stripImaginary] using hd
     rw [he] at hd'
     exact hd'
 
@@ -2412,7 +2422,8 @@ private lemma hasDerivAt_imaginary_p {u p : ℝ} (hu : 0 < u) (hp : p < 1 / 4) :
     HasDerivAt (fun q : ℝ => stripImaginary u q) (-2 * u / stripImaginary u p) p := by
   have hrad : u * (1 - 4 * p) ≠ 0 := ne_of_gt (mul_pos hu (by linarith))
   have hlin : HasDerivAt (fun q : ℝ => u * (1 - 4 * q)) (-4 * u) p := by
-    convert (((hasDerivAt_id p).const_mul 4).const_sub 1).const_mul u using 1 <;> ring
+    convert (((hasDerivAt_id p).const_mul 4).const_sub 1).const_mul u using 1 <;>
+      simp [Function.id_def] <;> ring
   have hd := hlin.sqrt hrad
   convert hd using 1 <;>
     simp only [stripImaginary, div_eq_mul_inv, mul_inv_rev] <;> ring
@@ -2431,7 +2442,7 @@ private lemma hasDerivAt_product {N : ℕ} {f : Fin N → ℝ → ℂ} {d : ℂ}
   have hp := Finset.mul_prod_erase Finset.univ (fun k => (f k t)⁻¹)
     (Finset.mem_univ j)
   rw [← hp]
-  simp only [smul_eq_mul]
+  simp only [smul_eq_mul, Pi.inv_apply]
   field_simp [hn j] <;> ring
 
 private def derivativeTerm {N : ℕ} (c : Fin N → ℝ) (u p v : ℝ) (j : Fin N) : ℝ :=
@@ -2448,9 +2459,11 @@ private lemma real_product_derivative {N : ℕ} {c : Fin N → ℝ} {u p : ℝ}
   apply Finset.sum_congr rfl
   intro j _
   rw [reciprocalProduct_div_polar hc hu hp j]
+  simp only [Complex.mul_re, Complex.mul_im]
+  rw [Complex.exp_ofReal_mul_I_re, Complex.exp_ofReal_mul_I_im]
   simp [derivativeTerm, Complex.mul_re, Complex.mul_im,
     Complex.exp_ofReal_mul_I_re, Complex.exp_ofReal_mul_I_im,
-    Real.cos_neg, Real.sin_neg] <;> ring
+    Real.cos_neg, Real.sin_neg, Real.cos_add, Real.sin_add] <;> ring
 
 private theorem hasDerivAt_weight_u {N : ℕ} {c : Fin N → ℝ} {u p : ℝ}
     (hc : ∀ j, 0 ≤ c j) (hu : 0 < u) (hp : p ∈ Icc 0 (1 / 4)) :
@@ -2464,7 +2477,10 @@ private theorem hasDerivAt_weight_u {N : ℕ} {c : Fin N → ℝ} {u p : ℝ}
     intro j
     have hr := (((hasDerivAt_id u).add_const p).add_const (c j)).ofReal_comp
     have hi := ((hasDerivAt_imaginary_u hu hp.2).ofReal_comp).mul_const I
-    simpa [factor] using hr.add hi
+    have hsum := hr.add hi
+    convert hsum using 1 <;>
+      (try funext y) <;>
+      simp [factor, Function.comp_def]
   have hF := hasDerivAt_product hf (factor_ne_zero hc hu hp.1)
   have hR := Complex.reCLM.hasFDerivAt.comp_hasDerivAt u hF
   change HasDerivAt (fun v : ℝ => weight c v p)
@@ -2485,7 +2501,10 @@ private theorem hasDerivAt_weight_p {N : ℕ} {c : Fin N → ℝ} {u p : ℝ}
     intro j
     have hr := (((hasDerivAt_id p).const_add u).add_const (c j)).ofReal_comp
     have hi := ((hasDerivAt_imaginary_p hu hp.2).ofReal_comp).mul_const I
-    simpa [factor] using hr.add hi
+    have hsum := hr.add hi
+    convert hsum using 1 <;>
+      (try funext y) <;>
+      simp [factor, Function.comp_def]
   have hF := hasDerivAt_product hf (factor_ne_zero hc hu hp.1)
   have hR := Complex.reCLM.hasFDerivAt.comp_hasDerivAt p hF
   change HasDerivAt (fun q : ℝ => weight c u q)
@@ -2513,9 +2532,9 @@ private theorem deriv_weight_u_neg {N : ℕ} {c : Fin N → ℝ} {u p : ℝ}
   · intro j _
     have ha := augmented_angle_mem hc hu hp hsector j
     have hcos := Real.cos_pos_of_mem_Ioo
-      ⟨by linarith [Real.pi_pos], ha.2⟩
+      ⟨by linarith [Real.pi_pos, ha.1], ha.2⟩
     have hsin := Real.sin_nonneg_of_mem_Icc
-      ⟨ha.1, by linarith [Real.pi_pos]⟩
+      ⟨ha.1, by linarith [Real.pi_pos, ha.2]⟩
     apply mul_pos (quotient_norm_pos hc hu hp.1 j)
     exact add_pos_of_pos_of_nonneg hcos
       (mul_nonneg (div_nonneg (Real.sqrt_nonneg _) (by positivity)) hsin)
@@ -2548,8 +2567,9 @@ private lemma p_bracket_neg {N : ℕ} {c : Fin N → ℝ} {u p : ℝ}
     simp [angle, hj₀, Real.tan_arctan]
   rw [ht0] at ht
   have hratio : stripImaginary u p / (2 * u) < stripImaginary u p / (u + p) := by
+    have hup0 : 0 < u + p := by linarith [hu, hp.1]
     apply (div_lt_div_iff₀ (by positivity : 0 < 2 * u)
-      (by linarith : 0 < u + p)).2
+      hup0).2
     nlinarith [mul_pos hb (sub_pos.2 hup)]
   have htan := hratio.trans_le ht
   have hcos := Real.cos_pos_of_mem_Ioo
@@ -2585,9 +2605,12 @@ private lemma continuousAt_weight_p {N : ℕ} {c : Fin N → ℝ} {u p : ℝ}
   have hF : ContinuousAt (fun q : ℝ => reciprocalProduct c u q) p := by
     apply tendsto_finsetProd Finset.univ
     intro j _
-    apply ContinuousAt.inv₀ _ (factor_ne_zero hc hu hp j)
-    unfold factor stripImaginary
-    fun_prop
+    have hfac : ContinuousAt (fun b : ℝ => factor c u b j) p := by
+      unfold factor stripImaginary
+      fun_prop
+    change Filter.Tendsto ((fun b : ℝ => factor c u b j)⁻¹) (𝓝 p)
+      (𝓝 ((factor c u p j)⁻¹))
+    exact (hfac.inv₀ (factor_ne_zero hc hu hp j)).tendsto
   exact Complex.continuous_re.continuousAt.comp hF
 
 private theorem strictAntiOn_weight_u {N : ℕ} {c : Fin N → ℝ} {p : ℝ}
@@ -2663,7 +2686,8 @@ private theorem real_product_signed_reduction {N : ℕ} (c : Fin N → ℝ) (u p
   rcases hsign with h | h
   · subst b; rfl
   · rw [h, reciprocalProduct_signed_conj c (u + p) (stripImaginary u p)]
-    simp [weight, reciprocalProduct, factor]
+    simp only [Complex.star_def, Complex.conj_re]
+    rfl
 
 
 end H14Sector
@@ -2849,7 +2873,11 @@ private theorem h14Weight_sector (rho : ℂ) :
   have he : rho * (1 - rho) =
       ((rho.im ^ 2 + rho.re * (1 - rho.re) : ℝ) : ℂ) +
         ((rho.im * (1 - 2 * rho.re) : ℝ) : ℂ) * Complex.I := by
-    apply Complex.ext <;> simp [Complex.mul_re, Complex.mul_im] <;> ring
+    apply Complex.ext <;>
+      simp only [Complex.add_re, Complex.add_im, Complex.mul_re, Complex.mul_im,
+        Complex.I_re, Complex.I_im, Complex.sub_re, Complex.sub_im,
+        ← Complex.ofReal_pow, Complex.ofReal_re, Complex.ofReal_im,
+        Complex.one_re, Complex.one_im] <;> ring
   rw [← H14Sector.real_product_signed_reduction H14Sector.shifts
     (rho.im ^ 2) (rho.re * (1 - rho.re)) (rho.im * (1 - 2 * rho.re)) hb]
   have hprod : (∏ j : Fin 6,
@@ -2872,7 +2900,8 @@ private theorem h14Weight_pos (n : ℕ) : 0 < h14Weight (actualData.zero n) := b
 
 private theorem h14Weight_conj (rho : ℂ) : h14Weight (conj rho) = h14Weight rho := by
   have h : h14Kernel (conj rho) = conj (h14Kernel rho) := by
-    simp [h14Kernel]
+    simp only [h14Kernel, map_div₀, map_mul, map_add, map_sub, map_one,
+      map_natCast, map_ofNat, starRingEnd_apply]
   unfold h14Weight
   rw [h, Complex.conj_re]
 

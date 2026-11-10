@@ -133,7 +133,7 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
     by_contra hk
     exact h ⟨(), k, 0, hk⟩
   have hs : Summable (fun k : ℕ => ((actualZero k).im)⁻¹ ^ 2) := by
-    simpa only [actualZero] using
+    simpa only [actualZero, Function.comp_def] using
       (actualOccurrenceEquiv.summable_iff).2 actual_sigma_inverse_square_summable
   have hsconst : Summable (fun _ : ℕ => actual.readout i () 0) := by
     apply hs.congr
