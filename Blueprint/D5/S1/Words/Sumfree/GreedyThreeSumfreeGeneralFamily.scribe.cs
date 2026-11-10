@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Words.Sumfree;
 internal sealed class GreedyThreeSumfreeGeneralFamilyDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Words/vanberkelbosma2026sumfree");
+        LibraryNoteRef.Create("D5/L/Automata/vanberkelbosma2026sumfree");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Theorem 19 gives the full seeded greedy range and exact characteristic periodicity.",
