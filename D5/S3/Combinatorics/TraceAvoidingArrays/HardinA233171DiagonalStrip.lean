@@ -129,8 +129,12 @@ private theorem class_fibres (s : Seen) (p : Boundary) (k : Fin 7) :
 set_option maxHeartbeats 0 in
 private theorem finite_certificate : ∀ s p, Valid s p → ∀ k,
     classCount s p k = transfer (boundaryClass s p) k := by
-  simp only [class_fibres, label_sum, Valid]
-  decide +kernel
+  suffices h : ∀ k : Fin 7, ∀ s p, Valid s p →
+      classCount s p k = transfer (boundaryClass s p) k by
+    intro s p hp k
+    exact h k s p hp
+  intro k
+  fin_cases k <;> simp only [class_fibres, label_sum, Valid] <;> decide +kernel
 
 private def w : ℕ → Fin 7 → ℤ
   | 0, _ => 1
