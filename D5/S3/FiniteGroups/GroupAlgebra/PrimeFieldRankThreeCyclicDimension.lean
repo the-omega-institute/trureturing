@@ -281,7 +281,8 @@ private theorem projective_reindex
   let r := (MonoidAlgebra.domCongr (F p) (F p) e.symm).toRingEquiv
   letI := RingHomInvPair.of_ringEquiv r
   letI := RingHomInvPair.symm (r : (F p)[J] →+* (F p)[H]) (r.symm : (F p)[H] →+* (F p)[J])
-  let eV : σ.asModule ≃ₛₗ[r.toRingHom] τ.asModule :=
+  let eV : LinearEquiv (r : (F p)[J] →+* (F p)[H])
+      (σ' := (r.symm : (F p)[H] →+* (F p)[J])) σ.asModule τ.asModule :=
     { toFun := fun v => τ.asModuleEquiv.symm (σ.asModuleEquiv v)
       invFun := fun v => σ.asModuleEquiv.symm (τ.asModuleEquiv v)
       left_inv := by intro v; rfl
@@ -416,12 +417,16 @@ private theorem top_injective : Function.Injective ((top (p := p))) := by
     simpa [top, sub_smul] using congrArg (fun z : Fin 2 → A p => z i) (sub_eq_zero.mpr h)
   exact sub_eq_zero.mp ((smul_eq_zero.mp he).resolve_right (norm_ne_zero (p := p)))
 
+set_option maxHeartbeats 800000 in
 private theorem top_factorization (B : M₂ (A p)) :
     (matrixOperator (p := p)) ((nu (p := p)) • B) =
       (top (p := p)).comp ((Matrix.toLin' ((constantMatrix (p := p)) B)).comp (bottom (p := p))) := by
   apply LinearMap.ext
   intro x
   funext i
+  simp only [matrixOperator, LinearMap.restrictScalars_apply, Matrix.toLin'_apply,
+    Matrix.mulVec, dotProduct, Matrix.smul_apply, smul_eq_mul, LinearMap.comp_apply,
+    top, bottom, constantMatrix, AlgHom.mapMatrix_apply, Matrix.map_apply]
   change (∑ j, nu * B i j * x j) =
     (∑ j, augmentation (B i j) * augmentation (x j)) • nu
   rw [Finset.sum_smul]
@@ -507,7 +512,7 @@ private theorem norm_rank_two
     simp [matrixOperator, Matrix.toLin'_apply, Matrix.mulVec, dotProduct]
   rw [range_rank_equivalent (cyclic_coordinates σ hσ hd) _ _ hc,
     (top_rank_identity (p := p)), map_one, Matrix.toLin'_one]
-  simpa only [LinearMap.range_id, finrank_top] using (Module.finrank_fintype_fun_eq_card (F p) (Fin 2))
+  simpa only [LinearMap.range_id, finrank_top] using (Module.finrank_fintype_fun_eq_card (F p) (η := Fin 2))
 
 private theorem constant_kernel_factor (B : M₂ (A p))
     (hB : (constantMatrix (p := p)) B = 0) : ∃ Q : M₂ (A p), B = (t (p := p)) • Q := by
@@ -583,11 +588,16 @@ private theorem blockAction_intertwines
       (matrixOperator (p := p)) (blockAction ρ s hσ hd g)
         (cyclic_coordinates (ρ.comp (direction s)) hσ hd v) := by
   let b := cyclic_basis_two (ρ.comp (direction s)) hσ hd
-  change b.equivFun (commutingAction ρ s g ((Representation.asModuleEquiv (ρ.comp (direction s))).symm v)) = _
-  simpa only [blockAction, matrixOperator, cyclic_coordinates,
-    LinearMap.restrictScalars_apply, Matrix.toLin'_apply, Basis.equivFun_apply]
-    using (LinearMap.toMatrix_mulVec_repr b b (commutingAction ρ s g)
-      ((Representation.asModuleEquiv (ρ.comp (direction s))).symm v)).symm
+  let w := (Representation.asModuleEquiv (ρ.comp (direction s))).symm v
+  change b.repr (commutingAction ρ s g w) =
+    LinearMap.toMatrixAlgEquiv b (commutingAction ρ s g) *ᵥ b.repr w
+  have hm : LinearMap.toMatrixAlgEquiv b (commutingAction ρ s g) =
+      LinearMap.toMatrix b b (commutingAction ρ s g) := by
+    apply Matrix.ext
+    intro i j
+    rw [LinearMap.toMatrixAlgEquiv_apply, LinearMap.toMatrix_apply]
+  rw [hm]
+  exact (LinearMap.toMatrix_mulVec_repr b b (commutingAction ρ s g) w).symm
 
 private theorem blockAction_distinguished
     {V : Type uV} [AddCommGroup V] [Module (F p) V]
@@ -598,9 +608,10 @@ private theorem blockAction_distinguished
     blockAction ρ s hσ hd (Multiplicative.ofAdd s) = (z (p := p)) • (1 : M₂ (A p)) := by
   apply Matrix.ext
   intro i j
-  change (cyclic_basis_two (ρ.comp (direction s)) hσ hd).repr
-    (commutingAction ρ s (Multiplicative.ofAdd s)
-      (cyclic_basis_two (ρ.comp (direction s)) hσ hd j)) i = _
+  change LinearMap.toMatrixAlgEquiv
+    (cyclic_basis_two (ρ.comp (direction s)) hσ hd)
+    (commutingAction ρ s (Multiplicative.ofAdd s)) i j = _
+  rw [LinearMap.toMatrixAlgEquiv_apply]
   have he (v : (Representation.asModule (ρ.comp (direction s)))) :
       commutingAction ρ s (Multiplicative.ofAdd s) v = ((z (p := p)) : A p) • v := by
     apply (Representation.asModuleEquiv (ρ.comp (direction s))).injective
@@ -1000,7 +1011,7 @@ private theorem two_block_obstruction
     simpa only [map_sub, map_smul, hLs] using hi
   let X : Module.End (F p) (W p) := Matrix.toLin' (L h)
   have hX (a : F p) : Function.Injective (X - a • (1 : Module.End (F p) (W p))) := by
-    simpa only [X, map_sub, map_smul, Matrix.toLin'_one] using hXeigen a
+    simpa only [X, map_sub, map_smul, Matrix.toLin'_one, Module.End.one_eq_id] using hXeigen a
   have htriv (g : G p) : R g = 1 := by
     let D : Module.End (F p) (W p) := Matrix.toLin' (R g - 1)
     have hcomm : Commute D X := by
@@ -1035,7 +1046,8 @@ private theorem two_block_obstruction
     have hne : a - b ≠ 0 := sub_ne_zero.mpr hab
     have hi := leading_injective B hnorm (a - b) hne
     have hezero : Matrix.toLin' (L (a - b)) v = Matrix.toLin' (L (a - b)) 0 := by
-      simpa only [evaluation, map_zero] using hz
+      change Matrix.toLin' (L (a - b)) v = 0 at hz
+      exact hz.trans (map_zero _).symm
     exact hv (hi hezero)
   have hle := LinearMap.finrank_le_finrank_of_injective heval
   change Module.finrank (F p) K ≤ Module.finrank (F p) (W p) at hle
