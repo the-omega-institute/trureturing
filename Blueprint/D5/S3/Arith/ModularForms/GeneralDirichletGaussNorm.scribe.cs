@@ -23,7 +23,7 @@ internal sealed class GeneralDirichletGaussNormDocument : IScribeDocumentDefinit
                         + "negative unit and the primitive-character Fourier transform law."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("primitive-dirichlet-gauss-normSq-general"),
+                DescribeId.Create("primitive-dirichlet-gauss-normsq-general"),
                 DeclarationHandle.Create(
                     "D5/S3/Arith/ModularForms/GeneralDirichletGaussNorm.primitive_dirichlet_gauss_normSq_general"),
                 H("General primitive Dirichlet Gauss norm"),
