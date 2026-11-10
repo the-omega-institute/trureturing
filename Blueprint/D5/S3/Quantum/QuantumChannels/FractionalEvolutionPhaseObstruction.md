@@ -94,6 +94,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/FractionalEvolutionPhaseObstruction.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/liu-wesolowski-2026-ordinary-fractional-evolution` (refuted) by `D5/S3/Quantum/QuantumChannels/FractionalEvolutionPhaseObstruction.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"liu-wesolowski-2026-ordinary-fractional-evolution","declaration_gid":"D5/S3/Quantum/QuantumChannels/FractionalEvolutionPhaseObstruction.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*
