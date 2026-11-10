@@ -29,7 +29,7 @@ open scoped BigOperators VertexOperator
 
 noncomputable section
 
-open private normal_separation from D5.S3.VertexAlgebra.Sectors.LatticeCosetReconstruction
+open private native_normal_separation from D5.S3.VertexAlgebra.Sectors.LatticeCosetReconstruction
 open private high_modes_finite map_finsum_linear from
   D5.S3.VertexAlgebra.Sectors.LatticeCosetFieldSeparation
 open private injection_single from D5.S3.VertexAlgebra.Sectors.LatticeCosetCompression
@@ -101,7 +101,15 @@ theorem inner_creation_expansion (hD : (gramReal D).PosDef)
       rw [hz, ← Finsupp.smul_single]
       simp only [compressed, map_smul, Pi.smul_apply, LinearMap.smul_apply,
         LinearMap.comp_apply, RingHom.id_apply]
-      rw [← smul_finsum' z (reconstruction_finite D B C hC hCe a d (Finsupp.single n 1) g m)]
+      have hs : Function.HasFiniteSupport (fun j : ℕ =>
+          mixedState D B C hC hCe (a+d)
+            (PowerSeries.coeff j (creationExponential (externalLattice C hC hCe) a))
+            (projection D B C hC hCe (a+d)
+              (((Y (ambient D e B C hC hCe)
+                (injection D B C hC hCe a (Finsupp.single n 1)))[[m+j]])
+                  (injection D B C hC hCe d g)))) :=
+        reconstruction_finite D B C hC hCe a d (Finsupp.single n 1) g m
+      rw [← smul_finsum' z hs]
       congr 1
       simp only [injection_single, map_one, stateField_ground]
       exact ground_reconstruction D B C hC hCe a d n m g
@@ -130,9 +138,9 @@ theorem inner_creation_expansion (hD : (gramReal D).PosDef)
         (compressed D B C hC hCe a d (Finsupp.single n (X x*f)) (m+j) g)
       simp_rw [← compressedField_modes]
       rw [hrec, compressed_multiplication_recursion D B C hC hCe hD]
-      apply normal_separation
+      apply native_normal_separation
       · intro t v
-        simpa only [compressedField_modes, compressed, LinearMap.comp_apply] using hf t v
+        simpa only [compressedField_modes, compressed, LinearMap.comp_apply] using hf v t
       · intro i j v
         exact derivative_negative_mixed D B C hC hCe hD d (a+d) x i _ v
       · intro i v

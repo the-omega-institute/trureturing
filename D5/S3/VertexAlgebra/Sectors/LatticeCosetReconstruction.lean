@@ -51,7 +51,7 @@ private theorem finite_swap {V : Type} [AddCommGroup V]
   rw [← h₁, ← h₂]
   exact (finsum_comp_equiv (Equiv.prodComm ℕ ℕ)).symm
 
-private theorem normal_separation {V W : Type} [AddCommGroup V] [Module ℂ V]
+private theorem native_normal_separation {V W : Type} [AddCommGroup V] [Module ℂ V]
     [AddCommGroup W] [Module ℂ W]
     (A F : VertexOperator ℂ W) (a f : VertexOperator ℂ V)
     (J : V →ₗ[ℂ] W) (K : ℕ → V →ₗ[ℂ] W)

@@ -128,6 +128,11 @@ private theorem translated_injection_longitudinal (a : Fin e → ℤ) (n : Charg
     simp only [tr, aeval_X]
     simp [L, translationVariable, longitudinalPolynomial, polynomialProjection,
       projectionVariable, polynomialInjection, MvPolynomial.smul_eq_C_mul]
+    rw [Polynomial.map_C]
+    congr 1
+    change polynomialInjection D B C hC hCe
+      (polynomialProjection D B C hC hCe (X (x.1.castAdd e, x.2))) = _
+    simp [polynomialProjection, projectionVariable, polynomialInjection]
   exact DFunLike.congr_fun he f
 
 private theorem projection_lift_single (d : Fin e → ℤ) (n : Charge D)

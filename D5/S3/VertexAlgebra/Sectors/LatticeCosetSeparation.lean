@@ -282,7 +282,15 @@ theorem ground_transverse_commutator (hD : (gramReal D).PosDef)
     simp only [LinearMap.comp_apply, LinearMap.sub_apply, LinearMap.smul_apply,
       multiply_single, LatticeActualGeneratorLocality.actual_modes,
       LatticeActualProductKernel.raw_single_convolution, map_smul]
-    have ht := translated_transverse D B C hC hCe hD a n j k
+    have ht : translatedPolynomial (ambient D e B C hC hCe)
+        (liftCharge D B C hC hCe a n) (transverse D B C hC hCe j k) =
+        Polynomial.C (transverse D B C hC hCe j k) -
+          Polynomial.C ((transversePair D B C a j : ℂ) • 1) * Polynomial.X^(k+1) := by
+      have hh := translated_mixed_polynomial D B C hC hCe hD a n 1 (X (j,k))
+      have hone : translatedPolynomial (ambient D e B C hC hCe)
+          (liftCharge D B C hC hCe a n) 1 = 1 := by simp [translatedPolynomial]
+      simpa only [map_one, one_mul, transversePolynomial, transverseTranslation,
+        aeval_X, hone] using hh
     change translatedPolynomial F A T = Polynomial.C T -
       Polynomial.C (s • 1) * Polynomial.X^(k+1) at ht
     rw [translated_mul, ht, sub_mul,
