@@ -3704,7 +3704,7 @@ $$
 后处理其两个非参考输出；不将 (12.1) 的经典仪器当作相干等距。定义
 
 $$
-Q_D=\Pi_+-\Pi_-=rac{I+2J\cdot\sigma_S}{D},\qquad
+Q_D=\Pi_+-\Pi_-=\frac{I+2J\cdot\sigma_S}{D},\qquad
 C Q_D=|0\rangle\langle0|_c\otimes I_{RS}
        +|1\rangle\langle1|_c\otimes Q_D .
 \tag{24.2}
@@ -3805,9 +3805,9 @@ $$
 以 $\zeta_w$ 表示该历史的全部新实际输出态，包含所有测后 $H,E$、原始 $(x_i,y_i)$ 和实际副本、读出输出、保留工作空间、调用计数、停止及截止标记。每条历史上的这些系统仅由已知输入和有限的非 $R$ 记录处理制成，故 $\zeta_w$ 固定且不含输入信息。为比较同一输出空间，可以预留 $q$ 组有限空白寄存器，未调用槽保持空白并带未使用标记；这不执行额外原生槽，也不擦除实际输出。定义
 
 $$
-\sigma_{s,q}=\sum_{w\ {m success}}4^{-|w|}\zeta_w,
+\sigma_{s,q}=\sum_{w\ {\rm success}}4^{-|w|}\zeta_w,
 \qquad
-\sigma_{f,q}=\sum_{w\ {m cutoff}}4^{-q}\zeta_w.
+\sigma_{f,q}=\sum_{w\ {\rm cutoff}}4^{-q}\zeta_w.
 \tag{24.9}
 $$
 
