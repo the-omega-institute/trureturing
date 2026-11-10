@@ -16,7 +16,7 @@ Lean statement: `D5/S3/Geometry/FiniteAcyclicMatchingCollapse.unmatched_in_X`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCollapse.CriticalData.unmatched_in_X.
+The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.CriticalData.unmatched_in_X.
 
 ### Source text
 
@@ -42,7 +42,7 @@ Lean statement: `D5/S3/Geometry/FiniteAcyclicMatchingCollapse.mainSequence`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCollapse.CriticalData.mainSequence.
+The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.CriticalData.mainSequence.
 
 ### Source text
 
@@ -68,7 +68,7 @@ Lean statement: `D5/S3/Geometry/FiniteAcyclicMatchingCollapse.coreSequence`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCollapse.CriticalData.coreSequence.
+The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.CriticalData.coreSequence.
 
 ### Source text
 
@@ -94,7 +94,7 @@ Lean statement: `D5/S3/Geometry/FiniteAcyclicMatchingCollapse.mainPairs`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCollapse.CriticalData.mainPairs.
+The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.CriticalData.mainPairs.
 
 ### Source text
 
@@ -120,7 +120,7 @@ Lean statement: `D5/S3/Geometry/FiniteAcyclicMatchingCollapse.corePairs`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCollapse.CriticalData.corePairs.
+The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.CriticalData.corePairs.
 
 ### Source text
 
@@ -146,7 +146,7 @@ Lean statement: `D5/S3/Geometry/FiniteAcyclicMatchingCollapse.main_pair_original
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCollapse.CriticalData.main_pair_original.
+The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.CriticalData.main_pair_original.
 
 ### Source text
 
@@ -174,7 +174,7 @@ Lean statement: `D5/S3/Geometry/FiniteAcyclicMatchingCollapse.core_pair_original
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCollapse.CriticalData.core_pair_original.
+The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.CriticalData.core_pair_original.
 
 ### Source text
 
@@ -202,7 +202,7 @@ Lean statement: `D5/S3/Geometry/FiniteAcyclicMatchingCollapse.main_lowers_nodup`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCollapse.CriticalData.main_lowers_nodup.
+The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.CriticalData.main_lowers_nodup.
 
 ### Source text
 
@@ -230,7 +230,7 @@ Lean statement: `D5/S3/Geometry/FiniteAcyclicMatchingCollapse.core_lowers_nodup`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCollapse.CriticalData.core_lowers_nodup.
+The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.CriticalData.core_lowers_nodup.
 
 ### Source text
 
@@ -258,7 +258,7 @@ Lean statement: `D5/S3/Geometry/FiniteAcyclicMatchingCollapse.main_pair_complete
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCollapse.CriticalData.main_pair_complete.
+The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.CriticalData.main_pair_complete.
 
 ### Source text
 
@@ -288,7 +288,7 @@ Lean statement: `D5/S3/Geometry/FiniteAcyclicMatchingCollapse.core_pair_complete
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCollapse.CriticalData.core_pair_complete.
+The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.CriticalData.core_pair_complete.
 
 ### Source text
 
@@ -320,7 +320,7 @@ Lean statement: `D5/S3/Geometry/FiniteAcyclicMatchingCollapse.main_frames`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCollapse.CriticalData.main_frames.
+The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.CriticalData.main_frames.
 
 ### Source text
 
@@ -352,7 +352,7 @@ Lean statement: `D5/S3/Geometry/FiniteAcyclicMatchingCollapse.core_frames`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCollapse.CriticalData.core_frames.
+The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.CriticalData.core_frames.
 
 ### Source text
 
@@ -384,7 +384,7 @@ Lean statement: `D5/S3/Geometry/FiniteAcyclicMatchingCollapse.main_frames_count`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCollapse.CriticalData.main_frames_count.
+The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.CriticalData.main_frames_count.
 
 ### Source text
 
@@ -412,7 +412,7 @@ Lean statement: `D5/S3/Geometry/FiniteAcyclicMatchingCollapse.core_frames_count`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCollapse.CriticalData.core_frames_count.
+The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.CriticalData.core_frames_count.
 
 ### Source text
 
@@ -440,7 +440,7 @@ Lean statement: `D5/S3/Geometry/FiniteAcyclicMatchingCollapse.main_endpoint`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCollapse.CriticalData.main_endpoint.
+The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.CriticalData.main_endpoint.
 
 ### Source text
 
@@ -468,7 +468,7 @@ Lean statement: `D5/S3/Geometry/FiniteAcyclicMatchingCollapse.core_endpoint`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCollapse.CriticalData.core_endpoint.
+The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.CriticalData.core_endpoint.
 
 ### Source text
 
@@ -498,7 +498,7 @@ Lean statement: `D5/S3/Geometry/FiniteAcyclicMatchingCollapse.closure_face_count
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCollapse.CriticalData.closure_face_count.
+The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.CriticalData.closure_face_count.
 
 ### Source text
 
@@ -526,7 +526,7 @@ Lean statement: `D5/S3/Geometry/FiniteAcyclicMatchingCollapse.vertex_face_count`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCollapse.CriticalData.vertex_face_count.
+The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.CriticalData.vertex_face_count.
 
 ### Source text
 
@@ -552,7 +552,7 @@ Lean statement: `D5/S3/Geometry/FiniteAcyclicMatchingCollapse.main_count`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCollapse.CriticalData.main_count.
+The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.CriticalData.main_count.
 
 ### Source text
 
@@ -580,7 +580,7 @@ Lean statement: `D5/S3/Geometry/FiniteAcyclicMatchingCollapse.core_count`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCollapse.CriticalData.core_count.
+The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.CriticalData.core_count.
 
 ### Source text
 
@@ -608,7 +608,7 @@ Lean statement: `D5/S3/Geometry/FiniteAcyclicMatchingCollapse.total_count`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCollapse.CriticalData.total_count.
+The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.CriticalData.total_count.
 
 ### Source text
 
@@ -638,7 +638,7 @@ Lean statement: `D5/S3/Geometry/FiniteAcyclicMatchingCollapse.mainSDR`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCollapse.CriticalData.mainSDR.
+The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.CriticalData.mainSDR.
 
 ### Source text
 
@@ -690,7 +690,7 @@ Lean statement: `D5/S3/Geometry/FiniteAcyclicMatchingCollapse.main_fixed`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCollapse.CriticalData.main_fixed.
+The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.CriticalData.main_fixed.
 
 ### Source text
 
@@ -720,7 +720,7 @@ Lean statement: `D5/S3/Geometry/FiniteAcyclicMatchingCollapse.core_fixed`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCollapse.CriticalData.core_fixed.
+The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.CriticalData.core_fixed.
 
 ### Source text
 
@@ -752,7 +752,7 @@ Lean statement: `D5/S3/Geometry/FiniteAcyclicMatchingCollapse.discrete_core`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCollapse.CriticalData.discrete_core.
+The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.CriticalData.discrete_core.
 
 ### Source text
 
@@ -778,7 +778,7 @@ Lean statement: `D5/S3/Geometry/FiniteAcyclicMatchingCollapse.discrete_X_equatio
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCollapse.CriticalData.discrete_X_equation.
+The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.CriticalData.discrete_X_equation.
 
 ### Source text
 
@@ -806,7 +806,7 @@ Lean statement: `D5/S3/Geometry/FiniteAcyclicMatchingCollapse.discrete_core_pair
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicMatchingCollapse.CriticalData.discrete_core_pairs.
+The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.CriticalData.discrete_core_pairs.
 
 ### Source text
 

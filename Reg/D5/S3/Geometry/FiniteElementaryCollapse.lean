@@ -611,4 +611,119 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   familyRecord := none
   options := #[]
 end Retraction
+namespace Downward
+abbrev arena : Arena where
+  signature := faceSignature.{u_1}
+  Law R := ∀ {V : Type u_1} [fv : Fintype V] [dv : DecidableEq V]
+    (P : CollapsePair V) {s t : Finset V},
+    s ∈ P.retained → t ⊆ s → t.Nonempty → R.readout () V P.retained t
+private theorem bridge : (type_of% (@CollapsePair.retained_downward.{u_1})) ↔
+    arena.{u_1}.Law faceActual := Iff.rfl
+private theorem negative : ¬ arena.{u_1}.Law faceRejected := by
+  intro h
+  exact @h sample.V inferInstance inferInstance sample.pair
+    {sample.pair.apex} {sample.pair.apex} (apex_face sample) le_rfl
+    (Finset.singleton_nonempty _)
+def family : Registration arena.{u_1} (type_of% (@CollapsePair.retained_downward.{u_1})) where
+  actual := faceActual
+  bridge := bridge
+  variation := ⟨bridge.mp (@CollapsePair.retained_downward.{u_1}), faceRejected, negative⟩
+  sensitivity := ⟨fun _i => ⟨faceRejected, fun _j h => (h (Subsingleton.elim _ _)).elim, rfl,
+    negative⟩, fun e => nomatch e⟩
+  dependence := faceDependence
+
+def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@CollapsePair.retained_downward.{u_1}) (Realization faceSignature.{u_1}) Unit Unit where
+  unitName := `Reg.D5.S3.Geometry.FiniteElementaryCollapse.Downward.registrationUnit
+  realizationName := `Reg.D5.S3.Geometry.FiniteElementaryCollapse.Downward.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize faceSignature (fun _ _ K s => s ∈ K) Empty.elim)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end Downward
+
+namespace Coordinate
+open scoped unitInterval
+abbrev signature : Signature where
+  Params := Type u_1
+  State V := V → ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ V := V → ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u_1} := realize signature (fun _ _ f => f) Empty.elim
+def rejected : Realization signature.{u_1} := realize signature (fun _ _ _ => 0) Empty.elim
+abbrev arena : Arena where
+  signature := signature.{u_1}
+  Law R := ∀ {V : Type u_1} [fv : Fintype V] [dv : DecidableEq V]
+    (P : CollapsePair V) (t : I) (x : Space P.ambient) (v : V),
+    R.readout () V (P.collapseHomotopy (t, x)).val v =
+      x.val v + (if v = P.apex then
+        (t : ℝ) * (P.lower.card : ℝ) * P.minimum x.val else 0) -
+      (if v ∈ P.lower then (t : ℝ) * P.minimum x.val else 0)
+private theorem bridge : (type_of% (@CollapsePair.collapseHomotopy_coordinate.{u_1})) ↔
+    arena.{u_1}.Law actual := Iff.rfl
+private theorem negative : ¬ arena.{u_1}.Law rejected := by
+  intro h
+  have bad := @h sample.V inferInstance inferInstance sample.pair (0 : I)
+    Endpoint.samplePoint sample.pair.apex
+  norm_num [rejected, realize, Endpoint.samplePoint] at bad
+private theorem dependence : ObservationalDependence signature.{u_1} actual := by
+  intro i
+  refine ⟨ULift.{u_1} Unit, 0, 1, ?_⟩
+  intro h
+  have hh := congrFun h (ULift.up ())
+  change (0 : ℝ) = 1 at hh
+  norm_num at hh
+
+def family : Registration arena.{u_1}
+    (type_of% (@CollapsePair.collapseHomotopy_coordinate.{u_1})) where
+  actual := actual
+  bridge := bridge
+  variation := ⟨bridge.mp (@CollapsePair.collapseHomotopy_coordinate.{u_1}), rejected, negative⟩
+  sensitivity := ⟨fun _i => ⟨rejected, fun _j h => (h (Subsingleton.elim _ _)).elim, rfl,
+    negative⟩, fun e => nomatch e⟩
+  dependence := dependence
+
+def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@CollapsePair.collapseHomotopy_coordinate.{u_1}) (Realization signature.{u_1}) Unit Unit where
+  unitName := `Reg.D5.S3.Geometry.FiniteElementaryCollapse.Coordinate.registrationUnit
+  realizationName := `Reg.D5.S3.Geometry.FiniteElementaryCollapse.Coordinate.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ f => f) Empty.elim)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := none
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end Coordinate
+
 end Reg.D5.S3.Geometry.FiniteElementaryCollapse

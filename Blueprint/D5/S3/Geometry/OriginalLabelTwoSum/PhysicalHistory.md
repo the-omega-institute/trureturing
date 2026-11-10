@@ -4,7 +4,7 @@
 
 Actual arbitrary-width retained-port wheel steps, literal corners and finite mixed histories.
 
- The count, handoff and list proofs apply to finite mixed histories. MixedHistory retains every finite prescribed width >=3 and every retained old/interior port. The stronger all-corner recursion is treated in the separate recursion module; an unrestricted arbitrary-plane supplier is not assumed.
+ The handoff, main_order and separate_order results apply to finite fixed-W4 History. Separately, MixedHistory retains every finite prescribed width >=3 and every retained old/interior port; mixed_excess, mixed_finite_carrier, mixed_vertex_card, mixed_ground_card and mixed_tree_edge_card construct and prove its actual arbitrary-width mixed counts. The stronger all-corner recursion is treated in the separate recursion module; an unrestricted arbitrary-plane supplier is not assumed.
 
 ## Source text
 

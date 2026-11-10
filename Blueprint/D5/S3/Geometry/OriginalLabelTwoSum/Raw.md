@@ -182,7 +182,31 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Raw.mem_delta`
 
 *Commentary.*
 
-The native skeleton determines the raw family only once raw empty membership is supplied. This theorem is used for non-VOID filling and Gamma endpoints.
+Membership in the raw simplex is precisely subset inclusion in its original ground W. The proof is Iff.rfl by the carrier definition of delta; with W empty, the empty face remains, so delta ∅ is UNIT.
+
+### Source text
+
+Exact lexical source context (not a compiled telescope):
+
+noncomputable section
+
+open Set Finset
+
+open scoped unitInterval ContinuousMap
+
+namespace D5.S3.Geometry.OriginalLabelTwoSum
+
+open FiniteElementaryCollapse FiniteRelativeSimplicialCollapse
+
+open FiniteConeCollapse FiniteSimplicialJoin
+
+variable {V : Type*} [DecidableEq V]
+
+Definitions and proofs are in the paired Lean module.
+
+Exact source statement:
+
+@[simp] theorem mem_delta (W s : Finset V) : s ∈ delta W ↔ s ⊆ W
 
 **Theorem 1.16 (mem_project).**
 
@@ -194,7 +218,33 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Raw.mem_project`
 
 *Commentary.*
 
-The native skeleton determines the raw family only once raw empty membership is supplied. This theorem is used for non-VOID filling and Gamma endpoints.
+Projection retains exactly the nonempty faces of K. The proof is Iff.rfl from project.faces. Consequently the empty face is discarded even when K contains it, so projection alone does not distinguish VOID from UNIT.
+
+### Source text
+
+Exact lexical source context (not a compiled telescope):
+
+noncomputable section
+
+open Set Finset
+
+open scoped unitInterval ContinuousMap
+
+namespace D5.S3.Geometry.OriginalLabelTwoSum
+
+open FiniteElementaryCollapse FiniteRelativeSimplicialCollapse
+
+open FiniteConeCollapse FiniteSimplicialJoin
+
+variable {V : Type*} [DecidableEq V]
+
+Definitions and proofs are in the paired Lean module.
+
+Exact source statement:
+
+@[simp] theorem mem_project (K : Family V) (s : Finset V) :
+
+    s ∈ project K ↔ s.Nonempty ∧ s ∈ K
 
 **Definition 1.17 (Root).**
 
@@ -254,7 +304,33 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Raw.rawJoin_void`
 
 *Commentary.*
 
-Complement roots are supported even when their row family is empty.
+VOID is an absorber on both sides of the raw join. Extensionality and expansion of rawJoin eliminate the impossible witness in the bottom factor, including for the empty face; no default empty witness is introduced.
+
+### Source text
+
+Exact lexical source context (not a compiled telescope):
+
+noncomputable section
+
+open Set Finset
+
+open scoped unitInterval ContinuousMap
+
+namespace D5.S3.Geometry.OriginalLabelTwoSum
+
+open FiniteElementaryCollapse FiniteRelativeSimplicialCollapse
+
+open FiniteConeCollapse FiniteSimplicialJoin
+
+variable {V : Type*} [DecidableEq V]
+
+Definitions and proofs are in the paired Lean module.
+
+Exact source statement:
+
+@[simp] theorem rawJoin_void (K : Family V) :
+
+    rawJoin (⊥ : Family V) K = ⊥ ∧ rawJoin K ⊥ = ⊥
 
 **Theorem 1.22 (rawJoin_unit).**
 
@@ -266,7 +342,33 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Raw.rawJoin_unit`
 
 *Commentary.*
 
-Complement roots are supported even when their row family is empty.
+UNIT = delta ∅ is an identity on both sides of the raw join. Expansion of rawJoin and delta forces the simplex witness to be ∅; union with it returns the other face, in either order. This also holds when K itself is VOID.
+
+### Source text
+
+Exact lexical source context (not a compiled telescope):
+
+noncomputable section
+
+open Set Finset
+
+open scoped unitInterval ContinuousMap
+
+namespace D5.S3.Geometry.OriginalLabelTwoSum
+
+open FiniteElementaryCollapse FiniteRelativeSimplicialCollapse
+
+open FiniteConeCollapse FiniteSimplicialJoin
+
+variable {V : Type*} [DecidableEq V]
+
+Definitions and proofs are in the paired Lean module.
+
+Exact source statement:
+
+@[simp] theorem rawJoin_unit (K : Family V) :
+
+    rawJoin (delta ∅) K = K ∧ rawJoin K (delta ∅) = K
 
 **Theorem 1.23 (join_split).**
 

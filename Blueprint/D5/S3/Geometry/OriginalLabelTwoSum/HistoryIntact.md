@@ -20,7 +20,7 @@ Exact common source context:
 
    mirror-E: none(waiver:physical-history-intact-terminal)
 
-   anchors: [mathlib/module/Mathlib.Data.Finset.Basic]
+   anchors: [mathlib/module/Mathlib.Order.UpperLower.CompleteLattice]
 
    utility: none
 
@@ -40,7 +40,7 @@ import D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.Consumer
 
 Definitions and proofs are in the paired Lean module.
 
-/-! The canonical predecessor below is preserved.
+/-! SOURCE_ONLY_UNCOMPILED. The canonical predecessor below is preserved.
 
 Its empty-X terminal is extended to arbitrary original-coordinate embeddings.
 
@@ -50,7 +50,7 @@ excluded-residue normalizations have globally expanded pair lists. The
 
 public intactOutput below has the intended local predecessor telescope.
 
-The physical-history induction is a separate consumer of these local constructions.
+No elaboration, kernel acceptance or physical-history induction is claimed.
 
 -/
 

@@ -1098,6 +1098,8 @@ theorem ground_recurrence (n ghosts k : Nat) (hk : k < n) :
 
   rw [input_Y]
 
+  rfl
+
 Mathematical content:
 
 Literal physical erase(interface) then union of four fresh labels, derived from the existing step authority.
@@ -1202,7 +1204,13 @@ theorem ground_formula (n ghosts k : Nat) (hk : k ≤ n) :
 
     · rintro ⟨i,hi,rfl⟩
 
-      rcases hi with rfl | rfl | rfl <;> simp [seedLabels,p,v,interface,u]
+      rcases hi with rfl | rfl | rfl
+
+      · exact Or.inl (Or.inl rfl)
+
+      · exact Or.inl (Or.inr (Or.inr rfl))
+
+      · exact Or.inl (Or.inr (Or.inl rfl))
 
     · intro hx
 
@@ -1566,7 +1574,7 @@ theorem closed_ground (n ghosts k : Nat) (hk : k < n) :
 
     simp only [retained,interface_succ]
 
-  · simpa only [interface_succ] using ground_disjoint n ghosts (k+1) (by omega)
+  · simpa [interface] using ground_disjoint n ghosts (k+1) (by omega)
 
 Mathematical content:
 
@@ -1620,11 +1628,13 @@ theorem original_support (n ghosts k : Nat) (hk : k ≤ n) :
 
   have hs := (PhysicalHistory.certificate (history n ghosts k hk)).critical_supported
 
-  rw [ground_formula] at hr hc hs
+  change Supported (graph n ghosts k hk).ground (graph n ghosts k hk).rows.root at hr
 
-  rw [critical_formula] at hs
+  exact ⟨by simpa only [ground_formula] using hr,
 
-  exact ⟨hr,hc,hs⟩
+    by simpa only [ground_formula] using hc,
+
+    by simpa only [ground_formula,critical_formula] using hs⟩
 
 Mathematical content:
 
@@ -2154,6 +2164,8 @@ theorem path_rows (n ghosts k : Nat) (hk : k < n) :
 
     rw [hr]
 
+    rfl
+
   · intro d
 
     let d' : (Wheel.ambientGraph i.labels).PhysicalSurvivor (0 : Fin 4) :=
@@ -2166,7 +2178,7 @@ theorem path_rows (n ghosts k : Nat) (hk : k < n) :
 
     have hv : ∀ j : Fin 4,
 
-        (![{(1 : Wheel.Label),2},{2,3},{3,4},{4,1}] j).image i.labels =
+        ((![( {1,2} : Finset Wheel.Label),{2,3},{3,4},{4,1}] j) : Finset Wheel.Label).image i.labels =
 
           ![{r n ghosts k hk 0,r n ghosts k hk 1},
 
@@ -2178,7 +2190,17 @@ theorem path_rows (n ghosts k : Nat) (hk : k < n) :
 
       intro j
 
-      fin_cases j <;> simp only [Finset.image_insert,Finset.image_singleton] <;> rfl
+      fin_cases j <;>
+
+        simp [Matrix.cons_val_zero, Matrix.cons_val_succ, i,
+
+          (input_labels n ghosts k hk).2.2.1,
+
+          (input_labels n ghosts k hk).2.2.2.1,
+
+          (input_labels n ghosts k hk).2.2.2.2.1,
+
+          (input_labels n ghosts k hk).2.2.2.2.2]
 
     exact hv d.1
 
@@ -2248,7 +2270,13 @@ theorem raw_root_step (n ghosts k : Nat) (hk : k < n) :
 
     simp only [Wheel.Z,Finset.image_insert,Finset.image_singleton]; rfl
 
-  simpa only [input_Y n ghosts k hk,hz] using h
+  change (graph n ghosts (k+1) (by omega)).rows.root =
+
+    parentOf _ (Wheel.Y.image i.labels) (Wheel.Z.image i.labels)
+
+      (interface n ghosts k (by omega)) _ _ at h
+
+  simpa only [i,g,input_Y n ghosts k hk,hz,(input_labels n ghosts k hk).1] using h
 
 Mathematical content:
 
@@ -2724,7 +2752,13 @@ private def seedLabels (n ghosts : Nat) : K4.SeedLabel ↪ Ambient n ghosts wher
 
   toFun i := ⟨i.val,by have := i.isLt; omega⟩
 
-  inj' := by intro a b h; exact Fin.ext (congrArg Fin.val h)
+  inj' := by
+
+    intro a b h
+
+    apply Fin.ext
+
+    exact congrArg (fun x : Ambient n ghosts => x.val) h
 
 Actual consumers: build, seed_root, ground_formula, critical_formula
 
@@ -2830,9 +2864,13 @@ Definitions and proofs are in the paired Lean module.
 
 private theorem S_zero (n ghosts : Nat) : S n ghosts 0 = ∅ := by
 
-  ext x
+  apply Finset.eq_empty_iff_forall_notMem.mpr
 
-  simp only [S,Finset.mem_filter,Finset.mem_univ,true_and,Finset.not_mem_empty] <;> omega
+  intro x hx
+
+  have hh := (Finset.mem_filter.mp hx).2
+
+  omega
 
 Actual consumers: critical_formula
 
@@ -2882,9 +2920,11 @@ private theorem critical_recurrence (n ghosts k : Nat) (hk : k < n) :
 
     tauto
 
-  · simp only [wheelCell,if_neg (interface_not_second n ghosts k (by omega)),
+  · unfold wheelCell
 
-      second,S_succ n ghosts k hk]
+    rw [if_neg (interface_not_second n ghosts k (by omega))]
+
+    simp only [second,S_succ n ghosts k hk]
 
     ext x
 
@@ -3038,7 +3078,17 @@ private theorem retained_recurrence (n ghosts k : Nat) (hk : k < n) :
 
     rintro rfl; exact hev
 
+  haveI : NeZero (3+4*n+ghosts) := ⟨by omega⟩
+
   simp only [Fin.ext_iff,p,v,r] at *
+
+  have hz : (0 : Ambient n ghosts).val = 0 := rfl
+
+  simp only [Fin.val_zero, Fin.val_one, Fin.val_ofNat] at *
+
+  norm_num at *
+
+  simp only [Fin.ext_iff, Fin.val_zero, Fin.val_one] at *
 
   omega
 

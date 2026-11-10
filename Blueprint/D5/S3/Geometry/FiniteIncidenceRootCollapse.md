@@ -494,7 +494,7 @@ Seven actual structural constructors: VOID, UNIT, empty row, isolated column, re
 
 ### Source text
 
-Authored Lean source header:inductive Pruning (ρ : I → J → Prop) : State ρ → Type
+Authored Lean source header:inductive Pruning (ρ : «I» → J → Prop) : State ρ → Type _
 
   | void (q : State ρ) (hrows : q.rows = ∅) : Pruning ρ q
 
@@ -506,7 +506,7 @@ Authored Lean source header:inductive Pruning (ρ : I → J → Prop) : State ρ
 
       (hempty : rowNeighborhood ρ q b = ∅) : Pruning ρ q
 
-  | isolatedColumn (q : State ρ) (x : I) (hx : x ∈ q.active)
+  | isolatedColumn (q : State ρ) (x : «I») (hx : x ∈ q.active)
 
       (hrows : q.rows.Nonempty) (hiso : IsolatedColumn ρ q x) : Pruning ρ q
 
@@ -516,17 +516,21 @@ Authored Lean source header:inductive Pruning (ρ : I → J → Prop) : State ρ
 
       (child : Pruning ρ (eraseRow ρ q c)) : Pruning ρ q
 
-  | dominatedColumn (q : State ρ) (x y : I) (hx : x ∈ q.active)
+  | dominatedColumn (q : State ρ) (x y : «I») (hx : x ∈ q.active)
 
       (hy : y ∈ q.active) (hxy : x ≠ y) (hsub : ColumnSubset ρ q x y)
 
       (child : Pruning ρ (eraseColumn ρ q y)) : Pruning ρ q
 
-  | singletonRow (q : State ρ) (b : J) (a : I)
+  | singletonRow (q : State ρ) (b : J) (a : «I»)
 
       (hsingle : SingletonRow ρ q b a)
 
       (child : Pruning ρ (singletonChild ρ q a)) : Pruning ρ q
+
+Definitions and proofs are in the paired Lean module.
+
+/-! ### Ordinary output and exact local specifications -/
 
 **Definition 1.27 (TerminalTag).**
 
@@ -684,7 +688,7 @@ Definitions and proofs are in the paired Lean module.
 
 Lean definition body:
 
-def simplexCollapse : ∀ (A : Finset I) (p : I), p ∈ A →
+def simplexCollapse : ∀ (A : Finset «I») (p : «I»), p ∈ A →
 
     Sequence (incidenceSimplex A) (vertexComplex p)
 
@@ -730,7 +734,7 @@ def simplexCollapse : ∀ (A : Finset I) (p : I), p ∈ A →
 
         exact (Sequence.refl (incidenceSimplex A)).cast rfl hK
 
-termination_by A.card
+termination_by A p hp => A.card
 
 decreasing_by
 
@@ -762,7 +766,7 @@ Definitions and proofs are in the paired Lean module.
 
 Lean definition body:
 
-def isolatedCollapse : ∀ (ρ : I → J → Prop) (q : State ρ) (x : I),
+def isolatedCollapse : ∀ (ρ : «I» → J → Prop) (q : State ρ) (x : «I»),
 
     x ∈ q.active → q.rows.Nonempty → IsolatedColumn ρ q x →
 
@@ -854,7 +858,7 @@ def isolatedCollapse : ∀ (ρ : I → J → Prop) (q : State ρ) (x : I),
 
         exact (Sequence.refl (rootK ρ q)).cast rfl hK
 
-termination_by q.active.card
+termination_by ρ q x hx hrows hiso => q.active.card
 
 decreasing_by
 
@@ -1004,7 +1008,7 @@ Definitions and proofs are in the paired Lean module.
 
 Lean definition body:
 
-def build {ρ : I → J → Prop} : {q : State ρ} → (c : Pruning ρ q) → Result ρ q
+def build {ρ : «I» → J → Prop} : {q : State ρ} → (c : Pruning ρ q) → Result ρ q
 
   | q, .void _ hrows =>
 
@@ -1044,13 +1048,13 @@ def build {ρ : I → J → Prop} : {q : State ρ} → (c : Pruning ρ q) → Re
 
           endpoint_eq_core := by intro; rfl
 
-          endpoint_eq_attach := by intro σ h; cases h
+          endpoint_eq_attach := by intro «σ» h; cases h
 
-          critical_nonempty := by intro σ h; cases h
+          critical_nonempty := by intro «σ» h; cases h
 
-          critical_outside := by intro σ h; cases h
+          critical_outside := by intro «σ» h; cases h
 
-          critical_boundary := by intro σ h; cases h }
+          critical_boundary := by intro «σ» h; cases h }
 
       · have hAE : q.active = ∅ := Finset.eq_empty_iff_forall_notMem.mpr (fun x hx => hA ⟨x, hx⟩)
 
@@ -1090,13 +1094,13 @@ def build {ρ : I → J → Prop} : {q : State ρ} → (c : Pruning ρ q) → Re
 
         endpoint_eq_core := by intro; rfl
 
-        endpoint_eq_attach := by intro σ h; cases h
+        endpoint_eq_attach := by intro «σ» h; cases h
 
-        critical_nonempty := by intro σ h; cases h
+        critical_nonempty := by intro «σ» h; cases h
 
-        critical_outside := by intro σ h; cases h
+        critical_outside := by intro «σ» h; cases h
 
-        critical_boundary := by intro σ h; cases h }
+        critical_boundary := by intro «σ» h; cases h }
 
   | q, .redundantRow _ b c hb hc hbc hsub child => by
 
@@ -1346,13 +1350,13 @@ def build {ρ : I → J → Prop} : {q : State ρ} → (c : Pruning ρ q) → Re
 
                   endpoint_eq_core := by intro; rfl
 
-                  endpoint_eq_attach := by intro σ h; cases h
+                  endpoint_eq_attach := by intro «σ» h; cases h
 
-                  critical_nonempty := by intro σ h; cases h
+                  critical_nonempty := by intro «σ» h; cases h
 
-                  critical_outside := by intro σ h; cases h
+                  critical_outside := by intro «σ» h; cases h
 
-                  critical_boundary := by intro σ h; cases h }
+                  critical_boundary := by intro «σ» h; cases h }
 
               · have hUE : U = ∅ := Finset.eq_empty_iff_forall_notMem.mpr (fun x hx => hU ⟨x, hx⟩)
 
@@ -1402,7 +1406,13 @@ def build {ρ : I → J → Prop} : {q : State ρ} → (c : Pruning ρ q) → Re
 
                     exact (mem_rowNeighborhood ρ q a c).mpr ⟨haA, hac⟩
 
-                exact .terminal .unit (hK.trans (by rw [hUE]; exact simplex_empty))
+                exact .terminal .unit (hK.trans (by
+
+                  change incidenceSimplex U = ⊥
+
+                  rw [hUE]
+
+                  exact simplex_empty))
 
                   ⟨⟨b, hsingle.1⟩, hfull⟩
 
@@ -1426,7 +1436,7 @@ def build {ρ : I → J → Prop} : {q : State ρ} → (c : Pruning ρ q) → Re
 
                 have hp := Classical.choose_spec hU
 
-                let Kparent := D ⊔ cone a (⊥ : PreAbstractSimplicialComplex I)
+                let Kparent := D ⊔ cone a (⊥ : PreAbstractSimplicialComplex «I»)
 
                 have hparent : rootK ρ q = Kparent := by
 
@@ -1446,19 +1456,19 @@ def build {ρ : I → J → Prop} : {q : State ρ} → (c : Pruning ρ q) → Re
 
                   core_sequence := simplexCollapse U p hp
 
-                  critical := some ({a} : Finset I)
+                  critical := some ({a} : Finset «I»)
 
                   endpoint_eq_core := by intro h; cases h
 
                   endpoint_eq_attach := by
 
-                    intro σ hσ
+                    intro «σ» hσ
 
-                    have he : ({a} : Finset I) = σ := Option.some.inj hσ
+                    have he : ({a} : Finset «I») = «σ» := Option.some.inj hσ
 
-                    subst σ
+                    subst «σ»
 
-                    change D ⊔ cone a (⊥ : PreAbstractSimplicialComplex I) =
+                    change D ⊔ cone a (⊥ : PreAbstractSimplicialComplex «I») =
 
                       D ⊔ incidenceSimplex {a}
 
@@ -1466,31 +1476,31 @@ def build {ρ : I → J → Prop} : {q : State ρ} → (c : Pruning ρ q) → Re
 
                   critical_nonempty := by
 
-                    intro σ hσ
+                    intro «σ» hσ
 
-                    have he : ({a} : Finset I) = σ := Option.some.inj hσ
+                    have he : ({a} : Finset «I») = «σ» := Option.some.inj hσ
 
-                    subst σ
+                    subst «σ»
 
                     exact Finset.singleton_nonempty _
 
                   critical_outside := by
 
-                    intro σ hσ hmem
+                    intro «σ» hσ hmem
 
-                    have he : ({a} : Finset I) = σ := Option.some.inj hσ
+                    have he : ({a} : Finset «I») = «σ» := Option.some.inj hσ
 
-                    subst σ
+                    subst «σ»
 
                     exact haD {a} hmem (Finset.mem_singleton_self _)
 
                   critical_boundary := by
 
-                    intro σ hσ t ht
+                    intro «σ» hσ t ht
 
-                    have he : ({a} : Finset I) = σ := Option.some.inj hσ
+                    have he : ({a} : Finset «I») = «σ» := Option.some.inj hσ
 
-                    subst σ
+                    subst «σ»
 
                     left
 
@@ -1512,7 +1522,7 @@ def build {ρ : I → J → Prop} : {q : State ρ} → (c : Pruning ρ q) → Re
 
                   rw [hdec, hchild]
 
-                  change incidenceSimplex U ⊔ cone a (⊥ : PreAbstractSimplicialComplex I) = _
+                  change incidenceSimplex U ⊔ cone a (⊥ : PreAbstractSimplicialComplex «I») = _
 
                   simp [hUE, simplex_empty, cone_bot_simplex, simplex_singleton]
 
@@ -1534,13 +1544,13 @@ def build {ρ : I → J → Prop} : {q : State ρ} → (c : Pruning ρ q) → Re
 
                   endpoint_eq_core := by intro; rfl
 
-                  endpoint_eq_attach := by intro σ h; cases h
+                  endpoint_eq_attach := by intro «σ» h; cases h
 
-                  critical_nonempty := by intro σ h; cases h
+                  critical_nonempty := by intro «σ» h; cases h
 
-                  critical_outside := by intro σ h; cases h
+                  critical_outside := by intro «σ» h; cases h
 
-                  critical_boundary := by intro σ h; cases h }
+                  critical_boundary := by intro «σ» h; cases h }
 
       | regular w =>
 
@@ -1562,9 +1572,9 @@ def build {ρ : I → J → Prop} : {q : State ρ} → (c : Pruning ρ q) → Re
 
             exact (Finset.mem_erase.mp hpU).1 he.symm
 
-          have hpCore : ({w.pivot} : Finset I) ∈ w.core :=
+          have hpCore : ({w.pivot} : Finset «I») ∈ w.core :=
 
-            w.core_sequence.monotone (show ({w.pivot} : Finset I) ∈ vertexComplex w.pivot from rfl)
+            w.core_sequence.monotone (show ({w.pivot} : Finset «I») ∈ vertexComplex w.pivot from rfl)
 
           have hapex := singleton_apex_of_child_face ρ q a hsingle (hcoreRoot hpCore)
 
@@ -1604,7 +1614,7 @@ def build {ρ : I → J → Prop} : {q : State ρ} → (c : Pruning ρ q) → Re
 
             endpoint_eq_attach := by
 
-              intro σ hσ
+              intro «σ» hσ
 
               cases hc : w.critical with
 
@@ -1612,15 +1622,15 @@ def build {ρ : I → J → Prop} : {q : State ρ} → (c : Pruning ρ q) → Re
 
               | some τ =>
 
-                  have he : insert a τ = σ := Option.some.inj (by simpa [hc] using hσ)
+                  have he : insert a τ = «σ» := Option.some.inj (by simpa [hc] using hσ)
 
-                  subst σ
+                  subst «σ»
 
                   rw [w.endpoint_eq_attach τ hc, cone_sup, cone_simplex, sup_assoc]
 
             critical_nonempty := by
 
-              intro σ hσ
+              intro «σ» hσ
 
               cases hc : w.critical with
 
@@ -1628,15 +1638,15 @@ def build {ρ : I → J → Prop} : {q : State ρ} → (c : Pruning ρ q) → Re
 
               | some τ =>
 
-                  have he : insert a τ = σ := Option.some.inj (by simpa [hc] using hσ)
+                  have he : insert a τ = «σ» := Option.some.inj (by simpa [hc] using hσ)
 
-                  subst σ
+                  subst «σ»
 
                   exact Finset.insert_nonempty _ _
 
             critical_outside := by
 
-              intro σ hσ hmem
+              intro «σ» hσ hmem
 
               cases hc : w.critical with
 
@@ -1644,9 +1654,9 @@ def build {ρ : I → J → Prop} : {q : State ρ} → (c : Pruning ρ q) → Re
 
               | some τ =>
 
-                  have he : insert a τ = σ := Option.some.inj (by simpa [hc] using hσ)
+                  have he : insert a τ = «σ» := Option.some.inj (by simpa [hc] using hσ)
 
-                  subst σ
+                  subst «σ»
 
                   have hτU : τ ⊆ U := witness_critical_support w hc
 
@@ -1668,7 +1678,7 @@ def build {ρ : I → J → Prop} : {q : State ρ} → (c : Pruning ρ q) → Re
 
             critical_boundary := by
 
-              intro σ hσ t ht
+              intro «σ» hσ t ht
 
               cases hc : w.critical with
 
@@ -1676,9 +1686,9 @@ def build {ρ : I → J → Prop} : {q : State ρ} → (c : Pruning ρ q) → Re
 
               | some τ =>
 
-                  have he : insert a τ = σ := Option.some.inj (by simpa [hc] using hσ)
+                  have he : insert a τ = «σ» := Option.some.inj (by simpa [hc] using hσ)
 
-                  subst σ
+                  subst «σ»
 
                   have hτU : τ ⊆ U := witness_critical_support w hc
 
@@ -1726,7 +1736,11 @@ def build {ρ : I → J → Prop} : {q : State ρ} → (c : Pruning ρ q) → Re
 
                         · exact hzτ)⟩ }
 
-termination_by structural c
+termination_by structural q c => c
+
+Definitions and proofs are in the paired Lean module.
+
+/-! ### Public native-map and replay contracts -/
 
 Definitions and proofs are in the paired Lean module.
 
@@ -1846,7 +1860,7 @@ Authored Lean source header:def rootCertificate {ρ : I → J → Prop} {q : Sta
 
     Result ρ q
 
-The named declarations below describe the combinatorial root construction. Equal-universe mem_rootK Reg semantics do not audit recursive build, Result, critical data or native maps. The unrestricted all-plane supplier is a separate obligation. FiniteSimplexBoundarySphere and FiniteCriticalCellSphere.AttachmentSphere provide the explicit simplex boundary, disk collar, attachment quotient and based sphere constructions.
+The named declarations below describe the combinatorial root construction. Independent-universe (I : Type u, J : Type v) mem_rootK Reg semantics do not audit recursive build, Result, critical data or native maps. The unrestricted all-plane supplier is a separate obligation. FiniteSimplexBoundarySphere and FiniteCriticalCellSphere.AttachmentSphere provide the explicit simplex boundary, disk collar, attachment quotient and based sphere constructions.
 
 ## References
 

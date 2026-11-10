@@ -26,7 +26,7 @@ Lean statement: `D5/S3/Geometry/OriginalLabelTwoSum/Certificates.endpoint`
 
 *Commentary.*
 
-A finite union of raw simplices, with the empty index family equal to VOID.
+For B : Family V and critical : Finset (Finset V), endpoint B critical = B ⊔ facets critical: retain B and adjoin every subface of each critical simplex. Thus endpoint B ∅ = B, since facets ∅ = VOID. In particular endpoint (delta ∅) ∅ = delta ∅ = UNIT, which retains the empty face.
 
 **Definition 1.3 (CriticalData).**
 

@@ -216,13 +216,17 @@ noncomputable section; open Finset SimpleGraph; namespace D5.S3.Geometry.Origina
 
 Exact public SOURCE declaration and proof/body:
 
-def left : GraphData (Fin 5) Label where
+abbrev left : GraphData (Fin 5) Label where
 
   graph := leftGraph
 
   tree := leftTree
 
-  tree_le := by decide
+  tree_le := by
+
+    change ∀ x y, _ → _
+
+    decide
 
   isTree := leftTree_isTree
 
@@ -274,11 +278,17 @@ theorem left_rows (i : Fin 2) : left.rows.row i =
 
   have hp := left.path_eq i (leftChordPath i) (leftChordPath_isPath i)
 
-  change ({h,a,c,e} : Finset Label).filter (fun j => left.edge j ∈ (left.path i).edges) = _
+  simp only [GraphData.rows]
 
   rw [hp]
 
-  fin_cases i <;> decide
+  apply Finset.ext
+
+  intro j
+
+  simp only [Finset.mem_filter]
+
+  fin_cases i <;> fin_cases j <;> decide
 
 The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
@@ -302,13 +312,17 @@ noncomputable section; open Finset SimpleGraph; namespace D5.S3.Geometry.Origina
 
 Exact public SOURCE declaration and proof/body:
 
-def parent : GraphData (Fin 7) Label where
+abbrev parent : GraphData (Fin 7) Label where
 
   graph := parentGraph
 
   tree := parentTree
 
-  tree_le := by decide
+  tree_le := by
+
+    change ∀ x y, _ → _
+
+    decide
 
   isTree := parentTree_isTree
 
@@ -360,11 +374,17 @@ theorem parent_rows (i : Fin 4) : parent.rows.row i =
 
   have hp := parent.path_eq i (parentChordPath i) (parentChordPath_isPath i)
 
-  change ({h,a,c,one,two,three} : Finset Label).filter (fun j => parent.edge j ∈ (parent.path i).edges) = _
+  simp only [GraphData.rows]
 
   rw [hp]
 
-  fin_cases i <;> decide
+  apply Finset.ext
+
+  intro j
+
+  simp only [Finset.mem_filter]
+
+  fin_cases i <;> fin_cases j <;> decide
 
 The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
@@ -502,7 +522,7 @@ noncomputable section; open Finset SimpleGraph; namespace D5.S3.Geometry.Origina
 
 Exact public SOURCE declaration and proof/body:
 
-def leftRoot : Family Label := facets {{a,e},{c,e}}
+abbrev leftRoot : Family Label := facets {{a,e},{c,e}}
 
 The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
@@ -526,7 +546,7 @@ noncomputable section; open Finset SimpleGraph; namespace D5.S3.Geometry.Origina
 
 Exact public SOURCE declaration and proof/body:
 
-def parentRoot : Family Label :=
+abbrev parentRoot : Family Label :=
 
   facets {{a,one,two,three},{c,one,two,three},{a,c,h,one},{a,c,h,two}}
 
@@ -654,7 +674,7 @@ noncomputable section; open Finset SimpleGraph; namespace D5.S3.Geometry.Origina
 
 Exact public SOURCE declaration and proof/body:
 
-def B0 : Family Label := facets
+abbrev B0 : Family Label := facets
 
   {{c,one,two,three},{a,c,h,one},{a,c,h,two}}
 
@@ -680,7 +700,7 @@ noncomputable section; open Finset SimpleGraph; namespace D5.S3.Geometry.Origina
 
 Exact public SOURCE declaration and proof/body:
 
-def Bf : Family Label := facets {{c,three},{a,c,h,one},{a,c,h,two}}
+abbrev Bf : Family Label := facets {{c,three},{a,c,h,one},{a,c,h,two}}
 
 The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
@@ -704,7 +724,7 @@ noncomputable section; open Finset SimpleGraph; namespace D5.S3.Geometry.Origina
 
 Exact public SOURCE declaration and proof/body:
 
-def C : Family Label := Bf ⊔ delta {c,one,two}
+abbrev C : Family Label := Bf ⊔ delta {c,one,two}
 
 The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
@@ -728,7 +748,7 @@ noncomputable section; open Finset SimpleGraph; namespace D5.S3.Geometry.Origina
 
 Exact public SOURCE declaration and proof/body:
 
-def q : Finset Label := {a,one,two}
+abbrev q : Finset Label := {a,one,two}
 
 The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
@@ -810,7 +830,7 @@ Exact public SOURCE declaration and proof/body:
 
 def baseSequence : Sequence (project (B0)) (project (Bf)) :=
 
-  ((baseStep 0).append (baseStep 1).append (baseStep 2).append (baseStep 3)).cast
+  ((((baseStep 0).append (baseStep 1)).append (baseStep 2)).append (baseStep 3)).cast
 
     (by simp [baseState]) (congrArg project baseFinal)
 
@@ -908,7 +928,7 @@ theorem skipped_order :
 
       [({one,two},{c,one,two})] := by
 
-  simp [baseSequence,baseStep,Sequence.pairs_cast,Sequence.pairs_append,Sequence.pairs,basePair,emitPair,baseLower,baseApex,baseLowers,baseApices,CollapsePair.upper,FinitePrescribedPairProtection.skipped,FinitePrescribedPairProtection.emitted,FinitePrescribedPairProtection.blocked,q,Finset.subset_iff] <;> decide
+  simp [baseSequence,baseStep,Sequence.pairs_cast,Sequence.pairs_append,Sequence.pairs,basePair,emitPair,baseLower,baseApex,baseLowers,baseApices,CollapsePair.upper,FinitePrescribedPairProtection.skipped,FinitePrescribedPairProtection.emitted,FinitePrescribedPairProtection.blocked,q,Finset.subset_iff,h,a,c,one,two,three] <;> decide
 
 The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
@@ -940,7 +960,7 @@ theorem emitted_order :
 
         ({two,three},{c,two,three})] := by
 
-  simp [baseSequence,baseStep,Sequence.pairs_cast,Sequence.pairs_append,Sequence.pairs,basePair,emitPair,baseLower,baseApex,baseLowers,baseApices,CollapsePair.upper,FinitePrescribedPairProtection.skipped,FinitePrescribedPairProtection.emitted,FinitePrescribedPairProtection.blocked,q,Finset.subset_iff] <;> decide
+  simp [baseSequence,baseStep,Sequence.pairs_cast,Sequence.pairs_append,Sequence.pairs,basePair,emitPair,baseLower,baseApex,baseLowers,baseApices,CollapsePair.upper,FinitePrescribedPairProtection.skipped,FinitePrescribedPairProtection.emitted,FinitePrescribedPairProtection.blocked,q,Finset.subset_iff,h,a,c,one,two,three] <;> decide
 
 The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
@@ -970,7 +990,7 @@ theorem scan_indices :
 
     FinitePrescribedPairProtection.emittedIndices baseSequence.pairs {q} = [0,2,3] := by
 
-  simp [baseSequence,baseStep,Sequence.pairs_cast,Sequence.pairs_append,Sequence.pairs,basePair,emitPair,baseLower,baseApex,baseLowers,baseApices,CollapsePair.upper,FinitePrescribedPairProtection.skippedIndices,FinitePrescribedPairProtection.emittedIndices,FinitePrescribedPairProtection.skippedIndexed,FinitePrescribedPairProtection.emittedIndexed,FinitePrescribedPairProtection.blocked,q,Finset.subset_iff] <;> decide
+  simp [baseSequence,baseStep,Sequence.pairs_cast,Sequence.pairs_append,Sequence.pairs,basePair,emitPair,baseLower,baseApex,baseLowers,baseApices,CollapsePair.upper,FinitePrescribedPairProtection.skippedIndices,FinitePrescribedPairProtection.emittedIndices,FinitePrescribedPairProtection.skippedIndexed,FinitePrescribedPairProtection.emittedIndexed,FinitePrescribedPairProtection.blocked,q,Finset.subset_iff,h,a,c,one,two,three] <;> decide
 
 The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
@@ -999,8 +1019,6 @@ theorem core_identity : FinitePrescribedPairProtection.core baseSequence {q} = p
   unfold FinitePrescribedPairProtection.core
 
   rw [skipped_tops,project_union_simplices,singleton_facets]
-
-  rfl
 
 The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
@@ -1184,7 +1202,7 @@ Exact public SOURCE declaration and proof/body:
 
 def coneTail : Sequence (project Bf) (project (delta {c})) :=
 
-  collapseCone parent.ground Bf c (by decide) (by decide) (by decide)
+  collapseCone parent.ground Bf c (by unfold Supported; decide) (by decide) (by decide)
 
 The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
@@ -1298,7 +1316,7 @@ def certificate : Certificate parent.ground parent.rows.root where
 
   vertex_mem := by decide
 
-  core_supported := by decide
+  core_supported := by unfold Supported; decide
 
   critical_supported := by decide
 
@@ -1424,6 +1442,12 @@ theorem coneTail_order : coneTail.pairs.map (fun P => (P.lower,P.upper)) =
 
     Finset.empty_union]
 
+  apply congrArg (fun F : Finset (Finset Label) =>
+
+    (fibres F).map (fun t => (t, insert c t)))
+
+  apply Finset.filter_congr_decidable
+
 The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
 **Definition 1.48 (Regression.RLabel).**
@@ -1470,7 +1494,7 @@ noncomputable section; open Finset SimpleGraph; namespace D5.S3.Geometry.Origina
 
 Exact public SOURCE declaration and proof/body:
 
-def initial : Family RLabel := facets {{0,1,2},{0,2,3},{1,2,3}}
+abbrev initial : Family RLabel := facets {{0,1,2},{0,2,3},{1,2,3}}
 
 The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
@@ -1494,7 +1518,7 @@ noncomputable section; open Finset SimpleGraph; namespace D5.S3.Geometry.Origina
 
 Exact public SOURCE declaration and proof/body:
 
-def critical : Finset RLabel := {0,1,3}
+abbrev critical : Finset RLabel := {0,1,3}
 
 The declaration handle identifies the paired source owner. The lexical statement and proof retain the original parameters.
 
@@ -1654,7 +1678,13 @@ theorem core_is_initial : FinitePrescribedPairProtection.core original {critical
 
     lower,apex,lowers,apices]
 
+  apply SetLike.coe_injective
+
   ext s
+
+  change ((s.Nonempty ∧ s ⊆ {3}) ∨
+
+    (s.Nonempty ∧ ∃ q ∈ _, s ⊆ q)) ↔ s.Nonempty ∧ ∃ q ∈ _, s ⊆ q
 
   revert s
 

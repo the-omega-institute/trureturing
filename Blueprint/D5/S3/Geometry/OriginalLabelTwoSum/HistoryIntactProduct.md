@@ -20,7 +20,7 @@ Exact common source context:
 
    mirror-E: none(waiver:intact-relative-product)
 
-   anchors: [mathlib/module/Mathlib.Data.Finset.Powerset]
+   anchors: [mathlib/module/Mathlib.Order.UpperLower.CompleteLattice]
 
    utility: none
 
@@ -30,7 +30,7 @@ import D5.S3.Geometry.OriginalLabelTwoSum.HistoryLeafCap
 
 Definitions and proofs are in the paired Lean module.
 
-/-! This constructs lists, not just equivalences of
+/-! SOURCE_ONLY_UNCOMPILED. This constructs lists, not just equivalences of
 
 families. A is the old subfamily already absorbed by B. Every local pair runs
 

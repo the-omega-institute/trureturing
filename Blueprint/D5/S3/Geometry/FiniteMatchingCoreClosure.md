@@ -4,7 +4,7 @@
 
 Iterated matching closure has bounded dimension and a maximal critical antichain with full proper boundaries.
 
-The source section has V : Type*, Fintype V and DecidableEq V; each raw statement retains its lexical source binders and namespace. Lean may omit unused section variables. Structures and the Walk inductive include their full explicit field/constructor contracts. This matching module supplies finite source extraction; the cyclic recurrence is proved in its separate owner. The collapse consumers use the same native face and coordinate types.
+The source sections have V : Type*, Fintype V and DecidableEq V. The Pairing extension block is declared in D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing; its entries below give that lexical namespace and open declarations. The source module remains D5/S3/Geometry/FiniteMatchingCoreClosure.lean. Lean may omit unused section variables. Structures and the Walk inductive include their full explicit field/constructor contracts. This matching module supplies finite source extraction; the cyclic recurrence is proved in its separate owner. The collapse consumers use the same native face and coordinate types.
 
 **Definition 1.1 (iterate).**
 
@@ -90,11 +90,17 @@ Lean statement: `D5/S3/Geometry/FiniteMatchingCoreClosure.seed`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.Pairing.seed.
+The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing.seed.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing
+
+open FiniteAcyclicFaceMatching FiniteElementaryCollapse
+
+open FiniteRelativeSimplicialCollapse FiniteMatchingCoreClosure
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -114,11 +120,17 @@ Lean statement: `D5/S3/Geometry/FiniteMatchingCoreClosure.expand`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.Pairing.expand.
+The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing.expand.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing
+
+open FiniteAcyclicFaceMatching FiniteElementaryCollapse
+
+open FiniteRelativeSimplicialCollapse FiniteMatchingCoreClosure
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -138,11 +150,17 @@ Lean statement: `D5/S3/Geometry/FiniteMatchingCoreClosure.mem_seed`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.Pairing.mem_seed.
+The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing.mem_seed.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing
+
+open FiniteAcyclicFaceMatching FiniteElementaryCollapse
+
+open FiniteRelativeSimplicialCollapse FiniteMatchingCoreClosure
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -164,11 +182,17 @@ Lean statement: `D5/S3/Geometry/FiniteMatchingCoreClosure.mem_expand`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.Pairing.mem_expand.
+The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing.mem_expand.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing
+
+open FiniteAcyclicFaceMatching FiniteElementaryCollapse
+
+open FiniteRelativeSimplicialCollapse FiniteMatchingCoreClosure
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -192,11 +216,17 @@ Lean statement: `D5/S3/Geometry/FiniteMatchingCoreClosure.expand_inflationary`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.Pairing.expand_inflationary.
+The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing.expand_inflationary.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing
+
+open FiniteAcyclicFaceMatching FiniteElementaryCollapse
+
+open FiniteRelativeSimplicialCollapse FiniteMatchingCoreClosure
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -216,11 +246,17 @@ Lean statement: `D5/S3/Geometry/FiniteMatchingCoreClosure.seed_downward`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.Pairing.seed_downward.
+The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing.seed_downward.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing
+
+open FiniteAcyclicFaceMatching FiniteElementaryCollapse
+
+open FiniteRelativeSimplicialCollapse FiniteMatchingCoreClosure
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -240,11 +276,17 @@ Lean statement: `D5/S3/Geometry/FiniteMatchingCoreClosure.expand_downward`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.Pairing.expand_downward.
+The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing.expand_downward.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing
+
+open FiniteAcyclicFaceMatching FiniteElementaryCollapse
+
+open FiniteRelativeSimplicialCollapse FiniteMatchingCoreClosure
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -266,11 +308,17 @@ Lean statement: `D5/S3/Geometry/FiniteMatchingCoreClosure.stage`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.Pairing.stage.
+The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing.stage.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing
+
+open FiniteAcyclicFaceMatching FiniteElementaryCollapse
+
+open FiniteRelativeSimplicialCollapse FiniteMatchingCoreClosure
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -290,11 +338,17 @@ Lean statement: `D5/S3/Geometry/FiniteMatchingCoreClosure.closureFaces`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.Pairing.closureFaces.
+The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing.closureFaces.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing
+
+open FiniteAcyclicFaceMatching FiniteElementaryCollapse
+
+open FiniteRelativeSimplicialCollapse FiniteMatchingCoreClosure
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -314,11 +368,17 @@ Lean statement: `D5/S3/Geometry/FiniteMatchingCoreClosure.closure_fixed`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.Pairing.closure_fixed.
+The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing.closure_fixed.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing
+
+open FiniteAcyclicFaceMatching FiniteElementaryCollapse
+
+open FiniteRelativeSimplicialCollapse FiniteMatchingCoreClosure
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -340,11 +400,17 @@ Lean statement: `D5/S3/Geometry/FiniteMatchingCoreClosure.stage_downward`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.Pairing.stage_downward.
+The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing.stage_downward.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing
+
+open FiniteAcyclicFaceMatching FiniteElementaryCollapse
+
+open FiniteRelativeSimplicialCollapse FiniteMatchingCoreClosure
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -366,11 +432,17 @@ Lean statement: `D5/S3/Geometry/FiniteMatchingCoreClosure.stage_nonempty`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.Pairing.stage_nonempty.
+The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing.stage_nonempty.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing
+
+open FiniteAcyclicFaceMatching FiniteElementaryCollapse
+
+open FiniteRelativeSimplicialCollapse FiniteMatchingCoreClosure
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -392,11 +464,17 @@ Lean statement: `D5/S3/Geometry/FiniteMatchingCoreClosure.stage_le_ambient`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.Pairing.stage_le_ambient.
+The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing.stage_le_ambient.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing
+
+open FiniteAcyclicFaceMatching FiniteElementaryCollapse
+
+open FiniteRelativeSimplicialCollapse FiniteMatchingCoreClosure
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -422,7 +500,13 @@ Native nonempty complex; the missing empty face is not a point.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing
+
+open FiniteAcyclicFaceMatching FiniteElementaryCollapse
+
+open FiniteRelativeSimplicialCollapse FiniteMatchingCoreClosure
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -442,11 +526,17 @@ Lean statement: `D5/S3/Geometry/FiniteMatchingCoreClosure.closure_le`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.Pairing.closure_le.
+The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing.closure_le.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing
+
+open FiniteAcyclicFaceMatching FiniteElementaryCollapse
+
+open FiniteRelativeSimplicialCollapse FiniteMatchingCoreClosure
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -468,11 +558,17 @@ Lean statement: `D5/S3/Geometry/FiniteMatchingCoreClosure.seed_le_stage`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.Pairing.seed_le_stage.
+The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing.seed_le_stage.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing
+
+open FiniteAcyclicFaceMatching FiniteElementaryCollapse
+
+open FiniteRelativeSimplicialCollapse FiniteMatchingCoreClosure
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -494,11 +590,17 @@ Lean statement: `D5/S3/Geometry/FiniteMatchingCoreClosure.seed_mem_closure`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.Pairing.seed_mem_closure.
+The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing.seed_mem_closure.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing
+
+open FiniteAcyclicFaceMatching FiniteElementaryCollapse
+
+open FiniteRelativeSimplicialCollapse FiniteMatchingCoreClosure
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -520,11 +622,17 @@ Lean statement: `D5/S3/Geometry/FiniteMatchingCoreClosure.closure_saturated`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.Pairing.closure_saturated.
+The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing.closure_saturated.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing
+
+open FiniteAcyclicFaceMatching FiniteElementaryCollapse
+
+open FiniteRelativeSimplicialCollapse FiniteMatchingCoreClosure
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -548,7 +656,13 @@ Leastness also certifies that no gratuitous faces are introduced.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing
+
+open FiniteAcyclicFaceMatching FiniteElementaryCollapse
+
+open FiniteRelativeSimplicialCollapse FiniteMatchingCoreClosure
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -576,7 +690,13 @@ The second invariant is essential: a face at the top allowed dimension can never
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing
+
+open FiniteAcyclicFaceMatching FiniteElementaryCollapse
+
+open FiniteRelativeSimplicialCollapse FiniteMatchingCoreClosure
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -596,11 +716,17 @@ Lean statement: `D5/S3/Geometry/FiniteMatchingCoreClosure.seed_dimension`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.Pairing.seed_dimension.
+The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing.seed_dimension.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing
+
+open FiniteAcyclicFaceMatching FiniteElementaryCollapse
+
+open FiniteRelativeSimplicialCollapse FiniteMatchingCoreClosure
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -624,11 +750,17 @@ Lean statement: `D5/S3/Geometry/FiniteMatchingCoreClosure.expand_dimension`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.Pairing.expand_dimension.
+The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing.expand_dimension.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing
+
+open FiniteAcyclicFaceMatching FiniteElementaryCollapse
+
+open FiniteRelativeSimplicialCollapse FiniteMatchingCoreClosure
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -650,11 +782,17 @@ Lean statement: `D5/S3/Geometry/FiniteMatchingCoreClosure.closure_dimension`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.Pairing.closure_dimension.
+The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing.closure_dimension.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing
+
+open FiniteAcyclicFaceMatching FiniteElementaryCollapse
+
+open FiniteRelativeSimplicialCollapse FiniteMatchingCoreClosure
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 

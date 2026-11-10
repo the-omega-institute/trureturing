@@ -4,7 +4,7 @@
 
 The literal coordinate-greedy matching is acyclic by incomparable relative branches and a no-return three-region potential.
 
-The source section has V : Type*, Fintype V and DecidableEq V; each raw statement retains its lexical source binders and namespace. Lean may omit unused section variables. Structures and the Walk inductive include their full explicit field/constructor contracts. This matching module supplies finite source extraction; the cyclic recurrence is proved in its separate owner. The collapse consumers use the same native face and coordinate types.
+The source sections have V : Type*, Fintype V and DecidableEq V. The RelativeFamily extension block is declared in D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily; its entries below give that lexical namespace and open declarations. The source module remains D5/S3/Geometry/FiniteGreedyMatchingAcyclicity.lean. Lean may omit unused section variables. Structures and the Walk inductive include their full explicit field/constructor contracts. This matching module supplies finite source extraction; the cyclic recurrence is proved in its separate owner. The collapse consumers use the same native face and coordinate types.
 
 **Definition 1.1 (Separated).**
 
@@ -376,11 +376,21 @@ Lean statement: `D5/S3/Geometry/FiniteGreedyMatchingAcyclicity.separated_branche
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteGreedyMatchingAcyclicity.RelativeFamily.separated_branches.
+The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily.separated_branches.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily
+
+open Set Finset
+
+open D5.S3.Geometry.FiniteGreedyMatchingAcyclicity
+
+open D5.S3.Geometry.FiniteAcyclicFaceMatching
+
+open D5.S3.Geometry.FiniteCoordinateGreedyMatching
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -400,11 +410,21 @@ Lean statement: `D5/S3/Geometry/FiniteGreedyMatchingAcyclicity.greedy_cons`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteGreedyMatchingAcyclicity.RelativeFamily.greedy_cons.
+The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily.greedy_cons.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily
+
+open Set Finset
+
+open D5.S3.Geometry.FiniteGreedyMatchingAcyclicity
+
+open D5.S3.Geometry.FiniteAcyclicFaceMatching
+
+open D5.S3.Geometry.FiniteCoordinateGreedyMatching
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -426,11 +446,21 @@ Lean statement: `D5/S3/Geometry/FiniteGreedyMatchingAcyclicity.zone`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteGreedyMatchingAcyclicity.RelativeFamily.zone.
+The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily.zone.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily
+
+open Set Finset
+
+open D5.S3.Geometry.FiniteGreedyMatchingAcyclicity
+
+open D5.S3.Geometry.FiniteAcyclicFaceMatching
+
+open D5.S3.Geometry.FiniteCoordinateGreedyMatching
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -450,11 +480,21 @@ Lean statement: `D5/S3/Geometry/FiniteGreedyMatchingAcyclicity.zone_A`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteGreedyMatchingAcyclicity.RelativeFamily.zone_A.
+The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily.zone_A.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily
+
+open Set Finset
+
+open D5.S3.Geometry.FiniteGreedyMatchingAcyclicity
+
+open D5.S3.Geometry.FiniteAcyclicFaceMatching
+
+open D5.S3.Geometry.FiniteCoordinateGreedyMatching
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -474,11 +514,21 @@ Lean statement: `D5/S3/Geometry/FiniteGreedyMatchingAcyclicity.zone_B`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteGreedyMatchingAcyclicity.RelativeFamily.zone_B.
+The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily.zone_B.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily
+
+open Set Finset
+
+open D5.S3.Geometry.FiniteGreedyMatchingAcyclicity
+
+open D5.S3.Geometry.FiniteAcyclicFaceMatching
+
+open D5.S3.Geometry.FiniteCoordinateGreedyMatching
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -498,11 +548,21 @@ Lean statement: `D5/S3/Geometry/FiniteGreedyMatchingAcyclicity.zone_A_iff`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteGreedyMatchingAcyclicity.RelativeFamily.zone_A_iff.
+The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily.zone_A_iff.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily
+
+open Set Finset
+
+open D5.S3.Geometry.FiniteGreedyMatchingAcyclicity
+
+open D5.S3.Geometry.FiniteAcyclicFaceMatching
+
+open D5.S3.Geometry.FiniteCoordinateGreedyMatching
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -522,11 +582,21 @@ Lean statement: `D5/S3/Geometry/FiniteGreedyMatchingAcyclicity.zone_B_iff`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteGreedyMatchingAcyclicity.RelativeFamily.zone_B_iff.
+The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily.zone_B_iff.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily
+
+open Set Finset
+
+open D5.S3.Geometry.FiniteGreedyMatchingAcyclicity
+
+open D5.S3.Geometry.FiniteAcyclicFaceMatching
+
+open D5.S3.Geometry.FiniteCoordinateGreedyMatching
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -546,11 +616,21 @@ Lean statement: `D5/S3/Geometry/FiniteGreedyMatchingAcyclicity.paired_not_A`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteGreedyMatchingAcyclicity.RelativeFamily.paired_not_A.
+The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily.paired_not_A.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily
+
+open Set Finset
+
+open D5.S3.Geometry.FiniteGreedyMatchingAcyclicity
+
+open D5.S3.Geometry.FiniteAcyclicFaceMatching
+
+open D5.S3.Geometry.FiniteCoordinateGreedyMatching
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -570,11 +650,21 @@ Lean statement: `D5/S3/Geometry/FiniteGreedyMatchingAcyclicity.paired_not_B`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteGreedyMatchingAcyclicity.RelativeFamily.paired_not_B.
+The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily.paired_not_B.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily
+
+open Set Finset
+
+open D5.S3.Geometry.FiniteGreedyMatchingAcyclicity
+
+open D5.S3.Geometry.FiniteAcyclicFaceMatching
+
+open D5.S3.Geometry.FiniteCoordinateGreedyMatching
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -594,11 +684,21 @@ Lean statement: `D5/S3/Geometry/FiniteGreedyMatchingAcyclicity.zone_P`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteGreedyMatchingAcyclicity.RelativeFamily.zone_P.
+The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily.zone_P.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily
+
+open Set Finset
+
+open D5.S3.Geometry.FiniteGreedyMatchingAcyclicity
+
+open D5.S3.Geometry.FiniteAcyclicFaceMatching
+
+open D5.S3.Geometry.FiniteCoordinateGreedyMatching
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -618,11 +718,21 @@ Lean statement: `D5/S3/Geometry/FiniteGreedyMatchingAcyclicity.paired_of_zone_on
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteGreedyMatchingAcyclicity.RelativeFamily.paired_of_zone_one.
+The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily.paired_of_zone_one.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily
+
+open Set Finset
+
+open D5.S3.Geometry.FiniteGreedyMatchingAcyclicity
+
+open D5.S3.Geometry.FiniteAcyclicFaceMatching
+
+open D5.S3.Geometry.FiniteCoordinateGreedyMatching
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -644,11 +754,21 @@ Lean statement: `D5/S3/Geometry/FiniteGreedyMatchingAcyclicity.pair_same_zone`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteGreedyMatchingAcyclicity.RelativeFamily.pair_same_zone.
+The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily.pair_same_zone.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily
+
+open Set Finset
+
+open D5.S3.Geometry.FiniteGreedyMatchingAcyclicity
+
+open D5.S3.Geometry.FiniteAcyclicFaceMatching
+
+open D5.S3.Geometry.FiniteCoordinateGreedyMatching
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -670,11 +790,21 @@ Lean statement: `D5/S3/Geometry/FiniteGreedyMatchingAcyclicity.zone_nondecreasin
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteGreedyMatchingAcyclicity.RelativeFamily.zone_nondecreasing.
+The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily.zone_nondecreasing.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily
+
+open Set Finset
+
+open D5.S3.Geometry.FiniteGreedyMatchingAcyclicity
+
+open D5.S3.Geometry.FiniteAcyclicFaceMatching
+
+open D5.S3.Geometry.FiniteCoordinateGreedyMatching
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -696,11 +826,21 @@ Lean statement: `D5/S3/Geometry/FiniteGreedyMatchingAcyclicity.pair_in_A`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteGreedyMatchingAcyclicity.RelativeFamily.pair_in_A.
+The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily.pair_in_A.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily
+
+open Set Finset
+
+open D5.S3.Geometry.FiniteGreedyMatchingAcyclicity
+
+open D5.S3.Geometry.FiniteAcyclicFaceMatching
+
+open D5.S3.Geometry.FiniteCoordinateGreedyMatching
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -722,11 +862,21 @@ Lean statement: `D5/S3/Geometry/FiniteGreedyMatchingAcyclicity.pair_in_B`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteGreedyMatchingAcyclicity.RelativeFamily.pair_in_B.
+The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily.pair_in_B.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily
+
+open Set Finset
+
+open D5.S3.Geometry.FiniteGreedyMatchingAcyclicity
+
+open D5.S3.Geometry.FiniteAcyclicFaceMatching
+
+open D5.S3.Geometry.FiniteCoordinateGreedyMatching
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -748,11 +898,21 @@ Lean statement: `D5/S3/Geometry/FiniteGreedyMatchingAcyclicity.edge_in_A`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteGreedyMatchingAcyclicity.RelativeFamily.edge_in_A.
+The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily.edge_in_A.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily
+
+open Set Finset
+
+open D5.S3.Geometry.FiniteGreedyMatchingAcyclicity
+
+open D5.S3.Geometry.FiniteAcyclicFaceMatching
+
+open D5.S3.Geometry.FiniteCoordinateGreedyMatching
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -778,11 +938,21 @@ Lean statement: `D5/S3/Geometry/FiniteGreedyMatchingAcyclicity.edge_in_B`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteGreedyMatchingAcyclicity.RelativeFamily.edge_in_B.
+The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily.edge_in_B.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily
+
+open Set Finset
+
+open D5.S3.Geometry.FiniteGreedyMatchingAcyclicity
+
+open D5.S3.Geometry.FiniteAcyclicFaceMatching
+
+open D5.S3.Geometry.FiniteCoordinateGreedyMatching
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -808,11 +978,21 @@ Lean statement: `D5/S3/Geometry/FiniteGreedyMatchingAcyclicity.pRank`
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteGreedyMatchingAcyclicity.RelativeFamily.pRank.
+The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily.pRank.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily
+
+open Set Finset
+
+open D5.S3.Geometry.FiniteGreedyMatchingAcyclicity
+
+open D5.S3.Geometry.FiniteAcyclicFaceMatching
+
+open D5.S3.Geometry.FiniteCoordinateGreedyMatching
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
@@ -832,11 +1012,21 @@ Lean statement: `D5/S3/Geometry/FiniteGreedyMatchingAcyclicity.paired_region_inc
 
 *Commentary.*
 
-The exact source contract below specifies D5.S3.Geometry.FiniteGreedyMatchingAcyclicity.RelativeFamily.paired_region_increases.
+The exact source contract below specifies D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily.paired_region_increases.
 
 ### Source text
 
-Exact attempted Lean contract:Source variable context (not a compiled telescope):
+Exact attempted Lean contract:Exact lexical source context (not a compiled telescope):
+
+namespace D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily
+
+open Set Finset
+
+open D5.S3.Geometry.FiniteGreedyMatchingAcyclicity
+
+open D5.S3.Geometry.FiniteAcyclicFaceMatching
+
+open D5.S3.Geometry.FiniteCoordinateGreedyMatching
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
