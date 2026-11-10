@@ -3140,7 +3140,7 @@ $$
 
 式 (18.1) 在完整四次域上直接沿用 Havlicek，[*Clifford Parallelisms and External Planes to the Klein quadric*，arXiv:1511.06308v1](https://arxiv.org/abs/1511.06308v1)，§3 case (B)、§5 式 (5.1)–(5.3) 的 $H/F$ 与 $\kappa$：case (B) 中共轭为恒等，因而 $\overline u v+F=uv+F$。该文的 case (B) 明确要求 $[H:F]=4$；这里只把同一公式用于已给定的任意有限指数一域，不借用其四维平行类分类处理高次域。
 
-**引理 18.2（实际乘积唯一绑定二次来源）。** 对任意独立的 $u,v\in L$，有
+**定理 18.2（实际乘积唯一绑定二次来源）。** 对任意独立的 $u,v\in L$，有
 $$
 uv\notin F,\qquad F(u/v)=F(uv),\qquad
 Fu+Fv=vF(u/v).
@@ -3181,7 +3181,7 @@ I_\kappa(W)=\operatorname{span}_F\mathcal T_\kappa(W),
 $$
 第一式由基外积张成性得到，第二式由 (18.4) 得到。
 
-Grassmann 点是 $\mathcal A(W)$ 的射影化：$\operatorname{Gr}_F(2,W)(F)=\mathcal A(W)/F^\times$，而不是 $\mathcal A(W)$ 本身。$\kappa_W=\kappa|_{\Lambda^2W}$ 的射影中心是 $\mathbf P_F(\ker\kappa_W)$；引理 18.2 保证它不含实际 Grassmann $F$-点。因此 $\mathbf P(\kappa_W)$ 在全部实际 Grassmann 点上有定义，其像经 $[h+F]\mapsto K_h$ 正是 $\operatorname{Src}(W)$。$\mathbf P_F(I_\kappa(W))(F)$ 则只给线性张成中的候选来源。扩到代数闭包后的 Grassmann 点、中心和投影须另取基变换；几何像或其闭包不能替代这里的实际 $F$-点像。
+Grassmann 点是 $\mathcal A(W)$ 的射影化：$\operatorname{Gr}_F(2,W)(F)=\mathcal A(W)/F^\times$，而不是 $\mathcal A(W)$ 本身。$\kappa_W=\kappa|_{\Lambda^2W}$ 的射影中心是 $\mathbf P_F(\ker\kappa_W)$；定理 18.2 保证它不含实际 Grassmann $F$-点。因此 $\mathbf P(\kappa_W)$ 在全部实际 Grassmann 点上有定义，其像经 $[h+F]\mapsto K_h$ 正是 $\operatorname{Src}(W)$。$\mathbf P_F(I_\kappa(W))(F)$ 则只给线性张成中的候选来源。扩到代数闭包后的 Grassmann 点、中心和投影须另取基变换；几何像或其闭包不能替代这里的实际 $F$-点像。
 
 这些外积与射影术语直接使用 Ghorpade–Patil–Pillai，[*Decomposable Subspaces, Linear Sections of Grassmann Varieties, and Higher Weights of Grassmann Codes*，arXiv:0710.5161v1](https://arxiv.org/abs/0710.5161v1)，§§1–2 的定义，以及 Havlicek 前引文 §2 的 Plücker 嵌入。它们是以下乘法恢复判据的经典输入。
 
@@ -3385,7 +3385,7 @@ $$
 A(G+A)+(B+zE)E+(C+tD)D
 =Q(x)+A^2+tD^2+zE^2.
 $$
-因此 (18.23) 由同一乘法纤维的分解条件与引理 18.2 的唯一来源标签得到；它描述全部实际 $F$-点，而非只展示两个选定来源。候选来源在共同像中的参数正是 $F^6\setminus\{0\}$ 模非零标量，不存在另外的标签歧义。
+因此 (18.23) 由同一乘法纤维的分解条件与定理 18.2 的唯一来源标签得到；它描述全部实际 $F$-点，而非只展示两个选定来源。候选来源在共同像中的参数正是 $F^6\setminus\{0\}$ 模非零标量，不存在另外的标签歧义。
 
 取 $x=(1,0,0,0,0,1)$，两方程的值分别为 $1$ 与 $0$，得到第一项；在 $W'$ 中，实际输入对就是 $(1,a+bc)$。取 $x=(1,0,0,0,0,0)$，两方程的值分别为 $0$ 与 $1$，得到第二项；在 $W$ 中输入对为 $(1,a)$。
 
@@ -3396,7 +3396,7 @@ C_h(W')=F1+Fh=K_h,
 $$
 这使同源性、实际输入对和秩判据在同一 $h$ 上一致。$\square$
 
-**命题 18.8（四维的一个关系与原三维入口）。** 对任意四维窗口，实际来源的充分且必要恢复可由整条 $\kappa_W$ 仿射核纤维上的一个 Pfaffian 方程 (18.21) 完成，或等价地由每个候选 $h$ 的单个秩判定 (18.10) 完成。在 (18.18) 的单射窗口中，省去该 Pfaffian 条件就会纳入 (18.19) 的虚假记录。这里“一个关系”只表示四维 Plücker 判据有一个二次方程；不声称它是所有编码中的唯一最小信息，也不把高维的全部 Plücker 关系缩成一个方程。
+**定理 18.8（四维的一个关系与原三维入口）。** 对任意四维窗口，实际来源的充分且必要恢复可由整条 $\kappa_W$ 仿射核纤维上的一个 Pfaffian 方程 (18.21) 完成，或等价地由每个候选 $h$ 的单个秩判定 (18.10) 完成。在 (18.18) 的单射窗口中，省去该 Pfaffian 条件就会纳入 (18.19) 的虚假记录。这里“一个关系”只表示四维 Plücker 判据有一个二次方程；不声称它是所有编码中的唯一最小信息，也不把高维的全部 Plücker 关系缩成一个方程。
 
 若另有 §13 定义 13.1 的全部 P+K 前件，且 $\operatorname{char}F=2$，则定理 13.9、13.11 给出同一个完整四次域 $(L,\pi)$、$V=\ker\pi$、$\dim_FV=3$。在这一原纯部窗口上，
 $$
