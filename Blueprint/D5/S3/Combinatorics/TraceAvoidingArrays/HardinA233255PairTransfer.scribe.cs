@@ -1,4 +1,6 @@
+using F = StrataLint.Scribe.FormulaDsl;
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.TraceAvoidingArrays;
 
@@ -6,6 +8,8 @@ internal sealed class HardinA233255PairTransferDocument : IScribeDocumentDefinit
 {
     private const string Prefix =
         "D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.";
+    private const string LeanPrefix =
+        "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255PairTransfer.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Literal seven-column arrays and the exact transfer on labelled six-cell boundaries.",
@@ -32,6 +36,14 @@ internal sealed class HardinA233255PairTransferDocument : IScribeDocumentDefinit
             Node("Legal", "The literal array predicate", "The existing HardinA233251TriangleStrip.widthLegal "
                 + "is applied at width seven with rowLegal and bonds. Its scanner normalization uses strict earlier cells.",
                 DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("decidablerowlegal"),
+                DeclarationHandle.Create(Prefix + "decidableRowLegal"),
+                H("Decidability of horizontal exclusions"),
+                StatementSource.FromAuthor(Disp(DecidableRowLegalFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The instance decides the six adjacent horizontal bonds by finite "
+                    + "universal quantification and decidable conjunction. Fin.val explicitly reads each "
+                    + "colour as a natural number."))), DescribeRole.Definition),
             Node("a", "The positive-height literal count", "The filter ranges over individual arrays without a quotient.",
                 DescribeRole.Definition),
             Node("pairs", "The preceding boundary", "Apply the existing complementary-pair map after discarding column zero.",
@@ -63,4 +75,52 @@ internal sealed class HardinA233255PairTransferDocument : IScribeDocumentDefinit
         Describe.Lean(DescribeId.Create(name.Replace("_", "-").ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
+
+    private static Formula DecidableRowLegalFormula()
+    {
+        var c = F.Id("c");
+        var j = F.Id("j");
+        var left = Apply(c, Apply(Name("Fin.castSucc"), j));
+        var right = Apply(c, Apply(Name("Fin.succ"), j));
+        var distinct = new Formula.Relation(left, FormulaRelationOperator.NotEqual, right);
+        var sum = new Formula.Binary(Apply(Name("Fin.val"), left), FormulaBinaryOperator.Add,
+            Apply(Name("Fin.val"), right));
+        var noncomplementary = new Formula.Relation(Parenthesized(sum),
+            FormulaRelationOperator.NotEqual, D(5));
+        var predicate = All("j", Apply(Name("Fin"), D(6)), new Formula.Logic(
+            Parenthesized(distinct), FormulaLogicOperator.And, Parenthesized(noncomplementary)));
+        var instance = Parenthesized(Seq(Apply(Name(LeanPrefix + "decidableRowLegal"), c),
+            Sp, Colon, Sp, Apply(Name("Decidable"), Apply(Name(LeanPrefix + "rowLegal"), c))));
+        return All("c", Name(LeanPrefix + "Row"), new Formula.Relation(instance,
+            FormulaRelationOperator.Equal,
+            Apply(Name("inferInstanceAs"), Apply(Name("Decidable"), predicate))));
+    }
+
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+
+    private static Formula All(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, Parenthesized(Seq(F.Id(name), Colon, Sp, type)), Comma, Sp, body);
+
+    private static Formula Name(string name)
+    {
+        var items = new System.Collections.Generic.List<Formula>();
+        foreach (var part in name.Split('.'))
+        {
+            if (items.Count != 0) items.Add(Dot);
+            items.Add(Operatorname);
+            items.Add(Grp(F.Id(part)));
+        }
+        return Seq(items.ToArray());
+    }
+
+    private static Formula Apply(Formula function, params Formula[] arguments)
+    {
+        var items = new System.Collections.Generic.List<Formula> { function };
+        foreach (var argument in arguments)
+        {
+            items.Add(Sp);
+            items.Add(Parenthesized(argument));
+        }
+        return Seq(items.ToArray());
+    }
 }
