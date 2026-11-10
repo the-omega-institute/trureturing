@@ -46,9 +46,8 @@ At least one and at most two other coordinates satisfy the threshold.
 
 ## Triage
 
-The Lean endpoint proves the complete split-prime assertion. Independent
-pre-freeze review approved the retained mathematical sources. Canonical
-owner identity migration, endpoint freezing and publication remain pending.
+The Lean endpoint proves the complete split-prime assertion. It reuses the
+owner declarations with their mathematical statements and proofs preserved.
 The proof mechanism uses only oddness in its modular step;
 no additional all-prime endpoint is asserted here. The inert-prime
 even-valuation condition, repetition counts and chains remain unresolved by
