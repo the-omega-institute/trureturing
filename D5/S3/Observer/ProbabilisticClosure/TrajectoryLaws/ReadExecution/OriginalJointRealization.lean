@@ -9,6 +9,7 @@
 import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.OriginalObserverNormalization
 import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.ActualRenewalHistoryLaw
 
+/-! Original joint stochastic operations and their common fresh innovation realization. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -72,6 +73,98 @@ instance : IsProbabilityMeasure O.innovationLaw := by unfold innovationLaw; infe
 private theorem table_entry (c : C) (b : Bool) :
     O.innovationLaw.map (fun r => r (c,b)) = (O.operation c b).toMeasure :=
   (measurePreserving_eval (fun p : C × Bool => (O.operation p.1 p.2).toMeasure) (c,b)).map_eq
+
+/-- The original paid-operation semantics, with no reference to a random table.
+    An emitted action holds without another read. -/
+def nextLaw (e : O.Outcome) (b : Bool) : PMF O.Outcome :=
+  match e.2 with
+  | .read c => O.operation c.val b
+  | .emit _ _ _ => PMF.pure e
+
+/-- The complete finite original joint execution law. Each vector records the
+    intermediate configuration and its correlated ensuing action. Emission
+    is held analytically; this does not charge any additional read. -/
+def executionLaw (source : ℕ → Bool) : (n : ℕ) → PMF (Fin (n + 1) → O.Outcome)
+  | 0 => O.initialLaw.map (fun e _ => e)
+  | n + 1 => (O.executionLaw source n).bind fun x =>
+      (O.nextLaw (x (Fin.last n)) (source n)).map (Fin.snoc x)
+
+def advance (e : O.Outcome) (b : Bool) (r : O.Innovation) : O.Outcome :=
+  match e.2 with
+  | .read c => r (c.val,b)
+  | .emit _ _ _ => e
+
+def develop (source : ℕ → Bool) (seed : O.Outcome) :
+    (n : ℕ) → (Fin n → O.Innovation) → (Fin (n + 1) → O.Outcome)
+  | 0, _ => fun _ => seed
+  | n + 1, r =>
+    let x := O.develop source seed n (fun j => r j.castSucc)
+    Fin.snoc x (O.advance (x (Fin.last n)) (source n) (r (Fin.last n)))
+
+private theorem advance_law (e : O.Outcome) (b : Bool) :
+    O.innovationLaw.map (O.advance e b) = (O.nextLaw e b).toMeasure := by
+  cases he : e.2 with
+  | read c => simpa [advance, nextLaw, he] using O.table_entry c.val b
+  | emit c d hd => simp [advance, nextLaw, he, PMF.toMeasure_pure]
+
+private theorem extend_law {n : ℕ} (ν : PMF (Fin (n + 1) → O.Outcome)) (b : Bool) :
+    (ν.toMeasure.prod O.innovationLaw).map
+      (fun p => Fin.snoc p.1 (O.advance (p.1 (Fin.last n)) b p.2)) =
+      (ν.bind fun x => (O.nextLaw (x (Fin.last n)) b).map (Fin.snoc x)).toMeasure := by
+  ext B hB
+  have hm : Measurable (fun p : (Fin (n + 1) → O.Outcome) × O.Innovation =>
+      Fin.snoc p.1 (O.advance (p.1 (Fin.last n)) b p.2)) := measurable_of_countable _
+  rw [Measure.map_apply hm hB, Measure.prod_apply (hm hB), lintegral_countable',
+    PMF.toMeasure_bind_apply _ _ hB]
+  apply tsum_congr
+  intro x
+  rw [PMF.toMeasure_apply_singleton _ _ (measurableSet_singleton _),
+    PMF.toMeasure_map _ _ (measurable_of_countable _),
+    Measure.map_apply (measurable_of_countable _) hB]
+  congr 1
+  have hrow := congrArg (fun μ : Measure O.Outcome => μ ((Fin.snoc x) ⁻¹' B))
+    (O.advance_law (x (Fin.last n)) b)
+  rw [Measure.map_apply (measurable_of_countable _)
+    (hB.preimage (measurable_of_countable _))] at hrow
+  exact hrow
+
+/-- Fresh table evaluation preserves the whole finite original joint law,
+    including all initial, updated, read-ready and emitted configurations. -/
+theorem finite_execution_law (source : ℕ → Bool) (n : ℕ) :
+    (O.seedLaw.prod (Measure.pi fun _ : Fin n => O.innovationLaw)).map
+      (fun p => O.develop source p.1 n p.2) = (O.executionLaw source n).toMeasure := by
+  induction n with
+  | zero =>
+    have he : (fun p : O.Outcome × (Fin 0 → O.Innovation) =>
+        O.develop source p.1 0 p.2) = (fun e _ => e) ∘ Prod.fst := rfl
+    rw [he, ← Measure.map_map (measurable_of_countable _) measurable_fst,
+      Measure.map_fst_prod, measure_univ, one_smul, executionLaw,
+      PMF.toMeasure_map _ _ (measurable_of_countable _)]
+    rfl
+  | succ n ih =>
+    let split : O.Outcome × (Fin (n + 1) → O.Innovation) →
+        (O.Outcome × (Fin n → O.Innovation)) × O.Innovation := fun p =>
+      ((p.1, fun j => p.2 j.castSucc), p.2 (Fin.last n))
+    have hsplit : (O.seedLaw.prod (Measure.pi fun _ : Fin (n + 1) => O.innovationLaw)).map
+        split = (O.seedLaw.prod (Measure.pi fun _ : Fin n => O.innovationLaw)).prod
+          O.innovationLaw := by
+      have he : split = MeasurableEquiv.prodAssoc.symm ∘
+          Prod.map id (fun r : Fin (n + 1) → O.Innovation =>
+            (fun j : Fin n => r j.castSucc, r (Fin.last n))) := rfl
+      rw [he, ← Measure.map_map (MeasurableEquiv.measurable _) (by fun_prop),
+        ← Measure.map_prod_map _ _ measurable_id (by fun_prop), Measure.map_id,
+        split_last O.innovationLaw n, ← Measure.prodAssoc_prod,
+        MeasurableEquiv.map_symm_map]
+    let step : (Fin (n + 1) → O.Outcome) × O.Innovation →
+        (Fin (n + 2) → O.Outcome) := fun p =>
+      Fin.snoc p.1 (O.advance (p.1 (Fin.last n)) (source n) p.2)
+    have he : (fun p => O.develop source p.1 (n + 1) p.2) =
+        step ∘ Prod.map (fun p => O.develop source p.1 n p.2) id ∘ split := rfl
+    rw [he, ← Measure.map_map (measurable_of_countable _) (by fun_prop), hsplit,
+      ← Measure.map_map (measurable_of_countable _) (measurable_of_countable _),
+      ← Measure.map_prod_map _ _ (measurable_of_countable _) measurable_id,
+      ih, Measure.map_id]
+    exact O.extend_law (O.executionLaw source n) (source n)
 
 end Stochastic
 
@@ -139,7 +232,11 @@ private theorem product_primitive (initial : I → S) (h : Measurable initial)
       rawPrefix (fun ω => initial ω.2.1) (fun ω => ω.2.2) l ⁻¹' D ∩
       rawBlock (fun ω => ω.2.2) l r ⁻¹' B = G ×ˢ E := by
     ext ω
-    simp [sourceSlice, rawPrefix, rawBlock, G, E, and_assoc]
+    change (((ω.1.1 = a.1 ∧ ∀ j : Fin n, ω.1.2 j.val = a.2 j) ∧
+      (initial ω.2.1, fun j : Fin l => ω.2.2 j.val) ∈ D) ∧
+      (fun j : Fin r => ω.2.2 (l + j.val)) ∈ B) ↔ _
+    simp only [G, E, Set.mem_prod, Set.mem_setOf_eq, Set.mem_preimage]
+    tauto
   rw [he, productLaw, Measure.prod_prod]
   have hG : (w.toMeasure.prod (Measure.infinitePi fun _ : ℕ => f.toMeasure)) G =
       w a.1 * ∏ j, f (a.2 j) := by
@@ -155,9 +252,10 @@ private theorem product_primitive (initial : I → S) (h : Measurable initial)
   have hE : (κ.prod (Measure.infinitePi fun _ : ℕ => ρ)) E =
       ((κ.map initial).prod (Measure.pi fun _ : Fin l => ρ)) D *
         (Measure.pi fun _ : Fin r => ρ) B := by
-    rw [E, ← Measure.map_apply (by fun_prop) (hD.prod hB), seed_blocks κ ρ initial h,
+    dsimp only [E]
+    rw [← Measure.map_apply (by fun_prop) (hD.prod hB), seed_blocks κ ρ initial h,
       Measure.prod_prod]
-  rw [hG, hE, mul_assoc]
+  simp only [hG, hE, mul_assoc]
 
 end Product
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ReadExecution.OriginalJointRealization

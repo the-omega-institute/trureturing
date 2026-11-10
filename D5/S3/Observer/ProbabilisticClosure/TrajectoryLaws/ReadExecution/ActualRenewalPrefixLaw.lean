@@ -130,7 +130,7 @@ theorem word_measurable (k : ℕ) :
         (measurable_pi_apply j.castSucc).comp measurable_snd))).prodMk
       ((measurable_pi_apply (Fin.last k)).comp measurable_snd))
 
-private theorem split_last (k : ℕ) :
+theorem split_last (k : ℕ) :
     (Measure.pi fun _ : Fin (k + 1) => ρ).map
       (fun r => (fun j : Fin k => r j.castSucc, r (Fin.last k))) =
     (Measure.pi fun _ : Fin k => ρ).prod ρ := by
