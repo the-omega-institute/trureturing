@@ -42,7 +42,7 @@ private lemma local_step {p : ℕ} (hp : p.Prime) (lam : ℝ) (a : ℕ) :
     (D5.S3.Arith.GoldenLocalThreshold.golden_prime_local_objective_diff hp lam a)
 
 -- Reuse the strict-count interval and the existing local maximum theorem.
-private lemma count_maximal {lam : ℝ} (hlam : 0 < lam) {p : ℕ} (hp : p.Prime)
+lemma count_maximal {lam : ℝ} (hlam : 0 < lam) {p : ℕ} (hp : p.Prime)
     (a : ℕ) :
     goldenPrimeLocalObjective lam p a ≤
       goldenPrimeLocalObjective lam p (optimalLayerCount lam p) := by
@@ -112,6 +112,50 @@ private lemma excess_loss {lam : ℝ} (hlam : 0 < lam) {p a : ℕ} (hp : p.Prime
   norm_num only at hs
   nlinarith
 
+/-- The SAME actual unrestricted defect pays the complete local optimality
+loss on any finite set of genuine primes. Missing primes and primes beyond z
+are both allowed. No harmonic-reference reserve enters this inequality. -/
+lemma actual_local_gap_sum_le_defect {z : ℝ} (hz : 1 < z) {n : ℕ} (hn : 1 ≤ n)
+    (S : Finset ℕ) (hS : ∀ p ∈ S, p.Prime) :
+    (∑ p ∈ S, (goldenPrimeLocalObjective (referencePrice z) p
+        (optimalLayerCount (referencePrice z) p) -
+      goldenPrimeLocalObjective (referencePrice z) p (n.factorization p))) ≤
+        actualDefect z n := by
+  classical
+  have hlam : 0 < referencePrice z :=
+    one_div_pos.mpr (mul_pos (by linarith) (log_pos hz))
+  obtain ⟨U, hU, hc, _, _⟩ := optimal_layer_count_spec hlam
+  let T := (U.primeFactors ∪ n.primeFactors) ∪ S
+  have hUT : U.primeFactors ⊆ T := by
+    intro p hp; simp only [T, mem_union]; tauto
+  have hnT : n.primeFactors ⊆ T := by
+    intro p hp; simp only [T, mem_union]; tauto
+  have hST : S ⊆ T := subset_union_right
+  have hprime : ∀ p ∈ T, p.Prime := by
+    intro p hp
+    rcases mem_union.mp hp with hp | hp
+    · rcases mem_union.mp hp with hp | hp
+      · exact Nat.prime_of_mem_primeFactors hp
+      · exact Nat.prime_of_mem_primeFactors hp
+    · exact hS p hp
+  have hpressure : actualPressure z = goldenResourceObjective (referencePrice z) U := by
+    unfold actualPressure
+    rw [golden_resource_supremum_eq_positive_part_sum hlam,
+      ← objective_at_optimal_eq_positive_part_sum hlam hU hc]
+  have hsum : actualDefect z n = ∑ p ∈ T,
+      (goldenPrimeLocalObjective (referencePrice z) p
+          (optimalLayerCount (referencePrice z) p) -
+        goldenPrimeLocalObjective (referencePrice z) p (n.factorization p)) := by
+    unfold actualDefect
+    rw [hpressure, golden_resource_objective_sum_on (referencePrice z) hU T hUT,
+      golden_resource_objective_sum_on (referencePrice z) hn T hnT, sum_sub_distrib]
+    apply sum_congr rfl
+    intro p hp
+    rw [hc p]
+  rw [hsum]
+  exact sum_le_sum_of_subset_of_nonneg hST (fun p hp _ =>
+    sub_nonneg.mpr (count_maximal hlam (hprime p hp) _))
+
 -- The SAME unrestricted pressure pays weighted positive-part local losses.
 -- The common support includes missing primes through H and p > z through X.
 private lemma common_support_charge {z : ℝ} (hz : 1 < z) {n : ℕ} (hn : 1 ≤ n)
@@ -124,59 +168,37 @@ private lemma common_support_charge {z : ℝ} (hz : 1 < z) {n : ℕ} (hn : 1 ≤
   classical
   have hlam : 0 < referencePrice z :=
     one_div_pos.mpr (mul_pos (by linarith) (log_pos hz))
-  obtain ⟨U, hU, hc, _, _⟩ := optimal_layer_count_spec hlam
-  let S := ((U.primeFactors ∪ n.primeFactors) ∪ H) ∪ X
-  have hUS : U.primeFactors ⊆ S := by
-    intro p hp; simp only [S, mem_union]; tauto
-  have hnS : n.primeFactors ⊆ S := by
-    intro p hp; simp only [S, mem_union]; tauto
-  have hHX : H ∪ X ⊆ S := by
-    intro p hp; simp only [S, mem_union] at *; tauto
-  have hprime : ∀ p ∈ S, p.Prime := by
+  let gap : ℕ → ℝ := fun p =>
+    goldenPrimeLocalObjective (referencePrice z) p
+        (optimalLayerCount (referencePrice z) p) -
+      goldenPrimeLocalObjective (referencePrice z) p (n.factorization p)
+  have hprime : ∀ p ∈ H ∪ X, p.Prime := by
     intro p hp
-    simp only [S, mem_union] at hp
-    rcases hp with ((hp | hp) | hp) | hp
-    · exact Nat.prime_of_mem_primeFactors hp
-    · exact Nat.prime_of_mem_primeFactors hp
+    rcases mem_union.mp hp with hp | hp
     · exact (hH p hp).1
     · exact (hX p hp).1
-  have hpressure : actualPressure z = goldenResourceObjective (referencePrice z) U := by
-    unfold actualPressure
-    rw [golden_resource_supremum_eq_positive_part_sum hlam,
-      ← objective_at_optimal_eq_positive_part_sum hlam hU hc]
-  let gap : ℕ → ℝ := fun p =>
-    goldenPrimeLocalObjective (referencePrice z) p (U.factorization p) -
-      goldenPrimeLocalObjective (referencePrice z) p (n.factorization p)
-  have hgap0 : ∀ p ∈ S, 0 ≤ gap p := by
+  have hgap0 : ∀ p ∈ H ∪ X, 0 ≤ gap p := by
     intro p hp
-    dsimp only [gap]
-    rw [hc p]
     exact sub_nonneg.mpr (count_maximal hlam (hprime p hp) _)
-  have hsum : actualDefect z n = ∑ p ∈ S, gap p := by
-    unfold actualDefect
-    rw [hpressure, golden_resource_objective_sum_on (referencePrice z) hU S hUS,
-      golden_resource_objective_sum_on (referencePrice z) hn S hnS, sum_sub_distrib]
   have hh : ∀ p ∈ H,
       max (log p * (goldenLayerMarginal p 2 - referencePrice z)) 0 ≤ gap p := by
     intro p hp
-    have hpS := hHX (mem_union_left X hp)
+    have hpS := mem_union_left X hp
     have hlp : 0 ≤ log (p : ℝ) := log_natCast_nonneg p
     apply max_le _ (hgap0 p hpS)
     by_cases hg : referencePrice z ≤ goldenLayerMarginal p 2
     · dsimp only [gap]
-      rw [hc p]
       exact hole_loss hlam (hH p hp).1 (hH p hp).2 hg
     · exact (mul_nonpos_of_nonneg_of_nonpos hlp
         (sub_nonpos.mpr (le_of_not_ge hg))).trans (hgap0 p hpS)
   have hx : ∀ p ∈ X,
       max (log p * (referencePrice z - goldenLayerMarginal p 2)) 0 ≤ gap p := by
     intro p hp
-    have hpS := hHX (mem_union_right H hp)
+    have hpS := mem_union_right H hp
     have hlp : 0 ≤ log (p : ℝ) := log_natCast_nonneg p
     apply max_le _ (hgap0 p hpS)
     by_cases hg : goldenLayerMarginal p 2 ≤ referencePrice z
     · dsimp only [gap]
-      rw [hc p]
       exact excess_loss hlam (hX p hp).1 (hX p hp).2 hg
     · exact (mul_nonpos_of_nonneg_of_nonpos hlp
         (sub_nonpos.mpr (le_of_not_ge hg))).trans (hgap0 p hpS)
@@ -184,9 +206,7 @@ private lemma common_support_charge {z : ℝ} (hz : 1 < z) {n : ℕ} (hn : 1 ≤
     _ ≤ (∑ p ∈ H, gap p) + ∑ p ∈ X, gap p :=
       add_le_add (sum_le_sum hh) (sum_le_sum hx)
     _ = ∑ p ∈ H ∪ X, gap p := (sum_union hdisj).symm
-    _ ≤ ∑ p ∈ S, gap p :=
-      sum_le_sum_of_subset_of_nonneg hHX (fun p hp _ => hgap0 p hp)
-    _ = actualDefect z n := hsum.symm
+    _ ≤ actualDefect z n := actual_local_gap_sum_le_defect hz hn (H ∪ X) hprime
 
 -- The old constant-margin estimate is a consumer of the weighted core.
 private lemma constant_margin_charge {z : ℝ} (hz : 1 < z) {n : ℕ} (hn : 1 ≤ n)
