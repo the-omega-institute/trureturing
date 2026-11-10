@@ -28,6 +28,10 @@ $$\neg (\forall (\mu: \mathbb{R}), \forall (\delta: \mathbb{R}), \forall (y: \ma
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/GaussZeroBalanced/FractionalLegendreTuran.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/karp-sf21-legendre-turan` (refuted) by `D5/S3/Analytic/GaussZeroBalanced/FractionalLegendreTuran.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"karp-sf21-legendre-turan","declaration_gid":"D5/S3/Analytic/GaussZeroBalanced/FractionalLegendreTuran.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Dmitry Karp (2011). *Log-convexity and log-concavity for series in product ratios of rising factorials and gamma functions*. URL: <https://math.nist.gov/~DLozier/SF21/SF21slides/Karp.pdf>.

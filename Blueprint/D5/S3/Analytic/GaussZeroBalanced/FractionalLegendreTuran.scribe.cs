@@ -27,7 +27,10 @@ internal sealed class FractionalLegendreTuranDocument : IScribeDocumentDefinitio
                 AssessedProvenance.FromRepo(Source), Blocks(
                     Paragraph(Text("Take μ=3/2, δ=63/64 and y=4095/4096. The values at degrees 33/64, 96/64 and 159/64 lie respectively in [−23/10,−227/100], [181/100,184/100] and [−153/100,−150/100]. The central square is at most (184/100)², whereas the shifted product is at least (227/100)(150/100); their difference is strictly negative.")),
                     Paragraph(Text("The integer certificates enclose 10,000 recurrence steps at scale 10¹². Beyond a degree-dependent index the absolute term ratio is at most y, so the remaining series is bounded geometrically. All three degrees are positive. This strict interior counterexample also contradicts the non-strict comparison. Variants requiring positive function values or a zero-free range, and a uniform moving-shift family, remain open."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("karp-sf21-legendre-turan"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula Parenthesized(Formula x) => Seq(Open, x, Close);
     private static Formula R => Seq(Mathbb, Grp(F.Id("R")));
