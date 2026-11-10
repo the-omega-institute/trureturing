@@ -62,21 +62,9 @@ Lean statement: `D5/S3/FluidDynamics/Vortices/AlternatingPolygonComplexSpectrum.
 
 Every label strictly below the neutral label gives a nonzero complex root.
 
-**Theorem 1.5 (no cross label collision).**
+For m ≥ 1 and folded labels r,s ≤ m, a common signed root μ has μ² equal to both squaredValue m r and squaredValue m s by spectralRoot_sq; the sign disappears on squaring. Injectivity of the real-to-complex embedding gives equality of these real squared values, and AlternatingPolygonMultiplicity.squaredValue_injective gives r = s. Thus different folded labels cannot share a signed root, including the imaginary families and the neutral label. This is a consequence of the existing square and injectivity arguments.
 
-Lean statement: `D5/S3/FluidDynamics/Vortices/AlternatingPolygonComplexSpectrum.no_cross_label_collision`
-
-*Proof.* Machine-checked in Lean as `D5/S3/FluidDynamics/Vortices/AlternatingPolygonComplexSpectrum.no_cross_label_collision` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Anna M. Barry, Panayotis G. Kevrekidis (2013). *Few-particle vortex cluster equilibria in Bose–Einstein condensates: existence and stability*. DOI: [10.1088/1751-8113/46/44/445001](https://doi.org/10.1088/1751-8113/46/44/445001). URL: <https://arxiv.org/abs/1306.1545v2>.
-
-*Commentary.*
-
-Signed roots at different folded labels never collide, including both imaginary families.
-
-**Theorem 1.6 (signed root multiplicities).**
+**Theorem 1.5 (signed root multiplicities).**
 
 Lean statement: `D5/S3/FluidDynamics/Vortices/AlternatingPolygonComplexSpectrum.signed_root_multiplicities`
 
@@ -93,7 +81,6 @@ Complete nonzero algebraic and geometric multiplicities of both signed roots.
 ## References
 
 - Truth anchor: `D5/S3/FluidDynamics/Vortices/AlternatingPolygonComplexSpectrum.all_complex_roots`
-- Truth anchor: `D5/S3/FluidDynamics/Vortices/AlternatingPolygonComplexSpectrum.no_cross_label_collision`
 - Truth anchor: `D5/S3/FluidDynamics/Vortices/AlternatingPolygonComplexSpectrum.signed_root_multiplicities`
 - Truth anchor: `D5/S3/FluidDynamics/Vortices/AlternatingPolygonComplexSpectrum.spectralRoot`
 - Truth anchor: `D5/S3/FluidDynamics/Vortices/AlternatingPolygonComplexSpectrum.spectralRoot_ne_zero`
