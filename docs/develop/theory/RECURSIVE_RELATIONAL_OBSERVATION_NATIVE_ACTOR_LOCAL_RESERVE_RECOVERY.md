@@ -2605,3 +2605,192 @@ source-specific acquisition, operation, continuation and resource
 obligations.
 
 ## 追加锚（本行以下为增补区）
+
+## 20. Late operand content and irreversible guard surplus
+
+**Definition 20.1 (direct transport with late distinguishing material).**
+Fix an integer $m\ge2$ and the authentic GENERAL/ARC beta-boot occurrence
+of Definition 9.1, ABT Definition 18.1 and NCE Convention 13.1. Retain
+$H_{\rm boot}=1$, $\xi$, source16, the continuing $\phi_K$, the acquired
+beta seed with its actual origin/epoch, parked original client, occupied
+verifier and INITIAL consumer. Complete Reserve$(m+1)$ and Raise$(m+1)$
+to reach $p$ with source $\beta$ and $h=K=m+1$. The reference starts at
+$p$. Its encoded alternative completes two original Rho calls, reaching
+$E(\beta)$ with that same guard/reserve: their candidates have two and
+three leaves, both within $m+1$. These are alternative extensions of one
+occurrence, without reset, clone or new preparation. CAP Theorems
+4.5, 5.2–5.3 and Lemma 6.7, this volume's Proposition 5.5 and GENERAL
+Lemma 8.1 give these actual source values and complete returns, as in
+Proposition 17.1; only its source preparation is used, not Assumption
+15.3's early operand supply.
+
+Reuse ABT Definition 19.2's ordered trees
+$P_1(z)=z$, $P_{r+1}(z)=\langle P_r(z),z\rangle$. Compare
+
+$$
+W_\gamma=
+\bigl(\operatorname{Right}(P_m(\gamma)),
+      \operatorname{Right}(\alpha)\bigr),\qquad
+\gamma\in\{\alpha,\beta\},
+\tag{LI.1}
+$$
+
+at the fixed reference guard $m+1$. Each modifier must map to exactly one
+complete original Right$(E(v))$, with its whole canonical operand. At
+each matched returned cut require only the same accept/executed-refusal
+label and encoded logical source $E(t')$ for the reference successor
+$t'$. Impose no exact encoded guard/reserve endpoint such as (GT.6).
+
+A single deterministic preparation rule starts at the same encoded
+prefix in the two cases. Before and between mapped modifiers it may use
+any finite lawful source-preserving read, local or history work and any
+paid lawful Reserve/Raise, using all information actually acquired then.
+The tested class uses no source-changing repair, replacement encoding or
+multi-modifier realization. This restricts the tested correspondence,
+not the original apparatus or any of its other lawful menu entries.
+
+The information premise is equality of the rule's **complete usable
+observation histories through its final effective first guard choice**.
+This includes acquired backing and rows, origins, epochs, current rights,
+tokens, clocks/status and certificates, and every usable read or input
+outcome of its preparation. No branch-distinguishing operand material,
+encoded length or other separating observation is usable there. Request
+kinds, reference guards and original operand shapes/sizes may be known
+if actually supplied. The first operands have the same ordered shape,
+$m$ leaves and original prefix-code length $3m-1$; these equalities alone
+do not imply the information premise or install a shape/size service.
+Any already owned/readable original operand, encoded length, weight or
+other lawful discriminator must be retained; if it separates these
+cases, this premise fails.
+
+The effective guard is the authoritative current producer-directory
+guard used by the first mapped whole call. Equality must persist through
+every opportunity to change it before that call, not just through an
+earlier provisional Raise. Thereafter grant complete truthful encoded
+ingress, including its possibly distinguishing length and payload, at
+all prescribed IN sites with all original charges. CAP Definitions 1.4,
+4.6 and 5.1 supply no maintenance callback during Busy ingress; later
+complete returns enable further lawful maintenance but no guard decrease.
+AIF Definition 2.2's future supply choices are not earlier adapter data.
+
+**Proposition 20.2 (two-round late-content obstruction).** For every
+$m\ge2$, every finite-returning rule in Definition 20.1 fails on at least
+one displayed word: either its first $W_\beta$ label/source successor is
+wrong, or its second $W_\alpha$ label/source successor is wrong. Both
+reference words actually release
+$(\mathsf{accept},\mathsf{executed\text{-}refusal})$.
+
+*Proof.* The reference first candidate
+$t_\gamma=\langle\beta,P_m(\gamma)\rangle$ has $m+1$ leaves and
+accepts. Its second candidate $\langle t_\gamma,\alpha\rangle$ has
+$m+2$ leaves, so the complete second call refuses and retains
+$t_\gamma$. These are canonical nonempty finite operands, including the
+refused one, in CAP Definition 1.2's original task domain.
+
+Determinism and the full observation premise force a common final first
+guard $G$, including any intervening lawful preparation and maintenance.
+Reuse (GT.1)–(GT.3) and CAP's whole-candidate test used in Theorem 16.1:
+
+$$
+n(E(\beta))=3,\qquad
+n(E(P_m(\alpha)))=2m,\qquad n(E(P_m(\beta)))=3m.
+\tag{LI.2}
+$$
+
+Thus the first beta-side candidate has $3+3m$ leaves. If $G<3+3m$,
+it refuses and keeps $E(\beta)$, whereas the reference accepts and
+requires $E(t_\beta)$, whose leaf count is strictly larger. Both the
+label and the source requirement fail on that first call.
+
+Otherwise $G\ge3+3m$. The first alpha-side candidate has $3+2m$ leaves,
+so it accepts and installs exactly $E(t_\alpha)$ by the supplied
+homomorphism. All allowed inter-call work preserves this source. CAP's
+actual maintenance rules give $G_2\ge G$ for the guard used by its next
+whole call, even after it learns the complete operand and history. But
+
+$$
+n\langle E(t_\alpha),E(\alpha)\rangle
+ =5+2m\le3+3m\le G\le G_2\qquad(m\ge2).
+\tag{LI.3}
+$$
+
+The second encoded call therefore accepts instead of refusing. Its
+actual source is $\langle E(t_\alpha),E(\alpha)\rangle$, with two more
+leaves than $E(t_\alpha)$, so it also fails the required successor
+relation. No exact guard endpoint from (GT.6) was used.
+
+For $m=2$, $p$ has guard/reserve 3. Both original first operands have
+two leaves and code length 5; the reference candidate counts are 3 then
+4, yielding acceptance then executed refusal. The encoded first counts
+are 7 and 9. Correct beta-side acceptance forces $G\ge9$; the alpha
+side's second candidate has exactly 9 leaves and accepts at any retained
+or raised guard. Each word separately is transportable when its early
+material is actually supplied: Theorems 16.1 and 17.2 permit respective
+first guards $3+2m$ and $3+3m$, held through the second call. The conflict
+is the common early choice, not the existence of either separate word.
+$\square$
+
+**Corollary 20.3 (necessary early separation for the direct consumer).**
+Any deterministic direct whole-graft rule with Definition 20.1's
+operations and endpoint requirements that transports all finite words
+must lawfully separate the two first operands in (LI.1) before its first
+effective irreversible guard choice. Eventual exact material and
+retrospective authentication alone cannot replace that distinction.
+This requires neither full early syntax, an exact count, nor any
+particular certificate format.
+
+*Proof.* Otherwise the two histories satisfy Definition 20.1's equality
+through the final choice, and Proposition 20.2 contradicts success on
+both. A later read or completed return cannot withdraw the surplus in
+(LI.3). An actual early discriminator removes that premise and is not
+excluded by this corollary. $\square$
+
+**Convention 20.4 (reuse, costs and remaining recovery obligation).**
+This source-specific temporal consequence is repo-derived. ABT
+Definition 19.1/Theorem 19.3 exclude one request-independent scalar for
+an entire entry menu, with different original sizes and first labels.
+Here preparation may depend on actual request observations, and both
+equal-size first requests accept. ABT Theorems 22.2–22.3 give the exact
+fixed-guard whole-menu interval and its slack-0/1 positive classes.
+Here slack is $m\ge2$, only two words are tested, guards may adapt
+between calls, and their first rounds alone admit a common guard.
+Theorem 16.1 already supplies the inequalities, and Proposition 18.4
+already shows a surplus can spoil refusal. The added necessity forces
+that surplus from correct service of an indistinguishable alternative;
+later truthful material cannot repair it. Deterministic
+indistinguishability is a mature method, not an originality claim. The
+primary simulation/refinement comparisons and their information limits
+remain those of Definition 19.2; neither supplies early native material.
+No worldwide or corpus-wide novelty claim is made.
+
+All calls retain the installed outer01/$F^A$ route, actual current
+admission and permissions, ReadState and current $\phi_K$ resolution,
+complete canonical ingress/validation, whole candidate and guard work
+including refusals, response/counters, rows and all dependencies,
+receiver checks, final row ACK, source TOK, idle CTL, InnerReturn,
+CaptureCAP and next Ready, as in Theorem 17.2. No call overlaps another.
+Premature, Busy, malformed or terminal routes cannot replace the paired
+completed label/source cuts. The acquired seed, every existing row,
+archive/menu, backing, permission and service contract remain intact.
+Definition 18.5's full vector charges acquisition, count/encoding/planning,
+original/encoded copies and immutable backing, maintenance, accepted and
+refused work, primitive receipts/ticks/fees, checks/ACKs, returns/captures,
+retention and output. Its CAP Bill applies only to its measured native
+prefix; outside material work and GENERAL's independent foundation/tariff
+remain separately charged. No cross-path cost equality, optimum, deadline,
+throughput or storage bound follows.
+
+Only finitely many preterminal completed Ready calls are considered,
+conditional on actual finite supply and termination of reached local
+computations. Original final00, INITIAL verification/output and absorbing
+halt remain available but uninvoked; no Busy/posthalt entry or physical
+completion follows. The remaining task for weakening Assumption 15.3
+is a genuinely lawful, timely separating acquisition for the existing
+decision path, or a separately proved alternative operation mapping.
+No preview service, planner, new owner, sufficient certificate interface,
+all-protocol impossibility, full-$Q$ equivalence, four-view completion or
+native/diffusion/AURIC source identification is supplied. The broader
+same-source mutual-recovery goal retains these acquisition, operation
+and resource obligations.
+
+## 追加锚（本行以下为增补区）
