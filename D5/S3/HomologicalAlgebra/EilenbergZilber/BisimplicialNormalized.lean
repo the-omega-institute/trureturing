@@ -763,7 +763,7 @@ comparisons:
 `F₁(X) ≃ N₁(X) ≃ N₂(X) ≃ F₂(X)`,
 
 where `normalizationComparison` is the inner/outer Moore normalization of the total complex
-(`BisimplicialNormalizationComparison`),
+(`NormalizationComparison`),
 and `diagonalNormalizationComparison` is the corresponding comparison for the diagonal simplicial
 object. -/
 noncomputable def eilenbergZilber (X : BisimplicialObject C) :
