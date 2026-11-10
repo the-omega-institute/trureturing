@@ -43,7 +43,6 @@ def Positive (P : Set A) (f : A →ₗ[ℝ] ℝ) : Prop := ∀ p : P, 0 ≤ f p
 /-- Full proper-effect confirmation, with maximum attainment stated separately. -/
 structure ConfirmationSystem (P : Set A) where
   unit : A →ₗ[ℝ] ℝ
-  spanning : Submodule.span ℝ P = ⊤
   normalized : ∀ p : P, unit p = 1
   effect : P → A →ₗ[ℝ] ℝ
   proper : ∀ p q : P, 0 ≤ effect p q ∧ effect p q ≤ 1

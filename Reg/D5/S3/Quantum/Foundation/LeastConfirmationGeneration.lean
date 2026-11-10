@@ -40,7 +40,6 @@ abbrev arena : Arena where
 
 private def zeroSystem : ConfirmationSystem (∅ : Set (ULift.{u} (Fin 0 → ℝ))) where
   unit := 0
-  spanning := Subsingleton.elim _ _
   normalized p := False.elim p.property
   effect p := False.elim p.property
   proper p := False.elim p.property
