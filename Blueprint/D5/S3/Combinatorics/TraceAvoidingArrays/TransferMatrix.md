@@ -60,9 +60,9 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/TransferMatrix.cont_mat
 
 Under the classwise successor-count hypothesis, every admissible boundary pair has continuation count equal to its matrix-power coordinate, for every continuation length.
 
-**Theorem 1.5 (Recursive and local word conditions).**
+**Theorem 1.5 (Admissibility is a local condition).**
 
-Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/TransferMatrix.good_iff_local`
+$$\forall R \in \operatorname{Type},\; \forall P \in R \to \left(R \to \operatorname{Prop}\right),\; \forall Q \in R \to \left(R \to \left(R \to \operatorname{Prop}\right)\right),\; [\operatorname{Inhabited}\left(R\right)] \forall xs \in \operatorname{List}\left(R\right),\; (\operatorname{good}\left(P, Q, xs\right)) \Leftrightarrow ((\forall i \in \operatorname{Nat},\; (i + 1 < \operatorname{List}.\operatorname{length}\left(xs\right)) \Rightarrow (P\left(\operatorname{List}.\operatorname{getD}\left(xs, i, \operatorname{default}\right), \operatorname{List}.\operatorname{getD}\left(xs, i + 1, \operatorname{default}\right)\right))) \land (\forall i \in \operatorname{Nat},\; (i + 2 < \operatorname{List}.\operatorname{length}\left(xs\right)) \Rightarrow (Q\left(\operatorname{List}.\operatorname{getD}\left(xs, i, \operatorname{default}\right), \operatorname{List}.\operatorname{getD}\left(xs, i + 1, \operatorname{default}\right), \operatorname{List}.\operatorname{getD}\left(xs, i + 2, \operatorname{default}\right)\right))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/TransferMatrix.good_iff_local` (`✓ std3`). ∎
 
@@ -72,7 +72,7 @@ Lean statement: `D5/S3/Combinatorics/TraceAvoidingArrays/TransferMatrix.good_iff
 
 *Commentary.*
 
-Recursive admissibility is equivalent to every consecutive pair and consecutive triple satisfying the corresponding condition at its actual list index.
+A word is admissible exactly when every two consecutive entries pass the pair test and every three consecutive entries pass the triple test; entries are read with a default value outside the word, which the length bounds never reach.
 
 **Definition 1.6 (Horizontal trace tests).**
 
@@ -177,8 +177,6 @@ A finite table starting at the constant-one vector and satisfying each matrix-ve
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/TransferMatrix.arrayOK`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/TransferMatrix.arrayOKIffGood`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/TransferMatrix.cardMatrix`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/TransferMatrix.cont`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/TransferMatrix.cont_matrix`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/TransferMatrix.good`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/TransferMatrix.good_iff_local`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/TransferMatrix.pairOK`
