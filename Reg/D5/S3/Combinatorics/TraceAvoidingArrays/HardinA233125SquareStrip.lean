@@ -3,7 +3,9 @@ import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
 
-/-! Four-slot registration of the literal four-column generating-function identity. -/
+/-! Four-slot registrations of the four-column identity, certificate and label sum. -/
+
+open scoped BigOperators
 
 namespace Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233125SquareStrip
 
@@ -160,6 +162,79 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 #print axioms audit
 
 end FiniteCertificate
+
+namespace LabelSum
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit
+    (fun _ => (Fin 4 → Fin 3) → ℤ) (fun _ => ℤ)
+
+def actual : Realization signature :=
+  realize signature (fun _ _ g => ∑ q, g q) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ g => (∑ q, g q) + 1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ g : (Fin 4 → Fin 3) → ℤ,
+    R.readout () () g = ∑ a : Fin 3, ∑ b : Fin 3, ∑ c : Fin 3, ∑ d : Fin 3,
+      g ![a, b, c, d]
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hb := h (fun _ => 0)
+  change (∑ _q : Fin 4 → Fin 3, (0 : ℤ)) + 1 =
+    ∑ _a : Fin 3, ∑ _b : Fin 3, ∑ _c : Fin 3, ∑ _d : Fin 3, (0 : ℤ) at hb
+  simpa using hb
+
+def family : Registration arena (type_of% @label_sum) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨label_sum, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    refine ⟨(), (fun _ => 0), (fun _ => 1), ?_⟩
+    change (∑ _q : Fin 4 → Fin 3, (0 : ℤ)) ≠ ∑ _q : Fin 4 → Fin 3, (1 : ℤ)
+    norm_num [Fintype.card_fun]
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@label_sum) (Realization signature) Type Unit where
+  unitName := `Reg.A233125LabelSum.auditUnit
+  realizationName := ``family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ g => ∑ q, g q) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233125SquareStrip
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms audit
+
+end LabelSum
 
 end
 
