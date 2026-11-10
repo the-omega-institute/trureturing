@@ -2004,3 +2004,374 @@ $$
 物理接回所指的谓词仍严格是§§9.6、10.9所固定的同一个 $\mathcal C_{47}^{\rm pin}(\Omega;S,D)$，即 $\mathsf F$ 定义41.4、40.1、36.1及其递归上游全文的逐子句合取，保留每个原量词和每层既定版本；本卷6.1及1–8的七合同亦各守自身全文，不将不同钉版谓词认作相同。原 $\Omega/\mathrm{native}$ 的对象、准备、事件、比较权、共同来源与全词核、全部静态和静默分支、完整 typed 菜单及整台仪器的每份输出和合法未来、真实 Return、完整 CountRead，以及原正常性、前对偶、无限记录与收敛、物理钟、实际可逆动力学和共同正物理作用量，仍逐项取这些已纳入的原定义与前件。这些全文不由本段的列名替代。数学正读取不自动成为实际准备，给定矩阵乘法不成为物理来源证明，有限接口中的预算排除也不构成完整 H、未知总 $D$ 或物理反模型。
 
 ## 追加锚（本行以下为增补区）
+
+## 12. 固定幅度零探针读取与原星形全族刚性
+
+### 12.1 原矩阵、原质量与一份共同读取
+
+**定义 12.1（互补比例域的有限读取）。** 始终取定义9.1的同一 $\mathcal A_\star=M_3(\mathbb C)$、$P_\star$、$c,d,t_0,t=t_0+\lambda c$、$g=g_0+\rho d$ 及 $g_0=K_\sigma(c,t_0)$，全部预算和标签严格取(9.2)–(9.3)。全称正读取仍是原代数上的全部数学正复线性泛函，质量仍为任意有限 $\phi(I_3)\ge0$。来源 $\mathsf F$ 严格取[全 PB 多项式卷][AXF]的提交 `2c1987c6ad3acbe4f9309ebde7bd204eacddd31a`。其定理42.2、式(39.7)，以及本卷定理11.2、11.4和命题11.5均按原陈述复用。
+
+当 $\lambda\rho\ne0$，置
+
+$$
+\begin{gathered}
+a=|\lambda|,\qquad b=|\rho|,\qquad
+\eta=\operatorname{sgn}(\lambda\rho),\qquad
+\alpha=\frac{\sqrt2}{18},\qquad \beta=\frac{4\sqrt2}{27},\\
+u=\frac13(2\sqrt2,-1,0)^{\mathsf T},\qquad
+e=\frac13(1,2\sqrt2,0)^{\mathsf T},\qquad f=(0,0,1)^{\mathsf T},\\
+x=0,\qquad \xi=u+\eta(i\sigma\alpha e+\beta\rho f),\qquad
+\phi_\xi(A)=\xi^*A\xi.
+\end{gathered}
+\tag{12.1}
+$$
+
+这里 $u,e,f$ 是 $\mathsf F$(42.5)中原来的实正交单位向量；$x$ 是原角内的实际零探针。$\phi_\xi$ 是整个 $M_3(\mathbb C)$ 上的正复线性泛函，且
+
+$$
+\phi_\xi(I_3)=\|\xi\|^2
+=1+\frac1{162}+\frac{32\rho^2}{729}.
+\tag{12.2}
+$$
+
+不归一化，不换成角质量。原基坐标中的 $t_0$ 及 $g_0$ 的两条环境边保留；以下用 $(u,e,f)$ 记录矩阵乘法，只是对同一三维数据换正交坐标。
+
+### 12.2 一份零探针读取的严格排除
+
+**定理 12.2（互补比例域的原零预算违反）。** 对(9.1)的任意 $\sigma=\pm1$ 和实参数
+
+$$
+\rho\ne0,\qquad 0<|\lambda|\le\frac{|\rho|}{10},
+\tag{12.3}
+$$
+
+定义12.1的单一有限读取严格违反原 $\mathsf{PB}_0$。具体地，保持原标签
+
+$$
+R_+=-k,\quad R_-=k,\quad S_+=t+g,\quad S_-=t-g,
+\quad L_0=-(tg+gt),\qquad k=c\circ t,
+\tag{12.4}
+$$
+
+并记 $B_\pm=B_{\phi_\xi}(R_\pm,S_\pm)$，则
+
+$$
+|\phi_\xi(L_0)|^2-(\sqrt{B_+}+\sqrt{B_-})^2
+>
+\frac4{15}\left(\frac{1735}{59049}b^2+\frac{38}{75}b^4\right)>0.
+\tag{12.5}
+$$
+
+不要求 $\mathsf{P2}$，也不限制 $b$ 的大小；全部比较量同时来自(12.1)的同一个 $x,\xi,c,t,g$。
+
+证明。先列出同一实现中的乘法。以下矩阵均在有序正交基 $(u,e,f)$ 中书写：
+
+$$
+\begin{gathered}
+c=\begin{pmatrix}
+10/9&-2\sqrt2/9&0\\-2\sqrt2/9&17/9&0\\0&0&0
+\end{pmatrix},\qquad
+c^2=\begin{pmatrix}
+4/3&-2\sqrt2/3&0\\-2\sqrt2/3&11/3&0\\0&0&0
+\end{pmatrix},\\
+d=\begin{pmatrix}
+2/3&2\sqrt2/3&0\\2\sqrt2/3&-5/3&0\\0&0&0
+\end{pmatrix},\qquad
+t_0=\begin{pmatrix}
+0&0&\sqrt2/3\\0&0&5/3\\\sqrt2/3&5/3&0
+\end{pmatrix},\\
+k_0=c\circ t_0=\begin{pmatrix}
+0&0&0\\0&0&3/2\\0&3/2&0
+\end{pmatrix},\qquad
+g_0=i\sigma\begin{pmatrix}
+0&0&0\\0&0&3/2\\0&-3/2&0
+\end{pmatrix}.
+\end{gathered}
+\tag{12.6}
+$$
+
+由 $k=k_0+\lambda c^2$、$t=t_0+\lambda c$、$g=g_0+\rho d$ 作用在坐标列 $(1,i\sigma\eta\alpha,\eta\beta\rho)^{\mathsf T}$ 上，逐项得到
+
+$$
+\begin{aligned}
+U=k\xi&=\begin{pmatrix}
+4\lambda/3-i\sigma\eta\,2\lambda/27\\
+\sqrt2(-2\lambda/3+2\eta\rho/9)+i\sigma\eta\,11\sqrt2\lambda/54\\
+i\sigma\eta\,\sqrt2/12
+\end{pmatrix},\\
+T=t\xi&=\begin{pmatrix}
+10\lambda/9+8\eta\rho/81-i\sigma\eta\,2\lambda/81\\
+\sqrt2(-2\lambda/9+20\eta\rho/81)+i\sigma\eta\,17\sqrt2\lambda/162\\
+\sqrt2/3+i\sigma\eta\,5\sqrt2/54
+\end{pmatrix},\\
+G=g\xi&=\begin{pmatrix}
+2\rho/3+i\sigma\eta\,2\rho/27\\
+2\sqrt2\rho/3+i\sigma\eta\,7\sqrt2\rho/54\\
+\eta\sqrt2/12
+\end{pmatrix}.
+\end{aligned}
+\tag{12.7}
+$$
+
+这同时核对 $\sigma$ 的两个取值，无需将原标签改号。置
+
+$$
+\begin{gathered}
+n=\|U\|^2,\quad m=\|T\|^2+\|G\|^2,\quad
+p=\operatorname{Re}(U^*T),\quad
+q=\eta\operatorname{Re}(U^*G),\quad
+r=\eta\operatorname{Re}(T^*G).
+\end{gathered}
+\tag{12.8}
+$$
+
+由 $\eta\lambda\rho=ab$，(12.7)给下列准确标量：
+
+$$
+\begin{aligned}
+n&=\frac1{72}+\frac{1339}{486}a^2-\frac{16}{27}ab+\frac8{81}b^2,\\
+m&=\frac{1477}{5832}+\frac{659}{486}a^2+\frac{731}{486}b^2,\\
+p&=\frac5{324}+\frac{2657}{1458}a^2-\frac8{27}ab+\frac{80}{729}b^2,\\
+q&=\frac{23}{486}ab+\frac8{27}b^2,\\
+r&=\frac1{18}+\frac{685}{1458}ab+\frac{32}{81}b^2>0.
+\end{aligned}
+\tag{12.9}
+$$
+
+例如 $n$ 中 $\lambda^2$ 的系数由 $1300/729+8/9+121/1458=1339/486$ 给出，交叉项为 $-16\eta\lambda\rho/27$。对 $m$，两项范数分别为
+
+$$
+\|T\|^2=\frac{349}{1458}+\frac{659}{486}\lambda^2+\frac{32}{243}\rho^2,
+\qquad
+\|G\|^2=\frac1{72}+\frac{667}{486}\rho^2.
+\tag{12.10}
+$$
+
+其中 $\|T\|^2$ 的 $\eta\lambda\rho$ 项相消。其余三个实内积在原实参数中依次为
+
+$$
+\begin{aligned}
+\operatorname{Re}(U^*T)
+&=\frac5{324}+\frac{2657}{1458}\lambda^2
+ -\frac8{27}\eta\lambda\rho+\frac{80}{729}\rho^2,\\
+\operatorname{Re}(U^*G)
+&=\frac{23}{486}\lambda\rho+\frac8{27}\eta\rho^2,\\
+\operatorname{Re}(T^*G)
+&=\frac\eta{18}+\frac{685}{1458}\lambda\rho+\frac{32}{81}\eta\rho^2.
+\end{aligned}
+\tag{12.11}
+$$
+
+因此表(12.9)中的每一项都取自相同三向量，而非分别优化的读取。
+
+令
+
+$$
+H=nm-p^2-q^2,\qquad J=2(nr-pq).
+\tag{12.12}
+$$
+
+原实 Gram 定义及(12.4)给
+
+$$
+\begin{aligned}
+B_+&=n(m+2\eta r)-(p+\eta q)^2=H+\eta J,\\
+B_-&=n(m-2\eta r)-(p-\eta q)^2=H-\eta J,\\
+\phi_\xi(L_0)&=-2\operatorname{Re}(T^*G)=-2\eta r,
+\qquad |\phi_\xi(L_0)|=2r.
+\end{aligned}
+\tag{12.13}
+$$
+
+两份 $B_\pm$ 均是原正泛函的 Gram 行列式，故非负。仅为估计而记 $B_\eta=H+J$、$B_{-\eta}=H-J$：$\eta=1$ 时它们依次是原 $B_+,B_-$，$\eta=-1$ 时依次是原 $B_-,B_+$。对这两个非负数用标量 Cauchy–Schwarz，明确取向量 $(\sqrt5,\sqrt3)$ 与 $(\sqrt{B_\eta/5},\sqrt{B_{-\eta}/3})$，得
+
+$$
+\begin{aligned}
+(\sqrt{B_+}+\sqrt{B_-})^2
+&\le8\left(\frac{B_\eta}{5}+\frac{B_{-\eta}}3\right)\\
+&=\frac85(H+J)+\frac83(H-J)
+=\frac{16}{15}(4H-J).
+\end{aligned}
+\tag{12.14}
+$$
+
+这只是原两笔面积之和的上估计，未改变任一原预算。故
+
+$$
+\begin{gathered}
+|\phi_\xi(L_0)|^2-(\sqrt{B_+}+\sqrt{B_-})^2\ge\frac4{15}E,\\
+E=15r^2-16nm+16p^2+16q^2+8nr-8pq.
+\end{gathered}
+\tag{12.15}
+$$
+
+现在证明 $E$ 在整个(12.3)严格为正。设 $z=a/b$，故 $0<z\le1/10$，并定义
+
+$$
+\begin{aligned}
+n_z&=\frac{1339}{486}z^2-\frac{16}{27}z+\frac8{81},&
+m_z&=\frac{659}{486}z^2+\frac{731}{486},\\
+p_z&=\frac{2657}{1458}z^2-\frac8{27}z+\frac{80}{729},&
+q_z&=\frac{23}{486}z+\frac8{27},\\
+r_z&=\frac{685}{1458}z+\frac{32}{81}.
+\end{aligned}
+\tag{12.16}
+$$
+
+则 $(n,m,p,q,r)=(1/72,1477/5832,5/324,0,1/18)+b^2(n_z,m_z,p_z,q_z,r_z)$。在(12.15)内按 $b^2$ 收集，常数项为
+
+$$
+\frac5{108}-\frac{1477}{26244}+\frac{100}{26244}+\frac1{162}=0,
+\tag{12.17}
+$$
+
+而 $b^2$ 的系数为
+
+$$
+\begin{aligned}
+C(z)&=\frac{16}{9}r_z-\frac{2630}{729}n_z
+      +\frac{40}{81}p_z-\frac{10}{81}q_z-\frac29m_z\\
+&=\frac{-1654744z^2+499725z+5205}{177147}.
+\end{aligned}
+\tag{12.18}
+$$
+
+为核对整系数，后一分子的五项按前一行次序恰为
+
+$$
+\begin{aligned}
+&216(685z+576)-1315(1339z^2-288z+48)\\
+&\qquad+60(2657z^2-432z+160)-45(23z+144)-81(659z^2+731).
+\end{aligned}
+\tag{12.19}
+$$
+
+因此有完整分解
+
+$$
+\begin{gathered}
+E=b^2C(z)+b^4F(z),\\
+F(z)=15r_z^2-16n_zm_z+16p_z^2+16q_z^2+8n_zr_z-8p_zq_z.
+\end{gathered}
+\tag{12.20}
+$$
+
+由 $z^2\le z/10$ 及 $499725>1654744/10$，得到
+
+$$
+C(z)\ge\frac{5205}{177147}=\frac{1735}{59049}>0.
+\tag{12.21}
+$$
+
+还须控制可能乘上任意大 $b^4$ 的系数，不能只用一次项的正性。在闭区间 $0\le z\le1/10$，(12.16)逐项给
+
+$$
+\begin{gathered}
+\frac{16}{405}\le n_z\le\frac8{81}<\frac1{10},\qquad
+0<m_z\le\frac{73759}{48600}<\frac85,\\
+\frac{292}{3645}\le p_z\le\frac{80}{729}<\frac18,\qquad
+\frac8{27}\le q_z\le\frac{1463}{4860}<\frac13,\qquad
+r_z\ge\frac{32}{81}>\frac38.
+\end{gathered}
+\tag{12.22}
+$$
+
+这里 $n_z\ge8/81-(16/27)(1/10)=16/405$，而
+$n_z-8/81=z(1339z-288)/486\le0$；同样
+$p_z\ge80/729-(8/27)(1/10)=292/3645$，且
+$p_z-80/729=z(2657z-432)/1458\le0$。$m_z,q_z,r_z$ 的界直接由其非负系数取得。于是 $16p_z^2$ 和 $8n_zr_z$ 非负，可以在下估计中舍去；其余乘积的符号也已确定。因此
+
+$$
+\begin{aligned}
+F(z)
+&>15\left(\frac38\right)^2+16\left(\frac8{27}\right)^2
+  -16\left(\frac1{10}\right)\left(\frac85\right)
+  -8\left(\frac18\right)\left(\frac13\right)\\
+&>2+\frac75-\frac{64}{25}-\frac13=\frac{38}{75}>0.
+\end{aligned}
+\tag{12.23}
+$$
+
+第二个严格号用 $135/64>2$ 及 $1024/729>7/5$。结合(12.20)–(12.23)及 $b>0$，得
+
+$$
+E>\frac{1735}{59049}b^2+\frac{38}{75}b^4>0.
+\tag{12.24}
+$$
+
+这与(12.15)给出(12.5)。原左端绝对值与两面积根的和均有限且非负，故严格的平方差确实推出 $\mathscr V(0,\phi_\xi)>0$，即原预算失败。证明没有取极限、改变响应或将不同实现的最优值拼接。∎
+
+### 12.3 原全部探针的参数完备结论
+
+**定理 12.3（原固定星形的全族充要条件）。** 对准确的(9.1)–(9.3)，任意 $\lambda,\rho\in\mathbb R$ 及 $\sigma=\pm1$，以下三项等价：
+
+$$
+\begin{aligned}
+&\rho=0;\\
+&(\forall x=x^*\in\mathcal Q_\star)(\forall\phi\ge0)\quad\mathsf{PB}_x;\\
+&(\forall\phi\ge0)\quad\mathsf{P2}
+\quad\land\quad
+(\forall x=x^*\in\mathcal Q_\star)(\forall\phi\ge0)\quad\mathsf{PB}_x.
+\end{aligned}
+\tag{12.25}
+$$
+
+每个 $\phi$ 量化整个原代数上全部正复线性泛函及其原有限质量，包括零；$x=0$、退化和任意幅度的原自伴角探针均保留。特别是原(9.38)成立，且(11.34)内没有满足全部原 PB 的非零残差。排除方向无需 P2。
+
+证明。先排除每个 $\rho\ne0$。若 $\lambda=0$，直接调用既定版本 $\mathsf F$ 定理42.2的实际零探针与有限正读取；该结论本来就不要求 P2。若 $\lambda\ne0$，置 $a=|\lambda|>0,b=|\rho|>0$，作穷尽分支：
+
+$$
+\begin{cases}
+0<b\le(35/3)a:&\text{直接调用定理11.4的实际非零探针与同一读取；}\\
+b>(35/3)a:&0<a<(3/35)b<b/10,\quad\text{应用定理12.2。}
+\end{cases}
+\tag{12.26}
+$$
+
+其中 $3/35<1/10$ 等价于 $30<35$。边界 $b=(35/3)a$ 包含在第一分支；定理12.2也包含其自身边界 $a=b/10$。两个已证排除域重叠于 $10a\le b\le(35/3)a$，没有遗漏的非零参数。每个分支都在各自那份固定 $\lambda,\rho,\sigma,c,t,g$ 中给实际失败的 $x,\phi$，不是沿参数变动运输预算。
+
+当 $\rho=0$，直接复用§10.7和推论11.6的逆向结论：$\mathsf F$(39.7)的标准乘法恒等式和复 Cauchy–Schwarz对每个 $\lambda$、全部原 $x$ 及全部正 $\phi$ 给 P2 与 PB。此处不重证标准零残差预算，也不从单一向量读取提升一个新全称断言。原证明不除以质量或 Gram 对角，故零质量、退化及任意有限质量都在原范围内。三项的其余蕴涵由合取投影给出。∎
+
+定理11.2的准确 P2 阈值 $\rho^2\le2/3$ 保持不变；定理12.3判定的是它与全部 PB 的交，而不是重写 P2 阈值。定理9.2的非零平移零探针余量仍只取其原有 $|\rho|\le\varepsilon_\lambda$ 的范围；它没有认证全部原探针。命题11.5仍只断言指定接触在指定读取上的严格正向预算。一个指定读取通过不蕴含同一探针在全部读取通过，更不蕴含全部 PB；(12.26)只需要给出一份实际违反的读取。
+
+**命题 12.4（必要包络内的一份明确消费者）。** 取原固定数据
+
+$$
+\lambda=\frac1{100},\qquad \rho=\frac12,\qquad \sigma=\pm1.
+\tag{12.27}
+$$
+
+它满足定理11.2的全正 P2，严格位于(11.34)的必要包络内部，却被原零探针及下列同一读取排除：
+
+$$
+x=0,\qquad
+\xi=u+i\sigma\frac{\sqrt2}{18}e+\frac{2\sqrt2}{27}f,
+\qquad \phi_\xi(I_3)=\frac{1483}{1458}.
+\tag{12.28}
+$$
+
+证明。$\rho^2=1/4<2/3$，直接用定理11.2；$35|\lambda|/3=7/60<1/2<\sqrt{2/3}$，且 $1/100<(3/35)\sqrt{2/3}$，所以(11.34)的两个严格不等式均满足。又 $a/b=1/50<1/10$，(12.1)和(12.2)恰为(12.28)，质量为 $1+1/162+8/729=1483/1458$。定理12.2给这份读取的严格失败。∎
+
+### 12.4 固定接口与一般原域的严格范围
+
+**约定 12.5（一般原关系及来源仍取原全文）。** 定理12.3的量词只覆盖定义9.1固定星形的全部实参数及(9.3)的全部原角探针和数学正读取。它没有把一般环境矩阵改为这份星形，也没有构造未知总映射 $D$。特别是这里非空的一维环境块仍为 $0$；要求环境块可逆的分类不用于此处。
+
+一般原域仍严格保留(9.37)、(10.42)和定义11.7中的同一两份混合输入缺陷及其已付差额：
+
+$$
+\begin{gathered}
+\mathcal E_+^D=D(c-g,k)-K_\sigma(c-g,k),\qquad
+\mathcal E_-^D=D(c+g,-k)-K_\sigma(c+g,-k),\\
+\mathcal E_+^D-\mathcal E_-^D=2cs,\qquad
+\mathcal E_+^D=\mathcal E_-^D\quad\text{在一般共同实现上仍须证明。}
+\end{gathered}
+\tag{12.29}
+$$
+
+固定星形全族的排除不推出这个一般等式。增长谱分割仍须原联合速率 $N\omega(\varepsilon)^2\to0$；定性 $\omega(\varepsilon)\to0$ 与(12.5)的固定有限差额不给该速率。完整 H、总 $D$、混合整行、相对标量、任意输入拼接、无限谱和完整奇数阶段 UHF 均保持§§9.6、10.9及定义11.7的原前件和未解范围；没有新增 $D$ 的连续、可测、可加、齐次、协变、单位平移或压缩前件。
+
+物理来源仍准确是§§9.6、10.9及定义11.7的同一 $\mathcal C_{47}^{\rm pin}(\Omega;S,D)$：按 $\mathsf F$ 定义41.4、40.1、36.1及其递归纳入的上游全文逐子句合取，每层固定版本、每个原量词和共同实现条件原样保留。本卷定义6.1和§§1–8的七合同也各守其全文及自身版本，不认作另一个较短谓词，不由此处的交叉引用缩短。原准备、事件、比较权、共同来源与全词核，静态和静默分支，完整 typed 菜单、整台仪器的每份输出及每个合法未来，真实 Return、完整 CountRead，以及正常性、前对偶、无限记录、收敛、物理钟、实际可逆动力学和共同正物理作用量，均按上述原定义与原前件承担。数学正泛函仍不自动是实际准备，有限矩阵乘法仍不自动是物理来源实现。
+
+本节使用的实 Gram 与加权标量 Cauchy–Schwarz 是成熟工具；正泛函与算子代数背景沿 $\mathsf F$ §41.5所引 Blackadar《Operator Algebras》和 Hanche-Olsen–Størmer《Jordan Operator Algebras》。本节新增的是同一有限读取的联合标量关系(12.9)、严格估计(12.5)及其补全原固定星形参数族的推论，属本库推导，不将一般 Gram 工具或已供给的零残差、零平移结论计为新内容，不作历史优先权或穷尽文献主张。这里给出普通数学证明，不作 Lean/kernel 形式验证断言；固定接口结论不成为完整 H、总 $D$ 或递归物理来源的实现证明。
+
+## 追加锚（本行以下为增补区）
