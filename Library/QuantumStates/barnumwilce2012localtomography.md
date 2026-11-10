@@ -258,6 +258,13 @@ self-composite $D$ remain explicit inputs, and S holds on $D$ as well.
 The preceding argument makes both Jordan systems simple.
 Equations (2) and (4) provide the rank and
 dimension equalities used in Theorem 29.2 of the quantum-origin volume.
+The classification step is also supplied directly by
+[van de Wetering, arXiv:1803.11139v3](https://arxiv.org/abs/1803.11139v3),
+Proposition 40: a simple Euclidean Jordan algebra whose rank and dimension
+both square in a simple composite is of complex matrix type. That
+proposition's rank/dimension hypotheses are the inputs used here; its
+Theorem 3 has an additional sequential-product compatibility contract,
+which is not assumed as a physical process contract in this note.
 The Jordan dimension comparison in that theorem therefore selects
 
 $$
