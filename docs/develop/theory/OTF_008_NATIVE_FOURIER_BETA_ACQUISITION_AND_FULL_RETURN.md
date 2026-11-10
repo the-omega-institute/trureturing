@@ -1812,3 +1812,438 @@ OTF004 式 (19.4) 的已有全场成功证书在每个原正有理 $0<e\le1/100$
 来源范围严格是 (16.18) 的整个声明使用端口。具有额外场相关输出、场相关时序输出、与旧控制器记忆相互作用、相干量子点地址访问或另行未知场输入的较大供应者，需要不同来源合同及新的比较，不能仅凭其 qubit 边缘与本节相同而移用结论。实际控制器环境始终保留，证明纯化及形式 Kraus 指标不被添加为实际端口；本节不构成所有物理环境实现的断言，也不给出物理准备、来源或时钟的实现界。混合输入下实际完整等距输出的精度问题仍未解决；重置必要量不宣告返回最优性或整个原量子纯理论目标完成。
 
 ## 追加锚（本行以下为增补区）
+
+## 17. 实际有限混合酉输出的对数旋转模反例
+
+**定义 17.1（精确原曲线与完整实际酉比较类）。** 精度始终取 [OTF004 定义 19.1](OTF_004_ENDOGENOUS_OBSERVATION_ATTENTION_CONTROL_AND_COSINE_FEEDBACK.md) 的正有理域 $0<e\le1/100$，并逐项保留其取整和最大值：
+
+$$
+\begin{aligned}
+k_e&=\left\lceil2048e^{-2}\log(18/e)\right\rceil,
+&\ell_e&=\left\lceil32768e^{-4}\log(90/e)\right\rceil,\\
+N_*&=8{,}388{,}608{,}000,
+&N_e&=\max\left\{N_*,\left\lceil\frac{3k_e+2}{10}\right\rceil,
+                 \left\lceil\frac{15\ell_e+1}{18}\right\rceil\right\},\\
+D_e&=\left\lceil\max\{8{,}000{,}000N_e^2,9k_e/e\}\right\rceil,
+&m_e&=D_e-1,\qquad t_e=m_e e^2.
+\end{aligned}
+\tag{17.1}
+$$
+
+对数均为自然对数。令 $R_e=\operatorname{Sym}^{m_e}(\mathbb C^2)$，$\tau_h=|e_h\rangle\langle e_h|$。相干向量、归一球面积和有限 Toeplitz 矩阵沿用 OTF004 式 (14.7)、(25.14)–(25.16)：
+
+$$
+e_z=(1+|z|^2)^{-m/2}(|0\rangle+z|1\rangle)^{\otimes m},\qquad
+d\mu(z)=\frac{dA(z)}{\pi(1+|z|^2)^2},\qquad
+T_m(f)=(m+1)\int_{S^2}f(h)\tau_h\,d\mu(h).
+\tag{17.2}
+$$
+
+$\rho_\alpha$ 表示 $z\mapsto e^{i\alpha}z$ 的球面旋转。此处积分只定义有限矩阵的各个条目，不是获取原语、连续物理寄存器或额外输入。
+
+取任意有限 $P,K$、独立于 $h$ 的混合态 $\sigma\in\mathcal D(P)$ 和独立于 $h$ 的完整实际等距 $U:R_e\otimes P\to R_e\otimes K$。其整个声明输出及其自身实际边缘为
+
+$$
+\Omega_h=U(\tau_h\otimes\sigma)U^\dagger,\qquad
+\omega_h=\operatorname{Tr}_R\Omega_h,\qquad
+\delta=\sup_hD_{\rm tr}(\Omega_h,\tau_h\otimes\omega_h),\qquad
+D_{\rm tr}(X,Y)=\tfrac12\|X-Y\|_1.
+\tag{17.3}
+$$
+
+$K$ 包括这一实现的全部实际输出；不加入输入纯化、形式 Kraus 寄存器或证明环境，也不丢弃实际生成的系统。所考察的统一充分旋转关系是：存在绝对常数 $C$，对上述每个 $e,\sigma,U$ 均有
+
+$$
+\int_{S^2}D_{\rm tr}(\omega_{\rho_{32e}h},\omega_h)^2\,d\mu(h)
+\le C(t_e\delta^2+\delta).
+\tag{17.4}
+$$
+
+这个完整等距比较类宽于带有原生操作、预算及成功解码要求的原始消费者类。OTF004 定理 14.1 的完整实际输出与混合压缩语义保持原样；其反足方向估计不等于 (17.4)。
+
+**定理 17.2（奇异混合输入的有限酉旋转反例；repo-derived）。** 令 $J=2^j\ge128$，$s=e_J=1/J$，$m=m_J=D_{1/J}-1$ 严格按 (17.1) 取值，$\alpha=32/J$，$N=(J+1)^2$。存在 $P_J=K_J$、维数 $2N$，独立于 $h$ 的奇异混合态 $\sigma_J$ 和独立于 $h$ 的有限酉 $U_J$，使 (17.3) 的同一实际输出满足
+
+$$
+0<\delta_J\le\frac{C_0}{J^2\sqrt{m_J}},\qquad
+\int_{S^2}D_{\rm tr}(\omega_{\rho_{32/J}h},\omega_h)^2\,d\mu(h)
+\ge c\frac{(\log J)^2}{J^6}
+\tag{17.5}
+$$
+
+对全部充分大的二进 $J$ 成立，其中 $c,C_0>0$ 为绝对常数。因此
+
+$$
+\frac{\displaystyle\int_{S^2}D_{\rm tr}(\omega_{\rho_{32/J}h},\omega_h)^2\,d\mu(h)}
+     {(m_J/J^2)\delta_J^2+\delta_J}
+\ge c' (\log J)^2\longrightarrow\infty.
+\tag{17.6}
+$$
+
+特别地，(17.4) 的统一绝对常数不存在。$\sigma_J$ 的秩为 $N$，有 $N$ 个特征值 $1/N$ 及 $N$ 个零特征值；结论不要求输入满秩。以下所有 $c,C$ 均为可随估计改变的正绝对常数，不依赖 $J,m,w,h$。
+
+证明。先给出全部有限矩阵。取
+
+$$
+\begin{aligned}
+W_J&=\{\tfrac12+a/J+i(-\tfrac12+b/J):a,b=0,\ldots,J\},\\
+P_J=K_J&=\mathbb C^{W_J}\otimes\mathbb C^2,\qquad
+\sigma_J=\frac1N\sum_{w\in W_J}|w,0\rangle\langle w,0|,\\
+\zeta_w(z)&=\frac{z-w}{1+\overline w z},\qquad
+f_w(h)=\frac{s^2\overline{\zeta_w(h)}}{s^2+|\zeta_w(h)|^2},\qquad
+A_w=T_m(f_w).
+\end{aligned}
+\tag{17.7}
+$$
+
+在 $\zeta_w=\infty$ 处取连续延拓。令 $\eta=1/\zeta_w$，则该处的表达为 $s^2\eta/(1+s^2|\eta|^2)$，故 $f_w$ 在整个球面实解析，且 $|f_w|\le s/2$。在 $R\otimes\mathbb C^2$ 上置
+
+$$
+H_w=A_w\otimes|1\rangle\langle0|+A_w^\dagger\otimes|0\rangle\langle1|,
+\qquad U_w=e^{iH_w},\qquad U_J=\bigoplus_{w\in W_J}U_w.
+\tag{17.8}
+$$
+
+直和保持实际标签 $w$。$H_w$ 自伴，故 $U_J$ 是 $R\otimes P_J$ 到整个 $R\otimes K_J$ 的有限酉。(17.2) 的保单位完全正性给 $\|A_w\|\le s/2$。这些公式指定每个有限矩阵条目，参数只依赖公开的 $J,m,w$，不依赖实际 $h$；没有 $R\otimes K_J$ 以外的生成系统。
+
+### 17.1 第一步：统一标量估计与格点和
+
+写 $g_s(\zeta)=s^2\overline\zeta/(s^2+|\zeta|^2)$，$r=|\zeta|$。直接求导得
+
+$$
+\partial_{\overline\zeta}g_s=\frac{s^4}{(s^2+r^2)^2},\qquad
+\partial_\zeta g_s=-\frac{s^2\overline\zeta^{2}}{(s^2+r^2)^2}.
+\tag{17.9}
+$$
+
+其内禀二阶导数统一不超过 $C/s$：在 $r\le2s$ 用 $g_s(\zeta)=s g_1(\zeta/s)$；在 $s\le r\le1$ 对上述有理函数求导；在 $r\ge1$ 则用 $|\eta|\le1$ 上的 $g_s=s^2\eta/(1+s^2|\eta|^2)$。同样三个区域给统一的一阶导数界。
+
+在以 $h$ 为中心的旋转相干坐标中，令 $a_w(h),b_w(h)$ 分别为 $f_w$ 在坐标原点的反全纯及全纯导数绝对值。若 $d=d(h,w)$ 为球面距离，则 $r=\tan(d/2)$，坐标变换导数绝对值为 $1+r^2$，因而
+
+$$
+\begin{aligned}
+a_w(h)&=(1+r^2)\frac{s^4}{(s^2+r^2)^2}
+       \le C\min\{1,(s/d)^4\},\\
+b_w(h)&=(1+r^2)\frac{s^2r^2}{(s^2+r^2)^2}
+       \le C\min\{1,(s/d)^2\},\\
+|f_w(h)|&\le C\min\{s,s^2/d\}.
+\end{aligned}
+\tag{17.10}
+$$
+
+在 $d=0$ 处按连续意义解释；反足处用倒数坐标。格点位于固定有界球极投影矩形，故球面间距至少 $cs$。由互不相交的小球冠，任意 $h$ 的距离 $R$ 邻域内格点数至多 $C(1+(R/s)^2)$。按 $d\asymp2^ks$ 的二进环带求和，(17.10) 分别给 $C2^{-2k}$ 和 $Cs2^{-k}$ 的环带上界，最内球冠占据数有统一界。于是对整个球面统一有
+
+$$
+\sum_{w\in W_J}a_w(h)\le C,\qquad
+\sum_{w\in W_J}|f_w(h)|b_w(h)\le Cs.
+\tag{17.11}
+$$
+
+### 17.2 第二步：定量相干向量估计
+
+固定 $w,h$，选任一相干向量 $e_h$，在以 $h$ 为中心的旋转相干坐标 $\xi$ 中作 Taylor 展开：
+
+$$
+f_w(\xi)=f_w(h)+p_w\xi+q_w\overline\xi+R_w(\xi),\qquad
+|q_w|=a_w(h),\quad |p_w|=b_w(h),\quad
+|R_w(\xi)|\le\frac C s|\xi|^2.
+\tag{17.12}
+$$
+
+当 $|\xi|\le1$ 时，余项界来自固定正则坐标中的 Taylor 定理和第一步的二阶导数界；当 $|\xi|\ge1$ 时，由 $f_w$ 的上确界及一阶导数界得到同一全局界。
+
+复用 (17.2) 的相干分解 $(m+1)\int\tau_\xi\,d\mu=I$。在这一坐标的归一 Dicke 基中，角向及径向矩给
+
+$$
+T_m(\xi)e_0=0,\qquad
+T_m(\overline\xi)e_0=\frac1{\sqrt m}e_1,
+\tag{17.13}
+$$
+
+其中 $e_1$ 为第一归一 Dicke 激发。这里对非有界坐标函数只使用所显示的收敛有限矩阵积分。由 $|\langle e_\xi,e_0\rangle|=(1+|\xi|^2)^{-m/2}$ 及三角不等式，
+
+$$
+\begin{aligned}
+\|T_m(R_w)e_0\|
+&\le\frac C s(m+1)\int_0^\infty u(1+u)^{-m/2-2}\,du\\
+&=\frac C s\frac{4(m+1)}{m(m+2)}
+\le\frac{4C}{ms}.
+\end{aligned}
+\tag{17.14}
+$$
+
+因此对每个 $w,h$，
+
+$$
+\begin{aligned}
+r_w(h)&:=\|(A_w-f_w(h)I)e_h\|
+       \le\frac{a_w(h)}{\sqrt m}+\frac C{ms},\\
+r'_w(h)&:=\|(A_w^\dagger-\overline{f_w(h)}I)e_h\|
+       \le\frac{b_w(h)}{\sqrt m}+\frac C{ms}.
+\end{aligned}
+\tag{17.15}
+$$
+
+第二式是对 $\overline{f_w}$ 作同一计算。旋转坐标在此只用于计算矩阵恒等式，不施行物理旋转。
+
+### 17.3 第三步：精确酉比较与完整自身边缘返回
+
+对复数 $f$，定义
+
+$$
+h_f=f|1\rangle\langle0|+\overline f|0\rangle\langle1|,\qquad
+v_f=e^{ih_f}|0\rangle,\qquad
+\psi_{w,h}=U_w(e_h\otimes|0\rangle),\qquad
+\epsilon_w(h)=\|\psi_{w,h}-e_h\otimes v_{f_w(h)}\|.
+\tag{17.16}
+$$
+
+在固定嵌入 $E_hv=e_h\otimes v$ 上，以 Duhamel 恒等式比较 $e^{iH_w}$ 和二维演化 $e^{ih_f}$。精确公式
+
+$$
+e^{iuh_f}|0\rangle
+=\cos(u|f|)|0\rangle
+ +i\sin(u|f|)\frac f{|f|}|1\rangle
+\tag{17.17}
+$$
+
+在 $f=0$ 处按连续意义取值。$|0\rangle$ 分量的嵌入残差为 $r_w$，$|1\rangle$ 分量为 $r'_w$，而 $\int_0^1|\sin(u|f|)|\,du\le|f|/2$，故
+
+$$
+\epsilon_w(h)\le r_w(h)+\frac{|f_w(h)|}{2}r'_w(h),\qquad
+E_J:=\sup_h\frac1N\sum_w\epsilon_w(h)
+\le\frac C{N\sqrt m}+\frac C{ms}.
+\tag{17.18}
+$$
+
+末步使用 (17.11)、(17.15) 和 $|f_w|\le s/2$。
+
+只作数学比较的态及真正实际态为
+
+$$
+\nu_h=\frac1N\bigoplus_w|v_{f_w(h)}\rangle\langle v_{f_w(h)}|,\qquad
+\Omega_h=\frac1N\bigoplus_w|\psi_{w,h}\rangle\langle\psi_{w,h}|.
+\tag{17.19}
+$$
+
+直和迹范数可加，纯态迹距离不超过向量距离，故
+
+$$
+D_{\rm tr}(\Omega_h,\tau_h\otimes\nu_h)\le E_J,\qquad
+D_{\rm tr}(\omega_h,\nu_h)\le E_J,\qquad
+\delta_J\le2E_J.
+\tag{17.20}
+$$
+
+第二式用偏迹收缩性，第三式用三角不等式。这一返回比较使用同一实际边缘 $\omega_h$，没有用 $\nu_h$ 替换定义 (17.3)。除在 $\omega_h$ 的定义中对 $R$ 取偏迹外，没有丢弃任何输出；$\nu_h$ 不是另行供应的实际态。
+
+### 17.4 第四步：精确原曲线的余项控制与正返回缺陷
+
+由 (17.1) 的原样定义，
+
+$$
+\ell_{1/J}\ge32768J^4\log(90J),\qquad
+N_{1/J}\ge\tfrac56\ell_{1/J},\qquad
+D_{1/J}\ge8{,}000{,}000N_{1/J}^2.
+\tag{17.21}
+$$
+
+特别地 $m_J\ge8{,}000{,}000N_{1/J}^2-1\ge4{,}000{,}000N_{1/J}^2$，所以对 $J\ge2$，
+
+$$
+\sqrt{m_J}\ge J^4\log J\ge J^3,\qquad
+\frac J{m_J}\le\frac1{J^2\sqrt{m_J}}.
+\tag{17.22}
+$$
+
+这些只是精确取整定义的后果，不将 $m_J$ 换成渐近替代量。因 $N=(J+1)^2\ge J^2$，(17.18)–(17.22) 给
+
+$$
+\delta_J\le\frac{C_0}{J^2\sqrt{m_J}}.
+\tag{17.23}
+$$
+
+还须排除零分母。在 $h=w$ 的中心 Dicke 基中，$f_w$ 的径向角形式使 $A_w$ 为加权升移位，且
+
+$$
+A_we_0=a e_1,\qquad A_w^\dagger e_1=a e_0,\qquad
+0<a=(m+1)\sqrt m\int_0^\infty
+\frac{s^2u}{s^2+u}(1+u)^{-m-2}\,du\le s/2.
+\tag{17.24}
+$$
+
+积分严格为正，上界也由 $\|A_w\|\le s/2$ 得到。相应不变二维子空间上的实际 $w$ 分支输出为
+$\cos(a)e_0|0\rangle+i\sin(a)e_1|1\rangle$。完整混合输出中，效果 $(I_R-\tau_w)\otimes I_K$ 检出至少 $\sin^2(a)/N>0$ 的泄漏，而 $\tau_w\otimes\omega_w$ 的该效果概率为零。故 $\delta_J\ge\sin^2(a)/N>0$。
+
+### 17.5 第五步：小 qubit 态保留复标量差
+
+若 $|f|,|g|\le s/2$ 且 $J$ 充分大，则
+
+$$
+D_{\rm tr}(|v_f\rangle\langle v_f|,|v_g\rangle\langle v_g|)
+\ge\tfrac12|f-g|.
+\tag{17.25}
+$$
+
+事实上，$|v_f\rangle\langle v_f|$ 的左下非对角条目为 $iM(f)$，其中
+
+$$
+M(f)=f\frac{\sin(2|f|)}{2|f|}.
+\tag{17.26}
+$$
+
+将 $M$ 看作实二维径向映射，其切向和径向微分特征值分别是 $\sin(2r)/(2r)$ 和 $\cos(2r)$，在 $r\le1/10$ 上均至少 $1/2$。沿连接 $f,g$ 的线段积分，强单调性及 Cauchy–Schwarz 给 $|M(f)-M(g)|\ge|f-g|/2$。两 qubit 态的迹距离至少为其非对角条目之差的绝对值，故得 (17.25)。保留标签的正交性遂给
+
+$$
+D_{\rm tr}(\nu_h,\nu_g)\ge\frac1{2N}\sum_{w\in W_J}|f_w(h)-f_w(g)|.
+\tag{17.27}
+$$
+
+### 17.6 第六步：固定正面积片上的对数分离
+
+取固定球面片
+
+$$
+\mathcal A=\{h:7/8\le\operatorname{Re}z\le9/8,
+                         \ |\operatorname{Im}z|\le1/8\}.
+\tag{17.28}
+$$
+
+其归一面积为固定正数。写 $z'=e^{i\alpha}z$，则对所有充分大的 $J$，在 $\mathcal A$ 上统一有 $c\alpha\le|z'-z|\le2\alpha$。离开 $w$ 写
+
+$$
+\begin{aligned}
+f_w(z)&=F_w(z)+B_w(z),\\
+F_w(z)&=s^2\frac{1+\overline w z}{z-w}=\frac{s^2}{\zeta_w(z)},\\
+B_w(z)&=-\frac{s^4}{\zeta_w(z)(s^2+|\zeta_w(z)|^2)}.
+\end{aligned}
+\tag{17.29}
+$$
+
+主项满足精确恒等式
+
+$$
+|F_w(z')-F_w(z)|
+=\frac{s^2(1+|w|^2)|z'-z|}{|z'-w|\,|z-w|}.
+\tag{17.30}
+$$
+
+固定一个充分大的绝对数 $R$。若
+
+$$
+r\le|z-w|\le2r,\qquad Rs\le r\le1/16,
+\tag{17.31}
+$$
+
+则从 $z$ 到 $z'$ 的整个线段到 $w$ 的距离与 $r$ 可比，且其上的 $|1+\overline w z|$ 有正绝对下界。这里 $|z'-z|\le2\alpha=64s$，故一个固定的大 $R$ 即可保证线段分离。沿此线段对 $B_w$ 求导给
+
+$$
+|B_w(z')-B_w(z)|\le C\frac{s^4|z'-z|}{r^4}.
+\tag{17.32}
+$$
+
+取同一固定 $R$ 足够大，使 $C/R^2$ 小于 (17.30) 主项下界常数的一半，便有
+
+$$
+|f_w(z')-f_w(z)|\ge c\frac{s^2\alpha}{r^2}
+\tag{17.33}
+$$
+
+对全部 (17.31) 环带、所有 $z\in\mathcal A$ 统一成立。$R$ 不依赖 $J,m,z$。
+
+还须给出环带内格点的下界，而非仅上界。对 $r\ge R/J$，每个 $r\le|w-z|\le2r$ 环带包含至少 $cJ^2r^2$ 个格点。给每个格点配一个边长 $1/J$ 的正方形；环带中这些格点的方形覆盖内缩环带
+$r+\sqrt2/J\le|u-z|\le2r-\sqrt2/J$，当固定 $R$ 足够大时其面积至少 $cr^2$。因 $z\in\mathcal A$ 且 $2r\le1/8$，所有相关环带和格点均在 (17.7) 的格点矩形内，边界不损失这个计数。
+
+在 $R/J$ 与 $1/16$ 之间取互不相交的二进环带；例如隔一个二进尺度取一次，保证边界无重叠计数。对充分大的 $J$，可取至少 $c\log J$ 个，且可将计数阈值取为 $J\ge(16R)^2$ 后再增大一个绝对阈值。每个环带由 (17.33) 贡献至少
+$c s^2\alpha J^2=c\alpha$，从而在整个 $\mathcal A$ 上
+
+$$
+\sum_{w\in W_J}|f_w(\rho_\alpha h)-f_w(h)|\ge c\alpha\log J.
+\tag{17.34}
+$$
+
+### 17.7 第七步：实际完整输出的旋转下界
+
+将 (17.27)、(17.34) 与两个端点各自的 (17.20) 合并，对 $h\in\mathcal A$ 得
+
+$$
+D_{\rm tr}(\omega_{\rho_\alpha h},\omega_h)
+\ge\frac{c\alpha\log J}{N}-2E_J.
+\tag{17.35}
+$$
+
+此处 $\alpha=32/J$，$N=(J+1)^2\le4J^2$，并且由 (17.18)、(17.22)，
+
+$$
+E_J\le\frac C{J^2\sqrt{m_J}}\le\frac C{J^6\log J}.
+\tag{17.36}
+$$
+
+所以存在一个有限绝对阈值 $J_0$，包含上述标量、格点及余项阈值，使每个二进 $J\ge J_0$ 的 (17.35) 右侧至少为 $c\log J/J^3$。在固定正面积片 $\mathcal A$ 上积分即得
+
+$$
+\int_{S^2}D_{\rm tr}(\omega_{\rho_\alpha h},\omega_h)^2\,d\mu(h)
+\ge c\frac{(\log J)^2}{J^6}.
+\tag{17.37}
+$$
+
+这是实际完整 $K_J$ 输出态的估计，所有混合标签及两态寄存器都仍在输出中。
+
+### 17.8 第八步：无界比值与精确反驳范围
+
+同一实际 $\delta_J$ 满足 (17.23)，故用 $t_J=m_J/J^2$ 得
+
+$$
+\begin{aligned}
+t_J\delta_J^2+\delta_J
+&\le\frac{C_0^2}{J^6}+\frac{C_0}{J^2\sqrt{m_J}}\\
+&\le\frac{C_0^2+C_0}{J^6}
+\end{aligned}
+\tag{17.38}
+$$
+
+对充分大的 $J$ 成立。(17.24) 使分母严格为正，(17.37)–(17.38) 于是给
+
+$$
+\frac{\displaystyle\int_{S^2}D_{\rm tr}(\omega_{\rho_{32/J}h},\omega_h)^2\,d\mu(h)}
+     {t_J\delta_J^2+\delta_J}
+\ge\frac{c(\log J)^2}{C_0^2+C_0}\longrightarrow\infty.
+\tag{17.39}
+$$
+
+每个 $J$ 都有限，$e_J=2^{-j}$ 属于原正有理精度域，$m_J$ 是精确原维数，$U_J$ 为实际完整有限酉，$\sigma_J$ 为允许的奇异混合态。因此不存在 (17.4) 所要求的统一绝对常数。整个论证不使用跨方向 Gram 恒等式，也未删除混合展开的任一跨方向交叉项。$\square$
+
+**命题 17.3（原置信度解码分离与反例的消费者边界）。** 保持 OTF004 定义 19.1 的全部原合同：对全部允许场 $n$、全部 $h$，同一有理四坐标解码器达到原目标 (19.2) 的 $e$ 精度，失败率 $\beta\le e$；原生菜单、最坏 $L_e,Q_e$、一次准备参考、独立来源、全部实际输出及规定终端均不改变。固定合法场
+
+$$
+n_*(x,y)=(x,y,\sqrt{1-x^2-y^2})
+\tag{17.40}
+$$
+
+于半径 $1/3$ 的开圆盘，其原目标第一坐标为 $h_y/2$。对任何满足上述成功条件的消费者，置 $\alpha=32e$。在归一面积 $1/4$ 的球冠 $\mathcal C=\{h:h_x\ge1/2\}$ 上，其同一实际输出必有
+
+$$
+D_{\rm tr}(\omega_{\rho_\alpha h},\omega_h)\ge1-2e.
+\tag{17.41}
+$$
+
+定理 17.2 只否定较大的完整等距类上的 (17.4)，不由此给出原始成功消费者的返回下界、反例或全部场成功构造。
+
+证明。场 (17.40) 及其原目标、秩和导数条件逐项复用 OTF004 式 (19.2) 与推论 19.2 的证明。对 $h\in\mathcal C$，$0<\alpha\le0.32$，同一几何分离为
+
+$$
+(\rho_\alpha h)_y-h_y
+\ge\tfrac12\sin\alpha-(1-\cos\alpha)
+\ge\tfrac\alpha2-\tfrac{\alpha^3}{12}-\tfrac{\alpha^2}{2}
+>\tfrac\alpha4.
+\tag{17.42}
+$$
+
+故第一目标坐标相差大于 $\alpha/8=4e>2e$，两个闭 $e$ 成功球不交。同一原解码器在两个输入的各自成功球中均有至少 $1-e$ 的概率，因而由迹距离的数据处理得 (17.41)。这个效果只是对已有实际解码输出的数学检验，不供应新的读出操作。使用的是原来的 $\beta\le e$，没有将其换成 $2e/3$。
+
+定理 17.2 的输入与酉属于 (17.3) 的普遍比较类，但它们的有限矩阵存在性不蕴含原生合成。该构造没有提供原有菜单下的最坏分支 $L_e/Q_e$ 证书、全部允许 $n,h$ 上成功的原四坐标解码器，或携带未改动且独立的 $+d e_x$ 原场令牌的规定终端；不从中取得直接参考控制、物理参数旋转、逆操作、场源或时钟接口。因此它既不反驳原 $\beta\le e$ 返回命题，也不完成原全场任务。未补齐这些共同实现条件的 $\beta\le2e/3$ 数值断言不能充作原成功消费者；本节不建立这一无条件消费者蕴含。
+
+若要对合格的原始成功完整等距消费者推出 $\delta\ge c/(e\sqrt{m_e})$，仍须使用该成功子类的额外约束，或另一个正确的充分关系；(17.41) 保持可用，(17.4) 不能承担此推理。OTF004 推论 19.2 的较弱 Hilbert 能量估计不被替换成 $m\delta^2$。本卷既有有限 CP、部分保留及新鲜点重置结果的各自假设和结论保持原范围。
+
+本节的承重新增内容是 (17.7)–(17.39) 的同一有限混合酉构造及统一纸面估计，标为 `repo-derived`；相干 Toeplitz 分解及保单位 CP 范数界复用 OTF004 (25.14)–(25.16)，完整等距和混合压缩语义复用其定理 14.1，精确原曲线及成功解码球冠复用其定义 19.1、推论 19.2。Taylor 余项、Duhamel 恒等式、迹范数收缩与正交直和可加性、平面格点计数只作为这些新推导中的经典中间工具，不单列为新增定理。该数学结论不包含原生实现、物理来源、时钟实现或历史原创性断言。信息—扰动与非对称性广播的相关引文为 Kretschmann–Schlingemann–Werner，[arXiv:quant-ph/0605009v1](https://arxiv.org/html/quant-ph/0605009v1)，Theorem 3、式 (32)–(35)，及 Marvian–Spekkens，[arXiv:1812.08766v2](https://arxiv.org/html/1812.08766v2)，Theorem 1、Proposition 2、Lemma 4；这些条目仅作相关文献定位，不承担本定理的前提，也不作为 (17.4) 的依据。$\square$
+
+## 追加锚（本行以下为增补区）
