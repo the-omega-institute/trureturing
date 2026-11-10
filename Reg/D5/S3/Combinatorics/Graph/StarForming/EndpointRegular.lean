@@ -61,7 +61,7 @@ def family : Registration arena SourceClaim where
     simp
 
 noncomputable def matchingCardRegistration :
-    Contract.Registration
+    Contract.Registration.{0,0,1,0,0,0,0,0,0,0,0,0}
       (@_root_.D5.S3.Combinatorics.Graph.StarForming.EndpointRegular.matching_card)
       (Realization signature) Unit Unit where
   unitName := `D5.S3.Combinatorics.Graph.StarForming.EndpointRegular.matching_card.__information_unit

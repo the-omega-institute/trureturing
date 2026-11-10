@@ -4,7 +4,7 @@
 
 Actual high-witness payments and regular equality resources
 
-Each high vertex pays its selected-degree demand to its actual injective deletion witness. Pointwise payment is bounded by the unused selected-degree capacity and sums to every high demand exactly once. The resulting exact regular budget retains selected isolates and nonnegative pointwise residuals. Equality exhausts every outside resource: every unpaid outside vertex has full selected degree, and high owners split into degree d minus one with an adjacent two-neighbor witness or degree d with a nonadjacent one-neighbor witness. This is an actual graph extraction. For isolate-tight bipartite regular graphs of degree at least three, every selected leaf is reserved, full highs have unique selected leaves, and the actual high graph is d-1 regular. For order-bound equality in every regular graph of degree at least two, selected isolates vanish, every high has full selected degree, and each high has exactly one selected leaf; no bipartiteness is needed for these order-tight results. Complete class counts and converse partitions, component path normal forms and Heawood block credits require their separate proofs and are not asserted here.
+Actual injective deletion witnesses give an exact regular isolate-plus-unused budget. Tightness classifies omitted selected degrees as one, two or d. Every one-neighbor resource has a unique full-high owner; every two-neighbor resource has a unique adjacent degree d-minus-one high owner and an actual isolate as its other selected neighbor. Actual witness and leaf bijections give the corresponding class cardinalities. The high graph is d-minus-one regular under isolate-tight bipartite hypotheses, and under order equality without bipartiteness. Full resources have only selected nonhigh neighbors and selected leaves have only their support, private resource and full resources as neighbors. For every positive-degree finite regular bipartite graph, SF attains the order bound if and only if beta does. Complete converse partitions, all balance and component identities, path forms and Heawood block credits remain separate obligations.
 
 **Theorem 1.1 (payment le capacity).**
 
@@ -222,9 +222,143 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.order_tight
 
 Exact declaration: theorem order_tight_unique_leaf (hS : IsMinimalStarForming G 2 S) (d : ℕ) (hd : 2 ≤ d) (hdegree : ∀ v, degree G v=d) (ht : (2*d-1)*S.card=d*Fintype.card V) (v : V) (hv : v ∈ CertificateBound.high G S) : ∃! u, BipartiteExchange.LeafAt G S u v.
 
+**Theorem 1.19 (tight resource degrees).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.tight_resource_degrees`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.tight_resource_degrees` (`✓ std3`). ∎
+
+*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+
+*Commentary.*
+
+Exact declaration: theorem tight_resource_degrees (hS : IsMinimalStarForming G 2 S) (d : ℕ) (hd : 3 ≤ d) (hdegree : ∀ v, degree G v=d) (ht : (2*d-1)*S.card+(isolates G S).card=d*Fintype.card V) (x : V) (hx : x ∉ S) : selectedDegree G S x=1 ∨ selectedDegree G S x=2 ∨ selectedDegree G S x=d.
+
+**Theorem 1.20 (tight one owner).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.tight_one_owner`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.tight_one_owner` (`✓ std3`). ∎
+
+*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+
+*Commentary.*
+
+Exact declaration: theorem tight_one_owner (d : ℕ) (hd : 3 ≤ d) (hdegree : ∀ v, degree G v=d) (ht : (2*d-1)*S.card+(isolates G S).card=d*Fintype.card V) (x : V) (hx : x ∉ S) (hone : selectedDegree G S x=1) : ∃! v, v ∈ CertificateBound.high G S ∧ selectedDegree G S v=d ∧ BipartiteExchange.witness G S hS v=x.
+
+**Theorem 1.21 (tight two owner).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.tight_two_owner`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.tight_two_owner` (`✓ std3`). ∎
+
+*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+
+*Commentary.*
+
+Exact declaration: theorem tight_two_owner (d : ℕ) (hd : 3 ≤ d) (hdegree : ∀ v, degree G v=d) (ht : (2*d-1)*S.card+(isolates G S).card=d*Fintype.card V) (x : V) (hx : x ∉ S) (htwo : selectedDegree G S x=2) : ∃! v, v ∈ CertificateBound.high G S ∧ selectedDegree G S v=d-1 ∧ BipartiteExchange.witness G S hS v=x ∧ G.Adj x v.
+
+**Theorem 1.22 (tight two isolate).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.tight_two_isolate`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.tight_two_isolate` (`✓ std3`). ∎
+
+*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+
+*Commentary.*
+
+Exact declaration: theorem tight_two_isolate (color : V → Bool) (hcolor : ∀ v w, G.Adj v w → color v ≠ color w) (d : ℕ) (hd : 3 ≤ d) (hdegree : ∀ v, degree G v=d) (ht : (2*d-1)*S.card+(isolates G S).card=d*Fintype.card V) (x : V) (hx : x ∉ S) (htwo : selectedDegree G S x=2) : ∃ v u, v ∈ CertificateBound.high G S ∧ selectedDegree G S v=d-1 ∧ BipartiteExchange.witness G S hS v=x ∧ S.filter (G.Adj x)={v,u} ∧ BipartiteExchange.Isolate G S u.
+
+**Theorem 1.23 (tight resource cardinalities).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.tight_resource_cardinalities`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.tight_resource_cardinalities` (`✓ std3`). ∎
+
+*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+
+*Commentary.*
+
+Exact declaration: theorem tight_resource_cardinalities (hS : IsMinimalStarForming G 2 S) (d : ℕ) (hd : 3 ≤ d) (hdegree : ∀ v, degree G v=d) (ht : (2*d-1)*S.card+(isolates G S).card=d*Fintype.card V) : ((CertificateBound.high G S).filter (fun v => selectedDegree G S v=d)).card = ((Finset.univ \ S).filter (fun x => selectedDegree G S x=1)).card ∧ ((CertificateBound.high G S).filter (fun v => selectedDegree G S v=d-1)).card = ((Finset.univ \ S).filter (fun x => selectedDegree G S x=2)).card.
+
+**Theorem 1.24 (tight leaf cardinality).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.tight_leaf_cardinality`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.tight_leaf_cardinality` (`✓ std3`). ∎
+
+*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+
+*Commentary.*
+
+Exact declaration: theorem tight_leaf_cardinality (hS : IsMinimalStarForming G 2 S) (color : V → Bool) (hcolor : ∀ v w, G.Adj v w → color v ≠ color w) (d : ℕ) (hd : 3 ≤ d) (hdegree : ∀ v, degree G v=d) (ht : (2*d-1)*S.card+(isolates G S).card=d*Fintype.card V) : ((CertificateBound.high G S).filter (fun v => selectedDegree G S v=d)).card = (S.filter (fun u => ∃ v, BipartiteExchange.LeafAt G S u v)).card.
+
+**Theorem 1.25 (order tight high regular).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.order_tight_high_regular`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.order_tight_high_regular` (`✓ std3`). ∎
+
+*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+
+*Commentary.*
+
+Exact declaration: theorem order_tight_high_regular (hS : IsMinimalStarForming G 2 S) (d : ℕ) (hd : 2 ≤ d) (hdegree : ∀ v, degree G v=d) (ht : (2*d-1)*S.card=d*Fintype.card V) (v : V) (hv : v ∈ CertificateBound.high G S) : selectedDegree G (CertificateBound.high G S) v=d-1.
+
+**Theorem 1.26 (tight high outside).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.tight_high_outside`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.tight_high_outside` (`✓ std3`). ∎
+
+*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+
+*Commentary.*
+
+Exact declaration: theorem tight_high_outside (d : ℕ) (hd : 3 ≤ d) (hdegree : ∀ v, degree G v=d) (ht : (2*d-1)*S.card+(isolates G S).card=d*Fintype.card V) (v x : V) (hv : v ∈ CertificateBound.high G S) (hx : x ∉ S) (hvx : G.Adj v x) : selectedDegree G S v=d-1 ∧ BipartiteExchange.witness G S hS v=x ∧ selectedDegree G S x=2.
+
+**Theorem 1.27 (tight full resource neighbors).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.tight_full_resource_neighbors`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.tight_full_resource_neighbors` (`✓ std3`). ∎
+
+*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+
+*Commentary.*
+
+Exact declaration: theorem tight_full_resource_neighbors (hS : IsMinimalStarForming G 2 S) (d : ℕ) (hd : 3 ≤ d) (hdegree : ∀ v, degree G v=d) (ht : (2*d-1)*S.card+(isolates G S).card=d*Fintype.card V) (y : V) (hy : y ∉ S) (hyd : selectedDegree G S y=d) (v : V) (hyv : G.Adj y v) : v ∈ S ∧ v ∉ CertificateBound.high G S.
+
+**Theorem 1.28 (tight leaf remaining neighbors).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.tight_leaf_remaining_neighbors`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.tight_leaf_remaining_neighbors` (`✓ std3`). ∎
+
+*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+
+*Commentary.*
+
+Exact declaration: theorem tight_leaf_remaining_neighbors (color : V → Bool) (hcolor : ∀ v w, G.Adj v w → color v ≠ color w) (d : ℕ) (hd : 3 ≤ d) (hdegree : ∀ v, degree G v=d) (ht : (2*d-1)*S.card+(isolates G S).card=d*Fintype.card V) (u v : V) (hu : BipartiteExchange.LeafAt G S u v) (x : V) (hux : G.Adj u x) (hxv : x≠v) (hxw : x≠BipartiteExchange.witness G S hS v) : x ∉ S ∧ selectedDegree G S x=d.
+
+**Theorem 1.29 (order endpoint iff).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.order_endpoint_iff`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.order_endpoint_iff` (`✓ std3`). ∎
+
+*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+
+*Commentary.*
+
+Exact declaration: theorem order_endpoint_iff (hG : G.Colorable 2) (d : ℕ) (hd : 1 ≤ d) (hdegree : ∀ v, degree G v=d) : (2*d-1)*SF G 2=d*Fintype.card V ↔ (2*d-1)*beta G 2=d*Fintype.card V.
+
 ## References
 
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.order_endpoint_iff`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.order_tight_high_full`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.order_tight_high_regular`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.order_tight_isolates`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.order_tight_leaf_witness`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.order_tight_unique_leaf`
@@ -234,12 +368,21 @@ Exact declaration: theorem order_tight_unique_leaf (hS : IsMinimalStarForming G 
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.payment_off_image`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.payment_sum`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.regular_budget`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.tight_full_resource_neighbors`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.tight_full_unique_leaf`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.tight_high_outside`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.tight_high_regular`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.tight_iff_pointwise`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.tight_leaf_cardinality`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.tight_leaf_full`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.tight_leaf_remaining_neighbors`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.tight_leaf_reserved`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.tight_no_extra`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.tight_one_owner`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.tight_outside_classes`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.tight_resource_cardinalities`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.tight_resource_degrees`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.tight_two_isolate`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.tight_two_owner`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/WitnessBudget.tight_witness_classes`
 - Dependency: [D5/S3/Combinatorics/Graph/StarForming/BipartiteExchange](BipartiteExchange.md)
