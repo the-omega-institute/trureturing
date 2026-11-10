@@ -26,7 +26,7 @@ internal sealed class ActualZhuAssociatorDocument : IScribeDocumentDefinition
                     + "circle generators; no replacement kernel or smaller carrier is used.")),
                 Paragraph(Text("Expanding the homogeneous products and applying the native "
                     + "LatticeAllStateReconstruction.stateField_iterate splits the left associated product "
-                    + "into genuine U and V families. The supplied finite supports justify splitting and "
+                    + "into genuine U and V families in ActualZhuAssociatorExpansion. The supplied finite supports justify splitting and "
                     + "reindexing their finsums. Regularity bounds the nonnegative inner modes. "
                     + "The signed U and V binomial kernels identify the residual coefficients. "
                     + "ActualZhuMuIdentity.mu_identity expresses each coefficient tower as the finite sum "

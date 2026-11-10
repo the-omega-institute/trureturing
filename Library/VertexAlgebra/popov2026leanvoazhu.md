@@ -13,6 +13,7 @@ strata_touched:
   - D5/S3/VertexAlgebra/Lattice/ActualZhuRightIdeal
   - D5/S3/VertexAlgebra/Lattice/ActualZhuMuIdentity
   - D5/S3/VertexAlgebra/Lattice/ActualZhuAssociatorScalar
+  - D5/S3/VertexAlgebra/Lattice/ActualZhuAssociatorExpansion
   - D5/S3/VertexAlgebra/Lattice/ActualZhuAssociator
 license: Apache-2.0
 triage: anchor
