@@ -202,7 +202,7 @@ internal sealed class PrescribedExchangeDocument : IScribeDocumentDefinition
     private static Formula AppAdd(Formula a, Formula b) => Seq(a, Sp, Plus, Sp, b);
     private static Formula AppError(Formula i) => new Formula.Subscript(F.Id("err"), i);
     private static Formula AppSum() => Seq(
-        new Formula.Subscript(Sum, Grp(Seq(D(0), Leq, F.Id("i"), Lt, F.Id("k")))),
+        new Formula.Subscript(Sum, Grp(Seq(D(0), F.Leq, F.Id("i"), Lt, F.Id("k")))),
         Sp, AppError(F.Id("i")));
 
     private static Formula ApplicationDefinitions()
@@ -255,9 +255,9 @@ internal sealed class PrescribedExchangeDocument : IScribeDocumentDefinition
     {
         Formula k = F.Id("k"), total = AppSum();
         Formula endpoint = AppMax(D(0), AppBase(k));
-        return Disp(Seq(AppMax(k, AppBase(D(0))), Sp, Leq, Sp,
+        return Disp(Seq(AppMax(k, AppBase(D(0))), Sp, F.Leq, Sp,
             AppMax(Seq(k, Minus, D(1)), AppBase(D(1))), Sp, Plus, Sp, AppError(D(0)),
-            Sp, Leq, Sp, Dot, Dot, Dot, Sp, Leq, Sp, AppAdd(endpoint, total), Sp, Eq, Sp,
+            Sp, F.Leq, Sp, Dot, Dot, Dot, Sp, F.Leq, Sp, AppAdd(endpoint, total), Sp, Eq, Sp,
             AppAdd(AppWeight(AppBase(k)), total)));
     }
 
