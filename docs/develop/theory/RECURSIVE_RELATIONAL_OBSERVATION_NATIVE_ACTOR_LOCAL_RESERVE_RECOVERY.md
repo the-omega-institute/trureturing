@@ -3323,3 +3323,931 @@ original source, operation, acquisition, authority and resource
 obligations.
 
 ## 追加锚（本行以下为增补区）
+
+## 25. A different original-boot guarded-policy apparatus
+
+**Definition 25.1 (versions, public data and the one-use domain).** Keep
+the source, preparation, 74 roles, primitive effects and costs of
+Definitions 1.1–1.4. Write $E=\rho^2$, $n=a+b$ and $w=2a+3b$, as in
+(GT.1). The apparatus in this section has controller version
+`GP1`, input version `GP-IN1`, controller-state version `GP-S1` and
+actor-to-producer packet version `GP-CALL1`. These are fixed distinct
+finite bit tags. Its source dispatcher, native descriptors, unified and
+semantic rows retain CAP's versions, including `SEG-U1` and `SEG-J1`.
+The GP tags are local control/data tags, not additional source opcodes.
+
+The public initial tape contains a genuinely supplied complete $U(h_{\rm ref})$
+with $1\le h_{\rm ref}<\infty$. It is a field of the actual public
+GP initial-data block, bound together with $H_{\rm boot}=1$,
+$\xi$, prior $\mathcal T_1$, GP1 and the original Stop-table binding.
+Its ordinary ingress, writes, framing, descriptor, seal and initial
+delivery are executed. In particular $h_{\rm ref}$ is not inferred from
+a later row's encoded $h$ field. The GP1 table is independent of this
+word's length or value. No future operand, operand count, depth bound,
+encoded operand or common future reserve is initialized.
+
+An eligible preparation is a finite beta-derived preparation of §§21–22,
+before outer00, attaining the following pair of designated alternatives
+from its first beta Ready:
+
+$$
+\begin{aligned}
+\pi_{\rm src}(p)&=t,& (h,K)(p)&=(h_-,h_-),&1\le h_-\le h_{\rm ref},\\
+\pi_{\rm src}(\widehat p)&=E(t),&
+(h,K)(\widehat p)&=(w(t),w(t)).
+\end{aligned}
+\tag{GP.1}
+$$
+
+All preparation calls, supplied words, rights, acquired seed and complete
+returns are retained. Thus $n(t)\le h_-\le h_{\rm ref}$. Immediately
+after $\widehat p$, supply one actual outer01 raw Left$(v)$ or Right$(v)$,
+where $v$ is any nonempty finite ordered alpha/beta tree, and complete
+its refusal, delivery, InnerReturn and CaptureCAP to Ready. Then supply
+outer00. This is the designated GP1 entry; it has not previously been
+used. The operand need not have been acquired by the continuing actor
+before its raw ingress. All rights and immutable backing used below
+must be current at the cuts where they are read.
+
+The empty reference preparation is allowed: its encoded preparation is
+the four actual calls Reserve$(3)$, Raise$(3)$, Rho, Rho of Theorem 22.1,
+so $t=\beta$ and (GP.1) is available for every public $h_{\rm ref}\ge1$.
+More general eligible preparations keep precisely their actually
+attained domain, rather than asserting attainment of every tree.
+
+**Definition 25.2 (literal original-boot construction).** The GP1
+controller is a native finite word controller. Its rows are obtained by
+Definitions 2.1–2.4's existing compiler, using the finite word operations,
+parsers and traversals cited in §§26–28 below. It is not assigned CAP8's
+narrower Native operation-packet type. Its code is the literal native
+row encoding of CAP Definition 2.3, installed bit by bit in the active
+joint original-boot control store, including the entry/send/return rows
+of §§26–27. Its immutable public code copy is the GP-description
+subfield of the initial public-data field on 69, whose complete field
+has its actual descriptor on 68. That same fixed code word is actually
+supplied with public initialization and copied through producer21/17
+to actor28/29 before the manifest export. Canonical initialization
+supplies the identical native row encoding for control installation
+and for this public copy, paying both occurrences of its bits.
+These are primitive-control rows under PR57.D1, not dynamic gate code
+read as an instruction by name. After outer00, port25 holds the actual
+sealed GP input and successive `GP-S1` state blocks, and 27 its waiting
+packets. Table24 remains exactly Definition 9.1's original finite
+Turing Stop table; its original initial configuration is retained too.
+
+For the shared actor word banks use the union of the registers required
+by the history graph and this one fixed word program. Number that finite
+union by Definition 2.1's hygienic first-occurrence rule. Its size $r_*$
+is a syntactic constant. Construct its empty bank by Definition 2.3;
+both the history and GP1 rows use this same layout and parity relation.
+Their temporary fields are disjoint. A call into CAP has both possible
+bank parities as finite control cases and makes no bank assignment.
+The history graph with this layout is denoted $G_*$. Its actual capture
+description is $\Delta(G_*)$, with its own $L_*$, installation and
+description checks as in §4. It is not identified with the old $G$.
+The GP1 rows used after outer00 were already installed at original
+boot; the later history-version installations do not install a new
+policy or change table24. The new joint apparatus has GP1 as an
+additional installed phase of the same actor, with the original Stop
+client as its fixed terminal continuation.
+
+More explicitly, reserve the fixed native version name $V_{\rm GP}$
+for these original-boot rows, including their inlined CAP caller and
+return copies. The joint finite control has fixed version/phase cases;
+$V_{\rm GP}$'s completed-store flag and literal rows remain resident
+while $L_*,G_*$ run. The new $G_*$ outer00 successor is the fixed CTL
+edge to $(V_{\rm GP},\mathrm{GPInput})$, after the actual invocation
+handoff and loan. Each GP service returns to that version's fixed
+GPResponse. All these targets are linked finite labels, not words
+obtained from an operand or a request to enter a legacy closed graph.
+The primitive-control version cases are installed at the same original
+boot; no edge here enables a partial store. The additional GP invocation
+slot starts dormant. Outer00's TOK transfers the invocation to it;
+its later fixed handback TOK transfers it to the original client slot.
+These are finite paid control/token bits, with no additional tape port.
+
+Construct the ordinary boot, one beta private preparation, stationary
+seed acquisition, original counters, directory and boot binding as in
+CAP Definition 2.4. The public initialization/prior copies include the
+actual GP initial-data word containing $U(h_{\rm ref})$. As in
+Definition 4.1, park the initialized original Stop client at its pre-loan entry,
+with 24/25/27 protected and its work tokens returned. In Definition
+4.3's initial manifest use the actual delivered initial-data block for
+this variable field: resolve its local origin and copy its bits, instead
+of emitting $h_{\rm ref}$ as a literal. The GP-description subfield is
+copied with this actual public data, not embedded as a literal in
+$G_*$. Earlier original-table/graph descriptions remain fixed literals.
+The ten additional roles, capture,
+manifest import, saved heads and token/Ready joins are those of §4
+with $L_*,G_*,r_*$ and these actual bindings.
+
+All finite-control alternatives, native calls and loops expand by
+CAP Definition 2.3 and Definition 2.1. The initial bootstrap therefore
+has a fixed finite literal description. Loops over data use constructed
+word cursors; tree traversal uses the existing constructed frame stack.
+The original table24, GP rows, $L_*,G_*$ and $r_*$ are fixed
+independently of $h_{\rm ref}$ and every future $v$. The canonical code
+bits supplied at initialization are these fixed descriptions, not
+operand-dependent code advice. Neither GP nor $G_*$ contains the GP
+description as a literal. Register counting is consequently over the
+finite syntactic field-copy program, independently of the later
+description-word length; it has no code-length/register-count fixed
+point to solve. This construction uses the finite native boot authority
+of PR57.D1/CAP2.3 and the word realization of §2; it does not require a
+new Turing-table-to-native compiler.
+
+The raw outer01 route remains the complete external-IN $F^A$ of
+Definition 4.1. The history route remains its complete acknowledged
+route. At outer00, the actual invocation handoff and twelve-port loan
+enter the fixed GPInput entry of §26, before the original Stop interpreter.
+GPInput saves the old 25/27 configuration before appending GP state
+there. There is no subsequent ARC capture
+or Ready assertion for this outer00 suffix. The GP1 terminal branch
+executes the original proposal $q_1(\beta)=(0,B,1)$ and CAP's unchanged
+Halt/snapshot/verifier/receipt/INITIAL consumer route after the explicit
+configuration handback in Definition 28.1. This is a different
+apparatus chosen at original boot. No edge installs it into Definition
+9.1's already running INITIAL-Stop table.
+
+**Theorem 25.3 (boot and parked-prefix correspondence).** The construction
+of Definition 25.2 has an actual finite first Ready, with source beta,
+$h=K=1$, the acquired beta seed and original INITIAL target/verifier/
+consumer. Every eligible preparation and the following raw acquisition
+in Definition 25.1 have their actual CAP/ARC returns in this apparatus.
+The raw acquisition refuses and leaves the entire $E(t)$ unchanged.
+
+*Proof.* All additional native rows are a finite literal boot installation;
+all new initial-data blocks are finite supplied words. CAP's original
+validation installs its initial source interval once. No GP row reads
+private source16 or bypasses its validation. The proof of Proposition
+4.4 applies with the stated finite register union and actual version
+descriptions: native field import/export is insensitive to the number
+of other fixed fields, the empty prelude constructs exactly $r_*$ empty
+fields, and the captured code is exactly the activated $G_*$. The
+variable public field is copied from its actual delivered block before
+the closed manifest scan. Thus it has its actual value, rather than a
+guessed literal. The prelude and manifest need no self-description
+constant in either earlier graph.
+
+The original-boot flag for $V_{\rm GP}$ was set only after its complete
+literal installation and is not changed by a fresh history-version
+installation. The fixed outer00 edge therefore has an actually enabled
+target of the right version. The twelve-token induction supplies its
+workspace owner and the invocation TOK its actual entry authority.
+This proves the version/entry correspondence; equality of names or
+use of the same ports is not being used to create that edge.
+
+Before outer00 no route reads or executes the parked policy. The raw
+and history routes, source work, channel checks, head restoration and
+token joins are the same inlined routines with their actual new-run
+bindings. Induct on completed preparation calls using Proposition 5.5
+and Theorem 22.1's attained-source argument. The parked-client proof
+uses protection of its initialized material and dead shared workspace,
+not the Stop instruction's particular next action. The outer00 entry
+is explicitly the new fixed native entry, rather than CAP8's table
+interpreter. At corresponding completed cuts the source value,
+historical guard/reserve, source occurrence and selected source-call
+outcomes agree with the specified preparation. Table bytes, initial
+data, manifests, native labels, addresses and costs have their new
+apparatus values; no equality of whole boot histories is required.
+
+At the last raw acquisition, $n(E(t))=w(t)=h=K$ and $n(v)>0$.
+Proposition 21.3 gives the actual source-preserving refusal and complete
+owned return. Its argument uses only the unchanged raw caller and source
+contracts, so it applies to either direction and every finite $v$ here.
+The original target remains INITIAL-$q_1$ of the original beta, not a
+target of the now modified source. ∎
+
+## 26. Constructing the policy input from actual acquired records
+
+**Definition 26.1 (local references and the input projection).** At GPInput,
+the actor owns archive28 and native descriptor stream29 and has their
+current read tokens. Its public initialization, prior and boot binding
+are available immutable received blocks there, with complete producer
+origins on 21/17. The acquired seed is the actual 26 or 28 block selected
+by the boot binding and its actual local descriptor. Header, length,
+payload, semantic and unified rows are immutable acquired blocks on 28
+with their actual local descriptors on 29. No producer reference is
+used as an actor address. CAP descriptor ordinals are one-based; the
+word-bank descriptors on 68 remain their separate zero-based grammar.
+
+Let $\mathcal R$ be the ordered projected record obtained from the
+complete acquired unified prefix. Each projected event contains the
+actual kind, full canonical request and complete named context when
+present, genuine response, historical guard/layout and before/after
+counters. For a nonmaintenance event its semantic mate is checked
+against that unified row. Retain the actual row and dependency origin
+references with this projection. Maintenance keeps its own event and
+response. Local/terminal kinds, when present in a prefix, retain their
+own material and do not become source modifiers. Physical header,
+length and payload seps/statuses are excluded from the chronological
+wire bits. Projecting these fields does not identify source events
+with word-bank assignments or discard the underlying acquired blocks.
+
+The input bit word is a fixed-arity framed tuple
+
+$$
+I=\operatorname{Tuple}\bigl(
+\mathtt{GP-IN1},\ {\rm Pub},\ {\rm Seed},\ \mathcal R,\
+{\rm Origins}\bigr).
+\tag{GP.2}
+$$
+
+`Pub` contains the actual public initialization, including the separately
+parsed $U(h_{\rm ref})$, prior and boot/controller bindings. `Seed`
+contains the acquired syntax and its original/local references.
+`Origins` enumerates the local references used for the row/dependency
+projection. Tuples, lists and references use §3's existing Frame/
+ReadFrame, ReadList and complete CAP-reference codecs. Version tags use
+their fixed bit encodings, and all arities and trailing exhaustion are
+checked. The data in (GP.2) are precisely public initialization and a
+projection of an authentic acquired record, with its acquisition
+bindings. They contain no source snapshot, private count or future reply.
+
+**Definition 26.2 (the native GPInput graph).** GPInput follows the complete
+outer00 invocation handoff and twelve actual TOKs lending the public
+work ports to $A$. It starts no helper during that transfer. It first
+imports the original closed 25/27 symbol words and saves their head
+distances by Definition 3.1's exact native graph, with its two fixed
+port cases now 25 and 27. These are actor-owned readable ports at this
+entry. The same proof restores both heads. Retain these words,
+distances, original configuration/packet bindings and initialized
+Stop entry in disjoint persistent bank fields until the terminal
+handback. This import precedes every GP append to either port. It
+neither changes their old bytes nor accesses another owner's data.
+The graph next
+uses the complete native descriptor count scan of CAP Definition 6.1
+to construct $U(D_*)$ for the closed current descriptor prefix on 29.
+It retains this bound before appending any new descriptor. Every search
+below is bounded by that copied count, even if later output appends to
+29. Each requested native field is obtained by ReadDescriptor's full
+origin scan and following-seal test, not by treating an ordinal as a
+cell number. ReadDescriptor may scan a longer complete tail on a later
+invocation; its requested ordinal is still one of these first $D_*$.
+
+Select the actual public initialization/boot/prior and seed by their
+complete bindings, using the actual local-origin resolution of
+Definition 3.3 and CAP6.3. At each selection load the real local base,
+length, type and status address, require initialized immutable available
+material, position by At and read its actual status. Only the fixed
+26/28 seed cases and archive28 cases are admitted. The binding's empty
+local origin, if any, is resolved by its complete local reference;
+it is not matched against every other empty origin. The GP version
+and native-description binding must agree with the actual GP1 boot
+version; the original Turing-table/initial-configuration bindings must
+agree with the actual Stop client. These are distinct code formats.
+
+Scan the first $D_*$ descriptors for acquired `SEG-U1` blocks of this
+$\xi$ and boot/prior binding. Bounded-parse them by §3.4/CAP6.3.
+Find their maximum old unified label by unary comparison and construct
+its successor $m_*$. Then, for $i=0,\ldots,m_*-1$, scan those same
+$D_*$ descriptors for the row with old label $i$ and the expected
+predecessor. Choose the first available copy with the complete origin;
+other copies of that same origin have CAP6.4's equal payload. Require
+one continuous prefix beginning at boot, correct before/after fields
+and both joined ends. Resolve every enumerated request/control/output
+dependency and semantic mate by its complete origin, local availability
+and the §3 parsers. Require its actual `SEG-J1` fields and separate
+semantic predecessor on nonmaintenance events, and no semantic mate
+on maintenance. These are the already supplied receiver tests, used
+as finite word tests on the acquired data.
+
+Import the selected native payload fields by §2.2's native field import,
+with positioned payload base and its actual length counter as bound;
+binary fields do not use a physical sep as an internal Frame delimiter.
+Word-bank rebuilds use only 64–68 and never move the native input port.
+At each bit use RD, select its literal cons branch before the compiler
+can reuse a latch, perform that assignment, and MR the native source.
+The terminal counter test and Reverse finish the exact bit word.
+The bounded variant is the same native import schema applied to a
+bit block instead of a sep-terminated field. The §3 parsers now form
+the successive projected fields of (GP.2) with Frame and AppendItem.
+No purported permission bit in an imported field executes TOK.
+
+Export the complete bank field $I$ into a fresh block on 25. This join
+has the following literal realization. With the pool still at $A$,
+measure Base(25) before writing; position the bank field using Field;
+dry-count its bits into a distinct public unary work word; reposition
+the same immutable bank field. For each counted bit execute
+RD(bank,6), Append(25,latch6), MR(bank) and the actual counter advance;
+include the terminal test. Parity selects fixed port64 or port65 before
+this scan, and no bank assignment runs during either pass. Append the
+physical sep and zero status, construct $b+|I|+1$ by Add, and construct
+the full ten-field CAP descriptor on 29 by WriteDescriptor. Set the
+actual status by At; WR(1); CTL seal. Its type is `GP-IN1`, owner $A$,
+port25, initialized=1, mutable=0 and origin empty. Its base is the
+measured $b$ and its creation ordinal is the actual new one-based
+count. It is not an RCA descriptor or a remote pointer.
+
+Release temporary words only after this block is sealed. Reposition it
+through its just constructed CAP descriptor, import its actual bits
+back to the designated policy input field by the same bounded native
+import, and parse (GP.2). Export a complete `GP-S1` state block on 25
+by the identical measured export, with phase `Input`, the local input
+reference and actual acquired-row/seed/public bindings. A CTL installs
+that completed state version and enters the word policy. The active
+bank/parity is its working representation; 25 is its persistent
+sealed state representation. No mathematical value of $I$ is installed
+by this CTL without those earlier writes and imports. Archive heads
+may now have their actual new positions; no later ARC Ready is claimed.
+
+**Theorem 26.3 (actual record-to-controller input).** At the designated entry
+of Definition 25.1, GPInput terminates and the consumed input is exactly
+(GP.2), made from these actual owned records and public initialization.
+In particular its last source request is the actually submitted raw
+Left$(v)$ or Right$(v)$, its acquired payload is the actual $v$, and its
+recorded response is that call's genuine refusal. The installed state25
+contains the complete input binding and every earlier genuine response
+through this prefix. It has not received any anticipated computed-call
+response.
+
+*Proof.* Theorem 25.3 and the final CaptureCAP supply a complete acquired
+prefix with authentic origins. All its request dependencies and semantic
+mates arrived before final row ACK. CAP6.4 gives their immutable equality
+to their senders, and §3.5 identifies their local grammar and origins.
+The closed count $D_*$ is finite. Every bound, ordinal and maximum used
+by GPInput is constructed by finite unary scans. Authentic rows supply
+exactly the continuous prefix selected by the old-$m$ and predecessor
+tests, including all maintenance and nonmaintenance cases. Copy choice
+cannot change a payload with the same complete origin.
+
+Each At addresses the selected local constructed interval. The current
+read tokens, not a copied descriptor flag, authorize its RD. During a
+native import bank rebuilds preserve that source head, so induction on
+the actual length counter gives precisely the referenced bits. Field
+parsing and Frame inversion yield the stated projection, including the
+raw call's complete context. The fixed seed/boot cases resolve the
+authentic initial data, so the public unary field read here is the
+actual $h_{\rm ref}$. There is no rule replacing it by the historical
+encoded guard in a row.
+
+The two-pass export reads one immutable bank field and appends exactly
+its counted bits at the measured 25 base. Status is set only after
+completion; descriptor construction uses the true base/length/count.
+The subsequent length-bounded reimport therefore consumes that actual
+sealed block. The same argument applies to the first persistent state
+block. All loops have finite closed data bounds; the source token and
+private source are untouched. This proves input availability as an
+executed connection, rather than a premise that an acquired bank is
+already a field on 25. ∎
+
+## 27. Computed packets into the original guarded service and back
+
+**Definition 27.1 (the GP guarded send graph).** A GP1 source-service
+output is the fixed-arity tuple
+
+$$
+P=\operatorname{Tuple}(\mathtt{GP-CALL1},\ k,\ z,\ c),
+\tag{GP.3}
+$$
+
+where $k$ is exactly one of CAP's seven three-bit tags, $z$ is its
+complete original payload, and $c$ is one of the finitely many GP1
+continuation-phase codes. A graft's $z$ is the full named original
+context code in its actual order; a maintenance $z$ is the complete
+$U(J)$; the other original payload grammars remain unchanged.
+The packet contains no claimed source response. The pending state
+retains $P$, $c$ and the bindings needed after return.
+
+The word controller writes and seals this packet on 27 by the measured
+native export of Definition 26.2, with its actual CAP descriptor on 29.
+It also exports the new `GP-S1` pending state to 25 before releasing
+the pool. The packet is copied through route49 to a fresh producer
+block on 21, with native descriptors on 17, by CAP6.3's complete
+two-stage channel and the actual twelve-port loans/returns. Its complete
+origin remains the actor packet reference. The sender continuation
+waits for the receiver's complete tuple/availability checks and
+acknowledgement; then all twelve work tokens are at the producer.
+No source call begins during a partial send or token transfer.
+
+The producer bounded-parses the received tuple, checks its GP version,
+finite continuation code and exactly one of the seven tags, and copies
+the whole payload into its public word/staging work. It calculates the
+payload length by a complete scan. It enters CAP Definition 4.6's
+already supplied automatic canonical block constructor: Append/copy
+the three literal header bits, the complete $U(|z|)$ and the entire
+$z$ into three fresh blocks on 13. Measure each actual Base before
+append and execute its sep/status/descriptor/seal operations on 13/17.
+Construct the complete three-reference request tuple in its original
+order. No source-frame bit in this graph uses IN. In particular a
+computed operand is copied from the packet, not compared with a
+separately supplied external operand.
+
+At the acknowledged idle source boundary the fixed GP caller kind
+takes the actual source-service token, retains its fixed return kind
+and enters the same canonical parser/ReadState/selected-service graph
+as an original guarded client. All seven cases use the same source
+or maintenance bodies, complete row writer and mandatory delivery.
+For Rho or a graft there is no intervening automatic safe-growth edge.
+The current guard itself decides the whole candidate's accept/refuse
+case. Reserve/Raise operate only when explicitly present in $P$.
+ReadE, TagRead and the original non-source terminal/local routes
+remain available through their own existing entries and types.
+Malformed, incomplete, busy and missing-token raw cases retain their
+original partial legality; GP packets neither grant such entries nor
+replace those cases by refusals. A GP tuple/availability fault has
+its finite paid local failure successor and makes no source call.
+
+**Definition 27.2 (the GP return graph).** Each selected service executes
+its actual response commitment, applicable counter/fence work, semantic
+row if required, unified row and all enumerated dependencies. Missing
+actor material is copied through route48 with fresh mailbox/receiver
+intervals, actual status/seal/TOK and both workspace loans. The receiver
+performs CAP6.3's full joined checks, installs its actual new ends, and
+emits the final row ACK after the workspace return. Only then execute
+the source-token TOK and idle CTL. Their GP saved continuation is the
+fixed label GPResponse, not $F^A$'s next IN or InnerReturn.
+
+At GPResponse lend all twelve work tokens to $A$ and enter its return
+reader. The pending 25/27 blocks remained protected during the service.
+Scan the local origin descriptors on 29 and acquire the returned new
+unified row and its semantic mate/dependencies through the actual
+complete CAP receiver relation. Apply the same bounded row checks as
+in Definition 26.2, additionally comparing the request references'
+resolved bits with the waiting $k,z$ and the actual predecessor with
+the saved acquired end. Read the complete genuine response field.
+Native field import places that field, row origins and the new joined
+ends into the active bank. The continuation $c$ is loaded from the
+retained packet; it is not inferred from a hoped-for reply.
+
+Append that response and its actual row reference to the controller's
+response list. Export a complete new `GP-S1` block on 25, containing
+the input reference, retained request/continuation, complete returned
+response and row binding, response-list end and actual successor phase.
+All exports have measured bases, complete descriptors and real status/
+seal operations. Its final state-install CTL occurs only after that
+seal. Return all twelve work tokens to the producer and execute the
+fixed caller-return CTL. Only the next actual loan/CTL can run the
+next controller phase. Bank heads/latches and new 25/27 versions keep
+their actual values; no old snapshot is restored over the source.
+
+The finite successor phases include `AfterReserve`, `AfterRaise` and
+`AfterFinal`. Each first examines its installed actual response. A
+response inconsistent with its selected phase goes to a retained local
+failure state; it never creates an acceptance token or updates counts
+as though a different response had arrived. The raw acquisition's
+response is already installed with the entire input by GPInput.
+
+**Theorem 27.3 (actual guarded output, complete return and memory).**
+Every finite valid packet emitted by this controller at its authorized
+source boundary has the original guarded canonical service, full
+returned row/dependency relation, final ACK, source-token/idle return
+and genuine response installation in state25 described above, under
+the retained pointwise progress and current-right premises. No matching
+external frame bits are required for this output. The graph retains
+the complete seven-tag guarded menu, rather than CAP8's safe-growth
+task or its narrower Native packet grammar.
+
+*Proof.* The packet export's bit induction is Definition 26.2's. CAP6.3
+then copies that actual immutable packet, including its version and
+whole operand, to the producer's own interval. The recipient reads
+through its own descriptor on 17. It does not dereference actor27.
+The acknowledged send returns the pool to the producer before its
+constructor starts. CAP4.6 explicitly supplies the automatic-mode
+three-block construction by copies/Appends, including real nonempty
+port bases, descriptors and status work. Applying it to this parsed
+packet gives exactly the requested original frame, without an IN row.
+CAP Lemma 4.7 gives each tag its actual selected body and saved return.
+The graph's explicit guarded caller kind selects those branches and
+contains no CAP8.2 growth-policy join. Thus a finite but too-large
+context still reaches its entire original candidate computation and
+executed refusal.
+
+CAP Lemma 6.7 and Theorem 6.4 give the actual response, counters, rows,
+two-stage copies and joined checks on every accepting and refusing
+case. These are the unchanged resident routines. The GP boot changes
+only this caller's final saved successor after the source token and
+idle restoration. Neither a directory seal nor a copy-completion TOK
+can enter GPResponse in place of final row ACK.
+
+The actual postservice archive now supplies the return reader's local
+row and response bits. The saved packet/continuation still exist on
+protected 25/27. Its origin and predecessor comparisons therefore
+identify the row for this execution, rather than an old equal-valued
+reply. The bounded import followed by measured export installs exactly
+that full field and row binding in the next state25. The subsequent
+phase reads these newly installed values. Serial token transfer
+establishes both its local authority and its actual caller return.
+Finite packets, closed scans and the supplied service termination give
+finite completion. This proves the joins by their primitive graphs;
+it does not assume an unproved GP input/call/return service. ∎
+
+## 28. The fixed one-use word policy
+
+**Definition 28.1 (finite policy and its persistent phases).** The word
+program has the finite phases `Input`, `Select`, `WaitReserve`,
+`AfterReserve`, `WaitRaise`, `AfterRaise`, `WaitFinal`, `AfterFinal`,
+`Done` and `Stop`, together with distinct finite parse/domain/response
+failure phases. Every persistent phase is exported to 25 as `GP-S1`.
+Variable trees, counts, request words, row ends and response lists are
+bank words and sealed 25/27 blocks, never finite-control indices.
+Only fixed literal bit cons, empty/copy/tail, first-bit/empty tests and
+the already supplied acyclic word macros occur in its local graphs.
+
+The `GP-S1` payload is a tuple with these fixed fields: version, phase,
+local input reference, saved-original-configuration binding, derived
+reference tree, raw operand, encoded operand, four leaf counts, current
+encoded $h,K$, selected $d$, branch bit, optional waiting-packet reference,
+continuation code, complete response list with row references, and the
+two acquired journal ends. Unset fields have explicit none tags. The
+saved binding includes the actual old 25/27 symbol words and head
+distances, their original initialization references and the original
+Stop entry. A field can hold a complete framed word or its complete
+local immutable block reference; reference fields are resolved with
+their actual descriptors and current read tokens. In particular this
+is not an unbounded collection of finite-control registers.
+
+At a phase change export this whole tuple, or its complete framed local
+reference fields, by Definition 26.2's native graph and install its
+sealed reference. On the next actor loan reimport and parse that actual
+state block before testing the phase/returned-response fields. The
+working bank is thus reestablished from the persistent representation,
+not from latches left across a source service. History fields are
+separate and are not overwritten by this state reload.
+
+At `Input`, parse the actual (GP.2). Replay its projected original
+source record from the acquired beta seed. Whole accepted Rho and
+grafts update the derived tree by their existing finite syntax
+construction; refusal and read leave it unchanged; maintenance updates
+only its derived $h,K$ according to its genuine recorded branch.
+Use the complete actual request contexts, historical guards and the
+actual recorded outcome, and check that the original guard test agrees.
+This is computation on acquired public data, not a read of a private
+source or of an unreleased refused candidate. Require the latest
+source event to be the immediately preceding raw graft refusal and
+retain its actual direction and whole $v$.
+
+Let $s$ be the replayed current encoded tree. Apply the existing finite
+two-step image parser of ABT Theorem 12.1 to $\operatorname{sh}(s)$,
+obtain $t$, and check the complete equality $E(t)=s$. The equality
+check prevents an arbitrary labeled tree with the same erased shape
+from passing. Require derived $h=K=n(s)=w(t)$ and $n(t)\le h_{\rm ref}$.
+The eligible entry guarantees these tests; outside it they are finite
+domain failures, not a claim of another Ready. Derive counts by the
+existing complete tree traversal, and form $E(v)$ by the existing two
+substitutions. Preserve the actual raw operand and all input bindings.
+
+At `Select` compute exactly the reused quantities (LA.3),
+
+$$
+\ell=n(t)+n(v),\qquad H=w(t),\qquad d=H+w(v)>H,
+\qquad b=[\ell\le h_{\rm ref}].
+\tag{GP.4}
+$$
+
+If $b=1$, emit Reserve$(d)$ with continuation `AfterReserve` by
+(GP.3). After its complete genuine returned greater response is in
+25, emit Raise$(d)$ with continuation `AfterRaise`. After that complete
+genuine successful response is in 25, emit the original same-direction
+Left$(E(v))$ or Right$(E(v))$, with continuation `AfterFinal`.
+If $b=0$, emit only that same final encoded graft, at the unchanged
+guard/reserve. The waiting and returned phases and all packet/state
+exports are real intervening graphs of §27. Neither anticipated
+maintenance success nor the bit $b$ itself is a source response.
+
+At `AfterFinal` read the installed genuine final response. On its
+accept component update the derived reference syntax to the specified
+ordered graft and its pair to $(a+a_v,b+b_v)$; on its refusal component
+retain $t,(a,b)$. Require agreement with $b$ before installing `Done`.
+Retain the complete actual response and row reference in either case.
+Export the resulting state to 25, return the pool, and take a CTL to
+the fixed non-ARC policy-return cut $D_{\rm GP}$. At this cut the
+producer again owns the twelve words, the source-service token is
+idle, and 25/27 contain the actual completed state and packet/response
+bindings. The history invocation has been consumed by outer00. There
+is no new CaptureCAP, $M$ item or ARC Ready at this cut.
+
+The next local GP1 phase is `Stop`. It is the following explicit
+handback, not a native encoding substituted for a Turing table.
+Borrow the public pool for $A$. From GPInput's saved actual original
+configuration/packet words extract the original finite Stop machine
+configuration using its original code/data grammar. The protected
+original table24 and all referenced initial blocks still exist.
+Use CAP8.1's actual configuration/stack word-copy initialization to
+write a fresh active original configuration version on 25 and its
+initial empty Native waiting-packet version on 27. Their bits are
+copied from those saved words, with the complete original reference
+fields; their newly constructed locations have their own descriptors.
+Only the live machine-configuration designation changes. The sealed
+GP-S1 blocks, response list, original configuration and all earlier
+25/27 data remain retained. No source, archive, row or acquired end
+is restored to an earlier state.
+
+Restore the table24 head by its original positioning code, return all
+twelve work tokens to the producer, and execute the fixed GP-to-client
+invocation-slot TOK. The original twelve-token loan and entry CTL now
+enter the initialized Stop interpreter at its original label.
+This code has exactly the original table and represented initial
+machine configuration, so it actually executes its original Stop,
+writes/seals $(0,B,1)$ on 31, enumerates the executed original
+instruction/output dependencies in its terminal packet, and copies
+them through route49 to producer21 as in CAP8.1. The terminal template
+identity is that original Turing-table identity, not the GP native
+encoding. It then follows CAP6.5–6.7's unchanged terminal route.
+No NativeLocal marker was fabricated for the preceding GP primitive
+work: CAP6.2a already distinguishes that work from completed semantic
+markers. There is no return to $D_{\rm GP}$ after global halt. This
+fixed handback is part of the original-boot apparatus; table24 is
+never rewritten or replaced.
+
+**Theorem 28.2 (finite realization of this policy).** Definitions
+25.2–28.1 specify a fixed finite primitive program on the stated owned
+carrier. On every eligible finite input, its local work terminates and
+its service output comprises exactly the packets just specified.
+Its new response list contains the genuine raw refusal and, in order,
+the genuine responses of every computed call actually performed.
+
+*Proof.* The local algorithms are the existing finite parsers,
+Frame/list operations, tree traversals, image parser, substitution,
+arithmetic and comparison, used inside one finite control graph.
+Replay iterates a finite acquired list; every tree traversal descends
+through finite syntax with a constructed stack. The image parser's
+termination and inverse property are ABT12.1's supplied result, not a
+new inverse theorem. Unary comparisons and additions use §2.1's
+acyclic expansions. Fixed calls are inlined, data loops retain their
+actual cursors, and the finite phase alternatives have the stated
+success/failure successors. Definition 2.1's compiler therefore yields
+finitely many native rows and the finite constant $r_*$, regardless of
+data sizes. Definition 2.4 supplies their represented-bank relation
+and paid native execution. Initial native imports and persistent-state
+exports have their separate joins in §26; no word assignment claims
+to access an unimported old port.
+
+Induct over the actual projected prefix to identify its replayed
+tree and guards. The base is the acquired original beta, and CAP's
+original whole-candidate semantics gives each update step. All request
+contexts are actually acquired. Thus $s$ is the actual current source
+value. The attained relation (GP.1) and source-preserving raw refusal
+give $s=E(t)$; the supplied inverse and the complete equality check
+recover precisely that reference $t$. The current guard/reserve and
+the actual public $h_{\rm ref}$ therefore pass the stated tests.
+The last captured raw payload gives precisely $v$ and its direction.
+No new source observation or hidden size argument was used.
+
+The word program forms complete finite packets from these now
+represented words. At most two maintenance packets and one final
+packet are emitted. Theorem 27.3 supplies their genuine response
+installation before each subsequent phase, so the induction over the
+three possible waits identifies the actual response list. Export to
+25 and its installation are part of each phase, including `Done`.
+All local loops terminate on this finite input; pointwise progress
+of the retained source services completes the finite composition.
+The generic finite interpretation and controller discipline of
+PR57.D5 and CAP8.1 are reused at the level of paid input/output and
+persistent returned data. Their Turing/Native packet grammar is not
+asserted to be identical to this explicitly expanded native version. ∎
+
+## 29. One earned guarded use and the original INITIAL consumer
+
+**Theorem 29.1 (actual acquired-record guarded use).** There is the one
+fixed original-boot apparatus of Definition 25.2 such that, for every
+actual finite public $h_{\rm ref}\ge1$, every eligible preparation
+(GP.1), every nonempty finite ordered operand $v$ of arbitrary size
+and depth, and either actual late raw direction, the designated entry
+executes one selected original guarded use after the complete raw
+refusal/acquisition, with no matching external bits for any computed
+maintenance or final modifier. Retain the original finite raw supply,
+canonical initialization, current rights/backing and reached-service
+progress premises. Define the reference whole modifier and its outcome
+at guard $h_{\rm ref}$ by
+
+$$
+\begin{gathered}
+c=\langle v,t\rangle\ \hbox{or}\ \langle t,v\rangle,\qquad
+\varepsilon=
+\begin{cases}\mathsf{accept},& n(c)\le h_{\rm ref},\\
+\mathsf{refuse},&n(c)>h_{\rm ref},\end{cases}\\
+t'=\begin{cases}c,&\varepsilon=\mathsf{accept},\\
+t,&\varepsilon=\mathsf{refuse}.\end{cases}
+\end{gathered}
+\tag{GP.5}
+$$
+
+At the actual completed policy-return cut $D_{\rm GP}$ the designated
+final modifier's original label is $\varepsilon$, its actual source
+successor is $E(t')$ through the continuing source16/$\phi_K$, and
+
+$$
+(h,K)(D_{\rm GP})=(w(t'),w(t')),
+\qquad n(\pi_{\rm src}(D_{\rm GP}))=h=K.
+\tag{GP.6}
+$$
+
+Every actual service used here has its complete return and genuine
+response in the declared state25. There is exactly one raw staging
+source call and one final encoded source call after $\widehat p$;
+two strict maintenance calls occur exactly when $\varepsilon$ accepts.
+The raw and final refusing calls remain distinct executed events.
+
+*Proof.* Theorem 25.3 earns the raw acquisition and the authentic Ready
+before outer00. GPInput constructs and consumes the actual acquired
+input by Theorem 26.3. Theorem 28.2 supplies the fixed finite policy
+on those words, and Theorem 27.3 supplies its actual guarded calls and
+complete response/state joins. These facts establish the missing
+input-to-call-to-return connection before any use of the guard/count
+identities.
+
+The semantic selection is precisely the one-step graft case already
+proved in Theorem 22.1. Explicitly, if $\ell\le h_{\rm ref}$, then
+$K=H<d$ makes Reserve$(d)$ strict and, after it, $h=H<d=K$ makes
+Raise$(d)$ lawful. Their real successful responses lead to the next
+phases. They preserve the entire $E(t)$ and extend the actual layout
+without replacing the source. The final original candidate has $d$
+leaves at guard $d$, so the original service accepts. Its actual
+ordered candidate is $E(c)$ by (GT.3), and $d=w(c)=w(t')$.
+If $\ell>h_{\rm ref}$, no maintenance runs. The final original
+candidate still has $d>H$ leaves, so it executes refusal and preserves
+the entire $E(t)$. Its endpoint has $h=K=H=w(t)=w(t')$.
+These are both outcomes of the actual unchanged guard/MUX body,
+not GP1 assignments to source16 or predictions installed as replies.
+
+At every wait the full response/row joins precede the next phase.
+The genuine final response therefore selects the corresponding
+derived syntax/count update and passes the comparison with $b$.
+`Done` is exported, sealed and installed, and all workspace/source
+tokens have their stipulated returned owners at $D_{\rm GP}$.
+This proves (GP.5)–(GP.6) and the complete memory assertion.
+
+The counterfactual reference path is an alternative finite extension
+from the same first beta Ready: use the reference preparation to $p$,
+publish $h_{\rm ref}$ by the original Reserve/Raise when needed,
+then perform the original whole Left$(v)$ or Right$(v)$. Since
+$h_-\le h_{\rm ref}$, this publication is lawful and $t$ fits the
+guard. Its actual whole-candidate branch is exactly (GP.5).
+The encoded path does not perform that reference publication on its
+own source; it reads the public initial datum and chooses its own
+explicit guards. Neither path is a live copy of the other's endpoint.
+All finite $v$ and both directions were arbitrary. No uniform time,
+size, depth or guard bound enters the finite program. ∎
+
+**Corollary 29.2 (preserved original target and actual terminal use).**
+Continue the same run from $D_{\rm GP}$ through its fixed `Stop` suffix.
+It reaches the original INITIAL-$q_1(\beta)$ consumer output and global
+halt with no new private preparation or altered verifier. This suffix
+has its actual terminal row, complete snapshot, both journal ends,
+receipt delivery, consumer checks/output/ACK and terminal return.
+
+*Proof.* The original seed acquisition, boot/prior binding and original
+source occurrence were preserved throughout. The explicit handback
+copies the saved initialized original Stop configuration into its
+actual active word representation. The bank compiler preserves the
+saved fields through all intervening source services, and no GP
+append overwrote the old 25/27 material. The original configuration
+copy/stack routines therefore establish the original interpreter's
+actual entry, with its unchanged Turing table24 and completed loan.
+This is a paid local configuration installation, not an assumption
+that arbitrary new 25 bytes are an old valid configuration. Executing
+that table gives the proposal $(0,B,1)$ for the actual original beta.
+The output is actually written/sealed on 31; its complete dependencies
+and terminal control packet are copied to producer21 before Halt
+commits. CAP6.3 freezes both complete journal indices only after the
+terminal row ACK and builds/copies the actual `SEG-P1` snapshot and
+all dependencies. CAP6.5's terminal-instruction check uses the actual
+original Turing table and acquired terminal material through PR57.D5's
+interpreter. It is not asked to interpret GP native rows as a Turing
+table or to invent a NativeLocal event for source-free primitive work.
+Every GP call used the original guarded source
+body, every maintenance row has its true historical guard/layout,
+and the raw/refused calls retain their complete contexts. Thus the
+actual initial beta survives the original verifier replay. The
+stationary acquired beta prefix distinguishes it from alpha in
+$\mathcal T_1$, as in Theorem 9.2's original consumer proof; later
+lawful events do not remove the actual surviving beta. The whole
+nonempty compatible initial-source fibre therefore has the proposed
+INITIAL target. CAP Theorem 6.6 and PR57.T4 give acceptance.
+
+CAP6.5–6.7 then construct and deliver the actual `SEG-R1` receipt
+on route51, with complete original binding and both frozen journal
+ends. Consumer40 checks its acquired local payloads and expected
+bindings, allocates/copies/seals the target on its original work ports,
+executes the genuine OUT, ACK and return, before global halt CTL.
+All these graphs and their costs remain in this same run. No new
+Ready, absorbing-halt re-entry or second policy invocation follows. ∎
+
+## 30. Retained source relation, exact accounting and theorem scope
+
+**Definition 30.1 (retained relation and comparison hypotheses).** The
+relation proved here consists of actual beta-boot/parked-prefix
+correspondence in Theorem 25.3, the record-to-controller representation
+of Theorem 26.3, the actual packet/service/response representation of
+Theorem 27.3, and the selected endpoint components
+
+$$
+\bigl(\varepsilon,\ t',\ h_{\rm ref}\bigr)
+\quad\longleftrightarrow\quad
+\bigl(\varepsilon,\ E(t'),\ w(t'),w(t')\bigr).
+\tag{GP.7}
+$$
+
+The source occurrence is the same original $\xi$ within either
+alternative. Its private ingress is not repeated; actual source16
+and its path's continuing $\phi_K$ remain the source. Each reserve
+extends its old logical address map, retaining old intervals and
+their original handle meanings. All old/new origins, descriptors,
+read/write rights, rows, source events, counters and actual partially
+constructed states are retained. Row equality in a channel identifies
+payloads with the same complete origin; it does not identify recipient
+addresses, owners or versions. New GP policy state and controller code
+are explicitly different from the old fixed Stop apparatus. The
+comparison does not equate the alternatives' full responses, histories,
+literal root reads, native labels, addresses or costs.
+
+The finite-fragment discipline in Lynch–Vaandrager, *Forward and
+Backward Simulations, Part I: Untimed Systems*,
+[§3.2](https://groups.csail.mit.edu/tds/papers/Lynch/IC95.pdf), requires
+initial coverage and a matching finite fragment with the same external
+trace for every related transition. Reissig–Weber–Rungger,
+*Feedback Refinement Relations for the Synthesis of Symbolic Controllers*,
+[Definition V.2](https://arxiv.org/pdf/1503.03715v3), additionally uses
+the same admissible input in its two transition systems. Leroy,
+*A Formally Verified Compiler Back-end*,
+[§3.7, Definitions 10–13](https://arxiv.org/pdf/0902.2137v3), relates
+initial/final states and transitions with matching event traces;
+its plus/star diagrams do not erase unmatched visible events.
+These literature-attested hypotheses delimit (GP.7). This apparatus
+has an extra visible raw refusal, packet/channel work and possibly
+different maintenance and encoded context words. No complete external
+trace equality or same-input feedback-refinement theorem is inferred.
+The new result is the repo-derived source-specific earned connection,
+not a new general parser/compiler/composition theorem, worldwide
+novelty claim or Lean verification claim.
+
+**Theorem 30.2 (all actual costs and the removed premise).** Let $z$ be
+any completed primitive prefix in this apparatus, including all boot,
+preparation, acquisition and GP work that precede it. The actual CAP
+bill is still
+
+$$
+\operatorname{Bill}(z)=
+\bigl(\nu(z),\ 2\nu(z),\
+S_0+b_{\rm ctl}(z)+8A_{\rm phys}(z)+8\nu(z)\bigr).
+\tag{GP.8}
+$$
+
+Each new graph has the exact evaluation recurrence of CAP Definition
+7.1, applied to its expanded primitive rows at their actual entry
+configurations. After $\widehat p$ the source/maintenance call count
+through $D_{\rm GP}$ is $2+2[\varepsilon=\mathsf{accept}]$.
+Only the first raw frame and the outer choices use externally supplied
+bits in this suffix. The number of later matching external IN bits
+for computed maintenance/final modifier frames is exactly zero.
+Their complete words, packet copies, canonical construction and
+returned-response work nevertheless have their full actual costs.
+
+*Proof.* Partition actual primitive occurrences by their actual opcode
+and disjoint owner/purpose phase, as in PR57.D9 and CAP7.1. This
+includes the original-boot GP rows/table/data, $L_*,G_*$ and $r_*$
+initialization, public guard ingress/copy, every retained preparation
+and raw acquisition, closed descriptor/row scans, input projection,
+25 export/reimport/state installation, replay/count/encoding, packet27
+construction, route49 copy, producer canonical construction, original
+source/maintenance execution, rows/dependencies/checks, final ACK,
+source token/idle, return-reader loans/state exports, retention and
+the optional original verifier/consumer suffix. An EX inside a helper
+has its actual one occurrence and ordinary constructed-cell coordinate;
+it is not charged again as another whole-phase allocation. Every
+status, delimiter, descriptor, old bank/stack/state version, gate tape,
+candidate, channel block, row and receipt remains constructed.
+
+The recurrence counts one for each such enabled primitive, including
+all positioning, loop tests, seal/TOK/CTL and state-install edges.
+An IN consumes exactly its actually supplied bit. Definition 27.1's
+computed-frame graph has no IN row: its reads are of the actually
+acquired producer packet and its constructed public fields. Thus
+there is no later external matching-input condition to count or
+assume. There is still positive work to emit and copy every bit.
+The raw stage, one final call and two optional maintenance calls give
+the stated count. Induction on primitive occurrences now gives (GP.8)
+by CAP Theorem 7.2; the disjoint phase counts also retain every
+coordinate of (LA.10), with planning/internal construction now inside
+the actual native run. GENERAL's independently specified structural
+tariff stays separate. No equality of cross-path bills follows. ∎
+
+**Definition 30.3 (supplier reuse and residual domain).** The mathematical
+suppliers used inside this connection are the acquired-refusal and
+selected-commit results of §§21–24, the $E$/count identities of §§15–16,
+ABT12's existing finite inverse, the word realization and actual
+readers of §§2–3, PR57.D1/D5/D7/D8/T4's primitive/public-policy/
+record/consumer contracts, and CAP2–7's seven-tag canonical construction,
+guarded source semantics, descriptor/row/channel/return/cost graphs.
+CAP8.1–8.3 already supply a positive Native packet/return controller
+on their own grammar and safe-growth task. The present GP1 version
+reuses their explicit owned-packet, retained continuation and genuine
+return discipline; it does not reprove that result or identify its
+packets with guarded GP packets by a shared port name. The original
+Stop Turing table is retained separately and genuinely resumed by the
+handback, keeping CAP6.5's original table interpreter applicable.
+
+The removed premise is exactly later matching external supply of
+computed maintenance/modifier frames after raw acquisition in this
+one-use domain. Actual public initialization, raw operand supply,
+current rights/backing, canonical installed versions, finite reached
+work, all costs and the attained tight beta-derived preparation remain.
+There is no arbitrary late-guard input, uniform duration, automatic
+admission at Busy/partial/halt cuts, repeated ARC closure, repeated
+policy-use theorem, full-$Q$/trace/cost equality, physical executor or
+alpha/beta-to-diffusion/AURIC/OTF source identity. The selected local
+use and original INITIAL consumer leave the broader mutual-recovery
+objective with its other original-source obligations.
+
+## 追加锚（本行以下为增补区）
