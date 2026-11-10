@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2a927a7f21cc42f028934cfaa0dd67886efae7d61dc806a9cf8551d0b0610b8a
+  normalized_sha256: sha256:2a927a7f21cc42f028934cfaa0dd67886efae7d61dc806a9cf8551d0b0610b8a
+cas_ref: sha256:2a927a7f21cc42f028934cfaa0dd67886efae7d61dc806a9cf8551d0b0610b8a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: The complete theorem 42.2, with its definition 42.1 parameters, is pure pinned-upstream closure at Mathlib revision 56a005855ea17e0b0958f73ec801ae140b0a1679; there is no usable frozen repository GID. PositiveLinearMap.norm_map_star_mul_sq_le gives complex Cauchy-Schwarz for every positive complex-linear functional, including zero and unnormalized mass; Matrix.le_iff and Matrix.PosSemidef.dotProduct_mulVec_nonneg supply the actual M3 vector functional positivity. Matrix/star algebra normalization gives the full all-Hermitian PAP probe commutator identity for both sigma signs, hence P2 and every PB probe at rho=0 by norm_sub_le and Real.abs_le_sqrt. For rho nonzero the same actual vector u+q(i sigma e+theta f) reads both full outer pairs. Finite matrix and polynomial normalization gives its exact mass, L reading, and both Gram polynomials; add_sq_le, Real.sq_sqrt, Real.sqrt_nonneg, sq_le_sq₀, sq_nonneg and mul_nonneg give budget <= q A+q^2 M, Lambda^2-A^2=20 rho^2/9+5888 rho^4/81, and epsilon=(Lambda-A)/(2 M) with gap >= (Lambda-A)^2/(4 M)>0. Thus PB0 alone excludes nonzero rho and the complete three-way equivalence and finite constants follow by instantiation and normalization. All 18 unfrozen candidate theorems are bind-only with admission basis none; none is a frozen coverage basis. This settlement concerns only theorem 42.2, not the physical-source realization in 42.1 or the separate all-positive P2 certificate in 42.3.
+    previous_atom_id: a284a6806ec77f0be19998000a974a773a944412a5404c91a39c853439683b27
+    next_atom_id: cf5cd0c06d6121b6aa42817e4931b732729353fd4ee4c4c0f35eb7f6534ae911

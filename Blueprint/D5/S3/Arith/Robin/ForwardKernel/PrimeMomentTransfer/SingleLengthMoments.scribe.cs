@@ -16,6 +16,18 @@ internal sealed class SingleLengthMomentsDocument : IScribeDocumentDefinition
                 + "over 1<=n<=N; the continuous kth moment is its integral over [1,Y]. "
                 + "The fourth moment assumption is sum D(K,n)^4 <= A*Y*v^2*L^2.")),
             Describe.Lean(
+                DescribeId.Create("sampling-prefix-estimate"),
+                DeclarationHandle.Create(Prefix + "sampling_prefix_estimate"),
+                H("Prefix replacement without a terminal correction"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For k equal to two or four, A>=1, Y>=2 and 1<=v<=Y, assume the discrete fourth moment is at most A Y v^2 log^2 Y. "
+                    + "The difference between the continuous kth moment and the integral of the floor sampled kth power is at most "
+                    + "32(1+A)Y sqrt(v log Y)^k times [10 sqrt(log Y/v)+(10 sqrt(log Y/v))^k]. "
+                    + "This estimate keeps the fractional terminal cell inside the integral and applies at every sublinear polynomial length."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("sampling-second"),
                 DeclarationHandle.Create(Prefix + "sampling_second"),
                 H("Second moment sampling"),
