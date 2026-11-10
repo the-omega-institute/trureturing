@@ -6,7 +6,7 @@ internal sealed class CertificateBoundDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/StarForming/CertificateBound.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/StarForming/omega2026starformingcertificates");
+        LibraryNoteRef.Create("D5/L/Certificates/omega2026starformingcertificates");
     private static DocumentBlock Node(string name, string title, string text,
         DescribeRole role = DescribeRole.Theorem) =>
         Describe.Lean(DescribeId.Create(name.Replace('_', '-').ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
