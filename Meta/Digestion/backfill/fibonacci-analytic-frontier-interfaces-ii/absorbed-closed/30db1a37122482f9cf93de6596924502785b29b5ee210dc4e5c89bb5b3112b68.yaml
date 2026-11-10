@@ -1,0 +1,23 @@
+fingerprints:
+  raw_sha256: sha256:30db1a37122482f9cf93de6596924502785b29b5ee210dc4e5c89bb5b3112b68
+  normalized_sha256: sha256:30db1a37122482f9cf93de6596924502785b29b5ee210dc4e5c89bb5b3112b68
+cas_ref: sha256:30db1a37122482f9cf93de6596924502785b29b5ee210dc4e5c89bb5b3112b68
+coverage_gids:
+  - gid: D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/ArithmeticTransferDefs.BVBound
+    target_statement_id: sha256:0f75c931f354a44b6de00254669d0db0d2be11909f3a12169961a6fa6cee358a
+  - gid: D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/ArithmeticTransferDefs.Delta
+    target_statement_id: sha256:faeff3cd7ff0069eb8cffb852ef5587a8bcae4b792a544b744d58ff852ab2e59
+  - gid: D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/ArithmeticTransferDefs.HL4
+    target_statement_id: sha256:baa842af3acf4cf8c71961ce1fa588219a205e49db6400c2d2700c75b4ac70d5
+  - gid: D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/ArithmeticTransferDefs.W4
+    target_statement_id: sha256:348f306769dfaa7bfed1522d06876e8eaf1c54dbbaad309b7e772b4a52493137
+  - gid: D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/ArithmeticTransferDefs.Z
+    target_statement_id: sha256:5c56e465e10201823e9f1b423a8e68226d6497c768dcba1e24957858c88abf71
+  - gid: D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/ArithmeticTransferDefs.kappa
+    target_statement_id: sha256:d85b83b9885160b78eb32307df76ecd5f9ad37646b6cf843d0d8ccc1eb8e7228
+  - gid: D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/ArithmeticTransferDefs.sigma
+    target_statement_id: sha256:112fb9a14c65df9783f649e33d056dad238c661188d12f3f05c4f91510621efe
+  - gid: D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/ArithmeticTransferDefs.weightedMoment
+    target_statement_id: sha256:c3f68c1c121c4a98c9f2786e5f2c1cf8efb4e9bdccb9d09c7cebf094096dbfe3
+receipts:
+  unresolved_subitems: []
