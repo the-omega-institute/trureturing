@@ -277,6 +277,7 @@ lemma totalFlipIso_hom_naturality (φ : K ⟶ L) :
   simp only [HomologicalComplex.comp_f, HomologicalComplex₂.ιTotal_totalFlipIso_f_hom_assoc,
     HomologicalComplex₂.ιTotal_map_assoc, flipMap, HomologicalComplex₂.flipFunctor_map_f_f,
     HomologicalComplex₂.ιTotal_totalFlipIso_f_hom]
+  erw [Linear.units_smul_comp, HomologicalComplex₂.ιTotal_map, Linear.comp_units_smul]
 
 /-- The totalization of a bicomplex morphism is conjugate to the totalization of its flip by
 `totalFlipIso`. -/
