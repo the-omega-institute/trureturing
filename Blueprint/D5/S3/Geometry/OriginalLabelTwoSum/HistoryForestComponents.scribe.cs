@@ -6,9 +6,9 @@ internal sealed class HistoryForestComponentsDocument : IScribeDocumentDefinitio
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
         DefinitionDsl.GeneralHeader(
             "D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents",
-            "Original-coordinate constructions used by the paired mathematical consumer.",
+            "Original-label path components.",
             "original-coordinate-constructions",
             Anchor.ParseCanonical("mathlib/module/Mathlib.Order.UpperLower.CompleteLattice")),
-        H("Original-coordinate constructions"),
-        Blocks(Paragraph(Text("The declarations retain their original namespaces, hypotheses and proof bodies. Their mathematical descriptions and precise public handles are in the D5/S3/Geometry/OriginalLabelTwoSum/HistoryForests document; this module supplies the construction dependency used by that consumer.")))));
+        H("Original-label path components"),
+        Blocks(Paragraph(Text("Rows keep their actual indices and multiplicities. Singleton constraints force original labels, while pruning removes only redundant size-two rows touching those forced labels. Connectivity is characterized by surviving consecutive cut intervals; component roots, singleton ghosts and untouched endpoint connectivity use the same original path positions.")))));
 }

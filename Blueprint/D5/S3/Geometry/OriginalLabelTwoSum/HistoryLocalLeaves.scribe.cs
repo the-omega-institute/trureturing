@@ -6,9 +6,9 @@ internal sealed class HistoryLocalLeavesDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
         DefinitionDsl.GeneralHeader(
             "D5/S3/Geometry/OriginalLabelTwoSum/HistoryLocalLeaves",
-            "Original-coordinate constructions used by the paired mathematical consumer.",
+            "Original-mask local leaf constructions.",
             "original-coordinate-constructions",
             Anchor.ParseCanonical("mathlib/module/Mathlib.Order.UpperLower.CompleteLattice")),
-        H("Original-coordinate constructions"),
-        Blocks(Paragraph(Text("The declarations retain their original namespaces, hypotheses and proof bodies. Their mathematical descriptions and precise public handles are in the D5/S3/Geometry/OriginalLabelTwoSum/HistoryRecursion document; this module supplies the construction dependency used by that consumer.")))));
+        H("Original-mask local leaf constructions"),
+        Blocks(Paragraph(Text("The original corner masks and retained ground determine the actual family decompositions. Singleton, one-leaf and two-leaf rows construct genuine Output values, while the path-component lemmas find an unmarked leaf. Ground transport preserves the original families rather than introducing a desired output as an assumption.")))));
 }

@@ -4,7 +4,7 @@
    mirror-E: none(waiver:original-mask-history-recursion)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Paths]
    utility: none
-   digest: Original-mask usable physical leaves, decreasing local solver and mixed-history recursion. -/
+   digest: Original-mask local leaf constructions. -/
 
 import D5.S3.Geometry.OriginalLabelTwoSum.HistoryFactors
 import D5.S3.Geometry.OriginalLabelTwoSum.HistoryForests

@@ -4,7 +4,7 @@
    mirror-E: none(waiver:all-m-protected-source-only)
    anchors: [mathlib/module/Mathlib.Order.UpperLower.CompleteLattice]
    utility: none
-   digest: Actual maximal-critical protection, path Gamma and ghost-retaining zero fillings on the original wheel grounds. -/
+   digest: Path and excluded-cycle fillings. -/
 
 import D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.CycleWord
 

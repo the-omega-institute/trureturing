@@ -4,7 +4,7 @@
    mirror-E: none(waiver:finite-critical-cell-sphere)
    anchors: [mathlib/module/Mathlib.Topology.CompactOpen, mathlib/module/Mathlib.Topology.Piecewise]
    utility: none
-   digest: The literal finite attachment collar, core quotient and both nonempty-face Euclidean sphere branches. -/
+   digest: The attachment collar and core quotient. -/
 
 
 import D5.S3.Geometry.FiniteAlexanderDualCollapse
@@ -133,33 +133,33 @@ def diskIn : C(A.Disk, Space A.X) :=
 private def coreRestrict : C(A.coreSet, Space A.P) :=
   ⟨fun x => ⟨x.1.1, x.2⟩, (continuous_subtype_val.comp continuous_subtype_val).subtype_mk _⟩
 
-private def diskRestrict : C(A.diskSet, A.Disk) :=
+def diskRestrict : C(A.diskSet, A.Disk) :=
   (toContinuousMap (faceCoordinateHomeomorph A.face).symm).comp
     ⟨fun x => ⟨x.1.1, x.2⟩,
       (continuous_subtype_val.comp continuous_subtype_val).subtype_mk _⟩
 
-private theorem diskIn_restrict (x : A.diskSet) : A.diskIn (A.diskRestrict x) = x.1 := by
+theorem diskIn_restrict (x : A.diskSet) : A.diskIn (A.diskRestrict x) = x.1 := by
   apply Subtype.ext
   change (faceCoordinateHomeomorph A.face
     ((faceCoordinateHomeomorph A.face).symm ⟨x.1.1, x.2⟩)).1 = x.1.1
   exact congrArg (fun y : ↥(faceSimplex A.face) => y.1)
     ((faceCoordinateHomeomorph A.face).apply_symm_apply ⟨x.1.1, x.2⟩)
 
-private theorem restrict_diskIn (x : A.Disk) :
+theorem restrict_diskIn (x : A.Disk) :
     A.diskRestrict ⟨A.diskIn x, (faceCoordinateHomeomorph A.face x).2⟩ = x :=
   (faceCoordinateHomeomorph A.face).symm_apply_apply x
 
-private theorem cover (x : Space A.X) : x ∈ A.coreSet ∨ x ∈ A.diskSet := by
+theorem cover (x : Space A.X) : x ∈ A.coreSet ∨ x ∈ A.diskSet := by
   obtain ⟨s, hs, hx⟩ := (realization_mem_iff A.X x.1).mp x.2
   rw [A.union_eq] at hs
   rcases hs with hs | hs
   · exact Or.inl ((realization_mem_iff _ _).mpr ⟨s, hs, hx⟩)
   · exact Or.inr ⟨hx.1, hx.2.1, fun v hv => hx.2.2 v (fun h => hv (hs.2 h))⟩
 
-private theorem core_closed : IsClosed A.coreSet :=
+theorem core_closed : IsClosed A.coreSet :=
   (realization_closed A.P).preimage continuous_subtype_val
 
-private theorem disk_closed : IsClosed A.diskSet := by
+theorem disk_closed : IsClosed A.diskSet := by
   have hc : IsClosed (faceSimplex A.face) := by
     rw [faceSimplex_eq_convexHull]
     exact (A.face.finite_toSet.image (fun v : V => Pi.single v (1 : ℝ))).isClosed_convexHull ℝ
@@ -188,7 +188,7 @@ private theorem native_boundary_iff (x : ↥(faceSimplex A.face)) :
     · subst j; exact hxi
     · exact x.2.2.2 j (fun h => hj (Finset.mem_erase.mpr ⟨hji, h⟩))
 
-private theorem diskIn_mem_core_iff (x : A.Disk) :
+theorem diskIn_mem_core_iff (x : A.Disk) :
     A.diskIn x ∈ A.coreSet ↔ FiniteSimplexBoundarySphere.boundary x := by
   have hx : (faceCoordinateHomeomorph A.face x).1 ∈
       realization (FiniteAlexanderDualCollapse.simplex A.face) := by

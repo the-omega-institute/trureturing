@@ -4,7 +4,7 @@
    mirror-E: none(waiver:physical-history-intact-terminal)
    anchors: [mathlib/module/Mathlib.Order.UpperLower.CompleteLattice]
    utility: none
-   digest: Original-coordinate intact terminals, exact excluded-residue normalizations and actual relative product lists. -/
+   digest: Good and two-residue intact certificates. -/
 import D5.S3.Geometry.OriginalLabelTwoSum.HistoryCycles
 import D5.S3.Geometry.OriginalLabelTwoSum.HistoryIsolated
 import D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntactProduct

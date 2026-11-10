@@ -4,7 +4,7 @@
    mirror-E: none(waiver:finite-incidence-pruning-construction)
    anchors: [mathlib/module/Mathlib.AlgebraicTopology.SimplicialComplex.Basic]
    utility: none
-   digest: Original-ground finite incidence root-K collapse certificates. -/
+   digest: Original-ground incidence pruning. -/
 /-
 
   SOURCE ATTEMPT — UNCOMPILED.

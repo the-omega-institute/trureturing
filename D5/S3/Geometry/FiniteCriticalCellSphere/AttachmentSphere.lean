@@ -34,13 +34,6 @@ open private
   pasteClosed
   pasteClosed_left
   pasteClosed_right
-  Attachment.diskRestrict
-  Attachment.diskIn_restrict
-  Attachment.restrict_diskIn
-  Attachment.cover
-  Attachment.core_closed
-  Attachment.disk_closed
-  Attachment.diskIn_mem_core_iff
   from D5.S3.Geometry.FiniteCriticalCellSphere.AttachmentCollar
 
 variable {V : Type*} [Fintype V] [DecidableEq V]

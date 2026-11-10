@@ -4,7 +4,7 @@
    mirror-E: none(waiver:actual-three-block-cycle-word-source-only)
    anchors: [mathlib/module/Mathlib.Order.UpperLower.CompleteLattice]
    utility: none
-   digest: The literal three-block cycle list is a P02 Word on every original rim. -/
+   digest: Occurrence and attachment Word constructors. -/
 
 import D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel
 

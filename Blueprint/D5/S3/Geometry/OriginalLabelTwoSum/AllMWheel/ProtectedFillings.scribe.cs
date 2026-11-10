@@ -6,9 +6,9 @@ internal sealed class ProtectedFillingsDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
         DefinitionDsl.GeneralHeader(
             "D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings",
-            "Original-coordinate constructions used by the paired mathematical consumer.",
+            "Path and excluded-cycle fillings.",
             "original-coordinate-constructions",
             Anchor.ParseCanonical("mathlib/module/Mathlib.Order.UpperLower.CompleteLattice")),
-        H("Original-coordinate constructions"),
-        Blocks(Paragraph(Text("The declarations retain their original namespaces, hypotheses and proof bodies. Their mathematical descriptions and precise public handles are in the D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected document; this module supplies the construction dependency used by that consumer.")))));
+        H("Path and excluded-cycle fillings"),
+        Blocks(Paragraph(Text("Maximal-critical protection constructs the path contract, the good-residue path Gamma, the zero filling on the unchanged tail ground and the excluded-residue cycle filling. The zero filling retains forbidden endpoint ghosts and the raw empty critical face in the small cases.")))));
 }

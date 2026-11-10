@@ -4,7 +4,7 @@
    mirror-E: none(waiver:original-projected-path-forest)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Paths]
    utility: none
-   digest: Literal projected wheel-path rows, redundant supersets, cut intervals and original endpoint markers. -/
+   digest: Original-label path components. -/
 
 import D5.S3.Geometry.OriginalLabelTwoSum.HistoryCorners
 import D5.S3.Geometry.OriginalLabelTwoSum.HistoryPaths
