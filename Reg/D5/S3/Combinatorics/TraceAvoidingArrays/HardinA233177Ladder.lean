@@ -15,19 +15,20 @@ attribute [local irreducible] a L
 namespace TwoLabel
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature ℕ
-    (fun n => Fin 4 × Fin n → Fin 3) (fun _ => Prop)
+    (fun n => Fin 4 × Fin n → Fin 3) (fun _ => Bool)
 def actual : Realization signature :=
-  realize signature (fun _ _ P => Proper P) (fun e => nomatch e)
+  realize signature (fun _ _ P => @decide (Proper P) (Classical.propDecidable _))
+    (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => True) (fun e => nomatch e)
+  realize signature (fun _ _ _ => true) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ {n : ℕ} (hn : 2 ≤ n) (P : Fin 4 × Fin n → Fin 3)
-    (hp : R.readout () n P) (d : Fin 3) (hd : ∀ i, P i ≠ d),
+    (hp : R.readout () n P = true) (d : Fin 3) (hd : ∀ i, P i ≠ d),
     ∃ a b : Fin 3, a ≠ b ∧ P = alternating n a b
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  obtain ⟨a, b, hab, he⟩ := h (n := 2) (by decide) (fun _ => 0) trivial 1
+  obtain ⟨a, b, hab, he⟩ := h (n := 2) (by decide) (fun _ => 0) rfl 1
     (by intro i; decide)
   have ha := congrFun he ((0 : Fin 4), (0 : Fin 2))
   have hb := congrFun he ((0 : Fin 4), (1 : Fin 2))
@@ -37,20 +38,18 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨2, (fun _ => 0), alternating 2 0 1, ?_⟩
-  change Proper (fun _ : Fin 4 × Fin 2 => (0 : Fin 3)) ≠
-    Proper (alternating 2 0 1)
   have hbad : ¬ Proper (fun _ : Fin 4 × Fin 2 => (0 : Fin 3)) := by
     intro h
     exact (h 0 (by decide) 0 0 (by decide)) rfl
   have hgood : Proper (alternating 2 0 1) := by
     unfold Proper alternating
     decide
-  intro he
-  exact hbad (Eq.mpr he hgood)
+  simp [actual, realize, hbad, hgood]
 def family : Registration arena (type_of% @two_label_classification) where
   actual := actual
-  bridge := Iff.rfl
-  variation := ⟨@two_label_classification, rejected, rejected_law⟩
+  bridge := by simp [arena, actual, realize]
+  variation := ⟨by simpa [arena, actual, realize] using @two_label_classification,
+    rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := actual_dependence
@@ -68,7 +67,9 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ P => Proper P) (fun e => nomatch e))
+  readout := some (realize signature
+    (fun _ _ P => @decide (Proper P) (Classical.propDecidable _))
+    (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -79,10 +80,10 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "body", "domain"]
-      stateBinder := 2
+      stateBinder := 0
       functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }] }
+      stateOperand := some #["arg"]
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
