@@ -192,14 +192,14 @@ theorem finiteExp_intertwining (P : V →ₗ[F] V)
 private theorem derivative_pow_gaugeNilpotent (δ : Derivation F K K) (v : V) :
     (D^(p-1)) (gaugeNilpotent δ v) = 0 := by
   have hp : 2 < p := Fact.out
-  let d := (D).restrictScalars F
-  have hc : Commute (coefficientDerivation δ) d := by
-    apply LinearMap.ext
-    exact coefficientDerivation_derivative δ
-  have he := LinearMap.congr_fun (hc.pow_right (p-1)).eq v
-  change coefficientDerivation δ ((d^(p-1)) v) = (d^(p-1)) (coefficientDerivation δ v) at he
-  rw [gaugeNilpotent_apply, ← restricted_derivative_pow, ← he,
-    restricted_derivative_pow, ← Module.End.mul_apply, ← pow_add,
+  have hpow (n : ℕ) (w : V) : coefficientDerivation δ ((D^n) w) =
+      (D^n) (coefficientDerivation δ w) := by
+    induction n with
+    | zero => rfl
+    | succ n ih =>
+      rw [pow_succ', Module.End.mul_apply, Module.End.mul_apply,
+        coefficientDerivation_derivative, ih]
+  rw [gaugeNilpotent_apply, ← hpow, ← Module.End.mul_apply, ← pow_add,
     pow_eq_zero_of_le (by omega : p ≤ (p-1)+(p-2)) derivative_pow_prime,
     LinearMap.zero_apply, map_zero]
 

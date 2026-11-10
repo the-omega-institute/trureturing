@@ -111,7 +111,7 @@ private theorem diagonalScale_pow (c : K) (hc : c ≠ 0) (n : ℕ) (v : V) :
   | zero => simp
   | succ n ih =>
     rw [pow_succ', Module.End.mul_apply, diagonalScale_derivative, ih, map_smul,
-      smul_smul, pow_succ', Module.End.mul_apply, pow_succ']
+      smul_smul, pow_succ', Module.End.mul_apply]
 
 private def normalizer (c : K) (hc : c ≠ 0) (d : K) : V ≃ₗ[K] V :=
   (diagonalScale c hc).trans (shear (d / c^(p-1)))
@@ -120,7 +120,7 @@ private theorem normalizer_operator (c : K) (hc : c ≠ 0) (d x y : K) (v : V) :
     normalizer c hc d (x • D v + y • (D^(p-1)) v) =
       (c⁻¹*x) • D (normalizer c hc d v) +
         ((c^(p-1))⁻¹*(y-d*(c⁻¹*x))) • (D^(p-1)) (normalizer c hc d v) := by
-  change shear _ (diagonalScale c hc (x • D v + y • (D^(p-1)) v)) = _
+  simp only [normalizer, LinearEquiv.trans_apply]
   rw [map_add, map_smul, map_smul, diagonalScale_derivative, diagonalScale_pow,
     smul_smul, smul_smul, shear_operator]
   simp only [normalizer, LinearEquiv.trans_apply, inv_pow, div_eq_mul_inv]
@@ -148,7 +148,8 @@ private theorem normalized_data (q s : K →ₗ[F] K) (e : K ≃ₗ[F] K)
       ← hD, h1D, ← commutes_pow U hD, dividedMonomial_one_top, map_zero,
       smul_zero, add_zero, ← (constantLinear (p := p) (K := K)).map_smul,
       hconst, hconst] at h
-    exact congrArg (fun v : V => coefficientZero v) h
+    simpa [coefficientZero, constantLinear] using
+      congrArg (fun v : V => coefficientZero v) h
   have hu : P0 1 ≠ 0 := by
     exact fun h => one_ne_zero (P0.injective (h.trans (map_zero P0).symm))
   have hvalue (a : K) : P0 a = e a * P0 1 := by simpa using hscalar a 1
@@ -172,7 +173,8 @@ private theorem normalized_data (q s : K →ₗ[F] K) (e : K ≃ₗ[F] K)
       ← commutes_pow U hD, dividedMonomial_top,
       ← (dividedMonomial (p-2) (by omega)).map_smul,
       ← (constantLinear (p := p) (K := K)).map_smul, map_add, hconst, hconst] at h
-    exact congrArg (fun v : V => coefficientZero v) h
+    simpa [coefficientZero, constantLinear, T] using
+      congrArg (fun v : V => coefficientZero v) h
   let δ0 : K →ₗ[F] K := q-σ.symm.toLinearMap.comp s
   have hcomm (a z : K) : a*Q z-Q (a*z) = δ0 a*z := by
     apply P0.injective
@@ -181,11 +183,11 @@ private theorem normalized_data (q s : K →ₗ[F] K) (e : K ≃ₗ[F] K)
     rw [P0.apply_symm_apply, P0.apply_symm_apply]
     have hs : P0 (δ0 a*z) = P0 (q a*z)-s a*P0 z := by
       change P0 ((q a-σ.symm (s a))*z) = _
-      rw [sub_mul, map_sub, hscalar]
-      change _ - σ (σ.symm (s a))*P0 z = _
+      rw [sub_mul, map_sub, hscalar (σ.symm (s a)) z]
+      change P0 (q a*z) - σ (σ.symm (s a))*P0 z = _
       rw [σ.apply_symm_apply]
     rw [hs]
-    linear_combination htop a z
+    linear_combination -(htop a z)
   let δ : Derivation F K K := Derivation.mk' δ0 (by
     intro a b
     exact leibniz_of_commutator δ0 Q hcomm a b)
@@ -314,7 +316,7 @@ private theorem sufficient_pair (q r : K →ₗ[F] K) (φ : E ≃* E)
     change normalizer (c : K) c.ne_zero (r c)
       (automorphismLinear (p := p) φ a • D v+
         r (automorphismLinear (p := p) φ a) • (D^(p-1)) v) = _
-    rw [show automorphismLinear (p := p) φ a = (c : K)*σ a from hφ a]
+    rw [show automorphismLinear (p := p) φ a = (c : K)*σ a from hφ a, hr]
     exact h
   have hU (a : K) (v : V) : U (jetOperator q a v) =
       σ a • D (U v)+σ (q a-δ a) • (D^(p-1)) (U v) := by
