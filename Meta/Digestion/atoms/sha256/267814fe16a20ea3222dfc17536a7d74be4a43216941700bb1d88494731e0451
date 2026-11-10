@@ -1,0 +1,47 @@
+**定理 19.4（真群任意标记的完整仿射复几何等价）。**在定义 19.1 的模型类中，完整关系 (19.1) 等价于存在复 Hilbert 空间 $H$ 和映射 $F:G\to H$，使
+
+$$
+\begin{gathered}
+F1=0,\qquad F(gh)=F(g)+F(h),\\
+F(Ug)=\omega F(g)+t,\qquad t=F(U1),\\
+c(g,h)=\|F(g)-F(h)\|^2,\qquad
+\omega=-\tfrac12+i\tfrac{\sqrt3}{2}.
+\end{gathered}
+\tag{19.18}
+$$
+
+最小表示 $H=\overline{\operatorname{span}_{\mathbb C}F(G)}$ 按本卷定理 1.3 的保标签唯一性唯一到酉同构。零核 $c\equiv0$ 包含在此结论中；$t$ 不被要求为零。
+
+**证明。**先证 (19.1) 蕴涵 (19.18)。任取至多五个原标签 $a_1,\ldots,a_m$（允许重复），令 $A$ 为其有限集合，应用引理 19.3 得到 $(S,U_*,c_\infty)$。在整个真群 $S$ 上应用引理 19.2；其零集 $Z_\infty$ 是正规子群，独立代表元的完整行列相等，且 $U_*$ 在陪集上下降。因为
+
+$$
+c_\infty(U_*1_S,1_S)=0,
+$$
+
+下降后的实际单位被下降的标记固定：$\overline U[1_S]=[1_S]$。因此真群商 $S/Z_\infty$ 连同下降后的有限非负零对角核满足[续卷 V 定理 1.3](AURIC_C133_THREE_READ_CLOSURE_VISIBLE_COMPLEX_GEOMETRY_CONTINUATION_V.md#1-原始配方与唯一配平关系)的全部前件。该定理给出其平方距离的复 Hilbert 表示，故对任意实系数 $\alpha_i$ 且 $\sum_i\alpha_i=0$，有
+
+$$
+\sum_{i,j}\alpha_i\alpha_jc_\infty([x_{a_i}],[x_{a_j}])
+=-2\left\|\sum_i\alpha_iF_\infty([x_{a_i}])\right\|^2\le0.
+\tag{19.19}
+$$
+
+用 (19.10) 拉回，得到原 $c$ 的五点负型 $\mathrm N_5$。这里不同的有限标签集可以使用不同的辅助群和不同的对角子列；(19.19) 只涉及被保留的原比较矩阵，不要求这些辅助表示彼此相容。
+
+现在回到原始 $G,U,c$，直接应用本卷定理 1.3 的 $\mathrm N_5\Rightarrow$ 表示方向，得到 (19.18)。乘法和 $U$ 都由该定理在原对象上恢复；它们没有从 $\Gamma_N$、$S$ 或任何极限嵌入拉回。定理 1.3 同时给出最小表示唯一性。
+
+反向设 (19.18) 成立。记 $t_0=0$、$t_1=t$、$t_2=(1+\omega)t$，则
+
+$$
+F(U^ku)=\omega^kF(u)+t_k.
+$$
+
+两端共同的 $t_k$ 相消；令 $X=F(a)-F(b)$、$Y=F(u)-F(v)$，左侧成为
+
+$$
+\sum_{k=0}^2\|X+\omega^kY\|^2
+=3\|X\|^2+3\|Y\|^2,
+$$
+
+正是 (19.1)。证毕。
+
