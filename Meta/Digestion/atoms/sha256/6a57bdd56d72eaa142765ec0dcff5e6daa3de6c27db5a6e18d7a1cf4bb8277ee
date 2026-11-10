@@ -1,0 +1,48 @@
+**定义 C-9.4（已经保留的参考列）。** 在同一载体中，𝐸 是满列秩参考列，𝐹 是待比较列，置 $`A=E^\dagger E\gt 0,B=E^\dagger F,C=F^\dagger F`$。为避免与原生 𝑆 混淆，剩余关系记 $`𝒮=C-B^\dagger A^{-1}B`$。
+
+**命题 C-9.5（残差递归服务共同实现任务；Schur 中间步骤见 [C-L1] 附录 A.5.5）。**
+
+
+<table><tbody><tr><td>
+
+```math
+P_E=E(E^\dagger E)^{-1}E^\dagger,\qquad
+𝒮=F^\dagger(I-P_E)F\succeq0,
+```
+
+</td></tr></tbody></table>
+
+
+```math
+\det\begin{pmatrix}A&B\\B^\dagger&C\end{pmatrix}
+=\det A\det𝒮,\qquad
+\mathrm{rank}G=\mathrm{rank}A+\mathrm{rank}𝒮.
+```
+
+
+正主元 $`𝒮_{aa}\gt 0`$ 新增参考后剩余条目为
+
+
+<table><tbody><tr><td>
+
+```math
+𝒮'_{ij}=𝒮_{ij}-
+\frac{𝒮_{ia}𝒮_{aj}}{𝒮_{aa}}.
+```
+
+</td></tr></tbody></table>
+
+
+零主元强制整行整列零，不能除零。相关参考先取实际张成空间独立基；若用 $`A^+`$，须保留 $`\mathrm{range}B\subseteq\mathrm{range}A`$。
+
+**证明。** $`P_E`$ 是正交投影，代入得残差 Gram。令
+
+
+```math
+W=\begin{pmatrix}I&-A^{-1}B\\0&I\end{pmatrix},\quad
+W^\dagger G W=\begin{pmatrix}A&0\\0&𝒮\end{pmatrix},\quad\det W=1,
+```
+
+
+证明行列式和秩；将一个剩余列分量投影到新参考给主元更新。PSD 的二阶主子式强制 $`|𝒮_{ia}|^2\le𝒮_{ii}𝒮_{aa}`$，零主元遂行列全零。奇异参考的 PSD 候选若 $`v\in\ker A`$，对 (𝑡𝑣,𝑤) 的二次式任意变 𝑡 强制 $`v^\dagger Bw=0`$，即 $`(I-AA^+)B=0`$；在实际非零参考空间消元给 $`C-B^\dagger A^+B\succeq0`$ 及秩相加。全部大矩阵含冗余列时行列式零，不滥用非零行列式积。概率残差代入 𝐸=𝑏,𝐹=(𝑥,𝑦),𝐴=𝑟；记录圆盘代入 $`E=o,F=(u_0,v_0),A=1`$。两者同为扣除共享投影，但布尔 Fréchet 区间与复记录圆盘的可行集不同；残差正性不替代事件非负性，代数条目可计算也不等于实际已取得。□
+
