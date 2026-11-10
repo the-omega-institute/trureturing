@@ -14,8 +14,7 @@ internal sealed class SplitPrimeSphereRadiiDocument : IScribeDocumentDefinition
             DeclarationHandle.Create("D5/S3/Arith/Descartes/SplitPrimeSphereRadii.result"),
             H("One or two other coordinates at every positive threshold"),
             StatementSource.FromAuthor(MainFormula()),
-            AssessedProvenance.NovelAfterSearch(
-                GidRef.Create("D5/L/ArithUnits/hohn2025a390148"),
+            AssessedProvenance.FromRepo(
                 LibraryNoteRef.Create("D5/L/ArithUnits/hohn2025a390148")),
             Blocks(
                 Paragraph(Text("The four radii are positive natural numbers with common gcd one. "

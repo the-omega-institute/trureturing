@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.Descartes.SplitPrimeSphereRadii
 import Reg.Support.DependentFamily
 
+/-! A source-bound audit of the complete shared-divisibility endpoint. -/
+
 namespace Reg.D5.S3.Arith.Descartes.SplitPrimeSphereRadii
 
 open _root_.D5.S3.Arith.Descartes.PrimitiveSphereRadii
@@ -64,6 +66,7 @@ def registration : Registration arena (type_of% @result) where
       exact nomatch e
   dependence := by
     intro i
+    cases i
     refine ⟨(7, 1, 0), (fun _ => 1), (fun _ => 7), ?_⟩
     decide
 
