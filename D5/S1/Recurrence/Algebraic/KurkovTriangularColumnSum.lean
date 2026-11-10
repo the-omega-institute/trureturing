@@ -119,7 +119,9 @@ private theorem array_lawful : IsArray array := by
     obtain ⟨r, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : q ≠ 0)
     simp only [Nat.succ_eq_add_one]
     rw [array]
-    congr 1 <;> congr 1 <;> omega
+    congr 1
+    congr 1
+    omega
 
 private theorem column_step (A : ℕ → ℕ → ℕ) (hA : IsArray A)
     (n k : ℕ) (hk : 1 ≤ k) :
@@ -140,7 +142,9 @@ private theorem column_sum (A : ℕ → ℕ → ℕ) (hA : IsArray A)
       ∑ j ∈ range (n + 1), (A j k : ℚ) *
         ((n + f k).factorial : ℚ) / ((f k + j).factorial : ℚ) := by
   induction n with
-  | zero => simp [hA.1, factorial_ne_zero]
+  | zero =>
+    simp only [sum_range_one, hA.1, Nat.cast_one, Nat.zero_add, Nat.add_zero, one_mul]
+    exact (div_self (factorial_ne_zero (f k))).symm
   | succ n ih =>
     rw [column_step A hA n k hk]
     push_cast
@@ -168,8 +172,8 @@ private theorem column_sum (A : ℕ → ℕ → ℕ) (hA : IsArray A)
     have hz : (n + 1 + f k : ℚ) * ((n + f k).factorial : ℚ) ≠ 0 := by
       rw [← hfac]
       exact factorial_ne_zero _
-    field_simp
-    <;> ring
+    rw [mul_div_cancel_right₀ _ hz]
+    ring
 
 /-- The complete positive-column source event, including a lawful array's existence. -/
 theorem result :
