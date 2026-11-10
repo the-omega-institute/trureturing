@@ -6,6 +6,7 @@
    utility: none
    digest: Mean-square prime correlations transfer to centred polynomial logarithmic BV sums. -/
 
+import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.CentredProductExpansion
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.MeanSquareCorrelation
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.TupleSubsetMultiplicity
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.BVCorrelationSummation
@@ -19,17 +20,6 @@ namespace D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer
 noncomputable section
 set_option autoImplicit false
 
-private lemma centred_expansion (D : Finset ℕ) (n : ℕ) :
-    (∏ d ∈ D, (ArithmeticFunction.vonMangoldt (n + d) - 1)) =
-      ∑ J ∈ D.powerset, (-1 : ℝ) ^ (D.card - J.card) *
-        ∏ d ∈ J, ArithmeticFunction.vonMangoldt (n + d) := by
-  simp_rw [sub_eq_add_neg]
-  rw [Finset.prod_add]
-  apply Finset.sum_congr rfl
-  intro J hJ
-  rw [Finset.prod_const, Finset.card_sdiff_of_subset (Finset.mem_powerset.mp hJ)]
-  ring
-
 private def centredError (SS : Finset ℕ → ℝ) (y : ℝ) (D : Finset ℕ) : ℝ :=
   (∑ n ∈ Finset.Ioc 0 ⌊y⌋₊,
     ∏ d ∈ D, (ArithmeticFunction.vonMangoldt (n + d) - 1)) - y * center SS D
@@ -38,7 +28,7 @@ private lemma centred_error_le (SS : Finset ℕ → ℝ) (y : ℝ) (D : Finset �
     |centredError SS y D| ≤ ∑ R ∈ D.powerset, |correlationError SS y R| := by
   have heq : centredError SS y D =
       ∑ R ∈ D.powerset, (-1 : ℝ) ^ (D.card - R.card) * correlationError SS y R := by
-    simp only [centredError, correlationError, centred_expansion]
+    simp only [centredError, correlationError, prod_sub_one_expansion]
     rw [Finset.sum_comm]
     simp only [center, centerFinite, Finset.mul_sum, mul_sub, Finset.sum_sub_distrib]
     congr 1
