@@ -1,0 +1,85 @@
+**定理 14.2（全部四元组的等式相容性与七项读数）。**$r,d_\sigma,Q$ 均为处处有限、零对角的实值核，并满足全部 (12.4)。$r$ 和 $d_\sigma$ 反对称，$Q$ 对称且非负。对任意 $a,p,z\in\mathcal T$，
+
+$$
+H_r(a,p;z)=-6\operatorname{Re}(Fa\,Fp\,Fz),\qquad
+H_{d_\sigma}(a,p;z)=\sigma\operatorname{Re}(Fa\,Fp\,Fz),\qquad
+H_Q(a,p;z)=0.
+\tag{14.3}
+$$
+
+因而 $h(d_\sigma)=\sigma$、$h(Q)=0$。三次有号机制沿用《无结合律的双端三相比较：可见代数与复几何共同生成》[命题 5.4](AURIC_C133_THREE_READ_CLOSURE_VISIBLE_COMPLEX_GEOMETRY_CONTINUATION_V.md#5-保留括号的非零模型与完整三历史提升)；此处给出保留仿射偏移、并在自由项的单位轨道上取得指定非零读数的适配。
+
+**证明。**由 (14.1)，
+
+$$
+F(V^ks)=\omega^kFs+\tau_k,\qquad
+\tau_0=0,\quad\tau_1=1,\quad\tau_2=1+\omega
+\qquad(k=0,1,2).
+\tag{14.4}
+$$
+
+对任意实际项四元组置 $x=Fa-Fb$、$y=Fu-Fv$，则共同的仿射项严格相消：
+
+$$
+F(a\cdot V^ku)-F(b\cdot V^kv)=x+\omega^ky.
+\tag{14.5}
+$$
+
+立方展开给
+
+$$
+\begin{aligned}
+\sum_{k=0}^2(x+\omega^ky)^3
+&=3x^3+3x^2y\sum_{k=0}^2\omega^k
+  +3xy^2\sum_{k=0}^2\omega^{2k}
+  +y^3\sum_{k=0}^2\omega^{3k}\\
+&=3x^3+3y^3.
+\end{aligned}
+\tag{14.6}
+$$
+
+取实部，再乘 $-\sigma/6$，分别得到 $r$ 和 $d_\sigma$ 的完整关系。另一方面，$|\omega|=1$，所以
+
+$$
+\begin{aligned}
+\sum_{k=0}^2|x+\omega^ky|^2
+&=3|x|^2+3|y|^2
+ +2\operatorname{Re}\left(\overline{x}y\sum_{k=0}^2\omega^k\right)\\
+&=3|x|^2+3|y|^2,
+\end{aligned}
+\tag{14.7}
+$$
+
+得到 $Q$ 的完整关系。此核验对每个四元组同时有效，包括标签重合、单位的两种乘法位置、不同标记表达式及原括号；未在任一重合情形另假定一致性。有限性和零对角直接来自 (14.2)；交换两变量使立方变号、平方范数不变，给出其余性质。
+
+为完整计算七项式，记 $\alpha=Fa$、$\pi=Fp$、$\zeta=Fz$。由 $F(a\cdot p)=\alpha+\pi$ 及 $F1=0$，
+
+$$
+\begin{aligned}
+H_r(a,p;z)=\operatorname{Re}\bigl(&
+(\alpha+\pi-\zeta)^3-(\alpha-\zeta)^3-(\pi-\zeta)^3
++(-\zeta)^3\\
+&-(\alpha+\pi)^3+\alpha^3+\pi^3\bigr).
+\end{aligned}
+\tag{14.8}
+$$
+
+前三个立方的差为
+
+$$
+3\alpha\pi(\alpha+\pi)-6\alpha\pi\zeta+\zeta^3.
+$$
+
+加上 $(-\zeta)^3$ 消去末项；余下三个立方消去 $3\alpha\pi(\alpha+\pi)$。于是只剩 $-6\operatorname{Re}(\alpha\pi\zeta)$，得到 (14.3) 的第一、第二式。相应的平方范数式为
+
+$$
+\begin{aligned}
+H_Q(a,p;z)={}&|\alpha+\pi-\zeta|^2-|\alpha-\zeta|^2
+-|\pi-\zeta|^2+|\zeta|^2\\
+&-|\alpha+\pi|^2+|\alpha|^2+|\pi|^2=0.
+\end{aligned}
+\tag{14.9}
+$$
+
+第一行展开为 $2\operatorname{Re}(\alpha\overline{\pi})$，第二行恰为其负值。最后取 $a=A,p=V1,z=Z$，三个求值全为 $1$，即得两个归一化读数。证毕。
+
