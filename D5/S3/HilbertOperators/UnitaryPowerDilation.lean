@@ -27,7 +27,8 @@ Ancestor: savarin/lean-operator-theory at 6f90bb7e6b056b54f56005e0416d77d6d7c2a4
 Modification notice: combine the consumed Halmos and repeated-interaction
 network proof in one native namespace, adapt imports and module visibility,
 make support private, and omit the unused simple bilateral-shift branch and
-an unused definitional fiber-embedding helper. The mathematical endpoint and
+unused definitional application helpers. Their source equalities are
+retained inline in the consuming proofs. The mathematical endpoint and
 substantive proof steps are preserved. Full source hashes and correspondence
 are in Library/HilbertOperators/leanpool2026unitarypowerdilation.md.
 Retire this transplant when this repository adopts a Mathlib pin providing an
@@ -116,19 +117,14 @@ private noncomputable def halmosGrading :
     (LinearIsometryEquiv.refl ℂ E) (LinearIsometryEquiv.neg ℂ (E := E)) :
       WithLp 2 (E × E) →L[ℂ] WithLp 2 (E × E))
 
-omit [CompleteSpace E] in
-@[simp]
-private theorem halmosGrading_apply (x : WithLp 2 (E × E)) :
-    halmosGrading x = WithLp.toLp 2 (x.fst, -x.snd) :=
-  rfl
-
 private theorem one_sub_halmosOffDiagonal_sq_commute_grading (T : E →L[ℂ] E) :
     Commute (1 - halmosOffDiagonal T ^ 2) (halmosGrading (E := E)) := by
   rw [Commute]
   apply ContinuousLinearMap.ext
   intro x
   simp only [mul_apply_eq_comp, pow_two, sub_apply, one_apply_eq_self,
-    halmosGrading_apply, halmosOffDiagonal_apply, WithLp.toLp_fst,
+    (show ∀ x : WithLp 2 (E × E),
+      halmosGrading x = WithLp.toLp 2 (x.fst, -x.snd) from fun _ => rfl), halmosOffDiagonal_apply, WithLp.toLp_fst,
     WithLp.toLp_snd, map_neg]
   apply WithLp.ofLp_injective 2
   change (x.fst - T (adjoint T x.fst), -x.snd - -(adjoint T (T x.snd))) =
@@ -149,7 +145,8 @@ private theorem sqrt_one_sub_halmosOffDiagonal_sq_fst_zero (T : E →L[ℂ] E)
   have happ := congrArg
     (fun q : WithLp 2 (E × E) →L[ℂ] WithLp 2 (E × E) =>
       (q (WithLp.toLp 2 (0, x))).fst) hcomm.eq
-  simp only [mul_apply_eq_comp, halmosGrading_apply, WithLp.toLp_fst,
+  simp only [mul_apply_eq_comp, (show ∀ x : WithLp 2 (E × E),
+      halmosGrading x = WithLp.toLp 2 (x.fst, -x.snd) from fun _ => rfl), WithLp.toLp_fst,
     WithLp.toLp_snd] at happ
   have hneg : WithLp.toLp 2 ((0 : E), -x) =
       -(WithLp.toLp 2 ((0 : E), x) : WithLp 2 (E × E)) := by
@@ -175,12 +172,6 @@ private noncomputable def halmosFlip :
     WithLp 2 (E × E) →L[ℂ] WithLp 2 (E × E) :=
   LinearIsometryEquiv.withLpProdComm 2 ℂ E E
 
-omit [CompleteSpace E] in
-@[simp]
-private theorem halmosFlip_apply (x : WithLp 2 (E × E)) :
-    halmosFlip x = WithLp.toLp 2 (x.snd, x.fst) :=
-  rfl
-
 private theorem halmosFlip_mem_unitary :
     halmosFlip (E := E) ∈ unitary (WithLp 2 (E × E) →L[ℂ] WithLp 2 (E × E)) := by
   exact (Unitary.linearIsometryEquiv.symm
@@ -202,7 +193,8 @@ private theorem exists_halmos_unitary_dilation (T : E →L[ℂ] E) (hT : ‖T‖
   refine ⟨U, ?_, ?_⟩
   · exact (unitary _).mul_mem hw halmosFlip_mem_unitary
   · intro x
-    simp only [U, w, a, mul_apply_eq_comp, halmosFlip_apply, WithLp.toLp_fst,
+    simp only [U, w, a, mul_apply_eq_comp, (show ∀ x : WithLp 2 (E × E),
+      halmosFlip x = WithLp.toLp 2 (x.snd, x.fst) from fun _ => rfl), WithLp.toLp_fst,
       WithLp.toLp_snd, add_apply, halmosOffDiagonal_apply, smul_apply,
       WithLp.add_fst, WithLp.smul_fst, map_zero]
     rw [sqrt_one_sub_halmosOffDiagonal_sq_fst_zero]
@@ -229,15 +221,11 @@ private noncomputable def schaefferNetworkEmbedding :
     schaefferFiberEmbedding
 
 omit [CompleteSpace E] in
-@[simp]
-private theorem schaefferNetworkEmbedding_apply (x : E) :
-    schaefferNetworkEmbedding x = lp.single 2 (0 : ℤ) (WithLp.toLp 2 (x, 0)) := rfl
-
-omit [CompleteSpace E] in
 /-- The network embedding preserves inner products. -/
 private theorem inner_schaefferNetworkEmbedding (x y : E) :
     ⟪schaefferNetworkEmbedding x, schaefferNetworkEmbedding y⟫_ℂ = ⟪x, y⟫_ℂ := by
-  simp only [schaefferNetworkEmbedding_apply, lp.inner_single_left,
+  simp only [(show ∀ x : E, schaefferNetworkEmbedding x =
+      lp.single 2 (0 : ℤ) (WithLp.toLp 2 (x, 0)) from fun _ => rfl), lp.inner_single_left,
     lp.single_apply_self, WithLp.prod_inner_apply, inner_zero_right, add_zero]
 
 /-- The adjoint of the network embedding extracts the system component at site zero. -/
@@ -246,7 +234,8 @@ private theorem adjoint_schaefferNetworkEmbedding_apply (f : SchaefferNetworkSpa
       (schaefferNetworkEmbedding : E →L[ℂ] SchaefferNetworkSpace E) f = (f 0).fst := by
   refine ext_inner_right ℂ fun x => ?_
   rw [ContinuousLinearMap.adjoint_inner_left]
-  simp only [schaefferNetworkEmbedding_apply, lp.inner_single_right,
+  simp only [(show ∀ x : E, schaefferNetworkEmbedding x =
+      lp.single 2 (0 : ℤ) (WithLp.toLp 2 (x, 0)) from fun _ => rfl), lp.inner_single_right,
     WithLp.prod_inner_apply, inner_zero_right, add_zero]
   rfl
 
@@ -258,13 +247,6 @@ private def lpPointwiseForward
     rw [memℓp_gen_iff (by norm_num : 0 < (2 : ℝ≥0∞).toReal)]
     simpa only [W.norm_map] using
       (lp.memℓp f).summable (by norm_num : 0 < (2 : ℝ≥0∞).toReal)⟩
-
-omit [CompleteSpace E] in
-@[simp]
-private theorem lpPointwiseForward_apply
-    (W : SchaefferNetworkFiber E ≃ₗᵢ[ℂ] SchaefferNetworkFiber E)
-    (f : SchaefferNetworkSpace E) (i : ℤ) :
-    lpPointwiseForward W f i = W (f i) := rfl
 
 omit [CompleteSpace E] in
 private theorem norm_lpPointwiseForward
@@ -280,7 +262,9 @@ private theorem norm_lpPointwiseForward
     simpa only [ENNReal.toReal_ofNat, Real.rpow_two] using
       lp.norm_rpow_eq_tsum (p := (2 : ℝ≥0∞))
         (by norm_num : 0 < (2 : ℝ≥0∞).toReal) f]
-  simp only [lpPointwiseForward_apply, W.norm_map]
+  simp only [(show ∀ (W : SchaefferNetworkFiber E ≃ₗᵢ[ℂ] SchaefferNetworkFiber E)
+      (f : SchaefferNetworkSpace E) (i : ℤ),
+      lpPointwiseForward W f i = W (f i) from fun _ _ _ => rfl), W.norm_map]
 
 /-- Apply the same fiberwise unitary at every integer site. -/
 private def lpPointwiseEquiv
@@ -291,19 +275,27 @@ private def lpPointwiseEquiv
   left_inv f := by
     apply lp.ext
     funext i
-    simp only [lpPointwiseForward_apply, W.symm_apply_apply]
+    simp only [(show ∀ (W : SchaefferNetworkFiber E ≃ₗᵢ[ℂ] SchaefferNetworkFiber E)
+      (f : SchaefferNetworkSpace E) (i : ℤ),
+      lpPointwiseForward W f i = W (f i) from fun _ _ _ => rfl), W.symm_apply_apply]
   right_inv f := by
     apply lp.ext
     funext i
-    simp only [lpPointwiseForward_apply, W.apply_symm_apply]
+    simp only [(show ∀ (W : SchaefferNetworkFiber E ≃ₗᵢ[ℂ] SchaefferNetworkFiber E)
+      (f : SchaefferNetworkSpace E) (i : ℤ),
+      lpPointwiseForward W f i = W (f i) from fun _ _ _ => rfl), W.apply_symm_apply]
   map_add' _ _ := by
     apply lp.ext
     funext i
-    simp only [lpPointwiseForward_apply, lp.coeFn_add, Pi.add_apply, map_add]
+    simp only [(show ∀ (W : SchaefferNetworkFiber E ≃ₗᵢ[ℂ] SchaefferNetworkFiber E)
+      (f : SchaefferNetworkSpace E) (i : ℤ),
+      lpPointwiseForward W f i = W (f i) from fun _ _ _ => rfl), lp.coeFn_add, Pi.add_apply, map_add]
   map_smul' _ _ := by
     apply lp.ext
     funext i
-    simp only [lpPointwiseForward_apply, lp.coeFn_smul, Pi.smul_apply, map_smul,
+    simp only [(show ∀ (W : SchaefferNetworkFiber E ≃ₗᵢ[ℂ] SchaefferNetworkFiber E)
+      (f : SchaefferNetworkSpace E) (i : ℤ),
+      lpPointwiseForward W f i = W (f i) from fun _ _ _ => rfl), lp.coeFn_smul, Pi.smul_apply, map_smul,
       RingHom.id_apply]
   norm_map' := norm_lpPointwiseForward W
 
@@ -352,13 +344,6 @@ private def schaefferRouteForward (f : SchaefferNetworkSpace E) :
       WithLp.prod_norm_sq_eq_of_L2, WithLp.toLp_fst, WithLp.toLp_snd] using
       (summable_network_fst_sq f).add hs⟩
 
-omit [CompleteSpace E] in
-omit [InnerProductSpace ℂ E] in
-@[simp]
-private theorem schaefferRouteForward_apply (f : SchaefferNetworkSpace E) (i : ℤ) :
-    schaefferRouteForward f i =
-      WithLp.toLp 2 ((f i).fst, (f (schaefferIntShift.symm i)).snd) := rfl
-
 private def schaefferRouteBackward (f : SchaefferNetworkSpace E) :
     SchaefferNetworkSpace E :=
   ⟨fun i => WithLp.toLp 2 ((f i).fst, (f (schaefferIntShift i)).snd), by
@@ -370,13 +355,6 @@ private def schaefferRouteBackward (f : SchaefferNetworkSpace E) :
     simpa only [ENNReal.toReal_ofNat, Real.rpow_two,
       WithLp.prod_norm_sq_eq_of_L2, WithLp.toLp_fst, WithLp.toLp_snd] using
       (summable_network_fst_sq f).add hs⟩
-
-omit [CompleteSpace E] in
-omit [InnerProductSpace ℂ E] in
-@[simp]
-private theorem schaefferRouteBackward_apply (f : SchaefferNetworkSpace E) (i : ℤ) :
-    schaefferRouteBackward f i =
-      WithLp.toLp 2 ((f i).fst, (f (schaefferIntShift i)).snd) := rfl
 
 omit [CompleteSpace E] in
 omit [InnerProductSpace ℂ E] in
@@ -397,7 +375,8 @@ private theorem norm_schaefferRouteForward (f : SchaefferNetworkSpace E) :
         simpa only [ENNReal.toReal_ofNat, Real.rpow_two] using
           lp.norm_rpow_eq_tsum (p := (2 : ℝ≥0∞))
             (by norm_num : 0 < (2 : ℝ≥0∞).toReal) (schaefferRouteForward f)]
-      simp only [schaefferRouteForward_apply, WithLp.prod_norm_sq_eq_of_L2,
+      simp only [(show ∀ (f : SchaefferNetworkSpace E) (i : ℤ), schaefferRouteForward f i =
+      WithLp.toLp 2 ((f i).fst, (f (schaefferIntShift.symm i)).snd) from fun _ _ => rfl), WithLp.prod_norm_sq_eq_of_L2,
         WithLp.toLp_fst, WithLp.toLp_snd]
     _ = (∑' i : ℤ, ‖(f i).fst‖ ^ (2 : ℕ)) +
         ∑' i : ℤ, ‖(f (schaefferIntShift.symm i)).snd‖ ^ (2 : ℕ) :=
@@ -424,7 +403,9 @@ private def schaefferRouteEquiv :
     apply lp.ext
     funext i
     apply WithLp.ofLp_injective
-    simp only [schaefferRouteBackward_apply, schaefferRouteForward_apply,
+    simp only [(show ∀ (f : SchaefferNetworkSpace E) (i : ℤ), schaefferRouteBackward f i =
+      WithLp.toLp 2 ((f i).fst, (f (schaefferIntShift i)).snd) from fun _ _ => rfl), (show ∀ (f : SchaefferNetworkSpace E) (i : ℤ), schaefferRouteForward f i =
+      WithLp.toLp 2 ((f i).fst, (f (schaefferIntShift.symm i)).snd) from fun _ _ => rfl),
       WithLp.toLp_fst, WithLp.toLp_snd, WithLp.ofLp_toLp,
       schaefferIntShift.symm_apply_apply]
     exact Prod.eta _
@@ -432,7 +413,9 @@ private def schaefferRouteEquiv :
     apply lp.ext
     funext i
     apply WithLp.ofLp_injective
-    simp only [schaefferRouteBackward_apply, schaefferRouteForward_apply,
+    simp only [(show ∀ (f : SchaefferNetworkSpace E) (i : ℤ), schaefferRouteBackward f i =
+      WithLp.toLp 2 ((f i).fst, (f (schaefferIntShift i)).snd) from fun _ _ => rfl), (show ∀ (f : SchaefferNetworkSpace E) (i : ℤ), schaefferRouteForward f i =
+      WithLp.toLp 2 ((f i).fst, (f (schaefferIntShift.symm i)).snd) from fun _ _ => rfl),
       WithLp.toLp_fst, WithLp.toLp_snd, WithLp.ofLp_toLp,
       schaefferIntShift.apply_symm_apply]
     exact Prod.eta _
@@ -513,14 +496,17 @@ private theorem schaeffer_power_state
   | zero =>
       refine ⟨?_, ?_, ?_⟩
       · simp only [schaefferOrbit, pow_zero, one_apply_eq_self,
-          schaefferNetworkEmbedding_apply, lp.single_apply_self,
+          (show ∀ x : E, schaefferNetworkEmbedding x =
+      lp.single 2 (0 : ℤ) (WithLp.toLp 2 (x, 0)) from fun _ => rfl), lp.single_apply_self,
           WithLp.toLp_fst]
       · simp only [schaefferOrbit, pow_zero, one_apply_eq_self,
-          schaefferNetworkEmbedding_apply, lp.single_apply_self,
+          (show ∀ x : E, schaefferNetworkEmbedding x =
+      lp.single 2 (0 : ℤ) (WithLp.toLp 2 (x, 0)) from fun _ => rfl), lp.single_apply_self,
           WithLp.toLp_snd]
       intro i hi
       simp only [schaefferOrbit, pow_zero, one_apply_eq_self,
-        schaefferNetworkEmbedding_apply]
+        (show ∀ x : E, schaefferNetworkEmbedding x =
+      lp.single 2 (0 : ℤ) (WithLp.toLp 2 (x, 0)) from fun _ => rfl)]
       rw [lp.single_apply_ne]
       exact ne_of_lt hi
   | succ n ih =>

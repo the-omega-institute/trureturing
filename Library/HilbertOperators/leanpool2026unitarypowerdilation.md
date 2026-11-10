@@ -51,15 +51,19 @@ The source import closure outside Mathlib consists of just these two files:
 | Source file | SHA-256 | Retained source section |
 | --- | --- | --- |
 | [Halmos.lean](https://github.com/LeanPool/lean-pool/blob/89f2facbb6478492222a9b43047e9c837bc65be6/LeanPool/OperatorTheory/Operator/Dilation/Halmos.lean) | `9e2941a526ebdb6a8b06742263ff8451205c492fd82d992dcf0c913c55994e2a` | Lines 32–184: off-diagonal contraction, grading and square-root coordinate argument, flip, and `exists_halmos_unitary_dilation`. |
-| [Schaeffer.lean](https://github.com/LeanPool/lean-pool/blob/89f2facbb6478492222a9b43047e9c837bc65be6/LeanPool/OperatorTheory/Operator/Dilation/Schaeffer.lean) | `c770c8e2e25f6b77e48661854b2fa5ae89f0752a6488b109de6fdb3c5fc2ef65` | Lines 148–509: network fibers, embedding, pointwise interaction, routing, orbit, joint `schaeffer_power_state` induction and the original all-powers endpoint; the unused `schaefferFiberEmbedding_apply` is omitted. |
+| [Schaeffer.lean](https://github.com/LeanPool/lean-pool/blob/89f2facbb6478492222a9b43047e9c837bc65be6/LeanPool/OperatorTheory/Operator/Dilation/Schaeffer.lean) | `c770c8e2e25f6b77e48661854b2fa5ae89f0752a6488b109de6fdb3c5fc2ef65` | Lines 148–509: network fibers, embedding, pointwise interaction, routing, orbit, joint `schaeffer_power_state` induction and the original all-powers endpoint; unused definitional application helpers are omitted. |
 
 Modification notice: the selected sections are combined in one native module
 and namespace, imports are changed from public source-module imports to
 ordinary Mathlib imports, module/expose wrappers are removed, and every
 support declaration is private. The unused simple `SchaefferSpace`, its
 embedding, generic `lpReindex` and bilateral-shift branch (source lines
-37–147) are omitted. The unused definitional fiber-embedding lemma is also
-omitted; the network embedding still has its original definitional proof.
+37–147) are omitted. The unused definitional application lemmas
+`schaefferFiberEmbedding_apply`, `halmosGrading_apply`, `halmosFlip_apply`,
+`schaefferNetworkEmbedding_apply`, `lpPointwiseForward_apply`,
+`schaefferRouteForward_apply` and `schaefferRouteBackward_apply` are omitted.
+Their source definitional equalities remain inline at their original uses;
+the network embedding still has its original definitional proof.
 The endpoint telescope, repeated-interaction construction and substantive
 proof steps are preserved. No external Lake dependency is added.
 
