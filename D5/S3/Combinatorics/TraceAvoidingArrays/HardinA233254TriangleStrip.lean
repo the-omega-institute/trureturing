@@ -235,7 +235,7 @@ def rowLegal (c : Row) : Prop :=
   ∀ j : Fin 5, c j.castSucc ≠ c j.succ ∧ (c j.castSucc).val + (c j.succ).val ≠ 5
 private def bonds (c d : Row) : Prop :=
   ∀ j : Fin 5, c j.succ ≠ d j.castSucc ∧ (c j.succ).val + (d j.castSucc).val ≠ 5
-private instance instDecidableRowLegal : DecidablePred rowLegal :=
+instance instDecidableRowLegal : DecidablePred rowLegal :=
   fun c => inferInstanceAs (Decidable (∀ _, _ ∧ _))
 private instance instDecidableBonds : DecidableRel bonds :=
   fun c d => inferInstanceAs (Decidable (∀ _, _ ∧ _))
