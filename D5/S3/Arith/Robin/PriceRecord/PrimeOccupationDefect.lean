@@ -85,9 +85,21 @@ private theorem interval_theta (a b : ℝ) (hab : a ≤ b) :
     thetaMass (primeInterval a b) = θ b - θ a := by
   classical
   have hsets : primeInterval a b = Nat.primesLE ⌊b⌋₊ \ Nat.primesLE ⌊a⌋₊ := by
-    ext p
-    simp only [primeInterval, mem_filter, mem_Ioc, mem_sdiff, Nat.mem_primesLE]
-    omega
+    apply Finset.ext
+    intro p
+    constructor
+    · intro hp
+      obtain ⟨hpI, hprime⟩ := Finset.mem_filter.mp hp
+      obtain ⟨ha, hb⟩ := Finset.mem_Ioc.mp hpI
+      exact Finset.mem_sdiff.mpr ⟨Nat.mem_primesLE.mpr ⟨hb, hprime⟩,
+        fun h => (not_le_of_gt ha) (Nat.mem_primesLE.mp h).1⟩
+    · intro hp
+      obtain ⟨hpb, hpa⟩ := Finset.mem_sdiff.mp hp
+      obtain ⟨hb, hprime⟩ := Nat.mem_primesLE.mp hpb
+      apply Finset.mem_filter.mpr
+      refine ⟨Finset.mem_Ioc.mpr ⟨?_, hb⟩, hprime⟩
+      by_contra hn
+      exact hpa (Nat.mem_primesLE.mpr ⟨not_lt.mp hn, hprime⟩)
   rw [thetaMass, hsets]
   exact (D5.S3.Arith.Robin.OriginalEndpointFirstLayerBand.theta_sub_eq_prime_band_sum hab).symm
 
