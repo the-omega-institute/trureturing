@@ -103,9 +103,6 @@ internal sealed class HardinA233171DiagonalStripDocument : IScribeDocumentDefini
 
     private static Formula Seen() => Name(Scanner + "Seen");
     private static Formula PairRow() => Name(BoundaryOwner + "Boundary");
-    private static Formula Proj(Formula a, bool first) =>
-        Call(first ? "Prod.fst" : "Prod.snd", a);
-    private static Formula Flags() => Pair(Name("Bool.false"), Name("Bool.false"));
     private static Formula Transfer()
     {
         var table = Vector(Vector(D(3,2), D(3,2), D(6,4), D(3,2), D(3,2), D(0), D(3,2)),
@@ -158,8 +155,6 @@ internal sealed class HardinA233171DiagonalStripDocument : IScribeDocumentDefini
     private static Formula Arrow(Formula a, Formula b) => new Formula.TypeArrow(a, b);
     private static Formula Product(Formula a, Formula b) =>
         Seq(Parenthesized(a), Sp, Times, Sp, Parenthesized(b));
-    private static Formula Pair(Formula a, Formula b) =>
-        Parenthesized(Seq(a, Comma, Sp, b));
     private static Formula Vector(params Formula[] entries) => Seq(
         new Formula[] { Bang, OpenBracket }.Concat(entries.SelectMany((f, i) =>
             i == 0 ? new[] { f } : new[] { Comma, Sp, f }))
@@ -169,8 +164,6 @@ internal sealed class HardinA233171DiagonalStripDocument : IScribeDocumentDefini
             Parenthesized(yes), Sp, Name("else"), Sp, Parenthesized(no)));
     private static Formula SumOver(string n, Formula type, Formula body) =>
         Seq(Sum, Underscore, Grp(V(n), Colon, Sp, type), Sp, Parenthesized(body));
-    private static Formula Imp(Formula a, Formula b) =>
-        Seq(Parenthesized(a), Sp, Implies, Sp, Parenthesized(b));
     private static Formula Eq(Formula a, Formula b) =>
         new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula Ne(Formula a, Formula b) =>
