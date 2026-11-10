@@ -19,7 +19,7 @@ internal sealed class RawGroupZeroDriftDocument : IScribeDocumentDefinition
     private static Formula Inv(Formula a) => Call("inv", a);
     private static Formula Cost(string c, Formula a, Formula b) => Call(c, a, b);
     private static Formula Sym(string m, string c) => All("a", I(m), All("b", I(m), Eqn(Cost(c,I("a"),I("b")),Cost(c,I("b"),I("a")))));
-    private static Formula Frame(Formula b) => All("G", I("Type_u"), All("gG", Call("Group",I("G")),
+    private static Formula Frame(Formula b) => All("G", new Formula.Subscript(I("Type"),I("u")), All("gG", Call("Group",I("G")),
         All("U", Arr(I("G"),I("G")), All("c", Arr(I("G"),Arr(I("G"),Real)), b))));
     private static Formula Raw => Call("RawCost", I("U"), I("c"));
     private static DocumentBlock Entry(string id, string name, string title, Formula formula, string text) =>
@@ -33,7 +33,7 @@ internal sealed class RawGroupZeroDriftDocument : IScribeDocumentDefinition
             Paragraph(Text("G is any group in Type u. U:G->G and c:G->G->R are total. RawCost means c(a,b)>=0, c(a,a)=0 and c(a*s,b*t)+c(a*U(s),b*U(t))+c(a*U(U(s)),b*U(U(t)))=3c(a,b)+3c(s,t) for every a,b,s,t. The group instances gG and gS displayed below supply the actual units, multiplication and inverses. No commutativity, countability or topology on G, marker homomorphism, U(1)=1, triangle inequality, Hilbert model, quotient or N5 premise is imposed.")),
             Entry("raw-group-right-invariant", "right_invariant", "Raw group costs are right invariant",
                 Frame(Imp(Raw,All("a",I("G"),All("b",I("G"),All("z",I("G"),
-                    Eqn(Cost("c",Mul(I("a"),I("z")),Mul(I("b"),I("z"))),Cost("c",I("a"),I("b"))))))),
+                    Eqn(Cost("c",Mul(I("a"),I("z")),Mul(I("b"),I("z"))),Cost("c",I("a"),I("b")))))))),
                 "Symmetry is absent. Fix a,b, put F(t)=c(a*t,b*t) and m=inf(range F). The range is nonempty and bounded below by zero. The full balance law at (a*t,b*t,w,w) gives F(t*w)<=3F(t)-2m. For each s, substituting w=t inverse times s makes the left side F(s) for every t. Thus (F(s)+2m)/3 is a lower bound for range F, so F(s)<=m; the converse follows from the infimum property. Hence F is constant. The infimum/transitivity step is a live new mechanism, and uses neither symmetry nor marker anchoring."),
             Entry("raw-group-inverse-budget", "inverse_budget", "Inversion preserves the unit budget",
                 Frame(Imp(Raw,Imp(Sym("G","c"),All("x",I("G"),
@@ -59,10 +59,10 @@ internal sealed class RawGroupZeroDriftDocument : IScribeDocumentDefinition
             And(Eqn(Cost("d",Call("V",D(1)),D(1)),D(0)),
                 All("a",a,All("b",a,Eqn(Cost("d",Call("x",I("a")),Call("x",I("b"))),
                     Cost("c",Call("f",I("a")),Call("f",I("b")))))))));
-        Formula result=Ex("S",I("Type_u"),Ex("gS",Call("Group",s),Ex("hS",Call("Countable",s),
+        Formula result=Ex("S",new Formula.Subscript(I("Type"),I("u")),Ex("gS",Call("Group",s),Ex("hS",Call("Countable",s),
             Ex("V",Arr(s,s),Ex("d",Arr(s,Arr(s,Real)),Ex("x",Arr(a,s),conclusion))))));
-        return All("G",I("Type_u"),All("gG",Call("Group",I("G")),
-            All("alpha",I("Type_v"),All("hAlpha",Call("Finite",a),
+        return All("G",new Formula.Subscript(I("Type"),I("u")),All("gG",Call("Group",I("G")),
+            All("alpha",new Formula.Subscript(I("Type"),I("v")),All("hAlpha",Call("Finite",a),
                 All("U",Arr(I("G"),I("G")),All("c",Arr(I("G"),Arr(I("G"),Real)),
                     Imp(Raw,Imp(Sym("G","c"),All("f",Arr(a,I("G")),result)))))))));
     }
