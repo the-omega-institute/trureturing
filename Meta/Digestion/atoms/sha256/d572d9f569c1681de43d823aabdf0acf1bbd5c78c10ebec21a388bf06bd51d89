@@ -1,0 +1,71 @@
+**定理 15.2（每个原零响应必为环境通勤）。** 在定义 15.1 下，对同一原域内的每一对原 $a,b$，有
+
+$$
+\boxed{D(a,b)=0\ \Longrightarrow\ [a,b]=0.}
+\qquad
+\boxed{[a,b]\ne0\ \Longrightarrow\ D(a,b)\ne0.}
+\tag{15.4}
+$$
+
+证明。原有向二表的 Hermitian 性和评价分离性给 $D(y,x)=-D(x,y)$，故 $D(x,x)=0$；P2 的零输入行也给 $D(x,0)=D(0,x)=0$。这些只用原二表，未除以任何质量。以下固定任意原 $a,b$，假设其实际旧值 $D(a,b)=0$。记
+
+$$
+p=a\circ b,\qquad q=a^2,\qquad
+F=b\circ q-a\circ p .
+\tag{15.5}
+$$
+
+$p,q,F$ 均是原元素。第一次在 (15.3) 代入原三元组 $(a;b,a)$。内层只有 $D(a,b)=D(a,a)=0$，所以 $\nu=-q,\omega=p$，准确得到
+
+$$
+D(b-q,a+p)-D(b+q,a-p)=2F .
+\tag{15.6}
+$$
+
+第二次代入原三元组 $(a;a,b)$，内层仍是这两个旧零值，现有 $\nu=-p,\omega=q$，故
+
+$$
+D(a-p,b+q)-D(a+p,b-q)=-2F .
+\tag{15.7}
+$$
+
+仅用反对称性，(15.7) 的左端恰为
+
+$$
+-D(b+q,a-p)+D(b-q,a+p),
+$$
+
+即 (15.6) 的同一个实际旧值差。因此 $2F=-2F$，实向量空间中 $F=0$。没有将任何外层 $D$ 对和、差或乘积拆开；两份比较的全部输入都在原 $E$。在已知环境结合乘法中展开这个 Jordan 元素，得到
+
+$$
+0=F
+=\frac{a^2b+ba^2-2aba}{4}
+=\frac14[a,[a,b]].
+\tag{15.8}
+$$
+
+接下来的有界自伴算子步骤是成熟供应，不把它单列为新理论。Kleinecke，*On operator commutators*，Proc. Amer. Math. Soc. **8** (1957), 535–536，DOI [10.1090/S0002-9939-1957-0087914-4](https://doi.org/10.1090/S0002-9939-1957-0087914-4)，属于这条有界导子来源；Stanković，[*Quasinilpotency of commutators under a weakened Kleinecke–Shirokov condition*，arXiv:2611.06423v1](https://arxiv.org/html/2611.06423v1#S1)，§1 明列的 Kleinecke–Shirokov 条件是复含单位 Banach 代数中 $[a,[a,b]]=0$ 蕴含 $[a,b]$ 拟幂零。本处有更具体的 C* 自伴前件，所需推论可直接如下证明。
+
+在 $A$ 中令 $\delta(x)=\mathrm i[a,x]$。它是有界线性导子，$\|\delta\|\le2\|a\|$，且 (15.8) 给 $\delta^2(b)=0$。由范数收敛的指数级数，或对 $e^{\mathrm ita}b e^{-\mathrm ita}$ 逐项求导，有
+
+$$
+e^{\mathrm ita}b e^{-\mathrm ita}
+=e^{t\delta}(b)
+=b+t\,\mathrm i[a,b]
+\qquad(t\in\mathbb R).
+\tag{15.9}
+$$
+
+由于 $a$ 自伴，$e^{\mathrm ita}$ 酉，左端范数恒等于 $\|b\|$。对每个 $t\ne0$，三角不等式给
+
+$$
+\|[a,b]\|
+\le\frac{\|b+t\,\mathrm i[a,b]\|+\|b\|}{|t|}
+=\frac{2\|b\|}{|t|}.
+\tag{15.10}
+$$
+
+令 $|t|\to\infty$，得 $[a,b]=0$。反向叙述的第二个框只是第一个框的逆否命题，仍指原 $D(a,b)$，不另造响应。
+
+指数、环境乘积及范数极限只在 $A$ 中证明 (15.8) 的算子后果，从未成为新的原 $D$ 输入，也未给 $D$ 取极限。$A$ 或其忠实 Hilbert 表示可以无限维；每个标签有界，但不要求全部标签共用范数界。连续谱、非原谱投影、零标签、重复标签、标量标签及零代数均在上述论证范围内。这里没有关于无界自伴算子的断言，亦不把任意维误作无界算子域。∎
+

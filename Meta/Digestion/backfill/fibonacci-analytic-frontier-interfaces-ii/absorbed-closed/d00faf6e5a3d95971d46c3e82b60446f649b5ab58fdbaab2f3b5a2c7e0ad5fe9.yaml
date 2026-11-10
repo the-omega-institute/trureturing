@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:d00faf6e5a3d95971d46c3e82b60446f649b5ab58fdbaab2f3b5a2c7e0ad5fe9
+  normalized_sha256: sha256:d00faf6e5a3d95971d46c3e82b60446f649b5ab58fdbaab2f3b5a2c7e0ad5fe9
+cas_ref: sha256:d00faf6e5a3d95971d46c3e82b60446f649b5ab58fdbaab2f3b5a2c7e0ad5fe9
+coverage_gids:
+  - gid: D5/S3/Arith/Robin/ForwardKernel/MellinPolynomialGrowth.forward_kernel_mellin_polynomial_remainder
+    target_statement_id: sha256:213fb85c66a703950ca09d491be4c44b518a9255d7d594963c43c02a9d9d5d58
+receipts:
+  unresolved_subitems: []

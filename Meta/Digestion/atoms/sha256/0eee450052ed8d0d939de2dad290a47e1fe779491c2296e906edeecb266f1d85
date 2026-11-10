@@ -1,0 +1,123 @@
+**定理 3.1（任意 JB 完成中的原多项式零值）。** 沿用配平主卷定义 128.1、183.1 的同一原 $E,C,u,N,\mathcal P,S,D$、原 A1–A3 及其无 R 的 Jordan 接口：$E$ 是任意含单位实 JB 完成 $X$ 中的含单位范数稠密实 Jordan 子代数，$C=E\cap X_+$，原评价分离并准确决定原锥。对同一个总映射 $D:E^2\to E$，只取原 P2（配平主卷式 (128.3)）和完整 PB（配平主卷式 (128.4)），保留全部原评价、零／不等／次归一质量及来源量词。则对每个原 $x\in E$ 和任意两个实系数多项式 $p,q\in\mathbb R[T]$，有
+
+$$
+\boxed{D(p(x),q(x))=0.}
+\tag{3.1}
+$$
+
+其中 $x^0=u$，其余为 Jordan 幂。这里不要求有限谱、原域完备、原根／逆／投影闭合或一般 JB 的特殊表示；不预设 $D$ 的可加、齐次、连续、可测、协变或完成延拓。
+
+证明。直接复用配平主卷 §§183–184 的全单位行及配平主卷定义 185.1 的 SO$(2)$ 标签旋转、每槽奇性和同轴仿射零行，不重证这些前置。单生成 Jordan 幂的成熟幂结合律给
+
+$$
+x^j\circ x^k=x^{j+k}\quad(j,k\ge0),\qquad
+\mathcal A_x=\mathbb R[x]=\{f(x):f\in\mathbb R[T]\}\subset E
+\tag{3.2}
+$$
+
+为含单位交换结合实代数。具体出处是 van de Wetering，[*Commutativity in Jordan Operator Algebras*，arXiv:1912.01903v1](https://arxiv.org/html/1912.01903v1)，Corollaries 2.9–2.10；零次幂由单位律补入。这里只使用这个原子代数的已知 Jordan 乘法，未给未知 $D$ 添加任何线性。特别，实多项式求值保持加法、实数乘法和乘积；这三项是已知求值映射的性质。
+
+对形式多项式 $H=h+\mathrm i k\in\mathbb C[T]$，其中 $h,k\in\mathbb R[T]$，记
+
+$$
+\Phi_x(H)=D(h(x),k(x)).
+$$
+
+$\overline H$ 表示系数逐个取共轭。复数在此只记录两个原实标签；需要乘法时只在已知结合代数的代数复化 $\mathcal A_x+\mathrm i\mathcal A_x$ 中计算，$D$ 从不接收复输入。配平主卷式 (185.1) 准确给出
+
+$$
+\Phi_x(e^{\mathrm i\theta}H)=\Phi_x(H),\qquad
+\Phi_x(-H)=\Phi_x(H),\qquad
+\Phi_x(\overline H)=-\Phi_x(H).
+\tag{3.3}
+$$
+
+第一式是实际标签旋转；第三式只用第二槽奇性。这些等式不宣称 $\Phi_x$ 对加法或任意复数乘法线性。
+
+约定形式零多项式的次数为 $-\infty$。对 $n=\max(\deg p,\deg q)$ 归纳，次数始终指所给形式多项式，不能用求值后的关系暗中降次。$n\le1$ 时，两标签都在 $\operatorname{span}_{\mathbb R}\{u,x\}$，由配平主卷定义 185.1 的仿射零行得结论，包含两个常数、一个或两个零多项式。设 $n\ge2$，且所有次数至多 $n-1$ 的实多项式对已经成立。固定当前 $p,q$，置 $P=p+\mathrm i q$。因最高次的实部与虚部不能互相抵消，$\deg P=n$。由普通复标量多项式的代数基本定理，写成
+
+$$
+P(T)=\kappa\prod_{\ell=1}^{n}(T-z_\ell),\qquad
+\kappa\in\mathbb C\setminus\{0\}.
+\tag{3.4}
+$$
+
+这里根按重数逐个占据一个索引位置，允许重复根及实根。令 $I=\{\ell:\operatorname{Im}z_\ell\ne0\}$，将这个有限索引集列为 $i_1,\ldots,i_m$，$0\le m\le n$。定义 $z_\ell^{(j)}$：若 $\ell\in\{i_1,\ldots,i_j\}$ 就取 $\overline{z_\ell}$，否则取 $z_\ell$，并置
+
+$$
+P_j(T)=\kappa\prod_{\ell=1}^{n}(T-z_\ell^{(j)})
+\quad(0\le j\le m).
+\tag{3.5}
+$$
+
+每步只改一个指定位置的非实根，首项系数始终是同一个 $\kappa$。即使两个根相同，或一对根本来互为共轭，也分别处理其索引位置，不约去或识别不同位置。
+
+固定第 $j$ 步，$1\le j\le m$，记尚未改变的该根 $z_{i_j}=r_j+\mathrm i t_j$，其中 $r_j,t_j\in\mathbb R$、$t_j\ne0$。取形式多项式和原标签
+
+$$
+\begin{aligned}
+a_j(T)&=(T-r_j)/t_j,\\
+W_j(T)&=-\mathrm i t_j\kappa
+       \prod_{\ell\ne i_j}(T-z_\ell^{(j-1)}),\\
+A_j&=a_j(x),\qquad
+B_j=(\operatorname{Re}W_j)(x),\qquad
+C_j=(\operatorname{Im}W_j)(x).
+\end{aligned}
+\tag{3.6}
+$$
+
+$A_j,B_j,C_j$ 全在原 $\mathcal A_x$。$\deg a_j=1\le n-1$，$\deg W_j=n-1$，其实部、虚部的次数均至多 $n-1$；其中任一实部或虚部可以为零。因此归纳假设确实支付两个实际内层值
+
+$$
+D(A_j,B_j)=D(A_j,C_j)=0.
+\tag{3.7}
+$$
+
+现在只调用原三元组 $(A_j,B_j,C_j)$ 的完整 PB 元素式（配平主卷式 (128.6)）。此时 $v=-A_j\circ C_j$、$w=A_j\circ B_j$，右端准确为
+
+$$
+2B_j\circ(A_j\circ C_j)-2C_j\circ(A_j\circ B_j)=0,
+$$
+
+因为三者都属于已知结合的 $\mathcal A_x$。故两个实际外层值满足
+
+$$
+D(B_j-A_j\circ C_j,\ C_j+A_j\circ B_j)
+=D(B_j+A_j\circ C_j,\ C_j-A_j\circ B_j).
+\tag{3.8}
+$$
+
+没有展开这些未知外层响应。它们的两标签记录分别是 $(u+\mathrm i A_j)(B_j+\mathrm i C_j)$ 和 $(u-\mathrm i A_j)(B_j+\mathrm i C_j)$。在形式多项式中直接有
+
+$$
+\begin{aligned}
+(1+\mathrm i a_j(T))(-\mathrm i t_j)&=T-z_{i_j},\\
+(1-\mathrm i a_j(T))(-\mathrm i t_j)&=-(T-\overline{z_{i_j}}).
+\end{aligned}
+$$
+
+结合其余同一组因子，两个外层记录准确为 $P_{j-1}(x)$ 和 $-P_j(x)$。所以 (3.8) 及已付的同时反号旋转给
+
+$$
+\Phi_x(P_{j-1})=\Phi_x(-P_j)=\Phi_x(P_j).
+\tag{3.9}
+$$
+
+有限次改变所有非实根后，实根本身不变，故普通标量多项式恒等式给
+
+$$
+P_m=\frac{\kappa}{\overline\kappa}\,\overline P,
+\qquad \left|\frac{\kappa}{\overline\kappa}\right|=1.
+$$
+
+这个标量是某个 $e^{\mathrm i\theta}$。由 (3.3) 和整条 (3.9)，
+
+$$
+\Phi_x(P)=\Phi_x(P_m)=\Phi_x(\overline P)=-\Phi_x(P).
+\tag{3.10}
+$$
+
+$E$ 是实向量空间，因而 $\Phi_x(P)=0$，归纳完成。若 $m=0$，没有 PB 步骤，$P_0=P=(\kappa/\overline\kappa)\overline P$ 本身就给同一端点反号，仍然成立。实根从不造成除法；重复非实根只被逐次反射，唯一的除法是除以非零实标量 $t_j$ 及非零复标量 $\overline\kappa$。没有在 $E$ 中求根、求逆或约去某个多项式因子。
+
+即使求值映射有核、$x$ 满足代数关系、$p(x)$ 或 $q(x)$ 为零，以上形式次数下降及原调用仍全部有效；$x$ 为标量单位倍数、线性窗口退化和零代数也包含在结论内。所有内层和外层标签只由原线性组合及原 Jordan 乘法生成。证明不使用未知 $D$ 的齐次性、可加性、连续性、输入极限、额外根／逆／投影闭合、共同实现者或完成上的新 $D$。∎
+

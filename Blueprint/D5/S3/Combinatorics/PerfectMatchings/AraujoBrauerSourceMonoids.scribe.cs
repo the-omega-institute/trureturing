@@ -10,6 +10,11 @@ internal sealed class AraujoBrauerSourceMonoidsDocument : IScribeDocumentDefinit
         "Constructive results for complete mappings of diagram monoids.",
         H("AraujoBrauerSourceMonoids"),
         Blocks(
+            Describe.Lean(DescribeId.Create("comap-sup-map"), DeclarationHandle.Create("D5/S3/Combinatorics/PerfectMatchings/AraujoBrauerSourceMonoids.comap_sup_map"),
+                H("Restriction after adjoining an induced relation"), StatementSource.FromAuthor(Disp(
+                    All("X", Id("Type"), All("Y", Id("Type"), All("R", Call("Setoid", Id("X")), All("i", Call("Function", Id("Y"), Id("X")), All("S", Call("Setoid", Id("Y")),
+                    Equal(Call("comap", Id("i"), Call("Join", Id("R"), Call("map", Id("S"), Id("i")))), Call("Join", Call("comap", Id("i"), Id("R")), Id("S")))))))))),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Pulling back the join with the relation induced by i gives the join of the pulled-back relation with S. Both inclusions follow by induction on the generated equivalence relation; no injectivity of i is required."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("araujobrauersourcemonoids-blocksize"), DeclarationHandle.Create("D5/S3/Combinatorics/PerfectMatchings/AraujoBrauerSourceMonoids.blockSize"),
                 H("blockSize"), StatementSource.FromAuthor(Disp(Seq(Forall, Sp, Seq(OpenBrace, Seq(F.Id("n"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N")))), CloseBrace), Sp, Comma, Sp, Forall, Sp, Parenthesized(Seq(F.Id("p"), Sp, Colon, Sp, Parenthesized(Seq(F.Id("Setoid"), Sp, Parenthesized(Seq(F.Id("Bool"), Sp, Times, Sp, F.Id("Fin"), Sp, F.Id("n"))))))), Sp, Comma, Sp, Forall, Sp, Parenthesized(Seq(F.Id("x"), Sp, Colon, Sp, Parenthesized(Seq(F.Id("Bool"), Sp, Times, Sp, F.Id("Fin"), Sp, F.Id("n"))))), Sp, Comma, Sp, F.Id("blockSize"), Sp, F.Id("p"), Sp, F.Id("x"), Sp, Eq, Sp, Parenthesized(Seq(F.Id("Nat"), Sp, Dot, Sp, F.Id("card"), Sp, Seq(OpenBrace, Seq(F.Id("y"), Sp, Colon, Sp, Parenthesized(Seq(F.Id("Bool"), Sp, Times, Sp, F.Id("Fin"), Sp, F.Id("n"))), Sp, Mid, Sp, F.Id("p"), Sp, Dot, Sp, F.Id("r"), Sp, F.Id("x"), Sp, F.Id("y")), CloseBrace)))))),
                 AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Certificates/araujo2026brauerexistence")), Blocks(Paragraph(Text("The formula gives the quantified defining expression."))), DescribeRole.Definition),
@@ -98,5 +103,7 @@ internal sealed class AraujoBrauerSourceMonoidsDocument : IScribeDocumentDefinit
                 H("source_monoids_exist"), StatementSource.FromAuthor(Disp(Seq(Forall, Sp, Parenthesized(Seq(F.Id("n"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Sp, Comma, Sp, Parenthesized(Seq(Exists, Sp, Colon, Sp, F.Id("BrauerSourceMonoid"), Sp, F.Id("n"), Sp, Comma, Sp, F.Id("True"))), Sp, Land, Sp, Parenthesized(Seq(Exists, Sp, Colon, Sp, F.Id("PartialBrauerSourceMonoid"), Sp, F.Id("n"), Sp, Comma, Sp, F.Id("True")))))),
                 AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The formula gives the quantified statement."))), DescribeRole.Theorem))));
 
+    private static Formula Id(string name) => F.Id(name);
+    private static Formula All(string name, Formula type, Formula body) => new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
 }

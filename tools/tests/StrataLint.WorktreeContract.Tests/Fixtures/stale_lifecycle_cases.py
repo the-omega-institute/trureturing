@@ -128,6 +128,276 @@ class LifecycleTests(unittest.TestCase):
         return SimpleNamespace(source=self.source, path=Path(path).resolve() if path else None,
                                branch=branch, base=self.base, skip_restore=True, exclude_path=[])
 
+    def absent_root_cleanup_entrances(self, native_failure):
+        self.prepare_make()
+        for entrance in ("worktree-remove", "clean-lanes"):
+            with self.subTest(entrance=entrance):
+                tree = self.root / ("absent-" + entrance)
+                branch = "lane/governance/absent-" + entrance
+                head = self.commit_branch(branch, tree, 7 * 3600)
+                _, metadata = protocol.identity(self.main, tree)
+                run(self.main, "worktree", "lock", tree)
+                if native_failure:
+                    import stat
+                    os.chflags(metadata, stat.UF_IMMUTABLE)
+                    try:
+                        failed = preservation.remove(SimpleNamespace(source=self.main, names=tree.name,
+                            path=[], preview=False, force=True))
+                        self.assertEqual("failed", failed["status"], failed)
+                        reason = failed["items"][0]["reason"]
+                        self.assertIn("removal_final-native_failed:CalledProcessError", reason)
+                        self.assertIn("Operation not permitted", reason)
+                        self.assertIn("root=False, pointer=False, registered=True", reason)
+                    finally:
+                        os.chflags(metadata, 0)
+                else:
+                    # Portable equivalent of the native partial-effect state.
+                    shutil.rmtree(tree)
+                self.assertFalse(os.path.lexists(tree))
+                current = next(row for row in protocol.inventory(self.main)
+                               if Path(row["worktree"]) == tree)
+                self.assertIn("locked", current)
+                with self.assertRaises(protocol.Refused):
+                    protocol.identity(self.main, tree)
+                with self.assertRaises(protocol.Refused):
+                    pool.claim(self.options("lane/governance/strict-reuse", tree))
+                recent = self.root / ("recent-" + entrance)
+                self.commit_branch("lane/governance/recent-" + entrance, recent, 60)
+                recent_pointer = (recent / ".git").read_bytes()
+                if not native_failure:
+                    preview = preservation.remove(SimpleNamespace(source=self.main, names=tree.name,
+                        path=[], preview=True, force=True))
+                    self.assertEqual("would_remove", preview["items"][0]["outcome"], preview)
+                    self.assertFalse(os.path.lexists(tree), "preview must not recreate the root")
+                    self.assertTrue(metadata.is_dir())
+                if entrance == "worktree-remove":
+                    result = self.make(entrance, "NAMES=" + tree.name, "FORCE=1", check=False)
+                else:
+                    result = self.make("-C", "tools", entrance, "FORCE=1", "BASE=" + self.base,
+                                       check=False)
+                self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+                self.assertFalse(os.path.lexists(tree))
+                self.assertFalse(metadata.exists())
+                self.assertFalse(any(Path(row["worktree"]) == tree for row in protocol.inventory(self.main)))
+                self.assertEqual(head, run(self.main, "rev-parse", branch).stdout.strip())
+                self.assertEqual(recent_pointer, (recent / ".git").read_bytes())
+                self.assertEqual("dev", run(self.main, "branch", "--show-current").stdout.strip())
+
+    def test_absent_root_locked_registration_supported_cleanup_and_preview(self):
+        self.absent_root_cleanup_entrances(native_failure=False)
+
+    @unittest.skipUnless(hasattr(os, "chflags"), "requires native immutable flags")
+    def test_actual_absent_root_native_partial_failure_supported_retry(self):
+        self.absent_root_cleanup_entrances(native_failure=True)
+
+    def test_absent_root_recovery_preserves_registration_boundaries(self):
+        for boundary in ("unregistered", "backlink", "alias", "nested", "metadata-link"):
+            with self.subTest(boundary=boundary):
+                tree = self.root / boundary
+                branch = "lane/governance/" + boundary
+                head = self.commit_branch(branch, tree, 7 * 3600)
+                _, metadata = protocol.identity(self.main, tree)
+                shutil.rmtree(tree)
+                requested = tree
+                if boundary == "unregistered":
+                    run(self.main, "worktree", "remove", "--force", "--force", tree)
+                elif boundary == "backlink":
+                    (metadata / "gitdir").write_text(str(self.root / "foreign/.git") + "\n")
+                elif boundary == "alias":
+                    requested = self.root / "dangling-alias"
+                    requested.symlink_to(tree, target_is_directory=True)
+                elif boundary == "nested":
+                    tree.mkdir()
+                    run(self.main, "worktree", "add", "-b", "nested", tree / "nested")
+                    shutil.rmtree(tree)
+                else:
+                    saved = self.root / "saved-administration"
+                    metadata.rename(saved)
+                    metadata.symlink_to(saved, target_is_directory=True)
+                with self.assertRaises(protocol.Refused):
+                    preservation.remove_registered(self.main, requested)
+                self.assertFalse(os.path.lexists(tree), "refusal must not recreate the root")
+                if boundary != "unregistered":
+                    self.assertTrue(metadata.exists())
+                self.assertEqual(head, run(self.main, "rev-parse", branch).stdout.strip())
+        arbitrary = self.root / "unregistered-directory"
+        arbitrary.mkdir()
+        (arbitrary / "keep").write_text("personal bytes")
+        for path in (self.main, arbitrary):
+            with self.assertRaises(protocol.Refused):
+                preservation.remove_registered(self.main, path)
+        self.assertEqual("personal bytes", (arbitrary / "keep").read_text())
+        self.assertEqual("dev", run(self.main, "branch", "--show-current").stdout.strip())
+
+    def test_automatic_allocation_payload_failure_identifies_selected_path(self):
+        tree = self.root / "selected five-hour tree"
+        head = self.commit_branch("lane/governance/selected", tree, 5 * 3600)
+        failure = subprocess.CalledProcessError(1, ["/bin/rm", "-rf", "--", "./payload"],
+                                              stderr=b"rm: ./payload: deletion denied\n")
+        with patch.object(preservation, "_remove_payload", side_effect=failure):
+            with self.assertRaises(protocol.GitFailure) as failed:
+                pool.claim(self.options("lane/governance/new-auto"))
+        reason = str(failed.exception)
+        self.assertIn("removal_payload_failed:CalledProcessError", reason)
+        self.assertIn("deletion denied", reason)
+        self.assertIn("root=True, pointer=True, registered=True", reason)
+        self.assertIn(str(tree), reason)
+        self.assertEqual(head, run(tree, "rev-parse", "HEAD").stdout.strip())
+
+    @unittest.skipUnless(hasattr(os, "chflags"), "requires native immutable flags")
+    def test_actual_default_allocation_failure_reports_selected_not_nominal_path(self):
+        import stat
+        self.prepare_make()
+        for entrance in ("default-make", "cli-with-nominal"):
+            with self.subTest(entrance=entrance):
+                tree = self.root / ("selected-" + entrance)
+                branch = "lane/governance/selected-" + entrance
+                head = self.commit_branch(branch, tree, 5 * 3600)
+                blocked = tree / "blocked"
+                blocked.write_text("retained on failure")
+                name = "diagnostic-allocation-" + entrance
+                nominal = self.root / ("trureturing-" + name)
+                self.assertNotEqual(tree, nominal)
+                os.chflags(blocked, stat.UF_IMMUTABLE)
+                try:
+                    if entrance == "default-make":
+                        failed = self.make("worktree", "KIND=governance", "NAME=" + name,
+                                           "BASE=" + self.base, check=False)
+                    else:
+                        failed = self.create(name, nominal, reuse_any=True, check=False)
+                    output = failed.stdout + failed.stderr
+                    self.assertNotEqual(0, failed.returncode, output)
+                    self.assertIn("removal_payload_failed:CalledProcessError", output)
+                    self.assertIn("Operation not permitted", output)
+                    self.assertIn("root=True, pointer=True, registered=True", output)
+                    self.assertIn(str(tree), output)
+                    self.assertTrue(blocked.exists())
+                    self.assertFalse(nominal.exists())
+                finally:
+                    os.chflags(blocked, 0)
+                    self.make("worktree-remove", "NAMES=" + tree.name, "FORCE=1")
+                self.assertEqual(head, run(self.main, "rev-parse", branch).stdout.strip())
+        self.assertEqual("dev", run(self.main, "branch", "--show-current").stdout.strip())
+
+    def test_missing_pointer_locked_registration_supported_cleanup_entrances(self):
+        self.prepare_make()
+        # Control only the unrelated artifact activity inventory. Make, the host
+        # cleanup owner and native registered-tree removal still execute normally.
+        python = self.bin / "python3"
+        python.write_text(f'''#!{sys.executable}
+import importlib.util, os, sys
+arguments = sys.argv[1:]
+if arguments[:1] == ["-B"]:
+    arguments.pop(0)
+if arguments[:1] != [{str(self.main / "tools/scripts/host-cleanup.py")!r}]:
+    os.execv({sys.executable!r}, [{sys.executable!r}, *sys.argv[1:]])
+sys.path.insert(0, os.path.dirname(arguments[0]))
+spec = importlib.util.spec_from_file_location("cleanup", arguments[0])
+cleanup = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(cleanup)
+cleanup.active_paths = lambda *args, **kwargs: set()
+raise SystemExit(cleanup.main(arguments[1:]))
+''')
+        python.chmod(0o700)
+        for entrance in ("clean-all", "clean-lanes", "worktree-remove"):
+            with self.subTest(entrance=entrance):
+                tree = self.root / ("missing-" + entrance)
+                branch = "lane/governance/" + entrance
+                head = self.commit_branch(branch, tree, 7 * 3600)
+                run(self.main, "worktree", "lock", tree, "--reason", "ordinary native lock")
+                (tree / ".git").unlink()
+                recent = self.root / ("recent-" + entrance)
+                self.commit_branch("lane/governance/recent-" + entrance, recent, 60)
+                if entrance == "worktree-remove":
+                    result = self.make(entrance, "NAMES=" + tree.name, "FORCE=1", check=False)
+                else:
+                    result = self.make("-C", "tools", entrance, "FORCE=1", "BASE=" + self.base,
+                                       "CLEAN_TMP_ROOT=" + str(self.root / "artifacts"), check=False)
+                self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+                self.assertFalse(tree.exists(), result.stdout)
+                self.assertFalse(any(Path(row["worktree"]) == tree for row in protocol.inventory(self.main)))
+                self.assertEqual(head, run(self.main, "rev-parse", branch).stdout.strip())
+                self.assertTrue((recent / ".git").exists())
+                self.assertEqual("dev", run(self.main, "branch", "--show-current").stdout.strip())
+
+    def test_missing_pointer_recovery_rejects_foreign_backlink_alias_and_nested_registration(self):
+        for boundary in ("foreign", "bare", "backlink", "alias", "nested"):
+            with self.subTest(boundary=boundary):
+                tree = self.root / boundary
+                self.commit_branch("lane/governance/" + boundary, tree, 7 * 3600)
+                _, metadata = protocol.identity(self.main, tree)
+                (tree / ".git").unlink()
+                requested = tree
+                if boundary == "foreign":
+                    run(tree, "init", "--initial-branch=foreign")
+                elif boundary == "bare":
+                    run(self.main, "init", "--bare", tree)
+                elif boundary == "backlink":
+                    (metadata / "gitdir").write_text(str(self.root / "foreign/.git") + "\n")
+                elif boundary == "alias":
+                    requested = self.root / "alias-link"
+                    requested.symlink_to(tree, target_is_directory=True)
+                else:
+                    run(self.main, "worktree", "add", "-b", "nested", tree / "nested")
+                with self.assertRaises(protocol.Refused):
+                    preservation.remove_registered(self.main, requested)
+                self.assertTrue((tree / "payload").exists())
+
+    def test_missing_pointer_cleanup_is_preview_only_then_native_retry(self):
+        tree, sibling = self.root / "missing", self.root / "other"
+        head = self.commit_branch("lane/governance/missing", tree, 7 * 3600)
+        self.commit_branch("lane/governance/other", sibling, 60)
+        sibling_pointer = (sibling / ".git").read_bytes()
+        run(self.main, "worktree", "lock", tree)
+        (tree / ".git").unlink()
+        with self.assertRaises(protocol.Refused):
+            protocol.identity(self.main, tree)
+        options = SimpleNamespace(source=self.main, names="", path=[tree], preview=True, force=True)
+        result = preservation.remove(options)
+        self.assertEqual("would_remove", result["items"][0]["outcome"])
+        self.assertFalse((tree / ".git").exists(), "preview must not repair")
+        options.preview = False
+        failure = subprocess.CalledProcessError(1, ["rm"], stderr=b"retryable payload error")
+        with patch.object(preservation, "_remove_payload", side_effect=failure):
+            result = preservation.remove(options)
+        self.assertEqual("failed", result["status"], result)
+        self.assertIn("pointer=True, registered=True", result["items"][0]["reason"])
+        protocol.identity(self.main, tree)
+        self.assertEqual("succeeded", preservation.remove(options)["status"])
+        self.assertFalse(tree.exists())
+        self.assertEqual(sibling_pointer, (sibling / ".git").read_bytes())
+        self.assertEqual(head, run(self.main, "rev-parse", "lane/governance/missing").stdout.strip())
+
+    def test_removal_deadline_matches_force_and_allocation_contract_without_waiting(self):
+        for mode in ("normal", "force", "allocation", "sweep"):
+            with self.subTest(mode=mode):
+                tree = self.root / ("deadline-" + mode)
+                self.commit_branch("lane/governance/old-" + mode, tree, 7 * 3600)
+                native, observed = subprocess.run, []
+                def elapsed(command, *args, **kwargs):
+                    if command[0] == "/bin/rm" or "remove" in command and "worktree" in command:
+                        timeout = kwargs.get("timeout")
+                        observed.append(timeout)
+                        # Model 301 seconds of deletion without waiting. A hidden
+                        # 300s deadline fails exactly as the production subprocess.
+                        if timeout is not None and timeout <= 301:
+                            raise subprocess.TimeoutExpired(command, timeout)
+                    return native(command, *args, **kwargs)
+                with patch.object(preservation.subprocess, "run", side_effect=elapsed):
+                    if mode == "allocation":
+                        result = pool.claim(self.options("lane/governance/new-deadline", tree))
+                    elif mode == "sweep":
+                        result = pool.sweep(self.main, self.base, force=True)
+                    else:
+                        result = preservation.remove(SimpleNamespace(source=self.main, names="", path=[tree],
+                            preview=False, force=mode == "force"))
+                self.assertNotEqual("failed", result.get("status"), result)
+                self.assertTrue(observed)
+                if mode == "normal":
+                    self.assertTrue(all(301 < value <= 1800 for value in observed), observed)
+                else:
+                    self.assertEqual([None] * len(observed), observed)
+
     def test_partial_payload_failure_preserves_identity_and_claim_retry(self):
         for fault in ("error", "timeout", "interrupt"):
             with self.subTest(fault=fault):
@@ -240,7 +510,7 @@ class LifecycleTests(unittest.TestCase):
         self.assertEqual(sentinel.read_text(), "external bytes")
         self.assertEqual(run(self.main, "rev-parse", branch).stdout.strip(), head)
 
-    def test_removal_shares_unchanged_deadline_and_exposes_timeout_stderr(self):
+    def test_removal_shares_normal_deadline_and_exposes_timeout_stderr(self):
         tree = self.root / "deadline"
         self.commit_branch("lane/governance/deadline", tree, 7 * 3600)
         original = subprocess.run
@@ -256,7 +526,7 @@ class LifecycleTests(unittest.TestCase):
                 patch.object(preservation, "time", SimpleNamespace(monotonic=iter([0, 10, 40]).__next__)):
             with self.assertRaisesRegex(protocol.GitFailure, "final-native.*native timeout diagnostic"):
                 preservation.remove_registered(self.main, tree)
-        self.assertEqual(budgets, [290, 260])
+        self.assertEqual(budgets, [1790, 1760])
         protocol.identity(self.main, tree)
         preservation.remove_registered(self.main, tree)
 
@@ -686,4 +956,8 @@ class LifecycleTests(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main(verbosity=2)
+    if sys.argv[1:] == ["--list-tests"]:
+        print(json.dumps(["LifecycleTests." + name for name in
+                          unittest.defaultTestLoader.getTestCaseNames(LifecycleTests)]))
+    else:
+        unittest.main(verbosity=2)

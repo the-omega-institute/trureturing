@@ -1,0 +1,28 @@
+**引理 7.3（普通有限维逆函数定理的连续拉回）。** 对7.2的固定 $P_r$，定义普通有限维群映射
+
+$$
+\Psi:\mathbb R^d\longrightarrow U(n),\qquad
+\Psi(s)=e^{is_dP_d}\cdots e^{is_1P_1}.
+\tag{7.4}
+$$
+
+其原点微分为 $s\mapsto i\sum_rs_rP_r$，是到 $\mathfrak u(n)$ 的实线性同构。故存在 $0$ 的参数邻域 $B$、$I$ 的群邻域 $V$ 及连续实坐标 $f_r:V\to\mathbb R$，满足 $\Psi(f(F))=F$、$f(I)=0$。对每个实际 $U\in\mathcal U(M)$ 充分范数接近 $I$，存在实际 $b_r\in A_{\rm sa}$，使
+
+$$
+U=e^{ib_dp_d}\cdots e^{ib_1p_1}
+=e^{J\alpha_dp_d}\cdots e^{J\alpha_1p_1},
+\qquad \alpha_r=Qb_r\in A_{\rm sa}.
+\tag{7.5}
+$$
+
+证明。逆函数定理只用于已知普通 $U(n)$ 上的7.4。用实际连续矩阵场 $F=W^*UW$；它给连续映射 $\widehat F:X\to U(n)$。选择 $\|U-I\|$ 足够小，保证所有 $\widehat F(\chi)$ 落在 $V$ 内一个紧子邻域。此时
+
+$$
+\widehat b_r(\chi)=f_r(\widehat F(\chi))
+\tag{7.6}
+$$
+
+是 $X$ 上实际连续实函数，故本身就是 $b_r\in A_{\rm sa}$。把普通恒等式7.4逐 character 读取并用单射性返回 $M_n(A)$，再作 $W$ 共轭，得第一式7.5。$JQ=i$ 给第二式。
+
+7.6准确使用 $W^*UW$ 而非 $U$ 的原坐标；它是矩阵条目映射与普通连续坐标的复合，不是给非正规矩阵套单变量谱演算，也不涉及 Borel 演算。∎
+
