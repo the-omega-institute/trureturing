@@ -12,10 +12,18 @@ escape_witness: none; all-height class reduction is semiconjugacy iteration.
 After normalizing finite one-step premises, v_eq_w is an instance of
 Function.Semiconj.iterate_right. It and its downstream chain are bind-only.
 Declaration namespace: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233128SquareStrip
-DIRECT_FROZEN_DEPENDENCIES
-DECLARATION_CONSUMERS
+Direct frozen dependencies (declaration GIDs and statement_ids):
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.Seen
+statement_id: sha256:db13d94501d24f27e6e69604bb633af95ff3309c5698815c44e12d2e52739fce
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.PairRow
+statement_id: sha256:e97b1a06b78d944d101465bdc94301416cfe964a1e9cbf900093e9cd04d04132
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.rowProper
+statement_id: sha256:be16a774dbabce7949eb6e2bfc0026252c129abfda8a7377875535297a177b53
+row_counts_two: proof_shape=bind-only; consumers=row_counts
+row_counts: proof_shape=bind-only; consumers=finite_certificate
 -/
 
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233128CertificateA
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233128CertificateB
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233128CertificateC

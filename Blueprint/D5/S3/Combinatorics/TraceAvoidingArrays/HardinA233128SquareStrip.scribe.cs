@@ -53,8 +53,7 @@ internal sealed class HardinA233128SquareStripDocument : IScribeDocumentDefiniti
                     + "identity: multiplying it by the continuation vector at any height "
                     + "proves the recurrence for the literal counts. The index n is any "
                     + "natural number, so the left side covers every height at least 15. "
-                    + "Every count is cast to Int before signed arithmetic. This is "
-                    + "Phase A and carries no publication or resolution claim."))),
+                    + "Every count is cast to Int before signed arithmetic."))),
                 DescribeRole.Theorem))));
 
     private static Formula Seen() => Name(Scanner + "Seen");

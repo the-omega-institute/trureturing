@@ -12,10 +12,42 @@ escape_witness: none; all-height class reduction is semiconjugacy iteration.
 After normalizing finite one-step premises, v_eq_w is an instance of
 Function.Semiconj.iterate_right. It and its downstream chain are bind-only.
 Declaration namespace: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233128SquareStrip
-DIRECT_FROZEN_DEPENDENCIES
-DECLARATION_CONSUMERS
+Direct frozen dependencies (declaration GIDs and statement_ids):
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.Seen
+statement_id: sha256:db13d94501d24f27e6e69604bb633af95ff3309c5698815c44e12d2e52739fce
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255LiteralBridge.rowFinish
+statement_id: sha256:ded50bd8c5de69b5b2324e575fee135f275ae05b5bb30b328b0e5c0313d86b07
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255LiteralBridge.rowWeight
+statement_id: sha256:076a03b0e19556ba67d0faed8d8d552fb3d55e6c40992d9c52c88faad85e373a
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.PairRow
+statement_id: sha256:e97b1a06b78d944d101465bdc94301416cfe964a1e9cbf900093e9cd04d04132
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.decidableRowProper
+statement_id: sha256:3008fde3ace25a7a7b6733df6dfc91bda36cb584aea7e431b1c29d583dc1893d
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.rowProper
+statement_id: sha256:be16a774dbabce7949eb6e2bfc0026252c129abfda8a7377875535297a177b53
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255ShapeSymmetry.full_row
+statement_id: sha256:f81e65c6e42bf750ca73737a7ace4b7b696a7b7a57684908ba1ce134acfcf88c
+completed_0101010: proof_shape=bind-only; consumers=row_counts_zero
+completed_0101012: proof_shape=bind-only; consumers=row_counts_zero
+completed_0101020: proof_shape=bind-only; consumers=row_counts_zero
+completed_0101021: proof_shape=bind-only; consumers=row_counts_zero
+completed_0101201: proof_shape=bind-only; consumers=row_counts_zero
+completed_0101202: proof_shape=bind-only; consumers=row_counts_zero
+completed_0101210: proof_shape=bind-only; consumers=row_counts_zero
+completed_0101212: proof_shape=bind-only; consumers=row_counts_zero
+completed_0102010: proof_shape=bind-only; consumers=row_counts_zero
+completed_0102012: proof_shape=bind-only; consumers=row_counts_zero
+completed_0102020: proof_shape=bind-only; consumers=row_counts_zero
+completed_0102021: proof_shape=bind-only; consumers=row_counts_zero
+completed_0102101: proof_shape=bind-only; consumers=row_counts_zero
+completed_0102102: proof_shape=bind-only; consumers=row_counts_zero
+completed_0102120: proof_shape=bind-only; consumers=row_counts_zero
+completed_0102121: proof_shape=bind-only; consumers=row_counts_zero
 -/
 
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255PairTransfer
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233128Rows
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233128Fibres
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255ShapeSymmetry

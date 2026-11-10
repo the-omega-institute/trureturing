@@ -12,8 +12,74 @@ escape_witness: none; all-height class reduction is semiconjugacy iteration.
 After normalizing finite one-step premises, v_eq_w is an instance of
 Function.Semiconj.iterate_right. It and its downstream chain are bind-only.
 Declaration namespace: D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233128SquareStrip
-DIRECT_FROZEN_DEPENDENCIES
-DECLARATION_CONSUMERS
+Direct frozen dependencies (declaration GIDs and statement_ids):
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.Seen
+statement_id: sha256:db13d94501d24f27e6e69604bb633af95ff3309c5698815c44e12d2e52739fce
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.finish
+statement_id: sha256:ebae2e26fe8811cb0e473a0168c27f49fa151fa2bcecda8ad3ba0c9fabc41a7f
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.finish_fst
+statement_id: sha256:5859cc0f84f4e6a91313521f32ea6d187c4822bb52d4e438939da5e000940bd5
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.finish_snd
+statement_id: sha256:1ada14ea452d6f35f959dbbd5a034265c8c6921cd041422cad27ec166a94d24c
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.good
+statement_id: sha256:f68e874b0a22676cb3053202c645a8ce30010dcd695d55f3e7fce272d4ce5989
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.good_iff
+statement_id: sha256:59d0ffb034f7f2361718e6d2566eb24417785b9a178f6fcb44f336c1199d3d62
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.colour_bond_iff
+statement_id: sha256:b9273762bbccc68fc56c48c38b8aba02a46a50a53bfbbe70a660fd21867d6be8
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.widthInstDecidableGood
+statement_id: sha256:1b18af22481f3b703bd96b1eff1d82cd4f06b1e61f3b79669043a61a31d15152
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.widthInstDecidableLegal
+statement_id: sha256:6c1f0ba304e14673a1966eca92d67e12ccf8925c940c5ba2391b4b478ac39547
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.widthLegal
+statement_id: sha256:989eff70ea57c1a27e750e36536ea11ddb8f9aa5a27d74dce459fc2432ec52e8
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.widthNormal
+statement_id: sha256:544f7677e789967b28078e2cb7f71e075b79492f79f4741e37f835329362022b
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.widthStep
+statement_id: sha256:bd12c5c5928f8822063ec100e0e6e92c5300f5907da4aa64e85595a1ee4c7cb5
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.widthTotal
+statement_id: sha256:c4c082551693765b0f6c344f5f6ff825120f019a96ec4d79015c10c10bf774d0
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.widthV
+statement_id: sha256:4f3953ec5d8902b74486197a6f4d782f3fb58c6627a5740a5242632a7560f9ed
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.width_counting_bridge
+statement_id: sha256:a6ad861eda2ca48bc91989542e4b7cc27d81aec8df9a91b8db40c9398c577c72
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255LiteralBridge.rowFinish
+statement_id: sha256:ded50bd8c5de69b5b2324e575fee135f275ae05b5bb30b328b0e5c0313d86b07
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255LiteralBridge.rowWeight
+statement_id: sha256:076a03b0e19556ba67d0faed8d8d552fb3d55e6c40992d9c52c88faad85e373a
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.PairRow
+statement_id: sha256:e97b1a06b78d944d101465bdc94301416cfe964a1e9cbf900093e9cd04d04132
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.Row
+statement_id: sha256:bfdef18389c25a4e0e0289ec0c41644aaf42d71c7a4d540ac5103952779dfd2c
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.decidableRowLegal
+statement_id: sha256:566fa77bfdf47796ff0524d5a78f68b96413ca55006aa1429a767aad72408b70
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.decidableRowProper
+statement_id: sha256:3008fde3ace25a7a7b6733df6dfc91bda36cb584aea7e431b1c29d583dc1893d
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.first_fibres
+statement_id: sha256:3a96f3fdc23bad6d14d0e164907d2eff591563f9c6fb4212e2552316abd3de04
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.rowLegal
+statement_id: sha256:ad59d456a8f5b2710481be3ed4a9d79e276a0e4319f7b6918310d350fc440508
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.rowProper
+statement_id: sha256:be16a774dbabce7949eb6e2bfc0026252c129abfda8a7377875535297a177b53
+GID: D5/S3/Observer/Separation/BooleanRankThreeK4.beta
+statement_id: sha256:1abdc5f3db71567fe05de5aabbe80dddeb5ec5179e4ec7fd49fe71e500518481
+bonds_iff: proof_shape=bind-only; consumers=counting_bridge
+v: proof_shape=bind-only; consumers=counting_bridge, v_eq_w
+total: proof_shape=bind-only; consumers=counting_bridge
+counting_bridge: proof_shape=bind-only; consumers=a_eq_w
+valid_next: proof_shape=bind-only; consumers=initial_valid, v_eq_w
+initial_valid: proof_shape=bind-only; consumers=a_eq_w
+initial_fibres: proof_shape=bind-only; consumers=initial_counts
+initial_counts: proof_shape=bind-only; consumers=finite_certificate
+finite_certificate: proof_shape=bind-only; consumers=v_eq_w, a_eq_w
+w: proof_shape=bind-only; consumers=v_eq_w, a_eq_w, shifted_count
+v_eq_w: proof_shape=bind-only; consumers=a_eq_w
+a_eq_w: proof_shape=bind-only; consumers=shifted_count
+distribution: proof_shape=bind-only; consumers=distribution_step
+distribution_step: proof_shape=bind-only; consumers=shifted_count
+shifted_count: proof_shape=bind-only; consumers=result
+distribution_relation: proof_shape=bind-only; consumers=result
+result: proof_shape=bind-only; consumers=terminal result (#28672)
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233128Rows
@@ -171,7 +237,8 @@ private theorem v_eq_w (n : ℕ) (s : Seen) (p : PairRow) (h : Valid s p) :
 
 private theorem a_eq_w (n : ℕ) :
     (a (n + 1) : ℤ) = ∑ k : Fin 21,
-    ![32, 0, 32, 32, 32, 16, 32, 32, 32, 32, 16, 32, 32, 16, 32, 16, 32, 16, 32, 16, 16] k * w n k := by
+    ![32, 0, 32, 32, 32, 16, 32, 32, 32, 32, 16, 32, 32, 16,
+      32, 16, 32, 16, 32, 16, 16] k * w n k := by
   rw [counting_bridge, total, widthTotal]
   have hs : ∀ c : Row, (if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c then
       v n (finish (false, false) c) (labels c) else 0) =

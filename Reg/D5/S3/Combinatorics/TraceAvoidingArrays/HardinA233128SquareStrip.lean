@@ -138,7 +138,8 @@ abbrev arena : Arena where
   signature := signature
   Law R :=
     (∀ s p, Valid s p → ∀ k, classCount s p k = transfer (boundaryClass s p) k) ∧
-    (∀ k, R.readout () () k = ![32, 0, 32, 32, 32, 16, 32, 32, 32, 32, 16, 32, 32, 16, 32, 16, 32, 16, 32, 16, 16] k)
+    (∀ k, R.readout () () k = ![32, 0, 32, 32, 32, 16, 32, 32, 32, 32, 16, 32, 32, 16,
+        32, 16, 32, 16, 32, 16, 16] k)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
