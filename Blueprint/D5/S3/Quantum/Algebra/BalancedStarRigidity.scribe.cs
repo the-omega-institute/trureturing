@@ -64,7 +64,7 @@ internal sealed class BalancedStarRigidityDocument : IScribeDocumentDefinition
     private static Formula Gram(Formula phi, Formula a, Formula b) => C("B",phi,a,b);
     private static Formula Budget(Formula x, Formula phi) => Le(C("abs",Reading(phi,Label("L",x))),Add(C("sqrt",Gram(phi,Label("Rp",x),Label("Sp",x))),C("sqrt",Gram(phi,Label("Rm",x),Label("Sm",x)))));
     private static Formula ZeroBudget() => All("phi",Pos,Budget(N(0),V("phi")));
-    private static Formula AllBudgets() => And(All("phi",Pos,Le(Sq(Reading(V("phi"),G)),Gram(V("phi"),V("c"),V("t")))),All("x",V("A"),Imp(C("CornerSA",V("x")),All("phi",Pos,Budget(V("x"),V("phi")))));
+    private static Formula AllBudgets() => And(All("phi",Pos,Le(Sq(Reading(V("phi"),G)),Gram(V("phi"),V("c"),V("t")))),All("x",V("A"),Imp(C("CornerSA",V("x")),All("phi",Pos,Budget(V("x"),V("phi"))))));
     private static Formula ForParameters(Formula body) => All("sigma",Rl,All("rho",Rl,Imp(Or(Eq(V("sigma"),N(1)),Eq(V("sigma"),new Formula.Negate(N(1)))),body)));
     private static Formula Scalar(string name) => C(name,V("rho"));
     private static Formula FiniteStatement()
