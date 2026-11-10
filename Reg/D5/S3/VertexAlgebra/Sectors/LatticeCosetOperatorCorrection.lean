@@ -2,13 +2,17 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import D5.S3.VertexAlgebra.Sectors.LatticeCosetOperatorCorrection
 
+/-! Exact dependent source realization of the native all-state correction.
+The enrolled readout and intervention evidence remain unconstructed. -/
+
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 
 namespace Reg.D5.S3.VertexAlgebra.LatticeCosetOperatorCorrection
 
 open _root_.D5.S3.VertexAlgebra
-open LatticeGeneratingFieldLocality LatticeCosetCompression LatticeDiscriminantTheta
+open LatticeGeneratingFieldLocality LatticeAllStateField
+open LatticeCosetCompression LatticeDiscriminantTheta
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open scoped BigOperators VertexOperator
 
