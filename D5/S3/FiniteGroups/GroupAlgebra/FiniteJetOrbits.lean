@@ -11,6 +11,8 @@ import Mathlib.Algebra.Algebra.Shrink
 import Mathlib.Algebra.Field.Shrink
 import Mathlib.Data.Fintype.Shrink
 
+/-! Actual original representation classes and finite-field orbit transport. -/
+
 set_option autoImplicit false
 noncomputable section
 namespace D5.S3.FiniteGroups.GroupAlgebra.FiniteJetOrbits
@@ -19,22 +21,22 @@ open scoped BigOperators
 universe u
 variable {p : ℕ} [Fact p.Prime] [Fact (2 < p)]
 variable {K : Type u} [Field K] [Fintype K] [Algebra (ZMod p) K]
-local notation "F" => ZMod p
+local notation "𝔽" => ZMod p
 local notation "V" => Polynomial.degreeLT K p
 local notation "E" => Multiplicative K
 
 /-- Actual representations in the normalized original family, with no chosen coefficient data. -/
-def OriginalFamily := {ρ : Representation F E V //
+def OriginalFamily := {ρ : Representation 𝔽 E V //
   ∃ q : Normalized (p := p) (K := K), originalRepresentation q.val = ρ}
 
 /-- Both original relabelings and merely prime-field-linear intertwiners are arbitrary. -/
 def originalSetoid : Setoid (OriginalFamily (p := p) (K := K)) where
-  r ρ τ := ∃ (φ : E ≃* E) (P : V ≃ₗ[F] V), ∀ (g : E) (v : V),
+  r ρ τ := ∃ (φ : E ≃* E) (P : V ≃ₗ[𝔽] V), ∀ (g : E) (v : V),
     P (ρ.val g v) = τ.val (φ g) (P v)
   iseqv := by
     constructor
     · intro ρ
-      exact ⟨MulEquiv.refl E, LinearEquiv.refl F V, fun _ _ => rfl⟩
+      exact ⟨MulEquiv.refl E, LinearEquiv.refl 𝔽 V, fun _ _ => rfl⟩
     · rintro ρ τ ⟨φ, P, h⟩
       refine ⟨φ.symm, P.symm, ?_⟩
       intro g v
@@ -55,26 +57,26 @@ private def ofCoefficients (n : ℕ) (A : Fin (n - 1) → K) :
 
 private theorem related_coefficients {n : ℕ} (hn : 1 ≤ n)
     (hK : Fintype.card K = p ^ n) (A B : Fin (n - 1) → K) :
-    originalSetoid (ofCoefficients n A) (ofCoefficients n B) ↔
-      ∃ (c : Kˣ) (σ : K ≃ₐ[F] K),
+    originalSetoid (ofCoefficients (p := p) n A) (ofCoefficients (p := p) n B) ↔
+      ∃ (c : Kˣ) (σ : K ≃ₐ[𝔽] K),
         ∀ i, B i = ((c⁻¹ : Kˣ) : K) ^ weight p n i * σ (A i) :=
   original_equivalence_iff hn hK A B
 
 section Transport
-variable {L : Type} [Field L] [Fintype L] [Algebra F L]
+variable {L : Type} [Field L] [Fintype L] [Algebra (ZMod p) L]
 
 private theorem relation_transport {n : ℕ} (hn : 1 ≤ n)
-    (hK : Fintype.card K = p ^ n) (e : K ≃ₐ[F] L) (A B : Fin (n - 1) → L) :
-    originalSetoid (ofCoefficients n (fun i => e.symm (A i)))
-      (ofCoefficients n (fun i => e.symm (B i))) ↔
-      letI := WeightedSemilinear.weightedAction (F := F) (K := L) (weight p n)
-      MulAction.orbitRel (WeightedSemilinear.Group F L) (Fin (n - 1) → L) A B := by
-  letI := WeightedSemilinear.weightedAction (F := F) (K := L) (weight p n)
+    (hK : Fintype.card K = p ^ n) (e : K ≃ₐ[𝔽] L) (A B : Fin (n - 1) → L) :
+    originalSetoid (ofCoefficients (p := p) n (fun i => e.symm (A i)))
+      (ofCoefficients (p := p) n (fun i => e.symm (B i))) ↔
+      letI := WeightedSemilinear.weightedAction (F := 𝔽) (K := L) (weight p n)
+      MulAction.orbitRel (WeightedSemilinear.Group 𝔽 L) (Fin (n - 1) → L) A B := by
+  letI := WeightedSemilinear.weightedAction (F := 𝔽) (K := L) (weight p n)
   constructor
   · intro h
     obtain ⟨c, σ, hB⟩ := (related_coefficients hn hK _ _).mp h
-    apply (MulAction.orbitRel (WeightedSemilinear.Group F L) (Fin (n - 1) → L)).symm
-    change ∃ g : WeightedSemilinear.Group F L, WeightedSemilinear.act (weight p n) g A = B
+    apply (MulAction.orbitRel (WeightedSemilinear.Group 𝔽 L) (Fin (n - 1) → L)).symm
+    change ∃ g : WeightedSemilinear.Group 𝔽 L, WeightedSemilinear.act (weight p n) g A = B
     refine ⟨⟨Units.map e.toMonoidHom c, e.symm.trans (σ.trans e)⟩, ?_⟩
     funext i
     have h := congrArg e (hB i)
@@ -82,7 +84,7 @@ private theorem relation_transport {n : ℕ} (hn : 1 ≤ n)
   · intro h
     apply (originalSetoid (p := p) (K := K)).symm
     apply (related_coefficients hn hK _ _).mpr
-    change ∃ g : WeightedSemilinear.Group F L, WeightedSemilinear.act (weight p n) g B = A at h
+    change ∃ g : WeightedSemilinear.Group 𝔽 L, WeightedSemilinear.act (weight p n) g B = A at h
     obtain ⟨g, hg⟩ := h
     refine ⟨Units.map e.symm.toMonoidHom g.left, e.trans (g.right.trans e.symm), ?_⟩
     intro i
@@ -90,20 +92,20 @@ private theorem relation_transport {n : ℕ} (hn : 1 ≤ n)
     simpa [WeightedSemilinear.act, map_mul, map_pow] using h.symm
 
 private def orbitToOriginal {n : ℕ} (hn : 1 ≤ n)
-    (hK : Fintype.card K = p ^ n) (e : K ≃ₐ[F] L) :
-    WeightedSemilinear.Orbits (F := F) (K := L) (weight p n) →
+    (hK : Fintype.card K = p ^ n) (e : K ≃ₐ[𝔽] L) :
+    WeightedSemilinear.Orbits (F := 𝔽) (K := L) (weight p n) →
       OriginalClasses (p := p) (K := K) := by
-  letI := WeightedSemilinear.weightedAction (F := F) (K := L) (weight p n)
-  exact Quotient.map (fun A => ofCoefficients n (fun i => e.symm (A i)))
+  letI := WeightedSemilinear.weightedAction (F := 𝔽) (K := L) (weight p n)
+  exact Quotient.map (fun A => ofCoefficients (p := p) n (fun i => e.symm (A i)))
     (fun A B h => (relation_transport hn hK e A B).mpr h)
 
 /-- Any actual prime-field algebra equivalence transports the full original
 representation quotient to the native weighted semilinear orbit quotient. -/
 def quotientEquiv {n : ℕ} (hn : 1 ≤ n)
-    (hK : Fintype.card K = p ^ n) (e : K ≃ₐ[F] L) :
+    (hK : Fintype.card K = p ^ n) (e : K ≃ₐ[𝔽] L) :
     OriginalClasses (p := p) (K := K) ≃
-      WeightedSemilinear.Orbits (F := F) (K := L) (weight p n) := by
-  letI := WeightedSemilinear.weightedAction (F := F) (K := L) (weight p n)
+      WeightedSemilinear.Orbits (F := 𝔽) (K := L) (weight p n) := by
+  letI := WeightedSemilinear.weightedAction (F := 𝔽) (K := L) (weight p n)
   apply Equiv.symm
   refine Equiv.ofBijective (orbitToOriginal hn hK e) ⟨?_, ?_⟩
   · intro x y
@@ -115,11 +117,16 @@ def quotientEquiv {n : ℕ} (hn : 1 ≤ n)
     intro ρ
     obtain ⟨q, hq⟩ := ρ.property
     obtain ⟨A, hA⟩ := (coefficientEquiv hn hK).surjective q
+    have hA' : coefficientMap (p := p) n A = q := hA
     refine ⟨Quotient.mk _ (fun i => e (A i)), ?_⟩
-    change Quotient.mk _ (ofCoefficients n (fun i => e.symm (e (A i)))) = Quotient.mk _ ρ
-    have he : ofCoefficients n (fun i => e.symm (e (A i))) = ρ := by
+    change Quotient.mk _ (ofCoefficients (p := p) n (fun i => e.symm (e (A i)))) = Quotient.mk _ ρ
+    have he : ofCoefficients (p := p) n (fun i => e.symm (e (A i))) = ρ := by
       apply Subtype.ext
-      simpa [ofCoefficients, hA] using hq
+      change originalRepresentation (Q (p := p) n (fun i => e.symm (e (A i)))) = ρ.val
+      simp only [AlgEquiv.symm_apply_apply]
+      change originalRepresentation (coefficientMap (p := p) n A).val = ρ.val
+      rw [hA']
+      exact hq
     rw [he]
 end Transport
 
@@ -133,7 +140,7 @@ theorem original_class_cardinality {n : ℕ} (hn : 1 ≤ n)
           ∑ m ∈ (p ^ d - 1).divisors, (Nat.totient m : ℚ) *
             (p : ℚ) ^ (d * (Finset.univ.filter (fun i : Fin (n - 1) => m ∣ weight p n i)).card) := by
   let L := Shrink.{0} K
-  let e : K ≃ₐ[F] L := (Shrink.algEquiv F K).symm
+  let e : K ≃ₐ[𝔽] L := (@Shrink.algEquiv 𝔽 K (inferInstance : Small.{0} K) _ _ _).symm
   have hL : Fintype.card L = p ^ n := by simpa [L] using hK
   rw [Nat.card_congr (quotientEquiv hn hK e)]
   exact WeightedSemilinear.orbit_cardinality p n (weight p n) hL
