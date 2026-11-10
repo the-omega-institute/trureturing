@@ -26,4 +26,10 @@ abbrev sourceScope_creationSeries_difference :=
 theorem source_actual_creationSeries_difference : sourceScope_creationSeries_difference :=
   @_root_.D5.S3.VertexAlgebra.LatticeCosetTransverse.creationSeries_difference
 
+abbrev sourceScope_creationExponential_factorization :=
+  type_of% (@_root_.D5.S3.VertexAlgebra.LatticeCosetTransverse.creationExponential_factorization)
+theorem source_actual_creationExponential_factorization :
+    sourceScope_creationExponential_factorization :=
+  @_root_.D5.S3.VertexAlgebra.LatticeCosetTransverse.creationExponential_factorization
+
 end Reg.D5.S3.VertexAlgebra.LatticeCosetTransverse

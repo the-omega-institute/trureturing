@@ -364,7 +364,7 @@ theorem creationExponential_factorization (hD : (gramReal D).PosDef)
           algebraMap ℚ (Polynomial (Oscillator D)) (Ring.choose s (k+2)) =
           (algebraMap ℚ (Polynomial (Oscillator D)) s - (k+1 : Polynomial (Oscillator D))) *
             algebraMap ℚ (Polynomial (Oscillator D)) (Ring.choose s (k+1)) := by
-        simpa only [map_mul, map_sub, map_add, map_natCast, map_one,
+        simpa only [map_mul, map_sub, map_add, map_natCast, map_one, map_ofNat,
           Nat.cast_add, Nat.cast_one, Nat.cast_ofNat, add_assoc, one_add_one_eq_two] using
           congrArg (algebraMap ℚ (Polynomial (Oscillator D))) (hChoose (k+1))
       simp only [pow_succ, Nat.cast_add, Nat.cast_one]
@@ -386,16 +386,22 @@ theorem creationExponential_factorization (hD : (gramReal D).PosDef)
     rw [derivative_map, hsource, map_mul, derivative_map]
   have hg : PowerSeries.derivative (R := Polynomial (Oscillator D)) (f₀*K) =
       (f₀*K) * PowerSeries.derivative (R := Polynomial (Oscillator D)) A := by
-    have h := (PowerSeries.derivative (R := Polynomial (Oscillator D))).leibniz f₀ K
+    have h := (PowerSeries.derivative (R := Polynomial (Oscillator D))).leibniz' f₀ K
     change PowerSeries.derivative (R := Polynomial (Oscillator D)) (f₀*K) =
       f₀ * PowerSeries.derivative (R := Polynomial (Oscillator D)) K +
         K * PowerSeries.derivative (R := Polynomial (Oscillator D)) f₀ at h
     rw [h, hf₀, hDK]
     ring
   apply solution_unique f (f₀*K) _ hf hg
-  rw [PowerSeries.coeff_mul, Finset.Nat.antidiagonal_zero]
-  simp only [Finset.sum_singleton, f, f₀, PowerSeries.coeff_map,
-    hconstant, map_one, hKcoeff, pow_zero, one_mul, Ring.choose_zero_right]
+  have hT : PowerSeries.coeff 0 f = 1 := by
+    dsimp only [f]
+    rw [PowerSeries.coeff_map, hconstant, map_one]
+  have hL : PowerSeries.coeff 0 f₀ = 1 := by
+    dsimp only [f₀]
+    rw [PowerSeries.coeff_map, hconstant, map_one]
+  rw [hT, PowerSeries.coeff_mul, Finset.Nat.antidiagonal_zero]
+  simp only [Finset.sum_singleton, hL, hKcoeff, pow_zero, one_mul,
+    Ring.choose_zero_right, map_one]
 
 end
 end D5.S3.VertexAlgebra.LatticeCosetTransverse
