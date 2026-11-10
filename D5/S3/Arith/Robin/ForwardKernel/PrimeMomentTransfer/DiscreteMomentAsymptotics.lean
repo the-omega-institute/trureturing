@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Normalized discrete cubic and fourth moment errors follow from arithmetic transfer and formal interval bounds. -/
+   digest: Mean-square prime correlations: Normalized discrete cubic and fourth moment errors follow from arithmetic transfer and formal interval bounds. -/
 
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.WeightedArithmeticTransfer
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.FormalIntervalMomentBounds
@@ -21,7 +21,7 @@ set_option autoImplicit false
 theorem discrete_moment_asymptotic_inputs (SS : Finset ℕ → ℝ) (α β : ℝ)
     (hα : 0 < α) (hαβ : α < β) (hβ : β < 1)
     (hSS : SS ∅ = 1) (hSS1 : ∀ d, SS {d} = 1)
-    (hHL : HL4 SS β) (hcor : IntervalCorrelations SS)
+    (hMS : MeanSquareHL4 SS β) (hcor : IntervalCorrelations SS)
     (M : ℝ) (hM : 1 ≤ M) (ε : ℝ) (hε : 0 < ε) :
     (∃ C : ℝ, 0 ≤ C ∧ ∀ᶠ N : ℝ in atTop,
       ∀ H : ℕ, N^α ≤ (H : ℝ) → (H : ℝ) ≤ N^β →
@@ -40,7 +40,7 @@ theorem discrete_moment_asymptotic_inputs (SS : Finset ℕ → ℝ) (α β : ℝ
           |Phi SS H s a b-H^2*(s-Real.log H)^2*W4 a b| ≤
             C*(η H*H^2*(Real.log N)^2+H^2*Real.log N))) := by
   constructor
-  · exact arithmetic_transfer SS α β hα hαβ hβ hSS hSS1 hHL M hM ε hε
+  · exact arithmetic_transfer SS α β hα hαβ hβ hSS hSS1 hMS M hM ε hε
   · exact formal_interval_moment_bounds SS α β hα hαβ hβ hSS hSS1 hcor M hM
 
 end
