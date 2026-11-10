@@ -4,7 +4,7 @@
 
 Unbounded four-prime tails, equality families and the old-method boundary.
 
-The same PR9 repeated-pair-product-tail source supplies these exact identities. All real a>=2 and all boundary parameters are included. These statements feed the actual-graph product theorem, with positive natural exponent applications checked separately. Failed sufficient criteria are not necessary-and-sufficient integrality tests.
+The same PR9 repeated-pair-product-tail source supplies these exact identities. All real a>=2 and all boundary parameters are included. For four arbitrary distinct primes and all positive integer a,b,c with b,c>=2a squared minus one, the actual ideal graph has an eigenvalue strictly between V-1 and V. The a=1 case is included: the general product inequality reduces to bc>0 for all positive tails. For a>=2, the natural truncated-subtraction bound transports exactly to the real uniform-tail inequality. These are applications of the general product theorem on all nonzero proper ideals. Failed sufficient criteria are not necessary-and-sufficient integrality tests.
 
 **Theorem 1.1 (The exact four-prime inequality).**
 
