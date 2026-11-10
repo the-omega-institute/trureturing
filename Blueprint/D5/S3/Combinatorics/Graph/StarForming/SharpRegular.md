@@ -4,7 +4,7 @@
 
 Actual sharp regular bipartite graphs
 
-The graph has two bipartition sides, each consisting of a high class, an outside class and one hub. An arbitrary fixed-point-free permutation determines the two excluded outside incidences. Symbolic neighbor counts prove degree d, the actual high classes and hubs form a minimal selection of size 2d+2, and degree capacity proves SF exactly 2d+2 for d at least three. Actual crown and outside-neighbor counting proves beta exactly 2d+1 for d at least five. The cyclic d=3,4 boundaries, two-connectivity, all-degree square weights and broken-edge rings are separate obligations.
+For every d at least three the actual finRotate graph has order 4d+2, degree d, a proper bipartition, beta=2d+1 and SF=2d+2. The displayed high classes and hubs are minimal forming. The beta proof uses symbolic neighborhood counts for d at least five, the C4-free threshold at d=3 and eighteen actual uniformly weighted squares at d=4. Two-connectivity, all-degree square weights and broken-edge rings remain separate obligations.
 
 **Definition 1.1 (Side).**
 
@@ -162,12 +162,25 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/SharpRegular.beta_graph_g
 
 Exact declaration: theorem beta_graph_ge_five (next : Equiv.Perm I) (hd : 5 ≤ Fintype.card I) : beta (graph next) 2 = 2 * Fintype.card I + 1.
 
+**Theorem 1.14 (cyclic parameters).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/SharpRegular.cyclic_parameters`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/SharpRegular.cyclic_parameters` (`✓ std3`). ∎
+
+*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+
+*Commentary.*
+
+Exact declaration: theorem cyclic_parameters (d : ℕ) (hd : 3 ≤ d) : Fintype.card (Vertex (Fin d)) = 4*d+2 ∧ (graph (finRotate d)).Colorable 2 ∧ (∀ v, DegreeCapacity.degree (graph (finRotate d)) v = d) ∧ beta (graph (finRotate d)) 2 = 2*d+1 ∧ SF (graph (finRotate d)) 2 = 2*d+2.
+
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/SharpRegular.Side`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/SharpRegular.Vertex`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/SharpRegular.beta_graph_ge_five`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/SharpRegular.bipartite`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/SharpRegular.cyclic_parameters`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/SharpRegular.dissociation_cap_ge_five`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/SharpRegular.graph`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/SharpRegular.link`
@@ -179,4 +192,6 @@ Exact declaration: theorem beta_graph_ge_five (next : Equiv.Perm I) (hd : 5 ≤ 
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/SharpRegular.sf_graph`
 - Dependency: [D5/S3/Combinatorics/Graph/StarForming/PrivateClauses](PrivateClauses.md)
 - Dependency: [D5/S3/Combinatorics/Graph/StarForming/RegularCompensation](RegularCompensation.md)
+- Dependency: [D5/S3/Combinatorics/Graph/StarForming/SquareCapacity](SquareCapacity.md)
 - Dependency: [D5/S3/Combinatorics/Graph/StarForming/SubcubicCertificate](SubcubicCertificate.md)
+- Dependency: [D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives](../SubQuorum/C4FreeRepresentatives.md)

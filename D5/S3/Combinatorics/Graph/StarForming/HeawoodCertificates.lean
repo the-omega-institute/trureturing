@@ -163,4 +163,93 @@ theorem jordan_parameters : beta jordanGraph 2 = 16 ∧ SF jordanGraph 2 = 16 :=
   parameters_of_certificate jordanGraph jordan_class.2 jordanSet
     jordan_selection.1 jordan_selection.2
 
+/-- Original six similarity-type signings, in the written N1,N2,S,J,C,K order. -/
+def sixTwists (k : Fin 6) : List (Nat × Nat) :=
+  match k.val with
+  | 0 => [(1,2)]
+  | 1 => [(1,2),(2,4)]
+  | 2 => scalarTwists
+  | 3 => jordanTwists
+  | 4 => [(1,4),(2,1),(4,2)]
+  | _ => [(1,4),(2,1),(4,2),(2,4)]
+
+def sixPoints (k : Fin 6) : List Nat :=
+  match k.val with
+  | 0 => [10,20,21,30,40,41,51]
+  | 1 => [10,11,20,31,40,41,60]
+  | 2 => [60,20,50,10,70,30]
+  | 3 => [60,20,70,30,10,50]
+  | 4 => [10,20,41,60,70,50]
+  | _ => [20,30,31,40,50,51,70]
+
+def sixLines (k : Fin 6) : List Nat :=
+  match k.val with
+  | 0 => [60,50,41,70,20,31,71,61]
+  | 1 => [40,61,50,71,30,11,70,51]
+  | 2 => [10,11,20,21,30,31,41,51,61]
+  | 3 => [10,11,30,31,21,41,51,61,71]
+  | 4 => [41,40,31,10,30,21,51,61,71]
+  | _ => [11,40,31,10,20,51,60,61]
+
+def sixGraph (k : Fin 6) : SimpleGraph (Fin 28) where
+  Adj := adjacency (sixTwists k)
+  symm := ⟨by
+    have h : ∀ k : Fin 6, ∀ v w : Fin 28,
+        adjacency (sixTwists k) v w → adjacency (sixTwists k) w v := by decide +kernel
+    exact h k⟩
+  loopless := ⟨by
+    have h : ∀ k : Fin 6, ∀ v : Fin 28, ¬ adjacency (sixTwists k) v v := by decide +kernel
+    exact h k⟩
+
+instance (k : Fin 6) : DecidableRel (sixGraph k).Adj :=
+  inferInstanceAs (DecidableRel (adjacency (sixTwists k)))
+
+def sixSet (k : Fin 6) : Finset (Fin 28) :=
+  Finset.univ.filter (selected (sixPoints k) (sixLines k))
+
+set_option maxHeartbeats 1600000 in
+private theorem six_source_certificates : ∀ k : Fin 6,
+    Dissociates (adjacency (sixTwists k)) (selected (sixPoints k) (sixLines k)) ∧
+      ((List.finRange 28).filter (fun v =>
+        decide (selected (sixPoints k) (sixLines k) v))).length = 15 := by
+  unfold Dissociates
+  decide +kernel
+
+/-- Each of the six original rows is an actual fifteen-vertex dissociation
+selection, with the original binary point/line labels and sheet bits. -/
+theorem six_selection (k : Fin 6) :
+    IsKIndependent (sixGraph k) 2 (sixSet k) ∧ (sixSet k).card = 15 := by
+  constructor
+  · apply (SubQuorum.DoubleStarGrafting.independent_iff _ _).mpr
+    intro c hc a ha b hb hca hcb
+    exact (six_source_certificates k).1 c a b (Finset.mem_filter.mp hc).2
+      (Finset.mem_filter.mp ha).2 (Finset.mem_filter.mp hb).2 hca hcb
+  · have h := (six_source_certificates k).2
+    rw [FiniteMasks.list_count] at h
+    exact h
+
+theorem six_class (k : Fin 6) : (sixGraph k).Colorable 2 ∧
+    ∀ v, DegreeCapacity.degree (sixGraph k) v = 3 := by
+  constructor
+  · refine ⟨SimpleGraph.Coloring.mk (fun v => if v.val < 14 then (0 : Fin 2) else 1) ?_⟩
+    have h : ∀ k : Fin 6, ∀ a b : Fin 28, adjacency (sixTwists k) a b →
+        (if a.val < 14 then (0 : Fin 2) else 1) ≠ (if b.val < 14 then 0 else 1) := by
+      decide +kernel
+    exact h k
+  · have h : ∀ k : Fin 6, ∀ v, DegreeCapacity.degree (sixGraph k) v = 3 := by decide +kernel
+    exact h k
+
+/-- The exact finite source witnesses give beta in {15,16} for all six graphs.
+Transfer to arbitrary signings still requires the switching/classification
+theorem, and these bounds do not classify the other four types exactly. -/
+theorem six_beta_bounds (k : Fin 6) :
+    15 ≤ beta (sixGraph k) 2 ∧ beta (sixGraph k) 2 ≤ 16 := by
+  have hl : (sixSet k).card ≤ beta (sixGraph k) 2 :=
+    Finset.le_sup (Finset.mem_filter.mpr ⟨by simp,(six_selection k).1⟩)
+  rw [(six_selection k).2] at hl
+  have hu := DegreeCapacity.sf_regular_bound (sixGraph k) 3 (by decide) (six_class k).2
+  have hb := beta_le_sf (sixGraph k)
+  norm_num at hu
+  omega
+
 end D5.S3.Combinatorics.Graph.StarForming.HeawoodCertificates

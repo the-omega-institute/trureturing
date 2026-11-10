@@ -1,10 +1,10 @@
-# The original S and J double-lift certificates
+# The six original double-lift certificates
 
 ## Abstract
 
-The original S and J double-lift certificates
+The six original double-lift certificates
 
-The supplied binary point/line labels, sheet bits, twist flags and selected lists are unchanged. Both source dissociation proofs and exact size-sixteen counts feed actual finite simple graphs. Their cubic bipartite classes are checked, and the canonical beta and SF maxima are each sixteen. These are the S and J certificates only; no all-signing switching classification, other four types, connectedness equivalence or deck-group factorization is asserted here.
+The supplied binary point/line labels, sheet bits, twist flags and selected lists are unchanged. All six N1,N2,S,J,C,K types have actual dissociation fifteen-sets and the cubic upper cap sixteen; S and J additionally have actual sixteen-sets proving beta=SF=16. The six finite witnesses do not themselves classify arbitrary signings or transfer across graph isomorphisms.
 
 **Definition 1.1 (label).**
 
@@ -306,6 +306,102 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.jorda
 
 Exact declaration: theorem jordan_parameters : beta jordanGraph 2 = 16 ∧ SF jordanGraph 2 = 16.
 
+**Definition 1.26 (sixTwists).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sixTwists`
+
+*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sixTwists` (`✓ std3`).
+
+*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+
+*Commentary.*
+
+Exact declaration: def sixTwists (k : Fin 6) : List (Nat × Nat).
+
+**Definition 1.27 (sixPoints).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sixPoints`
+
+*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sixPoints` (`✓ std3`).
+
+*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+
+*Commentary.*
+
+Exact declaration: def sixPoints (k : Fin 6) : List Nat.
+
+**Definition 1.28 (sixLines).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sixLines`
+
+*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sixLines` (`✓ std3`).
+
+*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+
+*Commentary.*
+
+Exact declaration: def sixLines (k : Fin 6) : List Nat.
+
+**Definition 1.29 (sixGraph).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sixGraph`
+
+*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sixGraph` (`✓ std3`).
+
+*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+
+*Commentary.*
+
+Exact declaration: def sixGraph (k : Fin 6) : SimpleGraph (Fin 28).
+
+**Definition 1.30 (sixSet).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sixSet`
+
+*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sixSet` (`✓ std3`).
+
+*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+
+*Commentary.*
+
+Exact declaration: def sixSet (k : Fin 6) : Finset (Fin 28).
+
+**Theorem 1.31 (six selection).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.six_selection`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.six_selection` (`✓ std3`). ∎
+
+*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+
+*Commentary.*
+
+Exact declaration: theorem six_selection (k : Fin 6) : IsKIndependent (sixGraph k) 2 (sixSet k) ∧ (sixSet k).card = 15.
+
+**Theorem 1.32 (six class).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.six_class`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.six_class` (`✓ std3`). ∎
+
+*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+
+*Commentary.*
+
+Exact declaration: theorem six_class (k : Fin 6) : (sixGraph k).Colorable 2 ∧ ∀ v, DegreeCapacity.degree (sixGraph k) v = 3.
+
+**Theorem 1.33 (six beta bounds).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.six_beta_bounds`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.six_beta_bounds` (`✓ std3`). ∎
+
+*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+
+*Commentary.*
+
+Exact declaration: theorem six_beta_bounds (k : Fin 6) : 15 ≤ beta (sixGraph k) 2 ∧ beta (sixGraph k) 2 ≤ 16.
+
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.adjacency`
@@ -333,5 +429,13 @@ Exact declaration: theorem jordan_parameters : beta jordanGraph 2 = 16 ∧ SF jo
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.scalar_selection`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.selected`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sheet`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sixGraph`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sixLines`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sixPoints`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sixSet`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.sixTwists`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.six_beta_bounds`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.six_class`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodCertificates.six_selection`
 - Dependency: [D5/S3/Combinatorics/Graph/StarForming/FiniteMasks](FiniteMasks.md)
 - Dependency: [D5/S3/Combinatorics/Graph/StarForming/RegularCompensation](RegularCompensation.md)

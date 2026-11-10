@@ -9,6 +9,9 @@
 import D5.S3.Combinatorics.Graph.StarForming.RegularCompensation
 import D5.S3.Combinatorics.Graph.StarForming.PrivateClauses
 import D5.S3.Combinatorics.Graph.StarForming.SubcubicCertificate
+import D5.S3.Combinatorics.Graph.StarForming.SquareCapacity
+import D5.S3.Combinatorics.Graph.SubQuorum.C4FreeRepresentatives
+import Mathlib.Logic.Equiv.Fin.Rotate
 import Mathlib.Data.Fintype.Option
 
 /-! The graph G_d from SHARP_REGULAR_BIPARTITE_GAP, at
@@ -20,6 +23,8 @@ the first and second forward shifts. No finite upper bound on d is used. -/
 namespace D5.S3.Combinatorics.Graph.StarForming.SharpRegular
 open StarFormingDissociationRefutation Regular
 open scoped BigOperators
+set_option synthInstance.maxSize 4096
+set_option maxSynthPendingDepth 128
 variable {I : Type} [Fintype I] [DecidableEq I]
 
 abbrev Side (I : Type) := Option (Bool × I)
@@ -34,12 +39,16 @@ def link (next : Equiv.Perm I) : Side I → Side I → Prop
   | some (true,i),some (false,j) => i = j
   | some (true,i),some (true,j) => j ≠ next i ∧ j ≠ next (next i)
 
-instance (next : Equiv.Perm I) : DecidableRel (link next) := fun a b => by
-  cases a with
-  | none => cases b <;> simp only [link] <;> infer_instance
-  | some a => rcases a with ⟨k,i⟩; cases k <;> cases b with
-    | none => simp only [link]; infer_instance
-    | some b => rcases b with ⟨l,j⟩; cases l <;> simp only [link] <;> infer_instance
+instance (next : Equiv.Perm I) : DecidableRel (link next) := fun a b =>
+  match a,b with
+  | none,none => isFalse id
+  | none,some (k,_) => inferInstanceAs (Decidable (k = true))
+  | some (k,_),none => inferInstanceAs (Decidable (k = true))
+  | some (false,i),some (false,j) => inferInstanceAs (Decidable (i ≠ j))
+  | some (false,i),some (true,j) => inferInstanceAs (Decidable (i = j))
+  | some (true,i),some (false,j) => inferInstanceAs (Decidable (i = j))
+  | some (true,i),some (true,j) =>
+      inferInstanceAs (Decidable (j ≠ next i ∧ j ≠ next (next i)))
 
 def graph (next : Equiv.Perm I) : SimpleGraph (Vertex I) where
   Adj x y := (x.1 = false ∧ y.1 = true ∧ link next x.2 y.2) ∨
@@ -401,5 +410,103 @@ theorem beta_graph_ge_five (next : Equiv.Perm I) (hd : 5 ≤ Fintype.card I) :
     simp [Vertex,Side,Fintype.card_prod]; omega
   rw [hn] at hl
   omega
+
+private theorem rotate_ne {d : ℕ} (hd : 2 ≤ d) (i : Fin d) : finRotate d i ≠ i := by
+  obtain ⟨n,rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : d ≠ 0)
+  intro he
+  have hv := congrArg Fin.val he
+  rw [coe_finRotate] at hv
+  split_ifs at hv with hi
+  · have hii := congrArg Fin.val hi
+    simp only [Fin.val_last] at hii
+    omega
+  · omega
+
+private abbrev cycleGraph (d : ℕ) : SimpleGraph (Vertex (Fin d)) := graph (finRotate d)
+
+private theorem cubic_free :
+    SubQuorum.C4FreeRepresentatives.NoFourCycle (cycleGraph 3).Adj := by
+  unfold SubQuorum.C4FreeRepresentatives.NoFourCycle
+  decide +kernel
+
+private theorem cubic_beta : beta (cycleGraph 3) 2 = 7 := by
+  have hc : ∀ v w, (cycleGraph 3).Adj v w → v.1 ≠ w.1 := by
+    rintro ⟨b,v⟩ ⟨c,w⟩ h
+    cases b <;> cases c <;> simp_all [cycleGraph,graph]
+  have hr : ∀ v, DegreeCapacity.degree (cycleGraph 3) v = 3 := by
+    intro v
+    simpa [cycleGraph] using regular (finRotate 3) (rotate_ne (by decide)) v
+  have hs : ∀ b : Bool, (Finset.univ.filter (fun v : Vertex (Fin 3) => v.1 = b)).card = 7 := by
+    decide +kernel
+  exact (SubQuorum.C4FreeRepresentatives.threshold_parameters (cycleGraph 3)
+    Prod.fst hc cubic_free 3 7 (by decide) hr hs (by decide)).1
+private def fourCycles : List (List (Vertex (Fin 4))) := [
+  [(false,none), (true,some (true,0)), (false,some (true,0)), (true,some (true,3))],
+  [(false,none), (true,some (true,0)), (false,some (true,1)), (true,some (true,1))],
+  [(false,none), (true,some (true,1)), (false,some (true,2)), (true,some (true,2))],
+  [(false,none), (true,some (true,2)), (false,some (true,3)), (true,some (true,3))],
+  [(false,some (false,0)), (true,some (false,2)), (false,some (false,1)), (true,some (false,3))],
+  [(false,some (false,0)), (true,some (false,1)), (false,some (false,2)), (true,some (false,3))],
+  [(false,some (false,0)), (true,some (false,1)), (false,some (false,3)), (true,some (false,2))],
+  [(false,some (false,0)), (true,some (false,1)), (false,some (true,1)), (true,some (true,0))],
+  [(false,some (false,1)), (true,some (false,0)), (false,some (false,2)), (true,some (false,3))],
+  [(false,some (false,1)), (true,some (false,0)), (false,some (false,3)), (true,some (false,2))],
+  [(false,some (false,1)), (true,some (false,2)), (false,some (true,2)), (true,some (true,1))],
+  [(false,some (false,2)), (true,some (false,0)), (false,some (false,3)), (true,some (false,1))],
+  [(false,some (false,2)), (true,some (false,3)), (false,some (true,3)), (true,some (true,2))],
+  [(false,some (false,3)), (true,some (false,0)), (false,some (true,0)), (true,some (true,3))],
+  [(false,some (true,0)), (true,none), (false,some (true,1)), (true,some (true,0))],
+  [(false,some (true,0)), (true,none), (false,some (true,3)), (true,some (true,3))],
+  [(false,some (true,1)), (true,none), (false,some (true,2)), (true,some (true,1))],
+  [(false,some (true,2)), (true,none), (false,some (true,3)), (true,some (true,2))]]
+
+private def fourCycleVertex (q : Fin 18) (t : Fin 4) : Vertex (Fin 4) :=
+  ((fourCycles.getD q.val []).getD t.val (false,none))
+
+private theorem fourCycleFacts : ∀ q : Fin 18,
+    Function.Injective (fourCycleVertex q) ∧
+      (cycleGraph 4).Adj (fourCycleVertex q 0) (fourCycleVertex q 1) ∧
+      (cycleGraph 4).Adj (fourCycleVertex q 1) (fourCycleVertex q 2) ∧
+      (cycleGraph 4).Adj (fourCycleVertex q 2) (fourCycleVertex q 3) ∧
+      (cycleGraph 4).Adj (fourCycleVertex q 3) (fourCycleVertex q 0) := by
+  decide +kernel
+
+private def fourSquare (q : Fin 18) : SquareCapacity.Square (cycleGraph 4) where
+  vertex := fourCycleVertex q
+  injective := (fourCycleFacts q).1
+  edge01 := (fourCycleFacts q).2.1
+  edge12 := (fourCycleFacts q).2.2.1
+  edge23 := (fourCycleFacts q).2.2.2.1
+  edge30 := (fourCycleFacts q).2.2.2.2
+
+private theorem four_uniform : ∀ v : Vertex (Fin 4),
+    (∑ q : Fin 18, if v ∈ (fourSquare q).carrier then (1/4 : ℚ) else 0) = 1 := by
+  decide +kernel
+
+private theorem quartic_beta : beta (cycleGraph 4) 2 = 9 := by
+  have h := SquareCapacity.beta_exact (cycleGraph 4) (bipartite (finRotate 4))
+    fourSquare (fun _ => (1/4 : ℚ)) (by intro _; norm_num) four_uniform
+  norm_num [Vertex,Side] at h
+  omega
+
+/-- For every d at least three, the actual cyclic graph G_d attains the sharp
+positive gap one. The two boundary cases use their actual C4-free or square
+certificate; every d at least five uses symbolic neighborhood counting. -/
+theorem cyclic_parameters (d : ℕ) (hd : 3 ≤ d) :
+    Fintype.card (Vertex (Fin d)) = 4*d+2 ∧
+      (graph (finRotate d)).Colorable 2 ∧
+      (∀ v, DegreeCapacity.degree (graph (finRotate d)) v = d) ∧
+      beta (graph (finRotate d)) 2 = 2*d+1 ∧
+      SF (graph (finRotate d)) 2 = 2*d+2 := by
+  refine ⟨by simp [Vertex,Side]; omega,bipartite _,?_,?_,?_⟩
+  · intro v; simpa only [Fintype.card_fin] using regular (finRotate d) (rotate_ne (by omega)) v
+  · by_cases he : d = 3
+    · subst d; exact cubic_beta
+    · by_cases hf : d = 4
+      · subst d; exact quartic_beta
+      · simpa only [Fintype.card_fin] using beta_graph_ge_five (finRotate d)
+          (by simpa only [Fintype.card_fin] using (show 5 ≤ d by omega))
+  · simpa only [Fintype.card_fin] using sf_graph (finRotate d) (rotate_ne (by omega))
+      (by simpa only [Fintype.card_fin] using hd)
 
 end D5.S3.Combinatorics.Graph.StarForming.SharpRegular
