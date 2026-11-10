@@ -2489,26 +2489,24 @@ $$
 少掉的只是实际真群分支的对称性与独立返回前件。原始组合未必是群，纸面群逆元也不是物理逆操作；复 Hilbert 完成不制造可取得准备、全菜单、真实相关联合或读后返回装置。原三相指标、复空间维数与物理空间维数仍是不同对象；同一 $\Omega$ 的全部来源和七项消费者合同继续逐项保留，完整量子供给仍须另行完成。
 
 ## 追加锚（本行以下为增补区）
-
-
-## 22. 实际产品输入的三相运输与自由正规障碍
+## 22. 实际产品右输入的三相运输与自由正规障碍
 
 本节把 W 续卷的平稳总模型直接用于实际乘积作为右输入的情形，并给出一个独立的全域自由正规模型。所用的仓内关系是 [W 引理 17.1](AURIC_C133_UNANCHORED_MARKER_BOUNDED_ORBITS_CONTINUATION_W.md#17-实际单位碰撞与全部探针上的标记消去) 的同层滑移、[W 定理 44.2 与推论 44.3](AURIC_C133_UNANCHORED_MARKER_BOUNDED_ORBITS_CONTINUATION_W.md#44-保全实际第三标记返回的平稳扩张与双向来源链) 的平稳扩张和 [W 定理 45.2–推论 45.3](AURIC_C133_UNANCHORED_MARKER_BOUNDED_ORBITS_CONTINUATION_W.md#45-共同平移核的实际乘积平分与三相背景运输) 的共同背景运输；新增部分是这些已付关系在实际乘积右输入、二坐标预算和自由正规模型中的应用。这里不把来源集合对乘法封闭作为前提。
 
 ### 22.1 实际乘积右输入的四块运输
 
-**命题 22.1（四块实际乘积运输）。**取 W 定理 44.2 的同一个总模型 $(N,star,e,V,d)$、保乘法和单位的自同构 $A$，其中 $AV=VA$、$d(As,At)=d(s,t)$。对 $minmathbb Z$ 置
+**命题 22.1（四块实际乘积运输）。**取 W 定理 44.2 的同一个总模型 $(N,\star,e,V,d)$、保乘法和单位的自同构 $A$，其中 $AV=VA$、$d(As,At)=d(s,t)$。对 $m\in\mathbb Z$ 置
 
 $$
-F_m(s,t)=d(A^ms,t),qquad T=V^3,qquad
-K={a:Aa=a},qquad S={u:Vu=Au}.
+F_m(s,t)=d(A^ms,t),\qquad T=V^3,\qquad
+K=\{a:Aa=a\},\qquad S=\{u:Vu=Au\}.
 $$
 
-每个 $F_m$ 都是处处有限、非负的完整 $(R)$ 核，且同步 $V$ 等距；只有 $F_0=d$ 被要求零对角。对 $a,bin K$、$u,vin S$ 定义实际产品数组
+每个 $F_m$ 都是处处有限、非负的完整 $(R)$ 核，且同步 $V$ 等距；只有 $F_0=d$ 被要求零对角。对 $a,b\in K$、$u,v\in S$ 定义实际产品数组
 
 $$
-I_0(a,u)=T(astar u),qquad I_1(a,u)=astar T(u),qquad
-J={astar T(u):a,uin N}.
+I_0(a,u)=T(a\star u),\qquad I_1(a,u)=a\star T(u),\qquad
+J=\{a\star T(u):a,u\in N\}.
 $$
 
 则四个有序块同时对所有 $m$ 成立：
@@ -2526,7 +2524,7 @@ $$
 取 $b=a$、$v=u$ 并令 $m=0$，(22.1) 给出
 
 $$
- d\bigl(T(a\star u),a\star T(u)\bigr)=0,qquad
+ d\bigl(T(a\star u),a\star T(u)\bigr)=0,\qquad
  d\bigl(a\star T(u),T(a\star u)\bigr)=0.
 \tag{22.2}
 $$
@@ -2538,21 +2536,21 @@ $$
 **命题 22.2（两坐标四块预算）。**在 $N^2$ 上逐坐标定义乘法、$A$，并置
 
 $$
- d^{[2]}(z,w)=\frac12\sum_{j=1}^2d(z_j,w_j),qquad
+ d^{[2]}(z,w)=\frac12\sum_{j=1}^2d(z_j,w_j),\qquad
  F_m^{[2]}(z,w)=\frac12\sum_{j=1}^2F_m(z_j,w_j).
 $$
 
-对 $a,bin K$、$u,vin S$ 定义
+对 $a,b\in K$、$u,v\in S$ 定义
 
 $$
- X(a,u)=\bigl(V(a\star u),V^2(a\star u)\bigr),qquad
+ X(a,u)=\bigl(V(a\star u),V^2(a\star u)\bigr),\qquad
  Y(a,u)=\bigl(a\star Vu,a\star V^2u\bigr),
 $$
 
 以及有序背景费用
 
 $$
- q(a)=d(a,e),qquad r(b)=d(e,b),qquad
+ q(a)=d(a,e),\qquad r(b)=d(e,b),\qquad
  Q(a,b)=\frac{3q(a)+3r(b)-d(a,b)}2\ge0.
 $$
 
@@ -2595,7 +2593,7 @@ $$
 \tag{22.5}
 $$
 
-特别地，对 W 定理 44.2 的来源 $x_0,y_0$ 和 $delta=H_3(x_0,y_0)$，取 $m=3,u=x_0,v=y_0$ 时四个块都保留 $delta$。这只是差核的共同背景消去，不消去 $F_0$ 的常数模；数组是坐标构造，不是物理副本。
+特别地，对 W 定理 44.2 的来源 $x_0,y_0$ 和 $\delta=H_3(x_0,y_0)$，取 $m=3,u=x_0,v=y_0$ 时四个块都保留 $\delta$。这只是差核的共同背景消去，不消去 $F_0$ 的常数模；数组是坐标构造，不是物理副本。
 
 ### 22.3 全域自由正规模型与有限置换障碍
 
@@ -2604,28 +2602,27 @@ $$
 **构造 22.3（自由正规模型）。**令 $N$ 的正规形由
 
 $$
- e,quad x_i, y_i (i\in\mathbb Z),quad \nu(s),quad \langle s,t\rangle
+ e,\qquad x_i,y_i\in\mathbb Z,\qquad \nu(s),\qquad \langle s,t\rangle
 $$
 
-递归生成，其中 $
-u(s)$ 只在 $s$ 不是源原子时可用，$langle s,t\rangle$ 只在 $s,t\ne e$ 时可用；所有正规形按构造子和参数严格区分。定义真实单位乘法
+递归生成，其中 $\nu(s)$ 只在 $s$ 不是源原子时可用，$\langle s,t\rangle$ 只在 $s,t\ne e$ 时可用；所有正规形按构造子和参数严格区分。定义真实单位乘法
 
 $$
- e\star s=s\star e=s,qquad s\star t=\langle s,t\ranglequad(s,t\ne e).
+ e\star s=s\star e=s,\qquad s\star t=\langle s,t\rangle\quad(s,t\ne e).
 $$
 
 定义总标记
 
 $$
- Vx_i=x_{i+1},qquad Vy_i=y_{i+1},qquad V s=\nu(s)quad
+ Vx_i=x_{i+1},\qquad Vy_i=y_{i+1},\qquad Vs=\nu(s)\qquad
 (s\text{ 为任意非源正规形，包括 }e).
 $$
 
 再令
 
 $$
- Ae=e,quad Ax_i=x_{i+1},quad Ay_i=y_{i+1},quad
- A\nu(s)=\nu(As),quad A\langle s,t\rangle=\langle As,At\rangle.
+ Ae=e,\qquad Ax_i=x_{i+1},\qquad Ay_i=y_{i+1},\qquad
+ A\nu(s)=\nu(As),\qquad A \langle s,t\rangle=\langle As,At\rangle.
 $$
 
 则 $A^{-1}$ 将源指标减一，$A$ 是真实自同构，$AV=VA$；由单位、标记和乘法从 $e$ 生成的子代数逐点被 $A$ 固定。这里没有给非结合二元词增加任何结合或交换关系。
@@ -2633,17 +2630,17 @@ $$
 取
 
 $$
- \zeta=e^{2\pi i/3},qquad h=(1-\zeta)^{-1},qquad \tau=(0,1)\in\mathbb C^2,
+ \zeta=e^{2\pi i/3},\qquad h=(1-\zeta)^{-1},\qquad \tau=(0,1)\in\mathbb C^2,
 $$
 
 并递归定义 $F:N\to\mathbb C^2$：
 
 $$
- F(e)=0,qquad F(x_i)=(\zeta^i,h),qquad F(y_i)=(0,h),
+ F(e)=0,\qquad F(x_i)=(\zeta^i,h),\qquad F(y_i)=(0,h),
 $$
 
 $$
- F(\langle s,t\rangle)=F(s)+F(t),qquad
+ F(\langle s,t\rangle)=F(s)+F(t),\qquad
  F(\nu(s))=\zeta F(s)+\tau.
 \tag{22.6}
 $$
@@ -2683,7 +2680,8 @@ $$
 
 **命题 22.4（有限坐标置换不能保留非源语法）。**对非源正规形定义外层连续标记数
 
-$$ell(e)=0,qquad ell(\langle s,t\rangle)=0,qquad
+$$
+\ell(e)=0,\qquad \ell(\langle s,t\rangle)=0,\qquad
 \ell(\nu(s))=1+\ell(s).
 $$
 
@@ -2697,7 +2695,7 @@ $$
 实际来源集合恰为
 
 $$
- S=\{s:Vs=As\}=\{x_i,y_i:i\in\mathbb Z\}.
+ S=\{s:Vs=As}=\{x_i,y_i:i\in\mathbb Z}.
 \tag{22.8}
 $$
 
