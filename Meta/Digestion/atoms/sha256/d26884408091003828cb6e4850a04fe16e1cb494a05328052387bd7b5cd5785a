@@ -1,0 +1,22 @@
+**定义 46.2（复用的固定行接口）。** 19–20、35–36 对同一 $J$ 已给
+
+$$
+\begin{gathered}
+Jb\in V_h,\quad J^2b=-b,\quad (Jb)^2=b^2,\quad b\circ Jb=0,\\
+J(\lambda b+\mu Jb)=\lambda Jb-\mu b,\\
+D(sh,b+\ell u)=sJb
+\qquad(\lambda,\mu,s,\ell\in\mathbb R,\ b\in V_h).
+\end{gathered}
+\tag{46.3}
+$$
+
+以下只将 26.2、27.2 接到 (46.3)，不重证原整圆、径向、全实参考强度或单位偏移。对 24.1 的任一非零含单位 JC 像 $q:X\to Y$，仍固定同一个实际首标签 $a=\rho h$；其像平方是 $\rho^21_Y$。26.2 只在这条行上给良定义的
+
+$$
+F_a(qz)=qD(a,z)/\rho\quad
+(z\in E,\ q(a)\circ q(z)=0).
+\tag{46.4}
+$$
+
+特别 $F_a(qb)=qJb$ 对原 $b\in V_h$ 成立。此式没有定义全部原对的商响应；其下标 $a$ 仍是实际原标签。零像吸收直接取 (24.1) 及[原多项式零响应卷](AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md) 4.1–4.2：原第二标签的像为零时，同一次旧输出的像为零。下述承重推导属于这些仓内接口的联合推论 $\texttt{repo-derived}$，不作文献穷尽或历史优先权断言。
+

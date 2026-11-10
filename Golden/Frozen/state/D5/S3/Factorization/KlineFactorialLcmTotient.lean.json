@@ -1,0 +1,1 @@
+{"statement_id":"sha256:799acf1857f93efd5ce584a40bb8430fac0920a60729a8b028e7f4f15f1916c3","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Factorization),24:KlineFactorialLcmTotient),1:a)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Factorization),24:KlineFactorialLcmTotient),6:result)","kind":"theorem"}]}

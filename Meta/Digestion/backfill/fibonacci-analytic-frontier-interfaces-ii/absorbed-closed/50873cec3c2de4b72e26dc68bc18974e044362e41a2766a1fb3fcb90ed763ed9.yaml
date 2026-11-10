@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:50873cec3c2de4b72e26dc68bc18974e044362e41a2766a1fb3fcb90ed763ed9
+  normalized_sha256: sha256:50873cec3c2de4b72e26dc68bc18974e044362e41a2766a1fb3fcb90ed763ed9
+cas_ref: sha256:50873cec3c2de4b72e26dc68bc18974e044362e41a2766a1fb3fcb90ed763ed9
+coverage_gids:
+  - gid: D5/S3/Arith/Robin/ForwardKernel/FourthTransfer/FourthMomentFreezing.moving_fourth_uniform
+    target_statement_id: sha256:735274b123397684cb0c682ac0bc4a093138816a83b36b03326d03073c2adb30
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c09ce02957314a10e293b202a0963a7fe12b703d0166a341040c40758cf7ffb6
+  normalized_sha256: sha256:c09ce02957314a10e293b202a0963a7fe12b703d0166a341040c40758cf7ffb6
+cas_ref: sha256:c09ce02957314a10e293b202a0963a7fe12b703d0166a341040c40758cf7ffb6
+coverage_gids:
+  - gid: D5/S3/Topology/Selection/ContinuousMatrixOrbitCounterexample.proposition10_3
+    target_statement_id: sha256:b8758eb47b42877eea330622cabcbff619a27be235bd9bb1365a635034eba0d7
+receipts:
+  unresolved_subitems: []

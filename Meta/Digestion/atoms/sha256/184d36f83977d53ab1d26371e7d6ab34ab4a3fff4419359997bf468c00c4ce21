@@ -1,0 +1,15 @@
+**$k$ 阶矩接口。** 称 $E$ 满足 $(\mathrm M_k)$，若
+
+(a) 存在 $C_k$，使对充分大的 $X$，$\sup_{0\le s\le1}\mathbb E_{\mu_X}|B_X(s)|^k\le C_k$；
+
+(b) 对每个 $\mathbf s=(s_1,\dots,s_k)\in[0,1]^k$，极限
+
+$$
+M_k(\mathbf s)=\lim_{X\to\infty}\mathbb E_{\mu_X}\Bigl[U_X^{kr}\prod_{j=1}^kB_X(s_j)\Bigr]
+\tag{494.1}
+$$
+
+存在。
+
+$M_k$ 作为可测函数的逐点极限是可测的；由 (a) 与 Hölder 不等式，$\bigl|\mathbb E_{\mu_X}[U_X^{kr}\prod_jB_X(s_j)]\bigr|\le2^{kr}\prod_j(\mathbb E|B_X(s_j)|^k)^{1/k}\le2^{kr}C_k$，故 $|M_k|\le2^{kr}C_k$。
+

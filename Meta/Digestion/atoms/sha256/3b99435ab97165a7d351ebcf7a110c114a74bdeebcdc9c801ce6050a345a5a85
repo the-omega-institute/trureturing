@@ -1,0 +1,4 @@
+**文献表态。** 原词校准卷 400.1–400.2 和本卷 §§27–31 是仓内既有前件与后端。Hanche-Olsen–Størmer，*Jordan Operator Algebras*，Theorem 4.4.3、Proposition 4.2.3 与 §2.6 的 JBW 双对偶、投影 Peirce 规则和有限谱逼近是成熟辅助工具；Niestegge，[arXiv:1402.0158v2](https://arxiv.org/html/1402.0158v2)，§4 Lemma 3 及其 order-derivation 分解给零面判据和单位分解。Peralta–Rodríguez Palacios 的实 JB*-三元组双对偶标量型延拓用于 (39.2) 的分别弱星步骤，来源为 [作者版本 PDF](https://www.ugr.es/~aperalta/oldweb/documentos/papers/bigGrothendieckIneq.pdf)。Baez，[arXiv:2006.14741v5 §4](https://arxiv.org/html/2006.14741v5#S4)，Theorem 12 明确把单位湮灭的 skew order derivation 与动力对应及其曲率条件区分开；它支持本批“先得到导子，后由 (39.6) 接回后端”的边界。Schupp–Szabo，[arXiv:2311.03647v3 §§2–3](https://arxiv.org/html/2311.03647v3)，只说明关联包络和 GNS 不能代替原非结合乘法的曲率识别。
+
+本批的 repo-derived 增量是：在不把 NN 放入输入的准确 $\mathsf H_{\rm NN^-}$ 上，将全原评价、全自由有限 Gram 正性和每个原演员的统一二次支配先变成同一辅助 JBW 双对偶上的序支配；零面判据先给 order derivation，单位演员的互补 Peirce 零面再给单位行，原演员对任意辅助投影的两侧支配给半空间平方恒等式，最后由投影极化和谱逼近给 (39.6)。这不是把一般动力对应定理改写成新结论，也不是复述 §§32–38 的 PB 或有限缺陷。
+

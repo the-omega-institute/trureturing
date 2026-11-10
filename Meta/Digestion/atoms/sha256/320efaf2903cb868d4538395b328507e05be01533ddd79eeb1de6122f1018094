@@ -1,0 +1,35 @@
+**定理 73.1（忠实乘子分支的全原域旧值唯一性）。** 在定义 70.1 的同一原对象及全部前件下，
+
+$$
+\boxed{\ \iota(D(a,b))=\kappa(\iota(a),\iota(b))
+\quad\text{对全部原 }a,b\in E.\ }
+\tag{73.1}
+$$
+
+特别地，$\kappa(\iota(E),\iota(E))\subset\iota(E)$ 是结论；不只识别种子、完成中的稠密对或某个原商。
+
+证明。固定一个实际 $Z\in V$，以及任意非零不可约 $\pi$。以下只在本证明中省略乘子延拓的波浪号，置 $T=\pi(Z)$。72.1 对每个原 $k\in I$ 保持同一个残差，因此 72.2 支付的任意有限向量酉插值都可以用实际 $U=\exp(\mathrm ik)\in1+A$ 执行，而且 $UZ\in V$。
+
+先证明 $\langle\pi(\mathfrak F(Z))\xi,\xi\rangle=0$ 对所有 $\xi\in s:=(\ker T)^\perp$ 成立。取环境极分解 $T=VP$、$P=|T|$；此处 $V$ 是极因子，非原复标签空间。令 $M=\operatorname{span}_{\mathbb C}\{\xi,P\xi\}\subset s$，$L=M+VM$。$V$ 在 $s$ 上等距，故 $Vv\mapsto v$ 把 $VM$ 等距送到 $M$，可延成有限维 $L$ 上酉算子 $W$。由 72.2 选原 $k\in I$，使 $U=\exp(\mathrm ik)$ 在 $L$ 上实现 $W$。于是
+
+$$
+\pi(UZ)\xi=P\xi,\qquad
+\pi(UZ)^*\xi=T^*\pi(U)^*\xi=PV^*V\xi=P\xi.
+\tag{73.2}
+$$
+
+故实际原标签 $B=\operatorname{Im}(UZ)\in E$ 满足 $\pi(B)\xi=0$。数学向量读取的原 P2 使 $D(\operatorname{Re}(UZ),B)$ 在 $\xi$ 上读为零；比较 $\kappa$ 的读取也因 $\pi(B)\xi=0$ 为零。式 (72.2) 保持残差，故这个固定 $\mathfrak F(Z)$ 在 $s$ 上的二次读取全为零。极分解只选择向量，没有把 $P,V$ 或支撑投影代入旧 $D$。
+
+若 $T=0$，两个原实部在此表示中的像都为零，P2 直接给 $\pi(\mathfrak F(Z))=0$。若 $T\ne0$，对任意非零 $\xi\in H_\pi$，选 $\zeta\in\overline{\operatorname{ran}T}$ 且 $\|\zeta\|=\|\xi\|$。在 $\operatorname{span}\{\zeta,\xi\}$ 上选把 $\zeta$ 送到 $\xi$ 的酉，再由 72.2 取得原 $U=\exp(\mathrm ik)$。对实际 $Y=UZ\in V$，有 $\xi\in\overline{\operatorname{ran}\pi(Y)}$，这恰是 $\mathrm i\pi(Y)^*$ 的初始支撑。实际复标签
+
+$$
+\mathrm iY^*=\operatorname{Im}Y+\mathrm i\operatorname{Re}Y\in V,
+\qquad
+\mathfrak F(\mathrm iY^*)=-\mathfrak F(Y)=-\mathfrak F(Z)
+\tag{73.3}
+$$
+
+由原反对称性和式 (72.2) 精确成立。把上段已经对任意实际复标签证明的初始支撑结论用于 $\mathrm iY^*$，便知固定残差在这个任意 $\xi$ 上仍读为零。极化给 $\pi(\mathfrak F(Z))=0$。
+
+最后，$A$ 的全部非零不可约表示的乘子延拓联合分离 $M(A)$：若每个延拓都消去 $m$，则对每个 $a\in A$，$ma\in A$ 被全部不可约表示消去，故 $ma=0$；乘子的作用忠实，遂有 $m=0$。因此 $\mathfrak F(Z)=0$。任取 $Z=a+\mathrm ib$ 得 (73.1)，再由原 $\iota$ 忠实读回同一个旧输出。∎
+
