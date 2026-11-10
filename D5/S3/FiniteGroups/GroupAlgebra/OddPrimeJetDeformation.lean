@@ -68,7 +68,7 @@ private theorem primeCast_eq_zero : (p : K) = 0 := by
     (p : K) = algebraMap F K (p : F) := (map_natCast _ _).symm
     _ = 0 := by rw [ZMod.natCast_self, map_zero]
 
-private def derivativeEnd : Module.End K V where
+def derivativeEnd : Module.End K V where
   toFun f := ⟨Polynomial.derivative (f : K[X]),
     Polynomial.mem_degreeLT.mpr
       (Polynomial.degree_derivative_le.trans_lt (Polynomial.mem_degreeLT.mp f.property))⟩
@@ -77,7 +77,7 @@ private def derivativeEnd : Module.End K V where
 
 local notation "D" => derivativeEnd (p := p) (K := K)
 
-private theorem derivative_pow_coe (n : ℕ) (f : V) :
+theorem derivative_pow_coe (n : ℕ) (f : V) :
     ((D ^ n) f : K[X]) = Polynomial.derivative^[n] (f : K[X]) := by
   induction n with
   | zero => rfl
@@ -86,7 +86,7 @@ private theorem derivative_pow_coe (n : ℕ) (f : V) :
       change Polynomial.derivative ((D ^ n) f : K[X]) = _
       rw [ih, Function.iterate_succ_apply']
 
-private theorem derivative_pow_prime : D ^ p = 0 := by
+theorem derivative_pow_prime : D ^ p = 0 := by
   apply LinearMap.ext
   intro f
   apply Subtype.ext
@@ -100,7 +100,7 @@ private theorem factorial_ne_zero (j : ℕ) (hj : j < p) :
   rw [Ne, CharP.cast_eq_zero_iff K p]
   exact fun h => (not_le_of_gt hj) ((Fact.out : p.Prime).dvd_factorial.mp h)
 
-private def finiteExp (A : Module.End K V) : Module.End K V :=
+def finiteExp (A : Module.End K V) : Module.End K V :=
   ∑ j ∈ range p, (j.factorial : K)⁻¹ • A ^ j
 
 private theorem finiteExp_zero : finiteExp (p := p) (K := K) 0 = 1 := by
@@ -474,7 +474,7 @@ private theorem polynomial_log_action (q : K →ₗ[F] K) (x : K) (v : V) :
     ← map_pow, algebraMap_smul] at h
   simpa only [← Algebra.smul_def] using h
 
-private def automorphismLinear (φ : E ≃* E) : K →ₗ[F] K :=
+def automorphismLinear (φ : E ≃* E) : K →ₗ[F] K :=
   ({ toFun := fun x => Multiplicative.toAdd (φ (Multiplicative.ofAdd x))
      map_zero' := by
        change Multiplicative.toAdd (φ 1) = 0
@@ -482,7 +482,7 @@ private def automorphismLinear (φ : E ≃* E) : K →ₗ[F] K :=
      map_add' := fun x y => congrArg Multiplicative.toAdd
        (φ.map_mul (Multiplicative.ofAdd x) (Multiplicative.ofAdd y)) } : K →+ K).toZModLinearMap p
 
-private theorem log_intertwining (q : K →ₗ[F] K) (φ : E ≃* E) (P : V ≃ₗ[F] V)
+theorem log_intertwining (q : K →ₗ[F] K) (φ : E ≃* E) (P : V ≃ₗ[F] V)
     (hP : ∀ (g : E) (v : V), P (originalRepresentation (p := p) q g v) =
       ordinaryRepresentation (φ g) (P v)) (x : K) (v : V) :
     P (jetOperator q x v) = automorphismLinear (p := p) φ x • D (P v) := by
@@ -589,7 +589,7 @@ private theorem nonprojective_action (q : K →ₗ[F] K) (hr : 2 ≤ finrank F K
 private def coefficientZero : V →ₗ[K] K :=
   (Polynomial.lcoeff K 0).comp (Polynomial.degreeLT K p).subtype
 
-private def diagonalScale (c : K) (hc : c ≠ 0) : V ≃ₗ[K] V :=
+def diagonalScale (c : K) (hc : c ≠ 0) : V ≃ₗ[K] V :=
   (degreeLT.basis K p).equivFun ≪≫ₗ
     (LinearEquiv.piCongrRight (fun i : Fin p =>
       LinearEquiv.smulOfNeZero K K (c^i.val) (pow_ne_zero _ hc))) ≪≫ₗ
@@ -602,7 +602,7 @@ private theorem diagonalScale_coeff (c : K) (hc : c ≠ 0) (v : V) (i : Fin p) :
     LinearEquiv.piCongrRight_apply, LinearEquiv.smulOfNeZero_apply, smul_eq_mul,
     Basis.equivFun_apply, degreeLT.basis_repr]
 
-private theorem diagonalScale_derivative (c : K) (hc : c ≠ 0) (v : V) :
+theorem diagonalScale_derivative (c : K) (hc : c ≠ 0) (v : V) :
     diagonalScale c hc (D v) = c⁻¹ • D (diagonalScale c hc v) := by
   apply (degreeLT.basis K p).repr.injective
   apply Finsupp.ext
@@ -676,10 +676,20 @@ private theorem dividedMonomial_one_top (s : K) :
     simp [dividedMonomial_coe, linearMonomial, Polynomial.smul_eq_C_mul]
   rw [h, map_smul, linearMonomial_pow (p-1) (by omega), smul_zero]
 
-private theorem trace_structural (P : V ≃ₗ[F] V)
+/-- The same coefficient map is used for every parameter of an intertwining. -/
+def constantCommutator (P : V ≃ₗ[F] V)
+    (hD : ∀ v : V, P (D v) = D (P v)) : K →ₗ[F] K :=
+  (constantsEquiv P hD).symm.toLinearMap.comp
+    ((coefficientZero.restrictScalars F).comp
+      (P.toLinearMap.comp ((dividedMonomial (p-2)
+        (by have : 2 < p := Fact.out; omega)).restrictScalars F)))
+
+/-- Extract the multiplication commutator without any scalar-linearity assumption
+beyond the prime field. The extracted map is independent of `a`, `b`, and `e`. -/
+theorem structural_commutator (P : V ≃ₗ[F] V)
     (hD : ∀ v : V, P (D v) = D (P v)) (a b e : K)
     (hL : ∀ v : V, P (a • D v + b • (D^(p-1)) v) = e • D (P v)) :
-    Algebra.trace F K b = 0 := by
+    ∀ s : K, a * constantCommutator P hD s - constantCommutator P hD (a*s) = b*s := by
   have hp : 2 < p := Fact.out
   let P0 : K ≃ₗ[F] K := constantsEquiv P hD
   let T : K →ₗ[F] K := (coefficientZero.restrictScalars F).comp
@@ -705,13 +715,21 @@ private theorem trace_structural (P : V ≃ₗ[F] V)
       ← (constantLinear (p := p) (K := K)).map_smul b s, map_add, hconst] at h
     have hc := congrArg (fun v : V => coefficientZero v) h
     simpa [T, coefficientZero, constantLinear] using hc
-  let Q : K →ₗ[F] K := P0.symm.toLinearMap.comp T
+  let Q : K →ₗ[F] K := constantCommutator P hD
   have hcomm (s : K) : a * Q s - Q (a*s) = b*s := by
     apply P0.injective
     rw [map_sub, hsecond]
     change e * P0 (P0.symm (T s)) - P0 (P0.symm (T (a*s))) = P0 (b*s)
     rw [P0.apply_symm_apply, P0.apply_symm_apply]
     exact sub_eq_iff_eq_add.mpr (by simpa only [add_comm] using (htop s).symm)
+  exact hcomm
+
+private theorem trace_structural (P : V ≃ₗ[F] V)
+    (hD : ∀ v : V, P (D v) = D (P v)) (a b e : K)
+    (hL : ∀ v : V, P (a • D v + b • (D^(p-1)) v) = e • D (P v)) :
+    Algebra.trace F K b = 0 := by
+  let Q := constantCommutator P hD
+  have hcomm := structural_commutator P hD a b e hL
   have he : Algebra.lmul F K a * Q - Q * Algebra.lmul F K a = Algebra.lmul F K b := by
     apply LinearMap.ext
     exact hcomm
