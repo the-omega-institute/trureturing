@@ -7,6 +7,7 @@
    digest: Native polynomial translation of transverse oscillator descendants. -/
 
 import D5.S3.VertexAlgebra.Sectors.LatticeCosetCompression
+import D5.S3.VertexAlgebra.LatticeHalfFockChargedCoefficients
 
 /-!
 The creation and annihilation polynomials are those of the native lattice
@@ -28,6 +29,7 @@ noncomputable section
 
 open private gram_longitudinal from D5.S3.VertexAlgebra.Sectors.LatticeCosetCompression
 open private bilinear_unit from D5.S3.VertexAlgebra.LatticeFiniteNegativeGeneration
+open private derivative_map solution_unique from D5.S3.VertexAlgebra.LatticeHalfFockChargedCoefficients
 
 variable (D : LatticeData) {e : ℕ}
 variable (B : Matrix (Fin D.rank) (Fin e) ℤ) (C : Matrix (Fin e) (Fin e) ℤ)
@@ -262,6 +264,140 @@ theorem creationSeries_difference (hD : (gramReal D).PosDef)
     rw [Finset.sum_neg_distrib, ← map_sum, ← Finset.sum_smul, hcast]
     simp only [neg_mul, smul_neg, neg_smul]
     simp only [← hCsmul, smul_smul, map_neg, neg_mul]
+
+
+/-- Projecting between the two native annihilation translations removes exactly
+one Schur binomial factor from the full creation exponential. -/
+theorem creationExponential_factorization (hD : (gramReal D).PosDef)
+    (a b : Fin e → ℤ) (n m : Charge D) :
+    PowerSeries.map (translatedProjection D B C hC hCe
+        (liftCharge D B C hC hCe a n)).toRingHom
+        (creationExponential (ambient D e B C hC hCe) (liftCharge D B C hC hCe b m)) =
+      PowerSeries.map (longitudinalTranslation D B C hC hCe
+        (liftCharge D B C hC hCe a n)).toRingHom
+        (creationExponential (ambient D e B C hC hCe) (liftCharge D B C hC hCe b m)) *
+      PowerSeries.rescale (-Polynomial.X)
+        (PowerSeries.binomialSeries (R := ℚ) (Polynomial (Oscillator D)) (schur D B C a b)) := by
+  classical
+  let F := ambient D e B C hC hCe
+  let α := liftCharge D B C hC hCe a n
+  let β := liftCharge D B C hC hCe b m
+  let T := translatedProjection D B C hC hCe α
+  let L := longitudinalTranslation D B C hC hCe α
+  let A := (creationSeries F β).map T.toRingHom
+  let A₀ := (creationSeries F β).map L.toRingHom
+  let f := (creationExponential F β).map T.toRingHom
+  let f₀ := (creationExponential F β).map L.toRingHom
+  let s := schur D B C a b
+  let U : Polynomial (Oscillator D) := Polynomial.X
+  let K := PowerSeries.rescale (-U)
+    (PowerSeries.binomialSeries (R := ℚ) (Polynomial (Oscillator D)) s)
+  let E : PowerSeries (Polynomial (Oscillator D)) := 1 - PowerSeries.C U * PowerSeries.X
+  have hS : PowerSeries.constantCoeff (creationSeries F β) = 0 := by
+    simp [creationSeries, ← PowerSeries.coeff_zero_eq_constantCoeff_apply]
+  have hsource : PowerSeries.derivative (R := Oscillator F) (creationExponential F β) =
+      creationExponential F β * PowerSeries.derivative (R := Oscillator F) (creationSeries F β) := by
+    rw [creationExponential, PowerSeries.derivative_subst
+      (PowerSeries.HasSubst.of_constantCoeff_zero' hS), PowerSeries.derivative_exp]
+  have hconstant : PowerSeries.coeff 0 (creationExponential F β) = 1 := by
+    rw [creationExponential, PowerSeries.coeff_subst'
+      (PowerSeries.HasSubst.of_constantCoeff_zero' hS), finsum_eq_single _ 0]
+    · simp
+    · intro j hj
+      rw [PowerSeries.coeff_zero_eq_constantCoeff, map_pow, hS]
+      simp [hj]
+  have hdiff (k : ℕ) : PowerSeries.coeff k
+      (PowerSeries.derivative (R := Polynomial (Oscillator D)) A -
+       PowerSeries.derivative (R := Polynomial (Oscillator D)) A₀) =
+      -Polynomial.C ((s : ℂ) • (1 : Oscillator D)) * U^(k+1) := by
+    rw [← map_sub, PowerSeries.coeff_derivative]
+    have h := creationSeries_difference D B C hC hCe hD a b n m
+    change A - A₀ = _ at h
+    rw [h, PowerSeries.coeff_mk, if_neg (Nat.succ_ne_zero k)]
+    rw [mul_comm, show (k+1 : Polynomial (Oscillator D)) =
+      algebraMap ℂ (Polynomial (Oscillator D)) (k+1 : ℂ) by simp,
+      ← Algebra.smul_def, smul_smul]
+    have hk : (k+1 : ℂ) ≠ 0 := by exact_mod_cast Nat.succ_ne_zero k
+    simp only [Nat.cast_add, Nat.cast_one, mul_neg, mul_inv_cancel₀ hk,
+      neg_one_smul, neg_mul, U, s]
+  have hDiffE : (PowerSeries.derivative (R := Polynomial (Oscillator D)) A -
+      PowerSeries.derivative (R := Polynomial (Oscillator D)) A₀) * E =
+      -PowerSeries.C (Polynomial.C ((s : ℂ) • (1 : Oscillator D)) * U) := by
+    apply PowerSeries.ext
+    intro k
+    cases k with
+    | zero =>
+      simp only [E, mul_sub, mul_one, ← mul_assoc, map_sub,
+        PowerSeries.coeff_zero_mul_X, sub_zero, hdiff,
+        map_neg, PowerSeries.coeff_zero_C]
+      ring
+    | succ k =>
+      simp only [E, mul_sub, mul_one, ← mul_assoc, map_sub,
+        PowerSeries.coeff_succ_mul_X, PowerSeries.coeff_mul_C,
+        hdiff, map_neg, PowerSeries.coeff_C, Nat.succ_ne_zero, if_false]
+      simp only [pow_succ]
+      ring
+  have hChoose (k : ℕ) : (k+1 : ℚ) * Ring.choose s (k+1) =
+      (s-k) * Ring.choose s k := by
+    simpa [Nat.choose_succ_self_right, Nat.add_sub_cancel_left,
+      Ring.choose_one_right, nsmul_eq_mul, mul_comm] using
+      (Ring.choose_smul_choose s (n := k+1) (k := k) (by omega))
+  have hKcoeff (k : ℕ) : PowerSeries.coeff k K =
+      (-U)^k * (Ring.choose s k : Polynomial (Oscillator D)) := by
+    simp only [K, PowerSeries.coeff_rescale, PowerSeries.binomialSeries_coeff,
+      Algebra.smul_def, mul_one]
+  have hs : Polynomial.C ((s : ℂ) • (1 : Oscillator D)) =
+      (s : Polynomial (Oscillator D)) := by
+    simp [Algebra.smul_def]
+  have hKE : PowerSeries.derivative (R := Polynomial (Oscillator D)) K * E =
+      -PowerSeries.C (Polynomial.C ((s : ℂ) • (1 : Oscillator D)) * U) * K := by
+    rw [hs]
+    apply PowerSeries.ext
+    intro k
+    cases k with
+    | zero =>
+      dsimp only [E]
+      rw [mul_sub, mul_one, ← mul_assoc, map_sub,
+        PowerSeries.coeff_zero_mul_X, sub_zero, PowerSeries.coeff_derivative,
+        neg_mul, map_neg, PowerSeries.coeff_C_mul, hKcoeff, hKcoeff]
+      simp
+      ring
+    | succ k =>
+      dsimp only [E]
+      rw [mul_sub, mul_one, ← mul_assoc, map_sub,
+        PowerSeries.coeff_succ_mul_X, PowerSeries.coeff_mul_C,
+        PowerSeries.coeff_derivative, PowerSeries.coeff_derivative,
+        neg_mul, map_neg, PowerSeries.coeff_C_mul]
+      simp only [hKcoeff]
+      have hr : (k+2 : Polynomial (Oscillator D)) *
+          (Ring.choose s (k+2) : Polynomial (Oscillator D)) =
+          ((s : Polynomial (Oscillator D)) - (k+1 : Polynomial (Oscillator D))) *
+            (Ring.choose s (k+1) : Polynomial (Oscillator D)) := by
+        exact_mod_cast hChoose (k+1)
+      simp only [pow_succ, Nat.cast_add, Nat.cast_one]
+      linear_combination (-U)^(k+1) * (-U) * hr
+  have hu : IsUnit E := PowerSeries.isUnit_iff_constantCoeff.mpr (by simp [E])
+  have hDK : PowerSeries.derivative (R := Polynomial (Oscillator D)) K =
+      K * (PowerSeries.derivative (R := Polynomial (Oscillator D)) A -
+        PowerSeries.derivative (R := Polynomial (Oscillator D)) A₀) := by
+    apply hu.mul_right_cancel
+    rw [hKE, mul_assoc, hDiffE]
+    ring
+  have hf : PowerSeries.derivative (R := Polynomial (Oscillator D)) f =
+      f * PowerSeries.derivative (R := Polynomial (Oscillator D)) A := by
+    dsimp only [f, A]
+    rw [derivative_map, hsource, map_mul, derivative_map]
+  have hf₀ : PowerSeries.derivative (R := Polynomial (Oscillator D)) f₀ =
+      f₀ * PowerSeries.derivative (R := Polynomial (Oscillator D)) A₀ := by
+    dsimp only [f₀, A₀]
+    rw [derivative_map, hsource, map_mul, derivative_map]
+  have hg : PowerSeries.derivative (R := Polynomial (Oscillator D)) (f₀*K) =
+      (f₀*K) * PowerSeries.derivative (R := Polynomial (Oscillator D)) A := by
+    rw [(PowerSeries.derivative (R := Polynomial (Oscillator D))).leibniz, hf₀, hDK]
+    ring
+  apply solution_unique f (f₀*K) _ hf hg
+  simp [f, f₀, PowerSeries.coeff_mul, Finset.Nat.antidiagonal_zero,
+    hconstant, hKcoeff]
 
 end
 end D5.S3.VertexAlgebra.LatticeCosetTransverse
