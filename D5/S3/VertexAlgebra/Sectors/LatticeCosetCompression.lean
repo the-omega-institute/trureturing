@@ -35,6 +35,7 @@ open scoped BigOperators VertexOperator
 noncomputable section
 
 open private rat_unit from D5.S3.VertexAlgebra.Characters.LatticeDiscriminantTheta
+open private bilinear_unit from D5.S3.VertexAlgebra.LatticeFiniteNegativeGeneration
 
 variable (D : LatticeData) (e : ℕ)
 variable (B : Matrix (Fin D.rank) (Fin e) ℤ) (C : Matrix (Fin e) (Fin e) ℤ)
@@ -186,8 +187,8 @@ private theorem old_current_pairing (i : Fin D.rank)
       bilinear D (unitCharge D i) (oldCharge D B C hC hCe n) +
         (Matrix.mulVec B (externalCharge D B C hC hCe n)) i := by
   classical
-  simp only [bilinear, unitCharge, ite_mul, one_mul, zero_mul,
-    Finset.sum_ite_eq', Finset.mem_univ, ↓reduceIte]
+  rw [bilinear_unit, bilinear_unit]
+  change (∑ j : Fin (D.rank+e), _) = _
   rw [Fin.sum_univ_add]
   rfl
 
