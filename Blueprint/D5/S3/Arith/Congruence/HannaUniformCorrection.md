@@ -128,7 +128,33 @@ Lean statement: `D5/S3/Arith/Congruence/HannaUniformCorrection.exponent_prime`
 
 Subtracting actual divisor ghosts at p and one gives p*c_s(p)=p^s-p. Integer cancellation yields p^(s-1)-1.
 
-**Theorem 1.11 (exponent bounds).**
+The proper-divisor budget keeps a full additive n margin. Complementary proper divisors lie among the integers from two through n. Mathlib supplies the finite reciprocal-square estimate; no infinite numerical approximation or finite enumeration is used. Both following estimates are consumed bind-only helpers of exponent_bounds and do not supply an independent host-admission witness.
+
+**Theorem 1.11 (Square budget).**
+
+Lean statement: `D5/S3/Arith/Congruence/HannaUniformCorrection.square_budget`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/HannaUniformCorrection.square_budget` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every positive n, the sum of d squared over proper divisors d, plus n, is at most n squared. The map d to n/d is the existing complementary-divisor involution and gives the exact reciprocal-square sum. The pinned finite sum_Ioc_inv_sq_le_sub at one bounds it by 1-1/n; multiplication by n squared gives the additive n margin, including n=1. The qualified declaration remains Divisors.ProperDivisorPowerBudget.square_budget and is consumed by power_budget.
+
+**Theorem 1.12 (Power budget).**
+
+Lean statement: `D5/S3/Arith/Congruence/HannaUniformCorrection.power_budget`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/HannaUniformCorrection.power_budget` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For all natural s>=2 and n>0, the integer sum of d^s over proper divisors, plus n, is at most n^s. Each d^s is at most n^(s-2) times d squared. Since n^(s-2)>=1, the quadratic margin remains at least n. Cast the rational estimate to integers. The qualified declaration remains Divisors.ProperDivisorPowerBudget.power_budget; exponent_bounds consumes it on the actual strong-induction path.
+
+**Theorem 1.13 (exponent bounds).**
 
 Lean statement: `D5/S3/Arith/Congruence/HannaUniformCorrection.exponent_bounds`
 
@@ -146,7 +172,7 @@ For every s>=2 and prime p, c_s(p)=p^(s.toNat-1)-1. Subtract divisorGhost(c_s,1)
 
 For every s>=2, prime p and r>=2, c_s(p^r)=p^(s.toNat*(r-1)-r)*(p^s.toNat-1). Consecutive prime-power divisor ghosts differ by p^r*c_s(p^r); the corrections are both p-1. Their difference is therefore p^(r*s.toNat)-p^((r-1)*s.toNat). Since r<=s.toNat*(r-1), factor and cancel the nonzero p^r. No negative natural exponent is used.
 
-**Definition 1.12 (f).**
+**Definition 1.14 (f).**
 
 Lean statement: `D5/S3/Arith/Congruence/HannaUniformCorrection.f`
 
@@ -160,7 +186,7 @@ These are ordinary integer coefficients of the canonical Euler series. They are 
 
 For s>=0 and every n>=0, (f_s(n):Q)=coeff_n(F_s), by applying coeff_n to the Euler/exponential equality and using coeff_map. The integers f are extracted from the existing Euler series independently of this equality.
 
-**Definition 1.13 (Independent finite coloured partitions).**
+**Definition 1.15 (Independent finite coloured partitions).**
 
 Lean statement: `D5/S3/Arith/Congruence/HannaUniformCorrection.ColouredPartitionWithColors`
 
@@ -172,7 +198,7 @@ Lean statement: `D5/S3/Arith/Congruence/HannaUniformCorrection.ColouredPartition
 
 For any colors:N->N and degree n, take the sigma over p:Nat.Partition n of the dependent product over distinct parts d of Sym(Fin(colors(d)), multiplicity_p(d)). This finite carrier is defined independently of any Euler or exponential coefficient and allows zero colours.
 
-**Definition 1.14 (The corrected-power coloured carrier).**
+**Definition 1.16 (The corrected-power coloured carrier).**
 
 Lean statement: `D5/S3/Arith/Congruence/HannaUniformCorrection.ColouredPartition`
 
@@ -196,7 +222,7 @@ For s>=2, f_s(n)>0 for every n>=0. On positive indices m, m^s>=m>a_s(m), so g(m)
 
 For s>=2, f_s is nondecreasing on all natural indices. The first corrected ghost is g(1)=1. For n>=1, write m^s=m*m^(s-1), use n^(s-1)<=(n+1)^(s-1) and (n+1)^(s-1)>=n+1 to get (n+1)^s-n^s>=n+1. Together with 0<=a_s(n)<n and 0<=a_s(n+1)<n+1 this gives g(n)<=g(n+1). EulerExponentialCoefficients.coefficient_monotone then applies, followed by coefficient transport.
 
-**Theorem 1.15 (correction boundary).**
+**Theorem 1.17 (correction boundary).**
 
 Lean statement: `D5/S3/Arith/Congruence/HannaUniformCorrection.correction_boundary`
 
@@ -208,7 +234,7 @@ Lean statement: `D5/S3/Arith/Congruence/HannaUniformCorrection.correction_bounda
 
 At weights zero and one, the bounded positive-index corrections are respectively zero and n-1. Their literal corrected ghosts equal one. Uniqueness comes from the same generic construction.
 
-**Theorem 1.16 (F boundary).**
+**Theorem 1.18 (F boundary).**
 
 Lean statement: `D5/S3/Arith/Congruence/HannaUniformCorrection.F_boundary`
 
@@ -236,9 +262,10 @@ Both actual boundary exponentials equal the inverse of one minus X. Coefficient 
 - Truth anchor: `D5/S3/Arith/Congruence/HannaUniformCorrection.exponent_bounds`
 - Truth anchor: `D5/S3/Arith/Congruence/HannaUniformCorrection.exponent_prime`
 - Truth anchor: `D5/S3/Arith/Congruence/HannaUniformCorrection.f`
+- Truth anchor: `D5/S3/Arith/Congruence/HannaUniformCorrection.power_budget`
+- Truth anchor: `D5/S3/Arith/Congruence/HannaUniformCorrection.square_budget`
 - Truth anchor: `D5/S3/Arith/Congruence/HannaUniformCorrection.weight`
 - Truth anchor: `D5/S3/Arith/Congruence/HannaUniformCorrection.weight_cast`
 - Dependency: [D5/S1/Recurrence/Witt/BoundedEulerCorrection](../../../S1/Recurrence/Witt/BoundedEulerCorrection.md)
 - Dependency: [D5/S1/Recurrence/Witt/EulerExponentialCoefficients](../../../S1/Recurrence/Witt/EulerExponentialCoefficients.md)
-- Dependency: [D5/S3/Arith/Congruence/BoundedPowerCorrection](BoundedPowerCorrection.md)
-- Dependency: [D5/S3/Arith/Divisors/ProperDivisorPowerBudget](../Divisors/ProperDivisorPowerBudget.md)
+- Dependency: [D5/S3/Arith/Congruence/HannaPrimePowerCorrection](HannaPrimePowerCorrection.md)
