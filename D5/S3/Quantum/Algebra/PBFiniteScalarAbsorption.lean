@@ -227,6 +227,55 @@ private def evalReadout (O : OriginalData (A := A) (E := E) P)
     exact (positive_table_transfer O.J O.D {c | 0 ≤ O.i c} O.preparation
       O.exact_cone O.raw_p2 f hf a b).2
 
+private theorem evalOp_injective (q : E →ₗ[ℝ] selfAdjoint (Matrix n n ℂ))
+    (x : E) (hx : evalOp q x = 0) : q x = 0 := by
+  apply Subtype.ext
+  change (q x : Matrix n n ℂ) = 0
+  apply (Matrix.toEuclideanCLM (n := n) (𝕜 := ℂ)).injective
+  rw [map_zero]
+  apply ContinuousLinearMap.ext
+  intro v
+  exact congrArg (fun T : EuclideanSpace ℂ n →ₗ[ℝ] EuclideanSpace ℂ n => T v) hx
+
+private theorem eval_skew (O : OriginalData (A := A) (E := E) P)
+    (q : E →ₗ[ℝ] selfAdjoint (Matrix n n ℂ))
+    (hu : (q O.u : Matrix n n ℂ) = 1)
+    (hJ : ∀ a b, (q (O.J a b) : Matrix n n ℂ) =
+      (1 / 2 : ℝ) • ((q a : Matrix n n ℂ) * q b + (q b : Matrix n n ℂ) * q a))
+    (hpositive : ∀ a, 0 ≤ O.i a → (q a : Matrix n n ℂ).PosSemidef)
+    (a b : E) : q (O.D b a) = -q (O.D a b) := by
+  let R := evalReadout O q hu hJ hpositive
+  have hz : q (O.D b a + O.D a b) = 0 := by
+    apply evalOp_injective q
+    apply (R.symmetric _).inner_map_self_eq_zero.mp
+    intro v
+    rw [real_inner_comm]
+    let f := reading R v
+    have hf (c : E) (hc : 0 ≤ O.i c) : 0 ≤ f c :=
+      (Matrix.isPositive_toEuclideanLin_iff.mpr (hpositive c hc)).re_inner_nonneg_right v
+    have ht := (positive_table_transfer O.J O.D {c | 0 ≤ O.i c} O.preparation
+      O.exact_cone O.raw_p2 f hf a b).1.1
+    have he := congrArg Complex.im (congrFun (congrFun ht 0) 1)
+    have hd : f (O.D b a) = -f (O.D a b) := by
+      simpa [originalTable, Matrix.conjTranspose_apply] using he
+    change f (O.D b a + O.D a b) = 0
+    simp [hd]
+  simpa only [map_add, add_eq_zero_iff_eq_neg] using hz
+
+private theorem zero_second_image (O : OriginalData (A := A) (E := E) P)
+    (q : E →ₗ[ℝ] selfAdjoint (Matrix n n ℂ))
+    (hu : (q O.u : Matrix n n ℂ) = 1)
+    (hJ : ∀ a b, (q (O.J a b) : Matrix n n ℂ) =
+      (1 / 2 : ℝ) • ((q a : Matrix n n ℂ) * q b + (q b : Matrix n n ℂ) * q a))
+    (hpositive : ∀ a, 0 ≤ O.i a → (q a : Matrix n n ℂ).PosSemidef)
+    (a b : E) (hb : q b = 0) : q (O.D a b) = 0 := by
+  let R := evalReadout O q hu hJ hpositive
+  apply evalOp_injective q
+  apply (R.symmetric _).inner_map_self_eq_zero.mp
+  intro v
+  rw [real_inner_comm]
+  exact collinear_read_zero R a b v 0 (by simp [R, evalReadout, evalOp, hb])
+
 private theorem positive_square_lift (O : OriginalData (A := A) (E := E) P)
     (q : E →ₗ[ℝ] selfAdjoint (Matrix n n ℂ)) (hq : Function.Surjective q)
     (hJ : ∀ a b, (q (O.J a b) : Matrix n n ℂ) =
@@ -440,6 +489,70 @@ theorem scalar_second_jordan_zero (O : OriginalData (A := A) (E := E) P)
   apply hinj
   exact (R.symmetric _).inner_map_self_eq_zero.mp
     (fun v => by rw [real_inner_comm]; exact hall v)
+
+/-- The second fixed table is an actual original PB call. Image-zero labels
+remain in its arguments; only their images and their P2 readings are simplified. -/
+theorem scalar_second_actual_table (O : OriginalData (A := A) (E := E) P)
+    (q : E →ₗ[ℝ] selfAdjoint (Matrix n n ℂ))
+    (hu : (q O.u : Matrix n n ℂ) = 1)
+    (hJ : ∀ a b, (q (O.J a b) : Matrix n n ℂ) =
+      (1 / 2 : ℝ) • ((q a : Matrix n n ℂ) * q b + (q b : Matrix n n ℂ) * q a))
+    (hpositive : ∀ a, 0 ≤ O.i a → (q a : Matrix n n ℂ).PosSemidef)
+    (hPB : PB O.J O.D) (a b : E) (μ : ℝ)
+    (ha : (q a : Matrix n n ℂ) = μ • (1 : Matrix n n ℂ)) :
+    let ν := O.D b a - O.J b (μ • b)
+    let ω := O.J b a + O.D b (μ • b)
+    let x := a + ν
+    let y := μ • b + ω
+    (q x : Matrix n n ℂ) = μ • (1 - (q b : Matrix n n ℂ) ^ 2) - q (O.D a b) ∧
+    (q y : Matrix n n ℂ) = (2 * μ) • (q b : Matrix n n ℂ) ∧
+    q (O.D x y) = (2 * μ) • q (O.D a b) := by
+  let R := evalReadout O q hu hJ hpositive
+  have hprop : q (O.D b (μ • b)) = 0 :=
+    evalOp_injective q _ (proportional_image_zero R b μ)
+  have hskew := eval_skew O q hu hJ hpositive a b
+  have hjba : (q (O.J b a) : Matrix n n ℂ) = μ • (q b : Matrix n n ℂ) := by
+    rw [hJ, ha, Matrix.mul_smul, Matrix.smul_mul, mul_one, one_mul]
+    module
+  have hjbb : (q (O.J b (μ • b)) : Matrix n n ℂ) =
+      μ • ((q b : Matrix n n ℂ) ^ 2) := by
+    rw [hJ]
+    simp only [map_smul, selfAdjoint.val_smul, Matrix.mul_smul, Matrix.smul_mul, pow_two]
+    module
+  have hminus : q (μ • b - (O.J b a + O.D b (μ • b))) = 0 := by
+    apply Subtype.ext
+    simp only [map_sub, map_add, map_smul, AddSubgroupClass.coe_sub,
+      AddSubgroup.coe_add, selfAdjoint.val_smul, hjba, hprop, ZeroMemClass.coe_zero]
+    module
+  have hm := zero_second_image O q hu hJ hpositive
+    (a - (O.D b a - O.J b (μ • b))) _ hminus
+  have he := congrArg (fun e : E => (q e : Matrix n n ℂ)) (hPB b a (μ • b))
+  dsimp only at he ⊢
+  have hν : (q (O.D b a - O.J b (μ • b)) : Matrix n n ℂ) =
+      -(q (O.D a b) : Matrix n n ℂ) - μ • ((q b : Matrix n n ℂ) ^ 2) := by
+    simp only [map_sub, AddSubgroupClass.coe_sub, hskew, NegMemClass.coe_neg, hjbb]
+  have hω : (q (O.J b a + O.D b (μ • b)) : Matrix n n ℂ) =
+      μ • (q b : Matrix n n ℂ) := by simp [hjba, hprop]
+  refine ⟨?_, ?_, ?_⟩
+  · simp only [map_add, AddSubgroup.coe_add, ha, hν]
+    module
+  · simp only [map_add, map_smul, AddSubgroup.coe_add, selfAdjoint.val_smul, hjba, hprop, ZeroMemClass.coe_zero]
+    module
+  · apply Subtype.ext
+    have hrhs : (q ((-2 : ℝ) •
+        (O.J a (O.D b a - O.J b (μ • b)) +
+          O.J (μ • b) (O.J b a + O.D b (μ • b)))) : Matrix n n ℂ) =
+        (2 * μ) • (q (O.D a b) : Matrix n n ℂ) := by
+      rw [q.map_smul (-2) _, q.map_add (O.J a _) _]
+      change (-2 : ℝ) • ((q (O.J a _) : Matrix n n ℂ) + (q (O.J (μ • b) _) : Matrix n n ℂ)) = _
+      rw [hJ a _, hJ (μ • b) _, ha, hν, hω]
+      simp only [q.map_smul μ b, selfAdjoint.val_smul, Matrix.mul_smul,
+        Matrix.smul_mul, Matrix.mul_sub, Matrix.sub_mul, one_mul, mul_one, pow_two]
+      module
+    rw [q.map_sub _ _, hm] at he
+    change (q (O.D _ _) : Matrix n n ℂ) - 0 = _ at he
+    rw [sub_zero, hrhs] at he
+    exact he
 
 #print axioms scalar_second_jordan_zero
 #print axioms semidefinite_second_image
