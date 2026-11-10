@@ -3467,3 +3467,457 @@ C13950–73、C128385–392 的既有下降、参考、恢复与相应明确前�
 此后整载体 Hilbert 分类与给定总空间上的效果由已有定理接上。树模型说明原对象的括号、正坐标及实际记录可以始终不同，第三标记甚至没有任何实际固定点，比较却已返回。这个数值返回既不抹掉原记录，也不证明装置、完整输出和所有合法未来真正回到原处；完整物理来源与七项消费者仍须在同一原实现中共同成立。
 
 ## 追加锚（本行以下为增补区）
+
+## 25. 原生有限项、静态事件与同一参考态的顺序读出
+
+### 25.1 原乘法项的实际作用与标量障碍
+
+**定义 25.1（受限原生项签名与锚定复核）。**固定 §4、定义 20.1 所用的同一个实际 $M,e,\cdot,U$ 及其最小表示；在满足各节全部前件时，该表示可由 §23 的实际群右作用或 §24 的实际交换幺半群右作用这两类充分结构取得。这些结构不由原 $\Omega$ 自动供应，后一结构也不消除一般 magma 的几何／事件缺口或创造新的实际运算。以下用 $\zeta$ 表示前文的三次相位根，另将 $\omega$ 留给态泛函：
+
+$$
+Fe=0,\qquad F(a\cdot b)=Fa+Fb,\qquad
+F(Ua)=\zeta Fa+t,\qquad
+\zeta^2+\zeta+1=0,\quad \operatorname{Im}\zeta>0,
+\qquad t=F(Ue).
+\tag{25.1}
+$$
+
+受限原生一元项由一个变量 $x$、任意固定原标签常元、二元运算 $\cdot$ 和标记 $U$ 作有限次构造；允许变量重复，保留每次实际乘法的次序和括号。常元不随输入变化。比较值、坐标、事件索引和核值都是关系数据，不因此成为新的取坐标、按核选择、准备或控制运算。这里限制的是所研究的生成签名，不断言完整原 $\Omega$ 只有这些运算。令
+
+$$
+\mathcal O=\mathbb Z[\zeta],\qquad
+\kappa(a,b)=(Fa)^\dagger Fb.
+\tag{25.2}
+$$
+
+$\kappa$ 取第一变量共轭线性的约定；应用本卷第一变量线性的式 (4.5) 时取共轭。所谓完整锚定分支守恒，是对全部原 $a,b$ 要求有限族 $w_j$ 满足
+
+$$
+\sum_j\kappa(w_j(a),w_j(b))=\kappa(a,b).
+\tag{25.3}
+$$
+
+这保留共同锚 $e$，不把左侧另行减去各分支的 $F(w_j(e))$。
+
+**命题 25.2（受限原项不能生成非标量坐标分支）。**每个定义 25.1 的项 $w$ 有
+
+$$
+F(w(a))=\lambda_wFa+b_w,\qquad
+\lambda_w\in\mathcal O,\qquad b_w=F(w(e)).
+\tag{25.4}
+$$
+
+若 $F(M)\ne\{0\}$，有限项族满足 (25.3)，则恰有一个分支在表示中为 $\lambda I$，其中
+
+$$
+\lambda\in\mu_6=\{\pm1,\pm\zeta,\pm\zeta^2\};
+\tag{25.5}
+$$
+
+其余分支在表示中全为零。特别，在 $\dim_{\mathbb C}H\ge2$ 时不能由这些项得到非零、非全空间的正交坐标投影。即使另准许任意复标量缩放，但仍只准许标量仿射分支，(25.3) 所给的分支效果仍全是 $|\lambda_j|^2 I$，不能成为依赖输入方向的坐标探针。
+
+证明。结构归纳的系数规则为
+
+$$
+\begin{array}{c|c}
+\text{项}&(\lambda,b)\\ \hline
+x&(1,0)\\
+c\text{，固定常元}&(0,Fc)\\
+w\cdot v&(\lambda_w+\lambda_v,b_w+b_v)\\
+Uw&(\zeta\lambda_w,\zeta b_w+t).
+\end{array}
+\tag{25.6}
+$$
+
+故全部有限项，包括重复使用输入的项，均满足 (25.4)。这沿用 §4–5 的 Eisenstein 配方结构；结构归纳只是该受限签名的逐项计算。若还施行实际一元映射的复合，则
+
+$$
+(\lambda_f,b_f)\circ(\lambda_g,b_g)
+=(\lambda_f\lambda_g,\lambda_fb_g+b_f).
+\tag{25.7}
+$$
+
+式 (25.7) 的映射复合与原二元乘法的 (25.6) 是两种运算；原二元乘法始终表示向量加法，没有被替换成矩阵乘法。
+
+在 (25.3) 取 $a=b=e$，得 $\sum_j\|b_j\|^2=0$，所以每个 $b_j=0$。再取 $Fa\ne0$，得
+
+$$
+\sum_j|\lambda_j|^2=1,\qquad
+|m+n\zeta|^2=m^2-mn+n^2\in\mathbb Z_{\ge0}.
+\tag{25.8}
+$$
+
+故恰有一个范数为一，其余为零。由
+$4(m^2-mn+n^2)=(2m-n)^2+3n^2$，范数一只有 $(m,n)=(\pm1,0),(0,\pm1),(1,1),(-1,-1)$，正是 (25.5)。范数非负整数这一步与 [C139 §16，命题 16.3](AURIC_C139_MUTUAL_PROBES_AND_INTRINSIC_RECOVERY_OF_SQUARE_GEOMETRY.md#16三路算术读口的实际供给与稠密边界)的算术障碍共用成熟的 Eisenstein 范数，不另主张算术分类。
+
+若某项满足 $F(w(a))=PFa$，取 $a=e$ 先给 $b=0$，在 $F(M)$ 的复线性张成上又有 $P=\lambda I$，与投影同时有非零像和非零核矛盾。准许一般标量后，整数论结论可失效，但相同的锚定计算仍杀掉偏置，且每支的 $M_j^\dagger M_j=|\lambda_j|^2I$。所以标量分支的方向障碍不依赖整数范数。证毕。
+
+### 25.2 全部原比较与一个三标签事件见证
+
+**命题 25.3（忠实的完整平方几何仍不供应坐标接续）。**取
+
+$$
+M=\mathcal O^2,\qquad e=0,\qquad a\cdot b=a+b,\qquad
+U(a)=\zeta a+e_0,\qquad e_0=(1,0),\quad e_1=(0,1),
+\tag{25.9}
+$$
+
+以 $G=M$ 的实际加法群和右作用满足定义 23.1，取 $F$ 为到 $H=\mathbb C^2$ 的恒等嵌入。对每一对原标签都给出
+
+$$
+\begin{gathered}
+K(a,b)=\|a-b\|^2,\qquad
+q_j(a,b)=|a_j-b_j|^2\quad(j=0,1),\\
+\kappa(a,b)=a^\dagger b,\qquad
+\kappa_j(a,b)=\overline{a_j}b_j,\qquad
+\kappa=\kappa_0+\kappa_1.
+\end{gathered}
+\tag{25.10}
+$$
+
+这些是所有交叉标签的完整函数，不只给出 Born 对角。每个 $K,q_j$ 都满足完整有序四变量 (R)，并有 $q_0+q_1=K$。总表示忠实，$t=e_0\ne0$，而定义 25.1 的任何项 $w$ 都不能同时满足
+
+$$
+\|F(w(a))-F(w(e))\|^2=q_0(a,e)
+\quad(a=e_0,e_1).
+\tag{25.11}
+$$
+
+因此这个同一来源具有坐标事件效果，而其受限原生项不能生成相应的未归一化坐标分支。
+
+证明。$e_0,e_1$ 属于 $M$ 并复张成 $H$，$F$ 不丢失标签。对任意原 $a,b,u,v$，置 $A=a-b$、$B=u-v$。$U^k$ 两端的共同漂移相消，所以
+
+$$
+\begin{aligned}
+\sum_{k=0}^2K(a\cdot U^ku,b\cdot U^kv)
+&=\sum_{k=0}^2\|A+\zeta^kB\|^2\\
+&=3\|A\|^2+3\|B\|^2.
+\end{aligned}
+\tag{25.12}
+$$
+
+对每个坐标作同一计算，即为 $q_j$ 的全部 (R)。交叉项之和因 $1+\zeta+\zeta^2=0$ 而为零；这就是 §4 及例 23.5 所用的完整恒等式，不依赖抽取有限样本。由 §20、推论 23.4，原菜单的效果是同一 $H$ 上的 $P_j=|j\rangle\langle j|$；也可直接将 (25.10) 代入其表示与唯一性结论。完整极化核由相应距离和本卷式 (4.5) 的共轭约定恢复，原标签上的纠偏项对两个事件也表示乘以 $\zeta$。
+
+具体地，
+
+$$
+Ue=e_0,\qquad U^2e=(1+\zeta)e_0,\qquad U^3=I_M,
+\qquad V_U(a)=U(a\cdot U^2e)=\zeta a.
+\tag{25.13}
+$$
+
+原 $U$ 的非零漂移未被删除；$U$ 本身不是保零的量子酉算子，纠偏后的 $V_U$ 才表示 $\zeta I$。
+
+命题 25.2 给出
+
+$$
+\|F(w(e_0))-F(w(0))\|^2
+=|\lambda_w|^2
+=\|F(w(e_1))-F(w(0))\|^2,
+\tag{25.14}
+$$
+
+而 $q_0(e_0,0)=1$、$q_0(e_1,0)=0$，故 (25.11) 不可能。此处用同一项、同一锚和三个原标签即得矛盾；偏置不能通过换锚掩盖。数学投影 $P_j$ 确实存在，但取坐标没有包含在原项语法中。也未声称两种不同表示具有相同的完整原数据，或较丰富的 $\Omega$ 不能实现投影。证毕。
+
+### 25.3 由实际接续与共同参考补足有限接口
+
+**假设 25.4（同源接续、正交记录与分析器）。**在命题 25.3 的同一个来源上，增加实际总接续 $r_0,r_1:M\to M$，要求所有原 $a,c$ 的共同参考混合配对满足
+
+$$
+\kappa(c,r_j(a))=\kappa_j(c,a).
+\tag{25.15}
+$$
+
+若还要求相干保留结果，则增加一个共同输出载体 $N$、实际映射 $i_j:M\to N$、$R:M\to N$ 及强正复核 $L$。这里强正指每个有限 Gram 矩阵半正定，约定第一变量共轭线性。要求
+
+$$
+\begin{gathered}
+L(i_j(c),i_k(b))=\delta_{jk}\kappa(c,b),\\
+L(i_j(c),R(a))=\kappa_j(c,a),\qquad
+L(R(a),R(a))=\kappa(a,a).
+\end{gathered}
+\tag{25.16}
+$$
+
+$i_j$ 给各结果的同载体参考；$R$ 是带完整记录的共同接续。若要相干混合这些记录，还须另给在该共同输出上实际合法且相对于这些参考校准的分析器。式 (25.15)–(25.16) 本身不供应分析器、控制、准备或复合权限。
+
+**命题 25.5（静态效果到实际坐标分支的有条件桥）。**在命题 25.3 与假设 25.4 下，全部原输入满足
+
+$$
+F(r_j(a))=P_jFa.
+\tag{25.17}
+$$
+
+特别 $r_0(a)=(a_0,0)$、$r_1(a)=(0,a_1)$ 是这一忠实来源上唯一满足 (25.15) 的接续，且它们是新增运算而非受限原生项。对该接续，预测波定理 7.2 的精确对应为
+
+$$
+H_n=H_{n+1}=\mathbb C^2,\qquad
+\mathcal K_n=\mathcal K_{n+1}=\kappa,\qquad O=\{0,1\},\qquad M_j=P_j.
+\tag{25.18}
+$$
+
+若再有 (25.16)，则在 $L$ 的 Hilbert 表示中，$R$ 的像恰为固定共同参考下的记录等距
+
+$$
+V_{\rm rec}\psi=P_0\psi\otimes|0\rangle+P_1\psi\otimes|1\rangle.
+\tag{25.19}
+$$
+
+这里的相位由混合参考配对固定，不仅由同结果守恒固定。
+
+证明。(25.15) 给
+
+$$
+(Fc)^\dagger\bigl(F(r_j(a))-P_jFa\bigr)=0\qquad(c\in M).
+$$
+
+$F(M)$ 复张成 $\mathbb C^2$，故括号为零。其值仍在 $\mathcal O^2$，所以显示的坐标接续确为总定义；$F$ 忠实又给原标签唯一性。命题 25.3 排除了它们是原项的可能。于是
+
+$$
+\kappa(r_j(a),r_j(b))=\kappa_j(a,b),\qquad
+\sum_j\kappa(r_j(a),r_j(b))=\kappa(a,b).
+\tag{25.20}
+$$
+
+这正好是[《相融预测波与关系谱》定义 7.1、定理 7.2](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA.md#7-预测波怎样给出概率与观察者的记录增长)的式 (7.1)，合法描述在本例张成全部 $\mathbb C^2$。直接复用该定理，得到 $M_j=P_j$、$\sum_jM_j^\dagger M_j=I$、分支 $\rho\mapsto P_j\rho P_j$ 及数学记录等距；不另输入 CP 假设。完全正、Kraus 分支和记录等距的这部分是既有结论的应用。其一般有限维先例见 Watrous，*The Theory of Quantum Information*，[第 2 章](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf)，Theorem 2.22、Corollary 2.27；这些先例不构造本来源的实际 $r_j$ 或 $R$。
+
+为识别实际 $R$，令 $G:N\to H_L$ 为强正核的最小 Gram 表示。(25.16) 第一式给正交等距 $T_j:H\to H_L$，满足 $T_jFc=G(i_j(c))$。将
+
+$$
+s_a=\sum_jT_jP_jFa
+$$
+
+与每个 $T_jFc$ 配对，(25.16) 第二式给 $G(R(a))-s_a$ 正交于两个参考子空间。又有
+
+$$
+\|s_a\|^2=\sum_j\|P_jFa\|^2=\|Fa\|^2=\|G(R(a))\|^2.
+\tag{25.21}
+$$
+
+由正交分解，残差范数为零。因此 $G(R(a))=s_a$，在 $T_j\psi\leftrightarrow\psi\otimes|j\rangle$ 的固定识别下就是 (25.19)。这还从显示配对推出全部 $L(R(a),R(b))$，没有遗留未定的额外记录分量。若只保留 (25.20)，每支重相位 $P_j\mapsto e^{i\gamma_j}P_j$ 仍守恒，故不足以给出 (25.16) 的参考相位。
+
+原漂移仍须逐项保留：
+
+$$
+\begin{aligned}
+F(r_j(Ua))&=\zeta P_jFa+P_jt,\\
+F(U(r_j(a)))&=\zeta P_jFa+t,\\
+F(r_j(V_Ua))&=\zeta F(r_j(a)).
+\end{aligned}
+\tag{25.22}
+$$
+
+在 $t=e_0,j=1$ 时前两行不同；不能以 $r_j$ 与原 $U$ 交换代替正确的纠偏协变性。证毕。
+
+### 25.4 固定全局纯参考与正成功域上的历史
+
+**定义 25.6（共同参考及其额外资源）。**将上述 $H=\mathbb C^2$ 作为目标系统 $S$ 的幅度空间。另给两个二维系统 $C,E$ 和两个二维记录 $R_1,R_2$，固定同一个全局纯参考
+
+$$
+\begin{gathered}
+\mathcal H=H_C\otimes H_S\otimes H_E\otimes H_{R_1}\otimes H_{R_2},\\
+|\Psi_0\rangle=|+\rangle_C\otimes|\Phi^+\rangle_{SE}
+                    \otimes|00\rangle_{R_1R_2},\\
+|+\rangle=(|0\rangle+|1\rangle)/\sqrt2,\qquad
+|\Phi^+\rangle=(|00\rangle+|11\rangle)/\sqrt2,\\
+\omega(X)=\langle\Psi_0|X|\Psi_0\rangle,\qquad
+\omega_S(B)=\omega(I_C\otimes B\otimes I_{ER_1R_2})
+             =\operatorname{Tr}(B)/2.
+\end{gathered}
+\tag{25.23}
+$$
+
+$\omega_S$ 忠实于 $M_2(\mathbb C)$，$\omega$ 不忠实于完整 $M_{32}(\mathbb C)$。全局纯参考、这些复合系统、独立 ready 控制、ready 记录、目标门 $X=|0\rangle\langle1|+|1\rangle\langle0|$、从 $S$ 到各记录的 CNOT 记录操作，以及所用的合法复合，均作为额外资源前件。它们不由原乘法和 $U$ 的项生成定理供应。
+
+对任意实际给定的全局分支算子 $D$，定义
+
+$$
+w_D=\omega(D^\dagger D)\ge0,\qquad
+\omega_D(B)=\frac{\omega(D^\dagger BD)}{w_D}\quad\text{仅当 }w_D>0.
+\tag{25.24}
+$$
+
+若 $D$ 是收缩，则 $w_D\le1$。称其为成功概率时，另要求实际给出带成功旗标的完整操作，失败结果也保留；单凭收缩矩阵的存在不授予这项实际权限。若 $w_D=0$，保留未归一化零分支，不定义条件泛函。
+
+对一个实际给定的目标收缩 $A$，其全局提升取其余因子上的单位，简记
+
+$$
+w_A=\omega_S(A^\dagger A),\qquad
+\omega_{S,A}(B)=\frac{\omega_S(A^\dagger BA)}{w_A}\quad(w_A>0).
+\tag{25.25}
+$$
+
+这些是同一个参考的标准过滤评价。$A=0$ 给 $w_A=0$；只有在本目标代数的忠实性下，才能由 $A\ne0$ 推出 $w_A>0$。对一般非忠实参考，非零算子也可有零权。例如 $D=|-\rangle\langle-|_C\otimes I$ 非零而 $D|\Psi_0\rangle=0$。任意有界 $B$ 在零权时满足 $\omega(D^\dagger BD)=0$，因为 $D|\Psi_0\rangle=0$；这不使分母成为正数。
+
+对实际给定的任意有限分支词 $K_h$，同样置
+
+$$
+p_h=\omega(K_h^\dagger K_h),\qquad
+\omega_h(B)=\frac{\omega(K_h^\dagger BK_h)}{p_h}\quad(p_h>0).
+\tag{25.26}
+$$
+
+词内的乘法是已给算子按实际时间次序的复合，独立于 (25.1) 的原二元聚合。完整有限分支树的归一化由预测波定理 7.2 的逐层守恒复用；其标准有限归纳不构造新的记录系统或任意长度程序权限。零历史始终保留未归一化零量，不除以零。
+
+**命题 25.7（同一全局参考、定常目标边缘与不同历史相关）。**在命题 25.5 的投影接续与定义 25.6 的资源下，两种程序 $Z$–$I$–$Z$ 和 $Z$–$X$–$Z$ 共用 (25.23) 的同一个 $\omega$。其第一次、第二次结果的联合表分别为
+
+$$
+\bigl(p_I(i,j)\bigr)_{i,j=0}^1
+=\begin{pmatrix}1/2&0\\0&1/2\end{pmatrix},\qquad
+\bigl(p_X(i,j)\bigr)_{i,j=0}^1
+=\begin{pmatrix}0&1/2\\1/2&0\end{pmatrix}.
+\tag{25.27}
+$$
+
+两次读数的边缘均匀，忽略记录的目标态始终为 $I/2$；完整全局态及记录则不要求在程序作用下不变。若额外坚持同一个全局泛函对这些 ready 记录操作也不变，便与本例的非平凡记录概率矛盾。
+
+证明。令 $C_k$ 为实际给定的 $\mathrm{CNOT}_{S\to R_k}$，其余系统上作用单位，并令
+
+$$
+T_U=C_2U_SC_1,\qquad U\in\{I,X\},\qquad
+\Pi_i^{R_k}=|i\rangle\langle i|_{R_k}.
+$$
+
+记录在 ready 输入上的作用就是 (25.19) 的本例提升，故同一个参考上的联合评价为
+
+$$
+\begin{aligned}
+p_U(i,j)
+&=\omega\bigl(T_U^\dagger\Pi_i^{R_1}\Pi_j^{R_2}T_U\bigr)\\
+&=\omega_S(P_iU^\dagger P_jUP_i)
+=\omega_S(K_{ji}^\dagger K_{ji}),\qquad K_{ji}=P_jUP_i.
+\end{aligned}
+\tag{25.28}
+$$
+
+$P_jIP_i=\delta_{ji}P_i$，而 $XP_i=P_{1-i}X$；$\omega_S(P_i)=1/2$，即得 (25.27)。每个显示的正历史权重为 $1/2$。等价地，按 $S,E,R_1,R_2$ 的次序写出记录部分，两个全局输出向量分别是
+
+$$
+\begin{aligned}
+T_I|\Psi_0\rangle
+ &=|+\rangle_C\otimes
+   \bigl(|0,0,0,0\rangle+|1,1,1,1\rangle\bigr)/\sqrt2,\\
+T_X|\Psi_0\rangle
+ &=|+\rangle_C\otimes
+   \bigl(|1,0,0,1\rangle+|0,1,1,0\rangle\bigr)/\sqrt2.
+\end{aligned}
+\tag{25.29}
+$$
+
+迹掉 $E,R_1,R_2$ 得 $I/2$。在每一中间阶段也有
+
+$$
+\sum_iP_i(I/2)P_i=I/2,\qquad U(I/2)U^\dagger=I/2,
+\tag{25.30}
+$$
+
+所以目标非选择态定常，不妨碍记录相关改变。另一方面，ready 初态有 $\omega(\Pi_1^{R_1})=0$，记录后有
+$\omega(T_U^\dagger\Pi_1^{R_1}T_U)=1/2$，排除了对这一全局操作的不变性。固定参考泛函与对所有复合操作不变是不同条件。
+
+静态效果不决定后继的数学先例已见预测波 §7 及[同效果而二步联合律不同的命题](../../../D5/S3/Quantum/Measurement/StaticEffectSequentialSeparation.lean)；本命题使用其有限分支计算，将同一忠实目标参考、纯全局参考和 ready 记录同时放入 (25.9) 的有条件扩充。$X$ 与记录操作已明列为新增资源，没有把两张不同程序表说成相同完整原操作数据的两种实现。证毕。
+
+### 25.5 过滤后的相干校准与门提升
+
+**假设 25.8（同参考的受控门与校准分析器）。**在定义 25.6 的固定参考上，给一个实际可用的目标酉门提升 $W$。除目标过滤的成功分支 $A$ 外，另给实际受控门
+
+$$
+\mathrm C(W)=|0\rangle\langle0|_C\otimes I_S
+             +|1\rangle\langle1|_C\otimes W,
+\tag{25.31}
+$$
+
+在 $E,R_1,R_2$ 上取单位；并给相对于 ready $|+\rangle_C$ 和 (25.31) 共同校准的 $+$ 分析器。过滤不作用控制；受控门之前，控制独立于过滤后的目标及成功旗标，且处于 ready $+$。这里指定的是门提升及其相位参考，不能只给目标通道 $B\mapsto WBW^\dagger$。
+
+**命题 25.9（同一参考对分支和相干门提升的联合约束）。**在假设 25.8 下，完整程序的成功且 $+$ 的未归一化联合概率为
+
+$$
+p(\mathrm{success},+)
+=\frac{w_A+\operatorname{Re}\omega_S(A^\dagger WA)}2.
+\tag{25.32}
+$$
+
+仅在 $w_A>0$ 时，条件概率为该式除以 $w_A$。取 $A=I$，则
+
+$$
+p_+(W)=\frac{1+\operatorname{Re}\omega_S(W)}2,
+\qquad p_+(I)=1,\qquad p_+(-I)=0.
+\tag{25.33}
+$$
+
+$I$ 与 $-I$ 的无控制目标通道相同，但在固定共同参考的受控程序中不同。这不构成对完整原核不可识别性的反例：命题 25.3 的完整数据已经区分其目标输出标签。
+
+证明。过滤成功后的目标与环境向量为 $(A\otimes I_E)|\Phi^+\rangle$，平方范数为 $w_A$；仍与 $|+\rangle_C$ 独立。再施 (25.31) 并取 $+$，未归一化向量为
+
+$$
+\frac12\bigl((I+W)A\otimes I_E\bigr)|\Phi^+\rangle.
+$$
+
+由 $W^\dagger W=I$，其平方范数为
+
+$$
+\frac14\omega_S\bigl(A^\dagger(2I+W+W^\dagger)A\bigr)
+=\frac12\bigl(w_A+\operatorname{Re}\omega_S(A^\dagger WA)\bigr).
+\tag{25.34}
+$$
+
+这复用标准受控干涉计算及[混合控制块的偏迹恒等式](../../../D5/S3/Quantum/Dynamics/PositivePauliClockOrder.lean)的同类迹配对，亦与预测波 §7 的跨记录相位边界一致。Cauchy–Schwarz 给
+$|\omega_S(A^\dagger WA)|\le w_A$，故联合权重属于 $[0,w_A]$；$w_A=0$ 时该式为零，不产生条件概率。取 $A=I$ 即得 (25.33)。目标通道只用 $WBW^\dagger$，整体负号相消，而受控门的负号相对于控制零支变成相对相位。
+
+这一全局／相对相位区别的文献先例见 Araújo、Feix、Costa、Brukner，*Quantum circuits cannot control unknown operations*，[原文](https://arxiv.org/html/1309.7976v2)。该文的未知黑箱电路前件不能排除本假设已供应的校准原生受控门；反之，无控制通道数据也不能自动供应 (25.31)。
+
+在忠实原来源中，$-e_0$ 是实际标签，并且
+
+$$
+K(e_0,-e_0)=4,\qquad K(e_0,e_0)=0.
+\tag{25.35}
+$$
+
+故完整原数据从未将两个标量提升识别为同一输出。式 (25.15)–(25.16) 的共同参考配对同样固定分支作用与相位，不能在保留这些数值时任意重相位。
+
+还有一个不依赖逐门相位校准的受限比较：固定实际门标签字母表，给每个标签重相位 $W_g\mapsto e^{i\theta_g}W_g$。若字 $w$ 中标签 $g$ 出现 $n_g(w)$ 次，则
+
+$$
+W_w\longmapsto e^{i\Theta(w)}W_w,\qquad
+\Theta(w)=\sum_g n_g(w)\theta_g,
+\tag{25.36}
+$$
+
+因标量位于中心。两字 $w,v$ 若每个标签次数都相等，则交叉参考值
+$\omega_S(W_v^\dagger W_w)$ 的重相位因子为一。这个逐标签平衡条件足以使中央相位抵消，即使门的次序不同；它不供应相干比较两字的装置。逆门若作为不同标签供应，就分别计数，除非另有相位绑定合同。无此平衡条件且无共同参考，普通概率或分别的同结果核不足以固定相干提升；若实际历史、跨历史／参考配对及终端分析器全部给定，其有限预测便由这些共同数据固定。证毕。
+
+### 25.6 原来源、几何类型与充分接口的边界
+
+**命题 25.10（受限生成障碍不选择唯一态或三维本体）。**命题 25.2–25.9 的组合给出以下有条件关系：在 (25.9) 的完整静态来源中，原项不能实现坐标分支；加入 (25.15) 的实际接续，便能按 (25.18) 复用既有仪器表示；再给 (25.16)、ready 复合资源及 (25.31) 的共同相位参考和分析器，(25.27)、(25.32) 就由同一个 (25.23) 计算。这个充分接口不推出其资源的全局最小性，也不从受限签名选出唯一 $\omega$。
+
+证明。前述命题已逐项证明这条有条件链。为见选择态的边界，对每个 $0<r<1$，
+
+$$
+\sigma_r=\operatorname{diag}(r,1-r),\qquad
+\omega_r(B)=\operatorname{Tr}(\sigma_rB)
+\tag{25.37}
+$$
+
+都是忠实归一化目标态，均在全部原生标量酉门的共轭下不变。故原生标量不变性不能选择 $r=1/2$；而加入的坐标探针给 $\omega_r(P_0)=r$，区分这些态。(25.23) 选择一个共同参考足以作条件计算，但不证明它是唯一物理来源。即使另给固定矩阵代数上全部酉共轭不变性，标准迹唯一性也只选择该代数上的迹态，不确定其全局纯化、ready 资源或物理取得性。
+
+各几何对象的类型同时保留。$\zeta\in\mathbb C$ 是三次标量相位；在 $H$ 的实化上，$R_0$ 表示 $\zeta I$，而
+
+$$
+J=\frac{2R_0+I}{\sqrt3},\qquad J^2=-I
+\tag{25.38}
+$$
+
+是 §4 的实复结构，作用于本例四维实幅度空间。qubit 的密度矩阵另有 Pauli 表示
+
+$$
+\rho=(I+\mathbf r\cdot\boldsymbol\sigma)/2,\qquad
+\mathbf r\in\mathbb R^3,\quad\|\mathbf r\|\le1.
+\tag{25.39}
+$$
+
+这是已选 $H=\mathbb C^2$ 后的 Bloch 三维，不能与实幅度四维相认。$\zeta I$ 的共轭在所有密度矩阵上为恒等，因此它本身不产生非平凡 Bloch 转动；$\omega$ 则是算子代数上的正线性泛函，不是相位数或 $J$。
+
+[C139 定义 16.1](AURIC_C139_MUTUAL_PROBES_AND_INTRINSIC_RECOVERY_OF_SQUARE_GEOMETRY.md#16三路算术读口的实际供给与稠密边界)明确加入相干三等分、非标量端口与 Fourier 操作，故其扩充菜单不受旧受限签名的标量结论限制。[环境耦合卷 §§19–21](AURIC_FULL_PB_ACTUAL_PROBE_AND_ENVIRONMENT_COUPLING_CONTINUATION.md#19-平衡零模族的原零探针刚性)的有限探针也以完整矩阵乘法、正泛函及 Hermitian 角探针背景为前件；其中的矩阵探针不能不经来源桥梁就充当本节的原标签项。相应的 [spin-factor／Pauli 完整分类](../../../D5/S3/Quantum/SpinFactor/OriginalClassification.lean)以 $E=\mathbb R\times\mathbb R^3$ 及 P2、PB 关系为输入，不从这里的受限签名推导维数。
+
+因而，将这条链用于 §23.6 所保留的同一个完整原 $\Omega$，仍须从该原来源证明 §23 的实际群右作用或 §24 的实际交换幺半群右作用等充分结构，或另付一般 magma 的几何／事件前件，构造非标量接续及其混合参考律，并给非零准备、概率标尺、保留记录、合法联合、相干分析器与所用控制。对任意长度程序、物理时钟、时空维数、全部未来 Return 和唯一本体来源的结论，均不能只由这里的有限条件链推出。这里的组合是针对原签名及其显示扩充的数学推导；结构归纳、整数范数、过滤、有限历史和受控干涉都是上述引文范围内的标准中间工具，不据此提出历史优先权或新增数学公理的唯一性主张。证毕。
+
+## 追加锚（本行以下为增补区）
