@@ -506,4 +506,3 @@ theorem result :
   ⟨recurrence, generating_function⟩
 
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233258Strip
-
