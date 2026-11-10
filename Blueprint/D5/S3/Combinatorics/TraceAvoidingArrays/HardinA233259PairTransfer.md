@@ -27,4 +27,3 @@ The adjusted scalar pair-pattern count satisfies the order-four recurrence.
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferPowers](HardinA233259PairTransferPowers.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferRecurrence](HardinA233259PairTransferRecurrence.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferRep](HardinA233259PairTransferRep.md)
-- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/TransferMatrix](TransferMatrix.md)
