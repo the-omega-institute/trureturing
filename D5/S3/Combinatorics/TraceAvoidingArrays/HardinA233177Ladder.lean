@@ -32,9 +32,9 @@ used_eq_card: proof_shape=bind-only; consumers=used_two_or_three, alternating_us
 proper_relabel: proof_shape=bind-only; consumers=L_card
 proper_two_labels: proof_shape=bind-only; consumers=used_two_or_three, L_card
 columns_constant: proof_shape=bind-only; consumers=two_label_classification
-alternating: proof_shape=bind-only; consumers=canonical_two_card
+alternating: proof_shape=bind-only; consumers=alternating_proper, two_label_classification, alternating_used, alternating_canon, canon_two_eq, canonical_two_card
 alternating_proper: proof_shape=bind-only; consumers=canonical_two_card
-two_label_classification: proof_shape=content; consumers=canon_two_eq
+two_label_classification: proof_shape=content; consumers=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Ladder.canon_two_eq
   reason: Induction on the column proves uniform alternation at arbitrary width.
 used_two_or_three: proof_shape=bind-only; consumers=weighted_count
 omitted_label: proof_shape=bind-only; consumers=canon_two_eq
@@ -189,7 +189,7 @@ private theorem columns_constant {n : ℕ} (hn : 2 ≤ n)
   · exact (adjacent 1).symm.trans (adjacent 0).symm
   · exact (adjacent 2).symm.trans ((adjacent 1).symm.trans (adjacent 0).symm)
 
-private def alternating (n : ℕ) (a b : Fin 3) : Fin 4 × Fin n → Fin 3 :=
+def alternating (n : ℕ) (a b : Fin 3) : Fin 4 × Fin n → Fin 3 :=
   fun p => if p.2.val % 2 = 0 then a else b
 
 private theorem alternating_proper (n : ℕ) (a b : Fin 3) (hab : a ≠ b) :
@@ -199,7 +199,7 @@ private theorem alternating_proper (n : ℕ) (a b : Fin 3) (hab : a ≠ b) :
   have hpar : (j.val + 1) % 2 = 0 ↔ ¬ j.val % 2 = 0 := by omega
   by_cases h : j.val % 2 = 0 <;> simp [h, hpar, hab, Ne.symm hab]
 
-private theorem two_label_classification {n : ℕ} (hn : 2 ≤ n)
+theorem two_label_classification {n : ℕ} (hn : 2 ≤ n)
     (P : Fin 4 × Fin n → Fin 3) (hp : Proper P)
     (d : Fin 3) (hd : ∀ i, P i ≠ d) :
     ∃ a b : Fin 3, a ≠ b ∧ P = alternating n a b := by

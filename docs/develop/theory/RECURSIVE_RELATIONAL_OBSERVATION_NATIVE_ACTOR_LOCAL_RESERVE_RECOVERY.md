@@ -2794,3 +2794,532 @@ same-source mutual-recovery goal retains these acquisition, operation
 and resource obligations.
 
 ## 追加锚（本行以下为增补区）
+
+## 21. Late raw operands at a tight encoded boundary
+
+**Definition 21.1 (late-material supplied-frame domain).** Let $P$ be the
+first actual Ready of Definition 9.1 and NCE Convention 13.1, with source
+$\beta$, $H_{\rm boot}=h=K=1$, acquired beta seed and its actual binding,
+source occurrence $\xi$, source16 and continuing $\phi_K$, parked original
+client, verifier and INITIAL consumer. Use Definition 15.2 with
+$t_0=\beta$, $h_0=K_0=1$: every finite $N\ge0$, every actually announced
+finite nondecreasing schedule $1=h_0\le\cdots\le h_N$, and every finite
+mixed word of whole Rho, Left$(v)$ and Right$(v)$. Each operand is any
+nonempty finite ordered alpha/beta tree. There is no common size or depth
+bound. The reference continuation keeps exactly its original guard
+publications, whole-candidate outcomes $\varepsilon_j$ and successors
+$t_j$ of (GT.5).
+
+Retain Assumption 15.3's owned immutable backing, current rights, actual
+next reference guard and request kind at each round's authorized
+preparation cut. Replace only its advance operand/encoding requirement: a whole raw graft frame is
+actually supplied at the existing outer01/$F^A$ IN sites, but the
+continuing consumer need not own $v$, its counts, its encoded length or
+$E(v)$ before this first call. The raw-frame supplier still supplies the
+whole actual operand; that input obligation is retained. The timing claim
+concerns the continuing consumer, not earlier possession by the supplier.
+The complete return must precede the continuing consumer's computation
+using its newly acquired operand. Material already
+available in an instance remains available and retained; no discriminator,
+row, permission or service is deleted to make this timing premise hold.
+
+The counts initially come from the acquired beta seed, $(a_0,b_0)=(0,1)$.
+Their subsequent owned representations and syntax descriptions are paid
+derived data, updated only after the actual final outcomes specified
+below. This is the seed-and-successor justification of Theorem 17.2,
+not a count sensor, a fresh source snapshot, or an inference from the
+global accepted-Rho epoch. Every retained description carries its
+actual lineage; its present use requires current read permission.
+
+After the complete acquisition return, use Definition 16.2's finite paid
+parsing, tree traversal, substitution, arithmetic and comparison on that
+owned material. Every resulting maintenance and encoded modifier frame
+must subsequently be supplied **anew** at its prescribed original IN
+sites. The pointwise finite-input and reached-local-computation premises
+of Assumption 1.2 apply to every displayed call and calculation. They give
+neither a deadline nor an automatic supplier. Selecting a finite
+continuation at this supplied-frame level does not install these
+calculations or a bank-to-IN route in the parked client or in $F^A$.
+A computed bank word alone is not a later IN occurrence.
+
+**Definition 21.2 (designated tight relation).** Keep $E=\rho^2$,
+$n=a+b$ and $w=2a+3b$ from (GT.1). At designated encoded endpoints
+$\widehat p_j$ compare with the reference endpoints $p_j$ by
+
+$$
+\begin{gathered}
+\pi_{\rm src}(p_j)=t_j,\qquad (h,K)(p_j)=(h_j,h_j),\\
+\pi_{\rm src}(\widehat p_j)=E(t_j),\qquad
+(h,K)(\widehat p_j)=(H_j,K_j)=(w(t_j),w(t_j)).
+\end{gathered}
+\tag{LA.1}
+$$
+
+The minimum-reserve policy in (LA.1) belongs to this construction.
+It is a different relation from (GT.6): there is no encoded requirement
+$H_j\ge h_j$, and no automatic mirroring of a reference Raise on the
+encoded path. Each path keeps its own actual announced guard and task.
+The two paths are alternatives of the same $P$, not simultaneous
+registers or callable copies.
+
+Here $j=0$ on the encoded path means the fully returned endpoint of
+Reserve$(3)$, Raise$(3)$, Rho, Rho. For $j>0$ it means the full return
+after round $j$'s designated final modifier. The preceding acquisition
+boundary and its returned source-preserving staging boundary are tight
+as well. Intermediate maintenance Ready cuts need not satisfy (LA.1);
+in particular, after Raise and before an accepting commit the old source
+can be strictly smaller than its guard. This is a phase-indexed relation,
+not an invariant of every Ready reachable by arbitrary legal choices.
+
+**Proposition 21.3 (source-preserving raw acquisition with an owned
+return).** In Definition 21.1's domain, at a designated tight entry with
+source $E(t)$ and
+$H=K=w(t)$, either original raw graft with any nonempty operand $v$
+executes refusal and retains exactly the whole $E(t)$. After its complete
+CAP/ARC return, its submitted operand is actual actor-owned readable
+material for the next calculation in Definition 21.1. No operand-dependent
+guard choice is required before that acquisition.
+
+*Proof.* The original raw candidate has
+
+$$
+n\langle v,E(t)\rangle
+ =n\langle E(t),v\rangle
+ =H+n(v)>H.
+\tag{LA.2}
+$$
+
+Thus CAP's existing whole-candidate test, including all acquisition,
+validation, candidate-generation and guard/MUX work, executes refusal.
+CAP Theorem 4.5 reinstates every old logical source bit, hence the
+entire ordered $E(t)$, not merely its leaf count. The raw operand may
+have any labels and brackets. Only nonemptiness and tightness were
+used to select this source-preserving acquisition flight.
+
+Its acquired object is the submitted request, not the unexposed private
+candidate. The outer receiver of Definition 5.2 first receives, seals,
+describes and imports choice 01. $F^A$ then executes its header Base/setup
+and actual raw INs. CAP Definition 4.6 retains the separate sealed
+header, unary-length and whole payload blocks on producer ingress13,
+with their real descriptors on 17. The original context code is in that
+payload; a refusal does not remove its request references.
+
+CAP Definition 6.3's mandatory delivery sends every missing enumerated
+request dependency, including header, length and payload, through its
+two actual copy stages before the final row ACK. The receiver has its
+own constructed intervals on archive28, local descriptors on 29,
+actual origin fields, complete seal/status and availability checks.
+CAP Theorem 6.4 gives equality to the immutable sender payload while
+keeping the distinct owners and physical intervals. Origin matching
+does not authorize reading the producer's address.
+
+Wait for both complete row checks and the final row ACK, source-token
+TOK and idle CTL, then InnerReturn normalization. Only then perform
+the closed-28/29 import and origin-to-local parsing of Definitions
+3.1–3.4. Proposition 3.5 identifies the actual delivered request bits.
+CaptureCAP appends their IN-site order, row occurrence, origins and
+dependencies to $M$, restores the archive heads and reaches Ready by
+Proposition 5.5. The operand can now be extracted from the resolved
+A-owned, initialized immutable local payload with its actual current
+read token. A copied permission flag grants no TOK; an internal
+copy-completion TOK is not final row ACK; an unsealed receiver prefix
+or a producer-private reference is not usable backing.
+
+This sequence supplies precisely the finite operand on which the later
+count/encoding calculation acts. Its capture does not turn archive28
+into a private-source snapshot. The continuing consumer's later
+calculation uses no operand-dependent information before this completed
+join; the producer's earlier ingress, parsing and copy work retain
+their actual roles.
+The original refusal/copy facts are reused here for this tight
+source-specific consumer. $\square$
+
+## 22. Repeated acquisition and selected commit
+
+**Theorem 22.1 (late-material finite mixed continuation).** Under
+Definition 21.1, the same authentic occurrence has reference and encoded
+alternative finite continuations satisfying (LA.1) for every
+$0\le j\le N$. Each designated final encoded modifier has exactly the
+reference modifier's original accept/executed-refusal component and
+has actual source successor $E$ of its reference successor. The encoded continuation uses
+one raw acquisition refusal per graft, one final whole modifier per
+round, and only the paid original maintenance described below.
+All calls return completely before another begins.
+
+*Proof.* First complete Reserve$(3)$ and Raise$(3)$ from $P$.
+Both are strict lawful maintenance and preserve beta, the source
+occurrence, old handles and current rights. The next two original Rho
+candidates have two and three leaves, respectively, so both accept.
+CAP Lemma 6.7 and Proposition 5.5 give a full returned Ready after
+each of these four calls. Thus source $E(\beta)$ and $H=K=3=w(\beta)$
+are attained, not posited as a new private preparation. The acquired
+seed gives the reference pair $(0,1)$; its two-substitution syntax
+description is finite paid derived material. This establishes (LA.1)
+at zero without a future operand or future guard maximum.
+
+Suppose the last designated endpoint is $E(t)$ with $H=K=w(t)$,
+and the retained current reference pair is $(a,b)$. Take the actually
+acquired next reference guard $h_j$. For a graft, first perform
+Proposition 21.3's whole raw Left$(v)$ or Right$(v)$ at unchanged
+$H,K$, and finish its entire owned return. Decode that captured
+payload, count its actual leaves by the finite traversal of Definition
+16.2, and construct $E(v)$ by two substitutions on its whole syntax.
+The construction preserves every ordered branch and label.
+Its finite scans, comparison or checking work, copies and immutable
+output backing are paid. Set, using those now-acquired counts,
+
+$$
+\ell=a+b+a_v+b_v,\qquad
+d=H+2a_v+3b_v=H+w(v)>H.
+\tag{LA.3}
+$$
+
+These are the reused (GT.11) quantities, computed at a later cut.
+If $\ell\le h_j$, select Reserve$(d)$, then Raise$(d)$, returning
+completely after each, then the same-direction whole encoded graft
+Left$(E(v))$ or Right$(E(v))$. Both maintenance calls are strict:
+before Reserve, $K=H<d$; after it, $H<d=K$ makes Raise lawful.
+They preserve the source and extend the actual address map.
+The final candidate has exactly $d$ leaves at guard $d$ and accepts.
+By (GT.3)'s ordered-tree homomorphism it is precisely $E(c_{A_j}(t))$.
+
+If $\ell>h_j$, omit both maintenance calls and issue that same whole
+encoded graft at the unchanged guard $H$. Its candidate still has
+$d>H$ leaves, so it executes refusal and retains $E(t)$. The final
+refusing call is actually issued, copied, captured and charged; it is
+not replaced by the earlier raw refusal. In either case its label is
+$\varepsilon_j$ and the endpoint is tight for $t_j$. On an actual final
+acceptance update the owned reference pair to
+$(a+a_v,b+b_v)$ and its syntax to the corresponding ordered graft;
+on refusal retain $(a,b)$ and $t$. Both descriptions are justified by
+the actual branch just proved, not by a hoped-for response.
+
+For an already identified Rho, no operand acquisition is needed.
+Compute from the valid retained current pair
+
+$$
+\ell=a+2b,\qquad
+d=3a+5b=H+\ell>H.
+\tag{LA.4}
+$$
+
+If $\ell\le h_j$, fully return from Reserve$(d)$ and Raise$(d)$ and
+then perform the original whole Rho. Otherwise keep $H,K$ and perform
+the original whole Rho directly. Its candidate on $E(t)$ has exactly
+$d$ leaves by (GT.3), so its actual label is again $\varepsilon_j$.
+On acceptance its source is $\rho(E(t))=E(\rho t)$ and its reference
+pair becomes $(b,a+b)$; on refusal source and pair are unchanged.
+Thus (LA.1) is restored in both branches. Only accepting final
+modifiers strictly increase $H$ and $K$; all refusals preserve them.
+
+For completeness, every actual entry in this construction, including
+raw staging, each Reserve, each Raise and every final refusal, uses
+its own literal outer01 prelude and $F^A$ frame. The final modifier
+frames are Rho $\mathtt{0010}$, or tag $\mathtt{011}$/$\mathtt{100}$
+with $U(3w(v)-1)$ and the complete prefix code of $E(v)$.
+Raw graft staging instead uses $U(3n(v)-1)$ and the code of $v$.
+Maintenance uses its unchanged tag $\mathtt{101}$/$\mathtt{110}$
+and $U(d+1)U(d)$. No second provenance operand or new opcode is added.
+
+Each call obtains current source-service admission and executes
+ReadState, resolving source operands and destinations through its
+actual current $\phi_K$. In particular, code from a previous layout
+or guard is not reused as a current gate tape. Its genuine response,
+counter/fence work and semantic/unified rows are followed by all
+required dependency and row copies, complete receiver checks, final
+row ACK, source TOK, idle CTL, InnerReturn, closed-28/29 import,
+CaptureCAP, $M$ append, head restoration and Ready. Proposition
+21.3 details why this returns the raw operand; CAP Lemma 6.7 and
+Proposition 5.5 give the same complete join for maintenance and commit.
+No next call begins at a Busy, partial-copy or partial-token cut.
+
+The reference separately performs Definition 15.2's actual Reserve/Raise
+publications, then its original whole request. Its guards are
+nondecreasing, so $n(t_j)\le h_j$ follows by induction from beta and the
+whole-candidate test. The encoded guard need not dominate $h_j$.
+We have used (GT.3), (GT.11) and CAP's original test directly, rather
+than applying Theorem 16.1 outside its $G\ge\max(H_-,h_j)$ domain.
+The statements and domains of §§15–20 remain unchanged.
+
+Every displayed frame and calculation is finite. Definition 21.1
+requires actual later supply of the newly determined bits and termination
+of the reached calculations, with backing and rights, so the existing
+finite-return suppliers apply. Their serial composition is finite for
+each finite word. The local cases close an induction on an arbitrary
+mixed word, including either direction, all finite operand shapes and
+labelings, consecutive refusals, repeated Rho, and a later acceptance
+after a reference guard rise. No uniform bound on the operands, number
+of rounds or primitive duration was used. $\square$
+
+**Corollary 22.2 (request kind first learned at ingress).** The same result
+holds if the next modifier kind is not already available before the
+first raw call, provided that every round stages its actual whole raw
+modifier and completes the owned return before selection of its final
+commit. For a Rho round this adds one real executed refusal.
+
+*Proof.* Grafts are covered by Proposition 21.3. On a tight encoded
+source, raw Rho has candidate count $H+(a+2b)>H$ by (LA.4), independently
+of any new input operand. It therefore refuses and preserves the source.
+Its complete captured frame supplies its actual kind. Apply the
+corresponding commit case of Theorem 22.1 after this return; do not update
+the reference pair from staging. The same induction applies with one
+additional source event for each otherwise unstaged Rho. $\square$
+
+**Definition 22.3 (causal and observational scope).** The acquired
+supplier is the existing raw request plus mandatory CAP delivery and ARC
+capture. The consumer is the next authentic Ready supplied-frame
+continuation of Theorem 17.2, now deciding from completed acquisition,
+seed-derived current counts and the acquired reference guard.
+The causal order is raw input, source-preserving refusal, complete owned
+return, paid parsing/count/encoding, then fresh maintenance/commit input.
+AIF Definition 2.2 permits later supplied bits to depend on already
+acquired public data; it does not place future choices in an earlier
+state or grant another owner access to A's banks. If the matching later
+input is withheld or changed, the completion premise fails. Ownership
+alone installs no transmitter.
+
+Every staging refusal advances its real source-call count $q$,
+semantic count $j_{\rm CAP}$ and all-event count $m$ once, preserves
+accepted-modification count $g$ and accepted-Rho epoch $e$, and has its
+own complete semantic row, unified row, request references, origins,
+receipts, successor and $M$ item. Each maintenance has its own
+historical guard/layout fields, response, unified row and $m$ advance,
+with no semantic-row advance. Final commits retain their own actual
+counter cases and records. None of these events is erased, relabeled
+as an unexecuted attempt, or combined into one reference source event.
+
+The paired components are only the designated final modifier label and
+the logical-source relation (LA.1). At every intermediate cut, the actual
+source, raw state, menu, root-literal and other original read meanings,
+rights and complete history remain their original ones. Their equality
+across alternatives is not asserted. In particular a newly acquired raw
+operand is not a free literal source read. The encoded source stays in
+$E[\mathcal T]$ at the designated endpoints; the existing image inverse
+and prefix conclusions of Corollary 17.3 apply there only if their
+additional current shape/support observations are lawfully acquired and
+paid. They create neither those observations nor an inverse source port.
+
+## 23. Attained boundaries and the actual bill
+
+**Proposition 23.1 (surplus boundary and the ARC20 family).** The tight-entry
+hypothesis cannot be dropped from Proposition 21.3 in favor of an
+arbitrary attained surplus Ready. Under the same current-right,
+finite-supply and local-progress premises, every pair (LI.1) has a
+separately justified acquisition/commit continuation from its own
+specified encoded preparation, preserving the reference's two
+designated labels and successors with four visible source calls.
+
+*Proof.* From the same beta-boot $P$, complete Reserve$(4)$, Raise$(4)$,
+Rho, Rho. Both substitutions accept and reach $E(\beta)$ with
+$H=K=4$. Its raw Right$(\alpha)$ candidate has $3+1=4$ leaves, so it
+accepts and changes the source. Thus arbitrary surplus entries do not
+supply the general source-preserving acquisition rule.
+Also, the intermediate Ready after Raise$(d)$ in an accepting round
+has surplus before commit; it is not a new staging entry for the
+induction of Theorem 22.1.
+
+For (LI.1), use exactly Definition 20.1's attained $p$ with
+$h=K=m+1$ and its two-Rho encoded alternative. That alternative has
+source $E(\beta)$ and guard $m+1$. For each $m\ge2$ and
+$\gamma\in\{\alpha,\beta\}$ the first raw staging candidate is
+Right$(P_m(\gamma))$ and has
+
+$$
+3+m>m+1
+\tag{LA.5}
+$$
+
+leaves, so it refuses even when this particular first entry is not
+tight. Complete its owned capture and compute the first encoded target
+
+$$
+d_\alpha=3+2m,\qquad d_\beta=3+3m.
+\tag{LA.6}
+$$
+
+Both exceed the present $H=K=m+1$. Fully returned Reserve and Raise
+to the appropriate $d_\gamma$, followed by
+Right$(E(P_m(\gamma)))$, accept and give the required whole encoded
+source at a tight endpoint. The next raw Right$(\alpha)$ has
+$H+1$ leaves and refuses; after capture, final Right$(E(\alpha))$
+has $H+2$ leaves and refuses at the same $H$. These are four
+distinct source calls, each with its full return, not the two
+direct mapped calls of Definition 20.1. At $m=2$ the first raw
+count is 5 at guard 3, the first commit counts/guards are 7 and 9,
+and the second raw/final counts are respectively 8/9 and 10/11.
+
+The first raw capture distinguishes the operands before the later
+effective commit-guard choice. It is therefore not source-preserving
+preparation of the restricted direct class: it is an additional actual
+source event. Proposition 20.2 and Corollary 20.3 stand on their
+unchanged one-whole-graft domain. No later return withdraws an already
+published guard; this construction chooses that guard after acquiring
+the discriminator. Equation (LA.5) is the separate first-entry
+justification for this family, not a license for arbitrary surplus.
+$\square$
+
+**Proposition 23.2 (complete calls and selected subtotals).** For the
+graft-only staging protocol of Theorem 22.1 let $G$ count the reference
+grafts, $r=N-G$ the Rho requests, and $A_{\rm acc}$ the accepting final
+modifiers. From $P$ the encoded continuation has exactly
+
+$$
+C_{\rm calls}=4+N+G+2A_{\rm acc}\le4+4N
+\tag{LA.7}
+$$
+
+complete source/maintenance calls. For Corollary 22.2 it has
+$4+2N+2A_{\rm acc}$. Let $\mathcal G$ list all graft rounds and
+$\mathcal M$ all actual encoded Reserve/Raise calls, including
+Reserve$(3)$ and Raise$(3)$. Their exact selected outer-choice and
+source-frame external ingress after $P$ is
+
+$$
+I_{\rm selected}
+=12+6r+
+ \sum_{j\in\mathcal G}\bigl(6n(v_j)+6w(v_j)+8\bigr)
+ +\sum_{(\mathrm{kind},J)\in\mathcal M}(2J+8).
+\tag{LA.8}
+$$
+
+The uniform-staging variant adds $6r$ to (LA.8). At a designated
+endpoint of either variant,
+
+$$
+H_j=K_j=w(t_j)\le3h_j,\qquad
+L_{\rm designated}=4H_j-2,\qquad
+\Delta L_{P\to\widehat p_j}=4(H_j-1).
+\tag{LA.9}
+$$
+
+These are call, specified-input and designated-source-payload
+coordinates only.
+
+*Proof.* There are four preparation calls, $G$ raw staging calls,
+$N$ final modifiers and exactly two strict maintenance calls for
+each accepting final modifier, since its $d>H=K$. Refusing finals
+use none. This proves (LA.7) and its variant.
+
+Use exactly Proposition 18.2's framing convention: each Rho call
+has six outer/source IN bits; each whole graft on an $m$-leaf
+operand has $6m+4$; each maintenance parameter $J$ has $2J+8$.
+Thus the two preparatory Rho calls give 12, and each graft round
+pays both $6n(v)+4$ and $6w(v)+4$, even on final refusal.
+Every additional raw Rho stage gives another six. This proves
+(LA.8) with $|\mathcal M|=2+2A_{\rm acc}$ and $J\le K_N$.
+Repeated equal bit words still require separate actual input occurrences.
+
+The reference source fits $h_j$, so (GT.3) gives
+$w(t_j)\le3n(t_j)\le3h_j$. CAP's designated payload has $4K_j-2$
+cells. Each strict Reserve adds $4(J-K)$ such cells, so their
+nondecreasing differences telescope from the actual reserve 1 at
+$P$ to $K_j=H_j$, proving (LA.9). Delimiters, descriptors, scratch,
+mailboxes, raw/encoded operands, rows, receipts, archives and retired
+material are excluded from this designated-payload subtotal.
+Neither (LA.7) nor (LA.9) bounds an arbitrary refused operand's input:
+at reference guard 1, take $v=P_m(\alpha)$. The single round
+refuses finally at encoded guard 3 for every $m\ge1$, with fixed
+call count but graft ingress $18m+8$ in (LA.8). $\square$
+
+**Definition 23.3 (complete resource convention).** Retain every
+coordinate of (SW.17) and Definition 18.5:
+
+$$
+\begin{aligned}
+\mathbf C={}&\mathbf C_{\rm acquire}+\mathbf C_{\rm plan}
++\mathbf C_{\rm context}+\mathbf C_{\rm copy}
++\mathbf C_{\rm ingress}+\mathbf C_{\rm maint}\\
+&+\mathbf C_{\rm auto}+\mathbf C_{\rm primitive}
++\mathbf C_{\rm rows/deps}+\mathbf C_{\rm checks/ACK}
++\mathbf C_{\rm returns}+\mathbf C_{\rm retain/output}.
+\end{aligned}
+\tag{LA.10}
+$$
+
+This includes boot and seed acquisition, current count/syntax maintenance,
+post-capture parsing, encoding/arithmetic/selection, checking and immutable
+backing, raw and encoded resupply, all Reserve/Raise work, refused whole
+candidate generation and guard/MUX work, current-map resolution, primitive
+counter/fence/receipt work, both journals and dependency copies, complete
+checks/ACKs, all InnerReturn/CaptureCAP work, retention and output.
+Automatic-mode work, if separately actually used, keeps its own charge;
+it does not supply this raw caller with automatic input.
+
+For an actual measured native primitive prefix $z$, (GT.15)'s CAP bill
+remains
+$\operatorname{Bill}(z)=(\nu(z),2\nu(z),
+S_0+b_{\rm ctl}(z)+8A_{\rm phys}(z)+8\nu(z))$.
+It is not a conversion of outside-prefix calculations into CAP ticks.
+Those calculations and GENERAL's independently specified
+foundation/structural tariff remain separately paid. All earlier
+acquisition and all later actual expenses stay in the complete run even
+where (LA.8) begins after $P$. No equality of cross-path costs,
+total-resource dominance, global optimum, timing rate, throughput,
+uniform deadline or infinite completion follows from these subtotals.
+
+## 24. The earned timing premise and retained recovery boundary
+
+**Definition 24.1 (supplier and comparison scope).** The source-specific
+composition in Proposition 21.3 and Theorem 22.1 is repo-derived:
+attain tightness on the authentic beta occurrence, use it for
+source-preserving acquisition of the raw whole operand, and restore
+it after each selected final commit. Its suppliers remain CAP's
+whole-candidate semantics, mandatory request delivery and complete return;
+ARC's owned import, $M$ capture and beta-boot continuation; and
+(GT.3)/(GT.11)'s counts, finite encoding and ordered homomorphism.
+The existing $\rho^2$ image inverse is reused only with Corollary
+17.3's independent acquired-observation premise. Forced refusal,
+finite computation, copying and the inverse are not newly invented
+general results.
+
+The reduction from Assumption 15.3 concerns the time at which the
+continuing consumer must possess the operand/encoding. It does not
+reduce the complete retained information or discharge later actual
+frame supply. The earlier one-final-call route remains useful on its
+early-material domain. The present route pays a separate original
+source refusal per graft and both raw and encoded input, and uses
+a narrower tight-entry condition. Neither route has been proved to
+dominate the other on the complete resource vector. ABT's fixed-guard
+whole-menu and tight next-Rho results and the acquired signed
+Read/ApplyRho/Halt consumers do not themselves supply this repeated
+raw-graft acquisition and encoded commit.
+
+The primary comparison frameworks remain Definition 19.2's
+Lynch–Vaandrager, *Forward and Backward Simulations, Part I: Untimed
+Systems*, [§3.2](https://groups.csail.mit.edu/tds/papers/Lynch/IC95.pdf),
+and Reissig–Weber–Rungger, *Feedback Refinement Relations for the
+Synthesis of Symbolic Controllers*,
+[§IV and Definition V.2](https://arxiv.org/pdf/1503.03715v3).
+Their finite-fragment/external-trace and same-input/admissibility
+conditions, respectively, are literature-attested. Here the matching
+fragment has an extra visible raw refusal and may have different
+maintenance and operand bits. It has not been shown to preserve the
+complete external trace; it also transforms a reference input into
+a sequence of different actual inputs. Neither framework therefore
+installs this native interface or supplies a full-system simulation
+or feedback controller. No worldwide novelty or new Lean claim is
+attached to this ordinary proof.
+
+**Definition 24.2 (remaining source and continuation obligations).**
+The positive domain is the designated preterminal finite protocol from
+$P$. Other lawful choices remain available with their literal semantics.
+Arbitrary surplus maintenance, Busy, malformed, partial-overwrite,
+bootstrap/unfinished, changed-return and annex cuts have no positive
+extension supplied here. The original final00 handoff, INITIAL
+verification/output and absorbing halt remain unchanged and uninvoked
+by this induction; no matched posthalt Ready or re-entry is asserted.
+The parked client is not an installed planner or autonomous executor.
+
+The new acquisition is specifically of the submitted operand through
+the original request channel. It does not provide arbitrary current
+source observations, full original-$Q$ equivalence, literal-read
+transport, complete state/history/response recovery, a physical
+executor, or native/diffusion/AURIC source identification. In particular
+results on another source, including finite-spectrum Gram extensions
+under their own support/corner hypotheses, supply no native admission,
+owned request or input-feed bridge here. The broader recovery of
+space, lawful continuation/time, boundary and memory retains its
+original source, operation, acquisition, authority and resource
+obligations.
+
+## 追加锚（本行以下为增补区）
