@@ -389,7 +389,7 @@ lemma primeHom_δ {q : ℕ} (i : Fin (q + 2)) :
   simp only [primeHom, SimplexCategory.mkHom, SimplexCategory.Hom.toOrderHom_mk, OrderHom.coe_mk,
     SimplexCategory.len_mk]
   simp only [SimplexCategory.δ, SimplexCategory.mkHom, SimplexCategory.Hom.toOrderHom_mk,
-    OrderHom.coe_mk, Fin.succAboveOrderEmb, OrderEmbedding.toOrderHom]
+    OrderHom.coe_mk, OrderEmbedding.toOrderHom_coe, Fin.succAboveOrderEmb_apply]
   simp only [Fin.succAbove, Fin.lt_def, Fin.val_castSucc, Fin.val_succ]
   have hj := j.isLt
   simp only [SimplexCategory.len_mk] at hj

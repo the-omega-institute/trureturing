@@ -144,7 +144,7 @@ lemma ιFront_comp_δ_of_le (p q : ℕ) (k : Fin (p + q + 2))
   simp only at hi'
   simp only [SimplexCategory.comp_toOrderHom, OrderHom.comp_coe, Function.comp_apply,
     val_eqToHom_apply, SimplexCategory.δ, SimplexCategory.mkHom, SimplexCategory.Hom.toOrderHom_mk,
-    OrderHom.coe_mk, Fin.succAboveOrderEmb, OrderEmbedding.toOrderHom, Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
+    OrderHom.coe_mk, OrderEmbedding.toOrderHom_coe, Fin.succAboveOrderEmb_apply, Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
   split_ifs <;>
     simp only [Fin.val_castSucc, Fin.val_succ, ιFront, SimplexCategory.mkHom,
       SimplexCategory.Hom.toOrderHom_mk, OrderHom.coe_mk,
@@ -162,7 +162,7 @@ lemma ιFront_comp_δ_of_gt (p q : ℕ) (k : Fin (p + q + 2))
   simp only at hi'
   simp only [SimplexCategory.comp_toOrderHom, OrderHom.comp_coe, Function.comp_apply,
     val_eqToHom_apply, SimplexCategory.δ, SimplexCategory.mkHom, SimplexCategory.Hom.toOrderHom_mk,
-    OrderHom.coe_mk, Fin.succAboveOrderEmb, OrderEmbedding.toOrderHom, Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
+    OrderHom.coe_mk, OrderEmbedding.toOrderHom_coe, Fin.succAboveOrderEmb_apply, Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
   split_ifs <;>
     simp only [Fin.val_castSucc, Fin.val_succ, ιFront, SimplexCategory.mkHom, SimplexCategory.Hom.toOrderHom_mk, OrderHom.coe_mk
       ] at *;
@@ -179,7 +179,7 @@ lemma ιBack_comp_δ_of_le (p q : ℕ) (k : Fin (p + q + 2))
   simp only at hi'
   simp only [SimplexCategory.comp_toOrderHom, OrderHom.comp_coe, Function.comp_apply,
     val_eqToHom_apply, SimplexCategory.δ, SimplexCategory.mkHom, SimplexCategory.Hom.toOrderHom_mk,
-    OrderHom.coe_mk, Fin.succAboveOrderEmb, OrderEmbedding.toOrderHom, Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
+    OrderHom.coe_mk, OrderEmbedding.toOrderHom_coe, Fin.succAboveOrderEmb_apply, Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
   split_ifs <;>
     simp only [Fin.val_castSucc, Fin.val_succ, ιBack, SimplexCategory.mkHom, SimplexCategory.Hom.toOrderHom_mk, OrderHom.coe_mk
       ] at * <;>
@@ -197,7 +197,7 @@ lemma ιBack_comp_δ_of_gt (p q : ℕ) (k : Fin (p + q + 2))
   simp only at hi'
   simp only [SimplexCategory.comp_toOrderHom, OrderHom.comp_coe, Function.comp_apply,
     val_eqToHom_apply, SimplexCategory.δ, SimplexCategory.mkHom, SimplexCategory.Hom.toOrderHom_mk,
-    OrderHom.coe_mk, Fin.succAboveOrderEmb, OrderEmbedding.toOrderHom, Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
+    OrderHom.coe_mk, OrderEmbedding.toOrderHom_coe, Fin.succAboveOrderEmb_apply, Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
   split_ifs <;>
     simp only [Fin.val_castSucc, Fin.val_succ, ιBack, SimplexCategory.mkHom,
       SimplexCategory.Hom.toOrderHom_mk, OrderHom.coe_mk,
@@ -214,7 +214,7 @@ private lemma δ_last_comp_ιFront (p q : ℕ) :
   simp only at hi'
   simp only [SimplexCategory.comp_toOrderHom, OrderHom.comp_coe, Function.comp_apply,
     val_eqToHom_apply, SimplexCategory.δ, SimplexCategory.mkHom, SimplexCategory.Hom.toOrderHom_mk,
-    OrderHom.coe_mk, Fin.succAboveOrderEmb, OrderEmbedding.toOrderHom, Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
+    OrderHom.coe_mk, OrderEmbedding.toOrderHom_coe, Fin.succAboveOrderEmb_apply, Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
   split_ifs <;>
     simp only [Fin.val_castSucc, Fin.val_succ, ιFront, SimplexCategory.mkHom,
       SimplexCategory.Hom.toOrderHom_mk, OrderHom.coe_mk,
@@ -231,7 +231,7 @@ private lemma δ_zero_comp_ιBack (p q : ℕ) :
   simp only at hi'
   simp only [SimplexCategory.comp_toOrderHom, OrderHom.comp_coe, Function.comp_apply,
     val_eqToHom_apply, SimplexCategory.δ, SimplexCategory.mkHom, SimplexCategory.Hom.toOrderHom_mk,
-    OrderHom.coe_mk, Fin.succAboveOrderEmb, OrderEmbedding.toOrderHom, Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
+    OrderHom.coe_mk, OrderEmbedding.toOrderHom_coe, Fin.succAboveOrderEmb_apply, Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
   split_ifs <;>
     simp only [Fin.val_castSucc, Fin.val_succ, ιBack, SimplexCategory.mkHom,
       SimplexCategory.Hom.toOrderHom_mk, OrderHom.coe_mk,
