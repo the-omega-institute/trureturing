@@ -1,0 +1,125 @@
+**定理 16.2（配平双边的完整原响应）。** 在定义 16.1 下，对任意 $R\in\mathbb R$ 和 $x,y\in B$，只要 $`x^*x=y^*y`$，就有
+
+$$
+\boxed{
+D(Rh,b_+(x)+b_-(y))
+=\frac{\sigma iR}{2}
+\bigl(E_{13}x-E_{31}x^*-E_{23}y+E_{32}y^*\bigr)
+=K_\sigma(Rh,b_+(x)+b_-(y)).}
+\tag{16.5}
+$$
+
+系数不要求可逆、正规、相互交换、闭值域或属于某个有限矩阵阶段；两种 $\sigma$ 和正、负、零 $R$ 全部包括。
+
+证明。原零槽直接复用 AH43.1。$B=0$、$R=0$ 或 $x=y=0$ 时结论为零；若 $x=0$ 或 $y=0$，等右 Gram 及 C* 恒等式迫使两者皆零。以下固定非零 $R$ 和给定的 $x,y$，始终记
+
+$$
+a=Rh,\quad b=b_+(x)+b_-(y),\quad
+g=D(a,b),\quad K=K_\sigma(a,b).
+\tag{16.6}
+$$
+
+只消费继承的主定理 7.1：对这个任意环境输入 $b$，同一输出已满足
+
+$$
+g=K+r,\qquad r=\operatorname{diag}(r_1,r_2,0),
+\qquad r_1=r_1^*,\ r_2=r_2^*\in B.
+\tag{16.7}
+$$
+
+主定理使用的正是 $pAp$ 的整体分类及完整原关系；此处不把 (16.7) 作为新假设。固定一份忠实含单位表示 $B\subseteq B(\mathcal H)$，使 $A$ 作用于 $\mathcal H^3$，内积第一槽共轭线性。AH43.1 的准确锥接口给每个未归一数学向量读取
+
+$$
+|\langle\xi,g\xi\rangle|^2
+\le\|a\xi\|^2\|b\xi\|^2
+-\bigl(\operatorname{Re}\langle a\xi,b\xi\rangle\bigr)^2
+\quad(\xi\in\mathcal H^3).
+\tag{16.8}
+$$
+
+这些读取不增加实际准备；其质量为 $\|\xi\|^2$，不作归一化。对任意 $w\in\mathcal H$ 和 $s\in\{1,-1\}$，取
+
+$$
+\eta_w=(xw,-yw,0),\qquad
+\zeta_{s,w}=(xw,-yw,s iRw).
+\tag{16.9}
+$$
+
+直接块相乘及等右 Gram 给
+
+$$
+\begin{gathered}
+b\eta_w=(0,0,(x^*x-y^*y)w)=0,\\
+a\zeta_{s,w}=R(xw,yw,0),\qquad
+b\zeta_{s,w}=s iR(xw,yw,0)=s i\,a\zeta_{s,w}.
+\end{gathered}
+\tag{16.10}
+$$
+
+由 (16.8)，$\langle\eta_w,g\eta_w\rangle=0$；由 $b\eta_w=0$，也有 $\langle\eta_w,K\eta_w\rangle=0$。故 $\langle\eta_w,r\eta_w\rangle=0$。因 $r$ 的第三行列为零，固定 $s,w$ 并写 $\zeta=\zeta_{s,w}$ 后，准确得到
+
+$$
+\langle\zeta,r\zeta\rangle=0,\qquad
+k_0:=\langle\zeta,K\zeta\rangle
+=-\sigma s\|a\zeta\|^2
+=-\sigma s R^2(\|xw\|^2+\|yw\|^2).
+\tag{16.11}
+$$
+
+若 $xw=yw=0$，则 $\zeta=(0,0,s iRw)$，(16.7) 已给 $r\zeta=0$。其余情形 $k_0\ne0$。为处理此情形，对任意 $\xi\in\mathcal H^3$ 只读取固定的 $K,r,g$，记
+
+$$
+\begin{aligned}
+k(\xi)&=\langle\xi,K\xi\rangle
+=-\sigma\operatorname{Im}\langle a\xi,b\xi\rangle,\\
+\rho(\xi)&=\langle\xi,r\xi\rangle,\\
+C(\xi)&=\|a\xi\|^2\|b\xi\|^2-|\langle a\xi,b\xi\rangle|^2\ge0,\\
+P(\xi)&=C(\xi)-2k(\xi)\rho(\xi)-\rho(\xi)^2\ge0.
+\end{aligned}
+\tag{16.12}
+$$
+
+最后一个不等式准确等价于原 (16.8)，因为 $\langle\xi,g\xi\rangle=k(\xi)+\rho(\xi)$。由 (16.10)–(16.11)，$C(\zeta)=P(\zeta)=0$。置固定向量 $v=r\zeta$，并仅改变读取向量 $\xi_\varepsilon=\zeta+\varepsilon v$，$\varepsilon\in\mathbb R$。自伴性给
+
+$$
+\rho(\xi_\varepsilon)
+=2\varepsilon\|v\|^2+\varepsilon^2\langle v,rv\rangle.
+\tag{16.13}
+$$
+
+复 Gram 行列式在第二向量减去第一向量的任意复倍数时不变。由 $(b-s i a)\zeta=0$，取 $d=(b-s i a)v$，得到准确多项式恒等式
+
+$$
+C(\xi_\varepsilon)
+=\varepsilon^2\left(
+\|a\xi_\varepsilon\|^2\|d\|^2
+-|\langle a\xi_\varepsilon,d\rangle|^2\right).
+\tag{16.14}
+$$
+
+因此 $C(\xi_\varepsilon)$ 没有常数项和一次项，$\rho(\xi_\varepsilon)^2$ 也没有一次项，而 $P(\xi_\varepsilon)$ 的一次系数正是
+
+$$
+-4k_0\|v\|^2.
+\tag{16.15}
+$$
+
+这是常数项为零、对正负全部实 $\varepsilon$ 均非负的实多项式，故一次系数只能为零：否则在足够小且与该系数异号的 $\varepsilon$ 上取负。$k_0\ne0$ 遂给 $v=0$。连同零向量分支，对每个 $w$ 及两种 $s$ 都有
+
+$$
+r\zeta_{s,w}=(r_1xw,-r_2yw,0)=0,
+\qquad r_1x=0,\quad r_2y=0,\quad rb=br=0.
+\tag{16.16}
+$$
+
+末尾 $br=0$ 也由 $rb=0$ 取伴随得到。全程 $a,b,g,K,r$ 是 (16.6)–(16.7) 中同一批固定元素；不同 $w,s,\varepsilon$ 只改变数学读取，没有出现变化输入上的未知 $D$。
+
+还须排除 $r$ 藏在 $b$ 的核上。令 $q_b$ 为表示中 $\ker b$ 的 Hilbert 正交投影，不要求 $q_b\in A$，也不对它调用 $D$。由 $br=rb=0$，有 $r=q_brq_b$。对每个 $\xi\in\ker b$，(16.8) 给 $\langle\xi,g\xi\rangle=0$；固定自伴输出的复极化给 $q_bgq_b=0$。又 $bq_b=q_bb=0$，所以 $q_bKq_b=0$。于是
+
+$$
+r=q_brq_b=q_b(g-K)q_b=0.
+\tag{16.17}
+$$
+
+忠实性将等式返回原 $A$，得到 (16.5)。不需要 $\operatorname{ran}b$ 或 $\operatorname{ran}x$ 闭合，没有取逆、极分解、输入极限或未知行的加法展开。∎
+

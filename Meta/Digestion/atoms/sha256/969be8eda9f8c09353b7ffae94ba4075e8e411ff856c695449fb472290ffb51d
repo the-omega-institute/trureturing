@@ -1,0 +1,9 @@
+记
+$$
+\Theta=\sup\{\Re\rho:\ \zeta(\rho)=0,\ 0<\Re\rho<1\}.
+$$
+经典输入如下：零点上确界的误差估计
+$$
+\forall\varepsilon>0\ \exists C_\varepsilon:\quad |E(t)|\le C_\varepsilon t^{\Theta+\varepsilon}\qquad(t\ge2),
+\tag{485.1}
+$$

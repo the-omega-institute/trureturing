@@ -1,0 +1,11 @@
+**推论 498.6（均方误差即足够）。** 定理 498.1 中的 $\mathrm{HL}_4(\beta)$ 可换成：对每个 $\varepsilon>0$、$M\ge1$、$1\le r\le4$，一致地对 $1\le K\le MN^\beta$、$N\le y\le2N$，
+
+$$
+\sum_{\substack{1\le d_1,\dots,d_r\le K\\ \text{两两不同}}}|E_r(y;\mathbf d)|^2\le C_{\varepsilon,M}N^{1+2\varepsilon}K^r ,
+\tag{498.10}
+$$
+
+其中 $E_r(y;\mathbf d)$ 为 (498.1) 左边的相关误差。
+
+证明。在含 $j$ 个不同位移的重合类型中，中心化展开的一项使用其中 $r$ 个相关位移，其余位移的求和至多给出 $K^{j-r}$。由 Cauchy–Schwarz，$K^{j-r}\sum_{\mathbf d_r}|E_r|\le K^{j-r}K^{r/2}(\sum|E_r|^2)^{1/2}\le C^{1/2}N^{1/2+\varepsilon}K^j$，这正是引理 498.4 所需的误差；分部求和只用 $N\le y\le2N$。其余不变。证毕。
+

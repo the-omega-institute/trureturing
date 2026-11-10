@@ -780,7 +780,7 @@ private lemma zero_tail {h : ℕ → ℝ} (hh : IsLogConvex h) (hz : h 1 = 0)
 
 /- proof_shape: content; escape_witness: Result.positive_all; consumers: Result.convex_ratio, Result.convex_step; admission_basis: open-problem-resolution.
    direct frozen dependencies: none; 5.2 owner dependencies: none. -/
-private lemma positive_all {h : ℕ → ℝ} (hh : IsLogConvex h) (h1 : 0 < h 1)
+lemma positive_all {h : ℕ → ℝ} (hh : IsLogConvex h) (h1 : 0 < h 1)
     (n : ℕ) : 0 < h n := by
   have h0 : 0 < h 0 := by
     have he := hh.2.2 1 (by omega)
@@ -802,7 +802,7 @@ private lemma positive_all {h : ℕ → ℝ} (hh : IsLogConvex h) (h1 : 0 < h 1)
 
 /- proof_shape: content; escape_witness: Result.positive_all; consumers: Result.convex_step; admission_basis: open-problem-resolution.
    direct frozen dependencies: none; 5.2 owner dependencies: none. -/
-private lemma convex_ratio {h : ℕ → ℝ} (hh : IsLogConvex h) (h1 : 0 < h 1)
+lemma convex_ratio {h : ℕ → ℝ} (hh : IsLogConvex h) (h1 : 0 < h 1)
     (a n : ℕ) : h (a + 1) / h a ≤ h (a + n + 1) / h (a + n) := by
   have hmono : Monotone (fun k : ℕ => h (k + 1) / h k) :=
     monotone_nat_of_le_succ (fun k => by
