@@ -33,8 +33,9 @@ open private injection_single from D5.S3.VertexAlgebra.Sectors.LatticeCosetCompr
 open private multiplication_recursion from D5.S3.VertexAlgebra.Sectors.LatticeDualCosetModule
 open private derivative_modes from D5.S3.VertexAlgebra.LatticeAllStateField
 
-private theorem high_modes_finite {V : Type} [AddCommGroup V] [Module ℂ V]
-    (A : VertexOperator ℂ V) (F : ℕ → Module.End ℂ V) (m : ℤ) (v : V) :
+private theorem high_modes_finite {V W : Type} [AddCommGroup V] [Module ℂ V]
+    [AddCommGroup W] [Module ℂ W]
+    (A : VertexOperator ℂ V) (F : ℕ → V →ₗ[ℂ] W) (m : ℤ) (v : V) :
     Function.HasFiniteSupport (fun j : ℕ => F j (((A)[[m+j]]) v)) := by
   classical
   let N : ℕ := (-((HahnModule.of ℂ).symm (A v)).order-m).toNat

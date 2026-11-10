@@ -119,6 +119,46 @@ theorem creationExponential_separation (b : Fin e → ℤ) (n : Charge D) :
     hg0, hh0, one_mul]
   exact hcF
 
+private theorem creationCoeff_separation (b : Fin e → ℤ) (n : Charge D) (t : ℤ) :
+    creationCoeff (ambient D e B C hC hCe) (liftCharge D B C hC hCe b n) t =
+      ∑ᶠ j : ℕ, longitudinalPolynomial D B C hC hCe
+          (creationCoeff (ambient D e B C hC hCe) (liftCharge D B C hC hCe b n) (t-j)) *
+        transversePolynomial D B C hC hCe
+          (PowerSeries.coeff j (creationExponential (externalLattice C hC hCe) b)) := by
+  classical
+  let F := ambient D e B C hC hCe
+  let β := liftCharge D B C hC hCe b n
+  let L := longitudinalPolynomial D B C hC hCe
+  let T := transversePolynomial D B C hC hCe
+  let g := creationExponential (externalLattice C hC hCe) b
+  change creationCoeff F β t = ∑ᶠ j : ℕ, L (creationCoeff F β (t-j)) * T (PowerSeries.coeff j g)
+  by_cases ht : t < 0
+  · rw [creationCoeff, dif_pos ht]
+    symm
+    apply finsum_eq_zero
+    intro j
+    simp [creationCoeff, show t-(j : ℤ) < 0 by omega]
+  · have hsub : Function.support (fun j : ℕ =>
+        L (creationCoeff F β (t-j)) * T (PowerSeries.coeff j g)) ⊆
+          Finset.range (t.toNat+1) := by
+      intro j hj
+      apply Finset.mem_range.mpr
+      by_contra hn
+      exact hj (by simp [creationCoeff, show t-(j : ℤ) < 0 by omega])
+    rw [finsum_eq_sum_of_support_subset _ hsub, creationCoeff, dif_neg ht]
+    rw [creationExponential_separation D B C hC hCe b n, PowerSeries.coeff_mul]
+    rw [← Finset.Nat.sum_antidiagonal_swap]
+    rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk]
+    apply Finset.sum_congr rfl
+    intro j hj
+    have hjt : (j : ℤ) ≤ t := by
+      have := Finset.mem_range.mp hj
+      omega
+    have hnat : (t-(j : ℤ)).toNat = t.toNat-j := by omega
+    simp only [PowerSeries.coeff_map, creationCoeff, show ¬ t-(j : ℤ) < 0 by omega,
+      ↓reduceDIte, hnat]
+    rfl
+
 private theorem translated_longitudinal
     (A : Charge (ambient D e B C hC hCe)) :
     (translatedProjection D B C hC hCe A).comp
@@ -202,14 +242,21 @@ theorem transverse_creation_coefficient (hD : (gramReal D).PosDef)
           Algebra.smul_def]] at hj
   have hrat (r : ℚ) : Polynomial.map ev.toRingHom
       (algebraMap ℚ (Polynomial (Oscillator D)) r) = Polynomial.C (r : ℂ) := by
+    change (Polynomial.mapRingHom ev.toRingHom)
+      (algebraMap ℚ (Polynomial (Oscillator D)) r) = _
     rw [RingHom.map_rat_algebraMap]
     exact RingHom.congr_fun (Subsingleton.elim
       (algebraMap ℚ (Polynomial ℂ)) (Polynomial.C.comp (algebraMap ℚ ℂ))) r
   rw [Polynomial.map_mul, Polynomial.map_pow, Polynomial.map_neg,
     Polynomial.map_X, hrat] at hj
   rw [hj]
-  simp only [neg_pow, correction, Polynomial.smul_eq_C_mul, map_mul, map_pow, map_neg,
-    map_one]
+  rw [correction, Polynomial.smul_eq_C_mul]
+  change (-Polynomial.X : Polynomial ℂ)^j *
+      Polynomial.C ((Ring.choose (schur D B C a b) j : ℚ) : ℂ) =
+    Polynomial.C ((-1 : ℂ)^j * ((Ring.choose (schur D B C a b) j : ℚ) : ℂ)) * Polynomial.X^j
+  rw [Polynomial.C_mul, Polynomial.C_pow]
+  have hneg : Polynomial.C (-1 : ℂ) = (-1 : Polynomial ℂ) := map_neg Polynomial.C 1
+  rw [hneg, neg_pow]
   ring
 
 end

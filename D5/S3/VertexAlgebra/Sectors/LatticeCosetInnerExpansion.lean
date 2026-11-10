@@ -52,7 +52,9 @@ def compressedField (a d : Fin e → ℤ) (u : Carrier D) : VertexOperator ℂ (
     by_contra hn
     have hz : HVertexOperator.coeff F k v = 0 :=
       VertexOperator.coeff_eq_zero_of_lt_order F k v (by omega)
-    exact hk (by change projection D B C hC hCe (a+d) _ = 0; rw [hz, map_zero]))
+    exact hk (by
+      change projection D B C hC hCe (a+d) (HVertexOperator.coeff F k v) = 0
+      rw [hz, map_zero]))
 
 private theorem compressedField_modes (a d : Fin e → ℤ) (u g : Carrier D) (m : ℤ) :
     ((compressedField D B C hC hCe a d u)[[m]]) g =
@@ -97,7 +99,7 @@ private theorem current_injection_modes (hD : (gramReal D).PosDef)
     apply Finsupp.lhom_ext
     intro n f
     simp [mixedState_single, injection_single]
-  simpa only [hmix] using current_mixed D B C hC hCe hD i d m g 1
+  simpa only [hmix, current] using current_mixed D B C hC hCe hD i d m g 1
 
 private theorem current_negative (d d' : Fin e → ℤ) (i : Fin D.rank) (m : ℤ)
     (hm : m < 0) : ((current D B d i)[[m]]) = ((current D B d' i)[[m]]) := by
@@ -175,8 +177,8 @@ theorem compressed_multiplication_recursion (hD : (gramReal D).PosDef)
   rw [(normalMinusOne A F).2, map_add,
     mapSum _ (high_modes_finite F (fun j => ((A)[[-(j : ℤ)-1]])) (-k-1)
       (injection D B C hC hCe d g)),
-    mapSum _ (by simpa using high_modes_finite A
-      (fun j => ((F)[[-k-1-j-1]])) 0 (injection D B C hC hCe d g)),
+    mapSum _ (by simpa only [zero_add] using (high_modes_finite A
+      (fun j => ((F)[[-k-1-j-1]])) 0 (injection D B C hC hCe d g))),
     (normalMinusOne _ _).2]
   congr 1 <;> apply finsum_congr <;> intro j
   · rw [derivative_negative_projection D B C hC hCe hD d (a+d) x j]
