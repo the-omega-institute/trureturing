@@ -51,13 +51,14 @@ internal sealed class HannaSquareExponentIntegralityDocument : IScribeDocumentDe
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "All three series exist uniquely and have integer coefficients", ClaimBody(),
                 "The factorial slope is nonzero. Differentiation makes the exceptional last numerator divisible by the cutoff; the remaining factorials already divide the clearing factorial. The resulting integer coefficient operator has a fixed point by prefix contraction. Translation by one gives the third series.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("op-hanna350410"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) =>
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("hannasquareexponentintegrality-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Call(string name, params Formula[] args) => args.Length == 0

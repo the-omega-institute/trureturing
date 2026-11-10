@@ -94,6 +94,10 @@ $$(\exists A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), (\operatorname{
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/HannaSquareExponentIntegrality.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/op-hanna350410` (proved) by `D5/S1/Recurrence/Algebraic/HannaSquareExponentIntegrality.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"op-hanna350410","declaration_gid":"D5/S1/Recurrence/Algebraic/HannaSquareExponentIntegrality.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2021). *OEIS A350410, A350411 and A350412: square-exponent factorial integrality*. URL: <https://oeis.org/A350410>.
