@@ -321,4 +321,185 @@ private theorem polynomial_orthogonality (i j : ℕ) : B (P i * P j) =
     rw [monomial_orthogonality j k (by omega), if_neg (by omega), mul_zero]
 
 
+
+
+private def gram (N : ℕ) : Matrix (Fin N) (Fin N) ℚ :=
+  fun i j => PowerSeries.coeff (i.val + j.val) M
+
+private def basisMatrix (N : ℕ) : Matrix (Fin N) (Fin N) ℚ :=
+  fun i j => (P j.val).coeff i.val
+
+private def norm (i : ℕ) : ℚ := if i = 0 then 1 else 2
+
+private theorem basis_det (N : ℕ) : (basisMatrix N).det = 1 := by
+  have hu : (basisMatrix N).IsUpperTriangular := by
+    intro i j h
+    exact Polynomial.coeff_eq_zero_of_natDegree_lt
+      (by rw [(polynomial_monic j.val).natDegree_eq]; exact h)
+  rw [Matrix.det_of_isUpperTriangular hu]
+  apply prod_eq_one
+  intro i _
+  exact (Polynomial.isMonicOfDegree_iff (P i.val) i.val).mp (polynomial_monic i.val) |>.2
+
+private theorem B_monomial (k : ℕ) : B (Polynomial.X ^ k) = PowerSeries.coeff k M := by
+  simp [B, Polynomial.X_pow_eq_monomial]
+
+private theorem pair_expansion (f g : ℚ[X]) (N : ℕ)
+    (hf : f.natDegree < N) (hg : g.natDegree < N) :
+    B (f * g) = ∑ i ∈ range N, ∑ j ∈ range N,
+      f.coeff i * PowerSeries.coeff (i + j) M * g.coeff j := by
+  conv_lhs => rw [f.as_sum_range_C_mul_X_pow' hf, g.as_sum_range_C_mul_X_pow' hg]
+  rw [Finset.sum_mul, map_sum]
+  apply sum_congr rfl
+  intro i _
+  rw [Finset.mul_sum, map_sum]
+  apply sum_congr rfl
+  intro j _
+  have hp : Polynomial.C (f.coeff i) * Polynomial.X ^ i *
+      (Polynomial.C (g.coeff j) * Polynomial.X ^ j) =
+      (f.coeff i * g.coeff j) • (Polynomial.X ^ (i + j)) := by
+    rw [Polynomial.smul_eq_C_mul, map_mul, pow_add]
+    ring
+  rw [hp, map_smul, B_monomial]
+  change (f.coeff i * g.coeff j) * _ = _
+  ring
+
+private theorem gram_congruence (N : ℕ) :
+    (basisMatrix N).transpose * gram N * basisMatrix N =
+      Matrix.diagonal (fun i : Fin N => norm i.val) := by
+  ext i j
+  rw [Matrix.diagonal_apply]
+  change (∑ k : Fin N, (∑ l : Fin N,
+    (P i.val).coeff l.val * PowerSeries.coeff (l.val + k.val) M) *
+      (P j.val).coeff k.val) = _
+  simp_rw [Finset.sum_mul]
+  rw [Finset.sum_comm]
+  rw [Fin.sum_univ_eq_sum_range (fun l => ∑ k : Fin N,
+    (P i.val).coeff l * PowerSeries.coeff (l + k.val) M * (P j.val).coeff k.val) N]
+  have inner (l : ℕ) := Fin.sum_univ_eq_sum_range (fun k =>
+    (P i.val).coeff l * PowerSeries.coeff (l + k) M * (P j.val).coeff k) N
+  simp_rw [inner]
+  rw [← pair_expansion (P i.val) (P j.val) N
+    (by rw [(polynomial_monic i.val).natDegree_eq]; exact i.isLt)
+    (by rw [(polynomial_monic j.val).natDegree_eq]; exact j.isLt)]
+  rw [polynomial_orthogonality]
+  by_cases h : i = j
+  · subst j; simp [Matrix.diagonal_apply, norm]
+  · have hv : i.val ≠ j.val := fun e => h (Fin.ext e)
+    simp [Matrix.diagonal_apply, h, hv]
+
+
+
+private theorem adjugate_congruence (N : ℕ) :
+    (gram N).adjugate = basisMatrix N *
+      (Matrix.diagonal (fun i : Fin N => norm i.val)).adjugate *
+      (basisMatrix N).transpose := by
+  rw [← gram_congruence, Matrix.adjugate_mul_distrib,
+    Matrix.adjugate_mul_distrib]
+  simp only [← Matrix.mul_assoc]
+  rw [Matrix.mul_adjugate, basis_det, one_smul, Matrix.one_mul]
+  rw [Matrix.mul_assoc, Matrix.adjugate_mul, Matrix.det_transpose,
+    basis_det, one_smul, Matrix.mul_one]
+
+private theorem norm_det (N : ℕ) :
+    (Matrix.diagonal (fun i : Fin (N + 1) => norm i.val)).det = 2 ^ N := by
+  rw [Matrix.det_diagonal, Fin.prod_univ_succ]
+  simp [norm]
+
+private theorem norm_adjugate (N : ℕ) :
+    (Matrix.diagonal (fun i : Fin (N + 1) => norm i.val)).adjugate =
+      Matrix.diagonal (fun i : Fin (N + 1) => 2 ^ N / norm i.val) := by
+  rw [Matrix.adjugate_diagonal]
+  congr 1
+  funext i
+  have h := Finset.prod_erase_mul (s := (Finset.univ : Finset (Fin (N + 1))))
+    (f := fun j => norm j.val) (Finset.mem_univ i)
+  have hd : (∏ j : Fin (N + 1), norm j.val) = 2 ^ N := by
+    simpa only [Matrix.det_diagonal] using norm_det N
+  rw [hd] at h
+  exact (eq_div_iff (by simp [norm]; split_ifs <;> norm_num)).mpr h
+
+private theorem constant_polynomial (n : ℕ) :
+    (P (n + 1)).coeff 0 = 2 * (-1 : ℚ) ^ n * n := by
+  induction n using Nat.twoStepInduction with
+  | zero => simp [P]
+  | one => norm_num [P, beta]
+  | more n hn hn1 =>
+    have hrec : (P (n + 2 + 1)).coeff 0 =
+        -2 * (P (n + 1 + 1)).coeff 0 - (P (n + 1)).coeff 0 := by
+      rw [show n + 2 + 1 = (n + 1) + 2 by omega, P]
+      simp [Polynomial.coeff_mul, beta]
+    rw [hrec, hn, hn1]
+    push_cast
+    rw [pow_succ, pow_succ]
+    ring
+
+private theorem constant_square (n : ℕ) : (P (n + 1)).coeff 0 ^ 2 = 4 * (n : ℚ) ^ 2 := by
+  rw [constant_polynomial]
+  have hs : ((-1 : ℚ) ^ n) ^ 2 = 1 := by rw [← pow_mul, mul_comm, pow_mul]; norm_num
+  rw [mul_pow, mul_pow, hs]
+  norm_num
+
+
+
+def hankel (N : ℕ) : Matrix (Fin N) (Fin N) ℚ :=
+  fun i j => q (i.val + j.val + 2)
+
+private theorem gram_minor (N : ℕ) :
+    (gram (N + 1)).submatrix (0 : Fin (N + 1)).succAbove
+      (0 : Fin (N + 1)).succAbove = (2 : ℚ) • hankel N := by
+  ext i j
+  simp [gram, hankel, M, F, PowerSeries.coeff_ofNat_mul, Matrix.smul_apply,
+    Nat.add_assoc, Nat.add_comm, Nat.add_left_comm]
+
+private theorem cofactor_value (N : ℕ) :
+    (gram (N + 1)).adjugate 0 0 =
+      2 ^ N * (1 + 2 * ∑ k ∈ range N, (k : ℚ) ^ 2) := by
+  rw [adjugate_congruence, norm_adjugate, Matrix.mul_apply]
+  simp_rw [Matrix.mul_diagonal, Matrix.transpose_apply]
+  change (∑ i : Fin (N + 1), (P i.val).coeff 0 *
+    (2 ^ N / norm i.val) * (P i.val).coeff 0) = _
+  rw [Fin.sum_univ_succ]
+  have term (i : Fin N) : (P i.succ.val).coeff 0 *
+      (2 ^ N / norm i.succ.val) * (P i.succ.val).coeff 0 =
+      2 ^ N * (2 * (i.val : ℚ) ^ 2) := by
+    have hs := constant_square i.val
+    simp only [Fin.val_succ, norm, Nat.add_eq_zero_iff, Nat.one_ne_zero,
+      and_false, ite_false]
+    calc
+      _ = (2 ^ N / 2) * ((P (i.val + 1)).coeff 0 ^ 2) := by ring
+      _ = _ := by rw [hs]; ring
+  simp_rw [term]
+  rw [Fin.sum_univ_eq_sum_range (fun k => (2 : ℚ) ^ N * (2 * (k : ℚ) ^ 2)) N,
+    ← Finset.mul_sum, ← Finset.mul_sum]
+  simp only [Fin.val_zero, P, Polynomial.coeff_one, ite_true, norm, div_one, one_mul, mul_one]
+  ring
+
+private theorem determinant_sum (N : ℕ) :
+    (hankel N).det = 1 + 2 * ∑ k ∈ range N, (k : ℚ) ^ 2 := by
+  have hc := Matrix.adjugate_fin_succ_eq_det_submatrix
+    (gram (N + 1)) (0 : Fin (N + 1)) (0 : Fin (N + 1))
+  rw [gram_minor, Matrix.det_smul] at hc
+  simp only [Fin.val_zero, zero_add, pow_zero, one_mul, Fintype.card_fin] at hc
+  rw [cofactor_value] at hc
+  exact mul_left_cancel₀ (pow_ne_zero N (by norm_num : (2 : ℚ) ≠ 0)) hc.symm
+
+theorem result (n : ℕ) :
+    (hankel (n + 1)).det = 1 + 2 * ∑ k ∈ range (n + 1), (k : ℚ) ^ 2 ∧
+    (hankel (n + 1)).det = (2 * (n : ℚ) ^ 3 + 3 * (n : ℚ) ^ 2 + n + 3) / 3 := by
+  have hs := determinant_sum (n + 1)
+  refine ⟨hs, ?_⟩
+  rw [hs]
+  have sumsq (m : ℕ) : (∑ k ∈ range (m + 1), (k : ℚ) ^ 2) =
+      (m : ℚ) * (m + 1) * (2 * m + 1) / 6 := by
+    induction m with
+    | zero => norm_num
+    | succ m ih =>
+      rw [sum_range_succ, ih]
+      push_cast
+      ring
+  rw [sumsq]
+  ring
+
+#print axioms result
 end BarryA188475
