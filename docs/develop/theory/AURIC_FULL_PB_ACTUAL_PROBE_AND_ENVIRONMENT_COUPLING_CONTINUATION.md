@@ -2536,3 +2536,878 @@ $$
 本节不对未知总响应添加正则性、可加性、齐次性、协变性、单位平移中性、压缩、商或自然性前件，也不把已知 $D_{\rm env}$ 当作它。原一般混合输入、共同实现义务 $\mathcal E_+^D=\mathcal E_-^D$、稳定性目标 $N_\omega(\varepsilon)^2\to0$、完整原 $\mathsf H$／总 $D$ 以及 §§6、15、18、21 的同一递归钉版实际物理来源全文均保持原范围与未决义务。有限矩阵读取与数学探针不供应原实际准备、评价标签、完整菜单、typed 仪器、全部合法历史、CountRead 或全输入／全未来 Return，也不以较强完整 $\mathsf H$ 的分类代替固定输出接口。
 
 ## 新增锚（本行以下为后续增补区）
+
+
+## 27A. 满行秩原四维族的线性尺度正预算排除域
+
+本节在定理 25.1 的同一个矩阵族上扩大实际 PB 排除域。全正 P2 的完整区间仍直接引用 (25.2)，零残量的全部 PB 充分性仍直接引用 §1。新增结论使用同一个实际探针、同一个原空间向量和同一个正泛函同时读取两笔预算及左端；环境坐标和原平方全部保留。
+
+**定义 27A.1（原四维输入与有限探针族）。** 取 $\varepsilon>0$、$\rho\in\mathbb R$，在原 $M_4(\mathbb C)$ 中令
+
+$$
+\begin{gathered}
+P=\operatorname{diag}(1,1,0,0),\qquad
+c=\operatorname{diag}(1,2,0,0),\qquad b=\rho+1-2\varepsilon^2,\\
+t=\begin{pmatrix}
+\rho/2&1&\varepsilon&0\\
+1&b&0&1\\
+\varepsilon&0&1&0\\
+0&1&0&1
+\end{pmatrix},\qquad
+s=\rho\operatorname{diag}(1,-2,0,0)=\rho(4P-3c),\\
+K_\sigma(A,B)=\frac{\sigma i}{2}[A,B],\qquad
+A\circ B=\frac{AB+BA}{2},\qquad g_\sigma=K_\sigma(c,t)+s.
+\end{gathered}
+\tag{27A.1}
+$$
+
+这是 (25.1) 的矩阵公式，未将该式原有的小参数限制加入定义。实际 $V=\operatorname{diag}(\varepsilon,1)$ 满行秩，$D_{\rm env}=I_2$；它不是总耦合秩一或零环境边的替代输入。对每个分别固定的 $\sigma$，原标签准确为
+
+$$
+\begin{gathered}
+h=K_\sigma(c,x),\qquad r=c\circ x,\qquad k=c\circ t,\\
+R_\pm=x\pm(h-k),\qquad S_\pm=t\pm(r+g_\sigma),\\
+L=-2x\circ(h-k)-2t\circ(r+g_\sigma).
+\end{gathered}
+\tag{27A.2}
+$$
+
+所有乘积在同一个原 $M_4(\mathbb C)$ 中进行。对原正泛函仍使用 (22.1) 的差额
+
+$$
+\mathcal G_\sigma(x,\phi)
+=|\phi(L)|-\sqrt{B_\phi(R_+,S_+)}-\sqrt{B_\phi(R_-,S_-)}.
+\tag{27A.3}
+$$
+
+当 $\rho\ne0$ 时，定义实数及复数
+
+$$
+\tau=-\frac{21\rho}{29},\qquad d=\frac{625\rho}{174},\qquad
+ a=\frac{29}{84\rho},\qquad U_\sigma=\tau(3+2\sigma i).
+$$
+
+对每个实际有限 $\delta>0$，取
+
+$$
+x_\delta=\begin{pmatrix}
+d&\delta^{-1}\\
+\delta^{-1}&a\delta^{-2}
+\end{pmatrix}\oplus0_2,\qquad
+\xi_{\sigma,\delta}=(1,\delta U_\sigma,0,0)^{\mathsf T},\qquad
+\phi_{\sigma,\delta}(A)=\xi_{\sigma,\delta}^*A\xi_{\sigma,\delta}.
+\tag{27A.4}
+$$
+
+$x_\delta=x_\delta^*=Px_\delta P$ 是原允许探针，不要求为正；$\phi_{\sigma,\delta}$ 是完整原代数上的正复线性泛函。其质量是 $1+\delta^2|U_\sigma|^2$，不归一化也合法。
+
+**定理 27A.2（实际有限见证的扩大排除域）。** 对定义 27A.1 的同一输入，每个取向分别有下列结论。
+
+1. 若 $\rho\ne0$ 且
+
+   $$
+   2697\varepsilon^2<1039\rho^2,
+   \tag{27A.5}
+   $$
+
+   则存在 $\delta_*(\rho,\varepsilon)>0$，使每个 $0<\delta<\delta_*$ 的 (27A.4) 都满足 $\mathcal G_\sigma(x_\delta,\phi_{\sigma,\delta})>0$，两笔原预算均严格为正。这里不要求 P2。
+2. 在明确的统一有限域
+
+   $$
+   0<|\rho|\le\frac12,\qquad 0<\varepsilon\le\frac{|\rho|}{2},
+   \tag{27A.6}
+   $$
+
+   固定取 $\delta=10^{-6}$，有
+
+   $$
+   \boxed{\mathcal G_\sigma(x_\delta,\phi_{\sigma,\delta})>\frac{\rho^2}{2}.}
+   \tag{27A.7}
+   $$
+
+   这些输入同时属于已付的完整全正 P2 区间 (25.2)。
+
+任意给定有限质量 $\mu>0$ 均可由同一个探针和向量
+
+$$
+\xi_{\sigma,\delta,\mu}
+=\sqrt{\frac{\mu}{1+\delta^2|U_\sigma|^2}}\,\xi_{\sigma,\delta}
+\tag{27A.8}
+$$
+
+取得严格违反；在 (27A.6) 的统一选择下，其差额严格大于 $\mu\rho^2/[2(1+\delta^2|U_\sigma|^2)]$。零质量的正泛函仍满足零等式。这些是反驳全称 PB 的同一实际读取见证，不是任何非零成员的全称 PB 证书。
+
+证明。先固定 $\sigma=1$，写 $U=\tau(3+2i)$、$\xi=\xi_{1,\delta}$。以下暂不代入 $\tau,d$ 的具体值，以展示配方；四列计算使用 $aU=-3/4-i/2$，而 (27A.4) 的参数确实满足该等式。
+
+### 27A.1 面积上界及原缺陷的准确符号
+
+在复 Hilbert 空间的实化中，对两列 $A,B$ 记
+
+$$
+\operatorname{Area}(A,B)
+=\sqrt{\|A\|^2\|B\|^2-\operatorname{Re}(A^*B)^2}.
+$$
+
+给定 $\lambda=\alpha+i\beta$、$\beta\ne0$，成熟的实 Cauchy–Schwarz 与 Young 不等式给
+
+$$
+\begin{aligned}
+\operatorname{Area}(A,B)
+&\le T_\lambda(A,B)
+:=\frac{\|B-\alpha A\|^2+\beta^2\|A\|^2}{2|\beta|}\\
+&=\frac{\|B-\lambda A\|^2}{2|\beta|}
+ +\operatorname{sgn}(\beta)\operatorname{Im}(A^*B).
+\end{aligned}
+\tag{27A.9}
+$$
+
+具体地，将 $B$ 换成 $B-\alpha A$ 不改面积，其平方不超过 $\|A\|^2\|B-\alpha A\|^2$；再用 $2|\beta|\|A\|\|B-\alpha A\|\le\beta^2\|A\|^2+\|B-\alpha A\|^2$。最后一等式由展开复范数得到，其中交叉项为 $-2\beta\operatorname{Im}(A^*B)$。这里使用面积上界；§22 的环境面积下界不用于推出 PB 违反。
+
+令 $g_0=K_1(c,t)$、$L_0=-2x\circ(h-k)-2t\circ(r+g_0)$。§1 的标准零残量恒等式直接给出
+
+$$
+\begin{aligned}
+M&:=K_1(R_+,S_+)-K_1(R_-,S_-)\\
+ &=L_0+K_1(R_+,s)+K_1(R_-,s)\\
+ &=L+2t\circ s+2K_1(x,s).
+\end{aligned}
+\tag{27A.10}
+$$
+
+第二行用的是当前 $S_+$ 增加 $s$、$S_-$ 增加 $-s$；第三行用 $R_++R_-=2x$。因为 $x=PxP$，(27A.1) 还给
+
+$$
+K_1(x,s)=3\rho K_1(c,x)=3\rho h.
+\tag{27A.11}
+$$
+
+若 $\operatorname{Im}\lambda_+<0$、$\operatorname{Im}\lambda_->0$，置
+
+$$
+E_\pm=S_\pm\xi-\lambda_\pm R_\pm\xi,\quad
+\beta_+=-\operatorname{Im}\lambda_+>0,\quad
+\beta_-=\operatorname{Im}\lambda_->0,\quad w_\pm=\frac1{2\beta_\pm}.
+$$
+
+对原自伴矩阵 $R,S$，准确有 $\phi_\xi(K_1(R,S))=-\operatorname{Im}((R\xi)^*S\xi)$。将 (27A.9) 的两种符号与 (27A.10) 合并，得到精确等式
+
+$$
+\begin{aligned}
+F_\delta
+&:=T_{\lambda_+}(R_+\xi,S_+\xi)
+  +T_{\lambda_-}(R_-\xi,S_-\xi)-\phi_\xi(L)\\
+&=w_+\|E_+\|^2+w_-\|E_-\|^2
+  +2\phi_\xi(t\circ s+K_1(x,s)).
+\end{aligned}
+\tag{27A.12}
+$$
+
+因此原差额满足
+
+$$
+\mathcal G_1(x,\phi_\xi)\ge -F_\delta.
+\tag{27A.13}
+$$
+
+这里同时用了 $|\phi_\xi(L)|\ge\phi_\xi(L)$ 和两笔面积各自的上界，没有将某个充分估计失败解释成违反。
+
+### 27A.2 同一个原四维实现的完整作用列
+
+令 $u=\delta^{-1}$、$v=a\delta^{-2}$。从 (27A.1)–(27A.2) 的原乘积直接得到
+
+$$
+\begin{gathered}
+h=\begin{pmatrix}0&-iu/2&0&0\\iu/2&0&0&0\\0&0&0&0\\0&0&0&0\end{pmatrix},\qquad
+r=\begin{pmatrix}d&3u/2&0&0\\3u/2&2v&0&0\\0&0&0&0\\0&0&0&0\end{pmatrix},\\
+k=\begin{pmatrix}\rho/2&3/2&\varepsilon/2&0\\3/2&2b&0&1\\\varepsilon/2&0&0&0\\0&1&0&0\end{pmatrix},\qquad
+g_1=\begin{pmatrix}\rho&-i/2&i\varepsilon/2&0\\i/2&-2\rho&0&i\\-i\varepsilon/2&0&0&0\\0&-i&0&0\end{pmatrix}.
+\end{gathered}
+\tag{27A.14}
+$$
+
+特别地，两个完整 $R$ 和两个完整 $S$ 为
+
+$$
+\begin{gathered}
+R_+=\begin{pmatrix}
+d-\rho/2&(1-i/2)u-3/2&-\varepsilon/2&0\\
+(1+i/2)u-3/2&v-2b&0&-1\\
+-\varepsilon/2&0&0&0\\0&-1&0&0
+\end{pmatrix},\\
+R_-=\begin{pmatrix}
+d+\rho/2&(1+i/2)u+3/2&\varepsilon/2&0\\
+(1-i/2)u+3/2&v+2b&0&1\\
+\varepsilon/2&0&0&0\\0&1&0&0
+\end{pmatrix},\\
+S_+=\begin{pmatrix}
+d+3\rho/2&1+3u/2-i/2&\varepsilon(1+i/2)&0\\
+1+3u/2+i/2&b+2v-2\rho&0&1+i\\
+\varepsilon(1-i/2)&0&1&0\\0&1-i&0&1
+\end{pmatrix},\\
+S_-=\begin{pmatrix}
+-d-\rho/2&1-3u/2+i/2&\varepsilon(1-i/2)&0\\
+1-3u/2-i/2&b-2v+2\rho&0&1-i\\
+\varepsilon(1+i/2)&0&1&0\\0&1+i&0&1
+\end{pmatrix}.
+\end{gathered}
+\tag{27A.15}
+$$
+
+用 $aU=-3/4-i/2$ 相乘，四个原作用列准确是
+
+$$
+\begin{aligned}
+R_+\xi&=\begin{pmatrix}
+d+(1-i/2)U-\rho/2-3\delta U/2\\
+1/(4\delta)-3/2-2b\delta U\\-\varepsilon/2\\-\delta U
+\end{pmatrix},&
+R_-\xi&=\begin{pmatrix}
+d+(1+i/2)U+\rho/2+3\delta U/2\\
+(1/4-i)/\delta+3/2+2b\delta U\\\varepsilon/2\\\delta U
+\end{pmatrix},\\
+S_+\xi&=\begin{pmatrix}
+d+3U/2+3\rho/2+\delta(1-i/2)U\\
+-i/\delta+1+i/2+(b-2\rho)\delta U\\
+\varepsilon(1-i/2)\\(1-i)\delta U
+\end{pmatrix},&
+S_-\xi&=\begin{pmatrix}
+-d-3U/2-\rho/2+\delta(1+i/2)U\\
+i/\delta+1-i/2+(b+2\rho)\delta U\\
+\varepsilon(1+i/2)\\(1+i)\delta U
+\end{pmatrix}.
+\end{aligned}
+\tag{27A.16}
+$$
+
+这些列同时保留第三、第四坐标。每笔原平方和原配对分别是
+
+$$
+\phi_\xi(R_\pm^2)=\sum_{j=1}^4|(R_\pm\xi)_j|^2,\quad
+\phi_\xi(S_\pm^2)=\sum_{j=1}^4|(S_\pm\xi)_j|^2,\quad
+\phi_\xi(R_\pm\circ S_\pm)
+=\operatorname{Re}\sum_{j=1}^4\overline{(R_\pm\xi)_j}(S_\pm\xi)_j.
+\tag{27A.17}
+$$
+
+左端也始终是同一次原乘法的
+
+$$
+\phi_\xi(L)=-2\operatorname{Re}((x\xi)^*(h-k)\xi)
+             -2\operatorname{Re}((t\xi)^*(r+g_1)\xi).
+\tag{27A.18}
+$$
+
+(27A.10)–(27A.12) 只是该左端的精确改写。没有将 (27A.15) 压到演员角后平方。
+
+### 27A.3 有限斜率的精确消去及连续延拓
+
+对实际有限 $\delta$，选择
+
+$$
+\lambda_{+,\delta}=\frac{(S_+\xi)_2}{(R_+\xi)_2},\qquad
+\lambda_{-,\delta}=\frac{(S_-\xi)_2}{(R_-\xi)_2}.
+\tag{27A.19}
+$$
+
+分子分母同乘 $\delta$，它们分别成为
+
+$$
+\begin{array}{c|cc}
+ &D_{\pm,\delta}:=\delta(R_\pm\xi)_2
+ &N_{\pm,\delta}:=\delta(S_\pm\xi)_2\\\hline
++&1/4-3\delta/2-2b\delta^2U
+ &-i+\delta(1+i/2)+(b-2\rho)\delta^2U\\
+-&1/4-i+3\delta/2+2b\delta^2U
+ &i+\delta(1-i/2)+(b+2\rho)\delta^2U
+\end{array}
+\tag{27A.20}
+$$
+
+故在充分小的正 $\delta$ 上分母非零，且
+
+$$
+\lambda_{+,\delta}\longrightarrow-4i=:\lambda_{+,0},\qquad
+\lambda_{-,\delta}\longrightarrow\frac{-16+4i}{17}=: \lambda_{-,0}.
+\tag{27A.21}
+$$
+
+两虚部有 (27A.12) 所需符号。关键是 $E_{\pm,\delta}$ 使用 (27A.19) 的实际有限比值，因而
+
+$$
+(E_{+,\delta})_2=(E_{-,\delta})_2=0
+\quad\text{对每个这样的实际 }\delta>0\text{ 精确成立。}
+\tag{27A.22}
+$$
+
+没有在有限 $\delta$ 上代入极限斜率再丢掉剩余常数。其他三坐标有普通有限极限。记
+
+$$
+\begin{aligned}
+z_+&=d+\frac52\tau+\frac32\rho+i(4d+19\tau-2\rho),\\
+z_-&=-d-\frac{61}{2}\tau-\frac12\rho+i(-4d-3\tau-2\rho).
+\end{aligned}
+$$
+
+直接从 (27A.16)、(27A.19) 得
+
+$$
+\begin{gathered}
+E_{+,0}=\bigl(z_+,0,\varepsilon(1-5i/2),0\bigr)^{\mathsf T},\\
+E_{-,0}=\bigl(z_-/17,0,\varepsilon(25/17+13i/34),0\bigr)^{\mathsf T},\\
+w_{+,0}=1/8,\qquad w_{-,0}=17/8.
+\end{gathered}
+\tag{27A.23}
+$$
+
+最后一项缺陷同样由原列计算。准确地，$s\xi=(\rho,-2\rho\delta U,0,0)^{\mathsf T}$、$t\xi=(\rho/2+\delta U,1+b\delta U,\varepsilon,\delta U)^{\mathsf T}$，故
+
+$$
+\phi_\xi(t\circ s)=\frac{\rho^2}{2}-3\rho\tau\delta-2\rho b\delta^2|U|^2,
+\qquad \phi_\xi(h)=\operatorname{Im}U=2\tau.
+$$
+
+结合 (27A.11)，得到精确有限等式
+
+$$
+2\phi_\xi(t\circ s+K_1(x,s))
+=\rho^2+12\rho\tau-6\rho\tau\delta-4\rho b\delta^2|U|^2.
+\tag{27A.24}
+$$
+
+### 27A.4 完整配方与一般开排除域
+
+将 (27A.23)–(27A.24) 代入 (27A.12) 的连续延拓，环境平方贡献为
+
+$$
+\frac18\left|\varepsilon(1-5i/2)\right|^2
++\frac{17}{8}\left|\varepsilon(25/17+13i/34)\right|^2
+=\frac{29}{32}\varepsilon^2+\frac{157}{32}\varepsilon^2
+=\frac{93}{16}\varepsilon^2.
+$$
+
+因此
+
+$$
+\begin{aligned}
+F_0:=\lim_{\delta\downarrow0}F_\delta
+&=\frac{|z_+|^2}{8}+\frac{|z_-|^2}{136}
+  +\rho^2+12\rho\tau+\frac{93}{16}\varepsilon^2\\
+&=\frac94d^2+\frac{81}{4}d\tau-\frac32d\rho
+ +\frac{845}{16}\tau^2+\frac{15}{4}\rho\tau
+ +\frac{29}{16}\rho^2+\frac{93}{16}\varepsilon^2\\
+&=\frac94\left(d+\frac92\tau-\frac{\rho}{3}\right)^2
+ +\frac{116\tau^2+168\rho\tau+25\rho^2}{16}
+ +\frac{93}{16}\varepsilon^2\\
+&=\frac94\left(d+\frac92\tau-\frac{\rho}{3}\right)^2
+ +\frac{29}{4}\left(\tau+\frac{21\rho}{29}\right)^2
+ +\frac{2697\varepsilon^2-1039\rho^2}{464}.
+\end{aligned}
+\tag{27A.25}
+$$
+
+(27A.4) 的 $\tau,d$ 使两个实平方精确为零。若 (27A.5) 成立，$F_0<0$。对每份固定有限的 $\rho\ne0,\varepsilon>0$，(27A.20) 在零点的两个分母分别为 $1/4$、$1/4-i$，(27A.21) 的虚部也非零。于是 (27A.22) 后的剩余坐标、权重及 (27A.24) 都连续延拓到零点。存在 $\delta_*>0$，使所有 $0<\delta<\delta_*$ 的分母和虚部符号合法且 $F_\delta<0$。由 (27A.13) 得实际严格违反。这是非一致的有限正 $\delta$ 存在证明；$\delta=0$ 和无限探针都不是实际见证。
+
+### 27A.5 统一有限误差的逐项界
+
+现在设 (27A.6)，记 $\varrho=|\rho|$，并先允许 $0<\delta\le10^{-3}$。参数有
+
+$$
+|U|\le4\varrho,\qquad |d|\le4\varrho,\qquad |\tau|\le\varrho,
+\qquad |b|\le2,\qquad\varepsilon\le\varrho/2.
+\tag{27A.26}
+$$
+
+例如 $|U|=21\sqrt{13}\,\varrho/29<4\varrho$，而 $|b|\le1+\varrho+2\varepsilon^2\le13/8<2$。由 (27A.20)，两分母距各自极限至多 $3\delta/2+8\delta^2<2\delta$；两分子距各自极限至多 $\sqrt5\delta/2+6\delta^2<2\delta$。因此
+
+$$
+|D_{+,\delta}|\ge1/4-2\delta>1/5,\qquad
+|D_{-,\delta}|\ge\sqrt{17}/4-2\delta>1/2.
+$$
+
+商差公式 $\lambda_\delta-\lambda_0=[N_\delta-N_0-\lambda_0(D_\delta-D_0)]/D_\delta$ 直接给
+
+$$
+|\lambda_{+,\delta}+4i|\le50\delta,\qquad
+\left|\lambda_{-,\delta}-\frac{-16+4i}{17}\right|\le8\delta.
+\tag{27A.27}
+$$
+
+这里用了 $|\lambda_{+,0}|=4$、$|\lambda_{-,0}|=4/\sqrt{17}<1$。因而
+
+$$
+\begin{gathered}
+\beta_{+,\delta}\ge3,\qquad\beta_{-,\delta}\ge1/5,
+\qquad w_{+,\delta}\le1/6,\qquad w_{-,\delta}\le5/2,\\
+|w_{+,\delta}-1/8|\le3\delta,\qquad
+|w_{-,\delta}-17/8|\le85\delta.
+\end{gathered}
+\tag{27A.28}
+$$
+
+具体地，第一权重差至多 $50\delta/(8\cdot3)<3\delta$，第二权重差至多 $8\delta/[2(1/5)(4/17)]=85\delta$；虚部下界分别由 $4-50\delta>3$、$4/17-8\delta>1/5$ 得到。
+
+仅为估计已经精确消去第二坐标的残差，给作用列加帽表示取其第 $1,3,4$ 坐标。零下标仅表示这些三坐标的有限极限。帽不是算子压缩，也不用于重算原平方；实际预算始终是 (27A.17)。从 (27A.16) 及 (27A.26) 有
+
+$$
+\begin{gathered}
+\|\widehat R_{\pm,0}\|\le12\varrho,\qquad
+\|\widehat S_{\pm,0}\|\le13\varrho,\\
+\|\widehat R_{\pm,\delta}-\widehat R_{\pm,0}\|\le10\delta\varrho,
+\qquad
+\|\widehat S_{\pm,\delta}-\widehat S_{\pm,0}\|\le12\delta\varrho,
+\qquad \|\widehat R_{\pm,\delta}\|\le13\varrho.
+\end{gathered}
+\tag{27A.29}
+$$
+
+这里范数都可由各坐标模之和控制：$R$ 的变化来自 $3\delta U/2$ 和 $\delta U$，给 $6\delta\varrho+4\delta\varrho$；$S$ 的变化来自 $(1\mp i/2)\delta U$ 和 $(1\mp i)\delta U$，每项均至多 $6\delta\varrho$。零点处 $R$ 第一坐标至多 $(4+6+1/2)\varrho$、第三坐标至多 $\varrho/4$；$S$ 第一坐标至多 $(4+6+3/2)\varrho$、第三坐标至多 $3\varrho/4$。这些分别给 (27A.29) 的 $12,13$ 两界。
+
+利用 (27A.22)，完整残差的范数等于其帽向量范数。由 (27A.23)、(27A.27)–(27A.29)，
+
+$$
+\begin{gathered}
+\|E_{+,0}\|\le61\varrho,\qquad
+\|E_{-,0}\|\le25\varrho,\\
+\|E_{+,\delta}-E_{+,0}\|
+ \le(12+4\cdot10+50\cdot13)\delta\varrho=702\delta\varrho,\\
+\|E_{-,\delta}-E_{-,0}\|
+ \le(12+10+8\cdot13)\delta\varrho=126\delta\varrho.
+\end{gathered}
+\tag{27A.30}
+$$
+
+前两界分别是 $13+4\cdot12=61$、$13+12=25$。后两界使用恒等式
+$\widehat E_\delta-\widehat E_0=(\widehat S_\delta-\widehat S_0)-\lambda_0(\widehat R_\delta-\widehat R_0)-(\lambda_\delta-\lambda_0)\widehat R_\delta$，不是把未消去的大第二坐标纳入一个错误的一致范数界。
+
+(27A.24) 的有限缺陷误差满足
+
+$$
+\begin{aligned}
+\left|2\phi_\xi(t\circ s+K_1(x,s))-(\rho^2+12\rho\tau)\right|
+&\le6\delta\varrho^2+128\delta^2\varrho^3\\
+&\le(6\delta+64\delta^2)\varrho^2
+\le9\delta\varrho^2.
+\end{aligned}
+\tag{27A.31}
+$$
+
+最后用 $|\|v+e\|^2-\|v\|^2|\le2\|v\|\|e\|+\|e\|^2$，把权重差乘零点范数平方，得
+
+$$
+\begin{aligned}
+\left|w_{+,\delta}\|E_{+,\delta}\|^2-\frac18\|E_{+,0}\|^2\right|
+&\le3\delta(61\varrho)^2
+ +\frac16\bigl(2\cdot61\cdot702\delta+702^2\delta^2\bigr)\varrho^2\\
+&=(25437\delta+82134\delta^2)\varrho^2,\\
+\left|w_{-,\delta}\|E_{-,\delta}\|^2-\frac{17}{8}\|E_{-,0}\|^2\right|
+&\le85\delta(25\varrho)^2
+ +\frac52\bigl(2\cdot25\cdot126\delta+126^2\delta^2\bigr)\varrho^2\\
+&=(68875\delta+39690\delta^2)\varrho^2.
+\end{aligned}
+\tag{27A.32}
+$$
+
+所以整个有限表达式满足
+
+$$
+|F_\delta-F_0|
+\le(94321\delta+121824\delta^2)\varrho^2
+\le200000\delta\varrho^2.
+\tag{27A.33}
+$$
+
+在 (27A.6) 中，(27A.25) 给 $F_0\le-1459\varrho^2/1856$。固定 $\delta=10^{-6}$，(27A.33) 于是给
+
+$$
+F_\delta\le\left(-\frac{1459}{1856}+\frac15\right)\varrho^2
+=-\frac{5439}{9280}\varrho^2<-\frac{\varrho^2}{2}.
+\tag{27A.34}
+$$
+
+结合 (27A.13)，得到 (27A.7)。统一域的全正 P2 不需重证：$\varepsilon\le1/4$，故
+
+$$
+|\rho|(2+\varepsilon^2)\le\frac{33}{32}<\sqrt2,
+\tag{27A.35}
+$$
+
+直接消费 (25.2) 即可。
+
+### 27A.6 两笔严格正预算、两取向及全部有限质量
+
+(27A.16) 的第三复坐标，在其自身的实二维平面内，分别给
+
+$$
+\begin{array}{c|cc}
+ &(R_\pm\xi)_3&(S_\pm\xi)_3\\\hline
++&-\varepsilon/2&\varepsilon(1-i/2)\\
+-&\varepsilon/2&\varepsilon(1+i/2)
+\end{array}
+$$
+
+两对投影的实面积均为 $\varepsilon^2/4$。实二维正交投影的面积不超过原实 Gram 面积，故对每个合法有限 $\delta$ 都有
+
+$$
+\sqrt{B_{\phi_\xi}(R_\pm,S_\pm)}\ge\varepsilon^2/4,
+\qquad B_{\phi_\xi}(R_\pm,S_\pm)\ge\varepsilon^4/16>0.
+\tag{27A.36}
+$$
+
+这是预算严格正性的用途，不是上界违反证书的替代。这一步也说明没有用共同零预算接触绕过定理 22.3。
+
+对 $\sigma=-1$，(27A.1) 的 $x,c,t,s$ 都是实矩阵，而 $K_{-1}$、$g_{-1}$、$h_{-1}$ 和 (27A.2) 的 $R,S,L$ 是 $\sigma=1$ 对应矩阵的逐项共轭。取 $\xi_{-1,\delta}=\overline{\xi_{1,\delta}}$，所有原自伴实读取、原平方预算及差额完全相等。实际比值 (27A.19) 也逐项共轭，第二坐标的精确消去保留。此处是显式矩阵恒等式；没有给未知总响应 $D$ 添加协变性，也没有把两个分别固定的取向合并成一个输出。
+
+密度 $\Theta=\xi\xi^*\ge0$ 本来就在完整原 $M_4$ 上，故一份这样的正泛函违反足以否定“对全部正泛函及全部实际探针”的 PB；无需把反例另提升为混合密度定理。对 (27A.8) 的质量 $\mu>0$，泛函乘以 $q_\mu=\mu/(1+\delta^2|U_\sigma|^2)>0$；两根和左端都乘 $q_\mu$，预算自身乘 $q_\mu^2$。于是严格违反、(27A.7) 的差额和 (27A.36) 的严格正性按所述比例保留。质量为零的正泛函只能是零，所有读取、预算和左端都是零，没有除以零质量。∎
+
+**推论 27A.3（越过二次尺度的明确同一实现）。** 在 (27A.1) 中取 $\varepsilon=1/8$、$\rho=1/4$。每个分别固定的 $\sigma$，取
+
+$$
+x=\begin{pmatrix}
+625/696&10^6\\
+10^6&29\cdot10^{12}/21
+\end{pmatrix}\oplus0_2,\qquad
+\xi_\sigma=\left(1,-\frac{21(3+2\sigma i)}{116\cdot10^6},0,0\right)^{\mathsf T}.
+\tag{27A.37}
+$$
+
+则该完整 $M_4$ 输入的全正 P2 成立，两笔原 PB 预算严格正，且 $\mathcal G_\sigma(x,\phi_{\xi_\sigma})>1/32$。
+
+证明。它是 (27A.6) 中的 (27A.4)，直接应用定理 27A.2。定理 24.1–25.1 在该 $\rho$ 上所付的小边条件为 $\varepsilon\le\rho^2/16=1/256$；现在 $\varepsilon=1/8>1/256$。更一般地，在 $0<|\rho|\le1/2$ 上，旧条件 $\varepsilon\le\rho^2/16$ 包含在 (27A.6) 内，而 (27A.6) 允许 $\varepsilon$ 与 $|\rho|$ 成正比。(27A.5) 还给出斜率 $\varepsilon/|\rho|<\sqrt{1039/2697}$ 的一般开域；不主张这些常数最优。∎
+
+### 27A.7 准确剩余域、成熟归属与完整来源边界
+
+对本节族写
+
+$$
+\begin{gathered}
+\mathcal P=\{(\varepsilon,\rho):\varepsilon>0,\ |\rho|\le\sqrt2/(2+\varepsilon^2)\},\\
+\mathcal D_{27A}=\{(\varepsilon,\rho):\varepsilon>0,\ \rho\ne0,
+\ 2697\varepsilon^2<1039\rho^2\}.
+\end{gathered}
+\tag{27A.38}
+$$
+
+全正 P2 区间是已付的 $\mathcal P$；新增的全 PB 排除域是 $\mathcal P\cap\mathcal D_{27A}$。$\rho=0$ 的充分性沿 §1 保留。本节证书在 $\mathcal P$ 内未处理的非零参数准确为
+
+$$
+\varepsilon>0,\qquad
+0<|\rho|\le\frac{\sqrt2}{2+\varepsilon^2},\qquad
+2697\varepsilon^2\ge1039\rho^2.
+\tag{27A.39}
+$$
+
+等号处本证书的 $F_0=0$，没有严格违反结论；它也没有全 PB 充分性结论。其他既有排除定理在其自身准确域中继续有效，不由 (27A.39) 重开。若 $\iota_\sigma$ 表示把参数映到 (27A.1) 同一取向输入的嵌入，则 §26 的整个有限类剩余集准确缩为
+
+$$
+\mathfrak R_{\sigma,27A}
+=\mathfrak R_\sigma\setminus\iota_\sigma(\mathcal P\cap\mathcal D_{27A}).
+\tag{27A.40}
+$$
+
+本节族中实际仍需判定的输入是
+$\mathfrak R_\sigma\cap\iota_\sigma(\mathcal P\setminus(\mathcal D_{27A}\cup\{\rho=0\}))$。
+这同时保留 §26 中其余平衡零模秩一、总耦合满行秩以及 Schur 平衡秩零输入的未决义务。没有得到整个 (25.2) 区间的“全 PB 当且仅当 $\rho=0$”，也没有给出任何非零残量成员对全部实际探针和全部正泛函的 PB 证书。若要后者，仍须在同一实现上覆盖任意原向量及全部原正密度；一份违反泛函不能承担该充分性量词。
+
+成熟归属沿用 §1 的未中心化正 Gram／Schwarz、§22 的原预算解释，以及 (17.14)–(17.15) 所引[运输卷 (9.28)–(9.30)](https://github.com/the-omega-institute/trureturing/blob/caf0f3b3064a987b753b67aaa3836d6d86e73f75/docs/develop/theory/AURIC_INTERVAL_ORIGINAL_RESPONSE_AND_VARIABLE_PROJECTION_TRANSPORT.md)。实面积、Young 上界、二阶 Gram、正密度谱分解、有限矩阵共轭和连续性都只是成熟工具，不单独计为新增定理。本节的 $\texttt{repo-derived}$ 贡献是 (27A.4) 的实际大探针与复读取、(27A.16) 的完整环境列、有限斜率的精确消去、(27A.25) 的负差额配方及 (27A.33) 的统一有限误差，由此取得超出 (24.1)–(25.1) 的实际排除域。不以检索未命中推断历史原创性，也不以中心化方差替换原未中心化预算。
+
+全部结论仅在原固定输出数学接口中成立。§6 的 (6.1)–(6.2)、定义 47.1 的同一递归全文、§§15、18、21、26 的来源身份及所有原量词完整保留：同一 $\Omega$ 的全部准备、事件、过程、参考／副本、真正相关联合、零／不等／次归一质量、钟与单位、控制、ready／flags、全记录、失败、停止、销毁和所有合法未来均不改变。原固定支持、全菜单和所有已量化中间切口义务不变。这里没有由向量生成实际准备，没有由矩阵综合生成原分析器或接受关联，也没有以旧 Born、CP、QC、密度／历史身份、操作逆或免费相干控制和复制补来源前件。
+
+七项原消费者——复 Hilbert 与实际叠加，Born／效果／全菜单，相关联合／张量，typed CP／Kraus／整台递归参考，完整仪器／更新，历史／真遗忘／Return，动力／物理钟／Hamiltonian／共同正作用量——仍只在 §6 的全部同源前件下消费。特别 CountRead 仍要求同一完整活动输出、实际读后活动 ready、第一合法消费者，以及读后同一完整活动输入对全部合法未来的真实 Return。已有固定来源、下降、参考、递归支持及原 $D$ 恢复结论继续按各自原范围保留；本节不将它们重列为缺失，也不从这个四维结果升级为任意有限环境、未知总 $D$、完整 $\mathsf H$ 或原完整量子起源结论。一般 $E_+^D=E_-^D$、$N_\omega(\varepsilon)^2\to0$ 及其未付原来源桥梁仍保持原未决范围。
+
+### 27A.8 中文直观说明
+
+两笔预算是两对实际作用向量张成的实面积。这个探针让它们和 PB 左端都有很大的共同主项；证明关心的是这些大数之间的有限差额。第二坐标最大，所以必须用同一实际列的有限比值把残差的第二坐标精确消掉。若只用极限比值，留下的常数项会改变差额，不能省略。
+
+消去以后，两个环境坐标仍然留在计算里。第三坐标一方面保证两笔预算都严格为正，另一方面在面积上界的差额里贡献明确的 $93\varepsilon^2/16$。所选复读取使残量贡献出现负的 $\rho^2$ 项；完成两个实平方后，竞争正好成为 $(2697\varepsilon^2-1039\rho^2)/464$。所以新的允许环境边与 $|\rho|$ 同尺度，比旧的 $\rho^2$ 小边条件更宽。
+
+负极限本身还不是原问题中的有限矩阵见证。一般域靠连续性取得一个实际正 $\delta$；统一子域则逐项支付有限误差，明确固定 $\delta=10^{-6}$。最终用的是同一个有限 $x$、同一个向量及其同一个正泛函，完整读取两个面积与左端。找到一份这样的违反就足以推翻“每个探针、每个正泛函都成立”；要证明某个非零成员全部成立，则仍须完成那个全称量词，不能反过来使用这份反例构造。
+
+## 新增锚（本行以下为后续增补区）
+
+## 28. 原输入的齐次核与环境零模像上的值域障碍
+
+### 28.1 实际零模像与残量列的核配对
+
+**定理 28.1（原输入齐次核的零模定位与精确配对）。** 沿用定义 17.1、27.1 及定理 27.4 的同一有限输入和系数。$B,V,D_{\rm env}$ 任意，$m\ge0$ 任意有限，每个 $\sigma$ 分别解释，不假设 P2。记
+
+$$
+N=\ker D_{\rm env},\qquad W=V|_N,\qquad
+N_1=N\ominus\ker W,\qquad \mathcal W=\operatorname{ran}W,
+\qquad J=(W|_{N_1})^{-1}:\mathcal W\longrightarrow N_1.
+\tag{28.1}
+$$
+
+$J$ 正是定义 17.1 的逆；零空间之间仍取零映射。固定任意一个 (27.6) 的有限索引 $\theta$，定义
+
+$$
+\zeta_\delta=\beta_\delta-i\epsilon\sigma\delta\alpha_\delta,
+\qquad \delta\in\{1,-1\}.
+\tag{28.2}
+$$
+
+令 $\mathcal K_{\sigma,\theta}(\mathcal W)$ 为所有满足下面两个复向量等式的 $(X,w)\in M_2(\mathbb C)_{\rm sa}\times\mathcal W$ 所组成的实向量空间：
+
+$$
+\boxed{\quad
+w+\delta\left(J_C(X)u+\frac{\sigma i}{2}Cw\right)
+=\zeta_\delta\left(Xu+\delta\left(H_\sigma(X)u-\frac12Cw\right)\right)
+\quad(\delta=1,-1).
+\quad}
+\tag{28.3}
+$$
+
+则原实坐标中的齐次核准确为
+
+$$
+\ker A
+=\{(a,v):\ \exists w\in\mathcal W:\quad
+     (X(a),w)\in\mathcal K_{\sigma,\theta}(\mathcal W),\ Y(v)=Jw\}.
+\tag{28.4}
+$$
+
+特别地，每个核方向的实际环境列都满足 $Y(v)\in N_1$；环境的非零谱读取方向不产生核方向。在这个核上，定理 27.4 的原残量列满足准确配对公式
+
+$$
+\boxed{\quad
+(a,v)^{\mathsf T}b_1
+=2\epsilon\operatorname{Re}\left((w-i\sigma Xu)^*T_Au\right),
+\qquad T_A=\operatorname{diag}(1,-2).
+\quad}
+\tag{28.5}
+$$
+
+因此，对这份同一输入和这个索引，
+
+$$
+b_1\in\operatorname{ran}A
+\quad\Longleftrightarrow\quad
+\operatorname{Re}\left((w-i\sigma Xu)^*T_Au\right)=0
+\quad\text{对每个 }(X,w)\in\mathcal K_{\sigma,\theta}(\mathcal W).
+\tag{28.6}
+$$
+
+这刻画所有零模耦合秩 $0,1,2$ 的核与配对。它只把齐次值域问题定位到原 $\mathcal W$，不把原算子乘法改成截面上的压缩乘法。
+
+证明。以下只在本定理的推导内消费成熟的复 Gram 配方。原复内积记为 $\langle f,g\rangle_{\mathbb C}=f^*g$，其实部仍是定义 27.1 的实内积。§1 已有的标准零残量换位恒等式及 (27.10) 给
+
+$$
+\ell_0(z)=-\sigma\sum_{\delta=\pm1}\delta\,
+  \operatorname{Im}\langle\mathcal R_\delta z,
+                       \mathcal S_{\delta,0}z\rangle_{\mathbb C}.
+\tag{28.7}
+$$
+
+先在 $\tau=1$ 上直接引用该原恒等式；两边都是 $z$ 的齐次实二次型，再按 (27.14) 即得全部 $z$ 上的等式。没有在 $\mathcal H_0$ 上相乘原算子的压缩。将 (28.7) 代入 (27.7)，逐项配方得到
+
+$$
+z^{\mathsf T}\mathscr Q_{\sigma,0}(\theta)z
+=\sum_{\delta=\pm1}\alpha_\delta^{-1}
+ \|\mathcal S_{\delta,0}z-\zeta_\delta\mathcal R_\delta z\|^2.
+\tag{28.8}
+$$
+
+这里交叉项准确为
+$2\epsilon\sigma\delta\operatorname{Im}\langle\mathcal R_\delta z,
+\mathcal S_{\delta,0}z\rangle_{\mathbb C}$。这是 §1 的复 Gram 与 §27 配方在原作用像上的中间恒等式，不另立通用定理。
+
+对 $k=(a,v)$，置 $z=(k,0)$、$X=X(a)$、$y=Y(v)$、$w=Vy$。原映射 (27.4)–(27.5) 在此处给
+
+$$
+\begin{aligned}
+\mathcal R_\delta(k,0)
+ &=\left(Xu+\delta(H_\sigma(X)u-Cw/2),\ 0\right),\\
+\mathcal S_{\delta,0}(k,0)
+ &=\left(w+\delta(J_C(X)u+\sigma iCw/2),\ D_{\rm env}y\right).
+\end{aligned}
+\tag{28.9}
+$$
+
+实对称 $A\succeq0$ 已由 (27.24) 给出；故 $k\in\ker A$ 当且仅当 $k^{\mathsf T}Ak=0$。在 (28.8) 的正系数平方和中，这又当且仅当每个差向量都为零。因 (28.9) 的每个 $\mathcal R_\delta(k,0)$ 的环境分量为零，首先必有 $D_{\rm env}y=0$。由 (17.2) 的原正交直和，
+
+$$
+\mathcal E_0\cap N=N_1.
+\tag{28.10}
+$$
+
+于是 $y\in N_1$，$w=Wy\in\mathcal W$，且 $y=Jw$。其余演员分量恰好是 (28.3)。反之，(28.3) 和 $y=Jw$ 使 (28.9) 的两个完整差向量都为零，故给出核方向。这证明 (28.4)，包括空环境和任意奇异 $D_{\rm env}$。$(X,w)\mapsto(a,v)$ 是实线性双射，因为 $X(a)$ 与 $Y(v)$ 都是各自给定空间的坐标同构。
+
+现在在同一个核方向上计算残量列。沿用 (27.28) 中的 $\mathcal M_\delta=\mathcal S_{\delta,0}-\beta_\delta\mathcal R_\delta$ 及 $w_u=(T_Au,0)$。核等式给
+
+$$
+\mathcal M_\delta(k,0)
+=-i\epsilon\sigma\delta\alpha_\delta\mathcal R_\delta(k,0),
+\qquad \mathcal T(k,0)=(w,0).
+$$
+
+因 $b_1$ 是 (27.28) 中 $h$ 的前 $n-1$ 个实坐标，原实伴随的定义给
+
+$$
+\begin{aligned}
+k^{\mathsf T}b_1
+ &=\sum_{\delta=\pm1}\delta\alpha_\delta^{-1}
+     \langle\mathcal M_\delta(k,0),w_u\rangle_{\mathbb R}
+      +2\epsilon\langle\mathcal T(k,0),w_u\rangle_{\mathbb R}\\
+ &=\langle-2i\epsilon\sigma(Xu,0),w_u\rangle_{\mathbb R}
+      +2\epsilon\langle(w,0),w_u\rangle_{\mathbb R}\\
+ &=2\epsilon\operatorname{Re}((w-i\sigma Xu)^*T_Au),
+\end{aligned}
+\tag{28.11}
+$$
+
+其中使用 $\mathcal R_+(k,0)+\mathcal R_-(k,0)=2(Xu,0)$。这证明 (28.5)。最后只用实对称矩阵的成熟关系 $\operatorname{ran}A=(\ker A)^\perp$，便得到 (28.6)。所以 $B$、环境非零谱和 $J$ 所携带的环境范数虽仍参与原系数及预算，值域是否成立却完全由 (28.3)、(28.6) 的原零模像和该索引决定。∎
+
+### 28.2 零模耦合为零的整个分支
+
+**定理 28.2（$W=0$ 的完整齐次核与自动值域）。** 对定理 28.1 的全部输入和全部有限索引，只假设
+
+$$
+V|_{\ker D_{\rm env}}=0.
+\tag{28.12}
+$$
+
+不要求 $D_{\rm env}$ 可逆，不要求 P2，也不限制 $B$ 或 $V$ 的总秩。则
+
+$$
+\boxed{\quad
+\ker A=\{(a,v):\ Y(v)=0,\ X(a)u=0,\ X(a)Cu=0\},
+\qquad b_1\in\operatorname{ran}A.
+\quad}
+\tag{28.13}
+$$
+
+若 $u_1u_2\ne0$，则 $A$ 在全部 $\mathbb R^{4+2d}$ 上正定。若 $u=e^{i\varphi}e_j$，其中 $j\in\{1,2\}$、$\varphi\in\mathbb R$，则核恰好是一条实直线：
+
+$$
+\ker A=\{(a,0):\ X(a)=r e_{kk},\ r\in\mathbb R\},
+\qquad \{j,k\}=\{1,2\}.
+\tag{28.14}
+$$
+
+这条直线是读取方向 $u$ 所看不见的相反对角探针方向；此时 $\operatorname{rank}A=3+2d$。这些结论对每个 $\epsilon$、每组有限 $\alpha_\pm>0,\beta_\pm\in\mathbb R$ 和每个分别固定的 $\sigma$ 成立。
+
+证明。由 $W=0$ 有 $N_1=\mathcal W=0$。定理 28.1 已强制每个核方向的 $y=0$、$w=0$，所以只须分析 (28.3) 中的
+
+$$
+\delta J_C(X)u=\zeta_\delta(X+\delta H_\sigma(X))u
+\qquad(\delta=1,-1).
+\tag{28.15}
+$$
+
+$X,H_\sigma(X),J_C(X)$ 都 Hermitian。用同一个单位 $u$ 左乘 (28.15)，两边除 $\zeta_\delta$ 外的标量均为实数，而 $\operatorname{Im}\zeta_\delta=-\epsilon\sigma\delta\alpha_\delta\ne0$。因此
+
+$$
+u^*(X+\delta H_\sigma(X))u=0,\qquad u^*J_C(X)u=0.
+$$
+
+对两个 $\delta$ 合并，得到 $u^*Xu=u^*H_\sigma(X)u=u^*J_C(X)u=0$。置 $p=Xu$、$q=XCu$。成熟的换位／Jordan 恒等式 $J_C(X)+\sigma iH_\sigma(X)=XC$ 于是给
+
+$$
+p^*u=0,\qquad p^*Cu=u^*XCu=0.
+\tag{28.16}
+$$
+
+若 $u_1u_2\ne0$，$u,Cu$ 线性无关，(28.16) 强制 $p=0$。此时
+
+$$
+(X+\delta H_\sigma(X))u=-\frac{\delta\sigma i}{2}q,
+\qquad \delta J_C(X)u=\frac\delta2q.
+\tag{28.17}
+$$
+
+若 $q\ne0$，(28.15) 就要求 $\zeta_\delta=\sigma i$。但对 $\delta=\epsilon$，$\operatorname{Im}\zeta_\epsilon=-\sigma\alpha_\epsilon$ 与 $\sigma i$ 的虚部符号相反，矛盾。故 $q=0$。$X$ 同时消去基 $u,Cu$，即 $X=0$，所以此时核为零，半正定 $A$ 正定。
+
+若 $u=e^{i\varphi}e_j$，记 $c_1=1,c_2=2$，并令 $k\ne j$。$u^*Xu=0$ 给 $X_{jj}=0$，故 $p=Xu$ 属于 $\mathbb C e_k$，且 $q=c_jp$。若 $p\ne0$，(28.15) 的两个向量比例强制
+
+$$
+\zeta_\delta
+=\frac{\delta(c_j+c_k)/2}{1+\delta\sigma i(c_k-c_j)/2},
+\qquad
+\operatorname{Im}\zeta_\delta
+=-\frac{\sigma(c_j+c_k)(c_k-c_j)}{4+(c_k-c_j)^2}.
+\tag{28.18}
+$$
+
+右侧虚部对两个 $\delta$ 相同且非零；(28.2) 的两个虚部却严格异号。这同时排除两个轴上的 $p\ne0$，所以 $p=q=0$。Hermitian 性随即给 $X=r e_{kk}$、$r\in\mathbb R$。反过来，这些 $X$ 以及非轴情形的 $X=0$ 都满足 $Xu=XCu=0$，使 (28.15) 两边为零。因此 (28.13) 的核等式及 (28.14) 均为充要描述；维数给所述秩。
+
+最后对每个核方向，(28.5) 中的 $w$ 和 $Xu$ 都为零，故核配对恒为零，由 (28.6) 得 $b_1\in\operatorname{ran}A$。这里没有使用 $B$、非零环境谱或 P2；$m=0$、$D_{\rm env}=0$ 且 $V=0$、以及有任意奇异环境但满足 (28.12) 的情况都已包含。∎
+
+### 28.3 平衡秩一的准确像线归约
+
+**定理 28.3（平衡零模像线的齐次值域归约）。** 在定理 28.1 的输入中，设 $\operatorname{rank}W=1$ 且 $\mathcal W$ 平衡，即对其任一非零生成元 $a=(a_1,a_2)^{\mathsf T}$ 有
+
+$$
+|a_2|^2=2|a_1|^2.
+\tag{28.19}
+$$
+
+这正是定理 13.1 中归一化像 $C^{-1/2}\mathcal W$ 的平衡条件。齐次值域问题的全部输入依赖首先准确降为原像线 $\mathcal W$：不同已知环境数据只要具有同一 $\mathcal W$，其 (28.6) 对同一个 $\sigma,\theta$ 有同一真值，不要求这些环境等距或维数相同。
+
+进一步可选一个与 $C,T_A$ 交换的对角酉矩阵 $U$，使
+
+$$
+U\mathcal W=\mathcal W_*:=\operatorname{span}_{\mathbb C}\ell,
+\qquad \ell=(1,\sqrt2)^{\mathsf T}.
+\tag{28.20}
+$$
+
+记 $\theta'=(Uu,\epsilon,\alpha_+,\alpha_-,\beta_+,\beta_-)$。映射
+
+$$
+(X,w)\longmapsto(UXU^*,Uw)
+\tag{28.21}
+$$
+
+是 $\mathcal K_{\sigma,\theta}(\mathcal W)$ 到 $\mathcal K_{\sigma,\theta'}(\mathcal W_*)$ 的实线性双射，并保持 (28.5) 的配对值。因而原输入是否对全部索引满足值域条件，准确等价于如下单一像线上的全称关系：对每个单位 $u$、每个 $\epsilon$ 和全部有限 $\alpha_\pm>0,\beta_\pm\in\mathbb R$，凡 $X=X^*$、$\lambda\in\mathbb C$ 满足
+
+$$
+\begin{gathered}
+\lambda\ell+\delta\left(J_C(X)u+\frac{\sigma i\lambda}{2}C\ell\right)
+=\zeta_\delta\left(Xu+\delta\left(H_\sigma(X)u-\frac\lambda2C\ell\right)\right)
+\quad(\delta=1,-1),\\
+\text{就有}\qquad
+\operatorname{Re}\left((\lambda\ell-i\sigma Xu)^*T_Au\right)=0.
+\end{gathered}
+\tag{28.22}
+$$
+
+其中 $u$ 遍取全部单位向量，所以 (28.22) 中已重新以 $u$ 表示 $Uu$。这里只归约齐次值域命题，不运输 (27.25) 的 $q_i$、原 PB 预算、环境度量或固定输入 $t$。
+
+证明。对相同 $\mathcal W$，(28.3) 与 (28.5) 完全不含 $B$ 或环境谱、度量；(28.4) 分别用每份原数据自己的 $J$ 和 $Y$ 将同一 $(X,w)$ 双射到实际核。这些双射一般不是等距映射，但配对值由 (28.5) 保持，所以核上的线性泛函是否为零相同。再由 (28.6) 即得同一像线上的断言；没有据此识别两份 $A$ 的谱或伪逆。
+
+由 (28.19)，$a_1,a_2$ 都非零。取
+$U=\operatorname{diag}(\overline{a_1}/|a_1|,\overline{a_2}/|a_2|)$，则 $Ua=|a_1|\ell$，给 (28.20)。因 $U$ 与 $C$ 交换，
+
+$$
+H_\sigma(UXU^*)=UH_\sigma(X)U^*,\qquad
+J_C(UXU^*)=UJ_C(X)U^*.
+$$
+
+将 (28.3) 的两个等式同时左乘 $U$，即得 (28.21)；用 $U^*$ 得其逆。$U$ 还与 $T_A$ 交换，故
+
+$$
+\operatorname{Re}\left((Uw-i\sigma UXU^*Uu)^*T_AUu\right)
+=\operatorname{Re}\left((w-i\sigma Xu)^*T_Au\right).
+\tag{28.23}
+$$
+
+这证明配对保持。$u\mapsto Uu$ 在单位球面上双射，而 $\epsilon,\alpha_\pm,\beta_\pm$ 不变，故所有有限索引上的值域条件等价。最后在 $\mathcal W_*$ 中写 $w=\lambda\ell$，(28.3)、(28.6) 正好成为 (28.22)。同一原环境中的实际核仍由 $y=Jw$ 回收；这一步没有将该原环境换成一个一维环境，也没有在原 PB 中替换来源。∎
+
+### 28.4 全称标量条件与适用边界
+
+**约定 28.4（剩余判据与来源）。** 在 $W=0$ 的整个分支，对 $s=\rho T_A\oplus0_m$、$\rho\in\mathbb R$，定理 28.2 只消去了 (27.26) 的值域障碍。因此直接消费定理 27.4，全部原 PB 准确等价于
+
+$$
+q_0(\theta)+\rho q_1(\theta)+\rho^2q_2(\theta)\ge0
+\qquad\text{对每个原有限索引 }\theta.
+\tag{28.24}
+$$
+
+各系数仍从同一固定 $B,V,D_{\rm env},\sigma$ 的 (27.23)–(27.25) 计算。非轴方向的 $A$ 虽可逆，两个轴方向仍须用原谱伪逆。$\kappa>0$ 不给 $q_2$ 的符号；$b_1$ 在值域内也不支付 (28.24)。所以值域失败在此分支不能排除任何非零 $\rho$。已有定理 25.1 在 $W=0$ 内同时给全正 P2 与原 PB 的严格违反，故自动值域不能成为全部 PB 的充分性证书，也没有因本节新增排除某份元组。
+
+平衡秩一中，(28.22) 的全称关系仍未判定；其否定准确是存在满足其两个等式而配对非零的有限 $u,\epsilon,\alpha_\pm,\beta_\pm,X,\lambda$。定理 28.3 只证明这道齐次问题在所有平衡像线之间相同；即使其全称关系成立，原 (27.26) 的标量条件仍须另外逐输入、逐索引支付。ENV8.1、13.1 的 P2 区间、ENV17.2 的同时读取与全正泛函提升、ENV18.1 的压缩乘法障碍、§§19–25 及原星形与双角卷的已付排除域均直接复用，保留各自前件与量词。
+
+本节新增的 $\texttt{repo-derived}$ 原输入结构是 (28.4)–(28.6) 的零模定位与配对、(28.13)–(28.14) 的整个 $W=0$ 分支核及自动值域，以及 (28.22) 的平衡像线归约。复 Gram 配方只作为定理 28.1 证明内的成熟中间步骤，沿 §1 与 §27.6 的既有来源；换位／Jordan 恒等式、Hermitian 二次型、有限维核／像正交与对角酉换基也是成熟工具。广义 Schur 与伪逆判据直接沿用 (27.9)、(27.15)、(27.26) 及 §27.6 所引 Higham、Penrose 来源，不另作通用定理或历史优先权主张。
+
+全部结论保持 (1.1)–(1.2) 和原 41.1 的实际标签，未改变两个预算的共同泛函、任意有限质量或环境分量。全正泛函的原等价仍由定理 17.2、27.2 承担；本节只分析其实际系数，没有另加未知总响应的正则性、可加性、齐次性、协变性、单位平移中性、压缩、商或自然性前件。$\mathfrak A_\sigma$ 是否为空、剩余域 $\mathfrak R_\sigma$ 的全分类、一般混合输入、$\mathcal E_+^D=\mathcal E_-^D$、$N_\omega(\varepsilon)^2\to0$、完整 $\mathsf H$／总 $D$ 及 §§6、15、18、21 的递归钉版实际物理来源义务，均未由此解决。
+
+## 新增锚（本行以下为后续增补区）
