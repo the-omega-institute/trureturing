@@ -64,7 +64,7 @@ internal sealed class UHFOneSidedProjectionMatchingDocument : IScribeDocumentDef
         Formula lj = App(X("l"), X("j"));
         Formula wi = App(X("w"), X("i"));
         Formula orth = InSet("i", InSet("j", Imp(Ne(X("i"), X("j")), Equal(Multiply(li, lj), D(0)))));
-        Formula sum = F.Seq(new Formula.Subscript(F.Sum, F.Seq(X("i"), F.InMacro, X("s"))), Par(li));
+        Formula sum = F.Seq(new Formula.Subscript(F.Sum, F.Seq(X("i"), F.InMacro, F.Sp, X("s"))), Par(li));
         Formula law = Conjunct(Call("Nonempty", X("s")),
             InSet("i", And(Proj(li), Ne(li, D(0)))), orth, Equal(sum, X("r")),
             Proj(X("m")), Ne(X("m"), D(0)),
