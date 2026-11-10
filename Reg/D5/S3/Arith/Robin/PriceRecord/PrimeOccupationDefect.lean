@@ -1,5 +1,8 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.Robin.PriceRecord.PrimeOccupationDefect
 import Reg.Support.DependentFamily
+
+/-! The whole source family varies only its exact profile observation. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -47,10 +50,14 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   obtain ⟨Z, hZ, hh⟩ := h 0 (by norm_num) (1 / 2) (by norm_num)
   have hb := hh Z le_rfl ∅ ∅ (by simp) (by simp) (by simp)
-  norm_num [rejected, realize] at hb
+  change (1 : ℝ) ≤ _ at hb
+  simp only [Finset.sum_empty, add_zero, mul_zero] at hb
+  norm_num at hb
 
 private theorem profile_zero : profile 0 = 0 := by
-  norm_num [profile, show (32 : ℝ) = 16 * 2 by norm_num, Real.sqrt_mul]
+  norm_num [profile]
+  rw [show (32 : ℝ) = 16 * 2 by norm_num, Real.sqrt_mul (by norm_num : (0 : ℝ) ≤ 16)]
+  norm_num
 
 private theorem profile_four_pos : 0 < profile 4 := by
   let s := Real.sqrt (1 + (4 : ℝ) ^ 2)
