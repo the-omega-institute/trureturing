@@ -61,11 +61,13 @@ def family : Registration arena (type_of% result) where
       exact nomatch i
   dependence := by
     intro i
-    refine ⟨(fun n _ => n), 0, 1, ?_⟩
+    obtain ⟨A, hA⟩ := result.1
+    refine ⟨A, 0, 1, ?_⟩
     intro he
     have h := congrFun he 0
-    change (0 : ℕ) = 1 at h
-    exact zero_ne_one h
+    change A 0 0 = A 1 0 at h
+    rw [hA.1, hA.2.1 1 (by decide)] at h
+    exact one_ne_zero h
 
 def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     result (Realization signature) Unit Unit where
