@@ -172,7 +172,21 @@ $$\forall (k: \operatorname{Fin}\left(4\right)), (\operatorname{D5}.\operatornam
 
 The first colour is fixed to zero and both initial scanner flags are false.
 
-**Theorem 1.13 (Single-row certificate).**
+**Theorem 1.13 (Summing over label rows).**
+
+$$\forall (g: (\operatorname{Fin}\left(4\right) \to \operatorname{Fin}\left(3\right)) \to \operatorname{Int}), (\sum_{q: \operatorname{Fin}\left(4\right) \to \operatorname{Fin}\left(3\right)} (g\left(q\right)) = \sum_{a: \operatorname{Fin}\left(3\right)} (\sum_{b: \operatorname{Fin}\left(3\right)} (\sum_{c: \operatorname{Fin}\left(3\right)} (\sum_{d: \operatorname{Fin}\left(3\right)} (g\left((![a, b, c, d])\right))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233125SquareStrip.label_sum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; R. J. Mathar; OEIS Foundation Inc. (2013). *OEIS A233125: six-colour complementary-pair exclusion on a four-column square strip*. URL: <https://oeis.org/A233125>.
+
+*Commentary.*
+
+The sum over all four-column label rows equals four nested sums over the three labels, for every integer-valued function.
+
+**Theorem 1.14 (Single-row certificate).**
 
 $$(\forall (s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{Seen}), (\forall (p: \operatorname{Fin}\left(4\right) \to \operatorname{Fin}\left(3\right)), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233125SquareStrip}.\operatorname{Valid}\left(s, p\right)) \implies (\forall (k: \operatorname{Fin}\left(4\right)), (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233125SquareStrip}.\operatorname{classCount}\left(s, p, k\right) = \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233125SquareStrip}.\operatorname{transfer}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233125SquareStrip}.\operatorname{boundaryClass}\left(s, p\right), k\right)))))) \land (\forall (k: \operatorname{Fin}\left(4\right)), (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233125SquareStrip}.\operatorname{firstCount}\left(k\right) = ![4, 0, 4, 2]\left(k\right)))$$
 
@@ -186,7 +200,7 @@ $$(\forall (s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.
 
 Exact scanner fibres reduce the transition counts to 3^4 label rows. The single-row certificate supplies the numerical premises of the all-height induction.
 
-**Theorem 1.14 (The power-series identity).**
+**Theorem 1.15 (The power-series identity).**
 
 $$(((1) - ((16) \cdot ((\operatorname{PowerSeries}.\operatorname{X}: \operatorname{PowerSeries}\left(\operatorname{Int}\right))))) \cdot ((((1) - ((144) \cdot ((\operatorname{PowerSeries}.\operatorname{X}: \operatorname{PowerSeries}\left(\operatorname{Int}\right))))) + ((3840) \cdot (((\operatorname{PowerSeries}.\operatorname{X}: \operatorname{PowerSeries}\left(\operatorname{Int}\right)))^{2}))) - ((24576) \cdot (((\operatorname{PowerSeries}.\operatorname{X}: \operatorname{PowerSeries}\left(\operatorname{Int}\right)))^{3})))) \cdot (\operatorname{PowerSeries}.\operatorname{mk}\left(((n: \operatorname{Nat}) \mapsto ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233125SquareStrip}.\operatorname{a}\left(n\right): \operatorname{Int})))\right)) = ((\operatorname{PowerSeries}.\operatorname{X}: \operatorname{PowerSeries}\left(\operatorname{Int}\right))) \cdot ((((10) - ((704) \cdot ((\operatorname{PowerSeries}.\operatorname{X}: \operatorname{PowerSeries}\left(\operatorname{Int}\right))))) + ((14336) \cdot (((\operatorname{PowerSeries}.\operatorname{X}: \operatorname{PowerSeries}\left(\operatorname{Int}\right)))^{2}))) - ((81920) \cdot (((\operatorname{PowerSeries}.\operatorname{X}: \operatorname{PowerSeries}\left(\operatorname{Int}\right)))^{3})))$$
 
@@ -216,6 +230,7 @@ The complementary-pair labels are the fibres {0,5}, {1,4}, {2,3} of BooleanRankT
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233125SquareStrip.decidableRowLegal`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233125SquareStrip.finite_certificate`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233125SquareStrip.firstCount`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233125SquareStrip.label_sum`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233125SquareStrip.labels`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233125SquareStrip.result`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233125SquareStrip.rowLegal`
