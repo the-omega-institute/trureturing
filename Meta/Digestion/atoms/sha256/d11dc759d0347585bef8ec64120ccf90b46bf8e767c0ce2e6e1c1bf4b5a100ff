@@ -1,0 +1,107 @@
+**命题 22.1（四块实际乘积运输）。**取 W 定理 44.2 的同一个总模型 $(N,\star,e,V,d)$、保乘法和单位的自同构 $A$，其中 $AV=VA$、$d(As,At)=d(s,t)$。对 $m\in\mathbb Z$ 置
+
+$$
+F_m(s,t)=d(A^ms,t),\qquad T=V^3.
+$$
+
+每个 $F_m$ 都是处处有限、非负的完整 $(R)$ 核，且同步 $V$ 等距；仅 $F_0=d$ 本身被要求零对角。以下定义对所有实际输入成立：
+
+$$
+I_0(a,u)=T(a\star u),\qquad I_1(a,u)=a\star T(u)
+\qquad(a,u\in N),
+$$
+
+以及
+
+$$
+J=\{a\star T(u):a,u\in N\}.
+$$
+
+则对任意 $a,b,u,v\in N$，四个有序块同时对所有 $m$ 成立：
+
+$$
+F_m\bigl(I_\epsilon(a,u),I_\eta(b,v)\bigr)=F_m(a\star u,b\star v)
+\qquad(\epsilon,\eta\in\{0,1\}).
+\tag{22.1}
+$$
+
+这里 $a\star u$、$b\star v$ 是实际右输入；不要求它们属于任何来源集合，也不把来源等式延伸到乘积。
+
+**证明。**固定 $a,b,u,v\in N$，对 $n\ge0$ 置
+
+$$
+h_n=F_m(a\star V^nu,b\star V^nv).
+$$
+
+把完整 $(R)$ 用于实际四元组 $(a,b,V^nu,V^nv)$。同步 $V$ 等距给
+$F_m(V^nu,V^nv)=F_m(u,v)$，所以对每个 $n\ge0$，
+
+$$
+h_n+h_{n+1}+h_{n+2}=3F_m(a,b)+3F_m(u,v),
+$$
+
+右端与 $n$ 无关。相邻两式相减得到 $h_{n+3}=h_n$，特别是 $h_3=h_0$。取原四元组 $(a,b,u,v)$，这正给出 $(1,1)$ 块：
+
+$$
+F_m(a\star T(u),b\star T(v))=F_m(a\star u,b\star v).
+$$
+
+$(0,0)$ 块只用同步 $V^3$ 等距：
+
+$$
+F_m(T(a\star u),T(b\star v))=F_m(a\star u,b\star v).
+$$
+
+对 $(1,0)$ 块，在同一个滑动恒等式中取背景 $(a,e)$、右输入 $(u,b\star v)$。其第零项和第三项分别是
+
+$$
+h_0=F_m(a\star u,e\star(b\star v))=F_m(a\star u,b\star v),
+$$
+
+$$
+h_3=F_m(a\star T(u),e\star T(b\star v))
+   =F_m(I_1(a,u),I_0(b,v)).
+$$
+
+对 $(0,1)$ 块，取背景 $(e,b)$、右输入 $(a\star u,v)$。同样，
+
+$$
+h_0=F_m(e\star(a\star u),b\star v)=F_m(a\star u,b\star v),
+$$
+
+$$
+h_3=F_m(T(a\star u),b\star T(v))
+   =F_m(I_0(a,u),I_1(b,v)).
+$$
+
+所有四元组都是真实标签，始终保留原乘法括号；没有使用来源对乘法封闭，也没有把 $V$ 当作乘法自同态或重括号。证毕。
+
+取 $b=a$、$v=u$ 并令 $m=0$，(22.1) 给出
+
+$$
+ d\bigl(T(a\star u),a\star T(u)\bigr)=0,\qquad
+ d\bigl(a\star T(u),T(a\star u)\bigr)=0.
+\tag{22.2}
+$$
+
+这是两端的零比较，不是实际标签等式。其在 $J$ 上能推出的行列事实可以精确写成：对任意 $a,u\in N$ 及 $z=b\star T(v)\in J$，
+
+$$
+d\bigl(I_0(a,u),z\bigr)
+ =d(a\star u,b\star v)
+ =d\bigl(I_1(a,u),z\bigr),
+$$
+
+$$
+d\bigl(z,I_0(a,u)\bigr)
+ =d(z,I_1(a,u)).
+$$
+
+前一式用 $(0,1)$、$(1,1)$ 两块，后一式用相同两块交换有序输入；它们只说明对集合 $J$ 的这些行、列读数相同。另若 $d(x,y)=d(y,x)=0$，则把 $x,y$ 放进同一个由 $V$ 与 $\star$、固定实际参数组成的有限项上下文 $C[-]$，仍有
+
+$$
+d(C[x],C[y])=d(C[y],C[x])=0.
+$$
+
+这是对上下文深度的结构归纳：$V$ 步用同步等距；二元步在另一输入相同的情况下，把完整 $(R)$ 用于该二元步的两个标签，右端为零，三项非负性遂使其中的 $k=0$ 项为零，反向次序同理。这个结论只保留共同上下文中的双向零比较，不给出任意行不变性、任意列不变性、零关系的传递性或全域同余。
+
