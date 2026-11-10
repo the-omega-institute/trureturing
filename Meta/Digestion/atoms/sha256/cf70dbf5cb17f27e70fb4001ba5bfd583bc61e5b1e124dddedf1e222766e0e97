@@ -1,0 +1,84 @@
+**推论 42.4（单调独立插入平均及其有限点态极限）。**在定义 42.1 下，对 $n\ge0$ 定义
+
+$$
+k_n=(ST)^nc=f_{nn},\qquad d_n=k_n-k_{n+1},\qquad\delta=d_0.
+\tag{42.19}
+$$
+
+则在全部 $M^2$ 上逐点有
+
+$$
+\begin{aligned}
+0&\le k_{n+1}\le k_n\le c,\\
+0&\le d_{n+1}\le d_n\le\frac{c}{n+1},\\
+|Sk_n-k_n|^2, |Tk_n-k_n|^2
+&\le9k_nd_n\le\frac{9c^2}{n+1}.
+\end{aligned}
+\tag{42.20}
+$$
+
+有限点态极限 $k_\infty(x,y)=\lim_{n\to\infty}k_n(x,y)$ 因而存在。它仍定义于同一个实际 $M^2$，处处有限、对称、非负且零对角，并满足
+
+$$
+0\le k_\infty\le c,\qquad Sk_\infty=Tk_\infty=k_\infty.
+\tag{42.21}
+$$
+
+这里尚未给 $k_n$ 或 $k_\infty$ 赋予完整关系 (42.1) 或两个第三标记返回。
+
+**证明。**仍对固定 $(x,y)$ 用 $\Lambda=\Lambda_{xy}$、$t=rs$，由交换性与定义有
+
+$$
+\begin{aligned}
+k_n(x,y)&=\Lambda(t^n),\\
+d_n(x,y)&=\Lambda(t^n(1-t)),\\
+(d_n-d_{n+1})(x,y)&=\Lambda(t^n(1-t)^2).
+\end{aligned}
+\tag{42.22}
+$$
+
+这三个多项式在 $K$ 上非负，故定理 42.2 给 $k_n,d_n,d_n-d_{n+1}\ge0$。因此 $k_n$ 递减且非负，$d_n$ 也递减且非负，并有
+
+$$
+(n+1)d_n\le\sum_{j=0}^nd_j
+=c-k_{n+1}\le c.
+\tag{42.23}
+$$
+
+为取得端点速率，定义 $\Lambda_n(p)=\Lambda(t^np)$。当 $p\ge0$ 于 $K$ 时，$t^np\ge0$ 也成立，故 $\Lambda_n$ 保有相同的多项式正性；其质量和残差分别为 $\Lambda_n(1)=k_n(x,y)$、$\Lambda_n(1-t)=d_n(x,y)$。将 (42.16)、(42.18) 的论证用于这个泛函，得到
+
+$$
+\begin{aligned}
+|\Lambda_n(r-1)|^2&\le9k_n(x,y)d_n(x,y),\\
+|\Lambda_n(s-1)|^2&\le9k_n(x,y)d_n(x,y).
+\end{aligned}
+\tag{42.24}
+$$
+
+零质量时，(42.18) 型二次式对所有 $\alpha$ 非负直接迫 $\Lambda_n(q)=0$；因此此处同样不除以零。由于 $S,T$ 交换，左侧分别就是 $|(Sk_n-k_n)(x,y)|^2$ 与 $|(Tk_n-k_n)(x,y)|^2$，再用 $k_n\le c$ 与 (42.23) 得 (42.20)。等价地，移位数组 $f_{i+n,j+n}(x,y)$ 仍满足 (42.9)；这不要求核 $k_n$ 满足完整四变量 (R)。
+
+每个实际 $(x,y)$ 上，$k_n(x,y)$ 是 $[0,c(x,y)]$ 中的递减序列，故有有限极限。由 (42.4)，
+
+$$
+k_n(x,y)=4^{-n}\sum_{w,z\in\{1,2\}^n}c(W_wx,W_zy).
+\tag{42.25}
+$$
+
+交换两个独立、等长的字 $w,z$，再用原 $c$ 的对称性，即得 $k_n(y,x)=k_n(x,y)$，其极限也对称。对角性质来自逐点支配 $0\le k_n(x,x)\le c(x,x)=0$，不要求不同插入字的输出相同，更不要求插入保乘法。
+
+最后 (42.20) 使每个固定 $(x,y)$ 上的 $Sk_n-k_n$ 与 $Tk_n-k_n$ 趋于零。由于 $S,T$ 各只取两个固定实际标签对的平均，点态极限给
+
+$$
+\begin{aligned}
+(Sk_\infty)(x,y)
+&=\frac{k_\infty(P_1x,y)+k_\infty(P_2x,y)}2
+=\lim_n(Sk_n)(x,y)=k_\infty(x,y),\\
+(Tk_\infty)(x,y)
+&=\frac{k_\infty(x,P_1y)+k_\infty(x,P_2y)}2
+=\lim_n(Tk_n)(x,y)=k_\infty(x,y).
+\end{aligned}
+\tag{42.26}
+$$
+
+没有交换无穷平均，也没有使用 $M$ 上的拓扑。速率常数取自当前标签对的有限 $c(x,y)$；(42.20) 控制端点均值缺陷，不给全部 $M^2$ 上的统一收敛或 $k_n-k_\infty$ 的收敛速率。证毕。
+

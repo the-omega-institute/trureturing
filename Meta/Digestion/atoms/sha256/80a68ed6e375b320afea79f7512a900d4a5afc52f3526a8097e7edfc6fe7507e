@@ -1,0 +1,29 @@
+**命题 C-14.2（同一回路的概率—相位几何）。** 内部关系线元为
+
+
+<table><tbody><tr><td>
+
+```math
+ds_{\rm rel}^2=\frac{ℐ}4d\kappa^2+
+\frac1{ℐ}d\Phi^2
+=\frac1{ℐ}(du^2+d\Phi^2).
+```
+
+</td></tr></tbody></table>
+
+
+水平相位速度为 $`v_s=d_s\,d\Phi/(p_sℐ)`$，与所有 1,𝑥,𝑦,𝑧 标架速度在 $`L^2(p)`$ 中正交。其行列式 1/4，面积元 $`\frac12d\kappa d\Phi`$，总面积
+
+
+<table><tbody><tr><td>
+
+```math
+𝒜_{\rm rel}=\pi w
+=\pi\min\{X,Y,1-X-Z,1-Y-Z\}.
+```
+
+</td></tr></tbody></table>
+
+
+**证明。** 把振幅微分代入定义，概率—相位交叉内积纯虚数，给分解。概率项 $`dp=d\,d\kappa`$ 立刻给 ℐ/4。去整体相位令 $`\sum p_sv_s=0`$，固定 $`d\cdot v=d\Phi`$；Cauchy–Schwarz 给 $`(d\Phi)^2\leℐ\sum p_sv_s^2`$，所列速度达到等号。并且 $`\sum p_sv_sf_s=(d\Phi/ℐ)\sum d_sf_s=0`$ 对四标架函数都成立，确为完整水平最小化。相位系数正是 §4 的隐藏函数平方长度。𝑑𝑢=ℐ 𝑑𝜅/2 给共形圆柱式，行列式与积分给面积。三角侧面宽度零使这条关系退化，未声明整个实际环境相位消失；1/4 是约定归一化，不能解释为普朗克常数。□
+
