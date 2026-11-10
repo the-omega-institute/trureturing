@@ -1,0 +1,99 @@
+**命题 58.1（分离供应超出有限谱与有限秩原域）。** 存在满足55.1全部静态数学前件的完整原模型，以及满足57.2的无限谱 $h$-偶背景 $c$，使本卷33.1的共同 $h,e$ 交换分割不存在，且 $c\notin Z(\mathcal A)_{\rm sa}+Z(\mathcal A)_{\rm sa}h$。该模型不具配平三角续卷142.1、152.1、157–160、167–174各自要求的有限全矩阵、完整有界type I、全部原有限秩或本质复紧理想结构。本命题只给57.1分支的相容范围见证，不给任意II₁原总响应的全域分类。
+
+证明。取具有可分迹GNS空间的超有限II₁因子 $\mathcal R$，带忠实正规归一数学迹 $\tau$，在其迹GNS空间 $\mathcal H_\tau$ 上忠实正规表示。使用成熟的II₁投影维数与比较理论，在逐步余投影内选非零正交 $d_n\in\mathcal R$，使
+
+$$
+\tau(d_n)=2^{-n},\qquad
+\sum_{n\ge1}^{\rm strong}d_n=1.
+\tag{58.1}
+$$
+
+确实，有限和的余投影迹为 $2^{-N}$；投影上确界存在，迹正规性及忠实性使最终余投影为零。再选 $f_1\le d_1$、$\tau(f_1)=1/4$，令 $f_2=d_2$。等迹投影等价，故有部分等距元 $v_0\in\mathcal R$ 满足
+
+$$
+v_0^*v_0=f_1,\qquad v_0v_0^*=f_2,
+\qquad f_1f_2=0.
+$$
+
+令 $p_0=f_1+f_2$，并取酉元
+
+$$
+w=(1-p_0)+\frac{p_0+v_0-v_0^*}{\sqrt2}.
+\tag{58.2}
+$$
+
+在 $p_0$ 角内，$v_0-v_0^*$ 斜自伴、平方为 $-p_0$，故58.2在此角为酉；补角为单位。令 $\lambda_n=1/n$，定义
+
+$$
+c_+=\sum_{n\ge1}\lambda_nd_n,\qquad
+c_-=wc_+w^*,\qquad c=\operatorname{diag}(c_+,c_-).
+\tag{58.3}
+$$
+
+第一式范数收敛，尾范数为 $1/(N+1)$。每个 $d_n\mathcal H_\tau$ 上取值 $\lambda_n$，故所有 $1/n$ 在谱中，谱闭性加入 $0$；闭集外的逆由有界倒数系数在这些正交角上定义，故
+
+$$
+\sigma(c_+)=\sigma(c_-)=\sigma(c)=\{1/n:n\ge1\}\cup\{0\}.
+\tag{58.4}
+$$
+
+总覆盖和各 $\lambda_n\ne0$ 给 $\ker c_+=0$，故 $0$ 是非本征谱聚点。这个范数和只在所选完整模型内定义已知自伴元，不对未知响应取输入极限。
+
+$p_0$ 减约 $c_+$ 和 $c_-$，并且
+
+$$
+\begin{gathered}
+p_0c_+p_0=\lambda_1f_1+\lambda_2f_2,\\
+p_0c_-p_0=\frac{\lambda_1+\lambda_2}{2}p_0
+ +\frac{\lambda_1-\lambda_2}{2}(v_0+v_0^*),\\
+p_0[c_+,c_-]p_0
+=\frac{(\lambda_1-\lambda_2)^2}{2}(v_0^*-v_0)\ne0.
+\end{gathered}
+\tag{58.5}
+$$
+
+最后的非零性可由 $f_1(v_0^*-v_0)f_2=v_0^*\ne0$ 直接读取。
+
+现在取完整原域及实际框架
+
+$$
+\begin{gathered}
+\mathcal A=M_2(\mathcal R),\qquad E=X=\mathcal A_{\rm sa},\qquad u=1_{\mathcal A},\\
+h=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\qquad
+e=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+j=\begin{pmatrix}0&i\\-i&0\end{pmatrix},\\
+S(a,b)=a\circ b,\qquad D_*(a,b)=i[a,b]/2.
+\end{gathered}
+\tag{58.6}
+$$
+
+矩阵各条目均乘 $1_{\mathcal R}$。锥和范数取标准算子锥及算子范数；原评价族取全部正实线性泛函，包括它们的全部非负质量倍数、零、不等和次归一质量，不排除奇异泛函。它们分离元素并准确决定锥。$E$ 是实Archimedean序单位空间；$D_*$ 对全部原对有自伴输出且在原域内。
+
+全部A1–A3/P2/PB的对应准确复用[原多项式零响应卷6.6–6.7](AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md#6-四份独立平方根预算的严格正下确界)的标准乘法身份，系数代数取当前 $\mathcal A$：$S-iD_*$ 就是 $ab$，两条有向二表为正Gram表；相加三表的实部为实Gram表，指定相加零向量仍为零。$0\le a\le\vartheta_0u\le u$ 给 $a^2\le a$，所以同一固定小窗的A3成立。对全部原自伴 $A,B,C$，记 $Z=B+iC$，PB的实际外层 $r_\pm,s_\pm$ 满足
+
+$$
+r_\pm+i s_\pm=(u\pm iA)Z,\qquad
+r_\pm^2+s_\pm^2+2D_*(r_\pm,s_\pm)=Z^*(u+A^2)Z.
+\tag{58.7}
+$$
+
+两份平方完全相同，故完整PB作为原元素恒等式成立，对全部正评价及全部质量也成立。直接相乘有 $D_*(h,e)=j$、框架各平方为 $u$、两两Jordan正交、$Q=ihej=u$。这些身份只核对见证模型的数学前件，不把标准 $D_*$ 代入56.1中的任意未知响应。
+
+在 $\mathcal H_\tau\oplus\mathcal H_\tau$ 上的含单位忠实表示中，原投影
+
+$$
+q_{+,n}=\operatorname{diag}(d_n,0),\qquad
+q_{-,n}=\operatorname{diag}(0,wd_nw^*)
+\tag{58.8}
+$$
+
+彼此正交，满足 $cq_{\pm,n}=\lambda_nq_{\pm,n}$、$hq_{\pm,n}=\pm q_{\pm,n}$，强和为单位。因此57.2成立，$K(c,h)=0$，但58.4的背景谱无限。可取 $z=e$ 为非零真正混合输入；57.1仍允许任意原奇 $z$。若改取 $\lambda_1=0$、$\lambda_n=1/n$（$n\ge2$），其他构造完全保持，则 $0$ 成为非孤立本征值，58.5仍非零，也仍有总覆盖。两种情形分别包含非本征聚点和非孤立本征值。
+
+若存在33.1的共同 $h,e$ 交换投影分割，则每个分割元都为 $\operatorname{diag}(b_\ell,b_\ell)$：与 $h$ 交换先给块对角，与 $e$ 交换再使两块相同。33.1的背景式遂使 $c_+,c_-$ 都是同一正交投影族 $b_\ell$ 的实线性组合，因而相互交换，与58.5矛盾。即使允许该类投影有任意指标强总覆盖，只要两块在每格上为标量，二者仍在稠密角和上交换，有界性使全交换，结论相同。$\mathcal A$ 又是因子，自伴中心为 $\mathbb Ru$，而 $Z(\mathcal A)_{\rm sa}+Z(\mathcal A)_{\rm sa}h$ 的上下块各为标量；58.4排除 $c$ 属于其中。
+
+最后明确原域结构的区别。II₁因子及其有限矩阵放大没有非零最小投影，每个非零角仍为II₁型。若某个忠实Hilbert表示中有非零有限秩投影 $q\in\mathcal A$，有限维 $q\mathcal A q$ 的最小投影便也是 $\mathcal A$ 的最小投影，矛盾；非零紧算子的模还会由非零孤立谱值产生这种有限秩投影，故该表示中 $\mathcal A\cap K(\mathcal H)=0$。这里的Murray–von Neumann有限投影绝非有限秩投影。
+
+若 $X$ 有非零Jordan理想 $I\cong_J K(H)_{\rm sa}$，取其中对应秩一的投影 $p$。理想性给 $U_pX\subset I$；$U_p$ 在其像上为恒等，故 $U_pX\subset U_pI=\mathbb Rp$。这将给出 $X$ 的最小Jordan投影，与II₁角矛盾。因此167.1所需的本质复紧理想亦不存在。有限全矩阵142.1、完整有界type I原域152.1、全部单块有限秩157.1及本质紧理想167.1的结构前件都没有被此见证暗中供应。
+
+更强地，$\mathcal A$ 没有非零有限维 $*$-表示，连不要求正规的表示也没有。II₁比较理论给任意大的含同一单位 $M_m(\mathbb C)\subset\mathcal A$。若 $\pi:\mathcal A\to M_k(\mathbb C)$ 非零，令 $r_0=\operatorname{rank}\pi(u)>0$，取 $m>r_0$。该 $M_m$ 的 $m$ 个等价正交对角投影之像均为等秩非零投影，和为 $\pi(u)$，将要求 $r_0\ge m$，矛盾。故本例也不借有限维表示族分离原域。这个模型只证明所写无限谱分支真实非空，并未生产七项实际物理来源。∎
+

@@ -1,0 +1,63 @@
+**Definition 9.1 (the retained source, complete future and gate).**
+Retain Assumption 1.1 and Definitions 6.1 and 7.1 in full, for every
+original finite $a,\eta,d>0$ and every permitted repaired Borel
+emission. In particular the group, unit-source normalization,
+complete complex non-Friedrichs endpoint, operator and form domains,
+source trace, $e$-start, first read at $2d$, subsequent gaps $d$,
+four labels and fresh conditional noise are unchanged. Write
+$P_t=T_t$, so that the discrete operator remains $P=P_d$.
+Use exactly the properly associated conservative process of
+[CONTACT, Theorem 116.3][CONTACT], with its properly exceptional
+set $\mathcal N$ satisfying $e\notin\mathcal N$; $m(\mathcal N)=0$.
+Its contact time is $\tau_e=\inf\{s\ge0:Z_s=e\}$.
+Contact is an analytic stopping time of this process, not a
+detectable label, sensor, available Return or operation on the source.
+
+On $\Omega=\mathcal L^{\mathbb N}$ use the whole product sigma algebra
+$\mathscr Y=\bigotimes_{n\ge0}2^{\mathcal L}$. For a word $v$ let
+$[v]$ be its initial cylinder. Reuse the common future kernel
+$\mathcal K(x,E)$ of [OWGR, Definition 15.1]: it starts at the
+next hidden read state $x$, emits with the original $f_y$, then
+repeats $P_d$ and the original independent conditional noise.
+It is a probability kernel on all of $\mathscr Y$, with
+$\mathcal K(x,[v])=F_v(x)$ as $m$-classes. For every history $u$
+put
+
+$$
+\begin{gathered}
+R_u^\infty(E)=\int_G\pi_u(x)\mathcal K(x,E)m(dx),\qquad
+Q_\emptyset^\infty(E)=\int_G\mathcal K(x,E)m(dx),\\
+R_u^\infty([v])=\frac{p(uv)}{p(u)},\qquad
+Q_\emptyset^\infty([v])=q(v),\\
+Q_w^\infty(E)=
+ \frac{Q_\emptyset^\infty([w]\cap\theta^{-|w|}E)}{q(w)},\qquad
+R_t^\infty=R_{Y_{<t}}^\infty .
+\end{gathered}
+\tag{9.1}
+$$
+
+Here $\theta$ is the left shift and $\pi_u$ is the actual next-read
+posterior of (2.2), conditioned on the entire history $u$.
+All $p(u),q(u)>0$ by Definition 6.1, so every finite conditioning
+in (9.1) is defined. Cylinder uniqueness extends the identities
+from (2.2) to the full product law. The superscript $H$ below
+denotes the marginal on the first $H$ future labels, agreeing with
+(6.1)--(6.3). The comparison $Q_\emptyset^\infty$ is mathematical;
+it supplies no stationary specimen preparation or exact-law query.
+
+Fix deterministic integers $S\ge0$ and $k\ge2$. Take precisely the
+disjoint-block gate (6.2) with $L=2k$:
+
+$$
+\begin{gathered}
+U_i=S+(i-1)2k,\qquad
+C_i=\{Y_{[U_i,U_i+2k)}=B^{2k}\},\\
+J=\inf\{i\ge1:C_i\},\qquad T=S+2kJ,\qquad
+W_j=Y_{[T,T+j)}\quad(j\ge0).
+\end{gathered}
+\tag{9.2}
+$$
+
+In particular $W_0=\emptyset$. The cut $T+j$ remains immediately
+before the read at physical time $(T+j+2)d$.
+

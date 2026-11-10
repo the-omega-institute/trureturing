@@ -1,0 +1,35 @@
+**命题 C-15.5（可见度与记录操作边界；[C-R4] §108）。** $`|\eta_{\rm rec}|\le1`$，pair 状态为
+
+
+```math
+\rho_{{\rm pair},\eta}=\frac1{A+B}
+\begin{pmatrix}A&\eta_{\rm rec}W\\\bar\eta_{\rm rec}\bar W&B\end{pmatrix}.
+```
+
+
+若 $`𝒫=|A-B|/(A+B),𝒱=2|\eta_{\rm rec}|\sqrt{AB}/(A+B)`$，则
+
+
+<table><tbody><tr><td>
+
+```math
+𝒫^2+𝒱^2=
+1-\frac{4AB}{(A+B)^2}(1-|\eta_{\rm rec}|^2).
+```
+
+</td></tr></tbody></table>
+
+
+$`AB\gt 0`$ 时纯态恰 $`|\eta_{\rm rec}|=1`$，严格小于一时混态；𝐴𝐵=0 时是纯极点且可见度零。实际读出的是 $`\eta_{\rm rec}W`$，只有已知非零记录重叠及 $`AB\gt 0`$ 才能恢复原 Φ。
+
+**证明。** 同一联合分支密度取记录迹得矩阵，Cauchy–Schwarz 给模长界。行列式 $`AB(1-|\eta_{\rm rec}|^2)/(A+B)^2`$ 给纯混条件；$`(A-B)^2+4AB=(A+B)^2`$ 给可见度式。记录相位把有效相位改为 $`\Phi+\arg\eta_{\rm rec}`$，不改对角概率。对任意仅记录上的迹保持映射 $`\Lambda`$，
+
+
+```math
+\mathrm{Tr}_{E'}[(\mathrm{id}\otimes\Lambda)\Omega]
+=\mathrm{Tr}_E\Omega,
+```
+
+
+因为对系统观测 $`A_0`$ 的配对中 $`\Lambda^\dagger(I)=I`$。所以无条件删除、改写记录不能恢复局部相干；条件测量反馈或联合逆操作须另供。□
+

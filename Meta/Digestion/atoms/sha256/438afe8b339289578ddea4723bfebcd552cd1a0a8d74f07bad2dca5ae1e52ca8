@@ -1,0 +1,83 @@
+**Corollary 9.4 (selection on one event and the conditional
+actual-current consumer).** Predeclare a countable effectively
+enumerated family of deterministic descriptions $\kappa$,
+specifying positive rational $c_\kappa,l_\kappa,
+\epsilon_\kappa,\delta_\kappa$ and integer $S_\kappa\ge0$.
+Let $\sum_\kappa\delta_\kappa<\infty$. Generate a deterministic
+$k_\kappa$ and guard (9.19)--(9.20) from each description.
+Use the inherited predeclared acquisition packets and their
+common event $\mathcal A_\tau$ of probability at least $1-\alpha$,
+as in Theorem 8.1 and [SRO, Theorem 22.1]. On this event,
+each selected description has earned
+$c_\kappa\le c$ and $l_\kappa\le\tau$; every row/certificate
+actually supplied by those packets retains its original finite
+domain and validity.
+
+There is an original-law event $\mathcal G$ with
+
+$$
+\mathbb P_e(\mathcal G)\ge1-\alpha-\sum_\kappa\delta_\kappa
+\tag{9.23}
+$$
+
+on which every selected description obeys the dynamic comparison
+of Theorem 9.2 at every later integer cut and every finite horizon.
+Suppose a lawful executor for one such description actually
+completes at a finite causal cut $C\ge T_\kappa$, retains and
+processes every actual label through $C$, and genuinely supplies
+a probability row $\rho_C$ at a finite horizon $H$ with a
+same-event generated error certificate
+
+$$
+\operatorname{TV}(\rho_C,Q_{W_{\kappa,C-T_\kappa}}^H)
+ \le\zeta_C+\xi_C .
+\tag{9.24}
+$$
+
+Here $\zeta_C,\xi_C\ge0$ include the acquired row error and all
+additional update, rounding and output error, respectively.
+On $\mathcal G$, wherever these executor conditions hold,
+
+$$
+\operatorname{TV}({\bf R}_C^H,\rho_C)
+ \le\epsilon_\kappa+\zeta_C+\xi_C .
+\tag{9.25}
+$$
+
+An extra row supplier with its own confidence event must have
+that event included in $\mathcal A_\tau$ and its failure charged
+to $\alpha$; (9.24) is not automatically a new acquired row.
+
+*Proof.* Fix the original source only for the analysis. For each
+deterministic description with $c_\kappa\le c,l_\kappa\le\tau$,
+Theorem 9.2 and Proposition 9.3 give an unconditional dynamic
+event $\mathcal D_\kappa$, with failure less than
+$\delta_\kappa$, covering all $j$ and $H$. Define
+
+$$
+\mathcal G=\mathcal A_\tau\cap
+ \bigcap_{\kappa:\ c_\kappa\le c,\ l_\kappa\le\tau}
+                  \mathcal D_\kappa .
+\tag{9.26}
+$$
+
+The intersection is over the deterministic valid descriptions,
+not a random list after calibration. A countable union bound
+proves (9.23); the intersection of their almost-sure finite-gate
+events costs no probability. On $\mathcal A_\tau$ every selected
+description belongs to this intersection. No independence of
+calibration, gates, row acquisition or branch selection is used.
+Data-selected integer starts and rational tolerances are handled
+by their predeclared descriptions, as in Theorem 8.1, not by
+substituting random values into a deterministic probability bound.
+There is no further union budget over $j$ or $H$.
+
+On $\mathcal G$, substitute the actual finite index
+$j=C-T_\kappa$ into its pathwise all-cut event, project to $H$,
+and apply the triangle inequality with (9.24).
+This proves (9.25), including selection of a horizon from an
+actually available certified menu. Causality and actual availability
+are executor premises, not consequences of this substitution.
+If an executor never completes, this argument supplies no row
+and makes no finiteness claim about its completion. $\square$
+

@@ -1,0 +1,23 @@
+**定义 71.3（真正原域中的减约区间分割）。** 当 $C>0$ 时，给定一个无上界的正整数集合 $\mathcal N_c$。对每个 $N\in\mathcal N_c$，令
+
+$$
+\varepsilon_N=C/N,\qquad a_i=-C+(2i-1)\varepsilon_N\quad(1\le i\le N).
+\tag{71.6}
+$$
+
+要求存在 $2N$ 个可为零的实际原投影 $q_{\sigma,i}^{(N)}\in E$，$\sigma\in\{+1,-1\}$，使
+
+$$
+\begin{gathered}
+(q_{\sigma,i}^{(N)})^*=(q_{\sigma,i}^{(N)})^2=q_{\sigma,i}^{(N)},\qquad
+q_{\sigma,i}^{(N)}q_{\sigma',j}^{(N)}=0\quad((\sigma,i)\ne(\sigma',j)),\\
+\sum_{\sigma,i}q_{\sigma,i}^{(N)}=u,\qquad
+hq_{\sigma,i}^{(N)}=\sigma q_{\sigma,i}^{(N)},\qquad
+[c,q_{\sigma,i}^{(N)}]=0,\\
+\|(c-a_i u)q_{\sigma,i}^{(N)}\|\le\varepsilon_N.
+\end{gathered}
+\tag{71.7}
+$$
+
+这是近似标量窗，不要求 $cq=a_iq$。投影不必最小、有限秩或本征投影，不要求与 $e$ 交换，也不要求不同 $N$ 的分割相容。全零的个别窗及其原指标保留。供应条件只依赖 $c,h,E,N$，与 $z,R,g,r$ 及未知响应值无关。每个正整数都有这份分割是一种方便的充分条件；无上界集合已经足够。环境Borel投影若不在原 $E$ 中，不能作为71.7的标签；迹分离也不蕴涵该成员资格。
+
