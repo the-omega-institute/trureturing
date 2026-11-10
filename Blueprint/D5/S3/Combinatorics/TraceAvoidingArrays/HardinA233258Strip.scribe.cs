@@ -10,6 +10,15 @@ internal sealed class HardinA233258StripDocument : IScribeDocumentDefinition
     private const string LeanPrefix = "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233258Strip.";
     private static LibraryNoteRef Source =>
         LibraryNoteRef.Create("D5/L/Automata/hardin2013a233258");
+    private static DocumentBlock Resolution(string name, string title, Formula formula) =>
+        Describe.Lean(DescribeId.Create(name.Replace("_", "-").ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(title),
+            StatementSource.FromAuthor(Disp(formula)),
+            AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(title + "."))),
+            DescribeRole.Theorem,
+            new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233258"), ResolutionKind.Proved));
+
     private static DocumentBlock Node(string name, string title, Formula formula, bool theorem,
         bool literature = false) =>
         Describe.Lean(DescribeId.Create(name.Replace("_", "-").ToLowerInvariant()),
@@ -44,8 +53,8 @@ internal sealed class HardinA233258StripDocument : IScribeDocumentDefinition
                 + "one canonical pattern of this kind. If C counts canonical proper "
                 + "patterns, L=6*C and a=2^(3*n-3)*(C+1), yielding the bridge.")),
             Node("finite_certificate", "The width-six recurrence instance", RecurrenceFormula(null), true),
-            Node("result", "The recurrence and exact integer power-series identity",
-                And(RecurrenceFormula(V("n")), SeriesFormula()), true),
+            Resolution("result", "The recurrence and exact integer power-series identity",
+                And(RecurrenceFormula(V("n")), SeriesFormula())),
             Paragraph(Text("Scaling L(n)+6 by 8^n multiplies the coefficient at lag j "
                 + "by 8^j, giving coefficients 48,-448,1024. The index n+6 covers "
                 + "every width at least six. The initial counts at widths zero through "

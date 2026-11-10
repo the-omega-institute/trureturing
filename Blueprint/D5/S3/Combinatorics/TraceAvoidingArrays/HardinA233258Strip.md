@@ -68,6 +68,10 @@ $$(\forall (n: \operatorname{Nat}), ((\operatorname{D5}.\operatorname{S3}.\opera
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233258Strip.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin233258` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233258Strip.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin233258","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233258Strip.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233258: three-row horizontal and antidiagonal pair exclusion*. URL: <https://oeis.org/A233258>.
