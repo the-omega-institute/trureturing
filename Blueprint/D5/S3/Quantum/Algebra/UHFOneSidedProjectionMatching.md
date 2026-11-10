@@ -6,6 +6,8 @@ Actual completed-algebra projections localize in finite matrix stages and admit 
 
 FullMatrixModel C consists of natural stage sizes, injective unital complex star-algebra maps from the corresponding full matrix algebras into C, increasing ranges, and a norm-dense union of those ranges. Matrix norms are the L2 operator norms. Localization and matching are conclusions, not fields of the model.
 
+The shared coordinate-projection lemma proj_single states that the diagonal matrix unit with coefficient one is a self-adjoint projection in every natural dimension. Both the finite-stage matching proof and the projection-span argument for the sequential Born-rule dichotomy use this same lemma. It has no state, channel, or Born-rule premise.
+
 **Theorem 1.1 (Exact finite-stage localization).**
 
 $$\forall C \in \operatorname{Type}\left(\right),\; [\operatorname{CStarAlgebra}\left(C\right)] \forall M \in \operatorname{FullMatrixModel}\left(C\right),\; \forall p \in C,\; (\operatorname{IsStarProjection}\left(p\right)) \Rightarrow (\exists n \in \operatorname{Nat}\left(\right),\; \exists u \in \operatorname{unitary}\left(C\right),\; \exists Q \in \operatorname{Matrix}\left(\operatorname{Fin}\left(\operatorname{size}\left(M, n\right)\right), \operatorname{Fin}\left(\operatorname{size}\left(M, n\right)\right), \operatorname{Complex}\left(\right)\right),\; (\operatorname{IsStarProjection}\left(Q\right)) \land (u \cdot p \cdot \operatorname{star}\left(u\right) = \operatorname{embed}\left(M, n, Q\right)))$$
@@ -39,4 +41,3 @@ This is the intrinsic unital-algebra supplier used by the existing full-PB sourc
 - Truth anchor: `D5/S3/Quantum/Algebra/UHFOneSidedProjectionMatching.localize_projection`
 - Truth anchor: `D5/S3/Quantum/Algebra/UHFOneSidedProjectionMatching.one_sided_projection_matching`
 - Dependency: [D5/S3/Quantum/Analysis/RussoDye](../Analysis/RussoDye.md)
-- Dependency: [D5/S3/Quantum/Measurements/SpatiotemporalBornRuleDichotomy](../Measurements/SpatiotemporalBornRuleDichotomy.md)
