@@ -6,7 +6,7 @@ Integral operators on bisimplicial diagonals
 
 For arbitrary natural degrees s,q, an OpLetter(s,q) is a pair of simplex maps [q] → [s]. A DerivedOp(s,q) is a finitely supported integer coefficient function on these letters. Its realization on X sends X[s,s] to X[q,q]. Realization is the integer-linear extension of the two contravariant simplex actions.
 
-For every use of a realization let C : Type u, Category.{v} C and Abelian C, with u,v independent, and let X be a bisimplicial object of C. Pure letter and coefficient operations do not depend on C. If M₁ : DerivedOp(s,q) and M₂ : DerivedOp(q,r), then M₂.comp M₁ realizes as M₁.realize X followed by M₂.realize X.
+For every use of a realization let C : Type u, Category.{v} C and Abelian C, with u,v independent, and let X be a bisimplicial object of C. Pure letter and coefficient operations do not depend on C. If MOne : DerivedOp(s,q) and MTwo : DerivedOp(q,r), then MTwo.comp MOne realizes as MOne.realize X followed by MTwo.realize X.
 
 Priming prepends a new zero vertex to each simplex map and shifts every old vertex by one; its integer-linear extension raises both degrees. Boundary operators are alternating sums of paired faces. D0op, the last face, and the truncated boundary interact with priming to express the recursion of the Eilenberg–Mac Lane homotopy. A diagonal noninjective simplex map is killed by Moore retraction.
 
@@ -38,19 +38,35 @@ An EM natural operator `(K×L)_s → (K×L)_q` (their (2.10)): a finite `ℤ`-li
 
 In this notation, abbrev DerivedOp (s q : ℕ).
 
-## OpLetter.realize
+**Definition 1.3 (OpLetter.realizeLetter).**
 
-Realize a single letter as a degreewise hom on the diagonal complex `F₂.obj X`.
+Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.realizeLetter`
 
-In this notation, noncomputable def OpLetter.realize {s q : ℕ} (X : BisimplicialObject C) (l : OpLetter s q) : (F₂.obj X).X s ⟶ (F₂.obj X).X q.
+*Formalization.* `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.realizeLetter` (`✓ std3`).
 
-## DerivedOp.realize
+*Citation.* Jeffrey Li (2026). *Bisimplicial Eilenberg–Zilber equivalence and recursive normalized homotopy*. URL: <https://github.com/LeanPool/lean-pool/tree/8bbde3a6de815108d41922c9362ebbe38422663a/LeanPool/EilenbergZilber>.
 
-Realize a formal operator as a degreewise hom on `F₂.obj X` (`ℤ`-linear extension of `OpLetter.realize`).
+*Commentary.*
 
-In this notation, noncomputable def DerivedOp.realize {s q : ℕ} (X : BisimplicialObject C) (M : DerivedOp s q) : (F₂.obj X).X s ⟶ (F₂.obj X).X q.
+Realize a single letter as a degreewise hom on the diagonal complex `FTwo.obj X`.
 
-**Definition 1.3 (primeHom).**
+In this notation, noncomputable def OpLetter.realizeLetter {s q : ℕ} (X : BisimplicialObject C) (l : OpLetter s q) : (FTwo.obj X).X s ⟶ (FTwo.obj X).X q.
+
+**Definition 1.4 (DerivedOp.realize).**
+
+Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.realize`
+
+*Formalization.* `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.realize` (`✓ std3`).
+
+*Citation.* Jeffrey Li (2026). *Bisimplicial Eilenberg–Zilber equivalence and recursive normalized homotopy*. URL: <https://github.com/LeanPool/lean-pool/tree/8bbde3a6de815108d41922c9362ebbe38422663a/LeanPool/EilenbergZilber>.
+
+*Commentary.*
+
+Realize a formal operator as a degreewise hom on `FTwo.obj X` (`ℤ`-linear extension of `OpLetter.realizeLetter`).
+
+In this notation, noncomputable def DerivedOp.realize {s q : ℕ} (X : BisimplicialObject C) (M : DerivedOp s q) : (FTwo.obj X).X s ⟶ (FTwo.obj X).X q.
+
+**Definition 1.5 (primeHom).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.primeHom`
 
@@ -64,31 +80,63 @@ The 0-th-coface shift of a monotone map: `0 ↦ 0`, `j+1 ↦ θ(j)+1`. This is E
 
 In this notation, def primeHom {s q : ℕ} (θ : (⦋q⦌ : SimplexCategory) ⟶ ⦋s⦌) : (⦋q + 1⦌ : SimplexCategory) ⟶ ⦋s + 1⦌.
 
-## OpLetter.prime
+**Definition 1.6 (OpLetter.primeLetter).**
+
+Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.primeLetter`
+
+*Formalization.* `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.primeLetter` (`✓ std3`).
+
+*Citation.* Jeffrey Li (2026). *Bisimplicial Eilenberg–Zilber equivalence and recursive normalized homotopy*. URL: <https://github.com/LeanPool/lean-pool/tree/8bbde3a6de815108d41922c9362ebbe38422663a/LeanPool/EilenbergZilber>.
+
+*Commentary.*
 
 The derived operator on a single letter: prime both `SimplexCategory` maps.
 
-In this notation, def OpLetter.prime {s q : ℕ} (l : OpLetter s q) : OpLetter (s + 1) (q + 1).
+In this notation, def OpLetter.primeLetter {s q : ℕ} (l : OpLetter s q) : OpLetter (s + 1) (q + 1).
 
-## DerivedOp.prime
+**Definition 1.7 (DerivedOp.prime).**
+
+Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.prime`
+
+*Formalization.* `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.prime` (`✓ std3`).
+
+*Citation.* Jeffrey Li (2026). *Bisimplicial Eilenberg–Zilber equivalence and recursive normalized homotopy*. URL: <https://github.com/LeanPool/lean-pool/tree/8bbde3a6de815108d41922c9362ebbe38422663a/LeanPool/EilenbergZilber>.
+
+*Commentary.*
 
 EM's **derived operator** `M ↦ M'` (their (2.10)): prime every letter, `ℤ`-linearly.
 
 In this notation, noncomputable def DerivedOp.prime {s q : ℕ} (M : DerivedOp s q) : DerivedOp (s + 1) (q + 1).
 
-## OpLetter.comp
+**Definition 1.8 (OpLetter.compLetter).**
+
+Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.compLetter`
+
+*Formalization.* `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.compLetter` (`✓ std3`).
+
+*Citation.* Jeffrey Li (2026). *Bisimplicial Eilenberg–Zilber equivalence and recursive normalized homotopy*. URL: <https://github.com/LeanPool/lean-pool/tree/8bbde3a6de815108d41922c9362ebbe38422663a/LeanPool/EilenbergZilber>.
+
+*Commentary.*
 
 Composition of letters: `comp l₂ l₁` realizes to `realize l₁ ≫ realize l₂` (apply `l₁` then `l₂`). Horizontal and vertical maps compose independently.
 
-In this notation, def OpLetter.comp {s q r : ℕ} (l₂ : OpLetter q r) (l₁ : OpLetter s q) : OpLetter s r.
+In this notation, def OpLetter.compLetter {s q r : ℕ} (l₂ : OpLetter q r) (l₁ : OpLetter s q) : OpLetter s r.
 
-## DerivedOp.comp
+**Definition 1.9 (DerivedOp.comp).**
 
-`ℤ`-bilinear composition of operators (apply `M₁` then `M₂`).
+Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.comp`
 
-In this notation, noncomputable def DerivedOp.comp {s q r : ℕ} (M₂ : DerivedOp q r) (M₁ : DerivedOp s q) : DerivedOp s r.
+*Formalization.* `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.comp` (`✓ std3`).
 
-**Theorem 1.4 (realize_zero).**
+*Citation.* Jeffrey Li (2026). *Bisimplicial Eilenberg–Zilber equivalence and recursive normalized homotopy*. URL: <https://github.com/LeanPool/lean-pool/tree/8bbde3a6de815108d41922c9362ebbe38422663a/LeanPool/EilenbergZilber>.
+
+*Commentary.*
+
+`ℤ`-bilinear composition of operators (apply `MOne` then `MTwo`).
+
+In this notation, noncomputable def DerivedOp.comp {s q r : ℕ} (MTwo : DerivedOp q r) (MOne : DerivedOp s q) : DerivedOp s r.
+
+**Theorem 1.10 (realize_zero).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.realize_zero`
 
@@ -102,7 +150,7 @@ Realizing the zero integer operator gives the zero morphism in every pair of deg
 
 In this notation, @[simp] lemma realize_zero {s q : ℕ} (X : BisimplicialObject C) : (0 : DerivedOp s q).realize X = 0.
 
-**Theorem 1.5 (realize_single).**
+**Theorem 1.11 (realize_single).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.realize_single`
 
@@ -114,9 +162,9 @@ Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.reali
 
 Realizing one letter with integer coefficient c gives c times that letter’s realized morphism.
 
-In this notation, @[simp] lemma realize_single {s q : ℕ} (X : BisimplicialObject C) (l : OpLetter s q) (c : ℤ) : DerivedOp.realize X (Finsupp.single l c) = c • l.realize X.
+In this notation, @[simp] lemma realize_single {s q : ℕ} (X : BisimplicialObject C) (l : OpLetter s q) (c : ℤ) : DerivedOp.realize X (Finsupp.single l c) = c • l.realizeLetter X.
 
-**Theorem 1.6 (realize_add).**
+**Theorem 1.12 (realize_add).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.realize_add`
 
@@ -130,7 +178,7 @@ Realization preserves addition of formal operators.
 
 In this notation, lemma realize_add {s q : ℕ} (X : BisimplicialObject C) (M N : DerivedOp s q) : (M + N).realize X = M.realize X + N.realize X.
 
-**Theorem 1.7 (realize_neg).**
+**Theorem 1.13 (realize_neg).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.realize_neg`
 
@@ -144,7 +192,7 @@ Realization preserves negation of formal operators.
 
 In this notation, lemma realize_neg {s q : ℕ} (X : BisimplicialObject C) (M : DerivedOp s q) : (-M).realize X = -(M.realize X).
 
-**Theorem 1.8 (realize_sub).**
+**Theorem 1.14 (realize_sub).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.realize_sub`
 
@@ -158,7 +206,7 @@ Realization preserves subtraction of formal operators.
 
 In this notation, lemma realize_sub {s q : ℕ} (X : BisimplicialObject C) (M N : DerivedOp s q) : (M - N).realize X = M.realize X - N.realize X.
 
-**Definition 1.9 (realizeAddMonoidHom).**
+**Definition 1.15 (realizeAddMonoidHom).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.realizeAddMonoidHom`
 
@@ -170,9 +218,9 @@ Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.reali
 
 Integer-linear realization packaged as an additive monoid homomorphism from formal operators to degreewise morphisms.
 
-In this notation, noncomputable def realizeAddMonoidHom {s q : ℕ} (X : BisimplicialObject C) : DerivedOp s q →+ ((F₂.obj X).X s ⟶ (F₂.obj X).X q).
+In this notation, noncomputable def realizeAddMonoidHom {s q : ℕ} (X : BisimplicialObject C) : DerivedOp s q →+ ((FTwo.obj X).X s ⟶ (FTwo.obj X).X q).
 
-**Theorem 1.10 (realize_zsmul).**
+**Theorem 1.16 (realize_zsmul).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.realize_zsmul`
 
@@ -186,7 +234,7 @@ An integer coefficient factors out of realization.
 
 In this notation, lemma realize_zsmul {s q : ℕ} (X : BisimplicialObject C) (c : ℤ) (M : DerivedOp s q) : (c • M).realize X = c • M.realize X.
 
-**Theorem 1.11 (DerivedOp.comp_add_right).**
+**Theorem 1.17 (DerivedOp.comp_add_right).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.comp_add_right`
 
@@ -198,9 +246,9 @@ Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.comp_
 
 `comp` is additive in its right argument.
 
-In this notation, lemma DerivedOp.comp_add_right {s q r : ℕ} (M₂ : DerivedOp q r) (M N : DerivedOp s q) : M₂.comp (M + N) = M₂.comp M + M₂.comp N.
+In this notation, lemma DerivedOp.comp_add_right {s q r : ℕ} (MTwo : DerivedOp q r) (M N : DerivedOp s q) : MTwo.comp (M + N) = MTwo.comp M + MTwo.comp N.
 
-**Theorem 1.12 (DerivedOp.add_comp).**
+**Theorem 1.18 (DerivedOp.add_comp).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.add_comp`
 
@@ -214,7 +262,7 @@ Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.add_c
 
 In this notation, lemma DerivedOp.add_comp {s q r : ℕ} (M N : DerivedOp q r) (K : DerivedOp s q) : (M + N).comp K = M.comp K + N.comp K.
 
-**Theorem 1.13 (DerivedOp.single_comp_single).**
+**Theorem 1.19 (DerivedOp.single_comp_single).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.single_comp_single`
 
@@ -226,15 +274,23 @@ Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.singl
 
 `comp` of two `single`s.
 
-In this notation, lemma DerivedOp.single_comp_single {s q r : ℕ} (l₂ : OpLetter q r) (l₁ : OpLetter s q) (c₂ c₁ : ℤ) : DerivedOp.comp (Finsupp.single l₂ c₂) (Finsupp.single l₁ c₁) = Finsupp.single (l₂.comp l₁) (c₁ * c₂).
+In this notation, lemma DerivedOp.single_comp_single {s q r : ℕ} (l₂ : OpLetter q r) (l₁ : OpLetter s q) (c₂ c₁ : ℤ) : DerivedOp.comp (Finsupp.single l₂ c₂) (Finsupp.single l₁ c₁) = Finsupp.single (l₂.compLetter l₁) (c₁ * c₂).
 
-## realize_comp
+**Theorem 1.20 (realize_comp).**
 
-`realize` turns operator composition into hom composition (contravariantly: apply `M₁` then `M₂`). The functoriality fact that drives the operator-level induction. Proved by reducing to the single-single case (`OpLetter.realize_comp`) via bilinearity of `comp` and additivity of `realize`.
+Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.realize_comp`
 
-In this notation, lemma realize_comp {s q r : ℕ} (X : BisimplicialObject C) (M₂ : DerivedOp q r) (M₁ : DerivedOp s q) : (M₂.comp M₁).realize X = M₁.realize X ≫ M₂.realize X.
+*Proof.* Machine-checked in Lean as `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.realize_comp` (`✓ std3`). ∎
 
-**Theorem 1.14 (realize_single_id).**
+*Citation.* Jeffrey Li (2026). *Bisimplicial Eilenberg–Zilber equivalence and recursive normalized homotopy*. URL: <https://github.com/LeanPool/lean-pool/tree/8bbde3a6de815108d41922c9362ebbe38422663a/LeanPool/EilenbergZilber>.
+
+*Commentary.*
+
+`realize` turns operator composition into hom composition (contravariantly: apply `MOne` then `MTwo`). The functoriality fact that drives the operator-level induction. Proved by reducing to the single-single case (`OpLetter.realizeLetter_compLetter`) via bilinearity of `comp` and additivity of `realize`.
+
+In this notation, lemma realize_comp {s q r : ℕ} (X : BisimplicialObject C) (MTwo : DerivedOp q r) (MOne : DerivedOp s q) : (MTwo.comp MOne).realize X = MOne.realize X ≫ MTwo.realize X.
+
+**Theorem 1.21 (realize_single_id).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.realize_single_id`
 
@@ -246,9 +302,9 @@ Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.reali
 
 The identity letter realizes to the identity hom.
 
-In this notation, lemma realize_single_id {q : ℕ} (X : BisimplicialObject C) : DerivedOp.realize X (Finsupp.single ⟨𝟙 _, 𝟙 _⟩ 1 : DerivedOp q q) = 𝟙 ((F₂.obj X).X q).
+In this notation, lemma realize_single_id {q : ℕ} (X : BisimplicialObject C) : DerivedOp.realize X (Finsupp.single ⟨𝟙 _, 𝟙 _⟩ 1 : DerivedOp q q) = 𝟙 ((FTwo.obj X).X q).
 
-**Definition 1.15 (D0op).**
+**Definition 1.22 (D0op).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.D0op`
 
@@ -262,7 +318,7 @@ The 0-th degeneracy operator `D₀ = s₀ × s₀ : (K×L)_q → (K×L)_{q+1}` o
 
 In this notation, noncomputable def D0op (q : ℕ) : DerivedOp q (q + 1).
 
-**Definition 1.16 (faceOp).**
+**Definition 1.23 (faceOp).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.faceOp`
 
@@ -276,7 +332,7 @@ The `i`-th face operator `F_i = δ_i × δ_i : (K×L)_{q+1} → (K×L)_q`.
 
 In this notation, noncomputable def faceOp (q : ℕ) (i : Fin (q + 2)) : DerivedOp (q + 1) q.
 
-**Definition 1.17 (lastFaceOp).**
+**Definition 1.24 (lastFaceOp).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.lastFaceOp`
 
@@ -290,7 +346,7 @@ The **last face** `F₀` in EM's `∂ = F₀ − ∂'` decomposition — here th
 
 In this notation, noncomputable def lastFaceOp (q : ℕ) : DerivedOp (q + 1) q.
 
-**Definition 1.18 (truncBoundaryOp).**
+**Definition 1.25 (truncBoundaryOp).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.truncBoundaryOp`
 
@@ -304,7 +360,7 @@ The **truncated boundary** `∂' = Σ_{i≥1} (-1)^{i-1} F_i` (the part of the b
 
 In this notation, noncomputable def truncBoundaryOp (q : ℕ) : DerivedOp (q + 1) q.
 
-**Definition 1.19 (boundaryOp).**
+**Definition 1.26 (boundaryOp).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.boundaryOp`
 
@@ -318,7 +374,7 @@ The full simplicial boundary operator `∂ = Σ_i (-1)^i F_i : (K×L)_{q+1} → 
 
 In this notation, noncomputable def boundaryOp (q : ℕ) : DerivedOp (q + 1) q.
 
-**Theorem 1.20 (realize_faceOp).**
+**Theorem 1.27 (realize_faceOp).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.realize_faceOp`
 
@@ -332,7 +388,7 @@ The realized `i`-th face is the `i`-th face of the diagonal simplicial object: t
 
 In this notation, lemma realize_faceOp (X : BisimplicialObject C) (q : ℕ) (i : Fin (q + 2)) : (faceOp q i).realize X = (diag.obj X).δ i.
 
-**Theorem 1.21 (realize_boundaryOp).**
+**Theorem 1.28 (realize_boundaryOp).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.realize_boundaryOp`
 
@@ -342,11 +398,11 @@ Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.reali
 
 *Commentary.*
 
-The realized boundary operator is the differential of `F₂.obj X`.
+The realized boundary operator is the differential of `FTwo.obj X`.
 
-In this notation, lemma realize_boundaryOp (X : BisimplicialObject C) (q : ℕ) : (boundaryOp q).realize X = (F₂.obj X).d (q + 1) q.
+In this notation, lemma realize_boundaryOp (X : BisimplicialObject C) (q : ℕ) : (boundaryOp q).realize X = (FTwo.obj X).d (q + 1) q.
 
-**Theorem 1.22 (boundaryOp_eq).**
+**Theorem 1.29 (boundaryOp_eq).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.boundaryOp_eq`
 
@@ -360,7 +416,7 @@ Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.bound
 
 In this notation, lemma boundaryOp_eq (q : ℕ) : boundaryOp q = lastFaceOp q - truncBoundaryOp q.
 
-**Theorem 1.23 (prime_zero).**
+**Theorem 1.30 (prime_zero).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.prime_zero`
 
@@ -374,7 +430,7 @@ The zero operator remains zero after prepending the new vertex.
 
 In this notation, @[simp] lemma prime_zero {s q : ℕ} : (0 : DerivedOp s q).prime = 0.
 
-**Theorem 1.24 (prime_add).**
+**Theorem 1.31 (prime_add).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.prime_add`
 
@@ -388,7 +444,7 @@ Priming distributes over addition of formal operators.
 
 In this notation, lemma prime_add {s q : ℕ} (M N : DerivedOp s q) : (M + N).prime = M.prime + N.prime.
 
-**Theorem 1.25 (primeHom_comp).**
+**Theorem 1.32 (primeHom_comp).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.primeHom_comp`
 
@@ -402,19 +458,35 @@ The 0-th coface shift is **multiplicative**: `(g ≫ f)' = g' ≫ f'`. The combi
 
 In this notation, lemma primeHom_comp {s q r : ℕ} (g : (⦋r⦌ : SimplexCategory) ⟶ ⦋q⦌) (f : (⦋q⦌ : SimplexCategory) ⟶ ⦋s⦌) : primeHom (g ≫ f) = primeHom g ≫ primeHom f.
 
-## OpLetter.prime_comp
+**Theorem 1.33 (OpLetter.primeLetter_compLetter).**
+
+Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.primeLetter_compLetter`
+
+*Proof.* Machine-checked in Lean as `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.primeLetter_compLetter` (`✓ std3`). ∎
+
+*Citation.* Jeffrey Li (2026). *Bisimplicial Eilenberg–Zilber equivalence and recursive normalized homotopy*. URL: <https://github.com/LeanPool/lean-pool/tree/8bbde3a6de815108d41922c9362ebbe38422663a/LeanPool/EilenbergZilber>.
+
+*Commentary.*
 
 Letter-level multiplicativity of `prime`: `(l₂ ∘ l₁)' = l₂' ∘ l₁'`.
 
-In this notation, lemma OpLetter.prime_comp {s q r : ℕ} (l₂ : OpLetter q r) (l₁ : OpLetter s q) : (l₂.comp l₁).prime = l₂.prime.comp l₁.prime.
+In this notation, lemma OpLetter.primeLetter_compLetter {s q r : ℕ} (l₂ : OpLetter q r) (l₁ : OpLetter s q) : (l₂.compLetter l₁).primeLetter = l₂.primeLetter.compLetter l₁.primeLetter.
 
-## prime_comp
+**Theorem 1.34 (prime_comp).**
 
-**`prime` is multiplicative** (`(β∘γ)' = β'∘γ'`), so `(M₂ ∘ M₁)' = M₂' ∘ M₁'`. The key fact behind EM's `∂'M' = M'∂'`. Reduced to the single–single case `OpLetter.prime_comp` by bilinearity of `comp` and additivity of `prime`.
+Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.prime_comp`
 
-In this notation, lemma prime_comp {s q r : ℕ} (M₂ : DerivedOp q r) (M₁ : DerivedOp s q) : (M₂.comp M₁).prime = M₂.prime.comp M₁.prime.
+*Proof.* Machine-checked in Lean as `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.prime_comp` (`✓ std3`). ∎
 
-**Theorem 1.26 (primeHom_δ).**
+*Citation.* Jeffrey Li (2026). *Bisimplicial Eilenberg–Zilber equivalence and recursive normalized homotopy*. URL: <https://github.com/LeanPool/lean-pool/tree/8bbde3a6de815108d41922c9362ebbe38422663a/LeanPool/EilenbergZilber>.
+
+*Commentary.*
+
+**`prime` is multiplicative** (`(β∘γ)' = β'∘γ'`), so `(MTwo ∘ MOne)' = MTwo' ∘ MOne'`. The key fact behind EM's `∂'M' = M'∂'`. Reduced to the single–single case `OpLetter.primeLetter_compLetter` by bilinearity of `comp` and additivity of `prime`.
+
+In this notation, lemma prime_comp {s q r : ℕ} (MTwo : DerivedOp q r) (MOne : DerivedOp s q) : (MTwo.comp MOne).prime = MTwo.prime.comp MOne.prime.
+
+**Theorem 1.35 (primeHom_δ).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.primeHom_δ`
 
@@ -428,7 +500,7 @@ Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.prime
 
 In this notation, lemma primeHom_δ {q : ℕ} (i : Fin (q + 2)) : primeHom (SimplexCategory.δ i) = SimplexCategory.δ i.succ.
 
-**Theorem 1.27 (prime_faceOp).**
+**Theorem 1.36 (prime_faceOp).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.prime_faceOp`
 
@@ -442,7 +514,7 @@ Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.prime
 
 In this notation, lemma prime_faceOp (q : ℕ) (i : Fin (q + 2)) : (faceOp q i).prime = faceOp (q + 1) i.succ.
 
-**Theorem 1.28 (primeHom_σ).**
+**Theorem 1.37 (primeHom_σ).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.primeHom_σ`
 
@@ -456,7 +528,7 @@ Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.prime
 
 In this notation, lemma primeHom_σ {q : ℕ} (i : Fin (q + 1)) : primeHom (SimplexCategory.σ i) = SimplexCategory.σ i.succ.
 
-**Definition 1.29 (primeAddHom).**
+**Definition 1.38 (primeAddHom).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.primeAddHom`
 
@@ -470,7 +542,7 @@ Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.prime
 
 In this notation, noncomputable def primeAddHom {s q : ℕ} : DerivedOp s q →+ DerivedOp (s + 1) (q + 1).
 
-**Theorem 1.30 (prime_boundaryOp).**
+**Theorem 1.39 (prime_boundaryOp).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.prime_boundaryOp`
 
@@ -484,7 +556,7 @@ Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.prime
 
 In this notation, lemma prime_boundaryOp (q : ℕ) : (boundaryOp q).prime = truncBoundaryOp (q + 1).
 
-**Theorem 1.31 (faceZero_comp_primeHom).**
+**Theorem 1.40 (faceZero_comp_primeHom).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.faceZero_comp_primeHom`
 
@@ -498,7 +570,7 @@ The 0-th face "eats" the prepended vertex: `δ 0 ≫ primeHom θ = θ ≫ δ 0`.
 
 In this notation, lemma faceZero_comp_primeHom {s q : ℕ} (θ : (⦋q⦌ : SimplexCategory) ⟶ ⦋s⦌) : SimplexCategory.δ (0 : Fin (q + 2)) ≫ primeHom θ = θ ≫ SimplexCategory.δ (0 : Fin (s + 2)).
 
-**Theorem 1.32 (lastFace_comp_prime).**
+**Theorem 1.41 (lastFace_comp_prime).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.lastFace_comp_prime`
 
@@ -512,7 +584,7 @@ Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.lastF
 
 In this notation, lemma lastFace_comp_prime {s q : ℕ} (M : DerivedOp s q) : (lastFaceOp q).comp (M.prime) = M.comp (lastFaceOp s).
 
-**Theorem 1.33 (face_zero_comp_D0).**
+**Theorem 1.42 (face_zero_comp_D0).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.face_zero_comp_D0`
 
@@ -526,7 +598,7 @@ The two unit faces `F_0 D₀ = F_1 D₀ = 1` (`δ_0 ≫ σ_0 = δ_1 ≫ σ_0 = �
 
 In this notation, lemma face_zero_comp_D0 (q : ℕ) : (faceOp (q + 1) (0 : Fin (q + 3))).comp (D0op (q + 1)) = (Finsupp.single ⟨𝟙 _, 𝟙 _⟩ 1 : DerivedOp (q + 1) (q + 1)).
 
-**Theorem 1.34 (boundary_comp_D0).**
+**Theorem 1.43 (boundary_comp_D0).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.boundary_comp_D0`
 
@@ -536,11 +608,11 @@ Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.bound
 
 *Commentary.*
 
-Simplicial identity `∂ D₀ = D₀ ∂'` at the operator level. Writing `∂ = F₀ - ∂'`, the terms `F₀ D₀` and `F₁ D₀` both equal the identity, so the remaining faces assemble to `D₀ ∂'`.
+Simplicial identity `∂ D₀ = D₀ ∂'` at the operator level. Writing `∂ = F₀ - ∂'`, the terms `F₀ D₀` and `FOne D₀` both equal the identity, so the remaining faces assemble to `D₀ ∂'`.
 
 In this notation, lemma boundary_comp_D0 (q : ℕ) : (boundaryOp (q + 1)).comp (D0op (q + 1)) = (D0op q).comp (truncBoundaryOp q).
 
-**Theorem 1.35 (realize_diagLetter).**
+**Theorem 1.44 (realize_diagLetter).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.realize_diagLetter`
 
@@ -554,17 +626,33 @@ The realization of a **diagonal letter** `⟨θ, θ⟩` is the diagonal map `(di
 
 In this notation, lemma realize_diagLetter (X : BisimplicialObject C) {s q : ℕ} (θ : (⦋q⦌ : SimplexCategory) ⟶ ⦋s⦌) : DerivedOp.realize X (Finsupp.single (⟨θ, θ⟩ : OpLetter s q) 1) = (diag.obj X).map θ.op.
 
-## realize_diagLetter_comp_retractionN₂_eq_zero_of_not_mono
+**Theorem 1.45 (realize_diagLetter_comp_retractionNTwo_eq_zero_of_not_mono).**
 
-A diagonal degeneracy `⟨θ, θ⟩` with `θ` non-monic is killed by `retractionN₂`. Its realization is the diagonal map `(diag X).map θ.op`, and a non-monic `θ` is a simplicial degeneracy, so `degeneracy_comp_PInfty` applies after factoring `PInfty` through the Moore inclusion.
+Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.realize_diagLetter_comp_retractionNTwo_eq_zero_of_not_mono`
 
-In this notation, lemma realize_diagLetter_comp_retractionN₂_eq_zero_of_not_mono {s q : ℕ} (X : BisimplicialObject C) (θ : (⦋q⦌ : SimplexCategory) ⟶ ⦋s⦌) (hθ : ¬ Mono θ) : DerivedOp.realize X (Finsupp.single (⟨θ, θ⟩ : OpLetter s q) 1) ≫ (retractionN₂ X).f q = 0.
+*Proof.* Machine-checked in Lean as `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.realize_diagLetter_comp_retractionNTwo_eq_zero_of_not_mono` (`✓ std3`). ∎
 
-## realize_comp_diagLetter_not_mono_comp_retractionN₂
+*Citation.* Jeffrey Li (2026). *Bisimplicial Eilenberg–Zilber equivalence and recursive normalized homotopy*. URL: <https://github.com/LeanPool/lean-pool/tree/8bbde3a6de815108d41922c9362ebbe38422663a/LeanPool/EilenbergZilber>.
 
-A diagonal degeneracy on the output side kills any composite after `retractionN₂`. If `M = ⟨θ, θ⟩ ∘ N` with `θ` non-monic, then `realize M ≫ retractionN₂ = 0`. This is the form used later, where the norm term is expressed as a diagonal degeneracy postcomposed with an arbitrary operator.
+*Commentary.*
 
-In this notation, lemma realize_comp_diagLetter_not_mono_comp_retractionN₂ {r s q : ℕ} (X : BisimplicialObject C) (θ : (⦋q⦌ : SimplexCategory) ⟶ ⦋s⦌) (hθ : ¬ Mono θ) (N : DerivedOp r s) : DerivedOp.realize X (DerivedOp.comp (Finsupp.single (⟨θ, θ⟩ : OpLetter s q) 1) N) ≫ (retractionN₂ X).f q = 0.
+A diagonal degeneracy `⟨θ, θ⟩` with `θ` non-monic is killed by `retractionNTwo`. Its realization is the diagonal map `(diag X).map θ.op`, and a non-monic `θ` is a simplicial degeneracy, so `degeneracy_comp_PInfty` applies after factoring `PInfty` through the Moore inclusion.
+
+In this notation, lemma realize_diagLetter_comp_retractionNTwo_eq_zero_of_not_mono {s q : ℕ} (X : BisimplicialObject C) (θ : (⦋q⦌ : SimplexCategory) ⟶ ⦋s⦌) (hθ : ¬ Mono θ) : DerivedOp.realize X (Finsupp.single (⟨θ, θ⟩ : OpLetter s q) 1) ≫ (retractionNTwo X).f q = 0.
+
+**Theorem 1.46 (realize_comp_diagLetter_not_mono_comp_retractionNTwo).**
+
+Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.realize_comp_diagLetter_not_mono_comp_retractionNTwo`
+
+*Proof.* Machine-checked in Lean as `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.realize_comp_diagLetter_not_mono_comp_retractionNTwo` (`✓ std3`). ∎
+
+*Citation.* Jeffrey Li (2026). *Bisimplicial Eilenberg–Zilber equivalence and recursive normalized homotopy*. URL: <https://github.com/LeanPool/lean-pool/tree/8bbde3a6de815108d41922c9362ebbe38422663a/LeanPool/EilenbergZilber>.
+
+*Commentary.*
+
+A diagonal degeneracy on the output side kills any composite after `retractionNTwo`. If `M = ⟨θ, θ⟩ ∘ N` with `θ` non-monic, then `realize M ≫ retractionNTwo = 0`. This is the form used later, where the norm term is expressed as a diagonal degeneracy postcomposed with an arbitrary operator.
+
+In this notation, lemma realize_comp_diagLetter_not_mono_comp_retractionNTwo {r s q : ℕ} (X : BisimplicialObject C) (θ : (⦋q⦌ : SimplexCategory) ⟶ ⦋s⦌) (hθ : ¬ Mono θ) (N : DerivedOp r s) : DerivedOp.realize X (DerivedOp.comp (Finsupp.single (⟨θ, θ⟩ : OpLetter s q) 1) N) ≫ (retractionNTwo X).f q = 0.
 
 ## References
 
@@ -575,25 +663,36 @@ In this notation, lemma realize_comp_diagLetter_not_mono_comp_retractionN₂ {r 
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.boundaryOp`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.boundaryOp_eq`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.boundary_comp_D0`
+- Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.comp`
+- Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.compLetter`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.comp_add_right`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.faceOp`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.faceZero_comp_primeHom`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.face_zero_comp_D0`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.lastFaceOp`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.lastFace_comp_prime`
+- Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.prime`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.primeAddHom`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.primeHom`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.primeHom_comp`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.primeHom_δ`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.primeHom_σ`
+- Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.primeLetter`
+- Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.primeLetter_compLetter`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.prime_add`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.prime_boundaryOp`
+- Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.prime_comp`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.prime_faceOp`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.prime_zero`
+- Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.realize`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.realizeAddMonoidHom`
+- Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.realizeLetter`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.realize_add`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.realize_boundaryOp`
+- Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.realize_comp`
+- Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.realize_comp_diagLetter_not_mono_comp_retractionNTwo`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.realize_diagLetter`
+- Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.realize_diagLetter_comp_retractionNTwo_eq_zero_of_not_mono`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.realize_faceOp`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.realize_neg`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.realize_single`

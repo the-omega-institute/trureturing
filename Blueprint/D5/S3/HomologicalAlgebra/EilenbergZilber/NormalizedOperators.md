@@ -172,17 +172,25 @@ Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/NormalizedOperators.de
 
 *Commentary.*
 
-The degenerate part of `F₁` is sent by `shuffleMap` to a diagonal degeneracy, hence is killed by `PInfty`. Concretely, after decomposing the complementary projector `𝟙 - retractionN₁ ≫ inclusionN₁` bidegreewise, the resulting inner- and outer-degenerate pieces are annihilated by `ezComponent_inner_degeneracy_comp_PInfty` and `ezComponent_outer_degeneracy_comp_PInfty`.
+The degenerate part of `FOne` is sent by `shuffleMap` to a diagonal degeneracy, hence is killed by `PInfty`. Concretely, after decomposing the complementary projector `𝟙 - retractionNOne ≫ inclusionNOne` bidegreewise, the resulting inner- and outer-degenerate pieces are annihilated by `ezComponent_inner_degeneracy_comp_PInfty` and `ezComponent_outer_degeneracy_comp_PInfty`.
 
-In this notation, lemma degenerate_shuffleMap_comp_PInfty (X : BisimplicialObject C) : (𝟙 (F₁.obj X) - retractionN₁ X ≫ inclusionN₁ X) ≫ shuffleMap X ≫ (PInfty : F₂.obj X ⟶ F₂.obj X) = 0.
+In this notation, lemma degenerate_shuffleMap_comp_PInfty (X : BisimplicialObject C) : (𝟙 (FOne.obj X) - retractionNOne X ≫ inclusionNOne X) ≫ shuffleMap X ≫ (PInfty : FTwo.obj X ⟶ FTwo.obj X) = 0.
 
-## retractionN₁_inclusionN₁_shuffleMap_PInfty
+**Theorem 1.13 (retractionNOne_inclusionNOne_shuffleMap_PInfty).**
 
-The round trip `retractionN₁ ≫ inclusionN₁` is absorbed under `shuffleMap ≫ PInfty`. The correction term `1 - retractionN₁ ≫ inclusionN₁` lands in the degenerate part of the diagonal, which `PInfty` kills.
+Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/NormalizedOperators.retractionNOne_inclusionNOne_shuffleMap_PInfty`
 
-In this notation, @[reassoc] lemma retractionN₁_inclusionN₁_shuffleMap_PInfty (X : BisimplicialObject C) : retractionN₁ X ≫ inclusionN₁ X ≫ shuffleMap X ≫ (PInfty : F₂.obj X ⟶ F₂.obj X) = shuffleMap X ≫ PInfty.
+*Proof.* Machine-checked in Lean as `D5/S3/HomologicalAlgebra/EilenbergZilber/NormalizedOperators.retractionNOne_inclusionNOne_shuffleMap_PInfty` (`✓ std3`). ∎
 
-**Theorem 1.13 (IsNorm.kill).**
+*Citation.* Jeffrey Li (2026). *Bisimplicial Eilenberg–Zilber equivalence and recursive normalized homotopy*. URL: <https://github.com/LeanPool/lean-pool/tree/8bbde3a6de815108d41922c9362ebbe38422663a/LeanPool/EilenbergZilber>.
+
+*Commentary.*
+
+The round trip `retractionNOne ≫ inclusionNOne` is absorbed under `shuffleMap ≫ PInfty`. The correction term `1 - retractionNOne ≫ inclusionNOne` lands in the degenerate part of the diagonal, which `PInfty` kills.
+
+In this notation, @[reassoc] lemma retractionNOne_inclusionNOne_shuffleMap_PInfty (X : BisimplicialObject C) : retractionNOne X ≫ inclusionNOne X ≫ shuffleMap X ≫ (PInfty : FTwo.obj X ⟶ FTwo.obj X) = shuffleMap X ≫ PInfty.
+
+**Theorem 1.14 (IsNorm.kill).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/NormalizedOperators.kill`
 
@@ -192,11 +200,11 @@ Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/NormalizedOperators.ki
 
 *Commentary.*
 
-**Every norm dies under `retractionN₂`** (for every `X`). Structural induction: linear cases are `realize`-linearity; the structural generator is a diagonal degeneracy composed with an operator.
+**Every norm dies under `retractionNTwo`** (for every `X`). Structural induction: linear cases are `realize`-linearity; the structural generator is a diagonal degeneracy composed with an operator.
 
-In this notation, lemma IsNorm.kill {s q : ℕ} {M : DerivedOp s q} (h : IsNorm M) (X : BisimplicialObject C) : DerivedOp.realize X M ≫ (retractionN₂ X).f q = 0.
+In this notation, lemma IsNorm.kill {s q : ℕ} {M : DerivedOp s q} (h : IsNorm M) (X : BisimplicialObject C) : DerivedOp.realize X M ≫ (retractionNTwo X).f q = 0.
 
-**Theorem 1.14 (IsNorm.prime).**
+**Theorem 1.15 (IsNorm.prime).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/NormalizedOperators.prime`
 
@@ -226,4 +234,5 @@ In this notation, lemma IsNorm.prime {s q : ℕ} {M : DerivedOp s q} (h : IsNorm
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/NormalizedOperators.primeHom_not_mono`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/NormalizedOperators.prime_idOp`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/NormalizedOperators.prime_single_diag`
+- Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/NormalizedOperators.retractionNOne_inclusionNOne_shuffleMap_PInfty`
 - Dependency: [D5/S3/HomologicalAlgebra/EilenbergZilber/RecursiveOperators](RecursiveOperators.md)

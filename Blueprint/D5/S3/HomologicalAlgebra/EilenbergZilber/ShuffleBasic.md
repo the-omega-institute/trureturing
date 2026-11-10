@@ -302,35 +302,7 @@ Swapping a `(p,q)`-shuffle changes the sign by the Koszul factor `(-1)^(p*q)`.
 
 In this notation, theorem sign_eq_negOnePow_mul_swap_sign {p q : ℕ} (u : Shuffle p q) : u.sign = (-1 : ℤ) ^ (p * q) * (u.swap).sign.
 
-**Theorem 1.22 (unique_0_0).**
-
-Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/ShuffleBasic.unique_0_0`
-
-*Proof.* Machine-checked in Lean as `D5/S3/HomologicalAlgebra/EilenbergZilber/ShuffleBasic.unique_0_0` (`✓ std3`). ∎
-
-*Citation.* Jeffrey Li (2026). *Bisimplicial Eilenberg–Zilber equivalence and recursive normalized homotopy*. URL: <https://github.com/LeanPool/lean-pool/tree/8bbde3a6de815108d41922c9362ebbe38422663a/LeanPool/EilenbergZilber>.
-
-*Commentary.*
-
-For `Shuffle 0 0`, the domain and codomain are both `Fin 1`, so every shuffle has the same underlying map: the unique monotone injection to `(0, 0)`.
-
-In this notation, lemma unique_0_0 (μ : Shuffle 0 0) : μ.1 = ⟨fun _ => (0, 0), fun _ _ _ => le_refl _⟩.
-
-**Theorem 1.23 (subsingleton_0_0).**
-
-Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/ShuffleBasic.subsingleton_0_0`
-
-*Proof.* Machine-checked in Lean as `D5/S3/HomologicalAlgebra/EilenbergZilber/ShuffleBasic.subsingleton_0_0` (`✓ std3`). ∎
-
-*Citation.* Jeffrey Li (2026). *Bisimplicial Eilenberg–Zilber equivalence and recursive normalized homotopy*. URL: <https://github.com/LeanPool/lean-pool/tree/8bbde3a6de815108d41922c9362ebbe38422663a/LeanPool/EilenbergZilber>.
-
-*Commentary.*
-
-There is exactly one `(0,0)`-shuffle.
-
-In this notation, instance subsingleton_0_0 : Subsingleton (Shuffle 0 0).
-
-**Definition 1.24 (trivialShuffle).**
+**Definition 1.22 (trivialShuffle).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/ShuffleBasic.trivialShuffle`
 
@@ -344,7 +316,7 @@ The **staircase** `(r,m)`-shuffle `k ↦ (min(k,r), k - r)`: it goes right `r` s
 
 In this notation, def trivialShuffle (r m : ℕ) : Shuffle r m.
 
-**Theorem 1.25 (trivialShuffle_apply).**
+**Theorem 1.23 (trivialShuffle_apply).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/ShuffleBasic.trivialShuffle_apply`
 
@@ -358,7 +330,7 @@ The coordinates of the staircase shuffle: `fst = min(·, r)`, `snd = · - r`.
 
 In this notation, @[simp] lemma trivialShuffle_apply (r m : ℕ) (k : Index (r + m)) : (trivialShuffle r m).1 k = (⟨min k.val r, by omega⟩, ⟨k.val - r, by have := k.isLt; omega⟩).
 
-**Theorem 1.26 (sign_trivialShuffle).**
+**Theorem 1.24 (sign_trivialShuffle).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/ShuffleBasic.sign_trivialShuffle`
 
@@ -372,7 +344,7 @@ The staircase shuffle has no inversions, hence sign `1`.
 
 In this notation, lemma sign_trivialShuffle (r m : ℕ) : (trivialShuffle r m).sign = 1.
 
-**Definition 1.27 (isLeftStep).**
+**Definition 1.25 (isLeftStep).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/ShuffleBasic.isLeftStep`
 
@@ -386,7 +358,7 @@ Whether step `r` of shuffle `μ` is a "left step" (first coordinate increments).
 
 In this notation, def isLeftStep {p q : ℕ} (μ : Shuffle p q) (r : Fin (p + q)) : Prop.
 
-**Definition 1.28 (decidableIsLeftStep).**
+**Definition 1.26 (decidableIsLeftStep).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/ShuffleBasic.decidableIsLeftStep`
 
@@ -400,7 +372,7 @@ First-coordinate increase is decidable on every edge of a shuffle.
 
 In this notation, instance decidableIsLeftStep {p q : ℕ} (μ : Shuffle p q) (r : Fin (p + q)) : Decidable (isLeftStep μ r).
 
-**Definition 1.29 (uniqueShuffleNZero).**
+**Definition 1.27 (uniqueShuffleNZero).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/ShuffleBasic.uniqueShuffleNZero`
 
@@ -414,7 +386,7 @@ A shuffle with zero second degree is the unique path k ↦ (k,0).
 
 In this notation, instance uniqueShuffleNZero {n : ℕ} : Unique (Shuffle n 0).
 
-**Definition 1.30 (uniqueShuffleZeroN).**
+**Definition 1.28 (uniqueShuffleZeroN).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/ShuffleBasic.uniqueShuffleZeroN`
 
@@ -428,7 +400,7 @@ A shuffle with zero first degree is the unique path k ↦ (0,k).
 
 In this notation, instance uniqueShuffleZeroN {n : ℕ} : Unique (Shuffle 0 n).
 
-**Theorem 1.31 (Shuffle.sign_default_zero_right).**
+**Theorem 1.29 (Shuffle.sign_default_zero_right).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/ShuffleBasic.sign_default_zero_right`
 
@@ -442,7 +414,7 @@ The unique `(n,0)`-shuffle has sign `1`.
 
 In this notation, lemma Shuffle.sign_default_zero_right {n : ℕ} : (default : Shuffle n 0).sign = 1.
 
-**Theorem 1.32 (Shuffle.sign_default_zero_left).**
+**Theorem 1.30 (Shuffle.sign_default_zero_left).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/ShuffleBasic.sign_default_zero_left`
 
@@ -478,7 +450,6 @@ In this notation, lemma Shuffle.sign_default_zero_left {n : ℕ} : (default : Sh
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/ShuffleBasic.sign_default_zero_right`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/ShuffleBasic.sign_eq_negOnePow_mul_swap_sign`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/ShuffleBasic.sign_trivialShuffle`
-- Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/ShuffleBasic.subsingleton_0_0`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/ShuffleBasic.swap`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/ShuffleBasic.swapEquiv`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/ShuffleBasic.swap_apply_fst`
@@ -488,5 +459,4 @@ In this notation, lemma Shuffle.sign_default_zero_left {n : ℕ} : (default : Sh
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/ShuffleBasic.trivialShuffle_apply`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/ShuffleBasic.uniqueShuffleNZero`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/ShuffleBasic.uniqueShuffleZeroN`
-- Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/ShuffleBasic.unique_0_0`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/ShuffleBasic.xy_diff_eq_sum_mixed`

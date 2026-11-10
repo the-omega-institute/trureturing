@@ -4,11 +4,11 @@
 
 The shuffle chain map and Moore normalization
 
-Fix an abelian category C : Type u with Category.{v} C and independent universes u,v. Every X is an arbitrary bisimplicial object in C. The complexes F₁ and F₂ are the total double alternating-face complex and the diagonal alternating-face complex, respectively, in ChainComplex C ℕ.
+Fix an abelian category C : Type u with Category.{v} C and independent universes u,v. Every X is an arbitrary bisimplicial object in C. The complexes FOne and FTwo are the total double alternating-face complex and the diagonal alternating-face complex, respectively, in ChainComplex C ℕ.
 
-The two coordinate maps of a (p,q)-shuffle give simplex maps [p+q] → [p] and [p+q] → [q]. Contravariance realizes their pair as X[p,q] → X[p+q,p+q]. The sum of these maps with integer shuffle signs is ezComponent. Its boundary splits into first-coordinate and second-coordinate insertion terms; the marked diagonal vertices cancel by the sign-reversing involution. Total descent packages the resulting shuffleMap : F₁(X) → F₂(X).
+The two coordinate maps of a (p,q)-shuffle give simplex maps [p+q] → [p] and [p+q] → [q]. Contravariance realizes their pair as X[p,q] → X[p+q,p+q]. The sum of these maps with integer shuffle signs is ezComponent. Its boundary splits into first-coordinate and second-coordinate insertion terms; the marked diagonal vertices cancel by the sign-reversing involution. Total descent packages the resulting shuffleMap : FOne(X) → FTwo(X).
 
-N₁ is the total complex after Moore normalization in both directions, and N₂ is the normalized Moore complex of the diagonal. Each uses the pinned Dold–Kan inclusion and retraction. The normalized shuffle and Alexander–Whitney maps are obtained by inclusion, the corresponding unnormalized map, and retraction. The Moore convention is the intersection of the positive-face kernels, rather than the quotient-by-degeneracies convention of the original product-chain formulation.
+NOne is the total complex after Moore normalization in both directions, and NTwo is the normalized Moore complex of the diagonal. Each uses the pinned Dold–Kan inclusion and retraction. The normalized shuffle and Alexander–Whitney maps are obtained by inclusion, the corresponding unnormalized map, and retraction. The Moore convention is the intersection of the positive-face kernels, rather than the quotient-by-degeneracies convention of the original product-chain formulation.
 
 **Definition 1.1 (shuffleFstHom).**
 
@@ -132,9 +132,9 @@ Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.shuffleMa
 
 *Commentary.*
 
-The shuffle chain map `F₁(X) ⟶ F₂(X)`.
+The shuffle chain map `FOne(X) ⟶ FTwo(X)`.
 
-In this notation, noncomputable def shuffleMap (X : BisimplicialObject C) : F₁.obj X ⟶ F₂.obj X.
+In this notation, noncomputable def shuffleMap (X : BisimplicialObject C) : FOne.obj X ⟶ FTwo.obj X.
 
 **Theorem 1.10 (alexanderWhitney_comp_shuffleMap_f).**
 
@@ -162,21 +162,37 @@ Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.awShuffle
 
 In degree `0`, the composite `alexanderWhitney ≫ shuffleMap` is the identity.
 
-In this notation, lemma awShuffle_f_zero (X : BisimplicialObject C) : (alexanderWhitney X ≫ shuffleMap X).f 0 = (𝟙 (F₂.obj X) : (F₂.obj X) ⟶ (F₂.obj X)).f 0.
+In this notation, lemma awShuffle_f_zero (X : BisimplicialObject C) : (alexanderWhitney X ≫ shuffleMap X).f 0 = (𝟙 (FTwo.obj X) : (FTwo.obj X) ⟶ (FTwo.obj X)).f 0.
 
-## N₁
+**Definition 1.12 (NOne).**
 
-The **bi-normalized total complex**: normalize both simplicial directions (via the normalized Moore complex), then take the total complex. The normalized analogue of `F₁`.
+Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.NOne`
 
-In this notation, noncomputable abbrev N₁ : BisimplicialObject C ⥤ ChainComplex C ℕ.
+*Formalization.* `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.NOne` (`✓ std3`).
 
-## N₂
+*Citation.* Jeffrey Li (2026). *Bisimplicial Eilenberg–Zilber equivalence and recursive normalized homotopy*. URL: <https://github.com/LeanPool/lean-pool/tree/8bbde3a6de815108d41922c9362ebbe38422663a/LeanPool/EilenbergZilber>.
 
-The **normalized Moore complex of the diagonal**. The normalized analogue of `F₂`.
+*Commentary.*
 
-In this notation, noncomputable abbrev N₂ : BisimplicialObject C ⥤ ChainComplex C ℕ.
+The **bi-normalized total complex**: normalize both simplicial directions (via the normalized Moore complex), then take the total complex. The normalized analogue of `FOne`.
 
-**Definition 1.12 (mooreInclusion).**
+In this notation, noncomputable abbrev NOne : BisimplicialObject C ⥤ ChainComplex C ℕ.
+
+**Definition 1.13 (NTwo).**
+
+Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.NTwo`
+
+*Formalization.* `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.NTwo` (`✓ std3`).
+
+*Citation.* Jeffrey Li (2026). *Bisimplicial Eilenberg–Zilber equivalence and recursive normalized homotopy*. URL: <https://github.com/LeanPool/lean-pool/tree/8bbde3a6de815108d41922c9362ebbe38422663a/LeanPool/EilenbergZilber>.
+
+*Commentary.*
+
+The **normalized Moore complex of the diagonal**. The normalized analogue of `FTwo`.
+
+In this notation, noncomputable abbrev NTwo : BisimplicialObject C ⥤ ChainComplex C ℕ.
+
+**Definition 1.14 (mooreInclusion).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.mooreInclusion`
 
@@ -190,7 +206,7 @@ The Moore inclusion `N[-] ⟶ K[-]` packaged as a natural transformation. Needed
 
 In this notation, noncomputable def mooreInclusion : normalizedMooreComplex C ⟶ alternatingFaceMapComplex C.
 
-**Definition 1.13 (mooreRetraction).**
+**Definition 1.15 (mooreRetraction).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.mooreRetraction`
 
@@ -204,7 +220,7 @@ The Dold–Kan retraction `K[-] ⟶ N[-]` (via `PInfty`) as a natural transforma
 
 In this notation, noncomputable def mooreRetraction : alternatingFaceMapComplex C ⟶ normalizedMooreComplex C.
 
-**Theorem 1.14 (mooreInclusion_comp_mooreRetraction).**
+**Theorem 1.16 (mooreInclusion_comp_mooreRetraction).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.mooreInclusion_comp_mooreRetraction`
 
@@ -218,31 +234,63 @@ The Moore inclusion is a section of the Dold–Kan retraction.
 
 In this notation, lemma mooreInclusion_comp_mooreRetraction : mooreInclusion ≫ mooreRetraction = 𝟙 (normalizedMooreComplex C).
 
-## inclusionN₁
+**Definition 1.17 (inclusionNOne).**
 
-Inclusion `N₁ ↪ F₁` of the bi-normalized total complex into the unnormalized total complex, obtained by including both simplicial directions (`inclusionOfMooreComplexMap` outer, `mooreInclusion` inner) and totalizing.
+Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.inclusionNOne`
 
-In this notation, noncomputable def inclusionN₁ : N₁.obj X ⟶ F₁.obj X.
+*Formalization.* `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.inclusionNOne` (`✓ std3`).
 
-## retractionN₁
+*Citation.* Jeffrey Li (2026). *Bisimplicial Eilenberg–Zilber equivalence and recursive normalized homotopy*. URL: <https://github.com/LeanPool/lean-pool/tree/8bbde3a6de815108d41922c9362ebbe38422663a/LeanPool/EilenbergZilber>.
 
-Retraction `F₁ ↠ N₁` onto the bi-normalized total complex (via `PInfty` in both directions).
+*Commentary.*
 
-In this notation, noncomputable def retractionN₁ : F₁.obj X ⟶ N₁.obj X.
+Inclusion `NOne ↪ FOne` of the bi-normalized total complex into the unnormalized total complex, obtained by including both simplicial directions (`inclusionOfMooreComplexMap` outer, `mooreInclusion` inner) and totalizing.
 
-## inclusionN₂
+In this notation, noncomputable def inclusionNOne : NOne.obj X ⟶ FOne.obj X.
 
-Inclusion `N₂ ↪ F₂` for the diagonal (the Moore inclusion).
+**Definition 1.18 (retractionNOne).**
 
-In this notation, noncomputable def inclusionN₂ : N₂.obj X ⟶ F₂.obj X.
+Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.retractionNOne`
 
-## retractionN₂
+*Formalization.* `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.retractionNOne` (`✓ std3`).
 
-Retraction `F₂ ↠ N₂` for the diagonal (the `PInfty` retraction).
+*Citation.* Jeffrey Li (2026). *Bisimplicial Eilenberg–Zilber equivalence and recursive normalized homotopy*. URL: <https://github.com/LeanPool/lean-pool/tree/8bbde3a6de815108d41922c9362ebbe38422663a/LeanPool/EilenbergZilber>.
 
-In this notation, noncomputable def retractionN₂ : F₂.obj X ⟶ N₂.obj X.
+*Commentary.*
 
-**Definition 1.15 (normalizedShuffleMap).**
+Retraction `FOne ↠ NOne` onto the bi-normalized total complex (via `PInfty` in both directions).
+
+In this notation, noncomputable def retractionNOne : FOne.obj X ⟶ NOne.obj X.
+
+**Definition 1.19 (inclusionNTwo).**
+
+Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.inclusionNTwo`
+
+*Formalization.* `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.inclusionNTwo` (`✓ std3`).
+
+*Citation.* Jeffrey Li (2026). *Bisimplicial Eilenberg–Zilber equivalence and recursive normalized homotopy*. URL: <https://github.com/LeanPool/lean-pool/tree/8bbde3a6de815108d41922c9362ebbe38422663a/LeanPool/EilenbergZilber>.
+
+*Commentary.*
+
+Inclusion `NTwo ↪ FTwo` for the diagonal (the Moore inclusion).
+
+In this notation, noncomputable def inclusionNTwo : NTwo.obj X ⟶ FTwo.obj X.
+
+**Definition 1.20 (retractionNTwo).**
+
+Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.retractionNTwo`
+
+*Formalization.* `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.retractionNTwo` (`✓ std3`).
+
+*Citation.* Jeffrey Li (2026). *Bisimplicial Eilenberg–Zilber equivalence and recursive normalized homotopy*. URL: <https://github.com/LeanPool/lean-pool/tree/8bbde3a6de815108d41922c9362ebbe38422663a/LeanPool/EilenbergZilber>.
+
+*Commentary.*
+
+Retraction `FTwo ↠ NTwo` for the diagonal (the `PInfty` retraction).
+
+In this notation, noncomputable def retractionNTwo : FTwo.obj X ⟶ NTwo.obj X.
+
+**Definition 1.21 (normalizedShuffleMap).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.normalizedShuffleMap`
 
@@ -252,11 +300,11 @@ Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.normalize
 
 *Commentary.*
 
-The shuffle map on normalized complexes, `∇ : N₁ → N₂`. Option 3: the unnormalized `shuffleMap` conjugated by the Dold–Kan inclusion `N₁ ↪ F₁` and the retraction `F₂ ↠ N₂`, so it is levelwise-concrete.
+The shuffle map on normalized complexes, `∇ : NOne → NTwo`. Option 3: the unnormalized `shuffleMap` conjugated by the Dold–Kan inclusion `NOne ↪ FOne` and the retraction `FTwo ↠ NTwo`, so it is levelwise-concrete.
 
-In this notation, noncomputable def normalizedShuffleMap : N₁.obj X ⟶ N₂.obj X.
+In this notation, noncomputable def normalizedShuffleMap : NOne.obj X ⟶ NTwo.obj X.
 
-**Definition 1.16 (normalizedAlexanderWhitney).**
+**Definition 1.22 (normalizedAlexanderWhitney).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.normalizedAlexanderWhitney`
 
@@ -266,23 +314,29 @@ Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.normalize
 
 *Commentary.*
 
-The Alexander–Whitney map on normalized complexes, `AW : N₂ → N₁`. Option 3: the unnormalized `alexanderWhitney` conjugated by the Dold–Kan inclusion `N₂ ↪ F₂` and the retraction `F₁ ↠ N₁`, so it is levelwise-concrete.
+The Alexander–Whitney map on normalized complexes, `AW : NTwo → NOne`. Option 3: the unnormalized `alexanderWhitney` conjugated by the Dold–Kan inclusion `NTwo ↪ FTwo` and the retraction `FOne ↠ NOne`, so it is levelwise-concrete.
 
-In this notation, noncomputable def normalizedAlexanderWhitney : N₂.obj X ⟶ N₁.obj X.
+In this notation, noncomputable def normalizedAlexanderWhitney : NTwo.obj X ⟶ NOne.obj X.
 
 ## References
 
+- Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.NOne`
+- Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.NTwo`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.alexanderWhitney_comp_shuffleMap_f`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.awShuffle_f_zero`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.ezComponent`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.ezComponent_boundary`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.fstHom_insertLeftStep_comp_δ`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.fstHom_swapDiagonalSteps_comp_δ`
+- Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.inclusionNOne`
+- Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.inclusionNTwo`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.mooreInclusion`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.mooreInclusion_comp_mooreRetraction`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.mooreRetraction`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.normalizedAlexanderWhitney`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.normalizedShuffleMap`
+- Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.retractionNOne`
+- Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.retractionNTwo`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.shuffleFstHom`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.shuffleMap`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/Bisimplicial.shuffleSndHom`

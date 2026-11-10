@@ -4,7 +4,7 @@
 
 The recursive Eilenberg–Mac Lane operator
 
-All degrees are natural numbers. Pure DerivedOp constructions are integer combinations of pairs of simplex maps; a realization uses any abelian C : Type u with Category.{v} C, independent universes, and any bisimplicial X. Composition M₂.comp M₁ means first apply M₁ and then M₂.
+All degrees are natural numbers. Pure DerivedOp constructions are integer combinations of pairs of simplex maps; a realization uses any abelian C : Type u with Category.{v} C, independent universes, and any bisimplicial X. Composition MTwo.comp MOne means first apply MOne and then MTwo.
 
 The endomorphism hOp(q) sums over every split p+(q-p)=q and every shuffle of that split. Its realization is alexanderWhitney followed by shuffleMap. The degree-raising family phiOp is defined recursively: phiOp(0)=0 and phiOp(q+1)=-(phiOp(q)).prime+(hOp(q+1)).prime.comp(D0op(q+1)). The negative sign belongs to this recursion.
 
@@ -50,7 +50,7 @@ Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/RecursiveOperators.hLe
 
 Realization of one `hLetter` summand is the corresponding `awComponent ≫ ezComponent` shuffle summand. This identifies the AW front/back faces with the shuffle degeneracies.
 
-In this notation, lemma hLetter_realize (X : BisimplicialObject C) (q : ℕ) (p : Fin (q + 1)) (μ : Shuffle (p : ℕ) (q - p)) : (hLetter q p μ).realize X = eqToHom (by simp [Nat.add_sub_cancel' (Nat.lt_succ_iff.mp p.isLt)]) ≫ awComponent X p (q - p) ≫ ((X.obj (Opposite.op ⦋(p : ℕ)⦌)).map (shuffleSndHom μ).op ≫ (X.map (shuffleFstHom μ).op).app (Opposite.op ⦋(p : ℕ) + (q - p)⦌)) ≫ eqToHom (by simp [Nat.add_sub_cancel' (Nat.lt_succ_iff.mp p.isLt)]).
+In this notation, lemma hLetter_realize (X : BisimplicialObject C) (q : ℕ) (p : Fin (q + 1)) (μ : Shuffle (p : ℕ) (q - p)) : (hLetter q p μ).realizeLetter X = eqToHom (by simp [Nat.add_sub_cancel' (Nat.lt_succ_iff.mp p.isLt)]) ≫ awComponent X p (q - p) ≫ ((X.obj (Opposite.op ⦋(p : ℕ)⦌)).map (shuffleSndHom μ).op ≫ (X.map (shuffleFstHom μ).op).app (Opposite.op ⦋(p : ℕ) + (q - p)⦌)) ≫ eqToHom (by simp [Nat.add_sub_cancel' (Nat.lt_succ_iff.mp p.isLt)]).
 
 **Theorem 1.4 (realize_hOp).**
 
@@ -62,7 +62,7 @@ Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/RecursiveOperators.rea
 
 *Commentary.*
 
-`hOp` realizes to the composite `alexanderWhitney ≫ shuffleMap = ∇f` on `F₂.obj X`.
+`hOp` realizes to the composite `alexanderWhitney ≫ shuffleMap = ∇f` on `FTwo.obj X`.
 
 In this notation, lemma realize_hOp (X : BisimplicialObject C) (q : ℕ) : (hOp q).realize X = (alexanderWhitney X ≫ shuffleMap X).f q.
 
@@ -90,9 +90,9 @@ Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/RecursiveOperators.phi
 
 *Commentary.*
 
-`Φ` packaged as a degree-`+1` `Homotopy.hom` family on `F₂.obj X` (the unnormalized diagonal): `phiOp i` realized (transported along `j = i+1`) on the single nonzero entry, `0` elsewhere.
+`Φ` packaged as a degree-`+1` `Homotopy.hom` family on `FTwo.obj X` (the unnormalized diagonal): `phiOp i` realized (transported along `j = i+1`) on the single nonzero entry, `0` elsewhere.
 
-In this notation, noncomputable def phiHomRaw (X : BisimplicialObject C) (i j : ℕ) : (F₂.obj X).X i ⟶ (F₂.obj X).X j.
+In this notation, noncomputable def phiHomRaw (X : BisimplicialObject C) (i j : ℕ) : (FTwo.obj X).X i ⟶ (FTwo.obj X).X j.
 
 **Theorem 1.7 (prevD_phiHomRaw).**
 
@@ -244,9 +244,9 @@ Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/RecursiveOperators.hOp
 
 *Commentary.*
 
-Base degree: `hOp 0` agrees with the identity after postcomposing with `retractionN₂`.
+Base degree: `hOp 0` agrees with the identity after postcomposing with `retractionNTwo`.
 
-In this notation, lemma hOp_zero_comp_retraction (X : BisimplicialObject C) : DerivedOp.realize X (hOp 0) ≫ (retractionN₂ X).f 0 = DerivedOp.realize X (idOp 0) ≫ (retractionN₂ X).f 0.
+In this notation, lemma hOp_zero_comp_retraction (X : BisimplicialObject C) : DerivedOp.realize X (hOp 0) ≫ (retractionNTwo X).f 0 = DerivedOp.realize X (idOp 0) ≫ (retractionNTwo X).f 0.
 
 **Theorem 1.18 (DerivedOp.comp_neg).**
 
@@ -260,7 +260,7 @@ Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/RecursiveOperators.com
 
 Negation in the operator applied first negates the composite.
 
-In this notation, lemma DerivedOp.comp_neg {s q r : ℕ} (M₂ : DerivedOp q r) (N : DerivedOp s q) : M₂.comp (-N) = -(M₂.comp N).
+In this notation, lemma DerivedOp.comp_neg {s q r : ℕ} (MTwo : DerivedOp q r) (N : DerivedOp s q) : MTwo.comp (-N) = -(MTwo.comp N).
 
 **Theorem 1.19 (DerivedOp.neg_comp).**
 
@@ -288,7 +288,7 @@ Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/RecursiveOperators.com
 
 Composition distributes over a difference in the operator applied first.
 
-In this notation, lemma DerivedOp.comp_sub {s q r : ℕ} (M₂ : DerivedOp q r) (M N : DerivedOp s q) : M₂.comp (M - N) = M₂.comp M - M₂.comp N.
+In this notation, lemma DerivedOp.comp_sub {s q r : ℕ} (MTwo : DerivedOp q r) (M N : DerivedOp s q) : MTwo.comp (M - N) = MTwo.comp M - MTwo.comp N.
 
 **Theorem 1.21 (DerivedOp.sub_comp).**
 
@@ -318,13 +318,21 @@ Priming commutes with negation.
 
 In this notation, lemma prime_neg {s q : ℕ} (M : DerivedOp s q) : (-M).prime = -M.prime.
 
-## DerivedOp.comp_assoc
+**Theorem 1.23 (DerivedOp.comp_assoc).**
+
+Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/RecursiveOperators.comp_assoc`
+
+*Proof.* Machine-checked in Lean as `D5/S3/HomologicalAlgebra/EilenbergZilber/RecursiveOperators.comp_assoc` (`✓ std3`). ∎
+
+*Citation.* Jeffrey Li (2026). *Bisimplicial Eilenberg–Zilber equivalence and recursive normalized homotopy*. URL: <https://github.com/LeanPool/lean-pool/tree/8bbde3a6de815108d41922c9362ebbe38422663a/LeanPool/EilenbergZilber>.
+
+*Commentary.*
 
 Associativity of `DerivedOp.comp` (reduces to `single_comp_single` + bilinearity).
 
-In this notation, lemma DerivedOp.comp_assoc {s q r p : ℕ} (M₃ : DerivedOp r p) (M₂ : DerivedOp q r) (M₁ : DerivedOp s q) : (M₃.comp M₂).comp M₁ = M₃.comp (M₂.comp M₁).
+In this notation, lemma DerivedOp.comp_assoc {s q r p : ℕ} (M₃ : DerivedOp r p) (MTwo : DerivedOp q r) (MOne : DerivedOp s q) : (M₃.comp MTwo).comp MOne = M₃.comp (MTwo.comp MOne).
 
-**Theorem 1.23 (DerivedOp.zero_comp).**
+**Theorem 1.24 (DerivedOp.zero_comp).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/RecursiveOperators.zero_comp`
 
@@ -342,6 +350,7 @@ In this notation, @[simp] lemma DerivedOp.zero_comp {s q r : ℕ} (N : DerivedOp
 
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/RecursiveOperators.bitype`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/RecursiveOperators.boundaryOp_comp_hOp`
+- Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/RecursiveOperators.comp_assoc`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/RecursiveOperators.comp_neg`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/RecursiveOperators.comp_sub`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/RecursiveOperators.dNext_phiHomRaw`
