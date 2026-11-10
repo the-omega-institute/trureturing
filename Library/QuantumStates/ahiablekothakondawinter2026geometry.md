@@ -176,3 +176,16 @@ is confined to v2 and is not an exhaustive later-literature or uniqueness
 check. No final unique completion, general-$m$ resolution, classification
 of all maximizers, equality of APPT with absolute separability, or
 maximum in dimensions 7 through 13 is asserted by this update.
+
+## Later literature
+
+[Tran, arXiv:2611.01492v1](tran2026puritymaxima.md), Theorem B, refutes
+the unrestricted form of Conjecture 6.7 with full-rank APPT boundary spectra
+for every $m\ge10$ at both $n=4m-2$ and $n=4m$. Theorem C also answers the
+Section 7 question: for $2\le m\le n$, ordered state eigenvalues satisfying
+equation (31) imply absolute separability. These are assertions of that
+preprint, checked against its official source text, separately from
+Lean/kernel acceptance. The existing project sector formalizations and
+their provenance remain separate; an independently found similar spectrum
+is not a new resolution. Section 8's remaining open questions are recorded
+in the linked note within the scope of that source.
