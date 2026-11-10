@@ -149,7 +149,7 @@ def evidence : Registration arena.{u, v, w} sourceScope.{u, v, w} :=
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, 0, 0, 0}
-      (@continuous_surjective_equivariant_minimality)
+      (@continuous_surjective_equivariant_minimality.{u, v, w})
       (Realization signature.{u, v, w}) Unit Unit where
   unitName := `Reg.D5.S3.Observer.Dynamics.TopologicalFactorMinimality.continuous_surjective_equivariant_minimality__information_unit
   realizationName := `Reg.D5.S3.Observer.Dynamics.TopologicalFactorMinimality.Additive.evidence
@@ -283,7 +283,7 @@ def evidence : Registration arena.{u, v} sourceScope.{u, v} :=
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, 0, 0, 0}
-      (@dense_forward_orbit_of_continuous_surjective_semiconj)
+      (@dense_forward_orbit_of_continuous_surjective_semiconj.{u, v})
       (Realization signature.{u, v}) Unit Unit where
   unitName := `Reg.D5.S3.Observer.Dynamics.TopologicalFactorMinimality.dense_forward_orbit_of_continuous_surjective_semiconj__information_unit
   realizationName := `Reg.D5.S3.Observer.Dynamics.TopologicalFactorMinimality.Forward.evidence
