@@ -5,7 +5,35 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.ZeroData;
 
 internal sealed class ActualHeightFourteenSectorDocument : IScribeDocumentDefinition
 {
-    private static Formula Statement() => Call("StrictAntiOn", Call("weight"), Call("Ioi", Call("threshold")));
+    private static Formula Statement()
+    {
+        var n = DefinitionDsl.Id("N");
+        var c = DefinitionDsl.Id("c");
+        var p = DefinitionDsl.Id("p");
+        var u = DefinitionDsl.Id("u");
+        var real = Seq(Mathbb, Grp(FormulaDsl.Id("R")));
+        var fin = Call("Fin", n);
+        var nonnegative = All("j", fin,
+            Le(new Formula.Number(0), Call("c", DefinitionDsl.Id("j"))));
+        var conclusion = Call("StrictAntiOn",
+            Seq(Open, Open, u, Colon, real, Close, Sp, Mapsto, Sp, Call("weight", c, u, p), Close),
+            Call("Ioi", Call("threshold", n)));
+        return All("N", Seq(Mathbb, Grp(FormulaDsl.Id("N"))),
+            All("c", new Formula.TypeArrow(fin, real), All("p", real,
+                Then(new Formula.Relation(new Formula.Number(0), FormulaRelationOperator.LessThan, n),
+                    Then(nonnegative, Then(Le(new Formula.Number(0), p),
+                        Then(Le(p, new Formula.Fraction(new Formula.Number(1), new Formula.Number(4))),
+                            conclusion)))))));
+    }
+
+    private static Formula All(string variable, Formula domain, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(variable), domain, body);
+
+    private static Formula Then(Formula premise, Formula conclusion) =>
+        new Formula.Logic(premise, FormulaLogicOperator.Implies, conclusion);
+
+    private static Formula Le(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.LessThanOrEqual, right);
 
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
