@@ -65,7 +65,7 @@ private theorem bilinear_old (a : Fin e → ℤ) (n : Charge D) (i : Fin D.rank)
   rw [bilinear_symmetric, bilinear_unit]
   change (∑ k : Fin (D.rank+e), _) = _
   rw [Fin.sum_univ_add]
-  simp [liftCharge, ambient, D.symmetric, mul_comm]
+  simp [liftCharge, D.symmetric, mul_comm]
 
 private theorem bilinear_external (a : Fin e → ℤ) (n : Charge D) (j : Fin e) :
     bilinear (ambient D e B C hC hCe) (liftCharge D B C hC hCe a n)
@@ -75,7 +75,7 @@ private theorem bilinear_external (a : Fin e → ℤ) (n : Charge D) (j : Fin e)
   rw [bilinear_symmetric, bilinear_unit]
   change (∑ k : Fin (D.rank+e), _) = _
   rw [Fin.sum_univ_add]
-  simp [liftCharge, ambient, hC, mul_comm]
+  simp [liftCharge, hC, mul_comm]
 
 private theorem transverse_pairing (hD : (gramReal D).PosDef)
     (a : Fin e → ℤ) (n : Charge D) (j : Fin e) :
@@ -113,10 +113,6 @@ private theorem transverse_pairing (hD : (gramReal D).PosDef)
   rw [old, ext]
   simp only [transversePair, mul_sub, Finset.sum_sub_distrib]
   ring
-
-private theorem projection_transverse (j : Fin e) (k : ℕ) :
-    polynomialProjection D B C hC hCe (transverse D B C hC hCe j k) = 0 := by
-  simp [transverse, polynomialProjection, projectionVariable, map_smul]
 
 private theorem translatedProjection_variable
     (A : Charge (ambient D e B C hC hCe))
@@ -159,18 +155,20 @@ theorem transverse_translation (hD : (gramReal D).PosDef)
     smul_smul]
   rw [← map_sum, ← Finset.sum_mul, ← map_sum, ← Finset.sum_smul]
   have hscalar := congrArg (fun z : ℂ => Polynomial.C (z • (1 : Oscillator D))) pair
-  simp only [sub_smul, map_sub, ← Finset.sum_smul, smul_smul, map_sum] at hscalar
+  simp only [sub_smul, map_sub] at hscalar
   linear_combination -Polynomial.X^(k+1) * hscalar
 
 /-- Every polynomial in transverse oscillators is contracted by the same
 native substitution. No bound on the polynomial degree or frequency is used. -/
 theorem transverse_polynomial_translation (hD : (gramReal D).PosDef)
     (a : Fin e → ℤ) (n : Charge D) (p : MvPolynomial (Fin e × ℕ) ℂ) :
-    translatedProjection D B C hC hCe (liftCharge D B C hC hCe a n)
-        (aeval (fun x : Fin e × ℕ => transverse D B C hC hCe x.1 x.2) p) =
+    Polynomial.map (polynomialProjection D B C hC hCe).toRingHom
+        (translatedPolynomial (ambient D e B C hC hCe) (liftCharge D B C hC hCe a n)
+          (aeval (fun x : Fin e × ℕ => transverse D B C hC hCe x.1 x.2) p)) =
       aeval (fun x : Fin e × ℕ =>
         -Polynomial.C ((transversePair D B C a x.1 : ℂ) • (1 : Oscillator D)) *
           Polynomial.X^(x.2+1)) p := by
+  rw [← translatedProjection_apply]
   have h : (translatedProjection D B C hC hCe (liftCharge D B C hC hCe a n)).comp
       (aeval (fun x : Fin e × ℕ => transverse D B C hC hCe x.1 x.2)) =
       aeval (fun x : Fin e × ℕ =>
@@ -244,7 +242,7 @@ theorem creationSeries_difference (hD : (gramReal D).PosDef)
   rw [map_sub, PowerSeries.coeff_map, PowerSeries.coeff_map, PowerSeries.coeff_mk]
   by_cases hq : q = 0
   · simp [creationSeries, hq]
-  · simp only [creationSeries, PowerSeries.coeff_mk, dif_neg hq]
+  · simp only [creationSeries, PowerSeries.coeff_mk, dite_eq_right hq]
     change translatedProjection D B C hC hCe (liftCharge D B C hC hCe a n) _ -
       longitudinalTranslation D B C hC hCe (liftCharge D B C hC hCe a n) _ = _
     rw [map_smul, map_smul, ← smul_sub, map_sum, map_sum, ← Finset.sum_sub_distrib]
@@ -258,11 +256,11 @@ theorem creationSeries_difference (hD : (gramReal D).PosDef)
     have hCsmul (z : ℂ) (p : Oscillator D) :
         Polynomial.C (z • p) = z • (Polynomial.C p : Polynomial (Oscillator D)) :=
       map_smul (Polynomial.CAlgHom : Oscillator D →ₐ[ℂ] Polynomial (Oscillator D)) z p
-    rw [if_neg hq, Nat.sub_add_cancel (Nat.one_le_iff_ne_zero.mpr hq)]
+    rw [ite_eq_right hq, Nat.sub_add_cancel (Nat.one_le_iff_ne_zero.mpr hq)]
     simp only [← smul_mul_assoc, smul_neg, ← hCsmul, smul_smul,
-      ← Finset.sum_neg_distrib, ← Finset.sum_mul, ← map_sum, ← Finset.sum_smul,
-      hcast]
-    simp only [smul_neg, neg_smul]
+      ← Finset.sum_mul]
+    rw [Finset.sum_neg_distrib, ← map_sum, ← Finset.sum_smul, hcast]
+    simp only [neg_mul, smul_neg, neg_smul]
 
 end
 end D5.S3.VertexAlgebra.LatticeCosetTransverse
