@@ -6,7 +6,31 @@ Quantitative second-layer occupation coercivity for every positive integer.
 
 The estimate combines exact local integer-objective losses with uniform moving margins and the global prime-number-theorem error. The composition is repository-derived; no historical novelty or RH conclusion is asserted.
 
-**Theorem 1.1 (A uniform quantitative estimate on arbitrary finite actual masks).**
+**Theorem 1.1 (The existing count optimizer is locally maximal).**
+
+Lean statement: `D5/S3/Arith/Robin/PriceRecord/ActualIntegerOccupationCoercivity.count_maximal`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/PriceRecord/ActualIntegerOccupationCoercivity.count_maximal` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every positive real price lam, genuine prime p and exponent a, goldenPrimeLocalObjective(lam,p,a) is at most its value at optimalLayerCount(lam,p). Only private is removed from the original declaration; its type and proof are unchanged. The original layer-2 losses and the finite-gap extraction consume it here. The first-layer missing and occupied loss proofs consume it directly from this owner. This public exposure introduces no second local-maximality proof.
+
+**Theorem 1.2 (Any finite set of prime local gaps is paid by the same actual defect).**
+
+Lean statement: `D5/S3/Arith/Robin/PriceRecord/ActualIntegerOccupationCoercivity.actual_local_gap_sum_le_defect`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/PriceRecord/ActualIntegerOccupationCoercivity.actual_local_gap_sum_le_defect` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For z>1, n>=1 and any finite set S of genuine primes, the sum over S of goldenPrimeLocalObjective(referencePrice(z),p,optimalLayerCount(referencePrice(z),p))-goldenPrimeLocalObjective(referencePrice(z),p,factorization(n,p)) is at most actualDefect(z,n). The proof is the single extraction of the existing unrestricted supremum/factorization argument. Both common_support_charge and actual_first_layer_charge consume it on their disjoint H union X. The unit, absent primes, primes beyond z and unbounded exponents remain in scope.
+
+**Theorem 1.3 (A uniform quantitative estimate on arbitrary finite actual masks).**
 
 $$\exists Z \in \mathbb{R},\; 2 \le Z \land \left(\forall z \in \mathbb{R},\; Z \le z \Rightarrow \left(\forall n \in \mathbb{N},\; 1 \le n \Rightarrow \left(\forall H \in Finset\left(\mathbb{N}\right), X \in Finset\left(\mathbb{N}\right),\; \left(\forall p \in \mathbb{N},\; p\in H \Rightarrow \left(Prime\left(p\right) \land \left(p \le sqrt\left(2\right) \cdot sqrt\left(z\right) \land factorization\left(n, p\right) \le 1\right)\right)\right) \Rightarrow \left(\left(\forall p \in \mathbb{N},\; p\in X \Rightarrow \left(Prime\left(p\right) \land \left(sqrt\left(2\right) \cdot sqrt\left(z\right) < p \land 2 \le factorization\left(n, p\right)\right)\right)\right) \Rightarrow \frac{\sum_{p\in H} log\left(p\right) + \sum_{p\in X} log\left(p\right)}{sqrt\left(z\right)} \le 6 \cdot sqrt\left(sqrt\left(z\right) \cdot log\left(z\right) \cdot actualDefect\left(z, n\right)\right) + 8 \cdot sqrt\left(z\right) \cdot log\left(z\right) \cdot actualDefect\left(z, n\right) + \frac{32}{log\left(z\right)}\right)\right)\right)\right)$$
 
@@ -22,7 +46,7 @@ H can contain any prime p <= sqrt(2) sqrt(z) with factorization(n,p) <= 1, inclu
 
 Proof-to-code step 1: the consumed private local_step adapter applies GoldenLocalThreshold.golden_prime_local_objective_diff, normalizing only multiplication order. Its existing owner proof is reused after removal of private at that owner. count_maximal consumes positive_layers_eq_count_interval and golden_prime_local_objective_maximal_of_threshold. hole_loss uses monotonicity of the first marginal and the layer-2 increment. It treats exponents 0 and 1 explicitly. excess_loss uses golden_layer_strict_decrease and the same increment to show that all later included layers can only increase the loss. No exponent cap or strict-margin premise occurs in the target.
 
-Proof-to-code step 2: common_support_charge obtains U from optimal_layer_count_spec at the positive price. It uses golden_resource_supremum_eq_positive_part_sum together with objective_at_optimal_eq_positive_part_sum to identify the EXISTING actualPressure with U's objective. The finite set S = U.primeFactors union n.primeFactors union H union X contains all selected primes. golden_resource_objective_sum_on applied to U and n on S makes actualDefect exactly the sum of local gaps. Every gap is nonnegative, so selected disjoint layer-2 losses are bounded by the complete defect. A missing prime has exponent zero and hence zero local objective. A selected prime greater than z remains in S. No support assumption is introduced, and U is a supplier witness inside the proof, not a target premise.
+Proof-to-code step 2: actual_local_gap_sum_le_defect extracts the original common-support decomposition once. For any finite prime set S it obtains U from optimal_layer_count_spec at the positive price, and uses golden_resource_supremum_eq_positive_part_sum together with objective_at_optimal_eq_positive_part_sum to identify the EXISTING actualPressure with U's objective. On T = U.primeFactors union n.primeFactors union S, golden_resource_objective_sum_on makes actualDefect exactly the sum of local gaps. The count specification rewrites U's exponents to optimalLayerCount; count_maximal makes each gap nonnegative. Restricting to S proves the finite-gap bound. common_support_charge now consumes that extraction once on H union X, using the original hole_loss and excess_loss comparisons. The same public extraction is consumed by FirstPrimePrefixLocalization. A missing prime has exponent zero; primes greater than z remain included. U remains a proof witness, never a target premise.
 
 Proof-to-code step 3: second_marginal identifies g2(p) = log(1 + 1/[p(p+1)]) and proves the needed bounds 1/(p^2+p+1) <= g2(p) <= p^(-2). The elementary log(1+u) <= u also gives the intermediate ordinary bound g2(p) <= 1/[p(p+1)] <= p^(-2). The code uses Real.one_sub_inv_le_log_of_pos for the lower estimate and the existing golden_layer_marginal_le_inv_pow for the upper estimate needed downstream. Dividing by the positive log p gives the actual layer-2 marginal.
 
@@ -38,6 +62,8 @@ The residual 32/log z pays the finite-clock displacement of the exact second mar
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/Robin/PriceRecord/ActualIntegerOccupationCoercivity.actual_local_gap_sum_le_defect`
+- Truth anchor: `D5/S3/Arith/Robin/PriceRecord/ActualIntegerOccupationCoercivity.count_maximal`
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/ActualIntegerOccupationCoercivity.eventually_quantitative_actual_occupation_defect`
 - Dependency: [D5/S3/Arith/GoldenLocalThreshold](../../GoldenLocalThreshold.md)
 - Dependency: [D5/S3/Arith/GoldenResource/ActualReserve/ActualReservePrimeMask](../../GoldenResource/ActualReserve/ActualReservePrimeMask.md)

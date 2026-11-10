@@ -42,7 +42,7 @@ internal sealed class FirstPrimePrefixLocalizationDocument : IScribeDocumentDefi
                 H("The concrete eta squared charge"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "For 0<eta<=1/4 and eta*z>=4, the below band is "
+                    "For z>1, 0<eta<=1/4 and eta*z>=4, the below band is "
                     + "(z*(1-3eta/4),z*(1-eta/2)] and the above band is "
                     + "(z*(1+eta/2),z*(1+3eta/4)]. Assume each literal theta mass is at least eta*z/8. "
                     + "If the original n>=1 has EXACT support primesLE(P), P=largestPrime(n), and "
@@ -60,7 +60,7 @@ internal sealed class FirstPrimePrefixLocalizationDocument : IScribeDocumentDefi
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For every fixed A in Nat and fixed 0<e<=1/4, put eta=e/log(z)^A. "
-                    + "One eventual threshold simultaneously gives log z>=1, 0<eta<=1/4, eta*z>=4, "
+                    + "One eventual threshold simultaneously gives z>1, log z>=1, 0<eta<=1/4, eta*z>=4, "
                     + "and BOTH finite theta masses >=eta*z/8. The PUBLIC theta_error_log_power(A+1) "
                     + "gives a global bound |theta(y)-y|<=y/log(y)^(A+1) for all sufficiently large y. "
                     + "Uniformly on z/2<=y<=2z, log y>=log z/2 and the error is at most "
