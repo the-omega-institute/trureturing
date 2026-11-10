@@ -8,10 +8,17 @@
 
 /-
 admission_basis: open-problem-resolution (#28719)
-escape_witness: none; no independent novelty is asserted for the transfer argument.
+escape_witness: the live all-length proper-boundary invariant in continuation.
 The literal source count and its whole generating function are the external target.
-Proof-shape accounting is conservative: every theorem is bind-only under
-finite kernel normalization and the existing generic transfer/induction machinery.
+proof_shape: content for continuation, count_formula, recurrence,
+product_identity and result: inlining retains induction at variable length,
+using the finite preservation and eigenweight certificate. The imported
+width-generic counting bridge does not supply this invariant.
+proof_shape: bind-only for bonds_iff, normal_iff, counting_bridge,
+saturated_certificate, finite_certificate, seed_congr, seed_linear,
+initial_counts and zero_count. Fixed initial counts reduce the continuation
+induction at lengths zero and one; they need no all-length inference.
+These shape judgements assert no independent literature novelty.
 Consumed helpers: bonds_iff and normal_iff feed counting_bridge;
 saturated_certificate feeds continuation; finite_certificate feeds seed_congr,
 count_formula and initial_counts; continuation, seed_congr and seed_linear
