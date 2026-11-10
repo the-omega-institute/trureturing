@@ -272,9 +272,12 @@ morphism `φ : K ⟶ L`: the totalization of `φ` and of its flip are related by
 lemma totalFlipIso_hom_naturality (φ : K ⟶ L) :
     (K.totalFlipIso c).hom ≫ HomologicalComplex₂.total.map φ c =
       HomologicalComplex₂.total.map (flipMap φ) c ≫ (L.totalFlipIso c).hom := by
+  change (K.totalFlipIso c).hom ≫ HomologicalComplex₂.total.map φ c =
+    HomologicalComplex₂.total.map ((HomologicalComplex₂.flipFunctor C c₁ c₂).map φ) c ≫
+      (L.totalFlipIso c).hom
   ext j i₂ i₁ hj
   simp only [HomologicalComplex.comp_f, HomologicalComplex₂.ιTotal_totalFlipIso_f_hom_assoc,
-    HomologicalComplex₂.ιTotal_map_assoc, flipMap, HomologicalComplex₂.flipFunctor_map_f_f,
+    HomologicalComplex₂.ιTotal_map_assoc, HomologicalComplex₂.flipFunctor_map_f_f,
     HomologicalComplex₂.ιTotal_totalFlipIso_f_hom]
   erw [Linear.units_smul_comp, HomologicalComplex₂.ιTotal_map, Linear.comp_units_smul]
   rfl

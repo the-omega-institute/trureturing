@@ -388,9 +388,8 @@ lemma primeHom_δ {q : ℕ} (i : Fin (q + 2)) :
   apply Fin.ext
   simp only [primeHom, SimplexCategory.mkHom, SimplexCategory.Hom.toOrderHom_mk, OrderHom.coe_mk,
     SimplexCategory.len_mk]
-  simp only [(show ∀ {n : ℕ} (k : Fin (n + 2))
-      (j : Fin ((⦋n⦌ : SimplexCategory).len + 1)),
-      (SimplexCategory.δ k).toOrderHom j = k.succAbove j from fun {_} _ _ => rfl)]
+  simp only [SimplexCategory.δ, SimplexCategory.mkHom, SimplexCategory.Hom.toOrderHom_mk,
+    OrderEmbedding.toOrderHom_coe, Fin.succAboveOrderEmb_apply]
   simp only [Fin.succAbove, Fin.lt_def, Fin.val_castSucc, Fin.val_succ]
   have hj := j.isLt
   simp only [SimplexCategory.len_mk] at hj
@@ -413,9 +412,8 @@ lemma primeHom_σ {q : ℕ} (i : Fin (q + 1)) :
   apply Fin.ext
   simp only [primeHom, SimplexCategory.mkHom, SimplexCategory.Hom.toOrderHom_mk, OrderHom.coe_mk,
     SimplexCategory.len_mk]
-  simp only [(show ∀ {n : ℕ} (k : Fin (n + 1))
-      (j : Fin ((⦋n + 1⦌ : SimplexCategory).len + 1)),
-      (SimplexCategory.σ k).toOrderHom j = k.predAbove j from fun {_} _ _ => rfl), Fin.predAbove]
+  simp only [SimplexCategory.σ, SimplexCategory.mkHom, SimplexCategory.Hom.toOrderHom_mk,
+    Fin.predAboveOrderHom_apply, Fin.predAbove]
   have hj := j.isLt
   simp only [SimplexCategory.len_mk] at hj
   simp only [Fin.lt_def, Fin.val_castSucc, Fin.val_succ]
