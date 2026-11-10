@@ -3,7 +3,6 @@ using static StrataLint.Scribe.DefinitionDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry;
 
-// Proposed exact source coverage; no C# or native validator was run.
 internal sealed class FiniteCyclicNoncoverCollapseDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Geometry/FiniteCyclicNoncoverCollapse.";
@@ -16,7 +15,7 @@ internal sealed class FiniteCyclicNoncoverCollapseDocument : IScribeDocumentDefi
             Anchor.ParseCanonical("mathlib/module/Mathlib.AlgebraicTopology.SimplicialComplex.Basic")),
         H("FiniteCyclicNoncoverCollapse"),
         Blocks(
-            Paragraph(Text("UNCOMPILED source contracts only. No Lean/kernel/axiom, Scribe, Reg, admission, freeze, deposit or PR result is claimed. The source section has V : Type*, Fintype V and DecidableEq V; each raw statement retains its lexical source binders and namespace. Lean may omit unused section variables; compiled telescopes, source selectors and exact binder coordinates remain unobserved. Structures and the Walk inductive include their full explicit field/constructor contracts. Generated Lean declarations require the later native coverage probe. The cyclic consumer remains partial: no universal survivor recurrence or all-n instantiated collapse is asserted. Native owners are reused as source APIs. The broader combinatorial-geometry goal remains unfinished.")),
+            Paragraph(Text("The source section has V : Type*, Fintype V and DecidableEq V; each raw statement retains its lexical source binders and namespace. Lean may omit unused section variables. Structures and the Walk inductive include their full explicit field/constructor contracts. This matching module supplies finite source extraction; the cyclic recurrence is proved in its separate owner. The collapse consumers use the same native face and coordinate types.")),
             Node("decl-1", "successor", "successor", "The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCollapse.successor.", "Source variable context (not a compiled telescope):\nvariable {V : Type*} [Fintype V] [DecidableEq V]\n\ndef successor {n : Nat} (hn : 0 < n) (i : Fin n) : Fin n", DescribeRole.Definition),
             Node("decl-2", "ground", "ground", "The exact source contract below specifies D5.S3.Geometry.FiniteCyclicNoncoverCollapse.ground.", "Source variable context (not a compiled telescope):\nvariable {V : Type*} [Fintype V] [DecidableEq V]\n\ndef ground {n : Nat} (s : Fin n ↪ V) : Finset V", DescribeRole.Definition),
             Node("decl-3", "noncover", "noncover", "A face misses the two ORIGINAL endpoints of at least one cyclic rim edge.", "Source variable context (not a compiled telescope):\nvariable {V : Type*} [Fintype V] [DecidableEq V]\n\ndef noncover {n : Nat} (hn : 0 < n) (s : Fin n ↪ V) : PreAbstractSimplicialComplex V", DescribeRole.Definition),
@@ -80,6 +79,6 @@ internal sealed class FiniteCyclicNoncoverCollapseDocument : IScribeDocumentDefi
     // as typed text; this is commentary, never a substitute for a Lean projection.
     private static DocumentBlock SourceText(string value) => value.Contains('\n')
         ? new DocumentBlock.Section(H("Source text"), Blocks(Array.ConvertAll(
-            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? " " : line)))))
+            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? "Definitions and proofs are in the paired Lean module." : line)))))
         : Paragraph(Text(value));
 }

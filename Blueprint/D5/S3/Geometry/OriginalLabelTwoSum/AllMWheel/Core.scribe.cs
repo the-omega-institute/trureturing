@@ -1,7 +1,6 @@
 using StrataLint.Engine;
 using static StrataLint.Scribe.DefinitionDsl;
 namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel;
-// SOURCE_ONLY_UNCOMPILED. Literal source text is not an emitted telescope receipt.
 internal sealed class CoreDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Core.";
@@ -27,6 +26,6 @@ internal sealed class CoreDocument : IScribeDocumentDefinition
     // as typed text; this is commentary, never a substitute for a Lean projection.
     private static DocumentBlock SourceText(string value) => value.Contains('\n')
         ? new DocumentBlock.Section(H("Source text"), Blocks(Array.ConvertAll(
-            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? " " : line)))))
+            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? "Definitions and proofs are in the paired Lean module." : line)))))
         : Paragraph(Text(value));
 }

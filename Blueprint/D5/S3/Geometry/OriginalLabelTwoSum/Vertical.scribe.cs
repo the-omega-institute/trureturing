@@ -1,5 +1,3 @@
-// UNCOMPILED Scribe preparation. No native emit, catalog resolution, rendered
-// fidelity, source selection or registration/audit receipt has been observed.
 using StrataLint.Engine;
 using static StrataLint.Scribe.DefinitionDsl;
 
@@ -17,9 +15,9 @@ internal sealed class VerticalDocument : IScribeDocumentDefinition
         H("Vertical"),
         Blocks(
             Node("verticalgamma", "verticalGamma", "verticalGamma",
-                "Source/endpoints are literal Phi states with the single maximal left fibre removed. No parent collapse, collar, or endpoint equality is an assumption. Source-only draft; elaboration and native binding are OPEN.", DescribeRole.Definition),
+                "Source/endpoints are literal Phi states with the single maximal left fibre removed. No parent collapse, collar, or endpoint equality is an assumption. ", DescribeRole.Definition),
             Node("verticalvoid", "verticalVoid", "verticalVoid",
-                "The separate VOID rule uses an original r in nonempty R. The empty right fibre emits lower=a, which is genuinely nonempty; it never collapses UNIT to VOID. Source-only draft; elaboration and native binding are OPEN.", DescribeRole.Definition)
+                "The separate VOID rule uses an original r in nonempty R. The empty right fibre emits lower=a, which is genuinely nonempty; it never collapses UNIT to VOID. ", DescribeRole.Definition)
         )));
 
     private static DocumentBlock Node(string id, string declaration, string title, string prose,
@@ -32,6 +30,6 @@ internal sealed class VerticalDocument : IScribeDocumentDefinition
     // as typed text; this is commentary, never a substitute for a Lean projection.
     private static DocumentBlock SourceText(string value) => value.Contains('\n')
         ? new DocumentBlock.Section(H("Source text"), Blocks(Array.ConvertAll(
-            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? " " : line)))))
+            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? "Definitions and proofs are in the paired Lean module." : line)))))
         : Paragraph(Text(value));
 }

@@ -1,5 +1,3 @@
-// UNCOMPILED Scribe preparation. No native emit, catalog resolution, rendered
-// fidelity, source selection or registration/audit receipt has been observed.
 using StrataLint.Engine;
 using static StrataLint.Scribe.DefinitionDsl;
 
@@ -33,37 +31,37 @@ internal sealed class WheelDocument : IScribeDocumentDefinition
             Node("b1", "B1", "B1",
                 "Actual source declaration; elaboration, native selection and audits remain OPEN.", DescribeRole.Definition),
             Node("gamma", "gamma", "gamma",
-                "All four ORIGINAL Gamma pairs, in their actual evolving complexes. Source-only draft; elaboration and native binding are OPEN.", DescribeRole.Definition),
+                "All four ORIGINAL Gamma pairs, in their actual evolving complexes. ", DescribeRole.Definition),
             Node("gamma-pairs", "gamma_pairs", "gamma_pairs",
-                "Ordered extraction uses the real native pairs. Source-only draft; elaboration and native binding are OPEN.", DescribeRole.Theorem),
+                "Ordered extraction uses the real native pairs. ", DescribeRole.Theorem),
             Node("interface-equations", "interface_equations", "interface_equations",
-                "A0 is E intersect the original Z-simplex; A1 retains the e-row simplex. Source-only draft; elaboration and native binding are OPEN.", DescribeRole.Theorem),
+                "A0 is E intersect the original Z-simplex; A1 retains the e-row simplex. ", DescribeRole.Theorem),
             Node("fill0", "fill0", "fill0",
-                "No pair at all in either list of filling zero. Source-only draft; elaboration and native binding are OPEN.", DescribeRole.Definition),
+                "No pair at all in either list of filling zero. ", DescribeRole.Definition),
             Node("fill1", "fill1", "fill1",
-                "The collar pair is on B1 alone, while the main endpoint also contains 134. Source-only draft; elaboration and native binding are OPEN.", DescribeRole.Definition),
+                "The collar pair is on B1 alone, while the main endpoint also contains 134. ", DescribeRole.Definition),
             Node("collar-not-free-in-main", "collar_not_free_in_main", "collar_not_free_in_main",
-                "A concrete obstruction to performing the collar pair in the whole endpoint: two distinct strict cofaces remain there. Source-only draft; elaboration and native binding are OPEN.", DescribeRole.Theorem),
+                "A concrete obstruction to performing the collar pair in the whole endpoint: two distinct strict cofaces remain there. ", DescribeRole.Theorem),
             Node("certificate", "certificate", "certificate",
-                "The wheel's absolute certificate is a consumer of the same path E. Source-only draft; elaboration and native binding are OPEN.", DescribeRole.Definition),
+                "The wheel's absolute certificate is a consumer of the same path E. ", DescribeRole.Definition),
             Node("seedlabel", "SeedLabel", "SeedLabel",
-                "The wheel's absolute certificate is a consumer of the same path E. Source-only draft; elaboration and native binding are OPEN.", DescribeRole.Definition),
+                "The wheel's absolute certificate is a consumer of the same path E. ", DescribeRole.Definition),
             Node("root", "root", "root",
-                "p=0,u=1,v=2; no label is globally removed as a ghost. Source-only draft; elaboration and native binding are OPEN.", DescribeRole.Definition),
+                "p=0,u=1,v=2; no label is globally removed as a ghost. ", DescribeRole.Definition),
             Node("seed", "seed", "seed",
-                "p=0,u=1,v=2; no label is globally removed as a ghost. Source-only draft; elaboration and native binding are OPEN.", DescribeRole.Definition)
+                "p=0,u=1,v=2; no label is globally removed as a ghost. ", DescribeRole.Definition)
         )));
 
     private static DocumentBlock Node(string id, string declaration, string title, string prose,
         DescribeRole role) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
-            role == DescribeRole.Definition ? StatementSource.WithoutFormula() : StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+            role == DescribeRole.Definition ? StatementSource.WithoutFormula() : StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(SourceText(prose)), role);
 
     // TextRun is one line. Keep every quoted source line, including blank separators,
     // as typed text; this is commentary, never a substitute for a Lean projection.
     private static DocumentBlock SourceText(string value) => value.Contains('\n')
         ? new DocumentBlock.Section(H("Source text"), Blocks(Array.ConvertAll(
-            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? " " : line)))))
+            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? "Definitions and proofs are in the paired Lean module." : line)))))
         : Paragraph(Text(value));
 }

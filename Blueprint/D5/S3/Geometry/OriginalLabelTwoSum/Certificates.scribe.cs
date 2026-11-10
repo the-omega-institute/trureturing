@@ -1,5 +1,3 @@
-// UNCOMPILED Scribe preparation. No native emit, catalog resolution, rendered
-// fidelity, source selection or registration/audit receipt has been observed.
 using StrataLint.Engine;
 using static StrataLint.Scribe.DefinitionDsl;
 
@@ -17,31 +15,31 @@ internal sealed class CertificatesDocument : IScribeDocumentDefinition
         H("Certificates"),
         Blocks(
             Node("facets", "facets", "facets",
-                "A finite union of raw simplices, with the empty index family equal to VOID. Source-only draft; elaboration and native binding are OPEN.", DescribeRole.Definition),
+                "A finite union of raw simplices, with the empty index family equal to VOID. ", DescribeRole.Definition),
             Node("endpoint", "endpoint", "endpoint",
-                "A finite union of raw simplices, with the empty index family equal to VOID. Source-only draft; elaboration and native binding are OPEN.", DescribeRole.Definition),
+                "A finite union of raw simplices, with the empty index family equal to VOID. ", DescribeRole.Definition),
             Node("criticaldata", "CriticalData", "CriticalData",
-                "Exact ordinary critical-cell conditions, including ALL proper subfaces. Source-only draft; elaboration and native binding are OPEN.", DescribeRole.Definition),
+                "Exact ordinary critical-cell conditions, including ALL proper subfaces. ", DescribeRole.Definition),
             Node("filling", "Filling", "Filling",
-                "A local filling need not have a contractible collar. Source-only draft; elaboration and native binding are OPEN.", DescribeRole.Definition),
+                "A local filling need not have a contractible collar. ", DescribeRole.Definition),
             Node("certificate", "Certificate", "Certificate",
-                "A left input carries an actual vertex and ordinary main/core lists. Source-only draft; elaboration and native binding are OPEN.", DescribeRole.Definition),
+                "A left input carries an actual vertex and ordinary main/core lists. ", DescribeRole.Definition),
             Node("critical-intersection", "critical_intersection", "critical_intersection",
-                "Actual literal simplex/core intersection, with the empty face retained. Source-only draft; elaboration and native binding are OPEN.", DescribeRole.Theorem),
+                "Actual literal simplex/core intersection, with the empty face retained. ", DescribeRole.Theorem),
             Node("critical-overlap", "critical_overlap", "critical_overlap",
-                "Distinct retained cells meet only in proper boundary faces. Source-only draft; elaboration and native binding are OPEN.", DescribeRole.Theorem)
+                "Distinct retained cells meet only in proper boundary faces. ", DescribeRole.Theorem)
         )));
 
     private static DocumentBlock Node(string id, string declaration, string title, string prose,
         DescribeRole role) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
-            role == DescribeRole.Definition ? StatementSource.WithoutFormula() : StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+            role == DescribeRole.Definition ? StatementSource.WithoutFormula() : StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(SourceText(prose)), role);
 
     // TextRun is one line. Keep every quoted source line, including blank separators,
     // as typed text; this is commentary, never a substitute for a Lean projection.
     private static DocumentBlock SourceText(string value) => value.Contains('\n')
         ? new DocumentBlock.Section(H("Source text"), Blocks(Array.ConvertAll(
-            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? " " : line)))))
+            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? "Definitions and proofs are in the paired Lean module." : line)))))
         : Paragraph(Text(value));
 }

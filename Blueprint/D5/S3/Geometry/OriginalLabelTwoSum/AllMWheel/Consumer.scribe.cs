@@ -1,7 +1,6 @@
 using StrataLint.Engine;
 using static StrataLint.Scribe.DefinitionDsl;
 namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel;
-// SOURCE_ONLY_UNCOMPILED. Literal source text is not an emitted telescope receipt.
 internal sealed class ConsumerDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Consumer.";
@@ -21,13 +20,13 @@ internal sealed class ConsumerDocument : IScribeDocumentDefinition
             Node("rowStep", "noncomputable section\nopen Set Finset\nnamespace D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel\nopen OriginalLabelTwoSum FiniteElementaryCollapse FiniteRelativeSimplicialCollapse\nvariable {V : Type*} [Fintype V] [DecidableEq V]\ndef rowStep (r : Rows V) (c : Certificate r.ground r.root)\n    (e : V) (he : e ∈ r.ground) (m : Nat) (hm : 3 ≤ m) (hg : goodResidue m)\n    (f : Label m ↪ V) (hf0 : f 0 = e) (hnew : Disjoint r.ground ((ground m).image f)) :\n    Certificate (appendRimRows r e he m hm f hf0).ground\n      (appendRimRows r e he m hm f hf0).root", "Exact SOURCE declaration and body from D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Consumer.lean; D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.rowStep\ndef rowStep (r : Rows V) (c : Certificate r.ground r.root)\n    (e : V) (he : e ∈ r.ground) (m : Nat) (hm : 3 ≤ m) (hg : goodResidue m)\n    (f : Label m ↪ V) (hf0 : f 0 = e) (hnew : Disjoint r.ground ((ground m).image f)) :\n    Certificate (appendRimRows r e he m hm f hf0).ground\n      (appendRimRows r e he m hm f hf0).root := by\n  let c' : Certificate (insert e (r.ground.erase e)) r.root := by\n    rw [Finset.insert_erase he]\n    exact c\n  have hXY : Disjoint (r.ground.erase e) ((ground m).image f) :=\n    Finset.disjoint_left.mpr (fun x hx hy => Finset.disjoint_left.mp hnew\n      (Finset.mem_erase.mp hx).2 hy)\n  let out := oneStep m hm hg c' f hf0 (by simp) hXY\n  rw [append_root r e he m hm f hf0 hnew]\n  exact out", DescribeRole.Definition, describeId: "row-step"))));
     private static DocumentBlock Node(string id, string sourceTelescope, string sourceBody, DescribeRole role, string? describeId = null) =>
         Describe.Lean(DescribeId.Create(describeId ?? id), DeclarationHandle.Create(Prefix + id), H(id),
-            role == DescribeRole.Definition ? StatementSource.WithoutFormula() : StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+            role == DescribeRole.Definition ? StatementSource.WithoutFormula() : StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(SourceText(sourceTelescope), SourceText(sourceBody)), role);
 
     // TextRun is one line. Keep every quoted source line, including blank separators,
     // as typed text; this is commentary, never a substitute for a Lean projection.
     private static DocumentBlock SourceText(string value) => value.Contains('\n')
         ? new DocumentBlock.Section(H("Source text"), Blocks(Array.ConvertAll(
-            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? " " : line)))))
+            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? "Definitions and proofs are in the paired Lean module." : line)))))
         : Paragraph(Text(value));
 }

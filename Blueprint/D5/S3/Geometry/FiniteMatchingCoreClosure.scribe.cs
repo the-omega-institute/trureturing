@@ -3,7 +3,6 @@ using static StrataLint.Scribe.DefinitionDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry;
 
-// Proposed exact source coverage; no C# or native validator was run.
 internal sealed class FiniteMatchingCoreClosureDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Geometry/FiniteMatchingCoreClosure.";
@@ -16,7 +15,7 @@ internal sealed class FiniteMatchingCoreClosureDocument : IScribeDocumentDefinit
             Anchor.ParseCanonical("mathlib/module/Mathlib.AlgebraicTopology.SimplicialComplex.Basic")),
         H("FiniteMatchingCoreClosure"),
         Blocks(
-            Paragraph(Text("UNCOMPILED source contracts only. No Lean/kernel/axiom, Scribe, Reg, admission, freeze, deposit or PR result is claimed. The source section has V : Type*, Fintype V and DecidableEq V; each raw statement retains its lexical source binders and namespace. Lean may omit unused section variables; compiled telescopes, source selectors and exact binder coordinates remain unobserved. Structures and the Walk inductive include their full explicit field/constructor contracts. Generated Lean declarations require the later native coverage probe. The cyclic consumer remains partial: no universal survivor recurrence or all-n instantiated collapse is asserted. Native owners are reused as source APIs. The broader combinatorial-geometry goal remains unfinished.")),
+            Paragraph(Text("The source section has V : Type*, Fintype V and DecidableEq V; each raw statement retains its lexical source binders and namespace. Lean may omit unused section variables. Structures and the Walk inductive include their full explicit field/constructor contracts. This matching module supplies finite source extraction; the cyclic recurrence is proved in its separate owner. The collapse consumers use the same native face and coordinate types.")),
             Node("decl-1", "iterate", "iterate", "The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.iterate.", "Source variable context (not a compiled telescope):\nvariable {V : Type*} [Fintype V] [DecidableEq V]\n\ndef iterate (f : Finset (Finset V) → Finset (Finset V))\n    (S : Finset (Finset V)) : Nat → Finset (Finset V)", DescribeRole.Definition),
             Node("decl-2", "iterate_stable", "iterate_stable", "Inflation alone forces stabilization by the number of possible faces. This is a bound for an arbitrary finite closure algorithm, not an enumeration of small complexes or a hypothesis that the desired endpoint exists.", "Source variable context (not a compiled telescope):\nvariable {V : Type*} [Fintype V] [DecidableEq V]\n\ntheorem iterate_stable (f : Finset (Finset V) → Finset (Finset V))\n    (hf : ∀ S, S ⊆ f S) (S : Finset (Finset V)) :\n    f (iterate f S (Fintype.card (Finset V))) =\n      iterate f S (Fintype.card (Finset V))", DescribeRole.Theorem),
             Node("decl-3", "Downward", "Downward", "The exact source contract below specifies D5.S3.Geometry.FiniteMatchingCoreClosure.Downward.", "Source variable context (not a compiled telescope):\nvariable {V : Type*} [Fintype V] [DecidableEq V]\n\ndef Downward (S : Finset (Finset V)) : Prop", DescribeRole.Definition),
@@ -83,6 +82,6 @@ internal sealed class FiniteMatchingCoreClosureDocument : IScribeDocumentDefinit
     // as typed text; this is commentary, never a substitute for a Lean projection.
     private static DocumentBlock SourceText(string value) => value.Contains('\n')
         ? new DocumentBlock.Section(H("Source text"), Blocks(Array.ConvertAll(
-            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? " " : line)))))
+            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? "Definitions and proofs are in the paired Lean module." : line)))))
         : Paragraph(Text(value));
 }

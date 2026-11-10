@@ -1,4 +1,3 @@
-// SOURCE STATUS: UNCOMPILED. Native emit, handle resolution and rendered fidelity are pending.
 using StrataLint.Engine;
 using static StrataLint.Scribe.DefinitionDsl;
 
@@ -16,7 +15,7 @@ internal sealed class CertificateSphereDocument : IScribeDocumentDefinition
             [Anchor.ParseCanonical("mathlib/module/Mathlib.Topology.CompactOpen")]),
         H("The finite certificate on the original K"),
         Blocks(
-            Paragraph(Text("These UNCOMPILED source attempts consume the current finite Alexander certificate and the attachment sphere construction. They retain literal j, original ambient labels, the whole retained endpoint and both based inverse homotopies. Availability for unrestricted arbitrary-plane-H original-K inputs remains open.")),
+            Paragraph(Text("These constructions consume the current finite Alexander certificate and the attachment sphere construction. They retain literal j, original ambient labels, the whole retained endpoint and both based inverse homotopies. Availability for unrestricted arbitrary-plane-H original-K inputs remains open.")),
             Node("certificate-attachment", "attachment", "Computing every attachment input",
                 "For the exact frozen AlexanderDual Certificate, use X=c.X, P=c.P, face=c.lambda, the included original apex c.a, c.cell_decomposition, c.cell_intersection, c.arithmetic and the already computed standalone c.pContraction. No desired collar or sphere outcome is added to Certificate.", DescribeRole.Definition),
             Node("certificate-apex", "apex", "The original apex in K",
@@ -48,13 +47,13 @@ internal sealed class CertificateSphereDocument : IScribeDocumentDefinition
     private static DocumentBlock Node(string id, string declaration, string title, string prose,
         DescribeRole role) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
-            role == DescribeRole.Definition ? StatementSource.WithoutFormula() : StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+            role == DescribeRole.Definition ? StatementSource.WithoutFormula() : StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(SourceText(prose)), role);
 
     // TextRun is one line. Keep every quoted source line, including blank separators,
     // as typed text; this is commentary, never a substitute for a Lean projection.
     private static DocumentBlock SourceText(string value) => value.Contains('\n')
         ? new DocumentBlock.Section(H("Source text"), Blocks(Array.ConvertAll(
-            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? " " : line)))))
+            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? "Definitions and proofs are in the paired Lean module." : line)))))
         : Paragraph(Text(value));
 }

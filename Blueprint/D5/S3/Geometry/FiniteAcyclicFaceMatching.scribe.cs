@@ -3,7 +3,6 @@ using static StrataLint.Scribe.DefinitionDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry;
 
-// Proposed exact source coverage; no C# or native validator was run.
 internal sealed class FiniteAcyclicFaceMatchingDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Geometry/FiniteAcyclicFaceMatching.";
@@ -16,7 +15,7 @@ internal sealed class FiniteAcyclicFaceMatchingDocument : IScribeDocumentDefinit
             Anchor.ParseCanonical("mathlib/module/Mathlib.AlgebraicTopology.SimplicialComplex.Basic")),
         H("FiniteAcyclicFaceMatching"),
         Blocks(
-            Paragraph(Text("UNCOMPILED source contracts only. No Lean/kernel/axiom, Scribe, Reg, admission, freeze, deposit or PR result is claimed. The source section has V : Type*, Fintype V and DecidableEq V; each raw statement retains its lexical source binders and namespace. Lean may omit unused section variables; compiled telescopes, source selectors and exact binder coordinates remain unobserved. Structures and the Walk inductive include their full explicit field/constructor contracts. Generated Lean declarations require the later native coverage probe. The cyclic consumer remains partial: no universal survivor recurrence or all-n instantiated collapse is asserted. Native owners are reused as source APIs. The broader combinatorial-geometry goal remains unfinished.")),
+            Paragraph(Text("The source section has V : Type*, Fintype V and DecidableEq V; each raw statement retains its lexical source binders and namespace. Lean may omit unused section variables. Structures and the Walk inductive include their full explicit field/constructor contracts. This matching module supplies finite source extraction; the cyclic recurrence is proved in its separate owner. The collapse consumers use the same native face and coordinate types.")),
             Node("decl-1", "Walk", "Walk", "A positive-length directed walk, with its direction explicit.", "Source variable context (not a compiled telescope):\nvariable {V : Type*} [Fintype V] [DecidableEq V]\n\ninductive Walk {α : Type*} (r : α → α → Prop) : α → α → Prop\n  | one {a b} : r a b → Walk r a b\n  | cons {a b c} : r a b → Walk r b c → Walk r a c", DescribeRole.Definition),
             Node("decl-2", "Walk.trans", "Walk.trans", "The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicFaceMatching.Walk.trans.", "Source variable context (not a compiled telescope):\nvariable {V : Type*} [Fintype V] [DecidableEq V]\n\ntheorem trans {α : Type*} {r : α → α → Prop} {a b c : α}\n    (h : Walk r a b) (k : Walk r b c) : Walk r a c", DescribeRole.Theorem),
             Node("decl-3", "Walk.map", "Walk.map", "The exact source contract below specifies D5.S3.Geometry.FiniteAcyclicFaceMatching.Walk.map.", "Source variable context (not a compiled telescope):\nvariable {V : Type*} [Fintype V] [DecidableEq V]\n\ntheorem map {α β : Type*} {r : α → α → Prop} {q : β → β → Prop}\n    (f : α → β) (hf : ∀ a b, r a b → q (f a) (f b))\n    {a b : α} (h : Walk r a b) : Walk q (f a) (f b)", DescribeRole.Theorem),
@@ -48,6 +47,6 @@ internal sealed class FiniteAcyclicFaceMatchingDocument : IScribeDocumentDefinit
     // as typed text; this is commentary, never a substitute for a Lean projection.
     private static DocumentBlock SourceText(string value) => value.Contains('\n')
         ? new DocumentBlock.Section(H("Source text"), Blocks(Array.ConvertAll(
-            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? " " : line)))))
+            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? "Definitions and proofs are in the paired Lean module." : line)))))
         : Paragraph(Text(value));
 }

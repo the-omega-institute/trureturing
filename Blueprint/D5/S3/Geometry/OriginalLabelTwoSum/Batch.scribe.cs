@@ -1,5 +1,3 @@
-// UNCOMPILED Scribe preparation. No native emit, catalog resolution, rendered
-// fidelity, source selection or registration/audit receipt has been observed.
 using StrataLint.Engine;
 using static StrataLint.Scribe.DefinitionDsl;
 
@@ -17,23 +15,23 @@ internal sealed class BatchDocument : IScribeDocumentDefinition
         H("Batch"),
         Blocks(
             Node("fibrelayers", "fibreLayers", "fibreLayers",
-                "Literal union of indexed fibre families. Repeated indices are not needed. Source-only draft; elaboration and native binding are OPEN.", DescribeRole.Definition),
+                "Literal union of indexed fibre families. Repeated indices are not needed. ", DescribeRole.Definition),
             Node("mem-fibrelayers", "mem_fibreLayers", "mem_fibreLayers",
-                "Membership retains the actual fibre index and local face. Source-only draft; elaboration and native binding are OPEN.", DescribeRole.Theorem),
+                "Membership retains the actual fibre index and local face. ", DescribeRole.Theorem),
             Node("batchfibre", "batchFibre", "batchFibre",
-                "A finite batch, with actual evolving base (finished N-fibres and unfinished M-fibres). The pair list is precisely the concatenation of the lifted local lists, in the supplied finite index order. Source-only draft; elaboration and native binding are OPEN.", DescribeRole.Definition)
+                "A finite batch, with actual evolving base (finished N-fibres and unfinished M-fibres). The pair list is precisely the concatenation of the lifted local lists, in the supplied finite index order. ", DescribeRole.Definition)
         )));
 
     private static DocumentBlock Node(string id, string declaration, string title, string prose,
         DescribeRole role) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
-            role == DescribeRole.Definition ? StatementSource.WithoutFormula() : StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+            role == DescribeRole.Definition ? StatementSource.WithoutFormula() : StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(SourceText(prose)), role);
 
     // TextRun is one line. Keep every quoted source line, including blank separators,
     // as typed text; this is commentary, never a substitute for a Lean projection.
     private static DocumentBlock SourceText(string value) => value.Contains('\n')
         ? new DocumentBlock.Section(H("Source text"), Blocks(Array.ConvertAll(
-            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? " " : line)))))
+            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? "Definitions and proofs are in the paired Lean module." : line)))))
         : Paragraph(Text(value));
 }

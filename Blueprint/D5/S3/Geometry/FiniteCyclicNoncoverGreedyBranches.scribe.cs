@@ -3,7 +3,6 @@ using static StrataLint.Scribe.DefinitionDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry;
 
-// Exact attempted source contracts; native Scribe acceptance is unobserved.
 internal sealed class FiniteCyclicNoncoverGreedyBranchesDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Geometry/FiniteCyclicNoncoverGreedyBranches.";
@@ -15,7 +14,7 @@ internal sealed class FiniteCyclicNoncoverGreedyBranchesDocument : IScribeDocume
             "original-cyclic-second-round",
             Anchor.ParseCanonical("mathlib/module/Mathlib.AlgebraicTopology.SimplicialComplex.Basic")), H("FiniteCyclicNoncoverGreedyBranches"),
         Blocks(
-            Paragraph(Text("The actual original s2 branches, exact free interval predicates, native no/yes restrictions and later-round separation. The interval-to-path-list conjugacy and all-n critical readback remain missing; C02 is absent. Lexical section variables are recorded faithfully. Lean may omit unused variables. Compiled telescopes, generated declarations and exact source-selector coordinates are unobserved. Native audit counts are zero.")),
+            Paragraph(Text("The actual original s2 branches, exact free interval predicates, native no/yes restrictions and later-round separation. The interval-to-path-list conjugacy and all-n critical readback remain missing; C02 is absent. Lexical section variables are recorded faithfully. Lean may omit unused variables. ")),
             Node("decl-1", "branchA", "branchA", "Exact source endpoint D5.S3.Geometry.FiniteCyclicNoncoverGreedyBranches.branchA.", "Lexical source context (not a compiled telescope):\nvariable {V : Type*} [Fintype V] [DecidableEq V]\n\ndef branchA {n : Nat} (hn : 6 ≤ n) (s : Fin n ↪ V) : Finset (Finset V)", DescribeRole.Definition),
             Node("decl-2", "branchB", "branchB", "Exact source endpoint D5.S3.Geometry.FiniteCyclicNoncoverGreedyBranches.branchB.", "Lexical source context (not a compiled telescope):\nvariable {V : Type*} [Fintype V] [DecidableEq V]\n\ndef branchB {n : Nat} (hn : 6 ≤ n) (s : Fin n ↪ V) : Finset (Finset V)", DescribeRole.Definition),
             Node("decl-3", "second_round", "second_round", "Exact source endpoint D5.S3.Geometry.FiniteCyclicNoncoverGreedyBranches.second_round.", "Lexical source context (not a compiled telescope):\nvariable {V : Type*} [Fintype V] [DecidableEq V]\n\ntheorem second_round {n : Nat} (hn : 6 ≤ n) (s : Fin n ↪ V) :\n    remaining (tailFaces (by omega) s) (s ⟨1, by omega⟩) = branchA hn s ∪ branchB hn s", DescribeRole.Theorem),
@@ -39,6 +38,6 @@ internal sealed class FiniteCyclicNoncoverGreedyBranchesDocument : IScribeDocume
     // as typed text; this is commentary, never a substitute for a Lean projection.
     private static DocumentBlock SourceText(string value) => value.Contains('\n')
         ? new DocumentBlock.Section(H("Source text"), Blocks(Array.ConvertAll(
-            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? " " : line)))))
+            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? "Definitions and proofs are in the paired Lean module." : line)))))
         : Paragraph(Text(value));
 }

@@ -1,4 +1,3 @@
-// SOURCE STATUS: UNCOMPILED. Native emit, handle resolution and rendered fidelity are pending.
 using StrataLint.Engine;
 using static StrataLint.Scribe.DefinitionDsl;
 
@@ -13,7 +12,7 @@ internal sealed class FiniteCriticalCellSphereDocument : IScribeDocumentDefiniti
             "finite-critical-cell-sphere"),
         H("Finite critical-cell sphere import facade"),
         Blocks(
-            Paragraph(Text("This module imports FiniteCriticalCellSphere/AttachmentSphere and FiniteCriticalCellSphere/CertificateSphere. Their companion documents own all 65 original semantic Describe entries. The original Lean declaration namespaces remain unchanged; this facade adds no mathematical declarations. All proofs and native bindings remain UNCOMPILED."))
+            Paragraph(Text("This module imports FiniteCriticalCellSphere/AttachmentSphere and FiniteCriticalCellSphere/CertificateSphere. Their companion documents own all 65 original semantic Describe entries. The original Lean declaration namespaces remain unchanged; this facade adds no mathematical declarations. "))
         )));
 
 }

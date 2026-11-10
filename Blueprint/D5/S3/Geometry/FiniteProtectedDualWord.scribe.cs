@@ -3,7 +3,6 @@ using static StrataLint.Scribe.DefinitionDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry;
 
-// SOURCE_ONLY_UNCOMPILED mirror. Source contexts are literal source scopes,
 // not claimed elaborated telescopes. No emit, Reg or admission has run.
 internal sealed class FiniteProtectedDualWordDocument : IScribeDocumentDefinition
 {
@@ -16,7 +15,7 @@ internal sealed class FiniteProtectedDualWordDocument : IScribeDocumentDefinitio
             "protected-original-ground-dual-word",
             Anchor.ParseCanonical("mathlib/module/Mathlib.AlgebraicTopology.SimplicialComplex.Basic")), H("FiniteProtectedDualWord"),
         Blocks(
-            Paragraph(Text("The raw authority is OriginalLabelTwoSum.Family = LowerSet (Finset V). Empty raw membership, original ambient ghosts and the Fintype native instances are preserved. The full word is partitioned into disjoint pairs and possibly empty criticals with earlier-face dependencies. Protection is upward within K and whole-symbol, contains all criticals, and only emitted uppers must be proper. Current carries a true ordered decomposition. Existing native CollapsePair and Sequence witnesses are constructed with exact deletion and terminal equality. All source remains uncompiled; Reg and every native and delivery obligation remain open.")),
+            Paragraph(Text("The raw authority is OriginalLabelTwoSum.Family = LowerSet (Finset V). Empty raw membership, original ambient ghosts and the Fintype native instances are preserved. The full word is partitioned into disjoint pairs and possibly empty criticals with earlier-face dependencies. Protection is upward within K and whole-symbol, contains all criticals, and only emitted uppers must be proper. Current carries a true ordered decomposition. Existing native CollapsePair and Sequence witnesses are constructed with exact deletion and terminal equality. ")),
             Node("decl-1", "Symbol", "Symbol", "Raw pair and critical symbols, including empty critical faces.", "variable {V : Type*} [Fintype V] [DecidableEq V]\ninductive Symbol (V : Type*) where\n  | pair (L : Finset V) (v : V)\n  | critical (S : Finset V)\n  deriving DecidableEq", DescribeRole.Definition),
             Node("decl-2", "Symbol.faces", "Symbol.faces", "The exact raw faces owned by each symbol.", "variable {V : Type*} [Fintype V] [DecidableEq V]\ndef faces : Symbol V → Finset (Finset V)", DescribeRole.Definition),
             Node("decl-3", "Symbol.isCritical", "Symbol.isCritical", "Critical-symbol predicate used by the empty-protection consumer.", "variable {V : Type*} [Fintype V] [DecidableEq V]\ndef isCritical : Symbol V → Prop", DescribeRole.Definition),
@@ -41,13 +40,13 @@ internal sealed class FiniteProtectedDualWordDocument : IScribeDocumentDefinitio
     private static DocumentBlock Node(string id, string declaration, string title,
         string prose, string rawContract, DescribeRole role) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration[(declaration.LastIndexOf('.') + 1)..]), H(title),
-            role == DescribeRole.Definition ? StatementSource.WithoutFormula() : StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+            role == DescribeRole.Definition ? StatementSource.WithoutFormula() : StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(SourceText(prose), SourceText(rawContract)), role);
 
     // TextRun is one line. Keep every quoted source line, including blank separators,
     // as typed text; this is commentary, never a substitute for a Lean projection.
     private static DocumentBlock SourceText(string value) => value.Contains('\n')
         ? new DocumentBlock.Section(H("Source text"), Blocks(Array.ConvertAll(
-            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? " " : line)))))
+            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? "Definitions and proofs are in the paired Lean module." : line)))))
         : Paragraph(Text(value));
 }

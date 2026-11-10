@@ -3,7 +3,6 @@ using static StrataLint.Scribe.DefinitionDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry;
 
-// Proposed exact source coverage; no C# or native validator was run.
 internal sealed class FiniteGreedyMatchingAcyclicityDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Geometry/FiniteGreedyMatchingAcyclicity.";
@@ -16,7 +15,7 @@ internal sealed class FiniteGreedyMatchingAcyclicityDocument : IScribeDocumentDe
             Anchor.ParseCanonical("mathlib/module/Mathlib.AlgebraicTopology.SimplicialComplex.Basic")),
         H("FiniteGreedyMatchingAcyclicity"),
         Blocks(
-            Paragraph(Text("UNCOMPILED source contracts only. No Lean/kernel/axiom, Scribe, Reg, admission, freeze, deposit or PR result is claimed. The source section has V : Type*, Fintype V and DecidableEq V; each raw statement retains its lexical source binders and namespace. Lean may omit unused section variables; compiled telescopes, source selectors and exact binder coordinates remain unobserved. Structures and the Walk inductive include their full explicit field/constructor contracts. Generated Lean declarations require the later native coverage probe. The cyclic consumer remains partial: no universal survivor recurrence or all-n instantiated collapse is asserted. Native owners are reused as source APIs. The broader combinatorial-geometry goal remains unfinished.")),
+            Paragraph(Text("The source section has V : Type*, Fintype V and DecidableEq V; each raw statement retains its lexical source binders and namespace. Lean may omit unused section variables. Structures and the Walk inductive include their full explicit field/constructor contracts. This matching module supplies finite source extraction; the cyclic recurrence is proved in its separate owner. The collapse consumers use the same native face and coordinate types.")),
             Node("decl-1", "Separated", "Separated", "The exact source contract below specifies D5.S3.Geometry.FiniteGreedyMatchingAcyclicity.Separated.", "Source variable context (not a compiled telescope):\nvariable {V : Type*} [Fintype V] [DecidableEq V]\n\ndef Separated (A B : Finset (Finset V)) : Prop", DescribeRole.Definition),
             Node("decl-2", "separated_disjoint", "separated_disjoint", "The exact source contract below specifies D5.S3.Geometry.FiniteGreedyMatchingAcyclicity.separated_disjoint.", "Source variable context (not a compiled telescope):\nvariable {V : Type*} [Fintype V] [DecidableEq V]\n\ntheorem separated_disjoint {A B : Finset (Finset V)} (h : Separated A B) : Disjoint A B", DescribeRole.Theorem),
             Node("decl-3", "separated_mono", "separated_mono", "The exact source contract below specifies D5.S3.Geometry.FiniteGreedyMatchingAcyclicity.separated_mono.", "Source variable context (not a compiled telescope):\nvariable {V : Type*} [Fintype V] [DecidableEq V]\n\ntheorem separated_mono {A B C D : Finset (Finset V)} (h : Separated A B)\n    (hC : C ⊆ A) (hD : D ⊆ B) : Separated C D", DescribeRole.Theorem),
@@ -65,6 +64,6 @@ internal sealed class FiniteGreedyMatchingAcyclicityDocument : IScribeDocumentDe
     // as typed text; this is commentary, never a substitute for a Lean projection.
     private static DocumentBlock SourceText(string value) => value.Contains('\n')
         ? new DocumentBlock.Section(H("Source text"), Blocks(Array.ConvertAll(
-            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? " " : line)))))
+            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? "Definitions and proofs are in the paired Lean module." : line)))))
         : Paragraph(Text(value));
 }

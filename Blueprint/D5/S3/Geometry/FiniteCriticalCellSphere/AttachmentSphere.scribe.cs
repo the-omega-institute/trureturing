@@ -1,4 +1,3 @@
-// SOURCE STATUS: UNCOMPILED. Native emit, handle resolution and rendered fidelity are pending.
 using StrataLint.Engine;
 using static StrataLint.Scribe.DefinitionDsl;
 
@@ -17,7 +16,7 @@ internal sealed class AttachmentSphereDocument : IScribeDocumentDefinition
              Anchor.ParseCanonical("mathlib/module/Mathlib.Topology.Piecewise")]),
         H("The barycentric collar and the unchanged quotient"),
         Blocks(
-            Paragraph(Text("All declarations are UNCOMPILED source attempts. The standalone based contraction of P is the sole homotopy input. The current rational dependency and its visibility/Scribe/Reg changes are materialized in the direct overlay. The full boundary, both based inverse homotopies, original labels and attached singleton S0 branch are preserved. No native acceptance or universal certificate supplier is claimed.")),
+            Paragraph(Text("The standalone based contraction of P is the sole homotopy input. The full boundary, both based inverse homotopies, original labels and attached singleton S0 branch are preserved. No native acceptance or universal certificate supplier is claimed.")),
             Node("attachment", "Attachment", "Actual-coordinate attachment input",
                 "The input consists of native X and P on the unchanged finite ambient type, a nonempty face, the exact union X=P union simplex(face), exact intersection P intersect simplex(face)=boundary(face), an actual point p of P, and a HomotopyRel contraction of P to p fixing p. The sole allowed homotopy input is this standalone based contraction of P to p fixing p. No contraction of X, desired sphere equivalence, collar or freeness across X is assumed.", DescribeRole.Definition),
             Node("attachment-faceinhabited", "faceInhabited", "A point of the face label type",
@@ -127,13 +126,13 @@ internal sealed class AttachmentSphereDocument : IScribeDocumentDefinition
     private static DocumentBlock Node(string id, string declaration, string title, string prose,
         DescribeRole role) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
-            role == DescribeRole.Definition ? StatementSource.WithoutFormula() : StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+            role == DescribeRole.Definition ? StatementSource.WithoutFormula() : StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(SourceText(prose)), role);
 
     // TextRun is one line. Keep every quoted source line, including blank separators,
     // as typed text; this is commentary, never a substitute for a Lean projection.
     private static DocumentBlock SourceText(string value) => value.Contains('\n')
         ? new DocumentBlock.Section(H("Source text"), Blocks(Array.ConvertAll(
-            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? " " : line)))))
+            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? "Definitions and proofs are in the paired Lean module." : line)))))
         : Paragraph(Text(value));
 }

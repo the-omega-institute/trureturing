@@ -3,7 +3,6 @@ using static StrataLint.Scribe.DefinitionDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry;
 
-// Exact attempted source contracts; native Scribe acceptance is unobserved.
 internal sealed class FiniteGreedyFamilyTransportDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Geometry/FiniteGreedyFamilyTransport.";
@@ -15,7 +14,7 @@ internal sealed class FiniteGreedyFamilyTransportDocument : IScribeDocumentDefin
             "finite-greedy-family-transport",
             Anchor.ParseCanonical("mathlib/module/Mathlib.Data.Fintype.Powerset")), H("FiniteGreedyFamilyTransport"),
         Blocks(
-            Paragraph(Text("Exact equality of remaining families under coordinate toggles, label maps and original-ground complements. Augmented empty faces are retained. No native validation was run. Lexical section variables are recorded faithfully. Lean may omit unused variables. Compiled telescopes, generated declarations and exact source-selector coordinates are unobserved. Native audit counts are zero.")),
+            Paragraph(Text("Exact equality of remaining families under coordinate toggles, label maps and original-ground complements. Augmented empty faces are retained. No native validation was run. Lexical section variables are recorded faithfully. Lean may omit unused variables. ")),
             Node("decl-1", "flip", "flip", "Exact source endpoint D5.S3.Geometry.FiniteGreedyFamilyTransport.flip.", "Lexical source context (not a compiled telescope):\nvariable {V W : Type*} [Fintype V] [DecidableEq V] [Fintype W] [DecidableEq W]\n\ndef flip (v : V) (a : Finset V) : Finset V", DescribeRole.Definition),
             Node("decl-2", "mem_flip", "mem_flip", "Exact source endpoint D5.S3.Geometry.FiniteGreedyFamilyTransport.mem_flip.", "Lexical source context (not a compiled telescope):\nvariable {V W : Type*} [Fintype V] [DecidableEq V] [Fintype W] [DecidableEq W]\n\n@[simp] theorem mem_flip (v x : V) (a : Finset V) :\n    x ∈ flip v a ↔ (x = v ∧ v ∉ a) ∨ (x ≠ v ∧ x ∈ a)", DescribeRole.Theorem),
             Node("decl-3", "flip_flip", "flip_flip", "Exact source endpoint D5.S3.Geometry.FiniteGreedyFamilyTransport.flip_flip.", "Lexical source context (not a compiled telescope):\nvariable {V W : Type*} [Fintype V] [DecidableEq V] [Fintype W] [DecidableEq W]\n\n@[simp] theorem flip_flip (v : V) (a : Finset V) : flip v (flip v a) = a", DescribeRole.Theorem),
@@ -45,6 +44,6 @@ internal sealed class FiniteGreedyFamilyTransportDocument : IScribeDocumentDefin
     // as typed text; this is commentary, never a substitute for a Lean projection.
     private static DocumentBlock SourceText(string value) => value.Contains('\n')
         ? new DocumentBlock.Section(H("Source text"), Blocks(Array.ConvertAll(
-            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? " " : line)))))
+            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? "Definitions and proofs are in the paired Lean module." : line)))))
         : Paragraph(Text(value));
 }

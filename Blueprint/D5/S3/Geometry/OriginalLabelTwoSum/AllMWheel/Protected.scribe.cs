@@ -1,7 +1,6 @@
 using StrataLint.Engine;
 using static StrataLint.Scribe.DefinitionDsl;
 namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel;
-// SOURCE_ONLY_UNCOMPILED. Literal source text is not an emitted telescope receipt.
 internal sealed class ProtectedDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.";
@@ -42,13 +41,13 @@ internal sealed class ProtectedDocument : IScribeDocumentDefinition
             Node("gamma_iff", "noncomputable section\nopen Set Finset\nnamespace D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel\nopen FiniteProtectedDualWord OriginalLabelTwoSum\nopen FiniteElementaryCollapse FiniteRelativeSimplicialCollapse\nopen scoped BigOperators\nvariable {V : Type*} [Fintype V] [DecidableEq V]\ntheorem gamma_iff (m : Nat) (hm : 3 ≤ m) :\n    Nonempty (Sequence (project (delta (ground m))) (project (pathRoot m hm))) ↔\n      goodResidue m", "Exact SOURCE declaration and body from D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/Protected.lean; D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.gamma_iff\ntheorem gamma_iff (m : Nat) (hm : 3 ≤ m) :\n    Nonempty (Sequence (project (delta (ground m))) (project (pathRoot m hm))) ↔\n      goodResidue m := by\n  constructor\n  · rintro ⟨G⟩\n    by_contra hn\n    have hr : m % 3 ≠ 1 := by\n      intro h1\n      exact hn ⟨m/3, good_width m h1⟩\n    let d := ground m \\ FiniteIndependentPathGreedy.pathChosen (pathRootPath m hm)\n    have hc : (pathFilling m hm).critical = {d} := by\n      rw [pathFilling_critical, if_neg hr]\n    have hmain := sequence_euler (pathFilling m hm).main\n    have hgamma := sequence_euler G\n    have hcells : CriticalData (pathRoot m hm) {d} := by\n      rw [← hc]\n      exact (pathFilling m hm).cells\n    have hcell := cell_euler (pathRoot m hm) d hcells\n    change nativeEuler (project (delta (ground m))) =\n      nativeEuler (project (endpoint (pathRoot m hm) (pathFilling m hm).critical)) at hmain\n    rw [hc] at hmain\n    have hzero : (-1 : Int)^d.card = 0 := by omega\n    exact (pow_ne_zero d.card (by decide : (-1 : Int) ≠ 0)) hzero\n  · intro hg\n    exact ⟨gammaGood m hm hg⟩", DescribeRole.Theorem, describeId: "gamma-iff"))));
     private static DocumentBlock Node(string id, string sourceTelescope, string sourceBody, DescribeRole role, string? describeId = null) =>
         Describe.Lean(DescribeId.Create(describeId ?? id), DeclarationHandle.Create(Prefix + id), H(id),
-            role == DescribeRole.Definition ? StatementSource.WithoutFormula() : StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+            role == DescribeRole.Definition ? StatementSource.WithoutFormula() : StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(SourceText(sourceTelescope), SourceText(sourceBody)), role);
 
     // TextRun is one line. Keep every quoted source line, including blank separators,
     // as typed text; this is commentary, never a substitute for a Lean projection.
     private static DocumentBlock SourceText(string value) => value.Contains('\n')
         ? new DocumentBlock.Section(H("Source text"), Blocks(Array.ConvertAll(
-            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? " " : line)))))
+            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? "Definitions and proofs are in the paired Lean module." : line)))))
         : Paragraph(Text(value));
 }

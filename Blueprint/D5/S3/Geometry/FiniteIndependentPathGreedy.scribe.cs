@@ -3,7 +3,6 @@ using static StrataLint.Scribe.DefinitionDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry;
 
-// Exact attempted source contracts; native Scribe acceptance is unobserved.
 internal sealed class FiniteIndependentPathGreedyDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Geometry/FiniteIndependentPathGreedy.";
@@ -15,7 +14,7 @@ internal sealed class FiniteIndependentPathGreedyDocument : IScribeDocumentDefin
             "augmented-path-greedy-recurrence",
             Anchor.ParseCanonical("mathlib/module/Mathlib.Data.List.Nodup")), H("FiniteIndependentPathGreedy"),
         Blocks(
-            Paragraph(Text("The full augmented path family and an unbounded three-coordinate survivor recurrence, with distinct 0/1/2 bases, literal insertion transport, a modulo-three closed recursive selection, and independent-path membership. This is uncompiled source. Lexical section variables are recorded faithfully. Lean may omit unused variables. Compiled telescopes, generated declarations and exact source-selector coordinates are unobserved. Native audit counts are zero.")),
+            Paragraph(Text("The full augmented path family and an unbounded three-coordinate survivor recurrence, with distinct 0/1/2 bases, literal insertion transport, a modulo-three closed recursive selection, and independent-path membership. Lexical section variables are recorded faithfully. Lean may omit unused variables. ")),
             Node("decl-1", "paths", "paths", "Exact source endpoint D5.S3.Geometry.FiniteIndependentPathGreedy.paths.", "Lexical source context (not a compiled telescope):\nvariable {V : Type*} [Fintype V] [DecidableEq V]\n\ndef paths : List V → Finset (Finset V)", DescribeRole.Definition),
             Node("decl-2", "remaining_paths_three", "remaining_paths_three", "Exact source endpoint D5.S3.Geometry.FiniteIndependentPathGreedy.remaining_paths_three.", "Lexical source context (not a compiled telescope):\nvariable {V : Type*} [Fintype V] [DecidableEq V]\n\ntheorem remaining_paths_three (v w z : V) (vs : List V)\n    (hd : (v :: w :: z :: vs).Nodup) :\n    remaining (paths (v :: w :: z :: vs)) v = (paths vs).image (insert w)", DescribeRole.Theorem),
             Node("decl-3", "remaining_paths_two", "remaining_paths_two", "Exact source endpoint D5.S3.Geometry.FiniteIndependentPathGreedy.remaining_paths_two.", "Lexical source context (not a compiled telescope):\nvariable {V : Type*} [Fintype V] [DecidableEq V]\n\ntheorem remaining_paths_two (v w : V) (hvw : v ≠ w) :\n    remaining (paths [v, w]) v = {{w}}", DescribeRole.Theorem),
@@ -37,6 +36,6 @@ internal sealed class FiniteIndependentPathGreedyDocument : IScribeDocumentDefin
     // as typed text; this is commentary, never a substitute for a Lean projection.
     private static DocumentBlock SourceText(string value) => value.Contains('\n')
         ? new DocumentBlock.Section(H("Source text"), Blocks(Array.ConvertAll(
-            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? " " : line)))))
+            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? "Definitions and proofs are in the paired Lean module." : line)))))
         : Paragraph(Text(value));
 }

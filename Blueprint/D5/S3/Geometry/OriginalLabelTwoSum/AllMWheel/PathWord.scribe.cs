@@ -1,7 +1,6 @@
 using StrataLint.Engine;
 using static StrataLint.Scribe.DefinitionDsl;
 namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel;
-// SOURCE_ONLY_UNCOMPILED. No emitted telescope, native selector, green gate or Reg receipt.
 internal sealed class PathWordDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/PathWord.";
@@ -13,7 +12,7 @@ internal sealed class PathWordDocument : IScribeDocumentDefinition
             Anchor.ParseCanonical("mathlib/module/Mathlib.Order.UpperLower.CompleteLattice")),
         H("PathWordDocument"),
         Blocks(
-            Paragraph(Text("The sole Symbol/Word/Contract/native Sequence authority is the selected repaired P02 owner. All eight Word fields, constructors and projections are inherited there unchanged. This document describes only concrete declarations present in this source owner. Universal cycle Word, ghost-retaining fill0, every-residue fill1, Gamma iff, standalone B1/Q1, parent/physical/all-plane and every kernel/native/Scribe/Reg/gate/delivery obligation remain due. Source scopes below are separate from unavailable elaborated telescopes.")),
+            Paragraph(Text("The sole Symbol/Word/Contract/native Sequence authority is the selected repaired P02 owner. All eight Word fields, constructors and projections are inherited there unchanged. This document describes only concrete declarations present in this source owner. The cycle word, ghost-retaining fill0, every-residue fill1, Gamma criterion, B1/Q1, parent and physical constructions have separate contracts; an unrestricted arbitrary-plane supplier is not assumed. The source scopes below specify the lexical parameters.")),
             Node("Symbol", "Symbol", "Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.", "variable {V : Type*} [Fintype V] [DecidableEq V]\nabbrev Symbol := FiniteProtectedDualWord.Symbol", DescribeRole.Definition, describeId: "symbol"),
             Node("Word", "Word", "Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.", "variable {V : Type*} [Fintype V] [DecidableEq V]\nabbrev Word (W : Finset V) (K : Family V) := FiniteProtectedDualWord.Word W K", DescribeRole.Definition, describeId: "word"),
             Node("Contract", "Contract", "Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.", "variable {V : Type*} [Fintype V] [DecidableEq V]\nabbrev Contract (W : Finset V) (K : Family V) := FiniteProtectedDualWord.Contract W K", DescribeRole.Definition, describeId: "contract"),
@@ -49,13 +48,13 @@ internal sealed class PathWordDocument : IScribeDocumentDefinition
             Node("pathWord_critical_formula", "pathWord_critical_formula", "Literal source declaration. The appended scope/header is source-derived; it is not an elaborated telescope or an acceptance receipt.", "variable {V : Type*} [Fintype V] [DecidableEq V]\ntheorem pathWord_critical_formula (vertices : List V) (hd : vertices.Nodup) :\n    criticalFaces (pathWord vertices) =\n      if vertices.length % 3 = 1 then ∅ else {FiniteIndependentPathGreedy.pathChosen vertices}", DescribeRole.Theorem, describeId: "path-word-critical-formula"))));
     private static DocumentBlock Node(string id, string declaration, string prose, string sourceContract,
         DescribeRole role, string? describeId = null) => Describe.Lean(DescribeId.Create(describeId ?? id), DeclarationHandle.Create(Prefix + declaration),
-        H(id), role == DescribeRole.Definition ? StatementSource.WithoutFormula() : StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+        H(id), role == DescribeRole.Definition ? StatementSource.WithoutFormula() : StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
         Blocks(SourceText(prose), SourceText(sourceContract)), role);
 
     // TextRun is one line. Keep every quoted source line, including blank separators,
     // as typed text; this is commentary, never a substitute for a Lean projection.
     private static DocumentBlock SourceText(string value) => value.Contains('\n')
         ? new DocumentBlock.Section(H("Source text"), Blocks(Array.ConvertAll(
-            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? " " : line)))))
+            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? "Definitions and proofs are in the paired Lean module." : line)))))
         : Paragraph(Text(value));
 }

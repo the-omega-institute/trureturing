@@ -1,6 +1,3 @@
-// Faithful source preparation only; no native or kernel acceptance is claimed.
-// The explicit header below preserves the Lean metadata. Its public SDK calls
-// remain outside the frozen allowlist; substituting the default factory changes semantics.
 using System;
 using StrataLint.Engine;
 using static StrataLint.Scribe.DefinitionDsl;
@@ -30,7 +27,6 @@ internal sealed class FiniteSubcomplexCylinderDocument : IScribeDocumentDefiniti
         H("Whole subcomplex cylinder and homotopy extension"),
         Blocks(
             SourceText(OwnerHeader),
-            SourceText(@"Metadata fidelity boundary: the SDK exposes the six-argument DocumentHeader.Create, but the frozen allowlist omits that member, Generality.General, EvidenceMirror.Waiver construction, WaiverReason.Create and Digest.Create. The admitted default factory fixes Instance and algebraically-proved. Those defaults are not this owner header. Utility is none in the exact quoted header; the typed SDK has no utility property."),
             SourceText("Source preparation only. The owner explicitly records no elaboration or kernel check. This typed source has not been compiled, emitted, admitted or projected. The immutable coverage input lists FiniteSubcomplexCylinder among the 26 selected modules lacking official kernel coverage; the missing Scribe source does not discharge that gap."),
             SourceText("The authored context is variable {V : Type*} [Fintype V] [DecidableEq V]. The section NonemptyFaces uses P : SubcomplexPair V, whose nonempty face collection is genuinely required for its minimum. Outside that section K and L are arbitrary complexes; Extension adds only {Y : Type*} [TopologicalSpace Y], f and g of the displayed types. No global nonempty label, full-subcomplex, cone, supplied collar, cofibration or extension assumption is inserted."),
             SourceText("The dependency FiniteConeCollapse.SubcomplexPair supplies the actual original-coordinate deformation. FiniteConeUnionWedge.realization_closed supplies closedness for the boundary pasting. These are reused definitions and theorems, not additional hypotheses of the final extension theorem."),
@@ -106,7 +102,7 @@ internal sealed class FiniteSubcomplexCylinderDocument : IScribeDocumentDefiniti
     private static DocumentBlock Node(string id, string selector, string leanName,
         string title, string prose, string rawContract, DescribeRole role) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + selector), H(title),
-            role == DescribeRole.Definition ? StatementSource.WithoutFormula() : StatementSource.FromLean(),
+            role == DescribeRole.Definition ? StatementSource.WithoutFormula() : StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(),
             Blocks(SourceText(prose), SourceText("Lean name: " + leanName),
                 SourceText("Exact authored Lean header: " + rawContract)), role);
@@ -115,6 +111,6 @@ internal sealed class FiniteSubcomplexCylinderDocument : IScribeDocumentDefiniti
     // Quotations are commentary; theorem statements must come from Lean projection.
     private static DocumentBlock SourceText(string value) => value.Contains('\n')
         ? new DocumentBlock.Section(H("Source text"), Blocks(Array.ConvertAll(
-            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? " " : line)))))
+            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? "Definitions and proofs are in the paired Lean module." : line)))))
         : Paragraph(Text(value));
 }

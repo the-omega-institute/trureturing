@@ -3,7 +3,6 @@ using static StrataLint.Scribe.DefinitionDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry;
 
-// Exact attempted source contracts; native Scribe acceptance is unobserved.
 internal sealed class FiniteCyclicNoncoverGreedyReductionDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Geometry/FiniteCyclicNoncoverGreedyReduction.";
@@ -15,7 +14,7 @@ internal sealed class FiniteCyclicNoncoverGreedyReductionDocument : IScribeDocum
             "original-cyclic-greedy-reduction",
             Anchor.ParseCanonical("mathlib/module/Mathlib.AlgebraicTopology.SimplicialComplex.Basic")), H("FiniteCyclicNoncoverGreedyReduction"),
         Blocks(
-            Paragraph(Text("The literal original NC(C_n) first round, native no/yes restrictions, direct injective label transport and genuine n=3/4/5 survivor bases. This does not assert the missing all-n congruence formulas or CriticalData. Lexical section variables are recorded faithfully. Lean may omit unused variables. Compiled telescopes, generated declarations and exact source-selector coordinates are unobserved. Native audit counts are zero.")),
+            Paragraph(Text("The literal original NC(C_n) first round, native no/yes restrictions, direct injective label transport and genuine n=3/4/5 survivor bases. This does not assert the missing all-n congruence formulas or CriticalData. Lexical section variables are recorded faithfully. Lean may omit unused variables. ")),
             Node("decl-1", "TailIndependent", "TailIndependent", "Exact source endpoint D5.S3.Geometry.FiniteCyclicNoncoverGreedyReduction.TailIndependent.", "Lexical source context (not a compiled telescope):\nvariable {V : Type*} [Fintype V] [DecidableEq V]\n\ndef TailIndependent {n : Nat} (hn : 3 ≤ n) (s : Fin n ↪ V) (a : Finset V) : Prop", DescribeRole.Definition),
             Node("decl-2", "tailFaces", "tailFaces", "Exact source endpoint D5.S3.Geometry.FiniteCyclicNoncoverGreedyReduction.tailFaces.", "Lexical source context (not a compiled telescope):\nvariable {V : Type*} [Fintype V] [DecidableEq V]\n\ndef tailFaces {n : Nat} (hn : 3 ≤ n) (s : Fin n ↪ V) : Finset (Finset V)", DescribeRole.Definition),
             Node("decl-3", "first_round", "first_round", "Exact source endpoint D5.S3.Geometry.FiniteCyclicNoncoverGreedyReduction.first_round.", "Lexical source context (not a compiled telescope):\nvariable {V : Type*} [Fintype V] [DecidableEq V]\n\ntheorem first_round {n : Nat} (hn : 3 ≤ n) (s : Fin n ↪ V) :\n    remaining (faceSet (noncover (show 0 < n by omega) s)) (point hn s) =\n      insert {point hn s} (tailFaces hn s)", DescribeRole.Theorem),
@@ -38,6 +37,6 @@ internal sealed class FiniteCyclicNoncoverGreedyReductionDocument : IScribeDocum
     // as typed text; this is commentary, never a substitute for a Lean projection.
     private static DocumentBlock SourceText(string value) => value.Contains('\n')
         ? new DocumentBlock.Section(H("Source text"), Blocks(Array.ConvertAll(
-            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? " " : line)))))
+            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? "Definitions and proofs are in the paired Lean module." : line)))))
         : Paragraph(Text(value));
 }

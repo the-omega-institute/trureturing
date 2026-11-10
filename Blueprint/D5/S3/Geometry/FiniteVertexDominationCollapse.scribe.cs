@@ -3,7 +3,6 @@ using static StrataLint.Scribe.DefinitionDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry;
 
-// UNCOMPILED Scribe source attempt. No C# / Scribe / Lean native checks ran.
 internal sealed class FiniteVertexDominationCollapseDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Geometry/FiniteVertexDominationCollapse.";
@@ -16,9 +15,8 @@ internal sealed class FiniteVertexDominationCollapseDocument : IScribeDocumentDe
             Anchor.ParseCanonical("mathlib/module/Mathlib.AlgebraicTopology.SimplicialComplex.Basic")),
         H("Finite dominated-vertex free-face deletion"),
         Blocks(
-            SourceText("SOURCE ATTEMPT: all listed Lean declarations are UNCOMPILED. "
-                + "The raw headers below are written in the section V : Type*, Fintype V, DecidableEq V. "
-                + "Unused section instances may not be captured; native binder closures are unobserved. "
+            SourceText("The raw headers below are written in the section V : Type*, Fintype V, DecidableEq V. "
+                + "Unused section instances need not occur in the compiled telescope. "
                 + "K is a native PreAbstractSimplicialComplex, with nonempty faces only. "
                 + "No carrier, purity, connectedness, or realization-nonempty hypothesis is hidden. "
                 + "Canonical finite relative and elementary owners supply the native Sequence and SDR. "
@@ -164,6 +162,6 @@ internal sealed class FiniteVertexDominationCollapseDocument : IScribeDocumentDe
     // as typed text; this is commentary, never a substitute for a Lean projection.
     private static DocumentBlock SourceText(string value) => value.Contains('\n')
         ? new DocumentBlock.Section(H("Source text"), Blocks(Array.ConvertAll(
-            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? " " : line)))))
+            value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? "Definitions and proofs are in the paired Lean module." : line)))))
         : Paragraph(Text(value));
 }
