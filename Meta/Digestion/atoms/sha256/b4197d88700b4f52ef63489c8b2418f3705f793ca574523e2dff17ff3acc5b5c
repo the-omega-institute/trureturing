@@ -1,0 +1,119 @@
+**定理 30.1（有限非标量谱的逐格标量余量）。** 保持定义 28.1 的完整原条件及整个实际 $C=PAP\ne0$ 的同号分类。另设这个角自身具有实际递增含单位满矩阵 UHF 模型
+
+$$
+C=\overline{\bigcup_n C_n}^{\|\cdot\|},\qquad
+C_n\cong M_{d_n}(\mathbb C),\qquad 1_{C_n}=P,
+\qquad d_n\longrightarrow\infty.
+\tag{30.1}
+$$
+
+不要求阶段大小为偶，也不要求 $C$ 是环境 $A$ 的预定有限阶段角。对 (29.1) 的每个有限非标量谱原演员 $c\in C_{\rm sa}$ 和每个任意环境 $t=t^*\in A$，存在唯一的一组实数 $\rho_i=\rho_i(c,t)$，使
+
+$$
+\boxed{D(c,t)=K_\sigma(c,t)+\sum_{a_i\ne0}\rho_i p_i.}
+\tag{30.2}
+$$
+
+特别，余量支撑在 $S=\operatorname{supp}(c)$、与 $c$ 交换，并在每个非零谱格上为实标量。$c$ 无须可逆或具有反对易反射，完整谱格的数学迹无须相等。
+
+证明。先在这个**实际内在载体 $C$、单位 $P$** 中消费 AH67.2 式 (67.3) 的近投影酉构造及有限矩阵秩工具；成熟归属为 Blackadar，*Operator Algebras*，II.2.3.1–5、II.3.3.4–5、II.8.2.2(iv)。为明确每次使用都产生实际匹配，给出其参数。
+
+对任意实际投影 $r\in C$，取某个 $C_n$ 中自伴 $h_r$，使 $\|h_r-r\|<\varepsilon<1/4$。其谱包含于
+$[-\varepsilon,\varepsilon]\cup[1-\varepsilon,1+\varepsilon]$，所以有限矩阵函数演算给
+
+$$
+r_0=1_{(1/2,\infty)}(h_r)\in C_n,\qquad
+\|r_0-h_r\|\le\varepsilon,\qquad\|r_0-r\|<2\varepsilon<1.
+$$
+
+在 $C$ 内置
+
+$$
+x_r=r_0r+(P-r_0)(P-r),\qquad
+\nu_r=x_r(x_r^*x_r)^{-1/2}.
+\tag{30.3}
+$$
+
+准确有 $x_r^*x_r=x_rx_r^*=P-(r-r_0)^2$，故 $x_r$ 可逆，$\nu_r$ 是单位为 $P$ 的实际酉。由 $x_rr=r_0x_r$ 及 $x_r^*x_r$ 与 $r$ 交换，得
+
+$$
+\nu_r r\nu_r^*=r_0.
+\tag{30.4}
+$$
+
+这只是 AH 式 (67.3) 在 $C$ 中的成熟构造，不对未知 $D$ 使用酉协变。
+
+现在取任意两个非零实际投影 $r,v\in C$。分别作 (30.3)–(30.4)，得 $\nu_r,\nu_v$ 及有限阶段的 $r_0,v_0$；把后两者放进一个共同后续 $C_N\cong M_{d_N}$。将 $r_0$ 分成秩一投影 $L_1,\ldots,L_k$，只从 $v_0$ 取**一个**秩一投影 $M_0\le v_0$。有限矩阵正交基给每个 $\alpha$ 的实际部分等距 $V_\alpha\in C_N$，满足
+
+$$
+V_\alpha^*V_\alpha=M_0,\qquad
+V_\alpha V_\alpha^*=L_\alpha.
+$$
+
+定义
+
+$$
+l_\alpha=\nu_r^*L_\alpha\nu_r,\qquad
+m=\nu_v^*M_0\nu_v,\qquad
+w_\alpha=\nu_r^*V_\alpha\nu_v.
+\tag{30.5}
+$$
+
+于是全部元素实际属于 $C$，并且
+
+$$
+r=\sum_{\alpha=1}^k l_\alpha,\qquad
+l_\alpha l_\beta=0\ (\alpha\ne\beta),\qquad
+0\ne m\le v,\qquad
+w_\alpha^*w_\alpha=m,\quad
+w_\alpha w_\alpha^*=l_\alpha.
+\tag{30.6}
+$$
+
+这是单侧完全分割：每次都可使用同一个 $m$。若使用 AH67.1 的相容归一数学迹 $\tau_C$，每块的迹为 $1/d_N$；$r$、$v$ 的整迹分别由它们在 $C_N$ 中的秩决定，可以不同。这里没有把 $v$ 分成与 $r$ 同样数量的完全匹配，也不假设不等整迹的投影等价。两个酉各自把一个投影放进有限阶段，不要求同时共轭全部原谱投影。
+
+对 (29.1) 的每个 $i$，任选一个 $j\ne i$。由于 $p_j\ne0$，将 (30.6) 用于 $r=p_i,v=p_j$ 就实际支付 (29.2)，并允许 $a_j=0$。定理 29.1 因而给同一个固定余量
+
+$$
+s=D(c,t)-K_\sigma(c,t)=s^*\in SAS,\qquad[c,s]=0.
+\tag{30.7}
+$$
+
+还须约束每个内部块，而不只求得交换性。固定 $a_i\ne0$，取任意实际非零投影 $r\le p_i$。对 $r$ 和同一个非零 $p_j$ 再作 (30.6)，把 $r$ 分成 $l_\alpha$，各块与反复使用的 $m\le p_j$ 实际等价。它们在**同一个原演员 $c$** 上仍有谱值 $a_i\ne a_j$；$e_\alpha=w_\alpha+w_\alpha^*$ 满足定理 28.2 的所有条件。于是逐块有 $l_\alpha s(1-l_\alpha)=0$，有限求和给
+
+$$
+rs(1-r)=0,\qquad(1-r)sr=0,\qquad[r,s]=0.
+\tag{30.8}
+$$
+
+零投影的等式也成立。因此 $s_i=p_i s p_i$ 与 $p_iCp_i$ 中的**每个实际投影**交换；这里只改变已知的探针标签，始终读取原来的同一个 $D(c,t)$。
+
+为使用角中心，令 (30.4) 对 $p_i$ 的实际酉为 $\nu_i$，并取 $p_i^0=\nu_i p_i\nu_i^*\in C_{n_i}$。对 $N\ge n_i$，已知代数中存在实际满矩阵模型
+
+$$
+B_N^i=\nu_i^*p_i^0C_Np_i^0\nu_i\subseteq p_iCp_i,
+\quad 1_{B_N^i}=p_i,
+\quad B_N^i\cong M_{k_i d_N/d_{n_i}}(\mathbb C),
+\quad k_i=\operatorname{rank}_{C_{n_i}}(p_i^0)\ge1.
+\tag{30.9}
+$$
+
+这些代数递增，其并在整个 $p_iCp_i$ 中范数稠密：先在 $C_N$ 内逼近已知的 $\nu_i y\nu_i^*$，再用 $p_i^0$ 压缩，最后共轭回去。有限矩阵谱分解给其每个自伴元素为有限实投影和。由 (30.8)，$s_i$ 与这些自伴元素全都交换。对于任意 $y=y^*\in p_iCp_i$，取上述 $y_N\to y$；只使用固定算子的乘法极限
+
+$$
+\|[s_i,y]\|\le 2\|s_i\|\|y-y_N\|\longrightarrow0.
+\tag{30.10}
+$$
+
+故 $s_i\in Z(p_iCp_i)$。
+
+现在直接消费 AH67.1 的成熟满矩阵极限标量中心结论，应用载体是 (30.9) 的整个 $p_iCp_i$、单位是 $p_i$；该结论不使用矩阵阶数的偶性。令 $\tau_i$ 为这个角的相容归一数学迹，则
+
+$$
+Z(p_iCp_i)=\mathbb C p_i,\qquad
+s_i=\rho_i p_i,\qquad \rho_i=\tau_i(s_i)\in\mathbb R.
+\tag{30.11}
+$$
+
+实系数来自 $s_i=s_i^*$。这些辅助数学迹的归一化不改变任何原评价质量。内部零格已由 (29.6) 消去，故 (30.7) 给 (30.2)；各 $p_i\ne0$ 又给系数唯一性。以上未使用输入极限通过 $D$、反对易反射或 $c$ 在单位 $P$ 下的逆。∎
+
