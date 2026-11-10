@@ -2,8 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Circle/Orbit/MersenneZeroSymmetries
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.Logic.Equiv.Fin.Rotate,
-     mathlib/module/Mathlib.Data.Int.ModEq]
+   anchors: [mathlib/module/Mathlib.Logic.Equiv.Fin.Rotate, mathlib/module/Mathlib.Data.Int.ModEq]
    utility: none
    digest: Gcd residue coordinates classify literal Mersenne zero-family symmetries. -/
 
