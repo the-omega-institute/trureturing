@@ -11,40 +11,32 @@ universe u
 
 namespace Reg.D5.S3.Quantum.Foundation.LeastConfirmationGeneration
 
-/-- The carrier and its algebraic structures remain parameters of the whole family. -/
-structure Carrier where
-  space : Type u
-  addition : AddCommGroup space
-  scalar : @Module ℝ space _ addition.toAddCommMonoid
-
-attribute [instance] Carrier.addition Carrier.scalar
-
+/-- Lists of arbitrary probes are states; the observation is their actual length. -/
 abbrev signature : Signature where
-  Params := Carrier.{u}
-  State k := k.space →ₗ[ℝ] ℝ
+  Params := Σ A : Type u, Set A
+  State k := List (ℝ × k.2)
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ k := (k.space →ₗ[ℝ] ℝ) → Prop
+  Output _ _ := ℕ
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature.{u} :=
-  realize signature (fun _ _ f => Eq f) (fun e => nomatch e)
+  realize signature (fun _ _ l => l.length) (fun e => nomatch e)
 
 def rejected : Realization signature.{u} :=
-  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature.{u}
   Law R := ∀ {A : Type u} [AddCommGroup A] [Module ℝ A] [FiniteDimensional ℝ A]
     {P : Set A} (C : ConfirmationSystem P) (f : A →ₗ[ℝ] ℝ) (_hf : Positive P f),
     ∃ l : List (ℝ × P), (∀ a ∈ l, 0 < a.1) ∧
-      R.readout () ⟨A, inferInstance, inferInstance⟩ f
-        ((l.map (fun a => a.1 • C.effect a.2)).sum) ∧
+      f = (l.map (fun a => a.1 • C.effect a.2)).sum ∧
       l.Pairwise (fun a b => C.effect b.2 a.2 = 0 ∧ C.effect a.2 b.2 = 0) ∧
       (∀ q : P, ((l.map (fun a => C.effect a.2)).sum) q ≤ C.unit q) ∧
-      l.length ≤ finrank ℝ A ∧ (f = C.unit → ∀ a ∈ l, a.1 = 1)
+      R.readout () ⟨A, P⟩ l ≤ finrank ℝ A ∧ (f = C.unit → ∀ a ∈ l, a.1 = 1)
 
 private def zeroSystem : ConfirmationSystem (∅ : Set (ULift.{u} (Fin 0 → ℝ))) where
   unit := 0
@@ -58,21 +50,17 @@ private def zeroSystem : ConfirmationSystem (∅ : Set (ULift.{u} (Fin 0 → ℝ
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
-  obtain ⟨l, _, hfalse, _⟩ := h zeroSystem 0 (by intro p; exact False.elim p.property)
-  exact hfalse
+  obtain ⟨l, _, _, _, _, hbound, _⟩ :=
+    h zeroSystem 0 (by intro p; exact False.elim p.property)
+  have hh : (1 : ℕ) ≤ 0 := by simpa [rejected, realize] using hbound
+  omega
 
 private theorem dependence : ObservationalDependence signature.{u} actual := by
   intro i
-  let k : Carrier.{u} := ⟨ULift.{u} ℝ, inferInstance, inferInstance⟩
-  let f : k.space →ₗ[ℝ] ℝ := ULift.moduleEquiv.toLinearMap
-  refine ⟨k, 0, f, ?_⟩
-  intro h
-  have he := congrFun h 0
-  change ((0 : k.space →ₗ[ℝ] ℝ) = 0) = (f = 0) at he
-  have hf : f = 0 := Eq.mp he rfl
-  have hh := LinearMap.congr_fun hf (ULift.up 1)
-  change (1 : ℝ) = 0 at hh
-  exact one_ne_zero hh
+  let k : signature.{u}.Params := ⟨ULift.{u} ℝ, Set.univ⟩
+  let a : ℝ × k.2 := (1, ⟨ULift.up 1, Set.mem_univ _⟩)
+  refine ⟨k, [], [a], ?_⟩
+  simp [actual, realize]
 
 def family : Registration arena.{u} (type_of% @positive_dual_generation.{u}) where
   actual := actual
@@ -99,7 +87,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature.{u} (fun _ _ f => Eq f) (fun e => nomatch e))
+  readout := some (realize signature.{u} (fun _ _ l => l.length) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -107,13 +95,13 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.Quantum.Foundation.LeastConfirmationGeneration
     definition := none
-    coordinates := #[0, 1, 2]
+    coordinates := #[0, 4]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "arg", "body", "arg", "fn", "arg", "fn"]
-      stateBinder := 6
+        "arg", "body", "arg", "arg", "arg", "arg", "fn", "arg", "fn", "arg"]
+      stateBinder := 8
       functionOperand := false
-      stateOperand := some #["arg"]
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
