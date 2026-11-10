@@ -137,7 +137,7 @@ theorem good_iff {n : ℕ} (s : Seen) (f : Fin n → Fin 6) :
     have hp : ∀ i : Fin n, (0 : Fin (n + 1)) < i.succ := fun i => Nat.zero_lt_succ _
     simp [Fin.tail, Fin.exists_fin_succ, advance, allowed, or_assoc, hp]
 
-private def normal {n : ℕ} (A : Fin 2 × Fin n → Fin 6) : Prop :=
+def normal {n : ℕ} (A : Fin 2 × Fin n → Fin 6) : Prop :=
   ∀ p,
     ((A p = 2 ∨ A p = 3 ∨ A p = 4) →
       ∃ q, q.1.val * n + q.2.val < p.1.val * n + p.2.val ∧ A q = 1) ∧
@@ -218,7 +218,7 @@ private def Legal {n : ℕ} (A : Fin 2 × Fin n → Fin 6) : Prop :=
     A (r, j) ≠ A (s, ⟨j.val + 1, h⟩) ∧
       (A (r, j)).val + (A (s, ⟨j.val + 1, h⟩)).val ≠ 5) ∧ normal A
 
-private instance instDecidableNormal {n : ℕ} (A : Fin 2 × Fin n → Fin 6) : Decidable (normal A) :=
+instance instDecidableNormal {n : ℕ} (A : Fin 2 × Fin n → Fin 6) : Decidable (normal A) :=
   inferInstanceAs (Decidable (∀ _p : Fin 2 × Fin n, (_ → _) ∧ (_ → _)))
 
 private instance instDecidableLegal {n : ℕ} (A : Fin 2 × Fin n → Fin 6) : Decidable (Legal A) :=

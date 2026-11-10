@@ -1,0 +1,20 @@
+**定义 1.1（完整区间模型）。** 记 $I=[0,1]$，固定整数 $n\ge3$，取
+
+$$
+M=C(I,M_n(\mathbb C)),\quad E=M_{\rm sa}=C(I,H_n(\mathbb C)),\quad
+u(t)=I_n,\quad C=M_+,\quad N(a)=\sup_{t\in I}\|a(t)\|,
+\qquad S(a,b)=a\circ b=(ab+ba)/2.
+\tag{1.1}
+$$
+
+这里是全部连续截面，既非局部常值域，也非稠密真子域。保留同一原 $\Omega/\mathrm{native}$ 的全部原正实线性评价 $\gamma\in\mathcal P$，准确要求
+
+$$
+a\in C\iff(\forall\gamma\in\mathcal P)\ \gamma(a)\ge0,
+\qquad [\gamma(a)=0\ (\forall\gamma)]\Longrightarrow a=0,
+\qquad m_\gamma=\gamma(u)\ge0.
+\tag{1.2}
+$$
+
+零、不等、次归一及原有非正常评价均不删除。不将数学正泛函或数学向量加入实际准备族。$D:E^2\to E$ 是同一份未知总映射；仅由值域成员资格知道每个固定输出是连续截面，不假定输入连续、可测、分别可加、齐次、协变、中央局部、商下降或任何完成延拓。
+

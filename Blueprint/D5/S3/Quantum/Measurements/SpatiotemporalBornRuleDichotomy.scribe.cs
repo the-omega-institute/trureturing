@@ -60,6 +60,7 @@ internal sealed class SpatiotemporalBornRuleDichotomyDocument : IScribeDocumentD
                     Paragraph(Text(
                         "Assume a representing operator w exists. Complex linear combinations of self-adjoint projections span the full square matrix space: "
                         + "the spectral theorem writes each self-adjoint matrix as a real linear combination of unitary conjugates of coordinate projections, and self-adjoint matrices span the complex algebra. "
+                        + "The coordinate-projection fact is supplied directly by proj_single in the intrinsic projection-matching module. "
                         + "Consequently a matrix whose trace pairing with every projection is zero is itself zero.")),
                     Paragraph(Text(
                         "Fix an input projection p and an output projection q. The decomposition 1 = p + (1 − p) makes the trace pairing with w additive in the first projection. "

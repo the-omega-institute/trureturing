@@ -10,6 +10,8 @@ internal sealed class HardinA233177PairTransferDocument : IScribeDocumentDefinit
         "D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177PairTransfer.";
     private const string LeanPrefix =
         "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer.";
+    private static LibraryNoteRef Source =>
+        LibraryNoteRef.Create("D5/L/Automata/hardin2013a233177");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A fourteen-class transfer for proper four-row pair-label patterns.",
@@ -26,6 +28,16 @@ internal sealed class HardinA233177PairTransferDocument : IScribeDocumentDefinit
                 + "propagates these equalities to arbitrary width.")),
             Node("Proper", "Proper pair-label patterns", ProperFormula(), false),
             Node("L", "Literal pair-pattern count", CountFormula(), false),
+            Node("Col", "Four-label columns", ColFormula(), false),
+            Node("column", "Column coordinates", ColumnFormula(), false),
+            Node("cls", "The fourteen equality classes", ClassFormula(), false),
+            Node("representatives", "First-appearance representatives", RepresentativesFormula(), false),
+            Node("relabel", "Coordinatewise label permutations", RelabelFormula(), false),
+            Node("column_relabel", "Relabelling column coordinates", ColumnRelabelFormula(), true),
+            Node("class_relabel", "Relabelling preserves equality classes", ClassRelabelFormula(), true),
+            Node("class_rep", "Every column has a representative", ClassRepFormula(), true),
+            Node("gridEquiv", "Grids as sequences of columns", GridEquivFormula(), false),
+            Node("column_grid", "Recovering a grid entry", ColumnGridFormula(), true),
             Node("initial_values", "Eight initial pair-pattern counts", InitialFormula(), true),
             Node("recurrence", "The constant-adjusted pair-pattern recurrence",
                 RecurrenceFormula(), true),
@@ -37,11 +49,112 @@ internal sealed class HardinA233177PairTransferDocument : IScribeDocumentDefinit
                 + "also annihilates the constant six.")))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, bool theorem) =>
-        Describe.Lean(DescribeId.Create(name.Replace("_", "-").ToLowerInvariant()),
+        Describe.Lean(DescribeId.Create(name == "gridEquiv" ? "grid-equiv"
+                : name.Replace("_", "-").ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
+            StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(title + "."))),
             theorem ? DescribeRole.Theorem : DescribeRole.Definition);
+
+    private static Formula ColFormula() =>
+        Eq(Own("Col"), Product(Fin(D(3)), Product(Fin(D(3)), Product(Fin(D(3)), Fin(D(3))))));
+
+    private static Formula ColumnFormula()
+    {
+        var c = V("c");
+        return All("c", Own("Col"), Eq(Own("column", c),
+            Typed(Vector(Call("Prod.fst", c), Call("Prod.fst", Call("Prod.snd", c)),
+                Call("Prod.fst", Call("Prod.snd", Call("Prod.snd", c))),
+                Call("Prod.snd", Call("Prod.snd", Call("Prod.snd", c)))),
+                Arrow(Fin(D(4)), Fin(D(3))))));
+    }
+
+    private static Formula ClassFormula()
+    {
+        var a = V("a"); var b = V("b"); var d = V("d"); var e = V("e"); var c = V("c");
+        var body = If(Eq(a, b), If(Eq(a, d), If(Eq(a, e), D(0), D(1)),
+            If(Eq(a, e), D(2), If(Eq(d, e), D(3), D(4)))),
+            If(Eq(a, d), If(Eq(a, e), D(5), If(Eq(b, e), D(6), D(7))),
+            If(Eq(b, d), If(Eq(a, e), D(8), If(Eq(b, e), D(9), D(1,0))),
+            If(Eq(a, e), D(1,1), If(Eq(b, e), D(1,2), D(1,3))))));
+        body = Let("a", Fin(D(3)), Call("Prod.fst", c),
+            Let("b", Fin(D(3)), Call("Prod.fst", Call("Prod.snd", c)),
+            Let("d", Fin(D(3)), Call("Prod.fst", Call("Prod.snd", Call("Prod.snd", c))),
+            Let("e", Fin(D(3)), Call("Prod.snd", Call("Prod.snd", Call("Prod.snd", c))), body))));
+        return All("c", Own("Col"), Eq(Own("cls", c), Typed(body, Fin(D(1,4)))));
+    }
+
+    private static Formula RepresentativesFormula() => Eq(Own("representatives"),
+        Typed(Vector(Column(0,0,0,0), Column(0,0,0,1), Column(0,0,1,0), Column(0,0,1,1),
+            Column(0,0,1,2), Column(0,1,0,0), Column(0,1,0,1), Column(0,1,0,2),
+            Column(0,1,1,0), Column(0,1,1,1), Column(0,1,1,2), Column(0,1,2,0),
+            Column(0,1,2,1), Column(0,1,2,2)), Arrow(Fin(D(1,4)), Own("Col"))));
+
+    private static Formula RelabelFormula()
+    {
+        var e = V("e");
+        return All("e", Perm(), Eq(Own("relabel", e),
+            Call("Equiv.prodCongr", e, Call("Equiv.prodCongr", e, Call("Equiv.prodCongr", e, e)))));
+    }
+
+    private static Formula ColumnRelabelFormula()
+    {
+        var e = V("e"); var c = V("c"); var r = V("r");
+        return All("e", Perm(), All("c", Own("Col"), All("r", Fin(D(4)),
+            Eq(Own("column", ApplyRelabel(e, c), r),
+                App(Typed(e, Arrow(Fin(D(3)), Fin(D(3)))), Own("column", c, r))))));
+    }
+
+    private static Formula ClassRelabelFormula() =>
+        All("e", Perm(), All("c", Own("Col"),
+            Eq(Own("cls", ApplyRelabel(V("e"), V("c"))), Own("cls", V("c")))));
+
+    private static Formula ClassRepFormula() =>
+        All("c", Own("Col"), Ex("e", Perm(),
+            Eq(ApplyRelabel(V("e"), V("c")), Own("representatives", Own("cls", V("c"))))));
+
+    private static Formula GridEquivFormula()
+    {
+        var n = V("n"); var p = V("P"); var j = V("j"); var f = V("f"); var cell = V("p");
+        var arrays = Arrow(Cells(n), Fin(D(3))); var columns = Arrow(Fin(n), Own("Col"));
+        var forward = Fn("P", arrays, Fn("j", Fin(n),
+            Pair(App(p, Pair(D(0), j)), Pair(App(p, Pair(D(1), j)),
+                Pair(App(p, Pair(D(2), j)), App(p, Pair(D(3), j)))))));
+        var inverse = Fn("f", columns, Fn("p", Cells(n),
+            Own("column", App(f, Call("Prod.snd", cell)), Call("Prod.fst", cell))));
+        var leftInverse = Fn("P", arrays, Seq(V("by"), Sp, V("funext"), Sp, cell, Semi, Sp,
+            V("rcases"), Sp, cell, Sp, V("with"), Sp, Langle, Sp, V("r"), Comma, j, Rangle, Semi, Sp,
+            Q("fin_cases"), Sp, V("r"), Sp, F.Lt, Semi, F.Gt, Sp, V("rfl")));
+        var rightInverse = Fn("f", columns, Call("Eq.refl", f));
+        return All("n", Q("Nat"), Eq(Own("gridEquiv", n),
+            Call("Equiv.mk", forward, inverse, leftInverse, rightInverse)));
+    }
+
+    private static Formula ColumnGridFormula()
+    {
+        var n = V("n"); var p = V("P"); var j = V("j"); var r = V("r");
+        return All("n", Q("Nat"), All("P", Arrow(Cells(n), Fin(D(3))),
+            All("j", Fin(n), All("r", Fin(D(4)),
+                Eq(Own("column", App(Typed(Own("gridEquiv", n),
+                    Arrow(Arrow(Cells(n), Fin(D(3))), Arrow(Fin(n), Own("Col")))), p, j), r),
+                    App(p, Pair(r, j)))))));
+    }
+
+    private static Formula Perm() => Call("Equiv.Perm", Fin(D(3)));
+    private static Formula ApplyRelabel(Formula e, Formula c) =>
+        App(Typed(Own("relabel", e), Arrow(Own("Col"), Own("Col"))), c);
+    private static Formula Column(byte a, byte b, byte c, byte d) =>
+        Typed(Pair(D(a), Pair(D(b), Pair(D(c), D(d)))), Own("Col"));
+    private static Formula Vector(params Formula[] entries) => Seq(Bang, OpenBracket,
+        Seq(entries.SelectMany((entry, i) => i == 0
+            ? new[] { entry } : new[] { Comma, Sp, entry }).ToArray()), CloseBracket);
+    private static Formula If(Formula condition, Formula yes, Formula no) =>
+        Parenthesized(Seq(V("if"), Sp, condition, Sp, V("then"), Sp, yes, Sp, V("else"), Sp, no));
+    private static Formula Let(string name, Formula type, Formula value, Formula body) =>
+        Parenthesized(Seq(V("let"), Sp, V(name), Colon, Sp, type, Sp, Colon, F.Eq, Sp,
+            value, Semi, Sp, body));
+    private static Formula Ex(string name, Formula type, Formula body) =>
+        Seq(Exists, Sp, Typed(V(name), type), Comma, Sp, Parenthesized(body));
 
     private static Formula ProperFormula()
     {
@@ -103,7 +216,8 @@ internal sealed class HardinA233177PairTransferDocument : IScribeDocumentDefinit
         new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Add, Parenthesized(b));
     private static Formula Own(string name, params Formula[] args) =>
         Call(LeanPrefix + name, args);
-    private static Formula Call(string name, params Formula[] args) => App(Q(name), args);
+    private static Formula Call(string name, params Formula[] args) =>
+        args.Length == 0 ? Q(name) : App(Q(name), args);
     private static Formula App(Formula f, params Formula[] args) =>
         new Formula.Apply(f, [.. args]);
     private static Formula Parenthesized(Formula f) => Seq(Open, f, Close);
