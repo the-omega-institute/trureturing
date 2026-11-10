@@ -4,10 +4,12 @@
    mirror-E: none(waiver:raw-unital-magma)
    anchors: []
    utility: none
-   digest: Actual group tails preserve every original directed comparison independently at bidirectional zero tails. -/
+   digest: Actual group tails preserve all original directed comparisons. -/
 
 import D5.S3.Quantum.Completion.RawUnanchoredReplication
 import Mathlib.Algebra.Group.Subgroup.Basic
+
+/-! Common group tails and independent bidirectional-zero tails on a unital magma. -/
 
 noncomputable section
 set_option autoImplicit false
@@ -64,7 +66,7 @@ theorem right_invariant (h : RawCost U c) (L : LabelGroup U G) (a b : M) (g : G)
 Neither symmetry of c nor marker stability of this subgroup is asserted. -/
 def zeroSubgroup (h : RawCost U c) (L : LabelGroup U G) : Subgroup G where
   carrier := {z | c (L.label z) 1 = 0 ∧ c 1 (L.label z) = 0}
-  one_mem' := by simp only [Set.mem_setOf_eq, L.map_one, h.diagonal, and_self]
+  one_mem' := by simp only [Set.mem_ofPred_eq, L.map_one, h.diagonal, and_self]
   mul_mem' := by
     rintro x y ⟨hx, hx'⟩ ⟨hy, hy'⟩
     have hf := single h (L.label x) 1 (L.label y) 1
@@ -94,7 +96,8 @@ theorem independent_zero_tails (h : RawCost U c) (L : LabelGroup U G)
         (L.label (L.marker^[n] 1)) ((L.marker^[n] 1)⁻¹)
       have hr := right_invariant h L (L.label (L.marker^[n] 1))
         (L.label (L.marker^[n] (g : G))) ((L.marker^[n] 1)⁻¹)
-      simp only [← L.map_mul, mul_inv_cancel, L.map_one, hiter, sync_iter h] at hf hr
+      simp only [← L.map_mul, mul_inv_cancel, L.map_one] at hf hr
+      simp only [hiter, L.map_one, sync_iter h] at hf hr
       exact ⟨hf.trans g.property.1, hr.trans g.property.2⟩⟩
   let F : Z × Z → ℝ := fun p => c (a * L.label (p.1 : G)) (b * L.label (p.2 : G))
   let R : Set ℝ := Set.range F
