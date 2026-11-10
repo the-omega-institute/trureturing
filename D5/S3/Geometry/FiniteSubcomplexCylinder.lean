@@ -258,6 +258,38 @@ theorem nonemptyRetraction_fixed (z : P.Space × I)
     exact nonemptyRetraction_bottom P x
   · exact nonemptyRetraction_side P x t hx
 
+/-- The positive-control branch formulas define the same continuous retraction.
+The zero-control branch retains the compact-parameter construction. -/
+private def branchRetraction : C(P.Space × I, Cylinder P.ambient P.subcomplex) := by
+  classical
+  let r : P.Space × I → Cylinder P.ambient P.subcomplex := fun z =>
+    if hx : 0 < (control P z.1 : ℝ) then
+      if ht : (z.2 : ℝ) ≤ (control P z.1 : ℝ) then
+        ⟨(P.deform ⟨(z.2 : ℝ) / (control P z.1 : ℝ),
+          div_nonneg z.2.property.1 hx.le, (div_le_one hx).mpr ht⟩ z.1, 0), by
+          rw [← nonemptyRetraction_lower P z.1 z.2 hx ht]
+          exact (nonemptyRetraction P z).property⟩
+      else
+        ⟨(P.deform 1 z.1, ⟨(z.2 : ℝ) - (control P z.1 : ℝ),
+          sub_nonneg.mpr (lt_of_not_ge ht).le,
+          (sub_le_self _ hx.le).trans z.2.property.2⟩), by
+          rw [← nonemptyRetraction_upper P z.1 z.2 hx (lt_of_not_ge ht)]
+          exact (nonemptyRetraction P z).property⟩
+    else nonemptyRetraction P z
+  have hr : r = nonemptyRetraction P := by
+    funext z
+    apply Subtype.ext
+    dsimp only [r]
+    split_ifs with hx ht
+    · exact (nonemptyRetraction_lower P z.1 z.2 hx ht).symm
+    · exact (nonemptyRetraction_upper P z.1 z.2 hx (lt_of_not_ge ht)).symm
+    · rfl
+  exact (nonemptyRetraction P).copy r hr
+
+private theorem branchRetraction_eq : branchRetraction P = nonemptyRetraction P := by
+  unfold branchRetraction
+  exact ContinuousMap.copy_eq _ _ _
+
 end NonemptyFaces
 
 variable (K L : PreAbstractSimplicialComplex V)
@@ -272,7 +304,7 @@ empty label types, empty realizations, empty subcomplexes and ghost labels. -/
 def retraction (hLK : L ≤ K) : C(Space K × I, Cylinder K L) := by
   classical
   exact if hL : (L : Set (Finset V)).Nonempty then
-    nonemptyRetraction ⟨K, L, hLK, hL⟩
+    branchRetraction ⟨K, L, hLK, hL⟩
   else bottomRetraction K L
 
 /-- Every point of the entire target is fixed, at every time. -/
@@ -281,7 +313,8 @@ theorem retraction_fixed (hLK : L ≤ K) (z : Space K × I)
   classical
   unfold retraction
   split_ifs with hL
-  · exact nonemptyRetraction_fixed ⟨K, L, hLK, hL⟩ z hz
+  · rw [branchRetraction_eq]
+    exact nonemptyRetraction_fixed ⟨K, L, hLK, hL⟩ z hz
   · rcases hz with ht | hx
     · apply Prod.ext
       · rfl

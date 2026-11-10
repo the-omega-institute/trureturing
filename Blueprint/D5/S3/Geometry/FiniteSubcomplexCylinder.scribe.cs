@@ -71,7 +71,7 @@ internal sealed class FiniteSubcomplexCylinderDocument : IScribeDocumentDefiniti
             Node("retraction", "retraction",
                 "D5.S3.Geometry.FiniteSubcomplexCylinder.retraction",
                 "A retraction for every finite inclusion",
-                "Given hLK : L ≤ K, split on whether L has an actual face. The inhabited-face branch uses nonemptyRetraction for the exact pair (K,L,hLK,hL). When L has no faces, send (x,t) directly to (x,0). This formula uses no minimum or chosen point of L. Empty labels, empty K, empty L and ghost labels are allowed. If L=K, the target is all of Space K × I and the fixedness theorem makes the retraction identity.",
+                "Given hLK : L ≤ K, split on whether L has an actual face. The inhabited-face branch uses the displayed lower and upper formulas at positive control and nonemptyRetraction at zero control, for the exact pair (K,L,hLK,hL). Their proved equalities transport the joint continuity of nonemptyRetraction to this same map. When L has no faces, send (x,t) directly to (x,0). This formula uses no minimum or chosen point of L. Empty labels, empty K, empty L and ghost labels are allowed. If L=K, the target is all of Space K × I and the fixedness theorem makes the retraction identity.",
                 "def retraction (hLK : L ≤ K) : C(Space K × I, Cylinder K L)", DescribeRole.Definition),
             Node("retraction-fixed", "retraction_fixed",
                 "D5.S3.Geometry.FiniteSubcomplexCylinder.retraction_fixed",
@@ -87,7 +87,7 @@ internal sealed class FiniteSubcomplexCylinderDocument : IScribeDocumentDefiniti
     private static DocumentBlock Node(string id, string selector, string leanName,
         string title, string prose, string rawContract, DescribeRole role) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + selector), H(title),
-            role == DescribeRole.Definition ? StatementSource.WithoutFormula() : StatementSource.FromLean(),
+            StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(),
             Blocks(SourceText(prose)), role);
 
