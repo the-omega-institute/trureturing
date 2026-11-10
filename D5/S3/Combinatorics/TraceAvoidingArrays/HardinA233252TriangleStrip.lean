@@ -9,71 +9,8 @@
 /-
 admission_basis: open-problem-resolution (#27709; Proved)
 escape_witness: none (open-problem-resolution; all declarations instantiate frozen owners and finite kernel decisions)
-Boundary: proof_shape=bind-only; consumers=pairs, compatible, Valid
-bonds: proof_shape=bind-only; consumers=instDecidableBonds, bonds_iff, a
-instDecidableBonds: proof_shape=bind-only; consumers=a
-instDecidableCompatible: proof_shape=bind-only; consumers=classCount
-a: proof_shape=bind-only; consumers=counting_bridge, zero_count, result
-pairs: proof_shape=bind-only; consumers=bonds_iff, compatible, classCount, a_eq_w
-compatible: proof_shape=bind-only; consumers=bonds_iff, counting_bridge, classCount
-bonds_iff: proof_shape=bind-only; consumers=counting_bridge
-v: proof_shape=bind-only; consumers=v_eq_w
-total: proof_shape=bind-only; consumers=a_eq_w
-counting_bridge: proof_shape=bind-only; consumers=a_eq_w
-Valid: proof_shape=bind-only; consumers=valid_next, row_counts, initial_valid, v_eq_w
-instDecidableValid: proof_shape=bind-only; consumers=row_counts, initial_valid
-boundaryClass: proof_shape=bind-only; consumers=classCount, firstCount, row_counts, initial_counts, v_eq_w, a_eq_w
-transfer: proof_shape=bind-only; consumers=row_counts, v_eq_w
-classCount: proof_shape=bind-only; consumers=row_counts, finite_certificate, v_eq_w
-firstCount: proof_shape=bind-only; consumers=initial_counts, finite_certificate, a_eq_w
-class_fibres: proof_shape=bind-only; consumers=row_counts
-label_sum: proof_shape=bind-only; consumers=row_counts
-valid_next: proof_shape=bind-only; consumers=v_eq_w
-row_counts: proof_shape=bind-only; consumers=finite_certificate
-initial_valid: proof_shape=bind-only; consumers=a_eq_w
-initial_counts: proof_shape=bind-only; consumers=finite_certificate
 finite_certificate: proof_shape=bind-only; consumers=v_eq_w, a_eq_w
-w: proof_shape=bind-only; consumers=v_eq_w, recurrence
-v_eq_w: proof_shape=bind-only; consumers=a_eq_w
-a_eq_w: proof_shape=bind-only; consumers=recurrence, closed_form
-recurrence: proof_shape=bind-only; consumers=result, closed_form
-zero_count: proof_shape=bind-only; consumers=result
-one_count: proof_shape=bind-only; consumers=closed_form
-two_count: proof_shape=bind-only; consumers=closed_form
-closed_step: proof_shape=bind-only; consumers=closed_form
-closed_form: proof_shape=bind-only; consumers=result
 result: proof_shape=bind-only; consumers=terminal result
-Direct frozen dependencies (declaration statement_ids):
-D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.Seen
-statement_id: sha256:db13d94501d24f27e6e69604bb633af95ff3309c5698815c44e12d2e52739fce
-D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.good
-statement_id: sha256:f68e874b0a22676cb3053202c645a8ce30010dcd695d55f3e7fce272d4ce5989
-D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.finish
-statement_id: sha256:ebae2e26fe8811cb0e473a0168c27f49fa151fa2bcecda8ad3ba0c9fabc41a7f
-D5.S3.Observer.Separation.BooleanRankThreeK4.beta
-statement_id: sha256:1abdc5f3db71567fe05de5aabbe80dddeb5ec5179e4ec7fd49fe71e500518481
-D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.widthNormal
-statement_id: sha256:544f7677e789967b28078e2cb7f71e075b79492f79f4741e37f835329362022b
-D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.widthLegal
-statement_id: sha256:989eff70ea57c1a27e750e36536ea11ddb8f9aa5a27d74dce459fc2432ec52e8
-D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.widthInstDecidableGood
-statement_id: sha256:1b18af22481f3b703bd96b1eff1d82cd4f06b1e61f3b79669043a61a31d15152
-D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.widthStep
-statement_id: sha256:bd12c5c5928f8822063ec100e0e6e92c5300f5907da4aa64e85595a1ee4c7cb5
-D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.widthV
-statement_id: sha256:4f3953ec5d8902b74486197a6f4d782f3fb58c6627a5740a5242632a7560f9ed
-D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.widthTotal
-statement_id: sha256:c4c082551693765b0f6c344f5f6ff825120f019a96ec4d79015c10c10bf774d0
-D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.width_counting_bridge
-statement_id: sha256:a6ad861eda2ca48bc91989542e4b7cc27d81aec8df9a91b8db40c9398c577c72
-D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.colour_bond_iff
-statement_id: sha256:b9273762bbccc68fc56c48c38b8aba02a46a50a53fbbe70a660fd21867d6be8
-D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge.rowFinish
-statement_id: sha256:ded50bd8c5de69b5b2324e575fee135f275ae05b5bb30b328b0e5c0313d86b07
-D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge.rowWeight
-statement_id: sha256:076a03b0e19556ba67d0faed8d8d552fb3d55e6c40992d9c52c88faad85e373a
-D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge.scanner_fibres
-statement_id: sha256:63a356389be3d9bf756c53fb12271299a7668c1123562d84a2e34e78a341fc90
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip

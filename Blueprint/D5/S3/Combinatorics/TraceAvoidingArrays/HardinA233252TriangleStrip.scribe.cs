@@ -73,7 +73,9 @@ internal sealed class HardinA233252TriangleStripDocument : IScribeDocumentDefini
                     + "height to the three-state transfer. Its spectrum has factors 1-16X "
                     + "and 1-144X, yielding the recurrence and exact integer power-series "
                     + "identity. The same transfer induction gives Barker's closed form."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233252"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Entry(string id, string name, string title, Formula formula,
         string prose, bool literature = false) => Describe.Lean(
