@@ -6,7 +6,7 @@ Insertion of horizontal and vertical steps
 
 All degrees p,q are natural numbers. A shuffle is the monotone injective lattice path defined in ShuffleBasic. To insert a first-coordinate step at face index j, first locate the crossing index t, lift the old first coordinate by j.succAbove, and insert the new vertex at t. The second-coordinate construction exchanges the coordinates.
 
-Deleting the inserted vertex recovers the old path composed with the corresponding coface in the product simplex. The insertion constructors are injective in both their shuffle and face-index data. The index inequalities include the first and last vertices, so the boundary cases use the same construction.
+Deleting the inserted vertex recovers the old path composed with the corresponding coface in the product simplex. The pair consisting of the inserted shuffle and its marked insertion index is injective in the original shuffle and face-index data. The index inequalities include the first and last vertices, so the boundary cases use the same construction.
 
 **Definition 1.1 (insertLeftIndex).**
 

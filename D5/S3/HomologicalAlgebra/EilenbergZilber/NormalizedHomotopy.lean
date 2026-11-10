@@ -129,7 +129,7 @@ lemma phi_op_isNorm_zero :
   rw [phi_op_zero_eq_diagDegen, D0op]
   exact IsNorm.diagDegen (SimplexCategory.σ (0 : Fin 1)) sigma_zero_not_mono (faceOp 0 1)
 
-/-- The error term `Φ∂ + ∂Φ + i - h` satisfies the same `prime` recursion as `Φ`.
+/-- The error term `Φ∂ + ∂Φ + i - h` in the next degree is the `prime` of the preceding error term.
 
 After rewriting `∂ = F₀ - ∂'` and `Φ = -Φ' + h' D₀`, the remaining identity is a formal operator
 calculation using `lastFace_comp_prime`, `boundaryOp_comp_hOp`, and `boundary_comp_D0`. -/

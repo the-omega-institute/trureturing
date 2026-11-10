@@ -34,7 +34,7 @@ Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/NormalizedHomotopy.phi
 
 *Commentary.*
 
-The error term `Φ∂ + ∂Φ + i - h` satisfies the same `prime` recursion as `Φ`. After rewriting `∂ = F₀ - ∂'` and `Φ = -Φ' + h' D₀`, the remaining identity is a formal operator calculation using `lastFace_comp_prime`, `boundaryOp_comp_hOp`, and `boundary_comp_D0`.
+The error term `Φ∂ + ∂Φ + i - h` in the next degree is the `prime` of the preceding error term. After rewriting `∂ = F₀ - ∂'` and `Φ = -Φ' + h' D₀`, the remaining identity is a formal operator calculation using `lastFace_comp_prime`, `boundaryOp_comp_hOp`, and `boundary_comp_D0`.
 
 In this notation, lemma phi_op_succ_eq (q : ℕ) : (phiOp (q + 1)).comp (boundaryOp (q + 1)) + (boundaryOp (q + 1 + 1)).comp (phiOp (q + 1 + 1)) + idOp (q + 1 + 1) - hOp (q + 1 + 1) = ((phiOp q).comp (boundaryOp q) + (boundaryOp (q + 1)).comp (phiOp (q + 1)) + idOp (q + 1) - hOp (q + 1)).prime.
 

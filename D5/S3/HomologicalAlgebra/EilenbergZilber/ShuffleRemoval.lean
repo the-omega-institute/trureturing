@@ -141,13 +141,16 @@ either `insertLeftStep` (from a `(p, q+1)`-shuffle and face index `j`) or
 This covers interior LL/RR vertices and boundary vertices (r = 0 or r = last). -/
 section
 
-/-- A vertex `r` is a "left vertex" if the adjacent steps are both left steps
-(or it is a boundary vertex adjacent to a left step). -/
+/-- A vertex `r` is a "left vertex" if every existing adjacent step is left.
+At an interior vertex both steps must be left; at an endpoint only its existing edge is tested.
+The predicate is vacuously true when the path has no edges. -/
 def isLeftVertex {p q : ℕ} (μ : Shuffle p q) (r : Fin (p + q + 1)) : Prop :=
   (∀ k : Fin (p + q), k.succ = r → isLeftStep μ k) ∧
   (∀ k : Fin (p + q), k.castSucc = r → isLeftStep μ k)
 
-/-- A vertex `r` is a "right vertex" if the adjacent steps are both right steps. -/
+/-- A vertex `r` is a "right vertex" if every existing adjacent step is right.
+At an interior vertex both steps must be right; at an endpoint only its existing edge is tested.
+The predicate is vacuously true when the path has no edges. -/
 def isRightVertex {p q : ℕ} (μ : Shuffle p q) (r : Fin (p + q + 1)) : Prop :=
   (∀ k : Fin (p + q), k.succ = r → ¬Shuffle.isLeftStep μ k) ∧
   (∀ k : Fin (p + q), k.castSucc = r → ¬Shuffle.isLeftStep μ k)

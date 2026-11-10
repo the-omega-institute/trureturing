@@ -46,7 +46,7 @@ Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/ShuffleRemoval.insertL
 
 *Commentary.*
 
-Left insertion always produces a non-diagonal vertex: the two steps adjacent to the inserted vertex are both left steps (LL pattern).
+Left insertion always produces a non-diagonal vertex: every existing adjacent step is left. Interior insertions have the LL pattern; an endpoint insertion has only its one adjacent edge.
 
 In this notation, lemma insertLeftStep_not_diagonal {p q : ℕ} (ν : Shuffle p (q)) (j : Fin (p + 2)) : ¬isDiagonalVertex (insertLeftStep ν j) ((insertLeftIndex ν j).cast (by omega)).
 
@@ -60,7 +60,7 @@ Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/ShuffleRemoval.insertR
 
 *Commentary.*
 
-Right insertion always produces a non-diagonal vertex: the two steps adjacent to the inserted vertex are both right steps (RR pattern).
+Right insertion always produces a non-diagonal vertex: every existing adjacent step is right. Interior insertions have the RR pattern; an endpoint insertion has only its one adjacent edge.
 
 In this notation, lemma insertRightStep_not_diagonal {p q : ℕ} (ν : Shuffle (p + 1) q) (k : Fin (q + 2)) : ¬isDiagonalVertex (insertRightStep ν k) ((insertRightIndex ν k).cast (by omega)).
 
@@ -74,7 +74,7 @@ Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/ShuffleRemoval.isLeftV
 
 *Commentary.*
 
-A vertex `r` is a "left vertex" if the adjacent steps are both left steps (or it is a boundary vertex adjacent to a left step).
+A vertex `r` is a "left vertex" if every existing adjacent step is left. Both steps are tested at an interior vertex, only the existing edge at an endpoint, and the predicate is vacuously true when the path has no edges.
 
 In this notation, def isLeftVertex {p q : ℕ} (μ : Shuffle p q) (r : Fin (p + q + 1)) : Prop.
 
@@ -88,7 +88,7 @@ Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/ShuffleRemoval.isRight
 
 *Commentary.*
 
-A vertex `r` is a "right vertex" if the adjacent steps are both right steps.
+A vertex `r` is a "right vertex" if every existing adjacent step is right. Both steps are tested at an interior vertex, only the existing edge at an endpoint, and the predicate is vacuously true when the path has no edges.
 
 In this notation, def isRightVertex {p q : ℕ} (μ : Shuffle p q) (r : Fin (p + q + 1)) : Prop.
 

@@ -18,7 +18,7 @@ Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/ShuffleDiagonal.isDiag
 
 *Commentary.*
 
-Extract the two facts from `isDiagonalVertex`: `0 < r` and `r < (p+1)+(q+1)`.
+Extract the two facts from `isDiagonalVertex`: `0 < r` and `r < p+q`.
 
 In this notation, lemma isDiagonalVertex_bounds {p q : ℕ} {μ : Shuffle p q} {r : Index (p + (q))} (hr : isDiagonalVertex μ r) : 0 < r.val ∧ r.val < (p) + (q).
 
@@ -102,7 +102,7 @@ Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/ShuffleDiagonal.swapDi
 
 *Commentary.*
 
-The sign-reversing involution on diagonal terms. Given a `(p+1, q+1)`-shuffle `μ` and a diagonal vertex `r`, swap the steps adjacent to `r` (replacing an LR corner with RL or vice versa). This produces a new shuffle `μ'` such that: - `μ' ∘ δ_r = μ ∘ δ_r` (same underlying map after vertex removal) - `μ'.sign = -μ.sign` (opposite sign, from the inversion count change)
+The sign-reversing involution on diagonal terms. Given a `(p, q)`-shuffle `μ` and a diagonal vertex `r`, swap the steps adjacent to `r` (replacing an LR corner with RL or vice versa). This produces a new shuffle `μ'` such that: - `μ' ∘ δ_r = μ ∘ δ_r` (same underlying map after vertex removal) - `μ'.sign = -μ.sign` (opposite sign, from the inversion count change)
 
 In this notation, def swapDiagonalSteps {p q : ℕ} (μ : Shuffle (p) (q)) (r : Index (p + (q))) (hr : isDiagonalVertex μ r) : Shuffle (p) (q).
 
@@ -160,7 +160,7 @@ Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/ShuffleDiagonal.swapDi
 
 The incoming edge type at the marked vertex is reversed.
 
-In this notation, lemma swapDiagonalSteps_flip_prev {p q : ℕ} (μ : Shuffle (p) (q)) (r : Index (p + (q))) (hr : isDiagonalVertex μ r) : isLeftStep (swapDiagonalSteps μ r hr) ⟨r.val - 1, by have.
+In this notation, lemma swapDiagonalSteps_flip_prev {p q : ℕ} (μ : Shuffle p q) (r : Index (p + q)) (hr : isDiagonalVertex μ r) : isLeftStep (swapDiagonalSteps μ r hr) ⟨r.val - 1, by have := (isDiagonalVertex_bounds hr).2; omega⟩ ↔ ¬ isLeftStep μ ⟨r.val - 1, by have := (isDiagonalVertex_bounds hr).2; omega⟩.
 
 **Theorem 1.12 (swapDiagonalSteps_flip_curr).**
 
@@ -174,7 +174,7 @@ Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/ShuffleDiagonal.swapDi
 
 The outgoing edge type at the marked vertex is reversed.
 
-In this notation, lemma swapDiagonalSteps_flip_curr {p q : ℕ} (μ : Shuffle (p) (q)) (r : Index (p + (q))) (hr : isDiagonalVertex μ r) : isLeftStep (swapDiagonalSteps μ r hr) ⟨r.val, by have.
+In this notation, lemma swapDiagonalSteps_flip_curr {p q : ℕ} (μ : Shuffle p q) (r : Index (p + q)) (hr : isDiagonalVertex μ r) : isLeftStep (swapDiagonalSteps μ r hr) ⟨r.val, by have := (isDiagonalVertex_bounds hr).2; omega⟩ ↔ ¬ isLeftStep μ ⟨r.val, by have := (isDiagonalVertex_bounds hr).2; omega⟩.
 
 **Theorem 1.13 (swapDiagonalSteps_vertex).**
 
@@ -230,7 +230,7 @@ Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/ShuffleDiagonal.swapDi
 
 The incoming first-coordinate-step predicate is negated by the corner swap.
 
-In this notation, lemma swapDiagonalSteps_isLeftStep_toggle {p q : ℕ} (μ : Shuffle (p) (q)) (r : Index (p + (q))) (hr : isDiagonalVertex μ r) : let rm1 : Fin ((p) + (q)).
+In this notation, lemma swapDiagonalSteps_isLeftStep_toggle {p q : ℕ} (μ : Shuffle p q) (r : Index (p + q)) (hr : isDiagonalVertex μ r) : let rm1 : Fin (p + q) := ⟨r.val - 1, by unfold isDiagonalVertex at hr; split_ifs at hr; omega⟩; isLeftStep (swapDiagonalSteps μ r hr) rm1 ↔ ¬ isLeftStep μ rm1.
 
 **Theorem 1.17 (swapDiagonalSteps_involutive).**
 

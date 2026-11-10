@@ -391,7 +391,7 @@ theorem sign_eq_negOnePow_mul_swap_sign {p q : ℕ} (u : Shuffle p q) :
   norm_num
 
 /-- The **staircase** `(r,m)`-shuffle `k ↦ (min(k,r), k - r)`: it goes right `r` steps then up
-`m` steps (the lexicographically smallest shuffle path). Its front-`r` face and back-`m` face
+`m` steps. Its front-`r` face and back-`m` face
 recover the identity, so it is the unique shuffle contributing the identity summand to the
 diagonal Eilenberg–Zilber/Alexander–Whitney pairing. -/
 def trivialShuffle (r m : ℕ) : Shuffle r m :=

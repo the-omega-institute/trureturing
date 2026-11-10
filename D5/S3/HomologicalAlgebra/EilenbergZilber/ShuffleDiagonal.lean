@@ -32,7 +32,7 @@ namespace D5.S3.HomologicalAlgebra.EilenbergZilber
 
 namespace Shuffle
 
-/-- Extract the two facts from `isDiagonalVertex`: `0 < r` and `r < (p+1)+(q+1)`. -/
+/-- Extract the two facts from `isDiagonalVertex`: `0 < r` and `r < p+q`. -/
 lemma isDiagonalVertex_bounds {p q : ℕ} {μ : Shuffle p q}
     {r : Index (p + (q))} (hr : isDiagonalVertex μ r) :
     0 < r.val ∧ r.val < (p) + (q) := by
@@ -326,7 +326,7 @@ lemma swapDiagonalStepsFun_injective {p q : ℕ}
     _ = j.val := swapDiagonalStepsFun_coordSum μ r hr j
 
 
-/-- The sign-reversing involution on diagonal terms.  Given a `(p+1, q+1)`-shuffle
+/-- The sign-reversing involution on diagonal terms.  Given a `(p, q)`-shuffle
 `μ` and a diagonal vertex `r`, swap the steps adjacent to `r` (replacing an LR
 corner with RL or vice versa).  This produces a new shuffle `μ'` such that:
 - `μ' ∘ δ_r = μ ∘ δ_r` (same underlying map after vertex removal)

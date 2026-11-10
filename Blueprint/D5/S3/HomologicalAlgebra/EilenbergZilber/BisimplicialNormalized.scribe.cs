@@ -21,11 +21,10 @@ internal sealed class BisimplicialNormalizedDocument : IScribeDocumentDefinition
     private static Formula EndpointStatement => Disp(Seq(
         All("u", V("UniverseLevel")), All("v", V("UniverseLevel")),
         All("C", Call("Type", V("u"))),
-        All("cat", Call("Category", V("v"), V("C"))),
-        All("ab", Call("Abelian", V("C"), V("cat"))),
-        All("X", Call("BisimplicialObject", V("C"), V("cat"))),
-        Call("HomotopyEquiv", Call("F1", V("C"), V("cat"), V("ab"), V("X")),
-            Call("F2", V("C"), V("cat"), V("ab"), V("X")))));
+        OpenBracket, Call("Category", V("v"), V("C")), CloseBracket, Sp,
+        OpenBracket, Call("Abelian", V("C")), CloseBracket, Sp,
+        All("X", Call("BisimplicialObject", V("C"))),
+        Call("HomotopyEquiv", Call("FOne", V("X")), Call("FTwo", V("X")))));
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The full bisimplicial Eilenberg–Zilber equivalence", H("The full bisimplicial Eilenberg–Zilber equivalence"), Blocks(

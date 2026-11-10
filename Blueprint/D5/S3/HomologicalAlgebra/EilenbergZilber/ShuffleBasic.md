@@ -312,7 +312,7 @@ Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/ShuffleBasic.trivialSh
 
 *Commentary.*
 
-The **staircase** `(r,m)`-shuffle `k ↦ (min(k,r), k - r)`: it goes right `r` steps then up `m` steps (the lexicographically smallest shuffle path). Its front-`r` face and back-`m` face recover the identity, so it is the unique shuffle contributing the identity summand to the diagonal Eilenberg–Zilber/Alexander–Whitney pairing.
+The **staircase** `(r,m)`-shuffle `k ↦ (min(k,r), k - r)`: it goes right `r` steps then up `m` steps. Its front-`r` face and back-`m` face recover the identity, so it is the unique shuffle contributing the identity summand to the diagonal Eilenberg–Zilber/Alexander–Whitney pairing.
 
 In this notation, def trivialShuffle (r m : ℕ) : Shuffle r m.
 

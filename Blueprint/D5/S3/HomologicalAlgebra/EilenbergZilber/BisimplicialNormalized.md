@@ -112,7 +112,7 @@ In this notation, noncomputable abbrev diagonalNormalizationComparison (X : Bisi
 
 **Definition 1.8 (eilenbergZilber).**
 
-$$\forall u: UniverseLevel, \forall v: UniverseLevel, \forall C: \operatorname{Type}\left(u\right), \forall cat: \operatorname{Category}\left(v, C\right), \forall ab: \operatorname{Abelian}\left(C, cat\right), \forall X: \operatorname{BisimplicialObject}\left(C, cat\right), \operatorname{HomotopyEquiv}\left(\operatorname{F1}\left(C, cat, ab, X\right), \operatorname{F2}\left(C, cat, ab, X\right)\right)$$
+$$\forall u: UniverseLevel, \forall v: UniverseLevel, \forall C: \operatorname{Type}\left(u\right), [\operatorname{Category}\left(v, C\right)] [\operatorname{Abelian}\left(C\right)] \forall X: \operatorname{BisimplicialObject}\left(C\right), \operatorname{HomotopyEquiv}\left(\operatorname{FOne}\left(X\right), \operatorname{FTwo}\left(X\right)\right)$$
 
 *Formalization.* `D5/S3/HomologicalAlgebra/EilenbergZilber/BisimplicialNormalized.eilenbergZilber` (`✓ std3`).
 

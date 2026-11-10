@@ -608,7 +608,7 @@ Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.bound
 
 *Commentary.*
 
-Simplicial identity `∂ D₀ = D₀ ∂'` at the operator level. Writing `∂ = F₀ - ∂'`, the terms `F₀ D₀` and `FOne D₀` both equal the identity, so the remaining faces assemble to `D₀ ∂'`.
+Simplicial identity `∂ D₀ = D₀ ∂'` at the operator level. Writing `∂ = F₀ - ∂'`, the terms `F₀ D₀` and `F₁ D₀` both equal the identity, so the remaining faces assemble to `D₀ ∂'`.
 
 In this notation, lemma boundary_comp_D0 (q : ℕ) : (boundaryOp (q + 1)).comp (D0op (q + 1)) = (D0op q).comp (truncBoundaryOp q).
 
