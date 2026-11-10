@@ -1,6 +1,6 @@
 /- GID: D5/S3/Quantum/Algebra/Knot/MultiVirtualTwinZetaEightFaithfulnessRefutation
    generality: G
-   mirror-B: D5/B/S3/Quantum/Algebra/Knot/MultiVirtualTwinZetaEightFaithfulnessRefutation
+   mirror-B: none(waiver:evidence-not-specified-by-formal-manifest)
    mirror-E: none(waiver:kernel-checked-refutation)
    anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Algebra/Knot/MultiVirtualTwinZetaEightFaithfulnessRefutation.claim; result=D5/S3/Quantum/Algebra/Knot/MultiVirtualTwinZetaEightFaithfulnessRefutation.result; claim=D5/S3/Quantum/Algebra/Knot/MultiVirtualTwinZetaEightFaithfulnessRefutation.claim
