@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Walks;
 internal sealed class GallaiRoyDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/Walks/GallaiRoy.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/GraphInvariants/roy1967chromatique");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/GraphInvariants/traversogianini2026brooks");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A finite simple graph is k-colorable exactly when an orientation bounds every injective directed path by k vertices.",
