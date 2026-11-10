@@ -145,42 +145,28 @@ internal sealed class HardinA233257StripDocument : IScribeDocumentDefinition
     private static Formula Parenthesized(Formula f) => Seq(Open, f, Close);
     private static Formula Typed(Formula x, Formula type) =>
         Parenthesized(Seq(x, Colon, Sp, type));
-    private static Formula Subtype(string name, Formula type, Formula body) =>
-        Seq(OpenBrace, V(name), Colon, Sp, type, Sp, Slash, Slash, Sp,
-            Parenthesized(body), CloseBrace);
     private static Formula Arrow(Formula a, Formula b) => new Formula.TypeArrow(a, b);
     private static Formula Fin(Formula n) => Call("Fin", n);
     private static Formula Val(Formula x) => Call("Fin.val", x);
     private static Formula Colour(int n) => Typed(Num(n), Fin(D(6)));
-    private static Formula BetaFunction() =>
-        Q("D5.S3.Observer.Separation.BooleanRankThreeK4.beta");
-    private static Formula Beta(Formula x) => App(BetaFunction(), x);
-    private static Formula Compose(Formula f, Formula g) => Call("Function.comp", f, g);
-    private static Formula Card(Formula type) => Call("Nat.card", type);
     private static Formula Fn(string name, Formula type, Formula body) =>
         Parenthesized(Seq(LambdaLower, Sp, Typed(V(name), type), Sp, Mapsto, Sp, body));
     private static Formula All(string name, Formula type, Formula body) =>
         Seq(Forall, Sp, Typed(V(name), type), Comma, Sp, Parenthesized(body));
     private static Formula Ex(string name, Formula type, Formula body) =>
         Seq(Exists, Sp, Typed(V(name), type), Comma, Sp, Parenthesized(body));
-    private static Formula Unique(string name, Formula type, Formula body) =>
-        Seq(Exists, Bang, Sp, Typed(V(name), type), Comma, Sp, Parenthesized(body));
     private static Formula Eq(Formula a, Formula b) =>
         new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula Ne(Formula a, Formula b) =>
         new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
     private static Formula Lt(Formula a, Formula b) =>
         new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
-    private static Formula Le(Formula a, Formula b) =>
-        new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
     private static Formula And(Formula a, Formula b) =>
         new Formula.Logic(Parenthesized(a), FormulaLogicOperator.And, Parenthesized(b));
     private static Formula Or(Formula a, Formula b) =>
         new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Or, Parenthesized(b));
     private static Formula Imp(Formula a, Formula b) =>
         new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Implies, Parenthesized(b));
-    private static Formula Iff(Formula a, Formula b) =>
-        new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Iff, Parenthesized(b));
     private static Formula Sub(Formula a, Formula b) =>
         new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Subtract, Parenthesized(b));
     private static Formula Mul(Formula a, Formula b) =>

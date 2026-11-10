@@ -10,9 +10,37 @@ admission_basis: open-problem-resolution (#28792; Proved)
 escape_witness: proper_count (last-column transfer induction), two_count (two-label classification).
 normal: proof_shape=bind-only; consumers=Legal
 Legal: proof_shape=bind-only; consumers=a, literal_card
-a: proof_shape=bind-only; consumers=closed_form, recurrence, result
+decNormal: proof_shape=bind-only; consumers=decLegal
+decLegal: proof_shape=bind-only; consumers=a
+a: proof_shape=bind-only; consumers=literal_card, finite_certificate, weighted_count
+Proper: proof_shape=bind-only; consumers=literal_card, proper_word, two_classification
+cellOrder: proof_shape=bind-only; consumers=RowNormal, Canon, pattern_cards, weighted_count
+RowNormal: proof_shape=bind-only; consumers=literal_card
+Canon: proof_shape=bind-only; consumers=Patterns
+literal_card: proof_shape=bind-only; consumers=weighted_count
+Col: proof_shape=bind-only; consumers=step, T, proper_word
+step: proof_shape=bind-only; consumers=transfer_certificate, proper_word, proper_count
+cl: proof_shape=bind-only; consumers=transfer_certificate, proper_count
+T: proof_shape=bind-only; consumers=transfer_certificate, proper_count
+v: proof_shape=bind-only; consumers=transfer_certificate, proper_count
+transfer_certificate: proof_shape=content; consumers=proper_count
+proper_word: proof_shape=bind-only; consumers=proper_count
+proper_count: proof_shape=content; consumers=pattern_cards
 finite_certificate: proof_shape=content; consumers=result
-closed_form: proof_shape=content; consumers=recurrence, result
+used: proof_shape=bind-only; consumers=used_image, used_cases, two_classification, weighted_count
+used_image: proof_shape=bind-only; consumers=used_cases, used_relabel, alt_properties, two_classification
+at_least_two: proof_shape=bind-only; consumers=used_cases, pattern_cards
+used_cases: proof_shape=bind-only; consumers=weighted_count
+relabel: proof_shape=bind-only; consumers=pattern_cards
+used_relabel: proof_shape=bind-only; consumers=pattern_cards
+alt: proof_shape=bind-only; consumers=alt_properties, two_classification, two_count
+alt_properties: proof_shape=content; consumers=two_count
+two_classification: proof_shape=content; consumers=two_count
+two_count: proof_shape=content; consumers=pattern_cards
+Patterns: proof_shape=bind-only; consumers=pattern_cards, weighted_count
+pattern_cards: proof_shape=content; consumers=weighted_count
+weighted_count: proof_shape=content; consumers=closed_form, recurrence, result
+closed_form: proof_shape=content; consumers=result
 recurrence: proof_shape=content; consumers=result
 result: proof_shape=content; consumers=terminal result
 -/
@@ -161,7 +189,7 @@ private theorem proper_count (n : ℕ) :
   | succ n ih =>
     rw [pow_succ', ← Matrix.mulVec_mulVec]
     simp only [dotProduct, Matrix.mulVec, Fin.sum_univ_two, v, T,
-      Matrix.of_apply, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons,
+      Matrix.of_apply, Matrix.cons_val_zero, Matrix.cons_val_one,
       Matrix.cons_val_fin_one] at ih ⊢
     rw [pow_succ]
     linear_combination 3 * ih
@@ -366,8 +394,6 @@ private theorem weighted_count (n : ℕ) :
       simp only [Finset.mem_univ]
     · intro P _
       congr 1
-      change 2*(n+2) - Nat.card (Set.range P.val) = 2*n+4 - Nat.card (Set.range P.val)
-      omega
   have summand (P : Patterns (n+2)) :
       2 ^ (2*n+4-used P.val) = 2 ^ (2*n+1) +
         2 ^ (2*n+1) * (if used P.val = 2 then 1 else 0) := by
@@ -400,15 +426,12 @@ theorem closed_form (n : ℕ) :
 /-- Hardin's recurrence, interpreted in the integers. -/
 theorem recurrence (n : ℕ) :
     (a (n+4) : ℤ) = 16 * (a (n+3) : ℤ) - 48 * (a (n+2) : ℤ) := by
-  have h0 := weighted_count n
-  have h1 := weighted_count (n+1)
-  have h2 := weighted_count (n+2)
   have hh : ∀ m, (a (m+2) : ℤ) = (2 : ℤ) ^ (2*m+1) * (4 * (3 : ℤ)^m + 1) :=
     fun m => by exact_mod_cast weighted_count m
   rw [show n+4 = (n+2)+2 from by omega, hh,
     show n+3 = (n+1)+2 from by omega, hh, hh]
   simp only [show 2*(n+2)+1 = (2*n+1)+4 from by omega,
-    show 2*(n+1)+1 = (2*n+1)+2 from by omega, pow_add, pow_succ]
+    show 2*(n+1)+1 = (2*n+1)+2 from by omega, pow_succ]
   ring
 
 open PowerSeries in
