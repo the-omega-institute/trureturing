@@ -35,22 +35,6 @@ internal sealed class HannaDiagonalGhostPowerIntegralityDocument : IScribeDocume
                     + SourceSentence + "\" The exponential is PowerSeries.exp over K, "
                     + "substituted at the positive-degree logarithmic input.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
-            Node("exponential_sum_constant", "The constant coefficient is one",
-                Disp(Seq(Context(Seq(V("Type"), Star), "a"),
-                    Equal(App(Q("PowerSeries", "constantCoeff"), Call("exponentialSum", V("a"))), D(1)))),
-                "For every characteristic-zero field K and sequence a, the formal exponential "
-                    + "of the logarithmic input has constant coefficient one.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
-            Node("exponential_sum_equation", "The formal differential equation",
-                Disp(Seq(Context(Seq(V("Type"), Star), "a"),
-                    Equal(Multiply(V("X"), App(Q("PowerSeries", "derivative"),
-                            Call("exponentialSum", V("a")))),
-                        Multiply(App(Q("HannaDiagonalDerivativeParity", "step"), V("a"), D(0)),
-                            Call("exponentialSum", V("a")))))),
-                "For every characteristic-zero field K and sequence a, multiplying the derivative "
-                    + "of exponentialSum a by X gives HannaDiagonalDerivativeParity.step a 0 "
-                    + "times exponentialSum a. The entry a(0) contributes no constant term.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("divisorGhost", "The integer divisor-sum ghost",
                 DivisorGhostFormula(),
                 "For an integer sequence b, the nth ghost is the sum of d*b(d) over "
@@ -77,6 +61,41 @@ internal sealed class HannaDiagonalGhostPowerIntegralityDocument : IScribeDocume
                     + "The diagonal-power theorem and the bounded square-weight "
                     + "correction theorem use this necessary integrality condition.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+
+            Describe.Lean(DescribeId.Create("h3-eulerseries"),
+                DeclarationHandle.Create("D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.eulerSeries"), H("The coefficientwise stabilized integer Euler series"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("This is the existing integer Euler object built from finite prefixes of the primitive ledger, with b(i) attached to part size i+1. Its public interface serves actual coefficient consumers."))), DescribeRole.Definition),
+
+            Describe.Lean(DescribeId.Create("h3-euler-series-represents"),
+                DeclarationHandle.Create("D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.euler_series_represents"), H("Finite prefixes represent the integer series"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Every prefix through part size N agrees with the integer series through degree N. This is the original owner proof, publicly reused by the infinite product bridge."))), DescribeRole.Theorem),
+
+            Describe.Lean(DescribeId.Create("h3-hasprod-eulerseries"),
+                DeclarationHandle.Create("D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.hasProd_eulerSeries"), H("An actual infinite Euler product"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The orders of eulerFactor(i+1,b(i))-1 tend to infinity. Coefficientwise stabilization then identifies the topological infinite product with the existing integer Euler series. The coefficient ring has its standard discrete topology."))), DescribeRole.Theorem),
+
+            Describe.Lean(DescribeId.Create("h3-exponential-sum-constant"),
+                DeclarationHandle.Create("D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.exponential_sum_constant"), H("The actual constant coefficient"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The formal logarithmic input has constant coefficient zero, so substituting into exp gives constant coefficient one. The original proof is now publicly consumed by coefficient and boundary arguments."))), DescribeRole.Theorem),
+
+            Describe.Lean(DescribeId.Create("h3-exponential-sum-equation"),
+                DeclarationHandle.Create("D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.exponential_sum_equation"), H("The actual differential equation"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Formal differentiation of the actual exponential gives X*F prime equal to the positive-index ghost series times F. This original owner theorem is now shared by the coefficient-recurrence proof."))), DescribeRole.Theorem),
+
+            Describe.Lean(DescribeId.Create("h3-euler-series-exponential"),
+                DeclarationHandle.Create("D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.euler_series_exponential"), H("Euler series equal the literal formal exponential"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For any characteristic-zero field, agreement of all positive-index divisor ghosts identifies the mapped integer Euler series with the literal exponential. The bridge uses the existing Euler differential equation and coefficientwise differential uniqueness. Both the original Gauss-integrality proof and the corrected power family consume it."))), DescribeRole.Theorem),
+
+            Describe.Lean(DescribeId.Create("h3-gauss-exponential-integral"),
+                DeclarationHandle.Create("D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.gauss_exponential_integral"), H("Gauss congruences yield actual integrality"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The original Mobius divisibility and Euler-ledger construction produce integer coefficients of the actual formal exponential. The proof now consumes the shared Euler-exponential bridge. No correction existence is assumed."))), DescribeRole.Theorem),
             Node("claim", "Hanna's second-comment conjecture",
                 Disp(Equal(V("claim"), Parenthesized(ClaimBody()))),
                 "OEIS A156216, internal revision #3, second comment (unpaginated): \""
@@ -174,10 +193,10 @@ internal sealed class HannaDiagonalGhostPowerIntegralityDocument : IScribeDocume
     private static Formula Divides(Formula a, Formula b) => Seq(a, Sp, Mid, Sp, b);
     private static Formula Implies(Formula a, Formula b) =>
         new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Implies, Parenthesized(b));
-    private static Formula Context(Formula carrierType, string sequence = "C") => Seq(Bound("K", carrierType),
+    private static Formula Context(Formula carrierType) => Seq(Bound("K", carrierType),
         OpenBracket, Call("Field", V("K")), CloseBracket, Sp,
         OpenBracket, Call("CharZero", V("K")), CloseBracket, Comma, Sp,
-        Bound(sequence, Seq(Nat(), Sp, To, Sp, V("K"))));
+        Bound("C", Seq(Nat(), Sp, To, Sp, V("K"))));
     private static Formula Nat() => Seq(Mathbb, Grp(V("N")));
     private static Formula V(string name) => F.Id(name);
     private static Formula Q(string owner, string name) =>
