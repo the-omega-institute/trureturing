@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S1/Recurrence/Algebraic/KurkovTriangularColumnSum
    mirror-E: none(waiver:external-open-problem-resolution)
-   anchors: [mathlib/module/Mathlib.Data.Nat.Find, mathlib/module/Mathlib.Data.Nat.Factorial.Basic]
+   anchors: [mathlib/module/Mathlib.Algebra.BigOperators.Ring.Finset, mathlib/module/Mathlib.Tactic.Linarith, mathlib/module/Mathlib.Tactic.Ring]
    utility: none
    digest: Every lawful A396981 array satisfies Kurkov's positive-column factorial sum. -/
 
