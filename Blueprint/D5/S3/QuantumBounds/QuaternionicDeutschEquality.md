@@ -188,6 +188,10 @@ $$(\operatorname{equalityModelExists}) \land (\forall (Q : Type), [\operatorname
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuantumBounds/QuaternionicDeutschEquality.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/quaternionic-deutsch` (proved) by `D5/S3/QuantumBounds/QuaternionicDeutschEquality.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"quaternionic-deutsch","declaration_gid":"D5/S3/QuantumBounds/QuaternionicDeutschEquality.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* K. Mahesh Krishna (2026). *Quaternionic Buzano-Dragomir Inequality and Deutsch Entropic Uncertainty Principle*. DOI: [10.48550/arXiv.2610.35881](https://doi.org/10.48550/arXiv.2610.35881). URL: <https://arxiv.org/abs/2610.35881v1>.

@@ -46,7 +46,10 @@ internal sealed class QuaternionicDeutschEqualityDocument : IScribeDocumentDefin
                 StatementSource.FromAuthor(Disp(ClaimBody())), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "Quaternionic Buzano bounds the product of the two coefficient densities. Actual bounded suprema give entropy decompositions with nonnegative remainder integrals. Equality makes both densities constant almost everywhere. Parseval at saturated frame vectors identifies both constants as the squared overlap; the scalar identity forces overlap one. Parseval applied to an orthogonal residual then forces rank one. Conversely, rank one and unit frame norms almost everywhere give both masses one and both entropies zero. Pair existence also requires every frame vector to be nonzero, including null indices. No product-measure sigma-finiteness assumption or finite total mass is imposed."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("quaternionic-deutsch"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose, AssessedProvenance provenance) =>
         Describe.Lean(DescribeId.Create(name.ToLowerInvariant()), DeclarationHandle.Create(Module + name),
