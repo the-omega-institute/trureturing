@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: none
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal.result; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal.counting_bridge
    digest: Literal five-row antidiagonal arrays and their exact complementary-pair count. -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
@@ -380,7 +380,7 @@ private theorem compatible_iff (a b : Col) : compatible a b ↔
     ∀ r s : Fin 5, (r = s ∨ r.val = s.val + 1) → column a r ≠ column b s := by
   constructor
   · intro h r s hrs
-    fin_cases r <;> fin_cases s <;> norm_num at hrs ⊢ <;> simp_all [compatible]
+    fin_cases r <;> fin_cases s <;> norm_num at hrs <;> simp_all [compatible]
   · intro h
     exact ⟨h 0 0 (by decide), h 1 1 (by decide), h 2 2 (by decide),
       h 3 3 (by decide), h 4 4 (by decide), h 1 0 (by decide),
@@ -480,6 +480,7 @@ set_option maxHeartbeats 10000000 in
 private theorem initial_class_counts : ∀ i : Fin 41,
     (∑ a : Col, if cls a = i then (1 : ℤ) else 0) = classWeights i := by
   decide +kernel
+set_option maxRecDepth 100000 in
 private theorem initial_weights (s : Fin 41) :
     (∑ a : Col, ∑ b : Col,
       if compatible a b ∧ cls b = s then (1 : ℤ) else 0) = weights s := by
@@ -575,12 +576,15 @@ private def coefficients : Fin 7 → ℤ := ![-8,48,-84,17,76,-64,16]
 private theorem table_zero : W 0 = (1 : Fin 41 → ℤ) := by
   exact List.ofFn_inj.mp rfl
 set_option maxRecDepth 100000 in
+set_option maxHeartbeats 10000000 in
 private theorem table_steps : ∀ k : Fin 11, W k.succ = Q.mulVec (W k.castSucc) := by
   intro k
   fin_cases k <;> exact List.ofFn_inj.mp rfl
 private theorem powers_table : ∀ k : Fin 12,
     (Q^k.val).mulVec (1 : Fin 41 → ℤ) = W k :=
   TransferMatrix.tabulatedPowers Q 11 W table_zero table_steps
+set_option maxRecDepth 100000 in
+set_option maxHeartbeats 10000000 in
 private theorem power_polynomial : (Q^(4+7)).mulVec (1 : Fin 41 → ℤ) =
     ∑ j : Fin 7, coefficients j • (Q^(4+j.val)).mulVec (1 : Fin 41 → ℤ) := by
   rw [show 4+7 = (11 : Fin 12).val from rfl, powers_table]
@@ -629,21 +633,17 @@ private theorem scale_recurrence (m : ℕ) (hm : 2 ≤ m)
   linear_combination h7 - 512*h6 + 65536*h5 - 2490368*h4 - 17825792*h3 +
     2818572288*h2 - 51539607552*h1 + 274877906944*h0 + (32 : ℤ)^m*34359738368*h
 
+set_option maxRecDepth 100000 in
+set_option maxHeartbeats 10000000 in
 private theorem pair_base : (L 12 : ℤ)+6 =
     16*((L 11 : ℤ)+6) - 64*((L 10 : ℤ)+6) + 76*((L 9 : ℤ)+6) +
     17*((L 8 : ℤ)+6) - 84*((L 7 : ℤ)+6) + 48*((L 6 : ℤ)+6) - 8*((L 5 : ℤ)+6) := by
-  have ht (k : Fin 12) : (L (k.val+2) : ℤ) = dotProduct weights (W k) := by
-    rw [count_transfer, powers_table]
-  have h10 := ht 10
-  have h9 := ht 9
-  have h8 := ht 8
-  have h7 := ht 7
-  have h6 := ht 6
-  have h5 := ht 5
-  have h4 := ht 4
-  have h3 := ht 3
-  norm_num only [Fin.val_ofNat, Nat.reduceMod, Nat.reduceAdd] at h10 h9 h8 h7 h6 h5 h4 h3
-  rw [h10,h9,h8,h7,h6,h5,h4,h3]
+  have ht (k : ℕ) (hk : k < 12) :
+      (L (k+2) : ℤ) = dotProduct weights (W ⟨k,hk⟩) := by
+    rw [count_transfer]
+    exact congrArg (dotProduct weights) (powers_table ⟨k,hk⟩)
+  rw [ht 10 (by decide), ht 9 (by decide), ht 8 (by decide), ht 7 (by decide),
+    ht 6 (by decide), ht 5 (by decide), ht 4 (by decide), ht 3 (by decide)]
   rfl
 
 private theorem shifted (m : ℕ) :

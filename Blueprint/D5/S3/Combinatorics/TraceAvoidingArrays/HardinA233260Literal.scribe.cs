@@ -8,6 +8,8 @@ internal sealed class HardinA233260LiteralDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal.";
     private const string LeanPrefix = "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233260Literal.";
+    private const string OriginalName = "Number of 5Xn 0..5 arrays with no element x(i,j) adjacent to itself or value 5-x(i,j) horizontally or antidiagonally, top left element zero, and 1 appearing before 2 3 and 4, and 2 appearing before 3 in row major order (unlabeled 6-colorings with no clashing color pairs).";
+    private const string OriginalFormula = "Empirical: a(n) = 512*a(n-1) -65536*a(n-2) +2490368*a(n-3) +17825792*a(n-4) -2818572288*a(n-5) +51539607552*a(n-6) -274877906944*a(n-7) for n>11";
     private static LibraryNoteRef Source => LibraryNoteRef.Create("D5/L/Automata/hardin2013a233260");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Literal five-row complementary-pair arrays with horizontal and antidiagonal bonds.",
@@ -48,7 +50,9 @@ internal sealed class HardinA233260LiteralDocument : IScribeDocumentDefinition
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(title + "."))),
+            Blocks(Paragraph(Text(literature
+                ? "OEIS A233260, revision 7, " + (name == "result" ? "FORMULA: " + OriginalFormula : "NAME: " + OriginalName)
+                : title + "."))),
             theorem ? DescribeRole.Theorem : DescribeRole.Definition);
     private static Formula BridgeFormula()
     {
@@ -81,7 +85,7 @@ internal sealed class HardinA233260LiteralDocument : IScribeDocumentDefinition
         var rhs=Sub(Add(Sub(Add(Add(Sub(Mul(Num(512),A(1)),Mul(Num(65536),A(2))),
             Mul(Num(2490368),A(3))),Mul(Num(17825792),A(4))),Mul(Num(2818572288),A(5))),
             Mul(Num(51539607552),A(6))),Mul(Num(274877906944),A(7)));
-        return All("n",Q("Int"),All("hn",Lt(Num(11),n),Eq(A(0),rhs)));
+        return All("n",Q("Int"),Imp(Lt(Num(11),n),Eq(A(0),rhs)));
     }
 
     private static Formula NormalFormula()

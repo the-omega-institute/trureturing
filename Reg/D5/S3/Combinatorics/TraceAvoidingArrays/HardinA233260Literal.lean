@@ -90,7 +90,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have ha := result 12 (by decide)
   have hb := h 12 (by decide)
   change (a 12 : ℤ)+1 = _ at hb
-  norm_num only [Int.reduceSub, Int.reduceToNat] at ha hb
+  norm_num at ha hb
   linarith only [ha,hb]
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
@@ -144,4 +144,5 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   options := #[]
 end Result
 
+end
 end Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233260Literal
