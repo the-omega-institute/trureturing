@@ -149,7 +149,7 @@ lemma ιFront_comp_δ_of_le (p q : ℕ) (k : Fin (p + q + 2))
     simp only [Fin.val_castSucc, Fin.val_succ, ιFront, SimplexCategory.mkHom,
       SimplexCategory.Hom.toOrderHom_mk, OrderHom.coe_mk,
       SimplexCategory.len_mk] at * <;>
-    omega
+    dsimp only at * <;> omega
 
 /-- `ιFront(p, q) ≫ δ k = ιFront(p, q+1)` when `k > p`, i.e., the face map
 acts beyond the front range — all front vertices stay below the skipped index. -/
@@ -166,7 +166,7 @@ lemma ιFront_comp_δ_of_gt (p q : ℕ) (k : Fin (p + q + 2))
   split_ifs <;>
     simp only [Fin.val_castSucc, Fin.val_succ, ιFront, SimplexCategory.mkHom, SimplexCategory.Hom.toOrderHom_mk, OrderHom.coe_mk
       ] at *;
-    omega
+    dsimp only at * <;> omega
 
 /-- `ιBack(p, q) ≫ δ k = ιBack(p+1, q)` when `k ≤ p`, i.e., the face map
 acts before the back range — all back vertices shift by one. -/
@@ -183,7 +183,7 @@ lemma ιBack_comp_δ_of_le (p q : ℕ) (k : Fin (p + q + 2))
   split_ifs <;>
     simp only [Fin.val_castSucc, Fin.val_succ, ιBack, SimplexCategory.mkHom, SimplexCategory.Hom.toOrderHom_mk, OrderHom.coe_mk
       ] at * <;>
-    omega
+    dsimp only at * <;> omega
 
 /-- `ιBack(p, q) ≫ δ k = δ (k - p) ≫ ιBack(p, q+1)` when `k > p`, i.e., the face
 map acts within the back range. Here `δ (k-p)` is the face map on `[q]`. -/
@@ -202,7 +202,7 @@ lemma ιBack_comp_δ_of_gt (p q : ℕ) (k : Fin (p + q + 2))
     simp only [Fin.val_castSucc, Fin.val_succ, ιBack, SimplexCategory.mkHom,
       SimplexCategory.Hom.toOrderHom_mk, OrderHom.coe_mk,
       SimplexCategory.len_mk] at * <;>
-    omega
+    dsimp only at * <;> omega
 
 /-- The top face of `[p+1]` followed by the front inclusion is the front inclusion
 `[p] ⟶ [p+(q+1)]`, up to the arithmetic reassociation of the target. -/
@@ -219,7 +219,7 @@ private lemma δ_last_comp_ιFront (p q : ℕ) :
     simp only [Fin.val_castSucc, Fin.val_succ, ιFront, SimplexCategory.mkHom,
       SimplexCategory.Hom.toOrderHom_mk, OrderHom.coe_mk,
       Fin.val_last, SimplexCategory.len_mk] at *;
-    omega
+    dsimp only at * <;> omega
 
 /-- The bottom face of `[q+1]` followed by the back inclusion shifts the back block
 from offset `p` to offset `p+1`, up to the arithmetic reassociation of the target. -/
@@ -236,7 +236,7 @@ private lemma δ_zero_comp_ιBack (p q : ℕ) :
     simp only [Fin.val_castSucc, Fin.val_succ, ιBack, SimplexCategory.mkHom,
       SimplexCategory.Hom.toOrderHom_mk, OrderHom.coe_mk,
       Fin.val_zero, SimplexCategory.len_mk] at * <;>
-    omega
+    dsimp only at * <;> omega
 
 /-! ### Alexander-Whitney map
 
