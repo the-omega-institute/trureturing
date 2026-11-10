@@ -7,6 +7,7 @@
    digest: An explicit six-dimensional F3 representation refutes projectivity detection by all actual cyclic subgroups of C3 x C3. -/
 
 import D5.S3.FiniteGroups.GroupAlgebra.PGroupProjectiveNormRing
+import Mathlib.RepresentationTheory.Basic
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.Field.ZMod
 import Mathlib.Algebra.Group.Subgroup.Finite
