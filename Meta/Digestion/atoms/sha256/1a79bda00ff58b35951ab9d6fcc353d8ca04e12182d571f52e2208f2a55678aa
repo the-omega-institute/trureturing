@@ -1,0 +1,26 @@
+**Definition 1.3 (Stopping authority and initialization).** A finite
+classical controller may retain a finite action string in
+$\{\mathsf J,\mathsf N\}^T$, its checkpoints and a stop bit for each
+checkpoint label prefix. Until stopping it executes the next prescribed
+action, without changing the positions of $\mathsf N$ in response to
+outcomes. A stop bit calls the original terminal and ends the run. The
+last checkpoint is forced to stop. This is exactly the extra classical
+authority declared in VI Definition 95.1.
+
+The names are evaluated and the whole controller is constructed, stored
+and initialized before the sole preparation is invoked. Its finite
+classical storage and permission to implement this stopping interface are
+explicit resources. After preparation, table lookup and record updates
+select among these already permitted decisions; they do not evaluate
+names or run the compilation search. No quantum wait, idle or identity
+action is added. As in the source stopping model, the theorem concerns
+discrete calls and their intervening classical decisions. A laboratory
+claim would additionally need a timing and uncontrolled-evolution model
+for those decisions. In particular, the construction never presumes
+holding an acquired unknown specimen while an unbounded classical search
+finishes. It does not provide a native service port or physical controller
+installation. The target name is available before preparation as well.
+A task first disclosed after an irrevocable specimen arrival, without
+this permitted prelude, is outside the initialization theorem; no
+holding permission for that different task is inferred.
+

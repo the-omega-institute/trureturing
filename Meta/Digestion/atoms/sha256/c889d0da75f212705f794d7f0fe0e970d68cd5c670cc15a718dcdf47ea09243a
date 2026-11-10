@@ -1,0 +1,29 @@
+**Lemma 2.3 (countable covering obstruction).** Consider any collection of admissible terminal words at a finite read budget. If none admits (2.1) with $\ell\ne0$, then no countable palette supported on these words succeeds on the whole domain, regardless of action, stopping, and selector regularity.
+
+**Proof.** Every legal source has the unique chart
+
+$$
+P(x,r)=\frac1{1+xr}\begin{pmatrix}1&r\\x&xr\end{pmatrix},\qquad x,r>0.
+\tag{2.2}
+$$
+
+To check surjectivity, write a legal source as $\left(\begin{smallmatrix}a&b\\c&e\end{smallmatrix}\right)$, set $x=c/a,r=b/a$, and use $ae=bc$ and $a+e=1$. The full parameter domain
+
+$$
+\Omega_d=(0,\infty)^2\times(\mathbb R^m\setminus\{0\})\times\mathbb R
+\tag{2.3}
+$$
+
+is nonempty and open. For each word-map pair, collinearity is expressed by
+
+$$
+\beta_j(CZ_w)_k-\beta_k(CZ_w)_j=0\qquad(0\le j<k<m).
+\tag{2.4}
+$$
+
+Multiplying by $1+xr$ makes each expression a polynomial in $(x,r,\beta,\delta)$. For a pair successful anywhere, these polynomials cannot all be identically zero: otherwise Lemma 2.2 would give a forbidden nonzero universal identity. Choose one nonzero polynomial for each such pair.
+
+The zero set of a nonzero real polynomial is closed and has empty interior. The latter assertion follows by induction on the number of variables: vanishing on a product of intervals makes each univariate coefficient polynomial vanish on a product of intervals of smaller dimension, and a univariate polynomial vanishing on an interval is zero. Thus each chosen zero set is nowhere dense relative to $\Omega_d$.
+
+There are finitely many words at the budget and countably many matrices per word. These zero sets cannot cover $\Omega_d$, by the Baire category theorem. One can see the needed form directly: choose a closed ball of positive radius inside $\Omega_d$, and successively choose nested positive-radius closed subballs avoiding the first, second, and subsequent zero sets, with diameters tending to zero. The common point, supplied by completeness of Euclidean space, stays in the initial ball and avoids every zero set. Every successfully processed world would have to lie in the zero set assigned to its selected pair, a contradiction. No topological assumption on the actual selection sets or terminal branches has entered. $\square$
+

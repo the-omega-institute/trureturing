@@ -1,0 +1,50 @@
+**Proposition 104.1 (finite reply and reconstruction record).** The public
+rationals and replies of Theorem 103.2 admit a finite binary description
+and a finite forbidden-$11$ FIB data word in the static convention of
+§§76 and 83. No arbitrary real coefficient is stored.
+
+*Proof.* Write $E=u/v$, $\varepsilon=x/y$ with nonnegative integer $u$
+and positive integers $v,x,y$. Fix a source-independent description
+program and format tag of total binary length $B_0$.
+For $n\ge0$, encode an integer by $1^{L(n)}0$ followed by the
+$L(n)$ binary digits of $n+1$, where $L(n)$ is their length.
+The unary part specifies the number of following digits, so four such
+fields parse the rational header, of length
+$H_{\rm hdr}=\sum_{n\in(u,v,x,y)}(2L(n)+1)$.
+
+All branch comparisons, $m(p)$ and $t$ lie in the ordered algebraic field
+$\mathbb Q(\sqrt5)$ and are decidable by exact integer arithmetic.
+A traversal stops each branch at its first $m(p)\le t$, including equality.
+It terminates by depth $D=\min\{j\ge1:a^j\le t\}$, since
+$m(p)\le a^{|p|}$. Thus the header determines the finite ordered address
+list, without storing an unknown input or an address oracle.
+The request-address length is $\sum_{p\in A_t}|p|\le k_tD$ symbols
+from $\{L,R\}$, separately from the reconstruction record.
+The integers $h,K$ and the required square-root ceiling are computable
+by integer comparisons of the algebraic quantities in (103.1).
+Put $w=\lceil\log_2(2K+1)\rceil$. Store each $n_p+K$ in exactly $w$
+binary digits; values above $2K$ are invalid. For the nonzero-read branch,
+the complete description length is
+
+$$
+L_{\rm bin}=B_0+H_{\rm hdr}+k_tw,\qquad
+L_{\rm FIB}=2L_{\rm bin},
+\tag{104.1}
+$$
+
+using the fixed injective spacer representation $b_i\mapsto0b_i$.
+Adjacent pairs cannot produce $11$, and deleting each leading spacer
+recovers the binary description. The same representation gives each
+service reply a finite word of $2w$ symbols. No optimal Fibonacci coding
+or new counting theorem is needed. In a zero-read branch there is only
+the program/tag and header; the approximation is $0$.
+
+From a nonzero-read record the decoder regenerates $A_t$ and evaluates
+(103.3). All its coefficients are in $\mathbb Q(\sqrt5)$, so this is an
+exact finite description of an $L^2$ step function, not storage of its
+unknown real cylinder means. No eigenfunction computation is required.
+For each fixed header the schedule, traversal stack of depth at most $D$,
+read index and finite-alphabet reply storage have finite ranges. This
+gives a finite symbolic controller description for that header; it is
+not a uniform bound on controller states as the header varies. $\square$
+

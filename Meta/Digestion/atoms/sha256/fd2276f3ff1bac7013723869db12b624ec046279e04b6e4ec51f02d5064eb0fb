@@ -1,0 +1,42 @@
+**定理 100.1（完整背景上的一条配平等价）。** 在各自完整原背景上，
+
+$$
+\begin{aligned}
+B+\mathsf F_{\rm tab}
+&\Longleftrightarrow B+\mathrm Z+\mathrm{SC}+\mathrm{SJ}
+\Longleftrightarrow\mathsf C_{\mathbb R}(B),\\
+\mathsf B_{\rm cl}+\mathsf F_{\rm tab}
+&\Longleftrightarrow\mathsf B_{\rm cl}+\mathsf Q+\mathrm{SC}+\mathrm{SJ}
+\Longleftrightarrow\mathsf C_{\mathbb R}(\mathsf B_{\rm cl}).
+\end{aligned}
+\tag{100.1}
+$$
+
+全部结论保持同一原 $D$，原指针处的正余量等值成为结论。
+
+证明。定理 99.2 给全部实输入配平。原 $V_p\ge0$，所以
+
+$$
+G_p(a,b)=V_p(b+2D_pa)\ge0.
+\tag{100.2}
+$$
+
+因此定理 96.1 的有限谱自举给 SC、两个单位恒等式、全 Jordan 导子律及 Z 或 $\mathsf Q$。此时才由各自完整背景消费定理 63.3 或 71.1，取得共同原尺度 $\kappa\ge0$。这些全网结论仍依赖原实际联合及其准备接口。
+
+取配平中的 $b=0$，得 $V_p(a)=V_p(2D_pa)$。原谱表已含某个 $W_p\ne0$ 的指针原子，存在性证明正是定理 96.2 的张成与中央性论证，不需另把 $d$ 加入表。对该点的 $0\ne a\in W_p$，已证结构使
+
+$$
+V_p(2D_pa)=\kappa V_p(a),\qquad V_p(a)>0.
+\tag{100.3}
+$$
+
+故 $\kappa=1$，原 SJ 随之成立。反向，单位尺度与 (96.7) 给任意数学原子及全部实输入上的
+
+$$
+G_p(a,b)=\tfrac12\|P_pb+2D_pP_pa\|_q^2
+       =V_p(b+2D_pa),
+\tag{100.4}
+$$
+
+故有限表配平成立。沿原 $d$，任选 $0\ne a\in W_d$，令 $b=-2D_da$，便有 $G_d(a,b)=0$ 与 $V_d(a)+V_d(b)=q(a,a)>0$。见证仍不要求整数坐标。与原余量候选的等价再用定理 96.2。∎
+

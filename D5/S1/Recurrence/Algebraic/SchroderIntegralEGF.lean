@@ -6,7 +6,19 @@
    utility: none
    digest: A338193 EGF coefficients equal Kurkov's two-index recurrence. -/
 
+/-
+Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/25663;
+primitive_zero and derivative_primitive.
+primitive_zero: proof_shape: bind-only; escape_witness: none;
+consumers: BalaQuarticEGFEventualDivisibility.integral_agree, source_exists_unique,
+sourceSinh_constant and source_system.
+derivative_primitive: proof_shape: bind-only; escape_witness: none;
+consumer: BalaQuarticEGFEventualDivisibility.source_system.
+Direct frozen dependencies for these two declarations: none.
+-/
+
 import D5.S1.Recurrence.Residue.QuarticEGFFixedPoint
+import D5.S1.Recurrence.Residue.IntegralEGFComposition
 import Mathlib.RingTheory.PowerSeries.Schroder
 import Mathlib.RingTheory.PowerSeries.NoZeroDivisors
 
@@ -24,14 +36,14 @@ def f : ℕ → ℕ → ℕ
 termination_by j m => (m, j)
 
 private noncomputable def F (j : ℕ) : PowerSeries ℚ := encode (fun m => f j m)
-private noncomputable def R : PowerSeries ℚ := largeSchroderSeries.map (Nat.castRingHom ℚ)
+noncomputable def R : PowerSeries ℚ := largeSchroderSeries.map (Nat.castRingHom ℚ)
 
-private theorem R_eq : R = 1 + X * R + X * R ^ 2 := by
+theorem R_eq : R = 1 + X * R + X * R ^ 2 := by
   have h := congrArg (PowerSeries.map (Nat.castRingHom ℚ))
     largeSchroderSeries_eq_one_add_X_mul_largeSchroderSeries_add_X_mul_largeSchroderSeries_sq
   simpa only [map_add, map_one, map_mul, map_X, map_pow, R] using h
 
-private theorem R_zero : constantCoeff R = 1 := by
+theorem R_zero : constantCoeff R = 1 := by
   simp [R, ← coeff_zero_eq_constantCoeff, coeff_map]
 private theorem F_zero (j : ℕ) : constantCoeff (F j) = 1 := by simp [F, f]
 private theorem F_coeff (j m : ℕ) : eCoeff (F j) m = (f j m : ℚ) := eCoeff_encode _ _
@@ -122,13 +134,13 @@ private theorem algebraic_iff_linear (S : PowerSeries ℚ) (hS : constantCoeff S
     linear_combination -S^2 * D_quadratic +
       ((1+X)*D*S - 2*X*(D*PowerSeries.derivative (R := ℚ) S+S)) * h
 
-private noncomputable def primitive (S : PowerSeries ℚ) : PowerSeries ℚ :=
+noncomputable def primitive (S : PowerSeries ℚ) : PowerSeries ℚ :=
   mk (fun n => if n = 0 then 0 else coeff (n-1) S / n)
 
-private theorem primitive_zero (S : PowerSeries ℚ) : constantCoeff (primitive S) = 0 := by
+theorem primitive_zero (S : PowerSeries ℚ) : constantCoeff (primitive S) = 0 := by
   simp [primitive]
 
-private theorem derivative_primitive (S : PowerSeries ℚ) : PowerSeries.derivative (R := ℚ) (primitive S) = S := by
+theorem derivative_primitive (S : PowerSeries ℚ) : PowerSeries.derivative (R := ℚ) (primitive S) = S := by
   ext n
   simp [primitive, coeff_derivative, Nat.cast_add, Nat.cast_one,
     show (n : ℚ) + 1 ≠ 0 by positivity]
@@ -226,6 +238,7 @@ theorem egf_coeff_eq_f (n : ℕ) (hn : 1 ≤ n) :
   obtain ⟨m, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : n ≠ 0)
   change eCoeff A (m+1) = (f 0 m : ℚ)
   rw [← hBA, ← eCoeff_derivative, B_derivative, F_coeff]
+
 
 #print axioms egf_coeff_eq_f
 #print axioms original_exists_unique

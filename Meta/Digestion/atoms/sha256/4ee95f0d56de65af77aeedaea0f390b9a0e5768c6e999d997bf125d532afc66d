@@ -1,0 +1,51 @@
+### 8.1 复数作为最小结合完成的中心
+
+定义 $(W,B)$ 的最小实含幺结合代数
+
+$$
+\mathcal A=\operatorname{Cl}(W,B),\qquad
+xy+yx=2B(x,y)1,\qquad x^*=x.
+$$
+
+这是明确的普遍构造，不把复数输入为基础数域。选与 $R$ 相容的正交基 $e_1,e_2,e_3$，置 $\iota=e_1e_2e_3$。生成关系给
+
+$$
+\iota^2=-1,\quad\iota^*=-\iota,\quad
+\iota x=x\iota,\quad xy=B(x,y)1+\iota R_xy.
+$$
+
+任意词约成八个实基词。把 $e_j$ 映到三个 Pauli 矩阵
+
+$$
+\sigma_1=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+\sigma_2=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\quad
+\sigma_3=\begin{pmatrix}1&0\\0&-1\end{pmatrix}
+$$
+
+给八个实线性独立像，所以
+
+$$
+\boxed{\mathcal A\cong\operatorname{Cl}_{3,0}\cong M_2(\mathbb C).}
+$$
+
+取 $p_+=(1+e_3)/2$，则
+
+$$
+\mathcal H=\mathcal A p_+=\mathbb C p_+\oplus\mathbb C e_1p_+\cong\mathbb C^2.
+$$
+
+由 $\xi^*\eta=\langle\xi,\eta\rangle p_+$ 定义正 Hermitian 内积，范数平方为 $|z_1|^2+|z_2|^2$。
+
+这里 $\iota$、$J_n$ 和比较代数上的 $J$ 是不同类型的对象。最小结合完成给出一份标准量子表示；它没有证明原装置已经实现每个完成元素。
+
+**两种复数结构在同一表示中的对齐。**
+
+比较代数 $\mathfrak h$ 与 $\mathfrak{sl}_2(\mathbb C)$ 的实 Lie 同构为
+
+$$
+\mathcal R_x\longmapsto-\frac{i}{2}x\cdot\sigma,\qquad
+L_x\longmapsto\frac12x\cdot\sigma.
+$$
+
+Pauli 乘法核对三类括号，六维维数给同构。在这份表示中，$J$ 正好成为乘以中心 $i$。所以“比较与转向互换所得的复数”和最小结合完成的中心复数，可以在同一表示中准确对齐；这不是给原三维 $W$ 另安一份复结构。
+

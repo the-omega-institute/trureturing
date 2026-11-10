@@ -1,0 +1,198 @@
+**定理 22.1（含全部零层的充要生成式）。** Fix any real data
+
+$$
+\mathbf z=(0,24,48,z,u,w,x,y)
+                                                                  \tag{22.1}
+$$
+
+at original clocks $0,\ldots,7$ for the prescribed seven-action word $JMJJJJJ$. Its cumulative matrices are
+
+$$
+(I,J,L,N,L,N,L,N).
+                                                                  \tag{22.2}
+$$
+
+No action or reading is omitted. Define data quantities
+
+$$
+D_E=48+2u-3x,\qquad D_O=3z-2w-y,\qquad C_*=48+6u+x.
+                                                                  \tag{22.3}
+$$
+
+The following construction gives exactly all compatible complete worlds. All displayed equalities and strict filters apply; a branch whose conditions fail contributes no world. Identical output triples are counted once. This is a solution-set parametrization and permits multiple compatible worlds.
+
+First select the possible positive trace ratio $\rho=T/\ell$:
+
+$$
+\mathscr P(\mathbf z)=
+\begin{cases}
+\{D_O/D_E\}\cap(0,\infty),&D_E\ne0,\\
+\varnothing,&D_E=0,\ D_O\ne0,\\
+(0,\infty),&D_E=D_O=0.
+\end{cases}                                                       \tag{22.4}
+$$
+
+For every selected $\rho$, use its appropriate branch below.
+
+For $\rho=1$, let $Y\in\mathbb R[t]$, $\deg Y\le3$, interpolate
+
+$$
+(Y(2),Y(3),Y(4),Y(5))=(48,z,u,w).
+$$
+
+Require $Y(6)=x$, $Y(7)=y$, and set
+
+$$
+\ell=\frac{Y(1)-Y(0)}{24},\qquad 1<\ell<2.
+                                                                  \tag{22.5}
+$$
+
+When these filters hold, this stratum contributes its one world
+
+$$
+P=\begin{pmatrix}\ell-1&\ell-1\\2-\ell&2-\ell\end{pmatrix},
+\qquad d=\frac{Y(0)}{1-\ell},\qquad g=\frac{Y-d}{\ell}.
+                                                                  \tag{22.6}
+$$
+
+For $\rho\ne1$, define the drift and interpolant
+
+$$
+\begin{gathered}
+d=\frac{\rho C_*-4(z+w)}{8(\rho-1)},\\
+(h(2),h(3),h(4),h(5))=
+\left(48-d,\frac{z-d}\rho,u-d,\frac{w-d}\rho\right),
+\qquad \deg h\le3,\\
+h_0=h(0)=480+15u-25d-\frac{20z+4w-24d}\rho,\\
+h_1=h(1)=192+4u-8d-\frac{6z+w-7d}\rho.
+\end{gathered}                                                     \tag{22.7}
+$$
+
+There are exactly three reconstruction cases.
+
+1. If $d\ne0$ and $h_1\ne0$, set
+
+$$
+\ell=-\frac{h_0}d,\quad j=\frac{\ell(24-d)}{h_1},\quad
+r=\rho\ell-j,\quad b=\ell-1,\quad c=j-b.
+                                                                  \tag{22.8}
+$$
+
+Require
+
+$$
+\ell>1,\quad j>0,\quad 0<r<1,\quad c>0,\quad
+(\ell-1)c=r(1-r).
+                                                                  \tag{22.9}
+$$
+
+Exactly when these filters hold, output the single world
+
+$$
+\left(\begin{pmatrix}r&\ell-1\\c&1-r\end{pmatrix},\frac h\ell,d\right).
+                                                                  \tag{22.10}
+$$
+
+In particular $d=24,h_1\ne0$ fails $j>0$ and contributes no world.
+
+2. If $d=0$, require $h_0=0$ and $h_1>0$. Set
+
+$$
+k=\frac{24}{h_1}>0,\qquad \gamma=\rho-k,
+$$
+
+and take every real root of
+
+$$
+(\gamma^2+k-1)\ell^2+(2-\rho)\ell-1=0.
+                                                                  \tag{22.11}
+$$
+
+Keep exactly those roots satisfying
+
+$$
+\ell>1,\qquad 0<\gamma\ell<1,\qquad 1+(k-1)\ell>0.
+                                                                  \tag{22.12}
+$$
+
+Each retained root gives
+
+$$
+P=\begin{pmatrix}
+\gamma\ell&\ell-1\\1+(k-1)\ell&1-\gamma\ell
+\end{pmatrix},\qquad g=h/\ell,\qquad d=0.
+                                                                  \tag{22.13}
+$$
+
+3. If $d\ne0$ and $h_1=0$, require $d=24$ and
+
+$$
+\ell=-h_0/24>1.
+$$
+
+Take every real root $r$ of
+
+$$
+r^2-\ell r+(\ell-1)(\rho\ell-\ell+1)=0,
+                                                                  \tag{22.14}
+$$
+
+keeping exactly those with
+
+$$
+0<r<1,\qquad c=\rho\ell-r-\ell+1>0.
+                                                                  \tag{22.15}
+$$
+
+Each gives $P=(\begin{smallmatrix}r&\ell-1\\c&1-r\end{smallmatrix})$, $g=h/\ell$, $d=24$.
+
+The inverse equations retain their full degree and root strata. For (22.11), write $A_2=\gamma^2+k-1$ and $A_1=2-\rho$. If $A_2\ne0$, use discriminant $A_1^2+4A_2$: negative gives no real roots, zero gives one repeated root, and positive gives two distinct real roots, each still subject to (22.12). If $A_2=0,A_1\ne0$, the sole candidate is $\ell=1/A_1$. If $A_2=A_1=0$, the equation is $-1=0$ and has no roots; it is never an identically zero equation. Equation (22.14) is monic, with discriminant
+
+$$
+\ell^2-4(\ell-1)(\rho\ell-\ell+1).
+                                                                  \tag{22.16}
+$$
+
+Its negative, zero and positive signs give zero, one and two real candidates before the strict filters. A boundary root with a zero source entry is rejected; a repeated legal root yields one world. This root convention also covers empty legal-root sets when real roots exist but all fail positivity.
+
+Proof. For any compatible world put $h=\ell g$. At even clocks $2,4,6$ the readings are $h(t)+d$; at odd clocks $3,5,7$ they are $\rho h(t)+d$. Thus the six successive values of $h$ at $2,\ldots,7$ must be
+
+$$
+48-d,\quad (z-d)/\rho,\quad u-d,\quad (w-d)/\rho,
+\quad x-d,\quad (y-d)/\rho.
+                                                                  \tag{22.17}
+$$
+
+A polynomial of degree at most three on these six successive nodes is characterized by its two vanishing fourth differences. Multiplying the first by $\rho$ and leaving the second in its denominator-cleared form gives
+
+$$
+\begin{aligned}
+0&=\rho C_*-4(z+w)-8d(\rho-1),\\
+0&=z+6w+y-4\rho(u+x)+8d(\rho-1).
+\end{aligned}                                                     \tag{22.18}
+$$
+
+Their sum is $\rho D_E-D_O$. Therefore (22.4) is necessary. Conversely, for $\rho\ne1$, the selected ratio and drift formula make both equations (22.18) hold. Interpolation at $2,3,4,5$ then gives the required $h(6)=x-d$ from the first difference, and $h(7)=(y-d)/\rho$ from the second. The extrapolation coefficient rows at $0,1$, on those four nodes, are $(10,-20,15,-4)$ and $(4,-6,4,-1)$; they give exactly $h_0,h_1$ in (22.7). There is no leading-degree assumption on this interpolant.
+
+The still unaccounted-for initial and first readings, and the definition of the trace ratio, are exactly
+
+$$
+h_0=-\ell d,\qquad jh_1=\ell(24-d),\qquad r+j=\rho\ell.
+                                                                  \tag{22.19}
+$$
+
+If $dh_1\ne0$, these identities force (22.8); (22.9) is precisely strict positivity, trace one and determinant zero for its source. If $d=0$, (22.19) forces $h_0=0,h_1>0$, $j=k\ell$ and $r=\gamma\ell$. Substitution in $bc=r(1-r)$ gives (22.11), while the four strictly positive source entries are exactly (22.12). If $d\ne0,h_1=0$, the first-clock equation forces $d=24$; the initial equation fixes $\ell$, and $j=\rho\ell-r$ gives (22.14) and (22.15). This proves that the three cases exhaust all denominators, including $d=0,h_1=0$, which cannot satisfy the first-clock equation.
+
+For $\rho=1$, $T=\ell$ implies $r+c=1$. Rank one gives $(r-b)(1-r)=0$, so strict positivity forces $b=r$, $c=1-r$, $j=1$, $\ell=1+r\in(1,2)$. All readings at clocks $2,\ldots,7$ are samples of $Y=\ell g+d$. Its initial and first equations are
+
+$$
+Y(0)=(1-\ell)d,\qquad Y(1)-Y(0)=24\ell.
+                                                                  \tag{22.20}
+$$
+
+These force (22.5)–(22.6), as well as both later consistency checks. Conversely those checks and (22.20) recover all eight readings, including the first two, for the positive source in (22.6). No division by $\rho-1$ is used in this branch.
+
+Finally every output in the $\rho\ne1$ branches has all four entries positive, trace one and determinant zero, hence rank one. Equations (22.19) give the initial and first readings; (22.17)–(22.18) give the other six. Thus the same entire polynomial $g=h/\ell$ works throughout the full word. In either ratio branch $g$ cannot be zero, since that would make the initial and first readings both equal the same $d$, contradicting $0\ne24$. This proves sufficiency as well as necessity. The only divisors used are positive source traces or the quantities explicitly separated as nonzero. ∎
+
+Constant, linear, quadratic and cubic gains are all retained by degree-at-most-three interpolation. A zero sampled gain is not an illegal source and need not be removed; neither its sample nor a gain leading coefficient or discriminant is inverted. Repeated gain roots are also allowed. The tests $d=0$, $h_1=0$ and $\rho=1$ separate reconstruction equations, not a restriction to generic gains. In particular no nonzero-fourth, fifth, sixth or seventh-gain promise is hidden in Theorem 22.1.
+

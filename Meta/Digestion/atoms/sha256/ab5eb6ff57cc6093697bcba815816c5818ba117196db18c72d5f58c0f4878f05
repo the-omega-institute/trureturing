@@ -1,0 +1,90 @@
+**命题 4.1（Rank one, free grounds, and coloops）。** Under
+Definition 1.3 with $|A|\le |B|$ the following statements hold.
+
+1. If $r=1$, every source basis is matched.
+2. If $|A|=|B|=r$, both matroids are free and are matched.
+3. If $r\ge2$ and $q=|B|-r\ge2$, $N$ has no coloops.
+4. If $r\ge2$ and $q=1$, $N$ is either uniform, or it has exactly
+   one coloop $e$ and exactly one circuit-hyperplane $B\setminus\{e\}$.
+   In the latter case its bases are precisely the $r$-subsets containing
+   $e$. At equality $|A|=|B|=r+1$, failure occurs exactly for the
+   endpoint blocks in Theorem 3.3 for which $U_j=\{e\}$.
+
+Proof. For (1), $S$ is a singleton and the target-union bound (U) makes $C_S$
+nonempty; every element is a nonloop. For (2), a rank-$r$ matroid on
+$r$ elements has its ground as its sole basis; matching follows from
+criterion (R) and the target-union bound (U), since every subset of $B$ is independent.
+For (3), paving of $N^*$ of rank at least two excludes dual loops.
+A loop in the dual is exactly a coloop in $N$ by the complementary
+basis definition.
+
+For (4), $N^*$ has rank one. Let $L$ be its set of loops and
+$D=B\setminus L$ its nonempty set of nonloops. Its bases are exactly
+the singletons in $D$, so the primal bases are precisely
+$B\setminus\{d\}$ for $d\in D$. Thus $L$ is the set of primal
+coloops, $D$ is the unique primal circuit, and every proper subset
+of $D$ lies in a primal basis. Paving of $N$ gives $|D|\ge r$;
+since $|B|=r+1$, $|L|\le1$. If $L$ is empty the matroid is uniform.
+If $L=\{e\}$ then $|D|=r$, $D$ has rank $r-1$, and adding $e$
+spans; it is the unique circuit-hyperplane.
+In Theorem 3.3, $m-r=1$ makes $j$ either $0$ or $1$;
+$U_0=\{d\}$ and $U_1=\{-d\}$. The assertion follows.
+There is consequently no implicit coloopless restriction in either
+main theorem. Coloops of the source have no special role, because the
+argument applies separately to every one of its actual bases.
+
+The supplied construction and its interval instance [Family] illustrate
+Theorem 3.3 as follows. Let $E$ be a finite set of size $r+q$, let $H\subset E$ have size $r$, and
+let $r\ge2$, $q\ge1$. The family
+
+$$
+\mathcal Q=\{Q\subseteq E:|Q|=r,\ Q\ne H\}
+$$
+
+is the basis family of a loopless sparse paving rank-$r$ matroid,
+and $H$ is a circuit-hyperplane. This is the one-deleted-base
+construction supplied in [Family]. Its properties follow directly from
+the supplied exchange and extension arguments. The family is nonempty
+because $E\setminus H$ is nonempty.
+For basis exchange, fix $Q,R\in\mathcal Q$ and $x\in Q\setminus R$.
+If $|R\setminus Q|=1$, exchanging with its unique element gives $R$.
+If $|R\setminus Q|\ge2$, the candidates
+$(Q\setminus\{x\})\cup\{y\}$ for $y\in R\setminus Q$ are distinct;
+at most one equals $H$, so an allowed exchange exists.
+This is the basis-axiom characterization of a matroid.
+
+Every $I\subseteq E$ with $|I|<r$ extends to an $r$-subset $Q$.
+If $Q=H$, choose $h\in H\setminus I$ and $e\in E\setminus H$;
+replacing $h$ by $e$ gives an allowed basis still containing $I$.
+Thus all sets of size at most $r-1$ are independent, proving paving
+and looplessness. Complementation shows the dual bases are the
+$q$-subsets other than $E\setminus H$. The same extension argument
+makes every set of size below $q$ independent in the dual, including
+$q=1$, when this statement concerns only the empty set.
+Finally $H$ is dependent with all proper subsets independent.
+For any $e\notin H$, replacing one element of $H$ by $e$ gives a
+basis inside $H\cup\{e\}$. Hence $H$ has rank $r-1$ and is a
+hyperplane as well as a circuit.
+
+For the supplied punctured-interval instance, let $n,s\ge2$,
+$G=\mathbb Z$, $E=\{1,\ldots,n+s\}$ and
+$H=\{s+1,\ldots,s+n\}$. Let $M=N$ have as bases all $n$-subsets
+of $E$ other than $H$. The basis $S=\{1,\ldots,n\}$ fails to match
+$N$. This is the family already supplied in [Family].
+
+In the supplied construction take $r=n$, $q=s$. The initial block $S$ differs
+from $H$, and so is a basis. In Theorem 3.3 take
+
+$$
+m=n+s,\qquad a=1,\qquad d=1,\qquad j=0,\qquad
+U=\{1,\ldots,s\}.
+$$
+
+Then $E\setminus U=H$, giving precisely the obstruction.
+Directly, an admissible target for $x\in S$ must satisfy
+$x+b>n+s$, hence $b\in H$. All $n$ distinct targets would therefore
+form the nonbasis $H$.
+The member $n=s=2$ keeps the negative answer to the disjunctive
+[AZ, Question 2.7]. Theorem 2.1 proves the strict-gap branch and does
+not turn the whole question into an affirmative assertion.
+

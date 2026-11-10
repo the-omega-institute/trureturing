@@ -1,0 +1,115 @@
+**Theorem 4.1 (All-$r$ conditional comparison and Bernstein certificate).** Let $r\ge5$, let $s\ge r$ be finite, and let $x$ be a profile supported on $K\ge r-2$. If $q\in[r-1,r]$, then $J_s(x)\ge F_r(q)$, with equality exactly when $s=r$ and $x=x^*(q)$, up to relabeling. Set
+
+$$
+d=r-2,\qquad
+\gamma_r=\frac{6r^4-39r^3+52r^2-8r-8}{6r^2}\ge\frac{127}{150}.
+$$
+
+For every $s\ge r+1$ one has
+
+$$
+J_s(x)-F_r(q)\ge\gamma_r+
+\frac{(r-2)^2}{2q}\bigl[s^2-(r+1)^2\bigr].\tag{4.1}
+$$
+
+For the same support condition, every $s\ge r+1$ and every feasible $q\ge r$ satisfy
+
+$$
+J_s(x)\ge\frac{r^3}{2}+\gamma_r.\tag{4.2}
+$$
+
+**Proof.** For every integer $k$,
+
+$$
+k^2\ge d^2+(2d+1)(k-d),
+\qquad k^2-d^2-(2d+1)(k-d)=(k-d)(k-d-1)\ge0.
+$$
+
+For types in the support $K-d\ge0$. Consequently
+
+$$
+\begin{aligned}
+2J_s(x)
+&\ge d^2\mathbb E\sum_{i\in T}y_i^{-2}
+ +(2d+1)\mathbb E\left[(K-d)\sum_{i\in T}y_i^{-2}\right]\\
+&\ge d^2\sum_i y_i^{-1}+(2d+1)\mathbb E[K(K-d)]\\
+&\ge\frac{d^2s^2}{q}+(2d+1)\bigl(\mathbb E K^2-dq\bigr).
+\end{aligned}\tag{4.3}
+$$
+
+The second step uses $y_i^{-2}\ge1$ only with nonnegative coefficients, and the third uses $(\sum_i y_i)(\sum_i y_i^{-1})\ge s^2$.
+
+For integer $K$, $(K-r+1)(K-r)\ge0$, so
+
+$$
+\mathbb E K^2\ge(2r-1)q-r(r-1).
+$$
+
+On $[r-1,r]$, (4.3) therefore gives
+
+$$
+2J_s(x)\ge B_{r,s}(q):=
+\frac{(r-2)^2s^2}{q}+(2r-3)\bigl[(r+1)q-r(r-1)\bigr].\tag{4.4}
+$$
+
+Here is a coefficient proof valid for every $r\ge5$, including the whole $q$ interval. Put $u=r-5\ge0$, $t=q-r+1\in[0,1]$ and
+
+$$
+P_r(q)=q^2\bigl[B_{r,r+1}(q)-2F_r(q)\bigr].
+$$
+
+After expansion it has the cubic Bernstein representation
+
+$$
+P_r(r-1+t)=\sum_{j=0}^3b_j\binom3j t^j(1-t)^{3-j},
+$$
+
+where
+
+$$
+\begin{aligned}
+b_0&=2u^4+27u^3+128u^2+244u+144,\\
+b_1&=2u^4+27u^3+\tfrac{367}{3}u^2+\tfrac{587}{3}u+\tfrac{127}{3},\\
+b_2&=2u^4+\tfrac{85}{3}u^3+\tfrac{406}{3}u^2+231u+62,\\
+b_3&=2u^4+31u^3+169u^2+369u+245.
+\end{aligned}\tag{4.5}
+$$
+
+In particular $b_1>0$. The exact differences are
+
+$$
+\begin{aligned}
+b_0-b_1&=\tfrac13(17u^2+145u+305),\\
+b_2-b_1&=\tfrac13(4u^3+39u^2+106u+59),\\
+b_3-b_1&=\tfrac13(12u^3+140u^2+520u+608).
+\end{aligned}
+$$
+
+All are nonnegative. The Bernstein weights are nonnegative and sum to one, so $P_r(q)\ge b_1$. Since $q\le r$,
+
+$$
+B_{r,r+1}(q)-2F_r(q)\ge\frac{b_1}{r^2}=2\gamma_r.
+$$
+
+Replacing $r+1$ by $s$ in (4.4) adds exactly $d^2[s^2-(r+1)^2]/q$, proving (4.1). Also
+
+$$
+\gamma_r=r^2-\frac{13r}{2}+\frac{26}{3}-\frac4{3r}-\frac4{3r^2}.
+$$
+
+Its derivative as a real function on $[5,\infty)$ is $2r-13/2+4/(3r^2)+8/(3r^3)>0$, and $\gamma_5=127/150$.
+
+For $q\ge r$, use $\mathbb E K^2\ge q^2$ in (4.3) instead. The lower bound obtained by replacing $s$ with $r+1$ is
+
+$$
+G_r(q)=\frac{d^2(r+1)^2}{q}+(2r-3)(q^2-dq).
+$$
+
+It is strictly increasing for $q\ge r$: its second derivative is positive and
+
+$$
+G_r'(r)=\frac{r^4+3r^3-3r^2-4r-4}{r^2}>0.
+$$
+
+For example $r^4-3r^2-4r-4>0$ for $r\ge5$, since it is at least $22r^2-4r-4>0$. At $q=r$ one has $G_r(r)=B_{r,r+1}(r)\ge r^3+2\gamma_r$. This proves (4.2). Finally Theorem 3.1 handles $s=r$, while the positive gap excludes $s>r$, proving the equality statement. ∎
+

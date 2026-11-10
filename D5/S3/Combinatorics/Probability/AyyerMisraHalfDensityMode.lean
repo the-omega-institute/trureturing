@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: The half-density K-exclusion mode for small and large positive parameters. -/
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/27411 -/
 /-
 proof_shape: result: bind-only; every private theorem is a consumed bind-only helper.
 escape_witness: none
@@ -47,12 +48,12 @@ noncomputable def occProb (K L n : ℕ) (t : ℝ) (s : Fin L) (a : ℕ) : ℝ :=
 def claim : Prop := ∀ r K k : ℕ, ∀ hr : 2 ≤ r, 1 ≤ K → k < K →
     let π := (occProb K (2 * r) ((2 * k + 1) * r)); let s : Fin (2 * r) := (⟨0, by omega⟩)
     ∃ ε > 0, ∀ t : ℝ, 0 < t → (t < ε ∨ 1 / ε < t) → (2 * k + 1 < K → ∀ b ≤ K, b ≠ k → π t s b < π t s k) ∧ (K < 2 * k + 1 → ∀ b ≤ K, b ≠ k + 1 → π t s b < π t s (k + 1)) ∧ (2 * k + 1 = K → π t s k = π t s (k + 1) ∧ ∀ b ≤ K, b ≠ k → b ≠ k + 1 → π t s b < π t s k)
-private noncomputable def gaussValue [CommRing R] (q : R) (n k : ℕ) : R := Polynomial.eval₂ (Int.castRingHom R) q (gauss n k)
-@[simp] private theorem gaussValue_zero_right [CommRing R] (q : R) (n : ℕ) : gaussValue q n 0 = 1 := by simp [gaussValue, gauss]
-@[simp] private theorem gaussValue_zero_succ [CommRing R] (q : R) (k : ℕ) : gaussValue q 0 (k + 1) = 0 := by simp [gaussValue, gauss]
-private theorem gaussValue_pascal [CommRing R] (n k : ℕ) (q : R) : gaussValue q (n + 1) (k + 1) = gaussValue q n (k + 1) + q ^ (n - k) * gaussValue q n k := by simp [gaussValue, gauss]
+noncomputable def gaussValue [CommRing R] (q : R) (n k : ℕ) : R := Polynomial.eval₂ (Int.castRingHom R) q (gauss n k)
+@[simp] theorem gaussValue_zero_right [CommRing R] (q : R) (n : ℕ) : gaussValue q n 0 = 1 := by simp [gaussValue, gauss]
+@[simp] theorem gaussValue_zero_succ [CommRing R] (q : R) (k : ℕ) : gaussValue q 0 (k + 1) = 0 := by simp [gaussValue, gauss]
+theorem gaussValue_pascal [CommRing R] (n k : ℕ) (q : R) : gaussValue q (n + 1) (k + 1) = gaussValue q n (k + 1) + q ^ (n - k) * gaussValue q n k := by simp [gaussValue, gauss]
 private theorem gaussValue_zero_of_lt [CommRing R] (q : R) {n k : ℕ} (hk : n < k) : gaussValue q n k = 0 := by simp [gaussValue, gauss_zero_of_lt n k hk]
-private theorem finite_q_binomial_from_gauss [CommRing R] (q z : R) (n : ℕ) : ∏ k ∈ Finset.range n, (1 + z * q ^ k) = ∑ k ∈ Finset.range (n + 1), q ^ k.choose 2 * gaussValue q n k * z ^ k := by
+theorem finite_q_binomial_from_gauss [CommRing R] (q z : R) (n : ℕ) : ∏ k ∈ Finset.range n, (1 + z * q ^ k) = ∑ k ∈ Finset.range (n + 1), q ^ k.choose 2 * gaussValue q n k * z ^ k := by
   induction n with
   | zero => simp
   | succ n ih =>
@@ -69,7 +70,7 @@ private theorem finite_q_binomial_from_gauss [CommRing R] (q z : R) (n : ℕ) : 
         have h := (Finset.sum_range_succ' (fun k => q ^ k.choose 2 * gaussValue q n k * z ^ k) (n + 1)); simp only [Nat.choose_zero_succ, pow_zero, gaussValue_zero_right, mul_one] at h; rw [Finset.sum_range_succ (f := fun k => q ^ k.choose 2 * gaussValue q n k * z ^ k) (n := n + 1), gaussValue_zero_of_lt q (Nat.lt_succ_self n)] at h; simp only [mul_zero, zero_mul, add_zero] at h; exact h
       linear_combination stepD
 private theorem qnum_pos {t : ℝ} (ht : 0 < t) {a : ℕ} (ha : 0 < a) : 0 < qnum t a := by exact geom_sum_pos ht.le (Nat.ne_of_gt ha)
-private theorem qfact_pos {t : ℝ} (ht : 0 < t) (a : ℕ) : 0 < qfact t a := by exact Finset.prod_pos (fun j _ => qnum_pos ht (by exact Nat.zero_lt_succ j))
+theorem qfact_pos {t : ℝ} (ht : 0 < t) (a : ℕ) : 0 < qfact t a := by exact Finset.prod_pos (fun j _ => qnum_pos ht (by exact Nat.zero_lt_succ j))
 private theorem qnum_add (t : ℝ) (a b : ℕ) : qnum t (a + b) = qnum t a + t ^ a * qnum t b := by simp only [qnum, Finset.sum_range_add, pow_add, Finset.mul_sum]
 private theorem qfact_succ (t : ℝ) (a : ℕ) : qfact t (a + 1) = qfact t a * qnum t (a + 1) := by exact Finset.prod_range_succ _ _
 private theorem qbinom_symm (t : ℝ) {K a : ℕ} (ha : a ≤ K) : qbinom t K a = qbinom t K (K - a) := by
@@ -95,7 +96,7 @@ private theorem qbinom_pascal {t : ℝ} (ht : 0 < t) (K a : ℕ) : qbinom t (K +
       simp [qbinom_diag ht, qbinom_zero t (show K < K + 1 by exact lt_add_one K)]
     · rw [qbinom_zero t (by omega), qbinom_zero t (by omega), qbinom_zero t (by omega)]
       ring
-private theorem gaussValue_eq_qbinom {t : ℝ} (ht : 0 < t) (K a : ℕ) : gaussValue t K a = qbinom t K a := by
+theorem gaussValue_eq_qbinom {t : ℝ} (ht : 0 < t) (K a : ℕ) : gaussValue t K a = qbinom t K a := by
   induction K generalizing a with
   | zero =>
       cases a with

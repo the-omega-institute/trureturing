@@ -1,0 +1,42 @@
+**定理 19.2（双回文切口的逐站点分类）。** 对每个奇素数 $p\ge3$、每个实际二值势和每个满足式 (19.1) 的切口，有
+
+$$
+\boxed{\qquad
+\mathsf N_j(v)\quad\Longleftrightarrow\quad
+\mathsf N_{j+p}(v)\quad\Longleftrightarrow\quad u=z.
+\qquad}
+\tag{19.2}
+$$
+
+任一条件成立时，式 (18.3) 的 $O_j$ 就是原势的固定非平凡共享实正交反射。
+
+**证明。** 先设 $\mathsf N_j(v)$。在同一个带标号单位圈上定义二值势 $\widehat v$，仅把 $j$ 处的值换为 $v_a$：
+
+$$
+\widehat v_i=v_i\ (i\ne j),\qquad\widehat v_j=v_a.
+$$
+
+对每个实数 $t$，原节点向量 $\psi_j=0$ 满足
+
+$$
+H_t(\widehat v)\psi
+ =H_t(v)\psi+t(v_a-v_j)E_{jj}\psi
+ =H_t(v)\psi.
+\tag{19.3}
+$$
+
+故 $\mathsf N_j(\widehat v)$，并且这个等式反向同样成立。式 (19.3) 是本卷式 (11.1) 所用单点节点不变性的向量形式；这里只消费该初等秩一事实，不使用缺陷重复数或 Chebyshev 块族的假设。
+
+令 $\sigma(i)=2j+p-i\pmod{2p}$。它交换 $j,a$；对两条开半圆分别有
+
+$$
+\sigma(j+r)=j+p-r,\qquad
+\sigma(j-r)=j-p+r.
+$$
+
+式 (19.1) 使每条半圆的实际内部势在这次反转下不变，而 $\widehat v_j=\widehat v_a$ 使端点也相容。因此 $\sigma$ 的实际置换矩阵 $R$ 分别与 $\Delta_{2p}$、$\operatorname{diag}(\widehat v)$ 可交换。将 $\widehat v$ 在 $j$ 处的每个节点向量乘以 $R$，得到同一耦合下在 $a$ 为零的非零本征向量。所以 $\mathsf N_a(\widehat v)$。
+
+现在将定理 18.2 应用于实际势 $\widehat v$，得 $\widehat v_{j+r}=\widehat v_{j-r}$，即 $u=z$。这里 $R$ 只用于 $\widehat v$ 上的节点传递；原势所需的对称由 $u=z$ 回接：$\rho_j(i)=2j-i$ 固定两个原端点，并逐项配对原势的两条半圆，因而确实保持原 $v$。所得原反射是 $O_j$，不是把 $R$ 冒作原势的对称。
+
+若从 $\mathsf N_a(v)$ 出发，从 $a$ 看到的两条字为 $\operatorname{rev}z$、$\operatorname{rev}u$，仍各自回文。相同论证以 $a$ 为起点给出这两个字相等，亦即 $u=z$。最后，$u=z$ 时直接用定理 18.2 的实际反射充分方向，得到两个站点均持续及所述 $O_j$。∎
+

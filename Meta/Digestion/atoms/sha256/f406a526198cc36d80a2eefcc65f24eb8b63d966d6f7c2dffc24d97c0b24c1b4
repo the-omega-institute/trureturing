@@ -1,0 +1,204 @@
+**定理 2.1（全部正电导上的乘积界与等号分类）。** 对定义 1.1 中每个
+$m\ge3$ 和每组独立正电导，有
+
+$$
+\lambda_2(L(a,b))R(a,b)\le C_m,
+\qquad C_m=(m+2)\left(m+\frac1m\right).
+$$
+
+等号成立当且仅当存在 $t>0$ 和一个共同的
+$\varepsilon\in\{+1,-1\}$，使对每个 $1\le i\le m$ 均有
+
+$$
+a_i=\frac t2\left(1+\varepsilon\sqrt{\frac{m-2}{m+2}}\right),\qquad
+b_i=\frac t2\left(1-\varepsilon\sqrt{\frac{m-2}{m+2}}\right).
+$$
+
+在任一等号情形，$\lambda_2=t$，完整谱为
+$0$ 一次、$t$ 共 $m$ 次、$mt$ 一次，且 $R=C_m/t$。
+因此乘积等号集恰为标号边电导空间中的这两条正射线。
+
+**证明。** 先把调和定义与谱公式接合。对任意实向量 $z$，
+
+$$
+z^{\mathsf T}Lz=\sum_{i=1}^m
+\left[a_i(z_u-z_{x_i})^2+b_i(z_v-z_{x_i})^2\right].
+$$
+
+所有电导严格为正，图连通，故 $\ker L=\mathbb R\mathbf1$，
+且 $L$ 在 $\mathbf1^\perp$ 上正定。固定两个不同边界点后，
+在其余坐标上的 Dirichlet 二次型正定：其零向量延拓为边界零值后，
+若能量为零，就必须在整个连通图上恒为零。因此线性调和方程有唯一解。
+对其解 $h$，由 $\mathbf1^{\mathsf T}Lh=0$ 得到
+
+$$
+Lh=I_{pq}(e_p-e_q),\qquad
+I_{pq}=(Lh)_p=h^{\mathsf T}Lh>0.
+$$
+
+令 $L^+$ 为在 $\mathbf1^\perp$ 上等于 $L^{-1}$、在常数空间上为零的
+Moore–Penrose 逆。作用 $L^+$ 后，取 $p,q$ 两坐标之差，得到
+
+$$
+1=I_{pq}(e_p-e_q)^{\mathsf T}L^+(e_p-e_q),\qquad
+r(p,q)=(e_p-e_q)^{\mathsf T}L^+(e_p-e_q).
+$$
+
+这是经典有效电阻恒等式，见 Ghosh–Boyd–Saberi，
+[*Minimizing Effective Resistance of a Graph*, SIAM Review 50(1), 37–66](https://web.stanford.edu/~boyd/papers/pdf/eff_res.pdf)，
+[DOI:10.1137/050645452](https://doi.org/10.1137/050645452)，§2.4，式 (8)。
+在此采用该文的电导矩阵 $G=L$、边电导 $g_{\{u,x_i\}}=a_i$、
+$g_{\{v,x_i\}}=b_i$；该文的固定总电导最小化问题不作为这里的优化结论。
+
+全点对求和使用经典的矩阵恒等式
+
+$$
+\sum_{\{p,q\}\subseteq V,\ p\ne q}
+(e_p-e_q)(e_p-e_q)^{\mathsf T}
+=nI-\mathbf1\mathbf1^{\mathsf T}.
+$$
+
+于是，由 $L^+\mathbf1=0$ 以及实对称矩阵的谱分解，
+
+$$
+R=n\operatorname{tr}(L^+)=n\sum_{j=2}^{n}\frac1{\lambda_j}.
+\tag{2.1}
+$$
+
+这正是上述文献 §2.5 式 (13)–(15) 及 Cruz Ortega–Menéndez-Conde §4
+全点对谱公式的系数；后者谱公式之后的文字将其称为迹时漏写了因子 $n$。
+这里始终使用式 (2.1) 的全点对总和。
+
+现在令 $t=\lambda_2(L)>0$，并考察叶差空间
+
+$$
+U=\left\{z\in\mathbb R^n:
+ z_u=z_v=0,\ \sum_{i=1}^m z_{x_i}=0\right\}
+ \subseteq\mathbf1^\perp.
+$$
+
+它的维数为 $m-1$。取任意正交标准基 $f_1,\ldots,f_{m-1}$。
+在叶坐标上，$U$ 的正交投影为
+$P_U=I_m-\mathbf1_m\mathbf1_m^{\mathsf T}/m$，所以
+
+$$
+\begin{aligned}
+(m-1)t
+&\le\sum_{k=1}^{m-1}f_k^{\mathsf T}Lf_k\\
+&=\operatorname{tr}\!\left(
+\operatorname{diag}(s_1,\ldots,s_m)P_U\right)
+=\frac{m-1}{m}\sum_{i=1}^m s_i.
+\end{aligned}
+\tag{2.2}
+$$
+
+这里第一步逐项使用 $\mathbf1^\perp$ 上的 Rayleigh 下界，没有假定
+$U$ 是 $L$ 的不变子空间。由于 $m-1>0$，式 (2.2) 给出
+$\sum_i s_i\ge mt$。每条边对迹贡献两次，故
+
+$$
+\operatorname{tr}L=2\sum_i s_i\ge2mt.
+\tag{2.3}
+$$
+
+对 $2\le j\le n$ 定义
+$q_j=\lambda_j/t-1\ge0$，并置 $Q=\sum_{j=2}^n q_j$。
+共有 $m+1$ 个这样的数，且式 (2.3) 给出
+
+$$
+Q=\frac{\operatorname{tr}L}{t}-(m+1)\ge m-1>0.
+$$
+
+逐项比较分母得到
+
+$$
+\sum_{j=2}^n\frac{q_j}{1+q_j}
+\ge\sum_{j=2}^n\frac{q_j}{1+Q}
+=\frac{Q}{1+Q}\ge\frac{m-1}{m}.
+\tag{2.4}
+$$
+
+因此
+
+$$
+\begin{aligned}
+\frac{tR}{n}
+&=\sum_{j=2}^n\frac1{1+q_j}
+=(m+1)-\sum_{j=2}^n\frac{q_j}{1+q_j}\\
+&\le m+1-\frac{m-1}{m}=m+\frac1m,
+\end{aligned}
+$$
+
+证明了对全部 $2m$ 个独立正电导的上界。
+
+下面证明等号的必要性。式 (2.4) 中后一不等式等号当且仅当
+$Q=m-1$，因为 $Q/(1+Q)$ 严格递增。前一不等式等号当且仅当
+每个正的 $q_j$ 都等于 $Q$。由于 $Q>0$，这等价于恰有一个正的
+$q_j$，其余全为零。因此乘积等号必然要求
+
+$$
+\operatorname{Spec}(L)=\{0,t\text{（重数 }m\text{）},mt\},\qquad
+\sum_i s_i=mt.
+\tag{2.5}
+$$
+
+式 (2.2) 此时也取等号。$L-tI$ 在 $\mathbf1^\perp$ 上半正定，
+且 $\sum_k f_k^{\mathsf T}(L-tI)f_k=0$，所以每项都为零。
+半正定实对称算子的零二次型向量在其核中，故
+$Lf_k=tf_k$，进而 $Lz=tz$ 对每个 $z\in U$ 成立。
+特别地，任取不同的 $i,j$，把这个等式用于 $z=e_{x_i}-e_{x_j}$。
+两个枢纽坐标及第 $i,j$ 个叶坐标分别给出
+
+$$
+a_i-a_j=0,\qquad b_i-b_j=0,\qquad s_i=s_j=t.
+$$
+
+所以存在两个数 $a,b>0$，使所有 $a_i=a$、所有 $b_i=b$，且 $a+b=t$。
+这是从等号推出的限制，不是对竞争者的预设。
+
+对任意这样的叶置换不变电导，令 $s=a+b$。
+$U$ 上的特征值为 $s$，重数 $m-1$。其正交补由
+$e_u,e_v,m^{-1/2}\sum_i e_{x_i}$ 张成，且是不变子空间。
+在这组正交标准基中的矩阵为
+
+$$
+H(a,b)=
+\begin{pmatrix}
+ma&0&-\sqrt m\,a\\
+0&mb&-\sqrt m\,b\\
+-\sqrt m\,a&-\sqrt m\,b&s
+\end{pmatrix}.
+$$
+
+它有零特征值，迹为 $(m+1)s$，三个二阶主子式之和为
+$m^2ab+mab+mab=m(m+2)ab$。因此
+
+$$
+\det(\mu I-H)=
+\mu\bigl(\mu^2-(m+1)s\mu+m(m+2)ab\bigr).
+\tag{2.6}
+$$
+
+在式 (2.5) 的等号情形，$s=t$，式 (2.6) 的两个非零根必须为
+$t,mt$，从而 $m(m+2)ab=mt^2$，即
+
+$$
+a+b=t,\qquad ab=\frac{t^2}{m+2}.
+$$
+
+这个二次方程恰有两组有序解，正是定理中的共同符号公式。
+$m\ge3$ 保证
+$0<\sqrt{(m-2)/(m+2)}<1$，故两组解不同，且每个电导严格为正。
+
+反过来，任取 $t>0$ 和一个共同符号，按定理公式赋予所有边电导。
+则 $s=t$、$ab=t^2/(m+2)$。式 (2.6) 因而有根 $0,t,mt$，
+连同 $U$ 上的 $m-1$ 个特征值 $t$，给出定理所述完整谱。
+由于 $m>1$，最小正特征值确为 $t$。由式 (2.1)，
+
+$$
+R=\frac{m+2}{t}\left(m+\frac1m\right)=\frac{C_m}{t}.
+$$
+
+故这两条正射线上的每一点均取等号，且前面的必要性排除了其他标号边电导。
+∎
+

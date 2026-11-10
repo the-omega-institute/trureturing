@@ -10,6 +10,7 @@
 admission_basis: escape-witness
 escape_witness: Pure.antisymmetric_product_bound
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19210
+Escape audit unfinished for pt_rank_hermitian: https://github.com/the-omega-institute/trureturing/issues/22682
 The spectral expansion uses D5.S3.Quantum.Recovery.PetzSpectralCoordinates.cfc_spectral_sum; its owner module is unfrozen on the protected base.
 Direct frozen dependencies: none.
 proof_shape: partialTransposeOn: bind-only; consumer: SymmetricAbsolutePPTPureBound.partialTranspose_sum, SymmetricAbsolutePPTPureBound.pure_state_half_bound, SymmetricAbsolutePPTPureBound.psd_partialTranspose_half_trace, SymmetricAbsolutePPTPermutationFloor.cross_partialTranspose_gram, SymmetricAbsolutePPTPermutationFloor.cross_partialTranspose_psd, SymmetricAbsolutePPTPermutationFloor.pt_split, SymmetricAbsolutePPTPermutationFloor.partialTranspose_PiS_sandwich, SymmetricAbsolutePPTPermutationFloor.partialTranspose_smulC, SymmetricAbsolutePPTPermutationFloor.partialTranspose_one, SymmetricAbsolutePPTPermutationFloor.P_partialTranspose_cosets, SymmetricAbsolutePPTPermutationFloor.symmetrizer_partialTranspose_floor, LouvetSymmetricAbsolutelyPPT.IsFullyPPT, LouvetSymmetricAbsolutelyPPT.fullyPPT_of_spectrum; escape_witness: none; Direct frozen dependencies: none.
@@ -23,7 +24,7 @@ proof_shape: Pure.wedge_norm_bound: bind-only; consumer: SymmetricAbsolutePPTPur
 proof_shape: Pure.antisymmetric_product_bound: content; consumer: SymmetricAbsolutePPTPureBound.Pure.transpose_pairing_lower; escape_witness: SymmetricAbsolutePPTPureBound.Pure.antisymmetric_product_bound; Direct frozen dependencies: none.
 proof_shape: Pure.transpose_pairing_identity: bind-only; consumer: SymmetricAbsolutePPTPureBound.Pure.transpose_pairing_lower; escape_witness: none; Direct frozen dependencies: none.
 proof_shape: Pure.transpose_pairing_lower: content; consumer: SymmetricAbsolutePPTPureBound.Pure.ptRank_lower; escape_witness: SymmetricAbsolutePPTPureBound.Pure.antisymmetric_product_bound; Direct frozen dependencies: none.
-proof_shape: Pure.ptRank_hermitian: bind-only; consumer: SymmetricAbsolutePPTPureBound.Pure.ptRank_half_psd; escape_witness: none; Direct frozen dependencies: none.
+proof_shape: pt_rank_hermitian: bind-only; consumers: SymmetricAbsolutePPTPureBound.Pure.ptRank_half_psd, KanachovaLiuTuPureStateDetection.measured_hermitian; escape_witness: none; Direct frozen dependencies: none.
 proof_shape: Pure.ptRank_form: bind-only; consumer: SymmetricAbsolutePPTPureBound.Pure.ptRank_lower; escape_witness: none; Direct frozen dependencies: none.
 proof_shape: Pure.ptRank_lower: content; consumer: SymmetricAbsolutePPTPureBound.Pure.ptRank_half_psd; escape_witness: SymmetricAbsolutePPTPureBound.Pure.antisymmetric_product_bound; Direct frozen dependencies: none.
 proof_shape: Pure.ptRank_half_psd: content; consumer: SymmetricAbsolutePPTPureBound.pure_state_half_bound; escape_witness: SymmetricAbsolutePPTPureBound.Pure.antisymmetric_product_bound; Direct frozen dependencies: none.
@@ -141,12 +142,14 @@ private lemma transpose_pairing_lower (V M : Matrix α β ℂ) :
   have hn := fmass_nonneg (fun i j => (Vᵀ * M) i j + (Vᵀ * M) j i)
   nlinarith
 end D5.S3.Quantum.Entanglement.AbsoluteSeparability.SymmetricAbsolutePPTPureBound.Pure
-namespace D5.S3.Quantum.Entanglement.AbsoluteSeparability.SymmetricAbsolutePPTPureBound.Pure
-variable {α β : Type*} [Fintype α] [Fintype β]
-omit [Fintype α] [Fintype β] in
-private lemma ptRank_hermitian (ψ : α × β → ℂ) : (((Matrix.of (fun (x y : α × β) => (vecMulVec ψ (star ψ)) (y.1, x.2) (x.1, y.2))) : Matrix (α × β) (α × β) ℂ)).IsHermitian := by
+namespace D5.S3.Quantum.Entanglement.AbsoluteSeparability.SymmetricAbsolutePPTPureBound
+lemma pt_rank_hermitian {α β : Type*} (ψ : α × β → ℂ) : (((Matrix.of (fun (x y : α × β) => (vecMulVec ψ (star ψ)) (y.1, x.2) (x.1, y.2))) : Matrix (α × β) (α × β) ℂ)).IsHermitian := by
   ext x y
   simp [Matrix.vecMulVec_apply, Pi.star_apply, Matrix.conjTranspose_apply, star_mul]
+end D5.S3.Quantum.Entanglement.AbsoluteSeparability.SymmetricAbsolutePPTPureBound
+
+namespace D5.S3.Quantum.Entanglement.AbsoluteSeparability.SymmetricAbsolutePPTPureBound.Pure
+variable {α β : Type*} [Fintype α] [Fintype β]
 private lemma ptRank_form (ψ v : α × β → ℂ) :
     star v ⬝ᵥ (((Matrix.of (fun (x y : α × β) => (vecMulVec ψ (star ψ)) (y.1, x.2) (x.1, y.2))) : Matrix (α × β) (α × β) ℂ) *ᵥ v) =
       ∑ b : β, ∑ d : β,
@@ -200,7 +203,7 @@ private lemma ptRank_half_psd [DecidableEq α] [DecidableEq β]
     (ψ : α × β → ℂ) (hψ : (∑ i, Complex.normSq (ψ i)) = 1) :
     (((Matrix.of (fun (x y : α × β) => (vecMulVec ψ (star ψ)) (y.1, x.2) (x.1, y.2))) : Matrix (α × β) (α × β) ℂ) + (1 / 2 : ℝ) • (1 : Matrix (α × β) (α × β) ℂ)).PosSemidef := by
   have hh : (((Matrix.of (fun (x y : α × β) => (vecMulVec ψ (star ψ)) (y.1, x.2) (x.1, y.2))) : Matrix (α × β) (α × β) ℂ) + (1 / 2 : ℝ) • (1 : Matrix (α × β) (α × β) ℂ)).IsHermitian :=
-    (ptRank_hermitian ψ).add (Matrix.isHermitian_one.smul (IsSelfAdjoint.div rfl rfl))
+    (pt_rank_hermitian ψ).add (Matrix.isHermitian_one.smul (IsSelfAdjoint.div rfl rfl))
   apply Matrix.PosSemidef.of_dotProduct_mulVec_nonneg hh
   intro v
   apply Complex.nonneg_iff.mpr

@@ -1,0 +1,26 @@
+**命题 76.1（合法缺词类可以保留未过滤相关）。** The conclusion that every comparator has zero unfiltered signed Cesàro correlation with $b(h)$ is false for the native source. There is a nonexceptional $\theta$ and a legal four-state comparator with $T_1=0$ for which
+
+$$
+\lim_{N\to\infty}\frac1N\sum_{n<N}
+\left[\mathbb E_{Q_{+,n}}(2y-1)b(h)-\mathbb E_{Q_{-,n}}(2y-1)b(h)\right]=\frac38.
+\tag{76.1}
+$$
+
+证明。Choose $z=(-3+4\mathrm i)/5=e^{-2\mathrm i\theta}$. Then $\sin(2\theta)\ne0$. The native $B_0$ has eigenvalues $\mathrm i$ and $\mu=(-4-3\mathrm i)/5$. Its unitary spectral expansion at $u$ is
+
+$$
+u^\dagger B_0^nu=\frac38\mathrm i^n+\frac58\mu^n.
+\tag{76.2}
+$$
+
+Indeed the weights sum to one and at $n=1$ give $(B_0)_{11}=-1/2$; distinct eigenvalues determine them. Let $P_4$ send hidden vertex $r$ to $r+1\pmod4$, set $T_0=P_4$, $T_1=0$, and choose
+
+$$
+2f_{\rm cl}(r)-1=\sin(\pi r/2),\qquad p_+=e_0,\quad p_-=e_2.
+\tag{76.3}
+$$
+
+These are legal probabilities and a legal fixed effect. The pair correlation is $2\sin(\pi n/2)b(0^n)$. Since $\mu\ne\pm\mathrm i$, geometric averaging kills the cross frequency, whereas the average of $\sin^2(\pi n/2)$ is $1/2$. Equation (76.2) gives the limit $2(3/8)(1/2)=3/8$.
+
+There is also an exact fixed-vector explanation. With $c=(1,\mathrm i,-1,-\mathrm i)^{\mathsf T}$, $P_4c=-\mathrm ic$. If $B_0v=\mathrm iv$, then $(P_4\otimes B_0)(c\otimes v)=c\otimes v$. This irreducible recurrent class permits only all-zero words and is missing-language. It is therefore allowed, rather than excluded, by Theorem 75.2. A suffix requiring an occurrence of label $1$ kills it exactly, which is the mechanism used below. ∎
+

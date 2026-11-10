@@ -1,0 +1,54 @@
+**定理 324.2（概率、全部旧事件与全历史）。** 设 $g_A^0$ 为原比较型，$T_f:E_B\to E_A$ 为原事件的 Heisenberg 映射，$T_f^{\dagger_0}$ 为其原 $g^0$ 伴随。定义正可逆线性 $B_A$ 为 $g_A^0(x,y)=\tau_A((B_Ax)y)$。同一原准备 $\alpha$ 的两个坐标运输为
+
+$$
+\begin{aligned}
+\alpha(y)&=g_A^0(x_\alpha,y)=\tau_A(\rho_\alpha y),
+&\rho_\alpha&=B_Ax_\alpha,\\
+\mathcal T_f^0&=T_f^{\dagger_0},
+&\Phi_f&=B_B\mathcal T_f^0B_A^{-1},\\
+\alpha(D_ab)&=g_A^0(x_\alpha,D_ab)
+=q_A(\widehat x_\alpha,D_ab),
+&\widehat x_\alpha&=\mathcal W_A^{-1}\rho_\alpha,\\
+q_A(x,y)&=\tau_A((\mathcal W_Ax)y).
+\end{aligned}
+\tag{324.3}
+$$
+
+一般 $x_\alpha\ne\widehat x_\alpha$，不能用未换算的 $q_A(x_\alpha,\cdot)$ 替代原准备。每个原事件的 $\Phi_f$ 为 CP/TNI，原完整设备的事件和为 TP；零、奇异、次归一和不等正权全部包括，各实际联合各用自己的 $B_A,\mathcal W_A$，无因子化前件。
+
+对每个数学效果 $0\le e\le u_A$，原所选精确有限平方根词在原许可相关执行中给
+
+$$
+\Phi_{W_e}(\rho)=\sqrt e\rho\sqrt e,\qquad
+\Phi_{W_e\mid R}(X)=(\sqrt e\otimes I_R)X(\sqrt e\otimes I_R).
+\tag{324.4}
+$$
+
+其原占用指针失败方向 $p_1$ 的每个原失败 $\Psi_\ell:P\to B_\ell$ 的完整输出为 $\sqrt{I-e}\rho\sqrt{I-e}\otimes\Psi_\ell(p_1)$；只有原实际丢弃时才化为质量因子，其他原方向和中心的失败仍取原映射。原 F 给同一实现的实际可访问细口与原遗忘，逐支有
+
+$$
+\begin{gathered}
+S_\ell=\operatorname{Ad}_{K_\ell},\quad \Phi_f=\sum_\ell S_\ell,
+\quad U_\ell=q_\ell\operatorname{Ad}_{K_\ell^+},\quad q_\ell>0,\\
+e_\ell=\operatorname{supp}(K_\ell^*K_\ell),\quad
+h_\ell=\operatorname{supp}(K_\ell K_\ell^*),\quad
+\mathsf C_e(X)=eXe,\\
+U_\ell=\mathsf C_{e_\ell}U_\ell\mathsf C_{h_\ell},\quad
+U_\ell S_\ell=q_\ell\mathsf C_{e_\ell},\quad
+S_\ell U_\ell=q_\ell\mathsf C_{h_\ell}.
+\end{gathered}
+\tag{324.5}
+$$
+
+$q_\ell$ 与原同数反向资料均保持，未归一成一。对每份原准备、每条原合法有限历史 $h=(f_1,\ldots,f_m)$ 及末端原效果 $w$，
+
+$$
+\alpha(T_{f_1}\cdots T_{f_m}w)
+=\tau_{A_m}\!\left(w\,\Phi_{f_m}\cdots\Phi_{f_1}(\rho_\alpha)\right).
+\tag{324.6}
+$$
+
+证明。324.1 取得前卷 316.1 的完整候选，且 319.2 保留其所有原来源，故逐项复用而不重新重构：导子、曲率给复乘法；原双对偶给 (324.3)；X 的 Jordan/$D$ 保持、交叉零、乘积张成及实际乘积准备分离给普通张量；全事件 R、同设备同记录旁接和全部原相关正锥给旧事件 CP/TNI，原完整效果和给 TP。闭背景仅在同一已固定执行上用母卷 69.2 连续延拓，不补实际极限准备。
+
+整个 AC、精确 $N_u$、Xs 及所消费的原参考／合法连线按母卷 12.1、32.1 给同一所选词，25.2 给完整失败。原 F、实际细口、同一分组／遗忘及母卷 (29.5) 的原同数两侧资料给 (324.5)，不从数学 Kraus 表示补造设备或记录。一步双对偶逐原箭头迭代给 (324.6)：自适应逐原实际记录分支，并行逐原已供联合及相关输入，粗化／遗忘取原线性和，失败／返回／停止取原箭头。故全部原合法有限历史覆盖，条件概率只在原分母正时取比值。∎
+

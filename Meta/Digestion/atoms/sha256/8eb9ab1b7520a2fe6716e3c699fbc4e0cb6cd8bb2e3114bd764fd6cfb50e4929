@@ -1,0 +1,10 @@
+**定义 78.2（每个预定终点的有限视野精度）。** For $H\in\mathbb N$ and $\epsilon\ge0$, let $k_{\rm pair}(H,\epsilon)$ be the least number of classical states for which one comparator (72.8) satisfies
+
+$$
+\max_{0\le n\le H}\max_{\sigma\in\{+,-\}}
+\operatorname{TV}(P_{\sigma,n},Q_{\sigma,n})\le\epsilon.
+\tag{78.3}
+$$
+
+Let $k_{\mathcal K_d}(H,\epsilon)$ be the corresponding least number for one comparator with arbitrary preparations $p(\rho)$ on all $\rho\in\mathcal K_d$, satisfying the same bound uniformly in $\rho$ at every $0\le n\le H$. A nonexistent finite model has minimum $\infty$. Matrices, effect and preparation rule may depend on $H$; within a given horizon they are common across its endpoints and source states. Thus $k_{\mathcal K_d}\ge k_{\rm pair}$.
+

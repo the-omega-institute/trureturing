@@ -1,0 +1,22 @@
+### 原区别与恢复残差的 Gram 块
+
+沿用核心证明的 $W_\sigma(X)=\sigma^{-1/4}X\sigma^{-1/4}$、HS 收缩 $T$。
+本段固定 $\mathcal R:=\mathcal R_\sigma$ 为式 [(5.1)](#eq-c90-petz) 的规范 Petz 恢复，
+以下残差恒等式不指任意另选的恢复映射。
+令
+
+$$
+u=W_\sigma(\delta),\qquad
+ C=T^\dagger T,\qquad B=I-C,\qquad r=Bu.
+$$
+
+则 $0\le B\le I$，并且
+
+$$
+r=W_\sigma(\rho_0-\mathcal R\mathcal N\rho_0)
+ =-W_\sigma(\rho_1-\mathcal R\mathcal N\rho_1).
+$$
+
+这里 $B$ 的正性是 HS Hilbert 空间上的正性，$r$ 是差向量；
+二者不被误当成量子效果或密度态。
+

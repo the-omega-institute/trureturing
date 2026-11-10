@@ -1,0 +1,96 @@
+则以下二十项结论同时成立，全部使用这些原 $l,M,f$。
+
+1. $\det G=-(\det M)^2$。
+
+2. 对每个 $i\in I$，$(G^{-1})_{ii}>0$。
+
+3. 对每个 $i,j\in I$，$B(D_i,m_j)=\delta_{ij}$。
+
+4. 对每个 $i,j\in I$，$B(D_i,D_j)=(G^{-1})_{ij}$。
+
+5. 对每个 $a\in\mathcal S$，$B(n_a,n_a)=1$；相应的外向侧是 $V_a>0$。
+
+6. 原映射的像集精确等于八个闭半空间的交：
+
+   $$
+   \operatorname{range}f=R=\bigcap_{a\in\mathcal S}H_a^-.
+   $$
+
+7. 同一像集也有不作单位化的对偶／cap 符号刻画：
+
+   $$
+   \operatorname{range}f=
+   \{p\in H^3:\forall i\in I,\ B(L(p),D_i)\ge0\ \text{且}\ B(L(p),m_i)\le0\}.
+   $$
+
+8. 实际三维环境内部为
+
+   $$
+   \operatorname{int}_{H^3}(\operatorname{range}f)=R^{<}.
+   $$
+
+9. 同一环境内部的不作单位化刻画为
+
+   $$
+   \operatorname{int}_{H^3}(\operatorname{range}f)=
+   \{p\in H^3:\forall i\in I,\ B(L(p),D_i)>0\ \text{且}\ B(L(p),m_i)<0\}.
+   $$
+
+10. 原系数重心的像点满足 $f(b)\in\operatorname{int}_{H^3}(\operatorname{range}f)$。
+
+11. $\operatorname{int}_{H^3}(\operatorname{range}f)\ne\varnothing$。
+
+12. $\operatorname{range}f$ 在 $H^3$ 中闭。
+
+13. 完整环境边界恰为原映射像集内至少一个支撑活跃的点：
+
+    $$
+    \partial_{H^3}(\operatorname{range}f)=
+    \{p\in\operatorname{range}f:\exists a\in\mathcal S,\ V_a(p)=0\}.
+    $$
+
+14. 对每个 $a\in\mathcal S$，$H_a^-$ 在 $H^3$ 中闭，并存在 $e:H^2\to H^3$，满足
+
+    $$
+    e\ \text{是等距映射},\qquad \operatorname{range}e=P_a,\qquad
+    \partial_{H^3}H_a^-=\operatorname{range}e.
+    $$
+
+15. 对每个 $a\in\mathcal S$，原系数等式截面的像精确为
+
+    $$
+    f(F_a)=\{p\in\operatorname{range}f:V_a(p)=0\}.
+    $$
+
+16. 对每个 $a\in\mathcal S$，存在 $v_a\in C_l$，其系数向量恰为 $\operatorname{facetWitness}(l,a)$，并且
+
+    $$
+    V_a(f(v_a))=0,\qquad
+    \forall c\in\mathcal S,\ c\ne a\Longrightarrow V_c(f(v_a))<0.
+    $$
+
+17. 对每个 $a\in\mathcal S$，存在 $e:H^2\to H^3$ 和 $U\subseteq H^2$，使
+
+    $$
+    \begin{gathered}
+    e\ \text{是等距映射},\qquad \operatorname{range}e=P_a,\\
+    U\ \text{在}\ H^2\ \text{中开且非空},\qquad e(U)\subseteq f(F_a).
+    \end{gathered}
+    $$
+
+18. 对每个 $a\in\mathcal S$，存在 $p\in H^3$，使
+
+    $$
+    V_a(p)>0,\qquad
+    \forall c\in\mathcal S,\ c\ne a\Longrightarrow V_c(p)<0.
+    $$
+
+19. 对每个 $a\in\mathcal S$，删去该不等式使原映射的像集严格扩大：
+
+    $$
+    \operatorname{range}f\subsetneq
+    \{p\in H^3:\forall c\in\mathcal S,\ c\ne a\Longrightarrow V_c(p)\le0\}.
+    $$
+
+20. 映射 $a\mapsto n_a$ 单射，即八个实际单位外法向量两两不同。
+

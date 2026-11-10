@@ -1,0 +1,175 @@
+**Theorem 6.1 (Uniform sufficient threshold and unique finite minimum).** Fix $r\ge5$. Let the admissible class $\mathcal A_r(n,\ell)$ be either of the following:
+
+1. for $r\in\{5,6,7,8,9,10\}$, all of $\mathcal G(n,\ell)$;
+2. for any $r\ge5$, the members of $\mathcal G(n,\ell)$ whose minimum degree is at least $r-2$.
+
+Define
+
+$$
+C_0=4r^3,\quad A=2C_0+1,\quad K_0=\lceil\sqrt A\rceil,
+\quad R=\frac{(3C_0)^4K_0^5}{8},
+$$
+
+$$
+B=r\bigl[4(r-1)^2+24(2r-1)\bigr],\qquad
+H=R+8B,\qquad
+\widehat\gamma=\min\{1/2,\gamma_r\}=1/2.
+$$
+
+Take any integer $n_0(r)$ strictly greater than
+
+$$
+\max\left\{
+1,2r,C_0^2,3C_0,A^3,4AK_0^2,36C_0^2A,
+\sqrt{H/\widehat\gamma},\frac{H}{3(r-1)}
+\right\}.\tag{6.1}
+$$
+
+For every integer $n\ge n_0(r)$ and every integer
+
+$$
+L_r(n)\le\ell\le U_r(n),
+$$
+
+$H_r(n,\ell)$ is the unique minimizing isomorphism class in $\mathcal A_r(n,\ell)$. In particular the exact minimum excess is
+
+$$
+E_r^{\min}(n,\ell):=\min_{G\in\mathcal A_r(n,\ell)}E(G)
+=\sum_{i=1}^rM_c(N-b_i),\tag{6.2}
+$$
+
+with $N,c,b_i$ as in Definition 5.1; the minimum of $\Phi$ is $m$ plus (6.2). The threshold is sufficient; it is not asserted to be least. For $r\ge11$, the second class here is a material minimum-degree restriction. The unrestricted conclusion includes the full intervals $[L_9(n),U_9(n)]=[7n-62,8n-80]$ and $[L_{10}(n),U_{10}(n)]=[8n-79,9n-99]$.
+
+**Proof.** The candidate belongs to either stated class, has source degrees $r-1,r$, and its hub degrees exceed $r$ at this threshold. It has $E(H_r)\le C_0/n$ by Theorem 5.2. A graph with larger excess is already strictly worse than the candidate. It suffices to consider actual graphs $G$ with $E(G)\le C_0/n$.
+
+Apply [*CDSO sink incidences and density limits*, Theorem 3.1](CDSO_SINK_INCIDENCE_AND_DENSITY_LIMITS.md) with exactly $C=C_0$, $A=2C_0+1$, $K=K_0$. The six reduction inequalities there are included in (6.1). Thus $G$ is two-layer, its actual sink number obeys $s\le K_0$, and each sink degree satisfies
+
+$$
+D_i\ge\frac n{3C_0}.
+$$
+
+This uses the existing reduction, rather than asserting an additional reduction theorem. Capacity from Theorem 5.2 forces $s\ge r$. In the second admissible class, each source also satisfies $K\ge r-2$. Let $N_s=n-s$ and use the actual array of Definition 1.3. In particular $q_s=m/N_s\ge q_r=m/(n-r)>r-1$, but $q_s$ need not be at most $r$.
+
+The uniform error on these actual edges follows from the elementary identity, also used in [*CDSO minimizers without a universal vertex for every cyclomatic number*, §11](CDSO_UNIVERSAL_VERTEX_ALL_CYCLOMATIC.md),
+
+$$
+0\le\frac{t^2}{2}-g(t)
+=\frac{t^4}{2(\sqrt{1+t^2}+1)^2}\le\frac{t^4}{8}\quad(t\ge0).
+$$
+
+The quadratic edge sum is exactly $J_s(x)/N_s$. Counting at most $s$ incidences at each source, each source degree at most $s$, gives
+
+$$
+\begin{aligned}
+0\le\frac{J_s(x)}{N_s}-E(G)
+&\le\frac18\sum_Ta_T|T|^4\sum_{i\in T}D_i^{-4}\\
+&\le\frac{N_ss^5}{8(\min_iD_i)^4}\le\frac R{n^3}.
+\end{aligned}\tag{6.3}
+$$
+
+The candidate bound is
+
+$$
+E(H_r)\le\frac{F_r(q_r)}{n-r}+\frac{8B}{n^3},\tag{6.4}
+$$
+
+since $n-r\ge n/2$.
+
+Suppose first that $s\ge r+1$. If $q_s\le r$, use (3.5) in the unrestricted class and (4.1) in the restricted class. In either case
+
+$$
+J_s(x)\ge F_r(q_s)+\widehat\gamma\ge F_r(q_r)+\widehat\gamma.
+$$
+
+For completeness, $F_r$ is strictly increasing on $[r-1,r]$, because
+
+$$
+F_r'(q)=\frac{r^2}{2q^3}(2C-Dq)>0,
+\qquad 2C-Dr=r(r^2-3r+1)>0.
+$$
+
+If $q_s\ge r$, (3.6) in the unrestricted class gives
+
+$$
+J_s(x)\ge r^3/2+\beta_r/2\ge F_r(q_r)+\widehat\gamma,
+$$
+
+whereas (4.2) gives the same conclusion in the restricted class. In particular, for $r=9$ and an actual $s\ge10$, (3.6) is precisely
+
+$$
+2J_s(x)\ge729+\kappa_9(s-9)+(217-\kappa_9)(q_s-9)\qquad(q_s\ge9).
+$$
+
+Here $217-\kappa_9>0$, so the gap is at least $\kappa_9/2>1/2$, even when $q_s>9$. If instead $q_s\le9$, the same graph has $8<q_s\le9$, and (2.8) gives $J_s-F_9(q_s)>1024/81+42(s-10)>1/2$. For $r=10$, (3.6) likewise gives the unrestricted estimate
+
+$$
+2J_s(x)\ge1000+\kappa_{10}(s-10)+(271-\kappa_{10})(q_s-10)
+\qquad(s\ge11,\ q_s\ge10).
+$$
+
+Here $271-\kappa_{10}>0$, so the gap above $1000/2$ is at least $\kappa_{10}/2>1/2$. In the other case the same actual graph has $9<q_s\le10$, and (2.12) gives $J_s(x)-F_{10}(q_s)>29/2+50(s-11)>1/2$. Thus the interval certificate is used only in its domain; the unrestricted certificate supplies every value $q_s>10$. For both $r=9$ and $r=10$, these two cases cover the actual budget $q_s=m/(n-s)$ without substituting $q_r$ for it. Thus $\widehat\gamma=1/2$ is a common gap in both cases, with $C_0,A,K_0,R,B,H$ as defined in the statement. This is the upper-capacity bridge: a graph with more hubs and $q_s>r$ is still separated by a fixed positive amount. Both cases therefore imply, using $F_r(q_r)>0$, $N_s\le n-r$ and (6.3)–(6.4),
+
+$$
+E(G)-E(H_r)\ge\frac{\widehat\gamma}{n}-\frac H{n^3}>0.\tag{6.5}
+$$
+
+The last inequality is exactly the square-root condition in (6.1). Thus a minimizing or tying graph must have $s=r$ throughout the closed integer capacity interval.
+
+Let $A_{\mathrm{low}}$ count its sources of degree at most $r-2$. If $A_{\mathrm{low}}\ge1$, (3.1) gives
+
+$$
+J_r(x)\ge F_r(q_r)+\frac{3(r-1)A_{\mathrm{low}}}{N}.
+$$
+
+Hence (6.3)–(6.4) yield
+
+$$
+E(G)-E(H_r)\ge\frac{3(r-1)}{N^2}-\frac H{n^3}
+\ge\frac{3(r-1)}{n^2}-\frac H{n^3}>0,\tag{6.6}
+$$
+
+by the last condition in (6.1). Every source of a minimizer consequently has degree $r-1$ or $r$. The vertex and edge budgets now force the full count $c$ and the total missing-one count $b$ in Definition 5.1. In particular $c\ge r$, independent of how these missing-one counts are distributed.
+
+It remains to minimize the exact cost, not just its quadratic approximation. For every distribution of missing-one counts,
+
+$$
+D_i=N-b_i\ge c\ge r,\quad \sum_iD_i=m,\quad
+E(G)=\sum_iM_c(D_i).
+$$
+
+The function $M_c$ is strictly convex on $(0,\infty)$. The analytic pattern in [the preceding universal-vertex volume, Theorem 8.2](CDSO_UNIVERSAL_VERTEX_ALL_CYCLOMATIC.md), extends here with adjacent source degrees $a,r$: let $f_k(z)=g(k/z)$, so
+
+$$
+M_c(z)=\sqrt{z^2+a^2}-z+c(f_r(z)-f_a(z)),
+$$
+
+$$
+f_k''(z)=\frac{k^2(3z^2+2k^2)}{z^3(z^2+k^2)^{3/2}}.
+$$
+
+For fixed $z>0$, the derivative with respect to $v>0$ of
+
+$$
+Q_z(v)=\frac{v(3z^2+2v)}{(z^2+v)^{3/2}}
+$$
+
+is
+
+$$
+Q_z'(v)=\frac{6z^4+5z^2v+2v^2}{2(z^2+v)^{5/2}}>0.
+$$
+
+Thus $f_r''(z)>f_a''(z)$ and
+
+$$
+M_c''(z)=\frac{a^2}{(z^2+a^2)^{3/2}}+c(f_r''(z)-f_a''(z))>0.\tag{6.7}
+$$
+
+Suppose $D_j\ge D_i+2$, equivalently $b_i\ge b_j+2$. At least one actual source misses hub $i$. Delete its edge to $j$ and add its missing edge to $i$. This changes that source's neighborhood from $[r]\setminus\{i\}$ to $[r]\setminus\{j\}$, raises $D_i$ by one and lowers $D_j$ by one. The operation preserves simplicity, source degree, $n,m,\ell$ and the untouched $c$ full sources, so it preserves connectedness. Hub degrees remain at least $c$, preserving the minimum-degree restriction as well. Strict convexity gives
+
+$$
+M_c(D_i+1)+M_c(D_j-1)<M_c(D_i)+M_c(D_j),
+$$
+
+for example by integrating the strictly increasing derivative over the two unit intervals. The reverse imbalance is handled by exchanging $i,j$. Repeated legal moves terminate at degrees differing pairwise by at most one, since their integer sum is fixed and each move decreases the sum of their squares. Therefore all minimizing $b_i$ are balanced. Their multiset is unique. Permuting hubs and sources identifies all graphs with that multiset, while any unbalanced graph admits a strictly improving actual move. Combined with (6.5)–(6.6), this proves the exact value and the unique graph isomorphism class. ∎
+

@@ -1,0 +1,43 @@
+**Definition 75.1 (source, service and conditional coordinates).** Fix
+exactly one owned LAB installation of AA Assumption 20.1: an actually
+allocated known $\alpha$ root, current exclusive source and auxiliary
+rights, genuine reference-returning allocation, the supplied local
+acknowledgement, and sufficient actual finite backing for every operation
+asserted to complete. Source changes are only AA (AA.65). There is no
+other writer, deletion, reset, crash, interrupt, revocation, exposed
+allocation order or observable capacity/exhaustion branch. The driver is
+one fixed finite source-independent program, installed before its finite
+request schedule is supplied. This section uses the complete original
+seven-request $Q_g$ of AA Definitions 20.2, 20.4 and 21.1, without changing
+its initialization or replacing its history by a represented task.
+
+Write $w$ for the actual successful addressed $P/S$ word from that alpha,
+and $t$ for its current term. Put $N=|w|=e_\alpha(t)$. Here and below
+$F,h,B,G$ have exactly Definition 60.1's meaning; in particular $G$ is
+history width, not a growth count from another section. Order the current
+logical branch addresses $v_1,\ldots,v_m$ by preorder, left before right.
+At $v_i$ let $W_i$ be the projection of actual events strictly below it
+onto their first side, and use the supplied coordinates
+
+$$
+x_i=e_\beta(t_{v_iL}),\qquad y_i=e_\alpha(t_{v_iR}),\qquad
+R_i=\binom{x_i+y_i}{x_i},\qquad
+r_i=\sum_{j=1}^{x_i}\binom{a_j-1}{j},
+$$
+
+where $a_1<\cdots<a_{x_i}$ are the left positions in $W_i$. Thus
+$0\le r_i<R_i$. Empty products are one. Define the global number
+
+$$
+Z(t,w)=\sum_{i=1}^{m}r_i\prod_{j<i}R_j,\qquad
+F(t)=\prod_{i=1}^{m}R_i,\qquad G(t)=\lceil\log_2F(t)\rceil.
+\tag{AAII.35}
+$$
+
+The first digit is least significant. Branches of radix one remain in
+the traversal, with digit zero. AA Theorem 19.2 supplies the product
+bijection between histories and local shuffles. Theorem 47.3 supplies
+these colex digits and their append law. Mixed-radix packing itself is
+standard finite enumerative coding; none of those static results is a
+new claim here.
+

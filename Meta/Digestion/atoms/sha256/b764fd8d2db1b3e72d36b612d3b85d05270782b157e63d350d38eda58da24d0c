@@ -1,0 +1,64 @@
+**Theorem 10.7 (Effective common-growth exact graph selector).**
+For each fixed finite $R\ge4$ there are $R$-only positive constants
+$A_R,D_R,E_R$ such that, for every pair in Definition 1.1 and every
+integer
+
+$$
+N\ge\max\left\{\lceil D_Ra^{24}\rceil,
+                 \left\lceil\exp(E_Ra^2\log a)\right\rceil\right\},
+\tag{10.19}
+$$
+
+the following is an exact selection rule in the original graph class.
+On the residue $\rho=N\bmod P$, replace $B_s$ in (8.6) by $T_s$
+from (10.8). The lexicographically least vectors select precisely all
+pairs attaining (6.12), and Theorem 6.4 reconstructs precisely all exact
+minimizers. All selected pairs have one common branch and one common
+$z$-histogram. Every source-label, endpoint, omission, minimum-offset
+allocation and high-tail-label freedom allowed by that reconstruction
+is retained. One may instead use $P_{\rm data}$ with the coherent
+residue germs described in Proposition 10.2. Neither period is asserted
+to be the least optimizer period, and (10.19) is only a sufficient
+threshold.
+
+**Proof.** Theorem 10.1 first identifies the exact original graph
+minimum with the finite allocation relation. Lemma 10.5 says that
+matching finite vectors means identity of the value germs. Otherwise
+let $k\le T_s$ be the first nonzero coefficient of a pair difference,
+called $c_k$. Cauchy's estimate on the disk of Lemma 10.6 gives, for
+$0<u\le r_0/2$,
+
+$$
+\left|D(u)-c_ku^k\right|
+ \le 2M_0r_0^{-(k+1)}u^{k+1}.
+\tag{10.20}
+$$
+
+Thus its sign is the sign of $c_k$ whenever
+
+$$
+N\ge\max\{2/r_0,
+       4M_0(2Q_0)^{k+3}r_0^{-(k+1)}\},\qquad u=1/N.
+\tag{10.21}
+$$
+
+Indeed the error is then at most half the nonzero leading term by
+(10.14). Since $s\le2a$, $k\le3(12a+5)^2$, $Q_0\le C_Ra^4$,
+$M_0=C_Ra^6$, and $r_0^{-1}=C_Ra^{3/2}$, the logarithm of the
+right side of (10.21) is at most $E_Ra^2\log a$, after choosing
+one $R$-only $E_R$. This bound holds for each pair and residue with
+the same constants. There is no multiplication by the number of
+allocations or residues. Every strict comparison therefore has its
+Taylor sign simultaneously in (10.19); all identities stay exact.
+This proves the selector and all tie claims. Proposition 10.4 then
+identifies the selected equivalence class with one branch and one
+histogram. Exhaustive reconstruction follows from Theorem 10.1. ∎
+
+The coefficient-separation step is logically necessary: even the linear
+function $\varepsilon-u$, for a positive rational $\varepsilon$,
+has a bounded vanishing order but requires $N>1/\varepsilon$ for
+its positive eventual sign. Lemma 10.6 supplies the extra arithmetic
+information for the actual graph functions. Theorem 10.7 therefore
+strengthens the uniformity of the later selector, without inferring a
+uniform sign threshold from finite order alone.
+

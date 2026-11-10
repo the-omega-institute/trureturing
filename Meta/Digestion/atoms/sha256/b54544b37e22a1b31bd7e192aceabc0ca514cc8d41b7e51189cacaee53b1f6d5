@@ -1,0 +1,60 @@
+**定理 112.2（对原竞争类统一的固定源有限噪声结论）。** 在定理 111.2 的条件下，对任一 (112.1) 的证书，若 $\sqrt3q_n<1$，同一个 $S$ 同时满足
+
+$$
+d_H(\mathcal B,\mathcal D)
+\le\max\{\tau+g(q_n),\ 6b(\tau+F_n)\}.
+\tag{112.3}
+$$
+
+特别地，对每个固定允许源、每一种合法前缀及每个 $\eta>0$，存在 $\epsilon_0>0$，使所有原假设 100.2 的竞争者只要满足 (111.1) 且 $0\le\epsilon<\epsilon_0$，便同时有 $\dim V=9$、(111.4) 及 $d_H(\mathcal B,\mathcal D)<\eta$。$\epsilon_0$ 可依赖该源、前缀、$\eta$ 和有限证书，不能依赖竞争者。
+
+证明。置 $s=Ss_0$、$J_a=\operatorname{Ad}_{U_a}$，按原时间次序复合。乘积差的逐项展开给每个长 $k$ 的词
+
+$$
+\|D_w-J_w\|\le(1+\beta)^k-1=F_k,\qquad
+\|D_ws-J_w\rho_0\|_2\le(1+\beta)^k\gamma+F_k=q_k.
+\tag{112.4}
+$$
+
+确实，每项至多 $\beta(1+\beta)^j$，求和得首式，初态误差再乘 $\|D_w\|\le(1+\beta)^k$ 得次式；$\beta=0$ 时同样成立。
+先取任意 $X\in\mathcal B$。对效果网中的 $w$，$D_wX\in C$，所以
+
+$$
+\operatorname{Tr}(U_w^\dagger EU_wX)=\operatorname{Tr}(EJ_wX)\ge-F_n b.
+\tag{112.5}
+$$
+
+任意纯投影 $P$ 距某个网点至多 $\tau$，Cauchy–Schwarz 不等式给 $\operatorname{Tr}(PX)\ge-b(\tau+F_n)$。置 $t=b(\tau+F_n)$，则 $\lambda_{\min}(X)\ge-t$。写 $X=X_+-X_-$，$v=\operatorname{Tr}X_-\le3t$；因 $\operatorname{Tr}X=1$，$\operatorname{Tr}X_+=1+v$。故
+
+$$
+Y=\frac{X_+}{1+v}\in\mathcal D,\qquad
+\|X-Y\|_2\le\|X_-\|_2+\frac{v}{1+v}\|X_+\|_2\le2v\le6t.
+\tag{112.6}
+$$
+
+这给 $\sup_{X\in\mathcal B}\operatorname{dist}(X,\mathcal D)$，未将总量上界倒用为某一部分的下界。
+再取状态网中的 $w$，令 $Z=D_ws\in C$、$P_w=J_w\rho_0$。由 (112.4)，
+
+$$
+|\operatorname{Tr}Z-1|\le\sqrt3q_n<1,\qquad
+\left\|\frac Z{\operatorname{Tr}Z}-P_w\right\|_2
+\le\frac{q_n+\sqrt3q_n}{1-\sqrt3q_n}=g(q_n).
+\tag{112.7}
+$$
+
+因此 $Z/\operatorname{Tr}Z\in\mathcal B$，每个纯投影距离 $\mathcal B$ 至多 $\tau+g(q_n)$。对任意密度矩阵取其至多三个纯投影的谱凸组合，并取对应 $\mathcal B$ 中点的同一凸组合，即得反向距离界。这一步约束完整基，不假设竞争锥自对偶、纯性或任意效果可取得，合起来就是 (112.3)。
+为显式给出正的误差门槛，任取
+
+$$
+\begin{gathered}
+0<\tau<\min\{\eta/2,\eta/(12b)\},\qquad
+q_* =\min\{1/(2\sqrt3),\eta/[4(1+\sqrt3)],\eta/(12b)\},\\
+C_0=3\|L^{-1}\|,\qquad C_1=36\kappa(1+\chi)/\sigma,\\
+\epsilon_0=\min\{\sigma/18,\ \log(1+q_*)/(nC_1+C_0)\}>0.
+\end{gathered}
+\tag{112.8}
+$$
+
+选择该 $\tau$ 的一个有限证书。若 $\epsilon<\epsilon_0$，则 $\beta\le C_1\epsilon$、$\gamma=C_0\epsilon$，所以
+$q_n\le\exp((nC_1+C_0)\epsilon)-1<q_*$，且 $F_n\le q_n$。代入 (112.3)，两方向都严格小于 $\eta$，所需量词成立。没有由此取得无证书的 $O(\epsilon)$ 完整锥速率。∎
+

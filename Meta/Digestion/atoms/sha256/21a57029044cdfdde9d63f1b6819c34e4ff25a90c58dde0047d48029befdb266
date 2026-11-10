@@ -1,0 +1,12 @@
+**Theorem 81.2 (exact selected persistent differences).** Compare the
+installed local layout of §§47–50 and this global layout at the same
+reachable endpoint, along the same successful LAB word and original
+request schedule, with each layout's own paid work. Their common source
+coordinates are $V,3V,V$. Their live history coordinates are
+
+| Selected coordinate | Local layout | Global layout | Local minus global |
+| --- | --- | --- | --- |
+| Headers | $h$ | $\eta$ | $h-\eta$ |
+| Bit/next cells | $B$ | $G$ | $B-G$ |
+| History data bits | $B$ | $G$ | $B-G$ |
+| Header/cell reference-field occurrences | $2h+B$ | $2\eta+G$ | $2(h-\eta)+(B-G)$ |

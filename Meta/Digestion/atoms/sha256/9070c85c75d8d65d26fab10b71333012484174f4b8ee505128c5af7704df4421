@@ -1,0 +1,4 @@
+**Open Question 7.1 (Quantitative information for the actual optimizer).** Does some $n$ satisfy $V_2(n)>\tau$? More generally, do the full-complement conditionals of the actual $\pi_n$ provide a lower bound for $\mathcal R_{N,n}$ or for the common-transfer refinement of [Guarded, Proposition 6.5] that exceeds $\tau$ for an intended $N$?
+
+Theorem 2.3 is a test on $\pi_n$ with no value supplied for its variance. Theorems 4.4 and 5.1 concern $\mu_n$ from (3.3). They imply neither posterior concentration for $\pi_n$ nor a lower bound on its variance or minors. Positive finite minors alone do not provide positive-density mean squared minors; (4.11) exhibits the obstruction. Failure of one localized bound to grow does not show that the global rank relaxation fails on $\pi_n$.
+

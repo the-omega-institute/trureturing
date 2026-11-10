@@ -1,0 +1,34 @@
+### 引理 6.1（归一校准给出的迹范数界）
+
+<a id="lem-c90-trace-norm"></a>
+
+对任意矩阵 $Z$，
+
+$$
+\left\lVert \sigma^{1/4}Z\sigma^{1/4}\right\rVert_1
+ \le\sqrt{\operatorname{Tr}\sigma}\,\left\lVert Z\right\rVert_2=\left\lVert Z\right\rVert_2.
+$$
+
+**证明。**
+迹范数可用酉测试矩阵取得对偶上确界。
+对任意酉 $U$，迹循环与 HS Cauchy–Schwarz 给出
+
+$$
+|\operatorname{Tr}(U\sigma^{1/4}Z\sigma^{1/4})|
+ \le\left\lVert \sigma^{1/4}U\sigma^{1/4}\right\rVert_2\left\lVert Z\right\rVert_2.
+$$
+
+再计算
+
+$$
+\begin{aligned}
+ \left\lVert \sigma^{1/4}U\sigma^{1/4}\right\rVert_2^2
+ &=\operatorname{Tr}(U^\dagger\sigma^{1/2}U\sigma^{1/2})\\
+ &\le\left\lVert U^\dagger\sigma^{1/2}U\right\rVert_2
+       \left\lVert \sigma^{1/2}\right\rVert_2
+ =\operatorname{Tr}\sigma=1.
+ \end{aligned}
+$$
+
+取上确界即得结论。最后的常数一使用了校准态的归一化。
+

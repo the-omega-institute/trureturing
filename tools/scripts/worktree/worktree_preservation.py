@@ -1,260 +1,204 @@
-"""User-directed worktree removal and independent non-worktree retention policies."""
+"""Native worktree identity and forced removal.
 
-from contextlib import ExitStack, contextmanager
-import hashlib
-import json
-import os
+Removal intentionally performs no snapshot, participation, activity, or lock
+inspection. AI users own their committed branch history; Git preserves the
+branch ref when a registered linked tree is removed.
+"""
 from pathlib import Path
-import re
-import signal
-import stat
+import os
 import subprocess
 import time
-import uuid
 
-from worktree_protocol import (Refused, GitFailure, git, value, common, inventory, identity,
-                               acquire, git_scope, remote_endpoint, tree_scope)
+from worktree_protocol import GitFailure, Refused, common, git, git_environment, identity, inventory
 
 
-def remote_roots(source, branch):
-    roots = []
-    for remote in value(source, "remote").splitlines():
-        endpoint = remote_endpoint(source, remote)
-        refs = ["refs/heads/dev"]
-        if branch:
-            refs.append(branch)
-        result = git(source, "ls-remote", "--heads", "--", endpoint, *refs)
-        for row in result.stdout.splitlines():
-            oid, reference = row.split(b"\t")
-            if os.fsdecode(reference) not in refs:
-                raise Refused("unexpected_remote_ref")
-            tip = oid.decode("ascii")
-            git(source, "fetch", "--no-write-fetch-head", "--no-tags", "--", endpoint, tip)
-            roots.append(tip)
-    if not roots:
-        raise Refused("remote_preservation_unknown")
-    return roots
-
-
-def retained(source, oid, roots):
-    if not oid or set(oid) == {"0"}:
-        return
-    if git(source, "cat-file", "-t", oid).stdout.strip() != b"commit":
-        raise Refused("noncommit_recovery_object:" + oid)
-    if not any(git(source, "merge-base", "--is-ancestor", oid, root, check=False).returncode == 0
-               for root in roots):
-        raise Refused("local_only_history:" + oid)
-
-
-def reflog_oids(path):
-    for line in path.read_bytes().splitlines():
-        fields = line.split(b" ", 2)
-        if len(fields) != 3 or not all(re.fullmatch(rb"[0-9a-f]{40}|[0-9a-f]{64}", field)
-                                      for field in fields[:2]):
-            raise Refused("unknown_reflog:" + str(path))
-        yield from (field.decode("ascii") for field in fields[:2])
-
-
-REMOVAL_RECORD = "worktree-removal"
-
-
-def record_removal(metadata, commit, recovery_branch, predecessors=None, native_locks=None):
-    """Record the verified snapshot in Git metadata, which native removal deletes last."""
-    staged = metadata / (REMOVAL_RECORD + ".tmp")
-    staged.write_text(json.dumps(dict(commit=commit, recovery_branch=recovery_branch,
-                                     predecessors=predecessors or [], native_locks=native_locks or [])))
-    os.replace(staged, metadata / REMOVAL_RECORD)
-
-
-def interrupted_removal(target, metadata, stack, source, branch):
-    """Return the record of an earlier removal whose native deletion stopped part way."""
-    record = metadata / REMOVAL_RECORD
-    if not record.exists():
-        return None
-    removal = json.loads(record.read_text())
-    commit = removal["commit"]
-    predecessors = removal.get("predecessors", [])
-    stack.recovery_roots = getattr(stack, "recovery_roots", []) + [
-        root["recovery_branch"] for root in predecessors]
-    stack.native_locks = getattr(stack, "native_locks", []) + removal.get("native_locks", [])
-    for root in predecessors:
-        reference = root["recovery_branch"]
-        git(source, "check-ref-format", reference)
-        if not any(handle.scope_key == "ref:" + reference
-                   for handle in getattr(stack, "scope_handles", [])):
-            acquire(stack, source, "ref:" + reference, True)
-        if value(target, "rev-parse", "--verify", reference + "^{commit}") != root["commit"]:
-            raise Refused("interrupted_removal_recovery_root_changed")
-    if removal["recovery_branch"] != branch:
-        acquire(stack, source, "ref:" + removal["recovery_branch"], True)
-    recorded_tip = git(target, "rev-parse", "--verify", removal["recovery_branch"] + "^{commit}", check=False)
-    if (value(target, "rev-parse", "--verify", "HEAD^{commit}") != commit
-            or recorded_tip.returncode or os.fsdecode(recorded_tip.stdout).strip() != commit):
-        from worktree_publication import commit_snapshot, recovery_root
-        # Pin the old object before checkpointing; its former branch can have moved.
-        predecessor = dict(commit=commit, recovery_branch=recovery_root(stack, source, target, commit))
-        predecessors = predecessors + [predecessor]
-        snapshot = commit_snapshot(target, metadata, branch,
-            b"Checkpoint current work after interrupted removal\n", stack, source)
-        current_root = recovery_root(stack, source, target, snapshot["commit"])
-        for root in predecessors + [dict(commit=snapshot["commit"], recovery_branch=current_root)]:
-            if value(target, "rev-parse", "--verify", root["recovery_branch"] + "^{commit}") != root["commit"]:
-                raise Refused("interrupted_removal_recovery_root_changed")
-        if git(target, "status", "--porcelain", "--untracked-files=all").stdout:
-            raise Refused("working_tree_changed_after_checkpoint")
-        record_removal(metadata, snapshot["commit"], current_root, predecessors,
-                       getattr(stack, "native_locks", []))
-        return dict(commit=snapshot["commit"], recovery_branch=current_root, reconverged=True,
-                    native_locks=getattr(stack, "native_locks", []))
-    # Native deletion only deletes files; other differences may be later changes.
-    status = git(target, "status", "--porcelain", "--untracked-files=all").stdout.splitlines()
-    if any(not line.startswith(b" D ") for line in status):
-        raise Refused("interrupted_removal_tree_changed")
-    return removal
-
-
-LOCK_AGE_SECONDS = 24 * 60 * 60
+def finished_operations(metadata):
+    # Kept as an inspection helper for callers that need to report unfinished
+    # work. Removal itself does not use it as a veto.
+    return [marker for marker in ("MERGE_HEAD", "CHERRY_PICK_HEAD", "REVERT_HEAD",
+                                  "rebase-merge", "rebase-apply", "sequencer")
+            if (Path(metadata) / marker).exists()]
 
 
 def qualify(source, path, stack=None, snapshot=None, deadline=None):
-    """Validate identity and Git lock age, without inspecting users or contents."""
-    if Path(path).is_symlink():
-        raise Refused("linked_tree")
-    path = Path(path).resolve()
-    if not path.is_dir():
+    del stack, deadline
+    path = Path(path).absolute()
+    if path.is_symlink() or (os.path.lexists(path) and not path.is_dir()):
         raise Refused("missing_or_linked_tree")
-    snapshot = snapshot if snapshot is not None else (inventory(source), common(source))
-    item, metadata = identity(source, path, snapshot=snapshot, deadline=deadline)
-    rows = snapshot[0]
-    if path == Path(rows[0]["worktree"]).resolve():
+    path = path.resolve()
+    rows = snapshot[0] if snapshot is not None else inventory(source)
+    if not rows or path == Path(rows[0]["worktree"]).resolve():
         raise Refused("main_worktree")
     if any(path in Path(row["worktree"]).resolve().parents for row in rows):
         raise Refused("nested_worktree")
-    if "locked" in item:
-        if item["locked"].startswith("worktree-init:"):
-            try:
-                if stack is None:
-                    with ExitStack() as probe:
-                        tree_scope(probe, source, path, True)
-                else:
-                    tree_scope(stack, source, path, True)
-            except Refused as error:
-                if not str(error).startswith("busy_scope:"):
-                    raise
-                raise Refused("initialization_in_progress") from error
-            return item
-        lock = metadata / "locked"
-        if lock.is_symlink():
-            raise Refused("locked_age_unknown")
-        observed = None
-        def lock_changed(current):
-            return observed is not None and any(
-                getattr(current, field) != getattr(observed, field)
-                for field in ("st_dev", "st_ino", "st_mode", "st_size", "st_mtime_ns", "st_ctime_ns"))
-        try:
-            observed = lock.stat()
-            if not stat.S_ISREG(observed.st_mode):
-                raise Refused("locked_age_unknown")
-            current = lock.stat()
-            if lock.is_symlink() or lock_changed(current):
-                raise Refused("observed_identity_changed")
-        except OSError as error:
-            try:
-                current = lock.lstat()
-                changed = stat.S_ISLNK(current.st_mode) or lock_changed(current)
-            except FileNotFoundError:
-                changed = True
-            except OSError:
-                changed = False
-            if changed:
-                raise Refused("observed_identity_changed") from error
-            raise
-        age = time.time() - current.st_mtime
-        if age < LOCK_AGE_SECONDS:
-            raise Refused("locked_recent")
+    if os.path.lexists(path / ".git"):
+        item, _ = identity(source, path, snapshot=snapshot)
+        return item
+    return _missing_pointer_identity(source, path, rows, snapshot)[0]
+
+
+def _missing_pointer_identity(source, path, rows, snapshot=None):
+    # Cleanup alone can recover an absent checkout root or pointer. Require the native
+    # administration entry's backlink, common directory and HEAD to agree;
+    # ordinary reuse/with identity continues to require the checkout pointer.
+    if all(os.path.lexists(path / name) for name in ("HEAD", "objects", "refs")):
+        raise Refused("foreign_repository")
+    matches = [row for row in rows if Path(row["worktree"]).resolve() == path]
+    if len(matches) != 1:
+        raise Refused("repository_identity")
+    if path.is_dir() and path.stat().st_dev != path.parent.stat().st_dev:
+        raise Refused("repository_identity")
+    shared = snapshot[1] if snapshot is not None else common(source)
+    administration = shared / "worktrees"
+    entries = []
+    for metadata in administration.iterdir():
+        if metadata.is_symlink() or not metadata.is_dir():
+            continue
+        backlink = metadata / "gitdir"
+        if backlink.is_symlink() or not backlink.is_file():
+            continue
+        if Path(backlink.read_text().rstrip("\n")) == path / ".git":
+            entries.append(metadata)
+    if len(entries) != 1:
+        raise Refused("git_backlink")
+    metadata = entries[0]
+    if administration.resolve() != administration or metadata.resolve() != metadata:
+        raise Refused("repository_identity")
+    for name in ("commondir", "HEAD"):
+        if (metadata / name).is_symlink() or not (metadata / name).is_file():
+            raise Refused("repository_identity")
+    if (metadata / (metadata / "commondir").read_text().strip()).resolve() != shared:
+        raise Refused("repository_identity")
+    head = git(source, "--git-dir=" + str(metadata), "rev-parse", "--verify", "HEAD^{commit}").stdout.strip()
+    if os.fsdecode(head) != matches[0].get("HEAD"):
+        raise Refused("registration_changed")
+    return matches[0], metadata
+
+
+def registered_committer_time(source, item):
+    """Read the qualified registration's commit even when its pointer is absent."""
+    raw = git(source, "show", "-s", "--format=%ct", item["HEAD"]).stdout.strip()
+    try:
+        return int(raw)
+    except ValueError as error:
+        raise Refused("head_timestamp_unknown") from error
+
+
+def _removal_state(source, path):
+    # Observe partial effects; never repair or delete an unregistered remnant.
+    try:
+        registered = any(Path(row["worktree"]).resolve() == path for row in inventory(source))
+    except (Refused, OSError, subprocess.SubprocessError):
+        registered = "unknown"
+    return f"root={os.path.lexists(path)}, pointer={os.path.lexists(path / '.git')}, registered={registered}"
+
+
+def remove_registered(source, path, timeout=1800):
+    """Remove qualified payload first, then let Git remove its pointer/registration.
+
+    Payload and final native removal share the caller's bound. None disables
+    that bound for explicit FORCE and the unbounded allocation/sweep entrances.
+    Payload failure leaves the root .git file available to ordinary retry; a
+    final Git failure can have partial native effects, which are only observed.
+    """
+    path = Path(path).absolute()
+    rows = inventory(source)
+    item = qualify(source, path)
+    path = path.resolve()
+    source = Path(rows[0]["worktree"]).resolve()
+    deadline = time.monotonic() + timeout if timeout is not None else None
+    phase = "pointer-recovery"
+
+    def remaining():
+        if deadline is None:
+            return None
+        seconds = deadline - time.monotonic()
+        if seconds <= 0:
+            raise subprocess.TimeoutExpired("worktree removal " + phase, timeout)
+        return seconds
+
+    try:
+        # An absent root has no payload or pointer to repair. Native Git can
+        # remove its qualified registration directly, including a locked one.
+        if os.path.lexists(path):
+            qualify(source, path)
+            if not os.path.lexists(path / ".git"):
+                # Git validates a present root's pointer even with double force.
+                # Recreate only this proven missing pointer, without overwriting
+                # any entry or repairing/pruning other registrations.
+                current_rows = inventory(source)
+                _, metadata = _missing_pointer_identity(source, path, current_rows)
+                with (path / ".git").open("x") as pointer:
+                    pointer.write("gitdir: " + str(metadata) + "\n")
+                identity(source, path)
+            phase = "payload"
+            # Bound argv even for a flat checkout. rm's physical traversal unlinks
+            # symlinks, including .lake, without following their external targets.
+            with os.scandir(path) as entries:
+                arguments = ["./" + entry.name for entry in entries if entry.name != ".git"]
+            batch, size = [], 0
+            for argument in arguments:
+                length = len(os.fsencode(argument)) + 1
+                if batch and size + length > 32768:
+                    _remove_payload(path, batch, remaining())
+                    batch, size = [], 0
+                batch.append(argument)
+                size += length
+            if batch:
+                _remove_payload(path, batch, remaining())
+            if any(entry.name != ".git" for entry in path.iterdir()):
+                raise GitFailure("payload remains")
+        phase = "final-native"
+        qualify(source, path)
+        result = git(source, "worktree", "remove", "--force", "--force", "--", str(path),
+                     check=False, timeout=remaining())
+        if result.returncode:
+            raise subprocess.CalledProcessError(result.returncode, result.args,
+                                                output=result.stdout, stderr=result.stderr)
+        if os.path.lexists(path) or any(Path(row["worktree"]).resolve() == path
+                                       for row in inventory(source)):
+            raise GitFailure("native success left worktree material")
+    except (OSError, subprocess.SubprocessError, GitFailure, KeyboardInterrupt) as error:
+        diagnostic = getattr(error, "stderr", None) or b""
+        if isinstance(diagnostic, bytes):
+            diagnostic = diagnostic.decode(errors="replace")
+        raise GitFailure(f"removal_{phase}_failed:{type(error).__name__}:"
+                         f"exit={getattr(error, 'returncode', None)}, "
+                         f"timeout={getattr(error, 'timeout', None)}; path={str(path)!r}; {str(error)[-4096:]}; "
+                         f"stderr={diagnostic[-4096:]!r}; {_removal_state(source, path)}") from error
     return item
 
 
-def bounded_diagnostic(value, limit=4096):
-    text = str(value)
-    return text if len(text) <= limit else text[:limit // 2] + "...[truncated]..." + text[-limit // 2:]
-
-
-def qualification_failure(error):
-    kind = "timeout" if isinstance(error, subprocess.TimeoutExpired) else "unavailable"
-    detail = type(error).__name__ + ":" + str(error)
-    if isinstance(error, subprocess.TimeoutExpired) and error.stderr:
-        stderr = error.stderr
-        detail += ":stderr=" + (stderr.decode(errors="replace") if isinstance(stderr, bytes) else stderr)
-    return "qualification_failed:" + kind + ":" + bounded_diagnostic(detail)
-
-
-@contextmanager
-def qualification_deadline(seconds):
-    def expired(signum, frame):
-        raise subprocess.TimeoutExpired(["qualify"], seconds, stderr=b"batch qualification deadline expired")
-    handler = signal.signal(signal.SIGALRM, expired)
-    previous = signal.setitimer(signal.ITIMER_REAL, seconds)
-    try:
-        yield
-    finally:
-        signal.setitimer(signal.ITIMER_REAL, *previous)
-        signal.signal(signal.SIGALRM, handler)
+def _remove_payload(path, arguments, timeout):
+    subprocess.run(["/bin/rm", "-rf", "--", *arguments], cwd=path,
+                   env=git_environment(), stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                   timeout=timeout, check=True)
 
 
 def qualify_batch(options, emit=None, emit_started=None):
-    """Qualify independently within min(600 seconds per path, 3600 seconds).
-
-    Completed rows are emitted immediately. The deadline covers snapshot reads
-    and qualification; native Git termination may additionally take 30 seconds.
-    Preview grants no mutation authority and only probes cooperative entry.
-    """
-    paths = list(dict.fromkeys(options.path))
     outcomes = []
-    budget = getattr(options, "budget_seconds", None)
-    budget = min(budget if budget is not None else 600 * len(paths), 600 * len(paths), 3600)
-    if budget <= 0:
-        raise ValueError("qualification budget must be positive")
-    deadline = time.monotonic() + budget
-    def report(path, outcome, reason):
-        row = dict(path=str(path), outcome=outcome, reason=reason)
+    for path in list(dict.fromkeys(options.path)):
+        try:
+            if emit_started:
+                emit_started(path)
+            qualify(options.source, path)
+            row = dict(path=str(path), outcome="qualified", reason=None)
+        except Refused as error:
+            row = dict(path=str(path), outcome="refused", reason=str(error))
+        except Exception as error:
+            row = dict(path=str(path), outcome="failed", reason=str(error))
         outcomes.append(row)
         if emit:
             emit(row)
-    try:
-        with qualification_deadline(budget):
-            snapshot = inventory(options.source), common(options.source)
-    except Exception as error:
-        for path in paths:
-            report(path, "failed", qualification_failure(error))
-    else:
-        for path in paths:
-            remaining = deadline - time.monotonic()
-            if remaining <= 0:
-                report(path, "deferred", "qualification_failed:deferred:batch qualification deadline expired")
-                continue
-            try:
-                if emit_started:
-                    emit_started(path)
-                with qualification_deadline(remaining):
-                    qualify(options.source, path, snapshot=snapshot, deadline=deadline)
-                report(path, "qualified", None)
-            except GitFailure as error:
-                report(path, "failed", qualification_failure(error))
-            except Refused as error:
-                report(path, "refused", str(error))
-            except Exception as error:
-                report(path, "failed", qualification_failure(error))
     return dict(event="worktree_qualification", items=outcomes,
-                status="failed" if any(item["outcome"] in ("failed", "deferred") for item in outcomes) else "succeeded")
+                status="failed" if any(row["outcome"] == "failed" for row in outcomes)
+                else "succeeded")
 
 
-def remove(options):
+def _resolve_targets(options, rows):
     names = list(dict.fromkeys(options.names.split()))
     if not names and not options.path:
         raise Refused("names_or_paths_required")
-    rows = inventory(options.source)
-    source = Path(rows[0]["worktree"]).resolve()
     targets = []
     for name in names:
         matches = [row for row in rows if Path(row["worktree"]).name == name]
@@ -262,132 +206,38 @@ def remove(options):
             raise Refused("name_not_found_or_ambiguous:" + name)
         targets.append(Path(matches[0]["worktree"]))
     for path in options.path:
-        if path.is_symlink():
-            raise Refused("linked_tree")
+        path = Path(path)
         matches = [row for row in rows if Path(row["worktree"]).resolve() == path.resolve()]
         if len(matches) != 1:
             raise Refused("path_not_registered:" + str(path))
         targets.append(Path(matches[0]["worktree"]))
-    targets = list(dict.fromkeys(targets))
+    return list(dict.fromkeys(targets))
+
+
+def remove(options):
+    rows = inventory(options.source)
+    targets = _resolve_targets(options, rows)
+    main = Path(rows[0]["worktree"]).resolve()
     outcomes = []
-    # Resolve and preflight the entire batch before any checkpoint mutation.
-    qualified = {}
     for target in targets:
-        item = qualify(source, target)
-        expected_rows = [json.loads(raw) for raw in options.expected]
-        matches = [row for row in expected_rows if Path(row["path"]).resolve() == target.resolve()]
-        if expected_rows and len(matches) != 1:
-            raise Refused("observed_path_changed")
-        for expected in matches:
-            if (item.get("HEAD") != expected["head"] or item.get("branch") != expected.get("branch")
-                    or "locked" in expected and item.get("locked") != expected["locked"]):
-                raise Refused("observed_identity_changed")
-        qualified[target] = item
-    for target in targets:
-        if options.preview:
-            outcomes.append(dict(path=str(target), outcome="would_remove"))
-            continue
-        checkpoint = None
-        recovery_branch = None
-        recovery_branch_candidate = None
-        removing = False
-        qualifying = True
         try:
-            with ExitStack() as stack:
-                # Initialization needs the dead initializer's exclusive entry.
-                # Ordinary removal has no participation or activity prerequisite.
-                if qualify(source, target, stack) != qualified[target]:
-                    raise Refused("observed_identity_changed")
-                qualifying = False
-                branch = git_scope(stack, source, target)
-                _, metadata = identity(source, target)
-                resumed = interrupted_removal(target, metadata, stack, source, branch)
-                if resumed:
-                    # The earlier removal verified this snapshot clean before native
-                    # deletion began; missing files are its effects, not changes.
-                    checkpoint = dict(event="worktree_checkpoint", status="reconverged" if resumed.get("reconverged") else "resumed",
-                                      commit=resumed["commit"], branch=branch,
-                                      native_locks=resumed.get("native_locks", []))
-                    recovery_branch = resumed["recovery_branch"]
-                    refreshed = identity(source, target)[0]
-                else:
-                    from worktree_publication import commit_snapshot
-                    checkpoint = commit_snapshot(target, metadata, branch,
-                        b"Checkpoint working tree before recycling\n", stack, source)
-                    if branch.startswith("refs/heads/"):
-                        recovery_branch = branch
-                    else:
-                        # Keep detached HEAD/index coordination until removal. Native
-                        # branch creation never replaces an existing ref, even on collision.
-                        recovery_branch_candidate = "refs/heads/lane/governance/recovery-" + uuid.uuid4().hex
-                        acquire(stack, source, "ref:" + recovery_branch_candidate, True)
-                        git(target, "branch", "--", recovery_branch_candidate.removeprefix("refs/heads/"),
-                            checkpoint["commit"])
-                        recovery_branch = recovery_branch_candidate
-                    refreshed = identity(source, target)[0]
-                    expected = dict(qualified[target], HEAD=checkpoint["commit"])
-                    if refreshed != expected:
-                        raise Refused("observed_identity_changed_after_checkpoint")
-                    # Concurrent edits or hook changes after staging need another
-                    # snapshot; do not silently discard ordinary outstanding files.
-                    if git(target, "status", "--porcelain", "--untracked-files=all").stdout:
-                        raise Refused("working_tree_changed_after_checkpoint")
-                    record_removal(metadata, checkpoint["commit"], recovery_branch,
-                                   native_locks=checkpoint.get("native_locks", []))
-                flags = ["--force", "--force"] if "locked" in refreshed else ["--force"]
-                removing = True
-                git(source, "worktree", "remove", *flags, "--", target,
-                    timeout=None if options.force else 300)
-                outcomes.append(dict(path=str(target), outcome="removed", checkpoint=checkpoint,
-                                     recovery_branch=recovery_branch,
-                                     recovery_roots=getattr(stack, "recovery_roots", [])))
-        except Exception as error:
-            if qualifying:
-                refused = isinstance(error, Refused) and not isinstance(error, GitFailure)
-                reason = str(error) if refused else qualification_failure(error)
-                outcomes.append(dict(path=str(target), outcome="refused" if refused else "qualification_failed",
-                                     reason=reason, error=reason))
+            if target.resolve() == main:
+                raise Refused("main_worktree")
+            item = qualify(main, target)
+            if options.preview:
+                outcomes.append(dict(path=str(target), outcome="would_remove",
+                                     branch=item.get("branch"), head=item.get("HEAD")))
                 continue
+            remove_registered(main, target, timeout=None if getattr(options, "force", False) else 1800)
+            outcomes.append(dict(path=str(target), outcome="removed",
+                                 branch=item.get("branch"), head=item.get("HEAD")))
+        except Refused as error:
             outcomes.append(dict(path=str(target),
-                outcome="partial_or_indeterminate" if removing else "checkpoint_failed",
-                error=str(error), checkpoint=checkpoint, recovery_branch=recovery_branch,
-                recovery_branch_candidate=recovery_branch_candidate,
-                native_locks=getattr(error, "native_locks", []) or getattr(stack, "native_locks", []),
-                recovery_roots=getattr(stack, "recovery_roots", [])))
-
-    return dict(event="worktree_removal", items=outcomes,
-                status="failed" if any(item["outcome"] not in ("removed", "would_remove", "refused") for item in outcomes)
-                else "refused" if any(item["outcome"] == "refused" for item in outcomes) else "succeeded")
-
-
-def retire_branch(options):
-    reference = "refs/heads/" + options.branch
-    git(options.source, "check-ref-format", reference)
-    with ExitStack() as stack:
-        acquire(stack, options.source, "ref:" + reference, True)
-        if any(row.get("branch") == reference for row in inventory(options.source)):
-            raise Refused("branch_in_use")
-        current = value(options.source, "rev-parse", "--verify", reference)
-        if current != options.commit:
-            raise Refused("branch_identity_changed")
-        if value(options.source, "for-each-ref", "--format=%(symref)", reference):
-            raise Refused("symbolic_branch")
-        roots = remote_roots(options.source, reference)
-        retained(options.source, current, roots)
-        log = common(options.source) / "logs" / reference
-        if options.expected_reflog_sha256 is not None:
-            if (not re.fullmatch(r"[0-9a-f]{64}", options.expected_reflog_sha256)
-                    or not log.is_file() or log.is_symlink()
-                    or hashlib.sha256(log.read_bytes()).hexdigest() != options.expected_reflog_sha256):
-                raise Refused("branch_reflog_changed")
-        if log.exists():
-            for oid in set(reflog_oids(log)):
-                retained(options.source, oid, roots)
-        if not options.preview:
-            try:
-                git(options.source, "update-ref", "--no-deref", "-d", reference, current)
-            except (Refused, OSError, subprocess.SubprocessError) as error:
-                return dict(event="worktree_branch_retirement", branch=options.branch, commit=current,
-                            status="partial_or_indeterminate", error=str(error))
-        return dict(event="worktree_branch_retirement", branch=options.branch, commit=current,
-                    status="would_remove" if options.preview else "removed")
+                                 outcome="failed" if isinstance(error, GitFailure) else "refused",
+                                 reason=str(error)))
+        except Exception as error:
+            outcomes.append(dict(path=str(target), outcome="failed", reason=str(error)))
+    status = ("failed" if any(row["outcome"] == "failed" for row in outcomes)
+              else "refused" if any(row["outcome"] == "refused" for row in outcomes)
+              else "succeeded")
+    return dict(event="worktree_removal", items=outcomes, status=status)

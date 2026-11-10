@@ -1,0 +1,77 @@
+## 文献与项目来源
+
+<a id="ref-snapshot"></a>
+
+1. the-omega-institute/trureturing.
+[固定提交 f76bcb79（dev，2026-10-29 UTC / 10-30 Singapore）](https://github.com/the-omega-institute/trureturing/commit/f76bcb791c34c35b622417c0d446251425e9faaf)；
+[相对 v21 固定版本的比较](https://github.com/the-omega-institute/trureturing/compare/ce2773bd014df637336d2e89f83f220d8535c5be...f76bcb791c34c35b622417c0d446251425e9faaf)。
+
+<a id="ref-jointkernel"></a>
+
+2. 项目：[递归关系观察：联合核与最小预测核心桥](https://github.com/the-omega-institute/trureturing/blob/f76bcb791c34c35b622417c0d446251425e9faaf/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_JOINT_KERNEL_MINIMAL_PREDICTIVE_CORE_BRIDGE.md)，新增第 15–23 节，尤其第 19–21 节与定理 23.2。普通理论文本；不等同于新的 Lean 声明。
+
+<a id="ref-omega"></a>
+
+3. 项目：[AURIC Ω 静态相容纤维理论](https://github.com/the-omega-institute/trureturing/blob/f76bcb791c34c35b622417c0d446251425e9faaf/docs/develop/theory/AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md)，第 1.3、4.1–4.2、5.2 节。
+
+<a id="ref-reconstruction"></a>
+
+4. 项目：[AURIC FIB ATOM 量子原则与相干重构](https://github.com/the-omega-institute/trureturing/blob/f76bcb791c34c35b622417c0d446251425e9faaf/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION.md)，第 6.1–6.2 节。
+
+<a id="ref-quotients"></a>
+
+5. 项目：[关系商与物理候选](https://github.com/the-omega-institute/trureturing/blob/f76bcb791c34c35b622417c0d446251425e9faaf/docs/develop/theory/AURIC_FIB_ATOM_RELATIONAL_QUOTIENTS_AND_PHYSICAL_CANDIDATES.md)。该卷开头标明混合用户供稿来源；历史快照与转录的主张按原归属处理。
+
+<a id="ref-csa"></a>
+
+6. 项目：[语境时空算术](https://github.com/the-omega-institute/trureturing/blob/f76bcb791c34c35b622417c0d446251425e9faaf/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md)，第 42.4 节命题 QI-P3：固定实际来源与消费者的准确观察商。
+
+<a id="ref-gate"></a>
+
+7. 项目：[量子原则与相干重构续卷](https://github.com/the-omega-institute/trureturing/blob/f76bcb791c34c35b622417c0d446251425e9faaf/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION.md)，第 64–68 节的合法黄金块与读出条件。本文所需黄金块完整列于第 [7](#sec-golden) 节。
+
+<a id="ref-qrf"></a>
+
+8. F. Giacomini, E. Castro-Ruiz, C. Brukner.
+*Quantum mechanics and the covariance of physical laws in quantum reference frames*.
+Nature Communications 10, 494 (2019).
+[arXiv:1712.07207](https://arxiv.org/abs/1712.07207)；
+[DOI:10.1038/s41467-018-08155-0](https://doi.org/10.1038/s41467-018-08155-0)。
+
+<a id="ref-bargmann"></a>
+
+9. E. M. Rabei, Arvind, N. Mukunda, R. Simon.
+*Bargmann invariants and geometric phases: A generalized connection*.
+Physical Review A 60, 3397 (1999).
+[arXiv:quant-ph/9907080](https://arxiv.org/abs/quant-ph/9907080)。参见式 (2.8)、(6.1)；零分母时不能直接使用锚定三角分解。
+
+<a id="ref-ekert"></a>
+
+10. A. K. Ekert, C. Moura Alves, D. K. L. Oi, M. Horodecki, P. Horodecki, L. C. Kwek.
+*Direct estimations of linear and nonlinear functionals of a quantum state*.
+Physical Review Letters 88, 217901 (2002).
+[arXiv:quant-ph/0203016](https://arxiv.org/abs/quant-ph/0203016)。参见式 (1)–(4)；本文显式固定三循环的方向与虚部符号。
+
+<a id="ref-nielsen"></a>
+
+11. M. A. Nielsen.
+*A simple formula for the average gate fidelity of a quantum dynamical operation*.
+Physics Letters A 303, 249–252 (2002).
+[arXiv:quant-ph/0205035](https://arxiv.org/abs/quant-ph/0205035)。
+
+<a id="ref-mpsproject"></a>
+
+12. 项目：[四物理能级、一般非零荷的 U(1) 可注入 MPS 问题与见证](https://github.com/the-omega-institute/trureturing/blob/f76bcb791c34c35b622417c0d446251425e9faaf/Problems/sanz-wolf-perez-garcia-cirac-2009-spin-three-halves-u1-injective-mps.md)。范围、报告证据和非结论分别见该文相应段落。
+
+<a id="ref-mpsblueprint"></a>
+
+13. 项目：[FourLevelU1SymmetricInjectiveMPS 蓝图](https://github.com/the-omega-institute/trureturing/blob/f76bcb791c34c35b622417c0d446251425e9faaf/Blueprint/D5/S3/Quantum/SpinChains/FourLevelU1SymmetricInjectiveMPS.md)；
+[对应 Lean 模块路径](https://github.com/the-omega-institute/trureturing/blob/f76bcb791c34c35b622417c0d446251425e9faaf/D5/S3/Quantum/SpinChains/FourLevelU1SymmetricInjectiveMPS.lean)。本轮未执行该模块。
+
+<a id="ref-sanz"></a>
+
+14. M. Sanz, M. M. Wolf, D. Pérez-García, J. I. Cirac.
+*Matrix Product States: Symmetries and two-body Hamiltonians*.
+Physical Review A 79, 042308 (2009).
+[arXiv:0901.2223](https://arxiv.org/abs/0901.2223)。本文使用其 MPS 边界映射与对称性背景，不据此主张已复核原论文的全部问题或新颖性。
+

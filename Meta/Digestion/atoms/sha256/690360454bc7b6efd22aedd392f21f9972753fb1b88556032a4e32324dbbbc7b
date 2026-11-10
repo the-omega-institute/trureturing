@@ -1,0 +1,2 @@
+**定义 3.1（实际标记树）。**设 $T$ 是具有 $N\ge1$ 个有序叶子的满二叉树。在每个内部结点选择 $\kappa_v\in\{0,1,2\}$。叶子输入为 $\mathbf a=(a_1,\ldots,a_N)$；内部结点按 $H_{\rm left}\cdot U^{\kappa_v}(H_{\rm right})$ 递推，所得实际配方记为 $H_{T,\kappa}(\mathbf a)$。全部内部标记配置组成有限集 $\mathcal K_T$，其基数为 $3^{N-1}$。
+

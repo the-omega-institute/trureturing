@@ -1,0 +1,16 @@
+**定义 12.1（同一五结果上的自治更新）。** 继续使用定义 3.1 的原效果、原增益 $\nu$ 和固定顺序 $S=(0,2,3,5,25)$。对全部 qubit 密度矩阵置
+
+$$
+p(\rho)=(\operatorname{Tr}\rho E_s)_{s\in S}\in\mathbb R^5.
+$$
+
+概率写为列向量。一个自治随机更新是满足 $T_{st}\ge0$、$\sum_sT_{st}=1$ 的实 $5\times5$ 矩阵，其中 $T_{st}$ 是输入标签 $t$ 到输出标签 $s$ 的条件概率。所问的精确存在性是
+
+$$
+\exists T\quad\forall\rho\succeq0,\ \operatorname{Tr}\rho=1:
+\qquad Tp(\rho)=p(U\rho U^*).
+\tag{12.1}
+$$
+
+$T$ 可以依赖已指定的 $U$，但不依赖 $\rho$、制备字、制备设置、既往记录或当次抽到的输入以外的信息。行概率约定下，同一式为 $p(\rho)^{\mathsf T}T^{\mathsf T}=p(U\rho U^*)^{\mathsf T}$，更新矩阵的行和才为一。这里没有假定 $T$ 可逆，也没有要求其逆仍随机。
+

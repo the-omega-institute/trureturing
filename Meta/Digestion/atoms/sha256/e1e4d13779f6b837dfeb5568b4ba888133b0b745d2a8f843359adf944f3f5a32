@@ -1,0 +1,68 @@
+**Theorem 4.3 (pure-$M$ lower bound).** A pure-$M$ word with at most $2m$ reads admits no identity (2.1) with $\ell\ne0$.
+
+**Proof.** Append $M$ actions and pad $C$ with zero columns if necessary, so $N=2m$. On auxiliary matrices the trace sequence is $a_i(S)=\alpha(S)\phi^i+\eta(S)\psi^i$. Therefore (2.1) makes $\ell$ vanish on $\ker\alpha\cap\ker\eta$. The functionals $\alpha,\eta$ are independent, as evaluation on the two projectors gives $(1,0)$ and $(0,1)$. Hence $\ell=u\alpha+v\eta$ with $(u,v)\ne(0,0)$.
+
+For row $k$ of $C$ define $f_k(x)=\sum_{i=0}^{2m-1}C_{ki}x^i$. The drift and coefficient identities imply
+
+$$
+f_k(1)=0,\qquad
+(D^j f_k)(\phi)=u\delta_{jk},\qquad
+(D^j f_k)(\psi)=v\delta_{jk}
+\quad(0\le j,k\le d),
+\tag{4.4}
+$$
+
+where $\delta_{jk}$ denotes the Kronecker symbol, not the drift.
+
+Let $H_\phi$ be the polynomial of degree at most $2d+1$ with value one at $\phi$, value zero at $\psi$, and ordinary derivatives of orders $1,\ldots,d$ zero at both nodes. It exists uniquely: the homogeneous square Hermite system has roots of multiplicity $m$ at both nodes, impossible in degree at most $2m-1$ unless zero. Let $H_\psi=1-H_\phi$. Lemma 4.2 gives
+
+$$
+f_0=uH_\phi+vH_\psi.
+\tag{4.5}
+$$
+
+The derivative of $H_\phi$ has degree at most $2d$, zeros of multiplicity at least $d$ at both endpoints, and integral one from $\psi$ to $\phi$. Consequently
+
+$$
+H_\phi'(x)=c(x-\psi)^d(\phi-x)^d,\qquad c>0
+\quad(\psi<x<\phi).
+\tag{4.6}
+$$
+
+The density is symmetric about $(\phi+\psi)/2=1/2$ and strictly positive in the interval. Since $\psi<1<\phi$ and $1>1/2$,
+
+$$
+\frac12<H_\phi(1)<1,\qquad 0<H_\psi(1)<\frac12.
+$$
+
+The condition $f_0(1)=0$ forces $u\ne0$ and
+
+$$
+\frac vu=-\frac{H_\phi(1)}{H_\psi(1)}<-1.
+\tag{4.7}
+$$
+
+On the other hand, the jets of $f_d$ below order $d$ vanish at both nodes. Its degree bound gives
+
+$$
+f_d(x)=(x-\phi)^d(x-\psi)^d(ax+b).
+$$
+
+Because $1$ is neither spectral node, $f_d(1)=0$ gives $b=-a$. Taking the order-$d$ Euler jets yields
+
+$$
+u=d!\phi^d(\phi-\psi)^d a(\phi-1),\qquad
+v=d!\psi^d(\psi-\phi)^d a(\psi-1).
+$$
+
+Here $u\ne0$ implies $a\ne0$. As $\phi-1=\phi^{-1}$ and $\psi-1=-\phi$,
+
+$$
+\frac vu=\left(\frac{-\psi}{\phi}\right)^d\frac{\psi-1}{\phi-1}
+=-\phi^{2-2d}\in[-1,0)
+\quad(d\ge1),
+\tag{4.8}
+$$
+
+contradicting (4.7). This proves the claim, including $d=1$. $\square$
+

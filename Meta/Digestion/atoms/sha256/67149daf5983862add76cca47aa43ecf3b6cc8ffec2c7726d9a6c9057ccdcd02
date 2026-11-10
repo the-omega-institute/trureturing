@@ -1,0 +1,35 @@
+**复用 99.2（完整有限角的准确调用）。** A50.2、A51.1及 SF89.2 的 P2 支撑接口给
+
+$$
+D\bigl((pMp)_{\rm sa},(pMp)_{\rm sa}\bigr)\subset(pMp)_{\rm sa}.
+\tag{99.5}
+$$
+
+参数为 $X=E=M_{\rm sa}$、$U_p(x)=pxp$；角原域正好是完整 $(pMp)_{\rm sa}$。限制评价仍逐原 $\gamma$ 索引，$\gamma_p=\gamma|_{(pMp)_{\rm sa}}$，分离角且准确决定角锥；局部辅助质量 $\gamma(p)$ 与原总质量 $m_\gamma=\gamma(1)$ 分开，不归一、不删零限制。全部零、重复、实缩放、以 $p$ 平移、相加三表及每个排列原样继承。$p^2=p$；$0\le y\le\theta p$ 蕴含 $0\le y\le\theta1$，所以同一小窗成立。99.5使每次角内 PB 的内值、位移、四个外层标签和外值逐层留在角内。角上数学正泛函 $\psi$ 可正延拓为 $x\mapsto\psi(pxp)$，所以全部正读取也继承。没有另造角的物理 $\Omega$、native、准备或菜单。
+
+因此 SM79.3 的准确参数代入为
+
+$$
+(M,E,u,C,N,S,D,\mathcal P,T)
+=(pMp,(pMp)_{\rm sa},p,(pMp)_+,\|\cdot\|,\circ,
+D|_{(pMp)_{\rm sa}^2},\{\gamma_p\}_{\gamma\in\mathcal P},T_p).
+\tag{99.6}
+$$
+
+它给唯一局部取向
+
+$$
+Q_p\in Z(pMp)_{\rm sa},\quad Q_p^2=p,\qquad
+D(a,b)=\frac{iQ_p}{2}[a,b]\quad(a,b\in(pMp)_{\rm sa}).
+\tag{99.7}
+$$
+
+定义其唯一中央提升 $\widehat Q_p=\rho_p^{-1}(Q_p)\in Z(z_pM)_{\rm sa}$，故
+
+$$
+Q_p=\widehat Q_pp,\qquad \widehat Q_p^2=z_p.
+\tag{99.8}
+$$
+
+有限分类及同角支撑均为复用，不重证 SM79.3，也不将 $Q_p$ 与 $\widehat Q_p$ 当作同一个角单位下的对象。
+

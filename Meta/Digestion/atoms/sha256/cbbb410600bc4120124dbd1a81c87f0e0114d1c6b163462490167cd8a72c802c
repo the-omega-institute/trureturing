@@ -1,0 +1,23 @@
+**Definition 45.1 (the root-read task).** Keep AA's logical terms, birth types and guarded $P/S$, NLBA's ordered current-terminal Add interface, and the persistent material/fresh-zero law of §17.3. The field law is still zero-diagonal symmetric unit adjacency. Replace the terminal Read menu by just one nondestructive $\operatorname{Read}_0$, authentically bound to the original material root. It returns that cell's literal rational, with identity successor. Tick returns only its fixed acknowledgement; a root scalar after a Tick requires a separate paid $\operatorname{Read}_0$. Reset, Hold and Add retain their original successors and fixed acknowledgements. There is no other field Read, clone, old-input or response-law port. An out-of-range Add has RangeRefusal and identity successor. The original growth guards, distinct refusal reasons, framing, pending-prefix and disabled-call conventions of §17.2 remain in force.
+
+This installation starts from a known allocated zero $\alpha$ and an earned ordered terminal roster maintained during the actual preparation. It is not acquisition of unknown geometry, an unknown raw permutation or a root right from scalar data. The terminal roster replaces an acted terminal by its new marker after $P$, or by its two consecutive left-to-right terminals after $S$, as in NLBA §§10–13. All references, rooted orientation, dispatcher bindings, current/fresh rights and finite backing are actual retained resources. Exact rational arithmetic, exclusive serialized use, no unrequested evolution or other writer, complete outputs/returns and no observable timing, allocation, capacity or work side channel are premises. Neither a numerical inverse nor a finite test of the law establishes these premises.
+
+For $k\ge1$, set
+
+$$
+c=\langle\beta,\beta\rangle,\qquad
+T_0=\beta,\qquad T_{j+1}=\langle c,T_j\rangle.
+$$
+
+Here and below $e_v$ denotes the unit coordinate at actual material address $v$, and $o=\epsilon$ is the original root. For $1\le i\le k$ define
+
+$$
+\begin{aligned}
+p_i&=R^{i-1}L,&q_i&=p_iL,&q'_i&=p_iR,\\
+z_i&=p_iLL,&z'_i&=p_iRL,&d_i&=i+2,\\
+w_i&=e_{z_i}-e_{z'_i},&&Z=[w_1\ \cdots\ w_k].
+\end{aligned}
+$$
+
+The $p_i$ are disjoint cherries in $T_k$. Their two original terminal markers have depth $d_i$.
+

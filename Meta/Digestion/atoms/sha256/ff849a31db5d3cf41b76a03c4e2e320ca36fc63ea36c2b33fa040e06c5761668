@@ -1,0 +1,8 @@
+### 定义 6.1（线性提升）
+
+称实线性同构 $\Phi:W\to\mathfrak g$ 为停住对应的线性提升，若
+
+$$
+\ker\Phi(x)=\mathbb R x\qquad(x\ne0).
+$$
+

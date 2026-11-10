@@ -1,0 +1,94 @@
+### 定理 3.1（平均上界、等号与唯一性）
+
+<a id="thm-main"></a>
+
+在上述前提下，令 $A=\sqrt E$。则
+
+<a id="eq-mean-r"></a>
+
+$$
+\begin{aligned}
+R_{\mathscr D}(T)&=\frac{\operatorname{Tr} E+\sum_\mu|\operatorname{Tr} K_\mu|^2}{d(d+1)},
+\end{aligned}
+\tag{5}
+$$
+
+<a id="eq-mean-q"></a>
+
+$$
+\begin{aligned}
+Q_{\mathscr D}(E)&=\frac{\operatorname{Tr} E+(\operatorname{Tr} A)^2}{d(d+1)},
+\end{aligned}
+\tag{6}
+$$
+
+<a id="eq-upper"></a>
+
+$$
+\begin{aligned}
+R_{\mathscr D}(T)&\le Q_{\mathscr D}(E).
+\end{aligned}
+\tag{7}
+$$
+
+等号成立当且仅当
+
+<a id="eq-luders"></a>
+
+$$
+\boxed{T(X)=A X A.}
+\tag{8}
+$$
+
+因此 C113 与所选分支的平方根更新完全等价，包括奇异 $E$。
+
+**证明。**
+由二阶矩公式，对任意矩阵 $K$，
+
+<a id="eq-moment"></a>
+
+$$
+\sum_s w_s|\langle \psi_s\rvert K\lvert \psi_s\rangle|^2
+=\frac{\operatorname{Tr} K^*K+|\operatorname{Tr} K|^2}{d(d+1)}.
+\tag{9}
+$$
+
+可直接把 $K\otimes K^*$ 与 [(2)](#eq-design) 配对，使用
+$\operatorname{Tr}[(B\otimes C)\mathsf S]=\operatorname{Tr}(BC)$。代入各 Kraus 算子即得 [(5)](#eq-mean-r)；代入 $K=A$ 得 [(6)](#eq-mean-q)。
+
+下面给不使用最小正谱值逆的等号证明。在 $A$ 的本征基中，设
+$A e_j=\lambda_j e_j$，$\lambda_j\ge0$，并将各 Kraus 算子的第 $j$ 个对角元合成向量
+
+$$
+v_j=(\langle e_j\rvert K_\mu\lvert e_j\rangle)_{\mu=1}^m\in\mathbb C^m.
+$$
+
+正确成功效果给
+
+$$
+\|v_j\|^2\le\sum_\mu\|K_\mu e_j\|^2
+=\langle e_j\rvert E\lvert e_j\rangle=\lambda_j^2.
+$$
+
+于是
+
+<a id="eq-triangle"></a>
+
+$$
+\sum_\mu|\operatorname{Tr} K_\mu|^2
+=\Big\|\sum_jv_j\Big\|^2
+\le\Big(\sum_j\|v_j\|\Big)^2
+\le\Big(\sum_j\lambda_j\Big)^2.
+\tag{10}
+$$
+
+这证明上界。
+
+若 $E\ne0$ 且等号成立，每个 $\|v_j\|=\lambda_j$，且所有非零 $v_j$ 沿同一个复向量的正向排列。因此存在单位向量 $c=(c_\mu)$，使 $v_j=\lambda_jc$。第一个不等式也处处饱和，故每个 $K_\mu e_j$ 没有 $e_j$ 以外的分量。于是
+
+$$
+K_\mu=c_\mu A,\qquad \sum_\mu|c_\mu|^2=1,
+$$
+
+从而 $T(X)=AXA$。若 $E=0$，[(1)](#eq-effect) 已迫使全部 Kraus 算子为零。反向代入 $T=\mathcal L_E$ 即得等号。
+

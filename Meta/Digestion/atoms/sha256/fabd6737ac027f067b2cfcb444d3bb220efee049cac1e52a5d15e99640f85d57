@@ -1,0 +1,18 @@
+**命题 3.3（JMJMJ 的完整两步边界）。** With $\lambda\ne0$, the targets with common gain $g(t)=\lambda(t-1)(t-3)(t-7)$, common drift $\delta$, and sources
+
+$$
+P_1=\begin{pmatrix}1/2&1/6\\3/2&1/2\end{pmatrix},\qquad
+P_2=\begin{pmatrix}5/6&1/6\\5/6&1/6\end{pmatrix}
+\tag{3.4}
+$$
+
+give $L_2$ at the entire history
+
+$$
+(\delta-21\lambda,J,\delta,M,\delta+35\lambda/6,
+J,\delta,M,\delta-12\lambda,J,\delta-128\lambda/3).
+\tag{3.5}
+$$
+
+Proof. Both sources are strictly positive, rank one, trace one and distinct. Direct multiplication along $JMJMJ$ gives the six reads in (3.5) for each source. Sixth $M$ reads $\delta-45\lambda/2$ in both worlds; sixth $J$ reads $\delta-20\lambda$ in both. All seventh reads are $\delta$. Thus the same pair covers both sixth actions, both final actions and stopping. At the preceding $JMJM$ history a correct full-domain eight-read protocol must choose fifth $M$. In particular a policy taking the fifth $J$ there cannot be extended to the full cubic domain merely by changing its sixth and seventh choices. This does not settle the complementary fifth-$M$ subtree. ∎
+

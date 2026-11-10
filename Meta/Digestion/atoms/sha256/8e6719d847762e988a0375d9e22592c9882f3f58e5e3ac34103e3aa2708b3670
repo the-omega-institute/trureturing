@@ -1,0 +1,6 @@
+**Theorem 24.3 (source-specific stationary replacement and usable stopping).** Under Assumption 24.1, for each fixed public $(P_\pi,\tau_\pi)$ and fixed conditional $O$, the following are equivalent:
+
+1. A stationary $O$-controller acquires the original target pointwise finitely.
+2. A forward $O$-controller acquires that same original target pointwise finitely.
+3. There is an $O$-computably enumerable sound complete family of labeled cells as in Definition 24.2.
+

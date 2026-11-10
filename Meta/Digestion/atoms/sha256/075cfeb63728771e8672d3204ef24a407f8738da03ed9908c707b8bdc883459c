@@ -1,0 +1,40 @@
+**Theorem 64.2 (prescribing the actual endpoint removes the gain).**
+Restrict randomized competitors to those whose actual returned source
+must equal the original normalized term $\nu(t)$ almost surely, with
+exact entry output and retained callable use. Then
+
+$$
+\inf_A\ \max_{t\in\mathcal F_K}
+\mathbb E[uG_A(t)+v\Delta_A(t)]=mc_P.
+\tag{AAII.30}
+$$
+
+More precisely, every terminating run with that endpoint has exactly
+$a$ successful promotions and no successful split, where $a$ is its
+entry alpha count. Its fee is pathwise $c_Pa$.
+
+Proof. A successful split creates a binary branch at a former leaf.
+No allowed later operation removes a branch, its logical children or
+its material vertices. The branch set of $\nu(t)$ is exactly the
+original branch set. Hence no successful split is compatible with that
+endpoint. With no split, all original positions remain the only logical
+positions. Every original alpha must be changed to beta, which requires
+its one successful promotion; no other successful promotion is enabled.
+Thus $P_+=a,S_+=0$ pathwise. Taking the entry with all $m$ variable leaves
+alpha proves the lower bound, and the deterministic all-$P$ traversal
+proves attainability. Null nonterminating sets do not change the
+expectation. $\square$
+
+The prices in (AAII.27) concern permission to finish at different actual
+endpoints. They are not a randomized improvement of Theorem 57.3 with
+its deterministic quantifier, or of (AAII.30) with its fixed endpoint.
+Nor is there pointwise disturbance dominance over all-$P$: on an all-beta
+entry all-$P$ has zero successes, whereas mode zero can split every
+variable leaf. In GLOBAL that event has probability $1-q$ and costs
+$2m$ source vertices. In LOCAL it has positive probability
+$(1-q)^m$. Thus an expectation improvement gives no smaller pathwise
+worst-tape allocation bound. Requiring the actual source to remain the
+entry is still stronger: monotonic source growth would forbid all
+successes, contradicting Theorem 63.1's positive lower bound for
+$v=1$ on this family.
+

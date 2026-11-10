@@ -1,0 +1,117 @@
+**Theorem 49.1 (causal installation and complete returned-service
+correspondence).** Under AA Assumption 20.1 with Definition 47.2's one
+local layout, Definitions 48.1–48.4 give one source-independent finite
+driver with the following properties for every finite supplied sequence
+of complete request frames.
+
+1. At each returned Ready the actual successful word $w$, the actual
+   bound source $t$ and the compressed record satisfy Definition 47.2
+   and Theorem 47.3, beginning with the allocated alpha and empty record.
+   Every finite legal LAB generation word is attainable.
+2. All seven original request kinds retain their complete guards,
+   refusal and OutOfRange behavior, request framing, reply tags and
+   payloads. Every completed request has real finite output, End,
+   local acknowledgement and Return to that same bound root. A proper
+   unsupplied frame prefix waits with its actual acquired pending data.
+3. In-range FetchGrowth returns the same complete old event as the
+   original service. In-range Next consumes that actual acquired result,
+   performs its original current left descent on the same live source,
+   executes the resulting genuinely enabled $P/S$, and returns the
+   original two-event payload. Its settled source and full-history
+   successor correspond to the original service's successors.
+4. The correspondence holds after every prefix of any finite request
+   sequence, including refused operations, arbitrary mixtures of all
+   seven kinds and requests chosen from already returned replies.
+
+This is correspondence of the declared semantic service, not equality
+of primitive work, allocation names, busy-state encodings or duration.
+The represented successful-history domain is exactly the original
+$\mathcal H(t)$, without an extra scheduling restriction.
+
+Proof. Initially the actual alpha root has no events or coordinates,
+and all its source and auxiliary fields have the required initialized
+values. The source-independent parser and receive-latch argument of AA
+Theorem 20.3 applies verbatim: each received bit is backed before its
+latch is cleared; each address/index length mark really exists; and
+only a complete frame enables its handler. Preserve the original seven
+three-bit tags, the unused BadFrame tag, $A(p)=1^{|p|}0p$ and
+$U(k)=1^k0$, and all eight three-bit reply tags and their original
+payloads. Compression introduces no new external frame, bit field,
+response or acknowledgement dependency.
+
+Tag, HasPromotion and HasSplit read exactly the same current source
+and AA (AA.67). Absent addresses, branches and wrong-type targets give
+the original tagged refusal for addressed growth, without a source or
+record change. Missing authority or a wrong controller phase disables
+the same primitive; it is not converted into a new reply. Queries and
+BadFrame preserve $w$ and its compressed record. Finite address
+navigation uses the actual links and arity tests, including the unary
+marker rule, exactly as in AA §20. Their reply backing therefore has
+the same literal content as before.
+
+For an enabled addressed growth, the preflight chain has exactly the
+$d$ proper logical ancestors of its actual target. Every child count
+is obtained by a finite current-source traversal. Equation (AAII.3)
+and Theorem 47.3 give finite nonnegative material increments. Reserve
+obtains that actual material under the unchanged sufficient-material
+premise. Preflight changes neither source nor records. The local source
+template then performs exactly the original single $P_p$ or $S_p$.
+Parent bindings persist, including the marker reused at a split.
+
+For each proper ancestor the new source differs in its indicated child
+by precisely that one successful event. AA (AA.73) and Theorem 19.2's
+projection identity therefore make its post-counts the old counts plus
+that one side increment. Hence Definition 48.4 recovers the true old
+counts even after the source edit. Ancestors already maintained do not
+change these counts. At an unmaintained ancestor the old stored rank
+is still the old word's rank by the induction invariant. Its old
+width is reconstructed before reading; a forced old word needs no
+header. Applying (AAII.3), extending to the computed new width and
+writing all its bits gives exactly the actual newly appended local
+word. An untouched coordinate and the split root's new empty coordinate
+already have their required contents. The preflight sums match precisely
+the consumed increments, so no unattached reservation remains when
+maintenance completes. All old live record cells remain in use; none
+is left as an obsolete retained rank version.
+
+Finite subtree traversals terminate by their finite edge tours;
+coefficient and binary routines have finite loop ranges; ancestor walks
+terminate at the bound root. A pending rank rewrite is not a Ready
+cut and cannot be read as a finished record. Thus this completes an
+actual, causal record update before constructing the Growth reply.
+The only appended event is the one genuinely executed, so every earlier
+indexed event is preserved and the new last one is callable.
+
+For FetchGrowth, Theorem 48.3 supplies its actual in-range event or
+OutOfRange, including zero. For Next, retain that handler's work result,
+index and continuation phase without an outer Return, as AA Definition
+20.4 requires. An OutOfRange result gives the same no-growth reply.
+Otherwise its historical address is still a logical source position
+because LAB has no deletion. Navigate from the retained real root to
+that position and follow current logical left children through branches.
+The finite descent reaches a current alpha or beta leaf. Its tag
+chooses exactly the original enabled promotion or split, with the same
+real target and authority. Apply the already proved source/record
+transaction to that event. Construct the reply from the retained old
+event and this actual new event, not from a separately replayed source.
+This is precisely AA Theorem 20.5's source successor and successful-word
+extension; only the internal representation of that word differs.
+
+Every handler seals a finite answer backing, traverses it to Print its
+specified bits and End, takes the supplied local ACK, returns to the
+same root and clears/reuses its pending and scratch fields. These are
+actual finite edges under AA Assumption 20.1; no eventual external ACK
+is postulated. This proves return and restores the invariant.
+
+Induct on completed requests. Each case gives the original complete
+reply and corresponding successor, so the invariant and correspondence
+hold at every prefix. The same induction covers a controller choosing
+its next frame from the common reply prefix. Supply addressed $P/S$
+frames for any desired legal finite generation word; the original
+guards accept each event by AA Theorem 17.2, and the finite transaction
+adds no scheduling prohibition. Conversely every successful edit is
+one original guarded LAB event. Thus no complete original histories
+are lost or new illegal ones admitted. Partial received frames retain
+only their received prefix and pending parser state; a finite supplied
+completion resumes the proof. $\square$
+

@@ -28,7 +28,7 @@ private theorem coefficients_polynomial (a : Gain) :
   simp [Polynomial.ofFn_eq_sum_monomial,Fin.sum_univ_four,gainCoefficients,gainPoly]
   ring
 
-private theorem coefficient_degree (c : Gain) : (Polynomial.ofFn 4 c).degree ≤ 3 :=
+theorem coefficient_degree (c : Gain) : (Polynomial.ofFn 4 c).degree ≤ 3 :=
   Polynomial.degree_le_of_natDegree_le
     (Nat.le_of_lt_succ (Polynomial.ofFn_natDegree_lt (by norm_num) c))
 
@@ -119,13 +119,13 @@ private theorem parent_literal (C : Coordinates) (hC : StrictParent C) :
   rw [hcoord]
   exact ⟨hC,rfl⟩
 
-private theorem encoded_parent (C : Coordinates) (hC : StrictParent C) :
+theorem encoded_parent (C : Coordinates) (hC : StrictParent C) :
     OriginalParent (encodeWorld (parentWorld C)) := by
   apply (decoded_parent _).mp
   rw [decode_encode]
   exact parent_literal C hC
 
-private theorem encoded_response (C : Coordinates) :
+theorem encoded_response (C : Coordinates) :
     originalResponse (encodeWorld (parentWorld C))=response C := by
   obtain ⟨h5,h6⟩ := actual_m_responses C
   apply Prod.ext <;> dsimp [originalResponse,response]

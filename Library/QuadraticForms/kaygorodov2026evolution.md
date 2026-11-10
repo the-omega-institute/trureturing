@@ -5,13 +5,17 @@ year: 2026
 title: "Evolution algebras: a survey of results and a list of open problems"
 doi: 10.48550/arXiv.2610.22248
 url: https://arxiv.org/abs/2610.22248v1
-claim: "Theorem 4 and Conjecture 3 concern perfect algebra automorphisms; Question 46 asks whether dense square forces uniqueness of a Hilbert natural orthonormal basis; Question 14 asks whether an infinite natural-basis quotient can coexist with finite full automorphisms."
+claim: "Conjecture 4 asks for the simple complex evolution-algebra automorphism maximum max{n!, n(2^n-1)}; Theorem 4 and Conjecture 3 concern perfect algebra automorphisms; Question 46 asks whether dense square forces uniqueness of a Hilbert natural orthonormal basis; Question 14 asks whether an infinite natural-basis quotient can coexist with finite full automorphisms; Question 31 asks about realizing arbitrary linear algebraic groups as full evolution-algebra automorphism groups or group schemes; Question 12 asks whether intrinsic heredity is preserved by direct sums."
 strata_touched:
+  - D5/S3/QuadraticForms/EvolutionAlgebras/SimpleEvolutionAutomorphismMaximum
   - D5/S3/QuadraticForms/EvolutionAlgebras/FiniteAutomorphismsInfiniteNaturalBases
   - D5/S3/QuadraticForms/EvolutionAlgebras/HilbertNaturalBasisNonuniqueness
   - D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionAutomorphismControl
   - D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionBasisTransport
   - D5/S3/QuadraticForms/EvolutionAlgebras/NilpotencySpectrumRefutation
+  - D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionAutomorphismTangentBridge
+  - D5/S3/QuadraticForms/EvolutionAlgebras/AlgebraicGroupRealizationRefutation
+  - D5/S3/QuadraticForms/EvolutionAlgebras/DirectSumHeredityRefutation
 license: citation-only
 triage: anchor
 ---
@@ -84,3 +88,62 @@ The fifteen-dimensional rational algebra in
 has ordinary index 256. At k=255, the logarithm and binary digit count
 are 7 and 8, whose sum exceeds 15-1. The construction and its proof
 are project results, while the question and definitions are from this survey.
+
+## Simple-algebra automorphism maximum
+
+Conjecture 4, section 2.3, page 28 states: “Over ℂ, the maximal order of the
+automorphism group of a simple n-dimensional evolution algebra is
+max{n!, n(2ⁿ−1)}.” The dimension is positive. The same paragraph identifies the
+cyclic product and generic complete-support products as attaining families.
+
+The source's Theorem 6 uses simplicity in the usual ideal sense. Its cited
+Cabrera Casado, Siles Molina and Velasco source, arXiv:1601.01832v2, section 4, page 18,
+states: “We recall that an algebra A is simple if A² ≠ 0 and 0 is the only
+proper ideal.” The formal predicate quantifies over every complex vector
+subspace absorbing multiplication on both sides. The full group consists of
+all complex linear multiplication automorphisms, without an associativity
+or multiplicative-unit assumption.
+
+The uniform maximum proof and the explicit I+J attaining family are
+repository results. Strong connectivity makes the successor quotient one
+cycle. A supported permutation gives equal positive quotient fibers. The
+joint group bound reduces to h(2ʰ−1)(k!)ʰ with n=hk; the factorial comparison
+and its boundary cases give the asserted maximum. Classification of all
+extremizers and attainment over other fields remain open here.
+
+## Algebraic-group realization
+
+Question 31 (Realisation of algebraic groups), section 2.2.5, page 24:
+“Let G be a linear algebraic group over 𝕜. Is there a finite-dimensional evolution
+𝕜-algebra A with Aut(A) ≅ G(𝕜) as abstract groups? with Aut(A) ≅ G as
+algebraic groups? with 𝐀𝐮𝐭(A) ≅ G as group schemes?”
+
+The second and third interrogatives are the selected assertions. Over Complex,
+they are encoded by polynomial-closed subgroups of Matrix.GeneralLinearGroup
+and natural equivalences with all multiplication-preserving linear automorphisms
+after extension to every commutative unital coefficient algebra. This includes
+coefficient algebras with nilpotents. Finite-dimensional algebras are represented
+on Fin d → Complex, with an existential natural basis and no nondegeneracy or
+perfectness assumption. The SL3 obstruction is a repository-derived consequence
+of the semisimple derivation classification and the tangent construction.
+The full SLn family and the abstract-group question are not formalized here.
+The literature screen recorded in issue #21840 is partial; exhaustive priority
+and journal/preprint equivalence remain ASSUMED-UNVERIFIED.
+
+## Question 12: intrinsic heredity and direct sums
+
+Section 2.2.2, Question 12 (Hereditary evolution algebras), p. 22 asks:
+
+> Characterise the evolution algebras all of whose subalgebras are evolution algebras. Is this property detected by the graphs? Is it preserved by tensor products and direct sums? What about ideals?
+
+Here heredity requires every multiplication-closed linear subspace to admit
+its own natural basis; that basis need not extend to one of the ambient algebra.
+The source permits arbitrary fields and assumes finite dimension unless stated
+otherwise.
+
+The refutation of the affirmative direct-sum assertion in
+`D5/S3/QuadraticForms/EvolutionAlgebras/DirectSumHeredityRefutation`
+is repository-derived. It uses rational hereditary factors of dimensions four
+and three whose direct sum contains a subalgebra with no intrinsic natural basis.
+The characterization, graph-detection, tensor-product and ideal clauses remain
+open in this result.

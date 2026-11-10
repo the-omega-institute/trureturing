@@ -1,0 +1,63 @@
+**Theorem 146.3 (All-history upper certificate and strict source gap).**
+Define
+
+$$
+\begin{aligned}
+z_*={1\over10^8}\big(&(-20328269+36581420\mathrm i)\xi
+ +(95916322-29623864\mathrm i)f\\
+ &+(-1841089-2547800\mathrm i)e\big),\\
+g_*={-3298492+5963260\mathrm i\over10^8}.
+\end{aligned}
+\tag{146.5}
+$$
+
+For every $i$ and every $w\in\mathscr W_{\le3}$, direct expansion of
+(143.2) at $(z_*,g_*)$, with the radical enclosure (143.5), gives
+
+$$
+\begin{array}{c|c|c}
+k(w)&\#\{w\in\mathscr W_{\le3}:k(w)=k\}&
+\displaystyle\max_{i,\,k(w)=k}|\ell_{i,w}(z_*,g_*)|\\ \hline
+0&3&<4485/100000\\
+1&18&<4485/100000\\
+2&108&<97/2500\\
+3&648&<233/10000
+\end{array}
+\tag{146.6}
+$$
+
+The inequalities in (146.6) are finite integer comparisons after replacing
+$\sqrt2,\sqrt3,\sqrt6$ by the lower and upper rational bounds in (143.5);
+they include all nine prefixes and both terminal labels through the sign
+identity following (125.4). Moreover, for the same exact matrices,
+
+$$
+T_*:=\frac12\left(\|X_1(z_*)\|_{\rm HS}+\|Y_1(z_*)\|_{\rm HS}
++2|g_*|\|K_-\|_{\rm HS}\right)<\frac38.
+\tag{146.7}
+$$
+
+For a history with $k\ge4$, trace Cauchy–Schwarz in the original row
+(116.2), $\max_i\|r_i\|_{\rm HS}=1$, and (146.7) give
+$|\ell_{i,w}(z_*,g_*)|\le2^{-k}T_*<3/128<23/512$.
+For $k\le3$, (146.6) and $4485/100000<23/512$ give the same bound.
+Reduction modulo $N^3=I_3$ therefore covers every finite actual history, and
+
+$$
+m_a\le\mathcal F_a(z_*,g_*)<\frac{23}{512}.
+\tag{146.8}
+$$
+
+Combining (146.2) and (146.8) yields the source-specific full-history
+certificate
+
+$$
+\boxed{\quad\delta_a=n_a-m_a>\frac{189}{4096}-\frac{23}{512}
+=\frac5{4096}>\frac3{4096}.\quad}
+\tag{146.9}
+$$
+
+This is an all-history upper bound, not a finite-decoder substitution:
+the tail estimate uses the original weighted rows, and the finite part
+contains every reduced history with at most three native labels.
+

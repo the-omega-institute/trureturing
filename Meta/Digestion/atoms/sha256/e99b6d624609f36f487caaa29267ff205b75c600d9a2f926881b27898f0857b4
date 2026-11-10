@@ -1,0 +1,14 @@
+**Equation 2.2 (`eq:cherry`).**
+
+$$
+\begin{array}{c|cc|c}
+I&(k^+,x,A)&(k^-,B,y)&D_{xy}\\
+H&(k^+,x,B)&(k^-,A,y)&D_{yx}\\
+X&(k^+,x,y)&(k^-,A,B)&Y_{xy}
+\end{array}
+\qquad Y_{xy}=D_{yx}-D_{xy}=0.
+$$
+
+The interpretation of the $H$ term has sign $+1$: reading along $A$ to
+$B$ reverses each of its two insertion cycles, giving two AS signs.
+The last equality is precisely CL. 

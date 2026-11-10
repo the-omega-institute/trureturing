@@ -1,0 +1,65 @@
+**定理 157.1（同一测试域的几何压缩）。** $\mathcal T_3(E)$ 是 $\mathcal T_{\rm in}(E)$ 的闭紧子集。在完整原复重构后的同一 $E=\bigoplus_tH_{n_t}(\mathbb C)$ 上，
+
+$$
+\mathcal T_3(E)\subsetneq\mathcal T_{\rm in}(E)
+\quad\Longleftrightarrow\quad\exists t:\ n_t\ge2.
+\tag{157.1}
+$$
+
+在这些非经典情形，新域并非旧域的相对开子集。纯经典 $E=\mathbb R^m$ 的域完全相同，仍有 $m^3+2\binom m2$ 个带标签点。
+
+为给多块的准确公式，固定秩一切口位于块 $t$，底空间为 $\mathbb {CP}^{n_t-1}$，其典范线丛记为 $\mathcal L$。允许输入丛 $\mathcal I_t$ 的分支是同一线、$\mathbb P_{\mathbb C}(\mathcal L^\perp)$、各 $s\ne t$ 的平凡因子 $\mathbb {CP}^{n_s-1}$，以及
+
+$$
+S\bigl(\operatorname{Hom}_{\mathbb C}(\mathcal L,\mathcal L^\perp)\bigr)
+\longrightarrow\mathbb {CP}^{n_t-1},\qquad
+\text{纤维 }S^{2n_t-3}.
+\tag{157.2}
+$$
+
+最后一支恰是半重叠输入，仅在 $n_t\ge2$ 时存在；正交线分支也仅在此时存在。法向读回丛 $\mathcal R_t$ 仍有同一线、该正交线分支与所有其他块的射影因子。整个秩一域是
+
+$$
+\coprod_t\mathcal I_t\mathop{\times}_{\mathbb {CP}^{n_t-1}}\mathcal R_t.
+\tag{157.3}
+$$
+
+这里始终是同一切口上的纤维积，不把球丛或射影丛误作全局直积。令
+
+$$
+\begin{aligned}
+h_t&=\max\bigl(\{0\}\cup\{2n_s-2:s\ne t\}
+\cup\{2n_t-3:n_t\ge2\}\bigr),\\
+g_t&=\max\bigl(\{0\}\cup\{2n_s-2:s\ne t\}
+\cup\{2n_t-4:n_t\ge2\}\bigr).
+\end{aligned}
+$$
+
+沿定理 152.1 记 $d(\mathbf k)=\sum_t2k_t(n_t-k_t)$。非零对象的最大分层实维数准确为
+
+$$
+M_3=\max\left\{
+\max_t(2n_t-2+h_t+g_t),\quad
+\max_{\substack{0\le k_t\le n_t\\\sum_tk_t=2}}
+\bigl[d(\mathbf k)+2(\max_tk_t-1)\bigr]
+\right\}.
+\tag{157.4}
+$$
+
+总秩小于二时略去第二项，零对象两域均空，不赋空域维数。单个复块的结果为
+
+$$
+M_3(1)=0,\qquad M_3(n)=6n-9\quad(n\ge2),
+\tag{157.5}
+$$
+
+比 (152.2) 的单块最大值准确下降一维。多块虽严格删域，最大分层维数未必下降；例如 $H_2(\mathbb C)\oplus H_2(\mathbb C)$ 的新旧最大维数均为六。
+
+证明。重叠是连续实函数，有限值集 $\{0,1/2,1\}$ 闭；秩层也闭，故新域在旧紧域中闭紧。复块内 $\tau(p\circ e)=|\langle v,z\rangle|^2$；不同块为零，同块的值零与一分别给正交线和同一线。对重叠为 $1/2$ 的线，其向 $L$ 的投影可逆，唯一写为某个复线性等距映射 $U:L\to L^\perp$ 的图，反向图线也有此重叠。因此得到 (157.2)；单位范数取原重构 Hilbert 结构，其不同正块权不会改变此球丛的拓扑。读回保持法向，所以独立于输入地在同一底线形成 (157.3)。逐非空分支计算纤维维数，再加底空间维数，给第一最大值；秩二内线旗完全未变，给第二最大值。
+
+单块 $n\ge2$，最大秩一层的维数为 $(2n-2)+(2n-3)+(2n-4)=6n-9$；未变的秩二层为 $4n-6$，前者与后者之差 $2n-3>0$。$n=1$ 只剩一个测试。两个二阶块中，每个 $h_t=g_t=2$，最大秩一层为六，秩二层最大四，旧式 (152.2) 也为六，给准确例子。
+
+只要有 $n_t\ge2$，取同块两条正交线并沿其二平面转动输入，可取得任意严格介于零与一、且不等于一半的重叠。以任一合法读回配成旧域点，新域将它删除，证明严格性；在半重叠点附近同样有这些被删点，证明不相对开。全部 $n_t=1$ 时重叠本来只为零或一，域不变，经典计数沿 (152.4)。∎
+
+在重构后的秩二数学角中，沿 (152.5) 写 $e=(I+\mathbf n\cdot\sigma)/2$、$p=(I+\mathbf m\cdot\sigma)/2$，则 $\tau(p\circ e)=(1+\mathbf n\cdot\mathbf m)/2$。三个重叠值分别是反向、直角与同向。半重叠层是同一方向球面上的赤道；在单块 $n=2$，(157.2) 为 $S(T\mathbb {CP}^1)\cong S(TS^2)\cong SO(3)\cong\mathbb {RP}^3$：一对垂直单位向量 $(\mathbf n,\mathbf m)$ 唯一组成有向正交架 $(\mathbf n,\mathbf m,\mathbf n\times\mathbf m)$，双覆盖单位四元数给最后一个同胚。法向读回只有 $e$ 与 $u-e$ 两个离散选择，因此最高层有两份这样的三维总空间。这里是定理 157.1 的同一球丛截面，不将数学角重新声明为实际 $M_2$ 或更换原单位。
+

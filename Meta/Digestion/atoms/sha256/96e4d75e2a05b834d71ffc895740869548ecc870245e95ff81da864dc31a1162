@@ -1,0 +1,68 @@
+**引理 2.1（有限类的有界探针逆）。** 在 (UJB.7401)--(UJB.7404) 的条件下，
+$\mathcal M_\rho$ 唯一决定 $\rho$，并且对任意两个允许的首行动作行
+$\rho,\rho'$ 有
+
+$$
+d_{\mathrm{TV}}(\rho,\rho')
+ \le \min\left\{1,
+m\Delta^{-(m-1)}d_{\mathrm{TV}}(\mathcal M_\rho,\mathcal M_{\rho'})\right\}.
+\tag{UJB.7405}
+$$
+
+**证明。** 对每一对 $c\ne d$，从有限字母表的总变差定义选取
+$f_{cd}:\mathcal A^L\to[0,1]$，使
+
+$$
+\mathbb E_{P_c}f_{cd}-\mathbb E_{P_d}f_{cd}
+ =d_{\mathrm{TV}}(P_c,P_d)\ge\Delta.
+$$
+
+令 $g_{cd}=f_{cd}-\mathbb E_{P_d}f_{cd}$。于是 $|g_{cd}|\le1$，
+$\mathbb E_{P_d}g_{cd}=0$，且 $\mathbb E_{P_c}g_{cd}\ge\Delta$。把
+$C\setminus\{c\}$ 任意双射到 $\{1,\ldots,r\}$，定义
+
+$$
+h_c(w_1,\ldots,w_r)=\prod_{d\ne c}g_{cd}(w_{\iota_c(d)}).
+$$
+
+由 (UJB.7402)，对 $k\ne c$，$P_k^{\otimes r}$ 下至少一个因子（$d=k$）均值为零，故
+
+$$
+\mathbb E_{P_k^{\otimes r}}h_c=0\quad(k\ne c),
+\qquad
+\alpha_c:=\mathbb E_{P_c^{\otimes r}}h_c\ge\Delta^r.
+\tag{UJB.7406}
+$$
+
+这给出一个显式的有界对偶读出，而不需要写出未界的矩阵逆。任意
+$F:B\times(C\sqcup T)\to[-1,1]$ 定义一个复合记录上的函数 $G_F$：在终端
+$(b,\mathsf{term},t)$ 上取 $F(b,t)$，在成功记录上取
+
+$$
+G_F(b,\mathsf{succ},w_1,\ldots,w_r)
+ =\sum_{c\in C}F(b,c)\frac{h_c(w_1,\ldots,w_r)}{\alpha_c}.
+$$
+
+因此 $|G_F|\le m\Delta^{-r}$，并由 (UJB.7406) 得
+
+$$
+\mathbb E_{\mathcal M_\rho}G_F=\mathbb E_\rho F.
+$$
+
+取 $F$ 遍历 $[-1,1]$ 中的函数，有限集上的对偶表述给出未归一化变差范数
+的界
+$\|\rho-\rho'\|_1\le m\Delta^{-r}\|\mathcal M_\rho-\mathcal M_{\rho'}\|_1$；
+两边除以 $2$ 即得 (UJB.7405)，再用概率距离不超过 $1$ 截断。若两份复合 law
+相等，所有 $F$ 的期望都相等，故首行（包括每个终端）相等。证毕。
+
+这个证明也说明为什么必须保留首事件和首记录：若只保留后继的边缘 law，
+$F(b,c)$ 的联合测试就不再能被 $G_F$ 实现。宏的实际动作数至多为
+
+$$
+1+rL=1+(m-1)L,
+\tag{UJB.7407}
+$$
+
+首动作一次，随后每个类保持宏各执行一次。$m=1$ 时没有分离问题，首行动作 law
+本身就是行，取 $r=0$ 可得到直接读出；(UJB.7403)--(UJB.7406) 专用于 $m\ge2$。
+

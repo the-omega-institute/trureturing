@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:da1e08ad0ef2d99d281aa65cf8102bc5e708a2a84b509ca3656fc93af1bf8e8f
+  normalized_sha256: sha256:da1e08ad0ef2d99d281aa65cf8102bc5e708a2a84b509ca3656fc93af1bf8e8f
+cas_ref: sha256:da1e08ad0ef2d99d281aa65cf8102bc5e708a2a84b509ca3656fc93af1bf8e8f
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/Geometry/NativeFreshSensorAcquisition.complete_native_sector
+    target_statement_id: sha256:57acfd33973ecd8c0ea1963d7b58e069b2ddfe44ba645fe7909e33dc579ac579
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,10 @@
+**Observation 3.3 (positivity at every old side of a birth).** In a history
+of Definition 3.2 the field immediately before every growth is strictly
+positive on every current vertex. At a first growth it is the positive
+scalar $2^{-q_0}$. Between two growths the first of the required positive
+number of Ticks fills every fresh cell positively by Definition 2.2;
+subsequent Ticks preserve positivity. Thus immediately after any raw
+growth its zeros are exactly its fresh support. All coordinates throughout
+are in $[0,1]$, and the field is nonzero. This is the supplied positivity
+argument applied at the separated cuts, not a fixed one-clock assumption.
+

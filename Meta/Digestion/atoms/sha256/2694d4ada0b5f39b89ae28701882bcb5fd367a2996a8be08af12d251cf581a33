@@ -1,0 +1,40 @@
+**命题 4.3（局部复角）。**
+令 $p=(1+n)/2$。则
+
+$$
+p\,\mathrm{Cl}_{3,0}\,p=\operatorname{span}_{\mathbb R}\{p,\omega p\}\cong\mathbb C,
+\qquad \jmath:=\omega p,\quad
+\jmath^2=-p,\quad \jmath^\dagger=-\jmath.
+$$
+
+左理想 $\mathrm{Cl}_{3,0}p$ 是复二维旋量空间。
+
+证明。
+在 Pauli 表示中 $p=\operatorname{diag}(1,0)$。
+角代数只有左上复数项，左理想则只有第一列可非零，
+分别为 $\mathbb C$ 和 $\mathbb C^2$。
+证毕。
+
+在一般系统代数中实现这个校准时，须给一个二维块投影 $q$ 及实 $*$-嵌入
+$\iota:\mathrm{Cl}_{3,0}\to q\mathfrak A q$，其单位满足 $\iota(1)=q$。
+此时三轴关系的右端是 $2\langle a,b\rangle q$，且
+
+$$
+p=\frac{q+\iota(n)}2,\qquad
+\jmath=\iota(\omega)p,\qquad
+p(q\mathfrak A q)p\supseteq\operatorname{span}_{\mathbb R}\{p,\jmath\}.
+$$
+
+后面的五事件接口只识别这个指定的复标量角与
+$\operatorname{span}_{\mathbb R}\{P_0,\jmath\}\subseteq P_0\mathfrak A P_0$，
+即 $p\leftrightarrow P_0$；不把块单位 $q$ 识别为 $P_0$ 或全系统单位 $I_5$。
+只要另外保留的角自由度更大，也不宣称整个 $P_0\mathfrak A P_0$ 必为复数。
+矩阵单位构造只需显示的复标量子角。
+这里 $p$ 的秩一指局部 $M_2(\mathbb C)$ 的不可约旋量表示；
+若环境带重数 $m$，它在实际载体上的秩可为 $m$，仍是该局部抽象代数的最小投影。
+
+局部三轴得到的旋量维数二，与五个模式的维数五不同。
+下面给出二者之间的一条附加桥，而不把它们直接认成同一个空间。
+
+<a id="def:matrixunits"></a>
+

@@ -1,0 +1,23 @@
+### 引理 4.4（加权范数支配迹范数）
+
+对任意矩阵 $Y$，有 $\|Y\|_1\le\|Y\|_\sigma$。
+
+**证明。**
+由迹范数的酉变分式及 Cauchy–Schwarz，
+
+$$
+|\operatorname{Tr}(U^*Y)|
+ \le\|\Gamma_\sigma^{1/2}(U)\|_2
+       \|\Gamma_\sigma^{-1/2}(Y)\|_2.
+$$
+
+而对酉矩阵 $U$，
+
+$$
+\|\Gamma_\sigma^{1/2}(U)\|_2^2
+ =\operatorname{Tr}(\sigma^{1/2}U^*\sigma^{1/2}U)
+ \le\|\sigma^{1/2}\|_2\|U^*\sigma^{1/2}U\|_2=1.
+$$
+
+取 $U$ 的上确界即得结论。
+

@@ -1,0 +1,28 @@
+**Definition 34.1 (the earned memory view and binding).** At the returned
+cut of Theorem 33.2, retain the actual first $m$ acquired bits in
+readable owned backing, the canonical finite behavioral description
+selected by the fixed synthesis, and counters $n,B_n$ synchronized to
+the actual source. Retain the source handle/root, surviving Read/update
+grants, and the actual exclusive serial invocation path. A current
+expanded tree and request workspace may be maintained in additional
+backing. Installation completes only when all those real writes and
+handoffs have finished. A computed address or a copy of a permission
+bit is not a source handle or a live grant.
+
+The selected mathematical memory data are
+
+$$
+ M_n^{\rm earned}=(z_1\cdots z_m,\ \widehat L,\ n,B_n),
+ \tag{GPO.84}
+$$
+
+where $\widehat L$ is the fixed canonical behavioral generator; in
+the public-row case it is that row with its earned seed. The genuine
+binding and capabilities are separately retained actual relations on
+this data and its source. The mathematical view does not contain all
+scratch bytes, all earlier observer operations or the private source
+machine. Different encodings of the same data are not thereby equal
+physical memories. If an audit needs literal acquisition receipts, their
+actual words, replies and backing must also be retained and charged;
+they are not used as an extra input by the predictor.
+

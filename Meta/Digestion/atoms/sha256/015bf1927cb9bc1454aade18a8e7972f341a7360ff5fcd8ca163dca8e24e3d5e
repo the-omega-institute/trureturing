@@ -1,0 +1,14 @@
+#### 定义 11.1（后验门风险）
+
+用酉 Choi 向量 $\lvert v_j\rangle=(I\otimes V_j)\lvert \Phi_d\rangle$ 定义
+
+$$
+M_\pi=\sum_j\pi_j\lvert v_j\rangle\langle v_j\rvert,\qquad
+\ell(U,V)=1-\frac{|\operatorname{Tr}(V^\dagger U)|^2}{d^2}.
+$$
+
+不限制门表达能力时的最优预测风险为
+$\mathcal R(\pi)=\min_{U\in\operatorname{U}(d)}\sum_j\pi_j\ell(U,V_j)$。
+
+<a id="thm-bayes"></a>
+

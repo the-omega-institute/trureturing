@@ -1,0 +1,29 @@
+**Proposition 97.2 (an actual rational acquisition, without spectral advice).**
+The acquired scan uniquely determines $z$ and installs
+$w_0=A^Mz$, the actual field after the primer and assay. Both
+$A|_{V_+}$ and the acquired map $S_L|_{V_+}$ are injective, with
+$A|_{V_+}$ a rational bijection.
+
+**Proof and finite decoder.** Symmetry gives
+$\operatorname{im}_{\mathbb R}A=(\ker_{\mathbb R}A)^\perp$.
+Thus (94.5) meets $V_+$ only in zero, and $A$ has no kernel on
+$V_+$. It maps this finite-dimensional space onto itself, so is a
+bijection. Choose independent columns of $A$ in fixed coordinate
+order to form a rational basis matrix $U\in\mathbb Q^{N\times r}$,
+where $r=\operatorname{rank}A$. Select $r$ independent rows of $S_LU$,
+with row selector $Q$. The resulting square $B=QS_LU$ is invertible.
+For the actual scan vector $y=S_Lz$, compute
+
+$$
+z=UB^{-1}Qy,\qquad w_0=A^MUB^{-1}Qy.
+\tag{97.2}
+$$
+
+All pivots, powers, selectors and solves depend on earned finite
+rational data or received scalars. They take paid finite work; $U$
+and $Q$ are not hidden source advice. Hold permits that work without
+unrequested evolution. Equation (94.1), now with entry $z$, proves
+that the installed vector is current. The full graph/map/context
+then initializes the existing complete-service invariant at $w_0$.
+$\square$
+

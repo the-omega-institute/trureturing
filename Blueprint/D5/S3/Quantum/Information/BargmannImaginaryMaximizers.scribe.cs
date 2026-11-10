@@ -14,6 +14,30 @@ internal sealed class BargmannImaginaryMaximizersDocument : IScribeDocumentDefin
         "For every n at least three, the unit qubit tuples with imaginary Bargmann invariant tau n form one unitary orbit of a latitude polygon, allowing an independent phase at each vertex.",
         H("All qubit maximizers of the imaginary Bargmann invariant"),
         Blocks(
+            Node("weighted_edge_bound", "An upper bound for a finite weighted mean", WeightedEdgeBoundFormula(),
+                "Nonnegative weights of total mass one preserve a common upper bound; equality holds exactly when every term strictly below the bound has zero weight.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Describe.Lean(
+                DescribeId.Create("qubit-latitude"),
+                DeclarationHandle.Create(Module + "latitude"),
+                H("A qubit latitude vector"),
+                StatementSource.FromAuthor(Disp(All(X("t"), Reals(), All(X("z"), Complexes(),
+                    Equal(Call("Latitude.latitude", X("t"), X("z")),
+                        Seq(Bang, OpenBracket,
+                            Typed(Call("Real.sqrt", Subtract(D(1), X("t"))), Complexes()),
+                            Comma, Sp, Multiply(Typed(Call("Real.sqrt", X("t")), Complexes()), X("z")),
+                            CloseBracket)))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The two coordinates have square-root amplitudes, with a complex factor on the second coordinate."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("qubit-latitude-inner-product"),
+                DeclarationHandle.Create(Module + "latitude_dot"),
+                H("Inner products of latitude vectors"),
+                StatementSource.FromAuthor(LatitudeDotFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For a latitude parameter between zero and one, the inner product is the sum of the two coordinate contributions."))),
+                DescribeRole.Theorem),
             Paragraph(Text("Vectors have type Fin 2 → ℂ. For a unit vector v, Matrix.vecMulVec v (star v) is its rank-one projector. Indices have type Fin n and start at zero. List.ofFn lists the outer products in increasing index order and List.prod takes their ordered matrix product. Real division, the real square root and natural powers have Lean's total meanings; the exponent n − 1 is natural subtraction, whereas the denominator 2 · (n − 1) uses real subtraction after coercing n to ℝ.")),
             Node("bargmann", "Ordered trace of pure states", BargmannFormula(),
                 "Zhang and Xie, Definition 3.1, p. 9: “The so-called nth-order Bargmann invariant for such n-tuple Ψ = (ρ₁, …, ρₙ) is defined as Δₙ(Ψ) := Tr(ρ₁ ⋯ ρₙ).” Section 2, p. 4: “Unit vector |ψ⟩ in ℂ^d will be called wave functions and its ranked-one projector ψ ≡ |ψ⟩⟨ψ| will be called pure state.” Here d = 2 and each ρ is the displayed outer product of its amplitude vector with its conjugate.",
@@ -37,9 +61,37 @@ internal sealed class BargmannImaginaryMaximizersDocument : IScribeDocumentDefin
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance,
         OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
-            DescribeId.Create("bargmannmax-" + name), DeclarationHandle.Create(Module + name),
+            DescribeId.Create("bargmannmax-" + name.Replace('_', '-')), DeclarationHandle.Create(Module + name),
             H(title), StatementSource.FromAuthor(formula), provenance,
             Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolution);
+
+    private static Formula WeightedEdgeBoundFormula()
+    {
+        Formula iota = Iota, w = X("w"), c = X("c"), m = X("M"), k = X("k");
+        Formula SumOf(Formula term) => Seq(new Formula.Subscript(Sum, Seq(k, Sp, Colon, Sp, iota)), Sp, Parenthesized(term));
+        Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
+        Formula mean = SumOf(Multiply(At(c, k), At(w, k)));
+        Formula nonnegative = All(k, iota, Le(Typed(D(0), Reals()), At(w, k)));
+        Formula bound = All(k, iota, Le(At(c, k), m));
+        Formula equality = IffOf(Equal(mean, m), All(k, iota,
+            Imp(new Formula.Relation(At(c, k), FormulaRelationOperator.LessThan, m), Equal(At(w, k), Typed(D(0), Reals())))));
+        return Disp(All(iota, Seq(Named("Type"), Star), Seq(OpenBracket, Call("Fintype", iota), CloseBracket, Sp,
+            All(w, Arrow(iota, Reals()), All(c, Arrow(iota, Reals()), All(m, Reals(),
+                Imp(nonnegative, Imp(Equal(SumOf(At(w, k)), Typed(D(1), Reals())), Imp(bound, And(Le(mean, m), equality))))))))));
+    }
+
+    private static Formula LatitudeDotFormula()
+    {
+        Formula t = X("t"), z = X("z"), w = X("w");
+        Formula lhs = Call("dotProduct", Call("star", Call("Latitude.latitude", t, z)),
+            Call("Latitude.latitude", t, w));
+        Formula rhs = Add(Typed(Subtract(D(1), t), Complexes()),
+            Multiply(Multiply(Typed(t, Complexes()), Call("star", z)), w));
+        Formula body = All(z, Complexes(), All(w, Complexes(), Equal(lhs, rhs)));
+        body = Imp(new Formula.Relation(t, FormulaRelationOperator.LessThanOrEqual, D(1)), body);
+        body = Imp(new Formula.Relation(D(0), FormulaRelationOperator.LessThanOrEqual, t), body);
+        return Disp(All(t, Reals(), body));
+    }
 
     private static Formula BargmannFormula()
     {

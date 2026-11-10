@@ -1,0 +1,44 @@
+**Definition 24.4 (period-free rank/unrank on the exact layer).** Order
+$H_c(t)$ lexicographically in the physical order $a<b$, and encode its
+rank in exactly
+
+$$
+ B_t=\lceil\log_2 F_{t+1}\rceil\text{ bits},\qquad
+ \operatorname{Hcode}_{c,t}(w)=
+ \operatorname{bin}_{B_t}(\operatorname{hrank}_{c,t}(w)).
+\tag{PCR.64}
+$$
+
+At a current exact integer descriptor $(e,A,B)$ and remaining time $u$,
+evaluate $y_{A-1}$ from the supplied core recurrence and seed, compute
+$\delta_a,\delta_b$ by (PCR.37), and set
+
+$$
+ n_x(u)=\begin{cases}F_{u-\delta_x+1},&u\ge\delta_x,\\
+                      0,&u<\delta_x.
+        \end{cases}
+\tag{PCR.65}
+$$
+
+If $u>0$, these are exactly the two first-letter block sizes. To rank a
+word, take its actual next letter $x$, add $n_a(u)$ to the rank if $x=b$,
+reject if $n_x(u)=0$, and update only that child's exact descriptor using
+(PCR.38)--(PCR.39), with $u\leftarrow u-\delta_x$. Accept only if the
+word ends exactly at $u=0$. An early ending, trailing letter after zero,
+nonphysical symbol, or overshooting delay is invalid. To unrank, choose
+$a$ when the remaining rank is below $n_a(u)$, otherwise subtract that
+block size and choose $b$. Continue until $u=0$; return the suffix, or
+the full literal $cw$ when that output is requested.
+
+The source and seed must be authentic as above. On a raw $(d,P,c)$
+interface, recompute $C_s$ by Definition 22.2 and verify this exact literal
+and its triple; reject a different seed, an inconsistent supplied triple,
+or a malformed source representation. No malformed representation proves
+a physical authenticity premise. Reject $t<0$, nonintegral time, codes of
+wrong length, nonbinary codes or ranks outside $[0,F_{t+1})$. At $t=0,1$
+the sole valid rank is zero and its fixed-length code is empty; the
+decoded suffix is respectively empty or the actual delay-one child.
+No period, phase, endpoint, $K_s$, or image table is required by this
+address codec. In particular it does not run the period computation of
+the image interface.
+

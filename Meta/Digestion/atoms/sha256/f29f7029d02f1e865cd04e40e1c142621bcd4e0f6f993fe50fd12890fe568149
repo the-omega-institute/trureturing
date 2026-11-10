@@ -1,0 +1,38 @@
+**Corollary 4.3 (Componentwise minimum and sharp total size).** For every integer $r\ge3$ and every $h\in\mathcal K_r$, with $t=h_r$,
+
+$$
+H(h)=(r+1)t+\sum_{i=0}^{r-1}2^{r-i}h_i
+ \ \ge\ r+2^{r+1}-1.
+\tag{23}
+$$
+
+Moreover $h\ge h^*$ coordinatewise, $h_{2r}\ge2^r$, and equality in the total-length bound holds exactly when $h=h^*$. Thus $h^*$ is the unique row minimizing $H$ on $\mathcal K_r$.
+
+*Proof.* The first $r$ coordinates and $t$ are at least one. For $1\le j\le r$, Theorem 4.2 gives
+
+$$
+h_{r+j}\ge1+\sum_{i=0}^{j-1}2^{j-1-i}=2^j.
+$$
+
+Together with $h_r\ge1=2^0$, this proves componentwise domination and the last-coordinate bound. Summing the full parameterization and reversing the finite sums gives
+
+$$
+\begin{aligned}
+H(h)
+ &=\sum_{i=0}^{r-1}h_i+(r+1)t
+   +\sum_{j=1}^{r}\sum_{i=0}^{j-1}2^{j-1-i}h_i\\
+ &=(r+1)t+
+   \sum_{i=0}^{r-1}\left(1+\sum_{j=i+1}^{r}2^{j-1-i}\right)h_i\\
+ &=(r+1)t+\sum_{i=0}^{r-1}2^{r-i}h_i.
+\end{aligned}
+$$
+
+The minimum of this expression over positive integer parameters is
+
+$$
+(r+1)+\sum_{i=0}^{r-1}2^{r-i}
+ =(r+1)+(2^{r+1}-2)=r+2^{r+1}-1.
+$$
+
+All coefficients of the independent parameters are strictly positive. Equality therefore forces, and is forced by, $t=h_0=\cdots=h_{r-1}=1$. Formula (19) then gives exactly $h^*$. $\square$
+

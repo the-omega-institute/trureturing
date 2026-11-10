@@ -1,0 +1,72 @@
+**命题 11.4（V 定理 15.1、推论 15.2 的同一三目标、五目标及历史对应）。** 使用约定 11.3 的唯一精确 $x_*$，令
+
+$$
+\begin{gathered}
+W_i=(P(\alpha_{i*},\beta_{i*}),f_i,d_{i*})\quad(1\le i\le3),\qquad
+\mathcal T=\{W_1,W_2,W_3\},\\
+y_*=Y_1(x_*),\quad v_*=V_1(x_*),\qquad
+\mathcal K=\mathcal A_{y_*}\cup\mathcal T,
+\end{gathered}
+$$
+
+每个 $f_i$ 始终是同一组三坐标给出的完整插值多项式，$\mathcal A_{y_*}$ 始终是命题 11.2 中 V 定义 11.2 所绑定的那一个配对。则
+
+$$
+\begin{gathered}
+y_*\in(144/5,156/5),\qquad |\mathcal K|=5,\qquad
+\mathcal K\subseteq\mathcal F((H_p(y_*),M,0)),\\
+\mathcal T\subseteq\mathcal F((H_p(y_*),M,0,M,v_*)),\qquad
+L_1(\mathcal T,(H_p(y_*),M,0,M,v_*)),\\
+L_2(\mathcal K,(H_p(y_*),M,0)),\qquad L_3(\mathcal K,H_p(y_*)).
+\end{gathered}
+$$
+
+$\mathcal T$ 的最后 $J$ 碰撞对恰为 $\{W_1,W_2\}$，最后 $M$ 碰撞对恰为 $\{W_1,W_3\}$。这是一个实际 JMMJMM 子纤维及其同父五目标障碍的复用，不是纯 J5 或已知根六 JMMJJJ 的定理。
+
+**证明，对应和全部固定祖先。** V 的源矩阵四项正、迹一、行列式零，因此秩一。实际 JMMJMM 从零至六的累计矩阵依次为
+
+$$
+I,\quad J,\quad
+\begin{pmatrix}1&0\\1&1\end{pmatrix},\quad
+\begin{pmatrix}1&1\\2&1\end{pmatrix},\quad
+\begin{pmatrix}2&1\\1&1\end{pmatrix},\quad
+\begin{pmatrix}1&1\\3&2\end{pmatrix},\quad
+\begin{pmatrix}3&2\\4&3\end{pmatrix}.
+$$
+
+它们的迹因子是 $1,j,\ell,j+\ell,A,B,A+B$。最后单独 $J,M$ 的矩阵分别为
+
+$$
+\begin{pmatrix}4&3\\3&2\end{pmatrix},\qquad
+\begin{pmatrix}4&3\\7&5\end{pmatrix},
+$$
+
+迹分别为 $2A+j,A+2B$，所以约定 11.3 的 $Y,Z,V,R,S$ 正是同一个世界的第四 $J$、第五 $M$、第六 $M$ 和两种末动作响应。第一至四个插值样本乘其相应迹并加同一漂移，恰给原时钟 $0,1,2,3$ 的读数 $0,24,48,312/5$。若任何 $f_i=0$，这四读数将全等于一个漂移，矛盾；故它们是合法的非零三次或更低次增益。精确盒给
+
+$$
+d_{1*}\in(2,3),\qquad d_{2*}\in(4,5),\qquad d_{3*}\in(15,16),
+$$
+
+三完整目标彼此不同。精确的 $F(x_*)=0$ 同时给
+
+$$
+Y_1=Y_2=Y_3=y_*,\quad Z_1=Z_2=Z_3=0,\quad
+V_1=V_2=V_3=v_*,\quad R_1=R_2,\quad S_1=S_3.
+$$
+
+于是整个 $\mathcal T$ 实现同一字面历史
+
+$$
+(0,J,24,M,48,M,312/5,J,y_*,M,0,M,v_*).
+$$
+
+投影表将 $R_3$ 与 $R_1=R_2$、$S_2$ 与 $S_1=S_3$ 严格分开。因此最终 $J$ 的实际响应 $R_1$ 在 $\mathcal T$ 中恰留前一不同目标对，最终 $M$ 的实际响应 $S_1$ 恰留后一对，分别给 $L_0$，故该整个实际子历史有 $L_1$，包括停止。
+
+为精确指定配对，令 $\xi_*=5(y_*-12)/96$，则 $9/10<\xi_*<901/1000$。V 定理 15.1 给 $Q_\xi$ 在该闭参数区间上的完整端点符号界：
+
+| $\ell$ | 包含 $Q_\xi(\ell)$ 的区间 |
+| --- | --- |
+| $4/3$ | $[2666666/10^9,9868445/10^9]$ |
+| $3/2$ | $[-13250000/10^9,-4697750/10^9]$ |
+| $8/5$ | $[-11200000/10^9,-1789440/10^9]$ |
+| $9/5$ | $[19000000/10^9,30235240/10^9]$ |

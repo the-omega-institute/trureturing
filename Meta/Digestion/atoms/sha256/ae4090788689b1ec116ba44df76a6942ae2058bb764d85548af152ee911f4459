@@ -1,0 +1,175 @@
+**Theorem 16.5 (The exact dense minimum and all labeled equality laws).** Under Definition 16.1, the dense infimum is attained and has precisely the following three branches. All unlisted atom masses in each displayed law are zero.
+
+If $0<\delta<\delta_1$, use the unique $u_0,v_0$ of (16.30). Then
+
+$$
+\mathscr D_a(\delta)=2g_0(u_0)+a g_1(v_0).
+\tag{16.35}
+$$
+
+All equality laws are indexed by unordered pairs $P\subseteq[s]$ and are
+
+$$
+\bar x_P=\delta,\qquad
+\bar x_{\{i\}}=\theta-u_0\quad(i\in P),\qquad
+\bar x_{\{j\}}=1-v_0\quad(j\notin P).
+\tag{16.36}
+$$
+
+Every displayed mass is positive. Their actual marginals are $u_0$ on $P$ and $v_0$ elsewhere.
+
+If $\delta_1\le\delta\le\delta_2$, put $V=V(\delta)$. Then
+
+$$
+\mathscr D_a(\delta)=2g_0(\theta)+a g_1(V).
+\tag{16.37}
+$$
+
+All equality laws are indexed by unordered pairs $P$ and are
+
+$$
+\bar x_P=\delta,\qquad
+\bar x_{\{j\}}=\frac\theta a\quad(j\notin P).
+\tag{16.38}
+$$
+
+Their actual marginals are $\theta$ on $P$ and $V$ elsewhere. In particular the two singleton-omission masses on $P$ are zero throughout this closed interval, including both thresholds.
+
+If $\delta_2<\delta\le1/a$, there is exactly one real triple $(u,w,v)$ in the legal region
+
+$$
+2u+w+n v=q,\qquad \tau<v<w<u<1,\qquad u>\theta
+\tag{16.39}
+$$
+
+satisfying the polynomial equations
+
+$$
+\begin{aligned}
+[a^2u+2c\theta]w^3
+ &=[(r^2+c)w+2c(2u+\delta-2)]u^3,\\
+[r^2w+2c(2u+\delta-2)]v^3
+ &=[r^2v-2\gamma]w^3.
+\end{aligned}
+\tag{16.40}
+$$
+
+This triple also satisfies the isolating bound (16.18). With $\eta=u+\delta-1>0$, the exact value is
+
+$$
+\boxed{\quad
+\mathscr D_a(\delta)
+=2\left(\frac{a^2}{u}+\frac{c\theta}{u^2}\right)
+ +\frac{r^2}{w}-\frac{c(\delta-2\eta)}{w^2}
+ +n\left(\frac{r^2}{v}-\frac{\gamma}{v^2}\right).
+\quad}
+\tag{16.41}
+$$
+
+Every equality law is obtained by choosing an unordered pair $P=\{p_1,p_2\}$ and a label $h\notin P$. Its positive masses are exactly
+
+$$
+\begin{aligned}
+\bar x_P&=\delta-2\eta,\\
+\bar x_{\{p_1,h\}}=\bar x_{\{p_2,h\}}&=\eta,\\
+\bar x_{\{h\}}&=1-w-2\eta,\\
+\bar x_{\{j\}}&=1-v\qquad(j\notin P\cup\{h\}).
+\end{aligned}
+\tag{16.42}
+$$
+
+The actual marginals are $u$ on $P$, $w$ on $h$ and $v$ on the other labels. There are exactly $\binom{s}{2}$ labeled minimizers in each of the first two branches, and exactly $a\binom{s}{2}$ in the third. Each branch has one minimizer up to relabeling. The dense minimum of $d(x)$ is the displayed value of $\mathscr D_a(\delta)$ minus $B$.
+
+**Proof.** Every grouped point in Lemma 16.2 lies in the same convex set $\Omega$, and that lemma bounds every actual dense law by $F$ there.
+
+For the first branch, Jensen across all $a$ lower coordinates gives
+
+$$
+F_0(u,w)\ge\Phi(u)\ge\Phi(u_0).
+\tag{16.43}
+$$
+
+The ordered mean implies $u\ge\mu$, so Lemma 16.4 applies on the entire possible interval. It also gives $u_0<\theta$, while $u_0>v_0$. Thus (16.36) has positive masses. Its pair mass is $\delta$ and its singleton-omission masses sum to $1-\delta$. Its omission probabilities are $1-u_0$ on $P$ and $1-v_0$ off $P$. It is therefore an actual law of total mass one, mean $a\delta+r(1-\delta)=q$, and exactly the claimed marginals, all greater than $\tau$. Labels on $P$ never belong to its sole cardinality-$a$ atom. Consequently their incidence second moments are $r^2u_0$, whereas the others have $r^2v_0-\gamma$. Its energy is exactly (16.35), attaining (16.43).
+
+For the middle branch put $p_\theta=(\theta,V)$. This point belongs to $\Omega$ since $\delta_2<1/r$. At it,
+
+$$
+F_0(p_\theta)=F_1(p_\theta)
+=2g_0(\theta)+a g_1(V),
+\qquad
+\nabla F_0(p_\theta)=(2E_0,0),\quad
+\nabla F_1(p_\theta)=(2E_1,0),
+\tag{16.44}
+$$
+
+where
+
+$$
+E_j=C_j(V^{-2}-\theta^{-2})-\frac{2\gamma}{V^3}
+=\frac{P_j(\delta)}{\theta^2V^3}.
+\tag{16.45}
+$$
+
+Lemma 16.4 gives $E_0\le0\le E_1$. The supporting-plane inequalities for these convex functions show that $F_0(u,w)$ is at least their common value when $u\le\theta$, and $F_1(u,w)$ is at least that value when $u\ge\theta$. Hence $F$ is minimized at $p_\theta$, uniquely by strict convexity. The law (16.38) has pair mass $\delta$ and singleton-omission mass $a(\theta/a)=1-\delta$. Its actual omissions are $\delta$ on $P$ and $\theta/a$ elsewhere; thus its marginals, mean and energy are as claimed. Its energy attains the bound, including at both endpoints.
+
+For the third branch take the minimum $(u_1,w_1)$ of $F_1$ from Lemma 16.3. First it has $u_1>\theta$. If $\delta_2<\delta<1/r$, then $E_1<0$. The supporting plane at $p_\theta$ gives
+
+$$
+F_1(u,w)\ge F_1(p_\theta)+2E_1(u-\theta)
+\ge F_1(p_\theta)\quad(u\le\theta).
+\tag{16.46}
+$$
+
+Increasing $u$ slightly from $p_\theta$ with $w$ fixed is feasible and strictly decreases $F_1$, so its minimum cannot have $u_1\le\theta$. If $\delta\ge1/r$, the ordered mean and $u_1>w_1$ give $u_1>\mu\ge\theta$, proving the same conclusion.
+
+Next $w_1>v_1$. Indeed, on the face $w=v$ with $u>\theta$, differentiation in the feasible direction increasing $w$ with $u$ fixed gives
+
+$$
+(F_1)_w=-\frac{4c(u+\delta-1)}{w^3}<0.
+\tag{16.47}
+$$
+
+Lemma 16.3 already gives $u_1>w_1$ and excludes the cube boundary. Thus the minimizer is interior in $\Omega$ and its stationary equations are
+
+$$
+f'(u)+\frac{c}{w^2}
+=-\frac{r^2}{w^2}-\frac{2c(2u+\delta-2)}{w^3}
+=g_1'(v).
+\tag{16.48}
+$$
+
+Clearing positive denominators gives exactly (16.40). Conversely, any triple satisfying (16.39) and (16.40) gives an interior stationary point of $F_1$ on $\Omega$. Strict convexity makes that point its unique minimum. This proves both existence and uniqueness in the specified legal region and excludes any further algebraic root there. Roots outside this region are not part of the specification.
+
+Write this triple as $(u,w,v)$ and put $\eta=u+\delta-1$. The distance bound in Lemma 16.3 and $\mu+\delta-1\le1/[a(a+2)]$ give
+
+$$
+0<\eta<\frac{65}{a^2},\qquad
+\delta-2\eta>\frac1{2a}-\frac{130}{a^2}>0,
+\qquad
+1-w-2\eta>\frac1{a+2}-\frac{194}{a^2}>0.
+\tag{16.49}
+$$
+
+Here $\delta>\delta_2>1/(2a)$ by (16.29). Also $v<\mu<1$, so $1-v>0$. These prove the positivity of every mass in (16.42). Their pair total is $\delta$, and their singleton-omission total, using $2u+w+n v=q$, is
+
+$$
+1-w-2\eta+n(1-v)=1-\delta.
+\tag{16.50}
+$$
+
+The omission probabilities on $P$ are $(\delta-2\eta)+\eta=1-u$; that on $h$ is $2\eta+(1-w-2\eta)=1-w$; and those on the other labels are $1-v$. This verifies total mass, the mean $q$, and every marginal from one law. Density follows from (16.19). Its actual incidence second moments are, respectively,
+
+$$
+r^2u-c\eta=a^2u+c\theta,\qquad
+r^2w-c(\delta-2\eta),\qquad r^2v-\gamma.
+\tag{16.51}
+$$
+
+They give (16.41), which is $F_1(u,w)$. Thus the law attains the lower bound $H(x)\ge\min_\Omega F_1$ on the full original dense domain.
+
+It remains to exhaust equality laws. In the first branch, equality in (16.43) and the strict Jensen inequalities fixes the marginals as two copies of $u_0$ and $a$ copies of $v_0$. In the middle branch, the unique minimizing point of $F$ is $p_\theta$. Since $F_0=F_1$ there, equality also forces equality in the $F_0$ certificate and its strict Jensen inequalities. Thus the marginals are two copies of $\theta$ and $a$ copies of $V$. In both branches the two larger marginals recover a unique pair $P$. Lemma 14.2 forces every positive-mass atom to have cardinality $r$, except for the unique cardinality-$a$ atom omitting $P$. The mean forces its mass to be $\delta$, and the actual omission probabilities force all singleton-omission masses. These are precisely (16.36) and (16.38), with no additional equality laws at either threshold.
+
+In the third branch, strict convexity of $F_1$ and equality in Lemma 16.2 force marginals $u,u,w,v,\ldots,v$. The zero set (16.8) allows only singleton omissions outside $P$ and pair omissions inside $P\cup\{h\}$; all other cardinalities have strictly positive residual. In particular the singleton-omission masses on $P$ vanish. The mean forces total pair mass $\delta$, and the two actual omission probabilities $1-u$ force the three pair masses to be $\delta-2\eta,\eta,\eta$. The remaining marginals force every singleton-omission mass in (16.42). Hence this is the complete equality class. The strict marginal groups recover $P$, and in the third branch also recover $h$. Their possible choices give the stated labeled counts, and permutations relate all laws in each branch. ∎
+
+The capacity certificate and equality classification in Theorem 16.5 are repo-derived deductions for the actual subset-law model. The classical sources attached to Lemma 16.2 supply only weak duality and finite Jensen. The finite-graph extrema in A. M. Albalahi, *On Two Conjectures Concerning the Hyperbolic Sombor Index and Its Counterpart*, DOI [10.47443/dml.2026.217](https://doi.org/10.47443/dml.2026.217), Proposition 2.1 and Theorem 2.2, concern prescribed graph order and cyclomatic number; they are not input theorems for this law-domain classification. The full text of Zhao–Zhao, DOI [10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26), is not an input here. Its possible overlap remains unassessed, and no worldwide priority assertion is made.
+

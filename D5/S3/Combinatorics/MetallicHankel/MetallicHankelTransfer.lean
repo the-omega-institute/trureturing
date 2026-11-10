@@ -25,6 +25,43 @@ def topWord (n : ℕ) : List (ℤ × ℤ) :=
       (List.replicate (n - 3) [(1, -1), (1, -1), (-1, -1)]).flatten ++
       [(1, -1), (1, -1), (0, -1), (2, 1), (-1, -1)]
 
+/-- The complete top-coefficient word acts as the identity on every initial state. -/
+theorem top_word_identity (n : ℕ) (hn : 2 ≤ n) (z : ℤ × ℤ) :
+    (topWord n).foldl (fun z a => (a.1 * z.1 - a.2 * z.2, z.1)) z = z := by
+  let step (z a : ℤ × ℤ) : ℤ × ℤ := (a.1 * z.1 - a.2 * z.2, z.1)
+  let triple : List (ℤ × ℤ) := [(1, -1), (1, -1), (-1, -1)]
+  let reps (m : ℕ) := (List.replicate m triple).flatten
+  have repeat_action (m : ℕ) (z : ℤ × ℤ) :
+      (reps m).foldl step z =
+        ((-1) ^ m * z.1, (1 - (-1) ^ m) * z.1 + z.2) := by
+    induction m generalizing z with
+    | zero => simp [reps]
+    | succ m ih =>
+      simp only [reps, List.replicate_succ, List.flatten_cons, List.foldl_append]
+      rw [ih]
+      simp only [triple, List.foldl_cons, List.foldl_nil, step, pow_succ]
+      ext <;> ring
+  by_cases hn2 : n = 2
+  · subst n
+    simp only [topWord, ite_true, List.foldl_cons, List.foldl_nil]
+    ext <;> dsimp [step] <;> ring
+  · obtain ⟨m, rfl⟩ : ∃ m, n = m + 3 := ⟨n - 3, by omega⟩
+    have hw : topWord (m + 3) =
+        [(2, -1), (0, 1)] ++ reps (m + 1) ++
+          [(0, -1), (1, -1), (0, -1), (-1, -1)] ++ reps m ++
+          [(1, -1), (1, -1), (0, -1), (2, 1), (-1, -1)] := by
+      simp [topWord, reps, triple]
+    rw [hw]
+    simp only [List.foldl_append]
+    rw [repeat_action]
+    simp only [List.foldl_cons, List.foldl_nil, step]
+    rw [repeat_action]
+    simp only [pow_succ]
+    apply Prod.ext <;> simp only
+    all_goals
+      ring_nf
+      simp
+
 /-- Triple induction proves monodromy and bounds every intermediate transfer state. -/
 theorem block_transfer (n : ℕ) (hn : 2 ≤ n) (state : ℕ → ℤ × ℤ)
     (initial : state 0 = (1, 0))
@@ -88,8 +125,7 @@ theorem block_transfer (n : ℕ) (hn : 2 ≤ n) (state : ℕ → ℤ × ℤ)
     · subst n
       constructor
       · intro z
-        simp only [topWord, ite_true, List.foldl_cons, List.foldl_nil]
-        ext <;> ring
+        exact top_word_identity 2 (by omega) z
       · simp [topWord, step, bounded, List.scanl_cons, List.scanl_nil]
     · obtain ⟨m, rfl⟩ : ∃ m, n = m + 3 := ⟨n - 3, by omega⟩
       have hw : topWord (m + 3) =
@@ -102,16 +138,7 @@ theorem block_transfer (n : ℕ) (hn : 2 ≤ n) (state : ℕ → ℤ × ℤ)
         norm_num
       constructor
       · intro z
-        rw [hw]
-        simp only [List.foldl_append]
-        rw [repeat_action]
-        simp only [List.foldl_cons, List.foldl_nil, step]
-        rw [repeat_action]
-        simp only [pow_succ]
-        apply Prod.ext <;> simp only
-        all_goals
-          ring_nf
-          simp
+        exact top_word_identity (m + 3) (by omega) z
       · let head : List (ℤ × ℤ) := [(2, -1), (0, 1)]
         let middle : List (ℤ × ℤ) := [(0, -1), (1, -1), (0, -1), (-1, -1)]
         let last : List (ℤ × ℤ) := [(1, -1), (1, -1), (0, -1), (2, 1), (-1, -1)]

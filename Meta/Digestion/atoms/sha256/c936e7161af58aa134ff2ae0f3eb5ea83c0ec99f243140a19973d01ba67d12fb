@@ -1,0 +1,83 @@
+**Theorem 6.1 (Two-family squeeze with additive error $O(1/a)$).** Fix $0<\lambda_-\le\lambda_+<\infty$. There are $A,C$, depending only on this interval, such that for all integers $a\ge A$ and $\delta=\lambda/a$ with $\lambda\in[\lambda_-,\lambda_+]$, put
+
+$$
+T=\frac\delta a=\frac\lambda{a^2},\qquad
+H_{\rm rare}=\frac1T+\frac{r^3}{1-T}.
+\tag{6.1}
+$$
+
+Then
+
+$$
+\boxed{\quad
+\min\{H_{\rm dense},H_{\rm rare}\}-\frac Ca
+\le\inf_x H(x)\le\min\{H_{\rm dense},H_{\rm rare}\}.
+\quad}\tag{6.2}
+$$
+
+The rare value is the energy of the actual law $x_{\{e\}}=T$, $x_C=1-T$. Every law with $t<t_{\rm conv}$ satisfies the exact lower bound $H\ge H_{\rm rare}$ for all these parameters once $a\ge A$. The theorem does not identify the exact global dense minimizer or an exact finite-$a$ transition.
+
+**Proof.** The upper bounds are the two laws of Lemma 1.2; at $t=T$, the missing-one masses in (1.4) vanish and the full-core mass is $1-T$, proving (6.1).
+
+For the lower bound, a law with $H>H_{\rm dense}+1$ already exceeds the proposed minimum. On the remaining sublevel $H\le H_{\rm dense}+1$, a law with $t\ge t_{\rm conv}$ satisfies (3.2). Its error is at most $C\delta\le C\lambda_+/a$, proving the desired dense-branch lower bound.
+
+Consider now $t<t_{\rm conv}$. Uniformly on the fixed interval of $\lambda$,
+
+$$
+t<t_{\rm conv}=O(a^{-2}),\qquad
+\sum_{i\in C}(1-y_i)=\delta+t=O(a^{-1}),\qquad
+\min_{i\in C}y_i\ge1-\delta-t.
+\tag{6.3}
+$$
+
+On the energy sublevel just specified, (5.14) and
+$H_{\rm dense}-q^3=O(a^2)$ give
+
+$$
+m^2(1/t-t)\le O(a^2),\qquad m^2=O(1).
+$$
+
+This conditional-moment estimate uses that sublevel; the scalar comparison that follows in fact needs no bound on $m$ or on $H$.
+
+Choose a fixed $C_1$ large enough that both $t_{\rm conv}$ and $T$ are at most $C_1/a^2$ for all the parameters in question. By (1.2), $g_\theta'>0$ on $(0,q)$ and $g_\theta'(t)=O(a^3)$ uniformly on $0<t\le C_1/a^2$. Hence
+
+$$
+h_\theta'(t)=-1/t^2+g_\theta'(t)<0
+\quad(0<t\le C_1/a^2)
+\tag{6.4}
+$$
+
+for all sufficiently large $a$ depending only on $\lambda_+$. Also
+$\Lambda_\theta(t)=O(a)$ on this interval, and $1/t\ge a^2/C_1$.
+
+If $t\le T$, monotonicity (6.4) and (2.6) give
+
+$$
+H\ge h_\theta(T)+v\left[\frac1t-\frac{\Lambda_\theta(t)}3\right]
+\ge h_\theta(T),
+$$
+
+because $v\ge0$ and the bracket is positive for all sufficiently large $a$. If $t\ge T$, the increase of $g_\theta$ gives
+
+$$
+h_\theta(t)\ge h_\theta(T)+\frac1t-\frac1T.
+$$
+
+The exact capacity and $r=a+1$ imply
+
+$$
+\frac1t-\frac1T\ge-\frac{\mu-1}{\delta}
+\ge-\frac v{3\delta}.
+\tag{6.5}
+$$
+
+Therefore the second line of (2.6) yields
+
+$$
+H\ge h_\theta(T)+v\left[
+\frac1t-\frac1{3\delta}-\frac{\Lambda_\theta(t)}3\right]
+\ge h_\theta(T).\tag{6.6}
+$$
+
+Indeed $1/(3\delta)\le a/(3\lambda_-)$ and $\Lambda_\theta(t)=O(a)$, whereas $1/t\ge a^2/C_1$. This positivity is uniform on the given compact interval. Since $h_\theta(T)=H_{\rm rare}$, both rare cases give the exact bound. They did not use the preliminary sublevel restriction, so it can be dropped for the last assertion of the theorem. Combining the dense and rare branches, together with the trivial high-energy case, proves (6.2). ∎
+

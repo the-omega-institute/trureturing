@@ -1,0 +1,23 @@
+**定义 54.3（经典正实现与实 CP 实现）。** 一个 $k$ 状态经典实现由固定矩阵 $T_0,T_1\in\mathbb R_+^{k\times k}$、固定列向量 $f_{\rm cl}\in[0,1]^k$ 和每个 $\rho$ 的概率列向量 $p(\rho)$ 组成，满足
+
+$$
+\mathbf1^{\mathsf T}(T_0+T_1)=\mathbf1^{\mathsf T},\qquad
+\begin{cases}
+f_{\rm cl}^{\mathsf T}T_hp(\rho)=p_\rho(h,1),\\
+(\mathbf1-f_{\rm cl})^{\mathsf T}T_hp(\rho)=p_\rho(h,0).
+\end{cases}
+\tag{54.9}
+$$
+
+$T_h=T_{j_n}\cdots T_{j_1}$；每个分支非负且列次随机。默认不要求 $p(\rho)$ 仿射，允许不可达状态、不可观察状态、任意隐藏纤维及依赖隐藏状态的分支质量。最小状态数记 $k_{\min}(\theta,d)$，没有有限实现时记为 $\infty$。
+
+一个实维数 $m$ 的实现由仿射映射 $\rho\mapsto\sigma(\rho)\in\operatorname{Sym}_m(\mathbb R)$、$\sigma(\rho)\succeq0$、$\operatorname{Tr}\sigma(\rho)=1$，固定效果 $0\preceq F\preceq I_m$，以及固定实 Kraus 分支
+
+$$
+\Phi_j(X)=\sum_\alpha L_{j\alpha}XL_{j\alpha}^{\mathsf T},\qquad
+\sum_{j,\alpha}L_{j\alpha}^{\mathsf T}L_{j\alpha}=I_m
+\tag{54.10}
+$$
+
+组成。要求 $\operatorname{Tr}(F\Phi_h(\sigma(\rho)))=p_\rho(h,1)$，补效果给 $p_\rho(h,0)$，对全部 $\rho\in\mathcal K_d$ 和全部有限词成立。仿射性作用于完整复凸集合；既不假设编码单射，也不预设分支为正交共轭。最小实维数记 $m_{\min}(\theta,d)$。
+

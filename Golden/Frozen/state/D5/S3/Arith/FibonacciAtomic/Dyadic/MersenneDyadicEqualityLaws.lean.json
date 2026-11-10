@@ -1,0 +1,1 @@
+{"statement_id":"sha256:74e49151eff97c4af73f2f663138e6dc8854728e01781ade7a4c5e7e5999378d","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),15:FibonacciAtomic),6:Dyadic),26:MersenneDyadicEqualityLaws),6:result)","kind":"theorem"}]}

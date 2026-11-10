@@ -1,0 +1,9 @@
+### 6.3 Independent local output post-processing
+
+Let \(\Lambda_A,\Lambda_B,\Lambda_C\) be stochastic output channels. Then
+
+\[
+P'=(\Lambda_A\otimes\Lambda_B\otimes\Lambda_C)P.
+\tag{6.3}
+\]
+

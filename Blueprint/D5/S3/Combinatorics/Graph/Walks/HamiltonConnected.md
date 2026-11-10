@@ -1,0 +1,33 @@
+# The Chvatal-Erdos Hamilton-connectedness theorem
+
+## Abstract
+
+Strict independence and vertex-deletion connectivity give Hamiltonian paths with prescribed distinct endpoints.
+
+**Theorem 1.1 (Every prescribed pair of distinct endpoints).**
+
+$$\forall V \in \operatorname{Type}\left(\right),\; \operatorname{Finite}\left(V\right) \Rightarrow \left(\forall G \in \operatorname{SimpleGraph}\left(V\right),\; \forall k \in \operatorname{Nat}\left(\right),\; \left(\forall S \in \operatorname{Set}\left(V\right),\; \operatorname{ncard}\left(S\right) < k \Rightarrow \operatorname{Connected}\left(\operatorname{induce}\left(G, \operatorname{compl}\left(S\right)\right)\right)\right) \Rightarrow \left(\left(\forall S \in \operatorname{Set}\left(V\right),\; \operatorname{IsIndepSet}\left(G, S\right) \Rightarrow \operatorname{ncard}\left(S\right) < k\right) \Rightarrow \left(\forall a \in V,\; \forall b \in V,\; a \ne b \Rightarrow \left(\exists p \in \operatorname{Walk}\left(G, a, b\right),\; \operatorname{IsHamiltonian}\left(p\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Walks/HamiltonConnected.exists_isHamiltonian_of_connectivity_independence` (`✓ std3`). ∎
+
+*Citation.* Václav Chvátal and Paul Erdős (1972). *A note on Hamiltonian circuits*. DOI: [10.1016/0012-365x(72)90079-9](https://doi.org/10.1016/0012-365x(72)90079-9). URL: <https://users.renyi.hu/~p_erdos/1972-02.pdf>.
+
+*Commentary.*
+
+For every finite vertex type V in any universe, every simple undirected graph G on V and every natural k, suppose that deleting any set S with S.ncard strictly less than k leaves a connected induced graph. Suppose that every G-independent set S also satisfies S.ncard strictly less than k. For every a and b in V with a distinct from b there exists an actual G.Walk a b visiting each vertex exactly once. Finite enumeration, decidable equality and classical choices are internal proof presentations.
+
+The empty independent set forces k to be positive. Deletion of the empty set supplies an initial path between these same a and b. The finite set of lengths of simple paths with these fixed endpoints has a maximum. No globally longest path with arbitrary endpoints, supplied edge, minimum degree, order lower bound, ambient spanning premise or bound k less than the vertex count is assumed. Empty and singleton orders have no distinct endpoint pair; the construction includes the two-vertex order and every natural k.
+
+Let P be that maximum path and B its actual support. Its vertex count is P.length plus one. If x lies outside B, ConnectivityFan.exists_fan supplies exactly r = min(k, B.card) terminal-clean paths from x to distinct terminals in B, meeting pairwise only at x. The private maximal_path_fan_obstruction assumes neither deletion connectivity nor the independent-set bound. It proves r less than B.card and constructs an independent set containing x with cardinality at least r.
+
+If the fan saturated B, arms ending at P[0] and P[1] would replace the first edge by a detour through x and produce a longer simple path from a to b, including when P has one edge. For the remaining argument exclude the at most one arm ending at b. Each retained terminal has a proved index strictly below P.length and hence a genuine forward successor. Bounded path injectivity makes these successors distinct, and none is x.
+
+An edge from x to a successor replaces its terminal edge by the reversed arm and that edge. An edge between two successors combines the corresponding arms through x and uses OrderedTwoCutSlicing.exists_path_slicing_at_two_ordered_edges. The constructed walk traverses the prefix, the detour, the reversed middle piece, the successor edge and the suffix. Literal slice support disjointness and terminal cleanliness prove simplicity, including adjacent cuts and nil pieces. The resulting path has the same endpoints and length P.length plus detour.length minus one, contradicting maximality.
+
+The independent set is x together with the retained successors. An injection of all arm indices into the optional retained indices proves that adding x compensates for the possible excluded terminal b. Unsaturation forces r = k; the constructed independent set then contradicts the original strict bound. Thus P contains every vertex and is Hamiltonian. This is the original paper's Theorem 3, not an open-problem resolution. Native Menger, fan and slicing results are reused; no complexity bound is asserted.
+
+## References
+
+- Truth anchor: `D5/S3/Combinatorics/Graph/Walks/HamiltonConnected.exists_isHamiltonian_of_connectivity_independence`
+- Dependency: [D5/S3/Combinatorics/Graph/Walks/ConnectivityFan](ConnectivityFan.md)
+- Dependency: [D5/S3/Combinatorics/Graph/Walks/OrderedTwoCutSlicing](OrderedTwoCutSlicing.md)

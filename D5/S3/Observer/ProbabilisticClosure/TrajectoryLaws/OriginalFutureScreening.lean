@@ -121,7 +121,7 @@ theorem cylinder_future_law (θ : Presentation H) (J : Measure (PathSpace H))
   rw [← hc (t-m) m h w]
   exact ENNReal.ofReal_toReal (measure_ne_top J _)
 
-private theorem past_prefix_cylinder (t : ℤ) (m : ℕ)
+theorem past_prefix_cylinder (t : ℤ) (m : ℕ)
     (p : Fin m → H × Bool) (i : H) :
     (past t ⁻¹' (readPrefix m ⁻¹' {p})) ∩ (state t ⁻¹' {i}) =
       MarkedPredictiveQuotient.cylinder (t-m) m

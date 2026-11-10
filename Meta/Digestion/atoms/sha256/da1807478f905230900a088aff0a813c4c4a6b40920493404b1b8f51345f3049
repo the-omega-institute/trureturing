@@ -1,0 +1,37 @@
+证明。先说明证明中消费的成熟 JB 工具及支撑接头。Hanche-Olsen–Størmer，[*Jordan Operator Algebras*](https://hanche.folk.ntnu.no/joa/joa-m.pdf)，§2.6.2、Lemma 2.6.3（印刷页 47–48）给含单位 Jordan 代数的 Peirce 投影和乘法规则；Theorem 3.2.4（页 79）给单生成等距谱演算；§3.3.3、Lemma 3.3.5、Proposition 3.3.6、Lemma 3.3.7、Proposition 3.3.10（页 82–84）给平方正锥、闭尖性、二次表示保正及准确序单位范数。这些事实适用于任意 JB，包括例外部分，不要求特殊矩阵表示或有限维。二次表示保正及范数的准确陈述也见 Roelands–Tiersma，[*An order-theoretic characterization of JB-algebras*，arXiv:2507.09526v3，Proposition 2.39](https://arxiv.org/html/2507.09526v3#S2.Thmtheorem39)。它们只作用于已知 Jordan 乘法。
+
+记 $q=u-p$、$T=L_p$、$U_r=2L_r^2-L_{r^2}$。所需代数公式可直接展开：在 Jordan 恒等式 $[L_z,L_{z^2}]=0$ 中取 $z=p+th$，一次系数为 $[L_h,T]+2[T,L_{p\circ h}]=0$；作用于 $p$ 得 $2T^3-3T^2+T=0$。因此有有界投影
+
+$$
+\begin{aligned}
+Q_2&=U_p=2T^2-T,& Q_0&=U_q=I-3T+2T^2,\\
+Q_1&=I-Q_2-Q_0=4T-4T^2,&
+X&=X_2(p)\oplus X_1(p)\oplus X_0(p),
+\end{aligned}
+\tag{119.6}
+$$
+
+其中 $X_i(p)$ 是 $T$ 的 $i/2$ 特征空间，$Q_i$ 是相应投影。若 $T h=h$，同一个一次系数式给 $[T,L_h]=0$，故 $X_p$ 对 $\circ$ 闭合，以 $p$ 为单位。它是闭空间，继承原 JB 范数公理，故 $p\ne0$ 时是含单位 JB 子代数。只对已知元素作 Peirce 分解，没有对未知 $D$ 作分配。
+
+这个角的内在平方锥准确等于环境正锥的限制。角内平方当然在 $X_+$ 中；反过来，若 $y\in X_p\cap X_+$，环境谱演算给正平方根 $\sqrt y$。在 $[0,\|y\|]$ 上用常数项为零的多项式一致逼近平方根函数，所得 $y$ 的多项式全在闭子代数 $X_p$ 中，故 $\sqrt y\in X_p$。零元单独取根零。因此
+
+$$
+(X_p)_+=X_p\cap X_+,\qquad
+0\le a^2\le\|a\|^2p\quad(a\in X_p),\qquad
+-\|x\|p\le x\le\|x\|p\quad(x\in X_p).
+\tag{119.7}
+$$
+
+后两式用角自己的谱／序单位范数；它正是继承范数。这里的平方根只用于完成中的已知 Jordan 结构，不要求原 $E_p$ 平方根闭合，也不送入 $D$。
+
+现补全支撑推断。由 $p\circ q=0$、$(p+tq)^2=p+t^2q$ 和 (119.6)，直接得到全部实 $t$ 的已知算子公式
+
+$$
+U_{p+tq}=Q_2+tQ_1+t^2Q_0.
+\tag{119.8}
+$$
+
+若 $y\ge0$ 且 $Q_0y=0$，写 $y=y_2+y_1$。每个 $U_{p+tq}$ 都保正，故 $y_2+t y_1\ge0$ 对所有实 $t$ 成立。令 $t\to+\infty$ 并除以 $t$，闭锥给 $y_1\ge0$；令 $t\to-\infty$ 并除以 $-t$，给 $-y_1\ge0$。尖性迫使 $y_1=0$，所以 $y\in X_p$。这里没有假设半 Peirce 投影 $Q_1$ 保正。
+
+若 $-cp\le x\le cp$、$c\ge0$，对两个正元 $cp\pm x$ 用正算子 $Q_0=U_q$，因 $Q_0p=0$ 得 $\pm Q_0x\ge0$，故 $Q_0x=0$。于是 $y=cp+x\ge0$ 且 $Q_0y=0$，上段给 $y\in X_p$，再减去 $cp$ 得 $x\in X_p$。结合 (119.7)，准确地
+

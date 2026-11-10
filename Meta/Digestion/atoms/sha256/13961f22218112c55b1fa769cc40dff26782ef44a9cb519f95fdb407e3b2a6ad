@@ -1,0 +1,32 @@
+#### 定理 7.6（三副本接口读取闭路量）
+
+若可重复制备三个历史并控制循环置换
+
+$$
+C(x_0\otimes x_1\otimes x_2)=x_1\otimes x_2\otimes x_0,
+$$
+
+则对 $\chi=\psi_0\otimes\psi_1\otimes\psi_2$ 有
+$\langle\chi,C\chi\rangle=B(0,1,2)$。辅助比特从 $\lvert +\rangle$ 出发并控制 $C$ 后，
+
+$$
+\langle X\rangle=\Re B,
+\qquad \langle Y\rangle=\Im B.
+$$
+
+**证明。**
+
+张量内积给三个相邻重叠之积。受控后的纯态是
+$(\lvert 0\rangle \chi+\lvert 1\rangle C\chi)/\sqrt2$，辅助约化矩阵为
+$\tfrac12\bigl(\begin{smallmatrix}1&\bar B\\B&1\end{smallmatrix}\bigr)$，与 $X,Y$ 取迹即得。
+
+∎
+
+该构造需要三副本制备、受控循环和校准读出。它与标准循环干涉方法相容 [[10](#ref-ekert)]，没有声称单地址原生菜单已免费供应全部接口，更不需要复制未知单份量子态。
+
+此处比较的是所声明的数据向量 $K^j\lvert s\rangle$。若完整历史还带永久正交时钟 $\lvert j\rangle$，则不同 $\lvert j\rangle \otimes K^j\lvert s\rangle$ 的完整内积为零。非零闭路量应由上述数据因子上的循环接口读取，不能把数据 Gram 核与保留全部正交记录的全局 Gram 核混为一物。
+
+<a id="statement-7-7"></a>
+
+<a id="thm-cycles"></a>
+

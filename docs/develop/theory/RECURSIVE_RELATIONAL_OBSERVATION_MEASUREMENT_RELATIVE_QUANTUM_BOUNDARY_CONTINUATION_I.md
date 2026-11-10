@@ -1145,3 +1145,899 @@ The sector-record argument is an application of quantum non-demolition likelihoo
 All original fixed-$G_{gc}$, original-$Q$, parked-consumer and unchanged-initialization obligations retain their stated domains. This installation does not prove their missing acquisition bridges. It also leaves open physical conformance and acquisition of the supplied CP/readout/reference/rights interface, general-$N$ herald/archive consumers, all-raw-carrier retention, supplied-contrast operation synthesis, native-to-quantum correspondence, full four-view mutual recovery, universal alpha/beta sufficiency or minimality, and unlimited continued-use bounds. Finite confidence does not become an exact anchor; subnormalized output comparison does not become rare-branch certainty; a mathematical comparison state does not become an extra preparation. None of these remaining bridges is removed by the finite result.
 
 ## 追加锚（本行以下为增补区）
+
+## 4. Fixed-DU acquisition with selective adaptive F-read counts
+
+**Definition 4.1 (the compared source and legal observation histories).**
+Retain exactly the fixed-DU installation of Definitions 3.2–3.3. In every
+comparison fix the same $d\in(0,1)$, original preparation
+$B\rho_0(d)B^\dagger$, finite untouched reference and its initial state,
+public task inputs, source binding, rights, physical readout calibration,
+program and initialized classical cells. The parameter $\gamma$ alone changes
+within the stationary memoryless lift class (3.2). On the code, the common
+initial state is $\rho_0(d)\otimes\zeta_Z$. Later system/reference correlations
+are retained. Every branch below acts as its displayed system map tensored
+with $\operatorname{id}_Z$.
+
+A legal classical policy uses the installed finite instructions and owned
+storage of Definition 3.3. At each settled cut it selects, from its actually
+available classical cells, a control $\mathsf N$, a source call with immediate
+$g$ or $F$ read, a source call whose carrier is discarded unread, a local
+classical instruction or hold, or a terminal decision. It cannot select from
+the unknown $d,\gamma$, an unmeasured quantum state, an inaccessible disposal
+record or a parameter-dependent initial seed. The supplied state and the
+entire initialized receiver, including metadata and any accessible advice,
+are matched across the compared parameters. Intermediate framing and
+enabledness have the common semantics of Definition 3.3. There is no reset,
+inverse, new preparation, delayed carrier read, additional measurement
+setting, return wire or coherent archive.
+
+A finite history $r$ records the actual issued instructions, their replies
+and terminal decision, when present. It is a probability-space index; using
+it in a proof supplies no additional stored copy to a policy that erased or
+compressed earlier data. The policy can use only its actual retained cells.
+Let $c(r)$ be those cells and all classical outputs actually returned at the
+cut. The finite binary instructions, finite strings and bit replies give a
+countable set of finite histories. Complete histories retain refusals and
+all measured outcomes; a branch is never selected by forcing an outcome.
+
+Write $\mathcal E_\gamma(r)$ for the chronological system branch map, and put
+
+$$
+\begin{gathered}
+E_{\gamma,d}(r)
+ =(\mathcal E_\gamma(r)\otimes\operatorname{id}_Z)
+                  (\rho_0(d)\otimes\zeta_Z),\\
+p_{\gamma,d}(r)=\operatorname{tr}E_{\gamma,d}(r),\\
+F(r)=\#\{\hbox{actual immediate F reads in }r\}.
+\end{gathered}
+\tag{4.1}
+$$
+
+The complete returned substate at that cut is
+$|c(r)\rangle\langle c(r)|\otimes E_{\gamma,d}(r)$, with the fixed inputs
+and reference data included in $c(r)$. On the physical code replace its
+quantum part by $(B\otimes I_Z)E_{\gamma,d}(r)(B^\dagger\otimes I_Z)$.
+Different histories with the same returned cells are summed when those
+histories are no longer distinguished by the accessible output. The measured
+carriers have retired, and the unread carriers and disposal sink remain
+inaccessible, precisely as in Definition 3.3.
+
+Let $\mathcal A$ be any set of finite terminal accepting histories of this
+policy. It is prefix free. Its probability is the nonnegative sum
+$\Pr_{\gamma,d}(\mathcal A)=\sum_{r\in\mathcal A}p_{\gamma,d}(r)$.
+This sum is at most one: at any finite instruction depth, pad terminal
+leaves by identities; completeness of each read instrument and trace
+preservation of common steps give total mass one. Accepted terminal
+leaves up to that depth have mass at most one, and increasing the depth
+exhausts their countable union.
+The statements below require neither a uniform terminal depth nor finite
+expected stopping cost. They apply even when some other paths never
+terminate; such paths are outside $\mathcal A$. Every accepted path must
+actually terminate after finitely many instructions and reads. For a gate
+promising termination, that additional promise means almost-sure finite
+termination at each parameter in its declared domain.
+
+For maps, $\Phi\succeq_{\rm CP}\Psi$ means that $\Phi-\Psi$ is completely
+positive. For matrices, $X\succeq Y$ means $X-Y$ is positive semidefinite.
+The two orders are distinct; CP order is used before tensoring arbitrary
+untouched references.
+
+**Theorem 4.2 (selective domination of full adaptive branch successors).**
+For every policy and common initialization of Definition 4.1, every
+$0<\kappa<2$, and every finite history $r$, set
+
+$$
+a=1-\kappa,\qquad q=\frac{1+a}{2}=1-\frac\kappa2\in(0,1).
+\tag{4.2}
+$$
+
+Then the source-specific branch maps and their actual returned substates
+satisfy
+
+$$
+\mathcal E_a(r)\succeq_{\rm CP}q^{F(r)}\mathcal E_1(r),
+\qquad
+E_{a,d}(r)\succeq q^{F(r)}E_{1,d}(r).
+\tag{4.3}
+$$
+
+Both statements include histories having zero probability at either
+parameter. They preserve the actual returned $QZ$ successor and its
+classical cells, without an equality assumption on normalized conditional
+states. In particular, writing
+$\alpha=\Pr_{1,d}(\mathcal A)$ and
+$\beta=\Pr_{a,d}(\mathcal A)$, one has
+
+$$
+\boxed{\quad
+\beta\ \ge\ \sum_{r\in\mathcal A}q^{F(r)}p_{1,d}(r)
+       =\mathbb E_{1,d}[\mathbf1_{\mathcal A}q^F].
+\quad}
+\tag{4.4}
+$$
+
+The expectation denotes the displayed finite-terminal sum; it requires no
+definition of $q^F$ on nonterminating paths.
+
+If a separately paid, finite classical random seed is supplied with a
+parameter-independent law, (4.3) holds conditional on its common value
+and (4.4) holds after averaging over that law. Its actual finite encoding
+and backing are charged. This permits no parameter-dependent seed and
+installs no additional randomization primitive.
+
+**Proof.** The complete F branches in (3.3), with the same fixed matrices,
+give the exact identity
+
+$$
+\begin{aligned}
+C_y^a
+ &=q C_y^1+(1-q)C_y^{-1},\\
+C_y^{-1}&=C_{-y}^1,\\
+C_y^a-q C_y^1&=(1-q)C_{-y}^1\succeq_{\rm CP}0.
+\end{aligned}
+\tag{4.5}
+$$
+
+Indeed $q-(1-q)=a$, so the two cross coefficients in (3.3) have exactly
+the real value $a$; changing $\gamma=1$ to $-1$ exchanges $y$ and $-y$.
+Here the superscript $-1$ denotes the parameter $\gamma=-1$, not an
+inverse operation. The endpoint branches are CP by the supplied lift.
+Equation (4.5) is an
+identity of actual branch maps, not a callable random coin or an
+authorization to choose the other endpoint instrument. By contrast the
+$g$ branches $A_j$, unread channel $\Lambda$, control
+$\operatorname{Ad}_N$ and hold are the same at both parameters. These
+common maps incur no factor $q$.
+
+Fix a finite history. The same classical prefix fixes the same next
+instruction and the same next retained-cell update at both parameters.
+This is a statement about the common program at a specified history; the
+history need not have positive probability in both experiments. Induct on
+the actual instruction sequence. At the empty prefix the two maps agree.
+For a common CP next map $M$, composition gives
+
+$$
+M\circ\mathcal E_a-q^fM\circ\mathcal E_1
+   =M\circ(\mathcal E_a-q^f\mathcal E_1)\succeq_{\rm CP}0.
+$$
+
+At an F outcome $y$, use instead
+
+$$
+\begin{aligned}
+C_y^a\circ\mathcal E_a-q^{f+1}C_y^1\circ\mathcal E_1
+ &=C_y^a\circ(\mathcal E_a-q^f\mathcal E_1)\\
+ &\quad+q^f(C_y^a-q C_y^1)\circ\mathcal E_1
+ \succeq_{\rm CP}0.
+\end{aligned}
+\tag{4.6}
+$$
+
+CP maps are closed under composition, addition and multiplication by a
+nonnegative scalar. Deterministic local instructions and terminal labels
+only update common classical cells, so they preserve this induction.
+This proves the map assertion in (4.3). Complete positivity permits the
+actual reference amplification, and evaluation on the same positive
+initial state gives its matrix assertion. Appending the same classical
+output cell, summing cells that coincide, or transporting by $B\otimes I_Z$
+preserves positive order. This accounts for the full declared returned
+output; no order on an accessible complementary disposal environment has
+been asserted.
+
+The trace of each positive residual is nonnegative. Sum the resulting
+$p_{a,d}(r)\ge q^{F(r)}p_{1,d}(r)$ over any finite subset of accepting
+leaves. Increase those subsets to their countable union. Nonnegative
+monotone sums give (4.4), without truncating a stopping time, exchanging
+signed limits or assigning conditional states to zero-mass branches.
+The finite branch/trace interpretation is the one used in (3.20)–(3.22).
+For a supplied classical seed, apply this argument to each fixed seed
+and sum the nonnegative terms with its common probabilities. Finite
+strings form a countable seed space, so the same monotone-sum argument
+applies to their joint histories.
+$\square$
+
+**Corollary 4.3 (accepted means, caps and finite null events).** In
+Theorem 4.2, $\alpha>0$ implies $\beta>0$. If $0<\beta<\alpha$, put
+$r_q=-\ln q>0$. Then
+
+$$
+\begin{aligned}
+\mathbb E_{1,d}[F\mid\mathcal A]
+ &\ge\frac{\ln(\alpha/\beta)}{r_q},\\
+\mathbb E_{1,d}[F;\mathcal A]
+ :=\sum_{r\in\mathcal A}F(r)p_{1,d}(r)
+ &\ge\frac{\alpha\ln(\alpha/\beta)}{r_q}.
+\end{aligned}
+\tag{4.7}
+$$
+
+These are extended nonnegative expectations and may be infinite. Under
+$0<\beta<\alpha$, if $F\le K$ almost surely on ideal accepted paths
+for a finite $K$, then
+
+$$
+\beta\ge\alpha q^K,\qquad
+K\ge\frac{\ln(\alpha/\beta)}{r_q}.
+\tag{4.8}
+$$
+
+In particular any worst-run cap on all paths obeys this bound. If
+$\beta=0$, necessarily $\alpha=0$, even when the putative ideal
+accepted cost has infinite mean.
+
+**Proof.** On every finite accepted history the weight $q^{F(r)}$ is
+strictly positive. A positive sum of ideal accepting masses therefore
+has a positive weighted sum, proving the first and last assertions.
+For a finite conditional mean $\mu$, convexity of $x\mapsto e^{-r_qx}$
+and (4.4) give
+
+$$
+q^\mu\le\mathbb E_{1,d}[q^F\mid\mathcal A]\le\beta/\alpha.
+\tag{4.9}
+$$
+
+Taking logarithms proves the first line of (4.7); multiplying by $\alpha$
+proves the second. If $\mu=\infty$, both lower bounds hold directly.
+Under the cap, $q^F\ge q^K$ on the same accepted paths, so (4.4) gives
+(4.8). This is the usual exponential/Jensen argument applied to the
+selectively counted actual F reads; it assumes no independent samples.
+$\square$
+
+## 5. Necessary F-read price for the specified acquired gate
+
+**Definition 5.1 (the gate contract and the counted cut).** Fix
+$0<\kappa<1$ and $0<\delta<1/2$. A gate for this installation is one
+common installed policy, independent of $d,\gamma$, terminating almost
+surely at every $d\in(0,1)$ and $|\gamma|\le1$, with terminal report
+PASS or INCONCLUSIVE, and satisfying
+
+$$
+\begin{gathered}
+\Pr_{1,d}(\mathsf{PASS})\ge1-\delta
+                  \quad\text{for every }d\in(0,1),\\
+\Pr_{\gamma,d}(\mathsf{PASS})\le\delta
+ \quad\text{for every }d\in(0,1),\ |\gamma|\le1,
+                         \ \operatorname{Re}\gamma\le1-\kappa.
+\end{gathered}
+\tag{5.1}
+$$
+
+The counted calibration ends at this decision, before any accepted refresh
+or later task. Let $F_{\rm cal}$ be the actual number of F reads up to that
+cut. The gate may make an unbounded but finite number of calls on its
+different runs. Any additional same-source consumer is charged separately.
+INCONCLUSIVE has the same meaning as in Definition 3.6 and need not assert
+nonideality. Contract (5.1) is a frequentist acceptance/rejection condition,
+not a posterior probability or an exact-law assertion on a PASS tape.
+
+**Theorem 5.2 (matching one-coordinate order for the public gate).** Every
+gate satisfying (5.1) has, at each fixed $d\in(0,1)$,
+
+$$
+\begin{aligned}
+\mathbb E_{1,d}[F_{\rm cal};\mathsf{PASS}]
+ &\ge \mathcal B(\kappa,\delta)
+ :=\frac{(1-\delta)\ln((1-\delta)/\delta)}
+                 {-\ln(1-\kappa/2)},\\
+\mathbb E_{1,d}[F_{\rm cal}]
+ &\ge\mathcal B(\kappa,\delta),\\
+\mathbb E_{1,d}[F_{\rm cal}\mid\mathsf{PASS}]
+ &\ge\frac{\ln((1-\delta)/\delta)}{-\ln(1-\kappa/2)}.
+\end{aligned}
+\tag{5.2}
+$$
+
+Every finite ideal accepted cap obeys the last lower bound as well.
+For the actual dyadic inputs
+
+$$
+h,p\ge1,\quad s\ge2,\quad
+\varepsilon=2^{-p},\quad\delta=2^{-s},\quad
+\kappa=\frac{\varepsilon^2}{8h^2}\le\frac1{32},
+\tag{5.3}
+$$
+
+the accepted weighted mean and total ideal mean are each at least
+
+$$
+\frac38\,\kappa^{-1}\ln(1/\delta),
+\tag{5.4}
+$$
+
+and the conditional mean and accepted cap are each at least
+$\tfrac12\kappa^{-1}\ln(1/\delta)$. The already installed gate of
+Definition 3.6 satisfies the same contract and has the simultaneous
+deterministic calibration counts
+
+$$
+\begin{aligned}
+M:=F_{\rm cal}&=B_0+m
+       =128(s+2)+1+\frac{2(s+2)}\kappa,\\
+J_{\rm cal}&=37B_0+m,\\
+N_{\rm cal}&=9B_0+m,
+\end{aligned}
+\tag{5.5}
+$$
+
+on both accepted and inconclusive runs. In particular
+
+$$
+M\le\frac{14}{\ln2}\,\kappa^{-1}\ln(1/\delta)
+\quad\text{on (5.3)}.
+\tag{5.6}
+$$
+
+Thus the infimal possible ideal expected F count, ideal accepted weighted
+and conditional F counts, ideal accepted cap and uniform all-run F cap
+have order $\Theta(\kappa^{-1}\ln(1/\delta))$ for this gate contract,
+with uniform constants on (5.3). The assertions concerning infima mean
+that every lawful gate obeys the displayed lower bounds and one actual
+gate attains all the displayed upper orders. They assert neither an
+optimal leading constant nor an optimum for any other resource vector.
+
+**Proof.** Fix $d$, and compare the gate at $1$ with its permitted bad
+alternative $a=1-\kappa$. With $\mathcal A=\mathsf{PASS}$, contract
+(5.1) gives $\alpha\ge1-\delta>\delta\ge\beta$. Corollary 4.3
+ensures $\beta>0$. Consequently
+
+$$
+\ln(\alpha/\beta)\ge\ln((1-\delta)/\delta)>0,
+\quad
+\alpha\ln(\alpha/\beta)
+ \ge(1-\delta)\ln((1-\delta)/\delta).
+$$
+
+Equations (4.7)–(4.8) prove (5.2) and its cap statement. The total mean
+dominates the accepted weighted mean because all costs are nonnegative.
+No nonideal expected-cost assumption has been used.
+
+For $0<\kappa\le1$,
+
+$$
+-\ln(1-\kappa/2)
+ =\int_0^{\kappa/2}\frac{du}{1-u}
+ \le\frac{\kappa/2}{1-\kappa/2}\le\kappa.
+\tag{5.7}
+$$
+
+For $\delta\le1/4$, $1-\delta\ge3/4$ and
+$1-\delta\ge\sqrt\delta$, so
+$\ln((1-\delta)/\delta)\ge\tfrac12\ln(1/\delta)$.
+These estimates prove (5.4) and the conditional/cap constant.
+
+Theorem 3.8 supplies (5.1) for Definition 3.6, uniformly in the original
+$d$. Proposition 3.14 supplies precisely (5.5); its schedule always
+finishes calibration, including after an early mismatch. For (5.6),
+$128(s+2)\le4(s+2)/\kappa$ on (5.3), hence
+$M\le7(s+2)/\kappa\le14s/\kappa$; use
+$s=\ln(1/\delta)/\ln2$. Its F calibration count equals $M$ when
+conditioned on acceptance, its total F mean is $M$, and its accepted
+weighted mean is at most $M$. This same fixed-length gate bounds the
+uniform all-run cap, without combining favorable counts from different
+schedules. Taking the specified infima gives the asserted order.
+$\square$
+
+The attained upper in this comparison remains the complete construction
+of §3, including its paid consumer. On an accepted run, its actual
+refresh and owned task word add
+
+$$
+\Delta J=4L_0+j_f,\qquad
+\Delta N=L_0+n_f,\qquad
+\Delta(\hbox{g/F reads})=j_f,\qquad
+L_0=2p+5,\quad j_f+n_f\le h.
+\tag{5.8}
+$$
+
+The actual F subset of those later $j_f$ reads is counted in a full-run
+F bill; it is not part of $F_{\rm cal}$. Equations (5.5) and (5.8)
+refer to that one executed calibration/refresh/task trajectory. In
+particular (5.2) also lower-bounds its full-run F expectation, but does
+not make contract (5.1) necessary for every possible finite task.
+
+Theorem 3.11 retains the **actual** calibration cells and masses in its
+comparison, with accepted bound $\varepsilon P_A+2\delta$ and normalized
+bound $\min\{2,\varepsilon+2\delta/P_A\}$ when $P_A>0$.
+Its good-parameter comparison is to the nominal suffix at $I/3$ with
+the actual reference marginal, following an actually executed refresh.
+It is not a rerun of calibration at $\gamma=1$, a preparation of that
+comparison state, or a uniform rare-prefix conditional guarantee.
+The callable annotations and their forward/product/backward route
+agreement are exactly Definition 3.12 and Theorem 3.13. The converse
+adds no decoder, measurement setting or acquisition service to them.
+
+Only the F coordinate is priced necessarily by (5.2). Every such read
+uses a genuine fresh ready carrier supplied to an actual $\mathsf J$
+call. The full upper bill still includes $36B_0$ unread calibration
+wash carriers, $4L_0$ unread accepted refresh carriers, all measured
+retired carriers, one persistent five-mode code specimen and its
+untouched reference, and the $B_0+m$-bit chronological calibration tape.
+The program, counters, phase/cursor, task inputs and outcomes, source
+and reference bindings, grants, actual storage/backing and output copies
+remain paid. If a competing policy compresses its tape, the theorem
+neither grants that tape for free nor imposes the upper construction's
+storage strategy on it. Counting histories in (4.4) is not an additional
+record resource available to that policy.
+
+The upper's exact nominal matrix, annotation output and scheduling bit
+costs remain the separate $O(h)$, $O(h^2)$ and
+$O(T\log(T+2))+O(h^2)$ bounds of Theorem 3.13 and Proposition 3.14,
+plus actual input/installation/reference/output handling. The preparation,
+control and readout installation, reference calibration and physical
+carrier supply remain supplied premises with their own costs. Neither
+the selective lower bound nor a finite program bounds lifetime storage,
+precision, physical duration or energy, and no total Pareto optimum is
+asserted.
+
+## 6. The finite exact-law boundary and its asymmetric limits
+
+**Definition 6.1 (a finite positive certificate).** Within the supplied
+class (3.2), a certificate of the exact coherent law is a terminal
+classical report $\mathsf{EXACT}$, computed by a legal policy from its
+actual retained records, meaning $\gamma=1$. Soundness means
+
+$$
+\Pr_{\gamma,d}(\mathsf{EXACT})=0
+\quad\text{for every }d\in(0,1),\ |\gamma|\le1,\ \gamma\ne1.
+\tag{6.1}
+$$
+
+Every path returning this report must finish in finite time, without
+a uniform depth or mean-cost requirement. Other paths may be
+inconclusive or nonterminating. A positive certificate requires
+$\Pr_{1,d}(\mathsf{EXACT})>0$ for at least one original $d$.
+The target is the full lift $\mathcal L_1$, with the fixed outgoing
+record coordinates and reference action, not just its common unread
+channel or original $g$ instrument.
+
+**Theorem 6.2 (no finite positive exact coherent-law certificate).**
+No policy of Definition 6.1 is both sound and positive. More strongly,
+at every fixed original $d$ and every chosen real $a\in(-1,1)$,
+
+$$
+\Pr_{a,d}(\mathsf{EXACT})=0
+\quad\Longrightarrow\quad
+\Pr_{1,d}(\mathsf{EXACT})=0.
+\tag{6.2}
+$$
+
+This includes policies with unbounded finite stopping records and
+infinite ideal expected F cost.
+
+**Proof.** Take $\kappa=1-a\in(0,2)$ and the accepting set of finite
+$\mathsf{EXACT}$ histories in (4.4). Corollary 4.3 transports the
+zero probability in exactly the direction (6.2). Equivalently, every
+finite accepted history with positive ideal mass has positive
+alternative mass at least $q^{F(r)}p_{1,d}(r)$. Positive ideal
+certification would therefore contradict soundness at this one
+permitted nonideal alternative. No expectation or uniform truncation
+is involved.
+
+For the target's source correspondence, [CPW VI, Theorem
+101.3](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA_VI.md#101-同一原交互的单制备记录锚)
+identifies $\gamma=1$ in its full-matrix CP class with
+$\mathcal L(X)=S_\theta XS_\theta^\dagger$ for every $X\in M_3$,
+including untouched references. In this fixed installation
+$\theta=\pi/4$. Its scalar anchor is
+$p_+(\gamma)=(1+\omega_d\operatorname{Re}\gamma)/2$ with
+$\omega_d=(2-d)/4>0$; the exact value $(6-d)/8$ forces
+$\operatorname{Re}\gamma=1$, hence $\gamma=1$ in the unit disk.
+Thus certifying that anchor or that full coherent lift from finite
+records with the soundness in (6.1) is excluded. The CP class,
+calibration and rights are still premises of this deduction, and
+their truth is not inferred from a record. An authentically supplied
+exact anchor is a different input from a finite acquired PASS flag.
+$\square$
+
+**Proposition 6.3 (zero-F tasks, finite refutations and infinite events).**
+The preceding conclusions have the following precise limits within
+the same installation.
+
+1. Every owned finite word consisting only of $\mathsf N$ controls
+   can be executed with zero F reads and with identical full output
+   and successor at every $\gamma$.
+2. At $\delta=1/2$, a terminating gate with ideal and nonideal PASS
+   probabilities both $1/2$ uses zero F reads.
+3. For the actual repeated word cycles $\mathsf J_F;\mathsf N$,
+   a finite mismatch has probability zero at $\gamma=1$ and positive
+   probability at each real $a\in(-1,1)$ after two cycles. The event
+   that the entire infinite word is constant has probability one at
+   $\gamma=1$ and zero at each such $a$. It is not a finite positive
+   certificate.
+
+**Proof.** In the first case the initial state and every control are
+common across parameters; iterate $\operatorname{Ad}_N\otimes
+\operatorname{id}_Z$ and the common classical updates. This proves
+equality of the full successors, not just an equality of reported bits.
+
+For the second case actually perform one $\mathsf J_g$ read and
+report PASS precisely on $j=0$. Its branch probability is
+$\operatorname{tr}A_0(\sigma)=1/2$ for every entrance density
+matrix, since $V_0$ is unitary. The other bit gives INCONCLUSIVE,
+and the real post-read state is returned. This uses one source
+call, one genuine $g$ read and its stored bit, with no F or free coin.
+It satisfies the boundary error $1/2$ without satisfying any
+contract (5.1) with $\delta<1/2$.
+
+For the third case use Lemma 3.7 at the actual entrance to the word,
+including any earlier acquired record and its conditional state.
+For real $a$ put $q_a=(1+a)/2$. The first $m$ replies are constant
+with probability
+
+$$
+q_a^m+(1-q_a)^m.
+\tag{6.3}
+$$
+
+At $a=1$ this is one. At $-1<a<1$ both terms are positive, and
+the two-cycle mismatch has probability $2q_a(1-q_a)>0$.
+The constant-prefix events decrease with $m$, and (6.3) tends
+to zero at every such interior alternative. Continuity of
+probability on decreasing events gives the infinite-word assertion.
+Every finite constant prefix still has positive probability there.
+A report based on observing no future mismatch would require an
+infinite observation, outside Definition 6.1. The finite mismatch
+can refute an ideal implication; it cannot certify ideality with
+positive ideal probability. No mutual absolute continuity of
+infinite path laws is asserted. $\square$
+
+The classical null-event step and exponential convexity used above
+are mature tools. The adaptive channel-discrimination comparison
+has the mature CP-order/max-relative-entropy framework of
+Wilde–Berta–Hirche–Kaur,
+[*Amortized Channel Divergence for Asymptotic Quantum Channel
+Discrimination*, Proposition 10, Lemma 12, Remark 13 and Lemma
+14](https://arxiv.org/html/1808.01498v2): channel max-relative
+entropy has a CP-order characterization, and a fixed-number
+adaptive protocol obeys the corresponding divergence converse.
+Here the new source-specific deduction is (4.5) through (5.4):
+only the actual F branches incur a factor, the intervening allowed
+maps incur none, the bound survives full disturbed/reference
+successors, and summation over unbounded finite terminal leaves
+gives both the selective accepted cost and the exact finite
+certificate obstruction. The general CP-order or discrimination
+principle is not reintroduced as a new theorem.
+
+The existing declarations
+[`finite_kraus_instrument_born_marginal`](../../../D5/S3/Quantum/Measurement/FiniteKrausInstrumentBornMarginal.lean),
+[`word_probability_trace_representation`](../../../D5/S3/Quantum/Measurement/WordProbabilityTraceRepresentation.lean)
+and [`complete_subtree_trace`](../../../D5/S3/Quantum/Recovery/FiniteLocalProtocol.lean),
+with their [Born-marginal](../../../Blueprint/D5/S3/Quantum/Measurement/FiniteKrausInstrumentBornMarginal.scribe.cs),
+[word-trace](../../../Blueprint/D5/S3/Quantum/Measurement/WordProbabilityTraceRepresentation.scribe.cs)
+and [finite-protocol](../../../Blueprint/D5/S3/Quantum/Recovery/FiniteLocalProtocol.scribe.cs)
+owners, supply the finite instrument, chronological trace and complete
+finite-tree interpretation. The private trace-fold helper in the
+word-trace source supplies its backward-effect step. Those facts
+do not supply (4.5), a selective F count, or the passage to countably
+many finite terminal leaves. The existing
+[`equivalent_probability_laws_exclude_perfect_separator`](../../../D5/S3/Observer/MeasureSeparation/EquivalentMeasuresExcludePerfectSeparator.lean)
+and its [owner](../../../Blueprint/D5/S3/Observer/MeasureSeparation/EquivalentMeasuresExcludePerfectSeparator.scribe.cs)
+express a general null-set obstruction under mutual absolute
+continuity. Here only the one-way finite-terminal implication is
+needed and proved; the infinite-word example forbids promoting
+it to mutual equivalence of the infinite laws.
+
+The independent-copy attempted-pair bounds of §2 retain their own
+fresh-preparation, terminal-discard, real-effect and no-surviving-
+quantum-memory hypotheses. They do not price this one evolving
+source, and (5.2) does not price their attempted pairs. CPW VI
+§§106–110 retain their different same-carrier return interaction;
+its accessible complementary information is not added to
+Definition 4.1. The native known/unknown-law acquisition and
+same-material transfer results in [Native Leaf Boundary
+Acquisition II, §§77–79](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_BOUNDARY_ACQUISITION_II.md#77-wlab-ord-acquiring-an-unknown-law-on-one-ordered-native-source)
+also retain their rational-field, ordered-roster and literal-Read
+contracts. Their acquired law or fresh-Read price does not supply
+the quantum lift, and no absence of such native results is used
+to justify this converse. This is a source-relative synthesis,
+without a claim of worldwide priority.
+
+The independent meanings and recovery limits of Proposition 3.15
+remain exact: the spatial data are the actual code/carrier/access
+cut; chronology is performed order; boundary data are the
+installed complete branches and access rights; memory is the
+actual retained record and callable cells. Theorems 4.2–6.2
+constrain the acquired boundary-law information and its necessary
+read price. They construct no inverse from a finite classical tape
+to an arbitrary unknown quantum state, no new four-view mutual
+recovery, no physical metric or elapsed-time readout, and no
+recovery of an erased preparation, inaccessible carrier or
+arbitrary past. The nominal route agreement remains the precise
+finite task statement (3.29)–(3.31), on its supplied source and
+retained context.
+
+All original fixed-$G_{gc}$/original-$Q$, parked-consumer,
+unchanged-initialization and final-no-Ready obligations retain
+their original scopes. The common actual-apparatus bridge among
+native, path, quantum and continuous installations still requires
+one genuine initialization and acquisition, legal selectors and
+actions, complete outputs and successors, retained callable records,
+references, rights and a simultaneous resource correspondence.
+Numerical inversion and likelihood bounds manufacture none of
+those premises. Physical conformance and acquisition of this
+stationary full-CP/readout/reference interface, general-$N$
+herald/archive operation, all-raw-carrier retention,
+supplied-contrast synthesis, native-to-quantum correspondence,
+full four-expression recovery and unlimited-use bounds remain
+separate unresolved bridges. Alpha/beta remains a candidate
+foundation, not a proved universal reduction or minimum. The
+gate-specific price and finite certificate boundary neither
+identify the separate installations as one source nor complete
+the common internal-observer objective.
+
+## 追加锚（本行以下为增补区）
+
+## 7. Current-public supplier reconciliation for the quantum converse
+
+**Supplier correspondence 7.1 (the changed coherent-reconstruction source).** The current public [coherent reconstruction §36](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION.md#36-同一被动等待的极分解与完整原生读取的不相容)
+uses the fixed five-mode $D$-frame, its polar factor and the original
+complete-read menu. It proves a waiting-compatible polar structure and a
+source-specific full-read effect obstruction, including a positive
+total-variation separation for the displayed input pair. It does not provide
+a common state--effect--instrument composition, a finite positive exact-law
+certificate, or a new preparation/reference/right. The selective F-read
+converse and finite exact-certificate boundary in §§4--6 therefore retain
+their own fixed-DU hypotheses and are neither strengthened nor replaced by
+§36.
+
+**Supplier correspondence 7.2 (analytic current sources).** The current
+public [Native Free Diffusion §§24--28](FIB_NATIVE_FREE_DIFFUSION_QUOTIENT_RIGIDITY.md#24-timed-entrance-and-killed-releases-from-the-original-source)
+supplies original-source causal releases, released-state accuracy and a
+prospective native consumer under the exact-real timed-service and actuation
+premises of Assumptions 25.1 and 26.1. The current public [attractive gluing
+§35](FIB_NATIVE_ATTRACTIVE_BOUNDARY_RESPONSE_GLUING.md#35-实际慢共振输入有限相容修正与修正后的物理质量)
+supplies a finite analytic compatibility correction and positive corrected
+mass while leaving the full residual estimate open. [Appendix II §120](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_II.md#120-a-positive-quadratic-direction-on-every-original-emission-overlap)
+supplies a positive quadratic direction for an original passive emission
+overlap, with deterministic attainment unresolved. None of these sources
+installs the fixed-DU CP/readout/reference interface, supplies a quantum
+finite-bit or finite-shot bridge, or identifies the separate installations
+with the present source.
+
+**Boundary 7.3 (remaining obligations).** The quantum contribution remains a
+fixed-DU selective adaptive F-read result with its supplied preparation,
+reference, rights, calibration, retained record and finite callable prefix.
+It does not establish physical acquisition of those interfaces, arbitrary
+unknown-state reconstruction, general-$N$ herald/archive operation, a native
+or continuous common apparatus, full four-view recovery, or unlimited-use
+bounds. The original fixed-model and common-realization obligations retain
+their exact scopes.
+
+## 追加锚（本行以下为增补区）
+
+
+## 8. A uniform native separation for the fixed same-history recorded recovery
+
+**Definition 8.1 (the sixteen-bit source and its actual reference history).**
+Use exactly [V88, Definitions 23.1–23.2 and 28.1](AURIC_RECURSIVE_SPHERES_RELATIVE_RESOLUTION_RELATION_FIELD_V88.md).
+The source for this section is its fixed sixteen-bit chain, with positions
+$-1,0,\ldots,14$, full space $\mathcal H_{\mathcal N}=(\mathbb C^2)^{\otimes16}$,
+legal subspace $\mathcal L=\operatorname{span}\{|b\rangle:b_i b_{i+1}=0\}$,
+and unique root
+
+$$
+\Omega_0=|1,0,0,0,1,0,0,0,1,0\rangle_{-1,\ldots,8}
+ \otimes|000\rangle_{9,10,11}\otimes|000\rangle_{12,13,14}.
+\tag{WR1.8.1}
+$$
+
+The native menu consists of the same full matrices $K_\ell$ of V88 (23.2),
+all addresses $0\le\ell\le13$, complete computational-basis diagonal
+zero-one projection decompositions, and finite deterministic feedback on
+acquired results. Every complete finite tree retains all calls, reports,
+controls, zero-mass labels, failures, refusals and stops. Inverse notation
+means nine forward calls. Each tree has finite $L,m,b,\mathcal C$ as in
+V88 (23.3), with no common upper bound imposed across trees. No rotation,
+rewiring, reset, source replacement, external random weight or extra
+coherent control is added. These assumptions concern this source; they do
+not identify it with the five-mode preparation of the preceding sections.
+
+Put $\varphi=(1+\sqrt5)/2$, $t=\varphi^{-1}$, $s=t$, $r=t^2$,
+$\beta=\sqrt t$ and
+$\zeta=e^{3\pi i/5}$. Thus $r+s=1$ and $s^2=r$.
+The actual prefix $\mathcal P_\chi$ calls, in time order,
+$K_3,K_2,K_1,K_{10},K_{13}$, then reads the original setting cells
+$X=b_{10},Y=b_{13}$, with empty result-routing words. Its complete
+pre-read archive is $a_{xy}$ on setting outcome $(x,y)$. Its unnormalized
+branch density $D_{xy}$ is exactly V88 (26.8), including the fixed
+spectator bits and original control $c_*$. In particular its setting
+weight is $p_xp_y$, where $p_0=r,p_1=s$, and its source vector is the
+actual $\psi_{\rm alt}$ of V88 (26.5); write $\psi_{123}$ for its
+$b_1b_2b_3$ factor there. No new preparation is made.
+Take $R=H_{\{1\}}$ and $Z=H_{\{1\}^c}$ in the full native tensor space.
+The reference and the fixed mathematical reverse are
+
+$$
+\begin{gathered}
+\chi=\begin{pmatrix}s&\gamma\\\overline\gamma&r\end{pmatrix},
+\qquad \gamma=r\beta\zeta^{-4},\qquad
+h=\operatorname{diag}(s,r),\qquad \det\chi=r^2>0,\\
+\mathcal R_\chi(Y)=\chi^{1/2}\Delta(h^{-1/2}Yh^{-1/2})\chi^{1/2},
+\qquad \Delta(Y)=\sum_{j=0}^1P_jYP_j,\qquad
+P_j=|j\rangle\langle j|_R,\\
+Q_j=\mathcal R_\chi(P_j)=
+ \frac{\chi^{1/2}P_j\chi^{1/2}}{\chi_{jj}}.
+\end{gathered}
+\tag{WR1.8.2}
+$$
+
+Here $\chi$ is the actual unconditional $b_1$ marginal, also the
+calibration conditional on the original positive setting event $X=Y=0$.
+It is not a freely supplied input or an extra reference register.
+
+**Definition 8.2 (the original-output laws being compared).** Perform the
+original $b_1$ computational read, retaining its actual result $j$.
+For this same input, let $P_\chi$ be the complete ideal terminal law of
+V88 (28.4), whose blocks are
+
+$$
+\Theta_{xy,j}=(\mathcal R_\chi\otimes\operatorname{id}_Z)
+ \bigl[(P_j\otimes I)D_{xy}(P_j\otimes I)\bigr].
+\tag{WR1.8.3}
+$$
+
+Every original program label $\pi=\pi(\mathcal P_\chi)$, archive $a_{xy}$,
+read $j$, sixteen-bit terminal word $z$ and original stop label remains
+separate, including every zero coordinate. The setting cells in $Z$
+are the original physical records; the archive notation does not attach
+new quantum copies. This input's original failure and early-stop labels
+have zero mass and remain present.
+
+A competitor $C$ is any permitted complete finite native continuation
+after that same read, allowed to depend on all acquired reports and on
+the known original program. Let $P_C$ be its full law, including its own
+program identity and all added continuation records $k$. Write $\bar P_C$
+for the mathematical sum over only those added records. Every original
+$\pi,a,j,z$ and stop coordinate remains unchanged. Include additional
+failure, refusal and early-stop positions in the comparison space with
+ideal mass zero; do not condition on success. All terminal bits in this
+law are the actual computational readouts. This is exactly the
+original-output comparison of V88 Definition 28.1. Summing added records
+is a probability marginal, not physical erasure or a permission to
+continue an absorbed stop. On other legal input prefixes the original
+absorbed branches retain their densities, archives and masses, with no
+new $j$ or later call, as required there.
+
+**Theorem 8.3 (a positive floor independent of every finite budget).**
+Define the event in the complete original-output space by
+
+$$
+\mathcal F=\{\pi=\pi(\mathcal P_\chi),\ j=0,\ z_1=z_2=1\}.
+\tag{WR1.8.4}
+$$
+
+It includes all original setting archives and all other terminal bits;
+it does not identify their separate coordinates. For every competitor
+$C$ of Definition 8.2,
+
+$$
+\bar P_C(\mathcal F)=0,\qquad
+P_\chi(\mathcal F)=\delta=
+\frac{r^3}{1+2r}=\frac{16-7\sqrt5}{11}>0,
+\qquad
+\operatorname{TV}(\bar P_C,P_\chi)\ge\delta.
+\tag{WR1.8.5}
+$$
+
+For any law $\widetilde P_\chi$ on $C$'s full added-record space with
+original-output marginal $P_\chi$, one also has
+$\operatorname{TV}(P_C,\widetilde P_\chi)\ge\delta$.
+
+Proof. Write $n_i=|1\rangle\langle1|$ on native bit $i$, with identity
+on the other bits, and let $F_{12}=n_1n_2$. This is a mathematical
+support test for two bits of the existing complete terminal read.
+[V15, Theorem 7.1](AURIC_GOLDEN_GATE_NAND_UNIVERSALITY_AND_ARITHMETIC_LIMITS_V15.md#thm-defect)
+gives $[K_\ell,F_{12}]=0$ at every original address. Every permitted
+projection is diagonal, so also commutes with $F_{12}$.
+Since $F_{12}\Omega_0=0$, induction along each branch of any complete
+finite tree gives $F_{12}v_h=0$ for its unnormalized branch vector.
+This applies before and after the actual $j$ read, to every feedback
+choice, repeated or inverse-expanded call, identity alignment slot and
+terminal stop. Failure and refusal branches obey the same induction;
+zero vectors need no normalization. Consequently every actual terminal
+word with $z_1=z_2=1$ has mass zero on every branch. Summing any added
+records preserves zero. This proves the first equality on the full
+native family, without bounding its resources or restricting its menu.
+
+For the target mass, use the actual vector in V88 (26.5). With
+$B=-\beta\zeta^4$ its active-block off-diagonal coefficient, the part
+with $b_2=1$ is precisely
+
+$$
+ (I\otimes n_2\otimes I)\psi_{123}
+       =\zeta B^2|010\rangle_{b_1b_2b_3},
+\qquad |B|^2=s,\qquad |B|^4=s^2=r.
+\tag{WR1.8.6}
+$$
+
+All omitted source bits retain their fixed original values. This
+component already has $b_1=0$. Define the positive unnormalized
+complement operator $\tau_{xy}=\langle0|_R D_{xy}|0\rangle_R$.
+The original settings are independent factors in this very same
+$D_{xy}$, by V88 (26.8), hence
+
+$$
+ (P_0\otimes I)D_{xy}(P_0\otimes I)=P_0\otimes\tau_{xy},
+ \qquad \operatorname{Tr}(n_2\tau_{xy})=p_xp_y r.
+\tag{WR1.8.7}
+$$
+
+The fixed square root in V88 (28.5) and its coefficient (28.6) give
+
+$$
+ \chi^{1/2}=\frac1{\sqrt{1+2r}}
+       \begin{pmatrix}1&\gamma\\\overline\gamma&2r\end{pmatrix},
+ \qquad q:=\operatorname{Tr}(P_1Q_0)
+       =\frac{|\gamma|^2}{s(1+2r)}=\frac{r^2}{1+2r}.
+\tag{WR1.8.8}
+$$
+
+Equation (WR1.8.3) therefore has $j=0$ block
+$Q_0\otimes\tau_{xy}$. Summing its terminal diagonal entries with
+$z_1=z_2=1$ gives, separately for every original archive,
+
+$$
+ P_\chi\{\pi(\mathcal P_\chi),a_{xy},j=0,z_1=z_2=1\}
+   =q\operatorname{Tr}(n_2\tau_{xy})=p_xp_y r q.
+\tag{WR1.8.9}
+$$
+
+This equality uses the source's actual joint $j=0,b_2=1$ mass $r$;
+there is no division by the probability of $j=0$ or of $X=Y=0$.
+The sum over all four original settings is $rq$, since
+$\sum_{xy}p_xp_y=1$. With $r=(3-\sqrt5)/2$, one has
+$r^3=9-4\sqrt5$ and $1+2r=4-\sqrt5$, which yield the displayed
+$\delta$. Its positivity follows from $16^2>5\cdot7^2$.
+
+Both compared laws have total mass one with all failure and stop
+coordinates included. The standard finite-law identity
+$\operatorname{TV}(P,Q)=\frac12\sum_\omega|P(\omega)-Q(\omega)|
+=\sup_A|P(A)-Q(A)|$ now gives (WR1.8.5) from $\mathcal F$.
+Its inverse image under the projection forgetting added records has
+probabilities zero and $\delta$ for $P_C$ and every
+$\widetilde P_\chi$, proving the last assertion. $\square$
+
+**Corollary 8.4 (no total-variation convergence on the original input domain).**
+For any sequence of permitted complete finite continuations $C_n$,
+even with unbounded gate counts, measurement counts, branching and
+finite control/archive sizes,
+
+$$
+ \inf_n\operatorname{TV}(\bar P_{C_n},P_\chi)\ge\delta>0.
+\tag{WR1.8.10}
+$$
+
+In particular no sequence of native compiler families on all legal
+prefixes of V88 Definition 28.1 converges in TV even pointwise at
+$\mathcal P_\chi$ to that strong target. Its worst-case input error
+is at least $\delta$ for each family, including when a different
+finite continuation is selected for each known original program.
+Proof. Apply Theorem 8.3 at this one retained legal input for every
+index. The supremum over the original input domain includes that
+input. No other input or original absorbed branch is removed. $\square$
+
+**Boundary 8.5 (attribution and exact scope).** The source-specific
+`repo-derived` deduction is the positive forbidden-event mass
+(WR1.8.9) and its uniform consequence for V88 (28.4). V88 (26.5),
+(26.8)–(26.9), (28.3) and (28.5)–(28.6) supply the actual vector,
+complete recorded source and fixed local Petz map; V15 supplies the
+conserved adjacent defect. The event characterization of TV is a
+standard probability bound. Neither Petz theory nor conserved-sector
+theory is a new result here. The recovery-theory attribution is
+[Petz, *Sufficient subalgebras and the relative entropy of states of a von Neumann algebra*](https://doi.org/10.1007/BF01212345),
+as in V88. V88 Proposition 28.2 and Corollary 28.3 use arithmetic to
+separate exact masses and obtain a gate-count-dependent error; the
+support event above gives a strictly positive bound independent of
+that count.
+
+The conclusion is only for this fixed strong local Petz map with its
+specified identity action on the native complement and retained original
+records. Its forbidden mass lies outside $\mathcal L$ in the full
+Hilbert space where V88 defines the ideal target. This does not rule
+out every recovery map or refute a process returning only the single
+unconditional marginal $h$ to $\chi$. It supplies no arbitrary-input
+or ancilla diamond bound, sharp optimum, new native operation, quantum
+origin, or common physical realization.
+
+## 追加锚（本行以下为增补区）

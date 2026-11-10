@@ -1,0 +1,4 @@
+## 1. Scope
+
+The complementary diminished Sombor index of a graph is $\sum_{uv\in E}\sqrt{d_u^2+d_v^2}/\max(d_u,d_v)$. Among connected graphs of order $n$ with cyclomatic number $\ell\ge1$, this volume shows that a graph with a universal vertex pays an excess over the edge count that is bounded below independently of $n$, while a two-hub graph without a universal vertex has excess of order $1/n$. Consequently, for every $\ell\ge1$ and every $n\ge3\ell+9$, no minimizer of the index has a universal vertex; for $\ell=1$ the same holds for every $n\ge7$. The minimum excess over the edge count lies between two explicit functions of order $1/n$.
+

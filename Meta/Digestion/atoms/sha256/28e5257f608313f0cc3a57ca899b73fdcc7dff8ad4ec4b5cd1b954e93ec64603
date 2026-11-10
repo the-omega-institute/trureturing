@@ -1,0 +1,35 @@
+**Lemma 24.1 (second response in homogeneous energy).** There is a unique $\Upsilon\in\dot{\mathcal H}_0$ such that
+
+$$
+h(\Upsilon,z)=-\mathcal F_2(z)\quad(z\in\dot{\mathcal H}),
+\qquad b(p,\Upsilon)=0.
+\tag{24.2}
+$$
+
+It is real and even. No $L^2$ representative or native-domain membership of $\Upsilon$ is asserted.
+
+Proof. The kinetic terms of $\mathcal F_2$ are continuous in $\sqrt b$ because $r^2Yp,rYv\in L^2$ by (22.6). For $L\in\{V_1,V_2,V_{\rm t}\}$, (3.4) gives $|L|\le C\sqrt V$ and $\int\sqrt V|z|^2\le\Gamma b[z]$. Weighted Cauchy–Schwarz therefore bounds the pairings with $p$ or $v$ by $C\sqrt{b[z]}$. The full unweighted threshold term is continuous because
+$|\langle p,z\rangle|\le\|p\|_{14/9}\|z\|_{14/5}\le C\sqrt{b[z]}$,
+using (22.6)–(22.7). These estimates define the complex linear $\mathcal F_2$ on the completion.
+
+The first response equation (3.5), with R Theorem 16.2's representative, says on this completion
+
+$$
+h(v,z)=-\mathfrak a_1(p,z).
+\tag{24.3}
+$$
+
+Parity extends it from the odd completion to all $z$. In particular $\mathfrak a_1(p,v)=-h[v]$ is real. Hermitian symmetry and $\|p\|_2=1$ give the exact compatibility
+
+$$
+\begin{aligned}
+\mathcal F_2(p)
+ &=\mathfrak a_2[p]-h[v]\\
+ &=\nu^2(K_{\rm base}-D_{\rm resp})-\lambda D_{\rm clock}
+ =C_{\rm resp}=0.
+\end{aligned}
+\tag{24.4}
+$$
+
+Thus the threshold contribution $-a\lambda\langle p,z\rangle$ is included in compatibility. On $\dot{\mathcal H}_0$ the bounds $a\theta b\le h\le ab$ and Riesz representation give a unique solution of (24.2). Since both sides annihilate $p$, it solves the equation on the whole completion. Complex conjugation and reflection commute with $h$, while $\mathcal F_2$ is real on real vectors and annihilates odd vectors. Uniqueness gives reality and evenness. $\square$
+

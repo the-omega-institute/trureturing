@@ -1,0 +1,15 @@
+**定义 78.1（方向正交与正面 Peirce 切向性）。** 在每个原有限 EJA、原正 Frobenius 型和完整原准备背景中，令 $F_A(a,b)=D^A_a b$。考虑三个覆盖全部原对象的关系：
+
+$$
+\begin{aligned}
+\mathsf Q:&\quad q_A(b,F_A(a,b))=0 &&(a,b\in E_A),\\
+\mathsf T:&\quad F_A(a,e)\in E_{1/2}(e)
+&&(a\in E_A,\ e\circ e=e),\\
+\mathsf T_+:&\quad \pi^{s(x)}_0F_A(a,x)=0
+&&(a\in E_A,\ x\in C_A).
+\end{aligned}
+\tag{78.1}
+$$
+
+$E_\lambda(e)$ 是原 $L_e$ 的特征空间；$s(x)$ 是正元的谱支持幂等元，$\pi_0^{s(x)}$ 是到 $E_0(s(x))$ 的原 $q_A$ 正交投影，$s(0)=0$。$\mathsf T_+$ 表示一阶变化没有进入该正面完全缺失的余补方向；它不要求变化仍在闭面 $E_1(s(x))$ 内。所有幂等元与支持面均为原空间内的数学元素，不添加实际准备、观察者、器件或角对象。
+

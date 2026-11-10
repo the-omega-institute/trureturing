@@ -8,7 +8,7 @@ internal sealed class DiagonalIterateEvenDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S1/Recurrence/Parity/DiagonalIterateEven.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Recurrence/hanna2026a395842");
+        LibraryNoteRef.Create("D5/L/RecurrenceComposition/hanna2026a395842");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The implicitly determined compositional series has even diagonal coefficients at every index at least two.",

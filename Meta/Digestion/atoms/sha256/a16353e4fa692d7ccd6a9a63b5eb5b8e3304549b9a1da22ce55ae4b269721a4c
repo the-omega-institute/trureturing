@@ -1,0 +1,46 @@
+**Lemma 112.1 (equivalence on one compatible stopped branch).** Fix a
+finite word $w$ and two rational parameters $\theta,\theta'$ satisfying
+$R\theta=R\theta'$ and $A_w\theta=A_w\theta'$. The two subprobability
+laws restricted to execution of $w$ and stopping there, represented by
+the seed and its finitely many noisy replies, are mutually absolutely
+continuous. If that branch has positive probability under one parameter,
+it has positive probability under the other.
+
+**Proof.** There are countably many finite words: all syntax, rational
+operands, addresses and finite framing are countable. Real noisy outputs
+are coordinates of a word's branch, not extra discrete letters. Suppose
+$w$ contains $m$ successful noisy calls. On coordinates
+$(\omega,y_1,\ldots,y_m)$, reconstruct successive histories by inserting
+the frozen commands, their exact replies and their structural outputs.
+Equality of the advice and of all the exact rows implies equality of these
+inserted exact replies, including every prefix. The same policy therefore
+defines the same measurable selection-and-stopping region $E_w$ for both
+parameters. At a common history the scale is the same, although the
+current terminal means can differ.
+
+Relative to seed law $\lambda$ times Lebesgue measure on $\mathbb R^m$,
+the restricted measure has density
+
+$$
+\mathbf1_{E_w}(\omega,y)
+\prod_{j=1}^m
+\frac{1}{\sqrt{2\pi}\,\sigma(h_j)}
+\exp\left(-\frac{(y_j-\mu_{\theta,j})^2}{2\sigma(h_j)^2}\right).
+\tag{112.3}
+$$
+
+This follows by iterating the conditional observation kernels and the
+causal selection indicators; Tonelli applies to their nonnegative
+products. Every factor is finite and strictly positive on $E_w$ under
+both parameters. The empty product is one when $m=0$. Thus both restricted
+measures have exactly the same null sets, proving the assertion. Complete
+exact replies, reconstruction of controller state and the final report are
+measurable functions of these same coordinates. $\square$
+
+The lemma asserts neither equivalence of the entire mixed stopped laws
+nor equivalence of infinite paths. An exact read on another branch can
+have unequal Dirac returns. Infinitely many positive-noise samples can
+also separate means; for instance averages of independent
+$\mathcal N(\theta,1)$ samples converge to $\theta$. Neither operation is
+licensed by a finite restricted-branch equivalence.
+

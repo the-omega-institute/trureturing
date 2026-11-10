@@ -1,0 +1,100 @@
+**Theorem 12.2 (Exact necklace means).** Every $N_k$ is a finite simple connected bridgeless cubic graph, with $4k$ vertices and $6k$ edges. Under Definition 12.1, put $a=23/32$. Then
+
+$$
+ \frac{\mathbb E B_k}{6k}
+   =\frac38-\frac{3}{32}a^{k-1},
+ \qquad
+ \mathbb E G_k=\mathbb E R_k=\frac{6k-\mathbb E B_k}{2}.
+ \tag{12.1}
+$$
+
+In particular,
+
+$$
+ \mathbb E B_k>\frac{|E(N_k)|}{3}\quad\Longleftrightarrow\quad k\ge4,
+ \qquad
+ \lim_{k\to\infty}\frac{\mathbb E B_k}{|E(N_k)|}=\frac38.
+ \tag{12.2}
+$$
+
+The excess over one third is
+
+$$
+ \mathbb E B_k-\frac{|E(N_k)|}{3}
+   =\frac{k}{4}-\frac{9k}{16}a^{k-1}.
+ \tag{12.3}
+$$
+
+For the simple bridgeless cubic graph $N_4$, which has sixteen vertices and twenty-four edges,
+
+$$
+ (\mathbb E G_4,\mathbb E B_4,\mathbb E R_4)
+ =\left(\frac{2075583}{262144},\frac{1070145}{131072},
+              \frac{2075583}{262144}\right)
+ =\left(8-\frac{21569}{262144},\ 8+\frac{21569}{131072},\
+              8-\frac{21569}{262144}\right).
+ \tag{12.4}
+$$
+
+*Proof.* First check the graph hypotheses. Each terminal has internal degree two and receives exactly one connector; the other vertices have degree three. For $k=1$, the connector is the missing edge $10$, so $N_1=K_4$. For $k\ge2$, connectors join different copies, with distinct unordered pairs of endpoints, even when $k=2$. Thus the graph is simple and cubic. It is connected. Every internal edge lies in one of the triangles $0_i2_i3_i0_i$ and $1_i2_i3_i1_i$. Every connector lies on the cycle obtained by using the terminal-to-terminal path $0_i2_i1_i$ in every copy. Hence every edge lies on a cycle and none is a bridge. No assertion of three-edge-connectivity is needed.
+
+We next reduce to fixed reference cyclic orders. At a cubic vertex there are exactly two cyclic orders. For any sampled choice, the vertex switch (10.13) conjugates its actual corner/band system to the chosen reference orders and translates the sign vector by a fixed coboundary. Since every sign is independently fair, this translation preserves the full uniform sign law. The conjugacy preserves physical facial boundaries and agreement or opposition of repeated directed traversals. Therefore the law of every edge category can be computed with fixed reference orders and independent fair signs. This uses the standard vertex switch of [Ghanbari–Šámal, Lemma 2.1](https://arxiv.org/html/2605.01410v1#S2); the actual flag identity and its all-edge fair-sign consequence are established in Sections 6 and 10.
+
+Cut the connector band or bands incident to a diamond, retaining its two port half-edges and their four side flags. The finite alternating corner/band paths pair the four port flags. Components missing all four flags are untouched. Write $D$ for the pairing of the two flags at each terminal separately, and $T_0,T_1$ for the two pairings joining each terminal's flags to the other terminal. Call these the *dead* and *through* cases. These pairings are actual first-positive-return pairings as in Section 10, not independently supplied connection data. Contracting each alternating path segment gives the same marked oriented-orbit relations before and after reattachment. In particular, after a distinguished band is cut, its dead pairing is exactly the bad-singular case in the four-endpoint calculation of Section 7.
+
+Here is the complete local diamond calculation. Identify a diamond's port flags with the four flags of the deleted edge $01$ in the edge order $01,02,03,12,13,23$. Number flags by $4e+2j+b$, where $j\in\{0,1\}$ is the labelled end and $b\in\{0,1\}$ is its side. Choose the reference corner involution
+
+$$
+ s=(0\ 9)(1\ 4)(2\ 17)(3\ 12)(5\ 8)(6\ 21)
+       (7\ 14)(10\ 23)(11\ 18)(13\ 16)(15\ 20)(19\ 22).
+ \tag{12.5}
+$$
+
+For signs on the five internal edges, let $r$ fix $0,1,2,3$ and, for $e\ne0$, act by
+
+$$
+ r(4e+2j+b)=4e+2(1-j)+(b+1+t_e\bmod2).
+ \tag{12.6}
+$$
+
+The port pairing $P(x)$ is $(sr)^{n_x}x$ at the first positive time $n_x$ when the orbit returns to $\{0,1,2,3\}$. Thus
+
+$$
+ D=(0\ 1)(2\ 3),\qquad T_0=(0\ 2)(1\ 3),\qquad T_1=(0\ 3)(1\ 2).
+ \tag{12.7}
+$$
+
+Put $u=t_{02}+2t_{03}$ and $v=t_{12}+2t_{13}$. Following (12.5)–(12.6) to the first positive return gives these two tables, with row $u$ and column $v$:
+
+$$
+ \begin{array}{c|cccc}
+ t_{23}=0&v=0&v=1&v=2&v=3\\\hline
+ u=0&T_1&T_0&T_1&T_0\\
+ u=1&T_1&D&T_1&T_1\\
+ u=2&T_0&T_0&D&T_0\\
+ u=3&T_0&T_0&T_1&T_1
+ \end{array}
+ \qquad
+ \begin{array}{c|cccc}
+ t_{23}=1&v=0&v=1&v=2&v=3\\\hline
+ u=0&T_0&T_0&D&T_0\\
+ u=1&D&D&D&D\\
+ u=2&T_0&T_0&D&T_0\\
+ u=3&T_0&T_0&D&T_0.
+ \end{array}
+$$
+
+The table accounts for all $2^5$ internal sign choices, with counts
+
+$$
+ \#D=9,\qquad \#T_0=16,\qquad \#T_1=7.
+ \tag{12.8}
+$$
+
+Consequently a diamond is through with probability $a=23/32$. Closing its two ports by an additional fair band gives the actual uniform-sign $K_4$ model. For each through pairing the two choices of that band's sign give one good and one regular state; the dead pairing gives a bad state under both signs. The bad marginal of the closing edge is therefore $9/32$. Every other edge of $K_4$ has the same marginal: relabel the vertices to map that edge to the closing edge, then apply the vertex normalization above. These operations preserve the uniform sign law and the physical category. Thus
+
+$$
+ \mathbb P_{K_4}(e\text{ bad})=\frac9{32}\quad\text{for every edge }e.
+ \tag{12.9}
+$$
+

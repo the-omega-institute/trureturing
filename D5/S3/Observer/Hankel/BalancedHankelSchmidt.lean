@@ -6,6 +6,8 @@
    utility: none
    digest: Construct a complete finite Schmidt decomposition of the actual infinite Hankel operator from its balanced Gramians. -/
 
+/- Escape audit of the published invRootDiagonal is unfinished: https://github.com/the-omega-institute/trureturing/issues/22032. -/
+
 import D5.S3.Observer.Hankel.InfiniteHankelGramian
 import D5.S3.Observer.Hankel.BalancedRealizationTransport
 import D5.S3.Observer.LinearMemory.HankelGramianSingularValues
@@ -27,7 +29,7 @@ open scoped BigOperators MatrixOrder Matrix.Norms.L2Operator RealInnerProductSpa
 variable {ι κ η : Type} [Fintype ι] [DecidableEq ι]
   [Fintype κ] [DecidableEq κ] [Fintype η] [DecidableEq η]
 
-private def invRootDiagonal (w : ι → ℝ) : Matrix ι ι ℝ :=
+def invRootDiagonal (w : ι → ℝ) : Matrix ι ι ℝ :=
   diagonal (fun i => (Real.sqrt (w i))⁻¹)
 
 private theorem invRootDiagonal_selfAdjoint (w : ι → ℝ) :
@@ -324,8 +326,5 @@ theorem constructed_hankel_schmidt {n m p : ℕ}
     hankel_mode_equations A B C hA b, hankel_schmidt_expansion A B C hA b,
     hankel_kernel_iff A B C hA b, b.gramian_product_charpoly⟩
 
-#print axioms hankel_isometric_factorization
-#print axioms hankel_schmidt_expansion
-#print axioms nonzero_squared_singular_value
 
 end D5.S3.Observer.Hankel.BalancedHankelSchmidt

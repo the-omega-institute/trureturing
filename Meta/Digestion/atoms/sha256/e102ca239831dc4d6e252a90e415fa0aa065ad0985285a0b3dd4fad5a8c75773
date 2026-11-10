@@ -1,0 +1,45 @@
+#### 推论 2.3（归一纯态与球面）
+
+令 $\psi=z/\sqrt S$、$r=Q(z)/S$，则
+
+$$
+\rho=\psi\psi^\dagger=\tfrac12(I+r\cdot\sigma),\qquad \|r\|=1.
+$$
+
+从而 $S^3/U(1)\cong\mathbb{CP}^1\cong S^2$。
+对两纯态 $\rho_r,\rho_s$，
+
+$$
+\operatorname{Tr}(\rho_r\rho_s)=|\langle\psi_r,\psi_s\rangle|^2
+=\frac{1+r\cdot s}{2}.
+$$
+
+**证明。**
+
+归一化消去正尺度；最后一式用 $\operatorname{Tr}\sigma_i=0$、
+$\operatorname{Tr}(\sigma_i\sigma_j)=2\delta_{ij}$ 展开。
+
+□
+
+<div style="overflow-x:auto" tabindex="0" role="region" aria-label="表格 2">
+
+| 对象 | 实维数 | 约束或被商去的冗余 |
+| --- | --- | --- |
+| 原始非零二振幅 $\mathbb{C}^2\setminus\{0\}$ | 4 | 共同相位与正尺度都保留 |
+| 未归一秩一正矩阵 $zz^\dagger$ | 3 | 商去共同相位，保留尺度 |
+| 单位振幅 $S^3$ | 3 | 固定范数，仍保留共同相位 |
+| 归一纯态 $\mathbb{CP}^1\cong S^2$ | 2 | 再商共同相位；三坐标满足球面等式 |
+| 全部归一二元密度态 | 3 | 闭 Bloch 球；包含混态径向参数 |
+
+</div>
+
+第三行与第五行虽然都三维，却不是同一对象。
+两个复振幅直接给出的归一态总是球面点；球内混态不是另一种二振幅纯态。
+
+共同相位的作用范围也必须固定。例如
+$(\lvert 0\rangle\otimes u+\lvert 1\rangle\otimes v)/\sqrt2$
+中只将 $v$ 改成 $e^{i\theta}v$，通常改变了整个向量的相对相位。
+递归拆分时每个局部参考的变换，必须由连接系数补偿。
+
+<a id="section-3"></a>
+

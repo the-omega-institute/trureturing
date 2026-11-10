@@ -1,0 +1,49 @@
+#### 定理 7.2（归一化 $\zeta$ 的酉重叠）
+
+对所有实数 $t$ 和 $\sigma>1$，
+
+<a id="eq-pointer"></a>
+
+$$
+m_\sigma(t)=\operatorname{Tr}(\rho_\sigma W_t)
+=\langle{\psi_\sigma}\rvert{}W_t\lvert{\psi_\sigma}\rangle{}
+=\frac{\zeta(\sigma+it)}{\zeta(\sigma)},
+\qquad
+1\ge|m_\sigma(t)|\ge
+\frac{\zeta(2\sigma)}{\zeta(\sigma)^2}>0. \tag{12}
+$$
+
+**证明。**
+
+迹及内积都是绝对收敛的 $\sum_n n^{-\sigma-it}/\zeta(\sigma)$。
+上界来自单位相位的概率平均。对下界，Euler 积给
+
+$$
+|\zeta(\sigma+it)|
+\ge\prod_p(1+p^{-\sigma})^{-1}
+=\frac{\zeta(2\sigma)}{\zeta(\sigma)}.
+$$
+
+这里所有乘积在 $\sigma>1$ 绝对收敛，因而极限保持不等式。
+
+∎
+
+若父系统有非平凡投影 $P$，受控门
+$C_P(W_t)=(I-P)\otimes I+P\otimes W_t$
+将纯指针变为 $\lvert{\psi_\sigma}\rangle{}$ 或 $W_t\lvert{\psi_\sigma}\rangle{}$；
+其重叠为 $m_\sigma(t)$。故这一特定一次耦合不能给出完全正交的两条记录，也不能对所有父输入产生精确的非选择 Lüders 通道。该结论不限制另备辅助态或使用更多操作的一般测量。
+
+> **编者局部说明（C1）。** 首次使用量子投影时，$P$ 按正交 Hilbert 投影解释，即 $P=P^*=P^2$。仅有一般斜幂等 $P^2=P$ 不能推出这里所声称的酉性；下文分解与行列式公式使用该正交投影解释。
+
+v18 的勾股恒等式在此成为
+
+$$
+1=\left|\frac{\zeta(\sigma+it)}{\zeta(\sigma)}\right|^2
++\left\lVert{(W_t-m_\sigma(t)I)\sqrt{\rho_\sigma}}\right\rVert_{\rm HS}^2.
+$$
+
+证明只需展开第二项并使用 $\operatorname{Tr}\rho_\sigma=1$、
+$\operatorname{Tr}(\rho_\sigma W_t)=m_\sigma(t)$。它是概率和酉重叠的精确关系，不能在 $\sigma\le1$ 继续使用已经失去归一化的 $\rho_\sigma$。
+
+<a id="thm-double"></a>
+

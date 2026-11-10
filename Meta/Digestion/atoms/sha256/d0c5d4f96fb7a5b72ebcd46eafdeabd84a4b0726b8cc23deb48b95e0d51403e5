@@ -1,0 +1,29 @@
+#### 引理 7.1（一个读口给概率盘）
+
+记 $P_u=I-uu^{\mathsf T}$，则
+
+<a id="eq-trineone"></a>
+
+$$
+\sum_j n_jn_j^{\mathsf T}=\frac32P_u,\qquad
+P_ur=2\sum_jq_jn_j,\qquad
+\sum_jq_j^2=\frac13+\frac{|P_ur|^2}{6}.
+\tag{13}
+$$
+
+其概率像是
+$\{q_j\ge0,\ \sum q_j=1,\ \sum q_j^2\le1/2\}$。
+对纯态，盘内通常对应两个相反法向分支。
+
+**证明。**
+
+在平面正交坐标取
+$n_0=(1,0)$、$n_1=(-1/2,\sqrt3/2)$、$n_2=(-1/2,-\sqrt3/2)$；
+外积求和给第一式，且 $\sum n_j=0$，后两式随即得到。
+反向给定所述 $q$，令 $v=2\sum q_jn_j$；
+$n_i\cdot v=3q_i-1$ 且 $|v|^2=6\sum q_i^2-2\le1$。
+因此 $r=v$ 是合法混态向量。
+纯态可取 $r=v\pm\sqrt{1-|v|^2}\,u$；盘边界两分支重合，盘内部不同。 ∎
+
+<a id="statement-7-2"></a>
+

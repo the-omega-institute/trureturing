@@ -1,0 +1,25 @@
+**Proposition 3.2 (the normalization and exterior boundary are exact).**
+In Theorem 3.1 the base coordinate covariance is $2C_0\,dt$ and the base
+control-frame covariance, in the frame
+$(\partial_k,\tfrac12\partial_\alpha)$, is $2A_0\,dt$.
+The unnormalized pushforward density is $2\pi\rho_0$, and no symmetry
+outside the killed cylinder is necessary.
+
+Proof. These are respectively the first two rows of (3.14) and the
+integral in (2.7). If one instead writes the base measure as
+$\rho_0\,dk\,d\alpha$, both its form and its squared norm are divided
+by $2\pi$, so the generator is unchanged, but $U$ is no longer an
+isometry: its squared norm is multiplied by $2\pi$. The isometry in
+(3.2) uses $\nu$, without that change. Rescaling only the form would
+change the clock and would not be (3.2).
+
+For an explicit exterior distinction, begin with $A=I_2,\rho=1$ and
+choose a nonzero smooth height function $\zeta$ supported just above $h$
+in a larger interval contained in $J$, with $\zeta=0$ at and below $h$.
+For example it may be positive arbitrarily close above $h$ and flat at
+$h$. Set $\rho=\exp(\zeta(k)\cos\beta)$ there. This extends the same
+coefficients on $\overline\Omega$, remains smooth positive, and violates
+hidden-circle symmetry arbitrarily close outside the upper face.
+The killed form and every killed law on $\Omega$ are unchanged.
+Thus a neighbourhood-wide symmetry converse would be false. $\square$
+

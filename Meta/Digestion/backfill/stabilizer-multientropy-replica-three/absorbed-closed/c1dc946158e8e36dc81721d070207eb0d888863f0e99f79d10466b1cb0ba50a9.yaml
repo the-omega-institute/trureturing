@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c1dc946158e8e36dc81721d070207eb0d888863f0e99f79d10466b1cb0ba50a9
+  normalized_sha256: sha256:c1dc946158e8e36dc81721d070207eb0d888863f0e99f79d10466b1cb0ba50a9
+cas_ref: sha256:c1dc946158e8e36dc81721d070207eb0d888863f0e99f79d10466b1cb0ba50a9
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Partitions/CoarseThreeBlockRefinement.coarseWeight
+    target_statement_id: sha256:3aa699d518d2915822d5eddb8bfb6fc43c8a192c4c611825ad414f5242ebe8d6
+  - gid: D5/S3/Quantum/Entanglement/StabilizerMultiEntropy/StabilizerMultiEntropyReplicaThree.coarse_linear_combination_and_vanishing_criterion
+    target_statement_id: sha256:b2714af3bcea07b50433a5e26e3b5b3d8727aab6f7c02e7aa1f6acc100cecee7
+receipts:
+  unresolved_subitems: []

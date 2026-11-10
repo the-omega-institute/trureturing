@@ -8,20 +8,14 @@
 
 /-
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19204.
+Published Fourier and Ramanujan owners: unfinished escape audit
+https://github.com/the-omega-institute/trureturing/issues/22671.
 
 admission_basis: open-problem-resolution (#19144; Proved).
 proof_shape: result: content; escape_witness: none.
 Direct frozen dependencies (declaration identities on the dev base):
   D5/S3/ConceptDynamics/Coding/CountedOriginalOrbitGyration.finEquiv_eq_natCast
   statement_id sha256:6062729cd00b090edb5dfcccd635f4a563a8a66f60deb5d1c6d91f2195edc1b1.
-  D5/S3/Quantum/Dynamics/PolygonalFourierCouplings.circulant_spectral
-  statement_id sha256:c0c4758ccc24a85ddcb6430f1368fa477dcc97806137246966f740473972a4c0.
-  D5/S3/Quantum/Dynamics/PolygonalFourierCouplings.transform_unitary
-  statement_id sha256:efa8366c2ffbe97c466a47cde0fa1bf8aea043e2121045f7338c075daf53d748.
-  D5/S3/Quantum/Dynamics/PolygonalFourierCouplings.transform
-  statement_id sha256:bc5ccc0b9c6c5a7a63a3c96211c723596ca12ab786b9c0cf4cbd4907f812603f.
-  D5/S3/Quantum/Dynamics/PolygonalFourierCouplings.spectralValue
-  statement_id sha256:5c76af6f912bc476b8b2627b4c4e4af6068c4792ec7ead5d9e1752cbc0ce33fc.
   D5/S3/Analytic/Certified/FiniteRamanujanDivisorIdentity.sum_ramanujanSum_divisors
   statement_id sha256:e84aedcf519a93b3d92c3f00b87b1f2f24ad6024a3148bd06815f5e546b64020.
   D5/S3/Analytic/Certified/FiniteRamanujanDivisorIdentity.ramanujanSum
@@ -34,15 +28,9 @@ Declaration classification:
   CirculantCharpoly.dft_real_of_even: reused from D5/S3/Quantum/Matrix/CirculantCharpoly; consumer: real_circulant_charpoly.
   CirculantCharpoly.real_circulant_charpoly: reused from D5/S3/Quantum/Matrix/CirculantCharpoly; consumer: real_circulant_roots.
   real_circulant_roots: bind-only; consumers: energy_eq_dft.
-  ramanujan_prime_power: bind-only; consumers: ramanujan_prime_power_values.
   ramanujan_prime_power_values: bind-only; consumers: ramanujan_prime_power_mixed.
-  ramFn_mul_zeta: bind-only; consumers: ramFn_eq_moebius_convolution.
-  ramFn_eq_moebius_convolution: bind-only; consumers: ramanujan_multiplicative.
-  divFn_multiplicative: bind-only; consumers: ramanujan_multiplicative.
-  ramanujan_multiplicative: bind-only; consumers: ramanujan_grid_table.
   ramanujan_moebius: bind-only; consumers: ramanujan_gcd_of_dvd.
   ramanujan_gcd_of_dvd: bind-only; consumers: energy_divisor_formula.
-  ramanujan_one: bind-only; consumers: p2_ramanujan_table, q3_ramanujan_table.
   prime_power_dvd_mixed_power: bind-only; consumers: ramanujan_prime_power_mixed, divisorValue_injective.
   ramanujan_prime_power_mixed: bind-only; consumers: p2_ramanujan_table, q3_ramanujan_table.
   sum_gcd_class: bind-only; consumers: gcd_class_phase_sum.
@@ -83,12 +71,12 @@ Declaration classification:
   result: content; consumers: none (settling result).
 -/
 
-import D5.S3.Quantum.Dynamics.PolygonalFourierCouplings
 import D5.S3.Quantum.Matrix.CirculantCharpoly
-import D5.S3.Analytic.Certified.FiniteRamanujanDivisorIdentity
+import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.FiniteSieve.RamanujanSums
 import D5.S3.Arith.RoldanCirculantEnergyP2Q3Certificate
 import D5.S3.ConceptDynamics.Coding.CountedOriginalOrbitGyration
 
+open D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.FiniteSieve.RamanujanSums
 open D5.S3.Arith.RoldanCirculantEnergyP2Q3Certificate
 set_option maxHeartbeats 0
 set_option maxRecDepth 100000
@@ -114,17 +102,6 @@ set_option maxHeartbeats 1000000
 set_option linter.unusedTactic false
 set_option linter.unreachableTactic false
 open D5.S3.Analytic.Certified.FiniteRamanujanDivisorIdentity
-private theorem ramanujan_prime_power (p j k : ℕ) (hp : p.Prime) :
-    ramanujanSum (p ^ (k + 1)) j =
-      (if p ^ (k + 1) ∣ j then (p ^ (k + 1) : ℂ) else 0) -
-      (if p ^ k ∣ j then (p ^ k : ℂ) else 0) := by
-  have h1 := sum_ramanujanSum_divisors (p ^ (k + 1)) j (pow_pos hp.pos _)
-  have h0 := sum_ramanujanSum_divisors (p ^ k) j (pow_pos hp.pos _)
-  rw [Nat.sum_divisors_prime_pow hp, Finset.sum_range_succ] at h1
-  rw [Nat.sum_divisors_prime_pow hp] at h0
-  push_cast at h1 h0
-  rw [h0] at h1
-  exact eq_sub_of_add_eq' h1
 private theorem ramanujan_prime_power_values (p j k : ℕ) (hp : p.Prime) :
     ramanujanSum (p ^ (k + 1)) j =
       if p ^ (k + 1) ∣ j then (Nat.totient (p ^ (k + 1)) : ℂ)
@@ -141,44 +118,6 @@ private theorem ramanujan_prime_power_values (p j k : ℕ) (hp : p.Prime) :
     split_ifs <;> simp
 open ArithmeticFunction
 open scoped ArithmeticFunction.zeta ArithmeticFunction.Moebius
-private noncomputable def ramFn (j : ℕ) : ArithmeticFunction ℂ :=
-  ⟨fun d => ramanujanSum d j, by simp [ramanujanSum]⟩
-private def divFn (j : ℕ) : ArithmeticFunction ℂ :=
-  ⟨fun d => if d ∣ j then (d : ℂ) else 0, by simp⟩
-private theorem ramFn_mul_zeta (j : ℕ) : ramFn j * (ζ : ArithmeticFunction ℂ) = divFn j := by
-  ext d
-  rw [ArithmeticFunction.coe_mul_zeta_apply]
-  change (∑ r ∈ d.divisors, ramanujanSum r j) = if d ∣ j then (d : ℂ) else 0
-  by_cases hd : d = 0
-  · simp [hd]
-  · exact sum_ramanujanSum_divisors d j (Nat.pos_of_ne_zero hd)
-private theorem ramFn_eq_moebius_convolution (j : ℕ) :
-    ramFn j = divFn j * (μ : ArithmeticFunction ℂ) := by
-  calc
-    ramFn j = ramFn j * 1 := (mul_one _).symm
-    _ = ramFn j * ((ζ : ArithmeticFunction ℂ) * (μ : ArithmeticFunction ℂ)) := by
-      rw [ArithmeticFunction.coe_zeta_mul_coe_moebius]
-    _ = (ramFn j * (ζ : ArithmeticFunction ℂ)) * (μ : ArithmeticFunction ℂ) :=
-      (mul_assoc _ _ _).symm
-    _ = _ := by rw [ramFn_mul_zeta]
-private theorem divFn_multiplicative (j : ℕ) : (divFn j).IsMultiplicative := by
-  refine ⟨by simp [divFn], ?_⟩
-  intro m n hmn
-  change (if m * n ∣ j then ((m * n : ℕ) : ℂ) else 0) =
-    (if m ∣ j then (m : ℂ) else 0) * (if n ∣ j then (n : ℂ) else 0)
-  have hd : m * n ∣ j ↔ m ∣ j ∧ n ∣ j := by
-    constructor
-    · intro h
-      exact ⟨(dvd_mul_right m n).trans h, (dvd_mul_left n m).trans h⟩
-    · rintro ⟨hm, hn⟩
-      exact hmn.mul_dvd_of_dvd_of_dvd hm hn
-  by_cases hm : m ∣ j <;> by_cases hn : n ∣ j <;> simp [hd, hm, hn]
-private theorem ramanujan_multiplicative (m n j : ℕ) (hmn : m.Coprime n) :
-    ramanujanSum (m * n) j = ramanujanSum m j * ramanujanSum n j := by
-  have h : (ramFn j).IsMultiplicative := by
-    rw [ramFn_eq_moebius_convolution]
-    exact (divFn_multiplicative j).mul ArithmeticFunction.isMultiplicative_moebius.intCast
-  exact h.2 hmn
 private theorem ramanujan_moebius (m j : ℕ) (hm : 0 < m) :
     ramanujanSum m j = ∑ x ∈ m.divisorsAntidiagonal,
       (μ x.1 : ℂ) * (if x.2 ∣ j then (x.2 : ℂ) else 0) := by
@@ -195,8 +134,6 @@ private theorem ramanujan_gcd_of_dvd (m n j : ℕ) (hm : 0 < m) (hmn : m ∣ n) 
   have hi : x.2 ∣ j ↔ x.2 ∣ n.gcd j := by
     exact ⟨fun h => Nat.dvd_gcd hxn h, fun h => h.trans (Nat.gcd_dvd_right _ _)⟩
   simp only [hi]
-private theorem ramanujan_one (j : ℕ) : ramanujanSum 1 j = 1 := by
-  simpa using sum_ramanujanSum_divisors 1 j Nat.zero_lt_one
 private theorem prime_power_dvd_mixed_power (p q k a b : ℕ)
     (hp : p.Prime) (hq : q.Prime) (hne : p ≠ q) :
     p ^ k ∣ p ^ a * q ^ b ↔ k ≤ a := by
@@ -312,7 +249,7 @@ namespace D5.S3.Arith.RoldanCirculantEnergyP2Q3
 open D5.S3.Analytic.Certified.FiniteRamanujanDivisorIdentity
 open scoped BigOperators
 noncomputable section
-private theorem gcdRow_dft_ramanujan (n : ℕ) [NeZero n] (D : Finset ℕ)
+theorem gcdRow_dft_ramanujan (n : ℕ) [NeZero n] (D : Finset ℕ)
     (hD : D ⊆ n.divisors) (j : ZMod n) :
     ZMod.dft (fun k => ((fun k : ZMod n => if n.gcd k.val ∈ D then (1 : ℝ) else 0) k : ℂ)) j =
       ∑ d ∈ D, ramanujanSum (n / d) j.val := by

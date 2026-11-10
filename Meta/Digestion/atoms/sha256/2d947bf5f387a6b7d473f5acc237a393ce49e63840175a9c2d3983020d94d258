@@ -1,0 +1,53 @@
+#### 定理 5.2（加权纤维饱和与模糊质量）
+
+有
+
+<a id="eq-bracket"></a>
+
+$$
+\begin{aligned}
+\ell_f(A)&\le\mu(A)\le u_f(A),
+\end{aligned}
+\tag{5.1}
+$$
+
+<a id="eq-defect"></a>
+
+$$
+\begin{aligned}
+\delta_f(A)&=\mu\bigl(f^{-1}(f[A])\setminus A\bigr),
+\end{aligned}
+\tag{5.2}
+$$
+
+<a id="eq-ambiguity"></a>
+
+$$
+\begin{aligned}
+\delta_f(A)+\delta_f(A^c)
+&=u_f(A)-\ell_f(A)
+=\nu\bigl(f[A]\cap f[A^c]\bigr).
+\end{aligned}
+\tag{5.3}
+$$
+
+以下条件等价：$\delta_f(A)=0$；$A=f^{-1}(f[A])$；$A$ 是若干完整记录纤维的并；$f[A^c]=Y\setminus f[A]$。
+
+**证明。**
+
+存在饱和闭包 $f^{-1}(f[A])$ 包含 $A$，全称纤维并 $f^{-1}(Y\setminus f[A^c])$ 包含于 $A$，给式[(5.1)](#eq-bracket)。由推送测度定义及不交差集分解得到式[(5.2)](#eq-defect)。
+
+满射保证 $f[A]\cup f[A^c]=Y$；有限测度的容斥式给
+
+$$
+\nu(f[A])+\nu(f[A^c])-1=\nu(f[A]\cap f[A^c]).
+$$
+
+结合 $\mu(A)+\mu(A^c)=1$ 与 $\ell_f(A)=1-u_f(A^c)$ 得式[(5.3)](#eq-ambiguity)。每个原子均为正质量，式[(5.2)](#eq-defect)为零恰好意味着差集为空。其余等价是项目 CSA 命题 10 的纤维饱和判据（[2](#ref-repocsa)、[3](#ref-repop10)）。
+
+∎
+
+若 $\Omega=\{a,b\}$、$\mu(a)=\mu(b)=1/2$，$f$ 把两者合成同一记录，而 $A=\{a\}$，则 $\mu(A)=1/2$，但 $u_f(A)=1$、$\ell_f(A)=0$。同时 $\exists A$ 与 $\exists A^c$ 为真：它们表示纤维里分别有见证，未构成同一世界上的矛盾。
+
+<a id="thm-cocycle"></a>
+

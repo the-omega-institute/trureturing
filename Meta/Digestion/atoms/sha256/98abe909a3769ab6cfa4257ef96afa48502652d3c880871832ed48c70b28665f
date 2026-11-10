@@ -1,0 +1,63 @@
+**Theorem 19.2 (both realization directions and timed transport).**
+For this one fixed original source,
+
+$$
+ R_s=\{(I_v(1),I_v(2))\bmod p:
+                  v\text{ is genuinely core-only}\}.
+ \tag{PCR.46}
+$$
+
+Every matrix path starting at a seed lifts to its literal physical
+address in the same original source. If its edge word is $w=x_1\cdots
+x_h$, then
+
+$$
+ q_{cw}=f_{x_h}\circ\cdots\circ f_{x_1}(q_c),\qquad
+ e_{cw}=e_c+\sum_{i=1}^h
+       \delta_{x_i}(c_y(A_{cx_1\cdots x_{i-1}})).
+ \tag{PCR.47}
+$$
+
+All quantities $A$ in the last formula may be reduced modulo $p$ for
+the bit evaluation. Conversely every core-only address has a unique
+seed prefix and supplies such a path. Every state in $R_s$ has a
+realization with at most $p^2-|E_s|$ edges after some seed, although
+this shortened witness need not retain an original witness's address
+or normalization time. A cone on a particular path has normalized age
+$T\ge0$ at actual cut $n$ exactly when $n=e_{cw}+T$. In particular the
+full square is attained if and only if every coordinate of the explicit
+column in (PCR.45) is positive; a zero coordinate is a strict-image
+certificate for that supplied source.
+
+Proof. By Theorem 18.2 every seed is an actual core-only cone. Suppose
+a path prefix has been lifted. Both actual children eventually exist;
+they remain core-only, and Theorem 17.2 gives exactly the two outgoing
+residue states and the stated time increments. Induction proves the
+lift for every finite word, including its normalization time. This is
+the realization direction for the finite presentation; no hypothetical
+state is installed as an actual cone. Conversely (PCR.43) writes every
+core-only address uniquely as $cw$, and the same induction computes
+its actual residues. This gives equality with the states reached by
+arbitrary finite graph paths.
+
+For completeness, a shortest path from the seed set to any reached
+state repeats no vertex, and has no seed vertex after its initial one:
+a repeated segment can be deleted, and a later seed allows a shorter
+start. All vertices after its first therefore lie in the complement
+of $E_s$, so its length is at most $p^2-|E_s|$. Matrix powers count
+these paths, proving (PCR.45)--(PCR.46), including both inclusions.
+Deleting a repeated segment changes the sum of positive time weights;
+there is no same-time shortening assertion. The time statement is
+precisely the original normalization equation of Definition 1.2.
+
+The elementary finite-path argument applies only after the physical
+transport and transient initialization have been established. In the
+terminology of [Rigo--Stipulanti, *Automatic sequences: from rational
+bases to trees*, arXiv:2102.10828v5, Definition 25 and Theorem 28](https://arxiv.org/html/2102.10828v5),
+the residue-decorated full address tree below a seed has finitely many
+suffixes; Theorem 28 concerns an abstract numeration system built on a
+prefix-closed regular language. Its address-enumeration correspondence
+is not this source's chronological birth enumeration. Neither that
+result nor finite graph closure supplies (PCR.39), (PCR.43), the actual
+normalization times or a physical Read service. $\square$
+

@@ -80,6 +80,99 @@ public sealed class RuleEngineCapacityTests
             && diagnostic.AdmissionEffect == AdmissionEffect.Block && diagnostic.Message.Contains("SL-003", StringComparison.Ordinal));
     }
 
+    [Theory]
+    [InlineData(801)]
+    [InlineData(1001)]
+    public void Sl003CurrentExemptsRootClaudeDocument(int lines)
+    {
+        var fixture = new RuleFixture();
+        RegisterCapacityMaterials(fixture, ["CLAUDE.md"]);
+        fixture.Files["CLAUDE.md"] = string.Concat(Enumerable.Repeat("rule\n", lines));
+
+        Assert.Empty(RuleCatalog.Default.EvaluateCurrentSingle(
+            RuleId.CreateKnown(3), fixture.Build().CurrentFacts).Diagnostics);
+    }
+
+    [Theory]
+    [InlineData(801)]
+    [InlineData(1001)]
+    public void CapacityAuditExemptsRootClaudeDocument(int lines)
+    {
+        Assert.Empty(RepositoryCapacityAudit.InspectFiles(
+            [("CLAUDE.md", string.Concat(Enumerable.Repeat("rule\n", lines)))]));
+    }
+
+    [Theory]
+    [InlineData("docs/CLAUDE.md")]
+    [InlineData("tools/CLAUDE.md")]
+    [InlineData("README.md")]
+    [InlineData("claude.md")]
+    [InlineData("CLAUDE.md.txt")]
+    public void ClaudeLineExemptionKeepsOtherProseLimits(string path)
+    {
+        foreach (var lines in new[] { 800, 801, 1000, 1001 })
+        {
+            var fixture = new RuleFixture();
+            RegisterCapacityMaterials(fixture, [path]);
+            fixture.Files[path] = string.Concat(Enumerable.Repeat("rule\n", lines));
+            var diagnostics = RuleCatalog.Default.EvaluateCurrentSingle(
+                RuleId.CreateKnown(3), fixture.Build().CurrentFacts).Diagnostics;
+            if (lines == 800)
+                Assert.Empty(diagnostics);
+            else
+            {
+                var finding = Assert.Single(diagnostics);
+                Assert.Equal(path, finding.Path);
+                Assert.Equal(lines > 1000 ? AdmissionEffect.Block : AdmissionEffect.Observe,
+                    finding.AdmissionEffect);
+                Assert.Equal(lines > 1000 ? "artifact exceeds 1000 lines"
+                    : $"artifact spans {lines} lines (soft limit 800, hard limit 1000)", finding.Message);
+            }
+
+            var audit = RepositoryCapacityAudit.InspectFiles([(path, fixture.Files[path])]);
+            if (lines <= 1000)
+                Assert.Empty(audit);
+            else
+            {
+                var finding = Assert.Single(audit);
+                Assert.Equal(path, finding.Path);
+                Assert.Equal("artifact spans 1001 lines (hard limit 1000)", finding.Message);
+            }
+        }
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void RootClaudeDocumentStillCountsTowardDirectoryCapacity(bool includeClaude)
+    {
+        var fixture = new RuleFixture();
+        RegisterCapacityMaterials(fixture, ["*.md"]);
+        var padding = 192 - fixture.Files.Keys.Count(path => !path.Contains('/') && path != "lake-manifest.json");
+        for (var index = 0; index < padding; index++)
+            fixture.Files[$"member{index}.md"] = "rule\n";
+        if (includeClaude)
+            fixture.Files["CLAUDE.md"] = "rule\n";
+        var current = fixture.Build().CurrentFacts;
+
+        Assert.Equal(includeClaude ? 193 : 192,
+            RepositoryRules.CapacityPathsByDirectory(current.Current.Files.Keys)["."].Count);
+        var diagnostics = RuleCatalog.Default.EvaluateCurrentSingle(RuleId.CreateKnown(3), current).Diagnostics;
+        var audit = RepositoryCapacityAudit.InspectFiles(fixture.Files.Select(file => (file.Key, file.Value)));
+        if (!includeClaude)
+        {
+            Assert.Empty(diagnostics);
+            Assert.Empty(audit);
+            return;
+        }
+
+        var finding = Assert.Single(diagnostics);
+        Assert.Equal(".", finding.Path);
+        Assert.Equal(AdmissionEffect.Block, finding.AdmissionEffect);
+        Assert.Equal("directory contains 193 files (repository tolerance 192)", finding.Message);
+        Assert.Equal(".", Assert.Single(audit).Path);
+    }
+
     private static void RegisterCapacityMaterials(RuleFixture fixture, string[] materials, string[]? excludes = null) =>
         fixture.Files["Meta/ci-checks.json"] = System.Text.Json.JsonSerializer.Serialize(new
         {

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b7d6e7d540f6e0f20aad413d54f1679cbd655cd367ef92787a53f35cf38426cb
+  normalized_sha256: sha256:b7d6e7d540f6e0f20aad413d54f1679cbd655cd367ef92787a53f35cf38426cb
+cas_ref: sha256:b7d6e7d540f6e0f20aad413d54f1679cbd655cd367ef92787a53f35cf38426cb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Bibliographic reference list and literature-stance provenance table for Sections 2 through 8; asserts no standalone mathematical proposition.
+    previous_atom_id: 2b2f7879422d403dd2b471d562eb65cf6183d212dd06377cda3f9d5d49b6dbb3
+    next_atom_id: null

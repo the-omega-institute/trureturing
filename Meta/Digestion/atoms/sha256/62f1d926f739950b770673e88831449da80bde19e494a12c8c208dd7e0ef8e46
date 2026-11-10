@@ -1,0 +1,21 @@
+## 9. Exact remaining positive-intersection obligation
+
+For every legal prefix in the whole class $\mathscr G$ and every legal final word $W$, the universal obstruction still requires finite actual matrices and real slopes satisfying
+$$
+\begin{gathered}
+S_j>0\text{ entrywise},\qquad \det S_j=0,\qquad k_j\in\mathbb R,\\
+(S_0,k_0)\ne(S_1,k_1),\qquad
+\mathsf T_{k_0}S_0=\mathsf T_{k_1}S_1.
+\end{gathered}
+\tag{9.1}
+$$
+This quantifier asks for some colliding datum for each complete history. It does not ask for multiplicity at every datum or every slope. Proposition 7.1 then determines one whole drift per run and checks all five original equations.
+
+Within the four-nonzero-entry subcase, Theorem 5.1 replaces arbitrary cumulative endpoints by exactly the admissible parameter tuples and first endpoints passing (5.10) and (5.5). The missing assertion is still (9.1) for every such tuple, every admitted first endpoint, and every legal final word, on both conjugate branches. Theorem 6.1 resolves precisely which final words preserve the kernel level. It supplies no second positive source for those histories. In the companion's exhaustive fibre description, the missing positive intersection would have to produce two positive regular candidates, a positive regular and positive singular candidate, two positive singular candidates, or a positive arc for some datum. A degree bound, failed sign test, or invertible zero-slope quotient does not force any such alternative.
+
+For kernels with at least one zero entry, Theorem 3.2 still applies. Theorems 4.1, 5.1, and 6.1 do not classify those boundary geometries. They remain in the whole-class obligation (9.1), except where a separate supplied collision theorem applies with its literal hypotheses. The already supplied exact nonlocal collision remains excluded as a recovering history; other final words are not excluded merely by that witness.
+
+The alternative constant-drift completion would be a legal predetermined five-read history with global uniqueness for every actual target, a global inverse, and a necessary-and-sufficient actual-source image criterion at every real slope. No such history or uniqueness theorem is established here. The original unrestricted programme also includes prefix geometries outside $\mathscr G$. Its five-versus-six alternative and full all-history objective remain unresolved; (8.1) is unchanged.
+
+Every structural realization uses the original forward words, the actual reading clock, and the actual positive-source factorization. These are ordinary exact textual mathematical results. They assert no adaptive-path lower bound, empirical or general-neural-network conclusion, Lean/kernel certification, unrestricted atom optimum, resource, bit, time, stability or physical acquisition-cost bound, external priority, or absence of other literature.
+

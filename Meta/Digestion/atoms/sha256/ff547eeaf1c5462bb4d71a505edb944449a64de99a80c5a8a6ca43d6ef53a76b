@@ -1,0 +1,39 @@
+**Corollary 26.6 (the remaining uniform obligation).** Let
+
+$$
+\mathcal O=\{w\in\mathcal W:
+ A(w)<2+\sqrt{8/3},\quad B(w)<23/6,\quad A(w)+B(w)>4\}.
+\tag{26.27}
+$$
+
+The inequality $g\ge\kappa\rho$ holds for all normalized effects
+and actual shared feedback whose reduced data lie outside $\mathcal O$.
+The original global endpoint is therefore equivalent to the remaining
+uniform assertion
+
+$$
+\nu_\kappa(w)\ge0\qquad\text{for every }w\in\mathcal O.
+\tag{26.28}
+$$
+
+Proof. The complement of $\mathcal O$ in the realizable set
+$\mathcal W$ is exactly the union of the two caps in Theorems
+24.4 and 25.3 and the trace triangle in Theorem 26.4.
+Theorem 23.4 transfers these uniform original inequalities to
+$\nu_\kappa\ge0$ there and identifies (26.28) as precisely the
+remaining condition for $C_{\rm opt}=\kappa^{-1}$.
+
+The source correspondence is (23.2) for the two original amplitudes,
+(23.3) for the joint-sign distance, and Theorem 23.2 for realizability
+and the mixed-effect transfer. The realization theorem used there
+continues to apply to every datum here; (26.25) supplies an explicit
+nondiagonal lift for the increment. Triangle inequalities, polynomial
+concavity and Cauchy–Schwarz are standard intermediate tools. The
+additional fixed-record content is the uniform certificate
+(26.8)–(26.18) and its coverage of all of $\mathcal T_{\rm new}$.
+The bounds (26.2)–(26.3) are sufficient envelopes, not a jointly
+attained optimization. Failure of such an envelope certificate
+outside its proved intervals would not give an original producer
+counterexample. Assertion (26.28) remains unresolved; neither global
+sharpness nor literature priority is asserted. $\square$
+

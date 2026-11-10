@@ -1,0 +1,16 @@
+### 7.1. Noisy quadrants
+
+Let $Q_0,Q_1,Q_2,Q_3$ be the four oriented quadrants of $(x,y)$, with axes assigned Borelly. Use the detector alphabet $\mathcal A=\{0,1,3,B\}$ and set
+
+$$
+C_0=Q_0,\qquad C_1=Q_1,\qquad C_3=Q_2,\qquad C_B=Q_3.
+$$
+
+Thus geometric quadrant $Q_2$ is carried by label $3$, and $Q_3$ by label $B$; the subscripts $0,1,3,B$ below are detector labels, not a claim that the alphabet contains label $2$. Source symmetry gives each positive-time marginal mass $1/4$. For $\varepsilon\in[0,1]$, define
+
+$$
+ f_i^\varepsilon=\varepsilon 1_{C_i}+\frac{1-\varepsilon}{4}\qquad(i\in\mathcal A).
+$$
+
+Let $q_{ij}(s)$, $i,j\in\mathcal A$, be the same-source quadrant pair law and let $U_{16}$ be uniform on $\mathcal A^2$.
+

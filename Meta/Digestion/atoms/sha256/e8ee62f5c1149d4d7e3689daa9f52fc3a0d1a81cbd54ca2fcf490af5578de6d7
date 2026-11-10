@@ -1,0 +1,52 @@
+### 62.3. 完整例外、ENTIRE 并集与实际末式
+
+在 $q=a$，$D_0=0,H=3a$。原 $Q$ 迫 $T=\tau$；原常数给 $(a-1)\lambda=C-15a\tau$，即 $\lambda=\Lambda$。偶恒等式成为 $eg=K$，所以 $K(-s)=0$。严格 $s>2a$ 恰接受 $s=p$ 或 $v$，正根七只会给负 $s$。
+
+因此全部例外为
+
+$$
+W_p=(P(a,p),\ p\tau(x+v)(x-7),\ d_*),\quad
+W_v=(P(a,v),\ v\tau(x+p)(x-7),\ d_*),\quad d_*=a_0+7\tau V.
+\tag{62.14}
+$$
+
+反向两源严格、首项非零、常数均为 $\Lambda$，各漂移固定为 $d_*$。它们满足 $eg=K,og=aK$，(62.3) 恢复 BOTH (62.6) 和全部 SAME 六原行，因而也证明每个 (62.4) 父确实达到。两个源因 $p\ne v$ 不同。
+
+其实际第七 $J$ 检验为
+
+$$
+\kappa_p=(p+4)(v+3),\qquad \kappa_v=(v+4)(p+3),\qquad
+\kappa_p-\kappa_v=v-p\ne0.
+\tag{62.15}
+$$
+
+例如实际响应为 $z_p=d_*-\tau(p+4)(6+v)$，等于 $a_0+E(4)+2\tau\kappa_p$；交换得另一式。仅附 SAME 取得 $\kappa$ 实际匹配的例外，至多一个。由源域 $q=a/q\ne a$ 的穷尽及两边完整 converse，
+
+$$
+\mathcal K_\kappa=\{W_\kappa(q):q\in S_\kappa\}\cup
+\{W_p:\kappa=\kappa_p\}\cup\{W_v:\kappa=\kappa_v\}
+\tag{62.16}
+$$
+
+是 ENTIRE 原七行子片的精确等号。只合并整个三元组相同者。取得可达 iff 此集合非空；空集合不是成功停止。
+
+定义
+
+$$
+\omega=\frac{g(7)}{s\tau}=17\theta+(7-h)\eta
+=32\theta+n+\eta+5m-\kappa.
+$$
+
+原奇恒等式在七给 $o(7)g(7)=\lambda+R(7)+48qT$。实际 $JJ$ 迹为 $o(7)-2q/s$，$JM$ 比它多 $(s+4-2q)/s$。所以
+
+$$
+\begin{aligned}
+f_{JJ}&=a_0+R(7)+\tau x,\quad x=48q\theta-2q\omega,\\
+f_{JM}&=a_0+R(7)+\tau y,\quad y=48q\theta+(s+4-4q)\omega,\\
+y-x&=(s+4-2q)\omega,\qquad s+4-2q>4.
+\end{aligned}
+\tag{62.17}
+$$
+
+共同加项为已取得的 $a_0+R(7)$，不随候选漂移改变。两例外在七增益为零，$x=y=48a$。普通与实际匹配例外的 $J,M$ 碰撞分别恰为 $x=48a,y=48a$，不除 $H,B_7$ 或 $\omega$。
+

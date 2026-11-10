@@ -1,0 +1,35 @@
+### 6.1 显式的三维有限提升
+
+取单位 $x$，取 $A\ne0$ 固定 $x$，再取 $y\perp x$、$y\ne0$。则 $Ay\ne0$，且
+
+$$
+x\perp y,\qquad x\perp Ay,\qquad y\perp Ay.
+$$
+
+所有原内容 $z\in W$ 都有准确分解
+
+$$
+\boxed{z=B_0(z,x)x+
+\frac{B_0(z,y)}{B_0(y,y)}y+
+\frac{B_0(z,Ay)}{B_0(Ay,Ay)}Ay.}
+$$
+
+也就是说，内容轴、一根偏离它的箭头、这根箭头被原转向送出的方向，已容纳完整窗口。
+
+```latex
+\begin{tikzpicture}[>=Latex,scale=0.92]
+\fill[pale] (-2.1,-0.65)--(1.9,-1.1)--(2.5,0.55)--(-1.5,1.0)--cycle;
+\draw[accent!65] (-2.1,-0.65)--(1.9,-1.1)--(2.5,0.55)--(-1.5,1.0)--cycle;
+\draw[->,very thick,ink] (0,0)--(0,2.65) node[above]{固定轴 \(x\)};
+\draw[->,very thick,accent] (0,0)--(2.0,-0.65) node[right]{\(y\)};
+\draw[->,very thick,warm] (0,0)--(1.25,0.78) node[above right]{\(Ay\)};
+\draw[->,thick,ink] (1.3,-0.25) arc[start angle=-15,end angle=120,x radius=1.1,y radius=0.35];
+\node[ink] at (-1.5,0.15){\(A\)};
+\node[align=left,text width=7.1cm,anchor=west] at (3.4,1.1)
+{\textbf{两个元：}\(A\) 与 \(x\)。\\
+原关系 \(Ax=0\) 指定一根轴。\\[3mm]
+互定与原顺序闭合迫出三维后，\\
+\(x,y,Ay\) 才成为完整正交三轴。};
+\end{tikzpicture}
+```
+

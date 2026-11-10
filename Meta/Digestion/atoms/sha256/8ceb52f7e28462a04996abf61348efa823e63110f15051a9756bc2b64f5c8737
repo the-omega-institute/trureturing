@@ -1,0 +1,68 @@
+### 10.4 两对完整标签在同一三维向量上接触
+
+**证明，环境不被压缩的同时接触。** 暂令 $s=0$，在 $x^{(0)}$ 上形成全部原标签，以上标 $(0)$ 表示。设
+
+$$
+\mathsf X=x^{(0)}\xi,\quad \mathsf T=t\xi,\quad
+\mathsf A=(h^{(0)}-k)\xi,\quad
+\mathsf B=(r^{(0)}+g_0)\xi.
+$$
+
+前两坐标的完整式子是
+
+$$
+\begin{aligned}
+\mathsf X_{12}&=y,&\quad \mathsf T_{12}&=\tau,\\
+\mathsf A_{12}&=\tfrac i2(c_0y-y_c)-\tfrac12(c_0\tau+\lambda c_0^2u),&
+\mathsf B_{12}&=\tfrac12(c_0y+y_c)+iwz.
+\end{aligned}
+\tag{10.17}
+$$
+
+把 $y_c$ 及 $(c_0-b)y=-ic_0\tau$ 代入 $\mathsf A_{12}$，得 $\mathsf A_{12}=(\tau-iy)/b$。又因同一已知乘法中
+
+$$
+r^{(0)}-ih^{(0)}=cx^{(0)},\qquad g_0+ik=ict,
+$$
+
+有 $\mathsf B_{12}-i\mathsf A_{12}=c_0(y+i\tau)=by$。所以前两坐标满足 $\mathsf T=i\mathsf X+b\mathsf A$、$\mathsf B=b\mathsf X+i\mathsf A$。
+
+第三坐标须单独保留并核对。由(10.9)，准确为
+
+$$
+\mathsf X_3=0,\qquad \mathsf T_3=-bW,\qquad
+\mathsf A_3=-W,\qquad \mathsf B_3=-iW.
+\tag{10.18}
+$$
+
+它们也满足同样两式。因此在完整的 $\mathbb C^3$ 中
+
+$$
+\mathsf T=i\mathsf X+b\mathsf A,\qquad
+\mathsf B=b\mathsf X+i\mathsf A,\qquad
+S^{(0)}_+\xi=(i+b)R^{(0)}_+\xi,\quad
+S^{(0)}_-\xi=(i-b)R^{(0)}_-\xi.
+\tag{10.19}
+$$
+
+$q=1$ 时负对斜率为实数 $-p$，正对斜率为 $p+2i$；$q=-1$ 时正对斜率为实数 $p$，负对斜率为 $-p+2i$。这两条接触线由同一 $x^{(0)}$、同一 $\xi$ 同时实现，不是分别可达的两个极值。
+
+现在恢复同一非零 $s$ 与 $x=x^{(0)}+\rho(a\oplus0)$。实对角修正满足
+
+$$
+(pI_2-c_0)a=d_0,\qquad [a,c_0]=[a,d_0]=0.
+$$
+
+故在完整算子标签上准确有
+
+$$
+\begin{gathered}
+R_\pm=R^{(0)}_\pm+\rho(a\oplus0),\\
+S_+=S^{(0)}_++p\rho(a\oplus0),\qquad
+S_-=S^{(0)}_--p\rho(a\oplus0).
+\end{gathered}
+\tag{10.20}
+$$
+
+因而 $q=1$ 时仍有 $S_-\xi=-pR_-\xi$，$q=-1$ 时仍有 $S_+\xi=pR_+\xi$。实 Gram 公式遂使这一对的 $B_{\phi_\xi}$ 精确为零，且其 $K_1$ 读取也为零；不是只在 $\rho=0$ 接触。
+

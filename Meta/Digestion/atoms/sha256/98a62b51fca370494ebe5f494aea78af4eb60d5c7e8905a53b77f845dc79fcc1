@@ -1,0 +1,12 @@
+**Definition 3.1 (recursive sufficient bounds).** For $x\in\{r,s\}$ set
+
+$$
+R_{r,6}=37,\qquad R_{s,6}=5,
+$$
+
+and for every integer $k\geq6$ define
+
+$$
+R_{x,k+1}=R_{x,k}+2\binom{R_{x,k}+k-1}{k}+1. \tag{3.1}
+$$
+

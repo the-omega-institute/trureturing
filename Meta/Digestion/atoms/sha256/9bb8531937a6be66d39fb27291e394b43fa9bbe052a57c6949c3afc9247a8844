@@ -1,0 +1,137 @@
+### 定理 2：实际函数是互素 Blaschke 商
+
+存在两个互素的右半平面 Blaschke 乘积 $B_+,B_-$，使
+
+$$
+\boxed{
+C(z)=\frac{B_+(z)}{B_-(z)}.
+}
+
+$$
+
+<a id="eq-2-7"></a>
+
+(2.7)
+
+其中：
+
+- $B_+$ 的零点是实际 $C$ 的右半平面零点；
+- $B_-$ 的零点是实际 $C$ 的右半平面极点；
+- 没有额外的无穷远奇异指数因子。
+
+#### 证明
+
+<!-- editorial-note: n08 begin -->
+<a id="n08"></a>
+
+**编者注 n08（Hadamard 配对的适用范围）。** 使用的标准 Hadamard 形式是：非零、阶至多一且在零处不为零的整函数可写成一次指数乘属一的典范乘积，零点按重数计，且平方倒数绝对可和；一般有限阶版本见 [Cobler–Lapidus §5.5，定理 30](https://arxiv.org/pdf/1705.06222v4)，这里只引用该节复分析定理，不使用其其他算子构造。Suzuki §2.2 用此形式处理实际 $\xi$。对这里的实整函数 $E$，共轭零点的重数相等。竖条界给出 $|\Re(1/\lambda)|\le A/|\lambda|^2$，故属一指数可在共轭对内收集为收敛的一次指数；实零点在紧区间 $[-A,A]$ 内仅有限个，且无零点 $0$。这给出（2.8）的正规收敛和实数 $d$，并非从“一阶”直接推得未配对的属零乘积。
+
+<!-- editorial-note: n08 end -->
+
+由 $E$ 的阶不超过一，
+
+$$
+\sum_{\lambda:E(\lambda)=0}|\lambda|^{-2}<\infty.
+$$
+
+又因零点实部有界，
+
+$$
+\sum_{\Im\lambda>0}
+\left|\Re\frac1\lambda\right|<\infty.
+$$
+
+所以 Hadamard 乘积可以按共轭零点配对，写成
+
+$$
+E(z)
+=
+E(0)e^{dz}
+\prod_{\lambda\in\mathbb R}
+\left(1-\frac z\lambda\right)
+\prod_{\Im\lambda>0}
+\left(1-\frac z\lambda\right)
+\left(1-\frac z{\bar\lambda}\right),
+
+$$
+
+<a id="eq-2-8"></a>
+
+(2.8)
+
+其中 $d\in\mathbb R$，实零点只有有限个。
+
+配对后的正规收敛来自
+
+$$
+\left(1-\frac z\lambda\right)
+\left(1-\frac z{\bar\lambda}\right)-1
+=
+-2z\Re\frac1\lambda+\frac{z^2}{|\lambda|^2}.
+$$
+
+在 $E(-z)/E(z)$ 中：
+
+- 虚轴上的共轭因子自动相消；
+- 左右镜像共有的因子相消；
+- 剩余左半平面零点给分子 Blaschke 因子；
+- 剩余右半平面零点给分母 Blaschke 因子。
+
+因此先得到
+
+$$
+C(z)=e^{-2dz}\frac{B_+(z)}{B_-(z)}.
+
+$$
+
+<a id="eq-2-9"></a>
+
+(2.9)
+
+<!-- editorial-note: n09 begin -->
+<a id="n09"></a>
+
+**编者注 n09（Blaschke 相位与奇异因子）。** 左右镜像的约分按各处最小重数进行；虚轴零点先按共轭对相消。剩余右半平面零点满足半平面 Blaschke 条件，因为其实部有界而平方倒数可和。对应因子需要单位模相位；有限实零点也可能贡献一个符号，此常数吸收入 $B_+$ 或 $B_-$。标准内因子分解中的奇异因子不能仅凭边界单位模而删去（Garcia–Ross 定理 2.12）；此处是上述整函数乘积恒等式直接把商写成（2.9）。它在每个有限虚轴点已可去且非零，唯一待处理的指数项是所列一次指数。
+
+<!-- editorial-note: n09 end -->
+
+还需证明 $d=0$。
+
+对共轭零点对 $\alpha=a+ib,\bar\alpha$，其中 $a>0$，对应因子在正实轴上为
+
+$$
+\mathcal B_\alpha(x)
+=
+\frac{(x-a)^2+b^2}{(x+a)^2+b^2}.
+$$
+
+由于 $a\le A$，当 $x$ 足够大时，
+
+$$
+0\le
+-\frac1x\log\mathcal B_\alpha(x)
+\le
+\frac{8a}{x^2+b^2}.
+$$
+
+这些上界有可和的控制函数，所以
+
+$$
+\frac{\log|B_\pm(x)|}{x}\longrightarrow0.
+$$
+
+另一方面，原归一化给出
+
+$$
+xF(x)\to S,\qquad C(x)\to1.
+$$
+
+代入式（2.9），得到 $d=0$。证毕。
+
+<!-- editorial-note: n10 begin -->
+<a id="n10"></a>
+
+**编者注 n10（消除一次指数的控制函数）。** 所列常数 $8$ 可取在 $x\ge4A$ 的范围内：先用 $\log(1+t)\le t$，再用 $(x-a)^2\ge x^2/2$，得到文中的上界。对 $x\ge\max(4A,1)$，可由 $8a/(1+b^2)$ 控制；按重数求和有限，有限个实因子另行趋于零。故两份 Blaschke 乘积的对数模除以 $x$ 都趋零。另由 $x\ge1$ 时 $|x/(x-a_\rho)|\le2$ 及绝对权重和，控制收敛给出 $xF(x)\to S$；于是 $C(x)\to1$，将（2.9）的对数模除以 $x$ 才得到 $d=0$。这一步使用了实际归一化，不能由任意单位模边界的亚纯函数替代。
+
+<!-- editorial-note: n10 end -->
+

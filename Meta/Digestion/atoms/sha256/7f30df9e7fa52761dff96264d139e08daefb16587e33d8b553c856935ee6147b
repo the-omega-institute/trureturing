@@ -1,0 +1,219 @@
+**Theorem 15.2 (negative answer to Question 13.6 with its deterministic-quotient quantifier).** The triple in Definition 15.1 belongs to $\Theta_8$, has one positive stationary irreducible component of period two, and its entire stationary visible law $P$ satisfies $\mathsf B(P)$. Every deterministic forward-labeled strong quotient of this component is the identity up to renaming. For that quotient, the actual conditional-support coefficients (13.10) satisfy
+
+$$
+c_{j,v}^L(w)=c_{j,v}^R(w)=1
+\tag{15.4}
+$$
+
+for every $j\ge0$, every positive integer block length, and every word of positive conditional probability, almost surely in the respective full conditioning field. Nevertheless, in the right direction, for every $j\ge1$ and every $m\ge1$, the exact post-word residual $\Delta_{j,0^m}^R(v)$ is strictly positive on a positive-measure set of $V_j^R$-values. Consequently no $m_R\ge1$, finite $b_R\ge0$, and $0\le\kappa_R<1$ can make (13.11) hold at every $j\ge b_R$. The left post-word residuals are zero for $j\ge1$. The actual output erasure errors are
+
+$$
+e_L^P(0)=e_R^P(0)=\frac3{260},\qquad
+e_L^P(j)=e_R^P(j)=0\quad(j\ge1),\qquad
+A_P(0)=2\sqrt{\frac3{260}}<\infty.
+\tag{15.5}
+$$
+
+Thus the universal availability assertion in Question 13.6 is false as written, although this witness satisfies both root-summability conclusions.
+
+**Proof.** First establish legality and the actual stationary law. Let $F_s$ be the three-by-three free-to-free block in the first line of (15.2). The constants satisfy
+
+$$
+\beta a^s=\frac14,\qquad d^s\mathbf1=d^s a^s=0,\qquad
+\beta F_s=\frac34\beta,\qquad d^sF_s=r d^{1-s},\qquad
+h(1-r)=\frac c4.
+\tag{15.6}
+$$
+
+For example, $d^0a^0=1/8-2/4+3/8=0$ and $d^1a^1=(16-33+17)/48=0$; the last two matrix identities follow by summing the two terms defining $F_s$. Each free zero entry is at least
+
+$$
+\frac{5}{24}-\frac1{12}\frac96=\frac1{12}>0,
+$$
+
+and each $B$-to-free entry is at least $1/3-3/24=5/24>0$. All one entries displayed are positive. The row sums of $F_s$ are $1-a_i^s$; the $B_s$ zero row has sum one. Hence $M_0+M_1$ is stochastic. The row (15.3) has positive entries and total mass one. Its incoming free mass in phase $s$ is
+
+$$
+\frac25\left(\frac34\beta+hr d^s\right)
+ +\frac1{10}(\beta+c d^s)
+ =\frac25(\beta+h d^s),
+$$
+
+and its incoming $B_s$ mass is $\frac25(\beta+h d^{1-s})a^{1-s}=1/10$. This proves stationarity. Every one enters a $B$ state, from which no one can be emitted, so $M_1^2=0$ and in particular the original scalar condition $\lambda M_1^2\mathbf1=0$ holds. Positive free zero edges, free one edges and $B$ zero edges make all eight states communicate. Every edge flips phase and a free state has a positive two-step zero return. The period is therefore exactly two. These facts establish membership in the unchanged domain (2.1) and identify its single positive stationary component.
+
+Next identify the complete visible law. Whenever $\beta+t d^s$ is a probability row on the free states of phase $s$, (15.6) gives the following actual filtering updates:
+
+$$
+\begin{array}{c|c|c}
+\text{observation}&\text{probability}&\text{conditional next-state law}\\ \hline
+0&3/4&\beta+\rho t d^{1-s}\\
+1&1/4&\delta_{B_{1-s}}.
+\end{array}
+\tag{15.7}
+$$
+
+From $B_s$, zero is forced and installs $\beta+c d^{1-s}$. These statements hold also for signed $t$ whenever the starting row is a probability row: nonnegativity of the matrices ensures validity of the updated rows. Thus every such free affine row induces the same law of all future outputs, namely the Markov future with previous bit zero; either $B$ point mass induces the Markov future with previous bit one. Induction over each finite word proves the assertion, since neither observation probability in (15.7) depends on $t$ or $s$.
+
+Under the stationary joint law, $H_i$ is free exactly when $X_{i-1}=0$, since every zero ends in a free state and every one ends in a $B$ state. Conditional on either phase, its stationary free mass is $4/5$, with normalized free row $\beta+h d^s$, and its $B$ mass is $1/5$. The preceding induction therefore identifies every visible cylinder with the stationary first-order Markov law having transition matrix, in visible-bit order $0,1$,
+
+$$
+T=\begin{pmatrix}3/4&1/4\\1&0\end{pmatrix},\qquad
+\bar\lambda=(4/5,1/5).
+\tag{15.8}
+$$
+
+Equivalently the same-law two-state edge presentation is
+
+$$
+\bar M_0=\begin{pmatrix}3/4&0\\1&0\end{pmatrix},\qquad
+\bar M_1=\begin{pmatrix}0&1/4\\0&0\end{pmatrix}.
+\tag{15.9}
+$$
+
+This is equality of the whole stationary law on the original one-edge clock, rather than equality of selected marginals.
+
+Let $S_i$ denote the hidden phase at cut $i$. The same calculation, starting conditional on either phase at the left endpoint of a finite interval, gives identical visible cylinder probabilities. Since $S_a=S_i+(a-i)\pmod2$ deterministically, this applies to any finite output cylinder and any specified cut $i$, even when the cylinder straddles that cut. The cylinder monotone-class extension proves
+
+$$
+\mathbb P(S_i=s\mid\sigma(X_k:k\in\mathbb Z))=\frac12
+\quad(s=0,1).
+\tag{15.10}
+$$
+
+In particular this independence holds after conditioning on any of the full fields $V_j^d$, on an observed block, and on $U=X_0$ if it is included.
+
+For the Markov law (15.8), a finite exterior window containing both neighbors has center odds $a:(1-a)^2$ on the free event, with $a=1/4$: all other transition factors cancel. A neighboring one forces the center to zero. Expanding those windows and using bounded conditional-expectation convergence therefore gives the exact full-exterior posterior
+
+$$
+q_0=\frac4{13}\,\mathbf1_{\{X_{-1}=X_1=0\}}.
+\tag{15.11}
+$$
+
+Since $1/4<4/13<1/2$, translation and a countable union of null sets prove the band at every site. Both original retained fields contain both neighbors for $j\ge1$, so their posteriors equal (15.11). At $j=0$, the Markov property, including its stationary reverse, gives
+
+$$
+p_0^R=\frac14\mathbf1_{\{X_{-1}=0\}},\qquad
+p_0^L=\frac14\mathbf1_{\{X_1=0\}}.
+$$
+
+The free event has probability $13/20$, so $\mathbb E q_0^2=4/65$ and $\mathbb E(p_0^d)^2=1/20$. Conditional projection gives $e_d^P(0)=4/65-1/20=3/260$. This proves (15.5) directly from the output law.
+
+Now classify all deterministic forward-labeled strong quotients. Summing (3.2) over target blocks shows that states in a common quotient block must have equal total outgoing one mass. The six free-state one masses, in phase order, are
+
+$$
+\frac6{48},\frac{12}{48},\frac{18}{48},\frac8{48},\frac{11}{48},\frac{17}{48}.
+$$
+
+They are pairwise distinct and positive. Each free state must therefore be a singleton, and cannot merge with a $B$ state. The only possible remaining merger is $B_0$ with $B_1$. Their zero rows have disjoint, strictly positive supports on the already singleton free states of opposite phases; hence they have unequal zero mass to, for example, the singleton $A_{1,1}$. Such a merger violates (3.2). The identity is the only eligible quotient, up to a bijection of its state names.
+
+For that quotient use exactly the fields and word orders of Theorem 12.3:
+
+$$
+\begin{aligned}
+V_j^R&=(X_{-\infty:-1},X_{1:j}),& Z_j^R&=H_{j+1},&
+W_j^R&=(X_{j+1},\ldots,X_{j+m}),\\
+V_j^L&=(X_{-j:-1},X_{1:\infty}),& Z_j^L&=H_{-j},&
+W_j^L&=(X_{-j-1},\ldots,X_{-j-m}).
+\end{aligned}
+\tag{15.12}
+$$
+
+The canonical reverse is $R_x(z,t)=\lambda_tM_x(t,z)/\lambda_z$, well-defined on all eight states. The identity-quotient case of Lemma 3.3 gives the joint-channel premise (13.9) with $B_w^R=M_w$ and $B_w^L=R_w$, including independence from $(U,V_j^d)$ conditional on the cut state. Concretely, the finite joint cylinder (2.2) factors into past and future at that state; stationarity gives the displayed reverse factor, and the monotone-class extension gives the same factorization with the full half-line in (15.12). Summing word matrices over all length-$m$ words gives a stochastic total kernel in either direction. Thus Lemmas 5.1 and 12.1 apply on these actual full fields at every cut, without imposing additional unifilarity or positivity hypotheses.
+
+For every non-null $(v,w)$ fiber, (15.10) implies that the posterior support $I_{j,v,w}^d$ contains a starting state of each phase. This is precisely the support marginal over $U$ in (13.10). By the actual joint channel, every supported starting row has positive word likelihood, as in (5.3). Every forward and reverse edge flips phase, so its normalized length-$m$ endpoint row is supported in starting phase plus $m$ modulo two. The two starting phases therefore give endpoint rows with disjoint supports and TV distance one. This proves (15.4) on the conditional support itself, in both directions for every cut and every non-null word. No global diameter or separately $U$-conditioned support replaces (13.10).
+
+It remains to prove persistent positive post-word variance; phase alone supplies no such variance. Fix arbitrary $j\ge1$ and $m\ge1$, and let
+
+$$
+E_j=\{X_{-1}=0,\ X_{1:j}=0^j\}\in\sigma(V_j^R),\qquad
+P(E_j)=\frac{13}{20}\left(\frac34\right)^{j-1}>0.
+\tag{15.13}
+$$
+
+Almost every complete past ending in zero has a most recent one. Indeed, under (15.8) the probability of $n$ consecutive zeros is $(4/5)(3/4)^{n-1}$, which tends to zero. If this most recent one is at $-k-2$, $k\ge0$, its next forced zero installs the affine coefficient $c$, and the following $k$ zeros multiply it by $\rho^k$. Consequently, conditional on that entire past and $S_0=s$, the state $H_0$ has free row
+
+$$
+\beta+\gamma d^s,\qquad \gamma=c\rho^k,\qquad 0<\gamma\le c.
+\tag{15.14}
+$$
+
+This assertion uses the entire past: for each finite most-recent-one location, the intervening one resets the state to a $B$ point mass once its phase is fixed. Earlier finite cylinder factors cancel, and extension over the earlier past preserves this conditional law. The countable union of these locations has full measure on $\{X_{-1}=0\}$.
+
+For almost every $v\in E_j$, the full conditional probability of $U=1$ is $q=4/13$, by the output Markov calculation. Conditional on $U=u$, the state $Z_j^R=H_{j+1}$ is free, its phase is uniform by (15.10), and its phase-$s$ normalized row is
+
+$$
+\beta+t_u d^s,\qquad
+ t_1=c\rho^{j-1},\qquad t_0=\gamma\rho^{j+1}.
+\tag{15.15}
+$$
+
+For $u=1$, $X_0=1$ enters a $B$ state and $X_1=0$ installs $c$; the remaining $j-1$ zeros give $t_1$. For $u=0$, the $j+1$ zeros from $X_0$ through $X_j$ give $t_0$. These are updates in the actual model after retaining the entire past; no finite window is substituted for $V_j^R$. In particular,
+
+$$
+\delta=t_1-t_0=\rho^{j-1}(c-\gamma\rho^2)>0,\qquad
+\bar t=qt_1+(1-q)t_0\in(0,c].
+\tag{15.16}
+$$
+
+All entries $\beta_i+\bar t d_i^s$ are at least $5/24>0$.
+
+For the specific future word $w=0^m$, its likelihood from $A_{s,i}$ is
+
+$$
+\ell_{s,i}(0^m)=(M_0^m\mathbf1)_{A_{s,i}}
+ =\left(\frac34\right)^{m-1}(1-a_i^s)>0.
+\tag{15.17}
+$$
+
+The first zero has probability $1-a_i^s$ and its normalized endpoint row is affine; (15.7) gives probability $3/4$ for each subsequent zero. Averaging (15.17) under either row in (15.15) gives the same $p=(3/4)^m$. Thus the conditional probability of $U=1$ remains $q$ after this word, while its conditional starting-state rows are reweighted, not left unchanged:
+
+$$
+\alpha_u^w(A_{s,i})
+ =\frac{(\beta_i+t_ud_i^s)\ell_{s,i}(0^m)}{2p}.
+\tag{15.18}
+$$
+
+The $B$ coordinates have zero mass on these fibers. Substitution in the finite binary conditional variance formula gives the exact post-word residual
+
+$$
+\begin{aligned}
+\Delta_{j,0^m}^R(v)
+ &=\mathcal D(U;Z_j^R\mid V_j^R=v,W_j^R=0^m)\\
+ &=\frac{q^2(1-q)^2\delta^2}{2}
+   \sum_{s=0}^1\sum_{i=1}^3
+   \frac{(d_i^s)^2(1-a_i^s)}{(3/4)(\beta_i+\bar t d_i^s)}
+ >0.
+\end{aligned}
+\tag{15.19}
+$$
+
+Indeed the difference between the two rows (15.18) is $\delta d_i^s\ell_{s,i}/(2p)$, and their $q$-weighted mixture is $(\beta_i+\bar t d_i^s)\ell_{s,i}/(2p)$. The standard binary variance computation, or the same computation underlying (4.7), then gives (15.19). This supplies positive residual after a positive-probability word for every finite $m$ and every $j\ge1$.
+
+For completeness, the precise averaged denominator also follows from the existing observation budget. On $E_j$ the complete future word $W_j^R$ is independent of $U$ given $V_j^R$, because $X_j=0$ is retained and (15.8) is first-order Markov. The valid joint-channel premise already established permits the fiberwise use of (5.5), giving
+
+$$
+\begin{aligned}
+\Delta_j^R(v)
+ &=\sum_w p_{j,v}^R(w)\Delta_{j,w}^R(v)\\
+ &=\mathcal D(U;Z_j^R\mid V_j^R=v)
+   -\mathcal D(U;W_j^R\mid V_j^R=v)\\
+ &=\frac{q^2(1-q)^2\delta^2}{2}
+   \sum_{s=0}^1\sum_{i=1}^3
+     \frac{(d_i^s)^2}{\beta_i+\bar t d_i^s}>0.
+\end{aligned}
+\tag{15.20}
+$$
+
+All word sums here omit null words. By (15.4), the left side of (13.11) is exactly this $\Delta_j^R(v)$. It cannot be at most $\kappa_R\Delta_j^R(v)$ for any $\kappa_R<1$ on $E_j$. Given any proposed finite burn-in, choose any $j\ge\max(1,b_R)$: (15.13)--(15.20) give a positive-measure violation at that required cut for its proposed block length. Since $j,m$ were arbitrary and the quotient classification is exhaustive, this proves failure of every allowed eventual right condition.
+
+The left direction has a different residual behavior. For any feasible state $z$ and near-past word $u=X_{-j:-1}$ of length $j\ge1$, the conditional endpoint row at $H_0$ after that word is affine on its free phase if $X_{-1}=0$, and is a $B$ point mass if $X_{-1}=1$. In the zero case this follows from the last $M_0$ row: each free-to-free row normalizes to an affine row by (15.2), as does a $B$ zero row, and mixtures preserve the affine form. The future-law calculation (15.7) therefore shows that the conditional law of $(U,X_{1:\infty})$ depends only on $X_{-1}$, irrespective of the starting state $H_{-j}$ or its phase. First factor finite future cylinders and then extend to the complete future. It follows that
+
+$$
+H_{-j}\ \perp\ (U,X_{1:\infty})\ \bigm|\ X_{-j:-1},\qquad
+\mathcal D(U;Z_j^L\mid V_j^L=v)=0
+\quad(j\ge1)
+\tag{15.21}
+$$
+
+almost surely. Apply (5.5) with the canonical reverse joint channel in (15.12). Its nonnegative terms force $\Delta_j^L(v)=0$, and every $\Delta_{j,w}^L(v)$ with positive word probability is zero, for every block length and every $j\ge1$. Thus the left condition is vacuous after one edge, even though all its coefficients in (15.4) are one. The right-direction failures suffice because Question 13.6 requires both directions. $\square$
+

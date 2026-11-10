@@ -12,7 +12,7 @@ $$\forall G \in \mathrm{FiniteSimpleGraphs},\; (\mathrm{MaxDegree}\left(G\right)
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Brooks/Subcubic.brooks_cubic` (`✓ std3`). ∎
 
-*Citation.* Juan Pablo Traverso Gianini (2026). *BrooksSubcubic: finite subcubic four-clique-free graph coloring*. URL: <https://github.com/Vilin97/lean-pool/tree/91c154506e3d08a1a25e4966c22c99212bf9df54/LeanPool/BrooksSubcubic>.
+*Citation.* Juan Pablo Traverso Gianini (2026). *Graph theorem Lean sources: BrooksSubcubic, chordal elimination, Menger and Hamiltonian closure*. URL: <https://github.com/jtraverso>.
 
 *Commentary.*
 

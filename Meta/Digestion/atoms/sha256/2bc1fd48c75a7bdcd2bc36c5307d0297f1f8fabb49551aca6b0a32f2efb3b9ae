@@ -1,0 +1,30 @@
+**Definition 1.1 (original design and material).** A logical term is
+$u::=\alpha\mid\beta\mid\langle u,u\rangle$, with ordered addresses in
+$\{L,R\}^*$. Retain the original reachable domain $\mathcal D$: no
+logical alpha address ends in $L$. The original operations are promotion
+$P_p:\alpha\mapsto\beta$ and split
+$S_p:\beta\mapsto\langle\beta,\alpha\rangle$ at a logical leaf $p$.
+Their actual guards retain their original absent, branch and wrong-type
+distinctions. A beta marker is a material vertex, never a logical target.
+
+Materialize alpha at $p$ by the single vertex $p$, beta by vertices
+$p,pL$ and edge $p-pL$, and a pair by its branch vertex $p$, its two
+child material trees, and edges to their roots. Every material address
+is persistent. Fix any $u\in\mathcal D$ with $b\ge3$ logical leaves,
+of which $c$ are beta. Let $V$ be its material vertices, $K$ its logical
+branch vertices, $I$ its beta owners, and $B$ its material terminals.
+Then
+
+$$
+ |K|=b-1,\qquad |I|=c,\qquad |B|=b,\qquad
+ N=|V|=2b+c-1.
+\tag{SC.1}
+$$
+
+Here $B$ comprises each alpha itself and each beta's marker. These are
+exactly the degree-one vertices; the root is a branch since $b\ge3$.
+The leftmost logical leaf ends in $L$ and hence is beta, so $1\le c\le b$
+in this domain. Empty selected subsets below are allowed; a purported
+$c=0,b\ge3$ reachable instance has empty domain. The results do not
+replace the domain by arbitrary rooted trees or the one-leaf cases.
+

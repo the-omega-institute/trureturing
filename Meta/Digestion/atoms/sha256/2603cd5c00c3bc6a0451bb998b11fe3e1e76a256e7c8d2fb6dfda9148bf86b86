@@ -1,0 +1,84 @@
+**命题 13.4（所有增益守卫成立仍不能删除同源分离守卫）。**
+Set every one of the $256$ sources to
+
+$$
+P_* =\begin{pmatrix}1/2&1/2\\1/2&1/2\end{pmatrix}.
+\tag{13.22}
+$$
+
+This is a legal source tuple for which every gain inequality in
+(13.12) holds, while the separation inequality for $w_*=M^7$
+fails. Thus retaining the gain guards alone is not an equivalent
+source criterion for Theorem 9.3.
+
+Proof. The matrix $P_*$ is strictly positive, has trace one and
+has determinant zero. For every $h\in\mathbb R^4$, the diagonal
+coefficient vector $x_q=h$ at all slots lies in $\ker B$, because
+every descendant of a given prefix then has the same source and
+coefficient block. Each $G_q|_{\ker B}$ is therefore surjective,
+so every gain guard holds by (13.15); a nonzero $h$ makes all gains
+nonzero at once.
+
+For an arbitrary $x\in\ker B$, put $d=D_{w_*}x$. The two slots
+of $w_*$ share the responses at every all-$M$ prefix, since both
+are equal to its reference descendant's response in (13.5).
+Subtract their equalities at clocks $1,2,3,4$. Direct multiplication
+gives
+
+$$
+\begin{gathered}
+M^2=\begin{pmatrix}1&1\\1&2\end{pmatrix},\quad
+M^3=\begin{pmatrix}1&2\\2&3\end{pmatrix},\quad
+M^4=\begin{pmatrix}2&3\\3&5\end{pmatrix},\\
+\bigl(\operatorname{tr}(M^iP_*)\bigr)_{i=1}^4
+ =\left(\frac32,\frac52,4,\frac{13}2\right).
+\end{gathered}
+\tag{13.23}
+$$
+
+Hence those four exact response-difference equations are $Rd=0$,
+where
+
+$$
+R=\begin{pmatrix}
+1/2&3/2&3/2&3/2\\
+3/2&5&10&20\\
+3&12&36&108\\
+11/2&26&104&416
+\end{pmatrix}
+ =\frac12\begin{pmatrix}
+1&3&3&3\\3&10&20&40\\6&24&72&216\\11&52&208&832
+\end{pmatrix}.
+\tag{13.24}
+$$
+
+Subtracting $3,6,11$ times the first row of $2R$ from its next
+three rows leaves the lower-right block
+
+$$
+\begin{pmatrix}1&11&31\\6&54&198\\19&175&799\end{pmatrix}.
+$$
+
+Subtracting $6$ and $19$ times its first row from its other rows
+leaves the last $2\times2$ determinant
+
+$$
+\det\begin{pmatrix}-12&12\\-34&210\end{pmatrix}
+ =-2520+408=-2112.
+$$
+
+The two preceding pivots are one, so
+
+$$
+\det R=\frac{-2112}{2^4}=-132\ne0.
+\tag{13.25}
+$$
+
+Therefore $d=0$ for every $x\in\ker B$. Equation (13.15) gives
+$\operatorname{rank}[B;D_{w_*}]=\operatorname{rank}B$.
+Its two sources are equal, so neither alternative in that leaf's
+separation guard holds. Any kernel vector would give identical
+complete targets at that leaf. This tuple is a counterexample to
+omitting the separation conditions, not a losing-tree realization
+and not a universal failure result for other source tuples. ∎
+

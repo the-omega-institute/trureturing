@@ -1,0 +1,10 @@
+**Definition 7.2 (a handoff gap without completed-cut exclusion).** Keep
+the same source, retained data and granted operations, but weaken the
+stationary interval so it ends after the recovery controller's final
+live observation. Before its record is handed off, allow either no
+update or one legal completed same-root update by an authorized invoker,
+without a delivered update-count observation to that controller. All
+its subsequent backing writes and handoff are local. The invoker's
+acknowledgement is not delivered as a new sensor to the recovering
+controller. All source replacements still follow GPO Definition 27.1.
+

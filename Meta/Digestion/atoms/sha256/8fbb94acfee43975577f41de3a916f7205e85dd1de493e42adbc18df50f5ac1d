@@ -1,0 +1,25 @@
+**Definition 72.1 (the cleared receiver experiment).** Immediately after
+Theorem 69.2, hold the actual source at $J(t)$, admit no represented
+continuation, and perform a paid clearing of the receiver's entire
+accessible entry-dependent information. This includes live/entry/current
+words, caches, reply transcripts, stack, pending input/output and proposed
+words, exported copies or callable archives available to this receiver,
+and any accessible length, layout or metadata that would disclose them.
+The receiver retains only common finite code, the opaque actual root,
+current exclusive rights, their source-independent I/O/adapter connections,
+and a fixed public stage flag selecting this second sweep. There is no
+source-correlated auxiliary provider or future input. The source itself
+is not cleared.
+
+The experiment requires actual clearing authority over these records;
+if an accessible external copy cannot be cleared, it is not an instance
+of this experiment. One realization exports no retained copy and overwrites
+its owned used records, resets list heads/counters to the common empty
+state, and leaves no accessible record of old lengths. Retained arena
+capacity, inaccessible reclaimed backing and their clearing work still
+count as actual material/work. As in Assumption 53.2, occupancy, allocator
+names, duration and resource amounts are not observation channels.
+No claim is made of erasing all past information elsewhere in the world.
+The second receiver starts without an entry-dependent word but with
+sufficient finite paid backing for its actual new execution.
+

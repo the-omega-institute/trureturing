@@ -1,0 +1,17 @@
+#### 定理 3.1：项目已有的原始比较表示定理
+
+定义 2.1 的数据满足 $\mathsf B_3$，当且仅当存在复 Hilbert 空间 $H$ 与 $\Phi:M\to H$，使
+
+$$
+\begin{gathered}
+\Phi(e)=0,\qquad \Phi(a\odot b)=\Phi(a)+\Phi(b),\\
+\Phi(Ua)=\omega\Phi(a),\qquad c(a,b)=\|\Phi(a)-\Phi(b)\|^2,\qquad
+\omega=-\tfrac12+i\tfrac{\sqrt3}{2}.
+\end{gathered}
+\tag{2}
+$$
+
+取 $H=\overline{\operatorname{span}_{\mathbb C}\Phi(M)}$ 时，表示唯一到唯一的保标签酉同构。
+
+这就是 C133 续卷 V 定理 1.3 与 `raw_hilbert_characterization` 的内容 [\[1\]](#ref-c133), [\[2\]](#ref-raw)；完整前件已逐项写出。附录 A 给出普通数学证明，包含从非对称比较消去原始乘法缺陷的步骤，不以“显然线性”略过这部分。
+

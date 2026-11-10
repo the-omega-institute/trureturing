@@ -1,0 +1,59 @@
+**定理 18.2（精确保核且保真实单位的实际历史）。**在 (18.1) 下，存在满足全部原始前件及 (R) 的有限直积模型 $(M_N,c_N,U_N)$ 及映射 $\Lambda_N:M\to M_N$，满足
+
+$$
+\Lambda_N1=\mathbf1,\qquad
+c_N(\Lambda_Na,\Lambda_Nb)=c(a,b),\qquad
+q_N(\Lambda_Na)=q(a),\quad r_N(\Lambda_Na)=r(a).
+\tag{18.2}
+$$
+
+这些结论不使用任何三角条件。
+
+**证明。**定义三个实际操作
+
+$$
+A_k(a,u)=U^{2-k}(a\cdot U^ku),\qquad k=0,1,2.
+\tag{18.3}
+$$
+
+同步等距与 (R) 给 $\frac13\sum_k c(A_k(a,u),A_k(b,v))=c(a,b)+c(u,v)$，而双侧单位给严格对象等式 $A_k(1,u)=U^2u$。递归定义
+
+$$
+K_0(a;z)=z,\qquad
+K_N^\sigma(a;z)=
+A_{\sigma_1}\bigl(a,K_{N-1}^{(\sigma_2,\ldots,\sigma_N)}(a;z)\bigr).
+\tag{18.4}
+$$
+
+逐层有限平均与单位代入分别给
+
+$$
+\begin{aligned}
+3^{-N}\sum_{\sigma\in\Sigma_N}
+c(K_N^\sigma(a;z),K_N^\sigma(b;w))&=Nc(a,b)+c(z,w),\\
+K_N^\sigma(1;w)&=U^{2N}w.
+\end{aligned}
+\tag{18.5}
+$$
+
+取 $M_N=M^{\Sigma_N}$，保留逐坐标的原乘法与原 $U$，真实单位为 $\mathbf1$，并置
+
+$$
+c_N(X,Y)=\frac1{N3^N}\sum_\sigma c(X_\sigma,Y_\sigma),
+\qquad
+\Lambda_Na=(K_N^\sigma(a;z_N))_\sigma.
+\tag{18.6}
+$$
+
+逐坐标求和保留完整 (R)。终端项 $c(z_N,z_N)=0$，而单位历史严格等于 $U^{2N}z_N=1$，故得全部 (18.2)。
+
+对任意 $j\ge0$，将另一历史终端取为 $U^jz_N$，其单位历史逐条等于 $p_j$。同步 $U^{2N}$ 等距给 $c(z_N,U^jz_N)=r(p_j)$，反向为 $q(p_j)$，从而还有精确探针式
+
+$$
+c_N(\Lambda_Na,\mathbf p_j)=q(a)+\frac{r(p_j)}N,\qquad
+c_N(\mathbf p_j,\Lambda_Na)=r(a)+\frac{q(p_j)}N.
+\tag{18.7}
+$$
+
+没有删除或更换终端费用，也没有断言 $\Lambda_N$ 保持乘法或标记。
+

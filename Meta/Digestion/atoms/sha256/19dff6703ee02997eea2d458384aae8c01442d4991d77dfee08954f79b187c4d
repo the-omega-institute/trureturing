@@ -1,0 +1,35 @@
+**Theorem 26.1 (singletons and supplements).** Fix an admissible $U$.
+The quotient alone determines the ordered endpoint exactly when
+$b(K(U))=s(K(U))$. It determines the full addressed history exactly when
+$U=\alpha$, or $K(U)$ is a unary path, or a unary path ending in one
+binary vertex whose two children are leaves. A one-vertex tree and a
+binary root with two leaves are included in these path conventions.
+
+For any supplied deterministic supplement $q$ on $\mathcal J(U)$,
+endpoint recovery is possible exactly when
+
+$$
+q(t,w)=q(t',w')\ \Longrightarrow\ t=t',
+\tag{IV.69}
+$$
+
+and full-history recovery is possible exactly when $q$ is injective.
+The sharp numbers of conditional supplement values are respectively
+$E(U)$ and $J(U)$; the sharp fixed-width binary content sizes are their
+ceiling logarithms. Given the ordered endpoint $t$ as well, the sharp
+history supplement has $F_{PS}(t)$ values, as in AA19.2.
+
+**Proof.** The endpoint assertion follows from (IV.64). In (IV.65), a
+unary vertex has factor one. A binary vertex with child masses $x,y\ge1$
+has factor $\binom{x+y}{x}/(1+\mathbf1_{X\cong Y})$. This equals one
+exactly when both children are leaves: if $x+y\ge3$, the binomial is at
+least three and the denominator at most two. Thus $J=1$ exactly for the
+listed shapes. Equality of supplement values cannot conceal different
+target answers, proving necessity of (IV.69) and injectivity. Conversely
+these conditions define a decoder on the actual image. At least one
+value per distinguishable target is required. Enumerating finite
+endpoints, or the labelling orbits of Theorem 24.1 and their inverse
+histories, assigns exactly the stated numbers of values. Ranking and
+unranking are finite-set indexing, with no extra acquisition premise.
+$\square$
+

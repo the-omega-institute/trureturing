@@ -1,0 +1,74 @@
+### 引理 12.5（共享纯 $N$ 历史的 $k$ 个互斥见证）
+
+对 $k\ge3$，存在 $k$ 个来源
+
+$$
+ H_k,\ R_2,\ldots,R_k\in\mathcal M_k
+\tag{12.10}
+$$
+
+它们的全部纯 $N$ 读数 $a_0,\ldots,a_{k-1}$ 相同；$H_k$ 只在首次
+$L_0$ 位于 $q=k-1$ 时可认证，而 $R_p$ 只在 $q=k-p$ 时可认证。
+
+**证明。** 取引理 12.4 的 $H_k$，令
+$A_r=a_{k-r}(H_k)$（$1\le r\le k$）、$A_0=0$、
+$d_h=A_{h+1}-A_h>0$（$0\le h<k$）。统一取
+$0<\varepsilon<\frac14\min_h d_h$。对 $2\le p\le k$ 置
+
+$$
+ u_j=\begin{cases}-\varepsilon/2,&j=p-1,\\
+ \varepsilon,&j\ne p-1,
+ \end{cases}
+ \quad u_{-1}=0,\quad
+ c_h=d_h+u_{h-1}-u_h,
+ \quad R_p=c\mathbf1^{\mathsf T}+u e_{k-1}^{\mathsf T}.
+\tag{12.11}
+$$
+
+由 $|u_h|\le\varepsilon$ 和 $u_{-1}=0$，有
+$c_h\pm2u_h\ge d_h-4\varepsilon>0$，于是
+
+$$
+ R_p=\tfrac12(c+2u)(\mathbf1+\tfrac12e_{k-1})^{\mathsf T}
+    +\tfrac12(c-2u)(\mathbf1-\tfrac12e_{k-1})^{\mathsf T}.
+\tag{12.12}
+$$
+
+两行因子线性无关；$c$ 严格正而 $u$ 同时含正、负坐标，故 $c,u$ 不平行，
+$R_p$ 普通秩恰为二。直接望远镜求和得
+
+$$
+ \operatorname{tr}(N^iR_p)=A_{k-i}\quad(0\le i<k),
+\tag{12.13}
+$$
+
+与 $H_k$ 的纯 $N$ 读数完全相同。令
+$U_r=\sum_{h=0}^{r-1}u_h$、$B_r=A_r-u_{r-1}$。则 $R_p$ 的 $D_{k-r}$ 数据满足
+
+$$
+ b^{(k-r)}_j=B_r\ (j<k-1),\qquad
+ b^{(k-r)}_{k-1}=B_r+U_r.
+\tag{12.14}
+$$
+
+在 (12.2) 的 $i=k-r$ 方程中，任何正解都必须满足
+$x_{r-1}=u_{r-1}/U_r$。当 $r=p$ 时
+$U_p=(p-\tfrac32)\varepsilon>0$ 而 $u_{p-1}=-\varepsilon/2$，故无正解。
+
+当 $r\ne p$ 且 $r\ge2$ 时，该比值为 $1/r$（$r<p$）或
+$1/(r-\tfrac32)$（$r>p$），在 $(0,1)$ 内。固定这个 $x_{r-1}$ 后，
+取 $x_0,\ldots,x_{r-2}>0$ 使前 $r$ 项之和为 $1$。当 $r=1$ 时取 $x_0=1$。
+对所有 $r$，$U_r>0$ 且 $B_r=\sum_{h=0}^{r-1}c_h>0$；其余坐标统一由
+
+$$
+ x_h=\frac{d_h+U_rx_{h-1}}{B_r+U_r}\quad(r\le h<k)
+$$
+
+递推，因而全部严格为正。这个递推正是 (12.2) 中相邻两式之差：对应
+$i=k-1-h$ 的右侧为 $B_r\sum_{j=0}^{h}x_j+U_rx_h$，与前一式相减后
+等于 $d_h$。首式 $A_r=B_r+U_rx_{r-1}$ 已满足，故递推逐式匹配全部数据。
+同一个显示的 $\varepsilon$ 界因此同时保证所有 $p$ 的正分解和所有 $r\ne p$
+的相容性，无须逐个另选参数。因此 $R_p$ 只在 $q=k-p$ 时失败相容性。
+
+最后，$H_k$ 的性质 2--3 给出它只在 $q=k-1$ 时失败相容性。∎
+

@@ -82,17 +82,17 @@ internal static class GitRepositorySnapshotReader
         Action<string, ReadOnlyMemory<byte>>? observeContentDigest)
     {
         var scopes = EnumerationScopes(pathspecs).ToArray();
-        var tracked = ParseIndex(Git(root, ["ls-files", "--stage", "-z", .. scopes[0]]));
+        var tracked = GitIndexRepositoryFiles.Read(root, scopes[0]);
         if (scopes.Length > 1)
         {
             for (var index = 1; index < scopes.Length; index++)
             {
                 var scope = scopes[index];
-                foreach (var (path, mode) in ParseIndex(Git(root, ["ls-files", "--stage", "-z", .. scope])))
+                foreach (var (path, entry) in GitIndexRepositoryFiles.Read(root, scope))
                 {
-                    if (tracked.TryGetValue(path, out var previous) && previous != mode)
+                    if (tracked.TryGetValue(path, out var previous) && previous.Mode != entry.Mode)
                         throw new InvalidOperationException($"git index mode changed during enumeration: {path}");
-                    tracked[path] = mode;
+                    tracked[path] = entry;
                 }
             }
         }
@@ -131,10 +131,10 @@ internal static class GitRepositorySnapshotReader
                         throw new InvalidOperationException($"git emitted an invalid repository path: {path}");
                     }
 
-                    if (tracked.TryGetValue(path, out var mode) && !IsSupportedMode(mode))
+                    if (tracked.TryGetValue(path, out var indexed) && !IsSupportedMode(indexed.Mode))
                     {
                         throw new InvalidOperationException(
-                            $"non-regular repository entry {path} has git mode {mode}");
+                            $"non-regular repository entry {path} has git mode {indexed.Mode}");
                     }
 
                     FileMapSymlinkPolicy.RequirePlainAncestors(root, path, inspectedDirectories);
@@ -158,7 +158,7 @@ internal static class GitRepositorySnapshotReader
             {
                 probe.Failure?.Throw();
                 var path = probe.Path;
-                var indexMode = tracked.TryGetValue(path, out var indexedMode) ? indexedMode : null;
+                var indexMode = tracked.TryGetValue(path, out var indexedEntry) ? indexedEntry.Mode : null;
                 if (probe.LinkTarget is { } target)
                 {
                     var linkBytes = ReadLinkBytes(root, probe.FullPath, target);
@@ -293,20 +293,22 @@ internal static class GitRepositorySnapshotReader
                 arguments,
                 maximumOutputBytes,
                 standardInput),
+            (arguments, maximumErrorBytes, standardInput, readStandardOutput) =>
+                BoundedProcessRunner.RunStreaming("git", arguments, root, TimeSpan.FromSeconds(120),
+                    maximumErrorBytes, readStandardOutput, standardInput),
             paths);
     }
 
     internal static RawRepositorySnapshot ReadRevisionProjection(string revision,
-        Func<IReadOnlyList<string>, int, ReadOnlyMemory<byte>, ProcessOutput> runGit,
+        GitStreamReader<GitRepositoryTreeEntry[]> readTree,
         GitStreamReader<IReadOnlyDictionary<string, GitRepositoryBlob>> runGitStreaming,
         Func<string, bool> readContents,
         Action<string, ReadOnlyMemory<byte>>? observeContentDigest = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(revision);
         ArgumentNullException.ThrowIfNull(readContents);
-        var treeResult = runGit(["ls-tree", "-r", "-l", "-z", revision], MaximumGitOutputBytes, default);
-        EnsureSuccess(treeResult);
-        var tree = ParseTree(treeResult.StandardOutput).OrderBy(static entry => entry.Path, StringComparer.Ordinal).ToArray();
+        var tree = GitRepositoryTreeStream.Read(revision, readTree)
+            .OrderBy(static entry => entry.Path, StringComparer.Ordinal).ToArray();
         foreach (var entry in tree)
             if (!IsSupportedMode(entry.Mode) || entry.ObjectType != "blob" || entry.Size is null)
                 throw new InvalidOperationException($"protected base has non-regular entry {entry.Path} ({entry.Mode} {entry.ObjectType})");
@@ -409,16 +411,12 @@ internal static class GitRepositorySnapshotReader
     internal static RawRepositorySnapshot ReadRevision(
         string revision,
         Func<IReadOnlyList<string>, int, ReadOnlyMemory<byte>, ProcessOutput> runGit,
+        GitStreamReader<GitRepositoryTreeEntry[]> readTree,
         IReadOnlyList<string>? paths = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(revision);
         ArgumentNullException.ThrowIfNull(runGit);
-        var treeResult = runGit(
-            ["ls-tree", "-r", "-l", "-z", revision],
-            MaximumGitOutputBytes,
-            default);
-        EnsureSuccess(treeResult);
-        var all = ParseTree(treeResult.StandardOutput).ToArray();
+        var all = GitRepositoryTreeStream.Read(revision, readTree);
         var tree = paths is null ? all : all.Where(entry =>
             paths.Any(selection => MatchesRevisionSelection(entry.Path, selection))).ToArray();
         if (paths is not null && tree.Any(static entry => entry.Mode == "120000"))
@@ -704,62 +702,6 @@ internal static class GitRepositorySnapshotReader
 
     private static InvalidOperationException InvalidBatchOutput(string objectId) =>
         new($"git cat-file --batch emitted invalid data for object {objectId}");
-
-    internal static IEnumerable<GitRepositoryTreeEntry> ParseTree(byte[] bytes)
-    {
-        foreach (var entry in SplitNul(bytes))
-        {
-            var tab = Array.IndexOf(entry, (byte)'\t');
-            if (tab <= 0) throw new InvalidOperationException("git tree emitted invalid metadata");
-            var metadata = StrictUtf8.GetString(entry.AsSpan(0, tab))
-                .Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            var path = StrictUtf8.GetString(entry.AsSpan(tab + 1));
-            if (metadata.Length is not (3 or 4) || !RepoPath.TryCreate(path, out _))
-            {
-                throw new InvalidOperationException($"git tree emitted invalid entry: {path}");
-            }
-
-            long? size = null;
-            if (metadata.Length == 4 && metadata[3] != "-")
-            {
-                if (!long.TryParse(
-                        metadata[3],
-                        System.Globalization.NumberStyles.None,
-                        System.Globalization.CultureInfo.InvariantCulture,
-                        out var parsedSize))
-                {
-                    throw new InvalidOperationException($"git tree emitted invalid entry: {path}");
-                }
-
-                size = parsedSize;
-            }
-
-            yield return new GitRepositoryTreeEntry(metadata[0], metadata[1], metadata[2], path, size);
-        }
-    }
-
-    private static Dictionary<string, string> ParseIndex(byte[] bytes)
-    {
-        var result = new Dictionary<string, string>(StringComparer.Ordinal);
-        foreach (var entry in SplitNul(bytes))
-        {
-            var tab = Array.IndexOf(entry, (byte)'\t');
-            if (tab <= 0)
-            {
-                throw new InvalidOperationException("git index emitted invalid metadata");
-            }
-
-            var metadata = StrictUtf8.GetString(entry.AsSpan(0, tab)).Split(' ');
-            var path = StrictUtf8.GetString(entry.AsSpan(tab + 1));
-            if (metadata.Length != 3 || metadata[2] != "0" || !result.TryAdd(path, metadata[0]))
-            {
-                throw new InvalidOperationException(
-                    $"unmerged or duplicate repository entry: {path}");
-            }
-        }
-
-        return result;
-    }
 
     private static IEnumerable<string> ParseNulStrings(byte[] bytes) =>
         SplitNul(bytes).Select(static item => StrictUtf8.GetString(item));

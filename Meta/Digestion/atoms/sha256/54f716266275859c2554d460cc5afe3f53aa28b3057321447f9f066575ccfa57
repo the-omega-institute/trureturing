@@ -1,0 +1,90 @@
+**Theorem 144.2 (Source-only positive constants on the entire paired domain; repo-derived).**
+Every quantity in (144.1) is finite and strictly positive. In particular
+$\eta_0>0$. The constants $B,\kappa,c,C$ are valid decoder, retention
+and comparison constants in VI (118.7), VI (116.8) and VI (118.12),
+respectively, with $L_{\mathfrak s}=2$. For every original anchor and
+every admissible competing hypothesis, including the whole complex
+retention disk and the boundary of the completion ball,
+
+$$
+cD_0(\gamma,h;h_0)\le d_f(\gamma,h;h_0)
+ \le d_a(\gamma,h;h_0)\le CD_0(\gamma,h;h_0).
+\tag{144.2}
+$$
+
+*Proof.* The minor certificate gives $\det T\ne0$. At least one
+cofactor is nonzero, since an invertible matrix has nonzero inverse.
+Hence $\Lambda>0$ and is finite. Also $b,\tau>0$ and
+$m_0>0$, since $9>4\sqrt2$. These facts prove positivity of all
+successive constants in (144.1), including the finite minimum $\eta_0$.
+
+To check the decoder bound directly, choose the representative of a
+lift modulo (142.4) whose $X_{33}$ and $\operatorname{Im}Z_{33}$
+coordinates vanish. Its 34 remaining coordinates form a vector $v$;
+the first 34 row values form $Tv$. If the maximum absolute original
+row value is $d$, Cramer's rule gives $|v_l|\le\Lambda d$ for every
+$l$. The bases (142.6)–(142.7) consequently give
+
+$$
+\|X\|_{\rm HS}\le4\Lambda d,\quad
+\|Y\|_{\rm HS}\le4\Lambda d,\quad
+\|Z\|_{\rm HS}\le5\Lambda d.
+\tag{144.3}
+$$
+
+Indeed the squared Hermitian norm has at most three squared diagonal
+coordinates and twelve squared off-diagonal real coordinates; the
+squared complex-matrix norm has eighteen squared real coordinates.
+The gauge conditions only reduce these bounds. Set
+$v_0=(1,2,0)^{\mathsf T}/\sqrt5$ and
+$\Pi_{v_0}M=M-(v_0^\dagger Mv_0)I_3$.
+Then $v_0\perp a_+,t$ and
+$\|\Pi_{v_0}M\|_{\rm HS}\le p\|M\|_{\rm HS}$.
+The kernel-invariant maps VI (118.8) are here
+$(X+Y)/b$, $\Pi_{v_0}(X-Y)$ and $\Pi_{v_0}Z$.
+Their three output norms sum to at most $B d$ by (144.3).
+For physical paired lifts they are exactly
+$H_\delta,S_\delta,\Pi_{v_0}Z$, so this proves VI (118.7).
+
+For the retention bound use
+
+$$
+F=\begin{pmatrix}3/5&-4/5&0\\-4/5&-3/5&0\\0&0&0\end{pmatrix},
+\qquad \ell_F(M)=\operatorname{Tr}(FM).
+\tag{144.4}
+$$
+
+This is VI (116.6) with normalized $a_+$ and the vector $v_0$.
+It has trace zero and Hilbert–Schmidt norm $\sqrt2$, annihilates $t$,
+and satisfies $\ell_F(D)=5/8$. For the whole completion ball,
+$q_h=5/8-b\ell_F(hh^\dagger)\ge m_0$.
+The exact identity VI (116.14) and scalar invariance give
+
+$$
+q_h|\gamma-\gamma'|
+ \le2\sqrt2\|\Pi_{v_0}Z\|_{\rm HS}
+             +b\sqrt2\|H_\delta\|_{\rm HS}
+ \le\sqrt2(2+b)B d.
+\tag{144.5}
+$$
+
+Thus $\kappa$ is a valid retention constant for these same finite rows.
+Substituting $B,\kappa$ in VI (118.15)–(118.18), using
+$s_\theta^2=c_\theta^2=s_\theta c_\theta=1/2$, gives exactly
+$R_*,Z_*,c$ in (144.1). The upper estimate VI (118.19)–(118.21)
+gives $C$, because $\max_i\|r_i\|_{\rm HS}=1$ and
+$\|D\|_{\rm HS}=\sqrt{34}/8$. These estimates apply to any two
+points of the full closed parameter domain. Specializing one of them
+to $(0,h_0)$ proves (144.2).
+
+Finally (125.6) with $A=1/2$ gives the displayed $E$, and (126.3)
+gives exactly $R,G$. The number $\eta_0$ is at most the interval
+bound in (126.7) and at most $\Delta/(4E)$ for
+$\Delta=1/10000$. These are explicit source constants, not an
+unevaluated minimum over the completion or retention domains.
+The observability intermediate in VI §118 is D'Alessandro,
+[*On Quantum State Observability and Measurement*, §2, Theorem 1](https://arxiv.org/html/quant-ph/0307127v1),
+which identifies indistinguishability with annihilation of an
+observable linear span. The finite raw-row minor and all constants
+above belong to this particular source. $\square$
+

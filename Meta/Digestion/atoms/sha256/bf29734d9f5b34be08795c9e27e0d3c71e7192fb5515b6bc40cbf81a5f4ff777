@@ -1,0 +1,42 @@
+**定义 119.1（完整原前件、实际幂等元与角）。** 固定定义 64.1 的同一原 $\Omega,E,C,u,N,P,S,D$ 及全部原来源量词；这里只取其已经给定的 JB 接口和实际二表，暂不要求 NN。准确地，$E$ 是实含单位 JB 代数 $X$ 的忠实等距稠密含单位实 Jordan 子代数，$a\circ b=S(a,b)$，$C=E\cap X_+$，$N=\|\cdot\|_X|_E$。原正实线性评价仍按原标签 $\alpha\in P$ 保留，分离 $E$，并满足
+
+$$
+c\in C\quad\Longleftrightarrow\quad
+\alpha(c)\ge0\ \text{对全部原 }\alpha\in P.
+\tag{119.1}
+$$
+
+全部原质量 $m_\alpha=\alpha(u)$ 保留零、不等和次归一情形；不假定全部数学态是原准备。$D:E^2\to E$ 起初仅为总映射。P2 是对全部原 $\alpha\in P$、$a,b\in E$ 的实际 Hermitian 半正定表
+
+$$
+M_\alpha(a,b)=
+\begin{pmatrix}
+\alpha(a^2)&\alpha(a\circ b)-\mathrm i\alpha(D(a,b))\\
+\alpha(b\circ a)-\mathrm i\alpha(D(b,a))&\alpha(b^2)
+\end{pmatrix}\succeq0,
+\qquad a^2=a\circ a.
+\tag{119.2}
+$$
+
+两个方向都是原实际值。对每个原域实际含有的 $p\in E$、$p^2=p$，定义
+
+$$
+X_p=X_2(p):=\{x\in X:p\circ x=x\},\qquad
+E_p=E\cap X_p,\qquad C_p=C\cap E_p,\qquad N_p=N|_{E_p}.
+\tag{119.3}
+$$
+
+只在明列的后续消费者中另要求原全域恒等式
+
+$$
+\begin{aligned}
+\mathrm{NN}:&\quad D(a,D(a,b))=(L_a^2-L_{a^2})b,
+\qquad L_ax=a\circ x,\\
+\mathrm J:&\quad D(a,D(b,c))+D(b,D(c,a))+D(c,D(a,b))=0
+\qquad(a,b,c\in E).
+\end{aligned}
+\tag{119.4}
+$$
+
+不加入 $D$ 的可加、齐次、连续、中央平移、PY、$R$、A、投影相容或完成延拓；不向 $D$ 输入 $X\setminus E$ 的投影。$p=0$ 及 $X=0$ 均保留。
+

@@ -1,0 +1,34 @@
+**定理 39.1（另行供应共同相干 bus 的反射相位）。**
+在不同数据系统上给投影 $Q_A,R_B$，另供同一个 bus qubit 上可调用的条件门
+
+$$
+A=C_{Q_A}(X)=(I-Q_A)\otimes I+Q_A\otimes X,\qquad
+B=C_{R_B}(Z)=(I-R_B)\otimes I+R_B\otimes Z.
+$$
+
+省略旁观数据的恒等张量因子。则在整个数据加 bus 空间，
+
+$$
+ABAB=(I_{AB}-2Q_A\otimes R_B)\otimes I_{\rm bus}.
+\tag{39.1}
+$$
+
+bus 可以未知，且可与数据或任意外部参考纠缠；仍精确恢复。
+若 bus 另初始化为 $|0\rangle$，则三次字 $ABA$ 已在这个制备切片实现同一个数据门并返回 bus。
+
+**证明。** $Q_A$ 和 $R_B$ 作用于不同数据因子，联合谱扇区由 $q,r\in\{0,1\}$ 标记。
+在每扇区，四次字作用为 $X^qZ^rX^qZ^r=(-1)^{qr}I$；
+把谱投影求和即得全空间算子恒等式 (39.1)，自动兼容所有参考与纠缠。
+在制备 bus $|0\rangle$ 的切片，$X^qZ^rX^q|0\rangle=(-1)^{qr}|0\rangle$，给三次结论。
+若 $Q_A,R_B$ 均非零且非恒等，在各自核与像中选单位向量；
+两者等权叠加的系数矩阵经数据门后为
+$\tfrac12\left(\begin{smallmatrix}1&1\\1&-1\end{smallmatrix}\right)$，秩二，故门能纠缠。∎
+
+这不是全局最少调用次数定理。共同可相干访问的 bus 与条件反射是显式新增资源，
+并不由任意 Stinespring 扩张或实际仪器的全维补全推出。
+[Waves VI §113](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA_VI.md#v9-full-completion)
+反而说明忠实全十维补全不可能保持整个原六维码记录空间。
+本节的 bus 恒等式没有改写那个原返回合同。
+
+<a id="v9-instrument-return"></a>
+

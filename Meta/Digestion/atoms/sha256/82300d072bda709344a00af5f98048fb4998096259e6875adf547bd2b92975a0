@@ -1,0 +1,89 @@
+**Proposition 8.1 (Finite instance bounds, with classical costs separate).**
+For the generated instance above, every actual run makes at most $Lk$
+instrument calls, at most $Lr$ calls to the same installed $N$, at most
+$LM$ checkpoint lookups, and exactly one original terminal call. No
+extra system call is used by the compiler or its certificate checker.
+Compilation, retention and online classical work are finite per valid
+instance but are additional resources.
+
+**Proof.** Every actual path is a prefix of $s_*^L$, with early stopping
+only. These give the quantum-call and checkpoint bounds immediately.
+For an explicit finite storage bound let $k_t$ count the instrument
+positions in the first $t$ actions of the nominal timetable. The full
+untrimmed action tree has
+
+$$
+S=\sum_{t=0}^{T}2^{k_t}\le(T+1)2^{Lk}
+\tag{8.1}
+$$
+
+nodes. All table rows and trimmed leaves are included in this finite
+tree. A serialization with fixed-width child indices therefore uses
+$O(S(1+\log(S+1)))$ bits for node tags, links and stop bits, in addition
+to the timetable, reference word, markers and arithmetic certificate.
+All rational certificate numerators and denominators have finite
+actual bit lengths; their sum, rather than a constant-cost real
+number convention, is charged to the advice size. An elementary
+sequential tape interpreter suffices: a table fetch may scan the
+whole serialized table. Random-access memory is not required to
+claim finite implementation. Its bit steps and workspace are charged
+as classical costs, and no efficiency bound is inferred from (8.1).
+
+The actual archive contains at most $Lk$ outcome bits, at most $L$
+mismatch bits, the timeout bit and terminal bit, with the executed
+action positions, stop decisions, source/advice identifiers and
+framing retained as well. One can allocate a finite bound before
+preparation, since $T$, $S$ and the serialization are then known.
+The quantum-call bounds do not include the bit cost of writing,
+copying or reading that archive. Detailed deterministic controller
+traces, if also retained, are functions of the same actual path and
+fixed advice; their full size and writing cost must also be charged.
+
+The first-stage word search and all precision refinements terminate
+by Lemmas 2.1–2.3. The second-stage enumeration and certificate
+generation have finitely many terminating evaluations. A universal
+classical implementation therefore has a finite actual step count
+and maximum workspace on every valid input. These include evaluation
+of the supplied naming programs, rational arithmetic and construction
+of the stored controller. They take place before preparation, and
+are not counted as $\mathsf J$ or $\mathsf N$ calls. Preparation of
+the naming inputs, their authentication, storage allocation and
+loading are separate costs as well; their availability is an explicit
+premise, not a zero-cost achievement of the quantum source. ∎
+
+For clarity, the resource account is a vector for the same execution,
+not a sum in which classical work is converted into free quantum calls.
+With a fixed bit-machine implementation, write $C_G,C_H,C_{\rm check}$
+for its actual pre-preparation step counts, $C_{\rm load}$ for writing
+the retained controller, and $C_{\rm on}(w_\ell,b)$ for the actual
+online lookup and archive work. A run is charged these counts, the
+actual retained and peak working bit sizes, and the quantum counts
+
+$$
+\bigl(k(w_\ell),\ \#_N(w_\ell),\ 1\bigr)
+\le\bigl(Lk,Lr,1\bigr)
+\tag{8.2}
+$$
+
+coordinatewise. Name evaluations are included in $C_G+C_H+C_{\rm check}$,
+wherever they are actually performed. If the finite certificate is
+retained without being separately checked in that run, its generation
+still costs work in $C_H$; no additional check is claimed. Input
+production and physical binding costs must be added when describing a
+larger process that supplies the names. They have no bound supplied by
+this theorem. Deterministic additions to the online archive preserve
+the complete-record bound because the full $(\ell,b)$ is still retained
+and the added fields are functions of it and the fixed advice.
+
+There is no efficiency, minimality or uniform total-resource claim over
+all valid models and naming programs. In particular [VI Theorem
+97.1](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA_VI.md#97-混合调用上限与精确有限取得的两个边界)
+still excludes a uniform finite $N$-call bound over the allowed
+installations for fixed error below $2/5$. The present compiler permits
+its timetable, advice size and run costs to depend on the named
+installation. A finite program is not a constant-memory guarantee;
+the finite allocation here is made only after the particular advice
+has actually been constructed. If compilation is repeated for another
+target, that is another classical cost; each subsequent quantum run
+requires its declared preparation and terminal resources.
+

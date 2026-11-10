@@ -1,0 +1,16 @@
+**Proposition 169.2 (the actual Section 166 plane is not $P$-invariant).** For every original finite $a,\eta,d>0$, with $P=T_d$, $g=g_{2d}$ and $W$ the concrete representer span of Section 166,
+
+$$
+P(W)\not\subseteq W.
+\tag{169.7}
+$$
+
+*Proof.* In the fixed readout of Appendix III Definition 134.1, $f_B=1/4$, $P1=1$, $\sigma_0=1$ and $\sigma_B=0$. Therefore the representer formula (166.1) gives the exact identity
+
+$$
+\psi_{0BB}=g\,P(f_B P f_B)=\frac{g}{16}.
+\tag{169.8}
+$$
+
+In particular $g/16\in W$. If $P(W)\subseteq W$, finite-dimensionality of $W$ would make the orbit $(P^ng)_{n\ge0}$ linearly dependent. Equivalently, some nonzero polynomial $q$ would satisfy $q(P)g=0$, contradicting Lemma 169.1 with $t=2d$. Thus (169.7) holds. $\square$
+

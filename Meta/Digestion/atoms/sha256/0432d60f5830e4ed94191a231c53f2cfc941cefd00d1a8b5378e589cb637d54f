@@ -1,0 +1,29 @@
+本文对每个 $\alpha\in\mathcal P$、每个原实标签和下列各关系中的全部原变量采用以下四组原关系；$\alpha$ 的归一性不是前件：
+
+1. 对所有原 $a,b$，实际二标签矩阵
+
+   $$
+   G_\alpha(a,b)=
+   \begin{pmatrix}
+   g_\alpha(a,a)&g_\alpha(a,b)\\
+   g_\alpha(b,a)&g_\alpha(b,b)
+   \end{pmatrix}
+   \succeq0,
+   $$
+
+   包含零、重复、全部实缩放和实平移；两条有向非对角项都取旧 $D$ 的实际值。
+2. 对 $(a_1,a_2,a_3)=(a+b,a,b)$，实际实部矩阵 $H_\alpha=[\alpha(S(a_i,a_j))]_{i,j=1}^3$ 在整个 $\mathbb R^3$ 上半正定，且 $v^*G_\alpha(a+b,a,b)v=0$，其中 $v=(1,-1,-1)$。全部排列使用同一实际表的对应排列和相应零方向。这里要求完整实加法三角 PSD，不只要求闭合零和面上的 PSD。
+3. $S(u,u)=u$，并固定一个正有理 $0<\theta\le1$ 的小效果平方收缩
+
+   $$
+   0\le e\le\theta u\Longrightarrow S(e,e)\le e.
+   $$
+
+4. 对所有原 $a,b,c$，保留原实部换括号式
+
+   $$
+   S(S(a,b),c)-D(D(a,b),c)
+   =S(a,S(b,c))-D(a,D(b,c)).
+   \tag{1.1}
+   $$
+

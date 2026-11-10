@@ -1,0 +1,34 @@
+**定义 21.1（四模门与嵌入三模旋转）。**沿用 $\zeta^2+\zeta+1=0$、$\bar\zeta=\zeta^2$ 及
+
+$$
+A=\mathbb Z[\zeta,1/3],\qquad t=(1-\zeta)^{-1},\qquad
+B=t(\zeta^{ij})_{i,j=0}^2,\qquad
+A'=A[1/2]=\mathbb Z[\zeta,1/6].
+$$
+
+四维坐标编号为 $0,1,2,3$；下面 $T$ 的三维坐标另编号为 $0,1,2$。置
+
+$$
+H_4=\frac12\begin{pmatrix}
+1&1&1&1\\
+1&-1&1&-1\\
+1&1&-1&-1\\
+1&-1&-1&1
+\end{pmatrix},\qquad
+b=\begin{pmatrix}1\\1\\1\\1\end{pmatrix},\quad
+a=\begin{pmatrix}-1\\-1\\-1\\1\end{pmatrix},\quad
+d=\begin{pmatrix}\zeta^2\\\zeta^2\\\zeta\\\zeta\end{pmatrix}.
+\tag{21.1}
+$$
+
+令 $P_{01}$ 交换三维的第零、第一坐标，定义
+
+$$
+T=P_{01}\operatorname{diag}(\zeta^2,1,1)B
+       \operatorname{diag}(-1,-1,1),\qquad
+W_4=H_4(1\oplus T)H_4.
+\tag{21.2}
+$$
+
+$1\oplus T$ 固定四维第零坐标，在其余三坐标上作用为 $T$。这里“旋转”指复酉变换，不限定行列式为一，也不声称它是原时间推进。
+

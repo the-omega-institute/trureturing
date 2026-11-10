@@ -1,0 +1,18 @@
+**Proposition 2.4 (an acquired signed local reference).** After the
+actual split at $p$, with fresh terminals $r=pR,d=pLL$,
+
+$$
+ (A_J^3)_{d,r}=T_{pL,p}.
+\tag{SC.7}
+$$
+
+Proof. Their tree distance is three and their unique length-three
+walk is $r,p,pL,d$. A diagonal stay or backtrack cannot traverse that
+distance in three steps. The walk product is
+$1\cdot T_{p,pL}\cdot1$. Thus this particular old signed link becomes
+a terminal cross response in the actual native units. The scan in
+Section 4 acquires its column after subtracting only previously earned
+free/forced contributions. A normalization in a decoder without these
+real $+1$ edges would not establish (SC.7) as a calibrated reference.
+$\square$
+

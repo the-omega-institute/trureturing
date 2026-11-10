@@ -1,0 +1,74 @@
+**引理 46.2（有界秩的条件自由投影）。** 设 $\pi$ 是任意酉的三股辫表示，$v$ 为单位向量，令
+
+$$
+T e_j=\pi(q_j)v,\qquad
+\delta=\max_{h\in\mathcal H}\|R(\pi(s))\pi(h)v\|,
+$$
+
+并令
+
+$$
+D(E)=\left(\frac12\sum_{g=s,t}\|\pi(g)E\pi(g)^*-E\|_{\rm HS}^2\right)^{1/2}.
+$$
+
+若 $0<\delta<1$，则存在正交投影 $E$，$1\le\operatorname{rank}E\le24$，且
+
+$$
+D(E)\le785\,\delta^{1/24}.
+\tag{46.8}
+$$
+
+若 $\delta=0$，则存在 $1\le\operatorname{rank}E\le24$ 的投影 $E$，且 $D(E)=0$。
+
+**证明。** $M_s$ 每列的绝对系数和至多 $3$；$M_t$ 第十二列的绝对系数和为
+$1+8a+4a^2\le13$，其余列至多 $7$。故
+$\|M_g\|_{\rm op}\le\|M_g\|_{\rm HS}\le13\sqrt{24}<85$。
+由残差表，每列至多十七项，每项系数绝对值至多 $1$，左右的字评价为酉算子，故每个缺陷列范数至多 $17\delta$，从而
+
+$$
+Z_g=\pi(g)T-TM_g,\qquad
+\varepsilon=\left(\frac12\sum_g\|Z_g\|_{\rm HS}^2\right)^{1/2}\le17\sqrt{24}\delta\le95\delta.
+\tag{46.9}
+$$
+
+因为 $q_1=1$，$\|T\|_{\rm op}\ge1$。给定 $0<\eta<1$，在奇异值
+$\sigma_1\ge\cdots\ge\sigma_{24}\ge\sigma_{25}=0$ 中取第一个满足
+$\sigma_{k+1}\le\eta\sigma_k$ 的 $k$。它存在且
+$\sigma_k\ge\eta^{23}$。令 $Y_k,V_k,D_k$ 为相应的左右奇异向量等距和正对角矩阵，$E=Y_kY_k^*$。于是
+
+$$
+\|(I-E)T\|_{\rm op}=\sigma_{k+1},\qquad \sigma_k^{-1}\le\eta^{-23}.
+$$
+
+由
+$\pi(g)T=TM_g+Z_g$，在 $TV_k=Y_kD_k$ 上有精确等式
+
+$$
+(I-E)\pi(g)Y_k=\bigl((I-E)TM_gV_k+(I-E)Z_gV_k\bigr)D_k^{-1}.
+$$
+
+因此
+
+$$
+\|(I-E)\pi(g)E\|_{\rm HS}
+ \le85\sqrt{k}\,\eta+\|Z_g\|_{\rm HS}\eta^{-23}.
+\tag{46.10}
+$$
+
+对有限秩投影和酉算子，直接展开迹得到
+
+$$
+\|\pi(g)E\pi(g)^*-E\|_{\rm HS}^2
+ =2\|(I-E)\pi(g)E\|_{\rm HS}^2.
+\tag{46.11}
+$$
+
+故欧氏三角不等式、$k\le24$ 和 (46.9) 给出
+
+$$
+D(E)\le85\sqrt{48}\,\eta+\sqrt2\,\varepsilon\eta^{-23}
+ \le595\eta+190\delta\eta^{-23}.
+$$
+
+取 $\eta=\delta^{1/24}$ 即得 (46.8)。当 $\delta=0$ 时，$\pi(g)T=TM_g$；$T$ 的非零像空间对 $s,t$ 不变，酉性使其也对逆元不变，故其像投影与两生成元交换，给出 $D(E)=0$。整个论证只使用奇异值分解，没有假定 $T$ 的列独立，也没有使用 Gram 矩阵的逆。∎
+

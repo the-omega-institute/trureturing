@@ -1,0 +1,38 @@
+## 16. 观察纤维上的补集与阈值任务
+
+**定义 B-16.1（实际像的两个事件读口）。** 对 $`\eta:\Omega\to B=\eta(\Omega)`$，令
+
+
+```math
+\eta_\exists(E)=\{b:\eta^{-1}(b)\cap E\ne\varnothing\},\qquad
+\eta_\forall(E)=\{b:\eta^{-1}(b)\subseteq E\}.
+```
+
+
+每个实际像纤维非空；空来源域的实际像也为空。此区分采用 [B-S2] §47。
+
+**命题 B-16.2（补集不会恢复旧读口遗忘的信息）。** 有
+
+
+<table><tbody><tr><td>
+
+```math
+\eta_\exists(\Omega\setminus E)=B\setminus\eta_\forall(E),
+\qquad
+\eta_\forall(\Omega\setminus E)=B\setminus\eta_\exists(E).
+```
+
+</td></tr></tbody></table>
+
+
+事件可从读数无损判断，当且仅当它是纤维并，当且仅当存在像与全称像相同。两像之间的差表示混合纤维，不表示一份来源同时属于互斥事件。在五模式均值纤维上，没有联合选择的概率在 $`[1-U,1-L]`$ 内，与联合概率区间宽度同为 $`w`$；对一个已取得布尔读数取 $`0\leftrightarrow1`$ 不改变任何区分能力。
+
+证明。一条非空纤维有补事件点，当且仅当不全在事件内；全在补事件内，当且仅当没有事件点，得两式。没有混合纤维等价于每条纤维全选或全不选，正是纤维并和两像相同的条件。$`\kappa\mapsto1-\kappa`$ 双射把区间端点反向，宽度不变。布尔反号双射也保持读数核，不能分开旧碰撞。∎
+
+**命题 B-16.3（原生失败阈值的同背景存在与保证）。** 在命题B-12.3中取 $`m=Y+Z\gt 0`$，定义律空间上的失败率 $`f=\kappa/m`$ 与事件 $`E_\tau=\{f\le\tau\}`$，$`0\le\tau\le1`$。固定三均值时
+
+
+|  | $`\text{存在相容律}`$ | $`\text{所有相容律}`$ |
+| --- | --- | --- |
+| $`E_\tau`$ | $`L\le\tau m`$ | $`U\le\tau m`$ |
+| $`E_\tau^c`$ | $`U\gt \tau m`$ | $`L\gt \tau m`$ |

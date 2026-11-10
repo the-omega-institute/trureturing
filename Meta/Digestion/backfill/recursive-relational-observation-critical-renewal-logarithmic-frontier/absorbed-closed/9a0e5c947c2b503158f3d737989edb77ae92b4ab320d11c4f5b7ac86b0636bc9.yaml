@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:9a0e5c947c2b503158f3d737989edb77ae92b4ab320d11c4f5b7ac86b0636bc9
+  normalized_sha256: sha256:9a0e5c947c2b503158f3d737989edb77ae92b4ab320d11c4f5b7ac86b0636bc9
+cas_ref: sha256:9a0e5c947c2b503158f3d737989edb77ae92b4ab320d11c4f5b7ac86b0636bc9
+coverage_gids:
+  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ReadExecution/CriticalRenewalController.uniform_counted_controller
+    target_statement_id: sha256:bce006dde52c0f1006fdcd6d33658f07960ca035a93d400793da723c2f9405d2
+receipts:
+  unresolved_subitems: []

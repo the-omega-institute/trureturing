@@ -1,0 +1,25 @@
+**命题 11.7（有限扇区比较模型的菜单保持充要条件）。**在明确的比较模型中取有限个扇区
+
+$$
+\mathcal A=\bigoplus_{j=0}^{q-1}M_{27}(\mathbb C),\qquad
+\delta(E)=(E,\ldots,E),\qquad q\ge2.
+\tag{11.21}
+$$
+
+该模型的菜单为 $\delta(\mathcal C_{27}(D))$。令实际扇区酉过程作用为 $\rho_j\mapsto U_j\rho_jU_j^\ast$，其中 $U_0\in U_{27}(D)$，其余 $U_j\in U_{27}(\mathbb C)$。其回拉使所有 $P\in\mathcal C_{27}(D)$ 仍落在此对角菜单，当且仅当
+
+$$
+U_j=\lambda_jU_0\quad(0\le j<q),\qquad |\lambda_j|=1.
+\tag{11.22}
+$$
+
+**证明。**回拉为 $(U_j^\ast P U_j)_j$。菜单保持首先要求所有分量相等，故对每个菜单 $P$ 有
+
+$$
+U_j^\ast P U_j=U_0^\ast P U_0,
+\qquad [U_jU_0^\ast,P]=0.
+\tag{11.23}
+$$
+
+引理 9.3 的有限实际探针张成 $\operatorname{Herm}_{27}(\mathbb C)$；复线性扩张后，$U_jU_0^\ast$ 与整个全矩阵代数交换。其交换子仅有标量：与全部坐标投影交换先迫使矩阵对角，与各矩阵单位交换再迫使对角元相同。酉性使标量模长为一，得到 (11.22)。反向，相位在共轭中消去，各分量均为 $U_0^\ast P U_0$；因 $U_0$ 是 $D$-酉矩阵，该共同投影仍属于 $\mathcal C_{27}(D)$，故确在对角菜单。$\square$
+

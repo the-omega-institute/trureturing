@@ -20,7 +20,21 @@ For k>=3 and t natural, s is exactly SourceWidth.actualSource on Fin(k), N=2^k-1
 
 hit_phase identifies the exact physical rotate iterate with the parent's modulo-k phase; phase_step includes the seam. Expansion forces p LARGE, and the genuine n-LARGE assumption supplies the other LARGE path step. The parent expanding_path_estimates supplies the strict energy estimate. Centered bounds imply r<=C and hence the budget. None of these equations, LARGE conclusions, gates or energy estimates is an input callback.
 
-**Theorem 1.2 (The three literal competitors and full physical accounting).**
+**Theorem 1.2 (Exclude Q-1 throughout the actual physical source).**
+
+Lean statement: `D5/S3/Combinatorics/Circle/TwoOppositeLargeExchange.actual_source_ne_q_sub_one`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/TwoOppositeLargeExchange.actual_source_ne_q_sub_one` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For natural k,t with k>=3, a physical p with s(p)>0, Q<=|s(hit(k,1,p))| and N<3|s(p)|, every physical label i satisfies s(i)!=Q-1. A putative occurrence generates the actual cycle Q-1,C-1,-3,-6,...,-3*2^(k-3). Native geometry gives N<3P and 2P<=3Q-1 for P=s(p). When Q>=4 neither positive cycle value can be P; when Q=2 these inequalities already contradict one another. Every remaining cycle value is negative.
+
+The phase covers all physical Fin k labels in fewer than k steps, including the seam and sources with shorter numerical period. No numerical source injectivity is assumed. Consequently every positive SMALL value is at most Q-2 by integer arithmetic. This source exclusion does not establish full C3.1 or arbitrary A transport.
+
+**Theorem 1.3 (The three literal competitors and full physical accounting).**
 
 Lean statement: `D5/S3/Combinatorics/Circle/TwoOppositeLargeExchange.actualSource_twoOpposite_twoStep_full`
 
@@ -51,6 +65,7 @@ Full C3.1, universal favorable-path availability, and full historical population
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Circle/TwoOppositeLargeExchange.actualSource_twoOpposite_twoStep_full`
+- Truth anchor: `D5/S3/Combinatorics/Circle/TwoOppositeLargeExchange.actual_source_ne_q_sub_one`
 - Truth anchor: `D5/S3/Combinatorics/Circle/TwoOppositeLargeExchange.native_geometry`
 - Dependency: [D5/S3/Combinatorics/Circle/MixedSuffixEnergy](MixedSuffixEnergy.md)
 - Dependency: [D5/S3/Combinatorics/Circle/SmallStepOrdering](SmallStepOrdering.md)

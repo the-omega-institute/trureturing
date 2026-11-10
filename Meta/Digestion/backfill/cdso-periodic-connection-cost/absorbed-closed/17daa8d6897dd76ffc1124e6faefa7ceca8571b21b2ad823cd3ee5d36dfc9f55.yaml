@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:17daa8d6897dd76ffc1124e6faefa7ceca8571b21b2ad823cd3ee5d36dfc9f55
+  normalized_sha256: sha256:17daa8d6897dd76ffc1124e6faefa7ceca8571b21b2ad823cd3ee5d36dfc9f55
+cas_ref: sha256:17daa8d6897dd76ffc1124e6faefa7ceca8571b21b2ad823cd3ee5d36dfc9f55
+coverage_gids:
+  - gid: D5/S3/Analytic/PowerSeries/CdsoAllocationGerms.allocation_germ_iff_taylor
+    target_statement_id: sha256:9e86622967ca4264f77e4823d9f4ab29aca75d37966f8331aac12d6e456a6ea6
+receipts:
+  unresolved_subitems: []

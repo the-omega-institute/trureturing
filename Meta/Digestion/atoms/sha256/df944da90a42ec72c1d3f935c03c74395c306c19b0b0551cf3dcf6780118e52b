@@ -1,0 +1,76 @@
+#### 定理 10.3：夹持、双交换子与面积恒等式
+
+对任意原生成元 $S,T,D\in\mathfrak g$，有
+
+$$
+\boxed{STS=-\kappa(S,T)S,\qquad
+\kappa(S,T)=-\tfrac12\operatorname{Tr}_W(ST).}
+\tag{10.4}
+$$
+
+因此当 $S\ne0$ 时，$\kappa(S,T)$ 可由夹持后沿 $S$ 剩下的负系数读出。极化及顺序差进一步给出
+
+$$
+STD+DTS=-\kappa(S,T)D-\kappa(D,T)S,
+\tag{10.5}
+$$
+
+$$
+\boxed{[S,[T,D]]=\kappa(S,D)T-\kappa(S,T)D,}
+\tag{10.6}
+$$
+
+$$
+\boxed{\lVert[S,T]\rVert_\kappa^2
+=\kappa(S,S)\kappa(T,T)-\kappa(S,T)^2.}
+\tag{10.7}
+$$
+
+**证明。**
+
+唯一写成 $S=R_z,T=R_t,D=R_u$。乘积公式与 $B(z,R_zq)=0$ 给
+
+$$
+R_zR_tR_zq=-B(z,t)R_zq,
+$$
+
+即夹持律。将 $S$ 替换为 $S+D$，减去各自夹持项，得极化式。再由地址交换子与三重乘积，
+
+$$
+[R_z,[R_t,R_u]]=R_{R_zR_tu}
+=B(z,u)R_t-B(z,t)R_u,
+$$
+
+得到双交换子式。最后由反对称性与平方公式，
+
+$$
+\lVert R_z t\rVert_B^2=-B(t,R_z^2t)
+=\lVert z\rVert_B^2\lVert t\rVert_B^2-B(z,t)^2.
+$$
+
+结合 $[S,T]=R_{R_z t}$ 与比较式即得面积恒等式。$\kappa$ 的对称、双线性与正定性也由其等于原 $B$ 的拉回得到；迹的循环性给 $\kappa([S,T],D)=\kappa(S,[T,D])$。
+
+$\square$
+
+对 $S\ne0$，同一夹持律还给出实转向轴投影
+
+$$
+\mathcal P_S(T)=-\frac{STS}{\kappa(S,S)}
+=\frac{\kappa(S,T)}{\kappa(S,S)}S.
+$$
+
+右式表明它是 $(\mathfrak g,\kappa)$ 到 $\mathbb RS$ 的正交投影。若 $T\ne0$，投影范数平方占原范数平方的比例为 $\cos^2\theta$，其中 $\theta$ 是两个实转向的夹角；这个无向实轴投影仍不同于后续的量子纯态投影。
+
+**见证给出取向，原比较不依赖取向。**
+
+归一见证作 $O(2)$ 变换时，$C$ 变为 $\delta C$，其中 $\delta=\pm1$ 为该变换的行列式。由式 (10.1)，整个地址相应变为 $R'_z=\delta R_z$，而 $\kappa(R'_z,R'_t)=B(z,t)$ 不变。对于固定的这份地址和任意 $h\in O(W,B)$，
+
+$$
+\boxed{\operatorname{Ad}_hR_z=(\det h)R_{hz}.}
+\tag{10.8}
+$$
+
+为核证此式，令 $\tau(z,t,u)=B(R_z t,u)$。上述矩阵说明 $\tau$ 是交替三线性式，且 $\tau(e,v,w)=1$；按行列式的多线性展开，$\tau(hz,ht,hu)=(\det h)\tau(z,t,u)$。再用 $h$ 保持 $B$，即得式 (10.8)。这里交替三次读数由原交换子派生，并未外给体积形式。
+
+原内容的正负、转向的正负与实际速率仍然保留。以上 $STS$、$R_zR_t$ 均是九维原实算子代数中的普通复合；下一步的四维振幅代数会明确引入另一种乘法。
+

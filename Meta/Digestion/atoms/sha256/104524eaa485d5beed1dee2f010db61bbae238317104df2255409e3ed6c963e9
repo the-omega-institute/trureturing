@@ -1,0 +1,33 @@
+**定义 6.1（Half filling and graph constants）。** Assume Definition 1.1 and
+Assumption 3.1. Write
+
+$$
+\ell=-\lambda,\qquad \Delta=\max_i\deg_H(i),\qquad T=m+2,
+\qquad c_H=\frac\ell2,\qquad
+s_H=2\left\lceil 2^{18}(\Delta/\ell)^2T^3\right\rceil.
+\tag{6.1}
+$$
+
+For an even positive integer $s$, put $S=s/2$, $k=mS$,
+$K=K_k$ and $E=E(s,k)$. Restrict $K$ and $P_{\mathrm{sym}}$ to the
+complete space $\mathcal H_{mS}$ of Definition 1.1. Define
+
+$$
+g_s=\lambda_{\min}\bigl(K|_{\operatorname{ran}(I-P_{\mathrm{sym}})}\bigr)-E.
+\tag{6.2}
+$$
+
+The restriction is well defined because $K$ commutes with all block
+permutations. Its space is nonzero for even $s\geq2$: in one block a
+nonconstant vector on the one-particle layer can be tensored with suitable
+occupancy vectors in the other blocks to reach $mS$. For example, take
+occupancy $s-1$ in a second block and occupancy $S$ in the remaining blocks.
+The edge test in the proof of Theorem 2.1 and the maximum-degree bound for
+adjacency give $1\leq\ell\leq\Delta$, so (6.1) specifies finite positive
+constants. Indeed, for a complex vector $v$,
+
+$$
+|v^*av|\leq\sum_{\{i,j\}\in E(H)}2|v_i||v_j|
+\leq\sum_i\deg_H(i)|v_i|^2\leq\Delta\|v\|^2.
+$$
+

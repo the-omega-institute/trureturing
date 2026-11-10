@@ -108,7 +108,7 @@ private theorem k_hasDerivAt {t : ℝ} (ht : 2 ≤ t) :
   field_simp [ht0, hl0]
   <;> ring
 
-private theorem theta_tail_finite {a u : ℝ} (ha : 2 ≤ a) (hau : a ≤ u) :
+theorem theta_tail_finite {a u : ℝ} (ha : 2 ≤ a) (hau : a ≤ u) :
     I u = I a - ∫ t in a..u, g t := by
   have hu : 2 ≤ u := ha.trans hau
   have hkw : (∫ t in a..u, t * w t) = k u - k a := by

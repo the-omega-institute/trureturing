@@ -1,0 +1,37 @@
+**定理 5.1（提升障碍与自由参数）。**
+
+<a id="thm-grouplift"></a>
+
+上述 $c$ 满足二余循环恒等式
+
+$$
+c(\gamma,\delta)+c(\gamma\delta,\epsilon)
+=c(\delta,\epsilon)+c(\gamma,\delta\epsilon).
+$$
+
+换选提升只改变一个二余边界，因此定义
+$o_H(\rho)=[c]\in H^2(\Pi;\mathbb F_5)$，系数作用平凡。存在同态提升当且仅当
+$o_H(\rho)=0$。一旦存在，固定 $\rho$ 的实际同态提升集合是
+$H^1(\Pi;\mathbb F_5)=\operatorname{Hom}(\Pi,\mathbb F_5)$ 的挠集。
+
+**证明。**
+
+比较 $(s(\gamma)s(\delta))s(\epsilon)$ 与
+$s(\gamma)(s(\delta)s(\epsilon))$，使用 $z$ 中心性即得余循环恒等式。
+换为 $s'(\gamma)=z^{b(\gamma)}s(\gamma)$ 时，
+
+$$
+c'(\gamma,\delta)=c(\gamma,\delta)
++b(\gamma)+b(\delta)-b(\gamma\delta)=c+\delta b.
+$$
+
+所以能把乘法缺陷全部消去，恰当且仅当 $[c]=0$。
+两同态提升之差唯一写为
+$\widetilde\rho_1(\gamma)=z^{\chi(\gamma)}\widetilde\rho_0(\gamma)$；
+同态性与中心性说明 $\chi$ 必且只须是加法同态。
+因此 $\operatorname{Hom}(\Pi,\mathbb F_5)$ 的作用自由且传递，
+即所称挠集：选一个基准提升后才得到与该群的具体识别。证毕。
+ □
+
+<a id="statement-5-2"></a>
+

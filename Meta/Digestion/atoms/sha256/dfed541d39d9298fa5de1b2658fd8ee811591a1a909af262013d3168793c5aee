@@ -1,0 +1,28 @@
+**引理 47.1（同向开理想）。** 对 $x_0\in X$、$\dim H_{x_0}\ge2$，存在 $A$ 的闭理想 $B_\sigma\subset J$，其谱开集含 $x_0$，且每个活跃点都非经典并具有44.1的同一符号 $\sigma=\sigma_{\pi_{x_0}}$。
+
+证明。由46.1选两条局部正交单位截面 $e_1,e_2$ 及实 $f\in C_c(U)$、$f(x_0)=1$。取实际
+
+$$
+a_0=f\theta_{e_1,e_1},\qquad
+b_0=f(\theta_{e_1,e_2}+\theta_{e_2,e_1})\quad\text{于 }U,
+\tag{47.1}
+$$
+
+图外延零。它们在每个非零纤维共同支撑于秩二角，在 $x_0$ 的交换子非零。定义固定实际输出及其生成理想
+
+$$
+h_\sigma=D(a_0,b_0)+K_\sigma(a_0,b_0),
+\qquad B_\sigma=\overline{\operatorname{Id}_A(h_\sigma)}.
+\tag{47.2}
+$$
+
+43.2给 $h_\sigma\in J$。44.1使反向点上的 $\pi_x h_\sigma$ 为零；一维点由标量P2给零；图外由实际零槽给零；在 $x_0$，$\pi_{x_0}h_\sigma=2K_\sigma(\pi_{x_0}a_0,\pi_{x_0}b_0)\ne0$。所以
+
+$$
+O_\sigma=\{x:\pi_x h_\sigma\ne0\}
+=\{x:\pi_x(B_\sigma)\ne0\}
+\tag{47.3}
+$$
+
+是所需谱开集。其开性是固定理想的hull–kernel性质；不需要 $D$ 的输入连续性，甚至不需要先证明 $x\mapsto\sigma_x$ 连续。46.1中的局部有限框架若支撑紧含于 $O_\sigma$，对应截断秩一演员便属于 $B_\sigma$。∎
+

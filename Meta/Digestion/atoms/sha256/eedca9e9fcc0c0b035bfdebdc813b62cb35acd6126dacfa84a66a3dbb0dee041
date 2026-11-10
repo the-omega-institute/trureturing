@@ -1,0 +1,11 @@
+**Assumption 26.1 (real numerical actuation).** Retain exactly the
+preparations, probabilities, periods, native fields, partial command
+law, concatenation and refusal of Definitions 1.1--1.2 and §7.
+A finite list of real two-control vertices and positive real durations
+known at issuance may be executed as its specified piecewise linear
+history in the original clock. Finite exact numerical computations
+and zero-velocity holds are available. No uniform precision, speed,
+energy, processing cost or physical realization is assumed.
+No direct central or $z$ operation, integral reset, amplitude
+preparation or new readout is added.
+

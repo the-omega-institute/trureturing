@@ -1,0 +1,10 @@
+# Polynomial-flow observations, integrated memory and the current endpoint
+
+This volume studies one commissioned continuous source with a known nilpotent
+generator. A finite receiver replaces its additional ideal weighted integrators
+by arithmetic on the taps that the source already supplies. The trajectory,
+advanced endpoint and entire declared timing-continuation task are preserved.
+The result is a source-specific ordinary synthesis of interpolation,
+observability and paid conversion. It asserts neither a new interpolation
+principle nor a Lean/kernel verification.
+

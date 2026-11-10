@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:2c716c71541ef29aae4adb4779ea8383233e1bfd68cb03a59a654c8cc9edfbf1
+  normalized_sha256: sha256:2c716c71541ef29aae4adb4779ea8383233e1bfd68cb03a59a654c8cc9edfbf1
+cas_ref: sha256:2c716c71541ef29aae4adb4779ea8383233e1bfd68cb03a59a654c8cc9edfbf1
+coverage_gids:
+  - gid: D5/S3/Quantum/Dynamics/LaplacianTwoLevelTreeSpectralBound.sharp_global_spectral_transfer_bound
+    target_statement_id: sha256:88622731e34b7f6723de33c7a4453d13f1785405b39798e45b9b0cfd79fa6b6d
+receipts:
+  unresolved_subitems: []

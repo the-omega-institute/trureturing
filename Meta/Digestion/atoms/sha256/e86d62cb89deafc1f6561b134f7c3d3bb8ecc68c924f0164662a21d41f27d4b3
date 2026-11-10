@@ -1,0 +1,153 @@
+**Definition 2.1 (Cramer coordinates).** For $t=(t_{ijk})\in\mathbb C^8$, define the slices $T_j=(t_{ijk})_{i,k=0,1}$ and
+$$
+\tag{4}
+ K(t)=\begin{pmatrix}
+ t_{000}&t_{001}&-t_{000}&-t_{100}\\
+ t_{010}&t_{011}&-t_{001}&-t_{101}\\
+ t_{100}&t_{101}&-t_{010}&-t_{110}\\
+ t_{110}&t_{111}&-t_{011}&-t_{111}
+ \end{pmatrix}.
+$$
+Let $H$ be its upper-left three-by-three submatrix, $d=\det H$, and
+let $c_j$ be the determinant obtained by replacing column $j$ of $H$
+by $-K_{\{0,1,2\},3}$, for $j=0,1,2$. Set
+$$
+\begin{aligned}
+ \widetilde\ell&=(c_2,d),& \widetilde z&=(c_0,c_1)^T,&
+ W_{ik}&=\sum_{j=0}^1\widetilde\ell_jt_{jik},\\
+ N_j&=T_j\operatorname{adj} W,&J&=N_0+N_1,&\widetilde r&=W\widetilde z.
+\end{aligned}
+\tag{5}
+$$
+All these quantities are polynomial in $t$. Our domain is specified by
+$$
+\tag{6}
+ g=d\det W\det J\det T_0\,
+ (t_{000}t_{011}-t_{001}t_{010})\ne0.
+$$
+On this domain put
+$$
+\tag{7}
+ \ell=\widetilde\ell/d,\quad z=\widetilde z/d,\quad B=W/d,
+ \quad M_j=T_jB^{-1},\quad r=Bz,\quad C=M_0+M_1.
+$$
+Then $B$ and $C$ are invertible, since
+$M_j=dN_j/\det W$ and $C=dJ/\det W$. The inverse in Theorem 1 is
+$$
+\tag{8}
+ F_{N,a}(t)_w=\ell C^{-a}M_{w_1}\cdots M_{w_N}C^{-b}r,
+ \qquad b=N-3-a.
+$$
+
+**Proof of Theorem 1.** 
+*The quartic relation.*
+First take $t_{ijk}=lA_iA_jA_kr$. Define
+$P_{i,*}=lA_i$ and $Q_{*,k}=A_kr$, so $T_j=PA_jQ$.
+On the open set where $P,Q$ are invertible, put
+$e=lP^{-1}$ and $v=Q^{-1}r$. For each $i,j$ one has
+$$
+\tag{9}
+ \sum_k t_{ijk}v_k=lA_iA_jr=\sum_k e_kt_{kij}.
+$$
+Consequently $K(t)(v_0,v_1,e_0,e_1)^T=0$. This vector is nonzero since
+$Q$ invertible implies $r\ne0$. Thus $\det K(t)=0$ on that parameter open
+set. It is nonempty: $A_0=I$, $A_1=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$,
+$l=(1,0)$, $r=(1,0)^T$ give $P=Q=I$. The parameter space is affine
+and irreducible, so the polynomial $\det K(t)$ vanishes for all parameters,
+and therefore on $X_3$.
+
+*Three-site reconstruction.*
+Cramer's rule applied to the first three rows of $K$ gives
+$$
+\tag{10}
+ K(t)(c_0,c_1,c_2,d)^T=(0,0,0,\det K(t))^T.
+$$
+The last component follows by expanding the determinant in its last row.
+For $t\in U$, division by $d$ gives
+$$
+\tag{11}
+ \sum_k t_{ijk}z_k=\sum_k\ell_kt_{kij}=B_{ij}.
+$$
+The definition of $B$ also gives $\ell T_i=B_{i,*}$. Hence
+$$
+\tag{12}
+ \ell M_i=e_i^T,\qquad M_kr=T_kz=B_{*,k},\qquad
+ \ell M_iM_jM_kr=(M_jB)_{ik}=t_{ijk}.
+$$
+Here $e_i$ is the $i$th coordinate column. Thus the reconstructed matrices
+and boundaries give exactly $t$ as a three-site tensor.
+
+*A right inverse for every length and position.*
+Equation (8) is itself of the form (1); it
+therefore belongs to the parametrized $N$-site model. Summing over the
+omitted sites multiplies its boundaries by $C^a$ and $C^b$.
+These powers cancel their inverses, and (12) yields
+$\mu_aF_{N,a}(t)=t$ for every $t\in U$.
+
+*Uniqueness on parametrized tensors.*
+Let $t=\mu_a\psi\in U$ with $\psi$ as in (1).
+Use $l=\alpha S^a$, $r_0=S^b\beta$, and form $P,Q$ as above with
+$r_0$ in place of $r$. Since $\det T_0\ne0$ and $T_0=PA_0Q$,
+both $P,Q$ are invertible. Define $e=lP^{-1}$ and $v=Q^{-1}r_0$.
+The first three rows of $K$ are independent, because $d\ne0$.
+Their kernel, and hence the kernel of $K$, is the line spanned by
+$(c_0,c_1,c_2,d)^T$. The nonzero vector $(v,e)$ lies on this line.
+Thus $s=e_1\ne0$, $\ell=s^{-1}e$, and $z=s^{-1}v$.
+It follows directly that
+$$
+\tag{13}
+ B=s^{-1}PQ,\quad M_j=sPA_jP^{-1},\quad
+ r=s^{-2}Pr_0,\quad C=sPSP^{-1}.
+$$
+Invertibility of $C$ implies invertibility of $S$. Substituting
+(13) in (8) cancels the gauge matrices and
+gives the scalar factor
+$s^{-1-a+N-b-2}=1$, since $N=a+b+3$. The remaining expression is
+$\alpha A_{w_1}\cdots A_{w_N}\beta$. Therefore
+$F_{N,a}(\mu_a\psi)=\psi$ for every such parametrized tensor.
+
+*Closure and nonemptiness.*
+Each $X_N$ is the closure of a polynomial image of an affine space,
+so is irreducible. Equivalently, its vanishing ideal is the kernel of
+the substitution homomorphism into the polynomial ring in the entries
+of $A_0,A_1,\alpha,\beta$. This ring is an integral domain, and a
+polynomial vanishing at all complex parameter values is zero. The
+kernel, and hence the vanishing ideal, is prime.
+
+The three-site tensor furnished by
+$$
+\tag{14}
+ A_0=\begin{pmatrix}1&2\\3&4\end{pmatrix},\quad
+ A_1=\begin{pmatrix}5&6\\7&8\end{pmatrix},\quad
+ l=(1,0),\quad r_0=(1,2)^T
+$$
+has lexicographically ordered coordinates
+$(145,349,337,829,489,1173,1193,2933)$. Its five factors in
+(6) are respectively
+$$
+ 387072,\quad172598092627968,\quad-397666005414838272,
+ \quad-576,\quad2592.
+$$
+Thus $U$ is nonempty. Its inverse image under $\mu_a$ is nonempty by
+the right-inverse construction. The parametrized tensors are dense in
+$X_N$, and their intersection with this principal open subset is dense
+in that subset. Both $F_{N,a}\mu_a$ and the identity are regular there,
+so their coordinatewise equality extends from these parametrized tensors
+to the whole subset. The two displayed maps are therefore inverse
+isomorphisms of nonempty open subsets of the irreducible varieties.
+ $\square$
+
+For explicit polynomial numerators and denominator, put $v=\det W$,
+$c=\det J$. Formula (8) becomes
+$$
+\tag{15}
+ F_{N,a}(t)_w=
+ \frac{\widetilde\ell(\operatorname{adj} J)^aN_{w_1}\cdots N_{w_N}
+ (\operatorname{adj} J)^b\widetilde r}{v^3c^{N-3}}.
+$$
+Indeed $\ell=d^{-1}\widetilde\ell$,
+$r=d^{-2}\widetilde r$, $M_j=(d/v)N_j$, and
+$C^{-1}=(v/(dc))\operatorname{adj} J$; the powers of $d$ cancel because $a+b=N-3$.
+The denominator is nonzero throughout $U$. This also makes the
+regularity used in the proof explicit.
+

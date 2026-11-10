@@ -1,0 +1,44 @@
+**Theorem 92.1 (each cherry must be split on every exact path).**
+Start from Definition 91.1's arbitrary original entry and cleared
+receiver, with all original no-Reset actions and adaptive choices
+permitted, subject to the inherited Read mask. For this lower bound
+even arbitrary terminal Adds, including masked-label Adds, may be
+allowed. A deterministic pointwise-terminating exact original-entry
+reporter, whole-final-current reporter, or self-contained full future
+predictor must make at least $k$ successful splits and allocate at
+least $2k$ fresh cells on every terminating transcript. No fixed
+final graph, stopping time or nonadaptive schedule is assumed.
+
+**Proof.** If some original cherry has not been edited internally on
+a terminating path, put $\eta=v_i+w_i$ on that cherry. Initially
+$A\eta=\eta$ by direct neighbor sums. Any growth outside the
+two beta-owner cones retains this vector by zero extension and
+preserves its eigenvalue one. Such growth touches only vertices with
+zero difference, so its fresh zero coordinates have zero neighbor
+contribution; no old edge at a supported vertex has changed. A Tick
+therefore keeps the nonzero difference unchanged on its persistent
+support. A common Add cancels, and Hold, Read and identity refusals
+preserve it. Every permitted Read misses its only terminal support,
+the two still-unmoved masked markers.
+
+Compare the actual entry $x$ with $x+\eta$. Induction on the
+whole completed replies makes them follow that same adaptive path,
+including addresses, operands, frames, label/grant updates, guards,
+refusals and stop. They have different old entries and different
+actual final fields. In the predictor case a legal subsequent Read
+at either still-unmoved masked marker distinguishes them; those
+original future rights were not removed. The common installed
+self-contained predictor cannot be exact for both. Thus an exact
+path cannot leave any original cherry unedited.
+
+The branch $c_i$ is not an enabled growth target. Its markers are
+material only until an owner split converts one to a logical beta;
+both original owners are beta, so a promotion there is wrong-type.
+The first successful internal edit must therefore be $S_{\ell_i}$
+or $S_{r_i}$. The $k$ cones are disjoint, and one call cannot be the
+first split of two. Every split appends two persistent cells. This
+proves both lower bounds. The argument extends the credited cherry
+symmetry method of NLBAII §49.2 to arbitrary full fields, terminal
+masking and persistent final-current distinctions; the exact
+all-subset kernel is Theorem 91.2. $\square$
+

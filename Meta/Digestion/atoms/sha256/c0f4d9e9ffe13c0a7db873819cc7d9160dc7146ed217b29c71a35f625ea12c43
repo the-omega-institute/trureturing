@@ -1,0 +1,24 @@
+**Theorem 6.9 (B: obstruction with explicit regular-cut hypothesis).**
+There exists no function $f:W\to\mathbb N\cup\{\infty\}$ such that
+every finite sublevel cut of $f$ is regular relative to $W$ and
+$f\approx c$ in the all-subsets sense of (NIC.37).
+
+Proof. Suppose such an $f$ exists. On $O=W\setminus E^*$, $c$ is
+identically zero. The direction from $c$-boundedness to $f$-boundedness
+in (NIC.37), applied to this very subset $O$, gives a finite $B$ with
+$f(w)\le B$ on all of $O$.
+
+Let $T=\{w\in W:f(w)\le B\}$. It is regular relative to $W$ by
+hypothesis and therefore a regular $\Gamma$ language, since $W$ is
+regular. Its complement $L=W\setminus T$ is regular by Lemma 6.3.
+No point of $O$ is in $L$, so $L\subseteq E^*$. Lemma 6.6 bounds
+$c$ on $L$.
+
+On $T$, $f$ is bounded by $B$. The reverse direction of (NIC.37), now
+applied to the subset $T$, bounds $c$ on $T$. The union $W=T\cup L$
+therefore has a finite $c$ bound, the maximum of these two bounds.
+This contradicts Lemma 6.7. Values $\infty$ of $f$ cause no exception:
+they belong to $L$, and the argument already covers $L$. No regularity
+of $E^*$ or $O$ was assumed, and no imported theorem about threshold
+cuts of a named cost model was used. $\square$
+

@@ -1,0 +1,61 @@
+**Theorem 31.3 (nonzero authentic fibres, common seed and full firstness).**
+For each $t\ge1$ and every $x\in\{0,1\}^t$, generate $s^x$ by the
+all-index recurrence $m_x$ from initial word $0^{2t-1}1$. Put
+$d=3t$, $P_x=(s^x_0,\ldots,s^x_{6t-1})$, and
+$\sigma_t=0^{2t-1}1\,0^t$. Then $s^x\in\mathscr R_d$ is nonzero,
+has least all-index annihilator $m_x$, and
+
+$$
+\begin{aligned}
+s_d(P_x)&=\sigma_t,&\operatorname{rank}H(P_x)&=2t<d,\\
+\{p_c:H(P_x)c=y(P_x)\}&=\{m_xq_w:w\in\{0,1\}^t\}.
+\end{aligned}
+$$
+
+The complete set of passing ordinal words in the auxiliary convention is
+
+$$
+\{(1\oplus A_t(x,w))\Vert x\Vert w\Vert0^{t-1}:
+                                    w\in\{0,1\}^t\}.
+$$
+
+Let $w^\star=0^t$ if no $y$ accepts; otherwise let
+$w^\star=(1,y^\star)$, where $y^\star$ is the lexicographically least
+accepting $(t-1)$-bit witness. The first passing row is exactly the
+lower-$d$ coefficient word of $m_xq_{w^\star}$, and the full
+row-plus-authentic-seed output is exactly that row paired with
+$\sigma_t$. Its coefficient at exponent $2t$ is
+$\mathbf1_{\exists y\,V_t(x,y)=1}$. The known feasible polynomial
+$m_xE^t$ is first if and only if no witness accepts.
+
+Proof. A nonzero annihilator $h$ of degree $j<2t$ would satisfy
+$(h(E)s^x)_{2t-1-j}=1$: its leading term sees the initial one,
+and all its lower terms see initial zeros. This contradicts
+annihilation. Since $m_x$ itself annihilates $s^x$, it is least.
+For $0\le i<t$, the recurrence for $s^x_{2t+i}$ uses only
+$s^x_{i+j}$ with $j<t$, where $i+j\le2t-2$; these are zero.
+This proves the common authentic seed. Multiplying $m_x$ by $E^t$
+also exhibits an order-$d$ presentation of this same all-index stream.
+
+The leading $2t\times2t$ Hankel block, after reversing columns,
+has entries $s^x_{i+2t-1-j}$. Entries with $i<j$ are zero and
+diagonal entries are one, so it is triangular and nonsingular.
+The order-$2t$ recurrence expresses every subsequent Hankel row as
+a combination of preceding rows, giving the matching upper rank bound.
+Theorem 21.2, using GPO Lemma 29.2's all-index finite separation,
+identifies the passing polynomials with the monic degree-$3t$
+multiples of $m_x$. Their monic quotients have degree $t$, hence
+are exactly the $q_w$. This reuses that fibre supplier rather than
+assuming arbitrary affine sets are recurrence-realizable.
+
+The inverse of Theorem 31.2 on $m_xq_w$ recovers precisely $x$,
+$r=0$ and $z=0$, yielding the displayed complete ordinal set.
+Accepting witnesses, and only those, have first ordinal bit zero;
+each has $w_0=1$. If one exists, the least such word uses the least
+accepting $y$. Otherwise every passing word starts with one and the
+least $w$ is $0^t$. Coefficient $2t$ of $m_xq_w$ is $w_0$.
+The gate ensures $w=0^t$ always rejects, proving the feasible-row
+criterion. These arguments include the empty witness at $t=1$ and
+$x=0^t$, whose source is a single nonzero impulse, not the zero
+stream. No inverse state transition was used. $\square$
+

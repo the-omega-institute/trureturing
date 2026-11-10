@@ -1,0 +1,8 @@
+**定理 297.2（局部后验阈值给出全局错误界）。** 任意只在满足 $\operatorname{Stop}_\varepsilon$ 的历史停止的策略，其最终决策错误概率满足
+
+$$
+\boxed{
+\Pr[\widehat k\ne k]\le\varepsilon.
+}
+$$
+

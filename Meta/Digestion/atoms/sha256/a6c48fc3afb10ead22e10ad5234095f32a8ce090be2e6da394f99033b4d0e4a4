@@ -1,0 +1,53 @@
+### 154.C. Exact pair corrections preserving the seven-column rank
+
+Choose an odd integer $N>10L$ and use the infinite odd sets
+
+$$
+S_0=\{N(8k+5):k\ge0\},\qquad
+S_1=\{N(8k+1):k\ge0\},\qquad
+S_3=\{N(8k+3):k\ge0\}.
+\tag{154.18}
+$$
+
+Apply the exact sectorwise results 152.A–C on $X_{E,S_a}$. They supply six independent ordered functionals and exact surjectivity of the three diagonal quadratics after any finite homogeneous constraints. These are the original three pencils, with the original measure and operator. Their finite-dimensional sphere step is (147.6)–(147.8), as localized in (152.29).
+
+More explicitly, for each $a\in I$ choose $y_a,h_{a,1},\ldots,h_{a,6}\in X_{E,S_a}$ with
+$\ell_i(y_a)(h_{a,k})=\delta_{ik}$, where
+$(\ell_i(w)(h))_{i=1}^6=(Q_r(h,w),Q_r(w,h))_{r\in\mathcal R}$.
+Use (152.29) to choose an actual $z_a\in X_{E,S_a}$ satisfying
+
+$$
+\begin{gathered}
+\ell_i(z_a)(h_{a,k})=0\quad(1\le i,k\le6),\qquad
+ B_r(y_a,z_a)=0\quad(r\in\mathcal R),\\
+q(z_a)=-q(v_a)-q(y_a),\qquad x_a=v_a+y_a+z_a.
+\end{gathered}
+\tag{154.19}
+$$
+
+Low and high sectors have zero ordered pair cross-pairings. Consequently
+
+$$
+q_r(x_a)=0,\qquad
+\ell_i(x_a)(h_{a,k})=\delta_{ik},\qquad
+Q_r(x_a,x_b)=0\quad(a\ne b).
+\tag{154.20}
+$$
+
+All $x_a$ are bounded, supported in $E$, odd, and have finitely many angular frequencies. Their positive spectra lie respectively in
+$\{n_0\}\cup S_0$, $\{n_1\}\cup S_1$ and $\{1,m_*\}\cup S_3$, which are pairwise disjoint.
+
+The eight evaluations used in 154.B are preserved exactly. Every density in (154.10)–(154.11) is quadratic in its inputs, and multiplication by $g$ and application of $P$ preserve angular characters. A low/high product has absolute frequency at least $N-L>2L$. A high/high product has frequency a multiple of $N$, so its positive frequencies are at least $N$; its possible zero mode contributes to none of our evaluations. Every protected frequency is positive and at most $2L$. Thus all high correction terms have zero coefficients at every protected frequency, on both output orbits. In particular the seven rows $\mathbf R_\sigma[x]$, $\sigma\in\mathcal J$, retain rank seven under those evaluations.
+
+They are bounded continuous two-component functions on $\Omega$, even with zero angular mean. Their Gram matrix
+
+$$
+\mathsf G_{\sigma\omega}
+ =\int_G\bigl(R_\sigma^{(0)}[x]R_\omega^{(0)}[x]
+             +R_\sigma^{(1)}[x]R_\omega^{(1)}[x]\bigr)dm
+ \quad(\sigma,\omega\in\mathcal J)
+\tag{154.21}
+$$
+
+is positive definite. A zero Gram quadratic form would make the corresponding combination zero in $L^2(m;\mathbb R^2)$. Continuity and full support on $\Omega$ would then make it zero pointwise there, contradicting the proved evaluation rank. Thus positive definiteness is established for these actual corrected inputs.
+

@@ -1,0 +1,55 @@
+**Theorem 4.1 (full inverse without knowing the gaps).** The map
+$F_A:\mathcal H_A\to\coprod_{t\in\mathcal D}\mathbb Q^{V_t}$ is injective.
+The following local exact procedure on its image recovers the unique
+entire $h$, including all its gaps.
+
+At a non-alpha pair $(t,y)$, repeatedly replace $y$ by $T_t^{-1}y$ while
+$y$ is strictly positive in every coordinate, counting these inversions.
+At the first zero coordinate stop. If the counter is $q$, the zeros are
+exactly one of these two possibilities:
+
+| Fresh zeros and current literal constructor | Recovered last event and collapse |
+| --- | --- |
+| $\{pL\}$ and a logical beta at $p$ | $P_p$; replace that beta by alpha and delete $pL$ |
+| $\{pLL,pR\}$ and literally $\langle\beta,\alpha\rangle$ at $p$ | $S_p$; replace that branch by beta and delete $pLL,pR$, retaining $pL$ |
+
+Restrict the stopped field to the retained predecessor vertices and repeat.
+At alpha the scalar is $2^{-q_0}$; multiply by two until reaching $1$,
+counting $q_0$. Reverse the recovered growths and attach their recovered
+following gaps. For $n=0$ only this scalar operation is needed.
+
+**Proof.** Let the actual last growth be $g:t'\to t$ and the actual final
+gap be $q_n$. Its predecessor field $z$ is strictly positive by Observation
+3.3, and
+
+$$
+y=T_t^{q_n}\iota_gz.
+\tag{4.1}
+$$
+
+For $q_n=0$ it already has zeros exactly at the fresh support. For
+$0\le r<q_n$, $T_t^{-r}y=T_t^{q_n-r}\iota_gz$ is strictly positive;
+at $r=q_n$ it is exactly $\iota_gz$. Thus the first zero occurs after
+exactly $q_n$ inversions, regardless of the size of this unknown gap.
+No negative-coordinate branch arises on this image.
+
+The zero support identifies $g$ by the same literal birth test as AAII
+Theorem 85.1. In the singleton case its sole element fixes $p$. In the
+pair case the unique $R$-ending member is $pR$, so fixes $p$, and the
+other member must be $pLL$. The required literal local constructors
+exclude a collapse of an arbitrary branch or of a unary marker. The
+retained material and edges are exactly $V_{t'}$; restriction gives $z$.
+Each collapse decreases $N$. Applying this argument to the actual
+predecessor recovers its last growth and gap, until the actual alpha is
+reached. At alpha, $T_\alpha=1/2$, so the scalar test recovers exactly
+the original $q_0$. It includes $q_0=0$ and arbitrary endpoint gaps.
+
+This proves that decoding an executed history returns that history.
+Conversely each recorded reverse equation is (4.1) for the indicated
+literal edit, and the final scalar equation is the actual alpha Tick
+equation. Replaying the recovered history from $1$ therefore reconstructs
+the input pair. All counters and last events were forced. Consequently
+two histories with the same pair have the same decoded gaps and letters,
+proving injectivity and both inverse identities on the full stated image.
+The procedure acts on local descriptions, not on the source. $\square$
+

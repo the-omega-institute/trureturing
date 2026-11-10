@@ -1,0 +1,30 @@
+**引理 127.1（完整计数的三次响应桥）。** 在约定 123.1 的共同纤维类上，
+
+$$
+\left\|\Xi_\alpha(y)+\sqrt\delta\,t_\alpha y
+               +\frac{\delta y^2}{2W_\alpha}\right\|_{3,R}\longrightarrow0.
+\tag{127.1}
+$$
+
+**证明。** 由 (124.3)，$J_2=e^{\alpha c_0}J_\eta^{\rm count}$，
+$J_0=J_0^{\rm count}$。引理 124.1、125.1、126.1 给出
+
+$$
+\log J_P-\log J_0
+ =\alpha c_0+\log(\mathcal J_\eta/\mathcal J_0)
+       +O_{C^3}\bigl(\operatorname{poly}(Q)e^{-bQ^3}\bigr),
+$$
+
+$$
+\|\log J_P-\log J_0-\alpha c_0\|_{3,R}\le C\delta^5+o(1).
+\tag{127.2}
+$$
+
+原 $P_x(m)^\alpha$ 与 $e^{-\alpha(S_Q(m)-\ell(m))}$ 只差输出无关的模态质量常数。
+因此 (122.3) 恰为 $\log J_P(\alpha,y)-\log J_P(\alpha,0)$。
+式 (127.2) 中的 $\alpha c_0$ 在 $y$ 与零处消去。
+再由 $s=0$ 的 (126.2)，
+$B^{|H|},Z_L$ 和 Gaussian 归一化常数也在输出比值中精确消去。
+剩下 $\log[g_\alpha(y)/g_\alpha(0)]$ 及三次范数趋零的误差。
+引理 123.2 即给 (127.1)。∎
+

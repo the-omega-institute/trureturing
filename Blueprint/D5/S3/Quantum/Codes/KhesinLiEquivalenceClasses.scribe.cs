@@ -14,6 +14,13 @@ internal sealed class KhesinLiEquivalenceClassesDocument : IScribeDocumentDefini
         "The commuting order-three rotations of the matched input-pivot pairs act freely on each connected class of normalized encoders. Each class therefore has cardinality divisible by 3^k.",
         H("Connected encoder classes and powers of three"),
         Blocks(
+            Describe.Lean(
+                DescribeId.Create("khesinli-lc-source"), DeclarationHandle.Create(Prefix + "lc_source"),
+                H("Local complementation as an exclusive-or relation"),
+                StatementSource.FromAuthor(Disp(LcSourceFormula())), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "Local complementation toggles the adjacency of two neighbours of v. The exclusive-or relation expresses this toggle; SimpleGraph.fromRel makes it symmetric and removes loops. Thus it gives exactly the same graph as lc."))),
+                DescribeRole.Theorem),
             Node("addInputRow", "Adding one input row to another", RowFormula(),
                 "Conjecture 6.3, p. 17: “4. Performing row operations on the adjacency matrix of input to output edges.” Section 6, p. 18: “Operation 4 consists of adding rows of the adjacency matrix between input and output nodes in modulo 2.” Input vertices are Sum.inl and output vertices are Sum.inr. The row indexed by j is added to row i with Xor; all other edges are retained. SimpleGraph.fromRel removes loops and symmetrizes the displayed relation.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
@@ -53,7 +60,7 @@ internal sealed class KhesinLiEquivalenceClassesDocument : IScribeDocumentDefini
     private static Formula Q(string owner, string name) => Seq(Named(owner), Dot, Named(name));
     private static Formula Call(string name, params Formula[] args) => new Formula.Apply(Named(name), [.. args]);
     private static Formula App(Formula function, params Formula[] args) => new Formula.Apply(function, [.. args]);
-    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula Parenthesized(Formula value) => new Formula.LatexSequence([Open, value, Close]);
     private static Formula All(string name, Formula domain, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), domain, body);
     private static Formula Ex(string name, Formula domain, Formula body) =>
@@ -79,6 +86,29 @@ internal sealed class KhesinLiEquivalenceClassesDocument : IScribeDocumentDefini
         Parenthesized(Seq(X("x"), Sp, X("y"), Colon, Sp, Vertices())), Sp, Mapsto, Sp, Parenthesized(body));
     private static Formula Complement(Formula g, Formula v) => App(Q("SimpleGraph", "fromRel"),
         LambdaXY(Call("Xor", Adj(g, X("x"), X("y")), And(Adj(g, v, X("x")), Adj(g, v, X("y"))))));
+
+    private static Formula LcSourceFormula()
+    {
+        Formula Qualified(params string[] parts)
+        {
+            var items = new System.Collections.Generic.List<Formula>();
+            foreach (var part in parts)
+            {
+                if (items.Count > 0) items.Add(Dot);
+                items.Add(X(part));
+            }
+            return Seq(Operatorname, Grp(Seq([.. items])));
+        }
+        Formula LambdaV(string name, Formula body) => Seq(LambdaLower, Sp,
+            Parenthesized(Seq(X(name), Colon, Sp, X("V"))), Sp, Mapsto, Sp, Parenthesized(body));
+        Formula AllTyped(string name, Formula type, Formula body) => Seq(Forall, Sp,
+            Parenthesized(Seq(X(name), Colon, Sp, type)), Comma, Sp, Parenthesized(body));
+        Formula toggled = Call("Xor", Adj(X("G"), X("x"), X("y")),
+            And(Adj(X("G"), X("v"), X("x")), Adj(X("G"), X("v"), X("y"))));
+        Formula lc = App(Qualified("D5", "S3", "Quantum", "Entanglement", "GraphStateMonogamyForbiddenSubgraph", "lc"), X("G"), X("v"));
+        return AllTyped("V", Named("Type"), AllTyped("G", Call("SimpleGraph", X("V")), AllTyped("v", X("V"),
+            EqualF(lc, App(Q("SimpleGraph", "fromRel"), LambdaV("x", LambdaV("y", toggled)))))));
+    }
 
     private static Formula RowFormula()
     {

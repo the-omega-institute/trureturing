@@ -1,0 +1,54 @@
+**Theorem 9.2 (necessary linear peak precision).** For every integer
+$n\ge4$ and every integer cap $B\ge0$ satisfying
+
+$$
+B\le n\log_2(8/7),
+\quad\text{equivalently}\quad \lambda^n\le2^{-B},
+\tag{9.1}
+$$
+
+no policy of Definition 8.2 with that cap is correct and pointwise
+terminating for all length-$n$ histories and every legal nuisance
+sequence. This remains true with unbounded finite extra work/calls,
+arbitrary adaptive rational Add, Reset, extra growth or Ticks, and
+pathwise randomized policies. Hence a uniformly robust finite peak
+cap sufficient at length $n\ge4$ must satisfy
+$B>n\log_2(8/7)$.
+
+**Proof.** The distinct words in (4.2) both have length four and final
+term $\langle\langle\beta,\alpha\rangle,\beta\rangle$. Append the same
+legal suffix of length $n-4$ to both; such a suffix of every finite length
+exists, by repeatedly extending a current logical leaf with its enabled
+$P$ or $S$. The resulting two distinct words $u,v$ have the same final
+term, the same earned code/roster and the same acquired origin. They
+have no retained old-order advice at the handoff.
+
+Each word has exactly $n$ actual clock Ticks. By Definition 8.2 both
+fields lie coordinatewise in $(0,\lambda^n]$, so
+
+$$
+\|x_u-x_v\|_\infty\le\lambda^n\le2^{-B}.
+\tag{9.2}
+$$
+
+Apply Lemma 9.1 to any proposed policy. Its compatible complete records
+are identical, including every adaptive probe and termination decision.
+If it terminates, it gives the same answer on these two records and so
+is wrong on at least one of the distinct original words. If it does not
+terminate, its compatible legal nuisance sequence violates pointwise
+termination. Either contradicts the required universal guarantee.
+
+For a pathwise randomized policy fix any of its tapes and apply the
+same argument to the resulting deterministic policy. Requiring correctness
+and termination for every tape cannot evade it. The argument establishes
+neither an almost-sure error bound nor equality of full transcript
+languages; it uses one legal common record against a worst-case
+guarantee. The pair construction requires $n\ge4$; it makes no assertion
+of this lower bound for $n<4$. $\square$
+
+The inequality counts peak requested precision, not the number of Reads,
+an arbitrary-field rank task, or total resource cost. Additional controls
+may increase both field magnitudes enormously while their difference stays
+small; the common Add cancellation in the proof is why that does not
+invalidate the bound. Known rational dithers are covered as Adds.
+

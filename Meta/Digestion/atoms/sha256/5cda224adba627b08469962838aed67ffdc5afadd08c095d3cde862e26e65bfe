@@ -1,0 +1,116 @@
+**Lemma 14.1 (Characteristic-zero normalization forced by degrees).**
+There are primitive positive polynomials $B_{51},C_{121},V_{69}$ such
+that
+
+$$
+\begin{gathered}
+E=uB_{51}T_5^2V_{69}^2,\qquad
+F=wB_{51}T_5^2C_{121}^2,\qquad u,w\in\mathbb Q^*,\\
+\iota_M=\lambda\rho_0^{17}C_{121}/V_{69},\qquad
+\lambda\in\mathbb Q^*,\qquad v_{101}(\lambda)=0,\\
+\gcd(C_{121},V_{69})=\gcd(\rho_0,V_{69})=1.
+\end{gathered}
+\tag{14.1}
+$$
+
+The subscripts are total degrees. Both $C_{121}$ and $V_{69}$ retain
+these degrees after reduction; their reductions are scalar multiples of
+$\mathsf C_M,d_M$ respectively. In particular (9.4) is literal.
+
+Proof. The monic-carrier Vandermonde identity IX, (7.3), together with
+$P_M=c\chi_M$ gives the exact rational identity
+
+$$
+\rho^{34}F=c^{34}E\iota_M^2.
+\tag{14.2}
+$$
+
+The nonzero bivariate residues of degrees $199,303$ in Lemma 12.3
+supply the lower bounds for the characteristic-zero polynomials $E,F$.
+Lemmas 11.3–11.4 supply the respective upper bounds. Therefore
+
+$$
+\deg E=199,\qquad\deg F=303,
+\tag{14.3}
+$$
+
+and both degrees survive reduction. This uses ordinary
+characteristic-zero degree bounds, not a modular upper-bound inference.
+
+Parity of each irreducible valuation in the UFD $\mathbb Q[p,v]$ in
+(14.2) says that $E,F$ have the same odd squarefree part. Thus write
+
+$$
+E=uBU^2,\qquad F=wBW^2,
+\tag{14.4}
+$$
+
+where $B,U,W$ are primitive positive integer polynomials and $B$ is
+squarefree. All three have $101$-Gauss valuation zero: for a nonzero
+polynomial this valuation is the minimum $101$-adic valuation of its
+coefficients, which is additive under multiplication by Gauss' lemma.
+The nonzero reductions of the raw $E,F$ imply $v_{101}(u)=v_{101}(w)=0$.
+Reducing (14.4), the odd squarefree part $\mathsf B$ of $\mathsf E$
+in (12.8) must divide $\overline B$. Hence $\deg B\ge51$.
+
+By (11.2), $T_5$ divides both $U,W$: an irreducible exponent at least
+$2$ in a discriminant has square-root exponent at least $1$, whether
+its parity is odd or even. Put
+
+$$
+g=\operatorname{pp}_+(\gcd(U,W)),\qquad
+C=\operatorname{pp}_+(W/g),\qquad
+V=\operatorname{pp}_+(U/g).
+\tag{14.5}
+$$
+
+Then $\deg g\ge5$, $\gcd(C,V)=1$, and (14.3)–(14.4) give
+
+$$
+\deg C=\frac{303-\deg B}{2}-\deg g\le121,
+\qquad
+\deg V=\frac{199-\deg B}{2}-\deg g\le69.
+\tag{14.6}
+$$
+
+The exact index (14.2) now has the form
+$\iota_M=\lambda\rho_0^{17}C/V$ for a nonzero rational $\lambda$;
+its scalar is rational because this is an identity with the already
+rational index. Taking a square does not choose a new square-root
+branch. The scalar sign is irrelevant to its separately primitive
+numerator and denominator.
+
+We check its $101$-adic status before reducing. Every scalar inversion
+in (9.2), (13.2)–(13.7) is a power of $2$ or $5$; the polynomial
+inversions have the nonzero reductions proved in Proposition 13.1.
+The constants $10,25,256,6400,1152,2592,82944$ reduce respectively to
+$10,25,54,37,41,67,23$, and $\overline c=88$ and the content of
+$\rho$ reduces to $5$. Thus these constants are $101$-units.
+The nonzero literal modular index in (12.5), together with
+$\overline q_M\ne0$, gives $\overline{\mathcal F_M}\ne0$ in (13.7).
+Consequently $\iota_M$ has Gauss valuation zero. The primitive factors
+$\rho_0,C,V$ each have Gauss valuation zero, so
+$v_{101}(\lambda)=0$. Reduction of their rational equality is now
+legitimate.
+
+By (12.5) the reduced modular $M$ index is a scalar multiple of
+$n_M/d_M$; $36=6^2$ in $\mathbb F_{101}$. Its reduced denominator has
+degree $69$. But reduction of (14.6) has denominator degree at most
+$\deg\overline V\le\deg V\le69$, and cancellation can only decrease
+it. Thus equality holds throughout and there is no modular cancellation
+between $\overline V$ and the numerator. Equality in (14.6) also forces
+$\deg B=51$ and $\deg g=5$. Since $T_5\mid g$, their primitive positive
+normalizations give $g=T_5$. Then $\deg C=121$.
+
+The modular numerator has degree $189=17\cdot4+121$. The degree of
+$\overline\rho_0$ is $4$, so $\deg\overline C=121$ too. Unique reduced
+fractions identify $\operatorname{mon}(\overline C)=\mathsf C_M$ and
+$\operatorname{mon}(\overline V)=d_M$. The same no-cancellation
+conclusion, or $\gcd(\overline\rho,d_M)=1$ with preserved degrees,
+gives $\gcd(\rho_0,V)=1$ in characteristic zero. We already have
+$\gcd(C,V)=1$. Naming these polynomials $C_{121},V_{69}$ and $B$ as
+$B_{51}$ proves (14.1). The product $\rho_0^{17}C_{121}$ is itself
+primitive positive by Gauss' lemma. It is therefore exactly the original
+$N_M$, and $V_{69}$ is exactly its primitive denominator. This proves
+(9.4), including its scalar/content convention. ∎
+

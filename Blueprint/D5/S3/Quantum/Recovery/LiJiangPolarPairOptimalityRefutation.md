@@ -248,6 +248,13 @@ At d=2, p=9/13 and chi=ket(0), the source polar columns are (3ket(00)-ket(11))/s
 - Truth anchor: `D5/S3/Quantum/Recovery/LiJiangPolarPairOptimalityRefutation.sourceNoise`
 - Truth anchor: `D5/S3/Quantum/Recovery/LiJiangPolarPairOptimalityRefutation.sourcePolar`
 - Truth anchor: `D5/S3/Quantum/Recovery/LiJiangPolarPairOptimalityRefutation.sourceQ`
+- Dependency: [D5/S3/Quantum/Foundation/FiniteKrausChannel](../Foundation/FiniteKrausChannel.md)
+- Dependency: [D5/S3/Quantum/Foundation/FiniteKrausRepresentation](../Foundation/FiniteKrausRepresentation.md)
+- Dependency: [D5/S3/Quantum/Foundation/FiniteStateChannel](../Foundation/FiniteStateChannel.md)
+- Dependency: [D5/S3/Quantum/Information/PartialTraceMutualInformation](../Information/PartialTraceMutualInformation.md)
+- Dependency: [D5/S3/Quantum/PureState/PureStateHandshake](../PureState/PureStateHandshake.md)
+- Dependency: [D5/S3/Quantum/QuantumChannels/MayerKnillInfidelityScalingCore](../QuantumChannels/MayerKnillInfidelityScalingCore.md)
 - Dependency: [D5/S3/Quantum/QuantumChannels/MayerZeroFidelityTightness](../QuantumChannels/MayerZeroFidelityTightness.md)
 - Dependency: [D5/S3/Quantum/Recovery/KrausCompletion](KrausCompletion.md)
+- Dependency: [D5/S3/QuantumBounds/PeritoTsirelson](../../QuantumBounds/PeritoTsirelson.md)
 - Dependency: [D5/S3/QuantumChannels/PassiveMemoryNonclassicalRefutation](../../QuantumChannels/PassiveMemoryNonclassicalRefutation.md)

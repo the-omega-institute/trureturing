@@ -1,0 +1,169 @@
+**Theorem 124.2 (Source-only entry bounds and punctured one-sided laws).**
+For every $A,\eta>0$ anchor in the closed ball, both thresholds in
+(124.2) are well defined and
+
+$$
+\begin{gathered}
+\mu_f=\mu_f^+\le\mu_a=\mu_a^+,\\
+\alpha_{\mathfrak s} A\eta\le\mu_j(h_0)
+ \le\beta_{\mathfrak s} A\eta,\qquad j=f,a,\\
+\alpha_{\mathfrak s}=\frac{c}{1+2/\tau}>0,
+\qquad \beta_{\mathfrak s}=2\sqrt2\,C>0.
+\end{gathered}
+\tag{124.3}
+$$
+
+For each $j$ there is no nonzero-retention reflection-side alternative
+at error $\varepsilon<\mu_j$, and at every
+$\varepsilon>\mu_j$ there is such an alternative. At equality,
+entry occurs if and only if an auxiliary minimiser has nonzero
+retention; an auxiliary minimiser at zero retention alone does not
+assert entry at equality.
+
+Let $\Omega_f=\omega_{\mathfrak s,h_0}$ and
+$\Omega_a=\omega^{\rm all}_{\mathfrak s,h_0}$. With
+
+$$
+J_0=1+1/\tau,\qquad J_1=J_0+d_\tau=1+5/(2\tau),
+\qquad L_{\mathfrak s}=J_1\beta_{\mathfrak s}/c,
+\tag{124.4}
+$$
+
+the following one-sided estimates hold for the original moduli:
+
+$$
+\begin{aligned}
+0<\varepsilon<\mu_j:quad
+ &\Omega_j(\varepsilon)
+       \le\frac{J_1\varepsilon}{cA}
+       \le L_{\mathfrak s}\eta,\\
+\varepsilon>\mu_j:quad
+ &\Omega_j(\varepsilon)\ge A.
+\end{aligned}
+\tag{124.5}
+$$
+
+In particular,
+$\limsup_{\varepsilon\uparrow\mu_j}\Omega_j(\varepsilon)
+ \le L_{\mathfrak s}\eta$ and
+$\liminf_{\varepsilon\downarrow\mu_j,\,\varepsilon>\mu_j}
+ \Omega_j(\varepsilon)\ge A$.
+No exact numerical coefficient for either raw-law threshold is asserted.
+
+*Proof.* Both error functions in (122.2) are continuous on the closed
+parameter domain. For $d_f$ this follows from its finite continuous
+coordinates. For $d_a$, the difference between its values at two
+alternatives is at most their full-law distance, by the triangle
+inequality in every actual coordinate followed by the supremum.
+The upper comparison in Theorem 118.3 makes that distance tend to
+zero when the parameters converge: all four terms in $\mathcal D$
+of (118.1) then tend to zero. This proves continuity without assuming
+that a history attains the full-law supremum.
+
+The set $\{|\gamma|\le1\}\times\mathcal B_{h_0}$ is nonempty
+and compact, so the auxiliary minima are attained. If a minimiser
+has $\gamma=0$, keep its same $h$ and take nonzero
+$\gamma_n\to0$. Continuity gives errors converging to the minimum.
+If its retention is nonzero it already belongs to the punctured set.
+In either case $\mu_j^+=\mu_j$. Since $d_f\le d_a$, minimising
+on the same compact set gives $\mu_f\le\mu_a$.
+
+For the lower bound in (124.3), every $h\in\mathcal B_{h_0}$ has
+$\|h-h_0\|\ge A$. The established off-axis inversion (120.15)
+gives, using $\eta\le1$,
+
+$$
+\|h-h_0\|
+ \le\left[\frac1\tau+\frac{1+1/\tau}{\eta}\right]Q(h;h_0)
+ \le\frac{1+2/\tau}{\eta}Q(h;h_0).
+\tag{124.6}
+$$
+
+Together with $d_j\ge cD_0\ge cQ$, this proves the claimed
+positive lower bound for each minimum.
+
+For the upper bound use the actual reflected vector
+
+$$
+h_\#=(-a+\mathrm i\beta)e+v_0.
+\tag{124.7}
+$$
+
+It has the same norm as $h_0$ and belongs to $\mathcal B_{h_0}$.
+The skew matrices agree and
+
+$$
+h_\#h_\#^\dagger-h_0h_0^\dagger
+ =-2a(ev_0^\dagger+v_0e^\dagger),\qquad
+Q(h_\#;h_0)=2\sqrt2 A\eta.
+\tag{124.8}
+$$
+
+At retention zero, (122.4) therefore gives
+$d_j(0,h_\#;h_0)\le\beta_{\mathfrak s}A\eta$.
+This proves the upper bound by a concrete actual-law comparison.
+Theorem 106.3 realises $h_\#$, just as it realises every vector
+in the compact minimisation, by one fixed full completion per
+hypothesis; the construction in Theorem 123.1 applies at the sphere
+as well.
+
+The definition of the infimum excludes all punctured reflection-side
+alternatives below $\mu_j$. If $\varepsilon>\mu_j$, its equality
+with the punctured infimum supplies one with error strictly less
+than $\varepsilon$. At $\varepsilon=\mu_j$, any such alternative
+is itself an auxiliary minimiser, and a nonzero auxiliary minimiser
+conversely supplies one. This proves the exact equality qualification;
+it does not assume punctured attainment.
+
+It remains to prove the one-sided modulus bounds directly from the
+law geometry. Write an alternative as
+$h=(u+\mathrm i b)e+v$, with $u,b$ real. If $D=D_0(\gamma,h;h_0)$,
+the same skew entries as in (122.12), and then the axial
+outer-product entry, give
+
+$$
+\|v-v_0\|\le D/\tau,\qquad
+|b-\beta|\le D/(2\tau),\qquad
+|u^2-A^2|\le J_0D.
+\tag{124.9}
+$$
+
+For the last inequality use
+$|u^2+b^2-A^2-\beta^2|\le D$ and
+$|b^2-\beta^2|\le2|b-\beta|$, since $|b|,|\beta|\le1$.
+If $\sigma u>0$, then
+
+$$
+|u-a|=\frac{|u^2-A^2|}{|u|+A}\le J_0D/A,
+\qquad \|h-h_0\|\le J_1D/A.
+\tag{124.10}
+$$
+
+Here the remaining components have norm at most $d_\tau D$, and
+$A\le1$. If $\varepsilon<\mu_j$, every feasible alternative
+has $\sigma u>0$ by the entry definition. Equation (122.4) gives
+$D\le\varepsilon/c$, proving the first bound in (124.5) after
+taking the supremum. Substituting
+$\varepsilon<\mu_j\le\beta_{\mathfrak s}A\eta$ proves its
+second bound. Above $\mu_j$, the already supplied punctured
+reflection-side alternative has displacement at least $A$, proving
+the other line of (124.5) and both stated one-sided limits.
+
+The calculation additionally locates the other branch: if
+$\sigma u\le0$, division by $|u|+A$ in (124.9) gives
+$|u+a|\le J_0D/A$, including $u=0$. Thus every such alternative
+satisfies
+
+$$
+\|h-h_\#\|\le J_1D/A,
+\qquad
+\bigl|\|h-h_0\|-2A\bigr|\le J_1D/A.
+\tag{124.11}
+$$
+
+For $\eta/A$ small, (124.10) and (124.11) separate the local and
+reflected components near the actual threshold. This is an estimate
+for the actual finite and full raw-law feasible sets. The threshold
+proof did not infer their entry from the scalar jump in (122.8).
+$\square$
+

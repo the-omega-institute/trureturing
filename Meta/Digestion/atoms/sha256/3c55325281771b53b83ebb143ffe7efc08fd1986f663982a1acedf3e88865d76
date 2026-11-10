@@ -1,0 +1,37 @@
+**Construction 84.2 (optional physical old-cell restoration).** Append this
+operation only to the entry run (84.2). By symmetry, the transpose of the
+injective stack (84.1) spans the whole new field space. Select $M$
+independent controllability columns $B^{k_j}e_{s_j}$ with readable $s_j$
+and $0\le k_j<M$, form their invertible matrix $K$, and put
+$L=\max_j k_j$. Compute from the acquired $x$ and actual $d$
+
+$$
+c=K^{-1}(Ex-B^L d).
+\tag{84.3}
+$$
+
+For $t=0,\ldots,L$, issue all selected Adds whose exponent is
+$k_j=L-t$, with operand $c_j$, including zero operands; Hold; and,
+if $t<L$, Tick. This is a legal forward control schedule, using no omitted
+port. Its actual endpoint is
+
+$$
+B^L d+\sum_j B^{k_j}e_{s_j}c_j=Ex.
+\tag{84.4}
+$$
+
+The appended bill is $M$ Adds, $L$ Ticks, $L+1$ Holds and zero
+Reads. Through restored handoff the receiver has $N$ Reads, $M$ Adds,
+$H_e+L$ Ticks and $H_e+L+2$ Holds, plus its chosen edit. The source
+is held and the installed predictor equals $Ex$. The old physical cells
+have their original values and every fresh cell is zero. The topology and
+inherited raw-label moves are not undone; a moved omitted label points to
+its new zero cell, not to its former coordinate.
+
+**Proof.** An Add at stage $t$ undergoes exactly $L-t=k_j$ later
+Ticks; linear superposition gives (84.4). Invertibility of $K$ follows
+from symmetry and full rank of (84.1). This is the allowed-port
+observability/control duality, used on the earned repaired graph. It is
+neither Reset nor an inverse Tick, and its extra calls cannot be charged to
+the un-restored entry report. $\square$
+

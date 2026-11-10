@@ -1,0 +1,6 @@
+The endpoint decomposition uses the minimum first direct or skew cut
+of an actual permutation in $\operatorname{Av}(2413,3142)$; see
+Ross G. Pinsky, *The Infinite Limit of Separable Permutations*,
+arXiv:1911.05565v2, Section 3. The coupled expressions describe the
+alternating endpoint transitions, not the independent primitive
+specification printed in that article.

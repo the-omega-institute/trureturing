@@ -1,0 +1,28 @@
+**Theorem 7.1 (one informative added read and two total Ticks).** For uniform exact identification of the parameter, or of the native coefficient law, from the zero entrance in the enlarged family/menu:
+
+1. At least one informative Read$_e$ is necessary; the old observations alone never suffice.
+2. No policy that uses at most one total Tick on its identifying runs can succeed uniformly, even if it uses arbitrarily many legal Adds, Resets, Holds, leaf Reads and Read$_e$ calls.
+
+The acquisition (CL.17) attains one informative added scalar read and two total Ticks simultaneously.
+
+**Proof.** The first claim follows from Theorems 4.2 and 5.1. More explicitly, call a read informative at an acquired history if its possible reply is not constant on the parameters still compatible with that history and its actual command sequence. Until the first informative Read$_e$, every interior reply leaves that parameter fiber unchanged. Old commands and replies cannot split the initial fiber by Theorem 4.2. A finite terminal record with no informative added read is therefore still compatible with every initial parameter and cannot determine the native law. Randomness does not help: coupling the common tape leaves the same nonsingleton fiber and the same output law.
+
+For the Tick lower bound, set
+
+$$
+L=\operatorname{span}\{e_{\ell_1},\ldots,e_{\ell_b}\}.
+$$
+
+Before a first Tick, every field reachable from zero is in $L$ and is parameter-independent: only Adds change it, Reset returns zero, and reads/Holds leave it unchanged. For any $v=\sum_j a_j e_{\ell_j}\in L$,
+
+$$
+Tv=\tfrac12v+\epsilon\Bigl(\sum_j a_j\Bigr)e_c,
+\tag{CL.21}
+$$
+
+independently of $(C,S)$. After this sole Tick, subsequent Adds keep the field in $L+\mathbb Qe_c$; Reset can only return it to $L$. There is no second Tick to propagate the $c$ component into $d,e$. Hence every interior read is zero, all leaf values and acknowledgements are parameter-independent, and all actual fields are identical across parameters under a common adaptive policy. This argument includes Ticks before any pulse and Ticks whose effects are later reset.
+
+Consequently no transcript using at most one Tick can identify a member of this nonsingleton family. The result is stronger at a proposed early terminal cut: if a common policy halts there with at most one Tick, every parameter has that same cut and terminal output. Pointwise common-tape coupling yields the same obstruction to uniform almost-sure randomized exact success. Finally, (CL.18) is nonconstant on $\mathcal P$ and decodes its parameter, so (CL.17) attains the two claimed coordinates. $\square$
+
+These lower bounds concern identifying the unknown family member using the declared menu and zero entrance. They are not lower bounds for a different entrance, extra interior input, coefficient-reading instrument, arbitrary hardware design, elapsed duration, bit cost or total physical resource. A parameter-specific guessed answer is not uniform identification.
+

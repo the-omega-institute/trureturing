@@ -1,0 +1,12 @@
+**Proposition 109.1 (same-run source counts).** Join exactly one preparation
+from §104 to its own fresh growth and Theorem 105.1. The six source-call
+coordinates through the dark cut are as follows; Reset is zero throughout.
+
+| Source and preparation | $P$ | $S$ | Read | Add | Tick | Hold |
+| --- | --- | --- | --- | --- | --- | --- |
+| General $u$, original general preparation | $b$ | $2a+3c-1$ | $k$ | $b(I+1)+4k$ | $I+4$ | $7$ |
+| Same chosen $u$, distinct marker preparation | $b$ | $2a+3c-1$ | $k$ | $6k$ | $5$ | $7$ |
+| Mixed $V_k$, original general preparation | $2k+1$ | $6k+1$ | $k$ | $(2k+1)(4k+1)+4k$ | $4k+4$ | $7$ |
+| Mixed $V_k$, marker preparation | $2k+1$ | $6k+1$ | $k$ | $6k$ | $5$ | $7$ |
+| All-beta $u$, original general preparation | $b$ | $3b-1$ | $k$ | $2b^2+4k$ | $2b+3$ | $7$ |
+| All-beta $u$, marker preparation | $b$ | $3b-1$ | $k$ | $6k$ | $5$ | $7$ |

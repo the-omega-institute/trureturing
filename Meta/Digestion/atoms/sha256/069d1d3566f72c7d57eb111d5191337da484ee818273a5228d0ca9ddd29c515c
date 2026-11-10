@@ -1,0 +1,45 @@
+**定理 10.1（共同外移与有限正交域）。**沿用定理 9.3，取整数 $L\ge2N$，定义实际数组
+
+$$
+X_{N,L}(a)(\sigma)=U^{L-s(\sigma)}H_N^\sigma(a;1),
+\qquad Z_L(z)=\mathbf{U^Lz},\qquad o_{N,L}=\mathbf p_L.
+\tag{10.1}
+$$
+
+则 $X_{N,L}(1)=o_{N,L}$，并且
+
+$$
+\begin{aligned}
+c_N(X_{N,L}(a),X_{N,L}(b))&=c(a,b),\\
+c_N(X_{N,L}(a),Z_L(z))&=q(a)+\frac{r(z)}N,\\
+c_N(Z_L(z),X_{N,L}(a))&=r(a)+\frac{q(z)}N.
+\end{aligned}
+\tag{10.2}
+$$
+
+在以 $o=o_{N,L}$ 为展开基点的自由差空间中，置 $\epsilon_x=\delta_x-\delta_o$ 和
+
+$$
+B_N^o(\epsilon_x,\epsilon_y)
+=\frac{c_N(x,o)+c_N(o,y)-c_N(x,y)}2.
+$$
+
+则有精确的双向配对关系
+
+$$
+\begin{aligned}
+B_N^o(\epsilon_{X_{N,L}(a)},\epsilon_{X_{N,L}(b)})&=B(e_a,e_b),\\
+B_N^o(\epsilon_{X_{N,L}(a)},\epsilon_{Z_L(z)})
+&=B_N^o(\epsilon_{Z_L(z)},\epsilon_{X_{N,L}(a)})=0.
+\end{aligned}
+\tag{10.3}
+$$
+
+**证明。**$s(\sigma)\le2N$ 保证全部外移指数非负。两端共同施加同一 $U$ 次数不改比较，故第一式由 (9.5) 得到。再将 (9.2) 的另一棵右梳取为 $H_N^\sigma(1;z)=U^{s(\sigma)}z$；共同外移后它严格变成 $U^Lz$，得到其余两式。取 $a=1$，得
+
+$$
+c_N(o,Z_L(z))=r(z)/N,\qquad c_N(Z_L(z),o)=q(z)/N.
+$$
+
+取 $z=1$，得 $c_N(X_{N,L}(a),o)=q(a)$ 及反向值 $r(a)$。分别代入四点展开，所有交叉项精确抵消，给 (10.3)。换展开基点不把 $o$ 变成乘法单位，也不预设双线性型正定或对称。
+

@@ -1,0 +1,23 @@
+**定理 114.2（两点自检恢复整片同纤维关系）。** 在裸有限 EJA、任意原正 Frobenius 型 $q$ 与任意原实双线性 $D$ 上，$\mathsf F_2$ 与 $\mathsf F_{\rm fib}$ 等价，因而由定理 107.2 也与全域 $\mathsf F_{\rm cut}$ 及定义 110.1 的 $\mathsf F_{\rm zero}$ 等价，并恢复 (107.2) 的全部同一原结构。
+
+证明。Peirce 正交性给 $P_c^2=P_c=P_c^*$、$Q_c^2=Q_c=Q_c^*$、$P_cQ_c=0$ 及 $N_c=\operatorname{im}Q_c$。固定 $c,a$，记 $X=D_ac$、$\eta=Q_cX$。由于 $\Phi_c(a,b)$ 只有第一项依赖 $b$，有精确恒等式
+
+$$
+\begin{aligned}
+\Phi_c(a,a+\eta)-\Phi_c(a,a)
+&=2q(X,\eta)\\
+&=2q(P_cX+Q_cX,Q_cX)
+=2\|\eta\|_q^2.
+\end{aligned}
+\tag{114.3}
+$$
+
+若 (114.2) 成立，正定性给 $\eta=0$，故 $D_ac\perp_q N_c$。对任意 $n\in N_c$，于是
+
+$$
+\Phi_c(a,a+n)=\Phi_c(a,a)+2q(D_ac,n)=0.
+\tag{114.4}
+$$
+
+这正是全部同纤维关系。反向，原同纤维关系直接包括 $n=0$ 与 $n=\eta_c(a)$ 两点。全部零、单位、中央及任意秩切口都包含；零对象的条件为空或为零。后续恢复直接调用定理 107.2，不重证既有全域分类。∎
+

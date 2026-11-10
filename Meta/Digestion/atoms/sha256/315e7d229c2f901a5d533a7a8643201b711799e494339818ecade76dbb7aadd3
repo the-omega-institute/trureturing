@@ -1,0 +1,14 @@
+**Cited replica rank formula.** The following result is stated without proof as a cited step; its proof exists in prior work of this project and it is not a load-bearing item of this volume. It generalises the bipartite rank formula of Hein, Eisert and Briegel (Remark 3.6) to the replica convention of Appendix A of Akella, Iizuka and Miyata (Convention 2.2). Stance: repo-derived (used as a cited step; not a load-bearing item of this volume). Let $\psi$ be a normalized pure qubit stabilizer state with graph form $\Gamma$ and let $\mathrm{col}:[N]\to[\mathtt q]$ be any colouring. For $t\in(\mathbb Z/3)^{\mathtt q-1}$ let $C_t\in\mathbb F_2^{N\times N}$ be the masked matrix
+
+$$
+(C_t)_{uv}=\begin{cases}\Gamma_{uv}, & t\cdot\delta_{\mathrm{col}(u)}\ne t\cdot\delta_{\mathrm{col}(v)},\\ 0, & \text{otherwise,}\end{cases}
+$$
+
+with $\delta_c$ as in Convention 2.2 for $n=3$. Let $P$ be a set of representatives of the pairs $\{t,-t\}$ with $t\ne0$. Then $Z_3^{(\mathtt q)}$ is a positive real number and
+
+$$
+Z_3^{(\mathtt q)}=2^{-\sum_{t\in P}\operatorname{rank}_{\mathbb F_2}C_t}.
+$$
+
+The mechanism is as follows. The replica contraction is invariant under applying the same local unitaries and phases to all replicas, so $\psi$ may be replaced by $|\Gamma\rangle$. For a graph state the summand is $(-1)^{F(x)}$ with $F$ a quadratic form over $\mathbb F_2$ in the variables $x_r(u)$. Since $|(\mathbb Z/3)^{\mathtt q-1}|$ is odd, the Fourier transform over $(\mathbb Z/3)^{\mathtt q-1}$ with values in $\mathbb F_4$ is invertible and is defined over $\mathbb F_2$ after pairing each character $t$ with $-t$; in the transformed coordinates $F$ splits into the zero contribution of $t=0$ and one bilinear block $y_t^{\mathsf T}C_tz_t$ for each $t\in P$, and the unnormalised sum over the $2N$ coordinates of the block of $t$ equals $2^{2N-\operatorname{rank}C_t}$. The block $t=0$ contributes $2^N$, so the unnormalised total is $2^{N\cdot3^{\mathtt q-1}-\sum_{t\in P}\operatorname{rank}C_t}$, and the amplitude normalisation $2^{-N/2}$ of each of the $2\cdot3^{\mathtt q-1}$ factors cancels $2^{N\cdot3^{\mathtt q-1}}$.
+

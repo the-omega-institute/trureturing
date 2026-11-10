@@ -1,0 +1,81 @@
+## 104. 定理 102.1 的时间列坐标与所有未测词
+
+证明（固定映射及实现对应）。(103.2) 还直接给每个字母的列坐标
+
+$$
+G_a=H^{-1}H^a
+=P^{-1}B_aP=R^{-1}A_aR,\qquad a=0,1,N.
+\tag{104.1}
+$$
+
+例如 $(MP)^{-1}(MB_aP)=P^{-1}B_aP$，这里必须使用 $M$ 的同构性。
+初始列为 $P^{-1}s_0=\delta_1$，因为 $p_1=\varnothing$。
+若 $w=a_1\cdots a_n$ 按实际时间排列，令
+
+$$
+G_w=G_{a_n}\cdots G_{a_1},\qquad G_\varnothing=I_9.
+\tag{104.2}
+$$
+
+于是所有词的质量、是权重和否权重分别为
+
+$$
+(HG_w\delta_1)_0,\qquad
+(HG_w\delta_1)_1,\qquad
+(HG_w\delta_1)_0-(HG_w\delta_1)_1.
+\tag{104.3}
+$$
+
+质量行和第一是行的含义由 $m_0=u$、$h_1=\varnothing$ 保证。
+这不是九个是后缀的标量 Hankel 块。
+
+所用一般实现所有者为
+[WordHankelRealization](../../../D5/S3/Observer/Hankel/WordHankelRealization.lean)。
+其中 `residualSpace` 是一个标量响应 $f$ 的全部有限词残差的跨度；
+`finite_hankel_realization` 给有限全残差维数与矩阵实现及其最小维数关系。
+`recoveredRealization`、`full_rank_block_recovery` 的实际前提包含
+$r>0$、整个标量残差空间的有限维性，以及
+$\operatorname{finrank}(\operatorname{residualSpace}f)=r$，
+然后才对可逆的 $r\times r$ 前缀／后缀块给全词恢复。
+单个有限块可逆本身不替代这个全残差秩前提。
+
+该所有者使用前缀行、后缀列和行状态的左到右矩阵乘积。
+与本处列状态约定的代数转换为
+
+$$
+H_{\rm row}=H^{\mathsf T},\quad
+H^a_{\rm row}=(H^a)^{\mathsf T},\quad
+H^a_{\rm row}H_{\rm row}^{-1}=G_a^{\mathsf T},\quad
+G_{a_1}^{\mathsf T}\cdots G_{a_n}^{\mathsf T}=G_w^{\mathsf T}.
+\tag{104.4}
+$$
+
+转置说明乘积方向，并不把本题的质量加八是多输出块变成该标量定理的直接实例。
+这里所需的推断由 (103.2)–(104.1) 在有限载体上直接承担。
+若定义多输出残差映射
+
+$$
+J:V\longrightarrow\mathbb R^{\mathcal W\times\{0,\ldots,8\}},
+\qquad J(x)(w,m)=m_m(B_wx),
+\tag{104.5}
+$$
+
+则它因子通过九维 $V$；空词评价就是同构 $M$，故 $J$ 单射。
+又 $x_i$ 张成 $V$，故全部前缀的多输出残差跨度恰为九维。
+这个全多输出秩是有限载体和四表的后果，不是新观察前提。
+
+由 (103.7) 对词长归纳，$SB_w=A_wS$ 对所有 $w$、所有 $x\in V$ 成立。
+配合 $Ss_0=\rho_0$、$u=\operatorname{Tr}\circ S$ 与效果恒等式，
+即得 (102.3)，包括两个终端及完整质量。
+还对每个 $x\in V$ 有
+
+$$
+u(B_jx)=\tfrac12u(x)\quad(j=0,1),\qquad u(B_Nx)=u(x).
+\tag{104.6}
+$$
+
+所以 $2B_0,2B_1,B_N$ 在数学上为保持 $u$ 的正映射。
+这些等式不是只在 $s_0$ 的轨道上成立。
+因子二的代数缩放没有改变原记录的权重，也没有供给可选择的随机分支。
+所有未测词的结论依赖固定全域映射复用；时间相关或非线性替代模型不在此合同中。
+

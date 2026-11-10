@@ -1,0 +1,42 @@
+**Definition 27.1 (full-source data and the two query domains).** Fix the
+original alpha-origin source $s\in\mathscr R_d$, physical order $a<b$,
+old-leaf replacement and one-based birth order of Definition 1.1. The
+supplied source field is exactly the authentic $(d,P)$ of Definition
+22.1: $P=s_0\cdots s_{2d-1}$, including every singular transient. Use
+[ACR, Theorems 21.2 and 21.4, (ACR.85)][ACR] to synthesize its least
+all-index monic annihilator $m$ and its original initial seed. This is
+the polynomial behavioral synthesis supplier, rather than Definition
+22.1's enumerative implementation. It computes neither the original
+$\rho_d$ first passing row nor a physical source certificate. At $d=0$
+the source is zero, $P$ is empty and $m=1$. No factorization, period,
+residue image or normalized local seed is an input to this query.
+
+There are two supplied-data tasks. In the **whole-origin-orbit** task,
+the query is a positive binary birth ordinal $j$, or a finite physical
+word $v\in\{a,b\}^*$, including the empty root. In the **already-occurred**
+task, the same input also contains the authentically acquired actual
+cut $n\ge0$, and the requested event must have occurred by $n$. The
+latter task is about the branching event of the queried parent, not just
+its creation or current presence. Neither task supplies an ordinal Read
+service or recovers $n$ from $(d,P)$.
+
+For every physical word retain the exact coordinates $(e_v,A_v,B_v)$
+of (PCR.36)--(PCR.39), using the actual bit $s_{A_v-1}$ also outside the
+core. Retain its immutable creation descriptor $(b_v,\sigma_v)$, and put
+$\tau_v=e_v+1$. Thus
+
+$$
+ (b_\varepsilon,\sigma_\varepsilon)=(0,\alpha),\qquad
+ (e_\varepsilon,A_\varepsilon,B_\varepsilon)=(1,1,2),\qquad
+ b_v=e_v-\mathbf1_{\sigma_v=\alpha}.
+\tag{PCR.69}
+$$
+
+An event query returns the literal parent and the fields
+$(j;b_v,\sigma_v,\tau_v,e_v,A_v,B_v,s_{j-1})$. A word query returns the
+same tuple with its own event ordinal. The original recovery output
+remains the transient-inclusive $(P,n)$: this tuple is an additional
+mathematical query result, not a replacement for either field. Returning $(P,n)$ additionally requires that acquired $n$ in either
+domain; a query never infers it. Copying the pair is charged to its
+actual length.
+

@@ -100,7 +100,19 @@ Lean statement: `D5/S3/Quantum/Analysis/DiagonalHeat.multiplier_positive`
 
 If all a(i) are nonnegative, the actual bounded multiplier is positive. Parseval expresses its quadratic form as the genuinely convergent sum of a(i) times the squared modulus of the coefficient of x. Each term is real and nonnegative. This proves positivity and self-adjointness on the entire space, without a finite-dimensional hypothesis.
 
-**Theorem 1.9 (The same closure has the full strong heat generator).**
+**Theorem 1.9 (The real exponential right derivative).**
+
+Lean statement: `D5/S3/Quantum/Analysis/DiagonalHeat.scalar_derivative`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Analysis/DiagonalHeat.scalar_derivative` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every real normed vector space V, every real scalar a and every vector z, the right limit at zero through nonnegative real times of t inverse times (exp(-t*a) times z minus z) equals minus a times z. No complex scalar structure, completeness or sign condition on a is required. The ordinary real exponential derivative and the right-slope limit give the result. It supplies finite-mode derivatives and coordinate derivatives in the full generator argument.
+
+**Theorem 1.10 (The same closure has the full strong heat generator).**
 
 Lean statement: `D5/S3/Quantum/Analysis/DiagonalHeat.diagonal_heat`
 
@@ -129,6 +141,7 @@ All basis index types, empty and finite cases, repeated coefficients and zero ei
 - Truth anchor: `D5/S3/Quantum/Analysis/DiagonalHeat.multiplier_basis`
 - Truth anchor: `D5/S3/Quantum/Analysis/DiagonalHeat.multiplier_coeff`
 - Truth anchor: `D5/S3/Quantum/Analysis/DiagonalHeat.multiplier_positive`
+- Truth anchor: `D5/S3/Quantum/Analysis/DiagonalHeat.scalar_derivative`
 - Dependency: [D5/S3/Quantum/Analysis/ContractionSemigroup](ContractionSemigroup.md)
 - Dependency: [D5/S3/Quantum/Analysis/EigenbasisGraphCore](EigenbasisGraphCore.md)
 - Dependency: [D5/S3/Quantum/Analysis/TraceClass/GeneralProduct](TraceClass/GeneralProduct.md)

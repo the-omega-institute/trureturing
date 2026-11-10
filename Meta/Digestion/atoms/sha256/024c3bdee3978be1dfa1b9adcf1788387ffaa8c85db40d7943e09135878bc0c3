@@ -1,0 +1,16 @@
+**推论 60.2（共同包络和标定预算的统一模量）。** 固定共同 $\omega$，令 $B_\omega(\delta_a,\delta_b)$ 为 (60.1) 中不含效果因子 $\|E\|$ 的无量纲最小值对 $R>0,N\ge0$ 的下确界，则
+
+$$
+\sup_{\mathscr C_\omega}\ \sup_{E,F}
+\|T_{E,F}-\mathcal L_E\|_\diamond
+\le B_\omega(\delta_a,\delta_b),
+\qquad
+B_\omega(\delta_a,\delta_b)\longrightarrow0
+\quad(\delta_a,\delta_b\longrightarrow0).
+\tag{60.7}
+$$
+
+第一个上确界只取实际亏损分别不超过所列预算的关系体。特别地，零亏损恢复全族精确平方根更新；在有限速度特例中，可将 $\omega(r_N)$ 直接替为 $Lr_N$。
+
+证明。任给 $\varepsilon>0$，先选有限 $R$ 使 $4e^{-R/2}<\varepsilon/3$，再由 $r_N(R)\to0$ 及共同 $\omega$ 在零处趋零选有限 $N$，使 $2\omega(r_N(R))<\varepsilon/3$。固定这两个选择后，亏损趋零使 $2\delta_*\to0$、$2N\eta\to0$，故右侧可小于 $\varepsilon$。选择次序不依赖系统维数或某个效果。若只知亏损上界，$\delta_*$、$\eta$ 及各固定 $R,N$ 的界均单调，所以下确界仍可单调代入。这里给出可由有限比较表表达的证书，不主张其最优性、已计算的数值或实际取得费用。∎
+

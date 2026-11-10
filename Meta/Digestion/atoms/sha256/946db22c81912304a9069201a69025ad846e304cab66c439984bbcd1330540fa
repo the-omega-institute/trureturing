@@ -1,0 +1,36 @@
+## 保留共享子态的圆和几何相位
+
+取互相正交的 q、r，令 ‖q‖²=p，‖r‖²=1−p，0\<p<1。共享 q 的历史可写为
+
+```math
+\psi(\theta)=q+e^{i\theta}r.
+```
+
+它具有 2π 周期，并满足
+
+```math
+\langle\psi(\theta),\partial_\theta\psi(\theta)\rangle=i(1-p).
+```
+
+其水平提升为
+
+```math
+\phi(\theta)=e^{-i(1-p)\theta}\psi(\theta),
+\qquad
+\langle\phi,\partial_\theta\phi\rangle=0,
+```
+
+故绕一周得到
+
+```math
+\phi(2\pi)=e^{-i2\pi(1-p)}\phi(0).
+```
+
+这是指定水平接续产生的几何相位。不能把它当成任意实际圆周门必有的额外净相位。原历史也可由
+
+```math
+U_\theta=P_q+e^{i\theta}(I-P_q)
+```
+
+实现，且 U₂π=I。以 θ 为参数，它的生成元对应 Hθ=−ℏ(I−Pq)；动态相位 +2π(1−p) 与几何相位 −2π(1−p) 抵消。要把几何相位单独读成相对结果，需要指定水平接续或动态补偿，并带着内部参考比较。
+

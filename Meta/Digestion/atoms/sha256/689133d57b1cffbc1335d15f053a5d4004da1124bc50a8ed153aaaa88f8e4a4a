@@ -1,0 +1,57 @@
+### 2.4 Denominator control away from root moduli
+
+Factor the nonzero polynomial after substitution:
+
+$$
+Q(1-t)=\sum_{k=0}^d r_kt^k
+=c\prod_{i=1}^d(t-\alpha_i),\qquad d=\deg Q\le N.
+\tag{2.13}
+$$
+
+The roots are complex and counted with multiplicity. A constant
+polynomial has $d=0$ and an empty product. Substituting $t=1-z$
+back and using the binomial theorem shows
+
+$$
+1=\|Q\|_{\mathrm{coeff},1}
+\le\sum_{k=0}^d|r_k|2^k
+\le2^N\sum_{k=0}^d|r_k|.
+$$
+
+Expansion of the factorization gives
+$\sum_k|r_k|\le|c|\prod_i(1+|\alpha_i|)$. Therefore
+
+$$
+|Q(1-t)|\ge
+2^{-N}\prod_{i=1}^d\frac{|t-\alpha_i|}{1+|\alpha_i|}.
+\tag{2.14}
+$$
+
+Call $t>0$ good for $Q$ if every root satisfies
+
+$$
+|\alpha_i|\le t/2\quad\hbox{or}\quad|\alpha_i|\ge2t.
+\tag{2.15}
+$$
+
+Every $t$ is good for a constant $Q$. At a good $t$,
+$|t-\alpha_i|\ge\max(t,|\alpha_i|)/2$ by the reverse triangle
+inequality. For $0<t\le1$ and $r\ge0$,
+
+$$
+\frac{\max(t,r)}{1+r}\ge\frac t2.
+$$
+
+For $r\le1$ use $\max(t,r)\ge t$ and $1+r\le2$; for $r\ge1$
+use $r/(1+r)\ge1/2\ge t/2$. Hence each factor in (2.14) is at
+least $t/4$, and, since $d\le N$ and $t/4\le1$,
+
+$$
+|Q(1-t)|\ge2^{-N}(t/4)^d\ge(t/8)^N>0.
+\tag{2.16}
+$$
+
+Zero roots satisfy the first alternative in (2.15). The estimate permits
+repeated roots, complex roots, degree collapse, and equality at either
+separation boundary.
+

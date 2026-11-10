@@ -1,0 +1,44 @@
+**Theorem 10.1 (Uniform exact allocation and reconstruction).**
+After increasing $A_R,D_R$ in Theorem 9.5, for every integer
+$N\ge\lceil D_Ra^{24}\rceil$, the exact relation (6.12) and every
+reconstruction and equality condition in Theorem 6.4 hold. Thus
+Sections 6.1--6.4 have uniform quantifiers on this window, including
+all law ties, price ties and remainders.
+
+**Proof.** For every winning branch and every $0\le d<r$,
+
+$$
+\begin{gathered}
+F=\alpha N+\varphi,\qquad F+d=\alpha N+\sigma,
+\qquad Q=n\beta N-\sigma,\\
+|\varphi|\le C_Ra,\quad |\sigma|\le C_R,
+\quad |z_i|\le C_Ra,\quad
+b=\beta N+\gamma-t/n=\beta N+O_R(1).
+\end{gathered}
+\tag{10.1}
+$$
+
+These follow directly from (6.1), (6.4) and (7.1), since
+$d<r=O_R(a)$ and $n=O_R(\sqrt a)$. They hold uniformly over
+all allocation entries, rather than only minimizing ones. In this
+window $F>0$, every possible core degree
+$F+d+z_i=\alpha N+O_R(a)$ exceeds $s$, and both balanced tail
+degrees exceed $s$. Every reconstruction in Theorem 6.4 is therefore
+legal: (6.13) gives exactly $N$ sources and $aN$ edges; different
+sources may have identical neighborhoods in a simple bipartite graph;
+a full-core source connects all core sinks, and the one connector at
+each tail connects every tail. All source degrees are at most $s$,
+so the required strict orientation holds on every edge.
+
+Conversely Theorem 9.5 gives every original minimizer exactly the
+source types used in (6.2), for $j\in\mathcal J_N$. Its actual law
+also satisfies the bounds used in the proof of that theorem, in
+particular every tail marginal is at least $\beta/2$ by (9.19).
+Thus every tail degree exceeds $4$ uniformly here. The singleton
+transfer in Lemma 6.2 is legal on this same graph and forces exact
+balancing. Lemma 6.3 then applies verbatim: its coupled move fixes
+all degrees and budgets, and its strict equality condition is (6.9).
+All inequalities needed for feasibility have just been made uniform;
+no compactness over fixed integer parameters is being used. This proves
+both directions of (6.12) and the exhaustive preimage assertion. ∎
+

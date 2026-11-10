@@ -1,0 +1,90 @@
+**Theorem 3.2 (A bracket of ratio less than two and linear small-noise order).** For every $0<\varepsilon<1$ and $q=1-\varepsilon$,
+
+$$
+\frac{1-q^2}{4}
+\ \leq\ c_{\mathrm{opt}}(\varepsilon)
+\ \leq\ \frac{1-q^4}{4}.
+\tag{3.2}
+$$
+
+The ratio of the upper endpoint to the lower endpoint is exactly
+
+$$
+\frac{1-q^4}{1-q^2}=1+q^2<2.
+\tag{3.3}
+$$
+
+In particular,
+
+$$
+\frac{2\varepsilon-\varepsilon^2}{4}
+\ \leq\ c_{\mathrm{opt}}(\varepsilon)
+\ \leq\
+\frac{4\varepsilon-6\varepsilon^2+4\varepsilon^3-\varepsilon^4}{4},
+\tag{3.4}
+$$
+
+so $c_{\mathrm{opt}}(\varepsilon)=\Theta(\varepsilon)$ as $\varepsilon\downarrow0$. More precisely,
+
+$$
+\frac12
+\leq\liminf_{\varepsilon\downarrow0}\frac{c_{\mathrm{opt}}(\varepsilon)}{\varepsilon}
+\leq\limsup_{\varepsilon\downarrow0}\frac{c_{\mathrm{opt}}(\varepsilon)}{\varepsilon}
+\leq1.
+\tag{3.5}
+$$
+
+*Proof.* Theorem 2.1 with $d=2$ gives the lower endpoint for every element of the infimum in (3.1).
+
+For the upper endpoint we use the star-centre transition supplied by the proof of [1, Theorem 6.1, Section 6, pp. 28–29]. Its specialization to $K_{1,1}=K_2$ is an inherited source consequence, not an additional independent proposition. To make the correspondence explicit, let $u$ be either endpoint, $v$ its unique neighbour, and put $Z_n=X_n(u)$. Uniform choice on $N(u)=\{v\}$ and $N(v)=\{u\}$ means copying the other endpoint with probability $q$ at every synchronous step, exactly as in (1.1). The noise is $\varepsilon$, and both the initial and fresh opinions are independent fair coins, as required by that source.
+
+For $n\geq2$, the supplied centre calculation gives, for every positive-probability centre history and $x\in\{0,1\}$,
+
+$$
+\begin{aligned}
+\mathbb P(Z_n=x\mid Z_0,\ldots,Z_{n-1})
+&=\frac{\varepsilon}{2}
+ +q\left(\frac{\varepsilon}{2}
+               +q\mathbf1\{x=Z_{n-2}\}\right)\\
+&=\frac{1-q^2}{2}+q^2\mathbf1\{x=Z_{n-2}\}.
+\end{aligned}
+\tag{3.6}
+$$
+
+Here the inner conditional distribution is the leaf distribution in that proof, and the outer update is the centre update. The original initial law also makes $Z_0,Z_1$ independent fair bits: $Z_0=I_u$, while $Z_1$ uses only $R_{1,u},F_{1,u},I_v$, independently of $I_u$.
+
+Let $p=(1+q^2)/2$. Formula (3.6) says that the next centre bit agrees with the centre bit two steps earlier with conditional probability $p$, independently of the values in the specified history. It also gives the full independence claim needed for the variance computation. For completeness, for any $M\geq2$, the map
+
+$$
+(z_0,\ldots,z_M)\longmapsto
+\bigl(z_0,z_1,e_2,\ldots,e_M\bigr),\qquad
+ e_n=\mathbf1\{z_n=z_{n-2}\},
+$$
+
+is a bijection of binary strings: reconstruct each $z_n$ from $z_{n-2}$ and $e_n$. By the chain rule and (3.6), its joint probability is
+
+$$
+\frac14\prod_{n=2}^{M}p^{e_n}(1-p)^{1-e_n}.
+\tag{3.7}
+$$
+
+Thus the indicators $E_n=\mathbf1\{Z_n=Z_{n-2}\}$, $n\geq2$, are mutually independent $\operatorname{Bernoulli}(p)$ variables, independent also of $Z_0,Z_1$. In particular, the exact indicators used here are $\zeta_i=E_{i+2}$, $1\leq i\leq t$. Therefore, under the original $K_2$ law,
+
+$$
+W_t\sim\operatorname{Binomial}(t,p),\qquad
+\operatorname{Var}_{K_2}(W_t)
+=tp(1-p)=\frac t4(1-q^4)
+\quad(t\geq0).
+\tag{3.8}
+$$
+
+This verifies the finite-time formula with the original indexing, including $t=0$, using the credited transition. Since $K_2$ belongs to precisely the class in (3.1), any $t\geq1$ gives the upper endpoint in (3.2).
+
+Because $0<q<1$, factorization $1-q^4=(1-q^2)(1+q^2)$ proves (3.3). Expanding the two endpoints gives (3.4). Dividing (3.4) by $\varepsilon>0$ and taking lower and upper limits proves (3.5). For explicit uniform order bounds, $1-q^2=\varepsilon(2-\varepsilon)\geq\varepsilon$ and $1-q^4=\varepsilon(1+q+q^2+q^3)\leq4\varepsilon$, so
+
+$$
+\frac{\varepsilon}{4}\leq c_{\mathrm{opt}}(\varepsilon)\leq\varepsilon.
+$$
+
+The bracket determines the linear small-noise order, without determining the exact infimum or the existence of its normalized limit. The upper comparison does not establish that $K_2$ minimizes (3.1), or identify any minimizing graph or time. ∎
+

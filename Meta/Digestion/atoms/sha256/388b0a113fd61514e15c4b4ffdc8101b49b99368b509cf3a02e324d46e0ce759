@@ -1,0 +1,65 @@
+**定理 78.1（有理数据的实际完整记录阈值）。** 固定 (76.1) 的源数据，对每个 $k\ge1$ 定义
+
+$$
+\varepsilon_k=
+\frac{(16\widetilde L D^\nu)^{-\nu 2^{\nu-1}D^\nu}}
+ {Q\sqrt{6(N+1)}},
+\tag{78.1}
+$$
+
+全部常数取 (76.2)。若 $\mathcal D\subseteq\mathcal K_d$ 包含 (73.1) 的双世界，且
+
+$$
+H\ge k+3,\qquad
+\Delta_H(\mathcal D;q)\le\varepsilon<\varepsilon_k,
+\tag{78.2}
+$$
+
+则比较器不能只有至多 $k$ 个状态。因而对全部整数 $H\ge0$，
+
+$$
+k_{\mathcal D}(H,\varepsilon)\ge
+1+\max\left(\{k\in\mathbb Z:1\le k\le H-3,\quad
+ \varepsilon<\varepsilon_k\}\cup\{0\}\right).
+\tag{78.3}
+$$
+
+证明。这里作为中间工具使用 Jeronimo–Perrucci–Tsigaridas，[*On the minimum of a polynomial function on a basic closed semialgebraic set and applications*](https://arxiv.org/html/1112.0544v1)，Theorem 1。其原定理的条件是：$n$ 变量整数约束多项式定义的基本闭半代数集，一个紧连通分支 $\mathscr C$，全部约束次数由正偶数 $d_{\rm J}$ 控制、系数绝对值由 $H_{\rm J}$ 控制；整数目标的次数 $d_0\le d_{\rm J}$、高度 $H_0\le H_{\rm J}$。若目标在 $\mathscr C$ 上的最小值非零，其绝对值至少为
+
+$$
+\left(2^{4-n/2}\max\{H_{\rm J},2n+2m_{\rm J}\}
+ d_{\rm J}^{\,n}\right)^{-n2^n d_{\rm J}^{\,n}},
+\tag{78.4}
+$$
+
+并且该最小值的代数次数至多 $2^{n-1}d_{\rm J}^{\,n}$。$m_{\rm J}$ 计等式与不等式的总数。此定理不要求紧连通分支有内部，不要求约束正则或极小点孤立。
+
+在本源中的逐项对应为
+
+$$
+\begin{gathered}
+n=\nu,\qquad m_{\rm J}=m,\qquad d_{\rm J}=D,\qquad
+H_{\rm J}=L,\qquad d_0=D,\quad H_0<L,\\
+\mathscr C=\mathcal P_k,\qquad \text{目标}=g,\qquad
+\min_{\mathscr C}g=g_*>0.
+\end{gathered}
+\tag{78.5}
+$$
+
+定义 76.2 给整数、次数一、高度一的全部 $m$ 个约束，及整个域的唯一紧连通分支；定理 77.1 给目标整数性、次数、高度及非零最小值。因此没有把只在数值样本上为正当作定理的非零前提。由于 $2^{4-\nu/2}\le16$，用更大的底数弱化 (78.4)，得到
+
+$$
+g_*\ge(16\widetilde L D^\nu)^{-\nu2^\nu D^\nu}.
+\tag{78.6}
+$$
+
+另一方面，假设有 $k$ 状态比较器满足 (78.2)，取 $R=T_0$ 及它的两个实际制备。式 (72.6) 的事件误差界给每个质量残差至多 $\varepsilon$、对比残差至多 $2\varepsilon$，故
+
+$$
+g\le Q^2(N+1)(\varepsilon^2+\varepsilon^2+4\varepsilon^2)
+=6Q^2(N+1)\varepsilon^2.
+\tag{78.7}
+$$
+
+由 (78.1) 的严格不等式，(78.7) 小于 (78.6)，矛盾。较少状态的模型可补上零制备、互不相连的隐藏状态，使总状态数为 $k$；给新增状态任选合法分支和效果不会改变记录。因此排除涵盖“至多 $k$”，再取最大值即得 (78.3)。阈值处的等号没有被排除。∎
+

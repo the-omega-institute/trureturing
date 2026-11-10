@@ -1,0 +1,16 @@
+**定义 36.1（标签与数值参数分开）。** 保留两个始终不同的隐藏标签 $A,B$，令
+
+$$
+a_A=p,\qquad a_B=q,\qquad \overline A=B,\quad\overline B=A.
+$$
+
+在占据位 $z$ 定义
+
+$$
+\mathsf C_z=A\quad\text{若 }H_z=2,\qquad
+\mathsf C_z=B\quad\text{若 }H_z=1.
+\tag{36.1}
+$$
+
+这是出向间隔标签。非对角线上，$a_{\mathsf C_z}$ 正好是第 3、21、30 节的数值标记 $C_z$，且 $a_{\overline{\mathsf C_z}}=\overline{C_z}$；对角线上仍保留 $A\ne B$，只令两个数值参数相等。以下直接从原柱式证明这一记号扩展，不在对角线上把两条带标签成功边合为一条。
+

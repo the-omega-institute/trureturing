@@ -173,7 +173,7 @@ private theorem uncertainty_det_bound (σ : Matrix (Fin 2) (Fin 2) ℝ) (hσ : �
         norm_num [Matrix.J, Matrix.fromBlocks, Matrix.submatrix, Fin.divNat,
           Matrix.one_apply, sub_eq_add_neg]
   exact (D5.S3.Estimation.GaussianThermometryJointMeasurementRefutation.physical_data σ hm).2
-private theorem normalization_isDensity {ι : Type*} [Fintype ι] (A : Matrix ι ι ℂ) (hA : A.PosSemidef) (ht : A.trace ≠ 0) : D5.S3.Quantum.Information.SLDSpectralEnergy.IsDensity (A.trace⁻¹ • A) := by
+theorem normalization_isDensity {ι : Type*} [Fintype ι] (A : Matrix ι ι ℂ) (hA : A.PosSemidef) (ht : A.trace ≠ 0) : D5.S3.Quantum.Information.SLDSpectralEnergy.IsDensity (A.trace⁻¹ • A) := by
   constructor
   · exact hA.smul (inv_nonneg.mpr hA.trace_nonneg)
   · rw [Matrix.trace_smul, smul_eq_mul, inv_mul_cancel₀ ht]

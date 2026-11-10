@@ -1,0 +1,48 @@
+**Lemma 6.1 (Homogeneous finite-chain factorization).** Suppose
+$A\in\mathfrak F_{\le n}(Z)$ has finite error. For an integer $m\ge0$,
+let $L=2m+1$ and choose $0<h<H/L$. Define
+
+$$
+v_j=\frac{g(H-jh)}{2\sqrt{Hh}}\quad(1\le j\le L),\qquad N=n+1.
+\tag{6.1}
+$$
+
+Then $v\in\mathcal R_{N,m}$.
+
+**Proof 6.1.** A phase-free probability leg from the preparation
+height reaches $(H-h,0,0)$. Relative phase increments remain zero.
+Repeating $P_{-h}$ at most $L-1$ times visits exactly the heights
+$H-jh$, $1\le j\le L$. The minimum is $H-Lh>0$, and the maximum
+$H-h$ is below $H$. Every whole probability segment lies between its
+interior endpoints, so every prefix and intermediate point is lawful.
+
+Homogenize the update for this model and this one command:
+
+$$
+T=\begin{pmatrix}1&0\\ b_{-h}&A_{-h}\end{pmatrix},
+\qquad \xi=F(H-h,0,0).
+$$
+
+It has size $d+1\le n+1=N$. The exact identities along the finite
+chain give
+
+$$
+g(H-jh)=\lambda T^{j-1}\xi,\qquad
+v_{p+q+1}=(\lambda T^p)
+\left(\frac{T^q\xi}{2\sqrt{Hh}}\right)
+\quad(0\le p,q\le m).
+\tag{6.2}
+$$
+
+All entries exist because $p+q+1\le2m+1=L$. Thus $H_m(v)$ is
+the product of an $(m+1)$-by-$(d+1)$ matrix and a
+$(d+1)$-by-$(m+1)$ matrix, proving the rank bound. $\square$
+
+The matrices, homogeneous states, and readout rows in this lemma belong
+to one model at a time. They need no common limit, norm bound, inverse,
+or shared coefficients across models. Although powers of an ambient
+matrix are algebraically defined, the proof uses their encoding
+identities only on this finite lawful chain. It asserts neither an
+infinite native execution nor a rank-preserving extension of arbitrary
+feasible prefixes.
+

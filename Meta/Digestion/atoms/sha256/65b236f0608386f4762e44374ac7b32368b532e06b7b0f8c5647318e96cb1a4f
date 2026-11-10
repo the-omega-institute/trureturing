@@ -1,0 +1,56 @@
+**Theorem 27.3 (a core-only frontier with bounded clock coordinates).**
+Put
+
+$$
+ \ell=\min\{l\ge0:F_{l+2}>d\},\qquad
+ h_0=\begin{cases}N(2d)-2,&d>0,\\0,&d=0.\end{cases}
+ \tag{ACR.117}
+$$
+
+There is a unique decomposition $s=y+t$ with $g(E)y=0$ and
+$E^a t=0$. Hence every branch whose physical depth is at least
+$\ell$ uses a bit of $y$ at its original global index. Starting at
+any present address of depth at most $h_0$, exploring at most
+$\ell$ further physical levels exposes at most $2^{\ell+1}-1$
+nodes; every surviving frontier cone is governed entirely by this
+same aligned core. Their actual depths $m$ satisfy
+
+$$
+ \begin{aligned}
+ 2^\ell&\le4(d+1)^2,\\
+ m&\le h_0+\ell\le4\lceil\log_2(2d+2)\rceil,\\
+ F_{2m+4}&=O((d+1)^8).
+ \end{aligned}
+ \tag{ACR.118}
+$$
+
+Proof. Coprimality of $E^a$ and $g$ gives polynomial coefficients
+$U,V$ with $UE^a+Vg=1$. The classical coprime decomposition here is
+explicit: set $y=U(E)E^as$ and $t=V(E)g(E)s$. The annihilator
+$m_s$ proves $gy=0$, $E^at=0$ and $s=y+t$. The intersection of
+the two kernels is zero by the same identity, proving uniqueness.
+All operators are forward shifts on semi-infinite sequences, so no
+past extension or inverse shift is required. In particular $t_i=0$
+for $i\ge a$, and $z_j=y_{j-1}$ whenever $j>d$. The degree of the
+least annihilator of $y$ is $r$: a smaller divisor annihilating $y$
+would, after multiplication by $E^a$, annihilate $s$, contradicting
+minimality of $m_s$.
+
+A branch at physical depth $m$ has $\tau\ge m+2$ and birth index
+$j\ge F_\tau$, by GPO Proposition 39.2. For $m\ge\ell$ this is
+strictly greater than $d$. Descendant branches have greater depth,
+so the entire frontier uses $y$. A terminal encountered earlier
+needs no law or continuation for its current height.
+
+Since $F_{2k+2}\ge2^k$, choosing
+$k=\lceil\log_2(d+1)\rceil$ gives
+$\ell\le2\lceil\log_2(d+1)\rceil$. The identical inequality
+with $2d+1$ gives $h_0\le2\lceil\log_2(2d+1)\rceil$ for $d>0$.
+These imply the first two bounds, including $d=0$. Finally
+$F_j<2^j$ for $j\ge1$ gives
+$F_{2m+4}<16\,2^{8\lceil\log_2(2d+2)\rceil}
+=O((d+1)^8)$. Thus enumerating both seeds costs only a polynomial
+number of pairs at these frontiers, independently of $2^a$ or $n$.
+The decomposition is used to prove inclusion of a genuine local
+model; the observer does not compute $U,V,a,g$ or $y$. $\square$
+

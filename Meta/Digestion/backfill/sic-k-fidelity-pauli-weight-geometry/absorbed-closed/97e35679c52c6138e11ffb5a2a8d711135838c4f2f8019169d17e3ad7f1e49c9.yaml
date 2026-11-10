@@ -1,0 +1,23 @@
+fingerprints:
+  raw_sha256: sha256:97e35679c52c6138e11ffb5a2a8d711135838c4f2f8019169d17e3ad7f1e49c9
+  normalized_sha256: sha256:97e35679c52c6138e11ffb5a2a8d711135838c4f2f8019169d17e3ad7f1e49c9
+cas_ref: sha256:97e35679c52c6138e11ffb5a2a8d711135838c4f2f8019169d17e3ad7f1e49c9
+coverage_gids:
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.kFidelity
+    target_statement_id: sha256:727840f9bb330f6d226a1945369a8d31949b2bbb07870ab856707ab8da9039b3
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.kFidelity_eq_pauliWeight_alternating_sum
+    target_statement_id: sha256:d1f2e2e494fb347692ece53b17d205d987ab2fc849654ee66ff8666f050db290
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.maxEntangledProj
+    target_statement_id: sha256:90bf607ec87e232fbb8c17d55e02cb4f1e44716119e563c2469f3839e9e2db60
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.maxEntangledVec
+    target_statement_id: sha256:42e5ccfc0417d059a3886f06814c679df39852e6e44f8ec443020a0561d00f94
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.processFidelity
+    target_statement_id: sha256:44354edc697a32a5e56474bfdcb821ea5600f8e7378f10f188f33c834ddc18c8
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.productSIC
+    target_statement_id: sha256:c747ab0d9ea8ad67cbcad3eecebbc0a9ea1c706fc82a8f880c59e736a36f11de
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.realKFidelity
+    target_statement_id: sha256:cab30c19930a18c537dc0a48af4374c217cf4e8bc7aba5392c898abef72b281b
+  - gid: D5/S3/Quantum/QuantumChannels/SicKFidelity/SicKFidelityPauliWeight.sicSubsetKernel
+    target_statement_id: sha256:cd8a50126f43fe99b43aa96cf87bb774fc6691686bdeefa2ebf9f3935dc3750e
+receipts:
+  unresolved_subitems: []

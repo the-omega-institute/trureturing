@@ -1,0 +1,32 @@
+**Theorem 52.2 (passive equality and explicit active distinction).** Both passive windows consist of nine literal zeros with the same declared fixed outputs and unchanged topology. At their ends the fields are again $\delta$ and zero. The active Read in (52.3) is respectively one and zero. On the nonzero run its actual final full field, in the explicitly ordered coordinates
+
+$$
+(\epsilon,L,LL,R,RL,RLL,RLLL,RLR,RR,RRL),
+$$
+
+is
+
+$$
+(8,0,1,0,22,0,9,0,7,0).
+\tag{52.4}
+$$
+
+On the zero run the actual final field is zero. Both final terms are
+$\langle\beta,\langle\langle\beta,\alpha\rangle,\beta\rangle\rangle$ with ten material vertices. Retaining either exact current field and its earned roster gives the complete original service, not a historical rollback.
+
+**Proof.** Before growth, $A\delta=e_{RLL}-e_{RRL}$ and $A^2\delta=\delta$. The right-arm interchange fixes the original first terminal $LL$ and negates both alternating fields. Thus every passive first-terminal moment is zero, not merely the nine sampled ones. Eight actual Ticks return $\delta$; the comparison zero field stays zero. The initial preparation Tick gives (52.2) by the same adjacency equations.
+
+After $S_{RL}$, let $B$ be the new adjacency and $\iota$ the old lift. Its new edges are $RLL$--$RLLL$ and $RL$--$RLR$. In the coordinates of (52.4), direct neighbor-sum recurrence gives the following sparse fields; omitted coordinates are zero:
+
+| Epoch after the split | Nonzero coordinates of $B^r\iota\delta$ |
+| --- | --- |
+| $0$ | $RL:1,\ RR:-1$ |
+| $1$ | $RLL:1,\ RLR:1,\ RRL:-1$ |
+| $2$ | $RL:2,\ RLLL:1,\ RR:-1$ |
+| $3$ | $R:1,\ RLL:3,\ RLR:2,\ RRL:-1$ |
+| $4$ | $\epsilon:1,\ RL:6,\ RLLL:3$ |
+| $5$ | $L:1,\ R:7,\ RLL:9,\ RLR:6$ |
+| $6$ | $\epsilon:8,\ LL:1,\ RL:22,\ RLLL:9,\ RR:7$ |
+
+Each row follows by summing the preceding row at the listed tree's neighbors; this proves all intermediate successors and (52.4). Equivalently the first unpaired length-six walk from $LL$ to the old positive $RL$ takes the new $RL,RLR,RL$ excursion. The corresponding negative endpoint and the deeper new edge require at least eight steps. Read(1) therefore returns the displayed $LL$ coordinate one. The zero-lifted zero comparison remains zero under every Tick. Growth, Tick and Hold have their original fixed outputs; Read is nondestructive. The full-field service induction then starts at the fields just computed. $\square$
+

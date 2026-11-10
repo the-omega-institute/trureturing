@@ -1,0 +1,62 @@
+**定理 2.2（Forced root and first-tour parity obstruction）。** For the target (2.2), every correct controller on either free-value fibre has root prefix $1^a0$. All band sources consequently have the same zero-difference archive through block indices $0,\ldots,Q-1$ and a common current tail. On that archive, complete removal of low-tail sources outside $I$ within these $Q$ blocks is possible if and only if
+
+$$
+m\text{ is odd}\quad\text{or}\quad a\text{ is even}.
+\tag{2.4}
+$$
+
+When $m$ is even and $a$ is odd, every correct controller retains at least one actual outside source there. A common literal scan retains exactly one, at INITIAL phase $m$. In all other cases the same construction retains none. The surviving phase support is thus exactly $I\cup\{m\}$ in the exceptional case, and exactly $I$ otherwise; all its sources have low INITIAL tails.
+
+Proof. The root cannot stop freely: the same free-value fibre has both high-tail label $R$ and low-tail labels. At a fixed phase and value choose actual tails $k-a-1$ and $k-a$, supplied by (1.5). Their labels differ. If the first zero follows $\alpha<a$ ones, both survive to it and become the identical current record, with identical accumulated value. The erased INITIAL distinction cannot be recovered. If $\alpha>a$, both reject before the first endpoint: even the smaller tail reaches $k$ after $a+1$ ones. A root with no zero has $m>a$ leading ones and has the same defect. Thus every correct root has $\alpha=a$. This is the first-zero irreversible-merge principle of [S1, Lemma 4.3 and Theorem 5.2] applied to this target. Exactly the high tails $s\ge k-a$ reject; every lower tail survives the prefix and clears at its zero. The remaining suffix has fewer than $k$ bits, so it cannot reject after that zero.
+
+By (1.7) every such root has
+
+$$
+q_0(0)=q_0(a)=1,\qquad q_0(j)=0\quad(j\in I).
+\tag{2.5}
+$$
+
+After the root the band sources have common current value and tail. For $1\le t<Q$, $W_t=[tm,(t+1)m]$ does not intersect $I$, so their successful differences are zero. Along their shared archive the controller chooses the same input for all of them. Legality depends only on input and current tail, not on phase. Uniform rejection would merge at least two different band labels and cannot be correct. Hence their common zero archive exists through the first tour and cannot stop early.
+
+First prove the obstruction for all roots and all adaptive continuations. Suppose every outside source leaves this archive within $Q$ blocks. Root-only outside phases $0,a,a+1,\ldots,m-1$ must all have root response one; otherwise they remain observationally identical to the band throughout the tour. Even charge then forces
+
+$$
+q_0(m)=(m-a+1)\bmod2.
+\tag{2.6}
+$$
+
+For every subsequent first-tour window write its left and right responses as $\ell_t=q_t(tm)$ and $r_t=q_t((t+1)m)$. Every strictly interior vertex is an outside phase with only this first-tour visit, so its response must be one. Even charge implies
+
+$$
+\ell_t\oplus r_t=(m-1)\bmod2.
+\tag{2.7}
+$$
+
+If $m$ is even and $a$ is odd, (2.6) gives $q_0(m)=0$. To remove phase $m$, the next row must have $\ell_1=1$; (2.7) gives $r_1=0$. To remove phase $2m$, the following row must similarly have $\ell_2=1$, hence $r_2=0$. Continue to the last first-tour window. Its right endpoint $Qm=k$ has response zero, has no later first-tour opportunity, and remains an outside source. This contradicts complete removal. The argument follows one actually acquired zero archive; it does not combine rows from different adaptive branches. The source at any unremoved phase can be chosen with INITIAL tail zero and the same free value as the band sources.
+
+For attainment define the root word $H_{m,a}$ by its bits
+
+$$
+(H_{m,a})_i=
+\begin{cases}
+1,&0\le i<a,\\
+(i-a)\bmod2,&a\le i<m.
+\end{cases}
+\tag{2.8}
+$$
+
+It is exactly $1^a0$ followed by alternating bits. Its response is one at $0,a,\ldots,m-1$, zero on $I$, and (2.6) at $m$. For each $1\le t<Q$, emit the same word
+
+$$
+M_m=
+\begin{cases}
+(01)^{m/2},&m\text{ even},\\
+(10)^{(m-1)/2}1,&m\text{ odd}.
+\end{cases}
+\tag{2.9}
+$$
+
+For odd $m$ its response is one on all of $W_t$. For even $m$ it is one on $W_t\setminus\{tm\}$. Thus an odd-width scan removes every remaining outside phase, including a root survivor at $m$. At even width all later interiors and right endpoints are removed, and only the root phase $m$ can remain: it remains exactly when $a$ is odd. Phase zero is always removed by the root. Every first positive successful difference has original label $A$, so it may stop immediately; root rejection returns $R$.
+
+The words are complete $m$-bit blocks. The root rejects exactly the prescribed high tails and has a zero; each middle word has a zero. After the root, terminal and leading runs of each word are at most $m-1$, so every interblock run is at most $2m-2<k$. These statements include $Q=2$ and $a=m-1$: there is one middle block, and the root then ends at its first zero. All continuing low-tail sources therefore execute the same legal scan. The all-zero response archive has the exact support asserted, with the original labels still attached. This also proves sufficiency in (2.4). ∎
+

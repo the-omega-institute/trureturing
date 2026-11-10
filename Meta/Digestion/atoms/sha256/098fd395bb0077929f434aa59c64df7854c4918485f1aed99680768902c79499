@@ -1,0 +1,4 @@
+**Corollary 2.2 (exact cumulative continuation).** For two legal endpoint matrices $A,B$, the endpoint $B$ can follow $A$ by a legal left word if and only if $BA^{-1}$ is entrywise nonnegative.
+
+**Proof.** Any such multiplier equals $BA^{-1}$, so nonnegativity is necessary. Conversely $A^{-1}$ is integral and unimodular. Hence $BA^{-1}$ is integral with determinant $\pm1$, and nonnegativity permits Theorem 2.1 to supply a forward word. The inverse here identifies that word algebraically; only the word is executed. Separate legality of $A$ and $B$ does not replace this cumulative condition. ∎
+

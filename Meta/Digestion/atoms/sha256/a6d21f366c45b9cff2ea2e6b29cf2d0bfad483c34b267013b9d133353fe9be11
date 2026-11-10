@@ -1,0 +1,15 @@
+**定义 10.1（压缩、切向量及互补谱）。** 令
+$\mathscr D_n=\{p\in\Delta^\circ:\rho(p)\text{ 恰二重}\}$。
+在 $p\in\mathscr D_n$ 处，记 $E=\ker(M-\rho I)$、$\Pi=P_E$、
+$Q=I_H-\Pi$、$v_i=a_i-\bar a(p)$、$\beta=T/\rho$。
+对 $\sum_i\xi_i=0$ 定义
+
+$$
+w_\xi=\sum_i\xi_iv_i,\quad C_\xi=\sum_i\xi_iv_iv_i^{\mathsf T},\quad
+\mathcal R_p\xi=\operatorname{tf}_E(\Pi C_\xi\Pi),\quad
+\operatorname{tf}_E A=A-\tfrac12\operatorname{tr}_E(A)I_E. \tag{10.1}
+$$
+
+互补逆 $G=Q(\rho I_Q-QMQ)^{-1}Q$ 只在 $QH$ 上取逆，
+在 $E$ 上为零。所有互补特征值都严格小于 $\rho$，所以该定义合法。
+

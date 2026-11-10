@@ -9,7 +9,7 @@ internal sealed class CompositionalSquareAllOddCoefficientsDocument : IScribeDoc
     private const string Prefix =
         "D5/S1/Recurrence/Parity/CompositionalSquareAllOddCoefficients.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Recurrence/hanna2026a396843");
+        LibraryNoteRef.Create("D5/L/RecurrenceComposition/hanna2026a396843");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Every positive-index coefficient in the series of OEIS A396843 is odd.",

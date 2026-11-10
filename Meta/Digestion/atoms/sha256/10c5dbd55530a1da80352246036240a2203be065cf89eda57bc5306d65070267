@@ -1,0 +1,45 @@
+**Lemma 6.2 (Predictable payment for actual ticks).** For every legal read/stop rule in the specified experiment,
+
+$$
+\mathbb E_{i,q}Q_T\le B(1-q)\mathbb E_{i,q}T,
+\qquad \mathbb E_{i,q}N\le B(1-q)\mathbb E_{i,q}T
+\text{ for compliant finite observers}.
+\tag{6.3}
+$$
+
+Proof. After an observed tick and exactly $u\ge1$ subsequent zeros, the conditional next-one probability, given the entire preceding history, is
+
+$$
+\frac{f_i(u)}{S_i(u)}
+=\frac{F_i(u)q^u}{\sum_{k\ge u}F_i(k)q^k}
+\le\frac{Bu^9q^u}{\sum_{k\ge u}u^9q^k}
+=B(1-q).
+\tag{6.4}
+$$
+
+At $u=0$ it is zero because $K\ge1$. Earlier completed gaps are independent of the current gap, justifying conditioning on the whole preceding history.
+
+Before any tick, $u$ zeros mean $\tau\ge u$. The actual stationary next-one hazard is
+
+$$
+\frac{S_i(u)}{\sum_{v\ge u}S_i(v)}.
+\tag{6.5}
+$$
+
+For integers $k\ge1,r\ge0$, the envelope gives $F_i(k+r)\ge(k+r)^9\ge k^9\ge B^{-1}F_i(k)$. Shifting each tail term by $r$ yields $S_i(u+r)\ge B^{-1}q^rS_i(u)$. At $u=0$ the shifted terms start at $r+1$ and are contained in the tail defining $S_i(r)$, which suffices for the same inequality. Summing over $r$ bounds the denominator of (6.5) below by $B^{-1}S_i(u)/(1-q)$. Thus the stationary first-wait hazard also is at most $B(1-q)$.
+
+For payment alone, expose an independent supply of the observer's coins on the analytical probability space, and let $\mathcal F_t$ contain them and the prefix $X_0,\ldots,X_{t-1}$. Independence preserves the source hazard bounds. The event $\{T>t\}$ that the next read is undertaken is $\mathcal F_t$-measurable. Tonelli and conditional expectation give
+
+$$
+\begin{aligned}
+\mathbb E_iQ_T
+&=\sum_{t\ge0}\mathbb E_i\left[
+\mathbf1_{\{T>t\}}\mathbb E_i(X_t\mid\mathcal F_t)\right]\\
+&\le B(1-q)\sum_{t\ge0}\mathsf P_i(T>t)
+=B(1-q)\mathbb E_iT.
+\end{aligned}
+\tag{6.6}
+$$
+
+Combine with (6.2) for the second assertion. The enlarged filtration is solely a predictability device; it gives the machine no retained tape and is not the epoch filtration used for the Markov entropy argument. Only reads actually undertaken are charged, including the terminal read. No unread closing tick or full expected gap is substituted for an interrupted gap. This is the continuation's Lemma 25.3 and the companions' predictable-payment interface. $\square$
+

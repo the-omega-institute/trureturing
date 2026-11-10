@@ -1,0 +1,23 @@
+### 命题 15.3（丢弃一个共同因子后的精确重建）
+
+若 $\mathcal N=\operatorname{Tr}_R$、$\sigma=\sigma_L\otimes\omega_R>0$，则
+
+$$
+\mathcal R_{\sigma,\mathcal N}(Y)=Y\otimes\omega_R.
+$$
+
+所以所有 $\rho_L\otimes\omega_R$ 都由同一恢复保留，
+而一般相关态的固定条件仍是 $\rho=(\operatorname{Tr}_R\rho)\otimes\omega_R$。
+
+**证明。**
+此时 $\tau=\sigma_L$、$\mathcal N^*(Z)=Z\otimes I_R$。
+代入 Petz 公式，左右两个 $\sigma_L^{1/2}$ 分别抵消 $\sigma_L^{-1/2}$，
+留下 $Y\otimes\omega_R$。固定条件由复合映射直接得到。
+
+**白话图景。**两个内容可以各自有不同的左半部，却共同使用同一份右半部的状态规则。
+如果一次压缩只丢掉这份共同部分，输出足以把它接回来。
+“接回”需要实际准备这份已校准的共同子态；它没有复制任意未知内容。
+若不同块共用的子态不同，地址还必须保留块的区别。
+
+<a id="section-16"></a>
+

@@ -1,0 +1,20 @@
+**Theorem 6.4 (Exact tripartite genuine multi-entropy).** For $\mathtt q=3$, all $n\ge2$, all $N_A,N_B,N_C\ge1$ and all $a>1$, with $\varepsilon=\varepsilon(a)$, $b_p=(1-\varepsilon)^2p(1-p)$ and $D_2^{(p)}(\varepsilon)=4^{1-n}b_p^n\varepsilon^{-1}\sinh^2(n\,\mathrm{arsinh}\sqrt{\varepsilon/b_p})$ (here $0<\varepsilon<1$ by Lemma 6.2, so $b_p>0$ and Theorem 5.2 applies),
+
+$$
+\mathrm{GM}^{(3)}_n=\frac{n-2}{4n}\log\varepsilon+\frac{\log\Omega_3(\varepsilon)}{2n(n-1)}+\frac{2-n}{4n(n-1)}\sum_{p\in\{x_A,x_B,x_C\}}\log D_2^{(p)}(\varepsilon),
+$$
+
+$$
+\Omega_3(\varepsilon)=\prod_{\substack{j_1,j_2\in\mathbb Z_n\\ 0,j_1,j_2\ \text{distinct}}}\Big(\varepsilon+(1-\varepsilon)^2\big(x_Ax_C\sin^2\tfrac{\pi j_1}{n}+x_Bx_C\sin^2\tfrac{\pi j_2}{n}+x_Ax_B\sin^2\tfrac{\pi(j_1-j_2)}{n}\big)\Big).
+$$
+
+Stance: suspected-novel. The source evaluates $\mathrm{GM}^{(3)}_n$ in closed form for $N\le8$ and $n\le4$ (Table 1, §3.2); the formula above covers all $n$ and $N$.
+
+**Proof.** With $\Delta=\varepsilon D$, $\log Z_n^{(3)}=\tfrac12\big((n^2-1)\log\varepsilon-\log D_3\big)$ and $\log Z_n^{(2)}=\tfrac12\big((n-1)\log\varepsilon-\log D_2\big)$. Hence
+
+$$
+S^{(3)}_n=-\frac{n+1}{2n}\log\varepsilon+\frac{\log D_3}{2n(n-1)},\qquad S^{(2)}_n=-\frac12\log\varepsilon+\frac{\log D_2}{2(n-1)},
+$$
+
+and $\mathrm{GM}^{(3)}_n=\frac{n-2}{4n}\log\varepsilon+\frac{\log D_3}{2n(n-1)}-\frac{1}{4(n-1)}\sum\log D_2$. Insert $\log D_3=\sum\log D_2^{(p)}+\log\Omega_3$ from Corollary 5.4, where the three bipartitions $AB{:}C$, $BC{:}A$, $CA{:}B$ have $p(1-p)$ equal to that of $x_C$, $x_A$, $x_B$, and use $\frac1{2n(n-1)}-\frac1{4(n-1)}=\frac{2-n}{4n(n-1)}$. The expression for $D_2^{(p)}$ is Theorem 5.2 and that of $\Omega_3$ is Theorem 5.3 with $\nu_j$ written out. ∎
+

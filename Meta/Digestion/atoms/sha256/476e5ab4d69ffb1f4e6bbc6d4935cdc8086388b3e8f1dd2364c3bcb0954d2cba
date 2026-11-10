@@ -1,0 +1,10 @@
+**命题 5.3（同一互补父历史的非空二目标纤维）。** The class $C_J(D_0+1632\lambda/55)$ contains distinct targets represented by
+
+$$
+R_1=\frac1{55}\begin{pmatrix}12&19\\36&57\end{pmatrix},\qquad
+R_3=\frac1{55}\begin{pmatrix}28&35\\20&25\end{pmatrix},
+\qquad G=\lambda h,\quad \delta=D_0.
+$$
+
+Proof. Both positive matrices have determinant zero, with traces $69/55,53/55$, and satisfy the two trace constraints in the proof of Theorem 5.2. Their $C_0$ traces are both $136/55$. Their $M^2C_0$ traces are $71/11,339/55$, so after the same mandatory fifth-$M$ read $D_0$, their sixth-$M$ reads are respectively $D_0-426\lambda/11$ and $D_0-2034\lambda/55$. The difference is $-96\lambda/55\ne0$. All readings belong to this same complementary history. ∎
+

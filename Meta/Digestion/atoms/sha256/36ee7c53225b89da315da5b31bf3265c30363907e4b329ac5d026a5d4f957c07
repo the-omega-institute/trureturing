@@ -1,0 +1,81 @@
+**Proposition 5.3 (material, internal work and writer of preparation).**
+Let $(x,y)$ be the actual alpha/beta composition of the entrance register
+$v$, not an accessible controller operand. An in-place, old-node traversal
+implementation of the two substitutions can have the following exact
+structural charges. Set
+
+$$
+\begin{aligned}
+ L_0&=x+y,&L_1&=x+2y,&L_2&=2x+3y,\\
+ N_i&=2L_i-1\quad(0\le i\le2),&
+ V_p&=N_0+N_1,&G&=\lceil\log_2(N_2+2)\rceil.
+\end{aligned}
+\tag{GPO.19}
+$$
+
+Its substitution traversal processes $V_p$ old nodes, overwrites
+$L_0+L_1$ old leaf tags, allocates
+and initializes $2y+2(x+y)$ new nodes, and writes that same number of
+new child links. The largest live source is $N_2$ nodes. With internal
+compact node references of $O(G)$ bits and ordinary explicit access
+charges, one finite bit implementation has internal actuator work
+$O((N_0+N_1+N_2)N_2G^2)$, source backing $O(N_2G)$ bits, and traversal
+scratch $O((H_0+2)G)$ bits, where $H_0$ is the entrance tree height.
+None of these is paid by the acquisition Read bound.
+
+Proof. The existing composition law sends $(x,y)$ to $(y,x+y)$ and then
+to $(x+y,x+2y)$, giving the three $L_i$ and $N_i$. In one pass visit each
+node that existed at the beginning of the pass once. At an old branch
+schedule its two old children. At an old alpha leaf overwrite its tag
+with beta. At an old beta leaf overwrite its tag with branch, create
+two children, and link them in the actuator's fixed semantic order beta,
+alpha. Do not visit these new children in the same pass. This is exactly
+one simultaneous leaf substitution, not repeated substitution of a newly
+created leaf. The first pass has $y$ such births; the second has $x+y$.
+Each birth adds two nodes and two child links. This proves every exact
+structural count, and
+
+$$
+ N_2-N_0=2y+2(x+y).
+ \tag{GPO.20}
+$$
+
+Existing branches and node identities can be retained in place; the root
+binding is not changed and no second callable source is created. Each
+pass increases height by at most one, so its depth-first stack needs
+$O(H_0+2)$ frames. Choose a private sequential allocator with compact
+indices at most $N_2$, never exposed to acquisition control. Each reference
+and counter has $O(G)$ bits. Store source records sequentially with
+self-delimiting indices and links, growing their widths on actual
+allocation rather than presupposing $N_2$. A record access can scan at
+most $N_2$ records, comparing their indices by finite binary scans;
+even allowing width changes and tape shifts, its work is
+$O(N_2G^2)$. These lookup scans are charged in addition to the one
+substitution-processing visit per old node. This deliberately simple
+implementation uses no random-access oracle. Its source records occupy
+$O(N_2G)$ bits. Every processing visit, tag overwrite, allocation, link
+write and stack manipulation uses a bounded number of such accesses or
+$O(G)$-bit scans. Their total number is $O(N_0+N_1+N_2)$, giving the
+work bound. Sequential lookup needs only $O(G)$ temporary bits and does
+not copy the source; together with the depth-first stack this gives the
+scratch bound. The internal compact representation is the selected
+implementation's storage contract; converting a different supplied
+representation would incur its additional actual work.
+
+These are internal actuator resources. Its compact identities, scratch,
+allocation behavior and runtime are not acquisition observations, as
+required by Assumption 1.2. New links realize the installed $\pi$;
+their creation does not prove that installation premise. Source material
+and access are charged even though applyRho is one native event.
+The native writer separately appends exactly two update entries, with
+old epochs $2k,2k+1$, and the $J_p$ controller markers. Their payload is
+$O(J_p+\log(k+2))$ before framing. It does not record one extra native
+event for every actuator-internal bit transition; that work has the
+separate coordinate just priced. Combining this prefix with Section 3's
+writer gives $O(J+J_p+W+(Q+2)\Lambda)$ new payload bits. All actual
+service metadata and any retained discarded internal storage are additional.
+If entrance $u$ has composition $(x_0,y_0)$, then the supplied recurrence
+gives $x=x_0F_{2k-1}+y_0F_{2k}$ and
+$y=x_0F_{2k}+y_0F_{2k+1}$. Thus these material charges can grow far
+beyond the sparse orientation query count. $\square$
+

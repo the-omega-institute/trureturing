@@ -14,6 +14,7 @@ strata_touched:
   - D5/S3/FiniteGroups/InducedCharacterFormula
   - D5/S3/FiniteGroups/MackeyCharacterFormula
   - D5/S3/FiniteGroups/ComplexCharacterAbelianProducts
+  - D5/S3/FiniteGroups/RegularRepresentation/RegularTrace
 license: Apache-2.0
 triage: anchor
 ---
@@ -38,6 +39,7 @@ The port retains the declarations used by the peak-group refutation from these f
 
 - [TauCeti/Algebra/Group/Subgroup/Pointwise.lean](https://github.com/TauCetiProject/TauCeti/blob/a780c7ad6beb23f60a17351a492d177878020ad5/TauCeti/Algebra/Group/Subgroup/Pointwise.lean)
 - [TauCeti/Algebra/MonoidAlgebra/Conjugation.lean](https://github.com/TauCetiProject/TauCeti/blob/a780c7ad6beb23f60a17351a492d177878020ad5/TauCeti/Algebra/MonoidAlgebra/Conjugation.lean)
+- [TauCeti/Algebra/MonoidAlgebra/Trace.lean](https://github.com/TauCetiProject/TauCeti/blob/a780c7ad6beb23f60a17351a492d177878020ad5/TauCeti/Algebra/MonoidAlgebra/Trace.lean)
 - [TauCeti/GroupTheory/Coset/Basic.lean](https://github.com/TauCetiProject/TauCeti/blob/a780c7ad6beb23f60a17351a492d177878020ad5/TauCeti/GroupTheory/Coset/Basic.lean)
 - [TauCeti/GroupTheory/DoubleCoset/Finite.lean](https://github.com/TauCetiProject/TauCeti/blob/a780c7ad6beb23f60a17351a492d177878020ad5/TauCeti/GroupTheory/DoubleCoset/Finite.lean)
 - [TauCeti/GroupTheory/DoubleCoset/Identity.lean](https://github.com/TauCetiProject/TauCeti/blob/a780c7ad6beb23f60a17351a492d177878020ad5/TauCeti/GroupTheory/DoubleCoset/Identity.lean)
@@ -90,6 +92,23 @@ The port retains the declarations used by the peak-group refutation from these f
 
 The category End/Aut homomorphism coercions and subgroup-membership proof coercions use the repository’s pinned Mathlib API. The mathematical hypotheses and conclusions are unchanged.
 
+## Regular traces
+
+The trace source proves `TauCeti.trace_leftMulMatrix_monoidAlgebra` and
+`TauCeti.MonoidAlgebra.trace_mulLeft`: left multiplication by an arbitrary
+weighted element of a finite cancellative monoid algebra has trace equal to
+the monoid cardinality times its identity coefficient. For a finite group,
+the diagonal proof is ported in `RegularRepresentation/RegularTrace` and
+combined with `map_list_prod` to give the ordered-product identity, including
+the empty list. Its coefficient ring is an arbitrary commutative ring.
+
+The immutable source uses `leanprover/lean4:v4.35.0-rc3` and Mathlib revision
+`5e0c4e5239cb0a2d86d68a884bf52cfd963fce22`; these differ from the repository's
+pinned toolchain and Mathlib revision, so a direct Lake dependency is incompatible.
+The port uses the pinned `MonoidAlgebra.basis` coefficient equivalence in place
+of the source's additional basis lemmas. The source archive has no root `NOTICE`
+file; its copyright and complete Apache 2.0 license are retained below.
+
 ## Replacement condition
 
 When the repository’s pinned Mathlib contains an equivalent declaration with the same
@@ -104,6 +123,66 @@ Copyright (c) 2026 Tau Ceti. All rights reserved.
 Copyright (c) 2026 Tau Ceti contributors. All rights reserved.
 
 Authors: The Tau Ceti contributors. The coset source also credits Claude.
+
+## Classical background for the modular additions
+
+The modular additions use the same Schur, density and Clifford infrastructure
+as the pinned port. For a directly inspected classical exposition of simultaneous
+density and simple-character separation, see Pavel Etingof, Oleg Golberg,
+Sebastian Hensel, Tiankai Liu, Alex Schwendner, Dmitry Vaintrob and Elena Yudovina,
+Introduction to Representation Theory, https://math.mit.edu/~etingof/replect.pdf,
+Theorem 2.5(ii) (simultaneous surjectivity to endomorphism algebras), and
+Theorem 2.17(i) (linear independence of characters of pairwise nonisomorphic
+finite-dimensional irreducible algebra representations). The two-module
+trace-one/trace-zero witness is obtained by choosing a rank-one trace-one block
+and a zero block in Theorem 2.5(ii). Equality of simple monoid characters extends
+linearly to the monoid algebra, where that separation applies. These are
+classical consequences, not mathematical novelty claims. The source's
+algebraically closed base-field hypothesis remains in force.
+
+The repository's fixed-point-free twist-rigidity argument and its structural
+Frobenius alternative combine these classical inputs with the existing
+fixed-point-free commutator and generic Clifford APIs. Their descriptions are
+repo-derived, not quotations of a verified external theorem with the complete
+same telescope. The integer divisibility comes from natural-number dimensions
+in Clifford decomposition. Field-valued traces in characteristic p retain only
+the image of those dimensions in the field; the complex integer degree dichotomy
+is not asserted in arbitrary characteristic. No external excerpt is reproduced.
+
+## Arbitrary-field descent
+
+The arbitrary-field structural alternative in `FrobeniusCharacterDegrees` is a
+repo-derived synthesis of the algebraically closed alternative and scalar
+extension; it is not attributed to the pinned port as an exact theorem. Set
+A = k[K], B = E[K] for an algebraic closure E of k. Although E tensor_k W need
+not be semisimple over B, its restriction to A is semisimple and W-isotypic:
+the A-linear maps w ↦ c tensor w have simple or zero images and their images
+generate all pure tensors. B-submodules inherit this A-support by inclusion.
+For a B-quotient, A-semisimplicity descends along the quotient map, and lifting
+each simple A-submodule shows that its isomorphism type is W. Consequently
+every B-subquotient retains the original A-support.
+
+A nonzero B-simple factor Q therefore contains an A-linear copy of W. If N
+acted trivially on Q, this injection would force trivial N-action on W. When
+W has nontrivial N-action, every supported simple factor does too; the
+algebraically closed alternative makes N.index divide each factor's
+E-dimension. Finite-length induction and dimension additivity give the same
+divisibility for E tensor_k W, whose E-dimension equals the k-dimension of W
+by base change. Neither B-semisimplicity nor inertia equal to N over the
+original nonsplitting field is asserted. No characteristic, perfectness,
+separability or coprimality assumption is added, and no literature novelty is
+claimed.
+
+The inner-action obstruction in `FrobeniusInnerActionObstruction` uses this
+original-module support on a nonzero simple E[N]-submodule. An implementer
+and its inverse in the representation image preserve that same submodule;
+fixed-point-free rigidity there and an injective support map force the
+original action to be trivial. For a finite-dimensional simple quotient of
+k[N], a faithful simple module detects that the quotient factors through
+the existing standard augmentation and is k-algebra isomorphic to k. This
+is a repository derivation, not an exact theorem attributed to TauCeti or
+a literature novelty claim. It supplies an ingredient of the arithmetic
+Frobenius direction; the stronger normalized-degree statement remains open.
 
 ## Complete license
 

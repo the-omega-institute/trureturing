@@ -1,3 +1,4 @@
+using System.Text.Json;
 using StrataLint.Runtime;
 using StrataLint.Cli;
 using StrataLint.Engine;
@@ -241,6 +242,11 @@ public sealed partial class WorktreeCommandTests
     [Fact]
     public void UsageForbidsSharedLakeSymlinks()
     {
+        using var repository = new TemporaryDirectory();
+        var missingArguments = WorktreeCommand.Run(repository.Path, [], new RecordingWorktreeProcessRunner());
+        Assert.False(missingArguments.Success);
+        Assert.Contains("[--restore-dependencies]", missingArguments.Error, StringComparison.Ordinal);
+        Assert.Contains("ensure-cache [--path DIR] [--restore-dependencies]", WorktreeCommand.Usage, StringComparison.Ordinal);
         Assert.Contains("--skip-restore", WorktreeCommand.Usage, StringComparison.Ordinal);
         Assert.Contains("symlink", WorktreeCommand.Usage, StringComparison.OrdinalIgnoreCase);
         Assert.Contains(".lake", WorktreeCommand.Usage, StringComparison.Ordinal);

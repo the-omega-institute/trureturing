@@ -1,0 +1,45 @@
+**Proposition 11.1 (forward-only quotient-law reduction).** Fix a finite positive stationary irreducible component $C$, with positive stationary vector $\lambda$, labeled matrices $M_0,M_1$, and visible law $P_C$. Let $\pi:C\to S$ be surjective and suppose only the forward labeled strong lumpability identities (3.2). Define
+
+$$
+\bar\lambda_u=\sum_{s:\pi(s)=u}\lambda_s,
+\qquad
+\sum_{t:\pi(t)=v}M_x(s,t)=\bar M_x(u,v)
+\quad (\pi(s)=u).
+$$
+
+Then $\bar A=\bar M_0+\bar M_1$ is stochastic, $\bar\lambda\bar A=\bar\lambda$, and $\bar\lambda_u>0$. The quotient producer $\bar\theta=(\bar\lambda,\bar M_0,\bar M_1)$ is in the same legal class $\Theta_{|S|}$, and its visible law equals $P_C$. Its canonical stationary reverse is the family
+
+$$
+R_x(u,v)=
+\frac{\bar\lambda_v\,\bar M_x(v,u)}{\bar\lambda_u}.
+\tag{11.1}
+$$
+
+Thus $R_0+R_1$ is stochastic and $\bar\lambda_uR_x(u,v)=\bar\lambda_v\bar M_x(v,u)$. If the forward matrices $\bar M_x$ and the canonical reverse matrices $R_x$ satisfy the two all-feasible-word diameter hypotheses (3.7), with constants $m_\pm,\rho_\pm$, then the original visible law $P_C$ satisfies exactly the bounds (6.1)--(6.3), with those constants. If every positive stationary component of an original producer has such a forward quotient and such constants, the mixture conclusion (7.1)--(7.3) applies.
+
+**Proof.** Summing (3.2) over $v$ and $x$ gives the row sums of $\bar A$. Summing the stationary flux over the fibers gives $\bar\lambda\bar A=\bar\lambda$. For a quotient-state cylinder, repeated use of (3.2) gives
+
+$$
+\begin{aligned}
+&J_C(Q_a=u_a,\ldots,Q_{b+1}=u_{b+1},X_a=x_a,\ldots,X_b=x_b)\\
+&\qquad=\bar\lambda_{u_a}\prod_{i=a}^{b}\bar M_{x_i}(u_i,u_{i+1}),
+\end{aligned}
+\tag{11.2}
+$$
+
+where $Q_i=\pi(H_i)$. Summing (11.2) over the quotient endpoints proves equality of all visible cylinders with the quotient producer. In particular,
+
+$$
+\bar\lambda\bar M_1^2\mathbf 1
+ =P_C(X_0=X_1=1)=0,
+$$
+
+so the quotient remains in $\Theta_{|S|}$. Irreducibility passes to the quotient: a positive hidden $A$-path between two fibers maps to a positive quotient path. Formula (11.1) is well-defined because every $\bar\lambda_u$ is positive; stationarity gives
+
+$$
+\sum_{v,x}R_x(u,v)
+ =\frac{1}{\bar\lambda_u}\sum_v\bar\lambda_v\bar A(v,u)=1.
+$$
+
+The identity quotient of $\bar\theta$ satisfies both labeled identities, with its reverse matrices equal to $R_x$. Applying Theorem 6.1 to this quotient producer yields (6.1)--(6.3) for its visible law. Equation (11.2) identifies that law with $P_C$, so the same bounds hold for the original component; Theorem 7.1 then gives the stated finite-mixture conclusion when the condition holds componentwise. This argument does not claim that the hidden reverse matrices $\check M_x$ are constant on fibers. It uses no new variance proof: the conditional-variance argument is exactly the one already contained in Theorem 6.1. $\square$
+

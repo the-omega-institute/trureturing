@@ -1,0 +1,16 @@
+**数学引文 11.1（结果归属与量词）。** 第5–10章是同一个 KBonacci 原来源上的普通数学推导，证据等级为理论正文证明；没有新增 Lean/kernel、冻结、axiom 或 CI 核验声明。一般纤维下界、图着色与实际像互译按下列供应复用。具体内容是混合尾的变化边界图计算（AA.18）、覆盖所有首动作与任意后续深度的（AA.24），以及将这些数值接回原历史消费者和明确附加的因果准备仪器。
+
+下表中 KBonacci 卷沿用已指定的固定版本；其余仓内供应的引用快照为修订 [0ae3e14e9800c1cb27b0e29d589b14a202f07576](https://github.com/the-omega-institute/trureturing/tree/0ae3e14e9800c1cb27b0e29d589b14a202f07576) 的所列章节或声明。来源版本限定引用对象，不将普通推导升级为形式证明。
+
+| 供应 | 使用范围与不运输的条件 |
+| --- | --- |
+| 本卷定义1.1–1.2及第2–4章；[KBonacci INITIAL 费用卷固定版本](https://github.com/the-omega-institute/trureturing/blob/e271e8c9d490b299979f17661411302360adb4c6/docs/develop/theory/KBONACCI_INITIAL_TARGET_COST_THEORY.md)，第68章 | 原参数域、共同历史见证、已付根候选、所有首动作的首零合并、规范块电荷和全域目标供应。新标签影响动作时，原无标签接口的根强制及费用最优性不自动保留。 |
+| [DefectGraphMinimumColoring](../../../D5/S3/ConceptDynamics/Coding/DefectGraphMinimumColoring.lean)，minimum_repair_labels_eq_chromatic_eq_fiber_diversity | 固定观察和有限来源上的最小补充标签／缺陷图／最大目标纤维对应。这里将目标取恒等映射；新增普通推导另算变化切口的联合图，未把读取声明当作本章的 Lean 应用编译。 |
+| [MultiTargetDefectGraphColoring](../../../D5/S3/ConceptDynamics/GraphColoring/MultiTargetDefectGraphColoring.lean)，joint_target_defect_graph_and_minimum_labels | 固定一个观察、改变目标族的图并结论。其量词不同于本章改变 $O_r$ 的合同，仅用于说明不可静默替换的范围。 |
+| [运输记忆完成卷](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md)，§16.1–16.6、§32.1–32.2 | 条件补充容量与自主完整状态的区别、实际初始化、保留共同读数，以及执行前证据可以引导控制的接口纪律。原 FIB 来源、可逆推进与尺寸阈值不移植到本卷吸收拒绝读者。 |
+| H. S. Witsenhausen，The zero-error side information problem and chromatic numbers，[DOI 10.1109/TIT.1976.1055607](https://doi.org/10.1109/TIT.1976.1055607) | 零误差侧信息与着色的成熟文献背景。此处仅核对书目信息，未核对全文，不从该文引入额外具体定理或最优率结论。 |
+
+参数始终为（AA.1），$C$ 有限非空，编码和译码精确确定，标签从同一实际 INITIAL 取得，目标在整个运行中不变。全部容量以补充字段和保留档案的接口为条件；不存在从容量数值到物理记录器、免费生成读口或任意来源操作的无条件桥梁。
+
+空间中的字段状态、时间中的真实生成前缀和边界处的端点在本章通过一条有限因果准备与实际像译码关系相接；这给出一个有条件的恢复实例。未知中途接入、无对齐或无 INITIAL 标记时的取得、噪声与错误记录、物理写入及保留成本、任意参数与任意目标的完整最优费用，以及全部未知历史的恢复仍未由这些定理解决。它们不影响所声明有限同源合同的结论，也不将长期的一般互恢复目标结算为完成。
+

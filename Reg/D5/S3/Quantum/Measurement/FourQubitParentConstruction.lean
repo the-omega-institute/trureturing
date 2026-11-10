@@ -1,6 +1,8 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Measurement.FourQubitParentConstruction
 import Reg.Support.DependentFamily
+import Reg.D5.S3.Quantum.Measurement.Bloch.QubitBloch
+import Reg.D5.S3.Quantum.Measurement.FourQubitParentConstruction.PublishedReadouts
 
 open _root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -37,29 +39,6 @@ theorem vectorDependence : ObservationalDependence vectorSignature vectorActual 
   intro h
   have hh := congrArg (fun A : Mat => A 0 0) h
   norm_num [vectorActual, realize, B_formula, Matrix.cons_val_succ, Matrix.cons_val_zero] at hh
-
-@[reducible] def formulaArena : Arena where
-  signature := vectorSignature
-  Law R := ∀ a : Vec, R.readout () () a = !![(a 2 : ℂ), (a 0 : ℂ) - Complex.I * (a 1 : ℂ); (a 0 : ℂ) + Complex.I * (a 1 : ℂ), -(a 2 : ℂ)]
-theorem formulaPositive : formulaArena.Law vectorActual := by
-  intro a; exact B_formula a
-theorem formulaNegative : ¬ formulaArena.Law vectorRejected := by
-  intro h
-  have hh := h 0
-  have he := congrArg (fun A : Mat => A 0 0) hh
-  norm_num [vectorRejected, realize, B_formula, Matrix.one_apply] at he
-  change (1 : ℂ) = 0 at he
-  norm_num at he
-
-def formulaEvidence : Registration formulaArena
-    (type_of% (@_root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula)) where
-  actual := vectorActual
-  bridge := Iff.rfl
-  variation := ⟨formulaPositive, vectorRejected, formulaNegative⟩
-  sensitivity := ⟨fun i => ⟨vectorRejected,
-    fun j h => (h (Subsingleton.elim j i)).elim, rfl, formulaNegative⟩,
-    fun i => nomatch i⟩
-  dependence := vectorDependence
 
 @[reducible] def smulArena : Arena where
   signature := vectorSignature
@@ -414,43 +393,6 @@ def allEvidence : Registration allArena
       endpoint, Complex.mul_re, Complex.mul_im] at hh
     change (0 : ℝ) = 1 at hh
     norm_num at hh
-
-noncomputable def formulaRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@_root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula)
-    (type_of% (realize vectorSignature (fun _ _ a => B a) (fun e => nomatch e))) Unit Unit := {
-  unitName := Lean.Name.str (Lean.Name.str `D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula
-    "Reg.D5.S3.Quantum.Measurement.FourQubitParentConstruction/Reg.D5.S3.Quantum.Measurement.FourQubitParentConstruction.formulaArena/[anonymous]") "__information_unit",
-  realizationName := `Reg.D5.S3.Quantum.Measurement.FourQubitParentConstruction.formulaEvidence,
-  realizationSource := none,
-  generated := false,
-  arena := .source ⟨formulaArena⟩,
-  objectArena := .source ⟨formulaArena⟩,
-  catalog := Lean.Name.anonymous,
-  localNames := false,
-  realization := .source formulaArena ⟨formulaEvidence⟩,
-  correspondence := { stage := .evidence, objectStage := .evidence },
-  bundleNonempty := .absent,
-  readout := some (realize vectorSignature (fun _ _ a => B a) (fun e => nomatch e)),
-  variation := .absent,
-  sensitivity := .absent,
-  partialSensitivity := none,
-  escapeFrom := none,
-  sourceSelection := some {
-    owner := `D5.S3.Quantum.Measurement.FourQubitParentConstruction, definition := none,
-    coordinates := #[], readouts := #[{
-      path := #["body", "fn", "arg"],
-      stateBinder := 0, functionOperand := false, stateOperand := some #["arg"],
-      booleanPredicate := false }] },
-  continuation := .unknown,
-  familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true },
-    { name := `internal.cmdlineSnapshots, value := .bool true },
-    { name := `linter.mathlibStandardSet, value := .bool true },
-    { name := `maxSynthPendingDepth, value := .nat 3 },
-    { name := `pp.unicode.fun, value := .bool true },
-    { name := `relaxedAutoImplicit, value := .bool false }] }
-
-#print axioms formulaRegistration
 
 noncomputable def smulRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_real_smul)
@@ -958,4 +900,77 @@ noncomputable def complementRegistration : Contract.Registration.{_,_,_,0,0,0,_,
     coordinates := #[0], readouts := #[⟨
       #["body", "body", "arg", "arg", "arg"], 1, false, none, false⟩] }, continuation := .unknown
   partialSensitivity := none, escapeFrom := none, familyRecord := none, options := #[] }
+noncomputable def zeroRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@B_zero) (Realization equalitySignature) Unit Unit := {
+  unitName := `D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_zero.__information_unit
+  realizationName := ``zeroEvidence
+  realizationSource := none, generated := false, arena := .source ⟨zeroArena⟩
+  objectArena := .source ⟨zeroArena⟩, catalog := .anonymous, localNames := false
+  realization := .source zeroArena ⟨zeroEvidence⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }, bundleNonempty := .absent
+  readout := some (realize equalitySignature (fun _ _ x y => x = y) (fun e => nomatch e))
+  variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Measurement.FourQubitParentConstruction, definition := none
+    coordinates := #[], readouts := #[⟨#["fn", "fn"], 0, true, none, false⟩] }
+  continuation := .unknown, familyRecord := none, options := #[] }
+#print axioms zeroRegistration
+noncomputable def sumEqualityRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@scalarB_sum.{u}) (Realization equalitySignature) Unit Unit := {
+  unitName := `D5.S3.Quantum.Measurement.FourQubitParentConstruction.scalarB_sum.__information_unit
+  realizationName := ``scalarSumEvidence
+  realizationSource := none, generated := false, arena := .source ⟨scalarSumArena.{u}⟩
+  objectArena := .source ⟨scalarSumArena.{u}⟩, catalog := .anonymous, localNames := false
+  realization := .source scalarSumArena.{u} ⟨scalarSumEvidence.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }, bundleNonempty := .absent
+  readout := some (realize equalitySignature (fun _ _ x y => x = y) (fun e => nomatch e))
+  variation := .absent, sensitivity := .absent, partialSensitivity := none, escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Measurement.FourQubitParentConstruction, definition := none
+    coordinates := #[], readouts := #[⟨
+      #["body", "body", "body", "body", "fn", "fn"], 0, true, none, false⟩] }
+  continuation := .unknown, familyRecord := none, options := #[] }
+#print axioms sumEqualityRegistration
+
+def formulaEvidence :
+    Registration _root_.Reg.D5.S3.Quantum.Measurement.Bloch.QubitBloch.formulaArena
+      (type_of% (@_root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula)) :=
+  _root_.Reg.D5.S3.Quantum.Measurement.Bloch.QubitBloch.formulaEvidence
+
+noncomputable def formulaRegistration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula)
+    (type_of% (realize _root_.Reg.D5.S3.Quantum.Measurement.Bloch.QubitBloch.vectorSignature (fun _ _ a => B a) (fun e => nomatch e))) Unit Unit := {
+  unitName := Lean.Name.str (Lean.Name.str `D5.S3.Quantum.Measurement.FourQubitParentConstruction.B_formula
+    "Reg.D5.S3.Quantum.Measurement.FourQubitParentConstruction/Reg.D5.S3.Quantum.Measurement.Bloch.QubitBloch.formulaArena/[anonymous]") "__information_unit",
+  realizationName := ``formulaEvidence,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨_root_.Reg.D5.S3.Quantum.Measurement.Bloch.QubitBloch.formulaArena⟩,
+  objectArena := .source ⟨_root_.Reg.D5.S3.Quantum.Measurement.Bloch.QubitBloch.formulaArena⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source _root_.Reg.D5.S3.Quantum.Measurement.Bloch.QubitBloch.formulaArena ⟨formulaEvidence⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize _root_.Reg.D5.S3.Quantum.Measurement.Bloch.QubitBloch.vectorSignature (fun _ _ a => B a) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.Measurement.FourQubitParentConstruction, definition := none,
+    coordinates := #[], readouts := #[{
+      path := #["body", "fn", "arg"],
+      stateBinder := 0, functionOperand := false, stateOperand := some #["arg"],
+      booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true },
+    { name := `internal.cmdlineSnapshots, value := .bool true },
+    { name := `linter.mathlibStandardSet, value := .bool true },
+    { name := `maxSynthPendingDepth, value := .nat 3 },
+    { name := `pp.unicode.fun, value := .bool true },
+    { name := `relaxedAutoImplicit, value := .bool false }] }
+
+#print axioms formulaRegistration
 end Reg.D5.S3.Quantum.Measurement.FourQubitParentConstruction

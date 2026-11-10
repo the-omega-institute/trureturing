@@ -1,0 +1,205 @@
+**Theorem 2.1 (Exact repeated-block difference).** For every pair of integers
+$m\geq0$ and $j\geq1$,
+
+$$
+\boxed{\quad
+P_3(G_{m,j})-P_3(H_{m,j})
+ =Q(1+q)^{j-1}(q^{j-1}-q^2)H_{m-1}.
+\quad}
+$$
+
+The identity is in $\mathbb Z[q]$ and hence also in $\mathbb C[q]$ under
+$\iota$.
+
+Proof. Use the full actual-coloring factorization [R1,
+`coloringEquiv`, `assemble_weight`, `coloring_factorization`,
+`ps_spine_sum`]. In the present notation it gives, for every positive vector,
+
+$$
+P_k(C_a)=\sum_{\substack{c_0,\ldots,c_{\ell-1}\in\{0,\ldots,k-1\}\\
+                         c_i\ne c_{i+1}\ (0\leq i<\ell-1)}}
+                         \prod_{i=0}^{\ell-1}B_{a_i}^{(k)}(c_i).
+\tag{2.1}
+$$
+
+The factorization includes the empty leaf sets when $a_i=1$: the spine
+color and the independent colors on its $a_i-1$ leaves contribute precisely
+the displayed block weight. We use this cited identity, including its
+private coloring-bijection and weight identities, as an intermediate input.
+
+For three colors, let all vectors below be columns, and put
+
+$$
+K=\begin{pmatrix}0&1&1\\1&0&1\\1&1&0\end{pmatrix},\qquad
+D=\operatorname{diag}(w_0,w_1,w_2),\qquad M=DK,
+$$
+
+$$
+a=B_5,\qquad b=B_4,\qquad c=B_3,\qquad t=Kc.
+$$
+
+Let $\operatorname{diag}(b)$ mean the diagonal matrix with diagonal $b$.
+Equation (2.1) gives, for every $m\geq0$,
+
+$$
+\begin{aligned}
+P_3(G_{m,j})&=a^{\mathsf T}KM^m\operatorname{diag}(b)Kc,\\
+P_3(H_{m,j})&=b^{\mathsf T}KM^m\operatorname{diag}(a)Kc.
+\end{aligned}
+\tag{2.2}
+$$
+
+Each $K$ enforces inequality on a spine edge, each $D$ contributes the
+weight of one repeated block, and the remaining diagonal matrix contributes
+the penultimate block. Thus the $m=0$ expression has exactly two spine
+edges. This is the standard weighted-path transfer-matrix method
+[P4, §V.6], applied inside the difference proof.
+
+Write $\Delta_m$ for the difference in the theorem. We calculate its
+three initial values. Put
+
+$$
+z=1+q,\qquad y=1+q^2,\qquad
+h=q^2z^2,\qquad d=qy^2.
+$$
+
+The explicit block weights are
+
+$$
+\begin{aligned}
+a&=(q^4z^4,\ qy^4,\ q^2z^4)^{\mathsf T},\\
+b&=(q^3z^3,\ qy^3,\ q^2z^3)^{\mathsf T},\\
+c&=(h,d,h)^{\mathsf T},\qquad
+ t=(h+d,2h,h+d)^{\mathsf T}.
+\end{aligned}
+\tag{2.3}
+$$
+
+For $i<s$ define $p_{is}=a_i b_s-b_i a_s$. Two of these minors agree:
+
+$$
+\begin{aligned}
+p_{01}&=q^4z^3y^3(qz-y)
+       =q^4z^3y^3(q-1),\\
+p_{12}&=q^3z^3y^3(y-z)
+       =q^4z^3y^3(q-1).
+\end{aligned}
+$$
+
+Call their common value $A$. Pairing the terms with spine colors $(i,s)$
+and $(s,i)$ in (2.2) for $m=0$ gives
+
+$$
+\Delta_0=\sum_{i<s}p_{is}(t_s-t_i)
+ =A(h-d)+p_{02}\,0+A(d-h)=0.
+\tag{2.4}
+$$
+
+For $m=1$, first fix the middle color $s$. Its coefficient $C_s$ in
+$\Delta_1=\sum_s w_sC_s$ is
+
+$$
+C_s=\left(\sum_{i\ne s}a_i\right)
+     \left(\sum_{u\ne s}b_ut_u\right)
+    -\left(\sum_{i\ne s}b_i\right)
+     \left(\sum_{u\ne s}a_ut_u\right).
+$$
+
+For the two allowed indices $i<u$, the right side is
+$p_{iu}(t_u-t_i)$. Inserting (2.3) therefore gives
+
+$$
+C_0=A(d-h),\qquad C_1=0,\qquad C_2=-A(d-h).
+$$
+
+Furthermore,
+
+$$
+\begin{aligned}
+d-h&=q\bigl((1+q^2)^2-q(1+q)^2\bigr)
+     =q(q-1)(q^3-1),\\
+A(d-h)&=q^5z^3y^3(q-1)^2(q^3-1)=Q.
+\end{aligned}
+$$
+
+Consequently,
+
+$$
+\Delta_1=Q(w_0-w_2).
+\tag{2.5}
+$$
+
+The remaining initial value is the cited arbitrary-middle-weight
+identity [R1, `diagonal_identity`]. If $F(U_0,\ldots,U_4)$ denotes the
+sum of $\prod_{i=0}^4 U_i(c_i)$ over all five consecutive unequal colors
+in $\{0,1,2\}$, that identity states
+
+$$
+F(B_5,w,w,B_4,B_3)=F(B_4,w,w,B_5,B_3)
+\quad\text{for every }w\in\mathbb Z[q]^3.
+$$
+
+Apply it to the present $w$ in (2.1). It gives
+
+$$
+\Delta_2=0.
+\tag{2.6}
+$$
+
+In particular this input is stronger than its specialization to a fixed
+$j$; no new two-middle-block identity is needed.
+
+The matrix $M$ has entries $M_{is}=w_i$ for $i\ne s$ and zero diagonal.
+Direct multiplication gives
+
+$$
+M^3=e_2M+2e_3I.
+\tag{2.7}
+$$
+
+For completeness, if $i,s,u$ are the three distinct indices, the
+$(i,s)$ entry of $M^3$ is
+$w_i^2(w_s+w_u)+w_iw_sw_u=e_2w_i$, while its $(i,i)$ entry is
+$2w_0w_1w_2=2e_3$. These are all the entries, proving (2.7) over
+$\mathbb Z[q]$ without any invertibility assumption on the weights.
+Multiplying (2.7) by $M^m$ and using both linear expressions (2.2) yields
+
+$$
+\Delta_{m+3}=e_2\Delta_{m+1}+2e_3\Delta_m
+\qquad(m\geq0).
+\tag{2.8}
+$$
+
+Introduce a second indeterminate $x$ and work in $\mathbb Z[q][[x]]$.
+Equations (2.4)--(2.8) imply
+
+$$
+\left(1-e_2x^2-2e_3x^3\right)\sum_{m\geq0}\Delta_mx^m
+       =Q(w_0-w_2)x.
+\tag{2.9}
+$$
+
+Indeed, the coefficients of $x^0,x^1,x^2$ on the left are respectively
+$0,Q(w_0-w_2),0$, and every higher coefficient is zero by (2.8).
+The factor in parentheses has constant coefficient one, so the formal
+geometric-series identity and the binomial theorem give
+
+$$
+\begin{aligned}
+\frac1{1-e_2x^2-2e_3x^3}
+ &=\sum_{s\geq0}(e_2x^2+2e_3x^3)^s\\
+ &=\sum_{u,v\geq0}\binom{u+v}{u}
+                     e_2^u(2e_3)^v x^{2u+3v}
+  =\sum_{n\geq0}H_nx^n.
+\end{aligned}
+\tag{2.10}
+$$
+
+These standard formal-series operations [P4, §I.2] require no analytic
+convergence: only finitely many summands contribute to each coefficient.
+Taking coefficients in (2.9)--(2.10) gives
+$\Delta_m=Q(w_0-w_2)H_{m-1}$, including $m=0$ by $H_{-1}=0$.
+Finally
+$w_0-w_2=(1+q)^{j-1}(q^{j-1}-q^2)$, which proves the formula. Applying
+$\iota$ proves its complex-coefficient version. ∎
+

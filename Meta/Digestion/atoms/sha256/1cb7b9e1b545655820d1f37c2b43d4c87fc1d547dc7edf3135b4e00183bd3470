@@ -1,0 +1,12 @@
+**Lemma 4.2 (readout polynomials and jets).** For $f(x)=\sum_i c_i x^i$ and $D=x\,d/dx$,
+
+$$
+(D^j f)(\lambda)=\sum_i c_i i^j\lambda^i,\qquad
+((D+1)^j f)(\lambda)=\sum_i c_i(i+1)^j\lambda^i.
+\tag{4.3}
+$$
+
+At a nonzero node $\lambda$, either list of jets through order $d$ is an invertible triangular transform of the ordinary derivative jets through that order.
+
+**Proof.** The monomial $x^i$ is an eigenvector of $D$ with eigenvalue $i$ and of $D+1$ with eigenvalue $i+1$, proving (4.3). Induction on $j$ shows that the leading derivative term of either operator power is $x^j f^{(j)}$, with all other terms involving smaller derivative orders. The diagonal entries of the jet transform are $1,\lambda,\ldots,\lambda^d$, all nonzero. In particular, vanishing of all these jets is equivalent to a root of multiplicity at least $m$. These operators specify fixed polynomial coefficients for readout maps; they do not change acquired clocks. $\square$
+

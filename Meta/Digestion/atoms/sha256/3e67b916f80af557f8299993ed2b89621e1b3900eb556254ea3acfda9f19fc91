@@ -1,0 +1,15 @@
+**Equation 2.3 (`eq:poly`).**
+
+$$
+b_{ve}={\bf1}_{t(e)=v}-{\bf1}_{s(e)=v},\qquad
+ r_{v,c}=\sum_e b_{ve}X_{e,c},\qquad
+ \mathscr A_G=\mathbb{Q}[X_{e,c}\mid e,c]/(r_{v,c}\mid v\notin A,c).
+$$
+
+The multigrading counts ordinary colors; no anchor relation is imposed.
+On a circle the cellular model has one auxiliary vertex and one loop,
+so its vertex relation is zero.
+
+<a id="prop-local"></a>
+<a id="prop:local"></a>
+

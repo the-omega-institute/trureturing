@@ -1,0 +1,62 @@
+**Lemma 53.2 (positive-trace-cosine localization of every global maximum).**
+For every tuple in Definition 53.1 with $D_\sigma(x,q)<0$, every
+global maximizer of $\Gamma_\sigma$ on $\mathcal T_x$ satisfies
+
+$$
+ x^2<X<Y<1,\qquad \sqrt X+\sqrt Y>L,\qquad X+Y<L^2.
+\tag{53.7}
+$$
+
+In particular every such maximizer lies in the open convex set
+
+$$
+ \mathcal D_A=\{(X,Y):0<X<1,\ 0<Y<1,\ X+Y<A,
+                           \ \sqrt X+\sqrt Y>\sqrt A\},
+ \qquad A=L^2>1.
+\tag{53.8}
+$$
+
+**Proof.** Definition 47.1 gives compact attainment on the entire
+$\mathcal T_x$. Proposition 51.2 places every global maximizer in
+$\Omega_x$ of (51.13), giving all but the last inequality of (53.7).
+That proposition excludes the complete curved arc, both straight
+edges, all three corners, the diagonal and the reversed ordering.
+Its exclusion of the canonical corner uses the same-slice strict
+competitor (46.29)--(46.31), valid for $D_\sigma<0$ without $\nu>0$.
+
+Suppress the fixed parameters. At an interior point with $X,Y<1$
+and $\sqrt X+\sqrt Y>L$, one has $|Z|<1$, $R,C>0$ and
+
+$$
+ Z_X=-\frac{A+X-Y}{4X^{3/2}\sqrt Y}<0.
+\tag{53.9}
+$$
+
+Indeed $A>1$, $Y\le1$ and $X>0$. If $Z\le0$, putting
+$u=1-X>0$ and $v=1-Y>0$ gives
+
+$$
+ F_X=-\frac12\sqrt{\frac vu}\sqrt{1-Z^2}
+       -\frac{\sqrt{uv}\,Z Z_X}{\sqrt{1-Z^2}}<0.
+\tag{53.10}
+$$
+
+The second term is nonpositive, while the first is strictly negative.
+Moreover
+
+$$
+ R_X=-\frac{ak}{2R}<0,\qquad
+ C_X=\frac{-\ell^2+2\ell mF_X}{2C}<0.
+\tag{53.11}
+$$
+
+Thus $\Gamma_X<0$ wherever $Z\le0$ in this interior. A global
+maximizer in $\Omega_x$ is an interior point of the original domain,
+so its first derivatives vanish. It must have $Z>0$, equivalently
+$X+Y<A$, proving (53.7).
+
+The square restrictions and the half-plane $X+Y<A$ are convex.
+The strict superlevel set of the concave function
+$\sqrt X+\sqrt Y$ is convex as well; hence $\mathcal D_A$ is convex.
+On this set $0<Z<1$. $\square$
+

@@ -1,0 +1,86 @@
+**Lemma 125.2 (Uniform expansion of the actual rows).**
+For radii $R>0$, $G\ge0$, put
+
+$$
+\begin{aligned}
+R_{\mathfrak s}&=\max_i\|r_i\|_{\rm HS},\qquad
+k_A=\tau+2|s_\theta c_\theta|bA,\\
+\mathcal E(R,G)&=\frac{R_{\mathfrak s}}2
+ \left[b(R^2+1)+2G\left(k_AR+|s_\theta c_\theta|bR^2\right)\right].
+\end{aligned}
+\tag{125.6}
+$$
+
+If $0<\eta\le1$, $\|z\|\le R$, $|g|\le G$, and
+$(\eta g,-Ae+\eta z),(0,h_0(\eta))$ belong to $\mathcal P$, then,
+for each $j=f,a$,
+
+$$
+\left|d_j(\eta g,-Ae+\eta z;h_0(\eta))
+                         -\eta\mathcal F_j(z,g)\right|
+ \le\mathcal E(R,G)\eta^2.
+\tag{125.7}
+$$
+
+*Proof.* Use the exact blocks (114.2) and paired lift (118.9).
+The unscaled outer-product and skew differences are exactly
+
+$$
+\begin{aligned}
+\mathsf H_{-Ae+\eta z}-\mathsf H_{Ae+\eta f}
+ &=\eta H_1(z)+\eta^2(zz^\dagger-ff^\dagger),\\
+\mathsf S_{-Ae+\eta z}-\mathsf S_{Ae+\eta f}
+ &=\eta S_1(z).
+\end{aligned}
+\tag{125.8}
+$$
+
+Also the exact quadratic expansion of the cross block is
+
+$$
+\begin{aligned}
+K_{-Ae+\eta z}&=K_-+\eta K_1(z)+\eta^2K_2(z),\\
+K_1(z)&=\tau(s_\theta^2ez^\dagger+c_\theta^2ze^\dagger)
+           +\mathrm i s_\theta c_\theta bA(ez^\dagger+ze^\dagger),\\
+K_2(z)&=-\mathrm i s_\theta c_\theta bzz^\dagger,\\
+\|K_1(z)\|_{\rm HS}&\le k_A\|z\|,\qquad
+\|K_2(z)\|_{\rm HS}\le|s_\theta c_\theta|b\|z\|^2.
+\end{aligned}
+\tag{125.9}
+$$
+
+If $(X,Y,Z)$ is the exact paired lift against $(0,h_0(\eta))$,
+then $Z=\eta gK_{-Ae+\eta z}$ and (125.8) gives
+
+$$
+\begin{aligned}
+\|X-\eta X_1\|_{\rm HS}+\|Y-\eta Y_1\|_{\rm HS}
+ &\le b\eta^2(R^2+1),\\
+\|Z-\eta gK_-\|_{\rm HS}
+ &\le\eta^2G(k_AR+|s_\theta c_\theta|bR^2).
+\end{aligned}
+\tag{125.10}
+$$
+
+For every actual row separately, unitary invariance and the trace
+Cauchy–Schwarz inequality give
+
+$$
+\begin{aligned}
+&|q_{i,w}(X,Y,Z)-\eta\ell_{i,w}(z,g)|\\
+&\quad\le\frac{a_w}{2}\|r_i\|_{\rm HS}
+ \bigl(\|X-\eta X_1\|_{\rm HS}+\|Y-\eta Y_1\|_{\rm HS}
+                  +2\|Z-\eta gK_-\|_{\rm HS}\bigr)\\
+&\quad\le\mathcal E(R,G)\eta^2.
+\end{aligned}
+\tag{125.11}
+$$
+
+The last inequality uses $a_w\le1$ only to obtain one common bound;
+the row on its left still has its original weight. The outcome-$0$
+identity following (114.3) gives the same bound for that label.
+The difference of two suprema of absolute values is at most the
+supremum of the absolute coordinate differences. Applying this fact
+to the finite set and, separately, to all actual histories proves
+(125.7). No history need attain the latter supremum. $\square$
+

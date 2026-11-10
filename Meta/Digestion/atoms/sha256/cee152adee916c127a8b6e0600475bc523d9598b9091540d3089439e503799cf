@@ -1,0 +1,76 @@
+**证明定理 1.3，第二部分。**令 $\gamma(a)=\beta(a)\bmod W$，$A=\gamma(M)$。由缺陷的定义，$\gamma(a\cdot b)=\gamma(a)+\gamma(b)$。$R$ 诱导 $\rho$，且
+
+$$
+\gamma(Ua)=\rho\gamma(a),\quad I+\rho+\rho^2=0,\quad
+\gamma(Ua\cdot U^2a)=-\gamma(a).
+\tag{3.1}
+$$
+
+因此 $A$ 是向量空间中的加法子群。这里的结合与交换只发生在已经得到的向量商空间中。令 $N=\gamma^{-1}(0)$、$K=\{(a,b):\gamma(a)=\gamma(b)\}$。
+
+对 $(a,b)\in K$，$w=\beta(a)-\beta(b)\in W$。由 (2.5)、(2.11) 和非负性，有 $c(a,b)=c(b,a)=0$。用 (2.4)、$\beta(b\cdot z)=\beta(b)+\beta(z)+T(b,z)$ 计算得
+
+$$
+c(a,b\cdot z)-c(b,b\cdot z)=-2B(w,\beta(z)),
+$$
+
+$$
+c(b\cdot z,a)-c(b\cdot z,b)=-2B(\beta(z),w).
+$$
+
+由 (2.3)，前一对读数都在 $[0,3r(z)]$，后一对都在 $[0,3q(z)]$。故对整个 $K$ 有统一界
+
+$$
+|B(w,\beta(z))|\le\tfrac32r(z),\qquad
+|B(\beta(z),w)|\le\tfrac32q(z).
+\tag{3.2}
+$$
+
+置 $J_0=(2R+I)/\sqrt3$，则 $J_0^2=-I$；此刻它只提供代数复结构。对实线性泛函 $\alpha$，令 $\ell=\alpha-i\alpha J_0$，则 $\ell R=\omega\ell$。分别取 $\alpha(x)=B(x,\beta(z))$ 和 $\alpha(x)=B(\beta(z),x)$。因 $N$ 在 $U$ 下封闭，(3.2) 使 $\ell(\beta(n))$ 在 $n\in N$ 上一致有界；$J_0\beta(n)=(2\beta(Un)+\beta(n))/\sqrt3$ 给出该界的显式有限系数。
+
+固定 $u\in N$，保留每个深度的全部 $3^n$ 条有序历史：
+
+$$
+\Omega_n=\{0,1,2\}^n,\qquad x_0=1,\quad x_j=x_{j-1}\cdot U^{k_j}u.
+\tag{3.3}
+$$
+
+这是明确的左括号递推；没有改变原始括号。所有 $x_j$ 都在 $N$。令 $Z=\ell\beta(x)$、$A_u=\ell\beta(u)$、$D_x=\ell T(x,u)$，(2.10) 给三个子值 $Z+\omega^kA_u+\omega^{-k}D_x$。有限 Fourier 正交性给
+
+$$
+\frac13\sum_k|Z+\omega^kA_u+\omega^{-k}D_x|^2
+=|Z|^2+|A_u|^2+|D_x|^2.
+\tag{3.4}
+$$
+
+逐层有限平均，得到
+
+$$
+3^{-n}\sum_{\Omega_n}|\ell\beta(x_n)|^2\ge n|\ell\beta(u)|^2.
+\tag{3.5}
+$$
+
+左端一致有界，而此式对全部整数 $n$ 成立，故 $\ell\beta(u)=0$。对两种配对及全部 $z$ 使用共同非退化性，得 $\beta(N)=0$。
+
+固定 $z$，函数 $h(a,b)=B(\beta(a)-\beta(b),\beta(z))$ 在 $K$ 上有界。由 (2.8)，对 $(u,v)\in K$ 有
+
+$$
+\sum_k h(a\cdot U^ku,b\cdot U^kv)=3h(a,b).
+\tag{3.6}
+$$
+
+对给定 $(a,b)\in K$ 选 $d=Ua\cdot U^2a$。由 (3.1)，$a\cdot d,b\cdot d\in N$，所以在增量 $(d,d)$ 的三项中，$k=0$ 项为零。其余两项均属于 $K$，故
+
+$$
+|h(a,b)|\le\tfrac23\sup_K|h|.
+$$
+
+取上确界得 $h=0$。对 $B(\beta(z),\beta(a)-\beta(b))$ 同理，故
+
+$$
+\gamma(a)=\gamma(b)\Longrightarrow\beta(a)=\beta(b).
+\tag{3.7}
+$$
+
+再由 $c(a,b)=0$ 与 (2.4) 得 $q(a)=q(b),r(a)=r(b)$。整个有向核 $c$ 因而下降为 $A$ 上的 $C$；它仍满足 (R)，但原乘法此时才合法地成为群加法、标记才成为加法算子 $\rho$。
+

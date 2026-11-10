@@ -1,0 +1,137 @@
+## 5. 四视图运输的极限条件
+
+设 $i\in\{\mathrm{space},\mathrm{time},\mathrm{boundary},\mathrm{memory}\}$。
+本节只用共同来源的有限实际像 $Q_n^0=Q_n$。每层给出保留接口类型的满射表示
+
+$$
+r_{i,n}:Q_n^0\twoheadrightarrow Y_{i,n}^0=r_{i,n}[Q_n^0],
+$$
+
+以及 $n\ge1$ 时的 bonding map
+$\delta_{i,n}:Y_{i,n}^0\to Y_{i,n-1}^0$，要求
+
+$$
+\delta_{i,n}r_{i,n}=r_{i,n-1}p_{n-1}\qquad(n\ge1).
+\tag{JKT.5}
+$$
+
+先在来源 $Z$ 上声明保持类型的等价关系 $E_n^Z$。确定性精确 UJLB 情形取
+$E_n^Z:=K_n$；随机 law 情形取 $E_n^Z:=A_n^{\mathrm{law}}$。只有显式假设
+$E_n^Z$ 经 $K_n$ 下降时，才在 $Q_n^0=Q_n$ 上定义诱导关系
+
+$$
+x\,\bar E_n\,y
+\quad\Longleftrightarrow\quad
+\exists z,u\in Z:\quad q_n(z)=x,\quad q_n(u)=y,\quad z\,E_n^Z\,u.
+$$
+
+这里的下降条件明确取为 $K_n\subseteq E_n^Z$；它与 $E_n^Z$ 的等价性保证
+代表元选择无关。确定性情形的诱导关系为 $\bar E_n=\Delta_{Q_n}$，即相等。
+随机 law 情形须明确假设 $A_n^{\mathrm{law}}$ 是保持类型的等价关系且
+$K_n\subseteq A_n^{\mathrm{law}}$，才能定义上述 $\bar E_n$；不具备这些下降
+条件时，不声称存在此商关系。若另有可识别性等式 $K_n=A_n^{\mathrm{law}}$，
+其诱导关系也为相等；此等式仍不是无条件结论。四个视图的精确视图合同明确要求
+
+$$
+\ker(r_{i,n})=\bar E_n
+\qquad
+\text{for every }i\in\{\mathrm{space},\mathrm{time},\mathrm{boundary},\mathrm{memory}\}.
+$$
+
+这里的 $\bar E_n$ 是由任务合同的来源关系诱导的有限关系，不由视图事后另选；下述
+$\chi_{ji,n}$ 的双射、自然性和完整联合核条件都以此精确关系为共同域。
+
+先定义各视图的完成与实际来源线程像：
+
+$$
+L_i=\varprojlim(Y_{i,n}^0,\delta_{i,n}),\qquad
+\eta_i(z)=\bigl(r_{i,n}([z]_{K_n})\bigr)_n,\qquad B_i=\eta_i[Z]\subseteq L_i.
+$$
+
+再明确假设：每层四个表示在同一个 $Q_n^0$ 上有相等的行为核，并给定由这一
+共同来源诱导的唯一双射
+
+$$
+\chi_{ji,n}:Y_{i,n}^0\simeq Y_{j,n}^0,\qquad
+\chi_{ji,n}r_{i,n}=r_{j,n}.
+$$
+
+要求它们满足跨层交换式
+
+$$
+\delta_{j,n}\chi_{ji,n}=\chi_{ji,n-1}\delta_{i,n}\qquad(n\ge1).
+$$
+
+动态运输还要求合法性及完整联合核已在各表示纤维上下降，各视图的移位核
+$\overline J^i_{a,n}$ 满足 (JKT.3) 的对应式。明确地，
+$\bar D^i_{a,n}\subseteq Y^0_{i,n+1,\tau}$，并且对
+$y\in Y^0_{i,n+1,\tau}$，
+$\overline J^i_{a,n}(\,\cdot\mid y)$ 的输出空间为
+$E_a\times\bigl(Y^0_{i,n,\upsilon}\sqcup F_a\bigr)\times R_a$；且
+
+$$
+\begin{aligned}
+\bar D^j_{a,n}&=\chi_{ji,n+1}[\bar D^i_{a,n}],\\
+\overline J^j_{a,n}(\cdot\mid\chi_{ji,n+1}y)
+&=(\operatorname{id}_{E_a}\times\chi^\sharp_{ji,n}\times
+\operatorname{id}_{R_a})_*\overline J^i_{a,n}(\cdot\mid y).
+\end{aligned}
+$$
+
+这里 $\chi^\sharp_{ji,n}=\chi_{ji,n}|_{Y_{i,n,\upsilon}^0}\sqcup
+\operatorname{id}_{F_a}$，保留事件、完整记录、失败和终止标签及接口类型。
+selector（含停止及动作参数）只使用表示和已取得档案 $c$，并满足
+$\Pi^j(a\mid\chi_{ji,n+1}y,c)=\Pi^i(a\mid y,c)$；权限和记录更新也须按上述
+联合合同运输，不得另读隐藏来源。初始档案匹配，所选动作在当前表示上合法。
+
+对每个有限自适应策略 $\Pi^i$、其按 $\chi_{ji}$ 运输的策略 $\Pi^j$，以及匹配的
+档案／权限记录 $c_i,c_j$，令 $\mathsf{Tr}_{ji}^{\Pi,c}$ 为逐坐标运输的 transcript
+映射，则
+
+$$
+(\mathsf{Tr}_{ji}^{\Pi,c})_*\operatorname{Law}_i
+ \bigl(\mathsf{Tr}_i^{\Pi^i,c_i}\bigr)
+=\operatorname{Law}_j
+ \bigl(\mathsf{Tr}_j^{\Pi^j,c_j}\bigr).
+$$
+
+这里的等式对所有上述有限策略和匹配记录成立；它由列出的完整联合核运输、
+selector 相容性及权限／记录更新条件按策略长度归纳得到，不是另行添入的自由
+law 表。
+
+在这些条件下，才逐坐标定义线程运输
+
+$$
+\chi_{ji}:L_i\to L_j,
+\qquad
+\chi_{ji}((y_{i,n})_n)=(\chi_{ji,n}(y_{i,n}))_n,
+$$
+
+其复合律和逆律为 $\chi_{ki}=\chi_{kj}\circ\chi_{ji}$、
+$\chi_{ij}=\chi_{ji}^{-1}$；同源等式给出
+$\chi_{ji}\eta_i=\eta_j$，从而 $\chi_{ji}(B_i)=B_j$。观察者的 acquisition
+合同仍须另行运输。任意逐层双射若不交换 bonding map，不能定义上述极限映射；
+只保持边缘不能保持有限策略树。这里所说的“相等行为核”具体是指同一
+$\bar E_n$ 纤维上的完整联合输出 law，连同合法域、selector、档案和权限更新；
+只比较某个边缘读数，不足以定义 $\chi_{ji,n}$ 的动态运输。若只有
+$\ker r_{i,n}\subseteq\ker r_{j,n}$，则只得单向因子，即使它在实际像上满射，
+也不蕴含逆运输。本节仅承接
+[运输、任务记忆与完成化](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md)
+§12、§14、§26 的共同来源及自然图册条件。
+
+与该文 TM §26 的条件字典为：$\Omega=Z$，$\sigma_n=q_n$，$p_n$ 是满足
+$p_nq_{n+1}=q_n$ 的商塔限制映射，$r_{i,n}$ 是定义在 $Q_n$ 上的四个视图映射。
+对目标动作取 $j_a(n)=n+1$；因此 TM 的 lookahead 输入 $\sigma_{j_a(n)}$
+正对应 (JKT.2) 的 $Q_{n+1}$ 输入，而输出仍落在 $Q_n$。成功输出字母表是
+$Q_{n,\upsilon}$，固定终端和事件、记录字母表分别对应 TM 环境层中的固定
+终端、事件和档案分量；若 TM 的环境层含有额外值，本卷只比较实际像纤维上的
+限制或先给出保持类型的嵌入，不能默认为同一字母表。$(JKT.5)$ 是相应的
+bonding 自然性，上面展示的核运输等式是完整联合 law 条件。这只是条件字典，
+不是新定理。
+
+`RealizedImageKernelFactorization.lean` 中
+`realized_image_unique_factorization_iff_reverse_kernel` 对应实际像上的唯一因子
+条件；`IndependentDescentCriterion.lean` 的
+`inverse_limit_descent_and_independent_converse` 对应“交换则下降、独立坐标提升
+才可反推交换”的方向分离。它们不把任意 levelwise bijection 变成自然运输。
+

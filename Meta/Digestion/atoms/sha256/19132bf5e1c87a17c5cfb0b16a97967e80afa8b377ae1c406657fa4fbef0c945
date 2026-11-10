@@ -1,0 +1,49 @@
+**定理 23.1（正则纤维基数与退化层的全部比值）。** For a gain
+
+$$
+g(t)=a_0+a_1t+a_2t^2+a_3t^3,\qquad
+\mathcal E(g)=a_1+9a_2+64a_3,
+$$
+
+every world compatible with (22.1) satisfies
+
+$$
+D_E=-8\ell\mathcal E(g),\qquad D_O=-8T\mathcal E(g).
+                                                                  \tag{23.1}
+$$
+
+If $D_E\ne0$, the whole compatible eight-read fiber has at most two worlds. Its ratio $\rho=D_O/D_E$ is fixed. At $\rho=1$ it has at most one world. At $\rho\ne1$ it can have two only at the common drift $d=0$ or $d=24$, in the respective quadratic branches of Theorem 22.1. All other drifts give at most one world.
+
+If $D_E=0,D_O\ne0$, the fiber is empty. If $D_E=D_O=0$, all compatible gains satisfy $\mathcal E(g)=0$, and the construction (22.4)–(22.16) must retain every $\rho>0$. This includes $\rho=1$, both exceptional drifts and every other drift, with all their zero and lower-degree intersections. There is no finite-cardinality assertion for this degenerate fiber and no assertion that different positive ratios cannot give the same data.
+
+At the JMJ ancestors, the gain hyperplane has the equivalent positive-trace equation
+
+$$
+7d+\frac{25(24-d)}j-\frac{31(48-d)}\ell+\frac{13(z-d)}T=0,
+                                                                  \tag{23.2}
+$$
+
+or, clearing only positive denominators,
+
+$$
+7dj\ell T+25(24-d)\ell T-31(48-d)jT+13(z-d)j\ell=0.
+                                                                  \tag{23.3}
+$$
+
+These equations supplement the full-data conditions and source filters; they do not replace them.
+
+Proof. Evaluating the monomials $1,t,t^2,t^3$ at the actual even clocks gives
+
+$$
+g(2)+2g(4)-3g(6)=-8\mathcal E(g).
+$$
+
+The odd clocks give $3g(3)-2g(5)-g(7)=-8\mathcal E(g)$. The drift cancels in both combinations, proving (23.1). Also direct interpolation on $0,1,2,3$ gives
+
+$$
+2\mathcal E(g)=-7g(0)+25g(1)-31g(2)+13g(3).
+                                                                  \tag{23.4}
+$$
+
+Substitution of (20.3) proves (23.2)–(23.3). Since $\ell,T>0$, the zero-data alternatives follow. In the regular case $D_E\ne0$, Theorem 22.1 fixes the ratio, then either the unique $\rho=1$ candidate or the common $d,h$ for $\rho\ne1$. Only its two displayed non-identically-zero quadratic equations can contribute more than one world. At $d=24$, the $h_1\ne0$ branch fails $j>0$, so two worlds there necessarily have $h_1=0$ and share $\ell,g$. At $d=0$ they share $h=\ell g$. This proves the cardinality and drift claims. When both data quantities vanish, the necessary ratio equation is $0=0$, and the complete construction, with its remaining filters, is still over all positive ratios. ∎
+

@@ -1,0 +1,14 @@
+**推论 10.2（全部未来常数标记的统一余量）。**若 $r\ge L$，则
+
+$$
+\begin{aligned}
+c_N(X_{N,L}(a),\mathbf p_r)&=q(a)+\frac{r(p_{r-L})}N,\\
+c_N(\mathbf p_r,X_{N,L}(a))&=r(a)+\frac{q(p_{r-L})}N.
+\end{aligned}
+\tag{10.4}
+$$
+
+两个余项之和不超过 $\Omega(1)/N$，对全部 $a$ 及 $r\ge L$ 一致。
+
+**证明。**在 (10.2) 取 $z=p_{r-L}$，再用推论 2.2。
+

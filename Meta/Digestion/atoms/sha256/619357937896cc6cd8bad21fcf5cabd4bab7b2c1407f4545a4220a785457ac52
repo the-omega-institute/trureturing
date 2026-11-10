@@ -1,0 +1,4 @@
+The equation is the full source-inclusive identity (131.27), initially tested against smooth functions with arbitrary source value and with trace (131.23). Its coefficient is the actual $aA$. Both the heat orbit and the contraction in (132.4) belong to the original full form and semigroup.
+
+1. Obtain a spatial gain in the same measure as the time derivative. The spatial input is F. Chiarenza and R. Serapioni, “Degenerate Parabolic Equations and Harnack Inequality,” *Annali di Matematica pura ed applicata* **137** (1984), 139–162, [doi:10.1007/BF01789392](https://doi.org/10.1007/BF01789392), Lemma 3.4, (3.3), and its displayed special case $h=1+\mu$ on p. 157. Apply it in dimension four to the time-independent $A_2(\mathbb R^4)$ weight $\widetilde w$ and the ball $\Omega$. It supplies spatial constants $K_{\rm S},\mu>0$, an exponent $\beta=1+\mu>1$, and finite local integrals
+

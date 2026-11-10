@@ -1,0 +1,17 @@
+## 一、这次项目更新，真正推进了哪些问题
+
+与我们的主线直接有关的变化主要有四组。
+
+| 新进展 | 对当前研究的意义 |
+|---|---|
+| [Selection Calculus §27–28](https://github.com/the-omega-institute/trureturing/blob/388e1086d5de6323c9dd6913d26e72fd91ddfdb6/docs/develop/theory/AURIC_FIB_ATOM_SELECTION_CALCULUS.md) | §27 已接入上次讨论的条件计数、前缀增长和概率预测；§28 新证明：裸五模式加常量与相等关系，不能自动构造 NOR/NAND。 |
+| [取得残余理论 §9 的更正](https://github.com/the-omega-institute/trureturing/blob/388e1086d5de6323c9dd6913d26e72fd91ddfdb6/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_ADAPTIVE_RESIDUAL.md) | 预测全部实际读出轨迹，并不等于知道隐藏后继状态落在哪个等价类。此前一条双向刻画被六状态反例纠正。 |
+| [最小预测核心与取得接口](https://github.com/the-omega-institute/trureturing/blob/388e1086d5de6323c9dd6913d26e72fd91ddfdb6/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_JOINT_KERNEL_MINIMAL_PREDICTIVE_CORE_BRIDGE.md) | 将未来行为的预测商、实际取得，以及允许安全增长的读出条件分别建模。 |
+| [存在量词与量子记录 V14](https://github.com/the-omega-institute/trureturing/blob/388e1086d5de6323c9dd6913d26e72fd91ddfdb6/docs/develop/theory/AURIC_EXISTENTIAL_QUANTIFIERS_CIRCUIT_SEMIRINGS_AND_QUANTUM_RECORDS_V14.md)、[黄金门 V15](https://github.com/the-omega-institute/trureturing/blob/388e1086d5de6323c9dd6913d26e72fd91ddfdb6/docs/develop/theory/AURIC_GOLDEN_GATE_NAND_UNIVERSALITY_AND_ARITHMETIC_LIMITS_V15.md) | 固定门、实际记录、相干演化、编码近似普适性和有限精确实现，已经有更细致的数学边界。 |
+
+其中最有价值的进展，是项目开始能够指出：**一个看似自然的“观察者可以这样做”，究竟在哪一步需要补充关系、读出或算法。**
+
+这使我们可以从类比转向可检验的结构理论。
+
+<a id="sec-2"></a>
+

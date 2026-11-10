@@ -1,0 +1,45 @@
+**Theorem 2.3 (Strict nine-hub comparison and quantitative compensation).** Let $s\ge10$ be finite and $8\le q\le9$. For every actual profile of mean $q$, with $t=q-8\in[0,1]$,
+
+$$
+\begin{aligned}
+2J_s(x)-2F_9(q)
+&>\frac{2048+23t+2360t^2+105t^3}{q^2}+84(s-10)\\
+&\ge\frac{2048}{81}+84(s-10)>0.
+\end{aligned}\tag{2.8}
+$$
+
+At $q=8$ this gives $2J_s(x)>680+84(s-10)$. In particular no actual profile on $[10]$ has $2J_{10}=648$ at that mean. For $s=10$, $q=8$, and the remainders of Theorem 2.1 with $r=9$, $\beta=\kappa_9=2+8\sqrt{63}$,
+
+$$
+R_{\mathrm{inc}}+R_{\mathrm{sc}}
+>164-16\sqrt{63}=32+(132-16\sqrt{63}).\tag{2.9}
+$$
+
+**Proof.** Here $2F_9(q)=81(217q-1224)/q^2$. The strict case of (2.4) gives
+
+$$
+2J_s(x)>105q-160+84(s-10).
+$$
+
+The exact difference is
+
+$$
+\begin{aligned}
+q^2\bigl[105q-160-2F_9(q)\bigr]
+&=105q^3-160q^2-17577q+99144\\
+&=2048+23t+2360t^2+105t^3.
+\end{aligned}
+$$
+
+All coefficients are positive and $q^2\le81$, proving (2.8) at both endpoints and throughout the interval. At $q=8$, (2.4) gives the claimed $680+84(s-10)$ bound directly. For the remainder assertion, the incidence identity in Theorem 2.1 gives exactly
+
+$$
+\begin{aligned}
+R_{\mathrm{inc}}+R_{\mathrm{sc}}
+&=2J_{10}-\bigl[(217-\kappa_9)8+10\kappa_9-1224\bigr]\\
+&=2J_{10}-516-16\sqrt{63}.
+\end{aligned}
+$$
+
+Subtract this constant from $2J_{10}>680$ to obtain (2.9). These bounds do not identify the true minimum at $q=8$, $s=10$, or an attaining array; in particular $680$ is not asserted to be optimal. ∎
+

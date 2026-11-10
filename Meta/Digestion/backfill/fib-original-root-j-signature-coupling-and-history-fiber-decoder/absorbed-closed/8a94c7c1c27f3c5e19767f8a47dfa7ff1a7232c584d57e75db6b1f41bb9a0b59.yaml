@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:8a94c7c1c27f3c5e19767f8a47dfa7ff1a7232c584d57e75db6b1f41bb9a0b59
+  normalized_sha256: sha256:8a94c7c1c27f3c5e19767f8a47dfa7ff1a7232c584d57e75db6b1f41bb9a0b59
+cas_ref: sha256:8a94c7c1c27f3c5e19767f8a47dfa7ff1a7232c584d57e75db6b1f41bb9a0b59
+coverage_gids:
+  - gid: D5/S3/Observer/CubicGain/RootJDeltaZero.fixed_original_leaf
+    target_statement_id: sha256:c5d68abd5efbac1f427c575ed401940426068bce247310ae0502da3915ecbacf
+receipts:
+  unresolved_subitems: []

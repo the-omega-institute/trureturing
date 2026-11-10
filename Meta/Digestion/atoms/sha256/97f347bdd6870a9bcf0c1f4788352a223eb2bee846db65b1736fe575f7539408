@@ -1,0 +1,47 @@
+**Definition 30.1 (settled record and actual edit resources).** Retain
+Definition 23.1's known initial alpha and **every** finite legal history
+of the actual addressed operations
+$P_p:\alpha\to\beta$ and
+$S_p:\beta\to\langle\beta,\alpha\rangle$, with beta on the left.
+Only the record interface changes. A deterministic recorder $R$ starts
+with $J_R(\varepsilon)=\varepsilon$. After an actual enabled event $e$
+it transforms $J_R(h)$ to $J_R(he)$ by a finite sequence of unit-cost
+operations: POP deletes the last bit of a nonempty word, and
+APPEND$(b)$ appends one bit $b\in\{0,1\}$. It must satisfy, at every
+settled cut,
+
+$$
+\operatorname{Dec}_R(U(t(h)),J_R(h))=t(h).
+\tag{IV.82}
+$$
+
+The whole finite word and its end are visible. Intermediate words need
+not decode. Fixed code is common to all histories. Update uses only
+$(U(t(h)),J_R(h),e)$, with finite separately paid transient scratch
+cleared before the next settled cut. There is no other retained variable
+channel: no controller register, event counter, old output, address
+roster, allocation chronology, archived word, or advice available to
+update or decoding. In particular scratch capacity cannot encode usable
+advice between cuts. The observation $U$ is the same unordered coloured
+rooted input as before, not a newly acquired physical port. Its leaf
+counts supply the grade $n=a+2c-1=|h|$ by Proposition 23.2.
+
+Let $c_R(h,e)$ be the number of **actual** POPs and APPENDs in this
+update, including any detours. For $h=e_1\cdots e_N$ put
+
+$$
+T_R(h)=\sum_{i=1}^N c_R(e_1\cdots e_{i-1},e_i),\qquad
+T_R^{\max}(N)=\max_{|h|=N}T_R(h).
+\tag{IV.83}
+$$
+
+Let $p_R(h)$ be the maximum record length at any settled cut or
+intermediate record edit along $h$, including the initial empty word,
+and put $P_R^{\max}(N)=\max_{|h|=N}p_R(h)$. These maxima exist: at a
+fixed grade there are finitely many legal addressed histories, each with
+finitely many record edits. Scratch, source access, source edits,
+arithmetic, execution time and cleared allocated capacity are separately
+paid; neither (IV.83) nor $p_R$ measures their total cost. No old-cut or
+full-history inverse is required. The literal-prefix contract (IV.70)
+and all earlier full-history problems retain their own definitions.
+

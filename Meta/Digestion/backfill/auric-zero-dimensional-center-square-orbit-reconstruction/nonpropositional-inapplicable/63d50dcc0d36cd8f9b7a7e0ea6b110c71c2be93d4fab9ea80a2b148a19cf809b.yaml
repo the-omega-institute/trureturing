@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:63d50dcc0d36cd8f9b7a7e0ea6b110c71c2be93d4fab9ea80a2b148a19cf809b
+  normalized_sha256: sha256:63d50dcc0d36cd8f9b7a7e0ea6b110c71c2be93d4fab9ea80a2b148a19cf809b
+cas_ref: sha256:63d50dcc0d36cd8f9b7a7e0ea6b110c71c2be93d4fab9ea80a2b148a19cf809b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Pure pinned-upstream reuse, with no usable frozen repository GID for this exact atom. Mathlib revision 56a005855ea17e0b0958f73ec801ae140b0a1679 supplies IsSelfAdjoint.le_algebraMap_norm_self and IsSelfAdjoint.neg_algebraMap_norm_le_self for P=(1+C)/2 and Q=(1-C)/2; CStarAlgebra.nonneg_iff_eq_star_mul_self, PositiveLinearMap.toPreGNS, PositiveLinearMap.preGNS_inner_def and Matrix.posSemidef_gram give both positive Gram matrices. Matrix.PosSemidef.transpose and Matrix.PosSemidef.add give the actual directed table Gram(P)+transposeGram(Q), and the same application with A/B swapped gives its other orientation. Matrix.PosSemidef.det_nonneg and Matrix.det_fin_two give the squared P2 bound; IsSelfAdjoint.map' and PositiveLinearMap.mk₀ supply real positive complex-linear readings. Adjoint, antisymmetry and table identities use only normalization. This applies to every finite n including 0, selfadjoint A/B/C, actual Matrix.Norms.L2Operator C-star norm of C at most 1, and every positive complex-linear functional, including zero and unnormalized ones and singular positive density matrices. It asserts the displayed Dhat=i(ACB-BCA)/2 only, no PB or arbitrary-original-D claim. All mathematical inference is instantiation, projection and normalization of these existing declarations; no new D5, GID, coverage, Reg or first freeze is introduced. The owning PBActualOuterBudget Blueprint preserves the substantive correspondence and boundaries.
+    previous_atom_id: 376e36875b799199943bb11f203d4de71e5e5ce358ae57a7c14531a8d2762a5f
+    next_atom_id: 893849c5dccd3fdf0d102aba260a60aa7af6dbb788153efb042a710fc4789cd3

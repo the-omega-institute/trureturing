@@ -5,7 +5,7 @@ year: 2026
 title: Talagrand compacta, 2DCP, and pointwise quotients
 doi: null
 url: https://arxiv.org/abs/2607.06808v2
-claim: Problem 8.2 asks whether the prediction principle in Theorem A can be weakened from diamond on a stationary co-stationary set to CH; the project suppliers give common-stage clopen reflection, regular signed-measure lifting, eventual point-pair equality, uniform strong-dual norm separation and the full signed-ball analytic reduction to normalized signed clopen collision, with an actual coherent CH-only ordinal history now constructed; the literal final omega-one Prefix, every proper Data/Laws and concrete RawHistory now constructed; the original uniform same-eta correspondence and joint endpoints remain open.
+claim: Problem 8.2 asks whether Theorem A can be obtained from CH in place of diamond(S); actual_CH_Talagrand_scheme_and_endpoints now has a successful targeted Lean 4.35 build proving the full literal scheme, A-G, finite disjoint images and closed copies, no 2DCP, full signed dual-ball exclusion, Grothendieck convergence and point-space consequences on exactly one actual finalPrefix; scoped axiom inspection and three independent reviews have passed; PR 22319 tracks delivery CI, and no official acceptance is claimed.
 strata_touched:
   - D5/S3/Topology/InverseLimit
   - D5/S3/Topology/Measures
@@ -811,6 +811,25 @@ transport proofs are private and consumed. The inherited information
 audit remains unfinished under
 https://github.com/the-omega-institute/trureturing/issues/21750.
 
+## Proper-stage continuous clopen obstruction
+
+`ContinuousFiniteImageTail.proper_F_clopen_dichotomy` uses the original
+`SignedProperLimit.Prefix.Data` and `Laws`. At a proper stage c, every whole
+Dirac lift of the original birth sequence has only finitely many visits or
+only finitely many misses of each clopen along its original J(r,d,c). The
+reference is chosen after the entire selected lift, exactly as in F. No split
+event, final-stage convergence or final common J is assumed.
+
+Its consumer `no_continuous_pool_separation` extends a continuous clopen set
+preimage from a closed domain to an ambient clopen. For pools in the original
+disjoint reservoirs whose union is the stored earlier J, DJ leaves only a
+finite error at c. Removing that error from each original C-pool leaves two
+infinite opposite indicator pools, contradicting the dichotomy. This is a
+repository-derived local step in the finite-image argument; it does not
+construct a raw history or assert that a delayed event occurs. The final
+application still needs the constructed arrival/birth readback and the same
+executed event, followed by reflection of the ambient preimage to one later
+proper stage. No final FI/AH, full CH Talagrand or official solution is claimed.
 
 ## Actual coherent history from CH
 
@@ -858,15 +877,64 @@ that construction.
 
 These results complete the final-space and proper-slice construction layer.
 Ordinary and delayed treatment cofinality, and support-launch cofinality, are
-proved on the actual run. The original paper uses one eta for both launch
-support and quantitative G; this exact uniform same-eta correspondence is
-still a separate obligation here, and is not inferred by equating the two
-existing schedules. The joint Banach-space and topological endpoints also
-remain separate. This delivery does not solve Problem 8.2; FullCHLeanSolved
-and officialSolved remain zero.
+proved on the actual run. `SignedOrdinalActualReindex` supplies one eta for
+the actual whole-birth measure and every support launch, including self-row
+events and rejected reservations. Its new labels decode to original measure
+labels no larger than themselves. `SignedOrdinalReindexedLaws` therefore
+retains all original A-F laws on every proper cutoff, including every-choice
+signed F and the regular reference measure of norm at most one. Every new
+label reads the same actual whole-birth measure at every natural index.
+
+`SignedOrdinalActualG` transports the unchanged selected Result to the literal
+successor carrier. A single clopen and strictly increasing column sequence,
+fixed before the signed lifts, give both the infinite evaluations at least
+one sixth and the infinite exact zero evaluations for every complete signed
+norm-one lift sequence. No positivity restriction is added. The private
+`actual_scheme` composition in `TalagrandTopologicalConsequences` combines
+these statements on the same finalPrefix, retaining the initial cube and
+literal onto restrictions. Its targeted Lean build has passed. The subsequent public total theorem below
+consumes this composition together with the geometric and analytic endpoints.
 
 The information audit remains unfinished under
 https://github.com/the-omega-institute/trureturing/issues/21750. The delivered
 Reg modules check exact source reconstruction, including the public transport
 and proper-slice statements; this does not constitute a declared_validated
 four-slot registration.
+
+## Combined CH theorem
+
+`TalagrandTopologicalConsequences.actual_CH_Talagrand_scheme_and_endpoints`
+has passed a targeted Lean 4.35 build. Its only input is continuum = aleph-one.
+Every conclusion concerns exactly `(SignedOrdinalRealization.finalPrefix
+hCH).LimitSpace`, with its actual inherited topology. The proof consumes the
+complete original scheme, closed-cover Boolean insertion at successors,
+proper-limit and final-thread equations, and the G coordinate-cylinder
+identity. Every proper stage is compact Hausdorff, zero-dimensional and
+metrizable. No diamond, completed-history, capture, Hball or no-sequence
+hypothesis remains.
+
+The same space has finite continuous disjoint images of closed domains;
+therefore every two disjoint homeomorphic closed subspaces are finite,
+stronger than Theorem A's nonmetrizable closed-copy prohibition. It has no
+nonempty compact binary-copy tower, with no nesting or infinitude restriction.
+The actual signed endpoint theorem gives full regular signed oscillation,
+excludes all continuous StoneCech injections into the entire real signed dual
+unit ball, and proves convergence under arbitrary continuous bidual tests for
+every weak-star convergent dual sequence, without an input norm bound.
+Every convergent point sequence is eventually its actual limit. Evaluation
+and the omega-cube quotient yield point-space no-beta, infinitude, failure of
+first countability and nonmetrizability.
+
+This is the combined formal target of the original Problem 8.2, preregistered
+in https://github.com/the-omega-institute/trureturing/issues/22300 before its
+first combined compilation. The Problems dossier
+`kania-kakol-2026-problem-8-2-ch-talagrand` records the exact statement bridge
+and bounded literature search. The scoped report and canonical Scribe emission have passed: 66 modules and
+2,138 declarations, with only propext, Classical.choice and Quot.sound.
+Three independent fixed-source reviews approved; PR 22319 tracks the separate
+required CI and merge evidence. The unavailable oracle seat used its documented
+Codex fallback, without a model-family diversity claim.
+Official acceptance and worldwide uniqueness are not claimed; officialSolved
+remains zero. Problem 8.1 and the full Cp metrizable quotient problem remain
+outside this theorem. The information registration remains unfinished under
+issue 21750; exact-source Reg reconstruction is not declared_validated.

@@ -14,7 +14,21 @@ Support for p and rawL_m p is established separately in the mixed normal-sum cal
 
 Creation multiplication at variable (i,k) raises L0 energy by k+1/2. Power induction and finite exponent-vector induction prove the monomial law; linearity extends it to arbitrary finite sums. Ground need not be a VOA vacuum.
 
-**Theorem 1.1 (Actual raw central term for all integers).**
+**Theorem 1.1 (The linear sum over a signed integer interval).**
+
+$$\forall (a:\mathbb Z), \forall (b:\mathbb Z), a \le b \longrightarrow \sum_{x\in \operatorname{Finset}.\operatorname{Ico}(a, b)} (\operatorname{Int.cast}\left(x\right): \mathbb C) = \frac{((\operatorname{Int.cast}\left(a\right): \mathbb C)+(\operatorname{Int.cast}\left(b\right): \mathbb C)-1) \cdot ((\operatorname{Int.cast}\left(b\right): \mathbb C)-(\operatorname{Int.cast}\left(a\right): \mathbb C))}{2}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeHalfFockVirasoroSpectrum.sum_Ico_id` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Kalle Kytölä (2025). *VirasoroProject, Sugawara.lean*. URL: <https://github.com/kkytola/VirasoroProject/blob/5ff4245383b2cdd4eea7a0524bc1274c32041eb4/VirasoroProject/Sugawara.lean>.
+
+*Commentary.*
+
+The complex casts of the integers in a half-open interval sum to the interval length times the average endpoint; this identity supplies the linear part of the quadratic boundary sum.
+
+**Theorem 1.2 (Actual raw central term for all integers).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockVirasoroSpectrum.rawL_virasoro`
 
@@ -30,7 +44,7 @@ Exact currently loaded native universal type: ∀ (D : D5.S3.VertexAlgebra.Latti
 
 Assuming exactly H*Gc=Gc*H=1, [rawL_m,rawL_n]=(m-n)rawL_(m+n)+delta_(m+n,0)rank(2m^3+m)/24 identity, all integers m,n and all ranks including zero.
 
-**Theorem 1.2 (Actual half-Casimir ground contraction).**
+**Theorem 1.3 (Actual half-Casimir ground contraction).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockVirasoroSpectrum.positive_ground_boundary`
 
@@ -46,7 +60,7 @@ Exact currently loaded native universal type: ∀ (D : D5.S3.VertexAlgebra.Latti
 
 For each natural m, rawL_m(rawL_-m 1)=(rank/2) sum_(k=0..m-1)(k+1/2)(m-k-1/2) times 1, under the same inverse pair. The operator connection follows from the actual raw Virasoro calculation and raw nonnegative-ground vanishing.
 
-**Theorem 1.3 (Rank/16 is forced by the actual first contraction).**
+**Theorem 1.4 (Rank/16 is forced by the actual first contraction).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockVirasoroSpectrum.shift_forced`
 
@@ -62,7 +76,7 @@ Exact currently loaded native universal type: ∀ (D : D5.S3.VertexAlgebra.Latti
 
 For any complex h, if the actual raw commutator [rawL_1,rawL_-1]1=2h times 1, then h=rank/16. The actual m=1 defect is rank/8. This normalization condition is used only for this uniqueness conclusion and is never a premise of the representation or Virasoro relation.
 
-**Theorem 1.4 (Shifted rank-central-charge Virasoro law).**
+**Theorem 1.5 (Shifted rank-central-charge Virasoro law).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockVirasoroSpectrum.L_virasoro`
 
@@ -78,7 +92,7 @@ Exact currently loaded native universal type: ∀ (D : D5.S3.VertexAlgebra.Latti
 
 The constructed shifted End operators satisfy [L_m,L_n]=(m-n)L_(m+n)+delta_(m+n,0)(rank/12)(m^3-m) identity, under exactly the two inverse equations, for all integers m,n and ranks including zero.
 
-**Theorem 1.5 (Exact actual monomial spectrum).**
+**Theorem 1.6 (Exact actual monomial spectrum).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeHalfFockVirasoroSpectrum.L_zero_monomial_coeff`
 
@@ -115,4 +129,5 @@ Charged theta fields, corrected fractional normal products, all-state twisted lo
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockVirasoroSpectrum.positive_ground_boundary`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockVirasoroSpectrum.rawL_virasoro`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockVirasoroSpectrum.shift_forced`
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockVirasoroSpectrum.sum_Ico_id`
 - Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockCurrentNormal](LatticeHalfFockCurrentNormal.md)

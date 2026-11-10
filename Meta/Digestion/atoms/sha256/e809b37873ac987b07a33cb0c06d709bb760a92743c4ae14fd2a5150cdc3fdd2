@@ -1,0 +1,31 @@
+**推论 87.1（独立固定长度 names 的精度代价）。** 固定定义 86.1 的一个 $0<q\le1/1000$。假设 static dictionary label 仅用一个独立的长度 $\ell\ge0$ binary data word 命名，word 内禁止相邻 $11$，前置 seam 固定为 $0$ 且在这 $\ell$ 位之外，不加其他末端约束。每个 name 只索引一个已供应的 fixed whole-qutrit CPTP decoder，不能附带未计入的 phase access 或 name-dependent continuous program parameter。则对 $\delta>0$，存在达到全部 phase tasks 阈值 $\eta_2(q)+\delta$ 的这种 static naming，当且仅当
+
+$$
+F_{\ell+2}\ge M_q(\delta),\qquad F_0=0,\quad F_1=1.
+\tag{87.1}
+$$
+
+因此最短这种 data length $\ell_q(\delta)$ 满足
+
+$$
+\ell_q(\delta)=\frac{\log(1/\delta)}{2\log\phi}+O_q(1),
+\qquad\phi=\frac{1+\sqrt5}{2},\qquad\delta\downarrow0.
+\tag{87.2}
+$$
+
+同一 naming contract 对定理 86.4 的 fixed finite catalogue，在 (86.11) 下的精确 capacity condition 是 $F_{\ell+2}\ge N$。
+
+**证明。** §76.4 与推论 83.2 已供应此独立 fixed-length no-$11$ contract 的 word count $F_{\ell+2}$，此处不另立 counting theorem。若 naming 实现阈值，distinct names 使用的 fixed maps 数不超过 $F_{\ell+2}$，由定义 86.1 不小于 $M_q(\delta)$。反之，(86.9) 说明 $\delta>0$ 有 finite dictionary，故最小 positive integer $M_q(\delta)$ 确实由某 dictionary 实现；若 (87.1) 成立，将这些 maps 分配到不同 legal names 即足够。没有结尾限制，且前置 seam 为 $0$，因此不会删除已计入的 words。
+
+标准 Fibonacci formula
+
+$$
+F_{\ell+2}=\frac{\phi^{\ell+2}-(-\phi^{-1})^{\ell+2}}{\sqrt5}
+$$
+
+给出 $F_{\ell+2}=\Theta(\phi^\ell)$。对最短 $\ell$ 使用 $F_{\ell+2}\ge M$ 及前一长度的失败条件，得
+$\ell=(\log M)/\log\phi+O(1)$。将定理 86.4 的 fixed-$q$ relation
+$\log M_q(\delta)=\tfrac12\log(1/\delta)+O_q(1)$ 代入即得 (87.2)。finite catalogue 则使用其恰为 $N$ 的 label count。∎
+
+这一推论把同一 actual quantum task 的 positive-slack phase resolution 翻译成声明的 FIB static-address length。precision 放宽使一个 fixed map 可以服务一段 tasks；zero-slack 时 circle 不存在 finite dictionary，fixed finite catalogue 则每个 phase 仍须独立 label。它只计算 names 的静态容量，不计算 decoder descriptions、phase acquisition、online updates、program counter、量子 program/storage dimension、paid read ports 或物理费用。即使 names 可编码，也没有构造实际取得 phase、更新 register 或执行 decoder 的装置；这些仍需原来源的权限与付费实现合同。
+

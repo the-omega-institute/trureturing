@@ -1,0 +1,38 @@
+**Theorem 83.3 (off-omitted-cone locality obstruction).** Suppose all
+successful births during acquisition are confined to descendant cones of
+initially readable terminals. Arbitrarily many such births cannot repair
+entry reporting at $g>1$, or whole-current/predictor recovery at $g=3$.
+The assertion permits adaptive rational controls and Reads at every
+non-omitted inherited or fresh label.
+
+**Proof.** Let $W=\bigcap_{k\ge0}\ker C_SA^k$ be the original hidden
+subspace of §79. Its vectors vanish off the omitted path and at every
+attachment, and $AW\subset W$. In particular they vanish at every
+initial readable terminal. Under a readable-cone birth extend these vectors
+by zero at fresh cells. The new edges touch only old zero coordinates and
+fresh zero coordinates, so, for the fresh-zero inclusion $E_1$ and new
+adjacency $B_1$,
+
+$$
+B_1E_1\eta=E_1A\eta\qquad(\eta\in W).
+\tag{83.3}
+$$
+
+The same holds at each further birth in those cones. By induction, after
+any finite such growth sequence, its inclusion $F$ intertwines the
+current adjacency and $A$ on $W$. At every acquired cut after $t$
+Ticks the difference between paired entries $x,x+\eta$ is consequently
+$F A^t\eta$. All allowed terminal Reads annihilate it, including the
+fresh descendants. Common Adds cancel. Identical complete replies give
+identical adaptive choices, guards, bindings and stop decisions.
+
+For entry reporting choose nonzero rational $\eta\in W$, which exists
+exactly when $g>1$. For $g=3$, §79.2 gives
+$\dim W=2$ with eigenvalues $1,-1$, hence
+$W\subset\operatorname{im}A$ and no nonzero such difference dies under
+any power. Thus actual final currents differ. The full future task retains
+the omitted ports; Convention 75.2 supplies a later all-port distinguishing
+continuation. A common self-contained predictor cannot serve both. This
+is a locality restriction on this policy, not a representation-independent
+impossibility. $\square$
+

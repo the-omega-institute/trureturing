@@ -1,0 +1,141 @@
+### 62.2. 完整原行桥梁与全普通图谱
+
+源坐标双射为
+
+$$
+q=r_0/b>0,\quad s=2/b>2q,\qquad
+P(q,s)=\begin{pmatrix}2q/s&2/s\\q(1-2q/s)&1-2q/s\end{pmatrix}.
+\tag{62.5}
+$$
+
+正向 $s-2q=2(1-r_0)/b>0$，秩一强制下左元的公式。反向四元正、迹一且 $bc_{\rm src}=r_0(1-r_0)$；非零迹排除秩零，且返回原 $q,s$。这覆盖 ENTIRE 严格源域，包括 $s=4$ 与 $s=4q$。另有 $j=q+2(1-q^2)/s$。
+
+置
+
+$$
+D_0=2-q-2q^2,\quad H=D_0+3q=2+2q-2q^2,\quad
+e(x)=1+x/s,\quad o(x)=qe(x)+D_0/s,\quad T=\nu/s.
+$$
+
+在原偶、奇节点，$e,o$ 恰为相应迹。六原行当且仅当源严格、整个 $g\ne0$、$d=a_0-\lambda$ 且 BOTH 整个恒等式
+
+$$
+-\lambda+eg=E+TU_0,\qquad -\lambda+og=R+qTV_o.
+\tag{62.6}
+$$
+
+证明必要性：相应差各有三个原节点根及三次系数 $T,qT$；减去相应节点三次式后次数至多二，三个不同根使其恒零。充分性在 SAME 节点取值即得六行，不除任何增益样本。
+
+全部偶升幂系数为
+
+$$
+(0,\mu+\lambda/s,\nu+\mu/s,\nu/s)=(0,L+8T,A-6T,T),
+$$
+
+故可逆地
+
+$$
+\nu=sT,\quad \mu=sA-sT(s+6),\quad
+F_{\rm orig}=\lambda/s=L-sA+T(s+2)(s+4),\quad
+\lambda=sF_{\rm orig},\quad d=a_0-sF_{\rm orig}.
+\tag{62.7}
+$$
+
+奇左升幂系数是
+
+$$
+\big((q-1+D_0/s)\lambda,\ q(\mu+\lambda/s)+(D_0/s)\mu,
+q(\nu+\mu/s)+(D_0/s)\nu,\ q\nu/s\big),
+$$
+
+右边是 $(C-15qT,B+23qT,D-9qT,qT)$。三次自动相同，其余恰为
+
+$$
+\begin{aligned}
+Q&=D-qA-HT=0,\\
+L_{\rm res}&=B-qL+15qT-D_0[A-T(s+6)]=0,\\
+R_C&=C-15qT-[(q-1)s+D_0]F_{\rm orig}=0.
+\end{aligned}
+\tag{62.8}
+$$
+
+逐系数反向恢复 BOTH 恒等式。因此原 $C$ 和 $15qT$ 都必须保留。
+
+ordinary 先声明 $q\ne a$。置
+
+$$
+\delta=q-a,\quad u=2q+2a+1>0,\quad \theta=T/\tau,\quad
+\eta=n/u<0,\quad h=s+5-u=s-2q+4-2a>0.
+$$
+
+$a$ 的方程给 $D_0=-\delta u,H=3q-\delta u$。原系数逐项收集得
+
+$$
+Q/\tau=3a-\delta m-H\theta,\qquad
+L_{\rm res}/\tau=\delta\{u[m-(s+1)\theta]-n\}-5Q/\tau.
+\tag{62.9}
+$$
+
+只在 $q\ne a,\tau\ne0$ 后取消，得到 $Q=L_{\rm res}=0$ iff $Q=0$ 与 $m=(s+1)\theta+\eta$。没有除 $H$。
+
+令 $\Gamma=n-(4a+1)m-6a<0$。由 $u-(4a+1)=2\delta$，
+
+$$
+\Gamma=-K_{\rm pos}\theta,\qquad
+K_{\rm pos}=u(s+1)+2H=u(s-2q+2a+1)+6q>0.
+$$
+
+故每个实际普通世界均推得 $\theta>0$，包括 $H=0$。每个偶系数于是恢复为
+
+$$
+F:=F_{\rm orig}/\tau=3\theta-h\eta>0,\qquad
+g(x)=s\tau[\theta x^2+(\eta-5\theta)x+F],\quad d=a_0-s\tau F.
+\tag{62.10}
+$$
+
+特别真正二次是原式的结论。常数计算中
+$F=n-(s+5)m+\theta(s+2)(s+4)$；代 $n=u\eta,m=(s+1)\theta+\eta$，$\theta$ 系数恰为三，$\eta$ 系数为 $-h$。
+
+定义 SAME 实际取得响应
+
+$$
+\kappa=\frac{z-a_0-E(4)}{2\tau}.
+$$
+
+时钟四和时钟六 $J$ 的迹同为 $1+4/s$，固定增益给 $g(6)-g(4)=2s\tau(5\theta+\eta)$。因此第七原行 iff
+
+$$
+\begin{aligned}
+\kappa&=(s+4)(5\theta+\eta)=(s+4)[m-(s-4)\theta]\\
+&=5m+15\theta+(s-1)\eta,\\
+\kappa-8m&=(s-4)(\eta-3\theta).
+\end{aligned}
+\tag{62.11}
+$$
+
+因为 $\eta-3\theta<0$，$\kappa<8m$ iff $s>4$，等号 iff $s=4$，$\kappa>8m$ iff $s<4$。没有取消 $s-4$ 或零样本。
+
+完整的一个 $q$ 图谱可直接由取得数据给出。对辅助 $q>0$ 置
+
+$$
+b_\kappa=\kappa-5m+2\eta,\quad
+\Delta=b_\kappa^2-60\eta(m-\eta)>b_\kappa^2,\quad
+\theta=\frac{b_\kappa+\sqrt\Delta}{30}>0,\quad
+s=\frac{m-\eta}{\theta}-1.
+\tag{62.12}
+$$
+
+这是 $15\theta^2-b_\kappa\theta+\eta(m-\eta)=0$ 的唯一正根：常数严格负，判别式严格大于 $b_\kappa^2$，另一根严格负。辅助点还不是世界。定义 $S_\kappa$ 为恰好通过 ALL 过滤的 $q$：
+
+$$
+q>0,\quad q\ne a,\quad s>2q,\qquad
+3a-(q-a)m-H\theta=0,
+$$
+
+$$
+\bar C-15q\theta-[(q-1)s+D_0](3\theta-h\eta)=0.
+\tag{62.13}
+$$
+
+反向每个保留点用 (62.5)、(62.10) 固定一个 $P,g,d$。$s$ 的定义恢复 ordinary 及全部偶系数；$Q$ 与 (62.9) 恢复奇二次、一次；原常数恢复奇常数，三次自动。故 BOTH 恒等式及 SAME 六行全部恢复。只除已正的 $\theta$，正根方程反向恢复 (62.11) 及 SAME 第七行。正向任一实际普通世界推得此唯一正根、此 $s$ 及所有过滤。因此这是 ENTIRE 普通原世界 iff。等 $q$ 固定整个世界，不同 $q$ 给不同源；不能从此固定坐标唯一性推出普通集合单点。
+

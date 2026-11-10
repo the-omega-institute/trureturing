@@ -1,0 +1,19 @@
+**Theorem 17.1 (DEV VI, Theorems 3.1–3.2).** For every real $Y$ and every exactly three-target known set $K\subseteq\mathcal F(H_4(Y))$,
+
+$$
+L_3(K,H_4(Y))\ \Longrightarrow\
+\exists m_5\ne j_5\ \forall W\in K:\
+m_5(W)=m_5,\ j_5(W)=j_5.
+\tag{17.11}
+$$
+
+Every known set at this parent with at most three targets has a strategy using at most three further reads, hence eight total reads. Consequently any compatible losing family with $L_3$ there, finite or infinite, has at least four targets.
+
+**Proof.** Unfold (17.1) at fifth $J$. The selected losing child has $L_2$ and at least two targets. The inherited II, Theorem 53.2 excludes exactly two, so that child must be all of the original triple. Its $j_5$ is constant. Unfold at fifth $M$. If its losing child had exactly two targets, they would share their actual $m_5$ and the already common $j_5$, contradicting the preceding bad-pair exclusion. This child too is all three targets, giving common $m_5$. These children are the same fixed triple with all earlier readings retained. If $m_5=j_5$, (17.6) gives $H_W(5)=0$ and thus $g_W(5)=0$ for every target. The inherited II, Theorem 58.1 gives one fixed $JJJ$ recovery policy on that whole class, contradicting $L_3$. This proves (17.11).
+
+The inherited V, Corollary 4.1 now applies to exactly this common non-diagonal joint fiber and its whole known triple. It supplies recovery within the three remaining clocks, contradicting the assumed $L_3$. To spell out a policy on every known triple, if $j_5$ varies, take fifth $J$; each actual child has at most two targets. Stop on a singleton and separate a remaining pair within two atoms using II, Theorem 53.2. If $j_5$ is constant and $m_5$ varies, take fifth $M$ and use the proved bad-pair exclusion. On a pair choose the first word in $MM,MJ,JM,JJ$ whose sixth or seventh read differs, execute its atoms individually, and stop at the first distinction. Such a word exists by the two-target meaning of $\neg L_2$. If both fifth functions are constant and equal, use the root-five $JJJ$ policy. If constant and unequal, use V, Corollary 4.1 on the entire known triple, choosing at each retained fiber a successful next atom and stopping at a singleton.
+
+For a known pair take fifth $J$; it either distinguishes immediately or leaves a pair excluded from $L_2$ by II, Theorem 53.2. A singleton can stop already. All policies use actual response children, clocks five through seven, and five already counted parent reads. Therefore every set of size below four is recoverable, proving the cardinality implication for an arbitrary compatible family without extracting a triple from a larger losing family. $\square$
+
+VI, Theorem 3.3 also recovers a known $K\subseteq\mathcal F(H_4(Y))$ with constant $j_5$ if every actual fifth-$M$ child has at most two targets. Its policy takes that $M$ and separates each whole retained pair by the preceding exclusion. At $H_3$, if every actual fourth-$M$ child has at most three targets, take fourth $M$, read its $Y$, and apply Theorem 17.1 to that entire child. Both statements allow infinite known families and finish within eight total reads; they impose the cardinality conditions on every whole actual child.
+

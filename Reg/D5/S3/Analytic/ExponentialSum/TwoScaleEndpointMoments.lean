@@ -114,3 +114,70 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
 
 end
 end Reg.D5.S3.Analytic.ExponentialSum.TwoScaleEndpointMoments
+
+namespace Reg.D5.S3.Analytic.ExponentialSum.TwoScaleEndpointMoments.ExponentialMoment
+open _root_.TwoScaleEndpointMoments
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open MeasureTheory Set
+noncomputable section
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
+def actual : Realization signature :=
+  realize signature (fun _ _ r => r) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => (0:ℝ)) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ (r : ℝ) (_hr : 0 < r) (k : ℕ),
+    IntegrableOn (fun t : ℝ => t^k * Real.exp (-(R.readout () () r * t))) (Ioi 0) ∧
+      (∫ t : ℝ in Ioi 0, t^k * Real.exp (-(r*t))) = (k.factorial:ℝ)/r^(k+1)
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hi := (h 1 (by norm_num) 0).1
+  simp [rejected, realize, integrableOn_const_iff] at hi
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  exact ⟨(), 1, 2, by simp [actual, realize]⟩
+def family : Registration arena (type_of% (@exponential_moment)) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨exponential_moment, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
+    rejected_law
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@_root_.TwoScaleEndpointMoments.exponential_moment) (Realization signature) Unit Unit := {
+  unitName := `Reg.D5.S3.Analytic.ExponentialSum.TwoScaleEndpointMoments.ExponentialMoment.unit
+  realizationName := `Reg.D5.S3.Analytic.ExponentialSum.TwoScaleEndpointMoments.ExponentialMoment.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ r => r) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.ExponentialSum.TwoScaleEndpointMoments
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg", "fn", "fn", "arg", "body", "arg", "arg", "arg", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+end
+end Reg.D5.S3.Analytic.ExponentialSum.TwoScaleEndpointMoments.ExponentialMoment

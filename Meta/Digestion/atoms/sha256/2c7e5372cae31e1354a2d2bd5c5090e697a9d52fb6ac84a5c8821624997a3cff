@@ -1,0 +1,30 @@
+## 7. 回到真正二元中点：一端恢复等价于两端共同恢复
+
+<a id="sec-c90-midpoint-recovery"></a>
+
+现在令 $\rho_0,\rho_1$ 为定义 [2.4](#def-c90) 中的两态，取
+
+$$
+\sigma=\frac{\rho_0+\rho_1}{2},\qquad
+ d=\frac{\rho_0-\rho_1}{2},\qquad
+ \tau=\mathcal N(\sigma).
+$$
+
+这是两端自身确定的中点，不再增加第三个独立参考态。
+先令 $p=\operatorname{supp}\sigma$、$q=\operatorname{supp}\tau$ 为支撑投影，
+并将矩阵接口限制到相应支撑空间。
+由于 $\rho_i\le2\sigma$，两端均支撑在 $p$ 中；其输出均支撑在 $q$ 中。
+对任意 $p$ 上的正矩阵 $X$，存在有限常数 $c$ 使 $X\le c\sigma$，故
+$\mathcal N(X)\le c\tau$。因此 $\mathcal N$ 确实限制为这两个支撑空间之间的
+CPTP 映射，$\sigma,\tau$ 在各自空间中严格正，前述逆幂均合法。
+
+若需要在原输出空间定义全通道，可将支撑内恢复扩为
+
+$$
+\widetilde{\mathcal R}_\sigma(Y)
+ =\mathcal R_\sigma(qYq)+\operatorname{Tr}((I-q)Y)\sigma.
+$$
+
+这个扩展完全正且迹保持，并与所有实际 $\mathcal N(\rho_i)$ 上的恢复一致。
+下文仍使用支撑内的简洁记号。
+

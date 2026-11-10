@@ -1,0 +1,43 @@
+**Theorem 10.1 (Infinitely many singular events).** Suppose the event list is infinite and its singular event indices, in increasing order, are $i_0<i_1<\cdots$. Define the prescribed nonzero row and finite-block coefficients
+
+$$
+\beta=e_{i_0}^TG\Phi_{0,i_0},\qquad
+\kappa_k=\left\langle e_{i_{k+1}},
+\Phi_{i_k+1,i_{k+1}}e_{i_k}\right\rangle_Q.
+\tag{10.1}
+$$
+
+Every $|\kappa_k|\leq1$. If any $\kappa_k=0$, every initial state is annihilated by time $t_{i_{k+1}}+1$. Otherwise put
+
+$$
+C=\sum_{k=0}^\infty-\log|\kappa_k|\in[0,\infty],\qquad
+p=e^{-C},\quad e^{-\infty}=0.
+\tag{10.2}
+$$
+
+The exact full chronological limit and stable space are
+
+$$
+\lim_{t\to\infty}\|u_t\|_Q=p|\beta u_0|,\qquad
+S_{\varepsilon,\boldsymbol\alpha}=
+\begin{cases}
+\ker\beta,&C<\infty,\\
+\mathbb R^2,&C=\infty.
+\end{cases}
+\tag{10.3}
+$$
+
+In the case of a zero $\kappa_k$ the limit is zero and the stable space is also $\mathbb R^2$. The row $\beta$ has one-dimensional kernel. A vector in that kernel is killed at the first singular event. If all $\kappa_k$ are nonzero, every vector outside that kernel remains nonzero at every finite time; when $C=\infty$, these surviving vectors decay only asymptotically. These alternatives are entirely prescribed finite-block and scalar-series conditions.
+
+*Proof.* Every factor preceding $i_0$ is nonsingular, so $\Phi_{0,i_0}$ is invertible. Since $e_{i_0}^TG\ne0$, the row $\beta$ is nonzero. Immediately after the first singular event the interaction vector is $e_{i_0}\beta u_0$. Each intervening factor up to the next singular event is one of the factors in the finite map $\Phi_{i_k+1,i_{k+1}}$; the singular event itself is projection onto $\mathbb Re_{i_{k+1}}$. Induction therefore gives the exact vectors immediately after the successive singular events:
+
+$$
+F_{i_m+1}u_0=e_{i_m}(\beta u_0)
+\prod_{k=0}^{m-1}\kappa_k\quad(m\geq0).
+\tag{10.4}
+$$
+
+Nonexpansiveness of the intervening finite map and Cauchy--Schwarz imply $|\kappa_k|\leq1$. A zero coefficient kills the whole already rank-one image. If all are nonzero, the absolute finite products in (10.4) converge to $e^{-C}$, simply by taking their logarithms. At the singular-event subsequence the norms thus have exactly the limit (10.3). All chronological norms are nonincreasing by (8.7), and this subsequence tends to infinite time, so the same limit holds at every time.
+
+For $\beta u_0=0$, (10.4) already vanishes at $m=0$. For $\beta u_0\ne0$ and all $\kappa_k\ne0$, its vectors never vanish. Nonsingular intervening factors cannot kill them either. Before $i_0$ all factors are invertible. This proves every finite-annihilation and survival assertion and distinguishes an infinite logarithmic sum from a zero finite factor. $\square$
+

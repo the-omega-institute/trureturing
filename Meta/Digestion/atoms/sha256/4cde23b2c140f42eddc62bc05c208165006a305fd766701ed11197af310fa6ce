@@ -1,0 +1,18 @@
+**推论 18.4（beta 零平面的完整源增益秩一必要性）。** Fix a
+complete legal source tuple satisfying every original guard of
+Theorem 13.3. If its two $J^7$ sources have a common nonunit
+signature and $E_J|_V=\beta|_V=0$, then
+
+$$
+\operatorname{rank}(G_{j_0}|_V)=1.
+\tag{18.20}
+$$
+
+This is a necessary condition, asserting neither a realization of
+this rank-one locus nor exclusion of the other original source
+strata or a decision of the unrestricted eight-read problem.
+
+Proof. The original $G_{j_0}$ guard makes the rank positive.
+E-zero, Theorem 8.1 bounds it by two, and Theorem 18.3 excludes
+two when $\beta|_V=0$. Thus it equals one. ∎
+

@@ -1,0 +1,39 @@
+**定理 88.1（分类所用纯、混合态都对应原通道）。** 定理 85.2 的曲线、定理 86.1 的两支混合边界以及下述 $d=1/2$ 的实例，均属于原完整 $\mathcal K_d$ 并有原域 $M_3\to M_5$ CPTP 提升，具有原全部完整输入效果 $Y_j$ 和后继 $S_\rho$。
+
+证明。复用第一卷定理 35.4 和本卷 (55.5) 的一般提升，明确为
+
+$$
+\begin{gathered}
+D_+=\frac1{\sqrt2}\begin{pmatrix}1&1&0&0&0\\0&0&\sqrt2&0&0\\0&0&0&1&1\end{pmatrix},\quad
+D_-=\frac1{\sqrt2}\begin{pmatrix}1&-1&0&0&0\\0&0&0&0&0\\0&0&0&-1&1\end{pmatrix},\\
+\omega=D_+^\dagger AD_++D_-^\dagger DD_-,\qquad
+T_\omega(X)=BP_+XP_+B^\dagger+(f^\dagger Xf)\omega.
+\end{gathered}
+\tag{88.1}
+$$
+
+$x\mapsto(D_+x,D_-x)$ 是 $\mathbb C^5\to\mathbb C^3\oplus N$ 的酉识别；$A,D$ 是 (54.2) 中实际正分解，故 $\omega$ 正且迹一。$T_\omega$ 的 Kraus 表为 $BP_+$ 及 $\sqrt{\lambda_r}w_rf^\dagger$，其中 $\omega=\sum_r\lambda_rw_rw_r^\dagger$；伴随平方和为 $P_++ff^\dagger=I_3$。第一卷 (35.3)、(35.6) 给
+
+$$
+\begin{gathered}
+T_\omega^*(J_0)=\operatorname{diag}(1,0,d),\\
+T_\omega^*(J_1)=\frac1{16}\begin{pmatrix}1&3&0\\3&9&0\\0&0&6-5d\end{pmatrix},\qquad
+T_\omega^*(J_2)=\frac1{32}\begin{pmatrix}17&3&0\\3&9&0\\0&0&6+11d\end{pmatrix},\\
+\mathcal GT_\omega(X)=B[UP_+XP_+U^\dagger+(f^\dagger Xf)\rho]B^\dagger=S_\rho(X).
+\end{gathered}
+\tag{88.2}
+$$
+
+三个 $Y_j$ 是 $(q,r,f)$ 输入基中的完整矩阵，含全部跨条目，不只是 $ff$ 上的三个数；原递推 $J_{j+2}=(J_j+J_{j+1})/2$、$j\ge1$ 延续到所有深度。故这是原纤维提升而非矩拟合。第二卷 (39.5)、(39.7) 再给同一时间词下的两个原始联合终端响应。
+
+对纯曲线取 $A=\psi_t\psi_t^\dagger,D=0$，其物理纯向量正是 (70.4) 的
+
+$$
+\eta_t=\sqrt d\,p_H+\sqrt d(e^{\mathrm it}-1)Br
++\mathrm i(3e^{\mathrm it}-2)f_d(t)c_H,
+\quad p_H=Bq,\quad c_H=(e_0+e_1-e_3-e_4)/2.
+\tag{88.3}
+$$
+
+供应恒等式 $D_+^\dagger(a,h_{\rm out},g)=(p_H,Br,c_H)$、$K_j\eta_t=B\psi_t/\sqrt2$ 保留实际五维仪器。对 (86.7)，取 $u_+=D_+^\dagger u_\epsilon$、$w_-=D_-^\dagger w_v$，则 $\omega=u_+u_+^\dagger+\epsilon w_-w_-^\dagger$。其每个参数来自已证的原正分解，因而直接消费相同的 (88.1)–(88.2)。这些提升的存在没有增加实际制备分解或访问其环境的权限。∎
+

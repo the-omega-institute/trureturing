@@ -1,0 +1,32 @@
+## 4. Four meanings at the same completed cut
+
+Keep the installation, source binding, charts, schedule, clock and rights
+context fixed. The following are numerical views on actual completed-window
+images, with their indicated independent meanings:
+
+| View | Meaning at the held cut $z$ |
+| --- | --- |
+| Space $F_S(z)=z$ | Actual current material-field coordinates; no observation port is inferred. |
+| Time $F_T(z)=V\mathcal O E(-T)z$ | Numerical contents of the performed ordered taps and their fixed timestamps/framing. |
+| Boundary $F_B(z)=R_{\mathcal W}z$ | Current lawful finite endpoint-response family (1.6), including its original selector/reference. |
+| Memory $F_M(z)=H\mathcal O E(-T)z$ | Acquired weighted accumulated output, together with its derived current predictor and retained callable binding. |
+
+The extra predictor in Memory is a deterministic function of $F_M$ and
+the fixed context, so it changes no fiber. Actual tap occurrences are
+witnessed by the performed record. A numerical conversion recreates its
+contents on this image, not a fresh historical occurrence, ACK, owner
+grant or Return. No inverse below authenticates an arbitrary submitted
+record or transfers another owner's right.
+
+Write $D_{\mathcal W}$ for the block evaluation map
+
+$$
+(D_{\mathcal W}b)_w=\sum_{j<\nu}\frac{s(w)^j}{j!}b_j.
+\tag{4.1}
+$$
+
+At the current cut $b=\mathcal O z=U(T)a$ belongs to $A$. Thus the actual
+images are $VU(-T)A$, $HU(-T)A$, and $D_{\mathcal W}A$. They can be proper
+subspaces of their ambient arrays; arbitrary arrays are not presumed to
+be source records.
+

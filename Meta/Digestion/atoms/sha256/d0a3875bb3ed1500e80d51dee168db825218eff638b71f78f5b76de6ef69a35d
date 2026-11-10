@@ -1,0 +1,40 @@
+#### 命题 9.4：非平行两轴的紧谱界
+
+设 $c=n\cdot m$、$|c|<1$， $W=C_n+C_m$、$\varepsilon=2-\operatorname{Tr}(\rho W)$。 仅使用这两条相关便有
+
+$$
+\operatorname{Tr}(\rho\Phi)\ge
+ \max\left\{0,\ 1-\frac{\varepsilon}{2(1-|c|)}\right\},
+ \qquad
+ \operatorname{Tr}(\omega W)\le1+|c|\quad(\omega\text{ 可分}).
+$$
+
+第二界可达到；第一界作为由 $\operatorname{Tr}(\rho W)$ 单独给出的下界也可达到。 因此 $\varepsilon<1-|c|$ 足以认证纠缠。
+
+**证明。**
+
+共同作 $\overline U\otimes U$ 的参考变换保持 $\Phi$，可设 $n=e_z$、$m=(\sin\theta,0,\cos\theta)$，$c=\cos\theta$。 在 $\Phi^+,\Psi^-$ 上 $W$ 分别取 $2,-2$； 在 $\operatorname{span}\{\Phi^-,\Psi^+\}$ 上为
+
+$$
+\begin{pmatrix}
+  1+\cos2\theta&\sin2\theta\\
+  \sin2\theta&-1-\cos2\theta
+ \end{pmatrix},
+$$
+
+其本征值为 $\pm2|c|$。 故 $W\le2\Phi+2|c|(I-\Phi)$，直接给 Bell 重叠的下界。 混合 $\Phi$ 与本征值 $2|c|$ 的正交本征态达到线性边界； 更低的相关可在 $\Phi^\perp$ 内达到，故零界也紧。
+
+对乘积态，反射转置一侧的 Bloch 向量后，相关和为 $a^{\mathsf T}(nn^{\mathsf T}+mm^{\mathsf T})b$。 中间实矩阵的最大奇异值是 $1+|c|$，两向量长度至多一，故得界。 取两向量同为最大本征方向即可达到；凸性给全部可分态。
+
+$\square$
+
+若实际二元效果为 $E_{\pm|j}=(I\pm\eta_j\sigma_j)/2$，$0<\eta_j\le1$， 记录中的原始相关为 $r_j=\eta_j\operatorname{Tr}(\rho C_j)$。 若估计误差 $|\widehat r_j-r_j|\le e_j$， 可用下界 $\sum_{j=n,m}(\widehat r_j-e_j)/\eta_j$ 代入上述证书。 小强度使误差放大 $1/\eta_j$。 近共线时 $1-|c|$ 趋于零，原始两相关证书的容差按夹角平方消失。 完整条件层析也可重组正交方向
+
+$$
+v=\frac{m-cn}{\sqrt{1-c^2}},\qquad
+ \tau(\sigma_v)=
+ \frac{\tau(\sigma_m)-c\tau(\sigma_n)}{\sqrt{1-c^2}},
+$$
+
+但记录误差被 $1/\sqrt{1-c^2}$ 放大。 上面的紧谱界只对两条原始相关而言，不声称使用全部条件层析后仍最优。
+

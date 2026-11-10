@@ -1,0 +1,44 @@
+#### 定理 7.5（并联相容的有效收缩）
+
+给酉路径 $V_j$、权 $w_j>0$，令
+
+$$
+W=\sum_jw_j,\qquad M=W^{-1}\sum_jw_jV_j .
+$$
+
+则
+
+<a id="eq-4"></a>
+
+$$
+\begin{aligned}
+ \sum_jw_j\left\lVert b-V_ja\right\rVert ^2
+ &=W\left\lVert b-Ma\right\rVert ^2+W a^\dagger(I-M^\dagger M)a,\end{aligned}
+\tag{4}
+$$
+
+<a id="eq-parallel"></a>
+
+$$
+\begin{aligned}
+ I-M^\dagger M
+ &=\frac1{2W^2}\sum_{j,k}w_jw_k(V_j-V_k)^\dagger(V_j-V_k)\ge0.
+
+\end{aligned}
+\tag{5}
+$$
+
+$M$ 酉当且仅当所有 $V_j$ 相同。
+
+**证明。**
+
+展开第一式，交叉项相同，利用 $V_j^\dagger V_j=I$ 得常数差。
+展开第二式的双和，其两个对角乘积各为 $W^2I$，其余项为 $2W^2M^\dagger M$。
+所有权严格正，所以缺陷为零当且仅当所有矩阵差均为零。
+
+∎
+
+这解释了为什么总体边关系都酉，而遗忘隐藏路径后的有效观察仍可能收缩。递归消元自然闭合在正半定边界二次型中，一般不闭合在“只含单条酉边、没有额外势项”的狭窄形式中。
+
+<a id="sec-8"></a>
+

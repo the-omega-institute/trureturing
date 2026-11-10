@@ -1,0 +1,6 @@
+Thus the rank-four search can be organized as a pairwise test: either find two feasible rank-one lifts with both wedge factors nonzero, or certify a common ruling by showing that one wedge factor vanishes for every pair.
+
+*Proof.* Convexity gives the first assertion, and Proposition 202.2 gives its rank. The converse is Proposition 201.2 together with the definition of a transverse pair. \(\square\)
+
+The wedge formula makes the rank-four boundary computationally concrete while keeping the pointwise constraints unchanged: the only new data are one feasible pair and two nonvanishing $2\times2$ minors. It does not construct such a pair for an arbitrary partition, evaluate the ruling identities in a concrete candidate, or settle $F_{64}$, $H43$, SRS\text{-}20, physical succession or Lean/kernel formalization.
+

@@ -1,0 +1,96 @@
+### 定理 2.2（有限 Takesaki 条件：参照与子代数的三种等价描述）
+
+<a id="thm-c123-finite-takesaki"></a>
+
+设 $\mathcal A\subseteq\mathcal B(H)$ 为含幺 $*$-子代数，$\sigma>0$ 为
+$\operatorname{Tr}\sigma=1$ 的密度矩阵。
+存在正交分解
+
+<a id="eq-c123-algebra-blocks"></a>
+
+$$
+H=\bigoplus_\alpha L_\alpha\otimes R_\alpha,
+ \qquad
+ \mathcal A=\bigoplus_\alpha\mathcal B(L_\alpha)\otimes I_{R_\alpha}.
+\tag{9}
+$$
+
+在该分解下，下列条件等价：
+
+1. 存在含幺完全正投影 $\mathcal E:\mathcal B(H)\to\mathcal A$，满足
+    $\operatorname{Tr}\sigma\mathcal E(X)=\operatorname{Tr}\sigma X$。
+
+2. 存在 $S_\alpha>0$ 与忠实密度矩阵 $\omega_\alpha$，使
+
+
+   <a id="eq-c123-reference-blocks"></a>
+
+   $$
+   \sigma=\bigoplus_\alpha S_\alpha\otimes\omega_\alpha,
+     \qquad \sum_\alpha\operatorname{Tr} S_\alpha=1.
+   \tag{10}
+   $$
+
+3. 对所有 $t\in\mathbb R$，
+    $\sigma^{it}\mathcal A\sigma^{-it}=\mathcal A$。
+
+若这些条件成立，保持 $\sigma$ 的条件期望唯一，且为
+
+<a id="eq-c123-conditional-expectation"></a>
+
+$$
+\mathcal E(X)=\bigoplus_\alpha
+ \bigl[(\operatorname{id}_{L_\alpha}\otimes\varphi_{\omega_\alpha})(P_\alpha XP_\alpha)\bigr]
+ \otimes I_{R_\alpha},\qquad
+ \varphi_{\omega}(B)=\operatorname{Tr}(\omega B).
+\tag{11}
+$$
+
+这里 $P_\alpha$ 是相应中心块的投影。
+
+**证明。**
+先说明分解 [(9)](#eq-c123-algebra-blocks) 的有限代数来源。
+以中心的最小投影分开各块；每个块中心只有标量。
+在一块内取正交最小投影 $p_1,\ldots,p_n$，其和为该块单位。
+最小性和谱分解给 $p_i\mathcal A p_i=\mathbb C p_i$。
+若 $0\ne X\in p_i\mathcal A p_j$，则
+$X^*X=\lambda p_j$、$XX^*=\lambda p_i$，故归一化后给连接两投影的部分等距。
+“能够连接”是等价关系：两个相接的部分等距之积仍连接端点；
+每个等价类中投影之和与 $\mathcal A$ 交换，因而中央。
+中心只有标量，故所有 $p_i$ 均相连。
+取 $v_i^*v_i=p_1$、$v_iv_i^*=p_i$，置 $e_{ij}=v_iv_j^*$。
+这些是矩阵单位，且
+$p_i\mathcal A p_j=\mathbb C e_{ij}$，因为
+$v_i^*Xv_j\in p_1\mathcal A p_1$。
+令 $R=p_1H$，映射 $\lvert i\rangle\otimes\xi\mapsto v_i\xi$ 给
+$H\simeq\mathbb C^n\otimes R$，$\mathcal A=M_n\otimes I_R$。
+对各中心块重复即可。
+
+假定条件1。对 $A\in\mathcal A$，$A,A^*A,AA^*$ 都被 $\mathcal E$ 固定；引理~[2.1](#lem-c123-schwarz) 给出
+$\mathcal E(AXB)=A\mathcal E(X)B$。
+故跨中心块被消去。在一块内，$\mathcal E(I\otimes B)$ 既属于
+$\mathcal B(L)\otimes I$，又与其中每个元素交换，因而等于
+$\varphi(B)I$。正性和含幺性给出唯一密度矩阵 $\omega$，使
+$\varphi(B)=\operatorname{Tr}\omega B$。双模性质遂给
+$\mathcal E(A\otimes B)=\varphi(B)A\otimes I$。
+保持 $\sigma$ 的条件先迫使 $\sigma$ 没有跨中心块，再由
+
+$$
+\operatorname{Tr}\sigma_\alpha(A\otimes B)
+ =\operatorname{Tr}\sigma_\alpha(A\otimes I)\,\operatorname{Tr}\omega_\alpha B
+$$
+
+迫使 $\sigma_\alpha=S_\alpha\otimes\omega_\alpha$。
+忠实性使两个因子都正定。这也证明唯一性。
+反过来，式~[(11)](#eq-c123-conditional-expectation) 由正泛函、压缩与直和组成，完全正、含幺、幂等且保持 [(10)](#eq-c123-reference-blocks)，故条件2推出条件1。
+
+条件2推出条件3可直接对每个乘积块取幂。反过来，连续的模作用必须逐点固定有限个最小中心投影，故 $D=\log\sigma$ 分块。
+在一块上，取重数空间的自伴基 $I,F_1,\ldots$，其中 $F_\mu$ 无迹，写
+$D=H_0\otimes I+\sum_{\mu>0}H_\mu\otimes F_\mu$。
+模不变的零点导数给
+$[D,A\otimes I]\in\mathcal B(L)\otimes I$，所以
+$[H_\mu,A]=0$ 对一切 $A$ 成立。
+于是 $\mu>0$ 的 $H_\mu$ 全是标量，
+$D=H_L\otimes I+I\otimes H_R$。
+指数化并归一化第二因子得到条件2。
+

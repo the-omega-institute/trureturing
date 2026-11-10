@@ -46,7 +46,7 @@ theorem term_finite (m : ℤ) : Function.HasFiniteSupport (term m) := by
     have hmjpos : 0 ≤ m+j := by omega
     exact hj (by simp [term, hjpos, hmjpos])
 
-private theorem sum_Ico_id (a b : ℤ) (hab : a ≤ b) :
+theorem sum_Ico_id (a b : ℤ) (hab : a ≤ b) :
     ∑ x ∈ Finset.Ico a b, (x : ℂ) = ((a : ℂ)+b-1)*((b : ℂ)-a)/2 := by
   induction b, hab using Int.leInduction with
   | base => simp

@@ -1,0 +1,62 @@
+### 定理 7.1（C90 的二态恢复形式）
+
+<a id="thm-c90-midpoint-main"></a>
+
+对上述中点与式 [(2.2)](#eq-c90-loss) 的平方损失 $\ell$，下列条件等价：
+
+1. C90 成立，即 $\ell=0$；
+
+2. $\mathcal R_\sigma\mathcal N(\rho_0)=\rho_0$；
+
+3. $\mathcal R_\sigma\mathcal N(\rho_1)=\rho_1$；
+
+4. 存在同一个 CPTP 映射 $\mathcal S$ 同时恢复两态：
+          $\mathcal S\mathcal N(\rho_i)=\rho_i$，$i=0,1$。
+
+对两个端点还同时有
+
+<a id="eq-c90-pair-errors"></a>
+
+$$
+\left\lVert \rho_i-\mathcal R_\sigma\mathcal N\rho_i\right\rVert_{2,\sigma^{-1}}^2
+ \le\ell,
+ \qquad
+ \frac12\left\lVert \rho_i-\mathcal R_\sigma\mathcal N\rho_i\right\rVert_1
+ \le\frac12\sqrt\ell.
+\tag{7.1}
+$$
+
+同一个上界适用于每个端点的全部完整后续读出。
+
+**证明。**
+由 $\rho_0-\sigma=d$、$\rho_1-\sigma=-d$，
+
+$$
+\mathcal I(\rho_0,\rho_1)=Q_\sigma(\rho_0)=Q_\sigma(\rho_1).
+$$
+
+输出的中点为 $\tau$，差为 $\mathcal N(d)$，所以
+$\ell=\ell_\sigma(\rho_0)=\ell_\sigma(\rho_1)$。
+定理 [5.2](#thm-c90-general-recovery) 随即给出前三项等价和两个误差界。
+也可直接由线性性看出
+
+$$
+\rho_1-\mathcal R_\sigma\mathcal N\rho_1
+ =-(\rho_0-\mathcal R_\sigma\mathcal N\rho_0),
+$$
+
+所以恢复一端必然恢复另一端。
+
+前三项成立时，$\mathcal R_\sigma$ 就是第四项所需的共同映射。
+反之，任何共同恢复两端的 $\mathcal S$ 都自动满足
+
+$$
+\mathcal S(\tau)
+ =\frac{\mathcal S\mathcal N(\rho_0)+\mathcal S\mathcal N(\rho_1)}2
+ =\sigma.
+$$
+
+因此可应用一般恢复定理。若原先在更大空间给出 $\mathcal S$，
+由 $\mathcal S(\tau)=\sigma$ 及正性，它也可限制到同一支撑接口。
+最后使用推论 [6.2](#cor-c90-operational-bound)，便得全部后续读出结论。
+

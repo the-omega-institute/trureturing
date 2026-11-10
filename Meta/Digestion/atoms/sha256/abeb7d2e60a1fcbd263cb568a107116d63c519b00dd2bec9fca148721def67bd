@@ -1,0 +1,52 @@
+**Theorem 29.2 (infinite conditional worst-case error).** At every
+realized terminating record in this branching dense-entrance model,
+there are two compatible rational entrances whose curves $f$ have
+infinite supremum distance, and whose curves $g$ have infinite supremum
+distance. Every common autonomous forecast has infinite supremum error
+on at least one of them. Thus the infimum over all forecasts of their
+worst compatible-source error is $+\infty$ at that record, for either
+target of (29.1).
+
+Proof. Use the compatible pair of Theorem 28.2, with final difference
+$\epsilon v$. A rooted native tree with at least three terminals has
+an unrooted degree-three vertex: it has a nonroot logical branch, whose
+two children and parent are distinct neighbors. That vertex persists
+through subsequent growth. Choose such a vertex $r$, a vertex $s$ with
+$v_s>0$, and the fixed terminal $j$. Put
+
+$$
+d_0=\operatorname{dist}(s,r)+\operatorname{dist}(r,j).
+\tag{29.2}
+$$
+
+Follow a fixed path from $s$ to $r$. Make $m$ successive two-step
+excursions $r\to u\to r$, independently choosing one of the three
+neighbors of $r$ at each excursion. Then follow a fixed path from $r$
+to $j$. The $3^m$ neighbor-choice strings give distinct walks of the
+same length $d_0+2m$. The ordinary adjacency-power/walk identity gives
+
+$$
+(B^{d_0+2m}\epsilon v)_j\ge\epsilon v_s3^m.
+\tag{29.3}
+$$
+
+For real $a\le b$, $\lfloor b\rfloor-\lfloor a\rfloor>b-a-1$.
+Applying this with scale $1/h_*$ shows that the corresponding digital
+difference is at least $\epsilon v_s3^m/h_*-1$. Both distances are
+unbounded. If one forecast had finite supremum errors $E,E'$ on both
+curves, their pairwise distance would be at most $E+E'$ at every epoch,
+a contradiction. This proves the worst-case assertion for every
+forecast and hence its infimum. $\square$
+
+The walk identity used here is the standard one in pinned mathlib's
+[SimpleGraph/AdjMatrix.lean](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Combinatorics/SimpleGraph/AdjMatrix.lean),
+`SimpleGraph.adjMatrix_pow_apply_eq_card_walk`. The new source-local
+step is its use on the same positive difference surviving the entire
+adaptive terminating service, rather than on an unrelated favorable
+initialization. Contraction-dependent
+[QuantizedWordApproximation](../../../D5/S3/ObserverMemory/Prediction/QuantizedWordApproximation.lean)
+and the strictly stable scalar
+[RankOneInfiniteHorizonRisk](../../../D5/S3/Observer/Hankel/RankOneInfiniteHorizonRisk.lean)
+have different hypotheses and conclusions. None supplies a bounded
+all-future error for this branching unit law.
+

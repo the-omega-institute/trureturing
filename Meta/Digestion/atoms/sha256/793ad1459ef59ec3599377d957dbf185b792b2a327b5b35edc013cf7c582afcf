@@ -1,0 +1,62 @@
+Both $K$ and $\Lambda$ are
+non-rational, in the sense of having infinitely many distinct rooted subtrees.
+
+Proof. Comparing holes 1–4 and 11 in equal whole outputs identifies the
+five coordinate copies. Holes 5, 6 and 12 give exactly (SFS.38).
+Every other corresponding hole then agrees by its native definition.
+Conversely these five identifications and three equations make all thirteen
+holes and the entire comb equal, proving the reverse whole-output direction.
+
+The first two equations give strict edges $X\longrightarrow Y$ and
+$Y\longrightarrow X$, each of weight one. Their total drift is two and
+the full forward region is $\{X,Y,Z,W\}$. The incoming head $V$ is outside
+that region. Theorem 9.2 splits the four coordinates into finite atoms or
+all $\Omega$.
+
+In the finite mode write $X=T_j$. Since $\rho X=T_{j+1}$ is a pair,
+$j\ge1$. The actual atomic recurrence
+$T_{j+1}=\langle T_j,T_{j-1}\rangle$ and ordered-pair cancellation force
+$Y=T_j,Z=T_{j-1}$. The second equation forces $W=T_{j-1}$.
+Thus $X=Y$ and $Z=W$. These are finite original coordinates, isolated at
+their actual hole addresses. Any finite source approaching that completed
+output must eventually have $x=y$ and $z=w$ exactly, violating retained
+negatives in $\Delta$. Equivalently, substitution into the whole negative
+support of Lemma 5.1 makes this entire unbounded finite-rank family false.
+No finite barrier list or bound on $j$ is supplied.
+
+In the infinite mode, $X=Y=Z=W=\Omega$. The last equation becomes the
+existing pair-guarded equation for $K$ in Theorem 6.3. Theorem 4.1 supplies
+its unique solution and computable native prefixes. Its two explicit pair
+levels give the prefix agreement gain; bare $\rho$ is only nonexpanding.
+The reconstructed output is (SFS.39).
+
+To realize it, fix any requested $h$. Prescribe depth-$h$ prefixes of
+$\Omega$ for $x,y,z,w$ and of $K$ for $v$. All five prescribed completions
+are infinite. The seed (SFS.37), with $m=4$, proves feasibility of the entire
+45-negative conjunction on the full Cartesian $\mathcal T^5$. Apply SLP
+Lemma 2.1 to obtain one finite tuple $(x_h,y_h,z_h,w_h,v_h)$ with those
+prefixes and every negative simultaneously. Repeated occurrences use these
+same finite values. Evaluate both $\Theta_0$ and $\Theta_1$ on this tuple.
+Theorem 10.2 places each result in its entire exact stratum, with all original
+records and its full row. Prefix nonexpansion of native powers and pairing
+makes both whole outputs agree through $h$ with the one $\Lambda$, including
+the early leaves of $K$ and absence below them. They are different originals
+because their full rows differ. Their cross-source completed feedback need
+not hold as an exact finite equation. Every step terminates for supplied $h$.
+
+Conversely, any common closure point retains the fixed comb and its reached
+holes. Continuous extraction at holes 1–4 and 11 and continuity of the
+helper expressions give (SFS.38). Finite isolation and the actual acquired
+negatives exclude its finite mode. Its infinite mode gives $\Omega$ on the
+region and guarded uniqueness gives $K$. Thus every common closure point is
+$\Lambda$, while the finite construction proves the reverse inclusion.
+The same argument applies to a compact subsequence of any all-depth joint
+finite realizations. No sign or finite partition is asserted on $\Lambda$.
+
+Finally reuse (SFS.23): the guarded tree has
+$K|_{(RL)^jRR}=T_j$ for every $j\ge0$. The transport paths stay on original
+branch nodes. The finite $T_j$ are distinct, so $K$, and therefore its
+containing source $\Lambda$, has infinitely many distinct rooted subtrees.
+This continuation and its non-rationality are suppliers; their role here is
+in the completed multi-residual consumer.
+

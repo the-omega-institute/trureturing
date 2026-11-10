@@ -1,0 +1,59 @@
+**Proposition 116.1 (one joined bill).** Put $m=\max\{1,k-d\}$ for the
+mandatory-both task. In coordinates
+$(P,S,\mathrm{Read}_0,\mathrm{Read}_+,\mathrm{Add},\mathrm{Tick},\mathrm{Hold})$
+the single marker-prepared run has the following exact source-call counts.
+All zero operands are executed, and no unused general-preparation bill
+is substituted for this actual marker run.
+
+| Actual segment/cut | Source-call vector |
+| --- | --- |
+| Build zero $u$, marker preparation, fresh growth, displayed cancellation, late advice/clearing cut | $(b,2a+3c-1,k,0,6k,5,7)$ |
+| Late window through readiness | $(0,0,m,1,0,1,1)$ |
+| Readiness through performed Add/Hold use | $(0,0,0,0,1,0,1)$ |
+| Joined run through used cut | $(b,2a+3c-1,k+m,1,6k+1,6,9)$ |
+| Optional additional designated-value export | $(0,0,1,0,0,0,0)$ |
+
+**Proof.** Original zero construction costs $c$ promotions and $b-1$
+splits. Marker preparation adds $2k$ Adds, one Tick and one Hold.
+Fresh growth adds $a$ promotions and $a+2c$ splits. The displayed
+cancellation has $k$ exact Reads, $4k$ Adds, four Ticks and six Holds.
+Summing gives the first row; the actual steps of §114 give the remaining
+rows. Native material is $M=5a+7c-1$ cells with $M-1$ births beyond the
+initial alpha; it is not the number of observer scratch cells. $\square$
+
+These source-call counts are only coordinates of the same-run resource
+vector. Use Conventions 109.2--109.3's actual framing/traffic and resource
+accounting for every original call, including complete reply/End/ACK/Return.
+Additionally charge the new service's commissioning, binding, grants,
+noise supply, real reply handling and sign processing. Charge the owned
+$N$-coordinate target reception, extraction, $R\theta$ computation and
+retention, clearing/isolation of dependent copies, greedy complement
+calculation, rational solving and each actual predictor initialization and
+update. Selector construction, raw-table lookup, rational arithmetic,
+operand creation, every copy/transport, installed evaluator, scratch,
+coexisting buffers, persistent or isolated producer material and final
+callable backing are resource coordinates on this same run. There is no
+free unknown seed or full-response oracle. Mathematical addresses and
+arithmetic create neither provenance nor an unearned grant.
+
+For fixed finite $u,R$ and rational inputs, the rational computations and
+finite strings can use ordinary finite algorithms with size depending on
+the actual data; their work, precision, scans and storage remain charged.
+Finite control does not imply bounded memory. Exact $Y$ handling/sign is
+instead the separately declared ideal real interface: this text provides
+no finite-bit length, hardware construction or bit-cost upper bound for
+it. If later historical export is selected, retaining/copying the literal
+$Y$ requires an additional ideal real record and its explicit resource
+coordinate; discarding it for native service does not retain it for free.
+Native prediction alone is cheaper by omitting that archive and, when
+mixed occurrence is optional, by using the existing noiseless repair.
+These comparisons claim no joint optimum over material, computation,
+precision, traffic, storage or physical cost.
+
+The rational linear advice domain is essential to (112.4): an irrational
+row $(1,\sqrt2)$ is injective on $\mathbb Q^2$, while unrestricted nonlinear
+encodings can pack rational tuples outside this contract. Zero noise,
+support-separated alternatives, leaked means/seeds, infinite averaging,
+nonpersistent erasure or a restricted future menu likewise require their
+own statements. There is no physical/universal impossibility theorem here.
+

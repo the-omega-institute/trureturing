@@ -1,0 +1,5 @@
+source_id = "fib-legal-edge-load-visible-tail-phase-rigidity-and-window-limits"
+path = "docs/develop/theory/FIB_LEGAL_EDGE_LOAD_VISIBLE_TAIL_PHASE_RIGIDITY_AND_WINDOW_LIMITS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

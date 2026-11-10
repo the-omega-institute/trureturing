@@ -1,0 +1,4 @@
+**Definition 18.1 (an armed cut and one edit assay).** A settled cut is armed when every current terminal has field value one. No condition on internal cells is included in this definition. To arm the entry, actually Reset, perform Add$(j,1)$ for every initial raw label, and Hold. Between this arming and the final zeroing, the acquisition uses no Tick.
+
+An edit assay starts armed with raw length $n$. Perform exactly one enabled original $P_p$ or $S_p$, consume its whole Growth reply, Hold, and Read every old raw label $1,\ldots,n$, in increasing order. Complete the entire scan even if a zero has already been found. The new split label $n+1$ is excluded from this scan. Rearm by Add$(j,1)$ at the unique old zero label, and, after a split, also Add$(n+1,1)$. No other Add is made in this assay.
+

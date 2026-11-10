@@ -1,0 +1,12 @@
+**定义 18.1（逐耦合持续性与两个独立的存在量词）。** 设 $p\ge3$ 为奇素数，实际带标号圈为 $\mathbb Z/(2p)\mathbb Z$，边权和顶点质量均为 $1$，$v\in\{-1,1\}^{2p}$，并沿用约定 13.1 的 $H_t$。记
+
+$$
+\mathsf N_j(v)\iff
+\forall t\in\mathbb R\ \exists\lambda\in\mathbb R\
+\exists\psi\in\mathbb R^{2p}\setminus\{0\},\qquad
+H_t\psi=\lambda\psi,\quad\psi_j=0.
+\tag{18.1}
+$$
+
+母卷定理 3.2 将此条件与约定 2.1 的持续节点等同。$\mathsf N_j(v)\land\mathsf N_{j+p}(v)$ 中的两个存在量词分别属于各自的站点和耦合；不要求预先选定同一本征值、同一本征向量或与 $t$ 无关的向量。
+

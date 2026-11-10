@@ -1,0 +1,20 @@
+**定理 88.2（有限零读数与全 Z 等价）。** 在完整 $B$ 上，不借 SC、$\mathrm O_{\mathrm{fin}}$ 或 SJ，有
+
+$$
+\mathrm Z_{\mathrm{fin}}
+\quad\Longleftrightarrow\quad
+\mathrm Z_\pi
+\quad\Longleftrightarrow\quad
+\mathrm Z.
+\tag{88.4}
+$$
+
+证明。定理 83.2 的首步仅用 $B$ 已给 $D_a u=0$。固定基元 $b_i$，令 $T=D_{b_i}$。有限零读数与 $\mathcal R_p$ 张成 $E_0(p)$，先杀掉 $Tp$ 的整个 $E_0(p)$ 分量。再选一个含 $p$ 的选定 frame $\mathcal F$；因 $p$ 已列入每个同框 $r\ne p$ 的 $\mathcal R_r$，反向的有限读数给
+
+$$
+q(p,Tp)=q(p,Tu)-\sum_{r\in\mathcal F\setminus\{p\}}q(p,Tr)=0.
+\tag{88.5}
+$$
+
+primitive 的 $E_1(p)=\mathbb Rp$，故这也杀掉 $E_1(p)$ 分量，剩下 $Tp\in E_{1/2}(p)$。引理 88.1 给每个 $D_{b_i}$ 的全导子律；第一槽线性遂给全部 $D_a$ 为导子。任意导子微分 $p^2=p$ 得 $D_ap\in E_{1/2}(p)$；与原 $q$ 正交的 Peirce 分解即给全部 $\mathrm Z_\pi$。定理 83.2 再把它接回全 Z。反向，$\mathrm Z_\pi$ 已对所有原子成立，每个有限测试点都在其域内。此链没有使用 $D_u=0$；$D_a u=0$ 与它是不同条件。∎
+

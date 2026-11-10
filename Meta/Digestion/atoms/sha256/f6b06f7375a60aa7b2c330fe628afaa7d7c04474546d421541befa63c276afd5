@@ -1,0 +1,36 @@
+因此 $\mathbb J_C(S_D\mid\mathcal F_d)\ge\varepsilon$，并有
+
+$$
+\mathbb E_{\mathbb J_C}[\rho^{2I_D}\mid\mathcal F_d]
+=1-(1-\rho^2)\mathbb J_C(S_D\mid\mathcal F_d)
+\le1-\varepsilon(1-\rho^2)=\eta.
+$$
+
+两侧的块都按 $i=1,\ldots,q$ 的时间先后顺序平均；此前块的指标在下一块起点的 $\mathcal F_d$ 中可测。逐块迭代条件期望，得到
+
+$$
+\mathbb E_{\mathbb J_C}\rho^{2K_j^L}\le\eta^q,\qquad
+\mathbb E_{\mathbb J_C}\rho^{2K_j^R}\le\eta^q.
+$$
+
+右侧虽反向传递条件律，成功概率仍按前向时间顺序平均，所以使用同一个 $\varepsilon$。此处不要求块独立，也不要求额外给定未来后仍有成功概率下界。对两个点态后验界平方并按同一实际律积分，即得 (4.3)。
+
+$j=0$ 时转移乘积和块列均为空，$K_j^L=K_j^R=0$，界为一，且各自仍条件于另一侧整条半线。约定 $0^0=1$；若 $\rho=0$，一次成功就使传递后的两个律相同。$0<\varepsilon\le1$ 且 $0\le\rho<1$，故 $\rho^2\le\eta<1$；若 $\eta=0$，则 $\varepsilon=1,\rho=0$，每块几乎必然成功，$j\ge b$ 时两个缺陷均为零。每个 $\lfloor j/b\rfloor$ 的值至多出现 $b$ 次，从 $\lfloor R/b\rfloor$ 起分别求和平方界及其平方根即得 (4.4)，包括上述零值情形。$\square$
+
+由定理 2.1，若每个正权类都满足矩形词前提，令 $b=\max_Cb_C$、$\eta=\max_C\eta_C<1$，则对原律
+
+$$
+e_L^P(j),e_R^P(j)\le\eta^{\lfloor j/b\rfloor},\qquad A_P\le\frac{2b}{1-\sqrt\eta}.
+\tag{4.8}
+$$
+
+更精确的加权尾界为
+
+$$
+A_P(R)\le2\sum_C\frac{\sqrt{w_C}\,b_C\eta_C^{\lfloor R/b_C\rfloor/2}}{1-\sqrt{\eta_C}},\qquad
+\tau_P(R)\le2\sum_C\frac{w_Cb_C\eta_C^{\lfloor R/b_C\rfloor}}{1-\eta_C}.
+\tag{4.9}
+$$
+
+这些是指定实际律的常数；不构成对 $\Theta_N$、后验带域或参数闭包的统一估计。
+

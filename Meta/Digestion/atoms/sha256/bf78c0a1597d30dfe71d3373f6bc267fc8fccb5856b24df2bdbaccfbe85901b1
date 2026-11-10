@@ -1,0 +1,50 @@
+**推论33.3（识别后才取得的静态结论）。** 在主分类前件下，同一个旧 $D$ 实双线性、连续、中央双模，具有中央平移中性、中央投影下降与纤维商下降。例如
+
+$$
+\begin{gathered}
+D(fa,gb)=fgD(a,b),\quad D(a+fu,b)=D(a,b),\quad D(ca,cb)=cD(a,b),\\
+\|D(a,b)-D(a',b')\|
+\le\|a-a'\|\|b\|+\|a'\|\|b-b'\|.
+\end{gathered}
+\tag{33.4}
+$$
+
+$f,g$ 为实连续中央函数，$c$ 为中央投影。对任意有限原标签 $a_j$、复系数 $z_j$、每份原评价，令 $Y=\sum_jz_ja_j$，则
+
+$$
+\sum_{j,k}\bar z_jz_k\{\gamma(a_j\circ a_k)-i\gamma D(a_j,a_k)\}
+=\gamma_{\mathbb C}(Y^*\star_QY)
+=\gamma(p_+Y^*Y+p_-YY^*)\ge0.
+\tag{33.5}
+$$
+
+同一乘法的结合律给原换括号式
+
+$$
+(a\circ b)\circ c-D(D(a,b),c)
+=a\circ(b\circ c)-D(a,D(b,c)),
+\tag{33.6}
+$$
+
+并给 Jacobi、Jordan 导子律和有界数学流
+
+$$
+L_a(b)=D(a,b)=[iQa/2,b],\qquad
+ e^{tL_a}(b)=e^{iQta/2}b\,e^{-iQta/2}.
+\tag{33.7}
+$$
+
+同一 $\mathcal A_Q=(M,\star_Q,{}^*)$ 有忠实含单位保锥等距 Hilbert 表示 $\Pi$，可给每份原评价向量 $\xi_\gamma$，使
+
+$$
+\begin{gathered}
+\Pi(S(a,b))=\{\Pi(a)\Pi(b)+\Pi(b)\Pi(a)\}/2,\quad
+\Pi(D(a,b))=i[\Pi(a),\Pi(b)]/2,\\
+\gamma(a)=\langle\xi_\gamma,\Pi(a)\xi_\gamma\rangle,\qquad
+\|\xi_\gamma\|^2=m_\gamma.
+\end{gathered}
+\tag{33.8}
+$$
+
+证明。33.4由已识别交换子计算；33.5由同一 C* 正平方；其余代数律由结合律与交换子恒等式。GNS取全部数学态直和保证忠实，再加入每份正质量原评价的归一 GNS分量，向量乘 $\sqrt{m_\gamma}$；零质量取零向量。这些是成熟 C* 接口的应用。表示像不必是全 $B(H)$，未取得一般非原子中心上的正常性、全局密度矩阵或全局 Kraus 算子。数学流参数不是物理钟。所有这些正则性和表示都在旧值识别后才使用。∎
+

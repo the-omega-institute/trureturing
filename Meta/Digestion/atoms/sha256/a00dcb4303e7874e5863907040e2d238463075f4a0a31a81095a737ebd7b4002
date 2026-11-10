@@ -1,0 +1,43 @@
+**Theorem 59.2 (Full independent-pair equivalence).** The original
+predicate (53.1) is equivalent to the existence of real
+$p\ne24,v,w_0,w_1,w_*$ and reconstructions satisfying
+
+$$
+\begin{gathered}
+x_0\in\mathcal R(p,v,w_0),\qquad
+x_1\in\mathcal R(p,v,w_1),\\
+x_2,x_3\in\mathcal R(p,v,w_*),\\
+x_0\not\sim x_1,\qquad x_2\not\sim x_3,\qquad
+\mathfrak a(x_0)=\mathfrak a(x_1).
+\end{gathered}
+\tag{59.2}
+$$
+
+There is no condition between the two pairs. In particular they may
+overlap, $w_0,w_1$ need not be equal to one another or to $w_*$, and
+the J pair's common value need not equal $w_*$. Their acquired
+readings share exactly the same $p,v$ and the same specified earlier
+record. Width equality within or between the pairs is not imposed.
+
+**Proof.** Starting from (53.1), set
+$w_0=m(W_{J0})$, $w_1=m(W_{J1})$ and
+$w_*=m(W_{M0})=m(W_{M1})$. Apply Theorem 57.2 at each world's
+own width to obtain $x_0,x_1,x_2,x_3$. Its bijection preserves
+complete-world distinctness, and (59.1) is the original J reading,
+so every condition in (59.2) follows.
+
+Conversely, each reconstruction in (59.2) gives a complete world
+in the same entire $C(p,v)$ by Theorem 57.2. The two stipulated
+inequivalences give the two distinct-world pairs, and (59.1) gives
+the J collision. The last two reconstructions have the same terminal-M
+value $w_*$ by their definition. These are exactly (53.1), with
+no identification between the two pairs and no equality required
+between their common terminal answers. $\square$
+
+Thus an M pair at arbitrary widths is specified exactly by two
+inequivalent legal reconstructions for one shared $(p,v,w)$.
+Different widths already imply inequivalence. At the same width,
+Corollary 57.3 gives the exact two-root test. In either case the
+independent J pair remains the separate condition in (59.2), with
+its own two terminal-M values $w_0,w_1$ retained independently.
+

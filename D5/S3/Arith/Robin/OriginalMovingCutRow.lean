@@ -56,7 +56,7 @@ private lemma endpoint_le_twice {t : ℝ} (ht : 1 ≤ t) : endpoint t ≤ 2 * t 
   dsimp [endpoint]
   linarith
 
-private lemma endpoint_strictMonoOn : StrictMonoOn endpoint (Ici (1 : ℝ)) := by
+lemma endpoint_strictMonoOn : StrictMonoOn endpoint (Ici (1 : ℝ)) := by
   intro s hs t ht hst
   change 1 ≤ s at hs
   change 1 ≤ t at ht
@@ -65,7 +65,7 @@ private lemma endpoint_strictMonoOn : StrictMonoOn endpoint (Ici (1 : ℝ)) := b
   dsimp [endpoint]
   linarith
 
-private lemma kernel_nonneg {t x : ℝ} (ht : 4 ≤ t) : 0 ≤ kernel t x := by
+lemma kernel_nonneg {t x : ℝ} (ht : 4 ≤ t) : 0 ≤ kernel t x := by
   have hden : 0 < weight t * t ^ (11 / 10 : ℝ) :=
     mul_pos (weight_pos (by linarith)) (Real.rpow_pos_of_pos (by linarith) _)
   unfold kernel
@@ -76,7 +76,7 @@ private lemma kernel_nonneg {t x : ℝ} (ht : 4 ≤ t) : 0 ≤ kernel t x := by
     exact (mul_nonneg hwb (sub_nonneg.mpr hx.2)).trans h
   · exact le_rfl
 
-private lemma height_bounds {t : ℝ} (ht : 4 ≤ t) :
+lemma height_bounds {t : ℝ} (ht : 4 ≤ t) :
     0 ≤ lowerHeight t ∧ lowerHeight t ≤ t ^ (-3 / 10 : ℝ) := by
   have ht0 : 0 < t := by linarith
   have htb : t ≤ endpoint t := le_add_of_nonneg_right (Real.rpow_nonneg ht0.le _)
@@ -97,7 +97,7 @@ private lemma height_bounds {t : ℝ} (ht : 4 ≤ t) :
           ← Real.rpow_add ht0]
         norm_num
 
-private lemma kernel_le_height {t x : ℝ} (ht : 4 ≤ t) :
+lemma kernel_le_height {t x : ℝ} (ht : 4 ≤ t) :
     kernel t x ≤ lowerHeight t := by
   have ht0 : 0 < t := by linarith
   have hden := mul_pos (weight_pos (by linarith : 1 < t))
@@ -138,7 +138,7 @@ private lemma kernel_zero_of_outside {t x : ℝ}
     · simp [he]
     · rw [if_neg (by grind)]
 
-private lemma kernel_le_one {t x : ℝ} (ht : 4 ≤ t) : kernel t x ≤ 1 := by
+lemma kernel_le_one {t x : ℝ} (ht : 4 ≤ t) : kernel t x ≤ 1 := by
   exact (kernel_le_height ht).trans ((height_bounds ht).2.trans
     (Real.rpow_le_one_of_one_le_of_nonpos (by linarith) (by norm_num)))
 
@@ -152,7 +152,7 @@ private lemma measurable_kernel_left (x : ℝ) : Measurable (fun t : ℝ => kern
   · fun_prop
   · exact measurable_const
 
-private lemma kernel_integrableOn {ell R x : ℝ} (hell : 4 ≤ ell) :
+lemma kernel_integrableOn {ell R x : ℝ} (hell : 4 ≤ ell) :
     IntegrableOn (fun t => kernel t x) (Icc ell R) := by
   apply (integrableOn_const (C := (1 : ℝ)) (by simp : volume (Icc ell R) ≠ ⊤)).mono'
     (measurable_kernel_left x).aestronglyMeasurable

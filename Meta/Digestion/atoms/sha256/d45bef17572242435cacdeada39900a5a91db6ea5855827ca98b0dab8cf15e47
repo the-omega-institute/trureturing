@@ -1,0 +1,17 @@
+**Proposition 69.2 (one-run counts ending at the declared graph).** Let $L=a+c$ be the number of logical leaves of the prescribed $u$, with $c$ beta leaves. Definition 69.1 reaches exactly $u$, whole zero before the unit Add, using $c$ successful P and $L-1$ successful S calls and no refusals, Tick or Read. After that origin, one length-$m$ ternary encoding followed by one assay of Definition 68.1 has the following total primitive counts, all on that same specimen and including the origin:
+
+$$
+\begin{aligned}
+P&=c,&S&=L-1,&\mathrm{Reset}&=0,\\
+\mathrm{Tick}&=m+K,&\mathrm{Add}&=1+m+K,\\
+\mathrm{Read}&=m+2,&\mathrm{Hold}&=m+K+2.
+\end{aligned}
+\tag{69.1}
+$$
+
+Its final field is $A^{m+K}e+\sum_{i<m}d_iA^{m+K-1-i}e$ on exactly that $u$, with a synchronized complete predictor. Only the last two of the $m+2$ Reads are late-acquisition samples.
+
+**Proof.** AA Theorem 17.2 gives an enabled original construction ending at $u$. At every prefix, old zero values persist and every fresh cell is zero; no Tick or Add intervenes. Induction proves whole zero on the final prescribed graph. A P increases the number of beta logical leaves by one and leaves the logical leaf count unchanged. An S leaves the beta count unchanged and increases the logical leaf count by one. Starting at $(c,L)=(0,1)$ therefore gives exactly the stated growth counts, also $1+c+2(L-1)=N$ allocated material vertices. The authentic installed persistence rule supplies the map at every prefix and hence the actual first-terminal selector. The unit Add and Hold give precisely the origin of Definition 67.1.
+
+Every encoded digit contributes one Tick, one Add, one Hold and one literal Read, including digits zero and two. The assay contributes the vector of Theorem 68.2, including its initial Hold and all zero Add frames. Adding the one origin Add/Hold gives (69.1). The final field follows by advancing (67.1) exactly $K$ times. No count is taken from a different preparation or endpoint. $\square$
+

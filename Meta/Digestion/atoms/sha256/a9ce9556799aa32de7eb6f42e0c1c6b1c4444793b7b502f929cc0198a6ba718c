@@ -1,0 +1,35 @@
+### 定义 2.3（五模式黄金投影）
+
+在上述五模式顺序中，定义
+
+$$
+P_A=
+\begin{pmatrix}
+\varphi^{-1}&0&\varphi^{-3/2}&0&0\\
+0&0&0&0&0\\
+\varphi^{-3/2}&0&\varphi^{-2}&0&0\\
+0&0&0&0&0\\
+0&0&0&0&1
+\end{pmatrix}.
+$$
+
+等价地，令
+
+$$
+|v\rangle=\varphi^{-1/2}|\mathrm{null}\rangle+\varphi^{-1}|2\rangle,
+$$
+
+则
+
+$$
+P_A=|v\rangle\langle v|+|13\rangle\langle13|.
+$$
+
+由于 $\varphi^{-1}+\varphi^{-2}=1$，有 $\langle v|v\rangle=1$，从而
+
+$$
+P_A^\dagger=P_A,\qquad P_A^2=P_A.
+$$
+
+因此 $\mathrm{null}$ 与 $2$ 参与黄金比例的相干混合，$13$ 是另一个选中的正交通道，而 $1$ 与 $3$ 属于投影的核。物理含义仍取决于如何制备、控制和读出这些模式。
+

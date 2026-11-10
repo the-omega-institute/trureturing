@@ -1,0 +1,21 @@
+**定义 17.1（完整仪器和内部访问结构）。**
+完整因果单元包括全部结果、失败、拒绝及停止端口。
+观察者由图内可访问代数 $\mathcal A_O$、其中可稳定区分的交换记录子代数
+$\mathcal D_O$，以及依记录选择许可测试的规则组成。
+其记忆、程序、相位参考和未来再耦合的环境均占据图内端口。
+身份由访问及接续角色确定，不要求预选一个几何点。
+
+若 $\mathcal D_O$ 由完整正交记录投影 $R_a$ 生成，联合态为 $\varrho_{SO}$，则
+
+$$
+\begin{aligned}
+p_a&=\operatorname{Tr}[(I\otimes R_a)\varrho_{SO}],\\
+\rho_{S|a}&=
+\frac{\operatorname{Tr}_O[(I\otimes R_a)\varrho_{SO}(I\otimes R_a)]}{p_a}
+\quad(p_a>0).
+\end{aligned}
+$$
+
+这在已选迹/Born 表示内给同一静态关系的条件限制；它不独立证明 Born 律。
+投影或联合态未知时，把两者共同放入 $\Omega_h$ 后逐模型计算。
+

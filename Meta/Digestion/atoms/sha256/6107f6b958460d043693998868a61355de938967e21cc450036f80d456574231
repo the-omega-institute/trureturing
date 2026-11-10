@@ -1,0 +1,54 @@
+#### 定理 6.9：完整可逆性给酉演化
+
+若同一有限 $M_d$ 上的 $\Phi$ 与其双侧逆均为 CPTP，则存在酉 $U$ 使 $\Phi(\rho)=U\rho U^\dagger$。
+
+**证明。**
+
+在效果侧，$T=\Phi^\dagger$ 与逆 $S$ 都保单位且完全正。Schwarz 不等式给
+
+$$
+T(A^\dagger A)\succeq T(A)^\dagger T(A).
+$$
+
+应用 $S$，再用 $S$ 的 Schwarz 不等式，得到两端均为 $A^\dagger A$，故处处取等号。因 $S$ 单射，$T$ 的 Schwarz 也取等号。极化得 $T(A^\dagger B)=T(A)^\dagger T(B)$，故 $T$ 是星自同构。全矩阵代数的星自同构由酉共轭实现：其矩阵单位像仍为一组矩阵单位，选各秩一像的正交单位基并配平相位即可构造酉矩阵。
+
+$\square$
+
+进一步要求同一接口上的连续双侧群
+
+$$
+\Phi_{t+s}=\Phi_t\Phi_s,\qquad \Phi_0=\operatorname{id},\qquad t,s\in\mathbb R.
+$$
+
+则可以一致选择
+
+$$
+U_t=e^{-itH/\hbar},\qquad H=H^\dagger,
+$$
+
+于是 $i\hbar\,d|\psi\rangle/dt=H|\psi\rangle$，密度形式为 $\dot\rho=-i[H,\rho]/\hbar$。为说明生成元，有限维连续一参数矩阵群可微；其效果侧生成元 $D$ 满足 $D(AB)=D(A)B+AD(B)$。以矩阵单位令
+
+$$
+K=\sum_iD(E_{i1})E_{1i}.
+$$
+
+由 $D(E_{kl}E_{i1})=\delta_{li}D(E_{k1})$ 展开并求和，得 $D(E_{kl})=[K,E_{kl}]$，所以 $D(A)=[K,A]$。 星保持使 $K+K^\dagger$ 为标量，减去该标量的一半后可取 $K=iH/\hbar$、$H=H^\dagger$，指数化即得结论。 双侧群、连续性和实际时间标定是这里的前件；任意连续路径或耗散半群不满足同一结论。该构造不选择自然界的具体 $H$ 或 $\hbar$。
+
+内部混态也可来自同一整体的纯态记录。若 $\rho=\sum_j\lambda_j|u_j\rangle\langle u_j|$，取内部参考基 $|j\rangle$，则
+
+$$
+|\Psi\rangle=\sum_j\sqrt{\lambda_j}|u_j\rangle\otimes|j\rangle,\qquad
+\operatorname{Tr}_{\rm ref}|\Psi\rangle\langle\Psi|=\rho.
+$$
+
+这是在已给复联合载体内的纯化，不把任意混态直接改写为两个标量振幅。项目的有限密度纯化模块有对应构造。[\[8\]](#ref-purification)
+
+对原合法有限历史 $j_1,\ldots,j_k$ 和末端效果 $E$，
+
+$$
+p(j_1,\ldots,j_k;E)
+=\operatorname{Tr}\!\left(E\,\Phi_{j_k}\cdots\Phi_{j_1}(\rho)\right).
+$$
+
+细记录被忽略时，把相应原分支求和；保留记录时，可放入内部正交记录寄存器。该式同时保存历史绝对质量与条件态。数学表示不自动授权任意实际仪器的共同组装。
+

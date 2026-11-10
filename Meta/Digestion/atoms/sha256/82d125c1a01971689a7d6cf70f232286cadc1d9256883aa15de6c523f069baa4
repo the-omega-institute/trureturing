@@ -1,0 +1,75 @@
+### 1.2 新增两帧旋转：二次式成立在哪里
+
+上述放大源码的 `frame_rotation` 与
+`uniform_operator_rotation` 分别始于第 108、214 行。
+其输入是有限复矩阵：等距源嵌入 $\iota$、酉 $C$、正交投影 $P$，以及
+
+$$
+U_0=C\iota,\qquad U_0^*U_0=I,\qquad
+ (PU_0)^*(PU_0)=pI.
+$$
+
+在严格 $0<p<1$ 时，定义成功、失败两帧及同一反射乘积
+
+$$
+W=p^{-1/2}PU_0,\quad
+ B=(1-p)^{-1/2}(I-P)U_0,\quad
+ \mathsf Q=(2U_0U_0^*-I)(I-2P).
+$$
+
+记 $\theta=\arcsin\sqrt p$、$c=\cos2\theta=1-2p$、
+$s=\sin2\theta=2\sqrt{p(1-p)}>0$。源码证明
+
+$$
+\begin{aligned}
+W^*W=B^*B&=I, & W^*B&=0,\\
+ \mathsf QW&=cW-sB, & \mathsf QB&=sW+cB.
+\end{aligned}
+$$
+
+因此在活动空间 $M=\operatorname{ran}W\oplus\operatorname{ran}B$ 上，
+
+$$
+(\mathsf Q^2-2c\mathsf Q+I)|_M=0.
+$$
+
+这是全部源列共同的旋转，不是逐输入挑选一个反射；源码还证明全部幂及参考张量上的同一等式。
+第 520 行的精确放大定理另用 coin、源逆调用和两种反射构造有限词。
+这些条件模型不能替代原七地址菜单的实际供应，活动空间的多项式也不能直接覆盖完整档案。
+
+**保留原成功读口，立即出现预算反例。**
+
+由 $P^2=P$ 有 $PW=W$、$PB=0$，所以
+
+$$
+[P,\mathsf Q]W=sB,\qquad [P,\mathsf Q]B=sW.
+$$
+
+若源非零，两帧等距给 $[P,\mathsf Q]\ne0$。
+这里必须写明非零源：Lean 的有限指标类型本身没有排除空源。
+取源中单位向量 $\xi$，保留原效果 $P$ 的实读口
+
+$$
+R_P(u,v)=\operatorname{Re}\langle u,Pv\rangle,
+ \qquad q_P(u)=R_P(u,u).
+$$
+
+令 $f=sW\xi$、$g=B\xi$，直接得到
+
+$$
+\boxed{\quad
+ 2R_P(f,\mathsf Qg)=2s^2>s^2=q_P(f)+q_P(g).
+ \quad}
+$$
+
+这已经违反本稿预算的 $n=0$ 情形，与后来选择哪一个残差无关。
+两帧在 $\xi$ 上也由 $U_0\xi,\mathsf QU_0\xi$ 的实线性组合张成，
+换基行列式非零；这里无需增添免费的成功、失败制备。
+若配方限于有理系数，严格违例可由有理逼近保留，再清分母成为整数配方。
+
+故这份动力学门 $\mathsf Q$ 不能直接充当全部合法效果共用的中央相位钟。
+对这个读口要求共同 $\mathsf Q$ 不变，等价于
+$\mathsf Q^*P\mathsf Q=P$，也就是 $[P,\mathsf Q]=0$，与上式冲突。
+不能为维持预算而删除原成功效果。
+$p=1$ 是另一个退化端点：源码单列 $U_0=W$，不沿用非零失败帧及上述二维反例。
+

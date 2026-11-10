@@ -1,0 +1,33 @@
+## 12. Credited Hermite obstruction and the fixed-acquisition threshold
+
+Define
+
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad \psi=\frac{1-\sqrt5}{2}=-\phi^{-1},
+\qquad
+\Pi_+=\frac{M-\psi I}{\phi-\psi},\quad
+\Pi_-=\frac{\phi I-M}{\phi-\psi}.
+\tag{12.1}
+$$
+
+The characteristic identity makes these complementary rank-one projectors and gives
+
+$$
+M^i=\phi^i\Pi_++\psi^i\Pi_-,\qquad
+\alpha(S)=\operatorname{tr}(\Pi_+S),\quad
+\eta(S)=\operatorname{tr}(\Pi_-S).
+\tag{12.2}
+$$
+
+For legal $P$, $\alpha(P)>0$ because $\Pi_+$ is strictly entrywise positive, and $\alpha(P)+\eta(P)=1$. No positivity or nonvanishing of $\eta$ is assumed. The two auxiliary functionals are independent, as evaluation on the projectors gives $(1,0)$ and $(0,1)$.
+
+For $D=x\,d/dx$ and $f(x)=\sum_i c_ix^i$,
+
+$$
+(D^jf)(\lambda)=\sum_i c_i i^j\lambda^i,\qquad
+((D+1)^jf)(\lambda)=\sum_i c_i(i+1)^j\lambda^i.
+\tag{12.3}
+$$
+
+Both operators act diagonally on monomials. Their order-$j$ leading derivative term is $x^jf^{(j)}$, by induction, so at a nonzero node their jets through order $d$ are invertible triangular transforms of ordinary derivative jets. In particular homogeneous vanishing is precisely root multiplicity at least $m$.
+

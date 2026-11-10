@@ -1,0 +1,190 @@
+**Theorem 9.2 (Full-law polynomial cap stability, including near
+branches).** There are $A_R,B_R$ such that for every integer pair in
+(9.1) with $a\ge A_R$ and every original law with
+
+$$
+0\le\tau:=H(x)-M\le1,
+\tag{9.18}
+$$
+
+the actual partition of Lemma 9.1 has an index $2\le j\le J$ and
+satisfies $0\le S_j-M\le\tau$. For its notation (9.2), let
+$\varepsilon=\sum_{T\text{ exceptional}}x_T$, with exceptional
+meaning every type except $C$ and the singletons in $D$. Then
+
+$$
+\begin{gathered}
+e:=\mathbb E[K-1;A]\le\tau/a^3,\qquad
+|u-u_c|\le4\tau/a^3,\qquad
+\varepsilon\le16\tau/a^2,\\
+|y_i-\alpha|\le3\varepsilon\quad(i\in C),\\
+\sum_{k\in D}(t_k-u/n)^2\le8\beta^3\tau,\qquad
+\max_{k\in D}|t_k-\beta|
+\le\sqrt{8\beta^3\tau}+\frac{4\tau}{na^3},\\
+\|x-x^{j,*}\|_1\le B_R a^{-2}\sqrt\tau.
+\end{gathered}
+\tag{9.19}
+$$
+
+Here $x^{j,*}$ is the actual cap law on this partition, even when
+$j$ is a nonwinning index. In particular every tail marginal is
+between $\beta/2$ and $3\beta/2$ after increasing $A_R$.
+There is a quantitative winning-index implication:
+
+$$
+\tau\le\frac1{2J^2a}\quad\Longrightarrow\quad j\in J_*.
+\tag{9.20}
+$$
+
+**Proof.** We retain the Jensen losses in the strict-payment argument.
+Use $\mathfrak a,\mathfrak b,d,\rho_i$ from (9.8)--(9.10), and put
+
+$$
+\begin{gathered}
+\mathfrak c=rd,\qquad
+b(u)=d((m-2)u-(j-1))>0,\\
+F_j(u)=\frac{n^2}{u}+\frac{r^2m^2}{a-u}
+                    +\frac{m^3b(u)}{(a-u)^2},\\
+P_j=-F_j'(u_c),\qquad
+\Lambda=3/\delta^2-\max\{\mathfrak a,\mathfrak b\}/c^2.
+\end{gathered}
+\tag{9.21}
+$$
+
+On $A$, each $\mathfrak c B-\rho_i\ge0$, and
+
+$$
+\sum_{i\in C}(\mathfrak c B-\rho_i)
+=\mathfrak a(B-1)+\mathfrak b L-L^3
+\le\max\{\mathfrak a,\mathfrak b\}(K-1).
+\tag{9.22}
+$$
+
+Indeed for $I_i=0$ the left summand is
+$d\{r(B-1)+L\}$; for $I_i=1$ it is
+$\mathfrak c(B-1)+r^2+dL-L^2\ge0$ for $1\le L\le m$.
+Off $A$ every $\rho_i\ge0$. Weight these signed inequalities
+by $y_i^{-2}\le c^{-2}$, and use
+$B(K^2-1)\ge3(K-1)$ on $A$. The exact incidence identity for
+$H$ then gives
+
+$$
+H\ge\sum_{k\in D}t_k^{-1}
+       +\sum_{i\in C}\{r^2/y_i+b(u)/y_i^2\}+\Lambda e.
+\tag{9.23}
+$$
+
+For example this identity follows directly by substituting
+$\mathbb E\rho_i=\mathbb E[L^2I_i]-r^2y_i+d(j-1+u)$,
+and keeping the nonnegative core term from $K^2-L^2$.
+
+Let $\bar t=u/n$. The two Jensen losses in (9.23) can be
+retained as
+
+$$
+\begin{gathered}
+H\ge F_j(u)+\Lambda e+\mathcal J_D
+                   +a^2\sum_{i\in C}(y_i-\bar y)^2,\\
+\mathcal J_D=\sum_{k\in D}t_k^{-1}-n^2/u
+=\sum_{k\in D}\frac{(t_k-\bar t)^2}{\bar t^2t_k}
+\ge\frac1{8\beta^3}\sum_{k\in D}(t_k-\bar t)^2.
+\end{gathered}
+\tag{9.24}
+$$
+
+The last bound uses $\bar t\le\delta\le2\beta$ from Lemma 9.1.
+For the core loss, the second derivative of
+$r^2/y+b(u)/y^2$ is at least $2a^2$ on $0<y\le1$.
+
+The scalar function in (9.21) is strictly convex on
+$\ell_j<u<a$: differentiation gives Growing (15.22), with all
+four displayed terms positive. At $u_c$ its exact derivative is
+
+$$
+F_j'(u_c)=-\frac{n^2r^2}{j^2}
+ +\frac{r^2(2mr^2+2m-1)}{(a-1)^2}.
+\tag{9.25}
+$$
+
+By (9.9), $P_j/a^3=z_*-2+O_R(a^{-1})$.
+The bounds (9.3) therefore give, uniformly over all surviving indices,
+
+$$
+P_j\ge a^3/4,\qquad
+\frac{\Lambda-(m/r)P_j}{a^3}
+\ge2z_*-O_R(a^{-1/4})\ge1.
+\tag{9.26}
+$$
+
+The original mean also gives $(u-u_c)_+\le(m/r)e$ by
+(9.11), since $m(B-1)+L\le m(K-1)$ on $A$.
+Apply the supporting tangent of $F_j$ at $u_c$, where $F_j(u_c)=S_j$.
+If $u\le u_c$, keep $P_j(u_c-u)$; if $u>u_c$, pay this
+negative tangent term using $(m/r)P_je$. Equations (9.24)--(9.26)
+prove the quantitative inequality
+
+$$
+H-S_j\ge a^3 e+\frac{a^3}{4}(u_c-u)_+
+       +\mathcal J_D+a^2\sum_{i\in C}(y_i-\bar y)^2.
+\tag{9.27}
+$$
+
+In particular $S_j\le H$ and $S_j\ge M$, because its cap is an
+admissible law. Thus every term on the right is at most $\tau$.
+This proves the assertions about $e,u$ and the tail variance.
+The supporting-tangent inequality used here has precisely the
+one-dimensional convexity hypotheses verified in (9.25)--(9.26);
+see Boyd--Vandenberghe, *Convex Optimization*, §3.1.3, printed p.69.
+
+To obtain exceptional mass, retain the exact common-mean identity
+
+$$
+\zeta:=\mathbb E[m-L;A^c]
+=j-ru+r\mathbb E[B-1;A]+e
+\le r(u_c-u)_++me.
+\tag{9.28}
+$$
+
+On $A^c$ every type other than $C$ has $m-L\ge1$; on $A$ every
+exceptional type has $K-1\ge1$. Hence
+$\varepsilon\le\zeta+e\le(4r+m+1)\tau/a^3
+\le16\tau/a^2$, using $m,r\le2a$.
+Normalization and the original mean give (3.4), so
+
+$$
+x_C-\alpha=-\frac1r\sum_{T\text{ exceptional}}(K-1)x_T,
+\qquad |x_C-\alpha|\le2\varepsilon.
+\tag{9.29}
+$$
+
+Every core marginal is $x_C$ plus at most $\varepsilon$, proving
+its bound. The tail bound in (9.19) follows from (9.24) and
+$|\bar t-\beta|=|u-u_c|/n$.
+Here $n\asymp_R\sqrt a$ and $\beta\asymp_R a^{-3/2}$.
+Consequently that tail bound divided by $\beta$ tends uniformly
+to zero for $\tau\le1$; this proves its asserted neighborhood.
+Also
+
+$$
+\sum_{k\in D}(t_k-x_{\{k\}})
+=\mathbb E[B;A,K\ge2]\le2e.
+\tag{9.30}
+$$
+
+Combining (9.29)--(9.30) with Cauchy for the tail deviations gives
+
+$$
+\|x-x^{j,*}\|_1
+\le3\varepsilon+2e+\sqrt{8n\beta^3\tau}
+                          +4\tau/a^3
+\le B_R a^{-2}\sqrt\tau.
+\tag{9.31}
+$$
+
+Finally $S_j$ has denominator dividing $j(a-1)$. If $k\in J_*$,
+a positive $S_j-S_k$ is at least $1/(jk(a-1))\ge1/(J^2(a-1))$.
+The bound $S_j-M\le\tau$ therefore proves (9.20).
+No separation assumption on the real phase parameter has been imposed;
+nonwinning branches remain in (9.19) until this rational test excludes
+them. All exact ties remain. ∎
+

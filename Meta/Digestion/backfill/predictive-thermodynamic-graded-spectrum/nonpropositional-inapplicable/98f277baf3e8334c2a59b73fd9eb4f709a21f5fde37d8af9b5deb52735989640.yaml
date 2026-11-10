@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:98f277baf3e8334c2a59b73fd9eb4f709a21f5fde37d8af9b5deb52735989640
+  normalized_sha256: sha256:98f277baf3e8334c2a59b73fd9eb4f709a21f5fde37d8af9b5deb52735989640
+cas_ref: sha256:98f277baf3e8334c2a59b73fd9eb4f709a21f5fde37d8af9b5deb52735989640
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: source-status table heading and header only; no independent mathematical assertion.'
+    previous_atom_id: f0624ffa12d3a41efdb788e0d3e96ba767e13b667726528bb23163f1d4ca1011
+    next_atom_id: 0d6fa38858d9950214deeb5d0e1fbecba25712235d7ce37046e4303ecd487376

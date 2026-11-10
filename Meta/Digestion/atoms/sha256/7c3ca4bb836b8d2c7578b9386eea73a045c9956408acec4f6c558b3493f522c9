@@ -1,0 +1,15 @@
+**定义 7.3（剩余同对的全部第六零层）。** In alternative 2 put
+
+$$
+QP_i=t_i\begin{pmatrix}x_iy_i&x_i\\y_i&1\end{pmatrix},\quad
+t_i>0,\quad x_i,y_i>0,\quad c_i=g_i(6)t_i.
+$$
+
+Equality of both sixth readings is exactly $c_1=c_2=c$ and $c(x_1+y_1-x_2-y_2)=0$. When $c=0$, both sixth gains vanish and no sum constraint follows. When $c\ne0$, the sums agree and distinctness forces $x_1\ne x_2$, $y_1\ne y_2$, with
+
+$$
+(x_1-x_2)(y_1-y_2)=-(x_1-x_2)^2<0.
+$$
+
+Indeed equal coordinates would make the normalized sources equal, and the common drift and first four ancestor reads would make the gains equal. Both signs of $c$ remain possible. These equations are necessary conditions together with the entire fixed ancestor and actual fifth history; they do not assert existence of the pair.
+

@@ -1,0 +1,30 @@
+**Theorem 17.3 (the original orbit retains exact four-view recovery).** Put
+
+$$
+\mathscr A=\{t^+:t\in\mathbb Q_{>0}\},\qquad
+E(w)=\iota(B(w))\quad(w\in\{L,R\}^*).
+\tag{17.5}
+$$
+
+Then $\mathscr A$ is exactly the finite forward orbit of the original root $1^+$, and $E$ is a bijection from the original chronological word set onto $\mathscr A$. On this orbit ROOT and PREDECESSOR of §5 hold for that same root and the restricted actions. Each of the original rational boundary, the limit boundary $E(w)$, original rooted named-incidence path, original literal chronology and original indexed prefix-memory table recovers all the others on their actual images.
+
+On the whole $\widehat X$, the incoming-edge map is still injective, but ROOT for the original root $1^+$ fails and there is no global finite-word decoder satisfying the original root and extension equations. The rootless point $1^-$, the point $0^+$, and all irrational threads lie outside the original finite orbit. These are global enlargement obstructions, not counterexamples to the restricted recovery theorem.
+
+Proof. Equation (17.2) preserves positive rational plus-points and intertwines their actions with the original $L/R$ actions. Theorem 6.2 reaches each positive rational from $1$ by one unique finite chronological word. Together with injectivity of $\iota$, this proves the orbit assertion and bijectivity of $E$. Within $\mathscr A$, both incoming ranges are disjoint and actionwise injective, and the only global predecessor of $1^+$ is $0^+\notin\mathscr A$. Thus the original root is excluded from the restricted incoming image. All other orbit points have their usual positive rational predecessor, so the criterion is exactly the original ROOT/PREDECESSOR criterion, with no replacement of its reachable domain.
+
+For explicit correspondence, if $z\in\mathscr A$, recover the unique rational $c>0$ by (16.5) and define
+
+$$
+\begin{aligned}
+D_E(z)&=\operatorname{dec}(c),\\
+T_z&=D_E(z),\\
+S_z&=S(D_E(z)),\\
+M_z&=\bigl((k,\operatorname{enc}(D_E(z)|_k))\bigr)_{0\le k\le|D_E(z)|}.
+\end{aligned}
+\tag{17.6}
+$$
+
+Here $S$ is exactly §6's original root-oriented path with named edges, and $\operatorname{enc}$ returns its reduced positive pair. The scalar boundary is $c$, and $E(D_E(z))=z$. Conversely the original word constructs its pair, its thread, path and table. The path or table recovers that word by §§5–6. These equations prove all actual-image inverse transports. A table of prefix threads is also equivalent: apply $\iota$ rowwise to its pair ratios and retain its indices; conversely decode each realized row. In particular the same decoded word determines the original prefixes and their order, not just a numerical duration or a current post-probe history. The eventual condition in (16.5) gives a mathematical inverse on its promised image; it supplies no finite stopping certificate for acquiring that promise.
+
+On the full carrier $1^+=\widehat R(0^+)$ violates root exclusion, although injectivity of the named predecessor map follows from (17.3). If a finite-word decoder $D$ on all $\widehat X$ satisfied $D(1^+)=\varepsilon$ and $D(\widehat a z)=D(z)a$ for both names and every $z$, the fixed point would give $D(0^+)=D(0^+)L$, contradicting finite word length. Already the incoming edge to the original root would force $\varepsilon=D(0^+)R$. Neither point is in $\mathscr A$ except the original root itself. Irrationality is preserved by the forward actions and by their positive inverse branches, so an irrational predecessor chain never reaches any rational root; no such point has a finite original rational history. This proves the stated global failures without classifying irrational components or changing the original root. $\square$
+

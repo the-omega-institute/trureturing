@@ -1,0 +1,23 @@
+**Theorem 11.2 (A comparison retaining all endpoint information).**
+Put $M=\lambda_{\max}(P)$. If the two actual marginal Bloch lengths
+$r_C,r_D$ are less than one and
+$$
+ f(r)=\begin{cases}\operatorname{atanh}(r)/r&r>0,\\1&r=0,\end{cases}
+ \qquad f_*=\max\{f(r_C),f(r_D)\},
+$$
+then
+$$
+ h\leq4Mf_*g,\qquad
+ \Delta\geq I_P+I_Q+(3-8Mf_*)g.
+$$
+In particular, for the entire original source and bias domain,
+$$
+ M\leq\frac7{20}
+ \quad\Longrightarrow\quad
+ \boxed{\Delta\geq I_P+I_Q+\frac1{45}g\geq0.}
+\tag{11.1}
+$$
+Consequently every negative original deficit, if one exists, has
+$\lambda_{\max}(\Phi_b\rho)>7/20$.
+
+Proof.

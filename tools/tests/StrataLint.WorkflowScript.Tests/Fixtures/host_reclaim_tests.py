@@ -27,6 +27,25 @@ cleanup = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(cleanup)
 
 
+def fixture_active_paths(codex, pids, scopes=()):
+    """Use the production observer on fixture-owned processes only."""
+    pids = {str(pid) for pid in pids}
+    selection = ",".join(sorted(pids))
+    iterdir, run = Path.iterdir, subprocess.run
+    def inventory(path):
+        entries = iterdir(path)
+        return (entry for entry in entries if entry.name in pids) if path == Path("/proc") else entries
+    def observe(arguments, **kwargs):
+        if arguments[0] == "ps":
+            arguments = ["ps", "-p", selection, "-o", arguments[-1]]
+        elif arguments[0] == "lsof":
+            arguments = [*arguments, "-p", selection]
+        return run(arguments, **kwargs)
+    with patch.object(Path, "iterdir", inventory), \
+         patch.object(cleanup.subprocess, "run", side_effect=observe):
+        return cleanup.active_paths(codex, scopes=scopes)
+
+
 class HostReclaimTests(unittest.TestCase):
     def setUp(self):
         self.workspace = tempfile.TemporaryDirectory(prefix="host reclaim with spaces ")
@@ -42,6 +61,9 @@ class HostReclaimTests(unittest.TestCase):
         self.git(self.main, "init", "--initial-branch=dev")
         self.git(self.main, "config", "user.name", "Reclaim Tests")
         self.git(self.main, "config", "user.email", "reclaim@example.invalid")
+        self.git(self.main, "config", "maintenance.auto", "false")
+        self.git(self.main, "config", "gc.auto", "0")
+        self.git(self.main, "config", "gc.autoDetach", "false")
         (self.main / "source").write_text("retained\n")
         (self.main / ".gitignore").write_text(".lake/\n")
         self.git(self.main, "add", ".")
@@ -56,6 +78,9 @@ class HostReclaimTests(unittest.TestCase):
         self.git(self.main, "clone", "--no-hardlinks", self.main, target)
         self.git(target, "config", "user.name", "Reclaim Tests")
         self.git(target, "config", "user.email", "reclaim@example.invalid")
+        self.git(target, "config", "maintenance.auto", "false")
+        self.git(target, "config", "gc.auto", "0")
+        self.git(target, "config", "gc.autoDetach", "false")
         return target
 
     def age(self, root):
@@ -65,6 +90,25 @@ class HostReclaimTests(unittest.TestCase):
 
     def clean(self, target, delete=True):
         return cleanup.clean_candidate(target, self.cutoff, [], delete=delete, repository=self.main)
+
+    def remnant(self, name="old", blueprint=True):
+        target = self.root / (self.main.name + "-" + name)
+        (target / ".lake/build").mkdir(parents=True)
+        (target / ".lake/build/object").write_bytes(b"regenerable")
+        if blueprint:
+            source = self.main / "Blueprint/Retained.md"
+            source.parent.mkdir(exist_ok=True)
+            source.write_bytes(b"retained blueprint\x00bytes\n")
+            self.git(self.main, "add", "Blueprint")
+            self.git(self.main, "commit", "--allow-empty", "-m", "Retain blueprint")
+            (target / "Blueprint").mkdir()
+            shutil.copyfile(source, target / "Blueprint/Retained.md")
+        self.age(target)
+        return target
+
+    def clean_remnant(self, target, delete=True, **kwargs):
+        return cleanup.clean_candidate(target, self.cutoff, [], delete=delete,
+                                       repository=self.main, remnant=True, **kwargs)
 
     def test_case_inventory_lists_every_case_without_running_git(self):
         environment = dict(os.environ, PATH="")
@@ -177,10 +221,10 @@ class HostReclaimTests(unittest.TestCase):
         self.assertEqual("changed", result["reason"], result)
         self.assertTrue(target.exists())
 
-    def run_sweep(self, trees=(), artifact_root=None, expected_exit=0, active=()):
+    def run_sweep(self, trees=(), artifact_root=None, expected_exit=0, active=(), min_age_hours=24, delete=True):
         options = cleanup.argparse.Namespace(repository=self.main, base="dev",
             codex_home=self.root / "codex", sshx_home=self.root / "sshx",
-            tmp_root=[artifact_root or self.root / "artifacts"], min_age_hours=24, delete=True, verbose=True)
+            tmp_root=[artifact_root or self.root / "artifacts"], min_age_hours=min_age_hours, delete=delete, verbose=True)
         output = io.StringIO()
         registrations = cleanup.registered_worktrees
         with patch.object(cleanup, "clean_worktrees", return_value=0), \
@@ -208,7 +252,7 @@ class HostReclaimTests(unittest.TestCase):
         self.assertTrue((lake / ".release-backup-token/source").exists())
         self.assertTrue((lake / "packages/source").exists())
 
-    def test_partial_removal_reports_failed_summary(self):
+    def test_partial_removal_fails_summary_and_continues(self):
         target = self.root / "artifacts/ordinary"
         target.mkdir(parents=True)
         (target / "first").write_text("artifact")
@@ -222,9 +266,89 @@ class HostReclaimTests(unittest.TestCase):
         self.assertEqual("vanished", result["reason"], result)
         (target / "first").write_text("artifact")
         self.age(target)
-        with patch.object(cleanup, "remove_tree", side_effect=partial):
+        healthy = target.with_name("z-healthy")
+        healthy.mkdir()
+        self.age(healthy)
+        native_remove = cleanup.remove_tree
+        def remove(path):
+            return partial(path) if path == target else native_remove(path)
+        warnings = io.StringIO()
+        with patch.object(cleanup, "remove_tree", side_effect=remove), contextlib.redirect_stderr(warnings):
             rows = self.run_sweep(expected_exit=1)
         self.assertEqual("failed", rows[-1]["status"], rows)
+        self.assertEqual(1, rows[-1]["counts"]["tmp:failed"])
+        self.assertTrue(target.exists())
+        self.assertFalse(healthy.exists())
+        warning, = map(json.loads, warnings.getvalue().splitlines())
+        self.assertEqual("host_cleanup_warning", warning["event"])
+        self.assertEqual(str(target), warning["path"])
+        self.assertEqual("failed", warning["action"])
+        self.assertEqual("vanished", warning["reason"])
+        self.assertIn("a later child vanished", warning["diagnostic"])
+
+    def test_explicit_staging_age_below_default_and_selected_temporary_root(self):
+        lake = self.main / ".lake"
+        stage = lake / ".release-six-hours/build"
+        stage.mkdir(parents=True)
+        (stage / "generated").write_text("cache")
+        self.age(lake)
+        for path in [stage.parent, stage, stage / "generated"]:
+            os.utime(path, (self.now - 6 * 3600, self.now - 6 * 3600))
+        selected = self.root / "Previous System/selected temporary files"
+        selected.mkdir(parents=True)
+        old = selected / "abandoned payload"
+        old.write_text("temporary bytes")
+        self.age(selected)
+        unrelated = selected.parent / "unselected temporary files"
+        unrelated.mkdir()
+        keep = unrelated / "personal"
+        keep.write_text("keep")
+        self.age(unrelated)
+        self.run_sweep(artifact_root=selected)
+        self.assertTrue(stage.exists(), "default retains sub-24h staging")
+        self.assertFalse(old.exists(), "selected root with spaces is swept")
+        self.assertEqual("keep", keep.read_text())
+        self.run_sweep(artifact_root=selected, min_age_hours=4)
+        self.assertFalse(stage.parent.exists(), "explicit staging cutoff must be effective")
+
+    def test_staging_item_failure_fails_host_summary_and_continues(self):
+        lake = self.main / ".lake"
+        blocked, healthy = lake / ".release-a", lake / ".release-z"
+        for stage in (blocked, healthy):
+            (stage / "build").mkdir(parents=True)
+            (stage / "build/payload").write_text("cache")
+        self.age(lake)
+        native = release.shutil.rmtree
+        def remove(path, *args, **kwargs):
+            if path == blocked:
+                raise PermissionError("injected staging deletion failure")
+            return native(path, *args, **kwargs)
+        with patch.object(release.shutil, "rmtree", side_effect=remove), contextlib.redirect_stderr(io.StringIO()):
+            rows = self.run_sweep(expected_exit=1)
+        self.assertEqual("failed", rows[-1]["status"])
+        self.assertTrue((blocked / "build/payload").exists())
+        self.assertFalse(healthy.exists())
+
+    def test_nonempty_residue_after_silent_deletion_is_failure(self):
+        target = self.root / "artifacts/ordinary"
+        target.mkdir(parents=True)
+        (target / "payload").write_text("keep on failure")
+        self.age(target)
+        with patch.object(cleanup, "remove_tree"), contextlib.redirect_stderr(io.StringIO()):
+            rows = self.run_sweep(expected_exit=1)
+        item = next(row for row in rows if row.get("path") == str(target))
+        self.assertEqual("failed", item["action"])
+        self.assertTrue(item["residue_exists"])
+        self.assertEqual(str(target), item["retained_path"])
+        stage = self.main / ".lake/.release-residue/build"
+        stage.mkdir(parents=True)
+        (stage / "payload").write_text("generated")
+        self.age(stage.parent.parent)
+        with patch.object(release.shutil, "rmtree"):
+            result, = release.clean_staging(stage.parent.parent, now=self.now)
+        self.assertEqual("failed", result["action"])
+        self.assertTrue(result["residue_exists"])
+        self.assertIn("residue", result["detail"])
 
     def test_staging_inventory_shape_age_lock_and_backup_exclusion(self):
         lake = self.main / ".lake"
@@ -489,10 +613,11 @@ raise SystemExit(cleanup.run_clean(options))
                  patch.object(release, "snapshot_candidates", return_value=[]), \
                  patch.object(release, "restore_snapshot"), contextlib.redirect_stdout(output):
                 if entry == "production":
-                    with release.cache_guard(self.main):
+                    with release.cache_guard(self.main), self.assertRaisesRegex(OSError, "staging_cleanup_failed"):
                         release.fetch_locked(self.main, "partition", 60)
                 else:
-                    release.fetch_verification(self.main, "partition", {"workflow_run_id": "1", "workflow_run_attempt": "1"})
+                    self.assertEqual(1, release.fetch_verification(self.main, "partition",
+                        {"workflow_run_id": "1", "workflow_run_attempt": "1"}))
             rows = [json.loads(line.split(" ", 1)[1]) for line in output.getvalue().splitlines()]
             self.assertTrue(any(failure in row.get("items", []) for row in rows), rows)
 

@@ -37,7 +37,7 @@ local macro "source_arith" : tactic =>
     List.nil_append, List.map_append, List.map_cons, List.map_nil,
     List.sum_append, List.sum_cons, List.sum_nil, add_zero, zero_add] at *) <;> omega))
 
-private theorem positive_mass_dominates {α : Type*} (f : α → ℤ) (X : List α) :
+theorem positive_mass_dominates {α : Type*} (f : α → ℤ) (X : List α) :
     mass f X ≤ mass f (X.filter (fun i => decide (0 < f i))) := by
   induction X with
   | nil => simp [mass]

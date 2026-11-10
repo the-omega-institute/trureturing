@@ -1,0 +1,25 @@
+## 组合核给出张量积
+
+若独立准备满足
+
+```math
+k_{AB}((x,y),(x',y'))
+=k_A(x,x')k_B(y,y'),
+```
+
+则对应映射 ιAB(x,y)↦ιA(x)⊗ιB(y) 在乘积准备的线性张成上保内积。商去零元后得到等距。若乘积准备张成所声明的复合空间，便得到 H_AB≅H_A⊗H_B。允许的整体相干组合包括不可分解向量，便产生纠缠态。
+
+实际局部端口由 A⊗I、I⊗B 实现时相互对易。对 B 上迹保持仪器忽略其结果，
+
+```math
+\begin{aligned}
+p_A(E)
+&=\sum_e\operatorname{Tr}\!\left[
+(E\otimes I)(I\otimes M_e)\rho(I\otimes M_e^*)
+\right]\\
+&=\operatorname{Tr}[(E\otimes I)\rho],
+\end{aligned}
+```
+
+其中使用 ∑eMe\*Me=I。这给相应局部操作下的无信号性。乘积核本身不能替代实际局部端口及其可用性的说明。
+

@@ -1,0 +1,21 @@
+**定理 1.3（完整表示与可见代数）。**定义 1.1 下，(R) 当且仅当存在复 Hilbert 空间 $H$ 与 $F:M\to H$，满足
+
+$$
+F(1)=0,\qquad F(a\cdot b)=F(a)+F(b),\qquad
+F(Ua)=\omega F(a),\qquad
+c(a,b)=\|F(a)-F(b)\|^2,
+\quad \omega=-\frac12+i\frac{\sqrt3}{2}.
+\tag{1.1}
+$$
+
+取 $H=\overline{\operatorname{span}_{\mathbb C}F(M)}$ 时，表示唯一到唯一的保标签酉同构。$a\sim b\iff c(a,b)=0$ 为兼容二元运算与标记的等价关系，$M/{\sim}\cong F(M)$ 是无挠的 $\mathbb Z[\omega]$-模，因而其结合、交换和可逆性都是结论。特别
+
+$$
+(a\cdot b)\cdot d\sim a\cdot(b\cdot d),\quad
+ a\cdot b\sim b\cdot a,\quad
+-[a]=[Ua\cdot U^2a],\quad U^3a\sim a.
+\tag{1.2}
+$$
+
+原始配方的次序、括号与额外记录仍可不同。零模型包含在内；完成与标量扩张不提供额外的实际配方或物理操作。
+

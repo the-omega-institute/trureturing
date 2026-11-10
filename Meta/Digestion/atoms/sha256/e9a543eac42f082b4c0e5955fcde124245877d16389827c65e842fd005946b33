@@ -1,0 +1,80 @@
+**定理 7.2（可求和漂移加渐近信息性）。**
+
+<a id="thm:twobudgets"></a>
+
+在定义条件下，
+
+$$
+\boxed{q_n\to q_\infty\in\{0,1\}\quad\text{几乎必然及 }L^1,}
+$$
+
+<a id="eq:polarlimit"></a>
+
+$$
+\boxed{|\mathbb{P}(q_\infty=1)-q_0|\le D_*.}
+ \tag{16}
+$$
+
+若另有确定包络 $e_n(h_n)\le\bar e_n\to0$，
+对 $0<\eta<1/2$ 取 $N_\eta$ 使所有 $n\ge N_\eta$ 满足
+$\bar e_n+d_n\le\kappa\eta^2(1-\eta)^2/2$，则
+
+<a id="eq:tailoccupancy"></a>
+
+$$
+\sum_{n\ge N_\eta}\mathbb{P}(\eta\le q_n\le1-\eta)
+ \le\frac{2[V(q_0)+D_*]}{\kappa\eta^2(1-\eta)^2}.
+ \tag{17}
+$$
+
+**证明。**
+
+记 $b_n=\mathbb{E}[q_{n+1}\mid\mathcal F_n]-q_n$。
+$Z_n=q_n-\sum_{j<n}b_j$ 是绝对值至多 $1+D_*$ 的鞅。
+有界鞅收敛且漂移绝对可求和，所以 $q_n$ 几乎必然收敛。
+
+对未归一正输出 $\tau$，写 $a=\operatorname{Tr}(P\tau),p=\operatorname{Tr}\tau$。
+后验杂质贡献 $g(\tau)=a-a^2/p$（零质量取零）满足
+
+$$
+g(\tau)=\min_{0\le z\le1}\operatorname{Tr}\left[((1-2z)P+z^2I)\tau\right].
+$$
+
+括号算符在两扇区上的特征值为 $(1-z)^2,z^2$，均在 $[0,1]$。
+所以在全部结果作直和后的归一态上，$\sum_yg(\tau_y)$
+对半迹距离为 1-Lipschitz。
+实际杂质因而满足
+
+$$
+\mathbb{E}[V(q_{n+1})\mid\mathcal F_n]
+ \le V(q_n)-\kappa V(q_n)^2+e_n(h_n).
+$$
+
+令 $A_n=\operatorname{Var}(q_{n+1}\mid\mathcal F_n)$。
+因为 $V$ 在 $[0,1]$ 上为 1-Lipschitz，
+
+<a id="eq:varlower"></a>
+
+$$
+A_n=V(q_n+b_n)-\mathbb{E}[V(q_{n+1})\mid\mathcal F_n]
+ \ge\kappa V(q_n)^2-e_n(h_n)-d_n.
+ \tag{18}
+$$
+
+同一恒等式又给
+$A_n\le V(q_n)-\mathbb{E}[V(q_{n+1})\mid\mathcal F_n]+d_n$。
+取期望求和，末项非负，得到
+
+$$
+\mathbb{E}\sum_nA_n\le V(q_0)+D_*<\infty.
+$$
+
+故 $\sum_nA_n<\infty$ 几乎必然。
+若 $V(q_\infty)>0$，式 [(18)](#eq:varlower) 的右侧最终为严格正下界，矛盾。
+所以极限二值。有界收敛与漂移求和给式 [(16)](#eq:polarlimit)。
+在确定包络条件下，$n\ge N_\eta$ 的中间区域有
+$A_n\ge\kappa\eta^2(1-\eta)^2/2$；其余区域 $A_n\ge0$。
+代入已得总条件方差界，得到式 [(17)](#eq:tailoccupancy)。
+
+□
+

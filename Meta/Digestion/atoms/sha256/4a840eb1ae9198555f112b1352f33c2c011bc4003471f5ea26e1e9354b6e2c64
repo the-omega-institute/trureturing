@@ -1,0 +1,10 @@
+**Example 7.3 (blind Space and a too-small Boundary).** With $B=0$ and
+$C=(1,0)$, every allowed output ignores the second coordinate. The
+three output views still interconvert, whereas full Space fails. In
+the observable $J_2,e_0^{\mathsf T}$ source, a boundary containing only
+zero-total words sees only the first current coordinate, despite the
+two acquired taps determining both. This separates the exact criterion
+(4.2) from a blanket assertion about every finite boundary. If all
+action durations are zero, even the full timing task has that smaller
+kernel, as Theorem 5.1 states.
+

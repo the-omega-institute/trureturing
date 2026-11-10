@@ -1,0 +1,21 @@
+**Definition 1.1 (native terms and truthful replies).** Let
+
+$$
+\begin{aligned}
+\mathcal T&::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,\\
+\rho\alpha&=\beta,\qquad
+\rho\beta=E:=\langle\beta,\alpha\rangle,\qquad
+\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle.
+\end{aligned}
+\tag{POC.1}
+$$
+
+These are ordinary finite nonempty ordered trees. Equality retains both leaf labels, brackets and order. Native true/false denote alpha/beta and false/true address letters denote $L/R$; the exported bits $0,1$ keep their separate original labels. Every word in $\mathcal W=\{L,R\}^{*}$, including $\varepsilon$, is legal. The reply $r_t(w)$ is alpha, beta or $\mathsf{branch}$ at a reached root, and $\mathsf{absent}$ if descent continues below a leaf. All nonempty continuations of a leaf are absent. At a reached occurrence $p$,
+
+$$
+r_t(pw)=r_{t|_p}(w).
+\tag{POC.2}
+$$
+
+Occurrences stay distinct when their whole subtrees are equal.
+

@@ -1,0 +1,19 @@
+**定义 42.4（代数乘法取向覆盖）。** 选 Jordan 图 $\theta_\alpha:\mathfrak J|_{O_\alpha}\to O_\alpha\times H_n(\mathbb C)$，写
+
+$$
+g_{\beta\alpha}(x)=\theta_{\beta,x}\theta_{\alpha,x}^{-1},
+\qquad e_{\beta\alpha}(x)=\varepsilon(g_{\beta\alpha}(x)).
+\tag{42.7}
+$$
+
+将 $O_\alpha\times\{\pm1\}$ 按
+
+$$
+(x,s)_\alpha\sim(x,e_{\beta\alpha}(x)s)_\beta
+\tag{42.8}
+$$
+
+粘合，所得主 $\mathbb Z_2$ 丛记为 $\mathcal O_{\rm alg}(\mathfrak J)\to X$。其连续截面由局部连续符号 $s_\alpha$ 表示，满足 $s_\beta=e_{\beta\alpha}s_\alpha$。
+
+过渡连续性与42.3使 $e_{\beta\alpha}$ 连续；字符乘法性给 cocycle 恒等式，故(42.8)确实是局部平凡二层覆盖。若换图或细化，以新旧坐标变换的字符乘局部符号，得到保持纤维二点作用的连续覆盖同构；cocycle 恒等式保证该同构在重叠处一致。覆盖因此不依赖图册。它编码可选的乘法／响应方向，不能换成 $\det_{\mathbb R}\mathfrak J$ 的体积取向覆盖。
+

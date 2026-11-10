@@ -1,0 +1,5 @@
+source_id = "fib-higher-order-schedule-compatibility-and-join-obstruction"
+path = "docs/develop/theory/FIB_HIGHER_ORDER_SCHEDULE_COMPATIBILITY_AND_JOIN_OBSTRUCTION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

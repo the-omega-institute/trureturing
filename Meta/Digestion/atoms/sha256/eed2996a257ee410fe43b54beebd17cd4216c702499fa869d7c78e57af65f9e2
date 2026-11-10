@@ -1,0 +1,12 @@
+## 3. Joint reachability and joint observability without hidden modes
+
+Put $B:\mathbb Q^b\to\mathbb Q^V$, $Bu=\sum_j u_j e_{\ell_j}$, and $H=B^{\mathsf T}$. Joint leaf reachability means
+
+$$
+\operatorname{span}_{\mathbb Q}\{T^k e_{\ell_j}:k\ge0,\ 1\le j\le b\}
+=\mathbb Q^V.
+\tag{CL.11}
+$$
+
+Joint leaf observability means that $HT^k v=0$ for every $k\ge0$ implies $v=0$. These are properties of the fixed system and its ports, not an assertion that the observer already knows the unknown native matrix.
+

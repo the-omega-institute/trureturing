@@ -1,0 +1,287 @@
+**定理 19.2（A deficient minimum forces separate component singlet ground
+spaces）。** Suppose that an original reducing spin sector with
+$J_p<S$ at a specified vertex $p$ attains the actual $E_s$ of (19.2).
+There exists a normalized original $E_s$-ground vector $\Psi$ whose spin
+at $p$ is this same $J_p$ and whose spin is $S$ at every $i\ne p$.
+For every actual connected component $C$ of $H[N_H(p)]$, this
+realization satisfies
+
+$$
+\begin{aligned}
+B_C^\pm\Psi&=0,\qquad Z_C\Psi=0,\\
+\operatorname{ran}\rho_C&\subseteq\mathcal G_C(0),
+ \qquad \rho_C=\operatorname{tr}_{V(H)\setminus C}
+                         |\Psi\rangle\langle\Psi|,\\
+\mathcal G_C(0)&\subseteq\mathcal S_C.
+\end{aligned}
+\tag{19.4}
+$$
+
+In particular, every vector in the local zero-weight ground space is
+a total singlet, not only the vectors in the support of $\rho_C$.
+This is an existence statement for a minimizing realization. It does
+not assert that all marginals of an initially chosen deficient ground
+vector are preserved.
+
+Proof. The complete orthogonal Boolean-chain representation of the
+[owning volume, (6.6)–(6.12)](TOKEN_GRAPH_BLOWUP_DEFECT_DECOMPOSITION.md)
+gives, on the unchanged space (19.1),
+
+$$
+\begin{aligned}
+\mathcal H_{mS}&\cong
+\bigoplus_{\substack{0\leq t_i\leq S\\
+                     1\leq a_i\leq r_{2S}(t_i)}}
+ \left(\bigotimes_iV_{S-t_i}\right)_{\sum_iZ_i=0},\\
+r_{2S}(t)&=\binom{2S}{t}-\binom{2S}{t-1},\qquad \binom{2S}{-1}=0,\\
+J_i^\pm|J_i,x\rangle
+ &=\sqrt{(J_i\mp x)(J_i\pm x+1)}\,|J_i,x\pm1\rangle,
+ \qquad -J_i\leq x\leq J_i,\\
+K_{\boldsymbol J}&=\sum_{\{i,j\}\in E(H)}
+ (J_i^+J_j^-+J_i^-J_j^+)
+ =2\sum_{\{i,j\}\in E(H)}(X_iX_j+Y_iY_j),
+\end{aligned}
+\tag{19.5}
+$$
+
+where $J_i=S-t_i$, $X_i=(J_i^++J_i^-)/2$ and
+$Y_i=(J_i^+-J_i^-)/(2\mathrm i)$. The occupancy is $S+x$.
+Every summand retains all weights $|x_i|\leq J_i$ with
+$\sum_i x_i=0$, all complex coefficients, and arbitrary entanglement.
+The index $a_i$ retains every multiplicity copy. Endpoint ladder
+coefficients are zero. The projection $P_s$ selects precisely $t_i=0$
+for all $i$.
+
+The primary parameter map in this representation is Srinivasan,
+[Theorem 1.2](https://arxiv.org/html/1001.0280v2), Boolean rank $2S$,
+starting rank $t_i$, up operator $L_i^\ast$ and layer index
+$u=S+x$: its coefficient
+$\sqrt{(u+1-t_i)(2S-t_i-u)}$ is the raising coefficient in (19.5).
+Feinsilver,
+[§3, (8)–(10), §4, (16), Proposition 4.3 and §4.2.2](https://arxiv.org/html/1102.0368v2),
+has $T=L_i^\ast$, $T^\ast=L_i$, principal number
+$2S-2t_i=2J_i$, chain index $J_i+x$ and grading operator $-2Z_i$.
+Its vacuum count is exactly $r_{2S}(t_i)$ and its orthogonality
+includes all copies. These are consumed representation results.
+The complete
+[OccupancyWordSectors](../../../D5/S3/Quantum/Entanglement/OccupancyWordSectors.lean)
+and its [Scribe](../../../Blueprint/D5/S3/Quantum/Entanglement/OccupancyWordSectors.scribe.cs),
+including the counting recurrences, `sector_words_card_multinomial`
+and `sector_gram`, normalize the symmetric vectors by the two-letter
+counts $(2S-n_i,n_i)$, including $n_i=0,2S$.
+The [collective-oscillator volume](AURIC_COLLECTIVE_OSCILLATORS_AND_RECORD_CAPACITY.md)
+has algebraic parameters $d=m$, $N=2S$, $g=0$, $e=1$,
+$B=A(H)$, $a_i=L_i/\sqrt{2S}$ and
+$H_{2S}=\hbar K_s/(2S)$; no fixed-excitation approximation is used.
+The singleton-difference definition in the complete
+[TokenGraphLaplacianRadiusRefutation](../../../D5/S3/Combinatorics/Graph/TokenGraphLaplacianRadiusRefutation.lean)
+and its [Scribe](../../../Blueprint/D5/S3/Combinatorics/Graph/TokenGraphLaplacianRadiusRefutation.scribe.cs)
+is exactly the move defining $K_s$. The primary normalization is
+Apte–Parekh–Sud,
+[v3, Definition 1 and Fact 2](https://arxiv.org/html/2506.03441v3),
+with $2mS$ vertices, $mS$ tokens and edge weights one. Their shifted
+operator $WI/2-K_s$ is a different operator. No refutation conclusion
+is used as a confinement premise.
+
+First use the nonstrict spin comparison of the
+[owning volume, (7.4)–(7.5)](TOKEN_GRAPH_BLOWUP_DEFECT_DECOMPOSITION.md).
+Its primary source is Ghassemi Tabrizi–Henderson–Kühne–Scuseria,
+[Appendix A4, (A34)–(A54) and its final fixed-magnetization paragraph](https://pmc.ncbi.nlm.nih.gov/articles/PMC12613319/#app1-sec4),
+DOI [10.1021/acs.jctc.5c01412](https://doi.org/10.1021/acs.jctc.5c01412).
+The maximal local spin there is $s_i=S$, the variable spin is
+$t_i=J_i$, the magnetization is $M=0$, and the bilinear coupling is
+$D_{ij}=\operatorname{diag}(2a_{ij},2a_{ij},0)$, $a=A(H)$.
+Only its nonstrict existence conclusion is consumed. In the explicit
+fixed-weight proof, the upper-spin projection of
+$|j,x\rangle\otimes|1,0\rangle$ has squared norm
+
+$$
+\frac{(j+1)^2-x^2}{(j+1)(2j+1)}>0
+\qquad(-j\leq x\leq j),
+\tag{19.6}
+$$
+
+including $j=0$ and $x=\pm j$. The pair has zero Cartesian spin
+expectations, so the trial keeps the energy and total weight.
+For completeness, let $\eta_j$ be the minimum with this one
+local spin $j$, all other spins fixed, and total weight zero.
+The trial is a ground vector for $\eta_j$ tensored with the
+weight-zero triplet. For $j=0$ it lies entirely in spin one,
+so $\eta_1\leq\eta_0$. For $j\geq1$, decompose it into the
+spins $j+1,j,j-1$ of $j\otimes1$. If induction gives
+$\eta_{j-1}\geq\eta_j$, the two lower-spin projected energies
+are at least $\eta_j$. Their average with the nonzero upper-spin
+contribution is $\eta_j$. Thus the upper contribution has energy
+at most $\eta_j$ and $\eta_{j+1}\leq\eta_j$. Distinct $x$ have orthogonal projected images, so
+(19.6) remains nonzero for an arbitrary entangled input. Increase
+each spin other than the specified $J_p$ to $S$. Every resulting
+sector occurs in (19.5) and has minimum at least $E_s$; the comparison
+gives at most $E_s$. Consequently it still attains precisely $E_s$.
+
+Realize the spin $J_p$ on $2J_p$ symmetric original coordinates in
+$B_p$, together with $S-J_p\geq1$ actual singlet pairs. Each pair
+contains one particle and is annihilated by its collective spin.
+At weight $x_p$ the occupancy is
+$(J_p+x_p)+(S-J_p)=S+x_p$, so this is an actual copy inside the
+original fibre. Since collective spin acts identically on all
+multiplicity copies, transferring a minimizing vector to this copy
+preserves its energy. Select one pair and write the resulting unit
+ground vector as
+
+$$
+\Psi=\chi\otimes f,\qquad
+\chi=\frac{|10\rangle-|01\rangle}{\sqrt2}.
+\tag{19.7}
+$$
+
+All remaining coordinates, including the remaining coordinates at
+$p$, stay in $f$. Set $A=N_H(p)$,
+$R=V(H)\setminus(\{p\}\cup A)$ and let $Q$ denote those remaining
+coordinates at $p$ together with $R$. Set $Z_Q=\sum_{u\in Q}(n_u-\tfrac12 I)$ on those actual
+coordinates and $\mathcal Q(0)=\ker Z_Q$. Since the selected
+pair has weight zero, $(Z_A+Z_Q)f=0$. The set $A$ is nonempty by
+connectedness and $m\geq2$.
+
+Replace $\chi$ by $\tau=(|10\rangle+|01\rangle)/\sqrt2=|1,0\rangle$.
+Both states have weight zero and zero expectations of all three
+collective Cartesian components. There is no intrafibre term in
+$K_s$. Hence $\tau\otimes f$ has the same original occupancy and
+energy expectation $E_s$. Since $K_s-E_sI\succeq0$ on (19.1),
+a unit vector with this expectation is a ground eigenvector:
+in a spectral expansion all terms
+$(\theta-E_s)|c_\theta|^2$ are nonnegative and their sum is zero.
+The equation for $\chi\otimes f$ first gives
+$K^{\mathrm{rem}}f=E_sf$, where $K^{\mathrm{rem}}$ omits just the
+selected pair. The equation after replacement then gives
+
+$$
+0=\sqrt2\,|1,1\rangle\otimes B_A^-f
+  +\sqrt2\,|1,-1\rangle\otimes B_A^+f.
+\tag{19.8}
+$$
+
+The pair weights are orthogonal, so $B_A^-f=B_A^+f=0$.
+Their commutator is $[B_A^+,B_A^-]=2Z_A$, so $Z_Af=0$.
+The ladder coefficients in each total-spin chain show that their
+common kernel consists exactly of spin-zero chains. Thus
+$f\in\mathcal S_A\otimes\mathcal Q(0)$, with the full singlet
+multiplicity space and all allowed spectators retained.
+
+If $\Pi_A$ projects onto $\mathcal S_A$, then, for every $i\in A$,
+
+$$
+\Pi_A X_i\Pi_A=\Pi_A Y_i\Pi_A=\Pi_A Z_i\Pi_A=0.
+\tag{19.9}
+$$
+
+Indeed a simultaneous rotation of $A$ fixes every vector in every
+singlet copy. Rotation by $\pi$ about an orthogonal axis reverses
+the specified Cartesian component; sandwiching equates the operator
+to its negative. Tensoring (19.9) with any operator on $Q$ proves
+that all $A$–$Q$ edge expectations vanish even in the entangled
+$f$. There are no $p$–$R$ edges. If
+$\rho_Q=\operatorname{tr}_A|f\rangle\langle f|$, then
+
+$$
+a=\langle f,K_Af\rangle,\qquad
+b=\operatorname{tr}(\rho_QK_R),\qquad E_s=a+b.
+\tag{19.10}
+$$
+
+The density $\rho_Q$ has trace one and support of joint weight zero;
+it is not replaced by a minimizing density on $Q$.
+
+Choose any unit $u\in\mathcal G_A(0)$. The density
+
+$$
+\sigma_u=|\chi\rangle\langle\chi|\otimes
+ |u\rangle\langle u|\otimes\rho_Q
+\tag{19.11}
+$$
+
+belongs to the unchanged original globally half-filled carrier.
+Every one-site expectation $\langle u,J_i^\pm u\rangle$ is zero
+because $u$ has definite total weight. All crossing expectations
+therefore vanish in this product density, including those with the
+remaining coordinates at $p$. Since $f$ also has $A$-weight zero,
+
+$$
+E_s\leq\operatorname{tr}(K_s\sigma_u)
+=e_A(0)+b\leq a+b=E_s.
+\tag{19.12}
+$$
+
+Consequently $a=e_A(0)$ and the actual $A$ reduced density is
+supported on $\mathcal G_A(0)$: diagonalize the positive operator
+$K_A-e_A(0)I$ on $\mathcal V_A(0)$, whose expectation is zero.
+This conclusion does not require that $K_A$ preserve the singlet
+space.
+
+Moreover, (19.12) holds for every chosen unit $u$ in that ground
+space. Diagonalize $\rho_Q=\sum_c w_c|h_c\rangle\langle h_c|$ with
+$w_c>0$ and unit zero-weight $h_c$. Each
+$\chi\otimes u\otimes h_c$ has energy at least $E_s$; their
+weighted average is $E_s$, so each is an actual ground eigenvector.
+Release its selected pair as in (19.8). It follows that
+$B_A^\pm u=0$. We have proved the universal inclusion
+
+$$
+\mathcal G_A(0)\subseteq\mathcal S_A.
+\tag{19.13}
+$$
+
+We now separate the actual connected components, without prescribing
+their fillings. For any such component $C$, $K_A$ commutes with
+$Z_C$, because no edge of $H[A]$ joins $C$ to its complement in
+$A$. If $u\in\mathcal G_A(0)$ and a weight projection
+$v=\mathbf1_{Z_C=q}u$ is nonzero, then $v\in\mathcal G_A(0)$.
+By (19.13), $v$ is a total singlet on $A$. A simultaneous rotation
+of $A$ by $\pi$ about the $x$ axis reverses $Z_C$ while fixing $v$.
+Thus
+
+$$
+q\|v\|^2=\langle v,Z_Cv\rangle
+=-\langle v,Z_Cv\rangle=0,
+\tag{19.14}
+$$
+
+and $q=0$. Every component weight of every $u\in\mathcal G_A(0)$
+is therefore zero. Using $B_A^\pm u=0$ and $Z_Cu=0$ gives
+
+$$
+0=[Z_C,B_A^\pm]u=\pm B_C^\pm u.
+\tag{19.15}
+$$
+
+Hence every such $u$ is separately a singlet on every actual
+component. This step uses the independent weight conservation of
+actual components; it does not select a cycle or other proper
+subgraph from a component.
+
+On $\bigotimes_C\mathcal V_C(0)$ the operator $K_A$ is the sum of
+the component operators. A unit $u\in\mathcal G_A(0)$ lies in this
+space by (19.14), so $e_A(0)\geq\sum_C e_C(0)$. Conversely, a
+product of unit vectors from all $\mathcal G_C(0)$ has total
+weight zero and energy $\sum_C e_C(0)$, proving
+
+$$
+e_A(0)=\sum_C e_C(0).
+\tag{19.16}
+$$
+
+The actual $A$ reduced density is supported in all component
+zero-weight spaces, and its expectation of the sum of the positive
+operators $K_C-e_C(0)I$ is zero. Each expectation is nonnegative,
+so each vanishes. Partial trace and the spectral equality argument
+therefore give $\operatorname{ran}\rho_C\subseteq\mathcal G_C(0)$.
+Finally choose any unit $u_C\in\mathcal G_C(0)$ and any ground
+vector on each other component. Their product belongs to
+$\mathcal G_A(0)$ by (19.16). Equation (19.15) applied to it gives
+$B_C^\pm u_C=0$. This proves the last inclusion of (19.4) for
+every vector in that space, and the same equations applied to the
+support of the actual density prove the first line of (19.4).
+All arguments allow $R=\varnothing$; an empty spectator is
+$\mathbb C$ with zero operator. The constructed vector is the
+required minimizing realization, with no assertion of unchanged
+marginals for every original deficient vector. $\square$
+

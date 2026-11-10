@@ -1,0 +1,23 @@
+### 一般态须保留算子值关系与 Schur 余量
+
+先令两个对角块作用于同一个有限维空间。对块矩阵
+
+$$
+M=\begin{pmatrix}A&C\\C^\dagger&B\end{pmatrix},
+\quad S=A+B,\ X=C+C^\dagger,\ Y=i(C-C^\dagger),\ Z=A-B,
+$$
+
+有精确恒等式
+
+$$
+\boxed{M=\tfrac12(I\otimes S+\sigma_x\otimes X+
+\sigma_y\otimes Y+\sigma_z\otimes Z).}
+$$
+
+继续分解时保留整个 $S,X,Y,Z$，不能用 $\operatorname{Tr} S$ 代替 $S$。
+若左右维数不同，可先补零成等大块；不补零时须保留原来的矩形关系类型。
+$X,Y,Z$ 一般不是正矩阵，故不能不加类型转换就分别作概率归一。
+该递归是 V37、V44 的既有结构。[4](#ref-v37)、[5](#ref-v44)
+
+<a id="thm:schur"></a>
+

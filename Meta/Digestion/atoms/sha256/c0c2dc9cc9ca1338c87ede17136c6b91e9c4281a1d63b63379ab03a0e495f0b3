@@ -1,0 +1,12 @@
+**推论 8.4（整个有效三状态域）。** 对任意 $N\ge1$、$\theta\in\Theta_N$，若 $N_+\le3$，则
+
+$$
+P_\theta\in\mathcal R,\qquad d(P_\theta)\le c_\star-\varepsilon_{\mathcal R}.
+$$
+
+特别地对 $N=1,2,3$，$C_N\le C_{\mathcal R}<c_\star$。每个有限隐藏精确达到者的每个裁剪边发射表示都必须有至少四个状态，并且两个事件算子 $\widetilde M_1$、$\widetilde M_0\widetilde M_1$ 都有秩至少二。
+
+证明。引理 8.2 给 $2\operatorname{rank}(\widetilde M_1)\le N_+\le3$，整数秩至多一；定理 8.3 应用到限制表示。取上确界得固定维数界；达到者所需条件为两个排除定理的逆否命题。$\square$
+
+按照 [普适缺陷卷][P4] 定理 6.2，对 $N\le3$ 还存在有限 $r,m\ge1$ 使 $U_{N,r}:=\max_{\theta\in\Theta_N}D_r(P_\theta)<\kappa_m/(m+1)$。这复用其固定维数紧分离等价，没有指定数值分离对。
+

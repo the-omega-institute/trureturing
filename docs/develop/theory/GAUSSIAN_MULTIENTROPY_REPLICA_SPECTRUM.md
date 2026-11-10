@@ -551,3 +551,337 @@ The multiplicity correction does not alter the definitions and determinant, grap
 The formulas and ordinary proofs in §10 are a correction and reuse of Theorem 3.8, Proposition 5.1, Theorem 5.2, Corollary 5.4 and Lemma 6.2; Remark 11.2 reuses Theorem 7.1 and the cut counts of Corollary 7.2. The primary definitions and the Table 1 example are literature-attested. No independent-priority, worldwide-novelty or kernel-verification claim is made for this correction.
 
 ## 追加锚（本行以下为增补区）
+
+## 12. Unrestricted pure Gaussian states at replica order two
+
+**Definition 12.1 (Gaussian data, canonical contraction and ordinary purities).** Let $q\ge2$ be an integer, let $N_1,\ldots,N_q$ be positive finite integers, and set $N=\sum_{k=1}^qN_k$. Use the party coordinate blocks and projections $P_k$ of Theorem 3.8. Let $A,B$ be real symmetric $N\times N$ matrices, with $A>0$, and let $d,p\in\mathbb R^N$ be arbitrary. Put $W=A+iB$ and
+
+$$
+\psi(y)=c_A\exp\left[-\frac12(y-d)^\top W(y-d)+ip^\top y\right],
+\qquad c_A=\left(\frac{\det A}{\pi^N}\right)^{1/4}.
+$$
+
+This is the nonsingular finite-mode pure bosonic Gaussian wavefunction class, allowing arbitrary position–momentum phase correlations. Its centered convention agrees with Camargo and Nishida, [arXiv:2609.30754v2, §2.3, Eqs. (21)–(22)](https://arxiv.org/html/2609.30754v2#S2.SS3), with their $\mathbf R=A$, $\mathbf S=B$, and $\mathbf W=W$. No permutation symmetry is assumed.
+
+Let $R=\mathbb F_2^{q-1}$, $M=2^{q-1}$, $t_k=e_k$ for $k<q$, and $t_q=0$. For $y=(y_r)_{r\in R}$ set
+
+$$
+y'_r=\sum_{k=1}^qP_ky_{r+t_k},\qquad
+Z_2^{(q)}=\int_{(\mathbb R^N)^R}
+\prod_{r\in R}\psi(y_r)\overline{\psi(y'_r)}\prod_{r\in R}dy_r.
+$$
+
+The integral is the actual canonical replica contraction of Convention 2.4 with the pure-state density kernel $\psi(y)\overline{\psi(y')}$. The normalization $\int|\psi|^2=1$ makes its usual denominator equal to $1$. Use the entropy normalization of Definition 6.3 at order two,
+
+$$
+S_2^{(q)}=-2^{2-q}\log Z_2^{(q)}.
+$$
+
+For a nonempty proper set $S$ of party labels, write $\mathcal H_S=L^2(\mathbb R^{\sum_{k\in S}N_k})$ and define the ordinary reduced density operator and its purity by
+
+$$
+\rho_S=\operatorname{Tr}_{\mathcal H_{S^c}}|\psi\rangle\langle\psi|,
+\qquad E_S=\operatorname{Tr}_{\mathcal H_S}(\rho_S^2),
+\qquad S_2^{(2)}(S:S^c)=-\log E_S.
+$$
+
+Here $S^c$ is the complement in $\{1,\ldots,q\}$; a matrix subscript $S$ denotes all coordinates of these parties. Thus $A_{SS}$ has size $\sum_{k\in S}N_k$, and $B_{S S^c}$ contains every phase coupling across this cut. These are partial traces of the same state $\psi$, independently of the replica contraction.
+
+**Theorem 12.2 (Same-state cut factorization without Gaussian permutation symmetry).** For every datum of Definition 12.1 with $q\ge4$, the contraction is absolutely convergent and
+
+$$
+Z_2^{(q)}=\prod_{\varnothing\ne S\subseteq\{1,\ldots,q-1\}}E_S>0,
+\qquad
+S_2^{(q)}=2^{2-q}\sum_{\varnothing\ne S\subseteq\{1,\ldots,q-1\}}
+S_2^{(2)}(S:S^c).
+$$
+
+Each unordered nontrivial cut occurs exactly once, including when distinct cuts have equal purities. All positive finite party sizes and all symmetric $B$ are included, without any rank or nonzero-coupling assumption.
+
+The $q=2$ identity is the ordinary swap formula for purity, and the unrestricted $q=3$ factorization is the whole result of Camargo and Nishida, [§4, Eq. (58)](https://arxiv.org/html/2609.30754v2#S4.E58), including position–momentum correlations. Together with those cases the displayed identities hold for every integer $q\ge2$. The fully symmetric all-$q$ specialization is Theorem 7.1. The inference added here is the identification, for unrestricted $q\ge4$, of every nontrivial binary-character block with a cut purity of the original state; this fills precisely the Gaussian restriction in Remarks 8.4 and 11.3. It addresses the higher-party order-two factorization question in Camargo–Nishida, [§6](https://arxiv.org/html/2609.30754v2#S6), within the finite nonsingular pure bosonic Gaussian class specified above.
+
+The Gaussian integral and Schur-complement methods of §3 and the finite-character method of §4 are ordinary intermediate tools, with their sources in §9. The general reflected-purification relation in [*Multipartite Markov Gaps and Entanglement Wedge Multiway Cuts*, arXiv:2507.15262v2, §4.3, Eqs. (4.9)–(4.13)](https://arxiv.org/html/2507.15262v2#S4.SS3), and its iterated form in [*Where Multipartite Entanglement Localizes: The Junction Law for Genuine Multi-Entropy*, arXiv:2602.16331v1, Appendix C](https://arxiv.org/html/2602.16331v1#A3), supply a known reduction to entropies on successively purified states. The conclusion here specifies the original-state purities $E_S$; the proof establishes that identification directly. No priority claim is attached to this extension.
+
+**Proof.** The argument uses binary characters and is valid uniformly for $q\ge2$. First,
+
+$$
+\int_{\mathbb R^N}|\psi(y)|^2dy
+=c_A^2\frac{\pi^{N/2}}{\sqrt{\det A}}=1.
+$$
+
+The substitution $y_r=x_r+d$ gives $y'_r=x'_r+d$ because $\sum_kP_k=I$. Moreover $\sum_r x'_r=\sum_r x_r$, since each party translation permutes $R$. Consequently all linear phases $ip^\top(y_r-y'_r)$ cancel in the product. This reduces $Z_2^{(q)}$ to the case $d=p=0$. Each $E_S$ is unchanged by this reduction: the map $f(y_k)\mapsto e^{i(P_kp)^\top y_k}f(y_k-P_kd)$ on the party coordinate space is unitary, and their tensor product carries the centered state to $\psi$. Partial trace therefore conjugates $\rho_S$ by the tensor product of the unitaries in $S$ and preserves its squared trace. Here the vectors in each party formula are restricted to that party's coordinates.
+
+Let $T$ send $(x_r)_r$ to $(x'_r)_r$. This is an orthogonal coordinate permutation. If $\lambda>0$ is the least eigenvalue of $A$, the absolute value of the centered replica integrand is
+
+$$
+c_A^{2M}\exp\left[-\frac12\sum_r
+\big(x_r^\top Ax_r+(Tx)_r^\top A(Tx)_r\big)\right]
+\le c_A^{2M}\exp\left[-\lambda\sum_r\|x_r\|^2\right].
+$$
+
+This proves absolute convergence. The same argument applies to the two-copy swap integral below. Changes of variables and the integrations used in the proof are thus justified by an integrable Gaussian bound.
+
+For $v\in\mathbb F_2^{q-1}$ set
+
+$$
+\chi_v(r)=(-1)^{v\cdot r},\qquad
+z_v=M^{-1/2}\sum_{r\in R}\chi_v(r)x_r,\qquad
+D_v=\sum_{k=1}^q\chi_v(t_k)P_k.
+$$
+
+The character orthogonality identity $\sum_r\chi_v(r)\chi_w(r)=M\,[v=w]$ makes this a real orthogonal change of replica coordinates, with absolute Jacobian $1$. If $v\ne w$, the identity follows by pairing $r$ with $r+e_k$ at any coordinate where $v_k\ne w_k$; the case $v=w$ has $M$ summands equal to $1$. Translation of the summation index gives
+
+$$
+M^{-1/2}\sum_r\chi_v(r)(Tx)_r=D_vz_v.
+$$
+
+Thus the exponent of the centered product separates into
+
+$$
+-\sum_{v\in R}z_v^\top H_vz_v,\qquad
+H_v=\frac12\big(W+D_v\overline W D_v\big).
+$$
+
+The trivial character gives $D_0=I$ and $H_0=A$. For $v\ne0$ let $S(v)=\{k<q:v_k=1\}$ and $C=S(v)^c$. Then $D_v$ is minus the identity on $S(v)$ and plus the identity on $C$. Ordering the coordinates by these two sets gives
+
+$$
+H_v=H_{S(v)}=
+\begin{pmatrix}
+ A_{SS}&iB_{SC}\\
+ iB_{CS}&A_{CC}
+\end{pmatrix},\qquad
+\operatorname{Re}H_{S(v)}=
+\begin{pmatrix}A_{SS}&0\\0&A_{CC}\end{pmatrix}>0.
+$$
+
+In particular, the arbitrary cross-phase block survives as $iB_{SC}$. The real cross block cancels in $H_S$ but remains in $\det A$ in the normalization.
+
+To evaluate a nontrivial block without a complex square-root choice, put
+
+$$
+\Delta_S=\det A_{SS}\,
+\det\big(A_{CC}+B_{CS}A_{SS}^{-1}B_{SC}\big)>0.
+$$
+
+The principal blocks of $A$ are positive definite, and the added matrix $B_{CS}A_{SS}^{-1}B_{SC}$ is positive semidefinite. The ordinary Gaussian Fourier integral, for real $K>0$ and $h\in\mathbb R^m$, is
+
+$$
+\int_{\mathbb R^m}e^{-u^\top Ku-2iu^\top h}du
+=\frac{\pi^{m/2}}{\sqrt{\det K}}e^{-h^\top K^{-1}h}.
+$$
+
+For completeness, the scalar transform $F(t)=\int_{\mathbb R}e^{-u^2-2itu}du$ satisfies $F'(t)=-2tF(t)$ by differentiation under the integral and integration by parts, with $F(0)=\sqrt\pi$. Hence $F(t)=\sqrt\pi e^{-t^2}$. Orthogonal diagonalization and real rescaling of $K$ give the displayed formula. Apply it first in the $S$ coordinates with $h=B_{SC}z_C$, then use the real Gaussian integral in the $C$ coordinates. Absolute integrability follows from $\operatorname{Re}H_S>0$, and the result is
+
+$$
+I_S:=\int_{\mathbb R^N}e^{-z^\top H_Sz}dz
+=\frac{\pi^{N/2}}{\sqrt{\Delta_S}}>0,
+\qquad
+I_0:=\int_{\mathbb R^N}e^{-z^\top Az}dz
+=\frac{\pi^{N/2}}{\sqrt{\det A}}.
+$$
+
+Equivalently, the Schur complement gives $\det H_S=\Delta_S$, but all square roots above are roots of explicitly positive real numbers. No inverse of a cross-coupling block has been used.
+
+It remains to identify $I_S$ with the ordinary partial trace in Definition 12.1. For a fixed nonempty proper $S$, write $y=(u,w)$ in the $S,C$ coordinates. The actual reduced kernel and its squared trace give
+
+$$
+\begin{aligned}
+\rho_S(u,u')&=\int\psi(u,w)\overline{\psi(u',w)}dw,\\
+E_S&=\int\psi(u,w)\overline{\psi(u',w)}
+          \psi(u',w')\overline{\psi(u,w')}\,du\,du'\,dw\,dw'.
+\end{aligned}
+$$
+
+Indeed the second equality expands $\operatorname{Tr}(\rho_S^2)$, or equivalently the squared Hilbert–Schmidt norm of the Hermitian reduced kernel; the four-factor Gaussian bound just established justifies Fubini. The reduced operator is positive of trace $1$, since $\psi$ is normalized. In this integral take $x_0=(u,w)$, $x_1=(u',w')$. Its two primed vectors swap exactly the $S$ coordinates. Under the orthogonal substitution
+
+$$
+z_+=\frac{x_0+x_1}{\sqrt2},\qquad
+z_-=\frac{x_0-x_1}{\sqrt2},
+$$
+
+the swap fixes $z_+$ and sends $z_-$ to $D_Sz_-$, with $D_S=-I$ on $S$ and $+I$ on $C$. The two exponent blocks are therefore exactly $A$ and $H_S$. Consequently
+
+$$
+E_S=c_A^4 I_0I_S
+=\frac{\det A}{\pi^N}
+  \frac{\pi^{N/2}}{\sqrt{\det A}}
+  \frac{\pi^{N/2}}{\sqrt{\Delta_S}}
+=\left(\frac{\det A}{\Delta_S}\right)^{1/2}>0.
+$$
+
+This is an evaluation of the ordinary purity, with no change to its definition. Exchanging $S$ and $C$ in the four-factor integral exchanges the swapped and unswapped labels and leaves the value unchanged; hence $E_S=E_C$, also the usual equality of complementary purities for a pure state.
+
+There is one nontrivial character for each nonempty $S\subseteq\{1,\ldots,q-1\}$. Multiplying the $M$ block integrals now yields
+
+$$
+\begin{aligned}
+Z_2^{(q)}
+&=c_A^{2M}I_0\prod_{\varnothing\ne S\subseteq\{1,\ldots,q-1\}}I_S\\
+&=(\det A)^{(M-1)/2}
+  \prod_{\varnothing\ne S\subseteq\{1,\ldots,q-1\}}\Delta_S^{-1/2}
+=\prod_{\varnothing\ne S\subseteq\{1,\ldots,q-1\}}E_S>0.
+\end{aligned}
+$$
+
+Every unordered nontrivial cut has exactly one side excluding party $q$, so the $M-1$ factors count the cuts once each. Taking the real logarithm of the positive product and applying $S_2^{(q)}=-2^{2-q}\log Z_2^{(q)}$ proves the entropy coefficient. Vanishing or rank-deficient cross couplings cause no exception: only positive principal blocks of $A$ are inverted. For example, if $A_{SC}=B_{SC}=0$, then $\Delta_S=\det A$ and this cut contributes $E_S=1$, as required for a product across that cut. ∎
+
+The theorem concerns finite nonsingular pure bosonic Gaussian states at replica order two. The non-Gaussian obstruction in Remark 8.3 remains valid. Mixed states, fermionic states, singular or infinite-mode limits, and replica orders $n\ge3$ require separate hypotheses and arguments.
+
+**Corollary 12.3 (The four-party consumer for unrestricted pure Gaussian data).** Let $q=4$ and take arbitrary data of Definition 12.1 on the distinct parties $A,B,C,D$. Use exactly $\mathrm{GM}_2^{(4)}$ of Definition 11.1, with real $\alpha,\beta$ satisfying $\alpha+\beta=1/3$. Set
+
+$$
+C_{\mathrm{tot}}=\sum_{C\in\mathcal C}S_2^{(2)}(C),\qquad
+P_{\mathrm{tot}}=\sum_{P\in\mathcal P}S_2^{(2)}(P),
+$$
+
+with the four single cuts $\mathcal C$ and three pair cuts $\mathcal P$ of Definition 11.1. Then
+
+$$
+\mathrm{GM}_2^{(4)}=(\beta-1/4)(C_{\mathrm{tot}}-P_{\mathrm{tot}}).
+$$
+
+In particular $\mathrm{GM}_2^{(4)}=0$ at $\alpha=1/12$, $\beta=1/4$ for every such Gaussian datum. The four-party definition is supplied by Iizuka and Nishida, [arXiv:2502.07995v1, §5, Eqs. (65)–(66)](https://arxiv.org/html/2502.07995v1#S5.E65), equivalently [v5, §5.1, Eqs. (67)–(68)](https://arxiv.org/html/2502.07995v5#S5.SS1), with their $(a,b)=(\alpha,\beta)$. The convention written using $\mathrm{GM}^{(3)}$ has the shifted coefficients of Definition 11.1. The cut-count algebra is that of Corollary 7.2 and Remark 11.2; the enlarged Gaussian domain is the consequence here.
+
+**Proof.** Theorem 12.2 gives
+
+$$
+S_2^{(4)}=\frac14(C_{\mathrm{tot}}+P_{\mathrm{tot}}).
+$$
+
+For any of the six merges $XY:Z:W$, the same global state is still a pure Gaussian state, now with party sizes $N_X+N_Y,N_Z,N_W$. Regrouping coordinates conjugates $A,B$ by a coordinate permutation and preserves $A>0$. Camargo–Nishida's unrestricted tripartite factorization, Eq. (58), therefore gives
+
+$$
+S_2^{(3)}(XY:Z:W)=\frac12\big(
+S_2^{(2)}(XY:ZW)+S_2^{(2)}(Z:XYW)+S_2^{(2)}(W:XYZ)\big).
+$$
+
+The partial traces in this formula are those of the original four-party state. Each pair cut is supplied by two complementary choices of merged pair, and each single cut by the three choices of a merged pair among its complementary three parties. These are exactly the multiplicities in Remark 11.2. Thus
+
+$$
+\sum_{XY\in\mathcal M}S_2^{(3)}(XY:Z:W)
+=P_{\mathrm{tot}}+\frac32C_{\mathrm{tot}}.
+$$
+
+Substitution into Definition 11.1 gives
+
+$$
+\begin{aligned}
+\mathrm{GM}_2^{(4)}
+&=\left(\frac14-\frac12+\beta\right)C_{\mathrm{tot}}
+ +\left(\frac14-\frac13+\alpha\right)P_{\mathrm{tot}}\\
+&=(\beta-1/4)C_{\mathrm{tot}}+(1/4-\beta)P_{\mathrm{tot}},
+\end{aligned}
+$$
+
+where the last equality uses $\alpha+\beta=1/3$. This proves the formula and its stated zero. The vanishing is a property of this entropy combination and entails no separability conclusion. ∎
+
+## 追加锚（本行以下为增补区）
+
+## 13. Replica three: finite formula and squeezing
+
+**Convention 13.1 (Physical and scalar domains).** The physical family is the real $e^-$ fully symmetric pure bosonic Gaussian family of Definition 6.1, with positive integer party sizes $x,y,z$, $N=x+y+z\ge3$, and $a\ge1$. All logarithms are natural. Put
+
+$$
+\kappa=\frac{3(a^2-1)}{4(N-1)},\qquad s=xy+xz+yz,\qquad
+D_x=1+\kappa x(y+z),\quad D_y=1+\kappa y(x+z),\quad D_z=1+\kappa z(x+y).
+$$
+
+The Fourier squeezing parameter is $(a^2-1)/(N-1)$; $\kappa$ is three quarters of it. The scalar expression $V(k,x,y,z)=[2\log(1+ks)-\log D_x-\log D_y-\log D_z]/12$, with $D_x=1+kx(y+z)$ and its labelled companions, also makes sense for nonnegative real $k,x,y,z$. This scalar extension does not assert fractional physical mode counts. The three cut terms retain their multiplicity when party sizes tie.
+
+**Theorem 13.2 (Actual integral-defined order-three formula).** On the physical domain of Convention 13.1,
+
+$$
+\mathrm{GM}^{(3)}_3(x:y:z;a)
+=\frac1{12}\log\frac{(1+\kappa s)^2}{D_xD_yD_z}.
+$$
+
+**Proof.** Apply the integral-to-Fourier product identity of the fully symmetric pure Gaussian family, with the three cuts indexed by parties as in Theorem 10.1. At replica three, $\sin^2(\pi/3)=\sin^2(2\pi/3)=3/4$. The nine tripartite weights comprise one zero weight, two occurrences each of $3x(y+z)/4$, $3y(x+z)/4$ and $3z(x+y)/4$, and two occurrences of $3s/4$. Thus the tripartite product is $D_x^2D_y^2D_z^2(1+\kappa s)^2$, while the three cut products are $D_x^2,D_y^2,D_z^2$. Substitution into $(2\log P_3-3\sum_{i=A,B,C}\log P_i)/24$ gives the stated formula. All factors are positive, including at $a=1$, so the logarithmic steps preserve the original integrals and normalizations. ∎
+
+**Theorem 13.3 (Scalar strict negativity).** For every $k,x,y,z>0$, $V(k,x,y,z)<0$.
+
+**Proof.** With $N=x+y+z$ and $p=xyz$, direct expansion gives
+
+$$
+D_xD_yD_z-(1+ks)^2=k^2p\,[N+k(Ns-p)].
+$$
+
+Here $Ns-p=x^2y+x^2z+xy^2+xz^2+y^2z+yz^2+2xyz>0$. The quotient in Theorem 13.2's scalar expression therefore lies strictly between zero and one. ∎
+
+**Theorem 13.4 (Vacuum and squeezing).** For every positive real scalar triple, $V(0,x,y,z)=0$ and $k\mapsto V(k,x,y,z)$ is strictly decreasing on $[0,\infty)$. Consequently, for every positive integer physical tripartition, $\mathrm{GM}^{(3)}_3$ is zero at $a=1$, strictly decreasing on $[1,\infty)$, and strictly negative at every $a>1$. All positive tripartitions tie at vacuum.
+
+**Proof.** Write $r_x=x(y+z)$ and its two labelled companions. Then $r_x+r_y+r_z=2s$, and $0<r_i<s$ for each party. For $k>0$,
+
+$$
+12\,\frac{\partial V}{\partial k}
+=\frac{2s}{1+ks}-\sum_{i=A,B,C}\frac{r_i}{1+kr_i}<0,
+$$
+
+since each summand $r_i/(1+kr_i)$ strictly exceeds $r_i/(1+ks)$. The logarithm arguments stay positive on the closed nonnegative ray. Continuity at zero and the mean value theorem give strict decrease on that whole ray. Direct substitution gives the vacuum value. On the physical domain, $a\mapsto3(a^2-1)/(4(N-1))$ is strictly increasing on $[1,\infty)$, which transfers the conclusion to the actual integrals through Theorem 13.2. No negative derivative at vacuum is asserted. ∎
+
+**Theorem 13.5 (Strict pair mixing).** Fix $k,x,y,z>0$ and $0\le t\le1$. Put $x'=(1-t)x+ty$ and $y'=tx+(1-t)y$. Then
+$$
+V(k,x',y',z)\le V(k,x,y,z),
+$$
+with equality exactly when $t=0$, $t=1$ or $x=y$.
+
+**Proof.** Fix $u=x+y$ and write $p=xy$, $q=x'y'$. The numerator of the positive logarithmic quotient is $A(p)=[1+k(p+uz)]^2$, and its denominator is $(1+kuz)B(p)$, where
+$$
+B(p)=(1+kp)^2+kuz(1+kp)+k^2pz^2.
+$$
+Direct expansion gives
+$$
+A(p)B(q)-A(q)B(p)=k^2z(q-p)\,H,
+$$
+where
+$$
+H=u+z+ku(p+q+2uz+2z^2)
++k^2\big[upq+zp(u^2-q)+zqu^2+u^2z^2(u+z)\big]>0.
+$$
+Indeed $p,q>0$ and $u^2-q=x'^2+x'y'+y'^2>0$. Since $q-p=t(1-t)(x-y)^2$, every proper mixing of an unequal pair strictly reduces the quotient and hence its logarithm. The endpoints are identity and full swap; a tied pair is unchanged. Symmetry of the three labelled factors gives equality in each of these cases. ∎
+
+**Theorem 13.6 (Strict Schur comparison).** Fix $k>0$. For any two positive real triples $X,Y$ of the same total, if $X$ is more mixed than $Y$ in descending-prefix-sum majorization, then $V(k,X)\le V(k,Y)$, with equality if and only if $X$ is a permutation of $Y$.
+
+**Proof.** Divide both triples by their common positive total $N$ and replace $k$ by $kN^2$; the value is unchanged. The classical positive T-transform characterization of majorization (Marshall, Olkin and Arnold) gives a finite chain from the normalized $Y$ to the normalized $X$. Theorem 13.5 decreases the value at each step and characterizes equality. If the final values agree, all steps have equal values and every step is a permutation, so their composition is a permutation. Conversely every permutation preserves the expression. This argument compares majorized triples; it makes no injectivity assertion about incomparable triples. ∎
+
+**Sources and boundaries.** The order-three statements in this section are from the research note by Haobo Ma then Wenlin Zhang, *An exact balancing law for order-three Gaussian multi-entropy* (4 November 2026, CC BY 4.0). The pair-product cross-difference proof above is an algebraic derivation of its balancing conclusion. The physical family and equal-party observation are due to Camargo and Nishida, arXiv:2609.30754v1 and v2 (v2: 12 October 2026, §5 and Figures 1–2). Classical majorization is credited to Marshall, Olkin and Arnold. Higher-replica balancing, physical replica-one continuation, other Gaussian branches and fixed-squeezing large-$N$ limits remain separate questions. The specialized order-four constants and remainders for $(m,1,1)$ do not restrict the broader order-four product formula. No worldwide priority claim is made.
+
+## 追加锚（本行以下为增补区）
+
+## 14. Replica three: all-total extrema and the labelled equal-party curve
+
+**Theorem 14.1 (All positive-integer extrema, with equality).** For every integer $N\ge3$, every $a>1$, and every positive integer labelled triple $x+y+z=N$, the actual integral-defined value of Convention 13.1 satisfies
+$$
+V(\kappa,b_0,b_1,b_2)\ \le\
+\mathrm{GM}^{(3)}_3(x:y:z;a)\ \le\
+V(\kappa,N-2,1,1),
+$$
+where $q=\lfloor N/3\rfloor$, $r=N\bmod3$, and
+$(b_0,b_1,b_2)=(q+[r>0],q+[r>1],q)$.
+These are exact extremal values by Theorem 13.2, evaluated at the displayed positive integer representatives; in particular exactly $r$ balanced entries equal $q+1$. The lower equality holds if and only if every pair of party sizes differs by at most one. The upper equality holds if and only if the triple is a permutation of $(N-2,1,1)$. All party labels, permutations and tied entries are retained.
+
+**Proof.** Sort any positive integer triple in descending order, calling its largest and smallest entries $u,w$. The total gives $b_0\le u$, $w\le b_2$, $u\le N-2$, and $1\le w$. These are exactly the first and second descending-prefix inequalities for the balanced triple to be more mixed than the given triple, and for the given triple to be more mixed than $(N-2,1,1)$. Apply Theorem 13.6 with the positive fixed parameter $\kappa$. Its equality is permutation equality. A descending integer triple of total $N$ has maximum minus minimum at most one exactly when it is the displayed balanced representative. Theorem 13.2 identifies the scalar expression with the original integrals. Both representatives have positive entries and total $N$, so both bounds are attained. ∎
+
+**Theorem 14.2 (Small-total coincidence and vacuum).** For $k>0$ and $N\ge3$, the minimum and maximum of Theorem 14.1's scalar expression coincide if and only if $N=3$ or $N=4$. At these totals every positive integer triple is in the common extremal class. For $N\ge5$ the minimum is strictly below the maximum. At physical vacuum $a=1$ every positive integer triple, at every total, has value zero and is both a minimizer and a maximizer.
+
+**Proof.** The extreme representative is balanced exactly when $N-2\le2$, equivalently $N=3$ or $4$. Theorem 14.1's equality classification then gives the coincidence assertion and the strict separation otherwise. The vacuum assertion is Theorem 13.4, and has no nonvacuum strictness attached to it. ∎
+
+**Theorem 14.3 (Exact labelled $B=C$ scalar curve).** Let $k>0$, $N>0$, and $0<b<N/2$. Put $A=N-2b$, $F(b)=V(k,A,b,b)$ and
+$$
+M=1+k(2Nb-3b^2),\qquad L=1+2kb(N-2b),\qquad R=1+kb(N-b).
+$$
+Then
+$$
+F'(b)=
+\frac{k^2b(3b-N)\,[N+k(2A^2b+3Ab^2+2b^3)]}{6LRM}.
+$$
+Thus $F'(b)$ is negative, zero or positive exactly as $b<N/3$, $b=N/3$ or $b>N/3$. The unique continuous minimum is at $b=N/3$. The scalar endpoint values and one-sided limits at $0$ and $N/2$ are zero. At $k=0$ the curve is identically zero.
+
+**Proof.** The labelled expression is $[2\log M-\log L-2\log R]/12$. Differentiate the three logarithms and collect the positive common denominator. On the stated interval $A,b,N,L,R,M$ and the bracket in the numerator are positive; only $3b-N$ changes sign. The mean value theorem gives strict decrease on $(0,N/3]$ and strict increase on $[N/3,N/2)$. Continuity at the two scalar endpoints and direct substitution give the two limits. At $k=0$ each logarithm vanishes. ∎
+
+**Theorem 14.4 (Physical integer curve minimum).** Suppose $N\ge3$ is an integer divisible by three, $a>1$, and $b$ is a positive integer with $2b<N$. The actual integral-defined value $\mathrm{GM}^{(3)}_3(N-2b:b:b;a)$ is the scalar curve of Theorem 14.3 at $k=\kappa(N,a)$, and has its unique minimum at the allowed integer $b=N/3$. Equivalently, at the minimum $B+C=2N/3$.
+
+**Proof.** Theorem 13.2 gives the curve identity, and Theorem 14.3 gives both the inequality and its iff equality. Divisibility ensures that $N/3$ is a positive integer and the equal-party triple is an allowed physical triple of total $N$. ∎
+
+Theorems 14.1–14.4 have the same Haobo Ma then Wenlin Zhang byline and CC BY 4.0 source attribution as §13. Real $b$ in Theorem 14.3 is a scalar interpolation only; its empty-party endpoints are outside the physical positive-integer domain. Totals not divisible by three do not acquire a fractional physical minimizer from the continuous curve. Subsystem size is not an evaporation time variable. The separate fixed-$a$ Page/large-$N$ question remains open. Existing all-replica integral/Fourier and order-four results remain prior work in their actual scopes.
+
+## 追加锚（本行以下为增补区）

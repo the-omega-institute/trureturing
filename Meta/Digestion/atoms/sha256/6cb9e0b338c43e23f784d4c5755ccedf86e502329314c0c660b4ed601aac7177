@@ -1,0 +1,13 @@
+**Convention 9.1 (Precise source ownership).** The following correspondence uses the supplied Sections 23–25 revision and the supplied DEV26 append revision named in Convention 1.1. Equation numbers refer to those supplied sources unless explicitly marked as equations of this volume.
+
+| Supplied source scope | Role in this companion volume |
+| --- | --- |
+| Definition 23.1, (23.2)–(23.3), (23.11), Theorem 23.2 | Shift/reset family, normalization, actual reset, and phase-independent classical renewal law. No new classical-law or spectrum result is claimed. |
+| Definition 24.1, (24.3), (24.18); Definition 25.1, (25.1)–(25.3) | Stable coherent post-tick access, chronological retained flags, total-count twirl, arbitrary within-sector terminal effects, and the inaccessible-record counterexample. Definitions 2.1–2.2 preserve this access. |
+| (25.4)–(25.5), (25.13)–(25.16) | Full integer affine lattice, complete-tick duration, every actual history, and every terminal memory overlap. Definitions 3.1 and Proposition 4.1 expose these as antecedents. |
+| (25.20)–(25.21) and the source family-orbit argument (24.7)–(24.9) | Compact integer annihilator and the affine channel/labeled-instrument orbit classification within this family. Proposition 3.3 reuses the direct annihilator proof; no classification of arbitrary CP realizations is claimed. |
+| (25.6)–(25.12), (25.18), (25.24)–(25.28) | Pure complete-tick characters, full integer generation, sufficient common full-separation horizon, terminal marginals, quadrature measurements, heralding and logical resource accounting. These remain source results; no new general optimal identification theorem is inferred. |
+| Theorem 25.3, (25.29)–(25.32) | Existing exact six-step result and full-orbit identification for $\{1,2,4\}$. Equation (7.2) is credited reuse. |
+| Proposition 25.4, (25.33)–(25.36) | Existing four-label relation $(-1,1,1,-1)$, its nine-step complete-tick coherence, and the anchored-triple index-five obstruction. The four-step realization and optimality in Theorem 7.2 are additional deductions. |
+| Entire supplied DEV26 append, revision `87b17201b5fbcbf41101aaf5541c8f990829b021`, including Definition 26.1 and Theorems 26.2–26.3 | Three-support complete-identification horizon and the $K=\{1,2,3,4\}$ full-$T_3$ equality-fiber collision with its exact horizon-four separator. These are credited supplied results; no individual monomial readout is inferred. |
+

@@ -1,0 +1,22 @@
+**定义 77.1（完整扇区和字）。** 站点顺序为 $b_{-1},b_0,\ldots,b_8$。记 $x=\varphi^{-1}$、$y=\sqrt{x}$、$\zeta=e^{3\pi i/5}$，所以 $x+x^2=1$。使用 [v15](AURIC_GOLDEN_GATE_NAND_UNIVERSALITY_AND_ARITHMETIC_LIMITS_V15.md) (3.1) 的整个三站点矩阵
+
+$$
+ K=\zeta[I+(\zeta-1)\mathcal P],\qquad
+ \mathcal P=n_Ln_R+(1-n_L)(1-n_R)Q_C,\qquad
+ Q=\begin{pmatrix}x&xy\\xy&x^2\end{pmatrix}.
+ \tag{77.1}
+$$
+
+$K_j$ 的中心为 $b_j$，$0\le j\le6$。令
+
+$$
+ \mathcal B=\{\beta\in\{0,1\}^5:\beta_i\beta_{i+1}=0\ (1\le i<5)\},
+ \quad e_\beta=|10\,\beta\,010\rangle,\quad
+ H=\operatorname{span}_{\mathbb C}\{e_\beta:\beta\in\mathcal B\},\quad
+ v=e_{00100}=|1000100010\rangle.
+ \tag{77.2}
+$$
+
+这里的 $v$ 同时是旧 §73.6 的终端字标签所对应的基向量；用 $u=e_{00000}=|1000000010\rangle$ 表示该节另一个标签。上下文中的 $q_u,q_v$ 指这两个固定探测器坐标，不随门字改变。
+令 $\mathsf W=\{0,\ldots,6\}^{<\infty}$，含空字 $\epsilon$；若 $p=j_1\cdots j_\ell$ 按调用先后书写，则 $K_p=K_{j_\ell}\cdots K_{j_1}$，$K_\epsilon=I$。制备后接续 $f$ 的态为 $K_fK_pv$。没有字长截断、辅助系统、中间测量、重置或随机选门。
+

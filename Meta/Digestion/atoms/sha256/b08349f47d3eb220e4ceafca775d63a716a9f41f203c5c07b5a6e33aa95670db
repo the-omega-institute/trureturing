@@ -1,0 +1,16 @@
+**Theorem 28.1 (The component containing the realized rectangle).**
+Let $q_*=(p_*,v_*)$ be the existing exact seed, and let $\Omega_*$
+be the connected component of $O\setminus D_{\rm crit}$ containing
+it. Then $\mathcal U\subset\Omega_*$. Every entire child over
+$\Omega_*$ has exactly two complete worlds. Transport of both seed
+worlds along any path in $\Omega_*$ exhausts its terminal fiber.
+
+**Proof.** On the entire closed rectangle, the four explicit polynomials
+(22.1) satisfy the finite inequalities
+
+| Polynomial | Enclosure on $\mathcal U$ |
+| --- | --- |
+| $E_0$ | $(-3807159123283,-3807159123282)$ |
+| $E_1$ | $(9406089304480,9406089304481)$ |
+| $E_2$ | $(-15436842,-15436841)$ |
+| $E_3$ | $(184377462718,184377462719)$ |

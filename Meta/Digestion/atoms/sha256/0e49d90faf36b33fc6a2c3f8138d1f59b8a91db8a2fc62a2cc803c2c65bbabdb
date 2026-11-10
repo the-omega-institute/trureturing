@@ -1,0 +1,17 @@
+#### 定义 9.1（未来效果空间）
+
+在固定 $d$ 维完整载体上，声明共同合法的仪器分支
+$\{\Phi_{a,o}\}$ 与含 $I$ 的末端效果族 $\mathcal G$。定义
+
+$$
+W_0=\operatorname{span}_{\mathbb R} \mathcal G,\qquad
+W_{n+1}=W_n+\sum_{a,o}\Phi_{a,o}^*W_n,\qquad
+W_\infty=\bigcup_n W_n.
+$$
+
+对偶由 $\operatorname{Tr} (\Phi(\rho)E)=\operatorname{Tr} (\rho\Phi^*(E))$ 定义。使用有限菜单即可；任意同载体菜单也可将求和解释为全部像的实张成。所有仍会返回的程序和环境必须已计入载体。
+
+<a id="statement-9-2"></a>
+
+<a id="thm-future"></a>
+

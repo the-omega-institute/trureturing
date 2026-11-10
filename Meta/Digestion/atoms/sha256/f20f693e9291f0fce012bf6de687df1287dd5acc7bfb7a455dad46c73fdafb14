@@ -1,0 +1,13 @@
+**Definition 19.1 (the synchronized retained state).** After Theorem 18.4 retain the mutable recursive current term $u$, its finite material graph, a field vector $\widehat x$ in persistent material-address coordinates, and the acquired raw table $\widehat\lambda$. Retain the actual service reference, current rights, finite instruction program, pending-call workspace and their backing. The entry report is an additional immutable archive, with separate storage.
+
+The mathematical invariant has a root-preserving material isomorphism $\iota$ to the actual current source satisfying
+
+$$
+\widehat x_v=x_{\iota(v)}\quad(v\in V(u)),
+\qquad
+\text{raw label }j\text{ actually binds }\iota(\widehat\lambda(j)).
+\tag{NLBAII.8}
+$$
+
+The original logical constructors and addresses also coincide. Initially $u=\rho(t)$ and $\widehat x=0$. The isomorphism is a proved correspondence; evaluating it does not provide a callable internal actuator or a new object reference.
+

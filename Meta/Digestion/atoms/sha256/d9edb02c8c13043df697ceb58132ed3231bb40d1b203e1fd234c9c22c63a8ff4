@@ -1,0 +1,45 @@
+**Definition 20.1 (one explicit isolating promise).** Continue to use
+post-clock digital C on the earned $t$. Supply an integer $B\ge1$
+and the class promise
+
+$$
+S_B(t)=\{x\in\mathbb Q^{V_t}:
+ \text{each reduced coordinate denominator is at most }B\}.
+\tag{20.1}
+$$
+
+Numerators have no common bound. $B$ is supplied task information,
+not learned or certified from this assay. Fix $O=O_I,D=D_I$ by
+Definition 17.1's geometry-only forcing choice and let
+
+$$
+K_D=\max_{a\in V_t}\sum_{\nu=1}^{b(I+1)}|D_{a,\nu}|>0.
+\tag{20.2}
+$$
+
+Choose a finite nonnegative integer $p$ with
+$2^p>4K_DB^2$ by integer/rational comparison. Actually Read all
+terminals at epoch zero and after each of $I$ actual Ticks, with
+precision $p$ throughout. No Hold, Add, Reset or growth occurs during
+this assay. For the actual integer vector $k$ put
+
+$$
+y=2^{-p}k,\qquad c=Dy,\qquad \varepsilon=K_D2^{-p}.
+\tag{20.3}
+$$
+
+For each coordinate enumerate $d=1,\ldots,B$ and the integers
+
+$$
+\left\lceil d(c_a-\varepsilon)\right\rceil
+ \le A\le
+\left\lfloor d(c_a+\varepsilon)\right\rfloor.
+\tag{20.4}
+$$
+
+Reduce and deduplicate $A/d$ and return the unique distinct value.
+The enumeration is a finite rational/integer operation, with no
+rational-reconstruction oracle. A concrete deduplication keeps the first
+reduced candidate and compares every later candidate with it, rejecting
+if a distinct one appears or if there is no candidate.
+

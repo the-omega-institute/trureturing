@@ -71,6 +71,81 @@ identities give the equivalent expression $\log((217+\sqrt{21489})/360)$.
 The axiom closure is exactly `propext`, `Classical.choice` and `Quot.sound`;
 there is no `sorry` or `native_decide`.
 
+
+### The registered low-alpha continuation
+
+Issue [#17673](https://github.com/the-omega-institute/trureturing/issues/17673)
+registers the remaining assertion with exactly $0<\alpha<1$ and the same
+frozen `mpow`, `renyiCMI` and `applyA` definitions. The candidate
+`RenyiCMILowAlphaRefutation` keeps the literal types `claim : Prop` and
+`result : Not claim`. Its intended witness is $\alpha=1/2$ and
+$t=2^{-30}$, with input dimensions $(3,2,2)$ and output dimensions $(2,2,2)$.
+
+Write $H=\begin{pmatrix}0&1\\1&0\end{pmatrix}$ and
+$R_0=\operatorname{diag}(16,1)/68$,
+$R_1=\operatorname{diag}(1,16)/68$, $R_2=I/4$.
+In the carrier $((A\times B)\times E)$, the candidate input is diagonal in
+$A,B$, with $E$ blocks
+$\rho_{a,b}=(R_a+(-1)^b t X_a)/2$, where
+$X_0=X_1=H$ and $X_2=-6H$.
+The three rectangular Kraus matrices are
+$K_j=|f(j)\rangle\langle j|$, with $f(0)=f(1)=0$ and $f(2)=1$.
+Thus their adjoint products sum to $I_3$, and the channel output has
+$E$ blocks $(I/4+2(-1)^btH)/2$ and
+$(I/4-6(-1)^btH)/2$.
+The input $AE$ marginal has diagonal blocks $R_0,R_1,R_2$;
+the output $AE$ marginal is $I_4/4$, and both $E$ marginals are $I_2/2$.
+
+The matrix bridge uses a positive square-root certificate. For
+$M=\begin{pmatrix}a&u\\u&b\end{pmatrix}>0$, put
+$d=\sqrt{ab-u^2}$ and $g=\sqrt{a+b+2d}$.
+The certificate $S=(M+dI)/g$ satisfies $S>0$ and $S^2=M$;
+CFC square-root uniqueness identifies the actual half power with $S$.
+Positive fourth-root certificates identify the $AE$ quarter powers, and
+an inverse certificate identifies the $E$ negative quarter power. This
+retains the order of multiplication and partial trace in equation (3.18).
+
+Put $x=t^2$, $r=\sqrt{1-289x}$, $s=\sqrt{17+8r}$,
+$p=\sqrt{1-64x}$, $q=\sqrt{1-576x}$,
+$m=\sqrt{(1+p)/2}$, $n=\sqrt{(1+q)/2}$,
+$A=5(s^2+9)/(34s)$ and $B=4/s$.
+The proposed exact evaluations are
+$Z_{\rm in}=(A+n)^2/4+4x(B-3/n)^2$ and
+$Z_{\rm out}=(m+n)^2/4+4x(1/m-3/n)^2$,
+with the corresponding CMI values $-\log Z_{\rm in}$ and
+$-\log Z_{\rm out}$. Their difference factors as
+
+$$
+ Z_{\rm out}-Z_{\rm in}
+ =\frac{(m-A)(m+A+2n)}4
+   +4x(1/m-B)(1/m+B-6/n).
+$$
+
+The abstract radical certificate bounds this expression by
+$-(473/1000)x$ for $0<x\le10^{-8}$ under the displayed radical identities
+and positivity assumptions. The fixed $x=2^{-60}$ is in this interval.
+After the exact matrix evaluations have been verified, $Z_{\rm out}>0$
+and strict logarithm monotonicity give a strict increase in CMI.
+
+#### Native verification boundary for the continuation
+
+The complete low-alpha source has passed native Lean compilation against the
+actual frozen imported module. This checks the state and channel certificates,
+the ordered matrix bridge, the actual CFC powers, both exact CMI evaluations
+and the strict comparison in the same whole-source proof. A separate native
+check of the compiled artifact confirms that `claim` has the literal type
+`Prop` and `result` has the literal type `Not claim`, with no universe
+parameters. Both axiom closures are exactly `propext`, `Classical.choice` and
+`Quot.sound`; the refutation is a closed kernel theorem.
+
+Canonical selected build/report validation, Scribe emission and independent
+prefreeze review have passed. The scoped canonical deposit has frozen the exact
+low-alpha result. The existing Refuted resolution claim includes both the
+original alpha-two result and this low-alpha result. Final whole-delivery review
+and all applicable exact-head CI checks remain required before merge.
+The already accepted alpha-two result above is separate. The log-Euclidean,
+dual-J and other optimized quantities are not substitutions for this target.
+
 ## Triage
 
 Tier 1: a named conjecture, preregistered in #16068. Admission basis:

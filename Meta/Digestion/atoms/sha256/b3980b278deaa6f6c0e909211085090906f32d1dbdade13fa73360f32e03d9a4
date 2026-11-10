@@ -1,0 +1,11 @@
+**Assumption 17.2 (one actual field, complete calls and their backing).** Every actual material vertex has a rational field cell. The old preparation initialized each cell to zero and used no field input, so the field at attachment is zero. Its known law is symmetric unit adjacency with zero diagonal. At a current logical term $u$, write $A_u$ for that adjacency matrix, with the actual vertices indexed by their material addresses for mathematical description only. The raw menu is
+
+| Request | Actual effect at a settled cut | Complete reply |
+| --- | --- | --- |
+| Reset | Set every current field cell to zero; retain the tree and roster | fixed acknowledgement |
+| Add$(j,q)$, $1\le j\le n$, $q\in\mathbb Q$ | Add $q$ at the terminal currently bound to raw label $j$ | fixed acknowledgement |
+| Tick | Replace $x$ by $A_u x$ | fixed acknowledgement |
+| Read$(j)$, $1\le j\le n$ | Retain the tree and field | the literal rational at that terminal |
+| Hold | Retain the tree and field; prevent unrequested evolution | fixed acknowledgement |
+| $P_p$ | Execute the original guarded promotion at logical address $p$ | original Growth$(P,p)$ or original tagged refusal |
+| $S_p$ | Execute the original guarded split at logical address $p$ | original Growth$(S,p)$ or original tagged refusal |

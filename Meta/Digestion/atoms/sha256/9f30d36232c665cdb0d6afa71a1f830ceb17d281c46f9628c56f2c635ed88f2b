@@ -1,0 +1,25 @@
+**约定 85.1（同一实际信道与同一个终端 map）。** 本节使用定义 81.1、82.1 的整个 complex qutrit 合同：$F=\operatorname{Ad}_{U_0}\circ\Delta_W$，$\mathcal N=F^2$，actual words 的先后仍为 $V_{h_2}V_{h_1}$，history law 为 input-independent fair law。ordered basis 是 $(\xi,e,f)$，$P=|\xi\rangle\langle\xi|$，$E(q)=|\sqrt{1-q}\,\xi+\sqrt q\,e\rangle\langle\sqrt{1-q}\,\xi+\sqrt q\,e|$。比较类为所有与未知输入无关、只作用于终端 qutrit 的 complex CPTP maps $\mathcal D:M_3(\mathbb C)\to M_3(\mathbb C)$，同一个 map 同时服务 $P,E(q)$。对 $A=P,E(q)$，记
+
+$$
+L_{\mathcal D}(A)=\|\mathcal N^\dagger\mathcal D^\dagger(A)-A\|_{\rm op},
+\qquad c_2(q)=\min_{\mathcal D\ {\rm CPTP}}
+                   \max\{L_{\mathcal D}(P),L_{\mathcal D}(E(q))\}.
+$$
+
+此 loss 等于全部 qutrit density matrices 上的 worst-case absolute Born-probability error。decoder 可知道两个 tasks、$q$ 和固定 horizon $2$，不能读取 history、reference、额外 summary 或未知输入，不作 code restriction、intermediate correction 或 postselection。这里不加 exact-$P$ 条件；命题 82.3 的条件问题仍是另一个问题。
+
+唯一 noise interface 仍是 [Environment §27][F81ENV27] 的整个 complex effect image。在本 horizon，若 $B$ 是任意 Hermitian output effect，置 $K_2=(U_0^\dagger B U_0)_{\xi,e}$、$d=(U_0^\dagger B U_0)_{ff}$，则
+
+$$
+\mathcal N^\dagger(B)=G_{-1/2}(K_2\oplus d)
+ =\begin{pmatrix}
+x&-z/2&0\\
+-\overline z/2&(y+3d)/4&0\\
+0&0&(3y+d)/4
+\end{pmatrix},\qquad
+K_2=\begin{pmatrix}x&z\\\overline z&y\end{pmatrix}.
+\tag{85.1}
+$$
+
+这只是供应公式的 $n=2$ specialization；下界保留全部 complex degrees of freedom。多个任务对应的 effects 必须来自一个 $\mathcal D^\dagger$，不能分别在此 interval 中选取。
+

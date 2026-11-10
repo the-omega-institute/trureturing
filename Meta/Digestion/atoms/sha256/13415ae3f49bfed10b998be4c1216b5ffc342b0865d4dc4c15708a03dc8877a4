@@ -1,0 +1,56 @@
+**Proposition 6.2 (Exact retained-field estimators and root summability).** Under Definition 4.1 and $d(P)=c_\star$, use exactly
+
+$$
+\begin{aligned}
+\mathcal L_j&=\sigma(X_{-j},\ldots,X_{-1},X_1,X_2,\ldots),\\
+\mathcal R_j&=\sigma(\ldots,X_{-2},X_{-1},X_1,\ldots,X_j),\\
+p_j^L&=\mathbb E_P[X_0\mid\mathcal L_j],\quad
+p_j^R=\mathbb E_P[X_0\mid\mathcal R_j],\\
+e_L(j)&=\mathbb E_P(q_0-p_j^L)^2,\quad
+e_R(j)=\mathbb E_P(q_0-p_j^R)^2\qquad(j\ge0).
+\end{aligned}
+\tag{6.4}
+$$
+
+There are producer-dependent $K<\infty$, $\gamma>0$ such that
+
+$$
+e_L(j)+e_R(j)\le Ke^{-\gamma j},\qquad
+A_P=\sum_{j\ge0}\bigl(\sqrt{e_L(j)}+\sqrt{e_R(j)}\bigr)<\infty.
+\tag{6.5}
+$$
+
+Proof. Work first in a component. For $j\ge1$ both fields retain the two nearest neighbors, so a forced center has the exactly known posterior zero. On a free exterior, define the $\mathcal L_j$ good event by the existence of a complete guard with both endpoints in $[-j,-1]$. Choose its first such occurrence by a fixed spatial ordering. The entire retained future determines the component and spatial phase by Proposition 5.2; transport that phase to the guard's starting anchor. Proposition 5.3 makes its ending predictive state the common image of all states in that phase. All subsequent observed past gaps then transport this state to the nearest left anchor. The entire retained future supplies the nearest right anchor and a prefix containing another guard. Formula (5.9), now using the recovered left predictive state, is $\mathcal L_j$ measurable and equals $q_0$ on this event. Define $\widehat q_j^L$ by this formula on the good free event and by zero elsewhere, including forced configurations. Every selection uses countably many measurable word tests.
+
+For $\mathcal R_j$, the entire retained past directly gives the left context, component and phase. Its good free event is the existence of a complete guard with endpoints in $[1,j]$. Take the future prefix from the nearest right anchor through this guard. All of it is retained, so (5.9) defines an $\mathcal R_j$-measurable $\widehat q_j^R=q_0$ there; again set the estimator to zero off the good free event. A guard starting at the nearest right anchor is allowed. Thus both estimators are defined on their whole retained fields, with values in $[0,1]$.
+
+Because these fields are subfields of $\mathcal E_0$, the tower property gives $p_j^L=\mathbb E[q_0\mid\mathcal L_j]$ and its right analogue. Projection optimality and boundedness give
+
+$$
+e_L(j)\le\mathbb E(q_0-\widehat q_j^L)^2
+\le P(\text{no complete guard in }[-j,-1]),
+\qquad
+e_R(j)\le P(\text{no complete guard in }[1,j]).
+\tag{6.6}
+$$
+
+Proposition 6.1 bounds both terms exponentially. Enlarging the constant includes $j=0$, where each field still retains its entire opposite half-line and each defect is at most $1$.
+
+For the original finite mixture, Proposition 5.2 with eigenvalue $1$ places every $E_D$ in both retained fields, including at $j=0$. Consequently each conditional projection restricts to its component projection. With $\omega_D=P(E_D)$ the mixing identities are exactly
+
+$$
+e_L(j)=\sum_D\omega_D e_{L,D}(j),\qquad
+ e_R(j)=\sum_D\omega_D e_{R,D}(j).
+\tag{6.7}
+$$
+
+There are finitely many positive components. Taking the least of their positive rates and summing their constants proves the first assertion in (6.5). Finally,
+
+$$
+A_P\le2\sqrt K\sum_{j\ge0}e^{-\gamma j/2}
+=\frac{2\sqrt K}{1-e^{-\gamma/2}}<\infty.
+\tag{6.8}
+$$
+
+This is the original one-sided root sum, not a two-sided window error or a hidden-state recovery error. $\square$
+

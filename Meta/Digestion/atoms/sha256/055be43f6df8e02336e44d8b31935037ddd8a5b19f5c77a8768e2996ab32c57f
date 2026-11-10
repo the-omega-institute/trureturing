@@ -1,0 +1,78 @@
+**定理 23.2（有限矩阵的无条件零漂移实现）。**给定任意满足原始前件与全部 (R) 的模型，以及其中任意有限标签集 $A$，存在一个可数、由 $|A|$ 个来源及真实单位生成的含幺 $U$-magma 模型 $(\mathcal T,c_\infty,U)$，使全部原始前件与 (R) 成立，并满足
+
+$$
+\Omega_\infty(1)=0,\qquad
+c_\infty(x_a,x_b)=c(a,b)\quad(a,b\in A).
+\tag{23.3}
+$$
+
+这是一项有限比较矩阵的实现定理，不断言原 $M$ 到 $\mathcal T$ 有保运算或保单位的嵌入。
+
+**证明。**对每个 $N\ge1$，取数组模型 $M_N=M^{\Sigma_N}$，乘法与 $U_N$ 均逐坐标采用原运算，真实单位为常值数组 $\mathbf1$，并置
+
+$$
+c_N(X,Y)=\frac1{N3^N}\sum_{\sigma\in\Sigma_N}c(X_\sigma,Y_\sigma).
+\tag{23.4}
+$$
+
+逐坐标完整 (R) 求和后仍是完整 (R)，且其真实单位预算精确为 $\Omega_N=\Omega/N$。
+
+为每个 $\sigma$ 统一选择 $e_\sigma\in\{0,1,2\}$，使 $L_\sigma=s_\sigma+e_\sigma$ 被三整除，定义
+
+$$
+\widetilde\Gamma_Na(\sigma)
+=U^{e_\sigma}H_N^\sigma(a;1).
+\tag{23.5}
+$$
+
+同一坐标中全部来源都采用同一 $e_\sigma$。同步等距与 (23.2) 给
+
+$$
+c_N(\widetilde\Gamma_Na,\widetilde\Gamma_Nb)=c(a,b),
+\qquad \widetilde\Gamma_N1(\sigma)=p_{L_\sigma}.
+\tag{23.6}
+$$
+
+每个 $L_\sigma$ 都可应用引理 22.2。因此先在原模型逐坐标估计，再除以 $N$ 取平均，得到
+
+$$
+\begin{aligned}
+q_N(\widetilde\Gamma_Na)&\le3q(a)+3\Omega/N,\\
+r_N(\widetilde\Gamma_Na)&\le3r(a)+3\Omega/N.
+\end{aligned}
+\tag{23.7}
+$$
+
+这里控制的是到真实数组单位 $\mathbf1$ 的费用。$\widetilde\Gamma_N1$ 无需等于 $\mathbf1$；它的双向单位费用由 (23.7) 控制。
+
+取有限变量 $x_a$、单位符号、二元运算及一元符号 $U$ 上的自由含幺项代数 $\mathcal T$，只施加双侧单位恒等式。沿用第 14 节的唯一单位约简正规形；$U1$ 不约简为 $1$。在第 $N$ 个模型中令 $x_a$ 求值为 $\widetilde\Gamma_Na$，单位求值为真实 $\mathbf1$，再按实际运算递归求值为 $s_N$。
+
+在正规形上定义与 $N$ 无关的有限预算
+
+$$
+\begin{aligned}
+B(1)&=0,\\
+B(x_a)&=3(q(a)+r(a))+6\Omega,\\
+B(Us)&=9B(s)+24\Omega,\\
+B(st)&=3(B(s)+B(t))\qquad(s,t\ne1).
+\end{aligned}
+\tag{23.8}
+$$
+
+一般乘积只用 $B(st)\le3(B(s)+B(t))$；有单位因子时先约简。式 (23.7) 给变量预算。在数组模型中应用定理 22.3，标记节点满足
+
+$$
+q_N(U_Ns_N)+r_N(U_Ns_N)
+\le9(q_N(s_N)+r_N(s_N))+24\Omega/N.
+$$
+
+乘法节点用 (R) 第零项的两种次序，故归纳得到
+
+$$
+q_N(s_N)+r_N(s_N)\le B(s),\qquad
+c_N(s_N,t_N)\le3(B(s)+B(t)).
+\tag{23.9}
+$$
+
+枚举可数的全部有序项对，依次取收敛子列并取同一个对角子列 $N_\ell\to\infty$，定义 $c_\infty(s,t)=\lim_\ell c_{N_\ell}(s_{N_\ell},t_{N_\ell})$。式 (23.9) 保证每个坐标有限。非负性、零对角和每条完整四变量 (R) 都只涉及有限个连续标量表达式，故共同保留。$\Omega_N=\Omega/N$ 给 $\Omega_\infty(1)=0$，(23.6) 给原有限矩阵的精确保留。没有取零费用商，也没有预设来源映射保持运算。即使 $A$ 含原标签 $1$，变量 $x_1$ 也未被等同于新模型的真实单位。证毕。
+

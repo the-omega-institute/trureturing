@@ -1,0 +1,16 @@
+#### 定理 16.6：理想投影更新
+
+CP 分支的效果为投影 $P$，并且不扰动每个支撑于 $P$ 的态，则
+
+$$
+\mathcal E(\rho)=P\rho P.
+$$
+
+**证明。**
+
+$\sum_\mu K_\mu^*K_\mu=P$ 给 $K_\mu=K_\mu P$。对 $\psi\in P\mathcal H$，秩一正和 $\sum_\mu\lvert K_\mu\psi\rangle\langle K_\mu\psi\rvert=\lvert\psi\rangle\langle\psi\rvert$ 迫使每项的向量与 $\psi$ 共线。对独立向量及其和用线性，得到 $K_\mu=c_\mu P$、$\sum_\mu|c_\mu|^2=1$。零投影和秩一情形直接包含。
+
+$\square$
+
+成功概率非零时，条件态为 $P\rho P/\operatorname{Tr}(\rho P)$。只可重复、或仅保持某组基态，不足以推出此定理：支撑内退相干提供反例。
+

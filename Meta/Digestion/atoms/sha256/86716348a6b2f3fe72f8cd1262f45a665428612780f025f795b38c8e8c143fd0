@@ -1,0 +1,10 @@
+**Definition 8.3 (Transition profile).** For $\rho>0$, let $t(\rho)>1$ be the unique solution of
+
+$$
+\rho=2(t-1)t^{3/2},
+\qquad F(\rho)=t(\rho)^4\bigl(4t(\rho)-3\bigr).
+\tag{8.5}
+$$
+
+Uniqueness and existence follow because $t\mapsto2(t-1)t^{3/2}$ is continuous on $(1,\infty)$, has derivative $\sqrt t(5t-3)>0$, and has endpoint limits $0$ and $\infty$.
+

@@ -1,0 +1,28 @@
+## 8. 与既有理论的接口及边界
+
+本卷使用的关系如下：
+
+- ADAPTIVE_ACTION_MENU_BRANCHING_RESIDUAL 给出确定性语义残余 $R_n$；
+- LAW_IMAGE_ACQUISITION_INTERFACE 区分语义 law-image 与一次运行档案，并给出共同支持障碍；
+- ACQUIRED_ADAPTIVE_RESIDUAL 的 $A_n$ 在本卷中沿用“所有声明自适应实验的档案 law 相等”这一轨迹定义；只有在式 (1.3a)–(1.3b) 的联合核闭合和可观测类条件下，才可使用相应的递归判据；
+- SERIAL_ACQUISITION_COMPOSITION 给出在共同来源和条件核闭合下的串行解码复合；
+- Fibonacci 原子生成与权限例子提供确定性 Dirac 档案的特例。
+
+本卷新增的是三分法：
+
+$$
+\boxed{
+R_n
+\quad\text{语义行为残余},
+\qquad
+A_n^{\mathrm{law}}
+\quad\text{档案分布残余},
+\qquad
+\operatorname{Sep}_{\le n}
+\quad\text{一次运行零误差可分性}.
+}
+$$
+
+它们不能互相替代。有限 law 的一致性不推出实际来源存在；有限样本的统计可辨识不推出零误差认证；渐近区分也不等于有限观察者已经得到极限信息。
+
+这一步使“空间、时间、边界、记忆”的统一保持在同一关系系统内，同时不把统计 law 偷渡成观察者已有的记录，也不把一次可分的具体实验夸大成所有未来任务的全局边界。

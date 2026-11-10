@@ -1,0 +1,11 @@
+**推论 93.1（切向复 Gram 几何）。** 在任一 $\mathsf C_{\rm Gram}(B_*)$ 下，令 $J_p=2D_p|_{W_p}$，并在复化切空间定义 $\Pi_p^-=(I+iJ_p)/2$。则
+
+$$
+K_p(z,w)=2\langle\Pi_p^-P_pz,\Pi_p^-P_pw\rangle_q.
+\tag{93.1}
+$$
+
+原实法向在核中；在 $W_p\otimes\mathbb C$ 上，核为 $J_p$ 的 $+i$ 特征空间，秩为 $\dim_{\mathbb R}W_p/2$。经典分支切空间为零。
+
+证明。定理 92.2 给 $J_p^2=-I$ 及 $q$-正交性，所以 $\Pi_p^-$ 是 $-i$ 特征空间的 Hermitian 正交投影；(92.4) 即为 (93.1)。这是一份由原横向关系导出的复 Gram 形式，没有为原世界另选 Hilbert 载体。复化的两个特征空间及其投影是成熟线性几何，见 Hackl–Bianchi, *Bosonic and fermionic Gaussian states from Kähler structures*, SciPost Phys. Core 4, 025 (2021)，[原文](https://scipost.org/SciPostPhysCore.4.3.025/pdf)，§2.2.3，(26)–(27)；这里由 (92.4) 核定原 $q,D$ 的符号与系数。该来源的 Gaussian 态构造另有 CCR/CAR 前件，本结论只消费其线性投影几何。定理 89.3 的 $\omega=2q(J\cdot,\cdot)$ 和 $g=2q$ 仍给相应 Hamilton–Kähler 形式；复射影几何及原 $d$ 的数学三维截面沿定理 86.2、90.2 或推论 73.1 接回。正核的实部及虚部分别使用原横向比较和原作用，不把其尺度直接命名为物理 $\hbar$。∎
+

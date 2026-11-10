@@ -1,0 +1,45 @@
+**定理 76.2（正支持任务签名判据）。** 定义 finite-horizon task signature
+
+$$
+\sigma_{\mathscr E}(h)=
+ (Q_hE_1Q_h^\dagger,\ldots,Q_hE_kQ_h^\dagger).
+$$
+
+定义 76.1 的 exact common decoding 存在，当且仅当对每个 $w_m>0$，$\sigma_{\mathscr E}$ 在 $H_m$ 上恒定。等价地，对所有 $h,g\in H_m$ 和所有 $j$，
+
+$$
+[E_j,Q_h^\dagger Q_g]=0.
+$$
+
+若 $\mathcal A_{\mathscr E}$ 是 $I_3,E_1,\ldots,E_k$ 生成的 complex unital star algebra，等价条件也写成
+
+$$
+\mathcal A_{\mathscr E}\subseteq
+\bigcap_{m:w_m>0}\{Q_h^\dagger Q_g:h,g\in H_m\}'.
+$$
+
+**证明。** 若 exact decoding 存在，对每个 $j$ 写 $F_{m,j}=\mathcal D_m^\dagger(E_j)$，它是 effect，且
+
+$$
+E_j=\sum_{h,m}p_ht(m\mid h)Q_h^\dagger F_{m,j}Q_h.
+$$
+
+projection 是 effect interval 的极点。具体地，对 $x\in\ker E_j$，右侧各非负二次型之和为零，故每个正权项 annihilate $x$；对 $x\in\operatorname{ran}E_j$，同样将该论证用于补 effect。于是每个正权 effect 都恰等于 $E_j$。因此
+
+$$
+F_{m,j}=Q_hE_jQ_h^\dagger\qquad(h\in H_m),
+$$
+
+同一 $m$ 的签名必恒定。这一步也说明只要求 averaged exactness 不能让不同正权分支互相抵消错误。
+
+反之，为每个非空 $H_m$ 选一个 $h_m\in H_m$，使用单一 unitary decoder $\mathcal D_m=\operatorname{Ad}_{Q_{h_m}^\dagger}$。签名相等给出
+
+$$
+Q_h^\dagger Q_{h_m}E_jQ_{h_m}^\dagger Q_h=E_j
+\qquad(h\in H_m,\ 1\le j\le k).
+$$
+
+故同一 $\mathcal D_m$ 对全部任务精确，求和仍精确。签名相等与 displayed commutators 等价；与生成元交换等价于与其生成的 star algebra 交换，得到最后的写法。∎
+
+这是对本 word instrument 的 terminal fibres 的直接组合证明。[Bény–Kempf–Kribs, *Quantum Error Correction of Observables*, Definition 8、Theorem 9、Corollary 10](https://arxiv.org/html/0705.1574v1) 已供应一般 observable-algebra correction 判据；这里其 code projection 是 $I_3$，Kraus products 为 $\sqrt{p_ht(m\mid h)p_gt(m\mid g)}\,Q_h^\dagger Q_g$。本定理不另立一般 observable-correction 定理，也不将 qutrit spectator projection 当作输入 code。
+

@@ -1,0 +1,55 @@
+### 固定黄金记录及本轮原生取得推论
+
+沿用项目的整个十三维来源 $H=V_8^{\mathbf1}$。
+令 $P_1=\Pi$ 秩五、$P_0=I-\Pi$ 秩八，并设
+
+$$
+\zeta=e^{3\pi i/5},\quad D=P_0+\zeta P_1,\quad
+a=\frac{5+\sqrt5}{10},\quad b=\frac{5-\sqrt5}{10}.
+$$
+
+原共同等距是
+
+$$
+V\eta=\sqrt a\,D^3\eta\otimes\lvert 0 \rangle
++\sqrt b\,D\eta\otimes\lvert 1 \rangle.
+$$
+
+令
+
+$$
+u=(\sqrt a,\sqrt b)^{\mathsf T},\qquad
+z=(\sqrt a\,\zeta^3,\sqrt b\,\zeta)^{\mathsf T},\qquad
+Q=\lvert u \rangle\langle u \rvert-\lvert z \rangle\langle z \rvert .
+$$
+
+由 $ab=1/5$ 及 $|\langle u,z\rangle|^2=b$，
+有 $Q^2=aI$。于是 v29 的信息性读口为
+
+<a id="eq-goldport"></a>
+
+$$
+F_\pm=\tfrac12(I\pm Q/\sqrt a),\qquad
+\ell_0=\left(\frac{1+\sqrt a}{2},\frac{1-\sqrt a}{2}\right),
+\quad
+\ell_1=\left(\frac{1-\sqrt a}{2},\frac{1+\sqrt a}{2}\right).
+\tag{12}
+$$
+
+这组似然严格正且不同，保持两个指针扇区。
+这里的两个扇区不是十三维来源的两个一维基态。
+
+项目新增 §100 在同一 Fibonacci 规范中取得
+
+$$
+\mathcal K=V_{12}^{\mathbf1},\quad \dim\mathcal K=89,\qquad
+J:H\otimes\mathbb C^2\hookrightarrow\mathcal K .
+$$
+
+代码 $\mathcal C$ 维数 $26$，其余 $63$ 条合法路径保留为泄漏。
+字面基映射是 $J(e_\beta\otimes\lvert i \rangle)=\lvert 10\,\beta\,010\,i010 \rangle$。
+原七地址不变，增加四个同类控制地址；
+准备关系为同族真空 ready 路径。
+新增资源可以在本稿本体中解释为取得新的内部可访问支持，
+而不是向宇宙附加外部物质。 [[4]](#ref-repoq)
+

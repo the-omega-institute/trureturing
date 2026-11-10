@@ -1,0 +1,74 @@
+**Lemma 9.3 (continuous actual-feedback defect).** Let $e_1,e_2$ be the standard record basis and use the unique positive square root to define
+
+$$
+\begin{aligned}
+b_\ell(E)&=(E^{\mathsf T})^{1/2}e_\ell,
+ &\quad v_\ell(E)&=R_0b_\ell(E),\\
+K_\ell(E,U)&=U\operatorname{diag}(v_\ell(E)),
+ &\quad \ell&=1,2,\\
+a(E)&=\sum_{\ell=1}^2\delta(b_\ell(E)),\\
+\tau(E,U)&=\sum_{\ell=1}^2
+ \left(\|v_\ell(E)\|_{\ell^1}^2
+                   -|\operatorname{Tr}K_\ell(E,U)|^2\right).
+\end{aligned}
+\tag{9.12}
+$$
+
+These are continuous nonnegative defects on $\mathcal K$. For the normalized Choi state and overlap
+
+$$
+J_{\Phi_\mu}=(\operatorname{id}_{M_4}\otimes\Phi_\mu)(\Pi),
+\qquad f_\mu=\langle\omega|J_{\Phi_\mu}|\omega\rangle,
+\qquad \Delta_\mu=\frac{1+c}{2}-f_\mu,
+\tag{9.13}
+$$
+
+one has
+
+$$
+\int_{\mathcal K}(a(E)+\tau(E,U))\,d\mu
+ =\operatorname{Tr}H-16f_\mu=16\Delta_\mu\ge0.
+\tag{9.14}
+$$
+
+The lower witness (3.15) applies to $\Phi_\mu$ and gives
+
+$$
+\|\Phi_\mu-\operatorname{id}_{M_4}\|_\diamond
+ \ge2(1-f_\mu)\ge q.
+\tag{9.15}
+$$
+
+For every $\varepsilon\ge0$, the premise
+$\|\Phi_\mu-\operatorname{id}_{M_4}\|_\diamond\le q+\varepsilon$ implies the actual defect budget
+
+$$
+0\le\int_{\mathcal K}(a+\tau)\,d\mu\le8\varepsilon.
+\tag{9.16}
+$$
+
+At exact optimum, $a(E)=\tau(E,U)=0$ at every point of $\operatorname{supp}\mu$.
+
+Proof. The positive square-root map is continuous on positive semidefinite matrices, including at singular matrices. Thus the columns in (9.12) are continuous and require no continuous choice of eigenvectors. They satisfy
+
+$$
+\sum_{\ell=1}^2b_\ell(E)b_\ell(E)^\dagger=E^{\mathsf T},
+\qquad
+G_{(E,U)}(X)=\sum_{\ell=1}^2K_\ell(E,U)XK_\ell(E,U)^\dagger.
+\tag{9.17}
+$$
+
+Theorem 8.2 gives $\delta(b)\ge0$, with equality exactly on its two rays. Each summand of $\tau$ is nonnegative by (3.12), using the actual same $U$ in both column terms. All expressions in (9.12) are continuous.
+
+The Choi trace formula (3.11), applied to (9.17) and integrated, reads
+
+$$
+16f_\mu=\int_{\mathcal K}\sum_{\ell=1}^2
+                   |\operatorname{Tr}K_\ell(E,U)|^2\,d\mu.
+\tag{9.18}
+$$
+
+Also, $\sum_\ell b_\ell^\dagger H b_\ell=\operatorname{Tr}(HE^{\mathsf T})$, whose integral is $\operatorname{Tr}H$ by (9.4). Subtracting (9.18) proves (9.14). This is the actual defect identity of Section 8 with the finite sum replaced by an integral; the feedback has not been changed. Since $\operatorname{Tr}H=8+8c$, (9.14) gives $f_\mu\le(1+c)/2$. Lemma 9.2 allows the existing Choi lower witness (3.15) to be applied, giving (9.15). For finite protocols its lower comparison is exactly Theorem 3.1. The near-optimal premise gives $2(1-f_\mu)\le1-c+\varepsilon$, hence $\Delta_\mu\le\varepsilon/2$, proving (9.16).
+
+At error $q$, (9.16) makes the integral of the continuous nonnegative function $a+\tau$ zero. If that function were positive at a support point, it would have a positive lower bound on a neighborhood with positive measure, a contradiction. Thus it is zero on the support, and nonnegativity gives the two separate equalities there. $\square$
+

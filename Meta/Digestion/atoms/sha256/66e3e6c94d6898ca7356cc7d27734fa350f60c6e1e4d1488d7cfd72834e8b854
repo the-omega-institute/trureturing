@@ -1,0 +1,122 @@
+**定理 34.1（加权两块标量余量的锐平衡区间）。** 取 $a,b,v>0$、$a\ne b$、$\sigma\in\{1,-1\}$ 和实数 $\rho_1,\rho_2$，在 $M_2(\mathbb C)$ 中置
+
+$$
+c=\begin{pmatrix}a&0\\0&b\end{pmatrix},\qquad
+t=v\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+s=\begin{pmatrix}\rho_1&0\\0&\rho_2\end{pmatrix},\qquad
+g=K_\sigma(c,t)+s.
+$$
+
+则对全部正泛函成立的 $\mathsf{P2}(c,t;g)$ 准确等价于
+
+$$
+\boxed{\quad s=r\begin{pmatrix}a&0\\0&-b\end{pmatrix},\qquad
+|r|\le\frac{2v\sqrt{ab}}{a+b}.\quad}
+\tag{34.2}
+$$
+
+结论包括两个端点、$r=0$、两种 $\sigma$、零泛函和任意质量；只分类这一份固定系数族，不对 $D$ 的不同输入调用施加线性关系。
+
+**证明。** 取未归一向量 $\xi=(\sqrt b,\sqrt a)$ 的正泛函 $\omega_\xi(X)=\xi^*X\xi$，则
+
+$$
+\begin{gathered}
+\omega_\xi(c^2)=ab(a+b),\quad
+\omega_\xi(t^2)=v^2(a+b),\\
+\omega_\xi(c\circ t)=v\sqrt{ab}(a+b),\quad
+\omega_\xi(K_\sigma(c,t))=0.
+\end{gathered}
+$$
+
+所以 $\det M_{\omega_\xi}=-(b\rho_1+a\rho_2)^2$。
+必要的平衡式是 $b\rho_1+a\rho_2=0$，即 $\rho_1=ar,\rho_2=-br$；它没有分别强迫两余量为零。
+
+对任意复向量 $\eta=(u,w)$，定义
+
+$$
+A_\eta=a|u|^2-b|w|^2,\qquad
+B_\eta=2\sqrt{ab}\operatorname{Im}(\bar u w).
+$$
+
+记 $K=K_\sigma(c,t)$。直接计算给
+
+$$
+\omega_\eta(s)=rA_\eta,\qquad
+\omega_\eta(K)=\frac{\sigma(b-a)v}{2\sqrt{ab}}B_\eta.
+$$
+
+二维 Gram 的 Lagrange 恒等式给
+
+$$
+\begin{aligned}
+\omega_\eta(c^2)\omega_\eta(t^2)
+-\omega_\eta(c\circ t)^2-\omega_\eta(K)^2
+&=v^2|au^2-bw^2|^2\\
+&=v^2(A_\eta^2+B_\eta^2).
+\end{aligned}
+$$
+
+减去 $2\omega_\eta(K)\omega_\eta(s)+\omega_\eta(s)^2$，得到包含全部复相位的准确恒等式
+
+$$
+\boxed{
+\det M_{\omega_\eta}
+=v^2\left(B_\eta+
+\frac{\sigma(a-b)r}{2v\sqrt{ab}}A_\eta\right)^2
++\left(v^2-\frac{(a+b)^2r^2}{4ab}\right)A_\eta^2.
+}
+\tag{34.3}
+$$
+
+区间 (34.2) 内两项非负，两个平方对角也非负，故所有向量正泛函的二表均正。端点处第二系数恰为零，仍剩下一项平方；$\eta=0$ 给零表，其余向量的两个对角项严格正。有限维谱定理将每个正泛函写成向量正泛函的有限非负和，相应二表逐项相加仍正，故充分性覆盖所有正泛函和全部质量。
+
+必要性不漏复相位：$(A_\eta,B_\eta)$ 映满 $\mathbb R^2$。取 $\sqrt a\,u=L$、$\sqrt b\,w=iM$，$L,M\in\mathbb R$，则
+$A_\eta+iB_\eta=(L+iM)^2$，而复平方映满 $\mathbb C$。
+若 (34.3) 的第二系数为负，取 $A_\eta=1$、$B_\eta=-\sigma(a-b)r/(2v\sqrt{ab})$，使第一平方为零、行列式为负，矛盾。这证明必要性。
+
+为在下节的实际消费者中使用全参数正证书，仍对平衡数据置
+
+$$
+J_\sigma=
+\begin{pmatrix}
+\dfrac b{a+b}&\dfrac{\sigma ir}{2v}\\
+-\dfrac{\sigma ir}{2v}&\dfrac a{a+b}
+\end{pmatrix},\qquad H_\sigma=1-J_\sigma.
+$$
+
+准确有
+
+$$
+\det J_\sigma=\det H_\sigma
+=\frac{ab}{(a+b)^2}-\frac{r^2}{4v^2},\qquad
+cJ_\sigma t-tJ_\sigma c=\sigma i s.
+\tag{34.4}
+$$
+
+两矩阵对角为正，所以锐区间正好保证 $0\le J_\sigma\le1$，包括端点。
+对 $z=x+iy$，已知乘法展开给
+
+$$
+\begin{aligned}
+&(t-\bar zc)^*J_\sigma(t-\bar zc)
+-(t-zc)^*J_\sigma(t-zc)\\
+&\hspace{3em}=-2iy(cJ_\sigma t-tJ_\sigma c)=2\sigma ys.
+\end{aligned}
+$$
+
+于是以下两个正平方给同一全复参数证书：
+
+$$
+\begin{aligned}
+Q_z&=(t-zc)^*H_\sigma(t-zc)
++(t-\bar zc)^*J_\sigma(t-\bar zc)\succeq0,\\
+Q_{x+iy}
+&=t^2-2x(c\circ t)+(x^2+y^2)c^2+iy[c,t]+2\sigma ys\\
+&=F_{x+i\sigma y}.
+\end{aligned}
+\tag{34.5}
+$$
+
+$(x,y)\mapsto(x,\sigma y)$ 为双射，故再由 (34.1) 得全部 P2。
+特别地，$\sigma=-1$ 时逐点身份是 $Q_{x+iy}=F_{x-iy}$。这是在证明与消费者中使用的初等正平方恒等式，不另立独立分类结论。证毕。
+

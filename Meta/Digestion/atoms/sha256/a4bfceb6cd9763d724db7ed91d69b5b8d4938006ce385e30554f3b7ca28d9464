@@ -1,0 +1,18 @@
+#### 定理 9.4（纠缠与局部 Bloch 向量的勾股）
+
+令 $\rho_A=MM^\dagger/R=(I+r\cdot\sigma)/2$ 为条件底面态的一端约化态，则
+
+$$
+\boxed{C^2+ \left\lVert r\right\rVert ^2=1.}
+$$
+
+<a id="proof-9-4"></a>
+
+**证明。** 
+$\operatorname{Tr}\rho_A=1$ 且 $\det\rho_A=|\det M|^2/R^2=C^2/4$。二阶矩阵的 Bloch 表示给 $\det\rho_A=(1- \left\lVert r\right\rVert ^2)/4$，相等即得。其两个非负本征值保证 $0\le C\le1$。
+ ∎
+
+纯态 concurrence 的一般理论见 [4](#ref-wootters)。这里没有调用混合态 concurrence 的凸包公式；若条件态混合，上述纯态等式不可直接使用。
+
+<a id="statement-9-5"></a>
+

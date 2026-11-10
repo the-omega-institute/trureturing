@@ -1,0 +1,17 @@
+**A concrete input/clearing layout.** One compatible provider stores the canonical input list in a private buffer of
+
+$$
+C_{\rm in}=2b(k)+1+\sum_{i=1}^k\ell(a_i)
+$$
+
+payload bits, besides its complete reception framing. It uses one reusable outgoing Add-frame buffer of capacity $C_{\rm req}$, at least the maximum actual framed Add length in this run, and a fixed-capacity ACK buffer $C_{\rm ack}$. These capacities and the provider are inaccessible to the recovering receiver. The provider reads each operand from the input buffer, serializes its first-listed and negated requests in order, and consumes both complete ACKs. Negation changes the numerator sign with canonical zero handling; it does not ask the source for an input. After each of the $2k$ complete Add returns, overwrite the entire outgoing and ACK buffers, including any unused old suffix. At final handoff overwrite the entire input buffer and its input-dependent control registers. Keep no provider transcript archive. If those registers occupy $C_{\rm ctl}$ bits and the other accessible transport/parser/copy buffers cleared along the whole preparation occupy a total of $C_{\rm chan}$ overwritten bits, this particular implementation performs exactly
+
+$$
+C_{\rm clear}=C_{\rm in}+2k(C_{\rm req}+C_{\rm ack})
+                 +C_{\rm ctl}+C_{\rm chan}
+$$
+
+bit overwrites for that erasure, in addition to input reception, serialization and all ordinary arithmetic/copy work. The channel term counts every actual copy separately and is zero only for genuinely absent copies. Complete request/reply framing is included in the corresponding buffer capacities, not identified with operand payload. Input reception writes at least $C_{\rm in}$ payload bits, preparation sends the exact operand and selector payloads above, and all its packet transmissions and returns remain actual traffic. Erased arenas still physically retained, their capacities, private input reception backing and any external unerasable input storage remain material resources; clearing means no accessible dependent contents or capacity channel, not free memory reclamation. This gives an explicit paid way to meet Definition 45.3 conditional on its isolation/clearing authority. It does not derive that authority from the numerical experiment.
+
+The recovery itself emits the canonical $k$-list $a$ as its completed local report, with $C_{\rm in}$ payload bits in that same list encoding and its own full framing/return. This is additional report traffic beyond the source replies of Proposition 50.1. Its live outgoing/copy buffers and eventual cleanup are charged. Exporting the reconstructed $2k$-pulse Time, full Space or prediction block would be additional literal output, rather than another native source observation.
+

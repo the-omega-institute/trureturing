@@ -1,0 +1,71 @@
+### 证明第二步：这些负方向确实全部可见
+
+任取不同右半平面极点
+
+$$
+a_1,\ldots,a_m,
+$$
+
+相应留数为 $r_1,\ldots,r_m$。令
+
+$$
+z_j=a_j-\epsilon r_j,
+\qquad \epsilon>0.
+$$
+
+当 $\epsilon$ 足够小时，节点仍在右半平面，并且
+
+$$
+F(z_j)=-\frac1\epsilon+O(1).
+$$
+
+于是
+
+$$
+\boxed{
+[\mathcal P_F(z_i,z_j)]
+=
+-\frac2\epsilon
+\left[
+\frac1{a_i+\bar a_j}
+\right]
++O(1).
+}
+
+$$
+
+<a id="eq-4-3"></a>
+
+(4.3)
+
+中间的 Cauchy 矩阵严格正定，因为
+
+$$
+\frac1{a_i+\bar a_j}
+=
+\int_0^\infty
+e^{-a_it}\overline{e^{-a_jt}}\,dt,
+$$
+
+且不同指数函数线性无关。
+
+所以 $\epsilon$ 充分小时，式（4.3）严格负定，具有 $m$ 个负方向。
+
+任意有限个离线极点都可以这样同时读出，因此
+
+$$
+\boxed{\nu_-(\mathcal P_F)=\kappa.}
+
+$$
+
+<a id="eq-4-4"></a>
+
+(4.4)
+
+<!-- editorial-note: n18 begin -->
+<a id="n18"></a>
+
+**编者注 n18（多极点逼近的余项与严格性）。** 固定有限个不同极点后，可选互不相交的小邻域，解析余项在那里一致有界。沿 $z_j=a_j-\epsilon r_j$ 取共同实数 $\epsilon>0$，各点仍在右半平面且避开极点，所得 $O(1)$ 是这个固定有限矩阵的算子范数余项；分母展开的误差亦为 $O(1)$。Cauchy 矩阵是半直线指数函数的 Gram 矩阵；不同指数的线性无关性使其最小特征值严格为正。因此主项 $-2/\epsilon$ 乘它压过有界余项，给出整个 $m$ 维负定空间。无穷情形只对每个有限 $m$ 分别取邻域与 $\epsilon$，不要求统一裕量。
+
+<!-- editorial-note: n18 end -->
+

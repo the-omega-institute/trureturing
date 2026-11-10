@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a8d3888721b791612567b5c8e4e407cc09a8d30df77a7dc6ac4b2bca12e94ae8
+  normalized_sha256: sha256:a8d3888721b791612567b5c8e4e407cc09a8d30df77a7dc6ac4b2bca12e94ae8
+cas_ref: sha256:a8d3888721b791612567b5c8e4e407cc09a8d30df77a7dc6ac4b2bca12e94ae8
+coverage_gids:
+  - gid: D5/S3/Quantum/Entanglement/ExponentialSectorKernel.result
+    target_statement_id: sha256:645cf334b69af7aa41fd6e94b2cae6291393abef7bde1e3a447d671227f8370a
+  - gid: D5/S3/Quantum/Entanglement/SectorChannels/FiniteFlatSectorOptimum.result
+    target_statement_id: sha256:56eb2f8bb98a377db4da6ef782c3d34b44b780bde64b53edffe97429d7028307
+receipts:
+  unresolved_subitems: []

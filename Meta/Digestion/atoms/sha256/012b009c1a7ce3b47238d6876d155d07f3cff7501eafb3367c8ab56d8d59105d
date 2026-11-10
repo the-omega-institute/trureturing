@@ -1,0 +1,47 @@
+## 12. Sources and remaining scope of the effective selection results
+
+The graph-specific deductions in Sections 10--11 use the existing exact
+law envelope and cap competition in Growing Theorem 15.5 and Proposition
+15.6, the actual-graph allocation in Sections 6--8, and Theorem 9.5's
+uniform source exclusion. They do not reprove those results as new
+content. The uniform legality bridge, normalized frequency separation,
+coefficient separation for these particular graph functions, and the
+finite-connection reversal in (11.14) are the additional relations.
+The positive finite-dilution regime in
+[*CDSO uniform dilution limit*, Corollary 40.3](CDSO_UNIFORM_DILUTION_LIMIT.md)
+has $N/a^{3/2}\to D\in(0,\infty)$; the budgets in (10.19) and
+(11.13) instead have that ratio tending to infinity, so that corollary
+is not substituted for either uniform estimate here.
+
+The analytic Wronskian criterion is the characteristic-zero statement
+of Bostan--Dumas cited in Lemma 10.5. The determinant factorization
+method is also present in Koiran--Portier--Tavenas, §3 and Theorem 13,
+with its stated distinct-zero scope. The derivative recurrence and local
+order estimate needed here are explicitly (10.9)--(10.12). The
+multiquadratic sign argument is standard field theory; independence
+here follows from the actual irreducible factors in (10.4), not merely
+from naming square classes. Binomial series, Cauchy's coefficient
+estimate and scalar convexity are intermediate tools, not separate
+claims of new general results.
+
+The maximum-endpoint-degree definition and removal of $1/\sqrt2$ are
+Albalahi--Das--Ali--Barman--Hamza,
+[*On the hyperbolic Sombor index and its counterpart*](https://arxiv.org/html/2510.24809v1),
+§1, DOI [10.47443/dml.2025.176](https://doi.org/10.47443/dml.2025.176).
+The general fixed-order, fixed-cyclomatic connected-graph question in
+its §4 remains broader than this prescribed bipartite domain. Full-text
+technical overlap with Zhao--Zhao, DOI
+[10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26),
+remains unassessed; it is not a premise and no worldwide-priority claim
+is made. These are prose results, with no assertion of new Lean
+verification or of a digestion or frozen-ledger state.
+
+The least optimizer period and least sufficient selector threshold
+remain undetermined. Proposition 10.2 identifies only the least full
+allocation-state period. Theorem 10.7 gives a sufficient effective
+exponential selector threshold; it does not assert a polynomial one.
+Theorem 11.3 supplies a necessary lower scale for the distinct
+law-winning source restriction. It leaves the exact minimizers and
+phase transitions at the intermediate scale, the critical constant's
+behavior, changing $R$, and varying sink budgets open.
+

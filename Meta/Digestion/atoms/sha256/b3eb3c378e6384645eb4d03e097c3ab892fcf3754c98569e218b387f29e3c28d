@@ -1,0 +1,39 @@
+#### 定理 3.3（Euler 积与本原对象的对数展开）
+
+令 $s=\sigma+it$。在 $\sigma>1$，
+
+<a id="eq-euler"></a>
+
+$$
+\begin{aligned}\zeta(s)&=\sum_{n\ge1}e^{-s\log n}
+=\prod_{p {\rm prime}}(1-e^{-s\log p})^{-1}, \tag{3}\end{aligned}
+$$
+
+<a id="eq-logeuler"></a>
+
+$$
+\begin{aligned}\log\zeta(s)&=\sum_p\sum_{k\ge1}\frac{p^{-ks}}{k}, \tag{4}\end{aligned}
+$$
+
+<a id="eq-vm"></a>
+
+$$
+\begin{aligned}-\frac{\zeta'(s)}{\zeta(s)}
+&=\sum_p\sum_{k\ge1}(\log p)p^{-ks}
+=\sum_{n\ge1}\Lambda(n)n^{-s}. \tag{5}\end{aligned}
+$$
+
+式 [(4)](#eq-logeuler) 指定趋向右端时为零的全纯对数分支；
+$\Lambda(p^k)=\log p$，其他 $n$ 上为零。
+
+**证明。**
+
+有限素数集上的各个几何级数相乘，唯一素因子分解保证每个仅使用该素数集的整数恰出现一次。$\sum_n n^{-\sigma}<\infty$ 允许素数集耗尽并得到式 [(3)](#eq-euler)。在任意闭半平面 $\sigma\ge1+\delta$，对数级数和导数级数局部一致绝对收敛；应用
+$-\log(1-z)=\sum_{k\ge1}z^k/k$ 并逐项微分，即得余式。
+
+∎
+
+这些是经典恒等式 [3](#ref-dlmfeuler)。其中加法收集整数贡献，乘法使用唯一素数分解，log 分离素数及其重复次数。一般电路、一般递归图并没有自动提供普通自然数的素数分解。
+
+<a id="section-3-1"></a>
+

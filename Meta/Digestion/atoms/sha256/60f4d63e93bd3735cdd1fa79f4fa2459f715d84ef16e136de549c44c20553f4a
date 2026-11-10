@@ -1,0 +1,8 @@
+**Convention 2.2 (Row data).** Let $\Delta_d=\{t\in\mathbb R^d: t_j\ge0,\ \sum_j t_j=1\}$, and for $t\in\Delta_d$ put $s_j=\sqrt{t_j}$ and $e_j(t)=\mu t_j+q$. For $i\in\{1,\dots,d\}$ let $\sigma^{(i)}=(s_j)_{j\ne i}\in\mathbb R^{d-1}$ and define the real symmetric matrices
+
+$$
+P_i(t)=\mathrm{diag}\big(e_j(t)\big)_{j\ne i}+\lambda(1-\lambda)\,\sigma^{(i)}\sigma^{(i)T},\qquad M_i(t)=\begin{pmatrix} A_i(t) & b_i(t)^{T}\\ b_i(t) & P_i(t)\end{pmatrix},
+$$
+
+with $A_i(t)=dq(1-dq)\,t_i+q$ and $b_i(t)=\lambda dq\,s_i\,\sigma^{(i)}$. Define $\kappa_i(t)=A_i(t)-b_i(t)^{T}P_i(t)^{+}b_i(t)$ if $P_i(t)\ge0$ and $b_i(t)$ lies in the range of $P_i(t)$, where ${}^{+}$ is the Moore–Penrose inverse, and $\kappa_i(t)=-\infty$ otherwise. When $e_j(t)\ne0$ for all $j\ne i$ put $c_i(t)=\sum_{j\ne i}t_j/e_j(t)$. Stance: repo-derived (notation fixed in this volume).
+

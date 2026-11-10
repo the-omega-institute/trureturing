@@ -1,0 +1,10 @@
+**Corollary 4.2 (Twisted sine products).** For $A=\mathbb Z_n^d$,
+
+$$
+\Delta(\varepsilon)=\prod_{j\in\mathbb Z_n^d}\Big(\varepsilon+(1-\varepsilon)^2\sum_{k<l}x_kx_l\sin^2\frac{\pi\langle j,t_k-t_l\rangle}{n}\Big).
+$$
+
+If $\Gamma$ is connected, then $n^d\kappa(\Gamma)=\prod_{\chi\ne1}\mu_\chi$ and $D(0)=\prod_{\chi\ne1}(\mu_\chi/4)$. Stance: the sine product is suspected-novel as a replica-determinant formula; the identity $n^d\kappa(\Gamma)=\prod_{\chi\ne1}\mu_\chi$ for Cayley graphs of abelian groups is literature-attested (§9) and also follows by comparing Corollary 3.5 with Theorem 4.1 at $\varepsilon\to0$.
+
+**Proof.** $|\chi_j(t_k)-\chi_j(t_l)|^2=|1-\omega^{\langle j,t_l-t_k\rangle}|^2=4\sin^2(\pi\langle j,t_k-t_l\rangle/n)$ and $c(\varepsilon)\cdot4=(1-\varepsilon)^2$. Dividing Theorem 4.1 by $\varepsilon$ (the factor of the trivial character) and letting $\varepsilon\to0$ gives $D(0)=\prod_{\chi\ne1}c(0)\mu_\chi=\prod_{\chi\ne1}(\mu_\chi/4)$; comparison with $D(0)=n^d\kappa(\Gamma)/4^{n^d-1}$ from Corollary 3.5 gives the tree identity. ∎
+

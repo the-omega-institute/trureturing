@@ -1,0 +1,26 @@
+**引理 3.2（All translations that keep a block inside a progression）。**
+Let $r,m$ be integers with $r\ge1$, $m\ge r$, let $a,d\in G$
+with $d\ne0$, and let $j$ be an integer with $0\le j\le m-r$. Put
+
+$$
+A=a+[0,m-1]_{\mathbb Z}d,\qquad
+S=a+[j,j+r-1]_{\mathbb Z}d.
+$$
+
+Then the full set of translations in $G$ satisfying $S+b\subseteq A$
+is
+
+$$
+W_j=[-j,m-r-j]_{\mathbb Z}d.
+$$
+
+Proof. If $S+b\subseteq A$, its first element gives
+$a+jd+b=a+td$ for an integer $0\le t<m$, hence
+$b=kd$ for some integer $k$. The first and last elements of $S+b$
+have indices $j+k$ and $j+r-1+k$ in $A$.
+Torsion-freeness makes all integer indices unique, so
+$-j\le k\le m-r-j$.
+Conversely these inequalities put every index of $S+kd$ between
+$0$ and $m-1$. In particular $0\in W_j$ and
+$|W_j\setminus\{0\}|=m-r$.
+

@@ -1,0 +1,9 @@
+**引理 15.2（首根三元层的两种完整排除）。**
+Let $T$ consist of three worlds with pairwise different sources,
+common drift $\delta$ and common initial reading $a_0$.
+
+1. If $T$ realizes an entire history $H$ through clock two and every
+   gain has root $1$, then $\neg L_5(T,H)$.
+2. If $T$ realizes an entire history $H$ through clock three and
+   every gain has roots $1,2$, then $\neg L_4(T,H)$.
+

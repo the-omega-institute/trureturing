@@ -1,0 +1,10 @@
+**Lemma 2.1 (roots and interpolation).** A nonzero real polynomial of degree at most $n\ge0$ has at most $n$ distinct real roots. At distinct real nodes $x_0,\ldots,x_n$, arbitrary real values $y_0,\ldots,y_n$ have the unique degree-at-most-$n$ interpolant
+
+$$
+F(t)=\sum_{h=0}^{n}y_h
+\prod_{\substack{0\le b\le n\\b\ne h}}
+\frac{t-x_b}{x_h-x_b}.
+$$
+
+Proof. If $F(x)=0$, polynomial division by $t-x$ has remainder $F(x)=0$, so $F=(t-x)Q$. At a distinct root $y$, the equality $(y-x)Q(y)=0$ forces $Q(y)=0$. Iterating at distinct roots would force a nonzero polynomial with $n+1$ roots to have degree at least $n+1$, proving the root bound. Each displayed basis product has degree at most $n$, equals one at its own node, and vanishes at all the others. The sum therefore interpolates. Two such interpolants differ by a degree-at-most-$n$ polynomial with $n+1$ distinct roots, so the difference is zero. The denominators are nonzero node differences. For $n=0$ the product is empty and equals one. The proof includes zero interpolants and lower actual degrees and places no restriction on root signs or multiplicities. ∎
+

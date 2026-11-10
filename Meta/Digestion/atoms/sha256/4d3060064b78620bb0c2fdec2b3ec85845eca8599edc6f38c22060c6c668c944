@@ -1,0 +1,155 @@
+**Theorem 53.1 (the sharp orders for every branch budget).**
+For each positive integer $n$, among all lists (52.2), the greatest
+integer $q$ for matching initial derivatives through order $q$ on
+every input in $\mathscr D$ is
+
+$$
+q_{\rm UNIT}(n)=2n-1,\qquad q_{\rm RAW}(n)=2n.
+\tag{53.1}
+$$
+
+Both are attained with $n$ strictly positive weights and $n$
+distinct couplings in the interior of their original compact
+native ranges. The same attaining lists will be used in §54.
+Neither $B_b(t)$ nor $A_s(t)$ equals a finite positive list in
+its respective class for all $t\ge0$ as operators on the entire
+$\mathscr H_B$.
+
+Proof. Apply positive Gaussian quadrature to $\mu_b$ on
+$[\alpha_b,C_b]$ and to $\eta_s$ on $[0,C_s]$.
+Its classical content is the quadrature theorem stated in
+Golub--Welsch, *Calculation of Gauss Quadrature Rules*,
+*Math. Comp.* **23** (1969), §1, pp.221--222, with the
+Jacobi-matrix correspondence in §2, (2.1)--(2.6), pp.222--223
+([primary article](https://www.ams.org/journals/mcom/1969-23-106/S0025-5718-69-99647-1/S0025-5718-69-99647-1.pdf),
+[public copy](https://web.stanford.edu/class/cme335/S0025-5718-69-99647-1.pdf)).
+The positive compact moment setting is also the one in
+Schmüdgen, *Ten Lectures on the Moment Problem*,
+[arXiv:2008.12698v1, Theorem 1.16 and the opening of Lecture 2,
+pp.16--17](https://arxiv.org/pdf/2008.12698v1).
+Neither supplier identifies our native measure or our operator
+derivatives; those are (50.5)--(50.6) and Theorem 52.1.
+
+Here is the quadrature step explicitly for these measures. For
+either finite measure $\sigma$, every nonzero polynomial has
+strictly positive squared integral, by full interval support.
+Thus its monic orthogonal polynomial $p_n$ of degree $n$ exists
+by the positive-definite polynomial Gram matrix. It has $n$
+simple roots in the interior of the interval. To verify this last
+fact, let $q$ be the product of its distinct interior roots where
+its sign changes. If there were fewer than $n$, then $\deg q<n$
+and $p_nq$ would have a constant nonzero sign except at finitely
+many points on the interval: every remaining interior root has
+even multiplicity, and exterior or nonreal factors cannot change
+the sign there. Its integral would be nonzero, contradicting
+orthogonality to $q$. There must therefore be $n$ interior
+sign-changing roots, all simple, exhausting the degree.
+
+Write the roots as $z_1,\ldots,z_n$, let $\ell_i$ be their
+degree-$(n-1)$ Lagrange polynomials, and put
+$v_i=\int\ell_i\,d\sigma$. Polynomial division by $p_n$ gives
+
+$$
+\int f\,d\sigma=\sum_{i=1}^nv_if(z_i)
+\qquad(\deg f\le2n-1).
+\tag{53.2}
+$$
+
+Indeed the quotient has degree at most $n-1$, so its product
+with $p_n$ integrates to zero, while the remainder is interpolated
+by the $\ell_i$. Applying (53.2) to $\ell_i^2$ gives
+$v_i=\int\ell_i^2d\sigma>0$, and applying it to $1$ gives the
+total mass. This proves the required existence, location,
+positivity and exactness as intermediate classical facts.
+
+For $\sigma=\mu_b$, denote the nodes and weights by
+$c_{b,i}^{(n)},w_{b,i}^{(n)}$. They are a valid UNIT list,
+including $\sum_iw_{b,i}^{(n)}=1$, and match $m_j^b$ through
+$j=2n-1$. For $\sigma=\eta_s$, denote them by
+$d_{s,i}^{(n)},v_{s,i}^{(n)}$. All these nodes are strictly
+between $0$ and $C_s$. Set
+
+$$
+a_{s,i}^{(n)}=\frac{v_{s,i}^{(n)}}{d_{s,i}^{(n)}}>0.
+\tag{53.3}
+$$
+
+These are finite for each fixed $n$, with no requirement on
+their sum. For $1\le j\le2n$,
+
+$$
+\sum_i a_{s,i}^{(n)}(d_{s,i}^{(n)})^j
+ =\sum_i v_{s,i}^{(n)}(d_{s,i}^{(n)})^{j-1}
+ =\int c^{j-1}d\eta_s(c)=m_j^s.
+\tag{53.4}
+$$
+
+Theorem 52.1 proves attainment of both orders on every input
+in the common all-power domain, not just in a scalar sector.
+Every constructed node is an actual native fibre: the UNIT node
+is $c_b(\rho_i)$ for its unique $\rho_i\in(0,\pi)$, and the RAW
+node is $c_s^{\rm line}(x_i)$ with
+$x_i=2\sqrt\beta\sqrt{\log(C_s/d_{s,i}^{(n)})}$.
+For example, at budget one the two lists are explicitly
+
+$$
+B_1(t)=T_{gc_0/(2\pi)}(t),\qquad
+A_1(t)=\sqrt{\frac{2\beta}{\pi}}
+                   [T_{C_s/\sqrt2}(t)-S_t].
+\tag{53.5}
+$$
+
+Indeed a one-node quadrature node is the first moment divided
+by the total mass of its finite measure; (50.6) gives both
+nodes and weights displayed here.
+
+For the upper bounds retain the entire declared competitor class.
+Given a UNIT list, let $z_1,\ldots,z_r$ be the distinct couplings
+with positive total weight, where $1\le r\le n$. They may lie
+anywhere in $[0,\infty)$. The polynomial
+$p(c)=\prod_{i=1}^r(c-z_i)$ satisfies
+
+$$
+\sum_i w_i p(c_i)^2=0,
+\qquad \int p(c)^2d\mu_b(c)>0.
+\tag{53.6}
+$$
+
+The second inequality follows from full interval support,
+regardless of the locations of the finitely many zeros.
+Matching through derivative $2n$ would match every moment of
+the polynomial $p^2$, whose degree is $2r\le2n$, contrary to
+(53.6).
+
+For a RAW list, discard only for this argument the terms with
+$a_i=0$ or $d_i=0$, and merge the remaining repeated positive
+couplings to $z_1,\ldots,z_r$, where $0\le r\le n$.
+This does not restrict the competitors or change their response.
+Put $p(c)=\prod_{i=1}^r(c-z_i)$, with $p=1$ when $r=0$.
+Then
+
+$$
+\sum_i a_i d_i p(d_i)^2=0,
+\qquad
+\int c p(c)^2d\nu_s(c)=\int p(c)^2d\eta_s(c)>0.
+\tag{53.7}
+$$
+
+The polynomial $cp^2$ has zero constant term and degree
+$2r+1\le2n+1$, so all its integrals are finite even though
+$\nu_s$ has infinite mass. Matching derivatives through
+$2n+1$ would contradict (53.7) by Theorem 52.1. This covers
+zero, repeated and redundant branches, including a list whose
+response is identically zero. In particular redundancy cannot
+improve the maximum in either family. It also shows that at an
+attaining order all $n$ branches must be effective and distinct.
+
+Finally equality for all times on the whole base implies equality
+of every derivative on $\mathscr D$, by Theorem 52.1. For any
+fixed finite list this contradicts (53.6) or (53.7). Thus the
+finite-list exact-realization decisions are negative for both
+original families, for every fixed original $s,b,g$.
+The obstruction concerns complete native semigroups and uses
+their noncommuting derivatives; it does not substitute scalar
+exponentials for them. $\square$
+

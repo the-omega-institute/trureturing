@@ -1,0 +1,23 @@
+## 15. Attribution, parameters, and dependency scope
+
+The supplied positive-retraction proposal, titled *Positive rank-one retraction and convex prefix image on all G; an exact obstruction to repairing lifted distinct-slope collisions*, supplies the retraction, five-inequality cone, interpolation and correction-obstruction content developed with complete proofs in Sections 10–14. The earlier structural results and read bounds retain their attribution in Section 8. The dependencies and parameter identifications are as follows.
+
+| Supplied result or notation | Correspondence and exact use here |
+|---|---|
+| Original sharp fixed-path recovery programme | The actual positive common-source model, arbitrary real slope, whole target, counted initial read and cumulative finite forward-word contract in Sections 1 and 9 remain unchanged |
+| Current normal-form volume, Theorem 3.2 | Its $f,\ell,r_0,N$ are $f_K,\ell_K,r_K,N$ in (10.1); this primitive representation applies on all $\mathscr G$ and supplies $t>0$ and the kernel line |
+| Current volume, Theorems 5.1–5.2 and 6.1 | Only Corollary 14.1 needs the exhaustive interior normal form and identity-only final-level theorem; all stated parameter, first-endpoint and rank filters remain in force |
+| Positive-retraction proposal, additional theorem 1 and its interpolation corollary | Theorem 10.2 and Corollary 12.1, including actual positivity, determinant correction, unique representative and fixed actual sources |
+| Positive-retraction proposal, additional theorem 2 | Theorem 11.1 and Proposition 12.2; its coordinates $(x,y,z)$ are $(\xi,\nu,\zeta)$ here, and its linear map $V$ is (11.1) |
+| Positive-retraction proposal, additional theorem 3 | Theorem 13.1 and Corollary 14.1; the zero-correction conclusion requires distinct slopes and a nonpreserved final kernel level |
+| Companion, Definition 19.1, Lemma 19.2, Theorem 20.1 and Corollary 20.2 | The same $\mathscr G$, all-slope rank facts, exhaustive regular/singular actual fibres and finite-or-arc alternative used to state the residual; these are credited existing results |
+| Companion, Proposition 21.1 and current Proposition 7.2 | Common-slope-zero uniqueness, consistent with the exact zero-slope inverse here; no common-nonzero-slope uniqueness premise |
+| Companion, Theorem 22.1 | The already excluded exact history ending at $(\begin{smallmatrix}2&3\\7&10\end{smallmatrix})$ with final multiplier $MJM$, not a new witness or an unresolved recovering candidate |
+| Companion, Theorems 8.1–8.2 | Complete support for the credited bounds (8.1); neither prefix convexity nor the correction obstruction changes them |
+
+The supplier's interior transition entry called $q$ is the normal form's $Q=1+nd$, distinct from a source entry $q$. Its first-endpoint determinant sign and integer parameter are $\epsilon,g$ in (5.10). The kernel coordinate $d$ is unrelated to the declared drift degree. The function $h(X)$ in (10.2) is unrelated to the integer $h$ in (5.2). No integer normal-form condition is imposed on an actual positive source or an auxiliary $X$.
+
+If a trace-one kernel convention is used, $\overline N=N/t$. Then $\mathfrak b(X,\overline N)=h(X)/t$, the correction coefficient becomes $\overline\eta=t\eta$, and $\overline t_4=t_4/t$. Thus $\overline\eta\,\overline N=\eta N$ and both scalar conditions in (13.2) are unchanged in meaning. The primitive convention used here never silently normalizes $t$ to one.
+
+The all-class retraction and cone results use only the primitive signed kernel and its positive trace, not the interior classification. The last-word corollary uses exactly that classification's four-nonzero-entry scope. Linear inverses, signed vectors, conjugations and positive full matrices are proof devices. Every retained actual source has the positive factorization and representation fibres of Proposition 1.2, with its original gain parameters $R=S/u$, $\alpha=u>0$, $\beta=uk$, and unchanged $D$. Attribution is not independent approval, formal certification, external priority or a missing-literature claim.
+

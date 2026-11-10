@@ -1,0 +1,56 @@
+**定理 21.1（条件作用确定完整变化，并强迫自守）。** 定义 20.1 的任何实际延伸必满足
+
+$$
+\boxed{\Gamma_{a\otimes b}=D_a\otimes L_b+L_a\otimes D_b.}
+\tag{21.1}
+$$
+
+两方均有 $D_aa=0$、$B(a,c)=-B(c,a)$ 及 $D_1=0$。这三个性质不需要 C99 的第三方。
+
+证明。式 (20.1) 给 $c\otimes d=M(c\otimes1,1\otimes d)$。用 (20.3) 对此比较求变化，再用 (20.2) 和两个模作用，得到
+
+$$
+\Gamma_{a\otimes b}(c\otimes d)
+=D_ac\otimes S_B(b,d)+S_A(a,c)\otimes D_bd.
+$$
+
+简单张量张成全部联合空间，故得到 (21.1)。
+
+记实际左乘为 $\mathbb L_XY=M(X,Y)$，局部曲率为 $K_{ac}=[L_a,L_c]$，并先使用未校正的差
+
+$$
+F(X,Y)=M(X,Y)-(S_A\otimes S_B)(X,Y).
+$$
+
+导子与左乘的交换关系 $[\Gamma_H,\mathbb L_X]=\mathbb L_{\Gamma_HX}$，配合 (21.1)，给
+
+$$
+\begin{aligned}
+\mathbb L_{D_ac\otimes b}
+ &=L_{D_ac}\otimes L_b+K_{ac}\otimes D_b,\\
+\mathbb L_{a\otimes D_bd}
+ &=L_a\otimes L_{D_bd}+D_a\otimes K_{bd}.
+\end{aligned}\tag{21.2}
+$$
+
+第一式由与 $L_c\otimes I$ 取交换子得到，第二式由与 $I\otimes L_d$ 取交换子得到；此处没有把尚未证明的 $D_1=0$ 放入推导。
+
+固定 $a$ 并令 $z=D_aa$。因 $K_{aa}=0$，第一式给 $F(z\otimes b,Y)=0$。另取 $w=D_fg$，第二式和 $F$ 的交换性给
+
+$$
+0=F(z\otimes b,c\otimes w)
+ =F(c\otimes w,z\otimes b)
+ =D_cz\otimes K_{fg}b.
+\tag{21.3}
+$$
+
+活动伙伴必有某个 $K_{fg}\ne0$。否则全部左乘对易，交换比较结合；有限正含幺交换结合 Frobenius 代数是有限实直积，所有导子为零，和 $D\ne0$ 矛盾。这一步复用定理 9.1 的零参数论证。
+
+选 $f,g,b$ 使 $K_{fg}b\ne0$，式 (21.3) 迫使 $D_cz=0$ 对全部 $c$ 成立，特别是 $D_az=0$。局部导子斜伴随，所以
+
+$$
+\|z\|^2=g(D_aa,z)=-g(a,D_az)=0.
+$$
+
+正定性给 $D_aa=0$。交换双方得到两边结论；对 $D_{a+c}(a+c)=0$ 极化得交替，再用 $D_a1=0$ 得 $D_1a=0$。∎
+

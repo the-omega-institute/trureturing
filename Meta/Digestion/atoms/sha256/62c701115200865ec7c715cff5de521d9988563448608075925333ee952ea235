@@ -1,0 +1,33 @@
+**Theorem 5.1 (two different failures of inverse).** For every $b\ge3$:
+
+1. There is no uniform inverse from the old complete boundary behavior to the native unweighted topology on the whole family, even with $N$ and the exact complete-leaf roster supplied.
+2. Within the subfamily $S>0$, the unweighted support is fixed, but distinct parameters give distinct coefficient laws even up to a leaf-fixing permutation. Thus there is no uniform native coefficient-law inverse on that fixed-support subfamily.
+
+The same failures hold for every actually acquired old record and its further internal postprocessing.
+
+**Proof.** At $S=0$ and $S=3/5$ the graphs have different edge counts by Theorem 2.2, and hence are not isomorphic even without fixing leaves. Their complete old behaviors coincide by Theorem 4.2. No function of that common value can return both topologies. An adaptive acquiring observer has the same records on the pair, so changing how it chooses or processes leaf observations cannot supply an inverse either.
+
+For the second assertion, the two extreme diagonal entries of $T$ are
+
+$$
+\min_v T_{vv}=\frac12-2\epsilon CS,\qquad
+\max_v T_{vv}=\frac12+2\epsilon CS,
+\tag{CL.15}
+$$
+
+and all other diagonal entries are $1/2$. To see strict parameter separation without a differentiability assumption, let $0\le S_1<S_2\le3/5$ and put $r_i=S_i^2$. Then
+
+$$
+(C_2S_2)^2-(C_1S_1)^2
+=(r_2-r_1)(1-r_1-r_2)>0,
+\tag{CL.16}
+$$
+
+since $r_1+r_2\le18/25<1$. Both products are nonnegative, so $C_2S_2>C_1S_1$. Also $C$ is uniquely determined by $S$ because $C>0$ and $C^2=1-S^2$. A permutation preserves the multiset of diagonal entries, in particular its minimum and maximum. Therefore distinct parameters cannot give permutation-equivalent coefficient laws. For $S>0$, (CL.8) gives the same support for every member, and Theorem 4.2 again gives the same old complete behavior.
+
+Any postprocessing of equal acquired records has equal values. This last observation does not impose a complexity bound on the observer: arbitrary finite computation and recursive relations among previously acquired data still start from the same data. $\square$
+
+For randomized exact recovery, Theorem 4.2 gives the same output distribution on the two different topologies. It cannot assign probability one to the correct topology on both. This is a fixed pair, pointwise common-tape obstruction, rather than an inference from separate worst cases after fixing each random tape.
+
+The obstruction is not that the order is unknown, nor that only some leaves were found. It is failure of the native target to be constant on a complete behavior fiber. Known-law observability in Theorem 3.1 and unknown-law native identification answer different questions.
+

@@ -1,0 +1,72 @@
+### 153.A. An original orbit and strictly positive character coefficients
+
+Use the original symmetric coordinates $(r,\vartheta,z,\xi)$ on $\Omega=\{r>0\}$ from (120.4) and (152.10). Write
+
+$$
+q=(r,z,\xi)\in\mathcal Q=(0,\infty)\times\mathbb R^2,\qquad
+dm=d\nu(q)\,\frac{d\vartheta}{2\pi},\qquad
+d\nu=2\pi rh(q)^2\,dr\,dz\,d\xi.
+\tag{153.5}
+$$
+
+The full original $K$, its semigroup and the source densities commute with these rotations. The analytic invariant representative $\beta$ of $g_d$ and the continuous invariant representative of $g$ are positive almost everywhere. Choose $q_\circ$ at which both are positive, choose $0<\tau<\beta(q_\circ)$, and then a relatively compact quotient neighborhood $U$ of $q_\circ$ on which $\beta>\tau$ and $g>0$. Set
+
+$$
+p_\circ=(q_\circ,0),\qquad g_\circ=g(q_\circ)>0,\qquad
+E=\{(q,\vartheta)\in\Omega:\beta(q)\ge\tau\}.
+\tag{153.6}
+$$
+
+Thus $m(E)>0$, and $E$ is exactly an admissible invariant slack set of 152.A. Let $b^0$ be the everywhere positive invariant representative constructed in 152.A, and let $f^0$ be (153.1) evaluated at $b^0$. Then $[f_y^0]=[f_y]$ for every label, so $\mathcal H_{39}(f^0)=\mathcal H_{39}(f)$. This intermediate tuple satisfies $f_3^0\ge c\tau$ on $E$ and $f_0^0,f_1^0,f_B^0\ge1/4$ on all of $G$.
+
+Let $p_d$ be the actual full heat kernel (120.8)–(120.10), and define its continuous orbit trace
+
+$$
+k(\alpha)=p_d(p_\circ,R_\alpha p_\circ),\qquad
+a_j=\int_0^{2\pi} k(\alpha)e^{-ij\alpha}\,
+                        \frac{d\alpha}{2\pi}\quad(j\in\mathbb Z).
+\tag{153.7}
+$$
+
+Symmetry and simultaneous rotation equivariance make $k$ real and even. In the complexification of $L^2(m)$ let $\Pi_j$ project onto the character $e^{ij\vartheta}$. The evaluation vector $k_{d/2,p_\circ}$ in (120.8) gives
+
+$$
+a_j=\|\Pi_j k_{d/2,p_\circ}\|_2^2
+    =a_{-j}.
+\tag{153.8}
+$$
+
+Indeed $p_d(p_\circ,R_\alpha p_\circ)$ is the matrix coefficient of the rotation action on this evaluation vector by (120.9); integration against a character gives the squared norm of its character projection. Depending on the pullback convention this first gives the $-j$ projection; reality of the evaluation vector identifies the two norms.
+
+In fact every $a_j$ is strictly positive. Suppose $\Pi_j k_{d/2,p_\circ}=0$. Evaluation at $p_\circ$ would then vanish on $T_{d/2}(H_j)$, where $H_j=\Pi_j L^2(m;\mathbb C)$. The commutation of the entire $K$ with rotations makes $H_j$ reducing. For $w\in D(K^2)\cap H_j$, its original spectral truncations satisfy
+
+$$
+w_N=\mathbf1_{[0,N]}(K)w\longrightarrow w
+ \quad\hbox{in the graph norm of }D(K^2),\qquad
+w_N=T_{d/2}\bigl(e^{(d/2)K}w_N\bigr),
+\quad e^{(d/2)K}w_N\in H_j.
+\tag{153.9}
+$$
+
+Evaluation on this graph domain is continuous by (120.7). It follows that every such $w$ vanishes at $p_\circ$. Choose instead $\chi\in C_c^\infty(\mathcal Q)$ with $\chi(q_\circ)=1$. The genuine punctured smooth function $\chi(q)e^{ij\vartheta}$ belongs to $D(K^N)$ for every $N$, by the core-domain argument following (120.11), and has value one at $p_\circ$. This contradiction proves strict positivity, using the original full domain.
+
+The nonnegative Fejér argument of (147.13) applies to this trace: the weighted coefficient sums at zero increase to $k(0)$, so
+
+$$
+a_j>0,\qquad
+\sum_{j\in\mathbb Z}a_j=k(0)<\infty,\qquad
+k(\alpha)=\sum_{j\in\mathbb Z}a_je^{ij\alpha}.
+\tag{153.10}
+$$
+
+In particular $a_j\to0$ as $|j|\to\infty$. There are infinitely many positive odd $n\ge3$ with $a_{n+1}\ne a_{n-1}$. Otherwise the positive even subsequence would eventually be constant, and its zero limit would contradict (153.10). Choose two distinct such frequencies and put
+
+$$
+n_0,n_1\ge3\text{ odd},\qquad n_0\ne n_1,\qquad n_3=1,\qquad
+a_{n_a+1}\ne a_{n_a-1}\ (a=0,1),\qquad
+L=\max(n_0,n_1).
+\tag{153.11}
+$$
+
+These choices restrict no original parameter.
+

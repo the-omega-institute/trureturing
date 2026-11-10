@@ -1,0 +1,30 @@
+We first establish the relative-entropy estimate needed below, using the
+standard finite-dimensional logarithmic functional calculus (Bhatia,
+*Matrix Analysis*). If $A,B$ are density matrices and $A,B\preceq MI$ for $M>0$, then
+$$
+ D(A\Vert B)\geq\frac{\|A-B\|_2^2}{2M}.
+$$
+Here relative entropy is extended by $+\infty$ if the support condition
+fails, and $\|H\|_2^2=\operatorname{tr} H^*H$.
+
+First suppose $A,B$ are positive definite. On the segment
+$A_t=B+t(A-B)\preceq MI$, put $H=A-B$ and
+$F(A)=\operatorname{tr}(A\log A)$. The derivative of the logarithm gives
+$$
+ F''(A_t)[H,H]=\int_0^\infty
+ \operatorname{tr}\bigl(H(A_t+sI)^{-1}H(A_t+sI)^{-1}\bigr)\,ds.
+$$
+In an orthonormal eigenbasis of $A_t$, the integrand is
+$\sum_{ij}|H_{ij}|^2/[(\lambda_i+s)(\lambda_j+s)]$ and hence is at
+least $\|H\|_2^2/(M+s)^2$. It follows that
+$F''(A_t)[H,H]\geq\|H\|_2^2/M$. Integrating with weight $1-t$ and
+using $\operatorname{tr} H=0$ identifies the Bregman remainder with $D(A\Vert B)$
+and proves the bound.
+For singular matrices with support inclusion, restrict to
+$\operatorname{supp}B$ (which contains $\operatorname{supp}A$) and use
+$(1-\varepsilon)A+\varepsilon B$ to approach $A$. This segment is still
+bounded above by $MI$, is positive definite on that support, and its
+relative entropy to $B$ converges by finite-dimensional spectral
+continuity. Without support inclusion the asserted extended inequality
+is immediate.
+

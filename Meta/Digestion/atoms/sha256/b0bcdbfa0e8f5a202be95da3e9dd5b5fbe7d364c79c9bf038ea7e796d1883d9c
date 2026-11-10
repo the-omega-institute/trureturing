@@ -1,0 +1,52 @@
+**命题 12.5（有序 $\alpha/\beta$ 的常组合呈现）。** 令
+$\mathcal R=\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}$ 为 `ActualTreeReadoutAcquisition.readout` 的原生回复。定义
+
+$$
+\iota_v(v)=\alpha,\qquad \iota_v(v\oplus1)=\beta,\qquad
+\iota_v(\bot)=\mathsf{branch}.
+\tag{AA.42}
+$$
+
+对 $y\in\{\alpha,\beta,\mathsf{branch}\}$，取四叶的局部编码
+
+$$
+\begin{array}{c|c|c}
+ y&G_y&H_y\\ \hline
+\alpha&\alpha&\langle\beta,\langle\beta,\alpha\rangle\rangle\\
+\beta&\beta&\langle\alpha,\langle\alpha,\beta\rangle\rangle\\
+\mathsf{branch}&\langle\beta,\alpha\rangle&\langle\beta,\alpha\rangle
+\end{array}
+\tag{AA.43}
+$$
+
+其中每一行的 $G_y$ 与 $H_y$ 合计恰有两片 $\alpha$ 和两片 $\beta$。令
+$T_q$ 为右结合的有序串
+
+$$
+\langle G_{\iota_v(O_0(q))},H_{\iota_v(O_0(q))}\rangle,
+\langle G_{\iota_v(O_1(q))},H_{\iota_v(O_1(q))}\rangle,\ldots,
+\langle G_{\iota_v(O_{h-1}(q))},H_{\iota_v(O_{h-1}(q))}\rangle,
+\tag{AA.44}
+$$
+
+这里“串”表示用固定右梳外壳依次拼接 $K_y=\langle G_y,H_y\rangle$。先到槽根的地址为
+$\pi_r=[\mathsf{right}]^r[\mathsf{left}]$（最后一个槽为
+$[\mathsf{right}]^{h-1}$），指定代码根地址为 $u_r=\pi_r[\mathsf{left}]$；最后一个槽同样在其左子地址读取 $G_y$。因此
+$\operatorname{readout}(u_r,T_q)=\iota_v(O_r(q))$。每个 $T_q$ 有 $4h$ 个叶，其中 $2h$ 个为 $\alpha$、$2h$ 个为 $\beta$，并有 $4h-1$ 个内部节点；形状与标签随 $q$ 变，但组合恒为 $(2h,2h)$。
+
+命题 12.5 的单位查询合同是双向且量化于完整地址菜单。给定任意有限地址 $u$：若它在右梳外壳处结束，回复恒为 `branch`；若它走出外壳或局部树，回复恒为 `absent`；若它落入槽 $r$ 的局部树，则回复是
+$\psi_{u,r}(\iota_v(O_r(q)))$，其中 $\psi_{u,r}$ 是由（AA.43）的固定有限树查表得到的函数。故从 KBonacci 切口到 FIB 原生读出，每一个非恒定地址只需一次 $O_r$ 查询，再作公开局部解码；恒定的 `branch`/`absent` 地址无需查询。反向地，查询切口 $r$ 只需读取一个地址 $u_r$ 并应用 $\iota_v^{-1}$。控制器可在每次收到回复后再决定下一个地址，所以上述映射保持自适应选择；它不是只列出一张预选地址表。
+
+地址是有限布尔串，槽导航至代码根的最大长度为 $h$，局部编码再增加至多两步；地址生成和查表属于语法导航，安装 $T_q$、写入 $4h$ 个叶及其形状属于另行收费的准备资源。源承诺是：每次运行只允许这些同组合的 $T_q$，且 $q$ 来自同一个 $Q_v$。用于实际取得时，树本身须从该源合法准备并保留；命题12.6给出一种条件安装合同，不能借用另一个来源的树。由合法保留的 INITIAL 计算局部代码是模型计算，不能把树回复登记为未执行原块的实际端点。该呈现只证明这一个承诺族上的双向单位查询模拟，不声称所有 FIB 树或所有表示的最小规模，也不导入第三次替换像的 membership 费用。
+
+由于每个 $T_q$ 的组成相同，已有组成律
+$c(\rho(t))=Mc(t)$
+给出对所有 $n\ge0$ 的
+
+$$
+ c(\rho^n(T_q))=M^n(2h,2h),
+\tag{AA.45}
+$$
+
+与 $q$ 无关。因此任何只读取组成向量、甚至读取其全部未来替换组成，都不能区分该承诺族；有区别的读取必须回到有序地址和真实的 `alpha`/`beta`/`branch`/`absent` 回复。
+

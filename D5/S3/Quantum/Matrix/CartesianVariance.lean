@@ -122,7 +122,7 @@ private theorem pureState_density {n : ℕ} (v : EuclideanSpace ℂ (Fin n)) (hv
   rw [D5.S3.Quantum.Entanglement.UniversalReplacementCapacityGrowth.pure_trace,hv]
   norm_num
 
-private theorem density_nonempty {n : ℕ} (hn : 0 < n) : {ρ : (Matrix (Fin n) (Fin n) ℂ) | ((ρ).PosSemidef ∧ Matrix.trace ρ = 1)}.Nonempty := by
+theorem density_nonempty {n : ℕ} (hn : 0 < n) : {ρ : (Matrix (Fin n) (Fin n) ℂ) | ((ρ).PosSemidef ∧ Matrix.trace ρ = 1)}.Nonempty := by
   refine ⟨(Matrix.vecMulVec (WithLp.ofLp (EuclideanSpace.single ⟨0,hn⟩ 1)) (star (WithLp.ofLp (EuclideanSpace.single ⟨0,hn⟩ 1)))),pureState_density _ ?_⟩
   simp
 
@@ -219,7 +219,7 @@ private theorem variance_maximizer_linear {n : ℕ} (hn : 0 < n) (A ρ : (Matrix
     linarith
   simpa only [Matrix.sub_mul,Matrix.trace_sub,Complex.sub_re,sub_nonpos] using hcoef
 
-private theorem hermitian_spectral_sum {n : ℕ} (ρ : (Matrix (Fin n) (Fin n) ℂ)) (hρ : ρ.IsHermitian) :
+theorem hermitian_spectral_sum {n : ℕ} (ρ : (Matrix (Fin n) (Fin n) ℂ)) (hρ : ρ.IsHermitian) :
     ρ = ∑ i, hρ.eigenvalues i • (Matrix.vecMulVec (WithLp.ofLp (hρ.eigenvectorBasis i)) (star (WithLp.ofLp (hρ.eigenvectorBasis i)))) := by
   ext j k
   conv_lhs => rw [hρ.spectral_theorem,Unitary.conjStarAlgAut_apply,Matrix.mul_apply]

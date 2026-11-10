@@ -1,0 +1,60 @@
+**Step 7 (bounded real tests and polar orthogonality).**
+For each positive $\ell$ there is therefore a bounded complex
+$v_\ell\in\mathcal L_\ell$ with $q_{\mathbb C}(v_\ell)<0$.
+The form is real and rotation invariant. Angular integration gives
+$$
+ q(\operatorname{Re}v_\ell)
+ =q(\operatorname{Im}v_\ell)
+ =\tfrac12q_{\mathbb C}(v_\ell)<0.
+$$
+The real symmetric polar form pairs distinct positive frequencies to zero.
+Indeed their products have nonzero angular frequencies
+$\ell\pm k$, and $R$ commutes with rotations while $g$ is invariant.
+Choose one real part at each of any $N$ distinct positive frequencies.
+Its polar Gram matrix is diagonal with strictly negative diagonal entries.
+These are bounded real Borel $m$-classes, hence form an allowed
+$N$-dimensional strictly negative subspace. Borel representatives can be
+chosen and changed on null sets without changing any integral.
+As $N$ is arbitrary, the global negative index is infinite.
+The localization and finite-codimension conclusions are exactly the
+already supplied (127.4)–(127.5). This proves the theorem. $\square$
+
+
+For the coefficient boundary, $g>0$ almost everywhere permits the ratio $r=Pg/g$. The simultaneous strict inequalities excluded by the original event are equivalent to $\alpha+\beta r<\min(0,-\gamma)=-\max(\gamma,0)$. Thus its sign condition is exactly
+
+$$
+m\{\varphi<0,\varphi+\gamma g<0\}=0
+\quad\Longleftrightarrow\quad
+\alpha+\beta(Pg/g)+\max(\gamma,0)\ge0
+\quad m\text{-almost everywhere}.
+\tag{128.15}
+$$
+
+For $\beta=0$, imposing this condition and removing $\alpha>0$, $\gamma>-\alpha$ gives exactly (128.4). Neither an endpoint comparison at zero nor an inverse of $R$ is required by Theorem 128.2. In particular, the positivity of $R$ and of $\alpha I+\gamma P$ in its proof is conditional on the assumed nonnegativity of $q_{\mathbb C}$ in the chosen sector; it is not asserted for arbitrary coefficients without that assumption.
+
+The remaining original mixed-time question has the full telescope of Definition 128.1 and the exact coefficient conditions
+
+$$
+\beta\ne0,\qquad\gamma\ne0,\qquad
+\alpha+\beta(Pg_t/g_t)+\max(\gamma,0)\ge0
+\quad m\text{-almost everywhere}.
+\tag{128.16}
+$$
+
+For every original $a,\eta,t,d>0$ and every such real triple, it asks whether every nonzero original form
+
+$$
+Q(v)=\int(\alpha g_t+\beta g_{t+d})vT_dv\,dm
+       +\gamma\int g_t vT_{2d}v\,dm,
+\qquad v\in\mathcal V_G,
+\tag{128.17}
+$$
+
+has infinite global negative index, or whether there is an exact original-family counterexample with a rigorous finite-index bound. No further coefficient, source-time, gap, parameter or domain restriction is imposed. This mixed-time question remains unresolved by Theorem 128.2. Its contraction identity pairs one multiplier $g_t$ with a self-adjoint spectral function of the actual $K$. When $\beta\ne0$, the additional multiplier $g_{t+d}$ prevents that identity: $M_{g_{t+d}}P$ is not supplied as a commuting spectral function or a scalar multiple of $M_{g_t}P$. Source localization and operator ordering do not supply this missing global rigidity implication. Negative tests in arbitrarily many angular sectors would suffice, but that route is not asserted to be necessary. No original-family finite-index counterexample follows here.
+
+The conditional premise boundary is the complete one in Definition 127.1 and §§115–127. In particular, §§115–117 supply the actual full extension and form, conservativity, strict positive $L^2(m)$ source densities and their original clock; §120 supplies rotation invariance of the entire actual extension and original source law, the punctured local elliptic estimates (120.6)–(120.7), and smooth positive $h$ off the source; §122 supplies the actual local expression (122.9), angular symbol, heat/density smoothness and source-start nonstationarity (122.24); Proposition 127.2 supplies the total local index and exact finite-codimension consequences. These are premises of ordinary conditional source mathematics, not conclusions re-established by the argument above. The endpoint, process, positivity, source, clock and rotation suppliers retain their inherited conditions.
+
+For the standard analytic ingredients, the spectral-cutoff three-lines/Cauchy argument is the one in (122.18)–(122.19), applied here to a fixed high-energy compression. Integration by parts and local elliptic/Sobolev estimates justify the removal of its complementary projection explicitly in Step 5. The analytic uniqueness ingredient in the inherited localization is Mityagin, [*The zero set of a real analytic function*, arXiv:1512.07276v1, Proposition 0](https://arxiv.org/html/1512.07276v1). Agler–Young, [*Functions which are almost multipliers of Hilbert function spaces*, arXiv:math/9605224v1, Theorem 2.1](https://arxiv.org/html/math/9605224v1#S2.Thmtheorem1), concerns a single multiplier under its nonsingular-kernel and two uniqueness-set hypotheses, as applied in §127. The proof of Theorem 128.2 does not invoke that theorem, assume global RKHS equivalence or use a closed finite-codimensional multiplication domain at an endpoint; it gives no extension of that theorem to two mixed-time multipliers.
+
+Infinite index for the single-density marginal pencil does not establish the all-pencil hypothesis for the individual quadratic coefficients in (125.2) or (125.3). The complete common three-time fiber assertion, all 64 coordinates and equations, the cubic condition and the remaining native realization obligations retain exactly their additional conditions in §§123–126. These mathematical and realization questions are not settled by (128.3), and the original $\beta\ne0$ event (128.16)–(128.17) remains open.
+

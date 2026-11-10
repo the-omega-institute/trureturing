@@ -1,0 +1,22 @@
+**命题 20.2（剩余范围与全部实际正交矩阵）。** 令 $\mathcal R$ 为式 (17.1) 的前提所定义的实际势与指定站点对的集合，并令
+
+$$
+\mathcal R'=\{(p,v,j)\in\mathcal R:
+ \{i:\mathsf N_i(v)\}=\{j\},\quad
+ u\ne\operatorname{rev}u\ \text{或}\ z\ne\operatorname{rev}z\}.
+$$
+
+则 $\mathcal R=\mathcal R'$。原断言 $T$ 仍等价于
+
+$$
+\forall(p,v,j)\in\mathcal R',\quad
+\exists O\in O(2p,\mathbb R),\quad O\ne\pm I,\quad
+O\Delta_{2p}=\Delta_{2p}O,\quad
+O\operatorname{diag}(v)=\operatorname{diag}(v)O.
+\tag{20.1}
+$$
+
+推论 20.1 不决定 $\mathcal R'$ 是否为空，亦不判定式 (20.1) 的真假。仅排除二面体置换不能排除式 (20.1) 中的全部实际实正交矩阵。
+
+**证明。** 包含 $\mathcal R'\subseteq\mathcal R$ 来自定义，反向包含是推论 20.1。命题 17.1 给出 $T$ 与对 $\mathcal R$ 的同一共享正交对称蕴含等价，代入集合等式即得式 (20.1)。最后的矩阵量词保持约定 13.1 的原定义；二面体置换只是 $O(2p,\mathbb R)$ 中的有限子集，检查该子集没有给出其余矩阵不存在的推断。∎
+

@@ -1,0 +1,4 @@
+**推论 493.5（原前向价格核）。** 在推论 493.4 的假设下，取 $\theta=4/5$、$g\equiv1$（$Q(1)=1/3$）：存在 $c,\delta>0$，使对所有充分大的 $X$，$[X,2X]$ 中 $\mathcal T(x)>cx^{1/10}\sqrt{\log x}$ 的点集与 $\mathcal T(x)<-cx^{1/10}\sqrt{\log x}$ 的点集的 $dx/x$ 测度都至少 $\delta$（由 $dx/x=(\log2)\,d\mu_X$，将定理 493.3 的 $\delta$ 换为 $\delta\log2$）。换算到 (481.1) 的价格量即 $T_\psi(x,x^{4/5})=x^{11/10}\mathcal T(x)$，两侧各在每个充分大二倍区间中占正比例，特别地 $T_\psi(x,x^{4/5})=\Omega_\pm\bigl(x^{6/5}\sqrt{\log x}\bigr)$。
+
+证明。$\mathcal T_{4/5,1}=\mathcal T$；在 $[X,2X]$ 上 $\log X\le\log x\le\log X+\log2$、$x^{1/10}\le2^{1/10}X^{1/10}$，减小 $c$ 即把阈值 $c\sqrt{S_X}$ 换成 $cx^{1/10}\sqrt{\log x}$。证毕。
+

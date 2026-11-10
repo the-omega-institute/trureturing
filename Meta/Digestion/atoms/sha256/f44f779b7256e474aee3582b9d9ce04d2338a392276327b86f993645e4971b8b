@@ -1,0 +1,29 @@
+**命题 6.1（尾部行列恒等式）。**令 $P_nx=x\cdot p_{3n}$、$Y_n(a,u)=a\cdot U^{3n}u$。对全部 $m\ge n\ge0$ 及 $a,u,z$，
+
+$$
+\begin{aligned}
+c(Y_n(a,u),P_mz)
+&=c(P_n(a\cdot u),P_mz)\\
+&=c(U^{3n}(a\cdot u),P_mz)\\
+&=c(a\cdot u,P_{m-n}z),
+\end{aligned}
+\tag{6.1}
+$$
+
+交换两个参数后的四项也相等。因此前三种实际历史对 $\bigcup_{m\ge n}P_m(M)$ 的全部测试具有相同行列。
+
+**证明。**置 $f_j=c(a\cdot U^ju,b\cdot U^jv)$。(R) 与同步等距给 $f_j+f_{j+1}+f_{j+2}=3c(a,b)+3c(u,v)$；相邻两式相减得 $f_{j+3}=f_j$。式 (6.1) 每一项都能从两个右输入同步撤去 $3n$ 次标记。例如首项为
+
+$$
+c\bigl(a\cdot U^{3n}u,z\cdot U^{3n}p_{3(m-n)}\bigr)
+=c(a\cdot u,z\cdot p_{3(m-n)}).
+$$
+
+第二项的右输入取 $(1,p_{3(m-n)})$，第三项的左背景取 $1$、右输入取 $(a\cdot u,p_{3(m-n)})$，同样得到最后一项。反向式逐项使用相同滑移。没有将 $(a\cdot u)\cdot p_{3n}$ 重括号为 $a\cdot(u\cdot p_{3n})$。引理 1.2 还给全部独立 $m,n\ge0$ 的统一界
+
+$$
+c(Y_n(a,u),P_mz)\le3c(a,z)+9[\Omega(u)+\Omega(1)].
+$$
+
+此测试域不被宣告等于 $M$；命题没有把 $P_mz$ 换成任意原始 $z$。
+

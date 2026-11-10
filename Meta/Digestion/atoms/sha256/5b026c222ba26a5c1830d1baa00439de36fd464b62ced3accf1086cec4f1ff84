@@ -1,0 +1,24 @@
+**定义 1.3（The actual target and a specified source basis）。** Let $M,N$
+be finite loopless matroids with respective ground sets $A,B\subseteq G$
+and the same rank $r\ge1$. Always assume $N$ is sparse paving and
+$0\notin B$. A specified $S\in\mathcal B(M)$ is matched to $N$ if there
+exist $T\in\mathcal B(N)$ and a bijection $f:S\longrightarrow T$ such
+that
+
+$$
+s+f(s)\notin A\qquad(s\in S).
+$$
+
+The matroid $M$ is matched to $N$ if every $S\in\mathcal B(M)$ is
+matched to $N$. A failing basis means a basis with no such bijection to
+any actual basis of the specified $N$. This is precisely the ordering-free
+form of Aliabadi–Zerbib Definition 1.3 [AZ]: enumerate $S$ in any order
+and enumerate $T$ by its images under $f$. Conversely a pair of matched
+ordered bases gives this bijection.
+
+The target matroid is fixed independently of the additive group law.
+Its rank function and its actual basis family are used throughout.
+There is no assumption of representability, a common ground set, or
+invariance of matroid independence under translation. The source matroid
+need not be paving.
+

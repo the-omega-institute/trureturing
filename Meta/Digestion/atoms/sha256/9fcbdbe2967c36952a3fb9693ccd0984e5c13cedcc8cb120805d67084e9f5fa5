@@ -1,0 +1,22 @@
+**定义 91.2（目标侧的 exact pattern assignment）。** 另固定一个 finite integer $n\ge1$，在定义 81.1 的实际 fair chronological $F^n$ 上使用全部 complex qutrit density inputs 与原 terminal CPTP permissions。给定 $42$ 个 fixed Hermitian tasks $A_i\in\mathcal H_3$ 和 fixed weak thresholds $\epsilon_i\ge0$，令
+
+$$
+\mathscr K_{\mathrm{qt}}=
+ \left\{J\subseteq[42]:\quad
+ \exists\mathcal D:M_3\to M_3\ {\rm CPTP},\quad
+ \|(F^n)^\dagger\mathcal D^\dagger(A_i)-A_i\|_{\rm op}
+       \le\epsilon_i\ \text{for all }i\in J\right\}.
+\tag{91.3}
+$$
+
+loss 是所有 qutrit densities 上的 worst-case absolute expectation error；只有 $A_i$ 为 projection/effect 时才作 event-probability 解释。同一个 $J$ 内只允许一个共同 map。不同 subsets 可以选择不同 maps，但 $n,F^n$、全部 inputs、terminal permissions、整个 catalogue 和 thresholds 均固定不变；没有 history/reference access、额外 summary、smaller code、intermediate correction 或 postselection。exact pattern assignment 的要求是逐 subset 的等价
+
+$$
+J\in\mathscr K_{\mathrm{qt}}
+ \quad\Longleftrightarrow\quad J\subsetneq[42]
+ \qquad(J\subseteq[42]).
+\tag{91.4}
+$$
+
+这里的 exact 指 feasibility pattern 完全相同，不要求 $\epsilon_i=0$，也不要求它等于某 task 的 individual optimum。
+

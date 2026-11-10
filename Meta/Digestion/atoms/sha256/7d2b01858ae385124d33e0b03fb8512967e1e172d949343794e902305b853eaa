@@ -1,0 +1,20 @@
+### 8.3 Lift obstruction interface
+
+Do not encode an arbitrary inflation graph as an untyped table. Define a finite inflation specification containing:
+
+- copied edge indices;
+- copied party indices;
+- allowed marginal projections;
+- a symmetry action;
+- factorization constraints.
+
+Then define an InflationCertificate with the required target \(T(P)\), an integer linear functional, and a strictly positive target-centered gap on every deterministic lifted event. Prove that every triangle-local law supplies the required lift before deriving the soundness implication
+
+\[
+\text{certificate exists}
+\Longrightarrow
+P\notin\mathcal L_\triangle.
+\]
+
+The exact EJM certificate can be admitted later as finite data. The theorem should first be generic.
+

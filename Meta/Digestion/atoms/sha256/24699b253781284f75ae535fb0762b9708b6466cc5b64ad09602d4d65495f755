@@ -1,0 +1,19 @@
+**Definition 30.2 (one fixed selector and its witness schedules).** Fix
+$C_*$ with states $0,1,2$, initial state $0$, and the disjoint event classes
+
+$$
+G=\{S_p:p\in L^*RL\},\qquad
+A=\{P_p:p\in L^*RR\},\qquad
+D=\{S_p:p\in L^*RR\}.
+\tag{AA.98}
+$$
+
+Here the star permits an arbitrary initial run of $L$ symbols, including
+an empty run. The entries below are $(\text{next state},\text{selection bit})$.
+
+| Event class | Old state $0$ | Old state $1$ | Old state $2$ |
+| --- | --- | --- | --- |
+| $G$ | $(1,0)$ | $(1,0)$ | $(2,0)$ |
+| $A$ | $(2,1)$ | $(1,0)$ | $(2,0)$ |
+| $D$ | $(0,0)$ | $(0,1)$ | $(0,0)$ |
+| Other | $(0,0)$ | $(1,0)$ | $(2,0)$ |

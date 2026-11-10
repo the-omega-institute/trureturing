@@ -1,0 +1,114 @@
+## 一、固定实际算术对象，不改变原整数和原尺度
+
+沿用前面建立的实际核。对 $t\geq0$，令
+
+$$
+\begin{aligned}
+K(t)
+={}&(1+\gamma-t)e^{t/2}
+-\log(2\pi)e^{-t/2}\\
+&+\sum_{j\geq1}
+\frac{e^{-(2j+\frac12)t}}{2j(2j+1)}
++\sum_{m\leq e^t}
+\frac{\Lambda(m)}{\sqrt m}\,
+2\sinh\frac{t-\log m}{2},
+\end{aligned}
+$$
+
+并偶延拓到整个实轴。这里
+
+$$
+S:=K(0)=2+\gamma-\log(4\pi)>0.
+$$
+
+将其中明确为正核的部分记为
+
+$$
+P(t)=\sum_{j\geq1}c_j e^{-\lambda_j|t|},
+\qquad
+c_j=\frac1{2j(2j+1)},
+\qquad
+\lambda_j=2j+\frac12.
+$$
+
+其总量为
+
+$$
+p_0:=P(0)=1-\log2.
+$$
+
+对有限原子复测度
+
+$$
+\mu=\sum_i a_i\delta_{t_i},
+$$
+
+定义实际二次型
+
+$$
+Q_K(\mu)=
+\sum_{i,j}\overline{a_i}a_jK(t_i-t_j).
+$$
+
+$Q_P$ 同理。这里允许带符号和复系数读出，才能保留全部关系方向。
+
+固定窗口
+
+$$
+I=[0,D].
+$$
+
+把读出写成
+
+$$
+\mu=a\delta_0+F',
+\qquad a=\mu(I),
+$$
+
+其中 $F$ 支撑于 $I$。正核给出精确能量
+
+$$
+Q_P(F')
+=
+\frac1{2\pi}\int_{\mathbb R}
+m(\xi)|\widehat F(\xi)|^2\,d\xi,
+$$
+
+其中
+
+$$
+\boxed{
+m(\xi)=
+2\sum_{j\geq1}
+c_j\lambda_j
+\frac{\xi^2}{\lambda_j^2+\xi^2}.
+}
+$$
+<a id="eq-1"></a>
+<div class="equation-caption">Equation (1).</div>
+
+这个权重具有三个关键性质：
+
+$$
+m(\xi)\geq0,
+\qquad
+m(\xi)\longrightarrow\infty\quad(|\xi|\to\infty),
+$$
+
+以及
+
+$$
+\boxed{
+1+m(\xi)\asymp \log(e+|\xi|).
+}
+$$
+<a id="eq-2"></a>
+<div class="equation-caption">Equation (2).</div>
+
+最后一个关系可直接将级数按 $j\leq|\xi|$ 与 $j>|\xi|$ 分开证明：前一部分产生调和和，后一部分有界。
+
+这说明，实际核的细节能量自然对应一个**对数频率权重**。后面的误差也应当使用这个尺度。
+
+---
+
+<a id="section-2-strict-detail-positivity"></a>

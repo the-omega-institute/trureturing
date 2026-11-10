@@ -3482,3 +3482,736 @@ $F_0$ 的轴向原始余弦严格小于 $-1$。原始余弦在正长度域内连
 **来源与形式化边界。** 正长度分类和角公式仍使用 Luo–Yang, *Volume and rigidity of hyperbolic polyhedral 3-manifolds*, [arXiv:1404.5365](https://arxiv.org/pdf/1404.5365)，以及混合匹配卷第 65、88 节的既有公式。无不动点有限对合的偶性是经典事实；第 27 节已有面签名转移的偶性，双公共边卷第 101.2 节已有另一框架下的轴向偶度。本节具体构造的是由短轴长度选出的低面槽与真正中槽出现的对应，再结合角区间排除所列形状族；不主张发现了新的通用奇偶原理。`EdgeStarTransitions.RawFacePairing` 提供无不动点面配对、互逆槽映射及原生全局边商；`PositiveFlatClassification` 提供真正/平坦二分。这里的实际低面槽应用、形状族排除及开邻域结论尚未获本节新增 Lean 内核验证。本节没有声称穷尽文献或世界范围优先权，也不把书面证明视为 registration 或 admission 门禁的替代。
 
 ## 追加锚（本行以下为增补区）
+## 72. 闭部分等距与有限实际轨道的链扩展度量
+
+**定义 72.1（原生成关系、实际轨道与允许无穷费用的链）。** 设 $I$ 为指标集，$J$ 为有限集，每个 $i\in I$ 配备扩展度量空间 $(X_i,d_i)$，距离允许取 $+\infty$。对每个 $j\in J$ 给定源、目标指标 $s(j),t(j)\in I$、闭集 $D_j\subseteq X_{s(j)}$、$E_j\subseteq X_{t(j)}$，以及满射等距映射 $\phi_j:D_j\to E_j$。不要求各 $X_i$ 非空、紧致、完备或有界，不要求 $s(j)\ne t(j)$。取拓扑不交并 $Y=\coprod_{i\in I}X_i$，由全部实际识别
+
+$$
+(s(j),x)\sim(t(j),\phi_j(x))\qquad(j\in J,\ x\in D_j)
+$$
+
+生成最小等价关系 $R$。因此 $R$ 是这些生成元的完整自反、对称、传递闭包，允许任意有限字；$O(a)=\{b\in Y:R(a,b)\}$ 是这个完整关系的实际轨道，并非只走一次生成元所得的集合。
+
+从 $a$ 出发的链由有限次下列操作组成：空链停在 $a$，费用为零；在同一块 $X_i$ 内从 $x$ 移到 $y$，费用增加 $d_i(x,y)$；在 $D_j$ 上应用 $\phi_j$，或在 $E_j$ 上应用 $\phi_j^{-1}$，费用不变。记 $C(a,b,T)$ 表示存在终点为 $b$、总费用为 $T\in[0,+\infty]$ 的这种有限链，定义
+
+$$
+\delta(a,b)=\inf\{T\in[0,+\infty]:C(a,b,T)\},\qquad\inf\varnothing=+\infty.
+$$
+
+有限链可以有无穷费用；以下凡说有限费用，都明确指 $T<+\infty$。每条 $R$ 关系都可展开为零费用链。
+
+**定理 72.2（单个有限实际轨道的排除半径与短链模型）。** 在定义 72.1 的数据下，固定 $a\in Y$ 并假设 $O(a)$ 有限；本定理不要求 $I$ 有限。存在 $0<\rho<+\infty$，同时满足：
+
+1. 对每个 $j$，若 $(s(j),c)\in O(a)$ 而 $c\notin D_j$，则对全部 $x\in D_j$ 有 $\rho\le d_{s(j)}(c,x)$；若 $(t(j),c)\in O(a)$ 而 $c\notin E_j$，则对全部 $x\in E_j$ 有 $\rho\le d_{t(j)}(c,x)$。
+2. 对任意 $b=(i,y)\in Y$ 和任意 $T\in[0,+\infty]$，若 $C(a,b,T)$ 且 $T<\rho$，则存在 $c\in X_i$，使 $(i,c)\in O(a)$ 且 $d_i(c,y)\le T$。
+3. 对任意 $b=(i,y)$ 和 $0<r<\rho$，有精确的局部球公式
+
+$$
+\delta(a,b)<r\quad\Longleftrightarrow\quad
+\exists c\in X_i\;\bigl((i,c)\in O(a)\ \land\ d_i(c,y)<r\bigr).
+\tag{72.1}
+$$
+
+**证明。** 对每个 $j$，轨道在 $X_{s(j)}$ 内且不属于 $D_j$ 的中心构成有限集，故为紧集，与闭集 $D_j$ 不交。紧集与闭集的扩展度量分离给出正有限数 $r_j^+$，使每一对这样的中心和域内点之间的距离严格大于 $r_j^+$。空集情形可任取正有限数。同理对值域取得 $r_j^->0$。令
+
+$$
+\rho=\min\bigl(1,\min_{j\in J}r_j^+,\min_{j\in J}r_j^-\bigr),
+$$
+
+其中空集的最小值按 $+\infty$ 处理。有限性保证 $0<\rho\le1$，并给出第 1 项。特别地，若轨道中心距某个域内点小于 $\rho$，该中心本身必在该域中；逆向对值域同样成立。
+
+对链的有限构造归纳证明第 2 项，并保留“当前终点同块中有一个实际轨道中心，其距离不超过当前累计费用”的不变量。空链取中心 $a$。付费移动时由三角不等式更新距离上界；总费用小于 $\rho$ 保证此前费用也小于 $\rho$。若下一步为正向识别，当前终点在 $D_j$ 中，归纳得到的中心距它小于 $\rho$，第 1 项迫使中心也在 $D_j$。对二者同时应用 $\phi_j$，等距性保持上界，且中心经一次真实生成元仍在 $O(a)$。逆向识别用 $E_j$ 的排除性质与 $\phi_j^{-1}$。这涵盖任意长度的链，未假设生成图无环或禁止自粘合。
+
+若 $\delta(a,b)<r$，下确界性质给出一条费用 $T<r<\rho$ 的链；第 2 项给出所需中心。反之，从 $a$ 到 $(i,c)$ 走一条零费用实际关系链，再在 $X_i$ 中从 $c$ 付费移至 $y$，得到费用 $d_i(c,y)<r$ 的链。证明完毕。
+
+**定理 72.3（原商上的链扩展度量及原拓扑）。** 在定义 72.1 的数据下，进一步假设 $I$ 有限，且每个完整实际轨道 $O(a)$ 都有限。令 $Q=Y/R$ 为原来的等价类集合，$q:Y\to Q$ 为原商映射，$\tau$ 为拓扑不交并的原商拓扑。则 $Q$ 上存在扩展度量 $d_Q$，满足以下全部结论：
+
+$$
+\begin{gathered}
+\operatorname{Top}(d_Q)=\tau,\qquad
+\forall a,b\in Y,\quad d_Q(q(a),q(b))=\delta(a,b),\\
+\forall a,b\in Y,\quad \delta(a,b)=0\ \Longleftrightarrow\ R(a,b),\\
+\forall a,b\in Y,\quad
+\delta(a,b)=+\infty\ \Longleftrightarrow\
+\neg\exists T<+\infty\;C(a,b,T),\\
+\forall i\in I\ \forall x,y\in X_i,\quad
+ d_Q(q(i,x),q(i,y))\le d_i(x,y).
+\end{gathered}
+\tag{72.2}
+$$
+
+此外，若 $V\subseteq Y$ 是原拓扑的开集且对完整关系 $R$ 饱和，则对每个 $a\in V$ 存在 $0<\varepsilon<+\infty$，使
+
+$$
+\forall b\in Y,\quad \delta(a,b)<\varepsilon\Longrightarrow b\in V.
+\tag{72.3}
+$$
+
+每个点的短链捕获及局部球公式仍由定理 72.2 给出。这里的商不再对零距离作第二次商。
+
+**证明，非塌缩。** 零费用关系链给出 $R(a,b)\Rightarrow\delta(a,b)=0$。反向设 $\delta(a,b)=0$，写 $b=(i,y)$，取定理 72.2 的 $\rho$。对任意 $\eta>0$，有费用小于 $\min(\rho,\eta)$ 的链，因而存在轨道中心 $c\in X_i$ 满足 $d_i(c,y)<\eta$。故 $y$ 属于有限集 $O_i(a)=\{c\in X_i:(i,c)\in O(a)\}$ 的闭包。扩展度量空间是 Hausdorff 空间，有限集闭，所以 $y\in O_i(a)$，即 $R(a,b)$。
+
+**证明，距离下降与无穷值。** 链的反向保持费用，两链串接使费用相加，空链费用为零。对费用取下确界，得到 $\delta$ 的对称性、三角不等式及对角零值。若 $R(a,a')$、$R(b,b')$，在链两端串接零费用关系链，双向得到 $\delta(a,b)=\delta(a',b')$。因此公式 $d_Q([a],[b])=\delta(a,b)$ 在原等价类集合上良定义；非塌缩给出它的分离性。同块一次付费移动给出最后的 $1$-Lipschitz 不等式。
+
+若有费用 $T<+\infty$ 的链，则 $\delta(a,b)\le T<+\infty$。若 $\delta(a,b)<+\infty$，下确界严格小于 $+\infty$ 的性质给出一条费用严格小于 $+\infty$ 的链。这证明无穷值的充要条件；没有把有限步数误当作有限费用。
+
+**证明，开邻域捕获与拓扑相等。** 固定饱和开集 $V$ 与 $a\in V$。对每个 $i$，有限集 $O_i(a)$ 全部落在开集 $V_i=\{x:(i,x)\in V\}$ 中。用它与闭集 $X_i\setminus V_i$ 的分离，选 $r_i>0$，使全部轨道中心到补集的距离严格大于 $r_i$。令 $\varepsilon=\min(\rho,\min_{i\in I}r_i)$。因为 $I$ 有限，$\varepsilon>0$，且 $\varepsilon\le\rho<+\infty$。若 $\delta(a,(i,y))<\varepsilon$，取费用 $T<\varepsilon$ 的链并应用短链捕获，得到 $c\in O_i(a)$ 且 $d_i(c,y)\le T<\varepsilon\le r_i$；故 $y$ 不能在补集中。这证明 (72.3)。
+
+若 $U\subseteq Q$ 在原商拓扑中开，则 $q^{-1}(U)$ 开且饱和；(72.3) 在每个代表元处给出包含于 $U$ 的 $d_Q$ 球，故 $U$ 度量开。反向，逐块 $1$-Lipschitz 性使每个限制 $q|_{X_i}$ 连续，因而 $q$ 从拓扑不交并到度量商连续；任一度量开集的逆像开，按原商拓扑定义即为商开。两种拓扑相等。若 $Y$ 为空，没有代表元要选，所得为空商；空生成集、空域或空值域、自粘合均已被上述构造包含。证明完毕。
+
+**命题 72.4（无穷费用与块内捷径的边界）。** 无生成元的单块两点扩展度量空间 $\{p,q\}$，若 $d(p,q)=+\infty$，则 $\delta(p,q)=+\infty$，但存在从 $p$ 到 $q$ 的有限链。若加入闭单点之间的自粘合 $\{p\}\to\{q\}$，则 $\delta(p,q)=0$，而原距离仍为 $+\infty$。因此一般结论中的有限费用条件不可删，逐块映射也不能提升为等距嵌入。
+
+**证明。** 无生成元时每条链只有付费移动，三角不等式使费用至少为原端点距离；一次付费移动达到该距离，故 $\delta=d$，这条单步链的费用为 $+\infty$。加上自粘合后，两点由一个生成元关系相连，所以有零费用链。两种数据的全部实际轨道均有限，单点域和值域闭，单点间唯一双射等距。证明完毕。
+
+**文献依据与适用范围。** Bridson–Haefliger, *Metric Spaces of Non-Positive Curvature*（1999，DOI [10.1007/978-3-662-12494-9](https://doi.org/10.1007/978-3-662-12494-9)，[公开文本](https://webhomes.maths.ed.ac.uk/~v1ranick/papers/bridsonhaefligerx.pdf)）第 I.3 节开头（印刷页 32）允许距离取无穷。I.5.18–5.19（页 64–65）给出不交并和链商伪度量，并指出原来不同的等价类可能具有零距离。I.5.27（页 69）的准则明确要求：对每个中心类 $A$ 存在 $\epsilon>0$，使 $\bigcup_{x\in A}B(x,\epsilon)$ 对关系饱和，且当 $x,x'\in A$、$z\in B(x,\epsilon)$、$z'\in B(x',\epsilon)$、$z\sim z'$ 时，有原空间距离 $d(x,z)=d(x',z')$。该引理给出局部径向距离及半径减半的局部商等距结论；I.5.28 从每类满足这些假设推出商距离分离。本节直接用排除半径和有限链归纳证明所需捕获及非塌缩，没有把“闭部分等距且有限实际轨道”冒写成该书的原文定理，也没有把这些准则假设预置为数据。
+
+Burago–Burago–Ivanov, *A Course in Metric Geometry*（2001，[核对文本](https://dl.icdst.org/pdfs/files/f0b079f316db922739b8efb51bca8896.pdf)）定义 3.1.12 给出链半度量及必要时再作零距离商；练习 3.1.14 在无额外识别的前提下给出拓扑包含，并在原空间紧致时给出拓扑相等；定理 3.1.27 给出商半度量的极大性描述。这些段落没有直接给出本节一般非紧情形的拓扑相等或有限轨道非塌缩结论。本节有限轨道推导属于此处给出的论证，不作世界范围新颖性或文献逐字重现主张。
+
+本节的应用须给出实际空间族、原生成元、闭域与闭值域、等距映射及完整实际轨道有限性的证明。要用于第 1 节指定的几何实现，还须把这些数据与原指定商和边界标记相容地识别；单凭本节不能推出原块等距嵌入、长度空间或测地性质、局部双曲锥模型、二面角和或曲率公式。
+
+## 73. 原链的定额切分与紧原商中的精确中点
+
+沿用第 72 节的实际数据：$I$ 标记扩展度量空间 $X_i$，$J$ 标记闭子空间之间的部分等距，$Y=\coprod_{i\in I}X_i$，$R$ 为全部实际生成元的等价闭包。原链的费用是块内移动距离之和，正向与逆向粘合步骤的费用均为零；$\delta$ 是这些原链费用在 $[0,+\infty]$ 中的下确界。本节保留同一个原关系和原商，不把选定链替换为另一套路径数据。
+
+**定义 73.1（块内定额切分）。** 称空间族具有定额切分性质，如果对每个 $i\in I$、$x,y\in X_i$ 以及 $s\in[0,+\infty]$，
+
+$$
+d_i(x,y)<+\infty,\quad s\le d_i(x,y)
+\quad\Longrightarrow\quad
+\exists z\in X_i:\quad
+d_i(x,z)\le s,\qquad d_i(z,y)\le d_i(x,y)-s.
+$$
+
+这里的减法是扩展非负实数的截断减法；在上述前提下，两项被减的费用均有限。该性质只要求对每次给定的 $s$ 取得一个点，没有预置所有 $s$ 之间的连续或相容选取。具有端点保持等距区间的块满足这个性质。本节直接使用所写的切分性质，不额外假定原商已有测地线。
+
+**定理 73.2（原链的定额切分）。** 设定义 73.1 成立。设 $Z$ 为任意扩展度量空间，$p:Y\to Z$ 满足
+
+$$
+d_Z(p(a),p(b))=\delta(a,b)\qquad(a,b\in Y).
+$$
+
+对任意一条从 $a$ 到 $b$、费用为 $c<+\infty$ 的原链，以及任意 $s\le c$，存在 $z\in Z$ 使
+
+$$
+d_Z(p(a),z)\le s,\qquad d_Z(z,p(b))\le c-s.
+$$
+
+本定理不要求 $p$ 满射，也不要求 $I$、$J$ 有限、空间族紧致或实际轨道有限。
+
+证明。任一原链费用上界给出其端点的 $Z$ 距离上界。特别地，一次块内移动给出
+
+$$
+d_Z(p(i,x),p(i,y))\le d_i(x,y),
+$$
+
+一次正向或逆向粘合的两端在 $Z$ 中具有零距离，因而像相等。
+
+对所给原链归纳。空链费用为零，所以 $s=0$，取 $z=p(a)$。若最后一步是费用为 $\ell=d_i(x,y)$ 的块内移动，令前缀费用为 $c_0$，则 $c=c_0+\ell<+\infty$。当 $s\le c_0$ 时，对前缀应用归纳假设，取其切分点 $z$。三角不等式给出
+
+$$
+\begin{aligned}
+d_Z(z,p(i,y))
+&\le d_Z(z,p(i,x))+d_Z(p(i,x),p(i,y))\\
+&\le(c_0-s)+\ell=c-s.
+\end{aligned}
+$$
+
+当 $c_0<s$ 时，有 $s-c_0\le\ell$，对实际的最后一步应用定义 73.1，选 $w\in X_i$ 使
+
+$$
+d_i(x,w)\le s-c_0,\qquad
+d_i(w,y)\le\ell-(s-c_0).
+$$
+
+取 $z=p(i,w)$。前缀的费用上界、块内的一步上界和三角不等式给出
+
+$$
+d_Z(p(a),z)\le c_0+(s-c_0)=s,
+$$
+
+而
+
+$$
+d_Z(z,p(i,y))\le\ell-(s-c_0)=c-s.
+$$
+
+这些等式中的前缀费用和最后一步费用均有限，故没有无穷减无穷的消去。若最后一步为正向或逆向粘合，其端点的 $p$ 像相等，归纳切分点直接沿用。归纳包含零费用的块内移动、重复粘合和任意有限次越缝。证明完毕。
+
+**定理 73.3（紧原商的精确中点）。** 设 $I,J$ 有限，每个 $X_i$ 紧致，全部实际 $R$ 类有限，并且定义 73.1 成立。则在字面原商
+
+$$
+Q=Y/R
+$$
+
+上存在一个扩展度量 $d_Q$，其拓扑等于原商拓扑，且对全部代表元满足
+
+$$
+d_Q([a],[b])=\delta(a,b).
+$$
+
+对同一个 $d_Q$，每对满足 $d_Q(A,B)<+\infty$ 的商点都有精确中点：
+
+$$
+\exists M\in Q:\qquad
+d_Q(A,M)=\frac{d_Q(A,B)}2,
+\qquad
+d_Q(M,B)=\frac{d_Q(A,B)}2.
+$$
+
+证明。定理 72.3 在同一个 $Q$ 上给出所需扩展度量及拓扑、代表元距离公式。有限个紧空间的拓扑不交并紧致，原商投影连续，故原商紧致；由于拓扑相等，这也是所得扩展度量拓扑下的紧性。
+
+选定 $A=[a]$、$B=[b]$，记 $D=d_Q(A,B)<+\infty$。对任意正实数 $\varepsilon>0$，费用下确界的性质给出一条从 $a$ 到 $b$ 的原链，费用满足
+
+$$
+c<D+\varepsilon<+\infty.
+$$
+
+对该链在费用 $c/2$ 处应用定理 73.2，得到 $Z_\varepsilon\in Q$，满足
+
+$$
+d_Q(A,Z_\varepsilon),\ d_Q(Z_\varepsilon,B)
+\le\frac c2
+\le\frac D2+\varepsilon.
+$$
+
+这里没有要求费用下确界由一条原链达到，也没有要求不同 $\varepsilon$ 使用相同链或相同越缝次数。
+
+函数
+
+$$
+F(Z)=\max\{d_Q(A,Z),d_Q(Z,B)\}\in[0,+\infty]
+$$
+
+连续。对已选定的点 $A$，紧空间 $Q$ 非空，故 $F$ 达到最小值于某点 $M$。每个近似中点给出
+
+$$
+F(M)\le F(Z_\varepsilon)\le D/2+\varepsilon.
+$$
+
+令正的 $\varepsilon$ 任意，得到 $F(M)\le D/2$，从而两端距离都不超过 $D/2$。另一方面，三角不等式给出
+
+$$
+D\le d_Q(A,M)+d_Q(M,B)\le D/2+D/2=D.
+$$
+
+因 $D$ 有限，结合每项不超过 $D/2$ 得到两项分别等于 $D/2$。若 $Q$ 为空，结论中没有可选定的点对，中点断言自然仍成立。不同有限距离分量之间的无穷距离始终保留。证明完毕。
+
+紧性本身不代替定义 73.1。例如实直线的紧子空间 $\{0,1\}$ 不存在同时距 $0$ 和 $1$ 不超过 $1/2$ 的点，因此不能删去块内切分前提。反之，定义 73.1 与定理 73.2 不要求块紧致；紧性在定理 73.3 中用于达到趋近的中点误差。
+
+**文献与范围。** 不交并的链商构造承接 Bridson–Haefliger, *Metric Spaces of Non-Positive Curvature*（1999）I.5.18–5.19。该书 I.1.4(1) 陈述完备度量空间中的中点准则：若每对点存在精确中点，则该空间为测地空间。本节只处理其中的原链定额切分和紧原商精确中点阶段，不把一组分别存在的中点当作已经构造好的连续等距区间，也不主张文献新颖性。
+
+将这些结论用于第 1 节指定的几何实现，还需核对实际块、原闭部分等距、完整实际轨道及原商标记的对应，并证明实际块满足定义 73.1。本节没有给出指定原流形的识别、整块等距嵌入、完整测地线、双曲锥局部模型、二面角和或曲率公式。
+
+## 74. 紧扩展度量空间中从中点到等距实区间
+
+**定理 74.1。** 设 $(Z,d)$ 为紧扩展度量空间，其拓扑是 $d$ 的度量拓扑。假设对任意满足 $d(x,y)<+\infty$ 的点对，都存在精确中点 $m$：
+
+$$
+d(x,m)=d(m,y)=\frac{d(x,y)}2.
+$$
+
+则对任意 $a,b\in Z$ 且 $L=d(a,b)<+\infty$，存在等距映射
+
+$$
+\gamma:[0,L]\longrightarrow Z,
+\qquad \gamma(0)=a,\quad\gamma(L)=b.
+$$
+
+此处 $[0,L]$ 取通常实数度量，等距表示全部 $s,t\in[0,L]$ 同时满足 $d(\gamma(s),\gamma(t))=|s-t|$。不要求 $Z$ 非空、连通或全部距离有限；对无穷距离点对不作区间存在断言。
+
+**证明，有限链逐次细分。** 若 $L=0$，扩展度量的分离性给出 $a=b$，而 $[0,0]$ 只有一点，取常值映射即可。以下设 $L>0$。
+
+从单条边 $(a,b)$ 出发，对每条已有边插入一个精确中点。对每个 $n\ge0$，得到点列
+
+$$
+p_n(0),\ldots,p_n(2^n),\qquad
+p_n(0)=a,\quad p_n(2^n)=b,
+$$
+
+其每条相邻边距离不超过 $h_n=L2^{-n}$。每次选择中点所需的有限距离由上一层的有限上界保证。不同 $n$ 的点列不要求预先作相容选取。对任何 $0\le i,j\le2^n$，三角不等式沿有限点列求和给出
+
+$$
+d(p_n(i),p_n(j))\le |i-j|h_n.
+$$
+
+**证明，对全部实时间的同一近似映射。** 对每个 $t\in[0,L]$，令
+
+$$
+k_n(t)=\lfloor t/h_n\rfloor,
+\qquad U_n(t)=p_n(k_n(t)).
+$$
+
+这里 $0\le k_n(t)\le2^n$，$k_n(0)=0$，$k_n(L)=2^n$，所以 $U_n$ 保持两个端点。实数取整不等式给出
+
+$$
+k_n(t)h_n\le t<k_n(t)h_n+h_n.
+$$
+
+将 $s,t$ 分别移到这两个网格点，并使用前述有限链估计，得到对同一个 $U_n$ 的全部时间对同时成立的上界
+
+$$
+d(U_n(s),U_n(t))\le |s-t|+2h_n.
+\tag{74.1}
+$$
+
+各 $U_n$ 可以不连续；所需的是其定义域已经包含全部实时间，且上界 (74.1) 对这些时间同时成立。
+
+**证明，紧乘积中的闭集交。** 在紧乘积空间 $Z^{[0,L]}$ 中，令
+
+$$
+K_n=\{f:f(0)=a,\ f(L)=b,\ 
+  d(f(s),f(t))\le|s-t|+2L2^{-n}\text{ 对全部 }s,t\in[0,L]\}.
+$$
+
+每个 $K_n$ 非空，因为 $U_n\in K_n$。坐标求值连续，扩展距离到 $[0,+\infty]$ 连续，故每个端点等式和每个距离闭次水平约束都是闭条件；任意多这些条件的交仍闭，故 $K_n$ 闭。又因误差随 $n$ 减小，有 $K_{n+1}\subseteq K_n$。紧性给出
+
+$$
+\gamma\in\bigcap_{n\ge0}K_n.
+$$
+
+对每个固定的 $s,t$，令 $n\to\infty$，得到
+
+$$
+d(\gamma(s),\gamma(t))\le |s-t|.
+\tag{74.2}
+$$
+
+这里使用任意乘积的紧性和递减非空闭集交，没有断言不可数乘积中的任意序列存在收敛子列，也没有由稠密时间点上的值擅自指定其余时间点。
+
+**证明，端点距离饱和。** 若 $s\le t$，沿 $0,s,t,L$ 使用三角不等式与 (74.2)，可得
+
+$$
+\begin{aligned}
+L&=d(a,b)\\
+&\le d(a,\gamma(s))+d(\gamma(s),\gamma(t))+d(\gamma(t),b)\\
+&\le s+d(\gamma(s),\gamma(t))+(L-t).
+\end{aligned}
+$$
+
+由 (74.2)，各项均有限，故可以在实数中消去 $s$ 和 $L-t$，得到 $t-s\le d(\gamma(s),\gamma(t))$。结合 (74.2) 得到等号。$t\le s$ 的情形由距离对称性得到。端点约束由全部 $K_n$ 的定义保留，证明完毕。
+
+**原链商应用。** 在定理 73.3 的前提下，对该定理给出的同一个原商扩展度量 $d_Q$ 应用定理 74.1。原商拓扑的紧性来自有限个紧块的连续商，且定理 73.3 已证明这一拓扑与 $d_Q$ 的拓扑相同。因此每对有限距离的原商点之间存在上述等距实区间，区间长度恰为原链费用的下确界。此处没有更换原生成关系、原商、原商投影或已选度量，也没有要求费用下确界由一条有限原链达到。
+
+应用于第 1 节指定几何实现时，仍须给出实际块及原部分等距与这些数据的对应，证明完整实际等价类有限和块内定额切分，并保持原流形及边界标记的识别。等距区间结论本身不提供指定块的全局等距嵌入、局部双曲锥模型、角和或曲率公式。
+
+**文献。** Bridson–Haefliger, *Metric Spaces of Non-Positive Curvature*（1999，DOI [10.1007/978-3-662-12494-9](https://doi.org/10.1007/978-3-662-12494-9)，[公开文本](https://webhomes.maths.ed.ac.uk/~v1ranick/papers/bridsonhaefligerx.pdf)）I.1.4(1)，印刷页 4，陈述完备普通度量空间的中点准则及局部半径版本；该条评注没有给出细分证明。本节给出紧扩展度量情形的有限细分、全时间取整和紧乘积闭集交证明，不主张文献新颖性，也不将其表述为完备非紧情形的形式化。
+
+## 追加锚（本行以下为增补区）
+
+## 75. 同一六长度标架的八个实际支撑半空间与面片
+
+**定义与约定。** 沿用定理 66.1–66.2 的标签 $I=\{0,1,2,3\}$、原六长度 $l$、Gram 矩阵 $G$、共同截断域 $C_l$、二次式 $q_l$、径向映射 $r_l$ 和 Lorentz 形式 $B$。六个槽位的顺序仍为 $(01,02,03,23,13,12)$。写 $M$ 的原四行为 $m_i$；系数向量 $x$ 的行乘积记为 $xM=\sum_i x_i m_i$，而 $(Gx)_i=\sum_jG_{ij}x_j$。本节全部三维内部、闭性和边界均在实际双曲度量空间 $H^3$ 中取；$H^2=\{u+iv:v>0\}$ 也取其标准双曲距离和拓扑。
+
+为明确上半空间与 Lorentz 坐标的对应，对 $p=(u+iv,h)\in H^3$，记
+
+$$
+L(p)=\left(\frac{u}{h},\frac{v}{h},
+\frac{u^2+v^2+h^2-1}{2h},
+\frac{u^2+v^2+h^2+1}{2h}\right).
+$$
+
+它与第 66 节的 $\Psi$ 互为未来单位双曲面上的逆。使用既有的提升和距离接口
+
+$$
+B(L(p),L(p))=-1,\qquad L(p)_3>0,\qquad
+B(L(p),L(q))=-\cosh d_{H^3}(p,q).
+$$
+
+令支撑标签为不交并 $\mathcal S=\{\mathrm L_i:i\in I\}\sqcup\{\mathrm C_i:i\in I\}$，定义系数支撑线性式
+
+$$
+S_{\mathrm L_i}(x)=-x_i,\qquad S_{\mathrm C_i}(x)=(Gx)_i.
+$$
+
+因而 $C_l$ 是总和为一的系数中全部 $S_a\le0$ 的集合。以下逆矩阵、权重和法向量均由同一 $l,M$ 定义：
+
+$$
+\begin{aligned}
+D_i&=\sum_j(G^{-1})_{ij}m_j,\\
+w_{\mathrm L_i}&=\sqrt{(G^{-1})_{ii}},&w_{\mathrm C_i}&=1,\\
+n_{\mathrm L_i}&=-w_{\mathrm L_i}^{-1}D_i,&n_{\mathrm C_i}&=m_i.
+\end{aligned}
+$$
+
+权重的严格正性是下面的结论及其证明的一部分。记
+
+$$
+\begin{aligned}
+V_a(p)&=B(L(p),n_a),& H_a^-&=\{p\in H^3:V_a(p)\le0\},\\
+P_a&=\{p\in H^3:V_a(p)=0\},& R&=\{p\in H^3:\forall a\in\mathcal S,\ V_a(p)\le0\},\\
+R^{<}&=\{p\in H^3:\forall a\in\mathcal S,\ V_a(p)<0\},& F_a&=\{\lambda\in C_l:S_a(\lambda)=0\}.
+\end{aligned}
+$$
+
+这里 $F_a$ 是原系数域的等式截面，$R$ 是由所定义法向量给出的半空间交；二者与给定映射之像的关系须由定理证明。再记 $b=(1/4,1/4,1/4,1/4)$，并定义
+
+$$
+A_i=\sum_{j\ne i}(-G_{ij}),\qquad
+\begin{aligned}
+\operatorname{facetWitness}(l,\mathrm L_i)_j
+&=\begin{cases}0&j=i,\\1/3&j\ne i,\end{cases}\\
+\operatorname{facetWitness}(l,\mathrm C_i)_j
+&=\begin{cases}A_i/(A_i+3)&j=i,\\1/(A_i+3)&j\ne i.\end{cases}
+\end{aligned}
+$$
+
+**定理 75.1（原给定径向像的实际八半空间、支撑面片与不可删性）。** 任取同一个六长度向量 $l$，假设每个槽位 $l_k>0$。保留定理 66.2 的原源余弦条件 $-1<\varphi_{01}<1$：具体地，置
+
+$$
+(a,b_0,c,d,e,f_0)=(\cosh l_0,\cosh l_1,\cosh l_2,\cosh l_3,\cosh l_4,\cosh l_5),
+$$
+
+$$
+\begin{aligned}
+\mathcal A&=2ab_0f_0+a^2+b_0^2+f_0^2-1,\\
+\mathcal B&=2ace+a^2+c^2+e^2-1,\\
+\mathcal P&=b_0c+ef_0+ab_0e+acf_0-(a^2-1)d,\\
+\varphi_{01}&=(\mathcal P/\sqrt{\mathcal A})/\sqrt{\mathcal B}.
+\end{aligned}
+$$
+
+给定原矩阵 $M$ 和原映射 $f:C_l\to H^3$，假设
+
+$$
+B(m_i,m_j)=G_{ij}\quad(i,j\in I),\qquad \det M>0,\qquad \det G<0.
+$$
+
+同时保留 $f$ 连续、$f$ 单射、$\operatorname{range}f$ 紧且非空的前提，以及对每个 $\lambda\in C_l$ 的原未来径向坐标前提：存在 $Y\in\mathbb R^4$ 使
+
+$$
+Y=r_l(\lambda)M,\qquad B(Y,Y)=-1,\qquad Y_3>0,\qquad
+f(\lambda)=\left(\frac{Y_0+iY_1}{Y_3-Y_2},\frac1{Y_3-Y_2}\right)=\Psi(Y).
+$$
+
+则以下二十项结论同时成立，全部使用这些原 $l,M,f$。
+
+1. $\det G=-(\det M)^2$。
+
+2. 对每个 $i\in I$，$(G^{-1})_{ii}>0$。
+
+3. 对每个 $i,j\in I$，$B(D_i,m_j)=\delta_{ij}$。
+
+4. 对每个 $i,j\in I$，$B(D_i,D_j)=(G^{-1})_{ij}$。
+
+5. 对每个 $a\in\mathcal S$，$B(n_a,n_a)=1$；相应的外向侧是 $V_a>0$。
+
+6. 原映射的像集精确等于八个闭半空间的交：
+
+   $$
+   \operatorname{range}f=R=\bigcap_{a\in\mathcal S}H_a^-.
+   $$
+
+7. 同一像集也有不作单位化的对偶／cap 符号刻画：
+
+   $$
+   \operatorname{range}f=
+   \{p\in H^3:\forall i\in I,\ B(L(p),D_i)\ge0\ \text{且}\ B(L(p),m_i)\le0\}.
+   $$
+
+8. 实际三维环境内部为
+
+   $$
+   \operatorname{int}_{H^3}(\operatorname{range}f)=R^{<}.
+   $$
+
+9. 同一环境内部的不作单位化刻画为
+
+   $$
+   \operatorname{int}_{H^3}(\operatorname{range}f)=
+   \{p\in H^3:\forall i\in I,\ B(L(p),D_i)>0\ \text{且}\ B(L(p),m_i)<0\}.
+   $$
+
+10. 原系数重心的像点满足 $f(b)\in\operatorname{int}_{H^3}(\operatorname{range}f)$。
+
+11. $\operatorname{int}_{H^3}(\operatorname{range}f)\ne\varnothing$。
+
+12. $\operatorname{range}f$ 在 $H^3$ 中闭。
+
+13. 完整环境边界恰为原映射像集内至少一个支撑活跃的点：
+
+    $$
+    \partial_{H^3}(\operatorname{range}f)=
+    \{p\in\operatorname{range}f:\exists a\in\mathcal S,\ V_a(p)=0\}.
+    $$
+
+14. 对每个 $a\in\mathcal S$，$H_a^-$ 在 $H^3$ 中闭，并存在 $e:H^2\to H^3$，满足
+
+    $$
+    e\ \text{是等距映射},\qquad \operatorname{range}e=P_a,\qquad
+    \partial_{H^3}H_a^-=\operatorname{range}e.
+    $$
+
+15. 对每个 $a\in\mathcal S$，原系数等式截面的像精确为
+
+    $$
+    f(F_a)=\{p\in\operatorname{range}f:V_a(p)=0\}.
+    $$
+
+16. 对每个 $a\in\mathcal S$，存在 $v_a\in C_l$，其系数向量恰为 $\operatorname{facetWitness}(l,a)$，并且
+
+    $$
+    V_a(f(v_a))=0,\qquad
+    \forall c\in\mathcal S,\ c\ne a\Longrightarrow V_c(f(v_a))<0.
+    $$
+
+17. 对每个 $a\in\mathcal S$，存在 $e:H^2\to H^3$ 和 $U\subseteq H^2$，使
+
+    $$
+    \begin{gathered}
+    e\ \text{是等距映射},\qquad \operatorname{range}e=P_a,\\
+    U\ \text{在}\ H^2\ \text{中开且非空},\qquad e(U)\subseteq f(F_a).
+    \end{gathered}
+    $$
+
+18. 对每个 $a\in\mathcal S$，存在 $p\in H^3$，使
+
+    $$
+    V_a(p)>0,\qquad
+    \forall c\in\mathcal S,\ c\ne a\Longrightarrow V_c(p)<0.
+    $$
+
+19. 对每个 $a\in\mathcal S$，删去该不等式使原映射的像集严格扩大：
+
+    $$
+    \operatorname{range}f\subsetneq
+    \{p\in H^3:\forall c\in\mathcal S,\ c\ne a\Longrightarrow V_c(p)\le0\}.
+    $$
+
+20. 映射 $a\mapsto n_a$ 单射，即八个实际单位外法向量两两不同。
+
+**证明（原标架的对偶、余子式与符号）。** 令 $J=\operatorname{diag}(1,1,1,-1)$。原 Gram 等式逐项给出 $MJM^T=G$，故
+
+$$
+\det G=(\det M)(\det J)(\det M^T)=-(\det M)^2.
+$$
+
+两个原行列式前提使 $M,G$ 均可逆。$G$ 对称，所以 $G^{-1}$ 对称。直接对原行作双线性展开，任意系数 $x,z$ 都满足
+
+$$
+B(xM,zM)=\sum_i x_i\sum_jG_{ij}z_j.
+$$
+
+将 $z$ 取为 $G^{-1}$ 的第 $i$ 行并用 $G^{-1}G=1$，得到
+
+$$
+B(xM,D_i)=x_i,\qquad B(xM,m_i)=(Gx)_i.
+$$
+
+取标准基系数和 $G^{-1}$ 的行，分别得到第 3、4 项。
+
+对第 $i$ 个对角余子式，剩下三个标签形成三角形。其三条边的余弦长度记为 $u,v,w$，均严格大于一。该主子式的行列式是
+
+$$
+\det\begin{pmatrix}1&-u&-v\\-u&1&-w\\-v&-w&1\end{pmatrix}
+=1-u^2-v^2-w^2-2uvw<0.
+$$
+
+具体地，$i=0,1,2,3$ 对应的三槽集合依次为 $\{5,4,3\}$、$\{1,2,3\}$、$\{0,2,4\}$、$\{0,1,5\}$；这覆盖原六槽的全部四个对角余子式。由逆矩阵的伴随公式和原前提 $\det G<0$，
+
+$$
+(G^{-1})_{ii}=\frac{\operatorname{adj}(G)_{ii}}{\det G}>0.
+$$
+
+所以全部 $w_a>0$。第 4 项给出 $B(D_i,D_i)=w_{\mathrm L_i}^2$，从而 $B(n_{\mathrm L_i},n_{\mathrm L_i})=1$；cap 法向量的单位性由 $B(m_i,m_i)=G_{ii}=1$ 得到。更一般地，对任意系数 $x$ 有精确支撑公式
+
+$$
+B(xM,n_a)=\frac{S_a(x)}{w_a}.
+$$
+
+此式同时固定八个不等式的方向。
+
+**证明（原映射的提升公式与逆向重构）。** 原未来径向坐标前提和 $L\circ\Psi=\mathrm{id}$ 给出
+
+$$
+L(f(\lambda))=r_l(\lambda)M\qquad(\lambda\in C_l).
+$$
+
+定理 66.1 保证 $q_l(\lambda)<0$。由支撑线性式的齐次性，
+
+$$
+V_a(f(\lambda))=
+\frac{S_a(\lambda)}{\sqrt{-q_l(\lambda)}\,w_a},\qquad
+\sqrt{-q_l(\lambda)}\,w_a>0.
+$$
+
+因此原映射的像集包含于 $R$，而且每个原系数支撑的等式和严格不等式都被精确保留。
+
+反向任取 $p\in R$，用原矩阵的逆定义
+
+$$
+x=L(p)M^{-1},\qquad s=\sum_i x_i.
+$$
+
+于是 $xM=L(p)$。对偶支撑公式和 $V_{\mathrm L_i}(p)\le0$ 给出 $-x_i/w_{\mathrm L_i}\le0$，故每个 $x_i\ge0$；cap 支撑给出 $(Gx)_i\le0$。原 Gram 配对和提升单位式给出
+
+$$
+q_l(x)=B(xM,xM)=B(L(p),L(p))=-1.
+$$
+
+因此 $x\ne0$。有限个非负坐标之和只能在它们全为零时等于零，故 $s>0$。定义 $\lambda_i=x_i/s$。则
+
+$$
+\lambda_i\ge0,\qquad \sum_i\lambda_i=1,\qquad
+(G\lambda)_i=(Gx)_i/s\le0,
+$$
+
+所以 $\lambda\in C_l$，包括全部等式边界。二次齐次性及 $s>0$ 给出
+
+$$
+q_l(\lambda)=-s^{-2},\qquad
+\sqrt{-q_l(\lambda)}=s^{-1},\qquad r_l(\lambda)=x.
+$$
+
+再次使用原 $f$ 的提升公式，$L(f(\lambda))=xM=L(p)$；提升单射性给出 $f(\lambda)=p$。等价地，原坐标式给出 $f(\lambda)=\Psi(L(p))=p$。这里恢复的是原 $f$ 的一个原像，没有重新选择标架或径向映射。这证明第 6 项。最后
+
+$$
+V_{\mathrm L_i}(p)=-\frac{B(L(p),D_i)}{w_{\mathrm L_i}},\qquad
+V_{\mathrm C_i}(p)=B(L(p),m_i)
+$$
+
+和权重正性给出第 7 项，以及 $R^{<}$ 的严格对偶／cap 符号刻画。
+
+**证明（实际环境内部、横穿支撑与完整边界）。** 提升的坐标公式及高度 $h>0$ 表明 $L$ 连续，故每个 $V_a$ 连续。于是每个 $H_a^-$ 闭，$R$ 闭，有限个严格不等式的交 $R^{<}$ 开，且 $R^{<}\subseteq\operatorname{int}_{H^3}R$。
+
+要证明反向包含，任取一个单位类空向量 $N$ 和满足 $B(L(p),N)=0$ 的实际点 $p$。置 $Y=L(p)$，考虑精确曲线
+
+$$
+Z(t)=\cosh(t)Y+\sinh(t)N\qquad(t\in\mathbb R).
+$$
+
+双线性展开给出
+
+$$
+B(Z(t),Z(t))=-1,\qquad B(Z(t),N)=\sinh t,\qquad
+B(Z(t),Z(u))=-\cosh(t-u).
+$$
+
+单位负值意味着 $Z(t)_3^2=1+Z(t)_0^2+Z(t)_1^2+Z(t)_2^2\ge1$。时间坐标连续且在 $t=0$ 为正，故在连通的整个实轴上始终为正。因此 $g(t)=\Psi(Z(t))$ 是实际 $H^3$ 中处处有定义的曲线，且
+
+$$
+L(g(t))=Z(t),\qquad g(0)=p,\qquad d_{H^3}(g(t),g(u))=|t-u|.
+$$
+
+最后一个等式由提升距离公式及 $\cosh$ 在非负实数上的严格单调性得到。这也是既有未来单位双曲测地线接口的直接情形。特别地，$g$ 连续，并有完全确定的横穿符号 $B(L(g(t)),N)=\sinh t$。
+
+若 $p\in R$ 且 $V_a(p)=0$，取 $N=n_a$。每个 $t>0$ 都有 $V_a(g(t))=\sinh t>0$，所以 $g(t)\notin R$，而 $g(t)\to p$ 当 $t\downarrow0$。因此任何活跃支撑点都不是三维环境内部点。反之，$p\in R$ 若没有活跃支撑，其全部八个支撑值严格为负，即 $p\in R^{<}$。得到 $\operatorname{int}_{H^3}R=R^{<}$。结合第 6 项和严格符号刻画，得到第 8、9 项。因 $R$ 闭，
+
+$$
+\partial_{H^3}R=R\setminus\operatorname{int}_{H^3}R
+=\{p\in R:\exists a\in\mathcal S,\ V_a(p)=0\},
+$$
+
+给出第 12、13 项。整个横穿论证发生在 $H^3$ 环境拓扑中。
+
+对原重心 $b$，全部 $S_{\mathrm L_i}(b)=-1/4<0$，且
+
+$$
+S_{\mathrm C_i}(b)=\frac{1+\sum_{j\ne i}G_{ij}}4=\frac{1-A_i}4<0,
+$$
+
+因为 $A_i>3$。定理 66.1 保证 $b\in C_l$；正分母的像支撑公式遂给出 $f(b)\in R^{<}$，从而证明第 10、11 项。
+
+**证明（每个完整实际支撑平面的双曲参数化）。** 使用既有的类空支撑平面实现：对 $B(N,N)>0$，有从标准 $H^2$ 到完整零支撑集 $\{p:B(L(p),N)=0\}$ 的实际距离等距映射。这里说明其构造与覆盖性，以确定所用的是完整平面。
+
+本题中 $B(N,N)=1$。令 $e_1=(0,1,0,0)$，取 $\sigma=1$ 当 $N_1\ge0$，否则取 $\sigma=-1$。置 $W=N+\sigma e_1$，则
+
+$$
+B(W,W)=2(1+\sigma N_1)>0,\qquad
+T(X)=X-\frac{2B(X,W)}{B(W,W)}W.
+$$
+
+这个 Lorentz 反射保持 $B$，满足 $T^2=\mathrm{id}$，并有
+
+$$
+B(T(X),N)=-\sigma X_1.
+$$
+
+它还保持未来单位双曲面：若 $X$ 是未来单位向量，则 $T(X)$ 为单位向量，且
+
+$$
+B(X,T(X))=-1-\frac{2B(X,W)^2}{B(W,W)}<0.
+$$
+
+具体地，若 $X,Z$ 都满足单位负值关系而 $X_3>0>Z_3$，写 $X_{\mathrm{sp}},Z_{\mathrm{sp}}$ 为其三个空间坐标，则 Cauchy–Schwarz 不等式给出
+
+$$
+B(X,Z)\ge X_3|Z_3|-\sqrt{X_3^2-1}\sqrt{Z_3^2-1}>0,
+$$
+
+末项严格性来自 $X_3,|Z_3|\ge1$ 及 $\sqrt{t^2-1}<t$ 对 $t\ge1$。所以负配对排除了异号时间坐标，上式保证 $T(X)$ 仍在未来片。
+
+标准竖直实现 $j:H^2\to H^3$ 为 $j(u+iv)=(u+i0,v)$，其提升第二坐标恒为零。反之，任意未来单位 $X$ 满足 $X_1=0$ 时，
+
+$$
+z=\frac{X_0}{X_3-X_2}+i\frac1{X_3-X_2}\in H^2
+$$
+
+满足 $L(j(z))=X$；分母正性由未来单位关系得到。定义 $e(z)=\Psi(T(L(j(z))))$，则
+
+$$
+B(L(e(z)),N)=0.
+$$
+
+若 $p$ 的 $N$ 支撑值为零，将上述反射恒等式用于 $X=T(L(p))$，得 $T(L(p))_1=0$；故存在 $z$ 使 $L(j(z))=T(L(p))$。再反射一次即得 $e(z)=p$，证明 $\operatorname{range}e$ 是整个零支撑平面。标准 $H^2$ 距离公式给出
+
+$$
+B(L(j(z)),L(j(w)))=-\cosh d_{H^2}(z,w).
+$$
+
+反射保持配对，结合 $H^3$ 的提升距离公式和非负距离上的 $\cosh$ 单射性，得到 $d_{H^3}(e(z),e(w))=d_{H^2}(z,w)$。这正是既有标准双曲平面实现的参数化。
+
+对 $N=n_a$ 得到所需 $e$。单个闭半空间 $H_a^-$ 的严格负值点构成开集，而每个零值点都能由上述 $g(t)$ 横穿至正值侧。故其内部恰为 $V_a<0$，边界恰为 $P_a=\operatorname{range}e$。连同已得闭性，证明第 14 项。
+
+**证明（原系数面的精确像与原显式见证）。** 正分母的像支撑公式表明，对每个 $\lambda\in C_l$ 和 $a\in\mathcal S$，
+
+$$
+V_a(f(\lambda))=0\quad\Longleftrightarrow\quad S_a(\lambda)=0.
+$$
+
+将此等价分别用于 $f(F_a)$ 的点和原映射像集内支撑为零的点，得到第 15 项。
+
+现在验证定义中的同一个 $\operatorname{facetWitness}$。对 $a=\mathrm L_i$，向量 $v$ 在 $i$ 位为零，其余三位均为 $1/3$，故坐标非负且和为一，只有 $S_{\mathrm L_i}(v)=0$，其余系数下界支撑为 $-1/3$。第 $i$ 个 cap 值是三个负非对角元之和除以三，严格为负；对 $r\ne i$，第 $r$ 个 cap 值为
+
+$$
+(Gv)_r=\frac{1+\sum_{j\notin\{i,r\}}G_{rj}}3<0,
+$$
+
+因为该和含两个严格小于 $-1$ 的元。因此 $v\in C_l$，且仅指定的支撑活跃。
+
+对 $a=\mathrm C_i$，设 $D=A_i+3>0$。定义中的原向量有全部坐标严格为正，坐标和为 $(A_i+3)/D=1$，并可写为
+
+$$
+v=\frac{\mathbf1+(A_i-1)e_i}{D}.
+$$
+
+于是对任意 $r\in I$，
+
+$$
+(Gv)_r=\frac{\sum_jG_{rj}+(A_i-1)G_{ri}}D.
+$$
+
+当 $r=i$ 时，$\sum_jG_{ij}=1-A_i$、$G_{ii}=1$，故该值恰为零。当 $r\ne i$ 时，$\sum_jG_{rj}=1-A_r<0$，$A_i-1>0$，而 $G_{ri}<-1$，故该值严格为负。全部下界支撑 $-v_j$ 也严格为负。故这个原 cap 见证同样属于 $C_l$ 且仅指定的支撑活跃。
+
+将两类原系数向量看作 $C_l$ 中的点 $v_a$，再用正分母的像支撑公式，就得到第 16 项的零值和全部其余严格负值。
+
+**证明（原生开面片、严格删除见证与法向量单射）。** 固定任意 $a\in\mathcal S$，令 $p_a=f(v_a)$。选择第 14 项的完整支撑平面等距映射 $e_a:H^2\to H^3$。因 $V_a(p_a)=0$，存在 $z_a\in H^2$ 使 $e_a(z_a)=p_a$。定义
+
+$$
+U_a=\{z\in H^2:\forall c\in\mathcal S,\ c\ne a\Longrightarrow V_c(e_a(z))<0\}.
+$$
+
+等距映射连续，每个支撑值连续，支撑数目有限，故 $U_a$ 在实际 $H^2$ 拓扑中开。第 16 项保证 $z_a\in U_a$，所以它非空。对每个 $z\in U_a$，指定支撑在整个 $e_a$ 平面上为零，其余支撑严格为负；因此 $e_a(z)\in R\cap P_a$。第 6、15 项给出 $e_a(U_a)\subseteq f(F_a)$，证明第 17 项。这个面片是完整支撑平面中一个非空相对开集的等距像。
+
+再在 $p_a$ 处用 $N=n_a$ 构造横穿曲线 $g_a$。它满足
+
+$$
+g_a(0)=p_a,\qquad V_a(g_a(t))=\sinh t.
+$$
+
+对每个 $c\ne a$，第 16 项给出 $V_c(g_a(0))<0$。由连续性及有限性，存在共同 $\varepsilon>0$，使 $|t|<\varepsilon$ 时全部这些不等式仍严格成立。取 $0<t<\varepsilon$，令 $p=g_a(t)$，便有 $V_a(p)>0$ 而其余全部支撑严格为负，证明第 18 项。它同时说明正支撑侧确实在原映射的像集之外，符合上述外向约定。
+
+第 6 项使原映射的像集包含于删除第 $a$ 个不等式后的集合；第 18 项的点属于后者却不属于前者，所以包含严格，得到第 19 项。最后若 $a\ne c$ 而 $n_a=n_c$，则在像点 $p_a=f(v_a)$ 上两个支撑值必相等；但第 16 项给出 $V_a(p_a)=0$ 和 $V_c(p_a)<0$，矛盾。因此八个法向量两两不同，证明第 20 项。证毕。
+
+**范围。** 本节把同一给定六长度标架的径向像与八个实际半空间、三维环境内部、完整支撑平面及其非空开面片相联；证明是经典 Lorentz／双曲框架在这些原对象上的具体综合。完整的循环面关联、原源角与实际二面角的对应、原生闭边管邻域、指定面标记及其等距匹配仍为分别的几何目标；原剖分商及全局 CFMP 结论也仍保留各自前提和证明义务。第 65–66 节所列较大实现目标的其余部分不由本定理推出。
+
+## 追加锚（本行以下为增补区）

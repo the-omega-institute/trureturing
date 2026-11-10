@@ -1,0 +1,13 @@
+**Corollary 14.3 (exact boundary exclusions for finite diagonal lifts).** Let $p$ be any probability law on a finite output alphabet, with positive support size $2\le m\le4$, and let $P_p(a,b,c)=p_a$ when $a=b=c$ and zero otherwise. If $m=2$, $m=3$, or $m=4$ with $p$ nonuniform on its positive support, every finite incident realization of $P_p$ satisfies
+
+$$
+C_{\rm src}>\frac12H(p).
+\tag{14.12}
+$$
+
+Consequently, for each such $p$, the lift problem of Definition 4.1 has no finite realization with source defect at most $H(p)/2$. In this output range, a lift with source defect at most that boundary exists exactly when $p$ is uniform on four symbols; every lift at the boundary then has (14.1). The two-symbol exclusion is Theorem 11.2; the three-symbol and nonuniform four-symbol exclusions and the complete description of the surviving lifts follow from Theorem 14.2.
+
+*Proof.* Theorem 11.1 supplies the lower bound $C_{\rm src}\ge H(p)/2$ on each realization. Theorem 14.2 excludes equality in all the stated cases, proving (14.12). This excludes the boundary budget that the non-strict observable test (10.4) alone leaves undecided. If $p$ is uniform on four symbols, Proposition 12.1 with $G=\mathbb F_2$ and an output bijection realizes it at cost $\log2=H(p)/2$. Conversely a lift of cost at most $H(p)/2$ must be an equality lift by Theorem 11.1 and hence has (14.1) by Theorem 14.2.
+
+The strictness in (14.12) is pointwise in each finite realization. It supplies no positive gap uniform in unbounded finite source cardinalities and no value of the binary source-cost infimum discussed after Theorem 11.2. The proof classifies exact agreement with at most four positive output symbols; a quantitative stability statement under approximate agreement and the classification for $m\ge5$ require additional arguments. No infinite-alphabet or physical-source assertion follows from this finite classification. ∎
+

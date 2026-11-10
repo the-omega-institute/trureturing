@@ -1,0 +1,22 @@
+**定理 13.2（整条非平凡仿射纤维的严格支配）。** 在每个内点局部极大值 $p$ 处，
+完整仿射纤维
+
+$$
+\mathcal A_p=\{p+\xi\in\Delta^\circ:
+ \sum_i\xi_i=0,\quad\operatorname{tf}_E(\Pi C_\xi\Pi)=0\} \tag{13.5}
+$$
+
+的维数为 $n-3$，且每个 $p'\in\mathcal A_p\setminus\{p\}$ 都满足
+$\Phi(p')<\Phi(p)$。不附加 $\Pi w_\xi=0$、小位移或余谱不变的条件。
+
+证明。引理 10.2 给出两个独立的线性条件，所以纤维维数为 $n-3$。
+对其中的位移，有 $\Pi C\Pi=\alpha I_E$，所以 $a=\alpha$。
+实际新矩阵的顶层压缩为
+$(\rho+\alpha)I_E-uu^{\mathsf T}$。
+二维空间内的秩一矩阵有零特征值，故
+$\rho'\ge\rho+\alpha$，即 $\delta\ge0$。
+又 $\sum_i\xi_i=0$ 时 $w=\sum_i\xi_i a_i$；
+$a_1,\ldots,a_{n-1}$ 线性无关，所以 $w=0$ 强迫所有 $\xi_i=0$。
+非零位移使 $\|w\|^2>0$，(13.1) 遂给出严格支配。
+新矩阵正定，故所有商的分母为正；证明对整条可行纤维有效。∎
+

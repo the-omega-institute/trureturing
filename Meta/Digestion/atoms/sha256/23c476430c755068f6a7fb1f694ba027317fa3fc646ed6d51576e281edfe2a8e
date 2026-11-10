@@ -1,0 +1,16 @@
+**Definition 66.3 (The reused unsaturated carrier).** Use exactly $x=n/U$, the tail interpolant, $a_0,a_1,a_2$, $f,\mathcal K,A,B_f,C_f$, and $\alpha,\zeta,F_0,R$ of [Support X, equations (12.8)–(12.12)](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_X.md). In particular
+
+$$
+\begin{gathered} D=x(x+1)(x+2),\\ F_0=405x^3+(975-18p+5v)x^2+(90-36p+5v)x-480,\\ \operatorname{Res}_d(f,\mathcal K)=256D^8F_0^2R,\\ f\mid A^3\mathcal K-(\alpha d+\zeta). \end{gathered} \tag{66.3}
+$$
+
+The normalization of $R$ is the exact quotient in that source; its $x$-degree is eighteen. Every actual world has $x>0$, satisfies $f=\mathcal K=0$, and therefore satisfies
+
+$$
+F_0(x,p,v)R(x,p,v)=0,\qquad \alpha(x,p,v)d+\zeta(x,p,v)=0. \tag{66.4}
+$$
+
+The factor $F_0$ is retained, including its zero-drift possibility. Neither the regular-source denominator nor the fixed-terminal inverse's quartic $K$ is divided out in (66.4).
+
+The all-world necessity is also immediate from the supplied original equations. For the tail interpolant $H=Ug$, clock zero gives $dU=-H_0$, and clock two gives $B_0U=H_2$, where $B_0=294/5-2d-H_2$. These imply $f=0$. Substituting $H_0=-dU$ and $xH_1-(24-d)=rH_1/U$ into $\mathcal K$ expresses it as the cleared original rank-one source relation. This proves $\mathcal K=0$ without division by $d$, so (66.4) applies also when $d=0$ and on singular sources.
+

@@ -1,0 +1,19 @@
+**Definition 2.3 (the recovery obligation for four expressions).** Put $J=(S,T,M)$. Theorem 2.2 gives the exact obligations
+
+$$
+\begin{aligned}
+B\text{ determines }J
+&\Longleftrightarrow \ker B\subseteq\ker S\cap\ker T\cap\ker M,\\
+J\text{ determines }B
+&\Longleftrightarrow \ker S\cap\ker T\cap\ker M\subseteq\ker B.
+\end{aligned}
+$$
+
+Thus $B$ and $J$ recover each other iff these two kernels are equal. This does not imply that each component of $J$ separately recovers $B$. All four expressions recover each other pairwise iff
+
+$$
+\ker S=\ker T=\ker B=\ker M.
+$$
+
+The joint quotient $H/(\ker S\cap\ker T\cap\ker B\cap\ker M)$ retains exactly their collective distinctions, as in PG.3404. “Minimal” here concerns distinctions required by the chosen targets: identifying any more histories loses one of those targets. It is not a universal minimum of alphabet size, physical dimension, bit length, description length or acquisition cost. A common kernel need not be the diagonal $\Delta_H$; recovering the views is weaker than recovering literal history.
+

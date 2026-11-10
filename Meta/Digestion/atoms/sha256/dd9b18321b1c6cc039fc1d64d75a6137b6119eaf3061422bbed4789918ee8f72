@@ -1,0 +1,16 @@
+### 3.2 均匀参考把残余变成双交换子的平方和
+
+现在固定 $H=\mathbb C^d$、$d\ge2$ 及 $\pi=I_H/d$。
+令 $B_N=\mathcal N(I_H)$，并记 $\mathcal T=\mathcal P_{\pi,\mathcal N}\mathcal N$。
+支撑逆公式消去 $d$ 后，$\mathcal T$ 的 Kraus 算子为
+
+<a id="eq-c122-paired-kraus"></a>
+
+$$
+K_{ij}=E_i^*B_N^{-1/2}E_j,
+ \qquad K_{ji}=K_{ij}^*.
+\tag{13}
+$$
+
+它是 CPTP，且保持 $\pi$，所以也是保单位的。
+

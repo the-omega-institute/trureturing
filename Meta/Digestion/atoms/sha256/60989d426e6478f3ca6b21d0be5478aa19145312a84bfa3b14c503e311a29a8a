@@ -1,0 +1,20 @@
+**定义 42.2（乘法字符）。** 对 $G_n=\operatorname{Aut}_{\mathbb R,1,J}(H_n(\mathbb C))$ 定义
+
+$$
+\varepsilon(\phi)=
+\begin{cases}
++1,&\Phi(AB)=\Phi(A)\Phi(B),\\
+-1,&\Phi(AB)=\Phi(B)\Phi(A).
+\end{cases}
+\tag{42.2}
+$$
+
+记 $\kappa(a,b)=i[a,b]/2$。由(42.1)与两类乘法直接得到
+
+$$
+\phi\kappa(a,b)=\varepsilon(\phi)\kappa(\phi a,\phi b),
+\qquad
+\varepsilon(\psi\phi)=\varepsilon(\psi)\varepsilon(\phi).
+\tag{42.3}
+$$
+

@@ -1,0 +1,4 @@
+**Lemma 2.1 (evaluation rank and source span).** Let $V_{ik}=i^k$ for $0\le i<N$ and $0\le k<m$, with $0^0=1$, and put $a_i(S)=\operatorname{tr}(A_iS)$. Evaluation at any $r$ distinct clocks has rank $\min(r,m)$. The legal normalized sources span $\operatorname{Mat}_2(\mathbb R)$.
+
+**Proof.** A polynomial of degree at most $m-1$ with $m$ distinct zeros vanishes. For $r\le m$, the usual Lagrange polynomials at those $r$ nodes give every value vector; for $r\ge m$, the preceding zero count gives injectivity. For the source claim, take two independent strictly positive columns and two independent strictly positive rows. Their four outer products form a basis of the matrix space. Each is positive rank one with positive trace; dividing each by its trace preserves independence and makes it legal. $\square$
+

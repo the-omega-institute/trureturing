@@ -307,9 +307,9 @@ private theorem orbit_mod (k t n : ℕ) (hk : 0 < k) :
   simpa only [mul_one, one_mul, mul_comm, mul_left_comm, mul_assoc] using hstep'
 
 /- The exact natural geometric multiplier is the requested quotient. -/
-def multiplier (b d : ℕ) : ℕ := ∑ j ∈ Finset.range d, 2 ^ (j * b)
+public def multiplier (b d : ℕ) : ℕ := ∑ j ∈ Finset.range d, 2 ^ (j * b)
 
-private theorem multiplier_identity (b d : ℕ) :
+public theorem multiplier_identity (b d : ℕ) :
     (multiplier b d : ℤ) * modulus b = modulus (d * b) := by
   induction d with
   | zero => simp [multiplier, modulus]
@@ -321,7 +321,7 @@ private theorem multiplier_identity (b d : ℕ) :
     rw [pow_add]
     nlinarith [ih]
 
-private theorem multiplier_quotient (b d : ℕ) (hb : 0 < b) :
+public theorem multiplier_quotient (b d : ℕ) (hb : 0 < b) :
     multiplier b d = (2 ^ (d * b) - 1) / (2 ^ b - 1) := by
   have hbase : 0 < 2 ^ b - 1 := by
     have := Nat.one_lt_two_pow (ne_of_gt hb)
@@ -334,7 +334,7 @@ private theorem multiplier_quotient (b d : ℕ) (hb : 0 < b) :
     exact_mod_cast hi
   rw [← hnat, Nat.mul_div_cancel _ hbase]
 
-private theorem multiplier_positive (b d : ℕ) (hd : 1 ≤ d) :
+public theorem multiplier_positive (b d : ℕ) (hd : 1 ≤ d) :
     1 ≤ multiplier b d := by
   have h0 : 0 ∈ Finset.range d := by simp; omega
   have hs := Finset.single_le_sum (fun j _ => Nat.zero_le (2 ^ (j * b))) h0
@@ -360,7 +360,7 @@ private theorem centered_scale (N0 N lam x : ℤ)
   rw [he]
   linear_combination lam * hz
 
-private theorem repeated_source (b d t : ℕ) (hb : 0 < b) (hd : 1 ≤ d)
+public theorem repeated_source (b d t : ℕ) (hb : 0 < b) (hd : 1 ≤ d)
     (i : Fin (d * b)) :
     actualSource (d * b) ((multiplier b d * t) % (2 ^ (d * b) - 1)) i =
       (multiplier b d : ℤ) * actualSource b t ⟨i.val % b, Nat.mod_lt _ hb⟩ := by
@@ -400,7 +400,7 @@ private theorem repeated_source (b d t : ℕ) (hb : 0 < b) (hd : 1 ≤ d)
     ((2 : ℤ) ^ i.val * t) h0 hodd0 hN hodd hlam (multiplier_identity b d).symm,
     orbit_mod b t i.val hb]
 
-private theorem scale_strip {α β : Type*} (f : α → ℤ) (g : β → ℤ)
+public theorem scale_strip {α β : Type*} (f : α → ℤ) (g : β → ℤ)
     (θ : α → β) (lam B B' h : ℤ) (hlam : 0 ≤ lam) (hB : lam * B ≤ B')
     (word : List α) (hval : ∀ x ∈ word, g (θ x) = lam * f x)
     (hs : InStrip f B h word) : InStrip g B' (lam * h) (word.map θ) := by
@@ -415,7 +415,7 @@ private theorem scale_strip {α β : Type*} (f : α → ℤ) (g : β → ℤ)
     have ht := ih (h + f x) (fun y hy => hval y (by simp [hy])) hs.2.2
     convert ht using 1 <;> rw [hx] <;> ring
 
-private theorem scaled_sum {α β : Type*} (f : α → ℤ) (g : β → ℤ)
+public theorem scaled_sum {α β : Type*} (f : α → ℤ) (g : β → ℤ)
     (θ : α → β) (lam : ℤ) (word : List α)
     (hval : ∀ x ∈ word, g (θ x) = lam * f x) :
     ((word.map θ).map g).sum = lam * (word.map f).sum := by

@@ -1,0 +1,8 @@
+对数学时间矩 $S_k^{(n)}=\langle e_1,K_n^ke_1\rangle$、
+$S_k^{(\infty)}=\langle e_1,K_\infty^ke_1\rangle$，
+
+$$
+S_k^{(n)}=S_k^{(\infty)}\quad(0\le k<2n),\qquad
+S_{2n}^{(\infty)}-S_{2n}^{(n)}=1.
+$$
+

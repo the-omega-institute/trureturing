@@ -1,0 +1,8 @@
+**命题 70.2（等帽常数的尖锐性）。** 固定 $0<\sigma\le\pi/2$，在定理的等帽条件下，$\cosh\ell_{12}$ 的上确界为 $(3-\cos\sigma)/(1+\cos\sigma)$。
+
+**证明。** 对足够小的 $\varepsilon>0$，取标准顺序角向量
+
+$$(\sigma-2\varepsilon,\varepsilon,\varepsilon,\varepsilon,\varepsilon,\varepsilon).$$
+
+目标边两个端点的角和均为 $\sigma<\pi$，另外两个顶点角和为 $3\varepsilon<\pi$，所有角严格正，故经典局部角域定理给出真正四面体。令 $\varepsilon\downarrow0$，式 (70.1) 的分子趋于 $3+2\cos\sigma-\cos^2\sigma$，分母趋于 $(1+\cos\sigma)^2$，比值即为所列常数。结合严格上界证明上确界，未声称边界角向量本身属于真正角域。
+

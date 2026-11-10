@@ -1,0 +1,53 @@
+### 定理 1：固定价格下，取全部正收益层给出整数最大值
+
+对任意 $\eta>0$，定义
+
+$$
+a_p(\eta)
+=
+\#\{j\ge1:\rho_{p,j}>\eta\},
+\qquad
+C_\eta=\prod_p p^{a_p(\eta)}.
+$$
+
+那么
+
+<a id="eq-6"></a>
+
+$$
+\boxed{
+\log Z(C_\eta)-\eta\log C_\eta
+=
+\max_{m\ge1}
+\{\log Z(m)-\eta\log m\}.
+}
+\tag{6}
+$$
+
+存在并列最大值时，$C_\eta$ 是其中最小的整数。
+
+**证明。**
+
+素数分解给出
+
+$$
+\log Z(m)-\eta\log m
+=
+\sum_p\sum_{j=1}^{v_p(m)}
+\bigl(\lambda_{p,j}-\eta\log p\bigr).
+$$
+
+每个素数方向的增量严格递减，因此最优选择是：取全部正项，不取负项；零项可取可不取。
+
+由式 (5)，正项只有有限多个。因此最大值由一个实际整数取得；不取零项给出最小的最大点。证毕。
+
+这使“贪心”获得了明确的算术含义。
+
+<!-- editorial-note:start finite-price-and-ties -->
+**【编者局部说明：有限性与并列】** Euler 分解为 $Z(m)=\prod_{p\mid m}S_p(v_p(m))$，约定 $S_p(0)=1$。式 (5) 来自 $\log(1+u)<u$ 及 $p+\cdots+p^j\ge p^j$；分母随 $j$ 严格增加，故密度严格下降。若 $\rho_{p,j}\ge\varepsilon>0$，则 $p^j\log p<1/\varepsilon$，从而 $p$ 有界且每个 $p$ 的 $j$ 有界。因此正价格层与零价格层都有限，正层在每个素数上构成前缀，零层若存在紧接其后。所有最大点均取全部正层、任选零层、不取负层；不取零层的 $C_\eta$ 整除其余最大点，因而是最小者。这也包括空正层时的 $C_\eta=1$。
+<!-- editorial-note:end finite-price-and-ties -->
+
+---
+
+<a id="sec-3"></a>
+

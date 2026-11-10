@@ -1,0 +1,2 @@
+**Correction 16.1 (the scope of (9.2)).** Both assertions $\mathsf Q_{\rm full}$ and $\mathsf Q_{\rm band}$ in (9.2) follow from [Strip, Theorems 3.1, 5.1 and 6.5][Strip] and [Entropy, Theorem 3.1][Entropy]. Their descriptions as open in Open problem 9.2, Open Question 12.4, Convention 14.2 and Consequence 15.3 are superseded by this application. The definitions and universal quantifiers in (9.2) are unchanged; this is reuse of the existing suppliers, not an additional universal rate theorem.
+

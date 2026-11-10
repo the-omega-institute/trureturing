@@ -1,0 +1,70 @@
+**Theorem 81.1 (allowed-actuator criterion and attained completion).**
+At (80.1), fix a law-dependent but entrance-independent list $U$ of allowed
+terminals, with inclusion matrix $B_U$. Let $V\in\mathbb Q^{N\times d}$
+have basis columns for $K=\ker T$, where $d=\dim K$. Consider a fixed
+law-dependent finite final list of Adds, each operand rational-affine in
+$x$, with no intervening Tick or growth. Among such lists supported in $U$,
+an injective entrance-to-current map exists if and only if
+
+$$
+ \operatorname{rank}(V^{\mathsf T}B_U)=d.          \tag{81.1}
+$$
+
+When all genuine terminals are available, $d\le b-1$. One can choose $d$
+distinct terminals $Z$ among any prescribed $b-1$ terminals such that
+$W=V^{\mathsf T}B_Z$ is invertible. For $d>0$, compute from the acquired
+data and actually execute, in fixed pivot order, the $d$ Adds with operands
+
+$$
+ q=W^{-1}V^{\mathsf T}x,
+ \qquad w=Fx+r_T,
+ \qquad F=T^m+B_ZW^{-1}V^{\mathsf T}.             \tag{81.2}
+$$
+
+Include zero operands as real calls, then perform Hold. The displayed $w$
+is the actual endpoint and $F$ is invertible over $\mathbb Q$.
+There are no additional Reads, Ticks, births or source cells. At $d=0$
+skip this phase entirely and set $F=T^m$. The minimum uniform length of a
+fixed rational-affine Add template is $d$, including this zero case.
+
+Proof. The elementary symmetric-kernel fact used in Proposition 77.5 gives
+$\ker T^h=K$ for every $h\ge1$. For completeness, $T^2v=0$ implies
+$0=v^{\mathsf T}T^2v=\|Tv\|^2$, and repeated squaring reduces any positive
+power to the first kernel. Also $\operatorname{im}T=K^\perp$, so
+$\mathbb Q^N=K\oplus\operatorname{im}T$. These statements over $\mathbb Q$
+follow either directly from sums of rational squares or from rational rank
+and real orthogonality. In particular $V^{\mathsf T}T^m=0$ and
+$V^{\mathsf T}V$ is invertible.
+
+Any fixed affine Add list has endpoint
+$T^m x+r_T+B_U(Dx+q_0)$ after combining repeated terminals. If (81.1)
+fails, there is a nonzero row $\gamma^{\mathsf T}$ annihilating
+$V^{\mathsf T}B_U$. The nonzero row $\gamma^{\mathsf T}V^{\mathsf T}$
+then annihilates $T^m+B_UD$. This square linear part is singular, whatever
+$D,q_0$ are, and its affine map is not injective. Conversely, if (81.1)
+holds, choose a rational right inverse $Q$ of $V^{\mathsf T}B_U$ and use
+operands $QV^{\mathsf T}x$. For $F_U=T^m+B_UQV^{\mathsf T}$ one has
+$V^{\mathsf T}F_U=V^{\mathsf T}$. If $F_Uh=0$, this identity gives
+$V^{\mathsf T}h=0$, the added term vanishes, and $T^mh=0$. Thus
+$h\in K\cap K^\perp=\{0\}$. This proves sufficiency.
+
+The terminal choice uses the established tree forcing mechanism. All leaves
+except one zero-force a finite tree: root the tree at the omitted leaf. If
+some vertex is still unmarked, take a deepest unmarked vertex. Unless it is
+the root, it cannot be a childless vertex, since all other leaves were
+initially marked. A marked child then has precisely that unmarked parent
+as its only unmarked neighbour and forces it. If only the root remains,
+its marked neighbour forces it. At a marked zero coordinate of a vector
+$h\in K$, the equation $(Th)_v=0$ forces the unique remaining neighbour
+to zero, since its edge weight is nonzero; the arbitrary diagonal multiplies
+zero. Therefore restriction of $K$ to any $b-1$ terminals is injective.
+Its matrix has rank $d$, so deterministic rational pivots choose $Z$ with
+the claimed invertible $W$. The general sufficiency argument now gives
+(81.2). Actual Adds are translations with no intervening evolution, so
+their sum is precisely $B_Zq$ in the real plant and in its updated predictor.
+
+Finally a list of $k$ fixed Add slots has actuator rank at most $k$.
+The necessity just proved implies $k\ge d$. The constructed list attains
+$d$ for every $x$, including entries making some operands zero. This is a
+uniform template minimum, not a per-entry adaptive or nonlinear bound. $\square$
+

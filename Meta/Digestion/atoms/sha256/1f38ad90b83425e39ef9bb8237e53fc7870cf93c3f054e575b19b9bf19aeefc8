@@ -1,0 +1,36 @@
+**定义 84.1（独立反模型的完整效果与 meter 域）。** 取 $E=\mathbb R^2$、$C=\mathbb R_+^2$、$u=(1,1)$，其有序单位范数为 $\|(r,s)\|_u=\max\{|r|,|s|\}$。全部正准备为
+
+$$
+\mathcal P=C^*
+=\{\alpha_{a,b}:\alpha_{a,b}(r,s)=ar+bs,\ a,b\ge0\}.
+\tag{84.1}
+$$
+
+归一态是 $a+b=1$ 的子集，其余包括零质量及任意正质量。指定效果域为
+
+$$
+\mathcal A_{\rm lens}
+=\{(r,s)\in[0,1]^2:r^2+s^2\le2r,\quad r^2+s^2\le2s\}.
+\tag{84.2}
+$$
+
+它是分别以 $(1,0),(0,1)$ 为心、半径一的两圆盘交集。固定复用命题 68.3 的同一个算子
+
+$$
+H(r,s)=(s-r,0),\qquad Hu=0.
+\tag{84.3}
+$$
+
+本数学反模型的全部允许 meters 为所有二值 meters $(e,u-e)$、$e\in\mathcal A_{\rm lens}$ 的有限混合与经典后处理的模拟闭包。准确地，一个有限完整 meter $M=(m_1,\ldots,m_k)$ 属于该域，当且仅当存在有限个 $e_i\in\mathcal A_{\rm lens}$、$\lambda_i\ge0$、$\sum_i\lambda_i=1$ 及非负数 $t_{j|i,+},t_{j|i,-}$，满足
+
+$$
+\sum_{j=1}^k t_{j|i,+}=\sum_{j=1}^k t_{j|i,-}=1,
+\qquad
+m_j=\sum_i\lambda_i\bigl(t_{j|i,+}e_i+t_{j|i,-}(u-e_i)\bigr).
+\tag{84.4}
+$$
+
+完整事件允许对任意输出子集求和，评价为相同正泛函在该和上的值；未丢弃余补或失败质量。重复有限混合、后处理仍可展平为 (84.4)。这些是此反模型自身定义的操作，不是原七地址来源的操作或其可执行扩张。
+
+此透镜几何取自 Wright–Weigert，*General Probabilistic Theories with a Gleason-type Theorem*，Quantum **5**, 588 (2021)，[arXiv:2005.14166v4，Fig. 4、Definition 4](https://arxiv.org/html/2005.14166v4) 的两圆盘 aNU bit 构造；效果与完整 meter 的区分及模拟闭包取义于 Filippov–Gudder–Heinosaari–Leppäjärvi，[DOI:10.1007/s10701-020-00352-6，§2.2](https://doi.org/10.1007/s10701-020-00352-6)。下面的结论是该效果域与已发表算子 (84.3) 的具体组合及接触速率障碍，不将任一成熟构造重新主张为新发现。
+

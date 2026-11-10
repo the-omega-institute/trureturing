@@ -1,0 +1,2 @@
+**Open question 6.2 (The case $k=0$ for two nodes).** For $(n,k)=(2,0)$ the first inequality involves $s_{(d\mid1)}$ and $e_2$, and the second involves $s_{(t-2\mid1)}$ and $e_2$. Determine, for two-node self-conjugate grids in $\mathbb{D}^2$, the set of grids on which each inequality holds for every $t\ge2$, and decide whether, as in Theorems 4.1 and 5.1, it coincides with the set on which it holds at $t=3$. Stance: repo-derived (question posed in this volume).
+

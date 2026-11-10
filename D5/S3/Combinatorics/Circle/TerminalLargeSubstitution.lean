@@ -8,8 +8,9 @@
 module
 public import D5.S3.Combinatorics.Circle.TwoOppositeLargeExchange
 
-/-! Strict substitution uses D < Z and retains every physical SMALL label.
-The original append failure derives the new endpoint; equal values do not imply strict descent. -/
+/-! Strict substitution uses D < Z and retains every physical label in a compatible suffix.
+The original append failure derives the new endpoint independently of suffix size or LARGE count.
+The terminal all-SMALL theorem is the original specialization; equal values give no strict descent. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -46,13 +47,15 @@ private theorem exponent_lt {a b : ℤ} (hab : |a| < |b|) :
       simpa only [Int.natCast_natAbs] using hab)
   exact pow_lt_pow_right₀ (by decide : (1 : ℕ) < 3) hn
 
-/-- Complete terminal exchange, including both exact disjoint physical partitions,
-all natural takes, unchanged G/U and SMALL complement, and the exact energy balance. -/
-theorem actualSource_terminal_sameSign_substitution_full
+/-- Strict same-sign exchange with an arbitrary pair-compatible physical suffix.
+Old append blocking derives both new gates. Every suffix occurrence is retained,
+with full natural prefixes, the whole Inventory, exact permutation and complement. -/
+theorem actualSource_compatibleTail_sameSign_substitution_full
     (k t : ℕ) (hk : 3 ≤ k)
     (A T : List (Fin k)) (z u : Fin k)
     (hW : Legal k t (A ++ [z] ++ T))
-    (hsmall : ∀ q ∈ T, |s k t q| < Q k)
+    (hcompatible : ∀ i ∈ T, ∀ j ∈ T,
+      0 < s k t i → s k t j < 0 → s k t i - s k t j ≤ C k)
     (hu : u ∉ A ++ [z] ++ T)
     (hularge : Q k ≤ |s k t u|)
     (hsame : 0 < s k t u * s k t z)
@@ -62,11 +65,15 @@ theorem actualSource_terminal_sameSign_substitution_full
       (let W := A ++ [z] ++ T
        let V := A ++ [u] ++ E
        Legal k t V ∧ InStrip (s k t) (C k) 0 V ∧
+       (∀ j : ℕ, 0 ≤ mass (s k t) (V.take j) ∧
+         mass (s k t) (V.take j) ≤ C k) ∧
        Inventory k t W V [u] [z] ∧
+       (V ++ [z]).Perm (W ++ [u]) ∧
        G k t V = G k t W ∧ U V = U W ∧
        H k t V + 3 ^ (s k t z).natAbs = H k t W + 3 ^ (s k t u).natAbs ∧
        H k t V < H k t W ∧ J k t V < J k t W ∧
        mass (s k t) V = mass (s k t) W - s k t z + s k t u ∧
+       remainingMass (s k t) V = -(mass (s k t) W - s k t z + s k t u) ∧
        remainingSmall t V = remainingSmall t W) := by
   classical
   let f := s k t
@@ -115,15 +122,6 @@ theorem actualSource_terminal_sameSign_substitution_full
       have hblocked' : mass f W < -f u := by ((try dsimp only [f, W, a, b, e] at *); source_arith)
       dsimp [b]
       exact ⟨⟨by ((try dsimp only [f, W, a, b, e] at *); source_arith), by ((try dsimp only [f, W, a, b, e] at *); source_arith)⟩, ⟨by ((try dsimp only [f, W, a, b, e] at *); source_arith), by ((try dsimp only [f, W, a, b, e] at *); source_arith)⟩⟩
-  have hcompatible : ∀ p ∈ T, ∀ n ∈ T, 0 < f p → f n < 0 → f p - f n ≤ C k := by
-    intro p hp n hn hpp hnn
-    have hp' := hsmall p hp
-    have hn' := hsmall n hn
-    change |f p| < Q k at hp'
-    change |f n| < Q k at hn'
-    rw [abs_of_pos hpp] at hp'
-    rw [abs_of_neg hnn] at hn'
-    ((try dsimp only [f, W, a, b, e] at *); source_arith)
   obtain ⟨E, hE, hsE⟩ := exists_order_between f T (C k) b hgate.1 hgate.2 hcompatible
   let V := A ++ [u] ++ E
   have hsingle : InStrip f (C k) a [u] := ⟨ha.1, ha.2, hgate.1⟩
@@ -159,12 +157,59 @@ theorem actualSource_terminal_sameSign_substitution_full
     ((try dsimp only [f, W, a, b, e] at *); source_arith)
   have hsmallRem : remainingSmall t V = remainingSmall t W := by
     simpa [Finset.filter_singleton, hzlarge] using inv.smallPartition
-  exact ⟨E, hE, legal_of_strip inv.nodup hVstrip, hVstrip, inv, by ((try dsimp only [f, W, a, b, e] at *); source_arith), by ((try dsimp only [f, W, a, b, e] at *); source_arith),
-    he, hH, hJ, hend, hsmallRem⟩
+  have hlegal : Legal k t V := legal_of_strip inv.nodup hVstrip
+  have hcomplement : remainingMass f V = -(mass f W - f z + f u) := by
+    have hc := inv.complementSum
+    change remainingMass f V = -mass f V at hc
+    rw [hend] at hc
+    exact hc
+  exact ⟨E, hE, hlegal, hVstrip, hlegal.2, inv, hperm,
+    by ((try dsimp only [f, W, a, b, e] at *); source_arith),
+    by ((try dsimp only [f, W, a, b, e] at *); source_arith),
+    he, hH, hJ, hend, hcomplement, hsmallRem⟩
+
+/-- Complete terminal exchange, including both exact disjoint physical partitions,
+all natural takes, unchanged G/U and SMALL complement, and the exact energy balance. -/
+theorem actualSource_terminal_sameSign_substitution_full
+    (k t : ℕ) (hk : 3 ≤ k)
+    (A T : List (Fin k)) (z u : Fin k)
+    (hW : Legal k t (A ++ [z] ++ T))
+    (hsmall : ∀ q ∈ T, |s k t q| < Q k)
+    (hu : u ∉ A ++ [z] ++ T)
+    (hularge : Q k ≤ |s k t u|)
+    (hsame : 0 < s k t u * s k t z)
+    (hmag : |s k t u| < |s k t z|)
+    (hblocked : ¬ Legal k t ((A ++ [z] ++ T) ++ [u])) :
+    ∃ E : List (Fin k), E.Perm T ∧
+      (let W := A ++ [z] ++ T
+       let V := A ++ [u] ++ E
+       Legal k t V ∧ InStrip (s k t) (C k) 0 V ∧
+       Inventory k t W V [u] [z] ∧
+       G k t V = G k t W ∧ U V = U W ∧
+       H k t V + 3 ^ (s k t z).natAbs = H k t W + 3 ^ (s k t u).natAbs ∧
+       H k t V < H k t W ∧ J k t V < J k t W ∧
+       mass (s k t) V = mass (s k t) W - s k t z + s k t u ∧
+       remainingSmall t V = remainingSmall t W) := by
+  have hcompatible : ∀ i ∈ T, ∀ j ∈ T,
+      0 < s k t i → s k t j < 0 → s k t i - s k t j ≤ C k := by
+    obtain ⟨hQ, hN, hC, hN0, hodd⟩ := source_geometry hk
+    intro i hi j hj hip hjn
+    have hi' := hsmall i hi
+    have hj' := hsmall j hj
+    rw [abs_of_pos hip] at hi'
+    rw [abs_of_neg hjn] at hj'
+    source_arith
+  obtain ⟨E, hE, hlegal, hstrip, _, inv, _, hG, hU, henergy,
+      hH, hJ, hend, _, hremaining⟩ :=
+    actualSource_compatibleTail_sameSign_substitution_full k t hk A T z u
+      hW hcompatible hu hularge hsame hmag hblocked
+  exact ⟨E, hE, hlegal, hstrip, inv, hG, hU, henergy, hH, hJ, hend, hremaining⟩
+
 
 
 #print axioms D5.S3.Combinatorics.Circle.TwoOppositeLargeExchange.native_geometry
 #print axioms D5.S3.Combinatorics.Circle.TwoOppositeLargeExchange.actualSource_twoOpposite_twoStep_full
+#print axioms actualSource_compatibleTail_sameSign_substitution_full
 #print axioms actualSource_terminal_sameSign_substitution_full
 
 end D5.S3.Combinatorics.Circle.TerminalLargeSubstitution

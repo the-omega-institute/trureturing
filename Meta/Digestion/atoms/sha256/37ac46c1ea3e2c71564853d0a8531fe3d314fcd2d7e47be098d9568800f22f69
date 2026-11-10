@@ -1,0 +1,52 @@
+**Definition 8.1 (post-growth clocks and the digital endpoint).** C uses
+the existing $+$ installation of AAII §84 with law (2.2), the actually
+prepared alpha of Definition 2.4, and the actual post-growth-clock
+adapter in Definition 7.1. A successful exposed growth has successor
+$T_{t'}\iota_gx$; a refused growth has no Tick. The only changed field
+command is Read. For an integer ordinal $j$ and a nonnegative integer
+precision $p$, a valid Read$(j,p)$ returns the complete signed integer
+
+$$
+k=\lfloor 2^p x_{\ell_j}\rfloor+\zeta,
+\qquad \zeta\in\{0,1\},
+\tag{8.1}
+$$
+
+and leaves the field unchanged. The floor is the ordinary signed floor,
+including on negative rational fields reached by later controls.
+There is no truncation of the integer payload. Both choices of $\zeta$
+are legal after every prefix at which that Read is enabled. Choices can
+be arbitrary, correlated and adaptive to the entire execution. There is
+no persistent hidden sensor state constraining the next legal choice,
+and no additional timing, bit-provider or digitizer side channel.
+This is a set-valued service contract, without a probability law.
+
+The digital endpoint is installed directly; the observer has no exact
+Read bypass. A device implementing (8.1) by first calling an inner exact
+Read must charge that inner transaction as well. The stated direct
+implementation instead charges the actual source access, exact shift/
+division/floor arithmetic, bit latch/provider and finite signed output
+backing. One actual nuisance bit is consumed for each valid Read.
+Providing every legal bit choice is a premise about that provider, not
+an inferred property of numerical reports.
+
+More explicitly, a finite ideal backend uses the source's actual rational
+cell representation $A/B$, $B>0$, at the ordinal terminal selected by
+the authentic current dispatcher. Under its installed internal field-access
+rights and busy lock it copies those integers into actual scratch, forms
+$2^pA$, and performs signed floor division by $B$. Integer division with
+remainder in $\{0,\ldots,B-1\}$ gives that quotient also for negative
+$A$. It acquires one bit through its genuine provider binding, adds it,
+and builds the complete signed integer reply before End/Return. It
+performs no field write or Tick. Every finite $p,A,B$ requires finite
+but charged scratch, digit operations and output backing. This realizes
+the changed ideal primitive from those installed accesses; it neither
+exposes an exact Read to the observer nor derives a physical sensor from
+an algebraic resemblance.
+
+Use the field codec of Definition 13.2, with an additional canonical
+nonnegative integer payload for $p$. A negative or noninteger precision,
+or a noncanonical precision frame, takes BadFrame without a source
+change. Valid precision with an invalid integer ordinal takes RangeRefusal.
+Proper prefixes, guards, acknowledgements, End and Return are as in §7.
+

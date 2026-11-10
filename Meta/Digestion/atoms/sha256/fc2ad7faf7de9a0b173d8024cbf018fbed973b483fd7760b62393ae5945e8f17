@@ -1,0 +1,25 @@
+**定理 7.1（有符号关系解的一致次线性消去）。**设处处有限的 $d:M^2\to[0,\infty)$、$h:M^2\to\mathbb R$ 都满足与 (R) 相同的四变量线性关系。若
+
+$$
+\forall\varepsilon>0\ \exists C_\varepsilon<\infty\ \forall a,b,\qquad
+|h(a,b)|\le\varepsilon d(a,b)+C_\varepsilon,
+\tag{7.1}
+$$
+
+则 $h=0$。
+
+**证明。**令 $\Phi_k(x)=x\cdot U^kx$，并对函数定义正平均算子
+
+$$
+(Pf)(a,b)=\frac13\sum_{k=0}^2f(\Phi_k(a),\Phi_k(b)).
+$$
+
+关系的输入 $(u,v)=(a,b)$ 给 $Pd=2d$、$Ph=2h$，从而
+
+$$
+2^n|h(a,b)|=|P^nh(a,b)|\le P^n|h|(a,b)
+\le\varepsilon2^nd(a,b)+C_\varepsilon.
+$$
+
+先除以 $2^n$ 并令 $n\to\infty$，再令 $\varepsilon\downarrow0$。所有迭代都使用原始实际历史 $x_{j+1}=x_j\cdot U^{k_j}x_j$，复制已带完整括号的 $x_j$，不改变其内部括号。平均精确放大因子为 $2^n$，没有用逐历史的最坏深度界替代平均。
+

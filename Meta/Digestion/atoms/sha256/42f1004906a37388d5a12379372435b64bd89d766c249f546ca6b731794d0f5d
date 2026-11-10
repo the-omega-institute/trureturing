@@ -1,0 +1,27 @@
+#### 命题 2.5（重投影没有在整个格上保持单射）
+
+文献的 CAP 格基提升 $\widetilde u_j=(u_j,u_j^\star)$ 与 Hat 返回格基 $v_1,v_2$ 满足
+
+$$
+\pi_D(\widetilde u_1)=3v_1-v_2,\quad
+ \pi_D(\widetilde u_2)=v_1,\quad
+ \pi_D(\widetilde u_3)=v_1+2v_2,\quad
+ \pi_D(\widetilde u_4)=v_2.
+$$
+
+因此其格核是秩二群，由
+$\widetilde u_1-3\widetilde u_2+\widetilde u_4$ 和
+$\widetilde u_3-\widetilde u_2-2\widetilde u_4$ 生成。
+
+**证明。**
+
+系数 $(a,b,c,d)\in\mathbb{Z}^4$ 在核内当且仅当 $3a+b+c=0$、$-a+2c+d=0$。
+解为 $(a,-3a-c,c,a-2c)$，恰为所列两向量的整数线性组合；独立性由格基保证。
+
+∎
+
+这一计算使用原论文 §3.2 的返回向量映射。（[5](#ref-diffraction)）
+它说明格点索引、窗口和类型不能被裸二维位置替代；同时也不否定带窗口、类型及邻域的合法控制点仍能局部重构 Hat 铺砌。
+
+<a id="sec-2-2"></a>
+

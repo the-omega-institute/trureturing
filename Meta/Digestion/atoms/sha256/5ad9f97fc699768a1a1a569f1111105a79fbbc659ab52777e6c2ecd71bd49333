@@ -1,0 +1,16 @@
+#### 定义 4.1（操作意义的条件塌缩）
+
+有限量子仪器是完全正映射族 $\{\mathcal I_o\}$，其和为迹保持通道。读得实际记录 $o$ 后，若
+
+$$
+
+q_o=\operatorname{Tr}\mathcal I_o(\rho)>0,
+
+$$
+
+条件态为 $\rho_o=\mathcal I_o(\rho)/q_o$。本文把这一<em>有实际记录的条件化</em>称为操作意义的塌缩；不由此选择一种关于客观波函数塌缩的解释。遗忘记录时，态为 $\sum_o\mathcal I_o(\rho)$。
+
+<a id="statement-4-2"></a>
+
+<a id="thm-endpointinstrument"></a>
+

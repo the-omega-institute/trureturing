@@ -1,0 +1,11 @@
+**定理 24.3（任意基数 L4 族的全 J 叶约束）。** Let $z\in\mathbb R$ and $K\subseteq\mathcal G_z$ have arbitrary cardinality. If $L_4(K,H_z)$, there exist actual successive responses $u,w,x,y$ along four further $J$ actions for which
+
+$$
+\left|K\cap\mathcal F((H_z,J,u,J,w,J,x,J,y))\right|\ge2.
+                                                                  \tag{24.8}
+$$
+
+For that one full eight-read history, either $D_E=D_O=0$ and every compatible gain obeys (23.2)–(23.4), with the full positive-ratio construction of Theorem 22.1, or $D_E\ne0$ and its entire compatible fiber is exactly one of the two-world types (23.5) or (23.11). In the regular case $\rho=1$, or $d\notin\{0,24\}$, cannot support this leaf. The final-$M$ consequences of Proposition 24.1 apply at its same clock-six prefix.
+
+Proof. Specify $J$ in the universal action clause of (1.1), successively four times. The corresponding actual children have $L_3,L_2,L_1,L_0$ on one nested sequence of literal histories, yielding (24.8). Only now, at this terminal leaf, may two targets be selected. Theorems 22.1 and 23.1 apply to its full compatible fiber. In the regular case that fiber has at most two worlds, so the two targets exhaust it and Theorems 23.2–23.3 give exactly its chamber. In the degenerate case both data combinations vanish and the full generator remains over every $\rho>0$. No cardinality bound is added there. This argument extracts a pair only at $L_0$, and does not assert that the pair had $L_3$ or $L_4$ at an earlier node. ∎
+

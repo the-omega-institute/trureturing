@@ -1,0 +1,8 @@
+**定理 1.2（圆周超图的固定一致度熵下界）。** For every such $r$ and $n$,
+
+$$
+H(X)\ge\frac12\log_2\frac nr-K_r.
+$$
+
+**证明。**
+

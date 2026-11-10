@@ -1,0 +1,26 @@
+**Theorem 5.2 (The secondary crossover and the intermediate window).** With the convention $1/0=+\infty$, if $a\delta_a\to\lambda\in[0,\infty)$, then
+
+$$
+\frac{D_a(\delta_a)}{a^2}\longrightarrow\min\{2,1/\lambda\}.
+\tag{5.6}
+$$
+
+If instead $a\delta_a\to\infty$ and $\sqrt a\,\delta_a\to0$, then
+
+$$
+D_a(\delta_a)\sim\frac a{\delta_a}.\tag{5.7}
+$$
+
+These limits are attained asymptotically by the actual laws of Lemma 1.2, choosing the better family when both are defined.
+
+**Proof.** If $a\delta_a$ has a finite limit and $\delta_a>0$, eventually the first line of (3.5) applies, and
+
+$$
+\frac{S_a(\delta_a)}{a^2}=\frac1{a\delta_a}+2\delta_a.
+$$
+
+Taking the minimum with two and using Theorem 3.4 proves (5.6) for $\lambda>0$ and for positive $\delta_a$ with $a\delta_a\to0$. The terms with $\delta_a=0$ obey the same limit by the exact value in Lemma 3.1. In the intermediate window,
+$2a^2\delta_a/(a/\delta_a)=2a\delta_a^2\to0$ and
+$(a/\delta_a)/(2a^2)=1/(2a\delta_a)\to0$.
+Thus $W_a(\delta_a)\sim a/\delta_a$, and (3.9) proves (5.7). The upper laws used to prove (3.9) were actual laws throughout. ∎
+

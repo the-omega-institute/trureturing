@@ -1,0 +1,25 @@
+**命题 16.2（精确算术菜单与稠密射线）。**AS 的有限门字在三维中恰给 $U_3(A)$；全部 $A^3$ 单位向量的秩一投影都能由坐标读口取得。这些投影在全部复秩一投影中稠密。门群的闭包为
+
+$$
+\overline{U_3(A)}=\{V\in U(3):\det V\in\mu _6\}.
+\tag{16.3}
+$$
+
+**证明。**精确综合直接复用 Glaudell–Ross–van de Wetering–Yeh，*Exact Synthesis of Multiqutrit Clifford-Cyclotomic Circuits*，[原文](https://arxiv.org/pdf/2405.08136)，Lemma 3.7、Proposition 3.8：三能级 Fourier 门、单坐标符号与三次相位、坐标交换生成 $U_n(\mathbb Z[1/3,\zeta])$，其单位向量消元也给每条算术单位射线的实际门字。文献 Fourier 门与 (16.1) 只差本菜单已有的六次单位整体相位；不从文献的多 qutrit 辅助位实现推断本来源已有辅助位。Kalra–Mosca–Valluri，*Synthesis and Arithmetic of Single Qutrit Circuits*，[原文](https://arxiv.org/pdf/2311.08696)，Theorem 5.7、Corollary 5.8 给三维的对应综合，额外符号门 $R=\operatorname{diag}(1,1,-1)$ 是其条件，不能删除。
+
+以下直接证明所需稠密性。取 $Q=\operatorname{diag}(-1,1,1)$，则
+
+$$
+R=BQB^*=I-\tfrac23\boldsymbol1\boldsymbol1^T,
+\qquad \operatorname{Tr}(QR)=\tfrac13.
+$$
+
+$QR\in SO(3)$ 的转角满足 $\cos\theta=-1/3$。若 $\theta/\pi$ 为有理数，则 $2\cos\theta=-2/3$ 是有理代数整数，矛盾。因此其幂在一个旋转圆中稠密，闭包 Lie 代数包含非零倍数的 $A_{01}+A_{02}$，其中 $A_{ij}=E_{ij}-E_{ji}$；这也可由 $QR-(QR)^T$ 直接读取。符号共轭分离 $A_{01},A_{02}$，置换给全部 $A_{ij}$。以第 $i$ 坐标的 $\zeta$ 相位共轭又给
+
+$$
+D_iA_{ij}D_i^*=-\tfrac12A_{ij}
+ +\tfrac{\sqrt3}{2}\,i(E_{ij}+E_{ji}).
+$$
+
+二者的交换子给 $i(E_{ii}-E_{jj})$，所以闭包包含 $SU(3)$。全部生成元的行列式属于 $\mu _6$，且六种行列式均取得，证明 (16.3)。$SU(3)$ 在单位射线上传递，故算术读口稠密。嵌入三坐标的同一论证，在任意 $d\ge3$ 给 $SU(d)$ 及算术射线稠密性；精确综合仍由上述 Proposition 3.8 供应。$\square$
+

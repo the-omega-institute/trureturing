@@ -1,0 +1,10 @@
+**定义 5.2（其余固定侧规模的有限分类域）。** 对整数 $a\ge4$，沿用定理 3.1 的 $\alpha=(a-1)/a$、$\eta_a$，记
+
+$$
+B_a=\max\left\{\frac{4a^2}{\eta_a^4},
+\frac{1+\eta_a}{4\alpha\eta_a}\right\},\qquad
+Z_a=\{b\in\mathbb Z:\ b\ge a,\ D_{a,b}=0\}.
+$$
+
+由定理 3.1 与效率，$Z_a\subseteq\{b\in\mathbb Z:a\le b\le B_a\}$；确定这个有限集合的成员是 $a\ge4$ 的有限核分类问题。定理 5.1 的充要式只量化 $a=3$、$b\ge3$，不确定 $Z_a$，也不要求 $D_{3,b}$ 的单调性或正赤字的精确最大值。
+

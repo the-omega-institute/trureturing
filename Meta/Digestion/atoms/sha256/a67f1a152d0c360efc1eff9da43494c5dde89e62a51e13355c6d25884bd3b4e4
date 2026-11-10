@@ -1,0 +1,40 @@
+**Proposition 97.1 (Residual for arbitrary complex decoders).** Every
+CPTP $\mathcal R:M_3\to M_3$ in Definition 96.1 satisfies
+
+$$
+e(\mathcal R)\ge L+\operatorname{Tr}(SJ_{\mathcal R})
+=L+3\operatorname{Tr}(S\omega_{\mathcal R}) .
+\tag{97.1}
+$$
+
+*Proof.* Trace preservation and the tensor order in (96.8) give
+
+$$
+\operatorname{Tr}[(I_{\rm out}\otimes Y)J_{\mathcal R}]
+=\operatorname{Tr}[Y\operatorname{Tr}_{\rm out}J_{\mathcal R}]
+=\operatorname{Tr}Y .
+\tag{97.2}
+$$
+
+Substitute $W=I_{\rm out}\otimes Y-S$ into the last line of
+(96.10), retaining the term that is nonnegative:
+
+$$
+\begin{aligned}
+e(\mathcal R)
+&\ge b_{\rm test}-\operatorname{Tr}Y+
+                    \operatorname{Tr}(SJ_{\mathcal R})\\
+&=L+\operatorname{Tr}(SJ_{\mathcal R}).
+\end{aligned}
+\tag{97.3}
+$$
+
+Since $S,J_{\mathcal R}\succeq0$, this residual is nonnegative:
+$\operatorname{Tr}(SJ_{\mathcal R})=
+\operatorname{Tr}(S^{1/2}J_{\mathcal R}S^{1/2})\ge0$.
+Finally $J_{\mathcal R}=3\omega_{\mathcal R}$ gives the second
+expression in (97.1). There is no additional factor of two: the
+supporting-test inequality in (96.10) already has the required metric.
+The phase average used to construct the fixed $W$ places no covariance,
+realness or sparsity requirement on $\mathcal R$. $\square$
+

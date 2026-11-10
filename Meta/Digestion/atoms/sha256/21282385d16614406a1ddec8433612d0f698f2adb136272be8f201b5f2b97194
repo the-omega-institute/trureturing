@@ -1,0 +1,29 @@
+**数学引文 27.2（固定宽度计数供应的三个界与类型）。** 外部版本固定为 OpenAI, *The Exponential Time Hypothesis is False*, [7ef5c0cc5ca4b0e072b7a050fca09ab24bc6fa3a 的论文](https://github.com/openai/math/blob/7ef5c0cc5ca4b0e072b7a050fca09ab24bc6fa3a/preprints/The-Exponential-Time-Hypothesis-is-False-October-25-2026/paper.pdf)，修订版日期为 2026-10-25。以下均为 `literature-attested` 的外部供应，应用明确依赖该算法结论，不把源码阅读当作本卷的外部重新编译或独立内核认证。令 $n$ 为声明变量数，$m$ 为子句数，$k\ge2$ 固定，$L$ 为供应者的规范编码位长度。
+
+| 供应及精确地址 | 时间上界；空间均为相应输入规模的多项式 |
+| --- | --- |
+| [形式化范围说明 `lean/docs/378.md`](https://github.com/openai/math/blob/7ef5c0cc5ca4b0e072b7a050fca09ab24bc6fa3a/lean/docs/378.md) | $(L+1)^{O_k(1)}2^{O_k(n(\log\log n)^2/\sqrt{\log n})}$ |
+| 论文 Theorem 1.1，一般 $m$，$n\ge20$ | $(n+m)^{O_k(1)}2^{O_k(n\log\log n/\sqrt{\log n})}$ |
+| 同一定理，$m\le Dn$，$D>0$ 固定 | $(n+m)^{O_{k,D}(1)}2^{O_{k,D}(n/\sqrt{\log n})}$ |
+
+论文 Appendix D 的 Theorem D.1、Lemma D.2 分别供应张量收缩及稀疏多项式系统的较强界；不把后两行冒称为第一行的同界形式核验。固定宽度的有限小规模可直接枚举并吸收到常数中。下文统一使用保守的正则化尺度
+
+$$
+\rho(n)=\frac{n(\log\log(n+16))^2}{\sqrt{\log(n+16)}},\qquad
+T_3(L,n)=(L+1)^{O(1)}2^{O(\rho(n))}.
+\tag{58}
+$$
+
+[实际端点 `SqrtLogSpace/Final.lean`](https://github.com/openai/math/blob/7ef5c0cc5ca4b0e072b7a050fca09ab24bc6fa3a/lean/OAI/Algorithms/SubexponentialSAT/SqrtLogSpace/Final.lean) 的 `exact_count_and_sat` 是 $\forall k\ge2\;\exists M,C,A,S,d,e\;\forall n,F$ 的顺序：一台固定有限 primitive machine，输出精确二进制计数和 SAT 位，停止，且每个执行前缀的已访问纸带空间有多项式界。`compiled_exact_count_and_sat` 给其固定程序，`exact_count_eth` 给 $n\ge20$ 的声明规模形式；量词不是每个规模重选一个免费程序或 advice。
+
+[规范 `SubexponentialSAT/Encoding.lean`](https://github.com/openai/math/blob/7ef5c0cc5ca4b0e072b7a050fca09ab24bc6fa3a/lean/OAI/Algorithms/SubexponentialSAT/Encoding.lean) 中 `encodeNat n` 是 $n$ 个 true 后接 false，`encodeCNF F = encodeNat n ++ encodeCNFBody F`。故空公式也保留声明的 $n$，不能用仅出现的变量数替代。其 `formulaBitLength_lower`、`formulaBitLength_upper` 给
+
+$$
+n+m+2\le L\le n+2+\bigl(4+(8n+8)k\bigr)m.
+\tag{59}
+$$
+
+两个有限集合层都排序，重复文字、重复子句可去重，恒真子句可删除，均不改变**同一声明宇宙**上的解数。名称重编号、规范排序、单目数字和列表框架的写出是实际多项式位成本。
+
+发布方的[公告](https://openai.com/index/building-scientific-understanding-with-academic-communities/)题为 *Working with academic communities to build scientific understanding*；其[可读 HTML 转呈](https://r.jina.ai/https://openai.com/index/building-scientific-understanding-with-academic-communities/)标示 2026-10-26，并将 Russell Impagliazzo、Ramamohan Paturi、Ryan Williams 列为共同主持开放检查的团队负责人。公告的 Lean 验证措辞属于发布方主张，不供应本节的独立认证；这里不另立无原始出处的 Williams 个人引语。
+

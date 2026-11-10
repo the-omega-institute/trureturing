@@ -1,0 +1,42 @@
+**定义 12.1（保留次序与括号的自由项）。**令 $\mathcal T$ 为由不同符号 $1,A,Z$、一元构造子 $V$ 和有序二元构造子生成的有限正规项集。具体地，$1,A,Z\in\mathcal T$；若 $s\in\mathcal T$，则 $V(s)\in\mathcal T$；若 $s,t\in\mathcal T\setminus\{1\}$，则有新的有序项 $\langle s,t\rangle\in\mathcal T$。不同构造子的输出及不同输入的构造项彼此不同。定义总二元运算
+
+$$
+s\cdot t=
+\begin{cases}
+t,&s=1,\\
+s,&t=1,\\
+\langle s,t\rangle,&s\ne1,\ t\ne1.
+\end{cases}
+\tag{12.1}
+$$
+
+两条单位规则在 $(1,1)$ 处一致。于是 $\mathcal T$ 是带任意一元运算的自由有双侧单位 magma；除 $1\cdot s=s=s\cdot1$ 及其在项中的代换外，没有施加其他恒等式，特别没有 $V1=1$、结合律、交换律或标记周期。
+
+每个项可编码为有限字母表上的有限字符串，故 $\mathcal T$ 至多可数；各 $V^n1$ 彼此不同，故它可数无限。对任意有双侧单位的 magma $M$、任意 $W:M\to M$ 以及 $a,z\in M$，结构递归唯一给出总求值映射 $\phi:\mathcal T\to M$，满足
+
+$$
+\phi(1)=1,\quad\phi(A)=a,\quad\phi(Z)=z,\quad
+\phi(s\cdot t)=\phi(s)\cdot\phi(t),\quad
+\phi(Vs)=W\phi(s).
+\tag{12.2}
+$$
+
+单位情形由 $M$ 的双侧单位律保证；非单位乘积与一元构造子情形由递归定义保证。此求值不要求单射，也不要求满到整个 $M$。
+
+对任意处处有限实值有向核 $d$，仍用 (8.2) 的七项式定义 $H_d$，不要求 $d$ 非负。对 $\mathcal T$ 上的核定义
+
+$$
+h(d)=H_d(A,V1;Z).
+\tag{12.3}
+$$
+
+本节中的归一化系统要求 $C:\mathcal T^2\to[0,\infty)$ 处处有限、$C(s,s)=0$，并对每个有序四元组满足
+
+$$
+\sum_{k=0}^2 C(a\cdot V^ku,b\cdot V^kv)
+=3C(a,b)+3C(u,v).
+\tag{12.4}
+$$
+
+重复标签、单位标签及每个项的原括号都包括在量词中。
+

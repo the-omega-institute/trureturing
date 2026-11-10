@@ -1,0 +1,68 @@
+**Theorem 22.9 (the exact inverse on the attained image).** Under the
+separation condition (22.13), the augmented boundary record at a fixed
+deterministic $t$ and the target
+
+$$
+\mathsf T_t=(\kappa,K_{[0,t]},\theta_{[0,t]},v_{[0,t]},D_{[0,t]})
+\tag{22.16}
+$$
+
+are Borel inverses modulo the law-wise null sets of the paired source. The
+inverse from boundary to target is
+
+$$
+\begin{aligned}
+K_a&=U_a+\alpha_\kappa,\\
+\theta_a&=\theta_0+\int_0^a
+       \frac{A_\kappa(K_s)}{B_\kappa(K_s)}\,dV_s,\\
+D_a&=D_0+\int_0^a
+       \frac{\kappa b_\kappa(K_s)}{B_\kappa(K_s)}\,dV_s,
+\qquad 0\leq a\leq t,
+\end{aligned}
+\tag{22.17}
+$$
+
+with the actual zero convention $D_a=D_0$. Define $\mathcal G_t$ to be
+the set of target tuples in (22.16) with the prescribed initial phase
+representatives, height in $I$ throughout, successful inherited variation
+reconstruction returning $(|\kappa|,K-\alpha_\kappa)$, and convergent
+integral versions of Lemma 22.4 reproducing the two phase paths in (22.17).
+When its candidate set is double, require additionally
+$q(\Xi_t)\ne q(-\Xi_t)$. At zero or on a singleton branch no such test is
+required. These are Borel conditions on continuous path spaces: convergence
+and the variation tests use countable limits, path identities can be tested
+at rational times, and the remaining range and endpoint tests are Borel.
+Under every fixed $\mathbf Q_\kappa$, $\mathcal G_t$ has full probability
+by Lemma 22.4 and Theorem 22.6.
+
+Let $F_t$ project a target tuple to its wrapped $v$ record and installed
+endpoint reply, and set $\mathcal B_t=F_t(\mathcal G_t)$. This is the
+precise attained image in the assertion. The decoder compares admissible
+replies as in Theorem 22.6, then uses (22.17); assign a fixed default when
+the variation, range, unique-match or convergence tests fail. On
+$\mathcal G_t$ it is a left inverse of $F_t$, so $F_t$ is injective there.
+The Borel injective-image theorem for standard Borel spaces makes
+$\mathcal B_t$ Borel. Restricted to $\mathcal B_t$ the decoder is also a
+right inverse. Both composites are pointwise identities on these sets.
+
+**Proof.** Theorem 22.6 recovers the signed $\kappa$ and $U$. The first line
+of (22.17) is the shifted-coordinate definition. Dividing the common-driver
+equations in (22.2) by $B_\kappa$ gives the other lines, and Lemma 22.4
+supplies their causal Borel versions. Substitution back into (22.2) reproduces
+the same stochastic increments, so the forward endpoint reply is exactly the
+observed reply. Conversely, projecting a reconstructed prefix and evaluating
+the declared sensor returns its boundary record. The inverse is an identity
+on the attained good image, not on arbitrary continuous records.
+
+After acquisition, retained $\kappa$ and the current state determine the
+conditional passive $Q$ transition law. Continued supplied $v$ observation
+updates (22.17) on the same source and agrees with the known-calibration
+inverse of L Theorem 55.2: both its inverse of $2B_\kappa(K)^2$ and
+$U+\alpha_\kappa$ return the same actual height, and the phase integrals
+then agree by (22.2). Restricting a decoded prefix to an earlier time returns
+the actual earlier state. This is retrospective recovery; the later endpoint
+reply was not available to the earlier observer. A conditional law is not a
+prediction of future Brownian outcomes without future observations. No arbitrary intervention,
+native control, or current-state-to-past inverse is supplied. $\square$
+
+

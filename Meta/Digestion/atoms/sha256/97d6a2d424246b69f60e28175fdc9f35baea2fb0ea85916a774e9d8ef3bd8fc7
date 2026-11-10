@@ -1,0 +1,30 @@
+**Proposition 165.2 (exact common-kernel/orbit-closure equivalence).** For every $v\in V$, viewed as its $H$-class,
+
+$$
+\bigl(\forall j\ge0,\ R_j(v)=0\bigr)
+\quad\Longleftrightarrow\quad
+v\in\mathcal C^\perp.
+\tag{165.2}
+$$
+
+Consequently the exact common infinite kernel of the bounded calibrated classes is
+
+$$
+W_\infty
+=V\cap L^\infty(G,m;\mathbb R)\cap\mathcal C^\perp,
+\tag{165.3}
+$$
+
+with the first intersection understood in the original $m$-class sense.
+
+*Proof.* For $v\in V$ and every $j,k$, self-adjointness of $P$ gives
+
+$$
+R_j(v)_k
+ =\langle P^jv,\psi_k\rangle_H
+ =\langle v,P^j\psi_k\rangle_H.
+\tag{165.4}
+$$
+
+Thus all successor coordinates vanish exactly when $v$ is orthogonal to every generator in (165.1). Orthogonality is preserved under real linear combinations and $H$-limits, so this is equivalent to $v\in\mathcal C^\perp$. Intersecting with the original bounded calibrated domain gives (165.3). The argument uses no compactness of the unit sphere and no assertion that the stack is physically realized. $\square$
+

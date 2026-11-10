@@ -1,0 +1,117 @@
+**定理 15.3（恰四世界原根失败的双恒定非对角首响应）。**
+For any $a_0\in\mathbb R$, let $K$ be a set of exactly four
+different complete worlds in the entire initial-$a_0$ fiber.
+If $L_7(K,(a_0))$, there are real numbers $j,m$, with $m\ne j$,
+such that
+
+$$
+\begin{aligned}
+\delta_W+g_W(1)\operatorname{tr}(JP_W)&=j,\\
+\delta_W+g_W(1)\operatorname{tr}(MP_W)&=m
+\end{aligned}
+\qquad(W\in K).
+\tag{15.9}
+$$
+
+The sources are pairwise different. Writing $\ell=m-j$, every
+member has unique $x_W,y_W>0$ satisfying
+
+$$
+\begin{gathered}
+P_W=\frac1{1+x_Wy_W}
+ \begin{pmatrix}x_Wy_W&x_W\\y_W&1\end{pmatrix},\qquad
+g_W(1)=\ell(1+x_Wy_W),\\
+\delta_W=j-\ell(x_W+y_W),\qquad
+g_W(0)=a_0-j+\ell(x_W+y_W).
+\end{gathered}
+\tag{15.10}
+$$
+
+In particular all first gain samples are nonzero and have the
+same sign. The assertion concerns the whole fixed four-world
+support, including members not assigned to a particular subtree
+in a terminal-slot representation.
+
+Proof. The necessary source difference is
+[the same source, Theorem 30.1](FIB_SAMPLED_ROOT_COLLAPSE_AND_SAME_PARENT_FAILURE_CORE.md).
+Its Theorem 25.2 gives at least one first action whose response
+is constant on all of $K$, with an $L_6$ child equal to $K$.
+If the other first action were nonconstant, its losing child
+would have exactly three worlds: the pair restriction excludes
+two, and nonconstancy excludes four. This triple has $L_6$ at
+that actual first history, pairwise different sources, and both
+first response functions constant on it. Theorem 15.1 excludes
+it. Hence both first responses are constant on $K$. Their only
+nonempty first response children are $K$, each with $L_6$.
+
+Suppose their constants were equal, $j=m$. Their difference is
+$g_W(1)(P_W)_{22}$, so positivity forces
+
+$$
+g_W(1)=0,\qquad\delta_W=j\quad(W\in K).
+\tag{15.11}
+$$
+
+At each first history, every losing second child has $L_5$.
+It cannot be a pair by the pair restriction, or a triple by
+Lemma 15.2(1). It is therefore all of $K$. Thus all four
+length-two histories retain $K$. Their full matrix span and
+common drift force $g_W(2)P_W$ to be independent of $W$.
+Different trace-one sources force all these samples to be zero.
+
+Every losing third child has $L_4$. A pair would have roots
+$5,6,7$ in addition to roots $1,2$; a triple is excluded by
+Lemma 15.2(2). Hence every third action also retains all of $K$.
+The full length-three matrix span forces all third gain samples
+to vanish. Roots $1,2,3$ and the common initial value then fix
+one common nonzero entire gain
+
+$$
+G(t)=\frac{j-a_0}{6}(t-1)(t-2)(t-3)
+\tag{15.12}
+$$
+
+on $K$; if $j=a_0$, legality has already been contradicted.
+This gain is nonzero at $4,5,6,7$. After any clock-four
+reading, the next three actual actions $J,M,J$ distinguish all
+sources compatible with that reading: after factoring out the
+known nonzero samples and common drift, the four matrices are
+
+$$
+Q,\quad JQ,\quad MJQ,\quad JMJQ,
+\tag{15.13}
+$$
+
+where $Q$ is the actual clock-four matrix. They span all
+matrices, since $\{I,J,MJ,JMJ\}$ does and $Q$ is invertible.
+For completeness, the span follows from $MJ-I=E_{21}$,
+$J-E_{21}=E_{12}$, $JMJ-J=E_{11}$ and $I-E_{11}=E_{22}$.
+If a clock-four child had $L_3$, its recursion along these three
+fixed next actions would retain a terminal pair agreeing at clocks
+$4,5,6,7$ and on all earlier ancestors. Dividing only by the
+already nonzero values of $G$ gives equal traces against (15.13),
+so the sources agree. The common entire gain and drift then make
+the complete worlds equal, contradicting the terminal guard.
+Thus no clock-four child has $L_3$, contradicting the retained
+$L_4$ at clock three and proving $m\ne j$.
+
+Finally $\ell=g_W(1)(P_W)_{22}\ne0$, so
+$g_W(1)/\ell=1/(P_W)_{22}>0$. The rank-one matrix
+$(g_W(1)/\ell)P_W$ is strictly positive and has bottom-right
+entry one. It therefore has the unique form
+$\left(\begin{smallmatrix}xy&x\\y&1\end{smallmatrix}\right)$,
+$x,y>0$. Taking traces gives $g_W(1)/\ell=1+xy$;
+the first-$J$ equation and the initial reading give the other
+identities in (15.10).
+
+This is a repository-derived necessary condition. The two inherited
+necessary conditions cited above are used with their exact
+four-world hypotheses. The added conclusions
+are simultaneous constancy of both first functions and inequality
+of their constants, obtained by excluding their actual three-world
+children and equal-response case. No subset of a larger failing
+family is asserted to inherit $L_7$. In particular (15.9)–(15.10)
+are necessary conditions on four-world original-root obstructions,
+not a source tuple satisfying all guards of Theorem 13.3 and not
+an eight-reading decoder on the unrestricted domain. ∎
+

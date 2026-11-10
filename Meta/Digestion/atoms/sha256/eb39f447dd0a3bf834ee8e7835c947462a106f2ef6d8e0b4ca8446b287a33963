@@ -1,0 +1,41 @@
+**Corollary 35.3 (fixed-parameter isolation and vanishing limiting gaps).**
+At each admissible nonzero parameter and positive cutoff the original
+attractive ground eigenvalue is simple, and $\Delta_\sigma>0$.
+Nevertheless, for both critical families,
+
+$$
+\Delta_{\rm raw}(\kappa,\tau_s)\longrightarrow0,
+\qquad
+\Delta_{\rm unit}(\kappa,\tau_b)\longrightarrow0.
+\tag{35.7}
+$$
+
+More generally the difference between the $(N+1)$st and $N$th full
+eigenvalues tends to zero for every fixed $N$. Thus no fixed finite
+initial cluster has a positive gap to its complement uniform in this
+limit.
+
+Proof. The original killed free heat kernel is strictly positive on the
+connected cylinder, as supplied by [G, Proposition 2.1 and Theorem 20.2].
+For each fixed parameter $W_\sigma$ is bounded and nonnegative.
+The bounded-potential Trotter formula [Teschl, Theorem 5.11] gives
+
+$$
+e^{-t\mathscr H_{\sigma,\kappa,\tau}}h
+ \ge e^{-tL_\kappa}h>0\quad(t>0,\quad 0\ne h\ge0).
+\tag{35.8}
+$$
+
+Indeed every multiplication factor $e^{tgW_\sigma/n}$ is at least
+one, and every free factor preserves positivity. The strong product
+limit preserves this inequality. This heat operator is real and
+selfadjoint, and its norm $e^{-t\Lambda_{\sigma,1}}$ is an eigenvalue
+by compact resolvent. The positive-eigenvector argument of [Teschl,
+Theorem 10.11, printed p.236] therefore makes it simple. That argument
+uses only the order and inner product of $L^2$, so applies here with
+the raw cylinder measure as it does on $L^2(\mathbb R^n)$.
+Discreteness then gives $\Delta_\sigma>0$. Subtract the limits in
+(35.2), first at $N=1,2$ and then at consecutive fixed indices.
+These are statements about eigenvalue differences, not an assertion
+about the spectral type of an unspecified limiting operator. $\square$
+

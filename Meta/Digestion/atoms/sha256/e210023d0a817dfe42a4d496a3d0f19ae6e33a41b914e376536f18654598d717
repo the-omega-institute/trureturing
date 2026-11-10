@@ -1,0 +1,53 @@
+**Lemma 8.1 (image diameter is not a Lipschitz constant).** For nonzero nonnegative $B$, define the normalized map on positive-likelihood priors by
+
+$$
+F_B(\nu)=\frac{\nu B}{\nu B\mathbf1},\qquad \nu B\mathbf1>0.
+$$
+
+Its image is exactly the convex hull of its feasible normalized rows, so its image TV diameter is $\delta(B)$. For $BC\ne0$,
+
+$$
+F_{BC}=F_C\circ F_B
+\quad\text{on positive-product priors},\qquad
+\delta(BC)\le\delta(C).
+\tag{8.1}
+$$
+
+There is no general multiplicative inequality $\delta(BC)\le\delta(B)\delta(C)$.
+
+**Proof.** Put $b_i=(B\mathbf1)_i>0$ on feasible rows and $r_i=B(i,\cdot)/b_i$. Then $F_B(\nu)$ is their convex combination with weights $\nu_i b_i/(\nu B\mathbf1)$. Conversely, any convex weights $a_i$ on feasible rows are realized by $\nu_i$ proportional to $a_i/b_i$. Convexity of TV bounds the distance between two such mixtures by the maximal pairwise row distance, and feasible point masses attain that maximum. The composition identity follows by canceling its intermediate denominator. Its image is contained in that of $F_C$, giving (8.1).
+
+For the failure of multiplication, take
+
+$$
+B=C=\frac12\begin{pmatrix}1&1\\0&1\end{pmatrix}.
+$$
+
+The normalized rows of $B$ are $(1/2,1/2)$ and $(0,1)$, so $\delta(B)=1/2$. Direct multiplication gives
+
+$$
+B^2=\frac14\begin{pmatrix}1&2\\0&1\end{pmatrix},\qquad
+\delta(B^2)=\frac13>\frac14.
+\tag{8.2}
+$$
+
+Inductively multiplying the triangular matrices gives, for every integer $k\ge0$,
+
+$$
+B^k=2^{-k}\begin{pmatrix}1&k\\0&1\end{pmatrix},\qquad
+\delta(B^k)=\frac1{k+1}.
+\tag{8.3}
+$$
+
+For $\nu_p=(p,1-p)$,
+
+$$
+F_B(\nu_p)=\left(\frac p{1+p},\frac1{1+p}\right),\qquad
+\frac{\operatorname{TV}(F_B(\nu_p),F_B(\nu_q))}
+{\operatorname{TV}(\nu_p,\nu_q)}
+=\frac1{(1+p)(1+q)}\quad(p\ne q).
+\tag{8.4}
+$$
+
+The supremum is one, by taking distinct $p,q$ approaching zero. Thus the map's TV Lipschitz constant is one although its image diameter is $1/2$. This distinction is exactly why image diameters cannot be multiplied through nonlinear filtering. $\square$
+

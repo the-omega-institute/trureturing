@@ -1,0 +1,24 @@
+**Definition 17.1 (the concealed entry and its two address systems).** Use the birth-typed local source of [Atomic Generation Acquisition, Definitions 17.1 and 17.3](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md), abbreviated AA. Thus
+
+$$
+t::=\alpha\mid\beta\mid\langle t,t\rangle,
+\qquad
+P_p:\alpha\longmapsto\beta,
+\qquad
+S_p:\beta\longmapsto\langle\beta,\alpha\rangle.
+\tag{NLBAII.1}
+$$
+
+Logical navigation follows children only through branches. A finite logical address below either kind of logical leaf is absent. The material tree $C(t)$ represents an $\alpha$ by one terminal vertex, a $\beta$ by a vertex with one terminal left marker, and a branch by a vertex with two ordered logical child subtrees. A marker is material and has a material address, but is not a logical child or growth target. Material addresses are root-based words over $L,R$ in this presentation. Write $V(u)$ for its material-address set and $\partial C(u)$ for its terminal-address set.
+
+An actual legal old word from the allocated $\alpha$ seed has produced an unknown $t\in\mathcal D$, where $\mathcal D$ is the finite terms with no $\alpha$ at an $L$-ending logical leaf. Let $a,c$ be its numbers of $\alpha,\beta$ leaves and let $L=a+c\ge3$. The old word, $t$, its original internal root reference, its internal addresses and its material order are not observer inputs. The addressed dispatcher is nevertheless authentically bound to that original root. AA Theorem 17.2 supplies both this reachable class and the meaning of its labelled causal order.
+
+At attachment there is a framed authentic complete raw terminal roster $1,\ldots,L$. Its installed binding is a bijection
+
+$$
+\lambda_0:\{1,\ldots,L\}\longrightarrow\partial C(t).
+\tag{NLBAII.2}
+$$
+
+The mathematical codomain in (NLBAII.2) specifies what the real dispatcher binds; the observer is not given the map. Initial raw labels may be arbitrarily permuted relative to the original left-to-right order. They are neither material addresses nor a promise of allocation order. The initial roster is installed at attachment; the persistence law below governs subsequent edits. It is not a restriction asserting that this arbitrary roster was generated from a one-label seed by that law during the concealed old word.
+

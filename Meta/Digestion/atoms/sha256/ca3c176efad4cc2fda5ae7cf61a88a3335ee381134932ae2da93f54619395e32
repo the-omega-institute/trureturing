@@ -1,0 +1,151 @@
+**Theorem 11.3 (An integer-family obstruction and a necessary
+$a^{5/2}$ source threshold).** Set
+
+$$
+a=6t^2,\qquad h=12t-1,\qquad s=a+12t,
+\qquad t\in\mathbb Z_{>0},\quad t\longrightarrow\infty.
+\tag{11.7}
+$$
+
+These parameters lie in the $R=5$ domain for large $t$ and have
+$J_* =\{2\}$. At the exact integer budget $N=a^2t$,
+
+$$
+\widehat V_{3,N}-\widehat V_{2,N}
+      =-84a+O(\sqrt a)<0.
+\tag{11.8}
+$$
+
+Thus the original graph class is nonempty and has exact minimizers,
+but none has any of the law-winning source templates permitted by
+Theorem 9.5 at this smaller budget. No global optimality of branch
+$j=3$ is asserted.
+
+More precisely, for a fixed admissible pair define $T_{\rm src}(a,h)$
+to be the least positive integer $K$ such that, for every integer
+$N\ge K$, the original class is nonempty and every exact minimizer
+has the source-type conclusion of Theorem 1.3, including a law-winning,
+price-winning branch. Theorem 9.5 ensures
+$T_{\rm src}(a,h)\le\lceil D_5a^{24}\rceil$ on this family for
+large $t$. Nevertheless
+
+$$
+\liminf_{t\to\infty}
+ \frac{T_{\rm src}(6t^2,12t-1)}{(6t^2)^{5/2}}
+ \ge\frac{5\sqrt6}{9}.
+\tag{11.9}
+$$
+
+In particular no uniform fixed multiple of $a^2$ suffices for that
+source-type conclusion in the $R=5$ domain.
+
+**Proof.** Here $h/\sqrt a=2\sqrt6-1/(\sqrt6t)$ lies between
+$7/2$ and $5$ for large $t$. Apply Growing Proposition 15.6, retaining
+its exact adjacent-difference formula rather than a limiting phase
+comparison. At $h+1=12t$ and $a=6t^2$ it gives
+
+$$
+\begin{aligned}
+S_3-S_2&=36a-24t+96+\frac{138}{a-1}>0,\\
+S_2-S_1&=-8a^2+32a+40-24t+\frac{46}{a-1}<0
+                     \quad\text{for large }t.
+\end{aligned}
+\tag{11.10}
+$$
+
+For example the polynomial divisions in that formula give
+$D_2(a)=4a^2+32a+96+138/(a-1)$ and
+$D_1(a)=4a^2+20a+40+46/(a-1)$; subtracting
+$24t+(a-1)(12t)^2/(j(j+1))$ gives (11.10).
+Strict discrete convexity makes $j=2$ the unique winner among all
+$1\le j\le h$, and Growing Theorem 15.5 identifies this as the full
+law winner. This proves $J_* =\{2\}$, without asserting that only
+these two adjacent branches need be considered for finite-graph
+optimality.
+
+We next compute the connection-price difference, retaining the remainder
+$d=d_{j,N}$ for each branch. Substituting (1.8) gives the exact rational
+identity, valid on either possibly nonwinning branch,
+
+$$
+\begin{aligned}
+\bar\chi_{j,N}={}&\frac{(3r^2-r)n^3}{j^2}
+ +\frac{nr^2}{(a-1)^2}
+                  \left(\frac{m^3}{r}+4-2m^2\right)\\
+ &+\frac{drn^2}{j^2}
+ -\frac{dr(r^3+r^2m+m^2)}{(a-1)^2}.
+\end{aligned}
+\tag{11.11}
+$$
+
+On (11.7), put $\kappa=2\sqrt6$; then
+$n=\kappa\sqrt a-j$ exactly. For fixed $j=2,3$,
+$r=a+O(1)$, $m=a+O(1)$ and $0\le d<r$ imply, uniformly over
+all integer $N$,
+
+$$
+\bar\chi_{j,N}=\frac{3\kappa^3}{j^2}a^{7/2}+O(a^3),
+\qquad
+\bar\chi_{3,N}-\bar\chi_{2,N}
+     =-20\sqrt6\,a^{7/2}+O(a^3).
+\tag{11.12}
+$$
+
+To see the uniform remainder directly, the first term in (11.11) is
+$3\kappa^3a^{7/2}/j^2+O(a^3)$, its second is $O(a^{5/2})$,
+and each $d$-term is $O(a^3)$. The leading difference is
+$3(2\sqrt6)^3(1/9-1/4)=-20\sqrt6$. Thus no choice of a
+residue or a repair count has been hidden in (11.12).
+
+Fix any real $D>0$ and take the integer budget
+$N=\lfloor Da^{5/2}\rfloor$. Lemma 11.2 applies to $j=2,3$
+with $R=5,J_0=3$ and, for example, $c=1$ once $a$ is large.
+Equations (11.2), (11.10)--(11.12) give
+
+$$
+\widehat V_{3,N}-\widehat V_{2,N}
+ =\left(36-\frac{20\sqrt6}{D}\right)a+O_D(\sqrt a).
+\tag{11.13}
+$$
+
+Indeed its two error terms $a^5/N^2$ are $O_D(1)$, while the
+price remainder divided by $N$ is $O_D(\sqrt a)$; rounding $N$
+changes the leading quotient by $O_D(a^{-3/2})$. Formula (11.8)
+is the special case $D=1/\sqrt6$, for which
+$N=a^{5/2}/\sqrt6=a^2t$ is already an integer and the coefficient
+is $36-120=-84$.
+
+If $0<D<5\sqrt6/9$, the leading coefficient in (11.13) is strictly
+negative. Both template classes are nonempty by Lemma 11.2, so the
+finite original class has a minimum and
+
+$$
+V_N\le\widehat V_{3,N}<\widehat V_{2,N}.
+\tag{11.14}
+$$
+
+By definition $\widehat V_{2,N}$ is the minimum over all original
+graphs with any $j=2$ source template, including every partition,
+endpoint array, omission array, and unbalanced tail array. The lawful
+balancing argument in Lemma 11.2 is what makes this the required lower
+bound for all of them. Since the only law winner is $j=2$, no exact
+original minimizer at this $N$ can have the asserted old source types.
+This excludes every law-winning template, rather than just a preferred
+construction at that branch.
+
+Consequently $T_{\rm src}(a,h)>\lfloor Da^{5/2}\rfloor$ for every
+fixed $D<5\sqrt6/9$ and all sufficiently large $t$. Its finiteness
+and upper bound follow from Theorem 9.5, independently of any behavior
+at smaller budgets. Divide by $a^{5/2}$, take the lower limit and then
+let $D$ increase to $5\sqrt6/9$, proving (11.9). ∎
+
+The obstruction concerns retaining the law-winning source restriction,
+not the existence of a different uniform finite-$N$ variational rule.
+It neither proves $j=3$ globally optimal nor decides the critical value
+$D=5\sqrt6/9$, nor proves that $a^{5/2}$ is sufficient. A theorem
+at $N\asymp a^2$ would have to retain competing near-law branches
+and obtain new full-domain stability and exclusion estimates. The
+$\tau\le1$ premise of Theorem 9.2 cannot simply be reused at a
+larger excess. No moving-$R$ result or variable-sink-budget extremum
+is implied.
+

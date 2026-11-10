@@ -1,0 +1,99 @@
+**Definition 152.1 (the retained source and the thirty-seven coordinates).** Retain the complete endpoint, source and analytic telescope of Appendix II §§115–117, 123–125 and 133, including their inherited suppliers, and Definitions 134.1 and 135.1. In particular, for arbitrary original finite $a,\eta,d>0$, the carrier, product, raw Haar measure and source are
+
+$$
+\begin{gathered}
+G=H^1\times\mathbb R,\qquad
+(x,y,z,\zeta)(x',y',z',\zeta')
+ =(x+x',y+y',z+z',\zeta+\zeta'+xy'),\\
+d\mu=dx\,dy\,dz\,d\zeta,\qquad e=(0,0,0,0),\\
+X_1=\partial_x,\quad X_2=\partial_y+x\partial_\zeta,
+\quad X_3=\partial_z,\quad L=-\sum_{i=1}^3X_i^2,
+\quad D_\zeta=-i\partial_\zeta,\quad L\Gamma=\delta_e.
+\end{gathered}
+\tag{152.1}
+$$
+
+The positive degree-$-3$ unit-source field $\Gamma$, central units, coefficient-one zero vector $w_*$, source coefficients and actual full self-adjoint endpoint are precisely the original ones:
+
+$$
+\begin{gathered}
+S=(aL+\eta D_\zeta^2-16\sqrt{a\eta}\,\Gamma)
+       |_{C_c^\infty(G\setminus\{e\};\mathbb C)},\\
+C_{\rm src}(w_*)=1,\qquad h=w_*/\|w_*\|_{L^2(\mu)},
+\qquad C_{\rm src}(h)>0,\qquad
+\rho=A_{\rm src}(h)/C_{\rm src}(h),\\
+D(H_{\rm end})=
+ \{v\in D(S^*):A_{\rm src}(v)=\rho C_{\rm src}(v)\},
+\qquad H_{\rm end}v=S^*v,\\
+m=h^2\mu,\quad m(G)=1,\quad U_hv=hv,
+\quad K=U_h^{-1}H_{\rm end}U_h\ge0,\quad T_s=e^{-sK}.
+\end{gathered}
+\tag{152.2}
+$$
+
+Here $h$ is real and strictly positive off the source. The full conservative form, with its source coordinate, remains
+
+$$
+\begin{gathered}
+\mathscr V=\mathscr V_0\dotplus\mathbb C1,\qquad
+\mathscr V_0=\overline{C_c^\infty(G\setminus\{e\})}^{\,(115.14)},\\
+\mathscr E[v]=\int_{G\setminus\{e\}}
+ \left(a\sum_{i=1}^3|X_iv|^2+\eta|\partial_\zeta v|^2\right)dm.
+\end{gathered}
+\tag{152.3}
+$$
+
+The original conservative diffusion starts at $e$ at time zero. Its original source-start densities satisfy
+
+$$
+\mathbb P_e(Z_s\in dx)=g_s(x)m(dx),\quad
+ g_s>0\ \ m\text{-a.e.},\quad \int g_s\,dm=1,
+\quad g_s\in L^2(m),\quad g_{s+r}=T_rg_s
+\quad(s>0,\ r\ge0).
+\tag{152.4}
+$$
+
+Keep the original epochs $2d,3d,4d$, and set
+
+$$
+\begin{gathered}
+P=T_d,\quad g=g_{2d},\quad g_j=P^jg=g_{(2+j)d}\quad(j=0,1,2),\\
+M=1+\|g_d\|_\infty<\infty,\quad c=(4M)^{-1},\quad
+\mathcal L=\{0,1,3,B\},\quad I=\{0,1,3\}.
+\end{gathered}
+\tag{152.5}
+$$
+
+For every permitted everywhere Borel representative $b$ of $g_d$ with $0<b\le M$, the prescribed common readout is
+
+$$
+f_3=cb,\qquad f_B=\tfrac14,\qquad
+f_0=f_1=(\tfrac34-cb)/2.
+\tag{152.6}
+$$
+
+It is used at all three epochs, with fresh read noises conditionally independent given the original path. For bounded real Borel classes retain
+
+$$
+\begin{aligned}
+\mathcal C(u,v,w)&=\int_GguP(vPw)\,dm,\\
+Q_{12}(u,v)&=\int_GguPv\,dm,\\
+Q_{13}(u,v)&=\int_GguP^2v\,dm,\\
+Q_{23}(u,v)&=\int_G(Pg)uPv\,dm,\\
+L_j(u)&=\langle g_j,u\rangle_m\quad(j=0,1,2).
+\end{aligned}
+\tag{152.7}
+$$
+
+Thus the operator in $Q_{13}$ is $M_gP^2$, and the operator in $Q_{23}$ is $M_{Pg}P$, as in (150.2). Write $\mathcal R=\{12,13,23\}$ and $q_r(v)=Q_r(v,v)$, with symmetric polar forms $B_r$. For a simplex tuple $u$, whose fourth component is $u_B=1-u_0-u_1-u_3$, define
+
+$$
+\mathcal H(u)=
+ \left((L_j(u_a))_{j=0,1,2;\ a\in I},
+       (Q_r(u_a,u_b))_{r\in\mathcal R;\ a,b\in I},
+       \mathcal C(u_0,u_1,u_3)\right)\in\mathbb R^{37}.
+\tag{152.8}
+$$
+
+These are nine source marginals, twenty-seven ordered pair coordinates and the individual ordered $013$ coefficient. No other moment coordinates are included.
+

@@ -21,7 +21,7 @@ open scoped BigOperators
 
 /-- Reserve one actual occurrence, cross with the others, and append that
 occurrence exactly when the crossing prefix leaves a positive gap. -/
-private theorem single_anchor_select {α : Type*} [DecidableEq α]
+theorem single_anchor_select {α : Type*} [DecidableEq α]
     (f : α → ℤ) (Pos : List α) (a : α) (m B low : ℤ)
     (ha : a ∈ Pos) (haval : f a = m) (hm : 0 < m)
     (hB : m ≤ B + 1) (hlow : 0 < low)

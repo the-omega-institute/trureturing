@@ -28,7 +28,19 @@ Lean statement: `D5/S3/Resource/LogDet/LogDetInformationSubmodularity.logVolumeI
 
 The selected operator's real log-determinant is normalized by the regularization-only baseline.
 
-**Theorem 1.3 (Log-determinant information is monotone and submodular).**
+**Theorem 1.3 (Log-determinant monotonicity for positive matrices).**
+
+$$\forall (Index: \operatorname{Type}), [\operatorname{Fintype}\left(Index\right)] [\operatorname{DecidableEq}\left(Index\right)] [\operatorname{Nonempty}\left(Index\right)] \forall (left right: \operatorname{Matrix}\left(Index, Index, \mathbb{C}\right)), (\operatorname{Matrix.PosDef}\left(left\right)) \Rightarrow ((\operatorname{Matrix.PosDef}\left(right\right)) \Rightarrow ((left \leq right) \Rightarrow (\operatorname{Real.log}\left(\operatorname{Complex.re}\left(\operatorname{Matrix.det}\left(left\right)\right)\right) \leq \operatorname{Real.log}\left(\operatorname{Complex.re}\left(\operatorname{Matrix.det}\left(right\right)\right)\right))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Resource/LogDet/LogDetInformationSubmodularity.log_det_mono` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+On a nonempty finite index type, the real log-determinant preserves the Loewner order between positive definite complex matrices.
+
+**Theorem 1.4 (Log-determinant information is monotone and submodular).**
 
 $$\forall Protocol \in \operatorname{Type}, Index \in \operatorname{Type}, G \in Protocol \to \operatorname{Matrix}(Index, Index, \mathbb{C}), lambda \in \mathbb{R},\; \left(\operatorname{DecidableEq}(Protocol) \land \left(\operatorname{Fintype}(Index) \land \left(\operatorname{DecidableEq}(Index) \land \left(0 < lambda \land \left(\forall p \in Protocol,\; \operatorname{PosSemidef}(G(p))\right)\right)\right)\right)\right) \Rightarrow \left(\left(\forall A \in \operatorname{Finset}(Protocol), B \in \operatorname{Finset}(Protocol),\; A \subseteq B \Rightarrow \operatorname{logVolumeInformation}(G, lambda, A) \leq \operatorname{logVolumeInformation}(G, lambda, B)\right) \land \left(\forall A \in \operatorname{Finset}(Protocol), B \in \operatorname{Finset}(Protocol), p \in Protocol,\; A \subseteq B \Rightarrow \operatorname{logVolumeInformation}(G, lambda, \operatorname{insert}(p, A)) - \operatorname{logVolumeInformation}(G, lambda, A) \geq \operatorname{logVolumeInformation}(G, lambda, \operatorname{insert}(p, B)) - \operatorname{logVolumeInformation}(G, lambda, B)\right)\right)$$
 
@@ -49,3 +61,4 @@ The proof bundles the raw matrix C-star components locally, applies operator mon
 - Truth anchor: `D5/S3/Resource/LogDet/LogDetInformationSubmodularity.informationOperator`
 - Truth anchor: `D5/S3/Resource/LogDet/LogDetInformationSubmodularity.logVolumeInformation`
 - Truth anchor: `D5/S3/Resource/LogDet/LogDetInformationSubmodularity.log_det_information_monotone_submodular`
+- Truth anchor: `D5/S3/Resource/LogDet/LogDetInformationSubmodularity.log_det_mono`

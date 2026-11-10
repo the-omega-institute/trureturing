@@ -1,0 +1,5 @@
+source_id = "auric-fib-atom-polygon-twenty-gon-same-parity-deficit"
+path = "docs/develop/theory/AURIC_FIB_ATOM_POLYGON_TWENTY_GON_SAME_PARITY_DEFICIT.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

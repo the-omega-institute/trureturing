@@ -1,0 +1,18 @@
+**Proposition 124.1 (proper common factors are impossible for the full path density).** The heat operator $T_s$ is injective on $L^2(m)$ for every $s>0$. If the density $W$ in (123.3) has an $\mathcal A\otimes\mathcal A\otimes\mathcal A$-measurable version modulo $m^3$, for a sub-$\sigma$-algebra $\mathcal A$ of the completed Borel $\sigma$-algebra $\mathcal F$, then $\mathcal A=\mathcal F$ modulo $m$.
+
+**Proof.** Spectral calculus gives
+
+$$
+\|T_su\|_2^2=\int_{[0,\infty)}e^{-2s\lambda}\,d\langle u,E_K(\lambda)u\rangle,
+$$
+
+so $T_su=0$ implies $u=0$. Integrating (123.3) in $x_3$ and then in $x_2$ gives
+
+$$
+D(x_1,x_2)=g(x_1)p_{\Delta _1}(x_1,x_2),
+$$
+
+with $g$ measurable for $\mathcal A$; division by $g>0$ almost everywhere then makes $p_{\Delta _1}$ measurable for $\mathcal A\otimes\mathcal A$, modulo null sets. If $\mathbb E_m[u\mid\mathcal A]=0$, boundedness and truncation of the kernel sections give $Pu=0$; $L^2$ approximation extends this to every such $u$. Injectivity of $P$ therefore makes conditional expectation the identity on $L^2(m)$, and every $L^2$ indicator is $\mathcal A$-measurable modulo null sets. Hence $\mathcal A=\mathcal F$ modulo $m$. $\square$
+
+This rules out the route that simultaneously requires a proper common factor, conditional atomlessness over that factor, and measurability of the complete $W$ over its three coordinates. It does not exclude conditional constructions for smaller quantities.
+

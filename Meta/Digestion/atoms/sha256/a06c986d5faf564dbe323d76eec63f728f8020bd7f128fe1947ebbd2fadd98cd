@@ -1,0 +1,29 @@
+### 定义 4.1（递归状态更新合同）
+
+设 $S_n$ 是第 $n$ 层状态，$U_n:S_n\to S_n$ 是一层内更新，$J_b:S_n\to S_{n+1}$ 是第 $b$ 个子层的状态注入，$\widetilde U_{n+1}:S_{n+1}\to S_{n+1}$ 是下一层更新。状态交换条件为
+
+$$
+\boxed{
+\widetilde U_{n+1}\circ J_b=J_b\circ U_n.
+}
+\tag{4.1}
+$$
+
+若状态 $s$ 的失败边族为 $\mathscr E_n(s)$，还需失败边等变性：
+
+$$
+\boxed{
+\mathscr E_{n+1}(J_b s)\cap 2^{\iota_b[V_n]}
+=
+\{\iota_b[e]:e\in\mathscr E_n(s)\}.
+}
+\tag{4.2}
+$$
+
+式 (4.1) 只传输状态；式 (4.2) 才传输失败超图。若有 cross family $\mathcal X_n(s)$，还需
+
+$$
+\widetilde U_{n+1}\text{ 将 }\mathcal X_n(s)\text{ 映到下一时刻的 cross family}.
+\tag{4.3}
+$$
+

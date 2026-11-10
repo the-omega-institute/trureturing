@@ -1,0 +1,24 @@
+**Proposition 4.3 (Integer core phases of the upper bound).** On $\kappa\ge\sqrt2$, the minimizing integer branch in (4.1) is $j=1$ for
+
+$$
+\sqrt2\le\kappa\le2\sqrt2,
+$$
+
+and, for each $j\ge2$, branch $j$ minimizes precisely on
+
+$$
+2\sqrt{j(j-1)}\le\kappa\le2\sqrt{j(j+1)}.
+\tag{4.4}
+$$
+
+At a shared endpoint the two adjacent branches tie; in each open interval the branch is unique. These are phases of the constructive upper bound $U$.
+
+**Proof.** The adjacent difference is
+
+$$
+F_{j+1}(\kappa)-F_j(\kappa)
+=4-\frac{\kappa^2}{j(j+1)}.
+$$
+
+For fixed $\kappa$, this difference increases strictly with $j$. A minimizing branch $j\ge2$ therefore has nonpositive incoming difference and nonnegative outgoing difference, which are exactly (4.4). For $j=1$ only the outgoing condition is needed. Strictness away from the adjacent crossing points proves uniqueness and the asserted ties. This compares the displayed constructions; it does not identify unrestricted minimizers. ∎
+

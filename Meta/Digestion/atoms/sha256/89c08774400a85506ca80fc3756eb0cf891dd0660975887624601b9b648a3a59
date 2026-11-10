@@ -1,0 +1,29 @@
+**定义 150.1（实际概率行与不变的程序域）。** 固定 138.1、144.1 的同一个 $\mathcal K=V_{12}^{\mathbf1}$、$\dim_{\mathbb C}\mathcal K=89$、唯一 ready $e_0=R_0v$、原十一地址矩阵 $K_j$、$\chi_a=K_ae_0$、原事件 $A=\{b_1=1\}$ 及 $Q=N_A$。仍只使用实际程序 $\mathsf T(a)$ 和 $\mathsf R(a,h)$，其中
+
+$$
+a\in\mathsf W_{11}=\{0,\ldots,10\}^{<\infty},\qquad
+h\in\mathsf W=\{0,\ldots,6\}^{<\infty},\qquad
+K_{af}=K_fK_a.
+\tag{150.1}
+$$
+
+所有程序共用一套固定的普通非负归一因果律。全部 $1024$ 个旧标签、真实调用顺序、记录、细档案、失败、拒绝、停止和告警坐标保留；已有理想、有限、可靠性和成本合同各守原供应域。以下精确应用取原全载体相干矩阵语义及原零失败范围，不从该范围的数学定义推断真实执行可靠。记录后域始终是七地址 $\mathsf W$。
+
+起点只有实际事件边缘，不预设共同射线响应：
+
+$$
+p(a)=P_{\mathsf T(a)}(A)\in[0,1],\qquad
+x_a=\bigl(1,(p(af))_{f\in\mathsf W_{11}}\bigr),\qquad
+V=\operatorname{span}_{\mathbb R}\{x_a:a\in\mathsf W_{11}\}.
+\tag{150.2}
+$$
+
+这里的 $f$ 是没有中途记录的 $\mathsf T(af)$ 的相干接续，不是 $\mathsf R(a,h)$ 的后读字。令坐标集 $I=\{\star\}\sqcup\mathsf W_{11}$，$x_a(\star)=1$，在 $V\subset\ell^\infty(I,\mathbb R)$ 上取
+
+$$
+\|z\|_\infty=\max\bigl\{|z(\star)|,\ \sup_{f\in\mathsf W_{11}}|z(f)|\bigr\}.
+\tag{150.3}
+$$
+
+有限实线性组合都是有界行，故此范数有定义。对非零向量 $u$ 令 $P_u=uu^*/\|u\|^2$，在数学射线域上取 $d_{\mathbb P}([u],[v])=\|P_u-P_v\|_{\rm op}$。这个紧度量空间及原酉的等距作用属于已供复 Hilbert 几何，不属于概率结论。本节不采用 138.2(2) 的全标签 Born 前件，也不采用 144.1 中 $q$ 的存在作为下述下降证明的前提。
+

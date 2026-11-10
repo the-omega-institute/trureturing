@@ -1,0 +1,7 @@
+**定义 25.2（原有限资料上的 $\mathsf C^{\mathrm{fin}}_{Z,\mathbb R,\theta}$）。** 固定同一正有理 $0<\theta\le1$，$g_\alpha,G_\alpha$ 取 (18.2)。完整静态候选是以下条件的合取。
+
+1. 对所有原 $\alpha,a,b$，只要求实际共轭对称 $g_\alpha(a,b)=\overline{g_\alpha(b,a)}$，不预先要求复二表正。
+2. 对全部原相加三表 $(a+b,a,b)$ 及其排列，要求实矩阵 $\operatorname{Re}G_\alpha$ 半正定，且 $v^{\mathsf T}\operatorname{Re}G_\alpha v=0$，其中 $v=(1,-1,-1)$，排列时 $v$ 同步排列。没有复系数正性前件。
+3. 保留同一个 $S(u,u)=u$、全部 $0\le e\le\theta u$ 上 $S(e,e)\le e$。
+4. 保留全部原 $a,b,c$ 的实部换括号式 (18.5)，并要求 (25.2)。
+

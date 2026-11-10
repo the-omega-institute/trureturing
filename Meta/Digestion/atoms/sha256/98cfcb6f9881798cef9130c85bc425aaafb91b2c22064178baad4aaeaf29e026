@@ -1,0 +1,64 @@
+### 49.9. The actual right-side branches
+
+Perform the stable-gradient elimination with $t$ also a parameter,
+centered on the analytic selected graph $\delta_\circ(t)$.
+The stable block remains invertible in a product neighborhood of
+$(t_*,b=0)$. Write its reduced objective as $\Phi(t,b)$.
+Its evenness gives an analytic function of $t$ and $u=b^2$.
+Eliminating the quadratic transverse phase exactly by the Schur
+complement of (49.25) gives
+
+$$
+\begin{aligned}
+\Phi(t,b)-N(2t)&=A(t)b^2+C(t)b^4+R(t,b),\\
+A(t)&=\frac{4\Gamma(t)}{L_a(t)}D_{\mathrm{sel}}(2t),\qquad
+C(t_*)=C_{\mathrm{eff}},\\
+|R(t,b)|&\le M|b|^6,\qquad
+|C(t)-C_{\mathrm{eff}}|\le M|t-t_*|
+\end{aligned}
+\tag{49.44}
+$$
+
+on a smaller closed product neighborhood, for some finite $M$.
+Analyticity supplies the corresponding derivative bounds as well.
+There is no scalar--phase quadratic cross term, so population
+elimination does not alter $A(t)$. Equation (49.13) implies
+$A(t_*)=0$ and $A'(t_*)<0$.
+
+The remaining full stationary equation away from $b=0$ is
+$A(t)+2C(t)u+O(u^2)=0$. Its derivative in $u$ at $(t_*,0)$
+is $2C_{\mathrm{eff}}>0$. Applying the implicit function theorem
+to this equation, with its analytic remainder, gives the unique
+nearby root
+
+$$
+u(t)=-\frac{A(t)}{2C_{\mathrm{eff}}}+O((t-t_*)^2).
+\tag{49.45}
+$$
+
+Choose $\varepsilon>0$ small enough that $t\in(t_*,t_*+\varepsilon)$
+implies $t<2$, all reconstructed coordinates remain in the chart
+and in $\Omega$, $u(t)>0$, and $C(t)>0$.
+Then $b_\pm(t)=\pm\sqrt{u(t)}$ are two distinct branches near
+each orientation. Along them the reduced second derivative is
+$8C_{\mathrm{eff}}u(t)+O(u(t)^2+|t-t_*|u(t))>0$.
+The stable Hessian stays positive, so these are strict local minima
+on the phase level, also among all effects by (49.23). Their values obey
+
+$$
+\Phi(t,b_\pm(t))-N(2t)
+ =-\frac{A(t)^2}{4C_{\mathrm{eff}}}+O(|t-t_*|^3)<0.
+\tag{49.46}
+$$
+
+Each branch uses its own single feedback (49.20) and its unique effect
+(49.23), with $q=t-\delta(t,b_\pm(t))$. Thus its original distance
+is exactly $2t$, with the negative distance strictly larger. This
+is a same-level comparison with $N(2t)$, not with a displaced level.
+The two signs of $b$ give different phase feedbacks modulo the common
+scalar by local injectivity of the chart. The two base orientations
+remain disjoint on a smaller neighborhood.
+For $t<t_*$ sufficiently close, (49.45) has $u(t)<0$, so no real
+nonzero branch of this local stationary equation exists. This is a
+local assertion only; it does not exclude separated stationary points.
+

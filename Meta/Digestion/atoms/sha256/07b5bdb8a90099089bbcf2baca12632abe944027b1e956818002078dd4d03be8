@@ -1,0 +1,2 @@
+**Definition 1.3 (Independent vertex classes).** Replacing each vertex $i$ of a path $P_k$ by a nonempty independent set $C_i$ of size $t_i$, and replacing each edge $i(i+1)$ by all edges between $C_i$ and $C_{i+1}$, gives an independent blow-up of $P_k$. Vertices in the same $C_i$ have the same open neighborhood. Coalescing equal rows and equal columns of a biadjacency matrix means retaining one representative of each distinct row and column; the class sizes remain attached to those representatives.
+

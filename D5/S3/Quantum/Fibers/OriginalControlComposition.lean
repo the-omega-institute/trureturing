@@ -117,7 +117,7 @@ private theorem finite_c1_ac (T : ℝ) (hT : 0 ≤ T) (f : ℝ → ℝ)
   ring
 
 
-private theorem original_ac (b : Base) (T : ℝ) (k chi : ℝ → ℝ)
+theorem original_ac (b : Base) (T : ℝ) (k chi : ℝ → ℝ)
     (hc : OriginalControl b T k chi) :
     AbsolutelyContinuousOnInterval k 0 T ∧ AbsolutelyContinuousOnInterval chi 0 T := by
   rcases hc.2.2.2.2.2 with h | ⟨N,time,hm,hz,he,hh⟩

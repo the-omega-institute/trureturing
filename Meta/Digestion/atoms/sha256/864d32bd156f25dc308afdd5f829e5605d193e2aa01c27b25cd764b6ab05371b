@@ -1,0 +1,22 @@
+**Lemma 47.1 (no input loss at the returned cut).** Put
+
+$$
+U=B^H\iota Z,\qquad
+\mathcal O_N=\begin{pmatrix}e_o^{\mathsf T}\\e_o^{\mathsf T}B\\\vdots\\e_o^{\mathsf T}B^{N-1}\end{pmatrix},
+\qquad F=\mathcal O_NU.
+$$
+
+Both $U$ and $F$ have column rank $k$. In particular they have rational left inverses
+
+$$
+L_U=(U^{\mathsf T}U)^{-1}U^{\mathsf T},
+\qquad L_F=(F^{\mathsf T}F)^{-1}F^{\mathsf T}.
+\tag{47.1}
+$$
+
+**Proof.** For any $b\in\mathbb Q^k$, $(B\iota Zb)_{e_i}=b_i$, since the fresh $e_i$ has just its old neighbor $z_i$. Hence $B\iota Z$ is injective. For a real symmetric matrix, $\ker B^m=\ker B$ for every $m\ge1$. One elementary proof chooses $2^s\ge m$ and repeatedly uses
+$\|B^{2^{s-1}}v\|^2=v^{\mathsf T}B^{2^s}v$ to descend from $B^{2^s}v=0$ to $Bv=0$. Thus $Ub=0$ implies $B\iota Zb=0$, proving the first rank assertion.
+
+Suppose $Fb=0$ and write $v=\iota Zb$. Cayley–Hamilton extends the first $N$ zero moments of $B^Hv$ to all later root moments. Let
+$K=\operatorname{span}_{\mathbb R}\{B^re_o:r\ge0\}$. Both $K$ and $K^\perp$ are $B$-invariant by symmetry. The component $v_K$ therefore satisfies $B^Hv_K\in K$ and is orthogonal to $K$; it is zero. The kernel-power identity gives $Bv_K=0$. All positive-time root moments of $v$ now vanish: the $K^\perp$ component never contributes and $Bv_K=0$. In particular $Mb=0$ at the positive epochs $h_i$. Theorem 46.3 gives $b=0$, proving the second rank assertion. For a rational full-column-rank matrix its Gram matrix is positive definite over $\mathbb R$, has a nonzero rational determinant and has a rational inverse. This proves (47.1). No invertibility of $B$ on the full field space is used. $\square$
+

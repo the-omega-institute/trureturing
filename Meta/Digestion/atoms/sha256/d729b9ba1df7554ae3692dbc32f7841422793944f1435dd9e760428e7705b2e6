@@ -1,0 +1,37 @@
+**Lemma 15.2 (No singular world over the rectangle).** No world in
+$C(p,v)$ over $\mathcal U$ has $\Lambda=0$.
+
+Proof. The zero-safe parent equation, Common Parent Geometry,
+Theorem 12.3, forces $b=1/8$ for every actual singular source.
+Its Theorems 4.2 and 29.2 exhaust this branch by the two strict roots
+$r_-,r_+$ of $\Phi$. They include every legal fifth-response lift,
+with no gain or drift nonvanishing condition. At either root put
+
+$$
+\begin{aligned}
+j&=1/8+8r(1-r),\qquad n=j+r,\qquad T=9/8,\\
+A_5&=1+(n+5/4)(4-15/j+20/T-10/n),\\
+a_6&=10-36/j+45/T-20/n,\\
+s_r(p)&=24+24(5/2+n)
+       +\frac{p-24}{A_5}\{1+(5/2+n)a_6\}.
+\end{aligned}
+$$
+
+Theorem 29.2 identifies $s_r(p)$ with the actual acquired sixth-M
+response of that unique singular fifth-response lift. Exact interval
+evaluation on the two $\Phi$ intervals of Lemma 15.1 and the full
+$p$ interval gives
+
+$$
+\begin{array}{c|cc}
+&r_-&r_+\\\hline
+A_5&(-908,-907)/10^3&(-5217,-5216)/10^3\\
+s_r(p)&(65,67)&(40,42).
+\end{array}
+$$
+
+All divisions are legitimate; in particular $A_5$ is separated from
+zero. Neither sixth-response interval meets
+$[v_c-h,v_c+h]\subset(172,173)$. This excludes the exhaustive
+singular branch without deleting its world strata. ∎
+

@@ -1,0 +1,46 @@
+**Definition 22.2 (streaming seeded residue image).** For $r=\deg g>0$,
+compute the least period $p$ by iterating multiplication by $x=X\bmod g$
+from $1$ until its first positive return. By (PCR.28) this is the actual
+core period, with $p\le2^r-1$. This works in a quotient ring, including
+repeated factors, rather than in a presumed field. At $r=0$ set $p=1$.
+Construct the actual $H_s,U_s,C_s$ and integer seed triples of
+(PCR.40)--(PCR.42). In particular retain shallow safe seeds, not just the
+frontier $A>a$. All these values are computed; none is supplied advice.
+
+Put $Q_p=\{0,\ldots,p-1\}^2$, $N=p^2$. The successor oracle on $q=(A,B)$
+evaluates $c_y(A)=y_{A-1}$ by periodic indexing and applies (PCR.39) modulo
+$p$, retaining physical names $a<b$. Evaluate the following recurrence
+depth first, without caching its subproblems:
+
+$$
+\begin{aligned}
+\mathsf{Reach}(u,v,0)&\Longleftrightarrow
+ (u=v)\lor(u\xrightarrow a v)\lor(u\xrightarrow b v),\\
+\mathsf{Reach}(u,v,j+1)&\Longleftrightarrow
+ \exists w\in Q_p\;
+ [\mathsf{Reach}(u,w,j)\land\mathsf{Reach}(w,v,j)].
+\end{aligned}
+\tag{PCR.53}
+$$
+
+This is reachability in at most $2^j$ edges, since shorter paths can be
+padded by zero-length portions. Set $\ell=\lceil\log_2(N+1)\rceil$ and
+
+$$
+\begin{aligned}
+\mathsf{InImage}_s(q)&\Longleftrightarrow
+ q\in Q_p\ \land\ \exists c\in C_s\;
+ \mathsf{Reach}((A_c,B_c)\bmod p,q,\ell),\\
+K_s&=\sum_{q\in Q_p}\mathbf1_{\mathsf{InImage}_s(q)}.
+\end{aligned}
+\tag{PCR.54}
+$$
+
+A numerical residue query uses canonical nonnegative coordinates and
+rejects out-of-range values before any reduction. Scan $Q_p$ in
+lexicographic order to count, rank and unrank its accepted values. Let
+$b_s=\lceil\log_2K_s\rceil$ and use exactly $b_s$ binary bits for a rank
+$0\le j<K_s$. At $K_s=1$ only the empty code is valid. Wrong lengths,
+nonbinary codes and indices $j\ge K_s$ are rejected. No image table is
+part of the input.
+

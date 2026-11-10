@@ -1,0 +1,85 @@
+**Theorem 12.2 (actual acquisition of native multiplication).** For every source of Definition 11.1 under Assumption 11.2, either schedule finitely earns rational matrices $G,A,D,E$ and a bilinear table $\mu$ on $\mathbb Q^N$. There exists an invertible proof-coordinate matrix
+
+$$
+R=[T^{k_1}e_{\ell_{j_1}}\ \cdots\ T^{k_N}e_{\ell_{j_N}}]
+\tag{CM.5}
+$$
+
+such that
+
+$$
+\begin{gathered}
+G=R^{\mathsf T}R,\qquad A=R^{-1}TR,\qquad
+D=R^{-1}B,\qquad E=B^{\mathsf T}R,\\
+\mu(u,v)=R^{-1}((Ru)\odot(Rv))\quad(u,v\in\mathbb Q^N).
+\end{gathered}
+\tag{CM.6}
+$$
+
+The controller never receives $R$ or $T$. In the dense schedule it also earns the actual endpoint coordinate $z_*=A^{N-1}\mu(z_{\rm last},z_{\rm last})$. In the selected-pulse schedule the actual endpoint is zero. Both assertions include singular $T$.
+
+**Proof.** The moment trials genuinely have fields $T^ke_{\ell_j}$ at their reads, because they start with Reset and their only intervening field changes are the declared Ticks. Symmetry gives the candidate Gram entries
+
+$$
+\langle T^re_{\ell_j},T^se_{\ell_h}\rangle=(M_{r+s})_{jh}
+\quad(0\le r,s<N).
+\tag{CM.7}
+$$
+
+Over $\mathbb R$, a list of rational vectors is independent exactly when its Gram determinant is positive. Independence over $\mathbb Q$ and over $\mathbb R$ agrees by the nonzero-minor criterion. Greedily test these rational Gram determinants and retain independent candidates. By (CM.1), exactly $N$ can be selected. Thus $R$ in (CM.5) exists and is invertible, although its native entries remain unknown to the controller.
+
+The earned entries
+
+$$
+\begin{aligned}
+G_{ih}&=(M_{k_i+k_h})_{j_i j_h},&
+L_{ih}&=(M_{k_i+k_h+1})_{j_i j_h},\\
+V_{ij}&=(M_{k_i})_{j_i j},&
+E_{ji}&=(M_{k_i})_{j j_i}
+\end{aligned}
+\tag{CM.8}
+$$
+
+use only the measured range through $2N-1$. They are $R^{\mathsf T}R$, $R^{\mathsf T}TR$, $R^{\mathsf T}B$ and $B^{\mathsf T}R$. Compute $A=G^{-1}L$ and $D=G^{-1}V$. Since $G^{-1}R^{\mathsf T}=R^{-1}$, the first line of (CM.6) follows. This is the supplied finite Ho–Kalman calculation [finite_samples_exact_recovery][CMHK] and its [owning Scribe][CMHKS], with field $\mathbb Q$, horizon $h=N$, state dimension $r=N$, $m=p=b$, and matching selected row/column indices $(k_i,j_i)$. Its base and shifted minors are exactly $G,L$. Known matching order is an explicit premise; [finite_samples_order_lower_bound][CMHK] does not turn a finite minor into an unknown-order upper certificate. The real Gram interpretation agrees with [finite_observability_equivalence][CMFO] and its [owning Scribe][CMFOS] after extension of scalars; no rational inner-product-space instance is presumed.
+
+For a probe $z$, each actual pulse at descending stage $s$ has exactly $s$ remaining Ticks before the end of preparation. The dense endpoint is
+
+$$
+\sum_{s=0}^{N-1}T^sBu_s
+=\sum_{i=1}^Nz_iT^{k_i}e_{\ell_{j_i}}=Rz.
+\tag{CM.9}
+$$
+
+The selected-pulse endpoint is the same sum with its $N$ separate pulses. This is an executable legal pulse word using learned indices and rational operands, rather than a supplied native basis-vector preparation. Holds and zero operands do not change (CM.9).
+
+Let $w=(Rz)\odot(Rz)$ be the actual immediate Square successor. Its subsequent all-port window contains, at the selected positions, the scalar vector
+
+$$
+s_i(z)=e_{\ell_{j_i}}^{\mathsf T}T^{k_i}w,
+\qquad s(z)=R^{\mathsf T}w.
+\tag{CM.10}
+$$
+
+Thus compute $F(z)=G^{-1}s(z)=R^{-1}w$. This uses actually returned scalars; Square itself returns none. The full window also has the learned injective observation matrix
+
+$$
+\mathcal O=\begin{pmatrix}E\\EA\\\vdots\\EA^{N-1}\end{pmatrix}.
+\tag{CM.11}
+$$
+
+Its selected rows form $G$, since $e_{\ell_{j_i}}^{\mathsf T}T^{k_i}R$ is row $i$ of $G$. Consequently any rational left inverse of $\mathcal O$ yields exactly the same $F(z)$ as (CM.10). These are two computations from one measured window, not two different acquisition results.
+
+Every probe window ends at $T^{N-1}w$, whose response coordinate is $A^{N-1}F(z)$. It does not end at $Rz$ or at $w$. The last such coordinate gives the dense endpoint in the statement. The selected-pulse schedule's additional actual Reset makes its endpoint zero.
+
+Finally put $\mu(e_i,e_i)=F(e_i)$ and, for $i<j$,
+
+$$
+\mu(e_i,e_j)=\mu(e_j,e_i)
+=\tfrac12\bigl(F(e_i+e_j)-F(e_i)-F(e_j)\bigr),
+\tag{CM.12}
+$$
+
+and extend bilinearly. Polarization of the actual native product proves the second line of (CM.6) for every rational $u,v$. Only the $q$ declared probes were performed. The controller obtains a finite table from them, not an oracle for unperformed experiments. Matrix inversion, rational pivots and the finite sums terminate on each promised input. $\square$
+
+The uncovered operation-to-data bridge in this theorem is (CM.9)–(CM.12), including its actual advanced endpoint. The Gram realization and polarization identities are reused mathematics inside that bridge. Full rank failure would defeat this construction; it is not a proof that every nonlinear acquisition method fails outside (CM.1).
+

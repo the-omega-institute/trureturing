@@ -1,0 +1,6 @@
+**Corollary 195.2 (conditional closure of the radical branch).** Under the hypotheses of Proposition 195.1, if either weighted map is saturated and its kernel is zero, then $r_u=2$ and the partition lies in the radical-free common-first branch of Corollary 179.3. More generally, for a rank-three or rank-four candidate, any additional independent weighted-mode equation that reduces the corresponding kernel below $r_u-2$ rules out that rank immediately.
+
+*Proof.* If a saturated map has zero kernel, then (195.1) gives $r_u-2=0$, hence $r_u=2$. Proposition 191.2 then gives $\mathcal R_u=0$, and Corollary 179.3 supplies the common-first reduction. The final statement is the exclusion direction of Proposition 194.2. $\square$
+
+The saturated case supplies a concrete finite-dimensional route: first compute the two weighted kernels, then either identify the radical exactly or exclude the proposed rank. Saturation is not known for every candidate, so the unsaturated rank-three and rank-four branches, the nonlinear residual equations, arbitrary partition realization, $F_{64}$, $H43$, SRS\text{-}20, physical succession and Lean/kernel formalization remain open.
+

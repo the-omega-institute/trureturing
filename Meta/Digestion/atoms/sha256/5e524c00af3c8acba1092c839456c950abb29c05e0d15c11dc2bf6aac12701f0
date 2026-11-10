@@ -1,0 +1,10 @@
+**(B2) Theorem 3.1 (shrinking-menu criterion).** Let $D\subset(0,\infty)$ with $\inf D=0$. The following are equivalent:
+
+1. one partition $P$ satisfies $\nu_P^s=\nu_f^s$ for every $s\in D$;
+2. $J=0$;
+3. $f$ is a simplex vertex $m$-almost everywhere.
+
+When these conditions hold, a Borel repair of $f$ gives equality of the joint source-label law for every finite timing-policy tree whose node delays are deterministic and strictly positive and whose first read occurs after a positive lead-in. Branching on returned labels is allowed. No arbitrary stopping-time or contact-time extension is included.
+
+**Proof.** Choose $s_n\in D$ tending to zero. Equality in (1) and Lemma 2.1 force $J=0$. The integrand defining $J$ is nonnegative and vanishes exactly at simplex vertices. Since $g_t>0$ $m$-almost everywhere, $f$ is vertex-valued $m$-almost everywhere. Repair the common null set by assigning one label, obtaining $P$. For any fixed finite policy tree there are only finitely many positive deterministic sampling epochs. Each source state at such an epoch avoids the repair set almost surely by positive-time absolute continuity. Couple the stochastic and deterministic detectors to the same $Z$; outside this finite union of null events they emit the same labels and therefore take the same branches. Induction down the finite tree gives equality of the full source-joint law. The converse is immediate because the pair projection of a joint law is a pair law and Lemma 2.1 applies. ∎
+

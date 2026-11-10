@@ -1,0 +1,28 @@
+**Assumption 2.1 (positive descended duration and cocycle).** Each realized edge has a fixed duration
+
+$$
+d:E\longrightarrow\mathbb R_{>0}.
+$$
+
+For a source execution of the edge $(\pi(x),a)$, its one-step duration is exactly $d(\pi(x),a)$, independent of the representative $x$. Durations use one declared unit and calibration. This constancy follows if duration is included in the complete one-step response of Definition 1.2; otherwise it is a separate required hypothesis.
+
+For every $v$ and every legal word $u$ from $v$, the accumulated duration $\tau_v(u)$ obeys
+
+$$
+\begin{aligned}
+\tau_v(\varepsilon_v)&=0,\\
+\tau_v(e)&=d(e),\\
+\tau_v(uw)&=\tau_v(u)+\tau_{v\cdot u}(w).
+\end{aligned}
+$$
+
+Induction on word length gives
+
+$$
+\tau_v(e_1\cdots e_n)=\sum_{j=1}^n d(e_j).
+$$
+
+Thus this cocycle lives on the residual graph. A source-level identity involving $T_u x$ is insufficient unless its one-step durations descend to that graph. Positive duration is a property of each named edge, including a legal failure edge when present; it is not inferred from a numerical label or from word length.
+
+The additive accounting convention is that of [Process Geometry §9.1](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md). Its §§9.2–9.3 already distinguish compositional path accounting, descent through path relations and a state potential. The distinction between time records and their numerical projections also appears in [Joint Relations Clocks §§1.1 and 3.1](RECURSIVE_RELATIONAL_OBSERVATION_JOINT_RELATIONS_CLOCKS.md). Those results supply these conventions, rather than the reconstruction criterion below.
+

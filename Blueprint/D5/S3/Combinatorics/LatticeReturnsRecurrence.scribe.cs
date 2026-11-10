@@ -8,7 +8,7 @@ internal sealed class LatticeReturnsRecurrenceDocument : IScribeDocumentDefiniti
 {
     private const string Prefix = "D5/S3/Combinatorics/LatticeReturnsRecurrence.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/mathar2012a068551");
+        LibraryNoteRef.Create("D5/L/Recurrence/mathar2012a068551");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The sequence a(n) = 4^n - binomial(2n, n), the total number of returns to the axis in all lattice paths with steps (1,1) and (1,-1) from the origin to (2n, 0), satisfies n a(n) + 2(3 - 4n) a(n - 1) + 8(2n - 3) a(n - 2) = 0 for every n at least 2, as conjectured by R. J. Mathar for OEIS A068551.",

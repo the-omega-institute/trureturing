@@ -1,0 +1,18 @@
+**Proposition 5.2 (Two half-line decoders for phase and invariant component).** Write $A_t$ for the absolute-continuity phase at an occupied anchor $t$. For any site $i$ define
+
+$$
+S_i=A_t+i-t\pmod m
+\tag{5.3}
+$$
+
+using a preceding anchor $t<i$. This is independent of the chosen anchor and has both strict-left and strict-right visible decoders. Every invariant component label $E_D$ also belongs to both strict half-lines. These assertions concern only phase and component, not the original contexts or the predictive states inside a phase.
+
+Proof. Formula (5.1) gives anchor independence and $S_{i+1}=S_i+1$. The preceding anchor and its strict-left mark make $S_i$ strictly past measurable. On the stationary component let $\zeta=e^{2\pi\mathrm i/m}$ and $Z=e^{2\pi\mathrm i S_0/m}$. Then
+
+$$
+Z\circ T^n=\zeta^n Z.
+\tag{5.4}
+$$
+
+Finite-past conditional expectations $Z_n=\mathbb E[Z\mid X_{-n},\ldots,X_{-1}]$ tend to $Z$ in $L^2$. The functions $\zeta^{-(n+1)}Z_n\circ T^{n+1}$ depend only on $X_1,\ldots,X_n$ and their distances from $Z$ in $L^2$ equal $\|Z_n-Z\|_2$ by stationarity and (5.4). The future-measurable subspace of $L^2$ is closed; hence $Z$, and therefore $S_0$, has a Borel strict-future version. Countably many shifts give the decoder at every actual anchor. For an invariant component indicator $Z=\mathbf1_{E_D}$ the identical argument uses eigenvalue $1$ under the unconditioned law. Thus component labels are future measurable as well as past measurable. This eigenvalue-$1$ case is also valid when $m=1$. $\square$
+

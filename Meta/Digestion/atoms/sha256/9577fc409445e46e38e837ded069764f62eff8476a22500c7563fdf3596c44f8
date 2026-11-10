@@ -1,0 +1,41 @@
+**Definition 153.1 (the retained original telescope and thirty-nine coordinates).** Retain exactly the complete suppliers and objects of Definition 152.1, hence Appendix II §§115–117, 123–125 and 133 and Definitions 134.1 and 135.1, with all their inherited conditions. The parameters are every original finite $a,\eta,d>0$ and every permitted everywhere Borel representative $b$ of $g_d$ satisfying $0<b\le M$. In particular, $G=H^1\times\mathbb R$, its product and raw Haar measure $\mu$, the source $e$, the unit-source field $L\Gamma=\delta_e$, the coefficient-one $w_*$, the positive normalized $h$, the actual selector $A_{\rm src}=\rho C_{\rm src}$ and the entire conservative source-inclusive $K$ are those of (152.1)–(152.4). Keep
+
+$$
+\begin{gathered}
+m=h^2\mu,\qquad T_s=e^{-sK},\qquad P=T_d,\qquad
+g=g_{2d},\qquad g_j=P^jg=g_{(2+j)d},\\
+M=1+\|g_d\|_\infty,\qquad c=(4M)^{-1},\qquad
+f_3=cb,\quad f_B=\tfrac14,\quad
+f_0=f_1=(\tfrac34-cb)/2,\\
+\mathcal L=\{0,1,3,B\},\qquad I=\{0,1,3\},\qquad
+\mathcal R=\{12,13,23\},\qquad
+\mathcal T=\{013,103,031\}.
+\end{gathered}
+\tag{153.1}
+$$
+
+The source starts at $e$ at time zero, the observation epochs are $2d,3d,4d$, and the common readout has the prescribed fresh noises conditionally independent given that path. Use precisely the functionals $\mathcal C,Q_r,L_j,q_r,B_r$ of (152.7) and its polar-form convention. For a pointwise simplex tuple $u$, with $u_B=1-u_0-u_1-u_3$, put
+
+$$
+\mathcal H_{39}(u)=
+\left(
+ (L_j(u_a))_{j=0,1,2;\ a\in I},
+ (Q_r(u_a,u_b))_{r\in\mathcal R;\ a,b\in I},
+ \mathcal C(u_0,u_1,u_3),
+ \mathcal C(u_1,u_0,u_3),
+ \mathcal C(u_0,u_3,u_1)
+\right).
+\tag{153.2}
+$$
+
+All coordinates refer to this one tuple on the original $G$. The original full joint equation remains
+
+$$
+(\forall\theta\in\Theta)(\exists D\text{ a pointwise Borel partition of }G)
+\quad
+\mathcal C(\mathbf1_{D_y},\mathbf1_{D_z},\mathbf1_{D_w})
+ =\mathcal C(f_y,f_z,f_w)
+\quad(y,z,w\in\mathcal L).
+\tag{153.3}
+$$
+

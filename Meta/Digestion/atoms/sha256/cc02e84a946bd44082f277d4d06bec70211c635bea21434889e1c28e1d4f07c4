@@ -1,0 +1,147 @@
+**Theorem 8.2 (Eventual refined-periodic exact optimizer
+templates).** For every fixed admissible $a,h$ there is a finite
+threshold such that, on each integer residue $\rho$ modulo $P$
+and above that threshold, the pairs attaining (6.12) are exactly
+$\mathcal W_\rho$. Consequently every exact optimizer is given
+by Theorem 6.4's reconstruction using these pairs, and every
+such reconstruction is an exact optimizer.
+
+All members of $\mathcal W_\rho$ have identical exact value
+functions near $u=0$. They remain tied at every sufficiently
+large budget in that residue. The finite data consisting of the
+partition, $z$, the choices (6.9), endpoint assignments and the
+$t$ high-degree tail labels give all optimizer templates; only
+$F$ and the tail-singleton multiplicities grow with $N$, affinely
+on that residue. Source-label permutations give all labelled
+preimages. No least threshold, least period, or uniform
+joint-growth estimate is asserted.
+
+**Proof.** A shift of $N$ by $P$ leaves $d$ fixed. It increases
+$F$ by $\alpha P$, $Q$ by $n\beta P$, and $b$ by $\beta P$,
+so it leaves $t$ fixed as well. This proves all the residue
+statements in Definition 8.1. Substituting $u=1/N$ in (8.3)
+and (8.4) proves (8.5) directly from (6.5). Analyticity follows
+since $\alpha,\beta>0$, and the expansion of the positive square
+root about a positive rational square has rational coefficients.
+
+For completeness, a finite algebraic bound justifies detecting
+exact ties by (8.6). For any pair of the functions (8.4), expand
+their last core term into its two summands and omit every
+zero-coefficient term. Each function has at most
+$3m+2n+2\le3s+2$ radical terms. If their difference is $D(u)$,
+it has the form
+
+$$
+D(u)=\frac2{u^2}\sum_{l=1}^{K}w_l(u)
+ \left(\frac{\sqrt{p_l(u)}}{a_l(u)}-1\right),
+\quad K\le6s+4,
+\tag{8.7}
+$$
+
+where $w_l,a_l$ are polynomials of degree at most one with
+rational coefficients, $a_l(0)>0$, and
+$p_l=a_l^2+k_l^2u^2$ has degree at most two. Negative coefficients
+of $w_l$ are allowed. If $K=0$ the difference is identically
+zero. Otherwise put
+
+$$
+\begin{aligned}
+Z(u)&=\frac{u^2D(u)}2\prod_{l=1}^K a_l(u)
+       =A_0(u)+\sum_{l=1}^K A_l(u)\sqrt{p_l(u)},\\
+\deg A_0&\le K+1,\qquad \deg A_l\le K.
+\end{aligned}
+\tag{8.8}
+$$
+
+Form the monic polynomial in $Y$
+
+$$
+\Pi(u,Y)=\prod_{\epsilon\in\{-1,1\}^K}
+ \left(Y-A_0(u)-\sum_{l=1}^K
+                          \epsilon_lA_l(u)\sqrt{p_l(u)}\right).
+\tag{8.9}
+$$
+
+This belongs to $\mathbb Q[u,Y]$: before substitution, changing
+the sign of any formal radical permutes the factors, so only
+even powers of each radical occur, and their squares are the
+polynomials $p_l$. This argument does not require the radicals
+to be algebraically independent. A coefficient of (8.9) is a
+sum of products of at most $2^K$ expressions of polynomial
+radical degree at most $K+1$, where a radical of a quadratic has
+degree weight one. Substitution of even radical powers therefore
+gives degree in $u$ at most
+
+$$
+(K+1)2^K\le (6s+5)2^{6s+4}=B_s.
+\tag{8.10}
+$$
+
+Delete the largest power of $Y$ dividing $\Pi$, obtaining
+$\Pi_0$ with nonzero constant coefficient $\Pi_0(u,0)$.
+This polynomial is still nonzero, since (8.9) is monic.
+If the analytic function $Z$ is not identically zero,
+$\Pi(u,Z(u))=0$ and cancellation in the ring of analytic germs
+gives $\Pi_0(u,Z(u))=0$. It follows that
+
+$$
+\operatorname{ord}_0 Z
+ \le \operatorname{ord}_0\Pi_0(u,0)
+ \le \deg_u\Pi_0(u,0)\le B_s.
+\tag{8.11}
+$$
+
+For the first inequality, write the polynomial equation as its
+constant coefficient plus terms each divisible by $Z$; their
+vanishing orders are at least that of $Z$. If $\Pi_0$ has
+no positive $Y$ powers, the nonzero-$Z$ case cannot occur at
+all. Since every $a_l(0)>0$, (8.8) gives
+$\operatorname{ord}_0Z=\operatorname{ord}_0D+2$ when $D$ is
+nonzero. Thus a nonzero difference cannot have all coefficients
+through order $B_s$ zero. This proves that equal vectors in
+(8.6) are equivalent to identical analytic value functions near
+zero. It supplies a finite equality test even when formal sign
+choices in (8.9) create spurious zero conjugates; deleting the
+$Y$ factors handles precisely that possibility. The large bound
+is sufficient, with no claim of efficiency or optimality.
+
+For two unequal vectors, let $k$ be their first different
+coordinate. The exact difference is $c u^k+O(u^{k+1})$ with
+$c\ne0$, so for sufficiently small positive $u$ its sign is the
+sign of $c$. Hence the lexicographic comparison is the exact
+comparison at every sufficiently large $N$ in the residue.
+There are finitely many pairs of functions and finitely many
+residues. One threshold suffices for every strict comparison;
+identical functions remain exactly tied. Therefore the exact
+minimum in (6.12) selects precisely $\mathcal W_\rho$.
+
+For each selected $z$, all the choices of $\ell$ in (6.9) have
+the same exact value, not only the same Taylor coefficients:
+their degrees at $I_0$ are equal and (6.10) depends only on the
+sum $L$. The same is true for the tail-label and endpoint-map
+choices in Theorem 6.4 by (6.6). Each of these sets is finite
+independently of $N$ on the residue. Counts $F$ and $b$ change
+affinely by the increments already computed. The exhaustive
+reconstruction now proves every template and preimage claim.
+
+The new graph-specific deductions are the exact allocation
+relation (6.12), its coupled equality conditions, the full
+secondary energy (7.2), the reachable obstruction (7.11), and
+the exact eventual selection just proved. They reuse Theorem
+1.3's all-domain source exclusion and the common-law equality
+theorem cited there, rather than reproving either as new content.
+Scalar convexity, Taylor expansion and polynomial sign
+symmetrization are mature intermediate tools; the graph budgets,
+allocation formulas and reconstruction are the additional
+relations. The original CDSO normalization and fixed-cyclomatic
+motivation are from Albalahi--Das--Ali--Barman--Hamza,
+[arXiv:2510.24809v1](https://arxiv.org/html/2510.24809v1), §1
+and §4, also DOI [10.47443/dml.2025.176](https://doi.org/10.47443/dml.2025.176).
+Possible technical overlap with the full text of Zhao--Zhao,
+*Extremal values with respect to vertex-degree-based topological
+indices in unicyclic and bicyclic graphs*, DOI
+[10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26),
+remains unassessed. Its abstract does not resolve that question
+and is not a premise of these proofs; no worldwide-priority
+claim is attached to these repo-derived deductions. ∎
+

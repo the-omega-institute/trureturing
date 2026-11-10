@@ -1,0 +1,35 @@
+#### 命题 7.2：二元协方差的三坐标约束
+
+对式(4)的状态，令
+
+$$
+u=(\sigma_1-xI)\sqrt\rho,\qquad
+v=(\sigma_3-zI)\sqrt\rho.
+$$
+
+采用 Hilbert–Schmidt 内积 $\langle u,v\rangle=\operatorname{tr}(u^\dagger v)$，其 Gram 矩阵为
+
+$$
+\Gamma=\begin{pmatrix}
+1-x^2&-xz-iy\\-xz+iy&1-z^2
+\end{pmatrix}\succeq0,
+\qquad
+\det\Gamma=1-x^2-y^2-z^2=4\det\rho.
+$$
+
+**证明。**
+
+平方展开与 $\sigma_j^2=I$ 给对角元。交叉元为 $\operatorname{tr}[\rho(\sigma_1-xI)(\sigma_3-zI)]=-iy-xz$。 Gram 正性来自 $\|\alpha u+\beta v\|_{\rm HS}^2\ge0$。行列式直接展开为 $(1-x^2)(1-z^2)-(x^2z^2+y^2)$，得到所示结果；二阶密度矩阵行列式由(4)直接计算。
+
+$\square$
+
+如果 $|x|<1$，消去第一项后的 Schur 余量为
+
+$$
+\delta=\frac{1-x^2-y^2-z^2}{1-x^2}.
+$$
+
+$\delta=0$ 当且仅当这两个中心化向量复线性相关。这是“平方关系使*这一项局部关系*可以停止增加独立方向”的精确版本。若 $|x|=1$，正性已迫使 $y=z=0$，需按退化情形单独处理。
+
+局部停止不代表全部信息都被读出。例如 $x=z=0,y=1$ 时状态纯且第三坐标确定，但 $\sigma_1,\sigma_3$ 的方差仍都等于一。算出第三坐标不能变成同时知道两项不相容测量的单次结果。
+

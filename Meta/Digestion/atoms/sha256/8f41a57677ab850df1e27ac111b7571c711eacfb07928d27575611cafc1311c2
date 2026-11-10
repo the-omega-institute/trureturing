@@ -1,0 +1,64 @@
+**Lemma 13.4 (The common tail event and the core remainder).** Fix $h$ and let $a$ be large enough that $a^2\ge3h(2a+1)$. For $x\in\mathcal X_{a,h}$, choose $D$ to be any $h$ labels with the smallest actual marginals, put $C=[s]\setminus D$, and define
+$$
+ t_j=y_j\ (j\in D),\quad
+ u=\sum_{j\in D}t_j,\quad
+ \delta=\max_{j\in D}t_j,
+$$
+$$
+ B=|T\cap D|,\qquad L=|T\cap C|,\qquad A=\{B>0\},\qquad p=\mathbb P(A).
+$$
+Then $\delta\le p\le u\le hp$, every core marginal is at least $\delta\ge u/h$, and
+$$
+Q(l)=(r-l)(a-l)(2a+1+l)
+ =\alpha-\beta l+l^3,
+$$
+where
+$$
+\alpha=a(a+1)(2a+1),\qquad \beta=3a^2+3a+1.
+$$
+Writing
+$$
+ f_u(y)=\frac{a^2}{y}-\frac{(2a+1)u}{y^2},
+ \qquad
+ \mathcal A_a(u)=\frac{r^2(a^2+3a+1+au)}{(a-u)^2},
+$$
+and
+$$
+\mathcal S_f=\sum_{i\in C}f_u(y_i)-r f_u\!\left(\frac{a-u}{r}\right)\ge0,
+$$
+one has the exact lower certificate
+$$
+ d(x)\ge H_D-u\mathcal A_a(u)+\mathbb E Q(L)+\mathcal S_f,
+\qquad
+ H_D=\mathbb E\!\left[K^2\sum_{j\in T\cap D}t_j^{-2}\right].
+\tag{13.5}
+$$
+In particular, $H_D\le d+u\mathcal A_a(u)$ and $\mathcal A_a(u)=O_h(a^2)$ whenever $0<u\le hp$.
+
+**Proof.** Since $D$ contains the $h$ smallest marginals, every core marginal is at least $\delta$, and $\delta\ge u/h$. Also $\delta\le p$ because a tail label with marginal $\delta$ can occur only on $A$, while $p\le u$ and $u\le hp$ are immediate.
+
+For $i\in C$, let $I_i=\mathbf1_{\{i\in T\}}$ and define the pointwise remainder
+$$
+ \rho_i=(1-I_i)(2a+1)(a-L)+I_i(r-L)(r-L-1).
+$$
+If $I_i=0$, then $L\le r-1=a$; if $I_i=1$, the last two factors are consecutive nonnegative integers except that their product is still zero at $L=r$. Hence $\rho_i\ge0$. Put $R_i=\mathbb E\rho_i$. Using $\mathbb E L=a-u$ gives
+$$
+R_i=\mathbb E[L^2I_i]-a^2y_i+(2a+1)u,
+\qquad \sum_{i\in C}R_i=\mathbb E Q(L).
+\tag{13.6}
+$$
+Moreover
+$$
+f_u''(y)=\frac{2(a^2y-3(2a+1)u)}{y^4}\ge0
+$$
+for $y\ge u/h$ under the stated condition. Jensen therefore applies to the actual $r$ core marginals, whose sum is $a-u$, and
+$$
+ r f_u\!\left(\frac{a-u}{r}\right)=B_0-u\mathcal A_a(u).
+\tag{13.7}
+$$
+The core part of $H$ is at least
+$$
+\sum_{i\in C}\left(\frac{a^2}{y_i}-\frac{(2a+1)u}{y_i^2}+\frac{R_i}{y_i^2}\right),
+$$
+because $K^2\ge L^2$. Since $0<y_i\le1$ and $R_i\ge0$, $R_i/y_i^2\ge R_i$. Combining this with (13.7) and the tail part gives (13.5). ∎
+

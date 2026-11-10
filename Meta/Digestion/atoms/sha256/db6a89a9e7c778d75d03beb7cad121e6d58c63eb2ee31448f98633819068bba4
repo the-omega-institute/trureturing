@@ -1,0 +1,20 @@
+**定理 28.6（完整候选的条件量子链及局部加强）。**若定义 28.5 的全部来源关系在同一原 $\Omega$ 中成立，则原目标域有定理 27.7 的完整有限维条件量子表示；此外每份实际三角满足 (28.3)，固定完整坐标框架有 (28.10) 的唯一 Hermitian 候选。局部简化是：原同切口框架关系已强制全部实际三维 $D$ 图表共享一张矩阵，不须逐图表另列 EC；不是移去原实际全菜单或高维来源义务。
+
+**证明。**先由定理 27.5 及原读口绑定取得原全部前接 QC，再用定理 17.6，继而由 (28.5)–(28.8) 的共同射线论证得定理 28.2，命题 28.3 给坐标拼接。完整原量子链则复用定理 27.7，按上表的原接口得到 C12／A12／BI12 的同一强度、最小复几何和具名 $K_j$。事件绑定给 $W_e(x)=\sum_{j\in e}\|K_jFx\|^2$，原校准才接回同一原事件质量。纯向量确定性及实际未归一逐分支混合仿射性给
+
+$$
+\begin{gathered}
+\mu_\sigma(e)=\operatorname{Tr}(\sigma E_e),\qquad
+E_e=\sum_{j\in e}K_j^*K_j,\qquad
+\Phi_e(\sigma)=\sum_{j\in e}K_j\sigma K_j^*,\quad \sigma\succeq0,\\
+\mu(E)=\sum_b\operatorname{Tr}(\sigma_bE_b),\quad
+\operatorname{Tr}\sigma_b=w_b\ge0,\quad
+\sigma_b=w_b\rho_b\ (w_b>0).
+\end{gathered}
+\tag{28.13}
+$$
+
+此处 $\sigma$ 是原完整链绑定的正态；命题 28.3 的坐标拼接矩阵尚不能仅凭同一符号就冒充该原正态在新增全菜单上的表示。归一原准备满足 $\sum_bw_b=1$，无需等中心质量；零块取零正算子而不定义 $\rho_b$。分支输出仅在 $\operatorname{Tr}\Phi_e(\sigma)>0$ 时归一。其他块 AS／EC 和原 OB 各在其声明域工作。
+
+原像内每条射线保持及 $\sum K_j^*K_j=P$ 给 $K_j=K_jP=c_jP$，因而 $\Phi_P(\sigma)=P\sigma P$；原参考承担实际完全正相容。原同一联合的交换生成及重数前件给张量联合。原连续可逆时钟给 $U(t)=e^{-it\mathsf H/\hbar}$、$i\hbar\dot\psi=\mathsf H\psi$ 和 $i\hbar\dot\sigma=[\mathsf H,\sigma]$。细历史按实际顺序乘 $K_j$，同一原粗标签才求和；失败、停止、销毁、返回和记录留在完整测试中，所有合法接续／未来沿原接口保留。$\square$
+

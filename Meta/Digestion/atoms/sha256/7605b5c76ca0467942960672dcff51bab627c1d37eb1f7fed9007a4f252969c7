@@ -1,0 +1,13 @@
+### 2.7. Sharp and conservative fiber certificates
+
+The noncommutation in Theorem 2.1 concerns a saturated complementary PSD
+slack at the true optimum. A conservative local certificate can instead
+use $N=0$ and the scalar local field $\lambda_{\min}(M_\omega)I$:
+$M_\omega\geq\lambda_{\min}(M_\omega)I$. The supporting inequality
+(2.6) then gives a valid fiber lower bound. Saturation requires
+equality at the optimizer; the unique noncommuting slack prevents a
+saturated marginal-diagonal slack in the family above. A marginal-diagonal
+restricted optimization value is an upper bound on the full fiber minimum,
+with the strict loss (2.3), and is not by itself a lower certificate.
+This completes the proof of Theorem 2.1.
+

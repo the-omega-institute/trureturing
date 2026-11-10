@@ -1,0 +1,125 @@
+**Theorem 32.2 (critical multipliers and effective source measures).**
+For each fixed $s\in\mathbb R$ and $b>0$, uniformly on $\Omega$,
+
+$$
+\begin{aligned}
+V_{\kappa,\tau_s}(k,\theta,v,D)
+ &=c_s\phi(k)\exp\!\left(-\frac{\rho(D)^2}{4\beta r_s^2}\right)+o(1),\\
+W_{\rm unit}(\kappa,\tau_b;k,\theta,v,D)
+ &=c_0\phi(k)G_{\beta b}(D)+o(1).
+\end{aligned}
+\tag{32.9}
+$$
+
+The unit effective source, as a density relative to $d\mu$, satisfies
+
+$$
+\frac{p_\kappa(\tau_b,o,y)}{S(\tau_b)}
+\longrightarrow
+\frac{\phi(k)}{J_\phi}\,
+ \frac1{(2\pi)^2}G_{\beta b}(D)
+\quad\hbox{uniformly}.
+\tag{32.10}
+$$
+
+At the raw cutoff the same conditional source has, under the actual
+representative $D/r_s\in[-\pi/r_s,\pi/r_s]$, the limiting probability law
+
+$$
+\frac{\phi(k)}{J_\phi}\,dk\,
+\frac{d\theta\,dv}{(2\pi)^2}\,
+\frac{e^{-x^2/(4\beta)}}{\sqrt{4\pi\beta}}\,dx.
+\tag{32.11}
+$$
+
+Its unscaled hidden marginal consequently tends to $\delta_0$.
+Source charges and field masses remain distinct:
+
+$$
+\begin{aligned}
+S(\tau_s)&=\phi(k_0)J_\phi\,
+ a\sqrt{L_a}e^{-\lambda s}(1+o(1)),&
+\int_\Omega V_{\kappa,\tau_s}\,d\mu&\longrightarrow0,\\
+S(\tau_b)&=\phi(k_0)J_\phi\,e^{-\lambda b/a^2}(1+o(1)),&
+\int_\Omega W_{\rm unit}(\kappa,\tau_b)\,d\mu
+ &\longrightarrow1/\lambda.
+\end{aligned}
+\tag{32.12}
+$$
+
+Proof. The exact height survival expansion [G, (29.1)--(29.2)] gives
+
+$$
+S(t)=\phi(k_0)J_\phi e^{-\lambda t}(1+O(e^{-8\lambda t})).
+\tag{32.13}
+$$
+
+Indeed $\phi(k_0)J_\phi=4\sin(\pi(k_0-l)/d_I)/\pi$, which is its
+first sine coefficient. Also
+
+$$
+r_s\to0,\qquad \tau_s\to\infty,\qquad
+\frac{e^{-\lambda\tau_s}}{r_s}\longrightarrow
+\sqrt\lambda e^{-\lambda s}.
+\tag{32.14}
+$$
+
+Integrate $p_\kappa(\tau_s+v,o,y)$ over $v\ge0$. On every fixed
+$0\le v\le R$, (32.1) applies uniformly and
+$a\sqrt{\tau_s+v}/r_s\to1$. Uniformly for real $x$,
+$e^{-x^2/(4\beta(1+v/\tau_s))}-e^{-x^2/(4\beta)}\to0$;
+this follows either by a bounded derivative in the variance parameter or
+by splitting $|x|\le M$ and its Gaussian tails. All nonnearest translates
+in (32.8) have sum tending uniformly to zero when $r_s\to0$.
+The contribution on this time window is therefore, in supremum norm,
+
+$$
+\frac{e^{-\lambda\tau_s}}{r_s}
+\frac{\phi(k_0)\phi(k)}{(2\pi)^2\sqrt{4\pi\beta}}
+e^{-\rho(D)^2/(4\beta r_s^2)}
+\int_0^R e^{-\lambda v}\,dv+o(1).
+$$
+
+For the omitted tail, the all-time bound [G, (26.1)] gives
+
+$$
+\int_R^\infty p_\kappa(\tau_s+v,o,y)\,dv
+\le C e^{-\lambda\tau_s}(1+r_s^{-1})e^{-\lambda R}.
+\tag{32.15}
+$$
+
+The prefactor is bounded by (32.14). Let $R\to\infty$ after taking
+the parameter limit. The resulting factor $1/\lambda$ gives exactly
+$c_s$ in (31.1), proving the first line of (32.9).
+
+At $\tau_b$, divide (32.2) by (32.13). This proves (32.10). For a
+bounded time increment $v$, the divided kernel converges uniformly to
+$e^{-\lambda v}\phi(k)G_{\beta b}(D)/(J_\phi(2\pi)^2)$.
+For every $v\ge0$, [G, (26.1)] and (32.13) bound it by
+$C_b e^{-\lambda v}$. Dominated time integration proves the second
+line of (32.9), including its exact $1/\lambda$ factor. Thus neither
+time integration requires an interchange without a uniform tail bound.
+
+For (32.11), change variables $D=r_sx$ in (32.1) at time $\tau_s$
+and use (32.13). The densities converge uniformly on every bounded
+$x$ interval to the displayed density. They are tight in $x$:
+conditional on the killed height path up to $\tau_s$, the unwrapped
+hidden displacement is centered Gaussian of variance
+$2\kappa^2\int_0^{\tau_s}b_\kappa(K_t)^2\,dt\le2M^2r_s^2$,
+where $M$ is the uniform coefficient bound in [G, §26].
+This is the same original second Brownian driver; the survival event
+depends only on the first driver. The actual distance of a wrapped
+displacement from zero is no greater than its unwrapped absolute value.
+Hence its conditional probability of $\rho(D)>Rr_s$ is bounded by
+the centered Gaussian tail with variance $2M^2$, independently of
+$\kappa$. Local density convergence and this tightness prove the
+probability limit, including its normalization. No independence of the
+visible and hidden paths before the limit is asserted.
+
+Finally (32.13), (32.14), and the exact identities
+$\int V_{\kappa,\tau}\,d\mu=\int_\tau^\infty S(t)\,dt$ and
+$\int W_{\rm unit}\,d\mu=(\int_\tau^\infty S(t)\,dt)/S(\tau)$
+from [G, Proposition 29.1] prove (32.12). The unit source in (32.10)
+integrates to one, whereas its field in (32.9) integrates to
+$c_0J_\phi(2\pi)^2=1/\lambda$. $\square$
+

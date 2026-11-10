@@ -1,0 +1,24 @@
+contradicting (2.10). Therefore
+
+$$
+N_H^+(\lambda)\ge k_t-1\ge b\lambda-1.
+\tag{2.11}
+$$
+
+For $\lambda\ge2/b$ the right side is at least $b\lambda/2$.
+Finally $j\le N_H^+(\lambda_j)\le B\lambda_j$ gives the eigenvalue
+lower bound. If $\lambda>j/b$, (2.11) gives
+$N_H^+(\lambda)>j-1$, so the integer count is at least $j$.
+Letting $\lambda\downarrow j/b$ gives $\lambda_j\le j/b$.
+This proves (2.1).
+
+The variational and finite-rank arguments are established spectral
+methods, not a claim of a new min-max principle: see Gerald Teschl,
+[*Mathematical Methods in Quantum Mechanics*, online 2009 edition,
+§§4.3–4.4, Theorem 4.10 and its form-domain statement, and Theorem 4.12(i)](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf).
+The new deduction here is the source-specific mass stopping estimate
+(2.8), its trial-space companion (2.10), and their application to the
+already constructed biased covariance and boundary operator of IV.
+These deductions are repo-derived; the cited variational methods are
+literature-attested intermediate supplies. $\square$
+

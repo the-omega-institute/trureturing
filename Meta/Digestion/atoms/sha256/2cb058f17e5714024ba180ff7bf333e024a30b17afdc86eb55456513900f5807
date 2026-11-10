@@ -1,0 +1,72 @@
+**Theorem 5.1 (installed continued use and exact future kernel).** Retain
+the acquired data and the current predictor $b=U(T)H^{-1}\mu$. For every
+actual legal timing action, use the retained source binding to forward
+the action to the same held specimen, consume its complete actual reply,
+and commit
+
+$$
+b\leftarrow U(s_a)b.
+\tag{5.1}
+$$
+
+The invariant is $b=\mathcal O z$ at every completed cut. In particular
+the predicted reply $b_0$ after the update equals the actual reply $Cz$.
+The invariant holds for every sufficiently backed finite adaptive
+continuation of Definition 1.3, with its actual source successors.
+
+If some original $s_a>0$, equality of all future output responses is
+exactly equality modulo $K$. If all original durations are zero, that
+task's kernel is instead $\ker C$; the acquired coefficient quotient
+can then be strictly finer than the full timing task needs. These
+statements do not require a separating finite $\mathcal W$.
+
+Proof. Before a call suppose $b=\mathcal O z$. The actual successor is
+$z'=E(s_a)z$, so (3.3) gives
+$\mathcal O z'=U(s_a)b$. Its zeroth block is $Cz'$, proving both the
+update and reply assertions. Endpoint Read and Hold have the corresponding
+identity update. Serial exclusion and hold ensure no unrepresented source
+advance during local processing. Genuine rights and the existing framing
+determine the same legal next action and complete fixed control replies.
+Induction over completed calls proves the invariant and equality of
+replies. Equal earlier replies make a common adaptive policy select the
+same next permitted action/input; conditioning on its common tape gives
+the same pointwise proof for randomized policies. Pending processing
+retains its phase until completion; this theorem's recovery square is
+asserted at completed cuts, not at every internal arithmetic microcut.
+
+If $h\in K$, every $CE(s)h$ vanishes and $E(s)h\in K$. Thus the quotient
+updates and all permitted replies are well defined for every finite word.
+For the converse, if $s_a>0$, compare the readouts after $a^k$ for
+$0\leq k<\nu$, using the endpoint read at $k=0$. Equality means the
+polynomial $CE(t)h$ vanishes at $\nu$ distinct values $ks_a$; interpolation
+makes it identically zero, hence $CB^jh=0$ for all $j<\nu$. If every
+$s_a=0$, all successors are the identity and every output is just $Cz$,
+giving exactly $\ker C$. ∎
+
+The descended state in the nontrivial case is an actual behavior class,
+not a fictional full field. Two different actual representatives remain
+different physical successors while their classes and disclosed replies
+agree. A task demanding their literal full coordinates, hidden actuator
+responses or a different action menu has to retain the missing distinctions.
+
+An installed finite consumer can implement (5.1) by forming the upper
+triangular scalar matrix in (3.2), multiplying block vectors and writing
+a destination predictor before committing it. In the rational scope of
+§6 this is an ordinary terminating exact program, with actual finite
+buffers. For example, a common selector can compare a retained rational
+read with a supplied rational threshold, choose one of the original
+actions, construct its request, forward it, and consume the returned
+endpoint. The induction covers both branches without access to $x_0$.
+This is a callable use procedure under the installed contract, not merely
+an existence statement about a decoder.
+
+After active duration $s$ beyond acquisition the actual state is
+$E(T+s)x_0$ and the current predictor is $U(T+s)a$. The original tap
+window and $\mu$ remain historical records. A shifted output polynomial
+can be calculated, but that calculation is not a new performed window.
+For a fresh window one must actually execute the timed reads and stop
+again, charge them, and apply Theorems 2.2 and 4.1 to its new entrance
+and advanced endpoint. Arbitrary earlier histories are not recoverable
+from the later field: inserting extra Hold or endpoint Read operations
+leaves that field unchanged and changes the journal.
+

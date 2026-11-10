@@ -1,0 +1,18 @@
+**Proposition 81.2 (sufficient local work and stores for the selected runs).** For the marked-slice run, one sufficient selector propagates $A^kD$ and $A^km_0$ through $I$, using
+
+$$
+O\bigl(IN(q+1)+b(I+1)q^2+q^3\bigr)
+\tag{81.2}
+$$
+
+exact arithmetic operations for propagation, rank-increasing row tests and the final solve. In addition pay construction of $C$, products with its $Nb(I+1)$ entries, the actual $\ell+I+1$ source/predictor updates, all controls, navigation and outputs. A direct implementation has two $N$-by-$q$ propagation buffers, the propagated offset vectors, $q$-by-$q$ row/solve work, $q$ selected index/reply records, saved $L$ original terminal scalars, $Nb(I+1)$ forcing entries and $b(I+1)$ control entries. All live $x,m,d_\ell,f$ and elimination/output vectors count while retained, besides Convention 81.1's common backing. The dense old measured window need not be retained as Time; the forcing matrix needed for actual restoration does not disappear when Reads are omitted.
+
+For restricted-site current acquisition, one conservative sufficient selector bound is
+
+$$
+O\bigl(N^3+N^2r+|S|Nr^2+r^3\bigr),
+\tag{81.3}
+$$
+
+for column pivots, sparse propagation through $N$ epochs, row tests and solving. Actual path extraction, integer gcd, $U^\dagger,F,F^{-H}$ calculations and view exports are additional. Store $U$, its left inverse, two $N$-by-$r$ propagation buffers, $r$-by-$r$ row/inverse/elimination work, the $r$ selected records and all live coordinates/vectors, as well as the separate source/predictor updates. The complete leaf metric, $|S|N$ germ entries, $E(u)$ and every retained output copy have actual backing. A joined provider also pays its forcing matrix, owned target and controls while live. The original-entry experiment instead selects an $N$-column full observation stack and pays its own elimination and $N$ records.
+

@@ -1,0 +1,13 @@
+**Theorem 31.3 (observation, inverse and actual successor).** Sample terminates on every promised binary-image cut and has the following simultaneous properties:
+
+$$
+y_r=J^{\mathsf T}A^rx_w\quad(0\le r\le I),\qquad
+x_w=C^{\mathsf T}\begin{pmatrix}y_0\\ \vdots\\y_I\end{pmatrix},
+\qquad x_{\rm end}=A^Ix_w=x_{w0^I}.
+\tag{NLBAII.39}
+$$
+
+It installs $x_{w0^I}$, rather than $x_w$, as the retained current predictive vector. Its exact inner counts are $I$ Ticks, $I$ Adds, $I+1$ Holds and $b(I+1)$ Reads. All Add operands are zero. It recovers the pre-sampling binary word even when a previous predictive vector and binary word have been discarded, provided the earned graph, raw map, callable reference, rights and origin promise persist.
+
+Proof. Induct on the actual Tick calls: the zero Adds, Holds and Reads do not change the field, so the $r$th sampled field is exactly $A^rx_w$. Symmetry of $A$ gives $K^{\mathsf T}x_w=(y_0,\ldots,y_I)^{\mathsf T}$. Transposing $KC=\operatorname{Id}$ proves the reconstruction formula. Theorem 30.2 then recovers precisely $w$. Each intervening Tick followed by an actual zero Add is a binary zero step, so the final field is $x_{w0^I}$. Multiplying the reconstructed vector by $A$ exactly $I$ times installs this actual endpoint. Counting the specified finite calls gives the bill. No inverse of $A$ is used: $A$ may be singular. On this special word image, $A^Ix_w=A^Ix_{w'}$ would imply $w0^I=w'0^I$ by Theorem 30.2, and therefore $w=w'$, but this restricted injectivity is not an inverse on arbitrary fields. $\square$
+

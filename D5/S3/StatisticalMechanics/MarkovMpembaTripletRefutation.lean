@@ -53,19 +53,19 @@ def claim : Prop :=
     (∀ i j k : Fin N, i < j → j < k → ¬ TripletCondition E βb a i j k) →
     ∀ lam ℓ, IsSlowMode (generator a) lam ℓ → ¬ MpembaEffect E βb ℓ
 
-private noncomputable def mean (r : ℝ) : ℝ := 2 * (125 + 1024 * r) / (15 * (273 + 256 * r))
-private noncomputable def weights (r : ℝ) : Fin 4 → ℝ := ![1, 1/16, 1/256, r]
+noncomputable def mean (r : ℝ) : ℝ := 2 * (125 + 1024 * r) / (15 * (273 + 256 * r))
+noncomputable def weights (r : ℝ) : Fin 4 → ℝ := ![1, 1/16, 1/256, r]
 private noncomputable def g : Fin 4 → ℝ := ![0, 1, 2/3, 8/15]
-private noncomputable def f (r : ℝ) : Fin 4 → ℝ := fun i => g i - mean r
-private noncomputable def rates (r : ℝ) : Fin 4 → Fin 4 → ℝ :=
+noncomputable def f (r : ℝ) : Fin 4 → ℝ := fun i => g i - mean r
+noncomputable def rates (r : ℝ) : Fin 4 → Fin 4 → ℝ :=
   let A := 47/48 - mean r - 112*r/25
   let B := 3/2 - 3*mean r/2 - 128*r/25
   let C := 31/20 - 15*mean r/8
   !![0, A, B, C; A/16, 0, 1, 3/5; B/256, 1/16, 0, 1/10;
      C*r, 48*r/5, 128*r/5, 0]
 private def levels : Fin 4 → ℕ := ![0, 1, 2, 64]
-private noncomputable def energy : Fin 4 → ℝ := fun i => (levels i : ℝ) * Real.log 16
-private noncomputable def small : ℝ := (1/16)^64
+noncomputable def energy : Fin 4 → ℝ := fun i => (levels i : ℝ) * Real.log 16
+noncomputable def small : ℝ := (1/16)^64
 private noncomputable def k1 : Fin 4 → ℝ := ![1, 2, -3, 0]
 private noncomputable def k2 : Fin 4 → ℝ := ![7, 8, 0, -15]
 private noncomputable def block (r : ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
@@ -83,14 +83,14 @@ private theorem mean_bounds (r : ℝ) (hr : 0 < r) (hb : r ≤ 1/4096) :
   · apply (div_lt_iff₀ (by positivity)).2
     linarith
 
-private theorem small_bounds : 0 < small ∧ small ≤ 1/4096 := by
+theorem small_bounds : 0 < small ∧ small ≤ 1/4096 := by
   refine ⟨by unfold small; positivity, ?_⟩
   calc
     small ≤ (1/16 : ℝ)^3 := by
       exact pow_le_pow_of_le_one (by norm_num) (by norm_num) (by norm_num : 3 ≤ 64)
     _ = 1/4096 := by norm_num
 
-private theorem rates_positive (r : ℝ) (hr : 0 < r) (hb : r ≤ 1/4096) :
+theorem rates_positive (r : ℝ) (hr : 0 < r) (hb : r ≤ 1/4096) :
     ∀ i j, i ≠ j → 0 < rates r i j := by
   obtain ⟨hlo, hhi⟩ := mean_bounds r hr hb
   intro i j hij
@@ -305,7 +305,7 @@ private theorem simple_mode (r : ℝ) (hr : 0 < r) (hb : r ≤ 1/4096)
     · exact hu3
   exact ⟨c, sub_eq_zero.mp hu⟩
 
-private theorem slow_mode : IsSlowMode (generator (rates small)) (-1) (f small) := by
+theorem slow_mode : IsSlowMode (generator (rates small)) (-1) (f small) := by
   refine ⟨by norm_num, ?_, (eigen_identities small small_bounds.1).2.1, ?_, ?_⟩
   · intro hz
     have h0 := congrFun hz 0
@@ -325,12 +325,12 @@ private theorem bath_weights (i : Fin 4) : Real.exp (-energy i) = weights small 
   convert he using 1
   simp only [energy.eq_1, neg_mul]
 
-private theorem bath_ratio (i j : Fin 4) :
+theorem bath_ratio (i j : Fin 4) :
     Real.exp (-(1*(energy i-energy j))) = weights small i / weights small j := by
   rw [show -(1*(energy i-energy j)) = -energy i - (-energy j) by ring,
     Real.exp_sub, bath_weights, bath_weights]
 
-private theorem reversible : DetailedBalance energy 1 (rates small) := by
+theorem reversible : DetailedBalance energy 1 (rates small) := by
   intro i j hij
   rw [bath_ratio, ← mul_div_assoc]
   apply (eq_div_iff (show weights small j ≠ 0 by
@@ -338,7 +338,7 @@ private theorem reversible : DetailedBalance energy 1 (rates small) := by
     fin_cases j <;> norm_num [weights.eq_1]; exact ne_of_gt hr)).2
   exact balance_weights small i j
 
-private theorem increasing_energy : StrictMono energy := by
+theorem increasing_energy : StrictMono energy := by
   have hL : 0 < Real.log 16 := Real.log_pos (by norm_num)
   intro i j hij
   fin_cases i <;> fin_cases j <;> norm_num at hij <;>
@@ -357,7 +357,7 @@ private theorem triplet_margins (r : ℝ) (hr : 0 < r) (hb : r ≤ 1/4096) :
   fin_cases i <;> fin_cases j <;> fin_cases k <;> try omega
   all_goals constructor <;> norm_num [rates.eq_1, weights.eq_1] <;> nlinarith
 
-private theorem no_triplets :
+theorem no_triplets :
     ∀ i j k : Fin 4, i < j → j < k → ¬ TripletCondition energy 1 (rates small) i j k := by
   intro i j k hij hjk
   obtain ⟨hfirst, hsecond⟩ := triplet_margins small small_bounds.1 small_bounds.2 i j k hij hjk
@@ -397,7 +397,7 @@ private theorem overlap_comparisons :
     1/16 < overlap (1023/1024) ∧ overlap (1023/1024) < overlap (127/128) := by
   constructor <;> norm_num [overlap.eq_1]
 
-private theorem effect : MpembaEffect energy 1 (f small) := by
+theorem effect : MpembaEffect energy 1 (f small) := by
   obtain ⟨hb1, h12, hb2⟩ := temperature_order
   obtain ⟨hmlo, hmhi⟩ := mean_bounds small small_bounds.1 small_bounds.2
   obtain ⟨hlo, hlt⟩ := overlap_comparisons

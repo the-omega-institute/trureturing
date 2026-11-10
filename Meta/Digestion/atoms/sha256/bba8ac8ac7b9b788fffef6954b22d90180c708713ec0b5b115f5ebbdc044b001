@@ -1,0 +1,41 @@
+**Definition 26.2 (one-cell prospective prescription).** Fix any
+original allowed preparation, $I=[l,u]\Subset(0,H_{\rm n})$ with
+$l<k_0<u$, $T>0$, integer $N\ge2$ and
+$0<\rho\le(u-l)/4$. Put $\Delta=T/N$, $t_j=j\Delta$, and
+$P_j=V_{t_j}$, $0\le j<N$. At a grid time include all records
+which have arrived at that time. Thus $P_0=e$.
+Define the following continuous four-coordinate polygon as a
+mathematical description of the successive prescriptions:
+
+$$
+ Q(t)=e\ (0\le t\le\Delta),\qquad
+ Q(t_j+s)=(1-s/\Delta)P_{j-1}+(s/\Delta)P_j,
+ \quad 0\le s\le\Delta,\quad 1\le j<N.
+\tag{26.1}
+$$
+
+Coordinate interpolation uses the fixed real coordinates of $G$.
+At $t_j$ the entire next cell is known from the released prefix.
+Put $\widehat S=T\wedge\inf\{t:k_0+x(Q(t))\notin(l,u)\}$.
+This global notation is not an input containing its future value.
+At $t_j$, if no own observation exit has occurred, compute just the
+first boundary intersection of that cell's known linear height
+segment. Clip that cell at that intersection, if present, and issue
+no later nonconstant command after the resulting own exit.
+
+Start with zero controls on $[0,\Delta]$. For every remaining
+positive cell portion $[s,t]$ to be executed, its two endpoint
+triples $(A,B,W)=(x,y,w)(Q)$ are already known at its grid start.
+Subdivide that portion into $m$ equal cells, with $m$ exactly (22.2),
+using its total increments and $K_I=\max(|l-k_0|,|u-k_0|)$.
+For each subdivision use the existing six-leg connector (17.4),
+with the same inward orientation and real area, translated by its
+current two-control start. Assign each leg one sixth of that
+subdivision's original elapsed duration. All these numerical
+instructions are issued at the grid start; they act only after it.
+Hold at own observation exit, or end at $T$.
+Call the resulting actual controls $(a_*,b_*)$ and set
+$J_* =\int a_*\,db_*$. The star labels a finite design, not a limit.
+The source service can continue through $T$ after this output hold;
+the consumer ignores its subsequent records.
+

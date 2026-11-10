@@ -1,0 +1,81 @@
+**定理 151.6（本源给定粗 Born 行的全部正后验自由度）。** 在假设 151.5 的任一正质量分支，令
+
+$$
+t_s=\|P_su\|^2,\qquad
+S(u)=\{s\in S_i:t_s>0\},\qquad
+\widehat u_s=P_su/\sqrt{t_s}\quad(s\in S(u)).
+\tag{151.17}
+$$
+
+在一个对全部原 $h,w$ 共同的满测集上，$\ell_z$ 有唯一的规范块密度代表，而且该代表必为
+
+$$
+\begin{gathered}
+\sigma_z=\bigoplus_{s\in S(u)}
+       \beta_s(z)|\widehat u_s\rangle\langle\widehat u_s|,
+\qquad \sigma_z|_{\mathcal H_s}=0\ (t_s=0),\\
+\beta_s(z)\ge0,\qquad
+\sum_{s\in S(u)}\beta_s(z)=1,\qquad
+\int\beta_s(z)\,d\nu_{a,i}(z)=t_s,\\
+\ell_z(B)=\operatorname{Tr}(\sigma_zB)
+\quad(B\in\operatorname{Herm}(\mathcal A_i)).
+\end{gathered}
+\tag{151.18}
+$$
+
+权重 $\beta_s$ 可测，且 $\beta_s(z)=\ell_z(P_s)$。反向，任意这样的可测权重，连同同一个已给切口分布，均参数化满足 (151.14)–(151.16) 的数学正条件未来核。此反向不声称该核可被原装置取得，也不声称它扩张成满足全部旧合同的物理模型。
+
+该类内完整原未来条件相等恰等价于中心权重不变：
+
+$$
+\begin{aligned}
+&k(z;h,w)=r_u^i(h,w)
+\quad\text{对全部 }h\in\mathsf W,w\in\Omega_{10}\text{，几乎处处}\\
+&\hspace{35mm}\Longleftrightarrow\quad
+\beta_s(z)=t_s\quad\text{对全部 }s\in S_i\text{，几乎处处}.
+\end{aligned}
+\tag{151.19}
+$$
+
+$\beta=t$ 同样足以给全部原 $h$ 的 $A$ 条件相等；本定理不将这个条件宣称为只观察 $A$ 时的一般必要条件。
+
+证明。先处理共同满测集。$\mathsf W\times\Omega_{10}$ 可数，把 (151.15) 的例外集作可数并集，再并入 (151.14) 的例外集，得到一个零集；在其补集上同一个正、归一、实线性 $\ell_z$ 表示所有列。正性是 (151.14) 的共同性质，不对不可数个效果的例外集作交。等价地，在固定有限维空间中可用正锥的一个可数稠密子集检验正性，再用每个实线性泛函的连续性延拓。以下均在这一个满测集上进行。
+
+对每个完整矩阵块，Hermitian 矩阵上的实迹配对非退化，故有限维对偶性唯一给出 Hermitian 矩阵 $\sigma_{z,s}$，使 $\ell_z(B_s)=\operatorname{Tr}(\sigma_{z,s}B_s)$。对全部 $|v\rangle\langle v|\ge0$ 的正性给 $\sigma_{z,s}\ge0$，归一化给 $\sum_s\operatorname{Tr}\sigma_{z,s}=1$。它们的直和就是唯一块代表 $\sigma_z$。矩阵元是有限个固定对偶坐标的实线性组合，所以 $z\mapsto\sigma_z$ 可测。这只是有限维迹对偶及正锥的标准表示步骤，施于这里已经付费的整个块域；没有从原离散读口推导全效果可加性。
+
+对任意自伴 $B$，$-\|B\|I\le B\le\|B\|I$ 给 $|\ell_z(B)|\le\|B\|$，所以各固定坐标均可积。由 (151.16) 和实际效果实张成 (151.2)，积分泛函在整个 $\operatorname{Herm}(\mathcal A_i)$ 上与 $B\mapsto\operatorname{Tr}(\bar\rho_uB)$ 相等。由有限维对偶唯一性，
+
+$$
+\int\sigma_z\,d\nu_{a,i}(z)
+=\bar\rho_u
+=\bigoplus_{s\in S(u)}t_s|\widehat u_s\rangle\langle\widehat u_s|.
+\tag{151.20}
+$$
+
+积分是有限个矩阵元的积分。只须选 (151.2) 的一个有限效果基即可得到此式，故没有对不可数个 $B$ 分别丢弃零集。
+
+若 $t_s=0$，非负函数 $\operatorname{Tr}\sigma_{z,s}$ 的均值为零，故该块几乎处处为零。若 $t_s>0$，令 $F_s=I_{\mathcal H_s}-|\widehat u_s\rangle\langle\widehat u_s|$。由 (151.20)，非负函数 $\operatorname{Tr}(\sigma_{z,s}F_s)$ 的均值为零。于是它几乎处处为零。正矩阵的平方根满足
+
+$$
+\operatorname{Tr}(\sigma_{z,s}F_s)
+=\|F_s\sigma_{z,s}^{1/2}\|_{\mathrm{HS}}^2,
+\tag{151.21}
+$$
+
+故 $\sigma_{z,s}$ 的像包含于 $\mathbb C\widehat u_s$。因此 $\sigma_{z,s}=\beta_s(z)|\widehat u_s\rangle\langle\widehat u_s|$，$\beta_s=\operatorname{Tr}\sigma_{z,s}\ge0$；对有限个块合并零集即得 (151.18)。迹、归一化和 (151.20) 给权重和及均值，且 $\beta_s=\ell_z(P_s)$ 保证其可测性。未占据的块没有被除以零，也不为它选择 $\widehat u_s$。
+
+反向给定 (151.18) 的权重，按该式构成 $\sigma_z$ 并取迹泛函。它正、归一、实线性而可测。置 $k(z;h,w)=\operatorname{Tr}(\sigma_zE^i_{h,w})$，由 $E^i_{h,w}\ge0$ 及 $\sum_wE^i_{h,w}=I_{\mathcal K_i}$，得到每个 $h$ 的全部 $1024$ 标签上的概率核；零投影标签仍为零。权重均值给 (151.16)。$\nu(dz)k(z;h,w)$ 是同一切口上相应未来选择的数学联合律。它证明正细化的参数化，不构造原装置的档案产生过程、状态变换或有限误差合同。
+
+若 $\beta=t$，则 $\sigma_z=\bar\rho_u$，立即得到所有列相等及其 $A$ 归组。反向若完整列相等，在可数交得到的共同满测集上，(151.2) 的迹配对唯一性给 $\sigma_z=\bar\rho_u$，逐块取迹得 $\beta=t$。也可只用空后读字核对中心：令 $L_s$ 为旧标签中 $(b_7,b_8)$ 等于 $s$ 前两位的集合，则在固定记录 $i$ 上
+
+$$
+P_s=\sum_{w\in L_s}E^i_{\epsilon,w},\qquad
+\beta_s(z)=\sum_{w\in L_s}k(z;\epsilon,w),\qquad
+ t_s=\sum_{w\in L_s}r_u^i(\epsilon,w).
+\tag{151.22}
+$$
+
+这用的是原标签的经典归组，无新增读器。只用 $A$ 的列没有 (151.22) 的全部尾标签信息，故上述必要性证明不转移给 $A$ 子族。
+
+实际前缀 $a$ 可数、记录 $i$ 有限。本证明逐个正质量 $(a,i)$ 给出其自身 $\nu_{a,i}$ 下的一个满测集，对该分支的全部 $h,w$ 同时有效；若这些切口已经放入一个共同概率空间，按可数个实际分支合并其零事件即可。它不产生未供应的跨程序耦合，不升级为每个零质量档案点的点态断言，也不把这些实际前缀结论延拓为所有数学射线的实际律。∎
+

@@ -1,0 +1,160 @@
+**引理 123.2（直接的三次有限鞍点估计）。** 固定 $l<c_q/2$，使最终 $L\le lQ^3$。
+选取 $\chi_0>0$，满足 $2\chi_0<c_q-l$，并置
+$H=\{j:C_j\ge e^{\chi_0Q^3}\}$。
+只在本证明中，以 $K_H$ 删除 $H^c$ 的坐标项而保留原噪声项，且仍在完整根 $t_\alpha$ 处置
+
+$$
+\epsilon_H=V-K_H'(t_\alpha),\quad W_H=K_H''(t_\alpha),\quad
+D_j=1-s_\alpha v_j/v_*,\quad
+w_j=v_j/(\alpha D_j),\quad m_j=-e_j/D_j.
+\tag{123.2}
+$$
+
+有
+
+$$
+|s_\alpha^{(k)}|\le C,\quad
+|w_j^{(k)}|\le Cw_j,\quad |m_j^{(k)}|\le C|e_j|,\quad
+|W_\alpha^{(k)}|+|W_H^{(k)}|\le C\delta\quad(1\le k\le3),
+$$
+
+$$
+W_\alpha\asymp W_H\asymp\delta,\quad
+\sum_{k=0}^3\bigl(|\epsilon_H^{(k)}|
+  +|(W_\alpha-W_H)^{(k)}|\bigr)
+ \le\operatorname{poly}(Q)e^{-b_0Q^3}
+\tag{123.3}
+$$
+
+其中 $b_0>0$。令 $X_j$ 独立且分布为 $N(-e_j,v_j/\alpha)$，$j\in H$，
+$g_\alpha$ 为 $(\sum_HX_j^2-V)/\sqrt\delta+N(0,\sigma^2/\alpha)$ 的密度，则
+
+$$
+\left\|\log\frac{g_\alpha(y)}{g_\alpha(0)}
+ +\sqrt\delta\,t_\alpha y+\frac{\delta y^2}{2W_\alpha}\right\|_{3,R}\longrightarrow0.
+\tag{123.4}
+$$
+
+**证明。** 写 $r_j=v_j/v_*$。完整根方程为
+
+$$
+G(s,\alpha):=\alpha^{-1}\sum_j\frac{v_j}{1-sr_j}
+ +\sum_j\frac{e_j^2}{(1-sr_j)^2}
+ +\frac{\delta\sigma^2s}{2v_*}-V=0.
+\tag{123.5}
+$$
+
+在原有根区间上 $G_s\ge c$，所有三阶及以下混合偏导有界。
+逐次微分 $G(s_\alpha,\alpha)=0$，先得 $G_ss'+G_\alpha=0$，再得
+
+$$
+G_ss''+G_{ss}(s')^2+2G_{s\alpha}s'+G_{\alpha\alpha}=0,
+$$
+
+$$
+G_ss'''+3(G_{ss}s'+G_{s\alpha})s''
+ +G_{sss}(s')^3+3G_{ss\alpha}(s')^2
+ +3G_{s\alpha\alpha}s'+G_{\alpha\alpha\alpha}=0.
+\tag{123.6}
+$$
+
+因此 $s',s'',s'''$ 均有界。商法则给 $w,m$ 的三阶界。再由
+
+$$
+W_\alpha=2\sum_jw_j^2+4\sum_jw_jm_j^2+\delta\sigma^2/\alpha
+\tag{123.7}
+$$
+
+得 $W$ 的界；$\sum w_jm_j^2\le C v_*\|e\|^2$。
+原低组界为
+
+$$
+\sum_{H^c}v_j\le\operatorname{poly}(Q)e^{-(c_q-\chi_0)Q^3},\qquad
+\sum_{H^c}e_j^2\le\operatorname{poly}(Q)e^{-(c_q-2\chi_0)Q^3}.
+\tag{123.8}
+$$
+
+每个删除项的前三次全导数仍带 $v_j$ 或 $e_j^2$，且
+$|t_\alpha^{(k)}|\le C/\delta$，$0\le k\le3$，这证明差量界。
+
+完整鞍点倾斜下，高组均值、方差正是 $m_j,w_j$。
+把高组能量与原能量噪声中心化并以 $\sqrt{W_H}$ 标准化，其精确特征函数为
+
+$$
+\psi_\alpha(\xi)=e^{-\beta_G^2\xi^2/2}
+\prod_{j\in H}e^{-i\xi a_j}(1-2i\xi a_j)^{-1/2}
+ \exp\left[-\frac{\beta_j^2\xi^2}{2(1-2i\xi a_j)}\right],
+$$
+
+$$
+a_j=w_j/\sqrt{W_H},\quad
+\beta_j=2m_j\sqrt{w_j}/\sqrt{W_H},\quad
+\beta_G=\sqrt{\delta\sigma^2/\alpha}/\sqrt{W_H}.
+\tag{123.9}
+$$
+
+其方差恰为一。前三次系数导数分别由 $Ca_j,C|\beta_j|,C|\beta_G|$ 控制，
+$\max a_j\le C\sqrt\delta$，核心块有 $c/\delta$ 项满足 $a_j^2\asymp\delta$。
+故
+
+$$
+|\psi_\alpha(\xi)|\le E_Q(\xi):=(1+c\delta\xi^2)^{-c'/\delta}.
+\tag{123.10}
+$$
+
+对中心对数因子逐次求导，利用
+$|\xi a_j|/|1-2i\xi a_j|\le1/2$，每个一至三阶导数均由 $C\xi^2a_j^2$ 控制。
+非中心因子相应由 $C\xi^2\beta_j^2$ 控制，噪声由 $C\xi^2\beta_G^2$ 控制。
+对指数再用三次乘法法则，得到
+
+$$
+|\partial_\alpha^k\psi_\alpha(\xi)|
+ \le C_k(1+|\xi|^{2k})E_Q(\xi),\quad 0\le k\le3.
+\tag{123.11}
+$$
+
+包络的所有固定多项式矩一致可积，尾部一致消失。
+在 $|\xi|\le\delta^{-1/2}$ 用 Gaussian 上界；在外侧置
+$u=\sqrt\delta|\xi|$，积分指数为 $-c'/\delta$ 的幂即可。
+固定频率紧集上，直接展开式 (123.9) 及其前三次导数给
+
+$$
+\log\psi_\alpha(\xi)=-\xi^2/2+O(\sqrt\delta|\xi|^3),\quad
+\partial_\alpha^k\log\psi_\alpha(\xi)
+ =O(\sqrt\delta|\xi|^3),\quad1\le k\le3.
+\tag{123.12}
+$$
+
+二次项的各阶导数为零来自恒等方差一；余项用 $\max a_j\le C\sqrt\delta$
+和平方系数和有界逐项求导。这是对精确变换的估计。
+若 $q_\alpha$ 为标准化密度，Fourier 反演给
+
+$$
+\partial_z^h q_\alpha\to\varphi^{(h)}\quad(0\le h\le3),\qquad
+\partial_\alpha^k\partial_z^h q_\alpha\to0
+ \quad(k\ge1,\ k+h\le3),
+\tag{123.13}
+$$
+
+对 $\alpha\in[1,2],z\in\mathbb R$ 一致。
+可微性由同一可积包络证明。
+$z_y=(\sqrt\delta y+\epsilon_H)/\sqrt{W_H}$ 及前三次导数在紧输出上一致有界，
+故 $q_\alpha(z_y)\ge c_R>0$，三次链式法则给
+
+$$
+\log\frac{q_\alpha(z_y)}{q_\alpha(z_0)}
+ =-\frac{z_y^2-z_0^2}{2}+o_{C^3}(1).
+\tag{123.14}
+$$
+
+精确撤销倾斜为
+
+$$
+g_\alpha(y)=\frac{\sqrt\delta}{\sqrt{W_H}}
+ e^{K_H(t_\alpha)-t_\alpha(V+\sqrt\delta y)}q_\alpha(z_y).
+\tag{123.15}
+$$
+
+比值中速率与前因子消去；式 (123.3) 支付 $\epsilon_H$ 和 $W_H-W_\alpha$ 的全部三次导数，
+得到 (123.4)。∎
+

@@ -26,7 +26,7 @@ namespace D5.S3.Quantum.QuantumChannels.ElementaryChannelDivisibility
 
 variable {n : Type*} [Fintype n] [DecidableEq n]
 
-private theorem factor_of_kernel (R S : Matrix n n ℂ)
+theorem factor_of_kernel (R S : Matrix n n ℂ)
     (hker : ∀ v, R *ᵥ v = 0 → S *ᵥ v = 0) :
     ∃ C : Matrix n n ℂ, S = C * R := by
   let r := R.mulVecLin
@@ -403,7 +403,7 @@ private theorem necessary_independent {ι κ : Type*} [Fintype ι] [Fintype κ]
     Necessary K x y ↔ Necessary L x y := by
   simp only [necessary_kernel, hKL]
 
-private theorem kernel_of_sub_psd (A B : Matrix n n ℂ)
+theorem kernel_of_sub_psd (A B : Matrix n n ℂ)
     (hB : B.PosSemidef) (t : ℝ) (ht : 0 < t) (hAB : (A - t • B).PosSemidef) :
     ∀ v, A *ᵥ v = 0 → B *ᵥ v = 0 := by
   intro v hv
@@ -543,7 +543,7 @@ private theorem fixed_pair_iff {ι : Type*} [Fintype ι]
     exact kernel_of_sub_psd A (Z * A * Zᴴ) hB t ht
       ((residual_cp_iff K t ht ht1 x y hxy.1).mp hcp)
 
-private theorem basis_pair (r s : n) (hrs : r ≠ s) :
+theorem basis_pair (r s : n) (hrs : r ≠ s) :
     OrthogonalUnitPair (Pi.single r 1) (Pi.single s 1 : n → ℂ) := by
   simp [OrthogonalUnitPair, Pi.star_single, single_dotProduct, hrs, hrs.symm]
 

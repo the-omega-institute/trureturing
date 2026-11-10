@@ -1,0 +1,10 @@
+**定义 2.1（单窗口观察映射）。** 定义
+
+$$
+\Phi_k:\operatorname{Mat}_k(K)\longrightarrow K^{\mathcal D_k},
+\qquad
+\Phi_k(A)_{p,t}=\operatorname{tr}(E_{p,t}A).
+$$
+
+其第 $(p,t)$ 个坐标是矩阵 $A$ 的第 $t$ 列前 $k-p$ 个坐标之和。
+

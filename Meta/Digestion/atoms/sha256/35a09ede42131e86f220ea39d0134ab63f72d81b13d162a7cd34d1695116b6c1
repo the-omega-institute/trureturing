@@ -1,0 +1,45 @@
+**Theorem 6.1 (mixed gain output at $2d+4$ reads).** The mixed chronological word $JM^{2m}$ admits one fixed linear gain-ray map with output
+
+$$
+\operatorname{tr}(JP)\beta,
+\tag{6.1}
+$$
+
+which is nonzero for every world.
+
+**Proof and construction.** Execute one $J$ and then $2m$ individual $M$ actions, reading after each and including $z_0$. The actual clocks are $0,\ldots,2m+1$. For $i\ge1$,
+
+$$
+A_i=M^{i-1}J,\qquad
+z_i=\bigl(\alpha'\phi^{i-1}+\eta'\psi^{i-1}\bigr)g(i)+\delta,
+$$
+
+where $\alpha'=\operatorname{tr}(\Pi_+JP)$ and $\eta'=\operatorname{tr}(\Pi_-JP)$. Their sum is $\operatorname{tr}(JP)=P_{12}+P_{21}>0$.
+
+For each $k$, let $h_k$ be the unique degree-at-most-$2m$ polynomial satisfying
+
+$$
+h_k(1)=0,\qquad
+((D+1)^j h_k)(\phi)=((D+1)^j h_k)(\psi)=\delta_{jk}
+\quad(0\le j\le d).
+\tag{6.2}
+$$
+
+Existence and uniqueness follow from the complete square-system argument of Lemma 5.1, including its root-multiplicity proof. Write $h_k(x)=\sum_{r=0}^{2m}b_{kr}x^r$ and define
+
+$$
+Y_k=\sum_{r=0}^{2m}b_{kr}z_{r+1}.
+\tag{6.3}
+$$
+
+This is a fixed matrix on the entire acquired data vector, with coefficient zero on $z_0$. Equation (4.3) gives
+
+$$
+Y_k=\sum_{j=0}^d\beta_j
+\left(\alpha'((D+1)^j h_k)(\phi)+
+\eta'((D+1)^j h_k)(\psi)\right)
+=(\alpha'+\eta')\beta_k.
+$$
+
+Thus (6.1) holds with a strictly positive scale, regardless of sampled roots, actual degree, signs, or drift. The polynomial exponent $r$ only specifies the coefficient of the read acquired at original clock $r+1$; it does not renumber the acquisition. The construction takes exactly $2m+2=2d+4$ reads. It asserts a mixed gain-ray realization, without claiming complete-target recovery on this word. $\square$
+

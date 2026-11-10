@@ -1,0 +1,12 @@
+**命题 4.1（Rank one, free grounds, and coloops）。** Under
+Definition 1.3 with $|A|\le |B|$ the following statements hold.
+
+1. If $r=1$, every source basis is matched.
+2. If $|A|=|B|=r$, both matroids are free and are matched.
+3. If $r\ge2$ and $q=|B|-r\ge2$, $N$ has no coloops.
+4. If $r\ge2$ and $q=1$, $N$ is either uniform, or it has exactly
+   one coloop $e$ and exactly one circuit-hyperplane $B\setminus\{e\}$.
+   In the latter case its bases are precisely the $r$-subsets containing
+   $e$. At equality $|A|=|B|=r+1$, failure occurs exactly for the
+   endpoint blocks in Theorem 3.3 for which $U_j=\{e\}$.
+

@@ -1,0 +1,142 @@
+**Theorem 136.1 (A source-dependent reflection bound; repo-derived).**
+For every allowed source $\mathfrak s$, let
+$\underline c,\overline C,J_1$ be exactly the positive constants
+in Theorem 126.1, and define from this source alone
+
+$$
+\begin{aligned}
+G_0&=\frac{2\sqrt2\,\overline C}{\underline c},&
+R_0&=1+J_1G_0,\\
+\kappa_{\mathfrak s}
+ &=\tau+|s_\theta c_\theta|(\|D\|_{\rm HS}+b),\\
+C_{\rm ref}
+ &=R_{\mathfrak s}\bigl[
+       (b+2|s_\theta c_\theta|\tau)(R_0+1)
+                           +\kappa_{\mathfrak s}G_0\bigr]>0.
+\end{aligned}
+\tag{136.1}
+$$
+
+Then for every $0<A<1$ and every complex transverse unit $f$ of
+Definition 125.1,
+
+$$
+\boxed{\quad 0\le\delta_a=n_a-m_a\le C_{\rm ref}\epsilon_N.\quad}
+\tag{136.2}
+$$
+
+The constant is independent of $A,f$ for this fixed source, but no
+bound uniform over allowed sources is asserted. More precisely, for
+all complex $z,g$, without a boundedness restriction,
+
+$$
+\mathcal F_a(\Pi z,0)
+ \le\mathcal F_a(z,g)+\tfrac12\epsilon_N\mathscr B_A(z,g).
+\tag{136.3}
+$$
+
+If $\epsilon_N=0$, the full-law tangent problem has
+
+$$
+\begin{gathered}
+\mathcal F_a(Wz,-g)=\mathcal F_a(z,g),\qquad
+\mathcal F_a((I_3+W)z/2,0)\le\mathcal F_a(z,g)
+                      \quad(z\in\mathbb C^3,g\in\mathbb C),\\
+0<\alpha_{\mathfrak s}A\le
+m_a=n_a=\min_{z\perp e}\mathcal F_a(z,0).
+\end{gathered}
+\tag{136.4}
+$$
+
+The last minimum is attained on the complex two-dimensional space
+$e^\perp$, hence is a minimization over four real variables. There
+exists a zero-retention tangent minimizer. Neither uniqueness nor
+zero retention of every tangent minimizer is asserted.
+
+*Proof.* Convexity of $\mathcal F_a$ is Theorem 126.1. The midpoint
+of $(z,g)$ and $\mathscr T(z,g)$ is $(\Pi z,0)$, so (135.5) gives
+
+$$
+\begin{aligned}
+\mathcal F_a(\Pi z,0)
+ &\le\tfrac12\bigl(\mathcal F_a(z,g)+\mathcal F_a(Wz,-g)\bigr)\\
+ &\le\mathcal F_a(z,g)+\tfrac12\epsilon_N\mathscr B_A(z,g).
+\end{aligned}
+\tag{136.5}
+$$
+
+This proves (136.3) for every point of the eight-real-variable space.
+To bound its remainder at an unrestricted minimizer, use the
+rank-one norm identity $\|uv^\dagger\|_{\rm HS}=\|u\|\|v\|$ and
+(125.3). They imply
+
+$$
+\begin{aligned}
+\|H_1(z)\|_{\rm HS}&\le2A(\|z\|+1),\\
+\|S_1(z)\|_{\rm HS}&\le2\tau(\|z\|+1),\\
+\|X_1(z)\|_{\rm HS}+\|Y_1(z)\|_{\rm HS}
+ &\le b\|H_1(z)\|_{\rm HS}
+                +2|s_\theta c_\theta|\|S_1(z)\|_{\rm HS}\\
+ &\le2(Ab+2|s_\theta c_\theta|\tau)(\|z\|+1),\\
+\|K_-\|_{\rm HS}
+ &\le A\tau+|s_\theta c_\theta|(\|D\|_{\rm HS}+bA^2)
+ \le\kappa_{\mathfrak s}.
+\end{aligned}
+\tag{136.6}
+$$
+
+Let $(z_*,g_*)$ be any attained unrestricted minimizer from
+Theorem 126.1. Its bounds (126.3), with
+$M=2\sqrt2\,\overline C A$, are exactly
+
+$$
+\|z_*\|\le R_0,\qquad |g_*|\le AG_0\le G_0.
+\tag{136.7}
+$$
+
+Equations (135.3), (136.6) and $A<1$ give
+$\mathscr B_A(z_*,g_*)/2\le C_{\rm ref}$. Restriction to $g=0$
+and (136.3) yield
+
+$$
+m_a\le n_a\le\mathcal F_a(\Pi z_*,0)
+                       \le m_a+C_{\rm ref}\epsilon_N,
+$$
+
+proving (136.2). Every quantity in (136.1) comes from the fixed
+source, including its actual weighted decoder bounds; it is not a
+constant for a normalized collection of states.
+
+When $\epsilon_N=0$, (135.5) proves full tangent invariance and
+(136.5) proves fixed-subspace nonincrease. Apply them to the same
+minimizer: its projection $(\Pi z_*,0)$ has value at most $m_a$,
+so its value is $m_a$. Since $\Pi z_*\perp e$, this also attains the
+restricted minimum in (136.4); the reverse inequalities follow
+from inclusion of feasible sets. Positivity is (126.2).
+For a complex unit $k$ making $(e,f,k)$ orthonormal, write every
+transverse vector uniquely as
+
+$$
+z=(x_1+\mathrm i x_2)f+(x_3+\mathrm i x_4)k,\qquad x\in\mathbb R^4.
+\tag{136.8}
+$$
+
+This proves the claimed four-variable reduction without imposing
+reality on $f,z$ or $g$ in the original problem.
+
+The convex midpoint step is the classical Reynolds averaging
+intermediary: Gatermann–Parrilo,
+[*Symmetry groups, semidefinite programs, and sums of squares*,
+arXiv:math/0211450v1, §3, Definition 3.1 and Theorem
+3.3](https://arxiv.org/pdf/math/0211450v1), prove fixed-subspace
+reduction for invariant convex semidefinite problems. The paragraph
+following their proof explicitly distinguishes nonconvex problems,
+whose minimizers need not be symmetric. Here convexity is supplied
+by the literal affine-row supremum of Theorem 126.1, and the needed
+source invariance is proved by (135.4)–(135.5). Averaging is solely
+an inequality between these tangent parameters. It asserts neither
+convexity of the nonlinear completion image nor an averaging protocol
+for installations, preparations or retention channels. Every
+admissible nonlinear lift of a parameter still uses its one shared
+full completion as in VI Theorem 106.3. $\square$
+

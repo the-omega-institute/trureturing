@@ -1,0 +1,17 @@
+**定义 3.1（四盒 Bernstein 证书）。** Use exactly the integer polynomial factors (2.3), (2.11), (2.12). Expansion gives a polynomial $\Phi$ characterized by
+
+$$
+\Delta(x,e,ez)=144e^3\Phi(x,e,z),\qquad
+\deg_{x,e,z}\Phi\le(6,10,5).                                  \tag{3.1}
+$$
+
+The identity specifies its polynomial extension at $e=0$; it is an exact polynomial division. Its expanded polynomial has $281$ nonzero monomials.
+
+For $\ell=1,2,3,4$, use the following endpoints:
+
+| $\ell$ | $e_\ell^-$ | $e_\ell^+$ | $z_\ell^-$ | $z_\ell^+$ |
+| --- | --- | --- | --- | --- |
+| 1 | $0$ | $1/28$ | $0$ | $11/2$ |
+| 2 | $0$ | $1/28$ | $11/2$ | $11$ |
+| 3 | $1/28$ | $1/14$ | $0$ | $11/2$ |
+| 4 | $1/28$ | $1/14$ | $11/2$ | $11$ |

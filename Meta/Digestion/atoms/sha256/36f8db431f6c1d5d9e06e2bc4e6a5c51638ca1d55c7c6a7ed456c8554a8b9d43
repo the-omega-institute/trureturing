@@ -1,0 +1,58 @@
+**Theorem 10.4 (a sharp fixed two-channel native law).** In the entire source (10.2), fix $r=2$, any $h>0$, arbitrary fixed $C,E\in\mathbb R_{>0}^2$, and the native loop vectors
+
+$$
+A=h(1,1),\qquad B=h(1,2).
+\tag{10.10}
+$$
+
+For every $\epsilon>0$, the exact minimum static alphabet and exact minimum number of reachable complete online states are both
+
+$$
+s_{\min}=o_{\min}
+ =\left(\left\lfloor\frac{2\epsilon}{h}\right\rfloor+1\right)^2.
+\tag{10.11}
+$$
+
+The native pair without supplementation recovers all histories exactly when $h>2\epsilon$. For every integer $k\ge0$, throughout the closed-left, open-right range $kh\le2\epsilon<(k+1)h$ the common minimum is $(k+1)^2$; the case $k=0$ is restricted to $\epsilon>0$ as above. Equality $2\epsilon=kh$ is included in the larger value at that threshold.
+
+Proof. The map from lap-count differences to normalized native differences is the integer matrix
+
+$$
+(j,k)\longmapsto(j+k,j+2k),\qquad
+\begin{pmatrix}1&1\\1&2\end{pmatrix}^{-1}
+ =\begin{pmatrix}2&-1\\-1&1\end{pmatrix}.
+\tag{10.12}
+$$
+
+Its determinant is one, so $\Lambda=h\mathbb Z^2$ and $\delta=h$. Thus Theorem 10.3 supplies both the native criterion and an online construction on $q^2$ full states, with $q=\lfloor2\epsilon/h\rfloor+1$. It uses the already fixed (10.10), not newly assigned edge vectors.
+
+For the matching static lower bound, set $k=\lfloor2\epsilon/h\rfloor$. For each $0\le i,j\le k$ choose the actual word
+
+$$
+u_{ij}=a^{\,k+2i-j}\,c\,a^{\,k+j-i}.
+\tag{10.13}
+$$
+
+Both exponents are nonnegative, since their minima are respectively zero and zero. They give distinct words because (10.12) is invertible, and they all end at $s$. Their normalized two loop totals are
+
+$$
+(m+n,m+2n)=(2k+i,3k+j).
+$$
+
+In particular their $(k+1)^2$ final observation boxes all contain the same point
+
+$$
+y_*=C+h\left(2k+\frac{k}{2},\,3k+\frac{k}{2}\right),
+\qquad
+\|y_*-T(u_{ij})\|_\infty\le\frac{hk}{2}\le\epsilon.
+\tag{10.14}
+$$
+
+Any smaller alphabet gives two words the same label, and the single actual permitted decoder input $(s,\lambda,y_*)$, with $\lambda$ their shared label, then has two different required outputs. This is a lower bound on every static assignment, without a linearity or periodicity restriction, and hence on every complete online register. It is an actual translated square inside the nonnegative history cone, not a clique imported from unreachable lattice points. Appending $e$ gives the same obstruction at $t$, translated by $E$.
+
+The construction (10.8) attains the lower bound. Its $q^2$ values are all reached by legal histories at $s$, so no phase or unused-state discount enters the equality. At $p$, the empty word is initialized at $(0,0)$ and the other histories have $(m,0)$; equal-endpoint, equal-state comparisons have gaps at least $qh$. At $s$, $c$ has value $(0,0)$, and all choices with either exponent zero obey (10.9). At $t$, $e$ preserves that same full state, and there is no later operation to track. Thus the lower and upper arguments cover the empty, zero-lap, intermediate and terminal histories simultaneously.
+
+At a positive equality threshold $2\epsilon=kh$, equation (10.14) still holds with closed boxes. Below that threshold the corresponding $k$-wide square is no longer forced by this argument, while the upper bound with the smaller $q$ applies. This proves the exact threshold law. $\square$
+
+The maximum-metric lattice/coding mechanism used inside this proof is classical. Qureshi–Costa, [*On cube tilings of tori and classification of perfect codes in the maximum metric*, arXiv:1512.05908v2, §2, pp.3–4, Definition 2.7 and Proposition 3.1](https://arxiv.org/pdf/1512.05908v2), study codes in $\mathbb Z_Q^n$ with the circular maximum metric, integer packing radius $e$, and their perfect-code condition $Q=(2e+1)t$. Their Cartesian code and Construction A are suppliers for periodic lattice separation; those finite-torus and integer-radius conditions are not imposed on the real final box in (10.1), and no perfect-code classification is asserted here. Theorem 10.4 connects that familiar geometry to actual nonnegative root words, this source's single shared $a$ token, and a complete online implementation attaining the static lower bound. Generic rank, lattice separation and coloring alone would not establish that last acquisition-compatible equality.
+

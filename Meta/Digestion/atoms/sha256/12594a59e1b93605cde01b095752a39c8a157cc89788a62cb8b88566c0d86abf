@@ -1,0 +1,46 @@
+**Lemma 82.2 (one graded row has monic collisions).** Freeze any finite
+receiver path up to a Read. Write its homogeneous response as
+$\rho x$ and its common affine offset as $b_0$. Then $\rho$ is a
+nonnegative integral row on the original seven cells and, for one
+$p\in\{0,1\}$,
+
+$$
+\rho A^k e=0\quad(k\not\equiv p\pmod2).
+\tag{82.2}
+$$
+
+On the other parity, one such row fails to distinguish all finite
+quaternary coefficient polynomials. It also fails on monic polynomials of
+that parity whose degrees exceed any specified finite bound.
+
+**Proof.** The homogeneous maps of a frozen path are products of native
+zero-inclusions and nonnegative integral adjacency matrices. Rational Adds
+supply only the common affine term. Lemma 76.1 proves (82.2), including
+through growth; its effective parity is current terminal depth minus seed
+depth minus the actual number of Ticks, modulo two.
+
+Use the explicit positive comparison already proved in NLBAII §73:
+
+$$
+h=(27,52,75,96,66,34,49)^{\mathsf T},\qquad
+Ah\le c h,\qquad c=95/48<2.
+\tag{82.3}
+$$
+
+Since $e\le h/27$, positivity gives
+$0\le\rho A^ke\le(\rho h/27)c^k$ for all $k\ge0$.
+For $n$ independent digits at powers $p,p+2,\ldots,p+2(n-1)$,
+the $4^n$ possible row values are nonnegative integers in an interval
+of length at most
+$3(\rho h/27)\sum_{i<n}c^{p+2i}=O_\rho(c^{2n})$.
+Because $c^2<4$, this interval contains fewer than $4^n$ integers
+for sufficiently large $n$. Two different digit choices collide.
+If the row is zero the same conclusion is immediate.
+
+For monic collisions choose, after choosing $n$, one fixed higher exponent
+$K\equiv p\pmod2$ exceeding all these powers and the prescribed bound.
+Add $z^K$ to every candidate. This translates the row values by the same
+integer and preserves the collision. All intervening coefficients are zero,
+so these are genuine monic quaternary polynomials. The degree $K$ may grow
+with $n$; it does not enlarge the interval of differences. $\square$
+

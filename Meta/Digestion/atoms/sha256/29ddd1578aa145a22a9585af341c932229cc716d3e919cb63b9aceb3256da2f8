@@ -1,0 +1,38 @@
+## 37. Terminal separation and the outside-companion obligation
+
+**Theorem 37.1.** At the base (36.1), the exact terminal differences satisfy
+$$
+ \frac{136776}{10^9}<a_+-a_-<\frac{151470}{10^9},\qquad
+ \frac{32718}{10^9}<m_+-m_-<\frac{38070}{10^9}.
+ \tag{37.1}
+$$
+In particular both terminal readings are distinct between the two local
+worlds.
+
+**Proof.** Equation (36.2) gives
+$$
+ 246/10^9<r_+-r_-<270/10^9.
+$$
+Integrating the two terminal derivative bounds in (34.4) along the single
+fixed-$p_{\rm f}$ curve gives
+$$
+ 556(r_+-r_-)<a_+-a_-<561(r_+-r_-),
+$$
+and the analogous inequalities with 133 and 141 for $m$.
+Multiplication gives exactly (37.1). ∎
+
+For orientation only, the two sources and terminal responses are
+approximately
+$$
+ \begin{array}{c|cc}
+ &-&+\\\hline
+ r&0.31379323282826445&0.31379349079889706\\
+ b&1.0000000103951462&0.9999999896048728\\
+ a&815.3689072363648&815.3690513474424\\
+ m&1695.3201035209611&1695.3201388014454.
+ \end{array}
+$$
+The rational inequalities and exact definitions, not these rounded
+illustrations, establish existence, equality of acquired readings and
+terminal separation.
+

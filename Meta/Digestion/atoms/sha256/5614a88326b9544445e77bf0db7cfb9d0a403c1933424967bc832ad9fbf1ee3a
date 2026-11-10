@@ -1,0 +1,14 @@
+**Definition 24.1 (the source, the reports and the paid normalization).** Keep exactly Definitions 17.1–17.3, including their arbitrary authentic attachment bijection, complete raw roster, original root-bound growth dispatcher, unit-adjacency field, full-field Reset, current rights, serialization and backing. In particular an old generation word does not prescribe the attachment permutation. Quantify over every finite reachable entry $t$, every legal old word ending at it, and every attachment bijection $\lambda_0$. Write $a+c=L\ge3$ for its entry leaf counts, and $n=2L-1$ for its number of logical nodes. The required reports are the exact entry $(t,\lambda_0)$ and the exact actual advanced term, full field and current raw binding. An unchanged endpoint is not required.
+
+First actually perform the all-$P$ traversal of [Atomic Generation Acquisition II, Definition 54.1 and Theorem 54.2](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_II.md), abbreviated AAII. A branch refusal schedules its original left and right children; a promotion or wrong-type leaf reply finishes that visit. This uses only the original growth channel, so its proof applies to the restriction of the present richer service to that channel. It earns $t$ and the actual $\nu(t)$, where every original logical leaf has become $\beta$, without learning $\lambda_0$. There are $n$ real $P$ calls, $a$ successes, and no $S$ calls. The field remains zero by the persistent lift (NLBAII.3).
+
+Enumerate the earned original logical leaves in left-to-right order as $p_1,\ldots,p_L$, retaining their original types $\eta_i\in\{\alpha,\beta\}$. The initial label belonging to leaf $i$ was bound to
+
+$$
+e_i=\begin{cases}p_i,&\eta_i=\alpha,\\p_iL,&\eta_i=\beta,\end{cases}
+\qquad\text{and is now bound to }p_iL.
+\tag{NLBAII.20}
+$$
+
+The last assertion follows from the actual promotion inheritance rule, not from a known permutation. Let $j_i=\lambda_0^{-1}(e_i)$ denote the still unknown initial label; this is a proof parameter, not a controller operand. Retain the entry code separately from its mutable current code. The traversal stack, the codes and their construction have their actual costs.
+

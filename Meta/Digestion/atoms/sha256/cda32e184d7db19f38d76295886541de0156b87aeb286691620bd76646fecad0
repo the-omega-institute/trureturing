@@ -1,0 +1,30 @@
+**Theorem 8.3 (reused lawful selector bridge and its DP consequence).** SOME-LAWFUL-ACQUIRED-CODE is equivalent to the conjunction
+
+$$
+\begin{aligned}
+\mathrm{Coverage}:&\quad\forall u\in\mathcal U_*,\
+\operatorname{Good}_0(u)\lor\operatorname{Good}_1(u),\\
+\mathrm{DistinctPair}:&\quad\exists u_0,u_1\in\mathcal U_*,\
+u_0\ne u_1\ \land\operatorname{Good}_0(u_0)\land\operatorname{Good}_1(u_1).
+\end{aligned}
+\tag{POC.21}
+$$
+
+It is in DP with $T$ part of the explicit input, and hence also for a literally fixed $T$.
+
+Proof. The equivalence is the distinct-point form of FCS Theorem 6.1. Necessity follows by choosing one source from each of a both-attained deterministic code's two fibers; they are different. For sufficiency Lemma 8.2 supplies a finite exact profile partition. Coverage permits a fixed good default for each profile. Store the two actual finite current tuples $X^0,X^1$ from DistinctPair and define the acquired-term code
+
+$$
+\widehat\sigma(x)=
+\begin{cases}
+0,&x=X^0,\\
+1,&x=X^1,\\
+\min G_{\eta(x)},&\text{otherwise},
+\end{cases}
+\tag{POC.22}
+$$
+
+where $G_\eta$ is the nonempty good set of the exposed profile. Finite structural equality of entire acquired tuples, prefix extraction and finite lookup terminate. A representation check with fixed fallback makes the program total on malformed finite data as well. The tuple uniquely determines its origin, so the exceptions are disjoint and give exactly the intended two distinct actual witnesses. Defaults and exceptions all choose good entries. Actual export and entry are supplied services. This is a lawful acquired computation without a claim of bounded native generation or a small producer program. A singleton profile remains one point: if both witness profiles coincide, that cell must contain at least two points, and Lemma 8.2 excludes its being closed.
+
+The new complexity consequence separates the two clauses. A failure of Coverage has a one-origin polynomial certificate on which both entries fail, recognized by Theorem 6.3 and Lemma 6.2, so Coverage is coNP. DistinctPair is NP: Theorem 5.3's cap-twelve construction preserves the entire equality matrix and genuine source inequality along with the two good behaviors, even inside one common behavior cell. Its joint semantic verifier checks both good runs and inequality. Their conjunction is DP. The finite lawful bridge is reused; this DP ceiling is its certificate-size consequence. $\square$
+

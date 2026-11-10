@@ -1,0 +1,68 @@
+**Theorem 12.2 (Eight reachable rays and one full-domain phase request).**
+Under Definition 12.1 take the original relative command
+
+$$
+\gamma(s)=(a(s),b(s))=(0,4\pi s),\qquad 0\le s\le1,
+\qquad T=T_\gamma.
+\tag{12.3}
+$$
+
+Its entire guard is $\mathcal M$. Define
+
+$$
+\begin{gathered}
+k_1=r/8,\qquad k_2=3r/8,\qquad s_1=1,\quad s_2=-1,\\
+\lambda_1=\frac{\sqrt3}{1+\sqrt3},\qquad
+\lambda_2=\frac1{1+\sqrt3},\qquad
+c=\lambda_1\sqrt{Zk_1}=\lambda_2\sqrt{Zk_2}
+ =\frac{\sqrt{3Zr/8}}{1+\sqrt3}>0.
+\end{gathered}
+\tag{12.4}
+$$
+
+For $\varepsilon,\tau\in\{1,-1\}$ and $j\in\{1,2\}$, specify source
+points $x_{\varepsilon j\tau}=(k_j,u_{\varepsilon j},v_\tau)$ by
+
+$$
+e^{-iu_{\varepsilon j}}=\varepsilon s_j e^{i\eta_0},
+\qquad e^{-iv_\tau}=\tau.
+\tag{12.5}
+$$
+
+Let $P_{\varepsilon j\tau}=P(x_{\varepsilon j\tau})$ and
+$P'_{\varepsilon j\tau}=P(Tx_{\varepsilon j\tau})$.
+The two finite probability laws
+
+$$
+\mu_\varepsilon
+ =\sum_{j=1}^2\sum_{\tau=\pm1}
+       \frac{\lambda_j}{2}\,\delta_{x_{\varepsilon j\tau}}
+\tag{12.6}
+$$
+
+have the following properties.
+
+1. Each of their eight distinct rays has all five original probabilities
+   strictly positive, and is reachable from the same fixed preparation.
+   Their complete density barycenters are exactly equal:
+
+$$
+\sum_{j,\tau}\frac{\lambda_j}{2}P_{+j\tau}
+ =\sum_{j,\tau}\frac{\lambda_j}{2}P_{-j\tau}=R_0.
+\tag{12.7}
+$$
+
+2. After (12.3), their barycenters $R'_\varepsilon$ have original signed
+   readouts and trace distance
+
+$$
+\begin{gathered}
+R'_\varepsilon=\sum_{j,\tau}\frac{\lambda_j}{2}
+                         P'_{\varepsilon j\tau},\qquad
+q_I(R'_\varepsilon)=-4\varepsilon c,\\
+|q_I(R'_+)-q_I(R'_-)|=8c,\qquad
+D(R'_+,R'_-)=4\sqrt2\,c.
+\end{gathered}
+\tag{12.8}
+$$
+

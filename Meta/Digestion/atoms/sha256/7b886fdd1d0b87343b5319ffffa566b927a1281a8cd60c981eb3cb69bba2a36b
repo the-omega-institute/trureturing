@@ -1,0 +1,22 @@
+**定理 25.2（标量交叠像与平方差像的准确面积）。** 在 24.1 下，若原 $a,b$ 的像满足 $\bar a\circ\bar b\in\mathbb R1$ 或 $\bar a^2-\bar b^2\in\mathbb R1$，则
+
+$$
+\bar a\circ\bar d=\bar b\circ\bar d=0,
+\qquad \bar d^2=\bar a^2\bar b^2-(\bar a\circ\bar b)^2,
+\qquad d=D(a,b).
+\tag{25.8}
+$$
+
+证明。若 $\bar a\circ\bar b=\tau1$，原 PB $(a,b,0)$ 的外层第二标签像为 $\pm\tau1$。24.2 使它们的旧输出像为零，故 $\bar b\circ\bar d=0$；交换原输入给另一份正交。若只有像平方差为标量，实际旋转 $(a+b,b-a)/\sqrt2$ 使像交叠为标量，185.1 保持实际旧输出，反解旋转给原像两份正交。
+
+两种情形都使 (25.1) 成立，25.1 先给面积下界。取含有真实响应像的
+
+$$
+B=C^*(1,\bar a,\bar b,\bar d),\qquad
+Z=C^*(1,\bar a^2,\bar b^2,\bar a\circ\bar b,\bar d^2)\subset Z(B).
+$$
+
+在每份非零中央商中，将其四个值写为 $\alpha1,\beta1,\gamma1,\delta^21$。若 $\delta>0$，选 $\bar d$ 的商像上绝对值为 $\delta$ 的谱支撑态并延到 $A'$；原 $(a,b)$ 的 (24.1) 给 $\delta^2\le\alpha\beta-\gamma^2$。$\delta=0$ 时这由像输入的实 Gram 正性成立。字符分离给相反算子上界，得到等号。
+
+18.2 的单坐标 Gram 计算因此亦可精确使用：若实际原对的像 Gram 为 $M_0 1+M_1R$，一个实际 SO$(2)$ 旋转对角化实对称 $M_1$，使像交叠为标量，再用 (25.8) 并反解。$M_1\ne0$ 时，$R$ 为某个旋转后像平方与单位的实线性组合，故与该份实际响应像交换；$M_1=0$ 时不作此断言。这里没有给原对在 $E$ 中添上标量交叠或平方差。∎
+

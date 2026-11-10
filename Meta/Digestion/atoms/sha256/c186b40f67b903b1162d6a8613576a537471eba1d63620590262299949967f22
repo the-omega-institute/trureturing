@@ -1,0 +1,28 @@
+**命题 15.4（Odd-rim wheels at larger even fibres）。**
+For every integer $r\geq2$, let $H=K_1\vee C_{2r+1}$ have only
+its rim and hub edges. For every integer $S\geq2$, all conclusions
+(15.2) hold on its original fibres of size $s=2S\geq4$ and the
+full complex $k=(2r+2)S$ carrier. For $r=2$ they also hold at $S=1$
+by Proposition 15.3.
+
+Proof. The graph is connected, simple and unit-weight of even order
+$2r+2$. Each rim neighborhood is the three-vertex path through the
+hub, hence bipartite; the hub neighborhood is $C_{2r+1}$.
+Put $q=2r+1$. Its Fourier vectors
+$z^{(j)}_i=\exp(2\pi\mathrm i ji/q)$, $0\leq i,j<q$, have
+modulus-one coordinates and eigenvalues $2\cos(2\pi j/q)$.
+The geometric-sum identity makes distinct such vectors orthogonal,
+so they form an eigenbasis. The angles nearest $\pi$ modulo
+$2\pi$ are those for $j=r,r+1$; cosine is increasing with distance
+from $\pi$ on $[0,\pi]$. Thus these two vectors have the least
+eigenvalue $-2\cos(\pi/q)$, and the hub neighborhood has an edge
+and the exact flat least mode required in (b). Theorem 15.2 applies.
+The case $r=2,S=1$ is precisely the no-pendant case already proved.
+
+For $r\geq3,S=1$ this proof asserts no confinement conclusion:
+(15.7) no longer supplies the strict comparison, and the
+five-cycle interval (15.8) does not settle these longer rims.
+Nor does failure of that comparison refute confinement there.
+The longer-odd-rim $s=2$ case and arbitrary connected even-order
+bases remain unresolved by these arguments. $\square$
+

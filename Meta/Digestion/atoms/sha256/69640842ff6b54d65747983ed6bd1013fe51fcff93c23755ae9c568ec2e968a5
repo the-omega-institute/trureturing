@@ -1,0 +1,50 @@
+## 7. Mathematical references
+
+[P1] Aram Bingham, Kyle Celano, Patricia Commins, Rosa Orellana,
+Jianping Pan and Mary Claire Simone, *Principal specializations of the
+t-chromatic symmetric function*,
+[arXiv:2610.31785v1](https://arxiv.org/html/2610.31785v1),
+Definitions 2.1, 2.4, 2.7, 2.9, equation (2.1), Remark 3.11 and
+Definition 3.1, Proposition 3.16(3) and Corollary 3.17. The graph and ordinary coloring conventions, the listed
+pairs and the bipartition interpretation are cited inputs; the
+all-$m,j$ difference, its converse and the family of Theorem 5.2 are the
+additional deductions proved above. Statements about the $t$-refined
+invariant in that source retain their own stronger hypotheses and data.
+
+[P2] Esme Bajo, Matthias Beck and Andrés R. Vindas-Meléndez,
+*q-chromatic polynomials*,
+[arXiv:2403.19573v3](https://arxiv.org/html/2403.19573v3),
+equation (1) and Theorems 1 and 6. Equation (1) uses one-based colors;
+Theorem 1 is the $\mathbb Q(q)[x]$ interpolation at $[k]_q$, and
+Theorem 6 concerns the positive-color infinite specialization. These
+are different contracts from equality at the fixed color bound three.
+
+[P3] Nicholas A. Loehr and Gregory S. Warrington, *A rooted variant of
+Stanley's chromatic symmetric function*,
+[arXiv:2206.05392v3](https://arxiv.org/html/2206.05392v3),
+§2.1, Theorem 17 and Conjecture 21. Theorem 17 concerns rooted trees
+and $X_0(T_*;q,q,1,1)$; Conjecture 21 concerns unrooted trees with at
+most $N+1$ vertices and $N+1$ distinct principal-specialization
+variables. The pairs in Theorem 5.2 have at least twenty-four vertices
+and are compared at three colors, so they do not refute that
+size-dependent conjecture.
+
+[P4] Philippe Flajolet and Robert Sedgewick, *Analytic Combinatorics*,
+§I.2 (admissible constructions and specifications) and §V.6
+(transfer matrix models), [author text](https://ac.cs.princeton.edu/home/)
+and [§V.6 contents](https://ac.cs.princeton.edu/50applications/).
+The formal geometric-series and weighted-path methods are classical
+intermediates in the proof of Theorem 2.1.
+
+[R1] *BinghamCaterpillarPs3Family*,
+[coloring identities and family result](https://github.com/the-omega-institute/trureturing/blob/9d2eb78abd964ce047726ba72b6b8adf076fe10d/D5/S3/Combinatorics/Graph/PrincipalSpecialization/BinghamCaterpillarPs3Family.lean).
+The factorization (2.1) and arbitrary-vector identity used in (2.6) are
+reused, including the private identities cited in that proof.
+
+[R2] *BinghamCaterpillarUniquenessRefutation*,
+[coefficient bridge and nonleaf argument](https://github.com/the-omega-institute/trureturing/blob/9d2eb78abd964ce047726ba72b6b8adf076fe10d/D5/S3/Combinatorics/Graph/PrincipalSpecialization/BinghamCaterpillarUniquenessRefutation.lean).
+The coefficientwise inclusion, nonleaf mechanism and finite
+counterexample cited above are inputs. The unbounded repeated-block
+classification and the injective sequence of unlisted pair classes are
+the deductions of Theorems 2.1--5.2.
+

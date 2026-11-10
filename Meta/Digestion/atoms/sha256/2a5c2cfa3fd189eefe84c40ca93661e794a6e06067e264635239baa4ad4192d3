@@ -1,0 +1,47 @@
+**定义 33.1（原参数、扇区与加权余核）。** 沿用定义 31.1--31.2 的全部原始条件：每个整数 $n\ge2$，整个隔离区间内的每个固定 $g\in(\lambda_n,g_n^{\rm iso})$，以及原定义 18.1 的解析供应者。单位恒等源、完整时间积分、完整无权边缘、raw Lebesgue 物理质量、covariance-$2$ 时钟、$\epsilon=1$、原场 $U,V,Z$ 与单位均保持不变。$\mathscr A$ 仍是包含极点的完整复 Friedrichs 算子，$D(\mathscr A)$ 仍由 (31.3) 定义；自然角端点不附加迹条件。以下常数、权重与起始指标可以依赖固定 $n,g$，不要求参数一致性，也不排除任何原条件允许的核或零能共振。
+
+记 $G$ 为[完整 Green 边缘续篇](FIB_NATIVE_ATTRACTIVE_BOUNDARY_RESPONSE_GREEN_TAIL.md)。令 $\mathcal S$ 为 $G$ 第 26 节所用的复轴对称、$z$ 偶对称扇区，即绕物理 $z$ 轴旋转不变且在 $z\mapsto-z$ 下不变的函数或局部分布。下面的 $H_{\pm d}$、$K$ 与 $Z$ 全部在此扇区内定义；它们不是全算子全部角模的核或余核。
+
+具体沿用 $G$ (26.8)--(26.10) 的完成空间。固定其中足够大的 $L_*$，取 $\chi_0$ 在 $\ell\le L_*+1$ 为一、在 $\ell\ge L_*+2$ 为零，并在极点附近恒为一。$H^{(0)}$ 是紧支撑原光滑 $\mathcal S$ 元在下列范数中的完成：
+
+$$
+\begin{aligned}
+\|f\|_{H^{(0)}}^2
+ &=\|\chi_0f\|_{\rm free}^2
+   +\int_{L_*}^{\infty}\mathcal E[w_f](\ell)\,d\ell,\\
+\mathcal E[w]&=C[w_\ell]+A[w]+e^{-2\ell}\|Dw\|_{L^2(da)}^2,
+& D&=2\sin a\,(\partial_\ell-1)+4c\partial_a,\\
+H_\sigma&=\{f\in\mathcal S:e^{\sigma\rho}f\in H^{(0)}\},
+&\|f\|_{H_\sigma}&=\|e^{\sigma\rho}f\|_{H^{(0)}},
+\qquad \rho=(\ell-L_*)_+.
+\end{aligned}
+\tag{33.1}
+$$
+
+$\rho$ 在内区延拓为零。这里 $H_\sigma$ 是 $G$ 的加权空间记号，须与原物理自由闭包 $\mathcal H_1$ 区分。选择 $d>0$，小于 $G$ 第 26、30 节及 wall 所允许的权重，并使 $d<1/2$；这是固定参数后的权重选择，不缩小隔离区间。取连续反对偶，定义
+
+$$
+\begin{aligned}
+P_d &:H_d\longrightarrow(H_{-d})^*,
+& (P_df)(z)&=4q(f,z),\\
+K&=\ker P_d,
+&Z&=\{z\in H_{-d}:q(f,z)=0\ \text{对每个 }f\in H_d\}.
+\end{aligned}
+\tag{33.2}
+$$
+
+$G$ (26.23)--(26.29) 给出 $\operatorname{ind}_{\mathbb C}P_d=-1$、$K\subset Z$、$\dim_{\mathbb C}Z=\dim_{\mathbb C}K+1$。取同一全局实解 $f_0$ 与非零系数 $b$，则
+
+$$
+\begin{aligned}
+G_\zeta(t)&=(\zeta e^{ist}+\overline\zeta e^{-ist})\psi,
+&s&=2\pi L_{n,g},\qquad C[\psi]=1,\\
+w_0(\ell)&=G_b(\ell)+r_0(\ell),
+&\int_{b_0}^{\infty}e^{2d\ell}\|r_0(\ell)\|_{L^2(da)}^2\,d\ell&<\infty,\\
+Z&=K\oplus\mathbb C f_0.
+\end{aligned}
+\tag{33.3}
+$$
+
+$b_0$ 是足够大的固定对数半径，与 $b$ 不同。加权余项是 $G$ (26.26)、(26.29)、(26.35) 的同一余项；非零站波不属于 $H_d$，故 $f_0\notin K$，维数公式给出直和。不能只用 (31.8) 的定性迹极限代替此加权信息。有限维 $Z$ 上可用范数 $\|v+af_0\|_Z=\|v\|_{H_d}+|a|$。
+

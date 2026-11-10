@@ -1,0 +1,26 @@
+### 定义 15.1（固定规范成功域与幸存块）
+
+固定有限实数 $\varepsilon>0$ 和 $k\ge2$，沿用定义 9.1、13.1、14.1
+的完整 $\mathcal M_k$、至多两项严格正来源、普通初始实秩、单条不可复制不可复位
+轨迹，以及初读和每个原子后必读的收费合同。误差满足闭约束
+$|\eta_i|\le\varepsilon$，允许任意相关和历史依赖；确定性完整历史规则不附加
+正则性。记 $p_{\le q}=(p_0,\ldots,p_q)$，定义
+
+$$
+ \begin{aligned}
+ \mathcal F_k(\varepsilon)
+ &=\{R\in\mathcal M_k:\ \exists q\in\{0,\ldots,k-1\}\quad
+       \forall p\in P_\varepsilon(R)\quad
+           \neg\mathsf C_q(R,p_{\le q})\},\\
+ H(R)&=(R_{ij})_{0\le i\le k-2,\ 0\le j<k}.
+ \end{aligned}
+\tag{15.1}
+$$
+
+$P_\varepsilon$ 和 $\mathsf C_q$ 恰为 (14.3)--(14.4) 的共同来源系统。
+由引理 13.2、14.4，$\mathcal F_k(\varepsilon)$ 是固定某个规范切口、在其
+完整规范历史末端以严格正相容性规则全误差成功的来源之并；允许任意其他可靠
+末端规则也不扩大这个并集。定理 14.5 给出
+$\mathcal F_k(\varepsilon)\subseteq\mathcal I_k(\varepsilon)$。
+这里没有把不同切口的数据放入同一次运行。
+

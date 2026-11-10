@@ -1,0 +1,37 @@
+**定理 56.2（同一给定旧响应的条件分类）。** 任意紧 Hausdorff $X$ 上，在51.1的完整原模型及全部原关系下，若同一 $D$ 满足 $\mathsf T_D$，则 $D=K$ 于全部原输入，不要求 $\overline{L(X)}=X$。
+
+证明。逐个固定 $W,x_0$，只选(56.1)给的一个合适截断。55.1提供从实际 $W_0=hW$ 到同一实际 $W_m$ 的有限链，故
+
+$$
+F(W)(x_0)=F(hW)(x_0)=F(W_m)(x_0)=0.
+\tag{56.3}
+$$
+
+第一等号只由所列受限比较支付；第二等号只由实际链上的 PB 支付；最后等号只由实际终点的 P2 零槽支付。量词覆盖全部 $W,x_0$，得到(51.6)，再取 $W=a+Jb$ 即认回全部旧值。没有从同点值直接推出任何旧值等式。∎
+
+在30章的复代数丛模型，这给同一 $D$ 的条件结论
+
+$$
+D(a,b)=\frac{iQ}{2}[a,b]\quad(\forall a,b\in E),
+\tag{56.4}
+$$
+
+其中 $Q$ 仍是31.4已取得的唯一共同取向。在41章的实 Jordan 模型，先用 $\sigma_D$ 构造 $\mathfrak B_{\sigma_D}$、取 $Q=u$，同一定理给
+
+$$
+D(a,b)=K_{\sigma_D}(a,b)\quad(\forall a,b\in E).
+\tag{56.5}
+$$
+
+于是，在 $\mathsf H_{\mathfrak J}(D)$ 已成立的范围内，$\mathsf T_D$ 与 $D=K_{\sigma_D}$ 等价：逆向只需已知 $K$ 的逐点双线性和 $h(x_0)=1$。任一取向 $\sigma$ 给 $K_\sigma$ 满足全部原关系，是44.3已证明且不要求稠密 $L$ 的逆向；它也满足 $\mathsf T_{K_\sigma}$。因此，不带稠密前件时有准确的受限分类
+
+$$
+\mathsf H_{\mathfrak J}(D)\ \land\ \mathsf T_D
+\iff
+\exists!\sigma\in\Gamma(X,\mathcal O_{\rm alg}(\mathfrak J))
+\quad D=K_\sigma.
+\tag{56.6}
+$$
+
+唯一性相对于给定 $D$，并非全体数学响应只有一份。结合44.4，识别后同一旧乘法为 $S-iD$，取向、全部有限复 Gram、原换括号、Jacobi、Jordan 导子和48.2的保质量表示一并接回。
+

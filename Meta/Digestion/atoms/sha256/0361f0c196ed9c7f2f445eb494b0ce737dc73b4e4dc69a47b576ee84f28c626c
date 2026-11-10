@@ -1,0 +1,26 @@
+**Theorem 3.13 (finite arithmetic, route agreement and the actual-law guarantee).** The entry of Definition 3.12 is an installed finite algorithm on every actual acquired tape and every task word (3.4). For a length-$k$ task prefix, $T$ is exactly the chronological ideal branch product applied to $I/3$. The forward recurrence, that ordered product, and the backward effect pairing give the same joint prefix weight. On every good fixed parameter $a>1-\kappa$ and every positive-mass accepted calibration cell $c$, the entire actual future-bit law differs from the nominal law by total variation at most $\varepsilon/2$. Its complete quantum output obeys the stronger unhalved bound $\varepsilon$ of Theorem 3.11. The same total variation bound holds after deterministic annotation of those bits.
+
+At most $h$ updates of (3.29) take $O(h^2)$ bit operations and $O(h)$ bits for one current nominal matrix in an explicit Gaussian-integer representation. Retaining annotations at every prefix instead of only a current callable value takes $O(h^2)$ additional output bits; copying requested outputs costs their actual length. These are upper bounds for this finite algorithm, without an optimality assertion.
+
+**Proof.** The ideal F identity follows from $V_0P_y=e^{iy\pi/4}UP_y$. Also
+
+$$
+\begin{aligned}
+A_j(X)&=\tfrac14 U(I+iW)W^jXW^j(I-iW)U^\dagger,\\
+C_y^1(X)&=\tfrac14 U(I+yW)X(I+yW)U^\dagger.
+\end{aligned}
+\tag{3.30}
+$$
+
+All coefficients are Gaussian rationals with denominator dividing four; $N$ is a signed permutation. Store $T=Z_k/(3\cdot4^k)$, with $Z_k$ a fixed-size Gaussian-integer matrix; these exact fractions need not be reduced. At an $N$ step multiply the conjugated numerator by four to maintain this common denominator. At the other steps (3.30) is a fixed finite collection of additions and multiplication by fixed Gaussian integers. Positivity and subnormalization give $|T_{ij}|\le1$, hence every real and imaginary numerator has $O(k+1)$ bits. Each update therefore takes $O(k+1)$ bit operations and workspace. The denominator is stored by its exponent and factor three, or explicitly with $O(k+1)$ bits. Taking traces and computing either two-way next-branch table has the same bound. Summing over $k\le h$ gives the stated work and output bounds. No arbitrary real inverse, bank scan, unknown matrix entry or physical state preparation is required by this arithmetic.
+
+Induction on the slots proves equality with the ordered branch product. For a prefix with maps $M_1,\ldots,M_k$, repeatedly using the trace-dual identity gives
+
+$$
+\operatorname{tr}(M_k\cdots M_1(I/3))
+ =\operatorname{tr}[(M_1^*\cdots M_k^*(I))\,I/3].
+\tag{3.31}
+$$
+
+Thus the alternative routes agree on this same task and source. The sum over the two next-read branches is the current joint prefix mass, since the complete instrument is trace preserving; all next masses are nonnegative. This supplies a normalized ideal law when summed over the complete task. Finally, trace out the final system/reference from the good-parameter bound in the proof of Theorem 3.11, conditional on this same actual $c$, and divide the trace norm by two for classical total variation. Deterministic annotations contract total variation. These are joint-law guarantees. Dividing a rare prefix's joint weights by its mass need not preserve this error, so no uniform conditional forecast or certainty about the realized next bit follows. $\square$
+

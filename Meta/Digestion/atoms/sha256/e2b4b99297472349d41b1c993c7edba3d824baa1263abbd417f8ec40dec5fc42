@@ -1,0 +1,6 @@
+**Proposition 7.4 (exact rational recovery has no uniform noise margin).** Equip positive rational responses with ordinary absolute error and literal histories with the discrete distinction between unequal words. The rational decoder of §6 has no uniform positive response tolerance that determines every literal word.
+
+Proof. The root response is $1$. For $n\ge1$, the distinct word $R^{n-1}L$ has response $n/(n+1)$, whose distance from $1$ is $1/(n+1)$. For any error radius $\epsilon>0$, choose $n$ with $1/(n+1)<2\epsilon$. The two closed error intervals then overlap, so a common corrupted measurement is compatible with two different histories. No decoder using only that measurement can always return both correct words. Thus exact set-theoretic inversion supplies neither a uniform noise margin nor a uniformly continuous inverse into the discrete history space. $\square$
+
+These failures separate four obligations: avoiding action-image mergers, excluding rooted returns, retaining the requested distinctions in the response contract, and obtaining sufficient precision. They do not refute the conditional theorem, and solving one obligation does not discharge the others.
+

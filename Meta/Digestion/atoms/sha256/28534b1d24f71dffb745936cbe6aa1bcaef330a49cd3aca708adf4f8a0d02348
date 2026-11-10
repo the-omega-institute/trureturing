@@ -1,0 +1,27 @@
+## 7. 更大的结构：比较、转向与 Lorentz 锥
+
+<a id="sec-lorentz"></a>
+
+在 $E=\mathbb R1\oplus W$ 上定义
+
+$$
+(a,x)\circ(b,y)=(ab+B(x,y),ay+bx).
+$$
+
+单位为 $(1,0)$。谱投影 $(1,\pm x/\|x\|)/2$ 的谱值为 $a\pm\|x\|$，故正锥为
+
+$$
+C=\{(a,x):a\ge\|x\|\}.
+$$
+
+为直接验证 Jordan 恒等式，记乘法算子为 $L_{(a,x)}=aI+L_x$；而
+$(a,x)^2=(a^2+B(x,x),2ax)$，所以
+$L_{(a,x)^2}=(a^2+B(x,x))I+2aL_x$，与 $L_{(a,x)}$ 交换。这是由球及归一单位给出的自旋因子。
+
+对 $x\in W$，记
+
+$$
+L_x(t,z)=(B(x,z),tx),\qquad
+\mathcal R_x(t,z)=(0,R_xz).
+$$
+

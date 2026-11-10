@@ -1,0 +1,4 @@
+# Common polynomial-gain shear calibration and erasure recovery
+
+This volume treats one strictly positive rank-one source with a common nonzero polynomial gain and a common polynomial additive drift. A predetermined forward history recovers the complete trace-normalized target in $\max(k,d)+2k+4$ scalar reads. After its specified baseline and shear prefix, exactly $k+2$ further reads are necessary and sufficient in the worst case over the declared model. The latter optimum concerns this fixed prefix, not all possible acquisition histories.
+

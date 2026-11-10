@@ -114,7 +114,7 @@ private noncomputable def piC (x : GG) : Matrix (Fin 4) (Fin 4) ℂ :=
 private noncomputable def uu : EuclideanSpace ℂ (Fin 4) := WithLp.toLp 2 (fun _ => 1)
 
 /-- The matrix of the orthogonal projection onto `ℂ (1, 1, 1, 1)`. -/
-private noncomputable def Pm : Matrix (Fin 4) (Fin 4) ℂ := Matrix.of fun _ _ => (1 / 4 : ℂ)
+noncomputable def Pm : Matrix (Fin 4) (Fin 4) ℂ := Matrix.of fun _ _ => (1 / 4 : ℂ)
 
 /-- Every `π(x)` is a monomial matrix with entries in `{0, ±1, ±i}`; unitarity, the projective
 relation with phases in `{±1, ±i}`, trace orthogonality of distinct elements, the matrix-unit

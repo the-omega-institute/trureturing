@@ -14,6 +14,33 @@ internal sealed class DoldExponentialIntegralityDocument : IScribeDocumentDefini
         "Dold prime-power congruences imply integrality of a formal exponential.",
         H("Dold Congruences and Formal Exponential Integrality"),
         Blocks(
+            Node("IsRIntegralRat", "Rational coefficients with coprime denominator",
+                All("r", N(), All("q", Q(), Seq(Call("IsRIntegralRat", V("r"), V("q")), Sp, Iff, Sp,
+                    QualifiedCall("Nat", "Coprime", QualifiedCall("Rat", "den", V("q")), V("r"))))),
+                "The reduced positive denominator of q is coprime to r.", DescribeRole.Definition,
+                AssessedProvenance.FromLiterature(Source)),
+            Node("IsRIntegralRat.zero", "Zero has coprime denominator",
+                All("r", N(), Call("IsRIntegralRat", V("r"), D(0))),
+                "Zero has denominator one.", DescribeRole.Theorem, AssessedProvenance.FromLiterature(Source)),
+            Node("IsRIntegralRat.one_coprime", "One has coprime denominator",
+                All("r", N(), Call("IsRIntegralRat", V("r"), D(1))),
+                "One has denominator one.", DescribeRole.Theorem, AssessedProvenance.FromLiterature(Source)),
+            Node("IsRIntegralRat.add", "Addition preserves coprime denominators",
+                LocalClosure(false), "The denominator of a sum divides the product of the denominators.",
+                DescribeRole.Theorem, AssessedProvenance.FromLiterature(Source)),
+            Node("IsRIntegralRat.neg", "Negation preserves coprime denominators",
+                All("r", N(), All("q", Q(), Imp(Call("IsRIntegralRat", V("r"), V("q")),
+                    Call("IsRIntegralRat", V("r"), new Formula.Negate(V("q")))))),
+                "Negation preserves the reduced denominator.", DescribeRole.Theorem, AssessedProvenance.FromLiterature(Source)),
+            Node("IsRIntegralRat.mul_coprime", "Multiplication preserves coprime denominators",
+                LocalClosure(true), "The denominator of a product divides the product of the denominators.",
+                DescribeRole.Theorem, AssessedProvenance.FromLiterature(Source)),
+            Node("expSeries_derivative", "Derivative of a substituted exponential",
+                All("h", PS(Q()), Imp(Eqn(Call("constantCoeff", V("h")), D(0)),
+                    Eqn(Call("derivative", Exponential(V("h"))),
+                        Mul(Exponential(V("h")), Call("derivative", V("h")))))),
+                "Formal differentiation of exp(h) gives exp(h) times the derivative of h.",
+                DescribeRole.Theorem, AssessedProvenance.FromLiterature(Source)),
             Node("Dold", "Prime-power congruences", All("c", Seq(N(), Sp, To, Sp, Z()), Seq(Call("Dold", V("c")), Sp, Iff, Sp, P(DoldBody()))),
                 "Dold(c) requires divisibility by p to the valuation of m plus one for every prime p and every nonzero natural m.", DescribeRole.Definition,
                 AssessedProvenance.FromLiterature(Source)),
@@ -23,14 +50,18 @@ internal sealed class DoldExponentialIntegralityDocument : IScribeDocumentDefini
             Node("expSeries_nsmul", "Scaling the input takes powers", All("f", PS(Q()), Imp(Eqn(Call("constantCoeff", V("f")), D(0)), All("n", N(), Eqn(Exponential(QualifiedCall("HSMul", "hSMul", V("n"), V("f"))), Pow(Exponential(V("f")), V("n")))))),
                 "Substitution into PowerSeries.exp_pow_eq_rescale_exp gives the natural-scaling identity.", DescribeRole.Theorem,
                 AssessedProvenance.FromRepo(Source)),
+            Node("expSeries_add", "Exponential of a sum", ExponentialAdditionFormula(),
+                "For two rational formal series with zero constant coefficients, substituting their sum "
+                    + "into the exponential gives the product of the two substituted exponentials.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("integral_exp_of_dold", "Dold congruences imply integrality", All("c", Seq(N(), Sp, To, Sp, Z()), Imp(Call("Dold", V("c")), All("n", N(), Ex("z", Z(), Eqn(Coeff(V("n"), Exponential(Call("logInput", V("c")))), Cast(V("z"), Q())))))),
                 "Apply the sufficient Dieudonne-Dwork criterion at each prime. The Dold congruences make the logarithmic difference locally integral; a rational coefficient integral at every prime has denominator one. The local-integrality induction is adapted from AINTLIB.", DescribeRole.Theorem,
                 AssessedProvenance.FromLiterature(Source)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance) =>
-        Describe.Lean(DescribeId.Create("doldexponentialintegrality-" + name.Replace('_', '-').ToLowerInvariant()),
-            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
+        Describe.Lean(DescribeId.Create("doldexponentialintegrality-" + name.Replace('_', '-').Replace('.', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name[(name.LastIndexOf('.') + 1)..]), H(title), StatementSource.FromAuthor(Disp(formula)),
             provenance, Blocks(Paragraph(Text(prose))), role);
 
     private static Formula V(string name) => F.Id(name);
@@ -68,5 +99,21 @@ internal sealed class DoldExponentialIntegralityDocument : IScribeDocumentDefini
     private static Formula QualifiedCall(string owner, string name, params Formula[] args) =>
         new Formula.Apply(Seq(Operatorname, Grp(V(owner), Dot, V(name))), [.. args]);
     private static Formula Exponential(Formula input) => Call("subst", input, Call("exp", Q()));
+    private static Formula LocalClosure(bool product)
+    {
+        var r = V("r"); var a = V("q1"); var b = V("q2");
+        var value = product ? Mul(a, b) : Add(a, b);
+        return All("r", N(), All("q1", Q(), All("q2", Q(),
+            Imp(Call("IsRIntegralRat", r, a), Imp(Call("IsRIntegralRat", r, b),
+                Call("IsRIntegralRat", r, value))))));
+    }
+    private static Formula ExponentialAdditionFormula()
+    {
+        var f = V("f"); var g = V("g");
+        return All("f", PS(Q()), All("g", PS(Q()),
+            Imp(Eqn(Call("constantCoeff", f), D(0)),
+                Imp(Eqn(Call("constantCoeff", g), D(0)),
+                    Eqn(Exponential(Add(f, g)), Mul(Exponential(f), Exponential(g)))))));
+    }
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
 }

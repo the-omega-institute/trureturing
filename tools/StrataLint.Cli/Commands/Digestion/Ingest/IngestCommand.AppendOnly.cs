@@ -31,15 +31,39 @@ internal static partial class IngestCommand
         }
     }
 
-    private static void RequireReportFreeInputs(string root, RawRepositorySnapshot current, ImmutableArray<LedgerUpdate> updates)
+    private static void RequireReportFreeInputs(
+        string root,
+        RawRepositorySnapshot current,
+        ImmutableArray<LedgerUpdate> updates,
+        ImmutableHashSet<string>? recoveryPaths = null)
     {
         var before = current.Entries.ToDictionary(entry => entry.Path, StringComparer.Ordinal);
+        if (recoveryPaths is { IsEmpty: false })
+        {
+            // Recovery removes an occurrence, so its retained identity and all
+            // captured scoped inputs must still be the ones used for planning.
+            foreach (var entry in current.Entries)
+            {
+                var inputPath = Path.Combine(root, entry.Path);
+                if (!File.Exists(inputPath)
+                    || !File.ReadAllBytes(inputPath).AsSpan().SequenceEqual(entry.Bytes.AsSpan()))
+                    throw new IOException($"ledger changed under us: {entry.Path}");
+            }
+        }
         foreach (var update in updates)
         {
             var path = Path.Combine(root, update.Path);
             if (IsContextIndexPath(update.Path) && before.TryGetValue(update.Path, out var old))
             {
                 if (!File.Exists(path) || !File.ReadAllBytes(path).AsSpan().SequenceEqual(old.Bytes.AsSpan()))
+                    throw new IOException($"ledger changed under us: {update.Path}");
+            }
+            else if (update.Bytes is null
+                && recoveryPaths is not null
+                && recoveryPaths.Contains(update.Path)
+                && before.ContainsKey(update.Path))
+            {
+                if (!File.Exists(path) || !File.ReadAllBytes(path).AsSpan().SequenceEqual(before[update.Path].Bytes.AsSpan()))
                     throw new IOException($"ledger changed under us: {update.Path}");
             }
             else if (File.Exists(path) || Directory.Exists(path)) throw WriteSetError(update.Path);
@@ -75,7 +99,8 @@ internal static partial class IngestCommand
         ImmutableArray<LedgerUpdate> ledgerUpdates,
         ImmutableArray<DigestionCasObject> casObjects,
         ImmutableHashSet<string> newAtomIds,
-        ImmutableHashSet<string>? sourceIds = null)
+        ImmutableHashSet<string>? sourceIds = null,
+        ImmutableHashSet<string>? recoveryPaths = null)
     {
         ArgumentNullException.ThrowIfNull(currentRaw);
         ArgumentNullException.ThrowIfNull(currentDocument);
@@ -111,7 +136,19 @@ internal static partial class IngestCommand
                 continue;
             }
 
-            if (update.Bytes is null || currentPaths.Contains(update.Path))
+            if (update.Bytes is null)
+            {
+                if (recoveryPaths is null
+                    || !recoveryPaths.Contains(update.Path)
+                    || !currentPaths.Contains(update.Path))
+                {
+                    throw WriteSetError(update.Path);
+                }
+
+                continue;
+            }
+
+            if (currentPaths.Contains(update.Path))
                 throw WriteSetError(update.Path);
 
             var sourceMetadata = finalSources.Values.FirstOrDefault(source =>

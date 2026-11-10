@@ -1,0 +1,85 @@
+**定义 20.1（双设置端口合同的引用实例）。**
+这里的五维等待模型按[静态相融纤维定义 1.4–1.5、§§10–11](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md)定型，
+不与定义 18.1 的仪器共享未声明控制。
+其物理基为 $(e_N,e_2,e_3,e_5,e_{25})$，实际生成元及被动实帧为
+
+$$
+\mathsf K=\begin{pmatrix}
+0&1&1&1&0\\1&0&0&0&1\\1&0&0&0&0\\1&0&0&0&1\\0&1&0&1&0
+\end{pmatrix},\quad
+D=\operatorname{diag}(1,i,i,i,1),\quad A=-iD^\dagger\mathsf K D,\quad O(t)=e^{tA}.
+$$
+
+$A$ 是实反对称矩阵；模式 $N$ 为单位态，既非零向量也非停止结果。
+两设置为 $Q_s(t)=O(t)^T|e_s\rangle\langle e_s|O(t)$，$t=0,2/3$。
+$t$ 是此模型的等待参数，未指定为全图时钟或秒。
+共同编码/解码在设置晚选前固定，且
+
+$$
+\operatorname{Enc}:M_5\to\bigoplus_{f\in F}M_q,\qquad
+\operatorname{Dec}:\bigoplus_{f\in F}M_q\to M_5,\qquad T=\operatorname{Dec}\operatorname{Enc}.
+$$
+
+$F$ 任意有限、可有输入相关分布，每块解码在整个 $M_q$ 上 CPTP。
+所有输入相关量子信息都通过端口；无副本、预共享纠缠或量子旁路，
+标记不另送给解码后的晚选测试。输入遍历全部复密度，
+
+$$
+e_{\rm two}(T)=\sup_\rho\max_{t=0,2/3}
+\operatorname{TV}(p_t(\rho),p_t(T\rho)),\qquad
+\varepsilon_{\rm two}(q)=\inf_Te_{\rm two}(T).
+$$
+
+供应定理 2.1 在该完全相同的参数、输入、效果、端口和误差约定下给
+
+$$
+T\text{ 精确保留两设置}\Longrightarrow T=\operatorname{id}_5,
+\qquad q_{\min}=5,
+\qquad\varepsilon_{\rm two}(q)\ge(5-q)/102,
+\qquad\varepsilon_{\rm two}(5)=0.
+$$
+
+这是既有结果的引用应用，不是由 §19 的条件破缺推出的新维数定理。
+其有限有理证书为 $v=O(2/3)^Te_N$ 的全部坐标满足 $|v_j|>9/25$，
+故 $\mu=\min_j|v_j|^2>1/8$。
+原证书取 $M=2A/3$、$S_{12}=\sum_{k=0}^{12}M^k/k!$，
+$\|e^M-S_{12}\|_\infty\le(7/6)2^{13}/13!<64/6081075$，
+$S_{12}$ 的 $N$ 行为
+
+$$
+\left(\frac{107738440637}{248594813775},
+\frac{490347766}{1104865839},
+\frac{4899328858}{9207215325},
+\frac{490347766}{1104865839},
+-\frac{91371050044}{248594813775}\right).
+$$
+
+其绝对值均大于 $367/1000$，减去尾界仍大于 $9/25$。
+四个基探针加 $v$ 张成且非正交图连通，供应 §10 的 Mayer–Knill 无扰动步骤强制 $T=I$。
+近似部分对任意复 Kraus 矩阵 $C$ 定义
+
+$$
+L_v(C)=\sum_{j=1}^{5}(\|Ce_j\|^2-|\langle e_j,Ce_j\rangle|^2)
+ +\|Cv\|^2-|\langle v,Cv\rangle|^2,
+$$
+
+其中 $e_j$ 枚举该五模式基；供应式 (11.4) 给
+
+$$
+L_v(C)\ge\frac\mu{2+\mu}
+\left(\|C\|_{\rm HS}^2-\frac{|\operatorname{Tr}C|^2}{5}\right).
+$$
+
+通过 $q$ 维块的每个复合 Kraus 秩至多 $q$，故
+$|\operatorname{Tr}C|^2\le q\|C\|_{\rm HS}^2$；
+对 Kraus 求和并用 TP 得总泄漏至少 $\mu(5-q)/(2+\mu)$。
+五个基输入和一个 $v$ 输入的生存率损失各至多 $e_{\rm two}$，
+总共六项给 $(5-q)/102$。逐通道的严格界取下确界后仅保留非严格界；$q=5$ 用恒等。
+这里准确消费供应全部复输入及 CP 合法性，不将有限探针误称信息完备层析，
+也不主张 $q<5$ 的精确 minimax 已知。
+
+单 Kraus 非零 CP 分支的秩一 Choi 使其位于 CP 锥极端射线；
+这与端口维数及串行不可分性不同。酉门总能写成 $U=(UW^\dagger)W$。
+二维量子位也能在最大混合态上先读计算基得到条件纯态，再作互补基非选择读回最大混合；
+因此平均平衡、条件破缺、再平衡本身不强制五维。
+

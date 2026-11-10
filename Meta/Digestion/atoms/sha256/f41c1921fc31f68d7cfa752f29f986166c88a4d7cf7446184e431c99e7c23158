@@ -1,0 +1,36 @@
+**约定 C-79.1（实际约化供应与尺度字典）。** 在 C-76 的全正固定矩层上，采用
+[《辛预测完成》§35.5–35.7](SYMPLECTIC_PREDICTIVE_COMPLETION.md#355-固定可见均值后的真正辛约化)
+及 C-74 已指定的几何：归一化五振幅先按共同相位成为射线，再固定 $(X,Y,Z)$，
+最后除去占位 $T^3$ 作用。内部为
+$(\kappa_-,\kappa_+)\times(\mathbb R/2\pi\mathbb Z)$。
+令
+
+$$
+\mathcal I=\frac1{p_0}+\frac1{p_1}+\frac1{p_3}+\frac1{p_{13}}.
+$$
+
+与旧 HiddenRelations 相位和尺度的对应，以及与《辛预测完成》的对数坐标对应，完整写为
+
+$$
+\theta_s^{\rm old}=-\theta_s,\qquad
+\Phi_{\rm old}=-\chi,\qquad g_{\rm SP}=2g_{\rm old},
+\qquad
+J=\tau_{\rm SP},\qquad \frac J2=\eta_{\rm SP}=4\eta.
+\tag{C79.1}
+$$
+
+同一振幅仍是 $\psi_s=\sqrt{p_s}e^{-i\theta_s}$；角符号对应不对状态作额外复共轭。
+选定约化结构为
+
+$$
+g=g_{\rm SP,red}
+=\frac{\mathcal I}{2}\,d\kappa^2+\frac2{\mathcal I}\,d\chi^2,
+\qquad \omega_{\rm red}=d\chi\wedge d\kappa.
+\tag{C79.2}
+$$
+
+这里的 $2$ 固定在来源所选的标准射影直线辛面积 $2\pi$ 的尺度上。
+概率方向 $dp_s=(1,-1,0,-1,1)_s\,d\kappa$ 给第一系数；
+相位方向的最短水平代表 $v_s=d_s/(p_s\mathcal I)$ 给第二系数，完整最小化及占位正交性已由 C-74.2 供应。
+这不是五概率的唯一几何后果。将度量整体乘常数会反向缩放高斯曲率，故下面界值始终附带式 (C79.2)。
+

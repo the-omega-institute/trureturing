@@ -1,0 +1,20 @@
+**Conclusion of the proof of Theorem 1.5.** The preceding elimination shows that $w$ vanishes on the entire local
+coefficient spaces of these five cores and of $B$. Lemma
+[4.3](#lem-bridgeB) covers every remaining bridge graph. Branching
+ordinary trees were already zero. Thus $w=0$ on every original
+diagram. Finite-dimensional duality proves [Theorem 1.5](#thm-main).
+In particular the potential nonzero three-color three-loop determinant
+classes, if present, have zero image in the required circle--tetrahedron
+gluing: the whole odd two-color $B$ coefficient space is annihilated.
+No claim about those three-loop classes themselves was used.
+
+For a zero population the
+corresponding factor is $\operatorname{Sym}^0=\mathbb{Q}$; the formal independent coefficient
+variables in [Lemma 6.1](#lem-shears) remain available. For $\ell=1$ the
+marked population is $(1,0)$, directly covered by the theorem. Loops,
+parallel paths, occupied central edges, and repeated bridges have not
+been discarded. Relative relations occur only for true anchors; all
+target diagrams and socket-cut factors are unanchored and of positive
+genus. Therefore neither the unstable $g=0,a=1$ counterexamples nor an
+anchored bridge has been used to force any vanishing. $\square$
+

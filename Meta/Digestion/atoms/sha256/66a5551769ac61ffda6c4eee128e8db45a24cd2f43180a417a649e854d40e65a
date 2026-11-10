@@ -1,0 +1,27 @@
+**Definition 154.1 (the unchanged original telescope and forty-three coordinates).** Retain exactly Definition 153.1, including the complete original endpoint, source and analytic suppliers of Appendix II §§115–117, 123–125 and 133 and Definitions 134.1, 135.1 and 152.1, with their inherited conditions. Thus $\theta=(a,\eta,d,b)$ ranges over every original finite $a,\eta,d>0$ and every permitted everywhere Borel representative $b$ of $g_d$ with $0<b\le M$. The group $G=H^1\times\mathbb R$, its original product, raw Haar measure $\mu$, source $e$, unit-source field $L\Gamma=\delta_e$, coefficient-one $w_*$, positive normalized $h$, actual selector $A_{\rm src}=\rho C_{\rm src}$ and full conservative source-inclusive operator $K$ are precisely those of (152.1)–(152.4). Keep
+
+$$
+\begin{gathered}
+m=h^2\mu,\quad T_s=e^{-sK},\quad P=T_d,\quad
+ g=g_{2d},\quad g_j=P^jg=g_{(2+j)d},\\
+M=1+\|g_d\|_\infty,\quad c=(4M)^{-1},\quad
+f_3=cb,\quad f_B=p=\tfrac14,\quad
+f_0=f_1=(\tfrac34-cb)/2,\\
+I=\{0,1,3\},\quad \mathcal L=I\cup\{B\},\quad
+\mathcal R=\{12,13,23\},\quad
+\mathcal T_6=\{013,103,031,130,301,310\}.
+\end{gathered}
+\tag{154.1}
+$$
+
+The original diffusion starts at $e$, the epochs are $2d,3d,4d$, and the prescribed stochastic readout uses this same $f$ at all epochs, with its fresh noises conditionally independent given the original path. Use exactly $\mathcal C,Q_r,L_j,q_r,B_r$ of (152.7), with the same polar-form convention. For a pointwise simplex tuple $u$, with $u_B=1-u_0-u_1-u_3$, define
+
+$$
+\mathcal H_{43}(u)=\left(
+ (L_j(u_a))_{j=0,1,2;\ a\in I},
+ (Q_r(u_a,u_b))_{r\in\mathcal R;\ a,b\in I},
+ (\mathcal C(u_y,u_z,u_w))_{yzw\in\mathcal T_6},
+ \mathcal C(u_B,u_B,u_B)\right)\in\mathbb R^{43}.
+\tag{154.2}
+$$
+

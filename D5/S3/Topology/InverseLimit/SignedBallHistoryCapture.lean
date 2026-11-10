@@ -76,7 +76,7 @@ private theorem exists_free_extension {I : Type u} [Nonempty I]
 /-- Two fixed distinct free ultrafilters contain every historical set and
 respectively the two original reservoirs. The index type is arbitrary;
 only pairwise downward directedness modulo finite sets is required. -/
-private theorem exists_distinct_free_ultrafilters {I : Type u} [Nonempty I]
+theorem exists_distinct_free_ultrafilters {I : Type u} [Nonempty I]
     (J : I → Set ℕ)
     (hd : ∀ i j, ∃ k, (J k \ J i).Finite ∧ (J k \ J j).Finite)
     (N₀ N₁ : Set ℕ) (hdis : Disjoint N₀ N₁)
@@ -95,7 +95,7 @@ private theorem exists_distinct_free_ultrafilters {I : Type u} [Nonempty I]
 under a continuous map if separating continuous Hausdorff-valued
 observables converge, each on its own historical set. No common stage
 for the observables is assumed. -/
-private theorem eq_of_historical_observables {I : Type u} (J : I → Set ℕ)
+theorem eq_of_historical_observables {I : Type u} (J : I → Set ℕ)
     (u₀ u₁ : Ultrafilter ℕ)
     (hf₀ : (u₀ : Filter ℕ) ≤ cofinite) (hf₁ : (u₁ : Filter ℕ) ≤ cofinite)
     (hJ₀ : ∀ i, J i ∈ u₀) (hJ₁ : ∀ i, J i ∈ u₁)
@@ -187,16 +187,6 @@ private theorem map_carry {X : Type u} {Y : Type v}
         (VectorMeasure.variation_map_le (μ := s) (φ := p)) Vᶜ
     _ = 0 := by rw [Measure.map_apply hp hV.compl, preimage_compl, hnull]
 
-private theorem functional_map {X : Type u} {Y : Type v}
-    [TopologicalSpace X] [CompactSpace X] [MeasurableSpace X] [BorelSpace X]
-    [TopologicalSpace Y] [CompactSpace Y] [MeasurableSpace Y] [BorelSpace Y]
-    (s : SignedMeasure X) (p : C(X, Y)) (g : C(Y, ℝ)) :
-    signedFunctional (s.map p) g = signedFunctional s (g.comp p) := by
-  change (∫ᵛ y, g y ∂•s.map p) = ∫ᵛ x, g (p x) ∂•s
-  apply VectorMeasure.integral_map p.continuous.measurable
-    g.continuous.aestronglyMeasurable
-  rw [VectorMeasure.Integrable, ← SignedMeasure.totalVariation_eq_variation]
-  exact (g.comp p).continuous.integrable_of_hasCompactSupport (HasCompactSupport.of_compactSpace _)
 
 
 /-- The stored data used by capture. The domain restriction on U, V and nu
@@ -237,7 +227,7 @@ private theorem projection_factor (F : CountableStageᵒᵖ ⥤ Profinite.{1})
   funext x
   exact ConcreteCategory.congr_hom (C.w (homOfLE h).op) x
 
-private theorem exists_original_birth (F : CountableStageᵒᵖ ⥤ Profinite.{1})
+theorem exists_original_birth (F : CountableStageᵒᵖ ⥤ Profinite.{1})
     (C : Cone F) (H : RawHistory F)
     (s : ℕ → SignedMeasure C.pt)
     (hsreg : ∀ n, (s n).totalVariation.Regular)
@@ -292,7 +282,7 @@ private theorem exists_original_birth (F : CountableStageᵒᵖ ⥤ Profinite.{1
     rw [hpre n]
     exact hcarry n
 
-private theorem projected_lift (F : CountableStageᵒᵖ ⥤ Profinite.{1})
+theorem projected_lift (F : CountableStageᵒᵖ ⥤ Profinite.{1})
     (C : Cone F) (H : RawHistory F) (s : ℕ → SignedMeasure C.pt)
     (hsreg : ∀ n, (s n).totalVariation.Regular)
     (hsnorm : ∀ n, (s n).totalVariation univ = 1)
@@ -401,7 +391,7 @@ private theorem capture_reflected_sequence (F : CountableStageᵒᵖ ⥤ Profini
   exact collision_of_original_birth F C hC hs H s hsreg hsnorm θ d hbirth hsup
 
 
-private theorem signed_clopen_collision (F : CountableStageᵒᵖ ⥤ Profinite.{1})
+theorem signed_clopen_collision (F : CountableStageᵒᵖ ⥤ Profinite.{1})
     [∀ j, Nonempty (F.obj j)] (C : Cone F) (hC : IsLimit C)
     (hs : ∀ {i j} (a : i ⟶ j), Surjective (F.map a)) (H : RawHistory F) :
     SignedBallReduction.SignedClopenCollision (K := C.pt) := by

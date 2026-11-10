@@ -29,7 +29,7 @@ def pairScalar (first second : ℕ) : ℂ :=
   (first : ℂ) * (second : ℂ) * halfBinomial first * halfBinomial second /
     ((first : ℂ) + (second : ℂ))
 
-private theorem halfBinomial_choose (degree : ℕ) :
+theorem halfBinomial_choose (degree : ℕ) :
     halfBinomial degree = Ring.choose (-1 / 2 : ℂ) degree := by
   rw [Ring.choose_eq_smul, ← Polynomial.aeval_eq_smeval, Polynomial.aeval_def,
     ← Polynomial.eval_map, descPochhammer_map,

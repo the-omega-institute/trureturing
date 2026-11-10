@@ -265,7 +265,7 @@ private theorem forwardWalk_multiplicity {V E : Type*} [DecidableEq E]
       Prod.mk.injEq, Bool.false_eq_true, Bool.true_eq_false, and_false,
       and_true, if_false, add_zero]
 
-private theorem positive_coefficient_forward {V E ι : Type*}
+theorem positive_coefficient_forward {V E ι : Type*}
     [Fintype E] [DecidableEq E] [Fintype ι]
     (G : EdgeGraph V E) (coefficient : SignedEdge E → ℝ)
     (weight : ι → ℝ) (base : ι → V)
@@ -479,18 +479,28 @@ private theorem positive_support_cycle {n : ℕ} [NeZero n]
   · exact h
   · exact (not_lt_of_ge hm.le h).elim
 
+/-- The initial part of a cycle with no proper positive closed subwalk visits no vertex twice. -/
+theorem cycle_initial_visited_nodup {V E : Type*} {G : EdgeGraph V E} {a : V}
+    (edge : E) (initial : G.Walk (G.target edge) a) (legal : G.source edge = a)
+    (hminimal : ∀ (v : V) (before : G.Walk (G.target edge) v)
+      (inner : G.Walk v v) (after : G.Walk v (G.target edge)),
+      (initial.concat edge legal).edges = before.edges ++ inner.edges ++ after.edges →
+      0 < inner.length → 0 < before.length + after.length → False) :
+    initial.visited.Nodup := by
+  by_contra h
+  obtain ⟨v, before, inner, after, hinner, hedges⟩ :=
+    initial.exists_closedSubwalk_of_not_nodup h
+  apply hminimal v before inner (after.concat edge legal)
+  · simp only [EdgeGraph.Walk.edges_concat, hedges, List.append_assoc]
+  · exact hinner
+  · simp
+
 private theorem simple_cycle_edges_nodup {V E : Type*} {G : EdgeGraph V E} {a : V}
     (w : G.Walk a a) (hw : IsSimpleCycle w) : w.edges.Nodup := by
   cases w with
   | nil => simp
   | concat initial edge legal =>
-    have hinit : initial.visited.Nodup := by
-      by_contra h
-      obtain ⟨v,before,inner,after,hinner,hedges⟩ := initial.exists_closedSubwalk_of_not_nodup h
-      apply hw.2 v before inner (after.concat edge legal)
-      · simp only [EdgeGraph.Walk.edges_concat,hedges,List.append_assoc]
-      · exact hinner
-      · simp
+    have hinit := cycle_initial_visited_nodup edge initial legal hw.2
     have hnot : edge ∉ initial.edges := by
       intro hmem
       obtain ⟨before,after,hedges⟩ := initial.exists_splitAtEdge edge hmem

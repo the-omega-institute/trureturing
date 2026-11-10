@@ -1,0 +1,22 @@
+**Proposition 7.1 (Complete bridgeless list).** The bridgeless four-loop cubic skeletons are exactly $R,S,C,P,K$.
+
+**Proof.** We justify the complete list, including multigraphs. A cubic
+four-loop skeleton has six vertices and nine edges. A loop forces a
+bridge on its vertex's third flag, and a triple edge would isolate a
+two-vertex component. Thus a connected bridgeless six-vertex core is
+loopless, with disjoint double-edge pairs. Replace a double pair by a
+bivalent two-port marker and suppress it. This is only a classification
+operation, not a homology-preserving contraction.
+
+With three pairs the three markers form a connected bivalent graph on
+three vertices, hence a triangle; this is $R$. With two pairs the
+reduced bridgeless two-loop cubic graph is theta. The two insertions
+must be on distinct theta edges, since otherwise the other two direct
+edges constitute a third double pair; this is $S$. With one pair the
+reduced bridgeless three-loop core is tetrahedron or the double digon
+of [Lemma 4.2](#lem-small). One insertion cannot destroy both pairs of
+the latter, so only the tetrahedron possibility remains, giving $C$.
+With no pairs the graph is simple cubic on six vertices. Its complement
+is simple bivalent, either a six-cycle or two disjoint triangles; these
+give $P$ and $K$. Thus these are all five bridgeless cores. $\square$
+

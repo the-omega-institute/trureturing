@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:2ea4a553fb7295410c16bbb5071f46b687c4f12010f984d4fe1a207a47c9cca4
+  normalized_sha256: sha256:2ea4a553fb7295410c16bbb5071f46b687c4f12010f984d4fe1a207a47c9cca4
+cas_ref: sha256:2ea4a553fb7295410c16bbb5071f46b687c4f12010f984d4fe1a207a47c9cca4
+coverage_gids:
+  - gid: D5/S3/Quantum/Recovery/FourPathWeightedEqualityRemainder.weighted_equality_remainder
+    target_statement_id: sha256:88bfe3b5bfcd7dd3bf3d5b264c9cf2d659560aaac499d115570fbf4c55b824a3
+receipts:
+  unresolved_subitems: []

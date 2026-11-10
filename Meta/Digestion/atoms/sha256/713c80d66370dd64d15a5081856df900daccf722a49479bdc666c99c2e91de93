@@ -1,0 +1,34 @@
+**定义 17.1（The graph class and the unchanged Boolean carrier）。**
+Let $H$ be a finite connected simple graph with unit edge weights and
+an even number $m\geq2$ of vertices. For every $p\in V(H)$ require
+that the entire induced open neighborhood
+
+$$
+G_p=H[N_H(p)]
+\tag{17.1}
+$$
+
+is bipartite or is one simple odd cycle $C_n$, where $n\geq3$ is
+arbitrary. The bipartite alternative permits disconnected graphs,
+isolated vertices and edgeless graphs. The cycle alternative is an
+assertion about all of $G_p$, not a cycle selected from it.
+
+Use the conventions of the owning volume,
+[Token-graph blow-ups and a full-state defect certificate,
+Definitions 1.1–1.2](TOKEN_GRAPH_BLOWUP_DEFECT_DECOMPOSITION.md).
+In particular $B_i=\{i\}\times[2]$, $\Omega=\bigsqcup_iB_i$,
+$H[\mathrm{empty}_2]=H[\overline{K_2}]$, and $\mathcal H_m$ is the
+entire complex space with orthonormal basis the $m$-subsets of
+$\Omega$. The positive ordinary adjacency $K$ has coefficient one
+exactly for a single token moved along an edge of this blow-up.
+Let $P_i$ be the original within-fibre symmetric projection and put
+
+$$
+P=\prod_iP_i,\qquad E=\min\operatorname{spec}K,
+\qquad \mathcal N=\ker P.
+\tag{17.2}
+$$
+
+The minimum is taken over all of $\mathcal H_m$, with only the
+global occupancy constraint $k=m$.
+

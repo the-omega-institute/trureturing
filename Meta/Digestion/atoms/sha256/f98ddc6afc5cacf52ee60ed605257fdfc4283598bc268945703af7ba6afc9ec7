@@ -1,0 +1,17 @@
+## 5. 有限补空间证明：两个平方锁住全部有序关系
+
+使用已继承的有限 Kraus 表示，写成
+
+$$
+\Phi(x)=\sum_rK_r^\dagger xK_r,qquad \sum_rK_r^\dagger K_r=I_k.
+$$
+
+定义从 $\mathbb C^k$ 到 $\mathbb C^d\otimes\mathbb C^s$ 的等距映射
+
+$$
+V\psi=\sum_rK_r\psi\otimes|r\rangle,qquad
+\pi(x)=x\otimes I_s,qquad P=VV^\dagger,qquad Q=I-P.
+$$
+
+于是 $V^\dagger V=I_k$、$\Phi(x)=V^\dagger\pi(x)V$。这是有限 Stinespring 表示的直接构造，不需要增加新的物理环境公理。
+

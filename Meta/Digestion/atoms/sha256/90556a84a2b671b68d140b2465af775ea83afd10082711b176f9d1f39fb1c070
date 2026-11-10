@@ -1,0 +1,33 @@
+#### 定义 5.1：原生十三维扇区
+
+沿用项目第 77.1 节。十个站点为  $b_ {-1},b_ 0,\ldots,b_ 8$ ，
+固定  $b_ {-1}=b_ 7=1$ 、 $b_ 0=b_ 6=b_ 8=0$ 。
+令  $\beta=(b_ 1,\ldots,b_ 5)$  无相邻的  $1$ ，并置
+
+<a id="eq-eq:13space"></a>
+
+```math
+e_\beta=\lvert 10\,\beta\,010\rangle,\qquad
+ H=\operatorname{span}_{\mathbb C}\{e_\beta\},\qquad v=e_{00100}.\tag{10}
+```
+
+ $K_ j$  的中心为  $b_ j$ ， $0\le j\le6$ 。长度为  $n$  的合法串数满足
+ $a_ n=a_ {n-1}+a_ {n-2}$ 、 $a_ 0=1,a_ 1=2$ ，故  $\dim H=a_ 5=13$ 。
+
+
+项目第 77.2 节已经逐基建立此扇区与八个 Fibonacci 任意子总荷真空空间的对应，
+再以 Jones--Wenzl 扇区的密度结果得到
+
+<a id="eq-eq:project-density"></a>
+
+```math
+\overline{\{[K_p|_H]:p\text{ 为七地址有限正字}\}}=PU(H).\tag{11}
+```
+
+下文使用其中的编织关系与标量交换子代数；不从维数相同直接跳到密度。
+该对应及外部密度前提的来源分别是项目第 77.2 节和 Freedman--Larsen--Wang 的 Theorem 0.1。
+[\[3\]](#bib-repoborn) [\[15\]](#bib-flw)
+
+
+<a id="stmt-5-2"></a>
+
