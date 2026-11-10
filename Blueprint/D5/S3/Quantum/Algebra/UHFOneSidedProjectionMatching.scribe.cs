@@ -43,9 +43,21 @@ internal sealed class UHFOneSidedProjectionMatchingDocument : IScribeDocumentDef
         F.Seq(F.OpenBracket, Call("CStarAlgebra", X("C")), F.CloseBracket, F.Sp,
             All("M", Call("FullMatrixModel", X("C")), body)));
     private static Formula InSet(string name, Formula body) => All(name, Stage(X("N")), Imp(Mem(X(name), X("s")), body));
-    private static Formula Localization() => Alg(All("p", X("C"), Imp(Proj(X("p")),
-        Ex("n", Call("Nat"), Ex("u", Call("unitary", X("C")), Ex("Q", Mat(X("n")),
-            And(Proj(X("Q")), Equal(Conj(X("u"), X("p")), Call("embed", X("M"), X("n"), X("Q")))))))));
+    private static Formula Conjunct(params Formula[] terms)
+    {
+        Formula result = terms[^1];
+        for (int i = terms.Length - 2; i >= 0; --i) result = And(terms[i], result);
+        return result;
+    }
+    private static Formula Localization()
+    {
+        Formula result = And(Proj(X("Q")),
+            Equal(Conj(X("u"), X("p")), Call("embed", X("M"), X("n"), X("Q"))));
+        result = Ex("Q", Mat(X("n")), result);
+        result = Ex("u", Call("unitary", X("C")), result);
+        result = Ex("n", Call("Nat"), result);
+        return Alg(All("p", X("C"), Imp(Proj(X("p")), result)));
+    }
     private static Formula Matching()
     {
         Formula li = App(X("l"), X("i"));
@@ -53,12 +65,13 @@ internal sealed class UHFOneSidedProjectionMatchingDocument : IScribeDocumentDef
         Formula wi = App(X("w"), X("i"));
         Formula orth = InSet("i", InSet("j", Imp(Ne(X("i"), X("j")), Equal(Multiply(li, lj), D(0)))));
         Formula sum = F.Seq(new Formula.Subscript(F.Sum, F.Seq(X("i"), F.InMacro, X("s"))), Par(li));
-        Formula law = And(Call("Nonempty", X("s")),
-            And(InSet("i", And(Proj(li), Ne(li, D(0)))),
-            And(orth, And(Equal(sum, X("r")), And(Proj(X("m")), And(Ne(X("m"), D(0)),
-            And(Equal(Multiply(X("m"), X("v")), X("m")),
-            And(Equal(Multiply(X("v"), X("m")), X("m")),
-                InSet("i", And(Equal(Multiply(Star(wi), wi), X("m")), Equal(Multiply(wi, Star(wi)), li))))))))));
+        Formula law = Conjunct(Call("Nonempty", X("s")),
+            InSet("i", And(Proj(li), Ne(li, D(0)))), orth, Equal(sum, X("r")),
+            Proj(X("m")), Ne(X("m"), D(0)),
+            Equal(Multiply(X("m"), X("v")), X("m")),
+            Equal(Multiply(X("v"), X("m")), X("m")),
+            InSet("i", And(Equal(Multiply(Star(wi), wi), X("m")),
+                Equal(Multiply(wi, Star(wi)), li))));
         Formula conclusion = Ex("N", Call("Nat"), Ex("s", Call("Finset", Stage(X("N"))),
             Ex("l", Arrow(Stage(X("N")), X("C")), Ex("m", X("C"),
                 Ex("w", Arrow(Stage(X("N")), X("C")), law)))));
