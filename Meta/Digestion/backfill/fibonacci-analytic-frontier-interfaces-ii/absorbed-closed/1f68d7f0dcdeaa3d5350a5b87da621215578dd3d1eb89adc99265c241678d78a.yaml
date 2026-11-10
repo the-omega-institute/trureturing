@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1f68d7f0dcdeaa3d5350a5b87da621215578dd3d1eb89adc99265c241678d78a
+  normalized_sha256: sha256:1f68d7f0dcdeaa3d5350a5b87da621215578dd3d1eb89adc99265c241678d78a
+cas_ref: sha256:1f68d7f0dcdeaa3d5350a5b87da621215578dd3d1eb89adc99265c241678d78a
+coverage_gids:
+  - gid: D5/S3/Arith/Robin/ForwardKernel/FourthMomentMean.profile_response_mean_bound
+    target_statement_id: sha256:31ec3f6d7a1123a8464b3ffb9ecd95d52a6516aa0fb4c48c0a9e7095c93d6bcb
+  - gid: D5/S3/Arith/Robin/ForwardKernel/FourthMomentMean.profile_response_mean_tendsto_zero
+    target_statement_id: sha256:d61a568cc0b30bb82a506e899d37b180ec85c687ca1278f9af881eeb83ed07b5
+receipts:
+  unresolved_subitems: []

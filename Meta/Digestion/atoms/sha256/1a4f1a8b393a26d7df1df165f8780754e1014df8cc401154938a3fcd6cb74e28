@@ -1,0 +1,87 @@
+**推论 20.1（三进 UHF 的全部标量总右 Gram 双边）。** 设 $A=M_{3^\infty}=M_3(B)$、$B=M_{3^\infty}$，同一原总映射满足完整 $\mathsf H_A(D)$。则 AH72.1 的同一个普通符号 $\sigma$ 对所有实 $R$、所有完成 $x,y\in B$ 及所有满足 (19.3) 的 $\mu\ge0$，给出 (19.6)。这里无需另加 $PAP$ 分类或 $P$ 位于原有限矩阵阶段的假设。
+
+证明。$\mu=0$ 已由零槽支付，以下取 $\mu>0$。标准 $p=E_{11}+E_{22}$ 属于原第一矩阵阶段且秩为二；AH71.2 分类整个完成 $pAp$，AH72.1 给它上述共同 $\sigma$。这支付定理 19.2 的第一角前件。
+
+对 (19.4) 的任意实际 $P$，W119.2–119.3 供应同一原 $D$ 的角闭合及准确接口：
+
+$$
+D((PAP)_{\rm sa},(PAP)_{\rm sa})\subseteq(PAP)_{\rm sa},\qquad
+C_P=(PAP)_+=A_+\cap PAP,\qquad
+1_{PAP}=P,\qquad N_P=\|\cdot\|_A|_{PAP}.
+\tag{20.1}
+$$
+
+每个原评价标签仍作为限制 $\gamma_P$ 保留，准确质量为 $\gamma(P)$；同值限制不合并，零限制不删除，不除以任何质量。原有向 P2、A2 的全部三表与排列以及同一个 $\vartheta$ 的 A3 均继承。W 式 (120.2) 的完整 PB 逐值继承：角内三输入的两份内输出由 (20.1) 留在角内，Jordan 运算和实际外标签也在角内，两份外输出再次由 (20.1) 留在角内。这使用任意**实际原投影**的接口；完整原域使这里的 $P$ 确是原标签。
+
+现在给这个具体角供应 AH66.1 所需的实际偶维模型。记 $\iota:B\to qAq$ 为 $\iota(z)=E_{33}z$。成熟矩阵单位接口给保单位 * 同构
+
+$$
+\begin{aligned}
+\Phi:M_2(B)&\longrightarrow PAP,\\
+\Phi\begin{pmatrix}z_{11}&z_{12}\\z_{21}&z_{22}\end{pmatrix}
+&=u\iota(z_{11})u^*+u\iota(z_{12})
++\iota(z_{21})u^*+\iota(z_{22}).
+\end{aligned}
+\tag{20.2}
+$$
+
+所用实际矩阵单位为 $P_0,u,u^*,q$，单位之和为 $P$。为明确该接口覆盖整个角，对 $T\in PAP$，其四个逆坐标是
+
+$$
+\Phi^{-1}(T)=
+\begin{pmatrix}
+\iota^{-1}(u^*Tu)&\iota^{-1}(u^*Tq)\\
+\iota^{-1}(qTu)&\iota^{-1}(qTq)
+\end{pmatrix}.
+\tag{20.3}
+$$
+
+各括号确在 $qAq$ 内。此式只明确成熟角同构的参数对应，不另立分类或新矩阵单位定理。
+
+取 $B$ 的实际递增含单位矩阵模型 $B_n\cong M_{3^n}(\mathbb C)$，其并在 $B$ 中范数稠密。则
+
+$$
+\mathcal A_n^P=\Phi(M_2(B_n))\subseteq PAP,\qquad
+\mathcal A_n^P\cong M_{2\cdot3^n}(\mathbb C),\qquad
+1_{\mathcal A_n^P}=P,\qquad
+PAP=\overline{\bigcup_n\mathcal A_n^P}^{\|\cdot\|}.
+\tag{20.4}
+$$
+
+这些是真正位于原 $A$ 中的递增有限全矩阵子代数，各矩阵阶数为偶。密度仅使用已知 * 同构的等距性与 $B_n$ 的密度。于是 AH70.1 **直接作用于实际载体 $PAP$、限制的同一个 $D_P$ 和模型 (20.4)**，供应唯一普通符号 $\sigma_P$，使
+
+$$
+D(z,t)=\frac{\sigma_P i}{2}[z,t]
+\qquad(z,t\in(PAP)_{\rm sa}).
+\tag{20.5}
+$$
+
+这里没有先把 $D$ 声明为对 $\Phi$ 协变，也没有让任何输入极限穿过 $D$；不要求 $D((\mathcal A_n^P)_{\rm sa},(\mathcal A_n^P)_{\rm sa})$ 留在 $\mathcal A_n^P$。AH70.1 自身分类整个完成载体，已支付所需推论。本步骤不把 AH71.1 的有限阶段投影条件赠给 $P$，也不声称 AH72.1 已经直接比较了这个 $P$。
+
+最后比较两份**同一原输出**。实际共同子角满足
+
+$$
+P_0AP_0\subseteq pAp\cap PAP,\qquad
+z\longmapsto u\iota(z)u^*:\ B\overset{*}{\cong}P_0AP_0.
+\tag{20.6}
+$$
+
+取实际 $B_1=M_3$ 的矩阵单位 $e_{ij}^B$，令 $d=e_{11}^B-e_{22}^B$、$t=e_{12}^B+e_{21}^B$；两者自伴且交换子非零。令
+
+$$
+\alpha=u\iota(d)u^*,\qquad \beta=u\iota(t)u^*.
+\tag{20.7}
+$$
+
+这两个自伴原标签在共同子角中，且 $[\alpha,\beta]=u\iota([d,t])u^*\ne0$；非零性也可左乘 $u^*$、右乘 $u$ 直接检验。第一角的既有分类与 (20.5) 因而同时给
+
+$$
+D(\alpha,\beta)
+=\frac{\sigma i}{2}[\alpha,\beta]
+=\frac{\sigma_P i}{2}[\alpha,\beta],
+\qquad \sigma_P=\sigma.
+\tag{20.8}
+$$
+
+这支付 (19.5) 的同号前件。直接应用定理 19.2 得全部结论。共同子角的非交换性在这里来自 $B=M_{3^\infty}$；对一般交换 $B$，不能用这个比较凭空认定两个可能符号相同。∎
+
