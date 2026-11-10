@@ -362,10 +362,212 @@ private lemma endpointFunction_inverse (y : ℝ) (hy : |y| < 7 / 2) :
   have hx : |x| < 1 := by simpa [he] using hG.1
   have hF : x + Real.sin x = y / 2 := by
     simpa [sineForward, he, Complex.sin_ofReal_re] using congrArg Complex.re hG.2
-  have hH : (endpointFunction y).re = Real.sin x := by simp [endpointFunction, he, Complex.sin_ofReal_re]
+  have hH : (endpointFunction y).re = Real.sin x := by
+    simp [endpointFunction, he, Complex.sin_ofReal_re]
   rw [hH, Real.arcsin_sin (by linarith [abs_le.mp hx.le, Real.pi_gt_three])
     (by linarith [le_abs_self x, Real.pi_gt_three])]
   linarith
+
+private lemma forward_expansion :
+    HasFPowerSeriesAt (fun x : ℝ => 2 * x + 2 * Real.arcsin x)
+      (PowerSeries.toFMS ℝ (forward.map (Rat.castHom ℝ))) 0 := by
+  have hX : PowerSeries.toFMS ℝ (PowerSeries.X : ℝ⟦X⟧) =
+      (ContinuousLinearMap.id ℝ ℝ).fpowerSeries 0 := by
+    funext n
+    apply ContinuousMultilinearMap.ext
+    intro v
+    rcases n with _ | (_ | n)
+    · simp [PowerSeries.toFMS, FormalMultilinearSeries.ofScalars]
+    · simp [PowerSeries.toFMS, FormalMultilinearSeries.ofScalars]
+    · simp [PowerSeries.toFMS, FormalMultilinearSeries.ofScalars,
+        PowerSeries.coeff_X]
+  have hA : PowerSeries.toFMS ℝ (forward.map (Rat.castHom ℝ)) =
+      (2 : ℝ) • PowerSeries.toFMS ℝ (PowerSeries.X : ℝ⟦X⟧) +
+        (2 : ℝ) • PowerSeries.toFMS ℝ (arcsine.map (Rat.castHom ℝ)) := by
+    funext n
+    apply ContinuousMultilinearMap.ext
+    intro v
+    change PowerSeries.toFMS ℝ (forward.map (Rat.castHom ℝ)) n v =
+      (2 : ℝ) * PowerSeries.toFMS ℝ (PowerSeries.X : ℝ⟦X⟧) n v +
+        (2 : ℝ) * PowerSeries.toFMS ℝ (arcsine.map (Rat.castHom ℝ)) n v
+    rw [PowerSeries.toFMS_apply, PowerSeries.toFMS_apply, PowerSeries.toFMS_apply]
+    rw [PowerSeries.coeff_map]
+    simp [forward, PowerSeries.coeff_X]
+    split_ifs <;> norm_num <;> ring
+  rw [hA, hX]
+  convert ((ContinuousLinearMap.id ℝ ℝ).hasFPowerSeriesAt 0).const_smul
+    (c := (2 : ℝ)) |>.add (arcsine_expansion.const_smul (c := (2 : ℝ))) using 1
+  funext x
+  rfl
+
+private lemma inverse_coefficients (n : ℕ) :
+    iteratedDeriv n endpointFunction 0 / (n.factorial : ℂ) =
+      ((PowerSeries.coeff n inverse : ℚ) : ℂ) := by
+  let h : ℝ → ℝ := fun y => (endpointFunction y).re
+  have hH := endpointFunction_analytic 0 (by norm_num)
+  have hreal : ∀ᶠ y : ℝ in 𝓝 0, (endpointFunction y).im = 0 := by
+    filter_upwards [(isOpen_lt continuous_abs continuous_const).mem_nhds
+      (by norm_num : |(0 : ℝ)| < 7 / 2)] with y hy
+    exact endpointFunction_real y hy
+  obtain ⟨hh, hc⟩ :=
+    D5.S3.Analytic.Fourier.PositiveDefiniteImaginaryAxis.real_taylor_data hH hreal
+  let T : ℝ⟦X⟧ := PowerSeries.mk (fun k => iteratedDeriv k h 0 / k.factorial)
+  let A := forward.map (Rat.castHom ℝ)
+  have hT : HasFPowerSeriesAt h (PowerSeries.toFMS ℝ T) 0 := by
+    simpa [T, PowerSeries.toFMS] using hh.hasFPowerSeriesAt
+  have hT0 : T.constantCoeff = 0 := by simp [T, h, endpointFunction_zero]
+  have hTs : PowerSeries.HasSubst T := PowerSeries.HasSubst.of_constantCoeff_zero' hT0
+  have hA : HasFPowerSeriesAt (fun x : ℝ => 2 * x + 2 * Real.arcsin x)
+      (PowerSeries.toFMS ℝ A) (h 0) := by
+    simpa [h, endpointFunction_zero, A] using forward_expansion
+  have he : (fun x : ℝ => 2 * h x + 2 * Real.arcsin (h x)) =ᶠ[𝓝 0] id := by
+    filter_upwards [(isOpen_lt continuous_abs continuous_const).mem_nhds
+      (by norm_num : |(0 : ℝ)| < 7 / 2)] with y hy
+    exact endpointFunction_inverse y hy
+  have hcomp := (hA.comp hT).congr he
+  have hEq := hcomp.eq_formalMultilinearSeries
+    ((ContinuousLinearMap.id ℝ ℝ).hasFPowerSeriesAt 0)
+  rw [← PowerSeries.toFMS_subst ℝ T A hTs] at hEq
+  have hAT : A.subst T = PowerSeries.X := by
+    ext k
+    have hval := congrArg (fun p : FormalMultilinearSeries ℝ ℝ ℝ =>
+      p k (fun _ => 1)) hEq
+    rcases k with _ | (_ | k)
+    · simpa [PowerSeries.toFMS, FormalMultilinearSeries.ofScalars_apply_eq] using hval
+    · simpa [PowerSeries.toFMS, FormalMultilinearSeries.ofScalars_apply_eq] using hval
+    · simpa [PowerSeries.toFMS, FormalMultilinearSeries.ofScalars_apply_eq,
+        PowerSeries.coeff_X, show k + 1 + 1 ≠ 1 by omega] using hval
+  have hA0 : A.constantCoeff = 0 := by
+    change ((forward.constantCoeff : ℚ) : ℝ) = 0
+    norm_num [forward, arcsine, alpha]
+  have hu : IsUnit (PowerSeries.coeff 1 A) := by
+    have hv : PowerSeries.coeff 1 A = 4 := by
+      change ((PowerSeries.coeff 1 forward : ℚ) : ℝ) = 4
+      norm_num [forward, arcsine, alpha]
+    rw [hv]
+    exact isUnit_iff_ne_zero.mpr (by norm_num)
+  have hB : PowerSeries.HasSubst inverse := by
+    dsimp [inverse]
+    exact PowerSeries.HasSubst.substInvOfIsUnit _ _
+  have hBi : forward.subst inverse = PowerSeries.X := by
+    dsimp [inverse]
+    exact PowerSeries.subst_substInvOfIsUnit_right _ (by simp [forward, arcsine, alpha]) _
+  have hBM : A.subst (inverse.map (Rat.castHom ℝ)) = PowerSeries.X := by
+    dsimp only [A]
+    have hm := PowerSeries.map_subst (h := Rat.castHom ℝ) hB forward
+    change (forward.subst inverse).map (Rat.castHom ℝ) =
+      (forward.map (Rat.castHom ℝ)).subst (inverse.map (Rat.castHom ℝ)) at hm
+    rw [← hm, hBi]
+    change (PowerSeries.map (Rat.castHom ℝ)) PowerSeries.X = PowerSeries.X
+    exact PowerSeries.map_X _
+  have hBs : PowerSeries.HasSubst (inverse.map (Rat.castHom ℝ)) :=
+    PowerSeries.HasSubst.of_constantCoeff_zero' (by
+      change ((inverse.constantCoeff : ℚ) : ℝ) = 0
+      simp [inverse])
+  have hTM : T = inverse.map (Rat.castHom ℝ) :=
+    (PowerSeries.eq_substInvOfIsUnit_of_subst_eq_X A hA0 hu hTs hAT).trans
+      (PowerSeries.eq_substInvOfIsUnit_of_subst_eq_X A hA0 hu hBs hBM).symm
+  have hn : iteratedDeriv n h 0 / n.factorial = ((PowerSeries.coeff n inverse : ℚ) : ℝ) := by
+    simpa [T] using congrArg (PowerSeries.coeff n) hTM
+  apply Complex.ext
+  · simpa [h] using (hc n).2.trans hn
+  · simpa using (hc n).1
+
+private lemma endpoint_series :
+    HasFPowerSeriesOnBall endpointFunction
+      (PowerSeries.toFMS ℂ (inverse.map (Rat.castHom ℂ))) 0 (13 / 4) := by
+  obtain ⟨p, hp⟩ := endpointFunction_expansion
+  have he := hp.hasFPowerSeriesAt.eq_formalMultilinearSeries
+    ((endpointFunction_analytic 0 (by norm_num)).hasFPowerSeriesAt)
+  have hc : p = PowerSeries.toFMS ℂ (inverse.map (Rat.castHom ℂ)) := by
+    rw [he]
+    congr 1
+    funext n
+    exact inverse_coefficients n
+  rwa [← hc]
+
+private lemma endpoint_value :
+    0 < (endpointFunction Real.pi).re ∧ (endpointFunction Real.pi).re < 1 ∧
+      Real.cos (endpointFunction Real.pi).re = (endpointFunction Real.pi).re := by
+  let x := (selectedInverse ((Real.pi : ℂ) / 2)).re
+  have hs : (selectedInverse ((Real.pi : ℂ) / 2)).im = 0 := by
+    simpa using selectedInverse_real (Real.pi / 2) (by
+      rw [abs_of_pos (half_pos Real.pi_pos)]
+      linarith [Real.pi_lt_d2])
+  have he : selectedInverse ((Real.pi : ℂ) / 2) = (x : ℂ) := by
+    apply Complex.ext <;> simp [x, hs]
+  have hG := selectedInverse_spec ((Real.pi : ℂ) / 2) (by
+    rw [norm_div, Complex.norm_ofNat, Complex.norm_real,
+      Real.norm_eq_abs, abs_of_pos Real.pi_pos]
+    linarith [Real.pi_lt_d2])
+  have hx : |x| < 1 := by simpa [he] using hG.1
+  have hF : x + Real.sin x = Real.pi / 2 := by
+    simpa [sineForward, he, Complex.sin_ofReal_re] using congrArg Complex.re hG.2
+  have hxpos : 0 < x := by
+    by_contra hn
+    have hsin := Real.sin_nonpos_of_nonpos_of_neg_pi_le (le_of_not_gt hn)
+      (by linarith [abs_le.mp hx.le, Real.pi_gt_three])
+    linarith [Real.pi_pos]
+  have hH : (endpointFunction Real.pi).re = Real.sin x := by
+    simp [endpointFunction, he, Complex.sin_ofReal_re]
+  rw [hH]
+  refine ⟨Real.sin_pos_of_pos_of_lt_pi hxpos (by
+    linarith [le_abs_self x, Real.pi_gt_three]),
+    lt_trans (Real.sin_lt hxpos) (lt_of_le_of_lt (le_abs_self x) hx), ?_⟩
+  rw [show Real.sin x = Real.pi / 2 - x by linarith, Real.cos_pi_div_two_sub]
+  linarith
+
+private lemma positive_fixed_unique (θ : ℝ) (hθ : 0 < θ) (hθ1 : θ < 1)
+    (hfix : Real.cos θ = θ) (t : ℝ) (ht : 0 < t) (htfix : Real.cos t = t) :
+    t = θ := by
+  have ht1 : t ≤ 1 := htfix ▸ Real.cos_le_one t
+  have htstrict : t < 1 := by
+    have hcos := Real.strictAntiOn_cos
+      (show (0 : ℝ) ∈ Set.Icc 0 Real.pi from ⟨le_rfl, Real.pi_pos.le⟩)
+      (show t ∈ Set.Icc 0 Real.pi from ⟨ht.le, by linarith [Real.pi_gt_three]⟩) ht
+    simpa [htfix] using hcos
+  have htpi : t ≤ Real.pi := htstrict.le.trans (by linarith [Real.pi_gt_three])
+  have hanti := Real.antitoneOn_cos
+  apply le_antisymm
+  · by_contra hn
+    have hle := hanti ⟨hθ.le, by linarith [Real.pi_gt_three]⟩
+      ⟨ht.le, htpi⟩ (le_of_not_ge hn)
+    rw [hfix, htfix] at hle
+    linarith
+  · by_contra hn
+    have hle := hanti ⟨ht.le, htpi⟩
+      ⟨hθ.le, by linarith [Real.pi_gt_three]⟩ (le_of_not_ge hn)
+    rw [hfix, htfix] at hle
+    linarith
+
+/-- The literal rational inverse converges absolutely at pi to the unique positive
+cosine fixed point. -/
+theorem rational_inverse_endpoint :
+    ∃ θ : ℝ, 0 < θ ∧ θ < 1 ∧ Real.cos θ = θ ∧
+      (∀ t : ℝ, 0 < t → Real.cos t = t → t = θ) ∧
+      Summable (fun n : ℕ => |((PowerSeries.coeff n inverse : ℚ) : ℝ)| * Real.pi ^ n) ∧
+      HasSum (fun n : ℕ => ((PowerSeries.coeff n inverse : ℚ) : ℝ) * Real.pi ^ n) θ := by
+  have hval := endpoint_value
+  refine ⟨(endpointFunction Real.pi).re, hval.1, hval.2.1, hval.2.2,
+    positive_fixed_unique _ hval.1 hval.2.1 hval.2.2, ?_, ?_⟩
+  · let r : ℝ≥0 := ⟨Real.pi, Real.pi_pos.le⟩
+    have hr : ENNReal.ofNNReal r <
+        (PowerSeries.toFMS ℂ (inverse.map (Rat.castHom ℂ))).radius := by
+      apply lt_of_lt_of_le (b := (13 / 4 : ℝ≥0∞)) _ endpoint_series.r_le
+      exact_mod_cast (show Real.pi < 13 / 4 by linarith [Real.pi_lt_d2])
+    have hsum := (PowerSeries.toFMS ℂ (inverse.map (Rat.castHom ℂ))).summable_norm_mul_pow hr
+    simpa [r, PowerSeries.toFMS, FormalMultilinearSeries.ofScalars_norm,
+      ← Complex.ofReal_ratCast, Complex.norm_real, Real.norm_eq_abs] using hsum
+  · have hsum := endpoint_series.hasSum_sub (y := (Real.pi : ℂ)) (by
+      rw [Metric.mem_eball, edist_dist]
+      simp only [dist_zero_right, Complex.norm_real, Real.norm_eq_abs,
+        abs_of_pos Real.pi_pos]
+      convert (ENNReal.ofReal_lt_ofReal_iff (show (0 : ℝ) < 13 / 4 by norm_num)).mpr
+        (show Real.pi < 13 / 4 by linarith [Real.pi_lt_d2]) using 1 <;> norm_num [ENNReal.ofReal_div_of_pos])
+    have hre := Complex.hasSum_re hsum
+    simpa [PowerSeries.toFMS, FormalMultilinearSeries.ofScalars_apply_eq,
+      smul_eq_mul, ← Complex.ofReal_ratCast, ← Complex.ofReal_pow,
+      ← Complex.ofReal_mul, mul_comm] using hre
 
 end D5.S3.Analytic.PowerSeries.DottieInverseSeries
 
