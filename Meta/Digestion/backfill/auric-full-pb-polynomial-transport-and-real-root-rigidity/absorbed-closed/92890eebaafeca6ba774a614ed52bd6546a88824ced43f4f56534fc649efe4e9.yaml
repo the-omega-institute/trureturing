@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:92890eebaafeca6ba774a614ed52bd6546a88824ced43f4f56534fc649efe4e9
+  normalized_sha256: sha256:92890eebaafeca6ba774a614ed52bd6546a88824ced43f4f56534fc649efe4e9
+cas_ref: sha256:92890eebaafeca6ba774a614ed52bd6546a88824ced43f4f56534fc649efe4e9
+coverage_gids:
+  - gid: D5/S3/Quantum/Algebra/UHFOneSidedProjectionMatching.one_sided_projection_matching
+    target_statement_id: sha256:757d6e6ecc3cff76f1e967222ea86d2d9b3b341765fdd5ae67d46e51ab93c991
+receipts:
+  unresolved_subitems: []
