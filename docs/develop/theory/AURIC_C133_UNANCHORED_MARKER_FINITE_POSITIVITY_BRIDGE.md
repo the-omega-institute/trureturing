@@ -2676,9 +2676,11 @@ $$
 令 $z=a\star u$、$b=a$、$v=u$，则 $A^kz=a\star V^ku$。从 (22.3) 的 $m=0$ 混合块得到精确的两步预算
 
 $$
+\begin{aligned}
 \sum_{k=1}^2d\bigl(V^kz,A^kz\bigr)
-:=\sum_{k=1}^2d\bigl(A^kz,V^kz\bigr)
-:=3\,[q(a)+r(a)].
+&=\sum_{k=1}^2d\bigl(A^kz,V^kz\bigr)\\
+&=3\,[q(a)+r(a)].
+\end{aligned}
 \tag{22.4}
 $$
 
