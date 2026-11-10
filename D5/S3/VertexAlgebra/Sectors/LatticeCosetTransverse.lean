@@ -261,6 +261,7 @@ theorem creationSeries_difference (hD : (gramReal D).PosDef)
       ← Finset.sum_mul]
     rw [Finset.sum_neg_distrib, ← map_sum, ← Finset.sum_smul, hcast]
     simp only [neg_mul, smul_neg, neg_smul]
+    simp only [← hCsmul, smul_smul, map_neg, neg_mul]
 
 end
 end D5.S3.VertexAlgebra.LatticeCosetTransverse
