@@ -8,6 +8,8 @@ No CompiledSourceScope/Operands/Contract or Scribe validator has run. Actual
 correspondence is OPEN; sourceSelection is none. Packed Parameters are a
 mathematical family presentation, not an asserted source binder/selector. -/
 noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 open Set Finset
 open scoped unitInterval
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -52,9 +54,9 @@ abbrev arena : Arena where
     R.readout () ⟨n, hn, lo, m, h⟩ (((List.finRange n).drop lo).take m) ∧
     R.readout () ⟨n, hn, lo, m, h⟩ ((List.finRange m).map (intervalEmbedding lo m h))
 private theorem bridge : (type_of% (@_root_.D5.S3.Geometry.FiniteCyclicNoncoverIntervalPaths.intervalList_source)) ↔ arena.Law actual := Iff.rfl
-private def testParameters : Parameters := ⟨1, by omega, 0, 0, by omega⟩
+private abbrev testParameters : Parameters := ⟨1, by omega, 0, 0, by omega⟩
 private def presentState : signature.State testParameters := []
-private def absentState : signature.State testParameters := [⟨0, by omega⟩]
+private def absentState : signature.State testParameters := [⟨0, by change 0 < 1; decide⟩]
 private theorem present : actual.readout () testParameters presentState := by rfl
 private theorem absent : ¬ actual.readout () testParameters absentState := by
   change ([] : List (Fin 1)) ≠ [⟨0, by omega⟩]
@@ -77,7 +79,7 @@ def family : Registration arena (type_of% (@_root_.D5.S3.Geometry.FiniteCyclicNo
     cases i
     refine ⟨testParameters, presentState, absentState, ?_⟩
     intro he
-    exact absent (he ▸ present)
+    exact absent (Eq.mp he present)
 
 def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Geometry.FiniteCyclicNoncoverIntervalPaths.intervalList_source) (Realization signature) Unit Unit where
@@ -169,9 +171,9 @@ private theorem bridge : (type_of% (@_root_.D5.S3.Geometry.FiniteCyclicNoncoverI
   · intro law n hn lo m h a
     exact (law (n := n) hn lo m h a).trans (rhs_reflection hn lo m a).symm
 
-private def testParameters : Parameters := ⟨2, {⟨1, by omega⟩}⟩
-private def outsideState : signature.State testParameters := ⟨0, by omega⟩
-private def insideState : signature.State testParameters := ⟨1, by omega⟩
+private abbrev testParameters : Parameters := ⟨2, {⟨1, by omega⟩}⟩
+private def outsideState : signature.State testParameters := ⟨0, by change 0 < 2; decide⟩
+private def insideState : signature.State testParameters := ⟨1, by change 1 < 2; decide⟩
 private theorem outside_readout : actual.readout () testParameters outsideState = true := by
   apply (readout_true_iff testParameters.2 outsideState).mpr
   change (⟨0, by omega⟩ : Fin 2) ∉ ({⟨1, by omega⟩} : Finset (Fin 2))
@@ -274,9 +276,9 @@ abbrev arena : Arena where
       lo+1 ≤ i.val ∧ i.val < lo+m ∧ R.readout () ⟨n, lo⟩ i = 1
 
 private theorem bridge : (type_of% (@_root_.D5.S3.Geometry.FiniteCyclicNoncoverIntervalPaths.mem_pathChosen_interval)) ↔ arena.Law actual := Iff.rfl
-private def testParameters : Parameters := ⟨2, 0⟩
-private def zeroState : signature.State testParameters := ⟨0, by omega⟩
-private def oneState : signature.State testParameters := ⟨1, by omega⟩
+private abbrev testParameters : Parameters := ⟨2, 0⟩
+private def zeroState : signature.State testParameters := ⟨0, by change 0 < 2; decide⟩
+private def oneState : signature.State testParameters := ⟨1, by change 1 < 2; decide⟩
 private theorem zero_readout : actual.readout () testParameters zeroState = 0 := by rfl
 private theorem one_readout : actual.readout () testParameters oneState = 1 := by rfl
 private theorem rejected_law : ¬ arena.Law rejected := by
@@ -336,6 +338,7 @@ universe u
 namespace pinnedImage_iff
 structure Parameters where
   V : Type u
+  fv : Fintype V
   dv : DecidableEq V
   n : Nat
   hn : 0 < n
@@ -345,7 +348,7 @@ structure Parameters where
   bound : lo+m ≤ n
   fixed : Finset (Fin n)
   outside : ∀ i ∈ fixed, i.val < lo ∨ lo+m ≤ i.val
-attribute [instance] Parameters.dv
+attribute [instance] Parameters.fv Parameters.dv
 
 abbrev signature : Signature where
   Params := Parameters.{u}
@@ -361,18 +364,18 @@ def actual : Realization signature.{u} := realize signature (fun _ p z => z ∈ 
 def rejected : Realization signature.{u} := realize signature (fun _ _ _ => False) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature.{u}
-  Law R := ∀ {V : Type u} [dv : DecidableEq V] {n : Nat} (hn : 0 < n)
+  Law R := ∀ {V : Type u} [fv : Fintype V] [dv : DecidableEq V] {n : Nat} (hn : 0 < n)
     (s : Fin n ↪ V) (lo m : Nat) (h : lo+m ≤ n)
     (S : Finset (Fin n)) (hS : ∀ i ∈ S, i.val < lo ∨ lo+m ≤ i.val) (a : Finset V),
-    R.readout () ⟨V, dv, n, hn, s, lo, m, h, S, hS⟩ a ↔ a ⊆ ground s ∧
+    R.readout () ⟨V, fv, dv, n, hn, s, lo, m, h, S, hS⟩ a ↔ a ⊆ ground s ∧
       (∀ i : Fin n, (i.val < lo ∨ lo+m ≤ i.val) → (s i ∉ a ↔ i ∈ S)) ∧
       (∀ i : Fin n, lo ≤ i.val → i.val+1 < lo+m → s i ∈ a ∨ s (successor hn i) ∈ a)
 private theorem bridge : (type_of% (@_root_.D5.S3.Geometry.FiniteCyclicNoncoverIntervalPaths.pinnedImage_iff.{u})) ↔ arena.{u}.Law actual := Iff.rfl
 private def testEmbedding : Fin 1 ↪ ULift.{u} (Fin 1) :=
   ⟨ULift.up, fun _ _ he => congrArg ULift.down he⟩
 private def answer : Finset (ULift.{u} (Fin 1)) := complementMap testEmbedding ∅
-private def testParameters : Parameters.{u} :=
-  ⟨ULift.{u} (Fin 1), inferInstance, 1, by omega, testEmbedding, 0, 0, by omega,
+private abbrev testParameters : Parameters.{u} :=
+  ⟨ULift.{u} (Fin 1), inferInstance, inferInstance, 1, by omega, testEmbedding, 0, 0, by omega,
     ∅, by simp⟩
 private def presentState : signature.State testParameters := answer
 private def absentState : signature.State testParameters := ∅
@@ -411,7 +414,7 @@ def family : Registration arena.{u} (type_of% (@_root_.D5.S3.Geometry.FiniteCycl
     cases i
     refine ⟨testParameters, presentState, absentState, ?_⟩
     intro he
-    exact absent (he ▸ present)
+    exact absent (Eq.mp he present)
 
 def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Geometry.FiniteCyclicNoncoverIntervalPaths.pinnedImage_iff.{u}) (Realization signature.{u}) Unit Unit where
@@ -441,6 +444,7 @@ end pinnedImage_iff
 namespace survivors_pinnedImage
 structure Parameters where
   V : Type u
+  fv : Fintype V
   dv : DecidableEq V
   n : Nat
   hn : 0 < n
@@ -452,7 +456,7 @@ structure Parameters where
   outside : ∀ i ∈ fixed, i.val < lo ∨ lo+m ≤ i.val
   k : Nat
   before : k ≤ lo
-attribute [instance] Parameters.dv
+attribute [instance] Parameters.fv Parameters.dv
 
 abbrev signature : Signature where
   Params := Parameters.{u}
@@ -468,24 +472,24 @@ def actual : Realization signature.{u} := realize signature (fun _ p z => z ∈ 
 def rejected : Realization signature.{u} := realize signature (fun _ _ _ => False) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature.{u}
-  Law R := ∀ {V : Type u} [dv : DecidableEq V] {n : Nat} (hn : 0 < n)
+  Law R := ∀ {V : Type u} [fv : Fintype V] [dv : DecidableEq V] {n : Nat} (hn : 0 < n)
     (s : Fin n ↪ V) (k lo m : Nat) (hk : k ≤ lo) (h : lo+m ≤ n)
     (S : Finset (Fin n)) (hS : ∀ i ∈ S, i.val < lo ∨ lo+m ≤ i.val) (a : Finset V),
-    R.readout () ⟨V, dv, n, hn, s, lo, m, h, S, hS, k, hk⟩ a ↔
-      a ∈ if m%3 = 1 then ∅ else {complementMap s (S ∪ pathChosen (intervalList hn lo m))}
+    R.readout () ⟨V, fv, dv, n, hn, s, lo, m, h, S, hS, k, hk⟩ a ↔
+      a ∈ (if m%3 = 1 then ∅ else {complementMap s (S ∪ pathChosen (intervalList hn lo m))} : Finset (Finset V))
 private theorem bridge : (type_of% (@_root_.D5.S3.Geometry.FiniteCyclicNoncoverIntervalPaths.survivors_pinnedImage.{u})) ↔ arena.{u}.Law actual := by
   constructor
-  · intro h V dv n hn s k lo m hk hb S hS a
+  · intro h V fv dv n hn s k lo m hk hb S hS a
     exact Finset.ext_iff.mp (h hn s k lo m hk hb S hS) a
-  · intro h V dv n hn s k lo m hk hb S hS
+  · intro h V fv dv n hn s k lo m hk hb S hS
     apply Finset.ext
     intro a
     exact h hn s k lo m hk hb S hS a
 private def testEmbedding : Fin 1 ↪ ULift.{u} (Fin 1) :=
   ⟨ULift.up, fun _ _ he => congrArg ULift.down he⟩
 private def answer : Finset (ULift.{u} (Fin 1)) := complementMap testEmbedding ∅
-private def testParameters : Parameters.{u} :=
-  ⟨ULift.{u} (Fin 1), inferInstance, 1, by omega, testEmbedding, 0, 0, by omega,
+private abbrev testParameters : Parameters.{u} :=
+  ⟨ULift.{u} (Fin 1), inferInstance, inferInstance, 1, by omega, testEmbedding, 0, 0, by omega,
     ∅, by simp, 0, by omega⟩
 private def presentState : signature.State testParameters := answer
 private def absentState : signature.State testParameters := ∅
@@ -529,7 +533,7 @@ def family : Registration arena.{u} (type_of% (@_root_.D5.S3.Geometry.FiniteCycl
     cases i
     refine ⟨testParameters, presentState, absentState, ?_⟩
     intro he
-    exact absent (he ▸ present)
+    exact absent (Eq.mp he present)
 
 def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Geometry.FiniteCyclicNoncoverIntervalPaths.survivors_pinnedImage.{u}) (Realization signature.{u}) Unit Unit where

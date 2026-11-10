@@ -8,6 +8,8 @@ import Reg.Support.DependentFamily
 import D5.S3.Geometry.FiniteSimplexBoundarySphere
 
 noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 open Set
 open _root_.D5.S3.Geometry.FiniteSimplexBoundarySphere
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -34,14 +36,16 @@ universe u
    source selection is impossible. No occurrence path or coordinate is guessed. -/
 structure SourceState (Λ : Type u) where
   finite : Fintype Λ
+  decEq : DecidableEq Λ
   inhabited : Nonempty Λ
   cardinal_bound : 2 ≤ @Fintype.card Λ finite
   left : @Simplex Λ finite
   right : @Simplex Λ finite
 
-private def pack {Λ : Type u} [Fintype Λ] [Nonempty Λ]
+private def pack {Λ : Type u} [Fintype Λ] [DecidableEq Λ] [Nonempty Λ]
     (hm : 2 ≤ Fintype.card Λ) (x y : Simplex Λ) : SourceState Λ :=
   { finite := inferInstance
+    decEq := inferInstance
     inhabited := inferInstance
     cardinal_bound := hm
     left := x
@@ -62,6 +66,7 @@ def actual : Realization signature.{u} := by
   exact realize signature
     (fun _ _ s =>
       letI := s.finite
+      letI := s.decEq
       letI := s.inhabited
       decide (psi s.cardinal_bound s.left = psi s.cardinal_bound s.right))
     (fun e => nomatch e)
@@ -75,13 +80,13 @@ abbrev arena : Arena where
      Fintype and Nonempty instances, then explicit hm, x and y. There is no
      DecidableEq binder. The Boolean reification has a logical bridge below;
      matching this telescope does not certify the packed State/readout fields. -/
-  Law R := ∀ {Λ : Type u} [Fintype Λ] [Nonempty Λ]
+  Law R := ∀ {Λ : Type u} [Fintype Λ] [DecidableEq Λ] [Nonempty Λ]
     (hm : 2 ≤ Fintype.card Λ) (x y : Simplex Λ),
     R.readout () Λ (pack hm x y) = true ↔ boundaryRelation x y
 
 theorem actual_law : arena.{u}.Law actual := by
   classical
-  intro Λ finite inhabited hm x y
+  intro Λ finite decEq inhabited hm x y
   letI := finite
   letI := inhabited
   change decide (psi hm x = psi hm y) = true ↔ boundaryRelation x y
@@ -91,12 +96,12 @@ theorem bridge_attempt :
     (type_of% (@psi_eq_iff.{u})) ↔ arena.{u}.Law actual := by
   classical
   constructor
-  · intro source Λ finite inhabited hm x y
+  · intro source Λ finite decEq inhabited hm x y
     letI := finite
     letI := inhabited
     change decide (psi hm x = psi hm y) = true ↔ boundaryRelation x y
     simpa only [decide_eq_true_eq] using source hm x y
-  · intro law Λ finite inhabited hm x y
+  · intro law Λ finite decEq inhabited hm x y
     letI := finite
     letI := inhabited
     have h := law hm x y
@@ -137,6 +142,7 @@ private theorem different_outputs :
 
 private def equalState : SourceState testΛ :=
   { finite := inferInstance
+    decEq := inferInstance
     inhabited := inferInstance
     cardinal_bound := testHm
     left := testBarycenter
@@ -144,6 +150,7 @@ private def equalState : SourceState testΛ :=
 
 private def differentState : SourceState testΛ :=
   { finite := inferInstance
+    decEq := inferInstance
     inhabited := inferInstance
     cardinal_bound := testHm
     left := testBarycenter
@@ -217,6 +224,7 @@ def registration_attempt :
     exact realize signature
       (fun _ _ s =>
         letI := s.finite
+        letI := s.decEq
         letI := s.inhabited
         decide (psi s.cardinal_bound s.left = psi s.cardinal_bound s.right))
       (fun e => nomatch e))

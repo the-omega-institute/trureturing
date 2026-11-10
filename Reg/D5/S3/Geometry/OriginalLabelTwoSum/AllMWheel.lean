@@ -4,15 +4,18 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel
 noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 namespace Reg.D5.S3.Geometry.OriginalLabelTwoSum.AllMWheelOperands
+universe u
 abbrev groundSource := type_of% (@_root_.D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.ground)
 abbrev orderedFacesSource := type_of% (@_root_.D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.orderedFaces)
 abbrev adjoinSymbolSource := type_of% (@_root_.D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.adjoinSymbol)
-abbrev adjoinSymbol_facesSource := type_of% (@_root_.D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.adjoinSymbol_faces)
+abbrev adjoinSymbol_facesSource := type_of% (@_root_.D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.adjoinSymbol_faces.{u})
 abbrev pathWordSource := type_of% (@_root_.D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.pathWord)
 abbrev pathWordDataSource := type_of% (@_root_.D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.pathWordData)
-abbrev pathWordData_wordSource := type_of% (@_root_.D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.pathWordData_word)
-abbrev duplicate_path_counterexampleSource := type_of% (@_root_.D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.duplicate_path_counterexample)
+abbrev pathWordData_wordSource := type_of% (@_root_.D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.pathWordData_word.{u})
+abbrev duplicate_path_counterexampleSource := type_of% (@_root_.D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.duplicate_path_counterexample.{u})
 abbrev pathRootPath_nodupSource := type_of% (@_root_.D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.pathRootPath_nodup)
 abbrev pathRootPath_row_edgesSource := type_of% (@_root_.D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.pathRootPath_row_edges)
 abbrev cycleTailWordDataSource := type_of% (@_root_.D5.S3.Geometry.OriginalLabelTwoSum.AllMWheel.cycleTailWordData)

@@ -11,14 +11,16 @@ import D5.S3.Geometry.OriginalLabelTwoSum.WheelSupplier
 import D5.S3.Geometry.OriginalLabelTwoSum.RowIteration
 
 noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 open Finset
 open _root_.D5.S3.Geometry.OriginalLabelTwoSum
 open _root_.D5.S3.Geometry.FiniteRelativeSimplicialCollapse
 namespace Reg.D5.S3.Geometry.OriginalLabelTwoSum.DirectOperands
-universe u
+universe u v w
 variable {V : Type u} [Fintype V] [DecidableEq V]
 
-abbrev rowTransportSource := type_of% (@row_transport.{u})
+abbrev rowTransportSource := type_of% (@row_transport.{u,v,w})
 def rowFaces (r : Rows V) (s : Finset V) : Prop := s ∈ r.root
 
 abbrev rectangleOrderSource := type_of% (@rectangle_order.{u})

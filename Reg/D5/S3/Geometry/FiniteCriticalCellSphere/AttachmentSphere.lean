@@ -10,6 +10,8 @@ import Reg.Support.DependentFamily
 import D5.S3.Geometry.FiniteCriticalCellSphere.AttachmentSphere
 
 noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 open Set
 open scoped unitInterval ContinuousMap
 open _root_.D5.S3.Geometry
@@ -71,9 +73,9 @@ private theorem bridge :
     exact law A s
 
 private abbrev TestV : Type u := ULift.{u} Bool
-private def testA : Attachment TestV where
-  P := cone (⟨false⟩ : TestV) ⊥
-  X := cone (⟨false⟩ : TestV) ⊥ ⊔
+private def testA : Attachment TestV.{u} where
+  P := cone (⟨false⟩ : TestV.{u}) ⊥
+  X := cone (⟨false⟩ : TestV.{u}) ⊥ ⊔
     FiniteAlexanderDualCollapse.simplex {⟨true⟩}
   face := {⟨true⟩}
   face_nonempty := Finset.singleton_nonempty _
@@ -84,9 +86,13 @@ private def testA : Attachment TestV where
     constructor
     · rintro ⟨hp, hs⟩
       obtain ⟨v, hv⟩ := hs.1
-      have he : v = (⟨true⟩ : TestV) := Finset.mem_singleton.mp (hs.2 hv)
-      have hn : v ≠ (⟨false⟩ : TestV) := by rw [he]; decide
-      have hv' : v ∈ s.erase (⟨false⟩ : TestV) := Finset.mem_erase.mpr ⟨hn, hv⟩
+      have he : v = (⟨true⟩ : TestV.{u}) := Finset.mem_singleton.mp (hs.2 hv)
+      have hn : v ≠ (⟨false⟩ : TestV.{u}) := by
+        intro hv
+        have htf : (true : Bool) = false :=
+          (congrArg ULift.down he).symm.trans (congrArg ULift.down hv)
+        cases htf
+      have hv' : v ∈ s.erase (⟨false⟩ : TestV.{u}) := Finset.mem_erase.mpr ⟨hn, hv⟩
       rcases hp.2 with hz | hb
       · rw [hz] at hv'
         exact (Finset.notMem_empty v hv').elim
@@ -96,8 +102,8 @@ private def testA : Attachment TestV where
       have hl := Finset.card_lt_card hs.2
       simp only [Finset.card_singleton] at hl
       omega
-  p := conePoint (⟨false⟩ : TestV) ⊥
-  contraction := coneContraction (⟨false⟩ : TestV) ⊥
+  p := conePoint (⟨false⟩ : TestV.{u}) ⊥
+  contraction := coneContraction (⟨false⟩ : TestV.{u}) ⊥
 
 private def testP : Parameters.{u} := ⟨TestV, inferInstance, inferInstance, testA⟩
 
@@ -111,7 +117,7 @@ private theorem dependence : ObservationalDependence signature.{u} actual := by
   intro role
   refine ⟨testP, (0 : I), (1 : I), ?_⟩
   intro h
-  change testA.cut 0 = testA.cut 1 at h
+  change testA.{u}.cut 0 = testA.{u}.cut 1 at h
   norm_num [Attachment.cut] at h
 
 /-- Full mathematical family attempt. No compiled enrollment or source binding

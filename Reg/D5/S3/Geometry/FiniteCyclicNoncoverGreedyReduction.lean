@@ -10,6 +10,8 @@ The full original equality and telescope remain in arena.Law. SourceSelection
 stays none; no compiled selection, kernel acceptance or enrollment is claimed. -/
 
 noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 open Set Finset
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Geometry.FiniteCoordinateGreedyMatching
@@ -52,7 +54,7 @@ abbrev arena : Arena where
 private theorem bridge : (type_of% (@first_round.{u})) ↔ arena.{u}.Law actual :=
   Iff.rfl
 
-private def testParameters : Parameters.{u} := ULift.{u} (Fin 3)
+private abbrev testParameters : Parameters.{u} := ULift.{u} (Fin 3)
 
 private def testSpokes : Fin 3 ↪ testParameters.{u} :=
   ⟨ULift.up, fun _ _ h => congrArg ULift.down h⟩

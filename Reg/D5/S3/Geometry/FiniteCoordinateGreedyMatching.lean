@@ -8,6 +8,8 @@ import D5.S3.Geometry.FiniteCoordinateGreedyMatching
    phase obligation. The source law and all witness proofs are complete here. -/
 
 noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 open Set Finset
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Geometry.FiniteCoordinateGreedyMatching
@@ -36,19 +38,19 @@ def rejected : Realization signature.{u} :=
 
 abbrev arena : Arena where
   signature := signature.{u}
-  Law R := ∀ {V : Type u} [dv : DecidableEq V]
+  Law R := ∀ {V : Type u} [fv : Fintype V] [dv : DecidableEq V]
     (F : Finset (Finset V)) (v : V) (a : Finset V),
     a ∈ lowers F v ↔
       a ∈ F ∧ (R.readout () ⟨V, v⟩ a = true) ∧ insert v a ∈ F
 
 private theorem bridge : (type_of% (@mem_lowers.{u})) ↔ arena.{u}.Law actual := by
   constructor
-  · intro h V dv F v a
-    simpa [actual, realize] using (@h V dv F v a)
-  · intro h V dv F v a
-    simpa [actual, realize] using (@h V dv F v a)
+  · intro h V fv dv F v a
+    simpa [actual, realize] using (@h V fv dv F v a)
+  · intro h V fv dv F v a
+    simpa [actual, realize] using (@h V fv dv F v a)
 
-private def testV : Type u := ULift.{u} Unit
+private abbrev testV : Type u  := ULift.{u} Unit
 private def testv : testV := ⟨()⟩
 private def testParameters : signature.Params := ⟨testV, testv⟩
 
@@ -60,7 +62,7 @@ private theorem absent : ¬ (actual.{u}.readout () testParameters {testv} = true
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
-  have hh := @h testV (Classical.decEq testV) ({∅, {testv}} : Finset (Finset testV))
+  have hh := @h testV (inferInstance : Fintype testV) (inferInstance : DecidableEq testV) ({∅, {testv}} : Finset (Finset testV))
     testv ∅
   have hl : (∅ : Finset testV) ∈ lowers ({∅, {testv}} : Finset (Finset testV)) testv := by
     apply (mem_lowers _ _ _).mpr

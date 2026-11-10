@@ -11,6 +11,8 @@ The complete original telescope and all other clauses remain in arena.Law.
 No native source selection, kernel acceptance or enrollment is claimed. -/
 
 noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 open Set
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Geometry
@@ -58,9 +60,19 @@ private theorem bridge :
     (type_of% (@orderedLowers_mem.{u})) ↔ arena.{u}.Law actual := by
   constructor
   · intro h V fv dv K u v huv hExt s
-    simpa only [actual_eq_true] using (@h V fv dv K u v huv hExt s)
+    constructor
+    · intro hs
+      obtain ⟨hk, hv, hu⟩ := (@h V fv dv K u v huv hExt s).mp hs
+      exact ⟨hk, (actual_eq_true v s).mpr hv, hu⟩
+    · rintro ⟨hk, hv, hu⟩
+      exact (@h V fv dv K u v huv hExt s).mpr ⟨hk, (actual_eq_true v s).mp hv, hu⟩
   · intro h V fv dv K u v huv hExt s
-    simpa only [actual_eq_true] using (@h V fv dv K u v huv hExt s)
+    constructor
+    · intro hs
+      obtain ⟨hk, hv, hu⟩ := (@h V fv dv K u v huv hExt s).mp hs
+      exact ⟨hk, (actual_eq_true v s).mp hv, hu⟩
+    · rintro ⟨hk, hv, hu⟩
+      exact (@h V fv dv K u v huv hExt s).mpr ⟨hk, (actual_eq_true v s).mpr hv, hu⟩
 
 private theorem source_law : arena.{u}.Law actual :=
   bridge.mp (@orderedLowers_mem.{u})

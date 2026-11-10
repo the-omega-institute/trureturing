@@ -13,6 +13,8 @@ compiled theorem supplies its coordinate and occurrence/operand selectors.
 No raw binder ordinal or syntax path is guessed here. -/
 
 noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 open Set Finset
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Geometry.FiniteCoordinateGreedyMatching
@@ -41,7 +43,7 @@ def rejected : Realization signature.{u} :=
 
 abbrev arena : Arena where
   signature := signature.{u}
-  Law R := ∀ {V : Type u} [dv : DecidableEq V] (vs : List V)
+  Law R := ∀ {V : Type u} [fv : Fintype V] [dv : DecidableEq V] (vs : List V)
     (hd : R.readout () V vs = true),
     survivors (paths vs) vs = pathCritical vs
 
@@ -59,20 +61,20 @@ private theorem actual_true_iff {V : Type u} (vs : List V) :
 
 private theorem bridge : (type_of% (@survivors_paths.{u})) ↔ arena.{u}.Law actual := by
   constructor
-  · intro h V dv vs hd
-    exact @h V dv vs ((actual_true_iff vs).mp hd)
-  · intro h V dv vs hd
-    exact @h V dv vs ((actual_true_iff vs).mpr hd)
+  · intro h V fv dv vs hd
+    exact @h V fv dv vs ((actual_true_iff vs).mp hd)
+  · intro h V fv dv vs hd
+    exact @h V fv dv vs ((actual_true_iff vs).mpr hd)
 
 /- These calculations unfold the preserved paths and simultaneous-round
 algorithm on two positions carrying the SAME label. No distinctness premise
 is used for this counterfactual calculation. -/
-private theorem paths_repeated {V : Type u} [DecidableEq V] (v : V) :
+private theorem paths_repeated {V : Type u} [Fintype V] [DecidableEq V] (v : V) :
     paths [v, v] = ({∅, {v}} : Finset (Finset V)) := by
   ext a
   simp [paths, or_assoc, or_left_comm, or_comm]
 
-private theorem lowers_repeated {V : Type u} [DecidableEq V] (v : V) :
+private theorem lowers_repeated {V : Type u} [Fintype V] [DecidableEq V] (v : V) :
     lowers (paths [v, v]) v = ({∅} : Finset (Finset V)) := by
   rw [paths_repeated]
   ext a
@@ -89,58 +91,58 @@ private theorem lowers_repeated {V : Type u} [DecidableEq V] (v : V) :
     subst a
     simp
 
-private theorem roundPairs_repeated {V : Type u} [DecidableEq V] (v : V) :
+private theorem roundPairs_repeated {V : Type u} [Fintype V] [DecidableEq V] (v : V) :
     roundPairs (paths [v, v]) v = ({(∅, v)} : Finset (Finset V × V)) := by
   rw [roundPairs, lowers_repeated]
   simp
 
-private theorem pairedFaces_repeated {V : Type u} [DecidableEq V] (v : V) :
+private theorem pairedFaces_repeated {V : Type u} [Fintype V] [DecidableEq V] (v : V) :
     pairedFaces (paths [v, v]) v = ({∅, {v}} : Finset (Finset V)) := by
   simp only [pairedFaces, lowers_repeated]
   ext a
   simp
 
-private theorem remaining_repeated {V : Type u} [DecidableEq V] (v : V) :
+private theorem remaining_repeated {V : Type u} [Fintype V] [DecidableEq V] (v : V) :
     remaining (paths [v, v]) v = (∅ : Finset (Finset V)) := by
   unfold remaining
   rw [pairedFaces_repeated, paths_repeated]
   simp
 
-private theorem lowers_empty {V : Type u} [DecidableEq V] (v : V) :
+private theorem lowers_empty {V : Type u} [Fintype V] [DecidableEq V] (v : V) :
     lowers (∅ : Finset (Finset V)) v = ∅ := by
   ext a
   simp
 
-private theorem roundPairs_empty {V : Type u} [DecidableEq V] (v : V) :
+private theorem roundPairs_empty {V : Type u} [Fintype V] [DecidableEq V] (v : V) :
     roundPairs (∅ : Finset (Finset V)) v = ∅ := by
   rw [roundPairs, lowers_empty]
   simp
 
-private theorem remaining_empty {V : Type u} [DecidableEq V] (v : V) :
+private theorem remaining_empty {V : Type u} [Fintype V] [DecidableEq V] (v : V) :
     remaining (∅ : Finset (Finset V)) v = ∅ := by
   ext a
   simp [remaining]
 
-private theorem rounds_repeated {V : Type u} [DecidableEq V] (v : V) :
+private theorem rounds_repeated {V : Type u} [Fintype V] [DecidableEq V] (v : V) :
     rounds (paths [v, v]) [v, v] =
       [({(∅, v)} : Finset (Finset V × V)), ∅] := by
   change [roundPairs (paths [v, v]) v,
     roundPairs (remaining (paths [v, v]) v) v] = _
   rw [roundPairs_repeated, remaining_repeated, roundPairs_empty]
 
-private theorem remaining_second {V : Type u} [DecidableEq V] (v : V) :
+private theorem remaining_second {V : Type u} [Fintype V] [DecidableEq V] (v : V) :
     remaining (remaining (paths [v, v]) v) v = (∅ : Finset (Finset V)) := by
   rw [remaining_repeated, remaining_empty]
 
-private theorem survivors_repeated {V : Type u} [DecidableEq V] (v : V) :
+private theorem survivors_repeated {V : Type u} [Fintype V] [DecidableEq V] (v : V) :
     survivors (paths [v, v]) [v, v] = (∅ : Finset (Finset V)) := by
   change remaining (remaining (paths [v, v]) v) v = ∅
   exact remaining_second v
 
-private theorem pathCritical_repeated {V : Type u} [DecidableEq V] (v : V) :
+private theorem pathCritical_repeated {V : Type u} [Fintype V] [DecidableEq V] (v : V) :
     pathCritical [v, v] = ({{v}} : Finset (Finset V)) := rfl
 
-private theorem recurrence_repeated_fails {V : Type u} [DecidableEq V] (v : V) :
+private theorem recurrence_repeated_fails {V : Type u} [Fintype V] [DecidableEq V] (v : V) :
     survivors (paths [v, v]) [v, v] ≠ pathCritical [v, v] := by
   rw [survivors_repeated, pathCritical_repeated]
   intro he
@@ -152,7 +154,7 @@ private def testVertex : ULift.{u} Unit := ULift.up ()
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
-  have he := @h (ULift.{u} Unit) inferInstance [testVertex, testVertex] (by rfl)
+  have he := @h (ULift.{u} Unit) inferInstance inferInstance [testVertex, testVertex] (by rfl)
   exact recurrence_repeated_fails testVertex he
 
 private theorem actual_nil {V : Type u} :

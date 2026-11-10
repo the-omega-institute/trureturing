@@ -379,7 +379,7 @@ private theorem retained_recurrence (n ghosts k : Nat) (hk : k < n) :
   have hz : (0 : Ambient n ghosts).val = 0 := rfl
   simp only [Fin.val_zero, Fin.val_one, Fin.val_ofNat] at *
   norm_num at *
-  set_option pp.explicit true in trace_state
+  simp only [Fin.ext_iff, Fin.val_zero, Fin.val_one] at *
   omega
 
 /-- Exact original-label ground, including k=0. Deleted interfaces are not

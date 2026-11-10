@@ -40,7 +40,8 @@ private def basedCompose {X Y Z : Type*} [TopologicalSpace X]
       map_one_left := fun a => congrArg B.backward (C.left.apply_one (B.forward a))
       prop' := by
         intro t a ha
-        obtain rfl := Set.mem_singleton_iff.mp ha
+        have ha' : a = x := Set.mem_singleton_iff.mp ha
+        subst a
         change B.backward (C.left (t, B.forward x)) =
           B.backward (C.backward (C.forward (B.forward x)))
         rw [B.forward_point]
@@ -54,7 +55,8 @@ private def basedCompose {X Y Z : Type*} [TopologicalSpace X]
       map_one_left := fun a => congrArg C.forward (B.right.apply_one (C.backward a))
       prop' := by
         intro t a ha
-        obtain rfl := Set.mem_singleton_iff.mp ha
+        have ha' : a = z := Set.mem_singleton_iff.mp ha
+        subst a
         change C.forward (B.right (t, C.backward z)) =
           C.forward (B.forward (B.backward (C.backward z)))
         rw [C.backward_point]
@@ -87,31 +89,31 @@ def attachment : Attachment V where
 def apex : Space c.K :=
   realizationInclusion (show c.C ≤ c.K from le_sup_right) (conePoint c.a c.Dstar)
 
-private theorem apex_inclusion : c.reduction.inclusion c.attachment.basepoint = c.apex :=
+private theorem apex_inclusion : c.reduction.inclusion (attachment c).basepoint = (apex c) :=
   Subtype.ext rfl
 
-private theorem reduction_apex : c.reductionSDR.retraction c.apex = c.attachment.basepoint := by
-  rw [← c.apex_inclusion]
-  exact c.reductionSDR.retraction_inclusion c.attachment.basepoint
+private theorem reduction_apex : c.reductionSDR.retraction (apex c) = (attachment c).basepoint := by
+  rw [← (apex_inclusion c)]
+  exact c.reductionSDR.retraction_inclusion (attachment c).basepoint
 
 /-- This based reduction uses the computed retraction and literal inclusion,
 with the owner's whole-retained-endpoint SDR restricted only for packaging. -/
 def reductionEquivalence : SingletonRetractionBasedInverse.BasedEquivalence
-    c.apex c.attachment.basepoint where
+    (apex c) (attachment c).basepoint where
   forward := c.reductionSDR.retraction
   backward := c.reduction.inclusion
-  forward_point := c.reduction_apex
-  backward_point := c.apex_inclusion
+  forward_point := (reduction_apex c)
+  backward_point := (apex_inclusion c)
   left :=
     { toHomotopy := c.reductionSDR.homotopy.toHomotopy.symm
       prop' := by
         intro t x hx
         obtain rfl := Set.mem_singleton_iff.mp hx
-        change c.reductionSDR.homotopy.toHomotopy.symm (t, c.apex) =
-          c.reduction.inclusion (c.reductionSDR.retraction c.apex)
-        rw [c.reduction_apex, c.apex_inclusion]
+        change c.reductionSDR.homotopy.toHomotopy.symm (t, (apex c)) =
+          c.reduction.inclusion (c.reductionSDR.retraction (apex c))
+        rw [(reduction_apex c), (apex_inclusion c)]
         apply c.reductionSDR.homotopy.eq_fst
-        exact c.attachment.basepoint.2 }
+        exact (attachment c).basepoint.2 }
   right :=
     { toFun z := z.2
       continuous_toFun := continuous_snd
@@ -124,59 +126,61 @@ def reductionEquivalence : SingletonRetractionBasedInverse.BasedEquivalence
 
 /-- The actual sphere point; for m>=2 it is reindexed south, and for m=1
 it is the negative point after the harmless natural-number dimension cast. -/
-def spherePoint : EuclideanSphereJoin.StdSphere c.d := c.attachment.sphereBasepoint
+def spherePoint : EuclideanSphereJoin.StdSphere c.d := (attachment c).sphereBasepoint
 
 /-- Both genuine based continuous-map inverse homotopies for the original K. -/
-def sphereEquivalence : SingletonRetractionBasedInverse.BasedEquivalence c.apex c.spherePoint :=
-  basedCompose c.reductionEquivalence c.attachment.sphereEquivalence
+def sphereEquivalence : SingletonRetractionBasedInverse.BasedEquivalence (apex c) (spherePoint c) :=
+  basedCompose (reductionEquivalence c) (attachment c).sphereEquivalence
 
 /-- The maps use the existing reduction retraction/inclusion, the unchanged q,
 and the actual quotient-to-Euclidean-sphere comparison. -/
 theorem sphere_maps :
-    c.sphereEquivalence.forward = c.attachment.sphereHomeomorph.toContinuousMap.comp
-      (c.attachment.q.comp c.reductionSDR.retraction) ∧
-    c.sphereEquivalence.backward = c.reduction.inclusion.comp
-      (c.attachment.quotientInverse.comp c.attachment.sphereHomeomorph.symm.toContinuousMap) := by
+    (sphereEquivalence c).forward = (toContinuousMap (attachment c).sphereHomeomorph).comp
+      ((attachment c).q.comp c.reductionSDR.retraction) ∧
+    (sphereEquivalence c).backward = c.reduction.inclusion.comp
+      ((attachment c).quotientInverse.comp (toContinuousMap (attachment c).sphereHomeomorph.symm)) := by
   constructor <;> ext x <;> rfl
 
 /-- Exact original-disk representative equation, including the literal
 reduction inclusion rather than any changed attaching map. -/
-theorem sphere_representative (hm : 2 ≤ c.lambda.card) (x : c.attachment.Disk) :
-    c.sphereEquivalence.forward (c.reduction.inclusion (c.attachment.diskIn x)) =
-      c.attachment.spherePsi hm x := by
-  change c.attachment.sphereHomeomorph
-    (c.attachment.q (c.reductionSDR.retraction
-      (c.reduction.inclusion (c.attachment.diskIn x)))) = _
+theorem sphere_representative (hm : 2 ≤ c.lambda.card) (x : (attachment c).Disk) :
+    (sphereEquivalence c).forward (c.reduction.inclusion ((attachment c).diskIn x)) =
+      (attachment c).spherePsi hm x := by
+  change (attachment c).sphereHomeomorph
+    ((attachment c).q (c.reductionSDR.retraction
+      (c.reduction.inclusion ((attachment c).diskIn x)))) = _
   rw [c.reductionSDR.retraction_inclusion]
-  have hn : c.lambda.card ≠ 1 := by omega
+  have hn : (attachment c).face.card ≠ 1 := by
+    change c.lambda.card ≠ 1
+    omega
   simp only [Attachment.sphereHomeomorph, dif_neg hn]
-  exact c.attachment.multiSphere_representative hm x
+  exact (attachment c).multiSphere_representative hm x
 
 /-- Exact original barycenter and whole-boundary pole equations for m>=2. -/
 theorem sphere_poles (hm : 2 ≤ c.lambda.card) :
-    c.sphereEquivalence.forward (c.reduction.inclusion (c.attachment.diskIn barycenterPoint)) =
-      c.attachment.sphereNorth hm ∧
-    (∀ x : c.attachment.Disk, FiniteSimplexBoundarySphere.boundary x →
-      c.sphereEquivalence.forward (c.reduction.inclusion (c.attachment.diskIn x)) =
-        c.attachment.sphereSouth hm) := by
+    (sphereEquivalence c).forward (c.reduction.inclusion ((attachment c).diskIn barycenterPoint)) =
+      (attachment c).sphereNorth hm ∧
+    (∀ x : (attachment c).Disk, FiniteSimplexBoundarySphere.boundary x →
+      (sphereEquivalence c).forward (c.reduction.inclusion ((attachment c).diskIn x)) =
+        (attachment c).sphereSouth hm) := by
   constructor
-  · rw [c.sphere_representative hm]
-    unfold Attachment.spherePsi Attachment.sphereNorth
-    rw [FiniteSimplexBoundarySphere.psi_barycenter]
+  · rw [sphere_representative c hm]
+    exact ((attachment c).multiSphere_representative hm barycenterPoint).symm.trans
+      ((attachment c).multiSphere_poles hm).1
   · intro x hx
-    rw [c.sphere_representative hm]
-    unfold Attachment.spherePsi Attachment.sphereSouth
-    rw [FiniteSimplexBoundarySphere.psi_boundary _ hx]
+    rw [sphere_representative c hm]
+    exact ((attachment c).multiSphere_representative hm x).symm.trans
+      (((attachment c).multiSphere_poles hm).2 x hx)
 
 /-- Both original homotopies fix their actual chosen points at every time. -/
 theorem sphere_based_laws :
-    c.sphereEquivalence.forward c.apex = c.spherePoint ∧
-    c.sphereEquivalence.backward c.spherePoint = c.apex ∧
-    (∀ t, c.sphereEquivalence.left (t, c.apex) = c.apex) ∧
-    (∀ t, c.sphereEquivalence.right (t, c.spherePoint) = c.spherePoint) := by
-  exact ⟨c.sphereEquivalence.forward_point, c.sphereEquivalence.backward_point,
-    fun t => c.sphereEquivalence.left.eq_snd t (Set.mem_singleton_self _),
-    fun t => c.sphereEquivalence.right.eq_snd t (Set.mem_singleton_self _)⟩
+    (sphereEquivalence c).forward (apex c) = (spherePoint c) ∧
+    (sphereEquivalence c).backward (spherePoint c) = (apex c) ∧
+    (∀ t, (sphereEquivalence c).left (t, (apex c)) = (apex c)) ∧
+    (∀ t, (sphereEquivalence c).right (t, (spherePoint c)) = (spherePoint c)) := by
+  exact ⟨(sphereEquivalence c).forward_point, (sphereEquivalence c).backward_point,
+    fun t => (sphereEquivalence c).left.eq_snd t (by simp),
+    fun t => (sphereEquivalence c).right.eq_snd t (by simp)⟩
 
 /-- Reduction continues to fix the WHOLE retained endpoint, not just its apex. -/
 theorem reduction_fixed (t : I) (x : Space c.X) :
@@ -184,10 +188,10 @@ theorem reduction_fixed (t : I) (x : Space c.X) :
   c.reductionSDR.homotopy.eq_fst t x.2
 
 /-- The original ambient coordinate bridge, including labels outside lambda. -/
-theorem disk_original_coordinates (x : c.attachment.Disk) :
-    (∀ i : c.lambda, (c.reduction.inclusion (c.attachment.diskIn x)).1 i.1 = x.1 i) ∧
-    (∀ v ∉ c.lambda, (c.reduction.inclusion (c.attachment.diskIn x)).1 v = 0) :=
-  c.attachment.diskIn_coordinates x
+theorem disk_original_coordinates (x : (attachment c).Disk) :
+    (∀ i : c.lambda, (c.reduction.inclusion ((attachment c).diskIn x)).1 i.1 = x.1 i) ∧
+    (∀ v ∉ c.lambda, (c.reduction.inclusion ((attachment c).diskIn x)).1 v = 0) :=
+  (attachment c).diskIn_coordinates x
 
 private theorem K_supported :
     FiniteAlexanderDualCollapse.Supported (insert c.a c.W) c.K := by
@@ -207,7 +211,7 @@ constructed K-valued inverse and homotopy outputs. A lambda-exterior label
 that is an actual core vertex is intentionally NOT called an ambient ghost. -/
 theorem ambient_ghost (x : Space c.K) (v : V) (hv : v ∉ insert c.a c.W) : x.1 v = 0 := by
   obtain ⟨s, hs, hx⟩ := (realization_mem_iff _ _).mp x.2
-  exact hx.2.2 v (fun h => hv (c.K_supported s hs h))
+  exact hx.2.2 v (fun h => hv ((K_supported c) s hs h))
 
 /-- Source-level preservation of the original attaching inclusion: this is
 literally the owner's coordinate j, not a replacement null or zero map. -/

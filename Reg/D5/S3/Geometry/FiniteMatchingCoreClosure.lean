@@ -9,6 +9,8 @@ binder coordinates or readout path has been observed. No validator execution,
 enrollment or successful audit is claimed by this source. -/
 
 noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 open Set Finset
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Geometry
@@ -113,7 +115,7 @@ def family : Registration arena.{u} (type_of% (@CriticalData.X_core_equation.{u}
     cases i
     refine ⟨testParameters, {testData.p}, ∅, ?_⟩
     intro he
-    exact absent (he ▸ present)
+    exact absent (Eq.mp he present)
 
 def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@CriticalData.X_core_equation.{u}) (Realization signature.{u}) Unit Unit where

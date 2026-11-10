@@ -6,6 +6,8 @@ import Reg.Support.DependentFamily
 import D5.S3.Geometry.FiniteAlexanderDualCollapse
 
 noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Geometry.FiniteAlexanderDualCollapse
 open _root_.D5.S3.Geometry.FiniteRelativeSimplicialCollapse
@@ -39,7 +41,7 @@ def rejected : Realization signature.{u} :=
 -- Keep every original theorem binder, and replace only the RHS s ⊆ W.
 abbrev arena : Arena where
   signature := signature.{u}
-  Law R := ∀ {V : Type u} [dv : DecidableEq V]
+  Law R := ∀ {V : Type u} [fv : Fintype V] [dv : DecidableEq V]
     (W : Finset V) (K : PreAbstractSimplicialComplex V)
     (hp : Proper W K) (s : Finset V),
     AugmentedFace (dual W K) s ↔
@@ -68,20 +70,20 @@ private theorem actual_true_iff {V : Type u} (W s : Finset V) :
 
 private theorem bridge : (type_of% (@dual_augmented.{u})) ↔ arena.{u}.Law actual := by
   constructor
-  · intro h V dv W K hp s
+  · intro h V fv dv W K hp s
     constructor
     · intro hs
-      rcases (@h V dv W K hp s).mp hs with ⟨hsW, hn⟩
+      rcases (@h V fv dv W K hp s).mp hs with ⟨hsW, hn⟩
       exact ⟨(actual_true_iff W s).mpr hsW, hn⟩
     · rintro ⟨hsW, hn⟩
-      exact (@h V dv W K hp s).mpr ⟨(actual_true_iff W s).mp hsW, hn⟩
-  · intro h V dv W K hp s
+      exact (@h V fv dv W K hp s).mpr ⟨(actual_true_iff W s).mp hsW, hn⟩
+  · intro h V fv dv W K hp s
     constructor
     · intro hs
-      rcases (@h V dv W K hp s).mp hs with ⟨hsW, hn⟩
+      rcases (@h V fv dv W K hp s).mp hs with ⟨hsW, hn⟩
       exact ⟨(actual_true_iff W s).mp hsW, hn⟩
     · rintro ⟨hsW, hn⟩
-      exact (@h V dv W K hp s).mpr ⟨(actual_true_iff W s).mpr hsW, hn⟩
+      exact (@h V fv dv W K hp s).mpr ⟨(actual_true_iff W s).mpr hsW, hn⟩
 
 private theorem source_law : arena.{u}.Law actual := bridge.mp (@dual_augmented.{u})
 
@@ -106,6 +108,7 @@ private theorem test_empty_face :
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   have hh := @h (ULift.{u} Bool)
+    (inferInstance : Fintype (ULift.{u} Bool))
     (inferInstance : DecidableEq (ULift.{u} Bool))
     testGround.{u} testComplex.{u} testProper (∅ : Finset (ULift.{u} Bool))
   have hfalse := (hh.mp test_empty_face).1
@@ -207,7 +210,7 @@ universe u
 abbrev sourceScope := type_of%
   (@_root_.D5.S3.Geometry.FiniteAlexanderDualCollapse.Certificate.pContraction_fixed_apex.{u})
 
-theorem exact_source : sourceScope :=
+theorem exact_source : sourceScope.{u} :=
   @_root_.D5.S3.Geometry.FiniteAlexanderDualCollapse.Certificate.pContraction_fixed_apex.{u}
 
 end Reg.D5.S3.Geometry.FiniteAlexanderDualCollapse.PContractionFixedApex

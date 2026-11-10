@@ -8,6 +8,8 @@ No CompiledSourceScope/Operands/Contract or Scribe validator has run. Actual
 correspondence is OPEN; sourceSelection is none. Packed Parameters are a
 mathematical family presentation, not an asserted source binder/selector. -/
 noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 open Set Finset
 open scoped unitInterval
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -55,7 +57,7 @@ abbrev arena : Arena where
   signature := signature.{u}
   Law R := ∀ {V : Type u} [fv : Fintype V] [dv : DecidableEq V]
     (q : Nat) (hq : 0 < q) (s : Fin (3*q) ↪ V) (a : Finset V),
-    R.readout () ⟨V, fv, dv, q, hq, s⟩ a ↔ a ∈ insert {point (by omega) s} {criticalA q hq s, criticalB q hq s}
+    R.readout () ⟨V, fv, dv, q, hq, s⟩ a ↔ a ∈ insert ({point (by omega) s} : Finset V) ({criticalA q hq s, criticalB q hq s} : Finset (Finset V))
 private theorem bridge : (type_of% (@_root_.D5.S3.Geometry.FiniteCyclicNoncoverUniversalSurvivors.remaining_zero.{u})) ↔ arena.{u}.Law actual := by
   constructor
   · intro h V fv dv q hq s a
@@ -66,7 +68,7 @@ private theorem bridge : (type_of% (@_root_.D5.S3.Geometry.FiniteCyclicNoncoverU
     exact h q hq s a
 private def testEmbedding : Fin 3 ↪ ULift.{u} (Fin 3) :=
   ⟨ULift.up, fun _ _ he => congrArg ULift.down he⟩
-private def testParameters : Parameters.{u} :=
+private abbrev testParameters : Parameters.{u} :=
   ⟨ULift.{u} (Fin 3), inferInstance, inferInstance, 1, by omega, testEmbedding⟩
 private def presentState : signature.State testParameters := {point (by omega) testEmbedding}
 private def absentState : signature.State testParameters := ∅
@@ -99,7 +101,7 @@ def family : Registration arena.{u} (type_of% (@_root_.D5.S3.Geometry.FiniteCycl
     cases i
     refine ⟨testParameters, presentState, absentState, ?_⟩
     intro he
-    exact absent (he ▸ present)
+    exact absent (Eq.mp he present)
 
 def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Geometry.FiniteCyclicNoncoverUniversalSurvivors.remaining_zero.{u}) (Realization signature.{u}) Unit Unit where
@@ -152,7 +154,7 @@ abbrev arena : Arena where
   signature := signature.{u}
   Law R := ∀ {V : Type u} [fv : Fintype V] [dv : DecidableEq V]
     (q : Nat) (hq : 0 < q) (s : Fin (3*q+1) ↪ V) (a : Finset V),
-    R.readout () ⟨V, fv, dv, q, hq, s⟩ a ↔ a ∈ insert {point (by omega) s} {criticalOne q s}
+    R.readout () ⟨V, fv, dv, q, hq, s⟩ a ↔ a ∈ insert ({point (by omega) s} : Finset V) ({criticalOne q s} : Finset (Finset V))
 private theorem bridge : (type_of% (@_root_.D5.S3.Geometry.FiniteCyclicNoncoverUniversalSurvivors.remaining_one.{u})) ↔ arena.{u}.Law actual := by
   constructor
   · intro h V fv dv q hq s a
@@ -163,7 +165,7 @@ private theorem bridge : (type_of% (@_root_.D5.S3.Geometry.FiniteCyclicNoncoverU
     exact h q hq s a
 private def testEmbedding : Fin 4 ↪ ULift.{u} (Fin 4) :=
   ⟨ULift.up, fun _ _ he => congrArg ULift.down he⟩
-private def testParameters : Parameters.{u} :=
+private abbrev testParameters : Parameters.{u} :=
   ⟨ULift.{u} (Fin 4), inferInstance, inferInstance, 1, by omega, testEmbedding⟩
 private def presentState : signature.State testParameters := {point (by omega) testEmbedding}
 private def absentState : signature.State testParameters := ∅
@@ -196,7 +198,7 @@ def family : Registration arena.{u} (type_of% (@_root_.D5.S3.Geometry.FiniteCycl
     cases i
     refine ⟨testParameters, presentState, absentState, ?_⟩
     intro he
-    exact absent (he ▸ present)
+    exact absent (Eq.mp he present)
 
 def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Geometry.FiniteCyclicNoncoverUniversalSurvivors.remaining_one.{u}) (Realization signature.{u}) Unit Unit where
@@ -249,7 +251,7 @@ abbrev arena : Arena where
   signature := signature.{u}
   Law R := ∀ {V : Type u} [fv : Fintype V] [dv : DecidableEq V]
     (q : Nat) (hq : 0 < q) (s : Fin (3*q+2) ↪ V) (a : Finset V),
-    R.readout () ⟨V, fv, dv, q, hq, s⟩ a ↔ a ∈ insert {point (by omega) s} {criticalTwo q hq s}
+    R.readout () ⟨V, fv, dv, q, hq, s⟩ a ↔ a ∈ insert ({point (by omega) s} : Finset V) ({criticalTwo q hq s} : Finset (Finset V))
 private theorem bridge : (type_of% (@_root_.D5.S3.Geometry.FiniteCyclicNoncoverUniversalSurvivors.remaining_two.{u})) ↔ arena.{u}.Law actual := by
   constructor
   · intro h V fv dv q hq s a
@@ -260,7 +262,7 @@ private theorem bridge : (type_of% (@_root_.D5.S3.Geometry.FiniteCyclicNoncoverU
     exact h q hq s a
 private def testEmbedding : Fin 5 ↪ ULift.{u} (Fin 5) :=
   ⟨ULift.up, fun _ _ he => congrArg ULift.down he⟩
-private def testParameters : Parameters.{u} :=
+private abbrev testParameters : Parameters.{u} :=
   ⟨ULift.{u} (Fin 5), inferInstance, inferInstance, 1, by omega, testEmbedding⟩
 private def presentState : signature.State testParameters := {point (by omega) testEmbedding}
 private def absentState : signature.State testParameters := ∅
@@ -293,7 +295,7 @@ def family : Registration arena.{u} (type_of% (@_root_.D5.S3.Geometry.FiniteCycl
     cases i
     refine ⟨testParameters, presentState, absentState, ?_⟩
     intro he
-    exact absent (he ▸ present)
+    exact absent (Eq.mp he present)
 
 def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Geometry.FiniteCyclicNoncoverUniversalSurvivors.remaining_two.{u}) (Realization signature.{u}) Unit Unit where

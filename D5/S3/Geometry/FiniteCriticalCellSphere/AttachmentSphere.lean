@@ -366,7 +366,8 @@ private theorem radial_seam (z : I × A.Disk) (hi : z ∈ A.innerRegion)
     A.coreIn (A.boundaryToCore (A.projection ⟨z, ho⟩))
   rw [A.boundaryToCore_in]
   apply congrArg A.diskIn
-  exact A.expand_congr _ _ _ _ _ he.symm
+  exact A.expand_congr z.2 (A.cut_pos z.1)
+    (A.outer_rho_pos ⟨z, ho⟩) hi le_rfl he.symm
 
 /-- The actual disk collar, built by closed-cover pasting, including its seam. -/
 def diskCollar : C(I × A.Disk, Space A.X) :=
@@ -786,8 +787,10 @@ theorem multiSphere_representative (hm : 2 ≤ A.face.card) (x : A.Disk) :
   have hc' : Fintype.card A.face - 1 = A.face.card - 1 :=
     congrArg (fun n => n - 1) (Fintype.card_coe A.face)
   unfold multiSphereHomeomorph spherePsi
+  dsimp only
   rw [sphereTransport_apply]
-  apply congrArg (fun y : EuclideanSphereJoin.StdSphere (Fintype.card A.face - 1) => hc' ▸ y)
+  apply congrArg (fun y : EuclideanSphereJoin.StdSphere (Fintype.card A.face - 1) =>
+    (hc' ▸ y : EuclideanSphereJoin.StdSphere (A.face.card - 1)))
   change FiniteSimplexBoundarySphere.simplexBoundaryStdSphere hm'
     (A.classMap hm' (A.diskIn x)) = _
   rw [hc]
@@ -803,8 +806,10 @@ theorem multiSphere_core (hm : 2 ≤ A.face.card) (x : Space A.P) :
   have hc' : Fintype.card A.face - 1 = A.face.card - 1 :=
     congrArg (fun n => n - 1) (Fintype.card_coe A.face)
   unfold multiSphereHomeomorph sphereSouth
+  dsimp only
   rw [sphereTransport_apply]
-  apply congrArg (fun y : EuclideanSphereJoin.StdSphere (Fintype.card A.face - 1) => hc' ▸ y)
+  apply congrArg (fun y : EuclideanSphereJoin.StdSphere (Fintype.card A.face - 1) =>
+    (hc' ▸ y : EuclideanSphereJoin.StdSphere (A.face.card - 1)))
   change FiniteSimplexBoundarySphere.simplexBoundaryStdSphere hm'
     (A.classMap hm' (A.coreIn x)) = _
   rw [hc]

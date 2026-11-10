@@ -8,6 +8,8 @@ No CompiledSourceScope/Operands/Contract or Scribe validator has run. Actual
 correspondence is OPEN; sourceSelection is none. Packed Parameters are a
 mathematical family presentation, not an asserted source binder/selector. -/
 noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 open Set Finset
 open scoped unitInterval
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -19,6 +21,7 @@ open _root_.D5.S3.Geometry.FiniteCyclicNoncoverCollapse
 open _root_.D5.S3.Geometry.FiniteCyclicNoncoverIntervalPaths
 open _root_.D5.S3.Geometry.FiniteCyclicNoncoverUniversalSurvivors
 open _root_.D5.S3.Geometry.FiniteCyclicNoncoverNative
+open _root_.D5.S3.Geometry.FiniteConeUnionWedge
 open _root_.D5.S3.Geometry.FiniteRelativeSimplicialCollapse
 open _root_.D5.S3.Geometry.FiniteElementaryCollapse
 open _root_.D5.S3.Geometry.FiniteComponentClosure
@@ -107,13 +110,15 @@ abbrev arena : Arena where
 private theorem bridge : (type_of% (@_root_.D5.S3.Geometry.FiniteCyclicNoncoverNativeEndpoints.native_zero.{u})) ↔ arena.{u}.Law actual := Iff.rfl
 private def testEmbedding : Fin 3 ↪ ULift.{u} (Fin 3) :=
   ⟨ULift.up, fun _ _ he => congrArg ULift.down he⟩
-private def testParameters : Parameters.{u} := ULift.{u} (Fin 3)
+private abbrev testParameters : Parameters.{u} := ULift.{u} (Fin 3)
 private def presentState : signature.State testParameters := {point (by omega) testEmbedding}
 private def absentState : signature.State testParameters := ∅
-private theorem present : actual.{u}.readout () testParameters presentState = 1 :=
-  Finset.card_singleton _
-private theorem absent : actual.{u}.readout () testParameters absentState = 0 :=
-  Finset.card_empty
+private theorem present : actual.{u}.readout () testParameters.{u} presentState.{u} = 1 := by
+  change ({point (by omega) testEmbedding.{u}} : Finset testParameters.{u}).card = 1
+  exact Finset.card_singleton _
+private theorem absent : actual.{u}.readout () testParameters.{u} absentState.{u} = 0 := by
+  change (∅ : Finset testParameters.{u}).card = 0
+  exact Finset.card_empty
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   have hh := h (V := ULift.{u} (Fin 3)) 1 (by omega) testEmbedding
@@ -241,13 +246,15 @@ abbrev arena : Arena where
 private theorem bridge : (type_of% (@_root_.D5.S3.Geometry.FiniteCyclicNoncoverNativeEndpoints.native_one.{u})) ↔ arena.{u}.Law actual := Iff.rfl
 private def testEmbedding : Fin 4 ↪ ULift.{u} (Fin 4) :=
   ⟨ULift.up, fun _ _ he => congrArg ULift.down he⟩
-private def testParameters : Parameters.{u} := ULift.{u} (Fin 4)
+private abbrev testParameters : Parameters.{u} := ULift.{u} (Fin 4)
 private def presentState : signature.State testParameters := {point (by omega) testEmbedding}
 private def absentState : signature.State testParameters := ∅
-private theorem present : actual.{u}.readout () testParameters presentState = 1 :=
-  Finset.card_singleton _
-private theorem absent : actual.{u}.readout () testParameters absentState = 0 :=
-  Finset.card_empty
+private theorem present : actual.{u}.readout () testParameters.{u} presentState.{u} = 1 := by
+  change ({point (by omega) testEmbedding.{u}} : Finset testParameters.{u}).card = 1
+  exact Finset.card_singleton _
+private theorem absent : actual.{u}.readout () testParameters.{u} absentState.{u} = 0 := by
+  change (∅ : Finset testParameters.{u}).card = 0
+  exact Finset.card_empty
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   have hh := h (V := ULift.{u} (Fin 4)) 1 (by omega) testEmbedding
@@ -375,13 +382,15 @@ abbrev arena : Arena where
 private theorem bridge : (type_of% (@_root_.D5.S3.Geometry.FiniteCyclicNoncoverNativeEndpoints.native_two.{u})) ↔ arena.{u}.Law actual := Iff.rfl
 private def testEmbedding : Fin 5 ↪ ULift.{u} (Fin 5) :=
   ⟨ULift.up, fun _ _ he => congrArg ULift.down he⟩
-private def testParameters : Parameters.{u} := ULift.{u} (Fin 5)
+private abbrev testParameters : Parameters.{u} := ULift.{u} (Fin 5)
 private def presentState : signature.State testParameters := {point (by omega) testEmbedding}
 private def absentState : signature.State testParameters := ∅
-private theorem present : actual.{u}.readout () testParameters presentState = 1 :=
-  Finset.card_singleton _
-private theorem absent : actual.{u}.readout () testParameters absentState = 0 :=
-  Finset.card_empty
+private theorem present : actual.{u}.readout () testParameters.{u} presentState.{u} = 1 := by
+  change ({point (by omega) testEmbedding.{u}} : Finset testParameters.{u}).card = 1
+  exact Finset.card_singleton _
+private theorem absent : actual.{u}.readout () testParameters.{u} absentState.{u} = 0 := by
+  change (∅ : Finset testParameters.{u}).card = 0
+  exact Finset.card_empty
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   have hh := h (V := ULift.{u} (Fin 5)) 1 (by omega) testEmbedding

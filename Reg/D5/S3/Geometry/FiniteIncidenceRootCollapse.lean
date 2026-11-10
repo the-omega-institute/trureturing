@@ -12,6 +12,8 @@ section's Fintype I, Fintype J or DecidableEq J. The exact compiled telescope
 and all compiled source checks remain pending; none has been executed here. -/
 
 noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Geometry.FiniteIncidenceRootCollapse
 
@@ -41,7 +43,7 @@ def rejected : Realization signature.{u} :=
 /-- Preserve the complete original RHS existential and independent I,J types. -/
 abbrev arena : Arena where
   signature := signature.{u}
-  Law R := ∀ {I : Type u} {J : Type v} [dvI : DecidableEq I]
+  Law R := ∀ {I : Type u} {J : Type v} [fvI : Fintype I] [dvI : DecidableEq I] [fvJ : Fintype J] [dvJ : DecidableEq J]
     (ρ : I → J → Prop) (q : State ρ) (s : Finset I),
     s ∈ rootK ρ q ↔
       (R.readout () I s = true) ∧
@@ -55,10 +57,12 @@ private theorem actual_eq_true (I : Type u) (s : Finset I) :
 private theorem bridge :
     (type_of% (@mem_rootK.{u,v})) ↔ arena.{u,v}.Law actual := by
   constructor
-  · intro h I J dvI ρ q s
-    simpa only [actual_eq_true] using (@h I J dvI ρ q s)
-  · intro h I J dvI ρ q s
-    simpa only [actual_eq_true] using (@h I J dvI ρ q s)
+  · intro h I J fvI dvI fvJ dvJ ρ q s
+    exact (@h I J fvI dvI fvJ dvJ ρ q s).trans
+      (and_congr (actual_eq_true I s).symm Iff.rfl)
+  · intro h I J fvI dvI fvJ dvJ ρ q s
+    exact (@h I J fvI dvI fvJ dvJ ρ q s).trans
+      (and_congr (actual_eq_true I s) Iff.rfl)
 
 private theorem source_law : arena.{u,v}.Law actual :=
   bridge.mp (@mem_rootK.{u,v})
@@ -96,7 +100,9 @@ private theorem test_absent :
 
 private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
   intro h
-  have hh := @h testI.{u} testJ.{v} (inferInstance : DecidableEq testI.{u})
+  have hh := @h testI.{u} testJ.{v} (inferInstance : Fintype testI.{u})
+    (inferInstance : DecidableEq testI.{u}) (inferInstance : Fintype testJ.{v})
+    (inferInstance : DecidableEq testJ.{v})
     testRelation.{u,v} testState {(⟨()⟩ : testI.{u})}
   have hf := (hh.mp test_face).1
   change (false : Bool) = true at hf
