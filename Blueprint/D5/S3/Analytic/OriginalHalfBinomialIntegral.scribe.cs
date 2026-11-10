@@ -92,7 +92,7 @@ internal sealed class OriginalHalfBinomialIntegralDocument : IScribeDocumentDefi
                     + "establish the logarithmic constant, the nome, an original Gaussian "
                     + "realization, crossing, string theory or an AdS/CFT correspondence."))),
             DescribeRole.Theorem),
-            H("An arcsine application on the closed interval"),
+            new DocumentBlock.Section(H("An arcsine application on the closed interval"), Blocks(
             Paragraph(Text("For every natural n define the rational coefficient "
                 + "c_n=choose(2n,n)/(4^n(2n+1)), and let a_n be its image in the reals. "
                 + "Since centralBinom(n)=choose(2n,n), a_n=b(n)/(2n+1). Thus "
@@ -124,8 +124,8 @@ internal sealed class OriginalHalfBinomialIntegralDocument : IScribeDocumentDefi
                 + "interval is empty and every integrated term is zero. For x<0, "
                 + "apply the nonnegative result to -x, negate its HasSum, and use "
                 + "arcsin(-x)=-arcsin(x) and the odd exponents. This yields the "
-                + "same series on the whole closed interval [-1,1].")),
-            H("Interior truncation and the function A"),
+                + "same series on the whole closed interval [-1,1].")))),
+            new DocumentBlock.Section(H("Interior truncation and the function A"), Blocks(
             Paragraph(Text("For all real x,q and natural N satisfying 0<=q<1 and "
                 + "|x|<=q, write S_N(x)=sum_{0<=n<N} a_n*x^(2n+1). Coefficient "
                 + "nonnegativity and a_n<=1 give |a_n*x^(2n+1)|<=q*(q^2)^n. "
@@ -141,5 +141,5 @@ internal sealed class OriginalHalfBinomialIntegralDocument : IScribeDocumentDefi
                 + "|A(x)-A_N(x)|<=2*q^(2N+1)/(1-q^2). These are classical "
                 + "arcsine-series consequences of the normalized binomial kernel. "
                 + "The endpoint convergence assertion supplies no endpoint "
-                + "truncation rate; the displayed error bounds require q<1.")))));
+                + "truncation rate; the displayed error bounds require q<1.")))))));
 }
