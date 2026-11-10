@@ -3804,9 +3804,9 @@ $$
 
 $$
 u\in W
-\ \Longleftrightarrow\ 
+\ \Longleftrightarrow\quad
 \sum_i\rho(k_i)v_i=0
-\ \Longleftrightarrow\ 
+\ \Longleftrightarrow\quad
 k_i\in H\quad\text{对每个 }i.
 $$
 
