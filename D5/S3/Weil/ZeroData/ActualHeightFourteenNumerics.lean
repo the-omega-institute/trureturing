@@ -831,9 +831,10 @@ private theorem h14Q14_bound : h14Q 14 ≤ (42538887969 / 1000000000000000 : ℝ
   rw [ht] at h
   linarith only [h, hf, hr]
 
-/- Private consumed sector proof, adapted verbatim from the static finite-sector source. -/
-
-/-- The signed complete zeta logarithmic-derivative combination used by the six-pole kernel. -/
+/-- The signed complete zeta logarithmic-derivative combination used by the six-pole kernel.
+The logarithm of two uses the pinned Mathlib lower bound `Real.log_two_gt_d9`;
+the remaining scalar bounds are supplied by the local gamma, logarithm of pi,
+and complete von Mangoldt estimates. -/
 theorem h14_evaluatedMass_upper :
     66493177 / 143006288128704000 +
       (4 / 12649365729) * Real.eulerMascheroniConstant -
