@@ -37,6 +37,11 @@ internal sealed class HannaPrimePowerCorrectionDocument : IScribeDocumentDefinit
                 + "including two, and every positive natural r.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
 
+            Describe.Lean(DescribeId.Create("boundedpowercorrection-bounded-power-corrections"),
+                DeclarationHandle.Create(Prefix + "bounded_power_corrections"), H("Bounded corrections on prime-power chains"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural exponent s at least two and every bounded integer correction sequence, divisibility of the corrected-weight differences at successive powers of every prime forces a(p^r)=p-1 for all positive r. The base step uses a(1)=0 and the residue at p. Higher steps use s*(r-1)>=r and uniqueness of the bounded residue. This is the single generalized induction in the original square-proof owner; the original square statement and the uniform integer-weight family consume it. It is a consumed bind-only generalization relative to the frozen square result: subtracting the square-weight difference from the s-weight difference preserves divisibility, by p at the first step and by p^r at higher steps. It supplies no new host-admission witness. The known square result is due to Su; no literature novelty is inferred."))), DescribeRole.Theorem),
+
             Node("result", "All positive prime powers", Disp(ClaimBody()),
                 "An integer Euler ledger gives m^2-a(m) as the sum of d times the ledger "
                 + "entry over positive divisors d of m. The difference between the divisor "
