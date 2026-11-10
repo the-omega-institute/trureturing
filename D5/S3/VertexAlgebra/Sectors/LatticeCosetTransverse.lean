@@ -120,7 +120,7 @@ private theorem projection_transverse (j : Fin e) (k : ℕ) :
 
 private theorem translatedProjection_variable
     (A : Charge (ambient D e B C hC hCe))
-    (x : Index (ambient D e B C hC hCe)) :
+    (x : Fin (D.rank+e) × ℕ) :
     translatedProjection D B C hC hCe A (X x) =
       Polynomial.C (projectionVariable D B C hC hCe x) -
         Polynomial.C ((bilinear (ambient D e B C hC hCe) A (unitCharge _ x.1) : ℂ) •
@@ -169,7 +169,8 @@ theorem transverse_polynomial_translation (hD : (gramReal D).PosDef)
       aeval (fun x : Fin e × ℕ =>
         -Polynomial.C ((transversePair D B C a x.1 : ℂ) • (1 : Oscillator D)) *
           Polynomial.X^(x.2+1)) := by
-    ext x
+    apply MvPolynomial.algHom_ext
+    intro x
     simpa using transverse_translation D B C hC hCe hD a n x.1 x.2
   exact DFunLike.congr_fun h p
 
@@ -184,7 +185,7 @@ def longitudinalTranslation (A : Charge (ambient D e B C hC hCe)) :
           Polynomial.X^(x.2+1))).comp (polynomialProjection D B C hC hCe)
 
 private theorem translation_difference (hD : (gramReal D).PosDef)
-    (a : Fin e → ℤ) (n : Charge D) (x : Index (ambient D e B C hC hCe)) :
+    (a : Fin e → ℤ) (n : Charge D) (x : Fin (D.rank+e) × ℕ) :
     translatedProjection D B C hC hCe (liftCharge D B C hC hCe a n) (X x) -
       longitudinalTranslation D B C hC hCe (liftCharge D B C hC hCe a n) (X x) =
     Fin.addCases (fun _ => 0) (fun j =>
@@ -236,7 +237,9 @@ theorem creationSeries_difference (hD : (gramReal D).PosDef)
   rw [map_sub, PowerSeries.coeff_map, PowerSeries.coeff_map, PowerSeries.coeff_mk]
   by_cases hq : q = 0
   · simp [creationSeries, hq]
-  · simp only [creationSeries, PowerSeries.coeff_mk, hq, ↓reduceIte]
+  · simp only [creationSeries, PowerSeries.coeff_mk, dif_neg hq]
+    change translatedProjection D B C hC hCe (liftCharge D B C hC hCe a n) _ -
+      longitudinalTranslation D B C hC hCe (liftCharge D B C hC hCe a n) _ = _
     rw [map_smul, map_smul, ← smul_sub, map_sum, map_sum, ← Finset.sum_sub_distrib]
     simp only [map_smul, ← smul_sub, translation_difference D B C hC hCe hD]
     change (q : ℂ)⁻¹ • (∑ i : Fin (D.rank+e), _) = _
