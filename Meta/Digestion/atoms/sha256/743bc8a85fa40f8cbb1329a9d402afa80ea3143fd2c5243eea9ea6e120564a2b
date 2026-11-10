@@ -1,0 +1,17 @@
+**定理 57.2（同响应的完整条件等价）。** 当 $\mathfrak c\ne0$，固定42.2的背景且 $A$ 含本质连续迹理想时，完整候选恰为
+
+$$
+\begin{aligned}
+&\mathsf H_A(D)\ \land\ \mathcal C_{47}^{\rm pin}(\Omega;S,D)\\
+&\quad\Longleftrightarrow\quad
+\exists!Q\in Z(M(\mathfrak c)):\quad Q=Q^*,\ Q^2=1,\\
+&\hspace{44mm}D=K_Q\ \land\
+\mathcal C_{47}^{\rm pin}(\Omega;S,K_Q).
+\end{aligned}
+\tag{57.1}
+$$
+
+交换情形用唯一 $D=0$ 与空取向。这里 $K_Q(a,b)=Qi[a,b]/2$。
+
+证明。正向由52–53节识别同一个旧 $D$，来源合同始终绑定这份响应；逆向由54.1支付全部原关系。全文合取中其余实际来源没有被这个等式删除、产生或替换。55节支付的是各后端已明确的静态接口，不把SQ固定阶丛定理的模型前件直接套到变维谱。∎
+

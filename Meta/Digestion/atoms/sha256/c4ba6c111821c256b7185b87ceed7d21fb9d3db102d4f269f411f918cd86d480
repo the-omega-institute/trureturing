@@ -1,0 +1,23 @@
+**引理 43.1（正读取、零槽与理想吸收）。** 对任意数学正泛函，原P2仍成立。特别，对任意表示 $\pi:A\to B(H)$、任意向量 $\xi$，令 $A_0=\pi a,B_0=\pi b,d=\pi D(a,b)$，有
+
+$$
+|\langle\xi,d\xi\rangle|^2
+\le\|A_0\xi\|^2\|B_0\xi\|^2
+-(\operatorname{Re}\langle A_0\xi,B_0\xi\rangle)^2.
+\tag{43.1}
+$$
+
+并有反对称性、原比例零值及
+
+$$
+\pi a=0\Rightarrow\pi D(a,b)=0,
+\qquad D(L_{\rm sa},E)\subset L_{\rm sa}
+\quad(L\triangleleft A\text{ 闭}),
+\qquad D(E,E)\subset\mathfrak c.
+\tag{43.2}
+$$
+
+证明。Hermitian性及分离性给 $D(b,a)=-D(a,b)$。二表在任意固定复系数上的二次型，是被全部原评价读为非负的原自伴元素，准确锥使它为正。这就把同一二表送给每个数学正泛函，给43.1。比例输入的Gram行列式为零，所以 $D(a,ta)=0$，特别全域零槽成立。一个输入像为零时，43.1及固定自伴输出的极化给零输出像。对所有消去 $L$ 的不可约表示应用这一事实，商的不可约分离性给理想吸收。
+
+若 $\chi$ 是字符，43.1右侧是 $\chi(a)^2\chi(b)^2-(\chi(a)\chi(b))^2=0$，不需要输入像为零。故所有字符消去 $D(a,b)$。$A/\mathfrak c$ 交换，字符分离其元素，得最后一式。这里未证明一般核平移不变性。∎
+
