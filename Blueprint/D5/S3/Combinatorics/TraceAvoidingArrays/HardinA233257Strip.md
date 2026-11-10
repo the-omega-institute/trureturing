@@ -78,10 +78,6 @@ $$(((((1: \operatorname{PowerSeries}\left(\operatorname{Int}\right))) - (((4: \o
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233257Strip.result` (`✓ std3`). ∎
 
-*Resolves.* `Problems/hardin233257` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233257Strip.result`.
-
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin233257","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233257Strip.result","resolution_kind":"proved"} -->
-
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233257: two-row horizontal and antidiagonal complementary-pair exclusion*. URL: <https://oeis.org/A233257>.
