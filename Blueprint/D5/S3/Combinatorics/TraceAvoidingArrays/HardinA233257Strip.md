@@ -86,7 +86,7 @@ $$(((((1: \operatorname{PowerSeries}\left(\operatorname{Int}\right))) - (((4: \o
 
 Barker's generating function with the closed form and recurrence.
 
-The pair-label map D5.S3.Observer.Separation.BooleanRankThreeK4.beta turns every bond into label inequality. For width n+2, the last-column transfer distinguishes equal and unequal labels within a column. Its matrix has rows (2,2) and (1,1), and its initial weights are (12,12). Induction gives 24 times 3 to the power n proper three-label patterns. If a label is omitted, every column is constant and successive columns alternate; there are six such patterns. The frozen canonical_pattern_card and normalized_card theorems of D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical give four times 3 to the power n canonical patterns, one of them with two labels. Their lift weights give the closed form. Expanding the two geometric factors gives the integer recurrence and the coefficient identity. Hardin authored the sequence and empirical recurrence; Barker stated the closed form and generating function.
+The pair-label map D5.S3.Observer.Separation.BooleanRankThreeK4.beta turns every bond into label inequality. For width n+2, the last-column transfer distinguishes equal and unequal labels within a column. Its matrix has rows (2,2) and (1,1), and its initial weights are (12,12). These weights form a left eigenvector with eigenvalue three. Mathlib's eigenvector power theorem gives 24 times 3 to the power n proper three-label patterns. If a label is omitted, the three-label bond constraints force every column to be constant. Replicating the upper row four times gives an array to which D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder.two_label_classification applies. Restricting its alternating pattern and identifying the lower row gives exactly six two-label patterns. The frozen canonical_pattern_card and normalized_card theorems of D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical give four times 3 to the power n canonical patterns, one of them with two labels. Their lift weights give the closed form. Expanding the two geometric factors gives the integer recurrence and the coefficient identity. Hardin authored the sequence and empirical recurrence; Barker stated the closed form and generating function.
 
 ## References
 
@@ -98,6 +98,7 @@ The pair-label map D5.S3.Observer.Separation.BooleanRankThreeK4.beta turns every
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233257Strip.result`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip](HardinA233175PairStrip.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical](HardinA233177Canonical.md)
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Ladder](HardinA233177Ladder.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip](HardinA233251TriangleStrip.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/TransferMatrix](TransferMatrix.md)
 - Dependency: [D5/S3/Observer/Separation/BooleanRankThreeK4](../../Observer/Separation/BooleanRankThreeK4.md)
