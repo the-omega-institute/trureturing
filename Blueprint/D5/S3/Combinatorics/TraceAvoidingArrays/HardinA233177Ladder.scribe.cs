@@ -25,6 +25,7 @@ internal sealed class HardinA233177LadderDocument : IScribeDocumentDefinition
                 + "The first cell is zero and the predecessor conditions use the strict "
                 + "row-major rank row.val*n+column.val.")),
             Node("normal", "Row-major predecessor conditions", NormalFormula(), false),
+            Node("instDecidableNormal", "Deciding the row-major conditions", DecidableNormalFormula(), false),
             Node("Legal", "Literal array conditions", LegalFormula(), false),
             Node("a", "The literal filtered count", CountFormula(), false, true),
             Node("alternating", "Two alternating constant columns", AlternatingFormula(), false),
@@ -119,22 +120,38 @@ internal sealed class HardinA233177LadderDocument : IScribeDocumentDefinition
         return n is null ? equation : All("n", Q("Nat"), equation);
     }
 
-    private static Formula NormalFormula()
+    private static Formula NormalCondition(Formula n, Formula a)
     {
-        var n = V("n"); var a = V("A"); var p = V("p"); var q = V("q");
+        var p = V("p"); var q = V("q");
         var cells = Product(Fin(D(4)), Fin(n));
         Formula Rank(Formula x) => Add(Mul(Val(Call("Prod.fst", x)), n),
             Val(Call("Prod.snd", x)));
         Formula Earlier(byte colour) => Ex("q", cells,
             And(Lt(Rank(q), Rank(p)), Eq(App(a, q), Typed(D(colour), Fin(D(6))))));
         var current = App(a, p);
-        var condition = All("p", cells, And(
+        return All("p", cells, And(
             Imp(Or(Eq(current, Typed(D(2), Fin(D(6)))),
                 Or(Eq(current, Typed(D(3), Fin(D(6)))),
                     Eq(current, Typed(D(4), Fin(D(6)))))), Earlier(1)),
             Imp(Eq(current, Typed(D(3), Fin(D(6)))), Earlier(2))));
+    }
+
+    private static Formula NormalFormula()
+    {
+        var n = V("n"); var a = V("A");
+        var cells = Product(Fin(D(4)), Fin(n));
         return All("n", Q("Nat"), All("A", Arrow(cells, Fin(D(6))),
-            Eq(Own("normal", a), Parenthesized(condition))));
+            Eq(Own("normal", a), Parenthesized(NormalCondition(n, a)))));
+    }
+
+    private static Formula DecidableNormalFormula()
+    {
+        var n = V("n"); var a = V("A");
+        var cells = Product(Fin(D(4)), Fin(n));
+        Formula Decides(Formula proposition) => Call("Decidable", Parenthesized(proposition));
+        return All("n", Q("Nat"), All("A", Arrow(cells, Fin(D(6))),
+            Eq(Typed(Own("instDecidableNormal", a), Decides(Own("normal", a))),
+                Call("inferInstanceAs", Parenthesized(Decides(NormalCondition(n, a)))))));
     }
 
     private static Formula LegalFormula()
