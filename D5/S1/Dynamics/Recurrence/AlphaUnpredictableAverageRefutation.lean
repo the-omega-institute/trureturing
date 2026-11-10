@@ -28,14 +28,14 @@ shifted_interval_error: proof_shape: bind-only; escape_witness: none; consumers:
   smooth_integral_error.
 smooth_integral_error: proof_shape: bind-only; escape_witness: none; consumers: endpoint_error.
 words_prefix_succ: proof_shape: bind-only; escape_witness: none; consumers: words_prefix.
-words_prefix: proof_shape: content; escape_witness: none; consumers: bit_eq_word.
+words_prefix: proof_shape: content; escape_witness: words_prefix; consumers: bit_eq_word.
 words_length_ge: proof_shape: bind-only; escape_witness: none; consumers: bit_eq_word,
   universal_word, endpoint_error, no_one_sided_mean.
 prefix_getD: proof_shape: bind-only; escape_witness: none; consumers: bit_eq_word.
-bit_eq_word: proof_shape: content; escape_witness: none; consumers: universal_word,
+bit_eq_word: proof_shape: content; escape_witness: words_prefix; consumers: universal_word,
   step_integral_endpoint.
 enumeration_infix: proof_shape: bind-only; escape_witness: none; consumers: universal_word.
-universal_word: proof_shape: content; escape_witness: none; consumers: central_return,
+universal_word: proof_shape: content; escape_witness: universal_word; consumers: central_return,
   zero_one_cells.
 occupation_bound: proof_shape: bind-only; escape_witness: none; consumers:
   endpoint_occupation_bound.
@@ -47,23 +47,23 @@ step_measurable: proof_shape: bind-only; escape_witness: none; consumers:
   step_integral_endpoint, smooth_alpha, endpoint_error, symmetric_mean_eq.
 step_bound: proof_shape: bind-only; escape_witness: none; consumers: step_integral_endpoint,
   smooth_alpha, endpoint_error, symmetric_mean_eq.
-central_return: proof_shape: content; escape_witness: none; consumers: smooth_alpha.
+central_return: proof_shape: content; escape_witness: universal_word; consumers: smooth_alpha.
 step_local_return: proof_shape: bind-only; escape_witness: none; consumers: smooth_alpha.
 cell_value: proof_shape: bind-only; escape_witness: none; consumers: step_integral_endpoint,
   smoothed_cell.
 step_even_ae: proof_shape: bind-only; escape_witness: none; consumers: smooth_even.
 sum_realBit: proof_shape: bind-only; escape_witness: none; consumers: sum_getD_count.
 sum_getD_count: proof_shape: bind-only; escape_witness: none; consumers: step_integral_endpoint.
-step_integral_endpoint: proof_shape: content; escape_witness: none; consumers: endpoint_error.
-zero_one_cells: proof_shape: content; escape_witness: none; consumers: smooth_alpha.
+step_integral_endpoint: proof_shape: content; escape_witness: words_prefix; consumers: endpoint_error.
+zero_one_cells: proof_shape: content; escape_witness: universal_word; consumers: smooth_alpha.
 increasing_selection: proof_shape: bind-only; escape_witness: none; consumers: smooth_alpha.
 smooth_even: proof_shape: bind-only; escape_witness: none; consumers: symmetric_mean_eq.
 smoothed_cell: proof_shape: bind-only; escape_witness: none; consumers: smooth_alpha.
-smooth_alpha: proof_shape: content; escape_witness: none; consumers: result.
-endpoint_error: proof_shape: content; escape_witness: none; consumers: no_one_sided_mean.
-no_one_sided_mean: proof_shape: content; escape_witness: none; consumers: result.
+smooth_alpha: proof_shape: content; escape_witness: universal_word; consumers: result.
+endpoint_error: proof_shape: content; escape_witness: words_prefix; consumers: no_one_sided_mean.
+no_one_sided_mean: proof_shape: content; escape_witness: endpoint_error; consumers: result.
 symmetric_mean_eq: proof_shape: bind-only; escape_witness: none; consumers: result.
-result: proof_shape: content; escape_witness: none; consumers: none (settling result).
+result: proof_shape: content; escape_witness: universal_word; consumers: none (settling result).
 -/
 
 
@@ -711,5 +711,3 @@ theorem result : ¬ claim := by
     exact ⟨m, by simpa only [symmetric_mean_eq] using hm⟩
 
 end D5.S1.Dynamics.Recurrence.AlphaUnpredictableAverageRefutation
-
-
