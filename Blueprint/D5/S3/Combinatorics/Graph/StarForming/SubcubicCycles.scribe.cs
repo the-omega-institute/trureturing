@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.StarForming;
 internal sealed class SubcubicCyclesDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/StarForming/SubcubicCycles.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/omega2026starformingfamily");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/StarForming/omega2026starformingfamily");
     private static DocumentBlock Node(string name, string title, string text, DescribeRole role) =>
         Describe.Lean(DescribeId.Create(name.Replace('_', '-').Replace('.', '-').ToLowerInvariant()), DeclarationHandle.Create(Prefix + name[(name.LastIndexOf('.') + 1)..]),
             H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),

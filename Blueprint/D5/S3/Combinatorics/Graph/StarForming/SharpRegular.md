@@ -194,4 +194,4 @@ Exact declaration: theorem cyclic_parameters (d : ℕ) (hd : 3 ≤ d) : Fintype.
 - Dependency: [D5/S3/Combinatorics/Graph/StarForming/RegularCompensation](RegularCompensation.md)
 - Dependency: [D5/S3/Combinatorics/Graph/StarForming/SquareCapacity](SquareCapacity.md)
 - Dependency: [D5/S3/Combinatorics/Graph/StarForming/SubcubicCertificate](SubcubicCertificate.md)
-- Dependency: [D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives](../SubQuorum/C4FreeRepresentatives.md)
+- Dependency: [D5/S3/Combinatorics/Graph/SubQuorum/C4RepresentativeBounds](../SubQuorum/C4RepresentativeBounds.md)

@@ -10,7 +10,7 @@ import D5.S3.Combinatorics.Graph.StarForming.RegularCompensation
 import D5.S3.Combinatorics.Graph.StarForming.PrivateClauses
 import D5.S3.Combinatorics.Graph.StarForming.SubcubicCertificate
 import D5.S3.Combinatorics.Graph.StarForming.SquareCapacity
-import D5.S3.Combinatorics.Graph.SubQuorum.C4FreeRepresentatives
+import D5.S3.Combinatorics.Graph.SubQuorum.C4RepresentativeBounds
 import Mathlib.Logic.Equiv.Fin.Rotate
 import Mathlib.Data.Fintype.Option
 
