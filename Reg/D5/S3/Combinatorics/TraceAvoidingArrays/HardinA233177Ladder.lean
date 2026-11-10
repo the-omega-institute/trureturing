@@ -325,8 +325,8 @@ abbrev signature : Signature :=
     (fun p => Fin 4 × Fin p.1) (fun _ => Bool)
 def actual : Realization signature :=
   realize signature (fun _ p q =>
-    letI := cellOrder p.1
-    decide (p.2 < q)) (fun e => nomatch e)
+    decide (p.2.2.val + p.1 * p.2.1.val < q.2.val + p.1 * q.1.val))
+    (fun e => nomatch e)
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => false) (fun e => nomatch e)
 abbrev arena : Arena where
