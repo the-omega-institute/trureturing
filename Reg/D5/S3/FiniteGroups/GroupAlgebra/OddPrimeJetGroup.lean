@@ -52,7 +52,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
       transformedTop] using h
   have hc := congrArg (fun v : Polynomial.degreeLT (ULift.{u} (ZMod 3)) 3 =>
     (v : Polynomial (ULift.{u} (ZMod 3))).coeff 0) hz
-  exact one_ne_zero (by simpa [constantLinear] using hc)
+  simpa [constantLinear] using hc
 
 private theorem dependence : ObservationalDependence signature.{u} actual := by
   intro i
@@ -63,7 +63,7 @@ private theorem dependence : ObservationalDependence signature.{u} actual := by
     (degreeLift s.d.hn s.d.hK s.A s.g).injective he
   have hc := congrArg (fun v : Polynomial.degreeLT s.d.K s.d.p =>
     (v : Polynomial s.d.K).coeff 0) hz
-  exact zero_ne_one (by simpa [constantLinear] using hc)
+  simpa [constantLinear] using hc
 
 def family : Registration arena.{u} (type_of% (@_root_.D5.S3.FiniteGroups.GroupAlgebra.OddPrimeJetGroup.normalized_conjugation.{u})) where
   actual := actual
