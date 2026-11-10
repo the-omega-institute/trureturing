@@ -21,9 +21,9 @@ local notation "V" => Polynomial.degreeLT K p
 local notation "E" => Multiplicative K
 
 /-- The original inverse scalar weights on all n-1 coordinates. -/
-def weight (p n : ℕ) (i : Fin (n-1)) : ℕ := p ^ (i.val+1) - p + 1
+def weight (p n : ℕ) (i : Fin (n - 1)) : ℕ := p ^ (i.val + 1) - p + 1
 
-abbrev Q (n : ℕ) (A : Fin (n-1) → K) : K →ₗ[F] K :=
+abbrev Q (n : ℕ) (A : Fin (n - 1) → K) : K →ₗ[F] K :=
   (coefficientMap (p := p) n A).val
 
 /-- The actual representation-theoretic condition for a fixed original relabeling. -/
@@ -41,37 +41,37 @@ private theorem derivation_zero (δ : Derivation F K K) : δ = 0 := by
   simp [nsmul_eq_mul, smul_eq_mul]
 
 /-- Reference subtraction is an identity of the actual functions on K. -/
-theorem reference_subtraction (n : ℕ) (B : Fin (n-1) → K) (c x : K) :
-    Q n B (c*x) - x*Q n B c =
-      Q n (fun i => c ^ (p ^ (i.val+1)) * B i) x := by
+theorem reference_subtraction (n : ℕ) (B : Fin (n - 1) → K) (c x : K) :
+    Q (p := p) n B (c*x) - x*Q (p := p) n B c =
+      Q (p := p) n (fun i => c ^ (p ^ (i.val + 1)) * B i) x := by
   simp only [Q, coefficientMap_apply, Finset.mul_sum, ← Finset.sum_sub_distrib, mul_pow]
   apply Finset.sum_congr rfl
   intro i hi
   ring
 
-private theorem transformed_coordinates (n : ℕ) (A : Fin (n-1) → K)
+private theorem transformed_coordinates (n : ℕ) (A : Fin (n - 1) → K)
     (c : K) (σ : K ≃ₐ[F] K) (x : K) :
-    Q n (fun i => c * σ (A i)) (σ x) = c * σ (Q n A x) := by
+    Q (p := p) n (fun i => c * σ (A i)) (σ x) = c * σ (Q (p := p) n A x) := by
   simp [Q, coefficientMap_apply, map_sum, map_mul, map_sub, map_pow,
     Finset.mul_sum, mul_assoc]
 
-private theorem weight_cancel {n : ℕ} (i : Fin (n-1)) (c : Kˣ) :
-    (c : K) ^ (p ^ (i.val+1)) * ((c⁻¹ : Kˣ) : K) ^ weight p n i =
-      (c : K) ^ (p-1) := by
+private theorem weight_cancel {n : ℕ} (i : Fin (n - 1)) (c : Kˣ) :
+    (c : K) ^ (p ^ (i.val + 1)) * ((c⁻¹ : Kˣ) : K) ^ weight p n i =
+      (c : K) ^ (p - 1) := by
   have hp : 1 ≤ p := (Fact.out : p.Prime).one_lt.le
-  have hle : p ≤ p ^ (i.val+1) := by
+  have hle : p ≤ p ^ (i.val + 1) := by
     simpa using Nat.pow_le_pow_right (by omega : 0 < p) (by omega : 1 ≤ i.val+1)
-  have he : p ^ (i.val+1) = (p-1) + weight p n i := by dsimp [weight]; omega
+  have he : p ^ (i.val + 1) = (p - 1) + weight p n i := by dsimp [weight]; omega
   rw [he, pow_add, mul_assoc, ← mul_pow, ← Units.val_mul]
   simp
 
-private theorem scalar_coefficients_iff {n : ℕ} (A B : Fin (n-1) → K)
+private theorem scalar_coefficients_iff {n : ℕ} (A B : Fin (n - 1) → K)
     (c : Kˣ) (σ : K ≃ₐ[F] K) :
-    (∀ i, (c : K) ^ (p ^ (i.val+1)) * B i = (c : K) ^ (p-1) * σ (A i)) ↔
+    (∀ i, (c : K) ^ (p ^ (i.val + 1)) * B i = (c : K) ^ (p - 1) * σ (A i)) ↔
     (∀ i, B i = ((c⁻¹ : Kˣ) : K) ^ weight p n i * σ (A i)) := by
   constructor
   · intro h i
-    apply mul_left_cancel₀ (pow_ne_zero (p ^ (i.val+1)) c.ne_zero)
+    apply mul_left_cancel₀ (pow_ne_zero (p ^ (i.val + 1)) c.ne_zero)
     rw [h i, ← mul_assoc, weight_cancel]
   · intro h i
     rw [h i, ← mul_assoc, weight_cancel]
@@ -79,25 +79,25 @@ private theorem scalar_coefficients_iff {n : ℕ} (A B : Fin (n-1) → K)
 /-- Necessity and sufficiency retain the fixed arbitrary original additive
 relabeling and allow every invertible merely prime-field-linear intertwiner. -/
 theorem fixed_automorphism_coefficients_iff {n : ℕ} (hn : 1 ≤ n)
-    (hK : Fintype.card K = p ^ n) (A B : Fin (n-1) → K) (φ : E ≃* E) :
-    Intertwines (Q n A) (Q n B) φ ↔
+    (hK : Fintype.card K = p ^ n) (A B : Fin (n - 1) → K) (φ : E ≃* E) :
+    Intertwines (Q (p := p) n A) (Q (p := p) n B) φ ↔
       ∃ (c : Kˣ) (σ : K ≃ₐ[F] K),
         (∀ a : K, Multiplicative.toAdd (φ (Multiplicative.ofAdd a)) = (c : K)*σ a) ∧
         ∀ i, B i = ((c⁻¹ : Kˣ) : K) ^ weight p n i * σ (A i) := by
-  rw [Intertwines, fixed_automorphism_intertwining_iff (Q n A) (Q n B)
-    (coefficientMap n A).property (coefficientMap n B).property φ]
+  rw [Intertwines, fixed_automorphism_intertwining_iff (Q (p := p) n A) (Q (p := p) n B)
+    (coefficientMap (p := p) n A).property (coefficientMap (p := p) n B).property φ]
   constructor
   · rintro ⟨c, σ, δ, hφ, hr⟩
     have hδ := derivation_zero δ
     subst δ
     refine ⟨c, σ, hφ, (scalar_coefficients_iff A B c σ).mp ?_⟩
-    have heq : coefficientMap (p := p) n (fun i => (c : K) ^ (p ^ (i.val+1)) * B i) =
-        coefficientMap (p := p) n (fun i => (c : K) ^ (p-1) * σ (A i)) := by
+    have heq : coefficientMap (p := p) n (fun i => (c : K) ^ (p ^ (i.val + 1)) * B i) =
+        coefficientMap (p := p) n (fun i => (c : K) ^ (p - 1) * σ (A i)) := by
       apply Subtype.ext
       apply LinearMap.ext
       intro x
       obtain ⟨a, rfl⟩ := σ.surjective x
-      change Q n _ (σ a) = Q n _ (σ a)
+      change Q (p := p) n _ (σ a) = Q (p := p) n _ (σ a)
       rw [← reference_subtraction, transformed_coordinates]
       have h := hr a
       simp only [Derivation.zero_apply, sub_zero] at h
@@ -107,9 +107,9 @@ theorem fixed_automorphism_coefficients_iff {n : ℕ} (hn : 1 ≤ n)
     refine ⟨c, σ, 0, hφ, ?_⟩
     intro a
     have hc := (scalar_coefficients_iff A B c σ).mpr hB
-    have he : (fun i => (c : K) ^ (p ^ (i.val+1)) * B i) =
-        (fun i => (c : K) ^ (p-1) * σ (A i)) := funext hc
-    have h := congrArg (fun T => Q n T (σ a)) he
+    have he : (fun i => (c : K) ^ (p ^ (i.val + 1)) * B i) =
+        (fun i => (c : K) ^ (p - 1) * σ (A i)) := funext hc
+    have h := congrArg (fun T => Q (p := p) n T (σ a)) he
     rw [← reference_subtraction, transformed_coordinates] at h
     simp only [Derivation.zero_apply, sub_zero]
     linear_combination h
@@ -121,8 +121,8 @@ def parameterAutomorphism (c : Kˣ) (σ : K ≃ₐ[F] K) : E ≃* E :=
 
 /-- Existential original equivalence is exactly the coefficient relation. -/
 theorem original_equivalence_iff {n : ℕ} (hn : 1 ≤ n) (hK : Fintype.card K = p ^ n)
-    (A B : Fin (n-1) → K) :
-    (∃ φ : E ≃* E, Intertwines (Q n A) (Q n B) φ) ↔
+    (A B : Fin (n - 1) → K) :
+    (∃ φ : E ≃* E, Intertwines (Q (p := p) n A) (Q (p := p) n B) φ) ↔
       ∃ (c : Kˣ) (σ : K ≃ₐ[F] K),
         ∀ i, B i = ((c⁻¹ : Kˣ) : K) ^ weight p n i * σ (A i) := by
   constructor

@@ -49,12 +49,12 @@ def originalSetoid : Setoid (OriginalFamily (p := p) (K := K)) where
 /-- The quotient of the actual original representations, not a parameter-space surrogate. -/
 abbrev OriginalClasses := Quotient (originalSetoid (p := p) (K := K))
 
-private def ofCoefficients (n : ℕ) (A : Fin (n-1) → K) :
+private def ofCoefficients (n : ℕ) (A : Fin (n - 1) → K) :
     OriginalFamily (p := p) (K := K) :=
-  ⟨originalRepresentation (Q n A), coefficientMap n A, rfl⟩
+  ⟨originalRepresentation (Q (p := p) n A), coefficientMap (p := p) n A, rfl⟩
 
 private theorem related_coefficients {n : ℕ} (hn : 1 ≤ n)
-    (hK : Fintype.card K = p ^ n) (A B : Fin (n-1) → K) :
+    (hK : Fintype.card K = p ^ n) (A B : Fin (n - 1) → K) :
     originalSetoid (ofCoefficients n A) (ofCoefficients n B) ↔
       ∃ (c : Kˣ) (σ : K ≃ₐ[F] K),
         ∀ i, B i = ((c⁻¹ : Kˣ) : K) ^ weight p n i * σ (A i) :=
@@ -64,16 +64,16 @@ section Transport
 variable {L : Type} [Field L] [Fintype L] [Algebra F L]
 
 private theorem relation_transport {n : ℕ} (hn : 1 ≤ n)
-    (hK : Fintype.card K = p ^ n) (e : K ≃ₐ[F] L) (A B : Fin (n-1) → L) :
+    (hK : Fintype.card K = p ^ n) (e : K ≃ₐ[F] L) (A B : Fin (n - 1) → L) :
     originalSetoid (ofCoefficients n (fun i => e.symm (A i)))
       (ofCoefficients n (fun i => e.symm (B i))) ↔
       letI := WeightedSemilinear.weightedAction (F := F) (K := L) (weight p n)
-      MulAction.orbitRel (WeightedSemilinear.Group F L) (Fin (n-1) → L) A B := by
+      MulAction.orbitRel (WeightedSemilinear.Group F L) (Fin (n - 1) → L) A B := by
   letI := WeightedSemilinear.weightedAction (F := F) (K := L) (weight p n)
   constructor
   · intro h
     obtain ⟨c, σ, hB⟩ := (related_coefficients hn hK _ _).mp h
-    apply (MulAction.orbitRel (WeightedSemilinear.Group F L) (Fin (n-1) → L)).symm
+    apply (MulAction.orbitRel (WeightedSemilinear.Group F L) (Fin (n - 1) → L)).symm
     change ∃ g : WeightedSemilinear.Group F L, WeightedSemilinear.act (weight p n) g A = B
     refine ⟨⟨Units.map e.toMonoidHom c, e.symm.trans (σ.trans e)⟩, ?_⟩
     funext i
@@ -114,7 +114,7 @@ def quotientEquiv {n : ℕ} (hn : 1 ≤ n)
     refine Quotient.inductionOn z ?_
     intro ρ
     obtain ⟨q, hq⟩ := ρ.property
-    obtain ⟨A, hA⟩ := (coefficientMap_bijective hn hK).surjective q
+    obtain ⟨A, hA⟩ := (coefficientEquiv hn hK).surjective q
     refine ⟨Quotient.mk _ (fun i => e (A i)), ?_⟩
     change Quotient.mk _ (ofCoefficients n (fun i => e.symm (e (A i)))) = Quotient.mk _ ρ
     have he : ofCoefficients n (fun i => e.symm (e (A i))) = ρ := by
@@ -131,7 +131,7 @@ theorem original_class_cardinality {n : ℕ} (hn : 1 ≤ n)
       (1 / (n : ℚ)) *
         ∑ d ∈ n.divisors, (Nat.totient (n / d) : ℚ) / (p ^ d - 1 : ℕ) *
           ∑ m ∈ (p ^ d - 1).divisors, (Nat.totient m : ℚ) *
-            (p : ℚ) ^ (d * (Finset.univ.filter (fun i : Fin (n-1) => m ∣ weight p n i)).card) := by
+            (p : ℚ) ^ (d * (Finset.univ.filter (fun i : Fin (n - 1) => m ∣ weight p n i)).card) := by
   let L := Shrink.{0} K
   let e : K ≃ₐ[F] L := (Shrink.algEquiv F K).symm
   have hL : Fintype.card L = p ^ n := by simpa [L] using hK

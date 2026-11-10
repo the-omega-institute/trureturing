@@ -36,11 +36,13 @@ variable {K : Type u} [Field K] [Fintype K] [Algebra (ZMod p) K]
 private def frobLinear (j : ℕ) : K →ₗ[ZMod p] K :=
   (FiniteField.frobeniusAlgHom (ZMod p) K ^ j).toLinearMap
 
+omit [Fintype K] in
 private theorem frobLinear_apply (j : ℕ) (x : K) :
     frobLinear (p := p) j x = x ^ p ^ j := by
   change (FiniteField.frobeniusAlgHom (ZMod p) K ^ j) x = _
   rw [AlgHom.coe_pow, FiniteField.coe_frobeniusAlgHom, pow_iterate, ZMod.card]
 
+omit [Algebra (ZMod p) K] in
 private theorem power_coefficients_zero {n : ℕ}
     (hn : p ^ (n - 1) < Fintype.card K) {a : Fin n → K}
     (ha : ∀ x : K, ∑ i, a i * x ^ p ^ (i : ℕ) = 0) : a = 0 := by
@@ -64,7 +66,7 @@ private theorem linearized_coordinates {n : ℕ} (hn : 1 ≤ n)
     (hK : Fintype.card K = p ^ n) (q : K →ₗ[ZMod p] K) :
     ∃! a : Fin n → K, ∀ x, q x = ∑ i, a i * x ^ p ^ (i : ℕ) := by
   have hp : p.Prime := Fact.out
-  have hlt : p ^ (n-1) < Fintype.card K := by
+  have hlt : p ^ (n - 1) < Fintype.card K := by
     rw [hK]
     exact Nat.pow_lt_pow_right hp.one_lt (by omega)
   have hli : LinearIndependent K (fun i : Fin n => frobLinear (p := p) (K := K) i) := by
@@ -96,23 +98,24 @@ def Normalized : Submodule K (K →ₗ[ZMod p] K) where
   smul_mem' := by intro c q hq; simp_all
 
 /-- The full normalized linearized polynomial, including all zero coordinates. -/
-def coefficientMap (n : ℕ) : (Fin (n-1) → K) →ₗ[K] Normalized (p := p) (K := K) where
-  toFun A := ⟨∑ i, A i • (frobLinear (p := p) (i.val+1) - LinearMap.id), by
+def coefficientMap (n : ℕ) : (Fin (n - 1) → K) →ₗ[K] Normalized (p := p) (K := K) where
+  toFun A := ⟨∑ i, A i • (frobLinear (p := p) (i.val + 1) - LinearMap.id), by
     simp [Normalized, frobLinear_apply]⟩
   map_add' A B := by apply Subtype.ext; simp [add_smul, Finset.sum_add_distrib]
   map_smul' c A := by apply Subtype.ext; simp [mul_smul, Finset.smul_sum]
 
-@[simp] theorem coefficientMap_apply (n : ℕ) (A : Fin (n-1) → K) (x : K) :
+@[simp] theorem coefficientMap_apply (n : ℕ) (A : Fin (n - 1) → K) (x : K) :
     (coefficientMap (p := p) n A).val x =
-      ∑ i, A i * (x ^ p ^ (i.val+1) - x) := by
+      ∑ i, A i * (x ^ p ^ (i.val + 1) - x) := by
   simp [coefficientMap, frobLinear_apply, smul_eq_mul]
 
-private def extendCoefficients {m : ℕ} (A : Fin m → K) : Fin (m+1) → K :=
+private def extendCoefficients {m : ℕ} (A : Fin m → K) : Fin (m + 1) → K :=
   Fin.cons (-∑ i, A i) A
 
+omit [Fact p.Prime] [Fintype K] [Algebra (ZMod p) K] in
 private theorem extended_sum {m : ℕ} (A : Fin m → K) (x : K) :
     (∑ j, extendCoefficients A j * x ^ p ^ j.val) =
-      ∑ i, A i * (x ^ p ^ (i.val+1) - x) := by
+      ∑ i, A i * (x ^ p ^ (i.val + 1) - x) := by
   rw [Fin.sum_univ_succ]
   simp only [extendCoefficients, Fin.cons_zero, Fin.val_zero, pow_zero, pow_one,
     Fin.cons_succ, Fin.val_succ, neg_mul, Finset.sum_mul, mul_sub,
@@ -126,18 +129,18 @@ theorem coefficientMap_bijective {n : ℕ} (hn : 1 ≤ n)
   obtain ⟨m, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : n ≠ 0)
   constructor
   · intro A B h
-    have hA : ∀ x, (coefficientMap (p := p) (m+1) A).val x =
+    have hA : ∀ x, (coefficientMap (p := p) (m + 1) A).val x =
         ∑ j, extendCoefficients A j * x ^ p ^ j.val := by
       intro x; rw [extended_sum, coefficientMap_apply]
-    have hB : ∀ x, (coefficientMap (p := p) (m+1) A).val x =
+    have hB : ∀ x, (coefficientMap (p := p) (m + 1) A).val x =
         ∑ j, extendCoefficients B j * x ^ p ^ j.val := by
       intro x; rw [h, extended_sum, coefficientMap_apply]
-    have he := (linearized_coordinates (by omega : 1 ≤ m+1) hK
-      (coefficientMap (p := p) (m+1) A).val).unique hA hB
+    have he := (linearized_coordinates (by omega : 1 ≤ m + 1) hK
+      (coefficientMap (p := p) (m + 1) A).val).unique hA hB
     funext i
     exact congrFun he i.succ
   · intro q
-    obtain ⟨a, ha, _⟩ := linearized_coordinates (by omega : 1 ≤ m+1) hK q.val
+    obtain ⟨a, ha, _⟩ := linearized_coordinates (by omega : 1 ≤ m + 1) hK q.val
     refine ⟨fun i => a i.succ, ?_⟩
     have ha0 : a 0 = -∑ i : Fin m, a i.succ := by
       have h := ha 1
@@ -150,11 +153,19 @@ theorem coefficientMap_bijective {n : ℕ} (hn : 1 ≤ n)
       funext j
       refine Fin.cases ?_ (fun i => rfl) j
       exact ha0.symm
-    rw [coefficientMap_apply, ← extended_sum, hext, ← ha]
+    rw [coefficientMap_apply]
+    calc
+      _ = ∑ j : Fin (m + 1), extendCoefficients (fun i : Fin m => a i.succ) j * x ^ p ^ j.val :=
+        (extended_sum (fun i : Fin m => a i.succ) x).symm
+      _ = ∑ j : Fin (m + 1), a j * x ^ p ^ j.val := by
+        apply Finset.sum_congr rfl
+        intro j hj
+        exact congrArg (fun z : K => z * x ^ p ^ j.val) (congrFun hext j)
+      _ = q.val x := (ha x).symm
 
 /-- A linear equivalence on the given field, rather than a polynomial quotient. -/
 def coefficientEquiv {n : ℕ} (hn : 1 ≤ n) (hK : Fintype.card K = p ^ n) :
-    (Fin (n-1) → K) ≃ₗ[K] Normalized (p := p) (K := K) :=
+    (Fin (n - 1) → K) ≃ₗ[K] Normalized (p := p) (K := K) :=
   LinearEquiv.ofBijective (coefficientMap (p := p) n) (coefficientMap_bijective hn hK)
 
 end D5.S3.FiniteGroups.GroupAlgebra.FiniteJetCoefficients
