@@ -15,7 +15,7 @@ internal sealed class RawGroupZeroDriftDocument : IScribeDocumentDefinition
     private static Formula Eqn(Formula a, Formula b) => Seq(a, Sp, Eq, Sp, b);
     private static Formula Imp(Formula a, Formula b) => Seq(Open, a, Sp, Rightarrow, Sp, b, Close);
     private static Formula And(Formula a, Formula b) => Seq(Open, a, Sp, Land, Sp, b, Close);
-    private static Formula Mul(Formula a, Formula b) => Seq(Open, a, Cdot, b, Close);
+    private static Formula Mul(Formula a, Formula b) => Seq(Open, a, Sp, Cdot, Sp, b, Close);
     private static Formula Inv(Formula a) => Call("inv", a);
     private static Formula Cost(string c, Formula a, Formula b) => Call(c, a, b);
     private static Formula Sym(string m, string c) => All("a", I(m), All("b", I(m), Eqn(Cost(c,I("a"),I("b")),Cost(c,I("b"),I("a")))));
