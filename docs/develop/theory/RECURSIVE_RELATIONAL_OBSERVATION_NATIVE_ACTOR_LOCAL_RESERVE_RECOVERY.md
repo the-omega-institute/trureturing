@@ -1399,3 +1399,508 @@ row correspondence is Proposition 6.3, with the concrete input sites and
 return labels specified here.
 
 ## 追加锚（本行以下为增补区）
+
+## 12. Arbitrary-operand source-write chronology
+
+This section fixes the value-level operation language used by the preceding
+CAP/ARC construction. It does not enlarge the installed controller. The
+mathematical source is the free set
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle x,y\rangle,
+\qquad
+\rho(\alpha)=\beta,
+\quad
+\rho(\beta)=\langle\beta,\alpha\rangle,
+\quad
+\rho\langle x,y\rangle=\langle\rho x,\rho y\rangle .
+\tag{SW.1}
+$$
+
+Write $\lambda(t)$ for the number of leaves of $t$, and write
+$a(t),b(t)$ for its numbers of $\alpha$ and $\beta$ leaves. Thus
+$\lambda(t)=a(t)+b(t)$. The three accepted modifying values are
+
+$$
+S(x)=\rho(x),\qquad
+\operatorname{Left}(c)(x)=\langle c,x\rangle,
+\qquad
+\operatorname{Right}(c)(x)=\langle x,c\rangle,
+\tag{SW.2}
+$$
+
+where every operand $c$ is a nonempty finite tree. These are command and
+operand values. They are not complete histories, physical states, or an
+identity of two source occurrences.
+
+The image $I=\rho[\mathcal T]$ and the actual image inverse $\delta:I\to
+\mathcal T$ are the ones already supplied by JOINT_MOMENT_FIBERS 36.2.
+For $t\in\mathcal T$, let $\mu(t)$ be its maximal actual substitution
+ancestry: the largest $m$ for which $t\in\rho^m[\mathcal T]$. Thus
+$\delta^j(t)$ is defined exactly when $0\le j\le\mu(t)$, and
+$\rho^j\delta^j(t)=t$ on that range. The finiteness of $\mu(t)$ is
+part of the same actual-image result; it also follows from (SW.7) below, since
+every $\rho$ step raises $W$ by the positive number $\lambda(t)$.
+
+**Definition 12.1 (retained occurrence and outward siblings).** Let $p$ be
+an actual address of a node of $v$, written from the root to that node in
+the usual $L/R$ convention. For the chronology below, read the same address
+from the retained occurrence outward, so its first symbol is the innermost
+retained-child choice. Put $g=|p|$. If the retained occurrence is the
+left child at a step, the final sibling at that step is the right sibling;
+if it is the right child, the final sibling is the left sibling. Read these
+final siblings from the retained occurrence outward as
+$w_1,\ldots,w_g$. The resulting outward word is the reverse of the usual
+root-to-node address, but the two descriptions name the same actual nodes.
+
+The retained child $L$ is rebuilt by a $\operatorname{Right}$ graft and the
+retained child $R$ by a $\operatorname{Left}$ graft. This convention keeps
+an address even when two sibling values are equal: equality of values never
+identifies the two actual addresses.
+
+**Theorem 12.2 (complete accepted-word parameterization).** Fix
+$u,v\in\mathcal T$. A value word in $S$, $\operatorname{Left}(c)$ and
+$\operatorname{Right}(c)$ carries $u$ to $v$ if and only if it is obtained
+from the following data:
+
+1. an actual address $p$ of $v$ and $g=|p|$;
+2. an integer $r\ge0$ such that
+   $v|_p=\rho^r(u)$;
+3. ages $r\ge s_1\ge\cdots\ge s_g\ge0$ satisfying
+   $s_i\le\mu(w_i)$ for every $i$.
+
+For these data the unique value word is
+
+$$
+S^{\,r-s_1},\ G_1,\ S^{\,s_1-s_2},\ G_2,\ldots,
+G_g,\ S^{\,s_g},
+\tag{SW.3}
+$$
+
+where $G_i=\operatorname{Right}(\delta^{s_i}(w_i))$ when the retained
+child at the $i$th outward step is $L$, and
+$G_i=\operatorname{Left}(\delta^{s_i}(w_i))$ when it is $R$. For $g=0$
+the word is $S^r$ and the condition is $v=\rho^r(u)$.
+
+More precisely, the displayed map is a bijection between the feasible
+triples $(p,r,(s_i))$ and value words together with their retained actual
+occurrence. After forgetting that occurrence, two triples may project to the
+same endpoint value only through the ordinary coincidence of equal source
+values; the classification never identifies distinct addresses or asserts
+a complete-history equivalence.
+
+*Proof.* First take a feasible triple. Starting at $u$, perform the initial
+$r-s_1$ substitutions. At the first outward step attach
+$\delta^{s_1}(w_1)$ on the non-retained side. Perform $s_1-s_2$ further
+substitutions, attach $\delta^{s_2}(w_2)$ on the next non-retained side, and
+continue. The last $s_g$ substitutions act on the whole current tree.
+The retained occurrence has undergone exactly $r$ substitutions. The
+$i$th operand has undergone exactly $s_i$ subsequent substitutions, so its
+final value is
+$\rho^{s_i}\delta^{s_i}(w_i)=w_i$. The graft orientation is exactly the
+one prescribed by the retained child. Induction on $i$ therefore gives the
+ordered tree $v$.
+
+Conversely, consider any accepted value word from $u$ to $v$. Mark the
+unique source occurrence that is retained by every graft. A substitution
+preserves that occurrence; a graft adds one edge to it. At the end its
+actual address is some $p$, and the number of grafts is $g=|p|$. Counting
+all substitutions gives $r$. Let $s_i$ be the number of substitutions
+strictly after the $i$th graft. The chronology forces
+$r\ge s_1\ge\cdots\ge s_g\ge0$. The operand at the $i$th graft is a tree
+$c_i$ whose final sibling is $w_i=\rho^{s_i}(c_i)$. Hence
+$w_i\in\rho^{s_i}[\mathcal T]$, $s_i\le\mu(w_i)$, and injectivity of $\rho$
+with the supplied inverse gives $c_i=\delta^{s_i}(w_i)$. The retained-child
+orientation gives the stated $G_i$. This recovers (SW.3).
+
+The value word itself records $r$ as its number of $S$ letters and $g$ as
+its number of graft letters. The orientation of each graft records the
+outward address, and the lengths of the intervening $S$ runs recover the
+$s_i$. The endpoint then fixes each $w_i$ at its actual address. Thus the
+recovery is unique at the value-and-address level. Equal values at two
+addresses remain two entries of the same recovered address list. No claim
+about unrecorded physical provenance is used. $\square$
+
+The proof also handles all degenerate cases. There are no feasible data
+when no actual address and age tuple satisfies the displayed conditions.
+The empty word occurs exactly for $u=v$, $p=\varepsilon$, $r=g=0$. If
+$r=0$, every feasible age is zero and the word consists only of grafts.
+Ages may repeat, including $s_i=s_{i+1}$, and a repeated sibling value does
+not collapse the two grafts. A zero substitution count therefore does not
+mean that the source was not acquired or that a call was omitted; it only
+specifies the modifier word.
+
+**Corollary 12.3 (the two endpoint bounds).** Define
+
+$$
+W(t)=a(t)+2b(t).
+\tag{SW.4}
+$$
+
+Every feasible parameter tuple satisfies
+
+$$
+ r+g\le W(v)-W(u).
+\tag{SW.5}
+$$
+
+If the operational start $u$ contains a $\beta$ leaf, then the stronger
+leaf bound holds:
+
+$$
+ r+g\le\lambda(v)-\lambda(u).
+\tag{SW.6}
+$$
+
+The second bound is an operational statement only; it is not a bound for
+all algebraic starts.
+
+*Proof.* Directly from (SW.1),
+
+$$
+W(\rho t)-W(t)=\lambda(t),
+\qquad
+W(\langle c,t\rangle)-W(t)=W(c),
+\qquad
+W(\langle t,c\rangle)-W(t)=W(c).
+\tag{SW.7}
+$$
+
+Every tree is nonempty, so every substitution and every graft increases
+$W$ by at least one. Summing the increments along the word proves (SW.5).
+For leaves,
+
+$$
+\lambda(\rho t)-\lambda(t)=b(t),
+\qquad
+\lambda(\langle c,t\rangle)-\lambda(t)=\lambda(c),
+\qquad
+\lambda(\langle t,c\rangle)-\lambda(t)=\lambda(c).
+\tag{SW.8}
+$$
+
+A $\beta$ leaf remains present under $\rho$, and a graft retains the old
+source as one child. Thus a $\beta$-containing start has $b(t)\ge1$ at every
+substitution point, while every context has at least one leaf. Summing
+(SW.8) proves (SW.6). If the start is all-$\alpha$, its first substitution
+has $b(t)=0$ and preserves leaf count: $\alpha\mapsto\beta$ is the explicit
+plateau. Therefore (SW.6) cannot be applied to arbitrary algebraic starts.
+Equation (SW.5) still applies on those plateaus. $\square$
+
+In particular, a negative right side in either bound certifies
+infeasibility, while a zero right side permits only the empty word in the
+corresponding nonempty-source class. These are bounds on the modifier
+word, not on acquisition, parser, return, storage or total execution.
+
+## 13. The exact age frontier and the finite write comparison
+
+**Definition 13.1 (feasible age set).** For a fixed feasible $(p,r)$, let
+$\mathcal A(p,r)$ consist of all integer vectors satisfying
+
+$$
+ r\ge s_1\ge\cdots\ge s_g\ge0,
+\qquad s_i\le\mu(w_i).
+\tag{SW.9}
+$$
+
+Put
+
+$$
+ s_i^*=\min\{r,\mu(w_1),\ldots,\mu(w_i)\}
+ \qquad(1\le i\le g).
+\tag{SW.10}
+$$
+
+**Theorem 13.2 (greatest feasible ages).** The vector $s^*$ belongs to
+$\mathcal A(p,r)$ and is its greatest element in the coordinatewise order.
+Consequently, for every $s\in\mathcal A(p,r)$ and every $i$,
+
+$$
+\lambda(\delta^{s_i^*}(w_i))\le
+\lambda(\delta^{s_i}(w_i)),
+\qquad
+3\lambda(\delta^{s_i^*}(w_i))-1\le
+3\lambda(\delta^{s_i}(w_i))-1.
+\tag{SW.11}
+$$
+
+Thus the canonical word with $s^*$ simultaneously minimizes every supplied
+context leaf count and every canonical context payload length. Equal minima
+are possible.
+
+*Proof.* The prefix minima in (SW.10) are nonincreasing, are at most $r$,
+and are at most each corresponding $\mu(w_i)$, so $s^*\in\mathcal A(p,r)$.
+For $s\in\mathcal A(p,r)$, induction gives
+$s_i\le r$, $s_i\le s_{i-1}\le\mu(w_{i-1})$, and
+$s_i\le\mu(w_i)$; hence $s_i\le s_i^*$ for every $i$.
+
+If $0\le j<\mu(w)$, then
+$\delta^j(w)=\rho(\delta^{j+1}(w))$. By (SW.8),
+$\lambda(\delta^{j+1}(w))\le\lambda(\delta^j(w))$. Iterating proves the
+first inequality in (SW.11). The supplied original context grammar has
+branch code $0$, leaf codes $11$ and $10$, and recursively codes an ordered
+pair by a branch followed by its two child codes. A tree with $m$ leaves
+therefore has $m-1$ branches and payload length
+
+$$
+ d(m)=(m-1)+2m=3m-1.
+\tag{SW.12}
+$$
+
+The second inequality follows. A strict decrease need not occur: for
+example $\delta(\beta)=\alpha$ and both trees have one leaf. This accounts
+for ties. $\square$
+
+**Definition 13.3 (canonical write subtotal).** For a feasible $(p,r)$,
+use $s^*$ and set
+
+$$
+I_{\mathrm{write}}(p,r)=
+6r+6\sum_{i=1}^{g}\lambda\!\left(\delta^{s_i^*}(w_i)\right)+4g.
+\tag{SW.13}
+$$
+
+This is the exact CAP7.2 subtotal for accepted modifying **external**
+outer-01 source cycles in the comparison class of this section: six units
+for each whole-source $S$ cycle, six units per supplied context leaf, and
+four units for each accepted graft. The Rho call has both its external
+outer-01 entry and its canonical source frame `0010`; this frame is part of
+the six-unit $S$ subtotal. A Left or Right call has the same outer entry
+and carries one context payload, whose payload length is (SW.12). The
+formula is a source-write subtotal, not a measurement of elapsed time.
+
+For an arbitrary feasible age vector define the analogous value by replacing
+$s^*$ in (SW.13) with $s$. Theorem 13.2 proves
+
+$$
+I_{\mathrm{write}}(p,r;s^*)
+ \le I_{\mathrm{write}}(p,r;s).
+\tag{SW.14}
+$$
+
+The inequality is simultaneous in all context coordinates; it does not
+trade one operand against another. The possible equality cases are exactly
+the payload ties allowed by (SW.11).
+
+**Theorem 13.4 (complete finite nondominated frontier).** Let
+$\mathcal C(u,v)$ be the set of triples
+
+$$
+\bigl(r,g,I_{\mathrm{write}}(p,r)\bigr)
+\tag{SW.15}
+$$
+
+over every actual address $p$ of $v$ and every $r$ satisfying the endpoint
+condition and the feasibility of (SW.9). Project away duplicate triples,
+and retain the coordinatewise nondominated ones. This finite set is the
+complete nondominated frontier for accepted modifying external outer-01
+source cycles between $u$ and $v$.
+
+*Proof.* By (SW.5), only finitely many pairs $(r,g)$ can occur. The finite
+tree $v$ has finitely many actual addresses. For each $(p,r)$, Theorem
+13.2 replaces every feasible age vector by $s^*$ without increasing any
+of the three coordinates in (SW.15), since $r$ and $g$ are unchanged and
+(SW.14) decreases the third. Thus every feasible word is weakly dominated
+by one of the displayed canonical triples. Conversely each displayed
+triple is realized by Theorem 12.2 and its canonical payload grammar, so
+no member of this comparison class is omitted. Removing coordinatewise
+dominated triples is precisely the definition of the nondominated frontier.
+Distinct addresses are considered before projection; equal endpoint values
+may consequently coalesce only after their actual-address distinction has
+been recorded. $\square$
+
+The frontier is deliberately limited. It does not optimize total time,
+storage peak, acquisition or ingress, context generation, copying/backing,
+maintenance, automatic-mode computed commands, primitive source work,
+rows/dependencies, checks, ACKs, returns, retention or output. Those
+coordinates retain their original CAP/ARC and GENERAL foundation/tariff
+and are charged when the corresponding phases occur. Nor does the finite
+frontier assert a measured speedup or a universal optimum for a different
+menu.
+
+**Example 13.5 (a repeated-age canonical word).** Let $u=\beta$, let the
+retained occurrence have outward choices $(R,L)$, and let its final
+siblings be $w_1=w_2=\beta$. Take $r=1$. Since $\mu(\beta)=1$,
+(SW.10) gives $s_1^*=s_2^*=1$. The canonical operands are both
+$\delta(\beta)=\alpha$, and the word is
+
+$$
+\operatorname{Left}(\alpha),\quad
+\operatorname{Right}(\alpha),\quad S.
+\tag{SW.16}
+$$
+
+It sends
+
+$$
+\beta
+\mapsto\langle\alpha,\beta\rangle
+\mapsto
+\langle\langle\alpha,\beta\rangle,\alpha\rangle
+\mapsto
+\left\langle\left\langle\beta,\langle\beta,\alpha\rangle\right\rangle,\beta\right\rangle.
+$$
+
+The two ages are equal and the two sibling values are equal, yet the two
+actual addresses and the two oriented graft commands remain distinct. The
+example illustrates a value-level word; it is not an execution trace or a
+measured benchmark.
+
+## 14. One authentic CAP/ARC consumer
+
+The classification above is algebraic for all nonempty finite endpoints.
+The following is the actual operational subdomain, with every extra
+condition visible. It is the only consumer claimed here.
+
+**Definition 14.1 (beta-boot write consumer).** Start from the completed
+beta-boot relation supplied by NATIVE_CROSS_EPOCH_RELATIONS 13.1–13.2 and
+this volume's Definitions 4.1 and 5.1–5.4: source value $\beta$,
+$H_0=h=K=1$, the original verifier and INITIAL consumer installed, the
+source-service token at its dispatcher, producer work tokens at their
+owners, and the original Stop client parked on its actual ports. Let a
+finite preparation, using the existing accepted graft calls and any
+lawful Reserve/Raise calls, reach an authentic ARC Ready boundary whose
+current source value is $u$ and whose current source syntax has actually
+been acquired at that epoch. The preparation is allowed only when $u$
+contains a $\beta$ leaf, as guaranteed by NCE 13.2.
+
+Before modifying the source, retain the target-side operands and the final
+literal target syntax in the existing owned immutable backing. For a
+canonical tuple $(p,r,s^*)$, this means retaining the actual finite
+contexts $\delta^{s_i^*}(w_i)$ and the authenticated endpoint specification
+$v$; the context words are supplied through the original context grammar,
+not generated by an unrecorded planner. The current source and target
+records carry their actual source epoch, origins and permissions. A formula
+for $v$ alone is not an acquisition and cannot open this consumer.
+
+Choose a guard/capacity $H\ge\lambda(v)$. If the reached Ready has
+insufficient $h=K$, complete the existing Reserve/Raise route to this
+finite $H$ and return to Ready before issuing the modifier word. No new
+capacity operation is introduced. Since the retained source contains a
+$\beta$ leaf and all contexts are nonempty, (SW.8) shows that every
+intermediate source and every final context fits the same finite bound
+$H$; if a stricter installed guard is used, raise to that guard instead.
+
+**Theorem 14.2 (actual completion of one canonical word).** Under
+Definition 14.1, every letter of (SW.3) has an actual finite CAP/ARC call
+and the complete word reaches a genuine Ready boundary with source value
+$v$. Every accepted call is one of the following existing frames:
+
+- $S$ is the external outer-01 call followed by source frame `0010`
+  (tag `001`, empty payload and its terminating zero);
+- $\operatorname{Left}(c)$ or $\operatorname{Right}(c)$ is the same
+  outer-01 call followed by tag `011` or `100`, unary length $U(3\lambda(c)-1)$,
+  and the original context payload code (branch `0`, alpha `11`, beta `10`,
+  and recursive pair branches).
+
+For each call, the consumer performs, in order, the actual outer-01
+acquisition, seal, descriptor construction and import; the $F^A$ header
+Base/setup; all required input, source work, row/dependency construction,
+checks and response publication; final row ACK; source-token TOK and idle
+CTL; InnerReturn normalization; closed-28/29 import; the CaptureCAP append
+of the actual cycle item; restoration of the archive heads; and the next
+ARC Ready relation. The next letter is issued only after this return.
+
+*Proof.* The frame forms are exactly CAP Definition 4.6 and the source
+frame grammar of the structural-storage atlas. The source frame for Rho is
+`0010`; its tag is not an inferred mnemonic. The context parser reads the
+unary length and then exactly the payload length in (SW.12), so every
+canonical operand is a finite accepted word. The endpoint guard is at most
+$H$ by Definition 14.1, and the canonical source effect is the one in
+(SW.2), so the installed admission predicate accepts every letter in the
+word.
+
+At an authentic Ready, ARC's outer-01 selector owns the invocation and
+CAP's resident admission supplies the actual current source token. CAP
+Lemma 6.7 gives the complete finite row/dependency/response/ACK/source-token
+return under the original local-progress premises. The changed final idle
+CTL enters InnerReturn exactly as in Definition 4.1. Proposition 5.5 then
+normalizes the public roles and reaches CaptureCAP; Proposition 3.5 parses
+and authenticates the delivered rows/dependencies and restores the 28/29
+heads. The CaptureCAP item records the actual input bits, origins and
+accepted source effect before the Ready CTL. At the next Ready, the source
+syntax is the newly returned current source and is not replaced by a stale
+pre-write snapshot; the retained target backing remains data only. Induction
+on the letters of (SW.3), with Theorem 12.2 for the semantic source value,
+proves both finite termination and the final endpoint $v$.
+
+No accepted write is left unrecorded between two Ready boundaries. A
+malformed, refused, partial or busy input remains in its corresponding raw
+or refusal phase and is not silently reclassified as an accepted letter.
+Every maintenance, read, copying/backing, other ingress, automatic-mode
+computed command, primitive row, dependency, capture, check, ACK, return,
+retention and output operation used by this induction keeps its original
+phase and charge. The subtotal (SW.13) counts only the selected external
+modifier cycles. $\square$
+
+**Corollary 14.3 (current-source reads occur only after the write).** After
+the final Ready in Theorem 14.2, the live source has endpoint value $v$.
+A later authorized TagRead at an actual address $q$ returns the literal
+reply for the current $v$ at $q$, subject to CAP's source token, guard and
+row conditions. Such a reply is a later source read; it is not a planning
+oracle, a retroactive validation of an operand, or a replacement for the
+retained target syntax used before the word.
+
+**Proposition 14.4 (consumer boundary).** The consumer does not provide
+any of the following: arbitrary Busy-cut admission, halt re-entry,
+original-annex Advance admission, an autonomous planner, a cross-source
+identity, a physical executor, a reset, a clone, an inverse source port, or
+a new callable service. It also does not identify a full history from the
+command/operand value word, and it does not extend the leaf bound to an
+all-$\alpha$ algebraic start.
+
+*Proof.* The start is the specific beta-boot Ready relation, and every
+entry is the installed outer-01 selector. CAP's admission clause is for
+that acknowledged idle relation; no claim is made for a different Busy or
+terminal cut. The parked Stop client remains parked until its own original
+route is selected and therefore cannot plan or issue the word. All source
+syntax and contexts used above are supplied finite material with current
+origins and explicit owner permissions. The only inverse used in planning
+is the mathematical $\delta$, while execution uses the existing source
+parser and controller. The original-interface exposure volume leaves the
+annex Advance judgment open, so no such edge is used here. These are exactly
+the stated premises and exclusions. $\square$
+
+**Definition 14.5 (comparison-class accounting).** For an executed
+canonical word, the retained accounting vector is split into
+
+$$
+\mathbf C=\mathbf C_{\rm acquire}+\mathbf C_{\rm plan}
++\mathbf C_{\rm context}+\mathbf C_{\rm copy}
++\mathbf C_{\rm ingress}+\mathbf C_{\rm maint}
++\mathbf C_{\rm auto}+\mathbf C_{\rm primitive}
++\mathbf C_{\rm rows/deps}+\mathbf C_{\rm checks/ACK}
++\mathbf C_{\rm returns}+\mathbf C_{\rm retain/output}.
+\tag{SW.17}
+$$
+
+The first, second, and every later coordinate is charged only when its
+actual original phase runs. The mathematical planner that enumerates
+(SW.3) is a proof-side finite calculation and is not a newly callable
+service. Canonical modifier input has one operand coordinate per graft;
+there is no hidden second input for provenance or a complete target state.
+Equation (SW.13) is the exact projection of $\mathbf C$ onto the selected
+external source-write subtotal. CAP7.2's actual primitive ticks/fees/storage
+and GENERAL's foundation/tariff remain separate coordinates.
+
+**Supplier map and nonduplicate boundary.** The following published
+interfaces are used as suppliers, with no stronger result imported:
+
+| Supplier | Reused fact here | Boundary retained here |
+| --- | --- | --- |
+| [ER](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ENTRY_REFERENCE_AND_GRAFT_ORDER.md), §§9, 16, 20–23 | Fixed-c correspondence, actual retained occurrence, source framing, current operand material and returned-cut discipline. | Its fixed-menu and received-shape results are not reinterpreted as this arbitrary-operand classifier. |
+| [NCE](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CROSS_EPOCH_RELATIONS.md), §§13–14 | Beta-boot attainment, source-value chronology and the distinction between source-value history and complete history. | It does not identify all complete physical histories or authorize a Busy/terminal entry. |
+| JOINT_MOMENT_FIBERS, §§36.2–36.3 | Actual image inverse $\delta$ and maximal substitution ancestry. | No new inverse operation or source port is installed. |
+| [SSA](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_STRUCTURAL_STORAGE_ATLAS.md), §§1–2 | $3m-1$ prefix-code payload length and the actual tags `000`–`100`. | Code length is a payload coordinate; it is not a total execution or storage optimum. |
+| CAP, [capacity coherence](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CAPACITY_COHERENCE_AND_GROWTH.md), Definition 4.6 and Lemma 6.7 | Canonical frame admission, source work, complete rows/dependencies, ACK and source-token/idle return. | Only the installed acknowledged-idle domain is used. |
+| ARC, this volume, Definitions 4.1 and 5.1–5.4 and Proposition 5.5 | Actual outer-01 entry, InnerReturn, CaptureCAP, retained cycle item and next Ready. | The parked client is not an autonomous planner and no arbitrary internal cut is admitted. |
+| Native Original Interface Exposure and Recovery, §§3–4 | The explicit open boundary for original annex Advance admission. | No original-Q claim is made for that annex. |
+| Native Finite Obstruction, §§3–7 | One-read prescribed-budget decision and its own optimization scope. | Its menu is not silently enlarged to these CAP arbitrary contexts. |
+
+The resulting increment is a classification of command/operand values, its
+exact age-and-payload frontier, and one actual returned CAP/ARC consumer.
+It is not a claim of worldwide originality, a new Lean theorem, a full
+history decoder, a universal source bridge, or completion of the broader
+space/continuation/boundary/memory objective.
+
+## 追加锚（本行以下为增补区）
