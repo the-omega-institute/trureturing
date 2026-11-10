@@ -3114,3 +3114,303 @@ $$
 
 ## 追加锚（本行以下为增补区）
 
+## 18　实际交替乘法的线性记录与来源恢复
+
+**定义 18.1（固定实际乘法、窗口与来源）。** 设 $F$ 是特征二的域，$L/F$ 是有限域扩张，满足 $L^2\subseteq F$，记 $n=[L:F]$，允许 $n=1$。以下始终使用同一个实际 $L$ 的乘法及其诱导的 $F$-线性映射
+$$
+\kappa:\Lambda_F^2L\longrightarrow L/F,
+\qquad \kappa(u\wedge v)=uv+F.
+\tag{18.1}
+$$
+这里 $L/F$ 表示商向量空间。乘法模 $F$ 是交替双线性的，因为 $u^2\in F$；故 (18.1) 确定唯一的线性映射。它在整个 $L$ 上满射，因为 $\kappa(1\wedge h)=h+F$。不另选线性记录器。
+
+预先固定任意 $F$-子空间 $W\le L$，记 $m=\dim_FW$。对 $h\in L\setminus F$，置 $K_h=F(h)$。称实际二次中间域 $K_h$ 在 $W$ 中可见，当且仅当存在 $v\in L^\times$ 使 $vK_h\subseteq W$，并记
+$$
+\operatorname{Src}(W)=\{K_h:\exists v\in L^\times,
+\ vK_h\subseteq W\}.
+\tag{18.2}
+$$
+对一个指定记录 $r\in L/F$，其来源使用同一输入对定义为
+$$
+\operatorname{Src}_W(r)=
+\{F(u/v):u,v\in W\text{ 在 }F\text{ 上独立，且 }uv+F=r\}.
+\tag{18.3}
+$$
+所有向量、子域和存在量词均在原 $L/F$ 内。
+
+式 (18.1) 在完整四次域上直接沿用 Havlicek，[*Clifford Parallelisms and External Planes to the Klein quadric*，arXiv:1511.06308v1](https://arxiv.org/abs/1511.06308v1)，§3 case (B)、§5 式 (5.1)–(5.3) 的 $H/F$ 与 $\kappa$：case (B) 中共轭为恒等，因而 $\overline u v+F=uv+F$。该文的 case (B) 明确要求 $[H:F]=4$；这里只把同一公式用于已给定的任意有限指数一域，不借用其四维平行类分类处理高次域。
+
+**定理 18.2（实际乘积唯一绑定二次来源）。** 对任意独立的 $u,v\in L$，有
+$$
+uv\notin F,\qquad F(u/v)=F(uv),\qquad
+Fu+Fv=vF(u/v).
+\tag{18.4}
+$$
+每个非零 $r=h+F\in L/F$ 唯一确定一个实际二次域 $K_h$，且
+$$
+\operatorname{Src}_W(r)=
+\begin{cases}
+\{K_h\},&r\text{ 有 }W\text{ 内的实际独立输入对},\\
+\varnothing,&r\text{ 没有这样的输入对}.
+\end{cases}
+\qquad \operatorname{Src}_W(0)=\varnothing.
+\tag{18.5}
+$$
+改变 $r$ 的非零 $F$-倍数不改变其候选来源域。于是实际二次中间域与 $\mathbf P_F(L/F)$ 的 $F$-点一一对应，但一个候选域是否在 $W$ 可见仍是另一条件。
+
+证明。独立性给 $v\ne0$、$u/v\notin F$。因 $v^2\in F^\times$，
+$$
+uv=v^2(u/v),\qquad u/v=(v^2)^{-1}uv.
+$$
+这证明前两式，第三式由 $u=v(u/v)$ 得到。每个 $h\notin F$ 的平方在 $F$，所以 $K_h=F+Fh$ 是二次域；这里复用 [Stacks，09HF，Lemma 9.14.2](https://stacks.math.columbia.edu/tag/09HF) 在 $p=2$ 的不可约性结论。若 $h$ 加上标量，或乘以非零标量，$F(h)$ 都不变。反过来，$F(h)=F(h')$ 恰好意味着 $h'=\alpha+\beta h$，其中 $\alpha\in F$、$\beta\in F^\times$。这给所述射影点对应。若 $uv+F=h+F\ne0$，则 $F(u/v)=F(uv)=F(h)$，标签确实来自这同一对输入；零记录由 $uv\notin F$ 排除。最后，任一平面 $vK_h\subseteq W$ 可取一组独立基，其比值生成 $K_h$；故 (18.2) 与全部实际记录的来源并集相同。这一比值桥复用 §17 引理 17.3、定理 17.5 中同一实际 $h$ 的关系。$\square$
+
+**定义 18.3（实际集、线性像与射影中心）。** 置
+$$
+\begin{aligned}
+\mathcal A(W)&=\{u\wedge v:u,v\in W\text{ 在 }F\text{ 上独立}\},\\
+\mathcal T_\kappa(W)&=\kappa(\mathcal A(W)),\\
+I_\kappa(W)&=\kappa(\Lambda_F^2W).
+\end{aligned}
+\tag{18.6}
+$$
+非零虚假记录指 $I_\kappa(W)\setminus(\mathcal T_\kappa(W)\cup\{0\})$ 中的元素。$\mathcal A(W)$ 是去掉原点的实际分解锥；当 $m\le1$ 时它为空，$\mathcal T_\kappa(W)=\varnothing$，而 $\Lambda^2W=I_\kappa(W)=\{0\}$。对所有 $m$，均有
+$$
+I_\kappa(W)=\operatorname{span}_F\mathcal T_\kappa(W),
+\qquad 0\notin\mathcal T_\kappa(W).
+\tag{18.7}
+$$
+第一式由基外积张成性得到，第二式由 (18.4) 得到。
+
+Grassmann 点是 $\mathcal A(W)$ 的射影化：$\operatorname{Gr}_F(2,W)(F)=\mathcal A(W)/F^\times$，而不是 $\mathcal A(W)$ 本身。$\kappa_W=\kappa|_{\Lambda^2W}$ 的射影中心是 $\mathbf P_F(\ker\kappa_W)$；定理 18.2 保证它不含实际 Grassmann $F$-点。因此 $\mathbf P(\kappa_W)$ 在全部实际 Grassmann 点上有定义，其像经 $[h+F]\mapsto K_h$ 正是 $\operatorname{Src}(W)$。$\mathbf P_F(I_\kappa(W))(F)$ 则只给线性张成中的候选来源。扩到代数闭包后的 Grassmann 点、中心和投影须另取基变换；几何像或其闭包不能替代这里的实际 $F$-点像。
+
+这些外积与射影术语直接使用 Ghorpade–Patil–Pillai，[*Decomposable Subspaces, Linear Sections of Grassmann Varieties, and Higher Weights of Grassmann Codes*，arXiv:0710.5161v1](https://arxiv.org/abs/0710.5161v1)，§§1–2 的定义，以及 Havlicek 前引文 §2 的 Plücker 嵌入。它们是以下乘法恢复判据的经典输入。
+
+**定理 18.4（任意固定窗口的交叠、秩与完整实际纤维）。** 对任意 $W\le L$ 及 $h\in L\setminus F$，记 $r=h+F$、$K=K_h$，并置
+$$
+C_h(W)=W\cap hW.
+$$
+则 $C_h(W)$ 是 $K$-向量空间，而且下列条件等价：
+$$
+\begin{aligned}
+&K\in\operatorname{Src}(W);\\
+&r\in\mathcal T_\kappa(W);\\
+&C_h(W)\ne0;\\
+&\dim_K C_h(W)\ge1;\\
+&\operatorname{rank}_F\Phi_h<2m,
+\quad\Phi_h:W\oplus W\to L,\quad(x,y)\mapsto x+hy.
+\end{aligned}
+\tag{18.8}
+$$
+更准确地，置 $\rho_h=\operatorname{rank}_F\Phi_h$，有
+$$
+\dim_F C_h(W)=2m-\rho_h,
+\qquad
+\dim_K C_h(W)=m-\rho_h/2.
+\tag{18.9}
+$$
+取 $L$ 的任意 $F$-基，以列满秩矩阵 $B\in F^{n\times m}$ 表示 $W$ 的包含映射，以 $M_h\in F^{n\times n}$ 表示原域中乘以 $h$，则
+$$
+\rho_h=\operatorname{rank}_F[B\ \ M_hB].
+\tag{18.10}
+$$
+特别地，$m>n/2$ 时所有实际二次来源均可见，且 $I_\kappa(W)=L/F$、$\mathcal T_\kappa(W)=(L/F)\setminus\{0\}$。一般情况下，非零虚假记录恰为
+$$
+\{h+F\in I_\kappa(W)\setminus\{0\}:
+\operatorname{rank}_F[B\ \ M_hB]=2m\}.
+\tag{18.11}
+$$
+
+完整实际提升纤维还有如下参数化：$C=C_h(W)$ 时，存在自然双射
+$$
+\mathbf P_K(C)\ \longrightarrow
+\{\xi\in\mathcal A(W):\kappa(\xi)=r\},
+\qquad
+Kv\longmapsto \xi_v:=v\wedge\frac{hv}{v^2}.
+\tag{18.12}
+$$
+这里 $\mathbf P_K(0)=\varnothing$；右侧保留实际外积向量而非只保留射影类。每个 $Kv$ 同时给出窗口内同一来源的实际支撑平面。
+
+证明。因为 $h^2\in F^\times$，有
+$$
+C_h(W)=\{v\in W:hv\in W\}.
+\tag{18.13}
+$$
+若 $v\in W\cap hW$，写 $v=hy$、$y\in W$，则 $hv=h^2y\in W$；反向由 $v=h((h^2)^{-1}hv)$ 得到。式 (18.13) 也说明 $hC_h(W)\subseteq C_h(W)$，故 $C_h(W)$ 对 $F+Fh=K$ 稳定。这正是 §17 的固定 $h$ 交叠条件，其 $K$-线性结构无需另加假设。
+
+若 $C_h(W)$ 含非零 $v$，则 $vK\subseteq W$，且 $v,hv/v^2$ 独立，乘积恰为 $h$。所以同一输入对同时见证来源 $K$ 和指定记录 $r$。反过来，若 $u,v\in W$ 独立且 $uv+F=h+F$，写 $uv=h+\alpha$，$\alpha\in F$，便有
+$$
+hv=(uv+\alpha)v=v^2u+\alpha v\in W.
+$$
+因此 $0\ne v\in C_h(W)$。若从 $vK\subseteq W$ 出发，则也直接得到 $v\in C_h(W)$，支付前三项等价与来源标签的绑定。
+
+$\Phi_h$ 的像为 $W+hW$。其核由 $x=hy$ 描述，映射 $(hy,y)\mapsto y$ 将该核与 $C_h(W)$ 作 $F$-线性同构。秩—零度给 (18.9) 的第一式；$[K:F]=2$ 给第二式。矩阵表示就是 (18.10)。于是 (18.8)、(18.11) 均得证。若 $2m>n$，秩至多为 $n<2m$，每个非零 $r$ 都实际可得；这也与 §17 的半维交叠边界相接。这里给出的是固定来源的一次线性秩判据，不需要枚举输入对或先解分解存在性的定义。
+
+对 (18.12)，若 $v'=kv$、$k=\alpha+\beta h\in K^\times$，则双线性及 $h^2\in F$ 给
+$$
+v'\wedge hv'=k^2(v\wedge hv),\qquad (v')^2=k^2v^2,
+$$
+故 $\xi_{v'}=\xi_v$；其支撑平面恰为 $Kv$，所以不同 $K$-线给不同外积。反之，任一实际提升写成 $\xi=u\wedge v$。上面的计算说明 $v\in C_h(W)$，而 $uv=h+\alpha$ 给
+$$
+u=\frac{hv+\alpha v}{v^2},\qquad
+u\wedge v=\frac{hv}{v^2}\wedge v
+=v\wedge\frac{hv}{v^2}.
+$$
+最后一个等号使用特征二。因而该提升等于 $\xi_v$，双射成立。若换代表 $h'=\alpha+\beta h$、$\beta\ne0$，(18.13) 给 $C_{h'}(W)=C_h(W)$；所以判据也不依赖同一候选来源的代表。$\square$
+
+**定理 18.5（完整 Plücker 条件与整条乘法纤维的等价）。** 固定任意 $m$ 维窗口 $W$、一组 $F$-基 $w_1,\ldots,w_m$，并以 $L/F$ 的一组基表示记录。令 $T_W$ 的列为 $w_iw_j+F$（$i<j$）的坐标。对非零实际 $r=h+F$，下列条件均与 (18.8) 等价：
+$$
+\begin{gathered}
+\exists (p_{ij})\in F^{\binom m2},\quad T_Wp=r,\\
+p_{ij}p_{kl}+p_{ik}p_{jl}+p_{il}p_{jk}=0
+\quad\text{对全部 }1\le i<j<k<l\le m.
+\end{gathered}
+\tag{18.14}
+$$
+这里 $r$ 在矩阵等式中表示其坐标列，所有未知量必须属于 $F$。若 $r\in I_\kappa(W)$，任选一个解 $p_0$，则 (18.14) 恰等价于
+$$
+\exists k\in\ker T_W,\quad
+p_0+k\text{ 满足全部 Plücker 关系}.
+\tag{18.15}
+$$
+一个满足关系的非零实际提升足以证明存在；一个不满足关系的任意提升不能否定存在。$r=0$ 的纤维没有非零实际分解点，其来源为空。
+
+证明。这里使用经典二维 Plücker 判据作为中间步骤：非零 $p$ 是某个 $u\wedge v$ 的坐标，当且仅当它满足 (18.14) 的所有二次关系。为明确其任意域实际点含义，将 $p_{ji}=p_{ij}$、$p_{ii}=0$；取 $p_{ij}\ne0$，在该坐标片上可直接取
+$$
+x_k=p_{ik},\qquad y_k=p_{jk}/p_{ij}.
+$$
+Plücker 关系给 $x_ky_l+x_ly_k=p_{kl}$，包括指标重复的情形。因此 $x,y\in F^m$ 独立，$p=x\wedge y$；没有从代数闭包取解。反向将 $p_{ij}=x_iy_j+x_jy_i$ 代入即得这些关系。这是标准 Plücker 坐标计算；四维形式正是 Havlicek 前引文 §2 的 Klein 方程，分解与支撑平面的经典关系见 Ghorpade–Patil–Pillai 前引文 §2，Lemma 1、Corollary 2。
+
+由于 $T_W$ 正是原 $\kappa_W$ 的矩阵，$T_Wp=r\ne0$ 已强制 $p\ne0$。故上述中间判据把 (18.14) 与实际乘法纤维中的分解点等同，再由定理 18.4 与固定 $h$ 的秩条件等同。所有线性解恰为 $p_0+\ker T_W$，得到 (18.15)。对于 $r=0$，若有非零实际分解点，就会违反独立输入的 $uv\notin F$。
+
+一个确有核的边界说明为何必须保留整条纤维。取完整四次域 $L_0/F$，基为 $1,a,b,ab$，$a^2=s$、$b^2=t$，并取 $W=L_0$。同一记录 $a+F$ 有分解提升 $1\wedge a$，也有提升
+$$
+1\wedge a+1\wedge ab+a\wedge b.
+\tag{18.16}
+$$
+后者的像仍为 $a+F$，因为两个 $ab$ 相消；其 Klein Pfaffian 为 $1$，故不可分解。因而只检查这一坏提升会否定一个已由前一实际输入对见证的来源。此处仅将经典四维 Klein 方程用于原乘法纤维，不把不可分解提升本身叫作虚假输出。$\square$
+
+**定理 18.6（原乘法记录首次失真的两个最小量）。** 对同一实际交替乘法 (18.1)，以下边界成立：任意 $n$ 下，$m\le3$ 的所有窗口均无非零虚假记录；$n\le4$ 时，所有窗口均无非零虚假记录。存在 $m=4$、$n=8$ 的窗口有非零虚假记录。因此首次可能失真的最小窗口维数与最小整体次数分别为
+$$
+m_{\min}=4,\qquad n_{\min}=8.
+\tag{18.17}
+$$
+在上述无失真范围内，线性像足以恢复来源：$\operatorname{Src}(W)=\{F(h):0\ne h+F\in I_\kappa(W)\}$。两下界由同一个实例同时达到。具体地，取代数独立的 $s,t,z$，令
+$$
+F=\mathbf F_2(s,t,z),\quad
+L=F(a,b,c),\quad a^2=s,\quad b^2=t,\quad c^2=z,
+\qquad W=F1+Fa+Fb+Fc.
+\tag{18.18}
+$$
+则 $[L:F]=8$，$\kappa_W$ 单射，而
+$$
+r=a+bc+F
+=\kappa(1\wedge a+b\wedge c)
+\in I_\kappa(W)\setminus\mathcal T_\kappa(W).
+\tag{18.19}
+$$
+两项分别来自窗口内的实际输入对 $(1,a)$ 与 $(b,c)$，其来源分别为 $F(a)$ 与 $F(b/c)=F(bc)$。
+
+证明。经典低维外积事实给 $m\le3$ 时每个非零二外积均可分解；三维情形是 Ghorpade–Patil–Pillai 前引文 §2 Corollary 2 的 $\ell=m-1$ 情形，二维情形直接由基外积得到。任一非零 $r\in I_\kappa(W)$ 有非零提升，因而有实际独立输入对。事实上，此时 $\kappa_W$ 还必单射，否则非零核元的分解会违反 (18.4)。$m\le1$ 按定义为空集边界。
+
+若 $n\le4$，除上述 $m\le3$ 情形，只须考虑 $n=m=4$，这时 $W=L$，每个非零 $h+F$ 都由 $(1,h)$ 产生。特别是完整四次域中的非分解外积，在经过原 $\kappa$ 后不能据此称为虚假记录。有限指数一扩张的次数为二幂，这里直接复用 [Stacks，09HI，Lemma 9.14.5](https://stacks.math.columbia.edu/tag/09HI) 的逐次二次塔；所以排除 $n\le4$ 就排除了全部 $n<8$。
+
+对 (18.18)，可取代数独立的 $a,b,c$，令 $s=a^2,t=b^2,z=c^2$。按三个指数的奇偶分组，
+$$
+1,a,b,c,ab,ac,bc,abc
+\tag{18.20}
+$$
+是 $L/F$ 的基：对有理函数先同乘分母使分母成为平方，再按奇偶分组给出张成；任何线性关系清去 $F$ 中的分母后，不同奇偶类的多项式项不能相消，给出独立性。这与 §13 命题 13.17 的双变量实例使用同一基论证。
+
+在 $W$ 的有序基 $(1,a,b,c)$ 下，六个基外积的像依次为
+$$
+a+F,\ b+F,\ c+F,\ ab+F,\ ac+F,\ bc+F,
+$$
+由 (18.20) 独立。因此 $r$ 的提升唯一，正是 $1\wedge a+b\wedge c$。该提升在坐标 $p_{01}=p_{23}=1$、其余为零处的 Klein Pfaffian
+$$
+\operatorname{Pf}(p)=p_{01}p_{23}+p_{02}p_{13}+p_{03}p_{12}
+\tag{18.21}
+$$
+为 $1$。由定理 18.5 的经典分解条件，它不是实际分解点，且不存在另一提升可以补救。特征二中 $\xi\wedge\xi=0$ 恒成立，不能替代 (18.21)。这支付的是原乘法商输出的失真，而非忠实外积记录器的另一问题。$\square$
+
+**定理 18.7（同一 $L$、同一 $\kappa$、同像而不同的完整来源集）。** 在 (18.18) 的同一实际 $L/F$ 内，另取
+$$
+W'=F1+F(a+bc)+Fb+Fc.
+$$
+则
+$$
+I_\kappa(W)=I_\kappa(W')
+=F(a+F)+F(b+F)+F(c+F)+F(ab+F)+F(ac+F)+F(bc+F),
+\tag{18.22}
+$$
+但 $\operatorname{Src}(W)\ne\operatorname{Src}(W')$，而且两来源集互不包含。更准确地，对 $x=(A,B,C,D,E,G)\in F^6$，置
+$$
+H(x)=Aa+Bb+Cc+Dab+Eac+Gbc,
+\qquad Q(x)=AG+BE+CD.
+$$
+两个完整来源集分别为
+$$
+\begin{aligned}
+\operatorname{Src}(W)
+&=\{F(H(x)):0\ne x\in F^6,\ Q(x)=0\},\\
+\operatorname{Src}(W')
+&=\{F(H(x)):0\ne x\in F^6,
+\ Q(x)+A^2+tD^2+zE^2=0\}.
+\end{aligned}
+\tag{18.23}
+$$
+特别地，
+$$
+\begin{aligned}
+&F(a+bc)\in\operatorname{Src}(W')\setminus\operatorname{Src}(W),\\
+&F(a)\in\operatorname{Src}(W)\setminus\operatorname{Src}(W').
+\end{aligned}
+\tag{18.24}
+$$
+所以线性像本身不能恢复完整可见来源，即使这两个四维窗口上的 $\kappa$ 都单射。
+
+证明。$1,a+bc,b,c$ 由 (18.20) 独立。在此有序基下，$\kappa_{W'}$ 的六个基像为
+$$
+a+bc+F,\ b+F,\ c+F,\ ab+tc+F,\ ac+zb+F,\ bc+F.
+\tag{18.25}
+$$
+它们张成 (18.22)：用最后一项从第一项取回 $a+F$，用 $c+F,b+F$ 分别从第四、第五项取回 $ab+F,ac+F$。这六个向量独立，故 $\kappa_{W'}$ 也单射。
+
+在 $W$ 中，$H(x)+F$ 的唯一提升坐标就是 $(A,B,C,D,E,G)$，其 Pfaffian 为 $Q(x)$。在 $W'$ 中，同一输出的唯一提升坐标是
+$$
+(p'_{01},p'_{02},p'_{03},p'_{12},p'_{13},p'_{23})
+=(A,B+zE,C+tD,D,E,G+A).
+$$
+其 Pfaffian 为
+$$
+A(G+A)+(B+zE)E+(C+tD)D
+=Q(x)+A^2+tD^2+zE^2.
+$$
+因此 (18.23) 由同一乘法纤维的分解条件与定理 18.2 的唯一来源标签得到；它描述全部实际 $F$-点，而非只展示两个选定来源。候选来源在共同像中的参数正是 $F^6\setminus\{0\}$ 模非零标量，不存在另外的标签歧义。
+
+取 $x=(1,0,0,0,0,1)$，两方程的值分别为 $1$ 与 $0$，得到第一项；在 $W'$ 中，实际输入对就是 $(1,a+bc)$。取 $x=(1,0,0,0,0,0)$，两方程的值分别为 $0$ 与 $1$，得到第二项；在 $W$ 中输入对为 $(1,a)$。
+
+第一项还可直接用线性交叠核对。令 $h=a+bc$，对任意 $x_0+x_1a+x_2b+x_3c\in W$，乘以 $h$ 后在 $bc,abc,ab,ac$ 四个窗外基方向的系数依次是 $x_0,x_1,x_2,x_3$。故 $C_h(W)=0$。在 $W'$ 中，用基 $1,h,b,c$ 写向量，乘以 $h$ 后，$ab,ac$ 两个窗外方向的系数分别是 $b,c$ 的原系数；故
+$$
+C_h(W')=F1+Fh=K_h,
+\qquad \rho_h(W)=8,\quad \rho_h(W')=6.
+$$
+这使同源性、实际输入对和秩判据在同一 $h$ 上一致。$\square$
+
+**定理 18.8（四维的一个关系与原三维入口）。** 对任意四维窗口，实际来源的充分且必要恢复可由整条 $\kappa_W$ 仿射核纤维上的一个 Pfaffian 方程 (18.21) 完成，或等价地由每个候选 $h$ 的单个秩判定 (18.10) 完成。在 (18.18) 的单射窗口中，省去该 Pfaffian 条件就会纳入 (18.19) 的虚假记录。这里“一个关系”只表示四维 Plücker 判据有一个二次方程；不声称它是所有编码中的唯一最小信息，也不把高维的全部 Plücker 关系缩成一个方程。
+
+若另有 §13 定义 13.1 的全部 P+K 前件，且 $\operatorname{char}F=2$，则定理 13.9、13.11 给出同一个完整四次域 $(L,\pi)$、$V=\ker\pi$、$\dim_FV=3$。在这一原纯部窗口上，
+$$
+I_\kappa(V)=L/F,\qquad
+\mathcal T_\kappa(V)=(L/F)\setminus\{0\},\qquad
+\operatorname{Src}(V)=\{K_h:h\in L\setminus F\}.
+\tag{18.26}
+$$
+并且原响应 $D(u,v)=uv-\pi(uv)$ 满足 $\kappa(u\wedge v)=D(u,v)+F$。八次反例不满足该入口所强制的整体次数，不能据此改变其三维结论。
+
+证明。四维只有一个四指标组，定理 18.5 因而恰给 (18.21)；核存在时仍须使用 (18.15) 的存在量词。必要性的具体见证已由定理 18.6 给出；任意窗口的等价秩判定已由定理 18.4 给出。对于原纯部，$m=3>4/2$，故同一定理直接给 (18.26)，也可用定理 18.6 中三维 $\kappa_V$ 的单射性及两边维数同为三得到。$D$ 与 $\kappa$ 的关系则直接来自原公式。这里保留 P+K、实际四次域和指定投影；未从高次域的窗口记录推出新的 P+K、Born 规则或物理维数。$\square$
+
+**定义 18.9（真实面积相加的数学释义）。** 一对窗口内的独立方向给一块可分解面积 $u\wedge v$，实际记录是同一域乘法给出的 $uv+F$。这个非零输出已经唯一指定候选二次域 $F(uv)=F(u/v)$。将许多实际记录相加只保留线性张成；相加后的候选域能否仍由窗口中的一对方向产生，须有该记录纤维中的实际分解点。一个这样的点就足够；一个坏提升不够否定。四维时，保留 Pfaffian 与整条纤维恰好保留这一要求；任意维时，可用固定 $h$ 的交叠乘法秩判据直接恢复。八次实例中，两块真实面积的和具有唯一的不可分解提升，因此输出不再有单对实际方向；另一个窗口虽保留完全相同的线性像，却有不同的真实面积集合和实际来源。
+
+本节使用的经典输入是前引 Havlicek v1 的完整四次域 case (B)、$\kappa$ 与 Klein 方程，Ghorpade–Patil–Pillai v1 的外积及分解事实，和 Stacks 09HF、09HI 的纯不可分二次塔；比值与交叠复用本卷 §17。相对于这些输入，本节推导的是原乘法输出的来源绑定、任意固定窗口的秩与实际纤维连接、最小 $(m,n)=(4,8)$，以及 (18.22)–(18.24) 在同一实际域和同一乘法下的两个完整来源集。经典几何本身不在此取得新的名称或首次性主张。
+
+## 追加锚（本行以下为增补区）
