@@ -106,7 +106,7 @@ Use t=delta=1/2, epsilon=1/4, and d=2. The logarithms are diagonal with entries 
 
 The input is the equal-superposition density on the target tensored with reference basis zero. At t=1/2 the two ideal stabilized full outputs are orthogonal pure states with relative phases i and -i, initialized at workspace basis zero. Their unhalved trace-norm separation is two. Each successful implementation would lie within trace norm one quarter of its corresponding target on this admissible stabilized input. The triangle inequality would then bound two by one half, a contradiction. No query-count estimate is needed to reach this contradiction.
 
-The source is Liu, Wesolowski, Thompson, Gu and Pira, Optimal query complexity for fractional quantum evolution, arXiv:2610.01940v1: Definitions 1-3, Appendix B, and the unnumbered uncontrolled-access question in Section V. The ordinary-query substitution leaves the controlled upper bound and the ordinary-query lower bound outside the assertion considered here. The global-phase obstruction is known prior work; the credited phase pair and binding conventions are recorded in issue 22813.
+The source is Liu, Wesolowski, Thompson, Gu and Pira, Optimal query complexity for fractional quantum evolution, arXiv:2610.01940v1: Definitions 1-3, Appendix B, and the unnumbered uncontrolled-access question in Section V. The ordinary-query substitution leaves the controlled upper bound and the ordinary-query lower bound outside the assertion considered here. The global-phase obstruction is known prior work.
 
 ## References
 
