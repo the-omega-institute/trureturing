@@ -18,6 +18,13 @@ internal sealed class HannaA158119ParityDocument : IScribeDocumentDefinition
                 + "The pinned source is oeis/oeisdata commit 5d3c6f683f5e0f2876df39773b7e49710c4f5f80, "
                 + "seq/A158/A158119.seq, seq/A157/A157308.seq and seq/A155/A155585.seq. "
                 + "The source qualification and independent review remain separate obligations.")),
+            Paragraph(Text("Related prior work: Vladimir Reshetnikov's ProveIt article at "
+                + "commit b61f8e7e32b64b32a925c2d3cffab80bc20fb4c6, "
+                + "SetTheory/Cardinals/docs/reports/generating-functions-and-asymptotics/"
+                + "oeis-sequence-asymptotics/a290569-power-weighted-dyck-moments/article.tex, "
+                + "proves powers-of-two parity for the quartic sequence A338634. "
+                + "The inspected text does not explicitly state the original A158119 result. "
+                + "No priority or new-method claim is made here.")),
             Node("summand", "The original factorial-product summand",
                 "For natural n, summand n is n! times X^n times the product, for k=1,...,n, "
                 + "of the formal unit inverse of 1+2kX. The product at n=0 is 1. "
