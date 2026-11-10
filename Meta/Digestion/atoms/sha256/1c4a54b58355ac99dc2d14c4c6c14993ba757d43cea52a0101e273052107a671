@@ -1,0 +1,13 @@
+**定义 102.1（无全局坐标的原截面域）。** 取紧 Hausdorff 空间 $K$、其上秩三 Euclidean 实向量丛 $V$，以及自旋 Jordan 丛 $J=\mathbb R1\oplus V$。记 $X=\Gamma(J)$，截面写为 $a=(\alpha_a,v_a)$，逐点规定
+
+$$
+(\alpha,v)\circ(\beta,w)=(\alpha\beta+\langle v,w\rangle,\alpha w+\beta v),
+\quad J_+=\{(\alpha,v):\alpha\ge\|v\|\},
+\quad \|a\|=\sup_{p\in K}(|\alpha_a(p)|+\|v_a(p)\|).
+\tag{102.1}
+$$
+
+纤维的 Jordan 恒等式、锥和范数给 $X$ 含单位实 JB 结构。令 $E\subset X$ 为任意含单位、范数稠密的实 Jordan 子代数，$C=E\cap X_+$、$u=(1,0)$、$N=\|\cdot\||_E$、$S=\circ$。完整保留80.1的同一原 $\Omega/\mathrm{native}$、全部原正评价及质量、A1–A3、全部P2与完整PB。特别是A2仍含全部原相加三表及排列的实部正性和指定零向量，A3仍用同一固定有理 $0<\theta\le1$。未知的仍是同一个总映射 $D:E^2\to E$；不假定其可加、齐次、输入连续、商下降或完成延拓，也不给 $V$ 取向或全局标架。$E$ 可不完备且不必是 $C(K,\mathbb R)$-模；$v_a$ 是 $a$ 的几何分量，不宣称 $(0,v_a)\in E$。
+
+连续取向指行列式线丛 $\Lambda^3V$ 的连续单位截面 $\omega_o$。其叉积由 $\langle v\times_o w,z\rangle=\langle\omega_o,v\wedge w\wedge z\rangle$ 定义。先令 $K\ne\varnothing$；空基底在104.1处理。
+

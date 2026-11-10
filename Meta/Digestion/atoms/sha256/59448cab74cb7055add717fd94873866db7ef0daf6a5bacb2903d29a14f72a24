@@ -1,0 +1,62 @@
+**Proposition 13.6 (the changed predictive-memory route and its limits).**
+For the unchanged original source, uniformly bounded classical
+handoff without extra history-bearing decoder input cannot give
+any uniform error guarantee $\delta<1$ for all finite actual
+histories and all finite requested horizons, even with a supplied
+common clock and randomized encoding. This obstructs a lossy
+bounded-handoff route in addition to the exact finite-rank route.
+It does not obstruct all executors or supply a source-law
+failure-probability lower bound, a fixed-$H$ impossibility, a
+uniform witness/acquisition deadline or an execution rate.
+
+*Proof and correspondence.* Sections 3–4 exclude exact finite
+linear dimension and exact finite predictive cardinality by
+actual word rank. Infinite exact rank alone does not rule out
+arbitrarily accurate finite approximations. Theorem 13.2 adds
+arbitrarily large almost disjoint actual-row packings; (13.13)
+then controls the entire convex hull of every $M$-row bank, not
+just equalities or deterministic state collisions. Taking $K$
+large and $\epsilon$ small gives (13.12). This is the additional
+approximate, randomized obstruction.
+
+Theorem 12.2's survival limits are reused, not reproved. The
+one-gap/timing results of §12 compare selected low predictions
+with a specified ready comparison row, under their own eligibility
+and error terms. Here the bank is arbitrary, may be redesigned
+for the common source/cut/horizon, and can mix its rows using
+arbitrary history-dependent encoding probabilities. The new
+source-specific steps are (13.6)–(13.10), which move from the
+supplied survival limits to many full actual histories at one
+cut, followed by their same-row marked acquisition in
+(13.17)–(13.22). No one-gap multiple or source-and-timing-uniform
+estimate is restored.
+
+For each comparison the source was fixed before $K,\epsilon$.
+The finite cut and horizon may grow with them; no bound keeps
+$H$ fixed while $K$ tends to infinity. The finitely witnessed
+words can have arbitrarily small positive original probabilities.
+Neither their existence nor a high-confidence estimate of their
+conditional rows bounds how frequently a running source visits
+an offending history. In particular the artificial equal weight
+$1/K$ used in the counting argument is not the source distribution
+of the histories. The confidence level $1-\alpha$ in (13.19)
+concerns correctness and finite indexed acquisition of retrospective
+certificates, not a probability of prediction failure. These
+distinctions prove the stated limitations of the inference.
+
+Archive reaccess, growing history-bearing state, restricted query
+domains or a separately proved source-law risk criterion are
+different possible routes. All original lawful access rights
+remain. A decoder that consults the retained archive receives
+additional history information, and the full system retaining
+that archive has no asserted uniform finite configuration bound.
+The bounded-handoff obstruction therefore is not an all-executor
+impossibility or a completion theorem. It furnishes neither a
+current row for an unbounded suffix nor physical capture/output
+service. The native unbounded finite ordered $\alpha/\beta$ trees,
+their actual $\rho$ replacements and literal-root reads, and the
+original AURIC $E$, positive evaluations, accurate cone, A1–A3,
+all P2/PB and original domains keep their separate correspondence
+obligations. No native/diffusion/AURIC operational bridge or full
+space/time/boundary/memory mutual recovery follows. $\square$
+

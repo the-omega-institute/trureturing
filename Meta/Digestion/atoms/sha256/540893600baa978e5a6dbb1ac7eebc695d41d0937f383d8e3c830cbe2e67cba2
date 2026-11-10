@@ -1,0 +1,35 @@
+**定义 10.1（原三标签、缺陷四元组与诊断代数）。** 保持 1.1 的同一原资料、同一原 $h^2=u$、全部原 P2 与完整 PB。固定真正原 $y,z\in V_h$，满足
+
+$$
+y^2-z^2\in\mathbb Ru.
+\tag{10.1}
+$$
+
+仍令
+
+$$
+P=y\circ z,\qquad Q=Jy\circ Jz,\qquad
+U=y\circ Jz,\qquad V=Jy\circ z.
+\tag{10.2}
+$$
+
+为避免与 0.2 的 JB 完成 $X$ 混淆，定义
+
+$$
+\mathsf A=P+Q,\qquad
+\mathsf X=P-Q,\qquad
+\mathsf Y=U+V,\qquad
+\mathsf R=P^2,\qquad
+\mathsf T=\mathsf X^2.
+\tag{10.3}
+$$
+
+这些全是原 Jordan 元。在给定忠实含单位 JC 环境 $A_0=C^*(X)$ 中记
+
+$$
+\mathfrak B_{y,z}=C^*(u,\mathsf A,\mathsf X,\mathsf Y)\subset A_0.
+\tag{10.4}
+$$
+
+这是由同一原对及其实际响应生成的诊断 C* 代数。其谱、表示、商和双对偶只用于读取固定元素，不作为新输入送回原 $D$。原域可不完备；只要求 1.1 的弱 JC 包含，不要求 $X=(A_0)_{\rm sa}$。若原对象为零，则此代数、下述元素与理想全为零，不可约表示集合为空；以下需要态或非零单位的步骤只在非零对象中使用。
+

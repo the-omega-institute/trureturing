@@ -1,0 +1,26 @@
+**推论 161.1（原复结合结构由旧关系产生）。** 对原 $a,b$ 定义 $a\star b=a\circ b-iD(a,b)$，并复双线性延拓到 $V$。则同一旧 $D$ 分别实双线性、满足 NN、Jacobi、原 $R$ 和逐块独立性；$V$ 在 $\star$ 下成为有单位复结合 $*$ 代数，且全部有限原有向 Gram 表正性成立。
+
+证明。160.1 给
+
+$$
+(Z\star W)_j=
+\begin{cases}
+Z_jW_j,&\varepsilon_j=-1,\\
+W_jZ_j,&\varepsilon_j=+1.
+\end{cases}
+\tag{161.1}
+$$
+
+原 Jordan 闭性与 $D(E,E)\subset E$ 先支付 $V$ 的乘法闭性，再消费逐块通常／相反乘法的结合律。取其实部正是原 (128.5)。双线性、NN、Jacobi 同样是已识别交换子的结论，范数满足 $\|Z\star W\|\le\|Z\|\|W\|$ 与 $\|Z^*\star Z\|=\|Z\|^2$。
+
+对有限原 $a_r$、复系数 $\lambda_r$，置 $Z=\sum_r\lambda_ra_r$。现在 $Z^*\star Z$ 确属 $E\cap\mathcal A_+$，才可用同一原 $\alpha$ 得
+
+$$
+\sum_{r,t}\bar\lambda_r\lambda_t
+\bigl(\alpha(a_r\circ a_t)-i\alpha D(a_r,a_t)\bigr)
+=\alpha_{\mathbb C}(Z^*\star Z)\ge0.
+\tag{161.2}
+$$
+
+没有将原评价作用于原域外比较值，也没有加入无限块求和或删去零质量。∎
+

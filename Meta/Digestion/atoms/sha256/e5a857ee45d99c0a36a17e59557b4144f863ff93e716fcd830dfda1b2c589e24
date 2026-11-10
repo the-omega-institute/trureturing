@@ -1,0 +1,17 @@
+**定义 39.1（删去 NN 的准确保留类）。** 记 $\mathsf H_{\rm NN^-}$ 为定义 27.1 的全部资料与量词，唯一删去其中的式 (27.1)。因此仍固定原 $(E,C,u,N)$、全部原评价 $\mathcal P$ 及其原质量、同一忠实等距保单位稠密 Jordan 嵌入 $E\subset X$、同一原对称双线性 $S$ 和同一总映射 $D:E^2\to E$。保留
+
+$$
+ h_\alpha([a],[b])=\alpha(S(a,b))-\mathrm i\alpha(D(a,b)),\qquad
+ A_t[a]=[S(t,a)]-\mathrm i[D(t,a)],
+$$
+
+对全部原 $\alpha$、全部原标签和全部有限自由复向量的 Gram 正性，并保留
+
+$$
+ \forall t\in E\ \exists C_t<\infty\ \forall\alpha\in\mathcal P\ \forall f\in\mathcal F,\qquad
+ h_\alpha(A_tf,A_tf)\le C_t^2h_\alpha(f,f).
+ \tag{39.1}
+$$
+
+常数只属于该原 $t$，同时对所有原评价和所有自由有限 $f$ 有效；不把它赋给完成、双对偶或投影中的辅助演员。$\mathsf H_{\rm NN^-}$ 不输入 $R$、PB、PY、Jacobi、原投影封闭、纯准备或实际乘法表示。
+

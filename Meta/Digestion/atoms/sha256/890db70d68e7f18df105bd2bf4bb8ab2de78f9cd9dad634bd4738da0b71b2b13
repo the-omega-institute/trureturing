@@ -1,0 +1,75 @@
+**引理 138.1（不增加假设的混合背景识别）。** 固定第 $j$ 块内的秩一投影 $p=ee^*$，$\|e\|=1$，并把其余块分量取零。记 $q=I_{n_j}-p$、$H(z)=ze^*+ez^*$。任意原 $a\in J$ 在本块写成
+
+$$
+a_j=\beta p+H(z)+B,\qquad z\in q\mathbb C^{n_j},\qquad B=qBq=B^*.
+$$
+
+只要 $\|z\|<2$，则对任意实 $\mu$，
+
+$$
+D(\mu p,a)_j=\mu H(-iz/2),\qquad
+D(\mu p,a)_l=0\quad(l\ne j).
+\tag{138.1}
+$$
+
+$\beta,B$、其他块输入和 $\mu$ 均无幅度限制。原取向坐标中对应公式为 $\mu H(i\varepsilon_jz/2)$。
+
+证明。$\mu=0$ 由 P2 的零对角预算给出。设 $\mu\ne0$，记同一旧输出 $d=D(\mu p,a)$。对其他块 $l$ 的任一数学向量读取，首输入平方为零，129.1 使 $d_l$ 的全部向量二次值为零；固定 Hermitian 矩阵极化给 $d_l=0$。对第 $j$ 块 $q\mathbb C^{n_j}$ 的全部向量，同理给 $qd_jq=0$。所以
+
+$$
+d_j=\delta p+H(w),\qquad \delta\in\mathbb R,\quad w\in q\mathbb C^{n_j}.
+\tag{138.2}
+$$
+
+这一步只定位输出，没有对未知输入和展开。定义仅支撑于第 $j$ 块的原元
+
+$$
+c_0=p\circ a=\beta p+\tfrac12H(z).
+$$
+
+在 (128.6) 中准确取演员 $a$、第二输入 $\mu p$、第三输入零。反对称性给 $v=-d$、$w_{\rm PB}=\mu c_0$，于是
+
+$$
+D(\mu p-d,\mu c_0)-D(\mu p+d,-\mu c_0)=2\mu p\circ d.
+\tag{138.3}
+$$
+
+此时外层输入只支撑于第 $j$ 块，但尚不认定共同位于二级角。分别使用两份外层 P2，并除以 $|\mu|$，得到每个本块向量 $\xi$ 的
+
+$$
+2|\phi_\xi(p\circ d)|
+\le\sqrt{\Delta_\xi(\mu p-d,c_0)}
+   +\sqrt{\Delta_\xi(\mu p+d,c_0)}.
+\tag{138.4}
+$$
+
+除法来自已知第二矩阵输入的向量 Gram 行列式缩放，不来自 $D$ 的齐次性。
+
+令 $v$ 为 $w$ 在复正交补 $(\mathbb Cz)^\perp$ 中的分量；$z=0$ 时取 $v=w$。设 $\kappa=\langle w,v\rangle=\|v\|^2$，取 $\xi_s=e+sv$、$s\in\mathbb R$。则
+
+$$
+c_0\xi_s=\beta e+z/2,\qquad
+(\mu p+\sigma d)\xi_s=A_\sigma(s)e+\sigma w,\qquad
+A_\sigma(s)=\mu+\sigma\delta+\sigma s\kappa .
+$$
+
+记 $r=\operatorname{Re}\langle w,z\rangle$。两个已知矩阵的准确实 Gram 行列式为
+
+$$
+\Delta_{\xi_s}(\mu p+\sigma d,c_0)
+=\frac{\|z\|^2}{4}A_\sigma(s)^2
+ -\sigma\beta r A_\sigma(s)
+ +\|w\|^2\left(\beta^2+\frac{\|z\|^2}{4}\right)-\frac{r^2}{4}.
+\tag{138.5}
+$$
+
+因此它们的二次最高系数均为 $\kappa^2\|z\|^2/4$，而 (138.4) 左边为 $2|\delta+s\kappa|$。比较这些固定矩阵多项式的增长，得 $2\kappa\le\kappa\|z\|$。严格条件 $\|z\|<2$ 迫使 $\kappa=0$，即 $w\in\mathbb Cz$。$z=0$ 时同一计算使 $w=0$；(138.5) 这时为常数。这里没有对未知 $D$ 取极限。
+
+现在 $p,d,c_0$ 才共同支撑于 $\operatorname{span}_{\mathbb C}\{e,z\}$ 的真实秩至多二角。对 (138.3) 的两个外层调用原样使用该角完整旧公式，得到
+
+$$
+2\mu p\circ d=2\mu^2K(p,c_0)=\mu^2H(-iz/2).
+$$
+
+而 $2\mu p\circ d=2\mu\delta p+\mu H(w)$。比较对角与连接分量，得 $\delta=0$、$w=-i\mu z/2$，即 (138.1)。秩一角直接使用其零公式；无需二级角存在。所有其他块背景始终保留在原演员 $a$ 中，未进入这两个外层输入。∎
+

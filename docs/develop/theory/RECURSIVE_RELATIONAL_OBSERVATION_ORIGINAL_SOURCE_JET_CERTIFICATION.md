@@ -1971,3 +1971,310 @@ Definition 13.2.
 [BV]: https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf
 
 ## 追加锚（本行以下为增补区）
+
+## 15. Finite-order graph constants for bracketed source consumers
+
+**Definition 15.1 (reference inputs and finite order).** Retain the
+entire reference endpoint and numerical services of §§1–5 and §8,
+but take a rational interval $J=[L,U]\Subset(0,\infty)$ as input,
+not a name of a selected time in it. Put $v_t=hg_t$ as in (4.5).
+The positive rational $\ell<D_0$ is produced by (4.2). Local boxes
+are $Q\Subset Q^+\Subset\Omega=\{x^2+y^2>0\}$. The complement
+of $\Omega$ is raw and $m$ null; no estimate across that complement
+or across the source is intended. An integer $k\ge0$ specifies
+one finite requested order. All graph vectors below are actual
+full-domain vectors, never differentiated step approximations.
+
+**Theorem 15.2 (constructed constants at every finite order).**
+For each such $k,Q,Q^+$ the coefficient services and finite
+rational operations produce $C_{Q,k}>0$ such that, with
+$p=k+2$,
+
+$$
+\|u\|_{C^k(\overline Q)}
+ \le C_{Q,k}\sum_{j=0}^{p}\|H^ju\|_2
+ \qquad(u\in D(H^p)).
+\tag{15.1}
+$$
+
+Consequently they produce rational bounds $M_{Q,k}(L)$ and
+$D_{Q,k}(L)$ for
+
+$$
+\begin{gathered}
+\|h\|_{C^k(\overline Q)}\le C_{Q,k},\qquad
+\sup_{t\in J}\|v_t\|_{C^k(\overline Q)}\le M_{Q,k}(L),\\
+\|v_t-v_s\|_{C^k(\overline Q)}
+ \le D_{Q,k}(L)|t-s|\qquad(s,t\in J).
+\end{gathered}
+\tag{15.2}
+$$
+
+These include arbitrary fixed higher orders, rather than only
+third point jets or the fourth-order bound of Theorem 3.2.
+
+*Proof.* Here is an explicit extension of that theorem's numerical
+recurrence. Set $n=2p=2k+4$. Replace the nine nested boxes in
+Definition 3.1 by $n+1$ equally interpolated boxes, with
+$Q_0=Q^+$ and $Q_{n+1}=Q$. Replace the exponent $10$ in (3.2)
+by $n+2$. The resulting rational polynomial transitions are
+$C^{n+2}$, compactly supported in their indicated outer boxes;
+compute all derivative coefficient sums through order $n$.
+Use (3.3)–(3.4) with those sums to obtain $K_i$ for
+$1\le i\le n+1$ and $D_\chi$ for the last cutoff through order
+$n$. Put
+
+$$
+J_\chi=\binom{n+4}{4}2^n\max(1,D_\chi),\qquad
+V_*=16\max_{0\le j\le n-2}G_j.
+\tag{15.3}
+$$
+
+Theorem 2.2 constructs every $G_j$ here, including its differentiated
+Green tail. Keep $A_*,L_A,\lambda,\Lambda,V_0$ from (2.13)–(2.14).
+The bound $A_*$ holds for derivatives of every order: entries of
+$\mathsf A$ have degree at most two, so higher derivatives vanish.
+Compute $C_{1,i},C_{2,i}$ by (3.8), (3.11) with the new cutoffs.
+For $0\le j\le n-2$ use
+
+$$
+n_j=\binom{j+3}{3},\qquad
+R_j=(2^j-1)(16A_*+V_*).
+\tag{15.4}
+$$
+
+Set $T_{j,0}=1$ for $0\le j\le p$ and
+$T_{j,1}=2C_{1,1}$ for $0\le j\le p-1$. For $2\le i\le n$
+and $0\le j\le p-\lceil i/2\rceil$ calculate
+
+$$
+T_{j,i}=[1+n_{i-2}C_{2,i}(R_{i-2}+1)]T_{j,i-1}
+                       +n_{i-2}C_{2,i}T_{j+1,i-2}.
+\tag{15.5}
+$$
+
+Every right-side entry is already defined. For $u_j=H^ju$,
+$H_{\rm loc}u_j=u_{j+1}$ for $j<p$, by the full-domain test
+(3.6). The energy and difference-quotient tests (3.7)–(3.12)
+therefore give the first two induction steps. Differentiating
+that same equation $i-2$ times gives exactly (3.14): its
+commutator contains derivatives of $u_j$ only through order
+$i-1$, bounded by $R_{i-2}N_{i-1}(u_j)$, and at most
+$n_{i-2}$ second-derivative lists are needed. Thus (3.15) proves
+(15.5) and
+
+$$
+N_i(u_j;Q_i)\le T_{j,i}\sum_{a=0}^p\|u_a\|_2.
+\tag{15.6}
+$$
+
+The norm of $u_{j+1}$ on $Q_{i-1}$ is bounded by its already
+estimated norm on the larger $Q_{i-2}$. At the last step only
+$u_p\in L^2$ is required. The qualitative local maximal-domain
+regularity used to start these weak tests is precisely the one
+checked in Theorem 3.2; subsequent derivatives are supplied by
+the difference-quotient induction, with the displayed constants.
+No extra regularity constant is imported.
+
+For $w=\chi_{n+1}u$, Leibniz gives $N_n(w)\le J_\chi N_n(u;Q_n)$.
+In the same unitary Fourier convention as (3.18),
+
+$$
+\|(1+|\xi|^2)^{n/2}\widehat w\|_2\le5^{n/2}N_n(w).
+\tag{15.7}
+$$
+
+For $|\alpha|\le k$, the remaining Cauchy–Schwarz integral
+is bounded by $\int(1+|\xi|^2)^{-(n-k)}d\xi$.
+Here $n-k=k+4\ge4$, so it is at most $\pi^2/6$ as evaluated
+in §3. After inverse Fourier normalization its square root is
+less than one. Fourier inversion consequently gives (15.1) with
+
+$$
+C_{Q,k}=5^pJ_\chi T_{0,n}.
+\tag{15.8}
+$$
+
+This also proves existence of the continuous derivatives in
+(15.1), by the same Fourier $L^1$ argument for each derivative.
+Every displayed number is rational and constructed.
+
+Finally set
+
+$$
+\begin{aligned}
+M_{Q,k}(L)&=\frac{C_{Q,k}}\ell
+ \sum_{j=0}^p[j!L^{-j}+(j+1)!L^{-j-1}],\\
+D_{Q,k}(L)&=\frac{C_{Q,k}}\ell
+ \sum_{j=0}^p[(j+1)!L^{-j-1}+(j+2)!L^{-j-2}].
+\end{aligned}
+\tag{15.9}
+$$
+
+Spectral smoothing gives the first graph bounds as in (4.7).
+For differences use
+$H^j(v_t-v_s)=-\int_s^tH^{j+1}(H+1)e^{-rH}\xi_{\rm src}\,dr$
+in $L^2$, with orientation reversed when necessary. The factorial
+spectral bound on $r\ge L$ gives the second sum. Apply (15.1)
+to these actual graph vectors. Also $Hh=0,\|h\|_2=1$.
+This proves (15.2) without assuming any graph derivative of
+$\xi_{\rm src}$. $\square$
+
+## 16. Finite jets and quotient moduli uniform on a time bracket
+
+**Theorem 16.1 (finite-order weak extraction and time transport).**
+For every fixed integer $R\ge0$, the reference services give
+rational-point jets through order $R$ of $h,g_{t_0}$ at every
+rational $t_0\in J$, to any requested precision. They also
+construct local spatial bounds through every fixed order and
+rational constants $W_{Q,R}(L)$ such that
+
+$$
+\max_{|\alpha|\le R}\sup_{\overline Q}
+ |D^\alpha(g_t-g_s)|\le W_{Q,R}(L)|t-s|
+ \qquad(s,t\in J).
+\tag{16.1}
+$$
+
+Thus values, derivative intervals and finite algebraic consumers
+can be certified simultaneously for every $t\in J$. This result
+needs neither a name of the unknown time nor original parameter
+or coordinate sensors.
+
+*Proof.* Generalize the exact weak kernel (5.1), rather than
+postulating higher pointwise access. Put $a=R+2$ and
+
+$$
+\zeta_R(t)=c_R(1-t^2)^a\mathbf1_{[-1,1]}(t),\qquad
+c_R=\left[2\sum_{l=0}^a\frac{(-1)^l\binom al}{2l+1}\right]^{-1}.
+\tag{16.2}
+$$
+
+The denominator is the integral of a nonnegative, nonzero
+polynomial on $[-1,1]$, hence positive rational. The extension
+is $C^{R+1}$. Its derivatives needed for integration by parts
+have zero boundary traces. For $0\le j\le R$ compute
+
+$$
+b_{R,j}=c_R\sum_{l=\lceil j/2\rceil}^{a}
+               \binom al\frac{(2l)!}{(2l-j)!},\qquad
+L_{R,\alpha}=4\prod_{i=1}^4b_{R,\alpha_i}.
+\tag{16.3}
+$$
+
+The product kernel in four coordinates has derivative $L^2$
+norm at most $L_{R,\alpha}$. Given a constructed $C^{R+1}$
+bound $M$ for an actual raw vector on a surrounding box, a
+raw step $U$ of error $\delta$ gives exactly as in (5.5)–(5.6)
+
+$$
+\left|D^\alpha u(x)-
+ \int D^\alpha\kappa_{R,\epsilon}(x-y)U(y)d\mu(y)\right|
+ \le4\epsilon M+L_{R,\alpha}\epsilon^{-2-|\alpha|}\delta.
+\tag{16.4}
+$$
+
+Choose rational $\epsilon$ inside the box with the first term
+below half the allotted error; then choose $\delta$ for the
+second term. Each integral is an exact finite polynomial integral
+on rational box intersections. Theorem 15.2 at order $R+1$
+constructs $M$ for $h,v_{t_0}$. This proves the raw jet service.
+
+Choose fixed rational boxes $Q\Subset S\Subset S^+\Subset\Omega$.
+Corollary 5.4 produces $l_Q>0$ below $\inf_{\overline S}h$;
+for finite box unions take the minimum of these lower bounds.
+Apply Theorem 15.2 on $S,S^+$ to construct
+
+$$
+M_h=C_{S,R+1},\qquad M_v=M_{S,R+1}(L),\qquad
+D_v=D_{S,R}(L).
+$$
+
+The spatial instance has $k=R+1$, $p=R+3$, $n=2R+6$ in
+(15.3)–(15.9): it uses cutoff derivatives through $2R+6$ and
+Green bounds $G_j$ through $2R+4$, all constructed there and in
+Theorem 2.2. The time-difference instance keeps $k=R$; the same
+$M_h$ also bounds its required derivatives of $h$ through $R$.
+Define $B_0=M_v/l_Q$, $W_0=D_v/l_Q$, and separately compute
+
+$$
+\begin{aligned}
+B_j&=\max\left\{B_{j-1},
+ \frac{M_v+M_h\sum_{i=1}^j\binom jiB_{j-i}}{l_Q}\right\}
+ &&(1\le j\le R+1),\\
+W_j&=\max\left\{W_{j-1},
+ \frac{D_v+M_h\sum_{i=1}^j\binom jiW_{j-i}}{l_Q}\right\}
+ &&(1\le j\le R).
+\end{aligned}
+\tag{16.5}
+$$
+
+Leibniz in $v_t=hg_t$ proves that $B_j$ bounds every derivative
+of $g_t$ through order $j$ on $\overline S$, uniformly for
+$t\in J$, for each $0\le j\le R+1$. Apply the same identity
+to $v_t-v_s=h(g_t-g_s)$ through order $R$ and (15.2) to prove
+(16.1) with $W_{Q,R}=W_R$. The multiindex coefficient sum at
+fixed length $i$ is $\binom ji$, which justifies these scalar
+recurrences, whose right sides use only smaller indices.
+Point jets of the quotient are computed in increasing order by
+(5.7), refining until the positive denominator and required widths
+are certified. Only raw point jets through $R$ are extracted;
+their error (16.4) uses the constructed $C^{R+1}$ bound, also
+sufficient for $B_{R+1}$. No derivative of an approximate raw
+step or point evaluation at order $R+1$ is used.
+
+For example, if a center jet interval at $x_0,t_0$ has radius $e$,
+then its value anywhere in a cell of maximum coordinate radius
+$\rho$ and anywhere in $J$ has extra radius
+
+$$
+4B_{R+1}\rho+W_R(U-L)
+\tag{16.6}
+$$
+
+for every derivative of length at most $R$: each of its four
+first coordinate derivatives is bounded by the constructed
+$B_{R+1}$ on the surrounding box, and its time increment is
+bounded by $W_R$. This is an explicit uniform modulus. Finite
+products, reciprocal expressions with certified positive
+denominators, and declared cutoff derivatives can now be evaluated
+by interval arithmetic with (16.6). Bounds stay fixed on the
+larger box while cells and brackets shrink. The construction is
+uniform over a given rational bracket; it asserts no uniform cost
+as $L\downarrow0$, the box approaches the axis, or $R\to\infty$.
+$\square$
+
+## 17. Consumers and source boundary of the higher-order supplier
+
+**Definition 17.1 (scope and attribution).** The new source-specific
+supplier is (15.8)–(16.6). Its finite-order graph recurrence extends
+the numerical weak tests already proved in §3, consumes arbitrary
+finite differentiated Green majorants from Theorem 2.2, and keeps
+the exact source vector of [R, Theorems 12.2–12.4]. Its consumers
+are finite recursive compact-energy trees and quantitative local
+charts in [FQ, §§9–12]. Those consumers need higher orders depending
+on their declared syntax; no single fixed third-jet service suffices.
+The classical difference-quotient, Leibniz, spectral, Fourier and
+convolution methods have the precedents and hypotheses checked in
+Definition 7.3. Here their explicit constants and the bracket
+transport are `repo-derived` deductions for this full source; no
+new general elliptic theorem or worldwide priority is claimed.
+
+The only coefficient and time parameters numerically evaluated are
+the reference coefficients $(1,1)$ and rational trial times; the
+constructed reference vector/resolvent services remain required.
+The full original transport is still (8.3),
+including its maximal domain, both complex coefficients, zero line,
+form, trace, entrance and calibration. In a passive application
+$\tau=a^2d/\eta$ lies in a statistically certified bracket; (15.2)
+and (16.1) apply to every time in that bracket. They do not turn
+$\tau$ or $a,\eta,d$ into supplied exact scalar names. The original
+$e$-start, first read $2d$, later gaps $d$, four labels and conditional
+noise remain intact. Numerical reference coordinates are proof
+and computation variables, never readings of the realized path.
+No jet query has been numerically executed here and no new Lean
+verification is asserted. The finite-order supplier does not identify
+a specified successor or $T_dr$ as a witnessing vector; qualitative strict compact-energy
+enlargement remains [FG, Theorem 10.2].
+
+## 追加锚（本行以下为增补区）

@@ -28,9 +28,9 @@ def gcd4 (r : Fin 4 → ℕ) : ℕ := univ.gcd r
 def sphereDescartes (r : Fin 4 → ℕ) : Prop :=
   (∑ i, (1 / r i : ℚ)) ^ 2 = 3 * ∑ i, (1 / r i : ℚ) ^ 2
 
-private def commonMultiple (r : Fin 4 → ℕ) : ℕ := univ.lcm r
+def commonMultiple (r : Fin 4 → ℕ) : ℕ := univ.lcm r
 
-private def curvature (r : Fin 4 → ℕ) (i : Fin 4) : ℕ := commonMultiple r / r i
+def curvature (r : Fin 4 → ℕ) (i : Fin 4) : ℕ := commonMultiple r / r i
 
 private lemma radius_dvd (r : Fin 4 → ℕ) (i : Fin 4) : r i ∣ commonMultiple r :=
   dvd_lcm (mem_univ i)
@@ -39,14 +39,14 @@ private lemma commonMultiple_pos (r : Fin 4 → ℕ) (hpos : ∀ i, 0 < r i) :
     0 < commonMultiple r := by
   exact Nat.pos_of_ne_zero (lcm_ne_zero_iff.mpr fun i _ => (hpos i).ne')
 
-private lemma curvature_pos (r : Fin 4 → ℕ) (hpos : ∀ i, 0 < r i) (i : Fin 4) :
+lemma curvature_pos (r : Fin 4 → ℕ) (hpos : ∀ i, 0 < r i) (i : Fin 4) :
     0 < curvature r i :=
   Nat.div_pos (Nat.le_of_dvd (commonMultiple_pos r hpos) (radius_dvd r i)) (hpos i)
 
-private lemma curvature_mul_radius (r : Fin 4 → ℕ) (i : Fin 4) :
+lemma curvature_mul_radius (r : Fin 4 → ℕ) (i : Fin 4) :
     curvature r i * r i = commonMultiple r := Nat.div_mul_cancel (radius_dvd r i)
 
-private lemma curvature_primitive (r : Fin 4 → ℕ) (hpos : ∀ i, 0 < r i) :
+lemma curvature_primitive (r : Fin 4 → ℕ) (hpos : ∀ i, 0 < r i) :
     gcd4 (curvature r) = 1 := by
   let d := gcd4 (curvature r)
   have hd (i : Fin 4) : d ∣ curvature r i := gcd_dvd (mem_univ i)
@@ -66,7 +66,7 @@ private lemma curvature_primitive (r : Fin 4 → ℕ) (hpos : ∀ i, 0 < r i) :
   have := Nat.div_lt_self hLpos htwo
   omega
 
-private lemma curvature_equation (r : Fin 4 → ℕ) (hpos : ∀ i, 0 < r i)
+lemma curvature_equation (r : Fin 4 → ℕ) (hpos : ∀ i, 0 < r i)
     (hdesc : sphereDescartes r) :
     (∑ i, curvature r i) ^ 2 = 3 * ∑ i, curvature r i ^ 2 := by
   have hc (i : Fin 4) : (curvature r i : ℚ) = commonMultiple r * (1 / r i : ℚ) := by

@@ -1,0 +1,76 @@
+**Corollary 17.5.** Write
+$$
+\Delta(r)=r^3(1-r)^5-\frac{1944}{390625},\qquad D(r)=\Delta(r)/2.
+$$
+Every positive globally valid tuple in the original coefficient norm
+satisfies $L_p>0$ and
+$$
+0<\delta\le
+\frac{\varepsilon D(r_\star)}{D(r_\star)+\varepsilon+\sigma_p}
+\le\frac{970653033099278294049}{5888989627122173078237500000}
+<\frac1{6000000}.                                          \tag{17.17}
+$$
+If $N_B$ is the sum of the absolute values of all original B multiplier
+coefficients, then also
+$$
+\varepsilon N_B\ge\delta+\sigma_pL_p+\sigma_\beta L_\beta,
+\qquad
+0<L_p<\frac{\varepsilon}{\varepsilon+\sigma_p}.              \tag{17.18}
+$$
+All six risk weights, both potential expansions, all A and B multiplier
+expansions, and both event coefficients remain charged in these bounds.
+
+**Proof.** Use the fair native endpoint edge measures
+$$
+\Gamma_B^e=\tfrac12\delta_{(P_{p,a},P_{\beta,a})}
+           +\tfrac12\delta_{(P_{p,b},P_{\beta,b})},
+\qquad \Gamma_A^e=\text{their reversed pairs}.
+$$
+They have common unweighted marginals, and (17.1) verifies both entire
+residual equations. Their full geometric tails put every projected node
+in the original domains. Their event means are C,H. On the complete
+level-four partition, the only native p target coordinate outside its
+endpoint interval for $r\in[3/8,5/13]$ is $w_{3,1}$, with excess
+$\Delta(r)>0$. To verify this, the marker-zero coordinates and grouped
+tail increase on $[a,b]$; the marker-one coordinates for $n=0,1,2$
+decrease there. For $n=3$, the derivative sign is $3-8r$, and its
+value at $5/13$ exceeds its larger endpoint value. Every suspended
+coordinate, including its grouped tail, lies between its endpoints:
+standalone beta and its $n=0$ one-branch decrease, and its other
+retained coordinates increase.
+
+The coordinate triangle identity consequently makes the integrated
+p nonendpoint excess exactly $D(r)$, the suspended nonendpoint excess
+zero, and all four endpoint excesses zero. Integrating the two proposed
+bounds against this same native pair gives
+$$
+\delta\le L_pD(r_\star).                                   \tag{17.19}
+$$
+This is the native endpoint-tag comparison of (12.4)--(12.5), with
+its projected-tail and sign premises proved above. It tests the proposed
+certificate without restricting the original unknown pair.
+
+Every entry of the input vector in (17.12) belongs to $[0,1]$.
+By (17.3) and (17.11), every absolute raw residual is at most
+$\varepsilon$, so $\Phi(\chi)\le\varepsilon N_B$.
+Equation (17.15) and (17.8) prove the first inequality in (17.18).
+The original full coefficient budget implies
+$N_B+L_p+L_\beta\le1$; all omitted budget terms are nonnegative
+absolute values. Therefore
+$$
+\delta\le\varepsilon-(\varepsilon+\sigma_p)L_p
+                     -(\varepsilon+\sigma_\beta)L_\beta.
+$$
+For $\delta>0$, (17.19) forces $L_p>0$ and
+$L_p\ge\delta/D(r_\star)$. Substitution, and $L_\beta\ge0$, prove
+the first bound of (17.17) and the second of (17.18). No coefficient has been
+removed or renormalized. Finally,
+$$
+0<\Delta(r_\star)\le\Delta(3/8)
+=\frac{344076471}{6553600000000},
+$$
+because the derivative of $r^3(1-r)^5$ is nonpositive on this interval.
+The function $x\mapsto\varepsilon x/(x+\varepsilon+\sigma_p)$
+increases for $x>0$. Exact substitution proves both remaining rational
+comparisons in (17.17). $\square$
+

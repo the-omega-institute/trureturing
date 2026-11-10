@@ -1,0 +1,9 @@
+**定理 37.2（原域的四分量结构）。** 固定常数正交三轴 $e_1,e_2,e_3$，有
+
+$$
+E=\mathcal A u\oplus\mathcal A e_1\oplus\mathcal A e_2\oplus\mathcal A e_3.
+\tag{37.2}
+$$
+
+证明。对原 $a=\alpha u+\sum_jx_je_j$，已知 $H_{e_i}a=-\sum_{j\ne i}x_je_j$，故 $v=-\tfrac12\sum_iH_{e_i}a=\sum_jx_je_j\in E$。每个 $v+H_{e_i}a=x_ie_i$ 都在原域，其与常数 $e_i$ 的 Jordan 乘积为 $x_iu$，故 $x_i\in\mathcal A$，且 $\alpha u=a-v\in E$。反向由 $(fu)\circ e_i=fe_i$ 得到。$\mathcal A$ 对实线性组合和乘法封闭。这里仅拆已知 Jordan 线性算子，没有拆未知 $D$。∎
+

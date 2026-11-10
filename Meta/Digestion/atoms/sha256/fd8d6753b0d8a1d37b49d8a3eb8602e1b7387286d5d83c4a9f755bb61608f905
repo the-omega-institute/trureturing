@@ -1,0 +1,9 @@
+#### 定义 6.1：同一乘法的对称部分与反对称部分
+
+对 $x,y,z\in W$ 定义
+
+$$
+x\times y:=\frac{xy-yx}{2},\qquad
+\nu(x,y,z):=B(x\times y,z).
+$$
+

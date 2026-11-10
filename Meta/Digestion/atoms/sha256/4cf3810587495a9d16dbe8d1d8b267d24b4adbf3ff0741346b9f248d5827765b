@@ -1,0 +1,23 @@
+**定义 89.1（完整原候选与三射线输入）。** 完整采用80.1的同一原 $\Omega/\mathrm{native}$、$E,C,u,N,\mathcal P,S,D$：A1为全部原有向Hermitian二表正性，A2为原相加三表及其排列的实部正性和指定相加零向量，A3为单位平方及同一固定有理小窗口。准确锥、全部原评价和零／不等／次归一质量保持。无R接口为含单位稠密实Jordan包含 $E\subset X$，$X$ 为含单位实JB代数，$S=\circ$。同一个未知总映射 $D:E^2\to E$ 只另满足全部原PB；不先给可加、齐次、输入连续、可测、单位平移、商下降、原幂等提升或完成延拓。
+
+取80.2的有限满Jordan商 $\pi:X\to Y=\bigoplus_jH_{n_j}(\mathbb C)$。固定一块及数学单位向量 $e$，记 $p=ee^*$、$q=I-p$ 和 $H(v)=ve^*+ev^*$，$v\perp e$。本节的实际原 $a,b$ 的商像只有这一块非零，且
+
+$$
+A=\pi a=\alpha p+H(v),\qquad
+B=\pi b=\beta p+H(w),\qquad \alpha,\beta\in\mathbb R.
+\tag{89.1}
+$$
+
+矩阵式仅在选定块中书写，其他块补零。两条支线共用中心射线 $\mathbb Ce$，侧腿 $v,w$ 不必共线。令 $L=\operatorname{span}_{\mathbb C}\{e,v,w\}$。当两腿复线性无关时，$L$ 为复三维，$A,B$ 不共同支撑于二阶角，虽然它们的每个实线性组合都奇异。始终写 $h_{a,b}=\pi D(a,b)$，不先定义商上的响应。
+
+原正读取接口129.1和241.1允许每个矩阵向量读取同一个原P2：
+
+$$
+|\xi^*h_{a,b}\xi|^2
+\le \|A\xi\|^2\|B\xi\|^2
+ -\bigl(\operatorname{Re}\langle A\xi,B\xi\rangle\bigr)^2.
+\tag{89.2}
+$$
+
+这始终是未中心化的实Gram预算。全部向量与其任意非负质量只是数学正读取，不增添实际准备。
+

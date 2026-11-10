@@ -1,0 +1,21 @@
+**Corollary 197.3 (what the rank branches mean).** For a full-zero partition,
+
+$$
+\dim(\mathcal W_u/\mathcal R_u)=2,
+$$
+
+and the three rank branches have the following canonical interpretation:
+
+$$
+\begin{array}{c|c|c}
+\dim\mathcal W_u & \dim\mathcal R_u & \text{quotient description}\\
+\hline
+2&0& T_u\text{ is an isomorphism},\\
+3&1& \text{one invisible radical extension of }E_f,\\
+4&2& \text{two invisible radical extensions of }E_f.
+\end{array}
+\tag{197.5}
+$$
+
+Any linear complement of $\mathcal R_u$ in $\mathcal W_u$ therefore carries a copy of the baseline tensor through $T_u$, but the complement is not canonical and need not respect the pointwise simplex constraints. In particular, (197.5) does not construct a rank-three or rank-four partition and does not eliminate the out-of-plane lift problem. The arbitrary-partition realization, the residual-zero search beyond the quotient, $F_{64}$, $H43$, SRS\text{-}20, physical succession and Lean/kernel formalization remain open.
+

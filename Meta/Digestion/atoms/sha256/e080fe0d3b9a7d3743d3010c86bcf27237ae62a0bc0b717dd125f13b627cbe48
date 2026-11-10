@@ -1,0 +1,74 @@
+**定理 27.1（像对称收缩的全部第二输入径向）。** 在 26.1–26.3 下，对全部实际 $z\in V_{q,a}$、实 $t$，
+
+$$
+qD(a,tz)=tqD(a,z),\qquad
+qD(a,D(a,z))=-r^2\bar z.
+\tag{27.1}
+$$
+
+证明。先取 $t>0$。保留真正原
+
+$$
+j=H_a(z),\quad k=H_a(tz),\quad
+v=(z-rj)/\sqrt L,\quad\ell=(rz+j)/\sqrt L,
+\qquad L=1+r^2.
+$$
+
+写 $B=\bar z,J=\bar j,K=\bar k,R=B^2$。26.4 给 $qH_a(v)=\bar\ell$；(26.2) 给 $J^2=R,K^2=t^2R,B\circ J=B\circ K=0$。原 PB $(a,tz,v)$ 取实际位移
+
+$$
+\nu=D(a,tz)-a\circ v,\qquad
+\omega=a\circ(tz)+D(a,v),
+\qquad U_\pm=tz\pm\nu,\quad V_\pm=v\pm\omega.
+$$
+
+它们的像准确为
+
+$$
+\begin{aligned}
+\bar U_\pm&=tB\pm rK,\\
+\bar V_+&=\sqrt L B,\qquad
+\bar V_-=((1-r^2)B-2rJ)/\sqrt L.
+\end{aligned}
+\tag{27.2}
+$$
+
+原 PB 右端的像为零，故仅在像中共享
+
+$$
+\kappa=qD(U_+,V_+)=qD(U_-,V_-).
+\tag{27.3}
+$$
+
+没有断言两个实际旧输出在 $E$ 中相等。第一对的像 Gram 为
+
+$$
+\begin{pmatrix}Lt^2&t\sqrt L\\t\sqrt L&L\end{pmatrix}R.
+$$
+
+25.2 已支付的实际旋转单坐标入口给
+
+$$
+\kappa^2=r^2Lt^2R^2,\qquad
+B\circ\kappa=K\circ\kappa=0,\qquad [R,\kappa]=0.
+\tag{27.4}
+$$
+
+第二对 $x=\bar U_-,y=\bar V_-$ 的平方为 $Lt^2R,LR$；$R$ 与 $B,J,K$ 交换，(27.4) 使 25.1 的四个交换前件成立。因此
+
+$$
+\mathcal A_-:=x^2y^2-(x\circ y)^2\le\kappa^2.
+$$
+
+另一方面令 $Q=K\circ J$。$[R,Q]=0$、$-tR\le Q\le tR$ 由 $(K\pm tJ)^2\ge0$ 给出。20.5 的已知结合展开在这些准确像上给
+
+$$
+\mathcal A_--\kappa^2
+=\frac{4r^2}{L}(tR-Q)(tR+r^2Q)\ge0.
+\tag{27.5}
+$$
+
+两边相夹使乘积为零。令 $\zeta=tR-Q$，则 $0\le\zeta\le2tR$ 且 $tR+r^2Q\ge(1-r^2)tR$，所以 $\zeta tR=0$，再由 $0\le\zeta^2\le2\zeta tR=0$ 得 $\zeta=0$。于是 $(K-tJ)^2=0$，得到全部正 $t$。负 $t$ 复用原奇性，零 $t$ 复用零行。26.4 的负平方结合刚付的径向性，才给 (27.1) 第二式。
+
+这逐项支付的是像上的共享平方和径向缺陷；没有将 20.1 的原 $h^2=u$ 前件改成像平方后直接套用，也没有对任一未知 $D$ 输出取极限。∎
+
