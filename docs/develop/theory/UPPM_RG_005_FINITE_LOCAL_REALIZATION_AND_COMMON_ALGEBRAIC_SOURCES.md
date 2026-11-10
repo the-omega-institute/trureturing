@@ -407,3 +407,245 @@ $$
 证明。定理 2.1 的域与点在选择有限 $F$ 后才产生；定理 4.2 对每个 $R_{\max}$ 允许重新选择，量词为 $\forall R_{\max}\,\exists(K,P_1,P_2)$。它没有给出 $\exists(K,P_1,P_2)\,\forall R_{\max}$，且任一固定有限清单的尾部最终为零。定理 6.2 所需的统一高度前件没有从这些有限构造推出；即使另外证成，它的结论也只计算选定支持，并未将点对识别为原点对或约束清单外素数。因此缺少把这些结论代入原固定来源与原全支持量的假设，不能由它们判断原小量。命题 5.3 仅否定精确目标的统一双界，不否定 (6.1) 的弱前件。这些都是定理中对象、支持与量词的明确限制。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 7. 固定八次来源的全关系一致尾部障碍
+
+**定义 7.1（固定嵌入下的全关系一致尾部紧性）。** 令 $K\supset\mathbb Q(i)$ 为固定数域，$P_1,P_2\in E(K)$ 在 $\mathcal O=\mathbb Z[i]$ 模意义下模挠独立，其中 $E:y^2=x^3-x$、$[i](x,y)=(-x,iy)$。先固定整数 $q\ge1$，并对每个有理素数 $p>5$ 固定一个嵌入 $\sigma_p:K\hookrightarrow\overline{\mathbb Q}_p$，以后所有关系共用它。取 $v_p(p)=1$。对非零 $z=(\alpha,\beta)\in\mathcal O^2$，定义
+
+$$
+Q_z=[q]([\alpha]P_1+[\beta]P_2),\qquad
+S(z)=|\alpha|^2+|\beta|^2,
+\tag{7.1}
+$$
+
+以及选定地方的完整深度
+
+$$
+b_p(Q_z)=
+\begin{cases}
+v_p(t(\sigma_p Q_z)),&\sigma_p Q_z\text{ 约化为 }O,\\
+0,&\text{否则},
+\end{cases}
+\qquad t=-x/y.
+\tag{7.2}
+$$
+
+模挠独立性保证 $Q_z$ 非挠，故不是 $O$ 或二挠点，式中形式参数非零且有定义。每条关系只在有限多个素数有正深度，因为一个固定代数点的分母支持有限。称这组固定数据满足 UHT，若
+
+$$
+\forall\varepsilon>0\ \exists\mathcal F\subset\{\text{有理素数}\}\text{ 有限}
+\ \forall z\in\mathcal O^2\setminus\{0\},\qquad
+\sum_{\substack{p>5\\p\notin\mathcal F}}b_p(Q_z)\log p
+\le\varepsilon q^2S(z).
+\tag{7.3}
+$$
+
+清单 $\mathcal F$ 可依赖固定来源、$q$、整族嵌入和 $\varepsilon$，但必须在关系 $z$ 之前选定。这里每个 $p$ 只有一个选定地方，并非全部地方的加权和。
+
+**定理 7.2（同一代数轨道排斥 UHT）。** 固定
+
+$$
+K=\mathbb Q(i,\sqrt6,\sqrt{15}),\qquad
+P_1=(2,\sqrt6),\qquad P_2=(4,2\sqrt{15})\in E(K).
+\tag{7.4}
+$$
+
+则 $[K:\mathbb Q]=8$，点对在 $\mathcal O$ 模意义下模挠独立。对每个固定整数 $q\ge1$、每族事先固定的嵌入 $\sigma_p$，以及每个固定有限有理素数集 $\mathcal F$，有完整极限
+
+$$
+\lim_{n\to\infty}
+\frac{1}{q^2n^2}
+\sum_{\substack{p>5\\p\notin\mathcal F}}
+b_p([qn]P_1)\log p
+=\widehat h_E(P_1)>0.
+\tag{7.5}
+$$
+
+因此同一来源对全部这些 $q$ 和嵌入选择均不满足 UHT。这里 $\widehat h_E$ 始终采用 $2\widehat h_E=h_x+O_E(1)$ 的规范。
+
+证明。首先核对来源与非挠性。将 $(-1)^a6^b15^c$ 为有理数平方的关系取 $a,b,c\in\{0,1\}$；在 $2$ 和 $5$ 处的赋值分别迫使 $b=0,c=0$，再由负数不是有理平方得 $a=0$。故三个平方类独立，逐次添加平方根给出八次多二次扩张；在 $\mathbb Q(i)$ 上可以分别翻转 $\sqrt6$ 和 $\sqrt{15}$ 而固定另一个根。坐标代入曲线方程即验证两个点属于 $E(K)$。
+
+对 $d=6,15$，置 $E_d:Y^2=X^3-d^2X$。保持原点的同构
+
+$$
+E\longrightarrow E_d,\qquad (x,y)\longmapsto(dx,d\sqrt d\,y)
+\tag{7.6}
+$$
+
+分别将 $P_1,P_2$ 送到有理点 $A_6=(12,36)$、$A_{15}=(60,450)$。由切线斜率所得的倍点公式，在 $Y\ne0$ 时为
+
+$$
+X([2](X,Y))=\frac{(X^2+d^2)^2}{4X(X^2-d^2)},\qquad
+X([2]A_6)=\frac{25}{4},\qquad
+X([2]A_{15})=\frac{289}{16}.
+\tag{7.7}
+$$
+
+两倍点均不是 $O$，横坐标均非整数。经典输入 [Silverman，*The Arithmetic of Elliptic Curves*，第二版，VIII.7.2(a)，印刷页 240](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf) 断言整系数短 Weierstrass 方程上的非零有理挠点具有整坐标；应用于这两个两倍点，便排除 $A_6,A_{15}$ 为挠点。因此 $P_1,P_2$ 非挠，所有非零整数倍也非挠。
+
+若 $[\alpha]P_1+[\beta]P_2$ 为挠点，分别施加上述两个固定 $i$ 的符号自同构并作差，可得 $[2\alpha]P_1$、$[2\beta]P_2$ 都为挠点。若 $\alpha\ne0$，再施加 $[\bar\alpha]$，得到非零整数倍 $[2|\alpha|^2]P_1$ 为挠点，矛盾；同理 $\beta\ne0$ 也不可能。这证明模挠独立性，也排除了定义 7.1 中任一非零关系等于 $O$ 的情形。
+
+以下只用同一个 $P_1$。记 $L=\mathbb Q(\sqrt6)$。其非平凡自同构将 $P_1$ 送到 $-P_1$，与整数乘法交换。因此对每个 $m\ne0$，非零倍点 $[m]P_1$ 的横坐标被该自同构固定，即
+
+$$
+x([m]P_1)\in\mathbb Q.
+\tag{7.8}
+$$
+
+这些点的 $x,y$ 都非零：$y=0$ 的点是二挠点，而 $x=0$ 在本方程上也迫使 $y=0$。固定 $q$ 后，置 $Q_n=[qn]P_1$、$x_n=x(Q_n)\in\mathbb Q^\times$、$h_n=h(x_n)$。由 [Silverman VIII.9.3(b)、(d)、(e)，印刷页 248–249](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf)，
+
+$$
+\widehat h_E(P_1)>0,\qquad
+h_n=2q^2n^2\widehat h_E(P_1)+O_E(1)\longrightarrow\infty.
+\tag{7.9}
+$$
+
+比较常数只依赖固定曲线及坐标函数 $x$；在这里不随 $n,q$ 或地方变化。
+
+现在把每个选定地方的读数准确接到有理横坐标。对 $p>5$，本整模型的判别式 $64$ 是单位。其好约化核的形式参数识别见 [Silverman IV.1、VII.2.1–2.2，印刷页 116–119、188–191](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf)。具体地，若 $v_p(x_n)<0$，方程中 $x_n^3$ 的赋值严格小于 $x_n$，所以
+
+$$
+2v_p(y(Q_n))=3v_p(x_n),\qquad
+v_p(t(Q_n))=-\tfrac12v_p(x_n)>0.
+\tag{7.10}
+$$
+
+此时射影约化为 $O$。若 $v_p(x_n)\ge0$，方程又给出 $v_p(y(Q_n))\ge0$，故点有仿射约化，不是 $O$。由于 $x_n$ 有理，任意 $\sigma_p$ 都有同一 $v_p(x_n)$；因此逐个选定嵌入准确有
+
+$$
+b_p(Q_n)\log p=\tfrac12\log\max(1,|x_n|_p),\qquad
+|p|_p=p^{-1}.
+\tag{7.11}
+$$
+
+特别地，没有乘上局部次数，也没有先把若干地方的预算分给一个地方。若用全体地方高度核对规范化，则每个 $w\mid p$ 都有相同的右端，权重为 $[K_w:\mathbb Q_p]/8$，其和为 $1$，所以加权读数恰等于选定读数。这里的相等是 (7.8) 的后果，不是一般代数点的性质。
+
+此步只用坐标与约化，没有使用形式对数的等距性。在一般分歧扩张中，若把对数用于深度等式，所引 [Silverman IV.6.3–6.4，印刷页 131–132](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf) 的保赋值范围须满足 $v_p(t)>1/(p-1)$；仅在第一形式层不能无条件推出这个严格阈值。
+
+对每个有理地方定义非负量
+
+$$
+\ell_{p,n}=\tfrac12\log\max(1,|x_n|_p),\qquad
+\ell_{\infty,n}=\tfrac12\log\max(1,|x_n|).
+\tag{7.12}
+$$
+
+关键经典输入为 [Silverman IX.3.1，印刷页 276，以及 IX.2 的距离定义，印刷页 273](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf)。在该定理中取曲线 $E/L$、固定目标 $O$、非恒定偶函数 $f=x$，并在每个所需的固定地方应用。$E(L)$ 因含非挠 $P_1$ 而无限，$Q_n\in E(L)$，且 (7.9) 保证其 $h_f=h_n$ 趋于无穷，故全部假设满足。因 $1/x$ 仅在 $O$ 有二阶零点，可以准确选取距离
+
+$$
+\delta_v(Q,O)=\min(1,|x(Q)|_v^{-1/2}).
+\tag{7.13}
+$$
+
+在有限地方取 $|p|_v=p^{-1}$，在实地方取通常绝对值；(7.8) 使其值只取决于下方有理地方。IX.3.1 于是直接给出
+
+$$
+\frac{\log\delta_v(Q_n,O)}{h_n}\longrightarrow0,
+\qquad
+\ell_{v,n}=o(h_n)=o(q^2n^2)
+\quad\text{对每个固定 }v.
+\tag{7.14}
+$$
+
+这里 $\log\delta_v=-\ell_{v,n}$。尤其，对每个有限有理地方清单 $\mathcal A$ 和每个 $\eta>0$，存在 $N=N(E,P_1,q,\mathcal A,\eta)$，使全部 $n\ge N$ 均满足
+
+$$
+\sum_{v\in\mathcal A}\ell_{v,n}\le\eta q^2n^2.
+\tag{7.15}
+$$
+
+这个阈值对全部 $\sigma_p$ 选择通用，因为其读数只取决于有理数 $x_n$；未从定性逼近输入提取有效速率。式 (7.15) 包含任意固定有限素数及无穷地方，而不是只给一个子列。
+
+最后，写 $x_n=a_n/c_n$，其中 $a_n,c_n$ 互素、$c_n>0$。有理数高度定义直接给出
+
+$$
+\tfrac12h_n=\ell_{\infty,n}+\sum_p\ell_{p,n},\qquad
+\sum_p\ell_{p,n}=\tfrac12\log c_n.
+\tag{7.16}
+$$
+
+对固定 $\mathcal F$，令 $\mathcal A_f=\mathcal F\cup\{2,3,5\}$。由 (7.11)、(7.16) 准确有
+
+$$
+\sum_{\substack{p>5\\p\notin\mathcal F}}b_p(Q_n)\log p
+=\tfrac12h_n-\ell_{\infty,n}-\sum_{p\in\mathcal A_f}\ell_{p,n}.
+\tag{7.17}
+$$
+
+将 (7.9)、(7.14)–(7.15) 代入，便得 (7.5)。这同时证明有限清单中每个地方的贡献可以移除，以及所余质量的准确规范常数为 $\widehat h_E(P_1)$。
+
+取 $\varepsilon=\widehat h_E(P_1)/2$。无论先选哪个有限 $\mathcal F$，(7.5) 都使全部充分大的 $n$ 在关系 $(\alpha,\beta)=(n,0)$、$S=n^2$ 上违反 (7.3)。这证明 UHT 失败。所用经典逼近、挠点整性和高度定理均只是这个固定来源消费者的中间输入；结论是 repo-derived 应用，不主张文献优先性。证毕。
+
+用白话说，一对固定代数点已经足以排除这项过强要求：沿第一个点不断取倍点，任意事先删除的有限素数清单之外，仍留下与倍数平方同阶的分母质量。每个固定地方单独占比都趋于零，不能据此把一个有限清单选成对所有关系都有效的清单。这没有改变 §§2–6 的有限共同来源结论及其量词。
+
+## 8. 原同点对的联合小像稀疏性充分桥
+
+**定义 8.1（原固定来源的实际小像集合）。** 本节恢复 [RG004 定义 68.1、定理 68.2、定义 70.1](UPPM_RG_004_CM_ANNIHILATORS_AND_GALOIS_DENOMINATOR_RELATIONS.md#68-原周期后的实际-cm-像群阶与全部首入口质量) 的全部原数据：$F=\mathbb Q(a,b,c)$ 为原八次全实域，$K=F(i)$、$[K:\mathbb Q]=16$，$P_1,P_2$ 指原固定点对。这里不使用 (7.4) 的新点对。固定整数 $H\ge7,M\ge1$，并在 $R\to\infty$ 时保持同一个 $q=q_H=q(H,H;M)$。原共同入口 $n_p,t_p$、完整深度、实际 CM 像群及其群阶为
+
+$$
+\rho_p=\frac{n_p}{\gcd(n_p,q)},\qquad d_p=t_p+v_p(q),\qquad
+C_w=\mathcal O\,\overline{[q]P_1}+\mathcal O\,\overline{[q]P_2},\qquad
+c_p=\#C_w\quad(w\mid v\mid p>H).
+\tag{8.1}
+$$
+
+全部地方、约化和 Galois 运输均按原接口保留。特别地，直接调用 RG004 (68.5)、(68.8)、(68.17)、(68.21)：$C_w$ 在地方运输下同构，$c_p$ 与 $w$ 无关，$\exp C_w=\rho_p$、$\rho_p\le c_p\le\rho_p^2$，且
+
+$$
+\begin{gathered}
+\sum_{w\mid v}\frac{f_w}{16}=\frac{f_v}{8},\qquad
+\sum_{w\mid p}\frac{f_w}{16}=1,\\
+d_p\log p\le64h_0q^2\sqrt{c_p}+16\log2.
+\end{gathered}
+\tag{8.2}
+$$
+
+$h_0>0$ 为原四方向准确高度中的常数。这些是既有输入；逐素数界已经支付所有原地方及全部 $1,\ldots,d_p$ 层，其常数保留各地方分别支付的费用。定义
+
+$$
+T_R=\{p>\max(H,R^2):\rho_p\le R\},\qquad
+J_H(R)=\sum_{p\in T_R}\sqrt{c_p}.
+\tag{8.3}
+$$
+
+这些集合有限，因为 $p\in T_R$ 蕴涵 $c_p\le R^2$，而原 (68.18) 已给出该群阶范围的有限分母支持。原尾部完整地等于 $V_H(R)=\sum_{p\in T_R}d_p\log p$。
+
+**定理 8.2（不含深度的稀疏计数足以支付原完整尾部）。** 对定义 8.1 的同一原数据，有
+
+$$
+\begin{aligned}
+0\le V_H(R)
+&\le64h_0q^2J_H(R)+(16\log2)\#T_R,\\
+\#T_R&\le J_H(R)\le R\,\#T_R.
+\end{aligned}
+\tag{8.4}
+$$
+
+因此以下任一算术假设都足以推出原目标 $V_H(R)=o(q^2R^3)$：
+
+$$
+J_H(R)=o(R^3),\qquad\text{或特别地}\qquad
+\#T_R=o(R^2).
+\tag{8.5}
+$$
+
+这两个假设均未在此证成；它们只涉及原同点对的共同约化像阶及共同入口指数，不含分母深度或 $\log p$ 权重。
+
+证明。对有限集合 $T_R$ 逐项相加 (8.2)，得到 (8.4) 第一行。由于 $1\le c_p\le\rho_p^2\le R^2$，每项满足 $1\le\sqrt{c_p}\le R$，给出第二行。若第一个假设成立，则
+
+$$
+0\le\frac{V_H(R)}{q^2R^3}
+\le\left(64h_0+\frac{16\log2}{q^2}\right)\frac{J_H(R)}{R^3}
+\longrightarrow0.
+\tag{8.6}
+$$
+
+若第二个假设成立，则 $J_H(R)\le R\#T_R=o(R^3)$，故也适用刚才的推论。这里 $H,M,q$ 固定；未断言关于移动 $H,M$ 的统一速度。证明从未将 $d_p$ 截成 $1$，也未将 $c_p$ 认作 $\rho_p$。这是既有完整逐素数界的新计数消费者（repo-derived），不是对上述稀疏性假设的证明。证毕。
+
+**命题 8.3（反例与原尾部之间的未决边界）。** 定理 7.2 不判定定义 8.1 的原 $V_H(R)$ 小量，也不判定该原点对的同时小阶陈述；定理 8.2 只给充分条件，不给必要性、与 UHT 的等价或严格分离。
+
+证明。定理 7.2 固定的是八次域 (7.4) 中的新点对，而定义 8.1 固定的是原十六次 CM 扩域内的原点对。其关系族仅为 $(n,0)$，读数为 $[qn]P_1$ 的完整选定素数分母；它既没有控制四个整数系数的 $R^3$ 盒尺度总量，也没有要求同一素数同时消去原两个点的约化。即使第一个点进入形式群，也不能据此推出第二个点同时进入，故不能把 (7.5) 代入 $T_R$ 或原 $d_p$。定理 8.2 的证明只有从 (8.5) 到完整尾部小量的方向，没有反向估计；并且两个来源不同，不能用新来源上的 UHT 失败为原来源建立必要性或逻辑严格性。原 RG004 §70 的完整尾部及 (8.5) 的稀疏性仍各有未证算术义务。证毕。
+
+用白话说，回到原问题后，需要估计的是同一原点对在大素数处共同落入多小的实际有限像，而不是另选点或只观察其中一个点。若这样的素数少到 (8.5) 的程度，已有逐素数界会连任意深的入口一起支付；目前给出的是这条充分桥，尚未给出它所需的稀疏计数。
+
+## 追加锚（本行以下为增补区）
