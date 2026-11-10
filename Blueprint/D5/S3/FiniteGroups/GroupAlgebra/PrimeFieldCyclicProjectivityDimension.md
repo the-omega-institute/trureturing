@@ -1,0 +1,42 @@
+# Actual cyclic projectivity and the prime-field dimension obstruction
+
+## Abstract
+
+Prime-field rationality of the centralizer slope forces dimension at least 2p for a nonzero representation projective on every actual cyclic subgroup.
+
+This repo-derived argument combines the imported conjugation-trace criterion and p-group norm-surjectivity criterion with an explicit nilpotent chain and a prime-field cancellation. The lower bound concerns actual cyclic subgroups and makes no claim of a general-prime construction attaining it or of literature novelty.
+
+**Theorem 1.1 (Cyclic projectivity forces dimension at least 2p).**
+
+Lean statement: `D5/S3/FiniteGroups/GroupAlgebra/PrimeFieldCyclicProjectivityDimension.two_mul_prime_le_finrank_of_cyclic_projective`
+
+*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/GroupAlgebra/PrimeFieldCyclicProjectivityDimension.two_mul_prime_le_finrank_of_cyclic_projective` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Exact scope: universe uV; {p : Nat} [Fact p.Prime]; {V : Type uV} [AddCommGroup V] [Module (ZMod p) V] [FiniteDimensional (ZMod p) V] [Nontrivial V]; rho : Representation (ZMod p) (Multiplicative (ZMod p × ZMod p)) V. The hypothesis quantifies over every H : Subgroup (Multiplicative (ZMod p × ZMod p)), including the trivial subgroup, and every proof IsCyclic H, and requires Module.Projective (ZMod p)[H] (Representation.asModule (rho.comp H.subtype : Representation (ZMod p) H V)). The conclusion is 2*p ≤ Module.finrank (ZMod p) V. There is one substantive public endpoint. Neither ambient nonprojectivity nor faithfulness, freeness, indecomposability, semisimplicity, a Jordan form, an assumed cyclic basis, or an assumed centralizer description appears in its hypotheses. The vector-space universe is independent of the finite group.
+
+Set E=C_p × C_p, r=(1,0), t=(0,1), d=dim V. The group computation p*g=0 is independent of rho; every nonidentity actual element has order p. Restrict to H=<r>. The imported projective_iff_projective_and_conjugation_trace_one gives an ordinary endomorphism D with sum_(h in H) rho(h) composed with D composed with rho(h inverse) equal to the identity. Taking ordinary linear trace, moving the first factor to the end with trace_mul_comm, and using rho(h inverse)rho(h)=1 shows d=|H|*tr(D)=0 in ZMod p. ZMod.natCast_eq_zero_iff therefore gives integer divisibility p divides d. Nontriviality gives d>0, so the contradiction assumption d<2p forces d=p. This step uses neither projective-module classification nor a group-order inverse.
+
+Put N=rho(r)-1. The polynomial characteristic-p identity (X-1)^p=X^p-1, evaluated at rho(r), proves N^p=0. Given x≠0, choose the least m with N^m x=0; then N^(m-1)x is nonzero and killed by N. The source supplies this elementary least-power argument explicitly. The existing PGroupProjectiveNormRing.projective_iff_projective_invariants_and_norm_surjective is applied with coefficient ring ZMod p, exponent a=1, and H an actual order-p subgroup. Its necessary half supplies a norm preimage for any invariant vector. No new norm-projectivity criterion is introduced.
+
+The actual norm is identified before use. finEquivZPowers enumerates every element of the actual subgroup <g> once by Fin(orderOf g). Rewriting orderOf g=p and using map_pow converts the subgroup sum to sum_(i<p) rho(g)^i. The imported cyclotomic_mul_prime_eq_pow_of_not_dvd at n=1, together with cyclotomic_one and cyclotomic_prime, gives sum_(i<p) X^i=(X-1)^(p-1) in (ZMod p)[X]. Applying Polynomial.aeval at rho(g) identifies the actual subgroup norm with (rho(g)-1)^(p-1). All cancellation has occurred in the imported polynomial theorem before evaluation. No nilpotent endomorphism is cancelled. The same actual enumeration proves that a vector fixed by rho(g) is invariant under its whole actual cyclic subgroup.
+
+Apply norm surjectivity on <r> to the nonzero N-killed vector. It yields v with w=N^(p-1)v≠0. To prove the chain v,Nv,...,N^(p-1)v is independent, take a relation and choose its least nonzero coefficient c_j. Apply N^(p-1-j). Coefficients below j are zero; terms above j contain a power at least p and vanish; the remaining term is c_j*w, contradicting w≠0. The finite-dimensional basisOfLinearIndependentOfCardEqFinrank' API then makes this length-p independent chain an actual basis because d=p. No cyclic-vector or regular-nilpotent classification is assumed.
+
+Let T=rho(t). The action of the abelian group gives TN=NT and T^p=1. Expand Tv in the chain basis with coefficients c_i in ZMod p. Commutation gives T(N^i v)=N^i(Tv), so basis extensionality proves T=sum_(i<p) c_i*N^i, equivalently T=f(N) for f=sum_(i<p) C(c_i)X^i. Applying any two such expressions to v and using chain independence proves uniqueness of the finite coefficient function. The code proves and uses this centralizer bridge; it does not infer polynomial form merely from nilpotence. For any polynomial q, induction on monomials proves q(N)w=q.coeff(0)*w when Nw=0. Applying this to f^p, using f(N)^p=T^p=1 and ZMod.pow_card, gives f.coeff(0)*w=w and therefore f.coeff(0)=1. This is the same constant-coefficient argument as Frobenius expansion, implemented by evaluation on the explicitly nonzero top vector.
+
+The prime-field step chooses the actual exponent a=-f.coeff(1) in ZMod p and k=a.val. Work with the exact polynomial P=(1+X)^k*f-1, so its evaluation is the actual operator (1+N)^k*T-1 with the displayed multiplication order. coeff_one_add_X_pow gives constant coefficient 1 and first coefficient k for the integer power. ZMod.natCast_zmod_val identifies k with a. mul_coeff_zero and mul_coeff_one then give P.coeff(0)=P.coeff(1)=0. X_pow_dvd_iff proves P=X^2*q. In the commutative polynomial ring, P^(p-1)=X^(2*(p-1))*q^(p-1); evaluate this equality at N. Since p≥2 gives 2*(p-1)≥p, N^p=0 forces ((1+N)^k*T-1)^(p-1)=0. This is an exact integer-power calculation, with all higher terms retained in q.
+
+Now use the actual group element g=(a,1)=r^k*t. Its second coordinate proves g≠1, and the group exponent computation proves orderOf g=p even if rho(g)=1. The representation homomorphism gives rho(g)=rho(r)^k*T, while 1+N=rho(r). The nonzero vector w=N^(p-1)v is fixed by rho(r); f.coeff(0)=1 also gives Tw=w. Consequently rho(g)w=w. Projectivity on the actual subgroup <g> would make its actual norm surject onto this nonzero invariant. But that norm equals (rho(g)-1)^(p-1)=0 by the cancellation computation, a contradiction. At p=2 the same proof uses 2*(p-1)=p and proves rho(g)-1=0; the first-power norm is still incompatible with its nonzero invariant. There is no odd-prime branch and no assumption that rho(g) has exact order p.
+
+Relationship to the separately supplied six-dimensional p=3 construction: a three-dimensional F_9-space has dimension six over F_3. In its described extension-field mechanism, a regular block N has N^3=0 and N^2v≠0, while T=1+lambda*N+mu*N^2 with lambda outside F_3. For every nonzero actual (a,b) in F_3^2, the actual product rho(a,b)-1 has first coefficient a+b*lambda≠0; its norm is (a+b*lambda)^2*N^2, whose image is the invariant space. This explains how cyclic projectivity can coexist with the ambient obstruction at dimension 6=2p. An independently verified six-dimensional example with these properties would attain the bound at p=3. The construction and its ambient nonprojectivity are separate results and are not conclusions of this endpoint.
+
+Exact extension-field boundary, explained but not formalized here: over a field K of characteristic p the chain basis, polynomial centralizer, constant coefficient 1, and norm identity survive. The coefficient b1 may lie outside the prime subfield. Actual powers only supply first coefficients a in F_p, and the exact product satisfies (rho(r)^(a.val)*T-1)^(p-1)=(a+b1)^(p-1)*N^(p-1). Thus cancellation on an actual direction exists precisely when b1 lies in F_p. A formal shifted line with an extension-field coefficient is not an actual cyclic subgroup. After restricting scalars in the F_9 example, a length-three chain is not an F_3-basis of the six-dimensional space, so the prime-field centralizer argument cannot simply be reapplied. No extension-field lower bound, general-prime upper construction, or attainment theorem is asserted by this endpoint.
+
+## References
+
+- Truth anchor: `D5/S3/FiniteGroups/GroupAlgebra/PrimeFieldCyclicProjectivityDimension.two_mul_prime_le_finrank_of_cyclic_projective`
+- Dependency: [D5/S3/FiniteGroups/GroupAlgebra/ProjectiveConjugationTrace](ProjectiveConjugationTrace.md)

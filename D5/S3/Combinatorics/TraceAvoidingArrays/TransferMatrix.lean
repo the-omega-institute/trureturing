@@ -119,7 +119,7 @@ private theorem good_cons (P : R → R → Prop) (Q : R → R → R → Prop) (a
    (match cs with | [] => True | c :: _ => Q a b c) ∧ good P Q (b :: cs) := by
  cases cs <;> simp only [good, tailGood, and_true, and_comm, and_left_comm]
 
-private theorem good_iff_local [Inhabited R] (P : R → R → Prop) (Q : R → R → R → Prop) (xs : List R) :
+theorem good_iff_local [Inhabited R] (P : R → R → Prop) (Q : R → R → R → Prop) (xs : List R) :
  good P Q xs ↔
    (∀ i, i+1 < xs.length → P (xs.getD i default) (xs.getD (i+1) default)) ∧
    (∀ i, i+2 < xs.length → Q (xs.getD i default) (xs.getD (i+1) default) (xs.getD (i+2) default)) := by
