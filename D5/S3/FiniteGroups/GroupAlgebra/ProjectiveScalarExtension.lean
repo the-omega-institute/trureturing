@@ -137,7 +137,7 @@ private def restrictIntertwiner {W : Type uW} {U : Type uU}
   isIntertwining' g := by
     apply LinearMap.ext
     intro w
-    exact f.isIntertwining g w
+    exact Representation.IntertwiningMap.isIntertwining σ τ f g w
 
 private def scalarExtensionMap (ρ : Representation k G V) (σ : Representation k G W)
     (f : ρ.IntertwiningMap σ) :
@@ -147,7 +147,8 @@ private def scalarExtensionMap (ρ : Representation k G V) (σ : Representation 
     apply TensorProduct.AlgebraTensorModule.ext
     intro r v
     change r ⊗ₜ[k] f (ρ g v) = r ⊗ₜ[k] σ g (f v)
-    rw [f.isIntertwining g v]
+    exact congrArg (fun x : W => r ⊗ₜ[k] x)
+      (Representation.IntertwiningMap.isIntertwining ρ σ f g v)
 
 private def unitIntertwiner (ρ : Representation k G V) :
     ρ.IntertwiningMap (restrictRepresentation (k := k) (scalarExtension R ρ)) where
@@ -168,7 +169,10 @@ private def extendIntertwiner (ρ : Representation k G V)
     change (s.toLinearMap.liftBaseChange R) (r ⊗ₜ[k] ρ g v) =
       σ g ((s.toLinearMap.liftBaseChange R) (r ⊗ₜ[k] v))
     simp only [LinearMap.liftBaseChange_tmul]
-    have hs : s (ρ g v) = σ g (s v) := s.isIntertwining g v
+    have hs : s (ρ g v) = σ g (s v) :=
+      Representation.IntertwiningMap.isIntertwining ρ
+        (restrictRepresentation (k := k) σ) s g v
+    change r • s (ρ g v) = σ g (r • s v)
     rw [hs]
     exact ((σ g).map_smul r (s v)).symm
 
@@ -184,7 +188,7 @@ private def contractIntertwiner (ρ : Representation k G V) (ell : R →ₗ[k] k
     (restrictRepresentation (k := k) (scalarExtension R ρ)).IntertwiningMap ρ where
   toLinearMap := contract ell
   isIntertwining' g := by
-    apply TensorProduct.ext
+    apply TensorProduct.ext'
     intro r v
     change contract ell (r ⊗ₜ[k] ρ g v) = ρ g (contract ell (r ⊗ₜ[k] v))
     simp only [contract_tmul, map_smul]
@@ -193,7 +197,7 @@ private def contractIntertwiner (ρ : Representation k G V) (ell : R →ₗ[k] k
 private theorem contract_natural (ell : R →ₗ[k] k) (f : V →ₗ[k] W) :
     f.comp (contract ell) =
       (contract ell).comp ((f.baseChange R).restrictScalars k) := by
-  apply TensorProduct.ext
+  apply TensorProduct.ext'
   intro r v
   change f (contract ell (r ⊗ₜ[k] v)) = contract ell (r ⊗ₜ[k] f v)
   simp only [contract_tmul, map_smul]
@@ -219,9 +223,6 @@ theorem projective_iff_scalarExtension
     intro f hf
     let σ := Representation.free R G ρR.asModule
     let X := ρR.asModule →₀ R[G]
-    letI : Module k X := Module.compHom X (algebraMap k R)
-    letI : IsScalarTower k R X :=
-      IsScalarTower.of_algebraMap_smul (fun _ _ => rfl)
     let σk := restrictRepresentation (k := k) σ
     let τk := restrictRepresentation (k := k) ρR
     let fk : σk.IntertwiningMap τk := restrictIntertwiner f
