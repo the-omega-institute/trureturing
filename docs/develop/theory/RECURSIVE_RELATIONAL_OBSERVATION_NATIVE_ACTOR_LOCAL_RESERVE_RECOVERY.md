@@ -3958,8 +3958,12 @@ GP-S1 blocks, response list, original configuration and all earlier
 is restored to an earlier state.
 
 Restore the table24 head by its original positioning code, return all
-twelve work tokens to the producer, and execute the fixed GP-to-client
-invocation-slot TOK. The original twelve-token loan and entry CTL now
+twelve work tokens to the producer, execute the identity public-role
+CTL and the actual Tail(13), Tail(17) normalization of Definition 4.1,
+and execute the fixed GP-to-client invocation-slot TOK. All former
+public work words are dead: the complete initial Stop configuration
+and empty packet have already been written on 25/27. The original
+twelve-token loan and entry CTL now
 enter the initialized Stop interpreter at its original label.
 This code has exactly the original table and represented initial
 machine configuration, so it actually executes its original Stop,
@@ -4102,7 +4106,14 @@ The encoded path does not perform that reference publication on its
 own source; it reads the public initial datum and chooses its own
 explicit guards. Neither path is a live copy of the other's endpoint.
 All finite $v$ and both directions were arbitrary. No uniform time,
-size, depth or guard bound enters the finite program. ∎
+size, depth or guard bound enters the finite program. Both outcome
+branches occur for the same fixed code and public $h_{\rm ref}=2$:
+from the empty reference preparation, $v=\alpha$ gives an accepting
+final at encoded guard/reserve 5, whereas
+$v=\langle\alpha,\alpha\rangle$ gives an executed final refusal at
+guard/reserve 3. Either direction has these actual returned executions.
+Their packets and genuine state25 responses are supplied by §§26–28,
+not additional matching external frame bits. ∎
 
 **Corollary 29.2 (preserved original target and actual terminal use).**
 Continue the same run from $D_{\rm GP}$ through its fixed `Stop` suffix.
