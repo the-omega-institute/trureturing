@@ -262,6 +262,10 @@ $$\operatorname{Filter}.\operatorname{Tendsto}\left((\operatorname{fun} (n:\math
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Delannoy/GrauOllerMarcenVaronaFactorialBorderGrowth.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/gv2501a-bordergrowth` (proved) by `D5/S3/Combinatorics/Delannoy/GrauOllerMarcenVaronaFactorialBorderGrowth.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"gv2501a-bordergrowth","declaration_gid":"D5/S3/Combinatorics/Delannoy/GrauOllerMarcenVaronaFactorialBorderGrowth.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* J. M. Grau, A. M. Oller-Marcén and J. L. Varona (2022). *A class of weighted Delannoy numbers*. DOI: [10.48550/arXiv.2501.09726](https://doi.org/10.48550/arXiv.2501.09726). URL: <https://arxiv.org/abs/2501.09726v2>.
