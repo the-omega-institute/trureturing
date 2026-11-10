@@ -465,7 +465,7 @@ theorem generated_inverse_of_quadratic_bijective (A : Data X S u) (a : X)
 
 #print axioms generated_inverse_of_quadratic_bijective
 
-private lemma real_character_value {R : Type*} [NormedCommRing R] [NormedAlgebra ℝ R]
+lemma real_character_value {R : Type*} [NormedCommRing R] [NormedAlgebra ℝ R]
     [SquareLaws R] [CompleteSpace R] (r : R)
     (φ : WeakDual.characterSpace ℂ (Complexification R)) :
     (((φ (QuadraticAlgebra.C r)).re : ℝ) : ℂ) = φ (QuadraticAlgebra.C r) := by
@@ -473,7 +473,7 @@ private lemma real_character_value {R : Type*} [NormedCommRing R] [NormedAlgebra
     apply QuadraticAlgebra.ext <;> simp
   exact (Complex.ofReal_eq_re_of_isSelfAdjoint (hs.map φ)).mp rfl
 
-private lemma real_character_scalar {R : Type*} [NormedCommRing R] [NormedAlgebra ℝ R]
+lemma real_character_scalar {R : Type*} [NormedCommRing R] [NormedAlgebra ℝ R]
     [SquareLaws R] [CompleteSpace R] (t : ℝ)
     (φ : WeakDual.characterSpace ℂ (Complexification R)) :
     φ (QuadraticAlgebra.C (t • (1 : R))) = (t : ℂ) := by
@@ -484,7 +484,7 @@ private lemma real_character_scalar {R : Type*} [NormedCommRing R] [NormedAlgebr
   rw [h]
   exact AlgHomClass.commutes φ _
 
-private lemma real_gelfand_norm {R : Type*} [NormedCommRing R] [NormedAlgebra ℝ R]
+lemma real_gelfand_norm {R : Type*} [NormedCommRing R] [NormedAlgebra ℝ R]
     [SquareLaws R] [CompleteSpace R] (r : R) :
     ‖gelfandStarTransform (Complexification R) (QuadraticAlgebra.C r)‖ = ‖r‖ := by
   calc
@@ -586,7 +586,7 @@ private theorem center_bound_square {R : Type*} [NormedCommRing R] [NormedAlgebr
     ← Complex.ofReal_sub, Complex.norm_real, Real.norm_eq_abs]
   exact abs_le.mpr ⟨by nlinarith [mul_self_nonneg v], by nlinarith [norm_nonneg (r * r)]⟩
 
-private theorem square_iff_center (A : Data X S u) (p : X) :
+theorem square_iff_center (A : Data X S u) (p : X) :
     (∃ x : X, S x x = p) ↔ ‖p - ‖p‖ • u‖ ≤ ‖p‖ := by
   constructor
   · rintro ⟨x, rfl⟩
@@ -604,7 +604,7 @@ private theorem square_iff_center (A : Data X S u) (p : X) :
       ‖p‖ (norm_nonneg _) hp
     exact ⟨r.val, congrArg Subtype.val hr⟩
 
-private theorem square_of_ambient_center (A : Data X S u) (p : X) (t : ℝ) (ht : 0 ≤ t)
+theorem square_of_ambient_center (A : Data X S u) (p : X) (t : ℝ) (ht : 0 ≤ t)
     (hp : ‖p - t • u‖ ≤ t) : ∃ x : X, S x x = p := by
   have hmem : p ∈ generated S u p := by
     have h : npow S u p 1 ∈ generated S u p :=
