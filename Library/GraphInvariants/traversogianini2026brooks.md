@@ -333,7 +333,8 @@ has every injective directed path bounded by k vertices.
 
 B. Roy, *Nombre chromatique et plus longs chemins d'un graphe*, Revue
 française d'informatique et de recherche opérationnelle **1**(5) (1967),
-129–132. [DOI](https://doi.org/10.1051/m2an/1967010501291).
+129–132. [DOI](https://doi.org/10.1051/m2an/1967010501291),
+[Numdam record](https://www.numdam.org/item/M2AN_1967__1_5_129_0/).
 The [original Numdam PDF](https://www.numdam.org/item/M2AN_1967__1_5_129_0.pdf)
 contains Theorem 1 on page 129, its proof through page 131, and the
 sharpness discussion immediately following that proof. A directed

@@ -12,7 +12,7 @@ $$\forall V \in \mathrm{Type},\; \forall G \in \operatorname{SimpleGraph}\left(V
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Walks/GallaiRoy.IsOrientation` (`✓ std3`).
 
-*Citation.* Bernard Roy (1967). *Nombre chromatique et plus longs chemins d'un graphe*. DOI: [10.1051/m2an/1967010501291](https://doi.org/10.1051/m2an/1967010501291). URL: <https://www.numdam.org/item/M2AN_1967__1_5_129_0/>.
+*Citation.* Juan Pablo Traverso Gianini (2026). *Graph theorem Lean sources: BrooksSubcubic, chordal elimination, Menger and Hamiltonian closure*. URL: <https://github.com/jtraverso>.
 
 *Commentary.*
 
@@ -24,7 +24,7 @@ $$\forall V \in \mathrm{Type},\; \forall o \in \operatorname{Relations}\left(V\r
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Walks/GallaiRoy.IsDirectedPath` (`✓ std3`).
 
-*Citation.* Bernard Roy (1967). *Nombre chromatique et plus longs chemins d'un graphe*. DOI: [10.1051/m2an/1967010501291](https://doi.org/10.1051/m2an/1967010501291). URL: <https://www.numdam.org/item/M2AN_1967__1_5_129_0/>.
+*Citation.* Juan Pablo Traverso Gianini (2026). *Graph theorem Lean sources: BrooksSubcubic, chordal elimination, Menger and Hamiltonian closure*. URL: <https://github.com/jtraverso>.
 
 *Commentary.*
 
@@ -36,7 +36,7 @@ $$\forall V \in \mathrm{Type},\; \operatorname{Finite}\left(V\right) \Rightarrow
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Walks/GallaiRoy.colorable_iff_exists_orientation` (`✓ std3`). ∎
 
-*Citation.* Bernard Roy (1967). *Nombre chromatique et plus longs chemins d'un graphe*. DOI: [10.1051/m2an/1967010501291](https://doi.org/10.1051/m2an/1967010501291). URL: <https://www.numdam.org/item/M2AN_1967__1_5_129_0/>.
+*Citation.* Juan Pablo Traverso Gianini (2026). *Graph theorem Lean sources: BrooksSubcubic, chordal elimination, Menger and Hamiltonian closure*. URL: <https://github.com/jtraverso>.
 
 *Commentary.*
 
