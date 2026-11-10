@@ -5,6 +5,14 @@
    anchors: []
    utility: none
    digest: Original all-state zero modes on the entire dual-coset bottom and their residue law. -/
+/-
+Copyright (c) 2026 Fedor K. Popov. All rights reserved.
+Released under the Apache 2.0 license; see the repository root LICENSE.
+Authors: Fedor K. Popov
+Source-faithful native adaptation of VOA/Modules/ZhuModule.lean and
+VOA/Modules/ZeroModeMult.lean, Fedor-Popov/Lean_VOA at
+013a799ca834a8a6b3afa8129e3e522025b3f45c.
+-/
 
 import D5.S3.VertexAlgebra.Sectors.LatticeDualCosetEnergyEndpoints
 import D5.S3.VertexAlgebra.Lattice.NormFourZhuAlgebra.Core

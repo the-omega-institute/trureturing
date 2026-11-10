@@ -11,6 +11,8 @@ strata_touched:
   - D5/S3/VertexAlgebra/Lattice/ActualZhuBinomial
   - D5/S3/VertexAlgebra/Lattice/ActualZhuProduct
   - D5/S3/VertexAlgebra/Lattice/ActualZhuRightIdeal
+  - D5/S3/VertexAlgebra/Sectors/LatticeDualCosetZhuZeroMode
+  - D5/S3/VertexAlgebra/Sectors/LatticeDualCosetZhuRepresentation
 license: Apache-2.0
 triage: anchor
 ---
@@ -159,3 +161,57 @@ remains incomplete: exact reconstruction, an enrolled readout,
 the actual-positive law, whole-family variation and sensitivity,
 actual observational dependence and current source binding are required;
 see <https://github.com/the-omega-institute/trureturing/issues/28745>.
+
+## Entire dual-coset bottom representation
+
+The same immutable revision's
+[ZhuModule.lean](https://github.com/Fedor-Popov/Lean_VOA/blob/013a799ca834a8a6b3afa8129e3e522025b3f45c/VOA/Modules/ZhuModule.lean)
+and
+[ZeroModeMult.lean](https://github.com/Fedor-Popov/Lean_VOA/blob/013a799ca834a8a6b3afa8129e3e522025b3f45c/VOA/Modules/ZeroModeMult.lean)
+supply the source lineage for the native module residue adaptation.
+Fedor K. Popov's copyright and Apache-2.0 notices are retained in both
+local source modules; the distinct upstream and native version pins and
+license terms above apply. This is literature-attested Zhu module
+mathematics, not a claim of independent mathematical novelty.
+
+`LatticeDualCosetZhuZeroMode` derives the generic residue `fullLaw` from
+the original all-state `module_borcherds`, retaining its three separate
+finite supports and using `Ring.map_choose` for the integer binomials.
+Under positive definiteness and the original rational dual-pairing condition
+`G_Q mu = beta`, actual mode grading and the original bottom-spectrum
+bound kill every mode at least the homogeneous weight. The existing
+internal energy direct sum assembles the original degree-minus-one modes
+into a complex-linear all-state map on the entire rational bottom fiber.
+
+`LatticeDualCosetZhuRepresentation` applies the existing generic circle
+and star residue calculus to that derived module law and the proved
+bottom truncations, then extends through the original finite homogeneous
+decompositions. It proves annihilation of the literal full circle span
+and multiplicativity for unrestricted original states. The conclusion is
+`zhuO <= ker(zeroMode)`, not kernel equality or faithfulness. The vacuum
+unit and the existing actual quotient algebra give a unital complex
+`AlgHom` from exactly `Carrier D / ActualZhuFinite.zhuO D` into endomorphisms
+of the full bottom. Nontriviality and finite dimension reuse the original
+bottom eigenvector and full eigenspace theorems. Arbitrary ranks, including
+rank zero, and all minimizing charges, including the rank-one half-shift
+multiplicity, remain in scope. No determinant-unit, positive-rank,
+norm-four or one-dimensional-bottom premise is imposed. No product law,
+`fullLaw`, O stability or associativity is added as a hypothesis.
+
+The converted residue, span, evaluation and unit interfaces are consumed
+proof organization, not independent mathematical contributions. Retire
+the port when a supplier at the repository's pinned versions gives an
+exactly compiled bridge for this same original carrier, full bottom,
+module fields and literal O; a restricted ground-line action is insufficient.
+Analytic CFT, fusion, anomalies, string theory and AdS/CFT remain separate
+obligations.
+
+The typed dependent-family audit for this exact two-module family remains
+unfinished under
+[#28745](https://github.com/the-omega-institute/trureturing/issues/28745).
+Faithful reconstruction of the complete original telescope, an enrolled
+scoped readout, equivalence and actual-positive law bridge, whole-family
+variation and sensitivity, actual observational dependence, source
+selection and realization, and current source binding remain required.
+The issue does not establish `declared_validated`; no placeholder Reg
+scaffold is supplied.

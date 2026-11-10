@@ -5,6 +5,14 @@
    anchors: []
    utility: none
    digest: Full Zhu quotient action on the nonzero finite-dimensional dual-coset bottom. -/
+/-
+Copyright (c) 2026 Fedor K. Popov. All rights reserved.
+Released under the Apache 2.0 license; see the repository root LICENSE.
+Authors: Fedor K. Popov
+Source-faithful native adaptation of VOA/Modules/ZhuModule.lean and
+VOA/Modules/ZeroModeMult.lean, Fedor-Popov/Lean_VOA at
+013a799ca834a8a6b3afa8129e3e522025b3f45c.
+-/
 
 import D5.S3.VertexAlgebra.Sectors.LatticeDualCosetZhuZeroMode
 import D5.S3.VertexAlgebra.Lattice.ActualZhuAlgebra
@@ -103,7 +111,7 @@ theorem zeroMode_circle (p : ℕ) (a b : Carrier D) (ha : a ∈ grade D (p : ℤ
   exact circle_homogeneous D β μ hDual hD p q.toNat a (gradeProjection D q b) ha
     (by simpa only [hqn] using gradeProjection_mem D q b)
 
-/-- The zero mode annihilates exactly the original full circle span, without replacing it. -/
+/-- The original full circle span is contained in the zero-mode kernel. -/
 theorem zhuO_le_kernel : Lattice.ActualZhuFinite.zhuO D ≤
     LinearMap.ker (zeroMode D β μ hDual hD) := by
   apply Submodule.span_le.mpr
@@ -194,21 +202,6 @@ theorem bottom_nontrivial_finite :
   · rw [← he]
     exact all_eigenspaces_finiteDimensional D β H hHG hGH μ hDual hD _
 
-/-- A finite nonzero representation together with its exact original-mode evaluation law. -/
-def finiteBottomRepresentation :
-    letI := Lattice.ActualZhuAlgebra.quotientRing D hD
-    letI := Lattice.ActualZhuAlgebra.quotientAlgebra D hD
-    {ρ : Lattice.ActualZhuAlgebra.Q D →ₐ[ℂ] Module.End ℂ (Bottom D μ hD) //
-      Nontrivial (Bottom D μ hD) ∧ FiniteDimensional ℂ (Bottom D μ hD) ∧
-      ∀ (k : ℤ) (a : Carrier D), a ∈ grade D k → ∀ v : Bottom D μ hD,
-        (ρ ((Lattice.ActualZhuFinite.zhuO D).mkQ a) v).val =
-          ((action D β a)[[k - 1]]) v.val} :=
-  ⟨representation D β μ hDual hD,
-    (bottom_nontrivial_finite D β μ hDual hD).1,
-    (bottom_nontrivial_finite D β μ hDual hD).2,
-    representation_mk D β μ hDual hD⟩
-
-#print axioms finiteBottomRepresentation
 #print axioms module_fullLaw
 #print axioms high_mode_kills_bottom
 #print axioms zeroMode_circle
