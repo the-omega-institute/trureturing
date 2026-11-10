@@ -65,7 +65,7 @@ private theorem card_subtype_sum {A : Type*} [Fintype A] (p : A → Prop) :
  push_cast
  rfl
 
-private noncomputable def cont (P : R → R → Prop) (Q : R → R → R → Prop)
+noncomputable def cont (P : R → R → Prop) (Q : R → R → R → Prop)
     (n : ℕ) (a b : R) : ℤ := by
  classical
  exact (Nat.card {cs : Fin n → R // tailGood P Q a b (List.ofFn cs)} : ℤ)
@@ -88,7 +88,7 @@ private theorem cont_succ (P : R → R → Prop) (Q : R → R → R → Prop) (n
  · simp only [ite_and]
    rcases not_and_or.mp h with h | h <;> simp [h]
 
-private theorem cont_matrix (P : R → R → Prop) (Q : R → R → R → Prop)
+theorem cont_matrix (P : R → R → Prop) (Q : R → R → R → Prop)
     (cl : R → R → S) (T : Matrix S S ℤ)
     (hT : ∀ a b, P a b → ∀ s,
       (∑ c : R, if P b c ∧ Q a b c ∧ cl b c = s then (1:ℤ) else 0) = T (cl a b) s)
@@ -119,7 +119,7 @@ private theorem good_cons (P : R → R → Prop) (Q : R → R → R → Prop) (a
    (match cs with | [] => True | c :: _ => Q a b c) ∧ good P Q (b :: cs) := by
  cases cs <;> simp only [good, tailGood, and_true, and_comm, and_left_comm]
 
-private theorem good_iff_local [Inhabited R] (P : R → R → Prop) (Q : R → R → R → Prop) (xs : List R) :
+theorem good_iff_local [Inhabited R] (P : R → R → Prop) (Q : R → R → R → Prop) (xs : List R) :
  good P Q xs ↔
    (∀ i, i+1 < xs.length → P (xs.getD i default) (xs.getD (i+1) default)) ∧
    (∀ i, i+2 < xs.length → Q (xs.getD i default) (xs.getD (i+1) default) (xs.getD (i+2) default)) := by
