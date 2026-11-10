@@ -76,7 +76,10 @@ internal sealed class AlphaUnpredictableAverageRefutationDocument : IScribeDocum
                         "Symbolic sequence constructions and convolution realizations of unpredictability appear in Akhmet–Fen, Poincaré chaos and unpredictable functions (arXiv:1608.07301), and Akhmet–Fen–Alejaily, A randomly determined unpredictable function (arXiv:1910.12758v2). Nonconvergent time averages are also part of classical historic behavior. The argument here combines arbitrarily late word occurrences with alternating occupation proportions and an even smooth realization. Exhaustive literature completeness remains ASSUMED-UNVERIFIED; the full Sigmund article and the relevant IOP monograph chapters were not verified in the literature screen.")),
                     Paragraph(Text(
                         "The exact finite checker is in the-omega-institute/trureturing-experiments at commit 8a5ad4a43297e68ef131028eddf08d0eb60c04f2, docs/reports/akhmet-tilessov-2026-alpha-unpredictable-average/check.py, SHA-256 28eafdc7ea3bdac010b391cae6d106e24cba1e51b1e7a7d2f20c27a462349a43; python3 check.py exited 0. It checks finite counts, rational samples and support containment using a polynomial test kernel. It does not establish infinite limits or smoothness, and its enumeration order and sample shifts need not equal those of the noncomputable Lean function."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("akhmet-tilessov-alpha-unpredictable-average"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula ReturnBody()
     {

@@ -68,6 +68,10 @@ $$\neg ((\forall (f: \mathbb{R} \to \mathbb{R}), ((\operatorname{IsAlphaUnpredic
 
 *Proof.* Machine-checked in Lean as `D5/S1/Dynamics/Recurrence/AlphaUnpredictableAverageRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/akhmet-tilessov-alpha-unpredictable-average` (refuted) by `D5/S1/Dynamics/Recurrence/AlphaUnpredictableAverageRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"akhmet-tilessov-alpha-unpredictable-average","declaration_gid":"D5/S1/Dynamics/Recurrence/AlphaUnpredictableAverageRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Marat Akhmet; Nurlan Tilessov (2026). *Integral of an Alpha Unpredictable Function*. DOI: [10.3390/math14183391](https://doi.org/10.3390/math14183391). URL: <https://arxiv.org/abs/2608.09809v2>.
