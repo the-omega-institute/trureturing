@@ -18,13 +18,10 @@ Each transplanted result is retired when the actual repository-pinned mathlib co
 
 ## Source correspondence
 
-- `D5/S3/Quantum/Algebra/StateApproximation/TauCeti/Analysis/CStarAlgebra/ContinuousFunctionalCalculus/Kaplansky.lean` corresponds to `TauCeti/Analysis/CStarAlgebra/ContinuousFunctionalCalculus/Kaplansky.lean`.
-- `D5/S3/Quantum/Algebra/StateApproximation/TauCeti/Analysis/LocallyConvex/PointwiseConvergence.lean` corresponds to `TauCeti/Analysis/LocallyConvex/PointwiseConvergence.lean`.
-- `D5/S3/Quantum/Algebra/StateApproximation/TauCeti/Analysis/VonNeumannAlgebra/Density.lean` corresponds to `TauCeti/Analysis/VonNeumannAlgebra/Density.lean`.
-- `D5/S3/Quantum/Algebra/StateApproximation/Physicslib4/GNS/CauchySchwarz.lean` corresponds to `Physicslib4/GNS/CauchySchwarz.lean`.
-- `D5/S3/Quantum/Algebra/StateApproximation/Physicslib4/GNS/ExtremeState.lean` corresponds to `Physicslib4/GNS/ExtremeState.lean`.
-- `D5/S3/Quantum/Algebra/StateApproximation/Physicslib4/GNS/Irreducibility.lean` corresponds to `Physicslib4/GNS/Irreducibility.lean`.
+- `D5/S3/Quantum/Algebra/StateApproximation/TauCeti/Analysis/CStarAlgebra/ContinuousFunctionalCalculus/Kaplansky.lean` contains the retained block from `TauCeti/Analysis/CStarAlgebra/ContinuousFunctionalCalculus/Kaplansky.lean`.
+- `D5/S3/Quantum/Algebra/StateApproximation/TauCeti/Analysis/VonNeumannAlgebra/Density.lean` contains the retained blocks from `TauCeti/Analysis/LocallyConvex/PointwiseConvergence.lean`, `TauCeti/Topology/Algebra/Module/Spaces/PointwiseConvergenceCLM.lean`, `TauCeti/Analysis/InnerProductSpace/Amplification.lean`, `TauCeti/Analysis/InnerProductSpace/InvariantSubspace.lean`, `TauCeti/Analysis/VonNeumannAlgebra/Density.lean`, `TauCeti/Analysis/LocallyConvex/WeakOperatorTopology.lean` and `TauCeti/Analysis/VonNeumannAlgebra/Bicommutant.lean`.
+- `D5/S3/Quantum/Algebra/StateApproximation/UniformSignedSquare.lean` contains the retained blocks from `Physicslib4/GNS/Basic.lean`, `Physicslib4/GNS/Construction.lean`, `Physicslib4/GNS/Irreducibility.lean` and `Physicslib4/GNS/ExtremeState.lean`.
 
-The Density source also contains selected declarations from TauCeti/Topology/Algebra/Module/Spaces/PointwiseConvergenceCLM.lean, TauCeti/Analysis/InnerProductSpace/Amplification.lean and TauCeti/Analysis/InnerProductSpace/InvariantSubspace.lean. Their original attribution headers are retained in the source.
-The Irreducibility source also contains selected declarations from Physicslib4/GNS/Basic.lean and Physicslib4/GNS/Construction.lean, with their original attribution headers. The global declaration names are preserved.
-The Density source also contains the selected weak-operator comparison and bicommutant declarations from TauCeti/Analysis/LocallyConvex/WeakOperatorTopology.lean and TauCeti/Analysis/VonNeumannAlgebra/Bicommutant.lean, retaining their original attribution headers.
+Each block retains its original attribution header and immutable supplier revision. The global declaration names are preserved. The complete licenses are [TauCeti-LICENSE.txt](TauCeti-LICENSE.txt) and [Physicslib4-LICENSE.txt](Physicslib4-LICENSE.txt).
+
+The five rows for `omega_expand_add`, `omega_expand_smul_add`, `omega_star_swap_conj` and `cauchy_schwarz_inequality` from `Physicslib4/GNS/CauchySchwarz.lean`, and `isPositive_inner_nonneg` from `Physicslib4/GNS/Irreducibility.lean`, are historical supplier correspondences with no retained current host.
