@@ -649,3 +649,280 @@ $$
 用白话说，回到原问题后，需要估计的是同一原点对在大素数处共同落入多小的实际有限像，而不是另选点或只观察其中一个点。若这样的素数少到 (8.5) 的程度，已有逐素数界会连任意深的入口一起支付；目前给出的是这条充分桥，尚未给出它所需的稀疏计数。
 
 ## 追加锚（本行以下为增补区）
+
+## 9. 同一八次来源的完整四维盒与固定素数尾部
+
+**定义 9.1（共同来源、全盒与局部高度规范）。** 本节始终取 (7.4) 的同一固定数据
+
+$$
+E:y^2=x^3-x,\qquad K=\mathbb Q(i,\sqrt6,\sqrt{15}),\qquad
+P_1=(2,\sqrt6),\quad P_2=(4,2\sqrt{15}).
+\tag{9.1}
+$$
+
+直接复用定理 7.2 的八次性、非挠性及 Gaussian 模挠独立性，不另证明这些前件。固定整数 $q\ge1$，并在关系之前对每个 $p>5$ 各固定一次嵌入 $\sigma_p:K\hookrightarrow\overline{\mathbb Q}_p$；其所选地方记为 $v_p^*$。对整数 $L\ge1$，令
+
+$$
+\begin{gathered}
+B_L=\{z=(a,b,c,d)\in\mathbb Z^4:|a|,|b|,|c|,|d|\le L\}\setminus\{0\},\\
+Q_z=[q]\bigl([a+bi]P_1+[c+di]P_2\bigr),\qquad
+H_j=\widehat h_E(P_j)>0,\qquad
+H_L=\sum_{z\in B_L}\widehat h_E(Q_z).
+\end{gathered}
+\tag{9.2}
+$$
+
+模挠独立性保证全部 $Q_z$ 非挠，也保证 $z\mapsto Q_z$ 单射。$\widehat h_E$ 仍为 $2\widehat h_E=h_x+O_E(1)$ 的绝对规范。对 $v\in M_K$，有限地方取 $|p|_v=p^{-1}$，无穷地方取通常复绝对值，令 $\nu_v=-\log|\cdot|_v$；有限地方 $n_v=[K_v:\mathbb Q_p]=e_vf_v$，复地方 $n_v=2$。使用 [Silverman，*The Arithmetic of Elliptic Curves*，第二版，C.18.1–18.3，印刷页 454–455](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf) 的 $\lambda_v$。原文 C.18.1(ii) 是 $\lambda_v+\frac12\nu_v(x)$ 在 $O$ 处有有限极限；结合 IV.1 的 $x=t^{-2}(1+O(t))$，对参数 $t=-x/y$ 有
+
+$$
+\lambda_v(A)=-\log|t(A)|_v+O_v(1)\longrightarrow+\infty
+\quad(A\longrightarrow O),\qquad
+\widehat h_E(A)=\frac18\sum_{v\in M_K}n_v\lambda_v(A).
+\tag{9.3}
+$$
+
+第二式正是 C.18.2；$\frac18$ 只用于局部高度之和。以下经典高度与局部邻域事实仅作新盒消费者的中间输入；不主张文献优先性。
+
+**定理 9.2（实际 Galois 系数作用与完整盒的地方恒等式）。** 对任意有理地方 $r$，以及其上任一选定地方 $w$，令
+$S_v(L)=\sum_{z\in B_L}\lambda_v(Q_z)$。则每个有限 $L$ 都有
+
+$$
+S_w(L)=\frac18\sum_{v\mid r}n_vS_v(L).
+\tag{9.4}
+$$
+
+特别地，若 $p>5$，定义 7.1 的深度满足
+
+$$
+\sum_{z\in B_L}b_p(Q_z)\log p
+=S_{v_p^*}(L)
+=\frac18\sum_{v\mid p}n_v\sum_{z\in B_L}\lambda_v(Q_z).
+\tag{9.5}
+$$
+
+这是完整盒的恒等式，没有断言一般单点的选定地方读数等于全部地方平均。
+
+证明。把 $g\in\operatorname{Gal}(K/\mathbb Q)$ 写成
+$g(i)=\epsilon i,\ g(\sqrt6)=\delta_1\sqrt6,\ g(\sqrt{15})=\delta_2\sqrt{15}$，其中三个符号独立取 $\pm1$。由于 $g(P_j)=[\delta_j]P_j$，而 $g[i]=[\epsilon i]g$，实际系数作用为
+
+$$
+g(Q_z)=Q_{\rho_gz},\qquad
+\rho_g(a,b,c,d)=(\delta_1a,\epsilon\delta_1b,\delta_2c,\epsilon\delta_2d).
+\tag{9.6}
+$$
+
+全部八个作用如下；它们不互换两个固定点，只在四个整数坐标上作所列符号置换。
+
+| $\epsilon$ | $\delta_1$ | $\delta_2$ | $\rho_g(a,b,c,d)$ |
+|---|---|---|---|
+| $+$ | $+$ | $+$ | $(a,b,c,d)$ |
+| $+$ | $+$ | $-$ | $(a,b,-c,-d)$ |
+| $+$ | $-$ | $+$ | $(-a,-b,c,d)$ |
+| $+$ | $-$ | $-$ | $(-a,-b,-c,-d)$ |
+| $-$ | $+$ | $+$ | $(a,-b,c,-d)$ |
+| $-$ | $+$ | $-$ | $(a,-b,-c,d)$ |
+| $-$ | $-$ | $+$ | $(-a,b,c,-d)$ |
+| $-$ | $-$ | $-$ | $(-a,b,-c,d)$ |
+
+每个 $\rho_g$ 都双射地保持 $B_L$。按 $|u|_{g^{-1}v}=|g(u)|_v$ 定义地方运输；因为曲线在 $\mathbb Q$ 上，C.18.1 的唯一性给出
+$\lambda_v(gA)=\lambda_{g^{-1}v}(A)$。把 (9.6) 代入有限盒和并重编号，得 $S_v(L)=S_{g^{-1}v}(L)$。Galois 群在 $r$ 上方地方上可迁，且 $\sum_{v\mid r}n_v=8$，故 (9.4) 成立；无穷地方的四个复地方各权 $2$ 也在此式之内。
+
+对 $p>5$，本方程的判别式 $64$ 是单位，故即使完成域有分歧，也是好约化的极小整方程。C.18.3(b) 与 VII.2.1–2.2 给出
+
+$$
+\lambda_v(A)=\tfrac12\log\max(1,|x(A)|_v)
+=
+\begin{cases}
+v_p(t(A))\log p,&A\text{ 约化为 }O,\\
+0,&\text{否则}.
+\end{cases}
+\tag{9.7}
+$$
+
+这里 $v_p=\nu_v/\log p$，故在分歧完成域可取分数值，没有额外乘 $e_v$；分歧和剩余次数已在 $n_v=e_vf_v$ 中。入口时 $2v_p(y)=3v_p(x)$ 给出该深度，无需形式对数的等距范围。所选嵌入诱导的绝对值就是 $v_p^*$，于是 (9.7)、(9.4) 证明 (9.5)。全程只重排同一盒的关系，没有逐关系更换来源或嵌入。证毕。
+
+**定理 9.3（准确的规范高度多项式）。** 对每个整数 $L\ge1$，
+
+$$
+H_L=\frac23q^2(H_1+H_2)L(L+1)(2L+1)^4.
+\tag{9.8}
+$$
+
+证明。记 $(R_1,R_2,R_3,R_4)=(P_1,[i]P_1,P_2,[i]P_2)$。使用 [Silverman VIII.9.3(a)–(e)，印刷页 248–249](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf) 的双线性配对
+$\langle A,B\rangle=\widehat h_E(A+B)-\widehat h_E(A)-\widehat h_E(B)$，即 $\langle A,A\rangle=2\widehat h_E(A)$。因此准确地
+
+$$
+\widehat h_E(Q_z)
+=q^2\left(\sum_{j=1}^4z_j^2\widehat h_E(R_j)
++ \sum_{j<k}z_jz_k\langle R_j,R_k\rangle\right).
+\tag{9.9}
+$$
+
+此配对约定下交叉项前没有再乘 $2$。由 $x([i][m]P)=-x([m]P)$，横坐标绝对高度相等；用 VIII.9.3(b)、(e) 并令 $m\to\infty$，得 $\widehat h_E([i]P)=\widehat h_E(P)$。四个对角高度依次为 $H_1,H_1,H_2,H_2$。
+
+把原点加回求和不改变值。全盒允许任一坐标独立变号，故每个 $j\ne k$ 的 $\sum_z z_jz_k$ 为零，无需假定配对正交。置 $N=2L+1$，每个对角和为
+
+$$
+\sum_{z\in[-L,L]^4\cap\mathbb Z^4}z_j^2
+=N^3\sum_{a=-L}^La^2
+=\tfrac13L(L+1)N^4.
+\tag{9.10}
+$$
+
+把四个对角高度相加即得 (9.8)。另外，(9.9) 给出后文所需的逐点上界
+
+$$
+0\le\widehat h_E(Q_z)\le C_0q^2L^2,\qquad
+C_0=\sum_j\widehat h_E(R_j)+\sum_{j<k}|\langle R_j,R_k\rangle|,
+\tag{9.11}
+$$
+
+其中 $C_0$ 只依赖固定点对。这是规范高度本身的盒总和，不是未除局部次数的总和。证毕。
+
+**定理 9.4（每一固定地方的定量装箱余项）。** 对每个固定 $v\in M_K$ 和固定 $q\ge1$，存在在 $L$ 之前固定的常数 $C_{v,q}$，使全部整数 $L\ge1$ 都满足
+
+$$
+\sum_{z\in B_L}|\lambda_v(Q_z)|\le C_{v,q}L^{16/3}.
+\tag{9.12}
+$$
+
+证明。先支付所有地方的负部。由 C.18.1 的连续性、(9.3) 在原点趋于正无穷的性质及射影曲线 $E(K_u)$ 的紧性，每个地方都有固定 $c_u\ge0$ 使 $\lambda_u(A)\ge-c_u$。在有限好约化地方，C.18.3(b) 使它非负，故可取 $c_u=0$。本模型在全部奇素数处好约化，所以只需对
+$\mathcal B=\{u:u\mid2\text{ 或 }u\mid\infty\}$ 取非零常数。令
+$C_-=\sum_{u\in\mathcal B}n_uc_u$。对每个非零 $A\in E(K)$，(9.3) 于是给出
+
+$$
+-c_v\le\lambda_v(A)\le\frac8{n_v}\widehat h_E(A)+d_v,\qquad
+d_v=C_-/n_v.
+\tag{9.13}
+$$
+
+这一步没有把坏地方或复地方的高度误作非负。由 (9.11)，盒内的 $\lambda_v$ 统一有 $O_v(q^2L^2)$ 上包络。
+
+下面只在此固定 $v$ 选择一次邻域常数。C.18.1(ii) 和 [Silverman IV.1 的原点展开，印刷页 115–120；VII.2，印刷页 187–191](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf) 提供参数 $t=-x/y$ 的局部图及解析群运算。取原点邻域 $U_0$，使某个固定 $C_v\ge0$ 满足
+$|\lambda_v(A)+\log|t(A)|_v|\le C_v$ 于 $U_0\setminus\{O\}$。再取较小邻域 $U$ 和 $\kappa_v\ge1$，使对 $A,B\in U$ 有 $A-B\in U_0$ 且
+
+$$
+|t(A-B)|_v\le\kappa_v\max\{|t(A)|_v,|t(B)|_v\}.
+\tag{9.14}
+$$
+
+这些经典局部事实在这里的具体适用范围如下。有限地方用原整方程的形式差级数，它无常数项、系数整；在足够小的参数闭球上收敛，故可取 $\kappa_v=1$。若完成域在 $p$ 上的分歧指数为 $e_v$，球半径可取固定的 $p^{-m_v/e_v}<1$，其中整数 $m_v$ 在 $L$ 之前选定。坏约化处只用光滑泛纤维在 $O$ 的参数图，必要的缩小包含在这个 $m_v$ 中，不把整个约化核认作该图。复地方则在固定双圆盘内使用解析差映射 $F(s,t)$；它满足 $F(0,0)=0$，缩小圆盘并用其有界一阶导数得 (9.14)，再缩小使像在 $U_0$ 中。整个 $K$ 没有实地方。这些选择不使用局部形式对数，不需要无分歧、好约化或某个随 $L$ 变化的对数收敛阈值。
+
+紧集 $E(K_v)\setminus U$ 上的 $\lambda_v$ 有有限上界。故存在固定 $h_v\ge0$，使 $\lambda_v(A)>h_v$ 蕴涵 $A\in U$。由 (9.14) 和两次参数高度比较，对不同的 $A,B$ 得到
+
+$$
+\lambda_v(A),\lambda_v(B)>h_v
+\quad\Longrightarrow\quad
+\lambda_v(A-B)\ge
+\min\{\lambda_v(A),\lambda_v(B)\}-D_v,\qquad
+D_v=2C_v+\log\kappa_v.
+\tag{9.15}
+$$
+
+这明确把所用邻域、差映射损失及坏地方依赖都固定下来。
+
+现只用一个实际非挠方向 $R=[q]P_1$。对每个非零整数 $k$，$[k]R\ne O$，由 (9.13) 与规范高度的二次性有
+
+$$
+\lambda_v([k]R)\le a_vq^2k^2+d_v,\qquad a_v=8H_1/n_v.
+\tag{9.16}
+$$
+
+令 $1\le M\le N=2L+1$ 为整数，预置阈值
+$\tau_M=1+\max\{h_v,a_vq^2M^2+d_v+D_v\}$。固定 $(b,c,d)$，把 $a=-L,\ldots,L$ 依次分成前面各长 $M$、末块长度至多 $M$ 的连续块。每块的点是某个固定平移加上连续的 $[a]R$。若同一块内两个不同的非零关系都满足 $\lambda_v(Q_z)>\tau_M$，其差必为 $[k]R$，其中
+
+$$
+z-z'=(k,0,0,0),\qquad 0<|k|\le M-1.
+\tag{9.17}
+$$
+
+因此该差非零；(9.15) 使其局部高度严格大于 $a_vq^2M^2+d_v$，与 (9.16) 矛盾。此处只需上述一维循环差集，未对整个四维差集作不成立的分离断言。删去 $z=0$ 只会减少每块的点数。
+
+于是高于 $\tau_M$ 的关系最多有
+$N^3\lceil N/M\rceil\le N^4/M+N^3$ 个；后一项支付每条线末端不足一块的边界。其余关系由 (9.13) 的负部下界给出 $|\lambda_v(Q_z)|\le\tau_M+c_v$。高层则由 (9.11)、(9.13) 的上包络支付。故有一个只依赖 $v,q$ 及固定来源的常数 $C$，使
+
+$$
+\begin{aligned}
+\sum_{z\in B_L}|\lambda_v(Q_z)|
+&\le N^4(\tau_M+c_v)
+ +(N^4/M+N^3)\bigl(8C_0q^2L^2/n_v+d_v\bigr)\\
+&\le C\bigl(L^4M^2+L^6/M+L^5+L^4\bigr).
+\end{aligned}
+\tag{9.18}
+$$
+
+现在才取 $M=\lceil L^{2/3}\rceil$；它满足 $1\le M\le N$ 和
+$L^{2/3}\le M\le2L^{2/3}$。前两项各为 $O(L^{16/3})$，边界项 $L^5$ 与 $L^4$ 也被此阶支付，得到 (9.12)。常数的依赖顺序为：固定来源和高度负部、固定地方的参数图与差映射、固定 $q$，最后才是 $L,M$。没有使用逐点多对数估计，没有从紧性提取一个关于所有素数统一的常数。证毕。
+
+**定理 9.5（固定有限素数尾部围绕准确多项式的展开）。** 令 $\mathcal F$ 为任意固定有限有理素数集，保留定义 9.1 的同一嵌入族，并定义
+
+$$
+\begin{gathered}
+T_{\mathcal F}(L)=
+\sum_{z\in B_L}\sum_{\substack{p>5\\p\notin\mathcal F}}
+b_p(Q_z)\log p,\\
+\mathcal D_{\mathcal F}
+=\{v\in M_K:v\mid p,\ p\in\mathcal F\cup\{2,3,5\}\}
+ \ \cup\ \{v:v\mid\infty\}.
+\end{gathered}
+\tag{9.19}
+$$
+
+对每个有限 $L$，$T_{\mathcal F}(L)$ 是有限和，独立于全部所选嵌入，而且准确有
+
+$$
+T_{\mathcal F}(L)
+=H_L-\frac18\sum_{v\in\mathcal D_{\mathcal F}}
+n_v\sum_{z\in B_L}\lambda_v(Q_z).
+\tag{9.20}
+$$
+
+从而在 $L\to\infty$、$\mathcal F,q$ 固定时，
+
+$$
+\begin{gathered}
+T_{\mathcal F}(L)
+=\frac23q^2(H_1+H_2)L(L+1)(2L+1)^4
++O_{\mathcal F,q}(L^{16/3}),\\
+\lim_{L\to\infty}\frac{T_{\mathcal F}(L)}{q^2L^6}
+=\frac{32}{3}(H_1+H_2)>0.
+\end{gathered}
+\tag{9.21}
+$$
+
+证明。每个 $x(Q_z)\in K$ 只在有限多个有限地方有负赋值，且 $B_L$ 有限；其分母支持的并集仍有限。所有未删素数都是好约化素数，(9.7) 使其余局部高度全为零。因此可以交换此处全部求和而无需无穷级数的收敛假设。逐素数应用 (9.5)，再对每个 $Q_z$ 使用 (9.3)，就给出 (9.20)。每个素数的盒和已由 (9.4) 独立于地方选择，所以嵌入独立性在每个有限 $L$ 就成立，不是取极限后才成立。
+
+$\mathcal D_{\mathcal F}$ 固定且有限。定理 9.4 给出
+
+$$
+\left|T_{\mathcal F}(L)-H_L\right|
+\le\frac18\sum_{v\in\mathcal D_{\mathcal F}}n_v
+\sum_{z\in B_L}|\lambda_v(Q_z)|
+=O_{\mathcal F,q}(L^{16/3}).
+\tag{9.22}
+$$
+
+代入 (9.8) 即得第一式。将其除以 $q^2L^6$，误差趋于零，而
+$L(L+1)(2L+1)^4/L^6\to16$，得到第二式及其正性。特别地，(9.20) 的 $H_L$ 已经是规范高度总和，不再除以 $8$；被删除的地方包括所有无穷地方和 $\mathcal F\cup\{2,3,5\}$ 上方的全部地方。证毕。
+
+**命题 9.6（单点反例及固定清单的边界）。** (9.4) 不能一般化为本来源上每个单点的恒等式；(9.21) 也不提供移动素数截止或原共同小像筛选尾部的判定。
+
+证明。单点反例可在同一来源中直接给出。取 $q=1$，$S=P_1+P_2$，$A=[2]S=Q_{(2,0,2,0)}$。加法公式给出
+
+$$
+\xi=x(S)=\tfrac{21}{2}-3\sqrt{10},\qquad
+N_{\mathbb Q(\sqrt{10})/\mathbb Q}(\xi+1)=\tfrac{169}{4},
+\qquad
+x(A)=\frac{(\xi^2+1)^2}{4\xi(\xi^2-1)}.
+\tag{9.23}
+$$
+
+这里 $\sqrt{10}=\sqrt6\sqrt{15}/3\in K$。在 $13$ 处，$10$ 的两个平方根分别约化为 $6,-6$，由 Hensel 引理分别确定 $\mathbb Q_{13}$ 中的根。在第一支 $\xi\equiv-1$，第二支 $\xi\equiv9$。第二支的 $\xi+1$ 为单位，范数等式使第一支 $v_{13}(\xi+1)=2$；其中 $\xi,\xi-1,\xi^2+1$ 均为单位。因此第一支 $v_{13}(x(A))=-2$，第二支 $v_{13}(x(A))\ge0$。由 (9.7)，两支的局部高度分别是 $\log13$ 和 $0$。由 $[K:\mathbb Q(\sqrt{10})]=4$ 及局部次数的塔式，两支在 $K$ 上方的局部次数总和各为 $4$，所以全部地方的加权平均是 $\frac12\log13$，而选第二支的读数为零。这反驳单点恒等式；全盒恒等式依赖 (9.6) 的重编号，仍然成立。
+
+定理 9.4 中的邻域半径、差映射损失和高度常数分别依赖固定地方。定理 9.5 只将固定有限个这种常数相加，不附带这些常数的有效求取结论，也没有全部素数上的统一速度。因此不能把 $\mathcal F$ 换成随 $L$ 移动的清单，不能从 (9.21) 推出只保留 $p>L^4$ 或原 $p>R^2$ 的尾部渐近式。
+
+此外本节的 $B_L$ 是无筛选的完整四维盒，来源为 (9.1)；定义 8.1 的原来源、共同入口及共同小像条件并未出现在 (9.19) 中。全盒分母总量不能决定经该条件筛选后的质量，故没有证明或否定原 RG004 §70 的 $V_H(R)=o(q_H^2R^3)$，也没有证明 (8.5) 的算术稀疏性。原量子结构与数论对象之间的解释性桥梁仍属未证，本节没有给出物理实现或任何此类结构对应的证明。上述结论只使用明示的代数点、Galois 作用、局部群运算和高度关系。证毕。
+
+用白话说，把同一对点的四个整数系数全部装进一个对称盒后，共轭只会把盒中的标签重新排列，所以任意事先选定的地方都能接回全球高度。某个固定地方若要在一个短块里同时收取两笔很高的费用，两点之差就会迫使一个短倍点付出超过全球高度所给上限的费用；因此每块至多容纳一笔。平衡块长后，任意固定有限地方的总费用都低于六次主项，余下分母质量便有准确的正主项。这没有估计移动截止，也没有替原共同小像条件作筛选。
+
+## 追加锚（本行以下为增补区）
