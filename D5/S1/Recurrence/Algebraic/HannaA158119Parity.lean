@@ -163,20 +163,18 @@ private theorem Q_mod_two : Q.map (Int.castRingHom (ZMod 2)) =
 
 theorem result : claim := by
   intro m
-  rw [a, Int.natAbs_odd, ← ZMod.intCast_eq_one_iff_odd]
-  have hb := congrArg (coeff (2 * m)) B_mod_two
-  rw [Q_mod_two] at hb
-  change (coeff (2 * m) (B.map (Int.castRingHom (ZMod 2))) = 1) ↔ _
-  rw [hb]
   by_cases hm : m = 0
   · subst m
-    have h0 : constantCoeff
-        (D5.S1.Recurrence.Invariants.CatalanCompositionSquareParity.catalanSeries.map
-          (Int.castRingHom (ZMod 2))) = 0 := by
-      rw [← coeff_zero_eq_constantCoeff, coeff_map, coeff_zero_eq_constantCoeff,
-        D5.S1.Recurrence.Invariants.CatalanCompositionSquareParity.catalan_equation.1, map_zero]
-    simp [coeff_zero_eq_constantCoeff, h0]
-  · simp only [map_add, coeff_one, show 2 * m ≠ 0 by omega, ite_false, zero_add,
+    have h0 : constantCoeff B = 1 := by
+      rw [B, constantCoeff_subst_of_constantCoeff_zero Q_zero]
+      simpa using F_zero
+    simp [a, coeff_zero_eq_constantCoeff, h0]
+  · rw [a, Int.natAbs_odd, ← ZMod.intCast_eq_one_iff_odd]
+    have hb := congrArg (coeff (2 * m)) B_mod_two
+    rw [Q_mod_two] at hb
+    change (coeff (2 * m) (B.map (Int.castRingHom (ZMod 2))) = 1) ↔ _
+    rw [hb]
+    simp only [map_add, coeff_one, show 2 * m ≠ 0 by omega, ite_false, zero_add,
       D5.S1.Recurrence.Invariants.CatalanCompositionSquareParity.binary_catalan,
       hm, false_or]
     constructor
