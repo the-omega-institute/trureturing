@@ -50,8 +50,8 @@ internal sealed class SplitPrimeSphereRadiiDocument : IScribeDocumentDefinition
         var equation = Seq(Pow(Par(SumI(reciprocal)), D(2)), Eq,
             D(3), SumI(Pow(Par(reciprocal), D(2))));
         var fiber = Seq(OpenBrace, V("j"), InMacro, Operatorname, Grp(V("Fin")), Par(D(4)),
-            Colon, V("j"), Neq, V("i"), Sp, Land, Sp,
-            Pow(V("p"), V("k")), Mid, Ri("j"), CloseBrace);
+            Colon, V("j"), Neq, Sp, V("i"), Sp, Land, Sp,
+            Pow(V("p"), V("k")), Mid, Sp, Ri("j"), CloseBrace);
         var count = Seq(Lvert, fiber, Rvert);
         return Disp(Seq(Forall, Sp, V("r"), Colon, Operatorname, Grp(V("Fin")), Par(D(4)),
             To, Mathbb, Grp(V("N")), Comma,
@@ -63,7 +63,7 @@ internal sealed class SplitPrimeSphereRadiiDocument : IScribeDocumentDefinition
             Forall, Sp, V("k"), InMacro, Mathbb, Grp(V("N")), Comma,
             D(0), Lt, V("k"), Sp, Implies, Sp,
             Forall, Sp, V("i"), InMacro, Operatorname, Grp(V("Fin")), Par(D(4)), Comma,
-            Pow(V("p"), V("k")), Mid, Ri("i"), Sp, Implies, Sp,
+            Pow(V("p"), V("k")), Mid, Sp, Ri("i"), Sp, Implies, Sp,
             Par(Seq(count, Eq, D(1), Sp, Lor, Sp, count, Eq, D(2)))));
     }
 }
