@@ -6,6 +6,8 @@ Parity of the original factorial-product OGF, its reversion quotient, and its un
 
 Paul D. Hanna's OEIS A158119 conjecture states: a(m) == 1 (mod 2) iff m is a power of 2 or m=0. The original integer OGF and quotient are taken from A155585 and A157308. The pinned source is oeis/oeisdata commit 5d3c6f683f5e0f2876df39773b7e49710c4f5f80, seq/A158/A158119.seq, seq/A157/A157308.seq and seq/A155/A155585.seq. The source qualification and independent review remain separate obligations.
 
+Related prior work: Vladimir Reshetnikov's ProveIt article at commit b61f8e7e32b64b32a925c2d3cffab80bc20fb4c6, SetTheory/Cardinals/docs/reports/generating-functions-and-asymptotics/oeis-sequence-asymptotics/a290569-power-weighted-dyck-moments/article.tex, proves powers-of-two parity for the quartic sequence A338634. The inspected text does not explicitly state the original A158119 result. No priority or new-method claim is made here.
+
 **Definition 1.1 (The original factorial-product summand).**
 
 Lean statement: `D5/S1/Recurrence/Algebraic/HannaA158119Parity.summand`
