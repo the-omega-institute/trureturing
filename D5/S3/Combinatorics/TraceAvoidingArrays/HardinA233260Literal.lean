@@ -8,9 +8,7 @@
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
-import Mathlib.Tactic
 import D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix
-import Mathlib.Data.List.ChainOfFn
 
 /-! Exact literal normalization and finite column transfer for five-row antidiagonal arrays. -/
 
