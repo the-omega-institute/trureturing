@@ -43,14 +43,18 @@ internal sealed class KurkovTriangularColumnSumDocument : IScribeDocumentDefinit
                 + "factorial successor identity give the inclusive sum, including n=0. "
                 + "The prefatory Stirling identity, Conjectures 2–4 and k=0 are outside "
                 + "this theorem. Source: Mikhail Kurkov and OEIS Foundation, CC-BY-SA 4.0.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a396981-kurkov-conjecture1-positive-column-factorial-sum"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) =>
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("a396981-c1-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolution);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula N() => Seq(Mathbb, Grp(V("N")));
