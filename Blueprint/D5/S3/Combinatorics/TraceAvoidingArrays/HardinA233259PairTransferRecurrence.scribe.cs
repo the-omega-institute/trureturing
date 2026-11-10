@@ -19,7 +19,7 @@ internal sealed class HardinA233259PairTransferRecurrenceDocument : IScribeDocum
     private static Formula D(int n) => StrataLint.Scribe.FormulaDsl.D(n.ToString(System.Globalization.CultureInfo.InvariantCulture).Select(c=>(byte)(c-'0')).ToArray());
     private static Formula Q(string n) => Seq(n.Split('.').SelectMany((part,i)=>i==0?new[]{Operatorname,Grp(V(part))}:new[]{Dot,Operatorname,Grp(V(part))}).ToArray());
     private static Formula App(Formula f, params Formula[] args) => new Formula.Apply(f,[..args]);
-    private static Formula Typed(Formula x, Formula t) => Seq(Open,x,Colon,Sp,t,Close);
+    private static Formula Typed(Formula x, Formula t) => Parenthesized(Seq(x, Colon, Sp, t));
     private static Formula All(string n, Formula t, Formula b) => new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(n), t, b);
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Add, Parenthesized(b));

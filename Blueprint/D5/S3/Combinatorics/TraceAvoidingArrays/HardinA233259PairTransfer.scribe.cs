@@ -23,7 +23,7 @@ internal sealed class HardinA233259PairTransferDocument : IScribeDocumentDefinit
     private static Formula Q(string name) => Seq(name.Split('.').SelectMany((part, i) =>
         i == 0 ? new[] { Op(part) } : new[] { Dot, Op(part) }).ToArray());
     private static Formula App(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
-    private static Formula Typed(Formula x, Formula t) => Seq(Open, x, Colon, Sp, t, Close);
+    private static Formula Typed(Formula x, Formula t) => Parenthesized(Seq(x, Colon, Sp, t));
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Add, Parenthesized(b));
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Subtract, Parenthesized(b));
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Multiply, Parenthesized(b));

@@ -18,12 +18,9 @@ row_major_lt: proof_shape=bind-only; consumers=normal_iff
 normal_iff: proof_shape=bind-only; consumers=legal_iff
 legal_iff: proof_shape=bind-only; consumers=literal_card
 literal_card: proof_shape=bind-only; consumers=a_sum
-used: proof_shape=bind-only; consumers=used_eq_card, used_two_or_three, omitted_label, alternating_used, canon_two_eq, canonical_two_card, a_sum, weighted_count
-used_eq_card: proof_shape=bind-only; consumers=used_two_or_three, alternating_used
 proper_relabel: proof_shape=bind-only; consumers=L_card
 proper_two_labels: proof_shape=bind-only; consumers=used_two_or_three, L_card
 columns_constant: proof_shape=bind-only; consumers=two_label_classification
-alternating: proof_shape=bind-only; consumers=alternating_proper, two_label_classification, alternating_used, alternating_canon, canon_two_eq, canonical_two_card
 alternating_proper: proof_shape=bind-only; consumers=canonical_two_card
 two_label_classification: proof_shape=bind-only; consumers=canon_two_eq
 used_two_or_three: proof_shape=bind-only; consumers=weighted_count
@@ -56,7 +53,7 @@ open scoped BigOperators
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259Strip
 open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
 open D5.S3.Combinatorics.TraceAvoidingArrays
-open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder (normal)
+open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder (normal used alternating)
 
 def Legal {n : ℕ} (A : Fin 4 × Fin n → Fin 6) : Prop :=
   (∃ j : Fin n, j.val = 0 ∧ A (0, j) = 0) ∧
@@ -117,16 +114,6 @@ private theorem literal_card {n : ℕ} (hn : 0 < n) :
   ext A
   simp only [Finset.mem_filter, Finset.mem_univ, true_and, legal_iff hn]
 
-private noncomputable def used {n : ℕ} (P : Fin 4 × Fin n → Fin 3) : ℕ :=
-  Nat.card (Set.range P)
-
-private theorem used_eq_card {n : ℕ} (P : Fin 4 × Fin n → Fin 3) :
-    used P = (Finset.univ.image P).card := by
-  have he : Set.range P = (↑(Finset.univ.image P) : Set (Fin 3)) := by
-    ext x
-    simp
-  rw [used, he, Nat.card_coe_set_eq, Set.ncard_coe_finset]
-
 private theorem proper_relabel {n : ℕ} (e : Equiv.Perm (Fin 3))
     (P : Fin 4 × Fin n → Fin 3) : Proper (e ∘ P) ↔ Proper P := by
   simp only [Proper, Function.comp_apply, e.injective.ne_iff]
@@ -167,15 +154,12 @@ private theorem columns_constant {n : ℕ} (hn : 2 ≤ n)
   · exact (adjacent 1).symm.trans (adjacent 0).symm
   · exact (adjacent 2).symm.trans ((adjacent 1).symm.trans (adjacent 0).symm)
 
-private def alternating (n : ℕ) (a b : Fin 3) : Fin 4 × Fin n → Fin 3 :=
-  fun p => if p.2.val % 2 = 0 then a else b
-
 private theorem alternating_proper (n : ℕ) (a b : Fin 3) (hab : a ≠ b) :
     Proper (alternating n a b) := by
   intro j hj r s _
-  dsimp [alternating]
-  have hpar : (j.val + 1) % 2 = 0 ↔ ¬ j.val % 2 = 0 := by omega
-  by_cases h : j.val % 2 = 0 <;> simp [h, hpar, hab, Ne.symm hab]
+  change (if j.val % 2 = 0 then a else b) ≠
+    (if (j.val + 1) % 2 = 0 then a else b)
+  split_ifs <;> first | exact hab | exact hab.symm | omega
 
 private theorem two_label_classification {n : ℕ} (hn : 2 ≤ n)
     (P : Fin 4 × Fin n → Fin 3) (hp : Proper P)
@@ -194,19 +178,13 @@ private theorem two_label_classification {n : ℕ} (hn : 2 ≤ n)
 
 private theorem used_two_or_three {n : ℕ} (hn : 2 ≤ n)
     (P : Fin 4 × Fin n → Fin 3) (hp : Proper P) : used P = 2 ∨ used P = 3 := by
-  classical
   obtain ⟨i, j, hij⟩ := proper_two_labels hn P hp
-  have hpair : ({P i, P j} : Finset (Fin 3)) ⊆ Finset.univ.image P := by
-    intro x hx
-    simp only [Finset.mem_insert, Finset.mem_singleton] at hx
-    rcases hx with rfl | rfl
-    · exact Finset.mem_image.mpr ⟨i, Finset.mem_univ _, rfl⟩
-    · exact Finset.mem_image.mpr ⟨j, Finset.mem_univ _, rfl⟩
-  have hl : 2 ≤ used P := by
-    simpa [used_eq_card, hij] using Finset.card_le_card hpair
-  have hu : used P ≤ 3 := by
-    rw [used_eq_card]
-    simpa using Finset.card_le_card (Finset.subset_univ (Finset.univ.image P))
+  have hlo : 1 < (Set.range P).ncard :=
+    Set.one_lt_ncard_iff_nontrivial.mpr
+      ⟨P i, Set.mem_range_self i, P j, Set.mem_range_self j, hij⟩
+  have hhi : (Set.range P).ncard ≤ 3 := by
+    simpa using Set.ncard_le_card (Set.range P)
+  rw [used, Nat.card_coe_set_eq]
   omega
 
 private theorem omitted_label {n : ℕ} (P : Fin 4 × Fin n → Fin 3)
@@ -220,20 +198,18 @@ private theorem omitted_label {n : ℕ} (P : Fin 4 × Fin n → Fin 3)
 
 private theorem alternating_used {n : ℕ} (hn : 2 ≤ n) (a b : Fin 3) (hab : a ≠ b) :
     used (alternating n a b) = 2 := by
-  classical
-  have hr : Finset.univ.image (alternating n a b) = ({a, b} : Finset (Fin 3)) := by
-    ext x
-    simp only [Finset.mem_image, Finset.mem_univ, true_and,
-      Finset.mem_insert, Finset.mem_singleton]
-    constructor
-    · rintro ⟨p, rfl⟩
-      dsimp [alternating]
+  have ha : a ∈ Set.range (alternating n a b) :=
+    ⟨(0, ⟨0, by omega⟩), by simp [alternating]⟩
+  have hb : b ∈ Set.range (alternating n a b) :=
+    ⟨(0, ⟨1, by omega⟩), by simp [alternating]⟩
+  have hr : Set.range (alternating n a b) = {a, b} := by
+    apply Set.Subset.antisymm
+    · rintro x ⟨p, rfl⟩
+      simp only [alternating]
       split_ifs <;> simp
-    · rintro (rfl | rfl)
-      · exact ⟨(0, ⟨0, by omega⟩), by simp [alternating]⟩
-      · exact ⟨(0, ⟨1, by omega⟩), by simp [alternating]⟩
-  rw [used_eq_card, hr]
-  simp [hab]
+    · exact Set.insert_subset ha (Set.singleton_subset_iff.mpr hb)
+  rw [used, hr, Nat.card_coe_set_eq]
+  exact Set.ncard_pair hab
 
 private theorem alternating_canon {n : ℕ} (hn : 0 < n) :
     Canon (alternating n 0 1) := by

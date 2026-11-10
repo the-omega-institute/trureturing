@@ -13,7 +13,7 @@ internal sealed class HardinA233259PairTransferCountDocument : IScribeDocumentDe
     private static Formula Vector(params int[] xs) => Seq(Bang, OpenBracket, Seq(xs.SelectMany((x,i)=>i==0?new[]{D(x)}:new[]{Comma,Sp,D(x)}).ToArray()), CloseBracket);
     private static Formula All(string n, Formula t, Formula b) => new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(n), t, b);
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
-    private static Formula Typed(Formula x, Formula t) => Seq(Open, x, Colon, Sp, t, Close);
+    private static Formula Typed(Formula x, Formula t) => Parenthesized(Seq(x, Colon, Sp, t));
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Add, Parenthesized(b));
     private static Formula Parenthesized(Formula x) => Seq(Open, x, Close);
     private static Formula Power(Formula a, Formula b) => new Formula.Power(a,b);
