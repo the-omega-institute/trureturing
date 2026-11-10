@@ -48,6 +48,10 @@ $$\forall n \in \mathbb{N},\; (\operatorname{Odd}\left(n\right)) \Rightarrow ((1
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/InterlaceFan/SongA232624LeadingTerm.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/song232624-leadingterm` (proved) by `D5/S3/Arith/InterlaceFan/SongA232624LeadingTerm.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"song232624-leadingterm","declaration_gid":"D5/S3/Arith/InterlaceFan/SongA232624LeadingTerm.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Jianing Song; Wolfdieter Lang (2019). *OEIS A232624: cosine minimal-polynomial coefficient array and Song's conjecture*. URL: <https://oeis.org/A232624>.

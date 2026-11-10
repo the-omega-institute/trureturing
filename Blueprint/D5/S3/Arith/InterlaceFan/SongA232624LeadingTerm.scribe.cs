@@ -29,13 +29,15 @@ internal sealed class SongA232624LeadingTermDocument : IScribeDocumentDefinition
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Song's leading term formula", ClaimBody(),
                 "Möbius inversion in the power-series quotient by X raised to m + 1 leaves the unique factor indexed by rad(n) and n/rad(n). Its first nonconstant coefficient is minus e. Reflection at odd conductors makes the cyclotomic half-difference start with e times X raised to m. Homogeneous evaluation at X squared plus one and X identifies it with the reciprocal substitution of the actual cosine minimal-polynomial difference. Its lowest coefficient determines the degree and leading coefficient of that difference without cancellation. Reflection then gives every displayed coefficient identity.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("song232624-leadingterm"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) =>
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolutionClaim = null) =>
         Describe.Lean(DescribeId.Create("song232624-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolutionClaim);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Qualified(string owner, string name) => Seq(Named(owner), Dot, Named(name));
