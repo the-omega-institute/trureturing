@@ -1,0 +1,63 @@
+**命题 25.5（同一有限 TP 仪器及其失败支）。** 用 (14.7) 的相干向量
+
+$$
+ e_z=(1+|z|^2)^{-m/2}
+       (|0\rangle+z|1\rangle)^{\otimes m},\qquad
+ T_m(a)=D\int_{S^2}a(u)\tau_u\,d\mu(u)
+ \tag{25.14}
+$$
+
+定义有限矩阵 $A_{lk}=T_m(f_{lk})$、$S=\sum_{lk}A_{lk}^\dagger A_{lk}$ 和 $A_0=\sqrt{I-S}$。则 $0\le S\le I$，以下仪器精确保迹：
+
+$$
+ \Psi(X)=\sum_{l=1}^J\left(\sum_{k=0}^{K_0}A_{lk}XA_{lk}^\dagger\right)
+                  \otimes|l\rangle\langle l|
+             +A_0XA_0^\dagger\otimes|0\rangle\langle0|.
+ \tag{25.15}
+$$
+
+其实际量子输出是原标记 $R$，实际原始获取记录是有限经典 $l$；$k$ 是形式 Kraus 指标。失败 $l=0$ 始终保留，且对每个输入态，其概率至多 $C_{\rm fail}/\lambda$。
+
+证明。按归一对称张量基展开 (25.14)，角积分使非对角项为零，径向 beta 积分给每个对角元 $1/D$，故
+
+$$
+ D\int\tau_u\,d\mu(u)=I,\qquad
+ |\langle e_u,e_h\rangle|=\cos^m(\theta(u,h)/2).
+ \tag{25.16}
+$$
+
+因此 $T_m$ 是从标量函数代数到有限矩阵的 unital CP 映射。其 Schwarz 不等式给
+$S\le T_m(\sum_{lk}|f_{lk}|^2)\le I$，于是 (25.15) 连同失败支精确 TP。可保留 $l$ 的确定性副本、固定程序及实际解码输出；这些是经典记录上的等距复制，不改变下述返回估计。
+
+为估计失败，令相干变换 $V_c\psi(u)=\sqrt D\langle e_u,\psi\rangle$，$P=V_cV_c^\dagger$。这是到平方可积相干截面的等距变换及其正交投影；局部相位选择不影响以下核范数。以 $M_f$ 表示乘以有限向量 $f$，由 $T_m(a)=V_c^\dagger M_aV_c$ 得精确恒等式
+
+$$
+ I-S=T_m(1-\|f\|^2)
+       +V_c^\dagger M_f^\dagger(I-P\otimes I)M_fV_c.
+ \tag{25.17}
+$$
+
+第一项范数至多 $\eta$。第二项是一个正平方，其平方根范数不超过
+$M_fP-(P\otimes I)M_f$ 的范数。这个算子的核为
+$D(f(u)-f(v))\langle e_u,e_v\rangle$。由 (25.10)，$f$ 对角距离为 $A/s$-Lipschitz；沿球面路径可逐点用中心坐标，其中球面单位速度对应的坐标速度至多一。Schur 核估计及 (25.16) 给
+
+$$
+ \|M_fP-(P\otimes I)M_f\|
+ \le\frac{A}{s}D\int\theta(u,v)\cos^m(\theta(u,v)/2)\,d\mu(v)
+ \le\frac{16A}{s\sqrt m}.
+ \tag{25.18}
+$$
+
+具体地 $r=\sin^2(\theta/2)$ 在归一面积下均匀分布于 $[0,1]$，$\theta\le\pi\sqrt r$、$(1-r)^{m/2}\le e^{-mr/2}$、$D\le2m$，故该积分至多
+$2\pi m\int_0^\infty r^{1/2}e^{-mr/2}dr
+=2\pi2^{3/2}\Gamma(3/2)/\sqrt m<16/\sqrt m$。
+两种 Schur 积分上界相同，亦适用于向量值核。由 (25.17)，
+
+$$
+ \|I-S\|\le\eta+\frac{256A^2}{ms^2}
+             =\frac{C_{\rm fail}}\lambda.
+ \tag{25.19}
+$$
+
+失败概率为 $\operatorname{Tr}[(I-S)X]$，结论成立。这里直接声明的是放宽类的约化 CP 原语；没有断言一个等距实现可以省去其实际环境。如果另一个实现产生额外实际系统，其完整输出必须另行估计，不能沿用 (25.15) 的端口结论。$\square$
+

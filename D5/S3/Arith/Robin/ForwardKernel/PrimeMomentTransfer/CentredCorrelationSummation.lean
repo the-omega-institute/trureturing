@@ -58,10 +58,10 @@ private lemma powerset_centred_error_le (SS : Finset ℕ → ℝ) (y : ℝ)
       ((pow_le_pow_right₀ (by norm_num : (1 : ℝ) ≤ 2) hD).trans_eq (by norm_num))
       (Finset.sum_nonneg (fun _ _ => abs_nonneg _))
 
-private theorem centred_tuple_partial_sums (SS : Finset ℕ → ℝ) (β : ℝ)
-    (hSS : SS ∅ = 1) (hMS : MeanSquareHL4 SS β) (M ε : ℝ) (hM : 1 ≤ M) (hε : 0 < ε) :
+private theorem centred_tuple_partial_sums {q : ℕ} (SS : Finset ℕ → ℝ) (β : ℝ)
+    (hSS : SS ∅ = 1) (hMS : MeanSquareHL q SS β) (M ε : ℝ) (hM : 1 ≤ M) (hε : 0 < ε) :
     ∃ C : ℝ, 0 ≤ C ∧ ∀ᶠ N : ℝ in atTop,
-      2 ≤ N ∧ ∀ k : ℕ, k ≤ 4 → ∀ K : ℕ, 1 ≤ K → (K : ℝ) ≤ M * N ^ β →
+      2 ≤ N ∧ ∀ k : ℕ, k ≤ min 4 q → ∀ K : ℕ, 1 ≤ K → (K : ℝ) ≤ M * N ^ β →
         ∀ T : Finset (Fin k → ℕ),
         T ⊆ Fintype.piFinset (fun _ => Finset.Ioc 0 K) →
         ∀ y : ℝ, y ∈ Icc N (2 * N) →
@@ -73,6 +73,8 @@ private theorem centred_tuple_partial_sums (SS : Finset ℕ → ℝ) (β : ℝ)
   filter_upwards [hbound] with N hN
   refine ⟨hN.1, ?_⟩
   intro k hk K hK hKN T hT y hy
+  have hk4 : k ≤ 4 := (Nat.le_min.mp hk).1
+  have hkq : k ≤ q := (Nat.le_min.mp hk).2
   have hN0 : 0 ≤ N := by linarith [hN.1]
   have hy0 : 0 ≤ y := hN0.trans hy.1
   have hpow : 1 ≤ N ^ (1 / 2 + ε) :=
@@ -94,7 +96,7 @@ private theorem centred_tuple_partial_sums (SS : Finset ℕ → ℝ) (β : ℝ)
         K hK hKN y hy.1 hy.2).trans (by
           nlinarith [Real.rpow_nonneg hN0 (1 / 2 + ε),
             pow_nonneg (Nat.cast_nonneg K : (0 : ℝ) ≤ K) r])
-  have hraw := sum_tuple_subsets_le k hk (Finset.Ioc 0 K) T hT
+  have hraw := sum_tuple_subsets_le k hk4 (Finset.Ioc 0 K) T hT
     (fun R => |correlationError SS y R|) (fun _ => abs_nonneg _)
   have hsum : (∑ r ∈ Finset.range (k + 1), (K : ℝ) ^ (k - r) *
       ∑ R ∈ (Finset.Ioc 0 K).powersetCard r, |correlationError SS y R|) ≤
@@ -122,7 +124,7 @@ private theorem centred_tuple_partial_sums (SS : Finset ℕ → ℝ) (β : ℝ)
     _ ≤ ∑ d ∈ T, 16 * ∑ R ∈ (Finset.univ.image d).powerset,
         |correlationError SS y R| := Finset.sum_le_sum (fun d _ =>
           powerset_centred_error_le SS y _
-            (Finset.card_image_le.trans (by simpa using hk)))
+            (Finset.card_image_le.trans (by simpa using hk4)))
     _ = 16 * ∑ d ∈ T, ∑ R ∈ (Finset.univ.image d).powerset,
         |correlationError SS y R| := (Finset.mul_sum ..).symm
     _ ≤ 16 * (256 * ∑ r ∈ Finset.range (k + 1), (K : ℝ) ^ (k - r) *
@@ -135,11 +137,11 @@ private theorem centred_tuple_partial_sums (SS : Finset ℕ → ℝ) (β : ℝ)
 /-- A common polynomial logarithmic BV weight can be applied after summing centred
 correlations over interval-box tuples. The constant is uniform in the tuple subfamily and
 in the assignment of coefficient polynomials. -/
-theorem centred_polynomial_log_correlation (SS : Finset ℕ → ℝ) (β : ℝ)
-    (hSS : SS ∅ = 1) (hMS : MeanSquareHL4 SS β) (M ε : ℝ) (hM : 1 ≤ M) (hε : 0 < ε)
+theorem centred_polynomial_log_correlation {q : ℕ} (SS : Finset ℕ → ℝ) (β : ℝ)
+    (hSS : SS ∅ = 1) (hMS : MeanSquareHL q SS β) (M ε : ℝ) (hM : 1 ≤ M) (hε : 0 < ε)
     (p : Polynomial ℝ) :
     ∃ C : ℝ, 0 ≤ C ∧ ∀ᶠ N : ℝ in atTop,
-      2 ≤ N ∧ ∀ k : ℕ, k ≤ 4 → ∀ K : ℕ, 1 ≤ K → (K : ℝ) ≤ M * N ^ β →
+      2 ≤ N ∧ ∀ k : ℕ, k ≤ min 4 q → ∀ K : ℕ, 1 ≤ K → (K : ℝ) ≤ M * N ^ β →
         ∀ T : Finset (Fin k → ℕ),
         T ⊆ Fintype.piFinset (fun _ => Finset.Ioc 0 K) →
         ∀ q : (Fin k → ℕ) → Finset ℕ → Polynomial ℝ,

@@ -1,0 +1,34 @@
+**引理 26.9（旁观记忆稳定的规定完成）。** 在 $\Phi_{\rm keep}$ 后附加 (19.4) 的独立场采样及保留的有理解码，然后恰接定义 17.1 的后缀。对每个原始允许场 $n$、每个 $h$，理想目标的同一完成态 $\Omega^{\rm keep}_{n,h}$ 满足
+
+$$
+ D_{\rm tr}\!\left(\Omega^{\rm keep}_{n,h},
+       \tau_h\otimes\operatorname{Tr}_R\Omega^{\rm keep}_{n,h}\right)
+ \ge\frac1{4\sqrt\lambda}.
+ \tag{26.19}
+$$
+
+证明。场采样只作用于独立非参考来源；将其全部输出态张量到 $\phi_h,\Xi_h$ 上。计算并保留最终解码器，同时保持原始标签和全部场数据，是这些非参考系统上的等距。因此它保持交叉块迹范数及差界 $B_*/\lambda$。以下将这些旧口统记为 $M$，并将相应扩充后的领先态仍写作 $\Xi_h$；其迹至多二。
+
+规定后缀不读取旧获取或场输出。令 $\mathcal F_v$ 为它的参考边缘通道，$v=n(+d e_x)$，并置 $\gamma=\sqrt m/D$、$W_1=\operatorname{span}\{e_h,e_1\}$。式 (17.12)、(22.9)、(22.10) 中两个原生等距与终端等距的算子范数差依次为 $6\gamma,6\gamma,8\gamma$；这些算子范数界张量任意旧旁观记忆后不变。
+
+在三个接触处作“理想前缀、实际后缀”的望远镜比较。理想前缀恒等作用于 $R$，故即使 $Y$ 在 $R,M$ 间相关，其参考支撑仍在 $W_1$。任意等距差 $\varepsilon$ 对应的联合迹范数差至多 $2\varepsilon\|Y\|_1$；其余非参考节点及实际后缀均为 CPTP。故直接在联合空间上有
+
+$$
+ \| (\mathcal F_v\otimes\operatorname{id}_M)(Y)-Y\|_1
+ \le(12+12+16)\gamma\|Y\|_1=40\gamma\|Y\|_1,
+ \quad\operatorname{supp}Y\subset W_1\otimes M.
+ \tag{26.20}
+$$
+
+这是 (22.11) 的原等距证明对任意旁观记忆的稳定延伸，不要求初态纯化，也不假定 $Y$ 是乘积。将它用于正的 $\Xi_h$，至多付 $80\gamma$。为取得下界检验，仅在完成态中偏迹新后缀系统；所得旧 $RM$ 态距 $\Xi_h$ 的迹范数至多 $B_*/\lambda+80\gamma$。于是其交叉块范数至少
+
+$$
+ \frac1{2\sqrt\lambda}-\frac{B_*}{\lambda}-80\gamma
+ \ge\frac1{2\sqrt\lambda}-\frac1{8\sqrt\lambda}
+                         -\frac1{8\sqrt\lambda}
+ =\frac1{4\sqrt\lambda},
+ \tag{26.21}
+$$
+
+因为 $\gamma\le1/\sqrt m=s/\sqrt\lambda$、$80s\le1/8$。引理 26.6 的对偶检验给约化态相对自身边缘的同一下界；迹距离收缩再给全部实际完成口的 (26.19)。偏迹新口只用于下界见证，实际比较仍包含全部新旧口，不删去任何记录，也不在可区分历史间求消。此结论只量化于忽略旧输出的定义 17.1 固定完成，不量化于任意反馈恢复后缀；它不是另一个单脉冲首退出限制。$\square$
+

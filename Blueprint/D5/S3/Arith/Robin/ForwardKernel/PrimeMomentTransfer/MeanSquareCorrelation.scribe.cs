@@ -27,9 +27,21 @@ internal sealed class MeanSquareCorrelationDocument : IScribeDocumentDefinition
                     + "floor y of the product of von Mangoldt(n+d) for d in D, minus y SS(D)."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("mean-square-hl-order"),
+                DeclarationHandle.Create(Prefix + "MeanSquareHL"),
+                H("Mean-square hypothesis through a prescribed order"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For each natural maximal order q, MeanSquareHL(q,SS,beta) requires the uniform "
+                    + "mean-square raw error bound C N^(1+2 epsilon) K^r for every order 1<=r<=q. "
+                    + "For each epsilon>0 and M>=1, one positive C and one threshold work for all "
+                    + "such r, natural 1<=K<=M N^beta and real N<=y<=2N."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("mean-square-hl-four"),
                 DeclarationHandle.Create(Prefix + "MeanSquareHL4"),
-                H("Uniform mean-square hypothesis"),
+                H("The four-point mean-square instance"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
@@ -47,9 +59,9 @@ internal sealed class MeanSquareCorrelationDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Assume MeanSquareHL4 for SS and beta. For every positive epsilon and M>=1 "
+                    "Assume MeanSquareHL(q,SS,beta). For every positive epsilon and M>=1 "
                     + "there is A>=0 such that, for all sufficiently large real N>=2, all r from "
-                    + "one through four, all natural 1<=K<=M N^beta, and N<=y<=2N, the sum of "
+                    + "one through q, all natural 1<=K<=M N^beta, and N<=y<=2N, the sum of "
                     + "absolute correlationError(SS,y,D) over all r-element subsets D of {1,...,K} "
                     + "is at most A N^(1/2+epsilon) K^r. Every such subset has an injective "
                     + "enumeration. Cauchy–Schwarz and the bound K^r on their number supply the estimate."))),

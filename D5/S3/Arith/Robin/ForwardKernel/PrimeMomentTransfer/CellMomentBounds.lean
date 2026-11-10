@@ -4,9 +4,10 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Mean-square prime correlations: Cell sampling has measurable normalized increments and uniform fourth moment bounds. -/
+   digest: Mean-square prime correlations: Cell sampling has measurable normalized increments and uniform second and fourth moment bounds. -/
 
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.DiscreteFourthBound
+import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.DiscreteSecondBound
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.CellQuadrature
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.ContinuousSampling
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.NormalizationAlgebra
@@ -138,33 +139,36 @@ theorem sampling_memLp (N H M a b : ℝ) (hN : 2 ≤ N) (hL : 1 ≤ Real.log N)
     exact (Real.norm_eq_abs _).le.trans (hbnd.1 a b _ ha hab hb
       (Nat.floor_mono hx.1) ((Nat.floor_mono hx.2).trans (Nat.floor_le_ceil _)))
 
-private theorem p_cell_fourth_from_sum (N H M C : ℝ) (hN : 2 ≤ N)
+private theorem p_cell_from_sum (p : ℕ) (hp : p = 2 ∨ p = 4) (N H M C : ℝ) (hN : 2 ≤ N)
     (hL : 1 ≤ Real.log N) (hH : 1 ≤ H) (hM : 1 ≤ M) (hMH : M * H ≤ N)
     (_hC : 0 ≤ C)
     (hdisc : ∀ a b : ℝ, 0 ≤ a → a ≤ b → b ≤ M →
-      (∑ n ∈ Finset.Ioc ⌊N⌋₊ ⌊2 * N⌋₊, |S H a b n| ^ 4) ≤ C * N * (H * Real.log N) ^ 2)
+      (∑ n ∈ Finset.Ioc ⌊N⌋₊ ⌊2 * N⌋₊, |S H a b n| ^ p) ≤ C * N * (H * Real.log N) ^ (p / 2))
     (a b : ℝ) (ha : 0 ≤ a) (hab : a ≤ b) (hb : b ≤ M) :
-    (∫ t in (1 : ℝ)..2, |S H a b ⌊N * t⌋₊ / Real.sqrt (H * Real.log N)| ^ 4) ≤
-      C + 9 * (4 * (M + 1)) ^ 4 * (H * Real.log N) ^ 2 / N := by
+    (∫ t in (1 : ℝ)..2, |S H a b ⌊N * t⌋₊ / Real.sqrt (H * Real.log N)| ^ p) ≤
+      C + 9 * (4 * (M + 1)) ^ p * (H * Real.log N) ^ (p / 2) / N := by
   have hN0 : 0 < N := by linarith
   have hH0 : 0 < H := by linarith
   have hL0 : 0 < Real.log N := by linarith
   have hQ0 : 0 < Real.sqrt (H * Real.log N) := Real.sqrt_pos.mpr (by positivity)
-  have hQ4 := (normalizer_powers H (Real.log N) hH0 hL0).2.2.2
-  let F : ℕ → ℝ := fun n => |S H a b n / Real.sqrt (H * Real.log N)| ^ 4
-  let A : ℝ := (4 * (M + 1)) ^ 4 * (H * Real.log N) ^ 2
+  have hQ4 : Real.sqrt (H * Real.log N) ^ p = (H * Real.log N) ^ (p / 2) := by
+    rcases hp with rfl | rfl
+    · norm_num [Real.sq_sqrt (by positivity : 0 ≤ H * Real.log N)]
+    · exact (normalizer_powers H (Real.log N) hH0 hL0).2.2.2
+  let F : ℕ → ℝ := fun n => |S H a b n / Real.sqrt (H * Real.log N)| ^ p
+  let A : ℝ := (4 * (M + 1)) ^ p * (H * Real.log N) ^ (p / 2)
   let w : ℝ → ℝ := (Icc (1 : ℝ) 2).indicator (fun _ => 1)
   have hF : ∀ n, ⌊N⌋₊ ≤ n → n ≤ ⌈2 * N⌉₊ → |F n| ≤ A := by
     intro n hnlo hnhi
     have hs := p_S_bound N H M a b n hN hL hH hM hMH ha hab hb hnlo hnhi
-    have hp := pow_le_pow_left₀ (abs_nonneg _) hs 4
+    have hp := pow_le_pow_left₀ (abs_nonneg _) hs p
     simpa only [F, A, abs_pow, abs_abs, mul_pow, hQ4] using hp
-  have hnorm (n : ℕ) : F n = |S H a b n| ^ 4 / (H * Real.log N) ^ 2 := by
+  have hnorm (n : ℕ) : F n = |S H a b n| ^ p / (H * Real.log N) ^ (p / 2) := by
     dsimp [F]
     rw [abs_div, div_pow, abs_of_pos hQ0, hQ4]
   have hsum : (∑ n ∈ Finset.Ioc ⌊N⌋₊ ⌊2 * N⌋₊, F n) ≤ C * N := by
     simp_rw [hnorm, ← Finset.sum_div]
-    exact (div_le_iff₀ (by positivity : 0 < (H * Real.log N) ^ 2)).mpr (hdisc a b ha hab hb)
+    exact (div_le_iff₀ (by positivity : 0 < (H * Real.log N) ^ (p / 2))).mpr (hdisc a b ha hab hb)
   have hquad := cell_quadrature N A 3 F w hN (by dsimp [A]; positivity)
     (cutoff_bv 1 2 le_rfl (by norm_num) le_rfl) hF
   have hwx (x : ℝ) (hx : x ∈ Icc N (2 * N)) : w (x / N) = 1 := by
@@ -209,7 +213,7 @@ theorem uniform_cell_fourth (SS : Finset ℕ → ℝ) (α β M : ℝ)
   have hp : 0 ≤ (4 * (M + 1)) ^ 4 := by positivity
   refine ⟨C + 9 * (4 * (M + 1)) ^ 4 + 1, by linarith, ?_⟩
   filter_upwards [hdisc, range_geometry α β M hα (by linarith) (by linarith),
-    cell_rate β 1 4 (by linarith) hβ (by norm_num) zero_lt_one]
+    cell_rate β 1 4 (by linarith) (by linarith) (by norm_num) zero_lt_one]
     with N hdisc hgeom hrate
   intro H hHlo hHhi a b ha hab hb
   obtain ⟨hH, _hHN, hMH⟩ := hgeom.2.2 H hHlo hHhi
@@ -217,7 +221,7 @@ theorem uniform_cell_fourth (SS : Finset ℕ → ℝ) (α β M : ℝ)
   have hsmall : ((H : ℝ) * Real.log N) ^ 2 / N ≤ 1 := by
     simpa only [Nat.cast_ofNat, show (4 : ℝ) / 2 = 2 by norm_num, Real.rpow_two]
       using hrate H hH1 hHhi
-  have hbnd := p_cell_fourth_from_sum N H M C hgeom.1 hgeom.2.1 hH1 hM hMH hC
+  have hbnd := p_cell_from_sum 4 (Or.inr rfl) N H M C hgeom.1 hgeom.2.1 hH1 hM hMH hC
     (hdisc H hHlo hHhi) a b ha hab hb
   calc
     _ ≤ C + 9 * (4 * (M + 1)) ^ 4 * ((H : ℝ) * Real.log N) ^ 2 / N := hbnd
@@ -225,6 +229,36 @@ theorem uniform_cell_fourth (SS : Finset ℕ → ℝ) (α β M : ℝ)
     _ ≤ C + (9 * (4 * (M + 1)) ^ 4) * 1 :=
       add_le_add (le_refl C) (mul_le_mul_of_nonneg_left hsmall (by positivity))
     _ = C + 9 * (4 * (M + 1)) ^ 4 := by ring
+    _ ≤ _ := by linarith
+
+/-- Cell second moments are uniformly bounded on the cubic length range. -/
+theorem uniform_cell_second (SS : Finset ℕ → ℝ) (α β M : ℝ)
+    (hα : 0 < α) (hαβ : α < β) (hβ : β < 1 / 3)
+    (hSS : SS ∅ = 1) (hSS1 : ∀ d, SS {d} = 1)
+    (hMS : MeanSquareHL 3 SS β) (hcor : IntervalCorrelations SS) (hM : 1 ≤ M) :
+    ∃ C : ℝ, 1 ≤ C ∧ ∀ᶠ N : ℝ in atTop,
+      ∀ H : ℕ, N ^ α ≤ (H : ℝ) → (H : ℝ) ≤ N ^ β →
+      ∀ a b : ℝ, 0 ≤ a → a ≤ b → b ≤ M →
+        (∫ t in (1 : ℝ)..2, |S H a b ⌊N * t⌋₊ / Real.sqrt ((H : ℝ) * Real.log N)| ^ 2) ≤ C := by
+  obtain ⟨C, hC, hdisc⟩ := uniform_discrete_second_bound SS α β M
+    hα hαβ hβ hSS hSS1 hMS hcor hM
+  refine ⟨C + 9 * (4 * (M + 1)) ^ 2 + 1, by nlinarith [sq_nonneg (4 * (M + 1))], ?_⟩
+  filter_upwards [hdisc, range_geometry α β M hα (by linarith) (by linarith),
+    cell_rate β 1 2 (by linarith) (by linarith) (by norm_num) zero_lt_one]
+    with N hdisc hgeom hrate
+  intro H hHlo hHhi a b ha hab hb
+  obtain ⟨hH, _, hMH⟩ := hgeom.2.2 H hHlo hHhi
+  have hH1 : 1 ≤ (H : ℝ) := by linarith
+  have hsmall : ((H : ℝ) * Real.log N) / N ≤ 1 := by
+    simpa only [Nat.cast_ofNat, show (2 : ℝ) / 2 = 1 by norm_num, Real.rpow_one]
+      using hrate H hH1 hHhi
+  have hbnd := p_cell_from_sum 2 (Or.inl rfl) N H M C hgeom.1 hgeom.2.1 hH1 hM hMH hC
+    (by simpa only [Nat.reduceDiv, pow_one] using hdisc H hHlo hHhi) a b ha hab hb
+  norm_num only [Nat.reduceDiv, pow_one] at hbnd
+  calc
+    _ ≤ C + 9 * (4 * (M + 1)) ^ 2 * ((H : ℝ) * Real.log N) / N := hbnd
+    _ = C + (9 * (4 * (M + 1)) ^ 2) * (((H : ℝ) * Real.log N) / N) := by ring
+    _ ≤ C + (9 * (4 * (M + 1)) ^ 2) * 1 := by gcongr
     _ ≤ _ := by linarith
 
 end
