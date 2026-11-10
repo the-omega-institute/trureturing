@@ -8,6 +8,9 @@ internal sealed class HannaA158119ParityDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S1/Recurrence/Algebraic/HannaA158119Parity.";
 
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/Recurrence/hanna2009a158119");
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Parity of the original factorial-product OGF, its reversion quotient, and its unsigned even coefficients.",
         H("Hanna's A158119 parity conjecture"),
@@ -17,7 +20,7 @@ internal sealed class HannaA158119ParityDocument : IScribeDocumentDefinition
                 + "The original integer OGF and quotient are taken from A155585 and A157308. "
                 + "The pinned source is oeis/oeisdata commit 5d3c6f683f5e0f2876df39773b7e49710c4f5f80, "
                 + "seq/A158/A158119.seq, seq/A157/A157308.seq and seq/A155/A155585.seq. "
-                + "The source qualification and independent review remain separate obligations.")),
+                + "The source definition and bounded prior-work limits are documented in hanna2009a158119.")),
             Paragraph(Text("Related prior work: Vladimir Reshetnikov's ProveIt article at "
                 + "commit b61f8e7e32b64b32a925c2d3cffab80bc20fb4c6, "
                 + "SetTheory/Cardinals/docs/reports/generating-functions-and-asymptotics/"
@@ -52,7 +55,7 @@ internal sealed class HannaA158119ParityDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Prefix + "result"),
                 H("The full parity statement"), StatementSource.FromAuthor(ClaimFormula()),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(
                     "Modulo two the factors 2k vanish and n! vanishes for n at least two. "
                     + "Thus F reduces to 1+X, B reduces to 1+Q, and Q+Q^2=X. "
                     + "Mathlib's uniqueness of reversion identifies Q with the existing reduced "
@@ -61,12 +64,14 @@ internal sealed class HannaA158119ParityDocument : IScribeDocumentDefinition
                     + "and restricting the degree to 2m gives precisely the displayed equivalence. "
                     + "The zero index is included explicitly. This is an application of existing "
                     + "reversion and Catalan parity results; no new proof method is claimed."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem, new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("hanna-a158119-original-parity"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, string prose, DescribeRole role) =>
         Describe.Lean(DescribeId.Create(name.Replace("_", "-").ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
-            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
+            AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
 
     private static Formula V(string s) => F.Id(s);
     private static Formula Nat() => Seq(Mathbb, Grp(V("N")));
