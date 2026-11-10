@@ -30,7 +30,7 @@ A has type N -> N -> N. Its zeroth row is one at every column, its zeroth column
 
 **Theorem 1.3 (Existence and the complete positive-column identity).**
 
-$$(\exists A: \mathbb{N} \to \mathbb{N} \to \mathbb{N}, (\operatorname{IsArray}\left(A\right))) \land (\forall A: \mathbb{N} \to \mathbb{N} \to \mathbb{N}, ((\operatorname{IsArray}\left(A\right)) \implies (\forall n: \mathbb{N}, (\forall k: \mathbb{N}, ((1 \leq k) \implies ((A\left(n, k + \operatorname{f}\left(k\right) + 1\right): \mathbb{Q}) = \left(\sum_{j = 0}\right)^{n} (\frac{(A\left(j, k\right): \mathbb{Q}) \cdot ((n + \operatorname{f}\left(k\right))!: \mathbb{Q})}{((\operatorname{f}\left(k\right) + j)!: \mathbb{Q})})))))))$$
+$$(\exists A: \mathbb{N} \to \mathbb{N} \to \mathbb{N}, (\operatorname{IsArray}\left(A\right))) \land (\forall A: \mathbb{N} \to \mathbb{N} \to \mathbb{N}, ((\operatorname{IsArray}\left(A\right)) \implies (\forall n: \mathbb{N}, (\forall k: \mathbb{N}, ((1 \leq k) \implies ((A\left(n, k + \operatorname{f}\left(k\right) + 1\right): \mathbb{Q}) = \sum_{j = 0}^{n} (\frac{(A\left(j, k\right): \mathbb{Q}) \cdot ((n + \operatorname{f}\left(k\right))!: \mathbb{Q})}{((\operatorname{f}\left(k\right) + j)!: \mathbb{Q})})))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/KurkovTriangularColumnSum.result` (`✓ std3`). ∎
 
