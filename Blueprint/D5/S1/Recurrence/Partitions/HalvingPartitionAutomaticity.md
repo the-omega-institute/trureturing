@@ -62,7 +62,7 @@ Lean statement: `D5/S1/Recurrence/Partitions/HalvingPartitionAutomaticity.count_
 
 *Commentary.*
 
-Exact source declaration: theorem count_mod_not_lsdf (q h : ℕ) (hq : 2 ≤ q) (hh : 1 ≤ h) : letI : NeZero q
+Exact source declaration: theorem count_mod_not_lsdf (q h : ℕ) (hq : 2 ≤ q) (hh : 1 ≤ h) : letI : NeZero q := ⟨by omega⟩; ¬ IsKAutomaticSequence (2 ^ h) (fun n => (count n : ZMod q))
 
 ## References
 
