@@ -9,7 +9,6 @@ import D5.S3.FiniteGroups.GroupAlgebra.OddPrimeJetRadical
 import Mathlib.FieldTheory.Finite.Basic
 import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 set_option autoImplicit false
-set_option maxHeartbeats 800000
 noncomputable section
 namespace D5.S3.FiniteGroups.GroupAlgebra.OddPrimeJetRadical
 open Polynomial Module OddPrimeJetDeformation OddPrimeJetCommutant
@@ -19,20 +18,19 @@ variable {p : ℕ} [Fact p.Prime] [Fact (2 < p)]
 variable {K : Type u} [Field K] [Algebra (ZMod p) K]
 local notation "F" => ZMod p
 local notation "V" => Polynomial.degreeLT K p
-variable (q : K →ₗ[F] K) (hq : q 1 = 0)
 /-- Principal units inside the units of the actual commutant algebra. -/
-def principalUnits : Subgroup (commutantAlgebra (p := p) (K := K) q)ˣ :=
-  ((leadingHom (p := p) (K := K) q hq).toMonoidHom.unitsMap).ker
+def principalUnits (q : K →ₗ[F] K) (hq : q 1 = 0) : Subgroup (commutantAlgebra (p := p) (K := K) q)ˣ :=
+  (Units.map (leadingHom (p := p) (K := K) q hq).toMonoidHom).ker
 
-private theorem principalUnits_sub_one (x : principalUnits (p := p) (K := K) q hq) :
+private theorem principalUnits_sub_one (q : K →ₗ[F] K) (hq : q 1 = 0) (x : principalUnits (p := p) (K := K) q hq) :
     (x.val : (commutantAlgebra (p := p) (K := K) q)) - 1 ∈ radical (p := p) (K := K) q hq := by
   change leadingHom (p := p) (K := K) q hq ((x.val : (commutantAlgebra (p := p) (K := K) q)) - 1) = 0
   have h : leadingHom (p := p) (K := K) q hq (x.val : (commutantAlgebra (p := p) (K := K) q)) = 1 :=
     congrArg (fun z : Kˣ => (z : K)) x.property
-  simp [h]
+  rw [RingHom.map_sub, RingHom.map_one, h, sub_self]
 
 /-- All principal units commute as actual invertible endomorphisms. -/
-theorem principalUnits_commute (x y : principalUnits (p := p) (K := K) q hq) : x * y = y * x := by
+theorem principalUnits_commute (q : K →ₗ[F] K) (hq : q 1 = 0) (x y : principalUnits (p := p) (K := K) q hq) : x * y = y * x := by
   apply Subtype.ext
   apply Units.ext
   have h := radical_commute (p := p) q hq ((x.val : (commutantAlgebra (p := p) (K := K) q)) - 1) ((y.val : (commutantAlgebra (p := p) (K := K) q)) - 1)
@@ -46,56 +44,58 @@ theorem principalUnits_commute (x y : principalUnits (p := p) (K := K) q hq) : x
   exact add_right_cancel he'
 
 /-- The principal units have exponent dividing p, for every odd prime including three. -/
-theorem principalUnits_pow (x : principalUnits (p := p) (K := K) q hq) : x ^ p = 1 := by
+theorem principalUnits_pow (q : K →ₗ[F] K) (hq : q 1 = 0) (x : principalUnits (p := p) (K := K) q hq) : x ^ p = 1 := by
   letI : Nontrivial V := ⟨⟨constantLinear (p := p) (K := K) 1, 0, by
     intro h
     have he := congrArg (fun v : V => (v : K[X]).coeff 0) h
-    simpa [constantLinear (p := p) (K := K)] using he⟩⟩
+    simpa [constantLinear] using he⟩⟩
   letI : CharP K p := charP_of_injective_algebraMap (algebraMap F K).injective p
-  letI : CharP (Module.End F V) p := inferInstance
-  letI : CharP (commutantAlgebra (p := p) (K := K) q) p := inferInstance
+  letI : CharP (commutantAlgebra (p := p) (K := K) q) p :=
+    charP_of_injective_algebraMap (algebraMap F (commutantAlgebra (p := p) (K := K) q)).injective p
   apply Subtype.ext
   apply Units.ext
   change (x.val : (commutantAlgebra (p := p) (K := K) q)) ^ p = 1
   have hn := radical_element_pow (p := p) q hq ((x.val : (commutantAlgebra (p := p) (K := K) q)) - 1) (principalUnits_sub_one (p := p) q hq x)
   have he := add_pow_char_of_commute p (Commute.one_left ((x.val : (commutantAlgebra (p := p) (K := K) q)) - 1))
-  simpa only [one_add_sub_cancel, one_pow, hn, add_zero] using he
+  have hs : 1 + ((x.val : commutantAlgebra (p := p) q) - 1) = x.val := by abel
+  simpa only [hs, one_pow, hn, add_zero] using he
 
-private def principalOfRadical (j : radical (p := p) (K := K) q hq) : principalUnits (p := p) (K := K) q hq := by
+private def principalOfRadical (q : K →ₗ[F] K) (hq : q 1 = 0) (j : radical (p := p) (K := K) q hq) : principalUnits (p := p) (K := K) q hq := by
   have hn : IsNilpotent (j.val : (commutantAlgebra (p := p) (K := K) q)) := ⟨p, radical_element_pow (p := p) q hq j.val j.property⟩
   let h := hn.isUnit_one_add
   refine ⟨h.unit, ?_⟩
   apply Units.ext
   change leadingHom (p := p) (K := K) q hq (h.unit : (commutantAlgebra (p := p) (K := K) q)) = 1
-  rw [h.unit_spec, map_add, map_one]
+  rw [h.unit_spec, RingHom.map_add, RingHom.map_one]
   have hj : leadingHom (p := p) (K := K) q hq j.val = 0 := j.property
   rw [hj, add_zero]
 
-private def principalRadicalEquiv : principalUnits (p := p) (K := K) q hq ≃ radical (p := p) (K := K) q hq where
+private def principalRadicalEquiv (q : K →ₗ[F] K) (hq : q 1 = 0) : principalUnits (p := p) (K := K) q hq ≃ radical (p := p) (K := K) q hq where
   toFun x := ⟨(x.val : (commutantAlgebra (p := p) (K := K) q)) - 1, principalUnits_sub_one (p := p) q hq x⟩
   invFun := principalOfRadical (p := p) q hq
   left_inv x := by
     apply Subtype.ext
     apply Units.ext
     change ((principalOfRadical (p := p) q hq ⟨(x.val : (commutantAlgebra (p := p) (K := K) q)) - 1, _⟩).val : (commutantAlgebra (p := p) (K := K) q)) = (x.val : (commutantAlgebra (p := p) (K := K) q))
-    simp only [principalOfRadical (p := p), IsUnit.unit_spec, add_sub_cancel]
-    abel
+    simp only [principalOfRadical, IsUnit.unit_spec] <;> abel
   right_inv j := by
     apply Subtype.ext
     change ((principalOfRadical (p := p) q hq j).val : (commutantAlgebra (p := p) (K := K) q)) - 1 = j.val
-    simp only [principalOfRadical (p := p), IsUnit.unit_spec]
-    abel
+    simp only [principalOfRadical, IsUnit.unit_spec] <;> abel
 
-private theorem leading_coordinates (X : (commutantAlgebra (p := p) (K := K) q)) :
+private theorem leading_coordinates (q : K →ₗ[F] K) (hq : q 1 = 0) (X : (commutantAlgebra (p := p) (K := K) q)) :
     leadingScalar (p := p) (K := K) q X = ((coordinatesEquiv (p := p) (K := K) q hq) ⟨X.val, X.property⟩).1.val
       (leadingIndex (p := p)) := by
   let z := (coordinatesEquiv (p := p) (K := K) q hq) ⟨X.val, X.property⟩
   have he := congrArg Subtype.val ((coordinatesEquiv (p := p) (K := K) q hq).symm_apply_apply
     (⟨X.val, X.property⟩ : {Y : Module.End F V // commutesOriginal q Y}))
   change toeplitzDegree (p := p) (K := K) z.1.val z.2 = X.val at he
-  simp [leadingScalar (p := p) (K := K), ← he, toeplitzDegree_constant (p := p) (K := K), coefficientZero (p := p) (K := K), constantLinear (p := p) (K := K)]
+  change leadingScalar (p := p) (K := K) q X = z.1.val (leadingIndex (p := p))
+  unfold leadingScalar
+  rw [← he, toeplitzDegree_constant]
+  simp [coefficientZero, constantLinear]
 
-private def radicalCoordinatesEquiv : radical (p := p) (K := K) q hq ≃
+private def radicalCoordinatesEquiv (q : K →ₗ[F] K) (hq : q 1 = 0) : radical (p := p) (K := K) q hq ≃
     {z : {c : Fin p → K // c 0 = 0} × (K →ₗ[F] K) //
       z.1.val (leadingIndex (p := p)) = 0} :=
   (coordinatesEquiv (p := p) (K := K) q hq).subtypeEquiv (by
@@ -158,7 +158,7 @@ private def freeCoordinatesEquiv :
     · rfl
 
 /-- The exact order counts all unrestricted prime-field-linear top maps. -/
-theorem principalUnits_cardinality [Fintype K] {n : ℕ}
+theorem principalUnits_cardinality (q : K →ₗ[F] K) (hq : q 1 = 0) [Fintype K] {n : ℕ}
     (hK : Fintype.card K = p ^ n) :
     Nat.card (principalUnits (p := p) (K := K) q hq) = p ^ (n * (p-2) + n*n) := by
   have hdim : Module.finrank F K = n :=

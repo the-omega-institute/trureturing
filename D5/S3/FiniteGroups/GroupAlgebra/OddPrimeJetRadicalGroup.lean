@@ -17,9 +17,8 @@ variable {p : ℕ} [Fact p.Prime] [Fact (2 < p)]
 variable {K : Type u} [Field K] [Algebra (ZMod p) K]
 local notation "F" => ZMod p
 local notation "V" => Polynomial.degreeLT K p
-variable (q : K →ₗ[F] K)
 
-private theorem kernel_commutes (x : (project (p := p) (K := K) q).ker) :
+private theorem kernel_commutes (q : K →ₗ[F] K) (x : (project (p := p) (K := K) q).ker) :
     OddPrimeJetCommutant.commutesOriginal q x.val.val.1.toLinearMap := by
   have hlabel : x.val.val.2 = 1 := congrArg Subtype.val x.property
   intro g v
@@ -27,7 +26,7 @@ private theorem kernel_commutes (x : (project (p := p) (K := K) q).ker) :
   rw [hlabel] at h
   exact h
 
-private def unitToKernel : (commutantAlgebra (p := p) (K := K) q)ˣ →* (project (p := p) (K := K) q).ker where
+private def unitToKernel (q : K →ₗ[F] K) : (commutantAlgebra (p := p) (K := K) q)ˣ →* (project (p := p) (K := K) q).ker where
   toFun x := ⟨⟨(LinearMap.GeneralLinearGroup.toLinearEquiv
       (Units.map (commutantAlgebra (p := p) (K := K) q).val.toMonoidHom x), 1), x.val.property⟩, rfl⟩
   map_one' := by
@@ -43,7 +42,7 @@ private def unitToKernel : (commutantAlgebra (p := p) (K := K) q)ˣ →* (projec
     · ext v; rfl
     · rfl
 
-private def kernelToUnit (x : (project (p := p) (K := K) q).ker) : (commutantAlgebra (p := p) (K := K) q)ˣ where
+private def kernelToUnit (q : K →ₗ[F] K) (x : (project (p := p) (K := K) q).ker) : (commutantAlgebra (p := p) (K := K) q)ˣ where
   val := ⟨x.val.val.1.toLinearMap, kernel_commutes (p := p) (K := K) q x⟩
   inv := ⟨(x⁻¹).val.val.1.toLinearMap, kernel_commutes (p := p) (K := K) q x⁻¹⟩
   val_inv := by
@@ -58,7 +57,7 @@ private def kernelToUnit (x : (project (p := p) (K := K) q).ker) : (commutantAlg
     exact x.val.val.1.symm_apply_apply v
 
 /-- A native group equivalence with the actual label-projection kernel. -/
-def commutantUnitsEquiv : (commutantAlgebra (p := p) (K := K) q)ˣ ≃* (project (p := p) (K := K) q).ker :=
+def commutantUnitsEquiv (q : K →ₗ[F] K) : (commutantAlgebra (p := p) (K := K) q)ˣ ≃* (project (p := p) (K := K) q).ker :=
   MulEquiv.ofBijective (unitToKernel (p := p) (K := K) q) ⟨by
     intro x y h
     apply Units.ext
@@ -73,36 +72,37 @@ def commutantUnitsEquiv : (commutantAlgebra (p := p) (K := K) q)ˣ ≃* (project
       · ext v; rfl
       · exact (congrArg Subtype.val x.property).symm⟩
 
-variable (hq : q 1 = 0)
 /-- Principal units as an actual subgroup of the original-pair kernel. -/
-def actualPrincipalUnits : Subgroup (project (p := p) (K := K) q).ker :=
+def actualPrincipalUnits (q : K →ₗ[F] K) (hq : q 1 = 0) : Subgroup (project (p := p) (K := K) q).ker :=
   (principalUnits (p := p) (K := K) q hq).map (commutantUnitsEquiv (p := p) (K := K) q).toMonoidHom
 
-private def principalEquiv : principalUnits (p := p) (K := K) q hq ≃* actualPrincipalUnits (p := p) (K := K) q hq :=
+private def principalEquiv (q : K →ₗ[F] K) (hq : q 1 = 0) : principalUnits (p := p) (K := K) q hq ≃* actualPrincipalUnits (p := p) (K := K) q hq :=
   (commutantUnitsEquiv (p := p) (K := K) q).subgroupMap (principalUnits (p := p) (K := K) q hq)
 
 /-- The embedded principal units commute in the actual original group. -/
-private theorem actualPrincipalUnits_commute (x y : actualPrincipalUnits (p := p) (K := K) q hq) : x * y = y * x := by
+private theorem actualPrincipalUnits_commute (q : K →ₗ[F] K) (hq : q 1 = 0) (x y : actualPrincipalUnits (p := p) (K := K) q hq) : x * y = y * x := by
   let e := principalEquiv (p := p) (K := K) q hq
   obtain ⟨a,rfl⟩ := e.surjective x
   obtain ⟨b,rfl⟩ := e.surjective y
-  rw [← map_mul, ← map_mul, principalUnits_commute (p := p) (K := K)]
+  exact (e.map_mul a b).symm.trans
+    ((congrArg e (principalUnits_commute q hq a b)).trans (e.map_mul b a))
 
 /-- The actual subgroup, including its original-label component, has exponent p. -/
-private theorem actualPrincipalUnits_pow (x : actualPrincipalUnits (p := p) (K := K) q hq) : x ^ p = 1 := by
+private theorem actualPrincipalUnits_pow (q : K →ₗ[F] K) (hq : q 1 = 0) (x : actualPrincipalUnits (p := p) (K := K) q hq) : x ^ p = 1 := by
   let e := principalEquiv (p := p) (K := K) q hq
   obtain ⟨a,rfl⟩ := e.surjective x
-  rw [← map_pow, principalUnits_pow (p := p) (K := K), map_one]
+  exact (map_pow e.toMonoidHom a p).symm.trans
+    ((congrArg e (principalUnits_pow q hq a)).trans e.map_one)
 
 /-- The order of the embedded actual principal-unit subgroup. -/
-private theorem actualPrincipalUnits_cardinality [Fintype K] {n : ℕ}
+private theorem actualPrincipalUnits_cardinality (q : K →ₗ[F] K) (hq : q 1 = 0) [Fintype K] {n : ℕ}
     (hK : Fintype.card K = p ^ n) :
     Nat.card (actualPrincipalUnits (p := p) (K := K) q hq) = p^(n*(p-2)+n*n) := by
   rw [← Nat.card_congr (principalEquiv (p := p) (K := K) q hq).toEquiv]
   exact principalUnits_cardinality (p := p) (K := K) q hq hK
 
 /-- The full elementary-abelian assertion on the actual original-label kernel. -/
-theorem actual_principal_unit_structure [Fintype K] {n : ℕ}
+theorem actual_principal_unit_structure (q : K →ₗ[F] K) (hq : q 1 = 0) [Fintype K] {n : ℕ}
     (hK : Fintype.card K = p^n) :
     (∀ x y : actualPrincipalUnits (p := p) q hq, x*y = y*x) ∧
     (∀ x : actualPrincipalUnits (p := p) q hq, x^p = 1) ∧

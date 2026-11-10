@@ -11,7 +11,6 @@ import Mathlib.RingTheory.Ideal.Operations
 /-! The ideal and unit group are subobjects of the actual endomorphism algebra.
 The scalar coordinates are divided degrees, with leading index p-1. -/
 set_option autoImplicit false
-set_option maxHeartbeats 800000
 noncomputable section
 namespace D5.S3.FiniteGroups.GroupAlgebra.OddPrimeJetRadical
 open Polynomial Module OddPrimeJetDeformation OddPrimeJetCommutant
@@ -32,51 +31,53 @@ def commutantAlgebra (q : K →ₗ[F] K) : Subalgebra F (Module.End F V) where
   mul_mem' := by intro X Y hX hY g v; exact (congrArg X (hY g v)).trans (hX g (Y v))
   algebraMap_mem' := by intro a g v; simp
 
-variable (q : K →ₗ[F] K) (hq : q 1 = 0)
 
 def leadingScalar (q : K →ₗ[F] K) (x : commutantAlgebra (p := p) (K := K) q) : K := coefficientZero (p := p) (K := K) (x.val (constantLinear (p := p) (K := K) 1))
 
 
-private theorem constant_action (X : (commutantAlgebra (p := p) (K := K) q)) (z : K) :
+
+private theorem constant_action (q : K →ₗ[F] K) (hq : q 1 = 0) (X : (commutantAlgebra (p := p) (K := K) q)) (z : K) :
     X.val (constantLinear (p := p) (K := K) z) = constantLinear (p := p) (K := K) (leadingScalar (p := p) (K := K) q X * z) := by
   obtain ⟨c,T,hc,he⟩ := (actual_commutant_normal_form (p := p) (K := K) q hq X.val).mp X.property
   have hlead : leadingScalar (p := p) (K := K) q X = c (leadingIndex (p := p)) := by
-    simp [leadingScalar (p := p) (K := K), he, toeplitzDegree_constant (p := p) (K := K), coefficientZero (p := p) (K := K), constantLinear (p := p) (K := K)]
+    simp only [leadingScalar, he, toeplitzDegree_constant]
+    simp [coefficientZero, constantLinear]
   rw [he, toeplitzDegree_constant (p := p) (K := K), hlead]
 
 /-- Restriction to the constant line gives the actual leading ring homomorphism. -/
-def leadingHom : (commutantAlgebra (p := p) (K := K) q) →+* K where
+def leadingHom (q : K →ₗ[F] K) (hq : q 1 = 0) : (commutantAlgebra (p := p) (K := K) q) →+* K where
   toFun := leadingScalar (p := p) (K := K) q
-  map_one' := by simp [leadingScalar (p := p) (K := K), coefficientZero (p := p) (K := K), constantLinear (p := p) (K := K)]
-  map_zero' := by simp [leadingScalar (p := p) (K := K)]
-  map_add' X Y := by simp [leadingScalar (p := p) (K := K)]
+  map_one' := by simp [leadingScalar, coefficientZero, constantLinear]
+  map_zero' := by simp [leadingScalar]
+  map_add' X Y := by simp [leadingScalar]
   map_mul' X Y := by
     change coefficientZero (p := p) (K := K) (X.val (Y.val (constantLinear (p := p) (K := K) 1))) = _
     rw [constant_action (p := p) q hq Y, mul_one, constant_action (p := p) q hq X]
-    simp [coefficientZero (p := p) (K := K), constantLinear (p := p) (K := K)]
+    simp [coefficientZero, constantLinear]
 
 /-- The leading-zero ideal of the actual commutant. -/
-def radical : Ideal (commutantAlgebra (p := p) (K := K) q) := (leadingHom (p := p) (K := K) q hq).ker
+def radical (q : K →ₗ[F] K) (hq : q 1 = 0) : Ideal (commutantAlgebra (p := p) (K := K) q) := RingHom.ker (leadingHom (p := p) (K := K) q hq)
 
-private theorem radical_constants (X : (commutantAlgebra (p := p) (K := K) q)) (hX : X ∈ radical (p := p) (K := K) q hq) (z : K) :
+private theorem radical_constants (q : K →ₗ[F] K) (hq : q 1 = 0) (X : (commutantAlgebra (p := p) (K := K) q)) (hX : X ∈ radical (p := p) (K := K) q hq) (z : K) :
     X.val (constantLinear (p := p) (K := K) z) = 0 := by
   rw [constant_action (p := p) q hq]
   change leadingScalar (p := p) (K := K) q X = 0 at hX
   simp [hX]
 
-private theorem commutes_derivative (X : (commutantAlgebra (p := p) (K := K) q)) (v : V) : X.val (D v) = D (X.val v) :=
+private theorem commutes_derivative (q : K →ₗ[F] K) (hq : q 1 = 0) (X : (commutantAlgebra (p := p) (K := K) q)) (v : V) : X.val (D v) = D (X.val v) :=
   ((actual_commutant_generated_bridge (p := p) (K := K) q hq X.val).mp X.property).1 v
 
-private theorem radical_normal_form (X : (commutantAlgebra (p := p) (K := K) q)) (hX : X ∈ radical (p := p) (K := K) q hq) :
+private theorem radical_normal_form (q : K →ₗ[F] K) (hq : q 1 = 0) (X : (commutantAlgebra (p := p) (K := K) q)) (hX : X ∈ radical (p := p) (K := K) q hq) :
     ∃ (c : Fin p → K) (T : K →ₗ[F] K), c 0 = 0 ∧
       c (leadingIndex (p := p)) = 0 ∧ X.val = toeplitzDegree (p := p) (K := K) c T := by
   obtain ⟨c,T,hc,he⟩ := (actual_commutant_normal_form (p := p) (K := K) q hq X.val).mp X.property
   refine ⟨c,T,hc,?_,he⟩
   change leadingScalar (p := p) (K := K) q X = 0 at hX
-  simpa [leadingScalar (p := p) (K := K), he, toeplitzDegree_constant (p := p) (K := K), coefficientZero (p := p) (K := K), constantLinear (p := p) (K := K)] using hX
+  simp only [leadingScalar, he, toeplitzDegree_constant] at hX
+  simpa [coefficientZero, constantLinear] using hX
 
 /-- The leading-zero ideal is commutative even though its ambient algebra need not be. -/
-theorem radical_commute (X Y : (commutantAlgebra (p := p) (K := K) q)) (hX : X ∈ radical (p := p) (K := K) q hq) (hY : Y ∈ radical (p := p) (K := K) q hq) :
+theorem radical_commute (q : K →ₗ[F] K) (hq : q 1 = 0) (X Y : (commutantAlgebra (p := p) (K := K) q)) (hX : X ∈ radical (p := p) (K := K) q hq) (hY : Y ∈ radical (p := p) (K := K) q hq) :
     Commute X Y := by
   obtain ⟨c,T,hc,hcl,heX⟩ := radical_normal_form (p := p) q hq X hX
   obtain ⟨d,U,hd,hdl,heY⟩ := radical_normal_form (p := p) q hq Y hY
@@ -98,28 +99,34 @@ theorem radical_commute (X Y : (commutantAlgebra (p := p) (K := K) q)) (hX : X �
     zero_add, add_zero, hf, ht]
 
 /-- Each actual radical element is p-nilpotent, using the derivative-filtration supplier. -/
-theorem radical_element_pow (X : (commutantAlgebra (p := p) (K := K) q)) (hX : X ∈ radical (p := p) (K := K) q hq) : X ^ p = 0 := by
+theorem radical_element_pow (q : K →ₗ[F] K) (hq : q 1 = 0) (X : (commutantAlgebra (p := p) (K := K) q)) (hX : X ∈ radical (p := p) (K := K) q hq) : X ^ p = 0 := by
   apply Subtype.ext
   exact nilpotent_of_constants_zero (p := p) (K := K) X.val (commutes_derivative (p := p) q hq X)
     (radical_constants (p := p) q hq X hX)
 
-private def vanishingIdeal (r : ℕ) : Ideal (commutantAlgebra (p := p) (K := K) q) where
+private def vanishingIdeal (q : K →ₗ[F] K) (r : ℕ) : Ideal (commutantAlgebra (p := p) (K := K) q) where
   carrier := {X | ∀ v : V, (D ^ r) v = 0 → X.val v = 0}
   zero_mem' := by intro v hv; rfl
   add_mem' := by intro X Y hX hY v hv; simp [hX v hv, hY v hv]
   smul_mem' := by intro X Y hY v hv; change X.val (Y.val v) = 0; rw [hY v hv, map_zero]
 
-private theorem radical_pow_vanish (r : ℕ) :
+private theorem radical_pow_vanish (q : K →ₗ[F] K) (hq : q 1 = 0) (r : ℕ) :
     radical (p := p) (K := K) q hq ^ r ≤ vanishingIdeal (p := p) q r := by
+  letI : (radical (p := p) (K := K) q hq).IsTwoSided :=
+    inferInstanceAs (RingHom.ker (leadingHom (p := p) (K := K) q hq)).IsTwoSided
   induction r with
   | zero =>
-      intro X hX v hv
+      intro X hX
+      change ∀ v : V, (D ^ 0) v = 0 → X.val v = 0
+      intro v hv
       change v = 0 at hv
       rw [hv, map_zero]
   | succ r ih =>
       rw [Ideal.IsTwoSided.pow_succ]
       apply Ideal.mul_le.mpr
-      intro X hX Y hY v hv
+      intro X hX Y hY
+      change ∀ v : V, (D ^ (r + 1)) v = 0 → X.val (Y.val v) = 0
+      intro v hv
       have hYv : D (Y.val v) = 0 := by
         rw [← commutes_derivative (p := p) q hq Y]
         apply ih hY
@@ -130,7 +137,7 @@ private theorem radical_pow_vanish (r : ℕ) :
       rw [he, radical_constants (p := p) q hq X hX]
 
 /-- Joint ideal-power nilpotence, rather than only elementwise p-nilpotence. -/
-theorem radical_pow_eq_bot : radical (p := p) (K := K) q hq ^ p = ⊥ := by
+theorem radical_pow_eq_bot (q : K →ₗ[F] K) (hq : q 1 = 0) : radical (p := p) (K := K) q hq ^ p = ⊥ := by
   apply le_antisymm _ bot_le
   intro X hX
   change X = 0
