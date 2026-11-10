@@ -24,7 +24,7 @@ internal sealed class HardinA233256RowOneDocument : IScribeDocumentDefinition
         "Hardin's RowOne recurrence for literal normalized six-colour arrays.",
         H("A233256 RowOne"),
         Blocks(
-            Paragraph(Text("A one-row array is a path. Its adjacent cells exclude equal colours and colours summing to five. Transposition preserves its ordered cells and turns it into a width-one row transfer. After one initial continuation step, the reachable state vectors satisfy (t-2)(t-4). The index bound is essential: at width three the proposed right side would be minus two, while the literal count is three." + " Exact initial counts give the recurrence at its first admissible index; the transfer identity gives every later case.")),
+            Paragraph(Text("A one-row array is a path. Its adjacent cells exclude equal colours and colours summing to five. Transposition preserves its ordered cells and turns it into a width-one row transfer. After one initial continuation step, the reachable state vectors satisfy a quadratic identity with coefficients 6 and minus 8. The index bound is essential: at width three the proposed right side would be minus two, while the literal count is three." + " Fin.val denotes the natural value of a finite index or colour. Exact initial counts give the recurrence at its first admissible index; the transfer identity gives every later case.")),
             Node("Legal", "The literal path conditions", LegalFormula()),
             Node("a", "The literal filtered array count", CountFormula(), literature: true),
             Node("finite_certificate", "Exact initial counts", InitialFormula(), theorem: true),
