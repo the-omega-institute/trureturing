@@ -321,30 +321,34 @@ end
 noncomputable section
 namespace RowMajor
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature ℕ
-    (fun n => Fin 4 × Fin n) (fun _ => ℕ)
+  _root_.Reg.Support.SingleDependentReadout.signature (Σ n : ℕ, Fin 4 × Fin n)
+    (fun p => Fin 4 × Fin p.1) (fun _ => Bool)
 def actual : Realization signature :=
-  realize signature (fun _ n p => p.1.val * n + p.2.val) (fun e => nomatch e)
+  realize signature (fun _ p q =>
+    letI := cellOrder p.1
+    decide (p.2 < q)) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+  realize signature (fun _ _ _ => false) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ {n : ℕ} (p q : Fin 4 × Fin n),
-    @LT.lt (Fin 4 × Fin n) (cellOrder n).toLT p q ↔
-      R.readout () n p < R.readout () n q
+    R.readout () ⟨n, p⟩ q = true ↔ p.1.val * n + p.2.val < q.1.val * n + q.2.val
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hh := (h (n := 1) (0, 0) (1, 0)).mp (by decide)
-  exact (Nat.lt_irrefl 0) hh
+  have hh := (h (n := 1) (0, 0) (1, 0)).mpr (by decide)
+  exact Bool.noConfusion hh
 def family : Registration arena (type_of% @row_major_lt) where
   actual := actual
-  bridge := Iff.rfl
-  variation := ⟨@row_major_lt, rejected, rejected_law⟩
+  bridge := by simp [arena, actual, realize]
+  variation := ⟨by simpa [arena, actual, realize] using @row_major_lt,
+    rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
-    exact ⟨1, (0, 0), (1, 0), by change (0 : ℕ) ≠ 1; decide⟩
+    refine ⟨⟨1, (0, 0)⟩, (0, 0), (1, 0), ?_⟩
+    change false ≠ true
+    decide
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@row_major_lt) (Realization signature) Type Unit where
   unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder.RowMajor.auditUnit
@@ -367,18 +371,13 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder
     definition := none
-    coordinates := #[0]
+    coordinates := #[0, 1]
     readouts := #[{
-      path := #["body", "body", "body", "arg", "fn", "arg"]
-      stateBinder := 1
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }, {
-      path := #["body", "body", "body", "arg", "arg"]
+      path := #["body", "body", "body", "fn", "arg"]
       stateBinder := 2
       functionOperand := false
       stateOperand := none
-      booleanPredicate := false }] }
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -387,36 +386,44 @@ end RowMajor
 namespace Normal
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature ℕ
-    (fun n => Fin 4 × Fin n → Fin 6) (fun _ => Prop)
+    (fun n => Fin 4 × Fin n → Fin 6) (fun _ => Bool)
 def actual : Realization signature :=
-  realize signature (fun _ _ A => normal A) (fun e => nomatch e)
+  realize signature (fun _ _ A => @decide (normal A) (instDecidableNormal A)) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ => false) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ {n : ℕ} (A : Fin 4 × Fin n → Fin 6), R.readout () n A ↔ RowNormal A
+  Law R := ∀ {n : ℕ} (A : Fin 4 × Fin n → Fin 6), R.readout () n A = true ↔ RowNormal A
 private theorem zero_normal : normal (fun _ : Fin 4 × Fin 1 => 0) := by
   simp [normal]
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  exact (h (n := 1) (fun _ => 0)).mpr ((_root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder.normal_iff _).mp
-    zero_normal)
+  have hh := (h (n := 1) (fun _ => 0)).mpr
+    ((_root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder.normal_iff _).mp
+      zero_normal)
+  exact Bool.noConfusion hh
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨1, (fun _ => 0), (fun _ => 2), ?_⟩
-  change normal (fun _ : Fin 4 × Fin 1 => 0) ≠ normal (fun _ : Fin 4 × Fin 1 => 2)
-  intro he
-  obtain ⟨q, _, hq⟩ := ((Eq.mp he zero_normal) (0, 0)).1 (Or.inl rfl)
-  norm_num at hq
-def family : Registration arena (type_of% @_root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder.normal_iff) where
+  have hbad : ¬ normal (fun _ : Fin 4 × Fin 1 => 2) := by
+    intro h
+    obtain ⟨q, _, hq⟩ := (h (0, 0)).1 (Or.inl rfl)
+    norm_num at hq
+  simp [actual, realize, zero_normal, hbad]
+
+def family : Registration arena
+    (type_of% @_root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder.normal_iff) where
   actual := actual
-  bridge := Iff.rfl
-  variation := ⟨@_root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder.normal_iff, rejected, rejected_law⟩
+  bridge := by simp [arena, actual, realize]
+  variation := ⟨by simpa [arena, actual, realize] using
+    @_root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder.normal_iff,
+    rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := actual_dependence
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-    (@_root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder.normal_iff) (Realization signature) Type Unit where
+    (@_root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder.normal_iff)
+    (Realization signature) Type Unit where
   unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder.Normal.auditUnit
   realizationName :=
     `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder.Normal.family
@@ -443,7 +450,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
       stateBinder := 1
       functionOperand := false
       stateOperand := none
-      booleanPredicate := false }] }
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -632,31 +639,38 @@ end AlternatingUsed
 namespace AlternatingCanon
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature ℕ
-    (fun n => Fin 4 × Fin n → Fin 3) (fun _ => Prop)
+    (fun n => Fin 4 × Fin n → Fin 3) (fun _ => Bool)
+private instance decidableCanon {n : ℕ} (P : Fin 4 × Fin n → Fin 3) :
+    Decidable (Canon P) := by
+  letI := cellOrder n
+  unfold Canon _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.Canonical
+  infer_instance
 def actual : Realization signature :=
-  realize signature (fun _ _ P => Canon P) (fun e => nomatch e)
+  realize signature (fun _ _ P => @decide (Canon P) (decidableCanon P)) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ => false) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ {n : ℕ} (hn : 0 < n), R.readout () n (alternating n 0 1)
+  Law R := ∀ {n : ℕ} (hn : 0 < n), R.readout () n (alternating n 0 1) = true
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  exact h (n := 1) (by decide)
+  exact Bool.noConfusion (h (n := 1) (by decide))
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨1, (fun _ => 0), (fun _ => 1), ?_⟩
-  change Canon (fun _ : Fin 4 × Fin 1 => 0) ≠ Canon (fun _ : Fin 4 × Fin 1 => 1)
-  intro he
   have h0 : Canon (fun _ : Fin 4 × Fin 1 => 0) := by
     intro p b hb
     exact False.elim ((Fin.not_lt_zero b) hb)
-  obtain ⟨q, _, hq⟩ := (Eq.mp he h0) (0, 0) 0 (by decide)
-  norm_num at hq
+  have h1 : ¬ Canon (fun _ : Fin 4 × Fin 1 => 1) := by
+    intro h
+    obtain ⟨q, _, hq⟩ := h (0, 0) 0 (by decide)
+    norm_num at hq
+  simp [actual, realize, h0, h1]
+
 def family : Registration arena (type_of% @alternating_canon) where
   actual := actual
-  bridge := Iff.rfl
-  variation := ⟨@alternating_canon, rejected, rejected_law⟩
+  bridge := by simp [arena, actual, realize]
+  variation := ⟨by simpa [arena, actual, realize] using @alternating_canon, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := actual_dependence
@@ -689,7 +703,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
-      booleanPredicate := false }] }
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
