@@ -31,13 +31,10 @@ private theorem selected_le_degree (S : Finset V) (v : V) :
     selectedDegree G S v ≤ degree G v :=
   Finset.card_le_card (Finset.filter_subset_filter _ (Finset.subset_univ S))
 
-/-- A high vertex and its failure witness use at most one extra unit of capacity. -/
-theorem witness_degree_capacity (S : Finset V) (D : ℕ)
-    (hD : ∀ v, degree G v ≤ D) (v x : V)
-    (hx : Regular.Failure G.Adj (· ∈ S) v x) :
-    selectedDegree G S v + selectedDegree G S x ≤ D + 1 := by
+/-- A deletion failure has at most two original selected neighbors. -/
+theorem failure_selected_degree_le_two (S : Finset V) (v x : V)
+    (hx : Regular.Failure G.Adj (· ∈ S) v x) : selectedDegree G S x ≤ 2 := by
   classical
-  have hav : selectedDegree G S v ≤ D := (selected_le_degree G S v).trans (hD v)
   have haerase : ((S.erase v).filter (G.Adj x)).card ≤ 1 := by
     apply Finset.card_le_one.mpr
     intro a ha b hb
@@ -60,18 +57,33 @@ theorem witness_degree_capacity (S : Finset V) (D : ℕ)
     have hi := Finset.card_insert_le v ((S.erase v).filter (G.Adj x))
     unfold selectedDegree
     omega
+  exact hax
+
+/-- An outside edge to a failure excludes full selected degree at its owner. -/
+theorem adjacent_failure_degree (S : Finset V) (D : ℕ)
+    (hD : ∀ v, degree G v ≤ D) (v x : V)
+    (hx : Regular.Failure G.Adj (· ∈ S) v x) (hedge : G.Adj x v) :
+    selectedDegree G S v + 1 ≤ D := by
+  classical
+  have hxnot : x ∉ S.filter (G.Adj v) := fun h => hx.1 (Finset.mem_filter.mp h).1
+  have hsub : insert x (S.filter (G.Adj v)) ⊆ Finset.univ.filter (G.Adj v) := by
+    intro a ha
+    rcases Finset.mem_insert.mp ha with rfl | ha
+    · exact Finset.mem_filter.mpr ⟨Finset.mem_univ _,G.adj_symm hedge⟩
+    · exact Finset.mem_filter.mpr ⟨Finset.mem_univ _,(Finset.mem_filter.mp ha).2⟩
+  have hc := (Finset.card_le_card hsub).trans (hD v)
+  rw [Finset.card_insert_of_notMem hxnot] at hc
+  exact hc
+/-- A high vertex and its failure witness use at most one extra unit of capacity. -/
+theorem witness_degree_capacity (S : Finset V) (D : ℕ)
+    (hD : ∀ v, degree G v ≤ D) (v x : V)
+    (hx : Regular.Failure G.Adj (· ∈ S) v x) :
+    selectedDegree G S v + selectedDegree G S x ≤ D + 1 := by
+  classical
+  have hav : selectedDegree G S v ≤ D := (selected_le_degree G S v).trans (hD v)
   apply Regular.witness_capacity D (selectedDegree G S v) (selectedDegree G S x)
-    (G.Adj x v) hav hax
-  · intro hedge
-    have hxnot : x ∉ S.filter (G.Adj v) := fun h => hx.1 (Finset.mem_filter.mp h).1
-    have hsub : insert x (S.filter (G.Adj v)) ⊆ Finset.univ.filter (G.Adj v) := by
-      intro a ha
-      rcases Finset.mem_insert.mp ha with rfl | ha
-      · exact Finset.mem_filter.mpr ⟨Finset.mem_univ _,G.adj_symm hedge⟩
-      · exact Finset.mem_filter.mpr ⟨Finset.mem_univ _,(Finset.mem_filter.mp ha).2⟩
-    have hc := (Finset.card_le_card hsub).trans (hD v)
-    rw [Finset.card_insert_of_notMem hxnot] at hc
-    exact hc
+    (G.Adj x v) hav (failure_selected_degree_le_two G S v x hx)
+  · exact adjacent_failure_degree G S D hD v x hx
   · intro hnon
     apply Finset.card_le_one.mpr
     intro a ha b hb
