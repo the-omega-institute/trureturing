@@ -3114,3 +3114,218 @@ $$
 
 ## 追加锚（本行以下为增补区）
 
+## 18　实际二元来源与外积线性记录
+
+**定义 18.1（实际二次来源与窗口）。** 设 $F$ 是特征二的域，$L/F$ 是有限域扩张，满足
+$L^2\subseteq F$，并记 $n=[L:F]$。允许 $n=1$。若 $h\in L\setminus F$，则
+$h^2\in F$ 且 $F(h)/F$ 是二次扩域；记
+$$
+K_h=F(h).
+$$
+称 $K_h$ 为 $L/F$ 的实际二次来源。对任意预先给定的 $F$-子空间 $W\le L$，称
+$K_h$ 在 $W$ 中可见，是指存在 $v\in L^\times$ 使
+$$
+vK_h=Fv+F(vh)\subseteq W.
+\tag{18.1}
+$$
+记
+$$
+\operatorname{Src}(W)=\{K_h:K_h\text{ 在 }W\text{ 中可见}\}.
+$$
+这里的 $v$、$vh$ 都是 $L$ 中的实际 $F$-点；把它们先扩张到 $\overline F$ 后得到的几何点不自动给出 (18.1)。
+
+**引理 18.2（实际输入对、比值与二次来源的桥）。** 设 $u,v\in W$ 线性无关。则
+$$
+h=u/v\in L\setminus F,\qquad u=vh,\qquad K_h=F(h),\qquad
+Fu+Fv=vK_h.
+\tag{18.2}
+$$
+反过来，若 (18.1) 由 $v_0$ 见证，则任取 $0\ne v\in v_0K_h$ 及不在 $Fv$ 中的 $u\in v_0K_h$，都有 $u/v\in K_h\setminus F$，并且 $Fu+Fv=v_0K_h$。因此
+$$
+K_h\text{ 在 }W\text{ 中可见}
+\Longleftrightarrow
+\exists\,u,v\in W\text{ 线性无关使 }K_h=F(u/v).
+\tag{18.3}
+$$
+
+证明。域中的除法给出 $h=u/v$。若 $h\in F$，则 $u$ 与 $v$ 相关，故 $h\notin F$；而 $h^2=u^2/v^2\in F$，所以 $F(h)$ 的次数为二。等式 $u=vh$ 随即给出 (18.2) 和 (18.1)。反向使用同一计算。若在同一个二维平面中换一组基，则新的比值为
+$$
+\frac{a+bh}{c+dh}\qquad(ad-bc\ne0,\ a,b,c,d\in F),
+$$
+仍在 $F(h)$ 中且不在 $F$ 中，所以源域不变。这正是旧§17 的 $W\cap hW$ 与比值集合桥；此处把它写成一对实际输入的等价形式。$\square$
+
+**定义 18.3（二元关系的外积记录）。** 对 $W$ 置
+$$
+\mathcal A(W)=\{u\wedge v:u,v\in W,\ u,v\text{ 线性无关}\}
+\subseteq\Lambda^2W,
+$$
+并令
+$$
+\mathcal G(W)=\{(v,h)\in L^\times\times(L\setminus F):v\in W,\ vh\in W\}.
+$$
+乘法图上的记录映射是
+$$
+\mathcal G(W)\longrightarrow\Lambda^2W,\qquad
+(v,h)\longmapsto v\wedge(vh);
+$$
+由引理 18.2，它的非零像正好给出可见二次来源的输入对记录。
+并称 $u\wedge v$ 是输入对 $(u,v)$ 的真实面积记录。它记录的是由实际乘法关系 $u=vh$ 确定的二维平面，不是标量输出 $uv$；后者仍是 $L$ 中的真实乘积。记
+$$
+\mathcal L(W)=\operatorname{span}_F\mathcal A(W)=\Lambda^2W
+\quad(\dim W\ge2).
+\tag{18.4}
+$$
+若预先固定一个满射的 $F$-线性记录器
+$$
+q:\Lambda^2L\twoheadrightarrow Q,
+$$
+则窗口 $W$ 的真实记录集和线性记录像分别为
+$$
+\mathcal T_q(W)=q(\mathcal A(W)),\qquad
+\mathcal I_q(W)=q(\Lambda^2W).
+\tag{18.5}
+$$
+若 $W=0$ 或 $\dim W=1$，则 $\mathcal A(W)=\Lambda^2W=\{0\}$，所以真实记录集和线性记录像都只有零；零记录在此没有实际二次来源。
+对代数闭包 $\overline F$，以同一公式定义几何集合
+$$
+\mathcal A(W_{\overline F})\subseteq\Lambda^2(W\otimes_F\overline F).
+$$
+它的 $\overline F$-点是几何 Grassmann 点；$\mathcal A(W)$ 只保留实际 $F$-点。两者的像不能互相替代。
+
+**命题 18.4（真实集、线性张成与商像的准确关系）。** 对 $\dim W\ge2$，有
+$$
+\mathcal I_q(W)=\operatorname{span}_F\mathcal T_q(W).
+\tag{18.6}
+$$
+对 $r\in Q(F)$，$r$ 有实际输入表示当且仅当
+$$
+q^{-1}(r)\cap\mathcal A(W)\ne\varnothing.
+\tag{18.7}
+$$
+若 $q^{-1}(r)\cap\Lambda^2W=\xi_0+\ker(q|_{\Lambda^2W})$，则 (18.7) 等价于存在某个 $\kappa\in\ker(q|_{\Lambda^2W})$ 使 $\xi_0+\kappa$ 是非零的实际 $F$-分解外积。特别地，选定一个提升 $\xi_0$ 并检验它，不足以证明或否定实际性。
+
+证明。取 $W$ 的 $F$-基 $w_1,\ldots,w_m$。每个 $w_i\wedge w_j$ 都来自实际输入对，因此它们张成整个 $\Lambda^2W$；施加 $q$ 得 (18.6)。式 (18.7) 只是 (18.5) 的逐点展开。两个提升的差恰在所示核中，所以实际性必须对整条仿射核纤维量化。$\square$
+
+**定理 18.5（首个内在线性失真及其最低整体）。** 先取忠实记录器 $q=\operatorname{id}$，并把非零 $\xi\in\Lambda^2W(F)$ 称为虚假记录，当它属于 $\mathcal L(W)$ 而不属于 $\mathcal A(W)$。则：
+
+$$
+\begin{array}{c|c}
+\dim W\le3&\text{每个非零线性记录都来自一对实际输入；}\\
+\dim W\ge4&\text{可能出现不来自一对实际输入的非零线性记录。}
+\end{array}
+\tag{18.8}
+$$
+
+在 $L^2\subseteq F$ 的有限扩张中，$n$ 是二的幂；因此首次可能出现的窗口维数和整体次数同时为
+$$
+\dim W=4,\qquad [L:F]=4.
+\tag{18.9}
+$$
+同一实际四次域内确有达到例子。取
+$$
+F=\mathbf F_2(s,t),\qquad
+L=F(\alpha,\beta),\qquad
+\alpha^2=s,\quad\beta^2=t,
+$$
+并令 $e_0=1,e_1=\alpha,e_2=\beta,e_3=\alpha\beta$。则 $[L:F]=4$。在 $W=L$ 中，令
+$$
+\begin{aligned}
+\xi&=e_0\wedge e_1
++(\alpha+\beta)\wedge(\alpha\beta+t)\\
+&=(1+t)e_0\wedge e_1+t e_0\wedge e_2+e_1\wedge e_3+e_2\wedge e_3.
+\end{aligned}
+\tag{18.10}
+$$
+两项分别来自实际输入对 $(1,\alpha)$ 与 $(\alpha+\beta,\alpha\beta+t)=(v,v\beta)$，其来源是 $F(\alpha)$ 与 $F(\beta)$。但 $\xi$ 不是单个输入对的记录。
+
+证明。若 $m=\dim W\le3$，把 $\xi$ 写成斜对称矩阵的上三角坐标。其秩至多为二，故存在 $u,v\in W$ 使 $\xi=u\wedge v$；当 $\xi\ne0$ 时 $u,v$ 线性无关。这一事实是二维 Grassmann 锥在三维以下占满外积空间的坐标形式。若 $m=4$，取一组基并写
+$$
+\xi=\sum_{0\le i<j\le3}p_{ij}e_i\wedge e_j.
+$$
+非零 $\xi$ 可分解当且仅当满足唯一的 Klein--Plücker 关系
+$$
+\operatorname{Pf}(\xi):=p_{01}p_{23}+p_{02}p_{13}+p_{03}p_{12}=0.
+\tag{18.11}
+$$
+注意在特征二中不能把 (18.11) 错写成 $\xi\wedge\xi=0$；后者恒为零，不能承担分解判据。式 (18.10) 的坐标给出
+$$
+\operatorname{Pf}(\xi)=(1+t)\cdot1+t\cdot1=1,
+$$
+所以它是两个真实面积的和，却不是一个真实面积。它仍属于 $\Lambda^2W$，故属于实际记录的线性像；失真来自线性张成内部的非分解元素，而不是来自不可见的二次来源。
+
+若 $n\le2$，不存在四维窗口；若 $n\ge4$，四维窗口才可能存在。有限指数一扩张的次数为 $2^r$，故最低整体次数只能是四。例 (18.10) 同时达到两项下界。$\square$
+
+上述结论的量词是“存在一个窗口和一个非零记录”。它不声称所有四维窗口都失真；四维窗口中满足 (18.11) 的记录仍是真实的。若 $q$ 有核，$m\le3$ 时任何非零记录 $r\in\mathcal I_q(W)$ 的任一提升都是分解的，因而商核不会制造非零虚假记录；核可能只改变同一记录的表示数目，或使零记录拥有非零实际提升。
+
+**定理 18.6（四维内的最少关系与完整实际来源恢复）。** 设 $2\le m=\dim W\le4$，并固定 $q:\Lambda^2L\twoheadrightarrow Q$。对 $r\in Q(F)$，定义
+$$
+\operatorname{Src}_W(r)=\{K_h:\ K_h\text{ 在 }W\text{ 中可见且 }q(u\wedge v)=r
+\text{ 对某个 }u,v\in W\text{ 线性无关}\}.
+$$
+则
+$$
+\operatorname{Src}_W(r)=
+\left\{
+F(u/v):
+\begin{array}{l}
+0\ne\xi\in\Lambda^2W(F),\ q(\xi)=r,\\
+\xi=u\wedge v\text{ for some }u,v\in W
+\end{array}
+\right\}.
+\tag{18.12}
+$$
+其中右侧的分解向量只通过其支撑平面决定源域。等价地，四维时可以把最后一行替换为
+$$
+\operatorname{Pf}_W(\xi)=0,
+\tag{18.13}
+$$
+而三维及以下没有额外的分解方程。式 (18.12) 对 $r=0$ 也成立：零记录的来源正好是核中非零实际分解外积的支撑来源；若这样的核点不存在，零记录没有实际来源。
+
+同一来源的输入对并不唯一。若 $(u',v')=(u,v)A$ 且 $A\in\operatorname{GL}_2(F)$，则
+$u'\wedge v'=\det(A)(u\wedge v)$，而支撑平面和 $F(u/v)$ 不变；若改变商记录的提升，则只是在同一条 $\ker q$-纤维中移动。故 (18.12) 对输入代表和记录代表的改变都不变。
+
+证明。实际输入对给出右侧元素，且引理 18.2 把其支撑平面送到唯一的 $F(u/v)$。反之，右侧的 $F$-分解外积可写成 $u\wedge v$，于是 $u,v$ 是实际 $F$-点，且引理 18.2 给出一个实际可见的二次来源。四维中，斜对称矩阵秩至多二等价于其 Pfaffian 为零，故 (18.13) 与分解等价；三维以下秩界自动成立。于是 (18.12) 同时包含商纤维、实际性和来源支撑，得到全部而非个别来源。$\square$
+
+**命题 18.7（“最少关系”的口径）。** 在定理 18.6 的范围内，“最少关系”指恢复一个给定 $F$-记录的全部实际二次来源所需的代数条件数量，不指所有窗口的分类或唯一的信息论编码。其准确内容是：
+
+1. 必须保留商方程 $q(\xi)=r$、非零条件、$F$-有理性以及支撑平面到 $F(u/v)$ 的比值桥；这些是实际性的定义域条件。
+2. 当 $m\le3$ 时，分解性不再增加方程。
+3. 当 $m=4$ 时，在六个 Plücker 坐标中增加一个且仅一个独立的 Pfaffian 关系 (18.11)；它把五维射影空间切成 Klein 二次曲面，正好恢复分解点。
+4. 若 $q$ 有核，必须在整条纤维 $\xi_0+\ker(q|_{\Lambda^2W})$ 上寻找满足上述条件的点；不能用一条任意提升代替存在量词。
+
+证明。前两项由定理 18.6。四维 Grassmann 点的射影维数为四，而 $\mathbf P(\Lambda^2W)$ 的维数为五，故分解锥在此范围是一个余维一条件；坐标式即 (18.11)。最后一项由命题 18.4。这里的“一个”只针对四维分解判据；它不宣称对 $m>4$ 的完整 Plücker 理想只有一个关系，也不宣称商核下解集的参数化是唯一的。$\square$
+
+**命题 18.8（同一实际整体、同一线性像而不同实际来源）。** 在上面四次域 $L/F$ 中，置
+$$
+W_\alpha=F1+F\alpha,\qquad W_\beta=F1+F\beta,\qquad
+p_{01}=1\wedge\alpha,\quad p_{02}=1\wedge\beta.
+$$
+令
+$$
+q:\Lambda^2L\longrightarrow Q:=\Lambda^2L/F(p_{01}+p_{02})
+$$
+为商映射。则
+$$
+q(\Lambda^2W_\alpha)=Fq(p_{01})=Fq(p_{02})=q(\Lambda^2W_\beta),
+\tag{18.14}
+$$
+但
+$$
+\operatorname{Src}(W_\alpha)=\{F(\alpha)\},\qquad
+\operatorname{Src}(W_\beta)=\{F(\beta)\},\qquad F(\alpha)\ne F(\beta).
+\tag{18.15}
+$$
+
+证明。每个窗口都是二维的，故其唯一支撑平面分别是 $W_\alpha=F(1,\alpha)$ 与 $W_\beta=F(1,\beta)$；引理 18.2 给出 (18.15)。商关系 $p_{01}+p_{02}\in\ker q$ 给出 (18.14)，而 $q(p_{01})\ne0$，所以这是非零的一维线性像相等，不是把整个记录器置为零。$s,t$ 的平方类独立保证两份二次子域不同。$\square$
+
+**命题 18.9（与三维入口及旧来源的接口）。** 若 §13 的 P+K 前件成立，且特征二的定理 13.11 给出带指定投影的同一四次域 $(L,\pi)$，令 $V=\ker\pi$。则 $\dim_FV=3$，本单元在 $W=V$ 上的忠实外积记录没有内在线性失真；可见来源仍须按 (18.3) 检查 $vK_h\subseteq V$。改变窗口或商记录器可以改变可见记录，但不能删去四次域和 P+K 前件。
+
+证明。$V$ 的维数为三，故定理 18.5 的低维一侧适用。其来源刻画直接是引理 18.2，旧§13 的投影只用来指定这个三维纯部；本单元没有从外积记录反推出 P+K，也没有把四次域扩展到任意高次窗口。$\square$
+
+**定义 18.10（实际面积和的白话释义）。** 一对实际方向先通过 $L$ 的乘法确定一个实际二维平面，再用外积把该平面写成一块面积。所有这些面积的 $F$-线性组合组成线性记录；线性组合中的每一项仍可能是真实面积，但总和只有在分解关系成立时才等于窗口内另一对实际方向的面积。四维时，这个“能否重新合成一对方向”恰由 Pfaffian (18.11) 检验；有商核时，还要在整条提升纤维中寻找满足它的实际 $F$-点。几何闭包中存在的分解点若没有 $F$-点，只是几何来源，不是 $L/F$ 的实际来源。
+
+本单元复用 §13–§17 的平方子域、比值、$W\cap hW$ 及同一实际扩底桥。Ghorpade–Patil–Pillai，*Decomposable Subspaces, Linear Sections of Grassmann Varieties, and Higher Weights of Grassmann Codes*，arXiv:0710.5161v1，提供任意域上的外积可分解子空间与 Grassmann 事实；Havlicek，*Clifford Parallelisms and External Planes to the Klein quadric*，arXiv:1511.06308v1，§5 及完整四次域 case (B) 提供四维 Klein/Clifford 边界，本单元不把该四次结论套到更高次任意四维窗口。Scully，*Quasilinear quadratic forms and function fields of quadrics*，arXiv:1710.09692v1，§2A–B，提供平方值、表示空间和各向异性事实；Zemková，*Vishik equivalence and similarity of quasilinear $p$-forms and totally singular quadratic forms*，arXiv:2309.13346v2，Definition 2.11、Definition 3.2 与 Theorem 4.6 只作最小全奇异型相似刚性的范围参照，不被改写为窗口逆恢复定理。这里新增的连接是：在同一实际 $L/F$ 中，把二次来源的乘法比值、实际外积、线性张成和商纤维中的 $F$-分解点放在同一条必要且充分的记录桥上。
+
+当几份真实面积相加时，线性记录只知道它们在外积空间中的和；它不记得这份和是否仍有秩二。四维中，(18.10) 展示了两个分别来自实际输入对的面积，其和的 Pfaffian 为一，因而没有任何窗口内单对实际方向能够产生它。这个失败不是把窗口看不见的来源误算成失真：两项本身已经来自同一个实际 $L$ 和同一个窗口；真正丢失的是“可由一对方向分解”的非线性关系。商记录器再把不同窗口的记录压到同一线性像时，只有整条核纤维上的 (18.12) 才能恢复实际来源。所有这些结论保持 §13 的四次域与 P+K 前件，不从记录中选择 Born 规则、物理维数或完整 $\Omega$。
+
+## 追加锚（本行以下为增补区）
