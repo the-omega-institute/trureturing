@@ -4509,3 +4509,456 @@ typed CP、箭头下降、整台递归同源参考、原真支持与支持内补
 把 $p,q$ 看成刻度为一和二的两间房，把固定答案中的 $s$ 看成仍留在各自房内的误差；每间房可以很复杂，误差不必是一个数，两房之间的通道也可以完全不通。受限定理只让输入在两房之间走动，并允许外面保留任意背景，暂不允许从这两房真正接向外界的连线。简化在于不用继续放大参数或对未知规则取极限，而是选两个明确的实数斜率，根据同一固定误差造出两份实际合法探针；每份探针都让两对原外标签在房内严格成比例，因此两笔 Gram 面积都为零。原预算于是给两条权重不同的误差连线关系，合起来使误差与输入相乘都为零，不需要把通道当成可逆。误差仍可能躲在通道完全不通的地方，所以最后还要用原 P2 通过误差本身作数学读取，才能消去这部分；不能只凭“乘通道为零”就宣布误差消失。已有的两块平衡标量余量只剩一个共同参数，任一斜率便能把所有非零参数排除，三维例子的外部背景也始终留在原输入与标签里。这不是新作一遍完整 H 下的返回分类，而是说明更少的固定答案不等式已经足够；房内对角输入及房间真正接向环境时，这套比例尚未得到，一般两份原缺陷为什么相等仍欠证明，许多近似房间拼接时误差怎样累加则是另一笔独立问题。已经识别的行准确等于通常或相反量子乘法，现成 Pauli、Hilbert 和 Born 对应继续按原入口使用；数学读取没有制造真实准备、完整菜单、共同相关来源、整台仪器全部输出及未来、Return、CountRead、正常性、指定前对偶、物理钟、动力学或共同正 $\hbar$，因而这里没有得到一套完整的新量子公理系统。
 
 ## 追加锚（本行以下为增补区）
+## 42. 真环境耦合的平衡三维星形输入：零探针的有限正读取刚性
+
+### 42.1 固定原输入、完整标签与预算
+
+**定义 42.1（平衡星形的固定输出接口）。** 在已给乘法、伴随和准确正锥的 $A=M_3(\mathbb C)$ 中，取
+
+$$
+P=\operatorname{diag}(1,1,0),\qquad C=PAP,\qquad c=\operatorname{diag}(1,2,0),\qquad
+t=\begin{pmatrix}0&0&1\\0&0&\sqrt2\\1&\sqrt2&0\end{pmatrix}.
+\tag{42.1}
+$$
+
+固定 $\sigma\in\{1,-1\}$、$\rho\in\mathbb R$，定义
+
+$$
+a\circ b=\frac{ab+ba}{2},\qquad K_\sigma(a,b)=\frac{\sigma i}{2}[a,b],\qquad s=\rho\operatorname{diag}(1,-2,0),\qquad g=K_\sigma(c,t)+s.
+\tag{42.2}
+$$
+
+每份读取 $\phi$ 都是 $A$ 上的数学正复线性泛函；其全部质量 $\phi(1)\ge0$ 均保留，包括零。对每个原实际探针 $x=x^*\in C$，沿用 (41.3) 的完整标签
+
+$$
+\begin{gathered}
+h=K_\sigma(c,x),\quad r=c\circ x,\quad k=c\circ t,\\
+R_+=x+h-k,\quad R_-=x-h+k,\quad S_+=t+r+g,\quad S_-=t-r-g,\\
+L=-2x\circ(h-k)-2t\circ(r+g),\\
+B_\phi(U,V)=\phi(U^2)\phi(V^2)-\phi(U\circ V)^2\ge0\quad(U=U^*,\ V=V^*).
+\end{gathered}
+\tag{42.3}
+$$
+
+这里 $B_\phi\ge0$ 来自实 Gram 的 Cauchy–Schwarz。原固定二表和每份探针预算分别为
+
+$$
+\mathsf{P2}:\quad \phi(g)^2\le B_\phi(c,t),\qquad
+\mathsf{PB}_x:\quad |\phi(L)|\le\sqrt{B_\phi(R_+,S_+)}+\sqrt{B_\phi(R_-,S_-)}
+\quad(\phi\ge0).
+\tag{42.4}
+$$
+
+这个接口只有固定 $c,t,g$ 和已知乘法，不含未知映射 $D$，也不预给两份外响应。它准确使用 §41.1 的同一固定输出预算；若完整原模型的实际角 $C$ 已同号分类，$g=D(c,t)$ 且数据为 (42.1)–(42.2)，则按 §41.1 的原 PB、外层 P2 及 AH43.1 同表读取取得这些预算，不增加物理评价标签或准备。
+
+这里 $PtP=0$ 而 $(1-P)tP\ne0$，两条角外连线均非零。定理 41.2 的无外边前件不成立；不能把它的比例式或返回消费者用于此输入，也没有把环境压缩掉。
+
+### 42.2 零探针刚性及明确的有限反证读取
+
+**定理 42.2（平衡星形的有限刚性）。** 对定义 42.1 的每个 $\sigma,\rho$，以下三项等价：$\rho=0$；$\mathsf{P2}$ 及每个 $x\in C_{\rm sa}$ 的 $\mathsf{PB}_x$ 对全部数学正泛函成立；仅 $\mathsf{PB}_0$ 对全部数学正泛函成立。第三项排除非零 $\rho$ 的证明不使用 P2。
+
+具体地，置以下标准复内积下的正交单位向量及实数：
+
+$$
+u=\frac13(2\sqrt2,-1,0)^{\mathsf T},\quad e=\frac13(1,2\sqrt2,0)^{\mathsf T},\quad f=(0,0,1)^{\mathsf T},\quad \theta=\frac83\rho,
+\tag{42.5}
+$$
+
+$$
+\begin{aligned}
+D_\rho&=\frac{2+12\rho^2}{9},& E_\rho&=\frac{2+4\rho^2}{9},\\
+A_\rho&=3\sqrt{D_\rho+\theta^2E_\rho},&
+\Lambda_\rho&=\sqrt2\left(1+\frac{64\rho^2}{9}\right),\\
+M_\rho&=3\left(\sqrt3+\frac32+2|\rho|\right)(1+\theta^2),&
+\delta_\rho&=\Lambda_\rho-A_\rho.
+\end{aligned}
+\tag{42.6}
+$$
+
+若 $\rho\ne0$，则 $\delta_\rho>0$。取同一个原零探针及有限正读取
+
+$$
+x=0,\quad \varepsilon=\varepsilon_\rho=\frac{\delta_\rho}{2M_\rho}>0,\quad
+\eta=i\sigma e+\theta f,\quad \xi=u+\varepsilon\eta,\quad \phi_\xi(a)=\xi^*a\xi,\quad \phi_\xi(1)=1+\varepsilon^2(1+\theta^2).
+\tag{42.7}
+$$
+
+则原预算的实际违反量满足
+
+$$
+|\phi_\xi(L)|-\sqrt{B_{\phi_\xi}(R_+,S_+)}-\sqrt{B_{\phi_\xi}(R_-,S_-)}\ge\frac{\delta_\rho^2}{4M_\rho}>0.
+\tag{42.8}
+$$
+
+**证明。** 先给完整有限余项所需的初等面积估计。将 $\mathbb C^3$ 看成内积为 $\operatorname{Re}(a^*b)$ 的实 Hilbert 空间，定义
+
+$$
+\mathcal A(a,b)=\sqrt{\|a\|^2\|b\|^2-\operatorname{Re}(a^*b)^2}.
+\tag{42.9}
+$$
+
+$a\ne0$ 时，设 $\Pi_a$ 是到实正交补 $a^\perp$ 的投影，则 $\mathcal A(a,b)=\|a\|\|\Pi_ab\|$。投影的三角不等式及收缩性给
+
+$$
+\mathcal A(a,b+q d)\le\mathcal A(a,b)+q\|a\|\|d\|\quad(q\ge0).
+\tag{42.10}
+$$
+
+$a=0$ 时两边相应面积均为零，故仍成立。对自伴 $U,V$，直接由 $\phi_\xi(U^2)=\|U\xi\|^2$、$\phi_\xi(U\circ V)=\operatorname{Re}((U\xi)^*V\xi)$ 得 $\sqrt{B_{\phi_\xi}(U,V)}=\mathcal A(U\xi,V\xi)$，无需除以任何 Gram 对角或质量。
+
+取 $x=0$，则 $h=r=0$，完整标签为 $R_+=-k$、$R_-=k$、$S_\pm=t\pm g$、$L=-(tg+gt)$。在前两维与第三维的原分块中，写
+
+$$
+v=\binom1{\sqrt2},\quad w=\binom{1/2}{\sqrt2},\quad s_0=\rho\operatorname{diag}(1,-2),\qquad
+t=\begin{pmatrix}0&v\\v^*&0\end{pmatrix},\quad k=\begin{pmatrix}0&w\\w^*&0\end{pmatrix},\quad g=\begin{pmatrix}s_0&i\sigma w\\-i\sigma w^*&0\end{pmatrix}.
+\tag{42.11}
+$$
+
+由 (42.5)，$w=(3/2)e$，逐项相乘给
+
+$$
+ku=0,\quad ke=\frac32f,\quad kf=\frac32e,\quad tu=\frac{\sqrt2}{3}f,\quad gu=su=\frac{2\rho}{3}u+\frac{2\sqrt2\rho}{3}e.
+\tag{42.12}
+$$
+
+原 $L$ 的角块为 $i\sigma(vw^*-wv^*)$，环境列为 $-s_0v$，环境对角为零。因此在完整正交基 $(u,e,f)$ 下，全部系数为
+
+$$
+L=\begin{pmatrix}
+0&i\sigma\sqrt2/2&-4\sqrt2\rho/3\\
+-i\sigma\sqrt2/2&0&7\rho/3\\
+-4\sqrt2\rho/3&7\rho/3&0
+\end{pmatrix}.
+\tag{42.13}
+$$
+
+确实，$v$ 在 $(u,e)$ 下为 $(\sqrt2/3,5/3)$，$w$ 为 $(0,3/2)$，而 $-s_0v$ 的两坐标是 $-4\sqrt2\rho/3,7\rho/3$。由此 $u^*Lu=\eta^*L\eta=0$；后一等式使用 $\eta$ 的 $e$ 坐标纯虚、$f$ 坐标实及 $L_{ef}$ 实。于是对任意有限 $\varepsilon>0$，准确有
+
+$$
+2\operatorname{Re}(\eta^*Lu)=-\sqrt2-\frac{8\sqrt2\rho\theta}{3}=-\Lambda_\rho,\qquad |\phi_{u+\varepsilon\eta}(L)|=\varepsilon\Lambda_\rho.
+\tag{42.14}
+$$
+
+再令
+
+$$
+a_0=k\eta=\frac32(\theta e+i\sigma f),\quad
+b_\pm=(t\pm g)u=\frac{\sqrt2}{3}f\ \pm\left(\frac{2\rho}{3}u+\frac{2\sqrt2\rho}{3}e\right),\quad d_\pm=(t\pm g)\eta.
+\tag{42.15}
+$$
+
+正交性给 $\|b_\pm\|^2=D_\rho$、$\|a_0\|^2=(9/4)(1+\theta^2)$、$\operatorname{Re}(a_0^*b_\pm)=\pm\sqrt2\rho\theta$。故
+
+$$
+\mathcal A(a_0,b_\pm)^2=\frac94\left(D_\rho+\theta^2E_\rho\right),\qquad \mathcal A(a_0,b_+)+\mathcal A(a_0,b_-)=A_\rho,
+\tag{42.16}
+$$
+
+其中 $E_\rho=D_\rho-8\rho^2/9$。由 $ku=0$ 和面积的齐次性，两笔真实预算之和准确等于
+
+$$
+\varepsilon\mathcal A(a_0,b_++\varepsilon d_+)+\varepsilon\mathcal A(a_0,b_-+\varepsilon d_-)
+\le\varepsilon A_\rho+\varepsilon^2\|a_0\|(\|d_+\|+\|d_-\|).
+\tag{42.17}
+$$
+
+此式保留全部环境项。由星形块平方得 $\|t\|=\|v\|=\sqrt3$、$\|K_\sigma(c,t)\|=\|w\|=3/2$，且 $\|s\|=2|\rho|$，所以
+
+$$
+\|d_+\|+\|d_-\|\le2(\|t\|+\|g\|)\|\eta\|
+\le2\left(\sqrt3+\frac32+2|\rho|\right)\sqrt{1+\theta^2}.
+\tag{42.18}
+$$
+
+乘以 $\|a_0\|=(3/2)\sqrt{1+\theta^2}$，(42.17) 即不超过 $\varepsilon A_\rho+\varepsilon^2M_\rho$。严格差额来自完整多项式恒等式
+
+$$
+A_\rho^2=\frac{18+236\rho^2+256\rho^4}{9},\qquad \Lambda_\rho^2-A_\rho^2=\frac{20}{9}\rho^2+\frac{5888}{81}\rho^4.
+\tag{42.19}
+$$
+
+两根量均正，故非零 $\rho$ 给 $\delta_\rho>0$，且 $M_\rho>0$。选择 (42.7) 的有限 $\varepsilon$，由 (42.14)、(42.17)–(42.19) 得违反量至少为 $\varepsilon\delta_\rho-\varepsilon^2M_\rho=\delta_\rho^2/(4M_\rho)>0$。这证明第三项蕴涵第一项，没有用 P2、除以 $\rho$ 或通道，也没有对未知响应取极限。
+
+反向证明保留全部探针。$\rho=0$ 时 $g=K_\sigma(c,t)$。任意正泛函的复 Cauchy–Schwarz 与 $UV=U\circ V-i\sigma K_\sigma(U,V)$ 给
+
+$$
+|\phi(K_\sigma(U,V))|^2\le B_\phi(U,V)\qquad(U=U^*,\ V=V^*).
+\tag{42.20}
+$$
+
+取 $U=c,V=t$ 得 P2。对任意原 $x\in C_{\rm sa}$，记 $a=h-k$、$b=r+g$、$Z=x+i\sigma t$。直接展开，或取已付 (39.7) 的演员为 $c$，得到
+
+$$
+a+i\sigma b=i\sigma cZ,\qquad R_\pm+i\sigma S_\pm=(1\pm i\sigma c)Z,\qquad
+(R_\pm+i\sigma S_\pm)^*(R_\pm+i\sigma S_\pm)=Z^*(1+c^2)Z.
+\tag{42.21}
+$$
+
+左端为 $R_\pm^2+S_\pm^2+2K_\sigma(R_\pm,S_\pm)$，两个平方和之差是 $4x\circ a+4t\circ b=-2L$。相减即 $K_\sigma(R_+,S_+)-K_\sigma(R_-,S_-)=L$；施以 $\phi$、三角不等式及 (42.20)，得每个 $x$ 的原 PB。全部零质量和退化情形包含在 Cauchy–Schwarz 内；这里的交换子只是已知乘法中的比较量，不是假定未知外响应。第二项蕴涵第三项由 $x=0$ 的包含关系，等价性得证。∎
+
+### 42.3 全复参数 P2 的非零证书及其明确失败预算
+
+**命题 42.3（P2 单独不足）。** 在 (42.1)–(42.2) 中取 $\rho=1/2$，则两种 $\sigma$ 的全部正泛函 P2 均成立，但 (42.7) 的一个正读取违反原零探针 PB。
+
+**证明。** 取任意 $z=X+iY$，记 $\mathcal R=X^2+Y^2$。固定二表与矩阵铅笔为
+
+$$
+H_\phi=\begin{pmatrix}\phi(c^2)&\phi(k)-i\phi(g)\\\phi(k)+i\phi(g)&\phi(t^2)\end{pmatrix},\qquad F_w=t^2-2\operatorname{Re}(w)k+|w|^2c^2+2\operatorname{Im}(w)g.
+\tag{42.22}
+$$
+
+其对角非负，$\det H_\phi=B_\phi(c,t)-\phi(g)^2$，故 P2 等价于 $H_\phi\ge0$。列 $(-w,1)$ 的二次值是 $\phi(F_w)$；其复数倍涵盖第二坐标非零的所有列，第二坐标为零的列由 $\phi(c^2)\ge0$ 处理。因此全部 $w$ 的 $F_w\ge0$ 等价于全部数学正泛函 P2，反向使用正泛函决定准确锥。这是列的齐次参数化，不除以任何质量或表对角。
+
+令 $s=\operatorname{diag}(1/2,-1,0)$，展开得
+
+$$
+Q_z=(t-zc)^*(t-zc)+2\sigma Y s=F_{X+i\sigma Y}.
+\tag{42.23}
+$$
+
+这个参数替换为复平面的双射。$Q_z$ 的右下角为 $3$；若 $c_0=\operatorname{diag}(1,2)$，其左上块为 $vv^*+\mathcal R c_0^2+2\sigma Y s_0$，右上列为 $-\overline zc_0v$。减去 $\mathcal R c_0vv^*c_0/3$，Schur 补准确为
+
+$$
+D_z=\begin{pmatrix}
+1+2\mathcal R/3+\sigma Y&\sqrt2(1-2\mathcal R/3)\\
+\sqrt2(1-2\mathcal R/3)&2+4\mathcal R/3-2\sigma Y
+\end{pmatrix}.
+\tag{42.24}
+$$
+
+$$
+(D_z)_{11}=\frac23X^2+\frac23(Y+3\sigma/4)^2+\frac58>0,\qquad \det D_z=\frac{16}{3}X^2+\frac{10}{3}Y^2\ge0.
+\tag{42.25}
+$$
+
+行列式由 $2[(1+2\mathcal R/3)^2-Y^2]-2(1-2\mathcal R/3)^2=16\mathcal R/3-2Y^2$ 得到。对任意 $a,b\in\mathbb C$，$D_z$ 的二次型可配成 $(D_z)_{11}|a+(D_z)_{12}b/(D_z)_{11}|^2+(\det D_z)/(D_z)_{11}|b|^2$，所以 $D_z\ge0$，包括 $z=0$。再将 $Q_z$ 的环境坐标配方，二次型等于该 Schur 二次型加 $3|b+(-zv^*c_0)a/3|^2$（此处 $a\in\mathbb C^2,b\in\mathbb C$），故 $Q_z\ge0$。这里只除以确定正的系数，全部复参数及全部原质量的 P2 证书成立。
+
+而 (42.6)–(42.7) 准确化为
+
+$$
+\theta=\frac43,\quad \Lambda_{1/2}=\frac{25\sqrt2}{9},\quad A_{1/2}=\frac{\sqrt{93}}3,\quad
+M_{1/2}=\frac{25}{3}\left(\sqrt3+\frac52\right),\quad \varepsilon_{1/2}=\frac{25\sqrt2-3\sqrt{93}}{150(\sqrt3+5/2)}>0.
+\tag{42.26}
+$$
+
+这里 $\Lambda_{1/2}^2-A_{1/2}^2=413/81>0$。取 $x=0$、$\xi=u+\varepsilon_{1/2}(i\sigma e+4f/3)$，质量为 $1+(25/9)\varepsilon_{1/2}^2$；定理 42.2 给实际违反量至少 $\delta_{1/2}^2/(4M_{1/2})>0$。因此这个例子只分离 P2 与固定输出 PB，不是满足完整 PB 或完整原公理的反模型。∎
+
+### 42.4 已知量子行、真实推断及保留的全局缺口
+
+本节的新增关系是这个真环境耦合平衡星形中，单个原零探针加一份明确有限移动的数学正读取已消去余量；不是重复 §41 的分离背景结论，也不使用任意三维输入的分类。对所得完整行，包括原来的两条环境边，准确有
+
+$$
+c\circ t-ig=\begin{cases}ct,&\sigma=1,\\tc,&\sigma=-1.\end{cases}
+\tag{42.27}
+$$
+
+$M_3$ 的乘法、正锥、伴随及数学正读取本来已给；单行身份不构造未知总响应，不证明全域双线性、结合乘法或全部有限旧复 Gram。已分类角的通常／相反 $C^*$-乘法及数学 GNS/Hilbert，仍直接复用 §36.1、40.2 的 AH64.1、75.1；循环向量平方范数仍为原 $\gamma(P)$，零质量仍为零向量。Born 数学配对要成为原概率，仍需实际完整事件菜单与真实来源。R5 §12 只按 §40.1 已付的非零交替双线性、同域及全域 P、N 前件复用，不能倒推这些前件；其 $\circ+iD$ 与本卷 $\circ-iD$ 的相反关系不变。
+
+一般原有限谱接口的首个未付关系仍为 (41.28)：
+
+$$
+E_+=D(c-g,k)-K_\sigma(c-g,k),\quad E_-=D(c+g,-k)-K_\sigma(c+g,-k),\quad
+E_+-E_-=2cs,\qquad \boxed{E_+=E_-}.
+\tag{42.28}
+$$
+
+本定理仅在指定星形上给 $s=0$，从而在适用的完整模型中给这份局部相等；一般输入的方框关系没有被增作公理，也未被普遍证明。任意三维输入、其他对角或环境耦合、一般混合整行、非零相对标量演员的未覆盖输入、无限谱演员及完整奇数阶段 UHF 分类仍须原桥梁。全局单位行 PT183.2/AH43.3 已付，不重开；相对单位的标准修正仍为 $K_\sigma(c+\lambda P,t)=K_\sigma(c,t)+\lambda K_\sigma(P,t)$，未添加平移中性、残差缩放或响应运输。
+
+独立定量义务也不变：$\omega_{M,\lambda_*}(q)\to0$ 不能推出增长分割中的 $N\omega_{M,\lambda_*}(q)^2\to0$；本节有限位移不提供任意输入的统一率、可累加界或任意相异谱值模数，也不能借用另一误差的 $N\kappa^2$ 界。§39 的原标签真角安置障碍没有消失。局部有限结论不等于一般重构、普适简化或全局独立公理数减少。
+
+### 42.5 完全相同的递归全文来源与数学归属
+
+**定义 42.4（完整来源的同一身份）。** 本节 $\mathcal C_{47}^{\rm pin}(\Omega;S,D)$ **就是定义 41.4 的同一个谓词**，因而也是定义 40.1、36.1 的同一个谓词；$S$ 仍指原对称响应。严格沿 $41.4\Rightarrow40.1\Rightarrow36.1\Rightarrow32.3\Rightarrow\S27.1\Rightarrow26.3\Rightarrow22.3\Rightarrow18.2\Rightarrow\{10.2,15.2,\mathrm{AH}28.1,64.2,75.1\}\Rightarrow\mathrm{SQ}47.1\text{--}47.13$ 的全文身份，将每份定义、合同、公式、量词及逐项递归纳入、逐层固定版本的全部上游全文，逐句、逐公式、逐量词同时合取。这里是原谓词的完整身份，不以编号范围或以下说明替代任何条款。
+
+定义 41.4 的各层固定身份全部保留：AH 的 `b1a95e41b9622e9f720e51f9bb899841f5b74ca1`，W/CC/PT 的 `3b10aed60f60e4901bae6cf2e160bf439d642e64`，SQ 自身 §§1.3、39、41.1、47.1 下各自层级的 `dcaebc0b9ca5a3a463fd8cfd161d38967df28668` 与 `0aa11dbc3dc337d667b98900673e07d67b99bf46`，OP/PT/PB/SM/C/AQ/R3/W/FR/XV/SF 的 `f24d1138a7b994da16abd9a47affedea64ea44ce`，AH22.1 的 `2addd6f369b7387226c2b0cc984623dd3efe40a1`、AH12.1 上游的 `39a0505470ea889dd9d4301ad60cd9506a5e8b58` 及 AH42.1 内的 `bef9bba367a24ab5e250491dcb88ed85ebc29cf7`；R5 的 `aef46ce7497cf8ee6bef9bb7356a4483f3bfe6f0` 不覆盖内层身份。
+
+同一 $\Omega/\mathrm{native}$ 的全部原对象、准备、事件、程序、设备、比较权 $q$、跨标签全词共同 $K/J$、parent、ready、控制、旗标、中心、经典及不等维块、无轴对象、中间切口、模式网络、根类、十一端点、配置、实际逆等距边、静默及零活动、终端标签和读器合同都保留；网络 $D,C$ 不换成本响应或数学正锥，未定义请求不补零箭头。实际准备、相干控制、完整 Born 菜单及所有原质量不由向量读取制造；全局归一须 $\gamma(1)>0$，角归一另须真实条件化及 $\gamma(P)>0$，零、不等、次归一和非正常质量不删除。真正相关联合、张量仍须同一实际共同来源、全部相关输入、忠实同向交换腿、共同生成、分离及重数，相同边缘或分别可达不支付联合实现。
+
+typed CP、箭头下降、整台递归同源参考、原真支持与支持内补、交织夹界、每个所需有限深度及每个正精度不变。完整仪器、TP、Kraus、更新及 Lüders 保留完整 typed 菜单、单位分区、接受端、校准、表示与收敛前件，并量化整个环境、全部成功／失败／细记录／port／post-port 输出及每份完整输出的每个仍合法未来；只有严格正实际输出质量可归一，失败和零分支及完整输出均不删。合法顺序、自适应、并行历史、真实分组遗忘、停止、拒绝、销毁、泄漏、同数两侧、逆向真实 Return 和含活动 ready、producer 的完整 CountRead 均不被矩阵相等或当前读取替代；原程序、历史、记录、读取次序、$q$ 零集和未来权限不合并。正常性、指定前对偶、可数可加、无限菜单记录和收敛，及实际连续可逆流与逆、物理钟单位、酉实现、生成元域、Hamiltonian 能量、作用量和共同正物理 $\hbar$ 各保留原来源。有限向量位移不证明整个谓词的满足性。
+
+实 Gram、Cauchy–Schwarz、实正交投影和 Schur 配方是成熟初等工具，正泛函背景沿 §41.5 所引 Blackadar《Operator Algebras》；(42.21) 复用已付 (39.7) 的标准乘法恒等式。Alfsen–Shultz《Orientation in operator algebras》的动力学对应需到斜序导子的线性映射，不能为本接口补上线性或物理动力学。本节不使用此前提未付的重构定理，也不把标量二表正性升格为未知映射的完全正性。平衡星形的有限差额 (42.19) 及其原预算消费者是本库关系推导；它不归给一般 Gram 文献，不作历史优先权、穷尽检索、外部开放问题或完整新公理系统主张。
+
+### 42.6 完整直观
+
+把刻度为一和二的两间房与外面的第三间房看成同一个三维系统：两条真实连线都在，而且配比恰好使原二表容许一正一负的平衡误差。新的有限结论是，原探针只取零就足够，只需把数学正读取的位置移动一次：先找两份原 $R$ 都送到零的房内方向 $u$，此时原输入 $t$ 仍把它送进环境；再按文中明确的有限幅度，加入带四分之一转相位的房内方向和与误差相配的环境方向。原 $L$ 的读数准确长出一次项，两笔完整 Gram 面积的一次项也能逐个算清；普通实投影的三角不等式包住全部有限余项，而两边平方之差是对任何非零误差都严格正的二次项加四次项，所以指定的这一次正读取确实违反原预算，没有删连线、归一质量、取消通道或对未知规则取极限。误差为二分之一时，全部复参数的原 P2 仍由明确矩阵证书通过，却被这份预算排除，说明补上的正是 P2 留下的有限缺口。余量为零时，同一个已知乘法恒等式又保证全部原探针预算，所得整行准确是通常或相反量子乘法；但任意环境输入为何有相同的两份原缺陷，以及增长谱分割的误差如何累加，仍是不同的未付桥梁。真实准备、完整 Born 菜单、同一共同相关来源、整台仪器全部输出及每个合法未来、Return、CountRead、正常性、指定前对偶、物理钟、动力学和共同正的作用量尺度，也继续由同一个完整递归来源谓词承担，因此这一步是明确有限几何的简化，尚未完成全局量子起源。
+
+## 追加锚（本行以下为增补区）
+## 43. 分离背景两探针的平方根稳定性与幂次尖锐性
+
+### 43.1 固定输出、原质量与两份近似预算
+
+沿用 §§41.1–41.2 的固定输出接口，以 $\Sigma$ 表示 (41.1) 的支撑投影，避免与原对称响应 $S$ 混淆。设 $A$ 为含单位复 $C^*$-代数，$P$ 为实际投影，$p,q\le P$ 为非零正交投影，置
+$$
+\Sigma=p+q,\quad c=p+2q,\quad K_\sigma(u,v)=\frac{\sigma i}{2}[u,v],\quad \sigma\in\{1,-1\},
+$$
+$$
+T=ptq\in pAq,\quad \tau=T+T^*,\quad t=\tau+b,\quad b=b^*=(1-\Sigma)b(1-\Sigma),
+\qquad s=s_p+s_q,\quad s_p=s_p^*\in pAp,\quad s_q=s_q^*\in qAq,\quad g=K_\sigma(c,t)+s.
+\tag{43.1}
+$$
+不要求 $p\sim q$ 或余量为标量；$b$ 无范数、谱或秩限制，可含 $P-\Sigma$ 与 $1-P$ 之间的任意耦合，禁止的是 $\Sigma$ 与 $1-\Sigma$ 之间的连线。对自伴元素保留 $u\circ v=(uv+vu)/2$，以及原来的
+$$
+B_\phi(U,V)=\phi(U^2)\phi(V^2)-\phi(U\circ V)^2,\qquad
+\phi(g)^2\le B_\phi(c,t)\quad(\phi\ge0).
+\tag{43.2}
+$$
+这里及下文的量词包含全部数学正泛函、零泛函、任意非负有限质量及非正常正泛函，不作原质量归一。固定二表 P2 保持精确。对 $x=x^*\in PAP$，原标签准确仍是 (41.3)：
+$$
+\begin{gathered}
+h=K_\sigma(c,x),\quad r=c\circ x,\quad k=c\circ t,\quad R_\pm=x\pm(h-k),\quad S_\pm=t\pm(r+g),\\
+L=-2x\circ(h-k)-2t\circ(r+g).
+\end{gathered}
+$$
+只取 (41.8) 的两份实际探针；其分母非零已由 §41.2 支付：
+$$
+d_\pm=\frac{1\pm\sqrt{10}}3,\qquad v=K_\sigma(c,\tau),\qquad
+x_d=\frac{v}{d-3/2}+z_d,\quad z_d=\frac{s_p}{d-1}+\frac{s_q}{d-2}\quad(d=d_+,d_-).
+\tag{43.3}
+$$
+探针可以依赖同一固定余量。以 $R_{d,\pm},S_{d,\pm},L_d$ 记其完整原标签；对同一 $\eta\ge0$，仅将这两份预算改为
+$$
+|\phi(L_d)|\le\sqrt{B_\phi(R_{d,+},S_{d,+})}+\sqrt{B_\phi(R_{d,-},S_{d,-})}+\eta\phi(1)
+\quad(\phi\ge0,\ d=d_+,d_-).
+\tag{43.4}
+$$
+这不是对完整 $\mathsf H_A(D)$ 的重定义，不假定任何响应映射、外响应值或以 $t$ 为演员的 PB。
+
+**定理 43.1（统一平方根界）。** 在 (43.1)–(43.4) 下，
+$$
+\boxed{\ \|s_p\|\le\sqrt{\eta/2},\qquad \|s_q\|\le\sqrt{\sqrt{10}\,\eta/2},\qquad
+\|s\|\le10^{1/4}\sqrt{\eta/2}.\ }
+\tag{43.5}
+$$
+此为显式有效而不主张最优的常数；与代数、维数、秩、$\sigma$、$T$ 的核和值域及 $b$ 的大小无关，不要求 $t,\tau,T$ 有统一范数界。
+
+### 43.2 保留背景的零面积读数与两条加权方程
+
+**证明。** 直接复用 (41.13)–(41.17) 的精确探针恒等式，不重证该块代数：
+$$
+\begin{gathered}
+R_{d,\pm}=x_d\pm\tau/d=\Sigma R_{d,\pm}\Sigma,\quad
+S_{d,+}=b+dR_{d,+},\quad S_{d,-}=b-dR_{d,-},\\
+L_d=-2(d+d^{-1})\tau\circ z_d\in\Sigma A\Sigma.
+\end{gathered}
+\tag{43.6}
+$$
+对任意正泛函 $\psi$，取正读取 $\phi_\Sigma(a)=\psi(\Sigma a\Sigma)$，其质量准确为 $\psi(\Sigma)$。$b$ 仍在两个完整 $S$ 标签中；由 (43.6) 的实际乘法及 $\Sigma b^2\Sigma=0$，
+$$
+\phi_\Sigma(S_{d,\pm}^2)=d^2\phi_\Sigma(R_{d,\pm}^2),\qquad
+\phi_\Sigma(R_{d,\pm}\circ S_{d,\pm})=\pm d\phi_\Sigma(R_{d,\pm}^2).
+$$
+因此**两项实际 Gram 同时为零**，(43.4) 给 $|\psi(L_d)|\le\eta\psi(\Sigma)$。每个 $\Sigma A\Sigma$ 的状态均可由 $a\mapsto\omega(\Sigma a\Sigma)$ 正延拓；自伴元素的状态范数公式遂给
+$$
+\|L_d\|\le\eta,\qquad |d+d^{-1}|=\frac{2\sqrt{10}}3,\qquad
+\|\tau\circ z_d\|\le\frac{3\eta}{4\sqrt{10}}.
+\tag{43.7}
+$$
+状态只作数学范数分离；零质量无需除法，未使用正常性。令 $X=s_pT$、$Y=Ts_q$、$F_d=2p(\tau\circ z_d)q$，读取 $pAq$ 块得
+$$
+\frac{X}{d-1}+\frac{Y}{d-2}=F_d,\qquad \|F_d\|\le M:=\frac{3\eta}{2\sqrt{10}}.
+\tag{43.8}
+$$
+置 $r_0=\sqrt{10}$、$\alpha_\pm=(d_\pm-1)^{-1}$、$\beta_\pm=(d_\pm-2)^{-1}$。精确系数及行列式为
+$$
+\begin{gathered}
+\alpha_+=(r_0+2)/2,\quad\alpha_-=-(r_0-2)/2,\quad |\alpha_+|+|\alpha_-|=r_0,\\
+\beta_+=-(r_0+5)/5,\quad\beta_-=(r_0-5)/5,\quad |\beta_+|+|\beta_-|=2,\\
+\Delta=\alpha_+\beta_--\alpha_-\beta_+=-6/r_0.
+\end{gathered}
+$$
+在 Banach 空间 $pAq$ 中解这两条标量系数方程：
+$$
+X=\frac{\beta_-F_{d_+}-\beta_+F_{d_-}}{\Delta},\quad
+Y=\frac{-\alpha_-F_{d_+}+\alpha_+F_{d_-}}{\Delta},\qquad
+\boxed{\ \|s_pT\|\le\frac{2M}{|\Delta|}=\frac\eta2,\quad
+\|Ts_q\|\le\frac{r_0M}{|\Delta|}=\frac{\sqrt{10}}4\eta.\ }
+\tag{43.9}
+$$
+这里仅除以非零标量，从未取消或求逆 $T$。
+
+### 43.3 矩形通道的 P2 恢复
+
+**引理 43.2（正确角上的矩形恢复）。** 设 $e,f$ 为 $C^*$-代数中的投影，$a=a^*\in eAe$、$U\in eAf$、$\kappa>0$。若每个 $eAe$ 的状态均满足 $|\omega(a)|^2\le\kappa\omega(UU^*)$，则
+$$
+\|aU\|\ge\frac{\|a\|^2}{\sqrt\kappa}.
+\tag{43.10}
+$$
+**证明。** 令 $m=\|a\|$；$m=0$ 时直接成立。否则取固定 $\epsilon_0\in\{1,-1\}$ 及角状态 $\omega_n$，使 $\omega_n(a)\to\epsilon_0m$。由 $-me\le a\le me$，
+$$
+(a-\epsilon_0me)^2\le2m(me-\epsilon_0a),\qquad
+\delta_n:=\|(\pi_n(a)-\epsilon_0m)\xi_n\|\longrightarrow0
+$$
+对其 GNS 循环单位向量成立。正确角元素是 $C_0=UU^*\in eAe$；假设给 $\liminf_n\omega_n(C_0)\ge m^2/\kappa$。$C_0$ 固定且有界，故
+$$
+|\omega_n(aC_0a)-m^2\omega_n(C_0)|\le2m\|C_0\|\delta_n\longrightarrow0,
+\qquad \liminf_n\omega_n(aC_0a)\ge m^4/\kappa.
+$$
+由 $aC_0a=(aU)(aU)^*$ 及 $C^*$-恒等式，$\|aU\|^2=\|aC_0a\|\ge m^4/\kappa$。不要求 $U$ 为方块、单射、满射、可逆或有闭值域。∎
+
+续证定理。对 $pAp$ 或 $qAq$ 的任意状态，分别用 $\phi(a)=\omega(pap)$ 或 $\omega(qaq)$ 读取精确 P2。两者的 $\phi(c\circ t)=0$；其 $\phi(c^2)$ 分别为 $1,4$，$\phi(t^2)$ 分别为 $\omega(TT^*),\omega(T^*T)$，$\phi(g)$ 分别为 $\omega(s_p),\omega(s_q)$。因此
+$$
+|\omega(s_p)|^2\le\omega(TT^*),\qquad
+|\omega(s_q)|^2\le4\omega(T^*T).
+\tag{43.11}
+$$
+第二角的因子必须是 $4$，来自 $c^2q=4q$。引理分别取 $(a,U,\kappa)=(s_p,T,1)$、$(s_q,T^*,4)$，给
+$$
+\|s_p\|^2\le\|s_pT\|\le\eta/2,\qquad
+\|s_q\|^2\le2\|s_qT^*\|=2\|Ts_q\|\le\sqrt{10}\,\eta/2.
+$$
+正交角满足 $\|s_p+s_q\|=\max\{\|s_p\|,\|s_q\|\}$，从而得到 (43.5)，也包括 $\eta=0$。引理已涵盖零通道；状态范数和 GNS 极限都只涉及每份数据中固定、已知的 $C^*$ 元素，不涉及未知 $D$ 的输入正则性或极限。∎
+
+### 43.4 精确全正 P2 家族的幂次消费者
+
+**命题 43.3（$1/2$ 幂次不可统一提高）。** 在 $M_2(\mathbb C)$ 中取 $p=E_{11}$、$q=E_{22}$、$P=1$、$c=\operatorname{diag}(1,2)$、$\tau_0=E_{12}+E_{21}$，并对 $\varepsilon>0$ 置
+$$
+t_\varepsilon=2\varepsilon\tau_0,\qquad s_\varepsilon=\varepsilon\operatorname{diag}(1,-2),\qquad
+b=0,\qquad g_\varepsilon=K_\sigma(c,t_\varepsilon)+s_\varepsilon.
+\tag{43.12}
+$$
+定理 34.1 的精确全正 P2 族直接供应此例：其参数 $(a,b,v,r)=(1,2,2\varepsilon,\varepsilon)$ 满足 $|r|=\varepsilon\le4\sqrt2\varepsilon/3$。这已覆盖两种 $\sigma$、全部复相位、任意质量与零泛函，不重证该尖锐区间。
+
+**证明。** 两份实际探针准确为
+$$
+x_{d,\varepsilon}=\frac{\sigma i\varepsilon}{d-3/2}
+\begin{pmatrix}0&-1\\1&0\end{pmatrix}
++\varepsilon\operatorname{diag}\big((d-1)^{-1},-2(d-2)^{-1}\big).
+$$
+由 (43.6) 且 $b=0$，两个 Gram 对**每个**正泛函均为零。此时 $z_d$ 两个对角元之和为 $-\varepsilon d/((d-1)(d-2))$，故
+$$
+L_d=2\varepsilon^2\frac{d^2+1}{(d-1)(d-2)}\tau_0,\qquad
+\|L_d\|=2\varepsilon^2\kappa_d,\quad
+\kappa_d=\left|\frac{d^2+1}{(d-1)(d-2)}\right|,
+$$
+$$
+\kappa_+=\frac{2(10+\sqrt{10})}{7\sqrt{10}-20},\qquad
+\kappa_-=\frac{2(10-\sqrt{10})}{20+7\sqrt{10}},\qquad
+\kappa=\max\{\kappa_+,\kappa_-\}=\kappa_+.
+\tag{43.13}
+$$
+取 $\eta_\varepsilon=2\kappa\varepsilon^2$。正泛函满足 $|\phi(L_d)|\le\|L_d\|\phi(1)\le\eta_\varepsilon\phi(1)$，故两份完整预算对全部质量成立；不是有限状态抽样。另一方面 $\|s_\varepsilon\|=2\varepsilon$，对任意 $\alpha>1/2$，
+$$
+\frac{\|s_\varepsilon\|}{\eta_\varepsilon^\alpha}
+=2(2\kappa)^{-\alpha}\varepsilon^{1-2\alpha}\longrightarrow\infty\quad(\varepsilon\downarrow0).
+$$
+所以固定 $M_2$ 上也不存在统一的 $C_\alpha\eta^\alpha$ 界。这只证明幂次尖锐性，不证明 (43.5) 的系数最优，也不是块数增长时的收敛率或完整公理反模型。∎
+
+### 43.5 乘法对应、成熟归属与完整来源边界
+
+固定行准确有 $c\circ t-ig=ct-is$（$\sigma=1$）或 $tc-is$（$\sigma=-1$），故距通常或相反乘法行的范数误差恰为 $\|s\|$，受 (43.5) 控制。已分类角的 $C^*$、Hilbert/GNS、Pauli 与 Born 对应只按 §§40.1–41.5 的原入口复用；固定输出不供应全域响应、双线性、任意输入混合或完整量子起源。
+
+本节保持 (43.1) 的支撑形状，未覆盖 $ptp\ne0$、$qtq\ne0$ 或 $(1-\Sigma)t\Sigma\ne0$ 的一般固定输出输入；完整 H 中已有 §31.2 返回消费者者仍直接复用。原任意总 $D$、准确锥、分离评价族、全部 A1–A3/P2、内外嵌套 PB 及其全部原质量不被修改。一般全 H 混合输入中，(41.28) 定义的同两份 $E_\pm$ 之相等 $E_+=E_-$ 仍未支付；已知差额 $E_+-E_-=2cs$ 不被改为相等公理。本界不支付增长有限分割中的 $N\omega_{M,\lambda_*}(\varepsilon)^2\to0$，不分类一般环境运输、无限谱演员或完整奇数阶段 UHF 全域。
+
+精确标签及比例恒等式归于 §41.2，精确 P2 家族归于定理 34.1；这里的定量推断使用成熟的正压缩、自伴状态范数公式、Gelfand–Naimark–Segal 表示和 $C^*$-恒等式。Peirce 块结构及表示背景的文献归属保持 §41.5 的 Hanche-Olsen–Størmer 与 Blackadar；不将本节定量界归给这些文献，不主张历史优先权或文献穷尽性。
+
+物理来源**严格就是定义 41.4 的同一个** $\mathcal C_{47}^{\rm pin}(\Omega;S,D)$，$S$ 为原对称响应；沿 $41.4\Rightarrow40.1\Rightarrow36.1\Rightarrow32.3\Rightarrow\S27.1\Rightarrow26.3\Rightarrow22.3\Rightarrow18.2\Rightarrow\{10.2,15.2,\mathrm{AH}28.1,64.2,75.1\}\Rightarrow\mathrm{SQ}47.1\text{--}47.13$，将每份定义、合同、公式、量词及逐项递归纳入、逐层固定版本的**全部上游全文逐句、逐公式、逐量词同时合取**。定义 41.4 的 AH/W/CC/PT、SQ 两层主源、OP/PT/PB/SM/C/AQ/R3/W/FR/XV/SF、AH22.1、AH12.1、AH42.1 及 R5 等各内层固定身份均原样保留；此处说明不替代其中任何全文或前件。
+
+AH 的直接身份为 `b1a95e41b9622e9f720e51f9bb899841f5b74ca1`，W、CC、PT 为 `3b10aed60f60e4901bae6cf2e160bf439d642e64`；SQ 主源按其自身 1.3、39、41.1、47.1 解析，保留 `dcaebc0b9ca5a3a463fd8cfd161d38967df28668`、`0aa11dbc3dc337d667b98900673e07d67b99bf46` 的相应层级。OP/PT/PB/SM/C/AQ/R3/W/FR/XV/SF 的 `f24d1138a7b994da16abd9a47affedea64ea44ce`、AH22.1 的 `2addd6f369b7387226c2b0cc984623dd3efe40a1`、AH12.1 的 `39a0505470ea889dd9d4301ad60cd9506a5e8b58`、AH42.1 中 OP 等直接身份 `bef9bba367a24ab5e250491dcb88ed85ebc29cf7` 均不被直接读取身份压平；R5 的原直接身份仍按 §41.5。原根、全部静默和其他静态分支不改为 UHF 或三维 Pauli 对象。
+
+同一 $\Omega/\mathrm{native}$ 的对象、准备、事件、设备、程序、比较权、共同 $K/J$、parent、ready、控制、旗标、中心、经典及不等维块、无轴对象、全部中间切口、模式网络、原根类、十一端点、配置、逆等距边、全静默、零活动、终端及读器合同均保持；未定义请求不补零。实际相干控制、事件绑定的完整 Born 菜单、全部原质量和真实条件化仍须原来源：全局菜单仅在 $\gamma(1)>0$ 时归一，角菜单另须真实条件化及 $\gamma(P)>0$。真正联合与张量须同一实际共同来源、全部相关输入、忠实同向交换腿、共同生成、分离及重数，不能由相同边缘、分别可达或 GNS 代付。
+
+typed CP、箭头下降、递归同源整台参考、真支持、支持内补、交织夹界、全部所需有限深度和每个正精度保留原前件。完整仪器、TP、Kraus、更新及 Lüders 仍须完整 typed 菜单、单位分区、接受端、校准、表示及收敛，量化整个环境、全部成功／失败／细记录／port／post-port 输出及每份完整输出的每个仍合法未来；只对严格正的实际输出质量归一，不删零分支或失败。合法顺序、自适应、并行历史、真正分组遗忘、停止、拒绝、销毁、泄漏、同数两侧及逆向真实 Return、完整 CountRead 的活动 ready 和 producer 全部保留，不凭相同算子或读数合并历史、记录、读取次序、比较权零集或未来权限。正常性、指定前对偶、无限菜单和记录的可数可加及收敛仍须原扩展来源；物理动力学仍须原域实际连续可逆流及实际逆、物理钟与单位、适用酉实现、一般生成元域、Hamiltonian 能量解释、作用量及共同正的物理 $\hbar$。数学读取、状态及 GNS 不制造这些物理来源，也不证明整个来源谓词满足。
+
+把 $p,q$ 看成刻度分别为一和二的两间房，$T$ 是可能有核、甚至完全不通的门，$s_p,s_q$ 是各房内不必为数值的误差；外部背景始终留在原输入与标签里，只允许它完全处于两房之外。几何简化是两条独立斜率配合一份二次正性约束：每个斜率使两对完整标签在支持读数中成比例，两笔 Gram 面积便同时为零，近似预算直接限制相应算子；两组不同权重再分别限制误差穿门的两个乘积。精确 P2 在两房给出系数一与四的平方读数界，矩形 GNS 引理把它们转换成误差范数的平方控制，同时涵盖门的零通道，不需要门可逆或值域闭合。这便得到平方根界，而精确二维全正家族说明这个幂次确实不能提高。过程中没有删改背景、改变原质量或对未知响应取极限；两房内的对角输入、真正接向环境的连线、块数增长时的误差累加与完整物理来源仍须各自的额外推断，不能由这项有限几何结论代付。
+
+## 追加锚（本行以下为增补区）
