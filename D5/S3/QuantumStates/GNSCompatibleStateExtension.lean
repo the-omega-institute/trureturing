@@ -46,7 +46,7 @@ private theorem cyclicVector_denseRange (f : A →ₚ[ℂ] ℂ) :
   exact hcoe.comp hpre.denseRange (UniformSpace.Completion.continuous_coe _)
 
 /-- Positivity and normalization give the contractive bound, before extending any tower. -/
-private theorem state_bound (f : A →ₚ[ℂ] ℂ) (hf : f 1 = 1) (a : A) : ‖f a‖ ≤ ‖a‖ := by
+theorem state_bound (f : A →ₚ[ℂ] ℂ) (hf : f 1 = 1) (a : A) : ‖f a‖ ≤ ‖a‖ := by
   have hcs := inner_mul_inner_self_le (𝕜 := ℂ) (f.toPreGNS 1) (f.toPreGNS a)
   have hp := f.norm_apply_le_of_nonneg (star a * a) (star_mul_self_nonneg a)
   have hpos : 0 ≤ f (star a * a) := f.map_nonneg (star_mul_self_nonneg a)
