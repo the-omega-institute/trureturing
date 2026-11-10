@@ -2,6 +2,8 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233261Literal
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
 
+/-! Literal six-row array counts as exact dependent-family laws. -/
+
 namespace Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233261Literal
 open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233261Literal
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -98,20 +100,23 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   change (a 17 : ℤ)+1 = _ at hb
   norm_num at ha hb
   linarith only [ha,hb]
+private theorem count_bound (n : ℕ) : a n ≤ 6 ^ (6 * n) := by
+  unfold a
+  calc
+    _ ≤ (Finset.univ : Finset (Fin 6 × Fin n → Fin 6)).card := Finset.card_filter_le _ _
+    _ = 6 ^ (6 * n) := by simp
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 1, 4, ?_⟩
-  have hsmall : a 1 ≤ 46656 := by
-    unfold a
-    calc
-      _ ≤ (Finset.univ : Finset (Fin 6 × Fin 1 → Fin 6)).card := Finset.card_filter_le _ _
-      _ = 46656 := by simp [Fintype.card_fun]
+  have hsmall : a 1 ≤ 46656 := count_bound 1
   have hs : (a 1 : ℤ) ≤ 46656 := by exact_mod_cast hsmall
   have hb := counting_bridge (n := 4) (by decide)
   have hL : (0 : ℤ) ≤ (L 4 : ℤ) := Int.natCast_nonneg _
   change (a 1 : ℤ) ≠ (a 4 : ℤ)
   norm_num only [show (64 : ℤ)^4 = 16777216 from rfl] at hb
-  omega
+  intro he
+  rw [he] at hs
+  linarith only [hs, hb, hL]
 
 def family : Registration arena (type_of% @result) where
   actual := actual
