@@ -684,7 +684,7 @@ private theorem negative : ¬ arena.{u_1}.Law rejected := by
   intro h
   have bad := @h sample.V inferInstance inferInstance sample.pair (0 : I)
     Endpoint.samplePoint sample.pair.apex
-  norm_num [rejected, realize, Endpoint.samplePoint] at bad
+  norm_num [rejected, realize, Endpoint.samplePoint, Pi.zero_apply] at bad
 private theorem dependence : ObservationalDependence signature.{u_1} actual := by
   intro i
   refine ⟨ULift.{u_1} Unit, 0, 1, ?_⟩
