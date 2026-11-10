@@ -22,7 +22,7 @@ internal sealed class CentredCorrelationSummationDocument : IScribeDocumentDefin
                 + "correlation errors by mean-square errors. The interval-box aggregation, overlapping "
                 + "mixed moments and BV polynomial logarithmic weights here are repo-derived. "
                 + "Cauchy–Schwarz bounds total raw errors; the tuple-subset multiplicity estimate "
-                + "accounts for the unused shifts. Inclusion–exclusion then controls the total centred error.")),
+                + "accounts for the unused shifts. The commutative-ring centred product expansion then controls the total centred error.")),
             Describe.Lean(
                 DescribeId.Create("centred-polynomial-log-correlation"),
                 DeclarationHandle.Create(Prefix + "centred_polynomial_log_correlation"),
