@@ -34,7 +34,7 @@ This is a source-faithful adaptation of Fedor K. Popov's Apache-2.0 VOA/Modules/
 
 ActualZhuAssociator.Ufam_inner consumes mu_identity to identify the finite higher-circle tower; its swapped-parameter use also supplies Vfam_inner. Both paths reach assoc_eq and associator_mem_zhuO. The coefficients and scalar identity are supplied with that consumer, with no separate scalar delivery.
 
-Four-slot escape registration for mu_identity is unfinished under https://github.com/the-omega-institute/trureturing/issues/28745. Missing evidence is a faithful typed reconstruction and equivalence for the full K,L,b : Nat and s : Int telescope, a lawful enrolled-template readout and actual-positive law, whole-family intervention and sensitivity, and actual observational dependence, including zero and negative-index boundary fibres. No declared_validated registration is asserted. Issues #28732 and #28685 remain specific to the product-chain and finite-quotient audits.
+Four-slot escape registration for mu_identity is unfinished under https://github.com/the-omega-institute/trureturing/issues/28745. Missing evidence is a faithful typed reconstruction and equivalence for the full K,L,b : Nat and s : Int telescope, a lawful enrolled-template readout and actual-positive law, whole-family intervention and sensitivity, and actual observational dependence, including zero and negative-index boundary fibres. No declared_validated registration is asserted.
 
 The result is a finite scalar identity. It supplies coefficients for an associator argument and establishes no quotient multiplication, O-space stability, VOA associativity, analytic CFT, string theory, or AdS/CFT statement by itself.
 

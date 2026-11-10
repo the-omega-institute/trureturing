@@ -57,8 +57,7 @@ internal sealed class ActualZhuMuIdentityDocument : IScribeDocumentDefinition
                         + "typed reconstruction and equivalence for the full K,L,b : Nat and s : Int telescope, a lawful "
                         + "enrolled-template readout and actual-positive law, whole-family intervention and sensitivity, "
                         + "and actual observational dependence, including zero and negative-index boundary fibres. "
-                        + "No declared_validated registration is asserted. Issues #28732 and #28685 remain specific "
-                        + "to the product-chain and finite-quotient audits.")),
+                        + "No declared_validated registration is asserted.")),
                     Paragraph(Text("The result is a finite scalar identity. It supplies coefficients for an associator "
                         + "argument and establishes no quotient multiplication, O-space stability, VOA associativity, "
                         + "analytic CFT, string theory, or AdS/CFT statement by itself."))),

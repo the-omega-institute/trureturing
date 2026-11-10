@@ -47,8 +47,7 @@ internal sealed class ActualZhuAssociatorDocument : IScribeDocumentDefinition
                     + "and arbitrary u,v,w, a lawful enrolled-template readout and actual-positive law, whole-family "
                     + "intervention and sensitivity, and actual observational dependence. Rank-zero and other constant "
                     + "degenerate fibres remain in scope; membership alone does not supply nonconstant sensitivity. "
-                    + "No declared_validated registration is asserted. Issues #28732 and #28685 concern the distinct "
-                    + "product-chain and finite-quotient audits.")),
+                    + "No declared_validated registration is asserted.")),
                 Paragraph(Text("This theorem establishes associator membership in O. It does not construct "
                     + "a quotient Ring or Algebra, prove the opposite stability statement, or assert an "
                     + "analytic CFT, string-theory model, or AdS/CFT correspondence."))),
