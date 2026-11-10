@@ -51,7 +51,7 @@ internal sealed class PositiveDefiniteImaginaryAxisDocument : IScribeDocumentDef
                         Call("im", Coefficient(F.Id("F"), F.Id("Complex"), F.Id("n"))), Sp, Eq, Sp, D(0),
                         Sp, Land, Sp,
                         Call("re", Coefficient(F.Id("F"), F.Id("Complex"), F.Id("n"))), Sp, Eq, Sp,
-                        Coefficient(Call("realRestriction", F.Id("F")), F.Id("Real"), F.Id("n"))))))),
+                        Coefficient(Call("realRestriction", F.Id("F")), F.Id("Real"), F.Id("n")))))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Let F be complex analytic at zero, with imaginary part zero at every real argument in some neighborhood of zero. Its real restriction is the real function x mapped to Re(F(x)), with the real argument embedded in the complex numbers. This restriction is real analytic at zero. For every natural n, the complex coefficient iteratedDeriv(n,F,0)/n! has imaginary part zero and real part equal to the corresponding derivative coefficient of the real restriction. Degree zero is included. The construction precomposes the scalar-restricted series by the real-to-complex continuous linear embedding before projecting real and imaginary parts."))),
                 DescribeRole.Lemma),

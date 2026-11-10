@@ -23,7 +23,7 @@ internal sealed class ScalarCompositionDocument : IScribeDocumentDefinition
         All("v", new Formula.TypeArrow(Call("Fin", F.Id("n")), F.Id("E")), Seq(
             Call("toFMS", F.Id("E"), F.Id("P"), F.Id("n"), F.Id("v")), Sp, Eq, Sp,
             Call("smul", Call("coeff", F.Id("n"), F.Id("P")),
-                Call("prod", Call("ofFn", F.Id("v"))))))));
+                Call("prod", Call("ofFn", F.Id("v")))))))));
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Scalar substitution and multilinear composition agree over a topological ring algebra.",
@@ -33,14 +33,14 @@ internal sealed class ScalarCompositionDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Analytic/PowerSeries/ScalarComposition.toFMS"),
                 H("Realization of a scalar coefficient series"),
                 StatementSource.FromAuthor(Disp(Evaluation())),
-                AssessedProvenance.FromLiterature("miyahara2026scalarcomposition"),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/AnalyticClosure/miyahara2026scalarcomposition")),
                 Blocks(Paragraph(Text("For a field K and a possibly noncommutative ring E with a K-algebra structure, topology and topological-ring structure, the degree n term acts on a vector v by multiplying its entries in order and scaling by the nth coefficient. Empty products give the degree-zero term. This is FormalMultilinearSeries.ofScalars applied to the coefficient function."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("scalar-evaluation"),
                 DeclarationHandle.Create("D5/S3/Analytic/PowerSeries/ScalarComposition.toFMS_apply"),
                 H("Evaluation on an arbitrary vector"),
                 StatementSource.FromAuthor(Disp(Evaluation())),
-                AssessedProvenance.FromLiterature("miyahara2026scalarcomposition"),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/AnalyticClosure/miyahara2026scalarcomposition")),
                 Blocks(Paragraph(Text("This evaluation formula includes every natural degree and every vector in Fin n to E. No commutativity of multiplication in E is required."))),
                 DescribeRole.Lemma),
             Describe.Lean(DescribeId.Create("scalar-substitution-composition"),
@@ -54,7 +54,7 @@ internal sealed class ScalarCompositionDocument : IScribeDocumentDefinition
                         Sp, Eq, Sp,
                         Call("comp", Call("toFMS", F.Id("E"), F.Id("Q")),
                             Call("toFMS", F.Id("E"), F.Id("P"))))))))),
-                AssessedProvenance.FromLiterature("miyahara2026scalarcomposition"),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/AnalyticClosure/miyahara2026scalarcomposition")),
                 Blocks(
                     Paragraph(Text("The inner series P has nilpotent constant coefficient, expressed by HasSubst P. Over a field this coefficient is zero. Bare subst P Q means outer Q after inner P, matching the order of the two multilinear series on the right.")),
                     Paragraph(Text("In each fixed degree, terms containing a zero-sized inner block vanish. The remaining finitely many positive block partitions correspond to compositions of that degree. Flattening these blocks preserves the order of the input vector. Scalar multiplication distributes through that ordered product by the algebra action laws, including for a noncommutative target ring.")),
