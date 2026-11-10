@@ -2,8 +2,8 @@
 bibkey: eilenbergmaclane1954groupsii
 authors: Samuel Eilenberg and Saunders Mac Lane
 year: 1954
-title: On the groups H(Π,n), II
-doi: null
+title: "On the Groups H(Π, n), II: Methods of Computation"
+doi: 10.2307/1969702
 url: https://www.jstor.org/stable/1969702
 claim: Theorem 2.1a gives the normalized product-chain Alexander–Whitney and shuffle identities and their recursive chain homotopy.
 strata_touched: []
@@ -13,7 +13,7 @@ triage: anchor
 
 # On the groups H(Π,n), II
 
-Samuel Eilenberg and Saunders Mac Lane, *On the groups H(Π,n), II*,
+Samuel Eilenberg and Saunders Mac Lane, *On the Groups H(Π, n), II: Methods of Computation*,
 Annals of Mathematics, second series, **60** (1954), 49–139.
 Theorem 2.1a is on printed page 51. The primary PDF has SHA-256
 `bd03c0601b608be67d680bef0ac352a51e0494bb9ad4fd38b8419b6b773ee1ab`.
@@ -37,4 +37,5 @@ No paper text or scan is reproduced here.
 
 ## Verified locator
 
+- DOI: https://doi.org/10.2307/1969702
 - Publisher record: https://www.jstor.org/stable/1969702
