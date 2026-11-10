@@ -45,8 +45,9 @@ open scoped BigOperators
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259Strip
 open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
 open D5.S3.Combinatorics.TraceAvoidingArrays
-open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder (normal used alternating cellOrder RowNormal Canon normal_iff omitted_label
-  alternating_used alternating_canon)
+open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder
+  (normal used alternating cellOrder RowNormal Canon normal_iff omitted_label
+    alternating_used alternating_canon)
 
 def Legal {n : ℕ} (A : Fin 4 × Fin n → Fin 6) : Prop :=
   (∃ j : Fin n, j.val = 0 ∧ A (0, j) = 0) ∧
