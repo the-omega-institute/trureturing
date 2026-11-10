@@ -55,6 +55,8 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255PairTransfer
 import D5.S3.Observer.Separation.BooleanRankThreeK4
 
+/-! Literal seven-column square strips and their boundary classes. -/
+
 set_option Elab.async false
 set_option maxRecDepth 100000
 

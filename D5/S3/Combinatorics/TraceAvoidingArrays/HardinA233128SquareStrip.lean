@@ -33,20 +33,28 @@ GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.widthIns
 statement_id: sha256:6c1f0ba304e14673a1966eca92d67e12ccf8925c940c5ba2391b4b478ac39547
 GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.widthLegal
 statement_id: sha256:989eff70ea57c1a27e750e36536ea11ddb8f9aa5a27d74dce459fc2432ec52e8
-GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.widthNormal
-statement_id: sha256:544f7677e789967b28078e2cb7f71e075b79492f79f4741e37f835329362022b
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.widthNormal._proof_1
+statement_id: sha256:3ea64915f32c9d14cb1f8694caa8b29adcc02a50f28a6142292cccc5f150cf1a
 GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.widthStep
 statement_id: sha256:bd12c5c5928f8822063ec100e0e6e92c5300f5907da4aa64e85595a1ee4c7cb5
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.widthStep.eq_1
+statement_id: sha256:f0e1fc897c2470d95f639750def23fe05e87fb9061f66dd0ca788b6eda04aec4
 GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.widthTotal
 statement_id: sha256:c4c082551693765b0f6c344f5f6ff825120f019a96ec4d79015c10c10bf774d0
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.widthTotal.eq_1
+statement_id: sha256:98c91caccabbd60e8a6fae4d99818e8a614dfba06487712acc8167120f8e9727
 GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.widthV
 statement_id: sha256:4f3953ec5d8902b74486197a6f4d782f3fb58c6627a5740a5242632a7560f9ed
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.widthV.eq_2
+statement_id: sha256:02a910fcd311188b871be135dbe86f61c98a47ead76d48f62a22196f30991d60
 GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.width_counting_bridge
 statement_id: sha256:a6ad861eda2ca48bc91989542e4b7cc27d81aec8df9a91b8db40c9398c577c72
 GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255LiteralBridge.rowFinish
 statement_id: sha256:ded50bd8c5de69b5b2324e575fee135f275ae05b5bb30b328b0e5c0313d86b07
 GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255LiteralBridge.rowWeight
 statement_id: sha256:076a03b0e19556ba67d0faed8d8d552fb3d55e6c40992d9c52c88faad85e373a
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255LiteralBridge.scanner_fibres
+statement_id: sha256:63a356389be3d9bf756c53fb12271299a7668c1123562d84a2e34e78a341fc90
 GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.PairRow
 statement_id: sha256:e97b1a06b78d944d101465bdc94301416cfe964a1e9cbf900093e9cd04d04132
 GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.Row
@@ -61,8 +69,12 @@ GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.rowLegal
 statement_id: sha256:ad59d456a8f5b2710481be3ed4a9d79e276a0e4319f7b6918310d350fc440508
 GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255PairTransfer.rowProper
 statement_id: sha256:be16a774dbabce7949eb6e2bfc0026252c129abfda8a7377875535297a177b53
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233255ShapeSymmetry.full_row
+statement_id: sha256:f81e65c6e42bf750ca73737a7ace4b7b696a7b7a57684908ba1ce134acfcf88c
 GID: D5/S3/Observer/Separation/BooleanRankThreeK4.beta
 statement_id: sha256:1abdc5f3db71567fe05de5aabbe80dddeb5ec5179e4ec7fd49fe71e500518481
+GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.WidthRow
+statement_id: sha256:63d18919d9321000a9a3541c82cd4a7aa88a0da2c26ce61e51d7cede756ff789
 bonds_iff: proof_shape=bind-only; consumers=counting_bridge
 v: proof_shape=bind-only; consumers=counting_bridge, v_eq_w
 total: proof_shape=bind-only; consumers=counting_bridge
@@ -90,6 +102,8 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255PairTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge
 import D5.S3.Observer.Separation.BooleanRankThreeK4
 import Lean.Elab.Tactic.Omega
+
+/-! Hardin's order-fourteen recurrence for literal seven-column square strips. -/
 
 set_option Elab.async false
 set_option maxRecDepth 100000

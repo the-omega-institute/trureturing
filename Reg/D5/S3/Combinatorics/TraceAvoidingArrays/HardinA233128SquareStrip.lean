@@ -1,5 +1,7 @@
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233128SquareStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233128Rows
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255PairTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
 import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 import Reg.Support.SingleDependentReadout
