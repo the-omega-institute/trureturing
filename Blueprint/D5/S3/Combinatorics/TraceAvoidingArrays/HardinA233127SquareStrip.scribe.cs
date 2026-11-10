@@ -85,8 +85,8 @@ internal sealed class HardinA233127SquareStripDocument : IScribeDocumentDefiniti
                     + "characteristic polynomial x^3 times "
                     + "(x^7-1920x^6+1191936x^5-335020032x^4+48670703616x^3"
                     + "-3778497478656x^2+147884313935872x-2269391999729664). "
-                    + "The zero modes are absent from the initial distribution. "
-                    + "The eighth transferred initial distribution is exactly the indicated "
+                    + "The full initial row vector is annihilated by (x-64) times that "
+                    + "degree-seven cofactor. Its eighth transfer is exactly the indicated "
                     + "linear combination of its first eight distributions, coordinate by "
                     + "coordinate. Pairing this identity with any continuation height proves "
                     + "the recurrence for the literal filtered count at every n+9."))),

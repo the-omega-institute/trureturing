@@ -69,9 +69,6 @@ def Valid (s : Seen) (p : Boundary) : Prop :=
   s.1 = true ∧ (∀ j : Fin 5, p j.castSucc ≠ p j.succ) ∧
     (s.2 = false → ∀ j, p j ≠ 2)
 
-private instance decidableValid (s : Seen) (p : Boundary) : Decidable (Valid s p) :=
-  inferInstanceAs (Decidable (_ ∧ (∀ _, _) ∧ (_ → ∀ _, _)))
-
 def boundaryClass (s : Seen) (p : Boundary) : Fin 11 :=
   if s.2 then
     if p 2 = p 0 then
@@ -968,9 +965,12 @@ private theorem row_counts : ∀ s p, Valid s p → ∀ k,
   rintro ⟨b1, b2⟩ p0 p1 p2 p3 p4 p5 hp k
   cases b1
   · cases hp.1
-  · cases b2 <;> fin_cases p0 <;> fin_cases p1 <;> fin_cases p2 <;>
-      fin_cases p3 <;> fin_cases p4 <;> fin_cases p5 <;>
+  · cases b2 <;> fin_cases p0 <;> fin_cases p1 <;>
       simp [Valid, Fin.forall_fin_succ] at hp
+    all_goals fin_cases p2 <;> simp at hp
+    all_goals fin_cases p3 <;> simp at hp
+    all_goals fin_cases p4 <;> simp at hp
+    all_goals fin_cases p5 <;> simp at hp
     all_goals first
       | exact completed_010101 k
       | exact completed_010102 k
@@ -1130,7 +1130,7 @@ private theorem first_fibres (k : Fin 11) :
       simpa only [hb] using hr
     simp only [eq_self, true_and, ← hb, hg, hf, hr']
     by_cases hc : good (false, false) c <;>
-      simp only [hc, ↓reduceIte, and_true, and_false, false_and]
+      simp only [hc, ↓reduceIte, true_and, and_false, false_and]
   · intro x _ hx
     simp [hx]
   · simp
