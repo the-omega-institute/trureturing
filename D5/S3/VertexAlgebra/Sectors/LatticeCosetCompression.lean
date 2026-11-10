@@ -24,7 +24,6 @@ they do not assert the product comparison or analytic sewing.
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
-set_option maxHeartbeats 800000
 
 namespace D5.S3.VertexAlgebra.LatticeCosetCompression
 
@@ -135,7 +134,7 @@ private theorem weightedPartial_variable (F : LatticeData) (i j : Fin F.rank)
   by_cases h : r = k
   · subst k
     simp [weightedPartial, pderiv_X, Pi.single_apply, Prod.mk.injEq, Algebra.smul_def]
-  · simp [weightedPartial, pderiv_X, Pi.single_apply, Prod.mk.injEq, h]
+  · simp [weightedPartial, pderiv_X, Prod.mk.injEq, h]
 
 private theorem projectionVariable_partial (hD : (gramReal D).PosDef)
     (i : Fin D.rank) (r : ℕ) (x : Index (ambient D e B C hC hCe)) :
@@ -185,7 +184,7 @@ private theorem old_current_pairing (i : Fin D.rank)
     (n : Charge (ambient D e B C hC hCe)) :
     bilinear (ambient D e B C hC hCe) (unitCharge _ (i.castAdd e)) n =
       bilinear D (unitCharge D i) (oldCharge D B C hC hCe n) +
-        (B *ᵥ externalCharge D B C hC hCe n) i := by
+        (Matrix.mulVec B (externalCharge D B C hC hCe n)) i := by
   classical
   simp only [bilinear, unitCharge, ite_mul, one_mul, zero_mul,
     Finset.sum_ite_eq', Finset.mem_univ, ↓reduceIte]
@@ -200,7 +199,7 @@ theorem projection_current_polynomial (hD : (gramReal D).PosDef)
     polynomialProjection D B C hC hCe
         (neutralPolynomialMode (ambient D e B C hC hCe) (i.castAdd e) n m p) =
       LatticeDualCosetModule.shiftedCurrentPolynomial D
-        (B *ᵥ externalCharge D B C hC hCe n) 1 i (oldCharge D B C hC hCe n) m
+        (Matrix.mulVec B (externalCharge D B C hC hCe n)) 1 i (oldCharge D B C hC hCe n) m
         (polynomialProjection D B C hC hCe p) := by
   by_cases hm : m < 0
   · simp [neutralPolynomialMode, LatticeDualCosetModule.shiftedCurrentPolynomial,
