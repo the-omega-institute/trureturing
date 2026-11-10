@@ -1,9 +1,9 @@
 /- GID: D5/S3/FiniteGroups/Semilinear/WeightedOneSupportStabilizer
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/FiniteGroups/Semilinear/WeightedOneSupportStabilizer
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: none
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/FiniteGroups/Semilinear/WeightedOneSupportStabilizer.splittingClaim; result=D5/S3/FiniteGroups/Semilinear/WeightedOneSupportStabilizer.result; claim=D5/S3/FiniteGroups/Semilinear/WeightedOneSupportStabilizer.splittingClaim
    digest: A native weighted stabilizer and its nonsplit Galois projection. -/
 
 import D5.S3.FiniteGroups.Semilinear.WeightedOrbits
@@ -30,6 +30,10 @@ abbrev Ambient (K : Type) [Field K] [Fintype K] [Algebra (ZMod 5) K] :=
   WeightedSemilinear.Group (ZMod 5) K
 
 def weights (i : Fin 5) : ℕ := 5 ^ (i.val + 1) - 5 + 1
+
+/-- The primitive field element, converted using its proved nonvanishing. -/
+def primitiveUnit (ζ : K) (hζ : IsPrimitiveRoot ζ 15624) : Kˣ :=
+  Units.mk0 ζ (hζ.ne_zero (by decide))
 
 def coefficients (z : Kˣ) (i : Fin 5) : K := if i = 1 then (z : K) ^ 7 else 0
 
@@ -249,6 +253,18 @@ private theorem stabilizer_card_le (hK : Fintype.card K = 15625)
 def alphaIn (z : Kˣ) (hz : IsPrimitiveRoot z 15624) : stabilizer z :=
   ⟨alpha z, alpha_mem z hz⟩
 
+private theorem kernel_generated (z : Kˣ) (hz : IsPrimitiveRoot z 15624) :
+    (projection z).ker = Subgroup.zpowers (alphaIn z hz) := by
+  symm
+  apply Subgroup.eq_of_le_of_card_ge
+  · apply Subgroup.zpowers_le.mpr
+    change (alpha z).right = 1
+    rfl
+  · rw [Nat.card_zpowers, ← Subgroup.orderOf_coe (alphaIn z hz)]
+    change Nat.card (projection z).ker ≤ orderOf (alpha z)
+    rw [alpha_order z hz]
+    exact kernel_card_le z
+
 def betaIn (z : Kˣ) (hz : IsPrimitiveRoot z 15624) : stabilizer z :=
   ⟨beta z, beta_mem z hz⟩
 
@@ -407,7 +423,9 @@ private theorem no_section (hK : Fintype.card K = 15625)
 
 /-- Internal cyclic factors, actual orders and the action-four decomposition of the stabilizer. -/
 theorem stabilizer_structure (hK : Fintype.card K = 15625)
-    (z : Kˣ) (hz : IsPrimitiveRoot z 15624) :
+    (ζ : K) (hζ : IsPrimitiveRoot ζ 15624) :
+    let z := primitiveUnit ζ hζ
+    let hz : IsPrimitiveRoot z 15624 := IsPrimitiveRoot.coe_units_iff.mp hζ
     alpha z ∈ stabilizer z ∧ tau z ∈ stabilizer z ∧ beta z ∈ stabilizer z ∧
     orderOf (alpha z) = 21 ∧ orderOf (tau z) = 9 ∧ orderOf (beta z) = 7 ∧
     tau z ^ 3 = alpha z ^ 7 ∧ alpha z ^ 7 ≠ 1 ∧
@@ -422,6 +440,9 @@ theorem stabilizer_structure (hK : Fintype.card K = 15625)
     internalAction hK z hz ⟨tauIn z, Subgroup.mem_zpowers _⟩
       ⟨betaIn z hz, Subgroup.mem_zpowers _⟩ =
         (⟨betaIn z hz, Subgroup.mem_zpowers _⟩ : betaSubgroup z hz) ^ 4 := by
+  dsimp only
+  let z := primitiveUnit ζ hζ
+  have hz : IsPrimitiveRoot z 15624 := IsPrimitiveRoot.coe_units_iff.mp hζ
   have ha : alpha z ^ 7 ≠ 1 := by
     intro he
     have hd := orderOf_dvd_of_pow_eq_one he
@@ -442,14 +463,20 @@ theorem stabilizer_structure (hK : Fintype.card K = 15625)
 
 /-- The scalar-kernel extension onto the actual order-three Galois image is nonsplit. -/
 theorem galois_nonsplitting (hK : Fintype.card K = 15625)
-    (z : Kˣ) (hz : IsPrimitiveRoot z 15624) :
+    (ζ : K) (hζ : IsPrimitiveRoot ζ 15624) :
+    let z := primitiveUnit ζ hζ
+    let hz : IsPrimitiveRoot z 15624 := IsPrimitiveRoot.coe_units_iff.mp hζ
     (projection z).range = galoisSubgroup K ∧ Nat.card (galoisSubgroup K) = 3 ∧
     Nat.card (projection z).ker = 21 ∧
+    (projection z).ker = Subgroup.zpowers (alphaIn z hz) ∧
     Function.Surjective (galoisProjection hK z hz) ∧
     (∀ g : stabilizer z, projection z g = frob K ^ 2 →
       g.val ^ 3 = SemidirectProduct.inl (z ^ 5208) ∧ g ^ 3 ≠ 1) ∧
     ¬ ∃ s : galoisSubgroup K →* stabilizer z,
       (galoisProjection hK z hz).comp s = MonoidHom.id _ := by
+  dsimp only
+  let z := primitiveUnit ζ hζ
+  have hz : IsPrimitiveRoot z 15624 := IsPrimitiveRoot.coe_units_iff.mp hζ
   have hk : Nat.card (projection z).ker = 21 := by
     have he := Subgroup.card_ker_mul_card_range (projection z)
     rw [projection_range hK z hz, galois_card hK, stabilizer_card hK z hz] at he
@@ -461,7 +488,8 @@ theorem galois_nonsplitting (hK : Fintype.card K = 15625)
       exact a.property
     obtain ⟨g, hg⟩ := ham
     exact ⟨g, Subtype.ext hg⟩
-  refine ⟨projection_range hK z hz, galois_card hK, hk, hs, ?_, no_section hK z hz⟩
+  refine ⟨projection_range hK z hz, galois_card hK, hk, kernel_generated z hz,
+    hs, ?_, no_section hK z hz⟩
   intro g hg
   refine ⟨lift_cube hK z hz g hg, ?_⟩
   intro he
