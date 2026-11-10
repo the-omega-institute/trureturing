@@ -3,8 +3,22 @@
    mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/HardinA233163KingStrip
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233163KingStrip.result; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233163KingStrip.finite_certificate
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233163KingStrip.result; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233163KingStrip.finite_certificate,D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233163KingStrip.saturated_certificate
    digest: The whole generating series of literal normalized eight-colour king strips. -/
+
+/-
+admission_basis: open-problem-resolution (#28719)
+escape_witness: none; no independent novelty is asserted for the transfer argument.
+The literal source count and its whole generating function are the external target.
+Proof-shape accounting is conservative: every theorem is bind-only under
+finite kernel normalization and the existing generic transfer/induction machinery.
+Consumed helpers: bonds_iff and normal_iff feed counting_bridge;
+saturated_certificate feeds continuation; finite_certificate feeds seed_congr,
+count_formula and initial_counts; continuation, seed_congr and seed_linear
+feed count_formula; counting_bridge and count_formula feed initial_counts
+and recurrence; initial_counts, recurrence and zero_count feed product_identity;
+product_identity feeds the external open-problem-resolution result.
+-/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233196Strip
 import Mathlib.RingTheory.PowerSeries.Inverse
