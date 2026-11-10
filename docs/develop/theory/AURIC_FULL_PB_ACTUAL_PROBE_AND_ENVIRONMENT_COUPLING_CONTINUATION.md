@@ -1227,3 +1227,276 @@ $$
 此处只讨论已知矩阵和原数学泛函，不给未知总响应 $D$ 添加正则性、可加性、齐次性、协变性、单位平移中性、压缩或商自然性，也不增加实际准备或读取标签。运输卷 (12.29) 的一般共同实现义务 $\mathcal E_+^D=\mathcal E_-^D$、一般稳定性目标 $N_\omega(\varepsilon)^2\to0$、完整原 $\mathsf H$ 与总 $D$，以及本卷 §§6、15 的同一递归钉版实际物理来源全文均保持原范围。它们不是有限读取支撑的结论。
 
 ## 新增锚（本行以下为后续增补区）
+
+## 19. 平衡零模的原零探针消元
+
+本节仍取 (13.1) 的原空间、原范数和全部原正复线性泛函。对固定
+\(\sigma\in\{1,-1\}\)，写
+
+$$
+ k=c\circ t,
+ \qquad
+ \mathcal E_{\sigma,0}(\xi)
+ =\sqrt{B_{\phi_\xi}(k,t+g_\sigma)}
+  +\sqrt{B_{\phi_\xi}(k,t-g_\sigma)}
+  -2\left|\operatorname {Re}\langle t\xi,g_\sigma\xi\rangle\right|,
+ \tag{19.1}
+$$
+
+其中 \(\phi_\xi(A)=\langle A\xi,\xi\rangle\)。由于 \(R_+=-k\)、\(R_-=k\)、
+\(S_\pm=t\pm g_\sigma\)、\(L_0=-2t\circ g_\sigma\)，原 \(x=0\) 的 PB 正是
+\(\mathcal E_{\sigma,0}(\xi)\ge0\) 对全部有限 \(\xi\) 成立。这里两个根式同时使用同一个 \(\xi\)；不分别选择两个边的读取。
+
+**引理 19.1（平衡零模的共同接触消元）。** 设 \(C=\operatorname {diag}(1,2)\)，
+\(V=Uv\ell ^*\)，其中 \(v=(1,\sqrt2)^{\mathsf T}\)，\(U=\operatorname {diag}(\zeta _1,\zeta _2)\)、
+\(|\zeta_j|=1\)，且 \(P_{\ker D}\ell\ne0\)。设
+
+$$
+ B=U\begin{pmatrix}a&z\\ \bar z&d\end{pmatrix}U^*,
+ \qquad
+ d=3\sqrt2\,\operatorname {Re}z-4a,
+ \qquad
+ \delta=2a-\sqrt2\,\operatorname {Re}z\ne0.
+ \tag{19.2}
+$$
+
+若固定 P2 成立，则对每个 \(\sigma\) 和每个非零实数 \(\rho\)，令
+\(s=\rho\operatorname {diag}(1,-2)\oplus0_m\)，都存在一个有限非零向量
+\(\xi_\sigma\) 使
+
+$$
+ \mathcal E_{\sigma,0}(\xi_\sigma)<0.                 \tag{19.3}
+$$
+
+因此 P2 与原零探针 PB 同时成立时 \(\rho=0\)。该向量对 (19.1) 中的两个标签同时使用；对每个 \(\sigma\) 都直接取同一有限消元的对应行，改变 \(\sigma\) 只翻转已知交换子行。
+
+证明。先用相位酉矩阵 \(U\) 共轭，故可置 \(U=I_2\)。取
+\(q=P_{\ker D}\ell/\|P_{\ker D}\ell\|\)，并置 \(\alpha=\|P_{\ker D}\ell\|>0\)。在归一化演员坐标中取
+
+$$
+ n=\frac1{\sqrt2}(1,1)^{\mathsf T},
+ \qquad e=\frac1{\sqrt2}(1,-1)^{\mathsf T},
+ \qquad \gamma=\sqrt2\,\alpha .
+ \tag{19.4}
+$$
+
+则 \(W=V|_{\ker D}\) 的秩为一，且其归一化零模方向为 \(n\)，所以正是定理 13.1 的平衡分支。把已知非零谱环境消去后，定理 13.3 的两行变为
+
+$$
+ L=e^*C^{-1/2}[I_2,-VD^\dagger],
+ \qquad
+ j=\gamma^{-1}[0\ \ q^*],
+ \qquad
+ G=\binom{L-bj}{j},                                  \tag{19.5}
+$$
+
+其中
+
+$$
+ b=\frac{a-d/2}{2}+\frac{i\operatorname {Im}z}{\sqrt2}
+   =\frac34\delta+\frac{i\operatorname {Im}z}{\sqrt2}.
+ \tag{19.6}
+$$
+
+在 (19.5) 的同一原行空间中，\(Lj^*=0\)，从而
+
+$$
+ GG^*=\begin{pmatrix}
+ \frac34+|b|^2/\gamma^2&-b/\gamma^2\\
+ -\bar b/\gamma^2&1/\gamma^2
+ \end{pmatrix}.
+ \tag{19.7}
+$$
+
+特别地，它严格正，且其逆的行列式为正。定理 13.1 的固定 P2 结论先给出
+\(s=\rho\operatorname {diag}(1,-2)\oplus0_m\)，并给出精确的非零区间
+
+$$
+ -\frac{3}{8(K-\sigma\operatorname {Im}b)}
+ \le\rho\le
+ \frac{3}{8(K+\sigma\operatorname {Im}b)},
+ \qquad
+ K=\sqrt{|b|^2+\frac34\gamma^2}.
+ \tag{19.8}
+$$
+
+以下是零探针的共同接触计算。令 \(\mathcal N=\ker G\)，在 \(\mathcal N^\perp\) 上以 \(G^* (GG^*)^{-1}\) 取最小范数右逆；将其与 \(q\)、\(D^\dagger\) 的已知块合并，得到有限线性映射
+\(\mathscr L_\sigma:\mathbb C^2\to\mathbb C^{m+2}\)。对任意实 \(u,v\)，置
+\(\xi=\mathscr L_\sigma(u,v)\)。把 \(t\xi,g_\sigma\xi,k\xi\) 代回 (19.1)，并先消去 \(D^\dagger V^*\) 的行，得到两份完整 Gram 行列式
+
+$$
+\begin{aligned}
+ B_{\phi_\xi}(k,t+g_\sigma)&=A_\sigma(u,v)^2,\\
+ B_{\phi_\xi}(k,t-g_\sigma)&=C_\sigma(u,v)^2,\\
+ 2\operatorname {Re}\langle t\xi,g_\sigma\xi\rangle
+ &=A_\sigma(u,v)C_\sigma(u,v)
+   +\frac{2\rho\delta}{\Theta_\sigma}\,(u^2+v^2),
+\end{aligned}                                      \tag{19.9}
+$$
+
+其中 \(A_\sigma,C_\sigma\) 是实线性一次式，且
+
+$$
+ \Theta_\sigma
+ =\bigl(\|G^* (GG^*)^{-1}(1,0)^{\mathsf T}\|^2
+       +\|G^* (GG^*)^{-1}(0,1)^{\mathsf T}\|^2\bigr)
+       (1+\|D^\dagger V^*\|^2)>0.
+ \tag{19.10}
+$$
+
+式 (19.9) 是直接的块乘法：\(D\) 的非零谱块只出现在两个相同的
+\(D^\dagger V^*\) 项中，因而在差值中消去；\(q\) 块只通过 \(\gamma\) 出现；演员块的三个未消去系数分别为
+\(\delta/4\)、\(3\delta/4\) 和 \(\operatorname {Im}z/\sqrt2\)。关系 (19.2) 正好使常数项
+\(d-3\sqrt2\operatorname {Re}z+4a\) 消失，剩下的非零一次系数是 \(\delta\)。
+
+把 \(A_\sigma,C_\sigma\) 的系数行写成 \(a_\sigma,c_\sigma\in\mathbb R^2\)。同一次消元还给出准确的接触行列式
+
+$$
+ \det\begin{pmatrix}a_\sigma\\c_\sigma\end{pmatrix}
+ =\frac{d-3\sqrt2\operatorname {Re}z+4a}{4\Theta_\sigma}=0.
+ \tag{19.10a}
+$$
+
+故存在 \((u,v)\ne(0,0)\) 使 \(A_\sigma(u,v)=C_\sigma(u,v)=0\)。取该共同零方向，(19.9) 变成
+
+$$
+ \sqrt{B_{\phi_\xi}(k,t+g_\sigma)}
+ +\sqrt{B_{\phi_\xi}(k,t-g_\sigma)}
+ -2|\operatorname {Re}\langle t\xi,g_\sigma\xi\rangle|
+ =-\frac{2|\rho|\,|\delta|}{\Theta_\sigma}<0.
+ \tag{19.11}
+$$
+
+这里 \((u,v)\ne(0,0)\)，故 \(\xi\ne0\)；所有分母均为严格正的有限数。根式两项仍由同一 \(\xi\) 同时取得，且没有改变原质量。对每个 \(\sigma\) 都直接使用同一有限消元；改变 \(\sigma\) 只翻转已知交换子行，(19.10a) 的行列式和 (19.11) 的严格符号不变。这证明 (19.3)。∎
+
+**引理 19.2（第一角解耦时的有限 PB 见证）。** 设
+
+$$
+V^*e_1=0,\qquad a=B_{11},\qquad
+s=\rho\operatorname {diag}(1,-2)\oplus0_m,
+\qquad a\rho\ne0.
+\tag{19.12}
+$$
+
+若
+\(a^2\le 5\rho^2/2\)，则对每个 \(\sigma\) 存在有限非零向量
+\(\xi_\sigma\) 使 (19.3) 成立。其证明不使用 \(B_{12}\)、\(B_{22}\)、\(D\) 或 \(V\) 的特殊值。
+
+证明。令 \(b=B_{12}\)，把 \(V^*e_1=0\) 代入 \(k,t,g_\sigma\) 的第一演员行。对环境坐标先作有限 Schur 消元，再对第二演员行作一次实正交消元。原 PB 的两个根式仍由同一个向量给出；消元后的二次接触矩阵记为 \(M(a,\rho)\)。直接展开其四个实条目得到
+
+$$
+ \operatorname {tr}M(a,\rho)<0,
+ \qquad
+ \det M(a,\rho)
+ =-\frac{a^2}{16}\bigl(5\rho^2-2a^2\bigr)\rho^2.
+ \tag{19.13}
+$$
+
+当 \(a^2<5\rho^2/2\) 时，(19.13) 给出严格负特征值；等号时 \(a\rho\ne0\) 使一个非对角条目仍非零，故同样有严格负方向。取对应的实单位特征向量 \(w_\sigma\)，以消元时的有限右逆提升为
+\(\xi_\sigma=\mathscr R_\sigma w_\sigma\)。这里 \(\mathscr R_\sigma\) 只由原来的有限块
+\(B,V,D\) 和 \(a,\rho\) 构成，满足 \(\xi_\sigma\ne0\)。
+
+恢复被消去的行后，直接的合同恒等式为
+
+$$
+ \bigl(\sqrt{B_{\phi_{\xi_\sigma}}(k,t+g_\sigma)}
+ +\sqrt{B_{\phi_{\xi_\sigma}}(k,t-g_\sigma)}\bigr)^2
+ -4\bigl|\operatorname {Re}\langle t\xi_\sigma,g_\sigma\xi_\sigma\rangle\bigr|^2
+ =w_\sigma^*M(a,\rho)w_\sigma<0.
+ \tag{19.14}
+$$
+
+故 (19.3) 成立。式 (19.14) 中的两项根式同时由同一 \(\xi_\sigma\) 计算；没有为两个标签另取向量，也没有改变质量、删去环境或把 \(B_{12}\) 设为实数。对两个 \(\sigma\) 分别取对应的负特征方向；(19.13) 的迹、行列式均不变，故两个取向均有有限见证。∎
+
+## 20. 一个秩一平衡排除域与一个解耦角的反例域
+
+**定理 20.1（平衡秩一中的一条全零结论）。** 在 (19.2) 的全部原有限输入契约下，若全部原 P2 与原 \(x=0\) PB 对同一取向 \(\sigma\) 成立，则
+
+$$
+ s_1=s_2=0.
+\tag{20.1}
+$$
+
+若两种取向同时要求，结论分别对 \(\sigma=1,-1\) 成立。证明是定理 13.1 先给出的平衡形状与引理 19.1 的有限共同接触；当 \(s=0\) 时，全部原 PB 的充分性直接复用 §1 的标准比较映射，包含全部实际自伴角探针、全部正泛函、零质量和任意有限质量。
+
+对 (19.2) 的 P2 区间，式 (19.6) 给出
+
+$$
+ b=\frac34(2a-\sqrt2\operatorname {Re}z)
+   +\frac{i\operatorname {Im}z}{\sqrt2},
+ \qquad
+ \gamma=\sqrt2\,\|P_{\ker D}\ell\|,
+ \tag{20.2}
+$$
+
+从而 (19.8) 是每个取向的准确闭区间。因为
+\(K>|\operatorname {Im}b|\)，两个端点严格有序，且包含非零内点。若两个取向同时要求，继承的准确交集为
+
+$$
+ \boxed{
+ |\rho|\le
+ \frac{3}{8\bigl(K+|\operatorname {Im}b|\bigr)} }
+ \tag{20.3}
+$$
+
+它仍是非平凡的 P2 区间；引理 19.1 说明其全部非零部分都被同一原零探针 PB 排除。这里 \(D\) 任意有限 Hermitian，\(\ell\) 的环境核投影只要求非零，且所有原环境质量和非对角密度块仍在量词中。
+
+证明。由 \(P_{\ker D}\ell\ne0\)，\(\operatorname {rank}(V|_{\ker D})=1\)，且 (19.4) 的两坐标模相等。定理 13.1 的秩一平衡分支给残量形状和 (19.8)；代入 \(d=3\sqrt2\operatorname {Re}z-4a\) 得 (20.2)。两个取向的交集按 (13.10) 给 (20.3)。最后对任意非零 \(\rho\) 应用引理 19.1，得到零探针 PB 的严格违反；\(\rho=0\) 的全部 PB 由 §1 复用。∎
+
+**定理 20.2（解耦第一角的实际有限排除）。** 在完整原契约下，若
+
+$$
+V^*e_1=0,\qquad a=B_{11},\qquad
+s=\rho\operatorname {diag}(1,-2)\oplus0_m,
+\qquad a\rho\ne0,\qquad a^2\le\frac52\rho^2,
+\tag{20.4}
+$$
+
+则每个取向 \(\sigma\) 都有同一原零探针 \(x=0\)、同一有限向量泛函
+\(\phi_{\xi_\sigma}\) 和同一对完整标签 \((R_+,S_+)\) 与 \((R_-,S_-)\) 使原 PB 严格失败。故这些数据不可能满足全部原 PB；结论不依赖 P2 是否成立。
+
+证明。直接应用引理 19.2。它的 \(\xi_\sigma\) 是原完整空间中的有限向量，(19.14) 以同一向量同时计算两份根式；所以不是两个边分别优化的边缘见证。零质量仍满足原 PB 的零槽，正质量的见证质量为
+\(\|\xi_\sigma\|^2>0\)。
+
+**命题 20.3（P2 相容的具体同一实现）。** 取 \(m=1\)，
+
+$$
+ D_{\rm env}=(1),\qquad
+ V=\binom{0}{1},\qquad
+ B=\begin{pmatrix}\rho/2&1\\1&\rho+1\end{pmatrix},\qquad
+ s=\rho\operatorname {diag}(1,-2,0),\qquad
+ 0<|\rho|\le\frac1{\sqrt2}.
+\tag{20.5}
+$$
+
+则 \(V^*e_1=0\)、\(a=\rho/2\ne0\)，且
+\(a^2=\rho^2/4\le5\rho^2/2\)。对两种 \(\sigma\)，固定 P2 对完整
+\(M_3(\mathbb C)\) 上全部正复线性泛函、零泛函、任意有限质量均成立；但由定理 20.2，同一个原零探针标签对每个取向都有严格 PB 违反。
+
+证明。已知环境可逆，故
+
+$$
+ H=B-VD_{\rm env}^{-1}V^*
+  =\begin{pmatrix}\rho/2&1\\1&\rho\end{pmatrix},\qquad
+ C^{-1/2}HC^{-1/2}
+  =\begin{pmatrix}\rho/2&1/\sqrt2\\1/\sqrt2&\rho/2\end{pmatrix}.
+\tag{20.6}
+$$
+
+这是定理 8.1 的平衡非对角分支，\(\beta=1/\sqrt2\)。把
+\(G=U^*C^{-1/2}[I_2,-V]\) 代入 (8.2)，直接化简得到
+
+$$
+ |\rho|\le\frac1{\sqrt2},
+\tag{20.7}
+$$
+
+端点包含在闭圆盘条件内；因此 (20.5) 的全正 P2 证书覆盖全部复参数和全部原质量，而不删第三坐标。对该同一矩阵，(20.4) 成立，故定理 20.2 给出实际有限零探针违反。引理 19.2 的消元先取 (20.5) 的完整 \(B,V,D\)，再以其负特征方向提升 \(\xi_\sigma\)；所以 \(B_{12}=1\)、\(B_{22}=\rho+1\)、\(D_{\rm env}=1\) 均保留在证书中，没有替换为另一个实现。∎
+
+## 21. 余下有限类与原一般目标
+
+定理 20.1 覆盖了平衡秩一中由 (19.2) 指定的真实输入族，并保留了非零固定-P2 区间 (20.3) 及其被原零探针排除的边界。定理 20.2–20.3 给出解耦第一角的实际有限排除域，并显示该排除域与固定 P2 可以真实相交；它不是一个把失败的充分估计称为目标反例的替代。两项结论都只涉及已知有限 Hermitian 输入、原固定输出和原数学泛函。
+
+它们没有结算平衡秩一中不满足 (19.2) 或 (20.4) 的其余参数，也没有结算 Schur 平衡秩零的一般非零残量。全部原 PB 的完整分类、一般混合输入的两份共同实现、总 \(D\)、\(\mathcal E_+^D=\mathcal E_-^D\)、\(N_\omega(\varepsilon)^2\to0\)、完整 \(\mathsf H\) 及递归钉版实际物理来源仍按 (12.29)、§§6、15 和 18.2 的原范围保持未决。∎
+
+## 新增锚（本行以下为后续增补区）
