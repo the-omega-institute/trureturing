@@ -132,7 +132,6 @@ private theorem raw_first_hasDerivAt {X t : ℝ} (hX : 4 < X) (ht : X / 2 ≤ t)
   · simp only [Pi.add_apply, Pi.inv_apply, id_eq, zero_add]
     field_simp [ht0.ne', hX0.ne', hL.ne',
       (show t + 1 ≠ 0 by positivity)]
-    <;> ring
 
 private theorem raw_first_derivative_bound {X t : ℝ} (hX : 4 < X)
     (ht : X / 2 ≤ t) :
@@ -162,8 +161,10 @@ private theorem raw_first_derivative_bound {X t : ℝ} (hX : 4 < X)
     simp only [neg_div]
     linarith
   rw [abs_of_nonpos hnonpos]
-  simp only [neg_div]
-  linarith
+  calc
+    _ = 1 / (t * (t + 1)) + 1 / (X * log X * t) := by ring
+    _ ≤ 4 / X ^ 2 + 2 / X ^ 2 := add_le_add hfirst hsecond
+    _ = 6 / X ^ 2 := by ring
 
 private theorem raw_first_bound_at_root {X r t : ℝ} (hX : 4 < X)
     (hr : r ∈ Set.Icc (X / 2) (2 * X))
