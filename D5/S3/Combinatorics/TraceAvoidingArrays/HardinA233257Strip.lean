@@ -179,7 +179,7 @@ private theorem proper_count (n : ℕ) :
       intro s
       rw [← transfer_certificate.2 s]) n
   rw [hbridge]
-  have hv : (Matrix.toLin' T.transpose).HasUnifEigenvector 3 1 v := by
+  have hv : Module.End.HasUnifEigenvector (Matrix.toLin' T.transpose) 3 1 v := by
     constructor
     · apply Module.End.mem_genEigenspace_one.mpr
       ext i
