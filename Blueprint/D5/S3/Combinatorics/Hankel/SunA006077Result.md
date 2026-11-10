@@ -4,7 +4,7 @@
 
 The literal finite sum satisfies every clause at every natural index.
 
-For a sequence b, H(b,k,s) is the k by k matrix with entry b(i+j+s), where 0 <= i,j < k; det of the empty matrix is one. Nat denotes the nonnegative integers, Z the integers, and all floor quotients are natural division.
+Nat denotes the nonnegative integers and Z the integers. Matrix.of is displayed with Fin-sized row and column binders and explicit val projections; det of the empty matrix is one. All floor quotients are natural division.
 
 **Definition 1.1 (All clauses of the assertion).**
 

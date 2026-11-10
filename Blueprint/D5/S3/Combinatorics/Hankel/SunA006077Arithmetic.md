@@ -4,7 +4,7 @@
 
 The quotient coefficient is odd exactly at positive powers of two.
 
-For a sequence b, H(b,k,s) is the k by k matrix with entry b(i+j+s), where 0 <= i,j < k; det of the empty matrix is one. Nat denotes the nonnegative integers, Z the integers, and all floor quotients are natural division.
+Nat denotes the nonnegative integers and Z the integers. Matrix.of is displayed with Fin-sized row and column binders and explicit val projections; det of the empty matrix is one. All floor quotients are natural division.
 
 **Definition 1.1 (An explicit integral quotient).**
 
@@ -22,7 +22,7 @@ NatSub is natural subtraction. The quotient relation is used only for positive r
 
 **Theorem 1.2 (Exact divisibility by six).**
 
-$$\forall r \in Nat,\; 0 < r \Rightarrow c\left(r\right) = 6 \cdot q\left(r\right)$$
+$$\forall r \in Nat,\; 0 < r \Rightarrow c\left(r\right) = 6 \cdot (q\left(r\right): \mathbb{Z})$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Hankel/SunA006077Arithmetic.c_six` (`✓ std3`). ∎
 
@@ -50,7 +50,7 @@ Kummer valuations express the central binomial valuation as the binary digit sum
 
 **Definition 1.4 (Unshifted normalized determinant).**
 
-$$\forall m \in Nat,\; d\left(m\right) = det\left(A\left(m\right)\right)$$
+$$\forall m \in Nat,\; d\left(m\right) = det\left((\operatorname{Matrix}.\operatorname{of}\left(\lambda (i: Fin\left(m + 1\right)) \mapsto (\lambda (j: Fin\left(m + 1\right)) \mapsto (ite\left(\operatorname{Fin}.\operatorname{val}\left(i\right) = 0, c\left(\operatorname{Fin}.\operatorname{val}\left(j\right)\right), (q\left(\operatorname{Fin}.\operatorname{val}\left(i\right) + \operatorname{Fin}.\operatorname{val}\left(j\right)\right): \mathbb{Z})\right)))\right): Matrix\left(Fin\left(m + 1\right), Fin\left(m + 1\right), \mathbb{Z}\right))\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Hankel/SunA006077Arithmetic.d` (`✓ std3`).
 
@@ -60,11 +60,11 @@ $$\forall m \in Nat,\; d\left(m\right) = det\left(A\left(m\right)\right)$$
 
 *Commentary.*
 
-A(m) has size m+1. Its first row has entries c(j); every other row i has entries q(i+j).
+The matrix has size m+1. Its first row has entries c(val(j)); every other row uses the integer cast of q(val(i)+val(j)).
 
 **Definition 1.5 (Shifted normalized determinant).**
 
-$$\forall m \in Nat,\; e\left(m\right) = det\left(H\left(q, m, 1\right)\right)$$
+$$\forall m \in Nat,\; e\left(m\right) = det\left((\operatorname{Matrix}.\operatorname{of}\left(\lambda (i: Fin\left(m\right)) \mapsto (\lambda (j: Fin\left(m\right)) \mapsto ((q\left(\operatorname{Fin}.\operatorname{val}\left(i\right) + \operatorname{Fin}.\operatorname{val}\left(j\right) + 1\right): \mathbb{Z})))\right): Matrix\left(Fin\left(m\right), Fin\left(m\right), \mathbb{Z}\right))\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Hankel/SunA006077Arithmetic.e` (`✓ std3`).
 

@@ -4,11 +4,11 @@
 
 Residue classes modulo three give exact block determinant formulas.
 
-For a sequence b, H(b,k,s) is the k by k matrix with entry b(i+j+s), where 0 <= i,j < k; det of the empty matrix is one. Nat denotes the nonnegative integers, Z the integers, and all floor quotients are natural division.
+Nat denotes the nonnegative integers and Z the integers. Matrix.of is displayed with Fin-sized row and column binders and explicit val projections; det of the empty matrix is one. All floor quotients are natural division.
 
 **Definition 1.1 (Unshifted multinomial determinants).**
 
-$$\forall k \in Nat,\; D\left(k\right) = det\left(H\left(c, k, 0\right)\right)$$
+$$\forall k \in Nat,\; D\left(k\right) = det\left((\operatorname{Matrix}.\operatorname{of}\left(\lambda (i: Fin\left(k\right)) \mapsto (\lambda (j: Fin\left(k\right)) \mapsto (c\left(\operatorname{Fin}.\operatorname{val}\left(i\right) + \operatorname{Fin}.\operatorname{val}\left(j\right)\right)))\right): Matrix\left(Fin\left(k\right), Fin\left(k\right), \mathbb{Z}\right))\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Hankel/SunA006077Blocks.D` (`✓ std3`).
 
@@ -22,7 +22,7 @@ D(0)=1.
 
 **Definition 1.2 (Shifted multinomial determinants).**
 
-$$\forall k \in Nat,\; E\left(k\right) = det\left(H\left(c, k, 1\right)\right)$$
+$$\forall k \in Nat,\; E\left(k\right) = det\left((\operatorname{Matrix}.\operatorname{of}\left(\lambda (i: Fin\left(k\right)) \mapsto (\lambda (j: Fin\left(k\right)) \mapsto (c\left(\operatorname{Fin}.\operatorname{val}\left(i\right) + \operatorname{Fin}.\operatorname{val}\left(j\right) + 1\right)))\right): Matrix\left(Fin\left(k\right), Fin\left(k\right), \mathbb{Z}\right))\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Hankel/SunA006077Blocks.E` (`✓ std3`).
 
@@ -82,9 +82,7 @@ $$\forall m \in Nat,\; W\left(3 \cdot m + 1\right) = 0$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Hankel/SunA006077Blocks.zero_branch` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Zhi-Wei Sun (2013). *On some determinants with Legendre symbol entries*. DOI: [10.48550/arXiv.1308.2900](https://doi.org/10.48550/arXiv.1308.2900). URL: <https://arxiv.org/abs/1308.2900v5>.
+*Citation.* Zhi-Wei Sun (2013). *On some determinants with Legendre symbol entries*. DOI: [10.48550/arXiv.1308.2900](https://doi.org/10.48550/arXiv.1308.2900). URL: <https://arxiv.org/abs/1308.2900v5>.
 
 *Commentary.*
 
