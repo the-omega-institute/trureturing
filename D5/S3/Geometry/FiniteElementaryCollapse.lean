@@ -5,12 +5,9 @@
    anchors: [mathlib/module/Mathlib.Data.Finset.Lattice.Fold, mathlib/module/Mathlib.Topology.Order.Lattice]
    utility: none
    digest: An explicit coordinate free-face deformation fixes the entire retained realization on the original labels. -/
-/- SOURCE PATCH DRAFT: UNCOMPILED. No Lean/kernel or project acceptance claimed.
-
-   Proposed canonical home: D5/S3/Geometry/FiniteElementaryCollapse.
-   Classical elementary free-face collapse in the existing coordinate realization.
-   Mathematical specification: section 2 of independent_general_relative_cancellation_proof.txt
-   (2026-11-05), SHA256 f9888966c4313557587f6c91f7a185a8aa6de6473219536205db6600e64553ad.
+/- Classical elementary free-face collapse in the existing coordinate realization.
+   Mathematical specification: section 2 of independent_general_relative_cancellation_proof.txt,
+   SHA256 f9888966c4313557587f6c91f7a185a8aa6de6473219536205db6600e64553ad.
    That proof credits the cancellation proposal as its source. The present source
    uses its barycentric formula globally; no theorem from that review is an axiom.
 -/
@@ -31,7 +28,7 @@ There is no normalization denominator and no closed-pasting assumption.
 
 This is the local geometric ingredient for relative link lifting and theta
 cancellation. Neither the link-collapse sequence nor theta cancellation is
-asserted or assumed here. This draft has not been elaborated or compiled.
+asserted or assumed here.
 -/
 
 noncomputable section
@@ -105,10 +102,6 @@ theorem retained_le : P.retained ≤ P.ambient := fun _ hs => hs.1
 
 theorem retained_nonempty {s : Finset V} (hs : s ∈ P.retained) : s.Nonempty :=
   (P.retained.isRelLowerSet_faces hs).1
-
-theorem retained_downward {s t : Finset V} (hs : s ∈ P.retained)
-    (hts : t ⊆ s) (ht : t.Nonempty) : t ∈ P.retained :=
-  (P.retained.isRelLowerSet_faces hs).2 hts ht
 
 @[simp] theorem empty_not_mem_retained : (∅ : Finset V) ∉ P.retained := by
   intro h
@@ -291,17 +284,6 @@ def collapseHomotopy :
     funext v
     simp only [mix]
     ring
-
-/-- The homotopy has precisely the reviewed barycentric coordinate formula
-at every point of the ambient realization, without a face-dependent branch. -/
-theorem collapseHomotopy_coordinate (t : I) (x : Space P.ambient) (v : V) :
-    (P.collapseHomotopy (t, x)).val v =
-      x.val v + (if v = P.apex then
-        (t : ℝ) * (P.lower.card : ℝ) * P.minimum x.val else 0) -
-      (if v ∈ P.lower then (t : ℝ) * P.minimum x.val else 0) := by
-  change mix t x.val (P.endpoint x.val) v = _
-  unfold mix endpoint
-  split_ifs <;> ring
 
 /-- The forward map is the proved retraction; its inverse is the actual
 coordinate inclusion, not a replacement homeomorphic model. -/

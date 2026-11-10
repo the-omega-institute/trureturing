@@ -33,6 +33,7 @@ open private disjointGraph restricted_join
   from D5.S3.Geometry.FiniteGraphVertexSubstitution
 open private joinCongr pointJoinContraction twoPoint
   from D5.S3.Geometry.FiniteComponentClosure.Transport
+open FiniteConeCollapse.ConePair (cone_segment)
 
 universe u
 variable {V : Type u} [Fintype V] [DecidableEq V]
@@ -184,7 +185,7 @@ theorem isolated_contractible (G : SimpleGraph V) (u : V) (hu : ∀ w, ¬ G.Adj 
   apply (contractible_iff_id_nullhomotopic _).mpr
   refine ⟨P.apexPoint, ⟨straight _ _ ?_⟩⟩
   intro t x
-  exact FiniteConeCollapse.ConePair.cone_segment P x x.property t t.property.1 t.property.2
+  exact cone_segment P x x.property t t.property.1 t.property.2
 
 omit [Fintype V] [DecidableEq V] in
 private theorem empty_faces (G : SimpleGraph V) [IsEmpty V] :
