@@ -1125,3 +1125,406 @@ $$
 原事件空间 $\Omega$、固定原事件核 $D$、所有原装置、程序、菜单、历史、原始概率与质量，包括零值、失败、停止、记录及返回系数，均保持其原定义。自由项、复数求值及关系商只承担数学论证，不供应实际重置、复制、辅助系统、量子位、角操作、张量联合、充分参考执行、仪器、时间接口或完全正映射的实际来源。可表示性、正性、实际供应与对既定原事件核及过程的识别仍是不同义务；静态定向和实际资源缺口不由这些抽象结果闭合。
 
 ## 追加锚（本行以下为增补区）
+
+## 17. 对称有号种子与两个单位读数
+
+**定义 17.1（复二维空间上的对称有号全项模型）。**令
+
+$$
+\omega=-\frac12+i\frac{\sqrt3}{2},\qquad
+1+\omega+\omega^2=0,\qquad \omega^3=1.
+$$
+
+取 $M=\mathbb C^2$，单位 $0=(0,0)$，乘法为向量加法，且
+
+$$
+Ux=\omega x+(1,1),\qquad p(t)=(t,t)\quad(t\in\mathbb C).
+$$
+
+在任意 $x,y\in M$ 上置
+
+$$
+E(x,y)=-\frac12\operatorname{Re}\bigl((x_1-y_1)(x_2-y_2)(x_1-x_2+y_1-y_2)\bigr).
+\tag{17.1}
+$$
+
+这是处处有限的实值核；它允许有号取值，因而暂不属于原问题的非负核类。
+
+**定理 17.2（全四变量关系与七项式读数）。**定义 17.1 的 $E$ 对称、零对角，并且对任意 $a,b,u,v\in\mathbb C^2$ 满足完整四变量关系 (R)
+
+$$
+\sum_{k=0}^2E(a+U^ku,b+U^kv)=3E(a,b)+3E(u,v).
+\tag{17.2}
+$$
+
+此外，对任意 $a=(a_1,a_2)$、$z=(z_1,z_2)$ 和 $t\in\mathbb C$，沿用 (8.2) 的七项式有
+
+$$
+H_E(a,p(t);z)=\operatorname{Re}\bigl(t(a_1z_2-a_2z_1)\bigr).
+\tag{17.3}
+$$
+
+特别地，若 $A=(1,0)$、$Z=(0,1)$，则
+
+$$
+H_E(A,p(1);Z)=1,\qquad H_E(A,p(1+\omega);Z)=\frac12.
+\tag{17.4}
+$$
+
+**证明。**由递推直接得到
+
+$$
+U^kx=\omega^kx+\tau_k(1,1),\qquad
+\tau_0=0,\quad\tau_1=1,\quad\tau_2=1+\omega.
+\tag{17.5}
+$$
+
+置
+
+$$
+\begin{aligned}
+X_0&=a_1-b_1,&X_1&=u_1-v_1,\\
+Y_0&=a_2-b_2,&Y_1&=u_2-v_2,\\
+Z_0&=a_1-a_2+b_1-b_2,&Z_1&=u_1-u_2+v_1-v_2.
+\end{aligned}
+$$
+
+公因子 $\tau_k(1,1)$ 在三个差因子中分别消去，故
+
+$$
+\begin{aligned}
+&(a+U^ku)_1-(b+U^kv)_1=X_0+\omega^kX_1,\\
+&(a+U^ku)_2-(b+U^kv)_2=Y_0+\omega^kY_1,\\
+&(a+U^ku)_1-(a+U^ku)_2+(b+U^kv)_1-(b+U^kv)_2
+ =Z_0+\omega^kZ_1.
+\end{aligned}
+$$
+
+因为 $\sum_k\omega^k=\sum_k\omega^{2k}=0$ 且 $\sum_k\omega^{3k}=3$，三次展开给出
+
+$$
+\sum_{k=0}^2(X_0+\omega^kX_1)(Y_0+\omega^kY_1)(Z_0+\omega^kZ_1)
+=3X_0Y_0Z_0+3X_1Y_1Z_1.
+$$
+
+取实部并乘以 $-1/2$ 即得 (17.2)。交换 $x,y$ 时前两个差因子变号而第三个不变，所以 $E(y,x)=E(x,y)$；置 $x=y$ 则三因子乘积为零。
+
+为计算 (17.3)，令
+
+$$
+S=a_1-a_2,\qquad T=z_1-z_2,\qquad P=a_1+a_2,\qquad Q=z_1+z_2.
+$$
+
+将 (8.2) 的七项逐项代入 (17.1)，不把 $t$ 限制为实数，复数多项式部分化为
+
+$$
+\begin{aligned}
+&[t(P-Q)+t^2](S+T)-[t^2-tQ]T-[tP+t^2]S\\
+&\qquad=t(PT-QS).
+\end{aligned}
+$$
+
+而 $PT-QS=-2(a_1z_2-a_2z_1)$，故
+
+$$
+H_E(a,p(t);z)=-\frac12\operatorname{Re}\bigl(t(PT-QS)\bigr)
+=\operatorname{Re}\bigl(t(a_1z_2-a_2z_1)\bigr).
+$$
+
+取 $a=A,z=Z$，有 $a_1z_2-a_2z_1=1$，且 $\operatorname{Re}(1+\omega)=1/2$，得到 (17.4)。证毕。
+
+**定理 17.3（自由项拉回与对称关系商中的两个非成员）。**在定义 12.1 的同一个自由有单位 magma $\mathcal T$ 上，定义结构递归映射
+
+$$
+\eta(1)=0,\qquad \eta(A)=(1,0),\qquad \eta(Z)=(0,1),\qquad
+\eta(s\cdot t)=\eta(s)+\eta(t),\qquad \eta(Vs)=U\eta(s),
+\tag{17.6}
+$$
+
+并置 $E_{\mathcal T}(s,t)=E(\eta(s),\eta(t))$。则 $E_{\mathcal T}$ 是处处有限、对称、零对角并满足全部 (12.4) 的有号核，而且
+
+$$
+E_{\mathcal T}(A\cdot V1,1)=-1,\qquad
+E_{\mathcal T}(Z\cdot V1,1)=1.
+\tag{17.7}
+$$
+
+令 $J_{\mathrm{sym}}$ 为 (14.10) 的 $J$ 与全部交换向量的和：
+
+$$
+J_{\mathrm{sym}}=J+\operatorname{span}_{\mathbb R}
+\{\varepsilon_{s,t}-\varepsilon_{t,s}:s,t\in\mathcal T\}.
+\tag{17.8}
+$$
+
+除 (14.11) 的 $\mathbf h_1=\mathbf h$ 外，定义
+
+$$
+\begin{aligned}
+\mathbf h_2={}&\varepsilon_{A\cdot V^2 1,Z}-\varepsilon_{A,Z}
+-\varepsilon_{V^2 1,Z}+\varepsilon_{1,Z}\\
+&-\varepsilon_{A\cdot V^2 1,1}+\varepsilon_{A,1}+\varepsilon_{V^2 1,1}.
+\end{aligned}
+\tag{17.9}
+$$
+
+则
+
+$$
+\mathbf h_1\notin J_{\mathrm{sym}},\qquad
+\mathbf h_2\notin J_{\mathrm{sym}}.
+\tag{17.10}
+$$
+
+这两个结论分别成立，不断言二者或其混合组合的线性独立性。本定理回答了 §16.2 的有号问题。
+
+**证明。**结构递归 (17.6) 总定义，每个有限原始项的求值均有限，且尊重真正的双侧单位规则。源 $\mathcal T$ 的约化仍只有这些单位规则；$\eta$ 不必单射，求值相同不使原始项相等，也不向 $\mathcal T$ 增添结合律、交换律或 $V$ 的周期关系。由乘法与 $V$ 的递归式，(17.2) 逐项拉回为 (12.4)，对称性与零对角也随即保留。由 $\eta(V1)=(1,1)$，
+
+$$
+\eta(A\cdot V1)=(2,1),\qquad \eta(Z\cdot V1)=(1,2),
+$$
+
+代入 (17.1) 得 (17.7)。
+
+对有限支撑向量 $q=\sum\lambda_{s,t}\varepsilon_{s,t}$ 定义
+
+$$
+\Lambda(q)=\sum\lambda_{s,t}E_{\mathcal T}(s,t).
+$$
+
+零对角、(12.4) 和 $E_{\mathcal T}(s,t)=E_{\mathcal T}(t,s)$ 分别说明 $\Lambda$ 消灭 $J$、交换生成元以及 $J_{\mathrm{sym}}$。另一方面，(17.3) 与
+
+$$
+\eta(V1)=p(1),\qquad \eta(V^2 1)=p(1+\omega)
+$$
+
+给出
+
+$$
+\Lambda(\mathbf h_1)=1,\qquad \Lambda(\mathbf h_2)=\frac12.
+$$
+
+若任一 $\mathbf h_j$ 属于 $J_{\mathrm{sym}}$，则其 $\Lambda$ 值应为零，矛盾；故 (17.10) 成立。证毕。
+
+**对应 17.4（相位、原问题边界与物理来源）。**式 (17.1) 的交换对称性来自交换端点时两个差因子同时变号、第三个差因子保持不变；它是无序比较读数的候选定义，不是对既有有向模型的所有交换次序的定理，也不是顺序测量的交换性。三次单位根的相消给出全四变量 (R) 的有号解，但负值读数 (17.7) 说明它不满足原问题的非负性，因此不提供原几何蕴涵的非负总反模型，也不决定非负对称完整(R)是否迫出UC/BR/几何。原有 §8.2 的条件等价、$H$、$T$、$L$、$J$ 及非负 $\mathrm{UC}\Longleftrightarrow\mathrm{BR}$ 范围均保持；[续卷 W 定理 20.1（正幂三点分类）](./AURIC_C133_UNANCHORED_MARKER_BOUNDED_ORBITS_CONTINUATION_W.md) 在完整 (R) 下所用的任意统一 $\alpha>0$ 的 $c^\alpha$ 三角条件仍是另行的接口前件。
+
+这里使用的三次单位根相消和有限支撑赋值是经典中间工具；本节新增的承重内容是处处有限的对称有号全项种子、两个单位读数 $1$ 与 $1/2$，以及 (17.10) 的关系张成分离。该种子没有给出非负性、实际事件或过程的来源，也没有补足原事件空间、组成、时间和完整量子接口；完整量子起源候选仍需在这些边界内另行验证。
+
+## 追加锚（本行以下为增补区）
+
+## 18. 第三标记返回下的单标记标定
+
+**定义 18.1（完整返回与保留单位贡献的标定）。**沿用定义 1.1 的整个原模型类：$M$ 仅有二元运算和真实双侧单位 $1$，$U:M\to M$ 任意，$c:M^2\to[0,\infty)$ 处处有限且零对角，完整 (R) 对全部原标签 $a,b,u,v$ 成立。仍记 $p_j=U^j1$、$P_ja=a\cdot p_j$，以及定义 8.1 的 $A_j(a)$、$H_d$ 和引理 2.1 的 $E,B,\mathcal N$。条件 $\mathrm C_3$ 为
+
+$$
+c(P_3a,b)=c(a,b),\qquad c(a,P_3b)=c(a,b)
+\qquad(a,b\in M).
+\tag{18.1}
+$$
+
+对 $j=1,2$，条件 $\mathrm C_j$ 为一个标记的完整双向标定族
+
+$$
+H_c(a,p_j;z)=H_{c^{\mathsf T}}(a,p_j;z)=0
+\qquad(a,z\in M).
+\tag{18.2}
+$$
+
+由 (8.5)，$\mathrm C_j$ 恰为 $A_j(a)\in\mathcal N$ 对全部 $a$ 成立，因而 $\mathrm{UC}=\mathrm C_1\land\mathrm C_2$。这里 $\mathrm C_3$ 专指 (18.1) 的返回，不指 $j=3$ 的七项式标定。所有量词保留重复标签、两个读数次序和原乘积的括号；$P_3$ 不与 $P_1$ 的三次复合相认。
+
+**引理 18.2（四个原标签返回等价与合法三阶商作用）。**在定义 18.1 的原类及完整 (R) 下，以下四个普遍条件等价：
+
+$$
+\begin{aligned}
+&c(P_3a,b)=c(a,b) &&(a,b\in M),\\
+&c(a,P_3b)=c(a,b) &&(a,b\in M),\\
+&c(U^3a,b)=c(a,b) &&(a,b\in M),\\
+&c(a,U^3b)=c(a,b) &&(a,b\in M).
+\end{aligned}
+\tag{18.3}
+$$
+
+任一个条件都等价于 $\mathrm C_3$，也等价于下列任一个完整行列普遍条件：
+
+$$
+a\cdot(U^3u)\approx a\cdot u,\qquad
+ a\cdot p_{j+3}\approx a\cdot p_j
+\qquad(a,u\in M,\ j\ge0),
+\tag{18.4}
+$$
+
+其中 $\approx$ 是定义 2.2 的全部原行列相等。此时 $Se_a=e_{Ua}-e_{p_1}$ 保持 $\mathcal N$，故在 $V=E/\mathcal N$ 上诱导算子 $T$，满足
+
+$$
+T^3=I,\qquad B(Tx,Ty)=B(x,y).
+\tag{18.5}
+$$
+
+**证明。**为与自由空间上的 $S$ 区分，暂记原对象操作 $G=U^3$、$P=P_3$。直接复用[续卷 W 引理 17.1](AURIC_C133_UNANCHORED_MARKER_BOUNDED_ORBITS_CONTINUATION_W.md#17-实际单位碰撞与全部探针上的标记消去)的交叉等距：
+
+$$
+c(Ga,Gb)=c(Ga,Pb)=c(Pa,Gb)=c(Pa,Pb)=c(a,b).
+\tag{18.6}
+$$
+
+第一端点的 $P$ 返回与第二端点的 $G$ 返回等价：前者给 $c(a,Gb)=c(Pa,Gb)=c(a,b)$，后者给 $c(Pa,b)=c(Pa,Gb)=c(a,b)$。同样，第二端点的 $P$ 返回与第一端点的 $G$ 返回等价。两个 $G$ 返回也等价：在 $c(Ga,Gb)=c(a,b)$ 中用所给返回消去其中一端，即取得另一端。每次代入均使用普遍量词，未要求 $G$ 或 $P$ 满射。于是 (18.3) 四项等价。
+
+引理 2.1 已给同步 $U$ 等距。完整 (R) 对 $(a,b,U^nu,U^nv)$ 的相邻实例相减，给
+
+$$
+c\bigl(a\cdot(U^3u),b\cdot(U^3v)\bigr)=c(a\cdot u,b\cdot v).
+\tag{18.7}
+$$
+
+取 $v=1$，用第二端点的 $P_3$ 返回，得到 $c(a\cdot(U^3u),b)=c(a\cdot u,b)$；取 $u=1$，另用第一端点返回，得到 $c(a,b\cdot(U^3v))=c(a,b\cdot v)$。这两式分别给 (18.4) 的完整行与完整列；再取 $u=p_j$ 得其第二式。反向，在 (18.4) 的第一项取 $u=1$，或在第二项取 $j=0$，均给 $P_3a\approx a$，也即 $\mathrm C_3$。这里只消去该指定右输入中的三次标记，没有建立 $\approx$ 对任意乘法环境的相容性。
+
+特别 $U^3a\approx a$、$p_3\approx1$。引理 2.3 因而给
+
+$$
+e_{U^3a}-e_a\in\mathcal N,\qquad e_{p_3}\in\mathcal N,\qquad
+(S^3-I)E\subseteq\mathcal N,
+\tag{18.8}
+$$
+
+末式使用 $S^3e_a=e_{U^3a}-e_{p_3}$。在定义任何商标记之前，对 $n\in\mathcal N,y\in E$ 分别计算
+
+$$
+\begin{aligned}
+B(Sn,y)&=B(Sn,S^3y)=B(n,S^2y)=0,\\
+B(y,Sn)&=B(S^3y,Sn)=B(S^2y,n)=0.
+\end{aligned}
+\tag{18.9}
+$$
+
+首个等号使用 (18.8) 的双侧根性，第二个等号使用引理 2.1 的自由空间等距。所以 $S\mathcal N\subseteq\mathcal N$，$T$ 才能下降，(18.8) 给 $T^3=I$，逆算子为 $T^2$。$B$ 因 $\mathcal N$ 在两个槽均为根而下降；商上的确切非退化性只是
+
+$$
+\bigl[B(w,x)=B(x,w)=0\ \text{对每个 }x\in V\bigr]\ \Longrightarrow\ w=0.
+\tag{18.10}
+$$
+
+并未假设任一个单侧根空间为零，也未假设 $B$ 对称或正定。证毕。
+
+**定理 18.3（两个缺陷的耦合与单标记条件判据）。**在完整原类及 $\mathrm C_3$ 下，置
+
+$$
+\beta(a)=[e_a],\qquad \alpha_j(a)=[A_j(a)],\qquad
+L=I+T+T^2,\qquad Q=L/3.
+\tag{18.11}
+$$
+
+则 $Q$ 是像为 $\ker(T-I)$ 的幂等算子，满足 $B(Qx,y)=B(x,Qy)$。对每个原标签 $a$，两个单位缺陷满足精确关系
+
+$$
+\begin{aligned}
+L\beta(a)+T^2\alpha_1(a)+T\alpha_2(a)&=0,\\
+\alpha_2(a)&=-T\alpha_1(a)-L\beta(a),\\
+Q\alpha_1(a)+Q\alpha_2(a)&=-3Q\beta(a),\\
+(I-Q)\alpha_2(a)&=-T(I-Q)\alpha_1(a).
+\end{aligned}
+\tag{18.12}
+$$
+
+在定义 1.1 的完整 (R) 类中，有条件等价
+
+$$
+\begin{aligned}
+\mathrm C_3\land\mathrm C_1
+\quad\Longleftrightarrow\quad
+\mathrm C_3\land\mathrm C_2
+\quad\Longleftrightarrow\quad
+\mathrm{UC}
+\quad\Longleftrightarrow\quad
+\text{存在满足 (1.2) 的完整仿射复 Hilbert 表示}.
+\end{aligned}
+\tag{18.13}
+$$
+
+因此额外返回条件只需 (18.3) 中任一端点的一条普遍条件；标定则仍要求同一个 $j$ 的全部原标签、全部探针与两个读数次序。表示中的漂移 $t=F(U1)$ 不受零值限制。
+
+**证明。**引理 18.2 已先支付商算子的合法性。由 $T^3=I$ 及等距性，两个槽分别有
+
+$$
+B(Tx,y)=B(x,T^2y),\qquad B(x,Ty)=B(T^2x,y).
+\tag{18.14}
+$$
+
+故 $L$ 可移至另一槽而不变，且 $L^2=3L$、$TL=LT=L$。于是 $Q^2=Q$；$TQ=Q$，而 $Tx=x$ 时 $Qx=x$，给出其像。分解 $V=\operatorname{im}Q\oplus\ker Q$ 的两个部分在 $B$ 的两个配对次序下均互相正交；这只是双线性意义下的固定部分与非平凡三相部分，不是已经取得的正内积。
+
+直接将 (8.6) 的两条原轴恒等式降到这个合法商。对任意原标签 $u,a$，令 $x=\beta(u),y=\beta(a)$，则
+
+$$
+\begin{aligned}
+B(Lx,y)&=-B(Tx,\alpha_1(a))-B(T^2x,\alpha_2(a)),\\
+B(y,Lx)&=-B(\alpha_1(a),Tx)-B(\alpha_2(a),T^2x).
+\end{aligned}
+\tag{18.15}
+$$
+
+分别用 (18.14) 移动算子，得到
+
+$$
+\begin{aligned}
+B\bigl(x,Ly+T^2\alpha_1(a)+T\alpha_2(a)\bigr)&=0,\\
+B\bigl(Ly+T^2\alpha_1(a)+T\alpha_2(a),x\bigr)&=0.
+\end{aligned}
+\tag{18.16}
+$$
+
+$\beta(M)$ 张成 $V$，所以 (18.10) 给 (18.12) 第一式；作用 $T^2$ 得第二式，再分别作用 $Q$ 与 $I-Q$ 得余下两式。这里 $\alpha_j(a)$ 始终按原标签索引，未把它当成 $\beta(a)$ 上已经良定义的函数或线性算子，也未令 $P_j$ 先行下降。
+
+若给 $\mathrm C_1$，则 $\alpha_1(a)=0$，耦合式给 $\alpha_2(a)=-L\beta(a)$；若给 $\mathrm C_2$，则 $\alpha_2(a)=0$，同式给 $\alpha_1(a)=-T^2L\beta(a)=-L\beta(a)$。两种情形均在原恒等式 (2.3) 取 $u=v=1$：由 $X_k(a,1)=e_a+A_k(a)$ 及 $A_0=0$，有
+
+$$
+\sum_{k=0}^2 B\bigl(\beta(a)+\alpha_k(a),\beta(b)+\alpha_k(b)\bigr)
+=3B(\beta(a),\beta(b)).
+\tag{18.17}
+$$
+
+三个向量由两份 $\beta(a)$ 与一份 $(I-L)\beta(a)$ 组成，只在 $k=1,2$ 的位置上有别。因此由双线性及张成性，对全部 $x,y\in V$ 有
+
+$$
+B((I-L)x,(I-L)y)=B(x,y).
+\tag{18.18}
+$$
+
+但移槽与 $L^2=3L$ 又给
+
+$$
+B((I-L)x,(I-L)y)
+=B(x,y)-2B(Lx,y)+B(L^2x,y)
+=B(x,y)+B(Lx,y).
+\tag{18.19}
+$$
+
+所以 $B(Lx,y)=0$ 对全部 $x,y$ 成立；另一方向也有 $B(y,Lx)=B(Ly,x)=0$。完整双侧非退化性 (18.10) 迫 $Lx=0$ 对全部 $x$ 成立。耦合式随即消去另一标记的全部缺陷，取得原自由空间中完整的 $\mathrm{UC}$。几何上，$I-L=I-3Q$ 在固定部分乘以 $-2$，在 $\ker Q$ 上为恒等；它同时保持 $B$ 迫使固定部分在两个方向都落入根，而非仅有零自配对。
+
+现在直接应用定理 8.2：其 $M,U,c$ 正是本节原对象，根空间也是同一个 $\mathcal N$，全部 $a,z$ 与 $j=1,2$ 的前件已经取得。故得到 (1.2)，连同该定理已有的 $\mathrm{BR}$、对称性、全部有限负型与最小表示唯一性；不另作群化或 Hilbert 分类。反向，$\mathrm{UC}$ 经定理 8.2 给表示，因而两个 $\mathrm C_j$ 都成立，且
+
+$$
+F(p_3)=(1+\omega+\omega^2)t=0,\qquad
+F(P_3a)=Fa,
+\tag{18.20}
+$$
+
+给 $\mathrm C_3$。这证明 (18.13)。
+
+单标记标定保留 $e_{p_j}$：其内容是 $e_{a\cdot p_j}-e_a-e_{p_j}\in\mathcal N$，不是 $e_{a\cdot p_j}-e_a\in\mathcal N$。在表示中它允许 $F(P_1a)=Fa+t$；第一标记完整行列不可见才会要求 $t=0$。例如取加法 magma $M=\mathbb C$，单位记作 $0$，任取 $t\ne0$，置 $Uz=\omega z+t$、$c(z,w)=|z-w|^2$、$Fz=z$。两端共同仿射项相消及 $\sum_k\omega^k=0$ 直接给完整 (R)；$p_3=0$，两个标定族由其表示取得。但 $c(P_1 0,0)=|t|^2>0=c(0,0)$。这是 (1.2) 的非零漂移实例，也与命题 5.4 的原始树实现相容，不另计为新的分类。证毕。
+
+**对应 18.4（来源、有号种子与保留接口）。**引理 18.2 的交叉等距复用续卷 W 引理 17.1；自由差空间等距、完整行列与根空间的对应、两个轴配对次序及完成分类，分别复用引理 2.1、2.3、式 (8.6) 与定理 8.2。三阶商的根稳定性及算子移槽也用于续卷 W 定理 40.1；该定理以输入的纯相位 Hilbert 映射和受支配反对称残差取得端点均值。本节不使用那个均值前件，新增的 repo-derived 承重关系是原类在返回条件下的 (18.12)，以及由一个双向标定族通过 (18.17)–(18.19) 消去固定部分的判据。有限循环平均与幂等算子代数是推导内的经典工具；完整几何及既有度量、增长入口不作为新增结果重述，不主张文献优先权。
+
+为划清非负性边界，直接检验定义 17.1 的同一个对称有号种子 $E$。其中 $U^3x=x$、$p_3=0$，故两个第三标记返回都在原对象上成立。定理 17.2 已给完整 (R) 以及
+
+$$
+H_E((1,0),p_1;(0,1))=1,\qquad
+H_E((1,0),p_2;(0,1))=\tfrac12.
+\tag{18.21}
+$$
+
+它仍不满足任一个标定族，且由 (17.1) 有 $E((2,1),0)=-1$，亦即定理 17.3 的原项负值。这个负值把种子排除在定义 1.1 的非负总模型类之外；它只说明完整等式、对称性与第三返回在有号扩展中不足以推出标定，不能用来否定非负完整 (R) 或非负完整 (R) 加第三返回的几何充分性。
+
+本节没有从完整 (R) 推出 (18.3) 的任一返回，也没有从完整 (R) 加 $\mathrm C_3$ 推出 $\mathrm C_1$。这两个仍未解决的普遍蕴涵分别是返回接口和单标记标定接口；(18.13) 仅说明后者一旦供应就足以复用全部比较几何。它不改变问题 16.4 的原类量词。
+
+在唯一整体态 $\Omega$ 的建模前提下，$\beta(a)$、$Q$ 和 Hilbert 完成均不是自动可执行的门或准备操作。观察者、参考、记录与读出仍须由同一 $\Omega$ 内的实际有限历史实现；非零准备、事件与完整测试的概率归一、共同联合与条件历史、仪器及其参考实现、物理过程的组合和物理时间，仍保留第 6 节与 §11.2 所列的独立接口。三相指标、三标签测试、复 Hilbert 维数与物理或 Bloch 三维没有在本判据中被认同；这里取得的是条件比较几何，不是完整量子起源。
+
+## 追加锚（本行以下为增补区）

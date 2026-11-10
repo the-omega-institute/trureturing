@@ -103,6 +103,10 @@ internal sealed class CatalanPrimeOddMomentDocument : IScribeDocumentDefinition
             Helper("lzero-nonvanishing", "LFunction_zero_ne_zero_of_prime_odd",
                 "For every prime p and every nonprincipal odd complex Dirichlet character modulo p, "
                     + "its Dirichlet L-function at zero is nonzero."),
+            Helper("general-weighted-zero", "LFunction_zero_eq_neg_weighted_sum_general",
+                "The same proof gives the weighted-zero formula at every nonzero modulus other than one, for every nonprincipal character. The original prime interface is retained. The conductor-four-r signed Merca bridge is its live consumer; this extension retains the full Yao Xu/catalan-lean4 notices."),
+            Helper("general-conditional-zero", "LFunction_zero_eq_neg_weighted_sum_general_of_hurwitz_zero",
+                "The weighted-zero reduction from the supplied Hurwitz-zero identity works for every nonzero modulus other than one. The unconditional general formula supplies the original proved Hurwitz identity."),
             Helper("conditional-lzero", "LFunction_zero_eq_neg_weighted_sum_of_hurwitz_zero",
                 "Assuming hurwitzZeta(toUnitAddCircle(t),0) = 1/2-t for every real t strictly between "
                     + "zero and one, every prime p and every nonprincipal complex Dirichlet character "
