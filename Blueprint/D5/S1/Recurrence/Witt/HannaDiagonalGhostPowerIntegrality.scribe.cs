@@ -72,10 +72,7 @@ internal sealed class HannaDiagonalGhostPowerIntegralityDocument : IScribeDocume
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Every prefix through part size N agrees with the integer series through degree N. This is the original owner proof, publicly reused by the infinite product bridge."))), DescribeRole.Theorem),
 
-            Describe.Lean(DescribeId.Create("h3-hasprod-eulerseries"),
-                DeclarationHandle.Create("D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.hasProd_eulerSeries"), H("An actual infinite Euler product"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The orders of eulerFactor(i+1,b(i))-1 tend to infinity. Coefficientwise stabilization then identifies the topological infinite product with the existing integer Euler series. The coefficient ring has its standard discrete topology."))), DescribeRole.Theorem),
+            Paragraph(Text("For every integer sequence b, the existing eulerSeries b is the actual infinite product of eulerFactor(i+1,b(i)). The frozen low-degree coefficient vanishing gives order(eulerFactor(i+1,b(i))-1)>=i+1. Mathlib PowerSeries.WithPiTopology.multipliable_one_add_of_tendsto_order_atTop_nhds_top therefore gives multipliability. The continuous coefficient maps send its finite-prefix convergence to coefficient convergence. For each degree k, euler_series_represents makes those coefficients eventually constant at coeff k (eulerSeries b); uniqueness of limits identifies the product with eulerSeries b. This application uses the standard discrete topology on the integer coefficient ring and imposes no sign condition on b.")),
 
             Describe.Lean(DescribeId.Create("h3-exponential-sum-constant"),
                 DeclarationHandle.Create("D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.exponential_sum_constant"), H("The actual constant coefficient"),

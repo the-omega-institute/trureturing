@@ -308,42 +308,6 @@ theorem euler_series_represents (b : ℕ → ℤ) : Represents (eulerSeries b) b
 open scoped PowerSeries.WithPiTopology
 open Filter
 
-/-- The coefficientwise stabilized product is an actual infinite Euler product. -/
-theorem hasProd_eulerSeries (b : ℕ → ℤ) :
-    HasProd (fun i => eulerFactor (i + 1) (b i)) (eulerSeries b) := by
-  classical
-  have hm : Multipliable (fun i => eulerFactor (i + 1) (b i)) := by
-    have h := PowerSeries.WithPiTopology.multipliable_one_add_of_tendsto_order_atTop_nhds_top ℤ
-      (f := fun i => eulerFactor (i + 1) (b i) - 1) (by
-        apply ENat.tendsto_nhds_top_iff_natCast_lt.mpr
-        intro k
-        apply Filter.eventually_atTop.mpr
-        refine ⟨k, fun i hi => ?_⟩
-        have hord : (i + 1 : ℕ∞) ≤ (eulerFactor (i + 1) (b i) - 1).order := by
-          apply PowerSeries.le_order_iff.mpr
-          intro j hj
-          have hjlt : j < i + 1 := by exact_mod_cast hj
-          by_cases hj0 : j = 0
-          · subst j
-            simp [coeff_zero_eq_constantCoeff]
-          · rw [map_sub, coeff_eulerFactor_of_pos_of_lt _ _ _
-              (Nat.pos_of_ne_zero hj0) hjlt]
-            simp [coeff_one, hj0]
-        exact lt_of_lt_of_le (by exact_mod_cast (by omega : k < i + 1)) hord)
-    simpa only [add_sub_cancel] using h
-  have he : (∏' i, eulerFactor (i + 1) (b i)) = eulerSeries b := by
-    ext k
-    have hlim : Filter.Tendsto (fun N => coeff k (ledgerProduct b N))
-        Filter.atTop (nhds (coeff k (∏' i, eulerFactor (i + 1) (b i)))) := by
-      simpa only [ledgerProduct, Function.comp_def] using
-        ((PowerSeries.WithPiTopology.continuous_coeff ℤ k).tendsto _).comp
-          hm.hasProd.tendsto_prod_nat
-    have hconst : Filter.Tendsto (fun N => coeff k (ledgerProduct b N))
-        Filter.atTop (nhds (coeff k (eulerSeries b))) :=
-      tendsto_atTop_of_eventually_const (fun N hN => euler_series_represents b N k hN)
-    exact tendsto_nhds_unique hlim hconst
-  simpa only [he] using hm.hasProd
-
 private theorem euler_series_differential (b : ℕ → ℤ) :
     X * derivative (R := ℤ) (eulerSeries b) = ghostSeries b * eulerSeries b := by
   ext k

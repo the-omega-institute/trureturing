@@ -14,7 +14,8 @@ observational dependence require current compiled binding evidence. -/
 
 import D5.S1.Recurrence.Witt.BoundedEulerCorrection
 import D5.S1.Recurrence.Witt.EulerExponentialCoefficients
-import D5.S3.Combinatorics.Partitions.ColouredEulerLedger
+import Mathlib.Combinatorics.Enumerative.Partition.Basic
+import Mathlib.Data.Sym.Card
 import D5.S3.Arith.Divisors.ProperDivisorPowerBudget
 import D5.S3.Arith.Congruence.BoundedPowerCorrection
 
@@ -158,11 +159,15 @@ theorem exponent_bounds (s : ℤ) (hs : 2 ≤ s) :
 /-- The independent integer coefficients of the constructed Euler series. -/
 def f (s : ℤ) (n : ℕ) : ℤ := coeff n (eulerSeries (fun i => c s (i + 1)))
 
-/-- A genuine finite carrier of coloured partitions, with each multiplicity
-represented by a multiset of colours. -/
+/-- An independent finite carrier for arbitrary natural colour counts.
+The outer partition fixes multiplicities; symmetric powers colour indistinguishable parts. -/
+abbrev ColouredPartitionWithColors (colors : ℕ → ℕ) (n : ℕ) :=
+  Σ p : Nat.Partition n,
+    (d : ↥p.parts.toFinset) → Sym (Fin (colors d.1)) (p.parts.count d.1)
+
+/-- The finite coloured carrier of the corrected power family. -/
 abbrev ColouredPartition (s : ℤ) (n : ℕ) :=
-  D5.S3.Combinatorics.Partitions.ColouredEulerLedger.ColouredPartition
-    (fun d => (c s d).toNat) n
+  ColouredPartitionWithColors (fun d => (c s d).toNat) n
 
 private theorem coeff_exponential_ones : ∀ n, coeff n (exponentialSum (fun _ => (1 : ℚ))) = 1 := by
     intro n
