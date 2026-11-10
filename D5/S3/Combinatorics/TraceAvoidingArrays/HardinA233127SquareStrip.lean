@@ -17,6 +17,7 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233254TriangleStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255PairTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255ShapeSymmetry
 import D5.S3.Observer.Separation.BooleanRankThreeK4
 import Mathlib.Tactic.FinCases
 import Lean.Elab.Tactic.Omega
@@ -179,577 +180,769 @@ private theorem class_fibres_normalized (s : Seen) (p : Boundary) (k : Fin 11) :
 private theorem completed_010101 : ∀ k : Fin 11,
     classCount (true, true) ![0, 1, 0, 1, 0, 1] k =
       transfer (boundaryClass (true, true) ![0, 1, 0, 1, 0, 1]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_010102 : ∀ k : Fin 11,
     classCount (true, true) ![0, 1, 0, 1, 0, 2] k =
       transfer (boundaryClass (true, true) ![0, 1, 0, 1, 0, 2]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_010120 : ∀ k : Fin 11,
     classCount (true, true) ![0, 1, 0, 1, 2, 0] k =
       transfer (boundaryClass (true, true) ![0, 1, 0, 1, 2, 0]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_010121 : ∀ k : Fin 11,
     classCount (true, true) ![0, 1, 0, 1, 2, 1] k =
       transfer (boundaryClass (true, true) ![0, 1, 0, 1, 2, 1]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_010201 : ∀ k : Fin 11,
     classCount (true, true) ![0, 1, 0, 2, 0, 1] k =
       transfer (boundaryClass (true, true) ![0, 1, 0, 2, 0, 1]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_010202 : ∀ k : Fin 11,
     classCount (true, true) ![0, 1, 0, 2, 0, 2] k =
       transfer (boundaryClass (true, true) ![0, 1, 0, 2, 0, 2]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_010210 : ∀ k : Fin 11,
     classCount (true, true) ![0, 1, 0, 2, 1, 0] k =
       transfer (boundaryClass (true, true) ![0, 1, 0, 2, 1, 0]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_010212 : ∀ k : Fin 11,
     classCount (true, true) ![0, 1, 0, 2, 1, 2] k =
       transfer (boundaryClass (true, true) ![0, 1, 0, 2, 1, 2]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_012010 : ∀ k : Fin 11,
     classCount (true, true) ![0, 1, 2, 0, 1, 0] k =
       transfer (boundaryClass (true, true) ![0, 1, 2, 0, 1, 0]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_012012 : ∀ k : Fin 11,
     classCount (true, true) ![0, 1, 2, 0, 1, 2] k =
       transfer (boundaryClass (true, true) ![0, 1, 2, 0, 1, 2]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_012020 : ∀ k : Fin 11,
     classCount (true, true) ![0, 1, 2, 0, 2, 0] k =
       transfer (boundaryClass (true, true) ![0, 1, 2, 0, 2, 0]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_012021 : ∀ k : Fin 11,
     classCount (true, true) ![0, 1, 2, 0, 2, 1] k =
       transfer (boundaryClass (true, true) ![0, 1, 2, 0, 2, 1]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_012101 : ∀ k : Fin 11,
     classCount (true, true) ![0, 1, 2, 1, 0, 1] k =
       transfer (boundaryClass (true, true) ![0, 1, 2, 1, 0, 1]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_012102 : ∀ k : Fin 11,
     classCount (true, true) ![0, 1, 2, 1, 0, 2] k =
       transfer (boundaryClass (true, true) ![0, 1, 2, 1, 0, 2]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_012120 : ∀ k : Fin 11,
     classCount (true, true) ![0, 1, 2, 1, 2, 0] k =
       transfer (boundaryClass (true, true) ![0, 1, 2, 1, 2, 0]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_012121 : ∀ k : Fin 11,
     classCount (true, true) ![0, 1, 2, 1, 2, 1] k =
       transfer (boundaryClass (true, true) ![0, 1, 2, 1, 2, 1]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_020101 : ∀ k : Fin 11,
     classCount (true, true) ![0, 2, 0, 1, 0, 1] k =
       transfer (boundaryClass (true, true) ![0, 2, 0, 1, 0, 1]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_020102 : ∀ k : Fin 11,
     classCount (true, true) ![0, 2, 0, 1, 0, 2] k =
       transfer (boundaryClass (true, true) ![0, 2, 0, 1, 0, 2]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_020120 : ∀ k : Fin 11,
     classCount (true, true) ![0, 2, 0, 1, 2, 0] k =
       transfer (boundaryClass (true, true) ![0, 2, 0, 1, 2, 0]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_020121 : ∀ k : Fin 11,
     classCount (true, true) ![0, 2, 0, 1, 2, 1] k =
       transfer (boundaryClass (true, true) ![0, 2, 0, 1, 2, 1]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_020201 : ∀ k : Fin 11,
     classCount (true, true) ![0, 2, 0, 2, 0, 1] k =
       transfer (boundaryClass (true, true) ![0, 2, 0, 2, 0, 1]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_020202 : ∀ k : Fin 11,
     classCount (true, true) ![0, 2, 0, 2, 0, 2] k =
       transfer (boundaryClass (true, true) ![0, 2, 0, 2, 0, 2]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_020210 : ∀ k : Fin 11,
     classCount (true, true) ![0, 2, 0, 2, 1, 0] k =
       transfer (boundaryClass (true, true) ![0, 2, 0, 2, 1, 0]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_020212 : ∀ k : Fin 11,
     classCount (true, true) ![0, 2, 0, 2, 1, 2] k =
       transfer (boundaryClass (true, true) ![0, 2, 0, 2, 1, 2]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_021010 : ∀ k : Fin 11,
     classCount (true, true) ![0, 2, 1, 0, 1, 0] k =
       transfer (boundaryClass (true, true) ![0, 2, 1, 0, 1, 0]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_021012 : ∀ k : Fin 11,
     classCount (true, true) ![0, 2, 1, 0, 1, 2] k =
       transfer (boundaryClass (true, true) ![0, 2, 1, 0, 1, 2]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_021020 : ∀ k : Fin 11,
     classCount (true, true) ![0, 2, 1, 0, 2, 0] k =
       transfer (boundaryClass (true, true) ![0, 2, 1, 0, 2, 0]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_021021 : ∀ k : Fin 11,
     classCount (true, true) ![0, 2, 1, 0, 2, 1] k =
       transfer (boundaryClass (true, true) ![0, 2, 1, 0, 2, 1]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_021201 : ∀ k : Fin 11,
     classCount (true, true) ![0, 2, 1, 2, 0, 1] k =
       transfer (boundaryClass (true, true) ![0, 2, 1, 2, 0, 1]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_021202 : ∀ k : Fin 11,
     classCount (true, true) ![0, 2, 1, 2, 0, 2] k =
       transfer (boundaryClass (true, true) ![0, 2, 1, 2, 0, 2]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_021210 : ∀ k : Fin 11,
     classCount (true, true) ![0, 2, 1, 2, 1, 0] k =
       transfer (boundaryClass (true, true) ![0, 2, 1, 2, 1, 0]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_021212 : ∀ k : Fin 11,
     classCount (true, true) ![0, 2, 1, 2, 1, 2] k =
       transfer (boundaryClass (true, true) ![0, 2, 1, 2, 1, 2]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_101010 : ∀ k : Fin 11,
     classCount (true, true) ![1, 0, 1, 0, 1, 0] k =
       transfer (boundaryClass (true, true) ![1, 0, 1, 0, 1, 0]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_101012 : ∀ k : Fin 11,
     classCount (true, true) ![1, 0, 1, 0, 1, 2] k =
       transfer (boundaryClass (true, true) ![1, 0, 1, 0, 1, 2]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_101020 : ∀ k : Fin 11,
     classCount (true, true) ![1, 0, 1, 0, 2, 0] k =
       transfer (boundaryClass (true, true) ![1, 0, 1, 0, 2, 0]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_101021 : ∀ k : Fin 11,
     classCount (true, true) ![1, 0, 1, 0, 2, 1] k =
       transfer (boundaryClass (true, true) ![1, 0, 1, 0, 2, 1]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_101201 : ∀ k : Fin 11,
     classCount (true, true) ![1, 0, 1, 2, 0, 1] k =
       transfer (boundaryClass (true, true) ![1, 0, 1, 2, 0, 1]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_101202 : ∀ k : Fin 11,
     classCount (true, true) ![1, 0, 1, 2, 0, 2] k =
       transfer (boundaryClass (true, true) ![1, 0, 1, 2, 0, 2]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_101210 : ∀ k : Fin 11,
     classCount (true, true) ![1, 0, 1, 2, 1, 0] k =
       transfer (boundaryClass (true, true) ![1, 0, 1, 2, 1, 0]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_101212 : ∀ k : Fin 11,
     classCount (true, true) ![1, 0, 1, 2, 1, 2] k =
       transfer (boundaryClass (true, true) ![1, 0, 1, 2, 1, 2]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_102010 : ∀ k : Fin 11,
     classCount (true, true) ![1, 0, 2, 0, 1, 0] k =
       transfer (boundaryClass (true, true) ![1, 0, 2, 0, 1, 0]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_102012 : ∀ k : Fin 11,
     classCount (true, true) ![1, 0, 2, 0, 1, 2] k =
       transfer (boundaryClass (true, true) ![1, 0, 2, 0, 1, 2]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_102020 : ∀ k : Fin 11,
     classCount (true, true) ![1, 0, 2, 0, 2, 0] k =
       transfer (boundaryClass (true, true) ![1, 0, 2, 0, 2, 0]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_102021 : ∀ k : Fin 11,
     classCount (true, true) ![1, 0, 2, 0, 2, 1] k =
       transfer (boundaryClass (true, true) ![1, 0, 2, 0, 2, 1]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_102101 : ∀ k : Fin 11,
     classCount (true, true) ![1, 0, 2, 1, 0, 1] k =
       transfer (boundaryClass (true, true) ![1, 0, 2, 1, 0, 1]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_102102 : ∀ k : Fin 11,
     classCount (true, true) ![1, 0, 2, 1, 0, 2] k =
       transfer (boundaryClass (true, true) ![1, 0, 2, 1, 0, 2]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_102120 : ∀ k : Fin 11,
     classCount (true, true) ![1, 0, 2, 1, 2, 0] k =
       transfer (boundaryClass (true, true) ![1, 0, 2, 1, 2, 0]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_102121 : ∀ k : Fin 11,
     classCount (true, true) ![1, 0, 2, 1, 2, 1] k =
       transfer (boundaryClass (true, true) ![1, 0, 2, 1, 2, 1]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_120101 : ∀ k : Fin 11,
     classCount (true, true) ![1, 2, 0, 1, 0, 1] k =
       transfer (boundaryClass (true, true) ![1, 2, 0, 1, 0, 1]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_120102 : ∀ k : Fin 11,
     classCount (true, true) ![1, 2, 0, 1, 0, 2] k =
       transfer (boundaryClass (true, true) ![1, 2, 0, 1, 0, 2]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_120120 : ∀ k : Fin 11,
     classCount (true, true) ![1, 2, 0, 1, 2, 0] k =
       transfer (boundaryClass (true, true) ![1, 2, 0, 1, 2, 0]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_120121 : ∀ k : Fin 11,
     classCount (true, true) ![1, 2, 0, 1, 2, 1] k =
       transfer (boundaryClass (true, true) ![1, 2, 0, 1, 2, 1]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_120201 : ∀ k : Fin 11,
     classCount (true, true) ![1, 2, 0, 2, 0, 1] k =
       transfer (boundaryClass (true, true) ![1, 2, 0, 2, 0, 1]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_120202 : ∀ k : Fin 11,
     classCount (true, true) ![1, 2, 0, 2, 0, 2] k =
       transfer (boundaryClass (true, true) ![1, 2, 0, 2, 0, 2]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_120210 : ∀ k : Fin 11,
     classCount (true, true) ![1, 2, 0, 2, 1, 0] k =
       transfer (boundaryClass (true, true) ![1, 2, 0, 2, 1, 0]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_120212 : ∀ k : Fin 11,
     classCount (true, true) ![1, 2, 0, 2, 1, 2] k =
       transfer (boundaryClass (true, true) ![1, 2, 0, 2, 1, 2]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_121010 : ∀ k : Fin 11,
     classCount (true, true) ![1, 2, 1, 0, 1, 0] k =
       transfer (boundaryClass (true, true) ![1, 2, 1, 0, 1, 0]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_121012 : ∀ k : Fin 11,
     classCount (true, true) ![1, 2, 1, 0, 1, 2] k =
       transfer (boundaryClass (true, true) ![1, 2, 1, 0, 1, 2]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_121020 : ∀ k : Fin 11,
     classCount (true, true) ![1, 2, 1, 0, 2, 0] k =
       transfer (boundaryClass (true, true) ![1, 2, 1, 0, 2, 0]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_121021 : ∀ k : Fin 11,
     classCount (true, true) ![1, 2, 1, 0, 2, 1] k =
       transfer (boundaryClass (true, true) ![1, 2, 1, 0, 2, 1]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_121201 : ∀ k : Fin 11,
     classCount (true, true) ![1, 2, 1, 2, 0, 1] k =
       transfer (boundaryClass (true, true) ![1, 2, 1, 2, 0, 1]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_121202 : ∀ k : Fin 11,
     classCount (true, true) ![1, 2, 1, 2, 0, 2] k =
       transfer (boundaryClass (true, true) ![1, 2, 1, 2, 0, 2]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_121210 : ∀ k : Fin 11,
     classCount (true, true) ![1, 2, 1, 2, 1, 0] k =
       transfer (boundaryClass (true, true) ![1, 2, 1, 2, 1, 0]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_121212 : ∀ k : Fin 11,
     classCount (true, true) ![1, 2, 1, 2, 1, 2] k =
       transfer (boundaryClass (true, true) ![1, 2, 1, 2, 1, 2]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_201010 : ∀ k : Fin 11,
     classCount (true, true) ![2, 0, 1, 0, 1, 0] k =
       transfer (boundaryClass (true, true) ![2, 0, 1, 0, 1, 0]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_201012 : ∀ k : Fin 11,
     classCount (true, true) ![2, 0, 1, 0, 1, 2] k =
       transfer (boundaryClass (true, true) ![2, 0, 1, 0, 1, 2]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_201020 : ∀ k : Fin 11,
     classCount (true, true) ![2, 0, 1, 0, 2, 0] k =
       transfer (boundaryClass (true, true) ![2, 0, 1, 0, 2, 0]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_201021 : ∀ k : Fin 11,
     classCount (true, true) ![2, 0, 1, 0, 2, 1] k =
       transfer (boundaryClass (true, true) ![2, 0, 1, 0, 2, 1]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_201201 : ∀ k : Fin 11,
     classCount (true, true) ![2, 0, 1, 2, 0, 1] k =
       transfer (boundaryClass (true, true) ![2, 0, 1, 2, 0, 1]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_201202 : ∀ k : Fin 11,
     classCount (true, true) ![2, 0, 1, 2, 0, 2] k =
       transfer (boundaryClass (true, true) ![2, 0, 1, 2, 0, 2]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_201210 : ∀ k : Fin 11,
     classCount (true, true) ![2, 0, 1, 2, 1, 0] k =
       transfer (boundaryClass (true, true) ![2, 0, 1, 2, 1, 0]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_201212 : ∀ k : Fin 11,
     classCount (true, true) ![2, 0, 1, 2, 1, 2] k =
       transfer (boundaryClass (true, true) ![2, 0, 1, 2, 1, 2]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_202010 : ∀ k : Fin 11,
     classCount (true, true) ![2, 0, 2, 0, 1, 0] k =
       transfer (boundaryClass (true, true) ![2, 0, 2, 0, 1, 0]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_202012 : ∀ k : Fin 11,
     classCount (true, true) ![2, 0, 2, 0, 1, 2] k =
       transfer (boundaryClass (true, true) ![2, 0, 2, 0, 1, 2]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_202020 : ∀ k : Fin 11,
     classCount (true, true) ![2, 0, 2, 0, 2, 0] k =
       transfer (boundaryClass (true, true) ![2, 0, 2, 0, 2, 0]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_202021 : ∀ k : Fin 11,
     classCount (true, true) ![2, 0, 2, 0, 2, 1] k =
       transfer (boundaryClass (true, true) ![2, 0, 2, 0, 2, 1]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_202101 : ∀ k : Fin 11,
     classCount (true, true) ![2, 0, 2, 1, 0, 1] k =
       transfer (boundaryClass (true, true) ![2, 0, 2, 1, 0, 1]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_202102 : ∀ k : Fin 11,
     classCount (true, true) ![2, 0, 2, 1, 0, 2] k =
       transfer (boundaryClass (true, true) ![2, 0, 2, 1, 0, 2]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_202120 : ∀ k : Fin 11,
     classCount (true, true) ![2, 0, 2, 1, 2, 0] k =
       transfer (boundaryClass (true, true) ![2, 0, 2, 1, 2, 0]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_202121 : ∀ k : Fin 11,
     classCount (true, true) ![2, 0, 2, 1, 2, 1] k =
       transfer (boundaryClass (true, true) ![2, 0, 2, 1, 2, 1]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_210101 : ∀ k : Fin 11,
     classCount (true, true) ![2, 1, 0, 1, 0, 1] k =
       transfer (boundaryClass (true, true) ![2, 1, 0, 1, 0, 1]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_210102 : ∀ k : Fin 11,
     classCount (true, true) ![2, 1, 0, 1, 0, 2] k =
       transfer (boundaryClass (true, true) ![2, 1, 0, 1, 0, 2]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_210120 : ∀ k : Fin 11,
     classCount (true, true) ![2, 1, 0, 1, 2, 0] k =
       transfer (boundaryClass (true, true) ![2, 1, 0, 1, 2, 0]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_210121 : ∀ k : Fin 11,
     classCount (true, true) ![2, 1, 0, 1, 2, 1] k =
       transfer (boundaryClass (true, true) ![2, 1, 0, 1, 2, 1]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_210201 : ∀ k : Fin 11,
     classCount (true, true) ![2, 1, 0, 2, 0, 1] k =
       transfer (boundaryClass (true, true) ![2, 1, 0, 2, 0, 1]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_210202 : ∀ k : Fin 11,
     classCount (true, true) ![2, 1, 0, 2, 0, 2] k =
       transfer (boundaryClass (true, true) ![2, 1, 0, 2, 0, 2]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_210210 : ∀ k : Fin 11,
     classCount (true, true) ![2, 1, 0, 2, 1, 0] k =
       transfer (boundaryClass (true, true) ![2, 1, 0, 2, 1, 0]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_210212 : ∀ k : Fin 11,
     classCount (true, true) ![2, 1, 0, 2, 1, 2] k =
       transfer (boundaryClass (true, true) ![2, 1, 0, 2, 1, 2]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_212010 : ∀ k : Fin 11,
     classCount (true, true) ![2, 1, 2, 0, 1, 0] k =
       transfer (boundaryClass (true, true) ![2, 1, 2, 0, 1, 0]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_212012 : ∀ k : Fin 11,
     classCount (true, true) ![2, 1, 2, 0, 1, 2] k =
       transfer (boundaryClass (true, true) ![2, 1, 2, 0, 1, 2]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_212020 : ∀ k : Fin 11,
     classCount (true, true) ![2, 1, 2, 0, 2, 0] k =
       transfer (boundaryClass (true, true) ![2, 1, 2, 0, 2, 0]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_212021 : ∀ k : Fin 11,
     classCount (true, true) ![2, 1, 2, 0, 2, 1] k =
       transfer (boundaryClass (true, true) ![2, 1, 2, 0, 2, 1]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_212101 : ∀ k : Fin 11,
     classCount (true, true) ![2, 1, 2, 1, 0, 1] k =
       transfer (boundaryClass (true, true) ![2, 1, 2, 1, 0, 1]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_212102 : ∀ k : Fin 11,
     classCount (true, true) ![2, 1, 2, 1, 0, 2] k =
       transfer (boundaryClass (true, true) ![2, 1, 2, 1, 0, 2]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_212120 : ∀ k : Fin 11,
     classCount (true, true) ![2, 1, 2, 1, 2, 0] k =
       transfer (boundaryClass (true, true) ![2, 1, 2, 1, 2, 0]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem completed_212121 : ∀ k : Fin 11,
     classCount (true, true) ![2, 1, 2, 1, 2, 1] k =
       transfer (boundaryClass (true, true) ![2, 1, 2, 1, 2, 1]) k := by
-  simp only [class_fibres_normalized]
+  simp only [class_fibres_normalized,
+    (HardinA233255ShapeSymmetry.full_row 6 _).1,
+    (HardinA233255ShapeSymmetry.full_row 6 _).2]
   decide +kernel
 
 private theorem unseen_010101 : ∀ k : Fin 11,
@@ -768,6 +961,7 @@ section
 attribute [local irreducible] classCount
 
 set_option maxHeartbeats 2000000 in
+-- Exhaust the 98 legal boundaries after rejecting the other label rows.
 private theorem row_counts : ∀ s p, Valid s p → ∀ k,
     classCount s p k = transfer (boundaryClass s p) k := by
   simp only [Fin.forall_fin_succ_pi, Fin.forall_fin_zero_pi]
@@ -931,8 +1125,12 @@ private theorem first_fibres (k : Fin 11) :
       rw [← hb]
       simp only [labels, ← colour_bond_iff]
       rfl
-    simp only [eq_self, true_and, hr, ← hb, hg, hf]
-    by_cases hc : good (false, false) c <;> simp [hc]
+    have hr' : (∀ j : Fin 5, labels (Fin.cons 0 c) j.castSucc ≠
+        labels (Fin.cons 0 c) j.succ) ↔ rowLegal (Fin.cons 0 c) := by
+      simpa only [hb] using hr
+    simp only [eq_self, true_and, ← hb, hg, hf, hr']
+    by_cases hc : good (false, false) c <;>
+      simp only [hc, ↓reduceIte, and_true, and_false, false_and]
   · intro x _ hx
     simp [hx]
   · simp
