@@ -1,10 +1,17 @@
 /- GID: D5/S1/Words/ReturnWords/GoldenArcFirstReturn
    generality: I
-   mirror-B: none(waiver:formal-kernel-first-return-spectrum)
+   mirror-B: D5/B/S1/Words/ReturnWords/GoldenArcFirstReturn
    mirror-E: none(waiver:kernel-symbolic-rotation-first-return)
    anchors: []
    digest: Golden rotation-gap arcs have exactly two positive first-return times. -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/26320 -/
+
+import D5.S1.Recurrence.RotationOrbitGapsPartition
+import D5.S1.Words.GoldenFactorComplexity
+import D5.S1.Words.GoldenMechanicalWord
+import D5.S1.Words.ReturnWords.GoldenOccurrenceGaps
+import D5.S1.Words.ReturnWords.RotationGapArcs
 import D5.S1.Words.ReturnWords.GoldenArcFirstReturnCore
 import D5.S1.Words.ReturnWords.GoldenGapFirstReturn
 import D5.S1.Words.ReturnWords.GoldenRankArcs
@@ -98,7 +105,7 @@ private theorem backward_displacement_mem_cut_set (alpha : Real) (N k : Nat) (hk
   rw [D5.S1.Recurrence.RotationOrbitGapsPartition.rotationOrbit, Finset.mem_image]
   exact ⟨k, Finset.mem_range.mpr hk, by rfl⟩
 
-private theorem rotation_gap_best_displacement (alpha : Real) (N : Nat)
+theorem rotation_gap_best_displacement (alpha : Real) (N : Nat)
     [Fact (Irrational alpha)] [NeZero N] (hN : 1 < N) (r : Fin N) :
     let a := rotationCut alpha N r.castSucc
     let ell := rotationCut alpha N r.succ - a
@@ -375,7 +382,7 @@ theorem golden_occurrence_gap_set_encard_eq_two {n i : Nat} (hn : 0 < n)
   rw [← golden_arc_first_return_gap_set_eq_rank_first_return_gap_set n r]
   exact golden_arc_first_return_gap_set_encard_eq_two n hn r
 
-private theorem golden_mechanical_slope_eq_goldenRatio_sub_one :
+theorem golden_mechanical_slope_eq_goldenRatio_sub_one :
     goldenMechanicalSlope = Real.goldenRatio - 1 := by
   rw [goldenMechanicalSlope, Real.inv_goldenRatio, ← Real.one_sub_goldenConj]
   ring
@@ -571,8 +578,5 @@ private theorem golden_arc_first_return_two_bounded_readout :
       boundedFirstReturnGaps 2 128] = [{2, 3}, {2, 3}, {3, 5}] := by
   decide
 
-#print axioms golden_arc_first_return_gap_set_eq_rank_first_return_gap_set
-#print axioms golden_arc_first_return_gap_set_encard_eq_two
-#print axioms golden_occurrence_gap_set_encard_eq_two
 
 end D5.S1.Words
