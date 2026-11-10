@@ -7,14 +7,15 @@ internal sealed class ActualZhuCurrentNormalFormDocument : IScribeDocumentDefini
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "ActualZhuCurrentNormalForm", H("Literal lattice Zhu source relations"), Blocks(
             Paragraph(Text("The native carrier is the complete finite-support sum over integral lattice charges of the complex oscillator polynomial algebra. O is the original literal span of circles with unrestricted second state. Positive definiteness is the sole extra lattice hypothesis for quotient multiplication. No restriction to nonzero rank, nonzero charge, a preferred dual class or a unique minimum is imposed.")),
-            Paragraph(Text("Mature source: Dong, Li and Mason, Certain associative algebras similar to U(sl2) and Zhu's algebra A(V_L), DOI 10.1006/jabr.1997.7112, arXiv q-alg/9605032v1, Theorem 3.4 and Remark 2.11. The native star coefficient is choose(m,i). Native field, mixed-commutator, creation, translation and energy suppliers are reused. This implementation supplies algebraic source relations; it does not establish the full finite transition span, the sharp sum of squared bottom dimensions, joint faithfulness, CFT, fusion, anomaly or string-theory completion.")),
+            Paragraph(Text("Dong, Li and Mason, Certain associative algebras similar to U(sl2) and Zhu's algebra A(V_L), DOI 10.1006/jabr.1997.7112, arXiv q-alg/9605032v1, Theorem 3.4 and Remark 2.11, supply the classical lattice Zhu framework. The native fields, grading, creation and translation retain their original definitions. The quotient product and literal circle relations use the original binomial coefficient choose(m,i).")),
+            Paragraph(Text("ActualZhuAlgebra supplies associativity on the original quotient. ActualZhuGroundCurrent and ActualZhuOscillator supply the ground and higher-mode current identities. The resulting all-charge polynomial normal form is used by ActualZhuCurrentRelations and ActualZhuTransitionSpan to span the source quotient before applying any representation.")),
             Describe.Lean(
-                DescribeId.Create("actualzhucurrentnormalform-H"),
+                DescribeId.Create("actualzhucurrentnormalform-h"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/ActualZhuCurrentNormalForm.H"), H("Neutral current class"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The class of the original current state in the full literal Zhu quotient."))), DescribeRole.Definition),
             Describe.Lean(
-                DescribeId.Create("actualzhucurrentnormalform-E"),
+                DescribeId.Create("actualzhucurrentnormalform-e"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/ActualZhuCurrentNormalForm.E"), H("Charged ground class"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The class of single(delta,1) for every integral charge."))), DescribeRole.Definition),
@@ -34,17 +35,17 @@ internal sealed class ActualZhuCurrentNormalFormDocument : IScribeDocumentDefini
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The neutral specialization of right-current transport identifies both orders with the same oscillator product."))), DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("actualzhucurrentnormalform-currentAlgebra"),
+                DescribeId.Create("actualzhucurrentnormalform-current-algebra"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/ActualZhuCurrentNormalForm.currentAlgebra"), H("Current subalgebra"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("C is Algebra.adjoin over the complex numbers of the range of H. Only this subalgebra is given a commutative ring structure; Q remains possibly noncommutative."))), DescribeRole.Definition),
             Describe.Lean(
-                DescribeId.Create("actualzhucurrentnormalform-currentGenerator"),
+                DescribeId.Create("actualzhucurrentnormalform-current-generator"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/ActualZhuCurrentNormalForm.currentGenerator"), H("Generator inside C"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Each H_i is regarded as an element of the generated current subalgebra."))), DescribeRole.Definition),
             Describe.Lean(
-                DescribeId.Create("actualzhucurrentnormalform-oscillatorEvaluation"),
+                DescribeId.Create("actualzhucurrentnormalform-oscillator-evaluation"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/ActualZhuCurrentNormalForm.oscillatorEvaluation"), H("Physical polynomial evaluation"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The complex algebra map from the original oscillator polynomials to C sends X(i,n) to (-1)^n H_i."))), DescribeRole.Definition),

@@ -7,14 +7,15 @@ internal sealed class ActualZhuCurrentRelationsDocument : IScribeDocumentDefinit
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "ActualZhuCurrentRelations", H("Literal lattice Zhu source relations"), Blocks(
             Paragraph(Text("The native carrier is the complete finite-support sum over integral lattice charges of the complex oscillator polynomial algebra. O is the original literal span of circles with unrestricted second state. Positive definiteness is the sole extra lattice hypothesis for quotient multiplication. No restriction to nonzero rank, nonzero charge, a preferred dual class or a unique minimum is imposed.")),
-            Paragraph(Text("Mature source: Dong, Li and Mason, Certain associative algebras similar to U(sl2) and Zhu's algebra A(V_L), DOI 10.1006/jabr.1997.7112, arXiv q-alg/9605032v1, Theorem 3.4 and Remark 2.11. The native star coefficient is choose(m,i). Native field, mixed-commutator, creation, translation and energy suppliers are reused. This implementation supplies algebraic source relations; it does not establish the full finite transition span, the sharp sum of squared bottom dimensions, joint faithfulness, CFT, fusion, anomaly or string-theory completion.")),
+            Paragraph(Text("Dong, Li and Mason, Certain associative algebras similar to U(sl2) and Zhu's algebra A(V_L), DOI 10.1006/jabr.1997.7112, arXiv q-alg/9605032v1, Theorem 3.4 and Remark 2.11, supply the classical lattice Zhu framework. The native fields, grading, creation and translation retain their original definitions. The quotient product and literal circle relations use the original binomial coefficient choose(m,i).")),
+            Paragraph(Text("ActualZhuCurrentNormalForm, the native creation derivative and ground-product coefficients identify full opposite-charge circles with falling-factorial current polynomials. ActualZhuSourceProjectors applies the resulting relation for every integral alpha to eliminate grid weights violating a lattice inequality.")),
             Describe.Lean(
                 DescribeId.Create("actualzhucurrentrelations-single-weighted-grade"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/ActualZhuCurrentRelations.single_weighted_grade"), H("Weighted energy"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Weighted oscillator homogeneity gives the exact original charge-plus-oscillator grade."))), DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("actualzhucurrentrelations-Hcharge"),
+                DescribeId.Create("actualzhucurrentrelations-hcharge"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/ActualZhuCurrentRelations.Hcharge"), H("Charge-linear current"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("H_alpha is the sum of alpha_i H_i; this includes rank zero."))), DescribeRole.Definition),

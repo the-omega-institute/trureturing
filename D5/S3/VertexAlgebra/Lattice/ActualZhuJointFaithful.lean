@@ -6,6 +6,7 @@
    utility: none
    digest: Native minimum transition matrix coefficients and joint bottom faithfulness. -/
 import D5.S3.VertexAlgebra.Lattice.ActualZhuTransitionSpan
+import Mathlib.LinearAlgebra.Eigenspace.Minpoly
 import D5.S3.VertexAlgebra.Sectors.LatticeDualCosetZhuRepresentation
 
 /-! The bottom action is the original dual-coset field, with its integral-lattice
@@ -72,20 +73,10 @@ private theorem polynomial_action {V : Type*} [AddCommGroup V] [Module ℂ V]
     (f : Polynomial ℂ →ₐ[ℂ] Module.End ℂ V) (v : V) (zeta : ℂ)
     (he : f Polynomial.X v = zeta • v) (p : Polynomial ℂ) :
     f p v = p.eval zeta • v := by
-  induction p using Polynomial.induction_on with
-  | C z =>
-    rw [show Polynomial.C z = algebraMap ℂ (Polynomial ℂ) z from rfl, f.commutes]
-    simp
-  | add p q hp hq =>
-    simp only [map_add, LinearMap.add_apply, hp, hq, Polynomial.eval_add, add_smul]
-  | monomial n z ih =>
-    rw [pow_succ, ← mul_assoc, map_mul, Module.End.mul_apply, he, map_smul, ih,
-      smul_smul, Polynomial.eval_mul, Polynomial.eval_pow, Polynomial.eval_X,
-      Polynomial.eval_C]
-    congr 1
-    simp only [Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_X,
-      Polynomial.eval_pow]
-    ring
+  have hf : f = Polynomial.aeval (f Polynomial.X) :=
+    Polynomial.algHom_ext (by rw [Polynomial.aeval_X])
+  rw [hf]
+  exact Module.End.aeval_apply_of_mem_apply_eq_smul he
 
 private def currentRep (c : Discriminant D) :
     currentAlgebra D →ₐ[ℂ] Module.End ℂ (SectorBottom D c) :=

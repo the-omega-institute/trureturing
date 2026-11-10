@@ -7,14 +7,15 @@ internal sealed class ActualZhuGroundCurrentDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "ActualZhuGroundCurrent", H("Literal lattice Zhu source relations"), Blocks(
             Paragraph(Text("The native carrier is the complete finite-support sum over integral lattice charges of the complex oscillator polynomial algebra. O is the original literal span of circles with unrestricted second state. Positive definiteness is the sole extra lattice hypothesis for quotient multiplication. No restriction to nonzero rank, nonzero charge, a preferred dual class or a unique minimum is imposed.")),
-            Paragraph(Text("Mature source: Dong, Li and Mason, Certain associative algebras similar to U(sl2) and Zhu's algebra A(V_L), DOI 10.1006/jabr.1997.7112, arXiv q-alg/9605032v1, Theorem 3.4 and Remark 2.11. The native star coefficient is choose(m,i). Native field, mixed-commutator, creation, translation and energy suppliers are reused. This implementation supplies algebraic source relations; it does not establish the full finite transition span, the sharp sum of squared bottom dimensions, joint faithfulness, CFT, fusion, anomaly or string-theory completion.")),
+            Paragraph(Text("Dong, Li and Mason, Certain associative algebras similar to U(sl2) and Zhu's algebra A(V_L), DOI 10.1006/jabr.1997.7112, arXiv q-alg/9605032v1, Theorem 3.4 and Remark 2.11, supply the classical lattice Zhu framework. The native fields, grading, creation and translation retain their original definitions. The quotient product and literal circle relations use the original binomial coefficient choose(m,i).")),
+            Paragraph(Text("ActualZhuProduct and ActualZhuAlgebra supply the original star and quotient product; the native derivative, creation and mixed-current identities compute the ground right-current law. ActualZhuOscillator and ActualZhuCurrentNormalForm use these identities to reduce every oscillator polynomial, and ActualZhuSourceSupport applies the translation relation to charged ground states.")),
             Describe.Lean(
                 DescribeId.Create("actualzhugroundcurrent-ground-grade"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/ActualZhuGroundCurrent.ground_grade"), H("Ground energy"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Every original ground state has its nonnegative integral half-norm energy."))), DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("actualzhugroundcurrent-translation-weight-mem-zhuO"),
+                DescribeId.Create("actualzhugroundcurrent-translation-weight-mem-zhu-o"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/ActualZhuGroundCurrent.translation_weight_mem_zhuO"), H("Translation and weight"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For any homogeneous original state a of natural weight K, T(a)+K a lies in the same literal O."))), DescribeRole.Theorem),
@@ -32,10 +33,5 @@ internal sealed class ActualZhuGroundCurrentDocument : IScribeDocumentDefinition
                 DescribeId.Create("actualzhugroundcurrent-current-star-single"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/ActualZhuGroundCurrent.current_star_single"), H("Left current on a full sector"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every oscillator polynomial p, H_i pi(single(delta,p)) is pi(single(delta,X(i,0)p)) plus B(e_i,delta) pi(single(delta,p))."))), DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("actualzhugroundcurrent-current-ground-commutator"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/Lattice/ActualZhuGroundCurrent.current_ground_commutator"), H("Ground commutator"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The difference H_i E_delta minus E_delta H_i is B(e_i,delta) E_delta; the charged left-support theorem consumes this relation."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("For every oscillator polynomial p, H_i pi(single(delta,p)) is pi(single(delta,X(i,0)p)) plus B(e_i,delta) pi(single(delta,p))."))), DescribeRole.Theorem))));
 }

@@ -27,7 +27,7 @@ internal sealed class LatticeDualCosetZhuRepresentationDocument : IScribeDocumen
                 H("The literal full O is contained in the zero-mode kernel"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Submodule.span_le extends zeroMode_circle to ActualZhuFinite.zhuO(D), the existing span of all full circle generators with unrestricted second state. The conclusion is O <= ker(zeroMode). It proves neither kernel equality nor faithfulness, and does not define O by a representation kernel. This consumed bind-only span interface is used by representation to descend the linear map."))),
+                Blocks(Paragraph(Text("Submodule.span_le extends zeroMode_circle to ActualZhuFinite.zhuO(D), the existing span of all full circle generators with unrestricted second state. The conclusion is O <= ker(zeroMode). It proves neither kernel equality nor faithfulness, and does not define O by a representation kernel. The representation descends this linear map by the proved kernel containment."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("latticedualcosetzhurepresentation-zero-mode-star"),
@@ -43,7 +43,7 @@ internal sealed class LatticeDualCosetZhuRepresentationDocument : IScribeDocumen
                 H("The original vacuum acts as the identity"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The vacuum is in grade zero. zeroMode_homogeneous and the original module_vacuum identity field identify its coefficient minus one with the identity on the full bottom. This consumed bind-only unit interface is used by representation."))),
+                Blocks(Paragraph(Text("The vacuum is in grade zero. zeroMode_homogeneous and the original module_vacuum identity field identify its coefficient minus one with the identity on the full bottom. The representation uses this identity as its unit law."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("latticedualcosetzhurepresentation-representation"),
@@ -59,16 +59,7 @@ internal sealed class LatticeDualCosetZhuRepresentationDocument : IScribeDocumen
                 H("Full-family evaluation on original homogeneous representatives"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For every integer k, every original a in grade k and every v in the full bottom, the underlying carrier vector of representation([a])(v) equals the coefficient k-1 of the original module field action(a) applied to v. This evaluation theorem retains the entire original parameter telescope; it is the bind-only evaluation interface of the constructed action, supplied by zeroMode_homogeneous, without a separate construction or novelty claim."))),
+                Blocks(Paragraph(Text("For every integer k, every original a in grade k and every v in the full bottom, the underlying carrier vector of representation([a])(v) equals the coefficient k-1 of the original module field action(a) applied to v. This evaluation theorem retains the entire original parameter telescope; zeroMode_homogeneous supplies this evaluation identity for the constructed action."))),
                 DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("latticedualcosetzhurepresentation-bottom-nontrivial-finite"),
-                DeclarationHandle.Create(Prefix + "bottom_nontrivial_finite"),
-                H("The entire representation space is nonzero and finite dimensional"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Under the same original positivity and dual-pairing conditions, Bottom has Nontrivial and FiniteDimensional_C instances as a proposition. Positive definiteness supplies a two-sided complex inverse H. The original moduleL eigenvector theorem supplies a nonzero bottom vector; moduleL_eigen_iff identifies the entire rational bottom with the eigenspace at its minimum, and all_eigenspaces_finiteDimensional supplies finite dimension. These original endpoint theorems are reused, not reproved as a new spectral result. The inverse is constructed rather than added as an extra premise, and no single minimizing charge replaces the full bottom."))),
-                DescribeRole.Theorem),
-            Paragraph(Text("The residue construction follows Zhu/Frenkel--Zhu mathematics and the source-faithful Lean adaptation of Fedor K. Popov, Lean_VOA commit 013a799ca834a8a6b3afa8129e3e522025b3f45c, VOA/Modules/ZhuModule.lean and VOA/Modules/ZeroModeMult.lean, Apache-2.0. The native Core residue calculus, Mathlib quotient descent, actual fields, module Borcherds and energy suppliers retain their existing ownership. Consumed bind-only interfaces organize the live proof and are not independent mathematical publications. No faithfulness, irreducibility, rationality, analytic CFT, fusion, anomaly, string or AdS/CFT conclusion is obtained.")),
-            Paragraph(Text("The typed dependent-family audit for this exact family remains unfinished under https://github.com/the-omega-institute/trureturing/issues/28745. Missing evidence includes a faithful original-telescope reconstruction and enrolled scoped readout, equivalence and actual-positive law bridge, whole-family variation and sensitivity, actual observational dependence, source selection and realization, and current source binding. The issue is not a proof or declared_validated registration; no placeholder Reg scaffold is supplied.")))));
+            Paragraph(Text("The residue construction follows Zhu/Frenkel--Zhu mathematics and the source-faithful Lean adaptation of Fedor K. Popov, Lean_VOA commit 013a799ca834a8a6b3afa8129e3e522025b3f45c, VOA/Modules/ZhuModule.lean and VOA/Modules/ZeroModeMult.lean, Apache-2.0. The native Core residue calculus, Mathlib quotient descent, actual fields, module Borcherds and energy suppliers retain their existing ownership. ActualZhuJointFaithful evaluates this representation on the complete native minimum basis, proves joint injectivity directly from its scalar matrix coefficients and obtains the sharp dimension equality. Nontriviality and finite dimension of the bottom are supplied by the original bottom_eigenvector, moduleL_eigen_iff and all_eigenspaces_finiteDimensional theorems. No irreducibility or rationality hypothesis is used.")))));
 }

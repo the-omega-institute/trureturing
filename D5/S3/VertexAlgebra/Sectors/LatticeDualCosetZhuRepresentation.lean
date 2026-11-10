@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Full Zhu quotient action on the nonzero finite-dimensional dual-coset bottom. -/
+   digest: Full Zhu quotient action on the entire dual-coset bottom. -/
 /-
 Copyright (c) 2026 Fedor K. Popov. All rights reserved.
 Released under the Apache 2.0 license; see the repository root LICENSE.
@@ -185,30 +185,12 @@ theorem representation_mk (k : ℤ) (a : Carrier D) (ha : a ∈ grade D k)
       ((action D β a)[[k - 1]]) v.val :=
   zeroMode_homogeneous D β μ hDual hD k a ha v
 
-include β hDual in
-/-- The representation space is nonzero and finite dimensional, with every minimum retained. -/
-theorem bottom_nontrivial_finite :
-    Nontrivial (Bottom D μ hD) ∧ FiniteDimensional ℂ (Bottom D μ hD) := by
-  obtain ⟨H, hHG, hGH⟩ := complex_inverse_exists D hD
-  have he : (moduleL D β H 0).eigenspace
-      (chargeWeight D μ (minimizingCharge D μ hD) : ℂ) = Bottom D μ hD := by
-    ext v
-    rw [Module.End.mem_eigenspace_iff]
-    exact moduleL_eigen_iff D β H hHG hGH μ hDual _ v
-  constructor
-  · obtain ⟨v, hv, heig⟩ := bottom_eigenvector D β H hHG hGH μ hDual hD
-    have hb := (moduleL_eigen_iff D β H hHG hGH μ hDual _ _).mp heig
-    exact ⟨⟨⟨v, hb⟩, 0, fun h => hv (congrArg Subtype.val h)⟩⟩
-  · rw [← he]
-    exact all_eigenspaces_finiteDimensional D β H hHG hGH μ hDual hD _
-
 #print axioms module_fullLaw
 #print axioms high_mode_kills_bottom
 #print axioms zeroMode_circle
 #print axioms zhuO_le_kernel
 #print axioms zeroMode_star
 #print axioms representation
-#print axioms bottom_nontrivial_finite
 
 end
 end D5.S3.VertexAlgebra.LatticeDualCosetZhu

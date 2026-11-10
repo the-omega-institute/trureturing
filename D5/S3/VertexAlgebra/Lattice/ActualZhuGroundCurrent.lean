@@ -144,16 +144,6 @@ theorem current_star_single (p : Oscillator D) :
   simp [Finset.sum_range_succ, mu, current_state_field, neutralField_ncoeff,
     neutralMode_single, neutralPolynomialMode, Finsupp.smul_single]
 
-theorem current_ground_commutator
-    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) :
-    quotientProduct D hD ((zhuO D).mkQ h) ((zhuO D).mkQ e) -
-      quotientProduct D hD ((zhuO D).mkQ e) ((zhuO D).mkQ h) =
-        lam • (zhuO D).mkQ e := by
-  rw [quotientProduct_mk D hD h e, current_star_single D δ i,
-    ground_right_current D δ i hD, map_add, map_smul]
-  abel
-
 #print axioms ground_right_current
-#print axioms current_ground_commutator
 end
 end D5.S3.VertexAlgebra.Lattice.ActualZhuGroundCurrent
