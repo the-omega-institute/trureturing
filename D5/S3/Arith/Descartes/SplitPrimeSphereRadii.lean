@@ -4,9 +4,11 @@
    mirror-E: none(waiver:symbolic-unbounded-classification)
    anchors: []
    utility: none
-   digest: Split prime powers dividing a primitive spherical radius divide one or two other radii. -/
+   digest: Split prime powers in one primitive spherical radius occur in one or two others. -/
 
 import D5.S3.Arith.Descartes.PrimitiveSphereRadii
+
+/-! Shared divisibility at every positive prime-power threshold. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -19,7 +21,7 @@ private lemma other_curvature_unit (b : Fin 4 → ℕ) (hprim : gcd4 b = 1)
     (heq : (∑ i, b i) ^ 2 = 3 * ∑ i, b i ^ 2)
     (p : ℕ) (hp : p.Prime) (hodd : p ≠ 2) (i : Fin 4) :
     ∃ j, j ≠ i ∧ ¬p ∣ b j := by
-  letI : Fact p.Prime := ⟨hp⟩
+  haveI : Fact p.Prime := ⟨hp⟩
   by_contra! hall
   have hunit : ¬p ∣ b i := by
     intro hi
@@ -42,16 +44,18 @@ private lemma other_curvature_unit (b : Fin 4 → ℕ) (hprim : gcd4 b = 1)
       rw [hz j hji, zero_pow (by decide)]
     · simp
   have he : (∑ j, (b j : ZMod p)) ^ 2 = 3 * ∑ j, (b j : ZMod p) ^ 2 := by
-    exact_mod_cast heq
+    have h := congrArg (fun n : ℕ => (n : ZMod p)) heq
+    push_cast at h
+    exact h
   rw [hs, hss] at he
   have hzero : (2 : ZMod p) * (b i : ZMod p) ^ 2 = 0 := by
     linear_combination -he
   have htwo : (2 : ZMod p) ≠ 0 := by
-    rw [ZMod.natCast_eq_zero_iff]
-    intro hd
+    intro h
+    have hd := (ZMod.natCast_eq_zero_iff 2 p).mp h
     exact hodd ((Nat.prime_dvd_prime_iff_eq hp (by decide)).mp hd)
   have hbzero : (b i : ZMod p) = 0 := by
-    exact pow_eq_zero (Or.resolve_left (mul_eq_zero.mp hzero) htwo)
+    exact sq_eq_zero_iff.mp (Or.resolve_left (mul_eq_zero.mp hzero) htwo)
   exact hunit ((ZMod.natCast_eq_zero_iff _ _).mp hbzero)
 
 /-- Every positive split-prime power in one radius occurs in one or two other
@@ -62,7 +66,7 @@ theorem result (r : Fin 4 → ℕ) (hpos : ∀ i, 0 < r i)
     (k : ℕ) (hk : 0 < k) (i : Fin 4) (hi : p ^ k ∣ r i) :
     (univ.filter fun j => j ≠ i ∧ p ^ k ∣ r j).card = 1 ∨
     (univ.filter fun j => j ≠ i ∧ p ^ k ∣ r j).card = 2 := by
-  letI : Fact p.Prime := ⟨hp⟩
+  haveI : Fact p.Prime := ⟨hp⟩
   have hodd : p ≠ 2 := by intro h; subst p; norm_num at hsplit
   obtain ⟨j, hji, hj⟩ := other_curvature_unit (curvature r)
     (curvature_primitive r hpos) (curvature_equation r hpos hdesc) p hp hodd i
@@ -93,7 +97,7 @@ theorem result (r : Fin 4 → ℕ) (hpos : ∀ i, 0 < r i)
     exact hp.not_dvd_one hd
   obtain ⟨a, ha⟩ := hnotall
   have hupp : t.card < 4 := by
-    have hstrict : t ⊂ univ := ssubset_iff_subset_ne.mpr ⟨filter_subset _ _, by
+    have hstrict : t ⊂ univ := Finset.ssubset_iff_subset_ne.mpr ⟨filter_subset _ _, by
       intro he
       have : a ∈ t := he.symm ▸ mem_univ a
       exact ha (mem_filter.mp this).2⟩
@@ -102,7 +106,6 @@ theorem result (r : Fin 4 → ℕ) (hpos : ∀ i, 0 < r i)
     have he : (univ.filter fun j => j ≠ i ∧ p ^ k ∣ r j) = t.erase i := by
       ext j
       simp only [mem_filter, mem_univ, true_and, mem_erase, t]
-      tauto
     rw [he, card_erase_of_mem hit]
   omega
 
