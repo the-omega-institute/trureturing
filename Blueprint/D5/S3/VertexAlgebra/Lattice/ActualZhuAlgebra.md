@@ -10,7 +10,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/ActualZhuAlgebra.Q`
 
 *Formalization.* `D5/S3/VertexAlgebra/Lattice/ActualZhuAlgebra.Q` (`✓ std3`).
 
-*Citation.* Fedor K. Popov (2026). *Lean_VOA, full Zhu quotient and right-ideal residues*. URL: <https://github.com/Fedor-Popov/Lean_VOA/blob/013a799ca834a8a6b3afa8129e3e522025b3f45c/VOA/Modularity/ZhuAlgebraFinite.lean>.
+*Citation.* Fedor K. Popov (2026). *Lean_VOA, full Zhu quotient algebra and original-carrier residue laws*. URL: <https://github.com/Fedor-Popov/Lean_VOA/blob/013a799ca834a8a6b3afa8129e3e522025b3f45c/VOA/Modularity/ZhuAlgebraFinite.lean>.
 
 *Commentary.*
 
@@ -22,7 +22,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/ActualZhuAlgebra.quotientProduct`
 
 *Formalization.* `D5/S3/VertexAlgebra/Lattice/ActualZhuAlgebra.quotientProduct` (`✓ std3`).
 
-*Citation.* Fedor K. Popov (2026). *Lean_VOA, full Zhu quotient and right-ideal residues*. URL: <https://github.com/Fedor-Popov/Lean_VOA/blob/013a799ca834a8a6b3afa8129e3e522025b3f45c/VOA/Modularity/ZhuAlgebraFinite.lean>.
+*Citation.* Fedor K. Popov (2026). *Lean_VOA, full Zhu quotient algebra and original-carrier residue laws*. URL: <https://github.com/Fedor-Popov/Lean_VOA/blob/013a799ca834a8a6b3afa8129e3e522025b3f45c/VOA/Modularity/ZhuAlgebraFinite.lean>.
 
 *Commentary.*
 
@@ -34,7 +34,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/ActualZhuAlgebra.quotientProduct_mk
 
 *Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/ActualZhuAlgebra.quotientProduct_mk` (`✓ std3`). ∎
 
-*Citation.* Fedor K. Popov (2026). *Lean_VOA, full Zhu quotient and right-ideal residues*. URL: <https://github.com/Fedor-Popov/Lean_VOA/blob/013a799ca834a8a6b3afa8129e3e522025b3f45c/VOA/Modularity/ZhuAlgebraFinite.lean>.
+*Citation.* Fedor K. Popov (2026). *Lean_VOA, full Zhu quotient algebra and original-carrier residue laws*. URL: <https://github.com/Fedor-Popov/Lean_VOA/blob/013a799ca834a8a6b3afa8129e3e522025b3f45c/VOA/Modularity/ZhuAlgebraFinite.lean>.
 
 *Commentary.*
 
@@ -46,7 +46,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/ActualZhuAlgebra.quotientRing`
 
 *Formalization.* `D5/S3/VertexAlgebra/Lattice/ActualZhuAlgebra.quotientRing` (`✓ std3`).
 
-*Citation.* Fedor K. Popov (2026). *Lean_VOA, full Zhu quotient and right-ideal residues*. URL: <https://github.com/Fedor-Popov/Lean_VOA/blob/013a799ca834a8a6b3afa8129e3e522025b3f45c/VOA/Modularity/ZhuAlgebraFinite.lean>.
+*Citation.* Fedor K. Popov (2026). *Lean_VOA, full Zhu quotient algebra and original-carrier residue laws*. URL: <https://github.com/Fedor-Popov/Lean_VOA/blob/013a799ca834a8a6b3afa8129e3e522025b3f45c/VOA/Modularity/ZhuAlgebraFinite.lean>.
 
 *Commentary.*
 
@@ -58,7 +58,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/ActualZhuAlgebra.quotientAlgebra`
 
 *Formalization.* `D5/S3/VertexAlgebra/Lattice/ActualZhuAlgebra.quotientAlgebra` (`✓ std3`).
 
-*Citation.* Fedor K. Popov (2026). *Lean_VOA, full Zhu quotient and right-ideal residues*. URL: <https://github.com/Fedor-Popov/Lean_VOA/blob/013a799ca834a8a6b3afa8129e3e522025b3f45c/VOA/Modularity/ZhuAlgebraFinite.lean>.
+*Citation.* Fedor K. Popov (2026). *Lean_VOA, full Zhu quotient algebra and original-carrier residue laws*. URL: <https://github.com/Fedor-Popov/Lean_VOA/blob/013a799ca834a8a6b3afa8129e3e522025b3f45c/VOA/Modularity/ZhuAlgebraFinite.lean>.
 
 *Commentary.*
 
@@ -70,7 +70,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/ActualZhuAlgebra.vacuum_not_mem_zhu
 
 *Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/ActualZhuAlgebra.vacuum_not_mem_zhuO` (`✓ std3`). ∎
 
-*Citation.* Fedor K. Popov (2026). *Lean_VOA, full Zhu quotient and right-ideal residues*. URL: <https://github.com/Fedor-Popov/Lean_VOA/blob/013a799ca834a8a6b3afa8129e3e522025b3f45c/VOA/Modularity/ZhuAlgebraFinite.lean>.
+*Citation.* Fedor K. Popov (2026). *Lean_VOA, full Zhu quotient algebra and original-carrier residue laws*. URL: <https://github.com/Fedor-Popov/Lean_VOA/blob/013a799ca834a8a6b3afa8129e3e522025b3f45c/VOA/Modularity/ZhuAlgebraFinite.lean>.
 
 *Commentary.*
 
@@ -82,7 +82,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/ActualZhuAlgebra.quotientNontrivial
 
 *Formalization.* `D5/S3/VertexAlgebra/Lattice/ActualZhuAlgebra.quotientNontrivial` (`✓ std3`).
 
-*Citation.* Fedor K. Popov (2026). *Lean_VOA, full Zhu quotient and right-ideal residues*. URL: <https://github.com/Fedor-Popov/Lean_VOA/blob/013a799ca834a8a6b3afa8129e3e522025b3f45c/VOA/Modularity/ZhuAlgebraFinite.lean>.
+*Citation.* Fedor K. Popov (2026). *Lean_VOA, full Zhu quotient algebra and original-carrier residue laws*. URL: <https://github.com/Fedor-Popov/Lean_VOA/blob/013a799ca834a8a6b3afa8129e3e522025b3f45c/VOA/Modularity/ZhuAlgebraFinite.lean>.
 
 *Commentary.*
 

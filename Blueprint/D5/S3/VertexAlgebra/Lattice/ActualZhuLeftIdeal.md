@@ -10,7 +10,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/ActualZhuLeftIdeal.translation_star
 
 *Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/ActualZhuLeftIdeal.translation_star_circle` (`✓ std3`). ∎
 
-*Citation.* Fedor K. Popov (2026). *Lean_VOA, full Zhu quotient and right-ideal residues*. URL: <https://github.com/Fedor-Popov/Lean_VOA/blob/013a799ca834a8a6b3afa8129e3e522025b3f45c/VOA/Modularity/ZhuAlgebraFinite.lean>.
+*Citation.* Fedor K. Popov (2026). *Lean_VOA, full Zhu quotient algebra and original-carrier residue laws*. URL: <https://github.com/Fedor-Popov/Lean_VOA/blob/013a799ca834a8a6b3afa8129e3e522025b3f45c/VOA/Modularity/ZhuAlgebraFinite.lean>.
 
 *Commentary.*
 
@@ -22,7 +22,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/ActualZhuLeftIdeal.star_left_mem_zh
 
 *Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Lattice/ActualZhuLeftIdeal.star_left_mem_zhuO` (`✓ std3`). ∎
 
-*Citation.* Fedor K. Popov (2026). *Lean_VOA, full Zhu quotient and right-ideal residues*. URL: <https://github.com/Fedor-Popov/Lean_VOA/blob/013a799ca834a8a6b3afa8129e3e522025b3f45c/VOA/Modularity/ZhuAlgebraFinite.lean>.
+*Citation.* Fedor K. Popov (2026). *Lean_VOA, full Zhu quotient algebra and original-carrier residue laws*. URL: <https://github.com/Fedor-Popov/Lean_VOA/blob/013a799ca834a8a6b3afa8129e3e522025b3f45c/VOA/Modularity/ZhuAlgebraFinite.lean>.
 
 *Commentary.*
 
@@ -36,3 +36,4 @@ The dependent-family audit remains incomplete: exact source reconstruction, an e
 
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/ActualZhuLeftIdeal.star_left_mem_zhuO`
 - Truth anchor: `D5/S3/VertexAlgebra/Lattice/ActualZhuLeftIdeal.translation_star_circle`
+- Dependency: [D5/S3/VertexAlgebra/Lattice/ActualZhuAssociator](ActualZhuAssociator.md)

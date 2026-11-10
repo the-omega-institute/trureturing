@@ -2,10 +2,10 @@
 bibkey: popov2026leanvoazhu
 authors: Fedor K. Popov
 year: 2026
-title: Lean_VOA, full Zhu quotient, right-ideal residues and associator
+title: Lean_VOA, full Zhu quotient algebra and original-carrier residue laws
 doi: null
 url: https://github.com/Fedor-Popov/Lean_VOA/blob/013a799ca834a8a6b3afa8129e3e522025b3f45c/VOA/Modularity/ZhuAlgebraFinite.lean
-claim: C2 cofiniteness gives finite Zhu additive quotient; higher-circle recursion and weighted commutator collapse give right-argument O stability; two finite higher-circle towers express the full actual associator in O.
+claim: C2 cofiniteness gives finite Zhu additive quotient; higher-circle recursion and weighted commutator collapse give right-argument O stability; two finite higher-circle towers express the full actual associator in O; translation residues give left-argument O stability and the nonzero finite-dimensional unital complex quotient algebra.
 strata_touched:
   - D5/S3/VertexAlgebra/Lattice/ActualZhuFinite
   - D5/S3/VertexAlgebra/Lattice/ActualZhuBinomial
@@ -15,6 +15,8 @@ strata_touched:
   - D5/S3/VertexAlgebra/Lattice/ActualZhuAssociatorScalar
   - D5/S3/VertexAlgebra/Lattice/ActualZhuAssociatorExpansion
   - D5/S3/VertexAlgebra/Lattice/ActualZhuAssociator
+  - D5/S3/VertexAlgebra/Lattice/ActualZhuLeftIdeal
+  - D5/S3/VertexAlgebra/Lattice/ActualZhuAlgebra
 license: Apache-2.0
 triage: anchor
 ---
