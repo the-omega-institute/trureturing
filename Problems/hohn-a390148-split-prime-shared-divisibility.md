@@ -44,6 +44,38 @@ curvature therefore supplies a radius with valuation at least v_p(r(i)).
 Common gcd one excludes all four radii being divisible by p^k when k>0.
 At least one and at most two other coordinates satisfy the threshold.
 
+## Falsifier
+
+A positive common-primitive quadruple r:Fin 4 -> Nat satisfying the
+coefficient-three rational equation, a prime p with p mod 3 = 1, a natural
+k > 0 and an index i with p^k dividing r(i), for which the number of other
+indices j with p^k dividing r(j) is neither 1 nor 2, falsifies this assertion.
+
+## Evidence
+
+The primary source is revision 23 of OEIS A390148, the `%C` line beginning
+“For each term” at
+https://raw.githubusercontent.com/oeis/oeisdata/d4ade8b4ca7c6ff0ac8931532918fd4f6176805e/seq/A390/A390148.seq.
+The 3700-byte source has SHA-256
+`976f7641f1a97cc86222cc9f9539b1f3374a9b787a91e652cd3281b9bcfc674e`.
+The corresponding [Library note](../Library/ArithUnits/hohn2025a390148.md)
+records the source context and bounded repository, pinned Mathlib and
+third-party supplier searches; these do not establish exhaustive absence
+of earlier proofs or priority.
+
+The existing theorem
+`D5.S3.Arith.Descartes.SplitPrimeSphereRadii.result` states the complete
+assertion above. Its `proof_shape` is `bind-only`, and admission is solely
+`open-problem-resolution` under issue #28788. The private bind-only helper
+`other_curvature_unit` is consumed by `result`; no escape-witness or
+additional mathematical credit is claimed. Existing selected-module Lean
+build and native scoped-report evidence cover 41 modules and 1640
+declarations, with only `Classical.choice`, `Quot.sound` and `propext`;
+the report SHA-256 is
+`8ff8287d1ce15dbfc71f1a8f7e1f9a4dc3f4a31c64b80bb89cf6edebe7ef62b7`.
+This is compiled evidence for its selected inputs, not whole-repository
+validation, a completed escape audit or current-head required-CI success.
+
 ## Triage
 
 The Lean endpoint proves the complete split-prime assertion. It reuses the
@@ -53,7 +85,9 @@ no additional all-prime endpoint is asserted here. The inert-prime
 even-valuation condition, repetition counts and chains remain unresolved by
 this result. Their distinct source statements require separate qualification.
 
-## Audit boundary
+## ASSUMED-UNVERIFIED
+
+### Audit boundary
 
 The endpoint's source-bound registration compiles, but its native state is
 `declared_unresolved`, with a null certificate and
@@ -78,3 +112,8 @@ No owner registration or `declared_validated` certificate is claimed.
 The exposed definitions `commonMultiple` and `curvature` are not theorem
 audit targets. These audit boundaries do not weaken the source assertion
 or settle the separate source clauses.
+
+The endpoint registration's `continuation := .unknown` records an unknown
+residual only; it proves neither undecidability nor inexhaustibility and
+does not supply the missing audit evidence. Priority remains unverified,
+and no solved KPI or first-dev-green outcome is credited here.
