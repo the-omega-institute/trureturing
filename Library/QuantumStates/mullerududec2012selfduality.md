@@ -92,9 +92,14 @@ $$
 S_{\min}+\text{compact physical bit symmetry}\ \Longrightarrow\ S.
 $$
 
-With the original signed frame spectrality Sp, Theorem 26.2 then supplies
-the original three norm formulas. Bit symmetry alone supplies neither Sp
-nor the all-frame strong symmetry needed for the Jordan classification.
+On this carrier, the [proper-effect spectrality bridge](niestegge2023transition.md)
+derives signed frame spectrality Sp from S by finite positive-dual peeling
+and a common-frame shift. Theorem 26.2 then supplies its original three
+norm formulas without a separate Sp input. That complete bridge remains
+a paper derivation; its positive-dual generation step is formalized under
+an explicit maximum-attainment interface. Bit symmetry alone does not
+supply the leastness used in that bridge or the all-frame strong symmetry
+needed for the cited Jordan classification.
 Where the original strong symmetry is retained, it already includes
 transitivity on two-element frames. The closure of its reversible group
 inside the normalized-base automorphism group is compact and retains that
