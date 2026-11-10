@@ -36,7 +36,7 @@ internal sealed class FractionalEvolutionPhaseObstructionDocument : IScribeDocum
                 openProblemResolutionClaim: new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("liu-wesolowski-2026-ordinary-fractional-evolution"),
                     ResolutionKind.Refuted)),
-            Paragraph(Text("The source is Liu, Wesolowski, Thompson, Gu and Pira, Optimal query complexity for fractional quantum evolution, arXiv:2610.01940v1: Definitions 1-3, Appendix B, and the unnumbered uncontrolled-access question in Section V. The ordinary-query substitution leaves the controlled upper bound and the ordinary-query lower bound outside the assertion considered here. The global-phase obstruction is known prior work; the credited phase pair and binding conventions are recorded in issue 22813."))
+            Paragraph(Text("The source is Liu, Wesolowski, Thompson, Gu and Pira, Optimal query complexity for fractional quantum evolution, arXiv:2610.01940v1: Definitions 1-3, Appendix B, and the unnumbered uncontrolled-access question in Section V. The ordinary-query substitution leaves the controlled upper bound and the ordinary-query lower bound outside the assertion considered here. The global-phase obstruction is known prior work."))
         )));
 
     private static DocumentBlock Definition(string selector, string title, string body) =>
