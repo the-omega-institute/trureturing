@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/SecondPeakResidualTails/Completion
    mirror-E: none(waiver:physical-dependent-source-registration)
-   anchors: [D5/S3/Combinatorics/Circle/FourNegative/PacketNormalForm/Source]
+   anchors: [lake/module/D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source]
    utility: none
    digest: Native charge completes original certificates, orders and all natural repetitions. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails.C3DiagonalPhysicalGates

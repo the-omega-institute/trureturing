@@ -1,3 +1,10 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakResidualTails/C2Arithmetic
+   generality: I
+   mirror-B: none(waiver:consumed-symbolic-support)
+   mirror-E: none(waiver:unbounded-symbolic-proof)
+   anchors: [lake/module/D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails.MaskInventory]
+   utility: none
+   digest: Exact residual mask arithmetic for the five second-peak charts. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails.MaskInventory
 
 /-! Arithmetic translation of the five symbolic charts in

@@ -1,3 +1,10 @@
+/- GID: D5/S3/Combinatorics/Circle/TwoNegativeNondecreasingJointLift/ReversedTwoBankCriterion
+   generality: G
+   mirror-B: none(waiver:consumed-symbolic-support)
+   mirror-E: none(waiver:unbounded-symbolic-proof)
+   anchors: [mathlib/module/Mathlib]
+   utility: none
+   digest: Abstract bounded-mask and dyadic interval criteria for the reversed two-bank construction. -/
 import Mathlib
 
 /-!

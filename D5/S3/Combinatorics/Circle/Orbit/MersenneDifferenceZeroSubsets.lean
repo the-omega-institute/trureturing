@@ -2,8 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Circle/Orbit/MersenneDifferenceZeroSubsets
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.Logic.Equiv.Fin.Rotate,
-     mathlib/module/Mathlib.Data.Nat.GCD.Basic]
+   anchors: [mathlib/module/Mathlib.Logic.Equiv.Fin.Rotate, mathlib/module/Mathlib.Data.Nat.GCD.Basic]
    utility: none
    digest: Binary powers classify and count physical Mersenne-difference zero subsets. -/
 module

@@ -1,19 +1,19 @@
+/- GID: D5/S3/Arith/Congruence/PowerPlusOneDivisibility
+   generality: G
+   mirror-B: none(waiver:consumed-symbolic-support)
+   mirror-E: none(waiver:unbounded-symbolic-proof)
+   anchors: [mathlib/module/Mathlib.Data.Int.ModEq]
+   utility: none
+   digest: Exponent congruence characterizes divisibility by a power plus one over every base at least two. -/
 import Mathlib.Data.Int.ModEq
 import Mathlib.Algebra.Order.GroupWithZero.Basic
 import Lean.Elab.Tactic.Omega
 
-/-!
-Source-only candidate: no compiler or kernel acceptance is claimed.
+/-! Exact exponent congruence for divisibility of powers plus one.
 
-Future substantive consumer (motivation only):
-  Q0 = 2^(a+b-1) + 2^(b-1),
-  q_h = 2^h * Q0 mod (2^(a+b)-1).
-The forward-classification branch
-  (2^a+1) | (2^b+1) OR (2^a+1) | (2^(b+1)+1)
-is to become b mod (2*a) in {a-1,a}, under the consumer's positive
-parameter hypotheses. Physical classification, the full orbit theorem,
-and all-label freshness still require their own actual checks.
--/
+For every natural base at least two and every positive first exponent, the
+divisibility condition is equivalent to a residue condition on the other exponent.
+The physical two-bit classification consumes this arithmetic equivalence. -/
 
 namespace PowerPlusOneDivisibility
 

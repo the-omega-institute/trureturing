@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/SecondPeakResidualTails/C3DiagonalPhysicalGates
    mirror-E: none(waiver:physical-dependent-source-registration)
-   anchors: [D5/S3/Combinatorics/Circle/FourNegative/PacketNormalForm/Source]
+   anchors: [lake/module/D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source]
    utility: none
    digest: Canonical signed terminals and bank masses transport gates to physical labels. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails.PhysicalMasses

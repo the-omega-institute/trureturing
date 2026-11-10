@@ -1,3 +1,10 @@
+/- GID: D5/S3/Combinatorics/Circle/TwoNegativeNondecreasingJointLift/HighPhaseTwoNegativeClassification
+   generality: I
+   mirror-B: none(waiver:consumed-symbolic-support)
+   mirror-E: none(waiver:unbounded-symbolic-proof)
+   anchors: [mathlib/module/Mathlib.RingTheory.Coprime.Basic]
+   utility: none
+   digest: A bounded-mask criterion for high-phase physical two-negative joint orders. -/
 import Mathlib.RingTheory.Coprime.Basic
 import Mathlib.Tactic
 import Batteries.Tactic.OpenPrivate

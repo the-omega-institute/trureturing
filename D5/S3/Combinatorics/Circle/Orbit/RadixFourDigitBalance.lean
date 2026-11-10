@@ -1,9 +1,8 @@
 /- GID: D5/S3/Combinatorics/Circle/Orbit/RadixFourDigitBalance
    generality: I
-   mirror-B: none(source-preparation-only)
+   mirror-B: none(waiver:no-separate-boolean-mirror-claimed)
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.Algebra.BigOperators.Fin,
-     mathlib/module/Mathlib.Data.Finset.Powerset]
+   anchors: [mathlib/module/Mathlib.Algebra.BigOperators.Fin, mathlib/module/Mathlib.Data.Finset.Powerset]
    utility: none
    digest: Centered radix-four balance and the full binomial actual even-trace spectrum. -/
 

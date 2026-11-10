@@ -1,11 +1,10 @@
 /- GID: D5/S3/Combinatorics/Circle/FourNegative/ResonantUniversalInsertionInventory
-   generality: G
+   generality: I
    mirror-B: none(waiver:universal-resonant-source)
    mirror-E: none(waiver:dependent-physical-source-audit)
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
-   digest: Generic block membership and target inventory for resonant insertion.
--/
+   digest: Generic block membership and target inventory for resonant insertion. -/
 import D5.S3.Combinatorics.Circle.FourNegative.ResonantUniversalInsertionSchedule
 
 /-! # Generic target inventory -/

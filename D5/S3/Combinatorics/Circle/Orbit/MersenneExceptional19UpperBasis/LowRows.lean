@@ -1,8 +1,8 @@
 /- GID: D5/S3/Combinatorics/Circle/Orbit/MersenneExceptional19UpperBasis/LowRows
-   generality: G
+   generality: I
    mirror-B: none(waiver:unbounded-symbolic-proof)
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.Algebra.Module.Basic]
+   anchors: [lake/module/D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19UpperBasis.InternalRows]
    utility: none
    digest: Integral exceptional19 UpperBasis LowRows on original physical labels. -/
 /- UNCOMPILED. The actual low upper rows, not an assumed boundary table.

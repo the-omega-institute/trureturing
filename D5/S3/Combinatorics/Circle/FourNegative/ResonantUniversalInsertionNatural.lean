@@ -1,11 +1,10 @@
 /- GID: D5/S3/Combinatorics/Circle/FourNegative/ResonantUniversalInsertionNatural
-   generality: G
+   generality: I
    mirror-B: none(waiver:universal-resonant-source)
    mirror-E: none(waiver:dependent-physical-source-audit)
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
-   digest: Natural target prefixes for the adaptive resonant lift above the boundary.
--/
+   digest: Natural target prefixes for the adaptive resonant lift above the boundary. -/
 import D5.S3.Combinatorics.Circle.FourNegative.ResonantUniversalInsertionSchedule
 import D5.S3.Combinatorics.Circle.FourNegative.ResonantUniversalInsertionLocal
 

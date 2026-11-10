@@ -1,8 +1,8 @@
 /- GID: D5/S3/Combinatorics/Circle/Orbit/MersenneExceptional19UpperBasis/Family
-   generality: G
+   generality: I
    mirror-B: none(waiver:unbounded-symbolic-proof)
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.Algebra.Module.Basic]
+   anchors: [lake/module/D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19ZeroLattice.Result]
    utility: none
    digest: Integral exceptional19 UpperBasis Family on original physical labels. -/
 /- UNCOMPILED source preparation. No basis theorem is asserted in this module.

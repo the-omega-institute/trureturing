@@ -1,3 +1,10 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakResidualTails/MaskInventory
+   generality: I
+   mirror-B: none(waiver:consumed-symbolic-support)
+   mirror-E: none(waiver:unbounded-symbolic-proof)
+   anchors: [lake/module/D5.S3.Combinatorics.Circle.FourNegative.SecondPeakHighD.LowBits]
+   utility: none
+   digest: Finite mask partitions consumed by the symbolic residual source construction. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakHighD.LowBits
 import D5.S3.Combinatorics.Circle.ThreeBitSource
 import Mathlib.Tactic

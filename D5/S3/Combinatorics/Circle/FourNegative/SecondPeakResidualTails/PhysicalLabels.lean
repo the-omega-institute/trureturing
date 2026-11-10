@@ -1,3 +1,10 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakResidualTails/PhysicalLabels
+   generality: I
+   mirror-B: none(waiver:consumed-symbolic-support)
+   mirror-E: none(waiver:unbounded-symbolic-proof)
+   anchors: [lake/module/D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails.C3Arithmetic]
+   utility: none
+   digest: Literal physical-label coverage and ordering for residual source packets. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails.C3Arithmetic
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails.DiagonalArithmetic
 import D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint

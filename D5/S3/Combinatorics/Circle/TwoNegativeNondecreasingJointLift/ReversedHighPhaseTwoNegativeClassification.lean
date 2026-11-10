@@ -1,3 +1,10 @@
+/- GID: D5/S3/Combinatorics/Circle/TwoNegativeNondecreasingJointLift/ReversedHighPhaseTwoNegativeClassification
+   generality: I
+   mirror-B: none(waiver:consumed-symbolic-support)
+   mirror-E: none(waiver:unbounded-symbolic-proof)
+   anchors: [lake/module/D5.S3.Combinatorics.Circle.TwoNegativeNondecreasingJointLift.HighPhaseTwoNegativeClassification]
+   utility: none
+   digest: Exact reversed high-phase two-negative physical joint-order classification. -/
 import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Circle.TwoNegativeNondecreasingJointLift.HighPhaseTwoNegativeClassification
 import D5.S3.Combinatorics.Circle.TwoNegativeNondecreasingJointLift.ReversedTwoBankCriterion

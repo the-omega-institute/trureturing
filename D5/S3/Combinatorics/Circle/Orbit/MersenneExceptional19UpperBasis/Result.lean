@@ -1,8 +1,8 @@
 /- GID: D5/S3/Combinatorics/Circle/Orbit/MersenneExceptional19UpperBasis/Result
-   generality: G
+   generality: I
    mirror-B: none(waiver:unbounded-symbolic-proof)
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.Algebra.Module.Basic]
+   anchors: [mathlib/module/Mathlib.LinearAlgebra.Dimension.OrzechProperty]
    utility: none
    digest: Integral exceptional19 UpperBasis Result on original physical labels. -/
 /- UNCOMPILED source preparation. Selected-span quotient and exact basis.

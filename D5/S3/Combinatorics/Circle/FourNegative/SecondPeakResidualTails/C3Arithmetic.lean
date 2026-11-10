@@ -1,3 +1,10 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakResidualTails/C3Arithmetic
+   generality: I
+   mirror-B: none(waiver:consumed-symbolic-support)
+   mirror-E: none(waiver:unbounded-symbolic-proof)
+   anchors: [lake/module/D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails.C2Arithmetic]
+   utility: none
+   digest: Exact capacities and mask inventory for the third residual sector. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails.C2Arithmetic
 
 /-! Prepared residual construction.  Literal fixed tables and the two universal tails are from

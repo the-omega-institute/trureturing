@@ -1,3 +1,10 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/EightBitLiftArithmetic
+   generality: I
+   mirror-B: none(waiver:consumed-symbolic-support)
+   mirror-E: none(waiver:unbounded-symbolic-proof)
+   anchors: [lake/module/D5.S3.Combinatorics.Circle.SparseNecklaceRounding.Endpoint]
+   utility: none
+   digest: Physical rows and exact charge transport for the eight-bit insertion. -/
 import D5.S3.Combinatorics.Circle.SparseNecklaceRounding.Endpoint
 import D5.S3.Combinatorics.Circle.PeriodicShorteningArithmetic
 import D5.S3.Combinatorics.Circle.RunFirstEarTransport

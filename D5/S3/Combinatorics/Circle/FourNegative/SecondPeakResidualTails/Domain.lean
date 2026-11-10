@@ -1,3 +1,10 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakResidualTails/Domain
+   generality: I
+   mirror-B: none(waiver:consumed-symbolic-support)
+   mirror-E: none(waiver:unbounded-symbolic-proof)
+   anchors: [lake/module/D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails.PhysicalLabels]
+   utility: none
+   digest: Original physical labels and insertion partitions for the residual source family. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails.PhysicalLabels
 
 /-! Prepared residual construction.  The original domain is unchanged.  The theorem in this file

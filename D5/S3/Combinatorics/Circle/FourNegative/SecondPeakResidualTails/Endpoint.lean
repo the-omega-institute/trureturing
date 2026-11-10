@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/SecondPeakResidualTails/Endpoint
    mirror-E: none(waiver:physical-dependent-source-registration)
-   anchors: [D5/S3/Combinatorics/Circle/FourNegative/PacketNormalForm/Source]
+   anchors: [lake/module/D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source]
    utility: none
    digest: Complete original-domain residual joint physical lift at literal cut zero. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails.C2Endpoint

@@ -1,3 +1,10 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakResidualTails/DiagonalSelector
+   generality: I
+   mirror-B: none(waiver:consumed-symbolic-support)
+   mirror-E: none(waiver:unbounded-symbolic-proof)
+   anchors: [mathlib/module/Mathlib.Data.Int.DivMod]
+   utility: none
+   digest: Integral selector bounds and tail transport for the diagonal residual sector. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails.MaskInventory
 import Mathlib.Data.Int.DivMod
 

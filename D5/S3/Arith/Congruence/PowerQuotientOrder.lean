@@ -1,6 +1,6 @@
 /- GID: D5/S3/Arith/Congruence/PowerQuotientOrder
    generality: G
-   mirror-B: D5/B/S3/Arith/Congruence/PowerQuotientOrder
+   mirror-B: none(waiver:no-separate-boolean-mirror-claimed)
    mirror-E: none(waiver:symbolic-proof-no-numeric-artifact)
    anchors: [mathlib/module/Mathlib.Algebra.Ring.GeomSum, mathlib/module/Mathlib.Data.ZMod.Basic]
    utility: none

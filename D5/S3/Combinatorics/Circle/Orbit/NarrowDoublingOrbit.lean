@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Circle/Orbit/NarrowDoublingOrbit
    mirror-E: none(waiver:no-escape-mirror-specified)
-   anchors: [mathlib/module/Mathlib.Dynamics.PeriodicPts.Defs, mathlib/module/Mathlib.GroupTheory.OrderOfElement]
+   anchors: [mathlib/module/Mathlib.Dynamics.PeriodicPts.Lemmas, mathlib/module/Mathlib.GroupTheory.OrderOfElement]
    utility: none
    digest: Exact unit-shift numerators classify actual anchored narrow doubling orbits. -/
 import D5.S3.Combinatorics.Circle.Orbit.NarrowDoublingOrbit.Basic

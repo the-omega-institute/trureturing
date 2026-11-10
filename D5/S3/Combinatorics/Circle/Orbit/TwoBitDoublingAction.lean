@@ -1,3 +1,10 @@
+/- GID: D5/S3/Combinatorics/Circle/Orbit/TwoBitDoublingAction
+   generality: I
+   mirror-B: none(waiver:consumed-symbolic-support)
+   mirror-E: none(waiver:unbounded-symbolic-proof)
+   anchors: [lake/module/D5.S3.Combinatorics.Circle.Orbit.NarrowDoublingOrbit]
+   utility: none
+   digest: Physical doubling phases and the genuine period of two-bit seeds. -/
 import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Circle.Orbit.NarrowDoublingOrbit
 

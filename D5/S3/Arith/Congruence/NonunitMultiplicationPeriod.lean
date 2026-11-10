@@ -1,6 +1,6 @@
 /- GID: D5/S3/Arith/Congruence/NonunitMultiplicationPeriod
    generality: G
-   mirror-B: D5/B/S3/Arith/Congruence/NonunitMultiplicationPeriod
+   mirror-B: none(waiver:no-separate-boolean-mirror-claimed)
    mirror-E: none(waiver:symbolic-proof-no-numeric-artifact)
    anchors: [mathlib/module/Mathlib.Data.Nat.ModEq, mathlib/module/Mathlib.Data.ZMod.Basic, mathlib/module/Mathlib.GroupTheory.OrderOfElement]
    utility: none

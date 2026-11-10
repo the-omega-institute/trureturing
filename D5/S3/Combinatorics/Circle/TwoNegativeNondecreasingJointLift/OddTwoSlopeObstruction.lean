@@ -1,3 +1,10 @@
+/- GID: D5/S3/Combinatorics/Circle/TwoNegativeNondecreasingJointLift/OddTwoSlopeObstruction
+   generality: I
+   mirror-B: none(waiver:consumed-symbolic-support)
+   mirror-E: none(waiver:unbounded-symbolic-proof)
+   anchors: [mathlib/module/Mathlib.Algebra.Ring.GeomSum]
+   utility: none
+   digest: The two-slope arithmetic obstruction excludes the odd physical joint order. -/
 import D5.S3.Combinatorics.Circle.RunFirstEarTransport
 import Batteries.Tactic.OpenPrivate
 import Mathlib.Algebra.Ring.GeomSum

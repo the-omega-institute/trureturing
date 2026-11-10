@@ -1,3 +1,10 @@
+/- GID: D5/S3/Combinatorics/Circle/Orbit/TwoBitPhysicalClassification
+   generality: I
+   mirror-B: none(waiver:consumed-symbolic-support)
+   mirror-E: none(waiver:unbounded-symbolic-proof)
+   anchors: [lake/module/D5.S3.Combinatorics.Circle.TwoNegativeNondecreasingJointLift.BelowHalfBoundary]
+   utility: none
+   digest: Exact physical two-bit joint-order classification from the modular criterion. -/
 import D5.S3.Combinatorics.Circle.TwoNegativeNondecreasingJointLift.BelowHalfBoundary
 import D5.S3.Combinatorics.Circle.Orbit.TwoBitDoublingAction
 import D5.S3.Arith.Congruence.PowerPlusOneDivisibility

@@ -1,8 +1,8 @@
 /- GID: D5/S3/Combinatorics/Circle/Orbit/MersenneExceptional19PermutationStabilizer/NormalForm
-   generality: G
+   generality: I
    mirror-B: none(waiver:unbounded-symbolic-proof)
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.Algebra.Module.Basic]
+   anchors: [lake/module/D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19PermutationStabilizer.CarryRows]
    utility: none
    digest: Integral exceptional19 PermutationStabilizer NormalForm on original physical labels. -/
 /- Source only: not elaborated or kernel checked. -/

@@ -1,6 +1,6 @@
 /- GID: D5/S3/Combinatorics/Circle/Orbit/RadixFourNonunitZeroSubsets
    generality: I
-   mirror-B: D5/B/S3/Combinatorics/Circle/Orbit/RadixFourNonunitZeroSubsets
+   mirror-B: none(waiver:no-separate-boolean-mirror-claimed)
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: [mathlib/module/Mathlib.Algebra.Ring.GeomSum, mathlib/module/Mathlib.Data.Nat.GCD.Basic]
    utility: none

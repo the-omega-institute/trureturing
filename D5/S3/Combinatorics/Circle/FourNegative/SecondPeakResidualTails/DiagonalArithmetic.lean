@@ -1,3 +1,10 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakResidualTails/DiagonalArithmetic
+   generality: I
+   mirror-B: none(waiver:consumed-symbolic-support)
+   mirror-E: none(waiver:unbounded-symbolic-proof)
+   anchors: [lake/module/D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails.DiagonalSelector]
+   utility: none
+   digest: Physical mask capacities and scale transport in the diagonal residual sector. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails.DiagonalSelector
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails.C2Arithmetic
 

@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Circle/Orbit/TernaryPhaseZeroCount
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.Data.Finset.Powerset, mathlib/module/Mathlib.Data.Fintype.Powerset, mathlib/module/Mathlib.Data.Finset.SymmDiff]
+   anchors: [mathlib/module/Mathlib.Data.Nat.Choose.Basic, mathlib/module/Mathlib.Data.Finset.SymmDiff]
    utility: none
    digest: Negative-label complementation counts all exact-zero subsets of ternary physical labels. -/
 module

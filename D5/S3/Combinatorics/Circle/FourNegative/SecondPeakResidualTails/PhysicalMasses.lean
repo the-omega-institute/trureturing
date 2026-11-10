@@ -1,3 +1,10 @@
+/- GID: D5/S3/Combinatorics/Circle/FourNegative/SecondPeakResidualTails/PhysicalMasses
+   generality: I
+   mirror-B: none(waiver:consumed-symbolic-support)
+   mirror-E: none(waiver:unbounded-symbolic-proof)
+   anchors: [lake/module/D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails.Domain]
+   utility: none
+   digest: Exact weighted physical masks for the residual source packets. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails.Domain
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakParityTail.PhysicalBanks
 

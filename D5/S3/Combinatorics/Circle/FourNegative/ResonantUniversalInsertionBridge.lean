@@ -1,11 +1,10 @@
 /- GID: D5/S3/Combinatorics/Circle/FourNegative/ResonantUniversalInsertionBridge
-   generality: G
+   generality: I
    mirror-B: none(waiver:universal-resonant-source)
    mirror-E: none(waiver:dependent-physical-source-audit)
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
-   digest: Universal resonant source-to-target physical word bridge.
--/
+   digest: Universal resonant source-to-target physical word bridge. -/
 import D5.S3.Combinatorics.Circle.FourNegative.ResonantUniversalInsertionInventory
 
 /-! # Universal physical target bridge -/

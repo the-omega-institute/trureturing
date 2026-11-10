@@ -1,8 +1,8 @@
 /- GID: D5/S3/Combinatorics/Circle/Orbit/MersenneExceptional19ZeroLattice/Result
-   generality: G
+   generality: I
    mirror-B: none(waiver:unbounded-symbolic-proof)
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.Algebra.Module.Basic]
+   anchors: [mathlib/module/Mathlib.Algebra.BigOperators.Pi]
    utility: none
    digest: Integral exceptional19 ZeroLattice Result on original physical labels. -/
 /- Source-only candidate: UNCOMPILED, no kernel or acceptance claim.

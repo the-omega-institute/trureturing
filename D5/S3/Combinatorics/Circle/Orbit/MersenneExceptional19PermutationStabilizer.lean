@@ -1,5 +1,5 @@
 /- GID: D5/S3/Combinatorics/Circle/Orbit/MersenneExceptional19PermutationStabilizer
-   generality: G
+   generality: I
    mirror-B: none(waiver:unbounded-symbolic-proof)
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: [mathlib/module/Mathlib.GroupTheory.OrderOfElement]

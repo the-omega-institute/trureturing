@@ -2,12 +2,9 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Circle/Orbit/NarrowChristoffelJointRefutation
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Circle/NarrowDoublingOrbit,
-     D5/S3/Combinatorics/Circle/RunFirstEarTransport]
+   anchors: [lake/module/D5.S3.Combinatorics.Circle.Orbit.NarrowDoublingOrbit, lake/module/D5.S3.Combinatorics.Circle.RunFirstEarTransport]
    utility: kind=bounded-enumeration; basis=refutes=gid:D5/S3/Combinatorics/Circle/Orbit/NarrowChristoffelJointRefutation.claim; result=D5/S3/Combinatorics/Circle/Orbit/NarrowChristoffelJointRefutation.result; claim=D5/S3/Combinatorics/Circle/Orbit/NarrowChristoffelJointRefutation.claim
-   digest: The complete primitive anchored-seed joint physical-order assertion
-     is false at r=5,s=2,u=3; the native source values are checked by a
-     kernel finite enumeration of all original orders and all fresh cuts. -/
+   digest: The complete primitive anchored-seed joint physical-order assertion is false at r=5,s=2,u=3; the native source values are checked by a kernel finite enumeration of all original orders and all fresh cuts. -/
 
 import D5.S3.Combinatorics.Circle.Orbit.NarrowDoublingOrbit
 import D5.S3.Combinatorics.Circle.RunFirstEarTransport

@@ -1,8 +1,8 @@
 /- GID: D5/S3/Combinatorics/Circle/Orbit/MersenneExceptional19UpperBasis/InternalRows
-   generality: G
+   generality: I
    mirror-B: none(waiver:unbounded-symbolic-proof)
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.Algebra.Module.Basic]
+   anchors: [lake/module/D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19UpperBasis.Correction]
    utility: none
    digest: Integral exceptional19 UpperBasis InternalRows on original physical labels. -/
 /- UNCOMPILED. Physical upper-to-upper bit transport and the integral inverse.

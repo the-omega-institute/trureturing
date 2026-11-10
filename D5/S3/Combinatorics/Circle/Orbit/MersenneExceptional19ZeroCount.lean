@@ -4,9 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: [mathlib/module/Mathlib.Data.Fintype.Powerset]
    utility: none
-   digest: Exact physical mask sieve and exceptional19 integer-floor count development.
-
--/
+   digest: Exact physical mask sieve and exceptional19 integer-floor count development. -/
 module
 public import D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19ZeroCountRows
 import all D5.S3.Combinatorics.Circle.MersenneExceptional19ZeroCountRows.Basic

@@ -1,11 +1,10 @@
 /- GID: D5/S3/Combinatorics/Circle/FourNegative/ResonantUniversalInsertionArithmetic
-   generality: G
+   generality: I
    mirror-B: none(waiver:universal-resonant-source)
    mirror-E: none(waiver:dependent-physical-source-audit)
    anchors: [mathlib/module/Mathlib.Algebra.Ring.GeomSum]
    utility: none
-   digest: Parameterized arithmetic for multiplicative resonant insertion.
--/
+   digest: Parameterized arithmetic for multiplicative resonant insertion. -/
 import D5.S3.Combinatorics.Circle.PeriodicShorteningArithmetic
 import Mathlib.NumberTheory.PowModTotient
 

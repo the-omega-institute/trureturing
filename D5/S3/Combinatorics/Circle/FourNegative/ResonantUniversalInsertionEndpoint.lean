@@ -1,11 +1,10 @@
 /- GID: D5/S3/Combinatorics/Circle/FourNegative/ResonantUniversalInsertionEndpoint
-   generality: G
+   generality: I
    mirror-B: none(waiver:universal-resonant-source)
    mirror-E: none(waiver:dependent-physical-source-audit)
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
-   digest: Repetition and natural-take closure of the strict resonant target lift.
--/
+   digest: Repetition and natural-take closure of the strict resonant target lift. -/
 import D5.S3.Combinatorics.Circle.FourNegative.ResonantUniversalInsertionNatural
 
 set_option autoImplicit false

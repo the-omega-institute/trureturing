@@ -1,8 +1,8 @@
 /- GID: D5/S3/Combinatorics/Circle/Orbit/MersenneExceptional19ZeroLattice/Readings
-   generality: G
+   generality: I
    mirror-B: none(waiver:unbounded-symbolic-proof)
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.Algebra.Module.Basic]
+   anchors: [lake/module/D5.S3.Combinatorics.Circle.Orbit.MersenneExceptional19ZeroLattice.NormalForm]
    utility: none
    digest: Integral exceptional19 ZeroLattice Readings on original physical labels. -/
 /- UNCOMPILED source candidate. Only integer coefficients are divided. -/

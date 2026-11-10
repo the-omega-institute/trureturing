@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Circle/FourNegative/SecondPeakResidualTails/DiagonalGates
    mirror-E: none(waiver:physical-dependent-source-registration)
-   anchors: [D5/S3/Combinatorics/Circle/FourNegative/PacketNormalForm/Source]
+   anchors: [lake/module/D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source]
    utility: none
    digest: Universal doubled gates for diagonal boundary and selector-tail charts. -/
 import D5.S3.Combinatorics.Circle.FourNegative.SecondPeakResidualTails.DiagonalArithmetic

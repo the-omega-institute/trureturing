@@ -1,11 +1,10 @@
 /- GID: D5/S3/Combinatorics/Circle/FourNegative/ResonantUniversalInsertionPhysical
-   generality: G
+   generality: I
    mirror-B: none(waiver:universal-resonant-source)
    mirror-E: none(waiver:dependent-physical-source-audit)
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
-   digest: Universal resonant physical insertion rows and prefix states.
--/
+   digest: Universal resonant physical insertion rows and prefix states. -/
 import D5.S3.Combinatorics.Circle.FourNegative.ResonantUniversalInsertionCorridor
 
 set_option autoImplicit false

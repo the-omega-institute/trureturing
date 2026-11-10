@@ -1,11 +1,10 @@
 /- GID: D5/S3/Combinatorics/Circle/FourNegative/ResonantUniversalInsertionCorridor
-   generality: G
+   generality: I
    mirror-B: none(waiver:universal-resonant-source)
    mirror-E: none(waiver:dependent-physical-source-audit)
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
-   digest: Generic two-coordinate corridor and negative-pair orientation lemmas.
--/
+   digest: Generic two-coordinate corridor and negative-pair orientation lemmas. -/
 import D5.S3.Combinatorics.Circle.FourNegative.ResonantUniversalInsertionRows
 
 set_option autoImplicit false

@@ -2,7 +2,7 @@
    generality: I
    mirror-B: none(waiver:consumed-packet-proof)
    mirror-E: none(waiver:source-registration)
-   anchors: [mathlib/module/Mathlib.Data.List.Range]
+   anchors: [lake/module/D5.S3.Combinatorics.Circle.PeriodicShortening]
    utility: none
    digest: Arbitrarily many labelled packets and their coupled charged prefix strips. -/
 import Batteries.Tactic.OpenPrivate

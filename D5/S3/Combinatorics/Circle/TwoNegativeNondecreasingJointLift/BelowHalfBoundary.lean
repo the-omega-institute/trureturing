@@ -1,3 +1,10 @@
+/- GID: D5/S3/Combinatorics/Circle/TwoNegativeNondecreasingJointLift/BelowHalfBoundary
+   generality: I
+   mirror-B: none(waiver:consumed-symbolic-support)
+   mirror-E: none(waiver:unbounded-symbolic-proof)
+   anchors: [lake/module/D5.S3.Combinatorics.Circle.TwoNegativeJointLift]
+   utility: none
+   digest: Uniform fresh-cut joint orders for physical two-bit sources below the half boundary. -/
 import Mathlib.Tactic
 import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Circle.TwoNegativeJointLift
