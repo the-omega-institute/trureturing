@@ -82,7 +82,8 @@ private theorem no_short_recurrence_of_periodic (a p L N : ℕ) (hp : 0 < p)
     simp only [rayPrefix, List.length_ofFn] at ht
     have hpoint' (r : ℕ) (hr : r < n) : goldenWord (i+r) = goldenWord (a+(t+r)) := by
       have he := hpoint ⟨r, by simpa only [rayPrefix, List.length_ofFn] using hr⟩
-      simpa [rayPrefix, List.getD_eq_getElem, hr, show t+r < N by omega] using he
+      simpa only [rayPrefix, List.getD_eq_getElem, List.length_ofFn, hr,
+        show t+r < N by omega, List.getElem_ofFn] using he
     apply Finset.mem_image.mpr
     refine ⟨t%p,Finset.mem_range.mpr (Nat.mod_lt t hp),?_⟩
     apply List.ext_get
@@ -390,13 +391,17 @@ private theorem golden_bound_of_gap_max (n M : ℕ) (hn : 0 < n)
     exact he.symm
   have heq' : (rayPrefix (fun index => goldenWord (a + index)) (n+M))=(rayPrefix (fun index => goldenWord (b + index)) (n+M)) := heq
   change ∃ t : ℕ, t + (rayPrefix (fun index => goldenWord (i + index)) n).length ≤
-    (rayPrefix (fun index => goldenWord (a + index)) (n+M)).length ∧ _
+    (rayPrefix (fun index => goldenWord (a + index)) (n+M)).length ∧
+      ∀ j : Fin (rayPrefix (fun index => goldenWord (i + index)) n).length,
+        (rayPrefix (fun index => goldenWord (i + index)) n).getD j.1 false =
+          (rayPrefix (fun index => goldenWord (a + index)) (n+M)).getD (t+j.1) false
   rw [heq']
   obtain ⟨t, ht, he⟩ := (contains_block_iff _ _ _ _ _ _).mp hc
   refine ⟨t, by simpa only [rayPrefix, List.length_ofFn] using ht, ?_⟩
   intro j
   have hj : j.1 < n := by simpa only [rayPrefix, List.length_ofFn] using j.2
-  simpa [rayPrefix, List.getD_eq_getElem, hj, show t+j.1 < n+M by omega] using he j.1 hj
+  simpa only [rayPrefix, List.getD_eq_getElem, List.length_ofFn, hj,
+    show t+j.1 < n+M by omega, List.getElem_ofFn] using he j.1 hj
 
 private theorem golden_recurrence_bound_fib (q n : ℕ) (hq : 3 ≤ q) (hn : 0 < n)
     (hNF : n+1 ≤ Nat.fib (q+1)) :
