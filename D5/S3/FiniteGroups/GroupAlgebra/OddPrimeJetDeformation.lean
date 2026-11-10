@@ -54,7 +54,6 @@ universe uK
 
 variable {p : ℕ} [Fact p.Prime] [Fact (2 < p)]
 variable {K : Type uK} [Field K] [Algebra (ZMod p) K]
-  [FiniteDimensional (ZMod p) K]
 
 local notation "F" => ZMod p
 local notation "V" => Polynomial.degreeLT K p
@@ -77,7 +76,7 @@ def derivativeEnd : Module.End K V where
 
 local notation "D" => derivativeEnd (p := p) (K := K)
 
-theorem derivative_pow_coe (n : ℕ) (f : V) :
+private theorem derivative_pow_coe (n : ℕ) (f : V) :
     ((D ^ n) f : K[X]) = Polynomial.derivative^[n] (f : K[X]) := by
   induction n with
   | zero => rfl
@@ -271,7 +270,7 @@ private def constantLinear : K →ₗ[K] V where
   map_add' _ _ := Subtype.ext (map_add C _ _)
   map_smul' _ _ := Subtype.ext (by simp)
 
-private def fieldFintype : Fintype K := by
+private def fieldFintype [FiniteDimensional (ZMod p) K] : Fintype K := by
   have : Finite K := Module.finite_of_finite F
   exact Fintype.ofFinite K
 
@@ -347,7 +346,7 @@ private theorem faithful_action (q : K →ₗ[F] K) :
   have hc := congrArg (fun f : V => (f : K[X]).coeff 0) hv
   simpa [constantLinear] using hc
 
-private theorem norm_vanish (q : K →ₗ[F] K) (hr : 2 ≤ finrank F K) :
+private theorem norm_vanish [FiniteDimensional (ZMod p) K] (q : K →ₗ[F] K) (hr : 2 ≤ finrank F K) :
     letI : Fintype K := fieldFintype (p := p) (K := K)
     (originalRepresentation (p := p) q).norm = 0 := by
   classical
@@ -565,7 +564,7 @@ private theorem invariants_constants (q : K →ₗ[F] K) (hq1 : q 1 = 0) (v : V)
     subst v
     exact constants_fixed q c
 
-private theorem nonprojective_action (q : K →ₗ[F] K) (hr : 2 ≤ finrank F K) :
+private theorem nonprojective_action [FiniteDimensional (ZMod p) K] (q : K →ₗ[F] K) (hr : 2 ≤ finrank F K) :
     ¬ Module.Projective F[E] (originalRepresentation (p := p) q).asModule := by
   classical
   letI : Fintype K := fieldFintype (p := p) (K := K)
@@ -724,7 +723,7 @@ theorem structural_commutator (P : V ≃ₗ[F] V)
     exact sub_eq_iff_eq_add.mpr (by simpa only [add_comm] using (htop s).symm)
   exact hcomm
 
-private theorem trace_structural (P : V ≃ₗ[F] V)
+private theorem trace_structural [FiniteDimensional (ZMod p) K] (P : V ≃ₗ[F] V)
     (hD : ∀ v : V, P (D v) = D (P v)) (a b e : K)
     (hL : ∀ v : V, P (a • D v + b • (D^(p-1)) v) = e • D (P v)) :
     Algebra.trace F K b = 0 := by
@@ -738,7 +737,7 @@ private theorem trace_structural (P : V ≃ₗ[F] V)
     simpa only [map_sub, LinearMap.trace_mul_comm, sub_self] using ht.symm
   exact hb
 
-private theorem trace_obstruction (q : K →ₗ[F] K) (hq1 : q 1 = 0)
+private theorem trace_obstruction [FiniteDimensional (ZMod p) K] (q : K →ₗ[F] K) (hq1 : q 1 = 0)
     (ha : ∃ a : K, Algebra.trace F K (q a) ≠ 0) :
     ∀ (φ : E ≃* E) (P : V ≃ₗ[F] V),
       ¬ ∀ (g : E) (v : V), P (originalRepresentation (p := p) q g v) =
@@ -911,7 +910,7 @@ private theorem original_cyclic_restrictions (q : K →ₗ[F] K)
 
 /-- The full original-group higher-jet family, including arbitrary scalar-linear
 intertwiners and arbitrary automorphisms of the original group. -/
-theorem full_family (q : K →ₗ[F] K) (hq1 : q 1 = 0) (hr : 2 ≤ finrank F K) :
+theorem full_family [FiniteDimensional (ZMod p) K] (q : K →ₗ[F] K) (hq1 : q 1 = 0) (hr : 2 ≤ finrank F K) :
     Function.Injective (originalRepresentation (p := p) q) ∧
     (∀ H : Subgroup E, IsCyclic H →
       Module.Projective F[H] (restrictedRepresentation (p := p) q H).asModule) ∧
