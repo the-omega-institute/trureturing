@@ -77,7 +77,7 @@ internal sealed class PrescribedExchangeDocument : IScribeDocumentDefinition
                     + "Write W(D) for NativeWeightedBaseRankSaturation.baseWeight w D, the finite sum "
                     + "of w over D. For natural t, let N_t(B) be the actual radius-t neighborhood and "
                     + "H_t(B) its attained maximum weight:")),
-                Paragraph(Math(ApplicationDefinitions())),
+                new DocumentBlock.DisplayFormula(ApplicationDefinitions()),
                 Paragraph(Text(
                     "These extrema are constructed, not supplied as hypotheses. Every base lies in "
                     + "the finite native ground M.E, so N_t(B) is a finite family of subsets of that "
@@ -92,18 +92,18 @@ internal sealed class PrescribedExchangeDocument : IScribeDocumentDefinition
                     + "for every 0 <= i < k, define err_i = H_1(Bi) - W(B(i+1)). The full known-source "
                     + "conclusion has both parts: each err_i is nonnegative, and every base C with "
                     + "|C minus B0| <= k satisfies the following bound:")),
-                Paragraph(Math(ApplicationConclusion())),
+                new DocumentBlock.DisplayFormula(ApplicationConclusion()),
                 Paragraph(Text(
                     "Nonnegativity follows immediately because B(i+1) belongs to N_1(Bi). "
                     + "To derive the comparator bound, first fix adjacent B0,B1 and any natural r. "
                     + "Lemma 4.1, with the paper's positive integer k replaced by r+1, is the joint "
                     + "neighborhood comparison:")),
-                Paragraph(Math(ApplicationComparison())),
+                new DocumentBlock.DisplayFormula(ApplicationComparison()),
                 Paragraph(Text(
                     "Choose A maximizing W in N_(r+1)(B0). The unspecified B in the printed initial "
                     + "argmax of Lemma 4.1 must be B0, as equation (21) requires. It suffices to "
                     + "construct one pair of bases D,F satisfying all three conditions together:")),
-                Paragraph(Math(ApplicationPairBound())),
+                new DocumentBlock.DisplayFormula(ApplicationPairBound()),
                 Paragraph(Text(
                     "Indeed their weights are bounded above by H_r(B1) and H_1(B0), respectively, "
                     + "while W(A)=H_(r+1)(B0). The radius and weight inequalities must hold for this "
@@ -168,7 +168,7 @@ internal sealed class PrescribedExchangeDocument : IScribeDocumentDefinition
                     + "|A minus B1|-2=|A minus B0|-1 <= r. Also F minus B0={a}. Finite "
                     + "single-insertion/removal weight identities, with the stated membership "
                     + "conditions, give:")),
-                Paragraph(Math(ApplicationRepairWeight())),
+                new DocumentBlock.DisplayFormula(ApplicationRepairWeight()),
                 Paragraph(Text(
                     "The final inequality is exactly w(amin) <= w(a), since a belongs to "
                     + "A minus B0. It closes the same-pair weight bound even for signed weights. "
@@ -177,8 +177,8 @@ internal sealed class PrescribedExchangeDocument : IScribeDocumentDefinition
                 Paragraph(Text(
                     "Rearrange the comparison at step i with r=k-i-1: "
                     + "H_(k-i)(Bi) <= H_(k-i-1)(B(i+1))+err_i. Iterating over the finite path "
-                    + "gives the telescope:")),
-                Paragraph(Math(ApplicationTelescope())),
+                    + "gives, for k >= 1, the telescope:")),
+                new DocumentBlock.DisplayFormula(ApplicationTelescope()),
                 Paragraph(Text(
                     "Every radius-k comparator C has W(C) <= H_k(B0), yielding the announced "
                     + "bound. For k=0 the sum is empty, there are no error assertions, and "
@@ -209,7 +209,7 @@ internal sealed class PrescribedExchangeDocument : IScribeDocumentDefinition
     {
         Formula t = F.Id("t"), b = F.Id("B"), d = F.Id("D");
         Formula neighborhood = new Formula.Apply(new Formula.Subscript(F.Id("N"), t), [b]);
-        Formula family = Seq(OpenBrace, d, Sp, Mid, Sp, Call("Matroid.IsBase", F.Id("M"), d),
+        Formula family = Seq(OpenBrace, d, Sp, Mid, Sp, Qualified("Matroid", "IsBase", F.Id("M"), d),
             Comma, Sp, Leq(AppCard(d, b), t), CloseBrace);
         Formula maximum = Seq(new Formula.Subscript(Max, Grp(Seq(d, InMacro, neighborhood))), Sp, AppWeight(d));
         return Disp(Seq(Equal(neighborhood, family), Comma, Qquad,
@@ -220,7 +220,7 @@ internal sealed class PrescribedExchangeDocument : IScribeDocumentDefinition
     {
         Formula i = F.Id("i"), k = F.Id("k"), c = F.Id("C");
         Formula errors = All("i", Call("Fin", k), Leq(D(0), AppError(i)));
-        Formula comparator = Imp(And(Call("Matroid.IsBase", F.Id("M"), c),
+        Formula comparator = Imp(And(Qualified("Matroid", "IsBase", F.Id("M"), c),
             Leq(AppCard(c, AppBase(D(0))), k)),
             Leq(AppWeight(c), AppAdd(AppWeight(AppBase(k)), AppSum())));
         return Disp(And(errors, All("C", Call("Set", F.Id("E")), comparator)));
