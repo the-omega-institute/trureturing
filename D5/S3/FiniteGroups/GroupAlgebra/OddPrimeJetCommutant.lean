@@ -319,7 +319,7 @@ def toeplitzDegree (c : Fin p → K) (T : K →ₗ[F] K) : V →ₗ[F] V :=
 def commutantFamily (X : V →ₗ[F] V) : Fin p → K := fun j =>
   if j = 0 then 0 else topCoefficient (p := p) (K := K) X j 1
 
-private theorem restricted_derivative_pow_local (n : ℕ) (v : V) :
+theorem restricted_derivative_pow_local (n : ℕ) (v : V) :
     (((D).restrictScalars F) ^ n) v = (D ^ n) v := by
   induction n with
   | zero => rfl
@@ -393,7 +393,7 @@ private theorem topCoefficient_smul (X : V →ₗ[F] V)
       omega) a z]
   simp [coefficientZero, smul_eq_mul]
 
-private theorem scalarMap_apply (a : K) (v : V) :
+theorem scalarMap_apply (a : K) (v : V) :
     scalarMap (p := p) (K := K) a v = a • v := by
   rfl
 
