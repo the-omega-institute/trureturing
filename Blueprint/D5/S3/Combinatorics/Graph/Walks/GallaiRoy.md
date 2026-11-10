@@ -50,7 +50,7 @@ For each vertex v let h(v) be the largest number of edges in a D-chain starting 
 
 Empty V is included for every k, including zero: its empty coloring and empty relation satisfy the statement. For nonempty V, the singleton directed paths force k at least one, so neither side holds at k=0. Reciprocal arcs and directed cycles in o remain within the theorem; acyclicity belongs only to the selected internal subrelation D. The reverse construction happens to produce an acyclic orientation, but the existential statement does not impose that extra condition.
 
-This is the classical Gallai–Hasse–Roy–Vitaver theorem. Roy's Theorem 1 and the sharpness discussion supply the historical mathematical reference. The Lean construction is received from Juan Pablo Traverso Gianini's immutable Lean Pool source; its maximal-acyclic argument is not attributed as Roy's original proof. The source note records exact software attribution, licenses, the related restricted native-rank application, and the condition for replacing this source with a theorem in the host's adopted Mathlib pin. Roy's stronger Theorem 2 is outside this statement.
+This is the classical Gallai–Hasse–Roy–Vitaver theorem. Roy's Theorem 1 and the sharpness discussion supply the historical mathematical reference. The Lean construction is received from Juan Pablo Traverso Gianini's immutable Lean Pool source; its maximal-acyclic argument is not attributed as Roy's original proof. The source note records exact software attribution and licenses, and identifies the related restricted native-rank application. Roy's stronger Theorem 2 is outside this statement.
 
 ## References
 
