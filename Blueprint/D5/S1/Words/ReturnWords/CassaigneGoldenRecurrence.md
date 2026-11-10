@@ -22,7 +22,6 @@ The displayed statement uses natural indices. Division of natural numbers is Nat
 - Dependency: [D5/S0/Computability/Coding/BiasedMassFrontier](../../../S0/Computability/Coding/BiasedMassFrontier.md)
 - Dependency: [D5/S0/Tower/GoldenGapWord](../../../S0/Tower/GoldenGapWord.md)
 - Dependency: [D5/S1/Words/Complexity/CassaigneRecurrenceTransport](../Complexity/CassaigneRecurrenceTransport.md)
-- Dependency: [D5/S1/Words/Complexity/MorseHedlund](../Complexity/MorseHedlund.md)
 - Dependency: [D5/S1/Words/GoldenMechanicalWord](../GoldenMechanicalWord.md)
 - Dependency: [D5/S1/Words/GoldenUniformRecurrence](../GoldenUniformRecurrence.md)
 - Dependency: [D5/S1/Words/GoldenWord](../GoldenWord.md)

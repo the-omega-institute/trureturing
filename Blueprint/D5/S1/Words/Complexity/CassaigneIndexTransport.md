@@ -86,5 +86,4 @@ The displayed statement uses natural indices. Division of natural numbers is Nat
 - Truth anchor: `D5/S1/Words/Complexity/CassaigneIndexTransport.per_le_of_period`
 - Dependency: [D5/S0/Computability/Coding/BiasedMassFrontier](../../../S0/Computability/Coding/BiasedMassFrontier.md)
 - Dependency: [D5/S1/Words/Complexity/CassaigneRecurrenceTransport](CassaigneRecurrenceTransport.md)
-- Dependency: [D5/S1/Words/Complexity/MorseHedlund](MorseHedlund.md)
 - Dependency: [D5/S1/Words/GoldenWord](../GoldenWord.md)

@@ -6,7 +6,7 @@ Uniform replication and golden-word asymptotic invariants.
 
 **Definition 1.1 (factorLanguage).**
 
-$$\forall \operatorname{u}: \operatorname{Nat} \to \operatorname{Bool}, \forall \operatorname{n}: \operatorname{Nat}, \operatorname{factorLanguage} \operatorname{u} \operatorname{n} = (\operatorname{Set.image} \operatorname{List.ofFn} (\{ \operatorname{v} \mid \operatorname{v} \in \operatorname{wordFactorSet} \operatorname{u} \operatorname{n} \}))$$
+$$\forall \operatorname{u}: \operatorname{Nat} \to \operatorname{Bool}, \forall \operatorname{n}: \operatorname{Nat}, \operatorname{factorLanguage} \operatorname{u} \operatorname{n} = \{ \operatorname{w} \mid \exists \operatorname{i}: \operatorname{Nat}, \operatorname{w} = \operatorname{List.ofFn} (\operatorname{j}: \operatorname{Fin} \operatorname{n} \mapsto \operatorname{u} (\operatorname{i} + \operatorname{j.1})) \}$$
 
 *Formalization.* `D5/S1/Words/Complexity/CassaigneRecurrenceTransport.factorLanguage` (`✓ std3`).
 
@@ -18,7 +18,7 @@ Printed p. 701: “Lₙ(u) denotes the language of factors of length n of u (i.e
 
 **Definition 1.2 (HasPeriod).**
 
-$$\forall \operatorname{w}: \operatorname{List} \operatorname{Bool}, \forall \operatorname{p}: \operatorname{Nat}, \operatorname{HasPeriod} \operatorname{w} \operatorname{p} = (0 < \operatorname{p} \land \operatorname{List.HasPeriod} \operatorname{w} \operatorname{p})$$
+$$\forall \operatorname{w}: \operatorname{List} \operatorname{Bool}, \forall \operatorname{p}: \operatorname{Nat}, \operatorname{HasPeriod} \operatorname{w} \operatorname{p} = (0 < \operatorname{p} \land \forall \operatorname{i}: \operatorname{Nat}, \operatorname{i} + \operatorname{p} < \operatorname{w.length} \to \operatorname{w.getD} \operatorname{i} \operatorname{false} = \operatorname{w.getD} (\operatorname{i} + \operatorname{p}) \operatorname{false})$$
 
 *Formalization.* `D5/S1/Words/Complexity/CassaigneRecurrenceTransport.HasPeriod` (`✓ std3`).
 
@@ -78,7 +78,7 @@ Printed pp. 703–704, Section 2.2: “ind*(u) = lim supₙ→∞ {e(w) : w ∈ 
 
 **Definition 1.7 (HasRecurrenceBound).**
 
-$$\forall \operatorname{u}: \operatorname{Nat} \to \operatorname{Bool}, \forall \operatorname{n}: \operatorname{Nat}, \forall \operatorname{N}: \operatorname{Nat}, \operatorname{HasRecurrenceBound} \operatorname{u} \operatorname{n} \operatorname{N} = (\forall \operatorname{w} : \operatorname{List} \operatorname{Bool} , \operatorname{w} \in \operatorname{factorLanguage} \operatorname{u} \operatorname{N} \to \forall \operatorname{x} : \operatorname{List} \operatorname{Bool} , \operatorname{x} \in \operatorname{factorLanguage} \operatorname{u} \operatorname{n} \to \operatorname{List.IsInfix} \operatorname{x} \operatorname{w})$$
+$$\forall \operatorname{u}: \operatorname{Nat} \to \operatorname{Bool}, \forall \operatorname{n}: \operatorname{Nat}, \forall \operatorname{N}: \operatorname{Nat}, \operatorname{HasRecurrenceBound} \operatorname{u} \operatorname{n} \operatorname{N} = (\forall \operatorname{w}: \operatorname{List} \operatorname{Bool}, \operatorname{w} \in \operatorname{factorLanguage} \operatorname{u} \operatorname{N} \to \forall \operatorname{x}: \operatorname{List} \operatorname{Bool}, \operatorname{x} \in \operatorname{factorLanguage} \operatorname{u} \operatorname{n} \to \exists \operatorname{i}: \operatorname{Nat}, \operatorname{i} + \operatorname{x.length} \leq \operatorname{w.length} \land \forall \operatorname{j}: \operatorname{Fin} \operatorname{x.length}, \operatorname{x.getD} \operatorname{j.1} \operatorname{false} = \operatorname{w.getD} (\operatorname{i} + \operatorname{j.1}) \operatorname{false})$$
 
 *Formalization.* `D5/S1/Words/Complexity/CassaigneRecurrenceTransport.HasRecurrenceBound` (`✓ std3`).
 

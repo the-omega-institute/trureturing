@@ -22,10 +22,6 @@ $$\neg (\forall \operatorname{u} : \operatorname{Nat} \to \operatorname{Bool} , 
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Complexity/CassaigneSturmianCharacterization.result` (`✓ std3`). ∎
 
-*Resolves.* `Problems/cassaigne-sturmian` (refuted) by `D5/S1/Words/Complexity/CassaigneSturmianCharacterization.result`.
-
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"cassaigne-sturmian","declaration_gid":"D5/S1/Words/Complexity/CassaigneSturmianCharacterization.result","resolution_kind":"refuted"} -->
-
 *Source.* Repository-derived.
 
 *Acknowledgement.* Julien Cassaigne (2008). *On extremal properties of the Fibonacci word*. DOI: [10.1051/ita:2008003](https://doi.org/10.1051/ita:2008003). URL: <https://www.numdam.org/item/10.1051/ita:2008003.pdf>.
