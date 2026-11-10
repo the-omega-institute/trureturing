@@ -39,7 +39,7 @@ internal sealed class HardinA233258PairTransferDocument : IScribeDocumentDefinit
             Node("Proper", "Proper pair patterns", ProperFormula(), false),
             Node("L", "Literal pair-pattern count", CountFormula(), false),
             Node("initial_values", "Six initial transfer counts", InitialFormula(), true),
-            Node("recurrence", "The constant-adjusted cubic relation", RecurrenceFormula(), true)))));
+            Node("recurrence", "The constant-adjusted cubic relation", RecurrenceFormula(), true))));
 
     private static Formula ProperFormula()
     {
@@ -106,18 +106,12 @@ internal sealed class HardinA233258PairTransferDocument : IScribeDocumentDefinit
         Parenthesized(Seq(LambdaLower, Sp, Typed(V(name), type), Sp, Mapsto, Sp, body));
     private static Formula All(string name, Formula type, Formula body) =>
         Seq(Forall, Sp, Typed(V(name), type), Comma, Sp, Parenthesized(body));
-    private static Formula Ex(string name, Formula type, Formula body) =>
-        Seq(Exists, Sp, Typed(V(name), type), Comma, Sp, Parenthesized(body));
     private static Formula Eq(Formula a, Formula b) =>
         new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula Ne(Formula a, Formula b) =>
         new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
     private static Formula Lt(Formula a, Formula b) =>
         new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
-    private static Formula Le(Formula a, Formula b) =>
-        new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
-    private static Formula And(Formula a, Formula b) =>
-        new Formula.Logic(Parenthesized(a), FormulaLogicOperator.And, Parenthesized(b));
     private static Formula Or(Formula a, Formula b) =>
         new Formula.Logic(Parenthesized(a), FormulaLogicOperator.Or, Parenthesized(b));
     private static Formula Imp(Formula a, Formula b) =>
@@ -126,5 +120,4 @@ internal sealed class HardinA233258PairTransferDocument : IScribeDocumentDefinit
         new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Subtract, Parenthesized(b));
     private static Formula Mul(Formula a, Formula b) =>
         new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Multiply, Parenthesized(b));
-    private static Formula Power(Formula a, Formula b) => new Formula.Power(a, b);
 }

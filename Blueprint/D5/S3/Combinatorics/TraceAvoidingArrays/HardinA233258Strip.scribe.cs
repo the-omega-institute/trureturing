@@ -94,7 +94,7 @@ internal sealed class HardinA233258StripDocument : IScribeDocumentDefinition
         var condition = All("p", cells, And(
             Imp(Or(Eq(current, Typed(D(2), Fin(D(6)))),
                 Or(Eq(current, Typed(D(3), Fin(D(6)))),
-                    Eq(current, Typed(D(3), Fin(D(6)))))), Earlier(1)),
+                    Eq(current, Typed(D(4), Fin(D(6)))))), Earlier(1)),
             Imp(Eq(current, Typed(D(3), Fin(D(6)))), Earlier(2))));
         return All("n", Q("Nat"), All("A", Arrow(cells, Fin(D(6))),
             Eq(Own("normal", a), Parenthesized(condition))));
