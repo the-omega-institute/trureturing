@@ -12,11 +12,11 @@ import D5.S3.FiniteGroups.UniformPartitionAutomorphisms
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Logic.Equiv.Fin.Basic
 
-/-! The proposed content is the exact gcd-residue orbit chart and its live
-consumption in the complete symmetry group of literal integer-zero subsets.
-The extraction witness is the Bezout construction of a rotation exponent from
-equal residues, followed by reconstruction of orbits using both directions of
-zero-family preservation. No cyclic order inside an orbit is observed. -/
+/-! Rotation-power orbits admit exact gcd-residue coordinates. Bezout constructs
+a rotation exponent from equal residues. Both directions of literal zero-family
+preservation reconstruct the orbit relation; conjugation by the residue chart
+then identifies its complete symmetry group. No cyclic order inside an orbit
+is observed. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
