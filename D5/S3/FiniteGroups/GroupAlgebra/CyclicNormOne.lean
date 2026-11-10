@@ -52,7 +52,7 @@ variable {A : Type u} [Ring A]
 
 /-- The finite norm is bundled additively so its subtraction and nsmul laws can
 be reused without expanding the noncommutative construction. -/
-private def norm (sigma : A ≃+* A) (n : ℕ) : A →+ A where
+def norm (sigma : A ≃+* A) (n : ℕ) : A →+ A where
   toFun a := ∑ i ∈ range n, (sigma ^ i) a
   map_zero' := by simp
   map_add' a b := by simp [map_add, sum_add_distrib]
@@ -77,7 +77,7 @@ private theorem norm_power_comm (sigma : A ≃+* A) (n m : ℕ) (a : A) :
   simp only [norm_apply, map_sum]
   exact sum_congr rfl fun i _ => power_apply_comm sigma i m a
 
-private theorem norm_comm (sigma : A ≃+* A) (q r : ℕ) (a : A) :
+theorem norm_comm (sigma : A ≃+* A) (q r : ℕ) (a : A) :
     norm (sigma ^ q) r (norm sigma q a) =
       norm sigma q (norm (sigma ^ q) r a) := by
   simp only [norm_apply, map_sum, ← pow_mul]
@@ -154,7 +154,7 @@ private theorem norm_mul_of_fixed (tau : A ≃+* A) (r : ℕ) (b x : A)
 
 /-- The digit decomposition k = q*i + j, proved by consecutive q-blocks.
 It is valid even for q = 0 and avoids any group-period reduction of exponents. -/
-private theorem norm_blocks (sigma : A ≃+* A) (q r : ℕ) (a : A) :
+theorem norm_blocks (sigma : A ≃+* A) (q r : ℕ) (a : A) :
     norm sigma (q * r) a = norm sigma q (norm (sigma ^ q) r a) := by
   induction r with
   | zero => simp [norm_apply]
