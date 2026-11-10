@@ -14,15 +14,15 @@ internal sealed class GallaiRoyDocument : IScribeDocumentDefinition
         H("The Gallai–Hasse–Roy–Vitaver theorem"),
         Blocks(
             Paragraph(Text("Let V be any finite type in any universe, G a simple undirected graph on V, and k a natural number. Colorable(G,k) means that a proper vertex coloring with values in Fin(k) exists; colors may be unused. No chosen enumeration, decidable adjacency, nonempty vertex set, positive k, connectedness or acyclicity of the input orientation is required. Relations(V) denotes V to V to Prop, and Functions(A,B) denotes the functions from A to B.")),
-            Describe.Lean(DescribeId.Create("orientation"), DeclarationHandle.Create(Prefix + "GallaiRoy.IsOrientation"),
+            Describe.Lean(DescribeId.Create("orientation"), DeclarationHandle.Create(Prefix + "IsOrientation"),
                 H("Orientation convention"), StatementSource.FromAuthor(OrientationFormula()),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("Every undirected edge must have at least one arc direction, and every arc must be an edge. Both directions on one edge are allowed. Since G has no loops, an orientation has no loops. The word orientation here does not require exactly one direction."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("directed-path"), DeclarationHandle.Create(Prefix + "GallaiRoy.IsDirectedPath"),
+            Describe.Lean(DescribeId.Create("directed-path"), DeclarationHandle.Create(Prefix + "IsDirectedPath"),
                 H("Paths count vertices"), StatementSource.FromAuthor(PathFormula()),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("For any natural m, a path is an injective function f from Fin(m) to V such that an arc joins f(i) to f(i+1) whenever i+1 is less than m. The displayed natural indices carry their canonical Fin(m) bounds. The path has m vertices and, when m is positive, m-1 edges. The empty function is a path with zero vertices; every singleton function is a path with one vertex. Neither a closing arc nor a terminal-to-initial equality is imposed."))), DescribeRole.Definition),
-            Describe.Lean(DescribeId.Create("coloring-equivalence"), DeclarationHandle.Create(Prefix + "GallaiRoy.colorable_iff_exists_orientation"),
+            Describe.Lean(DescribeId.Create("coloring-equivalence"), DeclarationHandle.Create(Prefix + "colorable_iff_exists_orientation"),
                 H("Colorings and bounded-path orientations"), StatementSource.FromAuthor(TheoremFormula()),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(

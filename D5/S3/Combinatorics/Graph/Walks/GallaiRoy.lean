@@ -39,7 +39,7 @@ def IsDirectedPath (o : V → V → Prop) {m : ℕ} (f : Fin m → V) : Prop :=
 private lemma nodup_of_isChain {D : V → V → Prop} (hD : ∀ x, ¬ Relation.TransGen D x x)
     {l : List V} (h : List.IsChain D l) : l.Nodup := by
   have hp := List.isChain_iff_pairwise.1 (h.imp fun _ _ hab => Relation.TransGen.single hab)
-  letI : Std.Irrefl (Relation.TransGen D) := ⟨hD⟩
+  let : Std.Irrefl (Relation.TransGen D) := ⟨hD⟩
   exact hp.nodup
 
 private lemma isDirectedPath_of_isChain {D o : V → V → Prop} (hDo : ∀ a b, D a b → o a b)
