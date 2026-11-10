@@ -318,4 +318,378 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   options := #[]
 end Recurrence
 end
+namespace RowMajor
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature ℕ
+    (fun n => Fin 4 × Fin n) (fun _ => ℕ)
+def actual : Realization signature :=
+  realize signature (fun _ n p => p.1.val * n + p.2.val) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {n : ℕ} (p q : Fin 4 × Fin n),
+    @LT.lt (Fin 4 × Fin n) (cellOrder n).toLT p q ↔
+      R.readout () n p < R.readout () n q
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hh := (h (n := 1) (0, 0) (1, 0)).mp (by decide)
+  exact (Nat.lt_irrefl 0) hh
+def family : Registration arena (type_of% @row_major_lt) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@row_major_lt, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    exact ⟨1, (0, 0), (1, 0), by decide⟩
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@row_major_lt) (Realization signature) Type Unit where
+  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder.RowMajor.auditUnit
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder.RowMajor.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "arg", "fn", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }, {
+      path := #["body", "body", "body", "arg", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end RowMajor
+
+namespace Normal
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature ℕ
+    (fun n => Fin 4 × Fin n → Fin 6) (fun _ => Prop)
+def actual : Realization signature :=
+  realize signature (fun _ _ A => normal A) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {n : ℕ} (A : Fin 4 × Fin n → Fin 6), R.readout () n A ↔ RowNormal A
+private theorem zero_normal : normal (fun _ : Fin 4 × Fin 1 => 0) := by
+  simp [normal]
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact (h (n := 1) (fun _ => 0)).mpr ((normal_iff _).mp zero_normal)
+private theorem actual_dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨1, (fun _ => 0), (fun _ => 2), ?_⟩
+  change normal (fun _ : Fin 4 × Fin 1 => 0) ≠ normal (fun _ : Fin 4 × Fin 1 => 2)
+  intro he
+  obtain ⟨q, _, hq⟩ := ((Eq.mp he zero_normal) (0, 0)).1 (Or.inl rfl)
+  norm_num at hq
+def family : Registration arena (type_of% @normal_iff) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@normal_iff, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := actual_dependence
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@normal_iff) (Realization signature) Type Unit where
+  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder.Normal.auditUnit
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder.Normal.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end Normal
+
+namespace LabelReadout
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature ℕ
+    (fun n => Fin 4 × Fin n → Fin 3) (fun _ => ℕ)
+def actual : Realization signature :=
+  realize signature (fun _ _ P => used P) (fun e => nomatch e)
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨2, (fun _ => 0), alternating 2 0 1, ?_⟩
+  change used (fun _ : Fin 4 × Fin 2 => 0) ≠ used (alternating 2 0 1)
+  rw [alternating_used (by decide) 0 1 (by decide)]
+  simp [used]
+end LabelReadout
+
+namespace UsedCard
+abbrev signature := LabelReadout.signature
+abbrev actual := LabelReadout.actual
+def rejected : Realization signature :=
+  realize signature (fun _ _ P => used P + 1) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {n : ℕ} (P : Fin 4 × Fin n → Fin 3),
+    R.readout () n P = (Finset.univ.image P).card
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hh := h (n := 1) (fun _ => 0)
+  change used (fun _ : Fin 4 × Fin 1 => 0) + 1 = _ at hh
+  rw [used_eq_card] at hh
+  omega
+def family : Registration arena (type_of% @used_eq_card) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@used_eq_card, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := LabelReadout.dependence
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@used_eq_card) (Realization signature) Type Unit where
+  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder.UsedCard.auditUnit
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder.UsedCard.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end UsedCard
+
+namespace Omitted
+abbrev signature := LabelReadout.signature
+abbrev actual := LabelReadout.actual
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 2) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {n : ℕ} (P : Fin 4 × Fin n → Fin 3)
+    (h : R.readout () n P = 2), ∃ d, ∀ i, P i ≠ d
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  let P : Fin 4 × Fin 1 → Fin 3 := fun p => ⟨p.1.val % 3, Nat.mod_lt _ (by decide)⟩
+  obtain ⟨d, hd⟩ := h P rfl
+  have he : P (⟨d.val, by omega⟩, 0) = d := Fin.ext (Nat.mod_eq_of_lt d.isLt)
+  exact hd _ he
+def family : Registration arena (type_of% @omitted_label) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@omitted_label, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := LabelReadout.dependence
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@omitted_label) (Realization signature) Type Unit where
+  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder.Omitted.auditUnit
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder.Omitted.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "domain", "fn", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end Omitted
+
+namespace AlternatingUsed
+abbrev signature := LabelReadout.signature
+abbrev actual := LabelReadout.actual
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 0) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {n : ℕ} (hn : 2 ≤ n) (a b : Fin 3) (hab : a ≠ b),
+    R.readout () n (alternating n a b) = 2
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hh := h (n := 2) (by decide) 0 1 (by decide)
+  exact (by decide : (0 : ℕ) ≠ 2) hh
+def family : Registration arena (type_of% @alternating_used) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@alternating_used, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := LabelReadout.dependence
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@alternating_used) (Realization signature) Type Unit where
+  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder.AlternatingUsed.auditUnit
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder.AlternatingUsed.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end AlternatingUsed
+
+namespace AlternatingCanon
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature ℕ
+    (fun n => Fin 4 × Fin n → Fin 3) (fun _ => Prop)
+def actual : Realization signature :=
+  realize signature (fun _ _ P => Canon P) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {n : ℕ} (hn : 0 < n), R.readout () n (alternating n 0 1)
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  exact h (n := 1) (by decide)
+private theorem actual_dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨1, (fun _ => 0), (fun _ => 1), ?_⟩
+  change Canon (fun _ : Fin 4 × Fin 1 => 0) ≠ Canon (fun _ : Fin 4 × Fin 1 => 1)
+  intro he
+  have h0 : Canon (fun _ : Fin 4 × Fin 1 => 0) := by
+    intro p b hb
+    exact False.elim ((Fin.not_lt_zero b) hb)
+  obtain ⟨q, _, hq⟩ := (Eq.mp he h0) (0, 0) 0 (by decide)
+  norm_num at hq
+def family : Registration arena (type_of% @alternating_canon) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@alternating_canon, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := actual_dependence
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@alternating_canon) (Realization signature) Type Unit where
+  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder.AlternatingCanon.auditUnit
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder.AlternatingCanon.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end AlternatingCanon
+
 end Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder
