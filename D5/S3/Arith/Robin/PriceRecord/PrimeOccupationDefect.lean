@@ -4,8 +4,9 @@
    mirror-E: none(waiver:analytic-inequality)
    anchors: []
    utility: none
-   digest: Sharp bounded-mass theta-weighted occupation defect for arbitrary finite prime selections. -/
+   digest: Bounded-mass theta-weighted occupation defect for arbitrary finite prime selections. -/
 
+import D5.S3.Arith.Robin.OriginalEndpointFirstLayerBand
 import D5.S3.Arith.Robin.PriceRecord.PrimeSquareTail
 import D5.S3.Arith.Robin.PriceRecord.QuantitativePrimeAbel
 import Mathlib.Topology.Compactness.Compact
@@ -83,22 +84,12 @@ private theorem interval_add (a b c : ℝ) (hab : a ≤ b) (hbc : b ≤ c)
 private theorem interval_theta (a b : ℝ) (hab : a ≤ b) :
     thetaMass (primeInterval a b) = θ b - θ a := by
   classical
-  have hu : Nat.primesLE ⌊a⌋₊ ∪ primeInterval a b = Nat.primesLE ⌊b⌋₊ := by
+  have hsets : primeInterval a b = Nat.primesLE ⌊b⌋₊ \ Nat.primesLE ⌊a⌋₊ := by
     ext p
-    simp only [mem_union, Nat.mem_primesLE, primeInterval, mem_filter, mem_Ioc]
-    have h := Nat.floor_mono hab
-    by_cases hp : p.Prime <;> simp_all only [hp, and_true, and_false, or_false, false_or]
-      <;> omega
-  have hd : Disjoint (Nat.primesLE ⌊a⌋₊) (primeInterval a b) := by
-    apply disjoint_left.mpr
-    intro p hp hq
-    simp only [Nat.mem_primesLE, primeInterval, mem_filter, mem_Ioc] at hp hq
+    simp only [primeInterval, mem_filter, mem_Ioc, mem_sdiff, Nat.mem_primesLE]
     omega
-  have h := sum_union hd (f := fun p : ℕ => Real.log p)
-  rw [hu, ← Chebyshev.theta_eq_sum_primesLE,
-    ← Chebyshev.theta_eq_sum_primesLE] at h
-  dsimp [thetaMass]
-  linarith only [h]
+  rw [thetaMass, hsets]
+  exact (D5.S3.Arith.Robin.OriginalEndpointFirstLayerBand.theta_sub_eq_prime_band_sum hab).symm
 
 private theorem mem_interval {a b : ℝ} (ha : 0 ≤ a) (hb : 0 ≤ b) (p : ℕ) :
     p ∈ primeInterval a b ↔ p.Prime ∧ a < (p : ℝ) ∧ (p : ℝ) ≤ b := by

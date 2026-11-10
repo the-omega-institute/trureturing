@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin.PriceRecord;
 internal sealed class PrimeOccupationDefectDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A sharp uniform theta-weighted occupation estimate for arbitrary prime selections.",
+        "A uniform theta-weighted occupation estimate for arbitrary prime selections.",
         H("Prime Occupation Defect"),
         Blocks(Describe.Lean(
             DescribeId.Create("uniform-theta-weighted-prime-occupation-defect"),
