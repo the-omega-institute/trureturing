@@ -862,8 +862,6 @@ theorem arbitrarily_large_price_records (T : ℝ) :
   have hmem : p ∈ m.primeFactors := Nat.mem_primeFactors.mpr ⟨hp, hpd, hm0⟩
   exact hTP.trans_le (by exact_mod_cast (le_sup (f := id) hmem))
 
--- The canonical supplier is consumed only through its public endpoint; this module is
--- a candidate until the native compiler and scoped report provide current evidence.
 /-- Only the Q2 coefficient needed by the complete residual proof. This helper is
 consumed by ActualRecordHigherLayerResidual.actual_record_critical_residual.
 The inverse/square-root rate and second-coefficient calculus are the original
@@ -904,9 +902,10 @@ theorem record_second_own_clock_limit {α : Type*} {l : Filter α}
   apply hout.congr'
   filter_upwards [hP.eventually_gt_atTop 1, hX.eventually_gt_atTop 0] with x hp hx
   have hp0 : 0 < P x := by linarith
-  change Real.log (X x) *
-    (Q x / Real.sqrt (P x) * (Real.sqrt (P x) / Real.sqrt (X x)) - a) =
+  change (Real.log (X x) / Real.log (P x)) * (Real.log (P x) *
+    (Q x / Real.sqrt (P x) * (Real.sqrt (P x) / Real.sqrt (X x)) - a)) =
     Real.log (X x) * (Q x / Real.sqrt (X x) - a)
-  field_simp [(Real.sqrt_pos.mpr hp0).ne'] <;> ring
+  have hlogP : Real.log (P x) ≠ 0 := (Real.log_pos hp).ne'
+  field_simp [hlogP, (Real.sqrt_pos.mpr hp0).ne'] <;> ring
 
 end D5.S3.Arith.Robin.PriceRecord.FullArithmeticCorrectionSecondOrder

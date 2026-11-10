@@ -199,13 +199,13 @@ internal sealed class ActualRecordHigherLayerResidualDocument : IScribeDocumentD
                         + "eventually_comap followed by eventually_atTop extracts one B; X0=max(B,2) "
                         + "precedes m and mu. There is no fixed-price or subsequence restriction.")),
                     Paragraph(Text(
-                        "Remaining evidence boundary: every finite and new proof body is unelaborated. "
-                        + "Reg source mirrors preserve exact full source types, with genuine final-law "
-                        + "negative-family variation and sensitivity candidates justified by arbitrarily large "
-                        + "literal records. Full observational dependence, exact sourceSelection and current "
-                        + "producer binding have not been supplied. None is declared_validated. Native source "
-                        + "repair and scoped audit are still required; source text is not evidence of kernel "
-                        + "correctness, elaborated liveness or acceptance."))),
+                        "The mathematical theorem retains the exact literal record telescope and complete "
+                        + "loss. Its four-slot source audit remains separate: the final-law negative-family "
+                        + "variation and sensitivity use arbitrarily large literal records, while actual "
+                        + "observational dependence on a lawful scoped reconstruction, exact sourceSelection "
+                        + "and current producer binding still require evidence. The existing validated compact "
+                        + "raw-margin registration is preserved. No complete registration is asserted for "
+                        + "this uniform residual or the newly visible owner suppliers."))),
                 DescribeRole.Theorem),
             Paragraph(Text(
                 "An ordinary sharper estimate also follows from the same finite bound. Choose R=(X L/log(2))^(1/3). The existing same-integer "

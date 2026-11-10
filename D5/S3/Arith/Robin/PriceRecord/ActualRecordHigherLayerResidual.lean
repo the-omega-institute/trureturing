@@ -4,13 +4,14 @@
    mirror-E: none(waiver:general-asymptotic-analysis)
    anchors: []
    utility: none
-   digest: Literal finite pressure-loss splitting and the compact second-layer raw margin. -/
+   digest: Complete actual higher-layer loss vanishes at the critical scale uniformly in literal record prices. -/
 
 import D5.S3.Arith.GoldenResource.ActualReserve.ActualReservePrimeMask
 import D5.S3.Arith.Robin.PriceRecord.FixedLayerRigidity
 import D5.S3.Arith.ExponentExchange.PriceRecordMissingLayer
 import D5.S3.Arith.Robin.PriceRecord.FullArithmeticCorrectionSecondOrder
 import D5.S3.Arith.Robin.ActualGlobalBracketing
+import D5.S3.Arith.Robin.PriceRecord.QuantitativePrimeAbel
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 import Mathlib.Tactic
 
@@ -1164,7 +1165,7 @@ private theorem higher_layer_negligible {α : Type*} {l : Filter α}
       l (𝓝 0) := by
     have hh := ((isLittleO_log_rpow_rpow_atTop (3 : ℝ)
       (by norm_num : (0 : ℝ) < 1 / 12)).tendsto_div_nhds_zero.comp hX).const_mul 8
-    simpa only [rpow_natCast, Function.comp_def, mul_zero] using hh
+    simpa only [rpow_natCast, rpow_ofNat, Function.comp_def, mul_zero] using hh
   have hregime : ∀ᶠ x in l,
       1 < X x ∧ 1 ≤ R x ∧ R x < P x ∧
       X x * log (X x) = log 2 * R x ^ 3 ∧
@@ -1177,6 +1178,9 @@ private theorem higher_layer_negligible {α : Type*} {l : Filter α}
       ((tendsto_rpow_atTop (by norm_num : (0 : ℝ) < 1 / 4)).comp hX).eventually_ge_atTop 8,
       hsmall.eventually (eventually_lt_nhds hlog2)]
         with x hx hLx hp hlow hhigh hq hpow hlogs
+    change 4 < X x at hx
+    change 0 < P x at hp
+    change 8 ≤ X x ^ (1 / 4 : ℝ) at hpow
     have hx0 : 0 < X x := by linarith
     have hL0 : 0 < log (X x) := by linarith
     have hcomp : X x / 2 ≤ P x ∧ P x ≤ 2 * X x := by
@@ -1186,14 +1190,14 @@ private theorem higher_layer_negligible {α : Type*} {l : Filter α}
       · have hh := (lt_div_iff₀ hp).mp hlow
         linarith
     let C : ℝ := X x ^ (5 / 12 : ℝ)
-    have hC0 : 0 ≤ C := rpow_nonneg _ _
+    have hC0 : 0 ≤ C := rpow_nonneg hx0.le _
     have hCcube : C ^ 3 = X x * X x ^ (1 / 4 : ℝ) := by
       dsimp [C]
       rw [← rpow_mul_natCast hx0.le]
       have he : (5 / 12 : ℝ) * (3 : ℕ) = 1 + (1 / 4 : ℝ) := by norm_num
       rw [he, rpow_add hx0, rpow_one]
     have hbase : 0 < X x * log (X x) / log 2 := by positivity
-    have hR0 : 0 ≤ R x := rpow_nonneg _ _
+    have hR0 : 0 ≤ R x := rpow_nonneg hbase.le _
     have hRcube : R x ^ 3 = X x * log (X x) / log 2 := by
       dsimp [R]
       rw [← rpow_mul_natCast hbase.le]
@@ -1221,8 +1225,12 @@ private theorem higher_layer_negligible {α : Type*} {l : Filter α}
     have hQC : Q x ≤ C := by
       have hh : Q x ^ 3 ≤ C ^ 3 := by
         rw [hCcube]
-        have hq' := (div_lt_iff₀ hp).mp hq
-        nlinarith [mul_le_mul_of_nonneg_left hpow hx0.le]
+        have hq' : Q x ^ 3 < 4 * P x := (div_lt_iff₀ hp).mp hq
+        calc
+          Q x ^ 3 ≤ 4 * P x := hq'.le
+          _ ≤ 8 * X x := by linarith only [hcomp.2]
+          _ ≤ X x * X x ^ (1 / 4 : ℝ) := by
+            nlinarith only [mul_le_mul_of_nonneg_left hpow hx0.le]
       by_contra! hnot
       exact (not_lt_of_ge hh) (pow_lt_pow_left₀ hnot hC0 (by norm_num : (3 : ℕ) ≠ 0))
     have hCsqrt : C ≤ sqrt (X x) := by
@@ -1246,7 +1254,8 @@ private theorem higher_layer_negligible {α : Type*} {l : Filter α}
           (show 16 ≤ X x ^ 2 by nlinarith)
         simpa only [log_pow, Nat.cast_ofNat] using hh
       rw [log_mul (by norm_num : (16 : ℝ) ≠ 0) (pow_ne_zero 2 hx0.ne'), log_pow] at hb
-      linarith
+      norm_num only [Nat.cast_ofNat] at hb
+      linarith only [hb, h16]
     have hbound : 2 * R x / P x + referencePrice (X x) * (Q x * log (4 * P x ^ 2)) ≤
         8 * C / X x := by
       have hfirst : 2 * R x / P x ≤ 4 * C / X x := by
@@ -1259,7 +1268,9 @@ private theorem higher_layer_negligible {α : Type*} {l : Filter α}
             (mul_le_mul_of_nonneg_left hlogB hC0)
         have hh := mul_le_mul_of_nonneg_left hb (reference_price_pos (by linarith : 1 < X x)).le
         convert hh using 1 <;> unfold referencePrice <;> field_simp [hx0.ne', hL0.ne'] <;> ring
-      linarith
+      calc
+        _ ≤ 4 * C / X x + 4 * C / X x := add_le_add hfirst hsecond
+        _ = 8 * C / X x := by ring
     have hscale : 0 ≤ sqrt (X x) * log (X x) ^ 3 := by positivity
     have hnorm : sqrt (X x) * log (X x) ^ 3 * (8 * C / X x) =
         8 * (log (X x) ^ 3 / X x ^ (1 / 12 : ℝ)) := by
@@ -1284,12 +1295,12 @@ private theorem higher_layer_negligible {α : Type*} {l : Filter α}
   · filter_upwards [hregime] with x hx
     have hfin := finite_complete_higher_layer_bound hx.1 (hm x) (hmu x) (hrecord x)
       hx.2.1 hx.2.2.1 hx.2.2.2.1.le
-    exact mul_nonneg (by positivity : 0 ≤ sqrt (X x) * log (X x) ^ 3) hfin.1
+    exact mul_nonneg (mul_nonneg (sqrt_nonneg _) (pow_nonneg (log_nonneg hx.1.le) 3)) hfin.1
   · filter_upwards [hregime] with x hx
     have hfin := finite_complete_higher_layer_bound hx.1 (hm x) (hmu x) (hrecord x)
       hx.2.1 hx.2.2.1 hx.2.2.2.1.le
     exact mul_le_mul_of_nonneg_left hfin.2.2
-      (by positivity : 0 ≤ sqrt (X x) * log (X x) ^ 3)
+      (mul_nonneg (sqrt_nonneg _) (pow_nonneg (log_nonneg hx.1.le) 3))
 
 /-- Uniform critical residual beyond the COMPLETE first layer, on the literal
 original integer and every arbitrary positive original record price. The one
