@@ -36,6 +36,8 @@ internal sealed class HardinA233253TriangleStripDocument : IScribeDocumentDefini
                 "The four labels record complementary pairs at column indices 1 through 4."),
             Def("horizontal", "rowLegal", "Horizontal exclusions", RowFormula(),
                 "The conjunction excludes equality and a natural-number sum of five."),
+            Def("decidable-rowlegal", "instDecidableRowLegal", "Deciding horizontal exclusions",
+                DecidableRowFormula(), "The horizontal predicate has a finite decision procedure."),
             Def("pairs", "pairs", "Boundary labels", PairsFormula(),
                 "The lambda retains the ordered four-column boundary."),
             Def("compatible", "compatible", "Antidiagonal exclusions", CompatibleFormula(),
@@ -92,6 +94,18 @@ internal sealed class HardinA233253TriangleStripDocument : IScribeDocumentDefini
             Blocks(Paragraph(Text(prose))), DescribeRole.Theorem,
             new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233253"),
                 ResolutionKind.Proved));
+
+    private static Formula DecidableRowFormula()
+    {
+        var c = V("c"); var j = V("j");
+        var x = App(c, Call("Fin.castSucc", j));
+        var y = App(c, Call("Fin.succ", j));
+        var body = All("j", Fin(4), And(Ne(x, y), Ne(Add(Val(x), Val(y)), Num(5))));
+        return All("c", N("Row"), Eq(
+            Typed(CallLocal("instDecidableRowLegal", c),
+                Call("Decidable", Parenthesized(CallLocal("rowLegal", c)))),
+            Call("inferInstanceAs", Parenthesized(Call("Decidable", Parenthesized(body))))));
+    }
 
     private static Formula RowFormula()
     {
