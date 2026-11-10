@@ -1,0 +1,35 @@
+### 6.1　数值比例的正确解释
+
+$$
+\alpha=0.7390851332151606416553\ldots,\qquad
+ \alpha\,\frac{180}{\pi}=42.3464588340929\ldots{}^\circ .
+$$
+
+以 $x$ 为 Bloch 极角、以 $Z$ 为读出时，
+
+$$
+|\psi(x)\rangle=\cos(x/2)|0\rangle+\sin(x/2)|1\rangle.
+$$
+
+在 $x=\alpha$ 处，得到
+
+$$
+\begin{aligned}
+ p_+&=\frac{1+\alpha}{2}=0.8695425666\ldots,\\
+ \mathcal P^2&=\alpha^2=0.5462468341\ldots,\\
+ \mathcal V^2&=1-\alpha^2=0.453753165860328\ldots .
+ \end{aligned}
+$$
+
+后两项是指定纯二路径实验中可预测度与最大可见度的平方， 不是“系统以 $54.62\%$ 的概率是粒子、以 $45.38\%$ 的概率是波”。 如果改写态为 $\cos x|0\rangle+\sin x|1\rangle$，则 $p_0=\cos^2x$， 但其 Bloch 极角已经变成 $2x$。
+
+同时必须区分三种几何量：半径 $R$ 下的轴向投影为 $R\cos x$， 有向弧长为 $Rx$，有向扇形面积为 $R^2x/2$； 两单位向量外积的模则为 $|\sin x|$。 令 $R=1$ 并未使这些量具有同一种操作含义。 普通两向量夹角属于 $[0,\pi]$； 使用正负 $x$ 还须给定一个有定向的旋转平面。 平面中的 $\pm\alpha$ 只是两个方向； 完整圆锥需要另加方位角轨道
+
+$$
+\mathbf n(\varphi)=
+ \cos\alpha\,\mathbf o+
+ \sin\alpha(\cos\varphi\,\mathbf e_1+\sin\varphi\,\mathbf e_2).
+$$
+
+余弦也不在全实轴为正，例如 $\cos\pi=-1$； 当前实根的正投影来自 $|x|\le1$。 在负根处 $x_-=-\alpha<0$，但 $-x_-=\alpha>0$。
+
