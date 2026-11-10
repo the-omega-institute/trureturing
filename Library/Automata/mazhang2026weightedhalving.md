@@ -46,3 +46,19 @@ not establish the universally quantified ring, base, length or machine results.
 The general deficit digit formula, exact fixed-bit maximum, general weighted
 coefficient formula, partitions using other division bases, A349553 minimal
 inputs and general-input unimodality remain outside the proved claims.
+
+## Verified locator
+
+Task source release:
+https://github.com/the-omega-institute/trureturing-outreach/releases/tag/outreach-task-shortnote-e1da5d247e1d45546de554c29708119b
+
+The release's `note.tex` is the entire weighted note, 18,632 bytes, SHA-256
+`97948e8aec759bdfe8cd8efc00a365dce3678c3d5f5e858d85b9b4163ea26405`,
+byte-identical to the supplied 7 November source. This is a private task
+deliverable locator; it is not a claim of scientific publication. DOI: null.
+
+The precise TeX locators are `lem:profile` / `eq:polynomial` / `eq:count`
+in Section 2, `cor:consequences`, `cor:deficit` and `cor:maximum` in that
+section, `eq:recurrence` and `cor:automatic` in Section 3, and
+`thm:weighted` / `eq:weighted` / `cor:bases` in Section 4. Section 5 records
+the verification scope and remaining boundaries.
