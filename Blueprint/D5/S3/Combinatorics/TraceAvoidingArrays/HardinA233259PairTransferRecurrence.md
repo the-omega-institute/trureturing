@@ -22,5 +22,7 @@ The adjusted transfer scalar satisfies the order-four recurrence.
 
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferRecurrence.recurrence`
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferBase](HardinA233259PairTransferBase.md)
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferCore](HardinA233259PairTransferCore.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferCount](HardinA233259PairTransferCount.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferPowers](HardinA233259PairTransferPowers.md)
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/TransferMatrix](TransferMatrix.md)

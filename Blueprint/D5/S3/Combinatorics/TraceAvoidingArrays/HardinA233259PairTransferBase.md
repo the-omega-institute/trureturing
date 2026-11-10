@@ -21,5 +21,6 @@ Initial scalar transfer values.
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferBase.initial_values`
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferCore](HardinA233259PairTransferCore.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferCount](HardinA233259PairTransferCount.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferPowers](HardinA233259PairTransferPowers.md)

@@ -36,4 +36,5 @@ Quotient rows.
 
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferRep.quotient_rows`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferRep.representative_rows`
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177PairTransfer](HardinA233177PairTransfer.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferCore](HardinA233259PairTransferCore.md)

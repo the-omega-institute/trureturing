@@ -21,6 +21,7 @@ The proper-pattern count equals the weighted transfer scalar.
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferCount.count_transfer`
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177PairTransfer](HardinA233177PairTransfer.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferCore](HardinA233259PairTransferCore.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferInitial](HardinA233259PairTransferInitial.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferRep](HardinA233259PairTransferRep.md)

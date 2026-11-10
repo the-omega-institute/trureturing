@@ -21,4 +21,5 @@ Initial class-weight certificate.
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferInitial.initial_weights`
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177PairTransfer](HardinA233177PairTransfer.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferCore](HardinA233259PairTransferCore.md)
