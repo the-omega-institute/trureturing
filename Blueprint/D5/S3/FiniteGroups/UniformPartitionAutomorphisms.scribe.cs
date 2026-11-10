@@ -22,7 +22,8 @@ internal sealed class UniformPartitionAutomorphismsDocument : IScribeDocumentDef
         All("K", V("Typeu"), All("L", V("Typev"), f));
     private static DocumentBlock.Describe Desc(string name, string title, Formula f,
         string text, DescribeRole role = DescribeRole.Definition) =>
-        Describe.Lean(DescribeId.Create("uniform-partition-" + name.Replace('_', '-').ToLowerInvariant()),
+        Describe.Lean(DescribeId.Create("uniform-partition-" +
+                (name == "Coordinates" ? "coordinate-type" : name.Replace('_', '-').ToLowerInvariant())),
             DeclarationHandle.Create("D5/S3/FiniteGroups/UniformPartitionAutomorphisms." + name),
             H(title), StatementSource.FromAuthor(Disp(f)), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(text))), role);
@@ -69,7 +70,8 @@ internal sealed class UniformPartitionAutomorphismsDocument : IScribeDocumentDef
                     + "and preimages of (w,t) make it onto. At destination w, sigma(w)(t) is the second coordinate of "
                     + "p(alpha inverse(w),t). Injectivity and surjectivity of p prove that every sigma(w) is a permutation. "
                     + "Assembly and extraction are inverse in both directions. Consequently both alpha and sigma are unique, "
-                    + "including for empty K and singleton L. Empty L is excluded: on an empty product p cannot determine alpha."),
+                    + "including for empty K and singleton L. Empty L is excluded: if K has multiple permutations, "
+                    + "the action on an empty product cannot determine alpha."),
                 Desc("automorphismEquiv", "The full symmetry group isomorphism", Context(Nonempty(
                     Call("MulEquiv", aut, coords))),
                     "The coordinate equivalence is multiplicative. Composing two assembled actions gives precisely "
