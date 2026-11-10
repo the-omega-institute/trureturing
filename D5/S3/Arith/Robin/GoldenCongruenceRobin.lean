@@ -10,7 +10,7 @@ import D5.S3.Arith.Robin.ElevenSmooth
 import D5.S3.Arith.Robin.GoldenResidualFive
 import D5.S3.Weil.GronwallUpperEnvelope
 import D5.S3.Arith.Robin.MertensExplicitEnvelope
-import Mathlib.Data.Nat.Totient
+import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.FiniteSieve.TotientPrimeProducts
 
 /-!
 For every n > 5040 with 5040 | n and 3^n = 2241 (mod n), strict Robin holds.
@@ -28,6 +28,7 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Arith.Robin.GoldenCongruenceRobin
 
 open Real Finset
+open D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.FiniteSieve.TotientPrimeProducts
 open D5.S3.Arith.Robin.ElevenSmooth
 open D5.S3.Arith.GoldenResource.RobinRationalBasis
 open D5.S3.Arith.ExponentExchange.IntegerSwap
@@ -270,17 +271,6 @@ private theorem excluded_prime_scalar_margin (L : ℝ) (hL : 499 / 100 ≤ L) :
         (1 + (347 / 500) / (499 / 100)) * (153 / 100) := by gcongr
     _ < 1 := by norm_num
 
-private theorem totient_prime_product {n : ℕ} (hn : 0 < n) :
-    (n : ℝ) / Nat.totient n =
-      ∏ p ∈ n.primeFactors, (1 - 1 / (p : ℝ))⁻¹ := by
-  have ht : (Nat.totient n : ℝ) =
-      (n : ℝ) * ∏ p ∈ n.primeFactors, (1 - 1 / (p : ℝ)) := by
-    have h := congrArg (fun q : ℚ => (q : ℝ)) (Nat.totient_eq_mul_prod_factors n)
-    push_cast at h
-    simpa only [one_div] using h
-  have hnR : (n : ℝ) ≠ 0 := by exact_mod_cast hn.ne'
-  rw [ht, div_mul_eq_div_mul_one_div, div_self hnR, one_mul, one_div,
-    prod_inv_distrib]
 
 /-- The complete divisibility and power-congruence branch satisfies strict Robin. -/
 theorem robin_of_modEq_2241 {n : ℕ} (hn : 5040 < n) (h5040 : 5040 ∣ n)

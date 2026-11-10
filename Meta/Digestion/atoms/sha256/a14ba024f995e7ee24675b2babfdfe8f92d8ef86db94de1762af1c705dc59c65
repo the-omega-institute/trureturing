@@ -1,0 +1,28 @@
+原 $q$、正权、全部中心、经典和不等维块、native、$B$ 与 $\mathsf B_{\rm cl}$、同一 $\sigma,t_0$、实际联合、设备、记录、失败、遗忘、返回均保持原身份。旧 $S,D:\mathsf E^2\to\mathsf E$ 起初仅为总映射；不预给可加、实齐次、对称／交替、乘法单位、结合律或辅助 $V,K,\xi,J$。对全部原参数要求恰为以下四组：
+
+1. 对每个原 $\ell$、任意至多三个纯响应标签，**同一**表 $G_\ell=[g_\ell(a_j,a_k)]$ 半正定，其中 $g_\ell(a,b)=\ell(S(a,b))-\mathrm i\ell(D(a,b))$。重复标签、全部原实缩放和平移后的标签都在量词内。
+2. 只输入相加定义关系的零平方：
+
+   $$
+   (1,-1,-1)G_\ell(a+b,a,b)(1,-1,-1)^{\mathsf T}=0
+   \quad(a,b\in\mathsf E,\ \ell\text{ 为任一原评价}).
+   \tag{78.2}
+   $$
+
+3. **两条**同一旧关系的三元换括号恒等式均输入：
+
+   $$
+   \begin{aligned}
+   S(S(a,b),c)-D(D(a,b),c)&=S(a,S(b,c))-D(a,D(b,c)),\\
+   D(S(a,b),c)+S(D(a,b),c)&=D(a,S(b,c))+S(a,D(b,c)).
+   \end{aligned}
+   \tag{78.3}
+   $$
+
+4. 同一原总事件自组合固定，且**每个**原效果的平方收缩：
+
+   $$
+   S(u,u)=u,\qquad S(e,e)\le e\quad(0\le e\le u).
+   \tag{78.4}
+   $$
+

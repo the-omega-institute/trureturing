@@ -1,0 +1,59 @@
+**定理 195.2（五份准确配平识别两个实际旧值）。** 同一旧 $D$ 必须满足
+
+$$
+\boxed{
+Y_+:=D(\rho P_+,\beta_0 F_+)=\frac{h+\rho^3T_+}{4},\qquad
+Y_-:=D(\rho P_-,\beta_0 F_-)=\frac{h-\rho^3T_-}{4}.}
+\tag{195.2}
+$$
+
+种子已付以后，跨输入证明只消费一份母 PB、两行各两份零预算 PB 及原 P2；不需要 194.1 的附加反向 PB，不预设有限三轴子代数对 $D$ 输出闭合。
+
+证明。置 $q=u-p$、$\ell=\rho s$、$m_0=\sqrt2\ell$、$C_0=\ell p+m_0q$。已付单位仿射平面零值给 $D(p,C_0)=0$。准确 PB $(p,v,C_0)$ 的位移为 $\nu=j/2-\ell p$、$\omega=v/2$，其外层输入为
+
+$$
+a_\pm=v\pm j/2\mp\ell p,\qquad
+b_\pm=C_0\pm v/2.
+$$
+
+因此
+
+$$
+D(a_+,b_+)-D(a_-,b_-)
+=\frac{\ell-m_0}{2}v=-\frac{\rho^3c}{2}v.
+\tag{195.3}
+$$
+
+由 $s=\rho c$、$\rho^2+2\rho=1$，准确标签恒等式为
+
+$$
+\begin{aligned}
+(ca_++sb_+,-sa_++cb_+)&=(\beta_0F_+,\rho P_+),\\
+(ca_--sb_-,sa_-+cb_-)&=(\beta_0F_-,\rho P_-).
+\end{aligned}
+$$
+
+两次已付 SO$(2)$ 标签旋转和反对称性使 $D(a_\pm,b_\pm)=-Y_\pm$。故母 PB 准确连接这两份未知旧值：
+
+$$
+Y_+-Y_-=\frac{\rho^3c}{2}v.
+\tag{195.4}
+$$
+
+对两条新行消费 193.2 的形状与上预算，得
+
+$$
+E_\pm\circ Y_\pm=F_\pm\circ Y_\pm=0,\qquad
+Y_\pm^2\le\frac{\gamma^2}{16}u.
+\tag{195.5}
+$$
+
+为明确此处确实只用四份附加 PB，选 $0<\tau<\pi/4$，使 $\sin2\tau=\rho/\beta_0$，置
+
+$$
+r_\pm=\rho P_\pm\cos\tau-\beta_0F_\pm\sin\tau,\qquad
+s_\pm=\rho P_\pm\sin\tau+\beta_0F_\pm\cos\tau.
+$$
+
+四份就是 $(r_+,s_+,0)$、$(s_+,r_+,0)$、$(r_-,s_-,0)$、$(s_-,r_-,0)$。其内层旧值由真实旋转分别为 $Y_\pm,-Y_\pm$，零输入值为零；不是自由指派。193.3 的核读取让四份外层预算消失，支付 (195.5) 的方向约束；该条余下 P2 读取支付平方上界。
+

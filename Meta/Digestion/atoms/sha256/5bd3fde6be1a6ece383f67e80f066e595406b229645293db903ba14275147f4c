@@ -1,0 +1,41 @@
+**定义 78.1（固定载体、实际二表与四个条件）。** 取同一个原复 Hilbert 空间 $\mathcal H=\ell^2(\mathbb N_0)$，内积第一槽共轭线性。原资料固定为
+
+$$
+E=B(\mathcal H)_{\rm sa},\qquad
+S(a,b)=\frac{ab+ba}{2},\qquad
+u=I,\qquad N(a)=\|a\|,\qquad C=B(\mathcal H)_+.
+\tag{78.1}
+$$
+
+此处 $ab$ 始终表示这些原有界算子的标准乘法。原评价族 $P$ 是 $E$ 上全部有界正实线性泛函，原质量 $m_\alpha=\alpha(I)$，包括零质量、不等质量及非正常评价。原 $q$ 不被任何迹、向量态或谱参数替代。同一个旧 $D:E^2\to E$ 初始为任意总映射；记标准参照关系
+
+$$
+Q(a,b)=\frac{\mathrm i}{2}[a,b],\qquad
+A_D=\{D(a,b):a,b\in E\}.
+\tag{78.2}
+$$
+
+$Q$ 只是已给原算子乘法的记号，不是另一个被采用的原 $D$。以下条件均在这些原对象上量化。
+
+$\mathsf A$：对每个原 $\alpha\in P$ 及任意至多两个原标签 $a_j$，实际有向表
+
+$$
+G^D_\alpha(a_1,\ldots,a_n)
+=\bigl[\alpha(S(a_j,a_k))-\mathrm i\alpha(D(a_j,a_k))\bigr]_{j,k=1}^n
+\succeq0,\qquad n\le2.
+\tag{78.3}
+$$
+
+两个方向均取旧 $D$ 的实际值；标签包含零、重复、全部原实缩放和平移。
+
+$\mathsf B$：对全部原 $a,b,c\in E$，要求原实部换括号式 (12.2)，即
+
+$$
+S(S(a,b),c)-S(a,S(b,c))
+=D(D(a,b),c)-D(a,D(b,c)).
+$$
+
+$\mathsf C$：原输出外延性 (40.1) 成立，准确地说，只对 $p,q\in A_D$，由 $D(p,t)=D(q,t)$ 对每个 $t\in A_D$ 成立推出 $p=q$。
+
+$\mathsf T$：对全部原 $a,b\in E,s\in\mathbb R$，$D(a+sI,b)=D(a,b)$。它只陈述原单位的标量平移；在没有旧 $D$ 线性时，不能从 $D(sI,b)=0$ 展开得到它。
+

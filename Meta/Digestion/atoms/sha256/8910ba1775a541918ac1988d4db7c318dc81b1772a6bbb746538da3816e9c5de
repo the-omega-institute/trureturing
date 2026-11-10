@@ -1,0 +1,8 @@
+**引理 389.2（精确分式域上的泛型特征多项式）。** 对每个自然数 $n\ge1$，仍取 389.1 的完整 $R_n,Y_n$，令 $K_n=\operatorname{Frac}(R_n)$，$\chi_n(t)=\det(tI-Y_n)\in R_n[t]$。沿自然嵌入 $R_n\to K_n$ 映射系数后，$\chi_n$ 在 $K_n[t]$ 中不可约。
+
+证明。$R_n$ 是唯一分解整环，故 389.1 的行列式为素元，其常多项式在 $R_n[t]$ 仍为素元。固定 $t$ 及全部复系数，将每个 $y_{ij}$ 代为 $\delta_{ij}t-y_{ij}$。在 $R_n[t]$ 中两次代换还原每个生成元，因而这是环自同构，且将 $\det Y_n$ 的常多项式送到 $\det(tI-Y_n)=\chi_n(t)$。于是 $\chi_n$ 在 $R_n[t]$ 不可约。它首一，由 Gauss 引理在精确分式域 $K_n[t]$ 中仍不可约。
+
+这两个引理是 320.1 证明中 (320.6) 所引用 Brešar–Špenko, *Functional identities of one variable*, arXiv:1307.2260v1, §§2–3，Lemma 2.1 至 Lemma 3.2 路线的前置，属于 literature-attested。389.1 的精确代码来源是 mathlib-initiative/Etingof-RepresentationTheory-draft1，修订 c6d86a8bd52065aafb8251fa1cdcd55b609743ef，clean-code/release/RepresentationTheory/AuxiliaryMatrixDeterminantIrreducibility.lean，公开定理 det_auxiliaryMatrix_irreducible_of_pos；其 Apache-2.0 版权、许可全文与 NOTICE 随正式源码保留。389.2 使用该完整行列式结论、可逆代换及首一 Gauss 引理，不提出文献原创性主张。
+
+389.1–389.2 本身不提供完整交换二次迹标准形。泛型矩阵中心化子、任意复双线性映射的全局二次重构、Hermitian 实复化与实系数下降、273/274 桥、全部直和与经典源以及 320/343/359/361/388 的原完整消费者仍各有证明义务；这些前置不能覆盖其父结论。
+

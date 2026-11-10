@@ -6,7 +6,14 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Recovery/LiJiangPolarPairOptimalityRefutation.claim; result=D5/S3/Quantum/Recovery/LiJiangPolarPairOptimalityRefutation.result; claim=D5/S3/Quantum/Recovery/LiJiangPolarPairOptimalityRefutation.claim
    digest: A feasible qubit rank-one encoder strictly improves the source polar pair. -/
 
+import D5.S3.Quantum.Foundation.FiniteStateChannel
+import D5.S3.Quantum.Foundation.FiniteKrausRepresentation
+import D5.S3.Quantum.PureState.PureStateHandshake
+import D5.S3.QuantumBounds.PeritoTsirelson
+import D5.S3.Quantum.Foundation.FiniteKrausChannel
+import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.QuantumChannels.PassiveMemoryNonclassicalRefutation
+import D5.S3.Quantum.QuantumChannels.MayerKnillInfidelityScalingCore
 import D5.S3.Quantum.QuantumChannels.MayerZeroFidelityTightness
 import D5.S3.Quantum.Recovery.KrausCompletion
 
@@ -547,7 +554,7 @@ theorem result : Not claim := by
       ((PhyslibLeaf.MatrixMap.of_kraus _ _
         (D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity
           (maxEntangledVector (Fin d)))).mulVec (maxEntangledVector (Fin d)))).re = _
-    rw [D5.S3.Quantum.QuantumChannels.MayerZeroFidelityTightness.kraus_survival]
+    rw [D5.S3.Quantum.QuantumChannels.MayerKnillInfidelityScalingCore.kraus_survival]
     calc
       _ = ∑ j, ‖Matrix.trace (Lf j) / (d : ℂ)‖ ^ 2 := by
         apply Finset.sum_congr rfl

@@ -1,0 +1,21 @@
+**定义 12.1（Graph blocks and the original Boolean fibres）。** Let $H$
+be a finite connected simple unit-weight block graph of even order
+$m\geq2$: every maximal two-connected graph block is a clique, and
+bridges are also counted as graph blocks $K_2$. Write $\mathfrak B(H)$
+for these graph blocks. For every integer $S\geq1$, put $s=2S$ and
+$k=mS$, and retain exactly $B_i$, $H[\overline{K_{2S}}]$, the complete
+complex Boolean carrier $\mathcal H_{mS}$, positive ordinary token
+adjacency $K=K_{mS}$ and the original within-$B_i$ projections $P_i$
+and $P_{\mathrm{sym}}$ of Definitions 1.1–1.2. Put
+
+$$
+E=\lambda_{\min}(K),\qquad
+U=\{p\in V(H):\text{some }C\in\mathfrak B(H)
+\text{ contains }p\text{ and }|C|\ne4\}.
+\tag{12.1}
+$$
+
+A graph block $C$ consists of base vertices, each with its own Boolean
+fibre $B_i$ of size $2S$; it is not a Boolean fibre. Only the single
+global filling $k=mS$ is prescribed.
+

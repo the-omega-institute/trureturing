@@ -1,0 +1,65 @@
+**定理 202.1（全部中央纤维饱和）。** 在 201.1–201.3 下，每个字符均有 $\delta^2=X^2Y^2$，从而 $d^2=a^2b^2$。
+
+证明。固定一份 $X,Y>0$ 的纤维。对任意有限 $\lambda>0$，取全部原标签
+
+$$
+t=\sqrt{\lambda^2X^2+1},\qquad c=tu+\lambda a\in E.
+$$
+
+185.1 的同轴仿射零值给 $D(a,c)=0$。因此准确 PB $(a,b,c)$ 有 $\nu=d-ta-\lambda a^2$、$\omega=0$，其两个原外层输入和元素等式为
+
+$$
+\begin{aligned}
+r_+&=b+d-ta-\lambda a^2,&r_-&=b-d+ta+\lambda a^2,\\
+D(r_+,c)-D(r_-,c)&=2\lambda a^2b.
+\end{aligned}
+\tag{202.1}
+$$
+
+右端等式只展开已知 Jordan 乘法：$b\circ d=a\circ b=0$，且 $a^2$ 与 $b$ 交换。没有展开未知 $D$。
+
+在该纤维中置 $e_1=\bar a/X$、$e_2=\bar b/Y$，它们是反交换自伴单位。令
+
+$$
+n=-\frac{\lambda X}{t}e_1+\frac1t e_2,\qquad n^2=u.
+\tag{202.2}
+$$
+
+与 $n$ 正交的单位 $t^{-1}e_1+(\lambda X/t)e_2$ 和它反交换，所以 $n$ 的两个符号谱值均存在。取 $\psi(n)=1$ 的数学态。支撑态的 Cauchy–Schwarz 使其对所有与 $n$ 反交换的自伴元读零；因而
+
+$$
+\psi(e_1)=-\lambda X/t,\qquad
+\psi(e_2)=1/t,\qquad\psi(\bar d)=0.
+$$
+
+将 $\psi$ 拉回并延为环境数学态 $\phi$。只用纤维中的三轴反交换乘法，已知平方及实内积准确为
+
+$$
+\begin{aligned}
+\phi(c^2)&=1,\\
+\phi(r_\pm^2)&=X^2+Y^2+\delta^2\mp2\lambda X^2Y/t,\\
+\phi(r_\pm\circ c)&=Y\mp\lambda X^2/t.
+\end{aligned}
+\tag{202.3}
+$$
+
+所以两份实际外层 P2 的实 Gram 预算相同：
+
+$$
+\Delta_\pm=X^2/t^2+\delta^2.
+\tag{202.4}
+$$
+
+(202.1) 的右端读取为 $2\lambda X^2Y/t$，两次 P2 便给
+
+$$
+\frac{2\lambda X^2Y}{t}
+\le2\sqrt{X^2/t^2+\delta^2},\qquad
+\lambda^2X^2(X^2Y^2-\delta^2)\le X^2+\delta^2.
+\tag{202.5}
+$$
+
+若 $\delta^2<X^2Y^2$，某个足够大的有限 $\lambda$ 已违反此式。因此 $\delta^2\ge X^2Y^2$，与 (201.3) 合起来给等号。$\delta=0$ 不被删除；同一个有限矛盾涵盖它。全部字符分离交换代数 $C_0$，遂得 $d^2=a^2b^2$，完成 200.2。∎
+
+在每份纤维中，只是选一份足以反驳所假定亏损的有限原 PB；不要求一个对全部字符通用的 $\lambda$。所有这些原调用的内层旧值始终是同一个固定 $d$。没有对随参数变化的外层 $D$ 取极限，亦没有将辅助纤维算作新的原对象。
+

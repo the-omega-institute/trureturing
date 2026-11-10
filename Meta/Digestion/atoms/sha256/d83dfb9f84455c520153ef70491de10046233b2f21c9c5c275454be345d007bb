@@ -1,0 +1,33 @@
+**定理72.1的证明：准确矩形角方程。** 记
+
+$$
+X_{ij}=q_i r q_j,\quad c_i=q_icq_i,\quad c_j=q_jcq_j,\quad
+O_{ij}=q_iOq_j,\quad \eta=\sigma R(a-b).
+$$
+
+$z,t$ 是 $h$-奇，$c,hT$ 在所选两窗上对角。因此 $q_iA_+q_j=X_{ij}$。两窗属于相反的 $H$ 角，73.3给
+$q_iD(T,A_+)q_j=i\eta QX_{ij}$。再用 $g=r+Rt$、$z\circ t=0$，73.4的右端在此角准确为
+
+$$
+q_i\mathcal Jq_j=-(c_iX_{ij}+X_{ij}c_j).
+$$
+
+原反对称性将73.4写为 $O=D(T,A_+)+\mathcal J$，故
+
+$$
+\boxed{O_{ij}=i\eta QX_{ij}-(c_iX_{ij}+X_{ij}c_j).}
+\tag{73.9}
+$$
+
+$c_i,c_j$ 仍是原背景的真实压缩，不把它们换成中心后送入旧响应。令
+$\delta_i=c_i-aq_i,\delta_j=c_j-bq_j$，则
+
+$$
+\|\delta_i\|,\|\delta_j\|\le\varepsilon,\qquad
+[i\sigma R(a-b)Q-(a+b)u]X_{ij}
+=O_{ij}+\delta_iX_{ij}+X_{ij}\delta_j.
+\tag{73.10}
+$$
+
+该误差式不要求 $a+b\ne0$；下一步也不以中心和作分母。
+

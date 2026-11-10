@@ -5,7 +5,7 @@ doi: 10.22331/q-2019-10-14-194
 url: https://arxiv.org/abs/1805.09364v3
 triage: theorem
 motivation_gids:
-  - D5/S3/Quantum/Measurement/SequentialWeakPointerRefutation.result
+  - D5/S3/Quantum/Measurement/Weak/SequentialWeakPointerRefutation.result
 ---
 
 # Three weak measurements of projections below minus one eighth
@@ -35,8 +35,8 @@ number of projections and every unit vector; the result refutes it.
 For two projection observables the paper's example attains `−1/8`, and its
 Appendix shows that this is "the most anomalous value obtainable"; the
 conjecture asserts that longer sequences of projections do not go further.
-The frozen declaration
-`D5/S3/Quantum/Measurement/SequentialWeakPointerRefutation.result` shows that
+The existing refutation
+`D5/S3/Quantum/Measurement/Weak/SequentialWeakPointerRefutation.result` shows that
 three projections on `ℂ³` already reach `−1/6`.
 
 ## Gap
@@ -77,15 +77,14 @@ Exact rational arithmetic (issue #11377) reproduces `−1/6`, the paper's qubit
 example and its two-observable bound `−1/8` as positive controls.
 
 The canonical source is
-`D5/S3/Quantum/Measurement/SequentialWeakPointerRefutation.lean`. Its public
+`D5/S3/Quantum/Measurement/Weak/SequentialWeakPointerRefutation.lean`. Its public
 declarations are `nestedAnti`, `pointerMean`, `claim` and `result`. The frozen
 module state has statement identity
-`sha256:8868bbf444c74a1adf9cd33157f6d92fe05a818dec792c771701d3a7dc9d79fa`.
+`sha256:eb883ff2832028ab86ee6939c9c1c35dd0c99067e52128282c66caf7bb1f2c1c`.
 The result declaration has statement identity
-`sha256:7d8c1049cbc7f723c163a9ceacd5bfd84f73a4add72eef062d9b4799517033cf`.
-The Freeze event is
-`sha256:2d7203096b4e87e36b736800c54da6d048df6dd2e82ac1e51d37d721b968de2e`
-and has no project-level frozen prerequisites. The proof uses only the
+`sha256:7733c6ac778936c11b9665887347c016f7af9fe327db4b8e6327f2910fd342aa`.
+The module has no project-level frozen prerequisites. The compiled claim has
+type `Prop`, and `result` has type `Not claim`. The proof uses only the
 standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`,
 `native_decide`, or new axiom.
 

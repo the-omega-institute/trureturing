@@ -3284,3 +3284,384 @@ $$
 本节的来源对应为：原源与完整联合合同见 [Native Recurrent Quantized Memory，Definitions 1.1–1.2](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_RECURRENT_QUANTIZED_MEMORY.md)；实际二配置矩阵和非单位根相位见 [Native Finite Horizon Memory Bounds，(2.3)–(2.6)](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_FINITE_HORIZON_MEMORY_BOUNDS.md)；任意入口的原生最小电流持有比见 [Native Finite Precision Continuation Kernels，(2.11)–(2.12)](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_FINITE_PRECISION_CONTINUATION_KERNELS.md)；十次原生调用周期核见 [Continuation V，§8.3，(8.3)–(8.9)](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_V.md)；有限状态猜测桥见 [Original Control Event Memory，Theorem 4.3，(EM.13)](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_EVENT_MEMORY_AND_COARSE_ALIASING.md)。这些引用只承担各自声明的成熟中间工具和源合同，不把不同载体的 ready/read 合同移植到原生 89 源。
 
 ## 追加锚（本行以下为增补区）
+## 25.36 原生共同未来接缝的指数调用界与有限总预算容量
+
+### 25.36.1 固定源、系数范数与事件量词
+
+**定义 25.36.1（原生定量共同尾事件的对象）。** 固定定义 25.35.1 的 native89 minimal-current no-read source，采用 [Native Recurrent Quantized Memory，Definitions 1.1–1.2](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_RECURRENT_QUANTIZED_MEMORY.md) 的完整载体、ready、正单位脉冲、原 innovations、chronological seams 和终止合同。所有执行都在原来的 $89$ 维载体上进行；地址仅为原地址 $0,1$，按实际到达的时间顺序执行，不增加负脉冲、分数调用、读口、重置或控制。完整输出仍是定义 25.35.1 的 $\mathbf C(w)$，包括初始配置、全部原 chronological seam、literal terminal $W$、所有原终端标签以及原 zero/failure/refusal/stop/alarm 坐标和原请求、顺序、schedule metadata。发送原 stop 不改变此前已经发出的接缝坐标。
+
+写
+
+$$
+\begin{gathered}
+q_0=\{3,7\},\qquad q_1=\{1,3,7\},\qquad
+V=\operatorname{span}(e_{q_0},e_{q_1}),\\
+\alpha=3\pi/5,\quad x=\varphi^{-1},\quad y=\sqrt{x},\quad
+\zeta=e^{3\pi i/5},\quad c=x\sqrt{x},\quad d=x-x^2,\\
+z=(0,0,1),\qquad b=(2c,0,d),\qquad
+|b|=1,\quad z\cdot b=d,\quad s_0=\sqrt{1-d^2}=2c>0.
+\end{gathered}
+$$
+
+有序基始终是 $(e_{q_0},e_{q_1})$。对单位向量 $f\in V$，Bloch 向量 $v_f$ 的约定为 $`ff^*=(I+v_f\cdot\sigma)/2`$，所以其 $q_1$ Born 质量为 $(1-z\cdot v_f)/2$。引理 25.35.3 的原地址保持 $V$；从原 ready 执行这些词时，另 $87$ 个配置的无条件质量始终为零，但不从源或输出空间删去。
+
+本节的系数范数是固定基底上的实际 $\ell^1$ 系数范数。具体地，取
+
+$$
+F=\mathbb Q(y,\zeta),\qquad \mathcal O=\mathbb Z[y,\zeta],\qquad
+\mathcal B=\{y^k\zeta^e:0\le k<4,\ 0\le e<2\},
+$$
+
+若 $a=\sum_{k=0}^3\sum_{e=0}^1 a_{ke}y^k\zeta^e\in\mathcal O$ 是其唯一约化表示，则
+
+$$
+\|a\|_c=\sum_{k=0}^3\sum_{e=0}^1|a_{ke}|,\qquad a_{ke}\in\mathbb Z.
+$$
+
+这里不是最大系数范数，也不是嵌入绝对值范数。[Native Finite Precision Continuation Kernels，§2.1，(2.8)–(2.10)](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_FINITE_PRECISION_CONTINUATION_KERNELS.md) 供应 $[F:\mathbb Q]=8$、该 integral order 及基底、$\|ab\|_c\le8\|a\|_c\|b\|_c$、原 endpoint entries 和每次原调用的 raw-coordinate 高度界；这些算术性质是固定源的前提工具。
+
+### 25.36.2 原生指数长度共同尾定理及证明
+
+**定理 25.36.2（所有正整数层的原生定量共同尾）。** 对定义 25.36.1 的固定源，存在只依赖该源的常数 $L\in\mathbb Z_{>0}$、$K>0$，使每个整数 $n\ge1$ 都有整数 $N=N_n$、前缀 $a_1,\ldots,a_N$、一个共同的非空正 $0/1$ 尾词 $t_n$ 和一个确定性可测解码器 $\mathscr D_n$，满足
+
+$$
+\begin{gathered}
+\frac{2^n}{4n+1}\le N\le2^n,\qquad |a_i|=Ln,\qquad
+\psi_i=K_{a_i}e_{q_0}\text{ 是两两不同的单位射线代表},\\
+|t_n|\le2^{Kn+K},\\
+\Pr_{\mathrm{src},\,a_it_n}
+ \{\mathscr D_n(\text{future seam coordinates of }t_n)=i\}
+ \ge\frac{19}{20}\qquad(1\le i\le N).
+\tag{25.36.1}
+\end{gathered}
+$$
+
+$L,K$ 在 $n$ 之前一次固定。每个 $n$ 的族、尾词和解码器只依赖该源及整个固定族，不依赖未知成员 $i$、比较 sampler、数值精度输入或实际取得的切口。概率是原 ready-source 对整个执行的无条件概率。解码器只读同一个原 chronological output tuple 的未来接缝坐标，不读切口配置、旧请求或旧输出，也不提供隐藏标签、重复制备、postselection 或额外控制。全部原输出和最后的原 stop 保留。结论是原整数单位调用数的存在性上界，不附带有效构造、常数的数值、描述精度、取得切口的概率律或物理实现结论。
+
+证明。以下将引理 25.35.4 的等长族、固定源算术、成熟旋转近似与原周期统计作定量对应；通用范数分离、球面带测度、Solovay–Kitaev 近似、Chebyshev 与有限消息计数均只是中间供应工具。
+
+（一）固定等长前缀与统一射线分离。精确复用引理 25.35.4 的两个正原生 $0/1$ 词，它们具有同一长度 $L\ge1$，且独立于 $n$。对其 $2^n$ 个串接词的 ready-ray 纤维各取一个代表，得到 (25.36.1) 的 $N$ 和 $a_i$。自由群论证仅用于供应这个既有族，不另换族或词长。每个 $\psi_i$ 已是实际单位向量，不是投影后的再归一化向量或选中的分支。
+
+由定义 25.36.1 所引精度卷 §2.1，原 endpoint matrix 的最大系数行和至多为六，乘法系数界为八。因此每次原调用把最大坐标系数范数放大至多 $48<64$，不需 record 或归一化。于是所有 $\psi_i$ 的坐标在 $\mathcal O$ 内，且
+
+$$
+\max_q\|\psi_i(q)\|_c\le H=64^{Ln}.
+$$
+
+取固定有限常数
+
+$$
+\begin{gathered}
+M=\max\bigl(\{1\}\cup
+ \{|\sigma(\beta)|:\sigma:F\hookrightarrow\mathbb C,\ \beta\in\mathcal B\}\bigr),\\
+\delta_0=(16M)^{-7},\qquad \beta_0=64^{14L},\qquad
+\delta_n=\delta_0\beta_0^{-n}.
+\end{gathered}
+$$
+
+对 $i\ne j$，不同射线使
+
+$$
+\omega_{ij}=\psi_i(q_0)\psi_j(q_1)-\psi_i(q_1)\psi_j(q_0)
+$$
+
+成为非零代数整数。其系数范数至多 $16H^2$，故每个共轭的绝对值至多 $16MH^2$。非零域范数是绝对值至少为一的整数；把其余七个嵌入因子作上述上界，得到
+
+$$
+|\omega_{ij}|\ge(16MH^2)^{-7}=\delta_n.
+$$
+
+这是标准代数整数范数机制在上述原坐标高度上的应用；其同源算术供应仍为精度卷 §2.1，而非一个独立的通用分离结果。单位向量的楔积恒等式与 Bloch 约定给
+
+$$
+1-|\langle\psi_i,\psi_j\rangle|^2=|\omega_{ij}|^2,\qquad
+|v_i-v_j|=2|\omega_{ij}|\ge2\delta_n\ge\delta_n,
+\quad v_i=v_{\psi_i}.
+\tag{25.36.2}
+$$
+
+特别地 $0<\delta_n\le1$，所有常数仅由源与一次固定的前缀词决定。
+
+（二）把一个目标旋转实现为正原调用的长度界。在 $V$ 上，原 endpoint gates 为 $K_j=\zeta[I+(\zeta-1)P_j]$。令
+
+$$
+S_j=e^{-3i\alpha/2}K_j|_V\in\mathrm{SU}(2),\qquad
+\mathcal G=\{S_0,S_1,S_0^{-1},S_1^{-1}\}.
+$$
+
+$S_j$ 的特征值为 $e^{\pm i\alpha/2}$，$\mathcal G$ 逆封闭。其射影像与原 gates 相同，由引理 25.35.3 在 $\mathrm{SO}(3)$ 中稠密。为核对 $\mathrm{SU}(2)$ 假设，令 $J$ 是 $\langle\mathcal G\rangle$ 在 $\mathrm{SU}(2)$ 中的闭包。$J$ 的射影像紧且包含稠密像，故满射到 $\mathrm{SO}(3)$，从而 $\mathrm{SU}(2)=J\cup(-J)$。若 $J$ 真包含于 $\mathrm{SU}(2)$，它就是指数二的闭子群，因而为开子群，与 $\mathrm{SU}(2)$ 的连通性矛盾。所以 $J=\mathrm{SU}(2)$。
+
+在此精确调用 [Dawson–Nielsen, *The Solovay–Kitaev algorithm*, quant-ph/0505030v2，Definition 1、Theorem 1 及 §§3,5](https://arxiv.org/html/quant-ph/0505030v2)：维数固定为二，度量为 operator norm，指令集是上述有限、逆封闭且稠密的 $\mathcal G$。该证明给出的指数 $\log(5)/\log(3/2)<4$。其初始表前提可纯存在性地满足：固定定理所需的充分小 $\varepsilon_0>0$；稠密性给每个目标一个距离小于 $\varepsilon_0/2$ 的词，这些以词为中心、半径 $\varepsilon_0/2$ 的开球覆盖紧群 $\mathrm{SU}(2)$。有限子覆盖给一个有限初始表及有限最大初始词长，两者只依赖 $\mathcal G$。这里没有构造该表，也没有表的数值或源 oracle。
+
+把常数扩大以包含粗精度，得到源特定 $C_{\rm SK}>0$，使
+
+$$
+\forall U\in\mathrm{SU}(2)\ \forall\,0<\eta\le\tfrac12\quad
+\exists W\in\mathcal G^*:\quad
+\|W-U\|_{\rm op}<\eta,\qquad
+|W|\le C_{\rm SK}(1+\ln(1/\eta))^4.
+$$
+
+将显示的矩阵乘积次序反转为 chronological calls，并用完整原载体上的精确恒等式 $K_j^{10}=I$，把每个逆原 gate 改成九次正调用。对 $S_j$ 或 $S_j^{-1}$ 作此替换只改变其在 $V$ 上的标量相位。因此有一个合法正词 $u$，其 $K_u|_V$ 的某个标量相位倍数距 $U$ 小于 $\eta$，且
+
+$$
+|u|\le C_{\rm pos}(1+\ln(1/\eta))^4,
+\qquad C_{\rm pos}=9C_{\rm SK}.
+\tag{25.36.3}
+$$
+
+这些调用是完整载体上的实际原正脉冲；标量归一化仅描述不变子空间上的数学作用，没有执行相位控制。(25.36.3) 只近似最终 unitary action，不断言中间 stochastic history 的近似。
+
+（三）整个族共用一个定量良好方向。若 $N=1$，取常值解码器和非空单调用尾词 $0$，成功概率为一。以下设 $N\ge2$，定义
+
+$$
+a=\frac1{16N},\qquad \tau=\frac{\delta_n}{8N^2},\qquad
+\eta=\frac\tau8=\frac{\delta_n}{64N^2}.
+$$
+
+由 $\delta_n\le1$、$N\ge2$ 有 $\tau\le a$ 和 $0<\eta\le1/2$。仅为证明存在性，在 $\mathrm{SO}(3)$ 上取数学 Haar 随机旋转 $R$。固定单位向量的像在球面上均匀，其在固定单位轴上的投影在 $[-1,1]$ 上均匀，因为投影宽度 $h$ 的球面带面积为 $2\pi h$。将这个成熟球面测度事实用于实际的 $v_i,z,b$，得
+
+$$
+\begin{aligned}
+\Pr\{|z\cdot R(v_i-v_j)|<\tau\}
+ &=\frac\tau{|v_i-v_j|}\le\frac1{8N^2},\\
+\Pr\{|z\cdot Rv_i|>1-a\}&=a,\qquad
+\Pr\{|b\cdot Rv_i|>1-a\}=a.
+\end{aligned}
+$$
+
+对所有无序对和两个轴的事件作 union bound，总坏概率至多
+
+$$
+\frac{N(N-1)}{16N^2}+2Na<\frac1{16}+\frac18<1.
+$$
+
+故可固定一个使所有坏事件均不发生的 $R$；它为整个族共同选定，不由未知成员选择。提升 $R$ 为 $U\in\mathrm{SU}(2)$，在上述 $\eta$ 用 (25.36.3) 取一个正词 $u$。令 $R'$ 为其精确 Bloch 旋转，$w_i=R'v_i$。
+
+这里 operator norm 到 Bloch 距离的界对所有向量统一：对单位 $f$ 和 unitaries $W,U$，
+
+$$
+\bigl\||Wf\rangle\langle Wf|-|Uf\rangle\langle Uf|\bigr\|_1
+ \le2\|(W-U)f\|,
+$$
+
+而两个 pure-qubit densities 之差的 trace norm 等于其 Bloch 向量的欧氏距离。因此 $|R'v-Rv|\le2\eta$ 对每个单位 $v$ 成立。由此
+
+$$
+\begin{gathered}
+|z\cdot(w_i-w_j)|\ge\tau-4\eta\ge\tau/2,\\
+|z\cdot w_i|,\ |b\cdot w_i|\le1-a+2\eta\le1-a/2.
+\end{gathered}
+$$
+
+设实际最终波为 $\phi_i=K_u\psi_i$，其实际 Born 质量为 $p_i=|\phi_i(q_1)|^2$。于是
+
+$$
+\frac a4\le p_i\le1-\frac a4,\qquad
+|p_i-p_j|\ge\Delta_n:=\frac{\delta_n}{32N^2}>0,\qquad
+|b\cdot w_i|\le1-a/2.
+\tag{25.36.4}
+$$
+
+$q_0,q_1$ 的入口质量均严格为正，且每个 $\phi_i$ 与 $P_1$ 本征射线定量分离。这些是 $u$ 之后实际波的性质，与 $u$ 中 stochastic path 的取值无关。原 ready-source minimal-current law 的 equivariance，无须对任何过去输出条件化，就给出 $u$ 末端恰为 $(1-p_i,p_i)$ 的 Born 分布；此处沿用定义 25.36.1 所引原源的原 innovations 与原过程。
+
+（四）原节点安全十调用核的统一混合界。此后仅执行原地址 $1$，实际波与配置连续跨过每个 seam。波的数学周期为 $P=2\pi/\alpha=10/3$；它只用于计算核，不引入分数调用或周期边界观测。十个整数单位调用恰好包含三个这样的周期。绕 $b$ 旋转给第 $i$ 个波的 $q_1$ 质量范围 $\ell_i\le p_i(t)\le h_i$，且
+
+$$
+\begin{aligned}
+h_i-\ell_i
+ &=\sqrt{1-d^2}\sqrt{1-(b\cdot w_i)^2}\\
+ &\ge s_0\sqrt{a/2}
+ =g_n:=\frac{s_0}{\sqrt{32N}}>0.
+\end{aligned}
+\tag{25.36.5}
+$$
+
+理由是 $z$ 与 $w_i$ 垂直于 $b$ 的分量长度分别为 $\sqrt{1-d^2}$ 与 $\sqrt{1-(b\cdot w_i)^2}$，而 $q_1$ 概率为一减其旋转标量积后的一半，所以整个概率范围正是这两个长度的乘积。再用 $|b\cdot w_i|\le1-a/2$ 和 $1-(1-a/2)^2\ge a/2$。这也定量保证了非恒定电流情形。
+
+为保持原统计过程，直接核对 [Native Finite Precision Continuation Kernels，§2.2，(2.11)–(2.12)](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_FINITE_PRECISION_CONTINUATION_KERNELS.md) 的原 current/holding law 与 [Continuation V，§§8.1–8.3，(8.3)–(8.9)](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_V.md) 的成熟两状态周期计算在此地址 $1$ 上的参数。在无节点的单调质量段，原速率恰为
+
+$$
+\lambda_{01}(t)=\frac{[p_i'(t)]_+}{1-p_i(t)},\qquad
+\lambda_{10}(t)=\frac{[-p_i'(t)]_+}{p_i(t)}.
+$$
+
+这不是 Born 重采样。原 holding formula 等价地说：离开前的存活概率是该配置结束质量与开始质量之比。完整无节点数学周期内，速率和的积分为
+
+$$
+\int_0^P(\lambda_{01}+\lambda_{10})\,dt
+ =\ln\frac{1-\ell_i}{1-h_i}+\ln\frac{h_i}{\ell_i}.
+$$
+
+两种入口条件下末端 $q_1$ 概率之差满足 $D'=-(\lambda_{01}+\lambda_{10})D$，故一个周期的差收缩因子为
+
+$$
+r_i=\frac{\ell_i(1-h_i)}{h_i(1-\ell_i)}.
+$$
+
+周期末波精确返回，equivariance 使 $(1-p_i,p_i)$ 成为平稳行。具有这个平稳行和这个差收缩因子的两状态随机矩阵于是为
+
+$$
+T_{{\rm period},i}=\Pi_i+r_i(I-\Pi_i),\qquad
+\Pi_i=\begin{pmatrix}1-p_i&p_i\\1-p_i&p_i\end{pmatrix}.
+$$
+
+若 $\ell_i=0$ 或 $h_i=1$，在相应确定的数学时刻某一配置的无条件质量为零。两种入口颜色的先验质量均为正，所以两种条件律在该时刻必须集中于同一单配置。原 node-safe common future kernel 使其后续行相同，故取 $r_i=0$，同一矩阵公式仍成立。没有对零概率入口定义实际条件状态，也没有节点重采样；这同时是原 holding law 的零存活极限。
+
+由于同一 Hamiltonian 连续穿过调用而不 reset，速率每周期重复，实际十调用 endpoint kernel 正好是
+
+$$
+T_i=\Pi_i+\rho_i(I-\Pi_i),\qquad \rho_i=r_i^3\in[0,1).
+\tag{25.36.6}
+$$
+
+这是引理 25.35.5 周期公式在实际原地址块上的核算，原 innovations 保持原样。其定量 gap 来自
+
+$$
+1-r_i=\frac{h_i-\ell_i}{h_i(1-\ell_i)}\ge h_i-\ell_i,
+\qquad 1-\rho_i\ge1-r_i\ge g_n.
+\tag{25.36.7}
+$$
+
+非恒定范围保证 $h_i>0$、$\ell_i<1$，所以分母严格为正且至多为一。在节点情形 $r_i=0$，同一不等式亦成立。
+
+（五）单个共同 future-only decoder 的相关统计。令
+
+$$
+R_n=\left\lceil\frac{40}{g_n\Delta_n^2}\right\rceil,
+\qquad t_n=u(1^{10})^{R_n}.
+\tag{25.36.8}
+$$
+
+这是一个共同的、非空的正原生整数调用词。对 $1\le j\le R_n$，令 $Y_j$ 是未来尾部位置 $|u|+10j$ 的原 emitted seam 为 $q_1$ 的指标。它们属于同一个原 chronological output tuple，解码器忽略其余坐标，不读取切口配置、过去请求或过去输出。
+
+成员 $i$ 的这个 endpoint chain 具有无条件平稳入口 $(1-p_i,p_i)$ 和转移 $T_i$，并不是独立样本。由 $T_i^k=\Pi_i+\rho_i^k(I-\Pi_i)$，有
+
+$$
+\begin{gathered}
+\mathbb E_iY_j=p_i,\qquad
+\mathbb E_i[Y_{j+k}\mid Y_j]=p_i+\rho_i^k(Y_j-p_i),\\
+\operatorname{Cov}_i(Y_j,Y_k)=p_i(1-p_i)\rho_i^{|j-k|}.
+\end{gathered}
+$$
+
+对这个实际相关序列求几何协方差和，得到
+
+$$
+\operatorname{Var}_i\!\left(\frac1{R_n}\sum_{j=1}^{R_n}Y_j\right)
+ \le\frac{1+\rho_i}{4R_n(1-\rho_i)}
+ \le\frac1{2R_ng_n}.
+$$
+
+取 $\mathscr D_n$ 为样本均值最近的 $p_i$，并固定确定性 tie rule。它是所列未来 seams 的可测函数；对完整载体的每个 seam tuple 均可用同一规则定义，其他配置的指标取零。误判成员 $i$ 必须使均值偏离 $p_i$ 至少 $\Delta_n/2$。成熟 Chebyshev 不等式在这里给
+
+$$
+\Pr_i\{\mathscr D_n\ne i\}
+ \le\frac2{R_ng_n\Delta_n^2}\le\frac1{20}.
+\tag{25.36.9}
+$$
+
+概率是原 ready-source 的 $a_it_n$ 无条件律。最后发送原 stop，保留已经发出的 seams、全部原终端标签、literal $W$ 与全部原 zero/failure/refusal/stop/alarm 坐标。这里没有重复准备、切口 $Q$ 的取得、隐藏标签、后选择或新增控制。
+
+（六）所有 $n$ 统一的原调用预算。为给出仅依赖源的常数关系，置
+
+$$
+\begin{gathered}
+C_R=\frac{40960\sqrt{32}}{s_0},\qquad
+A_0=1+\ln(64/\delta_0)+2\ln2+\ln\beta_0,\\
+\lambda=\frac92+2\log_2\beta_0,\qquad
+C_T=C_{\rm pos}A_0^4+10+10C_R\delta_0^{-2}.
+\end{gathered}
+$$
+
+(25.36.3)–(25.36.8) 给
+
+$$
+\begin{aligned}
+R_n&\le1+C_RN^{9/2}\delta_n^{-2},\\
+|u|&\le C_{\rm pos}\bigl(1+\ln(64N^2/\delta_n)\bigr)^4
+ \le C_{\rm pos}A_0^4n^4.
+\end{aligned}
+$$
+
+用 $N\le2^n$、$\delta_n=\delta_0\beta_0^{-n}$、$n^4\le2^{4n}$ 和 $\lambda\ge4$，得到
+
+$$
+|t_n|=|u|+10R_n\le C_T2^{\lambda n}.
+$$
+
+一次固定
+
+$$
+K=\max\{1,\lambda,\log_2C_T\}>0,
+$$
+
+则 $N\ge2$ 时对每个 $n\ge1$ 有 $|t_n|\le2^{Kn+K}$；$N=1$ 的单调用尾词亦满足此界，没有小 $n$ 的渐近例外。
+
+常数依赖顺序为：$L$ 由前节两个正词先于 $n$ 固定；$M,s_0$ 仅由固定代数源决定；$\delta_0,\beta_0$ 由这些数据和 $L$ 决定；$C_{\rm SK}$ 以及 $C_{\rm pos}$ 只由固定 normalized gates 和一次固定的初始近似表决定；其余常数只依赖这些常数与固定成功阈值。它们均不依赖 $n$、未知成员、sampler、数值精度输入、取得的切口或物理实现。证明中的原源特定定量联系是：同层实际坐标的高度给出分离尺度，一个共同正尾部据此同时取得 Born 质量间隔与原周期核 gap，从而把相关未来接缝解码的调用量统一压在指数界内。以上成熟供应工具各按其原假设使用，不另作为独立的新增数学贡献。证毕。
+
+### 25.36.3 有限总预算服务的精确持久状态推论
+
+**推论 25.36.3（固定有限预算与指定早期切口）。** 取定理 25.36.2 的同一 $L,K$。令 $H$ 为总调用预算；对每个给定的 $H$，允许单独选择一个依赖 $H$ 的固定因果服务 $A_H$。假设它只接收实际已经到达的原请求，以 fresh independent randomness 随机化，并对预算 $H$ 内每个合法执行的**整个原 chronological joint law** 满足 TV 误差至多 $1/10$。原完整输出和 stop 仍按定义 25.36.1 保留。所有可影响未来核的持久资源均计入 charged state：保留的随机性、controller/program position、counter、clock、可重读输入输出及 archives；不供给未到达标签、完整未来输入词或免费的外部 time-index service。这里的 $H$ 是服务可依赖的固定参数，不能充当未计费的可变未来控制资源。
+
+以一个原 stop request 的保守槽位计，定义
+
+$$
+H_n=Ln+\left\lceil2^{Kn+K}\right\rceil+1.
+\tag{25.36.10}
+$$
+
+若预算只计单位脉冲，额外的一个槽位可闲置。对每个 $n\ge1$、每个 $H\ge H_n$ 和每个满足上述合同的 $A_H$，取唯一指定切口 $m=Ln$，即第 $m$ 个 seam 已输出、下一请求尚未到达之时。所有测试前缀在同一原 schedule、同一 $H$ 下到达这一切口。令 $S_H(m)$ 是该切口完整可达持久状态集合，并令
+
+$$
+B_H(m)=\left\lceil\log_2|S_H(m)|\right\rceil,
+$$
+
+状态集无限时取 $+\infty$。则
+
+$$
+B_H(Ln)\ge n-\log_2(4n+1)+\log_2(17/20).
+\tag{25.36.11}
+$$
+
+这是逐个 $H$、逐个 $A_H$ 的断言，不要求一个 sampler 同时处理无界 horizon。它约束同一个指定早期切口的持久容量，不是历史各层状态集合的总和；后处理器仅读未来输出，不能通过解码器免费补入持久过去信息。
+
+证明。每个 $a_it_n$ 再接原 stop 都在 $H_n$ 内，故在给定的 $H\ge H_n$ 内合法。把服务的整个联合律投影到未来 seam coordinates，再施加同一个固定 $\mathscr D_n$；成熟的 TV 收缩与 (25.36.9) 给每个成员的服务解码成功率至少
+
+$$
+\frac{19}{20}-\frac1{10}=\frac{17}{20}.
+$$
+
+因果性使前缀 $a_i$ 后的切口分布 $\alpha_i(s)$ 独立于尚未到达的共同尾部。固定 $s,H$、共同未来请求及 schedule 后，把新独立随机性和固定解码器合成核 $d_s(i)$。每个影响未来的保留资源均已计入 $s$，所以相同 $s$ 对应相同未来核；解码器恰返回一个标签，故 $\sum_i d_s(i)=1$，用较弱的 $\le1$ 也足够。
+
+若 $S=|S_H(Ln)|$ 有限，对测试标签赋数学上的均匀先验。这只是原各执行律的计数混合，不是源的新增输入或随机制备。将 [Original Control Event Memory，Theorem 4.3，(EM.13)](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_EVENT_MEMORY_AND_COARSE_ALIASING.md) 的成熟有限消息计数对应为“成员 $i$—同预算同切口状态 $s$—共同未来核 $d_s$”，由 $\alpha_i(s)\le1$ 得
+
+$$
+\begin{aligned}
+\frac1N\sum_i
+ \Pr_{A_H}\{\mathscr D_n=i\mid\text{input }a_it_n\}
+ &=\frac1N\sum_s\sum_i\alpha_i(s)d_s(i)\\
+ &\le\frac1N\sum_s\sum_i d_s(i)
+ \le\frac SN.
+\end{aligned}
+$$
+
+故 $S\ge(17/20)N$，结合 $N\ge2^n/(4n+1)$ 即得 (25.36.11)。状态集无限时结论立即成立。完整联合律前提保障了未来相关坐标的误差控制；只比较 terminal marginal 不供应这一推导。
+
+还有一个明确的预算到切口选择。令
+
+$$
+C_H=L+2^K+2.
+$$
+
+由于 $K\ge1$ 且 $n\le2^{Kn}$，(25.36.10) 给 $H_n\le C_H2^{Kn}$。因此对每个 $H\ge C_H2^K$，取
+
+$$
+n(H)=\left\lfloor\frac{\log_2(H/C_H)}K\right\rfloor\ge1,
+\qquad m(H)=Ln(H).
+\tag{25.36.12}
+$$
+
+于是 $H_{n(H)}\le H$，(25.36.11) 在这个单一指定切口 $m(H)$ 成立。这给出随 $H$ 对数增长、带所示对数修正项的容量界，切口本身亦为 $\log H$ 的量级。对更小 $H$ 不由 (25.36.12) 断言界；适用于所有预算的精确表述仍是逐个 $n$ 的条件 $H\ge H_n$ 与 (25.36.11)。这只是同一个原生定量共同尾桥的标签—状态计数后果，不另计一个独立增益。证毕。
+
+## 追加锚（本行以下为增补区）

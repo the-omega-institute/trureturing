@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c5da3fa58957663993ad471eea060ea45ad3cc168592ad131f17fd01288f028f
+  normalized_sha256: sha256:c5da3fa58957663993ad471eea060ea45ad3cc168592ad131f17fd01288f028f
+cas_ref: sha256:c5da3fa58957663993ad471eea060ea45ad3cc168592ad131f17fd01288f028f
+coverage_gids:
+  - gid: D5/S3/Arith/Robin/ForwardKernel/CuspCrossEnergy.cuspCrossEnergy_estimate
+    target_statement_id: sha256:3d051638d02874da68ca717d5430113bfebc75cfc0d95ad5e301fa5de587087d
+receipts:
+  unresolved_subitems: []

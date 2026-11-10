@@ -5,7 +5,7 @@ year: 2026
 title: "Evolution algebras: a survey of results and a list of open problems"
 doi: 10.48550/arXiv.2610.22248
 url: https://arxiv.org/abs/2610.22248v1
-claim: "Conjecture 4 asks for the simple complex evolution-algebra automorphism maximum max{n!, n(2^n-1)}; Theorem 4 and Conjecture 3 concern perfect algebra automorphisms; Question 46 asks whether dense square forces uniqueness of a Hilbert natural orthonormal basis; Question 14 asks whether an infinite natural-basis quotient can coexist with finite full automorphisms; Question 31 asks about realizing arbitrary linear algebraic groups as full evolution-algebra automorphism groups or group schemes."
+claim: "Conjecture 4 asks for the simple complex evolution-algebra automorphism maximum max{n!, n(2^n-1)}; Theorem 4 and Conjecture 3 concern perfect algebra automorphisms; Question 46 asks whether dense square forces uniqueness of a Hilbert natural orthonormal basis; Question 14 asks whether an infinite natural-basis quotient can coexist with finite full automorphisms; Question 31 asks about realizing arbitrary linear algebraic groups as full evolution-algebra automorphism groups or group schemes; Question 12 asks whether intrinsic heredity is preserved by direct sums."
 strata_touched:
   - D5/S3/QuadraticForms/EvolutionAlgebras/SimpleEvolutionAutomorphismMaximum
   - D5/S3/QuadraticForms/EvolutionAlgebras/FiniteAutomorphismsInfiniteNaturalBases
@@ -15,6 +15,8 @@ strata_touched:
   - D5/S3/QuadraticForms/EvolutionAlgebras/NilpotencySpectrumRefutation
   - D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionAutomorphismTangentBridge
   - D5/S3/QuadraticForms/EvolutionAlgebras/AlgebraicGroupRealizationRefutation
+  - D5/S3/QuadraticForms/EvolutionAlgebras/DirectSumHeredityRefutation
+  - D5/S3/QuadraticForms/EvolutionAlgebras/DerivationRadicalQuotient
 license: citation-only
 triage: anchor
 ---
@@ -128,3 +130,56 @@ of the semisimple derivation classification and the tangent construction.
 The full SLn family and the abstract-group question are not formalized here.
 The literature screen recorded in issue #21840 is partial; exhaustive priority
 and journal/preprint equivalence remain ASSUMED-UNVERIFIED.
+
+## Question 12: intrinsic heredity and direct sums
+
+Section 2.2.2, Question 12 (Hereditary evolution algebras), p. 22 asks:
+
+> Characterise the evolution algebras all of whose subalgebras are evolution algebras. Is this property detected by the graphs? Is it preserved by tensor products and direct sums? What about ideals?
+
+Here heredity requires every multiplication-closed linear subspace to admit
+its own natural basis; that basis need not extend to one of the ambient algebra.
+The source permits arbitrary fields and assumes finite dimension unless stated
+otherwise.
+
+The refutation of the affirmative direct-sum assertion in
+`D5/S3/QuadraticForms/EvolutionAlgebras/DirectSumHeredityRefutation`
+is repository-derived. It uses rational hereditary factors of dimensions four
+and three whose direct sum contains a subalgebra with no intrinsic natural basis.
+The characterization, graph-detection, tensor-product and ideal clauses remain
+open in this result.
+
+## Zero-annihilator derivations and simple ideals
+
+Corollary 8 of the supplied released v2 note, *A negative answer to Question 31:
+special linear obstructions for evolution algebras* (3 November 2026), by
+Haobo Ma, then Wenlin Zhang, gives the zero-annihilator radical-quotient and
+simple-ideal consequences. This note is a distinct source from the survey
+above; its byline and attribution are preserved, without a priority claim.
+
+`DerivationRadicalQuotient.result` treats every finite-dimensional actual
+evolution algebra over every algebraically closed characteristic-zero field
+with zero annihilator. Its actual derivation Lie algebra modulo its actual
+solvable radical is Lie equivalent to a finite direct sum of standard
+orthogonal algebras of sizes at least three. The empty sum is permitted.
+No semisimplicity, perfectness, unit, associativity or square-dimension
+condition is assumed. The old semisimple block theorem retains its original
+hypothesis.
+
+The companion `simple_ideal_type` proves that every actual nonabelian simple
+ideal has type so3 or so_m with m at least five. The classical size-four
+orthogonal algebra is explicitly split into two size-three algebras.
+`simple_ideal_not_sl3` and `simple_ideal_not_g2` exclude actual sl3 and mathlib's
+actual Serre-presentation G2, respectively. For G2, the proof constructs a
+surjection to a proved fourteen-dimensional matrix image; a hypothetical
+simple-ideal equivalence supplies simplicity and makes that map an actual
+Lie equivalence. An unconditional Serre normal-form or dimension theorem is
+not claimed. These exclusions concern ideals, not arbitrary subalgebras or
+faithful actions.
+
+The proof reuses the canonical derivation equations, natural-basis
+normalization, and pointwise-stabilizer quotient maps. Solvable extensions,
+orthogonal simplicity and dimensions, the size-four splitting, and the G2
+representation are classical ingredients. The higher special-linear family,
+orthogonal full-functor realizations, distinction examples and Cartier
+smoothness remain outside this K2 formalization.

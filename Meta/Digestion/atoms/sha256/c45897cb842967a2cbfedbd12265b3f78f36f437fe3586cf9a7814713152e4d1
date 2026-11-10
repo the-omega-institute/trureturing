@@ -1,0 +1,35 @@
+**Corollary 209.4 (the unpaid $B3B$ coordinate has zero actual limit).** Let $\beta=e_B-\frac14\mathbf1_{\mathcal L}$. For each $j\in\mathcal L$, the unrefined lower-bound expression from (208.5) satisfies
+
+$$
+\frac{\pi_j}{2}\bigl(A_{j,n}+B_{j,n}-H_{j,n}\bigr)
+\longrightarrow
+-\frac3{32}\int_G f_jv\chi\,dm<0,
+\tag{209.15}
+$$
+
+where $A_{j,n}=G_{j,n}^+(\beta,\beta)$, $B_{j,n}=G_{j,n}^-(\beta,\beta)$ and $H_{j,n}=H_{\chi,j,n}(\beta,\beta)$. At the same time,
+
+$$
+\Delta(D_n)_{BjB}\longrightarrow0,
+\qquad
+\|\Delta(D_n)\|_{\max}\longrightarrow0.
+\tag{209.16}
+$$
+
+*Proof.* The hard product identity in (208.27) gives $F_{\beta\odot\beta}=3/16$. Therefore (209.3) gives
+
+$$
+\Lambda_j(\beta,\beta)=\frac3{16\pi_j}\int_Gf_jv\chi\,dm.
+\tag{209.17}
+$$
+
+The first limit in (209.15) follows from Proposition 209.2 and (209.17), and its strict sign follows from $f_jw>0$ almost everywhere. The inequality (208.5) still holds for each $D_n$, but its right side has the negative limit (209.15).
+
+For (209.16), approximate the original three-time density by finite sums of rectangular $L^1(m^3)$ tensors as in Appendix II §123.2. Every coefficient
+
+$$
+\mathcal C(u_{n,y},u_{n,z},u_{n,k})
+$$
+
+then converges to $\mathcal C(f_y,f_z,f_k)$, with the third factor interpreted through the same partition's actual $P u_{n,k}$. Hence all sixty-four residuals converge to zero, including the displayed $BjB$ coordinate. The negative limit in (209.15) is therefore a lower-bound slack, not a residual obstruction. $\square$
+

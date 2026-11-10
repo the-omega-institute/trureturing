@@ -1,0 +1,73 @@
+**定理 62.1（全部局部酉元保持同一原残差）。** 在61.1的完整条件下，取其共同 $\sigma$，置 $\jmath=\sigma i$、$K_\sigma(a,b)=\jmath[a,b]/2$。对每个原 $W\in A$，准确复用48.1定义
+
+$$
+X(W)=(W+W^*)/2,\quad Y(W)=(W-W^*)/(2\jmath),\qquad
+F(W)=D(X(W),Y(W))-K_\sigma(X(W),Y(W)).
+\tag{62.1}
+$$
+
+则对每个有限阶段酉元及任意原 $W$，
+
+$$
+\boxed{F(UW)=F(W)
+\qquad(U\in\bigcup_n\mathcal U(A_n)).}
+\tag{62.2}
+$$
+
+证明。先支付每个相位的实际PB。若 $H$ 是某有限阶段内迹零的自伴酉元，正负本征空间等维；交换两组正交基给该阶段内实际 $e^2=1$、$He=-eH$。因此61.2供应全部 $D(RH,a)=K_\sigma(RH,a)$，第二输入 $a$ 遍历整个原 $E$，不只遍历有限阶段。$H=1$ 时由全单位零行供应同式。
+
+任取 $\alpha\in[-\pi,\pi]$，令 $r=\sigma\tan(\alpha/4)H$、$C_r=(1+\jmath r)(1-\jmath r)^{-1}$。参数有限且模不超过一；已知乘法的函数演算给
+
+$$
+C_r=\cos(\alpha/2)1+i\sin(\alpha/2)H,
+\qquad C_r^2=e^{i\alpha H}.
+\tag{62.3}
+$$
+
+对每个当前原标签 $T\in A$，取实际逆标签
+
+$$
+(1-\jmath r)^{-1}T=X+\jmath Y,\qquad X,Y\in E.
+$$
+
+上述整行分别给这两份实际内值
+
+$$
+D(r,X)=K_\sigma(r,X),\qquad D(r,Y)=K_\sigma(r,Y).
+\tag{62.4}
+$$
+
+直接应用48.2得 $F(C_rT)=F(T)$。再对当前标签 $C_rT$ 重新取逆标签的两份原实虚部，并逐份用同一整行支付62.4，第二次48.2给
+
+$$
+F(e^{i\alpha H}T)=F(C_r^2T)=F(T).
+\tag{62.5}
+$$
+
+包括 $\alpha=\pm\pi$；没有正切极点。每次两个未知内误差都是由整行准确为零，没有以极限消除任一误差。
+
+现在只用一个有限相位分解。固定 $U\in\mathcal U(A_n)$，有限维谱定理给已知矩阵酉元 $V$ 及 $\theta_\epsilon\in[-\pi,\pi]$，使
+
+$$
+U=V\operatorname{diag}(e^{i\theta_\epsilon})V^*,
+\qquad\epsilon\in\{\pm1\}^n.
+$$
+
+对 $S\subset\{1,\ldots,n\}$ 定义
+
+$$
+\chi_S(\epsilon)=\prod_{k\in S}\epsilon_k,\quad
+\alpha_S=2^{-n}\sum_\epsilon\theta_\epsilon\chi_S(\epsilon),\quad
+H_S=V\operatorname{diag}(\chi_S)V^*.
+\tag{62.6}
+$$
+
+有限字符正交式 $2^{-n}\sum_\epsilon\chi_S(\epsilon)\chi_T(\epsilon)=\delta_{ST}$ 给 $\theta_\epsilon=\sum_S\alpha_S\chi_S(\epsilon)$，并且 $|\alpha_S|\le\pi$。这些已知 $H_S$ 彼此交换，故准确有
+
+$$
+U=\prod_{S\subset\{1,\ldots,n\}}e^{i\alpha_SH_S}.
+\tag{62.7}
+$$
+
+$H_\varnothing=1$，其余 $H_S$ 都是配平反射；其实际伴轴可直接取 $V$ 共轭某个 $S$ 中位置的张量Pauli翻转。这里 $V$ 仅用于制造已知标签，不使用旧 $D$ 的协变性。把62.5依次用于有限乘积的每个当前原标签，至多 $2^{n+1}$ 次准确Cayley运输便给62.2。没有稠密子群到未知函数的连续延拓，也不要求步数关于 $n$ 一致有界。∎
+

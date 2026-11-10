@@ -6,7 +6,8 @@
    utility: none
    digest: Bloch coordinates and an exact joint parent for four noisy qubit POVMs. -/
 /-
-  B_formula: proof_shape: bind-only; escape_witness: none; consumer: scalarB_det.
+  B_formula: proof_shape: bind-only; escape_witness: none; consumer: B_add, B_smul,
+    trace_B_mul, scalarB_hermitian, scalarB_det, scalarB_norm_square.
   B_smul: proof_shape: bind-only; escape_witness: none; consumer: B_real_smul.
   B_real_smul: proof_shape: bind-only; escape_witness: none; consumer: weighted_noisy_unbiased.
   B_neg: proof_shape: bind-only; escape_witness: none;
@@ -32,20 +33,23 @@
       statement_id: sha256:1589788918111821cb994915047b9b43151423396895fcfd849105cc8fe4d481
     D5/S3/Quantum/QuantumChannels/ConcealmentKernelNecessityRefutation.IsPOVM
       statement_id: sha256:218e2b42c4dc29468db56af33ad277eb32b8ed575533012439ed233131c5efa1
-    D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.pauliMatrix
-      statement_id: sha256:7f853eaeda888a9eccbab5fe25474fc62b519a3229013530986887de25cb28d7
     D5/S3/Quantum/Information/ActualPureQubitGeometry.bloch
       statement_id: sha256:cc88c714292e1a1b7f96163a344340fa2144c8b2caffc5cb2196fb9df44fd3e5
     D5/S3/Quantum/FiniteDimensional.qubitX
       statement_id: sha256:cfaddf4a17693b52013e93be8cd6559e7021ed57ca0305492712468b57f882f7
     D5/S3/Quantum/FiniteDimensional.qubitZ
       statement_id: sha256:381a2bec567456715f58fe6c0c413d59d37882b8499fc81a486c49e7c081d78c
+  Shared B, scalarB, and the Pauli carrier are supplied by the generic QubitBloch and
+  PauliMatrix sources. B_formula consumes QubitBloch's single coordinate-matrix proof.
   Same-delivery prerequisite: FourVectorSignSumBound.four_vector_inequality.
   Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/14767.
+  B_formula escape audit unfinished; shared Reg inspection boundary:
+    https://github.com/the-omega-institute/trureturing/issues/25908.
   Utility is none: the universal analytic parent construction is the main content;
   finite identities are consumed in its proof and in the extremal certificates.
 -/
 import D5.S3.Geometry.FourVectorSignSumBound
+import D5.S3.Quantum.Measurement.Bloch.QubitBloch
 import D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
 import D5.S3.Quantum.Information.ActualPureQubitGeometry
 set_option autoImplicit false
@@ -56,7 +60,6 @@ open Matrix
 open D5.S3.Combinatorics.IsingUniquenessSets (sgn)
 open scoped BigOperators ComplexOrder MatrixOrder Matrix.Norms.L2Operator
 open D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation (IsPOVM)
-open D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence (pauliMatrix)
 open D5.S3.Quantum.FiniteDimensional
 open D5.S3.Quantum.Information.ActualPureQubitCostInfimum (bloch)
 open D5.S3.Geometry.FourVectorSignSumBound
@@ -67,15 +70,9 @@ def Compatible4 (E : (Fin 4 → Bool → Matrix (Fin 2) (Fin 2) ℂ)) : Prop :=
 def noisy (s : ℝ) (E : (Fin 4 → Bool → Matrix (Fin 2) (Fin 2) ℂ)) : (Fin 4 → Bool → Matrix (Fin 2) (Fin 2) ℂ) :=
   fun i b => s • E i b + (1 - s) • ((1 / 2 : ℂ) • (1 : (Matrix (Fin 2) (Fin 2) ℂ)))
 def endpoint : ℝ := 2 / Real.sqrt 13
-def B (a : (EuclideanSpace ℝ (Fin 3))) : (Matrix (Fin 2) (Fin 2) ℂ) :=
-  (a 0 : ℂ) • pauliMatrix .X + (a 1 : ℂ) • pauliMatrix .Y +
-    (a 2 : ℂ) • pauliMatrix .Z
 theorem B_formula (a : (EuclideanSpace ℝ (Fin 3))) :
     B a = !![(a 2 : ℂ), (a 0 : ℂ) - Complex.I * (a 1 : ℂ);
-      (a 0 : ℂ) + Complex.I * (a 1 : ℂ), -(a 2 : ℂ)] := by
-  ext i j
-  fin_cases i <;> fin_cases j <;>
-    simp [B, pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two] <;> ring
+      (a 0 : ℂ) + Complex.I * (a 1 : ℂ), -(a 2 : ℂ)] := B_formula_core a
 @[simp] theorem B_zero : B (0 : (EuclideanSpace ℝ (Fin 3))) = 0 := by
   simp [B]
 @[simp] private theorem B_add (a b : (EuclideanSpace ℝ (Fin 3))) : B (a + b) = B a + B b := by
@@ -103,7 +100,6 @@ theorem trace_B_mul (a b : (EuclideanSpace ℝ (Fin 3))) : Matrix.trace (B a * B
   apply Complex.ext <;>
     simp [B_formula, Matrix.trace, Matrix.mul_apply, Fin.sum_univ_two,
       PiLp.inner_apply, Fin.sum_univ_three, Complex.mul_re, Complex.mul_im] <;> ring
-def scalarB (t : ℝ) (a : (EuclideanSpace ℝ (Fin 3))) : (Matrix (Fin 2) (Fin 2) ℂ) := (t : ℂ) • (1 : (Matrix (Fin 2) (Fin 2) ℂ)) + B a
 theorem scalarB_hermitian (t : ℝ) (a : (EuclideanSpace ℝ (Fin 3))) : (scalarB t a).IsHermitian := by
   apply Matrix.IsHermitian.ext
   intro i j

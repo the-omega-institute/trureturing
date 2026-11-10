@@ -1,0 +1,26 @@
+**定理 50.1（原代数中的全行等式）。** 在 $O\subset O_\sigma$ 的局部框架上，任取实 $g\in C_c(O)$ 及实际 $r=gp$、图外延零，则对每个实际 $a\in E$，
+
+$$
+D(r,a)=K_\sigma(r,a)
+\quad\text{在整个原 }A\text{ 中成立}.
+\tag{50.1}
+$$
+
+证明。固定实际 $d=D(r,a),t=r\circ a$，保留PB $(a;r,0)$ 的两份真正复外层标签
+
+$$
+W_+=r-d+jt,\qquad W_-=r+d-jt.
+\tag{50.2}
+$$
+
+在整个 $O$，43.1给 $q\pi_x(d)q=0$，也有 $q\pi_x(t)q=0$，故两者满足49.1。49.1分别识别两份真实外值的像。固定活跃点，记 $R=\mu p,T=\pi_xa,d_x=\pi_xd$。PB遂给
+
+$$
+2R\circ d_x
+=K_\sigma(R-d_x,R\circ T)-K_\sigma(R+d_x,-R\circ T)
+=2R\circ K_\sigma(R,T).
+\tag{50.3}
+$$
+
+这是先识别两份实际外值、再展开已知交换子。$d_x-K_\sigma(R,T)\in\mathbb Rp+H_e(qH_x)$，$\mu\ne0$ 时 $R\circ-$ 在该空间单射；$\mu=0$ 时43.2直接给零。对所有其他不可约表示，$\pi r=0$，同一旧输出由零槽为零，比较交换子也为零。全族分离给原元素等式50.1。其第二输入的射线对角、连接及任意有界补角背景都未受限制。∎
+

@@ -1,0 +1,25 @@
+**定义 11.1（A dominant part and the unchanged full carrier）。** Let
+$[m]=C_0\sqcup C_1\sqcup\cdots\sqcup C_r$ be a labelled partition,
+$p_a=|C_a|\geq1$, and $H=K_{p_0,p_1,\ldots,p_r}$. Assume
+
+$$
+r\geq3,\qquad m=\sum_{a=0}^r p_a\text{ is even},\qquad
+P=p_0>R=\sum_{a=1}^r p_a.
+\tag{11.1}
+$$
+
+For every integer $S\geq1$, put $s=2S$, $N=ms$, $k=mS$, and use
+exactly the complete complex Boolean space $\mathcal H_{mS}$, ordinary
+positive token adjacency $K=K_{mS}$, original blocks $B_i$ of size
+$2S$, and within-block permutation projection $P_{\mathrm{sym}}$ of
+Definitions 1.1–1.2. Write
+
+$$
+E=\lambda_{\min}(K),\qquad \mathcal N=\ker P_{\mathrm{sym}},\qquad
+L_a=p_aS,\qquad W=\sum_{a=1}^rL_a=RS.
+\tag{11.2}
+$$
+
+A graph part $C_a$ consists of $p_a$ original Boolean blocks; none of
+those blocks is replaced by a block of size $2L_a$.
+

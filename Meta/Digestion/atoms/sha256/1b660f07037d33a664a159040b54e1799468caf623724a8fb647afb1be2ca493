@@ -1,0 +1,50 @@
+**Theorem 47.1 (late corrections and final fixed-input limit).** On every actual sequence in Theorem 42.2, put $h_s=-\epsilon_c(s)/a=r_ss^8/a$. Then
+
+$$
+s^i\|(\mathcal B_s(h_s)^\ast-\mathcal N_s)g_i\|_2=o(s^4)
+\quad(i=2,3),\qquad
+\|(\mathcal B_s(h_s)^\ast-\mathcal N_0)g_4\|_2\longrightarrow0.
+\tag{47.1}
+$$
+
+These statements include bounded-$r_s$ sequences.
+
+Proof. Theorem 44.1 gives $g_2\in L^1\cap L^2$. The actual-path estimate (29.4) therefore bounds its unweighted late error by $C(h_s+s^5)$. Since $h_s=o(s^4)$, its factor $s^2$ proves the first assertion for $i=2$.
+
+For $g_3$, interpolate (29.5)'s $1\to2$ and $2\to2$ estimates at $p=6/5$. Symmetry and composition with the $2\to\infty$ estimate give
+
+$$
+\begin{array}{c|cc}
+& p\to2&p\to\infty\\ \hline
+0<t\le T&Ct^{-7/6}&Ct^{-35/12}\\
+t\ge T&Cs^{4/3}t^{-1/2}&Cs^{10/3}t^{-5/4}.
+\end{array}
+\tag{47.2}
+$$
+
+No Markov assertion for the shifted raw-measure semigroup is used. On $(0,1)$ use $L^2$ contraction and $\|F_s\|_\infty\le C$. On $(1,T)$, the replacement $e^{-h_st}-1$ in the short field costs
+
+$$
+Ch_s\|g_3\|_{6/5}\int_1^\infty t^{1-35/12}dt,
+\tag{47.3}
+$$
+
+which is finite. The short-field return past $T$ costs
+$Cs^{10/3}\int_T^\infty t^{-5/4}dt\,\|g_3\|_{6/5}
+=Cs^{23/6}\|g_3\|_{6/5}$.
+
+The long multiplier has supremum $Cs^5$. Its return below $T$ costs
+$Cs^5(\|g_3\|_2+\|g_3\|_{6/5})$, because $t^{-7/6}$ is integrable above one. Past $T$ its cost is at most
+
+$$
+Cs^{19/3}\|g_3\|_{6/5}
+ \int_T^\infty e^{-h_st}t^{-1/2}dt
+ \le Cs^{19/3}h_s^{-1/2}\|g_3\|_{6/5}
+ \le Cs^{7/3}\|g_3\|_{6/5}.
+\tag{47.4}
+$$
+
+The last inequality uses only the owned actual $r_s\ge c>0$. Hence the $g_3$ error is $O(h_s+s^{7/3})$; its factor $s^3$ is $o(s^4)$. Both original deaths remain in every heat operator.
+
+Finally (29.4) gives convergence on the dense class $L^1\cap L^2$. P (104.2) gives uniform $L^2$ bounds for $\mathcal B_s(h_s)^\ast$ along $h_s\ge cs^8$, $h_s\to0$; P (104.9) gives norm convergence $\mathcal N_s\to\mathcal N_0$. Approximate the fixed $g_4$ in $L^2$ by a member of the dense class. Uniform boundedness bounds the approximation error independently of $s$; first take $s\to0$, then the approximation error to zero. This proves the strong limit in (47.1), without a rate or a weight on $g_4$. $\square$
+

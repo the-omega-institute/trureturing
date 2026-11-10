@@ -69,7 +69,7 @@ theorem positive_gap (S : Spectrum) : ∃ b : ℝ, 0 < b ∧ ∀ j, b < S.gamma 
   · exact (min_le_left _ _).trans_lt (hbs j (by simpa [Spectrum.cut] using hj))
   · exact (min_le_right _ _).trans_lt (by linarith)
 
-private lemma count_mono (S : Spectrum) : Monotone (fun t => (S.N t : ℝ)) := by
+lemma count_mono (S : Spectrum) : Monotone (fun t => (S.N t : ℝ)) := by
   classical
   intro u v huv
   change (S.N u : ℝ) ≤ (S.N v : ℝ)
@@ -78,6 +78,16 @@ private lemma count_mono (S : Spectrum) : Monotone (fun t => (S.N t : ℝ)) := b
     intro j hj
     simpa only [Spectrum.cut, Set.Finite.mem_toFinset, Set.mem_ofPred_eq] using
       (show S.gamma j ≤ u from by simpa [Spectrum.cut] using hj).trans huv)
+
+lemma count_upper (S : Spectrum) (hN : CountAsymptotic S) :
+    ∃ B : ℝ, 0 < B ∧ ∀ᶠ M : ℝ in atTop,
+      (S.N M : ℝ) ≤ B * (M * Real.log M) := by
+  let B : ℝ := 1 / (2 * Real.pi) + 1
+  have hB : 0 < B := by dsimp [B]; positivity
+  refine ⟨B, hB, ?_⟩
+  filter_upwards [hN.eventually (gt_mem_nhds (by change 1 / (2 * Real.pi) < 1 / (2 * Real.pi) + 1; linarith)),
+    eventually_gt_atTop (1 : ℝ)] with M hM hM1
+  exact (div_le_iff₀ (mul_pos (by linarith) (Real.log_pos hM1))).mp hM.le
 
 /-- Logarithmic counting growth gives a uniform inverse-square tail bound. -/
 theorem inverse_square_tail (S : Spectrum) (hN : CountAsymptotic S) :

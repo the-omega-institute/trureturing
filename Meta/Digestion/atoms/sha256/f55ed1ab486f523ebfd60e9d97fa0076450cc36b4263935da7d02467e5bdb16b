@@ -1,0 +1,99 @@
+### 定理 37.2（原局部前缀的四时判据与整个终端效果）
+
+在定义 37.1 的精确原源与响应接口下，(37.2) 等价于：存在整个 $H$ 上的 Hermitian 效果 $E_w\succeq0$，满足
+
+$$
+\sum_{w\in\Omega_{10}}E_w=I_H,\qquad
+P_w(\psi)=\langle\psi,E_w\psi\rangle
+\quad(\psi\in S(H),\ w\in\Omega_{10}).
+\tag{37.3}
+$$
+
+不预设有限预测秩、有限调和展开、混态仿射性或全效果可加赋值；也不预设续卷 II 独立校准 79.1。结论约束原 $P$ 的全部十三维射线和全部标签。
+
+证明。先补齐局部密度的类型。由原卷 C117 (16.22)，在 $l_0=e_{00100},l_1=e_{00101}$ 张成的共同不变角 $L$ 上，$K_4=\zeta[(I-P_L)+\zeta P_L]$、$P_L=\operatorname{diag}(0,1)$，而 $K_5=\zeta[I+(\zeta-1)Q]$。置
+
+$$
+\rho_\xi=\xi\xi^*=\tfrac12(I+n(\xi)\cdot\sigma),\qquad
+u=(2x\sqrt x,0,2x-1),\quad \theta=3\pi/5.
+\tag{37.4}
+$$
+
+这里 $\xi\in S(L)$；秩一矩阵仅为射线的数学坐标，不用未知 $P$ 的 Born 解释。Pauli 对应 $[\xi]\mapsto n(\xi)$ 是 $\mathbb P(L)\simeq S^2$ 的同胚，$[v_0]$ 对应 $e_z$。因为 $P_L=(I-\sigma_z)/2$、$Q=(I+u\cdot\sigma)/2$，实际 $K_4,K_5$ 的普通矩阵共轭分别给 $R_{e_z}(\theta),R_u(-\theta)$。原卷 C117 命题 18.1 已证明这两个具体旋转的闭生成群为 $SO(3)$。又 $K_j^{10}=I$，每个逆由同地址九次正向调用取得，故正字 $\mathsf A$ 已有同一群轨道。$SO(3)$ 在 $S^2$ 上传递，且共轭作用连续，遂得到
+
+$$
+\overline{\{[K_av_0]:a\in\mathsf A\}}=\mathbb P(L).
+\tag{37.5}
+$$
+
+这将原 Pauli 共轭密度明确提升为原局部制备的射线密度；未由全 $PU(13)$ 密度替代此步。
+
+假设 (37.2)。固定一个实际未来 $h$ 和标签 $w$，有限和连续性及 (37.5) 使该关系在把 $K_av_0$ 换成任意 $\xi\in S(L)$ 后仍成立。若 $[K_{a_m}v_0]\to[\xi]$，可选一个共同标量使向量趋于 $\xi$；同一标量适用于四个 $K_4^tK_{a_m}v_0$，相位不变性消去它。因此这里得到的是四项同时的关系，不是分别挑四个不相容的极限。
+
+接着固定任意 $\eta\in S(H)$。使用续卷 II (85.3) 的原地址 $0$ 投影 $\Pi=\mathcal P_0|_H$：其秩为 $5$、核维数为 $8$，且 $K_0=\zeta[(I-\Pi)+\zeta\Pi]$。记
+
+$$
+\eta_0=(I-\Pi)\eta,\quad \eta_1=\Pi\eta,\quad
+r_j=\|\eta_j\|,\qquad
+\xi=r_0e^{i\alpha}l_0+r_1e^{i\beta}l_1\in S(L),
+\tag{37.6}
+$$
+
+其中 $\alpha,\beta$ 任意。若两分量均非零，取一个数学酉 $U$ 满足
+
+$$
+Ul_0=e^{-i\alpha}\eta_0/r_0,\qquad
+Ul_1=e^{-i\beta}\eta_1/r_1.
+\tag{37.7}
+$$
+
+两像正交归一，故可补成整个 $H$ 的酉。当 $r_0=0$ 时，只指定第二个像，第一个像任选其正交补中的单位向量；当 $r_1=0$ 时反之。两者不可能同时为零。零分量对应的相位完全无关，非零分量自身的所有相位由 (37.7) 保留。因此同一个 $U$ 对所有 $t\ge0$ 给出准确向量恒等式
+
+$$
+UK_4^t\xi
+=\zeta^t\eta_0+\zeta^{2t}\eta_1
+=K_0^t\eta.
+\tag{37.8}
+$$
+
+尤其四个时刻同时成立，包括原整体相位 $\zeta^t$ 和相对相位 $\zeta^t$；没有把门误作五阶门。这只是所选两分量及其时间四元组的运输；$U$ 不被要求共轭整个投影。将 $|l_1\rangle\langle l_1|$ 视为 $H$ 上秩一投影时，它不可能被共轭为秩五的 $\Pi$。
+
+必须保留任意原未来，而非用它替代 $U$。固定原 $f\in\mathsf W$。续卷 II 定理 77.2 的原七门射影密度给实际正字 $b_n\in\mathsf W$ 和单位标量 $\lambda_n$，使 $\lambda_nK_{b_n}\to U$。对每个 $n$，上面的局部延拓可用实际未来 $h=b_nf$，其矩阵正是 $K_fK_{b_n}$。因此同一个 $\xi$ 的四项都满足关系。对同一列 $b_n$ 取极限，
+
+$$
+\lambda_nK_fK_{b_n}K_4^t\xi
+\longrightarrow K_fUK_4^t\xi=K_fK_0^t\eta
+\qquad(t=0,1,2,3).
+\tag{37.9}
+$$
+
+相位不变性和连续性给
+
+$$
+P_w(K_fK_0^3\eta)+x^2P_w(K_fK_0\eta)
+=P_w(K_f\eta)+x^2P_w(K_fK_0^2\eta)
+\quad(\eta\in S(H),\ f\in\mathsf W,\ w\in\Omega_{10}).
+\tag{37.10}
+$$
+
+先固定 $n$ 延拓局部输入，再取 $n$ 极限；不需要有限维函数空间闭性。令 $\eta=K_pv_0$，$p\in\mathsf W$ 任意，(37.10) 正是续卷 II 的全上下文 $\mathrm T_4$，包括每个原制备字、原未来和标签。现在直接应用该卷定理 86.1，得到同一个原 $P$ 的 (37.3)。本证明不另作一般调和分类；II85–86 已承担从这个全上下文恒等式到 Hermitian 二次型的推导，非负性及归一化再给正效果和单位和。
+
+反向，若 (37.3) 成立，取任意实际 $a,f,w$，写 $K_av_0=c_0l_0+c_1l_1$，置 $u=c_0K_fl_0$、$v=c_1K_fl_1$。原两特征相位给
+
+$$
+P_w(K_fK_4^tK_av_0)
+=\langle u,E_wu\rangle+\langle v,E_wv\rangle
+ +2\operatorname{Re}\bigl(\zeta^t\langle u,E_wv\rangle\bigr).
+\tag{37.11}
+$$
+
+全局 $\zeta^t$ 已在二次型中消去；若任一分量为零，交叉项也为零。由 $\zeta+\zeta^{-1}=-x$ 及 $1-x=x^2$，多项式
+
+$$
+R(s)=s^3-x^2s^2+x^2s-1
+=(s-1)(s-\zeta)(s-\zeta^{-1})
+\tag{37.12}
+$$
+
+消去 (37.11) 的常数及两个共轭频率，正好给 (37.2)。这对全部 $1024$ 个 $w$ 同时成立，不先丢任何零项或非法标签。两向均已完成。∎
+

@@ -1,0 +1,43 @@
+**Lemma 53.2 (relative kernel including remote endpoints).** For this
+fixed pair choose a closed physical height neighborhood $J$ of $k_0$
+strictly inside both intervals. For $0<t\le1$, whenever either endpoint
+has height in $J$, uniformly over the other height and all phases,
+
+$$
+|(K_b-K_{\rm ref})(t;Y,Z)|\le Ct^{-7/2}e^{-c\delta^2/t},
+\tag{53.2}
+$$
+
+where $\delta>0$ is fixed. For $t\ge1$ the difference is bounded
+by $Ct^{-3/2}$. Consequently $(F_b-F_{\rm ref})/s^5$ is globally
+bounded and tends pointwise to $\delta_b^{<}$, while on output heights
+in $J$, $(H_b-H_{\rm ref})/s^5$ has globally bounded kernel tending
+at every fixed microscopic endpoint pair to $j_0\delta_b^{<}$.
+
+Proof. In the scale-one chart write the bridge as $H=A+W$, starting
+at a height $A$ in the compact chart image of $J$. On paths surviving
+either domain the common rational covariance is comparable to
+$\int u(H)u(H)^{\mathsf T}$. The identity $u(A+W)=D_Au(W)$ from
+Lemma 30.2 has $\det D_A=1$, so this covariance determinant equals
+that of the relative zero-start bridge. Differing indicators force
+$\sup|W|\ge\delta$, the distance from $J$ to the faces, with the
+fixed height conversion absorbed into $\delta$. The phase Gaussian
+supremum followed by (3.3), $m=0$, proves (53.2) for every other
+endpoint, including one outside a domain. Symmetry interchanges
+endpoints. The large-time bound is L41. Exact raw scaling gives
+
+$$
+\begin{aligned}
+(F_b-F_{\rm ref})(\xi)
+ &=s^5\int_{s^2}^1(K_b-K_{\rm ref})(t;o,Y_s\xi)dt,\\
+(H_b-H_{\rm ref})(\eta,\xi)
+ &=j_0s^5\int_0^1(K_b-K_{\rm ref})(t;Y_s\eta,Y_s\xi)dt.
+\end{aligned}
+\tag{53.3}
+$$
+
+The integrable estimate (53.2), positive-time smoothness near $(o,o)$
+and dominated convergence prove every asserted limit and bound.
+No compact-output approximation supplies the remote-endpoint bound.
+$\square$
+

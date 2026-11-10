@@ -6,7 +6,7 @@ Uniform energy bounds on the original finite lattice carrier with its integer-fr
 
 D is the original LatticeData, with its symmetric integral Gram matrix G and even diagonal. Carrier(D) is the original finite charge sum of oscillator polynomials. The real Gram matrix is assumed positive definite. H is a complex matrix with both H*gramComplex(D)=1 and gramComplex(D)*H=1. There is no integral determinant-unit hypothesis, diagonal-Gram restriction, support-size bound, oscillator-degree cutoff, alternative carrier or half-frequency metric.
 
-The original normD is supplied by Energy/OriginalCurrentEnergy and remains in the OriginalChargedEnergy namespace through this module import. Energy/OriginalNeutralEnergy supplies the unchanged private word estimates and finite energy recombination. This is a source-module split of the same proofs, with no additional public theorem or independent novelty claim.
+The original normD is supplied by Energy/OriginalCurrentEnergy and remains in the OriginalChargedEnergy namespace through this module import. Energy/OriginalWordEnergy supplies the single seed-parametrized arbitrary-charge word induction. Energy/OriginalNeutralEnergy specializes it to the identity seed and supplies finite energy recombination. The consumed shared charged_pre_relaxation_grade_le retains the input-grade factor for nonnegative raw modes and the actual output-grade factor for negative raw modes before introducing a mode scale. The original public types and exponents in this module are preserved.
 
 **Theorem 1.1 (Uniform homogeneous neutral bound).**
 
@@ -38,7 +38,7 @@ For every D with positive definite real Gram matrix, every complex H with both i
 
 The neutral creation coefficient of weight 2*d supplies energy order 4*d. The original cocycle phase, charged Hermitian adjoint and positive normal-product quadratic identity yield the charged order 2*d after Cauchy-Schwarz and square roots whenever m>=1-d. For m<=-d, the opposite-charge controlled estimate applies to the actual output grade E-m through the adjoint. Zero output norm is treated before cancellation. The inequality E-m+1 <= (1+abs(m))*(E+1) gives the claimed mode factor. Distinct input grades have distinct output grades E-m, so orthogonal finite recombination proves the arbitrary-state bound. One choice of C is the sum of the square roots of the two neutral polynomial constants for a and -a.
 
-The proof reuses the original lattice fields, factorial pairing, full-frame matrix suppliers, source transpose, energy grading and Sugawara identities. Their Bakalov-Kac, Matsuo-Nagatomo, Carnahan and Mathlib attributions remain with those suppliers. The new content is the uniform analytic inequality on the literal original carrier; no claim of literature novelty is made. All-state propagation, closable smeared fields on the Hilbert completion, strong locality, full string theory and AdS/CFT remain separate obligations.
+The proof reuses the original lattice fields, factorial pairing, full-frame matrix suppliers, source transpose, energy grading and Sugawara identities. Their Bakalov-Kac, Matsuo-Nagatomo, Carnahan and Mathlib attributions remain with those suppliers. The new content is the uniform analytic inequality on the literal original carrier; no claim of literature novelty is made. The homogeneous and finite-energy all-state consumers are authored separately in Energy/OriginalAllStateEnergy. Closable smeared fields on the Hilbert completion, strong locality, full string theory and AdS/CFT remain separate obligations.
 
 ## References
 

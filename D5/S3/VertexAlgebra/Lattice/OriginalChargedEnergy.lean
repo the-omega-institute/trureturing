@@ -402,12 +402,16 @@ private def totalChargedConstant (a : Charge D) : ℝ :=
 private theorem totalChargedConstant_pos (a : Charge D) : 0 < totalChargedConstant a :=
   add_pos (chargedConstant_pos a) (chargedConstant_pos (-a))
 
-private theorem charged_all_modes_grade_le (hD : (gramReal D).PosDef)
+/-- Shared estimate before introducing a circle-mode scale.  For a negative
+raw mode its energy factor is the actual output grade, not the input grade. -/
+private theorem charged_pre_relaxation_grade_le (hD : (gramReal D).PosDef)
     (a : Charge D) (ha : a ≠ 0) (m : ℤ) (E : ℕ) (v : Carrier D)
     (hv : v ∈ grade D (E : ℤ)) :
     normD (((actualField D a)[[m+chargeEnergy D a-1]]) v) ≤
-      totalChargedConstant a * (1+|(m : ℝ)|)^(2*(chargeEnergy D a).toNat) *
-        ((E : ℝ)+1)^(2*(chargeEnergy D a).toNat) * normD v := by
+      totalChargedConstant a *
+        ((if 0 ≤ m+chargeEnergy D a-1 then (E : ℝ)+1
+          else ((((E : ℤ)-m).toNat : ℕ) : ℝ)+1))^(2*(chargeEnergy D a).toNat) *
+        normD v := by
   let d := (chargeEnergy D a).toNat
   let N := 2*d
   let C := totalChargedConstant a
@@ -425,12 +429,9 @@ private theorem charged_all_modes_grade_le (hD : (gramReal D).PosDef)
       Int.toNat_of_nonneg hm
     have hh := charged_positive_mode_grade_le hD a (m+chargeEnergy D a-1).toNat E v hv
     rw [hr] at hh
-    have hmode : 1 ≤ (1+|(m : ℝ)|)^N :=
-      one_le_pow₀ (by linarith [abs_nonneg (m : ℝ)])
-    have hc : chargedConstant a ≤ C*(1+|(m : ℝ)|)^N :=
-      hCa.trans (by nlinarith [mul_nonneg hC (sub_nonneg.mpr hmode)])
+    rw [if_pos hm]
     exact hh.trans (mul_le_mul_of_nonneg_right
-      (mul_le_mul_of_nonneg_right hc (by positivity)) hvn)
+      (mul_le_mul_of_nonneg_right hCa (by positivity)) hvn)
   · have hm' : m ≤ -chargeEnergy D a := by omega
     let u := ((actualField D a)[[m+chargeEnergy D a-1]]) v
     let F := ((E : ℤ)-m).toNat
@@ -476,17 +477,43 @@ private theorem charged_all_modes_grade_le (hD : (gramReal D).PosDef)
             mul_le_mul_of_nonneg_left hb hvn
           _ = _ := by ring
       exact (mul_le_mul_iff_left₀ hup).mp hc
-    have hFr : (F : ℝ)=(E : ℝ)-(m : ℝ) := by exact_mod_cast hF
-    have hmr : (m : ℝ) ≤ 0 := by exact_mod_cast (show m ≤ 0 by omega)
-    have hscale : (F : ℝ)+1 ≤ (1+|(m : ℝ)|)*((E : ℝ)+1) := by
+    rw [if_neg hm]
+    exact hdual.trans (mul_le_mul_of_nonneg_right
+      (mul_le_mul_of_nonneg_right hCb (by positivity)) hvn)
+
+private theorem charged_all_modes_grade_le (hD : (gramReal D).PosDef)
+    (a : Charge D) (ha : a ≠ 0) (m : ℤ) (E : ℕ) (v : Carrier D)
+    (hv : v ∈ grade D (E : ℤ)) :
+    normD (((actualField D a)[[m+chargeEnergy D a-1]]) v) ≤
+      totalChargedConstant a * (1+|(m : ℝ)|)^(2*(chargeEnergy D a).toNat) *
+        ((E : ℝ)+1)^(2*(chargeEnergy D a).toNat) * normD v := by
+  let N := 2*(chargeEnergy D a).toNat
+  have hh := charged_pre_relaxation_grade_le hD a ha m E v hv
+  have hscale :
+      (if 0 ≤ m+chargeEnergy D a-1 then (E : ℝ)+1
+        else ((((E : ℤ)-m).toNat : ℕ) : ℝ)+1) ≤
+      (1+|(m : ℝ)|)*((E : ℝ)+1) := by
+    split_ifs with hm
+    · nlinarith [abs_nonneg (m : ℝ),
+        mul_nonneg (Nat.cast_nonneg (α := ℝ) E) (abs_nonneg (m : ℝ))]
+    · have hn := chargeEnergy_nonneg D hD a
+      have hmr : (m : ℝ) ≤ 0 := by exact_mod_cast (show m ≤ 0 by omega)
+      have hF : (((E : ℤ)-m).toNat : ℤ)=(E : ℤ)-m :=
+        Int.toNat_of_nonneg (by omega)
+      have hFr : ((((E : ℤ)-m).toNat : ℕ) : ℝ)=(E : ℝ)-(m : ℝ) := by
+        exact_mod_cast hF
       rw [hFr, abs_of_nonpos hmr]
       nlinarith [mul_nonneg (Nat.cast_nonneg (α := ℝ) E) (neg_nonneg.mpr hmr)]
-    have hpow := pow_le_pow_left₀ (by positivity : 0 ≤ (F : ℝ)+1) hscale N
-    calc
-      _ ≤ chargedConstant (-a)*((F : ℝ)+1)^N*normD v := hdual
-      _ ≤ C*((1+|(m : ℝ)|)*((E : ℝ)+1))^N*normD v :=
-        mul_le_mul_of_nonneg_right (mul_le_mul hCb hpow (by positivity) hC) hvn
-      _ = _ := by rw [mul_pow]; ring
+  have hb : 0 ≤ (if 0 ≤ m+chargeEnergy D a-1 then (E : ℝ)+1
+      else ((((E : ℤ)-m).toNat : ℕ) : ℝ)+1) := by split_ifs <;> positivity
+  have hp := pow_le_pow_left₀ hb hscale N
+  calc
+    _ ≤ totalChargedConstant a *
+        ((1+|(m : ℝ)|)*((E : ℝ)+1))^N * normD v :=
+      hh.trans (mul_le_mul_of_nonneg_right
+        (mul_le_mul_of_nonneg_left hp (totalChargedConstant_pos a).le)
+        (Real.sqrt_nonneg _))
+    _ = _ := by rw [mul_pow]; ring
 
 private theorem original_charged_energy_le (hD : (gramReal D).PosDef)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
