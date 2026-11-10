@@ -19,7 +19,7 @@ variable {V W : Type} [Fintype V] [Fintype W] [DecidableEq V] [DecidableEq W]
 variable {G : SimpleGraph V} {H : SimpleGraph W} [DecidableRel G.Adj] [DecidableRel H.Adj]
 
 private theorem twoAt (e : G ≃g H) (S : W → Prop) (v : V) :
-    Subcubic.TwoAt G.Adj (fun x => S (e x)) v ↔ Subcubic.TwoAt H.Adj S (e v) := by
+    Regular.TwoAt G.Adj (fun x => S (e x)) v ↔ Regular.TwoAt H.Adj S (e v) := by
   constructor
   · rintro (⟨a,b,ha,hb,he,hva,hvb⟩ | ⟨c,l,hc,hl,hvc,hcl⟩)
     · exact Or.inl ⟨e a,e b,ha,hb,fun h => he (e.injective h),
