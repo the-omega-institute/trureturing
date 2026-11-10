@@ -172,32 +172,26 @@ end Literal
 namespace FirstFibres
 
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature (Seen → PairRow → ℤ)
-    (fun _ => Boundary) (fun _ => ℤ)
+  _root_.Reg.Support.SingleDependentReadout.signature Unit
+    (fun _ => Seen → PairRow → ℤ) (fun _ => ℤ)
 
 def actual : Realization signature :=
-  realize signature (fun _ _ q => rowWeight (false, false) q) (fun e => nomatch e)
+  realize signature (fun _ _ H => ∑ c : Row,
+    if c 0 = 0 ∧ good (false, false) c then
+      H (finish (false, false) c) (fun j => beta (c j)) else 0) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ q => rowWeight (false, false) q + 1) (fun e => nomatch e)
+  realize signature (fun _ p H => actual.readout () p H + 1) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ H : Seen → PairRow → ℤ,
-    (∑ c : Row, if c 0 = 0 ∧ good (false, false) c then
-      H (finish (false, false) c) (fun j => beta (c j)) else 0) =
-    ∑ q : Boundary, R.readout () H q *
+    R.readout () () H = ∑ q : Boundary, rowWeight (false, false) q *
       H (rowFinish (false, false) q) (Fin.cons 0 q)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hb := h (fun _ _ => 1)
-  have ha := first_fibres (fun _ _ => 1)
-  simp only [rejected, realize, mul_one] at hb
-  simp only [mul_one] at ha
-  have hsum : (∑ _q : Boundary, (1 : ℤ)) = 729 := by
-    norm_num
-  rw [Finset.sum_add_distrib, hsum] at hb
-  linarith
+  have h0 := h (fun _ _ => 0)
+  simp [rejected, actual, realize] at h0
 
 def family : Registration arena (type_of% @first_fibres) where
   actual := actual
@@ -207,10 +201,18 @@ def family : Registration arena (type_of% @first_fibres) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
-    refine ⟨(fun _ _ => 1), ![1, 0, 1, 0, 1, 0], ![1, 2, 1, 2, 1, 2], ?_⟩
-    change rowWeight (false, false) ![1, 0, 1, 0, 1, 0] ≠
-      rowWeight (false, false) ![1, 2, 1, 2, 1, 2]
-    decide +kernel
+    refine ⟨(), (fun _ _ => 0), (fun _ _ => 1), ?_⟩
+    change (∑ c : Row, if c 0 = 0 ∧ good (false, false) c then (0 : ℤ) else 0) ≠
+      ∑ c : Row, if c 0 = 0 ∧ good (false, false) c then (1 : ℤ) else 0
+    simp only [ite_self, Finset.sum_const_zero]
+    apply ne_of_lt
+    refine Finset.sum_pos' ?_ ?_
+    · intro c _
+      split_ifs <;> norm_num
+    · refine ⟨(fun _ => 0), Finset.mem_univ _, ?_⟩
+      have hzero : good (false, false) (fun _ : Fin 7 => (0 : Fin 6)) := by
+        decide +kernel
+      norm_num [hzero]
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@first_fibres) (Realization signature) Type Unit where
@@ -227,7 +229,9 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ q => rowWeight (false, false) q) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ H => ∑ c : Row,
+    if c 0 = 0 ∧ good (false, false) c then
+      H (finish (false, false) c) (fun j => beta (c j)) else 0) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -235,10 +239,10 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255PairTransfer
     definition := none
-    coordinates := #[0]
+    coordinates := #[]
     readouts := #[{
-      path := #["body", "arg", "arg", "body", "fn", "arg"]
-      stateBinder := 1
+      path := #["body", "fn", "arg"]
+      stateBinder := 0
       functionOperand := false, stateOperand := none, booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
