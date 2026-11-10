@@ -105,11 +105,11 @@ internal sealed class HardinA233125SquareStripDocument : IScribeDocumentDefiniti
     private static Formula LabelSum()
     {
         var g = V("g"); var q = V("q");
+        var summand = At(g, Parenthesized(Vector(V("a"), V("b"), V("c"), V("d"))));
+        var nested = SumOver("a", Fin(3), SumOver("b", Fin(3),
+            SumOver("c", Fin(3), SumOver("d", Fin(3), summand))));
         return All("g", Arrow(Parenthesized(PairRow()), Name("Int")),
-            Eq(SumOver("q", PairRow(), At(g, q)),
-                SumOver("a", Fin(3), SumOver("b", Fin(3),
-                    SumOver("c", Fin(3), SumOver("d", Fin(3),
-                        At(g, Parenthesized(Vector(V("a"), V("b"), V("c"), V("d")))))))));
+            Eq(SumOver("q", PairRow(), At(g, q)), nested));
     }
 
     private static Formula DecidableHorizontal()
