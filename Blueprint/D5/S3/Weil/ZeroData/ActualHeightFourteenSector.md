@@ -19,4 +19,3 @@ For every positive finite index size, every nonnegative shift family, and every 
 ## References
 
 - Truth anchor: `D5/S3/Weil/ZeroData/ActualHeightFourteenSector.strictAntiOn_weight_u`
-- Dependency: [D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds](ActualReciprocalSquareBounds.md)

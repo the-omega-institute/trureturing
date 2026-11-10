@@ -18,6 +18,7 @@ import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.Ring
+import Mathlib.Topology.Algebra.Module.ModuleTopology
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
