@@ -22,6 +22,8 @@ attribute [local instance] historyIntactPropDecidable
 open Set Finset
 namespace D5.S3.Geometry.OriginalLabelTwoSum.HistoryIntact
 open OriginalLabelTwoSum AllMWheel HistoryLeafCap HistoryIsolated HistoryCycles
+open FiniteElementaryCollapse FiniteRelativeSimplicialCollapse
+open HistoryIntactProduct
 
 
 open private
