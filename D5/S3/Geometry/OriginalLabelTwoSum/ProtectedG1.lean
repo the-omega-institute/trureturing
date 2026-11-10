@@ -19,9 +19,13 @@ and a wheel in the outer bridge collar); no formal plane-embedding theorem is
 claimed. The explicit straight-line drawing is checked separately in Python.
 The native proof concerns precisely this actual graph, not all plane graphs. -/
 noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
+set_option maxRecDepth 4096
 open Finset SimpleGraph
 namespace D5.S3.Geometry.OriginalLabelTwoSum.ProtectedG1
 open FiniteElementaryCollapse FiniteRelativeSimplicialCollapse
+attribute [local reducible] facets delta cut project Supported endpoint
 
 abbrev Label := Fin 7
 abbrev h : Label := 0
@@ -32,21 +36,25 @@ abbrev one : Label := 4
 abbrev two : Label := 5
 abbrev three : Label := 6
 
-private def edgeGraph {V : Type*} [DecidableEq V] (F : Finset (Sym2 V))
+private abbrev edgeGraph {V : Type*} [DecidableEq V] (F : Finset (Sym2 V))
     (hn : ∀ v, s(v,v) ∉ F) : SimpleGraph V where
   Adj x y := s(x,y) ∈ F
-  symm := by intro x y hx; simpa only [Sym2.eq_swap] using hx
-  loopless := hn
+  symm := ⟨by intro x y hx; simpa only [Sym2.eq_swap] using hx⟩
+  loopless := ⟨hn⟩
 
-private def leftEnds (i : Fin 4) : Fin 5 × Fin 5 :=
+private instance {V : Type*} [DecidableEq V] (F : Finset (Sym2 V))
+    (hn : ∀ v, s(v,v) ∉ F) : DecidableRel (edgeGraph F hn).Adj :=
+  fun x y => inferInstanceAs (Decidable (s(x,y) ∈ F))
+
+private abbrev leftEnds (i : Fin 4) : Fin 5 × Fin 5 :=
   ![(0,1),(1,2),(1,3),(0,4)] i
-private def leftChordEnds (i : Fin 2) : Fin 5 × Fin 5 :=
+private abbrev leftChordEnds (i : Fin 2) : Fin 5 × Fin 5 :=
   ![(0,2),(0,3)] i
-private def leftTree : SimpleGraph (Fin 5) :=
+private abbrev leftTree : SimpleGraph (Fin 5) :=
   edgeGraph {s(0,1),s(1,2),s(1,3),s(0,4)} (by decide)
-private def leftGraph : SimpleGraph (Fin 5) :=
+private abbrev leftGraph : SimpleGraph (Fin 5) :=
   edgeGraph {s(0,1),s(1,2),s(1,3),s(0,4),s(0,2),s(0,3)} (by decide)
-private def leftSide (i : Fin 4) : Finset (Fin 5) :=
+private abbrev leftSide (i : Fin 4) : Finset (Fin 5) :=
   ![{1,2,3},{2},{3},{4}] i
 private theorem leftBridge (i : Fin 4) :
     leftTree.IsBridge s((leftEnds i).1,(leftEnds i).2) := by
@@ -58,7 +66,7 @@ private theorem leftBridge (i : Fin 4) :
       (x ∉ leftSide i ↔ y ∉ leftSide i)) i
 private theorem leftTree_isTree : leftTree.IsTree where
   connected := by
-    apply SimpleGraph.connected_iff_exists_forall_reachable.mpr
+    apply (SimpleGraph.connected_iff_exists_forall_reachable _).mpr
     refine ⟨(0 : Fin 5),?_⟩
     intro v
     fin_cases v
@@ -92,11 +100,14 @@ def left : GraphData (Fin 5) Label where
   chord_not_tree := by decide
   chord_cover := by decide
 
-private def leftChordPath (i : Fin 2) :
+attribute [local reducible] left
+
+private abbrev leftChordPath (i : Fin 2) :
     left.tree.Walk (left.start i) (left.finish i) := by
-  fin_cases i
+  refine Fin.cases ?_ (fun j => ?_) i
   · exact (.cons (show left.tree.Adj 0 1 from by decide) (.cons (show left.tree.Adj 1 2 from by decide) .nil))
-  · exact (.cons (show left.tree.Adj 0 1 from by decide) (.cons (show left.tree.Adj 1 3 from by decide) .nil))
+  · refine Fin.cases ?_ (fun j => Fin.elim0 j) j
+    exact (.cons (show left.tree.Adj 0 1 from by decide) (.cons (show left.tree.Adj 1 3 from by decide) .nil))
 private theorem leftChordPath_isPath (i : Fin 2) :
     (leftChordPath i).IsPath := by
   fin_cases i <;> simp [leftChordPath,left,leftChordEnds,
@@ -110,15 +121,15 @@ theorem left_rows (i : Fin 2) : left.rows.row i =
   rw [hp]
   fin_cases i <;> decide
 
-private def parentEnds (i : Fin 6) : Fin 7 × Fin 7 :=
+private abbrev parentEnds (i : Fin 6) : Fin 7 × Fin 7 :=
   ![(0,1),(1,2),(1,3),(5,0),(5,4),(5,6)] i
-private def parentChordEnds (i : Fin 4) : Fin 7 × Fin 7 :=
+private abbrev parentChordEnds (i : Fin 4) : Fin 7 × Fin 7 :=
   ![(0,2),(0,3),(4,6),(6,0)] i
-private def parentTree : SimpleGraph (Fin 7) :=
+private abbrev parentTree : SimpleGraph (Fin 7) :=
   edgeGraph {s(0,1),s(1,2),s(1,3),s(5,0),s(5,4),s(5,6)} (by decide)
-private def parentGraph : SimpleGraph (Fin 7) :=
+private abbrev parentGraph : SimpleGraph (Fin 7) :=
   edgeGraph {s(0,1),s(1,2),s(1,3),s(5,0),s(5,4),s(5,6),s(0,2),s(0,3),s(4,6),s(6,0)} (by decide)
-private def parentSide (i : Fin 6) : Finset (Fin 7) :=
+private abbrev parentSide (i : Fin 6) : Finset (Fin 7) :=
   ![{1,2,3},{2},{3},{0,1,2,3},{4},{6}] i
 private theorem parentBridge (i : Fin 6) :
     parentTree.IsBridge s((parentEnds i).1,(parentEnds i).2) := by
@@ -130,7 +141,7 @@ private theorem parentBridge (i : Fin 6) :
       (x ∉ parentSide i ↔ y ∉ parentSide i)) i
 private theorem parentTree_isTree : parentTree.IsTree where
   connected := by
-    apply SimpleGraph.connected_iff_exists_forall_reachable.mpr
+    apply (SimpleGraph.connected_iff_exists_forall_reachable _).mpr
     refine ⟨(5 : Fin 7),?_⟩
     intro v
     fin_cases v
@@ -166,13 +177,18 @@ def parent : GraphData (Fin 7) Label where
   chord_not_tree := by decide
   chord_cover := by decide
 
-private def parentChordPath (i : Fin 4) :
+attribute [local reducible] parent
+
+private abbrev parentChordPath (i : Fin 4) :
     parent.tree.Walk (parent.start i) (parent.finish i) := by
-  fin_cases i
+  refine Fin.cases ?_ (fun j => ?_) i
   · exact (.cons (show parent.tree.Adj 0 1 from by decide) (.cons (show parent.tree.Adj 1 2 from by decide) .nil))
-  · exact (.cons (show parent.tree.Adj 0 1 from by decide) (.cons (show parent.tree.Adj 1 3 from by decide) .nil))
-  · exact (.cons (show parent.tree.Adj 4 5 from by decide) (.cons (show parent.tree.Adj 5 6 from by decide) .nil))
-  · exact (.cons (show parent.tree.Adj 6 5 from by decide) (.cons (show parent.tree.Adj 5 0 from by decide) .nil))
+  · refine Fin.cases ?_ (fun j => ?_) j
+    · exact (.cons (show parent.tree.Adj 0 1 from by decide) (.cons (show parent.tree.Adj 1 3 from by decide) .nil))
+    · refine Fin.cases ?_ (fun j => ?_) j
+      · exact (.cons (show parent.tree.Adj 4 5 from by decide) (.cons (show parent.tree.Adj 5 6 from by decide) .nil))
+      · refine Fin.cases ?_ (fun j => Fin.elim0 j) j
+        exact (.cons (show parent.tree.Adj 6 5 from by decide) (.cons (show parent.tree.Adj 5 0 from by decide) .nil))
 private theorem parentChordPath_isPath (i : Fin 4) :
     (parentChordPath i).IsPath := by
   fin_cases i <;> simp [parentChordPath,parent,parentChordEnds,
@@ -214,6 +230,8 @@ def leftRoot : Family Label := facets {{a,e},{c,e}}
 def parentRoot : Family Label :=
   facets {{a,one,two,three},{c,one,two,three},{a,c,h,one},{a,c,h,two}}
 
+attribute [local reducible] leftRoot parentRoot
+
 theorem left_root : left.rows.root = leftRoot := by
   apply SetLike.ext
   intro s
@@ -247,17 +265,19 @@ def C : Family Label := Bf ⊔ delta {c,one,two}
 /-- The one outside critical top. -/
 def q : Finset Label := {a,one,two}
 
-private def leftLowers : List (Finset Label) := [{a},{e}]
-private def leftApices : List Label := [e,c]
-private def leftLower (i : Fin 2) := leftLowers[i.val]'(by simp [leftLowers]; exact i.isLt)
-private def leftApex (i : Fin 2) := leftApices[i.val]'(by simp [leftApices]; exact i.isLt)
-private def leftState (n : Nat) : Family Label := cut (leftRoot) (leftLowers.take n).toFinset
+attribute [local reducible] B0 Bf C q
+
+private abbrev leftLowers : List (Finset Label) := [{a},{e}]
+private abbrev leftApices : List Label := [e,c]
+private abbrev leftLower (i : Fin 2) := leftLowers[i.val]'(by simp [leftLowers]; omega)
+private abbrev leftApex (i : Fin 2) := leftApices[i.val]'(by simp [leftApices]; omega)
+private abbrev leftState (n : Nat) : Family Label := cut (leftRoot) (leftLowers.take n).toFinset
 private theorem leftFacts : ∀ i : Fin 2,
     (leftLower i).Nonempty ∧ leftApex i ∉ leftLower i ∧
     insert (leftApex i) (leftLower i) ∈ leftState i.val ∧
     ∀ s ∈ leftState i.val, leftLower i ⊆ s →
       s = leftLower i ∨ s = insert (leftApex i) (leftLower i) := by decide
-private def leftPair (i : Fin 2) : CollapsePair Label :=
+private abbrev leftPair (i : Fin 2) : CollapsePair Label :=
   emitPair (leftState i.val) (leftLower i) (leftApex i)
     (leftFacts i).1 (leftFacts i).2.1 (leftFacts i).2.2.1 (leftFacts i).2.2.2
 private theorem leftNext (i : Fin 2) :
@@ -265,8 +285,8 @@ private theorem leftNext (i : Fin 2) :
   rw [leftPair,emitPair_retained]
   congr 1
   fin_cases i <;> apply SetLike.ext <;> intro s <;>
-    simp [leftState,leftLowers,leftLower,cut]
-private def leftStep (i : Fin 2) :
+    simp [leftState,leftLowers,leftLower,cut,and_assoc]
+private abbrev leftStep (i : Fin 2) :
     Sequence (project (leftState i.val)) (project (leftState (i.val+1))) :=
   (Sequence.step (leftPair i) (Sequence.refl _)).cast rfl (leftNext i)
 private theorem leftFinal : leftState 2 = (delta {c}) := by
@@ -278,17 +298,17 @@ def leftSequence : Sequence (project (leftRoot)) (project (delta {c})) :=
   ((leftStep 0).append (leftStep 1)).cast
     (by simp [leftState]) (congrArg project leftFinal)
 
-private def verticalLowers : List (Finset Label) := [{a,one,three},{a,three}]
-private def verticalApices : List Label := [two,two]
-private def verticalLower (i : Fin 2) := verticalLowers[i.val]'(by simp [verticalLowers]; exact i.isLt)
-private def verticalApex (i : Fin 2) := verticalApices[i.val]'(by simp [verticalApices]; exact i.isLt)
-private def verticalState (n : Nat) : Family Label := cut (parentRoot) (verticalLowers.take n).toFinset
+private abbrev verticalLowers : List (Finset Label) := [{a,one,three},{a,three}]
+private abbrev verticalApices : List Label := [two,two]
+private abbrev verticalLower (i : Fin 2) := verticalLowers[i.val]'(by simp [verticalLowers]; omega)
+private abbrev verticalApex (i : Fin 2) := verticalApices[i.val]'(by simp [verticalApices]; omega)
+private abbrev verticalState (n : Nat) : Family Label := cut (parentRoot) (verticalLowers.take n).toFinset
 private theorem verticalFacts : ∀ i : Fin 2,
     (verticalLower i).Nonempty ∧ verticalApex i ∉ verticalLower i ∧
     insert (verticalApex i) (verticalLower i) ∈ verticalState i.val ∧
     ∀ s ∈ verticalState i.val, verticalLower i ⊆ s →
       s = verticalLower i ∨ s = insert (verticalApex i) (verticalLower i) := by decide
-private def verticalPair (i : Fin 2) : CollapsePair Label :=
+private abbrev verticalPair (i : Fin 2) : CollapsePair Label :=
   emitPair (verticalState i.val) (verticalLower i) (verticalApex i)
     (verticalFacts i).1 (verticalFacts i).2.1 (verticalFacts i).2.2.1 (verticalFacts i).2.2.2
 private theorem verticalNext (i : Fin 2) :
@@ -296,8 +316,8 @@ private theorem verticalNext (i : Fin 2) :
   rw [verticalPair,emitPair_retained]
   congr 1
   fin_cases i <;> apply SetLike.ext <;> intro s <;>
-    simp [verticalState,verticalLowers,verticalLower,cut]
-private def verticalStep (i : Fin 2) :
+    simp [verticalState,verticalLowers,verticalLower,cut,and_assoc]
+private abbrev verticalStep (i : Fin 2) :
     Sequence (project (verticalState i.val)) (project (verticalState (i.val+1))) :=
   (Sequence.step (verticalPair i) (Sequence.refl _)).cast rfl (verticalNext i)
 private theorem verticalFinal : verticalState 2 = (B0 ⊔ delta q) := by
@@ -309,17 +329,17 @@ def verticalSequence : Sequence (project (parentRoot)) (project (B0 ⊔ delta q)
   ((verticalStep 0).append (verticalStep 1)).cast
     (by simp [verticalState]) (congrArg project verticalFinal)
 
-private def baseLowers : List (Finset Label) := [{one,two,three},{one,two},{one,three},{two,three}]
-private def baseApices : List Label := [c,c,c,c]
-private def baseLower (i : Fin 4) := baseLowers[i.val]'(by simp [baseLowers]; exact i.isLt)
-private def baseApex (i : Fin 4) := baseApices[i.val]'(by simp [baseApices]; exact i.isLt)
-private def baseState (n : Nat) : Family Label := cut (B0) (baseLowers.take n).toFinset
+private abbrev baseLowers : List (Finset Label) := [{one,two,three},{one,two},{one,three},{two,three}]
+private abbrev baseApices : List Label := [c,c,c,c]
+private abbrev baseLower (i : Fin 4) := baseLowers[i.val]'(by simp [baseLowers]; omega)
+private abbrev baseApex (i : Fin 4) := baseApices[i.val]'(by simp [baseApices]; omega)
+private abbrev baseState (n : Nat) : Family Label := cut (B0) (baseLowers.take n).toFinset
 private theorem baseFacts : ∀ i : Fin 4,
     (baseLower i).Nonempty ∧ baseApex i ∉ baseLower i ∧
     insert (baseApex i) (baseLower i) ∈ baseState i.val ∧
     ∀ s ∈ baseState i.val, baseLower i ⊆ s →
       s = baseLower i ∨ s = insert (baseApex i) (baseLower i) := by decide
-private def basePair (i : Fin 4) : CollapsePair Label :=
+private abbrev basePair (i : Fin 4) : CollapsePair Label :=
   emitPair (baseState i.val) (baseLower i) (baseApex i)
     (baseFacts i).1 (baseFacts i).2.1 (baseFacts i).2.2.1 (baseFacts i).2.2.2
 private theorem baseNext (i : Fin 4) :
@@ -327,8 +347,8 @@ private theorem baseNext (i : Fin 4) :
   rw [basePair,emitPair_retained]
   congr 1
   fin_cases i <;> apply SetLike.ext <;> intro s <;>
-    simp [baseState,baseLowers,baseLower,cut]
-private def baseStep (i : Fin 4) :
+    simp [baseState,baseLowers,baseLower,cut,and_assoc]
+private abbrev baseStep (i : Fin 4) :
     Sequence (project (baseState i.val)) (project (baseState (i.val+1))) :=
   (Sequence.step (basePair i) (Sequence.refl _)).cast rfl (baseNext i)
 private theorem baseFinal : baseState 4 = (Bf) := by
@@ -503,23 +523,25 @@ abbrev RLabel := Fin 4
 /-- a=0,b=1,c=2,d=3, with no hidden label deletion. -/
 def initial : Family RLabel := facets {{0,1,2},{0,2,3},{1,2,3}}
 def critical : Finset RLabel := {0,1,3}
-private def lowers : List (Finset RLabel) := [{0,1},{0,2},{1,2},{0},{1},{2}]
-private def apices : List RLabel := [2,3,3,3,3,3]
-private def lower (i : Fin 6) := lowers[i.val]'(by simp [lowers]; exact i.isLt)
-private def apex (i : Fin 6) := apices[i.val]'(by simp [apices]; exact i.isLt)
-private def state (n : Nat) : Family RLabel := cut initial (lowers.take n).toFinset
+attribute [local reducible] initial critical
+
+private abbrev lowers : List (Finset RLabel) := [{0,1},{0,2},{1,2},{0},{1},{2}]
+private abbrev apices : List RLabel := [2,3,3,3,3,3]
+private abbrev lower (i : Fin 6) := lowers[i.val]'(by simp [lowers]; omega)
+private abbrev apex (i : Fin 6) := apices[i.val]'(by simp [apices]; omega)
+private abbrev state (n : Nat) : Family RLabel := cut initial (lowers.take n).toFinset
 private theorem facts : ∀ i : Fin 6,
     (lower i).Nonempty ∧ apex i ∉ lower i ∧ insert (apex i) (lower i) ∈ state i.val ∧
     ∀ s ∈ state i.val, lower i ⊆ s → s = lower i ∨ s = insert (apex i) (lower i) := by
   decide
-private def pair (i : Fin 6) : CollapsePair RLabel :=
+private abbrev pair (i : Fin 6) : CollapsePair RLabel :=
   emitPair (state i.val) (lower i) (apex i)
     (facts i).1 (facts i).2.1 (facts i).2.2.1 (facts i).2.2.2
 private theorem next (i : Fin 6) : (pair i).retained = project (state (i.val+1)) := by
   rw [pair,emitPair_retained]
   congr 1
-  fin_cases i <;> apply SetLike.ext <;> intro s <;> simp [state,lowers,lower,cut]
-private def step (i : Fin 6) :
+  fin_cases i <;> apply SetLike.ext <;> intro s <;> simp [state,lowers,lower,cut,and_assoc]
+private abbrev step (i : Fin 6) :
     Sequence (project (state i.val)) (project (state (i.val+1))) :=
   (Sequence.step (pair i) (Sequence.refl _)).cast rfl (next i)
 private theorem finalState : state 6 = delta {3} := by

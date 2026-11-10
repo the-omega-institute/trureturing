@@ -197,12 +197,13 @@ private theorem horizontal_mem_of_height_ne_zero (z : P.Space × I)
 /-- The formula retraction for an inhabited face collection. The singular
 continuity proof above covers both zero-control strata, the positive-control
 seam, and the full-control top corner. -/
-def nonemptyRetraction : C(P.Space × I, Cylinder P.ambient P.subcomplex) where
-  toFun z := ⟨(horizontal P z, height P z), by
-    by_cases hz : height P z = 0
+def nonemptyRetraction : C(P.Space × I, Cylinder P.ambient P.subcomplex) := by
+  classical
+  refine ⟨fun z => ⟨(horizontal P z, height P z), ?_⟩, ?_⟩
+  · by_cases hz : height P z = 0
     · exact Or.inl hz
-    · exact Or.inr (horizontal_mem_of_height_ne_zero P z hz)⟩
-  continuous_toFun := ((continuous_horizontal P).prodMk (continuous_height P)).subtype_mk _
+    · exact Or.inr (horizontal_mem_of_height_ne_zero P z hz)
+  · exact ((continuous_horizontal P).prodMk (continuous_height P)).subtype_mk _
 
 /-- Exact lower-branch formula, with a bounded ratio. Equality at the seam
 uses this formula; the upper expression has the same value there. -/
@@ -251,7 +252,8 @@ theorem nonemptyRetraction_fixed (z : P.Space × I)
     (nonemptyRetraction P z).val = z := by
   rcases z with ⟨x, t⟩
   rcases hz with ht | hx
-  · subst t
+  · change t = 0 at ht
+    subst t
     exact nonemptyRetraction_bottom P x
   · exact nonemptyRetraction_side P x t hx
 
@@ -368,7 +370,7 @@ theorem homotopy_extension (hLK : L ≤ K)
       Subtype.ext (retraction_fixed K L hLK (a.val, t) (Or.inr a.property))
     change boundaryMap K L f g (retraction K L hLK (a.val, t)) = g (t, a)
     rw [hr]
-    exact boundaryMap_side K L f g _ a.property
+    exact boundaryMap_side K L f g ⟨(a.val, t), Or.inr a.property⟩ a.property
 
 end Extension
 

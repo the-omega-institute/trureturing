@@ -85,7 +85,8 @@ def pole (Λ : Type*) [Fintype Λ] : E Λ :=
 variable [Nonempty Λ]
 
 theorem cardR_pos : 0 < cardR Λ := by
-  exact_mod_cast Fintype.card_pos
+  change (0 : ℝ) < (Fintype.card Λ : ℝ)
+  exact_mod_cast (Fintype.card_pos : 0 < Fintype.card Λ)
 
 theorem cardR_ne : cardR Λ ≠ 0 := (cardR_pos (Λ := Λ)).ne'
 
@@ -311,7 +312,6 @@ theorem psi_south_iff (hm : 2 ≤ Fintype.card Λ) (x : Simplex Λ) :
     have hv : psiRaw x = -pole Λ := congrArg Subtype.val h
     have hc : (sigma x ^ 2 - displacementSq x) / psiDenominator x = -1 := by
       rw [← psiRaw_inner_pole, hv, inner_neg_left, real_inner_self_eq_norm_sq, pole_norm_sq]
-      ring
     have he := (div_eq_iff (denominator_pos x).ne').mp hc
     have hs : sigma x = 0 := sq_eq_zero_iff.mp (by
       dsimp [psiDenominator] at he
@@ -323,7 +323,7 @@ private def maxNeg (v : E Λ) : ℝ :=
   Finset.univ.sup' Finset.univ_nonempty (fun i => -v i)
 
 private theorem neg_coord_le_maxNeg (v : E Λ) (i : Λ) : -v i ≤ maxNeg v :=
-  Finset.le_sup' _ (Finset.mem_univ i)
+  Finset.le_sup' (fun j => -v j) (Finset.mem_univ i)
 
 private theorem maxNeg_attained (v : E Λ) : ∃ i, -v i = maxNeg v := by
   obtain ⟨i, _, hi⟩ := Finset.exists_mem_eq_sup' Finset.univ_nonempty (fun i => -v i)
@@ -558,7 +558,8 @@ theorem nonSouthInverse_coordinate (y : Sphere Λ) (hy : y.1 ≠ -pole Λ) (i : 
           Finset.univ.sup' Finset.univ_nonempty
             (fun j => -(y.1 j - ⟪y.1, pole Λ⟫_ℝ * pole Λ j))) := by
   change (cardR Λ)⁻¹ + (kappa y.1)⁻¹ * tangent y.1 i = _
-  simp only [kappa, alpha, tangent, maxNeg, PiLp.sub_apply, PiLp.smul_apply, smul_eq_mul,
+  simp only [kappa, alpha, tangent, maxNeg, barycenter, PiLp.toLp_apply,
+    PiLp.sub_apply, PiLp.smul_apply, smul_eq_mul,
     div_eq_mul_inv]
   ring
 
@@ -721,7 +722,7 @@ theorem zeroExtend_norm_sq (v : E (FaceIndex G face)) :
       apply Finset.sum_congr rfl
       intro g _
       by_cases hg : g ∈ face <;> simp [zeroExtend, hg]
-    _ = ∑ i, (v i) ^ 2 := sum_supported face _
+    _ = ∑ i, (v i) ^ 2 := sum_supported face (fun i => (v i) ^ 2)
 
 private theorem zeroExtend_add (v w : E (FaceIndex G face)) :
     zeroExtend face (v + w) = zeroExtend face v + zeroExtend face w := by
@@ -797,9 +798,12 @@ theorem faceCoordinateHomeomorph_boundary (x : Simplex (FaceIndex G face)) :
     faceBoundary face (faceCoordinateHomeomorph face x) ↔ boundary x := by
   constructor
   · rintro ⟨g, hg, h⟩
-    exact ⟨⟨g, hg⟩, by simpa [faceCoordinateHomeomorph, extendFace, zeroExtend, hg] using h⟩
+    change zeroExtend face x.1 g = 0 at h
+    exact ⟨⟨g, hg⟩, by simpa [zeroExtend, hg] using h⟩
   · rintro ⟨i, hi⟩
-    exact ⟨i.1, i.2, by simpa [faceCoordinateHomeomorph, extendFace, zeroExtend, i.2] using hi⟩
+    refine ⟨i.1, i.2, ?_⟩
+    change zeroExtend face x.1 i.1 = 0
+    simpa [zeroExtend, i.2] using hi
 
 /-- The ambient source quotient is literal equality or both face-boundary points. -/
 def faceBoundarySetoid : Setoid (AmbientFace face) where

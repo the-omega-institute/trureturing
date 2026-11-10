@@ -20,10 +20,13 @@ sum carrier, total label map, physical chord indices, actual unique paths,
 raw root and native Sequence/Certificate authorities are imported unchanged.
 No claim about Lean/native/Reg/official acceptance is made here. -/
 noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 open Set Finset SimpleGraph
 open scoped unitInterval ContinuousMap
 namespace D5.S3.Geometry.OriginalLabelTwoSum.PhysicalClosedChain
 open FiniteElementaryCollapse FiniteRelativeSimplicialCollapse FiniteSimplicialJoin
+open FiniteConeCollapse
 
 abbrev Ambient (n ghosts : Nat) : Type := PhysicalHistory.Ambient n ghosts
 
@@ -61,7 +64,10 @@ def retained (n ghosts k : Nat) (hk : k ≤ n) : Finset (Ambient n ghosts) :=
 
 private def seedLabels (n ghosts : Nat) : K4.SeedLabel ↪ Ambient n ghosts where
   toFun i := ⟨i.val,by have := i.isLt; omega⟩
-  inj' := by intro a b h; exact Fin.ext (congrArg Fin.val h)
+  inj' := by
+    intro a b h
+    apply Fin.ext
+    exact congrArg (fun x : Ambient n ghosts => x.val) h
 
 private theorem interface_succ (n ghosts k : Nat) (hk : k+1 ≤ n) :
     interface n ghosts (k+1) hk = r n ghosts k (by omega) 0 := by
@@ -109,7 +115,8 @@ private theorem interface_not_second (n ghosts k : Nat) (hk : k ≤ n) :
 
 private theorem S_zero (n ghosts : Nat) : S n ghosts 0 = ∅ := by
   ext x
-  simp only [S,Finset.mem_filter,Finset.mem_univ,true_and,Finset.not_mem_empty] <;> omega
+  simp only [S,Finset.mem_filter,Finset.mem_univ,true_and,Finset.notMem_empty]
+  omega
 
 /-- An explicit union of the ORIGINAL r(j+1,3),r(j+1,4) values. -/
 theorem S_union (n ghosts k : Nat) (hk : k ≤ n) :
@@ -173,8 +180,9 @@ private theorem critical_recurrence (n ghosts k : Nat) (hk : k < n) :
     ext x
     simp only [Finset.mem_insert,Finset.mem_union,Finset.mem_singleton]
     tauto
-  · simp only [wheelCell,if_neg (interface_not_second n ghosts k (by omega)),
-      second,S_succ n ghosts k hk]
+  · unfold wheelCell
+    rw [if_neg (interface_not_second n ghosts k (by omega))]
+    simp only [second,S_succ n ghosts k hk]
     ext x
     simp only [Finset.mem_insert,Finset.mem_union,Finset.mem_singleton]
     tauto
@@ -323,6 +331,7 @@ theorem ground_recurrence (n ghosts k : Nat) (hk : k < n) :
   change (graph n ghosts k (by omega)).ground.erase _ ∪
     Wheel.Y.image (input n ghosts k hk).labels = _
   rw [input_Y]
+  rfl
 
 /-- Total values of all other coordinates are mapped through the actual
 left embedding, even when a coordinate has been physically deleted or inactive.
@@ -365,6 +374,7 @@ private theorem retained_recurrence (n ghosts k : Nat) (hk : k < n) :
   have hvI : x = v n ghosts → x ≠ interface n ghosts k (by omega) := by
     rintro rfl; exact hev
   simp only [Fin.ext_iff,p,v,r] at *
+  dsimp only at *
   omega
 
 /-- Exact original-label ground, including k=0. Deleted interfaces are not
@@ -381,7 +391,10 @@ theorem ground_formula (n ghosts k : Nat) (hk : k ≤ n) :
       Finset.mem_union,tail,Finset.mem_filter,Finset.mem_univ,true_and]
     constructor
     · rintro ⟨i,hi,rfl⟩
-      rcases hi with rfl | rfl | rfl <;> simp [seedLabels,p,v,interface,u]
+      rcases hi with rfl | rfl | rfl
+      · exact Or.inl (Or.inl rfl)
+      · exact Or.inl (Or.inr (Or.inr rfl))
+      · exact Or.inl (Or.inr (Or.inl rfl))
     · intro hx
       rcases hx with (hx | hx | hx) | hx
       · exact ⟨0,Or.inl rfl,hx.symm⟩
@@ -446,6 +459,7 @@ theorem critical_formula (n ghosts k : Nat) (hk : k ≤ n) :
   | zero =>
     change (K4.seed.critical.image (fun t => t.image (seedLabels n ghosts))) = _
     simp [K4.seed,first,second,S_zero,interface,seedLabels,u,v]
+    rfl
   | succ k ih =>
     change (PhysicalCertificate.certificate (graph n ghosts k (by omega))
       (input n ghosts k (by omega)).e (input n ghosts k (by omega)).retained
@@ -491,6 +505,7 @@ theorem original_support (n ghosts k : Nat) (hk : k ≤ n) :
   have hr := (graph n ghosts k hk).rows.root_supported
   have hc := (PhysicalHistory.certificate (history n ghosts k hk)).core_supported
   have hs := (PhysicalHistory.certificate (history n ghosts k hk)).critical_supported
+  change Supported (graph n ghosts k hk).ground (graph n ghosts k hk).rows.root at hr
   rw [ground_formula] at hr hc hs
   rw [critical_formula] at hs
   exact ⟨hr,hc,hs⟩
@@ -618,13 +633,14 @@ theorem path_rows (n ghosts k : Nat) (hk : k < n) :
       simp only [Wheel.R,Finset.image_insert,Finset.image_singleton]
       rfl
     rw [hr]
+    rfl
   · intro d
     let d' : (Wheel.ambientGraph i.labels).PhysicalSurvivor (0 : Fin 4) :=
       ⟨d.1,fun he => d.2 (Wheel.ambient_uniqueInterface i.labels d.1 he)⟩
     change (PhysicalHistory.step g i).data.rows.row (.inr d') = _
     rw [h.2 d']
     have hv : ∀ j : Fin 4,
-        (![{(1 : Wheel.Label),2},{2,3},{3,4},{4,1}] j).image i.labels =
+        ((![( {1,2} : Finset Wheel.Label),{2,3},{3,4},{4,1}] j) : Finset Wheel.Label).image i.labels =
           ![{r n ghosts k hk 0,r n ghosts k hk 1},
             {r n ghosts k hk 1,r n ghosts k hk 2},
             {r n ghosts k hk 2,r n ghosts k hk 3},
@@ -647,7 +663,10 @@ theorem raw_root_step (n ghosts k : Nat) (hk : k < n) :
     i.labels i.zero i.fresh
   have hz : Wheel.Z.image i.labels = {r n ghosts k hk 2,r n ghosts k hk 3} := by
     simp only [Wheel.Z,Finset.image_insert,Finset.image_singleton]; rfl
-  simpa only [input_Y n ghosts k hk,hz] using h
+  change (graph n ghosts (k+1) (by omega)).rows.root =
+    parentOf _ (Wheel.Y.image i.labels) (Wheel.Z.image i.labels)
+      (interface n ghosts k (by omega)) _ _ at h
+  simpa only [i,input_Y n ghosts k hk,hz] using h
 
 /-- Exact existing RowHistory and its EVERY-index correspondence on this chain. -/
 theorem row_handoff (n ghosts k : Nat) (hk : k ≤ n) :

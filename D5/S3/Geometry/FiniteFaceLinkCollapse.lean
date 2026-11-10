@@ -32,6 +32,9 @@ import D5.S3.Geometry.FiniteComponentClosure.Models
 
 noncomputable section
 
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
+
 open Set Finset Topology
 open scoped BigOperators unitInterval ContinuousMap
 
@@ -94,7 +97,7 @@ def faceLink (K : PreAbstractSimplicialComplex V) (E : Finset V) :
     refine ⟨hs, ?_⟩
     intro t hts ht
     exact ⟨ht, disjointFrom_subset_right hdis hts,
-      (K.isRelLowerSet_faces hKs).2 (Finset.union_subset_union_left E hts)
+      (K.isRelLowerSet_faces hKs).2 (Finset.union_subset_union le_rfl hts)
         (ht.mono Finset.subset_union_right)⟩
 
 /-- The exact antistar, on the same original label type. -/
@@ -680,8 +683,9 @@ theorem faceLinkCollapse_frames
   have hp := Sequence.frames_append_getD_lt T U hiT
   rw [replayFrames_frames] at hp
   have hmap := List.getD_map S.frames (faceLink K E) (n := i) (faceFrame K E)
-  rw [faceFrame_link_eq K E hE] at hp hmap
-  simpa only [faceLinkCollapse, Sequence.frames_cast, T, U] using hp.trans hmap
+  have h := hp.trans hmap
+  simpa only [faceLinkCollapse, Sequence.frames_cast, T, U,
+    faceFrame_link_eq K E hE] using h
 
 /-- The exact link/coface specification consumed by the sequence result. -/
 structure FaceLinkLiftResult (K : PreAbstractSimplicialComplex V) (E : Finset V)
@@ -723,6 +727,8 @@ def faceLinkLift
 and every original deletion contained in it is fixed through the same actual
 coordinate inclusion. -/
 theorem fixed_faceAntistar
+    {K : PreAbstractSimplicialComplex V} {E : Finset V} {d : V}
+    {S : Sequence (faceLink K E) (vertexComplex d)}
     (R : FaceLinkLiftResult K E d S) (t : I) (x : Space K)
     (hx : x.val ∈ realization (faceAntistar K E)) :
     R.sequence.collapseHomotopy (t, x) = x := R.fixed_antistar t x hx
@@ -741,7 +747,8 @@ theorem fixed_whole_deletion
       (t, realizationInclusion (deletion_le K e) x) =
       realizationInclusion (deletion_le K e) x := by
   apply R.fixed_antistar
-  exact realization_mono (deletion_le_faceAntistar he) x.property
+  rcases x.property with ⟨s, hs, hx⟩
+  exact ⟨s, deletion_le_faceAntistar he hs, hx⟩
 
 /-- Original-label residual predicate for a graph face link. -/
 def residualPredicate (G : SimpleGraph V) (E : Finset V) : V → Prop :=
@@ -814,8 +821,10 @@ theorem edge_antistar_union_deletions (K : PreAbstractSimplicialComplex V)
     faceAntistar K ({b, c} : Finset V) = deletion K b ⊔ deletion K c := by
   apply SetLike.coe_injective
   ext s
-  by_cases hbs : b ∈ s <;> by_cases hcs : c ∈ s <;>
-    simp [faceAntistar, deletion, hbs, hcs]
+  change (s ∈ K ∧ ¬ ({b, c} : Finset V) ⊆ s) ↔
+    ((s ∈ K ∧ b ∉ s) ∨ (s ∈ K ∧ c ∉ s))
+  simp only [Finset.insert_subset_iff, Finset.singleton_subset_iff]
+  tauto
 
 /-- A graph consumer takes a Sequence already on the original-label restricted
 complex.  The only transport is equality cast; mapHomeomorph is a realization
