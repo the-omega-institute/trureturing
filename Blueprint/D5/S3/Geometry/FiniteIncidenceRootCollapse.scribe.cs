@@ -68,7 +68,7 @@ internal sealed class FiniteIncidenceRootCollapseDocument : IScribeDocumentDefin
 
     private static DocumentBlock Node(string id, string declaration, string title, string prose,
         string sourceHeader, DescribeRole role) => Describe.Lean(
-        DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
+        DescribeId.Create(id), DeclarationHandle.Create(DeclarationPrefix(declaration) + declaration), H(title),
         StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
         Blocks(SourceText(prose), SourceText("Authored Lean source header:" + sourceHeader)), role);
 
@@ -78,4 +78,48 @@ internal sealed class FiniteIncidenceRootCollapseDocument : IScribeDocumentDefin
         ? new DocumentBlock.Section(H("Source text"), Blocks(Array.ConvertAll(
             value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? "Definitions and proofs are in the paired Lean module." : line)))))
         : Paragraph(Text(value));
+
+    private static string DeclarationPrefix(string name) => name switch
+    {
+        "ColumnSubset" => "D5/S3/Geometry/FiniteIncidenceRootPruning.",
+        "IsolatedColumn" => "D5/S3/Geometry/FiniteIncidenceRootPruning.",
+        "Pruning" => "D5/S3/Geometry/FiniteIncidenceRootPruning.",
+        "Result" => "D5/S3/Geometry/FiniteIncidenceRootPruning.",
+        "RowSubset" => "D5/S3/Geometry/FiniteIncidenceRootPruning.",
+        "SingletonRow" => "D5/S3/Geometry/FiniteIncidenceRootPruning.",
+        "State" => "D5/S3/Geometry/FiniteIncidenceRootPruning.",
+        "TerminalLaw" => "D5/S3/Geometry/FiniteIncidenceRootPruning.",
+        "TerminalTag" => "D5/S3/Geometry/FiniteIncidenceRootPruning.",
+        "Witness" => "D5/S3/Geometry/FiniteIncidenceRootPruning.",
+        "augmentedTerminal" => "D5/S3/Geometry/FiniteIncidenceRootPruning.",
+        "columnSubset_neighborhood" => "D5/S3/Geometry/FiniteIncidenceRootPruning.",
+        "eraseColumn" => "D5/S3/Geometry/FiniteIncidenceRootPruning.",
+        "eraseColumn_rows" => "D5/S3/Geometry/FiniteIncidenceRootPruning.",
+        "eraseRow" => "D5/S3/Geometry/FiniteIncidenceRootPruning.",
+        "eraseRow_active" => "D5/S3/Geometry/FiniteIncidenceRootPruning.",
+        "incidenceDual" => "D5/S3/Geometry/FiniteIncidenceRootPruning.",
+        "incidenceSimplex" => "D5/S3/Geometry/FiniteIncidenceRootPruning.",
+        "isolatedCollapse" => "D5/S3/Geometry/FiniteIncidenceRootPruning.",
+        "liftCoreToBase" => "D5/S3/Geometry/FiniteIncidenceRootPruning.",
+        "mem_rootK" => "D5/S3/Geometry/FiniteIncidenceRootPruning.",
+        "mem_rowNeighborhood" => "D5/S3/Geometry/FiniteIncidenceRootPruning.",
+        "rootK" => "D5/S3/Geometry/FiniteIncidenceRootPruning.",
+        "rootK_column_delete" => "D5/S3/Geometry/FiniteIncidenceRootPruning.",
+        "rootK_dual" => "D5/S3/Geometry/FiniteIncidenceRootPruning.",
+        "rootK_empty_row" => "D5/S3/Geometry/FiniteIncidenceRootPruning.",
+        "rootK_empty_rows" => "D5/S3/Geometry/FiniteIncidenceRootPruning.",
+        "rootK_full_rows" => "D5/S3/Geometry/FiniteIncidenceRootPruning.",
+        "rootK_isolated_cone" => "D5/S3/Geometry/FiniteIncidenceRootPruning.",
+        "rootK_row_erase" => "D5/S3/Geometry/FiniteIncidenceRootPruning.",
+        "rowNeighborhood" => "D5/S3/Geometry/FiniteIncidenceRootPruning.",
+        "rowSubset_neighborhood" => "D5/S3/Geometry/FiniteIncidenceRootPruning.",
+        "simplexCollapse" => "D5/S3/Geometry/FiniteIncidenceRootPruning.",
+        "singletonChild" => "D5/S3/Geometry/FiniteIncidenceRootPruning.",
+        "singleton_apex_of_child_face" => "D5/S3/Geometry/FiniteIncidenceRootPruning.",
+        "singleton_apex_of_child_rows" => "D5/S3/Geometry/FiniteIncidenceRootPruning.",
+        "singleton_decomposition" => "D5/S3/Geometry/FiniteIncidenceRootPruning.",
+        "singleton_no_apex" => "D5/S3/Geometry/FiniteIncidenceRootPruning.",
+        "terminal_semantics" => "D5/S3/Geometry/FiniteIncidenceRootPruning.",
+        _ => Prefix
+    };
 }

@@ -125,7 +125,7 @@ internal sealed class AttachmentSphereDocument : IScribeDocumentDefinition
 
     private static DocumentBlock Node(string id, string declaration, string title, string prose,
         DescribeRole role) => Describe.Lean(
-            DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
+            DescribeId.Create(id), DeclarationHandle.Create(DeclarationPrefix(declaration) + declaration), H(title),
             role == DescribeRole.Definition ? StatementSource.WithoutFormula() : StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(SourceText(prose)), role);
 
@@ -135,4 +135,39 @@ internal sealed class AttachmentSphereDocument : IScribeDocumentDefinition
         ? new DocumentBlock.Section(H("Source text"), Blocks(Array.ConvertAll(
             value.Split('\n'), line => Paragraph(Text(line.Length == 0 ? "Definitions and proofs are in the paired Lean module." : line)))))
         : Paragraph(Text(value));
+
+    private static string DeclarationPrefix(string name) => name switch
+    {
+        "Attachment" => "D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.",
+        "BDisk" => "D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.",
+        "Disk" => "D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.",
+        "Q" => "D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.",
+        "basepoint" => "D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.",
+        "boundaryToCore" => "D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.",
+        "collar" => "D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.",
+        "collar_core" => "D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.",
+        "collar_inner" => "D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.",
+        "collar_laws" => "D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.",
+        "collar_outer" => "D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.",
+        "coreIn" => "D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.",
+        "coreSet" => "D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.",
+        "cut" => "D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.",
+        "cut_pos" => "D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.",
+        "diskCollar" => "D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.",
+        "diskIn" => "D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.",
+        "diskSet" => "D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.",
+        "expand" => "D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.",
+        "faceInhabited" => "D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.",
+        "outerRegion" => "D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.",
+        "outerTime" => "D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.",
+        "projection" => "D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.",
+        "q" => "D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.",
+        "quotientEquivalence" => "D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.",
+        "quotientInverse" => "D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.",
+        "quotientInverse_barycenter" => "D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.",
+        "quotientInverse_inner" => "D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.",
+        "quotient_representative" => "D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.",
+        "rho" => "D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar.",
+        _ => Prefix
+    };
 }
