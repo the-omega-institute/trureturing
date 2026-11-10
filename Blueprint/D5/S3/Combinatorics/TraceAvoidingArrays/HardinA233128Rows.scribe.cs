@@ -1,3 +1,4 @@
+using System.Globalization;
 using F = StrataLint.Scribe.FormulaDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using static StrataLint.Scribe.DefinitionDsl;
@@ -130,7 +131,8 @@ internal sealed class HardinA233128RowsDocument : IScribeDocumentDefinition
     {
         var s = V("s"); var p = V("p");
         Formula P(byte j) => At(p, Typed(D(j), Fin(7)));
-        Formula K(int j) => Typed(Number(j.ToString()), Fin(21));
+        Formula K(int j) =>
+            Typed(Number(j.ToString(CultureInfo.InvariantCulture)), Fin(21));
         var classes = new[] { 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20 };
         Formula Tree(int depth, int code)
         {
@@ -138,7 +140,7 @@ internal sealed class HardinA233128RowsDocument : IScribeDocumentDefinition
             {
                 var reversed = 0;
                 for (var i = 0; i < 5; i++) reversed = 2 * reversed + ((code >> i) & 1);
-                var canonical = Math.Min(code, reversed);
+                var canonical = code < reversed ? code : reversed;
                 var codes = new[] { 0,1,2,3,4,5,6,7,9,10,11,13,14,15,17,19,21,23,27,31 };
                 return K(classes[Array.IndexOf(codes, canonical)]);
             }
@@ -294,7 +296,8 @@ internal sealed class HardinA233128RowsDocument : IScribeDocumentDefinition
     private static Formula Parenthesized(Formula f) => Seq(Open, f, Close);
     private static Formula Typed(Formula f, Formula type) =>
         Parenthesized(Seq(f, Colon, Sp, type));
-    private static Formula Fin(byte k) => Call("Fin", Number(k.ToString()));
+    private static Formula Fin(byte k) =>
+        Call("Fin", Number(((int)k).ToString(CultureInfo.InvariantCulture)));
     private static Formula Val(Formula f) => Call("Fin.val", f);
     private static Formula Arrow(Formula a, Formula b) => new Formula.TypeArrow(a, b);
     private static Formula Product(Formula a, Formula b) =>
@@ -320,10 +323,6 @@ internal sealed class HardinA233128RowsDocument : IScribeDocumentDefinition
         new Formula.Logic(Parenthesized(a), FormulaLogicOperator.And, Parenthesized(b));
     private static Formula Add(Formula a, Formula b) =>
         new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Add, Parenthesized(b));
-    private static Formula Sub(Formula a, Formula b) =>
-        new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Subtract, Parenthesized(b));
-    private static Formula Mul(Formula a, Formula b) =>
-        new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Multiply, Parenthesized(b));
     private static Formula All(string n, Formula type, Formula body) =>
         Seq(Forall, Sp, Typed(V(n), type), Comma, Sp, Parenthesized(body));
     private static Formula Fn(string n, Formula type, Formula body) =>

@@ -1,3 +1,4 @@
+using System.Globalization;
 using F = StrataLint.Scribe.FormulaDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using static StrataLint.Scribe.DefinitionDsl;
@@ -8,10 +9,6 @@ internal sealed class HardinA233128SquareStripDocument : IScribeDocumentDefiniti
 {
     private const string Root =
         "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233128SquareStrip.";
-    private const string Owner =
-        "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.";
-    private const string RowOwner =
-        "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255PairTransfer.";
     private const string BoundaryOwner =
         "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255PairTransfer.";
     private const string Scanner =
@@ -62,9 +59,6 @@ internal sealed class HardinA233128SquareStripDocument : IScribeDocumentDefiniti
 
     private static Formula Seen() => Name(Scanner + "Seen");
     private static Formula PairRow() => Name(BoundaryOwner + "PairRow");
-    private static Formula Proj(Formula a, bool first) =>
-        Call(first ? "Prod.fst" : "Prod.snd", a);
-    private static Formula Flags() => Pair(Name("Bool.false"), Name("Bool.false"));
     private static Formula Certificate()
     {
         var s = V("s"); var p = V("p"); var k = V("k");
@@ -82,7 +76,8 @@ internal sealed class HardinA233128SquareStripDocument : IScribeDocumentDefiniti
     private static Formula Result()
     {
         var n = V("n");
-        Formula A(int k) => Typed(Call(Root + "a", Add(n, Number(k.ToString()))), Name("Int"));
+        Formula A(int k) => Typed(Call(Root + "a",
+            Add(n, Number(((int)k).ToString(CultureInfo.InvariantCulture)))), Name("Int"));
         var coefficients = new[] {
             "7168",
             "-19070976",
@@ -103,7 +98,8 @@ internal sealed class HardinA233128SquareStripDocument : IScribeDocumentDefiniti
         for (var j = 1; j < coefficients.Length; j++)
         {
             var c = coefficients[j];
-            var product = Mul(Number(c.TrimStart('-')), A(14 - j));
+            var magnitude = c.StartsWith('-') ? c.Substring(1, c.Length - 1) : c;
+            var product = Mul(Number(magnitude), A(14 - j));
             term = c.StartsWith('-') ? Sub(term, product) : Add(term, product);
         }
         return All("n", Name("Nat"), Eq(A(15), term));
@@ -120,28 +116,16 @@ internal sealed class HardinA233128SquareStripDocument : IScribeDocumentDefiniti
     private static Formula Parenthesized(Formula f) => Seq(Open, f, Close);
     private static Formula Typed(Formula f, Formula type) =>
         Parenthesized(Seq(f, Colon, Sp, type));
-    private static Formula Fin(byte k) => Call("Fin", Number(k.ToString()));
-    private static Formula Val(Formula f) => Call("Fin.val", f);
-    private static Formula Arrow(Formula a, Formula b) => new Formula.TypeArrow(a, b);
-    private static Formula Product(Formula a, Formula b) =>
-        Seq(Parenthesized(a), Sp, Times, Sp, Parenthesized(b));
-    private static Formula Pair(Formula a, Formula b) =>
-        Parenthesized(Seq(a, Comma, Sp, b));
+    private static Formula Fin(byte k) =>
+        Call("Fin", Number(((int)k).ToString(CultureInfo.InvariantCulture)));
     private static Formula Vector(params Formula[] entries) => Seq(
         new Formula[] { Bang, OpenBracket }.Concat(entries.SelectMany((f, i) =>
             i == 0 ? new[] { f } : new[] { Comma, Sp, f }))
             .Append(CloseBracket).ToArray());
-    private static Formula Conditional(Formula test, Formula yes, Formula no) =>
-        Parenthesized(Seq(Name("if"), Sp, Parenthesized(test), Sp, Name("then"), Sp,
-            Parenthesized(yes), Sp, Name("else"), Sp, Parenthesized(no)));
-    private static Formula SumOver(string n, Formula type, Formula body) =>
-        Seq(Sum, Underscore, Grp(V(n), Colon, Sp, type), Sp, Parenthesized(body));
     private static Formula Imp(Formula a, Formula b) =>
         Seq(Parenthesized(a), Sp, Implies, Sp, Parenthesized(b));
     private static Formula Eq(Formula a, Formula b) =>
         new Formula.Relation(a, FormulaRelationOperator.Equal, b);
-    private static Formula Ne(Formula a, Formula b) =>
-        new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
     private static Formula And(Formula a, Formula b) =>
         new Formula.Logic(Parenthesized(a), FormulaLogicOperator.And, Parenthesized(b));
     private static Formula Add(Formula a, Formula b) =>
@@ -152,6 +136,4 @@ internal sealed class HardinA233128SquareStripDocument : IScribeDocumentDefiniti
         new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Multiply, Parenthesized(b));
     private static Formula All(string n, Formula type, Formula body) =>
         Seq(Forall, Sp, Typed(V(n), type), Comma, Sp, Parenthesized(body));
-    private static Formula Fn(string n, Formula type, Formula body) =>
-        Parenthesized(Seq(Typed(V(n), type), Sp, Mapsto, Sp, Parenthesized(body)));
 }
