@@ -29,7 +29,9 @@ noncomputable section
 
 open private gram_longitudinal from D5.S3.VertexAlgebra.Sectors.LatticeCosetCompression
 open private bilinear_unit from D5.S3.VertexAlgebra.LatticeFiniteNegativeGeneration
-open private derivative_map solution_unique from D5.S3.VertexAlgebra.LatticeHalfFockChargedCoefficients
+open private derivative_map solution_unique from
+  D5.S3.VertexAlgebra.LatticeHalfFockChargedCoefficients
+open private exponential_derivative from D5.S3.VertexAlgebra.LatticeSugawaraConformal
 
 variable (D : LatticeData) {e : ℕ}
 variable (B : Matrix (Fin D.rank) (Fin e) ℤ) (C : Matrix (Fin e) (Fin e) ℤ)
@@ -293,19 +295,8 @@ theorem creationExponential_factorization (hD : (gramReal D).PosDef)
   let K := PowerSeries.rescale (-U)
     (PowerSeries.binomialSeries (R := ℚ) (Polynomial (Oscillator D)) s)
   let E : PowerSeries (Polynomial (Oscillator D)) := 1 - PowerSeries.C U * PowerSeries.X
-  have hS : PowerSeries.constantCoeff (creationSeries F β) = 0 := by
-    simp [creationSeries, ← PowerSeries.coeff_zero_eq_constantCoeff_apply]
-  have hsource : PowerSeries.derivative (R := Oscillator F) (creationExponential F β) =
-      creationExponential F β * PowerSeries.derivative (R := Oscillator F) (creationSeries F β) := by
-    rw [creationExponential, PowerSeries.derivative_subst
-      (PowerSeries.HasSubst.of_constantCoeff_zero' hS), PowerSeries.derivative_exp]
-  have hconstant : PowerSeries.coeff 0 (creationExponential F β) = 1 := by
-    rw [creationExponential, PowerSeries.coeff_subst'
-      (PowerSeries.HasSubst.of_constantCoeff_zero' hS), finsum_eq_single _ 0]
-    · simp
-    · intro j hj
-      rw [PowerSeries.coeff_zero_eq_constantCoeff, map_pow, hS]
-      simp [hj]
+  have hsource := exponential_derivative F β
+  have hconstant := LatticeSugawaraConformal.exponential_constant F β
   have hdiff (k : ℕ) : PowerSeries.coeff k
       (PowerSeries.derivative (R := Polynomial (Oscillator D)) A -
        PowerSeries.derivative (R := Polynomial (Oscillator D)) A₀) =
@@ -313,7 +304,7 @@ theorem creationExponential_factorization (hD : (gramReal D).PosDef)
     rw [← map_sub, PowerSeries.coeff_derivative]
     have h := creationSeries_difference D B C hC hCe hD a b n m
     change A - A₀ = _ at h
-    rw [h, PowerSeries.coeff_mk, if_neg (Nat.succ_ne_zero k)]
+    rw [h, PowerSeries.coeff_mk, ite_eq_right (Nat.succ_ne_zero k)]
     rw [mul_comm, show (k+1 : Polynomial (Oscillator D)) =
       algebraMap ℂ (Polynomial (Oscillator D)) (k+1 : ℂ) by simp,
       ← Algebra.smul_def, smul_smul]
@@ -334,7 +325,7 @@ theorem creationExponential_factorization (hD : (gramReal D).PosDef)
     | succ k =>
       simp only [E, mul_sub, mul_one, ← mul_assoc, map_sub,
         PowerSeries.coeff_succ_mul_X, PowerSeries.coeff_mul_C,
-        hdiff, map_neg, PowerSeries.coeff_C, Nat.succ_ne_zero, if_false]
+        hdiff, map_neg, PowerSeries.coeff_C, Nat.succ_ne_zero, ite_false]
       simp only [pow_succ]
       ring
   have hChoose (k : ℕ) : (k+1 : ℚ) * Ring.choose s (k+1) =
@@ -343,12 +334,12 @@ theorem creationExponential_factorization (hD : (gramReal D).PosDef)
       Ring.choose_one_right, nsmul_eq_mul, mul_comm] using
       (Ring.choose_smul_choose s (n := k+1) (k := k) (by omega))
   have hKcoeff (k : ℕ) : PowerSeries.coeff k K =
-      (-U)^k * (Ring.choose s k : Polynomial (Oscillator D)) := by
+      (-U)^k * algebraMap ℚ (Polynomial (Oscillator D)) (Ring.choose s k) := by
     simp only [K, PowerSeries.coeff_rescale, PowerSeries.binomialSeries_coeff,
       Algebra.smul_def, mul_one]
   have hs : Polynomial.C ((s : ℂ) • (1 : Oscillator D)) =
-      (s : Polynomial (Oscillator D)) := by
-    simp [Algebra.smul_def]
+      algebraMap ℚ (Polynomial (Oscillator D)) s := by
+    simp [Algebra.smul_def, Polynomial.algebraMap_apply, MvPolynomial.algebraMap_apply]
   have hKE : PowerSeries.derivative (R := Polynomial (Oscillator D)) K * E =
       -PowerSeries.C (Polynomial.C ((s : ℂ) • (1 : Oscillator D)) * U) * K := by
     rw [hs]
@@ -370,10 +361,12 @@ theorem creationExponential_factorization (hD : (gramReal D).PosDef)
         neg_mul, map_neg, PowerSeries.coeff_C_mul]
       simp only [hKcoeff]
       have hr : (k+2 : Polynomial (Oscillator D)) *
-          (Ring.choose s (k+2) : Polynomial (Oscillator D)) =
-          ((s : Polynomial (Oscillator D)) - (k+1 : Polynomial (Oscillator D))) *
-            (Ring.choose s (k+1) : Polynomial (Oscillator D)) := by
-        exact_mod_cast hChoose (k+1)
+          algebraMap ℚ (Polynomial (Oscillator D)) (Ring.choose s (k+2)) =
+          (algebraMap ℚ (Polynomial (Oscillator D)) s - (k+1 : Polynomial (Oscillator D))) *
+            algebraMap ℚ (Polynomial (Oscillator D)) (Ring.choose s (k+1)) := by
+        simpa only [map_mul, map_sub, map_add, map_natCast, map_one,
+          Nat.cast_add, Nat.cast_one, Nat.cast_ofNat, add_assoc, one_add_one_eq_two] using
+          congrArg (algebraMap ℚ (Polynomial (Oscillator D))) (hChoose (k+1))
       simp only [pow_succ, Nat.cast_add, Nat.cast_one]
       linear_combination (-U)^(k+1) * (-U) * hr
   have hu : IsUnit E := PowerSeries.isUnit_iff_constantCoeff.mpr (by simp [E])
@@ -393,11 +386,16 @@ theorem creationExponential_factorization (hD : (gramReal D).PosDef)
     rw [derivative_map, hsource, map_mul, derivative_map]
   have hg : PowerSeries.derivative (R := Polynomial (Oscillator D)) (f₀*K) =
       (f₀*K) * PowerSeries.derivative (R := Polynomial (Oscillator D)) A := by
-    rw [(PowerSeries.derivative (R := Polynomial (Oscillator D))).leibniz, hf₀, hDK]
+    have h := (PowerSeries.derivative (R := Polynomial (Oscillator D))).leibniz f₀ K
+    change PowerSeries.derivative (R := Polynomial (Oscillator D)) (f₀*K) =
+      f₀ * PowerSeries.derivative (R := Polynomial (Oscillator D)) K +
+        K * PowerSeries.derivative (R := Polynomial (Oscillator D)) f₀ at h
+    rw [h, hf₀, hDK]
     ring
   apply solution_unique f (f₀*K) _ hf hg
-  simp [f, f₀, PowerSeries.coeff_mul, Finset.Nat.antidiagonal_zero,
-    hconstant, hKcoeff]
+  rw [PowerSeries.coeff_mul, Finset.Nat.antidiagonal_zero]
+  simp only [Finset.sum_singleton, f, f₀, PowerSeries.coeff_map,
+    hconstant, map_one, hKcoeff, pow_zero, one_mul, Ring.choose_zero_right]
 
 end
 end D5.S3.VertexAlgebra.LatticeCosetTransverse
