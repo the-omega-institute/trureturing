@@ -54,13 +54,6 @@ def translatedProjection (A : Charge (ambient D e B C hC hCe)) :
     (aeval (fun x : Index (ambient D e B C hC hCe) =>
       translationVariable (ambient D e B C hC hCe) A x.1 x.2))
 
-private theorem translatedProjection_apply
-    (A : Charge (ambient D e B C hC hCe))
-    (p : Oscillator (ambient D e B C hC hCe)) :
-    translatedProjection D B C hC hCe A p =
-      Polynomial.map (polynomialProjection D B C hC hCe).toRingHom
-        (translatedPolynomial (ambient D e B C hC hCe) A p) := rfl
-
 private theorem bilinear_old (a : Fin e → ℤ) (n : Charge D) (i : Fin D.rank) :
     bilinear (ambient D e B C hC hCe) (liftCharge D B C hC hCe a n)
         (unitCharge _ (i.castAdd e)) =

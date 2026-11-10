@@ -18,11 +18,6 @@ open scoped BigOperators VertexOperator
 
 noncomputable section
 
-abbrev sourceScope_inner_creation_expansion :=
-  type_of% (@_root_.D5.S3.VertexAlgebra.LatticeCosetOperatorCorrection.inner_creation_expansion)
-theorem source_actual_inner_creation_expansion : sourceScope_inner_creation_expansion :=
-  @_root_.D5.S3.VertexAlgebra.LatticeCosetOperatorCorrection.inner_creation_expansion
-
 structure Params where
   D : LatticeData
   e : ℕ
