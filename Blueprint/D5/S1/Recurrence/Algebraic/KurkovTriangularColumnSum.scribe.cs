@@ -17,8 +17,10 @@ internal sealed class KurkovTriangularColumnSumDocument : IScribeDocumentDefinit
         Blocks(
             Node("f", "The positive-index block sequence", BlockIndex(),
                 "For q>0, f(q) is the unique integer s>=1 satisfying "
-                + "s(s-1)/2<q<=s(s+1)/2, namely OEIS A002024. The implementation "
-                + "takes the least s with 2q<=s(s+1); the private characterization "
+                + "floor(s(s-1)/2)<q<=floor(s(s+1)/2), namely OEIS A002024. "
+                + "These are natural-number integer quotients (floor division); the "
+                + "rational factorial quotients in the result remain ordinary Q-division. "
+                + "The implementation takes the least s with 2q<=s(s+1); the private characterization "
                 + "proves equivalence with the source inequalities. Its zero value "
                 + "only totalizes the Lean function and supplies no extra source assertion.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
@@ -72,6 +74,8 @@ internal sealed class KurkovTriangularColumnSumDocument : IScribeDocumentDefinit
     private static Formula ArrayType() => Seq(N(), Sp, To, Sp, N(), Sp, To, Sp, N());
     private static Formula CastQ(Formula value) => Par(Seq(value, Colon, Sp, Q()));
     private static Formula Factorial(Formula value) => Seq(Par(value), Bang);
+    private static Formula NatDiv(Formula numerator, Formula denominator) =>
+        new Formula.Floor(new Formula.Fraction(numerator, denominator));
 
     private static Formula BlockIndex()
     {
@@ -81,8 +85,8 @@ internal sealed class KurkovTriangularColumnSumDocument : IScribeDocumentDefinit
             LeqTo(Mul(D(2), q), Mul(s, Add(s, D(1)))), CloseBrace);
         var definition = All("q", N(), Eqn(Call("f", q), least));
         var sourceBlock = And(LeqTo(D(1), s), And(
-            Lt(new Formula.Fraction(Mul(s, Sub(s, D(1))), D(2)), q),
-            LeqTo(q, new Formula.Fraction(Mul(s, Add(s, D(1))), D(2)))));
+            Lt(NatDiv(Mul(s, Sub(s, D(1))), D(2)), q),
+            LeqTo(q, NatDiv(Mul(s, Add(s, D(1))), D(2)))));
         var characterization = All("q", N(), Imp(Lt(D(0), q), All("s", N(),
             Seq(Par(Eqn(Call("f", q), s)), Sp, Iff, Sp, Par(sourceBlock)))));
         return And(definition, characterization);

@@ -6,14 +6,8 @@
    utility: none
    digest: Every lawful A396981 array satisfies Kurkov's positive-column factorial sum. -/
 
-import Mathlib.Data.Nat.Find
-import Mathlib.Data.Nat.Factorial.Basic
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.BigOperators.Ring.Finset
-import Mathlib.Algebra.Field.Rat
 import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
 
 /-!
