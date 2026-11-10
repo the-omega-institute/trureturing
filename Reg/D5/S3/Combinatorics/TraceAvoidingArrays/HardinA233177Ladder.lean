@@ -318,6 +318,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   options := #[]
 end Recurrence
 end
+noncomputable section
 namespace RowMajor
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature ℕ
@@ -343,7 +344,7 @@ def family : Registration arena (type_of% @row_major_lt) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
-    exact ⟨1, (0, 0), (1, 0), by decide⟩
+    exact ⟨1, (0, 0), (1, 0), by change (0 : ℕ) ≠ 1; decide⟩
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@row_major_lt) (Realization signature) Type Unit where
   unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder.RowMajor.auditUnit
@@ -398,7 +399,8 @@ private theorem zero_normal : normal (fun _ : Fin 4 × Fin 1 => 0) := by
   simp [normal]
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  exact (h (n := 1) (fun _ => 0)).mpr ((normal_iff _).mp zero_normal)
+  exact (h (n := 1) (fun _ => 0)).mpr ((_root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder.normal_iff _).mp
+    zero_normal)
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨1, (fun _ => 0), (fun _ => 2), ?_⟩
@@ -406,15 +408,15 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
   intro he
   obtain ⟨q, _, hq⟩ := ((Eq.mp he zero_normal) (0, 0)).1 (Or.inl rfl)
   norm_num at hq
-def family : Registration arena (type_of% @normal_iff) where
+def family : Registration arena (type_of% @_root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder.normal_iff) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨@normal_iff, rejected, rejected_law⟩
+  variation := ⟨@_root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder.normal_iff, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := actual_dependence
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-    (@normal_iff) (Realization signature) Type Unit where
+    (@_root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder.normal_iff) (Realization signature) Type Unit where
   unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder.Normal.auditUnit
   realizationName :=
     `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder.Normal.family
@@ -660,7 +662,8 @@ def family : Registration arena (type_of% @alternating_canon) where
   dependence := actual_dependence
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@alternating_canon) (Realization signature) Type Unit where
-  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder.AlternatingCanon.auditUnit
+  unitName :=
+    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder.AlternatingCanon.auditUnit
   realizationName :=
     `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder.AlternatingCanon.family
   realizationSource := none
@@ -692,4 +695,5 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   options := #[]
 end AlternatingCanon
 
+end
 end Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder

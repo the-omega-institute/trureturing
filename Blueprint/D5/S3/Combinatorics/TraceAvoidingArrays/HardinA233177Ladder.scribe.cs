@@ -103,7 +103,7 @@ internal sealed class HardinA233177LadderDocument : IScribeDocumentDefinition
     private static Formula CellOrderFormula()
     {
         var n = V("n");
-        var lift = Seq(Q("LinearOrder.lift"), Apostrophe);
+        var lift = Seq(Q("LinearOrder.lift"), Apos);
         var value = App(lift, Q("finProdFinEquiv"),
             Call("Equiv.injective", Q("finProdFinEquiv")));
         return All("n", Q("Nat"), Eq(Typed(Own("cellOrder", n),
