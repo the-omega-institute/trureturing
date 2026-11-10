@@ -6,7 +6,7 @@
      mathlib/module/Mathlib.LinearAlgebra.Dimension.Free,
      mathlib/module/Mathlib.Algebra.Order.Floor.Div]
    utility: none
-   digest: Actual cyclic projectivity over a finite coefficient field forces the ceiling dimension bound. -/
+   digest: Actual cyclic projectivity over finite fields forces the ceiling dimension bound. -/
 
 import D5.S3.FiniteGroups.GroupAlgebra.PrimeFieldUniformCyclicDimension
 import Mathlib.Algebra.Algebra.ZMod
@@ -23,10 +23,8 @@ through the public norm criterion, ordinary field-linear lifting, and the
 public norm-section equivalence. Cancellation and ceiling division give the
 finite-field bound. Rank zero is treated before choosing a nonidentity element.
 
-The prime-field import is supplied as an immutable, natively compiled but
-unpublished source dependency. This finite-field module is a source candidate;
-no integrated compilation or acceptance is asserted here. The bound is a
-classical derived consequence, with no sharpness construction or novelty claim.
+The prime-field import is used only through its public theorem. The bound is
+a classical derived consequence, with no equality construction or novelty claim.
 -/
 
 set_option autoImplicit false
@@ -66,11 +64,12 @@ private theorem primeRestriction_norm [Fintype P]
 
 /-- The norm criterion transfers projectivity on this actual finite p-group.
 This does not assume that group-algebra projectivity descends along scalars. -/
-private theorem primeRestriction_projective [Fintype P] [CharP K p]
+private theorem primeRestriction_projective [Finite P] [CharP K p]
     (hP : IsPGroup p P) (ρ : Representation K P V)
     (hproj : Module.Projective K[P] ρ.asModule) :
     Module.Projective (ZMod p)[P] (primeRestriction (p := p) ρ).asModule := by
   classical
+  letI : Fintype P := Fintype.ofFinite P
   have hpK : (p : K) ^ 1 = 0 := by
     simpa only [pow_one] using (CharP.cast_eq_zero K p)
   have hp₀ : (p : ZMod p) ^ 1 = 0 := by simp
@@ -130,7 +129,7 @@ private theorem finrank_eq_card_mul_invariants
     Module.finrank K V = Module.finrank K (P → ρ.invariants) := e.finrank_eq
     _ = Fintype.card P * Module.finrank K ρ.invariants := by
       rw [Module.finrank_pi_fintype]
-      simp only [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
+      simp only [Finset.sum_const, Finset.card_univ, nsmul_eq_mul, Nat.cast_id]
 
 /-- For a finite coefficient field of prime-field degree f, actual cyclic
 projectivity forces dimension at least p * ceil(r/f). No algebra, scalar tower,
@@ -146,15 +145,15 @@ theorem prime_mul_ceilDiv_finrank_le_finrank_of_cyclic_projective
     letI : Algebra (ZMod p) K := ZMod.algebra K p
     p * (r ⌈/⌉ Module.finrank (ZMod p) K) ≤ Module.finrank K V := by
   classical
-  letI : Algebra (ZMod p) K := ZMod.algebra K p
+  let : Algebra (ZMod p) K := ZMod.algebra K p
   by_cases hr : r = 0
   · subst r
     simp
   have hrpos : 0 < r := Nat.pos_of_ne_zero hr
-  letI : Module (ZMod p) V := Module.compHom V (algebraMap (ZMod p) K)
-  letI : IsScalarTower (ZMod p) K V := inferInstance
-  letI : FiniteDimensional (ZMod p) K := inferInstance
-  letI : FiniteDimensional (ZMod p) V := FiniteDimensional.trans (ZMod p) K V
+  let : Module (ZMod p) V := Module.compHom V (algebraMap (ZMod p) K)
+  let : IsScalarTower (ZMod p) K V := inferInstance
+  let : FiniteDimensional (ZMod p) K := inferInstance
+  let : FiniteDimensional (ZMod p) V := FiniteDimensional.trans (ZMod p) K V
   have hfpos : 0 < Module.finrank (ZMod p) K := Module.finrank_pos
   have hE := elementary_isPGroup p r
   let ρ₀ : Representation (ZMod p) (Multiplicative (Fin r → ZMod p)) V :=
@@ -187,7 +186,7 @@ theorem prime_mul_ceilDiv_finrank_le_finrank_of_cyclic_projective
     exact ZModModule.char_nsmul_eq_zero p (g.toAdd i)
   have hcard : Fintype.card (Subgroup.zpowers g) = p :=
     Fintype.card_zpowers.trans (orderOf_eq_prime hgpow hgne)
-  let n := Module.finrank K (ρ.comp (Subgroup.zpowers g).subtype).invariants
+  let n := Module.finrank K (Representation.invariants (ρ.comp (Subgroup.zpowers g).subtype))
   have hd : Module.finrank K V = p * n := by
     simpa only [hcard] using
       (finrank_eq_card_mul_invariants p (hE.to_subgroup (Subgroup.zpowers g))
