@@ -43,7 +43,7 @@ def claim : Prop :=
     IsDensity ρ → IsCPTP ε → 1 ≤ d → 1 ≤ e →
     (BornRuleExists ρ ε ↔ ρ = (1 / (d : ℂ)) • 1 ∨ DiscardPrepare ε)
 
-private lemma proj_single {d : ℕ} (i : Fin d) :
+lemma proj_single {d : ℕ} (i : Fin d) :
     IsStarProjection (single i i (1 : ℂ)) := by
   constructor
   · change single i i (1 : ℂ) * single i i 1 = single i i 1
