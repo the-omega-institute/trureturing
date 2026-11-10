@@ -21,10 +21,6 @@ open private
   singleton_coordinates
   from D5.S3.Geometry.FiniteComponentClosure.Transport
 
-open private
-  vertexComplex
-  from D5.S3.Geometry.FiniteComponentClosure.Models
-
 section ConeCovers
 
 private def wedgeSubsingletonHomeomorph {X Y : Type*}
