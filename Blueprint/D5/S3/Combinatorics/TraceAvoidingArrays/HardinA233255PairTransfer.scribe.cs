@@ -51,6 +51,14 @@ internal sealed class HardinA233255PairTransferDocument : IScribeDocumentDefinit
             Node("compatible", "The literal next-row bond test", "Every preceding boundary label excludes its bonded next-row label.",
                 DescribeRole.Definition),
             Node("rowProper", "Proper pair words", "Consecutive labels differ.", DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("decidablerowproper"),
+                DeclarationHandle.Create(Prefix + "decidableRowProper"),
+                H("Decidability of proper pair words"),
+                StatementSource.FromAuthor(Disp(DecidableRowProperFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The instance decides the six adjacent inequalities of a seven-label "
+                    + "word. Such words also form the full boundaries of seven-column square strips."))),
+                DescribeRole.Definition),
             Node("labelCompatible", "Compatible pair words", "The six cross-row exclusions are expressed in pair labels.",
                 DescribeRole.Definition),
             Node("labelBoundary", "The successor boundary", "Discard column zero only after scanning the entire row.",
@@ -60,6 +68,15 @@ internal sealed class HardinA233255PairTransferDocument : IScribeDocumentDefinit
             Node("continuation_pair_bridge", "All continuation heights", "Induction on the number of rows replaces the "
                 + "individual-colour row sum by the exact scanner-fibre sum. Both initial scanner flags remain arbitrary.",
                 DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("first-fibres"),
+                DeclarationHandle.Create(Prefix + "first_fibres"),
+                H("The first-row scanner fibres"),
+                StatementSource.FromAuthor(Disp(FirstFibresFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every integer readout of the final scanner state and the full "
+                    + "seven-label word, fixing the first individual colour to zero leaves the exact "
+                    + "scanner-weighted sum over the remaining six labels. A square-strip first-row "
+                    + "class readout can therefore reuse this equality directly."))), DescribeRole.Theorem),
             Node("literal_pair_bridge", "The anchored literal readout", "The existing literal array decomposition and the "
                 + "continuation identity give this equality at every positive height. Fixing its first colour to zero "
                 + "leaves six pair labels with the exact scanner weight, so the first-row sum also counts individual "
@@ -95,6 +112,66 @@ internal sealed class HardinA233255PairTransferDocument : IScribeDocumentDefinit
             FormulaRelationOperator.Equal,
             Apply(Name("inferInstanceAs"), Apply(Name("Decidable"), predicate))));
     }
+
+    private static Formula DecidableRowProperFormula()
+    {
+        var q = F.Id("q");
+        var j = F.Id("j");
+        var predicate = All("j", Apply(Name("Fin"), D(6)), new Formula.Relation(
+            Apply(q, Apply(Name("Fin.castSucc"), j)), FormulaRelationOperator.NotEqual,
+            Apply(q, Apply(Name("Fin.succ"), j))));
+        var instance = Typed(Apply(Name(LeanPrefix + "decidableRowProper"), q),
+            Apply(Name("Decidable"), Apply(Name(LeanPrefix + "rowProper"), q)));
+        return All("q", Name(LeanPrefix + "PairRow"), new Formula.Relation(instance,
+            FormulaRelationOperator.Equal,
+            Apply(Name("inferInstanceAs"), Apply(Name("Decidable"), predicate))));
+    }
+
+    private static Formula FirstFibresFormula()
+    {
+        const string Scanner = "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.";
+        const string Fibres = "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge.";
+        var h = F.Id("H");
+        var c = F.Id("c");
+        var q = F.Id("q");
+        var fin3 = Apply(Name("Fin"), D(3));
+        var fin6 = Apply(Name("Fin"), D(6));
+        var fin7 = Apply(Name("Fin"), D(7));
+        var seen = Name(Scanner + "Seen");
+        var integer = Name("Int");
+        var initial = Typed(Seq(Open, Name("Bool.false"), Comma, Sp, Name("Bool.false"), Close), seen);
+        var anchored = new Formula.Relation(Apply(c, Typed(D(0), fin7)),
+            FormulaRelationOperator.Equal, Typed(D(0), fin6));
+        var good = Apply(Name(Scanner + "good"), initial, c);
+        var condition = new Formula.Logic(Parenthesized(anchored), FormulaLogicOperator.And,
+            Parenthesized(good));
+        var labels = Fn("j", fin7, Apply(Name("D5.S3.Observer.Separation.BooleanRankThreeK4.beta"),
+            Apply(c, F.Id("j"))));
+        var readout = Apply(h, Apply(Name(Scanner + "finish"), initial, c), labels);
+        var summand = Seq(Name("ite"), Sp, Parenthesized(condition), Sp,
+            Parenthesized(readout), Sp, Typed(D(0), integer));
+        var left = Sum("c", Name(LeanPrefix + "Row"), summand);
+        var right = Sum("q", new Formula.TypeArrow(fin6, fin3), new Formula.Binary(
+            Parenthesized(Apply(Name(Fibres + "rowWeight"), initial, q)),
+            FormulaBinaryOperator.Multiply,
+            Parenthesized(Apply(h, Apply(Name(Fibres + "rowFinish"), initial, q),
+                Apply(Name("Fin.cons"), Typed(D(0), fin3), q)))));
+        var readoutType = new Formula.TypeArrow(seen,
+            new Formula.TypeArrow(Name(LeanPrefix + "PairRow"), integer));
+        return All("H", readoutType, new Formula.Relation(Parenthesized(left),
+            FormulaRelationOperator.Equal, Parenthesized(right)));
+    }
+
+    private static Formula Typed(Formula value, Formula type) =>
+        Parenthesized(Seq(value, Colon, Sp, type));
+
+    private static Formula Fn(string name, Formula type, Formula body) =>
+        Parenthesized(Seq(LambdaLower, Sp, Typed(F.Id(name), type), Sp, Mapsto, Sp,
+            Parenthesized(body)));
+
+    private static Formula Sum(string name, Formula type, Formula body) =>
+        Apply(Name("Finset.sum"), Typed(Name("Finset.univ"), Apply(Name("Finset"), type)),
+            Fn(name, type, body));
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
 
