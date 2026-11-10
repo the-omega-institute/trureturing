@@ -13,6 +13,9 @@ internal sealed class TransferMatrixDocument : IScribeDocumentDefinition
         H("Counting locally constrained finite words"), Blocks(
             Node("tailGood", "Admissible continuations", TailFormula(), "After two specified rows, each new row must satisfy the pair test with its predecessor and the triple test with both preceding rows.", DescribeRole.Definition),
             Node("good", "Locally admissible words", GoodFormula(), "The empty word and every one-row word are admissible. Longer words satisfy the first pair test and all continuation tests.", DescribeRole.Definition),
+            Existing("cont", "Continuation cardinality", "The integer cardinality counts all finite continuations after two specified boundary rows, with the original pair and triple conditions.", DescribeRole.Definition),
+            Existing("cont_matrix", "Exact continuation transfer", "Under the classwise successor-count hypothesis, every admissible boundary pair has continuation count equal to its matrix-power coordinate, for every continuation length.", DescribeRole.Theorem),
+            Existing("good_iff_local", "Recursive and local word conditions", "Recursive admissibility is equivalent to every consecutive pair and consecutive triple satisfying the corresponding condition at its actual list index.", DescribeRole.Theorem),
             Node("pairOK", "Horizontal trace tests", PairFormula(), "For two rows, traces at adjacent block columns differ.", DescribeRole.Definition),
             Node("tripleOK", "Vertical trace tests", TripleFormula(), "For three rows, traces at corresponding block columns in the two neighboring row pairs differ.", DescribeRole.Definition),
             Node("arrayOK", "All neighboring tests", ArrayFormula(), "The finite indexed array satisfies every horizontal and vertical neighboring-trace inequality.", DescribeRole.Definition),
@@ -22,6 +25,7 @@ internal sealed class TransferMatrixDocument : IScribeDocumentDefinition
             Node("tabulatedPowers", "Successive vectors are matrix powers", TableFormula(), "A finite table starting at the constant-one vector and satisfying each matrix-vector step agrees with the corresponding powers throughout its domain.", DescribeRole.Theorem)), []));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula, string prose, DescribeRole role) => Describe.Lean(DescribeId.Create("hardin-transfer-" + declaration.ToLowerInvariant()), DeclarationHandle.Create(Prefix + declaration), H(title), StatementSource.FromAuthor(formula), AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
+    private static DocumentBlock Existing(string declaration, string title, string prose, DescribeRole role) => Describe.Lean(DescribeId.Create("hardin-transfer-" + declaration.Replace("_", "-").ToLowerInvariant()), DeclarationHandle.Create(Prefix + declaration), H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
     private static Formula R() => V("R");
     private static Formula S() => V("S");
     private static Formula PropF() => Op("Prop");
