@@ -184,7 +184,7 @@ private theorem two_label_classification {n : ℕ} (hn : 2 ≤ n)
   by_cases hr : r.val < 4
   · exact congrFun hu (⟨r.val, hr⟩, j)
   · have hr2 : r.val - 2 < 4 := by omega
-    have hrow : (⟨r.val - 2 + 2, by omega⟩ : Fin 6) = r := Fin.ext (by omega)
+    have hrow : (⟨r.val - 2 + 2, by omega⟩ : Fin 6) = r := Fin.ext (by dsimp; omega)
     have h := congrFun hl (⟨r.val - 2, hr2⟩, j)
     change P (⟨r.val - 2 + 2, _⟩, j) = alternating n a b (r, j) at h
     simpa only [hrow] using h
