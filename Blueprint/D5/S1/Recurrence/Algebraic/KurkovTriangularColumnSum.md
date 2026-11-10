@@ -6,7 +6,7 @@ Every lawful A396981 array satisfies Kurkov's positive-column factorial sum.
 
 **Definition 1.1 (The positive-index block sequence).**
 
-$$(\forall q: \mathbb{N}, (\operatorname{f}\left(q\right) = \min \{s \in \mathbb{N} \mid 2 \cdot q \leq s \cdot \left(s + 1\right)\})) \land (\forall q: \mathbb{N}, ((0 < q) \implies (\forall s: \mathbb{N}, ((\operatorname{f}\left(q\right) = s) \iff ((1 \leq s) \land ((\frac{s \cdot \left(s - 1\right)}{2} < q) \land (q \leq \frac{s \cdot \left(s + 1\right)}{2})))))))$$
+$$(\forall q: \mathbb{N}, (\operatorname{f}\left(q\right) = \min \{s \in \mathbb{N} \mid 2 \cdot q \leq s \cdot \left(s + 1\right)\})) \land (\forall q: \mathbb{N}, ((0 < q) \implies (\forall s: \mathbb{N}, ((\operatorname{f}\left(q\right) = s) \iff ((1 \leq s) \land ((\left\lfloor\frac{s \cdot \left(s - 1\right)}{2}\right\rfloor < q) \land (q \leq \left\lfloor\frac{s \cdot \left(s + 1\right)}{2}\right\rfloor)))))))$$
 
 *Formalization.* `D5/S1/Recurrence/Algebraic/KurkovTriangularColumnSum.f` (`✓ std3`).
 
@@ -14,7 +14,7 @@ $$(\forall q: \mathbb{N}, (\operatorname{f}\left(q\right) = \min \{s \in \mathbb
 
 *Commentary.*
 
-For q>0, f(q) is the unique integer s>=1 satisfying s(s-1)/2<q<=s(s+1)/2, namely OEIS A002024. The implementation takes the least s with 2q<=s(s+1); the private characterization proves equivalence with the source inequalities. Its zero value only totalizes the Lean function and supplies no extra source assertion.
+For q>0, f(q) is the unique integer s>=1 satisfying floor(s(s-1)/2)<q<=floor(s(s+1)/2), namely OEIS A002024. These are natural-number integer quotients (floor division); the rational factorial quotients in the result remain ordinary Q-division. The implementation takes the least s with 2q<=s(s+1); the private characterization proves equivalence with the source inequalities. Its zero value only totalizes the Lean function and supplies no extra source assertion.
 
 **Definition 1.2 (The literal natural-valued array equations).**
 
