@@ -198,11 +198,11 @@ internal sealed class PrescribedExchangeDocument : IScribeDocumentDefinition
     private static Formula AppMax(Formula t, Formula b) =>
         new Formula.Apply(new Formula.Subscript(F.Id("H"), t), [b]);
     private static Formula AppCard(Formula a, Formula b) =>
-        Seq(Lvert, a, Sp, Setminus, Sp, b, Rvert);
+        Seq(Lvert, Sp, a, Sp, Setminus, Sp, b, Sp, Rvert);
     private static Formula AppAdd(Formula a, Formula b) => Seq(a, Sp, Plus, Sp, b);
     private static Formula AppError(Formula i) => new Formula.Subscript(F.Id("err"), i);
     private static Formula AppSum() => Seq(
-        new Formula.Subscript(Sum, Grp(Seq(D(0), F.Leq, F.Id("i"), Lt, F.Id("k")))),
+        new Formula.Subscript(Sum, Grp(Seq(D(0), Sp, F.Leq, Sp, F.Id("i"), Sp, Lt, Sp, F.Id("k")))),
         Sp, AppError(F.Id("i")));
 
     private static Formula ApplicationDefinitions()
@@ -211,7 +211,7 @@ internal sealed class PrescribedExchangeDocument : IScribeDocumentDefinition
         Formula neighborhood = new Formula.Apply(new Formula.Subscript(F.Id("N"), t), [b]);
         Formula family = Seq(OpenBrace, d, Sp, Mid, Sp, Qualified("Matroid", "IsBase", F.Id("M"), d),
             Comma, Sp, Leq(AppCard(d, b), t), CloseBrace);
-        Formula maximum = Seq(new Formula.Subscript(Max, Grp(Seq(d, InMacro, neighborhood))), Sp, AppWeight(d));
+        Formula maximum = Seq(new Formula.Subscript(Max, Grp(Seq(d, Sp, InMacro, Sp, neighborhood))), Sp, AppWeight(d));
         return Disp(Seq(Equal(neighborhood, family), Comma, Qquad,
             Equal(AppMax(t, b), maximum)));
     }
