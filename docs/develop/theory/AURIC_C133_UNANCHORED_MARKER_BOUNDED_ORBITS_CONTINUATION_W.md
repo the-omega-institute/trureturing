@@ -2823,3 +2823,251 @@ $$
 在唯一整体态 $\Omega$ 的建模前提下，观察者、参考、记录和读出仍须由 $\Omega$ 内部的实际有限门历史实现；上述自由项或商向量本身不供应实际历史。实际非零准备、事件与效果及完整菜单、共同联合与条件历史、可组合物理过程及其参考实现、连续时间与生成元，仍分别保留对应 37.2 及其所引接口的前件。三相指标 $k=0,1,2$、三标签测试、复 Hilbert 维数与物理或 Bloch 三维具有不同定义；本结论没有给出它们之间的新映射，也没有完成量子起源。
 
 ## 追加锚（三个有向比较族的单侧返回分类；本行以下为增补区）
+
+## 41. 任意仿射漂移的残差消失与同对象对称化归约
+
+**定理 41.1（任意仿射漂移下的支配残差消失）。**设 $M$ 是带真实双侧单位 $1$ 的任意 magma，$U:M\to M$ 任意，$H$ 为任意维复 Hilbert 空间，$\omega=\exp(2\pi i/3)$。设映射 $F:M\to H$ 与任意向量 $t\in H$ 满足
+
+$$
+F1=0,\qquad F(ab)=Fa+Fb,\qquad F(Ua)=\omega Fa+t
+\qquad(a,b\in M),
+\tag{41.1}
+$$
+
+并置 $K(a,b)=\|Fa-Fb\|^2$。设处处有限的实函数 $D:M^2\to\mathbb R$ 对全部原标签满足
+
+$$
+\begin{aligned}
+D(b,a)&=-D(a,b),& |D(a,b)|&\le K(a,b),\\
+\sum_{k=0}^2D(a\cdot U^ku,b\cdot U^kv)&=3D(a,b)+3D(u,v),\\
+D(a p_3,b)&=D(a,b),& D(a,b p_3)&=D(a,b),
+\qquad p_j=U^j1.
+\end{aligned}
+\tag{41.2}
+$$
+
+则 $D(a,b)=0$ 对全部 $a,b\in M$ 成立。漂移 $t$ 无须为零；不要求结合律、交换律、$U$ 保乘法或满射、正则性，也不要求 $D$ 沿 $F$ 的纤维下降。
+
+**证明。**置 $c=K+D$。反对称性与全域支配给
+
+$$
+c(a,a)=0,\qquad 0\le c(a,b)\le2K(a,b),\qquad
+\frac{c(a,b)+c(b,a)}2=K(a,b).
+\tag{41.3}
+$$
+
+令 $m=t/(1-\omega)$，则 $F(U^ja)=\omega^jFa+(1-\omega^j)m$。两个端点的共同漂移相消，故
+
+$$
+\sum_{k=0}^2\|(Fa-Fb)+\omega^k(Fu-Fv)\|^2
+=3K(a,b)+3K(u,v).
+\tag{41.4}
+$$
+
+因而 $K,c$ 都满足完整 (R)。又 $F(p_3)=0$，所以 $K$ 有两端第三标记返回；(41.2) 使 $c$ 也有这两个返回。对这个处处非负的实际核，直接复用引理 1.2 得同步等距 $c(Ux,Uy)=c(x,y)$。
+
+固定任意有限带索引来源列 $a_1,\ldots,a_h$；允许重复标签及 $a_i=1$。对 $N\ge1$ 取引理 23.1 的同一个实际右梳
+
+$$
+H_0(a;1)=1,\qquad
+H_N^\sigma(a;1)=a\cdot U^{\sigma_1}
+H_{N-1}^{(\sigma_2,\ldots,\sigma_N)}(a;1),
+\qquad \sigma\in\Sigma_N=\{0,1,2\}^N.
+\tag{41.5}
+$$
+
+记 $s_r=\sum_{i=1}^r\sigma_i$、$s_0=0$，统一选择 $e_\sigma\in\{0,1,2\}$ 使 $s_N+e_\sigma\equiv0\pmod3$，并置
+
+$$
+\Gamma_Na(\sigma)=U^{e_\sigma}H_N^\sigma(a;1).
+\tag{41.6}
+$$
+
+这是原 $M$ 中按所示括号求值的有限历史。在实际数组 magma $M_N=M^{\Sigma_N}$ 上，乘法和 $U_N$ 逐坐标采用原运算，真实单位为常值数组 $\mathbf1$。置
+
+$$
+\begin{aligned}
+c_N(X,Y)&=\frac1{N3^N}\sum_\sigma c(X_\sigma,Y_\sigma),\\
+H_N^{\rm arr}&=\ell^2(\Sigma_N;H),\qquad
+F_N(X)=\left(\frac{F(X_\sigma)}{\sqrt{N3^N}}\right)_\sigma,\\
+t_N&=\left(\frac{t}{\sqrt{N3^N}}\right)_\sigma,
+\qquad \|t_N\|=\frac{\|t\|}{\sqrt N}.
+\end{aligned}
+\tag{41.7}
+$$
+
+于是 $F_N\mathbf1=0$、$F_N(XY)=F_NX+F_NY$、$F_N(U_NX)=\omega F_NX+t_N$。核 $c_N$ 非负、零对角，满足每个完整 (R) 实例及两端第三标记返回，其对称部分为
+
+$$
+K_N(X,Y)=\|F_NX-F_NY\|^2,\qquad 0\le c_N\le2K_N.
+\tag{41.8}
+$$
+
+引理 23.1 的同一右梳平均及同步等距，正如 (23.5)–(23.6)，给
+
+$$
+c_N(\Gamma_Na_i,\Gamma_Na_j)=c(a_i,a_j)
+\qquad(1\le i,j\le h).
+\tag{41.9}
+$$
+
+这里同时保留所有有序比较，并未将 $\Gamma_N$ 断言为原 $M$ 的乘法同态。
+
+还需同一个 Hilbert 映射控制全部这些来源。令
+
+$$
+A_N(\sigma)=\sum_{r=0}^{N-1}\omega^{s_r}.
+\tag{41.10}
+$$
+
+按 (41.5) 的括号展开，漂移项逐层望远镜相消，得到精确式
+
+$$
+\begin{aligned}
+F(H_N^\sigma(a;1))&=A_N(\sigma)Fa+(1-\omega^{s_N})m,\\
+F(\Gamma_Na(\sigma))&=\omega^{e_\sigma}A_N(\sigma)Fa.
+\end{aligned}
+\tag{41.11}
+$$
+
+第二式使用 $s_N+e_\sigma\equiv0$；没有把原漂移设为零。若 $r>l$，有限均匀平均 $\mathbb E_\sigma\omega^{s_r-s_l}=0$，因为独立的一个相位坐标给因子 $(1+\omega+\omega^2)/3=0$。故
+
+$$
+\mathbb E_\sigma|A_N(\sigma)|^2=N,\qquad
+I_Nv=\left(\frac{\omega^{e_\sigma}A_N(\sigma)v}{\sqrt{N3^N}}\right)_\sigma
+\tag{41.12}
+$$
+
+定义一个复线性等距映射 $I_N:H\to H_N^{\rm arr}$，且对全部选定来源同时有 $F_N(\Gamma_Na_i)=I_NFa_i$。这些恒等式包含 $N=1$、非零漂移、零像和重复来源。
+
+令 $\mathcal T_h$ 为有限带索引变量 $x_1,\ldots,x_h$ 上的可数自由含幺 $U$-magma，只施加两条真实单位恒等式。采用定理 23.2 的单位约简正规形；$U1$ 不约简为 $1$。令总求值映射 $\operatorname{ev}_N:\mathcal T_h\to M_N$ 将 $x_i$ 送到 $\Gamma_Na_i$、将形式单位送到真实数组单位，并递归采用实际运算。即使 $a_i=1$ 或两来源读数为零，也不合并这些项。
+
+在同一个项代数上递归定义 $f:\mathcal T_h\to H$ 和 $\lambda:\mathcal T_h\to\mathbb C$：
+
+$$
+\begin{aligned}
+f(1)&=0,& f(x_i)&=Fa_i,& f(st)&=f(s)+f(t),& f(Us)&=\omega f(s),\\
+\lambda_1&=0,& \lambda_{x_i}&=0,& \lambda_{st}&=\lambda_s+\lambda_t,&
+\lambda_{Us}&=\omega\lambda_s+1.
+\end{aligned}
+\tag{41.13}
+$$
+
+两个递归均尊重两条单位约简，所以良定义；没有施加其他项等式。由 (41.7)、(41.11) 及 $I_N$ 的复线性，对项归纳得到
+
+$$
+F_N(\operatorname{ev}_Ns)=I_N f(s)+\lambda_s t_N
+\qquad(s\in\mathcal T_h).
+\tag{41.14}
+$$
+
+对每个固定有序项对 $s,z$，由同一个 $I_N$ 的等距性与 $\|t_N\|\to0$，有
+
+$$
+\begin{aligned}
+K_N(\operatorname{ev}_Ns,\operatorname{ev}_Nz)&\longrightarrow
+K_0(s,z):=\|f(s)-f(z)\|^2,\\
+0\le c_N(\operatorname{ev}_Ns,\operatorname{ev}_Nz)
+&\le2\left(\|f(s)-f(z)\|+|\lambda_s-\lambda_z|\,\|t\|\right)^2.
+\end{aligned}
+\tag{41.15}
+$$
+
+右端对每个固定项对有限且不依赖 $N$；不要求在全部项上有一个共同常数。枚举可数的 $\mathcal T_h^2$，逐坐标取收敛子列，再取同一条 $N_\ell\to\infty$ 的对角子列。记其总极限为 $c_\infty(s,z)$。每条完整 (R) 及两个返回只含有限坐标，故在这个同一真实含幺项模型上共同保留。非负性、零对角、(41.9) 的整个有向矩阵和 (41.8) 的对称部分也同时保留：
+
+$$
+\begin{aligned}
+\frac{c_\infty(s,z)+c_\infty(z,s)}2&=K_0(s,z),&
+0\le c_\infty(s,z)&\le2K_0(s,z),\\
+c_\infty(x_i,x_j)&=c(a_i,a_j).
+\end{aligned}
+\tag{41.16}
+$$
+
+现在才调用定理 40.1。其对象取 $\mathcal T_h$，Hilbert 映射取 (41.13) 的 $f$，残差取 $D_\infty=c_\infty-K_0$。此时 $f1=0$、$f(st)=f(s)+f(t)$、$f(Us)=\omega f(s)$ 确为纯相位；$D_\infty$ 处处有限、反对称且 $|D_\infty|\le K_0$。纯相位 $K_0$ 满足完整 (R)，且 $f(U^31)=0$ 给它的两个第三标记返回。故从同一 $c_\infty$ 减去 $K_0$ 后，每条完整 $(R_D)$ 与两个残差返回也都成立。定理 40.1 的所有前件已在一个真正总模型上取得，遂有 $D_\infty=0$。于是
+
+$$
+c(a_i,a_j)=c_\infty(x_i,x_j)=K_0(x_i,x_j)=K(a_i,a_j).
+\tag{41.17}
+$$
+
+有限带索引来源列任意，给原 $M$ 上全部 $D(a,b)=0$。
+
+若 (41.1) 的本原立方根约定为 $\bar\omega$，先取共轭 Hilbert 空间 $\overline H$ 及典范共轭线性等距映射 $J:H\to\overline H$。它满足 $J(\bar\omega v)=\omega Jv$；故 $JF$ 的相位是定理 40.1 所需的 $\omega$，漂移为 $Jt$，全部范数核不变。这样直接适用上述论证，不假定两个根的约定自动相同。证毕。
+
+**定理 41.2（原模型内的对称化保留普遍标定问题）。**取定义 1.1 的任意原模型，要求全部 (R) 及两端第三标记返回 $\mathrm C_3$。沿用[有限正性桥定义 18.1](AURIC_C133_UNANCHORED_MARKER_FINITE_POSITIVITY_BRIDGE.md#18-第三标记返回下的单标记标定)：$\mathrm C_1(d)$ 指全部 $a,z$ 上
+
+$$
+\begin{aligned}
+H_d(a,p_1;z)&=H_{d^{\mathsf T}}(a,p_1;z)=0,\\
+H_d(a,u;z)&=d(au,z)-d(a,z)-d(u,z)+d(1,z)\\
+&\quad-d(au,1)+d(a,1)+d(u,1).
+\end{aligned}
+\tag{41.18}
+$$
+
+在完全相同的 $M,1,\cdot,U$ 上置 $k=(c+c^{\mathsf T})/2$。则
+
+$$
+\begin{aligned}
+\mathrm C_1(c)&\Longleftrightarrow\mathrm C_1(k),\\
+\mathrm{UC}(c)&\Longleftrightarrow\mathrm{UC}(k),\\
+\operatorname{Rep}(c)&\Longleftrightarrow\operatorname{Rep}(k),
+\end{aligned}
+\tag{41.19}
+$$
+
+其中 $\mathrm{UC}(d)$ 按核 $d$ 自己的完整双侧根空间定义，$\operatorname{Rep}(d)$ 指定理 14.1 的完整仿射复 Hilbert 表示。上述任一性质成立时都有 $c=k$。这是普遍性质的等价，不声称任意原 $c$ 已对称，也不声称某个指定七项式缺陷的数值在对称化后不变。
+
+**证明。**对原四元组交换 $(a,b,u,v)$ 为 $(b,a,v,u)$，可知 $c^{\mathsf T}$ 满足全部 (R)；转置交换两个第三标记返回。因此 $k$ 在同一个实际对象上处处有限、非负、对称、零对角，满足全部 (R) 及 $\mathrm C_3$。同一对象上的
+
+$$
+D=\frac{c-c^{\mathsf T}}2,\qquad c=k+D,\qquad |D|\le k
+\tag{41.20}
+$$
+
+反对称，且满足全部 $(R_D)$ 和两个第三标记返回。
+
+只在假定 $\mathrm C_1(k)$ 的分支内，调用有限正性桥定理 18.3，将其原核取为这个 $k$，取得 $\mathrm{UC}(k)$。再直接应用该桥定理 8.2，得到 $k(a,b)=\|Fa-Fb\|^2$，其中 $F$ 定义于同一个 $M$，满足 $F1=0$、$F(ab)=Fa+Fb$、$F(Ua)=\omega Fa+t$，漂移 $t$ 任意。这一步的 Hilbert 映射来自条件分类，没有预设在一般原 $c$ 上。现在 (41.20) 支付定理 41.1 的全部残差前件，故 $D=0$、$c=k$，并得到 $\mathrm C_1(c)$。反向，(41.18) 对核线性，而 $k=k^{\mathsf T}$，所以 $\mathrm C_1(c)$ 的两个读数族直接给 $\mathrm C_1(k)$。
+
+对 $d=c,k$ 分别使用有限正性桥定理 18.3 和 8.2，已有 $\mathrm C_3(d)$ 使 $\mathrm C_1(d)$、$\mathrm{UC}(d)$、$\operatorname{Rep}(d)$ 等价，遂得 (41.19) 的其余两项。没有将两个核的根空间预先认同，也没有证明某个局部缺陷在平均下保持非零。证毕。
+
+**推论 41.3（保留两端返回的对称三来源零费用反例归约）。**若原始非负、处处有限、零对角的完整 $(R)+\mathrm C_3$ 类中存在不满足普遍 $\mathrm C_1$ 的模型，则存在一个可数、由三个来源变量及真实单位生成的总含幺 $U$-magma 模型 $(\mathcal T_3,d,V)$，其中 $d$ 对称、处处有限、非负、零对角，满足全部 (R)、两端第三标记返回，并且
+
+$$
+\begin{aligned}
+d(1,p_j)&=d(p_j,1)=0\qquad(j=1,2),\qquad p_j=V^j1,\\
+\sqrt{d(x_1,x_3)}&>\sqrt{d(x_1,x_2)}+\sqrt{d(x_2,x_3)}.
+\end{aligned}
+\tag{41.21}
+$$
+
+该模型仍不满足普遍 $\mathrm C_1$。这只是反例存在的归约，不构造这样的反例，也不无条件断言它存在。
+
+**证明。**由定理 41.2，在同一个原 $M$ 上的对称核 $k=(c+c^{\mathsf T})/2$ 仍不满足 $\mathrm C_1$。有限正性桥定理 18.3 使它也没有完整仿射表示。定理 14.1 的逆否因而给三个实际标签 $a_1,a_2,a_3$，满足
+
+$$
+\sqrt{k(a_1,a_3)}>\sqrt{k(a_1,a_2)}+\sqrt{k(a_2,a_3)}.
+\tag{41.22}
+$$
+
+将定理 23.2 用于这同一个模型和这一个三标签比较矩阵。其 (23.4) 的每个数组核对称；原 $k$ 的两个第三标记返回在逐坐标乘法与标记下也分别成立。在同一个三变量自由含幺项代数上的实际求值拉回仍保留这些等式。定理 23.2 的同一条有序项对对角子列因而同时保留对称性、两个返回、全部四变量关系以及九个有向比较值；不在不同模型或不同子列之间拼接这些性质。
+
+所得总核 $d$ 满足 $d(x_i,x_j)=k(a_i,a_j)$，所以严格超额 (41.22) 原值保留。定理 23.2 还给单位预算为零。以 $\mathfrak u(d)$ 记本证明的局部预算，它正是定义 1.1 及推论 2.2 的四项和：
+
+$$
+\mathfrak u(d)=d(1,p_1)+d(1,p_2)+d(p_1,1)+d(p_2,1)=0.
+\tag{41.23}
+$$
+
+四项各非负，故分别为零，得到 (41.21) 的单位费用条件。项代数只施加两条单位恒等式，没有将零费用项合并；三个变量生成整个可数总模型。若 $d$ 满足 $\mathrm C_1$，其已保留的 $\mathrm C_3$ 和有限正性桥定理 18.3 将给完整表示；Hilbert 范数三角与 (41.21) 矛盾。因此它仍是同一普遍标定问题的反例。证毕。
+
+**来源对应与适用边界 41.4。**本节的 repo-derived 承重增量是：通过 (41.11)–(41.16) 的共同等距映射和总项模型极限，将定理 40.1 的纯相位残差结论延伸到任意仿射漂移；再用它取得同一个原对象上的 (41.19)，并把失败归约为 (41.21) 的对称总模型。定理 40.1、引理 23.1 与定理 23.2、定理 14.1，以及有限正性桥定理 18.3 和 8.2 分别提供纯相位消失、实际复制与零单位预算实现、三角分类和单标记完成入口，均作为已有结果直接消费。有限 Fourier 正交、自由含幺项构造与可数坐标紧致性是这些新推导内部的经典工具，不另列为新结果，也不主张历史原创性。
+
+邻近的群二次方程结果，如 Friis–Stetkær，*On the quadratic functional equation on groups*，Theorem 1.2（[原文](https://publi.math.unideb.hu/paper/1111/download/)），要求交换定义域群及唯一二可除的交换值群；Akkaoui–Fadli，*New Results about Quadratic Functional Equation on Semigroups*（[DOI 10.2478/amsil-2024-0023](https://doi.org/10.2478/amsil-2024-0023)），在结合半群与两个自同态上处理 $g(x\phi(y))+g(\psi(y)x)=2g(x)+2g(y)$。这些定义域及标记条件并非原任意 magma 的前件，不能直接作为原始 (R) 迫出几何的输入；本节新增归约不借用它们补足这个接口。
+
+一般原始 $(R)\Rightarrow\mathrm C_3$ 与非负完整 $(R)+\mathrm C_3\Rightarrow\mathrm C_1$ 仍均未解决。定理 41.1 仍输入一个可加仿射 Hilbert 映射；定理 41.2 只在 $\mathrm C_1(k)$ 分支取得它。推论 41.3 把后一未决问题的反例搜索限制到对称、可数、三来源、两端返回且零单位费用的总模型，没有给有限表的可行性升级为总反例，也没有由原始非负性直接推出三角或完整有限正性。
+
+在唯一整体态 $\Omega$ 的建模前提下，数学数组、自由项及极限不供应物理复制或其他实际操作；局部单位预算 $\mathfrak u(d)$ 也不与整体态 $\Omega$ 相认。观察者、参考、仪器、记录以及预测与实际读出仍须在同一 $\Omega$ 内由实际有限准备和门历史实现。非零准备、事件与效果完备性、实际 Born 菜单的归一、共同联合与条件历史、参考和仪器的供应、可组合过程、物理时间与生成元，仍保留对应 37.2 及有限正性桥第 6 节、§11.2 的独立前件。三相指标、三标签测试或三来源生成、复 Hilbert 维数与物理或 Bloch 三维具有不同定义；这里未给出它们之间的新映射，未完成完整量子起源。
+
+## 追加锚（三个有向比较族的单侧返回分类；本行以下为增补区）
