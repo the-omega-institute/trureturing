@@ -6,7 +6,16 @@
    utility: none
    digest: Generic polar-angle positivity, derivative monotonicity, and signed reduction for finite reciprocal products. -/
 
-import D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds
+import Mathlib.Analysis.Calculus.Deriv.MeanValue
+import Mathlib.Analysis.Complex.RealDeriv
+import Mathlib.Analysis.SpecialFunctions.Complex.Arg
+import Mathlib.Analysis.SpecialFunctions.Sqrt
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.FunProp
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.Ring
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -15,16 +24,6 @@ noncomputable section
 
 namespace D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds
 
-open D5.S3.Weil.ZeroSum
-open D5.S3.Weil.ZeroData.UnconditionalCanonicalZeroData
-open D5.S3.Zeros.CompletedZeta
-open D5.S3.Zeros.Endpoints.FirstLiCoefficientNormalization
-open D5.S3.Zeros.Endpoints.FirstLiCoefficientPositivity
-open D5.S3.Zeros.Endpoints.XiEndpointValues
-open D5.S3.Zeros.Resolvent.XiNormalizedResolvent
-open D5.S3.Zeros.Resolvent.XiSquareExteriorRemainder
-open D5.S3.Weil.Convention
-open scoped BigOperators ComplexConjugate
 open scoped BigOperators ComplexConjugate Topology
 
 namespace H14Sector
