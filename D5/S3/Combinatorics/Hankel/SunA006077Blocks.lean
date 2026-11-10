@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Hankel/SunA006077Blocks
    mirror-E: none(waiver:symbolic-residue-block-proof)
-   anchors: [mathlib/module/Mathlib.LinearAlgebra.Matrix.SchurComplement]
+   anchors: []
    utility: none
    digest: Residue classes split the sparse Sun moment determinants into three blocks. -/
 

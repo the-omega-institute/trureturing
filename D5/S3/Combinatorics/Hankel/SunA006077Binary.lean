@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Hankel/SunA006077Binary
    mirror-E: none(waiver:all-index-binary-determinant-induction)
-   anchors: [mathlib/module/Mathlib.Data.ZMod.Basic]
+   anchors: []
    utility: none
    digest: Both shifted Rueppel Hankel determinants equal one in characteristic two. -/
 

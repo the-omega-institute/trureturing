@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Hankel/SunA006077
    mirror-E: none(waiver:symbolic-hankel-identities)
-   anchors: [mathlib/module/Mathlib.LinearAlgebra.Matrix.Block, mathlib/module/Mathlib.Algebra.Polynomial.Coeff]
+   anchors: []
    utility: none
    digest: The literal Sun finite sum and its sparse Hankel moment transform. -/
 

@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Hankel/SunA006077Arithmetic
    mirror-E: none(waiver:unbounded-binomial-valuation-proof)
-   anchors: [mathlib/module/Mathlib.NumberTheory.Padics.PadicVal.Basic]
+   anchors: []
    utility: none
    digest: Integral normalization and binary parity of the multinomial moments. -/
 

@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Hankel/SunA006077Result
    mirror-E: none(waiver:all-index-symbolic-determinant)
-   anchors: [mathlib/module/Mathlib.LinearAlgebra.Matrix.PosDef]
+   anchors: []
    utility: none
    digest: The complete signed integral oddness assertion for Sun's Hankel determinants. -/
 
