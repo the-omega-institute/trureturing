@@ -1,0 +1,34 @@
+**Proposition 43.4 (three equivalent coordinates at a coherent cut).**
+Conditional on current syntax $y$ and the native prefix contract, each
+of the following selects the same unique $(u,j)$ when it is accepted:
+(1) earned progress $j$; (2) exact entry event count $m$; (3) the
+semantic address $p$ of the next untouched ORIGINAL leaf, or exhaustion
+$\top$. With the appropriate current macro/phase and $n_0>1$, any of
+them also selects the unique member of (43.9). At $n_0=1$ the stated
+nonempty-prefix first-bit ambiguity remains. They determine the remaining
+LOGICAL old-leaf schedule, not physical row identities, rights or tapes.
+
+Proof. The first two convert by $m=n(y)-j$ and Theorem 43.2. For the
+third, reuse Native Entry Reference Definition 10.1 and Theorem 10.2,
+(ER.41)–(ER.43), on labelled logical syntax, before that volume's
+$E=\rho^2$ encoding. Their marked prefix is exactly $F_j(u)$ when $p$
+is original leaf $j+1$, or $p=\top$ at exhaustion. Thus their parser
+$D_p(y)$ recovers $u$ if and only if its marked-image tests hold.
+Additionally require $u\in\mathcal D_+$; count original leaves before
+$p$ to obtain $j$, or set $j=L(u)$ for $\top$. Conversely recover
+$u=U_j(y)$ and enumerate its leaf addresses in left-first order to
+obtain that $p$. The marked inverse's two laws prove these conversions
+are inverse on the native actual image, including $j=0$ and exhaustion.
+No encoded-source runtime or root-graft actuator transfers with them.
+
+The recovered tree supplies the ordered list of its original leaves
+from position $j+1$ onward and their old tags. Those untouched addresses
+are still leaves of $y$ with the same tags, so each describes the next
+legal $P$ or $S$. Edits at distinct old leaves preserve each remaining
+guard and address by LAB9.4. This determines all remaining source edits
+and their final syntax, without requiring summaries at every boundary,
+a second old-tree snapshot, or persistent logical copy. It does not
+identify the actual allocated list cells or manufacture bound operands.
+At exhaustion the source-edit schedule is empty but the outer protocol
+may still have work. $\square$
+

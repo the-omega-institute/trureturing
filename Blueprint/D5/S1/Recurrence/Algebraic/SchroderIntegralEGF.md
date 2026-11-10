@@ -4,7 +4,47 @@
 
 The EGF coefficients in OEIS A338193 equal Kurkov's two-index recurrence.
 
-**Remark 1.1 (Kurkov's recurrence).**
+**Definition 1.1 (Formal integral with zero constant coefficient).**
+
+$$\forall S: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \operatorname{primitive}\left(S\right) = \operatorname{mk}\left((fun n: \mathbb{N} \mapsto if (n = 0) then 0 else \frac{\operatorname{coeff}\left(n - 1, S\right)}{(n: \mathbb{Q})})\right)$$
+
+*Formalization.* `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.primitive` (`✓ std3`).
+
+*Citation.* Vaclav Kotesovec; Mikhail Kurkov (2024). *OEIS A338193, an integral-defined exponential generating function and Kurkov's recurrence*. URL: <https://oeis.org/A338193>.
+
+*Commentary.*
+
+For a rational series S, the constant coefficient is zero and coefficient n at positive n is coeff(n-1,S)/n.
+
+**Theorem 1.2 (The integral has zero constant coefficient).**
+
+$$\forall S: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \operatorname{constantCoeff}\left(\operatorname{primitive}\left(S\right)\right) = 0$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.primitive_zero` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Vaclav Kotesovec; Mikhail Kurkov (2024). *OEIS A338193, an integral-defined exponential generating function and Kurkov's recurrence*. URL: <https://oeis.org/A338193>.
+
+*Commentary.*
+
+The selected formal primitive has constant coefficient zero.
+
+**Theorem 1.3 (Differentiation recovers the integrand).**
+
+$$\forall S: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \operatorname{derivative}\left(\operatorname{primitive}\left(S\right)\right) = S$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.derivative_primitive` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Vaclav Kotesovec; Mikhail Kurkov (2024). *OEIS A338193, an integral-defined exponential generating function and Kurkov's recurrence*. URL: <https://oeis.org/A338193>.
+
+*Commentary.*
+
+Differentiating the zero-constant formal primitive recovers the rational series S.
+
+**Remark 1.4 (Kurkov's recurrence).**
 
 Lean statement: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.f`
 
@@ -16,7 +56,7 @@ Lean statement: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.f`
 
 Set f(j,0)=1. For positive m, the boundary is f(0,m)=f(0,m-1)+m f(1,m-1). For positive j and m, use f(j,m)=f(j-1,m)+m(f(j,m-1)+f(j+1,m-1)). Recursion first decreases m, then j; all values are natural numbers.
 
-**Remark 1.2 (The original integral equation).**
+**Remark 1.5 (The original integral equation).**
 
 Lean statement: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.Original`
 
@@ -28,7 +68,7 @@ Lean statement: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.Original`
 
 A has constant coefficient one and satisfies A=1+Integral ((x/A)' / (x/A^2)') dx. Integration is formal, with constant term zero, and all series have rational coefficients. The inverse series and the derivative in the denominator have constant coefficient one.
 
-**Remark 1.3 (Existence and coefficient uniqueness).**
+**Remark 1.6 (Existence and coefficient uniqueness).**
 
 Lean statement: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.original_exists_unique`
 
@@ -42,7 +82,7 @@ Lean statement: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.original_exists_
 
 Write F(j) for the EGF of row j. The recurrence gives F(j+1)=F(j)+x(F(j+1)+F(j+2)). Mathlib's large Schroeder series R satisfies R=1+xR+xR^2. Induction first on degree and then on j proves F(j)=F(0)R^j. The boundary gives B'=F(0) for B=F(0)(1-xR), and B has constant term one. Clearing the units in the original equation gives (1+x)AA'-2x(A')^2-A^2=0. Its constant-one branch is exactly (1-xR)A'=A: the alternative factor has constant term minus one. Strong induction on coefficients then proves uniqueness, canceling the nonzero rational factor n+1.
 
-**Remark 1.4 (The series specified by the source equation).**
+**Remark 1.7 (The series specified by the source equation).**
 
 Lean statement: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.A`
 
@@ -56,7 +96,7 @@ Lean statement: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.A`
 
 Choose the unique series satisfying Original. The selection predicate contains only the original integral equation and initial value. The recurrence and the coefficient identity are proved separately.
 
-**Remark 1.5 (The defining equation holds).**
+**Remark 1.8 (The defining equation holds).**
 
 Lean statement: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.A_original`
 
@@ -70,7 +110,7 @@ Lean statement: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.A_original`
 
 The chosen A satisfies the original integral equation and A(0)=1.
 
-**Theorem 1.6 (The coefficient identity).**
+**Theorem 1.9 (The coefficient identity).**
 
 $$\forall n \in \mathbb{N}, 1 \le n \implies n! [x^{n}]A = f\left(0, n-1\right)$$
 
@@ -93,7 +133,11 @@ For every natural n at least one, n! times coefficient n of A equals f(0,n-1), v
 - Truth anchor: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.A`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.A_original`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.Original`
+- Truth anchor: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.derivative_primitive`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.egf_coeff_eq_f`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.f`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.original_exists_unique`
+- Truth anchor: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.primitive`
+- Truth anchor: `D5/S1/Recurrence/Algebraic/SchroderIntegralEGF.primitive_zero`
+- Dependency: [D5/S1/Recurrence/Residue/IntegralEGFComposition](../Residue/IntegralEGFComposition.md)
 - Dependency: [D5/S1/Recurrence/Residue/QuarticEGFFixedPoint](../Residue/QuarticEGFFixedPoint.md)

@@ -1,0 +1,72 @@
+**定理 202.1（任意高简单秩的原分离族）。** 分别固定完整原 $B$ 或另名完整 $\mathsf B_{\rm cl}$，不加入配平、SC、导子或斜伴随条件。固定原非经典简单指针块 $P_0$。对每个非零原对象 $A$ 及任意有限整数 $N\ge3$，有限次原身份参考可以供应同一个实际 $J$、原含幺 Jordan/$D$ 单射 $i:E_A\to E_J$ 及原完整指针嵌入 $j_0:E_P\to E_J$，使
+
+$$
+\begin{gathered}
+D^J_{i(a)}j_0(b)=0,\\
+\mathcal V_N=\{T:\ T\text{ 是 }E_J\text{ 的简单块},\
+\operatorname{rank}T>N,\ \pi_Tj_0(P_0)\ne0\},\\
+\bigcap_{T\in\mathcal V_N}\ker(\pi_Ti)=\{0\}.
+\end{gathered}
+\tag{202.1}
+$$
+
+这是分离整个 $E_A$ 的族；不要求每个简单联合块都高秩。
+
+证明。有限简单 EJA 的经典分类给出
+
+$$
+3\le\operatorname{rank}S\le N
+\quad\Longrightarrow\quad
+\dim S\le M_N:=\max\{27,2N^2-N\}.
+\tag{202.2}
+$$
+
+实、复、四元数 Hermitian 矩阵的维数分别为 $r(r+1)/2,r^2,2r^2-r$；唯一例外是秩三、维数二十七的 Albert 代数。自旋因子只有秩二，所以不能把 (202.2) 用于任意维的自旋因子。
+
+取 $m=M_N$。与定理 195.1 相同，先固定 $m+1$ 次实际身份参考及每步一个完整 $P$ 位置，得到
+
+$$
+A_0=A,\quad A_{s+1}=A_sP^{\otimes k_s},\quad
+k_s\ge1\ (0\le s\le m),\quad J=A_{m+1}.
+\tag{202.3}
+$$
+
+复合原嵌入得 $i,j_0,\ldots,j_m$，第一步交叉零经原 $D$ 保持给 (202.1) 首式。原有限正和延拓 (57.6)，或另名闭背景定理 69.1，在每个已固定实际对象中保留前一步整个数学态。因此任意 $\gamma_A,\alpha_0,\ldots,\alpha_m$ 都能成为同一个 $J$ 的数学归一边缘。整条实际链不随这些边缘变化；正和与极限仍不是新增实际准备。
+
+固定支撑于 $P_0$ 的一份纯数学态 $\alpha$，用于 $j_0$。在 $P_0$ 中选正交 primitive $e,s$ 及 $y^2=e+s$、$y\in V_{es}$。成熟 Peirce 角给纯态圆弧
+
+$$
+p(t)=\frac{e+ty+t^2s}{1+t^2},\qquad
+\beta(t)(x)=\frac{q_P(p(t),x)}{q_P(p(t),u_P)},
+\qquad 0<t<1.
+\tag{202.4}
+$$
+
+分母是该简单块 primitive 的固定正范数平方；$\beta'(t)\ne0$，例如 $y$ 系数的导数为 $(1-t^2)/(1+t^2)^2>0$。于是
+
+$$
+F:(0,1)^m\longrightarrow(E_P^*)^m,\quad
+F(t_1,\ldots,t_m)=(\beta(t_1),\ldots,\beta(t_m))
+\tag{202.5}
+$$
+
+的微分处处秩 $m$，因为各个非零导数位于不同坐标槽。
+
+逐一考察已固定 $J$ 的有限个秩不超过 $N$ 的简单块 $S$。若 $S$ 能承载第一边缘 $\alpha$，则 $\pi_Sj_0|_{P_0}$ 非零、因简单性而单射。秩一目标不能如此；秩二目标沿定理 189.1 的纯自旋边缘论证，在固定 $\alpha$ 后至多有一份归一态，故余下 $m$ 边缘至多一个点。这里正是处理秩二无界维数的步骤。
+
+若 $3\le\operatorname{rank}S\le N$，其归一态位于 $\nu(u_S)=1$ 的 $(\dim S-1)$ 维仿射超平面。线性边缘映射 $\nu\mapsto(\nu\pi_Sj_1,\ldots,\nu\pi_Sj_m)$ 的像因此包含在某个仿射空间 $W_S$ 中，且
+
+$$
+\dim W_S\le\dim S-1\le M_N-1<m.
+\tag{202.6}
+$$
+
+把上述秩二单点也视为零维 $W_S$。每个 $F^{-1}(W_S)$ 是参数盒中的闭集，且无内点：若有非空开集被送入 $W_S$，该处微分像便包含于 $W_S$ 的方向空间，与 $\operatorname{rank}dF=m>\dim W_S$ 矛盾。有限个闭无内点集合不能覆盖开盒；逐次取避开它们的非空开子集即可。故可一次选定 $(t_1,\ldots,t_m)$，使全部这些低秩块都不能承载纯边缘元组
+
+$$
+(\alpha,\beta(t_1),\ldots,\beta(t_m)).
+\tag{202.7}
+$$
+
+对每个数学 $\gamma_A$，在固定 $J$ 中延拓它及 (202.7)，得归一态 $\Gamma$。按简单块分解 $\Gamma=\sum_St_S\Gamma_S$；每个原指针嵌入含幺，故各 $\Gamma_S\pi_Sj_r$ 都是整个 $P$ 的归一态。各边缘的纯性迫使每个 $t_S>0$ 的分量分别具有全部指定边缘。低秩块已被 (202.7) 排除，不能承载 $\alpha$ 的块亦排除，所以全部质量位于 $\mathcal V_N$。若 $\pi_Ti(x)=0$ 对该族全成立，则任意 $\gamma_A(x)=\Gamma(i(x))=0$；全部数学态分离点给 $x=0$。∎
+

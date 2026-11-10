@@ -1,0 +1,19 @@
+**定理 7.2（完整表示）。**定义 7.1 下，(T7) 当且仅当存在复 Hilbert 空间 $H$ 与 $F:M\to H$，使
+
+$$
+F(x+y)=Fx+Fy,\qquad F(Ux)=\zeta Fx,\qquad
+q(x)=q(0)+\|Fx\|^2,\qquad
+\zeta=-\frac12+i\frac{\sqrt3}{2}.
+\tag{7.1}
+$$
+
+取 $H=\overline{\operatorname{span}_{\mathbb C}F(M)}$ 后，此表示唯一到保留每个原标签像的唯一酉同构。特别地，
+
+$$
+F(U0)=0,\qquad F(U^3x)=Fx,\qquad
+-Fx=F(Ux+U^2x).
+\tag{7.2}
+$$
+
+负元只在可见像中由合法正配方实现，原档案仍可不同。$F$ 的完成与复线性包也不自动供应原门菜单中的任意振幅。
+

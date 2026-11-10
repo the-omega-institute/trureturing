@@ -7,6 +7,8 @@
    digest: Sparse survival measurements bound every finite classical-quantum compression port. -/
 
 import D5.S3.Quantum.QuantumChannels.SparseProbeCoercivity
+import D5.S3.Quantum.QuantumChannels.TomiyamaDiagonalKPositivity
+import D5.S3.Quantum.Foundation.FiniteStateChannel
 import D5.S3.Quantum.Foundation.FiniteKrausChannel
 import D5.S3.Quantum.Foundation.FiniteDiamondDistance
 import D5.S3.TotalVariation.Pinsker
@@ -396,5 +398,4 @@ theorem sparse_probe_port_bound (d q : ℕ) (hd : 0 < d) (hq : 0 < q)
   exact ⟨hp, le_csInf hn hb,
     le_antisymm (csInf_le ⟨0, hz⟩ hzero) (le_csInf ⟨0, hzero⟩ hz)⟩
 
-#print axioms sparse_probe_port_bound
 end D5.S3.Quantum.QuantumChannels.SparseProbePortBound

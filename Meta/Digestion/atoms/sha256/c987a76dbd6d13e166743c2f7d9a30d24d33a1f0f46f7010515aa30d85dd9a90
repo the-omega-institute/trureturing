@@ -1,0 +1,19 @@
+**推论 87.2（同一剪切的另外三个原标量表达）。** 令 $d=\dim V_s$，$\kappa=\|L_rT_{rs}-T_{rs}L_s\|_{\rm HS}^2$。对所有 $\rho$，
+
+$$
+\kappa=\|N\|_{\rm HS}^2
+=\tfrac12\|L_s+L_s^\dagger\|_{\rm HS}^2
+=\frac{\operatorname{tr}_{V_s}((U_0|_{V_s})^\dagger(U_0|_{V_s}))-d}{3+x}.
+\tag{87.3}
+$$
+
+证明。$C-A$ 唯一非零块为 $NJ$，$C+C^\dagger$ 有互伴随的两个非零块，所以前两等式由原 HS 范数给出。又
+
+$$
+(R_{2\alpha}-I)(R_{2\alpha}-I)^\dagger
+=4\sin^2\alpha\,I_P=(3+x)I_P.
+\tag{87.4}
+$$
+
+用 (87.2) 的逐块列范数计算整个 $d$ 维迹，得 $d+(3+x)\|N\|_{\rm HS}^2$。这不供应新的原范数／迹读者。∎
+

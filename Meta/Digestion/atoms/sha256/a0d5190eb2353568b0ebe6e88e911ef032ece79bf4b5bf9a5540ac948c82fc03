@@ -1,0 +1,50 @@
+**Proposition 166.2 (explicit representers for all first-order constraints).** For every $\alpha=(y,z,w)\in\mathcal L^3$, the function $\psi_{yzw}$ has a bounded Borel representative and belongs to $H$. For every bounded real Borel $v$,
+
+$$
+\ell_{yzw}(v)=\langle v,\psi_{yzw}\rangle_H.
+\tag{166.3}
+$$
+
+Consequently, with $V=\ker\Lambda$ as in Appendix III Definition 134.1,
+
+$$
+V=L^\infty(G,m;\mathbb R)\cap W^\perp.
+\tag{166.4}
+$$
+
+*Proof.* The inherited source estimate in Appendix III (134.4) gives $g=P g_d$, while Theorem 133.2 gives $g_d\in L^\infty(m)$. The Markov $L^\infty$-contraction of $P$ therefore gives $g\in L^\infty(m)$. Equation (134.8) gives $f_y\in L^\infty(m)$ for every label. Applying the same contraction to the products in (166.1) shows that $A_{yzw}$, $B_{yzw}$, and $C_{yzw}$ are bounded Borel $m$-classes, hence belong to $H$. Their displayed Borel representatives may be chosen simultaneously for the finite set of labels.
+
+For the first term of (134.11), self-adjointness of $P$ gives
+
+$$
+\mathcal C(v,f_z,f_w)
+ =\langle g v,P(f_z P f_w)\rangle_H
+ =\langle v,A_{yzw}\rangle_H.
+\tag{166.5}
+$$
+
+For the second term, move $P$ across the pairing once:
+
+$$
+\mathcal C(f_y,v,f_w)
+ =\langle g f_y,P(v P f_w)\rangle_H
+ =\langle P(g f_y),v P f_w\rangle_H
+ =\langle v,B_{yzw}\rangle_H.
+\tag{166.6}
+$$
+
+For the third term, move $P$ across the pairing twice:
+
+$$
+\begin{aligned}
+\mathcal C(f_y,f_z,v)
+ &=\langle g f_y,P(f_z P v)\rangle_H\\
+ &=\langle P(g f_y),f_z P v\rangle_H\\
+ &=\langle P(f_z P(g f_y)),v\rangle_H
+ =\langle v,C_{yzw}\rangle_H.
+\end{aligned}
+\tag{166.7}
+$$
+
+Substitution of (166.5)--(166.7) into the definition of $\ell_{yzw}$ in (134.11) proves (166.3). All pairings are legitimate because $m$ is a probability and every displayed factor is bounded. The simultaneous vanishing of the $64$ coordinates is therefore exactly orthogonality to $W$, which proves (166.4). $\square$
+

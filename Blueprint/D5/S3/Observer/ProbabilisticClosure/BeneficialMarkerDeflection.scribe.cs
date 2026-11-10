@@ -119,7 +119,10 @@ internal sealed class BeneficialMarkerDeflectionDocument : IScribeDocumentDefini
         return DocumentDefinition.Create(ScribeNode.Create(
             "Beneficial marker deflection under an arbitrary shared-parameter prior.",
             H("Support, actual improving policies, and true expectation boundaries"),
-            Blocks(Describe.Lean(
+            Blocks(
+                Fact("source-law-measurable", "measurable_source_law", "Measurable original source family", "For every closed-unit-interval alpha, the original sourceLaw is a measurable measure-valued function of the shared unit-interval parameter."),
+                Fact("joint-law-measurable", "measurable_joint_law", "Measurable independent-seed source family", "For every measurable seed space, original probability seed law and closed-unit-interval alpha, jointLaw is a measurable measure-valued function of the shared parameter."),
+                Describe.Lean(
                 DescribeId.Create("beneficial-marker-deflection"),
                 DeclarationHandle.Create(Prefix + "beneficial_marker_deflection"),
                 H("Complete support criterion with all finite and infinite mean consequences"),
@@ -159,4 +162,9 @@ internal sealed class BeneficialMarkerDeflectionDocument : IScribeDocumentDefini
                         + "expectations or a strict improvement of that objective."))),
                 DescribeRole.Theorem))));
     }
+    private static DocumentBlock.Describe Fact(string id, string declaration, string title, string statement) =>
+        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
+            H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(statement))), DescribeRole.Theorem);
+
 }

@@ -1,0 +1,65 @@
+**Theorem 31.2 (return remainder with complete endpoint and time tails).** On the entire common output space,
+
+$$
+\left\|H_sg_0-\sum_{j=0}^4s^jG_jg_0\right\|_\infty
+ \le Cs^5(1+|\log s|).
+\tag{31.4}
+$$
+
+Moreover $G_jg_0\in L^4$ for $j=1,2,3$, and $G_4g_0\in L^\infty$.
+
+Proof. Fix $\ell>0$ so that $(-\ell/s,\ell/s)\Subset I_s$ and $\nu\ell<1/4$, and put $L=\ell/s$. Use auxiliary killing at $\pm L$ in addition to the original realization. On a path staying in this strip all interpolation covariances $M_\vartheta$, $0\le\vartheta\le s$, are comparable to $M_0$. Finite Gaussian differentiation through order five, as in (23.3), bounds the fifth derivative of the combined shifted density by inflated-Gaussian majorants with input factors $|A|^{5-m}$ and relative degree $m$, $0\le m\le5$. Indeed $|H|\le|A|+\sup|W|$, and clock derivatives contribute their degree-two time powers. Constants are uniform on these paths and $0<t\le T$, since $\vartheta\sqrt t\le1$.
+
+For $t<1$, use the $L^1$ kernel bound against the bounded inputs $r^{5-m}g_0$. The resulting powers $t^{m/2}$ are integrable. For $t\ge1$, (30.4)'s majorant, now at total degree five, uses the following inputs in order $m=5,4,3,2,1,0$:
+
+$$
+g_0\in L^1,\quad rg_0\in L^1,\quad r^2g_0\in L^1,\quad
+r^3g_0\in L^{7/6},\quad r^4g_0\in L^{7/5},\quad
+r^5g_0\in L^{7/4}.
+\tag{31.5}
+$$
+
+Their time powers in $L^\infty$ are respectively $-1,-3/2,-2,-2,-2,-2$. All memberships are strict instances of (31.3). Taylor's integral remainder on $(0,T)$ is therefore bounded by $Cs^5(1+\log T)$. This estimate does not assume a third or fourth absolute $L^1$ height moment of $g_0$.
+
+We restore the original faces, noncompact input and canonical coefficient times. First split input heights at $|A|=L/4$. For inner input, a path leaving the auxiliary strip has relative height supremum at least $3L/4$. When $|\xi_r|\le L/2$ the deleted-path inverse-determinant bound applies; when $|\xi_r|>L/2$ the relative endpoint displacement is at least $L/4$. In both cases the kernel supremum is at most
+
+$$
+Ct^{-7/2}e^{-cL^2/t}.
+\tag{31.6}
+$$
+
+For surviving original paths, the covariance comparison needed for this bound follows from the fixed positive lower and upper bounds of $(k-\alpha_\kappa)/d_0$ on $\overline I$. It applies even when such paths leave the auxiliary strip. Integrating (31.6) against $|g_0|$ and over $t\in(0,T)$ costs $CL^{-5}$.
+
+For outer input, (31.2) gives supremum $CL^{-10}$ and $L^1$ norm $CL^{-3}$. On $t\le T$ the positive shifted heat has row mass at most $e^{\lambda s^2t}\le e^\lambda$, while (29.5) supplies its $1\to\infty$ bound. Thus the outer native contribution is at most
+
+$$
+C\int_0^T\min\{L^{-10},t^{-7/2}L^{-3}\}\,dt\le CL^{-8}.
+\tag{31.7}
+$$
+
+The same estimate bounds the auxiliary contribution, so deleting it in the preceding Taylor argument is harmless.
+
+For a coefficient of total degree $j\le4$ and relative degree $m$, put $n=j-m$. On inner input, removing the safe-path indicator costs at most $CL^{m-5}M_n(L)$ in the integrated supremum norm, where
+
+$$
+M_n(L)=\int_{|r|\le L/4}|r|^n|g_0|\le
+ \begin{cases}C,&n<3,\\C(1+\log L),&n=3,\\CL^{n-3},&n>3.\end{cases}
+\tag{31.8}
+$$
+
+To obtain the bound use the relative-moment version of (31.6) and integrate $t^{(m-7)/2}e^{-cL^2/t}$ on $(0,\infty)$. For (31.8), split homogeneous annuli below and above $L$: above $L$, the factor $|r|^n\le L^n$ on the truncated height region and the mass tail is $O(L^{-3})$. Each quantity $s^jL^{m-5}M_n(L)$ is $O(s^5)$ or smaller.
+
+For outer coefficient input, integrate below $L^2$ with the $L^1$ kernel bound and $\|r^ng_0\mathbf1_{|r|>L/4}\|_\infty\le CL^{n-10}$. The result is $CL^{j-8}$. Above $L^2$, choose
+
+$$
+1\le p<\frac7{m+2},\qquad p>\frac7{10-n}.
+\tag{31.9}
+$$
+
+Such a choice exists for every $j\le4$. The input tail is bounded by $CL^{n-10+7/p}$ and the integrated kernel factor is $CL^{m+2-7/p}$, again giving $CL^{j-8}$. Its prefactor $s^j$ makes it $O(s^8)$.
+
+Finally restore coefficient times $t>T$. For $n=0,1,2$ use input $L^1$ and integrate $t^{(m-7)/2}$; after $s^j$ the costs are $O(s^{5+n})$. For $n=3$ use $p=7/6$, and for $n=4$ use $p=7/5$; (30.4) gives $O(s^7)$ in either case. Thus every omitted coefficient time tail is $O(s^5)$ or smaller. The bounds also cover outputs outside $I_s$: the native kernel is zero there, and a safe path cannot have such an endpoint. This proves (31.4) on the full output space.
+
+For the asserted $L^4$ integrals, all small-time terms are integrable by the finite weighted $L^4$ input norms and the $L^1$ kernel bounds. At large time the unweighted terms for $j=1,2,3$ have powers $-17/8,-13/8,-9/8$. The inputs with one or two height powers lie in $L^1$ and have still more negative powers. The exceptional $r^3g_0$ input for $j=3$ may use $p=7/6$, giving exponent $-17/8$. For $G_4g_0$ in $L^\infty$, the unweighted exponent is $-3/2$, those with one or two input powers are smaller, and the inputs with three or four powers use $7/6,7/5$, giving respectively $-5/2,-5/2$. Small times use bounded weighted inputs. All these time integrals converge absolutely in their stated norms. $\square$
+
+

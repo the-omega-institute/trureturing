@@ -1,0 +1,13 @@
+### 13.6 相位与正交环境坐标不变性
+
+若 $q'=e^{i\chi}q$，则 $n'=e^{i\chi}n$；再令 $e'=e^{i\theta}e$，写 $T_0=\operatorname{diag}(e^{i\theta},e^{i\chi})$。直接由定义，
+
+$$
+b'=e^{i(\chi-\theta)}b,\qquad L'=e^{-i\theta}L,\qquad
+j'=e^{-i\chi}j,\qquad G'=T_0^*G,\qquad Q'=T_0^*QT_0.
+$$
+
+因此 $h$ 与 $\omega$ 同乘 $e^{i(\chi-\theta)}$，$q_1,q_2,R,\Delta,J$ 均不变，(13.8)–(13.10) 也不变。平衡性只取决于 $|n_1|^2,|n_2|^2$，不依赖这些选择。
+
+对任意环境酉换基 $E$，新坐标中 $V'=VE$、$D'=E^*DE$、$(D')^\dagger=E^*D^\dagger E$、$q'=E^*q$。此时 $H,v,\gamma,n$ 不变，$L'=L\operatorname{diag}(I_2,E)$、$j'=j\operatorname{diag}(I_2,E)$，故 $G'G'^*=GG^*$。零模耦合秩以及上述分类全部不变。这种不变性是同一个有限矩阵和原 Hilbert 范数的坐标不变性，不是未知响应的自然性公理，也不允许任意非酉环境变换后仍使用原来的 $Q$。
+

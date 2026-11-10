@@ -1,0 +1,72 @@
+**Definition 13.1 (fixed source, waiting windows and the handoff domain).**
+Fix one source of Assumption 1.1 and Definition 12.1, including its
+permitted repaired emission, before choosing any packing size or
+accuracy. Its finite positive $a,\eta,d$, full complex non-Friedrichs
+endpoint, maximal domain, form and source trace, original
+$G=H^1\times\mathbb R$, $e$-start, first read at $2d$, subsequent
+gaps $d$, four labels and conditionally fresh read noises remain
+unchanged. Use exactly $p,R_u,Q_w,q$ of §§1–2 and 12. In particular
+$R_u^H$ conditions on the entire original history $u$, and the first
+coordinate of its future is $Y_{|u|}$ at time $(|u|+2)d$.
+
+For a word $v\in\mathcal L^H$, let
+
+$$
+\begin{gathered}
+T_3(v)=\min\{j\in\{1,\ldots,H\}:v_{j-1}=3\},
+\qquad \min\varnothing=\infty,\\
+E^H(L,U)=\{v\in\mathcal L^H:L<T_3(v)\le U\},
+\qquad 0\le L<U\le H.
+\end{gathered}
+\tag{13.1}
+$$
+
+Thus the waiting index counts future reads, not physical time since
+source initialization. These are finite unions of full length-$H$
+cylinders. For probability rows on $\mathcal L^H$, use event-TV,
+equivalently half the $\ell^1$ distance, with range $[0,1]$.
+
+At a common cut $t$ and requested horizon $H$, an $M$-value classical
+predictive handoff has a single bank of normalized rows
+$\nu_{t,H,s}$, $1\le s\le M$, and may have arbitrary conditional
+encoding probabilities $\lambda_u(s)$. Its marginalized reported law is
+
+$$
+\mu_u^{t,H}=\sum_{s=1}^M\lambda_u(s)\nu_{t,H,s},
+\qquad \lambda_u(s)\ge0,\qquad \sum_s\lambda_u(s)=1.
+\tag{13.2}
+$$
+
+The bank and encoding weights may depend on this fixed source, the
+common cut/clock and the requested horizon. No compatibility between
+different horizons, finite online updating rule, effective bank
+construction or affordable bank storage is required for this
+mathematical comparison. Decoder
+randomness after receiving $s$ is already included in its normalized
+row. The probabilities $\lambda_u(s)$ describe the distribution of
+the transmitted configuration; the decoder receives its realized
+value, not a numerical description of these probabilities.
+
+Here $M$ bounds complete distinguishable history-bearing handoff
+configurations. All such pointer values, selected banks, program and
+control phases, reference replies or handles, allocation/address
+choices, retained precision data and other side registers used by
+decoding belong to that configuration. Separate component bounds
+multiply when their combinations are distinguishable; they do not
+each receive the allowance $M$. A $b$-bit complete carrier has at most
+$2^b$ values. Unlimited-precision real registers have no finite value
+bound merely because they have a fixed number of coordinates.
+The supplied clock is common to the histories being compared.
+A history-dependent completion-time signal, output length or
+reference selection used by decoding is additional history-bearing
+state or input, not that common clock.
+
+The entire actual archive, all acquired rows, references, permissions
+and legal menus remain retained and paid. This handoff domain allows
+no additional history-bearing decoder input. Reaccess to that archive,
+to history-dependent backing through a pointer, or to an external
+history-dependent controller is an additional input. It remains a
+legal route with its original costs, outside the stated bounded
+handoff. Supplying the vector $\lambda_u$ to the decoder would also
+be an additional history-bearing message; it is not free in (13.2).
+

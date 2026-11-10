@@ -1,0 +1,197 @@
+**Theorem 57.2 (an all-population negative canonical certificate).**
+For every $q\in[0,1]$,
+
+$$
+G_{\mathrm{can},-}(q)>\frac{13}{25}.
+\tag{57.6}
+$$
+
+Consequently, for every $q\in[0,1]$ with $D_-(x,q)\ge0$ and
+every point $(X,Y)\in\mathcal T_x$,
+
+$$
+G_-(q,X,Y)>\frac{13}{25}.
+\tag{57.7}
+$$
+
+The latter assertion includes all triangle boundaries. It makes no
+lower-bound assertion on a slice with $D_-(x,q)<0$.
+
+*Proof.* The positive constant enclosures (55.4) give
+
+$$
+\frac{7071}{10000}<h<\frac{7072}{10000},\qquad
+\frac{3826}{10000}<s<\frac{3827}{10000},\qquad
+\frac{4619}{5000}<c<\frac{231}{250}.
+\tag{57.8}
+$$
+
+In particular
+
+$$
+(h+s)^2>\frac{1187}{1000},\qquad
+(h+c)^2>\frac{5319}{2000}.
+\tag{57.9}
+$$
+
+Indeed the positive lower sums $10897/10000$ and $16309/10000$
+have squares exceeding these respective targets by
+$44609/100000000$ and $33481/100000000$.
+
+First take $0\le q\le1/3$. Then $3/16\le x\le17/48$, so
+
+$$
+R_0<\frac{7072}{10000}+\frac{17}{48}\frac{3827}{10000}
+ =\frac{404515}{480000}<\frac{843}{1000}.
+\tag{57.10}
+$$
+
+Also $y\le\sqrt{247/256}<393/400$: the difference between the
+square of $393/400$ and $247/256$ is $37/80000>0$.
+Thus
+
+$$
+C_0<\frac{231}{250}\frac{393}{400}
+ =\frac{90783}{100000}<\frac{227}{250}.
+\tag{57.11}
+$$
+
+Put $u=843/1000$, $v=227/250$, $t=13/100$ and form the real
+symmetric matrix
+
+$$
+N=\operatorname{diag}((h+s)^2-t,(h+c)^2-t)
+       -\begin{pmatrix}u\\v\end{pmatrix}
+        \begin{pmatrix}u&v\end{pmatrix}.
+\tag{57.12}
+$$
+
+Its entries satisfy
+
+$$
+\begin{aligned}
+N_{11}&>\frac{1187}{1000}-\frac{13}{100}
+                         -\left(\frac{843}{1000}\right)^2
+                 >\frac{173}{500},\\
+N_{22}&>\frac{5319}{2000}-\frac{13}{100}
+                         -\left(\frac{227}{250}\right)^2
+                 >\frac{341}{200},\\
+|N_{12}|&=uv=\frac{765444}{1000000}<\frac{383}{500},\\
+\det N&>\frac{173}{500}\frac{341}{200}
+                      -\left(\frac{383}{500}\right)^2
+           =\frac{1587}{500000}>0.
+\end{aligned}
+\tag{57.13}
+$$
+
+The positive first leading minor and determinant make $N$ positive
+definite. For $z=(\sqrt{1-q},\sqrt q)^{\mathsf T}$, $z^{\mathsf T}z=1$.
+All terms in (57.10)--(57.11) are nonnegative, so
+$\gamma_0\le u\sqrt{1-q}+v\sqrt q$. Since
+$e=2(h+s)$ and $d=2(h+c)$, it follows that
+
+$$
+\frac{G_{\mathrm{can},-}(q)}4-t
+ \ge z^{\mathsf T}Nz>0.
+\tag{57.14}
+$$
+
+This proves (57.6) on the closed first block, including $q=0,1/3$.
+
+For the remaining block, retain $x=3/16+q/2$ and define on $[0,1]$
+
+$$
+f(q)=(1-q)(sx+h)^2,\qquad
+j(q)=qc^2(1-x^2).
+\tag{57.15}
+$$
+
+These functions are continuous and nonnegative, and on $(0,1)$
+
+$$
+f''(q)=\frac{(1-q)s^2}{2}-2s(sx+h)<0,\qquad
+j''(q)=-c^2\left(\frac38+\frac{3q}{2}\right)<0.
+\tag{57.16}
+$$
+
+For the first inequality use $sx+h\ge h$ and $s<4h$.
+Thus both are strictly concave on the closed interval.
+Their geometric mean is concave, including at zeros. To see the
+required direction explicitly, let $0\le\lambda\le1$, let
+$q_\lambda=\lambda q_1+(1-\lambda)q_2$, and write
+$f_i=f(q_i)$, $j_i=j(q_i)$. Concavity and monotonicity of the
+nonnegative square root, followed by Cauchy--Schwarz, give
+
+$$
+\begin{aligned}
+\sqrt{f(q_\lambda)j(q_\lambda)}
+&\ge\sqrt{(\lambda f_1+(1-\lambda)f_2)
+          (\lambda j_1+(1-\lambda)j_2)}\\
+&\ge\lambda\sqrt{f_1j_1}+(1-\lambda)\sqrt{f_2j_2}.
+\end{aligned}
+\tag{57.17}
+$$
+
+The second inequality is Cauchy--Schwarz for the two vectors
+$(\sqrt{\lambda f_1},\sqrt{(1-\lambda)f_2})$ and
+$(\sqrt{\lambda j_1},\sqrt{(1-\lambda)j_2})$.
+No division by an endpoint value occurs. Hence
+$\gamma_0^2=f+j+2\sqrt{fj}$ is strictly concave, and
+$G_{\mathrm{can},-}$ is strictly convex.
+
+It remains to determine the derivative direction at $q=1/3$.
+Here $x=17/48$, $4/5<R_0<17/20$ and $0<C_0<37/40$.
+For the lower $R_0$ bound use $h>7/10$, $s>3/8$;
+the upper bounds follow from (57.10)--(57.11).
+Positive squaring gives
+$\sqrt{2/3}<5/6$ and $4/7<\sqrt{1/3}<7/12$. Therefore
+
+$$
+0<\gamma_0(1/3)
+ <\frac56\frac{17}{20}+\frac7{12}\frac{37}{40}
+ =\frac{599}{480}<\frac54.
+\tag{57.18}
+$$
+
+For $0<q<1$, differentiation of (57.5), with $x'=1/2$ and
+$y'=-x/(2y)$, gives
+
+$$
+\gamma_0'=-\frac{R_0}{2\sqrt{1-q}}
+ +\frac{s\sqrt{1-q}}2+\frac{C_0}{2\sqrt q}
+ -\frac{cx\sqrt q}{2y}.
+\tag{57.19}
+$$
+
+At $q=1/3$ its last term is negative. The preceding bounds and
+$s<2/5$ show
+
+$$
+\gamma_0'(1/3)<-\frac{12}{25}+\frac16+\frac{259}{320}
+ =\frac{2381}{4800}<\frac12.
+\tag{57.20}
+$$
+
+If this derivative is negative, $8\gamma_0\gamma_0'<0<5$;
+if it is nonnegative, (57.18)--(57.20) give
+$8\gamma_0\gamma_0'<8(5/4)(1/2)=5$.
+The identity $d^2-e^2=4h+8s>29/5$ therefore yields
+
+$$
+G_{\mathrm{can},-}'(1/3)
+ =d^2-e^2-8\gamma_0(1/3)\gamma_0'(1/3)>\frac45.
+\tag{57.21}
+$$
+
+Convexity makes the derivative nondecreasing on $(0,1)$.
+It follows that $G_{\mathrm{can},-}$ increases on $[1/3,1)$;
+continuity includes $q=1$. All its values on that block are at least
+its already certified value at $1/3$. This proves (57.6) for all
+$q\in[0,1]$.
+
+Finally Continuation II, Theorem 46.4 gives
+$G_-(q,X,Y)\ge G_{\mathrm{can},-}(q)$ on every complete slice
+with $D_-(x,q)\ge0$, including population endpoints and triangle
+boundaries. Combining this supplier with (57.6) proves (57.7).
+No implication for a negative-determinant slice is used. $\square$
+

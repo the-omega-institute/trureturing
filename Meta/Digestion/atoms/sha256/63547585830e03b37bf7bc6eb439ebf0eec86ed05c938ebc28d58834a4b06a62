@@ -1,0 +1,67 @@
+**Theorem 14.3 (A usable certificate in dimension, velocity ratio and damping).** Let
+
+$$
+v_- =\min_j v_j,\qquad v_+=\max_j v_j,\qquad R=\frac{v_+}{v_-}\geq1,
+$$
+
+and define the fully evaluated positive constants
+
+$$
+\boxed{\quad
+d_R=\frac{b_m(m+1)}{2^mR^{m^2}},\qquad
+\eta_R=\frac{4\alpha(1-\alpha)}{1+\alpha R}\,d_R,
+\qquad A_R=\sqrt{m(m+1)R}\,E_0.\quad}
+\tag{14.8}
+$$
+
+Then $0<\eta_R<1$ and, for all integer times and all real or complex initial states,
+
+$$
+\begin{gathered}
+Q(T^m z)\leq(1-\eta_R)Q(z),\qquad
+E(t)\leq A_R\exp\left(-\frac{\eta_R}2\lfloor t/m\rfloor\right),\\
+|\mu|\leq(1-\eta_R)^{1/(2m)}\quad(\mu\in\operatorname{spec}_{\mathbb C}T).
+\end{gathered}
+\tag{14.9}
+$$
+
+For $\epsilon>0$, if $E_0=0$ or $A_R\leq\epsilon$, take $K_R=0$; otherwise the following depends only on $m,R,\alpha,E_0,\epsilon$:
+
+$$
+\boxed{\quad K_R=m\left\lceil
+\frac{\log\big(m(m+1)R E_0^2/\epsilon^2\big)}{\eta_R}
+\right\rceil.\quad}
+\tag{14.10}
+$$
+
+It guarantees $E(t)\leq\epsilon$ for every $t\geq K_R$. Zero and negative tolerances retain the exact alternatives of Theorem 14.2.
+
+*Proof.* Scale every velocity by $v_-^{-1}$ in (12.3), which leaves each factor unchanged. The scaled velocities lie in $[1,R]$. The prefactor in that formula is at least $(m+1)/(2R)^m$, and each factor inside the product is at least $R^{-2}$. As $\sum_{i=1}^{m-1}(m-i)=m(m-1)/2$,
+
+$$
+\mathcal D(v)\geq\frac{m+1}{2^mR^{m^2}}.
+\tag{14.11}
+$$
+
+This also holds for $m=1$, where its right side is $R^{-1}\leq1=\mathcal D$. Hence $d(v)\geq d_R$, including the branch $\mathcal D=1$. If $a=v_1/v_2\leq R$, then (12.1) gives
+
+$$
+\sigma=4\alpha(1-\alpha)\frac{1+a}{(1+\alpha a)^2}
+\geq\frac{4\alpha(1-\alpha)}{1+\alpha a}
+\geq\frac{4\alpha(1-\alpha)}{1+\alpha R}.
+\tag{14.12}
+$$
+
+The first inequality uses $1+a\geq1+\alpha a$. Therefore $\eta\geq\eta_R>0$. Also $d_R\leq1$ and $4\alpha(1-\alpha)\leq1<1+\alpha R$, proving $\eta_R<1$. The $Q$ and spectral bounds follow directly from Theorem 13.2 with this smaller evaluated constant.
+
+For the coordinate prefactor, $h_i\leq S/4\leq(m+1)v_+/4$. The elementary estimate $|a-b|^2\leq2|a|^2+2|b|^2$, summed along the zero-endpoint path, gives
+
+$$
+Q_0\leq\frac4{v_-}\sum_{i=1}^m|z_i|^2
+\leq\frac{4m}{v_-}E_0^2,\qquad
+hQ_0\leq m(m+1)R E_0^2=A_R^2.
+\tag{14.13}
+$$
+
+Use (14.7), the $m$-step bound, and $1-x\leq e^{-x}$ for $x\geq0$ to prove the coordinate estimate in (14.9). The stated integer (14.10) makes its square at the block boundary at most $\epsilon^2$. The same floor argument as in Theorem 14.2 proves it for every later integer time. All constants are explicit finite expressions; the use of $R$ removes absolute velocity scale from this conservative certificate. $\square$
+

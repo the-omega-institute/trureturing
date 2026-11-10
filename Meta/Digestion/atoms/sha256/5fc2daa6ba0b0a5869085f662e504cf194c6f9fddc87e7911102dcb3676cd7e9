@@ -1,0 +1,20 @@
+**引理 9.5（唯一有限系数表）。**取定义 8.3 的逆封闭有限实际门表 $\Gamma$，每项保留原具名程序及矩阵 $k_\gamma\in U_{27}(D)$。对每对 $(\gamma,i)$，存在唯一 $\alpha_{\gamma i j}\in R$ 使
+
+$$
+k_\gamma^*\widetilde P_i k_\gamma
+=\sum_{j\in\mathcal I}\alpha_{\gamma i j}\widetilde P_j,
+\qquad \sum_j\alpha_{\gamma i j}=1.
+\tag{9.8}
+$$
+
+证明。将左式以 $W^*(\cdot)W$ 共轭，得到 $\operatorname{Herm}_{27}(D)$ 中的矩阵，再按 (9.3) 逐项反演即得系数，且全部在 $R$。每个 $\widetilde P_j$ 迹为一，左端也迹为一，取迹给系数和。$\Gamma$ 与 $\mathcal I$ 有限，故该表有限；无需列举群元素或门字。$\square$
+
+令 $A_\gamma=(\alpha_{\gamma i j})$，令列向量 $t$ 在二十七个坐标标签上取一、其他标签上取零。恒等算子的展开还给出
+
+$$
+ t^{\mathsf T}A_\gamma=t^{\mathsf T}.
+\tag{9.9}
+$$
+
+确实，将 (9.8) 对坐标标签 $i$ 求和，左端为 $k_\gamma^*I_{27}k_\gamma=I_{27}$，右端系数由基唯一性确定。行系数和为一与 (9.9) 是不同的事实；总质量不是全部七百二十九个探针读数之和，不能只用行和证明守恒。表的有限性只指有限种关系，不限制准备、参考、历史或使用次数。
+

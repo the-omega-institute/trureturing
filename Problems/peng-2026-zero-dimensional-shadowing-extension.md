@@ -16,8 +16,8 @@ Peng's Question 5.1 asks whether every compact Hausdorff shadowing system
 (X,f) is a continuous onto equivariant factor of a compact zero-dimensional
 shadowing system (Y,g). Time is natural, including zero. Neither f nor g is
 assumed invertible or onto; no metrizability or countable-weight condition
-is imposed. Empty X has the solution Y empty. The general nonempty question
-is unresolved here.
+is imposed. Empty X has the solution Y empty. The general assertion is
+refuted by `D5/S3/Topology/Shadowing/FreeFibreBoundary.result`.
 
 ## Motivation
 
@@ -114,9 +114,47 @@ restrictions inherit shadowing.
 
 ## Triage
 
-This is an unresolved construction question outside the metric case. The
-Mittag-Leffler shadowing bridge is known-background infrastructure, not an
-original question settlement.
+The unrestricted compact Hausdorff assertion is refuted. The
+Mittag-Leffler shadowing bridge remains known-background infrastructure;
+it does not supply the symbolic construction required for a positive answer.
+
+### Full unrestricted counterexample
+
+`D5/S3/Topology/Shadowing/FreeFibreBoundary` defines the original universal
+claim and proves `result : Not claim`. The exported claim quantifies types
+in universe zero with arbitrary topologies and no cardinal bound. The
+resolution-transfer theorem is separately universe-polymorphic.
+
+A generic binary name locally decides every complete finite binary graph
+language with arbitrary initial vertices. The first-disagreement map has
+a compact convergent section homeomorphic to the one-point compactification
+of the naturals. Pulling the supplied compact open-map nonresolution
+witness back along this map, and appending a binary full-shift core, gives
+the actual compact Hausdorff source. Finite controls prove its forward
+shadowing, with a separate time-zero lift and one core tracer for later times.
+
+Any compact Hausdorff zero-dimensional shadowing cover with continuous
+onto equivariant factor produces marked complete finite graph languages.
+Clopen extension and the exact saturated-image equality on the convergent
+section force an open zero-dimensional resolution of the static witness,
+which is impossible. The argument imposes no onto or invertible upstairs
+dynamics, openness or injectivity of the factor, prescribed fibres, core or
+transients, or invariant/shadowing restriction on the closed section preimage.
+The generic amplification and source construction are new here; the static
+obstruction and whole-language finite-observation theorem are reused suppliers.
+
+This refutes every globally successful positive construction in the stated
+scope. The compact metric case and other restricted settings retain their
+separate hypotheses. Question 5.2's proposed general construction therefore
+cannot supply a positive answer for all the sources of Question 5.1; no
+separate resolution of its exact row-deletion assertion is claimed.
+
+The designated refutation is exempt from four-slot Reg audit. The public
+auxiliary audits remain unfinished under
+[issue #25816](https://github.com/the-omega-institute/trureturing/issues/25816).
+The older BufferedConeExtension audit remains separately unfinished under
+[issue #25272](https://github.com/the-omega-institute/trureturing/issues/25272).
+Neither issue is validated registration evidence.
 
 ### Projective-cover obstruction
 
@@ -210,18 +248,18 @@ Lean declarations or an original open-problem settlement. The graph
 construction, projectivity characterization and closure machinery are
 reused; no worldwide novelty claim is made for their combination.
 
-The remaining construction must use zero-dimensional covers with
-controlled clopen observations, rather than projectivity alone. It still
-must provide one globally chosen coherent finite-face family in which
-every live finite word is source-feasible, with complete-path deletion
-lifting or proved Mittag-Leffler stabilization. The projective obstruction
-neither supplies this finite feasibility nor disproves existence of such
-a family for arbitrary compact Hausdorff shadowing sources.
+For a restricted positive construction, the proposed symbolic route still
+requires controlled clopen observations and one globally chosen coherent
+finite-face family in which every live finite word is source-feasible, with
+complete-path deletion lifting or proved Mittag-Leffler stabilization.
+The projective obstruction alone supplies neither this feasibility nor the
+full unrestricted refutation; the latter is the separate result above.
 
 ## ASSUMED-UNVERIFIED
 
 No worldwide open-status conclusion is inferred from a bounded search. The
 final Good–Meddaugh journal Theorem 8, pp.722-723, supplies the attributed
 Mittag-Leffler preservation result, including nonsurjective bonds. Its Lean
-formalization and subsequent freezing are separate from the still missing
-coherent symbolic construction in this problem dossier.
+formalization is separate from the full counterexample above. Bounded
+primary-source checks do not establish priority, uniqueness, publication or
+official acceptance of the repository refutation.

@@ -1,0 +1,55 @@
+**Definition 23.1 (reduced producer data).** Keep Definitions 1.1, 6.1 and 11.1, including the ordinary transpose, the joint optimizer-sign minimum and the common scalar feedback phase. Write
+
+$$
+h=1/\sqrt2,\qquad c=\cos(\pi/8),\qquad s=\sin(\pi/8),
+\qquad d=\sqrt2+2c,\qquad e=\sqrt2+2s,
+\qquad T=(b_+\ \ b_-),
+$$
+
+with $b_\pm$ as in (6.7), so that the certificate matrix of (3.9) is
+$H_0=T\operatorname{diag}(d^2,e^2)T^\dagger$. Define the compact set
+
+$$
+\mathcal W=
+\left\{w\in\mathbb C^4:
+ |w_i|\le1\ (1\le i\le4),\quad
+ \sum_{i=1}^4|w_i|-2\min_{1\le i\le4}|w_i|\le2\right\}.
+\tag{23.1}
+$$
+
+For $w\in\mathcal W$, put
+
+$$
+\begin{aligned}
+A(w)&=|w_1+w_2+w_3+w_4|,\\
+B(w)&=|w_1-w_2+i(w_3-w_4)|,\\
+P(w)&=h(w_1+w_2)+c(w_3+w_4),\\
+Q(w)&=h(w_1-w_2)+is(w_3-w_4),\\
+u(w)&=|P(w)|,\qquad v(w)=|Q(w)|.
+\end{aligned}
+\tag{23.2}
+$$
+
+For $0\le p\le1$, define
+
+$$
+\begin{aligned}
+r_+(w,p)&=10-2p-2A(w),\\
+r_-(w,p)&=8+2p-2B(w),\\
+r(w,p)&=\min\{r_+(w,p),r_-(w,p)\},\\
+G(w,p)&=d^2p+e^2(1-p)
+       -\bigl(u(w)\sqrt p+v(w)\sqrt{1-p}\bigr)^2.
+\end{aligned}
+\tag{23.3}
+$$
+
+The common phase action is $w\mapsto\lambda w$, $|\lambda|=1$.
+It preserves $\mathcal W$, $A,B,u,v,r,G$; no representative of this action is chosen. Define the original sharp constant by
+
+$$
+C_{\mathrm{opt}}=
+\sup_{\substack{E\in\operatorname{Dens}_2,\ U\in U(4)\\g(E,U)>0}}
+\frac{\rho(E,U)}{g(E,U)}.
+\tag{23.4}
+$$
+

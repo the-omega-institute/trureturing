@@ -1,0 +1,21 @@
+### 2.2　纯态的最简完整提升：Hopf 映射
+
+秩一时写
+
+$$
+\rho=\psi\psi^\dagger,\qquad \psi=(\alpha,\beta)^T,\quad
+|\alpha|^2+|\beta|^2=1.
+$$
+
+则
+
+$$
+h(\psi)=
+\left(2\Re(\bar\alpha\beta),\
+|\alpha|^2-|\beta|^2,\
+2\Im(\bar\alpha\beta)\right)=x.
+\tag{4}
+$$
+
+这里两个复数是关系表的一个因子表示，不把整个观察者简化成一个复数。
+

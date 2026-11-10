@@ -1,0 +1,20 @@
+**Definition 156.1 (the repeated-label residual map).** Retain the original telescope, the whole-$G$ partition space and the calibrated fiber $\mathscr F_{154}(\theta)$ of Definition 155.1. Let
+
+$$
+\mathcal R_{\mathrm{rep}}
+ =\{(y,z,w)\in I^3:\text{ at least two of }y,z,w\text{ are equal}\},
+ \qquad |\mathcal R_{\mathrm{rep}}|=21.
+\tag{156.1}
+$$
+
+For $D\in\mathscr F_{154}(\theta)$ write
+
+$$
+\Gamma_\theta(D)
+ =\bigl(\Delta(D)_{yzw}\bigr)_{(y,z,w)\in\mathcal R_{\mathrm{rep}}}
+ \in\mathbb R^{21}.
+\tag{156.2}
+$$
+
+The six distinct-label coordinates, BBB, all source marginals and all ordered pair coordinates are already fixed on this fiber. Every coordinate in (156.2) still uses the same partition's own terminal factor $P\mathbf1_{D_w}$.
+

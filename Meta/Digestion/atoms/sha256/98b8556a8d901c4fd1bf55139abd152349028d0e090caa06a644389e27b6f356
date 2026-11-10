@@ -1,0 +1,113 @@
+### 154.B. Seven independent quadratic densities on the original space
+
+For bounded real inputs define
+
+$$
+\mathsf A(v,w)=gP(vPw),\qquad
+\mathsf B(v,w)=P(gv)Pw,\qquad
+\mathsf T(v,w)=P(vP(gw)).
+\tag{154.9}
+$$
+
+For $x=(x_0,x_1,x_3)$ define two-component functions by the following six rows:
+
+$$
+\begin{array}{c|cc}
+\sigma&R_\sigma^{(0)}[x]&R_\sigma^{(1)}[x]\\ \hline
+013&\mathsf A(x_1,x_3)&\mathsf B(x_0,x_3)\\
+103&\mathsf B(x_1,x_3)&\mathsf A(x_0,x_3)\\
+031&\mathsf A(x_3,x_1)&\mathsf T(x_3,x_0)\\
+130&\mathsf T(x_3,x_1)&\mathsf A(x_3,x_0)\\
+301&\mathsf B(x_3,x_1)&\mathsf T(x_0,x_3)\\
+310&\mathsf T(x_1,x_3)&\mathsf B(x_3,x_0).
+\end{array}
+\tag{154.10}
+$$
+
+Let $\mathsf Z$ remove the angular mean, so
+$\mathsf ZH(q,\vartheta)=H(q,\vartheta)-\int H(q,\alpha)\,d\alpha/(2\pi)$.
+For $s=x_0+x_1+x_3$ put
+
+$$
+\begin{aligned}
+S[x]&=\mathsf A(s,s)+\mathsf B(s,s)+\mathsf T(s,s),\\
+\mathbf R_{BBB}[x]&=(-\mathsf ZS[x],-\mathsf ZS[x]),\qquad
+\mathcal J=\mathcal T_6\cup\{BBB\}.
+\end{aligned}
+\tag{154.11}
+$$
+
+All these functions are bounded and continuous on $\Omega$. Indeed every input to $P$ is bounded and in $L^2(m)$, and the actual local smoothing (120.7)–(120.10) supplies the continuous representative. The Markov bound, continuity and full support make these representatives bounded pointwise on $\Omega$. For the finite odd disjoint spectra in (154.8), the six rows in (154.10) are even with zero angular mean. The seventh row has those properties by $\mathsf Z$.
+
+We prove that the seven rows for one sufficiently small fixed $\epsilon$ are independent, by finitely many Fourier evaluations on the two actual orbits $q_\circ,q_\diamond$. The localization estimates of (153.14)–(153.15), now with the output quotient allowed at either fixed point, give
+
+$$
+\begin{gathered}
+PV_{j,\epsilon}\longrightarrow\mathcal K_j,\qquad
+P(gV_{j,\epsilon})\longrightarrow g_\circ\mathcal K_j,\\
+\mathsf A(V_{n,\epsilon},V_{k,\epsilon})
+ \longrightarrow g(q)a_k\mathcal S_{n,k},\qquad
+\mathsf T(V_{n,\epsilon},V_{k,\epsilon})
+ \longrightarrow g_\circ a_k\mathcal S_{n,k},\\
+\mathsf B(V_{n,\epsilon},V_{k,\epsilon})
+ \longrightarrow g_\circ\mathcal K_n\mathcal K_k,\qquad
+\mathcal S_{n,k}=\tfrac12(\mathcal K_{n+k}+\mathcal K_{|n-k|}).
+\end{gathered}
+\tag{154.12}
+$$
+
+The convergences are uniform in the output angle on both orbits, and on the shrinking input supports when computing the nested terms. For the latter terms, the inner heat factor tends uniformly there to $a_k\cos(k\vartheta)$, or to $g_\circ a_k\cos(k\vartheta)$ when its input includes $g$. Multiplication by $\phi_\epsilon\cos(n\vartheta)$ and integration then gives the cosine product in $\mathcal S_{n,k}$. Uniform continuity and boundedness of the kernel on the compact input and output orbit neighborhoods bound every error by its uniform modulus times $\int\phi_\epsilon\,d\nu=1$. This also proves (154.12) for $n=k$, where $\mathcal K_0$ occurs. No bound on $\|\phi_\epsilon\|_\infty$ uniform in $\epsilon$ is required.
+
+Denote the six limiting rows by $\overline{\mathbf R}_\sigma$. At $q_\circ$ they satisfy
+
+$$
+\overline{\mathbf R}_{013}=\overline{\mathbf R}_{310},\qquad
+\overline{\mathbf R}_{103}=\overline{\mathbf R}_{301},\qquad
+\overline{\mathbf R}_{031}=\overline{\mathbf R}_{130}.
+\tag{154.13}
+$$
+
+Take the component-$0$ coefficients at $n_1+1,n_1-1$ and component-$1$ coefficients at $n_0+1,n_0-1$, all at $q_\circ$. The $m_*$ mode contributes to none of these coefficients by (154.5). On the three folded columns $013,103,031$, the resulting matrix is exactly $g_\circ/2$ times (153.16), with its proved rank three. Thus a zero linear combination of all six columns has coefficients satisfying
+
+$$
+\lambda_{310}=-\lambda_{013},\qquad
+\lambda_{301}=-\lambda_{103},\qquad
+\lambda_{130}=-\lambda_{031}.
+\tag{154.14}
+$$
+
+Write $\alpha=\lambda_{013}$, $\beta=\lambda_{103}$ and $\gamma=\lambda_{031}$. The product terms $\mathsf B$ cancel in these reversal differences, by (154.12). At an arbitrary quotient $q$, the remaining components are exactly
+
+$$
+\begin{aligned}
+(g(q)-g_\circ)\bigl[
+ &(\alpha a_1+\gamma a_{n_1})\mathcal S_{n_1,1}
+ +(\alpha a_{m_*}+\gamma a_{n_1})\mathcal S_{n_1,m_*}\bigr],\\
+(g(q)-g_\circ)\bigl[
+ &(\beta a_1-\gamma a_{n_0})\mathcal S_{n_0,1}
+ +(\beta a_{m_*}-\gamma a_{n_0})\mathcal S_{n_0,m_*}\bigr].
+\end{aligned}
+\tag{154.15}
+$$
+
+At $q_\diamond$ take the component-$0$ coefficients at $n_1+1,n_1+m_*$ and the component-$1$ coefficient at $n_0+1$. The frequencies in each component are distinct by (154.5). Equations (154.6)–(154.7) make the three nonzero scalar factors removable, leaving
+
+$$
+\alpha a_1+\gamma a_{n_1}=0,\qquad
+\alpha a_{m_*}+\gamma a_{n_1}=0,\qquad
+\beta a_1-\gamma a_{n_0}=0.
+\tag{154.16}
+$$
+
+Since $a_1\ne a_{m_*}$ and $a_1,a_{n_1}>0$, these equations give $\alpha=\gamma=\beta=0$. The seven displayed orbit evaluations therefore have rank six on the six limiting columns.
+
+For the seventh column use the component-$0$ coefficient at $2n_0$ on $q_\circ$. Every six-triple column has zero coefficient there: its component $0$ uses just the frequencies $n_1\pm1,n_1\pm m_*$. In $S[v^\epsilon]$, only the two $n_0$ inputs can contribute to $2n_0$. Indeed (154.5) excludes that frequency from every other signed sum of two frequencies in $\{n_0,n_1,1,m_*\}$. Formula (154.12) at $q_\circ$ gives
+
+$$
+\mathfrak c_{2n_0}^{q_\circ}\overline S
+ =g_\circ\left(a_{n_0}a_{2n_0}+\tfrac12a_{n_0}^2\right)>0.
+\tag{154.17}
+$$
+
+Here the first and third terms of (154.11) each contribute $g_\circ a_{n_0}a_{2n_0}/2$, and the middle product contributes $g_\circ a_{n_0}^2/2$. Removing the angular mean leaves this coefficient unchanged. Thus the eight selected evaluations have rank seven on $\mathcal J$. Some seven-by-seven minor is nonzero in the limit. Uniform convergence preserves that minor for one sufficiently small fixed $\epsilon>0$. Fix this value and write $v_a=v_a^\epsilon$. This proves independence for actual bounded original-space inputs, rather than for a limiting matrix alone.
+

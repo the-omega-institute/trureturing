@@ -1,0 +1,19 @@
+**定义 26.1（固定原条件切口的供给）。**沿用 $D=\mathbb Z[\zeta,1/6]$、$\eta=1-\zeta$、$\zeta^2+\zeta+1=0$，故 $\eta\bar\eta=3$、$\eta^{-1}=\bar\eta/3\in D$。固定同一份原准备、实际参考及合法条件历史，其原未归一响应记为 $\widehat\mu$，总质量为 $w\ge0$。在原载体中取
+
+$$
+\begin{gathered}
+S=\operatorname{span}(e_0,e_1,e_2),\qquad
+H_0=\operatorname{span}(e_0,\ldots,e_5),\\
+H_1=\operatorname{span}(e_6,\ldots,e_{11}),\qquad
+H_2=\operatorname{span}(e_{12},\ldots,e_{17}),\\
+H_{18}=H_0\oplus H_1\oplus H_2,\qquad
+D_0=\operatorname{span}(d_1,d_2,d_3),\quad
+(d_1,d_2,d_3)=(e_3,e_4,e_5).
+\end{gathered}
+\tag{26.1}
+$$
+
+子空间与其正交投影用同一符号。要求 $\widehat\mu(I_{27})=\widehat\mu(S)=w$，响应对同一全载体锐利／粗投影单值、非负，并在每张实际完整单位框架内粗粒化相加。所用 $D$-单位框架、坐标读出、列子集粗事件、有限 $B/R_2$ 字、逆字及接线，均须在这份原准备／参考／历史上实际合法供应；定义 25.8 的全 $D$ 菜单是一个充分供给域。原活动读口与原独立三进抽签仍须按原历史和原权重绑定，矩阵综合不供应这些接口。
+
+原坐标完整测试和非负性先给 $S^\perp$ 中每根坐标列质量零。因此 $\widehat\mu(H_0)=\widehat\mu(H_{18})=w$，其余九根旁观坐标质量零。在 $H_{18}$ 内的每张完整框架后面附上这九根坐标列，便得到总质量仍为 $w$ 的实际二十七维完整测试。这里把 $S$ 加上三根零质量坐标重新分块为 $H_0$，只用于数学提升；没有改变原准备、原系统或原饱和角 $S$。
+

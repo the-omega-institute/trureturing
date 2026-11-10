@@ -1,0 +1,26 @@
+### 46.4 C117 旋转的块间下界
+
+沿用 §45 的负首分量轴、三股辫关系、十次单位关系和稠密性。把 $s,t$ 分别评价为 $A,C$。在复球面调和分解
+
+$$
+L^2(S^2,\mu;\mathbb C)=\widehat\bigoplus_{\ell\ge0}\mathcal H_\ell,
+\qquad d_\ell=2\ell+1,
+$$
+
+采用真正的群表示
+$\pi_\ell(g)h(n)=h(g^{-1}n)$。以同一个尾词集 $\mathcal H$ 记十四个 braid 尾词
+
+$$
+\mathcal H=\{1,t,ts,ts^{-1},t^{-1},t^{-1}s,t^{-1}s^{-1},t^{-1}st^{-1},t^{-1}s^{-2},t^{-2}s^{-1},t^{-2},t^{-1}s^{-3},s^{-1},t^{-2}s^{-2}\}.
+\tag{46.12}
+$$
+
+对 $2\le\ell\le23$，令 $b_\ell$ 为映射
+
+$$
+ v\longmapsto\bigl(R(\pi_\ell(A))\pi_\ell(h)v\bigr)_{h\in\mathcal H}
+\tag{46.13}
+$$
+
+的最小奇异值，并令 $\beta=\min_{2\le\ell\le23}b_\ell$。
+

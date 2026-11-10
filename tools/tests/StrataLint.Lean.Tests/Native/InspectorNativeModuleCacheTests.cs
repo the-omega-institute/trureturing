@@ -4,7 +4,13 @@ public sealed class InspectorNativeModuleCacheTests(InspectorCompilerFixture com
 {
     // Module cache validation uses a class-owned compiler stage.
     [Theory]
-    [InlineData("test_native.NativeArtifactTests")]
+    [InlineData("test_native.NativeArtifactTests.test_batch_production_rejects_an_invalid_module_before_writing_it")]
+    [InlineData("test_native.NativeArtifactTests.test_native_miss_prepares_only_its_production_sources")]
+    [InlineData("test_native.NativeArtifactTests.test_native_module_integrity_rejections")]
+    [InlineData("test_native.NativeArtifactTests.test_native_no_build_rejects_a_miss_without_production")]
+    [InlineData("test_native.NativeArtifactTests.test_native_producer_inputs")]
+    [InlineData("test_native.NativeArtifactTests.test_production_rejects_an_invalid_module_before_writing_it")]
+    [InlineData("test_native.NativeArtifactTests.test_warm_native_artifacts_do_not_require_production_source_files")]
     [InlineData("test_native.NativeTests.test_imported_comment_warm_report_equals_fresh")]
     [InlineData("test_native.NativeTests.test_native_format_preimage")]
     [InlineData("test_native.NativeTests.test_native_report_format_invalidates_every_module")]

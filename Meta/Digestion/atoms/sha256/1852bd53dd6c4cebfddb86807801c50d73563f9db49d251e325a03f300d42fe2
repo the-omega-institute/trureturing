@@ -1,0 +1,34 @@
+**定义 255.1（跨中央支持的第三点候选）。** 分别固定完整原 $B$ 和另名完整 $\mathsf B_{\rm cl}$，任一记为 $B_*$。原 $p_*=\operatorname{rank}E_P$ 不变；每颗 primitive 的中央支持仍为定义 180.1 的 $z(e)$。从定义 251.1 的三层带标签域中，仅删除
+
+$$
+\mathcal O_3^{\rm same}(E)
+=\{(e,p,r):e,p,r\text{ 两两正交 primitive},\ z(e)=z(p)=z(r)\}.
+\tag{255.1}
+$$
+
+记剩余条件为 $\mathsf F_{\rm cross3}$，完整候选为
+
+$$
+\mathsf C_{\rm cross3}(B_*)=B_*+\mathsf F_{\rm cross3}.
+\tag{255.2}
+$$
+
+它仍只在原对象总秩 $>p_*$ 时要求同一关系
+
+$$
+W_c(p)=2q(D_pc,r)+W_c(2D_cp),\qquad
+W_c(x)=\tfrac12\|P_cx\|_q^2,
+\tag{255.3}
+$$
+
+其完整保留域如下。
+
+| 层 | 切口及输入 | 读回 |
+| --- | --- | --- |
+| 正交输入自身 | $c=e$，primitive $e\perp p$ | $r=p$ |
+| 跨中央支持第三点 | 同一正交对 | primitive $r\perp e,p$，且 $z(e),z(p),z(r)$ 不全相同 |
+| 二原子内部 | $c^2=c$，整个对象的 $\operatorname{rank}c=2$，primitive $p\le c$ | $r=p$ |
+| 半重叠角外 | $c=e$，primitive $e,p$，$\tau(e\circ p)=1/2$ | 全部 primitive $r\perp e,p$ |
+
+同一原 $\Omega,q,D,L$、全部原对象与实际联合、完整相关准备、零和次归一质量、不等正块权、设备身份、整个 AC、精确 $N_u$、完整 X/Xs、全事件 R/F、失败、细记录、分组与实际遗忘、具名同数支持双返回和原同数反向资料、全部原合法有限顺序、自适应与并行历史均保留。SC、原 $D$ 的交替、导子、斜伴随或左单位均不作为前件；不要求嵌入等距、保持 primitive 或秩，不增加直接 $AP$、实际 $M_2$、任意仪器组装、钟或 $\hbar$。
+

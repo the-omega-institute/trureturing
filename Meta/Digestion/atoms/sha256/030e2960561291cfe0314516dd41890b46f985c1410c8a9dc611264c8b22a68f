@@ -1,0 +1,4 @@
+## 10　同一来源给出旋转地址与夹持比较
+
+Q17 已经给出正交单位标架 $e,v,w$、归一生成元 $\bar K=K/\sqrt\alpha,\bar L=L/\sqrt\alpha$，以及单位来源稳定子 $C=[K,L]/\alpha=[\bar K,\bar L]$。这里直接使用它们，不再另选一个稳定生成元或附加标尺。对于 $u\perp e$，记 $X_u e=u$、$X_u z=-B(u,z)e$（$z\perp e$）。
+

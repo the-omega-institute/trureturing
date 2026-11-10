@@ -1,0 +1,19 @@
+**推论 44.3（完整校准端点后的实际统一读数）。** 在定义 44.1 的全部条件端点下，定理 44.2 的同一个 $f$ 给
+
+$$
+\begin{aligned}
+P_{A_S}(K_fK_av_0)
+ &=\sum_{w\in A_S}P_w(K_fK_av_0)
+ =\langle\psi_a,e_{f,S}\psi_a\rangle,\\
+\sup_{a\in\mathsf A}\max_{S\subseteq\{0,1,2\}}
+\left|P_{A_S}(K_fK_av_0)
+ -\left\langle\psi_a,\left(\sum_{k\in S}E_k\right)\psi_a\right\rangle\right|
+ &\le2\varepsilon.
+\end{aligned}
+\tag{44.8}
+$$
+
+每个有限程序恰为原 ready；实际 B45 前缀 $a$；共同原七地址未来 $f$；一次完整原终端。三个分组是同一个完整记录的确定标签事件，没有加权接受或后选择。
+
+证明。II78.1、(44.3) 和独立 II79.1 经 37.2–37.3 给整个 $H$ 的 $P_w(\eta)=|\eta_w|^2$。在同一个完整终端上求和得到 $P_{A_S}(K_f\iota\psi_a)=\langle\psi_a,e_{f,S}\psi_a\rangle$；单位向量的二次值差不超过算符范数差，遂得 (44.8)。这是完整校准端点之后的条件应用，不是 Born 律的导出或校准前的实际效应覆盖。仅有局部 Bloch 几何、局部或整体门密度、甚至单独的基底校准，均未供应这里所消费的整体效果入口。∎
+

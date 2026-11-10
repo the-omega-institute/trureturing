@@ -1,0 +1,34 @@
+**定理 19.1（较弱载体中的全部原角度）。** 在 16.1 下，固定任意原 $h^2=u$、任意 $0<r<1$，置
+
+$$
+V_h=\{b\in E:h\circ b=0\},\qquad G(b)=D(rh,b)/r.
+$$
+
+则对全部原 $b\in V_h$、实 $\theta$，
+
+$$
+G(\cos\theta\,b+\sin\theta\,G(b))
+=-\sin\theta\,b+\cos\theta\,G(b),
+\qquad G(G(b))=-b.
+\tag{19.1}
+$$
+
+证明。16.3 对原 $(rh,b)$ 给 $G(b)\in V_h$、$G(b)^2=b^2$、$b\circ G(b)=0$；不预付径向性。若原 $y,z\in V_h$ 有相同平方 $R$，实际 PB $(rh,y,z)$ 的两份外层共享旧值，两个输入的平方都为 $(1+r^2)R$，故 18.1 的标量平方差入口合法。相减两份准确面积，正是 209.1 的等平方计算：
+
+$$
+\bigl(y\circ z+r^2G(y)\circ G(z)\bigr)
+\circ\bigl(y\circ G(z)+G(y)\circ z\bigr)=0.
+\tag{19.2}
+$$
+
+这是算子 Jordan 关系，不是两个读取的乘积。固定 $j=G(b)$、$R=b^2$，令 $x=\cos\theta b+\sin\theta j$、$k=G(x)$。四个原标签平方均为 $R$，故 (19.2) 的两因子为
+
+$$
+P=\cos\theta R+r^2j\circ k,\qquad
+Q=b\circ k+\sin\theta R.
+$$
+
+它们均支撑于 $s(R)$；$(j+k)^2\ge0$ 给 $P\ge(\cos\theta-r^2)R$。若 $\cos\theta>r^2$，则 $P\ge0$ 且 $P\circ Q=0$。反交换使 $Q$ 与 $P^2$ 交换，继而与其正平方根 $P$ 交换，故 $PQ=0$。由 $P$ 支撑在 $s(R)$ 且 $P\ge\varepsilon R$，有 $\ker P=\ker R$；$Q$ 的值域又在 $s(R)$，所以 $Q=0$。支撑和平方根只在环境证明中读取，不作为原输入。
+
+对非零的小角，再用 $x\circ k=0$ 得 $j\circ k=\cos\theta R$，从而 $(k+\sin\theta b-\cos\theta j)^2=0$。自伴平方零给所需局部公式；零角直接由 $j=G(b)$ 成立。任意角分成有限个上述小角，每步用已付原点及其响应重新锚定，210.1 的有限拼接逐项合法，得全部角度。取 $\theta=\pi/2$ 得归一化负平方。零 $R$ 情形四个标签都为零。没有谱隙、逆 $R$、原投影或响应连续性。∎
+

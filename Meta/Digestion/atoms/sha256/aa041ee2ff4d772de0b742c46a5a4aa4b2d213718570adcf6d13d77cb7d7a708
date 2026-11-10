@@ -1,0 +1,28 @@
+**Definition 145.1 (the signed terminal family on an invariant support).** Retain the complete original telescope of Theorems 142.1 and 143.2. Write
+$\mathscr R=R_\pi$, let $E=(E_S,E_C,E_B)=(S,C,B)\in\mathscr E_\theta$, and put
+
+$$
+q_i=P\mathbf1_{E_i},\qquad
+Q_i(u,v)=\int_G g\,u\,P(q_i v)\,dm,
+\qquad i\in\{S,C,B\}.
+\tag{145.1}
+$$
+
+For a half-turn-invariant Borel set $A\subset S$ with $m(A)>0$, let
+
+$$
+\mathcal V_{A,-}=\{u\in L^\infty(G,m;\mathbb R):u=0\ \text{a.e. on }G\setminus A,
+\ u\circ\mathscr R=-u\ \ m\text{-a.e.}\}.
+\tag{145.2}
+$$
+
+The quadratic value of $Q_i$ is its symmetric value $Q_i(u,u)$. For
+$\lambda=(\lambda_S,\lambda_C,\lambda_B)\in\mathbb R^3$ write
+
+$$
+r_\lambda=\sum_i\lambda_i\mathbf1_{E_i},\qquad
+q_\lambda=Pr_\lambda,\qquad
+Q_\lambda=\sum_i\lambda_iQ_i.
+\tag{145.3}
+$$
+

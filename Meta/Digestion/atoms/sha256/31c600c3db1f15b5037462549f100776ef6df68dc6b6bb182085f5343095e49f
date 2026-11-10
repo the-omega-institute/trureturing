@@ -1,0 +1,99 @@
+**Theorem 50.2 (native label equivalence and full support).**
+For every finite $b>0$,
+$0<\alpha_b<C_b$, and $c_b$ is strictly decreasing as a function
+of $\rho(D)\in[0,\pi]$. Consequently the precise equivalence of
+the native hidden labels, in terms of their complete fibre responses,
+is
+
+$$
+\begin{aligned}
+T_{c_b(D)}(t)h=T_{c_b(E)}(t)h
+ \quad\text{for every }t\ge0,\ h\in\mathscr H_B
+\quad\Longleftrightarrow\quad
+c_b(D)=c_b(E)
+\quad\Longleftrightarrow\quad E=D\text{ or }E=-D\pmod{2\pi}.
+\end{aligned}
+\tag{50.4}
+$$
+
+The probability measure $\mu_b$ is atomless and has full support
+$[\alpha_b,C_b]$. The measures on the raw side have densities
+
+$$
+d\nu_s(c)=\frac{\sqrt\beta}{\pi c\sqrt{\log(C_s/c)}}\,dc,
+\qquad
+d\eta_s(c)=\frac{\sqrt\beta}{\pi\sqrt{\log(C_s/c)}}\,dc
+\quad(0<c<C_s).
+\tag{50.5}
+$$
+
+Both have full support up to the endpoint zero, with no atom there
+when $\eta_s$ is regarded as a measure on $[0,C_s]$. Their relevant
+moments, including the raw factors, are
+
+$$
+\begin{aligned}
+m_j^b&=\int c^j\,d\mu_b(c)
+ =\frac{(gc_0)^j}{2\pi}\int_{\mathbb T}G_{\beta b}(D)^j\,dD
+ \quad(j\ge0),& m_0^b&=1,\\
+m_j^s&=\int c^j\,d\nu_s(c)
+ =\sqrt{\frac\beta\pi}\frac{C_s^j}{\sqrt j}
+ \quad(j\ge1),&
+\int c^r\,d\eta_s(c)&=m_{r+1}^s\quad(r\ge0).
+\end{aligned}
+\tag{50.6}
+$$
+
+Proof. The heat-kernel monotonicity is classical: see
+Alonso-Orán--Chamizo--Martínez--Mas, *Pointwise monotonicity of
+heat kernels*, [arXiv:1807.11072v2, Theorem 1.1 and §2,
+pp.1,4--5](https://arxiv.org/pdf/1807.11072v2).
+The native correspondence is the unit circle with arclength
+$dD$, Laplacian $\partial_D^2$, circumference $2\pi$ and time
+$\beta b$; no rescaling of its period or density is involved.
+Here its strict form can also be checked directly. Put
+$f_N(D)=e^{N\cos D}/\int_{\mathbb T}e^{N\cos E}\,dE$.
+It is even and its derivative is negative on $(0,\pi)$.
+The derivative of $G_t*f_N$ solves the Dirichlet heat equation
+on $(0,\pi)$, with nonpositive initial data, because evenness and
+periodicity give derivative zero at both endpoints. The parabolic
+maximum principle makes this derivative nonpositive for $t>0$.
+The measures $f_NdD$ tend to the unit point mass at zero; convolution
+therefore converges with every derivative to $G_t$ for fixed $t>0$.
+It follows that $w(t,D)=\partial_DG_t(D)\le0$ on $(0,\pi)$.
+It is not identically zero at any positive time: the Fourier
+coefficient of $\sin D$ in $w$ is $-e^{-t}/\pi$.
+Applying the strict maximum principle to $w$ between times $t/2$
+and $t$ gives $w(t,D)<0$ throughout the open interval. Positivity
+of $G_t$ follows also from its positive periodized Gaussian (32.8).
+These classical heat-equation steps establish precisely the
+monotonicity needed here, including every finite $\beta b>0$.
+
+If two fibre semigroups agree on every input for all nonnegative
+times, their generators agree on $D(K)$. Their difference is
+$(c_b(E)-c_b(D))M$. Since $\phi>0$ almost everywhere on $I$,
+$M$ is injective, so the couplings agree. Conversely equal
+couplings give the same operator and domain. Strict radial
+monotonicity gives the last equivalence in (50.4). This is a
+statement about fibre operators, not the assertion that a delta
+amplitude at an individual hidden label belongs to $\mathscr H$.
+
+Each nonempty open subinterval of $[\alpha_b,C_b]$ has a hidden
+preimage of positive raw length, while a singleton has at most two
+preimages. This proves full support and absence of atoms. More
+explicitly, on the interior the density is
+$1/(\pi|c_b'(\rho(c))|)$, where $\rho(c)$ is the inverse on
+$(0,\pi)$; it is integrable at the endpoints because it is a
+pushforward of $d\rho/\pi$.
+
+On the raw line, use the two signs of
+$x=2\sqrt\beta\sqrt{\log(C_s/c)}$ and the original factor
+$1/(2\pi)$. This gives (50.5). The divergence of
+$\int d\nu_s$ is also immediate from the infinite length of
+$\mathbb R$; it is not a probability measure. Direct Gaussian
+integration gives
+$\int (C_s e^{-x^2/(4\beta)})^j dx/(2\pi)
+=C_s^j\sqrt{\beta/\pi}/\sqrt j$ for $j\ge1$.
+The circle formula is the definition of pushforward. This proves
+all moment and support assertions. $\square$
+

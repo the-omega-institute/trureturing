@@ -1,0 +1,25 @@
+### 5.3　一般 POVM 还需要锁定过程
+
+零支撑足以锁定锐利输出记录，但不能确定一般非锐利效果的全部数值。例如
+
+$$
+E_\pm^{(\eta)}=\tfrac12(I\pm\eta\sigma_z),\qquad 0<\eta<1,
+$$
+
+对所有非零输入都有正概率；不同 $\eta$ 的零模式相同而概率不同。
+
+对给定有限 POVM $\{\widehat E_s\}$，数学上可定义
+
+$$
+\widehat Vx=\sum_s\sqrt{\widehat E_s}\,x\otimes|s\rangle,\qquad
+P_s=I\otimes|s\rangle\langle s|,
+$$
+
+于是 $\widehat V^*\widehat V=I$， $\widehat E_s=\widehat V^*P_s\widehat V$。 输出记录的暗校准只锁定 $P_s$；要锁定输入的 $\widehat E_s$，还需同源实际过程 $V=\widehat V$。在已证明复线性以后，比较一组输入生成向量的输出相等就足够：
+
+$$
+c_{\rm out}(Vx_j,\widehat Vx_j)=0\quad\text{对所有生成 }x_j.
+$$
+
+该式在输出有同源标签时使用。Naimark 的数学构造本身不供应辅助系统或这项实际校准。
+

@@ -127,7 +127,7 @@ private theorem firstLiMass_pos : 0 < firstLiMass := by
   unfold firstLiMass
   linarith
 
-private theorem firstLiMass_lt_one : firstLiMass < 1 := by
+theorem firstLiMass_lt_one : firstLiMass < 1 := by
   have hg : Real.eulerMascheroniConstant < 1 :=
     Real.eulerMascheroniConstant_lt_two_thirds.trans (by norm_num)
   have hroot : 3 < 2 * Real.sqrt Real.pi := by
@@ -286,7 +286,7 @@ def actualOccurrenceEquiv : ℕ ≃ ActualZeroOccurrence :=
 def actualZero (k : ℕ) : ℂ := actualData.zero (actualOccurrenceEquiv k).1
 
 
-private theorem actual_sigma_inverse_square_summable :
+theorem actual_sigma_inverse_square_summable :
     Summable (fun p : ActualZeroOccurrence => ((actualData.zero p.1).im)⁻¹ ^ 2) := by
   apply (summable_sigma_of_nonneg (fun _ => sq_nonneg _)).2
   constructor
@@ -853,5 +853,50 @@ theorem actual_inverse_square_mass_le_height :
 
 #print axioms actual_height_gt_ten
 #print axioms actual_inverse_square_mass_le_height
+
+end D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds
+
+namespace D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds
+
+/-- Consumed access to the original private strip estimate. -/
+theorem heightRefinement_strip_product_bounds {rho : ℂ} (h0 : 0 < rho.re) (h1 : rho.re < 1) :
+    0 < rho.re * (1 - rho.re) ∧ rho.re * (1 - rho.re) ≤ 1 / 4 :=
+  strip_product_bounds h0 h1
+
+theorem heightRefinement_pairWeight_strip {rho : ℂ} (h0 : 0 < rho.re) (h1 : rho.re < 1) :
+    0 < pairWeight rho ∧ 1 / (rho.im ^ 2 + 1) ≤ pairWeight rho :=
+  pairWeight_strip h0 h1
+
+theorem heightRefinement_actual_conjugation_ne (n : ℕ) :
+    actualData.conjugation n ≠ n :=
+  actual_conjugation_ne n
+
+theorem heightRefinement_one_endpoint_logDeriv :
+    logDeriv D5.S3.Zeros.CompletedZeta.xiReading 1 = (firstLiMass / 2 : ℝ) :=
+  one_endpoint_logDeriv
+
+theorem heightRefinement_actual_six_denominators (n : ℕ) :
+    actualData.zero n ≠ 0 ∧ 1 - actualData.zero n ≠ 0 ∧
+    6 - actualData.zero n ≠ 0 ∧ 5 + actualData.zero n ≠ 0 :=
+  actual_six_denominators n
+
+theorem heightRefinement_actual_six_hasSum :
+    HasSum (fun n : ℕ => (actualData.multiplicity n : ℝ) *
+      sixWeight (actualData.zero n)) (sixDefect / 165) :=
+  actual_six_hasSum
+
+theorem heightRefinement_sixDefect_evaluation :
+    sixDefect =
+    593 / 60 + 6 * Real.eulerMascheroniConstant - 11 * Real.log 2 -
+      5 * Real.log Real.pi + sixQ :=
+  sixDefect_evaluation
+
+theorem heightRefinement_log_le_half (x : ℝ) (hx : 0 < x) :
+    Real.log x ≤ x / 2 :=
+  log_le_half x hx
+
+theorem heightRefinement_actual_ordinate_sq_gt_hundred (n : ℕ) :
+    100 < (actualData.zero n).im ^ 2 :=
+  actual_ordinate_sq_gt_hundred n
 
 end D5.S3.Weil.ZeroData.ActualReciprocalSquareBounds

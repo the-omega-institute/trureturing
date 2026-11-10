@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:2a7fe321e66c4b46c1eaf8cf623530f6730af3b1dca9d809d5a03644d6781911
+  normalized_sha256: sha256:2a7fe321e66c4b46c1eaf8cf623530f6730af3b1dca9d809d5a03644d6781911
+cas_ref: sha256:2a7fe321e66c4b46c1eaf8cf623530f6730af3b1dca9d809d5a03644d6781911
+coverage_gids:
+  - gid: D5/S3/Quantum/Dynamics/NativeProtocolBornNormalization.original_event_cut_resource_bounds
+    target_statement_id: sha256:435965ff7b2406d898da65684c4a3657975ecb7c7c0bb5146c926e9766e37869
+receipts:
+  unresolved_subitems: []

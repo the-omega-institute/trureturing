@@ -1,0 +1,52 @@
+#### 定理 10.2：地址、比较与三重乘积
+
+映射 $R:W\to\mathfrak g$ 是实线性同构，且
+
+$$
+R_e=C,\qquad R_z z=0,\qquad
+\ker R_z=\mathbb Rz\quad(z\ne0).
+$$
+
+对全部 $z,t,u\in W$，有
+
+$$
+\boxed{\begin{aligned}
+\kappa(R_z,R_t)&=B(z,t),\qquad
+\kappa(S,T):=-\tfrac12\operatorname{Tr}_W(ST),\\
+R_zR_tu&=B(z,u)t-B(z,t)u.
+\end{aligned}}
+\tag{10.2}
+$$
+
+原交换子还满足
+
+$$
+[R_z,R_t]=R_{R_z t}.
+\tag{10.3}
+$$
+
+因此原正比较 $B$ 就是同一地址下的迹比较，没有重新定义另一份内容度量。
+
+**证明。**
+
+在已证明的正交标架 $(e,v,w)$ 中，式 (10.1) 的矩阵为
+
+$$
+R_{se+xv+yw}=
+\begin{pmatrix}
+0&-y&x\\ y&0&-s\\ -x&s&0
+\end{pmatrix}.
+$$
+
+三个坐标系数线性独立，且所有三维反对称矩阵均为此形，故 $R$ 为同构；矩阵乘以 $(s,x,y)^{\mathsf T}$ 给零。直接乘两个这样的矩阵，得到原算子恒等式
+
+$$
+R_zR_t=t\otimes z^{\flat_B}-B(z,t)I_W.
+$$
+
+其迹为 $-2B(z,t)$，所以比较式与三重乘积式同时成立。取 $t=z$，平方在 $z^\perp$ 上为 $-\lVert z\rVert_B^2I$，故非零 $z$ 的核恰为 $\mathbb Rz$。
+
+交换子式的双方对 $z,t$ 双线性且交替。检查三组基向量即可：$R_e=C,R_v=-\bar L,R_w=\bar K$，其循环交换子分别为 $R_w,R_e,R_v$，恰与 $R_ev=w,R_vw=e,R_we=v$ 一致。因此式 (10.3) 对全部向量成立。
+
+$\square$
+

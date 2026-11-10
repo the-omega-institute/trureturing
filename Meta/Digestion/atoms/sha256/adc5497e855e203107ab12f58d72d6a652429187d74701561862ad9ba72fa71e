@@ -1,0 +1,25 @@
+**Definition 164.1 (finite prefixes of a countable readout stack).** Let
+
+$$
+\mathcal X=L^\infty(G,m;\mathbb R),
+\qquad V=\ker\Lambda_{134},
+$$
+
+and let $(\mathscr R_j)_{j\ge0}$ be a countable family of real-linear maps
+
+$$
+\mathscr R_j:\mathcal X\longrightarrow\mathbb R^{r_j},
+\qquad r_j<\infty.
+$$
+
+Define
+
+$$
+W_{\le n}=V\cap\bigcap_{j=0}^{n}\ker\mathscr R_j,
+\qquad
+W_\infty=V\cap\bigcap_{j=0}^{\infty}\ker\mathscr R_j.
+\tag{164.1}
+$$
+
+When a specified real-linear successor $T$ is available, the successor stack is the special case $\mathscr R_j=\mathscr R\circ T^j$ whenever these compositions are defined on $\mathcal X$.
+

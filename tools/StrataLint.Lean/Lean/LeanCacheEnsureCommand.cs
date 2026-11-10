@@ -121,7 +121,7 @@ internal static partial class LeanCacheEnsureCommand
                 "canonical cache writer guard is busy");
         }
 
-        return EnsureLocked(
+        return ObserveEnsureResult(EnsureLocked(
             root,
             pins,
             lakeExecutable,
@@ -131,7 +131,7 @@ internal static partial class LeanCacheEnsureCommand
             removePartial,
             continueOnCacheGetFailure,
             stateProbe,
-            out _, donorRepository, restoreDependencies: restoreDependencies);
+            out _, donorRepository, restoreDependencies: restoreDependencies));
     }
 
     private static CommandResult EnsureLocked(

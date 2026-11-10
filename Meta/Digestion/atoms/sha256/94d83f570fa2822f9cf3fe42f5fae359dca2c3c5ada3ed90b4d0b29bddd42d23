@@ -1,0 +1,36 @@
+**Proposition 26.5 (a realizable nondiagonal increment).** The set
+$\mathcal T_{\rm new}$ contains actual nondiagonal feedback data.
+In particular, let
+
+$$
+V=\begin{pmatrix}
+1/2&\sqrt3/2&0&0\\
+-\sqrt3/2&1/2&0&0\\
+0&0&1/2&\sqrt3/2\\
+0&0&-\sqrt3/2&1/2
+\end{pmatrix},\qquad U=VU_+.
+\tag{26.25}
+$$
+
+Then $U\in U(4)$ is nondiagonal and its reduced datum is
+$w=(1/2,1/2,1/2,1/2)\in\mathcal T_{\rm new}$.
+For this fixed feedback, (26.20) holds for every normalized effect.
+For example, the original pair with $E=E_+$ satisfies
+
+$$
+\rho(E_+,U)=4,\qquad g(E_+,U)=\frac34d^2>0.
+\tag{26.26}
+$$
+
+Proof. Each real two-by-two rotation block of $V$ is orthogonal,
+so $V^\dagger V=I_4$ and $UU_+^\dagger=V$. Since $U_+$ is diagonal
+unitary by (6.3), multiplying its columns by the nonzero phases
+preserves the nonzero off-diagonal entries of $V$. Thus $U$ is an
+actual nondiagonal unitary lift. Its diagonal gives $A=2$, $B=0$,
+so $A+B=2<4$, $A<A_0$ and $B<23/6$. This datum lies in neither
+old cap. Direct substitution in (23.2) gives $P=d/2$, $Q=0$.
+For $E_+$, $p=1$ and $\epsilon=0$, hence
+$r=\min\{4,10\}=4$ and (23.12) gives $g=3d^2/4$.
+This proves (26.26) and shows that the uniform domain extension
+contains original feasible pairs beyond Sections 24–25. $\square$
+

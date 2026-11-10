@@ -1,0 +1,29 @@
+**Proposition 179.2 (full-zero radical containment).** Suppose a bounded pointwise partition $u$ has all sixty-four residuals equal to zero. If a real label vector $a$ satisfies
+
+$$
+F_a=\sum_{y\in\mathcal L}a_yf_y=0,
+$$
+
+then its candidate combination
+
+$$
+H_a=\sum_{y\in\mathcal L}a_yu_y
+$$
+
+belongs to
+
+$$
+\operatorname{Rad}_1(\mathcal W_u)
+\cap\operatorname{Rad}_2(\mathcal W_u)
+\cap\operatorname{Rad}_3(\mathcal W_u).
+\tag{179.1}
+$$
+
+*Proof.* Let $b,c$ be arbitrary real label vectors and put $U_b=\sum_yb_yu_y$ and $U_c=\sum_kc_ku_k$, with the analogous baseline combination $F_b,F_c$. Contracting the zero residual tensor with $a_yb_zc_k$ gives
+
+$$
+\mathcal C(H_a,U_b,U_c)=\mathcal C(F_a,F_b,F_c)=0.
+$$
+
+As $b,c$ range over all label vectors, $U_b,U_c$ range over $\mathcal W_u$, which proves the first radical inclusion. Placing $a$ in the middle or terminal label contracts the same zero tensor to the other two inclusions. $\square$
+

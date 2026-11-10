@@ -1,0 +1,10 @@
+### 12.5　自伴算子与原概率的准确保持
+
+对 $X\in\mathfrak g$，定义复线性算子
+
+$$
+\widehat X(r)=-Xr\iota .
+$$
+
+记左、右乘为 $L_X,R_\iota$，则复结构 $i=-R_\iota$，有 $\widehat X=L_Xi$。
+

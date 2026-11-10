@@ -1,0 +1,46 @@
+#### 定理 8.1：同相位的成对比较守恒
+
+输入、输出各有上述极小表示。实际有限细分支族 $T_j:M_{\rm in}\to M_{\rm out}$ 满足可见单位、 全部成对比较守恒和共同相位：
+
+$$
+\Phi_{\rm out}(T_je)=0,\qquad
+\sum_j c_{\rm out}(T_ja,T_jb)=c_{\rm in}(a,b),
+$$
+
+$$
+\Phi_{\rm out}(T_jU_{\rm in}a)
+=\omega\Phi_{\rm out}(T_ja).
+$$
+
+则存在唯一复线性算子 $K_j$，使
+
+$$
+K_j\Phi_{\rm in}(a)=\Phi_{\rm out}(T_ja),\qquad
+\sum_jK_j^*K_j=I.
+$$
+
+按原事件分组得到
+
+$$
+\mathcal I_s(\rho)=\sum_{j\in s}K_j\rho K_j^*,\qquad
+E_s=\sum_{j\in s}K_j^*K_j.
+$$
+
+若事件质量绑定了同一细记录，这里的 $E_s$ 就是定理 4.1 的原效果。
+
+**证明。**
+
+令 $\Psi(a)=\bigoplus_j\Phi_{\rm out}(T_ja)$。 它保原点和全部成对距离，实极化故保持全部实 Gram 数据。 输入标签的实张成因对 $\omega$ 封闭而已经复线性，故由最小性稠密。 因此唯一延拓为实线性等距 $W:H_{\rm in}\to\bigoplus_jH_{\rm out}$。 共同相位给 $W(\omega x)=\omega Wx$，所以 $W$ 复线性。 各坐标为 $K_j$，$W^*W=I$ 给归一。任意辅助空间上的 $(K_j\otimes I)X(K_j^*\otimes I)$ 对 $X\succeq0$ 非负，故各事件映射完全正。 同名质量公式与效果唯一性给最后一条。
+
+$\square$
+
+实际带参考实验等于这个数学 CP 扩张，还需同一参考接口。初始系统与记忆已有固定相关时， 不能随意宣称每种约化演化都是定义在全部系统态上的 CPTP 映射；应保留联合记忆或声明兼容域。 数学上的完全正性本身由上式已经证明。
+
+对正概率事件，条件态为
+
+$$
+\rho\mid s=\frac{\mathcal I_s(\rho)}{\operatorname{tr}\mathcal I_s(\rho)}.
+$$
+
+零概率分支不做归一化。效果 $E_s$ 不能决定测后状态，例如对同一空间上的酉 $V$， $\sqrt{E_s}$ 与 $V\sqrt{E_s}$ 有同一效果却可产生不同后继。
+

@@ -1,0 +1,16 @@
+#### 定理 6.3：有限正态的密度表示
+
+在 $M_d(\mathbb C)$ 上，每个正归一线性泛函 $\omega$ 唯一表示为
+
+$$
+\omega(A)=\operatorname{Tr}(\rho A),\qquad \rho\succeq0,\quad\operatorname{Tr}\rho=1.
+$$
+
+**证明。**
+
+迹配对非退化，先给唯一矩阵 $\rho$。正泛函在 Hermitian 元上取实数，所以 $\rho$ Hermitian。对任意向量 $v$， $\langle v,\rho v\rangle=\omega(|v\rangle\langle v|)\ge0$，故 $\rho\succeq0$；在 $I$ 上取值一给迹一。反向直接验证。
+
+$\square$
+
+这是状态泛函的表示。要把同一个公式认作原实际装置的概率，还须使用 C2，不能用符号改写跳过这一步。
+

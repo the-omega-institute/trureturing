@@ -1,0 +1,88 @@
+**Proposition 49.2 (analytic memory, supplier hypotheses and scope).**
+The defects in (44.5) decide failure of composition through the
+original analytic amplitude boundary. The strict unit limiting
+defect rules out a time-homogeneous semigroup on this boundary
+with the same responses. Concatenating the same full evolutions
+without intermediate erasure requires information distinguishing
+the hidden components lost by $J^*$.
+In the raw family the leading limit composes, while reproduction
+through its first nonzero correction has the nonzero defect
+$r_sD_s(t)+o(r_s)$ on the test (44.6). These conclusions assert
+neither a minimal finite hidden-state realization nor a physical
+projection, reset, preparation or acquisition procedure.
+
+Proof. Put $\Pi=JJ^*$. The exact bounded compression identity of
+[Free quotient, (5.3)] applies at each actual cutoff because the
+full attractive operator is selfadjoint and semibounded:
+
+$$
+\mathcal D_{\sigma,\kappa}(t)
+ =[(1-\Pi)e^{-tH_{\sigma,\kappa}}J]^*
+       [(1-\Pi)e^{-tH_{\sigma,\kappa}}J].
+\tag{49.7}
+$$
+
+Composing the projected response twice inserts $\Pi$ at the
+intermediate time, and (49.7) measures the lost returning
+component. Equations (46.9) and (47.3)--(47.4) evaluate it at the
+original fixed positive times, rather than only near $t=0$.
+They give the stated obstruction and its raw order. An extra
+intermediate projection is a mathematical operation in this test;
+no native actuator implementing it is supplied.
+
+The analytic tools used here have the following precise roles.
+Teschl's [author text](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf),
+Theorems 5.11 and 6.24, supplies the semibounded Trotter formula
+and closed bounded-multiplier perturbations (relative form bound
+zero). The original complete forms and common lower bounds are
+specified in Definition 44.1. Scalar common operator domains in
+(46.2) are the explicit Dirichlet domains, not an assertion about
+an interior operator core. Theorem 6.31 of that text requires
+strong resolvent convergence for its functional-calculus conclusion;
+no such conclusion is inferred merely from convergence of interior
+forms here. The direct native path estimates (46.4)--(46.8) and
+(47.2) supply the required fixed-time convergence instead.
+
+Arendt--Dier--Ouhabaz,
+[arXiv:1303.1167v1, Theorem 2.2](https://arxiv.org/pdf/1303.1167v1),
+requires projection to preserve the form domain and the stated
+cross-form inequality for invariance of a closed convex set.
+The free averaging in [G, §23] preserves the complete free form
+domain, but that fact is no invariance assertion for the attractive
+form. Its bounded hidden-dependent multiplier and the strict
+native defects above preclude transferring free invariance to the
+responses under study. The older [Observation quotient,
+Theorem 6.1](FIB_NATIVE_OBSERVATION_QUOTIENT_GREEN_ESCAPE.md)
+has full dimension three, base dimension two and a strict
+semiboundedness hypothesis. The nearby singular restricted result
+in its Theorem 11.1 has its own small-coupling hypothesis.
+Neither supplies the present four-coordinate full evolution or
+its critical asymptotics. The fixed-pole strict-gap comparison
+retains its separate stable singular-form contract as well.
+
+Gouasmi--Parish--Duraisamy,
+[arXiv:1611.06277v2, §2.1, (2.1)--(2.3)](https://arxiv.org/pdf/1611.06277v2),
+distinguishes an instantaneous projected term, hidden initial data
+and subsequent feedback. That finite-dimensional elimination
+example explains the interpretation of an obstruction to
+composition; it supplies no native coefficient, field error,
+semigroup domain or complexity theorem. The concrete native
+content here is (45.2)--(46.9), the all-base unit correspondence
+(47.2), the strict tests and the actual-ground residue (48.1).
+These are repository-derived applications of classical analytic
+tools, with the published spectra and ground laws reused exactly;
+no exhaustive novelty assertion is made.
+
+Finally $J^*$ takes the normalized amplitude integral in (44.1);
+it is not marginalization of $|f|^2$. The latter retains unit ground probability and has the
+shrinking laws of §42, while the former has (48.1). Neither
+operation specifies a physical interface. Three retained state
+coordinates, hidden state capacity and physical spatial axes are
+different assertions. The mathematical composition obstruction
+gives no physical spatial selection, independent driver, reset,
+finite-memory dimension, growing-time estimate, acquisition cost
+or computational speedup. The statements are for the two original
+critical families and fixed original parameters only; they include
+no further parameter uniformity, sharp residue rate or general
+norm-resolvent claim. $\square$
+

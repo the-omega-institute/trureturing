@@ -1,0 +1,92 @@
+**定理 146.1（裸自读回等价）。** 在任意有限 EJA、任意原正 Frobenius 型 $q$ 与任意原实双线性 $D$ 上，
+
+$$
+\mathsf F_{\rm diag}\Longleftrightarrow\mathsf F_{211}^{+}
+\Longleftrightarrow\mathsf F_{211}\Longleftrightarrow\mathsf F_2
+\Longleftrightarrow\mathsf F_{\rm zero}\Longleftrightarrow\mathsf F_{\rm cut}.
+\tag{146.1}
+$$
+
+因而恢复同一原 SC、双单位、全部 $D_a$ 的 Jordan 导子律与原 $q$-斜伴随，以及全部原幂等切口的 $D_c^2=-P_c/4$。裸结论不使用原实际参考供应或复分类。
+
+证明。反向由定理 141.1 和量词限制立即成立。以下只假设 (145.1)。$E=0$ 时两域为空且唯一 $D=0$，结论平凡。设 $m=\operatorname{rank}E\ge1$。沿 (141.4)–(141.5) 的成熟谱迹构造，令 $\tau$ 为每颗整个原 primitive 取值一的 Jordan 谱迹，定义
+
+$$
+q(\zeta,x)=\tau(x),\qquad
+\beta(a,b)=q(D_ab,u)/m,\qquad
+\Delta_ab=D_ab-\beta(a,b)\zeta.
+\tag{146.2}
+$$
+
+两种 Frobenius 型给 $T L_a=L_aT$，其中 $q(Tx,y)=\tau(x\circ y)$；$Tu=\zeta$ 又给 $T=L_\zeta$，故 $P_c\zeta=0$ 对每个幂等元成立，且 $q(\zeta,r)=1$ 对每颗 primitive 成立。这里仅构造辅助元与辅助双线性分解，没有替换原 $q$；在简单理想权重记法下仍是 $\zeta=\sum_su_s/w_s$。
+
+先完全只用秩一主切口。对 primitive $c,p$，所有非零法向 primitive $r$ 的 $q(D_pc,r)$ 相等。包含 $c$ 的完整 primitive frame 有 $m$ 项且和为 $u$，故共同值为 $\beta(p,c)$。定理 135.2 的角谱事实给这些法向原子实线性张成完整 $N_c$；第一槽的原子又张成 $E$。只对线性读数延拓，得到
+
+$$
+\Delta_ac\in E_{1/2}(c)
+\qquad(a\in E,\ c\in\operatorname{Prim}(E)).
+\tag{146.3}
+$$
+
+固定 $a$、记 $S=\Delta_a$。在任一完整 frame $(r_i)$ 中，(146.3) 给每个 $q(Sr_i,r_j)=0$。对 $x=\sum_i\lambda_ir_i$ 作谱展开，得 $q(Sx,x)=q(Sx,x^2)=0$。二次极化使 $S$ 对原 $q$ 斜伴随；三次式在 $x+ty$ 的一次项为
+
+$$
+0=q(Sy,x^2)+2q(Sx,x\circ y)
+=q\bigl(-S(x^2)+2x\circ Sx,y\bigr).
+$$
+
+非退化性与平方律极化给完整 Jordan 导子律，且 $Su=0$。所以辅助 $\Delta_a$ 此时才已知切于所有幂等元，并为原 $q$-斜伴随导子；没有将此性质预先赋给原 $D_a$。
+
+秩一层的原等式现可化成
+
+$$
+W_c(p)-W_c(2\Delta_cp)=2\beta(p,c).
+\tag{146.4}
+$$
+
+秩二层只对 $p\in\operatorname{Prim}(E)\cap N_c$ 使用原允许的 $r=p$。由于 $\Delta_pc$ 切于 $c$，有 $q(\Delta_pc,p)=0$；再用 $q(\zeta,p)=1$ 与 $P_c\zeta=0$，得到完全相同的 (146.4)。因此此式已对全部秩一切口和任意 primitive 输入成立，也对秩二切口及相容 primitive 输入成立。后一层没有使用独立读回或横向输入。
+
+取任意完整 frame $(r_i)$，令 $c=\sum_{i\in I}r_i$，$|I|=1$ 或二，$d=\Delta_c$。每个输入 $r_i$ 均与 $c$ 相容，所以刚取得的 (146.4) 足以给
+
+$$
+\beta(r_i,c)=-\|P_cdr_i\|_q^2\le0.
+\tag{146.5}
+$$
+
+导子律给 $dr_i\in\bigoplus_{j\ne i}V_{ij}$，$P_c$ 只保留恰一端位于 $I$ 的共同 Peirce 空间。同侧不同 $i$ 的保留边互不相同，故在原 $q$ 下正交。分别在切口内外求和，并用辅助导子的 $du=0$，得到
+
+$$
+\begin{aligned}
+\beta(c,c)&=-\|P_cdc\|_q^2,\\
+\beta(u-c,c)&=-\|P_cd(u-c)\|_q^2=\beta(c,c),\\
+2\beta(c,c)&=\beta(u,c).
+\end{aligned}
+\tag{146.6}
+$$
+
+这里 $u-c$ 只用于第一槽的线性和及辅助导子，不充作额外高秩主切口。对正交 primitive $p,s$，将最后一式在 $c=p+s,p,s$ 相减，得 $\beta(p,s)+\beta(s,p)=0$；两项由 (146.5) 分别非正，故分别为零。再补全任意 $p$ 所在 frame，由第二式得 $\beta(p,p)=\beta(u-p,p)=0$。总秩一时余补为空，同一式仍成立。因此每个完整 frame 的全部 $\beta(r_i,r_j)$ 均为零。
+
+在 $c=p$、输入 $p$ 使用 (146.4)，由切向性得 $\Delta_pp=0$。若 $p,s$ 正交，令 $v=\Delta_sp$；导子律作用于 $p\circ s=0$ 给
+
+$$
+v\in E_{1/2}(p)\cap E_0(s)\subseteq E_{1/2}(p+s).
+$$
+
+秩二主切口 $c=p+s$、输入和读回均为 $p$ 是新域允许的测试。$\beta(p,p+s)=0$ 且 $W_{p+s}(p)=0$，故 (146.4) 给 $0=2\|v\|_q^2$。于是同一 frame 中所有 $\Delta_{r_i}r_j=0$。分别对 $\Delta$ 和 $\beta$ 作谱展开与实极化，得到
+
+$$
+\Delta_ab=-\Delta_ba,\qquad \beta(a,b)=-\beta(b,a).
+\tag{146.7}
+$$
+
+最后只用秩一层交换任意两颗 primitive $p,c$。原 Frobenius 性给 $W_c(p)=W_p(c)=2q(c,p)-2\|c\circ p\|_q^2$。由 (146.7)，$\Delta_cp=-\Delta_pc$ 同时切于两个原子，两方向的长度项相同；(146.4) 因而又给 $\beta(p,c)=\beta(c,p)$。交替性与对称性使 $\beta$ 在 primitive 对上为零，双线性张成使 $\beta=0$。现在才有原 $D=\Delta$。
+
+为明确恢复删去的全部测试，固定任意 frame，记 $D_i=D_{r_i}$。已得导子、SC 与同框架互不推动，故 $[D_i,L_{r_j}]=0$，各 $D_i$ 保持所有 $V_{jk}$。当 $i\notin\{j,k\}$ 时，SC 与切向性使 $D_iV_{jk}\subset E_0(r_i)\cap E_{1/2}(r_i)=0$。又 $D_u=0$，所以在 $V_{ij}$ 上 $D_j=-D_i$。对 $0\ne v\in V_{ij}$，定理 130.2 中不含 $D$ 的成熟秩二角计算给 $v^2=\gamma(r_i+r_j)$、$\gamma>0$，以及整个原 primitive $p_v=(r_i+r_j)/2+v/(2\sqrt\gamma)$。秩一主切口 $r_i$、输入 $p_v$ 的已得长度校准给
+
+$$
+4\|D_iv\|_q^2=\|v\|_q^2.
+\tag{146.8}
+$$
+
+若 $V_{ij}=0$，该关系为空。对任意秩切口 $c=\sum_i\varepsilon_ir_i$，$\varepsilon_i\in\{0,1\}$，在每条 $V_{ij}$ 上分别有 $D_c=(\varepsilon_i-\varepsilon_j)D_i$、$P_c=(\varepsilon_i-\varepsilon_j)^2I$，并在对角 frame 上均为零。正交相加给 $4\|D_cx\|_q^2=\|P_cx\|_q^2$，而原 $q$-斜伴随再给 $D_c^2=-P_c/4$。因此 $W_c(p)=W_c(2D_cp)$；原 $D_pc$ 切于 $c$ 又使所有法向读数为零，恢复完整 $\mathsf F_{211}^{+}$，乃至全部任意秩原配平。此处没有对二次能量作原子线性延拓。其余等价直接消费定理 141.1、135.2 和 130.2。∎
+

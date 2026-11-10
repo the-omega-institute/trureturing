@@ -1,0 +1,44 @@
+**证明 20.1（15.4的全逆向）。** 设 $X$ 为任意非空紧 Hausdorff 空间，给任意 $Q=Q^*\in A$、$Q^2=1$。保留15.1–15.2的全部原数据，定义 $D_Q(a,b)=iQ[a,b]/2$。输出自伴且反对称。令
+
+$$
+p_\pm=(1\pm Q)/2,\qquad
+X\star_QY=p_+XY+p_-YX.
+\tag{20.1}
+$$
+
+这是 $p_+M\oplus(p_-M)^{\rm op}$ 的含单位 C* 乘法；同一复向量空间的自伴部、正锥、单位和范数与原模型相同。对自伴 $a,b$，
+
+$$
+a\star_Qb=a\circ b-iD_Q(a,b).
+\tag{20.2}
+$$
+
+每份原正评价的复线性延拓 $\gamma_{\mathbb C}$ 在该代数上正，不论质量是否为零。Cauchy–Schwarz给
+
+$$
+\gamma(a\circ b)^2+\gamma D_Q(a,b)^2
+=|\gamma_{\mathbb C}(a\star_Qb)|^2
+\le\gamma(a^2)\gamma(b^2).
+\tag{20.3}
+$$
+
+所以全部 P2与两向 A1成立。任意有限实标签和实系数的 Gram 值为 $\gamma((\sum_jt_ja_j)^2)\ge0$；相加三表在指定差向量处合成为零，所有排列同理，给完整 A2。原 $u^2=u$，且同一 $0<\vartheta\le1$ 上的 $0\le e\le\vartheta u$ 由谱演算给 $e^2\le\vartheta e\le e$，故完整 A3成立。
+
+再核全部 PB。对任意实际 $a,b,d$，取 $J=iQ$、$Z=b+Jd$，用 $D_Q$ 定义15.5的实际 $v,w$。已知结合计算给
+
+$$
+(b\pm v)+J(d\pm w)=(1\pm Ja)Z,
+\qquad q_{D_Q}(Y)=Y^*Y\quad(Y\in M).
+\tag{20.4}
+$$
+
+因 $J$ 中央且 $a$ 自伴，
+
+$$
+q_{D_Q}((1+Ja)Z)=Z^*(1+a^2)Z
+=q_{D_Q}((1-Ja)Z).
+\tag{20.5}
+$$
+
+由每份原评价读取便是15.6。这里演员 $a$ 任意，不只秩一或局部支持；零输入、所有质量和任意背景都保留。没有由此推得每个数学 $Q$ 都有七项同源物理实现。至此15.4两向证明完毕。∎
+

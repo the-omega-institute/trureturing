@@ -44,9 +44,6 @@ internal sealed class MayerZeroFidelityTightnessDocument : IScribeDocumentDefini
             Node("parseval", "The Pauli second-moment expansion", ParsevalFormula(), "product_pauli_parseval",
                 "Expand an arbitrary matrix in the orthogonal Pauli basis. The word_hermitian lemma of StabilizerPovmMaximalEntanglementRefutation states that every Pauli word is Hermitian, so its expectations in pure states are real. Expanding the squared modulus produces a double sum of Pauli coefficients; the product covariance removes all unequal pairs. Its factor four to the power n cancels the squared inverse dimension in the coefficients, leaving one third to the Pauli weight times each squared trace coefficient.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo()),
-            Node("survival", "Kraus survival amplitudes", SurvivalFormula(), "kraus_survival",
-                "Each Kraus term maps a pure projector to the projector of the transformed vector. Its expectation in the original vector is the squared modulus of their inner product. Additivity gives the sum over the Kraus family.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("bell-amplitude", "Bell amplitude of an operator", BellAmplitudeFormula(), "bell_amplitude",
                 "The maximally entangled trace contraction with identity on the first register gives the operator trace divided by the register dimension, which is two to the power n.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo()),
@@ -224,15 +221,6 @@ internal sealed class MayerZeroFidelityTightnessDocument : IScribeDocumentDefini
         Seq(LambdaLower, Sp, F.Id("i"), Sp, Mapsto, Sp, Named("I")));
     private static Formula Moment(Formula b) => new Formula.Power(new Formula.Fraction(D(1), D(3)), Weight(b));
     private static Formula LocalSic(Formula n, Formula s) => All("i", Call("Fin", n), Call("IsQubitSIC", At(s, F.Id("i"))));
-    private static Formula SurvivalFormula()
-    {
-        Formula a = F.Id("a"), r = F.Id("r"), v = F.Id("v"), ks = F.Id("K");
-        Formula mat = Call("Matrix", a, a, Field("C"));
-        Formula lhs = Call("real", Call("inner", v, Call("mulVec", Call("kraus", ks, Call("rankOneDensity", v)), v)));
-        Formula rhs = SumAt("j", Call("Fin", r), SqNorm(Call("inner", v, Call("mulVec", At(ks, F.Id("j")), v))));
-        return Disp(All("a", Named("finiteSet"), All("r", Field("N"), All("v", Arrow(a, Field("C")),
-            All("K", Arrow(Call("Fin", r), mat), Eqn(lhs, rhs))))));
-    }
     private static Formula BellAmplitudeFormula()
     {
         Formula n = F.Id("n"), a = F.Id("A"), v = Call("maxEntangledVector", Reg(n));

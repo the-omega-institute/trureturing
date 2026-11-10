@@ -1,0 +1,27 @@
+**Definition 147.1 (the original binary moment map).** Fix an arbitrary original tuple $\theta=(a,\eta,d,b)\in\Theta$ of Definition 134.1, with the complete endpoint, source and analytic suppliers of Appendix II §§115–117, 123–125 and 133, and §§134–144 above. In particular, $G=H^1\times\mathbb R$ has the original product and raw Haar measure $\mu$; $h$ is the coefficient-positive normalized original zero state; $m=h^2\mu$; $K=U_h^{-1}H_{\rm end}U_h$ is the full conservative self-adjoint operator with its source coordinate; and the diffusion starts at $e$ at time zero. Put
+
+$$
+P=T_d=e^{-dK},\qquad g=g_{2d},\qquad p=\frac14,
+\qquad g_j=P^jg\quad(j=0,1,2).
+\tag{147.1}
+$$
+
+Thus the epochs remain $2d,3d,4d$. Keep exactly the original $b,M,c$ and four functions $f$ in (134.5)–(134.8). The functions $g_j$ are bounded by Theorem 133.2. All spaces below are real bounded Borel $m$-classes unless otherwise specified; representatives on null sets can be chosen arbitrarily. For such $v$ define
+
+$$
+\begin{aligned}
+L(v)&=(\langle g_0,v\rangle_m,\langle g_1,v\rangle_m,
+                         \langle g_2,v\rangle_m),\\
+q_1(v)&=\langle gv,Pv\rangle_m,
+&q_2(v)&=\langle gv,P^2v\rangle_m,
+&q_3(v)&=\langle Pg\,v,Pv\rangle_m,\\
+q(v)&=(q_1(v),q_2(v),q_3(v)),
+&B_j(v,w)&=\tfrac12(q_j(v+w)-q_j(v)-q_j(w)),\\
+\tau(v)&=\mathcal C(v,v,v),
+&\mathcal F(u)&=(L(u-p),q(u-p),\tau(u-p))\in\mathbb R^7.
+\end{aligned}
+\tag{147.2}
+$$
+
+Here $\mathcal C(u,v,w)=\int guP(vPw)\,dm$ is the original form, including its actual terminal factor. The seven coordinates are, respectively, the three centered one-time, three centered two-time and one centered three-time moments under the original source-start law. Rotations $R_\alpha$ act in the original symmetric coordinates $(r,\vartheta,z,\xi)$ of (120.4), on $\Omega=\{r>0\}$. Its complement is $m$-null. A function is called odd or even according to its transformation under $R_\pi$. A real pure positive frequency $n$ means the real span of the complex angular characters $n$ and $-n$, allowing Borel amplitudes in $(r,z,\xi)$.
+

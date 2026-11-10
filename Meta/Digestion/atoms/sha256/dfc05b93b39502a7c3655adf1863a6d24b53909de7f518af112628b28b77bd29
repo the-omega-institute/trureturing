@@ -1,0 +1,33 @@
+**引理 3.9（可见线性与三读闭合）**
+
+$U$ 在 $W=V/\mathcal Z$ 上下降为实线性等距映射 $\bar U$，并满足
+
+$$
+I+\bar U+\bar U^2=0,\qquad \bar U^3=I.
+\tag{9}
+$$
+
+**证明**
+
+若 $x-x'\in\mathcal Z$，从式 (8) 相减得
+
+$$
+g(Ux-Ux',y)=-g(x-x',y)-g(x-x',Uy)=0
+$$
+
+对全部 $y$ 成立，故 $Ux-Ux'\in\mathcal Z$，下降良定。 同样把该式用于 $x+x'$ 与 $sx$，利用右端的实线性，分别得到
+
+$$
+U(x+x')-Ux-Ux'\in\mathcal Z,\qquad U(sx)-sUx\in\mathcal Z.
+$$
+
+因此 $\bar U$ 实线性；$p\in\mathcal Z$ 保证其零点。 $E(Ux)=E(x)$ 经极化给等距性。
+
+在商上，把式 (8) 的第二端换成 $\bar U y$， 用 $g(\bar Ux,\bar Uy)=g(x,y)$，得到
+
+$$
+g\bigl(x,y+\bar Uy+\bar U^2y\bigr)=0\qquad\forall x.
+$$
+
+商上的正定性给第一个恒等式；乘以 $\bar U-I$ 给第二个。 这个证明没有把原 $U$ 预先当成线性算子。$\square$
+

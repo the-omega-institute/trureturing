@@ -1,0 +1,44 @@
+**定理 27.2（像共同强度的混合相容与加法）。** 在 26.1 下，若实际 $b,c\in V_{q,a}$ 的像 $B,C$ 满足
+
+$$
+B^2=\alpha R,\quad C^2=\beta R,\quad
+B\circ C=\gamma R,
+\qquad R\in q(E)\cap Y_+,\quad\alpha,\beta\ge0,
+\tag{27.6}
+$$
+
+则良定义的 $F_a$ 满足
+
+$$
+F_aB\circ F_aC=B\circ C,\qquad
+B\circ F_aC+F_aB\circ C=0,\qquad
+F_a(B+C)=F_aB+F_aC.
+\tag{27.7}
+$$
+
+证明。先取等像平方的 $B,C$。26.5 对 26.4 的任意两份原圆代表都成立，且第二槽纤维已经支付。令
+
+$$
+P=B\circ C,\quad Q=F_aB\circ F_aC,\quad
+U=B\circ F_aC,\quad V=F_aB\circ C,
+\quad X_0=P-Q,\quad Y_0=U+V.
+$$
+
+21.3 所引用的 212.2 两独立圆角计算现在逐项合法：其仅需的像等平方、26.5 及全部圆响应已付；独立角和差的非零系数 $(1-r^2)/2$ 比较给
+
+$$
+P^2=Q^2,\qquad X_0^2=Y_0^2,\qquad
+X_0\circ Y_0=0,\qquad P\circ Y_0=0.
+\tag{27.8}
+$$
+
+复用的是这份乘法和角度计算，不是在 $q(E)$ 上假定一份全域 $D$。若 $P\ge0$，最后一式使 $Y_0$ 与 $P^2$、再与 $P$ 交换，故 $PY_0=0$。于是 $PX_0^2P=PY_0^2P=0$，给 $X_0P=PX_0=0$；由 $Q=P-X_0$ 与 $Q^2=P^2$ 得 $X_0^2=0$，所以 $X_0=Y_0=0$。负半定用 $-P$，零交叠同样包括。
+
+当 $\alpha\beta>0$，用真正原代表 $b/\sqrt\alpha,c/\sqrt\beta$ 得等像平方及半定像交叠，前段和 27.1 的第二槽实齐次给 (27.7) 前两式。零系数或 $R=0$ 时，像零平方和 (24.1) 处理。对 $T=B+C\ne0$，$T^2=(\alpha+\beta+2\gamma)R$、$T\circ B=(\alpha+\gamma)R$、$T\circ C=(\beta+\gamma)R$，所以 $(T,B),(T,C)$ 与 $(B,C)$ 三对都重新满足 (27.6)。消费三对已付混合式，12.3 的同一缺陷平方给
+
+$$
+(F_aT-F_aB-F_aC)^2=0.
+$$
+
+得到加法。$T=0$ 用原奇性及已付第二槽纤维。∎
+

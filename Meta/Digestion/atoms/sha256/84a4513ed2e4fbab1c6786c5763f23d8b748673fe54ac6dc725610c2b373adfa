@@ -1,0 +1,8 @@
+其中这个终点同时满足：
+
+- 所有单素数乘除都不能增加 $R$；
+- 在自身价格 $1/(\log N\log\log N)$ 下具有唯一整数最优性；
+- 严格曲率间隔；
+- $\operatorname{lcm}(1,\ldots,\lfloor\log N\rfloor)\mid N$；
+- 平方层质量约束与素数间隙约束。
+

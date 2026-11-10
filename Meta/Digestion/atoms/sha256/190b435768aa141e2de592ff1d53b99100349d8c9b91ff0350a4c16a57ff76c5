@@ -1,0 +1,4 @@
+## 167. Bounded calibration closure and the finite residual test
+
+Section 166 identifies the first-order calibration plane through bounded $L^2(m)$ representers, but leaves two different questions separate: whether bounded calibrated classes are dense in the Hilbert orthogonal complement, and whether the heat operator preserves that bounded calibrated class. The next propositions close the first logical bridge and reduce the second to a finite residual Gram matrix. They do not evaluate that matrix for the actual 64 representers.
+

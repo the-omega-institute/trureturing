@@ -1,0 +1,29 @@
+**命题 487.1（余项的多项式增长）。** 对每个 $0<\delta<1/5$，存在 $C_\delta$，使
+
+$$
+|R_{x_0}(\sigma+i\tau)|\le C_\delta(1+|\tau|)^2\qquad\Bigl(-\frac15+\delta\le\sigma\le1,\ \tau\in\mathbb R\Bigr).
+\tag{487.3}
+$$
+
+证明。取 (481.4) 的伴随核 $q_s$ 与命题 481.1 证明中的换元 $t=x+zx^a$（$a=4/5$），写 $L(t,z)=\log(x(t,z)/t)$，并令
+
+$$
+A(t,z)=D^{-1}\int_z^1\frac{w(x+ux^a)}{w(x)}\,du,\qquad q_s(t)=\int_0^1x^{-s-1/2}A(t,z)\,dz .
+$$
+
+记 $h_w=(\log w)'$。由 $h_w=O(1/x)$、$h_w'=O(1/x^2)$ 与 $D=1+azx^{a-1}$，得 $L_t=\frac{(1-a)zx^a}{txD}$，并且 $\partial_t\frac{w(x+ux^a)}{w(x)}=\frac{w(x+ux^a)}{w(x)}D^{-1}\bigl[(1+aux^{a-1})h_w(x+ux^a)-h_w(x)\bigr]$，其中方括号为 $O(x^{a-2})$。由此 $L=O(t^{-1/5})$、$L_t=O(t^{-6/5})$、$A=(1-z)+O(t^{-1/5})$、$A_t=O(t^{-6/5})$，且这些界关于 $z\in[0,1]$ 一致。令 $p_s=e^{-(s+1/2)L}$。当 $-1/5\le\Re s\le1$ 时 $L$ 为实数，故 $|p_s|\ll1$，$|p_s-1|\ll(1+|s|)t^{-1/5}$，$|\partial_tp_s|\ll(1+|s|)t^{-6/5}$。于是
+
+$$
+q_s(t)=\tfrac12t^{-s-1/2}+r_s(t),\qquad
+|r_s(t)|\ll(1+|s|)t^{-\sigma-7/10},\qquad
+|r_s'(t)|\ll(1+|s|)^2t^{-\sigma-17/10}.
+$$
+
+主项 $\tfrac12t^{-s-1/2}$ 给出 (481.3) 的 $\zeta'/\zeta$ 项与 $-1/(2(s-1/2))$，余项 $R_{x_0}$ 由 $r_s$ 生成。固定充分大的 $T_*$（位于 §481 证明中初始修正区间之外），把有限区间部分合并为整函数 $H_0$，分部积分得
+
+$$
+R_{x_0}(s)=H_0(s)-E(T_*)r_s(T_*)-\int_{T_*}^\infty E(t)r_s'(t)\,dt .
+$$
+
+$H_0$ 在固定实部条带上关于 $\tau$ 有界，端点项为 $O(1+|\tau|)$。由 $|E(t)|\ll t^{1/2}\log^2t$，当 $\sigma\ge-1/5+\delta$ 时积分项至多为 $(1+|\tau|)^2\int_{T_*}^\infty t^{-1-\delta}\log^2t\,dt\ll_\delta(1+|\tau|)^2$。证毕。
+

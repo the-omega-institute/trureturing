@@ -1,0 +1,11 @@
+#### 定义 17.1：由同一来源定义的量子基本块判据
+
+令 $\mathcal C$ 为本稿完整有限前端组成的模型类。对 $\Omega\in\mathcal C$，按原响应、完整可逆轨道、Haar 中心与协方差依次定义
+
+$$
+\Omega\longmapsto(V,u,W,e,G,B,\mathfrak g)
+\longmapsto(P_e,\mathcal A_e,M).
+$$
+
+定义 $\chi(\Omega)$ 为 Q17 的存在式。这里没有在最后一步加入一个独立的内积、复数域、维数三、手性符号或来源差额系数。
+

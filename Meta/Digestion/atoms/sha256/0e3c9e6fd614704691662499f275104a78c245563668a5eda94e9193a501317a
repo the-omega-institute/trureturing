@@ -1,0 +1,93 @@
+**Proposition 41.4 (complete small fibres and their distinct meanings).**
+Take the concrete attained source $t_0=\beta$, obtained by the legal root
+promotion from the installed alpha, so $v=(0,1)$. Its complete fibres are
+
+$$
+\begin{array}{c|c|c|c|c|c|c}
+q&k=0&k=1&k=2&k=3&k\ge4&N_{(0,1)}(q)\\ \hline
+(0,1)&\{\varepsilon\}&\varnothing&\varnothing&\varnothing&\varnothing&1\\
+(1,1)&\{G\}&\{F\}&\varnothing&\varnothing&\varnothing&2\\
+(2,3)&\varnothing&\{GGFG\}&\{GFF,FGFG\}&\{FFF\}&\varnothing&4
+\end{array}
+\tag{41.15}
+$$
+
+In particular $\mathcal W_{(0,1)}(2,3)=\{GGFG,FGFG,GFF,FFF\}$.
+For the two words at $(1,1)$ the actual tree is
+
+$$
+t_F=t_G=\langle\beta,\alpha\rangle,
+\qquad\text{successful primitive trace } S_\varepsilon.
+\tag{41.16}
+$$
+
+For the four words at $(2,3)$, with $\varepsilon$ the root address, the
+actual results and successful primitive edits are
+
+$$
+\begin{array}{c|c|l}
+\text{macro word}&\text{logical tree}&\text{chronological primitive edits}\\ \hline
+GGFG,\ FGFG
+ &\langle\langle\langle\langle\beta,\alpha\rangle,\alpha\rangle,
+       \beta\rangle,\beta\rangle
+ &S_\varepsilon\ S_L\ S_{LL}\ P_{LR}\ P_R\ S_{LLL}\\
+GFF,\ FFF
+ &\langle\langle\langle\beta,\alpha\rangle,\beta\rangle,
+       \langle\beta,\alpha\rangle\rangle
+ &S_\varepsilon\ S_L\ P_R\ S_{LL}\ P_{LR}\ S_R
+\end{array}
+\tag{41.17}
+$$
+
+The first tree is the four-branch left comb. Both trees have two alpha
+and three beta leaves. The words $GFF$ and $FGFG$ have the same affine
+pair action on every $u\in\mathcal Q_+$, namely $M^2u+(1,1)$, yet give
+the two different trees in (41.17). Thus affine-action equality does
+not imply equality of native tree actions. Conversely (41.16) equates
+native results and primitive traces on beta for $F$ and $G$, whose
+whole-domain affine actions are different.
+
+Proof. In (41.11), $M^0v=(0,1)$, $Mv=(1,1)$,
+$M^2v=(1,2)$ and $M^3v=(2,3)$. At $(2,3)$, $k=0$ has residual
+$(2,2)$ and $P_0=0$; $k=1$ has residual $(1,2)$ and unique word
+$G^2FG$; $k=2$ has residual $(1,1)$ and the two words $FGFG,GFF$;
+$k=3$ has zero residual and word $FFF$. At $k=4$ the unshifted endpoint
+is $(3,5)$, with sum eight exceeding five; subsequent sums increase.
+All their residuals therefore give zero. The other two rows follow
+from the source base and the $k=0,1$ cases of the same formulas.
+
+For the native calculations, a beta split replaces its leaf by
+$\langle\beta,\alpha\rangle$ and a promotion replaces alpha by beta.
+At each $F$, list the old leaves left first and edit exactly that list;
+at each $G$, edit the leftmost beta. From beta, the first $F$ or $G$
+is the single split at $\varepsilon$. Successively applying these
+rules gives exactly the enabled addresses, types and trees in
+(41.16)–(41.17). For example $GGF$ gives
+$\langle\langle\langle\beta,\alpha\rangle,\beta\rangle,\beta\rangle$;
+its final $G$ splits the leaf at $LLL$, producing the four-branch comb.
+In (41.6), $GFF$ has translation $u_2$ and $FGFG$ has translation
+$u_1+u_0=u_2$, with two $F$ letters in both. The two displayed trees
+are different ordered terms, so the stated native-action distinction
+follows. $\square$
+
+The selected §40 block family uses only $GFF$ and $FGFG$; it is a proper
+subset of (41.15)'s complete fibre. The initial composition $(0,1)$
+itself forces the singleton beta **logical** tree in nonempty ordered
+binary syntax: the total leaf count is one, so a branch is impossible.
+That fact does not acquire its authentic binding, rights or earlier
+records. For general count pairs, even attained native trees need not
+have unique shape, as (41.17) shows for $(2,3)$.
+
+Literal macro words, successful primitive edit traces, actual logical
+trees, affine pair actions, count endpoints and full native tapes are
+separate objects and equality relations. A primitive trace includes
+addresses and $P/S$ names; it does not include the macro grouping.
+The complete frontier acquisition in $F$ and the leftmost-path
+acquisition in $G$ have their own references, traversal lists, read
+traffic, acknowledgement frames and work storage. Neither a shared
+endpoint nor a shared successful primitive trace proves equality of
+those full records, physical runtime bytes, elapsed time or completion
+schedule. Primitive-event counts are work coordinates, not a clock.
+Recovering macro grouping from primitive expansion alone is a different
+parsing problem, not a premise of the following decoder.
+

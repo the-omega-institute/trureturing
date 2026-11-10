@@ -1,0 +1,63 @@
+**Definition 7.1 (scope of the existing results).** UJB Proposition 3.6's full
+$1944$-edge collection certificate already establishes complete relation
+recovery after all edges have been acquired, with its stated persistent
+paid-sampler contract. UJB §§12, 15–18 supply version sets, fixed-cache
+closure inverses, the actual two-source geometry and capacities, exact
+all-mask evaluation and the indexed Read consumer. The new constructions
+in §§2–3 give smaller positive evidence sets for those literal graphs;
+§5 connects their existence to the original fixed finite stationary
+preparation, without importing a persistent sampler. The source-specific
+counts, cross-source exclusion and capacity completion are ordinary
+conditional arguments here, not additional Lean certification.
+
+The existing formal declarations
+[`TargetRecoveryCriterion.target_recovery_criterion`](../../../D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean)
+and
+[`TargetSufficiencyPairCover.target_sufficiency_iff_pair_cover`](../../../D5/S3/ConceptDynamics/ExperimentDesign/TargetSufficiencyPairCover.lean)
+provide, respectively, target constancy on observation fibers and separation
+of every target-disagreement pair by a selected finite observation family.
+For target constancy, take the finite domain of supported full-generator and
+prepared-array realizations, the scan's actual completed-label readout, and
+target $(g,y)\mapsto\mathcal E_g$. Its positive readout fiber projects to
+(PCR.2). For the pair-cover criterion, the selected experiments are the
+actual fifteen coordinate Reads at each completed index, their responses
+are the corresponding bits, and the same relation is the target. A joint
+bit-readout fiber fixes the ordered complete pairs; their multiplicities
+and order do not further restrict (PCR.2), by UJB §12. These suppliers give
+the abstract criterion, not the $576/324$ graph constructions, a targetblind
+acquisition event or a cost-free source port. In particular a mathematical
+candidate-membership check is not an extra selected source experiment.
+
+[Goldman–Kearns, *On the Complexity of Teaching*, §2, PDF pp. 3–4,
+and §3, p. 5](https://www.cis.upenn.edu/~mkearns/papers/teaching.pdf)
+define a target-relative labelled sequence that leaves only one consistent
+concept. Their general examples may be positive or negative and their
+teacher knows the target. Here the concept is the transported relation,
+only positive complete pairs are acquired, and the observer follows a
+public fixed-slot Read scan. A target-relative existence witness does not
+supply target-aware querying or the IID coverage event for free.
+
+[Cavenagh–Wright, *The maximum, supremum and spectrum for critical set
+sizes in (0,1)-matrices*, §§1–2, Lemma 4 and Corollary 5](https://arxiv.org/pdf/1812.08282v1)
+work with all matrices having prescribed individual row and column sums.
+Their defining sets meet every relevant cycle trade, and their critical
+sets are inclusion minimal defining sets. That competitor class is not
+the two actual graph orbits with unknown injected support labels. Their
+numerical bounds and trade criterion are not imported here, and the two
+upper bounds do not assert inclusion minimality or minimum size.
+
+[Hatami–Qian, *Teaching dimension, VC dimension, and critical sets in
+Latin squares*, introduction, PDF pp. 2–3](https://arxiv.org/pdf/1606.00032v2)
+distinguish unique determination from a strong teaching set with iterative
+local completion. Their quantitative Latin-square conclusions do not
+transfer to (PCR.1). Public exhaustive recognition and a convenient
+capacity-completion proof are separate issues here. These source
+correspondences establish no world-originality claim for the bounds.
+
+The C105/C106 results in [V96 §§57–69](AURIC_COMPOSITE_COMPARISON_FINITE_WITNESSES_COMMON_QUANTUM_SCALE_V96.md)
+assume their actual all-effects filter family, specified preparation and
+readout paths, and a common-class continuity or boundary condition. The
+stationary Read contract here supplies none of those operations or common
+comparison bounds. Those stability results therefore do not provide an
+acquisition or recognition bridge for this two-source experiment.
+

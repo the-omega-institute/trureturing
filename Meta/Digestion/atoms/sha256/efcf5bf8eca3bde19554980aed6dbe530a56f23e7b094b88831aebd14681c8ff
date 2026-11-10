@@ -1,0 +1,15 @@
+**定理 20.1（同一个原 $D$ 的五种等价接口）。** 全部背景仍准确为定义 7.1。下列五个补充条件等价：
+
+1. 对全部原 $a,b\in E$、$c\in Z_E$，两槽中央平移均成立：$D(a+c,b)=D(a,b)$、$D(a,b+c)=D(a,b)$。
+2. 只要求原标量单位平移：$D(a,b+tu)=D(a,b)$ 对全部原 $a,b$ 和全部实 $t$ 成立。
+3. 对 $X$ 的每个数学态 $\varphi$ 和全部原 $a,b$，有零方差条件
+
+   $$
+   \varphi(b^2)=\varphi(b)^2
+   \quad\Longrightarrow\quad \varphi(D(a,b))=0.
+   \tag{20.1}
+   $$
+
+4. 同一个原总映射 $D:E^2\to E$ 是实双线性的。
+5. 同一个原 $S-\mathrm iD$ 是 $E\oplus\mathrm iE$ 上的含单位稠密 pre-$C^*$ 乘法，其完成为 $X\oplus\mathrm iX$ 上的相容复 $C^*$ 结构：伴随是 $x+\mathrm iy\mapsto x-\mathrm iy$，自伴部、Jordan 乘法、单位、自伴范数和正锥准确为指定的 $X,\circ,u,\bar N,X_+$。
+

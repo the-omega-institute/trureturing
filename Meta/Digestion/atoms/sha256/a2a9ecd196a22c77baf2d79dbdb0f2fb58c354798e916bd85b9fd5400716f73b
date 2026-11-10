@@ -1,0 +1,51 @@
+**定理 188.1（足够的跨块正常形）。** 设有限 EJA $E$ 总秩至少三，原 $q$ 是正 Frobenius 型，原 $D$ 实双线性、满足 $D_au=0$ 及 $\mathsf F_{-\rm self}$。固定一个秩至少三的简单理想 $T$，令 $R$ 为其余简单理想的直和，$a_T=\pi_Ta$、$a_R=\pi_Ra$。则存在双线性 $\delta_T:T\times T\to T$、线性 $\ell_T:E\to\mathbb R$ 及标量双线性 $G_T:R\times R\to\mathbb R$，使
+
+$$
+\begin{aligned}
+\pi_TD_ab
+&=\delta_T(a_T,b_T)+\ell_T(a)b_T+G_T(a_R,b_R)u_T,\\
+\ell_T|_T&=0,\qquad
+G_T(x,x)=-\ell_T(x^2)\quad(x\in R).
+\end{aligned}
+\tag{188.1}
+$$
+
+其中 $\delta_T$ 交替，每个 $(\delta_T)_a$ 都是原 $q_T=q|_T$ 的斜伴随 Jordan 导子。不要求 $G_T$ 对称，也不要求先把 $\ell_T$ 在低秩源块上写成谱迹倍数。
+
+证明。定理 181.1 只消费当前保留的正交输入自身、第三原子、内部层及右单位，故仍给 $D_ep=k_{ep}p$ 和 (181.2)。式 (182.1) 的同一输入两读回相减、再将两个半角输入相加的计算，也只用保留的半层。因此同一个秩至少三简单块内，(182.2) 的三个反号关系及反向循环仍消去全部内部 $k$；这一步不消费定理 182.1 证明首段的跨块自身读回。
+
+取 $\delta_T=\pi_TD|_{T\times T}$。内部 $k$ 归零与 (181.2) 给 $(\delta_T)_eu_T=0$，primitive 张成遂给其右单位。$T$ 的 primitive 也是整个 $E$ 的 primitive；$T$ 内的 rank-two 切口在 $E$ 内仍秩二，且对应 $P_c$ 消去 $R$。所以所有保留测试都可限制到 $T$，遗漏的正交自身测试因内部 $D_ep=0$ 直接成为 $0=0$。这恢复 $\mathsf F_{\rm ext}(T)$。在秩至少三的 $T$ 上直接消费定理 175.1 的完整局部恢复，得到所述 $\delta_T$ 的交替、导子及原 $q_T$ 斜伴随性质。
+
+固定 $a_R\in R$，线性算子 $H:b\mapsto\pi_TD_{a_R}b$ 把每颗 primitive $p\in T$ 送入 $\mathbb Rp$。这里使用成熟 Peirce 角的如下直接推论。若 $H(e_i)=\lambda_i e_i$，在一个 frame 的任意两点取 $y^2=e_i+e_j$、$p_\pm=(e_i+e_j\pm y)/2$。等式
+$H(e_i+e_j)=H(p_+)+H(p_-)$
+比较 $y,e_i,e_j$ 的系数，给 $\lambda_i=\lambda_j=\lambda_+=\lambda_-$。简单块的每条 frame 边非零，故一份 frame 上全部倍数相同；$H(u_T)$ 又使所有 frame 共用同一倍数。primitive 张成便给 $H=\ell_T(a_R)I_T$。由 $D$ 的双线性，$\ell_T$ 对 $a_R$ 线性；在 $T$ 上延为零。另一方面，两个输入分属不同简单块时，正常形的输出在第二个输入块，所以 $\pi_TD_{a_T}b_R=0$。
+
+还须控制同一个外部源块 $S\ne T$ 的两个输入。原正 Frobenius 型在不同理想间正交；在简单 $T$ 上全部 primitive 具有同一原范数平方 $w_T>0$，故
+
+$$
+q_T(u_T,x)=w_T\tau_T(x).
+\tag{188.2}
+$$
+
+这些是成熟谱分解与 Nomura 命题 2.2 对原 $q_T$ 本身的应用。若 $v\in T$ 对全部 primitive $r\in T$ 的 $q_T(v,r)$ 相同，则在 $v$ 的谱 frame 中所有特征值相同，所以 $v\in\mathbb Ru_T$。
+
+固定半重叠 $p,e\in S$。每颗 primitive $r\in T$ 都是合法的角外读回；(187.1) 中两能量与 $r$ 无关。因此 $q_T(\pi_TD_pe,r)$ 对全部这样的 $r$ 相同，刚才的谱论证给 $\pi_TD_pe\in\mathbb Ru_T$。固定 primitive $e\in S$，在含它的 frame 中使用 (181.2) 及已证 $D_eu_T=\ell_T(e)u_T$，得到
+
+$$
+\pi_TD_ee=-\ell_T(e)u_T.
+\tag{188.3}
+$$
+
+若 $p\perp e$ 且 $p\in S$，正常形给 $\pi_TD_pe=0$。任意 frame 边 $V_{es}\subset S$ 上的正规化 $y^2=e+s$ 又满足 $y=p_+-p_-$，两半角的标量值结论给 $\pi_TD_ye\in\mathbb Ru_T$。$E_0^S(e)$ 由其 primitive 张成，$T_e^S$ 由这些 frame 边张成，故整个 $S$ 的第一输入都已覆盖。再让第二输入的 primitive 张成 $S$，便有 $\pi_TD|_{S\times S}$ 为标量值。秩一源块由 (188.3) 直接处理。这里只证明标量值，没有令这些跨块输出提前为零。
+
+不同外部源块之间的输入，其输出仍在第二输入块，投影 $T$ 为零。把各源块上的标量双线性相加即得 $G_T$ 及 (188.1) 第一式。最后对 $x\in R$ 取完整谱展开 $x=\sum_i\lambda_i e_i$。不同 frame 原子的 $D_{e_i}e_j$ 都留在 $R$；对角项由 (188.3) 给出。因此
+
+$$
+\pi_TD_xx
+=-\sum_i\lambda_i^2\ell_T(e_i)u_T
+=-\ell_T(x^2)u_T.
+\tag{188.4}
+$$
+
+这正是 $G_T$ 的所需对角式；不需要额外判定其反对称部分。∎
+

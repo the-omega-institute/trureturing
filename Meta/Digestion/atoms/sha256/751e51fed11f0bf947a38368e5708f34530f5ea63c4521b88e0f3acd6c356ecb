@@ -1,0 +1,18 @@
+### 4.2　两两合格，还必须能放进同一个三维窗口
+
+取三个归一可见方向 $u,v,w$，记录三项二元响应
+
+$$
+\alpha=g(u,v),\qquad \beta=g(u,w),\qquad \gamma=g(v,w).
+$$
+
+其共同 Gram 矩阵为
+
+$$
+G=\begin{pmatrix}
+ 1&\alpha&\beta\\
+ \alpha&1&\gamma\\
+ \beta&\gamma&1
+ \end{pmatrix}.
+$$
+

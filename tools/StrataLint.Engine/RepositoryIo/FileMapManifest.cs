@@ -93,6 +93,9 @@ internal sealed record FileMapEntry
 
 internal sealed class FileMapManifest
 {
+    private readonly Dictionary<string, ImmutableArray<FileMapEntry>> entriesByRoot;
+    private readonly ImmutableArray<FileMapEntry> unrootedEntries;
+
     internal FileMapManifest(
         FileMapResidencePolicy residencePolicy,
         ImmutableArray<FileMapEntry> entries,
@@ -101,6 +104,14 @@ internal sealed class FileMapManifest
         ResidencePolicy = residencePolicy;
         Entries = entries;
         ArtifactKinds = artifactKinds;
+        var groups = entries.Select((entry, index) => (Entry: entry, Index: index))
+            .GroupBy(item => LiteralRoot(item.Entry.Pattern)).ToArray();
+        var unrooted = groups.Where(group => group.Key is null).SelectMany(group => group).ToArray();
+        unrootedEntries = unrooted.Select(item => item.Entry).ToImmutableArray();
+        entriesByRoot = groups.Where(group => group.Key is not null).ToDictionary(
+            group => group.Key!,
+            group => group.Concat(unrooted).OrderBy(item => item.Index)
+                .Select(item => item.Entry).ToImmutableArray(), StringComparer.Ordinal);
     }
 
     internal FileMapResidencePolicy ResidencePolicy { get; }
@@ -109,8 +120,27 @@ internal sealed class FileMapManifest
 
     internal ImmutableDictionary<ArtifactKindId, ArtifactPolicy> ArtifactKinds { get; }
 
-    internal ImmutableArray<FileMapEntry> Match(string path) =>
-        Entries.Where(entry => entry.Matches(path)).ToImmutableArray();
+    internal ImmutableArray<FileMapEntry> Match(string path)
+    {
+        // Candidate buckets depend only on this immutable manifest. Entry matching
+        // still decides glob/exclusion semantics and preserves declaration order.
+        var candidates = Entries;
+        if (path is not null)
+        {
+            var slash = path.IndexOf('/');
+            var root = slash < 0 ? path.AsSpan() : path.AsSpan(0, slash);
+            candidates = entriesByRoot.GetAlternateLookup<ReadOnlySpan<char>>().TryGetValue(root, out var rooted)
+                ? rooted : unrootedEntries;
+        }
+        return candidates.Where(entry => entry.Matches(path!)).ToImmutableArray();
+    }
+
+    private static string? LiteralRoot(string pattern)
+    {
+        var slash = pattern.IndexOf('/');
+        var root = slash < 0 ? pattern : pattern[..slash];
+        return root.Contains('*') ? null : root;
+    }
 }
 
 internal static partial class FileMapLoader

@@ -1,0 +1,55 @@
+**Theorem 138.2 (one original common partition and an ordered congruence).** With $v$ from Theorem 138.1, put
+
+$$
+D_0=\{v=1\},\qquad D_1=\{v=-1\},\qquad D_3=C,\qquad D_B=B.
+\tag{138.5}
+$$
+
+This is a single pointwise Borel partition of the whole $G$, belongs to the original $\mathscr D_{12}(\theta)$, and has $q_D=q_E$. In the original order $(0,1,3,B)$, the invertible matrix
+
+$$
+J=\begin{pmatrix}
+1&0&0&1\\
+1&0&0&-1\\
+0&1&0&0\\
+0&0&1&0
+\end{pmatrix}
+\tag{138.6}
+$$
+
+satisfies
+
+$$
+J^{\mathsf T}A^D J=\begin{pmatrix}A_E&0\\0&0\end{pmatrix}.
+\tag{138.7}
+$$
+
+Consequently
+
+$$
+\operatorname{rank}A^D=\operatorname{rank}A_E\le3,\qquad
+\operatorname{rank}A^D\le2\ \Longleftrightarrow\ \det A_E=0
+\tag{138.8}
+$$
+
+for this constructed partition.
+
+*Proof.* The square identity makes $D_0,D_1$ a disjoint exhaustive split of $S$, so (138.5) is a whole-$G$ partition. Each $\nu_j$ is $R_\pi$-invariant and vanishes on $N$. Almost-everywhere oddness gives $\int g_{jd}v\,dm=0$ and therefore
+
+$$
+\nu_j(D_0)=\nu_j(D_1)=\frac{3/4-t_j}{2},\qquad
+\nu_j(D_3)=t_j,\qquad \nu_j(D_B)=1/4.
+$$
+
+These are exactly the twelve original targets, for the original $b$, at the three original epochs.
+
+The columns of $J$ express the function basis $(\mathbf1_S,\mathbf1_C,\mathbf1_B,v)$ in the original indicator basis. They are independent, since $\mathbf1_{D_0}=(\mathbf1_S+v)/2$ and $\mathbf1_{D_1}=(\mathbf1_S-v)/2$. For any invariant bounded $u$, both ordered cross pairings vanish:
+
+$$
+Q_E(u,v)=\int guP(q_Ev)\,dm=0,\qquad
+Q_E(v,u)=\int gvP(q_Eu)\,dm=0.
+\tag{138.9}
+$$
+
+In the first integral $gu$ is even and $P(q_Ev)$ is odd under $R_\pi$. In the second $P(q_Eu)$ and $g$ are even while $v$ is odd. Invariance of $m$ gives zero in both cases. This proves (138.7), using $Q_E(v)=0$ and without any symmetry assumption on $A^D$ or $A_E$. Invertible left and right multiplication preserve rank, and a real three-by-three matrix has rank at most two exactly when its determinant is zero. $\square$
+

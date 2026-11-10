@@ -1,0 +1,134 @@
+### 9.3 全复参数 P2 与明确的共同直线障碍
+
+**证明，P2。** 设 $a=\phi(c^2)$、$b=\phi(c\circ t_0)$、$e=\phi(t_0^2)$。成熟的实 Gram 剪切恒等式给
+
+$$
+B_\phi(c,t_0+\lambda c)
+=a(e+2\lambda b+\lambda^2a)-(b+\lambda a)^2=ae-b^2.
+\tag{9.8}
+$$
+
+又 $[c,t_0+\lambda c]=[c,t_0]$，故同一 $\rho$ 的 P2 预算读数完全不变；二表的每个条目不必相同。这不是 PB 运输。
+
+对 $z=X+iY$ 记 $\mathcal R=X^2+Y^2$，形成完整三维矩阵
+
+$$
+Q_z=(t_0-zc)^*(t_0-zc)+2\sigma Ys.
+\tag{9.9}
+$$
+
+写 $v=(1,\sqrt2)^{\mathsf T}$、$c_2=\operatorname{diag}(1,2)$、$s_2=\rho\operatorname{diag}(1,-2)$。$Q_z$ 右下角为 $3$，左上块为 $vv^*+\mathcal R c_2^2+2\sigma Ys_2$，右上列为 $-\bar zc_2v$。其 Schur 补为
+
+$$
+D_z=\begin{pmatrix}
+1+2\mathcal R/3+2\sigma\rho Y&\sqrt2(1-2\mathcal R/3)\\
+\sqrt2(1-2\mathcal R/3)&2+4\mathcal R/3-4\sigma\rho Y
+\end{pmatrix},
+\tag{9.10}
+$$
+
+$$
+(D_z)_{11}=\frac23X^2+\frac23\left(Y+\frac32\sigma\rho\right)^2+1-\frac32\rho^2,
+\qquad
+\det D_z=\frac{16}{3}X^2+\left(\frac{16}{3}-8\rho^2\right)Y^2.
+\tag{9.11}
+$$
+
+当 $|\rho|\le1/2$，首项严格正，行列式非负；配方给 $D_z\succeq0$，再对环境坐标配方给 $Q_z\succeq0$，包括 $z=0$。这里保留两条环境连线。
+
+置 $\mathcal P_w^\star=t_0^2-2\operatorname{Re}(w)(c\circ t_0)+|w|^2c^2+2\operatorname{Im}(w)g$。展开(9.9)给 $Q_{X+iY}=\mathcal P_{X+i\sigma Y}^\star$。对正 $\phi$，$\phi(\mathcal P_w^\star)$ 正是
+
+$$
+\begin{pmatrix}\phi(c^2)&\phi(c\circ t_0)-i\phi(g)\\
+\phi(c\circ t_0)+i\phi(g)&\phi(t_0^2)\end{pmatrix}
+\tag{9.12}
+$$
+
+在列 $(-w,1)^{\mathsf T}$ 上的二次值。这些列及其复数倍涵盖第二坐标非零的全部列；其余列由 $\phi(c^2)\ge0$ 处理。因此(9.12)半正定，行列式给原 P2；(9.8)将它传给所有 $\lambda$。没有除以质量或 Gram 对角，且尚未推出 PB。
+
+**证明，显式矩阵障碍。** 暂置 $\rho=0$，记
+
+$$
+J_\star=\begin{pmatrix}0&0&1/2\\0&0&\sqrt2\\-1/2&-\sqrt2&0\end{pmatrix},\quad
+g_0=i\sigma J_\star,\qquad
+k=\begin{pmatrix}\lambda&0&1/2\\0&4\lambda&\sqrt2\\1/2&\sqrt2&0\end{pmatrix}.
+\tag{9.13}
+$$
+
+$\det k=-3\lambda$，以下矩阵与 $k$ 两侧相乘均为 $1_\star$：
+
+$$
+k^{-1}=\begin{pmatrix}
+2/(3\lambda)&-\sqrt2/(6\lambda)&2/3\\
+-\sqrt2/(6\lambda)&1/(12\lambda)&\sqrt2/3\\
+2/3&\sqrt2/3&-4\lambda/3
+\end{pmatrix}.
+\tag{9.14}
+$$
+
+局部置 $\mathsf A_\lambda=tk^{-1}$、$\mathsf H_\lambda=J_\star k^{-1}$。在 $\lambda=1$ 有
+
+$$
+\mathsf A_1=\begin{pmatrix}4/3&\sqrt2/6&-2/3\\\sqrt2/3&5/6&-2\sqrt2/3\\1/3&-\sqrt2/12&4/3\end{pmatrix},\quad
+\mathsf H_1=\begin{pmatrix}1/3&\sqrt2/6&-2/3\\2\sqrt2/3&2/3&-4\sqrt2/3\\0&0&-1\end{pmatrix}.
+\tag{9.15}
+$$
+
+对 $\mathsf E_\lambda=\operatorname{diag}(\lambda,\lambda,1)$，(9.14)逐项给
+
+$$
+\mathsf A_\lambda=\mathsf E_\lambda\mathsf A_1\mathsf E_\lambda^{-1},\qquad
+\mathsf H_\lambda=\mathsf E_\lambda\mathsf H_1\mathsf E_\lambda^{-1}.
+\tag{9.16}
+$$
+
+交换子及其明确逆为
+
+$$
+\mathsf C_1=[\mathsf A_1,\mathsf H_1]
+=\begin{pmatrix}1/3&1/(6\sqrt2)&2/3\\0&-1/3&2\sqrt2\\1/3&-1/(6\sqrt2)&0\end{pmatrix},\quad
+\mathsf C_1^{-1}=\begin{pmatrix}
+9/8&-3/(8\sqrt2)&15/8\\9\sqrt2/4&-3/4&-9\sqrt2/4\\3/8&3/(8\sqrt2)&-3/8
+\end{pmatrix}.
+\tag{9.17}
+$$
+
+直接乘法给 $\mathsf C_1\mathsf C_1^{-1}=\mathsf C_1^{-1}\mathsf C_1=1_\star$。Frobenius 范数与相似变换给
+
+$$
+\|\mathsf C_1^{-1}\|^2\le\|\mathsf C_1^{-1}\|_F^2=\frac{1665}{64}<36,
+\qquad
+\|[\mathsf A_\lambda,\mathsf H_\lambda]^{-1}\|\le6\kappa_\lambda.
+\tag{9.18}
+$$
+
+同样逐项平方求和，连同 $J_\star$ 的双边星形，给
+
+$$
+\|t\|\le T_\lambda,\quad\|k\|\le N_\lambda,\quad
+\|k^{-1}\|\le I_\lambda,\quad\|J_\star\|=j,\quad
+\|\mathsf A_\lambda\|\le T_\lambda I_\lambda,\quad
+\|\mathsf H_\lambda\|\le jI_\lambda.
+\tag{9.19}
+$$
+
+特别是 $\|k^{-1}\|_F^2=9/(16\lambda^2)+4/3+16\lambda^2/9$，整个环境行列均在内。这里的相似关系仅比较已知矩阵，不比较未知响应或不同输入的 PB 标签。
+
+对复单位向量 $\eta$，置 $a=\eta^*\mathsf A_\lambda\eta$、$b=\eta^*\mathsf H_\lambda\eta$、$u_\eta=\mathsf A_\lambda\eta-a\eta$、$v_\eta=\mathsf H_\lambda\eta-b\eta$。二者均与 $\eta$ 复正交，且准确有
+
+$$
+[\mathsf A_\lambda,\mathsf H_\lambda]\eta
+=(\mathsf A_\lambda-a1_\star)v_\eta-(\mathsf H_\lambda-b1_\star)u_\eta.
+$$
+
+由于 $|a|\le\|\mathsf A_\lambda\|$、$|b|\le\|\mathsf H_\lambda\|$，(9.18)–(9.19)给共同直线障碍
+
+$$
+\frac1{6\kappa_\lambda}
+\le2I_\lambda(T_\lambda\|v_\eta\|+j\|u_\eta\|)
+\le2I_\lambda\sqrt{T_\lambda^2+j^2}\sqrt{\|u_\eta\|^2+\|v_\eta\|^2},
+\quad
+\|u_\eta\|^2+\|v_\eta\|^2\ge\frac1{144\kappa_\lambda^2I_\lambda^2(T_\lambda^2+j^2)}.
+\tag{9.20}
+$$
+
