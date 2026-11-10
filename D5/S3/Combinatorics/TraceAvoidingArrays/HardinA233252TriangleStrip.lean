@@ -9,19 +9,13 @@
 /-
 admission_basis: open-problem-resolution (#27709; Proved)
 escape_witness: none (open-problem-resolution; all declarations instantiate frozen owners and finite kernel decisions)
-Row: proof_shape=bind-only; consumers=rowLegal, pairs, compatible, Valid, classCount, firstCount
 Boundary: proof_shape=bind-only; consumers=pairs, compatible, Valid
-rowLegal: proof_shape=bind-only; consumers=instDecidableRowLegal, classCount, a
 bonds: proof_shape=bind-only; consumers=instDecidableBonds, bonds_iff, a
-instDecidableNormal: proof_shape=bind-only; consumers=instDecidableLegal
-instDecidableRowLegal: proof_shape=bind-only; consumers=instDecidableLegal, classCount
-instDecidableBonds: proof_shape=bind-only; consumers=instDecidableLegal
-instDecidableLegal: proof_shape=bind-only; consumers=a
+instDecidableBonds: proof_shape=bind-only; consumers=a
 instDecidableCompatible: proof_shape=bind-only; consumers=classCount
 a: proof_shape=bind-only; consumers=counting_bridge, zero_count, result
 pairs: proof_shape=bind-only; consumers=bonds_iff, compatible, classCount, a_eq_w
 compatible: proof_shape=bind-only; consumers=bonds_iff, counting_bridge, classCount
-colour_bond_iff: proof_shape=bind-only; consumers=bonds_iff, class_fibres
 bonds_iff: proof_shape=bind-only; consumers=counting_bridge
 v: proof_shape=bind-only; consumers=v_eq_w
 total: proof_shape=bind-only; consumers=a_eq_w
@@ -35,10 +29,10 @@ firstCount: proof_shape=bind-only; consumers=initial_counts, finite_certificate,
 class_fibres: proof_shape=bind-only; consumers=row_counts
 label_sum: proof_shape=bind-only; consumers=row_counts
 valid_next: proof_shape=bind-only; consumers=v_eq_w
-row_counts: proof_shape=bind-only; consumers=finite_certificate, v_eq_w
+row_counts: proof_shape=bind-only; consumers=finite_certificate
 initial_valid: proof_shape=bind-only; consumers=a_eq_w
-initial_counts: proof_shape=bind-only; consumers=finite_certificate, a_eq_w
-finite_certificate: proof_shape=bind-only; consumers=v_eq_w, a_eq_w, result
+initial_counts: proof_shape=bind-only; consumers=finite_certificate
+finite_certificate: proof_shape=bind-only; consumers=v_eq_w, a_eq_w
 w: proof_shape=bind-only; consumers=v_eq_w, recurrence
 v_eq_w: proof_shape=bind-only; consumers=a_eq_w
 a_eq_w: proof_shape=bind-only; consumers=recurrence, closed_form
@@ -83,6 +77,7 @@ statement_id: sha256:63a356389be3d9bf756c53fb12271299a7668c1123562d84a2e34e78a34
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233125SquareStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge
 import D5.S3.Observer.Separation.BooleanRankThreeK4
@@ -98,38 +93,26 @@ open scoped BigOperators
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233252TriangleStrip
 
 open HardinA233175PairStrip (Seen good finish)
+open HardinA233125SquareStrip (Row rowLegal)
 open HardinA233251TriangleStrip
-  (widthNormal widthLegal widthV widthStep widthTotal width_counting_bridge colour_bond_iff)
+  (widthLegal widthV widthStep widthTotal width_counting_bridge colour_bond_iff)
 open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
 open HardinA233255LiteralBridge (rowFinish rowWeight scanner_fibres)
 
 attribute [local instance 2000] HardinA233251TriangleStrip.widthInstDecidableGood
+attribute [local instance 2000] HardinA233251TriangleStrip.widthInstDecidableNormal
+attribute [local instance 2000] HardinA233251TriangleStrip.widthInstDecidableLegal
+attribute [local instance 2000] HardinA233125SquareStrip.decidableRowLegal
 attribute [local instance 2000] Pi.instFintype
 
-abbrev Row := Fin 4 → Fin 6
 abbrev Boundary := Fin 3 → Fin 3
-
-def rowLegal (c : Row) : Prop :=
-  ∀ j : Fin 3, c j.castSucc ≠ c j.succ ∧
-    (c j.castSucc).val + (c j.succ).val ≠ 5
 
 private def bonds (c d : Row) : Prop :=
   ∀ j : Fin 3, c j.succ ≠ d j.castSucc ∧
     (c j.succ).val + (d j.castSucc).val ≠ 5
 
-private instance instDecidableNormal {n : ℕ} (s : Seen) (f : Fin n → Row) :
-    Decidable (widthNormal s f) :=
-  inferInstanceAs (Decidable (∀ _ _, (_ → _) ∧ (_ → _)))
-
-private instance instDecidableRowLegal (c : Row) : Decidable (rowLegal c) :=
-  inferInstanceAs (Decidable (∀ _, _ ∧ _))
-
 private instance instDecidableBonds (c d : Row) : Decidable (bonds c d) :=
   inferInstanceAs (Decidable (∀ _, _ ∧ _))
-
-private instance instDecidableLegal {n : ℕ} (A : Fin n × Fin 4 → Fin 6) :
-    Decidable (widthLegal rowLegal bonds A) :=
-  inferInstanceAs (Decidable (_ ∧ _ ∧ _ ∧ _))
 
 def a (n : ℕ) : ℕ :=
   (Finset.univ.filter (fun A : Fin n × Fin 4 → Fin 6 =>
@@ -263,7 +246,7 @@ private theorem v_eq_w (n : ℕ) (s : Seen) (p : Boundary) (h : Valid s p) :
     rw [Finset.sum_comm]
     simp_rw [← Finset.sum_mul]
     change (∑ k : Fin 3, classCount s p k * w n k) = _
-    simp_rw [row_counts s p h]
+    simp_rw [finite_certificate.1 s p h]
     generalize boundaryClass s p = k
     fin_cases k <;> simp [transfer, w, Fin.sum_univ_succ] <;> ring
 
@@ -284,7 +267,7 @@ private theorem a_eq_w (n : ℕ) :
   rw [Finset.sum_comm]
   simp_rw [← Finset.sum_mul]
   change (∑ k : Fin 3, firstCount k * w n k) = _
-  simp_rw [initial_counts]
+  simp_rw [finite_certificate.2]
   simp [Fin.sum_univ_succ]
   ring
 

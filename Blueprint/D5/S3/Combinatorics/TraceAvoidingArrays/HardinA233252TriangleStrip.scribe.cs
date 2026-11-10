@@ -12,6 +12,8 @@ internal sealed class HardinA233252TriangleStripDocument : IScribeDocumentDefini
         "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip.";
     private const string Scanner =
         "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.";
+    private const string RowOwner =
+        "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233125SquareStrip.";
     private const string Beta =
         "D5.S3.Observer.Separation.BooleanRankThreeK4.beta";
     private const string Gid =
@@ -29,12 +31,13 @@ internal sealed class HardinA233252TriangleStripDocument : IScribeDocumentDefini
                 + "each 2, 3 or 4 has an earlier 1, and each 3 an earlier 2. The coefficient "
                 + "at index zero is zero. The three complementary-pair labels are the fibres "
                 + "of the existing BooleanRankThreeK4.beta.")),
-            Entry("row", "Row", "Rows", Eq(Name(Root + "Row"), Arrow(Fin(4), Fin(6))),
-                "A row contains four colours."),
-            Entry("horizontal", "rowLegal", "Horizontal exclusions", RowLegal(),
-                "Consecutive colours in a row are unequal and are not complementary."),
-            Entry("bonds", "bonds", "Antidiagonal exclusions", Bonds(),
-                "The upper-right cell of one row is bonded to the lower-left cell of the next."),
+            Paragraph(Text(
+                "Rows and horizontal exclusions use HardinA233125SquareStrip.Row and "
+                + "HardinA233125SquareStrip.rowLegal. A row contains four colours; consecutive "
+                + "colours are unequal and are not complementary.")),
+            Entry("boundarytype", "Boundary", "Boundary label type",
+                Eq(Name(Root + "Boundary"), Arrow(Fin(3), Fin(3))),
+                "The antidiagonal boundary carries three complementary-pair labels."),
             Entry("count", "a", "The literal finite count", Count(),
                 "The owner widthLegal predicate combines the first-cell, horizontal, "
                 + "antidiagonal, and row-major scanner clauses. The empty-height filter is empty.", true),
@@ -80,37 +83,20 @@ internal sealed class HardinA233252TriangleStripDocument : IScribeDocumentDefini
             : AssessedProvenance.FromRepo(Source),
         Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 
-    private static Formula RowLegal()
-    {
-        var c = V("c"); var j = V("j");
-        var x = At(c, Call("Fin.castSucc", j));
-        var y = At(c, Call("Fin.succ", j));
-        return All("c", Name(Root + "Row"), Eq(Call(Root + "rowLegal", c),
-            All("j", Fin(3), And(Ne(x, y), Ne(Add(Val(x), Val(y)), D(5))))));
-    }
-
-    private static Formula Bonds()
-    {
-        var c = V("c"); var d = V("d"); var j = V("j");
-        var x = At(c, Call("Fin.succ", j));
-        var y = At(d, Call("Fin.castSucc", j));
-        return All("c", Name(Root + "Row"), All("d", Name(Root + "Row"),
-            Eq(Call(Root + "bonds", c, d), All("j", Fin(3),
-                And(Ne(x, y), Ne(Add(Val(x), Val(y)), D(5)))))));
-    }
-
     private static Formula Count()
     {
         var n = V("n"); var a = V("A"); var i = V("i"); var j = V("j");
         var arrays = Arrow(Product(Call("Fin", n), Fin(4)), Fin(6));
         var first = Ex("i", Call("Fin", n), And(Eq(Val(i), D(0)),
             Eq(At(a, Pair(i, Typed(D(0), Fin(4)))), Typed(D(0), Fin(6)))));
-        var horizontal = All("i", Call("Fin", n), Call(Root + "rowLegal",
+        var horizontal = All("i", Call("Fin", n), Call(RowOwner + "rowLegal",
             Fn("j", Fin(4), At(a, Pair(i, j)))));
         var next = Call("Fin.mk", Add(Val(i), D(1)), V("h"));
+        var upper = At(a, Pair(i, Call("Fin.succ", j)));
+        var lower = At(a, Pair(next, Call("Fin.castSucc", j)));
         var anti = All("i", Call("Fin", n), All("h", Lt(Add(Val(i), D(1)), n),
-            Call(Root + "bonds", Fn("j", Fin(4), At(a, Pair(i, j))),
-                Fn("j", Fin(4), At(a, Pair(next, j))))));
+            All("j", Fin(3), And(Ne(upper, lower),
+                Ne(Add(Val(upper), Val(lower)), D(5))))));
         var normal = Call(Owner + "widthNormal", Pair(Name("Bool.false"), Name("Bool.false")),
             Fn("i", Call("Fin", n), Fn("j", Fin(4), At(a, Pair(i, j)))));
         var predicate = Fn("A", arrays, And(first, And(horizontal, And(anti, normal))));
@@ -119,19 +105,19 @@ internal sealed class HardinA233252TriangleStripDocument : IScribeDocumentDefini
             Call("Finset.card", Call("Finset.filter", predicate, universe))));
     }
 
-    private static Formula BoundaryType() => Arrow(Fin(3), Fin(3));
+    private static Formula BoundaryType() => Name(Root + "Boundary");
 
     private static Formula Pairs()
     {
         var c = V("c"); var j = V("j");
-        return All("c", Name(Root + "Row"), Eq(Call(Root + "pairs", c),
+        return All("c", Name(RowOwner + "Row"), Eq(Call(Root + "pairs", c),
             Fn("j", Fin(3), Call(Beta, At(c, Call("Fin.succ", j))))));
     }
 
     private static Formula Compatible()
     {
         var p = V("p"); var c = V("c"); var j = V("j");
-        return All("p", BoundaryType(), All("c", Name(Root + "Row"),
+        return All("p", BoundaryType(), All("c", Name(RowOwner + "Row"),
             Eq(Call(Root + "compatible", p, c), All("j", Fin(3),
                 Ne(At(p, j), Call(Beta, At(c, Call("Fin.castSucc", j))))))));
     }
@@ -154,8 +140,9 @@ internal sealed class HardinA233252TriangleStripDocument : IScribeDocumentDefini
         var p0 = At(p, Typed(D(0), Fin(3))); var p2 = At(p, Typed(D(2), Fin(3)));
         return All("s", Name(Scanner + "Seen"), All("p", BoundaryType(),
             Eq(Call(Root + "boundaryClass", s, p),
-                Conditional(Proj(s, false), Typed(D(1), Fin(3)),
-                    Conditional(Eq(p0, p2), Typed(D(1), Fin(3)), Typed(D(2), Fin(3)))))));
+                Conditional(Proj(s, false),
+                    Conditional(Eq(p0, p2), Typed(D(1), Fin(3)), Typed(D(2), Fin(3))),
+                    Typed(D(0), Fin(3))))));
     }
 
     private static Formula Transfer()
@@ -169,7 +156,7 @@ internal sealed class HardinA233252TriangleStripDocument : IScribeDocumentDefini
     private static Formula ClassCondition()
     {
         var s = V("s"); var p = V("p"); var k = V("k"); var c = V("c");
-        return And(Call(Root + "rowLegal", c), And(Call(Root + "compatible", p, c),
+        return And(Call(RowOwner + "rowLegal", c), And(Call(Root + "compatible", p, c),
             And(Call(Scanner + "good", s, c), Eq(Call(Root + "boundaryClass",
                 Call(Scanner + "finish", s, c), Call(Root + "pairs", c)), k))));
     }
@@ -178,7 +165,7 @@ internal sealed class HardinA233252TriangleStripDocument : IScribeDocumentDefini
     {
         return All("s", Name(Scanner + "Seen"), All("p", BoundaryType(),
             All("k", Fin(3), Eq(Call(Root + "classCount", V("s"), V("p"), V("k")),
-                SumOver("c", Name(Root + "Row"),
+                SumOver("c", Name(RowOwner + "Row"),
                     Typed(Conditional(ClassCondition(), D(1), D(0)), Name("Int")))))));
     }
 
@@ -186,11 +173,11 @@ internal sealed class HardinA233252TriangleStripDocument : IScribeDocumentDefini
     {
         var c = V("c"); var k = V("k"); var flags = Pair(Name("Bool.false"), Name("Bool.false"));
         var condition = And(Eq(At(c, Typed(D(0), Fin(4))), Typed(D(0), Fin(6))),
-            And(Call(Root + "rowLegal", c), And(Call(Scanner + "good", flags, c),
+            And(Call(RowOwner + "rowLegal", c), And(Call(Scanner + "good", flags, c),
                 Eq(Call(Root + "boundaryClass", Call(Scanner + "finish", flags, c),
                     Call(Root + "pairs", c)), k))));
         return All("k", Fin(3), Eq(Call(Root + "firstCount", k),
-            SumOver("c", Name(Root + "Row"),
+            SumOver("c", Name(RowOwner + "Row"),
                 Typed(Conditional(condition, D(1), D(0)), Name("Int")))));
     }
 
