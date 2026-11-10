@@ -296,7 +296,10 @@ private theorem projective_reindex
         induction a using MonoidAlgebra.induction_on with
         | of c => simp [r, τ, MonoidAlgebra.domCongr, MonoidAlgebra.of_apply]
         | add a b ha hb => simp [map_add, LinearMap.add_apply, ha, hb]
-        | smul s a ha => simp [map_smul, LinearMap.smul_apply, ha] }
+        | smul s a ha =>
+          have hr : r (s • a) = s • r a :=
+            (MonoidAlgebra.domCongr (F p) (F p) e.symm).map_smul s a
+          simp only [map_smul, LinearMap.smul_apply, ha, hr] }
   letI := hσ
   exact Module.Projective.of_equiv eV
 
@@ -418,6 +421,7 @@ private theorem top_injective : Function.Injective ((top (p := p))) := by
   exact sub_eq_zero.mp ((smul_eq_zero.mp he).resolve_right (norm_ne_zero (p := p)))
 
 set_option maxHeartbeats 800000 in
+-- Normalizing the scalar restrictions and matrix action unfolds both module structures.
 private theorem top_factorization (B : M₂ (A p)) :
     (matrixOperator (p := p)) ((nu (p := p)) • B) =
       (top (p := p)).comp ((Matrix.toLin' ((constantMatrix (p := p)) B)).comp (bottom (p := p))) := by
@@ -511,8 +515,13 @@ private theorem norm_rank_two
     ext i
     simp [matrixOperator, Matrix.toLin'_apply, Matrix.mulVec, dotProduct]
   rw [range_rank_equivalent (cyclic_coordinates σ hσ hd) _ _ hc,
-    (top_rank_identity (p := p)), map_one, Matrix.toLin'_one]
-  simpa only [LinearMap.range_id, finrank_top] using (Module.finrank_fintype_fun_eq_card (F p) (η := Fin 2))
+    (top_rank_identity (p := p)), map_one]
+  have hfull : LinearMap.range (Matrix.toLin' (1 : M₂ (F p))) = ⊤ := by
+    apply LinearMap.range_eq_top.mpr
+    intro x
+    exact ⟨x, by simp⟩
+  rw [hfull, finrank_top]
+  simp
 
 private theorem constant_kernel_factor (B : M₂ (A p))
     (hB : (constantMatrix (p := p)) B = 0) : ∃ Q : M₂ (A p), B = (t (p := p)) • Q := by
@@ -616,8 +625,9 @@ private theorem blockAction_distinguished
       commutingAction ρ s (Multiplicative.ofAdd s) v = ((z (p := p)) : A p) • v := by
     apply (Representation.asModuleEquiv (ρ.comp (direction s))).injective
     simp [commutingAction, Representation.asModuleEquiv_map_smul, z, generator, direction]
+    rfl
   rw [he, map_smul, Basis.repr_self]
-  simp [Matrix.one_apply, Finsupp.single_apply]
+  simp [Matrix.one_apply, Finsupp.single_apply, eq_comm]
 
 private theorem block_norm_rank
     {V : Type uV} [AddCommGroup V] [Module (F p) V]
