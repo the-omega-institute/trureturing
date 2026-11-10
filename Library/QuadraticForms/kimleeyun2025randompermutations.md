@@ -22,6 +22,15 @@ $n$ and calls it the original matrix AM-GM. Its later future-work sentence
 concerns a separate second-moment comparison; it is not an explicit statement
 that this exact first-moment restriction remained unresolved.
 
+## Verified locator
+
+Inspected arXiv v1: https://arxiv.org/abs/2505.23152v1,
+DOI 10.48550/arXiv.2505.23152. The source passages are Assumption 2.2,
+pp.3–4; Section 4.3, p.9; and Appendix E.2, pp.50–51. These locators
+bind only the inspected arXiv version. Conference-version equality remains
+unverified. Appendix E.2's later future-work wording concerns second moments,
+not the displayed first-moment comparison.
+
 For ordinary scalar source correspondence, put $C=X^\top X$, take its
 symmetric positive-definite square root $S$, and set $U=XS^{-1}$.
 Then $U$ is orthogonal and $X=US$; the same orthogonal conjugation carries
