@@ -26,8 +26,8 @@ internal sealed class HardinA233257StripDocument : IScribeDocumentDefinition
             Node("finite_certificate", "The empty and one-column coefficients", InitialFormula(), true),
             Node("closed_form", "Barker's closed form", ClosedFormula(), true),
             Node("recurrence", "Hardin's integer recurrence", RecurrenceFormula(), true),
-            Node("result", "Barker's generating function with the closed form and recurrence",
-                And(SeriesFormula(), And(ClosedFormula(), RecurrenceFormula())), true),
+            Resolution("result", "Barker's generating function with the closed form and recurrence",
+                And(SeriesFormula(), And(ClosedFormula(), RecurrenceFormula()))),
             Paragraph(Text("The pair-label map D5.S3.Observer.Separation.BooleanRankThreeK4.beta "
                 + "turns every bond into label inequality. For width n+2, the last-column transfer "
                 + "distinguishes equal and unequal labels within a column. Its matrix has rows "
@@ -54,6 +54,15 @@ internal sealed class HardinA233257StripDocument : IScribeDocumentDefinition
             theorem ? AssessedProvenance.FromRepo(Source) : AssessedProvenance.FromLiterature(Source),
             Blocks(Paragraph(Text(title + "."))),
             theorem ? DescribeRole.Theorem : DescribeRole.Definition);
+
+    private static DocumentBlock Resolution(string name, string title, Formula formula) =>
+        Describe.Lean(DescribeId.Create(name.Replace("_", "-").ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(title),
+            StatementSource.FromAuthor(Disp(formula)),
+            AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(title + "."))),
+            DescribeRole.Theorem,
+            new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233257"), ResolutionKind.Proved));
 
     private static Formula N => Q("Nat");
     private static Formula Z => Q("Int");
