@@ -367,5 +367,233 @@ private lemma rectComp_hOp_shuffle_sub (p q : ℕ) :
       fun r _ => residue μ r (Or.inl (Finset.ne_of_mem_erase hμ))) a ha'
   · exact RectNorm.sum _ _ (fun r hr => residue t r (Or.inr (Finset.ne_of_mem_erase hr))) a ha'
 
+
+private lemma primeHom_succ {s n : ℕ} (f : (⦋n⦌ : SimplexCategory) ⟶ ⦋s⦌)
+    (i : Fin (n + 1)) : (primeHom f).toOrderHom i.succ = (f.toOrderHom i).succ := by
+  apply Fin.ext
+  have h : (f.toOrderHom i).val + 1 ≤ s + 1 := Fin.isLt _
+  simp [primeHom, Nat.min_eq_left h]
+
+private def rectShuffleLetterAt {p q n : ℕ} (e : n = p + q) (μ : Shuffle p q) :
+    RectLetter p q n :=
+  ⟨eqToHom (congrArg SimplexCategory.mk e) ≫ shuffleFstHom μ,
+    eqToHom (congrArg SimplexCategory.mk e) ≫ shuffleSndHom μ⟩
+
+private lemma rectShuffleLetterAt_self {p q : ℕ} (μ : Shuffle p q) :
+    rectShuffleLetterAt rfl μ = rectShuffleLetter μ := by
+  simp [rectShuffleLetterAt, rectShuffleLetter]
+
+private noncomputable def rectShuffleAt {p q n : ℕ} (e : n = p + q) : RectOp p q n :=
+  ∑ μ : Shuffle p q, Finsupp.single (rectShuffleLetterAt e μ) μ.sign
+
+private def leftPrefix {p q n : ℕ} (a : RectLetter p q n) : RectLetter (p + 1) q (n + 1) :=
+  ⟨primeHom a.1, primeHom a.2 ≫ SimplexCategory.σ 0⟩
+
+private def rightPrefix {p q n : ℕ} (a : RectLetter p q n) : RectLetter p (q + 1) (n + 1) :=
+  ⟨primeHom a.1 ≫ SimplexCategory.σ 0, primeHom a.2⟩
+
+private lemma insertLeftIndex_zero {p q : ℕ} (ν : Shuffle p q) :
+    ν.insertLeftIndex 0 = 0 := by
+  apply Fin.ext
+  simp [Shuffle.insertLeftIndex]
+
+private lemma insertRightIndex_zero {p q : ℕ} (ν : Shuffle p q) :
+    ν.insertRightIndex 0 = 0 := by
+  apply Fin.ext
+  simp [Shuffle.insertRightIndex]
+
+private lemma first_left_sign {p q : ℕ} (ν : Shuffle p q) :
+    (ν.insertLeftStep 0).sign = ν.sign := by
+  simpa [insertLeftIndex_zero] using Shuffle.sign_insertLeftStep ν 0
+
+private lemma first_right_sign {p q : ℕ} (ν : Shuffle p q) :
+    (ν.insertRightStep 0).sign = (-1 : ℤ)^p * ν.sign := by
+  simpa [insertRightIndex_zero] using Shuffle.sign_insertRightStep ν 0
+
+private lemma first_left_letter {p q n : ℕ} (e : n = p + q)
+    (E : n + 1 = (p + 1) + q) (ν : Shuffle p q) :
+    rectShuffleLetterAt E (ν.insertLeftStep 0) = leftPrefix (rectShuffleLetterAt e ν) := by
+  apply Prod.ext <;> apply SimplexCategory.Hom.ext <;> apply OrderHom.ext <;> funext i <;>
+    refine Fin.cases ?_ (fun j => ?_) i
+  · apply Fin.ext
+    simp [rectShuffleLetterAt, leftPrefix, primeHom, shuffleFstHom,
+      SimplexCategory.comp_toOrderHom, SimplexCategory.eqToHom_toOrderHom, Shuffle.apply_zero]
+  · apply Fin.ext
+    simp only [rectShuffleLetterAt, leftPrefix, primeHom_succ, SimplexCategory.comp_toOrderHom,
+      OrderHom.comp_coe, Function.comp_apply, shuffleFstHom, SimplexCategory.Hom.toOrderHom_mk,
+      OrderHom.fst_coe, SimplexCategory.eqToHom_toOrderHom, Fin.castOrderIso_apply,
+      OrderEmbedding.toOrderHom_coe, OrderIso.coe_toOrderEmbedding, Fin.val_succ]
+    change (Shuffle.insertLeftStepFun ν 0 _).1.val = _
+    simp [Shuffle.insertLeftStepFun, insertLeftIndex_zero]
+    rfl
+  · apply Fin.ext
+    simp [rectShuffleLetterAt, leftPrefix, primeHom, shuffleSndHom, SimplexCategory.σ,
+      SimplexCategory.comp_toOrderHom, SimplexCategory.eqToHom_toOrderHom, Shuffle.apply_zero]
+  · simp only [rectShuffleLetterAt, leftPrefix, primeHom_succ, SimplexCategory.comp_toOrderHom,
+      OrderHom.comp_coe, Function.comp_apply, shuffleSndHom, SimplexCategory.Hom.toOrderHom_mk,
+      OrderHom.snd_coe, SimplexCategory.eqToHom_toOrderHom, Fin.castOrderIso_apply,
+      OrderEmbedding.toOrderHom_coe, OrderIso.coe_toOrderEmbedding]
+    change (Shuffle.insertLeftStepFun ν 0 _).2 = (0 : Fin (q + 1)).predAbove (Fin.succ _)
+    rw [Fin.predAbove_zero_succ]
+    simp [Shuffle.insertLeftStepFun, insertLeftIndex_zero]
+    rfl
+
+private lemma first_right_letter {p q n : ℕ} (e : n = p + q)
+    (E : n + 1 = p + (q + 1)) (ν : Shuffle p q) :
+    rectShuffleLetterAt E (ν.insertRightStep 0) = rightPrefix (rectShuffleLetterAt e ν) := by
+  apply Prod.ext <;> apply SimplexCategory.Hom.ext <;> apply OrderHom.ext <;> funext i <;>
+    refine Fin.cases ?_ (fun j => ?_) i
+  · apply Fin.ext
+    simp [rectShuffleLetterAt, rightPrefix, primeHom, shuffleFstHom, SimplexCategory.σ,
+      SimplexCategory.comp_toOrderHom, SimplexCategory.eqToHom_toOrderHom, Shuffle.apply_zero]
+  · simp only [rectShuffleLetterAt, rightPrefix, primeHom_succ, SimplexCategory.comp_toOrderHom,
+      OrderHom.comp_coe, Function.comp_apply, shuffleFstHom, SimplexCategory.Hom.toOrderHom_mk,
+      OrderHom.fst_coe, SimplexCategory.eqToHom_toOrderHom, Fin.castOrderIso_apply,
+      OrderEmbedding.toOrderHom_coe, OrderIso.coe_toOrderEmbedding]
+    change (Shuffle.insertRightStepFun ν 0 _).1 = (0 : Fin (p + 1)).predAbove (Fin.succ _)
+    rw [Fin.predAbove_zero_succ]
+    simp [Shuffle.insertRightStepFun, insertRightIndex_zero]
+    rfl
+  · apply Fin.ext
+    simp [rectShuffleLetterAt, rightPrefix, primeHom, shuffleSndHom,
+      SimplexCategory.comp_toOrderHom, SimplexCategory.eqToHom_toOrderHom, Shuffle.apply_zero]
+  · apply Fin.ext
+    simp only [rectShuffleLetterAt, rightPrefix, primeHom_succ, SimplexCategory.comp_toOrderHom,
+      OrderHom.comp_coe, Function.comp_apply, shuffleSndHom, SimplexCategory.Hom.toOrderHom_mk,
+      OrderHom.snd_coe, SimplexCategory.eqToHom_toOrderHom, Fin.castOrderIso_apply,
+      OrderEmbedding.toOrderHom_coe, OrderIso.coe_toOrderEmbedding, Fin.val_succ]
+    change (Shuffle.insertRightStepFun ν 0 _).2.val = _
+    simp [Shuffle.insertRightStepFun, insertRightIndex_zero]
+    rfl
+
+private lemma firstLeft_nonDiag {p q : ℕ} (μ : Shuffle (p + 1) q)
+    (h : μ.isLeftStep 0) : ∃ ν : Shuffle p q, ν.insertLeftStep 0 = μ := by
+  let r : Fin (p + q + 2) := 0
+  have hV : μ.isLeftVertex (r.cast (by omega)) := by
+    constructor
+    · intro k hk
+      have he := congrArg Fin.val hk
+      change k.val + 1 = 0 at he
+      omega
+    · intro k hk
+      have e : k = 0 := Fin.ext (congrArg (fun x => x.val) hk)
+      simpa only [e] using h
+  refine ⟨μ.removeLeft r hV, ?_⟩
+  have H := Shuffle.insertLeft_removeLeft hV
+  simpa [r, Shuffle.apply_zero] using H
+
+private lemma firstRight_nonDiag {p q : ℕ} (μ : Shuffle p (q + 1))
+    (h : ¬ μ.isLeftStep 0) : ∃ ν : Shuffle p q, ν.insertRightStep 0 = μ := by
+  have h' : μ.swap.isLeftStep 0 := by
+    rw [Shuffle.isLeftStep, Shuffle.swap_apply_fst, Shuffle.swap_apply_fst]
+    have hiff := μ.shuffle_fst_lt_iff_not_snd_lt 0
+    simp only [Shuffle.isLeftStep] at h
+    have e₀ : (Fin.cast (by omega) ((0 : Fin (q + 1 + p)).castSucc) : Fin (p + (q + 1) + 1)) =
+        (0 : Fin (p + (q + 1))).castSucc := Fin.ext rfl
+    have e₁ : (Fin.cast (by omega) ((0 : Fin (q + 1 + p)).succ) : Fin (p + (q + 1) + 1)) =
+        (0 : Fin (p + (q + 1))).succ := Fin.ext rfl
+    rw [e₀, e₁]
+    by_contra hn
+    exact h (hiff.mpr hn)
+  obtain ⟨ν, hν⟩ := firstLeft_nonDiag μ.swap h'
+  refine ⟨ν.swap, (Shuffle.swapEquiv _ _).injective ?_⟩
+  change (ν.swap.insertRightStep 0).swap = μ.swap
+  rwa [Shuffle.insertRightStep_eq_swap, Shuffle.swap_swap]
+
+private lemma firstLeft_isLeft {p q : ℕ} (ν : Shuffle p q) :
+    (ν.insertLeftStep 0).isLeftStep 0 := by
+  simpa [insertLeftIndex_zero] using
+    Shuffle.insertLeftStep_isLeftStep_at ν 0 (by rw [insertLeftIndex_zero]; simp)
+
+private lemma firstRight_isRight {p q : ℕ} (ν : Shuffle p q) :
+    ¬ (ν.insertRightStep 0).isLeftStep 0 := by
+  simpa [insertRightIndex_zero] using Shuffle.insertRightStep_not_isLeftType ν 0
+
+private noncomputable def shuffleFirstEquiv (p q : ℕ) :
+    Sum (Shuffle p (q + 1)) (Shuffle (p + 1) q) ≃ Shuffle (p + 1) (q + 1) :=
+  Equiv.ofBijective (Sum.elim (fun ν => ν.insertLeftStep 0) (fun ν => ν.insertRightStep 0)) (by
+    constructor
+    · intro a b h
+      cases a with
+      | inl a =>
+        cases b with
+        | inl b =>
+          exact congrArg Sum.inl (Shuffle.insertLeftStep_injective 0 0 a b h
+            (by simp [insertLeftIndex_zero])).2
+        | inr b =>
+          change a.insertLeftStep 0 = b.insertRightStep 0 at h
+          exact False.elim (firstRight_isRight b (h ▸ firstLeft_isLeft a))
+      | inr a =>
+        cases b with
+        | inl b =>
+          change a.insertRightStep 0 = b.insertLeftStep 0 at h
+          exact False.elim (firstRight_isRight a (h.symm ▸ firstLeft_isLeft b))
+        | inr b =>
+          exact congrArg Sum.inr (Shuffle.insertRightStep_injective 0 0 a b h
+            (by simp [insertRightIndex_zero])).2
+    · intro μ
+      by_cases h : μ.isLeftStep 0
+      · obtain ⟨ν, hν⟩ := firstLeft_nonDiag μ h
+        exact ⟨Sum.inl ν, hν⟩
+      · obtain ⟨ν, hν⟩ := firstRight_nonDiag μ h
+        exact ⟨Sum.inr ν, hν⟩)
+
+/-- The signed first-step split, with signs inherited from the actual insertion
+identities. The two axes have just their one available first step. -/
+private lemma rectShuffleAt_first {p q n : ℕ} (e : n + 1 = (p + 1) + (q + 1)) :
+    rectShuffleAt e =
+      Finsupp.mapDomain leftPrefix (rectShuffleAt (show n = p + (q + 1) by omega)) +
+        ((-1 : ℤ) ^ (p + 1)) •
+          Finsupp.mapDomain rightPrefix (rectShuffleAt (show n = (p + 1) + q by omega)) := by
+  classical
+  rw [rectShuffleAt, ← (shuffleFirstEquiv p q).sum_comp, Fintype.sum_sum_type]
+  simp only [rectShuffleAt, Finsupp.mapDomain_finsetSum, Finsupp.mapDomain_single,
+    Finset.smul_sum, Finsupp.smul_single', smul_eq_mul]
+  congr 1
+  · apply Finset.sum_congr rfl
+    intro ν _
+    change Finsupp.single (rectShuffleLetterAt e (ν.insertLeftStep 0))
+      (ν.insertLeftStep 0).sign = _
+    rw [first_left_letter, first_left_sign]
+  · apply Finset.sum_congr rfl
+    intro ν _
+    change Finsupp.single (rectShuffleLetterAt e (ν.insertRightStep 0))
+      (ν.insertRightStep 0).sign = _
+    rw [first_right_letter, first_right_sign]
+
+private lemma rectShuffleAt_first_left_axis {p n : ℕ} (e : n + 1 = (p + 1) + 0) :
+    rectShuffleAt e =
+      Finsupp.mapDomain leftPrefix (rectShuffleAt (show n = p + 0 by omega)) := by
+  classical
+  let e₀ : Shuffle p 0 ≃ Shuffle (p + 1) 0 :=
+    Equiv.ofBijective (fun ν => ν.insertLeftStep 0) (by
+      constructor
+      · intro a b _; exact Subsingleton.elim a b
+      · intro a; exact ⟨default, Subsingleton.elim _ a⟩)
+  rw [rectShuffleAt, ← e₀.sum_comp]
+  simp only [rectShuffleAt, Finsupp.mapDomain_finsetSum, Finsupp.mapDomain_single]
+  apply Finset.sum_congr rfl
+  intro ν _
+  change Finsupp.single (rectShuffleLetterAt e (ν.insertLeftStep 0))
+    (ν.insertLeftStep 0).sign = _
+  rw [first_left_letter, first_left_sign]
+
+private lemma rectShuffleAt_first_right_axis {q n : ℕ} (e : n + 1 = 0 + (q + 1)) :
+    rectShuffleAt e =
+      Finsupp.mapDomain rightPrefix (rectShuffleAt (show n = 0 + q by omega)) := by
+  classical
+  let e₀ : Shuffle 0 q ≃ Shuffle 0 (q + 1) :=
+    Equiv.ofBijective (fun ν => ν.insertRightStep 0) (by
+      constructor
+      · intro a b _; exact Subsingleton.elim a b
+      · intro a; exact ⟨default, Subsingleton.elim _ a⟩)
+  rw [rectShuffleAt, ← e₀.sum_comp]
+  simp only [rectShuffleAt, Finsupp.mapDomain_finsetSum, Finsupp.mapDomain_single]
+  apply Finset.sum_congr rfl
+  intro ν _
+  change Finsupp.single (rectShuffleLetterAt e (ν.insertRightStep 0))
+    (ν.insertRightStep 0).sign = _
+  rw [first_right_letter, first_right_sign, pow_zero, one_mul]
+
 end BisimplicialObject
 end D5.S3.HomologicalAlgebra.EilenbergZilber
