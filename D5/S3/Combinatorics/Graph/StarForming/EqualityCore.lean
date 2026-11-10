@@ -20,13 +20,13 @@ namespace D5.S3.Combinatorics.Graph.StarForming.EqualityCore
 open StarFormingDissociationRefutation Regular
 open scoped BigOperators
 
-private def edges : Finset (Fin 20 × Fin 20) :=
+def edges : Finset (Fin 20 × Fin 20) :=
   {(0,1),(1,2),(2,3),(3,4),(4,5),(12,13),(13,14),(14,15),(15,16),(16,17),
    (0,6),(1,7),(2,8),(3,9),(4,10),(5,11),
    (6,12),(7,13),(8,14),(9,15),(10,16),(11,17),
    (6,18),(8,18),(10,18),(7,19),(9,19),(11,19)}
 
-private abbrev internal (v w : Fin 20) : Prop := (v,w) ∈ edges ∨ (w,v) ∈ edges
+abbrev internal (v w : Fin 20) : Prop := (v,w) ∈ edges ∨ (w,v) ∈ edges
 
 variable {I : Type} [Fintype I] [DecidableEq I]
 
@@ -58,7 +58,7 @@ instance (next : Equiv.Perm I) : DecidableRel (graph next).Adj := fun x y =>
     (x.2 = 17 ∧ y.2 = 12 ∧ next x.1 = y.1) ∨
     (x.2 = 12 ∧ y.2 = 17 ∧ next y.1 = x.1)))
 
-private def neighbors (next : Equiv.Perm I) (x : I × Fin 20) : Finset (I × Fin 20) :=
+def neighbors (next : Equiv.Perm I) (x : I × Fin 20) : Finset (I × Fin 20) :=
   let i := x.1
   match x.2.val with
   | 0 => {(next.symm i,5),(i,1),(i,6)}
@@ -84,7 +84,7 @@ private def neighbors (next : Equiv.Perm I) (x : I × Fin 20) : Finset (I × Fin
 
 set_option maxHeartbeats 1200000 in
 -- This proves all twenty symbolic rows; the index type and permutation stay arbitrary.
-private theorem mem_neighbors (next : Equiv.Perm I) (x y : I × Fin 20) :
+theorem mem_neighbors (next : Equiv.Perm I) (x y : I × Fin 20) :
     y ∈ neighbors next x ↔ (graph next).Adj x y := by
   rcases x with ⟨i,v⟩
   rcases y with ⟨j,w⟩
@@ -118,19 +118,19 @@ theorem bipartite (next : Equiv.Perm I) : (graph next).Colorable 2 := by
   have hn := hc x y h
   cases ha : color x.2 <;> cases hb : color y.2 <;> simp_all
 
-private abbrev selected (v : Fin 20) : Prop := v.val < 12
-private abbrev dissociation (v : Fin 20) : Prop :=
+abbrev selected (v : Fin 20) : Prop := v.val < 12
+abbrev dissociation (v : Fin 20) : Prop :=
   (6 ≤ v.val ∧ v.val < 12) ∨ v = 1 ∨ v = 3 ∨ v = 5 ∨ v = 12 ∨ v = 14 ∨ v = 16
 
-private def S : Finset (I × Fin 20) := Finset.univ.product (Finset.univ.filter selected)
-private def D : Finset (I × Fin 20) := Finset.univ.product (Finset.univ.filter dissociation)
+def S : Finset (I × Fin 20) := Finset.univ.product (Finset.univ.filter selected)
+def D : Finset (I × Fin 20) := Finset.univ.product (Finset.univ.filter dissociation)
 
 private theorem filter_neighbors (next : Equiv.Perm I) (A : Finset (I × Fin 20)) (x) :
     A.filter ((graph next).Adj x) = (neighbors next x).filter (· ∈ A) := by
   ext y
   simp [mem_neighbors,and_comm]
 
-private theorem D_valid (next : Equiv.Perm I) : IsKIndependent (graph next) 2 D := by
+theorem D_valid (next : Equiv.Perm I) : IsKIndependent (graph next) 2 D := by
   rintro ⟨i,v⟩ hv
   rw [filter_neighbors]
   fin_cases v <;>
@@ -155,7 +155,7 @@ private theorem unique_selected_U (next : Equiv.Perm I) (i : I) (n : Fin 6)
   fin_cases n <;> simp_all [neighbors,selected] <;>
     rcases ha with ⟨rfl,rfl⟩ | ⟨rfl,rfl⟩ | ⟨rfl,rfl⟩ <;> simp_all
 
-private theorem S_minimal (next : Equiv.Perm I) :
+theorem S_minimal (next : Equiv.Perm I) :
     IsMinimalStarForming (graph next) 2 S := by
   apply (regular_minimal_iff _ _).mp
   have hs (x : I × Fin 20) : x ∈ (S : Finset (I × Fin 20)) ↔ selected x.2 := by
@@ -209,11 +209,11 @@ private theorem S_minimal (next : Equiv.Perm I) :
       · exact hl.2 (hlh.trans he.symm)
       · exact hc.2 he.symm
 
-private theorem selected_card : (S : Finset (I × Fin 20)).card = 12 * Fintype.card I := by
+theorem selected_card : (S : Finset (I × Fin 20)).card = 12 * Fintype.card I := by
   have hc : (Finset.univ.filter selected).card = 12 := by decide +kernel
   simp [S,Finset.product_eq_sprod,hc,Nat.mul_comm]
 
-private theorem dissociation_card : (D : Finset (I × Fin 20)).card = 12 * Fintype.card I := by
+theorem dissociation_card : (D : Finset (I × Fin 20)).card = 12 * Fintype.card I := by
   have hc : (Finset.univ.filter dissociation).card = 12 := by decide +kernel
   simp [D,Finset.product_eq_sprod,hc,Nat.mul_comm]
 
