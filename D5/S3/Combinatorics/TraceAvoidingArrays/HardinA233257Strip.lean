@@ -7,9 +7,10 @@
    digest: Closed form and generating function for the two-row antidiagonal strip. -/
 /-
 admission_basis: open-problem-resolution (#28792; Proved)
-escape_witness: none; transfer and finite cases normalize; two-label classification is a
-  specialization of frozen HardinA233177Ladder.two_label_classification after copying the
-  upper row to four rows and recovering the lower row by finite three-label constraints.
+escape_witness: none; finite cases and transfer certificates normalize, matrix powers
+  apply Mathlib's eigenvector power theorem, and two-label classification specializes
+  frozen HardinA233177Ladder.two_label_classification after copying the upper row to
+  four rows and recovering the lower row by finite three-label constraints.
 Legal: proof_shape=bind-only; consumers=a, literal_card
 decLegal: proof_shape=bind-only; consumers=a
 a: proof_shape=bind-only; consumers=literal_card, finite_certificate, weighted_count
@@ -46,11 +47,14 @@ result: proof_shape=bind-only; consumers=terminal result
 -/
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix
 import D5.S3.Observer.Separation.BooleanRankThreeK4
 import Mathlib.Tactic
 import Mathlib.RingTheory.PowerSeries.Basic
+import Mathlib.LinearAlgebra.Eigenspace.Basic
+import Mathlib.LinearAlgebra.Matrix.ToLin
 
 /-! Literal normalization, canonical pair patterns and the last-column transfer. -/
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233257Strip
@@ -175,16 +179,21 @@ private theorem proper_count (n : ℕ) :
       intro s
       rw [← transfer_certificate.2 s]) n
   rw [hbridge]
-  clear hbridge E
-  induction n with
-  | zero => norm_num [T, v, dotProduct, Matrix.mulVec, Fin.sum_univ_two, Matrix.one_apply]
-  | succ n ih =>
-    rw [pow_succ', ← Matrix.mulVec_mulVec]
-    simp only [dotProduct, Matrix.mulVec, Fin.sum_univ_two, v, T,
-      Matrix.of_apply, Matrix.cons_val_zero, Matrix.cons_val_one,
-      Matrix.cons_val_fin_one] at ih ⊢
-    rw [pow_succ]
-    linear_combination 3 * ih
+  have hv : (Matrix.toLin' T.transpose).HasUnifEigenvector 3 1 v := by
+    constructor
+    · apply Module.End.mem_genEigenspace_one.mpr
+      ext i
+      fin_cases i <;>
+        norm_num [Matrix.toLin'_apply, T, v, Matrix.mulVec, dotProduct, Fin.sum_univ_two]
+    · intro h
+      have hzero := congrFun h 0
+      norm_num [v] at hzero
+  have hpow : (T ^ n).transpose.mulVec v = (3 : ℤ) ^ n • v := by
+    simpa only [← Matrix.toLin'_pow, Matrix.toLin'_apply, Matrix.transpose_pow] using
+      hv.pow_apply n
+  rw [← Matrix.dotProduct_transpose_mulVec, hpow]
+  norm_num [dotProduct, Fin.sum_univ_two, v, Pi.smul_apply, smul_eq_mul]
+  ring
 
 /-- The empty coefficient and the one-column literal count. -/
 theorem finite_certificate : a 0 = 0 ∧ a 1 = 3 := by
@@ -290,31 +299,20 @@ private theorem two_classification {n : ℕ} (P : Fin 2 × Fin (n+2) → Fin 3)
       rw [he] at hh
       exact unique _ _ (P (1, ⟨j.val-1, hk⟩)) (hd _) (hd _) (hd _)
         (Ne.symm (hh.1 1)) (Ne.symm hh.2)
-  let b := P (0, 0)
-  let c := P (0, 1)
-  have hbc : b ≠ c := (hp 0 (by change 0+1 < n+2; omega)).1 0
-  have row (k : ℕ) (hk : k < n+2) :
-      P (0, ⟨k, hk⟩) = if k % 2 = 0 then b else c := by
-    induction k with
-    | zero => rfl
-    | succ k ih =>
-      have hk' : k < n+2 := by omega
-      have hh := (hp ⟨k, hk'⟩ hk).1 0
-      rw [ih hk'] at hh
-      have hpar : (k+1) % 2 = 0 ↔ ¬ k % 2 = 0 := by omega
-      by_cases he : k % 2 = 0
-      · simp only [he, ite_true] at hh
-        simpa [hpar, he] using unique (P (0, ⟨k+1, hk⟩)) c b
-          (hd _) (hd _) (hd _) (Ne.symm hh) (Ne.symm hbc)
-      · simp only [he, ite_false] at hh
-        simpa [hpar, he] using unique (P (0, ⟨k+1, hk⟩)) b c
-          (hd _) (hd _) (hd _) (Ne.symm hh) hbc
+  let Q : Fin 4 × Fin (n+2) → Fin 3 := fun p => P (0, p.2)
+  have hQ : HardinA233177PairTransfer.Proper Q := by
+    intro j hj r s _
+    exact (hp j hj).1 0
+  obtain ⟨b, c, hbc, hQalt⟩ := HardinA233177Ladder.two_label_classification
+    (by omega) Q hQ d (fun p => hd (0, p.2))
+  have row (j : Fin (n+2)) : P (0, j) = alt (n+2) b c (0, j) :=
+    congrFun hQalt (0, j)
   refine ⟨b, c, hbc, ?_⟩
   funext p
   rcases p with ⟨r, j⟩
   fin_cases r
-  · exact row j.val j.isLt
-  · exact (rows j).trans (row j.val j.isLt)
+  · exact row j
+  · exact (rows j).trans (row j)
 
 private theorem two_count (n : ℕ) :
     Nat.card {P : Fin 2 × Fin (n+2) → Fin 3 // Proper P ∧ used P = 2} = 6 := by
