@@ -1,0 +1,80 @@
+**证明 183.2 的续段。** 在 PB 中准确取 $(a,b_0,c_0)=(b,\mu u,\mu b)$。反对称性和比例输入零值给 $D(b,\mu u)=-h$、$D(b,\mu b)=0$。置
+
+$$
+x=\mu(u-b^2)-h,\qquad y=2\mu b.
+$$
+
+正外层为 $(x,y)$，负外层第二标签为零，(183.1) 给
+
+$$
+\boxed{D(x,y)=2\mu h.}
+\tag{184.1}
+$$
+
+这里使用准确 PB，未展开任何未知 $D$ 的缩放输入。
+
+令 $J=\operatorname{JB}(u,b,h)\subset X$ 为由两个元素及单位生成的闭 JB 子代数。Hanche-Olsen–Størmer 7.2.5 的 JB 版 Shirshov–Cohn 定理使 $J$ 可忠实、保序地表示为含单位 JC 代数。在其环境复 C* 代数中，(183.10) 成为 $bh=-hb$，所以 $b^2$ 与 $h$ 交换。这里只读取输出已经确定属于 $J$ 的两张原表 $(\mu u,b,h)$ 和 $(x,y,2\mu h)$。它们的每个 P2 二次型元素均在 $J\cap X_+=J_+$，故该表示中的任意数学向量读取合法；不要求一般 $D(J\cap E,J\cap E)$ 在 $J$ 中闭合。
+
+取交换 C* 子代数 $C^*(u,b^2,h)$ 的任意字符 $\chi$，记 $t=\chi(b^2)\ge0$、$z=\chi(h)$。若 $z\ne0$，将字符延为环境 C* 态，在其 GNS 循环单位向量 $\xi$ 上有
+
+$$
+h\xi=z\xi,\qquad b^2\xi=t\xi.
+$$
+
+第一张原表的 P2 给 $|z|\le|\mu|\sqrt t$，故 $t>0$。反交换关系使 $b\xi$ 与 $\xi$ 正交。二维空间 $K=\operatorname{span}_{\mathbb C}\{\xi,b\xi/\sqrt t\}$ 在 $b,h$ 下不变，在这个有序正交基中
+
+$$
+\begin{aligned}
+b|_K&=\sqrt t\,\sigma_x,& h|_K&=z\sigma_z,\\
+x|_K&=\mu(1-t)I-z\sigma_z,& y|_K&=2\mu\sqrt t\,\sigma_x.
+\end{aligned}
+\tag{184.2}
+$$
+
+对实单位向量 $(\cos\theta,\sin\theta)$ 读取第二张固定原表 (184.1)。令 $q=\cos2\theta$。两个实输入作用向量的面积为 $2\mu\sqrt t\,[\mu(1-t)q-z]$，而旧输出读取为 $2\mu zq$，所以 P2 准确给
+
+$$
+|zq|\le\sqrt t\,|\mu(1-t)q-z|
+\quad(-1\le q\le1),
+\qquad |z|\le|\mu|\sqrt t.
+\tag{184.3}
+$$
+
+设 $A_0=\mu(1-t)\ne0$。若 $0<|z|\le|A_0|$，取 $q=z/A_0$，右端为零而左端非零。若 $|z|>|A_0|$，取 $q=\operatorname{sgn}(A_0z)$，得到 $|z|\le\sqrt t(|z|-|A_0|)$。$t<1$ 时立即矛盾；$t>1$ 时推出
+
+$$
+|z|\ge|\mu|\sqrt t(\sqrt t+1),
+$$
+
+与 (184.3) 的第二界矛盾。因此 $z\ne0$ 必有 $t=1$。所有字符分离交换子代数，故
+
+$$
+(b^2-u)\circ h=0.
+\tag{184.4}
+$$
+
+这是对同一个固定 $b,h$ 的谱读取，没有要求原输入或旧输出有限谱。
+
+仍取原 $x,y$，置 $d=D(y,x)=-2\mu h$、$g=y\circ x=2\mu^2(b-b^3)$。在上述忠实 JC 表示中，反交换与 (184.4) 给 $gh=hg=0$ 以及 $x\circ h=-h^2$。因此原 Jordan 元素本身满足
+
+$$
+U_h(g^2)=0,\qquad x\circ h=-h^2.
+\tag{184.5}
+$$
+
+最后在原域调用 PB $(y,x,0)$：
+
+$$
+D(x+d,g)-D(x-d,-g)=-2x\circ d=-4\mu h^2.
+\tag{184.6}
+$$
+
+对任意 $X$ 上数学正泛函 $\rho$，取正泛函 $\phi=\rho\circ U_h$。由 $\phi(g^2)=0$，两个外层 P2 都使对应的 $\phi$ 输出读取为零。因此
+
+$$
+0=-4\mu\,\rho(U_h(h^2))=-4\mu\,\rho(h^4).
+\tag{184.7}
+$$
+
+这里使用全部正 $\rho$，没有要求一份预先忠实的态。正泛函分离正锥给 $h^4=0$，JB 范数恒等式给 $\|h\|^4=\|h^4\|=0$。故 $h=0$，183.2 得证。零代数和零输入由同一结论包含。∎
+

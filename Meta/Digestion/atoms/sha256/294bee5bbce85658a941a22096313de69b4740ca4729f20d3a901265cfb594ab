@@ -1,0 +1,19 @@
+**定理 5.8（商中认回旧值）。** 对每个中心字符 $\chi$、每个原 $a,b$，
+
+$$
+\pi_\chi D(a,b)
+ =\psi^\chi_{\pi_\chi(a)}(\pi_\chi(b)).
+\tag{5.19}
+$$
+
+证明。$J_\chi$ 是完整含单位 JB 代数。引理 5.6 已给实线性赋值到有界斜顺序导子、自守恒和负乘法交换子恒等式，故 AS1998 Theorem 1 的所有前件已经满足。按 Baez §4 Theorem 12 明列的同一规范化，该定理给 $J_\chi+\mathrm iJ_\chi$ 上与此对应相容的复 C*-乘法
+
+$$
+xy=x\circ y-\mathrm i\psi^\chi_x(y),\qquad
+\psi^\chi_x(y)=\frac{\mathrm i}{2}(xy-yx).
+\tag{5.20}
+$$
+
+这里先只构造证明用的商乘法。对 $p=\pi(a),q=\pi(b)$，(5.9) 给
+$\pi D(a,b)=\psi^\chi_p(q)+\tau1$。该 C*-代数的态限制为 $J_\chi$ 的 JB 态，并沿 $\pi$ 拉回；引理 5.1 给它们全部同一原二表 PSD。引理 5.7 迫使 $\tau=0$，得到 (5.19)。∎
+

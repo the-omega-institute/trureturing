@@ -1,0 +1,11 @@
+**定义 50.1（只有有限原元素的背景）。** 指定一条含单位复全矩阵链
+
+$$
+A_0=M_{d_0}(\mathbb C),\qquad A_{n+1}=A_n\otimes M_{m_n}(\mathbb C),\qquad m_n\ge2,
+\qquad a\longmapsto a\otimes I_{m_n}.
+$$
+
+令 $A_{\rm alg}=\bigcup_nA_n$，原实域为 $E=(A_{\rm alg})_{\rm sa}$，原 Jordan 乘法为 $a\circ b=(ab+ba)/2$，范数为相容矩阵算子范数，单位为 $1$。$d_0=1$ 且全部 $m_n=2$ 时就是代数 qubit/CAR 核；只要求全部 $m_n=2$ 时，一般为 $M_{d_0}(\mathbb C)\otimes\mathrm{CAR}_{\rm alg}$。任意这样的链的范数完成为相应无限 UHF 代数。这里指定的是原代数并，既不取范数完成，也不取迹 GNS 后的弱闭包作为原输入。各层的秩一只是该有限矩阵层的相对秩，嵌入下一层后会分裂；不引入全原域的极小投影或有限秩算子。完整原来源和消费者合同不变。这项背景不从一般 JB 入口推出。
+
+旧 $D:E^2\to E$ 初始只为反对称总映射，仍要求同一 PY、NN 和 $\mathrm J_{\mathrm{idem}}$。每个旧输出属于某一有限层，但不假设 $D(A_{n,\rm sa},A_{n,\rm sa})\subseteq A_{n,\rm sa}$，也不假设存在对 $D$ 封闭的共尾有限子链。沿用 $C(a,b)=(ab-ba)/(2i)$、$F_a=D(a,\cdot)$、$H_a=L_a^2-L_{a^2}$、原 Peirce 非对角投影 $P_p$。辅助结合乘法只用于比较恢复结果，不定义旧 $D$。
+

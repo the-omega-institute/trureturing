@@ -1,0 +1,8 @@
+**Theorem 23.2 (exact elimination of mixed effects and unobserved feedback entries).** The following statements hold for the unchanged producer problem.
+
+1. The diagonals of $UU_+^\dagger$, as $U$ ranges over $U(4)$, are exactly $\mathcal W$. In particular, every reduced datum has an actual shared-unitary realization.
+2. For every $E\in\operatorname{Dens}_2$ and every actual $U\in U(4)$, set
+   $w=\operatorname{diag}(UU_+^\dagger)$,
+   $p=b_+^\dagger E^{\mathsf T}b_+$ and
+   $\epsilon(E)=1-\operatorname{Tr}(E^2)$. Then
+

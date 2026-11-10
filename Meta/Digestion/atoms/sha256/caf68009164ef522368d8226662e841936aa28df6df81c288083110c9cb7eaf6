@@ -1,0 +1,45 @@
+**定理 10.8（实际整数序桥的精确充要条件）。**若所有有限整数列表差实际可执行，则以下两条等价：
+
+$$
+\begin{array}{ll}
+\mathrm{O}:&\text{每个整数 }v\text{ 满足 }Yv\in K\Longrightarrow z(v)\ge0;\\
+\mathrm{D}:&z=\ell Y\quad\text{于 }V_{\mathsf X}.
+\end{array}
+\tag{10.17}
+$$
+
+充分方向实际只需下述逐个 $x$ 与校准基的上下近似列表可执行，并在这些列表上满足 $\mathrm O$；不要求实数物理权重或响应连续性。
+
+证明。对任意实际 $x$ 唯一写 $Yx=\sum_ja_jy_j$，允许 $a_j$ 为负实数。对每个正整数 $n$，取
+
+$$
+v_n^-=n\delta_x-\sum_j\lfloor na_j\rfloor\delta_{b_j},\qquad
+v_n^+=\sum_j\lceil na_j\rceil\delta_{b_j}-n\delta_x.
+\tag{10.18}
+$$
+
+其系数均为整数，负的基系数移到另一份实际列表。由 $0\le na_j-\lfloor na_j\rfloor<1$、$0\le\lceil na_j\rceil-na_j<1$，两份输入差都属于 $K$。由 $\mathrm O$ 得
+
+$$
+\frac1n\sum_j\lfloor na_j\rfloor z_j\le z(x)
+\le\frac1n\sum_j\lceil na_j\rceil z_j,
+\qquad |z(x)-\ell(Yx)|\le\frac{\sum_jz_j}{n}.
+\tag{10.19}
+$$
+
+这是有限常数界，因为只有有限个实际校准源且各 $z_j$ 有限。若误差为 $\varepsilon>0$，取整数 $n>(\sum_jz_j)/\varepsilon$ 即矛盾；因而逐个 $x$ 有 $z(x)=\ell(Yx)$，形式实线性延伸给 $\mathrm D$。$d=0$ 时空和为零，$\pm\delta_x$ 的条件直接给 $z(x)=0$。
+
+反向，若 $\mathrm D$，对任意 $Yv=\sum_jt_jy_j\in K$ 有 $z(v)=\sum_jt_jz_j\ge0$。这一步对所有整数差成立；只有全列表可执行时，才能把它与 $\mathrm O$ 的完整实际量词作上述等价比较。$\square$
+
+定理没有用连续性通过“准备极限”；每个 $n$ 是一份有限实际配方，取极限的只是已知有限实数的不等式。每次另选足够大的 $3^N$ 容纳 (10.18)，也不要求 $1/n$ 是物理抽签权重。若某些列表因参考、历史或准备权限不能执行，充分证明仅在仍具有所需近似列表的域成立，不可宣称完整等价。
+
+命题 10.6 的模型精确分开了有理相等与本序条件。对其中的 $x$ 取 $a_1=\theta,a_2=1-\theta$，则 $Yv_n^-\in K$，但
+
+$$
+z(v_n^-)<n(1/2-\theta)+1<0
+\quad\text{只要 }n>1/(\theta-1/2).
+\tag{10.20}
+$$
+
+这里 $z_1+z_2=1$，所以余项严格小于一。所需有限列表确由三种实际源与三进旗供应；它保持所有精确有理相等，却违反有确定有限界的整数序桥。$K$ 中的输入差不是自动存在的实际差事件，故这不与该局部模型的概率非负性矛盾。
+

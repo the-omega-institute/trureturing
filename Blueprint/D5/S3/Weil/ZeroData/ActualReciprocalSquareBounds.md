@@ -4,13 +4,19 @@
 
 Actual multiplicity-exact zero mass and unconditional height-ten exclusion from the first xi resolvent at six.
 
+Complete Gaussian localization uses exactly this owner's occurrence family. Write rho_k=actualZero(k), eta_k=Im(rho_k), c_k=1/(rho_k*(1-rho_k)) and R=sum_k eta_k^(-2). The public actual_sigma_inverse_square_summable transports through actualOccurrenceEquiv to summability of the natural occurrence series. The existing actual_inverse_square_mass_le_height gives R<=(101/100)*firstLiMass, and the public firstLiMass_lt_one gives R<2. These two publicizations change no proof body. Each coefficient satisfies |c_k|<=eta_k^(-2), so the complete H(y)=sum_k c_k*exp(rho_k*y) is absolutely convergent with |H(y)|<=2*exp(max(y,0)). Conjugation makes H real. No assumption of a simple, separated, rightmost or critical-line zero enters.
+
+For gamma>10 the finite local set S={k:|eta_k-gamma|<=6} is formed from actualData.symmetricIndices(|gamma|+7), taking every finite multiplicity fiber, mapping by actualOccurrenceEquiv.symm, then filtering by this exact closed condition. The strip gives spectralRadius(rho_k)<=|eta_k|+1; every local occurrence has |eta_k|<=gamma+6 and therefore belongs to that spectral enumeration. All distance-six occurrences belong to S. Every member has |eta_k|<=gamma+10, hence 1<=(gamma+10)^2*eta_k^(-2). Summing and using R<2 yields card(S)<=2*(gamma+10)^2. Both signs remain in the underlying occurrence family; the strict complement |eta_k-gamma|>6 includes every occurrence outside S.
+
+For any real m>=1 and real gamma put q_k=(rho_k-i*gamma)^2+16*(rho_k-i*gamma) and E=sum_k exp(m*q_k). The strip gives Re(rho_k)^2+16*Re(rho_k)<=17. With r=eta_k-gamma, r^2*exp(-m*r^2)<=1 follows from 1+m*r^2<=exp(m*r^2), and eta_k^2<=2*r^2+2*gamma^2. Consequently |exp(m*q_k)|<=exp(17*m)*(2+2*gamma^2)*eta_k^(-2). This summable majorant proves absolute convergence before splitting E into S and its entire strict complement. It does not assume a lower bound on E or a favorable sign of its complement.
+
 The exact source family is actualData = zetaZeroData, with the real kernel pairWeight rho = Re(1/(rho*(1-rho))), and firstLiMass = 2 + EulerGamma - 2*log(2*sqrt(pi)). The normalized reflection and resolvent-positive R(6) chain uses sixWeight, sixDefect, the digamma-at-3 and H512 reductions, log(pi) and log(2) bounds, the complete von Mangoldt prime-power series, and the tail integral 1/648. The complex HasSum at six is consumed by the real HasSum for sixWeight; the positive kernel estimate and the evaluated defect are then consumed by the height contradiction.
 
 The natural-index enumeration is equivalent to the sigma family of Fin (actualData.multiplicity n) over the exhaustive actual family. ActualZeroOccurrence, its infinite instance, actualOccurrenceEquiv : N ≃ ActualZeroOccurrence, actualZero, the exact fiber identity and fiber cardinality give exact transports of the infinite mass and the finite inclusive cutoffs. The resulting family includes both imaginary signs and every positive analytic multiplicity. The reciprocal-square summability and strict total bound are transported through those fibers. After height ten is proved, the complete inverse-square mass is sharpened to at most (101/100)*firstLiMass. The mathematical count consequence applies that sharper mass to the literal cutoff |Im(actualZero k)| ≤ T and gives ncard ≤ floor(2*T^2) for every T ≥ 10, without a filtered family or RH premise.
 
 **Theorem 1.1 (Complete Complex First Li Mass).**
 
-Lean statement: `D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.actual_complex_pairWeight_hasSum`
+$$\mathrm{HasSum}\left((\lambda \mathit{x0}:\mathrm{Nat}. \mathrm{cast}\left(\mathrm{ZeroDataMultiplicity}\left(\mathrm{actualData}, \mathit{x0}\right)\right) \cdot \frac{1}{\mathrm{ZeroDataZero}\left(\mathrm{actualData}, \mathit{x0}\right) \cdot \left(1 - \mathrm{ZeroDataZero}\left(\mathrm{actualData}, \mathit{x0}\right)\right)}), \mathrm{ofReal}\left(\mathrm{firstLiMass}\right), \mathrm{unconditional}\left(\mathrm{Nat}\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.actual_complex_pairWeight_hasSum` (`✓ std3`). ∎
 
@@ -22,7 +28,7 @@ The normalized xi resolvent gives the multiplicity-weighted complex first Li mas
 
 **Theorem 1.2 (First Li Mass Normalization).**
 
-Lean statement: `D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.firstLiMass_split`
+$$\mathrm{firstLiMass} = 2 + \mathrm{eulerMascheroniConstant} - 2 \cdot \mathrm{log}\left(2\right) - \mathrm{log}\left(\mathrm{pi}\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.firstLiMass_split` (`✓ std3`). ∎
 
@@ -34,7 +40,7 @@ The first Li mass equals 2 plus the Euler constant minus twice log 2 minus log p
 
 **Theorem 1.3 (Xi Logarithmic Derivative at Zero).**
 
-Lean statement: `D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.zero_endpoint_logDeriv`
+$$\mathrm{logDeriv}\left(\mathrm{xiReading}, 0\right) = -\mathrm{ofReal}\left(\frac{\mathrm{firstLiMass}}{2}\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.zero_endpoint_logDeriv` (`✓ std3`). ∎
 

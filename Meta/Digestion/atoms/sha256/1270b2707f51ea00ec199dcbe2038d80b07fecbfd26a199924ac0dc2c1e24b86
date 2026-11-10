@@ -1,0 +1,18 @@
+**定义 62.1（原子算子分支及其准确附加前件）。** 保留 A22.1、32.1 的完整 $\mathsf H_{\rm orig}$、A22.3 的全部原评价 PB，以及 A8.3–8.4、14.2、53.1、60.1 的所有实际来源合同。以下另指定同一个原域的忠实含单位 Jordan 坐标
+
+$$
+\begin{gathered}
+E\subseteq\mathcal M_{\rm sa},\qquad
+\mathcal M=\prod_{j\in I}^{\ell^\infty}B(H_j),\qquad
+u=(I_{H_j})_j,\qquad
+S(a,b)_j=\frac{a_jb_j+b_ja_j}{2},\\
+C=E\cap\mathcal M_+,\qquad N(a)=\sup_j\|a_j\|,\qquad
+\mathcal F(H_j)_{\rm sa}^{(j)}\subseteq E\quad(j\in I).
+\tag{62.1}
+\end{gathered}
+$$
+
+这里 $I$ 是任意集合，$H_j$ 是任意复 Hilbert 空间，允许有限、无限、不可分和不等维；$\mathcal F(H_j)_{\rm sa}^{(j)}$ 是只在第 $j$ 坐标非零的全部有限秩自伴算子。最后一个包含断言它们本来就是原实标签，而非仅在完成或表示中存在。$E$ 只要求实线性、含单位且对同一 $S$ 闭合，可以不完备；其 JB 完成是它在 $\mathcal M_{\rm sa}$ 中的范数闭包 $X$，不要求 $X=\mathcal M_{\rm sa}$。$\dim H_j=1$ 是经典坐标，$H_j=0$ 的坐标恒零，空乘积按零代数处理。原域 $B(H)_{\rm sa}$ 自动满足 (62.1)；任意 JB 域或任意忠实表示并不自动满足它。
+
+同一原 $D:E^2\to E$ 仍只以总映射输入。原评价族仍准确决定 $C$，不是仅取正常态、向量态或坐标态；所有原质量 $m_\alpha=\alpha(u)$ 不变。任意 $a,b\in E$ 可以在任意多个坐标有任意允许背景，不要求有限秩、有限谱、有限坐标支撑、可分支撑或共同约化。下面若固定一个坐标，其他坐标仍保留同一原输入的完整背景；不假设旧 $D$ 逐块独立或与压缩相容。
+

@@ -122,7 +122,7 @@ def rootCylinderWeight (q : unitInterval) (root : Bool) (actions : List Side) : 
   (q : ℝ) ^ (if root then sideCount actions false / 2 + sideCount actions true / 2
     else (sideCount actions false + 1) / 2 + (sideCount actions true + 1) / 2)
 
-private theorem parity_cons (actions : List Side) (j : Side) :
+theorem parity_cons (actions : List Side) (j : Side) :
     parity (j :: actions) = flipParity (parity actions) j := by
   have hf := Nat.mod_two_eq_zero_or_one (sideCount actions false)
   have ht := Nat.mod_two_eq_zero_or_one (sideCount actions true)
@@ -152,7 +152,7 @@ private theorem root_cylinder_extension (q : unitInterval) (root : Bool)
   rw [hexp, pow_add]
   by_cases he : root = selectedParity (parity actions) j <;> simp [rootZero, he]
 
-private theorem conditional_prefix_mass (q : unitInterval) (root : Bool)
+theorem conditional_prefix_mass (q : unitInterval) (root : Bool)
     (actions : List Side) :
     (conditionalSourceLaw q root).real {s | prefixNoMarker s actions} =
       rootCylinderWeight q root actions := by
@@ -466,7 +466,7 @@ private theorem native_active_history_fiber {Seed : Type*} [MeasurableSpace Seed
     simp only [hrun] at har hrr hs
     simp_all
 
-private theorem source_law_real (alpha q : unitInterval) (S : Set Source) :
+theorem source_law_real (alpha q : unitInterval) (S : Set Source) :
     (sourceLaw alpha q).real S =
       (alpha : ℝ) * (conditionalSourceLaw q true).real S +
       (1 - (alpha : ℝ)) * (conditionalSourceLaw q false).real S := by

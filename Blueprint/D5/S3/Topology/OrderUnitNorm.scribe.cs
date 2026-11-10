@@ -9,8 +9,20 @@ internal sealed class OrderUnitNormDocument : IScribeDocumentDefinition
         "The original Archimedean order-unit cone gives an exact norm and a quantitative preparation criterion for the same positive unital exponential group.",
         H("The original order-unit norm"),
         Blocks(
-            Paragraph(Text("Let E be any finite-dimensional real normed vector space. Its auxiliary norm supplies the usual topology only. The data A consist of a convex cone C containing zero, a closedness proof, salience, and a specified vector u in its interior. Salience means that a vector and its negative can both belong to C only when the vector vanishes. No inner product, lattice, Jordan product, self-duality or nonzero-dimension assumption is used.")),
+            Paragraph(Text("Let E be any real normed vector space. Its auxiliary norm supplies the topology only. The exponential and generator statements below separately require finite dimension. The data A consist of a convex cone C containing zero, a closedness proof, salience, and a specified vector u in its interior. Salience means that a vector and its negative can both belong to C only when the vector vanishes. No inner product, lattice, Jordan product, self-duality or nonzero-dimension assumption is used.")),
             Paragraph(Text("Put B equal to the vectors v for which u-v and u+v belong to C. For each v, let S(v) be the nonnegative real radii r for which r u-v and r u+v belong to C, and let n(v) be inf S(v). In particular, zero is retained among the radii. The order relation is exactly w-v in C.")),
+            Exposed("norm-attained", "norm_attained", "The infimum radius is attained",
+                "For every original vector v, the orderNorm infimum is itself a nonnegative radius in the original cone."),
+            Exposed("norm-nonneg", "norm_nonneg", "The original order norm is nonnegative",
+                "Every original vector has nonnegative orderNorm."),
+            Exposed("norm-le-iff", "norm_le_iff", "Order-norm bounds are radius membership",
+                "For every original vector v and real r, orderNorm(v) <= r exactly when r is an original nonnegative radius for v."),
+            Exposed("norm-zero-iff", "norm_zero_iff", "The order norm is definite",
+                "For every original vector v, orderNorm(v)=0 exactly when v=0, using salience of the original cone."),
+            Exposed("positive-bound", "positive_bound", "Positive functionals obey the order-norm bound",
+                "A real-linear functional nonnegative on the original cone satisfies abs(beta(v)) <= beta(unit) * orderNorm(v) for every original v."),
+            Exposed("boundary-support", "boundary_support", "Boundary points have positive support",
+                "An original cone boundary point has a continuous positive functional vanishing there and with strictly positive mass at the original unit."),
             Describe.Lean(
                 DescribeId.Create("constructed-order-norm-core"),
                 DeclarationHandle.Create("D5/S3/Topology/OrderUnitNorm.norm_core"),
@@ -20,6 +32,17 @@ internal sealed class OrderUnitNormDocument : IScribeDocumentDefinition
                 Blocks(
                     Paragraph(Text("The symbols R and Types denote the real scalars and the type universe. ConeUnitData denotes precisely the original cone and unit data stated above. The displayed norm laws apply to the copy of E with norm n; this first assertion does not require finite dimension. They are proved rather than supplied as an extra hypothesis. The interior-unit assumption makes B a neighborhood of zero and hence absorbent. Each S(v) is nonempty, closed and bounded below by zero, so its infimum is attained.")),
                     Paragraph(Text("The symmetric interval is convex and balanced. Its gauge equals n exactly: every positive gauge radius is an order radius, and every radius just above the attained order radius is a positive gauge radius. This includes v=0, where S(0) contains its infimum zero although the gauge uses strictly positive radii. Mathlib's gaugeSeminorm supplies the seminorm laws. At n(v)=0 the attained inequalities put v and -v in C, so salience supplies definiteness.")))),
+            Describe.Lean(
+                DescribeId.Create("identity-dominated-scalar-rigidity"),
+                DeclarationHandle.Create("D5/S3/Topology/OrderUnitNorm.identity_dominated_scalar"),
+                H("Scalar rigidity on every original vector"),
+                StatementSource.FromAuthor(F.Disp(RigidityStatement())),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("Here E is any real normed vector space, including zero, infinite-dimensional and incomplete spaces. A is exactly the original ConeUnitData, P is an arbitrary real-linear endomorphism and c is any real number. For every original cone vector v, both P(v) and v-P(v) must belong to that same cone, and P(u)=c u. The conclusion holds for every original vector. The ambient norm need not equal the order-unit norm; no continuity of P, product, lattice or representation is assumed.")),
+                    Paragraph(Text("If u=0, the attained order bounds and salience force every vector to vanish, so arbitrary c is retained. Otherwise positivity of P and I-P at u proves 0<=c<=1. A positive map sending u to a nonnegative multiple a u contracts the constructed order norm by a. Thus each actual binomial map choose(n,k) P^k (I-P)^(n-k) has the required global bound c^k(1-c)^(n-k) choose(n,k). Positivity of its factors is proved by induction on the powers.")),
+                    Paragraph(Text("The pinned Mathlib declarations bernsteinPolynomial.sum and bernsteinPolynomial.sum_smul supply the operator partition and first moment by polynomial evaluation in the original endomorphism algebra. The triangle inequality, the scalar Bernstein probability and variance identities, and finite Cauchy-Schwarz bound the squared deviation by c(1-c) n(v)^2/n. An arbitrarily large natural n then forces n(P(v)-c v)=0. The scalar probability and variance results are reused, not reproved. This is a classical binomial rigidity argument; no literature originality is asserted.")),
+                    Paragraph(Text("This is the general implication used at equations (2.15)-(2.16) of AURIC_ARBITRARY_DIMENSIONAL_SMALL_WINDOW_UNIT_BRIDGE. Its paper application substitutes E=X, the original completed cone and unit, P=A_h and c=exp(-h). It remains conditional on constructing that actual A_h and proving both full-cone positivities and its unit equation. This node does not establish those premises, B=0, K=0, the mirror and flow construction, general JB reconstruction, identification of the same original S, either source entrance, old D or physical consumers. The full Unit 2.2 through 6.1 goal remains open.")))),
             new DocumentBlock.Section(
                 H("Positive functionals and the same original operator"),
                 Blocks(
@@ -67,6 +90,12 @@ internal sealed class OrderUnitNormDocument : IScribeDocumentDefinition
                     Paragraph(Text("The map toData preserves C and u literally and supplies only these proved topology properties. The operator H, preparation set P, all functionals, the ordinary dual closure, and the actual exponential remain the original ones. The norm, square-operator coefficient, same-K extension, exact scaling and complementary minimum are precisely those in the preceding quantified criterion. This is the source's complete mathematical Theorem 68.1. The correlated execution-map extension of Section 69.2 is a separate statement and is not a consequence claimed here.")))))));
 
 
+    private static DocumentBlock.Describe Exposed(string id, string declaration, string heading, string prose) =>
+        Describe.Lean(DescribeId.Create("order-unit-norm-" + id),
+            DeclarationHandle.Create("D5/S3/Topology/OrderUnitNorm." + declaration), H(heading),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+
     private static Formula CoreStatement()
     {
         var n = Id("n"); var v = Id("v"); var w = Id("w"); var a = Id("a");
@@ -79,6 +108,18 @@ internal sealed class OrderUnitNormDocument : IScribeDocumentDefinition
                 Add(Apply(n, v), Apply(n, w))))));
         return All("E", Id("Types"), Implies(Call("RealNormedVectorSpace", Id("E")),
             All("A", Call("ConeUnitData", Id("E")), laws)));
+    }
+
+    private static Formula RigidityStatement()
+    {
+        var E=Id("E"); var A=Id("A"); var P=Id("P"); var c=Id("c"); var v=Id("v");
+        var C=Call("cone",A); var u=Call("unit",A);
+        var positive=All("v",C,And(Call("mem",Apply(P,v),C),
+            Call("mem",Call("sub",v,Apply(P,v)),C)));
+        return All("E",Id("Types"),Implies(Call("RealNormedVectorSpace",E),
+            All("A",Call("ConeUnitData",E),All("P",Call("RealEndomorphisms",E),
+                All("c",Id("R"),Implies(And(positive,Eq(Apply(P,u),Scale(c,u))),
+                    All("v",E,Eq(Apply(P,v),Scale(c,v)))))))));
     }
 
     private static Formula GeneratorStatement()

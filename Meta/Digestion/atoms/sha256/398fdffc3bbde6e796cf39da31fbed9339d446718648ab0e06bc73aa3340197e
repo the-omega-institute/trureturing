@@ -1,0 +1,82 @@
+**Theorem 36.2 (coefficient heat equation and specified reconstruction).** For the fixed $g_0$,
+
+$$
+\begin{gathered}
+(\partial_t+\mathcal E)\mathsf Q_1(t)g_0=-D_1P_tg_0
+\quad\text{in distributions for }t>0,\\
+\lim_{t\downarrow0}\|\mathsf Q_1(t)g_0\|_2
+=\lim_{t\to\infty}\|\mathsf Q_1(t)g_0\|_2=0,\qquad
+\int_0^\infty\|\mathsf Q_1(t)g_0\|_2dt<\infty,\\
+\mathcal E G_1g_0=-D_1p/(\gamma\mu),\qquad
+\gamma\mu G_1g_0=W.
+\end{gathered}
+\tag{36.2}
+$$
+
+Proof. On a fixed finite slab $(-L,L)$ define, only for $|\nu\vartheta|L<1/4$,
+
+$$
+\mathcal E_\vartheta^L=-X^2-(1+\nu\vartheta r)^{-2}Y^2
+\tag{36.3}
+$$
+
+with both slab endpoints Dirichlet. First restrict phase Fourier frequencies to a fixed bounded set. On this set its potential and parameter derivative are bounded multipliers on the finite height interval, on a common height Dirichlet operator domain. Integrating the two heat equations gives the classical bounded-perturbation variation-of-constants identity. Its derivative at zero is therefore
+
+$$
+\begin{gathered}
+(\partial_t+\mathcal E^L)\mathsf Q_1^L(t)=-D_1P_t^L,\qquad
+\mathsf Q_1^L(0)=0,\\
+\mathsf Q_1^L(t)u=-\int_0^tP_{t-b}^LD_1P_b^Lu\,db .
+\end{gathered}
+\tag{36.4}
+$$
+
+Finite differentiation of the conditional Gaussian on this safe slab gives precisely (30.1)'s first coefficient with the slab-survival indicator. The derivative of $e^{\lambda\vartheta^2t}$ at zero vanishes. Thus (36.4) has exactly the asserted coefficient, sign and absence of an order-one clock term; no rational family through a pole has been defined.
+
+Lemma 30.2's absolute kernel calculation applies with the survival indicator and gives, uniformly in slab size,
+
+$$
+\|\mathsf Q_1^L(t)g\|_2+\|\mathsf Q_1(t)g\|_2
+\le C(\|rg\|_2+\sqrt t\,\|g\|_2).
+\tag{36.5}
+$$
+
+For fixed $t$, $\mathsf Q_1^L(t)g\to\mathsf Q_1(t)g$ in $L^2$ when $g,rg\in L^2$. Indeed restrict input first to $|r|\le L/4$. An omitted path has relative height supremum at least $3L/4$. Integrate the inflated Gaussian over every phase and then the height endpoint. Brownian reflection bounds its relative-kernel $L^1$ norm by $Ct^{m/2}e^{-cL^2/t}$ for degrees $m=0,1$, after changing the exponential constant. Ordered Young controls these terms against the corresponding input norms. The remaining input is controlled by (36.5) and its weighted $L^2$ tail tends to zero. The order-zero argument also gives $P_t^Lg\to P_tg$. Compact testing now passes (36.4) to the first equation of (36.2). Phase Fourier cutoff and density remove the preliminary bounded-frequency restriction, since $\mathcal E\varphi,D_1\varphi\in L^2$ for compact smooth $\varphi$. These are the global two-endpoint bounds of Lemma 30.2 and P (107.5).
+
+The initial boundary requires cancellation. Approximate $g_0$ in $\|g\|_2+\|rg\|_2$ by functions $u$ with compact height support and bounded phase Fourier support. For these functions
+
+$$
+\sup_L\sup_{0\le b\le1}\|D_1P_b^Lu\|_2\le C_u.
+\tag{36.6}
+$$
+
+On the bounded frequency set the multiplier of $D_1$ has absolute value at most $C(1+|r|^5)$. The nonnegative Fourier potential dominates the absolute killed height heat by the free one-dimensional heat applied to $|\widehat u|$. Gaussian moment integration, or weighted $L^2$ convolution followed by the Gaussian moments, bounds all height moments through order five for $b\le1$, independently of the slab. Compact initial height support and integration over the bounded frequency set give (36.6). Contraction in (36.4) yields $\|\mathsf Q_1^L(t)u\|_2\le C_ut$. Pass $L\to\infty$ and then approximate $g_0$ using (36.5). This proves $\mathsf Q_1(t)g_0\to0$ in $L^2$ at time zero, which does not follow from a size estimate alone.
+
+For $t\ge1$, Lemma 30.2 gives
+
+$$
+\|\mathsf Q_1(t)g_0\|_2
+\le C(t^{-5/4}\|g_0\|_1+t^{-7/4}\|rg_0\|_1).
+\tag{36.7}
+$$
+
+The inputs are integrable by (31.2)–(31.3); both powers are integrable and tend to zero. Together with (36.5) this proves absolute $L^2$ convergence of $G_1g_0$ and the terminal boundary. Likewise $\int_0^\infty P_tg_0dt$ converges absolutely in $L^2$, by contraction below one and $Ct^{-7/4}\|g_0\|_1$ above one, and equals the owned $p/(\gamma\mu)$ in (31.2).
+
+Integrate the tested coefficient equation from $\delta$ to $M$, and pass $\delta\downarrow0$, $M\to\infty$ using both boundaries. This gives $\mathcal E G_1g_0=-D_1p/(\gamma\mu)$. The ordered convolution and noncompact input-cutoff argument in R (16.4)–(16.9) give $W\in L^2$ and
+
+$$
+\mathcal EW=-2\nu Y(rYp)=-D_1p .
+\tag{36.8}
+$$
+
+No factors of convolution are exchanged. The $L^2$ difference $d=\gamma\mu G_1g_0-W$ is distributionally $\mathcal E$-harmonic and is smooth by inherited canonical hypoellipticity. Take real smooth compact dilated cutoffs $\eta_R$, equal to one on an exhausting neighborhood, with $|\nabla_H\eta_R|\le C/R$. Testing against $\eta_R^2d$ and taking real parts gives, by the product rule,
+
+$$
+b[\eta_Rd]=\int|\nabla_H\eta_R|^2|d|^2
+\le CR^{-2}\|d\|_2^2.
+\tag{36.9}
+$$
+
+Every fixed compact set consequently has zero horizontal derivative as $R\to\infty$. Bracket generation makes $d$ constant and infinite Haar volume makes that $L^2$ constant zero. This proves (36.2) without an arbitrary zero-energy inverse, a maximal-domain theorem or $\Psi\in D(\mathcal E)$. The cutoff energy argument is a classical intermediate uniqueness tool within this particular reconstruction. $\square$
+
+

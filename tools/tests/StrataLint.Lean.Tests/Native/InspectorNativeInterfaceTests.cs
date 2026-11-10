@@ -10,7 +10,11 @@ public sealed class InspectorNativeInterfaceTests(InspectorCompilerFixture compi
     [InlineData("test_native.NativeTests.test_reg_manifest_rejected_before_materialization")]
     public void InspectorArtifactBehavior(string suite) => InspectorNativeTestRunner.Run(compiler, suite);
 
-    [Fact]
-    public void RoutingConsumersStartWithPrivateColdProjects() => InspectorNativeTestRunner.Run(compiler,
-        "test_native.NativeRoutingTests");
+    [Theory]
+    [InlineData("test_native.NativeRoutingTests.test_raw_interface_edit_breaks_reg_consumer")]
+    [InlineData("test_native.NativeRoutingTests.test_reg_empty_and_nonempty_build_routing")]
+    [InlineData("test_native.NativeRoutingTests.test_reg_report_rows_relocation_and_defaults")]
+    [InlineData("test_native.NativeRoutingTests.test_shared_inspector_and_audit_build_reuses_native_programs")]
+    public void RoutingConsumersStartWithPrivateColdProjects(string suite) =>
+        InspectorNativeTestRunner.Run(compiler, suite);
 }

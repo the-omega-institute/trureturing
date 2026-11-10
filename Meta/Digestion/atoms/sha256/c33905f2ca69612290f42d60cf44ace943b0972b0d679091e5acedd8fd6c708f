@@ -1,0 +1,117 @@
+**Lemma 24.3 (the matrix of the required difference).** For $w\in\mathcal C$,
+write $u=u(w)$, $v=v(w)$ and $\delta=4-A(w)$. Define
+
+$$
+\begin{aligned}
+D_\delta&=d^2-2\kappa\delta,\\
+F_\delta&=e^2-2\kappa(1+\delta),\\
+M(w)&=\begin{pmatrix}
+D_\delta-u^2&-uv\\
+-uv&F_\delta-v^2
+\end{pmatrix}.
+\end{aligned}
+\tag{24.17}
+$$
+
+Then $M(w)$ is positive semidefinite. It is positive definite if
+$\delta>0$; at $\delta=0$ it is exactly
+$\operatorname{diag}(0,e^2-2\kappa)$. For every $p\in[0,1]$,
+
+$$
+G(w,p)-\kappa r(w,p)
+=\begin{pmatrix}\sqrt p&\sqrt{1-p}\end{pmatrix}
+M(w)
+\begin{pmatrix}\sqrt p\\\sqrt{1-p}\end{pmatrix}.
+\tag{24.18}
+$$
+
+Proof. The bounds (22.13) and $0<\kappa<1/25$ imply
+
+$$
+d>3,\qquad e^2>4,\qquad dh<\frac52,
+\qquad d^2-e^2>5.
+\tag{24.19}
+$$
+
+Since $0\le\delta\le\delta_*<1/2$, both $D_\delta$ and $F_\delta$ are
+positive. The identity $f(\kappa)=0$ of Theorem 21.3 is equivalently
+
+$$
+(dh-\kappa)(e^2-2\kappa)=d^2.
+\tag{24.20}
+$$
+
+For $u_0,V_\delta$ from (24.8), set
+
+$$
+J=\frac{d^2-e^2}{2}+(5-4dh)\kappa+4\kappa^2.
+\tag{24.21}
+$$
+
+Using (24.19),
+
+$$
+J>\frac52-4\cdot\frac52\cdot\frac1{25}
+=\frac{21}{10}>0.
+\tag{24.22}
+$$
+
+The determinant cancellation is explicit:
+
+$$
+\begin{aligned}
+D_\delta-u_0^2
+ &=2(dh-\kappa)\delta-\frac{\delta^2}{2},\\
+(D_\delta-u_0^2)F_\delta-D_\delta V_\delta
+ &=\left(2(dh-\kappa)\delta-\frac{\delta^2}{2}\right)
+     (e^2-2\kappa-2\kappa\delta)\\
+ &\quad -(d^2-2\kappa\delta)
+              \left(2\delta-\frac{\delta^2}{2}\right)\\
+ &=J\delta^2.
+\end{aligned}
+\tag{24.23}
+$$
+
+The coefficient of $\delta$ vanishes by (24.20), and the two cubic
+terms cancel. This is the scalar polynomial cancellation used in
+Theorem 21.3, now combined with the uniform envelopes of Lemma 24.2.
+Consequently,
+
+$$
+\frac{u^2}{D_\delta}+\frac{v^2}{F_\delta}
+\le\frac{u_0^2}{D_\delta}+\frac{V_\delta}{F_\delta}
+=1-\frac{J\delta^2}{D_\delta F_\delta}\le1.
+\tag{24.24}
+$$
+
+For arbitrary real $a,b$, weighted Cauchy–Schwarz gives
+
+$$
+(ua+vb)^2
+\le\left(\frac{u^2}{D_\delta}+\frac{v^2}{F_\delta}\right)
+      (D_\delta a^2+F_\delta b^2)
+\le D_\delta a^2+F_\delta b^2.
+\tag{24.25}
+$$
+
+This proves positive semidefiniteness of $M(w)$. If $\delta>0$, the
+first factor in (24.25) is strictly less than $1$ by (24.22)–(24.24),
+so the quadratic form is strictly positive at every nonzero $(a,b)$.
+If $\delta=0$, Lemma 24.2 gives $u=d$, $v=0$, proving the stated
+boundary matrix.
+
+Finally, (23.3) and (24.9) give
+
+$$
+\begin{aligned}
+G-\kappa r
+&=d^2p+e^2(1-p)-(u\sqrt p+v\sqrt{1-p})^2
+       -2\kappa(1-p+\delta)\\
+&=D_\delta p+F_\delta(1-p)
+       -(u\sqrt p+v\sqrt{1-p})^2,
+\end{aligned}
+\tag{24.26}
+$$
+
+which is exactly (24.18), including $p=0,1$ and $\delta=0$. $\square$
+

@@ -63,6 +63,21 @@ preview are zero; no journal question or journal solution status is asserted.
 The repository's application is described in the
 [canonical Blueprint](../../Blueprint/D5/S3/Quantum/Entanglement/SymmetricExtensions/DickeExtension.md)
 and the [versioned question dossier](../../Problems/gnp-2025-v4-question-8-20-dicke-extensions.md).
-The elementary support argument is repo-derived from existing frozen results;
-the definitions and question above are literature-attested. This distinction
-makes no worldwide originality claim.
+The marginal-to-global Bose support mechanism is prior work of Kiara Hansenne,
+Zhen-Peng Xu, Tristan Kraft and Otfried Guehne, *Quantum Networks and
+Symmetries*, [arXiv:2108.02732v1](https://arxiv.org/pdf/2108.02732v1),
+main page 4 and Appendix D, Lemma 8 on page 12. Their main-text discussion also
+states that a generating family of pair flips suffices. The formal implementation
+reuses the repository's zero-weight support-face, tensor trace-duality and
+permutation machinery to obtain the arbitrary-Bose pointwise extension comparison.
+It does not claim a new discovery of support propagation or certify priority.
+
+The supplied *Dicke/Bose extension applications v2* note has the byline
+**Haobo Ma, Wenlin Zhang**, in that order, and is licensed CC BY 4.0. It supplies
+fallible scientific arguments for the five-unit extension package, rather than
+formal acceptance. GNP own the complete-graph SOS characterization (Theorem 8.16)
+and occupation twirl (Corollary 8.18); Gulati-Nechita-Pellegrini Lemma 5.8 also
+supplies a multipartite twirl. Li-Huang-Ruan-Zeng's qubit leaf existence result
+may change the witness and is distinct from equality for each individual E.
+No implementation here settles GNP Questions 8.7 or 8.21, the unclosed dual sum,
+or unrestricted exact witness lifting. No normalized optimum-zero claim follows.

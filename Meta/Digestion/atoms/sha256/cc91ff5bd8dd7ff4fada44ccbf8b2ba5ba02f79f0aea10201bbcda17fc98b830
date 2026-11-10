@@ -1,0 +1,19 @@
+### 同一预算保证无限酉过程收敛
+
+保留全部寄存器，在第 $j$ 个寄存器上定义
+
+$$
+U_j=
+\begin{pmatrix}
+\sqrt{1-b_j}&-\sqrt{b_j}\\
+\sqrt{b_j}&\sqrt{1-b_j}
+\end{pmatrix}.
+$$
+
+每个 $U_j$ 都是酉算子。取以全零状态为基准的无限 qubit 张量积空间，令
+
+$$
+V_h=U_1\cdots U_h.
+$$
+
+<!-- editorial-note:start incomplete-tensor-space -->

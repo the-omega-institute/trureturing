@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7039e5139c24b31c86d53e6a49559151a3209736b450f327c1eb748059d17e5c
+  normalized_sha256: sha256:7039e5139c24b31c86d53e6a49559151a3209736b450f327c1eb748059d17e5c
+cas_ref: sha256:7039e5139c24b31c86d53e6a49559151a3209736b450f327c1eb748059d17e5c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This paragraph records the note authors and license, physical-family and classical-majorization attribution, and the boundaries of separate research questions. It asserts no additional mathematical theorem to encode; the adjacent strict Schur and all-integer extrema propositions have their own Lean and coverage routes.
+    previous_atom_id: 4381d2c5ead71a6ab92276749e4601bc8fffe0758c9accf3fd8ef8843123a916
+    next_atom_id: 734637fa6c71820c857ee7eb939123e6bb61dbe5c9c393044cf5daf750734fb0

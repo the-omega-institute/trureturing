@@ -1,0 +1,31 @@
+#### 定理 6.4：球体上的混合相容锁定二元 Born 读出
+
+设 $x\in B^3$ 是充分状态坐标，单位向量 $n$ 指定二元菜单。若实际概率 $p_n:B^3\to[0,1]$ 对混合仿射，并有 $p_n(n)=1,p_n(-n)=0$，则
+
+$$
+\boxed{p_n(x)=\frac{1+n\cdot x}{2}.}
+\tag{9}
+$$
+
+纯态夹角为 $\theta$ 时，$p_n(x)=\cos^2(\theta/2)$。
+
+**证明。**
+
+满维球上的仿射函数写成 $p_n(x)=a+b\cdot x$。两端标定给 $a=1/2,b\cdot n=1/2$。整个球上的概率界给 $\|b\|\le1/2$； Cauchy–Schwarz 等号迫使 $b=n/2$。半角公式给最后一句。
+
+$\square$
+
+按本轮 Pauli 顺序，令
+
+$$
+P_n=\frac12(I+n_1\sigma_x+n_2\sigma_z+n_3\sigma_y).
+$$
+
+迹恒等式给 $\operatorname{Tr}(\rho(x)P_n)=(1+n\cdot x)/2$。对 $\rho=|\psi\rangle\langle\psi|$、$P_n=|\varphi\rangle\langle\varphi|$，得到
+
+$$
+p_n(x)=|\langle\varphi,\psi\rangle|^2.
+$$
+
+此证明没有先把实际概率定义成平方；它明确使用球体充分性、混合仿射和端点标定。项目 V48 已证明这条桥，并给出下面的反例。[\[3\]](#ref-v48)
+

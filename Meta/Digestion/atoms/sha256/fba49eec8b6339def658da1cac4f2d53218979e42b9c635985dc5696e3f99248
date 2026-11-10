@@ -1,0 +1,26 @@
+**Proposition 200.5 (persistent-boundary rank certificate).** For any $A_0\in\mathscr P_u$,
+
+$$
+\mathscr P_u\subseteq A_0+\mathscr V_u.
+\tag{200.8}
+$$
+
+If every $d_u\times d_u$ minor vanishes on the affine space $A_0+\mathscr V_u$, then
+
+$$
+\mathscr P_u^{\mathrm{full}}=\varnothing.
+\tag{200.9}
+$$
+
+Conversely, a full-column-rank feasible lift requires at least one such minor to be nonzero on $A_0+\mathscr V_u$. In the rank-three case this means that the persistent active equations must not force the unique coefficient column to vanish; in the rank-four case they must not force the two coefficient columns to remain linearly dependent.
+
+*Proof.* Let $A\in\mathscr P_u$. For every $(y,x)\in\mathcal I_u$, both $\lambda_{y,x}(A)$ and $\lambda_{y,x}(A_0)$ are zero. Subtracting (200.2) gives
+
+$$
+\sum_{\ell=1}^{d_u}(a_{y\ell}-a_{0,y\ell})r_\ell(x)=0,
+$$
+
+so $A-A_0\in\mathscr V_u$, proving (200.8). If all maximal minors vanish on $A_0+\mathscr V_u$, every matrix in $\mathscr P_u$ has column rank strictly below $d_u$, which is (200.9). The converse is the definition of full column rank. \(\square\)
+
+Sections 199 and 200 therefore give a two-stage finite-dimensional interface. First, the affine equations and pointwise inequalities define $\mathscr P_u$ and automatically close all sixty-four residuals. Second, a target rank requires either a uniformly interior coefficient lift or a direct nonvanishing maximal minor that survives every persistent active boundary. Failure of the first route does not prove failure of the second, and an active boundary at one lift does not constrain the whole body. The existence of a rank-three or rank-four arbitrary partition, the evaluation of these boundary conditions for concrete candidates, $F_{64}$, $H43$, SRS\text{-}20, physical succession and Lean/kernel formalization remain open.
+

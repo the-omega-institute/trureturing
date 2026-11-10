@@ -4,8 +4,9 @@ authors: Umesh Shankar
 year: 2026
 title: Avoiding patterns with three distinct letters in Canon permutations
 doi: 10.48550/arXiv.2608.30002
-claim: Theorem 7.1 identifies Q with the stated ballot-binomial closed form; Conjecture 9.5 asserts that B and Q are Stieltjes moment sequences.
+claim: The ballot coefficient E(r,b) is the stated difference of binomial coefficients; Theorem 7.1 identifies Q with the stated ballot-binomial closed form; Conjecture 9.5 asserts that B and Q are Stieltjes moment sequences.
 strata_touched:
+  - D5/S0/Conventions/IntegerIndexBinomial
   - D5/S0/Certificates/ShankarQStieltjesRefutation
 license: citation-only
 triage: anchor
@@ -17,6 +18,11 @@ Version 2, sections 2.2, 2.7, 7, and 9 were read. Q counts the lattice
 words with k occurrences each of 1, 2, and 3 that avoid the subsequence
 321. Theorem 7.1 gives the formula transcribed by `closedFormQ`, with
 Q(0)=1 and zero binomial coefficients for negative lower indices.
+
+The coefficient $E(r,b)=\binom{r+b-1}{b-1}-\binom{r+b-1}{b-2}$ is
+`D5/S0/Conventions/IntegerIndexBinomial.ballotE`. Its upper index uses
+natural subtraction, and its lower indices use integer subtraction with
+negative lower binomial indices interpreted as zero.
 
 This note attests the source formula and conjecture, not the repository's
 negative certificate or refutation. The complete combinatorial bijection

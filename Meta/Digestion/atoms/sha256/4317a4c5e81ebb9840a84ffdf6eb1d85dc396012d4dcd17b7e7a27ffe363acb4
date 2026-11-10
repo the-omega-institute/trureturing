@@ -1,0 +1,71 @@
+**Theorem 23.4 (equivalent sharp-endpoint criterion).** For every real $\gamma\ge0$, every $w\in\mathcal W$ and every actual $U$ with
+$\operatorname{diag}(UU_+^\dagger)=w$,
+
+$$
+\min_{E\in\operatorname{Dens}_2}
+ \bigl(g(E,U)-\gamma\rho(E,U)\bigr)
+ =\nu_\gamma(w).
+\tag{23.21}
+$$
+
+In particular, if $\kappa$ and $R_*=\kappa^{-1}$ are the exact constants of Theorem 21.3, then
+
+$$
+\boxed{
+\begin{aligned}
+&g(E,U)\ge\kappa\rho(E,U)
+ \quad\text{for every }E\in\operatorname{Dens}_2,\ U\in U(4)\\
+&\qquad\Longleftrightarrow\
+ \nu_\kappa(w)\ge0\quad\text{for every }w\in\mathcal W\\
+&\qquad\Longleftrightarrow\ C_{\mathrm{opt}}=R_*.
+\end{aligned}}
+\tag{23.22}
+$$
+
+For any $\gamma>0$, the same criterion with $\nu_\gamma$ is equivalent to $C_{\mathrm{opt}}\le\gamma^{-1}$. If one of the included values in $\mathcal V_\kappa(w)$ is strictly negative at a feasible $w$, its associated population and (23.13), together with any unitary realization of $w$, give an original shared-feedback pair with $\rho/g>R_*$.
+
+Proof. The exact difference between the two distance branches is
+
+$$
+r_+(w,p)-r_-(w,p)=4(p_0-p).
+$$
+
+Thus the joint minimum is $r_+$ on $I_+$ and $r_-$ on $I_-$. Direct substitution of (23.16) gives
+
+$$
+G(w,p)-\gamma r(w,p)=q_\sigma(p)\qquad(p\in I_\sigma).
+\tag{23.23}
+$$
+
+The intervals cover $[0,1]$, and at a sign tie their two expressions agree. In particular, this splitting never selects a feedback sign independently of the effect sign.
+
+If $\omega=0$, $q_\sigma$ is affine, including when both its coefficients coincide, and its minimum on a closed interval is an endpoint value. If $\omega>0$, then on $0<p<1$,
+
+$$
+\begin{aligned}
+q_\sigma'(p)
+ &=\alpha_\sigma-\beta_\sigma
+       -\omega\frac{1-2p}{\sqrt{p(1-p)}},\\
+q_\sigma''(p)
+ &=\frac{\omega}{2[p(1-p)]^{3/2}}>0.
+\end{aligned}
+$$
+
+The unique unconstrained minimizer is $p_\sigma^*$ of (23.19), which belongs to $(0,1)$, and its value is
+$(\alpha_\sigma+\beta_\sigma-D_\sigma)/2$. This follows either by substitution, using
+$\sqrt{p_\sigma^*(1-p_\sigma^*)}=\omega/D_\sigma$, or by the smaller eigenvalue of
+$\left(\begin{smallmatrix}\alpha_\sigma&-\omega\\-\omega&\beta_\sigma\end{smallmatrix}\right)$ and its positive eigenvector. Strict convexity shows that on any subinterval the minimum is this value if its population lies in that interval, and otherwise an endpoint value. Continuity supplies the endpoints $0,1$. This proves
+
+$$
+\min_{0\le p\le1}\bigl(G(w,p)-\gamma r(w,p)\bigr)
+ =\min\mathcal V_\gamma(w)=\nu_\gamma(w),
+$$
+
+including singleton intervals and every zero of $P$ or $Q$. Theorem 23.2 now gives (23.21) and the equivalence of the first two lines of (23.22).
+
+For $\gamma>0$, Lemma 11.2 supplies $g=\rho=0$ on the optimizer classes and $g>0$ everywhere else; consequently the universal inequality is equivalent to $C_{\mathrm{opt}}\le\gamma^{-1}$. Theorem 21.3 already supplies $C_{\mathrm{opt}}\ge R_*$ by an actual shared-feedback sequence, so at $\gamma=\kappa$ this upper bound is equivalent to equality. Its sharpness sequence is reused without another extremum calculation.
+
+Finally, every included value has the stated actual population, and every feasible $w$ has an actual unitary realization by Theorem 23.2. A negative value therefore gives $g-\kappa\rho<0$ for the pure effect (23.13), using that one realized $U$. Nonnegativity of $g$ forces $\rho>0$, and Lemma 11.2 then gives $g>0$, proving the asserted quotient inequality.
+
+All reduced formulas are invariant under the common scalar phase, even at a zero trace or at $w=0$; the proof never divides by $A$, $B$, $P$ or $Q$. The only division in (23.19) is made when $\omega>0$, so $D_\sigma>0$. The realization condition (23.1) retains all boundary diagonals and excludes diagonals not belonging to any actual unitary. The remaining universal assertion is precisely the nonnegativity of these finite expressions over that entire set, modulo its common scalar phase. Neither the restricted-family theorem nor the local limits of Section 22 settle that assertion. Thus the sharp global endpoint remains unresolved, with the established bounds $R_*\le C_{\mathrm{opt}}<135580$ of Sections 20–21. $\square$
+

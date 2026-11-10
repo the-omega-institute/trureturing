@@ -43,6 +43,8 @@ obstruction belong to Goddard, Kuenzel and Melville (2022), cited in the
 companion Library note. No new classification or repaired conjecture is
 asserted.
 
+The counterexample used here is the two-coordinate Hamming graph on alphabets of sizes 3 and 3: (i,j) records its two letters, and adjacent vertices differ in exactly one coordinate. Its rows and columns are coordinate-line 3-cliques. Independent sets are partial permutation sets; the three classes of i+j modulo 3 partition all nine vertices into independent transversals of size three. The certified sets S and T admit partitions into two independent color classes and are inclusion-maximal for induced two-colorability: every omitted cell completes a row or column 3-clique, preventing any two-coloring even after recoloring. Their different orders obstruct well-huedness. This is the Hamming partition and maximality use of the source in this note; Conjecture 2 and its refutation retain every finite simple graph and every positive k.
+
 The arXiv version page identifies the article license as CC BY-NC-SA 4.0
 (https://creativecommons.org/licenses/by-nc-sa/4.0/). This note is an original
 summary for citation; no source code or proof text is copied.

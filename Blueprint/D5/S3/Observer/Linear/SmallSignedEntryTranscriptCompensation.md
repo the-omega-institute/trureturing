@@ -56,9 +56,22 @@ FairAcquiresOnBall requires, separately on every fixed source and admitted entry
 
 Almost-sure reference success supplies one successful finite execution. Its positive-mass cylinder and zero error force that fixed export to be correct on the reference. Construct one compensating source from its command word and then fix this source. The same bit prefix and replies replay the execution on this source, where the export cannot be correct. Its whole positive-mass cylinder is an error event. The construction gives no uniform positive lower bound on error independent of the controller, radius, or transcript.
 
+**Theorem 1.4 (Quadratic form bound from nonnegative symmetric rows).**
+
+$$\forall I \in \operatorname{Type},\; [\operatorname{Fintype}\left(I\right)] [\operatorname{DecidableEq}\left(I\right)] \forall a \in \operatorname{Matrix}\left(I, I, \operatorname{Real}\right),\; (\forall i \in I,\; \forall j \in I,\; a\left(i, j\right) = a\left(j, i\right)) \Rightarrow (\forall q \in \operatorname{Real},\; (\forall i \in I,\; \operatorname{Finset}.\operatorname{sum}\left(\operatorname{Finset}.\operatorname{univ}, (\lambda j: I \mapsto |a\left(i, j\right)|)\right) \le q) \Rightarrow (\forall v \in I \to \operatorname{Real},\; |\operatorname{Finset}.\operatorname{sum}\left(\operatorname{Finset}.\operatorname{univ}, (\lambda i: I \mapsto \operatorname{Finset}.\operatorname{sum}\left(\operatorname{Finset}.\operatorname{univ}, (\lambda j: I \mapsto v\left(i\right) \cdot a\left(i, j\right) \cdot v\left(j\right))\right))\right)| \le q \cdot \operatorname{Finset}.\operatorname{sum}\left(\operatorname{Finset}.\operatorname{univ}, (\lambda i: I \mapsto v\left(i\right)^{2})\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/Linear/SmallSignedEntryTranscriptCompensation.quadratic_row_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a symmetric real matrix whose absolute row sums are bounded by q, the absolute value of every real quadratic form is at most q times the squared Euclidean norm.
+
 ## References
 
 - Truth anchor: `D5/S3/Observer/Linear/SmallSignedEntryTranscriptCompensation.no_deterministic_exact_acquisition`
 - Truth anchor: `D5/S3/Observer/Linear/SmallSignedEntryTranscriptCompensation.no_fair_zero_error_exact_acquisition`
+- Truth anchor: `D5/S3/Observer/Linear/SmallSignedEntryTranscriptCompensation.quadratic_row_bound`
 - Truth anchor: `D5/S3/Observer/Linear/SmallSignedEntryTranscriptCompensation.small_entry_complete_transcript_compensation`
 - Dependency: [D5/S0/Naming/GreenClassMeasure](../../../S0/Naming/GreenClassMeasure.md)

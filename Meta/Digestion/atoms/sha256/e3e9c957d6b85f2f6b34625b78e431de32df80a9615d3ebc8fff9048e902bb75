@@ -1,0 +1,14 @@
+### 13.2　一个锚和有限关系的精确轨道呈示
+
+这里新增一个已经核验的代数来源输入，并把它的范围锁在矩阵群层。令
+$$
+K=\mathbb Q(\zeta),\qquad \mathcal O_K=\mathbb Z[\zeta],\qquad
+D=\mathcal O_K[1/6],\qquad
+h(x,y)=\sum_i\overline{x_i}y_i.
+$$
+把 $K^n$ 看成带基 ${1,\zeta}$ 的 $\mathbb Q$-空间，并把
+$\mathcal O_K^n$ 看成相应格。于是标准正定 Hermitian $\mathbb Q$-群
+$U(h)$ 的 $\mathbb Z[1/6]$-整点正是 $U_n(D)$。它是连通约化
+$\mathbb Q$-群；取 $S=\{\infty,2,3\}$，所以这些整点是该群的
+$S$-算术子群。
+

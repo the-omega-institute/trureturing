@@ -1,0 +1,9 @@
+**引理 495.1（联合矩传递）。** 设 $E$ 局部有界 Borel 可测且满足 $(\mathrm J_{p,q})$。则
+
+$$
+\lim_{X\to\infty}\mathbb E_{\mu_X}\bigl[Z_{1,X}^pZ_{2,X}^q\bigr]=\int_{[0,1]^k}\Bigl(\prod_{\ell=1}^kg_{i_\ell}(s_\ell)\Bigr)M_{p,q}(\mathbf s)\,d\mathbf s .
+\tag{495.2}
+$$
+
+证明。对每个因子用定理 494.1 证明中的表示 $Z_{i,X}=U_X^{r_i}L_X\int_0^1g_i(s)B_{i,X}(s)\rho_x(sx^{\theta_i})\,ds$，宏观因子之积为 $U_X^{\gamma_{p,q}}$。令 $\eta_X=\max_{i=1,2}\sup_{x,s}|L_X(x)\rho_x(sx^{\theta_i})-1|$；由 $1\le L_X\le\sqrt{1+\log2/\log X}$ 与 $1-4u/x\le\rho_x(u)\le1$，$\eta_X=O\bigl((\log X)^{-1}+X^{\theta_2-1}\bigr)\to0$。其余各步——Fubini 的合法性（广义 Hölder 不等式给出 $\mathbb E_{\mu_X}[U_X^{\gamma_{p,q}}\prod_\ell|B_{i_\ell,X}(s_\ell)|]\le2^{\gamma_{p,q}}C$）、把价格因子换成 $1$ 的误差 $((1+\eta_X)^k-1)2^{\gamma_{p,q}}C\prod_\ell\|g_{i_\ell}\|_1$、控制收敛——与定理 494.1 的证明逐行相同。证毕。
+

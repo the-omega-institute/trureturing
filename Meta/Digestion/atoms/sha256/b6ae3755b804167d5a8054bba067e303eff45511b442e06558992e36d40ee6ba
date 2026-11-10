@@ -1,0 +1,71 @@
+**第二步：纯像面积及辅助映射。** 逐项消费PT243–245的已发表内积引理，所需实际调用如下。对纯像 $x\perp y$，上一反交换结论先给 $d=\pi D(a,b)\in\mathbb R^3$、$d\perp x,y$，P2给 $\|d\|=\kappa\|x\|\|y\|$、$0\le\kappa\le1$。取实际
+
+$$
+c=t_0e+\lambda a,\quad t_0=\sqrt{\lambda^2\|x\|^2+\eta^2},
+\quad n=-\lambda x/t_0+\eta y/(t_0\|y\|),\quad \lambda,\eta>0.
+\tag{44.7}
+$$
+
+44.6支付 $\pi D(a,c)=0$。PB的两份真实外层像为
+
+$$
+R_\pm=\mp\lambda\|x\|^2P+y\pm d\mp t_0x,
+\qquad S_\pm=t_0P+\lambda x.
+\tag{44.8}
+$$
+
+分别读取两份真实P2，PT243.5的同一Gram计算给
+
+$$
+(1-\kappa^2)\lambda^2\|x\|^2\|y\|^2
+\le\eta^4+\kappa^2\|y\|^2\eta^2.
+\tag{44.9}
+$$
+
+固定 $\eta$ 并选足够大但有限的 $\lambda$，迫使 $\kappa=1$。任意纯像对以43.5旋转其Gram，故所有实际纯像代表均有准确面积与正交性。
+
+固定 $0<\|x\|=r<1$，$W_x=x^\perp$，任取纯像 $y,z\in W_x$ 的实际代表 $b,c$。记 $f_b=\pi D(a,b),f_c=\pi D(a,c)$。实际PB $(a;b,c)$ 的右端像零，两外层纯像输出相等；刚得准确面积给
+
+$$
+(\langle y,z\rangle+\langle f_b,f_c\rangle)
+(\langle y,f_c\rangle+\langle f_b,z\rangle)=0.
+\tag{44.10}
+$$
+
+对同一 $y$ 的两份实际代表，在开集 $\langle y,z\rangle>r^2\|y\|\|z\|$ 中用同一个实际 $c$。第一因子严格正，第二因子之差和开球分离性使 $f_b$ 与代表无关。这才得到总映射 $F_a:W_x\to W_x$。W110.1的全部前件现已支付：44.10、$\langle y,F_ay\rangle=0$、$\|F_ay\|=r\|y\|$、$0<r<1$。该纯内积引理给实线性、斜性及 $F_a^2=-r^2I$。
+
+第一槽的一致性须另付：若 $\pi a=\pi a'=x$，对给定非零 $y\perp x$ 选 $\delta>0$、$\delta\|y\|<1$。刚得的第二槽一致性用于真实首标签 $\delta b$，反对称性及两条已线性的小行给 $\delta F_a(y)=\delta F_{a'}(y)$。所以可写 $F_x$。继而按照PT245.1及245.2、W111–112定义
+
+$$
+B(x,y)=\lambda^{-1}F_{\lambda x}
+\left(y-\frac{\langle x,y\rangle}{\|x\|^2}x\right),
+\qquad 0<\lambda\|x\|<1,
+\tag{44.11}
+$$
+
+零 $x$ 取零。两个真实缩小首标签和另一个真实 $\delta b$ 的反对称调用使它与 $\lambda$ 无关；这些小行均已取得纤维一致性。W112.1的二平面拼接只展开已线性的第二槽，给 $B$ 实交替双线性、斜，且
+
+$$
+B_x^2=-\|x\|^2I+x\otimes x,
+\qquad \|B(x,y)\|^2=\|x\|^2\|y\|^2-\langle x,y\rangle^2.
+\tag{44.12}
+$$
+
+这两个纯内积拼接引理不要求 $T_P$ 含单位、完备或存在Jordan截面。未知原 $D$ 没有被极化。
+
+OP59–61的大纯像步骤也逐次合法：正交非零 $x,y$ 任意，固定实际 $d=\pi D(a,b)$，取第三实际标签 $c=tb$，使 $t\|y\|\sqrt{1+\|x\|^2}<1$。小行及实际旋转支付 $\pi D(a,c)=tB(x,y)$。两份真实外层像为
+
+$$
+(y\pm d,\ ty\pm tB(x,y)).
+\tag{44.13}
+$$
+
+各自第二像长度小于一，故以实际旋转转入已付小正交行，两个旧输出分别由 $B$ 识别。PB成为
+
+$$
+B(y+d,ty+tB(x,y))=B(y-d,ty-tB(x,y)).
+\tag{44.14}
+$$
+
+此后才展开 $B$，44.12使 $d=B(x,y)$。一般纯像对用43.5对角化Gram，相关对用零预算。三维中斜的交替面积映射必为 $B(x,y)=k x\times y$、$k^2=1$：其三线性型 $\langle B(x,y),z\rangle$ 是三形式，单位正交对的面积确定 $|k|=1$。置 $\sigma(P)=-k$，即符合 $K_\sigma=\sigma i[,]/2$ 的Pauli符号。
+

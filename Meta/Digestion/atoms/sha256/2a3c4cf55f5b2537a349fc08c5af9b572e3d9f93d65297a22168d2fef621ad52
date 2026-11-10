@@ -1,0 +1,63 @@
+## 56. A full-triangle fibre majorant and a sharper positive comparator
+
+Theorem 56.1 (an attained positive upper bound at thirteen-fourths).
+At the same original level as Definition 54.2,
+
+$$
+\boxed{A_+(13/4)<\frac{11497119}{25000000}<\frac{23}{50}.}
+\tag{56.1}
+$$
+
+*Proof.* In the positive row take
+
+$$
+q=\frac35,\quad p=\frac25,\quad x=\frac{39}{80},\quad
+L=\frac{119}{80},\quad X=\frac{31}{100},\quad Y=\frac{93}{100}.
+\tag{56.2}
+$$
+
+The point is strictly inside the attained triangle because
+$\sqrt X>11/20$, $\sqrt Y>24/25$, and
+$11/20+24/25=151/100>119/80$.  In particular all displayed
+radicals are on their positive branches.  With $T=L^2-X-Y=249/256$,
+the simultaneous formulas of Continuation II, Definition 46.1 give
+
+$$
+F^2=\frac{1365995967}{157450240000}>\left(\frac{931}{10000}\right)^2,
+$$
+
+and, for the positive row,
+
+$$
+R^2=\frac{31}{200}+\frac{93c^2}{100}+\frac{249hc}{256},\qquad
+C^2=\frac{69}{200}+\frac{7s^2}{100}+2hsF.
+\tag{56.3}
+$$
+
+The positive rational enclosures for $h,s,c$ obtained by squaring their
+defining identities give
+
+$$
+R>\frac{6293}{5000},\qquad C>\frac{398}{625},qquad
+\frac25d^2+\frac35e^2<\frac{7107}{1000}.
+\tag{56.4}
+$$
+
+Also $\sqrt{2/5}>1581/2500$ and $\sqrt{3/5}>1549/2000$, hence
+
+$$
+\Gamma>\frac{16114253}{12500000}>\frac{12891}{10000}.
+$$
+
+Substitution in the simultaneously attained defect yields
+
+$$
+G_+<\frac{7107}{1000}-4\left(\frac{12891}{10000}\right)^2
+ =\frac{11497119}{25000000}<\frac{23}{50}.
+$$
+
+Lemma 46.2 and the ordinary-transpose alignment reconstruct one whole
+feedback and one effect with the fixed labels, so this is an upper bound
+for the full positive minimum.  It is not a global-minimum certificate.
+\hfill$\square$
+

@@ -1,0 +1,54 @@
+**Definition 52.1 (negative population and common triangle).** Retain the
+original $\mathcal K=\operatorname{Dens}_2\times U(4)$, ordinary transpose,
+$g$, $f=g-\kappa\rho$, $\rho=\min\{\rho_+,\rho_-\}$, and exactly one
+common feedback scalar. The matrices $T$, $U_+$ and $U_-$ are the fixed
+objects of source Section 23. The constants $h,s,c,d,e$ are (49.2), and in
+this section put $k_-=h-s>0$. The selected value $V=N+\kappa\xi$ is
+exactly Theorem 37.5 of Continuation I, not a definition of a global
+minimum. For a pure effect use the negative population
+
+$$
+\beta=\begin{pmatrix}e^{i\phi}\sqrt q\\\sqrt p\end{pmatrix},\qquad
+p=1-q,\qquad E=(T\beta\beta^\dagger T^\dagger)^{\mathsf T},\qquad
+q=(T^\dagger E^{\mathsf T}T)_{11}.
+\tag{52.1}
+$$
+
+Thus this $q$ is distinct from the positive population in (51.2).
+At the negative-active true original level $\xi$ set
+
+$$
+x=1-\xi/4+q/2,\qquad y=\sqrt{1-x^2},\qquad L=1+x,
+\qquad 0\le q\le\min\{1,\xi/2\}.
+\tag{52.2}
+$$
+
+For $0<x<1$ use precisely the negative row $(s,h,c,h)$ of
+Continuation II, Definition 46.1 and Lemma 46.2. Its actual common
+triangle and nonnegative half-amplitudes are
+
+$$
+\begin{aligned}
+\mathcal T_x&=\{(X,Y)\in[0,1]^2:\sqrt X+\sqrt Y\ge L\},\\
+Z&=\frac{L^2-X-Y}{2\sqrt{XY}},\qquad
+F=\sqrt{(1-X)(1-Y)}\sqrt{1-Z^2},\\
+R^2&=s^2X+h^2Y+sh(L^2-X-Y),\\
+C^2&=c^2(1-X)+h^2(1-Y)+2chF,\qquad
+\Gamma=\sqrt p\,R+\sqrt q\,C.
+\end{aligned}
+\tag{52.3}
+$$
+
+Both amplitudes belong to this one triangle point and one whole phase
+feedback. In particular $X,Y\ge x^2>0$, and $-1\le Z\le1$ follows
+from $|\sqrt X-\sqrt Y|\le1<L\le\sqrt X+\sqrt Y$.
+For every coherence phase, the original recovery modulus is at most
+$2\Gamma$ by Lemma 46.2, so its actual $g$ is at least
+$e^2p+d^2q-4\Gamma^2$. There is no substitution of independently
+attained recovery extrema. Define the explicit comparison function
+
+$$
+H(\xi)=\frac\xi{25}+\frac{\xi^2}{24}.
+\tag{52.4}
+$$
+

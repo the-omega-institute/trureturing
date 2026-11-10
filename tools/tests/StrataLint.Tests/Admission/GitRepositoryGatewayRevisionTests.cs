@@ -626,6 +626,105 @@ public sealed class GitRepositoryGatewayRevisionTests
         Assert.Equal(Encoding.UTF8.GetBytes(expected), entry.Bytes);
     }
 
+    [Theory]
+    [InlineData("committed", false)]
+    [InlineData("staged", false)]
+    [InlineData("unstaged", false)]
+    [InlineData("reverted-index", false)]
+    [InlineData("committed", true)]
+    [InlineData("unstaged", true)]
+    public void ChangeDiscoveryPreservesNativeCopyRenameAndWorkingBytes(string state, bool linked)
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        var source = string.Concat(Enumerable.Range(0, 40).Select(i => $"source line {i}\n"));
+        File.WriteAllText(Path.Combine(repository.Path, "source.txt"), source);
+        File.WriteAllText(Path.Combine(repository.Path, "old.txt"), "rename me\n");
+        TestGit.Run(repository.Path, "add", ".");
+        TestGit.Run(repository.Path, "commit", "-qm", "baseline");
+        var baseline = TestGit.Run(repository.Path, "rev-parse", "HEAD").Trim();
+        var candidate = repository.Path;
+        if (linked)
+        {
+            candidate = Path.Combine(repository.Path, "linked candidate");
+            TestGit.Run(repository.Path, "worktree", "add", "-b", "candidate", candidate, baseline);
+        }
+        File.WriteAllText(Path.Combine(candidate, "copy.txt"), source + "copy addition\n");
+        TestGit.Run(candidate, "mv", "old.txt", "renamed.txt");
+        TestGit.Run(candidate, "add", ".");
+        TestGit.Run(candidate, "commit", "-qm", "copy and rename");
+        if (state != "committed")
+        {
+            File.WriteAllText(Path.Combine(candidate, "copy.txt"), "different working content\n");
+            if (state is "staged" or "reverted-index") TestGit.Run(candidate, "add", ".");
+            if (state == "reverted-index")
+                File.WriteAllText(Path.Combine(candidate, "copy.txt"), source + "copy addition\n");
+        }
+        File.WriteAllText(Path.Combine(candidate, "untracked.txt"), "untracked\n");
+        var reference = new GitRepositoryGateway(candidate, new ComparisonGitRunner(forceWorkingTree: true), "git")
+            .Prepare(baseline).Changes.Entries;
+        var runner = new ComparisonGitRunner();
+        var actual = new GitRepositoryGateway(candidate, runner, "git").Prepare(baseline).Changes.Entries;
+        Assert.Equal(reference.Select(entry => (entry.Path.Value, entry.Kind)),
+            actual.Select(entry => (entry.Path.Value, entry.Kind)));
+        Assert.Contains(actual, entry => entry.Path.Value == "untracked.txt" && entry.Kind == RawChangeKind.Added);
+        Assert.Contains(actual, entry => entry.Path.Value == "old.txt" && entry.Kind == RawChangeKind.Deleted);
+        Assert.Contains(actual, entry => entry.Path.Value == "renamed.txt" && entry.Kind == RawChangeKind.Added);
+        Assert.Equal(state == "committed", runner.UsedObjectComparison);
+        if (state is "committed" or "reverted-index")
+            Assert.Contains(actual, entry => entry.Path.Value == "source.txt" && entry.Kind == RawChangeKind.Copied);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void ObjectComparisonRechecksTrackedBytesAndRejectsProbeErrors(bool probeError)
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        var path = Path.Combine(repository.Path, "source.txt");
+        File.WriteAllText(path, "baseline\n");
+        TestGit.Run(repository.Path, "add", ".");
+        TestGit.Run(repository.Path, "commit", "-qm", "baseline");
+        var baseline = TestGit.Run(repository.Path, "rev-parse", "HEAD").Trim();
+        var runner = new ComparisonGitRunner(afterComparison: () => File.WriteAllText(path, "changed\n"),
+            failFinalProbe: probeError);
+        var gateway = new GitRepositoryGateway(repository.Path, runner, "git");
+        if (probeError)
+            Assert.Throws<GitInfrastructureException>(() => gateway.Prepare(baseline));
+        else
+        {
+            var change = Assert.Single(gateway.Prepare(baseline).Changes.Entries);
+            Assert.Equal("source.txt", change.Path.Value);
+            Assert.Equal(RawChangeKind.Modified, change.Kind);
+        }
+        Assert.True(runner.UsedObjectComparison);
+    }
+
+    private sealed class ComparisonGitRunner(bool forceWorkingTree = false, Action? afterComparison = null,
+        bool failFinalProbe = false) : IGitProcessRunner
+    {
+        private readonly ProductionGitProcessRunner production = new();
+        internal bool UsedObjectComparison { get; private set; }
+        public ProcessOutput Run(string fileName, IReadOnlyList<string> arguments, string workingDirectory,
+            TimeSpan timeout, int maximumOutputBytes = GitRepositoryGateway.DefaultGitOutputBytes,
+            ReadOnlyMemory<byte> standardInput = default)
+        {
+            Assert.Equal(TimeSpan.FromSeconds(120), timeout);
+            if (forceWorkingTree && arguments.Contains("--quiet")) return new(1, [], []);
+            if (failFinalProbe && UsedObjectComparison && arguments.Contains("--quiet")) return new(2, [], []);
+            var result = production.Run(fileName, arguments, workingDirectory, timeout, maximumOutputBytes, standardInput);
+            if (arguments.Contains("diff-tree"))
+            {
+                UsedObjectComparison = true;
+                Assert.Contains("--find-copies-harder", arguments);
+                Assert.Equal("--git-dir=" + workingDirectory, arguments[0]);
+                afterComparison?.Invoke();
+            }
+            return result;
+        }
+    }
+
     private static void InitializeRepository(string path)
     {
         TestGit.Run(path, "init");
@@ -710,6 +809,7 @@ public sealed class GitRepositoryGatewayRevisionTests
                 "status" => Output(string.Empty),
                 "rev-parse" when arguments[1] == "--verify" => Output(FirstOid + "\n"),
                 "merge-base" when arguments[1] == "--is-ancestor" => Output(string.Empty),
+                "diff" when arguments.Contains("--quiet") => new(1, [], []),
                 "diff" => Output(diffNameStatus),
                 "ls-files" => Output(string.Empty),
                 _ => throw new InvalidOperationException("unexpected Git command"),

@@ -1,0 +1,17 @@
+**定义34.1（空间及代数丛）。** 令 $K=S^2$，取 $X=AD(K)=K\times\{0,1\}$：顶层 $T=K\times\{1\}$ 每点孤立；底点 $(p,0)$ 的基本邻域为
+
+$$
+N(V,p)=(V\times\{0,1\})\setminus\{(p,1)\},\qquad p\in V\subset K\text{ 开}.
+\tag{34.1}
+$$
+
+记底层 $B_0=K\times\{0\}$、$\pi(p,\epsilon)=p$、$\iota(p)=(p,0)$。令 $H\to S^2$ 为 Hopf Hermitian 线丛，沿赤道的单位过渡函数取 $e^{i\theta}$；相反约定只将下文绕数同时改号。取
+
+$$
+V=H\oplus\underline{\mathbb C}^{\,n-1},\qquad
+\mathfrak B=\pi^*\operatorname{End}(V),\qquad n\ge3.
+\tag{34.2}
+$$
+
+$\operatorname{End}(V)$ 的伴随及范数由 Hermitian 度量给出，单位过渡 $g$ 对矩阵作用为 $A\mapsto gAg^{-1}$，所以它和拉回都是30.1的复星代数丛。
+

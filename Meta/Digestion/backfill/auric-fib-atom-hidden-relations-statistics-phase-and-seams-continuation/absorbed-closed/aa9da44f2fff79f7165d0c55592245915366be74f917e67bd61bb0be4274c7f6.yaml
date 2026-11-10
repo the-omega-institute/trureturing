@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:aa9da44f2fff79f7165d0c55592245915366be74f917e67bd61bb0be4274c7f6
+  normalized_sha256: sha256:aa9da44f2fff79f7165d0c55592245915366be74f917e67bd61bb0be4274c7f6
+cas_ref: sha256:aa9da44f2fff79f7165d0c55592245915366be74f917e67bd61bb0be4274c7f6
+coverage_gids:
+  - gid: D5/S3/Analytic/Convexity/BirkhoffSharpContraction.sharp_contraction
+    target_statement_id: sha256:7510289687625f0ddeb5c5433aa00761930039f6aa452f946b5b31d90124dd1d
+receipts:
+  unresolved_subitems: []

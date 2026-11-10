@@ -1,0 +1,65 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement.SymmetricExtensions;
+
+internal sealed class BoseCoherentSymbolDocument : IScribeDocumentDefinition
+{
+    private const string Prefix = "D5/S3/Quantum/Entanglement/SymmetricExtensions/BoseCoherentSymbol.";
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Coherent symbols separate actual Bose-supported operators",
+        H("Coherent symbols of Bose operators"), Blocks(
+            Paragraph(Text("This is the finite polynomial spanning argument used in Gulati-Nechita-Park, Theorem 8.9. It concerns actual computational tensor matrices and the repository's full symmetric projector. The GNP extension characterization is proved separately in BoseHierarchy using these coherent symbols.")),
+            Describe.Lean(DescribeId.Create("bose-coherent-symbol"),
+                DeclarationHandle.Create(Prefix + "symbol"),
+                H("Actual bihomogeneous entry polynomial"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Each computational matrix entry multiplies the monomial with its row occupation in the first variable family and its column occupation in the second. Repeated occupations are summed with their actual multiplicities, without any normalization."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("bose-coherent-evaluation"),
+                DeclarationHandle.Create(Prefix + "eval_symbol"),
+                H("Evaluation is the actual coherent quadratic form"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Substituting conjugate z in the first family and z in the second gives exactly the quadratic form of the actual repeated tensor vector. This identity requires no support or positivity hypothesis."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("bose-coherent-separation"),
+                DeclarationHandle.Create(Prefix + "eq_zero_of_coherent"),
+                H("Coherent evaluations separate Bose operators"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every tensor length and local dimension, a Hermitian matrix supported by the full symmetric-projector sandwich is zero if all its coherent quadratic forms vanish. An invertible Cartesian substitution and polynomial uniqueness prove vanishing of the independent-coordinate polynomial. The existing occupation-orbit theorem then identifies each coefficient with a matrix entry times two strictly positive occupation multiplicities. Empty and zero-dimensional boundaries are retained."))), DescribeRole.Theorem),
+            new DocumentBlock.Section(H("Application: nonnegative occupation weights"), Blocks(
+                Paragraph(Text("For arbitrary natural numbers r and n, a positive semidefinite matrix E on words Fin r to Fin n, and every occupation a : Sym (Fin n) r, put w=representative a.val a.property. The occupation coefficient is the real natural multiplicity of a times the real part of E(w,w). Matrix.PosSemidef.diag_nonneg gives the complex-order inequality 0 <= E(w,w); the first component of Complex.nonneg_iff gives 0 <= real(E(w,w)). Nat.cast_nonneg and mul_nonneg then give a nonnegative occupation coefficient.")),
+                Paragraph(Text("Expanding the actual occupation twirl entrywise from hE.isHermitian and full Bose support gives the actual finite sum of these nonnegative coefficients times the normalized occupation projectors vecMulVec (sectorVector r a.val) (star (sectorVector r a.val)). The equality itself holds for every Hermitian Bose-supported E with signed coefficients. This positivity application retains zero coefficients, zero and singular operators, r=0, n=0 whenever the stated data exist, n=1 and r=2; it imposes neither trace one nor a coefficient-sum normalization.")))),
+            Describe.Lean(DescribeId.Create("bose-coherent-partial-transpose-coherent"),
+                DeclarationHandle.Create(Prefix + "partialTranspose_coherent"),
+                H("Complex coherent form at every cut"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The actual product-basis partial transpose acts on a coherent form by conjugating precisely the local vector entries at the selected sites. Empty and full cuts are retained."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("bose-coherent-rank-one-partial-transpose-coherent"),
+                DeclarationHandle.Create(Prefix + "rankOne_partialTranspose_coherent"),
+                H("Rank-one cut amplitude"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The coherent form of a partially transposed rank-one PSD tensor is exactly the squared modulus of its cut amplitude."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("bose-coherent-real-symbol"),
+                DeclarationHandle.Create(Prefix + "realSymbol"),
+                H("Actual real coherent polynomial"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The polynomial sums the real parts of the original matrix entries with their total row and column occupations."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("bose-coherent-real-symbol-pos-semidef-sos"),
+                DeclarationHandle.Create(Prefix + "realSymbol_posSemidef_sos"),
+                H("PSD tensors give native SOS forms"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Factoring the actual PSD matrix writes its real coherent polynomial as a finite sum of real and imaginary amplitude squares. The SOS predicate is the ordinary native real polynomial predicate."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("bose-coherent-eval-real-symbol"),
+                DeclarationHandle.Create(Prefix + "eval_realSymbol"),
+                H("Exact real coherent evaluation"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Every real local vector evaluates the polynomial to the real part of the actual repeated-tensor quadratic form."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("bose-coherent-real-symbol-partial-transpose"),
+                DeclarationHandle.Create(Prefix + "realSymbol_partialTranspose"),
+                H("Cut-invariant real polynomial"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Every product-basis partial transpose has the identical real coherent polynomial, for every cut."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("bose-coherent-real-symbol-sos-closed"),
+                DeclarationHandle.Create(Prefix + "realSymbol_sos_closed"),
+                H("Closed native SOS preimage"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The set of Hermitian tensors whose actual real coherent polynomial is a native SOS is closed. The proof consumes the genuine homogeneous SOS coefficient-cone closedness; it does not remove closure from the DPS dual-sum identity."))), DescribeRole.Theorem))));
+}

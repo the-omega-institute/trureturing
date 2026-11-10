@@ -1,0 +1,28 @@
+**定义 32.1（一整圈输入对上的总响应反号）。** 在同一个 $n=2$ 原域上取
+
+$$
+F=2x\sigma_z,\qquad G=x\sigma_x,\qquad
+ e_*=D_*(F,G)=-2x^2\sigma_y.
+\tag{32.1}
+$$
+
+令 $\mathcal S\subset E_2^2$ 是 $(F,G)$ 的整个 O$(2)$ 轨道：
+
+$$
+\mathcal S=\left\{(o_{11}F+o_{12}G,o_{21}F+o_{22}G):O\in O(2)\right\}.
+\tag{32.2}
+$$
+
+在全部原 $E_2^2$ 上定义同一个总函数
+
+$$
+\widetilde D(A,B)=
+\begin{cases}
+-D_*(A,B),&(A,B)\in\mathcal S,\\
+ D_*(A,B),&(A,B)\notin\mathcal S.
+\end{cases}
+\tag{32.3}
+$$
+
+$S$、锥、范数、单位、全部原评价及其全部质量均沿用 31.1，不另换乘法。$\mathcal S$ 中每对均是非交换的一次标签对。此映射不预设连续、齐次或可加。
+

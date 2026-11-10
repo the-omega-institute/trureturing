@@ -1,0 +1,125 @@
+ and $M^n b_0$ for Type II, with componentwise domination by every other return vector. Thus it remains to prove
+
+$$
+\begin{aligned}
+h(f_n+M^n b_6)+b_i'&\le LhM^n b_6 &&(n\ge0),\\
+h f_n+b_i'&\le LhM^n b_0 &&(n\ge6).
+\end{aligned}
+\tag{50}
+$$
+
+We give finite and uniform estimates for the entire index domains. Put
+
+$$
+k=(1,1,1,1,2,4,8),\qquad
+Q(z)=(z-1)(z^2-3),\qquad A_n=hM^n b_6.
+$$
+
+Direct row multiplication gives $h=kQ(M)$. Using the whole supplied spectral formula of Appendix Lemma 21, with its exact $d=3$ normalization, gives
+
+$$
+A_n=\sum_{\lambda^4-2\lambda^3-1=0}
+ \frac{Q(\lambda)\lambda^{n+4}}{4\lambda-6}.
+\tag{51}
+$$
+
+In particular, there are no tribonacci-root contributions, and
+
+$$
+A_{n+4}=2A_{n+3}+A_n,\qquad
+(A_0,A_1,A_2,A_3)=(13,27,57,121).
+$$
+
+Define
+
+$$
+S(n)=\sum_{\substack{\lambda^4-2\lambda^3-1=0\\\lambda\ne\Lambda}}
+ \frac{Q(\lambda)}{4\lambda-6}
+ \left(\frac{\lambda-2}{3-\lambda}
+       -\frac{\Lambda-2}{3-\Lambda}\right)\lambda^{n+4}.
+$$
+
+The supplied expression (2), with the rational functions (6), now yields the exact equalities
+
+$$
+\begin{aligned}
+h(f_n+M^n b_6)-LA_n&=S(n)-h\mathsf B_i b_0,\\
+h f_n-LhM^n b_0&=S(n-3)-h\mathsf B_i b_0\qquad(n\ge6).
+\end{aligned}
+\tag{52}
+$$
+
+For the second equality, use $(\lambda-2)\lambda^3=1$ for every root in (51). No estimate of an asymptotic exponent replaces either equality.
+
+The exact boundary margins are
+
+$$
+\begin{gathered}
+(h\mathsf B_i b_0)_{i=0}^5
+ =\tfrac1{13}(19,31,41,45,83,171),\\
+(h\mathsf B_i b_0-b_i')_{i=0}^5
+ =\tfrac1{13}(6,18,28,6,18,28).
+\end{gathered}
+\tag{53}
+$$
+
+They follow by substituting the row $h$ into the explicit matrix $\mathsf B_i$ in (2). Notice that the margins have period three, which will cover Type II without losing its initial indices.
+
+We next bound $S(n)$ uniformly. The negative root of $z^4-2z^3-1$ is $-s$, with $7/10<s<3/4$. The derivative $2z^2(2z-3)$ shows that the only real roots are this root and $\Lambda$; write the others as $z,\overline z$. Their product gives $|z|^2=1/(\Lambda s)<100/147<25/36$, since $\Lambda>21/10$. Thus each of the three non-Perron roots has modulus less than $5/6$. For any such root $\lambda$,
+
+$$
+|Q(\lambda)|<7,\qquad |4\lambda-6|>8/3,
+$$
+
+and its summand before the factor $\lambda^n$ can be bounded using
+
+$$
+\begin{aligned}
+\left|\left(\frac{\lambda-2}{3-\lambda}
+ -\frac{\Lambda-2}{3-\Lambda}\right)\lambda^4\right|
+&\le \frac{|\lambda|}{3-|\lambda|}
+ +\frac{|\lambda|^4}{\Lambda^3-1}\\
+&<\frac5{13}+\frac{625}{9072}<\frac12.
+\end{aligned}
+$$
+
+We used $(\lambda-2)\lambda^3=1$ and $\Lambda^3>8$. Summing the three terms proves
+
+$$
+|S(n)|<\frac{63}{16}(5/6)^n<4(5/6)^n.
+$$
+
+For every $n\ge12$, this is smaller than $6/13$, because $4(5/6)^{12}<6/13$. It is therefore smaller than every margin in (53).
+
+For $0\le n\le11$, use the rational lower bound
+
+$$
+\Lambda>\frac{2106919}{10^6},\qquad L>\frac{10^6}{893081}.
+$$
+
+Indeed substitution into $z^4-2z^3-1$ gives
+$-3668139160725701279/10^{24}<0$, and the polynomial is strictly increasing for $z>2$. The following integer table proves the first inequality in (50) at all the remaining indices: its last column is exactly
+$10^6 A_n-893081(A_n+h f_n+b_i')$.
+
+| $n$ | $A_n$ | $h f_n$ | $b_i'$ | Positive numerator |
+|---:|---:|---:|---:|---:|
+| $0$ | $13$ | $0$ | $1$ | $496866$ |
+| $1$ | $27$ | $1$ | $1$ | $1100651$ |
+| $2$ | $57$ | $4$ | $1$ | $1628978$ |
+| $3$ | $121$ | $11$ | $3$ | $434065$ |
+| $4$ | $255$ | $24$ | $5$ | $1364996$ |
+| $5$ | $537$ | $51$ | $11$ | $2044481$ |
+| $6$ | $1131$ | $134$ | $1$ | $359454$ |
+| $7$ | $2383$ | $283$ | $1$ | $1152973$ |
+| $8$ | $5021$ | $598$ | $1$ | $1884780$ |
+| $9$ | $10579$ | $1263$ | $3$ | $455555$ |
+| $10$ | $22289$ | $2662$ | $5$ | $1270564$ |
+| $11$ | $46961$ | $5609$ | $11$ | $1907939$ |
+
+Every entry follows from (51) and the supplied recurrence
+$f_0=0$, $f_{n+1}=Mf_n+b_0+2b_6$ when $n+1\equiv0\pmod6$, and $f_{n+1}=Mf_n+b_0$ otherwise. Thus the table is finite exact arithmetic, with the remaining infinitely many indices covered by the preceding estimate.
+
+Together with (52)–(53) this proves $S(n)<h\mathsf B_i b_0-b_i'$ for every $n\ge0$. For Type II, set $m=n-3\ge3$. The margin at $m\bmod6$ equals the margin at $n\bmod6$ by (53). Apply the already proved inequality to $S(m)$ in the second line of (52). This proves the second line of (50) for every $n\ge6$, including its finite initial segment. Componentwise domination of all source returns then proves the required output return bound for both series.
+
+We have exhausted the marker-free factors, all finite source classes, both infinite palindromic classes and every nonpalindromic class, including all output boundary contributions. The ordinary-exponent criterion consequently gives $E(x)\le1+L=e_3$. The reverse inequality follows directly from Theorem 2.1 for this nonerasing morphism. This proves (44). $\square$
+

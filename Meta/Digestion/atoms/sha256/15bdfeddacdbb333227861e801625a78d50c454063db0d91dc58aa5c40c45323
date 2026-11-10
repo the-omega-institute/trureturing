@@ -1,0 +1,62 @@
+#### 定理 6.2：二元长度、面积与三元返回
+
+对全部 $x,y,z\in W$，有
+
+$$
+\begin{aligned}
+xy&=-B(x,y)\mathbf 1+x\times y,
+\end{aligned}
+\tag{6.1}
+$$
+
+$$
+\begin{aligned}
+B(x\times y,x)&=B(x\times y,y)=0,
+\end{aligned}
+\tag{6.2}
+$$
+
+$$
+\begin{aligned}
+q(x\times y)&=q(x)q(y)-B(x,y)^2,
+\end{aligned}
+\tag{6.3}
+$$
+
+$$
+\begin{aligned}
+x\times(y\times z)&=B(x,z)y-B(x,y)z,
+\end{aligned}
+\tag{6.4}
+$$
+
+$$
+\begin{aligned}
+(x\times y)\times z&=B(x,z)y-B(y,z)x.
+\end{aligned}
+\tag{6.5}
+$$
+
+三线性型 $\nu$ 交替；$\times$ 满足 Jacobi 恒等式。
+
+**证明。**
+
+纯方向反交换关系 $xy+yx=-2B(x,y)\mathbf 1$ 给式 (6.1)。 共轭反转乘法次序，故 $x\times y\in W$。 原配对伴随恒等式给
+
+$$
+B(xy,x)=q(x)B(y,\mathbf 1)=0,\qquad
+B(xy,y)=q(y)B(x,\mathbf 1)=0.
+$$
+
+标量部分与 $W$ 正交，得到式 (6.2)。 将乘性二次型分成这两个正交部分，得到
+
+$$
+q(x)q(y)=q(xy)=B(x,y)^2+q(x\times y),
+$$
+
+即式 (6.3)。 取主定理中的正交单位基 $u,v,w=uv$。原乘法表给 $u\times v=w$、$v\times w=u$、$w\times u=v$，反序取负。 对三个变量作实三线性展开，即得两条三元返回式。 同一张表给 $\nu(u,v,w)=1$ 并在交换任意两槽时变号，故 $\nu$ 交替。 式 (6.4) 的循环和为零，得到 Jacobi 恒等式。
+
+$\square$
+
+这是四元数纯部的标准三维几何；本轮的推进在于先从半范数关系恢复内积，再用同一对忠实合读取得该原代数。 R5-022 已从另一种三元返回入口研究同一三维结果。[\[11\]](#ref-baez), [\[8\]](#ref-r522)
+

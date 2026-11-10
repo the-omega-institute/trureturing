@@ -1,0 +1,20 @@
+**定义 13.1（态几何与同乘法作用）。** 对定义 11.1 的原复化 $A_0=E\oplus\mathrm iE$，取共轭 $*$、原双线性延拓的 $\star$，并将每个原评价复线性延拓。定义
+
+$$
+h_\alpha(z,w)=\alpha(z^*\star w),\quad
+\mathcal N_\alpha=\{z:h_\alpha(z,z)=0\},\quad
+H_\alpha=A_0/\mathcal N_\alpha.
+\tag{13.1}
+$$
+
+11.2 说明 $h_\alpha$ 是半正定 Hermitian 型；Cauchy–Schwarz 由对 $z+tw$ 的非负二次式得到，所以零向量与全部向量正交，商上内积良定义。这里有限维，商已完备。原左乘若要按 $[z]\mapsto[t\star z]$ 在这个商上作用，必要且充分的是 $t\star\mathcal N_\alpha\subseteq\mathcal N_\alpha$。
+
+更强的“同乘法共同算子表示”是非零复 Hilbert 空间 $H$ 上的实线性 $J:E\to B(H)_{\rm sa}$，满足 $J_u=I$ 及全部原 $a,b$ 上
+
+$$
+J_aJ_b=J_{S(a,b)}-\mathrm iJ_{D(a,b)}.
+\tag{13.2}
+$$
+
+这准确保留同一原乘法，不只保留某个状态的比较数值。其复线性延拓自动保 $*$ 和整个原复乘法。
+

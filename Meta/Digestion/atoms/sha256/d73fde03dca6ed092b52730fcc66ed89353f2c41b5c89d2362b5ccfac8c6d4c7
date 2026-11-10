@@ -1,0 +1,17 @@
+**定义 14.1（当前正份额及其两种读数）。**记
+
+$$
+R_+=\mathbb N[1/3]=\{m/3^r:m,r\in\mathbb N\},\qquad
+S_+=R_+[u]/(u^3=1),\qquad \Delta=1+u+u^2.
+$$
+
+这里取半环关系 $u^3=1$，不取 $\Delta=0$。每个当前原始份额唯一写成 $s=a+bu+cu^2$，$a,b,c\in R_+$；乘法是模三的非负循环卷积。完整操作记录另存，$u^3=1$ 只表示当前可读相位回到原值，不删除三次标记的记录。令
+
+$$
+\phi(s)=a+b\zeta+c\zeta^2\in A=\mathbb Z[\zeta,1/3],\qquad
+\epsilon(s)=a+b+c,\qquad \zeta=e^{2\pi i/3}.
+\tag{14.1}
+$$
+
+对 $x\in S_+^d$ 记 $Fx=(\phi(x_j))_j$、$h(x)=(\epsilon(x_j))_j$、$\nu(x)=\sum_j\epsilon(x_j)$。$\nu$ 是当前原始总份额，既非原切口质量，也非已经绑定的量子事件概率。正原始矩阵 $L$ 的两份矩阵读数为 $K=\phi(L)$、$H=\epsilon(L)$，逐项应用。
+

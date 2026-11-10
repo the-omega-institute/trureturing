@@ -25,7 +25,7 @@ open scoped BigOperators ComplexConjugate Topology
 
 namespace D5.S3.Constants.Moments.CountableHankelNegativeWitness
 
-private theorem eval_bound (p : ℝ[X]) {z : ℂ} (hz : ‖z‖ ≤ 1) :
+theorem eval_bound (p : ℝ[X]) {z : ℂ} (hz : ‖z‖ ≤ 1) :
     ‖p.eval₂ Complex.ofRealHom z‖ ≤ ∑ k ∈ p.support, |p.coeff k| := by
   rw [Polynomial.eval₂_eq_sum]
   calc

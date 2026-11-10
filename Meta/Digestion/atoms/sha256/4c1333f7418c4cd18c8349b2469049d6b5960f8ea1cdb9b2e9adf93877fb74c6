@@ -1,0 +1,4 @@
+## 169. The concrete representer plane is not heat-invariant
+
+Section 168 reduces the actual closure question to a finite residual Gram matrix. The source-start law supplies an exact obstruction to that closure: the first-order representer plane already contains a positive-time source density, and no such density can have a finite-dimensional heat orbit.
+

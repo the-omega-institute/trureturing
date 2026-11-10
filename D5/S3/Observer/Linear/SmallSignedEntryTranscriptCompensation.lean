@@ -6,6 +6,9 @@
    utility: none
    digest: Small signed entries compensate complete finite native transcripts. -/
 
+/- quadratic_row_bound: proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Combinatorics.SpectralGraph.LinearKTreeBoundary.nonnegative_row_bound.
+Escape audit unfinished for quadratic_row_bound: https://github.com/the-omega-institute/trureturing/issues/25440 -/
+
 import D5.S0.Naming.GreenClassMeasure
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 import Mathlib.LinearAlgebra.Matrix.Block
@@ -458,7 +461,7 @@ private theorem unique_sum_bound {ι : Type*} [Fintype ι] [DecidableEq ι]
     simpa [hp] using hc
 
 set_option backward.isDefEq.respectTransparency false in
-private theorem quadratic_row_bound {ι : Type*} [Fintype ι] [DecidableEq ι]
+theorem quadratic_row_bound {ι : Type*} [Fintype ι] [DecidableEq ι]
     (a : Matrix ι ι ℝ) (ha : ∀ i j, a i j = a j i) (q : ℝ)
     (hq : ∀ i, ∑ j, |a i j| ≤ q) (v : ι → ℝ) :
     |∑ i, ∑ j, v i * a i j * v j| ≤ q * ∑ i, (v i)^2 := by
@@ -873,9 +876,5 @@ theorem no_fair_zero_error_exact_acquisition
     obtain ⟨future, hfuture⟩ := actual_cut_separation referenceSource.matrix s.matrix
       (finalState referenceSource.matrix (fun _ => 0) w) (finalState s.matrix z w) hmne
     exact hfuture ((hc0 future).symm.trans (hc1 future))
-
-#print axioms small_entry_complete_transcript_compensation
-#print axioms no_deterministic_exact_acquisition
-#print axioms no_fair_zero_error_exact_acquisition
 
 end D5.S3.Observer.Linear.SmallSignedEntryTranscriptCompensation

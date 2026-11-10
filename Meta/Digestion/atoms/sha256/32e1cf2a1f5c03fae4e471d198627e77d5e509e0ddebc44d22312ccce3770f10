@@ -1,0 +1,43 @@
+**定理 212.1（两点乘积的模长约束）。** 对 $y,z\in V_h$ 且 $y^2-z^2\in\mathbb Ru$，记
+
+$$
+P=y\circ z,\quad Q=Gy\circ Gz,\quad
+U=y\circ Gz,\quad V=Gy\circ z,\quad
+X=P-Q,\quad Y=U+V.
+$$
+
+则
+
+$$
+P^2=Q^2,\qquad U^2=V^2,\qquad
+X\circ Y=0,\qquad X^2=Y^2=:L\ge0,
+\tag{212.1}
+$$
+
+且 $L$ 和 $P,Q,U,V$ 全部交换。因此两边各自有相同算子绝对值、核与谱支撑；$L$ 仅在这四个交叉乘积生成的小包络中中央。
+
+证明。分别将两输入换成已支付的圆标签 $y_\theta=\rho_\theta y,z_\psi=\rho_\psi z$。它们的平方不变，209.1 对每一对都成立。置 $\sigma=\theta+\psi,\delta=\psi-\theta$，以及
+
+$$
+A_0=P+Q,\quad B_0=U-V,\quad
+a_0=(1+r^2)/2,\quad b_0=(1-r^2)/2.
+$$
+
+只展开已识别的圆响应，交叉关系准确成为
+
+$$
+\left[
+a_0(A_0\cos\delta+B_0\sin\delta)
++b_0(X\cos\sigma+Y\sin\sigma)
+\right]\circ(Y\cos\sigma-X\sin\sigma)=0.
+\tag{212.2}
+$$
+
+$\sigma,\delta$ 可独立取实值。比较 $\delta$ 与 $\delta+\pi$，用 $b_0>0$，再取 $\sigma=0,\pi/4$，得 $X\circ Y=0,X^2=Y^2$。分离另一部分给
+
+$$
+A_0\circ X=A_0\circ Y=B_0\circ X=B_0\circ Y=0.
+$$
+
+其中 $A_0\circ X=P^2-Q^2$、$B_0\circ Y=U^2-V^2$，所以得到前两式。成熟的等平方代数计算给：若自伴 $P^2=Q^2$，则 $P^2,Q^2,P\circ Q$ 都和 $P,Q$ 交换，故 $(P-Q)^2$ 也与二者交换。再对 $U,-V$ 使用同一计算，结合 $X^2=Y^2$，便得所述中央性。正平方根唯一性给绝对值相同，核和支撑随之相同。∎
+

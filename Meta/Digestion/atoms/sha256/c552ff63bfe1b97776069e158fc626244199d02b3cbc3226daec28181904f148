@@ -1,0 +1,14 @@
+## 24. The sharp endpoint on the high-trace cap
+
+Keep the constants and original producer data of Sections 21–23. Put
+
+$$
+A_0=2+\sqrt{\frac83},\qquad
+\delta_*=4-A_0=2-\sqrt{\frac83},\qquad
+\mathcal C=\{w\in\mathcal W:A(w)\ge A_0\}.
+\tag{24.1}
+$$
+
+Thus $0<\delta_*<1/2$. The following amplitude bound controls all complex
+phases on this cap.
+

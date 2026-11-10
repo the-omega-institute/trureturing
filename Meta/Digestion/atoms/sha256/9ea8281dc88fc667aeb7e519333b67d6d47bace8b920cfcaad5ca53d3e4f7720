@@ -1,0 +1,23 @@
+**定理 261.1（原量子公理及全部历史的对应）。** 在两份分别具名的完整背景上，
+
+$$
+\begin{aligned}
+\mathsf C_{\rm cross3}(B)&\Longleftrightarrow B+\mathrm Z+\mathrm{SC}+\mathrm{SJ},\\
+\mathsf C_{\rm cross3}(\mathsf B_{\rm cl})
+&\Longleftrightarrow\mathsf B_{\rm cl}+\mathsf Q+\mathrm{SC}+\mathrm{SJ}.
+\end{aligned}
+\tag{261.1}
+$$
+
+此处 $\mathsf Q$ 仍为母卷定义 67.2 的全准备、全数学效果及任意小原质量合同。恢复的原消费者为：
+
+| 原结构 | 同一原数据上的结论 |
+| --- | --- |
+| 原 $q,L,D$、中心及整个指针 | $[D_a,D_b]=-[L_a,L_b]$；$a\cdot b=a\circ b-iD_ab$ 给同空间有限复矩阵直和，保留块位置、经典部分和原取向。 |
+| 全部准备及双对偶运输 | $\rho_\alpha\ge0$、$\alpha(e)=\tau_A(\rho_\alpha e)$、$\tau_A(\rho_\alpha)=\alpha(u_A)$，包括零、次归一质量与不等正块权。 |
+| 完整 X、原实际联合及全部相关准备 | 同一实际联合内的普通复张量和含幺 $*$-嵌入；保留原乘积准备与设备身份。 |
+| 全事件 R、原完整装置 | 原事件 CP/TNI、原完整装置 TP；闭准备只沿同一固定执行延拓到相关正锥。 |
+| 整个 AC、精确 $N_u$、Xs | 原效果的所选完整平方根词、成功支 $\sqrt e\,\rho\sqrt e$、原投影的所选 Lüders 支及全部原失败、质量和记录。 |
+| F、原细记录及实际遗忘 | 原细支 $\operatorname{Ad}_{K_\ell}$、原粗支和、零标签、分组和实际可访问记录。 |
+| 具名同数支持双返回及原反向资料 | 同一 $q_\ell>0$、$U_\ell=q_\ell\operatorname{Ad}_{K_\ell^+}$，两侧支持复合、失败完成及原合法接续。 |
+| 完整 $B$ 与分别完整 $\mathsf B_{\rm cl}$ | 有限正生成与运输后闭正锥覆盖各守原范围；极限数学态不取得实际准备身份。 |

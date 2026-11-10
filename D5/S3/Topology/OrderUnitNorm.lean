@@ -26,6 +26,7 @@ public import Mathlib.Geometry.Convex.Cone.Pointed
 public import Mathlib.Algebra.Order.BigOperators.Ring.Finset
 public import Mathlib.Algebra.QuadraticDiscriminant
 public import Mathlib.Topology.Order.Monotone
+public import Mathlib.Analysis.SpecialFunctions.Bernstein
 public import Mathlib.Tactic.Module
 public import Mathlib.Tactic.Linarith
 
@@ -124,10 +125,10 @@ private lemma radii_closed (v : E) : IsClosed (A.radii v) := by
     ((A.closed.preimage ((continuous_id.smul continuous_const).sub continuous_const)).inter
       (A.closed.preimage ((continuous_id.smul continuous_const).add continuous_const)))
 
-private lemma norm_attained (v : E) : A.orderNorm v ∈ A.radii v :=
+lemma norm_attained (v : E) : A.orderNorm v ∈ A.radii v :=
   (A.radii_closed v).csInf_mem (A.radii_nonempty v) (A.radii_bdd v)
 
-private lemma norm_nonneg (v : E) : 0 ≤ A.orderNorm v := (A.norm_attained v).1
+lemma norm_nonneg (v : E) : 0 ≤ A.orderNorm v := (A.norm_attained v).1
 
 private lemma cone_smul_nonneg {r : ℝ} (hr : 0 ≤ r) {v : E} (hv : v ∈ A.cone) :
     r • v ∈ A.cone := by
@@ -146,7 +147,7 @@ private lemma radii_upward {v : E} {r s : ℝ} (hr : r ∈ A.radii v) (hrs : r �
     rw [he]
     exact A.cone.add_mem hr.2.2 hd
 
-private lemma norm_le_iff (v : E) (r : ℝ) :
+lemma norm_le_iff (v : E) (r : ℝ) :
     A.orderNorm v ≤ r ↔ r ∈ A.radii v := by
   constructor
   · exact A.radii_upward (A.norm_attained v)
@@ -165,7 +166,7 @@ private lemma norm_eq_gauge (v : E) : A.orderNorm v = gauge A.interval v := by
     exact (gauge_le_of_mem hr.le ((A.smul_interval_iff hr v).mpr hv.2)).trans_lt
       (by linarith)
 
-private lemma norm_zero_iff (v : E) : A.orderNorm v = 0 ↔ v = 0 := by
+lemma norm_zero_iff (v : E) : A.orderNorm v = 0 ↔ v = 0 := by
   constructor
   · intro h
     have hv := A.norm_attained v
@@ -227,7 +228,7 @@ def bridge [FiniteDimensional ℝ E] : E ≃L[ℝ] A.Space :=
 def operator [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] E) : A.Space →L[ℝ] A.Space :=
   LinearMap.toContinuousLinearMap (A.wrap.toLinearMap ∘ₗ H ∘ₗ A.wrap.symm.toLinearMap)
 
-private lemma positive_bound (β : E →ₗ[ℝ] ℝ)
+lemma positive_bound (β : E →ₗ[ℝ] ℝ)
     (hβ : ∀ v ∈ A.cone, 0 ≤ β v) (v : E) :
     |β v| ≤ β A.unit * A.orderNorm v := by
   have hv := A.norm_attained v
@@ -537,7 +538,7 @@ private lemma add_unit_interior (y : E) (hy : y ∈ A.cone) (ε : ℝ) (hε : 0 
     exact A.cone.add_mem hz hw
   · exact subset_interior_add_right ⟨y, hy, ε • A.unit, hscale, rfl⟩
 
-private lemma boundary_support (z : E) (hz : z ∈ A.cone)
+lemma boundary_support (z : E) (hz : z ∈ A.cone)
     (hzi : z ∉ interior (A.cone : Set E)) :
     ∃ β : E →L[ℝ] ℝ, (∀ v ∈ A.cone, 0 ≤ β v) ∧ β z = 0 ∧ 0 < β A.unit := by
   obtain ⟨f, hfne, hf⟩ := geometric_hahn_banach_of_nonempty_interior_point
@@ -562,6 +563,7 @@ private lemma boundary_support (z : E) (hz : z ∈ A.cone)
     exact congrArg (fun l : E →ₗ[ℝ] ℝ => l v) hzβ
   apply hfne
   simpa [β] using congrArg Neg.neg hβ0
+
 
 private lemma perturbed_interior [FiniteDimensional ℝ E] (L : E →ₗ[ℝ] E)
     (hcp : ∀ z ∈ A.cone, ∀ β : E →ₗ[ℝ] ℝ,
@@ -727,6 +729,169 @@ theorem quantitative_generator_iff [FiniteDimensional ℝ E] (H : E →ₗ[ℝ] 
     rcases le_total (β x) (β (A.unit - x)) with h | h
     · simpa only [min_eq_left h] using h1
     · simpa only [min_eq_right h] using h2
+
+private lemma positive_scaled_bound (T : E →ₗ[ℝ] E) (c : ℝ) (hc : 0 ≤ c)
+    (hT : ∀ v ∈ A.cone, T v ∈ A.cone) (hu : T A.unit = c • A.unit) (v : E) :
+    A.orderNorm (T v) ≤ c * A.orderNorm v := by
+  apply (A.norm_le_iff _ _).mpr
+  have hv := A.norm_attained v
+  refine ⟨mul_nonneg hc hv.1, ?_, ?_⟩
+  · simpa only [map_sub, map_smul, hu, smul_smul, mul_comm] using hT _ hv.2.1
+  · simpa only [map_add, map_smul, hu, smul_smul, mul_comm] using hT _ hv.2.2
+private lemma unit_scalar_nonneg (hu : A.unit ≠ 0) {r : ℝ}
+    (hr : r • A.unit ∈ A.cone) : 0 ≤ r := by
+  by_contra hn
+  have hlt : r < 0 := lt_of_not_ge hn
+  have hneg : -A.unit ∈ A.cone := by
+    have h := A.cone.smul_mem (inv_pos.mpr (neg_pos.mpr hlt)) hr
+    convert h using 1
+    rw [smul_smul]
+    have he : (-r)⁻¹ * r = -1 := by simp [inv_neg, mul_comm, hlt.ne]
+    rw [he, neg_one_smul]
+  exact A.salient A.unit A.unit_mem hu hneg
+private def bernsteinMap (P : E →ₗ[ℝ] E) (n k : ℕ) : E →ₗ[ℝ] E :=
+  Polynomial.aeval P (bernsteinPolynomial ℝ n k)
+
+private lemma bernsteinMap_formula (P : E →ₗ[ℝ] E) (n k : ℕ) :
+    bernsteinMap P n k = (n.choose k : ℝ) • (P ^ k * (1 - P) ^ (n-k)) := by
+  simp [bernsteinMap, bernsteinPolynomial, Algebra.smul_def, mul_assoc]
+
+private lemma positive_pow (T : E →ₗ[ℝ] E)
+    (hT : ∀ v ∈ A.cone, T v ∈ A.cone) (n : ℕ) :
+    ∀ v ∈ A.cone, (T ^ n) v ∈ A.cone := by
+  intro v hv
+  rw [Module.End.pow_apply]
+  exact (show Set.MapsTo T A.cone A.cone from hT).iterate n hv
+
+private lemma pow_unit (T : E →ₗ[ℝ] E) (c : ℝ) (hu : T A.unit = c • A.unit)
+    (n : ℕ) : (T ^ n) A.unit = c ^ n • A.unit := by
+  induction n with
+  | zero => simp
+  | succ n ih => simp [pow_succ, Module.End.mul_apply, map_smul, hu, ih, smul_smul, mul_comm]
+
+private lemma bernsteinMap_bound (P : E →ₗ[ℝ] E) (c : ℝ)
+    (hc : 0 ≤ c ∧ c ≤ 1)
+    (hP : ∀ v ∈ A.cone, P v ∈ A.cone ∧ v - P v ∈ A.cone)
+    (hu : P A.unit = c • A.unit) (n k : ℕ) (v : E) :
+    A.orderNorm (bernsteinMap P n k v) ≤
+      bernstein n k ⟨c, hc⟩ * A.orderNorm v := by
+  have hQ : ∀ v ∈ A.cone, (1 - P) v ∈ A.cone := fun v hv => by
+    simpa using (hP v hv).2
+  have hQu : (1 - P) A.unit = (1 - c) • A.unit := by simp [hu, sub_smul]
+  have hp : ∀ v ∈ A.cone, bernsteinMap P n k v ∈ A.cone := by
+    intro v hv
+    rw [bernsteinMap_formula]
+    exact A.cone_smul_nonneg (Nat.cast_nonneg _) (A.positive_pow P
+      (fun v hv => (hP v hv).1) k _ (A.positive_pow (1-P) hQ (n-k) v hv))
+  apply A.positive_scaled_bound _ _ bernstein_nonneg hp
+  rw [bernsteinMap_formula]
+  simp [Module.End.mul_apply, A.pow_unit P c hu, A.pow_unit (1-P) (1-c) hQu,
+    map_smul, smul_smul, bernstein_apply, mul_assoc, mul_comm, mul_left_comm]
+
+private lemma bernsteinMap_sum (P : E →ₗ[ℝ] E) (n : ℕ) :
+    (∑ k : Fin (n+1), bernsteinMap P n k) = 1 := by
+  have h := congrArg (Polynomial.aeval P) (bernsteinPolynomial.sum ℝ n)
+  simpa [map_sum, bernsteinMap, Finset.sum_range] using h
+
+private lemma bernsteinMap_mean (P : E →ₗ[ℝ] E) (n : ℕ) (hn : n ≠ 0) :
+    (∑ k : Fin (n+1), ((k : ℝ) / n) • bernsteinMap P n k) = P := by
+  have h := congrArg (Polynomial.aeval P) (bernsteinPolynomial.sum_smul ℝ n)
+  have h' : (∑ k : Fin (n+1), (k : ℝ) • bernsteinMap P n k) = (n : ℝ) • P := by
+    simpa [map_sum, map_nsmul, bernsteinMap, Finset.sum_range,
+      Nat.cast_smul_eq_nsmul] using h
+  calc
+    _ = (n : ℝ)⁻¹ • (∑ k : Fin (n+1), (k : ℝ) • bernsteinMap P n k) := by
+      simp [Finset.smul_sum, smul_smul, div_eq_mul_inv, mul_comm]
+    _ = P := by rw [h', smul_smul]; simp [hn]
+
+private lemma bernstein_deviation_bound (P : E →ₗ[ℝ] E) (c : ℝ)
+    (hc : 0 ≤ c ∧ c ≤ 1)
+    (hP : ∀ v ∈ A.cone, P v ∈ A.cone ∧ v - P v ∈ A.cone)
+    (hu : P A.unit = c • A.unit) (n : ℕ) (hn : n ≠ 0) (v : E) :
+    A.orderNorm (P v - c • v) ≤
+      (∑ k : Fin (n+1), |(k : ℝ) / n - c| * bernstein n k ⟨c,hc⟩) *
+        A.orderNorm v := by
+  have he : P v - c • v =
+      ∑ k : Fin (n+1), ((k : ℝ) / n - c) • bernsteinMap P n k v := by
+    simp only [sub_smul, Finset.sum_sub_distrib, ← Finset.smul_sum,
+      ← LinearMap.sum_apply, ← LinearMap.smul_apply,
+      bernsteinMap_sum, bernsteinMap_mean P n hn]
+    rfl
+  rw [he]
+  calc
+    _ = A.seminorm (∑ k : Fin (n+1), ((k : ℝ) / n - c) • bernsteinMap P n k v) :=
+      (A.seminorm_eq _).symm
+    _ ≤ ∑ k : Fin (n+1), A.seminorm (((k : ℝ) / n - c) • bernsteinMap P n k v) :=
+      Finset.univ.le_sum_of_subadditive A.seminorm (by simp)
+        (map_add_le_add A.seminorm) _
+    _ = ∑ k : Fin (n+1), |(k : ℝ) / n - c| * A.orderNorm (bernsteinMap P n k v) := by
+      apply Finset.sum_congr rfl; intro k hk
+      rw [map_smul_eq_mul, A.seminorm_eq, Real.norm_eq_abs]
+    _ ≤ ∑ k : Fin (n+1), |(k : ℝ) / n - c| *
+        (bernstein n k ⟨c,hc⟩ * A.orderNorm v) := by
+      apply Finset.sum_le_sum; intro k hk
+      exact mul_le_mul_of_nonneg_left (A.bernsteinMap_bound P c hc hP hu n k v)
+        (abs_nonneg _)
+    _ = (∑ k : Fin (n+1), |(k : ℝ) / n - c| * bernstein n k ⟨c,hc⟩) *
+        A.orderNorm v := by simp only [Finset.sum_mul, mul_assoc]
+
+private lemma bernstein_abs_sq_bound (c : ℝ) (hc : 0 ≤ c ∧ c ≤ 1)
+    (n : ℕ) (hn : n ≠ 0) :
+    (∑ k : Fin (n+1), |(k : ℝ) / n - c| * bernstein n k ⟨c,hc⟩) ^ 2 ≤
+      c * (1-c) / n := by
+  have h := Finset.sum_sq_le_sum_mul_sum_of_sq_le_mul (Finset.univ : Finset (Fin (n+1)))
+    (r := fun k => |(k : ℝ) / n - c| * bernstein n k ⟨c,hc⟩)
+    (f := fun k => (c - (k : ℝ) / n)^2 * bernstein n k ⟨c,hc⟩)
+    (g := fun k => bernstein n k ⟨c,hc⟩)
+    (by intro k hk; positivity) (by intro k hk; exact bernstein_nonneg)
+    (by intro k hk; rw [mul_pow, sq_abs]; ring_nf; exact le_rfl)
+  have hv := bernstein.variance hn (⟨c,hc⟩ : unitInterval)
+  simp only [bernstein.z] at hv
+  simpa only [hv, bernstein.probability, mul_one] using h
+
+/-- A positive linear map dominated by the identity and scalar at the specified
+interior order unit is that scalar on the entire original space. -/
+theorem identity_dominated_scalar (P : E →ₗ[ℝ] E) (c : ℝ)
+    (hP : ∀ v ∈ A.cone, P v ∈ A.cone ∧ v - P v ∈ A.cone)
+    (hu : P A.unit = c • A.unit) : ∀ v : E, P v = c • v := by
+  by_cases hunit : A.unit = 0
+  · have hz (w : E) : w = 0 := by
+      have hw := A.norm_attained w
+      simp only [radii, hunit, smul_zero, zero_sub, zero_add, Set.mem_ofPred_eq] at hw
+      by_contra hn
+      exact A.salient w hw.2.2 hn hw.2.1
+    intro v
+    simp [hz v]
+  have hc0 : 0 ≤ c := A.unit_scalar_nonneg hunit (by rw [← hu]; exact (hP _ A.unit_mem).1)
+  have hc1 : c ≤ 1 := by
+    have h : (1-c) • A.unit ∈ A.cone := by
+      simpa [hu, sub_smul] using (hP _ A.unit_mem).2
+    linarith [A.unit_scalar_nonneg hunit h]
+  intro v
+  apply sub_eq_zero.mp; apply (A.norm_zero_iff _).mp
+  apply le_antisymm _ (A.norm_nonneg _); by_contra hnot
+  have hd : 0 < A.orderNorm (P v - c • v) := lt_of_not_ge hnot
+  let d := A.orderNorm (P v - c • v)
+  let r := A.orderNorm v
+  let C := c * (1-c) * r^2
+  have hd2 : 0 < d^2 := sq_pos_of_pos hd
+  obtain ⟨n, hn⟩ := exists_nat_gt (max 1 (C / d^2))
+  have hnpos : 0 < (n : ℝ) := lt_trans (by norm_num) ((le_max_left _ _).trans_lt hn)
+  have hn0 : n ≠ 0 := by exact_mod_cast hnpos.ne'
+  have hb := A.bernstein_deviation_bound P c ⟨hc0,hc1⟩ hP hu n hn0 v
+  have hs := bernstein_abs_sq_bound c ⟨hc0,hc1⟩ n hn0
+  let s := ∑ k : Fin (n+1), |(k : ℝ) / n - c| * bernstein n k ⟨c,⟨hc0,hc1⟩⟩
+  have hsq : d^2 ≤ (c * (1-c) / n) * r^2 := by
+    calc
+      d^2 ≤ (s*r)^2 := pow_le_pow_left₀ (A.norm_nonneg _) hb 2
+      _ = s^2 * r^2 := mul_pow s r 2
+      _ ≤ _ := mul_le_mul_of_nonneg_right hs (sq_nonneg r)
+  have hbound : d^2 * n ≤ C := by
+    apply (le_div_iff₀ hnpos).mp
+    simpa [C, div_mul_eq_mul_div] using hsq
+  have hstrict : C < (n : ℝ) * d^2 :=
+    (div_lt_iff₀ hd2).mp ((le_max_right _ _).trans_lt hn)
+  nlinarith
 
 end Data
 

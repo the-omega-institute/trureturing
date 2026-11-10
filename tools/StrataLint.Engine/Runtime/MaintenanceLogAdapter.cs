@@ -9,6 +9,7 @@ public static class MaintenanceLogAdapter
 {
     private static string? source;
     private static string? state;
+    private static Dictionary<string, object?> lastFields = new();
     private static string executable = "python3";
 
     public static void Start()
@@ -29,6 +30,7 @@ public static class MaintenanceLogAdapter
                 var resolved = payload.RootElement.GetProperty("interpreter").GetString();
                 if (string.IsNullOrEmpty(resolved) || !Path.IsPathFullyQualified(resolved)) return;
                 executable = resolved;
+                lastFields = new();
                 state = result;
                 Environment.SetEnvironmentVariable("TRURETURING_MAINTENANCE_RUN_ID", result[..separator]);
             }
@@ -44,11 +46,52 @@ public static class MaintenanceLogAdapter
         if (state is null) return;
         try
         {
-            _ = Observe("finish", "--state", state, "--exit-code", exitCode.ToString(CultureInfo.InvariantCulture));
+            _ = Observe("finish", "--state", state, "--exit-code", exitCode.ToString(CultureInfo.InvariantCulture),
+                "--fields", JsonSerializer.Serialize(lastFields));
         }
         catch
         {
             // Source and cwd may already have been removed; the writer is loaded.
+        }
+        finally
+        {
+            state = null;
+            source = null;
+            lastFields.Clear();
+        }
+    }
+
+    public static void Record(string operation, string? status, string? stage,
+        string? reasonCode, string? errorType, IReadOnlyDictionary<string, object?>? details = null)
+    {
+        if (state is null || string.IsNullOrWhiteSpace(operation)) return;
+        try
+        {
+            var fields = new Dictionary<string, object?>
+            {
+                ["action"] = operation,
+                ["operation"] = operation,
+                ["status"] = status,
+                ["outcome"] = status,
+                ["stage"] = stage,
+                ["reason_code"] = reasonCode,
+                ["error_type"] = errorType,
+            };
+            if (details is not null)
+            {
+                foreach (var (key, value) in details)
+                    if (key is not ("action" or "operation" or "status" or "outcome" or "stage"
+                        or "reason_code" or "error_type"))
+                        fields[key] = value;
+            }
+
+            lastFields = fields;
+            _ = Observe("emit", "--state", state, "--event", "operation_finished",
+                "--fields", JsonSerializer.Serialize(fields));
+        }
+        catch
+        {
+            // Observation failure cannot change the native command result.
         }
     }
 

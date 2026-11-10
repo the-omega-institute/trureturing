@@ -1,0 +1,10 @@
+For the other amplitude, first establish the following support
+inequality for every $\lambda\ge2$ and every $|z_j|\le1$:
+
+$$
+|h(z_1-z_2)-ic(z_3-z_4)|
++\lambda\operatorname{Re}\sum_jz_j
+\le2\sqrt{\lambda^2+c^2}+2\lambda.
+\tag{25.6}
+$$
+

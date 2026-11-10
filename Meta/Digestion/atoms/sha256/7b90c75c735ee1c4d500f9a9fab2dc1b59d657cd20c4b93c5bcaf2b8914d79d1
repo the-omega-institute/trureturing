@@ -1,0 +1,19 @@
+**定理 92.1（全原 D 及原指针标定）。** 两个背景分别有下列前两行等价；相应候选成立时另有最后一行结论：
+
+$$
+\begin{aligned} \mathsf C_{\rm frd}(B)&\Longleftrightarrow B+\mathrm Z+\mathrm{SC}+\mathrm{SJ},\\ \mathsf C_{\rm frd}(\mathsf B_{\rm cl})&\Longleftrightarrow\mathsf B_{\rm cl}+\mathsf Q+\mathrm{SC}+\mathrm{SJ},\\ [D_a,D_b]&=-[L_a,L_b],\qquad D_c^2=-P_c/4\quad(c^2=c),\qquad a\cdot b=a\circ b-\mathrm iD_ab. \end{aligned} \tag{92.1}
+$$
+
+最后一行量化每个原对象、全部原 $a,b$ 及全部原幂等元 $c$，包括未直接测试的小对象、整个原指针、经典中心和实际联合；原 $D_a$ 为原 Jordan 导子及原 $q_A$ 斜伴随算子，$D_aa=D_au_A=D_{u_A}a=0$。
+
+证明。定理 89.1 已恢复同一原 cross3 和完整 F3，此时才消费 C128 定理 261.1 及其定理 251.2 的配平链，取得两个分别具名的等价。原右单位沿定理 30.1／引理 67.3 由原身份参考独立供应，原全域回迁仍用 C128 定理 202.1 的原高秩分离族，不加入直接 $AP$、共同指数或未给的乘法模身份。沿该来源的完整配平消费者得到 (92.1) 和导子／交替／斜伴随；$\mathsf Q$ 仍为定义 67.2 对全部原实际准备、全部数学效果及任意小原质量的统一近零条件，常数只可依对象及方向。复乘法系数恰为一，原矩阵坐标中 $D_ab=\mathrm i[a,b]/2$；定义 88.2 的临时静态坐标允许转置，恢复后的取向由同一原 $D$ 决定，并非重选原 $D$。
+
+特别地，原 $d=T_m(u_I)$、原全中心投影 $z_P$、$d_0=d-z_P(d)$ 满足逐字原 S：
+
+$$
+-\operatorname{Tr}_{\mathbb R,E_P}((D^P_{d_0})^2)=\operatorname{Tr}_{\mathbb R,E_P}(L_{d_0}^2).
+\tag{92.2}
+$$
+
+由原 $q$ 的逐块正迹权，$d_0$ 在每块无迹。若其第 $s$ 块本征值为 $a_i$，两边该块分别为 $\frac12\sum_{i<j}(a_i-a_j)^2$ 和 $\sum_i a_i^2+\frac12\sum_{i<j}(a_i+a_j)^2$；$\sum_i a_i=0$ 使二者同为 $n_s\sum_i a_i^2/2$。经典块贡献零，故在整个原 $E_P$ 上相等，未用内部尺度、$q$ 重权或物理时间改写原标定。∎
+

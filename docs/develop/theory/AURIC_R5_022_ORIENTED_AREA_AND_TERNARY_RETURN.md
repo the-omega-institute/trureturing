@@ -1,0 +1,2836 @@
+# AURIC R5-022：有向面积与三元返回
+
+> 理论参考输入：本稿为用户提供的研究正文，包含普通数学证明，未作本候选的 Lean/kernel 认证。仓库数学真值以经 Lean 内核核验的声明及其公理闭包为准。
+
+AURIC / R5-022
+
+有向面积与三元返回
+
+一条关系如何恢复三维量子比特几何
+
+定义、完整证明、反例与外部输入账本
+
+2026年11月7日（Asia/Singapore）
+
+**本轮核心。** 在一个至少含两个独立方向的实内积空间上，给任意二元总映射 $D$，只要求
+
+$$
+\boxed{\quad D(D(a,b),c)=\langle a,c\rangle b-\langle b,c\rangle a
+\qquad(a,b,c\in V).\quad}
+\tag{R}
+$$
+
+则空间自动为三维，$D$ 自动成为某一手性的标准叉积。 有限维、完备、连续、双线性、反对称、面积范数律和完整旋转协变都不用独立加入。
+
+**最短几何读法。** 先把两个方向组成有向面积，再把它与第三个方向比较；结果必须回到原来两方向的平面，且其两个分量恰由原二元比较决定。 第三个量是同一载体中的通用测试元，不是从模型外指定的特殊点。 关系对全部原元素、和、缩放与已生成输出成立，因而覆盖递归代入。
+
+**精简的准确范围。** 这是 R5-021 已恢复比较层的几何压缩。这里把正定内积作为明确输入，并把 $D$ 的输出类型固定为比较空间 $V$。 因此它不宣称：把旧世界中的五组关系直接删成一组、已经消除了旧中心输出、或从零公理得到了量子力学。 真正证明的是，在这个明列入口上，有限性与全部转向正则性是冗余假设。
+
+**线与面积的严格统一。** 单位态 $n$ 的切平面上有同一个正核
+
+$$
+Q_n(v,w)=\frac14\bigl(\langle v,w\rangle+i\langle n,D(v,w)\rangle\bigr),
+\quad v,w\perp n.
+$$
+
+其对称部分给长度，反对称部分给有向面积，且二元正性界精确饱和。 它不单独提供物理时间、完整历史或任意复合系统。
+
+固定项目快照：`5d356c7b7e9b0fc64a3c88286402d43ecb54f4a5`，当次可取得的默认分支为 dev。
+
+源提交时间：2026-11-07 20:38:23（新加坡）。源码核读与普通数学证明分列；本轮未新建或重新编译 Lean 定理。
+
+本稿续已取得的 R5-021 工作稿；编号不表示它已进入仓库或取得文献优先权。
+
+## 目录
+
+- [1　研究标杆、项目现状与本轮归属](#section-1)
+- [2　唯一候选：三元返回律](#section-2)
+- [3　最简几何：一条轴与一个转动平面](#section-3)
+- [4　正存在、内生读出与标准单比特形式](#section-4)
+- [5　两个态究竟决定哪一种面积](#section-5)
+- [6　线与面积来自同一个正核](#section-6)
+- [7　面积、时间与内生观察者的边界](#section-7)
+- [8　三元相容不能只解释成逐对没有冲突](#section-8)
+- [9　不动点、正交返回与有限线性提升](#section-9)
+- [10　从单比特到完整有限量子过程：哪些还需外部输入](#section-10)
+- [11　反向删除、闭合账本与白话描述](#section-11)
+
+<a id="section-1"></a>
+
+## 1　研究标杆、项目现状与本轮归属
+
+### 1.1　与问题最匹配的已核研究
+
+没有一项研究同时把球面几何、完整量子重构、测量过程和物理时间全部从无前提推出。 本轮按结论范围选择下列标杆，而不作无统一指标的“全球最好”排名。
+
+| 研究 | 已确立的结构 | 必须保留的输入边界 |
+|:---|:---|:---|
+| Ashtekar–Schilling [\[1\]](#ref-ashtekar) | 射线空间的相容度量、辛形式和复结构；Hamilton 流表示 Schrödinger 演化。 | 是量子形式的等价几何表达，不从裸“存在”推出。 |
+| Mitscherling 等，2025 [\[2\]](#ref-projector) | 投影算子给规范不变的量子度量、Berry 曲率和多态几何。 | 基于已有态投影及参数依赖；还存在超出二阶几何的信息。 |
+| Tamate 等，2011 [\[3\]](#ref-bargmann) | 三顶点相位与球面测地三角形立体角相联。 | 两个端点不能替代任意内部路径。 |
+| Barnum–Hilgert [\[4\]](#ref-jordan) | 强对称、谱分解的紧凸态空间被分类为简单 Euclidean Jordan 态空间或单纯形。 | 仍需额外关系选择复量子；“各向同性”本身更弱。 |
+| Selby–Scandolo–Coecke，2021 [\[5\]](#ref-selby) | 由过程图式公设重构有限维经典–量子复合及其相互作用。 | 过程组合、经典接口、纯化等都是明确结构。 |
+| Nakahira，2026 预印本 [\[6\]](#ref-nakahira) | 在其 OPT 框架中，局部等价与等价系统纯化给态、效果、复合和 CP 过程。 | Appendix A.2 另有框架要求；不是全部只付两个输入，也不覆盖量子场论。 |
+| Hausmann 等，2025 [\[7\]](#ref-clock) | 内生时钟下不同测量实现的等价性及有限资源失效边界。 | 非理想钟的某些实现可能失酉或失去确定时序；不能泛化为所有有限钟必如此。 |
+
+### 1.2　固定项目快照的实质内容
+
+本次对 1,334 份 theory 路径进行名称及关键词检索，并定点读取相关正文和 Lean 声明。 这不是全库逐行证明认证。以下四个接口直接参与本轮判断。
+
+1.  **C128 已到 §§468–478。** 最新候选保留原实载体、分离线性评价、原序单位锥、同一旧 $S,D$ 和实际来源。 仅查全部二标签正表及指定相加／近邻三表的受限系数正性，加相加零平方、$S(u,u)=u$、 小效果 $S(e,e)\le e$ 和一条实部三元式；正文据此恢复旧双线性、全有限正表、原单位、虚部式和结合星结构。 其 §473 明确：一般正核只给 $`J^*=-J,\|J\|\le1`$， *不给*  $J^2=-I$。 §476 给总平方正性不能代替原效果边界的四维反例。[\[12\]](#ref-c128)
+
+2.  **面积与方向同型已经在库。** 稳定关系边界卷 §4.4 证明 $\Lambda^2V\simeq V$ 的有限维非平凡情形必须是三维； §3 区分完整三槽 $SO(V)$ 不变性与裸球面传递性。 这些结论不能重新计为本轮首创。[\[13\]](#ref-boundary)
+
+3.  **三点相位已有精确 Lean 声明。** `triple_bargmann_bloch` 给本稿第 5.2 节的三点公式。 源码还含 $(1+i)/4$ 与 $(1-i)/4$ 的明确例子。 本轮仅读取该文件；其逃逸登记审计注记关联 issue \#27571，未在此消除。[\[14\]](#ref-repobargmann)
+
+4.  **整体内生不等于历史可压成端点。** 静态相融纤维卷区分事件历史、算子乘积与内生时钟； 目标恢复判据则要求目标在同读出纤维上常值。 它们为检验“面积就是时间”提供现成的准确标准。[\[15\]](#ref-omega), [\[16\]](#ref-recovery)
+
+R5-021 原稿的入口包括有限实载体 $E=\mathbb Ru\oplus V$、完整标架、原双线性 $M$ 和任意总 $D$， 以及五组关系。它恢复比较尺并用固定输出条件消去中心余项。 本稿改在已经分出的比较空间上工作，不把这一类型限制算作从无条件自动得出。
+
+<a id="section-2"></a>
+
+## 2　唯一候选：三元返回律
+
+### 2.1　全部外部输入
+
+#### 定义 2.1：候选 $\mathcal Q_{22}$
+
+给定以下三类结构：
+
+- **B1.** 实向量空间 $V$，至少有两个线性独立向量。 *不要求有限维或完备。*
+
+- **B2.** 正定对称实双线性形式 $g(a,b)=\langle a,b\rangle$。
+
+- **B3.** 任意总映射 $D:V\times V\to V$。 *不要求任何线性、反对称、连续或可测性。*
+
+唯一附加关系族是对全部 $a,b,c\in V$ 的恒等式
+
+$$
+D(D(a,b),c)=g(a,c)b-g(b,c)a.
+\tag{1}
+$$
+
+**计数约定。** 这是“三类结构输入加一个全称关系族”的分组计数。 实数、向量空间和正定双线性形式的公理内容没有被删除。 $D$ 的输出属于 $V$，不允许再附加一个不可见标量槽。 式 (1) 的全称量词包括零、缩放、和及 $D$ 的输出；只查单位态或有限三元样本不等价。
+
+### 2.2　分类定理及完整证明
+
+#### 定理 2.2：任意总操作的三维刚性
+
+候选 $\mathcal Q_{22}$ 当且仅当 $\dim_\mathbb RV=3$，且相对于某个正交定向，
+
+$$
+D(a,b)=\kappa\,a\times b,\qquad\kappa\in\{1,-1\}.
+$$
+
+尤其 $D$ 自动双线性、交替、连续，满足面积律、Jacobi 恒等式及全部正向正交变换协变。
+
+**证明。**
+
+记 $R_z(c)=D(z,c)$，此时尚不假设 $R_z$ 线性。
+
+**第一步：零行恰为零。** 令 $z_0=D(0,0)$，(1) 给 $R_{z_0}=0$。 于是 $D(z_0,z_0)=0$，再对 $(z_0,z_0,c)$ 用同一式，得 $D(0,c)=0$。 若 $R_z=0$，则对 $(z,a,c)$ 用式 (1) 得
+
+$$
+0=g(z,c)a-g(a,c)z\qquad\forall a,c.
+$$
+
+若 $z\ne0$，取非零 $a\perp z$、$c=z$，得到 $0=\|z\|^2a$，矛盾。 故
+
+$$
+R_z=0\quad\Longleftrightarrow\quad z=0.
+\tag{2}
+$$
+
+**第二步：零比较准确检测共线。** 由正定性，线性算子 $c\mapsto g(a,c)b-g(b,c)a$ 为零，当且仅当 $a,b$ 线性相关。 利用 (1) 和 (2)，
+
+$$
+D(a,b)=0\quad\Longleftrightarrow\quad a,b\text{ 线性相关}.
+\tag{3}
+$$
+
+特别地，$D(a,a)=0$。
+
+**第三步：两方向的全部正交补只能有一维。** 取独立 $a,b$，令 $w=D(a,b)\ne0$。 由于 $D(w,w)=0$，式 (1) 给
+
+$$
+0=g(a,w)b-g(b,w)a.
+$$
+
+独立性给 $w\perp a,b$。 若 $z\perp a,b$，同式给 $D(w,z)=0$，故由 (3)，$z\in\mathbb Rw$。 所以
+
+$$
+\operatorname{span}\{a,b\}^{\perp}=\mathbb Rw.
+$$
+
+任意向量都可正交投影到有限维平面 $\operatorname{span}\{a,b\}$；余量属于 $\mathbb Rw$。 故 $V=\operatorname{span}\{a,b,w\}$， *自动* 得到 $\dim V=3$。 这个投影只解一个可逆二阶 Gram 方程，不使用空间完备性。
+
+**第四步：所有行的线性与斜性自动恢复。** 对非零 $v$，取单位 $e\perp v$，令 $p=D(e,v)$。 由 (1)，$D(p,e)=v$；于是
+
+$$
+D(v,c)=g(p,c)e-g(e,c)p.
+$$
+
+右侧是关于 $c$ 的线性斜对称算子。 式 (3) 又给 $\ker R_v=\mathbb Rv$。
+
+**第五步：只有共同的两个手性选择。** 选一个临时正交定向。三维中每个核为 $\mathbb Rv$ 的非零斜对称算子唯一写成
+
+$$
+D(v,c)=\kappa(v)\,v\times c,\qquad\kappa(v)\ne0.
+$$
+
+给非零 $x\perp v$，可选 $b$ 使 $D(v,b)=x$。 此时 (1) 及通常的三重积公式给
+
+$$
+D(x,c)=(v\times b)\times c=\frac1{\kappa(v)}x\times c.
+$$
+
+故 $\kappa(x)\kappa(v)=1$。 任意非零 $v,w$ 都有共同非零垂线 $x$，所以 $\kappa(v)=\kappa(w)$。 该常数平方为一。 因此原 $D$ 在全部原向量上就是 $\pm\times$；其双线性等性质随即成立。 反向是标准三维叉积恒等式，且两次出现的符号相乘为一。
+
+$\square$
+
+### 2.3　真正减少了什么
+
+| 项目 | 本轮位置 | 是否已经删除独立输入 |
+|:---|:---|:---|
+| 有限维、完备 | 维数由三元返回自动推出 | 有限维无需输入；完备随三维成立 |
+| $D$ 双线性、反对称、连续 | 分类定理结论 | 均无需输入 |
+| 面积律、Jacobi、完整 $SO(3)$ 协变 | 分类定理推论 | 均无需输入 |
+| 原正定比较尺 $g$ | B2 明列 | 仍是入口；可由已给 $D$ 唯一回读不等于存在性免费 |
+| 旧标量尾项已被消除 | B3 的类型 $D:V^2\to V$ | 不能冒称自动解决 R5-021 的固定输出义务 |
+| 原世界、全部实际过程和时钟 | 本候选未给 | 不得把局部三维当作整个 $\Omega$ 的维数 |
+
+在检索到的项目近邻中，已有版本通常先给有限维或转向的线性／斜性，或由更大的原代数候选推出返回式。 本轮提供的是上述任意总映射入口的直接证明。 这不是全球优先权声明，也没有证明比成熟完整量子重构的总输入更少。
+
+<a id="section-3"></a>
+
+## 3　最简几何：一条轴与一个转动平面
+
+以下选择 $D$ 自身确定的定向，使 $D(a,b)=a\times b$。
+
+#### 命题 3.1：方向、面积和比较尺的条件互恢复
+
+对全部 $a,b\in V$，
+
+$$
+\begin{aligned}
+g(D(a,b),a)&=g(D(a,b),b)=0,\\
+\|D(a,b)\|^2&=\|a\|^2\|b\|^2-g(a,b)^2,
+\end{aligned}
+\tag{4}
+$$
+
+$$
+\begin{aligned}
+[L_a,L_b]&=L_{D(a,b)},\qquad L_a(v)=D(a,v),\\
+g(a,b)&=-\frac12\operatorname{Tr}_V(L_aL_b).
+\end{aligned}
+\tag{5}
+$$
+
+**证明。**
+
+前三式由分类后的叉积直接展开。具体地 $L_aL_b(v)=b\,g(a,v)-v\,g(a,b)$， 故其迹为 $g(a,b)-3g(a,b)=-2g(a,b)$。 这也表明若同一个 $D$ 满足两个正定尺的返回律，则两个尺必相同。
+
+$\square$
+
+#### 命题 3.2：一次正交、两次正交与内生复结构
+
+给单位 $n$，令 $T_n=\{v:g(n,v)=0\}$ 及 $J_nv=D(n,v)$。则
+
+$$
+J_n^2v=n\,g(n,v)-v,
+\qquad J_n^2|_{T_n}=-I_{T_n}.
+$$
+
+因此 $J_n$ 在切平面上是等距四分之一转动；两次作用回到反向。
+
+**证明。**
+
+用反对称性把 $D(n,D(n,v))$ 改为 $-D(D(n,v),n)$，再用返回律。 范数与正交性由 (4) 得到。
+
+$\square$
+
+原稿的两幅几何示意图在此用文字和公式呈现：
+
+- 左图“有向面积的法向读出”：两个方向 $a,b$ 张成面积平面，法向读出为 $D(a,b)$，对应 $\Lambda^2V\simeq V$。
+- 右图“$n$ 处的切平面”：依次转动 $v\mapsto J_nv\mapsto-v$，对应 $J_n^2=-I$。
+
+左图为三维关系的平面示意投影；它不把示意图中所画距离当作量值。 右图展示同一内部态 $n$ 所确定切平面上的精确转动关系。
+
+#### 推论 3.3：固定点与正交投影
+
+定义
+
+$$
+\Pi_n(v)=v+D(D(v,n),n)=g(v,n)n.
+$$
+
+则 $\Pi_n^2=\Pi_n$，$\operatorname{Fix}\Pi_n=\mathbb Rn$。 若 $n\perp m$，则 $\Pi_n\Pi_m=0$。
+
+这里的 $-v$ 是比较方向反转。正对象的端点没有消失，也没有引入负概率。 在正态空间上的物理非选择测量要使用第 4 节的含单位扩张。
+
+### 3.1　面积向量与全部面积记录
+
+反对称双线性使 $D$ 唯一诱导线性映射 $\widetilde D:\Lambda^2V\to V$，$a\wedge b\mapsto D(a,b)$。 在导出的三维中，它把一组正交面积基送到一组正交向量基，因此是等距同构。 这是已知的 Hodge 对偶结构，项目中已有对应定理。[\[13\]](#ref-boundary)
+
+七维也存在满足正交与面积范数条件的二元叉积，但它不满足本返回律。 这正说明只有式 (4) 还不够；经典向量积分类可参照 Brown–Gray 或 Walsh。[\[9\]](#ref-cross)
+
+完整各向同性在此指 $SO(3)$： $D(Ra,Rb)=RD(a,b)$。 若把反射也包括进来，正确关系是
+
+$$
+D(Ra,Rb)=\det(R)\,R D(a,b),\qquad R\in O(3).
+$$
+
+故手性不能与“普通向量的全部反射不变”同时无条件要求。
+
+<a id="section-4"></a>
+
+## 4　正存在、内生读出与标准单比特形式
+
+### 4.1　从比较量建立正对象
+
+#### 定义 4.1：含单位的比较代数
+
+从已得 $V,g,D$ 定义 $E=\mathbb R\oplus V$、$u=(1,0)$，以及
+
+$$
+\begin{aligned}
+(\alpha,a)\circ(\beta,b)
+&=(\alpha\beta+g(a,b),\alpha b+\beta a),\\
+\delta((\alpha,a),(\beta,b))&=(0,D(a,b)).
+\end{aligned}
+\tag{6}
+$$
+
+正对象定义为平方锥 $C=\{A\circ A:A\in E\}$。 这定义了本候选的数学扩张；不声称恢复了某个尚未提供的旧 $M$ 的身份。
+
+#### 定理 4.2：正锥、谱与负号的准确含义
+
+$$
+C=\{(t,a):t\ge\|a\|\},\qquad C\cap(-C)=\{0\},\qquad E=C-C.
+$$
+
+若 $a\ne0$，$n=a/\|a\|$、$p_{\pm n}=(u\pm n)/2$，则
+
+$$
+(t,a)=(t+\|a\|)p_n+(t-\|a\|)p_{-n}.
+$$
+
+**证明。**
+
+平方为 $(\alpha^2+\|b\|^2,2\alpha b)$，第一坐标不小于第二坐标的范数。 反向，给 $t\ge\|a\|$，上述谱式的系数非负； $\sqrt{t+\|a\|}p_n+\sqrt{t-\|a\|}p_{-n}$ 的平方恰为 $(t,a)$。 $a=0$ 直接取 $\sqrt t\,u$。 尖性显然。对任何 $A=(t,a)$，取足够大的 $s\ge0$，有 $A+su,su\in C$， 从而 $A=(A+su)-su$。
+
+$\square$
+
+每个有向比较都可表示为两个正对象的差；反向比较只交换两个正端点。 如果额外要求每个比较及其负值也都为正，尖性会迫使全部比较为零。
+
+### 4.2　内生数学观察者与 Born 形式
+
+令
+
+$$
+h((t,a),(s,b))=ts+g(a,b),\qquad\tau(t,a)=t.
+$$
+
+#### 定义 4.3：数学读出
+
+数学读出是正归一实线性泛函 $\omega:E\to\mathbb R$： $\omega(C)\ge0$，$\omega(u)=1$。效果是 $0\le e\le u$。 全部这类数学读出的实际可实施性，是额外的操作性主张，不从定义自动推出。
+
+#### 定理 4.4：对象与读出使用同一正锥
+
+每个数学读出唯一写成
+
+$$
+\omega_r(t,a)=t+g(r,a),\qquad\|r\|\le1.
+$$
+
+等价地，每个非零 $o\in C$ 给读出 $\omega_{[o]}(A)=h(o,A)/\tau(o)$，正比例的 $o$ 给同一读出。
+
+**证明。**
+
+线性与归一化给 $\omega(t,a)=t+g(r,a)$。 在全部 $(1,n)$、$\|n\|=1$ 上测试正性，得到 $1+g(r,n)\ge0$，即 $\|r\|\le1$。 反向由 Cauchy–Schwarz 成立。这也证明 $C$ 对 $h$ 自对偶。
+
+$\square$
+
+若 $c=(t,a)\in C\setminus\{0\}$，则 $t>0$，内部读出 $\omega_0(c)=t$ 可区分它与零。 但某个特定观察者可能读到零，例如 $\omega_{-n}(1,n)=0$。 所以“存在可被读出”在这里是正对象的可分离性，不是每个观察者都必须看到它。
+
+选择与 $D$ 相容的 Pauli 三轴，定义
+
+$$
+\Phi(t,a)=tI+a\cdot\sigma,
+\qquad\rho_r=\frac12(I+r\cdot\sigma).
+$$
+
+Pauli 恒等式给
+
+$$
+(a\cdot\sigma)(b\cdot\sigma)=g(a,b)I+iD(a,b)\cdot\sigma.
+$$
+
+因此在 $E_\mathbb C$ 上定义的 $A\star B=A\circ B+i\delta(A,B)$ 是结合星乘法， 且 $\Phi:E_\mathbb C\simeq M_2(\mathbb C)$。这里引入 $i$ 是复化表示；其局部几何已经由 $J_n^2=-I$ 构造。
+
+由两个特征值 $t\pm\|a\|$ 得 $\Phi(C)=M_2(\mathbb C)_+$，而
+
+$$
+\omega_r(A)=\operatorname{Tr}(\rho_r\Phi(A)).
+\tag{7}
+$$
+
+对单位方向 $m$ 的二元效果 $p_m=(1,m)/2$，
+
+$$
+p(m\mid r)=\frac{1+g(r,m)}2.
+\tag{8}
+$$
+
+若 $\|r\|=\|m\|=1$ 且夹角为 $\theta$，则 $p=\cos^2(\theta/2)$。
+
+#### 注 4.5：平方读数不是各向同性单独给的
+
+对纯方向定义 $p_k(a,b)=(1+(a\cdot b)^{2k+1})/2$，$k\ge1$。 它们旋转不变、非负、互补归一且同态读数为一，却不是 (8)。 本稿 Born 形式依赖明确的正线性读出定义；若读出也必须从原始关系推出，需回接项目 C128 的原评价／混合接口。
+
+### 4.3　酉演化、测量与不确定性
+
+#### 命题 4.6：导出的数学动力学与测量
+
+给 $a\in V$，$e^{sL_a}\in SO(V)$。其矩阵实现为
+
+$$
+U_a(s)=e^{-is(a\cdot\sigma)/2},\qquad
+\rho_{e^{sL_a}r}=U_a(s)\rho_rU_a(s)^\dagger.
+$$
+
+给投影 $P_m=(I+m\cdot\sigma)/2$，分支映射 $\mathcal I_m(\rho)=P_m\rho P_m$ 为完全正，权重为 $\operatorname{Tr}(\rho P_m)$。 权重正时归一输出为 $P_m$。 非选择测量为
+
+$$
+\mathcal E_m(\rho_r)=P_m\rho_rP_m+P_{-m}\rho_rP_{-m}
+=\rho_{(r\cdot m)m}.
+$$
+
+**证明。**
+
+$L_a$ 斜对称给旋转指数；Pauli 交换子验证矩阵形式。 夹心在任意参考系统上仍保持正，故完全正。秩一投影满足 $P_m\rho P_m=\operatorname{Tr}(\rho P_m)P_m$。 两个分支相加消去横向 Bloch 分量。
+
+$\square$
+
+这个构造证明了标准投影仪器的 *存在* ，不证明给定概率唯一指定该仪器。 同一效果可先用平方根分支、再对输出施加不同酉变换，获得不同状态更新而保持同一权重。
+
+对可观测量 $A=a\cdot\sigma,B=b\cdot\sigma$，直接计算还有
+
+$$
+\operatorname{Var}_r(A)\operatorname{Var}_r(B)
+-\operatorname{Cov}_r(A,B)^2-
+\bigl(r\cdot D(a,b)\bigr)^2
+=(1-\|r\|^2)\|D(a,b)\|^2\ge0.
+$$
+
+协方差取对称化乘法。这是单比特的 Robertson–Schrödinger 关系及其精确余项。
+
+<a id="section-5"></a>
+
+## 5　两个态究竟决定哪一种面积
+
+### 5.1　三种面积必须分开
+
+给单位 Bloch 方向 $a,b$，$t=a\cdot b=\cos\theta$、$0\le\theta\le\pi$。 它们决定
+
+$$
+\text{平行四边形面积 }A=\|a\wedge b\|=\sin\theta,
+\qquad
+\text{单位圆小扇形面积 }S=\theta/2.
+$$
+
+第一项的共同原点是归一化 Bloch 球的中心，它在所定义的凸结构内对应最大混合态，并非新增纯态 $C$。 非共线时，第二项使用两态张成的平面、选定的小弧和半径归一化。 共线时数值 $S=\theta/2$ 仍确定；反极点间的半圆所在平面还需要选择。 球面回路所围有向面积则依赖路径；两个端点本身没有确定这个回路。
+
+#### 命题 5.1：面积单独丢失二态概率
+
+令 $F=\operatorname{Tr}(P_aP_b)=(1+t)/2$，则
+
+$$
+A^2=1-t^2=4F(1-F).
+$$
+
+所以只有 $A$ 时无法区分 $F$ 与 $1-F$。 尤其 $a=b$ 和 $a=-b$ 都给 $A=0$，但转移概率分别是一与零。
+
+用圆扇形可以得到 $F=\cos^2 S$，但这是已经选择几何和 Born 配对后的恒等改写， 并不使“概率由面积唯一决定”的物理解释自动成立。
+
+另一个精确区别：
+
+$$
+a\perp b\Longrightarrow F=1/2,
+\qquad F=0\Longleftrightarrow b=-a.
+$$
+
+三条 Bloch 正交轴对应三个互补的二元测量，不是二维 Hilbert 空间内三个两两正交的纯态。
+
+### 5.2　第三态的回路信息不能由两个端点替代
+
+#### 命题 5.2：二态规范与三态不变量
+
+独立重定相 $|A\rangle\mapsto e^{i\alpha}|A\rangle$、$|B\rangle\mapsto e^{i\beta}|B\rangle$ 使
+
+$$
+\langle A|B\rangle\mapsto e^{i(\beta-\alpha)}\langle A|B\rangle.
+$$
+
+因此两射线的内积相位不是独立规范不变量。 三态乘积
+
+$$
+\Delta_3(A,B,C)=\langle A|B\rangle\langle B|C\rangle\langle C|A\rangle
+$$
+
+则不随三个相位选择改变。
+
+**证明。**
+
+三个相位因子在乘积中逐个抵消。
+
+$\square$
+
+对 qubit，Pauli 乘法直接给
+
+$$
+\operatorname{Tr}(P_aP_bP_c)=
+\frac{1+a\cdot b+b\cdot c+c\cdot a+i\,a\cdot D(b,c)}4.
+\tag{9}
+$$
+
+这是项目已有精确声明，本文引用其结构并给出相同的直接计算意义。[\[14\]](#ref-repobargmann)
+
+取内部正交标架 $a=e_z,b=e_x,c_\pm=\pm e_y$。 两组三个二态概率全为 $1/2$，但
+
+$$
+\Delta_3(a,b,c_+)=(1+i)/4,
+\qquad\Delta_3(a,b,c_-)=(1-i)/4.
+$$
+
+其相位分别为 $\pi/4$ 与 $-\pi/4$。 两个候选第三态均为原二元关系的内部输出 $\pm D(a,b)$，并没有用外部世界的点。  *内生* 不意味着两份相反的内部回路信息必须相同。
+
+若令 $C=A$ 或 $C=B$，则 $\Delta_3=F\ge0$。 $F>0$ 时相位成为零；$F=0$ 时相位未定义。 这说明端点基足够读出二态概率，但把第三点并到端点会删去非平凡环信息。
+
+对有指定闭路的 qubit，Berry 几何相位为有向立体角的一半，符号取决于连接和路径顺序； 本稿统一用 $\mathcal A=i\langle\psi|d\psi\rangle$，则 $\gamma_B=-\Omega/2\pmod{2\pi}$。 上述 $\Delta_3$ 顺序对应的三角形相位是其相反号；不把两种约定混写。[\[3\]](#ref-bargmann)
+
+#### 命题 5.3：局部选基不能消除全局相位拼接
+
+对本稿约定的 Berry 曲率，$\int_{S^2}F=-2\pi$。 不存在全局光滑的一形式 $\mathcal A$ 满足 $F=d\mathcal A$。 因此态向量的单一全局光滑相位规约不存在；局部规范仍需在重叠区域通过相位关系拼接。
+
+**证明。**
+
+将第 6 节的曲率式积分得 $-2\pi$。 若全局 $F=d\mathcal A$，球面无边界，Stokes 定理会给积分为零，矛盾。 一个全局光滑归一态向量将产生全局 $i\langle\psi|d\psi\rangle$，也被排除。
+
+$\square$
+
+这个障碍来自同一内部射线几何的 Hopf 线丛，不要求加入模型之外的参照点。
+
+### 5.3　起点和终点也不确定量子门
+
+#### 命题 5.4：同端点门的稳定子自由度
+
+若 $U_0P_aU_0^\dagger=P_b$，则对全部 $\eta\in\mathbb R$，
+
+$$
+U_\eta=e^{-i\eta b\cdot\sigma/2}U_0
+$$
+
+都有相同的态端点。 这些门对其他输入一般不同，因此端点不足以恢复门。
+
+**证明。**
+
+$e^{-i\eta b\cdot\sigma/2}$ 与 $P_b$ 对易，故固定 $P_b$。 对不平行于 $b$ 的另一个 Bloch 方向，它一般执行非平凡旋转。
+
+$\square$
+
+选择最短旋转是一条额外的选取规则；反极点间连最短大圆都不唯一。 给定实际纯态轨迹 $r(t)$，使它满足 Schrödinger 演化的 Hamiltonian 仍可写成
+
+$$
+H(t)=h_0(t)I+\frac\hbar2
+\bigl(r(t)\times\dot r(t)+\lambda(t)r(t)\bigr)\cdot\sigma.
+$$
+
+任意 $h_0,\lambda$ 不改变 Bloch 轨迹；后者的纵向分量可改变所选态向量的相位。
+
+<a id="section-6"></a>
+
+## 6　线与面积来自同一个正核
+
+### 6.1　完全内生的切平面关系
+
+#### 定理 6.1：切平面正核与面积饱和
+
+给单位 $n$、$v,w\in T_n$，定义
+
+$$
+Q_n(v,w)=\frac14\bigl(g(v,w)+i g(n,D(v,w))\bigr),
+\quad g_n=\operatorname{Re}Q_n,\quad\omega_n=\operatorname{Im}Q_n.
+$$
+
+对任意有限个切向量，$[Q_n(v_i,v_j)]$ 半正定，复秩至多一。 并且
+
+$$
+\begin{aligned}
+g_n(J_nv,w)&=\omega_n(v,w),
+\end{aligned}
+\tag{10}
+$$
+
+$$
+\begin{aligned}
+g_n(v,v)g_n(w,w)-g_n(v,w)^2&=\omega_n(v,w)^2.
+\end{aligned}
+\tag{11}
+$$
+
+**证明。**
+
+取单位切向量 $e$，令 $f=J_ne$。$(e,f,n)$ 为相容正交标架。 写 $v=v_1e+v_2f$，$z_v=v_1+iv_2$。 由叉积公式
+
+$$
+Q_n(v,w)=\tfrac14\overline{z_v}z_w.
+$$
+
+故对任意复系数 $c_j$， $\sum_{ij}\overline c_iQ_n(v_i,v_j)c_j=|\sum_j c_jz_{v_j}|^2/4\ge0$。 核只有一个复特征方向。 $g(J_nv,w)=g(n,D(v,w))$ 给 (10)； 二维实 Gram 行列式等于有向面积平方，给 (11)。
+
+$\square$
+
+这与投影算子公式完全一致：
+
+$$
+P_n=\tfrac12(I+n\cdot\sigma),\qquad
+Q_n(v,w)=\operatorname{Tr}(P_n\,dP_n[v]\,dP_n[w]).
+$$
+
+因而不需要选取一个绝对相位，甚至不需要先写一个态向量。 投影算子几何的系统发展可见近期一手研究。[\[2\]](#ref-projector)
+
+### 6.2　更大结构中的正性界
+
+在任意已有复 Hilbert 射线模型中，给归一态的参数化 $|\psi(x)\rangle$，
+
+$$
+Q_{\mu\nu}=\langle\partial_\mu\psi|(I-P)|\partial_\nu\psi\rangle.
+$$
+
+这是投影后切向量的 Gram 核，故正。 记 $g=\operatorname{Re}Q$、$\omega=\operatorname{Im}Q$，任意二参数满足
+
+$$
+\det\begin{pmatrix}g_{11}&g_{12}\\g_{12}&g_{22}\end{pmatrix}
+\ge\omega_{12}^2.
+$$
+
+qubit 切空间只有一复维，因而恰好饱和。 一般更高维子流形可以有严格缺口，缺口记录两复切向量未共线。
+
+取
+
+$$
+|\psi(\theta,\phi)\rangle=
+\cos(\theta/2)|0\rangle+e^{i\phi}\sin(\theta/2)|1\rangle,
+$$
+
+直接微分得到
+
+$$
+Q=\frac14
+\begin{pmatrix}
+1&i\sin\theta\\-i\sin\theta&\sin^2\theta
+\end{pmatrix},
+\quad
+ds^2=\frac14(d\theta^2+\sin^2\theta\,d\phi^2),
+$$
+
+$$
+\omega=\frac14\sin\theta\,d\theta\wedge d\phi,
+\qquad
+F=d\mathcal A=-2\omega=-\frac12\sin\theta\,d\theta\wedge d\phi.
+$$
+
+极点处参数坐标退化，几何张量本身仍良好。 这是“同一关系的线与面积读出”的精确数学内容。
+
+### 6.3　波粒读出的准确二元关系
+
+固定两条路径基，把 $\rho$ 写成
+
+$$
+\rho=\frac12
+\begin{pmatrix}
+1+r_z&r_x-ir_y\\r_x+ir_y&1-r_z
+\end{pmatrix}.
+$$
+
+路径先验偏置 $\mathcal P=|r_z|$；在平衡重合及相位扫描下，
+
+$$
+p(\phi)=\frac12(1+r_x\cos\phi+r_y\sin\phi),
+\quad\mathcal V=\sqrt{r_x^2+r_y^2}.
+$$
+
+正性给
+
+$$
+\boxed{\mathcal P^2+\mathcal V^2=\|r\|^2\le1.}
+\tag{12}
+$$
+
+纯态取等号。这里一轴读出路径偏置，正交平面读出相干；它们属于同一个正态。 这与波粒互补性的成熟定量研究相接，但 $\mathcal P$ 不是一般路径探测器的可区别度。 后者需要包含探测器相关，不能无条件替换。[\[10\]](#ref-englert)
+
+<a id="section-7"></a>
+
+## 7　面积、时间与内生观察者的边界
+
+#### 命题 7.1：单个各向同性方向不能自发选出非零流
+
+设 $X(n)\in T_nS^2$ 且 $X(Rn)=RX(n)$ 对全部 $R\in SO(3)$ 成立。 则 $X\equiv0$。
+
+**证明。**
+
+固定 $n$，全部绕 $n$ 的旋转都必须固定 $X(n)$。 它们在切平面上唯一的共同不动向量为零。
+
+$\square$
+
+因此非平凡转向至少还需要一个内部关系，例如控制轴、历史切向或 Hamiltonian。 这个第二对象可以属于同一整体，但不能从一个没有其他标记的方向自动恢复。
+
+### 7.1　同一几何不确定时间尺度
+
+#### 命题 7.2：时间缩放不可由态空间几何恢复
+
+给 $H$、持续时间 $T>0$ 与 $\lambda>0$，
+
+$$
+e^{-i(\lambda H)(T/\lambda)/\hbar}=e^{-iHT/\hbar}.
+$$
+
+两实现有同一门、同一未参数化轨迹、同一长度与几何面积，但持续时间不同。 因此这些几何数据不能单独唯一确定时间。
+
+**证明。**
+
+指数中的乘积相同；中间轨迹由 $t\mapsto\lambda t$ 重参数化。
+
+$\square$
+
+若已有 Hamiltonian 与时间校准，纯态满足
+
+$$
+\frac{ds}{dt}=\frac{\Delta H}{\hbar}.
+$$
+
+对 qubit，$H=h_0I+h\cdot\sigma$， $\dot r=(2/\hbar)h\times r$，故 $|\dot r|/2=\sqrt{|h|^2-(h\cdot r)^2}/\hbar$，即上式。 这需要能量与 $\hbar$ 的校准；不是“有面积”本身给出秒。 几何相位与球面面积无量纲，乘以 $\hbar$ 是作用量尺度，仍不是时间。
+
+### 7.2　静态整体的内生关系时间
+
+下面给出一个 *附带明确输入* 的内生钟模型，不把它并入 $\mathcal Q_{22}$ 的已证结论。 给共同空间 $\mathcal H_C\otimes\mathcal H_S$、两个 Hamiltonian、静态整体 $|\Omega\rangle$，满足
+
+$$
+(H_C\otimes I+I\otimes H_S)|\Omega\rangle=0.
+$$
+
+给协变钟态 $|t\rangle=e^{-iH_Ct/\hbar}|0\rangle$，定义条件态
+
+$$
+|\psi(t)\rangle=(\langle t|\otimes I)|\Omega\rangle.
+$$
+
+在这些微分与条件化合法的范围内，
+
+$$
+i\hbar\frac{d}{dt}|\psi(t)\rangle
+=-(\langle t|H_C\otimes I)|\Omega\rangle
+=H_S|\psi(t)\rangle.
+$$
+
+因此静态整体和内生相对演化可以共存。 张量分解、约束、钟协变及共同尺度仍是输入。 有限资源钟与连续测量的实现还需要额外核查，近期研究已给出不同实现不等价的明确情形。[\[7\]](#ref-clock)
+
+### 7.3　同一个读出能否承担全部历史
+
+#### 定理 7.3：目标恢复的纤维判据
+
+设非空来源集 $X$，读出 $O:X\to Y$，目标 $T:X\to Z$。 存在 $R:Y\to Z$ 满足 $T=R\circ O$，当且仅当
+
+$$
+O(x)=O(y)\Longrightarrow T(x)=T(y)\quad\forall x,y\in X.
+$$
+
+**证明。**
+
+必要性直接代入。充分性在 $O(X)$ 上令 $R(O(x))=T(x)$；纤维条件保证良定义。 取一个 $x_0\in X$，在 $Y\setminus O(X)$ 上令 $R=T(x_0)$。
+
+$\square$
+
+此为项目已有正式接口。[\[16\]](#ref-recovery) 取空历史和 $g g^{-1}$，算子读出都为 $I$，状态端点相同，但操作计数是 $0$ 与 $2$。 沿同一路径往返还能使有向面积相消，正耗时依然不为零。 所以保留端点或有向面积，都不自动保留完整时间历史。[\[15\]](#ref-omega)
+
+### 7.4　所有新过程可以内生，但不能全塞进同一三维类型
+
+有限表达式由 $D$ 和实线性组合构成时，结构归纳保证其值仍在 $V$，且返回律可递归代入。 但表达式值相同不保证表达式、来源历史或证明相同。
+
+在 $E=\mathbb R\oplus V$ 上，全部实线性过程的空间为
+
+$$
+\operatorname{End}_\mathbb R(E)\simeq E\otimes_\mathbb RE,
+\qquad\dim\operatorname{End}_\mathbb R(E)=16>4=\dim E.
+$$
+
+因此不存在把全部线性过程忠实线性编码为同型元素的单射。 它们仍可从内部二元关系构造：
+
+$$
+T_{a,b}(x)=h(b,x)a,
+\quad
+T_{a,b}T_{c,d}=h(b,c)T_{a,d}.
+$$
+
+三次接续两种括号都给 $h(b,c)h(d,e)T_{a,f}$。 这满足二元构造与三元相容，同时保留对象与过程的类型差异。 一般线性过程不都保持正，不能直接称为可执行量子操作。
+
+若把观察者的有限记录也纳入模型，可以另取记录空间、联合态和条件化。 它使用第 10 节所声明的复合扩张；“观察者内生”不赋予未知过程免费识别或无限记忆。
+
+<a id="section-8"></a>
+
+## 8　三元相容不能只解释成逐对没有冲突
+
+### 8.1　三阶正表仍不控制全表
+
+#### 命题 8.1：四元反例
+
+令
+
+$$
+G=\frac75I_4-\frac25\mathbf1\mathbf1^{\mathsf T}.
+$$
+
+每个不超过三阶的主子矩阵正定，但整个 $G$ 不半正定。
+
+**证明。**
+
+一个 $m$ 阶主子矩阵的特征值为 $7/5$（重数 $m-1$）及 $(7-2m)/5$。 $m\le3$ 时都正；$m=4$ 时后者为 $-1/5$。
+
+$\square$
+
+这不反驳本稿的三元返回律，因为它对全部线性组合及生成输出量化， 不是仅给有限原标签表的三阶子块作检查。 项目 C128 正在解决的也正是原加法、受限三表与全部有限表之间的恢复问题，而非省略这个桥。[\[12\]](#ref-c128)
+
+### 8.2　任取两测量可读也不等于三个共同可读
+
+已知量子例子为
+
+$$
+E_k(\pm)=\tfrac12(I\pm\eta\sigma_k),\quad k=x,y,z.
+$$
+
+任意两者联合可测当且仅当 $\eta\le1/\sqrt2$；三者共同联合可测当且仅当 $\eta\le1/\sqrt3$。 取 $\eta=3/5$ 就落在二者之间。对锐投影测量，这一反例不适用：两两可共同测量等价于两两对易， 并可得到共同联合。[\[11\]](#ref-joint)
+
+因此“可在一个模型中共同描述”“两两比较值存在”“有共同测量”“旧关系无损延拓”是不同条件。 改变原测量精度或删除约束可以改变相容性，但那是新的关系任务。 同在 $\Omega$ 内不能消除原任务的真实矛盾。
+
+<a id="section-9"></a>
+
+## 9　不动点、正交返回与有限线性提升
+
+### 9.1　任意不动点是关系交点，不自动是量子态
+
+对任意 $f:X\to X$，
+
+$$
+x=f(x)\quad\Longleftrightarrow\quad (x,x)\in\Gamma_f\cap\Delta_X.
+$$
+
+这一形式没有蕴含正性、线性、面积、概率或维数。
+
+#### 命题 9.1：$\cos x=x$ 的固定点
+
+该方程有唯一实解 $c\approx0.7390851332$，每个实初值的迭代 $x_{k+1}=\cos x_k$ 都趋于 $c$。
+
+**证明。**
+
+一次迭代进入 $[-1,1]$；该区间在 $\cos$ 下保持，且导数绝对值至多 $\sin1<1$。 压缩性给唯一固定点和收敛。
+
+$\square$
+
+在此固定点，$f'(c)=-\sin c\approx-0.6736120292$，是交替衰减。 本稿 $J_n^2=-I$ 则是保长度的两次正交返回。 两者都出现负号，但前者为收缩，后者为可逆旋转，不能互换。
+
+### 9.2　精确提升的闭合条件
+
+#### 定义 9.2：保留原读数的有限线性提升
+
+给 $f:X\to X$ 与原读数 $h:X\to\mathbb R$。 若存在有限 $N$、$K\in M_N(\mathbb R)$、$\Theta:X\to\mathbb R^N$、线性 $\ell$，满足
+
+$$
+\Theta(f(x))=K\Theta(x),\qquad h(x)=\ell\Theta(x),
+$$
+
+称其为精确有限线性提升；仿射常数由加入特征 $1$ 处理。
+
+#### 命题 9.3：必要且充分条件
+
+上述含常数的提升存在，当且仅当 $\operatorname{span}_\mathbb R\{1,h,h\circ f,h\circ f^2,\ldots\}$ 有限维。
+
+**证明。**
+
+前向所有 $h\circ f^k=\ell K^k\Theta$ 落入有限特征张成。 反向对这个有限维、被 $g\mapsto g\circ f$ 保持的空间选基，即得 $K$ 与 $\Theta$。
+
+$\square$
+
+#### 命题 9.4：$\cos$ 不容许保留原 $x$ 的有限精确线性提升
+
+在任意非空开区间，$1,x,\cos x,\cos(\cos x),\ldots$ 线性无关。 故在非空前向不变开区间，保留 $h(x)=x$ 时不存在任何有限维精确提升。
+
+**证明。**
+
+若有限线性关系成立，解析恒等原理使其延拓到全实轴。 $x$ 无界而所有正次迭代有界，先得 $x$ 的系数为零。 令 $y=\cos x$，其像包含开区间，再次解析延拓便使下一层的线性 $y$ 项系数为零。 重复至所有系数为零。有限提升将由 Cayley–Hamilton 给一个非零常系数关系，与此矛盾。
+
+$\square$
+
+这些固定点边界已在 R5-021 原稿中出现；本轮保留它们而不重计为新发现。 真正新增的核心不是一个吸引点，而是对全部关系和关系输出成立的返回恒等式。
+
+<a id="section-10"></a>
+
+## 10　从单比特到完整有限量子过程：哪些还需外部输入
+
+### 10.1　标准结构的恢复表
+
+| 标准量子内容 | 本轮状态 | 精确条件 |
+|:---|:---|:---|
+| 二维复 Hilbert 表示 | 数学上已构造 | $\mathcal Q_{22}$ 的三维定向与 Pauli 代数 |
+| 纯态与混态 | 数学上已构造 | 正平方锥、归一正线性读出定义 |
+| Born 配对与 POVM 数学形式 | 已得到 | 用全部正线性泛函与 $\sum e_i=u$；实际全可实施性未给 |
+| 酉群与连续旋转 | 已得到 | 指定生成方向给数学参数 $s$；具体 $H,t,\hbar$ 另给 |
+| 投影／平方根仪器 | 存在构造 | 原效果不唯一规定实际状态更新 |
+| 任意多系统张量积 | 未由单体唯一推出 | 需要复合关系与整体正锥 |
+| 所有 CP、CPTP 过程 | 条件构造 | 需要参考系统层级与可用过程规则 |
+| 测量记录、内生钟、全历史 | 条件构造 | 需要记录类型、联合、钟约束及来源供应 |
+| 量子场论、物理时空与作用量尺度 | 未推出 | 没有从本局部几何给出这些输入 |
+
+### 10.2　同一单体有不同复合正锥
+
+已经恢复两个 qubit 后，线性张量空间上至少可考虑
+
+$$
+\begin{aligned}
+C_{\min}&=\operatorname{cone}\{A\otimes B:A,B\ge0\},\\
+C_q&=\{X\in\operatorname{Herm}_4(\mathbb C):X\ge0\},\\
+C_{\max}&=\{X:\langle a\otimes b|X|a\otimes b\rangle\ge0\quad\forall a,b\}.
+\end{aligned}
+$$
+
+有 $C_{\min}\subsetneq C_q\subsetneq C_{\max}$。 归一 Bell 投影在 $C_q$ 中，其部分转置为交换算子 $F/2$，在反对称方向有负特征值， 故它不属于 $C_{\min}$。 另一方面 $\langle a\otimes b|F/2|a\otimes b\rangle=|\langle a,b\rangle|^2/2\ge0$， 故 $F/2\in C_{\max}\setminus C_q$。 单体态、单体概率与乘积效果没有唯一选出 $C_q$。
+
+Jordan 结构加合适复合、局部层析和 qubit 的成熟重构定理，正是填补这个层级的研究， 而不是把“整体”一词当作已给张量正锥。[\[8\]](#ref-wilce)
+
+### 10.3　一个明确付费的标准完成
+
+若 *另选* 以下数学扩张，可以构造完整有限维标准量子过程：
+
+- **C1.** 允许有限张量积 $M_2(\mathbb C)^{\otimes k}$ 及其投影支撑角 $P M_{2^k}(\mathbb C)P$，并使用其矩阵正锥。
+
+- **C2.** 过程取复线性映射，要求与每个允许参考系统旁接后仍保正；确定过程保迹，分支过程不增迹。
+
+第一项已经选择复合结构，第二项已经选择完全正的操作性要求。它们不是从返回律推出。
+
+任意 $d$ 可取 $2^k\ge d$ 及秩 $d$ 投影，得到 $P M_{2^k}(\mathbb C)P\simeq M_d(\mathbb C)$。 在该模型中，完全正映射的 Kraus 形式可以直接证明：
+
+$$
+C_\Phi=\sum_{ij}|i\rangle\langle j|\otimes\Phi(|i\rangle\langle j|)\ge0.
+$$
+
+谱分解 $C_\Phi=\sum_\alpha|v_\alpha\rangle\langle v_\alpha|$， 将 $v_\alpha$ 重排为矩阵 $K_\alpha$，逐矩阵单位比较给
+
+$$
+\Phi(\rho)=\sum_\alpha K_\alpha\rho K_\alpha^\dagger,
+\qquad
+\Phi\text{ 保迹}\Longleftrightarrow\sum_\alpha K_\alpha^\dagger K_\alpha=I.
+$$
+
+反向任意此类夹心和在旁接参考后保持正。 因此完全正要求与 Kraus 表示等价，保迹给标准确定过程。
+
+测量分支取有限标签集 $i$ 时，另要求共同归一化 $\sum_{i,\alpha}K_{i\alpha}^\dagger K_{i\alpha}=I$。 不完整仪器可取小于等于 $I$，并显式保留未记录的剩余权重。 每个分支各自不增迹不能代替这条总预算。此时
+
+$$
+\mathcal I_i(\rho)=\sum_\alpha K_{i\alpha}\rho K_{i\alpha}^\dagger,
+\quad E_i=\sum_\alpha K_{i\alpha}^\dagger K_{i\alpha},
+\quad p_i=\operatorname{Tr}(\rho E_i).
+$$
+
+把标签写入内部记录空间，得到
+
+$$
+\rho\longmapsto\sum_i\mathcal I_i(\rho)\otimes|i\rangle\langle i|.
+$$
+
+这是观察者记录的一个内生构造。任意数学过程的实际设备可实现性，仍不是表示定理的结论。
+
+本节给一个自洽完成，并证明其中标准形式的对应；它没有证明完成唯一。 若任务要求从更原始操作公设唯一推出这整个完成，应使用完整过程重构的额外前件， 而不能把 C1–C2 的定义选择隐藏起来。[\[5\]](#ref-selby), [\[6\]](#ref-nakahira)
+
+<a id="section-11"></a>
+
+## 11　反向删除、闭合账本与白话描述
+
+### 11.1　删除条件会发生什么
+
+| 拟删除或替换的内容 | 明确反例／缺口 | 被影响的关系 |
+|:---|:---|:---|
+| 至少两个独立方向 | $V=\mathbb R,D=0$ 满足返回式 | 无非零面积，不能得三维 |
+| 正定可分离比较 | 零半内积、$D=0$ 可在任意维满足返回式 | 所有区别均不可读 |
+| 三元返回律 | $D=0$ 可在任意实内积空间定义 | 二元正尺没有选出转向 |
+| 全域量词 | 零、输出和线性组合可能不在测试域 | 本定理的递归闭合证明失去前件 |
+| 三元相容仅保留至三阶正表 | 第 8 节四阶 Gram 反例 | 局部正性不能保证整体正性 |
+| 正线性读出改为只有旋转不变 | $p_k=(1+t^{2k+1})/2$ | Born 仿射配对不再唯一 |
+| 第三态或实际路径一概删掉 | $\Delta_3=(1\pm i)/4$ | 同二态概率仍有不同环相位 |
+| 时间由长度或面积唯一恢复 | $H\mapsto\lambda H,T\mapsto T/\lambda$ | 相同几何留下时间尺度纤维 |
+| 把所有过程压回同型对象 | $\dim\operatorname{End}(E)=16>4$ | 过程的忠实线性记录丢失 |
+
+### 11.2　本轮最终输入与输出
+
+**外部数学结构：** B1 实线性载体及非退化维数范围；B2 正定双线性比较；B3 比较输出同类型的总映射。
+
+**独立关系族：** 仅式 (1)，对所有原元素和所有生成输出量化。
+
+**定义选择：** 含单位扩张、平方正锥、全部正归一线性数学读出、复化表示、指定数学仪器。 这些定义给一个具体理论，但没有证明它们全部等于尚未提供的原设备或实际来源。
+
+**闭合推出：** 三维、原 $D$ 的完整正则性、共同手性叉积、面积律、Jacobi、$SO(3)$、 内生切平面复结构、正锥自对偶、单比特的 Born 形式和酉形式、投影仪器存在、切平面正核及面积饱和。
+
+**完整有限过程的新增扩张：** C1 张量／支撑角及矩阵正锥；C2 全参考正性与迹预算。 内生钟另需联合分解、Hamiltonian 约束、钟协变和尺度。 没有证明这些扩张族独立且最少，也没有证明只靠正性便唯一选出它们。
+
+若用一个新名称“相融”定义返回式，再要求全部关系相融，模型筛选条件仍是同一返回式。 定义性改写可以缩短语言，但不自动减少逻辑输入。
+
+**本轮没有推出：** 所有物理场等于时间、所有波等于面积、所有粒子等于线、宇宙全历史可压入一个三维球、 一个共同本体态唯一决定全部实际观察者的具体读出、或数学输入总数已经为零。
+
+### 11.3　完整白话
+
+两种存在可以比较；比较产生的关系还必须接受同一种比较。 先由两个方向组成有向面积，再用任何内部方向去比较它，所得结果必须回到原两方向的平面， 而且保留原来的投影关系。这一条返回约束足够把比较空间锁成三维，并让转向自动成为线性的叉积。 固定一个内部态，它周围的两种正交变化组成一个平面：转一次得到正交方向，转两次得到反向， 长度和面积因此成为同一正性关系的两种读出。 正对象没有负概率；负号描述比较的反向。 观察者可以用同一正锥表示，但观察者的记录、过程与时钟仍须在整体中保留各自信息。 线与面积可以统一，任意回路与完整时间却不能只从两个端点恢复。
+
+## 参考来源
+
+<a id="ref-ashtekar"></a>
+
+\[1\] A. Ashtekar, T. A. Schilling.  *Geometrical Formulation of Quantum Mechanics*  (1997). [arXiv:gr-qc/9706069](https://arxiv.org/abs/gr-qc/9706069).
+
+<a id="ref-projector"></a>
+
+\[2\] J. Mitscherling, A. Avdoshkin, J. E. Moore.  *Gauge-invariant projector calculus for quantum state geometry and applications to observables in crystals* . Phys. Rev. B 112, 085104 (2025). [arXiv:2412.03637v2](https://arxiv.org/html/2412.03637v2); [DOI:10.1103/qscv-qxqt](https://doi.org/10.1103/qscv-qxqt). 核对表 1 与投影几何部分。
+
+<a id="ref-bargmann"></a>
+
+\[3\] S. Tamate, K. Ogawa, M. Kitano.  *Bloch sphere representation of three-vertex geometric phases* . Phys. Rev. A 84, 052114 (2011). [arXiv:1107.5447](https://arxiv.org/pdf/1107.5447). 本稿与原文三点乘积的环路顺序相反，符号已分别标明。
+
+<a id="ref-jordan"></a>
+
+\[4\] H. Barnum, J. Hilgert.  *Strongly symmetric spectral convex bodies are Jordan algebra state spaces* . [arXiv:1904.03753](https://arxiv.org/abs/1904.03753). 强对称、谱性与有限紧凸背景均保留。
+
+<a id="ref-selby"></a>
+
+\[5\] J. H. Selby, C. M. Scandolo, B. Coecke.  *Reconstructing quantum theory from diagrammatic postulates* . Quantum 5, 445 (2021). [DOI:10.22331/q-2021-04-28-445](https://quantum-journal.org/papers/q-2021-04-28-445/).
+
+<a id="ref-nakahira"></a>
+
+\[6\] K. Nakahira.  *Two Operational Principles Single Out Quantum Theory* . [arXiv:2605.23217v1](https://arxiv.org/html/2605.23217v1) (2026，预印本). 核对 Theorem 51 与 Appendix A.2；本次未独立认证全文证明。
+
+<a id="ref-clock"></a>
+
+\[7\] L. Hausmann, A. Schmidhuber, E. Castro-Ruiz.  *Measurement events relative to temporal quantum reference frames* . Quantum 9, 1616 (2025). [DOI:10.22331/q-2025-01-30-1616](https://quantum-journal.org/papers/q-2025-01-30-1616/).
+
+<a id="ref-wilce"></a>
+
+\[8\] H. Barnum, A. Wilce.  *Local tomography and the Jordan structure of quantum theory* . Foundations of Physics 44, 192–212 (2014). [arXiv:1202.4513](https://arxiv.org/abs/1202.4513). 结论依赖其复合、因子化、局部层析等前件。
+
+<a id="ref-cross"></a>
+
+\[9\] B. Walsh.  *The Scarcity of Cross Products on Euclidean Spaces* . American Mathematical Monthly 74, 188–194 (1967). [DOI:10.2307/2315620](https://www.jstor.org/stable/2315620). 本稿三元返回分类采用自足证明，不把范数叉积分类的前件偷换为任意总映射。
+
+<a id="ref-englert"></a>
+
+\[10\] B.-G. Englert.  *Fringe Visibility and Which-Way Information: An Inequality* . Phys. Rev. Lett. 77, 2154 (1996). [DOI:10.1103/PhysRevLett.77.2154](https://doi.org/10.1103/PhysRevLett.77.2154). 本稿 $\mathcal P$ 是先验路径偏置，未冒称一般探测器可区别度。
+
+<a id="ref-joint"></a>
+
+\[11\] T. Heinosaari, D. Reitzner, P. Stano.  *Notes on Joint Measurability of Quantum Observables* . [arXiv:0811.0783v2](https://arxiv.org/pdf/0811.0783) (2008). 核对 Propositions 1–2 与 Example 1。
+
+<a id="ref-c128"></a>
+
+\[12\] 固定项目快照：[C128：正交迹与角关系续卷](https://github.com/the-omega-institute/trureturing/blob/5d356c7b7e9b0fc64a3c88286402d43ecb54f4a5/docs/develop/theory/AURIC_C128_ORTHOGONAL_TRACE_AND_CORNER_RELATIONS_CONTINUATION.md)，§§468–478。理论正文，非本轮机器认证。
+
+<a id="ref-boundary"></a>
+
+\[13\] 固定项目快照：[FIB-ATOM：稳定关系边界与三维闭合](https://github.com/the-omega-institute/trureturing/blob/5d356c7b7e9b0fc64a3c88286402d43ecb54f4a5/docs/develop/theory/AURIC_FIB_STABLE_RELATION_BOUNDARY_THREE_DIMENSIONAL_CLOSURE.md)，§§1–5，尤其命题 3.1、4.4、5.2。
+
+<a id="ref-repobargmann"></a>
+
+\[14\] 固定项目快照：[C129QubitBargmann.lean](https://github.com/the-omega-institute/trureturing/blob/5d356c7b7e9b0fc64a3c88286402d43ecb54f4a5/D5/S3/Quantum/Information/GroupInvariantPsi/C129QubitBargmann.lean)，`triple_bargmann_bloch` 与 `explicit_state_orientation`。源码注记的未完审计：[issue \#27571](https://github.com/the-omega-institute/trureturing/issues/27571)；本轮未重编。
+
+<a id="ref-omega"></a>
+
+\[15\] 固定项目快照：[AURIC OMEGA 静态相融纤维理论](https://github.com/the-omega-institute/trureturing/blob/5d356c7b7e9b0fc64a3c88286402d43ecb54f4a5/docs/develop/theory/AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md)，历史／操作／时钟区分、回路共同不动点与观察者内生部分。
+
+<a id="ref-recovery"></a>
+
+\[16\] 固定项目快照：[TargetRecoveryCriterion.lean](https://github.com/the-omega-institute/trureturing/blob/5d356c7b7e9b0fc64a3c88286402d43ecb54f4a5/D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean)，`target_recovery_criterion`。本稿给首项等价的普通证明，未声称本轮重新编译该声明。
+
+## 12　全域平面返回与代数不共线的无尺入口
+
+### 12.1　定义与整个原空间上的结论
+
+**定义 12.1（同一关系的两个条件）。** 设 $V$ 为任意实向量空间，$D:V\times V\to V$ 为非零交替双线性总映射。记 $L_a b=D(a,b)$。要求
+
+$$
+D(D(a,b),c)\in\operatorname{span}_{\mathbb R}\{a,b\}
+\qquad\forall a,b,c\in V,
+\tag{12.P}
+$$
+
+以及
+
+$$
+D(a,D(a,b))\in\mathbb R D(a,b)
+\ \Longrightarrow\ D(a,b)=0
+\qquad\forall a,b\in V.
+\tag{12.N}
+$$
+
+这里 $\mathbb R0=\{0\}$。条件 N 排除非零响应再次与原输入作用后仍落在该响应的一条线上，包括再次作用为零的情形。P 与 N 对整个原 $V$ 量化，因而也适用于任意和、实倍数及任意有限次生成的输出；没有另选测试域。入口不含有限维、比较尺、范数、拓扑、连续参数、Jacobi、生成性、商空间或共同有界群。
+
+**定理 12.2（无尺入口的三维正定刚性）。** 定义 12.1 蕴涵整个原 $V$ 三维。只在此有限性结论之后定义
+
+$$
+g_D(a,b)=-\frac12\operatorname{Tr}_V(L_aL_b).
+\tag{12.1}
+$$
+
+它是正定对称实双线性形式，并且对全部原向量有精确返回
+
+$$
+D(D(a,b),c)=g_D(a,c)b-g_D(b,c)a.
+\tag{12.2}
+$$
+
+这是同一个原 $D$ 的唯一返回比较尺。每个非零原向量都是实际二元输出；对每个 $a\ne0$，
+
+$$
+\ker L_a=\mathbb Ra,\qquad
+\operatorname{im}L_a=a^{\perp_{g_D}},\qquad
+\operatorname{rank}L_a=2.
+\tag{12.3}
+$$
+
+原 $D$ 相对于其自身确定的定向是 $g_D$ 的单位叉积，满足 Jacobi。所有原行的指数生成的代数子群恰为 $SO(V,g_D)$，无需取闭包。反向，三维正定空间上任一手性的单位叉积都满足定义 12.1。下面分别证明入口桥与这些结论。
+
+### 12.2　输出平面、中心与维数
+
+**引理 12.3（实际非零输出唯一确定原输入平面）。** 若 $w=D(a,b)\ne0$，则 $a,b,w$ 线性独立，且
+
+$$
+\operatorname{im}L_w=\operatorname{span}\{a,b\},\qquad
+L_w|_{\operatorname{span}\{a,b\}}\text{ 为线性同构}.
+\tag{12.4}
+$$
+
+因此同一个非零输出，甚至它的任一非零实倍数，不能来自两个不同的输入平面。
+
+**证明。** 交替双线性首先使 $a,b$ 独立。若 $w=sa+tb$，则 $D(a,w)=tw\in\mathbb Rw$，N 会使 $w=0$，矛盾。因此 $w$ 不在原平面 $F=\operatorname{span}\{a,b\}$。
+
+P 给 $L_w(V)\subseteq F$。对任意 $0\ne x=sa+tb\in F$，可选 $y=ua+vb$，使 $sv-tu=1$，从而 $D(x,y)=w$。若 $L_wx=0$，交替性给 $D(x,w)=0$；对 $(x,y)$ 用 N 又得到 $w=0$。所以 $L_w|_F$ 单射。二维 $F$ 上的单射是满射，故它的像恰为 $F$，同时也是整个 $L_w$ 的像。若 $D(a',b')=\lambda w$，$\lambda\ne0$，则同样的结论给
+
+$$
+\operatorname{span}\{a',b'\}
+=\operatorname{im}L_{\lambda w}
+=\operatorname{im}L_w=F.
+$$
+
+这里尚未使用整个 $V$ 的有限维性。$\square$
+
+**引理 12.4（没有中心，也没有独立输入的零响应）。** 在定义 12.1 下，
+
+$$
+Z:=\{z:D(z,v)=0\ \forall v\in V\}=0,
+\qquad
+D(a,c)=0\ \Longleftrightarrow\ a,c\text{ 线性相关}.
+\tag{12.5}
+$$
+
+**证明。** 非零性供应一对实际输入 $a,b$，使 $w=D(a,b)\ne0$。若 $z\in Z$，则 $D(a+z,b)=w$。由引理 12.3，$\operatorname{span}\{a+z,b\}=F$，所以 $z\in F$。交替性又给 $L_wz=0$，而 $L_w|_F$ 单射，故 $z=0$。中心是在原空间中被排除的，没有删去或商掉它。
+
+现在固定任意 $a\ne0$。中心为零使某个 $b$ 满足 $w=D(a,b)\ne0$。若 $D(a,c)=0$，则 $D(a,b+c)=w$。同一输出的平面唯一性给 $c\in\operatorname{span}\{a,b\}$；写 $c=sa+tb$，零响应变成 $tw=0$，所以 $t=0$。这证明 $\ker L_a=\mathbb Ra$。反向由交替双线性成立；$a=0$ 的情形也成立。$\square$
+
+**维数结论的证明。** 再取一个实际非零输出 $w=D(a,b)$ 及其平面 $F$。引理 12.3 给 $L_w(V)=F$ 和 $L_w|_F$ 可逆。对任意原 $v\in V$，在 $F$ 内解唯一的 $L_wp=L_wv$，便有
+
+$$
+v-p\in\ker L_w=\mathbb Rw.
+$$
+
+又因 $w\notin F$，得到整个原空间的代数直和
+
+$$
+V=F\oplus\mathbb Rw.
+\tag{12.6}
+$$
+
+所以 $\dim V=3$。这个结论覆盖每个原向量；没有先限制到 $a,b$ 的生成子空间，也没有使用无限维上的迹、投影、完备性或指数。$\square$
+
+### 12.3　由系数取得正尺与精确返回
+
+**引理 12.5（实特征线的排除）。** 对每个 $x\in V$，$L_x$ 没有非零实特征值。
+
+**证明。** 若 $L_xy=\lambda y$，$y\ne0$、$\lambda\in\mathbb R\setminus\{0\}$，令 $b=y/\lambda$，则 $D(x,b)=y$ 且 $D(x,y)\in\mathbb Ry$，违反 N。$\square$
+
+此时才使用已经得到的三维性。取上述基 $(a,b,w)$，其中 $w=D(a,b)$。P 给实系数
+
+$$
+D(w,a)=pa+qb,\qquad D(w,b)=ra+sb.
+\tag{12.7}
+$$
+
+$L_w|_F$ 可逆。若 $q=0$，则 $D(w,a)=pa$ 且 $p\ne0$，与引理 12.5 矛盾。因此 $q\ne0$。对输入 $(a,w)$、测试元 $w$ 使用 P，有
+
+$$
+D(D(a,w),w)
+=(p^2+qr)a+q(p+s)b
+\in\operatorname{span}\{a,w\}.
+$$
+
+故 $s=-p$。于是 $L_w|_F$ 的矩阵是
+
+$$
+\begin{pmatrix}p&r\\q&-p\end{pmatrix}.
+$$
+
+若 $p^2+qr>0$，它有非零实特征值；若 $p^2+qr=0$，它不可逆。两种都不可能。因此
+
+$$
+\Delta:=-(p^2+qr)>0.
+\tag{12.8}
+$$
+
+令 $b_0=b+(p/q)a$。直接用双线性得
+
+$$
+D(a,b_0)=w,\qquad D(w,a)=qb_0,\qquad
+D(b_0,w)=\frac\Delta q a.
+\tag{12.9}
+$$
+
+还须判定 $q$ 的符号，不能只由非退化性宣称正定。若 $q<0$，令 $\lambda=\sqrt{-q}>0$，则
+
+$$
+L_a(\lambda b_0+w)
+=\lambda w-qb_0
+=\lambda(\lambda b_0+w),
+$$
+
+又违反引理 12.5。因此 $q>0$。
+
+**精确比较尺的构造。** 在基 $(e_1,e_2,e_3)=(a,b_0,w)$ 上定义对称双线性形式 $H$，使此基正交且
+
+$$
+H(e_1,e_1)=q,\qquad
+H(e_2,e_2)=\frac\Delta q,\qquad
+H(e_3,e_3)=\Delta.
+\tag{12.10}
+$$
+
+$q,\Delta$ 都正，所以 $H$ 正定。式 (12.9) 给全部乘法表。为核对精确返回，只需检查第一对输入的三个循环基对与第三槽的三个基向量；两边均三线性，且关于前两槽交替。这九项为
+
+| $(i,j)$ | $D(D(e_i,e_j),e_1)$ | $D(D(e_i,e_j),e_2)$ | $D(D(e_i,e_j),e_3)$ |
+|---|---|---|---|
+| $(1,2)$ | $qe_2$ | $-(\Delta/q)e_1$ | $0$ |
+| $(2,3)$ | $0$ | $(\Delta/q)e_3$ | $-\Delta e_2$ |
+| $(3,1)$ | $-qe_3$ | $0$ | $\Delta e_1$ |
+
+它们逐项等于 $H(e_i,e_k)e_j-H(e_j,e_k)e_i$。因此对全部原 $a,b,c$，
+
+$$
+D(D(a,b),c)=H(a,c)b-H(b,c)a.
+\tag{12.11}
+$$
+
+**迹式与唯一性的证明。** 由交替性和 (12.11)，
+
+$$
+L_aL_b(c)=H(a,c)b-H(a,b)c,
+\qquad L_aL_b=b\otimes H(a,\cdot)-H(a,b)I.
+$$
+
+在已经证明的三维空间上，秩一算符 $b\otimes H(a,\cdot)$ 的迹是 $H(a,b)$，而 $\operatorname{Tr}I=3$。故
+
+$$
+-\tfrac12\operatorname{Tr}(L_aL_b)=H(a,b).
+$$
+
+这就证明 (12.1) 正定、对称、双线性，并证明 (12.2)。基与系数的选择没有留下自由度。事实上，若另一双线性形式 $h$ 也满足同一精确返回式，则对任意 $a\ne0,c$，选与 $a$ 独立的 $b$，有
+
+$$
+(h-g_D)(a,c)b-(h-g_D)(b,c)a=0.
+$$
+
+独立性给 $(h-g_D)(a,c)=0$；零输入由双线性处理。因此甚至不预设 $h$ 对称或正定，它也只能等于 $g_D$。$\square$
+
+**所有原向量都是实际输出。** 给 $z\ne0$，在已得的三维正定空间中选 $g_D$-单位 $e\perp z$。精确返回给
+
+$$
+D(D(e,z),e)=z.
+\tag{12.12}
+$$
+
+所以 $z$ 本身是实际二元输出，而不只是输出的线性和；零也是输出。若 $z=D(a,b)$，由 (12.2) 立即有
+
+$$
+g_D(L_zc,d)
+=g_D(a,c)g_D(b,d)-g_D(b,c)g_D(a,d)
+=-g_D(c,L_zd).
+$$
+
+实际输出覆盖整个 $V$，故每个原 $L_z$ 都斜对称。结合引理 12.4 的核与有限维秩—零度，$L_z$ 在 $z\ne0$ 时秩二，像包含于且等于 $z^\perp$，得到 (12.3)。中心、实际输出、同一输出的不同输入平面、独立零响应及全部核像都已在原 $V,D$ 上确定。
+
+### 12.4　直接复用原分类，处理手性、尺度与群
+
+**原定理 2.2 的适用。** 现在把原来的同一个总映射 $D$、整个原 $V$ 和刚构造的 $g_D$ 代入定义 2.1。非零交替性已使 $V$ 至少含两个独立方向；正定性和完整返回式分别由 (12.10) 与 (12.11) 支付。所以定理 2.2 可直接应用：相对于任一临时正交定向，$D=\pm\times_{g_D}$。这里不再另证或另计叉积分类。
+
+由此三形式
+
+$$
+\omega_D(a,b,c)=g_D(D(a,b),c)
+$$
+
+是一个单位体积形式；以 $\omega_D$ 为正定向时，原 $D$ 恰为单位叉积。反射将这个定向反转。固定 $g_D$ 的两个手性由 $D$ 与 $-D$ 给出，它们具有相同返回式和迹尺；不要求原 $D$ 对全部反射作为普通向量等变。
+
+**非零尺度。** 若 $\lambda\in\mathbb R\setminus\{0\}$，令 $D^\lambda=\lambda D$。双线性直接给 P、N 保持，且
+
+$$
+L_a^\lambda=\lambda L_a,\qquad
+g_{D^\lambda}=\lambda^2g_D,\qquad
+\omega_{D^\lambda}=\lambda^3\omega_D.
+\tag{12.13}
+$$
+
+因此负尺度反转手性，绝对尺度改变迹尺。相对于 $D^\lambda$ 自己的尺与定向，它仍是单位叉积。若坚持保留原来的同一把给定尺，返回式容许的共同倍数只有 $\lambda=\pm1$。从同一个 $D$ 读出唯一尺，与从没有标定的关系族得到绝对物理单位，是不同命题。
+
+**Jacobi 与行交换子。** 对 (12.2) 作三个循环相加，六个项因 $g_D$ 对称而两两抵消，故
+
+$$
+D(D(a,b),c)+D(D(b,c),a)+D(D(c,a),b)=0.
+\tag{12.14}
+$$
+
+由 $L_aL_b(c)=g_D(a,c)b-g_D(a,b)c$ 相减又得
+
+$$
+[L_a,L_b]=L_{D(a,b)}.
+\tag{12.15}
+$$
+
+这是已得精确返回及原命题 3.1 的直接应用，不以 Jacobi 为入口。
+
+**精确生成群。** 只在有限维结论之后，定义
+
+$$
+\mathcal G_D
+=\left\langle\exp(tL_a):a\in V,\ t\in\mathbb R\right\rangle
+\subseteq GL(V).
+\tag{12.16}
+$$
+
+斜对称性给指数保持 $g_D$；行列式沿参数从一连续变化且不为零，故 $\mathcal G_D\subseteq SO(V,g_D)$。若 $a\ne0$，将 $v=v_\parallel+v_\perp$ 按轴 $\mathbb Ra$ 分解，返回式给
+
+$$
+\exp(tL_a)v
+=v_\parallel+\cos(t\|a\|_D)v_\perp
++\frac{\sin(t\|a\|_D)}{\|a\|_D}D(a,v_\perp),
+\qquad \|a\|_D=\sqrt{g_D(a,a)}.
+\tag{12.17}
+$$
+
+$a=0$ 时指数为恒等。式 (12.17) 来自横面上 $L_a^2=-\|a\|_D^2I$ 的指数级数。
+
+反过来取任意 $Q\in SO(V,g_D)$。在 $g_D$-正交基下，
+
+$$
+\det(Q-I)=\det Q\det(I-Q^{-1})
+=\det(I-Q^{\mathsf T})=\det(I-Q)=-\det(Q-I).
+$$
+
+所以 $Q$ 有单位固定轴 $n$。它在 $n^\perp$ 上的限制是行列式一的二维正交矩阵。选单位 $e\perp n$ 和 $f=D(n,e)$，则 $(e,f)$ 为该平面的正交基，且 $L_ne=f,L_nf=-e$。二维正交矩阵的两列给某个 $\theta\in\mathbb R$，使
+
+$$
+Qe=\cos\theta\,e+\sin\theta\,f,\qquad
+Qf=-\sin\theta\,e+\cos\theta\,f.
+$$
+
+故 $Q=\exp(\theta L_n)$。特别地每个正向等距本身就是一条原行的指数，因而
+
+$$
+\mathcal G_D=SO(V,g_D).
+\tag{12.18}
+$$
+
+这证明的是代数生成子群的精确相等；没有把稠密、闭包或 Lie 代数相等替代群相等。参数 $t$ 此时是导出有限矩阵上的数学参数，不是入口供应的物理时间。
+
+### 12.5　与原有限维逐轴有界入口及全部旧总映射模型等价
+
+**定义 12.6（原逐轴有界条件 B）。** 对有限维实 $V$ 上的非零交替双线性 $D$，任选一把辅助范数 $\|\cdot\|_0$，要求
+
+$$
+\forall a\in V\ \exists M_a<\infty\ \forall t\in\mathbb R:
+\quad\|\exp(tL_a)\|_{0\to0}\le M_a.
+\tag{12.B}
+$$
+
+常数允许逐 $a$ 不同，不要求所有轴共有一个界，更不要求任意混合指数词已有共同界。有限维的范数等价使“某把辅助范数”与“每把辅助范数”等价：若 $c\|v\|_0\le\|v\|_1\le C\|v\|_0$，同一个族在新范数下的界至多为 $(C/c)M_a$。逐向量有界也与这里的算符族有界等价，因为可在一组有限基上分别取界再合并。这些都是有限维原入口的量词。
+
+**引理 12.7（逐轴 B 蕴涵 N，不用共同紧性）。** 只要有限维交替双线性模型满足 B，便满足 N。
+
+**证明。** 固定任意原 $a,b$，设 $w=L_ab$ 且 $L_aw=\lambda w$，$\lambda\in\mathbb R$。若 $w\ne0$、$\lambda\ne0$，则
+
+$$
+\exp(tL_a)w=e^{\lambda t}w
+$$
+
+在全实 $t$ 的一个方向上无界，与这条原轴自己的 $M_a$ 矛盾。若 $w\ne0$、$\lambda=0$，则 $L_a^2b=0$，故
+
+$$
+\exp(tL_a)b=b+tw.
+$$
+
+由 $\|b+tw\|_0\ge |t|\|w\|_0-\|b\|_0$，仍与同一条轴的 B 矛盾。故只能 $w=0$，正是 N。这个证明既未组合不同轴，也未平均任何群。$\square$
+
+**定理 12.8（同一原 $V,D$ 的三种完整模型类）。** 下列模型在遗忘已给比较尺后，具有完全相同的原有序对 $(V,D)$：
+
+1. 任意实 $V$ 上的非零交替双线性 $D$，满足全域 P 与 N。
+2. 有限维实 $V$ 上的非零交替双线性 $D$，满足全域 P 与原逐轴全实参数 B。
+3. 原定义 2.1 的全部模型：$V$ 至少有两个独立方向，给正定对称实双线性 $g$，$D:V^2\to V$ 是任意总映射，满足对所有原 $a,b,c$ 的原式 (1)。这里没有预先要求 $D$ 双线性或交替。
+
+每个这样的 $(V,D)$ 向第三类提升的尺恰为 $g_D$，所以尺的遗忘没有丢失选择。
+
+**证明。** 第一类由定理 12.2 得到整个原 $V$ 三维以及 $g_D$ 的精确返回，故属于第三类。各指数在 $g_D$-范数中都是等距，算符范数为一；范数等价随即给原任意辅助范数中的 B，故也属于第二类。此处共同等距性是结论，未被倒用于 B 的逆向。
+
+第二类由引理 12.7 得到 N，P 保持，故属于第一类。
+
+最后从第三类出发，必须先用原定理 2.2 的任意总映射结论：整个原 $V$ 三维，原来的同一个 $D$ 自动成为某一手性的单位叉积，因而自动非零、双线性且交替。原返回式直接给 P。再验证 N：若 $w=D(a,b)\ne0$，则 $a\ne0$、$g(a,w)=0$；叉积的斜性给 $g(D(a,w),w)=0$。若 $D(a,w)=\lambda w$，正定性迫使 $\lambda=0$，但原返回式又给
+
+$$
+D(a,w)=g(a,b)a-g(a,a)b.
+$$
+
+它为零会使 $b\in\mathbb Ra$，与 $w\ne0$ 矛盾。因此 N 成立，属于第一类。原命题 3.1，或上述秩一迹计算，给原来已给的 $g=-\tfrac12\operatorname{Tr}(L_aL_b)=g_D$。
+
+逆向没有将第三类缩成其预设双线性的子类，也没有换掉原 $D$、原向量、标量或操作域。$\square$
+
+有限维、范数和指数参数因此可以从数学主入口撤去；它们在相应结论之后仍可使用。三个入口定义同一模型类，不等于逻辑总信息严格减少，也不证明全局最少公理或文献优先性。
+
+### 12.6　删除反例与全域量词的边界
+
+**命题 12.9（删除 P 的反例；仅基三元测试仍不足）。** 设
+$$
+V=\mathbb R^3\oplus\mathbb R^3,
+\qquad
+D((a_1,a_2),(b_1,b_2))=(a_1\times b_1,a_2\times b_2),
+$$
+其中两个块都使用标准三维叉积，故 $\dim V=6$。这个模型保留“非零、总定义、交替、双线性”、条件 N 以及有限维逐轴全实参数有界条件 B，删除全域条件 P；它满足所有六个块标准基向量组成的有序三元组上的 P，却不满足对全部原向量量化的 P。具体地，取
+$$
+a=(e_1,e_1),\qquad b=c=(e_2,0),
+$$
+则
+$$
+D(D(a,b),c)=(-e_1,0)\notin\operatorname{span}\{a,b\}.
+$$
+
+**证明。** 记第一块和第二块的标准基向量为
+$u_i=(e_i,0)$ 与 $v_i=(0,e_i)$。非零性由
+$D(u_1,u_2)=u_3$ 给出；逐块叉积使 $D$ 为总的交替双线性映射。
+
+先验证 N。给定 $a$ 和 $w=L_ab$，若 $L_aw=\lambda w$ 且 $w\ne0$，则每个块的叉积算子均斜对称，所以
+$$
+0=\langle L_aw,w\rangle=\lambda\|w\|^2
+$$
+迫使 $\lambda=0$。此时 $w\in\operatorname{im}L_a\cap\ker L_a$。在每一块中，若 $a_i\ne0$，则 $a_i\times b_i$ 同时垂直于 $a_i$，而落在 $\ker(a_i\times\mathord\cdot)=\mathbb Ra_i$ 时只能为零；若 $a_i=0$，该块输出本来就是零。因此 $w=0$，N 成立。
+
+取直和 Euclidean 范数。每个 $L_a$ 是两个斜对称叉积算子的直和，故
+$\exp(tL_a)$ 是两个正交旋转（零块时为恒等），从而
+$$
+\|\exp(tL_a)\|_{0\to0}=1\qquad(a\in V,\ t\in\mathbb R).
+$$
+所以 B 也成立。
+
+现在检查基三元组。若前两项分别属于不同块，则 $D$ 输出为零；若同属一块，则输出仍在该块。对同一块的三个标准基向量，叉积再与同块的任一标准基向量作用所得向量落在前两个基向量张成的平面；与另一块的基向量作用则为零；重复的前两项也直接给零。因此对六个基向量的每个有序三元组，均有
+$$
+D(D(x,y),z)\in\operatorname{span}\{x,y\}.
+$$
+
+但对命题中给出的线性组合，$D(a,b)=(e_3,0)$ 且
+$D(D(a,b),c)=(-e_1,0)$。若它等于 $sa+tb$，则第二块给出 $se_1=0$，故 $s=0$；第一块随即要求 $-e_1=te_2$，不可能。故全域 P 失败。这个失败说明右侧平面随输入线性组合变化，基三元组上的归属关系不能替代全域三线性恒等式。$\square$
+
+**命题 12.10（删除 N 的中心与额外维数反例）。** 设 $V=\mathbb R^4$，在基
+$e_1,e_2,e_3,e_4$ 上定义交替双线性总映射
+$$
+D(e_1,e_2)=e_3
+$$
+及其反向，其他基对均为零。这个模型保留非零性、交替性、双线性、总定义和全域 P，删除 N；它不保留逐轴有界条件 B，并且 N、三维性及“每个非零向量都是输出”的结论均失败。
+
+**证明。** 任意 $a,b\in V$ 的输出都是 $e_3$ 的倍数，而 $e_3$ 是中心元，故
+$$
+D(D(a,b),c)=0\in\operatorname{span}\{a,b\}
+\qquad(a,b,c\in V),
+$$
+全域 P 成立。可是
+$$
+D(e_1,D(e_1,e_2))=D(e_1,e_3)=0\in\mathbb R D(e_1,e_2),
+\qquad D(e_1,e_2)=e_3\ne0,
+$$
+所以 N 失败。空间维数为 $4$，而像 $D$ 仅为 $\mathbb Re_3$，例如 $e_4$ 不是任何二元输出。
+
+同时 $L_{e_1}e_2=e_3$、$L_{e_1}e_3=0$，因而
+$$
+\exp(tL_{e_1})e_2=e_2+te_3.
+$$
+对任意范数，$\|e_2+te_3\|$ 随 $|t|\to\infty$ 无界，故 B 也失败。这正说明在原有限维 P+B 入口中删去 B（从而不再取得 N）允许该中心和额外维数。$\square$
+
+**命题 12.11（删除逐轴有界与正定选择的反例）。** 在 $V=\mathbb R^3$ 的基上定义非零交替双线性总映射
+$$
+D(e_1,e_2)=e_3,\qquad
+D(e_2,e_3)=-e_1,\qquad
+D(e_3,e_1)=e_2,
+$$
+并交替双线性延拓。令 $h$ 的矩阵为
+$\operatorname{diag}(1,-1,-1)$。这个模型保留非零性、交替性、双线性、总定义、全域 P 以及
+$\ker L_a=\mathbb Ra$（每个 $a\ne0$），删除 N 和 B；N、B 以及正定迹尺的结论均失败。
+
+**证明。** 对三个循环的前两项和三个基向量作计算，左、右两侧的共同值为
+$$
+\begin{array}{c|ccc}
+(a,b)\backslash c & e_1 & e_2 & e_3\\ \hline
+(e_1,e_2)&e_2&e_1&0\\
+(e_2,e_3)&0&-e_3&e_2\\
+(e_3,e_1)&-e_3&0&-e_1
+\end{array}
+$$
+其中右侧是 $h(a,c)b-h(b,c)a$。两侧都对前两项交替、对第三项线性；因此基计算给出全域恒等式
+$$
+D(D(a,b),c)=h(a,c)b-h(b,c)a
+\qquad\forall a,b,c\in V,
+$$
+即 P 成立。
+
+令 $\times$ 为标准 Euclidean 叉积，令
+$S=\operatorname{diag}(-1,1,1)$。上述乘法表正好是
+$$
+D(a,b)=S(a\times b).
+$$
+因 $S$ 可逆，标准叉积的核公式给出
+$\ker L_a=\mathbb Ra$ 对每个 $a\ne0$ 成立。
+
+由已经写出的返回式，
+$$
+L_aL_b(c)=h(a,c)b-h(a,b)c.
+$$
+秩一算子 $b\otimes h(a,\cdot)$ 的迹为 $h(a,b)$，且 $\operatorname{Tr}I=3$，故
+$$
+-\tfrac12\operatorname{Tr}(L_aL_b)=h(a,b).
+$$
+这个迹形式的签名是 $(1,2)$，不是正定。取
+$a=e_3$、$b=e_1+e_2$，则 $D(a,b)=b\ne0$ 且
+$$
+D(a,D(a,b))=D(e_3,b)=b\in\mathbb Rb,
+$$
+所以 N 失败。又 $L_{e_3}b=b$，从而
+$\exp(tL_{e_3})b=e^tb$；该族在任意范数中无界，故 B 失败。这是删除 B 后的实指数增长边界，与命题 12.10 的零特征值线性漂移不同；非退化核本身不能替代 N 所承担的正定选择。$\square$
+
+**命题 12.12（删除非零性的反例）。** 对任意实向量空间 $V$，取零映射 $D=0$。该模型保留总定义、双线性、交替性、全域 P 和 N，删除非零性；它不满足三维正定刚性，也不能产生非零输出。若 $V$ 有限维，它还满足 B；$V$ 可取四维或无限维，而在有限维且迹可定义时 $-\tfrac12\operatorname{Tr}(L_aL_b)=0$。
+
+**证明。** 对所有 $a,b,c$，有 $D(D(a,b),c)=0$，故 P 成立；同时 $D(a,D(a,b))=0\in\mathbb R D(a,b)$，而结论 N 的后件 $D(a,b)=0$ 也成立。有限维时每个 $L_a=0$，所以 $\exp(tL_a)=I$，可取 B 中的 $M_a=1$。由于 $D$ 恒为零，像为零，不能得到非零实际输出、三维性或正定迹尺；有限维时迹式确为零。$\square$
+
+**命题 12.13（删除交替性的反例）。** 令 $W=\mathbb R^2$，
+$J(x_1,x_2)=(-x_2,x_1)$，$V=\mathbb R\oplus W$，并定义
+$$
+D((s,x),(t,y))=(0,sJy).
+\tag{12.19}
+$$
+这是一个非零双线性总映射。它保留非零性、双线性、总定义、全域 P、N 以及有限维逐轴全实参数有界条件 B，删除交替性；交替结论和正定迹尺结论均失败。
+
+**证明。** 每个输出的第一坐标为零，而对任意 $z\in W$、$c\in V$ 有
+$D((0,z),c)=0$，所以
+$$
+D(D(a,b),c)=0\in\operatorname{span}\{a,b\}
+$$
+对所有 $a,b,c$ 成立，P 成立。写 $a=(s,x)$、$b=(t,y)$、$w=D(a,b)=(0,sJy)$。若 $w\ne0$，则 $s\ne0$ 且 $y\ne0$，并且
+$$
+D(a,w)=(0,sJ(sJy))=(0,-s^2y).
+$$
+向量 $y$ 与 $Jy$ 在实二维空间中线性独立：若 $Jy=\lambda y$，再作用一次 $J$ 得 $-y=\lambda^2y$，不可能。因此 $D(a,w)\notin\mathbb Rw$；当 $w=0$ 时 N 的结论本身成立，故 N 成立。
+
+对任意 $a=(s,x)$，行算符满足
+$L_a(t,y)=(0,sJy)$，且 $J^2=-I$，从而
+$$
+\exp(\tau L_{(s,x)})(t,y)=(t,e^{\tau sJ}y),
+\qquad \tau\in\mathbb R.
+$$
+$e^{\tau sJ}$ 是平面旋转，所以在标准直和 Euclidean 范数中所有这些指数都是等距的，B 成立。
+
+但若 $x\ne0$，则
+$$
+D((1,x),(1,x))=(0,Jx)\ne0,
+$$
+交替性失败。最后对 $a=(s,x)$、$b=(t,y)$ 和任意 $(r,z)$，
+$$
+L_aL_b(r,z)=(0,-stz).
+$$
+因此 $\operatorname{Tr}(L_aL_b)=-2st$，从而
+$$
+-\tfrac12\operatorname{Tr}(L_aL_b)=st.
+$$
+这个形式的秩为一，且该双线性形式在 $W$ 方向退化，绝非正定。这也说明引理 12.3 中由交替性承担的原输入与输出之间的反向作用不能删去。$\square$
+
+这些反例保持各自声明的全域量词。原 B 的删除边界包括非零实特征值的两侧指数增长及零特征值的线性漂移；把 B 换成有限参数样本或一段有界参数区间会漏掉这些障碍。全实参数逐轴有界是原逆向使用的条件。
+
+### 12.7　既有结果的前件与参数对应
+
+下列对应区分无尺入口桥与已经具备比较、旋转或量子结构的结论；后者直接消费，不另作新分类。
+
+| 实际正文 | 原前件与已给结果 | 与本节的准确对应 |
+|---|---|---|
+| 本卷定义 2.1、定理 2.2 | 至少二维实正定空间、任意总 $D$、精确全域返回；自动三维及 $D=\pm\times$ | §12.2–12.3 从 P+N 取得其正定尺与精确返回；随后直接应用原定理。逆向首先用其任意总映射正则性 |
+| 本卷命题 3.1 与 §§4、6 | 已得单位叉积和同一正尺；迹、平方锥、正线性读出、Pauli/Born 与切平面正核 | 参数就是本节的原 $D$ 与 $g=g_D$；这些消费者不供应入口所缺的正尺存在性 |
+| [OMEGAQ-003](OMEGAQ_003_ORDER_CONTENT_EQUIVALENCE.md) 定义 3.1、引理 3.2、定理 5.2 | 有限全未来预测空间、准确统计逆、概率有界所给的紧忠实群；顺序差商读出同构；矩阵交换子已满足 Jacobi | 它证明原内容空间 $W$ 三维，不能将其有限性、紧性或 Jacobi 倒作本节的前提 |
+| OMEGAQ-003 定理 6.1、推论 6.2 | 在已经三维后，由原参照对取得 $\Phi(C_x)=t_0x$，$t_0\ne0$，并定义算符 $D_x=\Phi^{-1}(x)$ | 本节二元关系对应 $D(x,y)=D_xy=t_0^{-1}x\times_{B_0}y$，行算符 $L_x=D_x$，故 $g_D=B_0/t_0^2$。$t_0$ 的符号进入手性，不能漏掉 |
+| [OMEGAQ-006](OMEGAQ_006_REGULAR_MUTUAL_ZERO_FIBERS_CONTINUATION.md) 定义 2.1、引理 2.2、定理 4.2 | 有限原预测窗口、紧矩阵作用与其 Lie 代数；一般位置的一对双零纤维；推得 $\mathfrak g=\mathfrak{so}(W)$ | 其二元作用是 $\beta(A,x)=Ax$，两槽类型不同；它不是本节原 $D:V^2\to V$ 的 P 或 N。辛球面步骤使用已经具备的紧性、Jacobi 与正定不变迹配对 |
+| OMEGAQ-006 §§7.1–7.3、8、10.1 | 来源轴 $e$ 归一为 $B(e,e)=1$；选择取向构造 $R_xy=x\times_B y$；原概率 Born 表示及原响应身份的条件桥 | 仅有其 Q6 不认定原 $D=R$。若同一原关系另满足 $D=\kappa R$，则 $g_D=\kappa^2B$；同尺使用还须核对 $|\kappa|=1$ 或显式运输尺度 |
+| [FIB 稳定关系边界卷](AURIC_FIB_STABLE_RELATION_BOUNDARY_THREE_DIMENSIONAL_CLOSURE.md) 假设 2.3、命题 3.1 | 有限维 $d\ge2$、正定 $g$、非零三线性 $T$、完整三槽 $SO(V,g)$ 不变性；得到 $d=3$ 与 $B=c\times_g$ | 它没有以裸球面传递性推出三维。其非零系数 $c$ 仍须有符号校准，不供应本节的无尺入口 |
+| FIB 同卷命题 4.4、5.2–5.3 | 有限维的全部面积和同构要求，及已校准组合的迹回读；固定体积不固定自由度量 | 本节是在整个原 $V$ 推得三维后，才能引用 $\Lambda^2V\simeq V$；对未校准 $B=c\times_g$，其迹尺为 $c^2g$，与 (12.13) 完全一致 |
+
+本节入口证明只用代数直和、二维实矩阵的特征方程和交替双线性展开。秩一迹公式、有限维范数等价、二维正交矩阵的旋转形式及指数级数，都在有限维与所需正定性已经确定后使用。它不借用需要内积相容与范数恒等式的三维／七维向量积分类，不借用需要正定不变配对及 Jacobi 的紧 Lie 代数分类，也没有把三维同型的维数计数用于未知的无限维入口。上述经典事实的前件在相应使用处均已明列。
+
+### 12.8　同一 $g_D$ 的既有消费者与原来源接口
+
+**同尺数学扩张。** 直接在本卷定义 4.1、定理 4.2、4.4 和命题 4.6 中代入 $g=g_D$、$D$ 为原关系，得到
+
+$$
+E_D=\mathbb Ru\oplus V,\quad u=(1,0),\qquad
+(\alpha,a)\circ(\beta,b)
+=(\alpha\beta+g_D(a,b),\alpha b+\beta a),
+$$
+
+$$
+C_D=\{A\circ A:A\in E_D\}
+=\{(t,a):t\ge\|a\|_D\},\qquad
+\omega_r(t,a)=t+g_D(r,a),\quad\|r\|_D\le1.
+\tag{12.20}
+$$
+
+这里 $\omega_r$ 恰为全部正归一实线性读出。采用 $D$ 的自定向正交 Pauli 轴，原有表示就是
+
+$$
+\Phi_D(t,a)=tI+a\cdot\sigma_D,\qquad
+\rho_r=\tfrac12(I+r\cdot\sigma_D),\qquad
+\omega_r(A)=\operatorname{Tr}(\rho_r\Phi_D(A)),
+$$
+
+$$
+p(m\mid r)=\frac{1+g_D(r,m)}2,\qquad
+U_a(t)=\exp(-it(a\cdot\sigma_D)/2).
+\tag{12.21}
+$$
+
+此处 $\|r\|_D\le1$，$\|m\|_D=1$，二元效果为 $p_m=(u+m)/2$；门公式对所有 $a\in V,t\in\mathbb R$ 成立。更一般的数学效果仍按 $0\le e\le u$ 取值。
+
+因此平方锥、正归一线性读出、单比特 Born 配对及旋转的酉提升用的是同一把 $g_D$，没有另选正尺。证明及适用边界直接由原 §§4、6 提供；这些公式、四元数／Pauli 结构和 Born 事实不构成另一个新增分类。
+
+**原评价的身份。** 若给定实际来源，必须先给保留原单位、原向量与原关系的线性识别，以及原对称比较确实为上述 $\circ$ 的身份。对每个原事件，其评价须仍为同一实线性泛函，原正准备与原效果须在同一正锥及对偶关系内，完整测试须满足原来的总和归一。此时若原事件写作 $e_f=(\alpha,b)$、原准备对应 $r$，就有
+
+$$
+p_f=\omega_r(e_f)
+=\alpha+g_D(r,b)
+=\operatorname{Tr}\bigl(\rho_r(\alpha I+b\cdot\sigma_D)\bigr).
+\tag{12.22}
+$$
+
+这是原数值的表示，全部原成功、失败、零标签、记录及合法未来均需保留；不能以重新定义一份数学概率替代这些身份条件。只从 P+N 得到 $C_D$ 的数学存在，不自动证明它等于某个已给来源的全部准备或效果。
+
+**来源归一的尺度运输。** OMEGAQ-006 的来源尺 $B$ 与本节迹尺相同，需要原关系的身份和尺度，而不是只凭同一载体名称。若另有同一原群的完整协变，已构造的叉积为 $R=\times_B$，并已确定原 $D=\kappa R$，则置
+
+$$
+s=\sqrt{g_D(e,e)}=|\kappa|>0,
+\qquad B=g_D/s^2,
+\qquad B(e,e)=1.
+$$
+
+该来源卷的原评价若为 $f(tc+w)=\alpha t+B(b,w)$，则设 $r=w/s$、$b_D=b/s$，严格有
+
+$$
+f(c+w)=\alpha+g_D(b_D,r)
+=\operatorname{Tr}\bigl(\rho_r(\alpha I+b_D\cdot\sigma_D)\bigr).
+\tag{12.23}
+$$
+
+来源轨道与球的归一也同样运输：$B(w,w)\le1$ 当且仅当 $g_D(r,r)\le1$。这只是保留原概率的参数对应，不宣称原对称乘法已等于 $g_D$ 的乘法。若要求原乘法、原响应与此扩张同时具有相同标定，还须原尺度合同给出 $s=1$。没有群协变或原响应身份时，不能仅由两个三维结论推出 $B$ 与 $g_D$ 成比例。
+
+**实际供应仍是条件接口。**
+
+| 要连接的原对象 | 必须给出的同一来源关系 | 可直接使用的既有结论 |
+|---|---|---|
+| 实际可逆门 | 对指定原 $a,t$，存在原合法调用，其在完整原内容上的作用恰为 $\exp(tL_a)$，并保留原接续、逆及记录；稠密逼近不等于精确调用 | 若全部这些指数实际供应，(12.18) 给其生成作用恰为全部 $SO(V,g_D)$；Pauli 提升由原命题 4.6 给出。它不认定额外原门均属于此菜单 |
+| 原有向响应与比较 | 原全对象及实际联合对象上的零接触、全内协变、完整中心与同一指针尺度等合同；不能只查平方或删掉中心输出 | OMEGAQ-006 §10.1–10.3 所复用的 C127 条件桥接回原导子及其标定；本节原 $V$ 的中心为零不替代含单位或多块中心合同 |
+| 多系统、参考与全部状态 | 共同复中心的相容识别、指定的联合与完整矩阵正锥、局部与联合原准备／效果的身份；生成型联合才可用相应生成分类 | 本卷 §10 与 OMEGAQ-006 §9.1–9.5；单体球不唯一决定复合锥，两个局部复中心也不自动相同 |
+| 同一物理分支与仪器 | 自伴部分实线性及其复线性延拓；同一分支旁接实际完整矩阵参考后在整个联合正锥保正；完整记录的共同迹预算 | OMEGAQ-006 定理 9.9 的 Choi–Kraus 结论；输入维 $d$ 时参考矩阵维数至少 $d$ 足够。仅经典参考或乘积态正性不足，Kraus 指标不自动是原记录 |
+| 锐读口、更新与失败 | 实际指针、精确合法门词、全标签、原遗忘与具名支持返回；理想更新另须投影效果及对其支撑内每个态无扰动 | 原命题 4.6、OMEGAQ-006 定理 9.10 与 §10.3；效果概率本身不唯一规定更新，不能通过条件归一抹去原成功质量 |
+| 内部记录与钟、作用量 | 记录类型和共同联合、条件化；若用关系钟，另给分解、总约束、钟协变、Hamiltonian 与共同尺度 | 本卷 §§7.1–7.4；同端点或同面积可有不同历史，$H\mapsto\lambda H,T\mapsto T/\lambda$ 保门而改耗时，$\hbar$ 不能由角度读出 |
+
+具体地，原响应身份接口中的零接触仍是对每个原对象及实际联合对象 $A$、每个 $a\in E_A$、每个原正元 $x$ 和每个原实际准备 $\alpha$ 的条件
+
+$$
+\alpha(x)=0\ \Longrightarrow\ \alpha(\mathscr D_ax)=0.
+$$
+
+这里 $\mathscr D_a$ 表示含单位原对象上已给的响应，须另核对其在 $V$ 上的限制确实为本节 $L_a$。全内协变与同一实际指针 $P$ 的标定仍为
+
+$$
+[K,\mathscr D_a]=\mathscr D_{Ka},\qquad
+-\operatorname{Tr}_{\mathbb R,E_P}(\mathscr D_{d_0}^{\,2})
+=\operatorname{Tr}_{\mathbb R,E_P}((M_{d_0}^{\circ})^2),
+\qquad d_0=d-z_P(d),
+$$
+
+其中 $K$ 遍历原合同允许的内导子，$M_a^\circ(x)=a\circ x$，$z_P$ 是完整 Jordan 中心投影。还保留该来源合同的实际身份参考和实际准备正锥包覆盖完整正对偶等前件；上述三个式子不能单独替代它们。
+
+同一分支的参考条件量化整个标准联合正锥，而非仅可分态：$\mathcal E\otimes\operatorname{id}_r$ 在全部 $X\ge0$ 上保正，$r\ge d$。所有原记录 $k$ 共用预算
+
+$$
+\sum_{k,\mu}K_{k\mu}^*K_{k\mu}=I,
+$$
+
+若原仪器不完整则为小于等于 $I$，其余质量须作为原失败部分保留。关系钟的条件则仍是共同 $\mathcal H_C\otimes\mathcal H_S$ 上的
+
+$$
+(H_C\otimes I+I\otimes H_S)|\Omega\rangle=0,\qquad
+|t\rangle=e^{-iH_Ct/\hbar}|0\rangle,
+$$
+
+并仅在这些微分和条件化合法的范围内使用原 §7.2 的 Schrödinger 条件态结论。这些量词均不由局部三维几何替代。
+
+这些条件决定特定物理来源能否采用已有数学表示；不把全部实际供应当作无尺入口定理的前提或额外数学结论。模型定义、条件定理、等价表示与经验主张分别按自己的条件成立。正定几何的证明不要求先无前提推出全部物理；其成立也不推出物理空间、整个 $\Omega$ 或全部历史只有三维。
+
+### 12.9　一段完整白话
+
+先不画球，不放尺，也不假定空间只有几个方向，只给同一个可以相加、缩放的二元关系：两个方向先产生一个响应，这个响应再同任何原方向作用，结果总要回到最初两个方向的平面；而一个非零响应再次同原输入作用时，不能塌回响应自己的同一条线，连塌成零也不允许。第二条先使非零响应离开原平面，并使它对这个平面的作用可逆；第一条于是让同一非零响应只能对应一个原平面。不可见的中心方向和独立却无响应的输入都会制造两个不同平面给出同一输出，所以都被排除。任取一份实际非零响应，它的像就是这个二维平面，核只剩响应自身的一维轴，每个原向量因而都分解成平面部分与轴部分，整个原空间只能是三维。继续核对同一关系的系数，不能落回同线的条件又排除实增长方向，迫使返回系数组成一把正尺；这把尺正是原行算符乘积的负半迹，原关系相对于自己的左右手约定成为单位叉积。此后才有范数、旋转指数和数学参数，原来的正平方锥、正归一线性读出与单比特表示可以原样接上；真实准备、门、复合、记录、钟和作用量仍各须同源接口。这给出一份完整的纯代数几何候选，不宣称宇宙的全部物理已经推出，也不宣称它是全球最小公理。
+
+## 追加锚（本行以下为增补区）
+
+## 13　任意域上的全域入口与带标记的四维含单位结构
+
+**定义 13.1（原域、原空间与二次零核条件）。** 设 $F$ 是任意域，$V$ 是任意 $F$-向量空间，$D:V\times V\to V$ 是同一个非零交替 $F$-双线性总映射。交替指 $D(a,a)=0$，在特征 $2$ 中也如此；双线性因而给出 $D(a,b)=-D(b,a)$。记 $L_ab=D(a,b)$。本节的两个入口条件为
+
+$$
+\begin{split}
+\mathrm P:\quad &D(D(a,b),c)\in\operatorname{span}_F\{a,b\}
+&& (a,b,c\in V),\\
+\mathrm K:\quad &\ker L_a^2=\ker L_a
+&& (a\in V).
+\end{split}
+\tag{13.1}
+$$
+
+这里的量词覆盖整个原 $V$，没有有限维、生成性、商空间、外积同构、比较尺、范数、Jacobi、拓扑或时间的输入。与之比较的条件是
+
+$$
+\mathrm N:\quad D(a,D(a,b))\in F D(a,b)
+\ \Longrightarrow\ D(a,b)=0\qquad(a,b\in V).
+\tag{13.2}
+$$
+
+$F0=\{0\}$。本节的同构均固定实际标量域及其结构嵌入：$(V,D)$ 的同构是保持 $D$ 的 $F$-线性双射；带标记含单位代数 $(A,\pi)$ 的同构是固定 $F1$ 且满足 $\pi'\Phi=\pi$ 的含单位 $F$-代数同构。这里 $\pi:A\to F$ 是 $F$-线性映射且 $\pi(1)=1$，所以它限制在 $F1$ 上是恒等，$A=F1\oplus\ker\pi$。不把改变标量域的半线性映射纳入这些同构。
+
+**引理 13.2（K 与 N 等价及非零特征值的排除）。** 对任意域上任意交替双线性 $D$，不要求 P、非零性或有限维，K 与 N 等价。若它们成立，则任何 $L_a$ 都没有属于 $F^\times$ 的特征值。
+
+**证明。** 若 N 成立且 $L_a^2b=0$，则 $L_a^2b\in F L_ab$，故 $L_ab=0$；反向的核包含总成立，得到 K。
+
+若 K 成立，设 $w=L_ab$ 且 $L_aw=\lambda w$。交替性给 $L_wa=-\lambda w$，因此 $L_w^2a=0$。对 $w$ 使用 K，得到 $\lambda w=0$，从而 $L_aw=0$。再对 $a$ 使用 K，得到 $w=0$，即 N。这个论证同时处理 $\lambda=0$ 与特征 $2$。
+
+最后，若 $L_ax=\lambda x$，其中 $x\ne0$、$\lambda\ne0$，则 $L_xa=-\lambda x\ne0$ 而 $L_x^2a=0$，直接违反 K。故所述特征值不存在。K 是 N 的较短表述；即使没有 P，它也不是严格较弱的条件。$\square$
+
+**引理 13.3（非零输出的平面，在任意原维数中）。** 在定义 13.1 的 P、K 下，若 $w=D(a,b)\ne0$，则 $a,b,w$ 线性独立。记 $U=\operatorname{span}_F\{a,b\}$，有
+
+$$
+L_w(V)=U,\qquad L_w|_U:U\longrightarrow U\text{ 是同构}.
+\tag{13.3}
+$$
+
+同一个非零输出及其任一非零标量倍数唯一确定这个原输入平面。
+
+**证明。** 交替双线性使 $a,b$ 独立。假设 $w=ra+sb$，则 $L_wa=-sw$、$L_wb=rw$，两者再受 $L_w$ 作用都为零。K 迫使两者本来就为零，因此 $r=s=0$，与 $w\ne0$ 矛盾。
+
+P 给 $L_w(V)\subseteq U$。对任意 $0\ne x=ra+sb\in U$，选择 $t,u\in F$ 使 $ru-st=1$，令 $y=ta+ub$，便有 $D(x,y)=w$。若 $L_wx=0$，则 $L_x^2y=D(x,w)=0$，K 会迫使 $D(x,y)=0$，矛盾。所以 $L_w|_U$ 单射。二维平面上的单射是满射，于是 (13.3) 成立。若 $D(a',b')=\mu w$、$\mu\in F^\times$，则
+
+$$
+\operatorname{span}_F\{a',b'\}
+=\operatorname{im}L_{\mu w}=\operatorname{im}L_w=U.
+$$
+
+这一步只使用原空间中的二维子空间，没有先假定整个 $V$ 有限维。$\square$
+
+**定理 13.4（中心、独立零响应与整个原空间的三维性）。** 在定义 13.1 的 P、K 下，
+
+$$
+Z_D:=\{z:D(z,v)=0\text{ 对所有 }v\in V\}=0,
+\qquad \ker L_a=Fa\quad(a\ne0),
+\tag{13.4}
+$$
+
+并且整个原空间 $V$ 恰为三维。具体地，对任何实际非零输出 $w=D(a,b)$，
+
+$$
+V=\operatorname{span}_F\{a,b\}\oplus Fw.
+\tag{13.5}
+$$
+
+**证明。** 非零性提供 $w=D(a,b)\ne0$。若 $z\in Z_D$，则 $D(a+z,b)=w$。引理 13.3 使 $a+z$ 属于 $U=\operatorname{span}_F\{a,b\}$，故 $z\in U$。又 $L_wz=0$，而 $L_w|_U$ 单射，所以 $z=0$。这里排除了原中心，没有取中心的商。
+
+对任意 $a\ne0$，中心为零保证存在 $b$ 使 $w=D(a,b)\ne0$。若 $D(a,c)=0$，则 $D(a,b+c)=w$。同一输出的平面唯一性使 $c\in\operatorname{span}_F\{a,b\}$。写 $c=ra+sb$，即有 $0=D(a,c)=sw$，所以 $c\in Fa$。反向由交替性成立。这也证明两个独立原输入不可能给零响应。
+
+再固定任意 $w=D(a,b)\ne0$。对每个原 $v\in V$，由引理 13.3 在 $U$ 中解唯一的 $L_wp=L_wv$，便有 $v-p\in\ker L_w=Fw$。同时 $w\notin U$，故得到 (13.5)。该分解适用于每个原向量，因而证明整个 $V$ 三维，而非仅证明一份生成子空间三维。到此为止没有使用迹或任何有限矩阵。$\square$
+
+**引理 13.5（全特征的唯一返回形式与合法回读）。** 在定理 13.4 的结论之后，存在唯一双线性形式 $g$ 使
+
+$$
+D(D(a,b),c)=g(a,c)b-g(b,c)a
+\qquad(a,b,c\in V).
+\tag{13.6}
+$$
+
+它对称且非退化。存在基 $(e_1,e_2,e_3)$ 和 $\alpha,\beta\in F^\times$，使
+
+$$
+\begin{split}
+&D(e_1,e_2)=e_3,\quad D(e_2,e_3)=\beta e_1,
+\quad D(e_3,e_1)=\alpha e_2,\\
+&[g]_{(e_1,e_2,e_3)}=\operatorname{diag}(\alpha,\beta,\alpha\beta).
+\end{split}
+\tag{13.7}
+$$
+
+诱导映射 $\widetilde D:\Lambda^2V\to V$ 是同构。对所有特征都有
+
+$$
+L_aL_b=b\otimes g(a,\cdot)-g(a,b)I,
+\qquad \operatorname{Tr}(L_aL_b)=-2g(a,b).
+\tag{13.8}
+$$
+
+当且仅当 $2\ne0$ 时，可从后一式回读 $g(a,b)=-\tfrac12\operatorname{Tr}(L_aL_b)$；特征 $2$ 中使用 (13.6) 的平面系数或 (13.7)，不使用除以 $2$ 的迹式。
+
+**证明。** 取 $w=D(a,b)\ne0$。现在 $(a,b,w)$ 已是整个 $V$ 的基，且可写
+
+$$
+D(w,a)=pa+qb,\qquad D(w,b)=ra+sb.
+$$
+
+若 $q=0$，引理 13.3 使 $p\ne0$，于是 $L_wa=pa$ 是引理 13.2 禁止的非零特征值。因此 $q\ne0$。对 $(a,w,w)$ 使用 P，得到
+
+$$
+D(D(a,w),w)=(p^2+qr)a+q(p+s)b\in\operatorname{span}_F\{a,w\},
+$$
+
+故 $s=-p$。$L_w|_U$ 可逆，其行列式
+$\delta=-(p^2+qr)$ 非零。置
+
+$$
+e_1=a,\quad e_2=b+(p/q)a,\quad e_3=w,
+\qquad \alpha=q,\quad \beta=\delta/q.
+$$
+
+双线性给出 (13.7) 的乘法表。定义 $g$ 的矩阵为其中的对角矩阵；其行列式是 $(\alpha\beta)^2\ne0$，所以 $g$ 对称非退化。
+
+以下完整表格验证 (13.6)。每格是 $D(D(e_i,e_j),e_k)$，同时也是 $g(e_i,e_k)e_j-g(e_j,e_k)e_i$：
+
+| $(i,j)\backslash k$ | $1$ | $2$ | $3$ |
+|---|---|---|---|
+| $(1,2)$ | $\alpha e_2$ | $-\beta e_1$ | $0$ |
+| $(2,3)$ | $0$ | $\beta e_3$ | $-\alpha\beta e_2$ |
+| $(3,1)$ | $-\alpha e_3$ | $0$ | $\alpha\beta e_1$ |
+
+两侧都三线性且在前两槽交替：两前槽相同时两侧为零，交换前两槽同时变号；因此这九格支付全部基三元组，包括第三槽重复第一槽或第二槽的情况，进而支付全部原向量。在特征 $2$ 中负号等于正号，而交替要求的重复槽仍严格为零；没有借助除以 $2$ 或域中元素数目。
+
+若 $h$ 是另一个满足 (13.6) 的双线性形式，固定 $a\ne0,c$ 并选与 $a$ 独立的 $b$。两返回式相减给
+
+$$
+(h-g)(a,c)b-(h-g)(b,c)a=0.
+$$
+
+独立性使 $(h-g)(a,c)=0$。$a=0$ 由双线性处理，因此 $h=g$；唯一性甚至不要求先规定 $h$ 对称。
+
+外积基 $(e_1\wedge e_2,e_2\wedge e_3,e_3\wedge e_1)$ 被送到 $(e_3,\beta e_1,\alpha e_2)$，所以 $\widetilde D$ 可逆。由交替性与返回式得到 (13.8) 的算子等式；秩一算子的迹是 $g(a,b)$，而三维恒等的迹是 $3$，故迹为 $-2g(a,b)$。特征 $2$ 中这些乘积的迹全部为零，不能据此恢复 $g$。在任意特征，固定独立 $a,b$ 后，(13.6) 中 $b$ 的系数就是 $g(a,c)$，唯一性保证此读数不依赖辅助 $b$。$\square$
+
+**引理 13.6（核判据、各向异性与实际输出）。** 设三维 $V$ 上的交替双线性 $D$ 满足 (13.6)，其中 $g$ 对称非退化，且 $\widetilde D$ 是同构。令 $q(a)=g(a,a)$。则 K 恰等价于 $q$ 各向异性，即 $q(a)=0\Rightarrow a=0$。在定义 13.1 的 P、K 下，还成立
+
+$$
+\operatorname{im}L_a=a^{\perp_g},\qquad
+\ker L_a=Fa,\qquad \operatorname{rank}L_a=2\quad(a\ne0),
+\tag{13.9}
+$$
+
+且每个原向量都是一份实际二元输出。三线性形式
+$\omega(a,b,c)=g(D(a,b),c)$ 交替，并满足
+
+$$
+g(D(a,b),c)=g(a,D(b,c)).
+\tag{13.10}
+$$
+
+**证明。** 外积同构使 $D(a,b)=0$ 当且仅当 $a,b$ 线性相关。返回式给
+
+$$
+L_a^2b=g(a,b)a-q(a)b.
+\tag{13.11}
+$$
+
+若 $q$ 各向异性，$a\ne0$ 且 $L_a^2b=0$ 就迫使 $b\in Fa$，因此 $L_ab=0$；$a=0$ 时两个核都是 $V$。所以 K 成立。
+
+反之，若 $a\ne0$ 且 $q(a)=0$，则非退化性使 $a^{\perp_g}$ 是包含 $a$ 的二维平面。取其中与 $a$ 独立的 $b$，(13.11) 给 $L_a^2b=0$，但外积同构给 $L_ab\ne0$，与 K 矛盾。这证明精确等价。
+
+对入口模型，在 (13.7) 的基上，$\omega(e_1,e_2,e_3)$ 及其两个循环值都是 $\alpha\beta$，反向排列取其负值，其余基三元组即所有重复槽都给零。因此 $\omega$ 在全特征中交替，而循环排列保持它，得到 (13.10)。这一步明确检查了重复槽，未把一个未验证的三元缺陷直接命名为交替形式。
+
+于是 $g(D(a,b),a)=0$，所以 $\operatorname{im}L_a\subseteq a^{\perp_g}$。核为 $Fa$，三维秩—零度给像的维数为二，得到 (13.9)。对任意 $z\ne0$，选择 $0\ne a\in z^{\perp_g}$；由各向异性 $q(a)\ne0$，而 (13.11) 给
+
+$$
+D\left(a,-q(a)^{-1}D(a,z)\right)=z.
+\tag{13.12}
+$$
+
+零也显然是输出。这是实际输出满射，不只是像的线性张成。$\square$
+
+**命题 13.7（入口的准确三维参数及反向）。** 对任意域 $F$，取 $\alpha,\beta\in F^\times$，在 $F^3$ 上按 (13.7) 定义交替双线性 $D$ 和对角形式 $g$。这些数据满足全域 P、唯一返回式、非退化性和外积同构；它们满足 K 当且仅当
+
+$$
+q(x_1e_1+x_2e_2+x_3e_3)
+=\alpha x_1^2+\beta x_2^2+\alpha\beta x_3^2
+\tag{13.13}
+$$
+
+各向异性。定义 13.1 的每个入口模型均由这种数据得到。在特征 $2$ 中 $q$ 是拟线性二次型，极化式 $q(a+b)-q(a)-q(b)$ 恒为零；这不妨碍对称双线性 $g$ 非退化，但不能用该极化式恢复 $g$。
+
+**证明。** 引理 13.5 的九格验证只使用给定乘法表，所以直接提供全域返回和 P；同一外积基与对角行列式给外积同构和 $g$ 非退化。唯一性的证明也原样适用。引理 13.6 给 K 的充要条件。引理 13.5 则把任意入口模型放入此表。特征 $2$ 的最后结论由 $2g(a,b)=0$ 直接得到。这里把标准乘法表作为入口桥的中间坐标，不将其重新命名为新的四元数或拟线性二次型分类。$\square$
+
+**定理 13.8（同一数据的结合扩张、乘法范数与除法桥）。** 对定义 13.1 的入口模型，以引理 13.5 的同一 $g,D$ 定义
+
+$$
+\begin{split}
+&A=F\oplus V,\qquad 1=(1,0),\qquad \pi(s,a)=s,\\
+&(s,a)(t,b)=(st-g(a,b),\;sb+ta+D(a,b)),\\
+&\overline{(s,a)}=(s,-a),\qquad
+\operatorname N_A(s,a)=s^2+q(a).
+\end{split}
+\tag{13.14}
+$$
+
+则 $A$ 是四维含单位结合 $F$-代数，共轭是标准反自同构，且
+
+$$
+x\bar x=\bar x x=\operatorname N_A(x)1,
+\qquad \operatorname N_A(xy)=\operatorname N_A(x)\operatorname N_A(y).
+\tag{13.15}
+$$
+
+纯部 $q$ 的各向异性蕴涵整个 $\operatorname N_A$ 各向异性，因而 $A$ 是除法代数，非零元素的逆为 $\bar x/\operatorname N_A(x)$。$D$ 自身不是结合乘法。
+
+**证明。** (13.14) 双线性且 $1$ 是两侧单位。结合子三线性，任一槽为标量单位时为零，因此只需对三个纯向量 $a,b,c$ 验证。左、右结合乘积的标量部分分别是
+
+$$
+-g(D(a,b),c),\qquad -g(a,D(b,c)),
+$$
+
+由 (13.10) 相同。向量部分分别是
+
+$$
+-g(a,b)c+D(D(a,b),c),\qquad
+-g(b,c)a+D(a,D(b,c)).
+$$
+
+(13.6) 与对称性使两者同为
+$-g(a,b)c+g(a,c)b-g(b,c)a$。所以结合性在所有重复槽和所有特征中成立。
+
+直接用 $g$ 对称、$D$ 交替验证 $\overline{xy}=\bar y\bar x$、$\bar{\bar x}=x$ 和 $x\bar x=(s^2+q(a))1$。结合性因此给
+
+$$
+(xy)\overline{xy}=xy\bar y\bar x
+=\operatorname N_A(y)x\bar x
+=\operatorname N_A(x)\operatorname N_A(y)1,
+$$
+
+证明乘法性。这是标准共轭的经典范数论证；其假设和公式见 [Voight，*Quaternion algebras*，v1.0.5，定义 3.2.1、§3.3，特别是 (3.3.4)](https://jvoight.github.io/quat-book-v1.0.5.pdf)。这里已用原入口数据支付所需结合性和共轭，而没有把经典范数乘法性当作新分类。
+
+还须从纯部到完整四维空间排除零范数。假设 $s^2+q(a)=0$，且 $(s,a)\ne0$。若 $s=0$，纯部各向异性已给矛盾。故 $s\ne0$，$a\ne0$ 且 $q(a)=-s^2\ne0$。取 $0\ne b\in a^{\perp_g}$。此平面在 $L_a$ 下不变，且 (13.11) 给 $L_a^2b=s^2b$。令 $v=(L_a+sI)b$。若 $v\ne0$，则
+
+$$
+(L_a-sI)v=(L_a^2-s^2I)b=0,
+$$
+
+于是 $v$ 是特征值 $s\ne0$ 的向量；若 $v=0$，则 $b$ 是特征值 $-s\ne0$ 的向量。两者都与引理 13.2 矛盾。在特征 $2$ 中 $s=-s$，同一两分情形仍成立，不要求这两个根不同。故完整范数各向异性，逆元公式由 (13.15) 给出。
+
+最后在 (13.7) 的基上，
+
+$$
+D(D(e_1,e_1),e_2)=0,\qquad
+D(e_1,D(e_1,e_2))=-\alpha e_2\ne0.
+$$
+
+所以结合的是含标量槽的 $A$，不是纯部二元响应 $D$。$\square$
+
+**定理 13.9（入口所导出含单位代数的两种准确类型）。** 定理 13.8 的 $A$ 具有以下分类。
+
+若 $\operatorname{char}F\ne2$，则
+
+$$
+A\simeq(-\alpha,-\beta)_F
+\tag{13.16}
+$$
+
+是四元数除法代数，$V=\ker\operatorname{trd}$，$\pi=\operatorname{trd}/2$，$\operatorname N_A=\operatorname{nrd}$。
+
+若 $\operatorname{char}F=2$，则 $A=L$ 是扩张总次数 $[L:F]=4$、满足 $L^2\subseteq F$ 的纯不可分指数 $1$ 域，连同原指定投影 $\pi:L\to F$。在此情形
+
+$$
+\operatorname N_A(x)=x^2,\qquad
+V=\ker\pi,\quad g(a,b)=\pi(ab),\quad D(a,b)=ab-\pi(ab)1.
+\tag{13.17}
+$$
+
+这里不能将 $\pi$ 当作域迹；该纯不可分扩张的通常域迹恒为零。
+
+**证明。** 在 (13.7) 的基上，把纯向量视为 $A$ 中元素，有
+
+$$
+e_1^2=-\alpha,\quad e_2^2=-\beta,\quad
+ e_1e_2=e_3=-e_2e_1,\quad e_3^2=-\alpha\beta.
+\tag{13.18}
+$$
+
+$1,e_1,e_2,e_3$ 是基，且结合性、除法性均已证明。当 $2\ne0$ 时，这正是经典四元数的定义和乘法表，直接识别得到 (13.16)，不重新证明四元数分类。[Voight，前引书，定义 2.2.1、引理 2.2.5](https://jvoight.github.io/quat-book-v1.0.5.pdf) 的前件是 $\operatorname{char}F\ne2$ 和两个参数非零；此处参数为 $-\alpha,-\beta\in F^\times$。本节共轭在该基上就是经典标准共轭，故经典约化迹、范数定义给 $\operatorname{trd}(s,a)=2s$ 和 $\operatorname{nrd}(s,a)=s^2+q(a)$；参见同书 §3.3、式 (4.1.1)。
+
+当 $2=0$ 时，交替双线性给 $D(a,b)=D(b,a)$，故整个 $A$ 交换。结合的交换除法代数是域，且 $\bar x=x$，所以 (13.15) 给每个 $x\in A$ 的平方都在实际 $F1$ 内。它是四维非平凡纯不可分指数 $1$ 扩张，且由 (13.18) 可写为
+
+$$
+L=F(e_1,e_2)=F(\sqrt\alpha,\sqrt\beta),\qquad [L:F]=4.
+$$
+
+这里“总次数四”不意味着存在次数四的单个元素；每个元素的最小多项式次数至多为二。纯不可分术语与逐次添平方根的经典依据见 [Stacks Project，定义 09HE、引理 09HF、09HI](https://stacks.math.columbia.edu/tag/09HD)，此处 $p=2$ 且所有平方已在 $F$，比一般有限纯不可分扩张的条件更具体。式 (13.17) 直接由 (13.14) 的标量和纯部分解给出。
+
+为核对迹的差异，取上述基 $1,e_1,e_2,e_1e_2$。乘以 $1$ 的通常迹为 $4=0$；乘以 $e_1,e_2,e_1e_2$ 的对角系数均为零。因此所有乘法算子的通常迹为零，而 $\pi(1)=1$，两者不可能相同。$\square$
+
+**定理 13.10（每个四元数除法代数的完整反向）。** 固定 $\operatorname{char}F\ne2$。对任意四元数除法 $F$-代数 $Q$，取其标准共轭、约化迹与约化范数，并置
+
+$$
+V=Q_0=\ker\operatorname{trd},\qquad
+\pi=\operatorname{trd}/2,
+$$
+
+$$
+g(a,b)=-\tfrac12(ab+ba)=-\pi(ab),\qquad
+D(a,b)=\tfrac12(ab-ba)=ab-\pi(ab)1.
+\tag{13.19}
+$$
+
+标量值 $g(a,b)$ 按 $F1$ 与 $F$ 识别。则这个原 $V,D$ 满足定义 13.1 的全部条件、唯一返回式、非退化性及外积同构；其 $q(a)=\operatorname{nrd}(a)$ 各向异性，定理 13.8 恢复同一个 $Q$ 及其原乘法。
+
+**证明。** 复用经典四元数标准生成元：存在 $i,j$，使 $1,i,j,k=ij$ 是基，$i^2=r$、$j^2=t$、$ji=-ij$，其中 $r,t\in F^\times$。标准共轭在 $i,j,k$ 上取负，故 $V=Fi\oplus Fj\oplus Fk$，且 $Q=F1\oplus V$。这正是 [Voight，前引书，定义 2.2.1、§3.2 的 (3.2.9)、§3.3](https://jvoight.github.io/quat-book-v1.0.5.pdf) 的全部适用条件，未在特征 $2$ 套用此描述。
+
+对纯 $a,b$，$\overline{ab}=ba$，因而 $ab+ba=\operatorname{trd}(ab)1$ 是标量，$ab-ba$ 迹零。这支付了 (13.19) 的类型。它给出对称双线性 $g$ 与交替双线性 $D$；后者的重复输入严格为零。直接用标准乘法表得到
+
+$$
+D(i,j)=k,\quad D(j,k)=-t i,\quad D(k,i)=-r j,
+\qquad [g]_{(i,j,k)}=\operatorname{diag}(-r,-t,rt).
+$$
+
+这就是命题 13.7 中 $\alpha=-r,\beta=-t$ 的数据，所以完整九格验证直接给全域返回、P、非退化性与外积同构。对纯 $a$，有 $q(a)=-a^2=\operatorname{nrd}(a)$。若 $q(a)=0$，则 $a^2=0$，除法性迫使 $a=0$。命题 13.7 因而给 K。最后 $ab=-g(a,b)+D(a,b)$，添标量槽后的 (13.14) 正是 $Q$ 的原乘法，而不是另造一个同维空间上的运算。$\square$
+
+**定理 13.11（特征二中每个指数一四次域及任意投影的完整反向）。** 固定 $\operatorname{char}F=2$。设 $L/F$ 是满足 $[L:F]=4$、$L^2\subseteq F$ 的域扩张，$\pi:L\to F$ 是任意 $F$-线性映射且 $\pi(1)=1$。取 $V=\ker\pi$，并按 (13.17) 定义 $g,D$。则 $V,D$ 满足定义 13.1 的全域 P、K、非零性及交替双线性，$g$ 非退化，$\widetilde D$ 为同构，且唯一返回式为 (13.6)。其 $q(a)=a^2$ 各向异性；(13.14) 恢复同一个带原投影的域 $(L,\pi)$。
+
+**证明。** $\pi|_F=\operatorname{id}$ 使 $L=F1\oplus V$，故 $\dim_FV=3$。对纯 $a,b$，$D(a,b)$ 的投影为零，所以其值确在 $V$。所有公式 $F$-双线性；因 $a^2\in F$，有
+
+$$
+D(a,a)=a^2-\pi(a^2)1=0,\qquad g(a,a)=a^2.
+$$
+
+域中平方为零只可能 $a=0$，故 $q$ 各向异性。
+
+先独立证明双线性 $g$ 非退化。$B(x,y)=\pi(xy)$ 是 $L$ 上的非退化对称双线性形式：对 $x\ne0$，取 $y=x^{-1}$，就有 $B(x,y)=1$。$B(1,1)=1$，且 $V=1^{\perp_B}$。若 $a\in V$ 与整个 $V$ 正交，它也与 $1$ 正交，因而与整个 $L$ 正交，所以 $a=0$。这证明 $g=B|_V$ 非退化，未调用域迹或二次型极化。
+
+选 $0\ne a\in V$，再在二维平面 $a^{\perp_g}\subset V$ 中选 $0\ne b$。因 $g(a,a)=a^2\ne0$，$b$ 不在 $Fa$。此外 $a\notin F$，$[F(a):F]=2$；若 $b\in F(a)$，则可写 $b=s+ta$，由 $\pi(b)=0$ 得 $s=0$，仍与独立性矛盾。因此 $L=F(a,b)$，且 $1,a,b,ab$ 是 $F$-基。这也可直接应用 [Stacks 引理 09HF 与 09HI](https://stacks.math.columbia.edu/tag/09HD) 的添平方根和次数乘法：两个平方在 $F$ 内，而第二个元素不在第一次二次扩张内。
+
+令 $\alpha=a^2\ne0$、$\beta=b^2\ne0$。因 $g(a,b)=\pi(ab)=0$，$w=ab\in V$，且 $(a,b,w)$ 是 $V$ 的基。域乘法直接给
+
+$$
+D(a,b)=w,\quad D(b,w)=\beta a,\quad D(w,a)=\alpha b.
+$$
+
+同时 $g(a,w)=\pi(a^2b)=0$、$g(b,w)=\pi(b^2a)=0$，故其矩阵为 $\operatorname{diag}(\alpha,\beta,\alpha\beta)$。这正是命题 13.7 的完整表，直接给非零性、外积同构、全域返回和 P；已证 $q$ 各向异性再给 K。所有重复槽由该表和 $D(x,x)=0$ 支付，不需要假定某个三元缺陷已经交替。最后因特征为二，$ab=g(a,b)+D(a,b)=-g(a,b)+D(a,b)$，所以 (13.14) 经 $(s,a)\mapsto s+a$ 恢复整个原域的乘法及原投影。$\square$
+
+**定理 13.12（固定实际标量嵌入的完整同构分类）。** 对固定域 $F$，入口模型 $(V,D)$ 的同构类恰与以下对象的同构类一一对应：当 $\operatorname{char}F\ne2$ 时，是四元数除法 $F$-代数；当 $\operatorname{char}F=2$ 时，是定理 13.11 的带指定投影 $(L,\pi)$。更准确地，任意两个入口模型之间的 $D$-同构 $T$ 唯一延伸为带标记代数同构
+
+$$
+\Phi(s,a)=(s,Ta),
+\tag{13.20}
+$$
+
+且每个这样的代数同构都如此得到。非二特征中投影是经典约化迹的一半，故无需另加自由标记；特征二中一般必须保留 $\pi$。
+
+**证明。** 若 $T$ 保持 $D$，把目标 $g'$ 经 $T$ 拉回，所得双线性形式满足源的 (13.6)。引理 13.5 的唯一性给
+$g'(Ta,Tb)=g(a,b)$。代入 (13.14) 即证明 (13.20) 保乘法、单位和投影。它在 $F1$ 上恒等，而整个空间是 $F1\oplus V$，故延伸唯一。反之，带标记同构把 $\ker\pi$ 送到 $\ker\pi'$，并把乘积的纯部分送到纯部分，所以其限制保持 $D$。
+
+定理 13.9 给正向对象；定理 13.10、13.11 给每个分类对象的完整反向，并恢复其原乘法和标记，因此两构造互逆。非二特征的任意 $F$-代数同构都保持经典标准共轭，因而保持约化迹与 $\pi$；这里直接复用 [Voight，前引书，推论 3.4.4 的标准共轭唯一性](https://jvoight.github.io/quat-book-v1.0.5.pdf)，其前件是已有标准共轭，定理 13.8 和四元数标准结构都已供应。于是非二特征中不必额外要求同构保持投影。二特征的标记不可这样消去，精确关系如下条。$\square$
+
+**定理 13.13（特征二的实际平方子域与 $F^2$ 值标记）。** 固定特征二的实际域 $F$ 及一份代数闭包 $\overline F$。记 $F^2=\{c^2:c\in F\}$。定理 13.12 的特征二对象完全等价于数据
+
+$$
+F^2\subseteq M\subseteq F,\qquad [M:F^2]=4,
+\qquad \lambda:M\to F^2\text{ 为 }F^2\text{-线性且 }\lambda(1)=1,
+\tag{13.21}
+$$
+
+其中 $M$ 是实际子域，标记的值域明确是 $F^2$。双向公式为
+
+$$
+M=L^2,\qquad
+\lambda(m)=\pi(\sqrt m)^2,
+\tag{13.22}
+$$
+
+$$
+L=\{x\in\overline F:x^2\in M\},\qquad
+\pi(x)=\sqrt{\lambda(x^2)}\in F.
+\tag{13.23}
+$$
+
+这里所有平方根在指定代数闭包中唯一，(13.23) 的最后一个平方根由于被开方量属于 $F^2$ 而确实在 $F$ 内。两个对象同构当且仅当它们的实际 $M$ 和实际 $\lambda$ 分别相同。任何 $F^2$-代数同构 $\sigma:M\to M'$ 都必为实际包含下的恒等，故必有 $M=M'$；若它还保持标记，则必有 $\lambda=\lambda'$。
+
+**证明。** 纯不可分扩张到 $\overline F$ 的 $F$-嵌入唯一；这是 [Stacks 引理 09HJ 的纯不可分情形](https://stacks.math.columbia.edu/tag/09HJ)。在此指数一的具体情形也直接由 $x^2\in F$ 和平方根唯一性得到。因而可把每个 $L$ 唯一看作 $\overline F$ 的实际子域。平方映射把 $L$ 同构到子域 $M=L^2\subseteq F$，并把 $F$ 同构到 $F^2$。所以 $F^2\subseteq M$，且 $[M:F^2]=[L:F]=4$。
+
+对 $m,n\in M$，唯一平方根满足 $\sqrt{m+n}=\sqrt m+\sqrt n$。对 $d\in F^2$，写 $d=c^2$、$c\in F$，则 $\sqrt{dm}=c\sqrt m$。$\pi$ 的 $F$-线性于是给
+
+$$
+\lambda(m+n)=\lambda(m)+\lambda(n),\quad
+\lambda(dm)=d\lambda(m),\quad \lambda(1)=1.
+$$
+
+因定义是 $F$ 中元素的平方，其值在 $F^2$，这支付 (13.22) 的值域。
+
+反之，给定 (13.21)，(13.23) 中的集合对加法、乘法和非零取逆封闭，是包含实际 $F$ 的域，且其平方域恰为 $M$。平方映射再次给 $[L:F]=[M:F^2]=4$ 和 $L^2\subseteq F$。定义的 $\pi$ 值在 $F$，并且
+
+$$
+\pi(x+y)^2=\lambda(x^2+y^2)=\pi(x)^2+\pi(y)^2,
+$$
+
+$$
+\pi(cx)^2=\lambda(c^2x^2)=c^2\pi(x)^2
+\qquad(c\in F).
+$$
+
+域中平方映射单射，故 $\pi$ 可加且 $F$-齐次，$\pi(1)=1$。两套公式互逆，因为相同平方的元素必相等。
+
+若 $\Phi:L\to L'$ 是固定 $F$ 的代数同构，则对 $x\in L$ 有
+$\Phi(x)^2=\Phi(x^2)=x^2$，故在 $\overline F$ 内 $\Phi(x)=x$。于是 $L=L'$，并由投影相容得 $\pi=\pi'$，等价于 $M=M'$、$\lambda=\lambda'$。反向的恒等映射显然给同构。
+
+另对任何实际子域间的 $F^2$-代数同构 $\sigma$，因为 $m\in M\subseteq F$ 使 $m^2\in F^2$，有
+
+$$
+\sigma(m)^2=\sigma(m^2)=m^2.
+$$
+
+仍由平方单射得 $\sigma(m)=m$。故同构像等于 $M$，而满射像又是 $M'$，两子域相同；保持标记的条件 $\lambda'\sigma=\lambda$ 正好化为 $\lambda'=\lambda$。这不是把任意 $F^2$-线性空间同构误当成子域同构。$\square$
+
+**推论 13.14（标记的纯部读数及自同构的精确范围）。** 在定理 13.13 的数据中，
+
+$$
+q(V)=\ker\lambda\subset M,\qquad
+M=F^2\oplus\ker\lambda,
+\tag{13.24}
+$$
+
+其中直和按 $F^2$-向量空间理解。固定 $F$ 的原入口模型自同构在特征二中只有恒等。这些结论只分类实际域上的对象和 $F$-有理点自同构，不是群概形的断言。
+
+**证明。** 若 $a\in V$，则 $q(a)=a^2$ 且 $\lambda(a^2)=\pi(a)^2=0$。反之，$m\in\ker\lambda$ 的唯一根 $a\in L$ 满足 $\pi(a)^2=0$，故 $a\in V$、$q(a)=m$，得到第一式。$\lambda(1)=1$ 给第二式。入口自同构依定理 13.12 延伸为固定 $F$ 的域自同构，定理 13.13 已证明该映射逐元素恒等。证明没有对非约化基环或任意基变换上的自同构函子作量化，所以只能得到所述 $F$-点结论。$\square$
+
+**命题 13.15（有限标量域及小特征的边界）。** 若 $F$ 是有限域，则定义 13.1 没有入口模型；上述定理的全特征表述并未排除这些域，而是在它们上给出模型不存在的结论。
+
+**证明。** 若特征为二，有限域的平方映射单射因而满射，所以 $F^2=F$，无法存在 (13.21) 所需的次数四子域。若特征非二，设 $|F|=n$。集合 $S=\{x^2:x\in F\}$ 的大小是 $(n+1)/2$：非零平方恰有两个根，零有一个。对命题 13.7 的 $\alpha,\beta$，两个子集 $\alpha S$ 和 $-\alpha\beta-\beta S$ 的大小之和是 $n+1>n$，必相交。故存在 $x,y\in F$ 使
+
+$$
+\alpha x^2+\beta y^2+\alpha\beta=0.
+$$
+
+这给 (13.13) 的非零各向同性向量 $(x,y,1)$，与 K 矛盾。证明覆盖最小有限域，不依靠避开少数域元素的选取。$\square$
+
+**推论 13.16（实数特化与既有 P+N 入口的准确接合）。** 当实际标量域另外指定为 $F=\mathbb R$ 时，定义 13.1 的模型恰为本卷定理 12.8 的原有序对 $(V,D)$：整个 $V$ 三维，唯一 $g$ 正定，原 $D$ 为相对于自身定向的单位叉积，含单位结合扩张为 Hamilton 四元数 $\mathbb H$。本卷 §12 的迹、旋转与同尺消费者可直接使用；这一实数特化没有从 P、K 选择出标量域 $\mathbb R$。
+
+**证明。** 引理 13.2 在实域给 P+K 与 P+N 完全相同，而原 $V,D$ 没有改变，所以定理 12.8 及定理 12.2 直接适用。也可从本节坐标核对正定性：实对角三元型各向异性使三个对角系数不能异号，否则两项用实平方根配比即可抵消。$\alpha,\beta,\alpha\beta$ 的乘积为正，三个系数不能全负，故全正。于是 $g$ 正定；以 $e_1/\sqrt\alpha,e_2/\sqrt\beta,e_3/\sqrt{\alpha\beta}$ 为基，D 的循环表均为单位系数，(13.18) 是 $\mathbb H$ 的标准表。这与经典实四元数结构一致，参见 [Voight，前引书，§2.4 与推论 3.5.8](https://jvoight.github.io/quat-book-v1.0.5.pdf)。这里的四维结论由已经证明的入口桥取得，不以 Frobenius 实除法代数分类为三维入口的前提。
+
+原逐轴有界条件 B 的使用仍保留其全部前件：有限维实空间、非零交替双线性 D、同一原行算子的全实参数指数、每条轴自己的有限界。定理 12.8 在这些前件下把 P+B、P+N 及原带正尺返回模型识别为同一类；本节只以引理 13.2 把其中 N 换成等价 K。平方锥、正归一读出、Born 表示及原来源接口则直接消费本卷 §§4、6、12.8 的同一个 $g,D$，不在任意域上追加正性或概率的结论。$\square$
+
+**命题 13.17（标量域未被选定的非实模型）。** 定义 13.1 同时存在以下两个实际非实标量模型。
+
+其一是 $F=\mathbb Q$，在 $\mathbb Q^3$ 上取 (13.7) 的 $\alpha=\beta=1$。其二是
+
+$$
+F=\mathbb F_2(u,v),\qquad
+L=\mathbb F_2(r,s),\qquad u=r^2,\quad v=s^2,
+\tag{13.25}
+$$
+
+其中 $r,s$ 代数独立，投影 $\pi$ 取基 $1,r,s,rs$ 的常数系数。第二个模型的 $V=Fr\oplus Fs\oplus Frs$，$q$ 的对角式为 $ux^2+vy^2+uvz^2$。
+
+**证明。** 有理数域的三平方和只有在三个数均为零时才为零，因为它的通常序使非零平方严格为正。故第一模型由命题 13.7 满足 P、K，其扩张是经典 $(-1,-1)_{\mathbb Q}$，而实际标量域仍为 $\mathbb Q$。
+
+对第二个模型，$\mathbb F_2(r,s)$ 在 $\mathbb F_2(r^2,s^2)$ 上的基是 $1,r,s,rs$。确切地，任一有理函数可将分子分母同乘分母，令分母变成平方，再按分子中两个指数的奇偶分组，故四者张成；若有线性关系，清去属于 $\mathbb F_2(r^2,s^2)$ 的分母后，四组多项式单项式的指数奇偶互异，不可能抵消，故线性独立。因此 $[L:F]=4$，且 $L^2=F$。投影 $\pi$ 满足定理 13.11 的全部条件，故给出入口模型与所列 q。亦可按同样奇偶证明 $1,u,v,uv$ 在 $F^2=\mathbb F_2(u^2,v^2)$ 上独立，直接确认该三元 q 各向异性。两例说明从 P、K 得到的是相对于已给标量域的分类；不能据此把标量结构输入消去。$\square$
+
+**定理 13.18（全赋值弱入口的汇总结论与经典重叠边界）。** 对任意实际域 $F$、任意维原 $V$ 和同一非零交替双线性总映射 $D$，全域 P+K 恰好描述定理 13.12 的模型类。它强制整个原 $V$ 三维、$\Lambda^2V\simeq V$、唯一非退化对称返回形式 g、各向异性 q 及同一数据的四维结合除法扩张；特征非二和特征二的扩张分别是四元数除法代数和带指定投影的四次纯不可分指数一域。特征二的完整标记可等价写为 (13.21)，其中 $\lambda$ 的值域是 $F^2$。
+
+**证明。** 引理 13.3 与定理 13.4 支付非零输出平面、原中心、独立零响应及整个原空间分解。引理 13.5、13.6 支付唯一返回、非退化性、外积同构、全特征回读与 K 的精确各向异性含义。定理 13.8 支付结合性、乘法范数以及纯部到完整四维除法性的桥。定理 13.9 给正向类型，定理 13.10、13.11 对每个分类对象给完整反向；定理 13.12、13.13 支付保留实际标量嵌入与投影的同构分类。因此这些结论的假设没有遗漏，正反向构造互逆。
+
+本结论相对于本卷 §12 补足的是任意域、包括特征二的全域入口桥及其到带标记含单位结构的准确接口。实域 P+N 的整个原空间结论已经由 §12 提供；K 与 N 的等价性不形成严格较弱的新模型类。四元数的标准乘法表、共轭、约化迹、乘法范数和实数特化直接复用定理 13.8—13.10、推论 13.16 所引 Voight 条目；纯不可分扩张、添平方根与嵌入唯一性直接复用定理 13.9、13.11、13.13 所引 Stacks 条目。它们都是此推导的经典中间结构，不取得新分类或文献首次性的名义。任意域上的各向异性不称为正定，$F$-点分类不称为群概形分类。这里没有关于某个整个物理 $\Omega$、全部历史、实际控制、复合、记录、时钟或作用量的三维结论；接入这些来源仍使用本卷 §12.8 所列的各自身份与范围条件。这些物理接口也不是本代数定理成立的额外前提。$\square$
+
+**定义 13.19（上述定理的一段完整白话释义）。** 这里的“入口”是先给一份标量规则以及一个允许相加和缩放的原空间，再给同一个二元响应：两个输入先产生响应，这份响应随后同任意原向量作用，总回到最初两个输入的平面；同时，某条原输入若把一个向量作用两次变成零，那么第一次就必须已经为零。第二条虽然比“不许非零响应再次落在自己同一条线上”写得短，但在交替双线性条件下两者等价，不能声称因此减少了逻辑信息。两条合起来先迫使每份非零响应离开原输入平面，并在该平面上作可逆作用；同一响应便不可能对应两个不同的原平面。完全看不见的中心方向、彼此独立却给零响应的方向都会破坏这份唯一性，所以都被排除。取一份非零响应以后，每个原向量都能唯一分成它所确定的二维平面部分和响应轴部分，整个原空间因此只有三维，而不是先挑一个三维片段来研究。随后响应的返回系数给出唯一的对称比较形式；条件要求它没有非零零平方方向，在实数上这成为正尺，在一般域上只叫各向异性。再加入一个标量单位槽，把比较部分和原响应一起保留，得到四维结合除法结构；结合的是这个更大的结构，原三维响应本身仍不结合。标量规则不含特征二时，它就是经典四元数除法代数；特征二时，它是每个元素平方都落回原标量域的四次域，还必须记住哪份线性投影规定了纯部。固定代数闭包后，这个域及其投影也可由实际平方子域和取值于标量平方子域的线性标记完整记录。这个结论统一了二元约束、三维有限提升与四维含单位结构，却没有替输入选择实数，也没有把数学表示的存在替换成 Born 规则、复合方式、实际门、记录或钟的供应。
+
+## 追加锚（本行以下为增补区）
+
+## 14. 同一二元关系的全环自同构与最小标量解锁
+
+**定义 14.1（固定入口的自同构函子与定向）。** 设 $F$ 是任意域，原 $V$ 维数任意，同一非零交替 $F$-双线性映射 $D:V\times V\to V$ 满足定义 13.1 的全域 P、K。以下直接使用引理 13.5—定理 13.12 的结论：整个原 $V$ 三维，$D$ 恢复唯一非退化对称形式 $g$、交替体积形式 $\omega(a,b,c)=g(D(a,b),c)$ 及带投影的四维结合代数 $(A,\pi)$。不另假定一个预给度量，也不重新把入口分类作为结论。
+
+对每个交换含单位 $F$-代数 $R$，包括零环，记 $V_R=R\otimes_F V$，以 $D_R,g_R,\omega_R,\pi_R$ 表示同一数据的标量延拓，并定义
+
+$$
+\operatorname{Aut}_D(R)=
+\{T\in\operatorname{GL}_R(V_R):
+T D_R(x,y)=D_R(Tx,Ty)\text{ 对全部 }x,y\in V_R\}.
+\tag{14.1}
+$$
+
+群运算为复合。$F$-代数同态 $R\to S$ 使矩阵系数逐项延拓，给出该群值函子的映射。在一份原基上，保持 $D$ 的条件是各对基向量的有限组矩阵多项式等式，因而在 $\operatorname{GL}_3$ 中定义闭子群函子。称 $T$ 保定向，是指对全部 $x,y,z$ 有 $\omega_R(Tx,Ty,Tz)=\omega_R(x,y,z)$。本节的 $\operatorname{SO}(g_R)$ 专指保持双线性 $g_R$ 且行列式为一的群；特征二时不能把这里的条件替换成仅保持 $q_R(x)=g_R(x,x)$。
+
+**定理 14.2（由原关系恢复形式的全环桥）。** 在定义 14.1 的假设下，对每个上述 $R$，有自然等式与自然群同构
+
+$$
+\begin{aligned}
+\operatorname{Aut}_D(R)
+&=\{T:g_R(Tx,Ty)=g_R(x,y),\ \omega_R(Tx,Ty,Tz)=\omega_R(x,y,z)\}\\
+&=\operatorname{SO}(g_R),\\
+\operatorname{Aut}_D(R)
+&\simeq\operatorname{Aut}_{R\text{-alg}}(A_R,\pi_R).
+\end{aligned}
+\tag{14.2}
+$$
+
+第一行的 $T$ 均取自 $\operatorname{GL}_R(V_R)$，其等式量化全部 $x,y,z\in V_R$；最后一群要求保持单位、乘法和指定投影。尤其保持 $D_R$ 本身就强制保持同一个 $g_R$，此断言同时量化非约化环和有零因子的环。
+
+证明。取引理 13.5 的基 $e_1,e_2,e_3$ 及参数 $\alpha,\beta\in F^\times$。其同一乘法表、返回恒等式与形式矩阵延拓到 $R$：
+
+$$
+\begin{gathered}
+D_R(D_R(x,y),z)=g_R(x,z)y-g_R(y,z)x,\\
+G=\operatorname{diag}(\alpha,\beta,\alpha\beta),
+\qquad \omega_R(e_1,e_2,e_3)=\alpha\beta.
+\end{gathered}
+\tag{14.3}
+$$
+
+$G$ 可逆，且 $\alpha\beta$ 是 $R$ 中的单位。先证明这里的返回式在 $R$ 上仍唯一决定双线性形式。若 $h$ 也满足它，令 $b=h-g_R$，对任意 $i\ne j$ 和任意 $z$ 有
+
+$$
+b(e_i,z)e_j-b(e_j,z)e_i=0.
+$$
+
+自由基的坐标比较给 $b(e_i,z)=b(e_j,z)=0$。每个指标都能配上另一个指标，因此 $b=0$。这个论证只比较自由模坐标，不把非零环元素当作可逆元素，也不使用域上的线性独立判据。
+
+若 $T\in\operatorname{Aut}_D(R)$，把 (14.3) 用于 $Tx,Ty,Tz$，再作用 $T^{-1}$，可见 $h(x,z)=g_R(Tx,Tz)$ 满足同一个返回式。上述唯一性给 $h=g_R$。于是
+
+$$
+\omega_R(Tx,Ty,Tz)
+=g_R(D_R(Tx,Ty),Tz)
+=g_R(TD_R(x,y),Tz)=\omega_R(x,y,z).
+$$
+
+反过来，若 $T$ 保持 $g_R$ 和 $\omega_R$，则对每个 $z$，
+
+$$
+g_R(D_R(Tx,Ty),Tz)
+=\omega_R(x,y,z)
+=g_R(TD_R(x,y),Tz).
+$$
+
+$T$ 可逆且 $g_R$ 非退化，故 $D_R(Tx,Ty)=TD_R(x,y)$。在秩三自由模上，交替三形式在 $T$ 下乘以 $\det T$；将其用于 (14.3) 的单位系数 $\alpha\beta$，保定向恰好是 $\det T=1$。这证明前两个等式，没有从 $\det(T)^2=1$ 擅自推出 $\det T=1$。
+
+最后用 (13.14) 的同一乘法。保持 $D_R,g_R$ 的 $T$ 唯一延伸为
+$\Phi(s,a)=(s,Ta)$，此式保持单位、乘法和投影。反向的保投影 $R$-代数自同构保持 $\ker\pi_R=V_R$，在此限制为可逆线性映射，比较乘积的纯部分即得保持 $D_R$。两构造互逆；所有公式均与任意 $R\to S$ 的基变换交换。
+
+非二特征的三维叉积自同构结论是 [Daza-García–Elduque–Tang，arXiv:2006.10324v1，定理 3.3、命题 3.4](https://arxiv.org/pdf/2006.10324v1) 的既有特例，其全局假设是 $\operatorname{char}F\ne2$。这里承重的延伸是同一弱入口所恢复的 $g$ 在任意系数环上的唯一性及特征二接口；不把该文注记 3.5 的光滑性断言外推到特征二。$\square$
+
+**定义 14.3（特征二的实际域、参数源与解锁）。** 以下除特别说明外，假设 $\operatorname{char}F=2$，保留定义 14.1 的原入口。定理 13.9、13.13、推论 13.14 已给出
+
+$$
+\begin{gathered}
+A=L,\quad [L:F]=4,\quad L^2=M\subset F,\quad [M:F^2]=4,\\
+\lambda:M\to F^2,\quad \lambda(1)=1,\quad
+q(V)=\ker\lambda,\quad M=F^2\oplus\ker\lambda.
+\end{gathered}
+\tag{14.4}
+$$
+
+在 (14.3) 的基中，$e_1^2=\alpha$、$e_2^2=\beta$、$e_3=e_1e_2$，故
+$L=F(e_1,e_2)$、$M=F^2(\alpha,\beta)$。原 K 只量化原 $F$，不把 K 在扩域后继续成立作为假设。
+
+对扩域 $E/F$，把 $L$ 唯一嵌入 $E$ 的一份代数闭包，$LE$ 表示其中的实际合成域；$ME^2$ 则是实际 $E$ 内由 $M$ 与 $E^2$ 生成的子域。称 $E$ 解锁，意为 $\operatorname{Aut}_D(E)\ne\{1\}$。基点为恒等的代数一参数子群指群函子的态射 $\mathbb G_{a,E}\to\operatorname{Aut}_{D_E}$；其底空间是 $\mathbb A^1_E$，零点映到恒等，且群律由加法给出。非恒定指其矩阵在 $E[t]$ 中并非恒等矩阵，而非仅指定一个切向量。
+
+一个 $F$-代数 $R$ 几何约化，是指对每个扩域 $K/F$，$K\otimes_F R$ 都约化；概形的同名条件按基变换及仿射开集理解。这里采用 [Stacks，030V](https://stacks.math.columbia.edu/tag/030V) 的条件，其等价形式允许用有限纯不可分扩张检验。它比仅要求 $R$ 自身约化强。
+
+**定理 14.4（任意交换环上的完整非平凡性判据）。** 对每个交换含单位 $F$-代数 $R$，
+
+$$
+\operatorname{Aut}_D(R)\ne\{1\}
+\quad\Longleftrightarrow\quad
+\exists\,0\ne v\in V_R:\ q_R(v)=0.
+\tag{14.5}
+$$
+
+右侧不要求 $v$ 是幺模向量，即不要求其坐标生成单位理想。每个非约化 $R$ 均有非恒等自同构；零环的两侧均为假。由某个非零零向量直接写出的秩一式可以恒等，(14.5) 不断言每个这样的向量都给非恒等秩一式。
+
+证明。若 $T\ne1$ 保持 $D_R$，定理 14.2 给它保持 $g_R$。特征二中 $q_R$ 可加，故对基向量有
+
+$$
+q_R(Te_i-e_i)=q_R(Te_i)+q_R(e_i)=0.
+$$
+
+至少一个 $Te_i-e_i\ne0$，得到必要性。
+
+反向设 $v=\sum_i v_i e_i\ne0$ 且 $q_R(v)=0$，记 $\varphi(x)=g_R(v,x)$、$N(x)=\varphi(x)v$。有
+
+$$
+N^2=q_R(v)N=0,
+\qquad g_R(Nx,y)=g_R(x,Ny)=\varphi(x)\varphi(y),
+\qquad g_R(Nx,Ny)=0.
+\tag{14.6}
+$$
+
+因此 $I+N$ 的平方为 $I$，并保持 $g_R$。行列式按列多线性展开时，含至少两列 $v$ 的项为零，从而
+$\det(I+v\varphi)=1+\varphi(v)=1$。由定理 14.2，$I+N\in\operatorname{Aut}_D(R)$。
+
+若某个 $v_i^2\ne0$，则 $N$ 的第 $i$ 个对角系数为 $G_{ii}v_i^2\ne0$，因为 $G_{ii}$ 是单位；所以此时 $I+N\ne I$。若所有 $v_i^2=0$，取一个非零坐标 $r=v_i$。此时 $r^2=0$，改用
+
+$$
+T=\operatorname{diag}(1+r,1+r,1).
+\tag{14.7}
+$$
+
+$1+r$ 是自己的逆，$T$ 保持对角形式 $G$，$\det T=(1+r)^2=1$，且 $T\ne I$。这给出另一份非恒等自同构，完全不需要坐标可逆。两种情形穷尽全部非零 $v$。
+
+若 $R$ 非约化，取非零幂零元 $a$，设 $n\ge2$ 是 $a^n=0$ 的最小正整数。则 $r=a^{n-1}\ne0$ 且 $r^2=0$，(14.7) 即适用。零环中 $V_R=0$ 且只有一个线性自同构，故单独也满足 (14.5)。$\square$
+
+**定理 14.5（任意扩域的实际平方子域与参数族桥）。** 对任意扩域 $E/F$，以下五个条件等价：
+
+$$
+\begin{aligned}
+&\operatorname{Aut}_D(E)\ne\{1\};\\
+&q_E\text{ 有非零零向量};\\
+&[ME^2:E^2]<4;\\
+&[LE:E]<4;\\
+&\text{存在基点为恒等的非恒定代数一参数子群 }
+\mathbb G_{a,E}\longrightarrow\operatorname{Aut}_{D_E}.
+\end{aligned}
+\tag{14.8}
+$$
+
+两项次数实际相等，且只可能为 $1,2,4$。这些条件一旦成立，同一延拓 $D_E$ 就不再满足 K。此处没有把扩域后的入口重新假定为 P+K。
+
+证明。前两项由定理 14.4 等价。为接到实际 $M$，在同一基上写
+
+$$
+q_E(X_1e_1+X_2e_2+X_3e_3)
+=\alpha X_1^2+\beta X_2^2+\alpha\beta X_3^2.
+\tag{14.9}
+$$
+
+拟线性形式的零向量由其系数在平方子域上的线性关系判断：$X_i^2$ 属于 $E^2$，反之每个 $E^2$ 中的关系系数在 $E$ 都有平方根。这个经典中间事实是 [Scully，arXiv:1710.09692v1，§2A—B、命题 2.1](https://arxiv.org/pdf/1710.09692v1) 的表示空间描述在此系数表上的应用。令
+$C=ME^2=E^2(\alpha,\beta)$。$\alpha^2,\beta^2\in F^2\subset E^2$，所以 $1,\alpha,\beta,\alpha\beta$ 张成 $C$，添入每个参数的次数至多二，$[C:E^2]\in\{1,2,4\}$。当次数为四时它们构成基，(14.9) 各向异性；次数小于四时至多为二，三个系数 $\alpha,\beta,\alpha\beta$ 必线性相关，得到非零零向量。这证明第二、三项等价。
+
+同一经典拟线性理论的范数域公式 [Scully，前引文 §2D](https://arxiv.org/pdf/1710.09692v1) 在原 $q$ 上给
+
+$$
+N(q)=F^2(\alpha\beta,\alpha^2\beta)
+=F^2(\alpha,\beta)=M.
+\tag{14.10}
+$$
+
+因此这里用的是原关系恢复的实际子域，不是一个只具有相同抽象次数的代用品。原 $q$ 是三维各向异性形式；按该文引理 2.2，它也是经典的二重拟 Pfister 型邻居。该识别及表示空间事实是本推导的中间输入，不单独承担新的分类结论。
+
+在实际合成域内，平方映射给
+
+$$
+(LE)^2=ME^2=C,
+\qquad E^2\subset C,
+\qquad [LE:E]=[C:E^2].
+\tag{14.11}
+$$
+
+确切地，平方把 $LE$ 同构到 $C$，把 $E$ 同构到 $E^2$，故把一份域基送到另一份域基。由此第三、四项等价。
+
+若 $0\ne v\in V_E$ 且 $q_E(v)=0$，仍取 $N=v\otimes g_E(v,-)$。域上的非退化性保证 $g_E(v,-)\ne0$，故 $N\ne0$；(14.6) 给 $N^2=0$。对任意交换 $E$-代数 $B$ 和 $t\in B$，定义
+
+$$
+U_v(t)x=x+t\,g_B(v,x)v.
+\tag{14.12}
+$$
+
+相同计算给它保持 $g_B$，行列式为一，逆为 $U_v(t)$，因而保持 $D_B$。又
+$U_v(s)U_v(t)=U_v(s+t)$，且 $U_v(0)=I$。矩阵 $I+tN\in\operatorname{Aut}_D(E[t])$ 非恒定，所以第五项成立。任选 $N$ 的一个非零矩阵元，它属于 $E^\times$，因而从 $U_v(t)$ 的该矩阵元能读回 $t$；该群态射在每个 $E$-代数上也单射。这是对实际系数代数的多项式子群，不只是有理点的集合对应。
+
+反之，若 $q_E$ 各向异性，则 $q_{E[t]}$ 没有非零零向量。事实上，将任何多项式向量写成 $w(t)=\sum_j w_jt^j$，拟线性给
+$q(w(t))=\sum_j q_E(w_j)t^{2j}$。此多项式为零便逐项给 $q_E(w_j)=0$，继而 $w_j=0$。定理 14.4 因此给 $\operatorname{Aut}_D(E[t])=\{I\}$，排除第五项，甚至排除任意非恒定的 $\mathbb A^1_E$ 保关系族。
+
+最后，返回式、$g_E$ 非退化与 $\widetilde D_E$ 可逆都由原恒等式和原可逆矩阵延拓，未使用 $K_E$。引理 13.6 因而适用于它们，给 $K_E$ 恰等价于 $q_E$ 各向异性；解锁时 $K_E$ 必失败。$\square$
+
+**定理 14.6（几何约化参数源的仿射局部刚性与准确扩域版）。** 对每个几何约化 $F$-代数 $R$，$\operatorname{Aut}_D(R)=\{I\}$。更一般地，几何约化 $F$-概形 $S$ 上，平凡向量丛 $\mathcal O_S\otimes_F V$ 的任何保持同一 $D$ 的可逆 $\mathcal O_S$-线性自同构都在每个仿射开集上恒等，故全局恒等。
+
+对任意扩域 $E/F$，以下两个条件等价：$q_E$ 各向异性；每个几何约化 $E$-参数源上的上述保 $D_E$ 族都恒等。这里第二个条件是对全部这种源的量化，不声称单个源的刚性必以几何约化为必要条件。
+
+证明。设 $R$ 几何约化。按定义及 Stacks 030V，$R\otimes_F L$ 约化。若 $v=\sum_i r_i e_i\in V_R$ 满足 $q_R(v)=0$，考虑此环中的元素
+
+$$
+z=\sum_i r_i\otimes e_i,
+\qquad z^2=\sum_i r_i^2\otimes e_i^2=q_R(v)\otimes1=0.
+\tag{14.13}
+$$
+
+约化性给 $z=0$。$1,e_1,e_2,e_3$ 是 $L$ 的 $F$-基，故它们延拓后是 $R\otimes_F L$ 的自由 $R$-基，于是所有 $r_i=0$。定理 14.4 给所需刚性。几何约化性限制到仿射开集仍成立，同一论证逐开集适用；相同的恒等映射在交叠上相容，故得到概形断言。
+
+对 $E$ 版，若 $q_E$ 各向异性，定理 14.5 给 $[LE:E]=4$。乘法映射 $E\otimes_F L\to LE$ 满射，源与目标都为四维 $E$-空间，故它是同构。对几何约化 $E$-代数 $B$，$B\otimes_E LE$ 约化；现在在此环中使用同一 (14.13)，其中 $1,e_1,e_2,e_3$ 是 $LE$ 的 $E$-基，再由定理 14.4 得刚性，概形版也逐仿射开集成立。若 $q_E$ 各向同性，定理 14.5 的 $U_v(t)$ 则在几何约化的 $E$-源 $\mathbb A^1_E$ 上非恒定，推翻普遍刚性条件。这证明精确等价。$\square$
+
+**定理 14.7（最小有限解锁次数及全部二次来源）。** 原入口的最小有限解锁扩张次数恰为二。更精确地，对每个 $c\in F\setminus F^2$，在固定代数闭包内令 $E=F(\sqrt c)$，则
+
+$$
+\begin{aligned}
+E\text{ 解锁}
+&\Longleftrightarrow c\in M\setminus F^2\\
+&\Longleftrightarrow F(\sqrt c)\text{ 是实际 }L/F\text{ 的二次中间域}.
+\end{aligned}
+\tag{14.14}
+$$
+
+可分二次扩张不解锁。对固定实际 $L$，这些最小来源、其存在性和最小次数均与 $\pi$ 无关。四次扩张 $E=L$ 足以解锁，但非最小；不同最小来源不必相互包含，不存在本结论所指定的唯一最小包含域。
+
+证明。$E$ 的平方子域恰为 $E^2=F^2(c)$，这是次数二的扩张。若 $c\in M\setminus F^2$，则 $ME^2=M$，域塔给
+$[ME^2:E^2]=[M:F^2(c)]=2$，定理 14.5 给解锁。若 $c\notin M$，因 $c^2\in F^2\subset M$，有 $[M(c):M]=2$，从而
+
+$$
+[ME^2:E^2]=[M(c):F^2(c)]
+=\frac{[M(c):F^2]}{[F^2(c):F^2]}=\frac{8}{2}=4.
+\tag{14.15}
+$$
+
+故不解锁。这给第一个等价。由于实际代数闭包中的平方根唯一，$\sqrt c\in L$ 恰等价于 $c\in L^2=M$；$c\notin F^2$ 保证对应中间域的次数确为二，得到第二个等价。
+
+任意可分二次 $E/F$ 是可分生成扩域。[Scully，前引文，引理 3.4](https://arxiv.org/pdf/1710.09692v1) 给拟线性形式在可分生成扩域下保持各向异性，故原 $q$ 在 $E$ 上仍各向异性，定理 14.5 排除解锁。此经典输入实际上也排除了全部可分生成扩域，并非只排除二次扩张。
+
+由 $[M:F^2]=4$，可选 $c\in M\setminus F^2$，于是确有二次解锁来源；次数一是原 $F$，其自同构只有恒等。因而最小有限次数为二。特征二的二次域扩张非可分时必为某个 $F(\sqrt c)$，所以 (14.14) 与可分情形穷尽全部最小有限来源。
+
+上述判据只用实际 $M=L^2$，未用 $\lambda$ 或 $\pi$。定理 13.11 允许同一 $L$ 上任意 $F$-线性 $\pi$ 满足 $\pi(1)=1$，且每份投影均给原入口；逐份应用上述证明，判据和最小次数相同。它不把不同投影的完整自同构函子认作相同，也不合并带标记对象。
+
+若 $E=L$，则 $E^2=M$，所以 $[ME^2:E^2]=1$，给四次全开根的充分性。另一方面，$F(e_1)$ 与 $F(e_2)$ 都是二次中间域；若它们相同，则 $L=F(e_1,e_2)$ 的次数至多二，与 $[L:F]=4$ 矛盾。两个不同二次域之间不能有真包含。故最小次数并不挑出一个唯一最小包含域。$\square$
+
+**命题 14.8（平凡交集不能代替实际线性不交）。** 对任意定义 14.3 的原入口，存在扩域 $E/F$，使
+
+$$
+E\cap L=F,\qquad E^2\cap M=F^2,
+\qquad [LE:E]=[ME^2:E^2]=2,
+\tag{14.16}
+$$
+
+而同一 $D_E$ 有定理 14.5 的非恒定代数一参数子群。因此即使两个实际交集都最小，仍不能据此判刚性。
+
+证明。在 $L$ 中取 $x=e_1$、$y=e_2$，则 $x^2=\alpha$、$y^2=\beta$，$1,x,y,xy$ 是 $F$-基。在实际有理函数域 $L(t)$ 中，$t$ 对 $L$ 超越，令
+
+$$
+z=x+ty,\qquad E=F(t,z),\qquad z^2=\alpha+\beta t^2.
+\tag{14.17}
+$$
+
+$1,x,y,xy$ 在 $F(t)$ 上仍独立：任何关系清分母后，逐个 $t$ 的幂比较就回到它们在 $F$ 上的独立性。因此 $z\notin F(t)$，而 $z^2\in F(t)$，得 $[E:F(t)]=2$；同时 $LE=L(t)$，由域塔
+$[LE:E]=4/2=2$。
+
+若 $\ell\in E\cap L$，可唯一写
+
+$$
+\ell=a+bx+cy+dxy
+=A(t)+B(t)(x+ty),
+\qquad a,b,c,d\in F,\quad A(t),B(t)\in F(t).
+$$
+
+比较上述四个 $F(t)$-基系数给 $d=0$、$A(t)=a$、$B(t)=b$ 和 $tB(t)=c$。$t$ 超越而 $b,c\in F$，故 $b=c=0$，$\ell=a\in F$，得到第一个交集。若 $m\in E^2\cap M$，它在 $E$ 中有根，在 $L$ 中也有根；$L(t)$ 中平方单射使这两个根相同，属于 $E\cap L=F$，所以 $m\in F^2$。反向包含显然，得到第二个交集。(14.11) 给余下次数等式。
+
+也可在此实际来源直接看到 (14.9) 的非零零向量：
+
+$$
+v=\beta t e_1+\alpha e_2+z e_3,
+\qquad q_E(v)=\alpha\beta(\beta t^2+\alpha+z^2)=0.
+\tag{14.18}
+$$
+
+$\alpha\ne0$ 保证 $v\ne0$，所以定理 14.5 给所述参数子群。
+
+这里的线性不交严格采用 [Stacks，09IC，定义 9.27.2](https://stacks.math.columbia.edu/tag/09IC)：共同环境中的乘法映射 $E\otimes_F L\to EL$ 必须单射。本例此映射的源为四维 $E$-空间、像为二维 $E$-空间，故不单射。平凡交集没有支付这个定义所要求的全部联合线性关系。$\square$
+
+**命题 14.9（双数方向、约化来源与几何约化边界）。** 下列现象均在上述同一入口范围内成立。每份原入口都有非恒等、约化后为恒等的双数自同构，而在原 $F$ 上没有非恒定 $\mathbb A^1_F$ 保关系族；每份二次解锁来源都给约化且光滑于该扩域的参数源，它作为 $F$-源却不几何约化；另有并不几何约化于 $F$、但仍完全刚性的域参数源。因此平方零形式方向、约化来源和几何约化来源具有不同的结论范围。
+
+证明。先令 $R=F[\epsilon]/(\epsilon^2)$，取同一基上的
+
+$$
+H=\operatorname{diag}(1,1,0),\qquad
+T=I+\epsilon H=\operatorname{diag}(1+\epsilon,1+\epsilon,1).
+\tag{14.19}
+$$
+
+由 (14.7)，$T\in\operatorname{Aut}_D(R)$，$T\ne I$，但令 $\epsilon=0$ 后变成恒等。对应的 $H$ 是 $D$ 的非零导子：在三对基向量上，$D(e_1,e_2)=e_3$ 的导子式两侧均为零，而 $D(e_2,e_3)=\beta e_1$、$D(e_3,e_1)=\alpha e_2$ 的导子式两侧分别为 $\beta e_1$、$\alpha e_2$；重复槽和交换槽由交替性与双线性给出。一般乘法的自同构、基变换自然性及双数—导子接口直接沿用现有 [EvolutionAutomorphismTangentBridge](../../../D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionAutomorphismTangentBridge.lean) 的 $\mathrm{automorphisms}$、$\mathrm{Realizes}$ 与 $\mathrm{Infinitesimal}$ 中平方零构造及重构，及其 [对应 Blueprint](../../../Blueprint/D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionAutomorphismTangentBridge.md)；这里仅将该接口用于同一 $D$ 和这个 $H$，不另立通用切向分类。
+
+这也展示秩一式的限制：$v=\epsilon e_1$ 是非零零向量，但
+$v\otimes g_R(v,-)=0$，所以它的 (14.12) 秩一式恒等。非恒等的 (14.19) 来自定理 14.4 的另一情形。由于原 $q$ 各向异性，定理 14.5 已排除原 $F$ 上任何非恒定 $\mathbb A^1_F$ 族；因此非零双数方向本身不能供应这样的族，也不能把其维数当作几何维数。
+
+再取定理 14.7 的二次解锁 $E=F(s)$、$s^2=c\in M\setminus F^2$。$E[t]$ 是约化环，$\mathbb A^1_E$ 光滑于 $E$，并承载定理 14.5 的非恒定子群。可是
+
+$$
+E\otimes_F E\simeq E[\eta]/(\eta^2),
+\qquad \eta=1\otimes s-s\otimes1\ne0.
+\tag{14.20}
+$$
+
+非零性由 $1,s$ 的 $F$-独立性给出；添入 $t$ 后该幂零元仍非零，所以 $E[t]$ 不几何约化于 $F$。因而此例没有违反定理 14.6 的 $F$ 版；它只给出光滑于 $E$ 的来源，不能把基域标签换成 $F$。
+
+最后给出刚性而不几何约化的来源。令
+
+$$
+F=\mathbb F_2(u,v,w),\qquad
+M=F^2(u,v),\qquad
+L=F(\sqrt u,\sqrt v),\qquad E=F(\sqrt w),
+\tag{14.21}
+$$
+
+其中 $u,v,w$ 代数独立，在 $L$ 上取基 $1,\sqrt u,\sqrt v,\sqrt{uv}$ 的标量坐标投影 $\pi$。有 $F^2=\mathbb F_2(u^2,v^2,w^2)$。按三个变量指数的奇偶分组，八个单项式
+$u^iv^jw^k$、$i,j,k\in\{0,1\}$ 是 $F$ 的 $F^2$-基：有理函数分母乘以自身可化成平方分母，故它们张成；关系清去平方域分母后，八组多项式指数奇偶互异，故独立。因此 $[M:F^2]=4$ 且 $w\notin M$；平方映射给 $[L:F]=4$ 和 $L^2=M\subset F$。定理 13.11 保证这些数据确为原 P+K 入口。
+
+定理 14.7 现在给 $\operatorname{Aut}_D(E)=\{I\}$，但把 (14.20) 中的 $c$ 换成 $w$，仍有 $E\otimes_F E$ 含非零平方零元，故域 $E$ 不几何约化于 $F$。这证明几何约化是普遍刚性的充分条件，不是单个来源刚性的必要条件。
+
+特征二双线性等距群的非约化及约化后仍非几何约化的现象已有经典先例，参见 [Milne，*Algebraic Groups: The Theory of Group Schemes of Finite Type over a Field*，iAG2022，练习 24-2](https://www.jmilne.org/math/Books/iAG2022.pdf)。同书练习 24-3 的约化等距群描述以基域完美为前提，此处 $[M:F^2]=4$ 排除了该前提，故不据它推断本入口的光滑性、完整群结构或维数。$\square$
+
+**定义 14.10（关系—来源桥的数学范围与完整白话解释）。** 本节的“关系—来源桥”指由同一全域 P+K 入口恢复的 $D,g,L,M$ 之间的 (14.2)、(14.5)、(14.8)、(14.14)，以及定理 14.6 的来源刚性。它的数学内容是将弱入口的唯一返回形式推广到全环，以此把非约化系数上的存在判据、扩域后的实际平方子域次数和最小二次来源接在同一对象上。叉积等距群、秩一等距变换、拟线性形式的表示空间与范数域、纯不可分域及线性不交都仅作为这些推导中的既有中间事实。所引文献的限定范围不包含从本入口到全部这些来源判据的同一条桥；这里将该桥视为仓内综合推导，不附历史首次性或穷尽文献的断言。C123 的引理 63.2 以实 EJA 及内导子协变为前提，[MatrixUnitGenerator](../../../Blueprint/D5/S3/Quantum/Transport/MatrixUnitGenerator.md) 处理复矩阵单位及实可微路径；两者均不提供这里任意域、特征二和实际 $M$ 的来源判据。
+
+白话中的“原二元关系”就是原空间里两个输入产生一个响应的同一双线性规则；P 要求响应再与任何输入作用时返回最初两输入的平面，K 要求原标量域上作用两次才消失的方向第一次就已消失。§13 已由这两条关系迫使整个原空间只有三维，并恢复唯一的比较形式；把一个标量单位槽同三维纯部合在一起，特征二时得到一个四维域，每个元素的平方都回到原标量域，而投影决定哪三维是纯部。固定这些数据以后，原标量域上没有非恒等保关系变化，但允许平方零量的系数环可以显示只存在于形式层面的微小方向。若要得到一整条真正由多项式参数描述、逐参数保持同一关系的变化，障碍由四维域的实际平方子域决定：把来源域自身的平方同它合在一起后，若仍保留四个独立平方方向，就没有这种变化；若独立数降为二或一，就有非恒定的加法参数子群。最少只需添入原四维域里一个非平凡二次部分，不必把全部平方根都添齐；原标量域内的一个非平方数能否这样开根，恰由它是否属于实际平方子域判断。不同二次部分都可达到这个最小次数，投影的选择不改变此存在性判据。代价是原 K 在解锁后的域上失效，而新参数源的光滑性属于新域；这没有把形式方向变成原域上的变化，也没有提供物理控制、时间演化、Born 规则、复合或钟的实现。这里的三维始终指原 $V$，不指一个额外的整个物理状态空间。
+
+## 追加锚（本行以下为增补区）
+
+## 15. 同一实际域的相对约化检测与纯部次数边界
+
+**定义 15.1（固定域的相对约化与归一化纯部）。** 设 $F$ 是特征二的域，$L/F$ 是有限域扩张，满足 $L^2\subseteq F$，记 $n=[L:F]=2^r$。允许 $r=0$，此时 $L=F$；$r\ge1$ 时扩张为纯不可分指数一。归一化投影指 $F$-线性映射 $\pi:L\to F$ 满足 $\pi(1)=1$。置
+
+$$
+V_\pi=\ker\pi,\qquad L=F1\oplus V_\pi,\qquad
+q_\pi(v)=v^2\in F.
+\tag{15.1}
+$$
+
+对每个交换含单位 $F$-代数 $R$，包括零环，置
+
+$$
+A_R=L\otimes_F R=R1\oplus V_{\pi,R},\qquad
+V_{\pi,R}=V_\pi\otimes_F R,\qquad
+\pi_R=\pi\otimes_F\operatorname{id}_R.
+\tag{15.2}
+$$
+
+按 $L$ 中原乘法定义 $A_R$ 的乘法。选择任意 $F$-基 $1,b_1,\ldots,b_{n-1}$，其中 $b_i\in V_\pi$，则
+
+$$
+\begin{aligned}
+q_{\pi,R}\Bigl(\sum_i t_i b_i\Bigr)&=\sum_i b_i^2t_i^2,\\
+Q_R\Bigl(s1+\sum_i t_i b_i\Bigr)&=s^2+\sum_i b_i^2t_i^2,\\
+x^2&=Q_R(x)1\qquad(x\in A_R).
+\end{aligned}
+\tag{15.3}
+$$
+
+这些式子由特征二和 $L^2\subseteq F$ 给出，与所选基无关。$R\to A_R$ 是直和分解中的单射，包括零环情形；因此 $Q_R$ 的标量值唯一。这里称 $q_{\pi,R}$ 各向异性，严格指全部向量上的条件
+
+$$
+\forall v\in V_{\pi,R},\quad q_{\pi,R}(v)=0\Longrightarrow v=0.
+\tag{15.4}
+$$
+
+不要求向量幺模。称 $R$ 对固定实际 $L/F$ 相对约化，是指 $A_R$ 没有非零幂零元。它只涉及这一个 $L$。与之分别，$R$ 自身约化只检验 $R$ 中的幂零元；$R$ 几何约化于 $F$ 则要求对每个扩域 $K/F$，$K\otimes_F R$ 都约化，沿用定义 14.3 及 [Stacks，030V](https://stacks.math.columbia.edu/tag/030V)。
+
+当 $n=4$ 且 $L$ 来自定义 14.3 的同一原入口 $D$ 时，其原投影为 §13 恢复的指定 $\pi$，$V_\pi$ 和 $q_\pi$ 就是原 $V$ 和 $q$。在同一实际 $L$ 上另选归一化投影时，定理 13.11 给相应的原模型 $(V_\pi,D_\pi)$，其中 $D_\pi(a,b)=ab-\pi(ab)1$。比较不同投影不表示同一 $D$ 可以任意改动其已恢复投影。对一般 $n$，本定义只取域乘法、投影与平方，不附加一个满足 P+K 的二元关系，也不假设扩底后的 K。
+
+**定理 15.2（纯部到全部扩底代数的全环桥）。** 在定义 15.1 中，若 $r\ge2$，则对每份归一化 $\pi$ 及每个交换含单位 $F$-代数 $R$，
+
+$$
+q_{\pi,R}\text{ 各向异性}
+\quad\Longleftrightarrow\quad
+L\otimes_F R\text{ 约化}.
+\tag{15.5}
+$$
+
+特别地，对定义 14.3 的同一四次原入口，准确的来源判据是
+
+$$
+\operatorname{Aut}_D(R)=\{I\}
+\quad\Longleftrightarrow\quad
+q_R\text{ 各向异性}
+\quad\Longleftrightarrow\quad
+L\otimes_F R\text{ 约化}.
+\tag{15.6}
+$$
+
+第一等价直接使用定理 14.4；最后一项推出中间项的四次情形直接使用定理 14.6 证明中的 (14.13)，其中只需所述扩底环约化。反向蕴涵不要求 $R$ 是整环、Noether 环或有限生成 $F$-代数。
+
+证明。先在本证明内给出所需域计算。对任意扩域 $E/F$，在 $E$ 的一份代数闭包中取 $L$ 的唯一 $F$-嵌入，记实际合成域为 $LE$。经典纯不可分逐次添根事实 [Stacks，09HF、09HI](https://stacks.math.columbia.edu/tag/09HI) 在此给出 $L=F(a_1,\ldots,a_r)$，其中 $a_i^2\in F$，逐次添入的次数均为二；故
+
+$$
+d=[LE:E]\in\{2^s:0\le s\le r\}.
+\tag{15.7}
+$$
+
+乘法映射
+
+$$
+\mu_E:A_E\longrightarrow LE,\qquad \ell\otimes e\longmapsto \ell e
+\tag{15.8}
+$$
+
+满射：其像是包含 $E,L$ 的有限维 $E$-子代数，且位于域中；非零元素的乘法在该有限维空间上单射，因而满射，故像本身是域，必等于 $LE$。对每个 $x\in A_E$，(15.3) 使
+
+$$
+\mu_E(x)=0\quad\Longleftrightarrow\quad x^2=0.
+\tag{15.9}
+$$
+
+正向用 $0=\mu_E(x)^2=Q_E(x)$，以及 $x^2=Q_E(x)1$；反向用域 $LE$ 中平方单射。任何幂零元的像在域中为零，而 (15.9) 的元素都是幂零元。因此
+
+$$
+N_E:=\ker\mu_E=\sqrt{(0)}_{A_E}
+=\{x\in A_E:x^2=0\},\qquad
+\dim_E N_E=n-d.
+\tag{15.10}
+$$
+
+等式不声称理想 $N_E$ 的乘积 $N_E^2$ 必为零，只说其中每个元素的平方为零。域上拟线性形式的零向量构成线性子空间是 [Scully，*Quasilinear quadratic forms and function fields of quadrics*，arXiv:1710.09692v1，§2A](https://arxiv.org/pdf/1710.09692v1) 的经典事实；此处 (15.8)—(15.10) 还明确识别了同一实际扩底代数中的该子空间。
+
+若 $d<n$，二的幂条件给 $d\le n/2$。$V_{\pi,E}$ 是 $A_E$ 的余维一子空间，故
+
+$$
+\dim_E(N_E\cap V_{\pi,E})\ge n-d-1\ge n/2-1>0
+\qquad(n\ge4).
+\tag{15.11}
+$$
+
+其非零元素由 (15.9) 给纯部非零零向量。若 $d=n$，$N_E=0$，纯部便没有非零零向量。因此在域 $E$ 上，纯部各向异性当且仅当 $d=n$，也当且仅当 $A_E$ 约化。没有要求 $\pi$ 对某个添根基是坐标投影。
+
+现在设 $q_{\pi,R}$ 各向异性。若 $R$ 非约化，从非零幂零元的最小消失幂可取 $0\ne t\in R$ 满足 $t^2=0$。取任意非零 $b\in V_\pi$ 并将它补成 $F$-基，则 $tb\ne0$，而 $q_{\pi,R}(tb)=b^2t^2=0$，矛盾。故 $R$ 约化。
+
+还须把纯部条件传到局部环，不能把它直接传到剩余域。设 $S\subset R$ 为乘法闭集，$w=v/s\in S^{-1}V_{\pi,R}$ 且 $q(w)=0$。自由模的有限个坐标允许取共同分母 $s\in S$。存在 $t\in S$ 使 $tq(v)=0$，于是 $q(tv)=t^2q(v)=0$，由假设 $tv=0$，故 $w=(tv)/(ts)=0$。所以纯部各向异性保持于任意局部化；该清分母论证没有使用 $R$ 约化或 $s,t$ 非零因子。
+
+对每个极小素理想 $\mathfrak p$，约化环 $R$ 的 $R_{\mathfrak p}$ 是域，且
+
+$$
+R\hookrightarrow
+\prod_{\mathfrak p\in\operatorname{Min}R}R_{\mathfrak p}.
+\tag{15.12}
+$$
+
+这是 [Stacks，00EU、00EW](https://stacks.math.columbia.edu/tag/00EW) 对任意约化环的结论，没有有限极小素或 Noether 假设。纯部条件经上述局部化成立于每个 $R_{\mathfrak p}$，域计算遂使每个 $A_R\otimes_R R_{\mathfrak p}$ 约化。取 $L$ 的有限 $F$-基，(15.12) 逐坐标给单射
+
+$$
+A_R\hookrightarrow
+\prod_{\mathfrak p\in\operatorname{Min}R}
+\bigl(L\otimes_F R_{\mathfrak p}\bigr).
+\tag{15.13}
+$$
+
+左侧幂零元在右侧每个因子中均为零，故本来就是零。这支付了任意 $R$ 上从纯部到整体的方向。
+
+反向对所有 $n$ 都成立：若 $A_R$ 约化，$v\in V_{\pi,R}$ 且 $q(v)=0$，则 (15.3) 给 $v^2=0$，因而 $v=0$。在四次情形这正是已引的 (14.13)。最后把定理 14.4 的原全环等价接上，得到 (15.6)，没有重新证明其自同构构造。零环中 $A_R=V_{\pi,R}=0$，约化与各向异性均成立，$\operatorname{Aut}_D(R)$ 只有恒等；因此它也满足全部等价。$\square$
+
+**定理 15.3（准确次数阈值与两个低次替代）。** 称一对 $(L,\pi)$ 具有普遍纯部检测性质，是指 (15.5) 对所有交换含单位 $F$-代数 $R$ 成立。在定义 15.1 的全部次数中，该性质当且仅当 $r\ge2$，且其真假与归一化投影的选择无关。低次的准确替代如下。
+
+若 $r=1$，对每份归一化投影可取 $0\ne\theta\in\ker\pi$，置 $a=\theta^2$，则 $a\in F^\times\setminus F^2$，$L=F(\theta)$，并且对所有 $R$，
+
+$$
+\begin{aligned}
+q_{\pi,R}(t\theta)&=a t^2,\\
+q_{\pi,R}\text{ 各向异性}&\quad\Longleftrightarrow\quad R\text{ 约化},\\
+L\otimes_F R\text{ 约化}
+&\quad\Longleftrightarrow\quad
+\bigl[s^2+a t^2=0\Longrightarrow s=t=0
+\text{ 对所有 }s,t\in R\bigr].
+\end{aligned}
+\tag{15.14}
+$$
+
+若 $r=0$，唯一投影是恒等，纯部为零，$q_{\pi,R}$ 对每个 $R$ 均各向异性，而 $L\otimes_F R$ 约化恰当且仅当 $R$ 约化。因而在所有次数中，固定 $L$ 后纯部各向异性的真假谓词都与 $\pi$ 无关；只有 $r\ge2$ 时，它才普遍检测整个扩底代数。
+
+证明。$r\ge2$ 的结论直接使用定理 15.2。设 $r=1$。$\ker\pi$ 一维且与 $F1$ 的交为零，故 $\theta\notin F$，且 $1,\theta$ 是基。若 $a=c^2$、$c\in F$，域中平方单射给 $\theta=c$，矛盾；$a=0$ 同样不可能。因此 $a$ 是所述非零非平方数。因为 $a$ 在每个非零 $F$-代数中为单位，$q$ 各向异性恰指 $R$ 中没有非零平方零元；这与约化等价：任何非零幂零元 $u$ 以其最小消失幂 $m\ge2$ 给非零平方零元 $u^{m-1}$。零环也满足这两个条件。
+
+对 (15.14) 的最后一项，$s+t\theta$ 的平方正是 $s^2+a t^2$。任意交换环约化当且仅当其平方零元只有零，故该二元条件正好检验整个 $A_R$。更一般地，定义 15.1 的每个次数都有
+
+$$
+A_R\text{ 约化}\quad\Longleftrightarrow\quad
+\bigl[Q_R(x)=0\Longrightarrow x=0\quad(x\in A_R)\bigr],
+\tag{15.15}
+$$
+
+因为 $Q_R(x)=0$ 与 $x^2=0$ 等价。纯部是这个完整条件的限制，二次时该限制仅保留原 $R$ 的约化信息。
+
+严格的二次反例取 $R=L$。环 $R$ 是域，故对任意归一化 $\pi$，纯部形式各向异性。然而
+
+$$
+0\ne z=\theta\otimes1+1\otimes\theta\in L\otimes_F L,
+\qquad z^2=a\otimes1+1\otimes a=0.
+\tag{15.16}
+$$
+
+非零性由 $1\otimes1,\theta\otimes1$ 是右侧自由 $L$-模的基给出：$z$ 在第二个基元上的系数为一。这也在二元条件中给出 $(s,t)=(\theta,1)$ 的非零零向量。故每一份二次 $(L,\pi)$ 都不具有普遍检测性质。
+
+若 $r=0$，$A_R=R$ 且纯部为零，取 $R=F[\epsilon]/(\epsilon^2)$，则纯部条件真而 $A_R$ 非约化，给一次情形的严格反例。所有次数已经穷尽。
+
+在 $r\ge2$ 时纯部维数是 $2^r-1$，故三维、七维、十五维及更高这些维数均具有所述检测性质。定理没有把 $r\ge3$ 的纯部赋予一个新的 P+K 入口；原三维性仍直接来自定理 13.4。普遍纯部检测性质本身不能在这些维数之间唯一选出三维。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 16. 相对约化的局部判据与标记信息
+
+**定义 16.1（局部环、剩余域与真假谓词）。** 保留定义 15.1。记 $\operatorname{Spec}R$、$\operatorname{Max}R$、$\operatorname{Min}R$ 分别为素理想、极大理想、极小素理想的集合。对素理想 $\mathfrak p$，$R_{\mathfrak p}$ 是局部环，$\kappa(\mathfrak p)=R_{\mathfrak p}/\mathfrak pR_{\mathfrak p}$ 是其剩余域。在 $\kappa(\mathfrak p)$ 的代数闭包中取唯一的 $L$ 嵌入以形成实际合成域 $L\kappa(\mathfrak p)$。定义下列真假谓词：
+
+$$
+\begin{aligned}
+\mathcal P_{L,\pi}(R)&: q_{\pi,R}\text{ 各向异性},\\
+\mathcal B_L(R)&:\ L\otimes_F R\text{ 约化},\\
+\mathcal C_{L,\pi}(R)&:\quad
+q_{\pi,\kappa(\mathfrak p)}\text{ 对每个 }
+\mathfrak p\in\operatorname{Spec}R\text{ 各向异性}.
+\end{aligned}
+\tag{16.1}
+$$
+
+$\mathcal P$ 检验原环中的全部纯向量，$\mathcal C$ 检验全部剩余域中的向量；后者先商去素理想再取分式，前者的局部化只容许清分母。这是不同的操作。零环的上述素理想集合均为空，涉及这些集合的全称条件按空真理解。
+
+**定理 16.2（准确的局部与整体条件）。** 对定义 15.1 的任意次数 $n$ 和任意 $R$，有
+
+$$
+\begin{aligned}
+\mathcal P_{L,\pi}(R)
+&\Longleftrightarrow
+\forall\mathfrak m\in\operatorname{Max}R,\quad
+\mathcal P_{L,\pi}(R_{\mathfrak m})\\
+&\Longleftrightarrow
+\forall\mathfrak p\in\operatorname{Spec}R,\quad
+\mathcal P_{L,\pi}(R_{\mathfrak p}),\\[2pt]
+\mathcal B_L(R)
+&\Longleftrightarrow
+\forall\mathfrak m\in\operatorname{Max}R,\quad
+\mathcal B_L(R_{\mathfrak m})\\
+&\Longleftrightarrow
+\forall\mathfrak p\in\operatorname{Spec}R,\quad
+\mathcal B_L(R_{\mathfrak p}).
+\end{aligned}
+\tag{16.2}
+$$
+
+其准确极小素判据为
+
+$$
+\mathcal B_L(R)
+\quad\Longleftrightarrow\quad
+\left[
+R\text{ 约化，且 }
+[L\kappa(\mathfrak p):\kappa(\mathfrak p)]=n
+\text{ 对每个 }\mathfrak p\in\operatorname{Min}R
+\right].
+\tag{16.3}
+$$
+
+若 $n\ge2$，另有
+
+$$
+\mathcal P_{L,\pi}(R)
+\quad\Longleftrightarrow\quad
+\left[
+R\text{ 约化，且 }
+q_{\pi,\kappa(\mathfrak p)}\text{ 各向异性}
+\text{ 对每个 }\mathfrak p\in\operatorname{Min}R
+\right].
+\tag{16.4}
+$$
+
+在 $n\ge4$ 时，(16.3)、(16.4) 的右侧等价；二次时 (16.4) 的剩余域条件自动成立，而 (16.3) 的次数条件仍不能省略。$n=1$ 时应使用定理 15.3 的零纯部结论，不能从纯部各向异性推出 $R$ 约化。
+
+证明。定理 15.2 证明中的清分母论证只使用 (15.3)，故适用于所有次数的 $\mathcal P$，给它保持于任意局部化。反向设 $0\ne v\in V_{\pi,R}$ 且 $q(v)=0$。其 $R$-模湮灭理想
+
+$$
+\operatorname{Ann}_R(v)=\{a\in R:av=0\}
+\tag{16.5}
+$$
+
+是一个真理想，取包含它的极大理想 $\mathfrak m$。若 $v/1=0$，便有 $s\notin\mathfrak m$ 使 $sv=0$，与 $s\in\operatorname{Ann}_R(v)\subseteq\mathfrak m$ 矛盾。故 $v/1$ 在该局部环中仍是非零零向量。这证明 $\mathcal P$ 的两项局部等价，且不要求向量幺模。
+
+对 $\mathcal B$，扩底与局部化交换。若 $A_R$ 约化，而 $x/s$ 是其局部化中的幂零元，则存在正整数 $k$ 及被倒置的 $t$，使 $tx^k=0$。于是 $(tx)^k=t^{k-1}(tx^k)=0$，约化性给 $tx=0$，故 $x/s=0$。反向若 $0\ne x\in A_R$ 幂零，取包含真理想 $\operatorname{Ann}_R(x)$ 的极大理想；与上一段相同的论证使 $x/1$ 仍非零且幂零。因此得到 $\mathcal B$ 的两项局部等价。
+
+若 $A_R$ 约化，单射 $R\to A_R$ 使 $R$ 约化。对极小素 $\mathfrak p$，经典事实 [Stacks，00EU](https://stacks.math.columbia.edu/tag/00EU) 给 $R_{\mathfrak p}$ 是域，故 $\mathfrak pR_{\mathfrak p}=0$ 且 $R_{\mathfrak p}=\kappa(\mathfrak p)$。$A_R$ 的局部化约化，由 (15.8)—(15.10) 得 $[L\kappa(\mathfrak p):\kappa(\mathfrak p)]=n$。反之，若 (16.3) 右侧成立，(15.10) 使所有这些域上的扩底环约化，而 [Stacks，00EW](https://stacks.math.columbia.edu/tag/00EW) 的约化环嵌入逐个有限自由坐标给出 (15.13)。故 $A_R$ 是约化环的积的子环，也约化。这证明 (16.3)。
+
+对 (16.4)，当 $n\ge2$ 时，定理 15.2 证明中用平方零标量乘非零纯基元的论证仍适用，故 $\mathcal P$ 强制 $R$ 约化。再局部化到极小素，得到所述剩余域条件。反之，若右侧成立，一个 $q(v)=0$ 的纯向量在每个 $R_{\mathfrak p}=\kappa(\mathfrak p)$ 中都为零，(15.12) 逐坐标使 $v=0$。$n\ge4$ 时的比较由 (15.10)—(15.11) 给出；二次的纯形式在任何域上都是系数非零的一元平方形式，故其剩余域条件自动成立。
+
+在 (16.3) 中，次数条件也恰好说 $L$ 与这些 $\kappa(\mathfrak p)$ 对实际嵌入线性不交：按 [Stacks，09IC，定义 9.27.2](https://stacks.math.columbia.edu/tag/09IC)，要求的正是 (15.8) 的乘法映射单射；其源维数为 $n$，像维数为所列次数。不能以实际交集最小代替此条件，反例已由命题 14.8 给出。
+
+几何约化的全部扩张量词蕴涵 $\mathcal B_L(R)$，但固定 $L$ 的检验一般不蕴涵几何约化。在命题 14.9 的同一 (14.21) 中，$E=F(\sqrt w)$ 不几何约化于 $F$，且原 $\operatorname{Aut}_D(E)=\{I\}$；(15.6) 因而给 $L\otimes_F E$ 约化。这直接复用该例，不另作来源构造。另一方面，若固定的有限 $L$ 恰好是 $F^{1/2}$，[Stacks，030V](https://stacks.math.columbia.edu/tag/030V) 使这一次检验确与几何约化等价。因此边界是一般不能以一个选定 $L$ 代表全部扩张；不是断言每一个有限 $L$ 的检验都严格较弱。(15.5) 对所有 $R$ 成立的量词也只给每个 $R$ 上两个条件的等价，不把 $\mathcal B_L(R)$ 改成对所有扩域的条件。$\square$
+
+**定理 16.3（全部剩余域判据的两个失败方向）。** 固定定义 14.3 的同一实际四次 $L/F$，对其每份归一化投影，下列两个蕴涵都不成立：
+
+$$
+\mathcal C_{L,\pi}(R)\Longrightarrow\mathcal P_{L,\pi}(R),
+\qquad
+\mathcal P_{L,\pi}(R)\Longrightarrow\mathcal C_{L,\pi}(R).
+\tag{16.6}
+$$
+
+第一项的反例可取所有剩余域都等于原 $F$ 的非约化局部环；第二项的反例可取扩底代数本身为整环的几何约化 $F$-代数。对原 $D$，按 (15.6)，两项同样是以全部剩余域上的刚性替代原环刚性的失败方向。
+
+证明。第一项取命题 14.9 已用的 $R_+=F[\epsilon]/(\epsilon^2)$。每个素理想包含幂零元 $\epsilon$，且商环 $F$ 是域，所以其唯一素理想是 $(\epsilon)$，剩余域为 $F$。原 $q_\pi$ 按定理 13.11 各向异性，故 $\mathcal C_{L,\pi}(R_+)$ 成立。然而对任何非零 $b\in V_\pi$，$\epsilon b$ 是非零平方零纯向量，故 $\mathcal P_{L,\pi}(R_+)$ 不成立。定理 14.4 给非恒等自同构，命题 14.9 的双数式已给具体实例。原环信息在取剩余域时被丢去。
+
+第二项令 $R_-=F[t]$。有 $L\otimes_F R_-=L[t]$，这是整环，故 (15.5) 给 $\mathcal P_{L,\pi}(R_-)$。任意扩域 $K/F$ 上 $K[t]$ 都是整环，也直接说明 $R_-$ 几何约化于 $F$。
+
+由原实际平方子域 $M=L^2$ 的 $[M:F^2]=4$，取 $c\in M\setminus F^2$。多项式 $t^2+c$ 按 [Stacks，09HF](https://stacks.math.columbia.edu/tag/09HF) 不可约，所以
+
+$$
+\mathfrak p=(t^2+c)\in\operatorname{Max}F[t],\qquad
+\kappa(\mathfrak p)\simeq E:=F(\sqrt c).
+\tag{16.7}
+$$
+
+这是定理 14.7 的原二次解锁域，故定理 14.4、14.7 给 $q_{\pi,E}$ 的非零零向量；因此 $\mathcal C_{L,\pi}(R_-)$ 不成立。这里的 $\mathfrak p$ 不是极小素，$F[t]$ 的唯一极小素是 $(0)$。其特殊纤维 $L\otimes_F E$ 的非约化性还能直接写出：在 $L$ 中令 $h=\sqrt c\notin F$，在 $E$ 中令 $s=\sqrt c$，则
+
+$$
+0\ne h\otimes1+1\otimes s\in L\otimes_F E,
+\qquad (h\otimes1+1\otimes s)^2=0.
+\tag{16.8}
+$$
+
+非零性由把 $1,h$ 补成 $L$ 的 $F$-基、再比较扩底后的 $E$-坐标给出。原环上的 $L[t]$ 没有幂零元，商出这个特殊纤维后却产生幂零元；(16.2) 中的实际局部环仍满足纯部各向异性，其剩余域则不满足。故两个方向的失败分别来自被抹去的原环幂零信息，以及取商后新出现的纤维退化。加上 $R$ 约化时，$\mathcal C$ 由 (16.4) 足以推出 $\mathcal P$，但第二个反例说明仍非必要。$\square$
+
+**定理 16.4（共同真假谓词不能恢复纯部标记）。** 固定同一实际四次 $L/F$。对任意两份归一化投影 $\pi,\pi'$，以及每个交换含单位 $F$-代数 $R$，
+
+$$
+\begin{aligned}
+\mathcal P_{L,\pi}(R)&=\mathcal P_{L,\pi'}(R)=\mathcal B_L(R),\\
+\bigl[\operatorname{Aut}_{D_\pi}(R)=\{I\}\bigr]
+&=\bigl[\operatorname{Aut}_{D_{\pi'}}(R)=\{I\}\bigr].
+\end{aligned}
+\tag{16.9}
+$$
+
+等号表示真假相同。若 $\pi\ne\pi'$，则其带标记代数不同构，原 $D_\pi,D_{\pi'}$ 模型不同构，而且纯二次形式 $q_\pi,q_{\pi'}$ 不 $F$-等距。因此即使知道对所有 $R$ 的共同真假谓词，仍不能恢复原投影、原纯部形式或原带标记对象。
+
+证明。(16.9) 逐份由 (15.6) 给出；右端只用同一实际 $L$。带标记代数不同构直接使用定理 13.13：固定 $F$ 的纯不可分实际域没有非恒等 $F$-自同构，因此不同投影不能通过这样的同构等同。原 $D$ 模型的结论直接使用定理 13.12，而不重作入口分类。
+
+还须核对纯形式本身。使用定理 13.13、推论 13.14 的同一实际 $M=L^2$ 及标记
+
+$$
+\lambda_\pi(m)=\pi(\sqrt m)^2\in F^2,\qquad
+q_\pi(V_\pi)=\ker\lambda_\pi\subset M,
+\tag{16.10}
+$$
+
+以及 $\pi'$ 的对应式。若 $\lambda_\pi=\lambda_{\pi'}$，对每个 $x\in L$ 取 $m=x^2$，平方单射便给 $\pi(x)=\pi'(x)$。因此不同投影有不同的归一化 $F^2$-线性标记。这些标记若有相同核 $H$，任意 $m\in M$ 可写成 $m=\lambda_\pi(m)1+h$、$h\in H$，而 $\lambda_{\pi'}(1)=1$ 会给 $\lambda_{\pi'}(m)=\lambda_\pi(m)$，矛盾。故不同投影的 (16.10) 表示集合不同。形式的 $F$-等距必保持全部表示值，因而不存在这样的等距；这也符合 [Scully，前引文，命题 2.1](https://arxiv.org/pdf/1710.09692v1) 的各向异性拟线性形式表示空间判据。
+
+不同投影确实存在：取原 $L$ 上非零 $F$-线性泛函 $\ell$ 满足 $\ell(1)=0$，则 $\pi'=\pi+\ell$ 仍归一化而不同于 $\pi$。所以该信息丢失有实际实例。式 (16.9) 只比较每个参数环上“是否只有恒等”的真值，既没有给出不同 $V_{\pi,R}$ 的指定等距，也没有给出完整自同构群函子之间的识别。原标记仍由 (16.10) 的实际 $F^2$ 值泛函及其核保留。$\square$
+
+**定义 16.5（同一关系、三维纯部与四维检验的完整白话释义）。** 这里把“同一实际域的有限检验”理解为：先保留原标量域和同一个二元响应，原关系要求响应再次作用时回到原输入平面，并排除原域上作用两次才消失的方向。§13 已证明这迫使整个原空间只有三维，并恢复比较形式；在特征二时，添上一个标量单位槽便得到四维实际域，原投影决定哪三维是纯部。现在给定任何系数环，检验的不是重新假设原核条件，而是问原三维纯部中是否出现非零却平方为零的向量。定理 14.4 已把这个问题同保关系自同构是否仍只有恒等精确连接；(15.5) 则说，仅检验由同一个四维域扩底得到的整个代数有没有非零幂零元，恰好就够了。这个环可以有零因子、幂零元或无限多极小素，零环也包含在内；证明在原环已有幂零元时由纯方向检出它，在原环约化时转到各极小素的域，再把各处结论接回原环。它不是把全部剩余域当作原环：剩余域能抹去双数方向，也能在一个原本约化的多项式来源的特殊纤维中新增退化。几何约化原先保证每一种扩域都不产生幂零元；这里对一个给定参数环只需同一实际四维域的这一次扩底，通常不必要求所有扩域。纯部检测整体也不是三维的唯一选择原则：次数为四、八、十六及更高二幂时，余下一维标量槽后的纯部都能这样检测；二次时纯部只有一维，只能看见原系数环是否约化，不能看见两槽之间的平方抵消。固定实际四维域以后，改变归一化投影不会改变每个参数环上的这些真假答案，却会改变原纯部的实际表示值、形式和带标记对象；共同真假答案也没有把完整群函子合并。这些结论只连接原代数关系、三维纯部、四维整体和固定域的约化检验，不增加物理控制、Born 规则、复合或时钟的含义。
+
+## 追加锚（本行以下为增补区）
+

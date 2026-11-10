@@ -211,7 +211,7 @@ class RefRecovery:
 
     def check(self, wanted):
         preservation, _ = worktree_modules()
-        from worktree_protocol import git_environment, scope_fds
+        from worktree_protocol import git_environment
         refs = preservation.git(self.repository, "for-each-ref", "--format=%(refname) %(objectname)").stdout
         if refs != self.refs:
             # Peel snapshot OIDs, so a moving ref cannot substitute another root.
@@ -250,7 +250,7 @@ class RefRecovery:
                 subprocess.run(["git", "--no-replace-objects", "-C", str(self.repository), "cat-file", "--batch"],
                                input=b"\n".join(wanted_blobs) + b"\n", stdout=blobs,
                                stderr=subprocess.PIPE, check=True, timeout=60,
-                               env=git_environment(), pass_fds=scope_fds())
+                               env=git_environment())
                 blobs.seek(0)
                 for oid in wanted_blobs:
                     header = blobs.readline().split()
@@ -273,9 +273,11 @@ class RefRecovery:
 
 
 def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True, remnant=False, recovery=None,
-                      verify_recovery=True, rollout_files=None):
+                      verify_recovery=True, rollout_files=None, cache_only=False):
     """Fingerprint owned, inactive trees without following links or crossing mounts."""
     path = Path(path).absolute()
+    if cache_only and path.resolve() != path:
+        return dict(reason="symlink")
     if path.name == ".git" and not reclaim:
         return dict(reason="repository")
     if not isinstance(protected, ProtectedPaths):
@@ -296,7 +298,7 @@ def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True, re
         return dict(reason="rollout_shape")
     if remnant and not stat.S_ISDIR(root_stat.st_mode):
         return dict(reason="not_directory")
-    if reclaim and root_stat.st_dev != path.parent.stat().st_dev:
+    if (reclaim or cache_only) and root_stat.st_dev != path.parent.stat().st_dev:
         return dict(reason="mount")
     digest = hashlib.sha256()
     apparent_bytes = 0
@@ -313,7 +315,7 @@ def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True, re
             return dict(reason="mount")
         if rollout_files is not None and entry != path and not stat.S_ISREG(info.st_mode):
             return dict(reason="rollout_shape")
-        if remnant and stat.S_ISLNK(info.st_mode):
+        if (remnant or cache_only) and stat.S_ISLNK(info.st_mode):
             return dict(reason="symlink")
         if getattr(info, "st_flags", 0) & PROTECTED_FLAGS:
             return dict(reason="protected_flag")
@@ -350,6 +352,8 @@ def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True, re
             if rollout_files is not None and tuple(names) != rollout_files:
                 return dict(reason="rollout_shape")
             if not reclaim and ".git" in names:
+                return dict(reason="repository")
+            if cache_only and {"HEAD", "objects", "refs"}.issubset(names):
                 return dict(reason="repository")
             if remnant:
                 if ".git" in names or {"HEAD", "objects", "refs"}.issubset(names):
@@ -428,7 +432,8 @@ def rename_exclusive(source, destination):
 
 
 def clean_candidate(path, cutoff, protected, delete=False, repository=None, activity=None,
-                    reclaim=True, refresh_activity=False, remnant=False, recovery=None, rollout_files=None):
+                    reclaim=True, refresh_activity=False, remnant=False, recovery=None, rollout_files=None,
+                    cache_only=False):
     path = Path(path).absolute()
     result = dict(path=str(path), action="kept", reason=None, apparent_bytes=0)
     removal_started = False
@@ -445,6 +450,8 @@ def clean_candidate(path, cutoff, protected, delete=False, repository=None, acti
             kwargs["reclaim"] = False
         if rollout_files is not None:
             kwargs["rollout_files"] = rollout_files
+        if cache_only:
+            kwargs["cache_only"] = True
         def observe(protection, **options):
             return inspect_candidate(path, cutoff, protection, **kwargs, **options)
         before = observe(protected)
@@ -482,6 +489,8 @@ def clean_candidate(path, cutoff, protected, delete=False, repository=None, acti
                 remove_tree(path)
             else:
                 path.unlink()
+            if os.path.lexists(path):
+                raise OSError("deletion returned with residue: " + str(path))
             result["action"] = "removed"
     except BlockingIOError:
         result["reason"] = "cache_busy"
@@ -510,6 +519,9 @@ def clean_candidate(path, cutoff, protected, delete=False, repository=None, acti
                               else "restore_failed", restore_detail=str(error))
         if owned_recovery is not None:
             owned_recovery.close()
+        if result["action"] == "failed":
+            retained = isolated if isolated is not None and os.path.lexists(isolated) else original
+            result.update(retained_path=str(retained), residue_exists=os.path.lexists(retained))
     return result
 
 
@@ -1016,11 +1028,12 @@ def remnant_candidates(repository, inventory):
     if not siblings:
         return
     preservation, _ = worktree_modules()
+    from worktree_protocol import common as git_common
     try:
         top = preservation.git(main, "rev-parse", "--show-toplevel").stdout.removesuffix(b"\n")
         if (Path(os.fsdecode(top)).resolve() != main or not (main / ".git").is_dir()
-                or preservation.common(main) != (main / ".git").resolve()
-                or preservation.common(repository) != preservation.common(main)):
+                or git_common(main) != (main / ".git").resolve()
+                or git_common(repository) != git_common(main)):
             raise OSError("main_checkout_unverifiable")
     except (OSError, RuntimeError, ValueError, subprocess.SubprocessError) as error:
         raise OSError("main_checkout_unverifiable: " + str(error)) from error
@@ -1036,6 +1049,55 @@ def containing_repository(path):
         if all((parent / name).exists() for name in ("HEAD", "objects", "refs")):
             return parent
     return None
+
+
+def remnant_cache_candidates(path, cutoff):
+    """Select Lake's generated paths while retaining package repositories/source.
+
+    Lake defaults place build products in .lake/build, and compiled workspace
+    configurations in .lake/config/<package index>/lakefile.olean{,.trace,.lock}.
+    The cache stamp is written by LeanWorktreePins. Other .lake bytes are retained.
+    """
+    device = path.parent.stat().st_dev
+    def directory(entry):
+        if not os.path.lexists(entry):
+            return False
+        info = entry.lstat()
+        return (stat.S_ISDIR(info.st_mode) and info.st_dev == device and info.st_uid == os.getuid()
+                and info.st_mtime <= cutoff and not getattr(info, "st_flags", 0) & PROTECTED_FLAGS)
+    if not directory(path) or path.resolve() != path:
+        return
+    if {child.name for child in path.iterdir()} - {".lake", "Blueprint"}:
+        return
+    lake = path / ".lake"
+    if not directory(lake):
+        return
+    projects = [path]
+    packages = lake / "packages"
+    if directory(packages):
+        for package in sorted(packages.iterdir()):
+            if directory(package) and any(
+                    (package / name).is_file() and not (package / name).is_symlink()
+                    for name in ("lakefile.lean", "lakefile.toml")):
+                projects.append(package)
+    for project in projects:
+        cache = project / ".lake"
+        if not directory(cache):
+            continue
+        if (cache / "build").is_dir() and not (cache / "build").is_symlink():
+            yield project, cache / "build"
+        config = cache / "config"
+        if directory(config):
+            for index in sorted(config.iterdir()):
+                if index.name.isascii() and index.name.isdecimal() and directory(index):
+                    files = list(index.iterdir())
+                    if ({child.name for child in files} <= {
+                            "lakefile.olean", "lakefile.olean.trace", "lakefile.olean.lock"}
+                            and all(stat.S_ISREG(child.lstat().st_mode) for child in files)):
+                        yield project, index
+        stamp = cache / ".stratalint-lean-cache-stamp.json"
+        if stamp.is_file() and not stamp.is_symlink():
+            yield project, stamp
 
 
 def artifact_lakes(path, protected, worktrees, unobservable):
@@ -1064,7 +1126,7 @@ def artifact_lakes(path, protected, worktrees, unobservable):
         yield entry, found
 
 
-def clean_worktrees(repository, base, delete, active_paths=(), working_directory=None):
+def clean_worktrees(repository, base, delete, working_directory=None):
     arguments = ["/bin/bash", str(repository / "tools/scripts/clean-lanes.sh"),
                  "--base", base, "--lanes-only"]
     if delete:
@@ -1114,9 +1176,23 @@ def clean_from_anchor(options, caller, disk_descriptor):
     # Registered-tree disposal can remove this program's source checkout.
     worktree_modules()
     inventory = registered_worktrees(options.repository)
-    worktrees = set(inventory)
     lanes_exit = clean_worktrees(options.repository, options.base, options.delete,
                                 working_directory=next(iter(inventory), options.repository))
+    # Only artifact disposal uses the artifact owner's mutex. Registered-tree
+    # cleanup has already completed, even when another artifact sweep is active.
+    lock_path = Path(tempfile.gettempdir()) / ("trureturing-clean-all-" + str(os.getuid()) + ".lock")
+    descriptor = os.open(lock_path, os.O_CREAT | os.O_RDWR | os.O_NOFOLLOW, 0o600)
+    with os.fdopen(descriptor, "r+") as lock:
+        info = os.fstat(lock.fileno())
+        if info.st_uid != os.getuid() or info.st_nlink != 1 or not stat.S_ISREG(info.st_mode):
+            raise OSError("invalid cleanup lock")
+        fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        return clean_artifacts(options, caller, disk_descriptor, inventory, lanes_exit,
+                               codex, sshx, roots)
+
+
+def clean_artifacts(options, caller, disk_descriptor, inventory, lanes_exit, codex, sshx, roots):
+    worktrees = set(inventory)
     try:
         active = active_paths(codex)
     except OSError as error:
@@ -1148,7 +1224,9 @@ def clean_from_anchor(options, caller, disk_descriptor):
         if result["action"] == "failed":
             print(json.dumps(dict(event="host_cleanup_warning", path=result["path"],
                                   action=result["action"], reason=result["reason"],
-                                  diagnostic=result.get("detail") or result["reason"])), file=sys.stderr)
+                                  diagnostic=result.get("detail") or result["reason"],
+                                  retained_path=result.get("retained_path", result["path"]),
+                                  residue_exists=result.get("residue_exists"))), file=sys.stderr)
             if LOG is not None:
                 LOG.emit("host_cleanup_warning", path=result["path"], action=result["action"],
                          reason=result["reason"])
@@ -1199,6 +1277,32 @@ def clean_from_anchor(options, caller, disk_descriptor):
                                          repository=main_checkout, activity=lambda: fresh_protection(path.parent),
                                          remnant=True, recovery=recovery)
                 record("worktree_remnant", result)
+                if result["action"] == "kept" and result["reason"] in (
+                        "lake_content", "repository", "blueprint_unrecoverable"):
+                    # Full-remnant deletion requires recoverable Blueprint and
+                    # no source/Git. Reclaim only recognized generated subtrees
+                    # when the qualified sibling retains those other bytes.
+                    for project, cache in list(remnant_cache_candidates(path, cutoff)):
+                        _, release = worktree_modules()
+                        try:
+                            with ExitStack() as guards:
+                                guards.enter_context(release.cache_guard(path))
+                                if project != path:
+                                    guards.enter_context(release.cache_guard(project))
+                                def cache_activity():
+                                    protection = fresh_protection(path)
+                                    if path in ProtectedPaths(protection):
+                                        protection.add(cache)
+                                    return protection
+                                result = clean_candidate(cache, cutoff, protections["sshx"], options.delete,
+                                    repository=main_checkout, activity=cache_activity,
+                                    reclaim=False, cache_only=True)
+                        except BlockingIOError:
+                            result = dict(path=str(cache), action="kept", reason="cache_busy", apparent_bytes=0)
+                        except OSError as error:
+                            result = dict(path=str(cache), action="failed", reason="cache_unavailable",
+                                          detail=str(error), apparent_bytes=0)
+                        record("worktree_remnant_cache", result)
         attempted_rollout_groups = set()
         for category, path in candidates(codex, sshx, roots, on_error=inventory_failure):
             if path in seen:
@@ -1239,7 +1343,8 @@ def clean_from_anchor(options, caller, disk_descriptor):
                         clean_staging(lake)
     except OSError as error:
         inventory_error = str(error)
-    failed = inventory_error is not None or lanes_exit != 0
+    failed = inventory_error is not None or lanes_exit != 0 or any(
+        count for key, count in counts.items() if key.endswith(":failed"))
     emit("host_cleanup_summary", mode="delete" if options.delete else "dry_run",
          min_age_hours=options.min_age_hours, counts=dict(counts), skipped=dict(skipped),
          candidate_apparent_bytes=apparent_bytes, worktree_exit=lanes_exit,
@@ -1285,15 +1390,7 @@ def _main(arguments=None):
             return 0
         if options.tmp_root is None:
             options.tmp_root = [Path("/tmp"), Path(tempfile.gettempdir())]
-        # Use a named, per-user lock so concurrent sweeps cannot delete the same tree.
-        lock_path = Path(tempfile.gettempdir()) / ("trureturing-clean-all-" + str(os.getuid()) + ".lock")
-        descriptor = os.open(lock_path, os.O_CREAT | os.O_RDWR | os.O_NOFOLLOW, 0o600)
-        with os.fdopen(descriptor, "r+") as lock:
-            info = os.fstat(lock.fileno())
-            if info.st_uid != os.getuid() or info.st_nlink != 1 or not stat.S_ISREG(info.st_mode):
-                raise OSError("invalid cleanup lock")
-            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
-            return run_clean(options)
+        return run_clean(options)
     except LowDiskSpace as error:
         print(str(error), file=sys.stderr)
         return 73

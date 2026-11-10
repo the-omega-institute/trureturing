@@ -30,7 +30,35 @@ $$\forall (N: \mathbb{N}), (\forall (p: \mathbb{N}), ([\operatorname{NeZero}\lef
 
 For nonzero p, the matrix is the phase windowRoot(p) raised to the natural representative w.phase.val, multiplying the tensor product of the local displacements X to the power w.x(n) followed by Z to the power w.z(n). The product gives its entries in the basis indexed by functions from Fin N to ZMod p. The dot denotes complex scalar multiplication of a matrix. See final_5.tex, lines 190–196 and 215–216.
 
-**Definition 1.3 (Local commutation phases).**
+**Definition 1.3 (Addition of Pauli-word coordinates).**
+
+$$\forall (N: \mathbb{N}), (\forall (p: \mathbb{N}), (\forall (a: \operatorname{PauliWord}\left(N, p\right)), (\forall (b: \operatorname{PauliWord}\left(N, p\right)), (\operatorname{wordMul}\left(a, b\right) = \operatorname{PauliWord.mk}\left(a.phase + b.phase, a.x + b.x, a.z + b.z\right)))))$$
+
+*Formalization.* `D5/S3/Quantum/Codes/StabilizerGenuineEntanglementCommutationRank.wordMul` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Owidiusz Makuta; Błażej Kuzaka; Remigiusz Augusiak (2023). *Fully non-positive-partial-transpose genuinely entangled subspaces*. DOI: [10.22331/q-2023-02-09-915](https://doi.org/10.22331/q-2023-02-09-915). URL: <https://arxiv.org/abs/2203.16902v2>.
+
+*Commentary.*
+
+The phase, shift and clock coordinates are added separately.
+
+**Theorem 1.4 (The phase in a product of Pauli words).**
+
+$$\forall (N: \mathbb{N}), (\forall (p: \mathbb{N}), ([\operatorname{NeZero}\left(p\right)] (\forall (a: \operatorname{PauliWord}\left(N, p\right)), (\forall (b: \operatorname{PauliWord}\left(N, p\right)), ((\operatorname{pauliWordOperator}\left(a\right)) \cdot (\operatorname{pauliWordOperator}\left(b\right)) = \operatorname{SMul.smul}\left(\operatorname{windowRoot}\left(p\right)^{(\sum_{j: \operatorname{Fin}\left(N\right)} (a.z\left(j\right)) \cdot (b.x\left(j\right))).val}, \operatorname{pauliWordOperator}\left(\operatorname{wordMul}\left(a, b\right)\right)\right))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Codes/StabilizerGenuineEntanglementCommutationRank.pauli_word_mul` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Owidiusz Makuta; Błażej Kuzaka; Remigiusz Augusiak (2023). *Fully non-positive-partial-transpose genuinely entangled subspaces*. DOI: [10.22331/q-2023-02-09-915](https://doi.org/10.22331/q-2023-02-09-915). URL: <https://arxiv.org/abs/2203.16902v2>.
+
+*Commentary.*
+
+The product of the two operators is the operator of their coordinate sum, multiplied by windowRoot raised to the sum of a.z(j) times b.x(j). The natural representative of this residue is the exponent.
+
+**Definition 1.5 (Local commutation phases).**
 
 $$\forall (N: \mathbb{N}), (\forall (p: \mathbb{N}), (\forall (a: \operatorname{PauliWord}\left(N, p\right)), (\forall (b: \operatorname{PauliWord}\left(N, p\right)), ((\operatorname{commutationVector}\left(a, b\right): (\operatorname{Fin}\left(N\right) \to \operatorname{ZMod}\left(p\right))) = ((n: \operatorname{Fin}\left(N\right)) \mapsto (((a.z\left(n\right)) \cdot (b.x\left(n\right))) - ((a.x\left(n\right)) \cdot (b.z\left(n\right)))))))))$$
 
@@ -42,7 +70,7 @@ $$\forall (N: \mathbb{N}), (\forall (p: \mathbb{N}), (\forall (a: \operatorname{
 
 At party n the commutation exponent is a.z(n)b.x(n) minus a.x(n)b.z(n), computed in ZMod p. Thus the global phases of a and b do not affect this vector. This is the coordinate form of the local commutation exponents in final_5.tex, lines 375–382.
 
-**Theorem 1.4 (Multiplication of coordinate-product matrices).**
+**Theorem 1.6 (Multiplication of coordinate-product matrices).**
 
 $$\forall (I: \operatorname{Type}), (\forall (T: \operatorname{Type}), ([\operatorname{Fintype}\left(I\right)] ([\operatorname{DecidableEq}\left(I\right)] ([\operatorname{Fintype}\left(T\right)] (\forall (M: I \to \operatorname{Matrix}\left(T, T, \mathbb{C}\right)), (\forall (L: I \to \operatorname{Matrix}\left(T, T, \mathbb{C}\right)), ((\operatorname{Matrix.of}\left(((u: I \to T) \mapsto (((v: I \to T) \mapsto (\prod_{n: I} (M\left(n\right)\left(u\left(n\right), v\left(n\right)\right))))))\right)) \cdot (\operatorname{Matrix.of}\left(((u: I \to T) \mapsto (((v: I \to T) \mapsto (\prod_{n: I} (L\left(n\right)\left(u\left(n\right), v\left(n\right)\right))))))\right)) = \operatorname{Matrix.of}\left(((u: I \to T) \mapsto (((v: I \to T) \mapsto (\prod_{n: I} (((n: I) \mapsto ((M\left(n\right)) \cdot (L\left(n\right))))\left(n\right)\left(u\left(n\right), v\left(n\right)\right))))))\right))))))))$$
 
@@ -56,7 +84,7 @@ $$\forall (I: \operatorname{Type}), (\forall (T: \operatorname{Type}), ([\operat
 
 For finite coordinate and local index types, multiplying two matrices whose entries are products of local entries gives the coordinate product of the local matrix products. The sum over intermediate configurations factors into independent sums over each local index.
 
-**Theorem 1.5 (The coordinate product of identity matrices).**
+**Theorem 1.7 (The coordinate product of identity matrices).**
 
 $$\forall (I: \operatorname{Type}), (\forall (T: \operatorname{Type}), ([\operatorname{Fintype}\left(I\right)] ([\operatorname{DecidableEq}\left(T\right)] (\operatorname{Matrix.of}\left(((u: I \to T) \mapsto (((v: I \to T) \mapsto (\prod_{n: I} ((1: \operatorname{Matrix}\left(T, T, \mathbb{C}\right))\left(u\left(n\right), v\left(n\right)\right))))))\right) = (1: \operatorname{Matrix}\left((I \to T), (I \to T), \mathbb{C}\right))))))$$
 
@@ -70,7 +98,7 @@ $$\forall (I: \operatorname{Type}), (\forall (T: \operatorname{Type}), ([\operat
 
 For finitely many coordinates and any local index type with decidable equality, the coordinate product of identity matrices is the identity on configurations. Each entry is one exactly when the two configurations agree at every coordinate. The local index type need not be finite.
 
-**Definition 1.6 (The common fixed subspace).**
+**Definition 1.8 (The common fixed subspace).**
 
 $$\forall (N: \mathbb{N}), (\forall (p: \mathbb{N}), (\forall (k: \mathbb{N}), ([\operatorname{NeZero}\left(p\right)] (\forall (G: \operatorname{Fin}\left(k\right) \to \operatorname{PauliWord}\left(N, p\right)), ((\operatorname{stabilizerSubspace}\left(G\right): \operatorname{Submodule}\left(\mathbb{C}, ((\operatorname{Fin}\left(N\right) \to \operatorname{ZMod}\left(p\right)) \to \mathbb{C})\right)) = \operatorname{iInf}\left(((i: \operatorname{Fin}\left(k\right)) \mapsto (\operatorname{LinearMap.fixedSubmodule}\left((\operatorname{pauliWordOperator}\left(G\left(i\right)\right)).mulVecLin\right)))\right))))))$$
 
@@ -82,7 +110,7 @@ $$\forall (N: \mathbb{N}), (\forall (p: \mathbb{N}), (\forall (k: \mathbb{N}), (
 
 Intersect the fixed submodules of the matrix actions of all generators. A vector belongs precisely when every generator fixes it; the same then holds for every finite product of generators. The intersection iInf is indexed by i in Fin k. See final_5.tex, lines 224–230.
 
-**Definition 1.7 (Factorization across a bipartition).**
+**Definition 1.9 (Factorization across a bipartition).**
 
 $$\forall (N: \mathbb{N}), (\forall (p: \mathbb{N}), (\forall (Q: \operatorname{Set}\left(\operatorname{Fin}\left(N\right)\right)), (\forall (\psi: (\operatorname{Fin}\left(N\right) \to \operatorname{ZMod}\left(p\right)) \to \mathbb{C}), (\operatorname{productAcross}\left(Q, \psi\right) = (\exists (u: (\operatorname{CoeSort.coe}\left(Q\right) \to \operatorname{ZMod}\left(p\right)) \to \mathbb{C}), (\exists (v: (\operatorname{CoeSort.coe}\left(Q^{c}\right) \to \operatorname{ZMod}\left(p\right)) \to \mathbb{C}), (\forall (x: \operatorname{Fin}\left(N\right) \to \operatorname{ZMod}\left(p\right)), (\psi\left(x\right) = (u\left(((q: \operatorname{CoeSort.coe}\left(Q\right)) \mapsto (x\left((\operatorname{Subtype.val}\left(q\right): \operatorname{Fin}\left(N\right))\right)))\right)) \cdot (v\left(((q: \operatorname{CoeSort.coe}\left(Q^{c}\right)) \mapsto (x\left((\operatorname{Subtype.val}\left(q\right): \operatorname{Fin}\left(N\right))\right)))\right))))))))))$$
 
@@ -94,7 +122,7 @@ $$\forall (N: \mathbb{N}), (\forall (p: \mathbb{N}), (\forall (Q: \operatorname{
 
 A vector factors across Q when its amplitude at every configuration x is the product of one amplitude u depending only on the Q coordinates and one amplitude v depending only on the complementary coordinates. CoeSort.coe makes the subtype belonging to a set explicit, and Subtype.val(q) is its inclusion into Fin N. No nonzero or normalization condition is imposed here. See final_5.tex, lines 122–129.
 
-**Definition 1.8 (Entanglement of every nonzero fixed vector).**
+**Definition 1.10 (Entanglement of every nonzero fixed vector).**
 
 $$\forall (N: \mathbb{N}), (\forall (p: \mathbb{N}), (\forall (k: \mathbb{N}), ([\operatorname{NeZero}\left(p\right)] (\forall (G: \operatorname{Fin}\left(k\right) \to \operatorname{PauliWord}\left(N, p\right)), (\operatorname{genuinelyEntangled}\left(G\right) = (\forall (\psi: (\operatorname{Fin}\left(N\right) \to \operatorname{ZMod}\left(p\right)) \to \mathbb{C}), ((\psi \in \operatorname{stabilizerSubspace}\left(G\right)) \Rightarrow ((\psi \ne (0: (\operatorname{Fin}\left(N\right) \to \operatorname{ZMod}\left(p\right)) \to \mathbb{C})) \Rightarrow (\forall (Q: \operatorname{Set}\left(\operatorname{Fin}\left(N\right)\right)), ((Q.Nonempty) \Rightarrow (((Q^{c}).Nonempty) \Rightarrow (\neg (\operatorname{productAcross}\left(Q, \psi\right))))))))))))))$$
 
@@ -106,7 +134,7 @@ $$\forall (N: \mathbb{N}), (\forall (p: \mathbb{N}), (\forall (k: \mathbb{N}), (
 
 Every nonzero vector of the common fixed subspace must fail to factor across every bipartition whose two sides are nonempty. This condition itself does not assert that the fixed subspace contains a nonzero vector. See final_5.tex, lines 120–136 and 141.
 
-**Definition 1.9 (The span of the commutation vectors).**
+**Definition 1.11 (The span of the commutation vectors).**
 
 $$\forall (N: \mathbb{N}), (\forall (p: \mathbb{N}), (\forall (k: \mathbb{N}), ([\operatorname{Fact}\left(\operatorname{Nat.Prime}\left(p\right)\right)] (\forall (G: \operatorname{Fin}\left(k\right) \to \operatorname{PauliWord}\left(N, p\right)), ((\operatorname{commutationSpace}\left(G\right): \operatorname{Submodule}\left(\operatorname{ZMod}\left(p\right), (\operatorname{Fin}\left(N\right) \to \operatorname{ZMod}\left(p\right))\right)) = \operatorname{Submodule.span}\left(\operatorname{ZMod}\left(p\right), \operatorname{Set.range}\left(((ij: \operatorname{Fin}\left(k\right) \times \operatorname{Fin}\left(k\right)) \mapsto (\operatorname{commutationVector}\left(G\left(ij.1\right), G\left(ij.2\right)\right)))\right)\right))))))$$
 
@@ -118,7 +146,7 @@ $$\forall (N: \mathbb{N}), (\forall (p: \mathbb{N}), (\forall (k: \mathbb{N}), (
 
 For prime p, take the ZMod p linear span of the commutation vectors of all ordered pairs of generators. The pair ij runs through Fin k times Fin k. This is the space K of final_5.tex, lines 375–391.
 
-**Definition 1.10 (Finite products of the generator matrices).**
+**Definition 1.12 (Finite products of the generator matrices).**
 
 $$\forall (N: \mathbb{N}), (\forall (p: \mathbb{N}), (\forall (k: \mathbb{N}), ([\operatorname{NeZero}\left(p\right)] (\forall (G: \operatorname{Fin}\left(k\right) \to \operatorname{PauliWord}\left(N, p\right)), ((\operatorname{generatedOperators}\left(G\right): \operatorname{Submonoid}\left(\operatorname{Matrix}\left((\operatorname{Fin}\left(N\right) \to \operatorname{ZMod}\left(p\right)), (\operatorname{Fin}\left(N\right) \to \operatorname{ZMod}\left(p\right)), \mathbb{C}\right)\right)) = \operatorname{Submonoid.closure}\left(\operatorname{Set.range}\left(((i: \operatorname{Fin}\left(k\right)) \mapsto (\operatorname{pauliWordOperator}\left(G\left(i\right)\right)))\right)\right))))))$$
 
@@ -132,7 +160,7 @@ $$\forall (N: \mathbb{N}), (\forall (p: \mathbb{N}), (\forall (k: \mathbb{N}), (
 
 The generated submonoid is the smallest multiplicatively closed collection containing the identity and all generator matrices. Its elements are finite products of those matrices. This formulation does not require a group structure on PauliWord.
 
-**Definition 1.11 (Commutativity and exclusion of nonidentity scalars).**
+**Definition 1.13 (Commutativity and exclusion of nonidentity scalars).**
 
 $$\forall (N: \mathbb{N}), (\forall (p: \mathbb{N}), (\forall (k: \mathbb{N}), ([\operatorname{NeZero}\left(p\right)] (\forall (G: \operatorname{Fin}\left(k\right) \to \operatorname{PauliWord}\left(N, p\right)), (\operatorname{IsStabilizer}\left(G\right) = ((\forall (i: \operatorname{Fin}\left(k\right)), (\forall (j: \operatorname{Fin}\left(k\right)), (\operatorname{Commute}\left(\operatorname{pauliWordOperator}\left(G\left(i\right)\right), \operatorname{pauliWordOperator}\left(G\left(j\right)\right)\right)))) \land (\forall (A: \operatorname{Matrix}\left((\operatorname{Fin}\left(N\right) \to \operatorname{ZMod}\left(p\right)), (\operatorname{Fin}\left(N\right) \to \operatorname{ZMod}\left(p\right)), \mathbb{C}\right)), ((A \in \operatorname{generatedOperators}\left(G\right)) \Rightarrow (\forall (c: \mathbb{C}), ((A = \operatorname{Matrix.scalar}\left((\operatorname{Fin}\left(N\right) \to \operatorname{ZMod}\left(p\right)), c\right)) \Rightarrow (c = (1: \mathbb{C}))))))))))))$$
 
@@ -144,7 +172,7 @@ $$\forall (N: \mathbb{N}), (\forall (p: \mathbb{N}), (\forall (k: \mathbb{N}), (
 
 The generator matrices commute pairwise, and every scalar matrix in their generated submonoid has scalar equal to one. The identity is already in that submonoid. For nonzero p the Pauli matrices form a finite collection of invertible matrices, so the generated submonoid is a group. These are the two stabilizer conditions of final_5.tex, lines 218–223.
 
-**Definition 1.12 (The commutation-rank bound).**
+**Definition 1.14 (The commutation-rank bound).**
 
 $$\operatorname{claim} = (\forall (N: \mathbb{N}), (\forall (p: \mathbb{N}), (\forall (k: \mathbb{N}), ((1 \le N) \Rightarrow (\forall (hp: \operatorname{Nat.Prime}\left(p\right)), (\forall (G: \operatorname{Fin}\left(k\right) \to \operatorname{PauliWord}\left(N, p\right)), ((\operatorname{IsStabilizer}\left(G\right)) \Rightarrow ((\operatorname{genuinelyEntangled}\left(G\right)) \Rightarrow (\operatorname{Nat.div}\left((((N) - (1)) + ((p) - (2))), ((p) - (1))\right) \le \operatorname{Module.finrank}\left(\operatorname{ZMod}\left(p\right), \operatorname{CoeSort.coe}\left(\operatorname{commutationSpace}\left(N, p, k, \langle hp \rangle, G\right)\right)\right))))))))))$$
 
@@ -156,7 +184,7 @@ $$\operatorname{claim} = (\forall (N: \mathbb{N}), (\forall (p: \mathbb{N}), (\f
 
 For every positive number N of parties, every prime p and every family G of k Pauli words generating a stabilizer, genuine entanglement implies the displayed rank bound. This is Conjecture 1 in final_5.tex, lines 457–463. Subtraction and Nat.div are natural-number operations: because p is prime, the quotient is exactly the ceiling of (N minus one) divided by (p minus one). The proof hp supplies the nonzero modulus and the instance ⟨hp⟩ in the explicitly applied commutationSpace. CoeSort.coe displays the submodule as its type of elements; its finrank is a natural number.
 
-**Theorem 1.13 (Genuine entanglement forces the rank bound).**
+**Theorem 1.15 (Genuine entanglement forces the rank bound).**
 
 $$\forall (N: \mathbb{N}), (\forall (p: \mathbb{N}), (\forall (k: \mathbb{N}), ((1 \le N) \Rightarrow (\forall (hp: \operatorname{Nat.Prime}\left(p\right)), (\forall (G: \operatorname{Fin}\left(k\right) \to \operatorname{PauliWord}\left(N, p\right)), ((\operatorname{IsStabilizer}\left(G\right)) \Rightarrow ((\operatorname{genuinelyEntangled}\left(G\right)) \Rightarrow (\operatorname{Nat.div}\left((((N) - (1)) + ((p) - (2))), ((p) - (1))\right) \le \operatorname{Module.finrank}\left(\operatorname{ZMod}\left(p\right), \operatorname{CoeSort.coe}\left(\operatorname{commutationSpace}\left(N, p, k, \langle hp \rangle, G\right)\right)\right)))))))))$$
 
@@ -202,8 +230,12 @@ Finally, write the positive N as n plus one and use p minus one greater than zer
 - Truth anchor: `D5/S3/Quantum/Codes/StabilizerGenuineEntanglementCommutationRank.generatedOperators`
 - Truth anchor: `D5/S3/Quantum/Codes/StabilizerGenuineEntanglementCommutationRank.genuinelyEntangled`
 - Truth anchor: `D5/S3/Quantum/Codes/StabilizerGenuineEntanglementCommutationRank.pauliWordOperator`
+- Truth anchor: `D5/S3/Quantum/Codes/StabilizerGenuineEntanglementCommutationRank.pauli_word_mul`
 - Truth anchor: `D5/S3/Quantum/Codes/StabilizerGenuineEntanglementCommutationRank.productAcross`
 - Truth anchor: `D5/S3/Quantum/Codes/StabilizerGenuineEntanglementCommutationRank.result`
 - Truth anchor: `D5/S3/Quantum/Codes/StabilizerGenuineEntanglementCommutationRank.stabilizerSubspace`
+- Truth anchor: `D5/S3/Quantum/Codes/StabilizerGenuineEntanglementCommutationRank.wordMul`
+- Dependency: [D5/S3/Observer/WindowRegister](../../Observer/WindowRegister.md)
+- Dependency: [D5/S3/Quantum/Algebra/WeylDisplacement](../Algebra/WeylDisplacement.md)
 - Dependency: [D5/S3/Quantum/Algebra/WeylDisplacementTrace](../Algebra/WeylDisplacementTrace.md)
 - Dependency: [D5/S3/Quantum/Algebra/WeylPhaseArithmetic](../Algebra/WeylPhaseArithmetic.md)

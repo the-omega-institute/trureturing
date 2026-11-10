@@ -1,0 +1,18 @@
+**Theorem 38.2 (every consumed coefficient product).** For $0\le j\le3$, $G_jg_1$ converges absolutely in $L^4$. Each product $\mathcal V_k(G_jg_1)$ with $k+j\le3$ is $L^2$, so
+
+$$
+\mathcal N_jg_1=\sum_{k+b=j}\mathcal V_k(G_bg_1)\in L^2
+\qquad(0\le j\le3).
+\tag{38.6}
+$$
+
+Proof. In the ordered decomposition (30.3) put $n=j-m$. On $0<t<1$ use the weighted $L^2$ inputs of Theorem 38.1 and kernel $L^{4/3}$ to obtain the integrable output-$L^4$ powers $t^{m/2-7/8}$. On $t\ge1$ use input exponents
+
+$$
+p_0=p_1=1,\qquad p_2=7/6,\qquad p_3=7/5.
+\tag{38.7}
+$$
+
+The time power is $m/2-(7/2)(1/p_n-1/4)$. Its largest value for $n=0,j\le3$ is $-9/8$; for $n\ge1$ it is at most $-13/8$. Hence all integrals converge absolutely in $L^4$. The coefficient bound of Lemma 32.1 gives $\mathcal V_k\in L^4$ for $k\le3$, since $k<5-7/4=13/4$. Hölder gives every asserted product. Young here is the classical ordered group inequality cited in Lemma 30.2, on the same Haar measure, with no additional $j_0$ in a return. No bounded coefficient operator on arbitrary $L^2$ is asserted. $\square$
+
+

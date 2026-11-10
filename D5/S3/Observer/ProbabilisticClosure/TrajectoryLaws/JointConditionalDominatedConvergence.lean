@@ -19,7 +19,7 @@ namespace D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.JointConditionalDom
 
 /-- The countable tail errors are bounded, decrease, dominate every later error,
 and converge to zero. All supremum order reasoning is under the actual bound. -/
-private theorem real_tail_control (a : ℕ → ℝ) (l G : ℝ)
+theorem real_tail_control (a : ℕ → ℝ) (l G : ℝ)
     (ha : Tendsto a atTop (𝓝 l)) (hG : ∀ n, |a n| ≤ G) :
     let b := fun N => ⨆ k : ℕ, |a (N + k) - l|
     (∀ N, 0 ≤ b N ∧ b N ≤ 2 * |G|) ∧ Antitone b ∧
