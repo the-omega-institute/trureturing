@@ -7,8 +7,8 @@
    digest: The six-row pair-pattern transfer has fifty live relabelling classes and an order-24 tail relation. -/
 /-
 admission_basis: open-problem-resolution (#28655; Proved)
-escape_witness: successors_spec, representative_rows, table_steps, power_polynomial
-direct_frozen_dependencies: []
+escape_witness: none; existing unfrozen TransferMatrix theorems and finite table
+  instantiation/normalization supply the pair-count relation.
 Proper: proof_shape=bind-only; consumers=instDecidableProper, L, grid_good
 instDecidableProper: proof_shape=bind-only; consumers=L
 L: proof_shape=bind-only; consumers=count_transfer, initial_values, recurrence
@@ -16,40 +16,40 @@ Col: proof_shape=bind-only; consumers=column, compatible, gridEquiv
 column: proof_shape=bind-only; consumers=compatible, column_relabel, column_grid
 compatible: proof_shape=bind-only; consumers=instDecidableCompatible, grid_good, quotient_rows
 instDecidableCompatible: proof_shape=bind-only; consumers=successors_spec, representative_rows
-orbit: proof_shape=content; consumers=cls, class_rep
-liveClass: proof_shape=content; consumers=cls
-cls: proof_shape=content; consumers=class_relabel, representative_rows, count_transfer
-representatives: proof_shape=content; consumers=class_rep, successors_spec
-Q: proof_shape=content; consumers=representative_rows, table_steps, powers_table
-sizes: proof_shape=content; consumers=class_sizes, initial_weights
-weights: proof_shape=content; consumers=initial_weights, count_transfer
-successors: proof_shape=content; consumers=successors_spec, representative_rows
+orbit: proof_shape=bind-only; consumers=cls, class_rep
+liveClass: proof_shape=bind-only; consumers=cls
+cls: proof_shape=bind-only; consumers=class_relabel, representative_rows, count_transfer
+representatives: proof_shape=bind-only; consumers=class_rep, successors_spec
+Q: proof_shape=bind-only; consumers=representative_rows, table_steps, powers_table
+sizes: proof_shape=bind-only; consumers=class_sizes, initial_weights
+weights: proof_shape=bind-only; consumers=initial_weights, count_transfer
+successors: proof_shape=bind-only; consumers=successors_spec, representative_rows
 relabel: proof_shape=bind-only; consumers=column_relabel, class_rep
 column_relabel: proof_shape=bind-only; consumers=compatible_relabel
 compatible_relabel: proof_shape=bind-only; consumers=quotient_rows
 class_relabel: proof_shape=bind-only; consumers=quotient_rows
-class_rep: proof_shape=content; consumers=quotient_rows
-successors_spec: proof_shape=content; consumers=representative_rows
-representative_rows: proof_shape=content; consumers=quotient_rows
-quotient_rows: proof_shape=content; consumers=initial_weights, count_transfer
+class_rep: proof_shape=bind-only; consumers=quotient_rows
+successors_spec: proof_shape=bind-only; consumers=representative_rows
+representative_rows: proof_shape=bind-only; consumers=quotient_rows
+quotient_rows: proof_shape=bind-only; consumers=initial_weights, count_transfer
 compatible_symm: proof_shape=bind-only; consumers=initial_weights
-class_sizes: proof_shape=content; consumers=initial_weights
-initial_weights: proof_shape=content; consumers=count_transfer
+class_sizes: proof_shape=bind-only; consumers=initial_weights
+initial_weights: proof_shape=bind-only; consumers=count_transfer
 gridEquiv: proof_shape=bind-only; consumers=column_grid, grid_good, count_transfer
 column_grid: proof_shape=bind-only; consumers=grid_good
 tail_iff: proof_shape=bind-only; consumers=good_iff
 good_iff: proof_shape=bind-only; consumers=grid_good
 grid_good: proof_shape=bind-only; consumers=count_transfer
-count_transfer: proof_shape=content; consumers=initial_values, recurrence_core
-W: proof_shape=content; consumers=table_zero, table_steps, powers_table
-coefficients: proof_shape=content; consumers=power_polynomial, recurrence_core
+count_transfer: proof_shape=bind-only; consumers=initial_values, recurrence_core
+W: proof_shape=bind-only; consumers=table_zero, table_steps, powers_table
+coefficients: proof_shape=bind-only; consumers=power_polynomial, recurrence_core
 table_zero: proof_shape=bind-only; consumers=powers_table
 table_steps: proof_shape=bind-only; consumers=powers_table
-powers_table: proof_shape=content; consumers=initial_values, power_polynomial
-power_polynomial: proof_shape=content; consumers=recurrence_core
-initial_values: proof_shape=content; consumers=HardinA233179Ladder.finite_certificate
-recurrence_core: proof_shape=content; consumers=recurrence
-recurrence: proof_shape=content; consumers=HardinA233179Ladder.result
+powers_table: proof_shape=bind-only; consumers=initial_values, power_polynomial
+power_polynomial: proof_shape=bind-only; consumers=recurrence_core
+initial_values: proof_shape=bind-only; consumers=HardinA233179Ladder.finite_certificate
+recurrence_core: proof_shape=bind-only; consumers=recurrence
+recurrence: proof_shape=bind-only; consumers=HardinA233179Ladder.result
 -/
 import D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix
 import Mathlib.Data.List.ChainOfFn

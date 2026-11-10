@@ -7,8 +7,8 @@
    digest: Hardin's order-24 recurrence for the literal normalized six-row complementary-pair ladder. -/
 /-
 admission_basis: open-problem-resolution (#28655; Proved)
-escape_witness: HardinA233179PairTransfer.successors_spec
-  (live through initial_values and recurrence after inlining unfrozen helpers)
+escape_witness: none; frozen canonical counting and four-row classification, existing
+  unfrozen transfer theorems, and finite/arithmetic normalization supply the result.
 normal: proof_shape=bind-only; consumers=instDecidableNormal, Legal, normal_iff
 Legal: proof_shape=bind-only; consumers=instDecidableLegal, a
 instDecidableNormal: proof_shape=bind-only; consumers=instDecidableLegal
@@ -40,8 +40,8 @@ L_card: proof_shape=bind-only; consumers=counting_bridge
 weighted_count: proof_shape=bind-only; consumers=counting_bridge
 counting_bridge: proof_shape=bind-only; consumers=scale_recurrence
 scale_recurrence: proof_shape=bind-only; consumers=finite_certificate, result
-finite_certificate: proof_shape=content; consumers=result
-result: proof_shape=content; consumers=terminal result
+finite_certificate: proof_shape=bind-only; consumers=result
+result: proof_shape=bind-only; consumers=terminal result
 -/
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
 import D5.S3.Observer.Separation.BooleanRankThreeK4
