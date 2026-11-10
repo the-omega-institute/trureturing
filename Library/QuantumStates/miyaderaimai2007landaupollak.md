@@ -26,12 +26,12 @@ $$
 For rank-one $P,Q$, $\|PQ\|=\sqrt{\operatorname{tr}(PQ)}$.
 The source already assumes Hilbert-space quantum mechanics. Its theorem
 therefore cannot establish the same bound in a general ordered model.
-The argument below relates this numerical bound to a specific missing
-geometric condition in the project's comparison reconstruction. It is a
+The argument below relates this numerical bound to two-state face
+geometry in the project's comparison reconstruction. It is a
 paper derivation and an application of attributed classification results;
 no claim of literature priority or Lean verification is made.
 
-## Carrier, comparison and the unresolved implication
+## Carrier, comparison and two-state faces
 
 Use the nonzero finite-dimensional ordered carrier, full proper-effect
 interval and Principle S from the
@@ -64,7 +64,7 @@ The face lattice is atomic and orthomodular. These supplied bridges
 remain paper results, including when used below.
 
 Let $p\vee q$ denote the smallest cone face containing the two pure
-rays. The geometric condition to test is
+rays. The geometric property of interest is
 
 $$
 \operatorname{cap}(p\vee q)\le2\qquad(p,q\text{ pure}).
@@ -72,10 +72,48 @@ $$
 $$
 
 It says that the smallest face containing two pure possibilities cannot
-contain three jointly distinguishable pure states. This concerns that
+contain any three pure states perfectly distinguished by one common
+measurement. The triple need not include either original state. This concerns that
 entire face; testing only the straight line segment between $p$ and $q$
-would be a different, weaker statement. Whether S alone implies J2 is
-unresolved here. No model satisfying S and violating J2 is supplied.
+would be a different, weaker statement. The
+[maximum-impurity argument](niestegge2023transition.md#least-confirmation-forces-face-filter-purity)
+derives purity of all face projections from S on the stated carrier.
+The following construction consequently derives J2 without a separate
+two-state or covering assumption. These are paper arguments, not a
+formalization of the full chain.
+
+## A capacity-two face from two pure states
+
+For distinct pure $p,q$, put $t=B(p,q)<1$ and
+$D=C\cap p^{\perp_B}$. Properness of $e_p$ gives $U-p\in D$;
+since $p\perp\operatorname{span}D$, $P_DU=U-p$. Therefore
+$u(P_Dq)=1-t>0$. Face-filter purity makes
+
+$$
+r=\frac{P_Dq}{1-t}
+$$
+
+a pure state in $D$. Orthogonal projection gives $B(q,r)=1-t$.
+The vector
+
+$$
+w=U-p-r=P_D(U-r)\in C
+$$
+
+is orthogonal to $p,q,r$. Positivity follows from $U-r\in C$ and
+positivity of $P_D$. The exposed face $H=C\cap w^{\perp_B}$ contains
+$p,q,r$, and its unit is $s_H=P_HU=p+r$. Hence its capacity is two,
+and $p\vee q\subseteq H$ proves J2. A face of capacity one is a pure
+ray, so two distinct pure states in fact generate capacity exactly two.
+When $p=q$, the capacity is one. The case $w=0$ is allowed.
+
+If the whole system has capacity three, $u(w)=1$ and
+$\|w\|^2=B(w,U-p-r)=u(w)=1$, so $w$ is pure. It is the unique pure
+state having zero comparison with both $p$ and $q$. Indeed any such
+$h$ lies in $D$ and satisfies
+$B(h,r)=B(h,P_Dq)/(1-t)=0$, whence $B(h,w)=1$; unit norms force
+$h=w$. Thus $T_w=0$ is a supporting hyperplane containing the entire
+line segment $[p,q]$. Distinctness of $p,q$ is essential to uniqueness.
 
 ## A three-comparison expression of exactly the same condition
 
@@ -132,9 +170,11 @@ $$
 
 Consequently $p\vee q$ has capacity greater than two precisely when
 $\delta(p,q)>0$. A maximal spectral state $a_1$ then gives an explicit
-third pure state violating WLP. The still missing inequality is the
-upper bound, not the lower bound. WLP is an equivalent expression of
-J2 within S, not a deletion of its logical content.
+third pure state violating WLP in the supplied spectral geometry.
+The moment identities alone supply the lower bound; face-filter purity
+and the two-state construction supply the upper bound, so in S the
+defect is zero. WLP is an equivalent expression of J2 within this
+geometry, not an additional independent assumption in the paper route.
 
 ## From the two-state condition to purity-preserving filters
 
@@ -202,7 +242,7 @@ The last reverse implication uses the usual positive spectral and
 purity-preserving compression properties of Euclidean Jordan algebras.
 It includes finite direct sums and classical simplices.
 
-## The picture is a ball, with one remaining global question
+## The two-state picture is a ball
 
 S already makes the normalized base of any capacity-two face a Euclidean
 ball. To see this, let $s=s_F$, so $B(s,s)=2$. Every pure $a\in F$
@@ -225,19 +265,29 @@ whole state space to be a ball or choose a three-dimensional Bloch ball.
 If the whole system has capacity three, J2 is equivalent to saying
 that every pure-state midpoint $(p+q)/2$ lies on the relative boundary
 of $K$: its support is $p\vee q$, and a proper face has smaller
-capacity. Excluding an interior midpoint from S alone is the remaining
-rank-three question, not a conclusion of the local ball calculation.
+capacity. The construction of $w$ above excludes an interior midpoint
+and supplies its unique pure zero-comparison witness when $p\ne q$.
+This uses the global face-filter argument, not local ball geometry alone.
 
 ## Complete conditional candidate and its scope
 
 On the stated finite-dimensional full-effect carrier, the complete
-candidate is: comparisons preserve mixtures, exchanging their pure
-endpoints preserves their value, and two pure states generate a face
-of capacity at most two. Equivalently the last condition can be WLP.
-The preceding paper bridges and Theorem 16 give precisely general
-finite-dimensional Euclidean Jordan state spaces. J2 is retained
-explicitly; whether it follows from the first two conditions remains
-unresolved here.
+candidate is S: the carrier-defined comparison preserves mixtures and
+exchanging its pure endpoints preserves its value. The
+[preparation-comparison equation](niestegge2023transition.md#one-preparation-comparison-equation)
+combines these two requirements. The preceding paper bridges and
+Theorem 16 give precisely general finite-dimensional Euclidean Jordan
+state spaces; their usual trace pairing satisfies S conversely. Filter
+purity, J2 and WLP are consequences on this route. The full bridge and
+maximum argument remain unformalized in Lean; the positive-dual theorem
+alone does not certify this classification.
+
+For the converse, in an EJA's trace representation a primitive idempotent
+$p$ represents a pure state. If $0\le a\le U$ and $B(a,p)=1$, then
+$U-a$ belongs to the complementary face $p^\perp$. Its positive face
+projection fixes $U-a$ and maps $U$ to $U-p$. Applying that projection
+to $U-a\le U$ gives $U-a\le U-p$, or $a\ge p$. Thus $p$ is the least
+proper confirming effect, and its trace pairing is affine and reciprocal.
 
 This permits classical simplices, real, complex and quaternionic matrix
 systems, spin factors, the Albert algebra, and finite direct sums. It
@@ -246,12 +296,12 @@ to select complex quantum mechanics and its allowed instruments.
 Existence of mathematical filters does not assert physical availability
 of every filter. No clock or Hamiltonian is selected.
 
-In ordinary words: comparing two pure possibilities should give the
-same reading from either end; the average reading of one state should
-not change when that state is prepared by a different mixture. The
-additional geometric condition says that the smallest part containing
-two pure possibilities cannot hide a third fully distinguishable one.
-Under that condition the local parts are balls and fit into Jordan
-geometry. The unresolved task is to derive that last condition from the
-comparison rules, rather than silently include it in “order does not
-matter.”
+In ordinary words: use the least possible false-acceptance probability
+as the comparison reading. Comparing after a random pure preparation
+gives the same result as reversing each comparison first and then
+averaging. In the stated model the paper argument makes a face filter
+preserve pure inputs, and makes every two pure states generate a local
+ball-shaped face. Those local parts fit into Jordan geometry. This is
+an explicit mathematical candidate with the displayed carrier and
+effect assumptions, not a claim that all physical measurement orders
+commute or that complex quantum dynamics has been reconstructed.

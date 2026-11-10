@@ -337,10 +337,103 @@ all filters with faces and gives the orthomodular face lattice.
 For a face frame, $u(s_F)=B(s_F,s_F)$ is its integer length. Any other
 frame in the face can be completed to a face frame by the same residual
 argument, so this integer is its capacity, the largest jointly
-distinguishable pure-state frame size. None of these steps asserts that
-$P_F$ sends every external pure state to zero or a pure ray. That is the
-remaining condition analyzed in the
-[two-pure-state comparison note](miyaderaimai2007landaupollak.md).
+distinguishable pure-state frame size. No purity-preservation assumption
+has entered the construction of these projections.
+
+## Least confirmation forces face-filter purity
+
+The following maximum argument uses the pairing and positive face
+projections just derived. It requires full proper-effect leastness and
+does not assume covering, two-state face capacity, or filter purity.
+It remains a paper argument, not an additional Lean result. The impurity
+quantity below also appears in
+[Barnum–Müller–Ududec, arXiv:1403.4147v4](https://arxiv.org/html/1403.4147v4),
+Definition 27; no literature priority is asserted for this application.
+
+Write $\|x\|^2=B(x,x)$. Convex decomposition into unit-norm pure states
+gives $\|x\|\le u(x)$ for $x\in C$. Strict convexity of squared norm
+gives $P=K\cap\{x:\|x\|=1\}$, so $P$ is compact and nonempty.
+For every pure $r$, Cauchy–Schwarz yields
+$B(x,r)\le\|x\|\le u(x)$. Pure rays generate $C$, and self-duality
+therefore gives
+
+$$
+x\le_C u(x)U\qquad(x\in C).
+\tag{12}
+$$
+
+Define $I(x)=u(x)^2-\|x\|^2$ on $C$. It is nonnegative and vanishes
+exactly at zero and pure rays. Fix a cone face $F$ and set $Q=P_F$,
+$s=QU$. The continuous function $r\mapsto I(Qr)$ attains its maximum
+$d\ge0$ at a pure state $p$. Put $z=Qp$, $a=u(z)$ and $g=as-z$.
+Equation (12) and positivity of $Q$ imply
+
+$$
+g=Q(aU-z)\in F,\qquad B(g,p)=a^2-\|z\|^2=d.
+\tag{13}
+$$
+
+For pure $r$, use the vector
+$v_r=(u(Qr),(\mathrm{Id}-Q)r)$ in the Euclidean direct sum
+$\mathbb R\oplus A$. Orthogonality gives
+
+$$
+\|v_r\|^2=1+I(Qr),\qquad
+\langle v_p,v_r\rangle=B(p+g,r).
+\tag{14}
+$$
+
+Since $p+g\in C$, Cauchy–Schwarz and maximality of $d$ give
+
+$$
+0\le B(p+g,r)
+\le\sqrt{1+d}\sqrt{1+I(Qr)}\le1+d,
+\tag{15}
+$$
+
+with equality at $r=p$. The functional
+$f=B(p+g,\cdot)/(1+d)$ consequently belongs to the full interval
+$[0,u]$ and confirms $p$. Leastness gives $e_p\le f$. By self-duality,
+
+$$
+g-dp\in C.
+\tag{16}
+$$
+
+If $d>0$, the positive decomposition $g=dp+(g-dp)$ and $g\in F$
+force $p\in F$. Hence $Qp=p$, contradicting $d=I(p)=0$. Thus $d=0$,
+and every pure input is projected either to zero or to a pure ray.
+This includes the zero face and the whole cone. The nonzero carrier
+ensures a pure maximizer exists; no division by $u(Qp)$ is needed.
+
+The face/filter bijection from Proposition 3.1 above makes every filter
+one of these projections. Projectivity, reciprocal transitions and
+filter purity therefore meet the hypotheses of Theorem 16 of
+arXiv:1403.4147v4, giving general finite-dimensional Euclidean Jordan
+state geometry, including direct sums. This classification is used as
+an attributed theorem, not proved anew. Neither strong symmetry nor
+purity preservation is a separate input to this paper route from S.
+The [two-pure-state comparison note](miyaderaimai2007landaupollak.md)
+spells out the resulting two-state faces and probability bound.
+
+## One preparation-comparison equation
+
+Using the original infimum definition of $T$, S is equivalently written
+
+$$
+T_p\!\left(\sum_i\alpha_iq_i\right)
+=\sum_i\alpha_i T_{q_i}(p)
+\quad\left(p,q_i\in P,\quad\alpha_i\ge0,\quad\sum_i\alpha_i=1\right),
+\tag{17}
+$$
+
+for every finite preparation. A singleton preparation gives reciprocity.
+Substituting that equality into (17) preserves every finite preparation
+relation and hence gives mixture affinity as above. Conversely affinity
+and reciprocity give (17). The equation combines two consistency
+requirements; displaying one equality is not by itself a reduction in
+their logical content. The substantive paper reduction is that signed
+spectrality and face-filter purity are consequences of S on this carrier.
 
 ## What this geometry does and does not select
 
@@ -348,7 +441,9 @@ The derived pairing identifies a pure state with its least confirming
 effect: the object and its reference test occupy the same real geometry.
 Positive dual readings can be separated into jointly distinguishable
 directions, and the same complete frame permits signed decompositions.
-These statements do not require a supplied reversible symmetry group.
+The face argument supplies purity-preserving filters and the attributed
+Jordan classification. These statements do not require a supplied
+reversible symmetry group, and the full chain is not Lean-formalized here.
 
 Classical simplices and real, complex and quaternionic Jordan systems
 remain examples. The candidate does not by itself select a complex
