@@ -27,15 +27,17 @@ The accompanying visibility-only patch exposes its geometric_norm_polynomial and
 chain_independent, consumed below by norm_power and truncated_power_basis.
 
 The algebra used here is the ACTUAL group algebra F[Multiplicative F]. We prove
-its locality and construct its t-power basis; no local-ring, free-chain,
+its locality and construct its (t (p := p))-power basis; no local-ring, free-chain,
 constant-reduction, faithfulness, or splitting hypothesis is added to the endpoint.
-The first coefficient is an augmentation derivation, not division by t.
+The first coefficient is an augmentation derivation, not division by (t (p := p)).
 The quadratic-centralizer argument is proved in its inverse-free form: every
 nonzero element of that centralizer is injective, hence it has no nonzero
 nilpotents. This avoids installing an artificial field structure on matrices.
 -/
 
 set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.instanceSearchTypes false
 
 namespace D5.S3.FiniteGroups.GroupAlgebra.PrimeFieldRankThreeCyclicDimension
 
@@ -63,16 +65,16 @@ private instance algebra_finite : Module.Finite (F p) (A p) :=
 private def generator : C p := Multiplicative.ofAdd 1
 
 private theorem generator_pow (n : ℕ) :
-    (generator (p := p)) ^ n = Multiplicative.ofAdd (n : F p) := by
-  simp [generator, ← Multiplicative.ofAdd_nsmul, nsmul_eq_mul]
+    ((generator (p := p))) ^ n = Multiplicative.ofAdd (n : F p) := by
+  simp [generator, ← ofAdd_nsmul, nsmul_eq_mul]
 
 private theorem c_pow (c : C p) : c ^ p = 1 := by
   apply Multiplicative.ext
-  simp [Multiplicative.toAdd_pow, nsmul_eq_mul]
+  simp [toAdd_pow, nsmul_eq_mul]
 
 private theorem g_pow (g : G p) : g ^ p = 1 := by
   apply Multiplicative.ext
-  ext <;> simp [Multiplicative.toAdd_pow, nsmul_eq_mul]
+  ext <;> simp [toAdd_pow, nsmul_eq_mul]
 
 private def finiteEnumeration : Fin p ≃ C p :=
   (ZMod.finEquiv p).toEquiv.trans Multiplicative.ofAdd
@@ -80,10 +82,10 @@ private def finiteEnumeration : Fin p ≃ C p :=
 private theorem finiteEnumeration_apply (i : Fin p) :
     finiteEnumeration i = generator ^ (i : ℕ) := by
   rw [generator_pow]
-  congr 1
+  change (ZMod.finEquiv p i : F p) = (i : ℕ)
   cases p with
   | zero => exact ((Fact.out : Nat.Prime 0).ne_zero rfl).elim
-  | succ n => rfl
+  | succ n => exact (ZMod.natCast_zmod_val (ZMod.finEquiv (n+1) i)).symm
 
 private noncomputable def augmentation : A p →ₐ[F p] F p :=
   MonoidAlgebra.lift (F p) (F p) (C p) 1
@@ -93,27 +95,34 @@ private noncomputable def firstCoefficient : A p →ₗ[F p] F p :=
     (MonoidAlgebra.coeffLinearEquiv (F p)).toLinearMap
 
 private noncomputable def z : A p := MonoidAlgebra.single generator 1
-private noncomputable def t : A p := z - 1
+private noncomputable def t : A p := (z (p := p)) - 1
 private noncomputable def nu : A p := ∑ c : C p, MonoidAlgebra.single c 1
 
 private theorem augmentation_of (c : C p) :
     augmentation (MonoidAlgebra.of (F p) (C p) c) = 1 := by
   simp [augmentation, MonoidAlgebra.of_apply]
 
+@[simp] private theorem augmentation_single (c : C p) (r : F p) :
+    augmentation (MonoidAlgebra.single c r) = r := by
+  simp [augmentation]
+
 private theorem firstCoefficient_of (c : C p) :
     firstCoefficient (MonoidAlgebra.of (F p) (C p) c) = c.toAdd := by
-  simp [firstCoefficient, MonoidAlgebra.of_apply,
-    MonoidAlgebra.coeffLinearEquiv, Finsupp.linearCombination_single]
+  change (Finsupp.linearCombination (F p) (fun c : C p => c.toAdd))
+    (Finsupp.single c 1) = c.toAdd
+  simp
 
-private theorem augmentation_t : augmentation (t : A p) = 0 := by
+private theorem augmentation_t : augmentation ((t (p := p)) : A p) = 0 := by
   simp [t, z, augmentation]
 
 private theorem firstCoefficient_one : firstCoefficient (1 : A p) = 0 := by
-  simpa [MonoidAlgebra.of_apply] using firstCoefficient_of (p := p) (1 : C p)
+  change firstCoefficient (MonoidAlgebra.of (F p) (C p) 1) = 0
+  simpa using (firstCoefficient_of (p := p)) (1 : C p)
 
-private theorem firstCoefficient_t : firstCoefficient (t : A p) = 1 := by
-  simp [t, z, generator, firstCoefficient_one, firstCoefficient,
-    MonoidAlgebra.coeffLinearEquiv, Finsupp.linearCombination_single]
+private theorem firstCoefficient_t : firstCoefficient ((t (p := p)) : A p) = 1 := by
+  change firstCoefficient ((MonoidAlgebra.of (F p) (C p)) generator - 1) = 1
+  rw [map_sub, firstCoefficient_of, firstCoefficient_one]
+  simp [generator]
 
 -- This derivation is literally coefficient one after z=1+t. It is defined on
 -- the group algebra, so well-definedness modulo t^p does not need cancellation.
@@ -124,16 +133,16 @@ private theorem firstCoefficient_mul (a b : A p) :
   | of c =>
     induction b using MonoidAlgebra.induction_on with
     | of d =>
-      simp [MonoidAlgebra.of_apply, firstCoefficient, augmentation,
-        MonoidAlgebra.coeffLinearEquiv, Finsupp.linearCombination_single,
-        Multiplicative.toAdd_mul, mul_add, add_comm]
-    | add b₁ b₂ hb₁ hb₂ => simp [mul_add, hb₁, hb₂]; ring
-    | smul r b hb => simp [mul_smul_comm, hb, mul_add]; ring
-  | add a₁ a₂ ha₁ ha₂ => simp [add_mul, ha₁, ha₂]; ring
-  | smul r a ha => simp [smul_mul_assoc, ha, add_mul]; ring
+      rw [← map_mul, firstCoefficient_of, firstCoefficient_of, firstCoefficient_of,
+        augmentation_of, augmentation_of]
+      simp [add_comm]
+    | add b₁ b₂ hb₁ hb₂ => simp only [mul_add, map_add, hb₁, hb₂]; ring
+    | smul r b hb => simp only [mul_smul_comm, map_smul, hb, smul_eq_mul]; ring
+  | add a₁ a₂ ha₁ ha₂ => simp only [add_mul, map_add, ha₁, ha₂]; ring
+  | smul r a ha => simp only [smul_mul_assoc, map_smul, ha, smul_eq_mul]; ring
 
 private theorem firstCoefficient_t_mul (a : A p) :
-    firstCoefficient (t * a) = augmentation a := by
+    firstCoefficient ((t (p := p)) * a) = augmentation a := by
   rw [firstCoefficient_mul, augmentation_t, firstCoefficient_t]
   ring
 
@@ -148,7 +157,7 @@ private theorem frobenius_augmentation (a : A p) :
       rw [smul_pow, ZMod.pow_card, ha, map_smul]
       simp [Algebra.smul_def]
 
-private theorem t_nilpotent : (t : A p) ^ p = 0 := by
+private theorem t_nilpotent : ((t (p := p)) : A p) ^ p = 0 := by
   rw [frobenius_augmentation, augmentation_t, map_zero]
 
 private theorem algebra_local : IsLocalRing (A p) := by
@@ -165,18 +174,19 @@ private theorem algebra_local : IsLocalRing (A p) := by
     exact (isUnit_iff_ne_zero.mpr ha).map (algebraMap (F p) (A p))
 
 private theorem augmentation_kernel_principal (a : A p) :
-    augmentation a = 0 ↔ t ∣ a := by
-  have hdiv : ∀ a : A p, t ∣ a - algebraMap (F p) (A p) (augmentation a) := by
+    augmentation a = 0 ↔ (t (p := p)) ∣ a := by
+  have hdiv : ∀ a : A p, (t (p := p)) ∣ a - algebraMap (F p) (A p) (augmentation a) := by
     intro a
     induction a using MonoidAlgebra.induction_on with
     | of c =>
         have hc : c = generator ^ c.toAdd.val := by
-          rw [generator_pow, ZMod.natCast_zmod_val, Multiplicative.ofAdd_toAdd]
-        have hz : MonoidAlgebra.of (F p) (C p) c = z ^ c.toAdd.val := by
-          rw [hc, map_pow]
-          rfl
-        simpa [augmentation_of, hz, t] using
-          sub_one_dvd_pow_sub_one (z : A p) c.toAdd.val
+          rw [generator_pow, ZMod.natCast_zmod_val, ofAdd_toAdd]
+        have hz : MonoidAlgebra.of (F p) (C p) c = (z (p := p)) ^ c.toAdd.val := by
+          calc
+            _ = MonoidAlgebra.of (F p) (C p) (generator ^ c.toAdd.val) := congrArg _ hc
+            _ = (z (p := p)) ^ c.toAdd.val := map_pow _ _ _
+        rw [augmentation_of, map_one, hz]
+        exact sub_one_dvd_pow_sub_one ((z (p := p)) : A p) c.toAdd.val
     | add a b ha hb =>
         simpa [map_add, add_sub_add_comm] using dvd_add ha hb
     | smul r a ha =>
@@ -188,12 +198,12 @@ private theorem augmentation_kernel_principal (a : A p) :
   · rintro ⟨b, rfl⟩
     simp [augmentation_t]
 
-private theorem norm_power : (nu : A p) = t ^ (p - 1) := by
-  have hgeom := congrArg (Polynomial.aeval (z : A p))
+private theorem norm_power : ((nu (p := p)) : A p) = (t (p := p)) ^ (p - 1) := by
+  have hgeom := congrArg (Polynomial.aeval ((z (p := p)) : A p))
     (PrimeFieldCyclicProjectivityDimension.geometric_norm_polynomial (p := p))
   have henum : (∑ c : C p, MonoidAlgebra.single c (1 : F p)) =
-      ∑ i : Fin p, z ^ (i : ℕ) := by
-    rw [← (finiteEnumeration (p := p)).sum_comp
+      ∑ i : Fin p, (z (p := p)) ^ (i : ℕ) := by
+    rw [← ((finiteEnumeration (p := p))).sum_comp
       (fun c : C p => MonoidAlgebra.single c (1 : F p))]
     apply Finset.sum_congr rfl
     intro i _
@@ -201,15 +211,15 @@ private theorem norm_power : (nu : A p) = t ^ (p - 1) := by
   rw [nu, henum, ← Finset.sum_range]
   simpa only [map_sum, map_pow, map_sub, map_one, Polynomial.aeval_X, t] using hgeom
 
-private theorem norm_ne_zero : (nu : A p) ≠ 0 := by
+private theorem norm_ne_zero : ((nu (p := p)) : A p) ≠ 0 := by
   intro h
   have hc := congrArg (fun a : A p => a.coeff 1) h
   simpa [nu, MonoidAlgebra.coeff_sum, MonoidAlgebra.coeff_single] using hc
 
-private theorem norm_mul (a : A p) : nu * a = augmentation a • nu := by
+private theorem norm_mul (a : A p) : (nu (p := p)) * a = augmentation a • (nu (p := p)) := by
   obtain ⟨b, hb⟩ := (augmentation_kernel_principal
     (a - algebraMap (F p) (A p) (augmentation a))).mp (by simp)
-  have hz : nu * (a - algebraMap (F p) (A p) (augmentation a)) = 0 := by
+  have hz : (nu (p := p)) * (a - algebraMap (F p) (A p) (augmentation a)) = 0 := by
     rw [hb, norm_power, ← mul_assoc, ← pow_succ,
       Nat.sub_add_cancel (Fact.out : p.Prime).pos, t_nilpotent, zero_mul]
   rw [mul_sub, sub_eq_zero] at hz
@@ -219,17 +229,20 @@ private theorem norm_mul (a : A p) : nu * a = augmentation a • nu := by
 -- the promised local-free / two-free-chains bridge, not a Jordan assumption.
 private noncomputable def truncated_power_basis : Basis (Fin p) (F p) (A p) := by
   let N : Module.End (F p) (A p) :=
-    { toFun := fun a => t * a
-      map_add' := mul_add t
+    { toFun := fun a => (t (p := p)) * a
+      map_add' := mul_add (t (p := p))
       map_smul' := by intro r a; simp [Algebra.smul_def, mul_assoc, mul_left_comm] }
-  have hpow (n : ℕ) (a : A p) : (N ^ n) a = t ^ n * a := by
+  have hpow (n : ℕ) (a : A p) : (N ^ n) a = (t (p := p)) ^ n * a := by
     induction n with
     | zero => simp
     | succ n ih => simp [pow_succ', Module.End.mul_apply, ih, mul_assoc, N]
-  have hN : N ^ p = 0 := by ext a; rw [hpow, t_nilpotent, zero_mul]; rfl
+  have hN : N ^ p = 0 := by
+    apply LinearMap.ext
+    intro a
+    rw [hpow, t_nilpotent, zero_mul, LinearMap.zero_apply]
   have htop : (N ^ (p - 1)) 1 ≠ 0 := by
     rw [hpow, mul_one, ← norm_power]
-    exact norm_ne_zero
+    exact (norm_ne_zero (p := p))
   have hli := PrimeFieldCyclicProjectivityDimension.chain_independent N hN 1 htop
   have hd : Module.finrank (F p) (A p) = p := by
     rw [Module.finrank_eq_card_basis (MonoidAlgebra.basis (C p) (F p))]
@@ -239,7 +252,7 @@ private noncomputable def truncated_power_basis : Basis (Fin p) (F p) (A p) := b
       (LinearEquiv.refl (F p) (A p))
 
 private theorem algebra_dimension : Module.finrank (F p) (A p) = p := by
-  rw [Module.finrank_eq_card_basis (truncated_power_basis (p := p))]
+  rw [Module.finrank_eq_card_basis ((truncated_power_basis (p := p)))]
   simp
 
 private def direction (a : E p) : C p →* G p where
@@ -262,12 +275,18 @@ private theorem projective_reindex
     {V : Type uV} [AddCommGroup V] [Module (F p) V]
     (σ : Representation (F p) J V) (e : H ≃* J)
     (hσ : Module.Projective (F p)[J] σ.asModule) :
-    Module.Projective (F p)[H] (σ.comp e.toMonoidHom).asModule := by
+    Module.Projective (F p)[H] (Representation.asModule (σ.comp e.toMonoidHom)) := by
   classical
-  let τ := σ.comp e.toMonoidHom
+  let τ : Representation (F p) H V := σ.comp e.toMonoidHom
   let r := (MonoidAlgebra.domCongr (F p) (F p) e.symm).toRingEquiv
+  letI := RingHomInvPair.of_ringEquiv r
+  letI := RingHomInvPair.symm (r : (F p)[J] →+* (F p)[H]) (r.symm : (F p)[H] →+* (F p)[J])
   let eV : σ.asModule ≃ₛₗ[r.toRingHom] τ.asModule :=
-    { __ := σ.asModuleEquiv.toAddEquiv.trans τ.asModuleEquiv.symm.toAddEquiv
+    { toFun := fun v => τ.asModuleEquiv.symm (σ.asModuleEquiv v)
+      invFun := fun v => σ.asModuleEquiv.symm (τ.asModuleEquiv v)
+      left_inv := by intro v; rfl
+      right_inv := by intro v; rfl
+      map_add' := by intro v w; rfl
       map_smul' := by
         intro a v
         apply τ.asModuleEquiv.injective
@@ -285,30 +304,32 @@ private theorem pullback_cyclic_projective
     {V : Type uV} [AddCommGroup V] [Module (F p) V]
     (ρ : Representation (F p) J V) (f : H →* J) (hf : Function.Injective f)
     (hcyc : ∀ Q : Subgroup J, IsCyclic Q →
-      Module.Projective (F p)[Q] (ρ.comp Q.subtype).asModule)
+      Module.Projective (F p)[Q] (Representation.asModule (ρ.comp Q.subtype)))
     (Q : Subgroup H) (hQ : IsCyclic Q) :
-    Module.Projective (F p)[Q] ((ρ.comp f).comp Q.subtype).asModule := by
+    Module.Projective (F p)[Q] (Representation.asModule ((ρ.comp f).comp Q.subtype)) := by
   let e := Q.equivMapOfInjective f hf
   letI : IsCyclic Q := hQ
   have hmap : IsCyclic (Q.map f) := isCyclic_of_surjective e e.surjective
   have hp := projective_reindex (ρ.comp (Q.map f).subtype) e (hcyc _ hmap)
   have heq : (ρ.comp (Q.map f).subtype).comp e.toMonoidHom =
       (ρ.comp f).comp Q.subtype := by ext q; rfl
-  simpa only [heq] using hp
+  exact Eq.mp (congrArg (fun σ : Representation (F p) _ V =>
+    Module.Projective (F p)[_] σ.asModule) heq) hp
 
 private theorem direction_projective
     {V : Type uV} [AddCommGroup V] [Module (F p) V]
     (ρ : Representation (F p) (G p) V)
     (hcyc : ∀ Q : Subgroup (G p), IsCyclic Q →
-      Module.Projective (F p)[Q] (ρ.comp Q.subtype).asModule)
+      Module.Projective (F p)[Q] (Representation.asModule (ρ.comp Q.subtype)))
     {a : E p} (ha : a ≠ 0) :
-    Module.Projective (A p) (ρ.comp (direction a)).asModule := by
+    Module.Projective (A p) (Representation.asModule (ρ.comp (direction a))) := by
   let f := direction a
   let e : C p ≃* f.range := MonoidHom.ofInjective (direction_injective ha)
   have hcyclic : IsCyclic f.range := isCyclic_of_surjective e e.surjective
   have hp := projective_reindex (ρ.comp f.range.subtype) e (hcyc _ hcyclic)
   have heq : (ρ.comp f.range.subtype).comp e.toMonoidHom = ρ.comp f := by ext c; rfl
-  simpa only [heq] using hp
+  exact Eq.mp (congrArg (fun σ : Representation (F p) _ V =>
+    Module.Projective (F p)[_] σ.asModule) heq) hp
 
 private theorem cyclic_free
     {V : Type uV} [AddCommGroup V] [Module (F p) V]
@@ -353,25 +374,25 @@ private noncomputable def cyclic_coordinates
   σ.asModuleEquiv.symm.trans ((cyclic_basis_two σ hσ hd).equivFun.restrictScalars (F p))
 
 private noncomputable def constantMatrix : M₂ (A p) →ₐ[F p] M₂ (F p) :=
-  (augmentation (p := p)).mapMatrix
+  ((augmentation (p := p))).mapMatrix
 
 private noncomputable def coefficientMatrix : M₂ (A p) →ₗ[F p] M₂ (F p) :=
-  (firstCoefficient (p := p)).mapMatrix
+  ((firstCoefficient (p := p))).mapMatrix
 
 private noncomputable def matrixOperator (B : M₂ (A p)) :
     Module.End (F p) (Fin 2 → A p) := (Matrix.toLin' B).restrictScalars (F p)
 
-private theorem coefficientMatrix_one : coefficientMatrix (1 : M₂ (A p)) = 0 := by
+private theorem coefficientMatrix_one : (coefficientMatrix (p := p)) (1 : M₂ (A p)) = 0 := by
   ext i j
   by_cases hij : i = j <;> simp [coefficientMatrix, Matrix.one_apply, hij,
     firstCoefficient_one]
 
 private theorem coefficientMatrix_mul (B D : M₂ (A p)) :
-    coefficientMatrix (B * D) =
-      constantMatrix B * coefficientMatrix D + coefficientMatrix B * constantMatrix D := by
+    (coefficientMatrix (p := p)) (B * D) =
+      (constantMatrix (p := p)) B * (coefficientMatrix (p := p)) D + (coefficientMatrix (p := p)) B * (constantMatrix (p := p)) D := by
   ext i j
   simp only [coefficientMatrix, constantMatrix, LinearMap.mapMatrix_apply,
-    AlgHom.mapMatrix_apply, Matrix.mul_apply, Matrix.add_apply, map_sum,
+    AlgHom.mapMatrix_apply, Matrix.map_apply, Matrix.mul_apply, Matrix.add_apply, map_sum,
     firstCoefficient_mul, Finset.sum_add_distrib]
 
 private noncomputable def bottom : (Fin 2 → A p) →ₗ[F p] W p where
@@ -380,32 +401,33 @@ private noncomputable def bottom : (Fin 2 → A p) →ₗ[F p] W p where
   map_smul' r x := by ext i; simp
 
 private noncomputable def top : W p →ₗ[F p] (Fin 2 → A p) where
-  toFun x i := x i • nu
+  toFun x i := x i • (nu (p := p))
   map_add' x y := by ext i; simp [add_smul]
   map_smul' r x := by ext i; simp [smul_smul]
 
-private theorem bottom_surjective : Function.Surjective (bottom (p := p)) := by
+private theorem bottom_surjective : Function.Surjective ((bottom (p := p))) := by
   intro x
   exact ⟨fun i => algebraMap (F p) (A p) (x i), by ext i; simp [bottom]⟩
 
-private theorem top_injective : Function.Injective (top (p := p)) := by
+private theorem top_injective : Function.Injective ((top (p := p))) := by
   intro x y h
   ext i
-  have he : (x i - y i) • (nu : A p) = 0 := by
+  have he : (x i - y i) • ((nu (p := p)) : A p) = 0 := by
     simpa [top, sub_smul] using congrArg (fun z : Fin 2 → A p => z i) (sub_eq_zero.mpr h)
-  exact sub_eq_zero.mp ((smul_eq_zero.mp he).resolve_right norm_ne_zero)
+  exact sub_eq_zero.mp ((smul_eq_zero.mp he).resolve_right (norm_ne_zero (p := p)))
 
 private theorem top_factorization (B : M₂ (A p)) :
-    matrixOperator (nu • B) =
-      top.comp ((Matrix.toLin' (constantMatrix B)).comp bottom) := by
-  ext x i
-  simp only [matrixOperator, LinearMap.restrictScalars_apply, Matrix.toLin'_apply,
-    Matrix.mulVec, dotProduct, Matrix.smul_apply, smul_eq_mul, LinearMap.comp_apply,
-    top, bottom, constantMatrix, AlgHom.mapMatrix_apply]
+    (matrixOperator (p := p)) ((nu (p := p)) • B) =
+      (top (p := p)).comp ((Matrix.toLin' ((constantMatrix (p := p)) B)).comp (bottom (p := p))) := by
+  apply LinearMap.ext
+  intro x
+  funext i
+  change (∑ j, nu * B i j * x j) =
+    (∑ j, augmentation (B i j) * augmentation (x j)) • nu
   rw [Finset.sum_smul]
   apply Finset.sum_congr rfl
   intro j _
-  change nu * B i j * x j = (augmentation (B i j) * augmentation (x j)) • nu
+  change (nu (p := p)) * B i j * x j = (augmentation (B i j) * augmentation (x j)) • (nu (p := p))
   rw [mul_assoc, norm_mul, map_mul]
 
 private theorem range_rank_injective_comp
@@ -436,26 +458,26 @@ private theorem range_rank_equivalent
     ext y
     constructor
     · rintro ⟨y, rfl⟩
-      exact ⟨f (e.symm y), ⟨e.symm y, rfl⟩, by rw [he, e.apply_symm_apply]⟩
+      exact ⟨f (e.symm y), ⟨e.symm y, rfl⟩, by exact (he (e.symm y)).trans (congrArg g (e.apply_symm_apply y))⟩
     · rintro ⟨x, ⟨v, rfl⟩, rfl⟩
       exact ⟨e v, (he v).symm⟩
   rw [hr, LinearEquiv.finrank_map_eq]
 
--- Exact rank identity, not just an upper estimate. The bottom map is onto
--- and the top map is one-to-one, including when p=2.
+-- Exact rank identity, not just an upper estimate. The (bottom (p := p)) map is onto
+-- and the (top (p := p)) map is one-to-one, including when p=2.
 private theorem top_rank_identity (B : M₂ (A p)) :
-    Module.finrank (F p) (LinearMap.range (matrixOperator (nu • B))) =
-      Module.finrank (F p) (LinearMap.range (Matrix.toLin' (constantMatrix B))) := by
-  rw [top_factorization, range_rank_injective_comp top top_injective]
-  have hr : LinearMap.range ((Matrix.toLin' (constantMatrix B)).comp bottom) =
-      LinearMap.range (Matrix.toLin' (constantMatrix B)) :=
-    LinearMap.range_comp_of_range_eq_top _ (LinearMap.range_eq_top.mpr bottom_surjective)
+    Module.finrank (F p) (LinearMap.range ((matrixOperator (p := p)) ((nu (p := p)) • B))) =
+      Module.finrank (F p) (LinearMap.range (Matrix.toLin' ((constantMatrix (p := p)) B))) := by
+  rw [top_factorization, range_rank_injective_comp (top (p := p)) (top_injective (p := p))]
+  have hr : LinearMap.range ((Matrix.toLin' ((constantMatrix (p := p)) B)).comp (bottom (p := p))) =
+      LinearMap.range (Matrix.toLin' ((constantMatrix (p := p)) B)) :=
+    LinearMap.range_comp_of_range_eq_top _ (LinearMap.range_eq_top.mpr (bottom_surjective (p := p)))
   rw [hr]
 
 private theorem canonical_norm
     {V : Type uV} [AddCommGroup V] [Module (F p) V]
     (σ : Representation (F p) (C p) V) :
-    σ.asAlgebraHom nu = (σ generator - 1) ^ (p - 1) := by
+    σ.asAlgebraHom (nu (p := p)) = (σ generator - 1) ^ (p - 1) := by
   rw [norm_power, map_pow, t, map_sub, z, Representation.asAlgebraHom_single_one, map_one]
 
 private theorem cyclic_coordinates_action
@@ -469,6 +491,7 @@ private theorem cyclic_coordinates_action
       (σ.asModuleEquiv.symm (σ.asAlgebraHom a v)) = _
   have he : σ.asModuleEquiv.symm (σ.asAlgebraHom a v) = a • σ.asModuleEquiv.symm v := rfl
   rw [he, map_smul]
+  rfl
 
 private theorem norm_rank_two
     {V : Type uV} [AddCommGroup V] [Module (F p) V]
@@ -478,39 +501,39 @@ private theorem norm_rank_two
     Module.finrank (F p) (LinearMap.range ((σ generator - 1) ^ (p - 1))) = 2 := by
   have hc (v : V) :
       cyclic_coordinates σ hσ hd (((σ generator - 1) ^ (p - 1)) v) =
-        matrixOperator (nu • (1 : M₂ (A p))) (cyclic_coordinates σ hσ hd v) := by
+        (matrixOperator (p := p)) ((nu (p := p)) • (1 : M₂ (A p))) (cyclic_coordinates σ hσ hd v) := by
     rw [← canonical_norm, cyclic_coordinates_action]
     ext i
     simp [matrixOperator, Matrix.toLin'_apply, Matrix.mulVec, dotProduct]
   rw [range_rank_equivalent (cyclic_coordinates σ hσ hd) _ _ hc,
-    top_rank_identity, map_one, Matrix.toLin'_one]
-  simp [LinearMap.range_id, W, Module.finrank_pi]
+    (top_rank_identity (p := p)), map_one, Matrix.toLin'_one]
+  simpa only [LinearMap.range_id, finrank_top] using (Module.finrank_fintype_fun_eq_card (F p) (Fin 2))
 
 private theorem constant_kernel_factor (B : M₂ (A p))
-    (hB : constantMatrix B = 0) : ∃ Q : M₂ (A p), B = t • Q := by
-  have hex (i j : Fin 2) : ∃ q : A p, B i j = t * q := by
+    (hB : (constantMatrix (p := p)) B = 0) : ∃ Q : M₂ (A p), B = (t (p := p)) • Q := by
+  have hex (i j : Fin 2) : ∃ q : A p, B i j = (t (p := p)) * q := by
     have hz : augmentation (B i j) = 0 := congrFun (congrFun hB i) j
     obtain ⟨q, hq⟩ := (augmentation_kernel_principal _).mp hz
     exact ⟨q, hq⟩
   choose Q hQ using hex
-  exact ⟨Q, by ext i j; exact hQ i j⟩
+  exact ⟨Q, by apply Matrix.ext; intro i j; exact hQ i j⟩
 
 private theorem kernel_norm_leading (B : M₂ (A p))
-    (hB : constantMatrix B = 1) :
-    Module.finrank (F p) (LinearMap.range (matrixOperator ((B - 1) ^ (p - 1)))) =
+    (hB : (constantMatrix (p := p)) B = 1) :
+    Module.finrank (F p) (LinearMap.range ((matrixOperator (p := p)) ((B - 1) ^ (p - 1)))) =
       Module.finrank (F p)
-        (LinearMap.range (Matrix.toLin' ((coefficientMatrix B) ^ (p - 1)))) := by
-  obtain ⟨Q, hQ⟩ := constant_kernel_factor (B - 1) (by rw [map_sub, hB, map_one]; simp)
-  have hd : coefficientMatrix B = constantMatrix Q := by
-    have he := congrArg coefficientMatrix hQ
+        (LinearMap.range (Matrix.toLin' (((coefficientMatrix (p := p)) B) ^ (p - 1)))) := by
+  obtain ⟨Q, hQ⟩ := (constant_kernel_factor (p := p)) (B - 1) (by rw [map_sub, hB, map_one]; simp)
+  have hd : (coefficientMatrix (p := p)) B = (constantMatrix (p := p)) Q := by
+    have he := congrArg (coefficientMatrix (p := p)) hQ
     rw [map_sub, coefficientMatrix_one, sub_zero] at he
     exact he.trans (by ext i j; exact firstCoefficient_t_mul (Q i j))
-  rw [hQ, smul_pow, ← norm_power, top_rank_identity, map_pow, ← hd]
+  rw [hQ, smul_pow, ← norm_power, (top_rank_identity (p := p)), map_pow, ← hd]
 
 private noncomputable def commutingAction
     {V : Type uV} [AddCommGroup V] [Module (F p) V]
     (ρ : Representation (F p) (G p) V) (s : E p) (g : G p) :
-    Module.End (A p) (ρ.comp (direction s)).asModule :=
+    Module.End (A p) (Representation.asModule (ρ.comp (direction s))) :=
   Representation.IntertwiningMap.equivLinearMapAsModule _ _
     ((ρ g).intertwiningMap_of_isIntertwiningMap _ _ (by
       intro c v
@@ -521,53 +544,66 @@ private noncomputable def blockAction
     {V : Type uV} [AddCommGroup V] [Module (F p) V]
     [FiniteDimensional (F p) V]
     (ρ : Representation (F p) (G p) V) (s : E p)
-    (hσ : Module.Projective (A p) (ρ.comp (direction s)).asModule)
+    (hσ : Module.Projective (A p) (Representation.asModule (ρ.comp (direction s))))
     (hd : Module.finrank (F p) V = 2 * p) : G p →* M₂ (A p) where
   toFun g := LinearMap.toMatrixAlgEquiv (cyclic_basis_two (ρ.comp (direction s)) hσ hd)
     (commutingAction ρ s g)
   map_one' := by
-    rw [← map_one (LinearMap.toMatrixAlgEquiv _)]
+    let b := cyclic_basis_two (ρ.comp (direction s)) hσ hd
+    change LinearMap.toMatrixAlgEquiv b (commutingAction ρ s 1) = 1
+    rw [← map_one (LinearMap.toMatrixAlgEquiv b)]
     congr 1
-    ext v
-    apply (ρ.comp (direction s)).asModuleEquiv.injective
-    simp [commutingAction, map_one]
+    apply LinearMap.ext
+    intro v
+    apply (Representation.asModuleEquiv (ρ.comp (direction s))).injective
+    change ρ 1 ((Representation.asModuleEquiv (ρ.comp (direction s))) v) = _
+    rw [map_one, Module.End.one_apply]
+    rfl
   map_mul' g h := by
-    rw [← map_mul (LinearMap.toMatrixAlgEquiv _)]
+    let b := cyclic_basis_two (ρ.comp (direction s)) hσ hd
+    change LinearMap.toMatrixAlgEquiv b (commutingAction ρ s (g*h)) =
+      LinearMap.toMatrixAlgEquiv b (commutingAction ρ s g) *
+        LinearMap.toMatrixAlgEquiv b (commutingAction ρ s h)
+    rw [← map_mul (LinearMap.toMatrixAlgEquiv b)]
     congr 1
-    ext v
-    apply (ρ.comp (direction s)).asModuleEquiv.injective
-    simp [commutingAction, map_mul, Module.End.mul_apply]
+    apply LinearMap.ext
+    intro v
+    apply (Representation.asModuleEquiv (ρ.comp (direction s))).injective
+    change ρ (g*h) ((Representation.asModuleEquiv (ρ.comp (direction s))) v) =
+      ρ g (ρ h ((Representation.asModuleEquiv (ρ.comp (direction s))) v))
+    rw [map_mul, Module.End.mul_apply]
 
 private theorem blockAction_intertwines
     {V : Type uV} [AddCommGroup V] [Module (F p) V]
     [FiniteDimensional (F p) V]
     (ρ : Representation (F p) (G p) V) (s : E p)
-    (hσ : Module.Projective (A p) (ρ.comp (direction s)).asModule)
+    (hσ : Module.Projective (A p) (Representation.asModule (ρ.comp (direction s))))
     (hd : Module.finrank (F p) V = 2 * p) (g : G p) (v : V) :
     cyclic_coordinates (ρ.comp (direction s)) hσ hd (ρ g v) =
-      matrixOperator (blockAction ρ s hσ hd g)
+      (matrixOperator (p := p)) (blockAction ρ s hσ hd g)
         (cyclic_coordinates (ρ.comp (direction s)) hσ hd v) := by
   let b := cyclic_basis_two (ρ.comp (direction s)) hσ hd
-  change b.equivFun (commutingAction ρ s g ((ρ.comp (direction s)).asModuleEquiv.symm v)) = _
+  change b.equivFun (commutingAction ρ s g ((Representation.asModuleEquiv (ρ.comp (direction s))).symm v)) = _
   simpa only [blockAction, matrixOperator, cyclic_coordinates,
     LinearMap.restrictScalars_apply, Matrix.toLin'_apply, Basis.equivFun_apply]
     using (LinearMap.toMatrix_mulVec_repr b b (commutingAction ρ s g)
-      ((ρ.comp (direction s)).asModuleEquiv.symm v)).symm
+      ((Representation.asModuleEquiv (ρ.comp (direction s))).symm v)).symm
 
 private theorem blockAction_distinguished
     {V : Type uV} [AddCommGroup V] [Module (F p) V]
     [FiniteDimensional (F p) V]
     (ρ : Representation (F p) (G p) V) (s : E p)
-    (hσ : Module.Projective (A p) (ρ.comp (direction s)).asModule)
+    (hσ : Module.Projective (A p) (Representation.asModule (ρ.comp (direction s))))
     (hd : Module.finrank (F p) V = 2 * p) :
-    blockAction ρ s hσ hd (Multiplicative.ofAdd s) = z • (1 : M₂ (A p)) := by
-  ext i j
+    blockAction ρ s hσ hd (Multiplicative.ofAdd s) = (z (p := p)) • (1 : M₂ (A p)) := by
+  apply Matrix.ext
+  intro i j
   change (cyclic_basis_two (ρ.comp (direction s)) hσ hd).repr
     (commutingAction ρ s (Multiplicative.ofAdd s)
       (cyclic_basis_two (ρ.comp (direction s)) hσ hd j)) i = _
-  have he (v : (ρ.comp (direction s)).asModule) :
-      commutingAction ρ s (Multiplicative.ofAdd s) v = (z : A p) • v := by
-    apply (ρ.comp (direction s)).asModuleEquiv.injective
+  have he (v : (Representation.asModule (ρ.comp (direction s)))) :
+      commutingAction ρ s (Multiplicative.ofAdd s) v = ((z (p := p)) : A p) • v := by
+    apply (Representation.asModuleEquiv (ρ.comp (direction s))).injective
     simp [commutingAction, Representation.asModuleEquiv_map_smul, z, generator, direction]
   rw [he, map_smul, Basis.repr_self]
   simp [Matrix.one_apply, Finsupp.single_apply]
@@ -576,21 +612,22 @@ private theorem block_norm_rank
     {V : Type uV} [AddCommGroup V] [Module (F p) V]
     [FiniteDimensional (F p) V]
     (ρ : Representation (F p) (G p) V) (s : E p)
-    (hσ : Module.Projective (A p) (ρ.comp (direction s)).asModule)
+    (hσ : Module.Projective (A p) (Representation.asModule (ρ.comp (direction s))))
     (hd : Module.finrank (F p) V = 2 * p) (a : E p)
-    (hτ : Module.Projective (A p) (ρ.comp (direction a)).asModule) :
+    (hτ : Module.Projective (A p) (Representation.asModule (ρ.comp (direction a)))) :
     Module.finrank (F p)
-      (LinearMap.range (matrixOperator
+      (LinearMap.range ((matrixOperator (p := p))
         ((blockAction ρ s hσ hd (Multiplicative.ofAdd a) - 1) ^ (p - 1)))) = 2 := by
   let e := cyclic_coordinates (ρ.comp (direction s)) hσ hd
   let B := blockAction ρ s hσ hd
   have hbase (v : V) : e ((ρ (Multiplicative.ofAdd a) - 1) v) =
-      matrixOperator (B (Multiplicative.ofAdd a) - 1) (e v) := by
+      (matrixOperator (p := p)) (B (Multiplicative.ofAdd a) - 1) (e v) := by
     simp only [LinearMap.sub_apply, Module.End.one_apply, map_sub,
       blockAction_intertwines, matrixOperator, map_sub, Matrix.toLin'_one,
       LinearMap.restrictScalars_apply, LinearMap.sub_apply, LinearMap.id_apply]
+    exact congrArg (fun x => x - e v) (blockAction_intertwines ρ s hσ hd _ v)
   have hpow (n : ℕ) (v : V) : e (((ρ (Multiplicative.ofAdd a) - 1) ^ n) v) =
-      matrixOperator ((B (Multiplicative.ofAdd a) - 1) ^ n) (e v) := by
+      (matrixOperator (p := p)) ((B (Multiplicative.ofAdd a) - 1) ^ n) (e v) := by
     induction n with
     | zero => simp [matrixOperator, e]
     | succ n ih =>
@@ -619,15 +656,19 @@ private noncomputable def primeLinearOfAddHom
     [Module (F p) X] [Module (F p) Y] (f : X →+ Y) : X →ₗ[F p] Y where
   __ := f
   map_smul' a x := by
+    change f (a • x) = a • f x
     rw [scalar_is_nsmul, scalar_is_nsmul, map_nsmul]
 
 private theorem power_injective
     (T : Module.End (F p) (W p)) (hT : Function.Injective T) (n : ℕ) :
     Function.Injective (T ^ n) := by
   induction n with
-  | zero => simpa using (Function.injective_id : Function.Injective (id : W p → W p))
+  | zero => intro v w h; exact h
   | succ n ih =>
-      simpa only [pow_succ', Module.End.mul_apply] using hT.comp ih
+      intro v w he
+      apply ih
+      apply hT
+      simpa only [pow_succ', Module.End.mul_apply] using he
 
 private theorem eigen_power
     (T : Module.End (F p) (W p)) (v : W p) (a : F p)
@@ -638,10 +679,11 @@ private theorem eigen_power
 
 private theorem nilpotent_square
     (D : Module.End (F p) (W p)) (hD : D ^ p = 0) : D ^ 2 = 0 := by
-  ext v
+  apply LinearMap.ext
+  intro v
   have hv : v ∈ LinearMap.ker (D ^ p) := by simp [hD]
   have hz := Module.End.ker_pow_le_ker_pow_finrank D p hv
-  simpa only [dimension_W, LinearMap.mem_ker] using hz
+  simpa only [(dimension_W (p := p)), LinearMap.mem_ker, LinearMap.zero_apply] using hz
 
 -- The single substantial 2x2 centralizer calculation is shared by both the
 -- unipotent image bound and the quadratic (no eigenvalue) argument.
@@ -651,29 +693,32 @@ private theorem cyclic_pair_centralizer
     ∃ a b : F p, T = a • 1 + b • X := by
   classical
   let B : Basis (Fin 2) (F p) (W p) :=
-    basisOfLinearIndependentOfCardEqFinrank' ![X v, v] hli (by simp [dimension_W])
+    basisOfLinearIndependentOfCardEqFinrank' ![X v, v] hli (by simp [(dimension_W (p := p))])
   have hB0 : B 0 = X v := by simp [B]
   have hB1 : B 1 = v := by simp [B]
   let a := B.repr (T v) 1
   let b := B.repr (T v) 0
   have hv : T v = a • v + b • X v := by
     have he := B.sum_repr (T v)
-    simpa [Fin.sum_univ_two, hB0, hB1, a, b, add_comm] using he.symm
+    rw [Fin.sum_univ_two, hB0, hB1] at he
+    exact he.symm.trans (add_comm _ _)
   refine ⟨a, b, B.ext (fun i => ?_)⟩
   fin_cases i
-  · rw [hB0]
+  · change T (B 0) = (a • 1 + b • X) (B 0)
+    rw [hB0]
+    change T (X v) = a • X v + b • X (X v)
     have hc := LinearMap.congr_fun hTX.eq v
     change T (X v) = X (T v) at hc
-    rw [hc, hv]
-    simp [map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply,
-      Module.End.mul_apply, Module.End.one_apply]
-  · rw [hB1, hv]
-    simp
+    rw [hc, hv, map_add, map_smul, map_smul]
+  · change T (B 1) = (a • 1 + b • X) (B 1)
+    rw [hB1]
+    exact hv
 
 private theorem nilpotent_cyclic_pair
     (D : Module.End (F p) (W p)) (hD : D ^ 2 = 0) (v : W p) (hv : D v ≠ 0) :
     LinearIndependent (F p) ![D v, v] := by
   rw [linearIndependent_fin2]
+  change v ≠ 0 ∧ ∀ a : F p, a • v ≠ D v
   refine ⟨fun hz => hv (by rw [hz, map_zero]), ?_⟩
   intro a ha
   have he := congrArg D ha
@@ -707,7 +752,7 @@ private theorem unipotent_centralizer
 
 private theorem pencil_injective
     (X : Module.End (F p) (W p))
-    (hX : ∀ a : F p, Function.Injective (X - a • 1))
+    (hX : ∀ a : F p, Function.Injective (X - a • (1 : Module.End (F p) (W p))))
     {a b : F p} (hab : a ≠ 0 ∨ b ≠ 0) :
     Function.Injective (a • (1 : Module.End (F p) (W p)) + b • X) := by
   by_cases hb : b = 0
@@ -727,9 +772,10 @@ private theorem pencil_injective
 
 private theorem no_eigenvalue_pair
     (X : Module.End (F p) (W p))
-    (hX : ∀ a : F p, Function.Injective (X - a • 1)) (v : W p) (hv : v ≠ 0) :
+    (hX : ∀ a : F p, Function.Injective (X - a • (1 : Module.End (F p) (W p)))) (v : W p) (hv : v ≠ 0) :
     LinearIndependent (F p) ![X v, v] := by
   rw [linearIndependent_fin2]
+  change v ≠ 0 ∧ ∀ a : F p, a • v ≠ X v
   refine ⟨hv, ?_⟩
   intro a ha
   have hz : (X - a • 1) v = (X - a • 1) 0 := by simp [ha.symm]
@@ -739,7 +785,7 @@ private theorem no_eigenvalue_pair
 -- All nonzero aI+bX are injective, so a commuting nilpotent must be zero.
 private theorem quadratic_centralizer_no_nilpotents
     (X D : Module.End (F p) (W p))
-    (hX : ∀ a : F p, Function.Injective (X - a • 1))
+    (hX : ∀ a : F p, Function.Injective (X - a • (1 : Module.End (F p) (W p))))
     (hDX : Commute D X) (hD : IsNilpotent D) : D = 0 := by
   let v : W p := Pi.single 0 1
   have hv : v ≠ 0 := by intro hz; have := congrFun hz 0; simpa [v] using this
@@ -761,7 +807,8 @@ private noncomputable def reductionKernel (R : G p →* M₂ (F p)) : Submodule 
     rw [map_mul, ha, hb, one_mul]
   smul_mem' := by
     intro c a ha
-    rw [scalar_is_nsmul, Multiplicative.ofAdd_nsmul, map_pow, ha, one_pow]
+    change R (Multiplicative.ofAdd (c • a)) = 1
+    rw [scalar_is_nsmul, ofAdd_nsmul, map_pow, ha, one_pow]
 
 private theorem reductionKernel_large (R : G p →* M₂ (F p)) :
     2 ≤ Module.finrank (F p) (reductionKernel R) := by
@@ -770,13 +817,13 @@ private theorem reductionKernel_large (R : G p →* M₂ (F p)) :
   · have htop : reductionKernel R = ⊤ := by
       ext a
       simp [reductionKernel, htriv]
-    rw [htop, finrank_top, dimension_E]
+    rw [htop, finrank_top, (dimension_E (p := p))]
     omega
   · obtain ⟨g₀, hg₀⟩ := not_forall.mp htriv
     let D : Module.End (F p) (W p) := Matrix.toLin' (R g₀ - 1)
     have hDp : D ^ p = 0 := by
       have hp : (R g₀ - 1) ^ p = 0 := by
-        rw [sub_pow_char_of_commute (Commute.one_right _), ← map_pow, g_pow,
+        rw [sub_pow_char_of_commute p (Commute.one_right _), ← map_pow, g_pow,
           map_one, one_pow, sub_self]
       simpa [D] using congrArg (Matrix.toLin' : M₂ (F p) → Module.End (F p) (W p)) hp
     have hD : D ≠ 0 := by
@@ -792,6 +839,7 @@ private theorem reductionKernel_large (R : G p →* M₂ (F p)) :
           rw [mul_sub, sub_mul, mul_one, one_mul, ← map_mul, ← map_mul, mul_comm g g₀]
         simpa only [Matrix.toLin'_mul, Module.End.mul_eq_comp] using congrArg Matrix.toLin' he
       · rw [← Matrix.toLin'_pow, ← map_pow, g_pow, map_one, Matrix.toLin'_one]
+        rfl
     choose b hb using hclass
     have huniq {a c : F p} (he : 1 + a • D = 1 + c • D) : a = c := by
       apply sub_eq_zero.mp
@@ -815,8 +863,8 @@ private theorem reductionKernel_large (R : G p →* M₂ (F p)) :
       { toFun a := b (Multiplicative.ofAdd a)
         map_zero' := by
           apply huniq
-          simpa only [Multiplicative.ofAdd_zero, map_one, Matrix.toLin'_one,
-            zero_smul, add_zero] using (hb 1).symm
+          simpa only [ofAdd_zero, map_one, Matrix.toLin'_one,
+            zero_smul, add_zero, Module.End.one_eq_id] using (hb 1).symm
         map_add' a c := hadd (Multiplicative.ofAdd a) (Multiplicative.ofAdd c) }
     let q : E p →ₗ[F p] F p := primeLinearOfAddHom qadd
     have hker : reductionKernel R = LinearMap.ker q := by
@@ -825,34 +873,34 @@ private theorem reductionKernel_large (R : G p →* M₂ (F p)) :
       constructor
       · intro ha
         apply huniq
-        simpa [ha] using (hb (Multiplicative.ofAdd a)).symm
+        simpa only [ha, Matrix.toLin'_one, zero_smul, add_zero, Module.End.one_eq_id] using (hb (Multiplicative.ofAdd a)).symm
       · intro ha
         apply Matrix.toLin'.injective
-        simp [hb, ha]
+        simp only [hb, ha, zero_smul, add_zero, Matrix.toLin'_one, Module.End.one_eq_id]
     have hrank := q.finrank_range_add_finrank_ker
     have hle := (LinearMap.range q).finrank_le
-    rw [dimension_E] at hrank
+    rw [(dimension_E (p := p))] at hrank
     have hF : Module.finrank (F p) (F p) = 1 := Module.finrank_self _
     rw [hF] at hle
     rw [hker]
     omega
 
 private noncomputable def reduced (B : G p →* M₂ (A p)) : G p →* M₂ (F p) :=
-  (constantMatrix (p := p)).toMonoidHom.comp B
+  ((constantMatrix (p := p))).toMonoidHom.comp B
 
 private noncomputable def leading (B : G p →* M₂ (A p)) :
     reductionKernel (reduced B) →ₗ[F p] M₂ (F p) :=
   primeLinearOfAddHom
-    { toFun a := coefficientMatrix (B (Multiplicative.ofAdd (a : E p)))
+    { toFun a := (coefficientMatrix (p := p)) (B (Multiplicative.ofAdd (a : E p)))
       map_zero' := by
-        simp only [Submodule.coe_zero, Multiplicative.ofAdd_zero, map_one,
+        simp only [Submodule.coe_zero, ofAdd_zero, map_one,
           coefficientMatrix_one]
       map_add' a b := by
-        have ha : constantMatrix (B (Multiplicative.ofAdd (a : E p))) = 1 := a.property
-        have hb : constantMatrix (B (Multiplicative.ofAdd (b : E p))) = 1 := b.property
-        change coefficientMatrix
+        have ha : (constantMatrix (p := p)) (B (Multiplicative.ofAdd (a : E p))) = 1 := a.property
+        have hb : (constantMatrix (p := p)) (B (Multiplicative.ofAdd (b : E p))) = 1 := b.property
+        change (coefficientMatrix (p := p))
           (B (Multiplicative.ofAdd (a : E p) * Multiplicative.ofAdd (b : E p))) = _
-        rw [map_mul, coefficientMatrix_mul, ha, hb, one_mul, mul_one] }
+        rw [map_mul, coefficientMatrix_mul, ha, hb, one_mul, mul_one, add_comm] }
 
 private theorem leading_commutes_reduction (B : G p →* M₂ (A p))
     (a : reductionKernel (reduced B)) (g : G p) :
@@ -860,29 +908,29 @@ private theorem leading_commutes_reduction (B : G p →* M₂ (A p))
   have he : B g * B (Multiplicative.ofAdd (a : E p)) =
       B (Multiplicative.ofAdd (a : E p)) * B g := by
     rw [← map_mul, ← map_mul, mul_comm]
-  have hc := congrArg coefficientMatrix he
-  have ha : constantMatrix (B (Multiplicative.ofAdd (a : E p))) = 1 := a.property
+  have hc := congrArg (coefficientMatrix (p := p)) he
+  have ha : (constantMatrix (p := p)) (B (Multiplicative.ofAdd (a : E p))) = 1 := a.property
   rw [coefficientMatrix_mul, coefficientMatrix_mul, ha, one_mul, mul_one] at hc
-  change constantMatrix (B g) * coefficientMatrix (B (Multiplicative.ofAdd (a : E p))) =
-    coefficientMatrix (B (Multiplicative.ofAdd (a : E p))) * constantMatrix (B g)
+  change (constantMatrix (p := p)) (B g) * (coefficientMatrix (p := p)) (B (Multiplicative.ofAdd (a : E p))) =
+    (coefficientMatrix (p := p)) (B (Multiplicative.ofAdd (a : E p))) * (constantMatrix (p := p)) (B g)
   exact add_right_cancel (by simpa only [add_comm] using hc)
 
 private theorem leading_injective (B : G p →* M₂ (A p))
     (hnorm : ∀ a : E p, a ≠ 0 →
       Module.finrank (F p)
-        (LinearMap.range (matrixOperator ((B (Multiplicative.ofAdd a) - 1) ^ (p - 1)))) = 2)
+        (LinearMap.range ((matrixOperator (p := p)) ((B (Multiplicative.ofAdd a) - 1) ^ (p - 1)))) = 2)
     (a : reductionKernel (reduced B)) (ha : a ≠ 0) :
     Function.Injective (Matrix.toLin' (leading B a)) := by
   have hane : (a : E p) ≠ 0 := by
     intro hz
     exact ha (Subtype.ext hz)
   have hr := hnorm (a : E p) hane
-  have hk : constantMatrix (B (Multiplicative.ofAdd (a : E p))) = 1 := a.property
-  rw [kernel_norm_leading _ hk] at hr
+  have hk : (constantMatrix (p := p)) (B (Multiplicative.ofAdd (a : E p))) = 1 := a.property
+  rw [(kernel_norm_leading (p := p)) _ hk] at hr
   change Module.finrank (F p)
       (LinearMap.range (Matrix.toLin' ((leading B a) ^ (p - 1)))) = 2 at hr
   have hfull : LinearMap.range (Matrix.toLin' ((leading B a) ^ (p - 1))) = ⊤ :=
-    Submodule.eq_top_of_finrank_eq (hr.trans dimension_W.symm)
+    Submodule.eq_top_of_finrank_eq (hr.trans (dimension_W (p := p)).symm)
   have hinj : Function.Injective (Matrix.toLin' ((leading B a) ^ (p - 1))) :=
     LinearMap.injective_iff_surjective.mpr (LinearMap.range_eq_top.mp hfull)
   intro v w he
@@ -894,19 +942,19 @@ private theorem leading_injective (B : G p →* M₂ (A p))
 
 private theorem distinguished_leading
     (B : G p →* M₂ (A p)) (s : E p)
-    (hs : B (Multiplicative.ofAdd s) = z • (1 : M₂ (A p))) :
+    (hs : B (Multiplicative.ofAdd s) = (z (p := p)) • (1 : M₂ (A p))) :
     ∃ sK : reductionKernel (reduced B), (sK : E p) = s ∧ leading B sK = 1 := by
   have hεz : augmentation (z : A p) = 1 := by simp [z, augmentation]
-  have hδz : firstCoefficient (z : A p) = 1 := by
+  have hδz : firstCoefficient ((z (p := p)) : A p) = 1 := by
     have hz : (z : A p) = t + 1 := by dsimp [t]; abel
     rw [hz, map_add, firstCoefficient_t, firstCoefficient_one, add_zero]
   have hred : reduced B (Multiplicative.ofAdd s) = 1 := by
-    change constantMatrix (B (Multiplicative.ofAdd s)) = 1
+    change (constantMatrix (p := p)) (B (Multiplicative.ofAdd s)) = 1
     rw [hs]
     ext i j
     by_cases hij : i = j <;> simp [constantMatrix, Matrix.one_apply, hij, hεz]
   refine ⟨⟨s, hred⟩, rfl, ?_⟩
-  change coefficientMatrix (B (Multiplicative.ofAdd s)) = 1
+  change (coefficientMatrix (p := p)) (B (Multiplicative.ofAdd s)) = 1
   rw [hs]
   ext i j
   by_cases hij : i = j <;> simp [coefficientMatrix, Matrix.one_apply, hij, hδz]
@@ -915,24 +963,26 @@ private theorem distinguished_leading
 -- theorem says nothing about an arbitrary rank-two elementary group.
 private theorem two_block_obstruction
     (B : G p →* M₂ (A p)) (s : E p) (hs : s ≠ 0)
-    (hBs : B (Multiplicative.ofAdd s) = z • (1 : M₂ (A p)))
+    (hBs : B (Multiplicative.ofAdd s) = (z (p := p)) • (1 : M₂ (A p)))
     (hnorm : ∀ a : E p, a ≠ 0 →
       Module.finrank (F p)
-        (LinearMap.range (matrixOperator ((B (Multiplicative.ofAdd a) - 1) ^ (p - 1)))) = 2) :
+        (LinearMap.range ((matrixOperator (p := p)) ((B (Multiplicative.ofAdd a) - 1) ^ (p - 1)))) = 2) :
     False := by
   classical
   let R := reduced B
   let K := reductionKernel R
   let L := leading B
-  obtain ⟨sK, hsK, hLs⟩ := distinguished_leading B s hBs
+  obtain ⟨sK, hsK, hLs⟩ := (distinguished_leading (p := p)) B s hBs
   have hsKne : sK ≠ 0 := by
     intro hz
     apply hs
     rw [← hsK, hz]
+    rfl
   have hKdim : 2 ≤ Module.finrank (F p) K := reductionKernel_large R
   have hspan : Submodule.span (F p) ({sK} : Set K) ≠ ⊤ := by
     intro he
-    have hr := finrank_span_singleton (K := F p) hsKne
+    have hr : Module.finrank (F p) (Submodule.span (F p) ({sK} : Set K)) = 1 :=
+      finrank_span_singleton (K := F p) hsKne
     rw [he, finrank_top] at hr
     omega
   have hex : ∃ h : K, h ∉ Submodule.span (F p) ({sK} : Set K) := by
@@ -949,7 +999,7 @@ private theorem two_block_obstruction
     have hi := leading_injective B hnorm (h - a • sK) hne
     simpa only [map_sub, map_smul, hLs] using hi
   let X : Module.End (F p) (W p) := Matrix.toLin' (L h)
-  have hX (a : F p) : Function.Injective (X - a • 1) := by
+  have hX (a : F p) : Function.Injective (X - a • (1 : Module.End (F p) (W p))) := by
     simpa only [X, map_sub, map_smul, Matrix.toLin'_one] using hXeigen a
   have htriv (g : G p) : R g = 1 := by
     let D : Module.End (F p) (W p) := Matrix.toLin' (R g - 1)
@@ -963,7 +1013,7 @@ private theorem two_block_obstruction
     have hnil : IsNilpotent D := by
       refine ⟨p, ?_⟩
       have hp : (R g - 1) ^ p = 0 := by
-        rw [sub_pow_char_of_commute (Commute.one_right _), ← map_pow, g_pow,
+        rw [sub_pow_char_of_commute p (Commute.one_right _), ← map_pow, g_pow,
           map_one, one_pow, sub_self]
       simpa only [D, Matrix.toLin'_pow, map_zero] using congrArg Matrix.toLin' hp
     have hz : D = 0 := quadratic_centralizer_no_nilpotents X D hX hcomm hnil
@@ -989,20 +1039,20 @@ private theorem two_block_obstruction
     exact hv (hi hezero)
   have hle := LinearMap.finrank_le_finrank_of_injective heval
   change Module.finrank (F p) K ≤ Module.finrank (F p) (W p) at hle
-  rw [hKtop, finrank_top, dimension_E, dimension_W] at hle
+  rw [hKtop, finrank_top, (dimension_E (p := p)), (dimension_W (p := p))] at hle
   omega
 
 private def rankTwoInclusion : Multiplicative (F p × F p) →* G p where
   toFun g := Multiplicative.ofAdd (g.toAdd.1, (g.toAdd.2, 0))
   map_one' := rfl
-  map_mul' g h := rfl
+  map_mul' g h := by apply Multiplicative.ext; simp
 
-private theorem rankTwoInclusion_injective : Function.Injective (rankTwoInclusion (p := p)) := by
+private theorem rankTwoInclusion_injective : Function.Injective ((rankTwoInclusion (p := p))) := by
   intro g h he
   apply Multiplicative.ext
   apply Prod.ext
-  · exact congrArg (fun a : G p => a.toAdd.1) he
-  · exact congrArg (fun a : G p => a.toAdd.2.1) he
+  · simpa [rankTwoInclusion] using congrArg (fun a : G p => a.toAdd.1) he
+  · simpa [rankTwoInclusion] using congrArg (fun a : G p => a.toAdd.2.1) he
 
 /-- Every nonzero finite-dimensional F_p representation of the actual group
 C_p^3 whose restrictions to all actual cyclic subgroups are projective has
@@ -1019,9 +1069,10 @@ theorem three_mul_prime_le_finrank_of_cyclic_projective
           (rho.comp H.subtype : Representation (ZMod p) H V))) :
     3 * p ≤ Module.finrank (ZMod p) V := by
   classical
-  let rho₂ := rho.comp (rankTwoInclusion (p := p))
+  let rho₂ : Representation (F p) (Multiplicative (F p × F p)) V :=
+    rho.comp ((rankTwoInclusion (p := p)))
   have hcyc₂ : ∀ H : Subgroup (Multiplicative (F p × F p)), IsCyclic H →
-      Module.Projective (F p)[H] (rho₂.comp H.subtype).asModule :=
+      Module.Projective (F p)[H] (Representation.asModule (rho₂.comp H.subtype)) :=
     pullback_cyclic_projective rho rankTwoInclusion rankTwoInclusion_injective hcyc
   have htwo : 2 * p ≤ Module.finrank (F p) V :=
     PrimeFieldCyclicProjectivityDimension.two_mul_prime_le_finrank_of_cyclic_projective
@@ -1033,23 +1084,24 @@ theorem three_mul_prime_le_finrank_of_cyclic_projective
   have hσ := direction_projective rho hcyc hs
   have hdim := cyclic_dimension (rho.comp (direction s)) hσ
   by_contra hbound
+  change ¬ 3 * p ≤ Module.finrank (F p) V at hbound
   have hlt : Module.finrank (F p) V < 3 * p := by omega
-  have hfreeRank : Module.finrank (A p) (rho.comp (direction s)).asModule = 2 := by
+  have hfreeRank : Module.finrank (A p) (Representation.asModule (rho.comp (direction s))) = 2 := by
     have hp := (Fact.out : p.Prime).pos
-    have hlow : 2 ≤ Module.finrank (A p) (rho.comp (direction s)).asModule := by
+    have hlow : 2 ≤ Module.finrank (A p) (Representation.asModule (rho.comp (direction s))) := by
       nlinarith
-    have hupp : Module.finrank (A p) (rho.comp (direction s)).asModule < 3 := by
+    have hupp : Module.finrank (A p) (Representation.asModule (rho.comp (direction s))) < 3 := by
       nlinarith
     omega
   have hd : Module.finrank (F p) V = 2 * p := by
     rw [hfreeRank] at hdim
     nlinarith
   let B := blockAction rho s hσ hd
-  have hBs : B (Multiplicative.ofAdd s) = z • (1 : M₂ (A p)) :=
+  have hBs : B (Multiplicative.ofAdd s) = (z (p := p)) • (1 : M₂ (A p)) :=
     blockAction_distinguished rho s hσ hd
   have hnorm (a : E p) (ha : a ≠ 0) :
       Module.finrank (F p)
-        (LinearMap.range (matrixOperator ((B (Multiplicative.ofAdd a) - 1) ^ (p - 1)))) = 2 :=
+        (LinearMap.range ((matrixOperator (p := p)) ((B (Multiplicative.ofAdd a) - 1) ^ (p - 1)))) = 2 :=
     block_norm_rank rho s hσ hd a (direction_projective rho hcyc ha)
   exact two_block_obstruction B s hs hBs hnorm
 
