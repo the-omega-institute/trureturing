@@ -60,14 +60,15 @@ internal sealed class NorthPoleBallCriterionDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "For necessity, suppose lambda squared exceeds a and choose the positive "
                         + "height deficit delta below. It is at most one. The sphere point has "
-                        + "y equal to zero, z equal to one minus delta, and x equal to the square "
-                        + "root of delta times two minus delta.")),
+                        + "y equal to zero, z equal to one minus delta, and nonnegative x whose "
+                        + "square is delta multiplied by (two minus delta).")),
                     Display(Seq(Delta, Sp, Eq, Sp, Frac,
                         Grp(Sq(Lambda), Minus, F.Id("a")), Grp(Sq(Lambda), Plus, D(1)))),
                     Paragraph(Text(
                         "Its image has squared radius exceeding one by delta times the bracket "
-                        + "below. Since delta times lambda squared plus one equals lambda squared "
-                        + "minus a, and a squared is nonnegative, the bracket is at least lambda "
+                        + "below. Since delta multiplied by (lambda squared plus one) equals "
+                        + "(lambda squared minus a), and a squared is nonnegative, the bracket "
+                        + "is at least lambda "
                         + "squared minus a and is strictly positive. Thus a specific sphere point "
                         + "violates preservation whenever the criterion fails; no infinitesimal "
                         + "approximation is needed.")),
