@@ -1,0 +1,13 @@
+**定义 1.5（取向坐标中的同一旧缺陷）。** 将 $Q$ 视为中央自伴截面，令 $J=iQ$。对 $Z\in M$ 定义
+
+$$
+\begin{gathered}
+x(Z)=(Z+Z^*)/2,\qquad y(Z)=-J(Z-Z^*)/2,\qquad Z=x(Z)+Jy(Z),\\
+K(a,b)=\tfrac J2[a,b],\qquad q_D(Z)=x(Z)^2+y(Z)^2+2D(x(Z),y(Z)),\\
+F(Z)=\tfrac12\{q_D(Z)-Z^*Z\}=D(x(Z),y(Z))-K(x(Z),y(Z)).
+\end{gathered}
+\tag{1.8}
+$$
+
+这里 $K,J,q_D$ 是数学辅助对象，不是原全词网络的 $K,\mathsf J,q$。每个固定 $F(Z)\in E$，不假定 $F$ 随输入连续。$J^2=-u$、$J^*=-J$，直接乘法给 $Z^*Z=x^2+y^2+J[x,y]$。
+

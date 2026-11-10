@@ -1,0 +1,32 @@
+**定理35.1（一般丛上平方的完整可得几何）。** 在30.3前件下，对任意 $Z,W\in M$，
+
+$$
+\begin{aligned}
+q_D(Z)=q_D(W)
+&\iff Z^*Z=W^*W\\
+&\iff(\forall\xi\in X)(\exists V_\xi\in\mathcal U(\mathfrak B_\xi))\quad
+W(\xi)=V_\xi Z(\xi).
+\end{aligned}
+\tag{35.1}
+$$
+
+每个平方纤维有唯一正代表 $|Z|$，并有
+
+$$
+\begin{gathered}
+q_D(Z)\ge0,\quad q_D(Z)=0\iff Z=0,\quad\|q_D(Z)\|=\|Z\|^2,\\
+q_D(UZ)=q_D(Z),\qquad q_D(ZU)=U^*q_D(Z)U,\\
+\overline{\mathcal O(Z)}^{\|\cdot\|}\subseteq\{W:W^*W=Z^*Z\},\quad
+\mathcal O(Z)=\{UZ:U\in\mathcal U(M)\}.
+\end{gathered}
+\tag{35.2}
+$$
+
+证明。已识别平方是普通 Gram。每个单独纤维内用有限矩阵 SVD把部分极因子补成酉，得到35.1；不选择连续的 $V_\xi$。连续函数演算给 $|Z|$，正平方根唯一性给唯一正代表。其余由 C* 恒等式及
+
+$$
+\|A^*A-B^*B\|\le(\|A\|+\|B\|)\|A-B\|
+$$
+
+得到，闭包只对已知 Gram 作极限。∎
+

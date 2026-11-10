@@ -90,7 +90,7 @@ theorem actual_proper_layer_bracket_surjective (k : ℕ)
 /-- Literal matrix height filtration used in printed equation(13). -/
 def LayerDepth (k : ℕ) (A : Matrix (Fin n) (Fin n) F) : Prop :=
   ∀ i j, j.val < i.val+k → A i j=0
-private theorem depth_mono {k l : ℕ} {A : Matrix (Fin n) (Fin n) F}
+theorem depth_mono {k l : ℕ} {A : Matrix (Fin n) (Fin n) F}
     (h : LayerDepth l A) (hkl : k ≤ l) : LayerDepth k A := by
   intro i j hij
   exact h i j (by omega)
@@ -98,11 +98,11 @@ private theorem depth_neg {k : ℕ} {A : Matrix (Fin n) (Fin n) F}
     (h : LayerDepth k A) : LayerDepth k (-A) := by
   intro i j hij
   simp only [Matrix.neg_apply,h i j hij,neg_zero]
-private theorem depth_add {k : ℕ} {A B : Matrix (Fin n) (Fin n) F}
+theorem depth_add {k : ℕ} {A B : Matrix (Fin n) (Fin n) F}
     (ha : LayerDepth k A) (hb : LayerDepth k B) : LayerDepth k (A+B) := by
   intro i j hij
   simp only [Matrix.add_apply,ha i j hij,hb i j hij,add_zero]
-private theorem depth_mul {k l : ℕ} {A B : Matrix (Fin n) (Fin n) F}
+theorem depth_mul {k l : ℕ} {A B : Matrix (Fin n) (Fin n) F}
     (ha : LayerDepth k A) (hb : LayerDepth l B) : LayerDepth (k+l) (A*B) := by
   classical
   intro i j hij
@@ -121,10 +121,10 @@ private theorem depth_pow {k : ℕ} {A : Matrix (Fin n) (Fin n) F}
     have hne : i ≠ j := by intro h; subst j; omega
     simp [hne]
   | succ d ih => simpa only [Nat.succ_mul,pow_succ] using depth_mul ih ha
-private theorem depth_n_zero {A : Matrix (Fin n) (Fin n) F} (ha : LayerDepth n A) : A=0 := by
+theorem depth_n_zero {A : Matrix (Fin n) (Fin n) F} (ha : LayerDepth n A) : A=0 := by
   ext i j
   exact ha i j (by omega)
-private theorem depth_sum {T : Type} {k : ℕ} (s : Finset T)
+theorem depth_sum {T : Type} {k : ℕ} (s : Finset T)
     (f : T → Matrix (Fin n) (Fin n) F) (hf : ∀ t ∈ s, LayerDepth k (f t)) :
     LayerDepth k (∑ t ∈ s, f t) := by
   intro i j hij

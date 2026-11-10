@@ -1,0 +1,45 @@
+**定义 45.1（同一实现中的固定代数、来源与两个整数指标）。**取定理 44.2 的同一个总模型 $(N,\star,e,V,d)$、保 $d$ 的含幺自同构 $A$ 和实际双向来源 $x_i=A^ix_0,y_i=A^iy_0$。以下推导只用其完整原始关系
+
+$$
+\sum_{k=0}^2d(a\star V^ku,b\star V^kv)
+=3d(a,b)+3d(u,v)\qquad(a,b,u,v\in N),
+\tag{45.1}
+$$
+
+以及 $AV=VA$、$Ae=e$、$d(As,At)=d(s,t)$、$Vx_i=Ax_i$、$Vy_i=Ay_i$。$d$ 处处有限、非负且零对角；$\star$ 有真实双侧单位，不输入结合、交换或 $V$ 保乘法。推导不使用 $N$ 的可数性，故也适用于任何具有这些性质的总模型。仍记
+
+$$
+\begin{aligned}
+&p_j=V^je,\qquad P(s)=s\star p_3,\qquad
+E=\langle e\rangle_{\star,V},\\
+&q_d(s)=d(s,e),\qquad r_d(s)=d(e,s),\\
+&B_0=\sum_{j=1}^2[q_d(p_j)+r_d(p_j)],\\
+&\delta=d(V^3x_0,y_0)-d(x_0,y_0)
+=d(P(x_0),y_0)-d(x_0,y_0).
+\end{aligned}
+\tag{45.2}
+$$
+
+这里的 $E$ 是实际单位子代数，$A$ 在它上面逐点固定，$B_0$ 不假定为零。沿用推论 44.3，在同一个 $N^2$ 上定义
+
+$$
+\begin{aligned}
+&F_m(s,t)=d(A^ms,t),\qquad H_m=F_m-F_0\quad(m\in\mathbb Z),\\
+&K=\{a\in N:Aa=a\},\qquad S=\{u\in N:Vu=Au\}.
+\end{aligned}
+\tag{45.3}
+$$
+
+$K$ 是固定背景集合，$S$ 是实际来源集合。对有序实际标签 $a,b\in N$、$u,v\in S$ 及彼此独立的整数 $m,n$，置
+
+$$
+\begin{aligned}
+L_m(n;a,b;u,v)
+&=F_m((A^na)\star u,(A^nb)\star v),\\
+D_m(a,b;u,v)&=F_m(a,b)+F_m(u,v).
+\end{aligned}
+\tag{45.4}
+$$
+
+$m$ 只平移比较核的第一输入，$n$ 只摆放两个背景。省略参数时仍固定同一个有序四元组，不改变来源或括号。$m=3$ 承载原缺陷 $H_3(x_0,y_0)=\delta$；下面的递推则发生在 $n$，不是 $m$。
+

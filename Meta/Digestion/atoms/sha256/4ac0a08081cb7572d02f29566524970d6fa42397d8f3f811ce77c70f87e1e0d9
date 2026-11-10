@@ -1,0 +1,20 @@
+**定义 51.1（同一候选与准确目标）。** 完整采用 36.1、41.1 的标量端点二阶 Hermitian 多项式原域 $E$、准确锥、原范数、逐点 Jordan 乘法和同一个未知总映射 $D:E^2\to E$。前件仍仅为静态卷 1.1、1.2 第 1–3 项和 22.1 的无 R 背景，加全部原 PB (36.2)。保留全部原评价、质量和 49.3 的来源合同。写实际输入为
+
+$$
+a=\alpha u+v\cdot\sigma,\qquad
+b=\beta u+w\cdot\sigma,
+\quad \alpha,\beta\in\mathbb R[x],\quad
+v,w\in x\mathbb R[x]^3.
+\tag{51.1}
+$$
+
+令 $\kappa=-\varepsilon_0$，其中共同符号取 36.2；只定义已知比较映射
+
+$$
+K(a,b)=\kappa(v\times w)\cdot\sigma
+=\varepsilon_0\frac{\mathrm i}{2}[a,b].
+\tag{51.2}
+$$
+
+$K$ 的双线性来自明确矩阵公式，不移给尚未识别的 $D$。不输入中心平移、可加、齐次、输入正则性、商下降或完成延拓。
+

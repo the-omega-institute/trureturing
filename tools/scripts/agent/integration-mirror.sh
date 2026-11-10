@@ -68,7 +68,12 @@ run() {
   local step=$1 rc=0
   shift
   log "$step"
-  "$@" >"$scratch/command.log" 2>&1 || rc=$?
+  if [[ "$step" == worktree ]]; then
+    # The native protocol's stdout is JSON; advisory reminders stay on stderr.
+    "$@" >"$scratch/command.log" || rc=$?
+  else
+    "$@" >"$scratch/command.log" 2>&1 || rc=$?
+  fi
   output=$(cat "$scratch/command.log")
   if (( rc != 0 )); then log "$step exit=$rc $output" >&2; fi
   return "$rc"

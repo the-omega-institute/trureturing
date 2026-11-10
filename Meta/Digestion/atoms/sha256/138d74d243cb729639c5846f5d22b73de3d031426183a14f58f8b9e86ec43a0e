@@ -1,0 +1,35 @@
+### 21.6. The dynamics-stable common-prediction bridge
+
+The current `dev` line also supplies a precise semantic bridge for the
+behavioral part of this control-fiber distinction. Given an update map
+$u:Y\to Y$ and two readouts $q_1,q_2$, form the complete-future itinerary
+kernels of the two readouts. Let $R_{\mathrm{cp}}$ be the least equivalence
+relation that contains both kernels and is preserved by $u$. Then the quotient
+$Y/R_{\mathrm{cp}}$ is a canonical common prediction quotient: every
+surjective factor $r:Y\to W$ that is computed from both complete-itinerary
+quotients and intertwines $u$ with an update on $W$ factors uniquely through
+$Y/R_{\mathrm{cp}}$.
+This is the universal property recorded by the frozen
+`CommonPredictionFactor.common_prediction_factor_universal_property` result
+in the current project. It identifies the smallest required behavioral
+identifications for the two complete readouts. It does not identify the
+finite task quotient in (21.3): the latter must still preserve one common
+continuation policy on each memory fiber. In particular, the universal
+behavior quotient does not by itself preserve action legality, response
+labels, the prescribed successor coupling $\Xi$, completion rank, risk
+thresholds or resource costs. Those data must be shown to descend separately
+before the quotient can serve as an executable controller state.
+More precisely, the factor in that theorem must be surjective, semiconjugate
+to the source update, and computed from both complete-itinerary quotients by
+maps out of their quotient types. The relation is the least update-stable
+equivalence containing the two itinerary kernels. It is therefore not a
+greatest invariant subrelation of a preselected relation, and it is not a
+task controller or a proof that a controller can implement every legal
+continuation on its fibers. Under contract (a), it becomes a full permitted-action behavioral quotient
+only when legality, responses, successors, $\Xi$, completion rank and cost
+descend and the repeated finite-memory update is closed. Under contract (b),
+the fixed depth-$n$ continuation needs only the common-policy condition in
+(21.3); a repeated controller additionally needs policy-relative update
+closure and a terminating rank. The remaining $\Xi$, legality, response,
+rank and cost checks stay separate.
+

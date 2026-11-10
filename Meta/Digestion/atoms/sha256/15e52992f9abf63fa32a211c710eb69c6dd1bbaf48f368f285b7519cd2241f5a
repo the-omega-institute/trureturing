@@ -1,0 +1,27 @@
+**引理 70.1（所有单位 Bloch 限制均消去余量读数）。** 对环境 $A_0$ 上任一数学态 $\phi$，若有单位 $n\in U$ 使 $\phi(z)=\langle n,z\rangle$ 对全部 $z\in U$ 成立，则 $\phi(F)=0$。
+
+证明。记 $f=\phi(F)\in\mathbb R$。对 (69.1) 的旋转输入取同一态的 P2，令 $r=O^{-1}n$，直接展开实际 Jordan 平方和交叠，得到
+
+$$
+|f+\langle w,r\rangle|^2\le |w+r\times p|^2\qquad(|r|=1).
+\tag{70.1}
+$$
+
+同一个 $f$ 不随旋转改变。若 $P\ge W>0$，取
+
+$$
+r=\frac{w\times p}{P^2}+\sqrt{1-W^2/P^2}\,\frac pP.
+\tag{70.2}
+$$
+
+此时 $|r|=1,r\times p=-w,w\cdot r=0$，所以 $f=0$。若 $P<W$，置 $L=\sqrt{W^2-P^2}>0$，取
+
+$$
+r_\pm=\frac{w\times p}{W^2}\pm\sqrt{1-P^2/W^2}\,\frac wW.
+\tag{70.3}
+$$
+
+有 $|r_\pm|=1,w\cdot r_\pm=\pm L,|w+r_\pm\times p|=L$。两份不等式为 $|f+L|\le L,|f-L|\le L$，共同给 $f=0$。68.1 的零分支已包括其余退化情形。∎
+
+这些态在指定 Jordan 三轴上的限制为纯 Bloch 读取；没有断言它们分离整个环境 $A_0$，也没有将 $C^*(u,U)$ 认成一个固定取向的 $M_2(\mathbb C)$。
+

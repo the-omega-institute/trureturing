@@ -1,0 +1,16 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer;
+
+internal sealed class BVCorrelationSummationDocument : IScribeDocumentDefinition
+{
+    private const string Prefix = "D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/BVCorrelationSummation.";
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Uniform partial-sum discrepancy controls weighted sums with bounded variation weights.",
+        H("Bounded variation correlation summation"),
+        Blocks(
+            Describe.Lean(DescribeId.Create("bv-discrepancy-bound"), DeclarationHandle.Create(Prefix + "bv_discrepancy_bound"), H("BV discrepancy against an integrable density"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("On an interval (a,b] with natural endpoints, suppose the discrepancy between the atomic prefix sum of c and the integral of an integrable real density is bounded by E at every real cut. A globally bounded variation weight with absolute value at most U on [a,b] and total variation at most V has weighted discrepancy at most E(U+V). No sign condition on the density or continuity convention on the weight is imposed. Finite step approximations preserve every sampled integer value; their variations are bounded by the weight's variation, and dominated convergence gives the density integral."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("bv-correlation-discrepancy"), DeclarationHandle.Create(Prefix + "bv_correlation_discrepancy"), H("Dyadic BV correlation discrepancy"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For every real N≥2, a bound E on the discrepancy between the sum of f over N<n≤y and c(y−N), uniform for N≤y≤2N, gives a weighted discrepancy bound E times the sum of U and the variation of v on [N,2N]. Here U bounds the absolute value of v on that interval. The comparison integral is c times the integral of v from N to 2N. The endpoints may be nonintegral and the weight may take arbitrary values at integer atoms. Clamping the weight to the dyadic interval preserves the variation bound."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("polynomial-log-bv-bound"), DeclarationHandle.Create(Prefix + "polynomial_log_bv_bound"), H("Polynomial logarithmic weights"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For each real polynomial p there is a nonnegative constant C depending only on p. For N≥2, if a global BV weight w has absolute value bounded by U and total variation bounded by V, then x↦w(x/N)p(log x) has bounded variation on [N,2N]. Its supremum bound K plus its variation is at most C(U+V)(1+log N) to the natural degree of p. Polynomial evaluation and Lipschitz bounds on [0,1+log N], the monotonicity of log, and the variation bound for a product give this estimate. Thus the same conclusion with CB holds whenever U+V≤B."))), DescribeRole.Theorem))));
+}

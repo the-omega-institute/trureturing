@@ -54,7 +54,25 @@ $$\forall (n : \mathbb{N}), \forall (\psi : (\operatorname{Fin}\left(n\right)) \
 
 Zhang and Xie, Definition 3.1, p. 9: “The so-called nth-order Bargmann invariant for such n-tuple Ψ = (ρ₁, …, ρₙ) is defined as Δₙ(Ψ) := Tr(ρ₁ ⋯ ρₙ).” Section 2, p. 4: “Unit vector |ψ⟩ in ℂ^d will be called wave functions and its ranked-one projector ψ ≡ |ψ⟩⟨ψ| will be called pure state.” Here d = 2 and each ρ is the displayed outer product of its amplitude vector with its conjugate.
 
-**Definition 1.5 (The maximal imaginary value).**
+**Theorem 1.5 (The overlap product of an ordered rank-one chain).**
+
+$$\forall (n : \mathbb{N}), \forall (\psi : (\operatorname{Fin}\left(n + 1\right)) \to ((\operatorname{Fin}\left(2\right)) \to (\mathbb{C}))), \operatorname{bargmann}\left(\psi\right) = (\prod_{j : \operatorname{Fin}\left(n\right)} (\operatorname{dotProduct}\left(\operatorname{star}\left(\psi\left(\operatorname{Fin.castSucc}\left(j\right)\right)\right), \psi\left(\operatorname{Fin.succ}\left(j\right)\right)\right))) \cdot (\operatorname{dotProduct}\left(\operatorname{star}\left(\psi\left(\operatorname{Fin.last}\left(n\right)\right)\right), \psi\left(0\right)\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/BargmannImaginaryMaximizers.bargmann_path_product` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural n and every tuple Ψ of n + 1 arbitrary vectors in ℂ², the trace of their ordered outer-product chain is the product of the n consecutive inner products, followed by the closing inner product from the last vector to the first. The inner product convention is ⟨u, v⟩ = star u dotProduct v. No normalization or nonzero premise is imposed; an outer product may therefore be zero. For n = 0, the empty consecutive product is one and the closing factor is ⟨Ψ₀, Ψ₀⟩, the trace of the single outer product.
+
+For an ideal finite polarizer cascade, let vⱼ = v(αⱼ) = (cos αⱼ, sin αⱼ), embedded from ℝ² into ℂ², and Pⱼ = vⱼvⱼ†, for j = 0, …, m. These vectors are unit vectors. Starting from the prepared state P₀, the branch that passes every subsequent filter has Kₘ = Pₘ⋯P₁ and unnormalized state Xₘ = KₘP₀Kₘ† = Pₘ⋯P₁P₀P₁⋯Pₘ. Its weight is Tr(Xₘ). Apply bargmann_path_product with n = 2m to the ordered vector tuple (vₘ, …, v₁, v₀, v₁, …, vₘ). Each consecutive overlap is paired with its complex conjugate, while the closing overlap is ⟨vₘ, vₘ⟩ = 1. Thus Tr(Xₘ) = ∏ⱼ₌₁ᵐ |⟨vⱼ, vⱼ₋₁⟩|² = ∏ⱼ₌₁ᵐ cos²(αⱼ − αⱼ₋₁). This is the trace of one ordered success branch; it requires no independence assumption on successive outcomes.
+
+For N intermediate filters between horizontal and vertical polarization, put m = N + 1 > 0 and αⱼ = jπ/(2m). The finite all-through weight relative to the prepared horizontal input is [cos²(π/(2m))]ᵐ = [cos²(π/(2(N + 1)))]ᴺ⁺¹. N = 0 gives zero and N = 1 gives 1/4. For unpolarized input I/2, retaining the initial horizontal preparation contributes a separate factor 1/2 to the weight relative to that input.
+
+The finite cascade application uses ideal rank-one projections. Scalar strict increase with N and convergence to one are separate classical analysis results, outside the Lean statement of bargmann_path_product. No conclusion about general noisy filters or absorbing media follows from this identity.
+
+**Definition 1.6 (The maximal imaginary value).**
 
 $$\forall (n : \mathbb{N}), \operatorname{tau}\left(n\right) = \frac{\operatorname{Real.cos}\left(\frac{\operatorname{Real.pi}}{(n : \mathbb{R})}\right)^{n}}{\operatorname{Real.cos}\left(\frac{\operatorname{Real.pi}}{2 \cdot ((n : \mathbb{R}) - 1)}\right)^{(n - 1)}}$$
 
@@ -66,7 +84,7 @@ $$\forall (n : \mathbb{N}), \operatorname{tau}\left(n\right) = \frac{\operatorna
 
 Zhang and Xie, Corollary 5.5, p. 25, Eq. (5.15): “τₙ := cosⁿ(π/n) secⁿ⁻¹(π/[2(n−1)]).” The reciprocal cosine power expresses the secant power; the classification below concerns n ≥ 3.
 
-**Definition 1.6 (The latitude polygon).**
+**Definition 1.7 (The latitude polygon).**
 
 $$\forall (n : \mathbb{N}), \forall (j : \operatorname{Fin}\left(n\right)), \operatorname{let} (t : \mathbb{R}) := \frac{1 - \frac{\operatorname{Real.tan}\left(\frac{\operatorname{Real.pi}}{2 \cdot ((n : \mathbb{R}) - 1)}\right)}{\operatorname{Real.tan}\left(\frac{\operatorname{Real.pi}}{(n : \mathbb{R})}\right)}}{2}; \operatorname{maximizer}\left(n, j\right) = ![(\operatorname{Real.sqrt}\left(1 - t\right) : \mathbb{C}), (\operatorname{Real.sqrt}\left(t\right) : \mathbb{C}) \cdot \operatorname{Complex.exp}\left(\frac{2 \cdot (\operatorname{Real.pi} : \mathbb{C}) \cdot \operatorname{Complex.I} \cdot (\operatorname{val}\left(j\right) : \mathbb{C})}{(n : \mathbb{C})}\right)]$$
 
@@ -80,7 +98,7 @@ $$\forall (n : \mathbb{N}), \forall (j : \operatorname{Fin}\left(n\right)), \ope
 
 The jth vector is (√(1 − t), √t · exp(2πij/n)), with t = (1 − tan(π/[2(n−1)])/tan(π/n))/2. The square roots are embedded from ℝ into ℂ. For n ≥ 3 the weight t lies strictly between zero and one half. The last coordinate uses the complex coercions of j and n.
 
-**Definition 1.7 (The complete set of maximizing tuples).**
+**Definition 1.8 (The complete set of maximizing tuples).**
 
 $$\operatorname{claim} = (\forall (n : \mathbb{N}), (3 \le n) \Rightarrow (\forall (\psi : (\operatorname{Fin}\left(n\right)) \to ((\operatorname{Fin}\left(2\right)) \to (\mathbb{C}))), (\forall (j : \operatorname{Fin}\left(n\right)), \operatorname{dotProduct}\left(\operatorname{star}\left(\psi\left(j\right)\right), \psi\left(j\right)\right) = 1) \Rightarrow ((\operatorname{Complex.im}\left(\operatorname{bargmann}\left(\psi\right)\right) = \operatorname{tau}\left(n\right)) \Leftrightarrow (\exists (U : \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right)), (U \in \operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(2\right), \mathbb{C}\right)) \land (\exists (eta : (\operatorname{Fin}\left(n\right)) \to (\mathbb{C})), (\forall (j : \operatorname{Fin}\left(n\right)), \left\lVert eta\left(j\right) \right\rVert = 1) \land (\forall (j : \operatorname{Fin}\left(n\right)), \psi\left(j\right) = \operatorname{SMul.smul}\left(eta\left(j\right), \operatorname{Matrix.mulVec}\left(U, \operatorname{maximizer}\left(n, j\right)\right)\right)))))))$$
 
@@ -94,7 +112,7 @@ $$\operatorname{claim} = (\forall (n : \mathbb{N}), (3 \le n) \Rightarrow (\fora
 
 Zhang and Xie, p. 26: “The quantity τ_n predicts the upper bound for the imaginary part of any nth-order Bargmann invariant. This immediately raises the question: what is the complete set of n-tuples Ψ = (|ψ_1⟩, …, |ψ_n⟩) in ℂ² that achieve Im Tr(ψ_1 … ψ_n) = τ_n? We leave this characterization, along with the operational interpretation of the condition z ∈ 𝓑_{n+1} ∖ 𝓑_n, as interesting open problems for future work.” The displayed answer uses one common matrix U in Matrix.unitaryGroup and independent complex phases eta of norm one. The wave-function premise is star (Ψ j) dotProduct (Ψ j) = 1. The second question is outside this equivalence.
 
-**Theorem 1.8 (Classification of every maximizing qubit tuple).**
+**Theorem 1.9 (Classification of every maximizing qubit tuple).**
 
 $$\forall (n : \mathbb{N}), (3 \le n) \Rightarrow (\forall (\psi : (\operatorname{Fin}\left(n\right)) \to ((\operatorname{Fin}\left(2\right)) \to (\mathbb{C}))), (\forall (j : \operatorname{Fin}\left(n\right)), \operatorname{dotProduct}\left(\operatorname{star}\left(\psi\left(j\right)\right), \psi\left(j\right)\right) = 1) \Rightarrow ((\operatorname{Complex.im}\left(\operatorname{bargmann}\left(\psi\right)\right) = \operatorname{tau}\left(n\right)) \Leftrightarrow (\exists (U : \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right)), (U \in \operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(2\right), \mathbb{C}\right)) \land (\exists (eta : (\operatorname{Fin}\left(n\right)) \to (\mathbb{C})), (\forall (j : \operatorname{Fin}\left(n\right)), \left\lVert eta\left(j\right) \right\rVert = 1) \land (\forall (j : \operatorname{Fin}\left(n\right)), \psi\left(j\right) = \operatorname{SMul.smul}\left(eta\left(j\right), \operatorname{Matrix.mulVec}\left(U, \operatorname{maximizer}\left(n, j\right)\right)\right))))))$$
 
@@ -115,6 +133,7 @@ Rephase consecutive overlaps onto one ray. AM–GM compares their product with t
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Information/BargmannImaginaryMaximizers.bargmann`
+- Truth anchor: `D5/S3/Quantum/Information/BargmannImaginaryMaximizers.bargmann_path_product`
 - Truth anchor: `D5/S3/Quantum/Information/BargmannImaginaryMaximizers.claim`
 - Truth anchor: `D5/S3/Quantum/Information/BargmannImaginaryMaximizers.latitude`
 - Truth anchor: `D5/S3/Quantum/Information/BargmannImaginaryMaximizers.latitude_dot`

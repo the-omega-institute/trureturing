@@ -1,0 +1,6 @@
+**Corollary 13.4 (one finite marginal suffices for abstract attainment).** Suppose the original installed support $S=\{k:\mu(k)>0\}$ is finite, of size $s\ge3$. The following are equivalent:
+
+1. A finite abstract original common conf/conf attainer exists.
+2. Some zero-level compatible pair has finitely supported p marginal.
+3. Some zero-level compatible pair has finitely supported suspended marginal.
+

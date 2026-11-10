@@ -1,0 +1,72 @@
+**定理 138.2（非交换系数闭合及全部原二元乘积）。** 对全部原 $c,d\in\mathcal B_0$，
+
+$$
+\boxed{\beta(c,d)\in\mathcal B_0,\qquad
+\beta(c,d)=\tfrac{iQ}{2}[c,d],\qquad
+(h\circ c)\circ(e\circ d)=-j\circ\beta(c,d).}
+\tag{138.3}
+$$
+
+因此(138.2)给保持整个原域的实交替双线性映射，并满足
+
+$$
+\boxed{B_\star:E^2\longrightarrow E,\qquad
+B_\star(a,b)=\tfrac{iQ}{2}[a,b],\qquad
+N(B_\star(a,b))\le N(a)N(b).}
+\tag{138.4}
+$$
+
+原Jordan乘积也由同一系数准确决定：
+
+$$
+\begin{aligned}
+a\circ b&=\eta_0+\sum_{k=1}^3s_k\circ\eta_k,\\
+\eta_0&=c_0\circ d_0+\sum_{r=1}^3c_r\circ d_r,\\
+\eta_k&=c_0\circ d_k+c_k\circ d_0
+-\sum_{r,t=1}^3\varepsilon_{rtk}\beta(c_r,d_t).
+\end{aligned}
+\tag{138.5}
+$$
+
+这些公式仅由原 $S$ 及同一有向三轴决定，因而不依赖所选忠实JC实现；不以一般旧 $D$ 的任何双线性为前件。
+
+证明。$hc\in E_{+--}$、$ed\in E_{-+-}$。因为每个 $U$ 保Jordan乘积，原 $y=(hc)\circ(ed)$ 位于 $E_{--+}$，故原 $-j\circ y$ 位于 $\mathcal B_0$。先由这个有限式支付返回原系数域，再在环境中计算：$c,d$ 与轴交换而 $eh=-he$，所以
+
+$$
+y=\tfrac12he(cd-dc),\qquad
+he=-iQj,\qquad
+-j\circ y=\tfrac{iQ}{2}[c,d].
+\tag{138.6}
+$$
+
+对 $E_{--+}$ 施加两次 $L_j$ 为恒等，得到(138.3)的最后一式。右侧 $iQ[c,d]/2$ 自伴；这里未先假设任何环境交换子属于原域，也未将 $\beta(c,d)$ 认作旧 $D(c,d)$。
+
+现在(138.2)的每个 $\gamma_k$ 已在 $\mathcal B_0$ 中，所以 $B_\star(a,b)\in E$。环境中三轴满足
+
+$$
+s_rs_t=-iQ\sum_k\varepsilon_{rtk}s_k\quad(r\ne t).
+\tag{138.7}
+$$
+
+展开 $[a,b]$：零轴与自身轴项分别给 $[c_0,d_0]$、$[c_r,d_r]$；零轴与第 $k$ 轴项给 $s_k([c_0,d_k]+[c_k,d_0])$；异轴项为
+
+$$
+[s_rc_r,s_td_t]=2s_rs_t(c_r\circ d_t)\quad(r\ne t).
+\tag{138.8}
+$$
+
+乘 $iQ/2$ 并用 $Q^2=u$，正好得到(138.2)。交替性由交换子身份给出，实双线性也已由原有限公式给出。$Q$ 为中央自伴酉元，$\|[a,b]\|\le2\|a\|\|b\|$，得到范数界。对Jordan乘积作相同展开，同轴项给 $c_r\circ d_r$，异轴项给
+
+$$
+(s_rc_r)\circ(s_td_t)
+=\tfrac12s_rs_t[c_r,d_t]
+=-\sum_k\varepsilon_{rtk}s_k\beta(c_r,d_t),
+\tag{138.9}
+$$
+
+这证明(138.5)。全部中间输出都已在原域中。
+
+任意保持单位、Jordan乘积及这三根标记轴的Jordan映射，都保持 $U,P,\kappa,\beta,\gamma$ 的有限表达式，所以也保持 $B_\star$。这正是相对于同一标记有向三轴的规范性，不声称所有轴选择已经给旧 $D$ 完成全域拼接。
+
+反向检查时，若某对原系数的有向差不能返回 $\mathcal B_0$，则同一原二元关系 $y=(h\circ c)\circ(e\circ d)\in E_{--+}$ 与 $-j\circ y\in\mathcal B_0$ 不可能同时保留。若某对原 $a,b$ 的 $iQ[a,b]/2$ 不能返回 $E$，(138.2)的有限原重构将与这个环境身份矛盾。被击中的正是原跨轴Jordan闭合关系；这项反事实没有识别未知旧值 $D(a,b)$。∎
+
