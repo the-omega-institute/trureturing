@@ -1,5 +1,6 @@
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233127SquareStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233254TriangleStrip
 import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration

@@ -158,7 +158,7 @@ internal sealed class HardinA233127SquareStripDocument : IScribeDocumentDefiniti
     {
         var s = V("s"); var p = V("p");
         Formula P(byte j) => At(p, Typed(D(j), Fin(6)));
-        Formula K(byte j) => Typed(D(j), Fin(11));
+        Formula K(byte j) => Typed(Numeral(j), Fin(11));
         return All("s", Seen(), All("p", PairRow(),
             Eq(Call(Root + "boundaryClass", s, p), Conditional(Proj(s, false),
                 Conditional(Eq(P(2), P(0)), Conditional(Eq(P(3), P(1)), Conditional(Eq(P(4),
@@ -242,7 +242,7 @@ internal sealed class HardinA233127SquareStripDocument : IScribeDocumentDefiniti
             Mul(D(4,1,1,3,0,3,9,3,6), A(6))), Mul(D(7,0,1,1,1,9,8,5,6,6,4), A(5))),
             Mul(D(6,8,9,3,4,2,2,5,1,0,0,8,0), A(4))), Mul(D(3,8,9,7,0,8,1,5,2,5,6,9,8,5,6),
             A(3))), Mul(D(1,1,7,3,3,9,8,8,0,9,1,6,2,5,4,7,2), A(2))),
-            Mul(D(1,4,5,2,4,1,0,8,7,9,8,2,6,9,8,4,9,6), A(1))))));
+            Mul(D(1,4,5,2,4,1,0,8,7,9,8,2,6,9,8,4,9,6), A(1)))));
     }
 
     private static Formula V(string name) => F.Id(name);
@@ -255,7 +255,13 @@ internal sealed class HardinA233127SquareStripDocument : IScribeDocumentDefiniti
     private static Formula Parenthesized(Formula f) => Seq(Open, f, Close);
     private static Formula Typed(Formula f, Formula type) =>
         Parenthesized(Seq(f, Colon, Sp, type));
-    private static Formula Fin(byte k) => Call("Fin", D(k));
+    private static Formula Numeral(byte k) => k switch
+    {
+        10 => D(1,0),
+        11 => D(1,1),
+        _ => D(k)
+    };
+    private static Formula Fin(byte k) => Call("Fin", Numeral(k));
     private static Formula Val(Formula f) => Call("Fin.val", f);
     private static Formula Arrow(Formula a, Formula b) => new Formula.TypeArrow(a, b);
     private static Formula Product(Formula a, Formula b) =>
