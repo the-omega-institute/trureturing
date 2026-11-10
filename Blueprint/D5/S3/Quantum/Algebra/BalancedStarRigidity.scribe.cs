@@ -10,7 +10,7 @@ internal sealed class BalancedStarRigidityDocument : IScribeDocumentDefinition
         H("Balanced-star rigidity with both environment edges"),
         Blocks(
             Paragraph(Text("The algebra A is Matrix(Fin 3,Fin 3,Complex), with ordinary multiplication, conjugate transpose and the positive semidefinite order. Set P=diag(1,1,0), c=diag(1,2,0), and t=((0,0,1),(0,0,sqrt(2)),(1,sqrt(2),0)). Thus both environment edges, of weights 1 and sqrt(2), are retained. The probe condition CornerSA(x) means star(x)=x and P*x*P=x. The orientation sigma is either 1 or -1, and rho ranges over all real numbers.")),
-            Paragraph(Text("Write J(a,b)=(ab+ba)/2, K(sigma,a,b)=(sigma*i/2)(ab-ba), s(rho)=rho*diag(1,-2,0), and g(sigma,rho)=K(sigma,c,t)+s(rho). At a probe x define h=K(sigma,c,x), r=J(c,x), k=J(c,t), Rplus=x+(h-k), Rminus=x-(h-k), Splus=t+(r+g), Sminus=t-(r+g), and L=-2*J(x,h-k)-2*J(t,r+g). These are the complete original labels.")),
+            Paragraph(Text("Write J(a,b)=(ab+ba)/2, K(sigma,a,b)=(sigma*i/2)(ab-ba), s(rho)=rho*diag(1,-2,0), and g(sigma,rho)=K(sigma,c,t)+s(rho). At a probe x define h=K(sigma,c,x), r=J(c,x), k=J(c,t), Rplus=x+(h-k), Rminus=x-(h-k), Splus=t+(r+g), Sminus=t-(r+g), and L=-2*J(x,h-k)-2*J(t,r+g). Here Rp and Rm denote Rplus and Rminus, and Sp and Sm denote Splus and Sminus. These are the complete original labels.")),
             Paragraph(Text("PositiveFunctionals(A) denotes all positive complex-linear maps from A to Complex. For such a phi put read(phi,a)=Re(phi(a)) and B(phi,a,b)=read(phi,a*a)*read(phi,b*b)-read(phi,J(a,b)) squared. Selfadjoint readings are real and B is nonnegative for selfadjoint a,b, by complex Cauchy-Schwarz. The quantified family includes the zero functional and every unnormalised mass phi(1). No faithfulness, normalisation or positive-mass premise is imposed.")),
             Paragraph(Text("For the quantitative statement set u=(2sqrt(2)/3,-1/3,0), e=(1/3,2sqrt(2)/3,0), f=(0,0,1), theta(rho)=8rho/3, D(rho)=(2+12rho squared)/9, E(rho)=(2+4rho squared)/9, A(rho)=3sqrt(D(rho)+theta(rho) squared*E(rho)), Lambda(rho)=sqrt(2)(1+64rho squared/9), M(rho)=3(sqrt(3)+3/2+2abs(rho))(1+theta(rho) squared), delta(rho)=Lambda(rho)-A(rho), and epsilon(rho)=delta(rho)/(2M(rho)). In the formulas below these are respectively dd, ee, amp, lam, bigM, delta and epsilon. Define eta(sigma,rho)=i*sigma*e+theta(rho)*f and xi(sigma,rho,q)=u+q*eta(sigma,rho). The positive functional vectorPhi(v) is the actual map a to star(v) dot (a*v).")),
             Describe.Lean(DescribeId.Create("exact-finite-violation"),
@@ -40,7 +40,7 @@ internal sealed class BalancedStarRigidityDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem))));
 
     private static Formula V(string s) => F.Id(s);
-    private static Formula N(int n) => F.D(n);
+    private static Formula N(byte n) => F.D(n);
     private static Formula C(string s, params Formula[] xs) => new Formula.Apply(V(s),[..xs]);
     private static Formula All(string s, Formula t, Formula b) => new Formula.Bind(FormulaQuantifier.ForAll,FormulaIdentifier.Create(s),t,b);
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a,FormulaRelationOperator.Equal,b);
