@@ -1,0 +1,11 @@
+若 $g$ 不几乎处处为零，则对每个 $0<c<\sqrt{(1-\theta)Q(g)}$，存在 $X_0$，使每个 $X\ge X_0$ 的 $[X,2X]$ 中满足
+
+$$
+|\mathcal T_{\theta,g}(x)|>c\,x^{(1-\theta)/2}\sqrt{\log x}
+\tag{490.4}
+$$
+
+的 $x$ 构成正测度集。
+
+证明。$\int_X^{2X}(\sqrt xP_{H_x,g})^2\,dx/x=\int_X^{2X}P_{H_x,g}^2\,dx$；由引理 490.4、490.5 与反三角不等式得 (490.3)。若 $g$ 不几乎处处为零，则 $Q(g)>0$：由引理 490.4 证明中的恒等式 $Q(g)=\|G_g\|_2^2$，若 $Q(g)=0$，则绝对连续函数 $G_g$ 几乎处处为零，由连续性处处为零，而 $G_g'=-g$ 几乎处处，故 $g=0$ 几乎处处。令 $W_X=\int_X^{2X}x^{1-\theta}\log x\,\frac{dx}x$；换元 $x=Xv$ 得 $W_X=X^{1-\theta}\bigl[\log X\int_1^2v^{-\theta}dv+\int_1^2v^{-\theta}\log v\,dv\bigr]\sim\frac{2^{1-\theta}-1}{1-\theta}X^{1-\theta}\log X$。故 $\int_X^{2X}\mathcal T_{\theta,g}^2\,\frac{dx}x\big/W_X\to(1-\theta)Q(g)>0$。固定 $c$ 后取 $X_0$ 使 $X\ge X_0$ 时该比值大于 $c^2$。若 (490.4) 在 $[X,2X]$ 上只在零测集上成立，则几乎处处 $\mathcal T_{\theta,g}(x)^2\le c^2x^{1-\theta}\log x$，比值至多 $c^2$，矛盾。证毕。
+
