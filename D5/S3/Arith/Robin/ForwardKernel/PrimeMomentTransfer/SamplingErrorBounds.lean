@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Fourth moment sampling errors control weighted products of continuous and cell increments. -/
+   digest: Mean-square prime correlations: Fourth moment sampling errors control weighted products of continuous and cell increments. -/
 
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.CellMomentBounds
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.ContinuousSampling
@@ -148,7 +148,7 @@ theorem weighted_product_difference (k : ℕ) (f g : Fin k → ℝ → ℝ)
 theorem uniform_sampling_fourth (SS : Finset ℕ → ℝ) (α β M : ℝ)
     (hα : 0 < α) (hαβ : α < β) (hβ : β < 1 / 4)
     (hSS : SS ∅ = 1) (hSS1 : ∀ d, SS {d} = 1)
-    (hHL : HL4 SS β) (hcor : IntervalCorrelations SS) (hM : 1 ≤ M) :
+    (hMS : MeanSquareHL4 SS β) (hcor : IntervalCorrelations SS) (hM : 1 ≤ M) :
     ∃ C : ℝ, 1 ≤ C ∧ ∀ δ : ℝ, 0 < δ → ∀ᶠ N : ℝ in atTop,
       ∀ H : ℕ, N ^ α ≤ (H : ℝ) → (H : ℝ) ≤ N ^ β →
       ∀ a b : ℝ, 0 ≤ a → a ≤ b → b ≤ M →
@@ -160,7 +160,7 @@ theorem uniform_sampling_fourth (SS : Finset ℕ → ℝ) (α β M : ℝ)
         (∫ t in (1 : ℝ)..2,
           |Z H a b (N * t) N - S H a b ⌊N * t⌋₊ / Real.sqrt ((H : ℝ) * Real.log N)| ^ 4) ≤ δ ^ 4 := by
   obtain ⟨Cg, hCg, hcell⟩ := uniform_cell_fourth SS α β M
-    hα hαβ hβ hSS hSS1 hHL hcor hM
+    hα hαβ hβ hSS hSS1 hMS hcor hM
   refine ⟨8 * (Cg + 1), by linarith, ?_⟩
   intro δ hδ
   filter_upwards [hcell, p_sampling_error_rate α (min δ 1) hα (lt_min hδ zero_lt_one),

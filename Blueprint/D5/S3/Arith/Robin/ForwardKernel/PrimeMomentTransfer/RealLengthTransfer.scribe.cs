@@ -17,7 +17,7 @@ internal sealed class RealLengthTransferDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Assume 0<alpha<beta<1/4, the empty and singleton normalizations of the singular series, HL4(beta), and the interval correlation input. For M>=1 and every delta>0, the absolute continuous cubic mixed moment is eventually at most B*delta uniformly for real N^alpha<=H<=N^beta, intervals in [0,M], and weights with supremum-plus-variation bound B."))),
+                    "Assume 0<alpha<beta<1/4, the empty and singleton normalizations of the singular series, MeanSquareHL4(SS,beta), and the interval correlation input. For M>=1 and every delta>0, the absolute continuous cubic mixed moment is eventually at most B*delta uniformly for real N^alpha<=H<=N^beta, intervals in [0,M], and weights supported on [1,2] with supremum-plus-variation bound B (BVBound(w,B))."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("real-fourth"),
