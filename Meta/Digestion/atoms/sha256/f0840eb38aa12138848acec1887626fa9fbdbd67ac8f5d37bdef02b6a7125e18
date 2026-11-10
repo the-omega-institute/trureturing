@@ -1,0 +1,46 @@
+**定义 17.1（精确原曲线与完整实际酉比较类）。** 精度始终取 [OTF004 定义 19.1](OTF_004_ENDOGENOUS_OBSERVATION_ATTENTION_CONTROL_AND_COSINE_FEEDBACK.md) 的正有理域 $0<e\le1/100$，并逐项保留其取整和最大值：
+
+$$
+\begin{aligned}
+k_e&=\left\lceil2048e^{-2}\log(18/e)\right\rceil,
+&\ell_e&=\left\lceil32768e^{-4}\log(90/e)\right\rceil,\\
+N_*&=8{,}388{,}608{,}000,
+&N_e&=\max\left\{N_*,\left\lceil\frac{3k_e+2}{10}\right\rceil,
+                 \left\lceil\frac{15\ell_e+1}{18}\right\rceil\right\},\\
+D_e&=\left\lceil\max\{8{,}000{,}000N_e^2,9k_e/e\}\right\rceil,
+&m_e&=D_e-1,\qquad t_e=m_e e^2.
+\end{aligned}
+\tag{17.1}
+$$
+
+对数均为自然对数。令 $R_e=\operatorname{Sym}^{m_e}(\mathbb C^2)$，$\tau_h=|e_h\rangle\langle e_h|$。相干向量、归一球面积和有限 Toeplitz 矩阵沿用 OTF004 式 (14.7)、(25.14)–(25.16)：
+
+$$
+e_z=(1+|z|^2)^{-m/2}(|0\rangle+z|1\rangle)^{\otimes m},\qquad
+d\mu(z)=\frac{dA(z)}{\pi(1+|z|^2)^2},\qquad
+T_m(f)=(m+1)\int_{S^2}f(h)\tau_h\,d\mu(h).
+\tag{17.2}
+$$
+
+$\rho_\alpha$ 表示 $z\mapsto e^{i\alpha}z$ 的球面旋转。此处积分只定义有限矩阵的各个条目，不是获取原语、连续物理寄存器或额外输入。
+
+取任意有限 $P,K$、独立于 $h$ 的混合态 $\sigma\in\mathcal D(P)$ 和独立于 $h$ 的完整实际等距 $U:R_e\otimes P\to R_e\otimes K$。其整个声明输出及其自身实际边缘为
+
+$$
+\Omega_h=U(\tau_h\otimes\sigma)U^\dagger,\qquad
+\omega_h=\operatorname{Tr}_R\Omega_h,\qquad
+\delta=\sup_hD_{\rm tr}(\Omega_h,\tau_h\otimes\omega_h),\qquad
+D_{\rm tr}(X,Y)=\tfrac12\|X-Y\|_1.
+\tag{17.3}
+$$
+
+$K$ 包括这一实现的全部实际输出；不加入输入纯化、形式 Kraus 寄存器或证明环境，也不丢弃实际生成的系统。所考察的统一充分旋转关系是：存在绝对常数 $C$，对上述每个 $e,\sigma,U$ 均有
+
+$$
+\int_{S^2}D_{\rm tr}(\omega_{\rho_{32e}h},\omega_h)^2\,d\mu(h)
+\le C(t_e\delta^2+\delta).
+\tag{17.4}
+$$
+
+这个完整等距比较类宽于带有原生操作、预算及成功解码要求的原始消费者类。OTF004 定理 14.1 的完整实际输出与混合压缩语义保持原样；其反足方向估计不等于 (17.4)。
+
