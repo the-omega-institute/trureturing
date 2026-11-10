@@ -2536,3 +2536,291 @@ $$
 本节不对未知总响应添加正则性、可加性、齐次性、协变性、单位平移中性、压缩、商或自然性前件，也不把已知 $D_{\rm env}$ 当作它。原一般混合输入、共同实现义务 $\mathcal E_+^D=\mathcal E_-^D$、稳定性目标 $N_\omega(\varepsilon)^2\to0$、完整原 $\mathsf H$／总 $D$ 以及 §§6、15、18、21 的同一递归钉版实际物理来源全文均保持原范围与未决义务。有限矩阵读取与数学探针不供应原实际准备、评价标签、完整菜单、typed 仪器、全部合法历史、CountRead 或全输入／全未来 Return，也不以较强完整 $\mathsf H$ 的分类代替固定输出接口。
 
 ## 新增锚（本行以下为后续增补区）
+
+## 28. 原输入的齐次核与环境零模像上的值域障碍
+
+### 28.1 实际零模像与残量列的核配对
+
+**定理 28.1（原输入齐次核的零模定位与精确配对）。** 沿用定义 17.1、27.1 及定理 27.4 的同一有限输入和系数。$B,V,D_{\rm env}$ 任意，$m\ge0$ 任意有限，每个 $\sigma$ 分别解释，不假设 P2。记
+
+$$
+N=\ker D_{\rm env},\qquad W=V|_N,\qquad
+N_1=N\ominus\ker W,\qquad \mathcal W=\operatorname{ran}W,
+\qquad J=(W|_{N_1})^{-1}:\mathcal W\longrightarrow N_1.
+\tag{28.1}
+$$
+
+$J$ 正是定义 17.1 的逆；零空间之间仍取零映射。固定任意一个 (27.6) 的有限索引 $\theta$，定义
+
+$$
+\zeta_\delta=\beta_\delta-i\epsilon\sigma\delta\alpha_\delta,
+\qquad \delta\in\{1,-1\}.
+\tag{28.2}
+$$
+
+令 $\mathcal K_{\sigma,\theta}(\mathcal W)$ 为所有满足下面两个复向量等式的 $(X,w)\in M_2(\mathbb C)_{\rm sa}\times\mathcal W$ 所组成的实向量空间：
+
+$$
+\boxed{\quad
+w+\delta\left(J_C(X)u+\frac{\sigma i}{2}Cw\right)
+=\zeta_\delta\left(Xu+\delta\left(H_\sigma(X)u-\frac12Cw\right)\right)
+\quad(\delta=1,-1).
+\quad}
+\tag{28.3}
+$$
+
+则原实坐标中的齐次核准确为
+
+$$
+\ker A
+=\{(a,v):\ \exists w\in\mathcal W:\quad
+     (X(a),w)\in\mathcal K_{\sigma,\theta}(\mathcal W),\ Y(v)=Jw\}.
+\tag{28.4}
+$$
+
+特别地，每个核方向的实际环境列都满足 $Y(v)\in N_1$；环境的非零谱读取方向不产生核方向。在这个核上，定理 27.4 的原残量列满足准确配对公式
+
+$$
+\boxed{\quad
+(a,v)^{\mathsf T}b_1
+=2\epsilon\operatorname{Re}\left((w-i\sigma Xu)^*T_Au\right),
+\qquad T_A=\operatorname{diag}(1,-2).
+\quad}
+\tag{28.5}
+$$
+
+因此，对这份同一输入和这个索引，
+
+$$
+b_1\in\operatorname{ran}A
+\quad\Longleftrightarrow\quad
+\operatorname{Re}\left((w-i\sigma Xu)^*T_Au\right)=0
+\quad\text{对每个 }(X,w)\in\mathcal K_{\sigma,\theta}(\mathcal W).
+\tag{28.6}
+$$
+
+这刻画所有零模耦合秩 $0,1,2$ 的核与配对。它只把齐次值域问题定位到原 $\mathcal W$，不把原算子乘法改成截面上的压缩乘法。
+
+证明。以下只在本定理的推导内消费成熟的复 Gram 配方。原复内积记为 $\langle f,g\rangle_{\mathbb C}=f^*g$，其实部仍是定义 27.1 的实内积。§1 已有的标准零残量换位恒等式及 (27.10) 给
+
+$$
+\ell_0(z)=-\sigma\sum_{\delta=\pm1}\delta\,
+  \operatorname{Im}\langle\mathcal R_\delta z,
+                       \mathcal S_{\delta,0}z\rangle_{\mathbb C}.
+\tag{28.7}
+$$
+
+先在 $\tau=1$ 上直接引用该原恒等式；两边都是 $z$ 的齐次实二次型，再按 (27.14) 即得全部 $z$ 上的等式。没有在 $\mathcal H_0$ 上相乘原算子的压缩。将 (28.7) 代入 (27.7)，逐项配方得到
+
+$$
+z^{\mathsf T}\mathscr Q_{\sigma,0}(\theta)z
+=\sum_{\delta=\pm1}\alpha_\delta^{-1}
+ \|\mathcal S_{\delta,0}z-\zeta_\delta\mathcal R_\delta z\|^2.
+\tag{28.8}
+$$
+
+这里交叉项准确为
+$2\epsilon\sigma\delta\operatorname{Im}\langle\mathcal R_\delta z,
+\mathcal S_{\delta,0}z\rangle_{\mathbb C}$。这是 §1 的复 Gram 与 §27 配方在原作用像上的中间恒等式，不另立通用定理。
+
+对 $k=(a,v)$，置 $z=(k,0)$、$X=X(a)$、$y=Y(v)$、$w=Vy$。原映射 (27.4)–(27.5) 在此处给
+
+$$
+\begin{aligned}
+\mathcal R_\delta(k,0)
+ &=\left(Xu+\delta(H_\sigma(X)u-Cw/2),\ 0\right),\\
+\mathcal S_{\delta,0}(k,0)
+ &=\left(w+\delta(J_C(X)u+\sigma iCw/2),\ D_{\rm env}y\right).
+\end{aligned}
+\tag{28.9}
+$$
+
+实对称 $A\succeq0$ 已由 (27.24) 给出；故 $k\in\ker A$ 当且仅当 $k^{\mathsf T}Ak=0$。在 (28.8) 的正系数平方和中，这又当且仅当每个差向量都为零。因 (28.9) 的每个 $\mathcal R_\delta(k,0)$ 的环境分量为零，首先必有 $D_{\rm env}y=0$。由 (17.2) 的原正交直和，
+
+$$
+\mathcal E_0\cap N=N_1.
+\tag{28.10}
+$$
+
+于是 $y\in N_1$，$w=Wy\in\mathcal W$，且 $y=Jw$。其余演员分量恰好是 (28.3)。反之，(28.3) 和 $y=Jw$ 使 (28.9) 的两个完整差向量都为零，故给出核方向。这证明 (28.4)，包括空环境和任意奇异 $D_{\rm env}$。$(X,w)\mapsto(a,v)$ 是实线性双射，因为 $X(a)$ 与 $Y(v)$ 都是各自给定空间的坐标同构。
+
+现在在同一个核方向上计算残量列。沿用 (27.28) 中的 $\mathcal M_\delta=\mathcal S_{\delta,0}-\beta_\delta\mathcal R_\delta$ 及 $w_u=(T_Au,0)$。核等式给
+
+$$
+\mathcal M_\delta(k,0)
+=-i\epsilon\sigma\delta\alpha_\delta\mathcal R_\delta(k,0),
+\qquad \mathcal T(k,0)=(w,0).
+$$
+
+因 $b_1$ 是 (27.28) 中 $h$ 的前 $n-1$ 个实坐标，原实伴随的定义给
+
+$$
+\begin{aligned}
+k^{\mathsf T}b_1
+ &=\sum_{\delta=\pm1}\delta\alpha_\delta^{-1}
+     \langle\mathcal M_\delta(k,0),w_u\rangle_{\mathbb R}
+      +2\epsilon\langle\mathcal T(k,0),w_u\rangle_{\mathbb R}\\
+ &=\langle-2i\epsilon\sigma(Xu,0),w_u\rangle_{\mathbb R}
+      +2\epsilon\langle(w,0),w_u\rangle_{\mathbb R}\\
+ &=2\epsilon\operatorname{Re}((w-i\sigma Xu)^*T_Au),
+\end{aligned}
+\tag{28.11}
+$$
+
+其中使用 $\mathcal R_+(k,0)+\mathcal R_-(k,0)=2(Xu,0)$。这证明 (28.5)。最后只用实对称矩阵的成熟关系 $\operatorname{ran}A=(\ker A)^\perp$，便得到 (28.6)。所以 $B$、环境非零谱和 $J$ 所携带的环境范数虽仍参与原系数及预算，值域是否成立却完全由 (28.3)、(28.6) 的原零模像和该索引决定。∎
+
+### 28.2 零模耦合为零的整个分支
+
+**定理 28.2（$W=0$ 的完整齐次核与自动值域）。** 对定理 28.1 的全部输入和全部有限索引，只假设
+
+$$
+V|_{\ker D_{\rm env}}=0.
+\tag{28.12}
+$$
+
+不要求 $D_{\rm env}$ 可逆，不要求 P2，也不限制 $B$ 或 $V$ 的总秩。则
+
+$$
+\boxed{\quad
+\ker A=\{(a,v):\ Y(v)=0,\ X(a)u=0,\ X(a)Cu=0\},
+\qquad b_1\in\operatorname{ran}A.
+\quad}
+\tag{28.13}
+$$
+
+若 $u_1u_2\ne0$，则 $A$ 在全部 $\mathbb R^{4+2d}$ 上正定。若 $u=e^{i\varphi}e_j$，其中 $j\in\{1,2\}$、$\varphi\in\mathbb R$，则核恰好是一条实直线：
+
+$$
+\ker A=\{(a,0):\ X(a)=r e_{kk},\ r\in\mathbb R\},
+\qquad \{j,k\}=\{1,2\}.
+\tag{28.14}
+$$
+
+这条直线是读取方向 $u$ 所看不见的相反对角探针方向；此时 $\operatorname{rank}A=3+2d$。这些结论对每个 $\epsilon$、每组有限 $\alpha_\pm>0,\beta_\pm\in\mathbb R$ 和每个分别固定的 $\sigma$ 成立。
+
+证明。由 $W=0$ 有 $N_1=\mathcal W=0$。定理 28.1 已强制每个核方向的 $y=0$、$w=0$，所以只须分析 (28.3) 中的
+
+$$
+\delta J_C(X)u=\zeta_\delta(X+\delta H_\sigma(X))u
+\qquad(\delta=1,-1).
+\tag{28.15}
+$$
+
+$X,H_\sigma(X),J_C(X)$ 都 Hermitian。用同一个单位 $u$ 左乘 (28.15)，两边除 $\zeta_\delta$ 外的标量均为实数，而 $\operatorname{Im}\zeta_\delta=-\epsilon\sigma\delta\alpha_\delta\ne0$。因此
+
+$$
+u^*(X+\delta H_\sigma(X))u=0,\qquad u^*J_C(X)u=0.
+$$
+
+对两个 $\delta$ 合并，得到 $u^*Xu=u^*H_\sigma(X)u=u^*J_C(X)u=0$。置 $p=Xu$、$q=XCu$。成熟的换位／Jordan 恒等式 $J_C(X)+\sigma iH_\sigma(X)=XC$ 于是给
+
+$$
+p^*u=0,\qquad p^*Cu=u^*XCu=0.
+\tag{28.16}
+$$
+
+若 $u_1u_2\ne0$，$u,Cu$ 线性无关，(28.16) 强制 $p=0$。此时
+
+$$
+(X+\delta H_\sigma(X))u=-\frac{\delta\sigma i}{2}q,
+\qquad \delta J_C(X)u=\frac\delta2q.
+\tag{28.17}
+$$
+
+若 $q\ne0$，(28.15) 就要求 $\zeta_\delta=\sigma i$。但对 $\delta=\epsilon$，$\operatorname{Im}\zeta_\epsilon=-\sigma\alpha_\epsilon$ 与 $\sigma i$ 的虚部符号相反，矛盾。故 $q=0$。$X$ 同时消去基 $u,Cu$，即 $X=0$，所以此时核为零，半正定 $A$ 正定。
+
+若 $u=e^{i\varphi}e_j$，记 $c_1=1,c_2=2$，并令 $k\ne j$。$u^*Xu=0$ 给 $X_{jj}=0$，故 $p=Xu$ 属于 $\mathbb C e_k$，且 $q=c_jp$。若 $p\ne0$，(28.15) 的两个向量比例强制
+
+$$
+\zeta_\delta
+=\frac{\delta(c_j+c_k)/2}{1+\delta\sigma i(c_k-c_j)/2},
+\qquad
+\operatorname{Im}\zeta_\delta
+=-\frac{\sigma(c_j+c_k)(c_k-c_j)}{4+(c_k-c_j)^2}.
+\tag{28.18}
+$$
+
+右侧虚部对两个 $\delta$ 相同且非零；(28.2) 的两个虚部却严格异号。这同时排除两个轴上的 $p\ne0$，所以 $p=q=0$。Hermitian 性随即给 $X=r e_{kk}$、$r\in\mathbb R$。反过来，这些 $X$ 以及非轴情形的 $X=0$ 都满足 $Xu=XCu=0$，使 (28.15) 两边为零。因此 (28.13) 的核等式及 (28.14) 均为充要描述；维数给所述秩。
+
+最后对每个核方向，(28.5) 中的 $w$ 和 $Xu$ 都为零，故核配对恒为零，由 (28.6) 得 $b_1\in\operatorname{ran}A$。这里没有使用 $B$、非零环境谱或 P2；$m=0$、$D_{\rm env}=0$ 且 $V=0$、以及有任意奇异环境但满足 (28.12) 的情况都已包含。∎
+
+### 28.3 平衡秩一的准确像线归约
+
+**定理 28.3（平衡零模像线的齐次值域归约）。** 在定理 28.1 的输入中，设 $\operatorname{rank}W=1$ 且 $\mathcal W$ 平衡，即对其任一非零生成元 $a=(a_1,a_2)^{\mathsf T}$ 有
+
+$$
+|a_2|^2=2|a_1|^2.
+\tag{28.19}
+$$
+
+这正是定理 13.1 中归一化像 $C^{-1/2}\mathcal W$ 的平衡条件。齐次值域问题的全部输入依赖首先准确降为原像线 $\mathcal W$：不同已知环境数据只要具有同一 $\mathcal W$，其 (28.6) 对同一个 $\sigma,\theta$ 有同一真值，不要求这些环境等距或维数相同。
+
+进一步可选一个与 $C,T_A$ 交换的对角酉矩阵 $U$，使
+
+$$
+U\mathcal W=\mathcal W_*:=\operatorname{span}_{\mathbb C}\ell,
+\qquad \ell=(1,\sqrt2)^{\mathsf T}.
+\tag{28.20}
+$$
+
+记 $\theta'=(Uu,\epsilon,\alpha_+,\alpha_-,\beta_+,\beta_-)$。映射
+
+$$
+(X,w)\longmapsto(UXU^*,Uw)
+\tag{28.21}
+$$
+
+是 $\mathcal K_{\sigma,\theta}(\mathcal W)$ 到 $\mathcal K_{\sigma,\theta'}(\mathcal W_*)$ 的实线性双射，并保持 (28.5) 的配对值。因而原输入是否对全部索引满足值域条件，准确等价于如下单一像线上的全称关系：对每个单位 $u$、每个 $\epsilon$ 和全部有限 $\alpha_\pm>0,\beta_\pm\in\mathbb R$，凡 $X=X^*$、$\lambda\in\mathbb C$ 满足
+
+$$
+\begin{gathered}
+\lambda\ell+\delta\left(J_C(X)u+\frac{\sigma i\lambda}{2}C\ell\right)
+=\zeta_\delta\left(Xu+\delta\left(H_\sigma(X)u-\frac\lambda2C\ell\right)\right)
+\quad(\delta=1,-1),\\
+\text{就有}\qquad
+\operatorname{Re}\left((\lambda\ell-i\sigma Xu)^*T_Au\right)=0.
+\end{gathered}
+\tag{28.22}
+$$
+
+其中 $u$ 遍取全部单位向量，所以 (28.22) 中已重新以 $u$ 表示 $Uu$。这里只归约齐次值域命题，不运输 (27.25) 的 $q_i$、原 PB 预算、环境度量或固定输入 $t$。
+
+证明。对相同 $\mathcal W$，(28.3) 与 (28.5) 完全不含 $B$ 或环境谱、度量；(28.4) 分别用每份原数据自己的 $J$ 和 $Y$ 将同一 $(X,w)$ 双射到实际核。这些双射一般不是等距映射，但配对值由 (28.5) 保持，所以核上的线性泛函是否为零相同。再由 (28.6) 即得同一像线上的断言；没有据此识别两份 $A$ 的谱或伪逆。
+
+由 (28.19)，$a_1,a_2$ 都非零。取
+$U=\operatorname{diag}(\overline{a_1}/|a_1|,\overline{a_2}/|a_2|)$，则 $Ua=|a_1|\ell$，给 (28.20)。因 $U$ 与 $C$ 交换，
+
+$$
+H_\sigma(UXU^*)=UH_\sigma(X)U^*,\qquad
+J_C(UXU^*)=UJ_C(X)U^*.
+$$
+
+将 (28.3) 的两个等式同时左乘 $U$，即得 (28.21)；用 $U^*$ 得其逆。$U$ 还与 $T_A$ 交换，故
+
+$$
+\operatorname{Re}\left((Uw-i\sigma UXU^*Uu)^*T_AUu\right)
+=\operatorname{Re}\left((w-i\sigma Xu)^*T_Au\right).
+\tag{28.23}
+$$
+
+这证明配对保持。$u\mapsto Uu$ 在单位球面上双射，而 $\epsilon,\alpha_\pm,\beta_\pm$ 不变，故所有有限索引上的值域条件等价。最后在 $\mathcal W_*$ 中写 $w=\lambda\ell$，(28.3)、(28.6) 正好成为 (28.22)。同一原环境中的实际核仍由 $y=Jw$ 回收；这一步没有将该原环境换成一个一维环境，也没有在原 PB 中替换来源。∎
+
+### 28.4 全称标量条件与适用边界
+
+**约定 28.4（剩余判据与来源）。** 在 $W=0$ 的整个分支，对 $s=\rho T_A\oplus0_m$、$\rho\in\mathbb R$，定理 28.2 只消去了 (27.26) 的值域障碍。因此直接消费定理 27.4，全部原 PB 准确等价于
+
+$$
+q_0(\theta)+\rho q_1(\theta)+\rho^2q_2(\theta)\ge0
+\qquad\text{对每个原有限索引 }\theta.
+\tag{28.24}
+$$
+
+各系数仍从同一固定 $B,V,D_{\rm env},\sigma$ 的 (27.23)–(27.25) 计算。非轴方向的 $A$ 虽可逆，两个轴方向仍须用原谱伪逆。$\kappa>0$ 不给 $q_2$ 的符号；$b_1$ 在值域内也不支付 (28.24)。所以值域失败在此分支不能排除任何非零 $\rho$。已有定理 25.1 在 $W=0$ 内同时给全正 P2 与原 PB 的严格违反，故自动值域不能成为全部 PB 的充分性证书，也没有因本节新增排除某份元组。
+
+平衡秩一中，(28.22) 的全称关系仍未判定；其否定准确是存在满足其两个等式而配对非零的有限 $u,\epsilon,\alpha_\pm,\beta_\pm,X,\lambda$。定理 28.3 只证明这道齐次问题在所有平衡像线之间相同；即使其全称关系成立，原 (27.26) 的标量条件仍须另外逐输入、逐索引支付。ENV8.1、13.1 的 P2 区间、ENV17.2 的同时读取与全正泛函提升、ENV18.1 的压缩乘法障碍、§§19–25 及原星形与双角卷的已付排除域均直接复用，保留各自前件与量词。
+
+本节新增的 $\texttt{repo-derived}$ 原输入结构是 (28.4)–(28.6) 的零模定位与配对、(28.13)–(28.14) 的整个 $W=0$ 分支核及自动值域，以及 (28.22) 的平衡像线归约。复 Gram 配方只作为定理 28.1 证明内的成熟中间步骤，沿 §1 与 §27.6 的既有来源；换位／Jordan 恒等式、Hermitian 二次型、有限维核／像正交与对角酉换基也是成熟工具。广义 Schur 与伪逆判据直接沿用 (27.9)、(27.15)、(27.26) 及 §27.6 所引 Higham、Penrose 来源，不另作通用定理或历史优先权主张。
+
+全部结论保持 (1.1)–(1.2) 和原 41.1 的实际标签，未改变两个预算的共同泛函、任意有限质量或环境分量。全正泛函的原等价仍由定理 17.2、27.2 承担；本节只分析其实际系数，没有另加未知总响应的正则性、可加性、齐次性、协变性、单位平移中性、压缩、商或自然性前件。$\mathfrak A_\sigma$ 是否为空、剩余域 $\mathfrak R_\sigma$ 的全分类、一般混合输入、$\mathcal E_+^D=\mathcal E_-^D$、$N_\omega(\varepsilon)^2\to0$、完整 $\mathsf H$／总 $D$ 及 §§6、15、18、21 的递归钉版实际物理来源义务，均未由此解决。
+
+## 新增锚（本行以下为后续增补区）
