@@ -122,8 +122,9 @@ internal sealed class HardinA233258StripDocument : IScribeDocumentDefinition
     {
         var n = V("n"); var a = V("A");
         var arrays = Arrow(Product(Fin(D(3)), Fin(n)), Fin(D(6)));
-        return All("n", Q("Nat"), Eq(Own("a", n), Call("Finset.card",
-            Call("Finset.filter", Fn("A", arrays, Own("Legal", a)), Typed(Q("Finset.univ"), Call("Finset", arrays))))));
+        return All("n", Q("Nat"), Eq(Own("a", n), Parenthesized(Call("Finset.card",
+            Call("Finset.filter", Fn("A", arrays, Own("Legal", a)),
+                Typed(Q("Finset.univ"), Call("Finset", arrays)))))));
     }
 
     private static Formula Pair(Formula a, Formula b) => Parenthesized(Seq(a, Comma, Sp, b));
