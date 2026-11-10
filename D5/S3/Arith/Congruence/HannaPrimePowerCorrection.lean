@@ -1,5 +1,5 @@
 /- GID: D5/S3/Arith/Congruence/HannaPrimePowerCorrection
-   generality: I
+   generality: G
    mirror-B: D5/B/S3/Arith/Congruence/HannaPrimePowerCorrection
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []

@@ -1,5 +1,5 @@
 /- GID: D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality
-   generality: I
+   generality: G
    mirror-B: D5/B/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
