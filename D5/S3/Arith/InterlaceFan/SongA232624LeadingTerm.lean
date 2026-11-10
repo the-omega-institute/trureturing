@@ -10,49 +10,114 @@
 admission_basis: open-problem-resolution (#21790; Proved)
 The public definitions are the rational cosine minimal polynomial, its coefficient array, and claim.
 The result proves every conjunct of claim with no additional hypotheses.
-The root of unity is the existing InterlaceFan.Cyclotomic.zeta; no duplicate is defined here.
-The reciprocal substitution uses Polynomial.homogenize and MvPolynomial.eval₂.
+The reciprocal substitution uses Polynomial.homogenize and MvPolynomial.eval₂;
 reciprocal_lift_eval applies Polynomial.eval_homogenize.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/22136
+Declaration names below belong to D5.S3.Arith.InterlaceFan.SongA232624LeadingTerm.
+Frozen dependency identities include generated constants of their source owner.
+MPR2: proof_shape: definition; escape_witness: none; consumers: MPR2_reflection_coeff, MPR2_reflection, result, claim, MPR2_bridge, a.
+Direct frozen dependencies: none.
+a: proof_shape: definition; escape_witness: none; consumers: result, claim.
+Direct frozen dependencies: none.
+claim: proof_shape: definition; escape_witness: none; consumers: result.
+Direct frozen dependencies: none.
 totient_radical: proof_shape: bind-only; escape_witness: none; consumers: arithmetic_setup.
+Direct frozen dependencies: none.
 arithmetic_setup: proof_shape: bind-only; escape_witness: none; consumers: cyclotomic_half_difference, result.
+Direct frozen dependencies: none.
 moebius_radical: proof_shape: bind-only; escape_witness: none; consumers: cyclotomic_half_difference.
-reciprocal_lift_sum: proof_shape: bind-only; escape_witness: none; consumers: reciprocal_lift_coeff_below, reciprocal_lift_coeff_first, reciprocal_lift_degree_le, reciprocal_lift_coeff_top, reciprocal_lift_sub, reciprocal_lift_smul.
+Direct frozen dependencies: none.
+reciprocalLift: proof_shape: definition; escape_witness: none; consumers: reciprocal_lift_smul, MPR2_reflection_coeff, reciprocal_lift_injective, reciprocal_lift_eval, reciprocal_lift_coeff_first, reciprocal_lift_monic, reciprocal_lift_trailing, MPR2_reflection, result, reciprocal_lift_coeff_below, primitive_trace_bridge, reciprocal_lift_coeff_top, MPR2_bridge, reciprocal_lift_sub, reciprocal_lift_sum, degree_from_lift, reciprocal_lift_degree_le.
+Direct frozen dependencies: none.
+reciprocal_lift_sum: proof_shape: bind-only; escape_witness: none; consumers: reciprocal_lift_smul, reciprocal_lift_coeff_first, reciprocal_lift_coeff_below, reciprocal_lift_coeff_top, reciprocal_lift_sub, reciprocal_lift_degree_le.
+Direct frozen dependencies: none.
 reciprocal_lift_coeff_below: proof_shape: bind-only; escape_witness: none; consumers: reciprocal_lift_trailing.
-reciprocal_lift_coeff_first: proof_shape: bind-only; escape_witness: none; consumers: reciprocal_lift_trailing, reciprocal_lift_injective, degree_from_lift.
+Direct frozen dependencies: none.
+reciprocal_lift_coeff_first: proof_shape: bind-only; escape_witness: none; consumers: reciprocal_lift_injective, reciprocal_lift_trailing, degree_from_lift.
+Direct frozen dependencies: none.
 reciprocal_lift_trailing: proof_shape: bind-only; escape_witness: none; consumers: degree_from_lift.
+Direct frozen dependencies: none.
 reciprocal_lift_degree_le: proof_shape: bind-only; escape_witness: none; consumers: reciprocal_lift_monic.
+Direct frozen dependencies: none.
 reciprocal_lift_coeff_top: proof_shape: bind-only; escape_witness: none; consumers: reciprocal_lift_monic.
+Direct frozen dependencies: none.
 reciprocal_lift_monic: proof_shape: bind-only; escape_witness: none; consumers: primitive_trace_bridge.
+Direct frozen dependencies: none.
 reciprocal_lift_eval: proof_shape: bind-only; escape_witness: none; consumers: primitive_trace_bridge.
+Direct frozen dependencies: none.
 reciprocal_lift_sub: proof_shape: bind-only; escape_witness: none; consumers: reciprocal_lift_injective, result.
+Direct frozen dependencies: none.
 reciprocal_lift_smul: proof_shape: bind-only; escape_witness: none; consumers: result.
+Direct frozen dependencies: none.
 reciprocal_lift_injective: proof_shape: bind-only; escape_witness: none; consumers: MPR2_reflection.
+Direct frozen dependencies: none.
 trace_minpoly_degree: proof_shape: content; escape_witness: none; consumers: primitive_trace_bridge.
-zeta_trace: proof_shape: bind-only; escape_witness: none; consumers: MPR2_bridge, MPR2_reflection.
-zeta_nonreal: proof_shape: bind-only; escape_witness: none; consumers: MPR2_bridge, MPR2_reflection.
-primitive_neg: proof_shape: bind-only; escape_witness: none; consumers: cyclotomic_reflection, MPR2_reflection.
+Direct frozen dependencies: none.
+zeta_trace: proof_shape: bind-only; escape_witness: none; consumers: MPR2_reflection, MPR2_bridge.
+Direct frozen dependencies:
+D5/S3/Arith/InterlaceFan/Cyclotomic.evalCos._proof_1; statement_id: sha256:81c71ee02d2f72b171fc58aaa25c773cb2970afdc3859889e24aec286d6db5ae
+D5/S3/Arith/InterlaceFan/Cyclotomic.zeta; statement_id: sha256:e8aa7909f91dd6e576ae9c0ca5fc87df493a148eddedc7a3d512d1874731ac68
+zeta_nonreal: proof_shape: bind-only; escape_witness: none; consumers: MPR2_reflection, MPR2_bridge.
+Direct frozen dependencies:
+D5/S3/Arith/InterlaceFan/Cyclotomic.zeta.eq_1; statement_id: sha256:4dbb1a5f4ecfb71781c968b4f51e3f9fca799113d5fcb9d0016744e44ccba9e8
+D5/S3/Arith/InterlaceFan/Cyclotomic.evalCos._proof_1; statement_id: sha256:81c71ee02d2f72b171fc58aaa25c773cb2970afdc3859889e24aec286d6db5ae
+D5/S3/Arith/InterlaceFan/Cyclotomic.zeta; statement_id: sha256:e8aa7909f91dd6e576ae9c0ca5fc87df493a148eddedc7a3d512d1874731ac68
+primitive_neg: proof_shape: bind-only; escape_witness: none; consumers: MPR2_reflection, cyclotomic_reflection.
+Direct frozen dependencies: none.
 cyclotomic_reflection: proof_shape: bind-only; escape_witness: none; consumers: cyclotomic_half_difference.
-normalizedCyclo_constant: proof_shape: bind-only; escape_witness: none; consumers: cycloUnit.
+Direct frozen dependencies: none.
+normalizedCyclo: proof_shape: definition; escape_witness: none; consumers: normalizedCyclo_constant, cycloUnit_prod, cyclotomic_initial, cycloUnit_val, normalizedCyclo_prod, cycloUnit.
+Direct frozen dependencies: none.
+normalizedCyclo_constant: proof_shape: bind-only; escape_witness: none; consumers: cycloUnit_val, cycloUnit.
+Direct frozen dependencies: none.
+cycloUnit: proof_shape: definition; escape_witness: none; consumers: cyclotomic_moebius_series, cycloUnit_prod, cyclotomic_initial, cycloUnit_val.
+Direct frozen dependencies: none.
 cycloUnit_val: proof_shape: bind-only; escape_witness: none; consumers: cycloUnit_prod, cyclotomic_initial.
+Direct frozen dependencies: none.
+oneSubXPowUnit: proof_shape: definition; escape_witness: none; consumers: cyclotomic_moebius_series, cycloUnit_prod, cyclotomic_initial, oneSubXPowUnit_val.
+Direct frozen dependencies: none.
 oneSubXPowUnit_val: proof_shape: bind-only; escape_witness: none; consumers: cycloUnit_prod, cyclotomic_initial.
+Direct frozen dependencies: none.
 normalizedCyclo_prod: proof_shape: bind-only; escape_witness: none; consumers: cycloUnit_prod.
+Direct frozen dependencies: none.
 cycloUnit_prod: proof_shape: bind-only; escape_witness: none; consumers: cyclotomic_moebius_series.
+Direct frozen dependencies: none.
 cyclotomic_moebius_series: proof_shape: bind-only; escape_witness: none; consumers: cyclotomic_initial.
+Direct frozen dependencies: none.
 cyclotomic_index: proof_shape: bind-only; escape_witness: none; consumers: cyclotomic_initial.
+Direct frozen dependencies: none.
 nilpotent_unit_zpow: proof_shape: bind-only; escape_witness: none; consumers: cyclotomic_initial.
+Direct frozen dependencies: none.
 cyclotomic_initial: proof_shape: content; escape_witness: none; consumers: cyclotomic_half_difference.
-primitive_trace_bridge: proof_shape: content; escape_witness: none; consumers: MPR2_bridge, MPR2_reflection.
-MPR2_bridge: proof_shape: content; escape_witness: none; consumers: MPR2_reflection, MPR2_reflection_coeff, result.
+Direct frozen dependencies: none.
+primitive_trace_bridge: proof_shape: content; escape_witness: none; consumers: MPR2_reflection, MPR2_bridge.
+Direct frozen dependencies: none.
+MPR2_bridge: proof_shape: content; escape_witness: none; consumers: MPR2_reflection_coeff, MPR2_reflection, result.
+Direct frozen dependencies:
+D5/S3/Arith/InterlaceFan/Cyclotomic.zeta.eq_1; statement_id: sha256:4dbb1a5f4ecfb71781c968b4f51e3f9fca799113d5fcb9d0016744e44ccba9e8
+D5/S3/Arith/InterlaceFan/Cyclotomic.evalCos._proof_1; statement_id: sha256:81c71ee02d2f72b171fc58aaa25c773cb2970afdc3859889e24aec286d6db5ae
+D5/S3/Arith/InterlaceFan/Cyclotomic.zeta; statement_id: sha256:e8aa7909f91dd6e576ae9c0ca5fc87df493a148eddedc7a3d512d1874731ac68
 MPR2_reflection: proof_shape: content; escape_witness: none; consumers: MPR2_reflection_coeff.
+Direct frozen dependencies:
+D5/S3/Arith/InterlaceFan/Cyclotomic.zeta.eq_1; statement_id: sha256:4dbb1a5f4ecfb71781c968b4f51e3f9fca799113d5fcb9d0016744e44ccba9e8
+D5/S3/Arith/InterlaceFan/Cyclotomic.evalCos._proof_1; statement_id: sha256:81c71ee02d2f72b171fc58aaa25c773cb2970afdc3859889e24aec286d6db5ae
+D5/S3/Arith/InterlaceFan/Cyclotomic.zeta; statement_id: sha256:e8aa7909f91dd6e576ae9c0ca5fc87df493a148eddedc7a3d512d1874731ac68
 MPR2_reflection_coeff: proof_shape: content; escape_witness: none; consumers: result.
+Direct frozen dependencies:
+D5/S3/Arith/InterlaceFan/Cyclotomic.zeta.eq_1; statement_id: sha256:4dbb1a5f4ecfb71781c968b4f51e3f9fca799113d5fcb9d0016744e44ccba9e8
+D5/S3/Arith/InterlaceFan/Cyclotomic.evalCos._proof_1; statement_id: sha256:81c71ee02d2f72b171fc58aaa25c773cb2970afdc3859889e24aec286d6db5ae
+D5/S3/Arith/InterlaceFan/Cyclotomic.zeta; statement_id: sha256:e8aa7909f91dd6e576ae9c0ca5fc87df493a148eddedc7a3d512d1874731ac68
 coefficient_consequences: proof_shape: bind-only; escape_witness: none; consumers: result.
+Direct frozen dependencies: none.
 cyclotomic_half_difference: proof_shape: content; escape_witness: none; consumers: result.
+Direct frozen dependencies: none.
 degree_from_lift: proof_shape: bind-only; escape_witness: none; consumers: result.
+Direct frozen dependencies: none.
 result: proof_shape: content; escape_witness: none; consumers: settling result.
-Direct frozen dependencies: the per-declaration closure uses only
-D5/S3/Arith/InterlaceFan/Cyclotomic.zeta where the primitive complex root occurs.
-zeta statement_id: sha256:e8aa7909f91dd6e576ae9c0ca5fc87df493a148eddedc7a3d512d1874731ac68; all other external proof constants are pinned Mathlib.
+Direct frozen dependencies:
+D5/S3/Arith/InterlaceFan/Cyclotomic.zeta.eq_1; statement_id: sha256:4dbb1a5f4ecfb71781c968b4f51e3f9fca799113d5fcb9d0016744e44ccba9e8
+D5/S3/Arith/InterlaceFan/Cyclotomic.evalCos._proof_1; statement_id: sha256:81c71ee02d2f72b171fc58aaa25c773cb2970afdc3859889e24aec286d6db5ae
+D5/S3/Arith/InterlaceFan/Cyclotomic.zeta; statement_id: sha256:e8aa7909f91dd6e576ae9c0ca5fc87df493a148eddedc7a3d512d1874731ac68
 -/
 
 import D5.S3.Arith.InterlaceFan.Cyclotomic
