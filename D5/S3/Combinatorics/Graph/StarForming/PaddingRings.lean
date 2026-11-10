@@ -23,7 +23,7 @@ variable {J : Type} [Fintype J] [DecidableEq J]
 variable (K : J → Type) [∀ j, Fintype (K j)] [∀ j, DecidableEq (K j)]
 abbrev Vertex := (j : J) × PaddingModule.Vertex (K j)
 
-private inductive Within (q : ∀ j, Equiv.Perm (K j)) (mark : ∀ j, K j) :
+inductive Within (q : ∀ j, Equiv.Perm (K j)) (mark : ∀ j, K j) :
     Vertex K → Vertex K → Prop
   | intro (j : J) (v w : PaddingModule.Vertex (K j))
       (h : (PaddingModule.graph (q j) (mark j)).Adj v w) :
