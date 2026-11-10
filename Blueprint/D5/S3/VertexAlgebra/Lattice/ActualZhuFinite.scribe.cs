@@ -5,6 +5,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.Lattice;
 internal sealed class ActualZhuFiniteDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/VertexAlgebra/Lattice/ActualZhuFinite.";
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/VertexAlgebra/popov2026leanvoazhu");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The full actual Zhu additive quotient of a positive-definite even lattice is finite-dimensional.",
@@ -15,7 +17,7 @@ internal sealed class ActualZhuFiniteDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "zhuO"),
                 H("Full actual Zhu O-space"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("For any LatticeData D, zhuO(D) is the complex span of the existing full circle(D,n,a,b), "
                     + "where n is natural, a lies in the original energy grade n, and b is any state of Carrier(D). "
                     + "The circle retains every binomial term from j=0 through j=n."))),
@@ -25,7 +27,7 @@ internal sealed class ActualZhuFiniteDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "positive_definite_zhu_quotient_finite"),
                 H("Finite-dimensional full additive quotient"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromLiterature(Source),
                 Blocks(
                     Paragraph(Text("For every original LatticeData D with positive-definite real Gram matrix, "
                         + "Carrier(D) / zhuO(D) is finite-dimensional over C. Rank zero and all original charge and oscillator "
@@ -41,6 +43,10 @@ internal sealed class ActualZhuFiniteDocument : IScribeDocumentDefinition
                         + "Lean_VOA, VOA/Modularity/ZhuAlgebraFinite.lean, commit 013a799ca834a8a6b3afa8129e3e522025b3f45c. "
                         + "The local proof uses the existing actual carrier, fields, energy projections, and circle. "
                         + "This is an algebraic additive-quotient statement; quotient multiplication, rationality, analytic CFT, "
-                        + "fusion, anomaly, string theory, and AdS/CFT require further results."))),
+                        + "fusion, anomaly, string theory, and AdS/CFT require further results.")),
+                    Paragraph(Text("Four-slot escape registration for this theorem is unfinished. "
+                        + "https://github.com/the-omega-institute/trureturing/issues/28685 identifies the missing faithful "
+                        + "readout, source reconstruction, law bridge, variation, sensitivity, observational dependence, "
+                        + "and source-selection/realization evidence. The issue is not a registration or declared_validated status."))),
                 DescribeRole.Theorem))));
 }
