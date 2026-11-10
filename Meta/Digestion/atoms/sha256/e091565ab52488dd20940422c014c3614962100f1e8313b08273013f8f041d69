@@ -1,0 +1,34 @@
+**引理 490.4（移动长度的剖面均方）。** 设 (490.2)。则
+
+$$
+\frac1{S_X}\int_X^{2X}P_{H_x,g}(x)^2\,dx\longrightarrow Q(g)\bigl(2^{1-\theta}-1\bigr).
+$$
+
+证明。先设 $g$ 为 Lipschitz 函数，记 $M=\|g\|_\infty$、$L=\mathrm{Lip}(g)$。固定正整数 $n$，令 $\eta=1/n$、$a_j=1+j\eta$、$I_j=[a_jX,a_{j+1}X]$、$h_j=(a_jX)^\theta$，并在 $I_j$ 上令 $P^{(n)}_X=P_{h_j,g}$。由引理 490.2（取 $c=a_j^\theta$；$X/h_j=a_j^{-\theta}X^{1-\theta}$，$\log(X/h_j)=(1-\theta)\log X-\theta\log a_j$），
+
+$$
+\frac{\|P^{(n)}_X\|_{L^2[X,2X]}^2}{S_X}\longrightarrow C_n=\frac{(1-\theta)Q(g)}n\sum_{j=0}^{n-1}a_j^{-\theta}.
+$$
+
+在 $I_j$ 上 $h_j\le H_x\le h_j+d_j$，$d_j=(a_{j+1}^\theta-a_j^\theta)X^\theta\le\theta\eta h_0$，并有分解
+
+$$
+P_{H_x,g}(x)-P_{h_j,g}(x)=\int_0^{h_j}\Bigl[H_x^{-2}g(u/H_x)-h_j^{-2}g(u/h_j)\Bigr]D_u(x)\,du+H_x^{-2}\int_{h_j}^{H_x}g(u/H_x)D_u(x)\,du .
+$$
+
+对 $0\le u\le h_j$，由 $|H^{-2}-h^{-2}|\le2d/h^3$ 与 $|H^{-1}-h^{-1}|\le d/h^2$，方括号的绝对值至多 $(2M+L)d_j/h_j^3$。全部比值 $h_j/h_0$ 与全部尾部长度与 $h_0$ 之比都落在固定紧区间 $[1,2^\theta]$ 内，故下面引理 490.1 与 (490.2) 的常数及 $X$ 门槛可对全部 $j$ 与全部 $n$ 一致选取。由 Minkowski 不等式与引理 490.1(i)，第一项在 $I_j$ 上的平方范数至多 $(2M+L)^2d_j^2h_j^{-6}\bigl(h_j\sqrt{CXh_j\log X}\bigr)^2\ll_g\eta^2S_X$。对第二项，由 Cauchy–Schwarz，
+
+$$
+\int_{I_j}\Bigl|H_x^{-2}\int_{h_j}^{H_x}g(u/H_x)D_u(x)\,du\Bigr|^2dx\le M^2h_j^{-4}d_j\int_{h_j}^{h_j+d_j}\int_{I_j}D_u(x)^2\,dx\,du\ll_g\eta^2S_X ,
+$$
+
+这里对 $u\in[h_j,h_j+d_j]$ 用了 $\int_{I_j}D_u^2\le V(2X,u)\ll Xh_0\log X$。对 $n$ 个不相交格子求和得 $O_g(\eta S_X)$，故
+
+$$
+\limsup_{X\to\infty}\frac{\|P_{H_\cdot,g}-P^{(n)}_X\|_2}{\sqrt{S_X}}\le K_gn^{-1/2},
+$$
+
+$K_g$ 与 $n$ 无关。又 $a\mapsto a^{-\theta}$ 在 $[1,2]$ 上递减，上下矩形和相差 $(1-2^{-\theta})/n$，故 $C_n\to(1-\theta)Q(g)\int_1^2v^{-\theta}\,dv=Q(g)(2^{1-\theta}-1)$。令 $A_X=\|P_{H_\cdot,g}\|_2/\sqrt{S_X}$，由反三角不等式，对每个固定 $n$ 有 $\limsup_X|A_X-\sqrt{C_n}|\le K_gn^{-1/2}$；令 $n\to\infty$ 得 Lipschitz 情形。
+
+一般 $g\in L^1(0,1)$。由 $\min(s,t)=\int_0^1\mathbf 1_{\{r\le s\}}\mathbf 1_{\{r\le t\}}\,dr$ 及 $\iint|g(s)g(t)|\min(s,t)\le\|g\|_1^2$，Fubini 给出 $Q(g)=\int_0^1G_g(r)^2\,dr=\|G_g\|_{L^2(0,1)}^2$；于是对 $f,g\in L^1(0,1)$，$|\sqrt{Q(g)}-\sqrt{Q(f)}|\le\|G_{g-f}\|_{L^2(0,1)}\le\sup_r|G_{g-f}(r)|\le\|g-f\|_1$。Lipschitz 函数在 $L^1(0,1)$ 中稠密，取 Lipschitz 的 $g_m$ 使 $\|g_m-g\|_1\to0$。由 $P_{H_x,g}-P_{H_x,g_m}=P_{H_x,g-g_m}$ 与引理 490.3，$\|P_{H_\cdot,g}-P_{H_\cdot,g_m}\|_2\le C\|g-g_m\|_1\sqrt{S_X}$ 对充分大的 $X$ 一致成立；又 $\sqrt{Q(g_m)}\to\sqrt{Q(g)}$。在反三角不等式中先令 $X\to\infty$、再令 $m\to\infty$ 即得。证毕。
+

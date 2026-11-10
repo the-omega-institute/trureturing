@@ -1,0 +1,26 @@
+## 497. 固定尺度四阶矩到移动长度的传递
+
+沿用 §494 的 $\mu_X,U_X,B_X,\kappa,r,c_k$ 与 §496 的 $h=X^\theta$、$\varepsilon_X$ 记号；$E$ 局部有界 Borel 可测，$0<\alpha<\theta<\beta<1$。令 $d\nu(u)=du/(u\log2)$（$1\le u\le2$），
+
+$$
+\widetilde B_X(c,x)=\frac{D_{ch}(x)}{\sqrt{h\log X}}\qquad(c\ge0,\ X\le x\le2X),
+$$
+
+$W_3\equiv0$，$W_4(c_1,c_2,c_3,c_4)=\kappa^2\bigl[\min(c_1,c_2)\min(c_3,c_4)+\min(c_1,c_3)\min(c_2,c_4)+\min(c_1,c_4)\min(c_2,c_3)\bigr]$。
+
+**局部四阶能量假设 $(\mathrm L_4)$。** 存在 $C_4$ 与 $\varepsilon'_X\to0$，使对充分大的 $X$、一切 $X/2\le A\le B\le4X$ 与 $(4X)^\alpha\le v\le(X/2)^\beta$，
+
+$$
+\int_A^B|D_v(y)|^4\,dy\le C_4\,v^2(\log X)^2\bigl(B-A+\varepsilon'_XX\bigr).
+\tag{497.1}
+$$
+
+**固定尺度假设 $(\mathrm F_k)$（$k=3,4$）。** 对每个 $M>0$、$\mathbf c\in[0,M]^k$ 与 $1\le u<v\le2$，
+
+$$
+\lim_{X\to\infty}\mathbb E_{\mu_X}\Bigl[\mathbf 1_{[u,v]}(U_X)\prod_{j=1}^k\widetilde B_X(c_j)\Bigr]=\nu([u,v])\,W_k(\mathbf c).
+\tag{497.2}
+$$
+
+$(\mathrm F_4)$ 是固定长度 $c_1h,\dots,c_4h$ 的联合四阶矩的 Wick 渐近，带有宏观位置的区间权，是下面证明直接使用的形式；$(\mathrm F_3)$ 是相应三阶混合矩的消失。单一长度的四阶矩渐近不决定 $(\mathrm F_4)$：边际矩不决定混合矩。
+

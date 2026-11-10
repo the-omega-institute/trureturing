@@ -1,0 +1,16 @@
+**定义 14.2（同一原三标签与整体障碍）。** 三标签仍是同一真正原 $(h,y,z)$：$h$ 是原第三标签，$Jy,Jz$ 是同一旧 $D$ 的实际响应；$\mathsf A,\mathsf X,\mathsf Y$ 由这五个原元素通过 Jordan 组合得到。在给定原 JC 包含中有
+
+$$
+\text{同一原 PB 两圆接口}
+\Longrightarrow
+\text{三元反交换及中心锥 }0\le\mathsf T\le4\mathsf R
+\Longrightarrow
+\mathcal K=\operatorname{Id}_{\mathfrak B_{y,z}}([\mathsf X,\mathsf Y])
+=\overline{\mathsf T\mathfrak B_{y,z}}
+\Longrightarrow
+\bigl(\mathfrak B_{y,z}\text{ 交换}\iff\text{两份原混合式成立}\bigr).
+\tag{14.2}
+$$
+
+这个闭理想结论针对未归一化的同一原混合误差，并连接所有纤维的公共交换商；不只是将每个正纤维除以长度得到 Pauli 轴。任意标量读取必消灭该理想，读取正残余的二维表示则不能消灭它；14.1 说明第三轴退化时这份障碍仍完整存在。结论是给定弱 JC 包含中的诊断，不断言不同忠实 JC 环境的全部诊断代数已被规范识别。
+

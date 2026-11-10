@@ -4,7 +4,7 @@
 
 Signed locality for every homogeneous state in the actual ghost Fock space.
 
-The normal product has a signed reverse half. Its three-field discrepancy is the signed double commutator. The sign-independent finite-residue cancellation kernel from FieldNormalProductLocality is reused with these exact signed coefficients. No ordinary plus-ordered normal product is identified with odd normal ordering.
+SignedFieldNormalProductLocality supplies the signed commutator, signed normal-product locality and divided-derivative locality. Reflection of the coefficient indices transports the flip law from BinomialKernelDelta. The actual ghost CAR and occupation-word induction specialize this generic calculus to the original Fock carrier.
 
 **Theorem 1.1 (Homogeneous all-state signed locality).**
 

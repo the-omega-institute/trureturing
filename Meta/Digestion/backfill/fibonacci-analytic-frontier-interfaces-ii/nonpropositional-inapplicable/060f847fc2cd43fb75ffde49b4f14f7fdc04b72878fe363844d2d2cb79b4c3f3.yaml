@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:060f847fc2cd43fb75ffde49b4f14f7fdc04b72878fe363844d2d2cb79b4c3f3
+  normalized_sha256: sha256:060f847fc2cd43fb75ffde49b4f14f7fdc04b72878fe363844d2d2cb79b4c3f3
+cas_ref: sha256:060f847fc2cd43fb75ffde49b4f14f7fdc04b72878fe363844d2d2cb79b4c3f3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Notation-only preamble fixing the locally bounded Borel function E and the exponent band, and defining nu, the fixed-scale normalized increment B_tilde_X, and the comparison kernels W_3=0 and W_4 by its three-pairing formula. W_3 and W_4 are definitions, not asserted moment identities; no fourth-moment bound or transfer conclusion is stated in this atom.
+    previous_atom_id: acb69424f2d715d98d0c77bedb1bac99e6e54ca2beacfb7f00a611e255897508
+    next_atom_id: 74309966182de8a09ef9d4af74b54c2e244df7e667d8b34791f3237fd4aa85d0

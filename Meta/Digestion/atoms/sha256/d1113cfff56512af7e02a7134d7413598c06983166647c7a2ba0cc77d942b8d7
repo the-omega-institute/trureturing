@@ -1,0 +1,46 @@
+**定义 32.2（完整原模型）。** 固定含单位复C*代数 $A$，每个不可约表示维数不超过某个有限整数 $d$。原静态域准确为
+
+$$
+E=A_{\rm sa},\quad S(a,b)=a\circ b=(ab+ba)/2,
+\quad C=A_+,\quad u=1,\quad N(a)=\|a\|.
+\tag{32.1}
+$$
+
+原正实线性评价族 $\mathcal P$ 分离 $E$，并准确决定 $C$。保留同一个原世界、全部原标签、评价及质量 $m_\gamma=\gamma(u)$，包括零、不等、次归一质量及原表示意义下的非正常评价。未知 $D:E^2\to E$ 是同一给定总映射。
+
+记 $\mathsf H_A(D)$ 为以下完整原关系的合取。A1/P2对全部实际 $a,b$、两种次序和全部原评价要求
+
+$$
+\begin{pmatrix}
+\gamma(a^2)&\gamma(a\circ b)-i\gamma D(a,b)\\
+\gamma(b\circ a)-i\gamma D(b,a)&\gamma(b^2)
+\end{pmatrix}\succeq0.
+\tag{32.2}
+$$
+
+A2是全部相加三表 $(a+b,a,b)$ 及全部排列的实部在整个 $\mathbb R^3$ 上半正定，指定相加向量 $(1,-1,-1)$ 及相应排列准确给零。A3保留 $u^2=u$ 和同一固定有理 $0<\vartheta\le1$ 上全部 $0\le e\le\vartheta u\Rightarrow e^2\le e$。不预给复三表正性。
+
+对全部实际 $h,a,b\in E$，仍由同一个旧 $D$ 定义
+
+$$
+v=D(h,a)-h\circ b,\qquad w=h\circ a+D(h,b),
+\qquad r_\pm=a\pm v,\quad s_\pm=b\pm w.
+$$
+
+完整PB要求全部原评价满足
+
+$$
+\gamma(r_+^2+s_+^2+2D(r_+,s_+))
+=\gamma(r_-^2+s_-^2+2D(r_-,s_-)).
+\tag{32.3}
+$$
+
+零、重复、任意幅度、缩放、平移、任意背景和所有实际嵌套调用均在量词内。由评价分离，PB等价于其元素等式；消去已知Jordan平方后也等价于
+
+$$
+D(a+v,b+w)-D(a-v,b-w)=-2a\circ v-2b\circ w.
+\tag{32.4}
+$$
+
+证明前不输入 $D$ 的可加、齐次、连续、可测、局部、协变、商下降或理想保持。完整 $A_{\rm sa}$ 是实质前件；以下逆元、精确提升和全部前缀都在此原域中构造。
+
