@@ -1598,3 +1598,409 @@ $$
 typed CP、箭头下降、整台递归同源参考、真支持与支持内补、交织夹界、每个所需有限深度及每个正精度均守原前件。完整仪器、TP、Kraus、更新和 Lüders仍须完整 typed 菜单、单位分区、接受端、校准、表示与收敛，覆盖整个环境、所有成功／失败／细记录／port／post-port 输出及每份完整输出的每个仍合法未来；仅严格正实际输出质量可归一。合法顺序、自适应、并行历史、真分组遗忘、停止、拒绝、销毁、泄漏、同数两侧与逆向真实 Return、含活动 ready 和 producer 的完整 CountRead不因矩阵相等或当前读取相同而支付，原程序、历史、细记录、读取次序、比较权零集及未来权限不合并。正常性、指定前对偶、可数可加、无限菜单记录与收敛，以及实际保持原域的连续可逆流和实际逆、物理钟单位、酉实现、生成元域、Hamiltonian 能量、作用量及共同正物理 $\hbar$ 仍各由原来源承担。上述有限几何见证没有满足整个来源谓词，也没有完成一般全家族刚性或全局量子起源。
 
 ## 追加锚（本行以下为增补区）
+
+## 11. 全正二表的准确阈值与双接触的扩大排除域
+
+### 11.1 同一星形数据的全正二表阈值
+
+**定义 11.1（固定数据、质量与接触差额）。** 本节的代数、角、乘法、正锥和数据始终准确取(9.1)，全部标签及预算取(9.2)–(9.3)。特别是 $t=t_0+\lambda c$、$g=K_\sigma(c,t)+\rho d$，两条非零环境边均保留。每个全称正读取量词仍遍历 $M_3(\mathbb C)$ 上全部数学正复线性泛函，质量为任意有限 $\phi(1_\star)\ge0$，不改为角质量。对一份实际探针和读取，记
+
+$$
+\mathscr V(x,\phi)=|\phi(L_x)|
+-\sqrt{B_\phi(R_+,S_+)}-\sqrt{B_\phi(R_-,S_-)}.
+\tag{11.1}
+$$
+
+$\mathscr V>0$ 才是该读取对原 PB 的严格违反。来源卷 $\mathsf F$ 仍是9.1所钉的[全 PB 多项式卷][AXF]，直接身份仍为 `2c1987c6ad3acbe4f9309ebde7bd204eacddd31a`；其(39.7)、41.1和42.2保持原版本和原量词。本节不指定未知总响应或外响应，不增加协变、响应缩放、单位平移中性、压缩自然性或新的 $D$ 前件。
+
+**定理 11.2（全正 P2 的充要阈值）。** 对(9.1)的每个 $\lambda\in\mathbb R$ 和 $\sigma=\pm1$，有
+
+$$
+(\forall\phi\ge0)\ \mathsf{P2}(c,t_\lambda;g)
+\quad\Longleftrightarrow\quad \rho^2\le\frac23.
+\tag{11.2}
+$$
+
+端点 $\rho^2=2/3$、退化二表和零质量均包含在内。若 $\rho^2>2/3$，一份明确的完整三维读取为
+
+$$
+\zeta_\rho=(1,0,-i\sigma\rho/2)^{\mathsf T},\qquad
+\phi_{\zeta_\rho}(A_1)=\zeta_\rho^*A_1\zeta_\rho,
+\qquad \phi_{\zeta_\rho}(1_\star)=1+\rho^2/4.
+\tag{11.3}
+$$
+
+证明。先证充分性。直接复用(9.9)–(9.12)的完整三维矩阵 $Q_{X+iY}$、右下正标量 $3$、其 Schur 补 $D_{X+iY}$ 和二表二次型对应。除了(9.11)的第一对角元及行列式外，第二对角元的配方是
+
+$$
+(D_{X+iY})_{22}
+=\frac43X^2+\frac43\left(Y-\frac32\sigma\rho\right)^2+2-3\rho^2.
+\tag{11.4}
+$$
+
+当 $\rho^2\le2/3$，两个对角元均非负，且(9.11)给
+
+$$
+\det D_{X+iY}
+=\frac{16}{3}X^2+\left(\frac{16}{3}-8\rho^2\right)Y^2\ge0.
+$$
+
+故这个 Hermitian 二阶矩阵半正定，包括对角元为零的情形。由环境块 $3>0$ 的 Schur 合同，$Q_{X+iY}\succeq0$ 对每个实 $X,Y$ 成立。这里使用的是成熟的 Schur 补半正定判别，参见 Higham 的[原作者论述](https://nhigham.com/2023/06/01/what-is-the-schur-complement-of-a-matrix/)中正定性检验的半正定版本；不将该一般判别另立为本族的新定理。(9.12)的二次型对应于是给每份正 $\phi$ 的二表半正定，其行列式给 P2；(9.8)再保留同一 $g$ 地将结论传给每个 $\lambda$。整个步骤没有除以质量或 Gram 对角。
+
+必要性由(11.3)直接给出。在同一完整向量上，已知乘法给
+
+$$
+\begin{gathered}
+\phi_{\zeta_\rho}(c^2)=1,\qquad
+\phi_{\zeta_\rho}(t_0^2)=1+\frac34\rho^2,\qquad
+\phi_{\zeta_\rho}(c\circ t_0)=0,\\
+\phi_{\zeta_\rho}(K_\sigma(c,t_0))=\frac\rho2,\qquad
+\phi_{\zeta_\rho}(\rho d)=\rho.
+\end{gathered}
+\tag{11.5}
+$$
+
+因此由相同的剪切恒等式(9.8)，对所有 $\lambda$ 准确有
+
+$$
+B_{\phi_{\zeta_\rho}}(c,t_\lambda)
+-\phi_{\zeta_\rho}(g)^2=1-\frac32\rho^2.
+\tag{11.6}
+$$
+
+$\rho^2>2/3$ 时这是真实正读取的严格 P2 违反。零泛函的全部读数为零；充分性中也没有删去任何正质量、奇异密度或混合读取。此阈值是给定星形族的算子二表分类，不是一般协方差或一般 Schur 判别的改名。普通协方差背景仍按 Gibilisco–Hiai–Petz [arXiv:0712.1208v1](https://arxiv.org/abs/0712.1208v1)及 $\mathsf F$ §41.5 的既有归属；这些文献中的一般工具不承担(11.6)的本族结论。∎
+
+### 11.2 不加小残差限制的同一接触构造
+
+**定义 11.3（在扩大参数域上使用原有限公式）。** 取任意 $\lambda\rho\ne0$，置 $q=-\operatorname{sgn}(\lambda\rho)$。取(10.4)的同一个唯一实根 $p$，并严格按(10.5)–(10.6)定义 $b,u,C_j,m,Z,z,\tau,y,y_c,X,a$，这里不施加(10.1)的两个大小限制。所用实际探针和同一读取仍为
+
+$$
+\begin{gathered}
+b=p+iq,\qquad
+X=[\,y\ \ y_c\,][\,u\ \ c_0u\,]^{-1},\qquad
+x=(X+\rho a)\oplus0,\qquad
+\xi=\binom{u}{z},\qquad \phi_\xi(A_1)=\xi^*A_1\xi,\\
+a=\operatorname{diag}\left(\frac1{p-1},\frac{-2}{p-2}\right).
+\end{gathered}
+\tag{11.7}
+$$
+
+先对 $\sigma=1$ 取这些公式；对 $\sigma=-1$ 取其逐项复共轭。§10.2的可定义性和§10.3的三个 Hermitian 配对只用实根关系、$q^2=1$ 及已写出的矩阵乘法，不用 $|\rho|\le1/4$ 或 $|\rho|\le|\lambda|$。故它们直接给 $X=X^*$ 及 $x\in(\mathcal Q_\star)_{\rm sa}$。§§10.4–10.5的完整标签恒等式也在此域原样适用；本定义不把定理10.2的估计结论延伸为前件。
+
+**定理 11.4（比例区间上的实际非零探针排除）。** 对同一(9.1)数据，若
+
+$$
+\lambda\ne0,\qquad 0<|\rho|\le\frac{35}{3}|\lambda|,
+\tag{11.8}
+$$
+
+则对每个 $\sigma=\pm1$，定义11.3给一个实际 $0\ne x=x^*\in\mathcal Q_\star$ 和一份共同的完整三维正读取，使
+
+$$
+\mathscr V(x,\phi_\xi)>
+2\left(p^2-\frac{121}{16}\right)|\lambda\rho|>0.
+\tag{11.9}
+$$
+
+不另要求 $|\rho|\le1/4$ 或 $\rho^2\le2/3$；若还要求全部正读取的 P2，则其准确附加范围由定理11.2给出。
+
+证明。以下对 $\sigma=1$ 证明，另一符号最后由原共轭接线取得。先从同一个根提取所需的有理界。$H(-69/25)=-654/15625<0$，而 $H$ 的严格递增性及 $H(-11/4)>0$ 已在§10.2证明，故
+
+$$
+-\frac{69}{25}<p<-\frac{11}{4}.
+\tag{11.10}
+$$
+
+沿用(10.7)的 $A_0,B_0,C_j$，局部另置实数
+
+$$
+\begin{gathered}
+D_p=(p-1)(p-2),\qquad
+\alpha=\frac{2(2p-3)}{D_p},\qquad
+\beta=\frac{4-3p}{D_p},\qquad a=\alpha I_2+\beta c_0,\\
+\eta=-\frac{2C_1+3(1-p)C_2}{4p},\qquad
+\theta=\frac{(p+3)C_2}{2}.
+\end{gathered}
+\tag{11.11}
+$$
+
+其中 $\operatorname{Re}Z=-\lambda\eta$，$\operatorname{Im}Z=q\lambda(p-3)C_2/4$，由原(10.13)准确给出。根区间给
+
+$$
+\begin{gathered}
+\alpha<0,\qquad |\alpha|<1,\qquad \frac23<\beta<1,\\
+\frac{75}{8}<C_2<\frac{49}{5}<10,\qquad
+\frac98<\theta<\frac54,\qquad
+\frac{23}{2}<\eta<\frac{47}{4},\\
+|u_1|^2<\frac{33}{4},\qquad |u_2|^2<\frac25,\qquad
+|a_{11}|<\frac4{15},\qquad |a_{22}|<\frac37.
+\end{gathered}
+\tag{11.12}
+$$
+
+为明确这些界的依据，$A_0<(44/25)^2+1=2561/625$、$B_0<(19/25)^2+1=986/625$，而下端有 $A_0>65/16$、$B_0>25/16$，于是 $C_2=2A_0+B_0>155/16>75/8$；$6/25<p+3<1/4$ 再给 $\theta$ 的两界。$|\alpha|<1$ 等价于 $p^2+p-4>0$，$\beta<1$ 等价于 $p^2>2$，而 $\beta>2/3$ 等价于 $8-3p-2p^2>0$，均由(11.10)得到。对 $\eta$，展开 $C_1,C_2$ 后有
+
+$$
+\eta=\frac{9r_p^2-10r_p-9+40/r_p}{4},\qquad r_p=-p\in(11/4,69/25).
+$$
+
+右式关于 $r_p$ 的导数为 $(18r_p-10-40/r_p^2)/4>0$，故
+
+$$
+\frac{23}{2}<\frac{8115}{704}<\eta
+<\frac{1001603}{86250}<\frac{47}{4}.
+\tag{11.13}
+$$
+
+这也完成(11.12)中未直接由分母和坐标给出的界。
+
+现在使用同一接触的联合量。严格沿(10.21)取 $R_0$ 为非实斜率那一对在 $\rho=0$ 的完整 $R$ 向量，取 $e=(au,0)^{\mathsf T}$，并记
+
+$$
+U=\|R_0\|^2,\qquad V_0=\operatorname{Re}(R_0^*e),\qquad
+W_0=\|e\|^2,\qquad J=2|\lambda|(p^2-1).
+\tag{11.14}
+$$
+
+另一对仍由(10.20)保持实斜率，其面积精确为零；这不是分别选择的两份最优读取。原(10.18)给 $|(R_0)_3|^2=1/2$。在前两坐标，(10.17)–(10.19)给
+
+$$
+(R_0)_{12}=y+q\frac{\tau-iy}{b}.
+\tag{11.15}
+$$
+
+设 $n=u^*c_0y$。由(10.12)和(10.14)已经给出的 $u^*y=m$、$n=bm-i\tau_1$ 及 $2\operatorname{Re}(\bar bZ)=\lambda(C_1-pC_2)$，准确得到
+
+$$
+\begin{aligned}
+u^*(R_0)_{12}&=\frac{pm+q\tau_0}{b}=q\bar Z,\\
+(c_0u)^*(R_0)_{12}&=\frac{pn+q\tau_1}{b}=pm-i\tau_1,\\
+\operatorname{Re}\{u^*(R_0)_{12}\}&=-q\lambda\eta,\\
+\operatorname{Re}\{(c_0u)^*(R_0)_{12}\}&=-q\lambda\theta.
+\end{aligned}
+\tag{11.16}
+$$
+
+这里 $\tau_j$ 是原(10.12)的标量配对，不是向量 $\tau$ 的坐标。第一式的分子之所以等于 $qb\bar Z$，正是 $\lambda(C_1-pC_2)=\bar bZ+b\bar Z$；第二式用 $q-ip=-ib$。因 $c_0=\operatorname{diag}(1,2)$，同一两个坐标因此满足
+
+$$
+\begin{aligned}
+\operatorname{Re}\{\bar u_1(R_0)_1\}&=q\lambda(-2\eta+\theta),\\
+\operatorname{Re}\{\bar u_2(R_0)_2\}&=q\lambda(\eta-\theta).
+\end{aligned}
+\tag{11.17}
+$$
+
+这是对实际联合向量的坐标估计。由(11.12)，$2\eta-\theta>87/4$、$\eta-\theta>41/4$，故
+
+$$
+\begin{aligned}
+\|(R_0)_{12}\|^2
+&\ge\frac{\operatorname{Re}(\bar u_1(R_0)_1)^2}{|u_1|^2}
+ +\frac{\operatorname{Re}(\bar u_2(R_0)_2)^2}{|u_2|^2}\\
+&>\lambda^2\left(\frac{(87/4)^2}{33/4}
+                +\frac{(41/4)^2}{2/5}\right)
+>315\lambda^2,\qquad U>\frac12+315\lambda^2.
+\end{aligned}
+\tag{11.18}
+$$
+
+最后的两项分别大于 $57$ 与 $262$，故严格大于 $315$。另一方面，$a=\alpha I_2+\beta c_0$ 和(11.16)给出准确的混合配对
+
+$$
+V_0=q\lambda\widehat V,\qquad
+\widehat V=-\alpha\eta-\beta\theta.
+\tag{11.19}
+$$
+
+因 $0<-\alpha<1$、$2/3<\beta<1$，有
+
+$$
+-\frac54<\widehat V<\frac{47}{4}-\frac23\frac98=11,
+\qquad |V_0|<11|\lambda|.
+\tag{11.20}
+$$
+
+修正向量的完整平方范数则满足
+
+$$
+0<W_0=|a_{11}u_1|^2+|a_{22}u_2|^2
+<\frac{33}{4}\left(\frac4{15}\right)^2
+ +\frac25\left(\frac37\right)^2
+=\frac{44}{75}+\frac{18}{245}<\frac23.
+\tag{11.21}
+$$
+
+这些三个界均来自同一 $R_0,e,\xi$，没有代换环境坐标，也没有将不同参数的最优值拼接。
+
+置 $r_0=|\rho|$。由(11.8)、(11.18)、(11.20)，
+
+$$
+r_0|V_0|<\frac{385}{3}\lambda^2<\frac{11}{27}U,
+\qquad U+\rho V_0>\frac{16}{27}U.
+\tag{11.22}
+$$
+
+直接复用(10.22)–(10.25)和(10.30)的完整标签及 $\mathsf F$(39.7)残差恒等式，令 $(R,S)$ 表示非实斜率那一对，便有
+
+$$
+\begin{gathered}
+Q=\phi_\xi(K_1(R,S))=-2(U+\rho V_0)<0,
+\qquad |Q|>\frac{32}{27}U,\\
+\Delta=4r_0^2\{UW_0-|R_0^*e|^2\}\le4r_0^2UW_0,\\
+B_{\phi_\xi}(R,S)=Q^2+\Delta,\qquad
+\phi_\xi(L_x)=q(Q-r_0J).
+\end{gathered}
+\tag{11.23}
+$$
+
+复 Gram 行列式及实、虚部平方分解仍是§10.5使用的成熟工具，归属沿§10.9及 $\mathsf F$ §41.5；新估计是(11.18)–(11.22)对这份实际接触的同时控制。$U\ge1/2$ 保证下式没有零分母。全部有限面积亏量满足
+
+$$
+\sqrt{Q^2+\Delta}-|Q|
+=\frac{\Delta}{\sqrt{Q^2+\Delta}+|Q|}
+\le\frac{4r_0^2UW_0}{2|Q|}
+<\frac98r_0^2.
+\tag{11.24}
+$$
+
+另一对面积精确为零，而 $Q<0$ 给 $|\phi_\xi(L_x)|=|Q|+r_0J$，所以
+
+$$
+\begin{aligned}
+\mathscr V(x,\phi_\xi)
+&>2(p^2-1)r_0|\lambda|-\frac98r_0^2\\
+&\ge\left(2(p^2-1)-\frac{105}{8}\right)r_0|\lambda|
+=2\left(p^2-\frac{121}{16}\right)|\lambda\rho|>0.
+\end{aligned}
+\tag{11.25}
+$$
+
+严格正性用 $p<-11/4$；特别是(11.8)的闭端点仍严格违反。这是一份有限探针的差额，不是渐近探针或忽略高阶项所得的符号。
+
+还须在扩大范围证明 $x\ne0$。原(10.12)–(10.16)给
+
+$$
+\begin{aligned}
+\operatorname{Im}(u^*c_0Xu)
+&=\operatorname{Im}n=-2\lambda C_2-2\operatorname{Re}Z\\
+&=-\frac{\lambda\{2C_1+(p+3)C_2\}}{2p}
+=-\frac{\lambda(C_1+C_3)}{2p}\ne0.
+\end{aligned}
+\tag{11.26}
+$$
+
+最后一步使用(10.8)及 $C_1,C_3>0$。$a$ 与 $c_0$ 交换且自伴，故 $u^*ac_0u\in\mathbb R$；于是 $X+\rho a=0$ 将与(11.26)矛盾。这证明每个 $\lambda\ne0$、任意 $\rho$ 的该探针均非零，不再借助小残差三角界。
+
+$u_1u_2\ne0$，而 $\operatorname{Re}Z=-\lambda\eta\ne0$ 给 $z\ne0$，故这份读取的三个坐标均非零。$\phi_\xi$ 的完整质量仍为 $\|u\|^2+|z|^2>0$，且两个面积、左端和全部配对始终使用这一份读取。任意正倍数的该泛函把严格差额和质量同时乘以同一常数，故也可给出任意指定的有限正总质量；零泛函的预算则两边均为零。对 $\sigma=-1$，直接使用§10.6的逐项复共轭：同一 $c,t,d,\lambda,\rho$ 不变，全部自伴标签的实读取、面积和质量不变。这给两种符号的(11.9)。∎
+
+### 11.3 固定非零残差靠近零平移时，这一接触确有缺口
+
+**命题 11.5（原接触在零平移附近的严格正向预算）。** 固定任意实 $\rho\ne0$。定义11.3的同一探针和读取存在明确的 $\varepsilon_\rho>0$，使对每个 $0<|\lambda|<\varepsilon_\rho$ 及每个 $\sigma$，有
+
+$$
+x\ne0,\qquad \mathscr V(x,\phi_\xi)<0.
+\tag{11.27}
+$$
+
+这里只断言这一探针在这一读取上满足严格的原 PB 方向，不断言它在所有读取上成立，更不认证全部探针。该接触差额还有准确的单侧共同极限
+
+$$
+\lim_{\lambda\to0,\ \lambda\ne0}\mathscr V(x,\phi_\xi)
+=1-\sqrt{1+2\rho^2W_0}<0,
+\tag{11.28}
+$$
+
+其中 $W_0$ 对 $q=1,-1$ 相同。
+
+证明。先对 $\sigma=1$。对任一固定 $q$，(10.5)中的 $Z,z,\tau,y,y_c,X$ 都准确线性于 $\lambda$，而 $u,a,e$ 与 $\lambda$ 无关。因此可写
+
+$$
+(R_0)_{12}=\lambda\widehat R_q,\qquad
+U=\frac12+\lambda^2\|\widehat R_q\|^2,\qquad
+V_0=q\lambda\widehat V.
+\tag{11.29}
+$$
+
+这里 $\widehat R_q$ 是将同一有限公式取 $\lambda=1$ 所得的前两坐标。$u_{-q}=\bar u_q$、$a$ 为实矩阵，所以 $W_0=\|au_q\|^2$ 与 $q$ 无关且严格正。$R_0^*e=\lambda\widehat R_q^*(au_q)$，故由前两坐标的复 Cauchy–Schwarz，准确有
+
+$$
+\begin{aligned}
+\Delta
+&=2\rho^2W_0
+ +4\rho^2\lambda^2\left\{\|\widehat R_q\|^2W_0
+             -|\widehat R_q^*(au_q)|^2\right\}
+\ge2\rho^2W_0>0.
+\end{aligned}
+\tag{11.30}
+$$
+
+为了给出有限邻域而非只报极限，令
+
+$$
+\begin{gathered}
+r_0=|\rho|,\qquad j_p=2(p^2-1)>0,\qquad
+\widehat U=\max\{\|\widehat R_1\|^2,\|\widehat R_{-1}\|^2\},\\
+M_\rho=1+2\widehat U+22r_0,\qquad
+\varepsilon_\rho=\min\left\{1,\frac{r_0W_0}{4j_pM_\rho},
+                                  \frac{\sqrt{W_0}}{2j_p}\right\}>0.
+\end{gathered}
+\tag{11.31}
+$$
+
+这些只是同一两支显式矩阵公式的共同上界，不替换任何实际读取。当 $0<\ell=|\lambda|<\varepsilon_\rho$，由(11.20)、(11.29)及 $J=j_p\ell$ 得
+
+$$
+|Q|=2|U+\rho V_0|\le M_\rho,\qquad
+2|Q|r_0J+r_0^2J^2<\frac12r_0^2W_0+\frac14r_0^2W_0<\Delta.
+\tag{11.32}
+$$
+
+因此
+
+$$
+\sqrt{Q^2+\Delta}>|Q|+r_0J\ge|Q-r_0J|
+=|\phi_\xi(L_x)|.
+\tag{11.33}
+$$
+
+另一对面积仍精确为零，故(11.27)的差额为负；实际非零性由(11.26)保证。另一方面，(11.29)–(11.30)给 $Q\to-1$、$J\to0$、$\Delta\to2\rho^2W_0$，两支均得(11.28)。也可把同一有限公式延到 $\lambda=0$ 并任选 $q=\pm1$：此时 $X=z=0$、$x=(\rho a)\oplus0\ne0$、$\xi=(u,0)^{\mathsf T}$，其实际差额就等于(11.28)右端。对 $\sigma=-1$ 仍用同一逐项复共轭。
+
+这里只对明确已知的矩阵及其标量读取作代数比较；没有对未知 $D$ 取输入极限，也不由不同 $\lambda$ 之间运输 PB。$\lambda=0$ 的同一非零残差仍被 $\mathsf F$ 定理42.2的另一份零探针读取排除。因此原接触的严格正向预算与零平移刚性相容，不能据此判定任何数据通过全部 PB。∎
+
+### 11.4 原全族推断所剩的准确参数包络
+
+**推论 11.6（全部预算的必要残余域）。** 在(9.1)中，同时满足(9.38)前件的非零 $\rho$，若存在，只能位于
+
+$$
+\boxed{\quad
+0<|\lambda|<\frac3{35}\sqrt{\frac23},\qquad
+\frac{35}{3}|\lambda|<|\rho|\le\sqrt{\frac23}.
+\quad}
+\tag{11.34}
+$$
+
+故对 $\lambda=0$ 或 $|\lambda|\ge(3/35)\sqrt{2/3}$，原(9.38)的结论 $\rho=0$ 成立。零残差对任意 $\lambda$ 满足全部正读取的 P2 和每个原角探针的 PB。对(11.34)内的点，本节没有判定其全部预算成立或失败；它们仍须同时满足原 $\mathsf{PB}_0$ 与每个实际非零自伴角探针的全部正读取预算。
+
+证明。$\rho^2>2/3$ 由定理11.2的一份实际 P2 违反排除。$\lambda=0$、$\rho\ne0$ 由 $\mathsf F$ 定理42.2排除，保留其原零探针而不重证该结论。$\lambda\ne0$ 且 $0<|\rho|\le(35/3)|\lambda|$ 由定理11.4的实际非零探针排除。余下的必要条件正是(11.34)，不把此包络中的点宣告为可行。$\rho=0$ 时，复 Cauchy–Schwarz及 $\mathsf F$(39.7)对同一已知乘法直接给 P2 和全部原 PB，包含零、退化及任意质量，沿§10.7的既有逆向结论复用。
+
+定理11.4覆盖的(11.8)严格扩大(10.1)，例如 $\lambda=\rho=1/2$ 的同一数据按定理11.2满足全部正读取的 P2，却被(11.7)排除；原(10.1)没有覆盖它。新增推断是同一接触的联合配对与有限亏量控制，不是 Hermitian 实现、一般 Gram 恒等式、零残差标准 PB 或零平移刚性的再次证明。这里不作历史优先权或穷尽文献的主张。
+
+对区间上的常值数据，可直接使用(9.33)–(9.36)及§10.8已经给定的同一个含单位常值嵌入与点值读取：把(11.7)的非零矩阵放成非零常值角截面，乘积、全部标签、完整质量及(11.9)的严格差额均原样保持。P2 在 $\rho^2\le2/3$ 时对任意正 $\Psi$ 由 $\Psi\circ\iota$ 和定理11.2取得；PB 的违反读取仍是 $\phi_\xi\circ\operatorname{ev}_{s_0}$。这不要求未知 $D$ 与嵌入、点值或压缩交换；如欲接回完整 $\mathsf H_I(D)$，仍须实际供应§10.8所列的同号角旧值、同一输出及 $\mathsf F$ §41.1的原必要性接线。∎
+
+**定义 11.7（保持原强度的一般原域问题与来源）。** (11.34)中的固定输出全族问题仍准确取(9.38)，不是在其前件中增加(11.8)。一般原域的两份混合输入缺陷仍为(9.37)、(10.42)的同一对象
+
+$$
+\begin{gathered}
+\mathcal E_+^D=D(c-g,k)-K_\sigma(c-g,k),\qquad
+\mathcal E_-^D=D(c+g,-k)-K_\sigma(c+g,-k),\\
+\mathcal E_+^D-\mathcal E_-^D=2cs.
+\end{gathered}
+\tag{11.35}
+$$
+
+在一般共同实现上取得 $\mathcal E_+^D=\mathcal E_-^D$ 仍是原未付义务，不以定理11.4的一族固定矩阵替代。增长谱分割仍须原联合速率 $N\omega(\varepsilon)^2\to0$，定性 $\omega(\varepsilon)\to0$ 及本节有限差额不给这个速率。一般环境连线、混合整行、输入拼接、相对标量、无限谱与完整奇数阶段 UHF 均保留§§9.6、10.9的原适用范围；已有全 H 分类保持自身的总响应与全域前件。
+
+物理接回所指的谓词仍严格是§§9.6、10.9所固定的同一个 $\mathcal C_{47}^{\rm pin}(\Omega;S,D)$，即 $\mathsf F$ 定义41.4、40.1、36.1及其递归上游全文的逐子句合取，保留每个原量词和每层既定版本；本卷6.1及1–8的七合同亦各守自身全文，不将不同钉版谓词认作相同。原 $\Omega/\mathrm{native}$ 的对象、准备、事件、比较权、共同来源与全词核、全部静态和静默分支、完整 typed 菜单及整台仪器的每份输出和合法未来、真实 Return、完整 CountRead，以及原正常性、前对偶、无限记录与收敛、物理钟、实际可逆动力学和共同正物理作用量，仍逐项取这些已纳入的原定义与前件。这些全文不由本段的列名替代。数学正读取不自动成为实际准备，给定矩阵乘法不成为物理来源证明，有限接口中的预算排除也不构成完整 H、未知总 $D$ 或物理反模型。
+
+## 追加锚（本行以下为增补区）
