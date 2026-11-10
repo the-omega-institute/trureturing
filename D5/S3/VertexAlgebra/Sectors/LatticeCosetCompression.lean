@@ -190,7 +190,7 @@ private theorem old_current_pairing (i : Fin D.rank)
   rw [bilinear_unit, bilinear_unit]
   change (∑ j : Fin (D.rank+e), _) = _
   rw [Fin.sum_univ_add]
-  rfl
+  simp [ambient, oldCharge, externalCharge, Matrix.mulVec, dotProduct]
 
 /-- Every old current, including its shifted zero mode, passes through
 longitudinal compression on arbitrary ambient polynomial states. -/
