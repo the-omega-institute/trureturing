@@ -7,7 +7,7 @@ internal sealed class KurkovTriangularColumnSumDocument : IScribeDocumentDefinit
     private const string Prefix =
         "D5/S1/Recurrence/Algebraic/KurkovTriangularColumnSum.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Recurrence/kurkov2026a396981c1");
+        LibraryNoteRef.Create("D5/L/RecurrenceAlgebraic/kurkov2026a396981c1");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Every lawful A396981 array satisfies Kurkov's positive-column factorial sum.",
