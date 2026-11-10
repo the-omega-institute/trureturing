@@ -1,7 +1,7 @@
 /- GID: D5/S3/Combinatorics/Riordan/LabeledComplementCount
    generality: G
-   mirror-B: Blueprint/D5/S3/Combinatorics/Riordan/LabeledComplementCount.md
-   mirror-E: none(waiver:external-open-problem-resolution)
+   mirror-B: D5/B/S3/Combinatorics/Riordan/LabeledComplementCount
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Labeled Riordan complement enumeration. -/

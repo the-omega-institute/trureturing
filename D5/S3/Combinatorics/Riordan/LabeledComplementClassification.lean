@@ -1,6 +1,6 @@
 /- GID: D5/S3/Combinatorics/Riordan/LabeledComplementClassification
    generality: G
-   mirror-B: Blueprint/D5/S3/Combinatorics/Riordan/LabeledComplementClassification.md
+   mirror-B: D5/B/S3/Combinatorics/Riordan/LabeledComplementClassification
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none

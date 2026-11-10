@@ -1,6 +1,6 @@
 /- GID: D5/S3/Combinatorics/Riordan/LabeledComplementAlgebra
    generality: G
-   mirror-B: Blueprint/D5/S3/Combinatorics/Riordan/LabeledComplementAlgebra.md
+   mirror-B: D5/B/S3/Combinatorics/Riordan/LabeledComplementAlgebra
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
