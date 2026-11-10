@@ -109,9 +109,9 @@ private theorem fold_neg {d m N : ℕ} (A : Circuit d m N)
         z • L.foldl (fun acc j => (A.W j.succ).val *
           ((1 : Matrix (Fin (m + 1)) (Fin (m + 1)) ℂ) ⊗ₖ query (A.negative j) U) * acc) B := by
       intro K z B
-      induction K generalizing B with
-      | nil => rfl
-      | cons j K hk => simp only [List.foldl_cons, Matrix.mul_smul]; exact hk _
+      exact List.foldl_hom (fun B => z • B) (by
+        intro X j
+        simp only [Matrix.mul_smul])
     rw [show -(↑(A.W j.succ) * (1 ⊗ₖ query (A.negative j) U) * B) =
       (-1 : ℂ) • (↑(A.W j.succ) * (1 ⊗ₖ query (A.negative j) U) * B) by simp,
       hs, smul_smul, pow_succ]
@@ -246,17 +246,29 @@ private theorem half_exp (swapped : Bool) :
       ((3 * Real.pi / 2 : ℝ) : ℂ)) = commonPhase * Complex.I := by
     rw [← Complex.exp_eq_exp_ℂ]
     convert h3 using 1 <;> congr 1 <;> push_cast <;> ring
+  have hs' : NormedSpace.exp ((Real.pi : ℂ) / 2 * (Complex.I * 2⁻¹)) = commonPhase := by
+    calc
+      _ = NormedSpace.exp (((1 / 2 : ℝ) : ℂ) * Complex.I * ((Real.pi / 2 : ℝ) : ℂ)) := by
+        congr 1
+        push_cast
+        ring
+      _ = _ := hsmall
+  have hl' : NormedSpace.exp (Complex.I * 2⁻¹ * ((Real.pi : ℂ) * 3 / 2)) =
+      Complex.I * commonPhase := by
+    calc
+      _ = NormedSpace.exp (((1 / 2 : ℝ) : ℂ) * Complex.I * ((3 * Real.pi / 2 : ℝ) : ℂ)) := by
+        congr 1
+        push_cast
+        ring
+      _ = commonPhase * Complex.I := hlarge
+      _ = _ := mul_comm _ _
   rw [logarithm, ← Matrix.diagonal_smul, Matrix.exp_diagonal]
   ext i j
   fin_cases i <;> fin_cases j <;> cases swapped <;>
-    simp only [Bool.not_false, Bool.not_true, Bool.false_eq_true, not_false_eq_true,
-      Bool.true_eq_false, Matrix.diagonal_apply, halfDiagonal, Pi.smul_apply,
-      smul_eq_mul, Function.comp_apply] <;>
-    norm_num only [hsmall, hlarge, one_mul, mul_one, mul_zero, ite_true, ite_false] <;>
-    simp [mul_comm]
+    simp [halfDiagonal, Pi.smul_apply, smul_eq_mul, mul_comm, mul_left_comm, mul_assoc]
   all_goals first
-    | (convert hsmall using 1 <;> congr 1 <;> push_cast <;> ring)
-    | (convert hlarge using 1 <;> congr 1 <;> push_cast <;> ring)
+    | simpa only [mul_comm, mul_left_comm, mul_assoc] using hs'
+    | simpa only [mul_comm, mul_left_comm, mul_assoc] using hl' 
 
 private theorem common_phase_unit : commonPhase * star commonPhase = 1 := by
   change Complex.exp _ * (starRingEnd ℂ) (Complex.exp _) = 1
@@ -280,6 +292,7 @@ private theorem half_channel (m : ℕ) (swapped : Bool) :
   simp only [Matrix.conjTranspose_smul, Matrix.smul_mul, Matrix.mul_smul, smul_smul]
   rw [mul_comm (star commonPhase), common_phase_unit, one_smul]
 
+-- Expanding the fixed two-dimensional reference sums produces many scalar terms.
 set_option maxHeartbeats 1600000 in
 private theorem amplified_target (m : ℕ) (swapped : Bool) :
     kron (conj (initialization 2 m * NormedSpace.exp
@@ -301,7 +314,7 @@ private theorem amplified_sub {m : ℕ}
     kron (φ - ψ) (LinearMap.id : MatrixMap (Fin 2) (Fin 2) ℂ) inputDensity =
     kron φ (LinearMap.id : MatrixMap (Fin 2) (Fin 2) ℂ) inputDensity -
       kron ψ (LinearMap.id : MatrixMap (Fin 2) (Fin 2) ℂ) inputDensity := by
-  ext p q
+  ext ⟨p, r⟩ ⟨q, s⟩
   simp only [kron_def, LinearMap.sub_apply, Matrix.sub_apply, sub_mul,
     Finset.sum_sub_distrib]
 
@@ -319,7 +332,11 @@ private theorem no_success {m N : ℕ} (A : Circuit 2 m N) :
       (hφ : diamondNorm φ ≤ ENNReal.ofReal (1 / 4 : ℝ)) :
       traceNorm (kron φ (LinearMap.id : MatrixMap (Fin 2) (Fin 2) ℂ) inputDensity) ≤ 1 / 4 := by
     apply (ENNReal.ofReal_le_ofReal_iff (by norm_num : (0 : ℝ) ≤ 1 / 4)).mp
-    exact (le_sSup ⟨inputDensity, input_density.1, input_density.2, rfl⟩).trans hφ
+    have hl : ENNReal.ofReal (traceNorm
+        (kron φ (LinearMap.id : MatrixMap (Fin 2) (Fin 2) ℂ) inputDensity)) ≤ diamondNorm φ := by
+      apply le_sSup
+      exact ⟨inputDensity, input_density.1, input_density.2, rfl⟩
+    exact hl.trans hφ
   have b0 := bound _ h0
   have b1 := bound _ h1
   rw [amplified_sub, amplified_target] at b0 b1

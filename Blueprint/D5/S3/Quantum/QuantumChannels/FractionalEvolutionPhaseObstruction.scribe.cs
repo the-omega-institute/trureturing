@@ -27,7 +27,7 @@ internal sealed class FractionalEvolutionPhaseObstructionDocument : IScribeDocum
                 "There exists a real universal constant C>0. For every real t and delta strictly between zero and one, epsilon strictly between zero and one half, and positive natural dimension d, there exist natural m,N and a fixed Circuit d m N with N at most C times inverse delta times the natural logarithm of inverse epsilon, and Successful A t delta epsilon. The circuit existential precedes every U,H in Successful."),
             Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Module + ".result"),
                 H("The uniform upper bound fails"),
-                StatementSource.FromAuthor(Disp(new Formula.Not(Parenthesized(Local("claim"))))),
+                StatementSource.FromLean(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Use t=delta=1/2, epsilon=1/4, and d=2. The logarithms are diagonal with entries pi/2 and 3 pi/2 in opposite orders. Their oracle exponentials are U=diag(i,-i) and -U, and both logarithms satisfy the half-open spectral promise. Every ordinary query changes sign when U is replaced by -U, including adjoint queries. Induction over the actual ordered fold gives run(A,-U)=(-1)^N run(A,U), so the initialized implementation channels agree for every finite workspace and every natural N.")),
                     Paragraph(Text("The input is the equal-superposition density on the target tensored with reference basis zero. At t=1/2 the two ideal stabilized full outputs are orthogonal pure states with relative phases i and -i, initialized at workspace basis zero. Their unhalved trace-norm separation is two. Each successful implementation would lie within trace norm one quarter of its corresponding target on this admissible stabilized input. The triangle inequality would then bound two by one half, a contradiction. No query-count estimate is needed to reach this contradiction.")))),
@@ -35,7 +35,7 @@ internal sealed class FractionalEvolutionPhaseObstructionDocument : IScribeDocum
         )));
 
     private static DocumentBlock Definition(string selector, string title, string body) =>
-        Describe.Lean(DescribeId.Create(selector), DeclarationHandle.Create(Module + "." + selector),
+        Describe.Lean(DescribeId.Create(selector.ToLowerInvariant()), DeclarationHandle.Create(Module + "." + selector),
             H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(body))), DescribeRole.Definition);
 }
