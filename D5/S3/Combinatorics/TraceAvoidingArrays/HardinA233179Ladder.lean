@@ -452,8 +452,10 @@ private theorem scale_recurrence (m : ℕ) (hm : 2 ≤ m)
   have h22 := hb 22
   have h23 := hb 23
   have h24 := hb 24
-  norm_num only [Nat.add_zero, pow_zero, pow_one, mul_one] at h0 h1 h2 h3 h4 h5 h6 h7 h8 h9 h10 h11
-    h12 h13 h14 h15 h16 h17 h18 h19 h20 h21 h22 h23 h24
+  norm_num only [Nat.add_zero, pow_zero, pow_one, mul_one] at h0 h1 h2 h3 h4 h5 h6
+  norm_num only [Nat.add_zero, pow_zero, pow_one, mul_one] at h7 h8 h9 h10 h11 h12 h13
+  norm_num only [Nat.add_zero, pow_zero, pow_one, mul_one] at h14 h15 h16 h17 h18 h19 h20
+  norm_num only [Nat.add_zero, pow_zero, pow_one, mul_one] at h21 h22 h23 h24
   apply (mul_left_cancel₀ (show (48 : ℤ) ≠ 0 by norm_num))
   linear_combination h24 - 448 * h23 - 421888 * h22 + 95682560 * h21 + 48586817536 * h20 -
     7696581394432 * h19 - 2219020623282176 * h18 + 331924968239529984 * h17 + 45544058606667694080 *
@@ -508,8 +510,11 @@ theorem finite_certificate : (a 26 : ℤ) =
   have h22 := HardinA233179PairTransfer.initial_values 22
   have h23 := HardinA233179PairTransfer.initial_values 23
   have h24 := HardinA233179PairTransfer.initial_values 24
-  norm_num at h0 h1 h2 h3 h4 h5 h6 h7 h8 h9 h10 h11 h12 h13 h14 h15 h16 h17 h18 h19 h20 h21 h22 h23
-    h24 ⊢
+  norm_num at h0 h1 h2 h3 h4 h5 h6 h7
+  norm_num at h8 h9 h10 h11 h12 h13 h14 h15
+  norm_num at h16 h17 h18 h19 h20 h21 h22 h23
+  norm_num at h24
+  norm_num
   omega
 theorem result (n : ℕ) : (a (n+26) : ℤ) =
     448 * (a (n+25) : ℤ) + 421888 * (a (n+24) : ℤ) - 95682560 * (a (n+23) : ℤ) - 48586817536 * (a
