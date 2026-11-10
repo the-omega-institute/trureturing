@@ -779,7 +779,7 @@ private theorem second_loss_occupancy {X : ℝ} (hX : 1 < X) {n p : ℕ}
 /-- A finite, literal residual bound for the complete second layer. The analytic
 and theta premises are explicit finite tail conditions; they are not a pressure
 or defect hypothesis. Both endpoint losses vanish, even at prime endpoints.
-The still-unproved uniform full residual target is not weakened to this statement. -/
+The uniform complete residual theorem below consumes this finite bound. -/
 theorem finite_actual_second_layer_tube_bound {X δ : ℝ} {n : ℕ}
     (hX : 1 < X) (hn : 1 ≤ n) (hδ : 0 < δ) (hδ1 : δ ≤ 1)
     (hanti : ∀ p q : ℕ, p.Prime → q.Prime → p < q →
