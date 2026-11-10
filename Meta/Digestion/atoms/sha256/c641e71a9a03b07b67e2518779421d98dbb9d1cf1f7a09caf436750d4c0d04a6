@@ -1,0 +1,48 @@
+**Lemma 16.1 (same-table mismatch control).** The actual return variation of any finite regular stationary table is at most the sum of the square roots of its two directional mismatch energies, as in (16.5).
+
+**Proof.** Consider first one finite regular same-update table with p labels $i$, suspended labels $j$, rows $\pi,\tau$, kernels $B,A$, and emissions $u_i,v_j\in[a,b]$, satisfying
+
+$$
+\pi B=\tau,
+\qquad \tau A=\pi.
+\tag{16.4}
+$$
+
+Its actual three-stage return distribution is the single probability law
+
+$$
+\Xi(i,j,i')=\pi_iB_{ij}A_{ji'}.
+$$
+
+The two directional edge laws are the marginals of this same object:
+
+$$
+\Gamma_B^{\rm fin}(i,j)=\pi_iB_{ij},
+\qquad
+\Gamma_A^{\rm fin}(j,i')=\tau_jA_{ji'}.
+$$
+
+Consequently, pointwise on every triple,
+
+$$
+|u_i-u_{i'}|
+\le |u_i-v_j|+|v_j-u_{i'}|.
+$$
+
+Taking expectation under $\Xi$, then using (16.4), gives
+
+$$
+V_\pi:=\sum_{i,j,i'}\pi_iB_{ij}A_{ji'}|u_i-u_{i'}|
+\le \int|u-v|\,d\Gamma_B^{\rm fin}
+   +\int|v-u|\,d\Gamma_A^{\rm fin}.
+$$
+
+Both edge measures are probability measures.  Cauchy–Schwarz therefore yields the same-table estimate
+
+$$
+V_\pi\le \sqrt{M_B^{\rm fin}}+\sqrt{M_A^{\rm fin}}.
+\tag{16.5}
+$$
+
+No independently selected edge distributions occur in (16.5): the first marginal is $\pi B=\tau$, and the second is $\tau A=\pi$, exactly as required by the actual triple. $\square$
+
