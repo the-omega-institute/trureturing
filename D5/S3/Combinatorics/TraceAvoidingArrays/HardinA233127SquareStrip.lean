@@ -18,6 +18,7 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233254TriangleStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255PairTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge
 import D5.S3.Observer.Separation.BooleanRankThreeK4
+import Mathlib.Tactic.FinCases
 import Lean.Elab.Tactic.Omega
 
 /-! Literal six-column square-strip counts and their all-height class reduction. -/
@@ -95,10 +96,10 @@ def transfer (i k : Fin 11) : ℤ :=
     , ![0, 64, 128, 64, 128, 128, 64, 64, 0, 192, 0]
     , ![0, 64, 128, 128, 128, 128, 128, 64, 64, 0, 128]] i k
 
-private theorem valid_next (s : Seen) (p : Boundary) (hp : Valid s p) (c : Row)
-    (hc : rowLegal c ∧ compatible p c ∧ good s c) :
+private theorem valid_next (s : Seen) (c : Row)
+    (hs : s.1 = true ∨ ∃ i, c i = 1) (hc : rowLegal c ∧ good s c) :
     Valid (finish s c) (labels c) := by
-  refine ⟨HardinA233175PairStrip.finish_fst s c |>.mpr (Or.inl hp.1), ?_, ?_⟩
+  refine ⟨HardinA233175PairStrip.finish_fst s c |>.mpr hs, ?_, ?_⟩
   · intro j
     exact (colour_bond_iff _ _).mp (hc.1 j)
   · intro ht j
@@ -112,7 +113,7 @@ private theorem valid_next (s : Seen) (p : Boundary) (hp : Valid s p) (c : Row)
       simp [ht] at hh
     have hthree : ∀ i, c i ≠ 3 := by
       intro i hi
-      rcases ((HardinA233175PairStrip.good_iff s c).mp hc.2.2 i).2 hi with
+      rcases ((HardinA233175PairStrip.good_iff s c).mp hc.2 i).2 hi with
         hh | ⟨r, _, hr⟩
       · exact hstate hh
       · exact htwo r hr
@@ -163,13 +164,31 @@ private theorem row_counts : ∀ s p, Valid s p → ∀ k,
     ← (Fin.consEquiv (fun _ : Fin 1 => Fin 3)).sum_comp,
     Fintype.sum_prod_type]
   simp only [Fin.consEquiv, Fin.sum_univ_zero]
-  decide +kernel
-
-private theorem initial_valid : ∀ c : Row,
-    c 0 = 0 ∧ rowLegal c ∧ good (false, false) c →
-      Valid (finish (false, false) c) (labels c) := by
   simp only [Fin.forall_fin_succ_pi, Fin.forall_fin_zero_pi]
-  decide +kernel
+  rintro ⟨b1, b2⟩ p0 p1 p2 p3 p4 p5 hp
+  cases b1
+  · cases hp.1
+  · cases b2 <;> fin_cases p0 <;> fin_cases p1 <;> fin_cases p2 <;>
+      fin_cases p3 <;> fin_cases p4 <;> fin_cases p5 <;>
+      simp [Valid] at hp <;> decide +kernel
+
+private theorem initial_valid (c : Row)
+    (hc : c 0 = 0 ∧ rowLegal c ∧ good (false, false) c) :
+    Valid (finish (false, false) c) (labels c) := by
+  have hedge : (0 : Fin 6) ≠ c 1 ∧ (c 1).val ≠ 5 := by
+    have hh := hc.2.1 (0 : Fin 5)
+    change c 0 ≠ c 1 ∧ (c 0).val + (c 1).val ≠ 5 at hh
+    simpa only [hc.1, Fin.val_zero, zero_add] using hh
+  have hcol : ∀ x : Fin 6, x ≠ 0 → x.val ≠ 5 → x = 1 ∨ x = 2 ∨ x = 3 ∨ x = 4 := by
+    decide +kernel
+  have hone : ∃ i, c i = 1 := by
+    rcases hcol _ (Ne.symm hedge.1) hedge.2 with hi | hi
+    · exact ⟨1, hi⟩
+    · rcases ((HardinA233175PairStrip.good_iff _ c).mp hc.2.2 1).1 hi with
+        hh | ⟨i, _, hi⟩
+      · cases hh
+      · exact ⟨i, hi⟩
+  exact valid_next _ c (Or.inr hone) ⟨hc.2.1, hc.2.2⟩
 
 private theorem initial_counts : ∀ k,
     firstCount k = ![16, 0, 16, 16, 16, 16, 16, 8, 8, 16, 8] k := by
@@ -187,7 +206,8 @@ private theorem initial_counts : ∀ k,
     ← (Fin.consEquiv (fun _ : Fin 1 => Fin 6)).sum_comp,
     Fintype.sum_prod_type]
   simp only [Fin.consEquiv, Fin.sum_univ_zero]
-  decide +kernel
+  intro k
+  fin_cases k <;> decide +kernel
 
 /-- The exact single-row transitions and first-row distribution. -/
 theorem finite_certificate :
@@ -211,7 +231,7 @@ private theorem v_eq_w (n : ℕ) (s : Seen) (p : Boundary) (h : Valid s p) :
           boundaryClass (finish s c) (labels c) = k then (1 : ℤ) else 0) * w n k := by
       intro c
       by_cases hc : rowLegal c ∧ compatible p c ∧ good s c
-      · rw [ite_eq_left hc, ih _ _ (valid_next s p h c hc)]
+      · rw [ite_eq_left hc, ih _ _ (valid_next s c (Or.inl h.1) ⟨hc.1, hc.2.2⟩)]
         simp [hc]
       · simp only [← and_assoc] at hc ⊢
         simp [hc]
