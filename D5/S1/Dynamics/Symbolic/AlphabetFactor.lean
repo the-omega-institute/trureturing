@@ -2,8 +2,7 @@
    generality: G
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Dynamics.SymbolicDynamics.Basic,
-     mathlib/module/Mathlib.Topology.Separation.Hausdorff]
+   anchors: []
    utility: none
    digest: Continuous alphabet maps induce compact shift-equivariant factor subshifts. -/
 
