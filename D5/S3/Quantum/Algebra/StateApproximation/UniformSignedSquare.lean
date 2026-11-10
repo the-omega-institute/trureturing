@@ -6,12 +6,1191 @@
    utility: none
    digest: Uniform signed original-algebra square approximation for whole-state-space extreme real states. -/
 
-import D5.S3.Quantum.Algebra.StateApproximation.ReconstructedStateGNS
+import Mathlib.Analysis.CStarAlgebra.Classes
+import Mathlib.Analysis.CStarAlgebra.GelfandNaimarkSegal
+import Mathlib.Analysis.InnerProductSpace.Basic
+import Mathlib.Analysis.Normed.Module.Dual
+import Mathlib.Analysis.InnerProductSpace.Adjoint
+import Mathlib.Analysis.InnerProductSpace.Positive
+import Mathlib.Analysis.CStarAlgebra.ContinuousLinearMap
+import Mathlib.Analysis.VonNeumannAlgebra.Basic
+import Mathlib.Analysis.CStarAlgebra.PositiveLinearFunctional
+import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.Basic
+import Mathlib.Analysis.CStarAlgebra.Basic
+import Mathlib.Analysis.CStarAlgebra.Spectrum
+import Mathlib.Analysis.Convex.Extreme
+import D5.S3.Quantum.Algebra.CentralPositiveFunctionalExtension
 import D5.S3.Quantum.Algebra.StateApproximation.TauCeti.Analysis.VonNeumannAlgebra.Density
 import D5.S3.Quantum.Algebra.StateApproximation.TauCeti.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Kaplansky
 import Mathlib.Analysis.InnerProductSpace.StarOrder
 import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Unique
-import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.Basic
+
+section
+/- Source: Physicslib4, immutable revision 2337279e729998740898c4be8f6c7d24f3e641e1, Physicslib4/GNS/Basic.lean.
+Modified for ordinary D5 imports and necessary declaration selection; mathematical telescopes are preserved.
+Full license and attribution: docs/reports/licenses/state-approximation-suppliers/.
+Retire each transplanted result when the actual pinned mathlib contains an equivalent statement,
+and replace its consumers with direct imports and applications of that pinned result. -/
+
+/-
+Copyright (c) 2026 Lean Community. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Lean Community
+-/
+
+/-!
+# Basic definitions for the GNS construction
+
+This file formalises some basic notions used in the GNS construction, following
+the AQFT-in-Lean blueprint, section 10.1.
+
+## Main definitions
+
+* `Physicslib4.GNS.State`: a state on an abstract C*-algebra, defined as a
+  continuous linear functional that is positive (sends `star a * a` to a
+  non-negative complex number) and normalised (operator norm equal to `1`).
+  This corresponds to the blueprint label `def:state`.
+* `Physicslib4.GNS.State.IsFaithful`: faithfulness of a state, asserting that
+  `ω (star a * a) = 0` only when `a = 0`. Also part of `def:state`.
+* `Physicslib4.GNS.IsCyclicVector`: a vector `Ω` of a Hilbert space `H` is
+  cyclic for a representation `π : A →⋆ₐ[ℂ] (H →L[ℂ] H)` of an algebra `A`
+  when the set `{ π a Ω : a ∈ A }` is dense in `H`.
+  This corresponds to the blueprint label `def:cyclic-vector`.
+
+## Notes
+
+Mathlib has no packaged `State` type for C*-algebras, so one is introduced
+here. The positivity condition is stated using the canonical
+partial order on `ℂ` from Mathlib: `0 ≤ z` iff `z.re ≥ 0` and `z.im = 0`.
+
+The blueprint statement of `def:cyclic-vector` only requires `A` to be an
+algebra, but `IsCyclicVector` is declared under this file's ambient
+`variable (A : Type*) [CStarAlgebra A]`, so in Lean `A` is a unital C*-algebra
+(matching every call site in the project). The generality kept here is on the
+`H` side: `H` is required only to be a complex Hilbert space, not fixed to the
+GNS space of a particular state.
+-/
+
+namespace Physicslib4
+namespace GNS
+
+open scoped ComplexOrder
+
+variable (A : Type*) [CStarAlgebra A]
+
+/-
+A state on a unital C*-algebra A: a positive, normalised continuous linear functional ω : A → ℂ.
+
+The number ω(a) is the expectation value of the observable a in the state ω. Positivity asks
+that ω(a* a) ≥ 0 for every a ∈ A, that is, ω(a* a) is real and non-negative. Normalisation asks
+that the operator norm ‖ω‖ is 1; for a positive functional on a nonzero algebra the norm is
+Re ω(1) (`norm_eq_re_apply_one_of_positive`), so this is the familiar ω(1) = 1. A density matrix
+ρ gives the state a ↦ tr(ρa) of the algebra of bounded operators on a Hilbert space, but the
+definition needs no Hilbert space: the GNS construction (`gns_construction`) produces one from ω.
+
+Implementation note: the structure extends `A →L[ℂ] ℂ`, and a `FunLike` instance lets one write
+`ω a`. Positivity uses Mathlib's partial order on ℂ (`ComplexOrder`), in which 0 ≤ z means that
+z is real and non-negative.
+
+Blueprint: def:state
+-/
+structure State extends A →L[ℂ] ℂ where
+  /- Positivity: ω(a* a) is real and non-negative for every a ∈ A. -/
+  isPositive : ∀ a : A, 0 ≤ toContinuousLinearMap (star a * a)
+  /- Normalisation: the operator norm ‖ω‖ equals 1. -/
+  isNormalized : ‖toContinuousLinearMap‖ = 1
+
+namespace State
+
+variable {A}
+
+noncomputable instance : FunLike (State A) A ℂ where
+  coe ω := ω.toContinuousLinearMap
+  coe_injective := by
+    intro ω₁ ω₂ h
+    cases ω₁
+    cases ω₂
+    simp only [mk.injEq]
+    exact DFunLike.coe_injective h
+
+/-
+A faithful state: ω(a* a) > 0 for every nonzero a ∈ A.
+
+Since ω(a* a) ≥ 0 always, this says that ω(a* a) = 0 only for a = 0: no nonzero observable has
+vanishing expectation of a* a. A faithful state has an injective GNS representation
+(`gns_construction`), and its cyclic vector is separating (`separating_of_faithful`). On a
+matrix algebra the Gibbs state a ↦ tr(e^(−βH) a)/Z is faithful, while a vector state
+a ↦ ⟨ψ, aψ⟩ is not: it vanishes on a* a whenever a annihilates the unit vector ψ.
+
+Blueprint: def:state
+-/
+def IsFaithful (ω : State A) : Prop :=
+  ∀ a : A, a ≠ 0 → 0 < ω (star a * a)
+
+/- Repackaging of a state as a Mathlib `PositiveLinearMap`, using the canonical
+spectral order on the C*-algebra `A`, so that Mathlib's GNS infrastructure applies. -/
+noncomputable def toPositiveLinearMap (ω : State A) [PartialOrder A] [StarOrderedRing A] :
+    A →ₚ[ℂ] ℂ where
+  toFun := ω.toContinuousLinearMap
+  map_add' := by intro x y; exact map_add ω.toContinuousLinearMap x y
+  map_smul' := by intro c x; exact map_smul ω.toContinuousLinearMap c x
+  monotone' := by
+    intro a b hab
+    have hba : 0 ≤ b - a := sub_nonneg.mpr hab
+    obtain ⟨y, hy⟩ := CStarAlgebra.nonneg_iff_eq_star_mul_self.mp hba
+    have h_pos : 0 ≤ ω.toContinuousLinearMap (b - a) := by
+      rw [hy]; exact ω.isPositive y
+    have hsub : ω.toContinuousLinearMap (b - a)
+        = ω.toContinuousLinearMap b - ω.toContinuousLinearMap a := by
+      simp [map_sub]
+    rw [hsub] at h_pos
+    exact sub_nonneg.mp h_pos
+
+end State
+
+variable {A}
+variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
+
+def IsCyclicVector (π : A →⋆ₐ[ℂ] (H →L[ℂ] H)) (Ω : H) : Prop :=
+  Dense (Set.range fun a : A => π a Ω)
+
+end GNS
+end Physicslib4
+end
+
+section
+/- Source: Physicslib4, immutable revision 2337279e729998740898c4be8f6c7d24f3e641e1, Physicslib4/GNS/Construction.lean.
+Modified for ordinary D5 imports and necessary declaration selection; mathematical telescopes are preserved.
+Full license and attribution: docs/reports/licenses/state-approximation-suppliers/.
+Retire each transplanted result when the actual pinned mathlib contains an equivalent statement,
+and replace its consumers with direct imports and applications of that pinned result. -/
+
+/-
+Copyright (c) 2026 Lean Community. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Lean Community
+-/
+
+namespace Physicslib4
+namespace GNS
+
+open scoped ComplexOrder
+open scoped InnerProductSpace
+
+theorem gns_construction.{u} {A : Type u} [CStarAlgebra A] (ω : State A) :
+    ∃ (H : Type u)
+      (_ : NormedAddCommGroup H) (_ : InnerProductSpace ℂ H) (_ : CompleteSpace H)
+      (π : A →⋆ₐ[ℂ] (H →L[ℂ] H)) (Ω : H),
+        IsCyclicVector π Ω ∧
+        (∀ a : A, (ω a : ℂ) = ⟪Ω, π a Ω⟫_ℂ) ∧
+        (ω.IsFaithful → Function.Injective π) := by
+  letI : PartialOrder A := CStarAlgebra.spectralOrder A
+  haveI : StarOrderedRing A := CStarAlgebra.spectralOrderedRing A
+  set f : A →ₚ[ℂ] ℂ := ω.toPositiveLinearMap with hf
+  refine ⟨f.GNS, inferInstance, inferInstance, inferInstance, f.gnsStarAlgHom,
+    ((f.toPreGNS 1 : f.PreGNS) : f.GNS), ?cyclic, ?rep, ?inj⟩
+  case cyclic =>
+    unfold IsCyclicVector
+    have hkey : ∀ a : A,
+        f.gnsStarAlgHom a ((f.toPreGNS 1 : f.PreGNS) : f.GNS)
+          = ((f.toPreGNS a : f.PreGNS) : f.GNS) := by
+      intro a
+      simp [PositiveLinearMap.gnsStarAlgHom_apply,
+            PositiveLinearMap.gnsNonUnitalStarAlgHom_apply,
+            ContinuousLinearMap.completion_apply_coe,
+            PositiveLinearMap.leftMulMapPreGNS_apply,
+            PositiveLinearMap.ofPreGNS, PositiveLinearMap.toPreGNS]
+      exact congrArg _ (congrArg _ (mul_one _))
+    rw [show (Set.range fun a : A => f.gnsStarAlgHom a
+              ((f.toPreGNS 1 : f.PreGNS) : f.GNS))
+            = Set.range (fun a : A => ((f.toPreGNS a : f.PreGNS) : f.GNS)) by
+              ext y
+              refine ⟨fun ⟨a, ha⟩ => ⟨a, ?_⟩, fun ⟨a, ha⟩ => ⟨a, ?_⟩⟩
+              · simp only at ha; rw [← ha]; exact (hkey a).symm
+              · simp only at ha; rw [← ha]; exact (hkey a)]
+    have h_range_eq : Set.range (fun a : A => ((f.toPreGNS a : f.PreGNS) : f.GNS))
+        = Set.range ((↑) : f.PreGNS → f.GNS) := by
+      ext y; constructor
+      · rintro ⟨a, rfl⟩; exact ⟨f.toPreGNS a, rfl⟩
+      · rintro ⟨p, rfl⟩
+        refine ⟨f.ofPreGNS p, ?_⟩
+        change ((f.toPreGNS (f.ofPreGNS p) : f.PreGNS) : f.GNS) = (p : f.GNS)
+        rw [show f.toPreGNS (f.ofPreGNS p) = p from f.toPreGNS.apply_symm_apply p]
+    rw [h_range_eq]
+    exact UniformSpace.Completion.denseRange_coe
+  case rep =>
+    intro a
+    have hkey : f.gnsStarAlgHom a ((f.toPreGNS 1 : f.PreGNS) : f.GNS)
+        = ((f.toPreGNS a : f.PreGNS) : f.GNS) := by
+      simp [PositiveLinearMap.gnsStarAlgHom_apply,
+            PositiveLinearMap.gnsNonUnitalStarAlgHom_apply,
+            ContinuousLinearMap.completion_apply_coe,
+            PositiveLinearMap.leftMulMapPreGNS_apply,
+            PositiveLinearMap.ofPreGNS, PositiveLinearMap.toPreGNS]
+      exact congrArg _ (congrArg _ (mul_one _))
+    rw [hkey, UniformSpace.Completion.inner_coe,
+        PositiveLinearMap.preGNS_inner_def]
+    change (ω a : ℂ) = f (star (f.ofPreGNS (f.toPreGNS 1)) * f.ofPreGNS (f.toPreGNS a))
+    have h1 : f.ofPreGNS (f.toPreGNS 1) = 1 := f.toPreGNS.symm_apply_apply 1
+    have h2 : f.ofPreGNS (f.toPreGNS a) = a := f.toPreGNS.symm_apply_apply a
+    rw [h1, h2, star_one, one_mul]
+    rfl
+  case inj =>
+    intro hfaith a b hab
+    have hsub : f.gnsStarAlgHom (a - b) = 0 := by
+      rw [map_sub, hab, sub_self]
+    have hkey : ∀ c : A, f.gnsStarAlgHom c ((f.toPreGNS 1 : f.PreGNS) : f.GNS)
+        = ((f.toPreGNS c : f.PreGNS) : f.GNS) := by
+      intro c
+      simp [PositiveLinearMap.gnsStarAlgHom_apply,
+            PositiveLinearMap.gnsNonUnitalStarAlgHom_apply,
+            ContinuousLinearMap.completion_apply_coe,
+            PositiveLinearMap.leftMulMapPreGNS_apply,
+            PositiveLinearMap.ofPreGNS, PositiveLinearMap.toPreGNS]
+      exact congrArg _ (congrArg _ (mul_one _))
+    have happ : f.gnsStarAlgHom (a - b) ((f.toPreGNS 1 : f.PreGNS) : f.GNS) = 0 := by
+      rw [hsub]; rfl
+    rw [hkey] at happ
+    have hinner : (⟪((f.toPreGNS (a-b) : f.PreGNS) : f.GNS),
+                    ((f.toPreGNS (a-b) : f.PreGNS) : f.GNS)⟫_ℂ) = 0 := by
+      rw [happ, inner_zero_right]
+    rw [UniformSpace.Completion.inner_coe, PositiveLinearMap.preGNS_inner_def] at hinner
+    have hab_eq : f.ofPreGNS (f.toPreGNS (a - b)) = a - b :=
+      f.toPreGNS.symm_apply_apply (a - b)
+    rw [hab_eq] at hinner
+    have h_omega : ω (star (a - b) * (a - b)) = 0 := hinner
+    by_contra hne
+    have hne' : a - b ≠ 0 := sub_ne_zero.mpr hne
+    have hpos := hfaith (a - b) hne'
+    rw [h_omega] at hpos
+    exact lt_irrefl _ hpos
+
+/-
+Uniqueness of the GNS triple: two cyclic representations reproducing ω are unitarily equivalent.
+
+Let (H₁, π₁, Ω₁) and (H₂, π₂, Ω₂) be representations of A with cyclic vectors, both reproducing
+the state ω: ω(a) = ⟨Ω₁, π₁(a)Ω₁⟩ = ⟨Ω₂, π₂(a)Ω₂⟩. Then there is a unitary U : H₁ → H₂ with
+UΩ₁ = Ω₂ and U π₁(a) = π₂(a) U for all a ∈ A. The map U sends π₁(a)Ω₁ to π₂(a)Ω₂; it preserves
+inner products, since both equal ω(a* b), and it extends from the dense orbits to the whole spaces.
+So the representation that a state determines is unique, and "the" GNS representation of ω is
+well defined up to unitary equivalence.
+
+Implementation note: U is a linear isometric equivalence `H₁ ≃ₗᵢ[ℂ] H₂`, and the two Hilbert
+spaces may live in different universes.
+
+Blueprint: thrm:gns-construction-theorem
+-/
+end GNS
+end Physicslib4
+end
+
+section
+/- Source: Physicslib4, immutable revision 2337279e729998740898c4be8f6c7d24f3e641e1, Physicslib4/GNS/Irreducibility.lean.
+Modified for ordinary D5 imports and necessary declaration selection; mathematical telescopes are preserved.
+Full license and attribution: docs/reports/licenses/state-approximation-suppliers/.
+Retire each transplanted result when the actual pinned mathlib contains an equivalent statement,
+and replace its consumers with direct imports and applications of that pinned result. -/
+
+/-
+Copyright (c) 2026 Lean Community. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Lean Community
+-/
+
+/-!
+# Irreducibility of representations and Schur's lemma
+
+A `*`-representation `π : A →⋆ₐ[ℂ] (H →L[ℂ] H)` is *irreducible* when its
+commutant is trivial: the only bounded operators commuting with every `π a` are
+the scalar multiples of the identity. This is the von Neumann (commutant) form of
+irreducibility, the operator-algebra counterpart of "no nontrivial closed
+invariant subspace".
+
+The central analytic fact is the **topological Schur lemma** for a cyclic
+representation: if `T` commutes with all `π a` and its diagonal GNS coefficient
+`a ↦ ⟪Ω, T (π a Ω)⟫` is proportional to `a ↦ ⟪Ω, π a Ω⟫`, then `T` is the
+corresponding scalar. The proof is pure Hilbert-space analysis: the off-diagonal
+coefficients `⟪π b Ω, (T - c) (π a Ω)⟫` all vanish (using the `*`-representation
+property and the commutation relation), so `(T - c)` annihilates the dense cyclic
+orbit and is therefore zero.
+
+This is the bridge between the commutant and the GNS state: a commutant operator
+is a scalar exactly when its GNS coefficient is proportional to the state.
+-/
+
+namespace Physicslib4
+namespace GNS
+
+open scoped ComplexOrder InnerProductSpace
+
+variable {A : Type*} [CStarAlgebra A]
+variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H]
+
+/-
+An irreducible representation: every bounded operator commuting with all π(a) is a multiple of 1.
+
+The operators that commute with every π(a) form the commutant π(A)'. Irreducibility asks that
+π(A)' consist of the scalars c·1 only. For a representation on a Hilbert space this is
+equivalent to the absence of a nontrivial closed subspace invariant under all π(a), because the
+orthogonal projection onto such a subspace lies in π(A)'; the library uses the commutant form.
+A state is pure exactly when its GNS representation is irreducible (`isPure_iff_isIrreducible`),
+and π is irreducible exactly when π(A)'' is all of B(H)
+(`isIrreducible_iff_gnsVonNeumann_eq_univ`).
+
+Implementation note: on the zero Hilbert space every operator is 0 = 0·1, so every representation
+on it is irreducible in this sense; the usual convention excludes H = 0, and results that need a
+nonzero space assume it.
+
+Blueprint: def:irreducible-representation
+-/
+def IsIrreducible (π : A →⋆ₐ[ℂ] (H →L[ℂ] H)) : Prop :=
+  ∀ T : H →L[ℂ] H, (∀ a : A, π a * T = T * π a) → ∃ c : ℂ, T = c • 1
+
+/- **Topological Schur lemma (proportional coefficient ⟹ scalar).** Let `Ω` be a
+cyclic vector for `π`. If `T` commutes with every `π a` and the diagonal GNS
+coefficient `a ↦ ⟪Ω, T (π a Ω)⟫` equals `c` times `a ↦ ⟪Ω, π a Ω⟫`, then
+`T = c • 1`. The key step is that all off-diagonal coefficients
+`⟪π b Ω, (T - c) (π a Ω)⟫` vanish, so `(T - c)` kills the dense cyclic orbit. -/
+theorem eq_smul_one_of_commute_of_cyclic
+    {π : A →⋆ₐ[ℂ] (H →L[ℂ] H)} {Ω : H} (hcyc : IsCyclicVector π Ω)
+    {T : H →L[ℂ] H} (hT : ∀ a : A, π a * T = T * π a)
+    {c : ℂ} (hprop : ∀ a : A, ⟪Ω, T (π a Ω)⟫_ℂ = c * ⟪Ω, π a Ω⟫_ℂ) :
+    T = c • 1 := by
+  have hcycdense : DenseRange (fun a : A => π a Ω) := hcyc
+  -- Move `π b` to the other slot of the inner product via the adjoint `π (star b)`.
+  have hadj : ∀ (b : A) (w : H), ⟪(π b) Ω, w⟫_ℂ = ⟪Ω, π (star b) w⟫_ℂ := fun b w => by
+    rw [map_star, ContinuousLinearMap.star_eq_adjoint, ContinuousLinearMap.adjoint_inner_right]
+  have hπ : ∀ b a : A, π (star b) (π a Ω) = π (star b * a) Ω := fun b a => by
+    rw [← mul_apply_eq_comp, ← map_mul]
+  -- `T` agrees with `c • ·` on the cyclic orbit: all off-diagonal coefficients match.
+  have hkey : ∀ a : A, T (π a Ω) = c • (π a Ω) := fun a =>
+    hcycdense.eq_of_inner_right ℂ fun b => by
+      rw [hadj b (T (π a Ω)), ← mul_apply_eq_comp, hT (star b), mul_apply_eq_comp, hπ b a,
+        hprop (star b * a), inner_smul_right, hadj b (π a Ω), hπ b a]
+  -- Density + continuity upgrade the agreement to all of `H`.
+  have hall := Continuous.ext_on hcycdense T.continuous
+    (continuous_const.smul continuous_id) (by rintro _ ⟨a, rfl⟩; exact hkey a)
+  exact ContinuousLinearMap.ext fun x => by
+    rw [smul_apply, one_apply_eq_self]; exact congrFun hall x
+
+/- **A commutant operator is a scalar iff its GNS coefficient is proportional to
+the state.** In a cyclic representation reproducing `ω`, an operator `T` commuting
+with all `π a` is a scalar multiple of the identity exactly when its diagonal
+coefficient `a ↦ ⟪Ω, T (π a Ω)⟫` is a scalar multiple of `ω`. This is the precise
+operator-theoretic bridge between irreducibility and purity: it is the forward
+(easy) direction together with the topological Schur lemma. -/
+def IsPure (ω : State A) : Prop :=
+  ∀ ψ : A →L[ℂ] ℂ, (∀ a : A, 0 ≤ ψ (star a * a)) →
+    (∀ a : A, ψ (star a * a) ≤ ω (star a * a)) →
+      ∃ t : ℂ, ∀ a : A, ψ a = t * (ω a : ℂ)
+
+/- The **GNS coefficient functional** `a ↦ ⟪Ω, T (π a Ω)⟫` of an operator `T`,
+bundled as a continuous linear functional. -/
+noncomputable def coeffFunctional (π : A →⋆ₐ[ℂ] (H →L[ℂ] H)) (Ω : H) (T : H →L[ℂ] H) :
+    A →L[ℂ] ℂ :=
+  LinearMap.mkContinuous
+    { toFun := fun a => ⟪Ω, T (π a Ω)⟫_ℂ
+      map_add' := fun a b => by simp only [map_add, add_apply, inner_add_right]
+      map_smul' := fun c a => by
+        simp only [map_smul, smul_apply, inner_smul_right, RingHom.id_apply, smul_eq_mul] }
+    (‖Ω‖ * ‖T‖ * ‖Ω‖)
+    (fun a => by
+      have hT' : ‖T (π a Ω)‖ ≤ ‖T‖ * (‖a‖ * ‖Ω‖) :=
+        (T.le_opNorm _).trans (mul_le_mul_of_nonneg_left
+          (((π a).le_opNorm Ω).trans (mul_le_mul_of_nonneg_right
+            (NonUnitalStarAlgHom.norm_apply_le π a) (norm_nonneg Ω))) (norm_nonneg T))
+      exact (norm_inner_le_norm Ω _).trans
+        ((mul_le_mul_of_nonneg_left hT' (norm_nonneg Ω)).trans_eq (by ring)))
+
+@[simp] theorem coeffFunctional_apply (π : A →⋆ₐ[ℂ] (H →L[ℂ] H)) (Ω : H)
+    (T : H →L[ℂ] H) (a : A) :
+    coeffFunctional π Ω T a = ⟪Ω, T (π a Ω)⟫_ℂ := rfl
+
+/- On an element `star a * a`, the coefficient functional of a commutant operator
+`T` evaluates to `⟪π a Ω, T (π a Ω)⟫`. -/
+theorem coeffFunctional_star_mul {π : A →⋆ₐ[ℂ] (H →L[ℂ] H)} {Ω : H} {T : H →L[ℂ] H}
+    (hT : ∀ a : A, π a * T = T * π a) (a : A) :
+    coeffFunctional π Ω T (star a * a) = ⟪π a Ω, T (π a Ω)⟫_ℂ := by
+  rw [coeffFunctional_apply]
+  have hsplit : π (star a * a) Ω = π (star a) (π a Ω) := by
+    rw [map_mul, mul_apply_eq_comp]
+  rw [hsplit]
+  have hcomm : T (π (star a) (π a Ω)) = π (star a) (T (π a Ω)) := by
+    rw [← mul_apply_eq_comp, ← hT (star a), mul_apply_eq_comp]
+  rw [hcomm]
+  have hadjeq : ContinuousLinearMap.adjoint (π a) = π (star a) := by
+    rw [← ContinuousLinearMap.star_eq_adjoint, map_star]
+  rw [← hadjeq, ContinuousLinearMap.adjoint_inner_right]
+
+/- **Pure ⟹ irreducible, self-adjoint case.** If `ω` is pure (in its cyclic GNS
+representation reproducing `ω`) and `S` is a self-adjoint operator commuting with
+all `π a`, then `S` is a scalar multiple of the identity. The proof scales `S`
+into a positive operator `T = r·S + ½·1` with `0 ≤ T ≤ 1`, whose coefficient
+functional is positive and dominated by `ω`; purity forces it proportional to
+`ω`, so Schur's lemma makes `T` (hence `S`) a scalar. -/
+theorem scalar_of_isSelfAdjoint_of_isPure
+    {ω : State A} {π : A →⋆ₐ[ℂ] (H →L[ℂ] H)} {Ω : H}
+    (hcyc : IsCyclicVector π Ω) (hrep : ∀ a : A, (ω a : ℂ) = ⟪Ω, π a Ω⟫_ℂ)
+    (hpure : IsPure ω) {S : H →L[ℂ] H} (hSsa : IsSelfAdjoint S)
+    (hScomm : ∀ a : A, π a * S = S * π a) :
+    ∃ c : ℂ, S = c • 1 := by
+  obtain ⟨r, hrpos, hrS⟩ : ∃ r : ℝ, 0 < r ∧ r * ‖S‖ ≤ 2⁻¹ := by
+    have hden : (0 : ℝ) < 2 * (‖S‖ + 1) := by positivity
+    exact ⟨_, inv_pos.mpr hden, by rw [inv_mul_eq_div, div_le_iff₀ hden]; linarith only []⟩
+  -- the scaled operator
+  obtain ⟨T, hT_def⟩ : ∃ T : H →L[ℂ] H, T = (r : ℂ) • S + (2⁻¹ : ℂ) • 1 := ⟨_, rfl⟩
+  have h1SA : IsSelfAdjoint (1 : H →L[ℂ] H) := .one _
+  have h2 : (2⁻¹ : ℂ) = ((2⁻¹ : ℝ) : ℂ) := by rw [Complex.ofReal_inv, Complex.ofReal_ofNat]
+  have hhalf : (starRingEnd ℂ) (2⁻¹ : ℂ) = (2⁻¹ : ℂ) := by rw [h2]; exact Complex.conj_ofReal _
+  have hTsa : IsSelfAdjoint T := by
+    rw [hT_def]
+    exact IsSelfAdjoint.add (.smul (Complex.conj_ofReal r) hSsa) (.smul hhalf h1SA)
+  have hvv : ∀ v : H, Complex.re ⟪v, v⟫_ℂ = ‖v‖ ^ 2 := fun v => inner_self_eq_norm_sq (𝕜 := ℂ) v
+  -- coefficient expansion of `re ⟪T v, v⟫`
+  have hTexp : ∀ v : H,
+      Complex.re ⟪T v, v⟫_ℂ = r * Complex.re ⟪S v, v⟫_ℂ + 2⁻¹ * ‖v‖ ^ 2 := fun v => by
+    simp only [hT_def, add_apply, smul_apply, one_apply_eq_self, inner_add_left, inner_smul_left,
+      Complex.add_re, h2, Complex.conj_ofReal, Complex.re_ofReal_mul, hvv]
+  -- bound: |r · re ⟪S v, v⟫| ≤ ½‖v‖², hence `0 ≤ re ⟪T v, v⟫ ≤ ‖v‖²`
+  have hTb : ∀ v : H, 0 ≤ Complex.re ⟪T v, v⟫_ℂ ∧ Complex.re ⟪T v, v⟫_ℂ ≤ ‖v‖ ^ 2 := fun v => by
+    have hb : |r * Complex.re ⟪S v, v⟫_ℂ| ≤ 2⁻¹ * ‖v‖ ^ 2 := by
+      rw [abs_mul, abs_of_pos hrpos]
+      calc r * |Complex.re ⟪S v, v⟫_ℂ| ≤ r * (‖S‖ * ‖v‖ * ‖v‖) :=
+            mul_le_mul_of_nonneg_left
+              (((Complex.abs_re_le_norm _).trans (norm_inner_le_norm _ _)).trans
+                (mul_le_mul_of_nonneg_right (S.le_opNorm v) (norm_nonneg v))) hrpos.le
+        _ = r * ‖S‖ * ‖v‖ ^ 2 := by ring
+        _ ≤ 2⁻¹ * ‖v‖ ^ 2 := mul_le_mul_of_nonneg_right hrS (sq_nonneg ‖v‖)
+    obtain ⟨hlo, hhi⟩ := abs_le.mp hb
+    rw [hTexp v]
+    exact ⟨neg_le_iff_add_nonneg.mp hlo, le_trans (add_le_add_left hhi _)
+      (show (2 : ℝ)⁻¹ * ‖v‖ ^ 2 + 2⁻¹ * ‖v‖ ^ 2 ≤ ‖v‖ ^ 2 from le_of_eq (by ring))⟩
+  -- `1 - T` is positive (and so is `T`, inlined below)
+  have hTle : (1 - T).IsPositive := by
+    refine ContinuousLinearMap.isPositive_def.mpr ⟨(h1SA.sub hTsa).isSymmetric, fun v => ?_⟩
+    rw [ContinuousLinearMap.reApplyInnerSelf_apply, sub_apply, one_apply_eq_self,
+      inner_sub_left, map_sub, sub_nonneg]
+    exact (hTb v).2.trans (hvv v).ge
+  -- the coefficient functional is a dominated positive functional
+  have hTcomm : ∀ a : A, π a * T = T * π a := fun a => by
+    simp only [hT_def, mul_add, add_mul, mul_smul_comm, smul_mul_assoc, mul_one, one_mul,
+      hScomm a]
+  -- purity forces `T` to be a scalar
+  obtain ⟨t, ht⟩ := hpure (coeffFunctional π Ω T)
+    (fun a => by
+      rw [coeffFunctional_star_mul hTcomm a]
+      exact ContinuousLinearMap.IsPositive.inner_nonneg_right
+        (ContinuousLinearMap.isPositive_def.mpr ⟨hTsa.isSymmetric, fun v => (hTb v).1⟩) _)
+    (fun a => by
+      have hpd := ContinuousLinearMap.IsPositive.inner_nonneg_right hTle (π a Ω)
+      rw [sub_apply, one_apply_eq_self, inner_sub_right, sub_nonneg] at hpd
+      rwa [coeffFunctional_star_mul hTcomm a, hrep (star a * a), map_mul, mul_apply_eq_comp,
+        show π (star a) = ContinuousLinearMap.adjoint (π a) from by
+          rw [← ContinuousLinearMap.star_eq_adjoint, map_star],
+        ContinuousLinearMap.adjoint_inner_right])
+  -- Schur's lemma makes `T`, hence `S`, a scalar
+  refine ⟨(r : ℂ)⁻¹ * (t - 2⁻¹), ?_⟩
+  rw [mul_smul, sub_smul, ← eq_sub_of_add_eq (hT_def.symm.trans
+      (eq_smul_one_of_commute_of_cyclic hcyc hTcomm fun a => by rw [← hrep a]; exact ht a)),
+    inv_smul_smul₀ (Complex.ofReal_ne_zero.mpr hrpos.ne')]
+
+/- **Pure ⟹ irreducible.** If a state `ω` is pure, then any cyclic representation
+reproducing `ω` (in particular its GNS representation) is irreducible: the only
+operators commuting with all `π a` are scalars. The proof decomposes a commuting
+operator into its self-adjoint real and imaginary parts (the commutant is
+`*`-closed), each of which is a scalar by `scalar_of_isSelfAdjoint_of_isPure`. -/
+theorem isIrreducible_of_isPure
+    {ω : State A} {π : A →⋆ₐ[ℂ] (H →L[ℂ] H)} {Ω : H}
+    (hcyc : IsCyclicVector π Ω) (hrep : ∀ a : A, (ω a : ℂ) = ⟪Ω, π a Ω⟫_ℂ)
+    (hpure : IsPure ω) : IsIrreducible π := by
+  intro T hTcomm
+  -- the commutant is `*`-closed: `star T` also commutes
+  have hstarcomm : ∀ a : A, π a * star T = star T * π a := fun a => by
+    simpa only [star_mul, ← map_star, star_star] using (congrArg star (hTcomm (star a))).symm
+  -- self-adjoint real and imaginary parts; the commutation relations are `Commute` algebra
+  have hPcomm : ∀ a : A, π a * (T + star T) = (T + star T) * π a := fun a =>
+    Commute.add_right (hTcomm a) (hstarcomm a)
+  have hQSA : IsSelfAdjoint (Complex.I • (star T - T)) := by
+    change star (Complex.I • (star T - T)) = Complex.I • (star T - T)
+    rw [star_smul, star_sub, star_star, RCLike.star_def, Complex.conj_I,
+      neg_smul, ← smul_neg, neg_sub]
+  have hQcomm : ∀ a : A,
+      π a * (Complex.I • (star T - T)) = (Complex.I • (star T - T)) * π a := fun a =>
+    Commute.smul_right (Commute.sub_right (hstarcomm a) (hTcomm a)) _
+  -- each part is a scalar
+  obtain ⟨p, hp⟩ := scalar_of_isSelfAdjoint_of_isPure hcyc hrep hpure (.add_star_self T) hPcomm
+  obtain ⟨q, hq⟩ := scalar_of_isSelfAdjoint_of_isPure hcyc hrep hpure hQSA hQcomm
+  -- reconstruct `T` as a scalar: `T + star T` and `T - star T` are both scalars
+  have hq' : T - star T = (Complex.I * q) • (1 : H →L[ℂ] H) := by
+    rw [← smul_smul, ← hq, smul_smul, Complex.I_mul_I, neg_one_smul, neg_sub]
+  refine ⟨2⁻¹ * (p + Complex.I * q), ?_⟩
+  have h2T : (2 : ℂ) • T = (p + Complex.I * q) • (1 : H →L[ℂ] H) := by
+    rw [two_smul, add_smul, ← hp, ← hq', add_add_sub_cancel]
+  rw [mul_smul, ← h2T, inv_smul_smul₀ two_ne_zero]
+
+/-
+The von Neumann algebra π(A)'' generated by a representation π, as a set of operators.
+
+The commutant S' of a set S of bounded operators is the set of operators commuting with every
+element of S, and S'' = (S')' is its bicommutant. By von Neumann's density theorem every element
+of π(A)'' is a strong-operator limit of elements of π(A)
+(`exists_forall_norm_sub_lt_of_mem_bicommutant`), so π(A)'' adds to the represented observables
+their limits, such as spectral projections. π is irreducible exactly when π(A)'' is all of B(H)
+(`isIrreducible_iff_gnsVonNeumann_eq_univ`).
+
+Implementation note: the commutant is `Set.centralizer`, taken in the bounded operators on H.
+The name refers to the GNS representation, but π is any representation. The bundled version is
+`gnsVonNeumannAlgebra`.
+-/
+def gnsVonNeumann (π : A →⋆ₐ[ℂ] (H →L[ℂ] H)) : Set (H →L[ℂ] H) :=
+  Set.centralizer (Set.centralizer (Set.range π))
+
+omit [CStarAlgebra A] in
+/- The commutant (`Set.centralizer`) of a self-adjoint set of operators is
+itself self-adjoint. -/
+private theorem smul_one_mem_centralizer (c : ℂ) (S : Set (H →L[ℂ] H)) :
+    (c • 1 : H →L[ℂ] H) ∈ Set.centralizer S :=
+  Set.mem_centralizer_iff.mpr fun M _ => by
+    rw [mul_smul_comm, smul_mul_assoc, mul_one, one_mul]
+
+/- **An irreducible representation generates a factor.** The von Neumann algebra
+`π(A)''` of an irreducible representation has *trivial center*: an operator lies in
+the center `π(A)'' ∩ (π(A)'')'` if and only if it is a scalar multiple of the
+identity. The center is contained in `(π(A)'')' = π(A)'` (the triple commutant
+collapses to the single one), which irreducibility makes the scalars; conversely
+scalars are central. -/
+theorem gnsVonNeumann_eq_univ_of_isIrreducible {π : A →⋆ₐ[ℂ] (H →L[ℂ] H)}
+    (hirr : IsIrreducible π) : gnsVonNeumann π = Set.univ := by
+  have hcomm : Set.centralizer (Set.range π) = {T : H →L[ℂ] H | ∃ c : ℂ, T = c • 1} := by
+    apply Set.Subset.antisymm
+    · intro T hT
+      exact hirr T fun a => Set.mem_centralizer_iff.mp hT (π a) ⟨a, rfl⟩
+    · rintro _ ⟨c, rfl⟩
+      exact smul_one_mem_centralizer c _
+  unfold gnsVonNeumann
+  rw [hcomm, Set.eq_univ_iff_forall]
+  intro T
+  rw [Set.mem_centralizer_iff]
+  rintro _ ⟨c, rfl⟩
+  rw [smul_mul_assoc, one_mul, mul_smul_comm, mul_one]
+
+/- **Irreducibility is equivalent to generating `\mathcal B(H)`.** A representation
+is irreducible iff its generated von Neumann algebra is the whole of `\mathcal B(H)`.
+The forward direction is `gnsVonNeumann_eq_univ_of_isIrreducible`; the converse uses
+that `\mathcal B(H)` is a *central* `ℂ`-algebra (its center is the scalars): if the
+bicommutant is everything then every operator commutes with the commutant, so any
+operator commuting with `π(A)` is central, hence scalar. -/
+end GNS
+end Physicslib4
+end
+
+section
+/- Source: Physicslib4, immutable revision 2337279e729998740898c4be8f6c7d24f3e641e1, Physicslib4/GNS/ExtremeState.lean.
+Modified for ordinary D5 imports and necessary declaration selection; mathematical telescopes are preserved.
+Full license and attribution: docs/reports/licenses/state-approximation-suppliers/.
+Retire each transplanted result when the actual pinned mathlib contains an equivalent statement,
+and replace its consumers with direct imports and applications of that pinned result. -/
+
+/-
+Copyright (c) 2026 Lean Community. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Lean Community
+-/
+/-!
+# Pure states and extreme points of the state space
+
+A state `ω` on a unital C*-algebra `A` is **pure** (`Physicslib4.GNS.IsPure`) when
+every positive functional `ψ` dominated by `ω` is a scalar multiple of `ω`. The
+convex-geometric counterpart is that `ω` is an **extreme point** of the (convex)
+state space: it is not a nontrivial convex combination of two distinct states.
+
+This file proves the equivalence
+
+`IsPure ω ↔ ω.IsExtremePoint`,
+
+a classical characterization of purity. The analytic crux is the identity
+
+`‖φ‖ = (φ 1).re`
+
+for a positive linear functional `φ` on a unital C*-algebra
+(`norm_eq_re_apply_one_of_positive`), obtained from `PositiveContinuousLinearMap.ofReal_opNorm_eq_map_one`
+using the local spectral order and positivity of squares.
+It is the bridge that lets us normalize positive functionals into states and back.
+
+* `‖ψ‖ = (ψ 1).re` recovers the normalization `ω 1 = 1` for states
+  (`State.apply_one`), pins the convex coefficients in the forward direction, and
+  rescales the two pieces `ψ` and `ω - ψ` into states in the backward direction.
+-/
+
+namespace Physicslib4
+namespace GNS
+
+open scoped ComplexOrder
+
+variable {A : Type*} [CStarAlgebra A]
+
+private lemma complex_ofReal_nonneg {r : ℝ} (hr : 0 ≤ r) : (0 : ℂ) ≤ (r : ℂ) :=
+  Complex.nonneg_iff.mpr ⟨by simpa using hr, by simp⟩
+
+private lemma complex_inv_ofReal_nonneg {r : ℝ} (hr : 0 ≤ r) : (0 : ℂ) ≤ ((r : ℂ))⁻¹ := by
+  rw [← Complex.ofReal_inv]; exact complex_ofReal_nonneg (inv_nonneg.mpr hr)
+
+private lemma norm_inv_ofReal_pos {r : ℝ} (hr : 0 < r) : ‖((r : ℂ))⁻¹‖ = r⁻¹ := by
+  rw [norm_inv, Complex.norm_real, Real.norm_of_nonneg hr.le]
+
+/- A C*-algebra carrying a state is nontrivial (a state has operator norm `1`,
+so the algebra cannot be the zero ring). -/
+private lemma nontrivial_of_state (ω : State A) : Nontrivial A := by
+  rcases subsingleton_or_nontrivial A with hs | hn
+  · exfalso
+    have h0 : ω.toContinuousLinearMap = 0 := by
+      ext a
+      rw [Subsingleton.elim a 0, map_zero, zero_apply]
+    have hnorm := ω.isNormalized
+    rw [h0, norm_zero] at hnorm
+    exact one_ne_zero hnorm.symm
+  · exact hn
+
+/- The spectral order is local: no order on the original algebra is assumed. -/
+theorem norm_eq_re_apply_one_of_positive [Nontrivial A] {φ : A →L[ℂ] ℂ}
+    (hpos : ∀ a : A, 0 ≤ φ (star a * a)) : ‖φ‖ = (φ 1).re := by
+  letI : PartialOrder A := CStarAlgebra.spectralOrder A
+  letI : StarOrderedRing A := CStarAlgebra.spectralOrderedRing A
+  let f : A →P[ℂ] ℂ := PositiveContinuousLinearMap.mk₀ φ fun a ha => by
+    obtain ⟨b, rfl⟩ := CStarAlgebra.nonneg_iff_eq_star_mul_self.mp ha
+    exact hpos b
+  exact congrArg Complex.re (PositiveContinuousLinearMap.ofReal_opNorm_eq_map_one f)
+
+/- A state evaluates to `1` on the unit: `ω 1 = 1`. The real part is `‖ω‖ = 1`
+(via `norm_eq_re_apply_one_of_positive` and normalization), and the imaginary part
+vanishes by positivity at `1`. -/
+theorem State.apply_one (ω : State A) : (ω 1 : ℂ) = 1 := by
+  haveI := nontrivial_of_state ω
+  have hpos : ∀ a, 0 ≤ ω.toContinuousLinearMap (star a * a) := ω.isPositive
+  have hn := norm_eq_re_apply_one_of_positive hpos
+  rw [ω.isNormalized] at hn
+  have him : (ω.toContinuousLinearMap 1).im = 0 := by
+    have h0 : (0 : ℂ) ≤ ω.toContinuousLinearMap 1 := by
+      have := ω.isPositive 1; rwa [star_one, one_mul] at this
+    exact (Complex.nonneg_iff.mp h0).2.symm
+  apply Complex.ext
+  · change (ω.toContinuousLinearMap 1).re = (1 : ℂ).re
+    rw [Complex.one_re]; exact hn.symm
+  · change (ω.toContinuousLinearMap 1).im = (1 : ℂ).im
+    rw [Complex.one_im]; exact him
+
+/-
+An extreme point of the state space: ω is not a mixture t ω₁ + (1 − t) ω₂ of two distinct states.
+
+The states of A form a convex set: a mixture of states with weights t and 1 − t is a state
+(`State.convexCombo`). ω is extreme when ω = t ω₁ + (1 − t) ω₂ with 0 < t < 1 forces ω₁ = ω₂,
+and then both equal ω. Physically, an extreme state carries no classical uncertainty about which
+state the system is in. Extremality is equivalent to purity (`isPure_iff_isExtremePoint`) and to
+membership in Mathlib's `extremePoints` of the state space
+(`mem_extremePoints_iff_isExtremePoint`).
+
+Implementation note: the decomposition is stated pointwise, ω(a) = t ω₁(a) + (1 − t) ω₂(a) for all
+a ∈ A, with real t.
+
+Blueprint: def:extreme-state
+-/
+def State.IsExtremePoint (ω : State A) : Prop :=
+  ∀ (ω₁ ω₂ : State A) (t : ℝ), 0 < t → t < 1 →
+    (∀ a, (ω a : ℂ) = (t : ℂ) * ω₁ a + (1 - t : ℂ) * ω₂ a) → ω₁ = ω₂
+
+/- **Pure ⟹ extreme point.** If `ω` is pure and decomposes as a convex
+combination `ω = t·ω₁ + (1-t)·ω₂` of states with `0 < t < 1`, then `t·ω₁` is a
+positive functional dominated by `ω`, hence (by purity) a scalar multiple of `ω`;
+evaluating at `1` (where all states give `1`) pins the scalar to `t`, forcing
+`ω₁ = ω`, and symmetrically `ω₂ = ω`. -/
+theorem isExtremePoint_of_isPure (ω : State A) (hpure : IsPure ω) :
+    ω.IsExtremePoint := by
+  haveI := nontrivial_of_state ω
+  intro ω₁ ω₂ t ht0 ht1 hcomb
+  set ψ : A →L[ℂ] ℂ := (t : ℂ) • ω₁.toContinuousLinearMap with hψ_def
+  have hψapp : ∀ a, ψ a = (t : ℂ) * ω₁ a := by
+    intro a; rw [hψ_def]
+    show ((t : ℂ) • ω₁.toContinuousLinearMap) a = (t : ℂ) * ω₁ a
+    rw [smul_apply]; rfl
+  have htne : (t : ℂ) ≠ 0 := by rw [Ne, Complex.ofReal_eq_zero]; exact ht0.ne'
+  have h1tne : (1 - (t : ℂ)) ≠ 0 := by
+    have he : (1 - (t : ℂ)) = ((1 - t : ℝ) : ℂ) := by push_cast; ring
+    rw [he, Ne, Complex.ofReal_eq_zero]; exact (by linarith : (0 : ℝ) < 1 - t).ne'
+  -- `ψ` is positive and dominated by `ω`
+  have hψpos : ∀ a, 0 ≤ ψ (star a * a) := by
+    intro a; rw [hψapp]
+    exact mul_nonneg (complex_ofReal_nonneg ht0.le) (ω₁.isPositive a)
+  have hψdom : ∀ a, ψ (star a * a) ≤ ω (star a * a) := by
+    intro a
+    have hc := hcomb (star a * a)
+    have hnn : (0 : ℂ) ≤ (1 - (t : ℂ)) * ω₂ (star a * a) := by
+      refine mul_nonneg ?_ (ω₂.isPositive a)
+      have he : (1 - (t : ℂ)) = ((1 - t : ℝ) : ℂ) := by push_cast; ring
+      rw [he]; exact complex_ofReal_nonneg (by linarith)
+    rw [hψapp]
+    have hsub : ω (star a * a) - (t : ℂ) * ω₁ (star a * a)
+        = (1 - (t : ℂ)) * ω₂ (star a * a) := by rw [hc]; ring
+    exact sub_nonneg.mp (hsub ▸ hnn)
+  -- purity gives the scalar
+  obtain ⟨s, hs⟩ := hpure ψ hψpos hψdom
+  have e1 := hs 1
+  rw [hψapp, ω₁.apply_one, ω.apply_one, mul_one, mul_one] at e1
+  -- `e1 : (t : ℂ) = s`
+  have hst : s = (t : ℂ) := e1.symm
+  have hω1eq : ∀ a, ω₁ a = ω a := by
+    intro a
+    have ea := hs a
+    rw [hψapp, hst] at ea
+    exact mul_left_cancel₀ htne ea
+  have hω1 : ω₁ = ω := DFunLike.ext _ _ hω1eq
+  have hω2eq : ∀ a, ω₂ a = ω a := by
+    intro a
+    have hc := hcomb a
+    rw [hω1eq a] at hc
+    have hh : (1 - (t : ℂ)) * ω₂ a = (1 - (t : ℂ)) * ω a := by linear_combination -hc
+    exact mul_left_cancel₀ h1tne hh
+  have hω2 : ω₂ = ω := DFunLike.ext _ _ hω2eq
+  exact hω1.trans hω2.symm
+
+/- **Extreme point ⟹ pure.** If `ω` is an extreme point and `ψ` is a positive
+functional dominated by `ω`, set `λ = (ψ 1).re ∈ [0,1]`. For `λ ∈ (0,1)` the
+rescaled functionals `λ⁻¹·ψ` and `(1-λ)⁻¹·(ω-ψ)` are states (normalized via
+`norm_eq_re_apply_one_of_positive`) with `ω = λ·(λ⁻¹ψ) + (1-λ)·((1-λ)⁻¹(ω-ψ))`, so
+extremality identifies them and forces `ψ = λ·ω`. The boundary cases `λ = 0`
+(`ψ = 0`) and `λ = 1` (`ψ = ω`) are handled separately. -/
+theorem isPure_of_isExtremePoint (ω : State A) (hext : ω.IsExtremePoint) :
+    IsPure ω := by
+  haveI := nontrivial_of_state ω
+  intro ψ hψpos hψdom
+  have hω1 : (ω 1 : ℂ) = 1 := ω.apply_one
+  have hψ1 : (0 : ℂ) ≤ ψ 1 := by have := hψpos 1; rwa [star_one, one_mul] at this
+  set lam : ℝ := (ψ 1).re with hlam_def
+  have hlam_nn : 0 ≤ lam := (Complex.nonneg_iff.mp hψ1).1
+  have hψnorm : ‖ψ‖ = lam := norm_eq_re_apply_one_of_positive hψpos
+  -- `λ ≤ 1`
+  have hlam_le1 : lam ≤ 1 := by
+    have hd := hψdom 1
+    rw [star_one, one_mul] at hd
+    have hre := (Complex.le_def.mp hd).1
+    rw [hlam_def]
+    calc (ψ 1).re ≤ (ω 1).re := hre
+      _ = 1 := by rw [hω1, Complex.one_re]
+  rcases eq_or_lt_of_le hlam_nn with hlam0 | hlampos
+  · -- `λ = 0` : `ψ = 0`
+    refine ⟨0, fun a => ?_⟩
+    have hψ0 : ψ = 0 := by
+      rw [← norm_eq_zero]; rw [hψnorm, ← hlam0]
+    rw [hψ0]; simp
+  · rcases eq_or_lt_of_le hlam_le1 with hlam1 | hlamlt1
+    · -- `λ = 1` : `ψ = ω`
+      refine ⟨1, fun a => ?_⟩
+      have hpossub : ∀ c, 0 ≤ (ω.toContinuousLinearMap - ψ) (star c * c) := by
+        intro c; rw [sub_apply]; exact sub_nonneg.mpr (hψdom c)
+      have hval : ((ω.toContinuousLinearMap - ψ) 1).re = 0 := by
+        rw [sub_apply, Complex.sub_re]
+        change (ω 1).re - (ψ 1).re = 0
+        rw [hω1, Complex.one_re, ← hlam_def, hlam1]; ring
+      have hnormsub := norm_eq_re_apply_one_of_positive hpossub
+      rw [hval] at hnormsub
+      have hzero : ω.toContinuousLinearMap - ψ = 0 := norm_eq_zero.mp hnormsub
+      have heq : ω.toContinuousLinearMap = ψ := sub_eq_zero.mp hzero
+      rw [one_mul]
+      change ψ a = ω.toContinuousLinearMap a
+      rw [heq]
+    · -- `0 < λ < 1` : genuine convex decomposition
+      have hlamne : (lam : ℂ) ≠ 0 := by
+        rw [Ne, Complex.ofReal_eq_zero]; exact hlampos.ne'
+      have h1lampos : 0 < 1 - lam := by linarith
+      have h1lam_ofReal_ne : (((1 - lam : ℝ) : ℂ)) ≠ 0 := by
+        rw [Ne, Complex.ofReal_eq_zero]; exact h1lampos.ne'
+      -- the two rescaled states
+      have hpos1 : ∀ a, 0 ≤ (((lam : ℂ))⁻¹ • ψ) (star a * a) := by
+        intro a; rw [smul_apply]
+        exact mul_nonneg (complex_inv_ofReal_nonneg hlampos.le) (hψpos a)
+      have hnorm1 : ‖((lam : ℂ))⁻¹ • ψ‖ = 1 := by
+        rw [norm_smul, norm_inv_ofReal_pos hlampos, hψnorm, inv_mul_cancel₀ hlampos.ne']
+      have hpossub : ∀ c, 0 ≤ (ω.toContinuousLinearMap - ψ) (star c * c) := by
+        intro c; rw [sub_apply]; exact sub_nonneg.mpr (hψdom c)
+      have hnormsub : ‖ω.toContinuousLinearMap - ψ‖ = 1 - lam := by
+        rw [norm_eq_re_apply_one_of_positive hpossub, sub_apply,
+          Complex.sub_re]
+        change (ω 1).re - (ψ 1).re = 1 - lam
+        rw [hω1, Complex.one_re, ← hlam_def]
+      have hpos2 : ∀ a, 0 ≤ ((((1 - lam : ℝ) : ℂ))⁻¹ • (ω.toContinuousLinearMap - ψ))
+          (star a * a) := by
+        intro a; rw [smul_apply]
+        exact mul_nonneg (complex_inv_ofReal_nonneg h1lampos.le) (hpossub a)
+      have hnorm2 : ‖(((1 - lam : ℝ) : ℂ))⁻¹ • (ω.toContinuousLinearMap - ψ)‖ = 1 := by
+        rw [norm_smul, norm_inv_ofReal_pos h1lampos, hnormsub, inv_mul_cancel₀ h1lampos.ne']
+      -- bundle as states
+      set s1 : State A := ⟨((lam : ℂ))⁻¹ • ψ, hpos1, hnorm1⟩ with hs1
+      set s2 : State A :=
+        ⟨(((1 - lam : ℝ) : ℂ))⁻¹ • (ω.toContinuousLinearMap - ψ), hpos2, hnorm2⟩ with hs2
+      have hs1a : ∀ a, s1 a = ((lam : ℂ))⁻¹ * ψ a := by
+        intro a; rw [hs1]
+        change (((lam : ℂ))⁻¹ • ψ) a = ((lam : ℂ))⁻¹ * ψ a
+        rw [smul_apply]; rfl
+      have hs2a : ∀ a, s2 a = (((1 - lam : ℝ) : ℂ))⁻¹ * (ω a - ψ a) := by
+        intro a; rw [hs2]
+        change ((((1 - lam : ℝ) : ℂ))⁻¹ • (ω.toContinuousLinearMap - ψ)) a
+          = (((1 - lam : ℝ) : ℂ))⁻¹ * (ω a - ψ a)
+        rw [smul_apply, sub_apply]; rfl
+      have hcancel : (lam : ℂ) * ((lam : ℂ))⁻¹ = 1 := mul_inv_cancel₀ hlamne
+      have hcancel2 : (1 - (lam : ℂ)) * (((1 - lam : ℝ) : ℂ))⁻¹ = 1 := by
+        rw [show (1 - (lam : ℂ)) = (((1 - lam : ℝ) : ℂ)) from by push_cast; ring]
+        exact mul_inv_cancel₀ h1lam_ofReal_ne
+      have hdecomp : ∀ a, ω a = (lam : ℂ) * s1 a + (1 - lam : ℂ) * s2 a := by
+        intro a
+        rw [hs1a, hs2a, ← mul_assoc, ← mul_assoc, hcancel, hcancel2, one_mul, one_mul]
+        ring
+      have key : s1 = s2 := hext s1 s2 lam hlampos hlamlt1 hdecomp
+      refine ⟨(lam : ℂ), fun a => ?_⟩
+      have h := hdecomp a
+      rw [key] at h
+      have he : (lam : ℂ) * s2 a + (1 - lam : ℂ) * s2 a = s2 a := by ring
+      rw [he] at h
+      rw [← key, hs1a a] at h
+      -- `h : ω a = (lam⁻¹ : ℂ) * ψ a`
+      rw [h, ← mul_assoc, hcancel, one_mul]
+
+/- **Purity ⟺ extreme point of the state space.** -/
+theorem isPure_iff_isExtremePoint (ω : State A) : IsPure ω ↔ ω.IsExtremePoint :=
+  ⟨isExtremePoint_of_isPure ω, isPure_of_isExtremePoint ω⟩
+
+/- A `*`-automorphism of a C*-algebra as a continuous `ℂ`-linear map; it is
+isometric (`StarAlgEquiv.isometry`), hence bounded with norm `≤ 1`. -/
+theorem State.toContinuousLinearMap_injective :
+    Function.Injective (State.toContinuousLinearMap : State A → (A →L[ℂ] ℂ)) := by
+  intro ω₁ ω₂ h
+  cases ω₁; cases ω₂
+  simp only [State.mk.injEq]
+  exact h
+
+variable (A) in
+/-
+The state space of A: the set of all states, as a subset of the continuous linear functionals.
+
+The states of A form a convex set (`convex_stateSpace`), whose extreme points are the pure
+states (`mem_extremePoints_iff_isExtremePoint`, `isPure_iff_isExtremePoint`), so Mathlib's
+`Convex` and `extremePoints` apply to it.
+
+Implementation note: the set is the image of `State A` in `A →L[ℂ] ℂ`, regarded as a real vector
+space through `NormedSpace.complexToReal`, with the norm topology. The weak-* compact version is
+`weakStateSet`; mathematically the Krein–Milman theorem applies to it, and the library proves the
+compactness, not the application.
+
+Blueprint: the state space of thrm:state-space-convex-bridge
+-/
+def stateSpace : Set (A →L[ℂ] ℂ) := Set.range (State.toContinuousLinearMap : State A → _)
+
+/- **The state space is convex.** A real convex combination `a·ω₁ + b·ω₂`
+(`a, b ≥ 0`, `a + b = 1`) of two states is again a state, via `State.convexCombo`. -/
+theorem mem_extremePoints_iff_isExtremePoint (ω : State A) :
+    ω.toContinuousLinearMap ∈ (stateSpace A).extremePoints ℝ ↔ ω.IsExtremePoint := by
+  rw [mem_extremePoints]
+  constructor
+  · rintro ⟨_, h⟩ ω₁ ω₂ t ht0 ht1 hdec
+    have hseg : ω.toContinuousLinearMap
+        ∈ openSegment ℝ ω₁.toContinuousLinearMap ω₂.toContinuousLinearMap := by
+      refine ⟨t, 1 - t, ht0, by linarith, by ring, ?_⟩
+      refine ContinuousLinearMap.ext fun c => ?_
+      have hc := hdec c
+      simp only [add_apply, smul_apply,
+        Complex.real_smul]
+      change (t : ℂ) * ω₁ c + ((1 - t : ℝ) : ℂ) * ω₂ c = ω c
+      rw [hc]
+      push_cast
+      ring
+    obtain ⟨he₁, he₂⟩ :=
+      h ω₁.toContinuousLinearMap ⟨ω₁, rfl⟩ ω₂.toContinuousLinearMap ⟨ω₂, rfl⟩ hseg
+    exact State.toContinuousLinearMap_injective (he₁.trans he₂.symm)
+  · intro hext
+    refine ⟨⟨ω, rfl⟩, ?_⟩
+    rintro _ ⟨ω₁, rfl⟩ _ ⟨ω₂, rfl⟩ ⟨a, b, ha, hb, hab, heq⟩
+    have hdec : ∀ c, (ω c : ℂ) = (a : ℂ) * ω₁ c + (1 - a : ℂ) * ω₂ c := by
+      intro c
+      have hc := congrArg (fun φ : A →L[ℂ] ℂ => φ c) heq
+      simp only [add_apply, smul_apply,
+        Complex.real_smul] at hc
+      change (a : ℂ) * ω₁ c + (b : ℂ) * ω₂ c = ω c at hc
+      rw [← hc]
+      have hb' : b = 1 - a := by linarith
+      rw [hb']; push_cast; ring
+    have hω : ω₁ = ω₂ := hext ω₁ ω₂ a ha (by linarith) hdec
+    subst hω
+    have hcombo : ω₁.toContinuousLinearMap = ω.toContinuousLinearMap := by
+      rw [← heq]
+      refine ContinuousLinearMap.ext fun c => ?_
+      rw [add_apply, smul_apply,
+        smul_apply, Complex.real_smul, Complex.real_smul,
+        ← add_mul, ← Complex.ofReal_add, hab, Complex.ofReal_one, one_mul]
+    exact ⟨hcombo, hcombo⟩
+
+variable {B : Type*} [CStarAlgebra B]
+
+/- A unital `*`-homomorphism of C*-algebras as a continuous `ℂ`-linear map; it is
+contractive (`‖π a‖ ≤ ‖a‖`, `NonUnitalStarAlgHom.norm_apply_le`), hence bounded with
+norm `≤ 1`. -/
+end GNS
+end Physicslib4
+
+end
+
+section
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+set_option maxHeartbeats 4000000
+noncomputable section
+open scoped ComplexOrder InnerProductSpace ComplexStarModule
+open Physicslib4.GNS
+
+namespace D5.S3.Quantum.Algebra.StateApproximation.ReconstructedStateGNS
+universe u
+variable {A : Type u} [CStarAlgebra A] [Nontrivial A] [PartialOrder A] [StarOrderedRing A]
+
+def IsRealState (β : selfAdjoint A →ₗ[ℝ] ℝ) : Prop :=
+  (∀ a : selfAdjoint A, 0 ≤ (a : A) → 0 ≤ β a) ∧ β 1 = 1
+
+def realStateSpace (A : Type u) [CStarAlgebra A] [PartialOrder A] [StarOrderedRing A] :
+    Set (selfAdjoint A →ₗ[ℝ] ℝ) := {β | IsRealState β}
+
+theorem state_abs_le (β : selfAdjoint A →ₗ[ℝ] ℝ) (hβ : IsRealState β)
+    (a : selfAdjoint A) : |β a| ≤ ‖a‖ := by
+  have hm : Monotone β := by
+    intro x y hxy
+    have h := hβ.1 (y - x) (show 0 ≤ ((y - x : selfAdjoint A) : A) from sub_nonneg.mpr hxy)
+    simpa only [map_sub, sub_nonneg] using h
+  have hu : a ≤ ‖a‖ • (1 : selfAdjoint A) := by
+    change (a : A) ≤ ‖a‖ • (1 : A)
+    simpa [Algebra.algebraMap_eq_smul_one] using a.property.le_algebraMap_norm_self
+  have hl : -(‖a‖ • (1 : selfAdjoint A)) ≤ a := by
+    change -(‖a‖ • (1 : A)) ≤ (a : A)
+    simpa [Algebra.algebraMap_eq_smul_one] using a.property.neg_algebraMap_norm_le_self
+  have h1 := hm hu
+  have h2 := hm hl
+  simp only [map_smul, map_neg, hβ.2, smul_eq_mul, mul_one] at h1 h2
+  exact abs_le.mpr ⟨h2, h1⟩
+
+def realCLM (β : selfAdjoint A →ₗ[ℝ] ℝ) (hβ : IsRealState β) :
+    StrongDual ℝ (selfAdjoint A) :=
+  β.mkContinuous 1 (fun a => by simpa only [Real.norm_eq_abs, one_mul] using state_abs_le β hβ a)
+
+theorem realCLM_norm_le (β : selfAdjoint A →ₗ[ℝ] ℝ) (hβ : IsRealState β) :
+    ‖realCLM β hβ‖ ≤ 1 :=
+  β.mkContinuous_norm_le zero_le_one (fun a => by
+    simpa only [Real.norm_eq_abs, one_mul] using state_abs_le β hβ a)
+
+def complexStateSpace (A : Type u) [CStarAlgebra A] [PartialOrder A] [StarOrderedRing A] :
+    Set (A →L[ℂ] ℂ) := {φ | (∀ a : A, 0 ≤ a → 0 ≤ φ a) ∧ φ 1 = 1}
+
+def restriction : (A →L[ℂ] ℂ) →ₗ[ℝ] (selfAdjoint A →ₗ[ℝ] ℝ) where
+  toFun φ := {
+    toFun a := (φ (a : A)).re
+    map_add' a b := by simp
+    map_smul' c a := by simp }
+  map_add' φ ψ := by ext a; simp
+  map_smul' c φ := by ext a; simp
+
+def positiveMap (φ : A →L[ℂ] ℂ) (hφ : φ ∈ complexStateSpace A) : A →P[ℂ] ℂ :=
+  PositiveContinuousLinearMap.mk₀ φ hφ.1
+
+theorem state_moment (φ : A →L[ℂ] ℂ) (hφ : φ ∈ complexStateSpace A)
+    (a : selfAdjoint A) : φ (a : A) = (restriction φ a : ℂ) := by
+  exact (Complex.re_eq_ofReal_of_isSelfAdjoint (a.property.map' (positiveMap φ hφ))).mp rfl
+
+theorem restriction_mem (φ : A →L[ℂ] ℂ) (hφ : φ ∈ complexStateSpace A) :
+    restriction φ ∈ realStateSpace A := by
+  refine ⟨fun a ha => (Complex.nonneg_iff.mp (hφ.1 a ha)).1, ?_⟩
+  change (φ (1 : A)).re = 1
+  rw [hφ.2, Complex.one_re]
+
+theorem ext_selfAdjoint (φ ψ : A →L[ℂ] ℂ)
+    (h : ∀ a : selfAdjoint A, φ (a : A) = ψ (a : A)) : φ = ψ := by
+  ext a
+  rw [← realPart_add_I_smul_imaginaryPart a]
+  simp only [map_add, map_smul, h]
+
+theorem exists_extension (β : selfAdjoint A →ₗ[ℝ] ℝ) (hβ : IsRealState β) :
+    ∃ φ : A →L[ℂ] ℂ, φ ∈ complexStateSpace A ∧
+      ∀ a : selfAdjoint A, φ (a : A) = (β a : ℂ) := by
+  obtain ⟨p, n, hread, hmass⟩ :=
+    D5.S3.Quantum.Algebra.CentralPositiveFunctionalExtension.exists_positive_extensions_norm_additive
+      (selfAdjoint.submodule ℝ A) (fun a => a.property) (realCLM β hβ)
+  have hdiff := hread (1 : selfAdjoint A)
+  change β 1 = (p (1 : A)).re - (n (1 : A)).re at hdiff
+  have hn0 : 0 ≤ (n (1 : A)).re :=
+    (Complex.nonneg_iff.mp (n.map_nonneg (show 0 ≤ (1 : A) from zero_le_one))).1
+  have hnb := realCLM_norm_le β hβ
+  change (p (1 : A)).re + (n (1 : A)).re = ‖realCLM β hβ‖ at hmass
+  have hnzero : (n (1 : A)).re = 0 := by
+    rw [hβ.2] at hdiff
+    linarith! only [hdiff, hmass, hnb, hn0]
+  have hnnorm := congrArg Complex.re (PositiveContinuousLinearMap.ofReal_opNorm_eq_map_one n)
+  simp only [Complex.ofReal_re] at hnnorm
+  have hnCLM : (n : A →L[ℂ] ℂ) = 0 := norm_eq_zero.mp (hnnorm.trans hnzero)
+  have nz (a : A) : n a = 0 := congrArg (fun f : A →L[ℂ] ℂ => f a) hnCLM
+  have hmom (a : selfAdjoint A) : p (a : A) = (β a : ℂ) := by
+    apply (Complex.re_eq_ofReal_of_isSelfAdjoint (a.property.map' p)).mp
+    have hr := hread a
+    change β a = (p (a : A)).re - (n (a : A)).re at hr
+    simpa only [nz, Complex.zero_re, sub_zero] using hr.symm
+  refine ⟨p, ⟨fun a ha => p.map_nonneg ha, ?_⟩, hmom⟩
+  simpa only [PositiveContinuousLinearMap.coe_toContinuousLinearMap,
+    selfAdjoint.val_one, hβ.2, Complex.ofReal_one] using hmom 1
+
+def extension (β : realStateSpace A) : complexStateSpace A :=
+  ⟨(exists_extension β.val β.property).choose, (exists_extension β.val β.property).choose_spec.1⟩
+
+theorem extension_moment (β : realStateSpace A) (a : selfAdjoint A) :
+    (extension β).val (a : A) = (β.val a : ℂ) :=
+  (exists_extension β.val β.property).choose_spec.2 a
+
+theorem restriction_extension (β : realStateSpace A) : restriction (extension β).val = β.val := by
+  ext a
+  change ((extension β).val (a : A)).re = β.val a
+  rw [extension_moment, Complex.ofReal_re]
+
+theorem extension_restriction (φ : complexStateSpace A) :
+    extension ⟨restriction φ.val, restriction_mem φ.val φ.property⟩ = φ := by
+  apply Subtype.ext
+  apply ext_selfAdjoint
+  intro a
+  exact (extension_moment _ a).trans (state_moment φ.val φ.property a).symm
+
+def realComplexEquiv : realStateSpace A ≃ complexStateSpace A where
+  toFun := extension
+  invFun φ := ⟨restriction φ.val, restriction_mem φ.val φ.property⟩
+  left_inv β := Subtype.ext (restriction_extension β)
+  right_inv := extension_restriction
+
+theorem extension_affine_iff (x y z : realStateSpace A) (s t : ℝ) :
+    z.val = s • x.val + t • y.val ↔
+      (extension z).val = s • (extension x).val + t • (extension y).val := by
+  constructor
+  · intro h
+    apply ext_selfAdjoint
+    intro a
+    have ha := congrArg (fun f : selfAdjoint A →ₗ[ℝ] ℝ => f a) h
+    simp only [LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul] at ha
+    simp only [ContinuousLinearMap.add_apply, ContinuousLinearMap.smul_apply, extension_moment,
+      Complex.real_smul, smul_eq_mul]
+    exact_mod_cast ha
+  · intro h
+    have hr := congrArg (fun φ : A →L[ℂ] ℂ => restriction φ) h
+    simpa only [map_add, map_smul, restriction_extension] using hr
+
+section Transport
+variable {E F : Type*} [AddCommGroup E] [Module ℝ E] [AddCommGroup F] [Module ℝ F]
+variable {S : Set E} {T : Set F}
+
+theorem extreme_forward (e : S ≃ T)
+    (haff : ∀ x y z : S, ∀ s t : ℝ,
+      z.val = s • x.val + t • y.val ↔ (e z).val = s • (e x).val + t • (e y).val)
+    (x : S) (hx : x.val ∈ S.extremePoints ℝ) : (e x).val ∈ T.extremePoints ℝ := by
+  rw [mem_extremePoints_iff_left] at hx ⊢
+  refine ⟨(e x).property, ?_⟩
+  intro y hy z hz hseg
+  rcases hseg with ⟨s,t,hs,ht,hst,hcomb⟩
+  let y' : S := e.symm ⟨y,hy⟩
+  let z' : S := e.symm ⟨z,hz⟩
+  have hc : (e x).val = s • (e y').val + t • (e z').val := by
+    simpa only [y', z', e.apply_symm_apply] using hcomb.symm
+  have hr := (haff y' z' x s t).mpr hc
+  have hl := hx.2 y'.val y'.property z'.val z'.property ⟨s,t,hs,ht,hst,hr.symm⟩
+  have he : y' = x := Subtype.ext hl
+  have he' := congrArg (fun q : S => (e q).val) he
+  simpa only [y', e.apply_symm_apply] using he'
+
+theorem extreme_equiv (e : S ≃ T)
+    (haff : ∀ x y z : S, ∀ s t : ℝ,
+      z.val = s • x.val + t • y.val ↔ (e z).val = s • (e x).val + t • (e y).val)
+    (x : S) : x.val ∈ S.extremePoints ℝ ↔ (e x).val ∈ T.extremePoints ℝ := by
+  constructor
+  · exact extreme_forward e haff x
+  · intro h
+    have haff' : ∀ x y z : T, ∀ s t : ℝ,
+        z.val = s • x.val + t • y.val ↔
+        (e.symm z).val = s • (e.symm x).val + t • (e.symm y).val := by
+      intro x y z s t
+      simpa only [e.apply_symm_apply] using (haff (e.symm x) (e.symm y) (e.symm z) s t).symm
+    simpa only [e.symm_apply_apply] using extreme_forward e.symm haff' (e x) h
+end Transport
+
+theorem real_complex_extreme_iff (β : realStateSpace A) :
+    β.val ∈ (realStateSpace A).extremePoints ℝ ↔
+      (extension β).val ∈ (complexStateSpace A).extremePoints ℝ :=
+  extreme_equiv realComplexEquiv extension_affine_iff β
+
+def provider (φ : complexStateSpace A) : State A where
+  toContinuousLinearMap := φ.val
+  isPositive a := φ.property.1 (star a * a) (star_mul_self_nonneg a)
+  isNormalized := by
+    rw [norm_eq_re_apply_one_of_positive (fun a => φ.property.1 _ (star_mul_self_nonneg a))]
+    rw [φ.property.2, Complex.one_re]
+
+theorem provider_mem (ω : State A) : ω.toContinuousLinearMap ∈ complexStateSpace A :=
+  ⟨fun a ha => ω.toPositiveLinearMap.map_nonneg ha, ω.apply_one⟩
+
+theorem provider_stateSpace_eq : Physicslib4.GNS.stateSpace A = complexStateSpace A := by
+  ext φ
+  constructor
+  · rintro ⟨ω,rfl⟩
+    exact provider_mem ω
+  · intro hφ
+    exact ⟨provider ⟨φ,hφ⟩,rfl⟩
+
+def originalState (β : realStateSpace A) : State A := provider (extension β)
+
+theorem original_moment (β : realStateSpace A) (a : selfAdjoint A) :
+    originalState β (a : A) = (β.val a : ℂ) := extension_moment β a
+
+theorem original_extreme_iff (β : realStateSpace A) :
+    β.val ∈ (realStateSpace A).extremePoints ℝ ↔ (originalState β).IsExtremePoint := by
+  rw [← mem_extremePoints_iff_isExtremePoint, provider_stateSpace_eq]
+  exact real_complex_extreme_iff β
+
+theorem original_pure_iff (β : realStateSpace A) :
+    β.val ∈ (realStateSpace A).extremePoints ℝ ↔ IsPure (originalState β) := by
+  rw [isPure_iff_isExtremePoint]
+  exact original_extreme_iff β
+
+theorem actual_pure_gns (β : selfAdjoint A →ₗ[ℝ] ℝ) (hβ : IsRealState β)
+    (hpure : β ∈ (realStateSpace A).extremePoints ℝ) :
+    ∃ (φ : A →L[ℂ] ℂ), φ ∈ complexStateSpace A ∧
+      (∀ a : selfAdjoint A, φ (a : A) = (β a : ℂ)) ∧
+      (∀ ψ : A →L[ℂ] ℂ, ψ ∈ complexStateSpace A →
+        (∀ a : selfAdjoint A, ψ (a : A) = (β a : ℂ)) → ψ = φ) ∧
+      ∃ (H : Type u) (_ : NormedAddCommGroup H) (_ : InnerProductSpace ℂ H) (_ : CompleteSpace H)
+        (π : A →⋆ₐ[ℂ] (H →L[ℂ] H)) (Ω : H),
+        ‖Ω‖ = 1 ∧ Dense (Set.range (fun a : A => π a Ω)) ∧
+        (∀ a : A, φ a = inner ℂ Ω (π a Ω)) ∧
+        (∀ a : selfAdjoint A, inner ℂ Ω (π (a : A) Ω) = (β a : ℂ)) ∧
+        (∀ T : H →L[ℂ] H, (∀ a : A, π a * T = T * π a) → ∃ c : ℂ, T = c • 1) := by
+  let b : realStateSpace A := ⟨β,hβ⟩
+  let ω := originalState b
+  have hw : IsPure ω := (original_pure_iff b).mp hpure
+  obtain ⟨H, hN, hI, hC, π, Ω, hcyc, hrep, _⟩ := gns_construction ω
+  letI := hN
+  letI := hI
+  letI := hC
+  have hn : ‖Ω‖ = 1 := by
+    have hunit := hrep (1 : A)
+    rw [map_one π, ContinuousLinearMap.one_apply] at hunit
+    have hr : (1 : ℝ) = ‖Ω‖ ^ 2 := by
+      simpa only [ω.apply_one, RCLike.one_re, ← norm_sq_eq_re_inner] using
+        congrArg (RCLike.re : ℂ → ℝ) hunit
+    nlinarith [norm_nonneg Ω]
+  refine ⟨(extension b).val, (extension b).property, extension_moment b, ?_,
+    H, hN, hI, hC, π, Ω, hn, hcyc, hrep, ?_, isIrreducible_of_isPure hcyc hrep hw⟩
+  · intro ψ hψ hm
+    exact ext_selfAdjoint _ _ (fun a => (hm a).trans (extension_moment b a).symm)
+  · intro a
+    exact (hrep a).symm.trans (original_moment b a)
+
+end D5.S3.Quantum.Algebra.StateApproximation.ReconstructedStateGNS
+
+end
+end
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
