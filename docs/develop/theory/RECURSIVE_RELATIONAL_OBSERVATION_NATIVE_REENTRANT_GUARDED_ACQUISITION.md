@@ -930,3 +930,716 @@ interfaces of the sustained goal; finite local terminal success leaves
 that full goal active.
 
 ## 追加锚（本行以下为增补区）
+
+## 11. Input occurrences of the installed RG2 graph
+
+**Definition 11.1 (one common entrance and two footprints).** Fix the
+original RG2 apparatus of §§1–2, including its actual beta preparation,
+original Stop client, prior and public/native code. Let $b$ be its canonical
+paid prefix immediately before the first `StartMode` IN, after the saved
+original25/27 import and all code installation. Its state is computed by
+that fixed finite initialization. The same $b$ is used for every later
+round count, request, guard and stopping choice. Neither a new reached-entry
+snapshot per round nor an independently supplied execution trace is a
+parameter below. Write $n(h)$ for the absolute number of actual primitive
+receipts, including $b$.
+
+For a port $p$, let $W_p(h)$ be its actual finite constructed cell word in
+creation-chain order, with physical separators/statuses and cell identities;
+its payload bits are not a concatenation of interpreted wire frames. Let
+$\lambda_5(h)$ be the actual input latch5. The original-coordinate selection
+used below is
+
+$$
+O_{\rm s}(h)=
+\bigl(W_{13}(h),W_{25}(h),W_{29}(h),\lambda_5(h),n(h)\bigr).
+\tag{RG.11}
+$$
+
+These are coordinates already present in the complete original successor
+of AIF2.5 and SRC1.4. No new observation operation is installed. In
+particular (RG.11) does not include banks64–68, ingress69, an interpreter
+history, a source snapshot or a completed-input oracle. It includes *all*
+retained25 versions and the actual29 records, not only LatestType's answer.
+Physical construction bounds distinguish absent cells from reserved cells.
+
+The larger, separate mathematical selection considered in §14 is
+
+$$
+O_{69}(h)=\bigl(W_{13}(h),W_{69}(h),\Lambda(h),n(h)\bigr),
+\tag{RG.12}
+$$
+
+where $\Lambda$ is the finite tuple of actual native latch values. This
+selection includes a new port. It is not an original-coordinate selection,
+private actor memory, UAS's $M_J$, or an assertion of minimality.
+
+**Definition 11.2 (actual input origin).** An input occurrence is identified
+by the original boot/code binding, installed version and literal IN row,
+its absolute primitive occurrence, ingress latch, and the receiving
+port/cell to which that occurrence's matching WR is prescribed. Its
+controller phase, raw/computed caller kind and round/stage, when present,
+are those of this same execution. A complete local block reference adds
+its actual owner, descriptor stream/ordinal, port/base/length/type/status
+binding. These are different kinds of information: CAP's descriptor $c$
+is the one-based *owner-stream descriptor ordinal*, not an IN ordinal,
+round number or version field. Version and phase are parsed state payload.
+An original block's empty origin field identifies no unique occurrence.
+
+For a prefix $h$, let $I_b(h)$ be the chronological word of external bits
+actually consumed after $b$, and let $\mathcal I_b(h)$ retain each bit with
+its occurrence/site origin. These are targets of recovery, not supplied
+arguments. Computed request bits are not entries of $I_b(h)$.
+
+**Lemma 11.3 (closed invocation and input-site census).** After $b$, every
+IN reachable in the resident RG2 program, up to its stated local exit or
+actual global halt, belongs to the following list. There is no additional
+variable IN hidden in its called routines.
+
+| Reachable caller and phase | Actual external ingress | Relevant retained destination and subsequent export |
+| --- | --- | --- |
+| `StartMode`, §2.2 | Two unrolled bit bodies | Fresh69 payload; for01/10 the initialized state25 contains the selected mode |
+| External `Select`, §4.1 | One choice bit, distinct from raw header | Fresh69 payload; choice0 precedes `RawWait`, choice1 precedes `HandbackPending` |
+| `RawDispatch`, §4.1, or resident mode00 | CAP4.6's header, unary length and raw payload INs | The three actual blocks on13, with descriptors17; dependencies are later copied through the original channel |
+| `GuardIngress`, §5.1 | The separately supplied unary guard, including its zero | Fresh69 payload; successful binding exports the entire $G_i$ of (RG.4) in `GuardAcquired` on25 |
+
+Internal `Select` constructs its proposal and has no choice or raw-frame
+IN. Lift, computed maintenance and computed final frames have no frame IN.
+The original Stop/INITIAL suffix has no new external input.
+
+*Proof.* The reachable top-level edges can be enumerated without a
+runtime bound. `StartMode` selects mode00's resident raw graph, mode11's
+local exit, or mode01/10's initialized state and the four lift calls.
+Those calls return successively through their four fixed continuation
+codes; their fourth return reaches `Entry`. Each `Entry` loans/reloads
+before `Select`. External `Select` takes its one-bit receiver, then either
+exports `RawWait` and enters `RawDispatch`, or exports `HandbackPending`
+and enters §9. Internal `Select` instead uses the finite stage constructor,
+then guard ingress, or its final handback branch. A returned external
+modifier installs `RawAcquired` before guard ingress. A completed legal
+nonmodifier has §4.2's separate domain exit. Malformed/partial raw branches
+retain the CAP successors and do not enter a completed-return reader.
+
+The guard receiver either remains in its literal ingress, takes the
+retained guard-domain exit, or exports `GuardAcquired` and enters `Plan`.
+`Plan` emits either the final packet or Reserve, Raise and final packets,
+using their actual returned responses. `AfterFinal` seals its state,
+returns/normalizes and reaches `Entry`. Handback reloads its saved words,
+copies a fresh original configuration and empty waiting word, transfers
+the invocation, and enters the unchanged Stop/terminal route. None of
+these edges calls ARC's outer gate/history program on70–73. The matching
+old helper definitions are used at the named calls; retaining its carrier
+does not execute every installed ARC entry.
+
+It remains to inspect the called leaves, rather than infer completeness
+from this phase list alone. ARC2/RCA11–12 assignments expand into bank
+reads, fresh-bank writes, metadata scans and CTLs. Their primitives do not
+include IN. ARC3's native imports and frame/list parsers likewise use
+reads, bank assignments and moves; Stage34/35 are copies, not ingress.
+The tree algorithms cited in §7 consume acquired finite words. Measured
+state/proposal/configuration exports and CAP6's field, descriptor, counter,
+row, fence and channel routines use copies/Appends, scans, TOK and CTL,
+not external IN. CAP4.6 explicitly distinguishes its raw receiver from
+its automatic Append/copy constructor. The actual original source services
+read their one already prepared source; the unique private preparation
+and public/code installation precede $b$. Finally CAP8.1 applied to this
+literal Stop table constructs its terminal packet and outputs it; the
+fixed prior/verifier and receipt consumer read their supplied records.
+They do not acquire a fresh request or private preparation. These leaf
+families close the finite inlined call graph specified in §2.1. Its only
+post-$b$ IN leaves are precisely the four rows of the table. This is an
+invocation census for RG2, not for arbitrary supplied controllers or a
+future extension with an extra input site. ∎
+
+**Lemma 11.4 (raw matching-write preservation on the whole RG2 run).**
+Suppose a raw-frame IN has pre-occurrence count $j$. Its receiving cell
+address is determined before IN. Its matching WR has post-count $j+3$
+for header/length and $j+2$ for payload. Until that WR the actual input
+latch5 still holds this bit. After that WR, this particular13 payload cell
+retains the bit for the remainder of the resident run, including later raw
+and computed calls and the original terminal suffix.
+
+*Proof.* The literal bodies are, respectively, `IN; EX; WR; MR`,
+`IN; EX; WR; RD(test); MR`, and the positive iteration
+`RD(length); IN; WR; MR(payload); MR(length)`. The first two use the
+current R cell; EX constructs the blank receiving cell without consulting
+the input. The last uses the already positioned fresh Zero-reserved
+interval. None overwrites latch5 before WR. The distinct length-test
+latch and the location of its RD give exactly the asserted offsets,
+as in SRC3.2. An unfilled reserved zero is therefore never evidence that
+an IN supplied zero.
+
+CAP4.6 places each new block beyond the earlier blocks at its measured
+actual Base. Filling a raw payload is an in-place construction write,
+not a tail append; its loop visits each reserved payload cell once.
+Its later status WR is at $b+\ell+1$, outside the payload. Every automatic
+constructor also allocates its three fresh blocks at the then-current
+tail. CAP's twelve work roles exclude13, and request parsers/channel
+senders read those retained blocks without rewriting them. RG2's explicit
+normalizations Tail(13/17) do not write them. Its actor assignments use
+64–68; state/proposal/guard destinations are25/27/69. Handback and the
+unchanged Stop suffix construct configuration/output/channel material on
+their designated other ports. By the reachable-caller census these are
+all later invocation families that could otherwise reuse13. No later
+writer targets an earlier raw payload interval. Thus the local matching-WR
+fact persists through subsequent calls; it is not restricted to one
+independently supplied reached entry. ∎
+
+## 12. Discharging input recovery from retained state versions
+
+**Definition 12.1 (sealed actor-input domain).** Let $\mathcal D_{\rm s}$
+contain the following actual finite cuts of the same RG2 apparatus.
+Mode01 or10 has been received and its initialized whole-state export has
+completed its seal. Every consumed external choice has completed the seal
+of its consequent `RawWait` or `HandbackPending` export. Every consumed
+reference-guard bit belongs to a guard whose entire `GuardAcquired` export,
+including $G_i$ and its actual word $U(h_i)$, has completed its seal.
+
+Raw-frame INs need not have completed their matching write, block seal,
+parser, source flight or return. Include all intervening cuts of the
+prescribed computation, state/descriptor construction, request/response
+copy, pool loan/return, bookkeeping, maintenance, next-entry normalization,
+handback and original terminal route satisfying the preceding conditions.
+For the successful round domain retain §§1/7's arbitrary finite mixed
+requests and nondecreasing guards, and §8's internal consumer. One may
+also stop in a canonical raw nonmodifier flight through its §4.2 exit;
+the input-recovery statement there asserts no selected-round result.
+No future completion is required to name a finite cut.
+
+There is no new member between the first unrepresented mode/choice/guard
+IN and the seal of its specified state export. A partial new export
+whose independent inputs were represented by earlier states is included.
+Thus this domain is neither all partial ingress nor merely the set of
+idle round endpoints. Its exclusions will be treated separately in §14.
+
+**Lemma 12.2 (physical evidence of actor input, without a state chain).**
+For $h\in\mathcal D_{\rm s}$, (RG.11) determines finite evidence for the
+selected mode, every consumed external choice and every consumed guard,
+with their actual round/proposal and local block bindings. The evidence
+can be obtained by scanning retained native descriptors and their selected25
+payloads. No linked predecessor chain, value-only deduplication or latest25
+full-state premise is needed.
+
+*Proof.* Start at L of the mathematical word $W_{29}(h)$. Parse the fixed
+ten-field CAP records by their tag and separators, stopping before an
+unfinished trailing record. A record is selectable only after its following
+descriptor seal. Check its actual owner, port25, type `RG-S2`, initialized
+and immutable flags, complete base/length/status address and status1 in
+$W_{25}(h)$. Use that real local interval, not its descriptor ordinal as
+an address. Parse its framed tuple, version/phase, boot/source/code bindings
+and exhaustion. Every completed state export in the definition of
+$\mathcal D_{\rm s}$ passes these tests. A complete physical export immediately
+before its final availability CTL already contains only the already
+acquired fields of that same export; selecting its written evidence adds
+no future input and confers no read permission.
+
+The relevant state writers are precisely §§2.2, 4.1–4.2, 5.1, 6.1–6.2,
+7.1 and 9.1. They write a new measured block and separate status, then its
+actual ten-field descriptor, and seal/install it. They do not change a
+retired state's payload. RG2 never directs its bank compiler to25; the
+original service bodies protect that actor state. At handback the original
+configuration is appended freshly, with its own grammar/descriptors;
+it does not overwrite retired RG states. The original Stop and terminal
+route do not edit them. Before full seal, the measured export has already
+finished copying the payload before it sets status1, and its remaining
+CTL does not edit those bits. Hence the selectable payloads used here are
+the actual exported words. This is the actual use of CAP6.1's post-seal
+immutability rule, together with the construction order; the flag alone
+would not prohibit an earlier construction write.
+
+The initialized state supplies mode01/10. For external mode, each reached
+choice0 produces a `RawWait` with its round $i$, previous joined ends and
+(RG.3)'s complete pending fields, before the raw INs. Choice1 produces
+`HandbackPending` before the new handback loan. These are the two literal
+successors of the one-bit choice test. In internal mode the same handback
+phase is a computed stage transition and represents no choice IN. Thus
+mode and the parsed phase/context, rather than the state type alone,
+determine which input, if any, was consumed. In replay order use the
+first such export for that still-unresolved choice occurrence. Later
+exports carrying its unchanged fields are not additional choices.
+
+For guard round $i$, select the actual `GuardAcquired` export whose $G_i$
+has the required source, round, preceding selected-final end and proposal
+origin. The payload includes the *entire* $U(h_i)$, not just its reference
+$\gamma_i$. Unary inversion yields its bits, including the terminal zero.
+The complete $\gamma_i$ and proposal binding distinguish the occurrence
+from other equal guards. In external mode that proposal is the genuine
+raw row; in internal mode it is the sealed constructed proposal. No guard
+is read from a historical encoded $H$, a current directory or latest25's
+alleged private successor.
+
+All these candidates are ordered by their actual one-based creation
+ordinals in the full29 stream, which also contains nonstate descriptors.
+The fixed writer order supplies the appropriate first phase occurrence
+for each successive round. Repeated reloads or copies of its binding can
+be checked against that occurrence. State versions with equal payloads
+but different complete local references remain different versions. Equal
+origin permits selection of a received copy of one immutable sender;
+it does not permit merging two original state exports with empty origins.
+In particular the optional previous-state reference in §3.1 is never
+followed as a mandatory chain. Scanning all retained versions is finite
+and reaches the required witnesses even when every optional pointer is
+absent. ∎
+
+More explicitly, the evidence selection in this lemma is a finite search,
+not an auxiliary oracle. The fixed initialization computes the complete29
+descriptor count $D_b$ at $b$. Ignore earlier records when selecting the
+post-mode initialized export. The first post-$b$ whole-state export with
+that initialized phase is the mode export; no lift call precedes it. At
+an external choice demand, the already replayed entry gives the round and
+previous semantic/unified ends. Enumerate the retained candidates in
+increasing full-stream $c$, testing those unchanged context fields and
+the `RawWait`/`HandbackPending` phase. The explicit `RawWait` state reference
+can also be checked; an optional predecessor is not required for handback. The
+first matching consequent export supplies0/1 respectively. Serial entry
+and the fresh joined ends after a completed round prevent a later round
+from matching this entry. At a guard demand, enumerate the candidates for
+`GuardAcquired` and test the full source/round/proposal/preceding-final
+binding against the already replayed proposal context; read its actual
+$U(h_i)$. There is one ingress for that proposal, and no next proposal
+before its return. Later copies of its binding give the same word. These
+searches terminate on the actual image by Definition12.1 and the writer
+order just proved; absent or inconsistent evidence on another proposed
+image may return failure. None of these tests dereferences69 or assumes
+that an equal word denotes an equal occurrence.
+
+**Theorem 12.3 (original-coordinate recovery with actual input origins).**
+On the actual image of $\mathcal D_{\rm s}$, one finite mathematical decoder
+from $O_{\rm s}(h)$ and the common fixed initialization returns
+
+$$
+\bigl(I_b(h),\mathcal I_b(h),h,X(h),\operatorname{Bill}(h)\bigr).
+\tag{RG.13}
+$$
+
+Here $X(h)$ is the full same-run joint configuration, including private
+source/work bits, retired and partial blocks, current heads/latches,
+all active/inactive code and control, actual rights/tokens, pending events,
+rows, both channel copy stages and the original terminal type/output.
+There is no additional INPUT argument. The assertion is uniform in the
+finite number of rounds and actual operand/guard lengths.
+
+*Proof.* Form Lemma 12.2's finite state-evidence list. Simulate the actual
+fixed initialization and then the literal installed RG2 graph, stopping
+at the supplied absolute receipt count $n=n(h)$. The represented state at
+$b$ is the one computed by that initialization, once for the apparatus,
+not a separately supplied entry for each request. At a mode, choice or
+guard IN, the already reconstructed mode/phase/round/proposal context
+selects its evidence from Lemma 12.2. Supply its corresponding bit. The
+domain guarantees that the required completed export is present by the
+target cut; this is a fact about the target's retained past, not a promise
+that a future guard will finish. Bits later in a fully retained word are
+not counted as consumed until their actual IN is reached.
+
+At a raw IN with pre-count $j$, the represented head and current raw site
+determine its matching13 address and offset $w=j+3$ or $j+2$. If $w\le n$,
+read the bit at that address in $W_{13}(h)$; Lemma 11.4 proves it is the
+actual supplied bit, even if its enclosing block/row is still unfinished.
+If $w>n$, use the endpoint $\lambda_5(h)$ instead. Until that unperformed
+WR no other primitive has overwritten this latch. This second case is
+exactly an acquired-but-unwritten input, not an inference from a reserved
+zero. All earlier raw inputs have passed their matching WR and use their
+own distinct addresses.
+
+These rules are a demand-driven extraction of input from specified actual
+backing. They do not first presume a complete request list. In particular,
+when a computed constructor writes bytes equal to a previous raw request,
+the simulated code/version/caller reaches Append/copy and consumes no
+input. Only the raw IN sites demand a bit from13. Counting three blocks,
+comparing wire values or treating every source row as external cannot
+implement this rule.
+
+Every other row is deterministic on the represented actual cells, PC,
+heads, latches, ownership and finite control. Lemma 11.3 exhausts the
+possible input demands. Induct on the absolute primitive count. The base
+is the common actual initialization. At an IN, the preceding paragraphs
+supply its actual bit; at a non-IN, equal represented state selects the
+same installed row, actual operands, outcome, receipt and next control.
+Thus the induction never changes the witness run. It also constructs the
+same physical cell/descriptor origins, rather than isomorphic replacements.
+At count $n$ it yields the whole $h$ and all coordinates of $X(h)$
+simultaneously. This is AIF4.4's existing deterministic replay argument,
+now with its input premise discharged by Lemmas 11.3–12.2 for these RG2
+cuts. The new assertion is that concrete discharge, not a new generic
+replay theorem.
+
+Record each IN when it is reached, with the code version, literal site,
+absolute occurrence and actual matching address of Definition 11.2.
+The reconstructed raw rows, local references and guard/state bindings
+therefore recover $\mathcal I_b(h)$ as well as $I_b(h)$. In particular two
+occurrences of the same value are not collapsed. Fixed source bits need
+no new observation; their one canonical preparation was already computed.
+Likewise all internal proposals, guard comparisons, accepted/refused
+responses and later private successor coordinates follow from this one
+simulation, rather than from the last state payload alone.
+
+Executing exactly $n$ represented finite primitives terminates on every
+actual image, including a cut in a computation with no eventual return.
+No future service-termination premise is needed for that finite-prefix
+claim. The computed history evaluates all occurrence counts and actual
+cell/control constructions in (RG.9), giving exactly its full bill. A
+nonactual proposed footprint need not pass parsing or replay; no total
+recognizer for arbitrary purported records is asserted. ∎
+
+**Corollary 12.4 (new cuts covered and cuts still excluded).** The recovery
+in Theorem 12.3 includes lift setup after its mode export; partial raw
+header/length/payload, raw refusal and its return reader; newly constructed
+`RawAcquired` and computed-wait states; all planning, maintenance and
+selected-final bodies; descriptor/row/channel copies and partial pool
+loans/returns; repeated entry; `HandbackPending`'s new handback loan,
+original configuration copying, invocation return and the complete original
+Stop/INITIAL suffix. It includes the actual halted endpoint as a mathematical
+record. It excludes the unrepresented mode/choice/guard intervals of
+Definition 12.1.
+
+*Proof.* Each listed interval has consumed no additional actor input beyond
+the indicated sealed state witnesses. Raw IN is covered independently by
+Lemma 11.4. Copies and token transfers add no independent input; partial
+new exports do not remove old witnesses. The finish choice has its witness
+before the first handback loan. Internal stages have only their actual
+guard input and their already retained constructed proposals. No new IN
+occurs in the original Stop suffix. These facts verify Definition 12.1
+through every listed interval, irrespective of whether the source currently
+decodes as a valid tree or a partial candidate. The missing intervals do
+consume an actor input before its required export, so the definition does
+not include them. ∎
+
+## 13. The supplied original-successor leg and its scope
+
+**Definition 13.1 (inherited original row charts).** Inside
+$\mathcal D_{\rm s}$, retain the actual original row correspondence only
+where the next prescribed action has its unchanged original operands,
+enabledness, label/released output and complete original successor effect.
+There are the following concrete charts:
+
+1. The original raw-frame body in $F^{\rm RG}$, from header Base/setup
+   through the final row ACK and source-token TOK, excluding the final
+   changed idle CTL and any new-return edge.
+2. The original admitted service, response, counter, row, channel, check,
+   ACK and source-token body reached by a computed call, where the original
+   service row is unchanged; its packet constructor and changed return are
+   not placed in this chart.
+3. After §9.1's new configuration/packet setup and invocation transfer,
+   the actual original workspace loan, Stop interpreter and the unchanged
+   original terminal row/snapshot/verifier/receipt/consumer/ACK/return/global
+   halt path of §9.2.
+
+The row maps are the fixed finite renumberings of the inlined source
+bodies, with their actual caller continuation. They identify neither an
+RG2 history with §7.3's alternative reference history nor a new call-kind
+with a raw external request. Let $\mathcal J$ be their running cuts whose
+next row is an enabled original *non-IN* primitive. The cut just before
+the executed global halt is included; its terminal successor is not in
+$\mathcal J$.
+
+**Lemma 13.2 (the charts retain full successors).** The rows in Definition
+13.1 have their original primitive action and full original-successor
+semantics on this apparatus. For a cut in $\mathcal J$, that one executed
+successor remains in $\mathcal D_{\rm s}$.
+
+*Proof.* Section 4.1 changes only $F^{\rm RG}$'s last idle successor;
+all preceding input, parser, source and complete delivery rows are the
+CAP4.6/6.7 rows. The argument of SRC2.3 consequently applies to precisely
+that retained body, with the RG2 return label excluded. Section 6.1 keeps
+the seven original guarded bodies and §6.2 their complete return work;
+the new fixed successor is again outside the chart. Request construction
+and the unknown-raw reader have their own actual control and are not made
+original by a similar name. The handback chart starts only after the
+actual fresh original configuration has been sealed and the invocation
+transferred. Section 9.1 then enters the original twelve-token loan and
+table24's unchanged interpreter, followed by the unchanged terminal route.
+This is the actual original client, not the RG2 native description treated
+as a Turing table.
+
+For each such primitive, copying the prescribed row's operands and both
+finite control effects copies its actual cell, head, latch, seal/token,
+receipt and next original control effects. It therefore preserves the
+complete successor, not merely the current tree or accept bit. In
+particular the final changed idle CTL fails this test because its next
+control differs. An enabled non-IN row consumes no new actor input and
+does not overwrite an earlier state witness; Lemma 12.2 gives their
+persistence. Its successor thus retains the defining witnesses of
+$\mathcal D_{\rm s}$, also when that successor has a changed-return row
+next or is terminal. ∎
+
+**Theorem 13.3 (original-$Q$ separation on the inherited non-IN charts).**
+Keep the original $Q$ of AIF2.6/SRC1.3, including its complete original
+joint-successor coordinate. For $h,k\in\mathcal J$,
+
+$$
+h\sim_Q k\quad\Longleftrightarrow\quad h=k.
+\tag{RG.14}
+$$
+
+Consequently equality of original continuation/audit responses on this
+domain determines the full same-run RG2 history and joint state, rather
+than just its encoded source endpoint. This does not assert an original
+$Q$ interpretation for a new RG2 row.
+
+*Proof.* The original experiment Advance is enabled at each cut in
+$\mathcal J$. If their $Q$ maps agree, its actual successful responses
+have the same full original successor. Both successors contain the
+coordinates of (RG.11). By Lemma 13.2 they are in $\mathcal D_{\rm s}$;
+Theorem 12.3 applied to the common footprint returns the same entire
+successor history. Delete its last executed primitive to obtain $h=k$.
+This works across different round counts, source versus terminal-chart
+positions, and external versus internal mode: the decoder obtains the
+mode and branch from their actual state evidence. Conversely identical
+histories have identical task domains and responses under the same fixed
+apparatus. No view conversion is used in either direction. ∎
+
+**Proposition 13.4 (original input and failure distinctions).** On the raw
+IN portions of the first chart, recovery determines the consumed canonical
+prefix and hence SRC2.2's original admissible set
+$\{b:pb\in\mathsf P_7\}$. A lawful next Supply has its actual IN/latch/
+control/receipt successor, which Theorem 12.3 recovers. An enabled
+noncanonical Supply remains task-undefined, a disabled/unauthorized attempt
+remains unexecuted `none`, a complete admitted refusal remains an executed
+response with its actual successor, and an executed lookup outside its
+sealed prefix remains typed `no-row`. These do not become interchangeable
+because history is recoverable.
+
+*Proof.* The actual site and chronological input word come from Theorem
+12.3. The original seven-tag parser determines the prefix language and
+its next-bit test. An admitted raw IN changes no mode/choice/guard witness;
+its matching-write/latch rule still applies immediately afterward. For a
+bit retaining the stated actual domain, its original successor is therefore
+recovered. When an original-lawful bit instead completes a tag outside
+the selected three-modifier domain, the same raw rule applies through the
+retained canonical nonmodifier flight to its separate exit; no main-round
+conclusion is inferred. None of these statements enlarges the task domain
+for a noncanonical bit. The other cases are exactly AIF2.4–2.6's different
+executed, unexecuted and undefined branches, which replay retains.
+
+At the final original halt, the *executed* Advance response still has its
+complete original successor, so the argument of Theorem 13.3 applies to
+its predecessor. A new empty experiment after halt returns only terminal
+type/output; it is not a full-state observation. Theorem 12.3's mathematical
+decoder at a halted record supplies no new posthalt experiment or current
+entry. Running/terminal empty responses stay different, and no injective
+terminal task kernel follows from (RG.14). ∎
+
+## 14. Actual partial69 backing and the separate larger footprint
+
+**Lemma 14.1 (whole-run protection of received69 bits).** On the resident
+post-$b$ graph of Lemma 11.3, a mode, choice or guard IN has its matching
+WR three primitives after its pre-count. It uses that receiver's actual
+input latch unchanged until WR. After WR, the received69 payload bit is
+never rewritten, even before its block/descriptor is complete or available.
+This assertion includes later metadata staging, further rounds and handback.
+
+*Proof.* For mode and choice the unrolled body is `IN; EX; WR; MR`.
+For a guard it is explicitly `IN(5); EX(69); WR(69,5); RD(69,4); MR(69)`.
+EX does not depend on the supplied value, and the guard's RD/test follows
+the matching WR, using the different latch4. Hence the delay and latch
+claim hold, including the pending acquired bit before EX or WR.
+
+The following is the write-footprint closure for69, in addition to the
+input-site closure of Lemma 11.3. It lists the actual destinations of each
+reachable writer family, rather than infer a global property from RCA's
+local staging rule alone.
+
+| Reachable invocation family | Writes that could concern69, or the exclusion |
+| --- | --- |
+| Mode/choice/guard reception, §§2.2/4.1/5.1 | At the measured current tail, EX then its one payload WR; following sep/status, and later WR(status,1) at the separately constructed $b+\ell+1$ |
+| ARC4.3 metadata staging used by §3's imports/exports | Stage34/35 relocated from37 to69 copies onto its measured tail, followed by its fresh F/seal; native scratch sources are66/67 and RCA descriptors68 |
+| ARC2/RCA11–12 bank assignments, arithmetic, parsing, tree and consumer-stage constructors | Bank/scratch/descriptor writes on64–68; assignment helpers do not write the staging stream69 |
+| RG2 state/proposal exports, saved-word import, fresh original configuration and waiting packet | Payload destinations25/27 and native descriptors29; imports only read69 when selecting its actual local input |
+| CAP field/descriptor/count/staging, source, maintenance, row, fence and channel graphs | Their original destinations are among0–63 and word roles1–12; their descriptor/row/packet copies introduce no69 writer |
+| Pool transfers, normalization, native control and the original Stop/terminal consumer | TOK/CTL or head positioning, and the original0–63 configuration/output/route destinations; no69 payload write |
+
+Initialization of this carrier's boundaries and code precedes $b$. The
+post-$b$ graph installs no later code and invokes no outer history receiver
+on70–73. Native staging is the explicit exception to otherwise disjoint
+64–68 bank writes. RCA13.2's Stage34 first measures the current tail of its
+relocated destination, then copies its saved source word there and appends
+F/seal. Stage35 measures the same current tail before its corresponding
+copy. Its base/length/ordinal preparation writes scratch/descriptors, not
+an earlier69 field. The relocation therefore remains correct on a stream
+already containing CAP-format ingress blocks: it requires the actual tail,
+not a globally uniform delimiter grammar or the installation manifest as
+its latest block. Its new staged field has its own RCA descriptor; a CAP
+input block keeps its native29 descriptor. These are not conflated.
+
+Every top-level path and every nested call is in Lemma 11.3's enumerated
+closure, so the table covers each possible post-$b$69 writer. Each such
+writer either appends a fresh disjoint interval or fills only that fresh
+interval's nonpayload delimiter/status. In particular the status update
+is in place, but outside all received payload cells. Neither a construction
+write nor a later unavailable partial field can reach an earlier received
+payload bit. After a full seal the same conclusion is also required by
+CAP6.1's mutable=0 rule. Before seal it follows from these actual write
+locations, not from that rule. Thus the claim covers precisely the
+construction period for which an immutability flag alone would be
+insufficient. ∎
+
+**Definition 14.2 (larger resident finite-prefix domain).** Let
+$\mathcal D_{69}$ consist of every actual post-$b$ finite prefix of the
+resident graph enumerated in Lemma 11.3, up to its stated local domain/fault
+exit or actual global halt. Include partial mode before selection, both
+choices, unterminated guard ingress, guards later found zero/decreasing,
+raw canonical or noncanonical/unfinished frames, partial records/exports,
+invalid intermediate source packets and partial loans/copies. Mode00's
+resident original raw alternative and mode11's domain exit are retained
+here as their actual branches. This is a larger domain of the same boot,
+not an identification of those modes with successful RG2 rounds. No
+uninstalled/raw replacement code, additional controller input site or
+arbitrarily scheduled other service is included by this definition.
+
+**Theorem 14.3 (recovery across the larger actual partial-input domain).**
+On the actual image of $O_{69}$ for $h\in\mathcal D_{69}$, there is a finite
+mathematical decoder with exactly the output (RG.13). No full state export
+is needed for an unfinished mode/choice/guard, and no future zero is
+postulated. This theorem concerns (RG.12), not (RG.11) or the old four views.
+
+*Proof.* Replay from the same fixed computed initialization to count $n$.
+At a raw IN use Lemma 11.4: the final13 cell if the matching WR's count
+is at most $n$, otherwise the actual ingress latch from $\Lambda$.
+At a mode/choice/guard IN use Lemma 14.1: the final69 cell at its replay-
+determined address if its matching WR count is at most $n$, otherwise that
+receiver's occupied input latch in $\Lambda$. In the pending case no helper
+can have overwritten it before the target cut. Only one such pending
+window can exist in this serial graph. In the written case the whole-run
+write-footprint proof, including construction writes, supplies the bit.
+
+In particular the counter/address decision is made before looking at a
+reserved cell's value. An unfilled raw Zero cell is not input. Nor is an
+unfilled fresh69 blank a zero. Completion, descriptor availability and
+later bank import are irrelevant to this demand rule. Conversely a
+completed state/proposal/automatic frame is computed from already acquired
+data and triggers no external-input demand. Lemma 11.3 rules out any
+remaining site or independent schedule choice. The same absolute-count
+induction as Theorem 12.3 therefore reconstructs the whole joint run,
+occurrence origins, partial construction, actual current rights/control
+and bill, stopping without a future input. It preserves fault/domain-exit
+labels and does not convert a noncanonical physical IN into `none`.
+
+The proof used the full reachable writer closure of Lemma 14.1. RCA's
+sentence that its assignment helpers do not touch37, taken alone, would
+not have established it for RG2's guard/status writers on69. No
+preservation theorem is being added as an independent premise. ∎
+
+**Proposition 14.4 (a same-boot obstruction to extending (RG.11) at will).**
+There are two actual cuts of $\mathcal D_{69}$ with the same $O_{\rm s}$
+and different consumed mode input. Thus (RG.11) is not sufficient on all
+of $\mathcal D_{69}$, even though it suffices on $\mathcal D_{\rm s}$.
+
+*Proof.* At the common `StartMode` entry, let the first supplied bit be0
+in one continuation and1 in the other. Execute its full unrolled
+`IN; EX; WR; MR` body, then supply the common second bit0 and stop
+immediately after that second IN, before its EX. There is no mode test
+between these two unrolled ingress bodies. The first bit has been written
+only to its fresh69 cell. The second IN makes latch5 equal to0 in both
+cuts. The original13/25/29 words are still their common pre-mode words;
+mode has not been imported/exported. Both continuations executed the same
+number of ordinary receipt-producing rows, so their $n$ agrees. Thus
+(RG.11) agrees, while their consumed words are00 and10 and their first69
+payload cells differ.
+
+These are physical continuations of this very boot. Mode00 is the actually
+installed original raw alternative, not an invented mode; mode10 is the
+actually installed internal consumer. The prefix does not require either
+subsequent branch to finish. Neither cut is in $\mathcal D_{\rm s}$.
+This refutes precisely the unconditional extension of this particular
+original-coordinate footprint. It does not refute every conceivable
+original-$Q$ representation, restrict the valid01/10 round theorem, or
+prove that69 is a minimum supplement. The executed second IN and its
+receipt remain real in both cuts. ∎
+
+## 15. Recovery gained, accounting and the interfaces still open
+
+**Proposition 15.1 (same-run costs and operational separation).** The
+recovered bill is exactly (RG.9), with every boot/setup, native scan,
+copy, partial write, refusal, TOK, ACK and return retained. The two decoders
+are mathematical functions of actual joint material; neither is a free
+executed recovery service.
+
+*Proof.* Theorems 12.3 and 14.3 return the same actual primitive prefix and
+all its actual constructed ordinary/control cells. Theorem 10.1 and CAP7.1–7.2
+therefore apply to those very occurrences, not to a second run chosen for
+the same source endpoint. In particular current rights/control are outputs
+of replay, including partial transfer states; a historical token in a
+retired block is not a current permission. To execute either decoder would
+require an actual admissible acquisition route to each selected input,
+code and scratch, plus all positioning, reads, output delivery, checks,
+ACKs and token/mailbox/invocation return. Those extra primitives have their
+own same-run receipts and constructions. They have not been removed from
+(RG.9) or assigned zero cost. ∎
+
+**Definition 15.2 (supplier correspondence and mathematical status).** The
+new source-specific results are the exhaustive RG2 input/write census,
+retired-state evidence construction, its original-coordinate recovery
+application, and the separate larger69 footprint with its explicit
+same-boot boundary. All are ordinary mathematical arguments on the stated
+source model. None is claimed to be compiled or Lean-kernel certified.
+
+| Supplier | Exact correspondence and boundary |
+| --- | --- |
+| §§2–9 of this volume | One original boot, concrete mode/choice/guard receivers, whole-state export order, raw/computed caller separation, repeated returns and the original terminal consumer; §§11–14 discharge input recovery from these actual writers and occurrences |
+| CAP4.6, 6.1–6.7, 7.1–7.4, 8.1 | Literal raw matching WRs, ten-field descriptors and owner-stream ordinals, immutable complete blocks, actual dependency/row/ACK/token routes and bill; construction writes and status updates are not treated as tail-only or prematurely immutable |
+| ARC2–4, 26.2–27.3, 28.1–29.2; RCA11–13.2 | Finite bank expansion, native imports, measured state/configuration export, Stage34/35's actual relocated tail writes; their local protection rules are used inside the explicit RG2 invocation closure |
+| SRC1–4, especially3.2 and4.7 | Original-coordinate meaning, local raw matching-write lemma, complete original-successor response convention and actual caller provenance; no supplied per-round entry and no three-block classification rule |
+| AIF2.4–2.6, 4.3–4.5 | Distinct partial-task outcomes and existing full deterministic replay once actual inputs are supplied; the new work determines those inputs and origins from retained RG2 material |
+| UAS/GUA1.4, 3, 5 | The old canonical $\mathcal C$ and its independent $S,B,T,M_J$ definitions and twelve conversions remain intact; no assertion places $\mathcal D_{\rm s}$ or $\mathcal D_{69}$ inside that old canonical class |
+| `D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialMachine.lean`, `Replay`, `replay_deterministic`, `reached_prefix_replay`; corresponding Scribe | Source-free finite reply replay and uniqueness at its existing symbolic interface; not a native bit-ingress extractor or a compiled instance of Theorem12.3 |
+| `Observer/NativeSerialEffective.lean`, `OriginalCodeRealization`, `original_code_service_simulation`; corresponding Scribe | Supplied code with its realization equation and actual evaluator/run/trace correspondence; not a theorem that all the new rows are original experiments |
+| `GenealogicalFiberTransport.lean` and `Observer/OriginalVector/NativeErasedSupportKernels.lean`, `two_step_prefix_kernel`; corresponding Scribes | Existing substitution and labeled/erased/presence relations used by §§1/7; they supply no omitted current-access, guard-input or task-domain bridge here |
+
+The mature record/replay principle is literature-attested, rather than
+claimed as new: O'Callahan et al., *Engineering Record And Replay For
+Deployability*, [§2.1](https://arxiv.org/pdf/1610.02144), requires all inputs
+and nondeterminism crossing the chosen boundary to be captured. Here the
+boundary is the fixed deterministic resident graph and its actual INs;
+Lemmas 11.3, 11.4, 12.2 and 14.1 establish the particular capture facts.
+Lynch–Vaandrager, *Forward and Backward Simulations, Part I*,
+[§3.2](https://groups.csail.mit.edu/tds/papers/Lynch/IC95.pdf), requires
+initial-state coverage and a finite matching fragment with the same
+external trace from each related state for each source step; its soundness
+conclusion is trace inclusion. That principle does not itself give the
+input inverse established here.
+CompCert v3.16's
+[`fsim_properties`](https://raw.githubusercontent.com/AbsInt/CompCert/v3.16/common/Smallstep.v)
+separately requires matching initial/final states, same-trace plus/star
+step diagrams with well-founded decrease, and preserved public symbols.
+No trace erasure or endpoint identity in this addition substitutes for
+those premises. The source-specific applications and obstruction above
+are repo-derived; no global novelty or physical-conformance claim is made.
+
+**Open 15.3 (the remaining mutual-recovery and access legs).** Open10.4
+is advanced by a concrete original-coordinate input discharge and the
+original full-successor-to-history leg on the inherited charts. It is not
+settled. In particular:
+
+- For the new setup, mode/choice/guard, bookkeeping, bank/copy, reentry,
+  handback-setup and changed-return rows themselves, recovering their
+  actual history does not supply an unchanged original-$Q$ experiment
+  with that full successor. Theorem13.3 applies only to its stated
+  inherited non-IN row charts; §13.4 gives only the stated raw-IN leg.
+- UAS's independent views have not been redefined as either footprint or
+  as (RG.13). Their old $\mathcal C$ is not enlarged by naming these new
+  cuts. Applying their individual history kernels and twelve conversions
+  to this RG2 apparatus still needs the respective actual representation,
+  domain and original-task bridges. In particular no result identifies
+  the added69 selection with old joint $M_J$ or with actor-private memory.
+- The larger partial-input theorem uses (RG.12). Proposition14.4 prevents
+  deleting its new backing and reusing the sealed-footprint claim
+  unconditionally. It supplies no all-cut original-$Q$ or four-view
+  theorem, no minimum sufficient footprint, and no current reader.
+- Current executable access to original13/25/29/latches/meter or added69,
+  code/scratch rights, acquired target bindings, delivery/check/ACK and
+  all return obligations still require an actual authorized protocol.
+  Recovery of current rights is a statement about which rights exist,
+  not a grant of the rights needed to run the decoder.
+- The fixed canonical initialization and resident graph are essential.
+  Invalid preparation, arbitrary raw replacement code, another controller
+  with an unaccounted IN, or a separately scheduled invocation requires
+  its own source/input/preservation argument. No positive theorem here
+  identifies all such cases with the supported domain.
+
+The final original Stop/INITIAL consumer and every actual executed refusal
+remain on the same source occurrence and common run. A finite local
+recovery result, including mathematical recovery of a halted record, does
+not complete the sustained four-expression goal or install a posthalt
+entry.
+
+## 追加锚（本行以下为增补区）
