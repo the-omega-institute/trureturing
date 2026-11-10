@@ -194,7 +194,7 @@ private theorem boundary_output (a : Action O.emission) :
     O.output (O.boundary a) = a.output := by
   cases a <;> rfl
 
-private theorem stop_spec (seed : I) (source : ℕ → Bool) (coins : ℕ → R) (n : ℕ) :
+theorem stop_spec (seed : I) (source : ℕ → Bool) (coins : ℕ → R) (n : ℕ) :
     O.stopIndex seed source coins = some n ↔
       (O.execute seed source coins n).action.output ≠ none ∧
       ∀ k < n, (O.execute seed source coins k).action.output = none := by
@@ -213,7 +213,7 @@ private theorem stop_spec (seed : I) (source : ℕ → Bool) (coins : ℕ → R)
       ⟨hn, fun k hk => by rw [hpre k hk]; simp⟩
     simp only [stopIndex, dif_pos h, he]
 
-private theorem stop_length (seed : I) (source : ℕ → Bool) (coins : ℕ → R)
+theorem stop_length (seed : I) (source : ℕ → Bool) (coins : ℕ → R)
     (n : ℕ) (hn : O.stopIndex seed source coins = some n) :
     (O.execute seed source coins n).acquired.length = n := by
   cases n with
