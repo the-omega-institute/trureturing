@@ -73,6 +73,70 @@ distinguishability requirement. Compactness also makes $u$ an order unit
 for $C^*$: every $g\in A^*$ satisfies $-tu\le g\le tu$ for some $t\ge0$.
 In particular $C^*$ spans $A^*$.
 
+## An intrinsic binary comparison and its consistency condition
+
+The proper-effect interval is defined by the carrier. For pure $p$ and
+arbitrary normalized $x$, define
+
+$$
+T_p(x)=\inf\{f(x):f\in[0,u],\ f(p)=1\}.
+$$
+
+This is the least possible false acceptance of $x$ by a test which
+certainly accepts $p$. A pointwise infimum need not itself be one effect.
+On this finite-dimensional carrier, the following requirements for each
+fixed pure $p$ are equivalent:
+
+1. $T_p$ is affine on normalized mixtures.
+2. There is one least proper effect confirming $p$.
+3. Every finite relation between pure-state preparations is preserved:
+
+$$
+\sum_i\lambda_iq_i=\sum_j\mu_jr_j
+\quad\Longrightarrow\quad
+\sum_i\lambda_iT_p(q_i)=\sum_j\mu_jT_p(r_j),
+\qquad
+\lambda_i,\mu_j\ge0,\quad\sum_i\lambda_i=\sum_j\mu_j=1.
+\tag{9}
+$$
+
+To prove the nontrivial direction, define $e_p(x)$ by the average of
+$T_p$ over any finite pure-state preparation of $x$. Such preparations
+exist by compact finite-dimensional convex geometry, and (9) makes the
+definition independent of the preparation. Combining preparations proves
+affinity. Its values lie in $[0,1]$, and $e_p(p)=1$. An affine function on
+$K$ extends to its relative affine hull, and homogenization gives a
+linear proper effect on $A$. For every confirming effect $f$, the
+inequality $T_p(q)\le f(q)$ on pure $q$ gives $e_p\le f$ on all of $K$,
+hence on $C$. Thus $e_p$ is least and equals $T_p$ everywhere. Conversely,
+a least confirming effect realizes the infimum and preserves all mixture
+relations by affinity.
+
+Consequently S can be expressed using the carrier-defined comparison:
+exchanging its two pure endpoints preserves its value, and replacing a
+normalized state by another pure preparation of the same state preserves
+the average comparison. This is an equivalent expression of leastness
+and reciprocity, not a further deletion of an independent condition.
+The substantive reduction in the subsequent argument is the removal of
+the separate signed-spectrality input.
+
+For the square $K=[0,1]^2$, its four vertices have
+$T_p(q)=\delta_{pq}$, just as four classical pure states do. Nevertheless,
+writing $a=(0,0)$, $b=(1,0)$, $c=(0,1)$, $d=(1,1)$ gives
+$(a+d)/2=(b+c)/2$, while the proposed comparison average against $a$ is
+$1/2$ on the first preparation and zero on the second. Hence the table
+does not preserve the actual square's mixture relations, and no least
+confirming effect exists at $a$. This is the square obstruction discussed
+in the cited source's Section 3, expressed with the proper-effect domain;
+it is not claimed as a new counterexample. Numerical endpoint symmetry
+alone does not provide a common effect.
+
+The first endpoint must remain pure in this infimum definition. A proper
+effect attaining one at a relative interior state is constant one, so
+extending the definition to mixed first endpoints does not produce the
+symmetric bilinear pairing derived below. That pairing is an extension
+of pure comparisons, with a different meaning at mixed first endpoints.
+
 ## Positive dual generation and one common complete frame
 
 Even without (2), leastness implies reciprocal zero readings. If
