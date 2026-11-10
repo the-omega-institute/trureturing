@@ -143,12 +143,12 @@ lemma ιFront_comp_δ_of_le (p q : ℕ) (k : Fin (p + q + 2))
   have hi' := hi
   simp only at hi'
   simp only [SimplexCategory.comp_toOrderHom, OrderHom.comp_coe, Function.comp_apply,
-    val_eqToHom_apply, (show ∀ {n : ℕ} (k : Fin (n + 2)) (i : Fin (n + 1)),
-      (SimplexCategory.δ k).toOrderHom i = k.succAbove i from fun {_} _ _ => rfl), Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
+    val_eqToHom_apply]
+  change (k.succAbove (⟨i, by omega⟩ : Fin (p + q + 1)) : ℕ) =
+    ((⟨(k : ℕ), by omega⟩ : Fin (p + 2)).succAbove (⟨i, by omega⟩ : Fin (p + 1)) : ℕ)
+  simp only [Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
   split_ifs <;>
-    simp only [Fin.val_castSucc, Fin.val_succ, (show ∀ (p q : ℕ) (i : Fin ((⦋p⦌ : SimplexCategory).len + 1)),
-      ((ιFront p q).toOrderHom i : ℕ) = i from fun _ _ _ => rfl),
-      SimplexCategory.len_mk] at * <;>
+    simp only [Fin.val_castSucc, Fin.val_succ, Fin.val_last, Fin.val_zero] at * <;>
     omega
 
 /-- `ιFront(p, q) ≫ δ k = ιFront(p, q+1)` when `k > p`, i.e., the face map
@@ -161,12 +161,11 @@ lemma ιFront_comp_δ_of_gt (p q : ℕ) (k : Fin (p + q + 2))
   have hi' := hi
   simp only at hi'
   simp only [SimplexCategory.comp_toOrderHom, OrderHom.comp_coe, Function.comp_apply,
-    val_eqToHom_apply, (show ∀ {n : ℕ} (k : Fin (n + 2)) (i : Fin (n + 1)),
-      (SimplexCategory.δ k).toOrderHom i = k.succAbove i from fun {_} _ _ => rfl), Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
+    val_eqToHom_apply]
+  change (k.succAbove (⟨i, by omega⟩ : Fin (p + q + 1)) : ℕ) = i
+  simp only [Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
   split_ifs <;>
-    simp only [Fin.val_castSucc, Fin.val_succ, (show ∀ (p q : ℕ) (i : Fin ((⦋p⦌ : SimplexCategory).len + 1)),
-      ((ιFront p q).toOrderHom i : ℕ) = i from fun _ _ _ => rfl)
-      ] at *;
+    simp only [Fin.val_castSucc, Fin.val_succ, Fin.val_last, Fin.val_zero] at * <;>
     omega
 
 /-- `ιBack(p, q) ≫ δ k = ιBack(p+1, q)` when `k ≤ p`, i.e., the face map
@@ -179,12 +178,11 @@ lemma ιBack_comp_δ_of_le (p q : ℕ) (k : Fin (p + q + 2))
   have hi' := hi
   simp only at hi'
   simp only [SimplexCategory.comp_toOrderHom, OrderHom.comp_coe, Function.comp_apply,
-    val_eqToHom_apply, (show ∀ {n : ℕ} (k : Fin (n + 2)) (i : Fin (n + 1)),
-      (SimplexCategory.δ k).toOrderHom i = k.succAbove i from fun {_} _ _ => rfl), Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
+    val_eqToHom_apply]
+  change (k.succAbove (⟨p + i, by omega⟩ : Fin (p + q + 1)) : ℕ) = p + 1 + i
+  simp only [Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
   split_ifs <;>
-    simp only [Fin.val_castSucc, Fin.val_succ, (show ∀ (p q : ℕ) (j : Fin ((⦋q⦌ : SimplexCategory).len + 1)),
-      ((ιBack p q).toOrderHom j : ℕ) = p + j from fun _ _ _ => rfl)
-      ] at * <;>
+    simp only [Fin.val_castSucc, Fin.val_succ, Fin.val_last, Fin.val_zero] at * <;>
     omega
 
 /-- `ιBack(p, q) ≫ δ k = δ (k - p) ≫ ιBack(p, q+1)` when `k > p`, i.e., the face
@@ -198,12 +196,13 @@ lemma ιBack_comp_δ_of_gt (p q : ℕ) (k : Fin (p + q + 2))
   have hi' := hi
   simp only at hi'
   simp only [SimplexCategory.comp_toOrderHom, OrderHom.comp_coe, Function.comp_apply,
-    val_eqToHom_apply, (show ∀ {n : ℕ} (k : Fin (n + 2)) (i : Fin (n + 1)),
-      (SimplexCategory.δ k).toOrderHom i = k.succAbove i from fun {_} _ _ => rfl), Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
+    val_eqToHom_apply]
+  change (k.succAbove (⟨p + i, by omega⟩ : Fin (p + q + 1)) : ℕ) =
+    p + ((⟨(k : ℕ) - p, by omega⟩ : Fin (q + 2)).succAbove
+      (⟨i, by omega⟩ : Fin (q + 1)) : ℕ)
+  simp only [Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
   split_ifs <;>
-    simp only [Fin.val_castSucc, Fin.val_succ, (show ∀ (p q : ℕ) (j : Fin ((⦋q⦌ : SimplexCategory).len + 1)),
-      ((ιBack p q).toOrderHom j : ℕ) = p + j from fun _ _ _ => rfl),
-      SimplexCategory.len_mk] at * <;>
+    simp only [Fin.val_castSucc, Fin.val_succ, Fin.val_last, Fin.val_zero] at * <;>
     omega
 
 /-- The top face of `[p+1]` followed by the front inclusion is the front inclusion
@@ -215,12 +214,11 @@ private lemma δ_last_comp_ιFront (p q : ℕ) :
   have hi' := hi
   simp only at hi'
   simp only [SimplexCategory.comp_toOrderHom, OrderHom.comp_coe, Function.comp_apply,
-    val_eqToHom_apply, (show ∀ {n : ℕ} (k : Fin (n + 2)) (i : Fin (n + 1)),
-      (SimplexCategory.δ k).toOrderHom i = k.succAbove i from fun {_} _ _ => rfl), Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
+    val_eqToHom_apply]
+  change ((Fin.last (p + 1)).succAbove (⟨i, by omega⟩ : Fin (p + 1)) : ℕ) = i
+  simp only [Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
   split_ifs <;>
-    simp only [Fin.val_castSucc, Fin.val_succ, (show ∀ (p q : ℕ) (i : Fin ((⦋p⦌ : SimplexCategory).len + 1)),
-      ((ιFront p q).toOrderHom i : ℕ) = i from fun _ _ _ => rfl),
-      Fin.val_last, SimplexCategory.len_mk] at *;
+    simp only [Fin.val_castSucc, Fin.val_succ, Fin.val_last, Fin.val_zero] at * <;>
     omega
 
 /-- The bottom face of `[q+1]` followed by the back inclusion shifts the back block
@@ -232,12 +230,12 @@ private lemma δ_zero_comp_ιBack (p q : ℕ) :
   have hi' := hi
   simp only at hi'
   simp only [SimplexCategory.comp_toOrderHom, OrderHom.comp_coe, Function.comp_apply,
-    val_eqToHom_apply, (show ∀ {n : ℕ} (k : Fin (n + 2)) (i : Fin (n + 1)),
-      (SimplexCategory.δ k).toOrderHom i = k.succAbove i from fun {_} _ _ => rfl), Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
+    val_eqToHom_apply]
+  change p + ((0 : Fin (q + 2)).succAbove (⟨i, by omega⟩ : Fin (q + 1)) : ℕ) =
+    p + 1 + i
+  simp only [Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
   split_ifs <;>
-    simp only [Fin.val_castSucc, Fin.val_succ, (show ∀ (p q : ℕ) (j : Fin ((⦋q⦌ : SimplexCategory).len + 1)),
-      ((ιBack p q).toOrderHom j : ℕ) = p + j from fun _ _ _ => rfl),
-      Fin.val_zero, SimplexCategory.len_mk] at * <;>
+    simp only [Fin.val_castSucc, Fin.val_succ, Fin.val_last, Fin.val_zero] at * <;>
     omega
 
 /-! ### Alexander-Whitney map
