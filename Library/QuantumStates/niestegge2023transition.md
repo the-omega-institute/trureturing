@@ -449,8 +449,14 @@ Classical simplices and real, complex and quaternionic Jordan systems
 remain examples. The candidate does not by itself select a complex
 Hilbert space, a tensor product, an allowed instrument menu, complete
 positivity, a clock or a Hamiltonian. Endpoint reciprocity does not make
-successive physical measurements commute. The full composition and
-process contracts in the [spectral strong-symmetry note](barnumhilgert2019spectral.md#complete-conditional-reconstruction-and-its-remaining-contracts)
+successive physical measurements commute. A [composite premise bridge](barnumwilce2012localtomography.md)
+derives product purity, complete product frames, comparison factorization
+and rank multiplication when S holds on both factors and their locally
+tomographic composite with positive bilinear state/effect products.
+It also derives composite simplicity from a connected local comparison
+graph. Existence of those products, local tomography and local graph
+connectedness remain separate inputs. The process contracts in the
+[spectral strong-symmetry note](barnumhilgert2019spectral.md#complete-conditional-reconstruction-and-its-remaining-contracts)
 remain separate obligations.
 
 In ordinary words: each pure state has one least confirming test which
