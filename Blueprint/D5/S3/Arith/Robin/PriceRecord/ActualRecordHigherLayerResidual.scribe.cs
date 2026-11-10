@@ -205,7 +205,8 @@ internal sealed class ActualRecordHigherLayerResidualDocument : IScribeDocumentD
                         + "observational dependence on a lawful scoped reconstruction, exact sourceSelection "
                         + "and current producer binding still require evidence. The existing validated compact "
                         + "raw-margin registration is preserved. No complete registration is asserted for "
-                        + "this uniform residual or the newly visible owner suppliers."))),
+                        + "this uniform residual or the newly visible owner suppliers; their unfinished audit "
+                        + "evidence is tracked in https://github.com/the-omega-institute/trureturing/issues/28966."))),
                 DescribeRole.Theorem),
             Paragraph(Text(
                 "An ordinary sharper estimate also follows from the same finite bound. Choose R=(X L/log(2))^(1/3). The existing same-integer "

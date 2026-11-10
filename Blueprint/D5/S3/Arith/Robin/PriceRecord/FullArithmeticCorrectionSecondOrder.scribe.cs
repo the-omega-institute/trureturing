@@ -46,6 +46,10 @@ internal sealed class FullArithmeticCorrectionSecondOrderDocument : IScribeDocum
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For any filter of literal original record pairs with P->infinity, log(X)*(Q2/sqrt(X)-sqrt(2))->-log(2)/sqrt(2). Apply unit_sqrt(unit_inv(record_mass_limits.2.2)), multiply Q2/sqrt(P) with second_mul_unit, and transport the logarithmic ratio with relative_clocks. All four are the original private calculus. This bind-only helper is retained solely because actual_record_critical_residual consumes it in this same source delivery. There is no separate own-log module, full conjunction wrapper, or claim of new rate calculus."))),
                 DescribeRole.Theorem),
+            Paragraph(Text(
+                "The newly visible suppliers and consumed own-clock helper still require complete "
+                + "source-bound four-slot audits; the exact remaining evidence is tracked in "
+                + "https://github.com/the-omega-institute/trureturing/issues/28966.")),
             Describe.Lean(
                 DescribeId.Create("price-record-same-integer-log-mass"),
                 DeclarationHandle.Create(
