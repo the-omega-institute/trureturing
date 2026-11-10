@@ -581,4 +581,3 @@ theorem rational_inverse_endpoint :
       ← Complex.ofReal_mul, mul_comm] using hre
 
 end D5.S3.Analytic.PowerSeries.DottieInverseSeries
-
