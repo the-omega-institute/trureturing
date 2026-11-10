@@ -30,9 +30,12 @@ namespace D5.S3.VertexAlgebra.LatticeCosetCompression
 
 open LatticeGeneratingFieldLocality LatticeAllStateField LatticeAllStateReconstruction
 open LatticeDiscriminantTheta MvPolynomial
+open LatticeFiniteNegativeGeneration LatticeSugawaraCurrents
 open scoped BigOperators VertexOperator
 
 noncomputable section
+
+open private rat_unit from D5.S3.VertexAlgebra.Characters.LatticeDiscriminantTheta
 
 variable (D : LatticeData) (e : ℕ)
 variable (B : Matrix (Fin D.rank) (Fin e) ℤ) (C : Matrix (Fin e) (Fin e) ℤ)
@@ -104,6 +107,79 @@ def schur (a b : Fin e → ℤ) : ℚ :=
 def correction (a b : Fin e → ℤ) (j : ℕ) : ℂ :=
   (-1 : ℂ)^j * (Ring.choose (schur D B C a b) j : ℚ)
 
+private theorem gram_longitudinal (hD : (gramReal D).PosDef)
+    (i : Fin D.rank) (j : Fin e) :
+    ∑ k, (D.G i k : ℚ) * longitudinal D B k j = (B i j : ℚ) := by
+  have h : gramRat D * longitudinal D B = B.map (Int.castRingHom ℚ) := by
+    rw [longitudinal, ← Matrix.mul_assoc, inverseRat,
+      Matrix.mul_nonsing_inv _ (rat_unit D hD), Matrix.one_mul]
+  simpa [Matrix.mul_apply, gramRat] using congrArg (fun M => M i j) h
+
+private theorem gram_longitudinal_complex (hD : (gramReal D).PosDef)
+    (i : Fin D.rank) (j : Fin e) :
+    ∑ k, (D.G i k : ℂ) * (longitudinal D B k j : ℂ) = (B i j : ℂ) := by
+  exact_mod_cast gram_longitudinal D B hD i j
+
+private theorem weightedPartial_mul (F : LatticeData) (i : Fin F.rank) (r : ℕ)
+    (p q : Oscillator F) :
+    weightedPartial F i r (p*q) =
+      weightedPartial F i r p * q + p * weightedPartial F i r q := by
+  simp only [weightedPartial, LinearMap.sum_apply, LinearMap.smul_apply,
+    Derivation.coeFn_coe, pderiv_mul, smul_add, Finset.sum_add_distrib,
+    smul_mul_assoc, mul_smul_comm, Finset.sum_mul, Finset.mul_sum]
+
+private theorem weightedPartial_variable (F : LatticeData) (i j : Fin F.rank)
+    (r k : ℕ) :
+    weightedPartial F i r (X (j,k)) = if r = k then MvPolynomial.C (F.G i j : ℂ) else 0 := by
+  classical
+  by_cases h : r = k
+  · subst k
+    simp [weightedPartial, pderiv_X, Pi.single_apply, Prod.mk.injEq, Algebra.smul_def]
+  · simp [weightedPartial, pderiv_X, Pi.single_apply, Prod.mk.injEq, h]
+
+private theorem projectionVariable_partial (hD : (gramReal D).PosDef)
+    (i : Fin D.rank) (r : ℕ) (x : Index (ambient D e B C hC hCe)) :
+    weightedPartial D i r (projectionVariable D B C hC hCe x) =
+      if r = x.2 then MvPolynomial.C ((ambient D e B C hC hCe).G (i.castAdd e) x.1 : ℂ)
+      else 0 := by
+  classical
+  rcases x with ⟨j,k⟩
+  induction j using Fin.addCases with
+  | left j =>
+    simpa [projectionVariable, ambient] using weightedPartial_variable D i j r k
+  | right j =>
+    simp only [projectionVariable, Fin.addCases_right, map_sum, map_smul,
+      weightedPartial_variable, ambient, Fin.addCases_left]
+    by_cases h : r = k
+    · simp only [h, ↓reduceIte]
+      simp_rw [Algebra.smul_def, ← MvPolynomial.C_mul]
+      rw [← map_sum]
+      congr 1
+      simpa only [mul_comm] using gram_longitudinal_complex D B hD i j
+    · simp [h]
+
+/-- Compression commutes with every old positive Heisenberg direction on
+every ambient polynomial. In particular transverse descendants cannot acquire
+an old-current component from an unproved field-isomorphism premise. -/
+theorem projection_weightedPartial (hD : (gramReal D).PosDef)
+    (i : Fin D.rank) (r : ℕ) (p : Oscillator (ambient D e B C hC hCe)) :
+    polynomialProjection D B C hC hCe
+        (weightedPartial (ambient D e B C hC hCe) (i.castAdd e) r p) =
+      weightedPartial D i r (polynomialProjection D B C hC hCe p) := by
+  classical
+  induction p using MvPolynomial.induction_on with
+  | C z => simp [weightedPartial, polynomialProjection]
+  | add p q hp hq => simp only [map_add, hp, hq]
+  | mul_X p x hp =>
+    have hx : polynomialProjection D B C hC hCe
+        (weightedPartial (ambient D e B C hC hCe) (i.castAdd e) r (X x)) =
+        weightedPartial D i r (polynomialProjection D B C hC hCe (X x)) := by
+      rw [weightedPartial_variable, show polynomialProjection D B C hC hCe (X x) =
+        projectionVariable D B C hC hCe x by simp [polynomialProjection],
+        projectionVariable_partial D B C hC hCe hD]
+      split_ifs <;> simp
+    simp only [weightedPartial_mul, map_add, map_mul, hp, hx]
+
 private theorem polynomialProjection_injection (p : Oscillator D) :
     polynomialProjection D B C hC hCe (polynomialInjection D B C hC hCe p) = p := by
   have h : (polynomialProjection D B C hC hCe).comp
@@ -171,7 +247,7 @@ theorem correction_finite (a b c : Fin e → ℤ) (u v w : Carrier D) (p q : ℤ
   intro j hj
   apply Finset.mem_range.mpr
   by_contra hn
-  exact hj (by rw [hN j (by omega), map_zero, smul_zero])
+  exact hj (by dsimp only; rw [hN j (by omega), map_zero, smul_zero])
 
 end
 end D5.S3.VertexAlgebra.LatticeCosetCompression

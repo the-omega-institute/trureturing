@@ -4,8 +4,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.Sectors;
 
 internal sealed class LatticeCosetCompressionDocument : IScribeDocumentDefinition
 {
-    private static Describe D(string selector, string text, DescribeRole role) => Describe.Lean(
-        DescribeId.Create("coset-compression-" + selector.Replace('_', '-')),
+    private static DocumentBlock D(string selector, string text, DescribeRole role) => Describe.Lean(
+        DescribeId.Create("coset-compression-" + selector.Replace('_', '-').ToLowerInvariant()),
         DeclarationHandle.Create("D5/S3/VertexAlgebra/Sectors/LatticeCosetCompression." + selector),
         H(selector), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
         Blocks(Paragraph(Text(text))), role);
