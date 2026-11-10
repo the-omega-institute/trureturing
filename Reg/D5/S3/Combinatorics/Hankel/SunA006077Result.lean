@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.SingleDependentReadout
 import D5.S3.Combinatorics.Hankel.SunA006077Result
 
+/-! Two source observations retain both residue branches of the complete assertion. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -13,7 +15,7 @@ open _root_.D5.S3.Combinatorics.Hankel.SunA006077
 
 noncomputable section
 
-def signature : Signature where
+abbrev signature : Signature where
   Params := Unit
   State _ := ℕ
   Role := Bool
@@ -25,7 +27,7 @@ def signature : Signature where
 
 def actual : Realization signature := realize signature (fun _ _ n => W n) (fun e => nomatch e)
 
-def arena : Arena where
+abbrev arena : Arena where
   signature := signature
   Law R := ∀ n : ℕ,
     (n % 3 = 1 → R.readout false () n = 0) ∧
@@ -65,7 +67,9 @@ def family : Registration arena claim where
     change W 0 ≠ W 1
     have hz : W 1=0 := zero_branch 0
     rw [hz]
-    norm_num [W,w]
+    change (Matrix.of fun i j : Fin 1 => w (i.val+j.val)).det ≠ 0
+    rw [Matrix.det_fin_one]
+    norm_num [w]
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Combinatorics.Hankel.SunA006077.result)
