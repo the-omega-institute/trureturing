@@ -41,7 +41,7 @@ internal sealed class ThreeWayPositiveKernelDocument : IScribeDocumentDefinition
             Paragraph(Text("If additionally norm(x)=norm(y)=1, Cauchy--Schwarz gives normSq(inner(x,y)) <= 1. This is a squared-overlap bound. A Born probability interpretation requires a separate operational rule.")),
             Paragraph(Text("Endpoint reversal conjugates the inner product: inner(y,x)=conjugate(inner(x,y)). For distances the corresponding identity is d_k(x,y)=d_{-k mod 3}(y,x), so swapping endpoints also conjugates the phase. A fixed non-real phase need not give a symmetric reading: with x=1,y=i and phase i, the two squared distances are 4 and 0. These endpoint identities say nothing about reversing the order of successive physical measurements.")),
             Paragraph(Text("Completing the label image to a complex Hilbert space introduces mathematical linear combinations. It does not establish that the original labels are closed under physically available superposition preparations. This application derives no preparation or effect system, Born interpretation, probability additivity, state update, tensor composition, or dynamics.")),
-            Paragraph(Text("白话：已经有复内积结构时，给同一对对象加上三个指定相位，测三个平方距离，就能还原它们的复重叠；对象不必先归一化。只有要把平方重叠限制在 1 以内，才需要单位范数。交换两端还必须反转相位，这不是证明先测谁后测谁都一样，也没有从比较本身推出量子物理。"))));
+            Paragraph(Text("白话：已经有复内积结构时，给同一对对象加上三个指定相位，测三个平方距离，就能还原它们的复重叠；对象不必先归一化。若两者均为单位范数，平方重叠就不超过 1。交换两端还必须反转相位，这不是证明先测谁后测谁都一样，也没有从比较本身推出量子物理。"))));
 
     private static Formula PhaseDistanceFormula()
     {

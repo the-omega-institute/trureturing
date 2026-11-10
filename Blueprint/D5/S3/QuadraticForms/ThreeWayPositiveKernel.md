@@ -64,7 +64,7 @@ Endpoint reversal conjugates the inner product: inner(y,x)=conjugate(inner(x,y))
 
 Completing the label image to a complex Hilbert space introduces mathematical linear combinations. It does not establish that the original labels are closed under physically available superposition preparations. This application derives no preparation or effect system, Born interpretation, probability additivity, state update, tensor composition, or dynamics.
 
-白话：已经有复内积结构时，给同一对对象加上三个指定相位，测三个平方距离，就能还原它们的复重叠；对象不必先归一化。只有要把平方重叠限制在 1 以内，才需要单位范数。交换两端还必须反转相位，这不是证明先测谁后测谁都一样，也没有从比较本身推出量子物理。
+白话：已经有复内积结构时，给同一对对象加上三个指定相位，测三个平方距离，就能还原它们的复重叠；对象不必先归一化。若两者均为单位范数，平方重叠就不超过 1。交换两端还必须反转相位，这不是证明先测谁后测谁都一样，也没有从比较本身推出量子物理。
 
 ## References
 
