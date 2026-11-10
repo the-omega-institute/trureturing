@@ -1227,3 +1227,353 @@ $$
 此处只讨论已知矩阵和原数学泛函，不给未知总响应 $D$ 添加正则性、可加性、齐次性、协变性、单位平移中性、压缩或商自然性，也不增加实际准备或读取标签。运输卷 (12.29) 的一般共同实现义务 $\mathcal E_+^D=\mathcal E_-^D$、一般稳定性目标 $N_\omega(\varepsilon)^2\to0$、完整原 $\mathsf H$ 与总 $D$，以及本卷 §§6、15 的同一递归钉版实际物理来源全文均保持原范围。它们不是有限读取支撑的结论。
 
 ## 新增锚（本行以下为后续增补区）
+
+
+## 19. 平衡零模族的原零探针刚性
+
+本节与 §20 准确沿用承载卷在 `caf0f3b3064a987b753b67aaa3836d6d86e73f75` 的定义 41.1，以及本卷 (1.1)–(1.2)。记 $S_\pm=t\pm(r+g_\sigma)$，即 (1.2) 中的同一 $V_\pm$；不改变任何读取标签。始终取
+
+$$
+C=\operatorname{diag}(1,2),\quad c=C\oplus0_m,\quad P=I_2\oplus0_m,
+\quad t=\begin{pmatrix}B&V\\V^*&D_{\rm env}\end{pmatrix}=t^*,
+\quad g_\sigma=\frac{\sigma i}{2}[c,t]+s,
+\quad\sigma\in\{1,-1\}.
+\tag{19.1}
+$$
+
+$D_{\rm env}$ 是已知有限 Hermitian 环境矩阵。全部正泛函仍是完整 $M_{m+2}(\mathbb C)$ 上的全部正复线性泛函，包含零泛函与任意有限质量。对原空间向量 $\xi$，使用 $\phi_\xi(A)=\xi^*A\xi$；因此
+$\phi_\xi(A^2)=\|A\xi\|^2$、$\phi_\xi(A\circ B)=\operatorname{Re}((A\xi)^*B\xi)$，所有乘积均取原完整矩阵乘法。实 Gram 的这些恒等式及正泛函背景沿 §§1、5、11 的成熟归属；本节的增量是下述特定输入的显式共同见证，不另立通用 Gram 定理。
+
+**定理 19.1（平衡秩一族的零探针刚性与继承区间）。** 设 $m\ge1$，
+
+$$
+\begin{gathered}
+v=(1,\sqrt2)^{\mathsf T},\qquad
+U=\operatorname{diag}(\zeta_1,\zeta_2),\quad |\zeta_j|=1,\qquad
+V=Uv\ell^*,\qquad P_{\ker D_{\rm env}}\ell\ne0,\\
+B=U\begin{pmatrix}a&z\\\bar z&d\end{pmatrix}U^*,\qquad
+ a,d\in\mathbb R,\quad z\in\mathbb C,\qquad
+ d=3\sqrt2\operatorname{Re}z-4a,\qquad
+ \delta=2a-\sqrt2\operatorname{Re}z\ne0.
+\end{gathered}
+\tag{19.2}
+$$
+
+对任意实对角角残量 $s=\operatorname{diag}(s_1,s_2)\oplus0_m$，固定 P2 的准确条件直接由定理 13.1 给出：
+
+$$
+\begin{gathered}
+s=\rho\operatorname{diag}(1,-2)\oplus0_m,\qquad \rho\in\mathbb R,\\
+\alpha=\|P_{\ker D_{\rm env}}\ell\|>0,\qquad
+\gamma=\sqrt2\alpha,\qquad
+\mathfrak b=\frac34\delta+\frac{i\operatorname{Im}z}{\sqrt2},\qquad
+K=\sqrt{|\mathfrak b|^2+\frac34\gamma^2},\\
+-\frac{\gamma^2}{2(K+\sigma\operatorname{Im}\mathfrak b)}
+\le\rho\le
+\frac{\gamma^2}{2(K-\sigma\operatorname{Im}\mathfrak b)}.
+\end{gathered}
+\tag{19.3}
+$$
+
+若要求两个取向，两个准确区间的交集为
+
+$$
+ |\rho|\le\frac{\gamma^2}{2(K+|\operatorname{Im}\mathfrak b|)}.
+\tag{19.4}
+$$
+
+对每个分别固定的 $\sigma$，全部原 P2 与原 $x=0$ PB 同时成立，当且仅当 $s=0$。更具体地，对任意 $\rho\ne0$，下述同一个有限原空间向量使原零探针的两笔 Gram 预算同时为零，而其左端严格正；不要求 $\rho$ 先属于 (19.3)。
+
+证明。先准确代入定理 13.1，不重证其分类。令
+
+$$
+q=\alpha^{-1}P_{\ker D_{\rm env}}\ell,\qquad
+n=U(1,1)^{\mathsf T}/\sqrt2,\qquad
+e=U(1,-1)^{\mathsf T}/\sqrt2.
+\tag{19.5}
+$$
+
+$q$ 为单位向量，$D_{\rm env}q=0$、$\ell^*q=\alpha$，而
+$C^{-1/2}Vq=\gamma n$，故零模耦合秩为一且平衡。归一化 Schur 矩阵中，被减去的项为
+$(\ell^*D_{\rm env}^\dagger\ell)U(1,1)^{\mathsf T}(1,1)U^*$；其 $e,n$ 条目为零。因此 (13.5) 的 $b$ 准确为
+
+$$
+e^*C^{-1/2}(B-VD_{\rm env}^\dagger V^*)C^{-1/2}n
+=\frac{a-d/2}{2}+\frac{i\operatorname{Im}z}{\sqrt2}
+=\mathfrak b.
+\tag{19.6}
+$$
+
+在 (13.6) 的同一个原行空间中，$e^*C^{-1/2}V=0$，所以
+
+$$
+L=[e^*C^{-1/2},0],\qquad j=\gamma^{-1}[0,q^*],\qquad
+G=\begin{bmatrix}L-\mathfrak b j\\j\end{bmatrix},\qquad
+GG^*=\begin{pmatrix}
+3/4+|\mathfrak b|^2/\gamma^2&-\mathfrak b/\gamma^2\\
+-\overline{\mathfrak b}/\gamma^2&1/\gamma^2
+\end{pmatrix}.
+\tag{19.7}
+$$
+
+其逆及定理 13.1 的标量准确为
+
+$$
+\begin{gathered}
+Q=\begin{pmatrix}4/3&4\mathfrak b/3\\
+4\overline{\mathfrak b}/3&\gamma^2+4|\mathfrak b|^2/3\end{pmatrix},\qquad
+R=4K/3,\quad \Delta=4\gamma^2/3,\quad
+\omega=e^*\operatorname{diag}(1,-1)n=1,\quad
+J=-4\operatorname{Im}\mathfrak b/3.
+\end{gathered}
+\tag{19.8}
+$$
+
+将它们直接代入 (13.9) 和 (13.10)，得到 (19.3) 和 (19.4)，包括全部闭端点及原质量。$K>|\operatorname{Im}\mathfrak b|$，所以分母严格正；两个区间都包含非零内点。这里保留了实际耦合幅度 $\gamma$ 及取向 $\sigma$。
+
+现在给出原零探针的向量。置
+
+$$
+u_0=(-2\sqrt2,1)^{\mathsf T},\qquad
+w=4\sqrt2a-3z,\qquad y=(w/\alpha)q,\qquad
+\xi=(Uu_0,y)\in\mathbb C^2\oplus\mathbb C^m.
+\tag{19.9}
+$$
+
+此处的 $u_0$ 是上述列向量；$U$ 保留在原演员坐标中。$\ell^*y=w$、$D_{\rm env}y=0$。直接用原 $k=c\circ t$ 的三个块行，得到
+
+$$
+\begin{aligned}
+U^*(k\xi)_{\rm actor}
+&=\binom{-2\sqrt2a+3z/2+w/2}
+{-3\sqrt2\bar z+2d+\sqrt2w}=\binom00,\\
+(k\xi)_{\rm env}
+&=\tfrac12\ell\,v^*Cu_0=0.
+\end{aligned}
+\tag{19.10}
+$$
+
+第二演员行使用的准确关系是
+$2d+8a-3\sqrt2(z+\bar z)=0$。令 $\nu=\operatorname{Im}z$，则同一向量还满足
+
+$$
+T=\binom{\sqrt2\delta-2i\nu}{2\delta-i\sqrt2\nu},\qquad
+ t\xi=(UT,-\sqrt2\ell).
+\tag{19.11}
+$$
+
+由 $k\xi=0$，有 $tc\xi=-ct\xi$，故对于任意实 $\rho$，
+
+$$
+Z=\operatorname{diag}(1,-1),\qquad
+ g_\sigma\xi=(U(\sigma iCT+\rho CZu_0),0_m),\qquad
+ CZu_0=(-2\sqrt2,-2)^{\mathsf T}.
+\tag{19.12}
+$$
+
+取实际 $x=0$，则 $h=r=0$。两对完整原标签在这一个向量上的作用分别为
+
+$$
+\begin{gathered}
+R_+\xi=-k\xi=0,\qquad R_-\xi=k\xi=0,\\
+S_\pm\xi=
+\bigl(U[T\pm(\sigma iCT+\rho CZu_0)],-\sqrt2\ell\bigr).
+\end{gathered}
+\tag{19.13}
+$$
+
+因此 $B_{\phi_\xi}(R_+,S_+)=B_{\phi_\xi}(R_-,S_-)=0$。这里两个 $S$ 的环境分量仍是原来的 $-\sqrt2\ell$；零预算来自 $R_\pm\xi=0$，不是删除环境平方。另一方面，$T^*CT$ 为实数，且
+
+$$
+\operatorname{Re}(T^*CZu_0)=-8\delta,\qquad
+\phi_\xi(L)=-2\operatorname{Re}((t\xi)^*g_\sigma\xi)
+=16\rho\delta.
+\tag{19.14}
+$$
+
+这对两种 $\sigma$ 分别成立。$\|\xi\|^2=9+|w|^2/\alpha^2>0$，所有条目均有限；故 $\rho\delta\ne0$ 时左端为 $16|\rho\delta|>0$，两笔预算之和为零。任取质量 $\mu>0$，再用 $\sqrt\mu\xi/\|\xi\|$，两笔预算仍为零，左端为 $16\mu|\rho\delta|/\|\xi\|^2$。零泛函本身满足零等式。
+
+于是 P2 先给 (19.3) 的残量形状，而原零探针排除其中全部非零 $\rho$。$s=0$ 时的 P2 与全部实际角探针 PB 直接复用 §1 的标准零残量结果。这证明充要结论。∎
+
+## 20. 第一角无环境连线时的实际探针
+
+**定理 20.1（解耦第一角的有限探针排除）。** 在 (19.1) 的完整原空间中，允许任意有限 $m\ge0$，并设
+
+$$
+V^*e_1=0,\qquad a=B_{11},\qquad b=B_{12},\qquad
+s=\rho\operatorname{diag}(1,-2)\oplus0_m,\qquad
+ a\rho\ne0,\qquad a^2\le\tfrac52\rho^2.
+\tag{20.1}
+$$
+
+对每个分别固定的 $\sigma$，以下实际有限 Hermitian 角探针和原向量 $\xi=e_1\oplus0_m$ 联合严格违反 PB：
+
+$$
+\begin{gathered}
+\tau=\sqrt{\tfrac52\rho^2-a^2},\qquad
+u=\rho+\operatorname{sgn}(\rho)\tau,\qquad
+p_\sigma=1+\sigma i/2,\\
+A_+=(u-a)p_\sigma+\tfrac32(u+a+\rho),\qquad
+B_+=\tfrac32(u-a)-p_\sigma(u+a+\rho),\qquad
+\eta=-A_+/B_+,\\
+x=\begin{pmatrix}u&\bar\eta b\\\eta\bar b&0\end{pmatrix}\oplus0_m.
+\end{gathered}
+\tag{20.2}
+$$
+
+式中的 $u$ 为上述实数。该结论不要求 P2，不限制 $b,B_{22},D_{\rm env}$ 或第二演员的环境连线。
+
+证明。$u$ 与 $\rho$ 同号，且
+
+$$
+ (u-\rho)^2+a^2-\tfrac52\rho^2=0.
+\tag{20.3}
+$$
+
+若 $B_+=0$，其虚部给 $u+a+\rho=0$，再由实部得 $u=a$，从而 $\rho=-2a$。这与 $u$、$\rho$ 同号矛盾。因此 $\eta$ 定义良好，$x=x^*=PxP$ 且有限。
+
+由 $V^*e_1=0$，下列均为完整原算子在同一 $\xi$ 上的作用，所有环境分量恰为零：
+
+$$
+\begin{gathered}
+t\xi=(a,\bar b,0_m),\quad
+k\xi=(a,\tfrac32\bar b,0_m),\quad
+g_\sigma\xi=(\rho,\tfrac{\sigma i}{2}\bar b,0_m),\\
+x\xi=(u,\eta\bar b,0_m),\quad
+h\xi=(0,\tfrac{\sigma i}{2}\eta\bar b,0_m),\quad
+r\xi=(u,\tfrac32\eta\bar b,0_m).
+\end{gathered}
+\tag{20.4}
+$$
+
+特别地，两对完整原标签为
+
+$$
+\begin{aligned}
+R_+\xi&=(u-a,(p_\sigma\eta-3/2)\bar b,0_m),\\
+S_+\xi&=(u+a+\rho,(p_\sigma+3\eta/2)\bar b,0_m),\\
+R_-\xi&=(u+a,(\bar p_\sigma\eta+3/2)\bar b,0_m),\\
+S_-\xi&=(a-u-\rho,(\bar p_\sigma-3\eta/2)\bar b,0_m).
+\end{aligned}
+\tag{20.5}
+$$
+
+为同时证明两笔实 Gram 为零，定义剩下的两个明确系数
+
+$$
+A_-=(u+a)\bar p_\sigma-\tfrac32(a-u-\rho),\qquad
+B_-=-\tfrac32(u+a)-\bar p_\sigma(a-u-\rho).
+\tag{20.6}
+$$
+
+每一对 (20.5) 的前两坐标行列式分别是
+$(A_++\eta B_+)\bar b$ 与 $(A_-+\eta B_-)\bar b$。第一个由定义为零。四个系数的完整实虚部分为
+
+$$
+\begin{aligned}
+2A_+&=5u+a+3\rho+\sigma i(u-a),\\
+2B_+&=u-5a-2\rho-\sigma i(u+a+\rho),\\
+2A_-&=5u-a+3\rho-\sigma i(u+a),\\
+2B_-&=-u-5a+2\rho+\sigma i(a-u-\rho).
+\end{aligned}
+\tag{20.7}
+$$
+
+相乘相减，虚部相消，实部给
+
+$$
+A_+B_--A_-B_+
+=-2u^2+4\rho u+3\rho^2-2a^2
+=-2\bigl((u-\rho)^2+a^2-\tfrac52\rho^2\bigr)=0.
+\tag{20.8}
+$$
+
+故 $A_-+\eta B_-=(A_-B_+-A_+B_-)/B_+=0$。这同时处理 $\tau=0$ 的边界，不使用严格不等号。
+
+第一对的两个实首坐标不能同时为零，否则 $u=a,\rho=-2a$；第二对也不能同时为零，否则 $u=-a,\rho=2a$。两者均与 $u$、$\rho$ 同号矛盾。因此在每一对中，至少有一个非零实首坐标；行列式为零遂保证两个完整作用向量是实比例，而不仅是复比例。于是
+
+$$
+ B_{\phi_\xi}(R_+,S_+)=B_{\phi_\xi}(R_-,S_-)=0.
+\tag{20.9}
+$$
+
+最后，不改变向量或探针，由 (20.4) 得
+
+$$
+\begin{aligned}
+\operatorname{Re}((x\xi)^*(h-k)\xi)
+ &=-au-\tfrac32|b|^2\operatorname{Re}\eta,\\
+\operatorname{Re}((t\xi)^*(r+g_\sigma)\xi)
+ &=a(u+\rho)+\tfrac32|b|^2\operatorname{Re}\eta,\\
+\phi_\xi(L)&=-2a\rho.
+\end{aligned}
+\tag{20.10}
+$$
+
+PB 左端为 $2|a\rho|>0$，右端由 (20.9) 为零，故严格失败。$\xi$ 的质量为一；用 $\sqrt\mu\xi$ 可在任意给定有限质量 $\mu>0$ 得同一严格违反。$B_{22}$ 与环境块未出现在这些原作用列中，是 $V^*e_1=0$ 的准确结果，不是对原输入作 Schur 替换或压缩平方。∎
+
+**命题 20.2（全正 P2 相容而被实际探针排除的同一实现）。** 取
+
+$$
+\begin{gathered}
+m=1,\qquad D_{\rm env}=(1),\qquad V=(0,1)^{\mathsf T},\qquad
+B=\begin{pmatrix}\rho/2&1\\1&\rho+1\end{pmatrix},\\
+s=\rho\operatorname{diag}(1,-2,0),\qquad
+0<|\rho|\le1/\sqrt2.
+\end{gathered}
+\tag{20.11}
+$$
+
+对两种分别解释的 $\sigma$，该完整 $M_3(\mathbb C)$ 实现满足全部原正泛函的固定 P2，而下述同一实现的有限原探针与原向量严格违反 PB：
+
+$$
+x_\sigma=\begin{pmatrix}5\rho/2&2+3\sigma i&0\\
+2-3\sigma i&0&0\\0&0&0\end{pmatrix},\qquad
+\xi=(1,0,0)^{\mathsf T}.
+\tag{20.12}
+$$
+
+证明。P2 直接复用定理 8.1。其参数为
+
+$$
+H=B-VV^*=\begin{pmatrix}\rho/2&1\\1&\rho\end{pmatrix},\qquad
+C^{-1/2}HC^{-1/2}
+=\begin{pmatrix}\rho/2&1/\sqrt2\\1/\sqrt2&\rho/2\end{pmatrix},
+\qquad \beta=1/\sqrt2.
+\tag{20.13}
+$$
+
+取其有序正交谱基 $U_0$，则原度量给
+
+$$
+GG^*=U_0^*C^{-1/2}(I_2+VV^*)C^{-1/2}U_0=I_2,
+\quad Q=I_2,\quad R=\Delta=1,\quad h=J=0.
+\tag{20.14}
+$$
+
+故 (8.2) 准确成为 $|\rho|\le\beta=1/\sqrt2$，包含端点；这已是对原全部正复线性泛函、零泛函和任意有限质量的充要证书，不以选定向量读取替代 P2 的全称量词。
+
+对该同一输入，$a=\rho/2$、$b=1$，定理 20.1 的 $\tau=3|\rho|/2$、$u=5\rho/2$、$\eta=2-3\sigma i$，正好得到 (20.12)。其两对完整原作用列明确为
+
+$$
+\begin{aligned}
+R_+\xi&=(2\rho,2-2\sigma i,0)^{\mathsf T},&
+S_+\xi&=2R_+\xi,\\
+R_-\xi&=(3\rho,2-4\sigma i,0)^{\mathsf T},&
+S_-\xi&=-R_-\xi.
+\end{aligned}
+\tag{20.15}
+$$
+
+所以两笔 Gram 预算均为零，而 (20.10) 给
+$|\phi_\xi(L)|=\rho^2>0$。环境矩阵 $1$、连线 $V$、两个演员对角条目及全部原标签均保持 (20.11) 的实际值。∎
+
+## 21. 有限排除域与未决边界
+
+定理 19.1 的覆盖域准确是 (19.2)，其固定 P2 形状和锐区间复用 ENV13.1；新增的 repo-derived 推断是 (19.9)–(19.14) 的原零探针见证。定理 20.1 的覆盖域准确是 (20.1)，其新增推断是 (20.2)–(20.10) 的同一有限探针、向量及两笔零预算；命题 20.2 在同一实现上结合 ENV8.1 的既有 P2 证书。它们不重证 ENV8.1、ENV13.1、ENV17.2、ENV18.1、既有实星形区间、F41.2、F42.2 或标准零残量 PB，也不从六维共同读取支撑推出普通 $M_6$ 分类。有限矩阵乘法、实 Gram 与二次方程在上述证明中只作为成熟工具；不主张历史优先权或文献穷尽。
+
+平衡秩一中不属于 (19.2) 的输入、包括该等式族中 $\delta=0$ 的情形，尚未由这里的零探针见证排除。Schur 平衡秩零中不属于 (20.1) 的非零残量也尚未由这里的探针构造排除。定理 20.1 对任意已知有限 Hermitian 环境成立，但未声称其域之外存在全部 PB 相容残量；上述有限排除域不构成整个有限类的分类，也没有给出任何全 PB 反例。
+
+原一般混合输入的 $E_+^D=E_-^D$、$N_\omega(\varepsilon)^2\to0$、一般完整 $\mathsf H$／总响应 $D$、全部递归钉版实际物理来源，以及 §§6、15、18 的原全域和资源义务仍保持原范围。上述数学向量和探针不供应任何未知总响应的正则性、输入可加性、齐次性、协变性、单位平移中性、压缩或商自然性，也不生成原物理准备与过程。
+
+## 新增锚（本行以下为后续增补区）
