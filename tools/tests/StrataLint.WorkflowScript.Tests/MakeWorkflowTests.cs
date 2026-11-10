@@ -74,6 +74,7 @@ public sealed partial class MakeWorkflowTests
         "worktree",
         "worktree-clean",
         "worktree-remove",
+        "worktree-pending",
         "worktree-checkpoint",
         "worktree-publish",
         "worktree-finalize",
@@ -333,7 +334,8 @@ public sealed partial class MakeWorkflowTests
     }
 
     private static int RecipeCount(string makefile, string target) =>
-        RecipeLines(makefile, target).Count;
+        RecipeLines(makefile.Replace("\\\r\n", string.Empty, StringComparison.Ordinal)
+            .Replace("\\\n", string.Empty, StringComparison.Ordinal), target).Count;
 
     private static string Recipe(string makefile, string target) =>
         Assert.Single(RecipeLines(makefile, target));

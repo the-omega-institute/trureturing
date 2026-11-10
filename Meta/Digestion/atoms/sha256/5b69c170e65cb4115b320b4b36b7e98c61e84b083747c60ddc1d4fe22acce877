@@ -1,0 +1,27 @@
+### 17.7 第七步：实际完整输出的旋转下界
+
+将 (17.27)、(17.34) 与两个端点各自的 (17.20) 合并，对 $h\in\mathcal A$ 得
+
+$$
+D_{\rm tr}(\omega_{\rho_\alpha h},\omega_h)
+\ge\frac{c\alpha\log J}{N}-2E_J.
+\tag{17.35}
+$$
+
+此处 $\alpha=32/J$，$N=(J+1)^2\le4J^2$，并且由 (17.18)、(17.22)，
+
+$$
+E_J\le\frac C{J^2\sqrt{m_J}}\le\frac C{J^6\log J}.
+\tag{17.36}
+$$
+
+所以存在一个有限绝对阈值 $J_0$，包含上述标量、格点及余项阈值，使每个二进 $J\ge J_0$ 的 (17.35) 右侧至少为 $c\log J/J^3$。在固定正面积片 $\mathcal A$ 上积分即得
+
+$$
+\int_{S^2}D_{\rm tr}(\omega_{\rho_\alpha h},\omega_h)^2\,d\mu(h)
+\ge c\frac{(\log J)^2}{J^6}.
+\tag{17.37}
+$$
+
+这是实际完整 $K_J$ 输出态的估计，所有混合标签及两态寄存器都仍在输出中。
+

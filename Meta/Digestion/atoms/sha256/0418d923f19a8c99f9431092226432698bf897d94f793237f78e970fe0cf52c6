@@ -1,0 +1,226 @@
+**定理 4.2（一般标量像吸收）。** 在定义 4.1 的全部原域上，对任意原 $a,b\in E$、任意 $\mu\in\mathbb R$，有
+
+$$
+\boxed{q(a)=\mu1_Y\quad\Longrightarrow\quad qD(a,b)=0.}
+\tag{4.4}
+$$
+
+$E$ 可以无限维、不可分且不完备，$X$ 与 $Y$ 无须有非零最小投影；没有原谱投影、原根或原逆元闭合的前件。
+
+证明。$Y=0$ 时直接成立；$\mu=0$ 由 (4.3)。以下固定 $\mu\ne0$，记真正的原输出及其数学像
+
+$$
+H=D(a,b)\in E,\qquad B=q(b),\qquad h=q(H).
+$$
+
+先证明第二输入像半定时的结论。若 $h\ne0$，同书 Lemma 3.6.8（页 89）的范数支撑态给状态 $\beta$，令 $Z=\beta(h)$，满足 $|Z|=\|h\|>0$。由 Schwarz 不等式和 $h^2\le\|h\|^2 1_Y$，
+
+$$
+\beta((h-Z1_Y)^2)=0.
+\tag{4.5}
+$$
+
+选择实际比例标签 $c=ka\in E$，其中 $k=Z/(1+\mu^2)$。原比例零值给 $D(a,c)=0$。在原 PB $(a,b,c)$ 中，保留实际外层 $r_\pm,s_\pm$；其像为
+
+$$
+\begin{aligned}
+R_\pm:=q(r_\pm)&=B\pm h\mp k\mu^2 1_Y,\\
+S_\pm:=q(s_\pm)&=k\mu1_Y\pm\mu B,\\
+S_+-\mu R_+&=S_-+\mu R_-=\mu(Z1_Y-h).
+\end{aligned}
+\tag{4.6}
+$$
+
+在半内积 $\langle v,w\rangle_\beta=\beta(v\circ w)$ 中，(4.5) 使两组像向量分别成比例。因此 (4.2) 使两个实际外层输出的 $\beta\circ q$ 读取都为零。PB 右端的像准确为
+
+$$
+-2B\circ(h-k\mu^2 1_Y)-2k\mu1_Y\circ(\mu B)
+=-2B\circ h.
+$$
+
+又由 (4.5) 的 Schwarz 不等式，$\beta(B\circ h)=Z\beta(B)$，故 $Z\beta(B)=0$。若 $B\ge0$ 或 $B\le0$，则 $\beta(B)=0$ 及 $0\le B^2\le\|B\|(\pm B)$ 给 $\beta(B^2)=0$。原 $(a,b)$ 的 (4.2) 随即给 $Z=0$，矛盾。于是已经证明
+
+$$
+q(c)\in Y_+\cup(-Y_+)\quad\Longrightarrow\quad qD(a,c)=0
+\qquad(c\in E).
+\tag{4.7}
+$$
+
+现在处理一般 $B$。只为数学读取，取 $M=Y^{**}$，将 $\beta\in Y^*$ 正常延伸到 $M$。同书 Theorem 4.4.3（页 104）供应此 JBW 结构。Hamhalter，[*Pure states on Jordan algebras*](https://dml.cz/bitstream/handle/10338.dmlcz/133911/MathBohem_126-2001-1_7.pdf)，Mathematica Bohemica 126 (2001)，81–91，§1 页 82–83，供应每个纯态的最小非零支撑投影 $p\in M$，满足 $U_p(v)=\beta(v)p$；由正常性和弱星稠密性，该式从 $Y$ 延至 $M$。这里 $U_v=2L_v^2-L_{v^2}$，$L_vw=v\circ w$。
+
+固定满足 $\beta(h)\ne0$ 的纯态，令
+
+$$
+K=\frac{\mu h}{1+\mu^2},\qquad r=\beta(K)\ne0,
+\qquad C_0=\frac{U_K(p)}r\in M.
+\tag{4.8}
+$$
+
+$U_K$ 保正，故 $C_0$ 按 $r$ 的符号半定。最小支撑给 $M_1(p)=\mathbb Rp$、$\beta(p)=1$、$\beta=\beta\circ U_p$。将 $K=rp+v+w$ 按 Peirce 特征值 $1,1/2,0$ 分解；同书 Lemma 2.6.3（页 48）的乘法规则给
+
+$$
+U_K(p)=r^2p+rv+(v^2)_0,\qquad
+C_0-K=(v^2)_0/r-w\in M_0(p).
+\tag{4.9}
+$$
+
+所以 $\beta((C_0-K)^2)=0$。支撑、$C_0$ 及其根都只用于已知 Jordan 结构，不输入 $D$。
+
+同书 Lemma 4.1.9（页 96–97）给有界集上乘法联合强连续性；Theorem 4.5.12（页 115）的 Kaplansky 密度给有界强逼近。具体地，$Y$ 在 $M$ 中弱星稠密，弱与强拓扑在凸集上有相同闭包，故 $Y$ 强稠密；再用 $q(E)$ 在 $Y$ 中范数稠密，可以选择实际原 $e_i\in E$，使 $q(e_i)$ 一致范数有界且强收敛到 $|C_0|^{1/2}$。这里不要求提升 $e_i$ 在 $X$ 中范数有界。令
+
+$$
+c_i=\operatorname{sgn}(r)e_i^2\in E,\qquad C_i=q(c_i).
+$$
+
+于是 $C_i$ 一致有界、半定并强收敛到 $C_0$。(4.7) 已经支付 $qD(a,c_i)=0$。定义
+
+$$
+\delta_i=(1+\mu^2)C_i-\mu h,\qquad
+\varepsilon_i=\beta(\delta_i^2)^{1/2}\longrightarrow0.
+\tag{4.10}
+$$
+
+最后的收敛由 $\delta_i\to(1+\mu^2)(C_0-K)$ 强收敛及 (4.9) 的零平方读取得到。
+
+对每个 $i$，完整 PB 仍准确使用原标签
+
+$$
+\begin{aligned}
+r_\pm^{(i)}&=b\pm H\mp a\circ c_i,\\
+s_\pm^{(i)}&=c_i\pm a\circ b\pm D(a,c_i).
+\end{aligned}
+\tag{4.11}
+$$
+
+即使 $qD(a,c_i)=0$，也不在这些原标签里删除 $D(a,c_i)$。仅在计算像时，得
+
+$$
+\begin{aligned}
+R_\pm^{(i)}&=B\pm h\mp\mu C_i,&
+S_\pm^{(i)}&=C_i\pm\mu B,\\
+S_+^{(i)}-\mu R_+^{(i)}
+&=S_-^{(i)}+\mu R_-^{(i)}=\delta_i.
+\end{aligned}
+\tag{4.12}
+$$
+
+给第二向量加第一向量的实倍数不改实 Gram 行列式。故每张实际外层 P2 分别给
+
+$$
+|\beta(qD(r_\pm^{(i)},s_\pm^{(i)}))|
+\le\beta((R_\pm^{(i)})^2)^{1/2}\varepsilon_i
+\le M_0\varepsilon_i,
+\tag{4.13}
+$$
+
+其中 $M_0<\infty$ 只依赖 $B,h,\mu$ 和 $C_i$ 的一致像范数界。PB 右端的像却始终是固定元素
+
+$$
+-2B\circ(h-\mu C_i)-2C_i\circ(\mu B)=-2B\circ h.
+$$
+
+于是 $2|\beta(B\circ h)|\le2M_0\varepsilon_i$，从而 $\beta(B\circ h)=0$。若这个固定读取非零，一个足够准确的实际 $c_i$、一次原 PB 和两张原 P2 就已给出矛盾；没有对任何变动的未知输出取极限。
+
+若纯态 $\beta(h)=0$ 且 $\beta(h^2)=0$，Schwarz 不等式直接给 $\beta(B\circ h)=0$。若 $\beta(h)=0$ 而 $\beta(h^2)>0$，则对足够小的非零实 $t$，$1_Y+th$ 正且可逆。$U_{1_Y+th}$ 是正锥自同构，其对偶保持正极射线，故
+
+$$
+\beta_t(v)=\frac{\beta(U_{1_Y+th}v)}{\beta((1_Y+th)^2)}
+$$
+
+仍为纯态。二次表示的保正性及逆来自同书 Proposition 3.3.6、§3.2.10（页 83、96 的引用）。已知单生成演算和 $\beta(h)=0$ 给
+
+$$
+\beta_t(h)=\frac{2t\beta(h^2)+t^2\beta(h^3)}{1+t^2\beta(h^2)}\ne0
+\tag{4.14}
+$$
+
+对足够小的非零 $t$ 成立。已证情形使 $\beta_t(B\circ h)=0$；$U_{1_Y+th}=I+2tL_h+t^2U_h$ 使 $\beta_t\to\beta$ 范数收敛，所以固定元素仍读为零。纯态分离 $Y$，得到
+
+$$
+B\circ h=0.
+\tag{4.15}
+$$
+
+这只是读取的变形，不是实际准备或原输入的变形。
+
+下一步取得第二张固定表。准确调用原 PB $(b,a,\mu b)$，比例零值给 $D(b,\mu b)=0$，反对称性给 $D(b,a)=-H$。定义实际原标签
+
+$$
+x=a-H-\mu b^2,\qquad y=\mu b+b\circ a,
+\qquad x_-=a+H+\mu b^2,\qquad y_-=\mu b-b\circ a.
+$$
+
+$y_-$ 不必是原零，但 $q(y_-)=0$，所以只能由已经证明的 (4.3) 消去 $qD(x_-,y_-)$。PB 右端的像为
+
+$$
+2\mu h+2\mu^2B^2-2\mu^2B^2=2\mu h.
+$$
+
+因而两张固定实际表的像准确为
+
+$$
+\begin{array}{c|c|c}
+\text{第一输入像}&\text{第二输入像}&\text{旧输出像}\\ \hline
+\mu1_Y&B&h\\
+X_0:=\mu(1_Y-B^2)-h&Y_0:=2\mu B&2\mu h
+\end{array}
+\qquad qD(x,y)=2\mu h.
+\tag{4.16}
+$$
+
+这些不是在像上定义的新表函数，只是两次固定原调用的三个像。
+
+令 $J=\operatorname{JB}(1_Y,B,h)\subseteq Y$。同书 Theorem 7.2.5（页 156），亦见 van de Wetering，[*Commutativity in Jordan Operator Algebras*](https://arxiv.org/html/1912.01903v1)，Theorem 3.5，给两生成 $J$ 的忠实含单位 JC 表示。正锥由单生成谱演算准确保留。(4.15) 在其生成的复 C* 环境中成为 $Bh=-hB$，所以 $B^2$ 与 $h$ 交换。两张固定表的每个 P2 二次型像都属于 $J\cap Y_+=J_+$，因此环境中的向量态可合法读取它们；若需要拉回到整个 $Y$，这些 $J$ 上正泛函由序单位 Hahn–Banach 正延拓得到。这里只读取 (4.16) 的固定调用，不要求其他原调用的输出像属于 $J$。
+
+取交换 C* 子代数 $C^*(1_Y,B^2,h)$ 的任意字符 $\chi$，记 $t=\chi(B^2)\ge0$、$z=\chi(h)$。$z=0$ 已满足所需谱关系。若 $z\ne0$，将字符延为环境 C* 态；其 GNS 循环单位向量 $\xi$ 满足 $h\xi=z\xi$、$B^2\xi=t\xi$。第一张表给 $|z|\le|\mu|\sqrt t$，故 $t>0$。反交换给 $hB\xi=-zB\xi$，所以 $\xi$ 与 $B\xi/\sqrt t$ 正交。它们张成的二维不变空间上，
+
+$$
+B=\sqrt t\,\sigma_x,\quad h=z\sigma_z,\quad
+X_0=\mu(1-t)I-z\sigma_z,\quad Y_0=2\mu\sqrt t\,\sigma_x.
+$$
+
+用实单位向量 $(\cos\theta,\sin\theta)$ 读第二张固定表，写 $\eta=\cos2\theta$。其旧输出读取为 $2\mu z\eta$，两个输入作用向量的有向面积为 $2\mu\sqrt t[\mu(1-t)\eta-z]$。故
+
+$$
+|z\eta|\le\sqrt t\,|\mu(1-t)\eta-z|
+\quad(-1\le\eta\le1),\qquad |z|\le|\mu|\sqrt t.
+\tag{4.17}
+$$
+
+为完整排除残余谱，令 $A_0=\mu(1-t)\ne0$。若 $0<|z|\le|A_0|$，取 $\eta=z/A_0$，右端零而左端非零。若 $|z|>|A_0|$，取 $\eta=\operatorname{sgn}(A_0z)$，得到 $|z|\le\sqrt t(|z|-|A_0|)$。$t<1$ 时右端严格小于左端；$t>1$ 时则推出
+
+$$
+|z|\ge\frac{\sqrt t|A_0|}{\sqrt t-1}
+=|\mu|\sqrt t(\sqrt t+1),
+$$
+
+违反 (4.17) 的第二界。因此非零 $z$ 只能位于 $t=1$。字符分离交换子代数，包括 $t=0,z=0$ 的退化情形，给
+
+$$
+(B^2-1_Y)\circ h=0.
+\tag{4.18}
+$$
+
+还需排除 $t=1$ 上的残余，不能由 (4.15) 单独断言 $h=0$。取实际原 $d=D(y,x)$、$g=y\circ x$。由 (4.16) 及已知乘法，
+
+$$
+q(d)=-2\mu h,\qquad G:=q(g)=2\mu^2(B-B^3).
+$$
+
+在上述 JC 环境中，(4.15)、(4.18) 给 $Gh=hG=0$，故 $U_h(G^2)=0$；并有 $X_0\circ h=-h^2$。最后准确调用原 PB $(y,x,0)$：
+
+$$
+D(x+d,g)-D(x-d,-g)=-2x\circ d.
+\tag{4.19}
+$$
+
+对任意 $Y$ 上正 $\rho$，$\phi=\rho\circ U_h\circ q|_E$ 是数学正读取。两个实际外层 P2 的第二对角均为 $\phi(g^2)=\rho(U_h(G^2))=0$，故两输出的 $\phi$ 读取均为零。(4.19) 于是给
+
+$$
+0=4\mu\rho(U_h(X_0\circ h))
+=-4\mu\rho(h^4).
+\tag{4.20}
+$$
+
+全部正 $\rho$ 分离正锥，故 $h^4=0$；JB 范数恒等式给 $\|h\|^4=\|h^4\|=0$。于是 $h=0$。所有未知调用从头至尾只接收实际原 $E$ 标签；既未构造商响应，也未使用它的输入连续性。∎
+

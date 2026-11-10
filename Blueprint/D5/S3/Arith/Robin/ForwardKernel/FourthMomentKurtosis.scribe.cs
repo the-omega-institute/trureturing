@@ -20,6 +20,24 @@ internal sealed class FourthMomentKurtosisDocument : IScribeDocumentDefinition
                 + "Z_X(x)=profileResponse(E,theta,g,x)/sqrt(X^kappa log(X)). "
                 + "Expectations use dx/(x log(2)) on [X,2X].")),
             Describe.Lean(
+                DescribeId.Create("dyadic-z-second-moment-tendsto"),
+                DeclarationHandle.Create(Prefix + "dyadicZ_second_moment_tendsto"),
+                H("Normalized second profile moment"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For locally bounded Borel measurable E, a valid exponent band "
+                    + "0<alpha<theta<beta<1 with the cumulative variance asymptotic, "
+                    + "and a measurable integrable real profile g, E[Z_X^2] tends to "
+                    + "(2^(1-theta)-1)*Q(g)/log(2). Apply moment transfer at order two "
+                    + "to the variance-band interface with kernel "
+                    + "kappa*dyadicMacroMoment(kappa)*min(s,t). Its profile-weighted "
+                    + "integral is kappa*dyadicMacroMoment(kappa)*Q(g), since the "
+                    + "Brownian pair kernel integrates to Q(g). The formula "
+                    + "dyadicMacroMoment(kappa)=(2^kappa-1)/(kappa*log(2)) "
+                    + "gives the stated limit."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("fixed-dyadic-positive-excess-kurtosis"),
                 DeclarationHandle.Create(Prefix + "fixed_dyadic_positive_excess_kurtosis"),
                 H("Second and fourth moments with strict excess kurtosis"),
@@ -37,9 +55,7 @@ internal sealed class FourthMomentKurtosisDocument : IScribeDocumentDefinition
                         + "L4=3*kappa*(2^(2*kappa)-1)*Q(g)^2/(2*log(2)). "
                         + "If g is not almost everywhere zero, 3*L2^2<L4.")),
                     Paragraph(Text(
-                        "The second limit follows from the profile-kernel "
-                        + "dyadic mean-square asymptotic and the logarithmic "
-                        + "probability-measure conversion. The fourth-moment "
+                        "The normalized second-moment theorem gives L2. The fourth-moment "
                         + "band bound supplies the uniform absolute-moment "
                         + "part of the fourth moment interface; the Brownian "
                         + "pairing function is measurable and the assumed "

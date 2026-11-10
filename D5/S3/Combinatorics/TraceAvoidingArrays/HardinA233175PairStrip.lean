@@ -8,9 +8,11 @@
 
 /-
 admission_basis: open-problem-resolution (#27656; Proved)
+Registration audit (CLAUDE.md §3.9): finish_fst, finish_snd, good_iff and edge_iff are
+declared_unresolved (IE-C050); the unfinished audit is recorded in issue #27943.
 escape_witness: none (open-problem-resolution; the settlement is the new content)
 Direct frozen dependency: D5.S3.Observer.Separation.BooleanRankThreeK4.beta
-(statement_id sha256:4d28f42d1bda6ccad928ffeaa23471945d90a760f82fa38f755ecbef9e992dc9), the complementary-pair label map.
+(statement_id sha256:1abdc5f3db71567fe05de5aabbe80dddeb5ec5179e4ec7fd49fe71e500518481), the complementary-pair label map.
 Pinned Mathlib supplies finite sums and power-series coefficients.
 Seen: proof_shape=bind-only; consumers=allowed, advance, good, finish, TailGood, step, v, count, total, seenCode
 Col: proof_shape=bind-only; consumers=pairs, compatible, chain, TailGood, step, count, total, counting_bridge
@@ -93,7 +95,7 @@ abbrev Col := Fin 2 → Fin 6
 
 def allowed (s : Seen) (c : Fin 6) : Prop :=
   ((c = 2 ∨ c = 3 ∨ c = 4) → s.1 = true) ∧ (c = 3 → s.2 = true)
-private instance instDecidableAllowed (s : Seen) (c : Fin 6) : Decidable (allowed s c) :=
+instance instDecidableAllowed (s : Seen) (c : Fin 6) : Decidable (allowed s c) :=
   inferInstanceAs (Decidable ((_ → _) ∧ (_ → _)))
 
 def advance (s : Seen) (c : Fin 6) : Seen :=
@@ -107,7 +109,7 @@ def finish : {n : ℕ} → Seen → (Fin n → Fin 6) → Seen
   | 0, s, _ => s
   | _n + 1, s, f => finish (advance s (f 0)) (Fin.tail f)
 
-private theorem finish_fst {n : ℕ} (s : Seen) (f : Fin n → Fin 6) :
+theorem finish_fst {n : ℕ} (s : Seen) (f : Fin n → Fin 6) :
     (finish s f).1 = true ↔ s.1 = true ∨ ∃ i, f i = 1 := by
   induction n generalizing s with
   | zero => simp [finish]
@@ -115,7 +117,7 @@ private theorem finish_fst {n : ℕ} (s : Seen) (f : Fin n → Fin 6) :
     rw [finish, ih]
     simp [advance, Fin.exists_fin_succ, Fin.tail, or_assoc]
 
-private theorem finish_snd {n : ℕ} (s : Seen) (f : Fin n → Fin 6) :
+theorem finish_snd {n : ℕ} (s : Seen) (f : Fin n → Fin 6) :
     (finish s f).2 = true ↔ s.2 = true ∨ ∃ i, f i = 2 := by
   induction n generalizing s with
   | zero => simp [finish]
@@ -123,7 +125,7 @@ private theorem finish_snd {n : ℕ} (s : Seen) (f : Fin n → Fin 6) :
     rw [finish, ih]
     simp [advance, Fin.exists_fin_succ, Fin.tail, or_assoc]
 
-private theorem good_iff {n : ℕ} (s : Seen) (f : Fin n → Fin 6) :
+theorem good_iff {n : ℕ} (s : Seen) (f : Fin n → Fin 6) :
     good s f ↔ ∀ i,
       ((f i = 2 ∨ f i = 3 ∨ f i = 4) →
         s.1 = true ∨ ∃ j, j < i ∧ f j = 1) ∧
@@ -135,7 +137,7 @@ private theorem good_iff {n : ℕ} (s : Seen) (f : Fin n → Fin 6) :
     have hp : ∀ i : Fin n, (0 : Fin (n + 1)) < i.succ := fun i => Nat.zero_lt_succ _
     simp [Fin.tail, Fin.exists_fin_succ, advance, allowed, or_assoc, hp]
 
-private def normal {n : ℕ} (A : Fin 2 × Fin n → Fin 6) : Prop :=
+def normal {n : ℕ} (A : Fin 2 × Fin n → Fin 6) : Prop :=
   ∀ p,
     ((A p = 2 ∨ A p = 3 ∨ A p = 4) →
       ∃ q, q.1.val * n + q.2.val < p.1.val * n + p.2.val ∧ A q = 1) ∧
@@ -190,7 +192,7 @@ private instance instDecidableCompatible (p : Fin 3 × Fin 3) (c : Col) :
     Decidable (compatible p c) :=
   inferInstanceAs (Decidable (∀ _r : Fin 2, _ ∧ _))
 
-private theorem edge_iff (c d : Col) :
+theorem edge_iff (c d : Col) :
     (∀ r s, c r ≠ d s ∧ (c r).val + (d s).val ≠ 5) ↔ compatible (pairs c) d := by
   have h : ∀ x y : Fin 6, (x ≠ y ∧ x.val + y.val ≠ 5) ↔ beta x ≠ beta y := by
     decide +kernel
@@ -216,7 +218,7 @@ private def Legal {n : ℕ} (A : Fin 2 × Fin n → Fin 6) : Prop :=
     A (r, j) ≠ A (s, ⟨j.val + 1, h⟩) ∧
       (A (r, j)).val + (A (s, ⟨j.val + 1, h⟩)).val ≠ 5) ∧ normal A
 
-private instance instDecidableNormal {n : ℕ} (A : Fin 2 × Fin n → Fin 6) : Decidable (normal A) :=
+instance instDecidableNormal {n : ℕ} (A : Fin 2 × Fin n → Fin 6) : Decidable (normal A) :=
   inferInstanceAs (Decidable (∀ _p : Fin 2 × Fin n, (_ → _) ∧ (_ → _)))
 
 private instance instDecidableLegal {n : ℕ} (A : Fin 2 × Fin n → Fin 6) : Decidable (Legal A) :=
@@ -260,7 +262,7 @@ private instance instDecidableChain {n : ℕ} (p : Fin 3 × Fin 3) (f : Fin n �
   | zero => exact isTrue trivial
   | succ n ih => exact @instDecidableAnd _ _ inferInstance (ih _ _)
 
-private instance instDecidableGood {n : ℕ} (s : Seen) (f : Fin n → Fin 6) :
+instance instDecidableGood {n : ℕ} (s : Seen) (f : Fin n → Fin 6) :
     Decidable (good s f) := by
   induction n generalizing s with
   | zero => exact isTrue trivial

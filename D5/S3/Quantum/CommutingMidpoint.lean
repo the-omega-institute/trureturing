@@ -19,13 +19,13 @@ open scoped ComplexOrder MatrixOrder Matrix.Norms.Frobenius InnerProductSpace
 open D5.S3.Quantum.GeneralizedFidelity
 open D5.S3.Quantum.Information.ActualPureQubitCostInfimum
 
-private theorem bloch_hermitian (r : EuclideanSpace ℝ (Fin 3)) :
+theorem bloch_hermitian (r : EuclideanSpace ℝ (Fin 3)) :
     (blochMatrix 1 r).IsHermitian := by
   ext i j
   fin_cases i <;> fin_cases j <;>
     simp [blochMatrix, Matrix.conjTranspose_apply, sub_eq_add_neg]
 
-private theorem bloch_physical (r : EuclideanSpace ℝ (Fin 3)) (hr : ‖r‖ ≤ 1) :
+theorem bloch_physical (r : EuclideanSpace ℝ (Fin 3)) (hr : ‖r‖ ≤ 1) :
     (blochMatrix 1 r).PosSemidef := by
   have hh := bloch_hermitian r
   have ht := congrArg Complex.re hh.trace_eq_sum_eigenvalues

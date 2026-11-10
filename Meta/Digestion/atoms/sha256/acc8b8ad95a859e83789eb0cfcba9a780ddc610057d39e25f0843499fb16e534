@@ -1,0 +1,64 @@
+**定理 46.2（混合输出纯性与横向多项式模线性）。** 对全部 $\lambda\in\mathbb R$、$A\in E_0$ 和 $b\in V_A$，同一实际旧值 $d=F_{\lambda,A}(b)$ 满足
+
+$$
+\boxed{d\in E_0,\qquad A\circ d=b\circ d=0.}
+\tag{46.2}
+$$
+
+并且对全部 $b,c\in V_A$、$f,g\in\mathbb R[x]$，
+
+$$
+\boxed{F_{\lambda,A}(fb+gc)
+=fF_{\lambda,A}(b)+gF_{\lambda,A}(c).}
+\tag{46.3}
+$$
+
+这是整份原输出的等式，不只提取有限阶系数。它不识别该行的响应幅度，也不主张 $D(\lambda u+A,b)=D(A,b)$。证明在 46–48 给出。
+
+先复用 36.2 证明中的一个准确窗口：由 (37.3)–(37.8) 的共同取向及 (38.2)–(38.3) 的实际常数 SO$(2)$ 对角化，对任意实际原 $p,q\in E$、固定 $0<\xi<1$，只要
+
+$$
+\operatorname{tr}p(\xi)=\operatorname{tr}q(\xi)=0,\qquad
+\|p(\xi)\|^2+\|q(\xi)\|^2<1,
+$$
+
+就有
+
+$$
+D(p,q)(\xi)=\varepsilon_0 C(p(\xi),q(\xi)).
+\tag{46.4}
+$$
+
+独立像先对角化实 Gram，旋转后首像非零且长度小于一，故 (37.4) 认回实际旧值；相关像由零面积给零。不要求 $p,q\in E_0$，不要求原上确界范数小，也不据同像随意替换原代表。这是已付窗口的直接应用，仅作本证明中间步骤。
+
+若 $A=0$ 或 $b=0$，全单位行或零行处理；若 $\lambda=0$，36.2 已给 (46.2)。以下固定 $\lambda\ne0$、$A,b\ne0$。$A(0)=b(0)=0$，端点 P2 给 $d(0)=0$。这三份固定原多项式本身连续。可取足够小的 $\eta>0$，使 $A(\xi),b(\xi)$ 对 $0<\xi<\eta$ 均非零，并满足下述有限窗口的长度界。非零向量多项式的首个非零系数保证这段非零性；这里不用未知 $D$ 的输入连续性。
+
+固定这样的 $\xi$，只在这个点选 Pauli 坐标，使
+
+$$
+A(\xi)=r\sigma_z,\qquad b(\xi)=s\sigma_x,
+\qquad r,s>0,\qquad r<|\lambda|,
+$$
+
+并写同一旧输出为
+
+$$
+d(\xi)=\delta u+v_x\sigma_x+v_y\sigma_y+v_z\sigma_z.
+$$
+
+这是同一矩阵的坐标选择，不是预付 $D$ 的酉协变。对单位 Bloch 向量 $n$ 的数学读取，P2 的准确实 Gram 行列式是
+
+$$
+s^2\bigl((\lambda n_z+r)^2+\lambda^2n_y^2\bigr).
+\tag{46.5}
+$$
+
+选择 $n_y=0$、$n_z=-r/\lambda$ 和两个相反非零的 $n_x$，两份预算都为零，得到
+
+$$
+v_x=0,\qquad \lambda\delta=rv_z.
+\tag{46.6}
+$$
+
+只选择归一数学向量读取并不改变原评价族或各自质量。尚未从 (46.6) 单独推出 $\delta=0$。
+

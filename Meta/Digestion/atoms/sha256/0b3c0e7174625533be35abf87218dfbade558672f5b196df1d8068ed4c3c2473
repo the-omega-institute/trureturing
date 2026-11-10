@@ -1,0 +1,59 @@
+**定理 24.1（有限谱局部反对易演员）。** 保留完整原条件和整个实际 $PAP$ 的同号分类。设 $c=c^*\in PAP$ 在角单位 $P$ 下可逆，谱为有限的非零集合，另有实际 $f=f^*\in PAP$ 满足
+
+$$
+f^2=P,\qquad fc=-cf.
+\tag{24.1}
+$$
+
+则对每个任意环境 $t=t^*\in A$，存在 $s=s^*\in PAP$，使同一个实际旧输出满足
+
+$$
+\boxed{D(c,t)=K_\sigma(c,t)+s,\qquad [c,s]=0.}
+\tag{24.2}
+$$
+
+$P=0,c=0$ 的零角按零槽取 $s=0$。此为余量行，不宣称一般环境整行已有 $s=0$。
+
+证明。以下设 $P\ne0$。角内酉元 $f$ 的共轭把 $c$ 变成 $-c$，所以谱对称。写互异正数 $\lambda_1,\ldots,\lambda_N$，并在同一**实际原代数**中取有限谱投影
+
+$$
+\begin{gathered}
+l_j=1_{\{\lambda_j\}}(c),\qquad
+m_j=1_{\{-\lambda_j\}}(c),\qquad p_j=l_j+m_j,\\
+P=\sum_{j=1}^N p_j,\qquad
+c=\sum_{j=1}^N\lambda_j(l_j-m_j),\qquad
+fl_j=m_jf,\quad fp_j=p_jf.
+\end{gathered}
+\tag{24.3}
+$$
+
+这些投影由角内有限 Lagrange 多项式演算得到，属于 $PAP\subset A$；没有调用表示外或双对偶谱投影。令
+
+$$
+e_j=fp_j,\qquad j_j=\jmath(l_j-m_j)e_j.
+\tag{24.4}
+$$
+
+则 $e_j=e_j^*$、$e_j^2=p_j$ 且交换 $l_j,m_j$。整个 $PAP$ 的分类逐值支付 $D(c,e_j)=\lambda_jj_j,D(c,j_j)=-\lambda_je_j,D(c,2l_j)=0$，虽 $c$ 在其余 $p_k$ 上仍有不同谱值。固定 $g=D(c,t)$、$M=g-K_\sigma(c,t)$，用定理 23.2 得 $l_jM(1-l_j)=0$。
+
+对负谱块准确取 $(l,m,\lambda,e,j,n)=(m_j,l_j,-\lambda_j,e_j,-j_j,2m_j)$。演员仍是**原来的 $c$**，实际内值是
+
+$$
+D(c,e_j)=(-\lambda_j)(-j_j),\quad
+D(c,-j_j)=\lambda_je_j=-(-\lambda_j)e_j,\quad
+c\circ(2m_j)=-\lambda_j(2m_j).
+\tag{24.5}
+$$
+
+这些是整个角的已证公式，不从 $D(-c,t)$ 推断 $D(c,t)$。定理 23.2 的负 $\lambda$ 版本给 $m_jM(1-m_j)=0$。因 $M=M^*$，所有反向块也为零。
+
+令 $Q=1-P$。$c$ 在 $P\mathcal H$ 上有界可逆，故 $\ker c=Q\mathcal H$。对每个 $\xi\in Q\mathcal H$，原 $(c,t)$ 的 P2 读取第一平方为零，给 $\langle\xi,g\xi\rangle=0$；在该子空间内极化得 $QgQ=0$。又 $QK_\sigma(c,t)Q=0$，故 $QMQ=0$。有限分割 (24.3) 连同 $Q$ 已穷尽单位，遂有原元素等式
+
+$$
+M=\sum_{j=1}^N(l_jMl_j+m_jMm_j)=:s\in(PAP)_{\rm sa},
+\qquad[c,s]=0.
+\tag{24.6}
+$$
+
+求和只分解固定的一个输出算子，未对未知 $D$ 的输入作和式展开。∎
+

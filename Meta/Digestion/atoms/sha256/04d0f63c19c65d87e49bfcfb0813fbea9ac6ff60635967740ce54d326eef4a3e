@@ -1,0 +1,30 @@
+### 19.1 Standing data and native unit flows
+
+Retain exactly the source, the once-sampled $K$, the fixed finite or countable installed prior, positive endpoint masses, every actually supported target, both seeds, all paid histories and rejections, source-independent initialization, the complete records, noncompletion outcomes, completion and matching Stop, and the same acquired update rules of Definition 11.2. Let $(\Gamma_B,\Gamma_A)\in\mathfrak C$ satisfy
+
+$$
+\mathcal J(\Gamma_B,\Gamma_A)=0.
+\tag{19.1}
+$$
+
+Thus (11.6)--(11.8), the full endpoint boxes (11.29), the midpoint equations (11.30), and every supported complete-configuration loss budget in (11.9) hold on the same pair. No finite support, reversibility, native-mixture, common rate, or atomicity assumption is made here.
+
+For $r\in\{a,b\}$ write the native laws as $P_{p,r},P_{\beta,r}$ and define the unit native flows
+
+$$
+N_r^B=\delta_{(P_{p,r},P_{\beta,r})},
+\qquad
+N_r^A=\delta_{(P_{\beta,r},P_{p,r})}.
+\tag{19.2}
+$$
+
+Each pair $(N_r^B,N_r^A)$ is a compatible unit flow: the native complete recursions on the whole carriers, including the infinite cells, are the residual equations for these flows. Put
+
+$$
+ m_r^p=\nu_p(\{P_{p,r}\}),\qquad
+ m_r^\beta=\nu_\beta(\{P_{\beta,r}\}).
+\tag{19.3}
+$$
+
+The endpoint laws are distinct because their p alpha masses, and their suspended $v=1-W(\beta)$ masses, are $a$ and $b$.
+

@@ -1,0 +1,29 @@
+**Definition 208.3 (hard relation forms).** In the coefficient space $\mathbb R^{\mathcal L}$ put
+
+$$
+\begin{gathered}
+F_a=\sum_i a_if_i,\qquad K_{\rm rel}=\ker\Phi_f=\{a:F_a=0\},\\
+h_a=\sum_i a_iu_i,\qquad
+(a\odot b)_i=a_ib_i,\qquad
+h_ah_b=h_{a\odot b},\\
+s_a=\frac{P(gh_a)}v,\qquad t_a=Ph_a.
+\end{gathered}
+\tag{208.14}
+$$
+
+The product identity is the hard-indicator algebra of this actual partition. For $a,b\in K_{\rm rel}$ define the bilinear forms
+
+$$
+\begin{aligned}
+M_j(a,b)&=\mathbb E_{\nu_j}[s_at_b],\\
+G_j^+(a,b)&=\mathbb E_{\nu_j}[t_at_b],
+& G_j^-(a,b)&=\mathbb E_{\nu_j}[s_as_b],\\
+V_j(a,b)&=\mathbb E_{\nu_j}[P(h_ah_b)],\\
+H_{\chi,j}(a,b)&=\mathbb E_{\nu_j}
+ \bigl[\chi\bigl(P(h_ah_b)-t_at_b\bigr)\bigr].
+\end{aligned}
+\tag{208.15}
+$$
+
+Write $\operatorname{Sym}M_j(a,b)=(M_j(a,b)+M_j(b,a))/2$. The order $A\succeq B$ for symmetric forms on $K_{\rm rel}$ means $(A-B)(a,a)\ge0$ for every $a\in K_{\rm rel}$.
+

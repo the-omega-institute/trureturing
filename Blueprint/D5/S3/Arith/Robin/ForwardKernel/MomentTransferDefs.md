@@ -100,7 +100,43 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/MomentTransferDefs.MomentInterf
 
 There is a nonnegative constant C such that, for all sufficiently large X and every s in [0,1], the integral of abs(B(s,x))^k is at most C. The specified limit function M is measurable, and each weighted mixed moment at a tuple in the unit cube converges to M at that tuple as X tends to infinity.
 
-**Definition 1.9 (Fourth Brownian kernel).**
+**Definition 1.9 (Joint weighted mixed moment).**
+
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/MomentTransferDefs.jointDyadicMixedMoment`
+
+*Formalization.* `D5/S3/Arith/Robin/ForwardKernel/MomentTransferDefs.jointDyadicMixedMoment` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a finite family of exponents e_i, the joint mixed moment integrates U_X raised to the sum of r(e_i), times the product of B for the corresponding exponents and parameters, against the dyadic logarithmic measure.
+
+**Definition 1.10 (Joint moment interface).**
+
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/MomentTransferDefs.JointMomentInterface`
+
+*Formalization.* `D5/S3/Arith/Robin/ForwardKernel/MomentTransferDefs.JointMomentInterface` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+One nonnegative constant eventually bounds the absolute kth moment of every increment family, uniformly over the unit interval. At every point of the unit cube the joint weighted mixed moment converges to the specified kernel M. No measurability condition on M outside the cube is imposed.
+
+**Definition 1.11 (Mixed normalized response moment).**
+
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/MomentTransferDefs.jointZMoment`
+
+*Formalization.* `D5/S3/Arith/Robin/ForwardKernel/MomentTransferDefs.jointZMoment` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The mixed response moment integrates Z for the first exponent and profile to power p, times Z for the second exponent and profile to power q, against the dyadic logarithmic measure.
+
+**Definition 1.12 (Fourth Brownian kernel).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/MomentTransferDefs.brownianW4`
 
@@ -112,7 +148,7 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/MomentTransferDefs.brownianW4`
 
 For four real coordinates, W4 is min(s0,s1)*min(s2,s3) + min(s0,s2)*min(s1,s3) + min(s0,s3)*min(s1,s2), the three covariance pairings for the fourth Brownian moment on nonnegative times.
 
-**Definition 1.10 (Fourth dyadic moment constant).**
+**Definition 1.13 (Fourth dyadic moment constant).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/MomentTransferDefs.dyadicMomentConstant`
 
@@ -124,7 +160,7 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/MomentTransferDefs.dyadicMoment
 
 The fourth-order macroscopic constant c4(theta) is (2^(2*kappa(theta))-1)/(2*kappa(theta)*log(2)). For nonzero kappa this is the integral of u^(2*kappa) against du/(u*log(2)) on [1,2].
 
-**Theorem 1.11 (Joint measurability of normalized increments).**
+**Theorem 1.14 (Joint measurability of normalized increments).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/MomentTransferDefs.dyadicB_measurable`
 
@@ -138,6 +174,7 @@ For a locally bounded measurable error function E and any real exponent theta, t
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/MomentTransferDefs.JointMomentInterface`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/MomentTransferDefs.MomentInterface`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/MomentTransferDefs.brownianW4`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/MomentTransferDefs.cubeMeasure`
@@ -148,6 +185,8 @@ For a locally bounded measurable error function E and any real exponent theta, t
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/MomentTransferDefs.dyadicR`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/MomentTransferDefs.dyadicU`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/MomentTransferDefs.dyadicZ`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/MomentTransferDefs.jointDyadicMixedMoment`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/MomentTransferDefs.jointZMoment`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/MomentTransferDefs.kappa`
 - Dependency: [D5/S3/Arith/Robin/ForwardKernel/DyadicProbability](DyadicProbability.md)
 - Dependency: [D5/S3/Arith/Robin/ForwardKernel/WeightRemoval](WeightRemoval.md)

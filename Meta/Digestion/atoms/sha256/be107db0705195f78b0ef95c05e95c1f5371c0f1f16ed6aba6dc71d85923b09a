@@ -1,0 +1,41 @@
+**定义 79.1（同一原对象及明确模型类）。** 本组以 SM、C、PT、PB、A 分别指[本谱混合卷](AURIC_SPECTRAL_MIXED_RESPONSES_AND_DIRECT_WINDOW_BOUNDARIES.md)、[中央续卷](AURIC_CENTRAL_RESPONSE_SQUARE_AND_RADIAL_CONSISTENCY_CONTINUATION.md)、[原 PB 运输续卷](AURIC_ORIGINAL_POLYNOMIAL_PB_TRANSPORT_AND_FIBER_BOUNDARIES_CONTINUATION.md)、[配平三角续卷](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md)及[任意维静态卷](AURIC_C128_ARBITRARY_DIMENSIONAL_STATIC_QUANTUM_RECONSTRUCTION.md)。完整有限原域的反射行直接取 SM72.1与SM75.1，七项同源合同完整取 SM78.2及86.1；这些源中的完整原前件、实际框架、原输入及评价量词均保留。
+
+保持唯一原 $\Omega/\mathrm{native}$ 及同一 $(E,C,u,N,\mathcal P,S,D)$。本组的明确数学环境是任意有限 continuous 复 von Neumann 代数 $M$，即纯 type $\mathrm{II}_1$ 代数：没有非零 type I 中央直和项。取
+
+$$
+E=M_{\rm sa},\qquad u=1,\qquad C=M_+,\qquad
+N(a)=\|a\|,\qquad S(a,b)=a\circ b=\frac{ab+ba}{2}.
+\tag{79.1}
+$$
+
+中心值迹是本模型明列的数学结构：
+
+$$
+T:M\longrightarrow Z(M),\qquad T(1)=1,
+\tag{79.2}
+$$
+
+它正、忠实、正规、复线性、$Z(M)$-线性，并满足 $T(ab)=T(ba)$。不要求 $M$ 为因子、可分、可数可分解或存在全局忠实正规标量迹。结合乘法、伴随、范数、Borel 函数演算、极分解和 $T$ 属于此模型类的数学结构；它们的存在并未由一般 JB 原域的关系重新推出，也不代表实际物理准备、操作或正常读取。
+
+$\mathcal P$ 是原正实线性评价族，分离 $E$ 且准确决定 $C$。每份原质量 $m_\gamma=\gamma(1)$ 保持原值，包含零、不等和次归一质量。保留完整 A1：每对原标签两条有向 Hermitian 二表正性；完整 A2：全部相加三表 $(a+b,a,b)$ 及其排列的实部在整个 $\mathbb R^3$ 上半正定，并有指定相加向量 $(1,-1,-1)$ 的零二次值；完整 A3：$S(u,u)=u$，且在同一个固定有理 $0<\theta\le1$ 上，$0\le y\le\theta u$ 蕴含 $S(y,y)\le y$。特别对全部原 $a,b\in E$、$\gamma\in\mathcal P$ 有完整 P2：
+
+$$
+\begin{pmatrix}
+\gamma(a^2)&\gamma(a\circ b)-i\gamma D(a,b)\\
+\gamma(a\circ b)+i\gamma D(a,b)&\gamma(b^2)
+\end{pmatrix}\succeq0.
+\tag{79.3}
+$$
+
+同一原总映射 $D:E^2\to E$ 反对称。对全部原 $a,b,d\in E$ 保留完整 PB：
+
+$$
+\begin{gathered}
+v=D(a,b)-a\circ d,\qquad w=a\circ b+D(a,d),\\
+D(b+v,d+w)-D(b-v,d-w)=-2b\circ v-2d\circ w.
+\end{gathered}
+\tag{79.4}
+$$
+
+不预付 $D$ 的可加、齐次、连续、可测、协变、单位平移中性、输出小代数闭合或中央投影下降。所有辅助标签均须实际属于同一个完整原 $E$；“实际标签”在数学证明中只指原域成员，不宣称它已由物理程序制备。完整候选的七项实际来源合同取86.1，不能由79.1的模型类限制删去其中的原对象或量词。
+

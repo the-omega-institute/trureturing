@@ -1,0 +1,20 @@
+**Proposition 6.6 (the exact disjoint-block waiting law).** For the
+deterministic $S,L$ of Definition 6.1, $T<\infty$ almost surely and
+
+$$
+ \begin{gathered}
+ \mathbb P_e(T-S>kL)=(1-4^{-L})^k\quad(k\ge0),\\
+ \mathbb P_e(J=k)=(1-4^{-L})^{k-1}4^{-L}\quad(k\ge1),\qquad
+ \mathbb E_e(T-S)=L4^L.
+ \end{gathered}
+ \tag{6.18}
+$$
+
+*Proof.* Conditional on the hidden path the block indicators are
+independent Bernoulli variables with constant parameter $4^{-L}$,
+so they have that same joint law unconditionally. The geometric
+tail and expectation give (6.18). Positivity of the tail at every
+finite $k$ excludes a finite worst-case Read bound. The formula
+does not assert the same conditional waiting law after a
+data-selected calibration, $S$, or $L$. $\square$
+

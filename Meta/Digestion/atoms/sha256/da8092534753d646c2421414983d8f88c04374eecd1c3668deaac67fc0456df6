@@ -1,0 +1,71 @@
+**定理 63.1（完整秩一行，不拆任意背景）。** 在定义 62.3 的统一坐标中，任意单坐标秩一投影 $p$、实数 $t$ 和任意原 $a\in E$ 都满足
+
+$$
+D(tp,a)=t\kappa(p,a).
+\tag{63.1}
+$$
+
+因此这一整条行的实线性是结论；第二输入可以有任意无限支撑及全部其他坐标背景。
+
+证明。先直接复用 W99.2 和配平续卷 129.1 的 R-free 子论证。P2 的 Hermitian 性及原评价分离给反对称、$D(a,a)=0$、$D(a,0)=0$。对任意原 $a,b$ 及 $z_1,z_2\in\mathbb C$，其二次型对应的原元素
+
+$$
+|z_1|^2a^2+|z_2|^2b^2
++2\operatorname{Re}(\overline z_1z_2)S(a,b)
++2\operatorname{Im}(\overline z_1z_2)D(a,b)
+\tag{63.2}
+$$
+
+被全部原评价读为非负，故属于准确原锥。于是任何数学坐标向量读取也给同一 P2，并有
+
+$$
+|\langle\xi,D(a,b)_j\xi\rangle|^2
+\le\|a_j\xi\|^2\|b_j\xi\|^2
+-\bigl(\operatorname{Re}\langle a_j\xi,b_j\xi\rangle\bigr)^2.
+\tag{63.3}
+$$
+
+这些读取只检验同一个旧值；不把向量态加进原准备族，也不排除奇异原评价。PB 的元素形式直接取 W99.2 的式 (99.4)、配平续卷 (128.6)：
+
+$$
+\begin{aligned}
+v&=D(a,b)-S(a,c),&w&=S(a,b)+D(a,c),\\
+D(b+v,c+w)-D(b-v,c-w)&=-2S(b,v)-2S(c,w).
+\tag{63.4}
+\end{aligned}
+$$
+
+它只展开已知 Jordan 平方，没有展开旧 $D$ 的相加输入。
+
+设 $p$ 支撑在坐标 $j$，在此坐标写 $p=ee^*$、$\|e\|=1$，置 $d=D(tp,a)$。$t=0$ 已付。对 $\ell\ne j$，(63.3) 的第一对角为零，故 $d_\ell=0$。对 $\xi\perp e$，同一式给 $\langle\xi,d_j\xi\rangle=0$。极化的是这个固定有界自伴算子，得到 $(I-p)d_j(I-p)=0$；因此存在实 $\delta$ 及 $w\perp e$ 使
+
+$$
+\begin{gathered}
+d_j=\delta p+H(w),\qquad H(w)=we^*+ew^*,\\
+z=(I-p)a_je,\qquad \beta=\langle e,a_je\rangle,\qquad
+c_0=S(p,a),\qquad (c_0)_j=\beta p+\tfrac12H(z).
+\tag{63.5}
+\end{gathered}
+$$
+
+特别 $d,c_0$ 都是该坐标的有限秩原元素。令 $k$ 为 $\operatorname{span}_{\mathbb C}\{e,z,w\}$ 的投影并在其他坐标置零。其秩至多三，且 $k\in E$；$tp,d,c_0$ 全部支撑于这个同一个真实角。
+
+在完整 PB 的 (63.4) 中取演员、第二及第三输入准确为 $(a,tp,0)$。反对称给 $D(a,tp)=-d$，零输入给 $D(a,0)=0$，所以
+
+$$
+D(tp-d,tc_0)-D(tp+d,-tc_0)=2tS(p,d).
+\tag{63.6}
+$$
+
+两次外层调用都在 $k$ 角内，62.2 因而识别其实际旧值为 $\kappa$。只有已知比较映射可以在此拆和，得到
+
+$$
+\begin{aligned}
+2tS(p,d)&=2t^2\kappa(p,c_0),\\
+2t\delta p+tH(w)&=t^2H(-iz/2).
+\tag{63.7}
+\end{aligned}
+$$
+
+第二行是该坐标的普通矩阵恒等式：$S(p,d_j)=\delta p+H(w)/2$，$\kappa(p,(c_0)_j)=H(-iz/4)$。对 $t\ne0$，正交矩阵分量给 $\delta=0$、$w=-itz/2$，即 $d=t\kappa(p,a)$。任意 $a$ 的原背景始终留在内层 $D(a,tp)$；没有使用 $D$ 的中央平移、有限谱相加、压缩相容或背景独立性。∎
+

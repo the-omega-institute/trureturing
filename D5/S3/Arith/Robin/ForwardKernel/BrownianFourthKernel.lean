@@ -8,71 +8,39 @@
 
 import D5.S3.Arith.Robin.ForwardKernel.MomentTransferDefs
 import D5.S3.Arith.Robin.ForwardKernel.TriangularMeanSquare
-import Mathlib.Analysis.Calculus.Deriv.MeanValue
+import D5.S3.Arith.Robin.ForwardKernel.DyadicMacroMoments
 
 /-! Fourth Brownian pairing integrals and the strict dyadic kurtosis inequality. -/
 
 namespace D5.S3.Arith.Robin.ForwardKernel.BrownianFourthKernel
 
 open Set MeasureTheory
-open VarianceTransferDefs MomentTransferDefs
+open VarianceTransferDefs MomentTransferDefs DyadicMacroMoments
 
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
 
-private lemma exp_pairing_strict {a : ℝ} (ha : 0 < a) :
-    2 * (Real.exp a - 1) < a * (Real.exp a + 1) := by
-  let f : ℝ → ℝ := fun t => t * (Real.exp t + 1) - 2 * (Real.exp t - 1)
-  have hd (t : ℝ) : HasDerivAt f (1 + (t - 1) * Real.exp t) t := by
-    convert ((hasDerivAt_id t).mul ((Real.hasDerivAt_exp t).add_const 1)).sub
-      (((Real.hasDerivAt_exp t).sub_const 1).const_mul 2) using 1
-    · rfl
-    · simp only [id_eq]; ring
-  have hm : StrictMonoOn f (Ici 0) := by
-    apply strictMonoOn_of_deriv_pos (convex_Ici 0)
-      (by fun_prop)
-    intro t ht
-    rw [interior_Ici, mem_Ioi] at ht
-    rw [(hd t).deriv]
-    have he := mul_lt_mul_of_pos_right (Real.add_one_lt_exp (neg_ne_zero.mpr ht.ne'))
-      (Real.exp_pos t)
-    rw [← Real.exp_add] at he
-    simp only [neg_add_cancel, Real.exp_zero] at he
-    nlinarith
-  have h := hm (show (0 : ℝ) ∈ Ici 0 by simp) ha.le ha
-  simpa [f] using h
-
-private lemma kurtosis_ratio_identity {κ : ℝ} (hκ : 0 < κ) :
-    κ * (2 ^ (2 * κ) - 1) * Real.log 2 / (2 * (2 ^ κ - 1) ^ 2) =
-      (κ * Real.log 2) * (Real.exp (κ * Real.log 2) + 1) /
-        (2 * (Real.exp (κ * Real.log 2) - 1)) := by
-  have ha : 0 < κ * Real.log 2 := mul_pos hκ (Real.log_pos (by norm_num))
-  have he : Real.exp (κ * Real.log 2) - 1 ≠ 0 :=
-    (sub_pos.mpr (Real.one_lt_exp_iff.mpr ha)).ne'
-  rw [Real.rpow_def_of_pos (by norm_num : (0 : ℝ) < 2),
-    Real.rpow_def_of_pos (by norm_num : (0 : ℝ) < 2)]
-  rw [show Real.log 2 * (2 * κ) = κ * Real.log 2 + κ * Real.log 2 by ring,
-    Real.exp_add, show Real.log 2 * κ = κ * Real.log 2 by ring]
-  field_simp
-  ring
-
 /-- The dyadic scale mixture has kurtosis strictly greater than three. -/
 theorem three_lt_kurtosis_ratio {κ : ℝ} (hκ : 0 < κ) :
     3 < 3 * κ * (2 ^ (2 * κ) - 1) * Real.log 2 /
       (2 * (2 ^ κ - 1) ^ 2) := by
-  have ha : 0 < κ * Real.log 2 := mul_pos hκ (Real.log_pos (by norm_num))
-  have hd : 0 < 2 * (Real.exp (κ * Real.log 2) - 1) := by
-    exact mul_pos (by norm_num) (sub_pos.mpr (Real.one_lt_exp_iff.mpr ha))
+  have hm := dyadic_macro_moment_strict_mul hκ hκ
+  have hp := dyadic_macro_moment_pos hκ
+  have hr : 1 < dyadicMacroMoment (κ + κ) /
+      (dyadicMacroMoment κ * dyadicMacroMoment κ) :=
+    (lt_div_iff₀ (mul_pos hp hp)).mpr (by simpa only [one_mul] using hm)
+  have hl : 0 < Real.log 2 := Real.log_pos (by norm_num)
+  have hpow : 0 < (2 : ℝ) ^ κ - 1 :=
+    sub_pos.mpr (Real.one_lt_rpow (by norm_num) hκ)
   calc
-    3 < 3 * ((κ * Real.log 2) * (Real.exp (κ * Real.log 2) + 1) /
-        (2 * (Real.exp (κ * Real.log 2) - 1))) := by
-      have h : 1 < (κ * Real.log 2) * (Real.exp (κ * Real.log 2) + 1) /
-          (2 * (Real.exp (κ * Real.log 2) - 1)) :=
-        (lt_div_iff₀ hd).mpr (by simpa only [one_mul] using exp_pairing_strict ha)
-      linarith
-    _ = _ := by rw [← kurtosis_ratio_identity hκ]; ring
+    3 < 3 * (dyadicMacroMoment (κ + κ) /
+        (dyadicMacroMoment κ * dyadicMacroMoment κ)) := by linarith
+    _ = _ := by
+      rw [dyadic_macro_moment_eq (add_pos hκ hκ), dyadic_macro_moment_eq hκ,
+        show κ + κ = 2 * κ by ring]
+      field_simp [hκ.ne', hl.ne', hpow.ne']
 
 private def splitFour : (Fin 4 → ℝ) ≃ᵐ (Fin 2 → ℝ) × (Fin 2 → ℝ) :=
   (MeasurableEquiv.piCongrLeft (fun _ : Fin 4 => ℝ)
@@ -85,15 +53,18 @@ private lemma splitFour_preserving :
     (measurePreserving_piCongrLeft (fun _ : Fin 4 => unitMeasure)
       (finSumFinEquiv : Fin 2 ⊕ Fin 2 ≃ Fin 4)).symm
 
-private def pairKernel (g : ℝ → ℝ) (s : Fin 2 → ℝ) : ℝ :=
+/-- The profile-weighted Brownian covariance kernel on two coordinates. -/
+def pairKernel (g : ℝ → ℝ) (s : Fin 2 → ℝ) : ℝ :=
   g (s 0) * g (s 1) * min (s 0) (s 1)
 
-private lemma pairKernel_integrable {g : ℝ → ℝ} (hg : ProfileIntegrable g) :
+/-- An integrable profile gives an integrable Brownian covariance pair. -/
+lemma pairKernel_integrable {g : ℝ → ℝ} (hg : ProfileIntegrable g) :
     Integrable (pairKernel g) (cubeMeasure 2) := by
   exact (measurePreserving_finTwoArrow unitMeasure).integrable_comp_of_integrable
     (TriangularMeanSquare.min_kernel_integrable hg)
 
-private lemma integral_pairKernel {g : ℝ → ℝ} (hg : ProfileIntegrable g) :
+/-- Integrating a Brownian covariance pair gives the min-kernel quadratic energy. -/
+lemma integral_pairKernel {g : ℝ → ℝ} (hg : ProfileIntegrable g) :
     (∫ s, pairKernel g s ∂cubeMeasure 2) = Q g := by
   have hp := measurePreserving_finTwoArrow unitMeasure
   rw [show (∫ s, pairKernel g s ∂cubeMeasure 2) =
@@ -105,59 +76,61 @@ private lemma integral_pairKernel {g : ℝ → ℝ} (hg : ProfileIntegrable g) :
   rw [integral_prod _ hi]
   simp only [Q, intervalIntegral.integral_of_le (zero_le_one : (0 : ℝ) ≤ 1)]
 
-private lemma pairing_integrable_and_integral {g : ℝ → ℝ} (hg : ProfileIntegrable g)
+/-- Integrable functions of two disjoint coordinate pairs factor under every permutation. -/
+theorem pair_product_integrable_and_integral
+    {F H : (Fin 2 → ℝ) → ℝ}
+    (hF : Integrable F (cubeMeasure 2))
+    (hH : Integrable H (cubeMeasure 2))
     (e : Equiv.Perm (Fin 4)) :
-    Integrable (fun s =>
-      g (s (e 0)) * g (s (e 1)) * g (s (e 2)) * g (s (e 3)) *
-        (min (s (e 0)) (s (e 1)) * min (s (e 2)) (s (e 3)))) (cubeMeasure 4) ∧
-    (∫ s, g (s (e 0)) * g (s (e 1)) * g (s (e 2)) * g (s (e 3)) *
-        (min (s (e 0)) (s (e 1)) * min (s (e 2)) (s (e 3))) ∂cubeMeasure 4) = Q g ^ 2 := by
-  let F (s : Fin 4 → ℝ) :=
-    g (s 0) * g (s 1) * g (s 2) * g (s 3) *
-      (min (s 0) (s 1) * min (s 2) (s 3))
-  have hF : F = (fun p => pairKernel g p.1 * pairKernel g p.2) ∘ splitFour := by
+    Integrable
+      (fun s : Fin 4 → ℝ =>
+        F ![s (e 0), s (e 1)] * H ![s (e 2), s (e 3)])
+      (cubeMeasure 4) ∧
+    (∫ s : Fin 4 → ℝ,
+      F ![s (e 0), s (e 1)] * H ![s (e 2), s (e 3)] ∂cubeMeasure 4) =
+        (∫ u, F u ∂cubeMeasure 2) * (∫ v, H v ∂cubeMeasure 2) := by
+  let K (s : Fin 4 → ℝ) := F ![s 0, s 1] * H ![s 2, s 3]
+  have hK : K = (fun p => F p.1 * H p.2) ∘ splitFour := by
     funext s
-    change g (s 0) * g (s 1) * g (s 2) * g (s 3) *
-      (min (s 0) (s 1) * min (s 2) (s 3)) =
-      g (s 0) * g (s 1) * min (s 0) (s 1) *
-        (g (s 2) * g (s 3) * min (s 2) (s 3))
-    ring
-  have hFi : Integrable F (cubeMeasure 4) := by
-    rw [hF]
-    exact splitFour_preserving.integrable_comp_of_integrable
-      ((pairKernel_integrable hg).mul_prod (pairKernel_integrable hg))
-  have hFI : (∫ s, F s ∂cubeMeasure 4) = Q g ^ 2 := by
-    rw [hF]
-    calc
-      _ = ∫ p, pairKernel g p.1 * pairKernel g p.2
-          ∂(cubeMeasure 2).prod (cubeMeasure 2) :=
-        splitFour_preserving.integral_comp' (fun p => pairKernel g p.1 * pairKernel g p.2)
-      _ = _ := by rw [integral_prod_mul, integral_pairKernel hg, pow_two]
+    have hleft : (splitFour s).1 = ![s 0, s 1] := by
+      funext i
+      fin_cases i <;> rfl
+    have hright : (splitFour s).2 = ![s 2, s 3] := by
+      funext i
+      fin_cases i <;> rfl
+    simp only [Function.comp_apply, hleft, hright, K]
+  have hKi : Integrable K (cubeMeasure 4) := by
+    rw [hK]
+    exact splitFour_preserving.integrable_comp_of_integrable (hF.mul_prod hH)
+  have hKI : (∫ s, K s ∂cubeMeasure 4) =
+      (∫ u, F u ∂cubeMeasure 2) * (∫ v, H v ∂cubeMeasure 2) := by
+    rw [hK]
+    exact (splitFour_preserving.integral_comp' (fun p => F p.1 * H p.2)).trans
+      (integral_prod_mul F H)
   let ep := (MeasurableEquiv.piCongrLeft (fun _ : Fin 4 => ℝ) e).symm
   have hep : MeasurePreserving ep (cubeMeasure 4) (cubeMeasure 4) :=
     (measurePreserving_piCongrLeft (fun _ : Fin 4 => unitMeasure) e).symm
-  have heq : (fun s =>
-      g (s (e 0)) * g (s (e 1)) * g (s (e 2)) * g (s (e 3)) *
-        (min (s (e 0)) (s (e 1)) * min (s (e 2)) (s (e 3)))) = F ∘ ep := by
-    rfl
-  rw [heq]
-  exact ⟨hep.integrable_comp_of_integrable hFi, (hep.integral_comp' F).trans hFI⟩
+  change Integrable (K ∘ ep) (cubeMeasure 4) ∧ _
+  exact ⟨hep.integrable_comp_of_integrable hKi, (hep.integral_comp' K).trans hKI⟩
 
 /-- The three Brownian pairings each contribute the square of the min-kernel energy. -/
 theorem brownianW4_integral {g : ℝ → ℝ} (hg : ProfileIntegrable g) :
     (∫ s, (∏ i, g (s i)) * brownianW4 s ∂cubeMeasure 4) = 3 * Q g ^ 2 := by
-  have h₁ := pairing_integrable_and_integral hg (Equiv.refl _)
-  have h₂ := pairing_integrable_and_integral hg (Equiv.swap 1 2)
-  have h₃ := pairing_integrable_and_integral hg (Equiv.swap 1 3)
-  simp only [Equiv.refl_apply, Equiv.swap_apply_def] at h₁ h₂ h₃
+  have hpair := pairKernel_integrable hg
+  have h₁ := pair_product_integrable_and_integral hpair hpair (Equiv.refl _)
+  have h₂ := pair_product_integrable_and_integral hpair hpair (Equiv.swap 1 2)
+  have h₃ := pair_product_integrable_and_integral hpair hpair (Equiv.swap 1 3)
+  rw [integral_pairKernel hg] at h₁ h₂ h₃
+  simp only [Equiv.refl_apply, Equiv.swap_apply_def, pairKernel,
+    Matrix.cons_val_zero, Matrix.cons_val_one] at h₁ h₂ h₃
   norm_num at h₂ h₃
   have he (s : Fin 4 → ℝ) : (∏ i, g (s i)) * brownianW4 s =
-      g (s 0) * g (s 1) * g (s 2) * g (s 3) *
-        (min (s 0) (s 1) * min (s 2) (s 3)) +
-      g (s 0) * g (s 2) * g (s 1) * g (s 3) *
-        (min (s 0) (s 2) * min (s 1) (s 3)) +
-      g (s 0) * g (s 3) * g (s 2) * g (s 1) *
-        (min (s 0) (s 3) * min (s 2) (s 1)) := by
+      (g (s 0) * g (s 1) * min (s 0) (s 1)) *
+        (g (s 2) * g (s 3) * min (s 2) (s 3)) +
+      (g (s 0) * g (s 2) * min (s 0) (s 2)) *
+        (g (s 1) * g (s 3) * min (s 1) (s 3)) +
+      (g (s 0) * g (s 3) * min (s 0) (s 3)) *
+        (g (s 2) * g (s 1) * min (s 2) (s 1)) := by
     rw [Fin.prod_univ_four]
     dsimp [brownianW4]
     rw [min_comm (s 2) (s 1)]

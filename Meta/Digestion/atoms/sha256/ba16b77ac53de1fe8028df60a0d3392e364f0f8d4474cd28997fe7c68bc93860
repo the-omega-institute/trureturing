@@ -1,0 +1,23 @@
+**定义 2.3（显式充分二进窗口）。** 置
+
+$$
+\begin{aligned}
+M_{\rm Fourier}&=2^{50}C^4,& A_0&=2^{20}768^2M_{\rm Fourier},\\
+U_0&=3\cdot10^{16},&C_\nu&=2^{26}A_0,\\
+r_0=\max\bigl\{&r_{\rm base},7,
+\lceil\log_2(1000U_0M_{\rm Fourier}768^{24})\rceil,\\
+&\lceil\log_2(10000A_0)\rceil,
+\lceil\log_2(10000C_\nu^2)\rceil\bigr\}.
+\end{aligned}
+\tag{2.7}
+$$
+
+使用 $e=2^{-r}$、$r\ge r_0$，故 $0<e\le2^{-r_0}$。常数由固定显示函数的解析范数定义，不要求其数值物化。原窗口直接给
+
+$$
+t\ge C_t e^{-2}\log^2(1/e)\ge C_t/e^2,\quad
+\lambda\ge\Lambda,\quad t\ge6K_{\rm risk}/e,
+\quad t\ge16384\log(24/e).
+\tag{2.8}
+$$
+

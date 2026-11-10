@@ -104,7 +104,7 @@ class NativeReportConsumerTests:
             return data
 
         # Hold the shared prerequisite inside Lake's lookup/create gap until
-        # another consumer either contends on graphFetch or creates it again.
+        # an independent consumer contends on graphFetch or creates it again.
         # Observe the real mutex with a try-lock; never infer overlap from time.
         config = self.root / 'lakefile.toml'
         config.write_text(config.read_text().replace(
@@ -117,10 +117,11 @@ class NativeReportConsumerTests:
         schedule = '''
 structure RegistrationSchedule where
   state : Std.Mutex (Nat × Nat)
+  firstRegistration : IO.Promise Unit
   release : IO.Promise String
 
 package_facet compilerRegistrationState (_pkg : Package) : RegistrationSchedule := do
-  Job.async do return ⟨← Std.Mutex.new (0, 0), ← IO.Promise.new⟩
+  Job.async do return ⟨← Std.Mutex.new (0, 0), ← IO.Promise.new, ← IO.Promise.new⟩
 
 structure RegistrationMutex (α : Type) where
   inner : CompilerMutex α
@@ -143,12 +144,32 @@ def RegistrationMutex.atomically [Monad m] [MonadLiftT BaseIO m] [MonadLiftT Fet
       (registered, waiting - 1)
 
 '''
+        contender = '''
+package_facet compilerRegistrationContender (pkg : Package) : Unit := do
+  let schedule ← (← fetch <| (← getWorkspace).root.facet `compilerRegistrationState).await
+  let reportState ← (← fetch <| pkg.facet `reportBatch).await
+  let some registry := (← getWorkspace).findModule? `LeanInformationAudit.TemplateEnrollment
+    | error "missing fixture enrollment module"
+  Job.async do
+    discard <| IO.wait schedule.firstRegistration.result!
+    let enrollment ← reportState.graphFetch.atomically fun _ =>
+      JobM.runFetchM registry.exportInfo.fetch
+    discard <| enrollment.await
+
+'''
         if 'import Std.Sync.Mutex\n' not in source:
             source = 'import Std.Sync.Mutex\n' + source
         batch = 'package_facet reportBatch (_pkg : Package) : ReportState := do\n'
+        inputs = 'package_facet reportInputs (pkg : Package) : FilePath := do\n'
+        enrollment = '      let enrollment ← reportState.graphFetch.atomically fun _ =>\n'
+        self.assertEqual(source.count(inputs), 1)
+        self.assertEqual(source.count(enrollment), 1)
         producer_config.write_text(source.replace(
             'private structure ReportState where', schedule + 'private structure ReportState where').replace(
-            batch, batch + '  discard <| (← fetch <| (← getWorkspace).root.facet `compilerRegistrationState).await\n'))
+            batch, batch + '  discard <| (← fetch <| (← getWorkspace).root.facet `compilerRegistrationState).await\n').replace(
+            inputs, contender + inputs).replace(enrollment,
+                '      let contender ← JobM.runFetchM <| fetch <| pkg.facet `compilerRegistrationContender\n'
+                '      deps := deps.add contender\n' + enrollment))
         with producer_config.open('a') as target:
             target.write('''\ntarget compilerRegistrationGate pkg : Unit := do
   let root ← repositoryDir pkg
@@ -157,6 +178,7 @@ def RegistrationMutex.atomically [Monad m] [MonadLiftT BaseIO m] [MonadLiftT Fet
     let (registered, waiting) ← state.get
     state.set (registered + 1, waiting)
     IO.FS.withFile (root / "compiler-registrations") .append fun out => out.putStrLn "registered"
+    if registered == 0 then schedule.firstRegistration.resolve ()
     if registered > 0 then schedule.release.resolve "duplicate"
     else if waiting > 0 then schedule.release.resolve "contended"
   let reason ← IO.wait schedule.release.result!

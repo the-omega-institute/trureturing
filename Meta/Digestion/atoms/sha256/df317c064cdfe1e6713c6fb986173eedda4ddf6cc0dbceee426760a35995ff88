@@ -1,0 +1,43 @@
+**定理 19.3（原相干输入上的固定门缺陷；repo-derived）。** 取合法原参考方向 $h=e_z$，令
+
+$$
+\begin{gathered}
+e_0=|j,j\rangle,\qquad
+|x+\rangle=(|\uparrow\rangle+|\downarrow\rangle)/\sqrt2,\\
+\psi_0=e_0\otimes|x+\rangle,\qquad
+\rho_0=|\psi_0\rangle\langle\psi_0|.
+\end{gathered}
+\tag{19.8}
+$$
+
+对定义 19.1 的每个字和任意允许的 $\eta_A$，约化输出是 $\Delta_\Pi(\rho_0)$，且
+
+$$
+\begin{aligned}
+D_{\rm tr}(\Delta_\Pi(\rho_0),\rho_0)
+&=D_{\rm tr}(\Delta_\Pi(\rho_0),Q_D\rho_0Q_D)\\
+&=\alpha_D:=\frac12\sqrt{1-D^{-2}}.
+\end{aligned}
+\tag{19.9}
+$$
+
+因而该族不能以小于 $\alpha_D$ 的误差供应 $Q_D$；作为受控 $Q_D$ 的替换时，仅取 $c=0$，其预期 $RS$ 动作为恒等，误差已经至少为 $\alpha_D$。此下界使用原本的相干参考及已知独立探针，不依赖任意纠缠参考输入或对全部输入另加 diamond 精度要求。
+
+证明。输入 (19.8) 满足 $\langle J\cdot\sigma_S\rangle=0$，故
+
+$$
+\langle\psi_0,Q_D\psi_0\rangle=D^{-1},\qquad
+p_\pm:=\|\Pi_\pm\psi_0\|^2=(1\pm D^{-1})/2.
+\tag{19.10}
+$$
+
+令 $v_b=\Pi_b\psi_0$，两向量正交。差算子
+
+$$
+\rho_0-\Delta_\Pi(\rho_0)
+=|v_+\rangle\langle v_-|+|v_-\rangle\langle v_+|
+\tag{19.11}
+$$
+
+仅有两个非零本征值 $\pm\sqrt{p_+p_-}$，半迹范数等于 $\alpha_D$。以 $Q_D$ 共轭 $\rho_0$ 只反转这两个非对角项的符号，至同一 pinching 的距离相同。定理 19.2 使该约化输出与 $q$ 和 $\eta_A$ 无关。对受控门取 $c=0$，理想门固定 $\psi_0$；将全部辅助输出连同 $c$ 数学偏迹，迹距离收缩性给同一下界。这没有断言完整控制器必须在每个可能输入上复现这扇局部门。$\square$
+

@@ -1,0 +1,19 @@
+**定义 68.1（同一候选与原三轴）。** 保持 60.1 的全部原资料、A1–A3、准确锥、全部数学正读取 P2 和完整原 PB；消费同一 Jordan 乘法、自身 JB 完成 $X$ 及其忠实含单位等距准确锥 JC 包含 $X\subset(A_0)_{\rm sa}$。原 $E$ 可不完备，$X$ 不要求填满环境自伴部。七项实际消费者及全部来源量词保持 66.1。不输入旧 $D$ 的加法、齐次、连续、可测、一般单位平移、商下降、完成延拓或局部输出闭合。
+
+固定 63.1 由原 $h,k$ 及其同一旧响应 $j=D(h,k)$ 生成的 $U=\operatorname{span}_{\mathbb R}\{h,k,j\}$，以内积与取向使
+
+$$
+x\circ y=\langle x,y\rangle u,\qquad D(x,y)=x\times y\quad(x,y\in U).
+\tag{68.1}
+$$
+
+对真正原 $a=su+x,b=tu+y$，其中 $s,t\in\mathbb R,x,y\in U$，记
+
+$$
+w=x\times y,\quad p=sy-tx,\quad \ell=sx+ty,\quad
+W=|w|,\quad P=|p|,\quad F=D(a,b)-w\in E.
+\tag{68.2}
+$$
+
+$F$ 是固定原输出的差，起初不属于指定的四维空间 $\mathbb Ru+U$。$x,y$ 共线时，$a,b$ 是同一个原生成元的实多项式，既有多项式零值给 $D(a,b)=w=0$；$s=t=0$ 时由 (68.1) 得 $F=0$。下面的非平凡证明取 $W>0$、$(s,t)\ne(0,0)$，于是 $\ell\ne0$、$\ell\perp w$。
+

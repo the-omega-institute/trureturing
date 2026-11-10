@@ -1,0 +1,59 @@
+**Proposition 193.2 (weighted radical annihilation).** If $u$ has all sixty-four residuals equal to zero and $h\in\mathcal R_u$, then
+
+$$
+\langle h,\phi\rangle_m=0
+\quad(\phi\in\mathcal M_u),
+\qquad
+\langle gh,\psi\rangle_m=0
+\quad(\psi\in\mathcal N_u).
+\tag{193.2}
+$$
+
+Equivalently,
+
+$$
+\mathcal R_u\subseteq\mathcal M_u^{\perp_m},
+\qquad
+g\mathcal R_u\subseteq\mathcal N_u^{\perp_m}.
+\tag{193.3}
+$$
+
+In particular, since $1\in\mathcal W_u$, every radical element is orthogonal to $Pg$ and $P^2g$ and its $g$-weighted class is orthogonal to $P1=P^21=1$; together with Section 192 this gives the first three source-mode constraints for every radical direction.
+
+*Proof.* Let $w\in\mathcal W_u$. Because $h$ lies in the first, middle and terminal slot radicals, the four contractions with the constant candidate function $1\in\mathcal W_u$ vanish:
+
+$$
+\mathcal C(w,h,1)=0,
+\qquad
+\mathcal C(w,1,h)=0,
+\qquad
+\mathcal C(h,w,1)=0,
+\qquad
+\mathcal C(h,1,w)=0.
+\tag{193.4}
+$$
+
+Using $P1=1$ and self-adjointness of $P$, these equations become
+
+$$
+\begin{aligned}
+0=\mathcal C(w,h,1)
+  &=\int_Ggw\,P h\,dm
+   =\langle P(gw),h\rangle_m,\\
+0=\mathcal C(w,1,h)
+  &=\int_Ggw\,P^2h\,dm
+   =\langle P^2(gw),h\rangle_m,\\
+0=\mathcal C(h,w,1)
+  &=\int_Ggh\,Pw\,dm
+   =\langle gh,Pw\rangle_m,\\
+0=\mathcal C(h,1,w)
+  &=\int_Ggh\,P^2w\,dm
+   =\langle gh,P^2w\rangle_m.
+\end{aligned}
+\tag{193.5}
+$$
+
+As $w$ ranges over $\mathcal W_u$, (193.5) is exactly (193.2)--(193.3). Taking $w=1$ shows that $Pg$ and $P^2g$ belong to $\mathcal M_u$ and that $gh$ is orthogonal to $1$; the missing $g$ mode is supplied by $\mathcal C(h,1,1)=0$ in Section 192. $\square$
+
+Thus a rank-three radical must satisfy one weighted annihilation system and a rank-four radical must satisfy two independent directions in the same system, in addition to lying in $\mathcal S_q^{\perp_m}$. This is a necessary barrier for the remaining out-of-plane branches, not a nonexistence proof: the dimensions of $\mathcal M_u$ and $\mathcal N_u$ may collapse, and the residual-zero partition, $F_{64}$, $H43$, SRS\text{-}20, physical succession and Lean/kernel formalization remain open.
+
