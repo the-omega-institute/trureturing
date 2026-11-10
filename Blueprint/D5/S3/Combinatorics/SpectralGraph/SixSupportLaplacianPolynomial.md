@@ -33,3 +33,4 @@ For all parameters and every commutative ring, the actual six-by-six determinant
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportLaplacianPolynomial.charpoly_zero_factor`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/SixSupportLaplacianPolynomial.determinant_formula`
 - Dependency: [D5/S3/Combinatorics/SpectralGraph/SixSupportLaplacianLowRoot](SixSupportLaplacianLowRoot.md)
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/SixSupportQuadraticTower](SixSupportQuadraticTower.md)
