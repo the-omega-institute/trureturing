@@ -22,6 +22,29 @@ def stern (n : ℕ) : ℕ :=
   else stern (n / 2) + stern (n / 2 + 1)
 termination_by n
 
+/-! Scalar recurrences shared by the Farey and partition consumers. -/
+
+theorem stern_zero : stern 0 = 0 := by
+  rw [stern]
+  norm_num
+theorem stern_one : stern 1 = 1 := by
+  rw [stern]
+  norm_num
+theorem stern_even (n : ℕ) : stern (2 * n) = stern n := by
+  by_cases hn : n = 0
+  · subst n
+    simp
+  · rw [stern, if_neg (by omega), if_neg (by omega), if_pos (by omega)]
+    congr 1
+    omega
+theorem stern_odd (n : ℕ) : stern (2 * n + 1) = stern n + stern (n + 1) := by
+  by_cases hn : n = 0
+  · subst n
+    simp [stern_zero, stern_one]
+  · rw [stern, if_neg (by omega), if_neg (by omega), if_neg (by omega)]
+    have hd : (2 * n + 1) / 2 = n := by omega
+    rw [hd]
+
 /-- Add numerator and denominator coordinates of adjacent fractions. -/
 def mediant (a b : ℕ × ℕ) : ℕ × ℕ := (a.1 + b.1, a.2 + b.2)
 
@@ -50,26 +73,6 @@ def fareyDen (r : ℕ) : ℕ := (fareyEntry r).2
 /-- Coordinates of every element of a full mediant row. -/
 private theorem row_coordinates (m k : ℕ) (hk : k ≤ 2 ^ m) :
     fareyRow m k = (stern k, stern (2 ^ m + k)) := by
-  have stern_zero : stern 0 = 0 := by
-    rw [stern]
-    norm_num
-  have stern_one : stern 1 = 1 := by
-    rw [stern]
-    norm_num
-  have stern_even (n : ℕ) : stern (2 * n) = stern n := by
-    by_cases hn : n = 0
-    · subst n
-      simp
-    · rw [stern, if_neg (by omega), if_neg (by omega), if_pos (by omega)]
-      congr 1
-      omega
-  have stern_odd (n : ℕ) : stern (2 * n + 1) = stern n + stern (n + 1) := by
-    by_cases hn : n = 0
-    · subst n
-      simp [stern_zero, stern_one]
-    · rw [stern, if_neg (by omega), if_neg (by omega), if_neg (by omega)]
-      have hd : (2 * n + 1) / 2 = n := by omega
-      rw [hd]
   induction m generalizing k with
   | zero =>
       have hk' : k = 0 ∨ k = 1 := by norm_num at hk; omega
@@ -99,26 +102,6 @@ private theorem row_coordinates (m k : ℕ) (hk : k ≤ 2 ^ m) :
 private theorem stern_determinant (m k : ℕ) (hk : k < 2 ^ m) :
     stern (k + 1) * stern (2 ^ m + k) =
       stern k * stern (2 ^ m + k + 1) + 1 := by
-  have stern_zero : stern 0 = 0 := by
-    rw [stern]
-    norm_num
-  have stern_one : stern 1 = 1 := by
-    rw [stern]
-    norm_num
-  have stern_even (n : ℕ) : stern (2 * n) = stern n := by
-    by_cases hn : n = 0
-    · subst n
-      simp
-    · rw [stern, if_neg (by omega), if_neg (by omega), if_pos (by omega)]
-      congr 1
-      omega
-  have stern_odd (n : ℕ) : stern (2 * n + 1) = stern n + stern (n + 1) := by
-    by_cases hn : n = 0
-    · subst n
-      simp [stern_zero, stern_one]
-    · rw [stern, if_neg (by omega), if_neg (by omega), if_neg (by omega)]
-      have hd : (2 * n + 1) / 2 = n := by omega
-      rw [hd]
   induction m generalizing k with
   | zero =>
       have hk0 : k = 0 := by norm_num at hk; omega
@@ -147,19 +130,6 @@ private theorem stern_determinant (m k : ℕ) (hk : k < 2 ^ m) :
 /-- Adamson's inverse claim for the supplied level-by-level Farey enumeration. -/
 theorem result (n : ℕ) (hn : 0 < n) :
     stern n * fareyNum (n + 1) % fareyDen (n + 1) = 1 % fareyDen (n + 1) := by
-  have stern_zero : stern 0 = 0 := by
-    rw [stern]
-    norm_num
-  have stern_one : stern 1 = 1 := by
-    rw [stern]
-    norm_num
-  have stern_odd (n : ℕ) : stern (2 * n + 1) = stern n + stern (n + 1) := by
-    by_cases hn : n = 0
-    · subst n
-      simp [stern_zero, stern_one]
-    · rw [stern, if_neg (by omega), if_neg (by omega), if_neg (by omega)]
-      have hd : (2 * n + 1) / 2 = n := by omega
-      rw [hd]
   let m := Nat.log 2 n
   let k := n - 2 ^ m
   have hlo : 2 ^ m ≤ n := Nat.pow_log_le_self 2 (by omega)

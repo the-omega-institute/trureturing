@@ -154,4 +154,10 @@ theorem weightedCount_zero {R : Type*} [CommRing R] (t : R) : weightedCount t 0 
   letI : Unique (SourceLists 0) := ⟨⟨p⟩, fun q => Subsingleton.elim q p⟩
   simp [weightedCount, he, stepDigits]
 
+/-- Weight one recovers the single actual source count in any coefficient ring. -/
+theorem weightedCount_one {R : Type*} [CommRing R] (n : ℕ) :
+    weightedCount (1 : R) n = (count n : R) := by
+  classical
+  simp [weightedCount, count, Nat.card_eq_fintype_card]
+
 end D5.S1.Recurrence.Partitions.HalvingPartitionNonregularity
