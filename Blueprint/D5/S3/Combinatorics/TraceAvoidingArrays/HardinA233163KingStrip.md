@@ -38,6 +38,8 @@ The four complementary colour pairs are {0,7}, {1,6}, {2,5} and {3,4}. The priva
 
 The public Fin8 scanner Seen, good and finish, the pair map beta and colour_bond_iff, and the width-independent widthNormal, widthLegal, widthStep, widthV, widthTotal and width_counting_bridge are reused directly from HardinA233196Strip. Normal is independently expressed with strict rank 3 times row plus column; normal_iff proves its equivalence with the scanner. Both diagonal directions and every vertical bond are present in bonds. The literal count is independent of the transfer calculation. Formal inversion uses the denominator constant coefficient one. The result concerns rational formal series at every height; there is no finite cutoff or resource assumption. No claim of global priority is made.
 
+Proof shape is content for continuation, count_formula, recurrence, product_identity and result: after inlining, the new all-length proper-boundary induction remains live. The imported generic counting bridge does not supply that invariant. The finite certificates, bonds_iff, normal_iff, counting_bridge, seed_congr, seed_linear, initial_counts and zero_count are bind-only helpers with live consumers listed in the problem dossier. The fixed initial cases reduce continuation at lengths zero and one. Admission remains open-problem-resolution under preregistration 28719; this shape judgement makes no independent novelty claim.
+
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233163KingStrip.a`
