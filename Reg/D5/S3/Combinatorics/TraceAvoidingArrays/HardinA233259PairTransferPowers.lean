@@ -93,6 +93,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have ha := congrFun (table_steps 0) (0 : Fin 14)
   have hb := congrFun (h 0) (0 : Fin 14)
+  change W 1 0 = (Q.mulVec (W 0)) 0 at ha
   change W 1 0 + 1 = (Q.mulVec (W 0)) 0 at hb
   linarith only [ha, hb]
 def family : Registration arena (type_of% @table_steps) where
@@ -158,6 +159,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have ha := congrFun (powers_table 0) (0 : Fin 14)
   have hb := congrFun (h 0) (0 : Fin 14)
+  change ((Q^0).mulVec (1 : Fin 14 → ℤ)) 0 = W 0 0 at ha
   change ((Q^0).mulVec (1 : Fin 14 → ℤ)) 0 = W 0 0 + 1 at hb
   linarith only [ha, hb]
 def family : Registration arena (type_of% @powers_table) where
