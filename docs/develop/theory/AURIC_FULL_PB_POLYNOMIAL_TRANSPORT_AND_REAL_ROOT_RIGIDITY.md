@@ -1716,3 +1716,1333 @@ typed CP、整台递归参考、完整仪器、TP、Kraus、更新和 Lüders �
 **解释 22.5（两个实际反射的完整白话）。** 把前两块看成带相反标记的两条通道，第三块看成共同端点。第一对象在前两块上分别取正、负的同一幅度；标量总右 Gram 使第二对象把两条边合成一条等距通道。除去各自的非零幅度后，两个对象各自在自己的实际支撑上是反射，原来的完整关系便能从两边读取同一个答案：第一遍只留下前两块内部的余量，第二遍又要求这份余量与第二面反射交换，并且只能留在合成通道和共同端点内。余量在共同端点上已经为零，而第二反射恰好交换这个端点与合成通道；若余量在通道上还非零，交换前后就不可能一致，因此也必须为零，已经没有地方容纳它。两条边是同时进入原表的一个输入，没有先把两个答案相加；三进 UHF 所需的第二张整角旧表，由实际角自身的偶维矩阵模型和共同交叠中的同一个非零交换子支付。这个证明更短，也覆盖了一个不等右 Gram 的新输入族，简化来自支撑交换几何，没有减少原公理条数；标量总右 Gram 是输入限制。零幅度直接由原零槽处理。已分类的角具有数学复代数、正 Gram 和 Hilbert 表示，真实准备、完整 Born 菜单、共同相关联合、整台递归仪器全部输出及未来、Return、CountRead、正常性和物理动力学继续由定义 18.2 的整个同源谓词逐项承担，完整量子起源目标没有被这些局部结果替代。
 
 ## 追加锚（本行以下为增补区）
+
+## 23. 保留整个实际演员的局部谱对探针
+
+**定义 23.1（同一原条件与局部谱对）。** 全部采用定义 6.1、16.1、19.1 的同一个完整 $\mathsf H_A(D)$：$A$ 为含单位复 C* 代数，原域准确为 $E=A_{\rm sa}$，$S(x,y)=x\circ y=(xy+yx)/2$，原锥为 $A_+$，原单位、范数、$\Omega/\mathrm{native}$、每个原标签、每份分离且准确决定锥的原评价及其全部零、不等、次归一和原表示意义下的非正常质量不变。全部有向 A1/P2、相加三表及全部排列和相加零方向的 A2、同一个固定有理小窗口的 A3，以及每个原三元组的全部实际内外层 PB (19.1)，均保持原量词。未知量仍为同一个任意总映射 $D:E^2\to E$；没有输入线性、齐次、正则性、协变、压缩自然性、商下降、双对偶延拓或有限阶段输出闭合前件。
+
+设实际投影 $P\in A$ 的**整个** $PAP$ 已按 (6.4) 以同一个普通符号 $\sigma\in\{\pm1\}$ 分类，记 $\jmath=\sigma i$。取实际 $c=c^*\in PAP$、正交投影 $l,m\le P$ 及实际自伴 $e\in PAP$，满足
+
+$$
+cl=lc=\lambda l,\quad cm=mc=-\lambda m,\quad
+\lambda\in\mathbb R\setminus\{0\},\qquad
+ e=(l+m)e(l+m),\quad e^2=l+m,\quad el=me.
+\tag{23.1}
+$$
+
+正 $\lambda$ 是正谱对；允许负 $\lambda$ 仅为交换两格时继续保留原演员 $c$。$c$ 在 $P-l-m$ 上任意；尤其不要求 $c^2=\lambda^2P$。定义原元素
+
+$$
+j=\jmath(l-m)e,\quad n=2l.
+\tag{23.2}
+$$
+
+直接相乘给 $j=j^*$、$j^2=e^2=l+m$、$ej=-je$、$e\circ j=0$、$n\circ j=j$。整个 $PAP$ 的分类准确支付
+
+$$
+\begin{gathered}
+D(c,e)=\lambda j,\quad D(c,j)=-\lambda e,\quad D(c,n)=0,\\
+c\circ e=c\circ j=0,
+\qquad c\circ n=\lambda n,\\
+D(c,Te+\alpha n)=\lambda Tj
+\quad(T,\alpha\in\mathbb R).
+\end{gathered}
+\tag{23.3}
+$$
+
+最后一式在已分类的整个角内逐值成立；它不是对未知环境行使用齐次或可加性。
+
+**定理 23.2（单个局部谱对识别一整条非对角块）。** 在定义 23.1 下，对任意实际环境输入 $t=t^*\in A$，同一个固定旧输出满足
+
+$$
+\boxed{\quad l\bigl(D(c,t)-K_\sigma(c,t)\bigr)(1-l)=0.\quad}
+\tag{23.4}
+$$
+
+这里 $1-l$ 包括 $m$、同一角的其余谱块及整个补角；不压缩演员 $c$ 或第二输入 $t$。
+
+证明。AH43.1 供应反对称性、零槽和同表正读取。对每个数学正实线性泛函 $\phi$，记
+
+$$
+B_\phi(X,Y)=\phi(X^2)\phi(Y^2)-\phi(X\circ Y)^2,
+\qquad |\phi D(X,Y)|\le\sqrt{B_\phi(X,Y)}.
+\tag{23.5}
+$$
+
+这只读取原输出，未增加物理准备或归一化原质量。若 $l+m=0$，结论为零。否则固定实际 $c,t$ 及同一个
+
+$$
+g=D(c,t),\qquad k=c\circ t,\qquad
+V=\lambda n\circ t-n\circ k,\qquad Z=t+\lambda k.
+\tag{23.6}
+$$
+
+对每个有限实 $T,\alpha$，使用真正原三元组 $\operatorname{PB}(c;Te+\alpha n,t)$。内值准确为 $\lambda Tj,g$，内构造为 $v=\lambda Tj-k,w=\lambda\alpha n+g$，故两份实际外层对是
+
+$$
+\begin{aligned}
+R_+&=T(e+\lambda j)-k+\alpha n,&
+S_+&=t+g+\lambda\alpha n,\\
+R_-&=T(e-\lambda j)+k+\alpha n,&
+S_-&=t-g-\lambda\alpha n.
+\end{aligned}
+\tag{23.7}
+$$
+
+完整 PB 的原右端只按已知 Jordan 乘法展开：
+
+$$
+\begin{aligned}
+D(R_+,S_+)-D(R_-,S_-)
+&=-2(Te+\alpha n)\circ(\lambda Tj-k)
+  -2t\circ(\lambda\alpha n+g)\\
+&=2T e\circ k-2t\circ g-2\alpha(\lambda Tj+V).
+\end{aligned}
+\tag{23.8}
+$$
+
+这里使用的恰是 $e\circ j=0,n\circ j=j$；没有平方 $c$ 的步骤。对两份未知外值分别用同一 $\phi$ 的 (23.5)，得到
+
+$$
+|\phi(2Te\circ k-2t\circ g-2\alpha(\lambda Tj+V))|
+\le\sqrt{B_\phi(R_+,S_+)}+\sqrt{B_\phi(R_-,S_-)}.
+\tag{23.9}
+$$
+
+为完整支付首项提取，置实半内积 $\langle X,Y\rangle_\phi=\phi(X\circ Y)$。对固定自伴 $A_0,B_0,n$ 和实 $\theta$，令 $C_0=B_0-\theta A_0$；直接展开 Gram 行列式得
+
+$$
+\begin{aligned}
+B_\phi(A_0+\alpha n,B_0+\theta\alpha n)
+&=B_\phi(A_0+\alpha n,C_0)\\
+&=\alpha^2B_\phi(n,C_0)
+ +2\alpha\{\langle A_0,n\rangle_\phi\langle C_0,C_0\rangle_\phi
+ -\langle A_0,C_0\rangle_\phi\langle n,C_0\rangle_\phi\}
+ +B_\phi(A_0,C_0).
+\end{aligned}
+\tag{23.10}
+$$
+
+在正号对取 $A_0=T(e+\lambda j)-k,B_0=t+g,\theta=\lambda$，有 $C_0=Z+g-\lambda Te-\lambda^2Tj$；在负号对取 $A_0=T(e-\lambda j)+k,B_0=t-g,\theta=-\lambda$，有 $C_0=Z-g+\lambda Te-\lambda^2Tj$。固定 $T,\phi$，将 (23.9) 除以 $|\alpha|$，令 $|\alpha|\to\infty$，得到
+
+$$
+\begin{aligned}
+2|\phi(\lambda Tj+V)|\le{}&
+\sqrt{B_\phi(n,Z+g-\lambda Te-\lambda^2Tj)}\\
+&+\sqrt{B_\phi(n,Z-g+\lambda Te-\lambda^2Tj)}.
+\end{aligned}
+\tag{23.11}
+$$
+
+首项为零时，(23.10) 除以 $\alpha^2$ 仍趋零，其非负平方根亦趋零；没有非零首项或非退化半内积假设。
+
+在一份忠实含单位表示 $A\subseteq B(\mathcal H)$ 中计算，内积第一槽共轭线性。$cl=lc=\lambda l,n=2l$ 逐块给
+
+$$
+\begin{gathered}
+lVl=0,\qquad(1-l)V(1-l)=0,\qquad V=V^*,\\
+lV(1-l)=\lambda lt(1-l)-lk(1-l)
+=\tfrac12l[c,t](1-l).
+\end{gathered}
+\tag{23.12}
+$$
+
+因此 $V$ 相对 $l\oplus(1-l)$ 完全非对角，即使 $c$ 在余块上任意。取单位 $\xi\in(1-l)\mathcal H$，先设 $d=\|m\xi\|>0$。由于 $j$、$e$ 只交换 $l,m$，定义
+
+$$
+\eta=j\xi/d\in l\mathcal H,\quad\|\eta\|=1,
+\qquad j\xi=d\eta,\quad e\xi=-\jmath d\eta.
+\tag{23.13}
+$$
+
+对 $\delta>0$，以 $(\xi+\delta\eta)/\sqrt{1+\delta^2}$ 作数学向量读取 $\phi_\delta$。记实正交投影
+$\Pi_\eta z=z-\operatorname{Re}\langle\eta,z\rangle\eta$。任意固定自伴 $W$ 满足
+
+$$
+\begin{aligned}
+\phi_\delta(n^2)&=\frac{4\delta^2}{1+\delta^2},&
+\phi_\delta(W^2)&=\frac{\|W\xi+\delta W\eta\|^2}{1+\delta^2},\\
+\phi_\delta(n\circ W)&=
+\frac{2\delta\operatorname{Re}\langle\eta,W\xi+\delta W\eta\rangle}{1+\delta^2},&
+B_{\phi_\delta}(n,W)&=
+\frac{4\delta^2}{(1+\delta^2)^2}
+\|\Pi_\eta(W\xi+\delta W\eta)\|^2.
+\end{aligned}
+\tag{23.14}
+$$
+
+又由 (23.12) 和 $j$ 的非对角性，
+
+$$
+\phi_\delta(\lambda Tj+V)
+=\frac{2\delta}{1+\delta^2}
+\bigl(\lambda Td+\operatorname{Re}\langle\eta,V\xi\rangle\bigr).
+\tag{23.15}
+$$
+
+在 (23.11) 逐项代入 (23.14)–(23.15)，约去正因子 $2\delta/(1+\delta^2)$。固定 $T$ 后令 $\delta\downarrow0$，用 $\Pi_\eta(j\xi)=0$，得
+
+$$
+\begin{gathered}
+A_\xi=\operatorname{Re}\langle\eta,V\xi\rangle,
+\quad z_\pm=\Pi_\eta((Z\pm g)\xi),
+\quad u_\xi=e\xi/d=-\jmath\eta,\\
+\|u_\xi\|=1,\quad\operatorname{Re}\langle\eta,u_\xi\rangle=0,\\
+2|\lambda Td+A_\xi|
+\le\|z_+-\lambda Td\,u_\xi\|
+  +\|z_-+\lambda Td\,u_\xi\|.
+\end{gathered}
+\tag{23.16}
+$$
+
+为提取两向范数一次项，对固定 $\|u\|=1,z$ 和实 $\rho\ne0$，有准确有理化等式
+
+$$
+\|\rho L u+z\|-|\rho|L
+=\frac{2\rho L\operatorname{Re}\langle u,z\rangle+\|z\|^2}
+       {\|\rho Lu+z\|+|\rho|L}
+\longrightarrow\operatorname{sgn}(\rho)\operatorname{Re}\langle u,z\rangle
+\quad(L\to+\infty).
+\tag{23.17}
+$$
+
+令 $\epsilon=\operatorname{sgn}\lambda$，$B_\xi=\operatorname{Re}\langle u_\xi,g\xi\rangle$。在 (23.16) 取 $T=L$，左右均减去 $2|\lambda|dL$。左侧极限为 $2\epsilon A_\xi$；右侧两项的极限分别为
+$-\epsilon\operatorname{Re}\langle u_\xi,z_+\rangle$ 和
+$\epsilon\operatorname{Re}\langle u_\xi,z_-\rangle$，和为 $-2\epsilon B_\xi$。取 $T=-L$，左侧极限为 $-2\epsilon A_\xi$，右侧两项依次反号，和为 $2\epsilon B_\xi$。两向不等式一起给
+
+$$
+A_\xi=-B_\xi,\qquad
+\operatorname{Im}\langle\eta,g\xi\rangle
+=\sigma\operatorname{Re}\langle\eta,V\xi\rangle.
+\tag{23.18}
+$$
+
+这里 $\operatorname{Re}\langle u_\xi,z_\pm\rangle
+=\operatorname{Re}\langle u_\xi,(Z\pm g)\xi\rangle$，因为被减去的是 $\eta$ 的实倍数；共同的 $Z$ 因而消去。符号 $\epsilon$ 的保留使证明同时覆盖负 $\lambda$。
+
+第二次使用实际伴轴 $e'=j$，仍以同一个 $c$ 为演员、同一个 $t$ 为第二输入。此时 $j'=\jmath(l-m)j=-e$，且 (23.3) 对应为 $D(c,e')=\lambda j',D(c,j')=-\lambda e'$；$n,g,k,V,Z,d$ 全不改变，$\eta'=j'\xi/d=\jmath\eta$。设 $G=\langle\eta,g\xi\rangle$、$L_0=\langle\eta,V\xi\rangle$。第一伴轴给 $\operatorname{Im}G=\sigma\operatorname{Re}L_0$；第二伴轴给
+$\operatorname{Im}(-\jmath G)=\sigma\operatorname{Re}(-\jmath L_0)$，即 $-\sigma\operatorname{Re}G=\operatorname{Im}L_0$。故
+
+$$
+G=\jmath L_0,\qquad
+\langle jm\xi,(g-\jmath V)\xi\rangle=0
+\quad(\xi\in(1-l)\mathcal H).
+\tag{23.19}
+$$
+
+由二次齐次性，单位向量结论扩到全部 $d>0$ 的向量。$d=0$ 时末式左边本来就是零；不在该情形定义 $\eta$ 或除以 $d$。
+
+令 $M=g-\jmath V$、$r_0=1-l-m$。在 (23.19) 取 $\xi=u+z$，其中 $u\in m\mathcal H,z\in r_0\mathcal H$，再减去 $z=0$ 的等式，得 $\langle ju,Mz\rangle=0$。$j:m\mathcal H\to l\mathcal H$ 是满的等距映射，故 $lMr_0=0$。对 $z=0$，算子 $T_0=mjMm$ 的二次型 $Q(u)=\langle u,T_0u\rangle$ 恒零；不要求 $T_0$ 自伴，复极化给
+
+$$
+4\langle u,T_0v\rangle
+=Q(u+v)-Q(u-v)-iQ(u+iv)+iQ(u-iv)=0.
+\tag{23.20}
+$$
+
+故 $T_0=0$，同一满等距性给 $lMm=0$。合并得 $l(g-\jmath V)(1-l)=0$；(23.12) 使它正是 (23.4)。忠实性返回原 $A$。所有极限只作用于显式标量多项式和固定元素 $g,k,V,Z$ 的向量范数；没有把任一变化输入上的未知外响应移入极限。∎
+
+## 24. 有限对称谱演员的中心化余量行
+
+**定理 24.1（有限谱局部反对易演员）。** 保留完整原条件和整个实际 $PAP$ 的同号分类。设 $c=c^*\in PAP$ 在角单位 $P$ 下可逆，谱为有限的非零集合，另有实际 $f=f^*\in PAP$ 满足
+
+$$
+f^2=P,\qquad fc=-cf.
+\tag{24.1}
+$$
+
+则对每个任意环境 $t=t^*\in A$，存在 $s=s^*\in PAP$，使同一个实际旧输出满足
+
+$$
+\boxed{D(c,t)=K_\sigma(c,t)+s,\qquad [c,s]=0.}
+\tag{24.2}
+$$
+
+$P=0,c=0$ 的零角按零槽取 $s=0$。此为余量行，不宣称一般环境整行已有 $s=0$。
+
+证明。以下设 $P\ne0$。角内酉元 $f$ 的共轭把 $c$ 变成 $-c$，所以谱对称。写互异正数 $\lambda_1,\ldots,\lambda_N$，并在同一**实际原代数**中取有限谱投影
+
+$$
+\begin{gathered}
+l_j=1_{\{\lambda_j\}}(c),\qquad
+m_j=1_{\{-\lambda_j\}}(c),\qquad p_j=l_j+m_j,\\
+P=\sum_{j=1}^N p_j,\qquad
+c=\sum_{j=1}^N\lambda_j(l_j-m_j),\qquad
+fl_j=m_jf,\quad fp_j=p_jf.
+\end{gathered}
+\tag{24.3}
+$$
+
+这些投影由角内有限 Lagrange 多项式演算得到，属于 $PAP\subset A$；没有调用表示外或双对偶谱投影。令
+
+$$
+e_j=fp_j,\qquad j_j=\jmath(l_j-m_j)e_j.
+\tag{24.4}
+$$
+
+则 $e_j=e_j^*$、$e_j^2=p_j$ 且交换 $l_j,m_j$。整个 $PAP$ 的分类逐值支付 $D(c,e_j)=\lambda_jj_j,D(c,j_j)=-\lambda_je_j,D(c,2l_j)=0$，虽 $c$ 在其余 $p_k$ 上仍有不同谱值。固定 $g=D(c,t)$、$M=g-K_\sigma(c,t)$，用定理 23.2 得 $l_jM(1-l_j)=0$。
+
+对负谱块准确取 $(l,m,\lambda,e,j,n)=(m_j,l_j,-\lambda_j,e_j,-j_j,2m_j)$。演员仍是**原来的 $c$**，实际内值是
+
+$$
+D(c,e_j)=(-\lambda_j)(-j_j),\quad
+D(c,-j_j)=\lambda_je_j=-(-\lambda_j)e_j,\quad
+c\circ(2m_j)=-\lambda_j(2m_j).
+\tag{24.5}
+$$
+
+这些是整个角的已证公式，不从 $D(-c,t)$ 推断 $D(c,t)$。定理 23.2 的负 $\lambda$ 版本给 $m_jM(1-m_j)=0$。因 $M=M^*$，所有反向块也为零。
+
+令 $Q=1-P$。$c$ 在 $P\mathcal H$ 上有界可逆，故 $\ker c=Q\mathcal H$。对每个 $\xi\in Q\mathcal H$，原 $(c,t)$ 的 P2 读取第一平方为零，给 $\langle\xi,g\xi\rangle=0$；在该子空间内极化得 $QgQ=0$。又 $QK_\sigma(c,t)Q=0$，故 $QMQ=0$。有限分割 (24.3) 连同 $Q$ 已穷尽单位，遂有原元素等式
+
+$$
+M=\sum_{j=1}^N(l_jMl_j+m_jMm_j)=:s\in(PAP)_{\rm sa},
+\qquad[c,s]=0.
+\tag{24.6}
+$$
+
+求和只分解固定的一个输出算子，未对未知 $D$ 的输入作和式展开。∎
+
+## 25. 有限非标量总右 Gram 的完整双边响应
+
+**定义 25.1（实际双边与正可逆有限谱输入族）。** 取 $A=M_3(B)$，$B$ 为任意含单位复 C* 代数；$p,q,h,e$ 保持 (19.2)。原条件完整取定义 23.1。对任意完成系数 $x,y\in B$，置
+
+$$
+\begin{gathered}
+c_0=x^*x+y^*y,\qquad
+v=E_{13}x+E_{23}y,\qquad b=v+v^*,\\
+\iota(z)=E_{33}z:\ B\overset{*}{\cong}qAq.
+\end{gathered}
+\tag{25.1}
+$$
+
+本节输入限制为 $c_0$ 正、可逆且谱有限；写互异正数的谱为 $\{\mu_1,\ldots,\mu_N\}$，不要求 $N=1$。在已知 C* 乘法中定义
+
+$$
+u=v\iota(c_0^{-1/2}),\quad d=\iota(c_0^{1/2}),\quad
+P_0=uu^*,\quad P=P_0+q,\quad f=P_0-q.
+\tag{25.2}
+$$
+
+对一般 $B$，明确假定同一旧 $D$ 在整个 $pAp$ 和整个实际 $PAP$ 上均以**同一个** $\sigma$ 分类。谱限制及这两份角分类的条件不被改写为新的原公理；25.3 在奇数阶段 UHF 中供应角分类。
+
+**定理 25.2（有限总右 Gram 双边族）。** 在定义 25.1 下，对全部实 $R$，同一个实际旧输出满足
+
+$$
+\boxed{\begin{aligned}
+D(Rh,b)&=K_\sigma(Rh,b)\\
+&=\frac{\sigma iR}{2}
+\bigl(E_{13}x-E_{31}x^*-E_{23}y+E_{32}y^*\bigr).
+\end{aligned}}
+\tag{25.3}
+$$
+
+系数是任意满足该输入限制的完成元素；无需 $x,y$ 正规、彼此交换、右 Gram 相等或位于某个有限矩阵阶段。
+
+证明。零代数、$R=0$ 或 $x=y=0$ 时直接用零槽；在非零代数中后者不属可逆 $c_0$ 的分支，仍保留其原零输入结论。以下设 $B\ne0,R\ne0$ 且 $c_0$ 正可逆有限谱。由 $v^*v=\iota(c_0)$、$pv=v=vq$、$qv=vp=0$，已知乘法准确给
+
+$$
+\begin{gathered}
+u^*u=q,\quad u^2=0,\quad P_0=uu^*\le p,
+\quad P_0q=0,\quad v=ud,\quad v^*=du^*,\\
+b=ud+du^*,\qquad
+b^2=u\iota(c_0)u^*+\iota(c_0),\qquad
+f=f^*,\quad f^2=P,\quad fb=-bf.
+\end{gathered}
+\tag{25.4}
+$$
+
+特别 $P_0$ 是原代数中的实际投影。$b$ 在 $PAP$ 中的逆为 $u\iota(c_0^{-1/2})+\iota(c_0^{-1/2})u^*$：两种乘法次序均给 $P_0+q=P$。因此其表示中的核准确为 $(1-P)\mathcal H$。
+
+为明确有限谱的实际实现，令 $z_j=1_{\{\mu_j\}}(c_0)\in B$、$r_j=\iota(z_j)$，并取
+
+$$
+\begin{gathered}
+P_j=ur_ju^*+r_j,\qquad H_j=ur_j+r_ju^*,\\
+H_j=H_j^*,\quad H_j^2=P_j,\quad
+\sum_jP_j=P,\quad bP_j=\sqrt{\mu_j}\,H_j,\\
+l_j=(P_j+H_j)/2,\quad m_j=(P_j-H_j)/2,\qquad
+b=\sum_j\sqrt{\mu_j}(l_j-m_j).
+\end{gathered}
+\tag{25.5}
+$$
+
+不同 $P_j$ 正交；$l_j,m_j$ 是正交的实际谱投影，且 $fl_j=m_jf$。这些等式证明 $b$ 的角内谱正是 $\{\pm\sqrt{\mu_j}:1\le j\le N\}$，并支付定理 24.1 的有限谱及实际反对易前件。没有把归一化的 $b$ 代入未知 $D$。
+
+现在固定 $a=Rh$、$g=D(a,b)$。第一遍直接消费 7.1，使用实际 $h,e$、整个 $pAp$ 的分类及完整环境输入 $b$：
+
+$$
+g=K_\sigma(a,b)+r,\qquad
+r=r^*\in pAp,\qquad[h,r]=0.
+\tag{25.6}
+$$
+
+第二遍对实际有序对 $(b,a)$ 使用定理 24.1，整个角为 $PAP$、实际反对易元为 $f$，给
+
+$$
+D(b,a)=K_\sigma(b,a)+s,\qquad
+s=s^*\in PAP,\qquad[b,s]=0.
+\tag{25.7}
+$$
+
+这里 $D$ 的首输入就是整个 $b$，未提取 $\sqrt{\mu_j}$、$c_0^{1/2}$ 或任何谱投影。反对称性只比较同一旧表的反向值，得 $r=-s$。故
+
+$$
+r\in PAP,\quad[b,r]=0,\quad qr=rq=0,\qquad
+r=PrP=P_0rP_0.
+\tag{25.8}
+$$
+
+在 $[b,r]=0$ 左乘 $q$，由 $qb=du^*$、$qr=0$ 得
+
+$$
+0=q[b,r]=du^*r.
+\tag{25.9}
+$$
+
+$d$ 在 $qAq$ 中的逆是 $\iota(c_0^{-1/2})$，而 $u^*r=qu^*r$，所以 $u^*r=0$。再用 $r=P_0r=uu^*r$ 得 $r=0$，证明 (25.3)。
+
+若恰有一条边为零而 $c_0$ 仍可逆，上述 $u^*u=q$ 和全部等式照常成立：从未求 $x$ 或 $y$ 的逆，也未除以其范数。若允许退化的 $c_0=0$，则两个正元之和为零及 C* 恒等式给 $x=y=0$，仍由零槽得同式。这里没有覆盖其余非可逆总右 Gram。∎
+
+**推论 25.3（奇数阶段 UHF 的任意完成系数）。** 设非零无限 UHF $B$ 带有实际递增含单位模型 $B_n\cong M_{d_n}(\mathbb C)$，其并在 $B$ 中范数稠密；各 $d_n$ 为奇数。取 $A=M_3(B)$，同一原总映射 $D$ 满足完整 $\mathsf H_A(D)$。则 AH72.1 的同一个普通符号 $\sigma$ 使 (25.3) 对所有实 $R$ 及所有满足正可逆有限谱总右 Gram 的完成 $x,y\in B$ 成立，不另要求任何角分类或 $P$ 位于原有限阶段。
+
+证明。$A_n=M_3(B_n)$ 是 $A$ 的实际满矩阵模型；$p$ 在每个阶段的矩阵秩为 $2d_n$，故 AH71.2 分类整个 $pAp$，AH72.1 供应共同 $\sigma$。这只使用其已有实际偶角结论，不声称整个奇数阶段 $A$ 已分类。
+
+对 (25.2) 的具体实际 $P$，完整原域保证 $P\in E$。W119.2–119.3 准确给
+
+$$
+\begin{gathered}
+D((PAP)_{\rm sa},(PAP)_{\rm sa})\subseteq(PAP)_{\rm sa},\qquad
+(PAP)_+=A_+\cap PAP,\qquad 1_{PAP}=P,\\
+N_P=\|\cdot\|_A|_{PAP},\qquad
+\gamma_P=\gamma|_{(PAP)_{\rm sa}},\qquad m_\gamma^P=\gamma(P).
+\end{gathered}
+\tag{25.10}
+$$
+
+保留每个原评价标签，不合并同值限制、不删零限制、不除以质量。限制评价准确决定角锥并分离角内元素；有向 P2、A2 的全部三表及排列、同一个有理窗口的 A3 均继承。对任意角内原三元组，内层输出由 (25.10) 留在角中，Jordan 运算及实际外标签亦留在角中，外输出再次由同式闭合。因此 W 式 (120.2) 的**全部实际 PB** 逐值继承。
+
+(20.2)–(20.8) 的角供应只用 $u^*u=q,uu^*=P_0\le p$ 及 $B$ 的实际模型，不用总右 Gram 是标量。对本节的实际 $u$，其完整参数仍为
+
+$$
+\begin{aligned}
+\Phi:M_2(B)&\overset{*}{\cong}PAP,\\
+\Phi((z_{ij}))&=u\iota(z_{11})u^*+u\iota(z_{12})
+ +\iota(z_{21})u^*+\iota(z_{22}),\\
+\Phi^{-1}(T)&=
+\begin{pmatrix}
+\iota^{-1}(u^*Tu)&\iota^{-1}(u^*Tq)\\
+\iota^{-1}(qTu)&\iota^{-1}(qTq)
+\end{pmatrix}.
+\end{aligned}
+\tag{25.11}
+$$
+
+实际矩阵单位是 $P_0,u,u^*,q$，单位之和是 $P$。乘法和伴随由 $u^*u=q$ 逐项保持；四个逆坐标在 $qAq$ 内。展开 $T=(P_0+q)T(P_0+q)$，分别用 $P_0=uu^*$，便得 $\Phi\Phi^{-1}(T)=T$；反向逐坐标给恒等。这支付覆盖**整个**实际角的成熟 * 同构，而非仅一份子代数。
+
+因此有真正位于原 $A$ 中的模型
+
+$$
+\mathcal A_n^P=\Phi(M_2(B_n)),\qquad
+\mathcal A_n^P\cong M_{2d_n}(\mathbb C),\quad
+1_{\mathcal A_n^P}=P,\qquad
+PAP=\overline{\bigcup_n\mathcal A_n^P}^{\|\cdot\|}.
+\tag{25.12}
+$$
+
+密度仅来自已知 * 同构的等距性。AH70.1 直接作用于此实际载体、同一个限制总映射 $D_P$ 和刚继承的完整原条件，给唯一普通符号 $\sigma_P$，使
+
+$$
+D(z,t)=\frac{\sigma_P i}{2}[z,t]
+\quad(z,t\in(PAP)_{\rm sa}).
+\tag{25.13}
+$$
+
+没有先声明 $D$ 对 $\Phi$ 协变，没有让输入极限穿过 $D$，也没有有限阶段输出闭合假设。
+
+最后准确重复 (20.6)–(20.8) 的非零交叠比较。$P_0AP_0\subseteq pAp\cap PAP$，且 $z\mapsto u\iota(z)u^*$ 是 $B\overset{*}{\cong}P_0AP_0$。无限 UHF 的某个实际矩阵阶段阶数至少为二，可取其中自伴 $d_B,t_B$ 使 $[d_B,t_B]\ne0$；例如两条矩阵坐标上的对角差和对称非对角元。令
+
+$$
+\alpha=u\iota(d_B)u^*,\quad\beta=u\iota(t_B)u^*,
+\qquad [\alpha,\beta]=u\iota([d_B,t_B])u^*\ne0.
+\tag{25.14}
+$$
+
+非零性可左乘 $u^*$、右乘 $u$ 检验。两份已分类的整个角对**同一原输出**给
+
+$$
+D(\alpha,\beta)=\frac{\sigma i}{2}[\alpha,\beta]
+              =\frac{\sigma_P i}{2}[\alpha,\beta],
+\qquad \sigma_P=\sigma.
+\tag{25.15}
+$$
+
+这支付定义 25.1 的第二整体角及同号前件，故定理 25.2 适用。特别包括 $B=M_{3^\infty}$；$P$、$x$、$y$ 均不必属于原有限阶段。∎
+
+**输入族 25.4（无需交换的完成参数）。** 对任意正可逆有限谱 $c_0\in B$、任意 $0\le T\le1_B$ 及任意酉元 $v_0,w_0\in B$，准确取
+
+$$
+x=v_0T^{1/2}c_0^{1/2},\qquad
+y=w_0(1_B-T)^{1/2}c_0^{1/2}.
+\tag{25.16}
+$$
+
+因子次序给
+
+$$
+x^*x=c_0^{1/2}Tc_0^{1/2},\qquad
+y^*y=c_0^{1/2}(1_B-T)c_0^{1/2},\qquad
+x^*x+y^*y=c_0.
+\tag{25.17}
+$$
+
+所以不要求 $[T,c_0]=0$；$T=0,1_B$ 给一边为零的端点。参数检验只使用已知乘法，不对旧 $D$ 作酉协变、求和或取极限。
+
+这个族包含真正不在任何原有限阶段的系数，而不是仅有 AH42.4 已覆盖的有限维例子。例如在标准 $B=M_{3^\infty}$ 中，取首个张量因子的非交换秩一投影 $r,s$，以及第 $n\ge2$ 个张量因子的秩一投影 $s_n$，令
+
+$$
+c_0=\mu r+\nu(1_B-r),\quad
+\mu,\nu>0,\quad\mu\ne\nu,\qquad
+T=\tfrac13s+\sum_{n=2}^{\infty}2\,3^{-n}s_n.
+\tag{25.18}
+$$
+
+这是已知 C* 代数中范数收敛的正级数，$0\le T\le(2/3)1_B$，且 $[T,c_0]=(\mu-\nu)[s,r]/3\ne0$。对每个 $n\ge2$，在该张量因子取 $z_n$ 使 $[s_n,z_n]\ne0$，则 $[T,z_n]=2\,3^{-n}[s_n,z_n]\ne0$。任何首 $N$ 个因子中的元素都与 $n>N$ 的 $z_n$ 交换，故 $T$ 不在任何这样的有限阶段。取 (25.16) 的 $v_0=w_0=1_B$；若 $x$ 或 $y$ 在某个原有限阶段，则由 (25.17) 和同一阶段之后的 $c_0^{-1/2}$ 分别得到 $T$ 或 $1_B-T$ 也在某个有限阶段，矛盾。因此两系数都是真正的完成元素，而总右 Gram 仍只有两个正谱值。这一构造不向未知 $D$ 传递任何级数极限。
+
+## 26. 归属、准确量子对应与保留的全局边界
+
+**归属 26.1（可复用探针与成熟谱工具）。** 本节的 $\texttt{repo-derived}$ 条件纸面综合由一份局部谱对探针、有限实际谱分割及两份支撑的交集组成。23.2 保留整个 $c$ 并支付全部真实外标签，故不把 7.1 的标量平方前件直接删掉；24.1 只对固定输出作有限谱块分解；25.2 以实际 $b$ 的中心化余量和第一局部反射的支撑余量比较，25.3 的第二角供应复用 (20.2)–(20.8) 的实际内在偶维模型和非零交叠。标量总右 Gram 的 19.2–20.1 是 $N=1$ 的已成范围，等右 Gram 的 16.2 仍保留其无需可逆或有限谱的原范围。
+
+仓内已有的 PBIdempotentSupport 原二表角支撑、PBActualOuterBudget 实际外层预算、W119.2–119.3、120.2 及 AH43.1、70.1、71.2、72.1 均按原前件直接复用。谱混合响应卷 40–41 的有限谱背景行及 55–56 的窗缺陷定位要求实际**全单位**框架；CC147–150 的双伴轴与一次范数预算同样有其原框架前件。它们不直接供应 (23.1) 中仅一对局部谱格且余块任意的整个演员行。有限维、连续迹或已有更强全域分类覆盖的情形直接消费 AH42.4 等既有结论，不将有限维特例、成熟谱演算或普通角同构另算基础分类。
+
+AH 的直接身份仍为 `b1a95e41b9622e9f720e51f9bb899841f5b74ca1`，W、CC 的直接身份仍为 `3b10aed60f60e4901bae6cf2e160bf439d642e64`；各自递归固定引文不被覆盖。对照的谱混合响应卷和 D5/Blueprint 数学源码取 `d2e4fc3127389e556fa518d82d6d849de98d74f5`。成熟工具归于 Blackadar，[*Operator Algebras*](https://bruceblackadar.com/Mathematics/Cycr.pdf)，II.2.3.1–4 的连续函数演算与谱映射、II.2.3.5 的部分等距支撑、II.3.3.4 的等价投影、II.6.6.8 的矩阵单位记号及 II.8.2.2(iv) 的 UHF 模型。有限谱上的特征函数是连续函数，也可直接用有限 Lagrange 多项式取得，故本文使用的是原代数中的实际投影。忠实表示、正读取和数学 GNS 沿定义 10.1 的 Gelfand–Naimark、Segal；Peirce 规则沿该处 Hanche-Olsen–Størmer §2.6.2、Lemma 2.6.3。Gram 展开、范数有理化及复极化已在证明中逐式给出。这些成熟工具不承担本文局部原响应结论的优先权；本文不主张文献穷尽、历史原创、外部开放问题解决或原独立公理减少。
+
+**对应 26.2（已识别的乘法值与已有后端）。** 对 25.2–25.3 的每一实际输入对 $a=Rh,b$，准确有
+
+$$
+S(a,b)-iD(a,b)
+=\frac{ab+ba}{2}+\frac\sigma2(ab-ba)
+=\begin{cases}ab,&\sigma=1,\\ba,&\sigma=-1.\end{cases}
+\tag{26.1}
+$$
+
+24.1 的一般余量行本身只给 $S(c,t)-iD(c,t)$ 等于相应通常或相反乘法值再减 $is$；仅在 25.2 消去同一余量后，才得到 (26.1)。不能把中心化余量的存在当作整行标准化。
+
+在已经整体分类的 $pAp$ 和 $PAP$ 上，AH64.1、75.1 给 $S-iD$ 的复线性延拓为通常或相反 C* 乘法，伴随、准确锥、单位和范数不变；所有有限旧复 Gram 为正，每个原限制评价有数学 GNS，循环向量平方范数分别为 $\gamma(p),\gamma(P)$，零角质量对应零向量。共同符号使这些角乘法在实际交叠上相容。单对公式 (26.1) 没有给整个奇数阶段环境的全域双线性、结合乘法或全部有限旧复 Gram。
+
+Alfsen–Shultz，[*Orientation in operator algebras*](https://pmc.ncbi.nlm.nih.gov/articles/PMC22571/)，PNAS **95**，6596–6601，DOI `10.1073/pnas.95.12.6596`，Dynamical Correspondences、Theorem 1，提供取向与 Jordan 相容 C* 乘法的成熟对应；其 dynamical correspondence 是从含单位 JB 代数到 skew order derivations 的**线性**映射。局部谱行不赠予该全域前件，也不赠予物理时间或正常性。
+
+**定义 26.3（与 22.3、18.2 完全相同的全文来源谓词）。** 本节的完整物理来源准确就是定义 22.3 所严格引用的定义 18.2 的同一个 $\mathcal C_{47}^{\rm pin}(\Omega;S,D)$，**整个 18.2 连同其引用的 10.2、15.2、AH28.1、64.2、75.1、SQ47.1–47.13 及每项逐层固定版本的递归上游全文，逐句、逐公式、逐量词同时纳入**。这里是原谓词的身份保持，不定义缩短替代谓词。
+
+SQ 主源仍按其自身 1.3、39、41.1、47.1 解析；`dcaebc0b9ca5a3a463fd8cfd161d38967df28668` 与 `0aa11dbc3dc337d667b98900673e07d67b99bf46` 的对应层级、OP/PT/PB/SM/C/AQ/R3/W/FR/XV/SF 的 `f24d1138a7b994da16abd9a47affedea64ea44ce`、AH22.1 保留的 `2addd6f369b7387226c2b0cc984623dd3efe40a1` 及 AH12.1 上游 `39a0505470ea889dd9d4301ad60cd9506a5e8b58` 均原样保持。AH42.1 中 OP 等直接身份 `bef9bba367a24ab5e250491dcb88ed85ebc29cf7` 也不被本节直接 AH/W 读取身份压平。原根、静默及其他静态分支不改为 UHF。下文范围说明不替代其中任何被纳入的全文或原前件。
+
+实际准备、相干控制、原事件绑定的实际完整 Born 菜单、质量及角菜单的真实条件化仍须原来源；只在严格正的相应实际质量上归一，零、不等、次归一和非正常质量均保留。真正相关联合与张量须同一实际共同来源、全部相关输入、忠实同向交换局部腿、共同生成、分离和所需重数；数学谱投影、相同边缘和角交叠不生产这些关系。
+
+typed CP、箭头下降、整台递归同源参考、原真支持与支持内补、交织夹界、每个所需有限深度及正精度，仍保留全部原前件。完整仪器、TP、Kraus、更新和 Lüders 仍要求其完整 typed 菜单、完整单位分区、接受端、校准、表示与收敛条件，并量化**整个环境、全部成功／失败／细记录／port／post-port 输出，以及每份完整输出的每个仍合法未来**，不以有限谱角替代任何一份输出或未来。
+
+合法顺序／自适应／并行历史、真正分组遗忘、停止、拒绝、销毁、泄漏、同数两侧和逆向真实 Return、完整 CountRead 的活动 ready 与 producer 全部保持。相同算子不合并原程序、记录、读序、原零集或未来权限；未定义请求不补零。正常性、指定前对偶、无限菜单和记录的可数可加及收敛，仍需原扩展来源。保持原域的实际连续可逆流、实际逆、物理钟和单位、适用酉实现及生成元域、Hamiltonian 能量解释、作用量与共同正 $\hbar$，仍由整个原谓词逐项承担。$\lambda_j,\mu_j,R,T,\alpha,\delta$、数学部分等距和谱格都不生产这些物理来源。
+
+**边界 26.4（有限谱闭合及首个仍未支付的关系）。** 在奇数阶段 UHF 应用中，25.3 关闭正可逆**有限谱**总右 Gram 的整个双边输入族，不要求两条右 Gram 相等或总 Gram 为标量。这不以有限谱逼近推广到无限谱总 Gram，也不覆盖一般非可逆总 Gram；16.2 已有的等右 Gram 退化族和先前已识别单边仍各守其原范围。含任意对角背景、$12$ 边及这些部分任意和的环境输入亦未取得一般旧行可加性。
+
+对本节所闭合的输入，定义 8.3 的两份实际外层缺陷确有 $E_+=E_-$，因为 25.2 给 $r=0$。对一般未覆盖的 $R\ne0,b=b^*\in A$，首个未付关系仍是同一份实际 $E_+=E_-$，差仍准确为 (8.5) 的 $2Rhr$；这里没有将该等式添作公理。全奇数阶段 UHF 分类、从混合整行接回全域分类，以及完整量子起源及其整个来源满足性，均保持原目标与未结边界。
+
+**解释 26.5（一个谱对探针与支撑交集的完整白话）。** 把同一个对象的有限谱想成若干对正负刻度，每对刻度之间已有一条实际交换通道；只探查其中一对时，整个对象仍坐在原来的位置，其余所有刻度和角外环境都保留，不能先把对象压进这两个格子。原完整 PB 比较两份真实外响应，同一个二表预算先随一个有限标签放大，再在数学读取中轻轻混入另一格；向正、负两边观察范数的一次项，并换用第二条实际伴通道，就能锁住这一谱格接向所有其余格子的整条连线，不需要整个对象平方为一个标量。有限多对刻度把这些连线全部锁住后，同一个答案只可能留下各刻度内部的余量。对于两条同时接向共同端点的边，正可逆有限总右 Gram 允许在已知代数中辨认一条实际等距通道和它的支撑；这是构造通道，并没有把因子从未知响应中抽出来。第一面局部反射要求余量只在前两块内，有限谱探针从反向的同一个答案又要求余量留在合成通道和共同端点内，并与整个第二对象交换。它在共同端点上已经为零，第二对象又以可逆强度连接端点和通道，所以通道上也不能剩任何余量。奇数阶段 UHF 所需的第二张整角旧表，由这个实际角自己的偶维模型及交叠中的同一个非零交换子供应；无需假装原输入落在某个有限阶段。简化是一份可复用探针加支撑交集，没有减少原公理。这里总右 Gram 可以有限非标量，两个系数本身则可以是真正的完成元素；无限谱总 Gram、任意背景整行和全局量子起源仍未闭合。已分类角保有复乘法、正 Gram 和数学 Hilbert 表示，真实准备与完整 Born 菜单、共同相关联合、整台递归仪器的全部输出和未来、Return、CountRead、正常性及物理动力学，仍须同一个完整原来源谓词逐项成立。
+
+## 追加锚（本行以下为增补区）
+
+## 27. 有限非可逆总右 Gram 的自然支撑响应
+
+### 27.1 原条件、记号与来源谓词的身份保持
+
+本节在 §§23–26 的同一原条件上追加。令 $B$ 为含单位复 $C^*$-代数，$A=M_3(B)$，$E=A_{\rm sa}$，$a\circ b=(ab+ba)/2$，$p=E_{11}+E_{22}$，$q=E_{33}$，
+$$
+ h=E_{11}-E_{22},\qquad e_{12}=E_{12}+E_{21},\qquad \iota(z)=E_{33}z .
+$$
+未知量仍是一个**总的任意映射** $D:E^2\to E$。原正实线性评价族 $\mathcal P$ 分离 $E$ 并准确决定 $A_+$；每个原标签、每份评价及质量 $m_\gamma=\gamma(1)$ 全部保留，包括零、不等、次归一和原表示意义下的非正常质量。
+
+完整 $\mathsf H_A(D)$ 逐项不变：所有有向 A1/P2 及两种次序
+$$
+\begin{pmatrix}
+\gamma(a^2)&\gamma(a\circ b)-i\gamma D(a,b)\\
+\gamma(b\circ a)-i\gamma D(b,a)&\gamma(b^2)
+\end{pmatrix}\succeq0\qquad(a,b\in E,\ \gamma\in\mathcal P),
+$$
+全部相加三表 $(a+b,a,b)$ 及其排列在整个 $\mathbb R^3$ 上的 A2 实部正性，具体即每个排列 $(a_1,a_2,a_3)$ 的实矩阵 $(\gamma(a_i\circ a_j))_{i,j=1}^3$ 半正定，并保留指定相加零方向；$1^2=1$ 及固定有理 $0<\vartheta\le1$ 下的 A3：$0\le a\le\vartheta1\Rightarrow a^2\le a$。对每个实际三元组 $(c;x,y)$，以及由任何内值、外值、缩放、平移和背景再次形成的每一个实际嵌套调用，均保留同一个 PB
+$$
+ v=D(c,x)-c\circ y,\qquad w=c\circ x+D(c,y),\qquad
+ D(x+v,y+w)-D(x-v,y-w)=-2x\circ v-2y\circ w.
+$$
+不加入输入线性、齐次性、连续性、可测性、协变性、压缩自然性、商下降、双对偶延拓或有限阶段输出闭合。
+
+完整物理来源谓词也只作身份保持：本文的 $\mathcal C_{47}^{\rm pin}(\Omega;S,D)$ **就是**定义 26.3 的谓词，按定义 22.3、18.2 的逐句、逐公式、逐量词递归全文纳入，包含其固定的 AH28.1、64.2、75.1、SQ47.1–47.13 及每一项固定版本的上游全文；不定义缩短替代物，不改动任何 pinned layer、原根、静默或其他静态分支。
+
+下文消费 AH43.1 的反对称性、零槽和数学正读取，消费 §§7、24 已完成的定理，其中 24.1 是下述响应定理的明确数学前件。$K_\sigma(a,b)=\sigma i[a,b]/2$，其中 $\sigma\in\{\pm1\}$ 是同一实际角的符号。
+
+### 27.2 自然支撑构造
+
+给定 $x,y\in B$，置
+$$
+ c_0=x^*x+y^*y,\qquad v=E_{13}x+E_{23}y,\qquad b=v+v^* .
+$$
+假设 $\operatorname{sp}(c_0)$ 为有限集。若 $c_0\ne0$，写其正谱为 $\{\mu_1,\ldots,\mu_N\}\subset(0,\infty)$，并令
+$$
+ e_c=1_{(0,\infty)}(c_0),\qquad
+ g(0)=0,\quad g(\mu_j)=\mu_j^{-1/2},\qquad
+ Q=\iota(e_c),\quad d=\iota(c_0^{1/2}),\quad u=v\,\iota(g(c_0)).
+$$
+这里 $e_c$ 和 $g(c_0)$ 是实际 $B$ 元素：有限谱函数由有限 Lagrange 多项式给出。记号 $e_c$ 专门避免与固定的 $e_{12}$ 混淆。
+
+由
+$$
+ (1-e_c)c_0(1-e_c)=(x(1-e_c))^*x(1-e_c)+(y(1-e_c))^*y(1-e_c)=0
+$$
+及正元平方为零即元为零，得 $x(1-e_c)=y(1-e_c)=0$。所以 $v=vQ$，$v^*=Qv^*$，并且
+$$
+ g(c_0)c_0g(c_0)=e_c,\qquad
+ u^*u=Q,\qquad P_0:=uu^*\le p,\qquad P:=P_0+Q.
+$$
+因此 $P_0,Q,P$ 是实际投影，且
+$$
+ ud=v,\qquad b=ud+du^*,\qquad f:=P_0-Q=f^*,\qquad f^2=P,\qquad fb=-bf.
+$$
+在 $QAQ\cong e_cBe_c$ 内，$d$ 的逆是 $\iota(g(c_0))$；这只是支撑角内的逆，绝不是 $c_0$ 在整个 $B$ 中可逆。由此
+$$
+ b^{-1}_{PAP}=u\,\iota(g(c_0))+\iota(g(c_0))u^*.
+$$
+若 $z_j=1_{\{\mu_j\}}(c_0)$、$Q_j=\iota(z_j)$，则实际谱块
+$$
+ P_j=uQ_ju^*+Q_j,\quad H_j=uQ_j+Q_ju^*,\quad
+ H_j^2=P_j,\quad b=\sum_j\sqrt{\mu_j}\,H_j,
+$$
+且 $l_j=(P_j+H_j)/2,\ m_j=(P_j-H_j)/2$ 是实际投影，$f l_j=m_jf$。故 $b$ 在单位为 $P$ 的 $PAP$ 中可逆，谱是有限的非零对称集 $\{\pm\sqrt{\mu_j}\}$。这些等式只用已知 $C^*$-乘法。
+
+### 27.3 支撑角已分类时的完整响应
+
+**定理 27.1（有限总右 Gram 的自然支撑响应）。** 在 §27.1 的完整原条件下，假设 $c_0\ne0$ 且 $\operatorname{sp}(c_0)$ 有限，同一个 $D$ 在整个 $pAp$ 与整个实际 $PAP$ 上都以同一个 $\sigma$ 分类。则对所有 $R\in\mathbb R$，
+$$
+\boxed{
+D(Rh,b)=K_\sigma(Rh,b)=\frac{\sigma iR}{2}
+\bigl(E_{13}x-E_{31}x^*-E_{23}y+E_{32}y^*\bigr).}
+$$
+
+**证明。** $R=0$ 时由零槽成立。以下 $R\ne0$。对实际有序对 $(Rh,b)$ 使用已完成的 §7.1（同一原 PB、同一任意环境输入），得到
+$$
+ g:=D(Rh,b)=K_\sigma(Rh,b)+r,\qquad r=r^*\in pAp,\qquad [h,r]=0. \tag{27.1}
+$$
+对反向有序对 $(b,Rh)$ 使用已完成的定理 24.1；§27.2 已给出其实际 actor $b\in PAP$ 的有限非零对称谱、实际对合 $f^2=P$ 及 $fb=-bf$。于是
+$$
+ D(b,Rh)=K_\sigma(b,Rh)+s,\qquad s=s^*\in PAP,\qquad [b,s]=0. \tag{27.2}
+$$
+反对称性比较的是同一旧表的同一反向输出，故 $r=-s$。于是
+$$
+ r\in PAP,\qquad [b,r]=0,\qquad Qr=rQ=0,\qquad r=PrP=P_0rP_0. \tag{27.3}
+$$
+因 $qb=du^*$、$qr=0$，$[b,r]=0$ 给出
+$$
+ 0=q[b,r]=du^*r. \tag{27.4}
+$$
+$d^{-1}=\iota(g(c_0))$ 只存在于 $QAQ$，而 $u^*r=Qu^*r$ 具有左支撑 $Q$。左乘这个角内逆得到 $u^*r=0$。再由 (27.3)，
+$$
+ r=P_0r=uu^*r=0.
+$$
+代回 (27.1)，并直接计算
+$[h,b]=E_{13}x-E_{23}y-E_{31}x^*+E_{32}y^*$，即得所示公式。证明从未对 $x$ 或 $y$ 求逆、从未把 $D$ 的输入拆开相加，也未让未知 $D$ 穿过输入极限。若 $c_0=0$，则 $x=y=0$，$b=0$，同一零槽给出同一盒装公式；零代数按同样等式成立。∎
+
+### 27.4 无限奇数阶段 UHF 中不再需要第二角前件
+
+**推论 27.2（实际无限奇数阶段 UHF）。** 设 $B=\overline{\bigcup_nB_n}$ 是无限 UHF，$B_n\cong M_{d_n}(\mathbb C)$，各 $d_n$ 为奇数；特别包括 $M_{3^\infty}$。若 $D$ 满足 §27.1 的完整 $\mathsf H_A(D)$，则定理 27.1 对所有 $x,y\in B$ 且 $\operatorname{sp}(x^*x+y^*y)$ 有限成立，不要求该 Gram 可逆，也不要求 $x,y$ 属于任何原有限阶段。
+
+**证明。** $p=E_{11}+E_{22}$ 在实际有限阶段 $A_n=M_3(B_n)$ 中的秩为 $2d_n$，因而为偶数。W119.2–119.3、W120.2 把完整原候选的所有原评价标签、原质量（包括零与非正常质量）、准确锥、单位、范数、A1/P2、A2、A3 及每一个实际 PB 逐值限制到整个 $pAp$；AH71.2 与 AH72.1 因而给出整个 $pAp$ 的同一符号 $\sigma$。这一步不要求 $D$ 保持任何有限阶段。
+
+若 $c_0=0$，结论已由定理 27.1 的零槽分支给出。以下 $e_c\ne0$。使用 AH67.2 式 (67.3) 的成熟近投影酉共轭构造：存在实际酉 $w\in B$、某 $N$ 和实际 $e_0\in B_N$，使 $we_cw^*=e_0$。令 $k=\operatorname{rank}_{B_N}(e_0)\ge1$，并对 $n\ge N$ 定义
+$$
+ C_n=w^*e_0B_ne_0w\subset e_cBe_c.
+$$
+这是实际递增的整个角子代数，单位为 $e_c$，且
+$$
+ C_n\cong M_{k\,d_n/d_N}(\mathbb C),\qquad
+ e_cBe_c=\overline{\bigcup_{n\ge N}C_n}^{\|\cdot\|}. \tag{27.5}
+$$
+密度只来自 $e_0B_ne_0$ 在 $e_0Be_0$ 中的压缩密度及实际酉共轭；没有把未知 $D$ 对任何逼近列取极限。因 $d_n$ 无界，$e_cBe_c$ 非交换。
+
+§27.2 的实际矩阵单位 $P_0,u,u^*,Q$ 给出整个角的明确同构
+$$
+ \Phi:M_2(e_cBe_c)\longrightarrow PAP,\qquad
+ \Phi((z_{ij}))=u\iota(z_{11})u^*+u\iota(z_{12})+\iota(z_{21})u^*+\iota(z_{22}). \tag{27.6}
+$$
+逆坐标为
+$$
+ \Phi^{-1}(T)=
+ \begin{pmatrix}\iota^{-1}(u^*Tu)&\iota^{-1}(u^*TQ)\\
+ \iota^{-1}(QTu)&\iota^{-1}(QTQ)\end{pmatrix}. \tag{27.7}
+$$
+四个坐标确在 $QAQ$ 中，且 $P_0+Q=P$；逐项相乘即证 $\Phi$ 覆盖整个 $PAP$。由 (27.5) 得实际递增有限全矩阵子代数
+$$
+ \mathcal A_n^P=\Phi(M_2(C_n))\cong M_{2k\,d_n/d_N}(\mathbb C),\qquad
+ 1_{\mathcal A_n^P}=P,\qquad
+ PAP=\overline{\bigcup_{n\ge N}\mathcal A_n^P}^{\|\cdot\|}. \tag{27.8}
+$$
+它们的阶数全为偶数。W119–120 的完整实际角限制适用于这个具体 $P$，所以 AH70.1 直接作用于实际载体 $PAP$ 和同一个限制 $D_P$，给出某个 $\sigma_P$ 的整个角分类。这里没有假定 $D$ 对 $\Phi$ 协变，也没有假定输出落在 $\mathcal A_n^P$。
+
+为比较符号，取 $n$ 使 $k\,d_n/d_N\ge2$，在实际 $C_n$ 中取自伴 $a_0,\beta_0$ 使 $[a_0,\beta_0]\ne0$，并令
+$$
+ \alpha=u\iota(a_0)u^*,\qquad \beta=u\iota(\beta_0)u^*.
+$$
+则 $\alpha,\beta\in P_0AP_0\subseteq pAp\cap PAP$，且交换子非零。两份整个角分类对同一原输出给出
+$$
+ D(\alpha,\beta)=\frac{\sigma i}{2}[\alpha,\beta]
+ =\frac{\sigma_P i}{2}[\alpha,\beta],\qquad \sigma_P=\sigma. \tag{27.9}
+$$
+故定理 27.1 的全部前件已由实际模型支付。注意这里没有声称 $P$ 或 $e_c$ 位于某个原有限阶段；只有 AH67.2 式 (67.3) 的实际酉共轭和 (27.5) 的实际角模型被使用。∎
+
+### 27.5 一个真正非有限阶段的非可逆有限谱族
+
+**命题 27.3（完成系数与非可逆有限谱 Gram）。** 在 $B=M_{3^\infty}$ 中取一个实际有限阶段的非零真投影 $e_c$，并在其角 $e_cBe_c$ 的某个尾部 $M_{3^\infty}$ 中取第一尾因子的秩一投影 $r,s$，满足 $[r,s]\ne0$，以及后续各因子的秩一投影 $s_n$（$n\ge2$）。令
+$$
+ c_0=\mu r+\nu(e_c-r),\qquad \mu,\nu>0,\quad \mu\ne\nu, \tag{27.10}
+$$
+并令
+$$
+ T=\frac13s+\sum_{n=2}^{\infty}2\,3^{-n}s_n. \tag{27.11}
+$$
+级数在范数中收敛，$0\le T\le(2/3)e_c$，而 $[T,c_0]=(\mu-\nu)[T,r]\ne0$。取
+$$
+ x=T^{1/2}c_0^{1/2},\qquad y=(e_c-T)^{1/2}c_0^{1/2}. \tag{27.12}
+$$
+则两系数均不属于任何原有限阶段，且
+$$
+ x^*x=c_0^{1/2}Tc_0^{1/2},\qquad y^*y=c_0^{1/2}(e_c-T)c_0^{1/2},\qquad x^*x+y^*y=c_0. \tag{27.13}
+$$
+证明。这个 $c_0$ 在整个 $B$ 中非可逆而在 $e_cBe_c$ 中正且有限谱；(27.12) 不要求 $T$ 与 $c_0$ 交换。先取 $K$ 使 $e_c\in B_K$，命题中的尾部副本取在 $B_K$ 之后，尾部元素均以 $e_c$ 为支撑。对 $T$ 或某一系数属于 $B_N$ 的任一假设，先选共同后续阶段 $B_L$，使其包含 $B_N,e_c,r,s$ 及有限支撑逆 $c_0^{-1/2}=\mu^{-1/2}r+\nu^{-1/2}(e_c-r)$。在此共同阶段之后的尾因子 $n\ge2$ 取支撑于 $e_c$ 的 $z_n$，使 $[s_n,z_n]\ne0$；则 $z_n$ 与 $e_cB_Le_c$ 中每个元素交换，且 $[T,z_n]=2\,3^{-n}[s_n,z_n]\ne0$。由于 $T=e_cTe_c$，若 $T\in B_N$，就有 $T\in e_cB_Le_c$，与此非零交换子矛盾；因此 $T$ 不在任何原有限阶段。若 $x\in B_N$，在上述共同阶段中由 (27.13) 得 $T=c_0^{-1/2}x^*x c_0^{-1/2}\in e_cB_Le_c\subset B_L$，矛盾；若 $y\in B_N$，则 $T=e_c-c_0^{-1/2}y^*y c_0^{-1/2}\in e_cB_Le_c$，同样矛盾。因此两系数都是真正完成元素，而响应定理仍适用。这个族说明“自然支撑”允许非可逆 Gram 和无限阶段系数。∎
+
+### 27.6 乘法对应、成熟归属与全局边界
+
+对定理 27.1 的实际输入 $a=Rh,b=v+v^*$，有
+$$
+ S(a,b)-iD(a,b)=\frac{ab+ba}{2}+\frac{\sigma}{2}(ab-ba)
+ =\begin{cases}ab,&\sigma=1,\\ba,&\sigma=-1.\end{cases} \tag{27.14}
+$$
+这只是该输入对的准确静态值。已分类的两个角按 AH64.1、75.1 带有相应的通常或相反 $C^*$-乘法、准确锥、单位、范数、原质量和数学 GNS；角质量分别是 $pAp$ 的 $\gamma(p)$ 与 $PAP$ 的 $\gamma(P)$，零质量仍给零向量。
+
+实际投影的有限谱函数、等价投影、部分等距与矩阵单位可归于 Blackadar, *Operator Algebras*, II.2.3.1–5、II.6.6.8、II.8.2.2(iv)，以及 Bratteli, “Inductive limits of finite dimensional $C^*$-algebras,” *Trans. Amer. Math. Soc.* 171 (1972), 195–234；UHF 归纳极限的成熟背景亦见 Glimm, “On a certain class of operator algebras,” *Trans. Amer. Math. Soc.* 95 (1960), 318–340。AH67.2 式 (67.3)、AH70.1、AH71.2、AH72.1 与 W119.2–119.3、W120.2 只按其既有前件消费；本节不把成熟角构造计作新响应定理。
+
+本节没有把自然支撑角、谱分解或 GNS 变成真实准备、实际 Born 菜单、共同来源或联合张量；也没有产生递归整台仪器的全部输出、每份输出的全部未来、Return、CountRead、正常性、指定前对偶、动力学、物理钟或共同正 $\hbar$。无限谱总 Gram、一般非可逆但非有限谱 Gram、任意背景的整行及全局奇数阶段 UHF 分类仍未由此结清；未支付的全局关系仍是 §§8、22、26 所标出的两份实际外层缺陷相等式 $E_+=E_-$。本节只说明：携带实际通道的支撑角足以完成这一个有限谱族，整个 $B$ 的可逆性是多余的。
+
+**完整白话。** 把 $x,y$ 的总右 Gram 看成一盏只在真实支撑 $e_c$ 上点亮的灯：灯外 $x$ 和 $y$ 都已经为零，所以不必把整盏 $B$ 当成可逆的；在灯亮的角里，用有限谱函数把每个非零亮度开方、再倒数，就把两条边合成一条实际等距通道 $u$，它和共同端点 $Q$ 组成真正的二乘角。第一面反射 $h$ 只可能留下前两块的对角余量，反向把同一个 $b$ 当作演员时，有限的正负谱对又迫使余量同时落在这张支撑角里并与 $b$ 交换；余量在端点 $Q$ 上已经没有位置，而 $b$ 在支撑角内把端点和通道以非零有限谱强度接起来，因此余量连通道也不能占据，只能完全消失。这个过程始终对同一个实际输出使用原来的全部 P2、A1–A3 和每一次真实 PB，没有把两个边的答案相加，没有把未知响应对输入取极限，也没有把数学角偷换成物理准备或 Born 菜单；无限 UHF 中即使 $e_c,x,y$ 都不在任何原有限阶段，实际酉共轭仍给出整个支撑角的偶维矩阵模型，所以同一个符号可以由真实交叠锁定。得到的是所有有限谱总右 Gram（包括非可逆、非标量）的这条响应，完整无限谱、任意环境整行和整个量子起源仍由原来的递归来源谓词逐项承担。
+
+## 28. 不平移原演员的相异谱值探针
+
+**定义 28.1（完整原关系与实际谱差）。** 本节起保持定义 6.1 与 §27.1 的同一个完整 $\mathsf H_A(D)$，包括其全部递归固定引文。$A$ 是含单位复 $C^*$-代数，原域准确为 $E=A_{\rm sa}$，$S(x,y)=x\circ y=(xy+yx)/2$，原单位为 $1$，原范数为 $\|\cdot\|$，原锥准确为 $A_+$。同一 $\Omega/\mathrm{native}$、全部原输入与评价标签保持；原正实线性评价族 $\mathcal P$ 分离 $E$ 并准确决定锥。每份原评价及其质量 $m_\gamma=\gamma(1)$ 全部保留，包括零、不等、次归一和原表示意义下的非正常评价。未知量仍是同一个任意总映射 $D:E^2\to E$。
+
+具体地，全部有向 A1/P2 及两种次序仍为
+
+$$
+\begin{pmatrix}
+\gamma(x^2)&\gamma(x\circ y)-i\gamma D(x,y)\\
+\gamma(y\circ x)-i\gamma D(y,x)&\gamma(y^2)
+\end{pmatrix}\succeq0
+\qquad(x,y\in E,\ \gamma\in\mathcal P).
+\tag{28.1}
+$$
+
+A2 保留每份相加三表 $(x+y,x,y)$ 及全部排列 $(x_1,x_2,x_3)$：实矩阵 $(\gamma(x_i\circ x_j))_{i,j=1}^3$ 在全部实系数 $\mathbb R^3$ 上半正定，$(1,-1,-1)$ 及相应排列仍给指定零二次值。A3 保留 $1^2=1$，以及同一个固定有理 $0<\vartheta\le1$ 下的全部 $0\le x\le\vartheta1\Rightarrow x^2\le x$。对每个实际原三元组 $(c;x,y)$，完整 PB 仍是
+
+$$
+\begin{gathered}
+v=D(c,x)-c\circ y,\qquad w=c\circ x+D(c,y),\\
+D(x+v,y+w)-D(x-v,y-w)=-2x\circ v-2y\circ w.
+\end{gathered}
+\tag{28.2}
+$$
+
+每个实际内值、外值、零、重复、有限实幅度、缩放、平移、背景以及它们再形成的全部嵌套调用均在原量词内。不增加未知 $D$ 的可加性、齐次性、连续性、可测性、协变性、单位平移中性、压缩自然性、商下降、双对偶延拓或有限输出子代数闭合。
+
+固定实际投影 $P\in A$，记 $C=PAP$。附加数学前件严格是同一 $D$ 在**整个实际完成角**上的分类
+
+$$
+D(x,y)=K_\sigma(x,y),\qquad
+K_\sigma(x,y)=\frac{\jmath}{2}[x,y],\qquad
+\jmath=\sigma i,\quad\sigma\in\{1,-1\},
+\quad x,y\in C_{\rm sa}.
+\tag{28.3}
+$$
+
+$K_\sigma$ 作为比较映射在全部 $E^2$ 上有定义；(28.3) 只识别角内旧值。W119.2–119.3、W 式 (120.2) 的实际角支撑及完整继承按定义 6.2 直接复用：单位是 $P$，锥和范数准确继承，每个原评价标签限制到角内，质量为 $\gamma(P)$，同值限制不合并、零限制不删除、质量不归一；全部角内实际 PB 的继承不要求输出留在有限矩阵阶段。
+
+取原演员 $c=c^*\in C$，以及实际正交投影 $l,m\le P$、实际 $e=e^*\in C$，满足
+
+$$
+\begin{gathered}
+cl=lc=al,\qquad cm=mc=bm,\qquad a,b\in\mathbb R,\quad a\ne b,\\
+e=(l+m)e(l+m),\qquad e^2=l+m,\qquad el=me.
+\end{gathered}
+\tag{28.4}
+$$
+
+(28.4) 的通道条件正是 $l,m$ 在 $C$ 内的实际投影等价：若实际 $w^*w=m$、$ww^*=l$，则 $w=lwm$、$w^2=0$，取 $e=w+w^*$ 即得该条件；反向取 $w=lem$，由 $e^2=l+m$、$el=me$ 得 $w^*w=m$、$ww^*=l$。
+
+非平凡情形 $l,m$ 均非零；若其中一个为零，实际等价关系迫使另一个也为零，以下行等式平凡。$c$ 在 $P-l-m$ 上任意。置
+
+$$
+\mu=\frac{a+b}{2},\qquad \lambda=\frac{a-b}{2}\ne0,
+\qquad j=\jmath(l-m)e,\qquad n=2l.
+\tag{28.5}
+$$
+
+已知乘法逐项给出
+
+$$
+\begin{gathered}
+j=j^*,\quad j^2=e^2=l+m,\quad e\circ j=0,\quad n\circ j=j,\\
+c\circ e=\mu e,\quad c\circ j=\mu j,\quad c\circ n=an.
+\end{gathered}
+\tag{28.6}
+$$
+
+对每个有限实 $T,\alpha$，整个角分类逐值支付
+
+$$
+D(c,Te+\alpha n)=\lambda Tj,\qquad
+c\circ(Te+\alpha n)=\mu Te+a\alpha n.
+\tag{28.7}
+$$
+
+$a,b$ 可同号或异号，也允许恰有一个为零。这里没有把演员改为 $c-\mu P$，也没有对一般环境行抽取系数或拆分输入。
+
+**定理 28.2（相异谱值锁定一个谱格的完整非对角行）。** 在定义 28.1 下，对每个任意实际环境输入 $t=t^*\in A$，有
+
+$$
+\boxed{\quad l\bigl(D(c,t)-K_\sigma(c,t)\bigr)(1-l)=0.\quad}
+\tag{28.8}
+$$
+
+$1-l$ 包含 $m$、同一角的全部其余部分和整个 $1-P$；两份原输入始终是完整的 $c,t$。
+
+证明。复用 AH43.1 的反对称性、零槽及数学正读取。对每个未归一的数学正实线性泛函 $\phi$，记
+
+$$
+B_\phi(X,Y)=\phi(X^2)\phi(Y^2)-\phi(X\circ Y)^2,
+\qquad |\phi D(X,Y)|\le\sqrt{B_\phi(X,Y)}.
+\tag{28.9}
+$$
+
+该读取来自同一原二表：对固定复系数 $z_1,z_2$，其二次型是原自伴元素
+
+$$
+|z_1|^2X^2+|z_2|^2Y^2
++2\operatorname{Re}(\overline z_1z_2)X\circ Y
++2\operatorname{Im}(\overline z_1z_2)D(X,Y).
+$$
+
+原评价全部读为非负，准确锥使该元素为正，故可由任意 $\phi\ge0$ 读取同一二表。Hermitian 性与分离性给反对称性，零对角及分离性给零槽，行列式给 (28.9)。这些数学读取不增添实际准备，也不改变任何原质量。
+
+固定 $c,t$ 及其同一个输出，置
+
+$$
+g=D(c,t),\qquad k=c\circ t,\qquad
+V=a\,n\circ t-n\circ k,\qquad Z=t+ak.
+\tag{28.10}
+$$
+
+对每个有限实 $T,\alpha$，真正调用 $\operatorname{PB}(c;Te+\alpha n,t)$。(28.7) 给实际内构造 $v=\lambda Tj-k$、$w=\mu Te+a\alpha n+g$；因此全部实际外层标签为
+
+$$
+\begin{aligned}
+R_+&=T(e+\lambda j)-k+\alpha n,&
+S_+&=t+g+\mu Te+a\alpha n,\\
+R_-&=T(e-\lambda j)+k+\alpha n,&
+S_-&=t-g-\mu Te-a\alpha n.
+\end{aligned}
+\tag{28.11}
+$$
+
+保留 $\alpha$ 依赖的完整 PB 右端，直接展开得
+
+$$
+\begin{aligned}
+D(R_+,S_+)-D(R_-,S_-)
+&=-2(Te+\alpha n)\circ(\lambda Tj-k)
+  -2t\circ(\mu Te+a\alpha n+g)\\
+&=2T e\circ k-2\mu Tt\circ e-2t\circ g
+  -2\alpha(\lambda Tj+V).
+\end{aligned}
+\tag{28.12}
+$$
+
+$T^2$ 项因 $e\circ j=0$ 为零，$\alpha T$ 项使用 $n\circ j=j$。对两份未知实际外值分别应用同一个 $\phi$ 的 (28.9)，先得到
+
+$$
+\left|\phi\bigl(2T e\circ k-2\mu Tt\circ e-2t\circ g
+ -2\alpha(\lambda Tj+V)\bigr)\right|
+\le\sqrt{B_\phi(R_+,S_+)}+\sqrt{B_\phi(R_-,S_-)}.
+\tag{28.13}
+$$
+
+以下只消元已知的标量 Gram。令 $\langle X,Y\rangle_\phi=\phi(X\circ Y)$；对固定自伴 $A_0,B_0,n$ 和实 $\theta$，置 $C_0=B_0-\theta A_0$，则
+
+$$
+\begin{aligned}
+B_\phi(A_0+\alpha n,B_0+\theta\alpha n)
+&=B_\phi(A_0+\alpha n,C_0)\\
+&=\alpha^2B_\phi(n,C_0)+B_\phi(A_0,C_0)\\
+&\quad+2\alpha\bigl\{
+\langle A_0,n\rangle_\phi\langle C_0,C_0\rangle_\phi
+-\langle A_0,C_0\rangle_\phi\langle n,C_0\rangle_\phi\bigr\}.
+\end{aligned}
+\tag{28.14}
+$$
+
+这是半内积 Gram 行列式的列消元及二次展开，退化时同样成立。正号对取
+$A_0=T(e+\lambda j)-k$、$B_0=t+g+\mu Te$、$\theta=a$；负号对取
+$A_0=T(e-\lambda j)+k$、$B_0=t-g-\mu Te$、$\theta=-a$。由 $a-\mu=\lambda$，得到准确的
+
+$$
+C_+=Z+g-\lambda Te-a\lambda Tj,
+\qquad C_-=Z-g+\lambda Te-a\lambda Tj.
+\tag{28.15}
+$$
+
+这一步消去的是标量预算中的共同中点，演员没有改变。对固定 $T,\phi$，将 (28.13) 除以 $|\alpha|$，只在 (28.14) 的标量多项式中令 $|\alpha|\to\infty$，得
+
+$$
+2|\phi(\lambda Tj+V)|
+\le\sqrt{B_\phi(n,C_+)}+\sqrt{B_\phi(n,C_-)}.
+\tag{28.16}
+$$
+
+每个 Gram 多项式非负；除以 $\alpha^2$ 后趋向其二次系数，非负平方根连续，所以首项为零时对应根号也趋零。没有除以 $a$、$b$、质量或首项 Gram。
+
+在一份忠实含单位表示 $A\subseteq B(\mathcal H)$ 内计算，内积第一槽共轭线性。由 $cl=lc=al$ 和 $n=2l$，
+
+$$
+\begin{gathered}
+V=V^*,\qquad lVl=0,\qquad(1-l)V(1-l)=0,\\
+lV(1-l)=a\,lt(1-l)-lk(1-l)
+=\tfrac12l[c,t](1-l).
+\end{gathered}
+\tag{28.17}
+$$
+
+因此 $V$ 相对 $l\oplus(1-l)$ 完全非对角，未对余块上的 $c$ 施加条件。
+
+取单位 $\xi\in(1-l)\mathcal H$。先设 $d=\|m\xi\|>0$，令
+
+$$
+\eta=j\xi/d\in l\mathcal H,\quad\|\eta\|=1,
+\qquad j\xi=d\eta,\qquad e\xi=-\jmath d\eta.
+\tag{28.18}
+$$
+
+对 $\delta>0$，用向量 $\xi_\delta=(\xi+\delta\eta)/\sqrt{1+\delta^2}$ 作数学读取 $\phi_\delta$。在底层实 Hilbert 空间令
+$\Pi_\eta z=z-\operatorname{Re}\langle\eta,z\rangle\eta$。每个固定自伴 $W$ 满足
+
+$$
+\begin{aligned}
+\phi_\delta(n^2)&=\frac{4\delta^2}{1+\delta^2},&
+\phi_\delta(W^2)&=\frac{\|W\xi+\delta W\eta\|^2}{1+\delta^2},\\
+\phi_\delta(n\circ W)&=
+\frac{2\delta\operatorname{Re}\langle\eta,W\xi+\delta W\eta\rangle}{1+\delta^2},&
+B_{\phi_\delta}(n,W)&=
+\frac{4\delta^2}{(1+\delta^2)^2}
+\|\Pi_\eta(W\xi+\delta W\eta)\|^2.
+\end{aligned}
+\tag{28.19}
+$$
+
+$j,V$ 的非对角性又给
+
+$$
+\phi_\delta(\lambda Tj+V)=\frac{2\delta}{1+\delta^2}
+\bigl(\lambda Td+\operatorname{Re}\langle\eta,V\xi\rangle\bigr).
+\tag{28.20}
+$$
+
+代入 (28.16)，约去正因子 $2\delta/(1+\delta^2)$，在固定 $T$ 后令 $\delta\downarrow0$。因为 $\Pi_\eta(j\xi)=0$，两份 $-a\lambda Tj$ 项在此时消失。记
+
+$$
+A_\xi=\operatorname{Re}\langle\eta,V\xi\rangle,\qquad
+z_\pm=\Pi_\eta((Z\pm g)\xi),\qquad
+\nu=e\xi/d=-\jmath\eta.
+$$
+
+于是 $\|\nu\|=1$、$\operatorname{Re}\langle\eta,\nu\rangle=0$，并且
+
+$$
+2|\lambda Td+A_\xi|
+\le\|z_+-\lambda Td\,\nu\|+\|z_-+\lambda Td\,\nu\|.
+\tag{28.21}
+$$
+
+对固定单位向量 $\nu$、固定 $z$ 及非零实 $\rho$，平方差有理化给
+
+$$
+\|\rho L\nu+z\|-|\rho|L
+=\frac{2\rho L\operatorname{Re}\langle\nu,z\rangle+\|z\|^2}
+{\|\rho L\nu+z\|+|\rho|L}
+\longrightarrow\operatorname{sgn}(\rho)\operatorname{Re}\langle\nu,z\rangle
+\quad(L\to+\infty).
+\tag{28.22}
+$$
+
+令 $\epsilon=\operatorname{sgn}\lambda$、$B_\xi=\operatorname{Re}\langle\nu,g\xi\rangle$。在 (28.21) 取 $T=L$，左右各减去 $2|\lambda|dL$，两边极限分别为
+
+$$
+2\epsilon A_\xi,\qquad
+-\epsilon\operatorname{Re}\langle\nu,z_+\rangle
++\epsilon\operatorname{Re}\langle\nu,z_-\rangle=-2\epsilon B_\xi.
+$$
+
+在 $T=-L$ 时，两边极限分别为 $-2\epsilon A_\xi$、$2\epsilon B_\xi$。实投影 $\Pi_\eta$ 不改变与 $\nu$ 的实配对，共同的 $Z$ 因此消去。两向不等式一起迫使 $A_\xi=-B_\xi$。由 $\nu=-\jmath\eta$，准确得到
+
+$$
+\operatorname{Im}\langle\eta,g\xi\rangle
+=\sigma\operatorname{Re}\langle\eta,V\xi\rangle.
+\tag{28.23}
+$$
+
+$\epsilon$ 的保留同时覆盖负 $\lambda$。
+
+再使用另一份实际伴轴 $e'=j$、$j'=\jmath(l-m)j=-e$。整个角分类给
+$D(c,e')=\lambda j'$、$c\circ e'=\mu e'$，所以刚才的全部实际 PB 推导适用。$c,t,g,k,V,Z,n,d$ 不变，$\eta'=j'\xi/d=\jmath\eta$。设
+$G=\langle\eta,g\xi\rangle$、$L_0=\langle\eta,V\xi\rangle$。第二伴轴的 (28.23) 是
+
+$$
+\operatorname{Im}(-\jmath G)=\sigma\operatorname{Re}(-\jmath L_0),
+\qquad -\sigma\operatorname{Re}G=\operatorname{Im}L_0.
+$$
+
+它与第一伴轴的 $\operatorname{Im}G=\sigma\operatorname{Re}L_0$ 合为 $G=\jmath L_0$，故
+
+$$
+\langle jm\xi,(g-\jmath V)\xi\rangle=0
+\qquad(\xi\in(1-l)\mathcal H).
+\tag{28.24}
+$$
+
+固定算子的二次齐次性把单位向量结论扩到全部 $d>0$ 的向量；$d=0$ 时左边本来为零，不定义 $\eta$、不除以 $d$。
+
+令 $M=g-\jmath V$、$r_0=1-l-m$。在 (28.24) 取 $\xi=u+z$，其中 $u\in m\mathcal H$、$z\in r_0\mathcal H$，减去 $z=0$ 的等式，得 $\langle ju,Mz\rangle=0$。$j:m\mathcal H\to l\mathcal H$ 是满等距，故 $lMr_0=0$。在 $z=0$ 时，$T_0=mjMm$ 的二次型 $Q(u)=\langle u,T_0u\rangle$ 恒零。不要求 $T_0$ 自伴，复极化给
+
+$$
+4\langle u,T_0v\rangle
+=Q(u+v)-Q(u-v)-iQ(u+iv)+iQ(u-iv)=0.
+\tag{28.25}
+$$
+
+因此 $T_0=0$，同一满等距性给 $lMm=0$。合并得到 $l(g-\jmath V)(1-l)=0$，再由 (28.17) 得到 (28.8)，忠实性将等式返回 $A$。
+
+所有极限只作用于显式标量 Gram 多项式或固定元素 $g,k,V,Z$ 的向量范数。没有对变化输入上的任何未知 $D$ 取极限。$a=0$、$b=0$、两种 $\sigma$、负 $\lambda$、首项 Gram 为零及 $d=0$ 均已包含。∎
+
+## 29. 有限实际谱分割与完整核压缩
+
+**定理 29.1（有限匹配供应下的支撑与交换余量）。** 保持定义 28.1 的完整原条件及整个 $C=PAP$ 的分类。设角内原演员具有有限非标量谱
+
+$$
+c=\sum_{i=1}^r a_i p_i,\qquad r\ge2,\qquad
+\sum_{i=1}^r p_i=P,
+\tag{29.1}
+$$
+
+其中 $a_i\in\mathbb R$ 两两不同，$p_i\ne0$ 为两两正交的实际谱投影。零谱值若存在，是单位 $P$ 下的一个内部谱格。假定每个 $a_i\ne0$ 的谱格有如下实际有限匹配：存在 $j(i)\ne i$、有限正交分割 $p_i=\sum_{\alpha=1}^{N_i}l_{i\alpha}$，以及 $m_{i\alpha}\le p_{j(i)}$、$w_{i\alpha}\in C$，使
+
+$$
+w_{i\alpha}^*w_{i\alpha}=m_{i\alpha},\qquad
+w_{i\alpha}w_{i\alpha}^*=l_{i\alpha}.
+\tag{29.2}
+$$
+
+比较投影 $m_{i\alpha}$ 不必彼此正交，可以反复使用同一小投影。这里 $p_{j(i)}\ne0$ 指实际投影非零，不要求其谱值 $a_{j(i)}$ 非零。
+
+记实际非零谱支撑 $S=\sum_{a_i\ne0}p_i$。则对每个任意环境 $t=t^*\in A$，同一个输出满足
+
+$$
+\boxed{D(c,t)=K_\sigma(c,t)+s,\qquad
+s=s^*\in SAS\subseteq C,\qquad[c,s]=0.}
+\tag{29.3}
+$$
+
+不要求谱对称、反对易反射或 $c$ 在 $C$ 中可逆。
+
+证明。有限谱投影确在原代数中，由角内 Lagrange 演算给
+
+$$
+p_i=\prod_{j\ne i}\frac{c-a_jP}{a_i-a_j}\in C.
+\tag{29.4}
+$$
+
+固定 $M=D(c,t)-K_\sigma(c,t)=M^*$。对 (29.2) 的一对 $l,m,w$，有 $w=lwm$，且 $lm=0$，故 $w^2=(w^*)^2=0$。实际 $e=w+w^*$ 满足 $e^2=l+m$、$el=me$；不变的演员 $c$ 在两格取值 $a_i\ne a_{j(i)}$。定理 28.2 给 $lM(1-l)=0$。因为 $1-p_i\le1-l_{i\alpha}$，有限求和只分解这一个固定输出，得到
+
+$$
+p_iM(1-p_i)=\sum_\alpha l_{i\alpha}M(1-p_i)=0
+\qquad(a_i\ne0).
+\tag{29.5}
+$$
+
+自伴性给反向块也为零。因此全部非零谱格之间、这些格与其余部分之间的余量块均为零。
+
+令 $q=1-S$。在忠实表示中，$q\mathcal H=\ker c$：正交有限谱分解使 $c\xi=0$ 当且仅当每个 $a_i\ne0$ 的 $p_i\xi=0$。$q$ 包含整个 $1-P$ 和内部零谱格；若无内部零格，后者取零。对每个 $\xi\in q\mathcal H$，原 $(c,t)$ 的 (28.9) 第一平方为零，故 $\langle\xi,D(c,t)\xi\rangle=0$。对这个固定自伴输出在整个 $q\mathcal H$ 上极化，得到
+
+$$
+qD(c,t)q=0,\qquad qK_\sigma(c,t)q=0,\qquad qMq=0.
+\tag{29.6}
+$$
+
+这是**整个核压缩**，同时消去内部零格与角外之间的交叉压缩，不能只分别检查两个对角块。结合 (29.5) 及其伴随，有
+
+$$
+M=\sum_{a_i\ne0}p_iMp_i=:s\in(SAS)_{\rm sa},\qquad[c,s]=0.
+\tag{29.7}
+$$
+
+它是固定原输出的有限分块，不是对未知行输入的可加展开。∎
+
+(29.6) 不断言 $D(c,t)q=0$；标准交换子本身可以有接向核的非零行。被限制到 $S$ 上的是余量 $s$。若 $c=0$，原零槽给整行零。若 $c=aP\ne0$ 在单位 $P$ 下只有一个谱值，(29.1) 不成立，本节不作其任意环境整行结论；不能将 $1-P$ 添作分类角 $C$ 内的第二个零谱投影。
+
+## 30. 内在 UHF 模型的实际单侧匹配与逐谱格标量余量
+
+**定理 30.1（有限非标量谱的逐格标量余量）。** 保持定义 28.1 的完整原条件及整个实际 $C=PAP\ne0$ 的同号分类。另设这个角自身具有实际递增含单位满矩阵 UHF 模型
+
+$$
+C=\overline{\bigcup_n C_n}^{\|\cdot\|},\qquad
+C_n\cong M_{d_n}(\mathbb C),\qquad 1_{C_n}=P,
+\qquad d_n\longrightarrow\infty.
+\tag{30.1}
+$$
+
+不要求阶段大小为偶，也不要求 $C$ 是环境 $A$ 的预定有限阶段角。对 (29.1) 的每个有限非标量谱原演员 $c\in C_{\rm sa}$ 和每个任意环境 $t=t^*\in A$，存在唯一的一组实数 $\rho_i=\rho_i(c,t)$，使
+
+$$
+\boxed{D(c,t)=K_\sigma(c,t)+\sum_{a_i\ne0}\rho_i p_i.}
+\tag{30.2}
+$$
+
+特别，余量支撑在 $S=\operatorname{supp}(c)$、与 $c$ 交换，并在每个非零谱格上为实标量。$c$ 无须可逆或具有反对易反射，完整谱格的数学迹无须相等。
+
+证明。先在这个**实际内在载体 $C$、单位 $P$** 中消费 AH67.2 式 (67.3) 的近投影酉构造及有限矩阵秩工具；成熟归属为 Blackadar，*Operator Algebras*，II.2.3.1–5、II.3.3.4–5、II.8.2.2(iv)。为明确每次使用都产生实际匹配，给出其参数。
+
+对任意实际投影 $r\in C$，取某个 $C_n$ 中自伴 $h_r$，使 $\|h_r-r\|<\varepsilon<1/4$。其谱包含于
+$[-\varepsilon,\varepsilon]\cup[1-\varepsilon,1+\varepsilon]$，所以有限矩阵函数演算给
+
+$$
+r_0=1_{(1/2,\infty)}(h_r)\in C_n,\qquad
+\|r_0-h_r\|\le\varepsilon,\qquad\|r_0-r\|<2\varepsilon<1.
+$$
+
+在 $C$ 内置
+
+$$
+x_r=r_0r+(P-r_0)(P-r),\qquad
+\nu_r=x_r(x_r^*x_r)^{-1/2}.
+\tag{30.3}
+$$
+
+准确有 $x_r^*x_r=x_rx_r^*=P-(r-r_0)^2$，故 $x_r$ 可逆，$\nu_r$ 是单位为 $P$ 的实际酉。由 $x_rr=r_0x_r$ 及 $x_r^*x_r$ 与 $r$ 交换，得
+
+$$
+\nu_r r\nu_r^*=r_0.
+\tag{30.4}
+$$
+
+这只是 AH 式 (67.3) 在 $C$ 中的成熟构造，不对未知 $D$ 使用酉协变。
+
+现在取任意两个非零实际投影 $r,v\in C$。分别作 (30.3)–(30.4)，得 $\nu_r,\nu_v$ 及有限阶段的 $r_0,v_0$；把后两者放进一个共同后续 $C_N\cong M_{d_N}$。将 $r_0$ 分成秩一投影 $L_1,\ldots,L_k$，只从 $v_0$ 取**一个**秩一投影 $M_0\le v_0$。有限矩阵正交基给每个 $\alpha$ 的实际部分等距 $V_\alpha\in C_N$，满足
+
+$$
+V_\alpha^*V_\alpha=M_0,\qquad
+V_\alpha V_\alpha^*=L_\alpha.
+$$
+
+定义
+
+$$
+l_\alpha=\nu_r^*L_\alpha\nu_r,\qquad
+m=\nu_v^*M_0\nu_v,\qquad
+w_\alpha=\nu_r^*V_\alpha\nu_v.
+\tag{30.5}
+$$
+
+于是全部元素实际属于 $C$，并且
+
+$$
+r=\sum_{\alpha=1}^k l_\alpha,\qquad
+l_\alpha l_\beta=0\ (\alpha\ne\beta),\qquad
+0\ne m\le v,\qquad
+w_\alpha^*w_\alpha=m,\quad
+w_\alpha w_\alpha^*=l_\alpha.
+\tag{30.6}
+$$
+
+这是单侧完全分割：每次都可使用同一个 $m$。若使用 AH67.1 的相容归一数学迹 $\tau_C$，每块的迹为 $1/d_N$；$r$、$v$ 的整迹分别由它们在 $C_N$ 中的秩决定，可以不同。这里没有把 $v$ 分成与 $r$ 同样数量的完全匹配，也不假设不等整迹的投影等价。两个酉各自把一个投影放进有限阶段，不要求同时共轭全部原谱投影。
+
+对 (29.1) 的每个 $i$，任选一个 $j\ne i$。由于 $p_j\ne0$，将 (30.6) 用于 $r=p_i,v=p_j$ 就实际支付 (29.2)，并允许 $a_j=0$。定理 29.1 因而给同一个固定余量
+
+$$
+s=D(c,t)-K_\sigma(c,t)=s^*\in SAS,\qquad[c,s]=0.
+\tag{30.7}
+$$
+
+还须约束每个内部块，而不只求得交换性。固定 $a_i\ne0$，取任意实际非零投影 $r\le p_i$。对 $r$ 和同一个非零 $p_j$ 再作 (30.6)，把 $r$ 分成 $l_\alpha$，各块与反复使用的 $m\le p_j$ 实际等价。它们在**同一个原演员 $c$** 上仍有谱值 $a_i\ne a_j$；$e_\alpha=w_\alpha+w_\alpha^*$ 满足定理 28.2 的所有条件。于是逐块有 $l_\alpha s(1-l_\alpha)=0$，有限求和给
+
+$$
+rs(1-r)=0,\qquad(1-r)sr=0,\qquad[r,s]=0.
+\tag{30.8}
+$$
+
+零投影的等式也成立。因此 $s_i=p_i s p_i$ 与 $p_iCp_i$ 中的**每个实际投影**交换；这里只改变已知的探针标签，始终读取原来的同一个 $D(c,t)$。
+
+为使用角中心，令 (30.4) 对 $p_i$ 的实际酉为 $\nu_i$，并取 $p_i^0=\nu_i p_i\nu_i^*\in C_{n_i}$。对 $N\ge n_i$，已知代数中存在实际满矩阵模型
+
+$$
+B_N^i=\nu_i^*p_i^0C_Np_i^0\nu_i\subseteq p_iCp_i,
+\quad 1_{B_N^i}=p_i,
+\quad B_N^i\cong M_{k_i d_N/d_{n_i}}(\mathbb C),
+\quad k_i=\operatorname{rank}_{C_{n_i}}(p_i^0)\ge1.
+\tag{30.9}
+$$
+
+这些代数递增，其并在整个 $p_iCp_i$ 中范数稠密：先在 $C_N$ 内逼近已知的 $\nu_i y\nu_i^*$，再用 $p_i^0$ 压缩，最后共轭回去。有限矩阵谱分解给其每个自伴元素为有限实投影和。由 (30.8)，$s_i$ 与这些自伴元素全都交换。对于任意 $y=y^*\in p_iCp_i$，取上述 $y_N\to y$；只使用固定算子的乘法极限
+
+$$
+\|[s_i,y]\|\le 2\|s_i\|\|y-y_N\|\longrightarrow0.
+\tag{30.10}
+$$
+
+故 $s_i\in Z(p_iCp_i)$。
+
+现在直接消费 AH67.1 的成熟满矩阵极限标量中心结论，应用载体是 (30.9) 的整个 $p_iCp_i$、单位是 $p_i$；该结论不使用矩阵阶数的偶性。令 $\tau_i$ 为这个角的相容归一数学迹，则
+
+$$
+Z(p_iCp_i)=\mathbb C p_i,\qquad
+s_i=\rho_i p_i,\qquad \rho_i=\tau_i(s_i)\in\mathbb R.
+\tag{30.11}
+$$
+
+实系数来自 $s_i=s_i^*$。这些辅助数学迹的归一化不改变任何原评价质量。内部零格已由 (29.6) 消去，故 (30.7) 给 (30.2)；各 $p_i\ne0$ 又给系数唯一性。以上未使用输入极限通过 $D$、反对易反射或 $c$ 在单位 $P$ 下的逆。∎
+
+## 31. 精确外层缺陷与实际角返回的整行
+
+**命题 31.1（同一原 PB 的未付等式）。** 在定理 29.1 的条件下，固定任意 $t=t^*$，记 $g=D(c,t)$、$k=c\circ t$、$s=g-K_\sigma(c,t)$。定义两份真正外层缺陷
+
+$$
+E_+=D(c-g,k)-K_\sigma(c-g,k),\qquad
+E_-=D(c+g,-k)-K_\sigma(c+g,-k).
+\tag{31.1}
+$$
+
+则有精确恒等式
+
+$$
+\boxed{E_+-E_-=2cs.}
+\tag{31.2}
+$$
+
+对这份原输入，$D(c,t)=K_\sigma(c,t)$、$s=0$ 与 $E_+=E_-$ 三者等价。在定理 30.1 的范围内，进一步有
+
+$$
+E_+-E_-=2\sum_{a_i\ne0}a_i\rho_i p_i,
+\qquad
+\|E_+-E_-\|=2\max_{a_i\ne0}|a_i\rho_i|.
+\tag{31.3}
+$$
+
+证明。真正的 $\operatorname{PB}(t;c,0)$ 使用内值 $D(t,c)=-g$、$D(t,0)=0$，所以
+
+$$
+D(c-g,k)-D(c+g,-k)=2c\circ g.
+\tag{31.4}
+$$
+
+只对已知比较映射使用双线性，逐项相消给
+
+$$
+\begin{aligned}
+K_\sigma(c-g,k)-K_\sigma(c+g,-k)
+&=2K_\sigma(c,k)\\
+&=\frac{\jmath}{2}[c^2,t]
+=2c\circ K_\sigma(c,t).
+\end{aligned}
+\tag{31.5}
+$$
+
+相减并用 $[c,s]=0$ 得 $2c\circ s=2cs$。若 $cs=0$，左、右乘各非零谱投影给 $a_i p_i s p_i=0$；逐个非零实数 $a_i$ 消去后，(29.7) 给 $s=0$。这不要求 $c$ 在整个 $C$ 中可逆。反向直接成立。定理 30.1 将其化为正交有限谱和，范数即 (31.3)。∎
+
+**定理 31.2（实际返回条件下的整行与任意补角背景）。** 在定理 29.1 的条件下，若这份实际输入满足
+
+$$
+(1-P)tS=0,\qquad S=\operatorname{supp}(c),
+\tag{31.6}
+$$
+
+则
+
+$$
+\boxed{D(c,t)=K_\sigma(c,t).}
+\tag{31.7}
+$$
+
+特别包括 $[P,t]=0$ 且补角背景 $(1-P)t(1-P)$ 任意的情形；不要求该背景有限谱或有限阶段。(31.6) 也允许内部零谱格与角外之间的任意自伴背景，因为它只限制非零谱支撑向角外的连线。
+
+证明。由 $c=ScS$，(31.6) 给 $(1-P)tc=0$，其伴随给 $ct(1-P)=0$。同时 $(1-P)ct=0=tc(1-P)$ 本来成立。因此 $ct,tc\in C$，从而 $k,K_\sigma(c,t)\in C_{\rm sa}$；定理 29.1 的 $s\in C$ 又给 $g\in C$。两份实际外层对 $(c-g,k)$、$(c+g,-k)$ 此时全在 $C_{\rm sa}^2$，故整个角分类逐份给 $E_+=E_-=0$。命题 31.1 遂给 $s=0$。没有将 $t$ 的任何背景从未知响应中拆出。∎
+
+**边界 31.3（右支撑不能代付角返回）。** 对定理 29.1 的一般环境输入，仍有准确复标签
+
+$$
+\begin{aligned}
+W_+&=(c-g)+\jmath k=c-s+\jmath tc,&W_+S&=W_+,\\
+W_-&=(c+g)-\jmath k=c+s-\jmath tc,&W_-S&=W_-,\\
+(1-P)W_+&=\jmath(1-P)tc,&
+(1-P)W_-&=-\jmath(1-P)tc.
+\end{aligned}
+\tag{31.8}
+$$
+
+这些等式直接代入 $g=\jmath(ct-tc)/2+s$ 即得。若 $(1-P)tS\ne0$，必有某个 $a_i\ne0$ 使 $(1-P)tp_i\ne0$，而
+$(1-P)tc p_i=a_i(1-P)tp_i\ne0$。于是两份 $W_\pm$ 都不在 $C$ 中；它们的自伴实虚标签不能全部送入 (28.3)。因此右理想关系 $W_\pm S=W_\pm$ 不消去两份实际缺陷。对一般 $t$，首个仍未支付的原关系准确是 (31.1) 的 $E_+=E_-$，在定理 30.1 中等价于每个 $\rho_i=0$。这里没有把这条等式增加为公理，也没有给出满足全部 $\mathsf H_A(D)$ 的反模型。
+
+## 32. 谱差几何、量子对应及同一完整来源
+
+**归属 32.1（被消费的工具与结论范围）。** 本增补的数学差额归为 $\texttt{repo-derived}$：在同一完整原 PB 中保留 $\mu$、$\lambda$ 和全部外标签，利用相异谱值而非相反谱值支付 (28.8)；在实际内在 UHF 载体中，以单侧分割和可重复小块匹配约束同一个输出，再以任意子投影及成熟角中心缩为 (30.2)。这是证明与条件几何的简化，不是原 A1–A3/P2/PB 独立条数减少，不主张文献优先权、穷尽检索或外部开放问题解决。
+
+AH 的直接身份严格为 `b1a95e41b9622e9f720e51f9bb899841f5b74ca1`，W、CC 的直接身份严格为 `3b10aed60f60e4901bae6cf2e160bf439d642e64`，各被引正文的递归版本保持自身身份。AH43.1 供应原二表的数学正读取、反对称性及零槽；AH67.1、67.2 式 (67.3) 供应已知代数中的偏迹、角中心及近投影酉构造。W119.2–119.3 与 W 式 (120.2) 供应整个实际角的准确接口与全部实际 PB 继承。CC147–150 的双伴轴与两向一次范数预算具有实际全单位框架前件；定理 28.2 在局部谱格和任意余块上逐项支付实际标签，不将该前件直接删去。定理 23.2 的相反谱对是本探针 $\mu=0$ 的已成范围；24.1 的有限对称谱余量仍直接复用，不另计新分类。
+
+成熟有限谱函数演算、部分等距、投影等价和近投影酉共轭归于 Blackadar，[*Operator Algebras*](https://bruceblackadar.com/Mathematics/Cycr.pdf)，II.2.3.1–5、II.3.3.4–5；变重数 UHF 满矩阵模型取 II.8.2.2(iv)。其中近投影共轭的地址是 II.3.3.5。(30.3)–(30.6) 明确给出其在本题的实际参数，不以一般迹比较代替有限矩阵秩匹配。忠实表示、正泛函及数学 GNS 沿定义 10.1 的 Gelfand–Naimark、Segal，Peirce 角术语沿该处 Hanche-Olsen–Størmer §2.6.2、Lemma 2.6.3；Gram 列消元、固定向量范数一次项及复极化只在上述证明中作为成熟工具消费。
+
+若**整个环境**已有 AH70.1 的偶维满矩阵模型，直接复用其更强全域分类，任意环境行已全部识别。有限维环境及 AH42.4 已覆盖的本质连续迹情形也直接复用既有更强结果；这些不是新分类案例。若只有 $C$ 的内在模型有偶数阶段，W 的完整角继承及 AH70.1 直接供应的只是整个 $C$ 的分类；环境任意输入的余量仍按上述定理处理。实际有限阶段偶角及其共同符号由 AH71.2、72.1 原样供应，不重证分类或符号拼接。
+
+一般 $A=M_3(B)$、任意 $B$ 不自动供应 (30.1)；完整奇数单位 UHF 也不因具有矩阵模型便获得 (28.3)。$c$ 在已分类角内部可以带任意有限谱背景，始终保留整个演员；这不将第二输入的任意背景搬进一个已分类角，不使用单位平移中性或输入可加性。有限谱逼近也不能穿过未知 $D$ 推出无限谱演员结论。
+
+[C133W §§42–43](https://github.com/the-omega-institute/trureturing/blob/13d69713c20f58174d6bbfd07a12be95802faed7/docs/develop/theory/AURIC_C133_UNANCHORED_MARKER_BOUNDED_ORBITS_CONTINUATION_W.md) 中的原始有序关系 $(R)$ 及第三标记返回 $(C3)$ 属于另一套对象和量词。其 $(R)+(C3)$ 下的 $(C1)$、UC 与仿射复 Hilbert 结论，既不取消 $(C3)$ 前件，也不提供该 $(R)$ 与本节原 PB 的对应映射。将它用于这里仍须证明保留对象、原标签、操作、全部量词和结论方向的桥梁；本节结论不以该未给出的桥梁承重。
+
+**对应 32.2（已证明行上的普通量子代数）。** 对定理 29.1 的同一实际输入，准确有
+
+$$
+S(c,t)-iD(c,t)
+=\begin{cases}ct,&\sigma=1,\\tc,&\sigma=-1\end{cases}-is.
+\tag{32.1}
+$$
+
+因此已经识别的非对角块等于通常乘法或相反乘法的相应块；定理 30.1 的整行还保留 $-i\sum_{a_i\ne0}\rho_i p_i$。只有余量为零时，例如满足 (31.6) 的定理 31.2，才有完整行
+
+$$
+S(c,t)-iD(c,t)=
+\begin{cases}ct,&\sigma=1,\\tc,&\sigma=-1.\end{cases}
+\tag{32.2}
+$$
+
+在已经整体分类的 $C$ 上，AH64.1、75.1 的既有消费者给 $S-iD$ 的复线性延拓为通常或相反 $C^*$-乘法，保持伴随、准确锥、单位 $P$ 和原范数；全部有限角内旧复 Gram 正，每个原限制评价有数学 GNS，循环向量平方范数准确为 $\gamma(P)$，零质量给零向量。数学正泛函、角及 Hilbert 表示不成为实际准备。局部行和共同符号没有给整个未知环境增加全域双线性、结合乘法或全部有限旧复 Gram。
+
+Alfsen–Shultz，[*Orientation in operator algebras*](https://pmc.ncbi.nlm.nih.gov/articles/PMC22571/)，PNAS **95**，6596–6601，DOI `10.1073/pnas.95.12.6596`，Dynamical Correspondences、Theorem 1，提供 Jordan 相容乘法与取向的成熟对应。该 dynamical correspondence 的前件是到 skew order derivations 的**线性**映射；(30.2) 的部分行不代付这个全域前件，也不供应物理时间。
+
+**定义 32.3（与 §27.1 完全相同的递归全文来源谓词）。** 本节的完整物理来源谓词**就是 §27.1 的同一个** $\mathcal C_{47}^{\rm pin}(\Omega;S,D)$。沿其身份关系，整个定义 26.3、22.3、18.2 及其严格引用的 10.2、15.2、AH28.1、64.2、75.1、固定 SQ47.1–47.13 和每一项逐层固定版本的递归上游全文，逐句、逐公式、逐量词同时纳入。这里没有另造缩短谓词，也不以以下范围说明替代任何被纳入全文。
+
+SQ 主源按其自身 1.3、39、41.1、47.1 解析，`dcaebc0b9ca5a3a463fd8cfd161d38967df28668` 与 `0aa11dbc3dc337d667b98900673e07d67b99bf46` 保持其相应层级；OP/PT/PB/SM/C/AQ/R3/W/FR/XV/SF 的 `f24d1138a7b994da16abd9a47affedea64ea44ce`、AH22.1 保留的 `2addd6f369b7387226c2b0cc984623dd3efe40a1`、AH12.1 上游 `39a0505470ea889dd9d4301ad60cd9506a5e8b58` 和 AH42.1 中 OP 等直接身份 `bef9bba367a24ab5e250491dcb88ed85ebc29cf7` 全部保持。原根、静默和其他静态分支不改为 UHF，各内层来源不被直接 AH/W/CC 身份压平。
+
+实际准备、相干控制、原事件绑定的实际完整 Born 菜单、全部原质量及角菜单的真实条件化仍须其完整来源；只在严格正的相应实际质量上归一，零、不等、次归一和非正常质量均保留。数学谱格、正泛函和 GNS 不产生这些来源。真正相关联合与张量仍须同一实际共同来源、全部相关输入、忠实同向交换腿、共同生成、分离与所需重数；数学等价投影、相同边缘或分别可达不代付共同实现。
+
+typed CP、箭头下降、整台递归同源参考、原真支持和支持内补、交织夹界、全部所需有限深度及每个正精度，保留各自全部原前件。完整仪器、TP、Kraus、更新、Lüders 仍须完整 typed 菜单、完整单位分区、接受端、校准、表示和收敛条件，量化**整个环境、全部成功／失败／细记录／port／post-port 输出，以及每份完整输出的每个仍合法未来**。只有严格正的实际输出质量可归一，任何失败或零分支不删除。
+
+合法顺序、自适应与并行历史、真正分组遗忘、停止、拒绝、销毁、泄漏、同数两侧及逆向真实 Return、完整 CountRead 的活动 ready 与 producer 均保留原全文合同。相同算子不合并原程序、记录、读取次序、原零集或未来权限，未定义请求不补零。正常性、指定前对偶、无限菜单和记录的可数可加及收敛仍须原扩展来源。物理动力学仍须保持原域的实际连续可逆流及实际逆、物理钟与单位、适用酉实现和一般生成元域、Hamiltonian 能量解释、作用量与共同正 $\hbar$。谱差、数学匹配通道及证明中的有限参数均不生产这些物理来源。
+
+**边界 32.4（连续目标与准确余项）。** 定理 28.2 关闭相异实际等价谱格的一整条非对角行；定理 30.1 关闭实际 UHF 分类角内有限非标量谱演员的内部非中央余量；定理 31.2 只在实际角返回 (31.6) 上关闭整行。一般环境输入上，首个仍未支付的推理是从原完整关系推出 (31.1) 的两份实际缺陷相等，即 $E_+=E_-$；(31.2) 仅准确识别它与 $s$ 的关系。非零标量演员 $c=aP$、无限谱演员、一般混合环境整行、从混合行接回完整奇数阶段 UHF 分类，以及完整量子起源和整个物理来源谓词的满足性，都未由这些有限谱结论取得。$c=0$ 保持原零槽结论，§§16、19、25、27 的已识别输入族及其原范围全部保留。
+
+**解释 32.5（谱值差与可重复小块的完整白话）。** 把同一个对象的谱值看成房间上的刻度：现在不要求两间房恰好位于零点两侧且距离相等，只要求刻度不同，并能在实际代数里找到交换两块地面的通道。探查时始终保留整个对象和整个环境输入，不先压进两间房，也不把对象的刻度平移；完整 PB 的两份真实外响应各受同一个二表预算约束，先放大有限标签，Gram 消元便准确抵消共同中点，再轻轻改变数学读取、向正负两个方向提取范数的一次项，并换用相差四分之一转的第二条实际伴通道，就能认出这一小块通向所有其余房间及角外环境的完整连线。UHF 的作用是把任一待测房间或其中任一真实子投影有限地切成小块，每块都能与另一种刻度房间中的同一小块匹配；另一房间的小块可以反复使用，不需要两间整房同样大，也不要求把两间整房等数量配完。这些匹配都由已知代数中的实际酉元和有限矩阵部分等距给出，没有要求未知响应随坐标变化。把约束汇总到同一个固定答案后，余量只能留在非零刻度内部；再探查每个房间的任意子投影，它就只能在每个房间均匀取一个实数。零刻度房间连同角外环境由原 P2 的整个核压缩处理，其中二者之间的交叉压缩也一并消去，不能把角外另算成分类角内的第二个谱格。但一般环境输入下，这些非零房间里的实数还没有被证明消失，准确欠下的是两份真实外层缺陷相等；只有非零谱支撑向角外的连线确实返回已分类角内时，全部实际外标签才可用角分类，整行余量随之为零，而补角背景仍可任意。简化来自谱值之差、实际小块匹配和固定输出的分块几何，没有减少任何原独立公理；已知的完整偶维 UHF 和有限维分类直接沿用，完整奇数阶段全表及量子起源仍保留原目标。已经识别的行具有准确的通常或相反量子乘法值，已分类角具有正 Gram 和数学 Hilbert 表示，但真实准备、完整 Born 菜单、共同相关来源、整台仪器的全部输出与未来、Return、CountRead、正常性、指定前对偶、物理钟、动力学及共同正 $\hbar$，仍由同一个完整递归来源谓词逐项承担。
