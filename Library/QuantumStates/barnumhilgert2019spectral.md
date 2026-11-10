@@ -92,7 +92,7 @@ a new classification theorem or a reduction in the number of logically
 independent assumptions of the original full package: S was already
 redundant there. This note does not formalize the classification in Lean.
 
-There is also a [comparison-based route](niestegge2023transition.md):
+There is also a [comparison-based route](../QuantumComparisons/niestegge2023transition.md):
 on this same full-effect carrier, S implies signed Sp by positive-dual
 peeling and a shift in one completed frame. Thus S together with all-frame
 strong symmetry gives the same classified package. The S-to-Sp bridge is

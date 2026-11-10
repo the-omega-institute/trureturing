@@ -92,7 +92,7 @@ $$
 S_{\min}+\text{compact physical bit symmetry}\ \Longrightarrow\ S.
 $$
 
-On this carrier, the [proper-effect spectrality bridge](niestegge2023transition.md)
+On this carrier, the [proper-effect spectrality bridge](../QuantumComparisons/niestegge2023transition.md)
 derives signed frame spectrality Sp from S by finite positive-dual peeling
 and a common-frame shift. Theorem 26.2 then supplies its original three
 norm formulas without a separate Sp input. That complete bridge remains

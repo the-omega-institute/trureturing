@@ -268,7 +268,7 @@ classification theorem.
 
 The domain in v2 §3's displayed $(**)$ is different: it takes an infimum
 over all positive affine functionals normalized at one state, with no
-upper bound by $u$. The [qubit scope test](mullerududec2012selfduality.md#scope-tests)
+upper bound by $u$. The [qubit scope test](../QuantumStates/mullerududec2012selfduality.md#scope-tests)
 shows why proper leastness cannot be substituted into that domain. The
 bridge here uses proper $(*)$ and Theorems 2–3, and does not invoke
 Theorem 1's passage to $(**)$.
@@ -460,7 +460,7 @@ Compatible products and local tomography remain separate inputs.
 Connectedness is needed for the single-sector conclusion; the
 self-composite sector argument classifies complex matrix sectors without
 assuming connectedness. The process contracts in the
-[spectral strong-symmetry note](barnumhilgert2019spectral.md#complete-conditional-reconstruction-and-its-remaining-contracts)
+[spectral strong-symmetry note](../QuantumStates/barnumhilgert2019spectral.md#complete-conditional-reconstruction-and-its-remaining-contracts)
 remain separate obligations.
 
 In ordinary words: each pure state has one least confirming test which
