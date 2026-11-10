@@ -84,7 +84,7 @@ private lemma hLetter_realize_of_add_eq (X : BisimplicialObject C) (p r q : ℕ)
       (eqToHom (congrArg SimplexCategory.mk h.symm) ≫ shuffleFstHom μ ≫ ιFront p r ≫
         eqToHom (congrArg SimplexCategory.mk h))
       (eqToHom (congrArg SimplexCategory.mk h.symm) ≫ shuffleSndHom μ ≫ ιBack p r ≫
-        eqToHom (congrArg SimplexCategory.mk h))).realize X =
+        eqToHom (congrArg SimplexCategory.mk h))).realizeLetter X =
       eqToHom (by
         simp only [FTwo, Functor.comp_obj, alternatingFaceMapComplex_obj_X, diag_obj_obj]
         rw [← h]) ≫
@@ -110,7 +110,7 @@ private lemma hLetter_realize_of_add_eq (X : BisimplicialObject C) (p r q : ℕ)
 summand. This is the Pattern-5 merge of the AW front/back faces with the shuffle degeneracies. -/
 lemma hLetter_realize (X : BisimplicialObject C) (q : ℕ) (p : Fin (q + 1))
     (μ : Shuffle (p : ℕ) (q - p)) :
-    (hLetter q p μ).realize X =
+    (hLetter q p μ).realizeLetter X =
       eqToHom (by simp [Nat.add_sub_cancel' (Nat.lt_succ_iff.mp p.isLt)]) ≫
         awComponent X p (q - p) ≫
           ((X.obj (Opposite.op ⦋(p : ℕ)⦌)).map (shuffleSndHom μ).op ≫
@@ -126,7 +126,7 @@ lemma realize_hOp (X : BisimplicialObject C) (q : ℕ) :
   have hrealize :
       (hOp q).realize X =
         ∑ p : Fin (q + 1), ∑ μ : Shuffle (p : ℕ) (q - p),
-          μ.sign • (hLetter q p μ).realize X := by
+          μ.sign • (hLetter q p μ).realizeLetter X := by
     change realizeAddMonoidHom X (hOp q) = _
     rw [hOp, map_sum]
     refine Finset.sum_congr rfl fun p _ => ?_
