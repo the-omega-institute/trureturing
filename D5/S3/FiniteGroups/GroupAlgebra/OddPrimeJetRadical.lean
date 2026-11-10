@@ -36,7 +36,7 @@ def leadingScalar (q : K →ₗ[F] K) (x : commutantAlgebra (p := p) (K := K) q)
 
 
 
-private theorem constant_action (q : K →ₗ[F] K) (hq : q 1 = 0) (X : (commutantAlgebra (p := p) (K := K) q)) (z : K) :
+theorem constant_action (q : K →ₗ[F] K) (hq : q 1 = 0) (X : (commutantAlgebra (p := p) (K := K) q)) (z : K) :
     X.val (constantLinear (p := p) (K := K) z) = constantLinear (p := p) (K := K) (leadingScalar (p := p) (K := K) q X * z) := by
   obtain ⟨c,T,hc,he⟩ := (actual_commutant_normal_form (p := p) (K := K) q hq X.val).mp X.property
   have hlead : leadingScalar (p := p) (K := K) q X = c (leadingIndex (p := p)) := by

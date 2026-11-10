@@ -562,5 +562,470 @@ theorem actual_commutator_structure (q : K →ₗ[F] K) (hq : q 1 = 0) (hn : 1 �
 
 #print axioms offDiagonalTop_cardinality
 
+private def originalLabelScalar (q : K →ₗ[F] K) (z : originalGroup (p := p) q) : K :=
+  (z.val.2 (Multiplicative.ofAdd 1)).toAdd
+
+private theorem originalLabelScalar_ne_zero (q : K →ₗ[F] K)
+    (z : originalGroup (p := p) q) : originalLabelScalar q z ≠ 0 := by
+  intro h
+  have he : z.val.2 (Multiplicative.ofAdd 1) = z.val.2 1 := by
+    apply Multiplicative.toAdd.injective
+    rw [z.val.2.map_one]
+    exact h
+  have := congrArg Multiplicative.toAdd (z.val.2.injective he)
+  exact one_ne_zero this
+
+private theorem originalGalois_data (q : K →ₗ[F] K) (hq : q 1 = 0)
+    (z : originalGroup (p := p) q) :
+    ∃ σ : K ≃ₐ[F] K, ∀ a : K,
+      (z.val.2 (Multiplicative.ofAdd a)).toAdd = originalLabelScalar q z * σ a := by
+  obtain ⟨c, σ, δ, hφ, _⟩ :=
+    (OddPrimeJetPairClassification.fixed_automorphism_intertwining_iff
+      q q hq hq z.val.2).mp ⟨z.val.1, z.property⟩
+  have hc : originalLabelScalar q z = (c : K) := by
+    simpa only [originalLabelScalar, map_one, mul_one] using hφ 1
+  exact ⟨σ, fun a => by rw [hc]; exact hφ a⟩
+
+private def originalSigma (q : K →ₗ[F] K) (hq : q 1 = 0)
+    (z : originalGroup (p := p) q) : K ≃ₐ[F] K :=
+  (originalGalois_data q hq z).choose
+
+private theorem originalGalois_formula (q : K →ₗ[F] K) (hq : q 1 = 0)
+    (z : originalGroup (p := p) q) (a : K) :
+    (z.val.2 (Multiplicative.ofAdd a)).toAdd =
+      originalLabelScalar q z * originalSigma q hq z a :=
+  (originalGalois_data q hq z).choose_spec a
+
+private theorem originalLabelScalar_mul (q : K →ₗ[F] K) (hq : q 1 = 0)
+    (z w : originalGroup (p := p) q) :
+    originalLabelScalar q (z*w) =
+      originalLabelScalar q z * originalSigma q hq z (originalLabelScalar q w) := by
+  exact originalGalois_formula q hq z (originalLabelScalar q w)
+
+/-- The actual Galois coordinate of the original additive label. Its defining
+formula determines it uniquely, independently of any choice of lifts. -/
+def originalGalois (q : K →ₗ[F] K) (hq : q 1 = 0) :
+    originalGroup (p := p) q →* (K ≃ₐ[F] K) where
+  toFun := originalSigma q hq
+  map_one' := by
+    ext a
+    have h := originalGalois_formula q hq 1 a
+    simpa [originalLabelScalar] using h.symm
+  map_mul' z w := by
+    ext a
+    apply mul_left_cancel₀ (originalLabelScalar_ne_zero q (z*w))
+    rw [← originalGalois_formula, originalLabelScalar_mul q hq]
+    have h := originalGalois_formula q hq z
+      ((w.val.2 (Multiplicative.ofAdd a)).toAdd)
+    change ((z*w).val.2 (Multiplicative.ofAdd a)).toAdd = _ at h
+    rw [originalGalois_formula q hq w a, map_mul] at h
+    simpa only [AlgEquiv.mul_apply, mul_assoc] using h
+
+private theorem originalGalois_eq_labelSigma (A : Fin (n-1) → K)
+    (hq : Q (p := p) n A 1 = 0)
+    (z : originalGroup (Q (p := p) n A)) :
+    originalGalois (Q (p := p) n A) hq z =
+      labelSigma hn hK A (project (Q (p := p) n A) z) := by
+  ext a
+  let s := project (Q (p := p) n A) z
+  have hc : originalLabelScalar (Q (p := p) n A) z =
+      (labelScalar hn hK A s : K) := by
+    have h := label_formula hn hK A s 1
+    change (z.val.2 (Multiplicative.ofAdd 1)).toAdd = _ at h
+    simpa only [originalLabelScalar, map_one, mul_one] using h
+  apply mul_left_cancel₀ (originalLabelScalar_ne_zero (Q (p := p) n A) z)
+  calc
+    _ = (z.val.2 (Multiplicative.ofAdd a)).toAdd :=
+      (originalGalois_formula (Q (p := p) n A) hq z a).symm
+    _ = _ := by rw [hc]; exact label_formula hn hK A s a
+
+#print axioms originalGalois
+
+private theorem coherentLift_constant (A : Fin (n-1) → K)
+    (s : labelGroup (Q (p := p) n A)) (a : K) :
+    coherentLift hn hK A s (constantLinear a) =
+      constantLinear (labelSigma hn hK A s a) := by
+  have hs (b x : K) : OddPrimeJetPairClassification.shear (p := p) b
+      (constantLinear x) = constantLinear x := by
+    change constantLinear x + b • OddPrimeJetPairClassification.topShear
+      (constantLinear x) = constantLinear x
+    have hz : OddPrimeJetPairClassification.topShear (p := p)
+        (constantLinear (p := p) (K := K) x) = 0 := by
+      simp only [OddPrimeJetPairClassification.topShear, LinearMap.comp_apply,
+        pow_constant (p-1) (by have hp : 2 < p := Fact.out; omega), map_zero]
+    rw [hz, smul_zero, add_zero]
+  have hS (x : K) : canonicalShear (p := p) A (constantLinear x) = constantLinear x :=
+    hs _ x
+  have hSi (x : K) : (canonicalShear (p := p) A).symm (constantLinear x) =
+      constantLinear x := by
+    apply (canonicalShear (p := p) A).injective
+    rw [LinearEquiv.apply_symm_apply, hS]
+  change (canonicalShear A).symm
+    (degreeLift hn hK A s (canonicalShear A (constantLinear a))) = _
+  rw [hS, degreeLift_constant, hSi]
+
+private def originalConstantScalar (q : K →ₗ[F] K)
+    (z : originalGroup (p := p) q) : K :=
+  coefficientZero (z.val.1 (constantLinear 1))
+
+include hn hK in
+private theorem original_constant_action (q : K →ₗ[F] K) (hq : q 1 = 0)
+    (z : originalGroup (p := p) q) (a : K) :
+    z.val.1 (constantLinear a) =
+      constantLinear (originalConstantScalar q z * originalGalois q hq z a) := by
+  obtain ⟨A, hA⟩ := (coefficientMap_bijective hn hK).surjective ⟨q,hq⟩
+  have he : Q (p := p) n A = q := congrArg Subtype.val hA
+  subst q
+  obtain ⟨⟨k,s⟩, hfac, _⟩ := unique_factorization hn hK A z
+  have hs : project (Q (p := p) n A) z = s := by
+    rw [← hfac, map_mul, project_section,
+      show project (Q (p := p) n A) k.val = 1 from k.property, one_mul]
+  obtain ⟨u, hu⟩ := (commutantUnitsEquiv (p := p) (Q (p := p) n A)).surjective k
+  have hact (x : K) : z.val.1 (constantLinear x) =
+      constantLinear (leadingHom (Q (p := p) n A) hq u.val * labelSigma hn hK A s x) := by
+    rw [← hfac, ← hu]
+    change u.val.val (coherentLift hn hK A s (constantLinear x)) = _
+    rw [coherentLift_constant, constant_action _ hq]
+    rfl
+  have hc : originalConstantScalar (Q (p := p) n A) z =
+      leadingHom (Q (p := p) n A) hq u.val := by
+    dsimp only [originalConstantScalar]
+    rw [hact]
+    simp [coefficientZero, constantLinear]
+  rw [hc, originalGalois_eq_labelSigma hn hK A hq, hs]
+  exact hact a
+
+include hn hK in
+private def scalarKernelConstantHom (q : K →ₗ[F] K) (hq : q 1 = 0) :
+    (originalGalois (p := p) q hq).ker →* K where
+  toFun z := originalConstantScalar q z.val
+  map_one' := by simp [originalConstantScalar, coefficientZero, constantLinear]
+  map_mul' z w := by
+    change coefficientZero (z.val.val.1 (w.val.val.1 (constantLinear 1))) = _
+    rw [original_constant_action hn hK q hq w.val 1]
+    simp only [map_one, mul_one]
+    rw [original_constant_action hn hK q hq z.val]
+    have hz : originalGalois q hq z.val = 1 := z.property
+    rw [hz]
+    simp [coefficientZero, constantLinear]
+
+private def scalarKernelLabelHom (q : K →ₗ[F] K) (hq : q 1 = 0) :
+    (originalGalois (p := p) q hq).ker →* K where
+  toFun z := originalLabelScalar q z.val
+  map_one' := rfl
+  map_mul' z w := by
+    have hz : originalSigma q hq z.val = 1 := z.property
+    change originalLabelScalar q (z.val*w.val) = _
+    rw [originalLabelScalar_mul q hq, hz, AlgEquiv.one_apply]
+
+include hn hK in
+private def scalarKernelPairHom (q : K →ₗ[F] K) (hq : q 1 = 0) :
+    (originalGalois (p := p) q hq).ker →* (Kˣ × Kˣ) :=
+  (scalarKernelConstantHom hn hK q hq).toHomUnits.prod
+    (scalarKernelLabelHom q hq).toHomUnits
+
+#print axioms scalarKernelPairHom
+
+private def originalPrincipalUnits (q : K →ₗ[F] K) (hq : q 1 = 0) :
+    Subgroup (originalGroup (p := p) q) :=
+  (actualPrincipalUnits (p := p) q hq).map (project q).ker.subtype
+
+include hn hK in
+private theorem scalarKernel_pair_mem_principal (q : K →ₗ[F] K) (hq : q 1 = 0)
+    (z : (originalGalois (p := p) q hq).ker)
+    (hp : scalarKernelPairHom hn hK q hq z = 1) :
+    z.val ∈ originalPrincipalUnits q hq := by
+  have hc : originalConstantScalar q z.val = 1 :=
+    congrArg (fun t : Kˣ × Kˣ => (t.1 : K)) hp
+  have hl : originalLabelScalar q z.val = 1 :=
+    congrArg (fun t : Kˣ × Kˣ => (t.2 : K)) hp
+  have hσ : originalSigma q hq z.val = 1 := z.property
+  have hφ : z.val.val.2 = 1 := by
+    apply MulEquiv.ext
+    intro a
+    apply Multiplicative.toAdd.injective
+    simpa [hl, hσ] using
+      originalGalois_formula q hq z.val a.toAdd
+  have hk : z.val ∈ (project q).ker := by
+    change project q z.val = 1
+    apply Subtype.ext
+    exact hφ
+  let k : (project q).ker := ⟨z.val, hk⟩
+  obtain ⟨u, hu⟩ := (commutantUnitsEquiv (p := p) q).surjective k
+  have hlead : leadingHom q hq u.val = 1 := by
+    have he := congrArg (fun w : (project q).ker =>
+      coefficientZero (w.val.val.1 (constantLinear 1))) hu
+    change leadingHom q hq u.val = originalConstantScalar q z.val at he
+    exact he.trans hc
+  have hup : u ∈ principalUnits (p := p) q hq := by
+    change Units.map (leadingHom q hq).toMonoidHom u = 1
+    apply Units.ext
+    exact hlead
+  exact ⟨k, ⟨u, hup, hu⟩, rfl⟩
+
+include hn hK in
+private theorem scalar_commutator_mem_principal (q : K →ₗ[F] K) (hq : q 1 = 0)
+    (x y : originalGroup (p := p) q)
+    (hx : originalGalois q hq x = 1) (hy : originalGalois q hq y = 1) :
+    ⁅x,y⁆ ∈ originalPrincipalUnits q hq := by
+  let x' : (originalGalois q hq).ker := ⟨x,hx⟩
+  let y' : (originalGalois q hq).ker := ⟨y,hy⟩
+  have hp : scalarKernelPairHom hn hK q hq ⁅x',y'⁆ = 1 := by
+    rw [map_commutatorElement]
+    exact commutatorElement_eq_one_iff_mul_comm.mpr (mul_comm _ _)
+  exact scalarKernel_pair_mem_principal hn hK q hq ⁅x',y'⁆ hp
+
+include hK in
+private theorem originalPrincipalUnits_commute (q : K →ₗ[F] K) (hq : q 1 = 0)
+    (x y : originalGroup (p := p) q)
+    (hx : x ∈ originalPrincipalUnits q hq) (hy : y ∈ originalPrincipalUnits q hq) :
+    x*y = y*x := by
+  obtain ⟨a,ha,rfl⟩ := hx
+  obtain ⟨b,hb,rfl⟩ := hy
+  have h := (actual_principal_unit_structure q hq hK).1
+    (⟨a,ha⟩ : actualPrincipalUnits q hq) (⟨b,hb⟩ : actualPrincipalUnits q hq)
+  exact congrArg (fun z : actualPrincipalUnits q hq => z.val.val) h
+
+include hK in
+private theorem commutator_eq_bot_of_le_principal (q : K →ₗ[F] K) (hq : q 1 = 0)
+    (H : Subgroup (originalGroup (p := p) q)) (hH : H ≤ originalPrincipalUnits q hq) :
+    ⁅H,H⁆ = ⊥ := by
+  apply le_antisymm _ bot_le
+  apply Subgroup.commutator_le.mpr
+  intro x hx y hy
+  exact commutatorElement_eq_one_iff_mul_comm.mpr
+    (originalPrincipalUnits_commute hK q hq x y (hH hx) (hH hy))
+
+include hn hK in
+/-- The actual original group has derived length at most three, without a
+splitting of the actual label stabilizer onto its Galois image. -/
+theorem original_derived_three_eq_bot (q : K →ₗ[F] K) (hq : q 1 = 0) :
+    derivedSeries (originalGroup (p := p) q) 3 = ⊥ := by
+  have hfirst : derivedSeries (originalGroup (p := p) q) 1 ≤
+      (originalGalois q hq).ker :=
+    Abelianization.commutator_subset_ker (originalGalois q hq)
+  have hsecond : derivedSeries (originalGroup (p := p) q) 2 ≤
+      originalPrincipalUnits q hq := by
+    apply Subgroup.commutator_le.mpr
+    intro x hx y hy
+    exact scalar_commutator_mem_principal hn hK q hq x y (hfirst hx) (hfirst hy)
+  exact commutator_eq_bot_of_le_principal hK q hq _ hsecond
+
+include hn hK in
+/-- Trivial actual Galois image gives a metabelian actual original group. -/
+theorem original_derived_two_of_galois_trivial (q : K →ₗ[F] K) (hq : q 1 = 0)
+    (hH : (originalGalois (p := p) q hq).range = ⊥) :
+    derivedSeries (originalGroup (p := p) q) 2 = ⊥ := by
+  have hall (z : originalGroup (p := p) q) : originalGalois q hq z = 1 := by
+    have hm : originalGalois q hq z ∈ (originalGalois q hq).range := ⟨z,rfl⟩
+    rw [hH] at hm
+    exact hm
+  have hfirst : derivedSeries (originalGroup (p := p) q) 1 ≤
+      originalPrincipalUnits q hq := by
+    apply Subgroup.commutator_le.mpr
+    intro x hx y hy
+    exact scalar_commutator_mem_principal hn hK q hq x y (hall x) (hall y)
+  exact commutator_eq_bot_of_le_principal hK q hq _ hfirst
+
+#print axioms original_derived_three_eq_bot
+#print axioms original_derived_two_of_galois_trivial
+
+private theorem exists_moving_ratio (σ : K ≃ₐ[F] K) (hσ : σ ≠ 1) :
+    ∃ a : Kˣ, (σ (a : K) / (a : K)) ^ p ≠ σ (a : K) / (a : K) := by
+  letI : CharP K p := charP_of_injective_algebraMap (algebraMap F K).injective p
+  by_contra! h
+  have hcross (x : K) : (σ x)^p * x = σ x * x^p := by
+    by_cases hx : x = 0
+    · simp [hx]
+    · have he := h (Units.mk0 x hx)
+      change (σ x / x)^p = σ x / x at he
+      rw [div_pow, div_eq_div_iff (pow_ne_zero p hx) hx] at he
+      exact he
+  apply hσ
+  apply AlgEquiv.ext
+  intro x
+  have h0 := hcross x
+  have h1 := hcross (x+1)
+  rw [map_add, map_one, add_pow_char, add_pow_char, one_pow] at h1
+  have hd : (σ x)^p - σ x = x^p-x := by
+    linear_combination h1-h0
+  have hp : (σ x-x)*(x^p-x) = 0 := by
+    linear_combination -h0 + x*hd
+  rcases mul_eq_zero.mp hp with he | he
+  · exact sub_eq_zero.mp he
+  · have hx : x ∈ (⊥ : Subfield K) :=
+      (Subfield.mem_bot_iff_pow_eq_self K p).mpr (sub_eq_zero.mp he)
+    exact (show (⊥ : Subfield K) ≤
+      σ.toRingHom.eqLocusField (RingHom.id K) from bot_le) hx
+
+private theorem frobenius_mem_offDiagonal (h2 : 2 ≤ n) :
+    frobLinear (p := p) (K := K) 1 ∈ offDiagonal hn hK := by
+  classical
+  let j : Fin n := ⟨1, by omega⟩
+  let b : Fin n → K := fun i => if i = j then 1 else 0
+  have he : linearizedEquiv hn hK b = frobLinear (p := p) (K := K) 1 := by
+    change linearizedMap b = _
+    simp [linearizedMap, b, j]
+  change (linearizedEquiv hn hK).symm (frobLinear (p := p) (K := K) 1)
+    ⟨0, by omega⟩ = 0
+  rw [← he, LinearEquiv.symm_apply_apply]
+  simp [b, j, Fin.ext_iff]
+
+#print axioms exists_moving_ratio
+
+include hn hK in
+private theorem originalConstantScalar_mul (q : K →ₗ[F] K) (hq : q 1 = 0)
+    (x y : originalGroup (p := p) q) :
+    originalConstantScalar q (x*y) =
+      originalConstantScalar q x * originalGalois q hq x (originalConstantScalar q y) := by
+  change coefficientZero (x.val.1 (y.val.1 (constantLinear 1))) = _
+  rw [original_constant_action hn hK q hq y 1]
+  simp only [map_one, mul_one]
+  rw [original_constant_action hn hK q hq x]
+  simp [coefficientZero, constantLinear]
+
+private theorem originalGalois_of_label_one (q : K →ₗ[F] K) (hq : q 1 = 0)
+    (z : originalGroup (p := p) q) (hz : z.val.2 = 1) : originalGalois q hq z = 1 := by
+  apply AlgEquiv.ext
+  intro a
+  change originalSigma q hq z a = a
+  have h := originalGalois_formula q hq z a
+  simpa [originalLabelScalar, hz] using h.symm
+
+include hn hK in
+private theorem scalar_commutator_leading (q : K →ₗ[F] K) (hq : q 1 = 0)
+    (g : originalGroup (p := p) q) (a : Kˣ) :
+    originalConstantScalar q ⁅g, (scalarEmbedding q hq a).val⁆ =
+      originalGalois q hq g (a : K) / (a : K) := by
+  let m := (scalarEmbedding q hq a).val
+  have hm : originalGalois q hq m = 1 := originalGalois_of_label_one q hq m rfl
+  have hc : originalConstantScalar q m = (a : K) := by
+    change coefficientZero (scalarMap (p := p) (a : K) (constantLinear 1)) = _
+    simp [scalarMap_apply, coefficientZero, constantLinear]
+  have hci : originalConstantScalar q m⁻¹ = (a : K)⁻¹ := by
+    apply mul_left_cancel₀ a.ne_zero
+    have h := originalConstantScalar_mul hn hK q hq m m⁻¹
+    rw [mul_inv_cancel, hc, hm, AlgEquiv.one_apply] at h
+    rw [← h, mul_inv_cancel₀ a.ne_zero]
+    simp [originalConstantScalar, coefficientZero, constantLinear]
+  have hcancel : originalConstantScalar q g *
+      originalGalois q hq g (originalConstantScalar q g⁻¹) = 1 := by
+    have h := originalConstantScalar_mul hn hK q hq g g⁻¹
+    simpa [originalConstantScalar, coefficientZero, constantLinear] using h.symm
+  change originalConstantScalar q (g*m*g⁻¹*m⁻¹) = _
+  rw [originalConstantScalar_mul hn hK q hq,
+    originalConstantScalar_mul hn hK q hq,
+    originalConstantScalar_mul hn hK q hq, hc, hci]
+  simp only [map_mul, map_inv, hm, mul_one, mul_inv_cancel, AlgEquiv.one_apply,
+    AlgEquiv.mul_apply]
+  calc
+    _ = (originalConstantScalar q g *
+        originalGalois q hq g (originalConstantScalar q g⁻¹)) *
+        originalGalois q hq g (a : K) * (a : K)⁻¹ := by ring
+    _ = _ := by rw [hcancel, one_mul, div_eq_mul_inv]
+
+private theorem topElement_left_mul (q : K →ₗ[F] K) (hq : q 1 = 0)
+    (X : commutantAlgebra (p := p) q) (T : K →ₗ[F] K) :
+    X * topElement q hq T = topElement q hq ((fieldScalar (leadingHom q hq X)).comp T) := by
+  apply Subtype.ext
+  apply LinearMap.ext
+  intro v
+  change X.val (constantLinear (T _)) = constantLinear (leadingHom q hq X * T _)
+  exact constant_action q hq X _
+
+private theorem kernel_commuting_frobenius (q : K →ₗ[F] K) (hq : q 1 = 0)
+    (x : (project (p := p) q).ker)
+    (hx : x * topEmbedding q hq (Multiplicative.ofAdd (frobLinear (p := p) 1)) =
+      topEmbedding q hq (Multiplicative.ofAdd (frobLinear (p := p) 1)) * x) :
+    originalConstantScalar q x.val ^ p = originalConstantScalar q x.val := by
+  let e := commutantUnitsEquiv (p := p) q
+  obtain ⟨u,rfl⟩ := e.surjective x
+  have hu : u * topUnit q hq (frobLinear (p := p) 1) =
+      topUnit q hq (frobLinear (p := p) 1) * u := by
+    apply e.injective
+    rw [e.map_mul, e.map_mul]
+    exact hx
+  have he := congrArg Units.val hu
+  change u.val * (1 + topElement q hq (frobLinear (p := p) 1)) =
+    (1 + topElement q hq (frobLinear (p := p) 1)) * u.val at he
+  simp only [mul_add, add_mul, mul_one, one_mul] at he
+  have ht := add_left_cancel he
+  rw [topElement_left_mul, topElement_right_mul] at ht
+  have hv := congrArg (fun X : commutantAlgebra (p := p) q =>
+    coefficientZero (X.val (topInput (p := p) (K := K) 1))) ht
+  change originalConstantScalar q (e u).val ^ p = originalConstantScalar q (e u).val
+  have hl : originalConstantScalar q (e u).val = leadingHom q hq u.val := rfl
+  rw [hl]
+  have hmap (T : K →ₗ[F] K) :
+      coefficientZero ((topElement q hq T).val (topInput (p := p) 1)) = T 1 := by
+    change coefficientZero (topMap T (topInput (p := p) 1)) = T 1
+    rw [topMap_topInput, dividedMonomial_zero]
+    simp [coefficientZero, constantLinear]
+  rw [hmap, hmap] at hv
+  simpa [LinearMap.comp_apply, fieldScalar, frobLinear_apply] using hv.symm
+
+#print axioms scalar_commutator_leading
+#print axioms kernel_commuting_frobenius
+
+include hn hK in
+/-- The second actual derived subgroup vanishes exactly when the actual
+Galois image is trivial. No pure-Frobenius lift or splitting is assumed. -/
+theorem original_derived_two_eq_bot_iff (q : K →ₗ[F] K) (hq : q 1 = 0) :
+    derivedSeries (originalGroup (p := p) q) 2 = ⊥ ↔
+      (originalGalois q hq).range = ⊥ := by
+  constructor
+  · intro hbot
+    apply le_antisymm _ bot_le
+    rintro σ ⟨g,rfl⟩
+    change originalGalois q hq g = 1
+    by_contra hσ
+    obtain ⟨a, ha⟩ := exists_moving_ratio (originalGalois q hq g) hσ
+    let b := originalGalois q hq g (a : K) / (a : K)
+    have h2 : 2 ≤ n := by
+      by_contra h2
+      have hn1 : n = 1 := by omega
+      have hc : Fintype.card K = p := by simpa [hn1] using hK
+      apply ha
+      change b ^ p = b
+      rw [← hc]
+      exact FiniteField.pow_card b
+    let m := scalarEmbedding q hq a
+    let x : (project q).ker := ⟨⁅g,m.val⁆, by
+      change project q ⁅g,m.val⁆ = 1
+      rw [map_commutatorElement, show project q m.val = 1 from m.property]
+      simp [commutatorElement_def]⟩
+    let t := topEmbedding q hq (Multiplicative.ofAdd (frobLinear (p := p) (K := K) 1))
+    have hx : x.val ∈ derivedSeries (originalGroup (p := p) q) 1 :=
+      Subgroup.commutator_mem_commutator (Subgroup.mem_top _) (Subgroup.mem_top _)
+    have htK : t ∈ commutator ((project q).ker) :=
+      offDiagonalTop_le_commutator q hq hn hK
+        ⟨Multiplicative.ofAdd (frobLinear (p := p) (K := K) 1),
+          frobenius_mem_offDiagonal hn hK h2, rfl⟩
+    have ht : t.val ∈ derivedSeries (originalGroup (p := p) q) 1 :=
+      map_derivedSeries_le_derivedSeries (project q).ker.subtype 1 ⟨t,htK,rfl⟩
+    have hct : ⁅x.val,t.val⁆ ∈ derivedSeries (originalGroup (p := p) q) 2 :=
+      Subgroup.commutator_mem_commutator hx ht
+    rw [hbot] at hct
+    have hcomm : x*t = t*x :=
+      Subtype.ext (commutatorElement_eq_one_iff_mul_comm.mp hct)
+    have hfix := kernel_commuting_frobenius q hq x hcomm
+    have hl : originalConstantScalar q x.val = b :=
+      scalar_commutator_leading hn hK q hq g a
+    rw [hl] at hfix
+    exact ha hfix
+  · exact original_derived_two_of_galois_trivial hn hK q hq
+
+include hn hK in
+/-- The unchanged universal actual original-group derived-series endpoint. -/
+theorem original_derived_structure (q : K →ₗ[F] K) (hq : q 1 = 0) :
+    derivedSeries (originalGroup (p := p) q) 3 = ⊥ ∧
+    (derivedSeries (originalGroup (p := p) q) 2 = ⊥ ↔
+      (originalGalois q hq).range = ⊥) ∧
+    derivedSeries (originalGroup (p := p) q) 1 ≠ ⊥ :=
+  ⟨original_derived_three_eq_bot hn hK q hq,
+    original_derived_two_eq_bot_iff hn hK q hq,
+    original_derived_one_ne_bot q hq hn hK⟩
+
+#print axioms original_derived_structure
 
 end D5.S3.FiniteGroups.GroupAlgebra.OddPrimeJetTop

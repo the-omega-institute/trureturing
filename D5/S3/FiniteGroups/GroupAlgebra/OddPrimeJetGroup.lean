@@ -76,7 +76,7 @@ private theorem label_data (g : 𝒮) :
 
 def labelScalar (g : 𝒮) : Kˣ := (label_data hn hK A g).choose
 def labelSigma (g : 𝒮) : K ≃ₐ[𝔽] K := (label_data hn hK A g).choose_spec.choose
-private theorem label_formula (g : 𝒮) (a : K) :
+theorem label_formula (g : 𝒮) (a : K) :
     Multiplicative.toAdd (g.val (Multiplicative.ofAdd a)) =
       (labelScalar hn hK A g : K) * labelSigma hn hK A g a :=
   (label_data hn hK A g).choose_spec.choose_spec.1 a
@@ -581,7 +581,7 @@ private theorem degreeLift_power (g : 𝒮) (r : ℕ) (v : V) :
         map_zero, mul_zero, map_one, one_smul, mul_one] using degreeLift_operator hn hK A g 1 0 w
     rw [hd, ih, map_smul, smul_smul, pow_succ', Module.End.mul_apply]
 
-private theorem degreeLift_constant (g : 𝒮) (x : K) :
+theorem degreeLift_constant (g : 𝒮) (x : K) :
     degreeLift hn hK A g (constantLinear x) = constantLinear (labelSigma hn hK A g x) := by
   apply (degreeLTEquiv K p).injective
   funext i
