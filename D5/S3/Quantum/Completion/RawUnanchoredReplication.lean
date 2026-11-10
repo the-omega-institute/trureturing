@@ -48,18 +48,18 @@ private lemma sync (h : RawCost U c) (x y : M) : c (U x) (U y) = c x y := by
   exact D5.S3.QuadraticForms.ThreeWayBalance.nonneg_recurrence_constant s
     (fun n => h.nonneg _ _) hr
 
-private lemma sync_iter (h : RawCost U c) (n : ℕ) (x y : M) :
+lemma sync_iter (h : RawCost U c) (n : ℕ) (x y : M) :
     c (U^[n] x) (U^[n] y) = c x y := by
   induction n with
   | zero => rfl
   | succ n ih => simpa only [Function.iterate_succ_apply', sync h] using ih
 
-private lemma single (h : RawCost U c) (a b u v : M) :
+lemma single (h : RawCost U c) (a b u v : M) :
     c (a * u) (b * v) ≤ 3 * (c a b + c u v) := by
   have hh := h.balance a b u v
   linarith [h.nonneg (a * U u) (b * U v), h.nonneg (a * U (U u)) (b * U (U v))]
 
-private lemma unit_compare (h : RawCost U c) (x y : M) :
+lemma unit_compare (h : RawCost U c) (x y : M) :
     c x y ≤ 3 * (c x 1 + c 1 y) := by
   simpa only [mul_one, one_mul] using single h x 1 1 y
 
