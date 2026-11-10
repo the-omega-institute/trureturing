@@ -177,6 +177,8 @@ A finite table starting at the constant-one vector and satisfying each matrix-ve
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/TransferMatrix.arrayOK`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/TransferMatrix.arrayOKIffGood`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/TransferMatrix.cardMatrix`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/TransferMatrix.cont`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/TransferMatrix.cont_matrix`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/TransferMatrix.good`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/TransferMatrix.good_iff_local`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/TransferMatrix.pairOK`
