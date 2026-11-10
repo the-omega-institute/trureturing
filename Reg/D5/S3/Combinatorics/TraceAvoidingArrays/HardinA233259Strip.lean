@@ -1,3 +1,29 @@
+/- Declaration classifications for the retained registration evidence.
+Bridge.signature: proof_shape=bind-only; consumers=Bridge.actual, Bridge.rejected, Bridge.arena, Bridge.family, Bridge.audit
+Bridge.actual: proof_shape=bind-only; consumers=Bridge.actual_dependence, Bridge.family
+Bridge.rejected: proof_shape=bind-only; consumers=Bridge.rejected_law, Bridge.family
+Bridge.arena: proof_shape=bind-only; consumers=Bridge.rejected_law, Bridge.family, Bridge.audit
+Bridge.rejected_law: proof_shape=bind-only; consumers=Bridge.family
+Bridge.actual_dependence: proof_shape=bind-only; consumers=Bridge.family
+Bridge.family: proof_shape=bind-only; consumers=Bridge.audit
+Bridge.audit: proof_shape=bind-only; consumers=compiled-registration-reader
+Base.signature: proof_shape=bind-only; consumers=Base.actual, Base.rejected, Base.arena, Base.family, Base.audit
+Base.actual: proof_shape=bind-only; consumers=Base.actual_dependence, Base.family
+Base.rejected: proof_shape=bind-only; consumers=Base.rejected_law, Base.family
+Base.arena: proof_shape=bind-only; consumers=Base.rejected_law, Base.family, Base.audit
+Base.rejected_law: proof_shape=bind-only; consumers=Base.family
+Base.actual_dependence: proof_shape=bind-only; consumers=Base.family
+Base.family: proof_shape=bind-only; consumers=Base.audit
+Base.audit: proof_shape=bind-only; consumers=compiled-registration-reader
+Recurrence.signature: proof_shape=bind-only; consumers=Recurrence.actual, Recurrence.rejected, Recurrence.arena, Recurrence.family, Recurrence.audit
+Recurrence.actual: proof_shape=bind-only; consumers=Recurrence.actual_dependence, Recurrence.family
+Recurrence.rejected: proof_shape=bind-only; consumers=Recurrence.rejected_law, Recurrence.family
+Recurrence.arena: proof_shape=bind-only; consumers=Recurrence.rejected_law, Recurrence.family, Recurrence.audit
+Recurrence.rejected_law: proof_shape=bind-only; consumers=Recurrence.family
+Recurrence.actual_dependence: proof_shape=bind-only; consumers=Recurrence.family
+Recurrence.family: proof_shape=bind-only; consumers=Recurrence.audit
+Recurrence.audit: proof_shape=bind-only; consumers=compiled-registration-reader
+-/
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259Strip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferBase
 import Reg.Support.SingleDependentReadout
