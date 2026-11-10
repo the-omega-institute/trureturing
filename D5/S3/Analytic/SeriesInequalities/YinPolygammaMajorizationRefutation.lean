@@ -385,10 +385,10 @@ private lemma beta_list (m l : ℕ) :
       ((m-1 : ℕ) : ℝ) :: (m+1 : ℝ) :: List.replicate l (m : ℝ) := by
   have he : (fun i => (beta m l i : ℝ)) =
       Fin.cons ((m-1 : ℕ) : ℝ) (Fin.cons (m+1 : ℝ) (fun _ : Fin l => (m : ℝ))) := by
-    ext i
-    refine Fin.cases ?_ (fun j => ?_) i
-    · simp [beta]
-    · refine Fin.cases ?_ (fun j => ?_) j <;> simp [beta]
+    change ((fun r : ℕ => (r : ℝ)) ∘
+      Fin.cons (m-1) (Fin.cons (m+1) (fun _ : Fin l => m))) = _
+    rw [Fin.comp_cons, Fin.comp_cons]
+    simp only [Function.comp_def, Nat.cast_add, Nat.cast_one]
   rw [he]
   simp
 
@@ -500,10 +500,10 @@ private lemma Q_family (p m l : ℕ) (k x : ℝ) (hm : 2 ≤ m) (hk : 0 < k) (hx
   have hb : (fun i => polygamma p k (beta m l i) x) =
       Fin.cons (polygamma p k (m-1) x)
         (Fin.cons (polygamma p k (m+1) x) (fun _ : Fin l => polygamma p k m x)) := by
-    ext i
-    refine Fin.cases ?_ (fun j => ?_) i
-    · simp [beta]
-    · refine Fin.cases ?_ (fun j => ?_) j <;> simp [beta]
+    change ((fun r : ℕ => polygamma p k r x) ∘
+      Fin.cons (m-1) (Fin.cons (m+1) (fun _ : Fin l => m))) = _
+    rw [Fin.comp_cons, Fin.comp_cons]
+    rfl
   unfold Q
   rw [hb, Fin.prod_cons, Fin.prod_cons]
   simp only [Function.const, Finset.prod_const, Finset.card_univ, Fintype.card_fin]
