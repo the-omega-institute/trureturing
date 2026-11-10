@@ -1,0 +1,9 @@
+**引理 496.1（局部方差与移动端点）。** (i) 设 $X\ge4$，$J=[A,B]\subset[X/2,4X]$，$R>0$ 满足
+
+$$
+(4X)^\alpha\le R,\qquad 4R\le(X/2)^\beta .
+\tag{496.2}
+$$
+
+则对所有 $v\in[R,4R]$，$\int_A^BD_v(y)^2\,dy\le v\log X\,\bigl(3(B-A)+16\varepsilon_XX\bigr)$。
+

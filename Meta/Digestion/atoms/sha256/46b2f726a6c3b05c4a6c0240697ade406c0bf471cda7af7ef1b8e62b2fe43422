@@ -1,0 +1,58 @@
+**定理 C-7.3（端点关联）。** 在定义 C-7.1 的来源内，
+
+
+<table><tbody><tr><td>
+
+```math
+\det W=abc\gt 0,\qquad
+\mathrm{Cov}(x,y)=\det P=\frac{abc}{𝒵^2}\gt 0.
+```
+
+</td></tr></tbody></table>
+
+
+**证明。** $`\det W=(1+b)ac-ca=abc`$。对任意非负归一化二元表，
+
+
+```math
+\begin{aligned}
+\mathrm{Cov}(x,y)
+&=P_{11}-(P_{10}+P_{11})(P_{01}+P_{11})\\
+&=P_{00}P_{11}-P_{01}P_{10}=\det P,
+\end{aligned}
+```
+
+
+其中用了四格和为一。矩阵全部除以 𝒵，行列式除以 $`𝒵^2`$。□
+
+此公式接到同一五模式的共同底面余量，而不是把两个不同的行列式合并。对一般 𝑝，写
+
+
+```math
+P_{\mathrm{base}}=
+\begin{pmatrix}p_0&p_3\\p_1&p_{13}\end{pmatrix},
+\quad
+\Delta_{\mathrm{base}}=\det P_{\mathrm{base}},
+\quad
+X=𝔼 x,\ Y=𝔼 y,\ Z=𝔼 z,\quad
+r=1-Z,\ \kappa=p_{13}.
+```
+
+
+这里 𝑍 是中位均值，𝒵 才是配分总权。逐格合并中位得
+
+
+<table><tbody><tr><td>
+
+```math
+\delta:=\det P
+=\Delta_{\mathrm{base}}+Z\kappa
+=\kappa-XY,\qquad
+\Delta_{\mathrm{base}}=r\kappa-XY.
+```
+
+</td></tr></tbody></table>
+
+
+若 $`r\gt 0`$，§3 的共同底面残差命题给 $`\langle u,v\rangle=\Delta/r`$ 和底面条件协方差 $`\Delta/r^2`$。这里 $`\Delta_{\mathrm{base}}=\Delta`$。活动来源的 Δ=0，但总体端点 $`\delta=Z\kappa\gt 0`$；条件余量零不使总体两端独立。所用概率空间、实际共同底面与总体协方差仍取同一律。[^CE-D]
+

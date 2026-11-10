@@ -27,6 +27,9 @@ internal sealed class HardinA233177LadderDocument : IScribeDocumentDefinition
             Node("normal", "Row-major predecessor conditions", NormalFormula(), false),
             Node("Legal", "Literal array conditions", LegalFormula(), false),
             Node("a", "The literal filtered count", CountFormula(), false, true),
+            Node("alternating", "Two alternating constant columns", AlternatingFormula(), false),
+            Node("two_label_classification", "Classification when one label is omitted",
+                TwoLabelClassificationFormula(), true),
             Node("counting_bridge", "The canonical-form counting bridge", BridgeFormula(), true),
             Paragraph(Text("The beta-label identifies the pairs {0,5}, {1,4}, {2,3}; "
                 + "the side is an independent Boolean choice. Normalization introduces "
@@ -78,6 +81,32 @@ internal sealed class HardinA233177LadderDocument : IScribeDocumentDefinition
             Mul(Power(Typed(D(1,6), Q("Int")), n),
                 Add(Typed(Call("D5.S3.Combinatorics.TraceAvoidingArrays."
                     + "HardinA233177PairTransfer.L", n), Q("Int")), D(6))))));
+    }
+
+    private static Formula AlternatingFormula()
+    {
+        var n = V("n"); var a = V("a"); var b = V("b"); var p = V("p");
+        var cells = Product(Fin(D(4)), Fin(n));
+        var even = Eq(Call("Nat.mod", Val(Call("Prod.snd", p)), D(2)), D(0));
+        var value = Parenthesized(Seq(V("if"), Sp, Parenthesized(even), Sp,
+            V("then"), Sp, a, Sp, V("else"), Sp, b));
+        return All("n", Q("Nat"), All("a", Fin(D(3)), All("b", Fin(D(3)),
+            Eq(Own("alternating", n, a, b), Fn("p", cells, value)))));
+    }
+
+    private static Formula TwoLabelClassificationFormula()
+    {
+        var n = V("n"); var p = V("P"); var d = V("d");
+        var a = V("a"); var b = V("b");
+        var cells = Product(Fin(D(4)), Fin(n));
+        var omitted = All("i", cells, Ne(App(p, V("i")), d));
+        var proper = Call("D5.S3.Combinatorics.TraceAvoidingArrays."
+            + "HardinA233177PairTransfer.Proper", p);
+        var classification = Ex("a", Fin(D(3)), Ex("b", Fin(D(3)),
+            And(Ne(a, b), Eq(p, Own("alternating", n, a, b)))));
+        return All("n", Q("Nat"), All("hn", Le(D(2), n),
+            All("P", Arrow(cells, Fin(D(3))), All("hp", proper,
+                All("d", Fin(D(3)), All("hd", omitted, classification))))));
     }
 
     private static Formula RecurrenceFormula(Formula? n)

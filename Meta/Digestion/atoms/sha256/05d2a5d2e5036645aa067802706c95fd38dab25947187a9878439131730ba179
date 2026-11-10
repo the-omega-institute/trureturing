@@ -1,0 +1,8 @@
+**定义 C-27.5.1（有向记录闭环）。** 固定标号和取向的简单循环，<span>𝑁≥3</span>，令
+
+<div>
+𝑔<sub>𝑖</sub>=⟨𝑒<sub>𝑖</sub>,𝑒<sub>𝑖+1</sub>⟩,  𝑒<sub>𝑁+1</sub>=𝑒<sub>1</sub>,  Ω<sub>𝑁</sub>=∏<sub>𝑖=1</sub><sup>𝑁</sup>𝑔<sub>𝑖</sub>.
+</div>
+
+仅当每条 <span>𝑔<sub>𝑖</sub>≠0</span> 时定义 <span>Φ<sub>𝐺</sub>= arg Ω<sub>𝑁</sub></span> 模 <span>2π</span>。这是同一关系报告的 Bargmann 环积；反向取向给 <span>conj(Ω<sub>𝑁</sub>)</span> 和 <span>-Φ<sub>𝐺</sub></span>。[^GL-B]
+
