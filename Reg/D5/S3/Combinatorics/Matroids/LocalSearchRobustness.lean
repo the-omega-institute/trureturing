@@ -99,7 +99,7 @@ def registration :
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.Matroids.LocalSearchRobustness
     definition := none
-    coordinates := #[0]
+    coordinates := #[0, 1]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "fn"]
       stateBinder := 3
@@ -165,7 +165,7 @@ def registration :
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.Matroids.LocalSearchRobustness
     definition := none
-    coordinates := #[0]
+    coordinates := #[0, 1]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "arg", "body", "body", "body", "fn", "arg", "fn"]
       stateBinder := 3

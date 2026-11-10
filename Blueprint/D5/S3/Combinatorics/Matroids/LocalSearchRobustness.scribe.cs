@@ -97,27 +97,27 @@ internal sealed class LocalSearchRobustnessDocument : IScribeDocumentDefinition
         return Telescope(All("B", Bases, All("t", Nat, body)));
     }
     private static Formula ErrorStatement() => Telescope(All("B0", Bases, All("B1", Bases,
-        Equal(Error(F.Id("B0"),F.Id("B1")), Sub(Max(F.Id("B0"),F.Id("1")),Total(F.Id("B1")))))));
+        Equal(Error(F.Id("B0"),F.Id("B1")), Sub(Max(F.Id("B0"),D(1)),Total(F.Id("B1")))))));
     private static Formula ComparisonStatement()
     {
         Formula b0 = F.Id("B0"), b1 = F.Id("B1"), r = F.Id("r");
         return Telescope(All("B0", Bases, All("B1", Bases, All("r", Nat,
-            Imp(Leq(Distance(b1,b0),F.Id("1")),
-                Leq(Add(Max(b0,Add(r,F.Id("1"))),Total(b1)),Add(Max(b1,r),Max(b0,F.Id("1")))))))));
+            Imp(Leq(Distance(b1,b0),D(1)),
+                Leq(Add(Max(b0,Add(r,D(1))),Total(b1)),Add(Max(b1,r),Max(b0,D(1)))))))));
     }
     private static Formula RobustnessStatement()
     {
         Formula k = F.Id("k"), i = F.Id("i"), c = F.Id("C");
         Formula bi = Call("B",Call("Fin.castSucc",i));
         Formula bn = Call("B",Call("Fin.succ",i));
-        Formula b0 = Call("B",F.Id("0")), bk = Call("B",Call("Fin.last",k));
+        Formula b0 = Call("B",D(0)), bk = Call("B",Call("Fin.last",k));
         Formula index = Call("Fin",k);
         Formula errors = Seq(new Formula.Subscript(Sum,Grp(Seq(i,Colon,Sp,index))),Sp,Error(bi,bn));
-        Formula conclusion = And(All("i",index,Leq(F.Id("0"),Error(bi,bn))),
+        Formula conclusion = And(All("i",index,Leq(D(0),Error(bi,bn))),
             All("C",SetE,Imp(Basis(c),Imp(Leq(Distance(c,b0),k),Leq(Total(c),Add(Total(bk),errors))))));
-        Formula path = new Formula.TypeArrow(Call("Fin",Add(k,F.Id("1"))),Bases);
+        Formula path = new Formula.TypeArrow(Call("Fin",Add(k,D(1))),Bases);
         return Telescope(All("k",Nat,All("B",path,
-            Imp(All("i",index,Leq(Distance(bn,bi),F.Id("1"))),conclusion))));
+            Imp(All("i",index,Leq(Distance(bn,bi),D(1))),conclusion))));
     }
     private static Formula Telescope(Formula body) => Disp(All("E",new Formula.Subscript(F.Id("Type"),F.Id("u")),
         Seq(OpenBracket,Call("Finite",E),CloseBracket,Comma,Sp,
@@ -127,10 +127,12 @@ internal sealed class LocalSearchRobustnessDocument : IScribeDocumentDefinition
     private static Formula Total(Formula a) => Call("baseWeight",W,a);
     private static Formula Max(Formula b, Formula t) => Call("neighborhoodMax",M,W,b,t);
     private static Formula Error(Formula b0, Formula b1) => Call("localError",M,W,b0,b1);
-    private static Formula Add(Formula a, Formula b) => Paren(Seq(a,Sp,F.Id("+"),Sp,b));
-    private static Formula Sub(Formula a, Formula b) => Paren(Seq(a,Sp,F.Id("-"),Sp,b));
+    private static Formula Add(Formula a, Formula b) => Paren(Seq(a,Sp,Plus,Sp,b));
+    private static Formula Sub(Formula a, Formula b) => Paren(Seq(a,Sp,Minus,Sp,b));
     private static Formula Call(string name, params Formula[] args) =>
-        new Formula.Apply(Seq(Operatorname,Grp(F.Id(name))),[.. args]);
+        new Formula.Apply(Seq(name.Split('.').SelectMany((part, i) =>
+            i == 0 ? new Formula[] { Operatorname, Grp(F.Id(part)) }
+                : new Formula[] { Dot, Operatorname, Grp(F.Id(part)) }).ToArray()),[.. args]);
     private static Formula Paren(Formula x) => Seq(Open,x,Close);
     private static Formula All(string name, Formula type, Formula body) =>
         Seq(Forall,Sp,Paren(Seq(F.Id(name),Colon,Sp,type)),Comma,Sp,Paren(body));
