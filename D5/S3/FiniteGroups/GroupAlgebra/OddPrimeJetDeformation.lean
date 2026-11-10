@@ -264,7 +264,7 @@ def originalRepresentation (q : K →ₗ[F] K) : Representation F E V where
 /-- Ordinary polynomial translations, expressed by their truncated exponential. -/
 def ordinaryRepresentation : Representation F E V := originalRepresentation 0
 
-private def constantLinear : K →ₗ[K] V where
+def constantLinear : K →ₗ[K] V where
   toFun c := ⟨C c, mem_degreeLT.mpr (degree_C_le.trans_lt
     (by exact_mod_cast (Fact.out : p.Prime).pos))⟩
   map_add' _ _ := Subtype.ext (map_add C _ _)
@@ -277,7 +277,7 @@ private def fieldFintype [FiniteDimensional (ZMod p) K] : Fintype K := by
 private def restrictedRepresentation (q : K →ₗ[F] K) (H : Subgroup E) :
     Representation F H V := (originalRepresentation q).comp H.subtype
 
-private theorem constant_derivative (c : K) : D (constantLinear c) = 0 := by
+theorem constant_derivative (c : K) : D (constantLinear c) = 0 := by
   apply Subtype.ext
   simp [derivativeEnd, constantLinear]
 
@@ -464,7 +464,7 @@ private theorem weighted_exponential (q : K →ₗ[F] K) (x : K) :
   rw [hs, neg_add, neg_neg, neg_neg]
   rfl
 
-private theorem polynomial_log_action (q : K →ₗ[F] K) (x : K) (v : V) :
+theorem polynomial_log_action (q : K →ₗ[F] K) (x : K) (v : V) :
     -(∑ i : F, i^(p-2) • originalRepresentation (p := p) q
       (Multiplicative.ofAdd (i • x)) v) = jetOperator q x v := by
   change -(∑ i : F, i^(p-2) • (finiteExp (jetOperator q (i • x))) v) = _
@@ -502,7 +502,7 @@ private theorem scalar_ne_zero (j : ℕ) (hj0 : 0 < j) (hjp : j < p) :
   rw [Ne, CharP.cast_eq_zero_iff K p]
   exact Nat.not_dvd_of_pos_of_lt hj0 hjp
 
-private theorem derivative_kernel (v : V) (hv : D v = 0) :
+theorem derivative_kernel (v : V) (hv : D v = 0) :
     (v : K[X]) = C ((v : K[X]).coeff 0) := by
   apply Polynomial.ext
   intro n
@@ -521,7 +521,7 @@ private theorem derivative_kernel (v : V) (hv : D v = 0) :
         (by exact_mod_cast (by omega : p ≤ n)))
   simp [coeff_C, hn, hcoeff]
 
-private def dividedMonomial (j : ℕ) (hj : j < p) : K →ₗ[K] V where
+def dividedMonomial (j : ℕ) (hj : j < p) : K →ₗ[K] V where
   toFun s := s • ((j.factorial : K)⁻¹ • (degreeLT.basis K p) ⟨j,hj⟩)
   map_add' _ _ := add_smul _ _ _
   map_smul' _ _ := smul_assoc _ _ _
@@ -530,12 +530,12 @@ private theorem dividedMonomial_coe (j : ℕ) (hj : j < p) (s : K) :
     (dividedMonomial j hj s : K[X]) = C (s / (j.factorial : K)) * X^j := by
   simp [dividedMonomial, Polynomial.smul_eq_C_mul, div_eq_mul_inv, mul_assoc]
 
-private theorem dividedMonomial_zero (h0 : 0 < p) (s : K) :
+theorem dividedMonomial_zero (h0 : 0 < p) (s : K) :
     dividedMonomial 0 h0 s = constantLinear s := by
   apply Subtype.ext
   simp [dividedMonomial_coe, constantLinear]
 
-private theorem dividedMonomial_succ (j : ℕ) (hj : j + 1 < p) (s : K) :
+theorem dividedMonomial_succ (j : ℕ) (hj : j + 1 < p) (s : K) :
     D (dividedMonomial (j+1) hj s) = dividedMonomial j (by omega) s := by
   apply Subtype.ext
   change derivative (dividedMonomial (j+1) hj s : K[X]) = _
@@ -585,7 +585,7 @@ private theorem nonprojective_action [FiniteDimensional (ZMod p) K] (q : K →�
   have : (0 : K) = 1 := by simpa [w, constantLinear] using hc
   exact zero_ne_one this
 
-private def coefficientZero : V →ₗ[K] K :=
+def coefficientZero : V →ₗ[K] K :=
   (Polynomial.lcoeff K 0).comp (Polynomial.degreeLT K p).subtype
 
 def diagonalScale (c : K) (hc : c ≠ 0) : V ≃ₗ[K] V :=
@@ -620,14 +620,14 @@ theorem diagonalScale_derivative (c : K) (hc : c ≠ 0) (v : V) :
         (by exact_mod_cast (by omega : p ≤ i.val+1)))
     rw [h0, h0]; simp
 
-private theorem constant_image (P : V ≃ₗ[F] V)
+theorem constant_image (P : V ≃ₗ[F] V)
     (hD : ∀ v : V, P (D v) = D (P v)) (s : K) :
     P (constantLinear s) = constantLinear (coefficientZero (P (constantLinear s))) := by
   apply Subtype.ext
   apply derivative_kernel
   rw [← hD, constant_derivative, map_zero]
 
-private def constantsEquiv (P : V ≃ₗ[F] V)
+def constantsEquiv (P : V ≃ₗ[F] V)
     (hD : ∀ v : V, P (D v) = D (P v)) : K ≃ₗ[F] K := by
   let f : K →ₗ[F] K := (coefficientZero.restrictScalars F).comp
     (P.toLinearMap.comp (constantLinear.restrictScalars F))
@@ -660,14 +660,14 @@ private theorem dividedMonomial_power (j n : ℕ) (hjn : j + n < p) (s : K) :
     rw [heq]
     exact ih (by omega)
 
-private theorem dividedMonomial_top (s : K) :
+theorem dividedMonomial_top (s : K) :
     (D^(p-1)) (dividedMonomial (p-1) (by have : 2 < p := Fact.out; omega) s) =
       constantLinear s := by
   have hp : 2 < p := Fact.out
   simpa only [Nat.zero_add, dividedMonomial_zero] using
     dividedMonomial_power (p := p) (K := K) 0 (p-1) (by omega) s
 
-private theorem dividedMonomial_one_top (s : K) :
+theorem dividedMonomial_one_top (s : K) :
     (D^(p-1)) (dividedMonomial 1 (by have : 2 < p := Fact.out; omega) s) = 0 := by
   have hp : 2 < p := Fact.out
   have h : dividedMonomial (p := p) 1 (by omega) s = s • linearMonomial := by

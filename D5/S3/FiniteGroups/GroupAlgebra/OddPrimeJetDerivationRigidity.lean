@@ -27,7 +27,7 @@ local notation "V" => Polynomial.degreeLT K p
 local notation "E" => Multiplicative K
 local notation "D" => derivativeEnd (p := p) (K := K)
 
-private theorem leibniz_of_commutator (q Q : K →ₗ[F] K)
+theorem leibniz_of_commutator (q Q : K →ₗ[F] K)
     (h : ∀ a s : K, a * Q s - Q (a*s) = q a * s) (a b : K) :
     q (a*b) = a * q b + b * q a := by
   have hb := h b 1
@@ -160,7 +160,7 @@ private theorem cubic_geometric_inverse {R : Type*} [Ring R] (N : R) (hN : N^3 =
       _ = 1 - N^3 := by noncomm_ring
       _ = 1 := by rw [hN, sub_zero]
 
-private def gauge (δ : Derivation F K K) : V ≃ₗ[F] V := by
+def gauge (δ : Derivation F K K) : V ≃ₗ[F] V := by
   let N := gaugeNilpotent δ
   have h := cubic_geometric_inverse N (gaugeNilpotent_cube δ)
   exact LinearEquiv.ofLinearMap (f := 1-N) (g := 1+N+N^2) h.2 h.1
@@ -174,7 +174,7 @@ private theorem gauge_operator (δ : Derivation F K K) (a : K) (v : V) :
     map_sub, smul_sub]
   abel
 
-private theorem finiteExp_intertwining (P : V →ₗ[F] V)
+theorem finiteExp_intertwining (P : V →ₗ[F] V)
     (A B : Module.End K V) (h : ∀ v, P (A v) = B (P v)) (v : V) :
     P (finiteExp A v) = finiteExp B (P v) := by
   have hpow (n : ℕ) (w : V) : P ((A^n) w) = (B^n) (P w) := by
@@ -187,6 +187,32 @@ private theorem finiteExp_intertwining (P : V →ₗ[F] V)
     have he : (n.factorial : K)⁻¹ = algebraMap F K ((n.factorial : F)⁻¹) := by simp
     rw [he, algebraMap_smul, algebraMap_smul, map_smul]
   simp only [finiteExp, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, hs, hpow]
+
+
+private theorem derivative_pow_gaugeNilpotent (δ : Derivation F K K) (v : V) :
+    (D^(p-1)) (gaugeNilpotent δ v) = 0 := by
+  have hp : 2 < p := Fact.out
+  let d := (D).restrictScalars F
+  have hc : Commute (coefficientDerivation δ) d := by
+    apply LinearMap.ext
+    exact coefficientDerivation_derivative δ
+  have he := LinearMap.congr_fun (hc.pow_right (p-1)).eq v
+  change coefficientDerivation δ ((d^(p-1)) v) = (d^(p-1)) (coefficientDerivation δ v) at he
+  rw [gaugeNilpotent_apply, ← restricted_derivative_pow, ← he,
+    restricted_derivative_pow, ← Module.End.mul_apply, ← pow_add,
+    pow_eq_zero_of_le (by omega : p ≤ (p-1)+(p-2)) derivative_pow_prime,
+    LinearMap.zero_apply, map_zero]
+
+/-- The derivation gauge shifts every highest jet by the original derivation. -/
+theorem gauge_pair_operator (δ : Derivation F K K) (q : K →ₗ[F] K) (a : K) (v : V) :
+    gauge δ (jetOperator q a v) =
+      jetOperator (q-δ.toLinearMap) a (gauge δ v) := by
+  change (a • D v + q a • (D^(p-1)) v) -
+    gaugeNilpotent δ (a • D v + q a • (D^(p-1)) v) =
+    a • D (v - gaugeNilpotent δ v) + (q a-δ a) • (D^(p-1)) (v-gaugeNilpotent δ v)
+  rw [map_add, gaugeNilpotent_top, add_zero, gaugeNilpotent_commutator,
+    map_sub, map_sub, derivative_pow_gaugeNilpotent, sub_zero, smul_sub, sub_smul]
+  abel
 
 private theorem sufficient (δ : Derivation F K K) :
     ∃ (φ : E ≃* E) (P : V ≃ₗ[F] V),
