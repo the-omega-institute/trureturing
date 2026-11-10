@@ -34,6 +34,10 @@ $$(\exists A: \mathbb{N} \to \mathbb{N} \to \mathbb{N}, (\operatorname{IsArray}\
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/KurkovTriangularColumnSum.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a396981-kurkov-conjecture1-positive-column-factorial-sum` (proved) by `D5/S1/Recurrence/Algebraic/KurkovTriangularColumnSum.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a396981-kurkov-conjecture1-positive-column-factorial-sum","declaration_gid":"D5/S1/Recurrence/Algebraic/KurkovTriangularColumnSum.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Mikhail Kurkov; OEIS Foundation (2026). *OEIS A396981, Conjecture 1: positive-column factorial sum*. URL: <https://oeis.org/A396981>.
