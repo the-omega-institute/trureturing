@@ -8,7 +8,7 @@ internal sealed class BarryA188475Document : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/CatalanPowerHankel/BarryA188475.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Recurrence/barry2011a188475");
+        LibraryNoteRef.Create("D5/L/RecurrenceAlgebraic/barry2011a188475");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The original Barry A188475 shifted Hankel conjecture for the literal Catalan recurrence.",
@@ -28,7 +28,7 @@ internal sealed class BarryA188475Document : IScribeDocumentDefinition
                         Add(Mul(D(2), Q(Add(N(), D(2)))), Mul(D(2), Q(Add(N(), D(1))))),
                         SigmaRange(N(),
                             Mul(Call("catalan", Add(K(), D(1))),
-                                Q(Subtract(Add(N(), D(1)), K()))))))
+                                Q(Subtract(Add(N(), D(1)), K())))))))
                 ]))), AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("All values lie in ℚ. The sum is over k in Finset.range n "
                     + "and is empty at n=0; hence the recursive clause also gives q(3)=2. "
