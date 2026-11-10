@@ -16,10 +16,10 @@ triage: anchor
 For every pair of independent universe levels `u,v`, every `C : Type u`
 with `Category.{v} C` and `Abelian C`, and every
 `X : SimplicialObject (SimplicialObject C)`, the source constructs
-`HomotopyEquiv (F₁.obj X) (F₂.obj X)` in `ChainComplex C ℕ`.
-Here `F₁` is the total double alternating-face complex, with degree-n
+`HomotopyEquiv (FOne.obj X) (FTwo.obj X)` in `ChainComplex C ℕ`.
+Here `FOne` is the total double alternating-face complex, with degree-n
 finite coproduct over `p+q=n` and differential `d₁+(-1)^p d₂` on the
-`(p,q)` summand. `F₂` is the alternating-face complex of the diagonal
+`(p,q)` summand. `FTwo` is the alternating-face complex of the diagonal
 simplicial object `n ↦ X[n,n]`. Both chain maps and both chain homotopies
 are included. No equality of universes, module realization, projectivity,
 field, characteristic, additional infinite coproduct, tensor hypothesis,
@@ -29,7 +29,7 @@ The normalized equivalence uses the shuffle map as its forward map and
 Alexander–Whitney as its inverse. Shuffle followed by Alexander–Whitney
 is strictly the identity on the twice-normalized total. The other
 composite is homotopic to the diagonal identity by the original recursive
-operator `phiOp`. In composition notation `M₂.comp M₁`, `M₁` acts first.
+operator `phiOp`. In composition notation `MTwo.comp MOne`, `MOne` acts first.
 The recursion is `phiOp(0)=0` and
 `phiOp(q+1)=-(phiOp(q)).prime+(hOp(q+1)).prime.comp(D0op(q+1))`.
 The all-degree induction proves that
@@ -74,9 +74,18 @@ original repository.
 
 The host modules lie in `D5/S3/HomologicalAlgebra/EilenbergZilber`.
 The selected declarations keep their mathematical statements and proof
-bodies. The receiving namespace, imports and module boundaries differ;
+bodies, up to the receiving identifier spellings and local definitional
+exposure in the face, degeneracy and flip calculations. The receiving
+namespace, imports and module boundaries differ;
 consumed private interfaces are exposed. Unused companion and frontal
-material is omitted. The total-symmetry instance is reused directly from
+material and unused reflexive binding declarations are omitted.
+Canonical receiving spellings replace F₁/F₂, N₁/N₂ and M₁/M₂ fragments
+by FOne/FTwo, NOne/NTwo and MOne/MTwo, and totalMapHomotopy₂ by
+totalMapHomotopyTwo. Letter-level realize, prime and comp are
+realizeLetter, primeLetter and compLetter; their composition laws use
+realizeLetter_compLetter, primeLetter_compLetter and compLetter_assoc.
+Each receiving name denotes the single original definition or proof,
+without an alias or duplicate implementation. The total-symmetry instance is reused directly from
 `HomologicalComplex₂.finiteDegreeTotalSymmetry` in its host owner
 `D5/S3/Topology/TauCeti/Algebra/Homology/FiniteDegreeComparison.lean`;
 that existing implementation is exposed without replacing its proof.

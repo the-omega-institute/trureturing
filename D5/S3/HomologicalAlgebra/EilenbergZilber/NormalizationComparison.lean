@@ -16,7 +16,8 @@ Original source: jeffrey-dot-li/lean-homology, revision
 40c5aae235b0f499ebfc1e68ce574a62b531203c; author release
 fd0147a1ffe4f3c14c247574e148893d7cdf8cf6 (LeanPool PR 588).
 Modifications: receiving namespace and imports, module boundaries, exposure of
-consumed private interfaces, and omission of unused companion and frontal material.
+consumed private interfaces, canonical identifier spellings, and omission of unused
+companion, reflexive binding, and frontal material.
 -/
 
 
@@ -29,14 +30,14 @@ import Mathlib.AlgebraicTopology.DoldKan.HomotopyEquivalence
 # The normalization comparison equivalence
 
 This file constructs the homotopy equivalence
-`normalizationComparison : HomotopyEquiv (N₁.obj X) (F₁.obj X)` used in the normalized
+`normalizationComparison : HomotopyEquiv (NOne.obj X) (FOne.obj X)` used in the normalized
 Eilenberg-Zilber argument.
 
 The construction is factored as
 
-`N₁(X) ≃ M₁(X) ≃ F₁(X)`,
+`NOne(X) ≃ MOne(X) ≃ FOne(X)`,
 
-where `M₁` is outer-unnormalized and inner-normalized.
+where `MOne` is outer-unnormalized and inner-normalized.
 -/
 
 
@@ -51,38 +52,38 @@ namespace BisimplicialObject
 variable {C : Type*} [Category* C] [Abelian C]
 
 /-- The intermediate total complex: outer unnormalized and inner normalized. -/
-noncomputable abbrev M₁ (X : BisimplicialObject C) : ChainComplex C ℕ :=
+noncomputable abbrev MOne (X : BisimplicialObject C) : ChainComplex C ℕ :=
   (HomologicalComplex₂.totalFunctor _ _ _ _).obj
     (((normalizedMooreComplex C).mapHomologicalComplex _).obj
       ((alternatingFaceMapComplex (SimplicialObject C)).obj X))
 
 variable (X : BisimplicialObject C)
 
-/-- The outer normalization inclusion `N₁(X) ⟶ M₁(X)`. -/
-noncomputable def inclusionM₁ : N₁.obj X ⟶ M₁ X :=
+/-- The outer normalization inclusion `NOne(X) ⟶ MOne(X)`. -/
+noncomputable def inclusionMOne : NOne.obj X ⟶ MOne X :=
   (HomologicalComplex₂.totalFunctor _ _ _ _).map
     (((normalizedMooreComplex C).mapHomologicalComplex _).map (inclusionOfMooreComplexMap X))
 
-/-- The outer normalization retraction `M₁(X) ⟶ N₁(X)`. -/
-noncomputable def retractionM₁ : M₁ X ⟶ N₁.obj X :=
+/-- The outer normalization retraction `MOne(X) ⟶ NOne(X)`. -/
+noncomputable def retractionMOne : MOne X ⟶ NOne.obj X :=
   (HomologicalComplex₂.totalFunctor _ _ _ _).map
     (((normalizedMooreComplex C).mapHomologicalComplex _).map (PInftyToNormalizedMooreComplex X))
 
-/-- The inner normalization inclusion `M₁(X) ⟶ F₁(X)`. -/
-noncomputable def inclusionF₁ : M₁ X ⟶ F₁.obj X :=
+/-- The inner normalization inclusion `MOne(X) ⟶ FOne(X)`. -/
+noncomputable def inclusionFOne : MOne X ⟶ FOne.obj X :=
   (HomologicalComplex₂.totalFunctor _ _ _ _).map
     ((NatTrans.mapHomologicalComplex mooreInclusion _).app
       ((alternatingFaceMapComplex (SimplicialObject C)).obj X))
 
-/-- The inner normalization retraction `F₁(X) ⟶ M₁(X)`. -/
-noncomputable def retractionF₁ : F₁.obj X ⟶ M₁ X :=
+/-- The inner normalization retraction `FOne(X) ⟶ MOne(X)`. -/
+noncomputable def retractionFOne : FOne.obj X ⟶ MOne X :=
   (HomologicalComplex₂.totalFunctor _ _ _ _).map
     ((NatTrans.mapHomologicalComplex mooreRetraction _).app
       ((alternatingFaceMapComplex (SimplicialObject C)).obj X))
 
 @[reassoc]
-lemma inclusionM₁_comp_retractionM₁ :
-    inclusionM₁ X ≫ retractionM₁ X = 𝟙 (N₁.obj X) := by
+lemma inclusionMOne_comp_retractionMOne :
+    inclusionMOne X ≫ retractionMOne X = 𝟙 (NOne.obj X) := by
   have h :
       (((normalizedMooreComplex C).mapHomologicalComplex (ComplexShape.down ℕ)).map
           (inclusionOfMooreComplexMap X) ≫
@@ -98,8 +99,8 @@ lemma inclusionM₁_comp_retractionM₁ :
         (CategoryTheory.Functor.map_id _ _))
 
 @[reassoc]
-lemma inclusionF₁_comp_retractionF₁ :
-    inclusionF₁ X ≫ retractionF₁ X = 𝟙 (M₁ X) := by
+lemma inclusionFOne_comp_retractionFOne :
+    inclusionFOne X ≫ retractionFOne X = 𝟙 (MOne X) := by
   have h :
       (NatTrans.mapHomologicalComplex mooreInclusion (ComplexShape.down ℕ)).app
           ((alternatingFaceMapComplex (SimplicialObject C)).obj X) ≫
@@ -265,10 +266,6 @@ variable {I₁ I₂ J : Type*} {c₁ : ComplexShape I₁} {c₂ : ComplexShape I
 def flipMap (φ : K ⟶ L) : K.flip ⟶ L.flip :=
   (HomologicalComplex₂.flipFunctor C c₁ c₂).map φ
 
-@[simp]
-lemma flipMap_f_f (φ : K ⟶ L) (i₂ : I₂) (i₁ : I₁) : ((flipMap φ).f i₂).f i₁ = (φ.f i₁).f i₂ :=
-  rfl
-
 /-- Naturality of the flip symmetry isomorphism `totalFlipIso` with respect to a bicomplex
 morphism `φ : K ⟶ L`: the totalization of `φ` and of its flip are related by conjugation. -/
 @[reassoc]
@@ -277,7 +274,7 @@ lemma totalFlipIso_hom_naturality (φ : K ⟶ L) :
       HomologicalComplex₂.total.map (flipMap φ) c ≫ (L.totalFlipIso c).hom := by
   ext j i₂ i₁ hj
   simp only [HomologicalComplex.comp_f, HomologicalComplex₂.ιTotal_totalFlipIso_f_hom_assoc,
-    HomologicalComplex₂.ιTotal_map_assoc, flipMap_f_f,
+    HomologicalComplex₂.ιTotal_map_assoc, flipMap, HomologicalComplex₂.flipFunctor_map_f_f,
     HomologicalComplex₂.ιTotal_totalFlipIso_f_hom]
   erw [Linear.units_smul_comp, HomologicalComplex₂.ιTotal_map, Linear.comp_units_smul]
   rfl
@@ -294,7 +291,7 @@ lemma total_map_eq_flipConjugate (φ : K ⟶ L) :
 
 It is obtained by applying `totalMapHomotopy` to the flipped bicomplex and transporting the result
 across `totalFlipIso`. -/
-noncomputable def totalMapHomotopy₂ {φ ψ : K ⟶ L}
+noncomputable def totalMapHomotopyTwo {φ ψ : K ⟶ L}
     (h : Homotopy (flipMap φ) (flipMap ψ)) :
     Homotopy (HomologicalComplex₂.total.map φ c) (HomologicalComplex₂.total.map ψ c) :=
   (Homotopy.ofEq (total_map_eq_flipConjugate φ)).trans
@@ -317,12 +314,12 @@ noncomputable def outerNormalizationComparisonPreTotal :
       (A := SimplicialObject C) (Y := X)
 
 /-- The outer half of `normalizationComparison`. -/
-noncomputable def outerNormalizationComparison : HomotopyEquiv (N₁.obj X) (M₁ X) where
-  hom := inclusionM₁ X
-  inv := retractionM₁ X
-  homotopyHomInvId := Homotopy.ofEq (inclusionM₁_comp_retractionM₁ X)
+noncomputable def outerNormalizationComparison : HomotopyEquiv (NOne.obj X) (MOne X) where
+  hom := inclusionMOne X
+  inv := retractionMOne X
+  homotopyHomInvId := Homotopy.ofEq (inclusionMOne_comp_retractionMOne X)
   homotopyInvHomId := by
-    simpa [retractionM₁, inclusionM₁, M₁, outerNormalizationComparisonPreTotal,
+    simpa [retractionMOne, inclusionMOne, MOne, outerNormalizationComparisonPreTotal,
       HomologicalComplex₂.totalFunctor]
       using HomologicalComplex₂.totalMapHomotopy (c := ComplexShape.down ℕ)
         ((outerNormalizationComparisonPreTotal (C := C) X).homotopyInvHomId)
@@ -395,7 +392,7 @@ lemma homotopyInvHomId_hom_naturality {Y Z : SimplicialObject C} (f : Y ⟶ Z) (
   exact alternatingFaceMapComplex_map_f_comp_homotopyPToId_hom f (j + 1) i j
 
 /-- The flipped inner Dold-Kan homotopy used in `innerNormalizationComparison`. -/
-noncomputable def retractionF₁InclusionF₁FlipHomotopy :
+noncomputable def retractionFOneInclusionFOneFlipHomotopy :
     Homotopy
       (HomologicalComplex₂.flipMap
         ((NatTrans.mapHomologicalComplex mooreRetraction _).app
@@ -413,18 +410,18 @@ noncomputable def retractionF₁InclusionF₁FlipHomotopy :
     ((alternatingFaceMapComplex (SimplicialObject C)).obj X)
 
 /-- The inner half of `normalizationComparison`. -/
-noncomputable def innerNormalizationComparison : HomotopyEquiv (M₁ X) (F₁.obj X) where
-  hom := inclusionF₁ X
-  inv := retractionF₁ X
-  homotopyHomInvId := Homotopy.ofEq (inclusionF₁_comp_retractionF₁ X)
+noncomputable def innerNormalizationComparison : HomotopyEquiv (MOne X) (FOne.obj X) where
+  hom := inclusionFOne X
+  inv := retractionFOne X
+  homotopyHomInvId := Homotopy.ofEq (inclusionFOne_comp_retractionFOne X)
   homotopyInvHomId :=
     (Homotopy.ofEq ((HomologicalComplex₂.totalFunctor _ _ _ _).map_comp _ _).symm).trans <|
-      (HomologicalComplex₂.totalMapHomotopy₂ (c := ComplexShape.down ℕ)
-        (retractionF₁InclusionF₁FlipHomotopy X)).trans
+      (HomologicalComplex₂.totalMapHomotopyTwo (c := ComplexShape.down ℕ)
+        (retractionFOneInclusionFOneFlipHomotopy X)).trans
         (Homotopy.ofEq ((HomologicalComplex₂.totalFunctor _ _ _ _).map_id _))
 
 /-- The full comparison between the normalized and unnormalized total complexes. -/
-noncomputable def normalizationComparison : HomotopyEquiv (N₁.obj X) (F₁.obj X) :=
+noncomputable def normalizationComparison : HomotopyEquiv (NOne.obj X) (FOne.obj X) :=
   (outerNormalizationComparison X).trans (innerNormalizationComparison X)
 
 end BisimplicialObject

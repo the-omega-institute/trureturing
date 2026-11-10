@@ -16,7 +16,8 @@ Original source: jeffrey-dot-li/lean-homology, revision
 40c5aae235b0f499ebfc1e68ce574a62b531203c; author release
 fd0147a1ffe4f3c14c247574e148893d7cdf8cf6 (LeanPool PR 588).
 Modifications: receiving namespace and imports, module boundaries, exposure of
-consumed private interfaces, and omission of unused companion and frontal material.
+consumed private interfaces, canonical identifier spellings, and omission of unused
+companion, reflexive binding, and frontal material.
 -/
 
 module
@@ -41,17 +42,17 @@ the contraction identity via the recursion + derived operators, so we follow EM 
 
 EM's "natural operators" `M : (K×L)_s → (K×L)_q` (their (2.10)) are, on a bisimplicial object `X`,
 exactly finite `ℤ`-linear combinations of **letters**: a pair of `SimplexCategory` maps
-`(β, γ) : ⟦q⟧ ⟶ ⟦s⟧` acting on the diagonal `F₂.obj X = diag X` by
+`(β, γ) : ⟦q⟧ ⟶ ⟦s⟧` acting on the diagonal `FTwo.obj X = diag X` by
 
 `(X.obj ⟦s⟧).map γ.op ≫ (X.map β.op).app ⟦q⟧ : X_{s,s} ⟶ X_{q,q}`.
 
 * `OpLetter s q` — one such pair, `DerivedOp s q := OpLetter s q →₀ ℤ` — a formal `ℤ`-combination.
-* `DerivedOp.realize X` — realize a formal operator as an actual degreewise hom on `F₂.obj X`.
+* `DerivedOp.realize X` — realize a formal operator as an actual degreewise hom on `FTwo.obj X`.
 * `DerivedOp.prime` — EM's derived operator `M ↦ M'` (prepend the 0-th coface `δ⁰` to each letter).
 
 "Modulo norms" is represented (per the project's `PInfty` strategy) by postcomposing with
-`retractionN₂ X = PInftyToNormalizedMooreComplex (diag X)`: a term is a *norm* iff it dies after
-`≫ retractionN₂`.
+`retractionNTwo X = PInftyToNormalizedMooreComplex (diag X)`: a term is a *norm* iff it dies after
+`≫ retractionNTwo`.
 -/
 
 @[expose] public section
@@ -84,16 +85,16 @@ noncomputable instance (s q : ℕ) : DecidableEq (OpLetter s q) := Classical.dec
 letters, with uniqueness of representation supplied by carrying the representation as data. -/
 abbrev DerivedOp (s q : ℕ) := OpLetter s q →₀ ℤ
 
-/-- Realize a single letter as a degreewise hom on the diagonal complex `F₂.obj X`. -/
-noncomputable def OpLetter.realize {s q : ℕ} (X : BisimplicialObject C) (l : OpLetter s q) :
-    (F₂.obj X).X s ⟶ (F₂.obj X).X q :=
+/-- Realize a single letter as a degreewise hom on the diagonal complex `FTwo.obj X`. -/
+noncomputable def OpLetter.realizeLetter {s q : ℕ} (X : BisimplicialObject C) (l : OpLetter s q) :
+    (FTwo.obj X).X s ⟶ (FTwo.obj X).X q :=
   (X.obj (Opposite.op ⦋s⦌)).map l.snd.op ≫ (X.map l.fst.op).app (Opposite.op ⦋q⦌)
 
-/-- Realize a formal operator as a degreewise hom on `F₂.obj X` (`ℤ`-linear extension of
-`OpLetter.realize`). -/
+/-- Realize a formal operator as a degreewise hom on `FTwo.obj X` (`ℤ`-linear extension of
+`OpLetter.realizeLetter`). -/
 noncomputable def DerivedOp.realize {s q : ℕ} (X : BisimplicialObject C) (M : DerivedOp s q) :
-    (F₂.obj X).X s ⟶ (F₂.obj X).X q :=
-  M.sum fun l c => c • l.realize X
+    (FTwo.obj X).X s ⟶ (FTwo.obj X).X q :=
+  M.sum fun l c => c • l.realizeLetter X
 
 /-! ### The derived operator `M ↦ M'` (EM (2.10)) -/
 
@@ -123,29 +124,29 @@ def primeHom {s q : ℕ} (θ : (⦋q⦌ : SimplexCategory) ⟶ ⦋s⦌) :
           omega }
 
 /-- The derived operator on a single letter: prime both `SimplexCategory` maps. -/
-def OpLetter.prime {s q : ℕ} (l : OpLetter s q) : OpLetter (s + 1) (q + 1) :=
+def OpLetter.primeLetter {s q : ℕ} (l : OpLetter s q) : OpLetter (s + 1) (q + 1) :=
   ⟨primeHom l.fst, primeHom l.snd⟩
 
 /-- EM's **derived operator** `M ↦ M'` (their (2.10)): prime every letter, `ℤ`-linearly. -/
 noncomputable def DerivedOp.prime {s q : ℕ} (M : DerivedOp s q) : DerivedOp (s + 1) (q + 1) :=
-  Finsupp.mapDomain OpLetter.prime M
+  Finsupp.mapDomain OpLetter.primeLetter M
 
 /-! ### Composition of operators (vertical, on the diagonal) -/
 
 /-- Composition of letters: `comp l₂ l₁` realizes to `realize l₁ ≫ realize l₂` (apply `l₁` then
 `l₂`). Horizontal and vertical maps compose independently. -/
-def OpLetter.comp {s q r : ℕ} (l₂ : OpLetter q r) (l₁ : OpLetter s q) : OpLetter s r :=
+def OpLetter.compLetter {s q r : ℕ} (l₂ : OpLetter q r) (l₁ : OpLetter s q) : OpLetter s r :=
   ⟨l₂.fst ≫ l₁.fst, l₂.snd ≫ l₁.snd⟩
 
-/-- `ℤ`-bilinear composition of operators (apply `M₁` then `M₂`). -/
-noncomputable def DerivedOp.comp {s q r : ℕ} (M₂ : DerivedOp q r) (M₁ : DerivedOp s q) :
+/-- `ℤ`-bilinear composition of operators (apply `MOne` then `MTwo`). -/
+noncomputable def DerivedOp.comp {s q r : ℕ} (MTwo : DerivedOp q r) (MOne : DerivedOp s q) :
     DerivedOp s r :=
-  M₁.sum fun l₁ c₁ => M₂.sum fun l₂ c₂ => Finsupp.single (l₂.comp l₁) (c₁ * c₂)
+  MOne.sum fun l₁ c₁ => MTwo.sum fun l₂ c₂ => Finsupp.single (l₂.compLetter l₁) (c₁ * c₂)
 
 /-! ### Functoriality / `ℤ`-linearity of `realize`
 
 These let the abstract operator identities (`prime_comp_truncBoundary`, `lastFace_comp_prime`,
-`boundary_comp_D0`, …) be pushed to genuine hom identities on `F₂.obj X`, so the EM induction can
+`boundary_comp_D0`, …) be pushed to genuine hom identities on `FTwo.obj X`, so the EM induction can
 run at the operator level and only be realized at the end. -/
 
 @[simp] lemma realize_zero {s q : ℕ} (X : BisimplicialObject C) :
@@ -153,7 +154,7 @@ run at the operator level and only be realized at the end. -/
   simp [DerivedOp.realize]
 
 @[simp] lemma realize_single {s q : ℕ} (X : BisimplicialObject C) (l : OpLetter s q) (c : ℤ) :
-    DerivedOp.realize X (Finsupp.single l c) = c • l.realize X := by
+    DerivedOp.realize X (Finsupp.single l c) = c • l.realizeLetter X := by
   simp [DerivedOp.realize, Finsupp.sum_single_index]
 
 lemma realize_add {s q : ℕ} (X : BisimplicialObject C) (M N : DerivedOp s q) :
@@ -169,7 +170,7 @@ lemma realize_sub {s q : ℕ} (X : BisimplicialObject C) (M N : DerivedOp s q) :
   simp [sub_eq_add_neg, realize_add, realize_neg]
 
 noncomputable def realizeAddMonoidHom {s q : ℕ} (X : BisimplicialObject C) :
-    DerivedOp s q →+ ((F₂.obj X).X s ⟶ (F₂.obj X).X q) where
+    DerivedOp s q →+ ((FTwo.obj X).X s ⟶ (FTwo.obj X).X q) where
   toFun M := M.realize X
   map_zero' := realize_zero X
   map_add' := realize_add X
@@ -180,9 +181,9 @@ lemma realize_zsmul {s q : ℕ} (X : BisimplicialObject C) (c : ℤ) (M : Derive
 
 /-- A single composed letter realizes to the composition of the realizations (the Pattern-5
 bifunctor merge: interleave the horizontal/vertical legs via naturality of `X.map _`). -/
-private lemma OpLetter.realize_comp {s q r : ℕ} (X : BisimplicialObject C) (l₂ : OpLetter q r)
+private lemma OpLetter.realizeLetter_compLetter {s q r : ℕ} (X : BisimplicialObject C) (l₂ : OpLetter q r)
     (l₁ : OpLetter s q) :
-    (l₂.comp l₁).realize X = l₁.realize X ≫ l₂.realize X := by
+    (l₂.compLetter l₁).realizeLetter X = l₁.realizeLetter X ≫ l₂.realizeLetter X := by
   change (X.obj (Opposite.op ⦋s⦌)).map (l₂.snd ≫ l₁.snd).op ≫
       (X.map (l₂.fst ≫ l₁.fst).op).app (Opposite.op ⦋r⦌) =
     ((X.obj (Opposite.op ⦋s⦌)).map l₁.snd.op ≫ (X.map l₁.fst.op).app (Opposite.op ⦋q⦌)) ≫
@@ -191,8 +192,8 @@ private lemma OpLetter.realize_comp {s q r : ℕ} (X : BisimplicialObject C) (l�
   rw [reassoc_of% ((X.map l₁.fst.op).naturality l₂.snd.op)]
 
 /-- `comp` is additive in its right argument. -/
-lemma DerivedOp.comp_add_right {s q r : ℕ} (M₂ : DerivedOp q r) (M N : DerivedOp s q) :
-    M₂.comp (M + N) = M₂.comp M + M₂.comp N := by
+lemma DerivedOp.comp_add_right {s q r : ℕ} (MTwo : DerivedOp q r) (M N : DerivedOp s q) :
+    MTwo.comp (M + N) = MTwo.comp M + MTwo.comp N := by
   simp only [DerivedOp.comp]
   rw [Finsupp.sum_add_index']
   · intro a; simp
@@ -210,43 +211,43 @@ lemma DerivedOp.add_comp {s q r : ℕ} (M N : DerivedOp q r) (K : DerivedOp s q)
   · intro a b₁ b₂; simp only [mul_add, Finsupp.single_add]
 
 /-- `comp` on a right `single`. -/
-private lemma DerivedOp.comp_single_right {s q r : ℕ} (M₂ : DerivedOp q r) (l₁ : OpLetter s q)
+private lemma DerivedOp.comp_single_right {s q r : ℕ} (MTwo : DerivedOp q r) (l₁ : OpLetter s q)
     (c : ℤ) :
-    M₂.comp (Finsupp.single l₁ c) = M₂.sum fun l₂ c₂ => Finsupp.single (l₂.comp l₁) (c * c₂) := by
+    MTwo.comp (Finsupp.single l₁ c) = MTwo.sum fun l₂ c₂ => Finsupp.single (l₂.compLetter l₁) (c * c₂) := by
   rw [DerivedOp.comp, Finsupp.sum_single_index (by simp)]
 
 /-- `comp` of two `single`s. -/
 lemma DerivedOp.single_comp_single {s q r : ℕ} (l₂ : OpLetter q r) (l₁ : OpLetter s q)
     (c₂ c₁ : ℤ) :
     DerivedOp.comp (Finsupp.single l₂ c₂) (Finsupp.single l₁ c₁) =
-      Finsupp.single (l₂.comp l₁) (c₁ * c₂) := by
+      Finsupp.single (l₂.compLetter l₁) (c₁ * c₂) := by
   rw [DerivedOp.comp_single_right, Finsupp.sum_single_index (by simp)]
 
-/-- `realize` turns operator composition into hom composition (contravariantly: apply `M₁` then
-`M₂`). The functoriality fact that drives the operator-level induction. Proved by reducing to the
-single-single case (`OpLetter.realize_comp`) via bilinearity of `comp` and additivity of
+/-- `realize` turns operator composition into hom composition (contravariantly: apply `MOne` then
+`MTwo`). The functoriality fact that drives the operator-level induction. Proved by reducing to the
+single-single case (`OpLetter.realizeLetter_compLetter`) via bilinearity of `comp` and additivity of
 `realize`. -/
-lemma realize_comp {s q r : ℕ} (X : BisimplicialObject C) (M₂ : DerivedOp q r)
-    (M₁ : DerivedOp s q) :
-    (M₂.comp M₁).realize X = M₁.realize X ≫ M₂.realize X := by
-  induction M₁ using Finsupp.induction with
+lemma realize_comp {s q r : ℕ} (X : BisimplicialObject C) (MTwo : DerivedOp q r)
+    (MOne : DerivedOp s q) :
+    (MTwo.comp MOne).realize X = MOne.realize X ≫ MTwo.realize X := by
+  induction MOne using Finsupp.induction with
   | zero => simp [DerivedOp.comp]
   | single_add l₁ c₁ f _ _ ih =>
     rw [DerivedOp.comp_add_right, realize_add, ih, realize_add, Preadditive.add_comp]
     congr 1
     clear ih
-    induction M₂ using Finsupp.induction with
+    induction MTwo using Finsupp.induction with
     | zero => simp [DerivedOp.comp]
     | single_add l₂ c₂ g _ _ ih₂ =>
       rw [DerivedOp.add_comp, realize_add, ih₂, realize_add, Preadditive.comp_add]
       congr 1
-      simp only [DerivedOp.single_comp_single, realize_single, OpLetter.realize_comp,
+      simp only [DerivedOp.single_comp_single, realize_single, OpLetter.realizeLetter_compLetter,
         Preadditive.zsmul_comp, Preadditive.comp_zsmul, smul_smul]
       rw [mul_comm c₂ c₁]
 
 /-- The identity letter realizes to the identity hom. -/
 lemma realize_single_id {q : ℕ} (X : BisimplicialObject C) :
-    DerivedOp.realize X (Finsupp.single ⟨𝟙 _, 𝟙 _⟩ 1 : DerivedOp q q) = 𝟙 ((F₂.obj X).X q) := by
+    DerivedOp.realize X (Finsupp.single ⟨𝟙 _, 𝟙 _⟩ 1 : DerivedOp q q) = 𝟙 ((FTwo.obj X).X q) := by
   rw [realize_single, one_smul]
   change (X.obj (Opposite.op ⦋q⦌)).map (𝟙 _).op ≫ (X.map (𝟙 _).op).app (Opposite.op ⦋q⦌) =
     𝟙 ((X.obj (Opposite.op ⦋q⦌)).obj (Opposite.op ⦋q⦌))
@@ -277,7 +278,7 @@ noncomputable def boundaryOp (q : ℕ) : DerivedOp (q + 1) q :=
 
 /-! ### The realized operators agree with the chain-complex data
 
-These tie the formal operators to the actual differentials / maps on `F₂.obj X`, so the abstract
+These tie the formal operators to the actual differentials / maps on `FTwo.obj X`, so the abstract
 operator identities below can be transported to statements about `Homotopy.comm`. -/
 
 /-- The realized `i`-th face is the `i`-th face of the diagonal simplicial object: the
@@ -285,13 +286,13 @@ horizontal/vertical legs of `⟨δ i, δ i⟩` reassemble into `(diag X).δ i` v
 `X.map (δ i).op`. -/
 lemma realize_faceOp (X : BisimplicialObject C) (q : ℕ) (i : Fin (q + 2)) :
     (faceOp q i).realize X = (diag.obj X).δ i := by
-  rw [faceOp, realize_single, one_smul, OpLetter.realize, SimplicialObject.δ, diag_obj_map]
+  rw [faceOp, realize_single, one_smul, OpLetter.realizeLetter, SimplicialObject.δ, diag_obj_map]
   exact (X.map (SimplexCategory.δ i).op).naturality (SimplexCategory.δ i).op
 
-/-- The realized boundary operator is the differential of `F₂.obj X`. -/
+/-- The realized boundary operator is the differential of `FTwo.obj X`. -/
 lemma realize_boundaryOp (X : BisimplicialObject C) (q : ℕ) :
-    (boundaryOp q).realize X = (F₂.obj X).d (q + 1) q := by
-  rw [show (F₂.obj X).d (q + 1) q
+    (boundaryOp q).realize X = (FTwo.obj X).d (q + 1) q := by
+  rw [show (FTwo.obj X).d (q + 1) q
       = (AlternatingFaceMapComplex.obj (diag.obj X)).d (q + 1) q from rfl,
     AlternatingFaceMapComplex.obj_d_eq,
     show (boundaryOp q).realize X = realizeAddMonoidHom X (boundaryOp q) from rfl,
@@ -354,36 +355,28 @@ lemma primeHom_comp {s q r : ℕ} (g : (⦋r⦌ : SimplexCategory) ⟶ ⦋q⦌)
     simp [t, hmin]
 
 /-- Letter-level multiplicativity of `prime`: `(l₂ ∘ l₁)' = l₂' ∘ l₁'`. -/
-lemma OpLetter.prime_comp {s q r : ℕ} (l₂ : OpLetter q r) (l₁ : OpLetter s q) :
-    (l₂.comp l₁).prime = l₂.prime.comp l₁.prime := by
-  simp only [OpLetter.prime, OpLetter.comp, primeHom_comp]
+lemma OpLetter.primeLetter_compLetter {s q r : ℕ} (l₂ : OpLetter q r) (l₁ : OpLetter s q) :
+    (l₂.compLetter l₁).primeLetter = l₂.primeLetter.comp l₁.primeLetter := by
+  simp only [OpLetter.primeLetter, OpLetter.compLetter, primeHom_comp]
 
-/-- **`prime` is multiplicative** (`(β∘γ)' = β'∘γ'`), so `(M₂ ∘ M₁)' = M₂' ∘ M₁'`. The key fact
-behind EM's `∂'M' = M'∂'`. Reduced to the single–single case `OpLetter.prime_comp` by bilinearity
+/-- **`prime` is multiplicative** (`(β∘γ)' = β'∘γ'`), so `(MTwo ∘ MOne)' = MTwo' ∘ MOne'`. The key fact
+behind EM's `∂'M' = M'∂'`. Reduced to the single–single case `OpLetter.primeLetter_compLetter` by bilinearity
 of `comp` and additivity of `prime`. -/
-lemma prime_comp {s q r : ℕ} (M₂ : DerivedOp q r) (M₁ : DerivedOp s q) :
-    (M₂.comp M₁).prime = M₂.prime.comp M₁.prime := by
-  induction M₁ using Finsupp.induction with
+lemma prime_comp {s q r : ℕ} (MTwo : DerivedOp q r) (MOne : DerivedOp s q) :
+    (MTwo.comp MOne).prime = MTwo.prime.comp MOne.prime := by
+  induction MOne using Finsupp.induction with
   | zero => simp [DerivedOp.comp, DerivedOp.prime]
   | single_add l₁ c₁ f _ _ ih =>
     rw [DerivedOp.comp_add_right, prime_add, ih, prime_add, DerivedOp.comp_add_right]
     congr 1
     clear ih
-    induction M₂ using Finsupp.induction with
+    induction MTwo using Finsupp.induction with
     | zero => simp [DerivedOp.comp, DerivedOp.prime]
     | single_add l₂ c₂ g _ _ ih₂ =>
       rw [DerivedOp.add_comp, prime_add, ih₂, prime_add, DerivedOp.add_comp]
       congr 1
       simp only [DerivedOp.single_comp_single, DerivedOp.prime, Finsupp.mapDomain_single,
-        OpLetter.prime_comp]
-
-private lemma δ_toOrderHom_apply {n : ℕ} (k : Fin (n + 2))
-    (j : Fin ((⦋n⦌ : SimplexCategory).len + 1)) :
-    (SimplexCategory.δ k).toOrderHom j = k.succAbove j := rfl
-
-private lemma σ_toOrderHom_apply {n : ℕ} (k : Fin (n + 1))
-    (j : Fin ((⦋n + 1⦌ : SimplexCategory).len + 1)) :
-    (SimplexCategory.σ k).toOrderHom j = k.predAbove j := rfl
+        OpLetter.primeLetter_compLetter]
 
 /-- `primeHom` shifts the face map index: `prime(δ_i) = δ_{i+1}`. The combinatorial core of
 `prime_faceOp`. -/
@@ -395,7 +388,7 @@ lemma primeHom_δ {q : ℕ} (i : Fin (q + 2)) :
   apply Fin.ext
   simp only [primeHom, SimplexCategory.mkHom, SimplexCategory.Hom.toOrderHom_mk, OrderHom.coe_mk,
     SimplexCategory.len_mk]
-  simp only [δ_toOrderHom_apply]
+  simp only [SimplexCategory.δ, SimplexCategory.mkHom, SimplexCategory.Hom.toOrderHom_mk, OrderHom.coe_mk]
   simp only [Fin.succAbove, Fin.lt_def, Fin.val_castSucc, Fin.val_succ]
   have hj := j.isLt
   simp only [SimplexCategory.len_mk] at hj
@@ -406,7 +399,7 @@ lemma primeHom_δ {q : ℕ} (i : Fin (q + 2)) :
 omitted vertex up by one). -/
 lemma prime_faceOp (q : ℕ) (i : Fin (q + 2)) :
     (faceOp q i).prime = faceOp (q + 1) i.succ := by
-  simp only [faceOp, DerivedOp.prime, Finsupp.mapDomain_single, OpLetter.prime, primeHom_δ]
+  simp only [faceOp, DerivedOp.prime, Finsupp.mapDomain_single, OpLetter.primeLetter, primeHom_δ]
 
 /-- `primeHom` shifts the degeneracy map index: `prime(σ_i) = σ_{i+1}` (prepending the `0`-th vertex
 pushes the doubled vertex up by one). The degeneracy analog of `primeHom_δ`. -/
@@ -418,7 +411,7 @@ lemma primeHom_σ {q : ℕ} (i : Fin (q + 1)) :
   apply Fin.ext
   simp only [primeHom, SimplexCategory.mkHom, SimplexCategory.Hom.toOrderHom_mk, OrderHom.coe_mk,
     SimplexCategory.len_mk]
-  simp only [σ_toOrderHom_apply, Fin.predAbove]
+  simp only [SimplexCategory.σ, SimplexCategory.mkHom, SimplexCategory.Hom.toOrderHom_mk, OrderHom.coe_mk, Fin.predAbove]
   have hj := j.isLt
   simp only [SimplexCategory.len_mk] at hj
   simp only [Fin.lt_def, Fin.val_castSucc, Fin.val_succ]
@@ -483,7 +476,7 @@ lemma lastFace_comp_prime {s q : ℕ} (M : DerivedOp s q) :
     rw [DerivedOp.prime, Finsupp.mapDomain_single, lastFaceOp, faceOp, lastFaceOp, faceOp,
       DerivedOp.single_comp_single, DerivedOp.single_comp_single, mul_one, one_mul]
     congr 1
-    simp only [OpLetter.comp, OpLetter.prime, faceZero_comp_primeHom]
+    simp only [OpLetter.compLetter, OpLetter.primeLetter, faceZero_comp_primeHom]
 
 /-- Post-composition with `D₀` on the right, bundled additively so `map_sum`/`map_zsmul` distribute
 it over the boundary sum. -/
@@ -508,7 +501,7 @@ private lemma faceSuccSucc_comp_D0 (q : ℕ) (k : Fin (q + 1)) :
   rw [faceOp, D0op, D0op, faceOp, DerivedOp.single_comp_single,
     DerivedOp.single_comp_single, mul_one]
   congr 1
-  simp only [OpLetter.comp]
+  simp only [OpLetter.compLetter]
   congr 1 <;>
     exact SimplexCategory.δ_comp_σ_of_gt (i := k.succ) (j := 0) (by simp [Fin.lt_def])
 
@@ -525,12 +518,12 @@ private lemma face_one_comp_D0 (q : ℕ) :
       = (Finsupp.single ⟨𝟙 _, 𝟙 _⟩ 1 : DerivedOp (q + 1) (q + 1)) := by
   rw [faceOp, D0op, DerivedOp.single_comp_single, mul_one]
   congr 1
-  simp only [OpLetter.comp]
+  simp only [OpLetter.compLetter]
   congr 1 <;> exact SimplexCategory.δ_comp_σ_succ
 
 /-- Simplicial identity `∂ D₀ = D₀ ∂'` at the operator level.
 
-Writing `∂ = F₀ - ∂'`, the terms `F₀ D₀` and `F₁ D₀` both equal the identity, so the remaining
+Writing `∂ = F₀ - ∂'`, the terms `F₀ D₀` and `FOne D₀` both equal the identity, so the remaining
 faces assemble to `D₀ ∂'`. -/
 lemma boundary_comp_D0 (q : ℕ) :
     (boundaryOp (q + 1)).comp (D0op (q + 1)) =
@@ -563,7 +556,7 @@ lemma boundary_comp_D0 (q : ℕ) :
 
 For the homotopy identity, the relevant norms are the **diagonal** degenerate terms in `D(K×L)`.
 They are detected by postcomposing with
-`retractionN₂ = PInftyToNormalizedMooreComplex (diag X)`, which kills diagonal degeneracies of the
+`retractionNTwo = PInftyToNormalizedMooreComplex (diag X)`, which kills diagonal degeneracies of the
 diagonal simplicial object.
 
 The lemmas in this section package that kill mechanism in the forms used later by the EM
@@ -575,17 +568,17 @@ naturality of `X.map θ.op`. -/
 lemma realize_diagLetter (X : BisimplicialObject C) {s q : ℕ}
     (θ : (⦋q⦌ : SimplexCategory) ⟶ ⦋s⦌) :
     DerivedOp.realize X (Finsupp.single (⟨θ, θ⟩ : OpLetter s q) 1) = (diag.obj X).map θ.op := by
-  rw [realize_single, one_smul, OpLetter.realize, diag_obj_map]
+  rw [realize_single, one_smul, OpLetter.realizeLetter, diag_obj_map]
   exact (X.map θ.op).naturality θ.op
 
-/-- A diagonal degeneracy `⟨θ, θ⟩` with `θ` non-monic is killed by `retractionN₂`.
+/-- A diagonal degeneracy `⟨θ, θ⟩` with `θ` non-monic is killed by `retractionNTwo`.
 
 Its realization is the diagonal map `(diag X).map θ.op`, and a non-monic `θ` is a simplicial
 degeneracy, so `degeneracy_comp_PInfty` applies after factoring `PInfty` through the Moore
 inclusion. -/
-lemma realize_diagLetter_comp_retractionN₂_eq_zero_of_not_mono {s q : ℕ} (X : BisimplicialObject C)
+lemma realize_diagLetter_comp_retractionNTwo_eq_zero_of_not_mono {s q : ℕ} (X : BisimplicialObject C)
     (θ : (⦋q⦌ : SimplexCategory) ⟶ ⦋s⦌) (hθ : ¬ Mono θ) :
-    DerivedOp.realize X (Finsupp.single (⟨θ, θ⟩ : OpLetter s q) 1) ≫ (retractionN₂ X).f q = 0 := by
+    DerivedOp.realize X (Finsupp.single (⟨θ, θ⟩ : OpLetter s q) 1) ≫ (retractionNTwo X).f q = 0 := by
   rw [realize_diagLetter]
   -- `(diag X).map θ.op` is a degeneracy of `diag X` (θ non-mono); factor `PInfty = retr ≫ incl`
   -- and cancel the mono Moore inclusion (Pattern 1).
@@ -599,17 +592,17 @@ lemma realize_diagLetter_comp_retractionN₂_eq_zero_of_not_mono {s q : ℕ} (X 
           (PInftyToNormalizedMooreComplex_comp_inclusionOfMooreComplexMap (diag.obj X))))).trans
       (degeneracy_comp_PInfty (diag.obj X) q θ hθ)
 
-/-- A diagonal degeneracy on the output side kills any composite after `retractionN₂`.
+/-- A diagonal degeneracy on the output side kills any composite after `retractionNTwo`.
 
-If `M = ⟨θ, θ⟩ ∘ N` with `θ` non-monic, then `realize M ≫ retractionN₂ = 0`. This is the form
+If `M = ⟨θ, θ⟩ ∘ N` with `θ` non-monic, then `realize M ≫ retractionNTwo = 0`. This is the form
 used later, where the norm term is expressed as a diagonal degeneracy postcomposed with an
 arbitrary operator. -/
-lemma realize_comp_diagLetter_not_mono_comp_retractionN₂ {r s q : ℕ} (X : BisimplicialObject C)
+lemma realize_comp_diagLetter_not_mono_comp_retractionNTwo {r s q : ℕ} (X : BisimplicialObject C)
     (θ : (⦋q⦌ : SimplexCategory) ⟶ ⦋s⦌) (hθ : ¬ Mono θ) (N : DerivedOp r s) :
     DerivedOp.realize X (DerivedOp.comp (Finsupp.single (⟨θ, θ⟩ : OpLetter s q) 1) N) ≫
-        (retractionN₂ X).f q = 0 := by
+        (retractionNTwo X).f q = 0 := by
   rw [realize_comp, Category.assoc,
-    realize_diagLetter_comp_retractionN₂_eq_zero_of_not_mono X θ hθ, Limits.comp_zero]
+    realize_diagLetter_comp_retractionNTwo_eq_zero_of_not_mono X θ hθ, Limits.comp_zero]
 
 
 end BisimplicialObject

@@ -16,7 +16,8 @@ Original source: jeffrey-dot-li/lean-homology, revision
 40c5aae235b0f499ebfc1e68ce574a62b531203c; author release
 fd0147a1ffe4f3c14c247574e148893d7cdf8cf6 (LeanPool PR 588).
 Modifications: receiving namespace and imports, module boundaries, exposure of
-consumed private interfaces, and omission of unused companion and frontal material.
+consumed private interfaces, canonical identifier spellings, and omission of unused
+companion, reflexive binding, and frontal material.
 -/
 
 module

@@ -16,7 +16,8 @@ Original source: jeffrey-dot-li/lean-homology, revision
 40c5aae235b0f499ebfc1e68ce574a62b531203c; author release
 fd0147a1ffe4f3c14c247574e148893d7cdf8cf6 (LeanPool PR 588).
 Modifications: receiving namespace and imports, module boundaries, exposure of
-consumed private interfaces, and omission of unused companion and frontal material.
+consumed private interfaces, canonical identifier spellings, and omission of unused
+companion, reflexive binding, and frontal material.
 -/
 
 module
@@ -388,20 +389,6 @@ theorem sign_eq_negOnePow_mul_swap_sign {p q : ℕ} (u : Shuffle p q) :
     rw [this, mul_one]
   rw [← mul_pow]
   norm_num
-
-/-! #### Shuffle (0,0) -/
-
-/-- For `Shuffle 0 0`, the domain and codomain are both `Fin 1`, so every shuffle
-has the same underlying map: the unique monotone injection to `(0, 0)`. -/
-lemma unique_0_0 (μ : Shuffle 0 0) :
-    μ.1 = ⟨fun _ => (0, 0), fun _ _ _ => le_refl _⟩ := by
-  ext x
-  · simp [Fin.eq_zero (μ.1 x).1]
-  · simp [Fin.eq_zero (μ.1 x).2]
-
-/-- There is exactly one `(0,0)`-shuffle. -/
-instance subsingleton_0_0 : Subsingleton (Shuffle 0 0) :=
-  ⟨fun μ ν => Subtype.ext (by rw [unique_0_0 μ, unique_0_0 ν])⟩
 
 /-- The **staircase** `(r,m)`-shuffle `k ↦ (min(k,r), k - r)`: it goes right `r` steps then up
 `m` steps (the lexicographically smallest shuffle path). Its front-`r` face and back-`m` face

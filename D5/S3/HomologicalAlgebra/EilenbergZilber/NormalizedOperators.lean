@@ -16,7 +16,8 @@ Original source: jeffrey-dot-li/lean-homology, revision
 40c5aae235b0f499ebfc1e68ce574a62b531203c; author release
 fd0147a1ffe4f3c14c247574e148893d7cdf8cf6 (LeanPool PR 588).
 Modifications: receiving namespace and imports, module boundaries, exposure of
-consumed private interfaces, and omission of unused companion and frontal material.
+consumed private interfaces, canonical identifier spellings, and omission of unused
+companion, reflexive binding, and frontal material.
 -/
 
 module
@@ -52,7 +53,7 @@ inductive IsNorm : {s q : ℕ} → DerivedOp s q → Prop where
 lemma prime_single_diag {s q : ℕ} (θ : (⦋q⦌ : SimplexCategory) ⟶ ⦋s⦌) :
     DerivedOp.prime (Finsupp.single (⟨θ, θ⟩ : OpLetter s q) 1)
       = Finsupp.single (⟨primeHom θ, primeHom θ⟩ : OpLetter (s + 1) (q + 1)) 1 := by
-  simp [DerivedOp.prime, Finsupp.mapDomain_single, OpLetter.prime]
+  simp [DerivedOp.prime, Finsupp.mapDomain_single, OpLetter.primeLetter]
 
 /-- `primeHom` preserves non-monicity: `primeHom θ` is injective iff `θ` is, and `Mono` in
 `SimplexCategory` is injectivity. -/
@@ -111,7 +112,7 @@ lemma comp_idOp {s q : ℕ} (M : DerivedOp s q) : M.comp (idOp s) = M := by
       congr 1
       rw [idOp, DerivedOp.single_comp_single, one_mul]
       congr 1
-      simp only [OpLetter.comp, Category.comp_id]
+      simp only [OpLetter.compLetter, Category.comp_id]
 
 /-- **`F₀ h' D₀ = h` (EM line 192).** `F₀ h' D₀ = (h F₀) D₀ = h (F₀ D₀) = h`, using
 `lastFace_comp_hPrime` and `F₀ D₀ = i` (`δ_0 ≫ σ_0 = 𝟙`). -/
@@ -162,7 +163,7 @@ private lemma sigma_not_mono {n : ℕ} (a : Fin (n + 1)) : ¬ Mono (SimplexCateg
 noncomputable def diagPInfty (X : BisimplicialObject C) (n : ℕ) :
     (X.obj (Opposite.op ⦋n⦌)).obj (Opposite.op ⦋n⦌) ⟶
       (X.obj (Opposite.op ⦋n⦌)).obj (Opposite.op ⦋n⦌) :=
-  (PInfty : F₂.obj X ⟶ F₂.obj X).f n
+  (PInfty : FTwo.obj X ⟶ FTwo.obj X).f n
 
 /-- **Shared per-summand kill (degeneracy ⟹ diagonal degeneracy).** A single Eilenberg–Zilber
 summand `(X_⦋s⦌).map v.op ≫ (X.map h.op)_⦋n+1⦌`, in which the horizontal leg `h` and the vertical
@@ -346,9 +347,9 @@ private noncomputable def outerQInfty (X : BisimplicialObject C) (p q : ℕ) :
       (X.obj (Opposite.op ⦋p⦌)).obj (Opposite.op ⦋q⦌) :=
   ((QInfty (X := X)).f p).app (Opposite.op ⦋q⦌)
 
-/-- The inclusion of `X_{p,q}` into `F₁.obj X` in total degree `p + q`. -/
-private noncomputable def ιF₁ (X : BisimplicialObject C) (p q : ℕ) :
-    (X.obj (Opposite.op ⦋p⦌)).obj (Opposite.op ⦋q⦌) ⟶ (F₁.obj X).X (p + q) :=
+/-- The inclusion of `X_{p,q}` into `FOne.obj X` in total degree `p + q`. -/
+private noncomputable def ιFOne (X : BisimplicialObject C) (p q : ℕ) :
+    (X.obj (Opposite.op ⦋p⦌)).obj (Opposite.op ⦋q⦌) ⟶ (FOne.obj X).X (p + q) :=
   HomologicalComplex₂.ιTotal (doubleComplex X) (ComplexShape.down ℕ) p q (p + q)
     (by simp [ComplexShape.π_def])
 
@@ -373,7 +374,7 @@ private lemma sub_one_sub_comp_eq_zero {A Z : C} (a b : A ⟶ A) (f : A ⟶ Z)
     (ha : a ≫ f = 0) (hb : b ≫ f = 0) : f - (𝟙 A - a) ≫ (𝟙 A - b) ≫ f = 0 := by
   simp [Preadditive.sub_comp, ha, hb]
 
-/-- The `(p, q)` component of `retractionN₁ ≫ inclusionN₁` is `outerPInfty ≫ innerPInfty`. -/
+/-- The `(p, q)` component of `retractionNOne ≫ inclusionNOne` is `outerPInfty ≫ innerPInfty`. -/
 private lemma retraction_inclusion_component (X : BisimplicialObject C) (p q : ℕ) :
     ((PInftyToNormalizedMooreComplex (X.obj (Opposite.op ⦋p⦌))).f q ≫
       ((normalizedMooreComplex C).map ((PInftyToNormalizedMooreComplex X).f p)).f q) ≫
@@ -402,23 +403,23 @@ private lemma retraction_inclusion_component (X : BisimplicialObject C) (p q : �
     (Category.assoc _ _ _).symm.trans <|
     (congrArg (· ≫ outerPInfty X p q) e3).trans (PInfty_f_naturality q ((PInfty (X := X)).f p)).symm
 
-private lemma ιF₁_shuffleMap_PInfty (X : BisimplicialObject C) (p q : ℕ) :
-    ιF₁ X p q ≫ (shuffleMap X ≫ PInfty).f (p + q) = ezComponent X p q ≫ diagPInfty X (p + q) := by
+private lemma ιFOne_shuffleMap_PInfty (X : BisimplicialObject C) (p q : ℕ) :
+    ιFOne X p q ≫ (shuffleMap X ≫ PInfty).f (p + q) = ezComponent X p q ≫ diagPInfty X (p + q) := by
   rw [HomologicalComplex.comp_f]
-  dsimp only [shuffleMap, ιF₁]
+  dsimp only [shuffleMap, ιFOne]
   erw [HomologicalComplex₂.ι_totalDesc_assoc]
   exact (Category.assoc _ _ _).trans (congrArg (ezComponent X p q ≫ ·) (Category.id_comp _))
 
-/-- The degenerate part of `F₁` is sent by `shuffleMap` to a diagonal degeneracy, hence is killed by
+/-- The degenerate part of `FOne` is sent by `shuffleMap` to a diagonal degeneracy, hence is killed by
 `PInfty`.
 
 Concretely, after decomposing the complementary projector
-`𝟙 - retractionN₁ ≫ inclusionN₁` bidegreewise, the resulting inner- and outer-degenerate pieces are
+`𝟙 - retractionNOne ≫ inclusionNOne` bidegreewise, the resulting inner- and outer-degenerate pieces are
 annihilated by `ezComponent_inner_degeneracy_comp_PInfty` and
 `ezComponent_outer_degeneracy_comp_PInfty`. -/
 lemma degenerate_shuffleMap_comp_PInfty (X : BisimplicialObject C) :
-    (𝟙 (F₁.obj X) - retractionN₁ X ≫ inclusionN₁ X) ≫ shuffleMap X ≫
-        (PInfty : F₂.obj X ⟶ F₂.obj X) = 0 := by
+    (𝟙 (FOne.obj X) - retractionNOne X ≫ inclusionNOne X) ≫ shuffleMap X ≫
+        (PInfty : FTwo.obj X ⟶ FTwo.obj X) = 0 := by
   ext n
   rw [HomologicalComplex.comp_f, HomologicalComplex.zero_f]
   apply HomologicalComplex₂.total.hom_ext
@@ -426,27 +427,27 @@ lemma degenerate_shuffleMap_comp_PInfty (X : BisimplicialObject C) :
   simp only [ComplexShape.π_def] at hpq
   subst hpq
   erw [comp_zero]
-  have hr' : ιF₁ X p q ≫ (retractionN₁ X ≫ inclusionN₁ X).f (p + q) =
-      (outerPInfty X p q ≫ innerPInfty X p q) ≫ ιF₁ X p q := by
-    rw [retractionN₁, inclusionN₁, ← Functor.map_comp, HomologicalComplex₂.totalFunctor_map]
-    dsimp only [ιF₁]
+  have hr' : ιFOne X p q ≫ (retractionNOne X ≫ inclusionNOne X).f (p + q) =
+      (outerPInfty X p q ≫ innerPInfty X p q) ≫ ιFOne X p q := by
+    rw [retractionNOne, inclusionNOne, ← Functor.map_comp, HomologicalComplex₂.totalFunctor_map]
+    dsimp only [ιFOne]
     erw [HomologicalComplex₂.ιTotal_map]
     exact congrArg (· ≫ _) (retraction_inclusion_component X p q)
-  change ιF₁ X p q ≫ ((𝟙 (F₁.obj X) - retractionN₁ X ≫ inclusionN₁ X) ≫ shuffleMap X ≫
-    (PInfty : F₂.obj X ⟶ F₂.obj X)).f (p + q) = 0
+  change ιFOne X p q ≫ ((𝟙 (FOne.obj X) - retractionNOne X ≫ inclusionNOne X) ≫ shuffleMap X ≫
+    (PInfty : FTwo.obj X ⟶ FTwo.obj X)).f (p + q) = 0
   rw [HomologicalComplex.comp_f, HomologicalComplex.sub_f_apply, Preadditive.sub_comp,
     Preadditive.comp_sub, HomologicalComplex.id_f, Category.id_comp, reassoc_of% hr',
-    ιF₁_shuffleMap_PInfty, outerPInfty_eq, innerPInfty_eq]
+    ιFOne_shuffleMap_PInfty, outerPInfty_eq, innerPInfty_eq]
   exact sub_one_sub_comp_eq_zero _ _ _ (outerQInfty_ezComponent_diagPInfty X p q)
     (innerQInfty_ezComponent_diagPInfty X p q)
 
-/-- The round trip `retractionN₁ ≫ inclusionN₁` is absorbed under `shuffleMap ≫ PInfty`.
+/-- The round trip `retractionNOne ≫ inclusionNOne` is absorbed under `shuffleMap ≫ PInfty`.
 
-The correction term `1 - retractionN₁ ≫ inclusionN₁` lands in the degenerate part of the diagonal,
+The correction term `1 - retractionNOne ≫ inclusionNOne` lands in the degenerate part of the diagonal,
 which `PInfty` kills. -/
 @[reassoc]
-lemma retractionN₁_inclusionN₁_shuffleMap_PInfty (X : BisimplicialObject C) :
-    retractionN₁ X ≫ inclusionN₁ X ≫ shuffleMap X ≫ (PInfty : F₂.obj X ⟶ F₂.obj X)
+lemma retractionNOne_inclusionNOne_shuffleMap_PInfty (X : BisimplicialObject C) :
+    retractionNOne X ≫ inclusionNOne X ≫ shuffleMap X ≫ (PInfty : FTwo.obj X ⟶ FTwo.obj X)
       = shuffleMap X ≫ PInfty := by
   have key := degenerate_shuffleMap_comp_PInfty X
   rw [Preadditive.sub_comp, Category.id_comp, sub_eq_zero] at key
@@ -454,15 +455,15 @@ lemma retractionN₁_inclusionN₁_shuffleMap_PInfty (X : BisimplicialObject C) 
   exact key.symm
 
 
-/-- **Every norm dies under `retractionN₂`** (for every `X`). Structural induction: linear cases are
+/-- **Every norm dies under `retractionNTwo`** (for every `X`). Structural induction: linear cases are
 `realize`-linearity; the structural generator is a diagonal degeneracy composed with an operator. -/
 lemma IsNorm.kill {s q : ℕ} {M : DerivedOp s q} (h : IsNorm M) (X : BisimplicialObject C) :
-    DerivedOp.realize X M ≫ (retractionN₂ X).f q = 0 := by
+    DerivedOp.realize X M ≫ (retractionNTwo X).f q = 0 := by
   induction h with
   | zero => rw [realize_zero, Limits.zero_comp]
   | add _ _ ihM ihN => rw [realize_add, Preadditive.add_comp, ihM, ihN, add_zero]
   | neg _ ihM => rw [realize_neg, Preadditive.neg_comp, ihM, neg_zero]
-  | diagDegen θ hθ N => exact realize_comp_diagLetter_not_mono_comp_retractionN₂ X θ hθ N
+  | diagDegen θ hθ N => exact realize_comp_diagLetter_not_mono_comp_retractionNTwo X θ hθ N
 
 /-- The structural norm class is closed under `prime`. -/
 lemma IsNorm.prime {s q : ℕ} {M : DerivedOp s q} (h : IsNorm M) : IsNorm M.prime := by

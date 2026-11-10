@@ -16,7 +16,8 @@ Original source: jeffrey-dot-li/lean-homology, revision
 40c5aae235b0f499ebfc1e68ce574a62b531203c; author release
 fd0147a1ffe4f3c14c247574e148893d7cdf8cf6 (LeanPool PR 588).
 Modifications: receiving namespace and imports, module boundaries, exposure of
-consumed private interfaces, and omission of unused companion and frontal material.
+consumed private interfaces, canonical identifier spellings, and omission of unused
+companion, reflexive binding, and frontal material.
 -/
 
 module
@@ -85,13 +86,13 @@ private lemma hLetter_realize_of_add_eq (X : BisimplicialObject C) (p r q : ℕ)
       (eqToHom (congrArg SimplexCategory.mk h.symm) ≫ shuffleSndHom μ ≫ ιBack p r ≫
         eqToHom (congrArg SimplexCategory.mk h))).realize X =
       eqToHom (by
-        simp only [F₂, Functor.comp_obj, alternatingFaceMapComplex_obj_X, diag_obj_obj]
+        simp only [FTwo, Functor.comp_obj, alternatingFaceMapComplex_obj_X, diag_obj_obj]
         rw [← h]) ≫
         awComponent X p r ≫
           ((X.obj (Opposite.op ⦋p⦌)).map (shuffleSndHom μ).op ≫
             (X.map (shuffleFstHom μ).op).app (Opposite.op ⦋p + r⦌)) ≫
           eqToHom (by
-            simp only [F₂, Functor.comp_obj, alternatingFaceMapComplex_obj_X, diag_obj_obj]
+            simp only [FTwo, Functor.comp_obj, alternatingFaceMapComplex_obj_X, diag_obj_obj]
             rw [← h]) := by
   subst q
   change (X.obj (Opposite.op ⦋p + r⦌)).map
@@ -119,7 +120,7 @@ lemma hLetter_realize (X : BisimplicialObject C) (q : ℕ) (p : Fin (q + 1))
     Nat.add_sub_cancel' (Nat.lt_succ_iff.mp p.isLt)
   simpa [hLetter, hpq] using hLetter_realize_of_add_eq X (p : ℕ) (q - p) q hpq μ
 
-/-- `hOp` realizes to the composite `alexanderWhitney ≫ shuffleMap = ∇f` on `F₂.obj X`. -/
+/-- `hOp` realizes to the composite `alexanderWhitney ≫ shuffleMap = ∇f` on `FTwo.obj X`. -/
 lemma realize_hOp (X : BisimplicialObject C) (q : ℕ) :
     (hOp q).realize X = (alexanderWhitney X ≫ shuffleMap X).f q := by
   have hrealize :
@@ -144,12 +145,12 @@ noncomputable def phiOp : (q : ℕ) → DerivedOp q (q + 1)
   | (q + 1) => -(phiOp q).prime + (hOp (q + 1)).prime.comp (D0op (q + 1))
 
 
-/-! ### Packaging the homotopy on `F₂` (raw, modulo norms) -/
+/-! ### Packaging the homotopy on `FTwo` (raw, modulo norms) -/
 
-/-- `Φ` packaged as a degree-`+1` `Homotopy.hom` family on `F₂.obj X` (the unnormalized diagonal):
+/-- `Φ` packaged as a degree-`+1` `Homotopy.hom` family on `FTwo.obj X` (the unnormalized diagonal):
 `phiOp i` realized (transported along `j = i+1`) on the single nonzero entry, `0` elsewhere. -/
 noncomputable def phiHomRaw (X : BisimplicialObject C) (i j : ℕ) :
-    (F₂.obj X).X i ⟶ (F₂.obj X).X j :=
+    (FTwo.obj X).X i ⟶ (FTwo.obj X).X j :=
   if h : j = i + 1 then (phiOp i).realize X ≫ eqToHom (by rw [h]) else 0
 
 /-- `prevD` of `phiHomRaw` is the realized operator `∂Φ` (apply `Φ` then `∂`):
@@ -216,14 +217,14 @@ private lemma opToPair_injective {s q : ℕ} :
   simpa only [opToPair, Prod.mk.injEq, OpLetter.mk.injEq] using h
 
 /-- The universal generator `(𝟙, 𝟙) ∈ X_{s,s}` for `X = univOp s`. -/
-private noncomputable def univGen (s : ℕ) : (F₂.obj (univOp s)).X s :=
+private noncomputable def univGen (s : ℕ) : (FTwo.obj (univOp s)).X s :=
   ModuleCat.freeMk (R := ℤ) ((𝟙 (⦋s⦌ : SimplexCategory)), (𝟙 (⦋s⦌ : SimplexCategory)))
 
 private lemma realize_univOp_single_gen_one {s q : ℕ} (l : OpLetter s q) :
     (DerivedOp.realize (univOp s) (Finsupp.single l 1)) (univGen s)
       = ModuleCat.freeMk (R := ℤ) (opToPair l) := by
   rw [realize_single, one_smul]
-  simp only [OpLetter.realize, univOp, freeWhisker, univGen, Functor.comp_obj, Functor.comp_map,
+  simp only [OpLetter.realizeLetter, univOp, freeWhisker, univGen, Functor.comp_obj, Functor.comp_map,
     Functor.whiskeringRight_obj_obj, Functor.whiskeringRight_obj_map,
     Functor.whiskerRight_app, bitype, ysimp,
     yoneda_obj_map, Quiver.Hom.unop_op, opToPair]
@@ -265,7 +266,7 @@ lemma realize_univOp_injective {s q : ℕ} :
     Function.Injective (fun M : DerivedOp s q => M.realize (univOp s)) := by
   intro M N h
   have hg := congrArg
-    (fun φ : (F₂.obj (univOp s)).X s ⟶ (F₂.obj (univOp s)).X q =>
+    (fun φ : (FTwo.obj (univOp s)).X s ⟶ (FTwo.obj (univOp s)).X q =>
       (ConcreteCategory.hom φ) (univGen s)) h
   simp only [realize_univOp_gen] at hg
   exact Finsupp.mapDomain_injective opToPair_injective hg
@@ -286,10 +287,10 @@ lemma lastFace_comp_hPrime (q : ℕ) :
     (lastFaceOp q).comp ((hOp q).prime) = (hOp q).comp (lastFaceOp q) :=
   lastFace_comp_prime (hOp q)
 
-/-- Base degree: `hOp 0` agrees with the identity after postcomposing with `retractionN₂`. -/
+/-- Base degree: `hOp 0` agrees with the identity after postcomposing with `retractionNTwo`. -/
 lemma hOp_zero_comp_retraction (X : BisimplicialObject C) :
-    DerivedOp.realize X (hOp 0) ≫ (retractionN₂ X).f 0 =
-      DerivedOp.realize X (idOp 0) ≫ (retractionN₂ X).f 0 := by
+    DerivedOp.realize X (hOp 0) ≫ (retractionNTwo X).f 0 =
+      DerivedOp.realize X (idOp 0) ≫ (retractionNTwo X).f 0 := by
   rw [realize_hOp, idOp, realize_single_id, awShuffle_f_zero, HomologicalComplex.id_f]
 
 /-! #### Exact-identity backbone for the EM induction
@@ -297,30 +298,30 @@ lemma hOp_zero_comp_retraction (X : BisimplicialObject C) :
 The induction is organized at the formal `DerivedOp` level. We encode the error term
 `Φ∂ + ∂Φ + i - h` as a structural norm class `IsNorm`, prove that this class is closed under
 `prime`, and only at the end convert structural norms into vanishing statements after
-postcomposing with `retractionN₂`. -/
+postcomposing with `retractionNTwo`. -/
 
 /-- Right composition `· .comp N` bundled additively (general `compRightD0`). -/
-private noncomputable def compRightHom {s q r : ℕ} (M₂ : DerivedOp q r) :
+private noncomputable def compRightHom {s q r : ℕ} (MTwo : DerivedOp q r) :
     DerivedOp s q →+ DerivedOp s r where
-  toFun N := M₂.comp N
+  toFun N := MTwo.comp N
   map_zero' := by simp [DerivedOp.comp]
-  map_add' := DerivedOp.comp_add_right M₂
+  map_add' := DerivedOp.comp_add_right MTwo
 
 /-- Left composition `M ↦ M.comp K` bundled additively. -/
-private noncomputable def compLeftHom {s q r : ℕ} (M₁ : DerivedOp s q) :
+private noncomputable def compLeftHom {s q r : ℕ} (MOne : DerivedOp s q) :
     DerivedOp q r →+ DerivedOp s r where
-  toFun M₂ := M₂.comp M₁
+  toFun MTwo := MTwo.comp MOne
   map_zero' := by simp [DerivedOp.comp]
-  map_add' M N := DerivedOp.add_comp M N M₁
+  map_add' M N := DerivedOp.add_comp M N MOne
 
-lemma DerivedOp.comp_neg {s q r : ℕ} (M₂ : DerivedOp q r) (N : DerivedOp s q) :
-    M₂.comp (-N) = -(M₂.comp N) := map_neg (compRightHom M₂) N
+lemma DerivedOp.comp_neg {s q r : ℕ} (MTwo : DerivedOp q r) (N : DerivedOp s q) :
+    MTwo.comp (-N) = -(MTwo.comp N) := map_neg (compRightHom MTwo) N
 
 lemma DerivedOp.neg_comp {s q r : ℕ} (M : DerivedOp q r) (K : DerivedOp s q) :
     (-M).comp K = -(M.comp K) := map_neg (compLeftHom K) M
 
-lemma DerivedOp.comp_sub {s q r : ℕ} (M₂ : DerivedOp q r) (M N : DerivedOp s q) :
-    M₂.comp (M - N) = M₂.comp M - M₂.comp N := map_sub (compRightHom M₂) M N
+lemma DerivedOp.comp_sub {s q r : ℕ} (MTwo : DerivedOp q r) (M N : DerivedOp s q) :
+    MTwo.comp (M - N) = MTwo.comp M - MTwo.comp N := map_sub (compRightHom MTwo) M N
 
 lemma DerivedOp.sub_comp {s q r : ℕ} (M N : DerivedOp q r) (K : DerivedOp s q) :
     (M - N).comp K = M.comp K - N.comp K := map_sub (compLeftHom K) M N
@@ -329,20 +330,20 @@ lemma prime_neg {s q : ℕ} (M : DerivedOp s q) : (-M).prime = -M.prime :=
   map_neg primeAddHom M
 
 /-- Associativity of letter composition (`≫`-associativity in each coordinate). -/
-private lemma OpLetter.comp_assoc {s q r p : ℕ} (l₃ : OpLetter r p) (l₂ : OpLetter q r)
-    (l₁ : OpLetter s q) : (l₃.comp l₂).comp l₁ = l₃.comp (l₂.comp l₁) := by
-  simp only [OpLetter.comp, Category.assoc]
+private lemma OpLetter.compLetter_assoc {s q r p : ℕ} (l₃ : OpLetter r p) (l₂ : OpLetter q r)
+    (l₁ : OpLetter s q) : (l₃.compLetter l₂).compLetter l₁ = l₃.compLetter (l₂.compLetter l₁) := by
+  simp only [OpLetter.compLetter, Category.assoc]
 
 /-- Associativity of `DerivedOp.comp` (reduces to `single_comp_single` + bilinearity). -/
-lemma DerivedOp.comp_assoc {s q r p : ℕ} (M₃ : DerivedOp r p) (M₂ : DerivedOp q r)
-    (M₁ : DerivedOp s q) : (M₃.comp M₂).comp M₁ = M₃.comp (M₂.comp M₁) := by
-  induction M₁ using Finsupp.induction with
+lemma DerivedOp.comp_assoc {s q r p : ℕ} (M₃ : DerivedOp r p) (MTwo : DerivedOp q r)
+    (MOne : DerivedOp s q) : (M₃.comp MTwo).comp MOne = M₃.comp (MTwo.comp MOne) := by
+  induction MOne using Finsupp.induction with
   | zero => simp [DerivedOp.comp]
   | single_add l₁ c₁ f _ _ ih =>
     rw [DerivedOp.comp_add_right, ih, DerivedOp.comp_add_right, DerivedOp.comp_add_right]
     congr 1
     clear ih
-    induction M₂ using Finsupp.induction with
+    induction MTwo using Finsupp.induction with
     | zero => simp [DerivedOp.comp]
     | single_add l₂ c₂ g _ _ ih₂ =>
       rw [DerivedOp.comp_add_right, DerivedOp.add_comp, ih₂, DerivedOp.add_comp,
@@ -355,7 +356,7 @@ lemma DerivedOp.comp_assoc {s q r p : ℕ} (M₃ : DerivedOp r p) (M₂ : Derive
         rw [DerivedOp.add_comp, DerivedOp.add_comp, ih₃, DerivedOp.add_comp]
         congr 1
         rw [DerivedOp.single_comp_single, DerivedOp.single_comp_single,
-          DerivedOp.single_comp_single, DerivedOp.single_comp_single, OpLetter.comp_assoc]
+          DerivedOp.single_comp_single, DerivedOp.single_comp_single, OpLetter.compLetter_assoc]
         congr 1
         ring
 

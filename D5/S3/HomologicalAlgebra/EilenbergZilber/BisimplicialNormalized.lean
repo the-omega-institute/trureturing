@@ -16,7 +16,8 @@ Original source: jeffrey-dot-li/lean-homology, revision
 40c5aae235b0f499ebfc1e68ce574a62b531203c; author release
 fd0147a1ffe4f3c14c247574e148893d7cdf8cf6 (LeanPool PR 588).
 Modifications: receiving namespace and imports, module boundaries, exposure of
-consumed private interfaces, and omission of unused companion and frontal material.
+consumed private interfaces, canonical identifier spellings, and omission of unused
+companion, reflexive binding, and frontal material.
 -/
 
 
@@ -30,13 +31,13 @@ import D5.S3.HomologicalAlgebra.EilenbergZilber.NormalizedHomotopy
 The literature (Eilenberg–Mac Lane II, Thm 2.1a) proves the Eilenberg–Zilber contraction on the
 **normalized** complexes, where one direction is a strict identity and the other is a chain
 homotopy via the explicit Eilenberg–Mac Lane homotopy. We assemble that here on the bi-normalized
-total complex `N₁` and the normalized Moore complex of the diagonal `N₂` (both defined in
+total complex `NOne` and the normalized Moore complex of the diagonal `NTwo` (both defined in
 `Bisimplicial.lean`).
 
-This normalized equivalence is then transported to the unnormalized `F₁`/`F₂`
+This normalized equivalence is then transported to the unnormalized `FOne`/`FTwo`
 (in `Bisimplicial.lean`) along the normalization comparisons
 `normalizationComparison` and `diagonalNormalizationComparison`,
-to obtain `eilenbergZilber : HomotopyEquiv (F₁.obj X) (F₂.obj X)`.
+to obtain `eilenbergZilber : HomotopyEquiv (FOne.obj X) (FTwo.obj X)`.
 -/
 
 
@@ -55,9 +56,9 @@ of the retraction. This lifts the Mathlib split-mono identity `(splitMonoInclusi
 _).id` through `totalFunctor` in both simplicial directions. (Reused by
 `normalizationComparison`.) -/
 @[reassoc]
-lemma inclusionN₁_comp_retractionN₁ (X : BisimplicialObject C) :
-    inclusionN₁ X ≫ retractionN₁ X = 𝟙 (N₁.obj X) := by
-  dsimp only [inclusionN₁, retractionN₁]
+lemma inclusionNOne_comp_retractionNOne (X : BisimplicialObject C) :
+    inclusionNOne X ≫ retractionNOne X = 𝟙 (NOne.obj X) := by
+  dsimp only [inclusionNOne, retractionNOne]
   rw [← Functor.map_comp]
   refine Eq.trans (congrArg ((HomologicalComplex₂.totalFunctor _ _ _ _).map) ?_) <|
     (HomologicalComplex₂.totalFunctor _ _ _ _).map_id _
@@ -82,7 +83,7 @@ lemma inclusionN₁_comp_retractionN₁ (X : BisimplicialObject C) :
 `j+1` (via `δ_{j+1}`) makes one of the two shuffle projections non-surjective: the vertical
 projection `sndHom x ∘ δ_{j+1}` (both steps vertical, RR) or the horizontal projection
 `fstHom x ∘ δ_{j+1}` (both steps horizontal, LL). This is the combinatorial core feeding the
-termwise Moore vanishing in `higherFacesVanish_inclusionN₁_shuffleMap`. -/
+termwise Moore vanishing in `higherFacesVanish_inclusionNOne_shuffleMap`. -/
 private lemma comp_δ_not_surjective {a b : ℕ} (f : (⦋a⦌ : SimplexCategory) ⟶ ⦋b⦌)
     (k : Fin (b + 2)) :
     ¬ Function.Surjective ⇑(SimplexCategory.Hom.toOrderHom (f ≫ SimplexCategory.δ k)) := by
@@ -216,7 +217,7 @@ private noncomputable def innerIncl (X : BisimplicialObject C) (p q : ℕ) :
       (X.obj (Opposite.op ⦋p⦌)).obj (Opposite.op ⦋q⦌) :=
   (inclusionOfMooreComplexMap (X.obj (Opposite.op ⦋p⦌))).f q
 
-/-- Bidegree-`(p, q)` form of `higherFacesVanish_inclusionN₁_shuffleMap`: the face `δⱼ₊₁` kills
+/-- Bidegree-`(p, q)` form of `higherFacesVanish_inclusionNOne_shuffleMap`: the face `δⱼ₊₁` kills
 the Eilenberg–Zilber component of a bi-normalized chain. -/
 private lemma biInclusion_ezComponent_δ_eq_zero (X : BisimplicialObject C) (n p q : ℕ)
     (hpq : p + q = n + 1) (j : Fin (n + 1))
@@ -354,11 +355,11 @@ private lemma biInclusion_ezComponent_δ_eq_zero (X : BisimplicialObject C) (n p
 
 /-- **(B-core)** Higher faces vanish on the shuffle of a bi-normalized chain: every diagonal
 face `δⱼ₊₁` (`j : Fin (n+1)`, i.e. all faces except `δ₀`) annihilates
-`(inclusionN₁ X ≫ shuffleMap X).f (n+1)`. This is the combinatorial heart of (B): a shuffle of
+`(inclusionNOne X ≫ shuffleMap X).f (n+1)`. This is the combinatorial heart of (B): a shuffle of
 chains normalized in both bisimplicial directions has no degenerate component in the diagonal. -/
-private lemma higherFacesVanish_inclusionN₁_shuffleMap (X : BisimplicialObject C) (n : ℕ) :
+private lemma higherFacesVanish_inclusionNOne_shuffleMap (X : BisimplicialObject C) (n : ℕ) :
     HigherFacesVanish (X := diag.obj X) (n + 1)
-      ((inclusionN₁ X ≫ shuffleMap X).f (n + 1)) := by
+      ((inclusionNOne X ≫ shuffleMap X).f (n + 1)) := by
   intro j hj
   rw [HomologicalComplex.comp_f]
   apply HomologicalComplex₂.total.hom_ext
@@ -370,7 +371,7 @@ private lemma higherFacesVanish_inclusionN₁_shuffleMap (X : BisimplicialObject
   have h1 : HomologicalComplex₂.ιTotal
         (((normalizedMooreComplex C).mapHomologicalComplex (ComplexShape.down ℕ)).obj
           ((normalizedMooreComplex (SimplicialObject C)).obj X)) (ComplexShape.down ℕ) p q
-        (n + 1) hpq ≫ (inclusionN₁ X).f (n + 1) =
+        (n + 1) hpq ≫ (inclusionNOne X).f (n + 1) =
       (outerIncl X p q ≫ innerIncl X p q) ≫
         HomologicalComplex₂.ιTotal (doubleComplex X) (ComplexShape.down ℕ) p q (n + 1) hpq :=
     HomologicalComplex₂.ιTotal_map _ _ _ _ p q (n + 1) hpq
@@ -392,19 +393,19 @@ private lemma higherFacesVanish_inclusionN₁_shuffleMap (X : BisimplicialObject
 
 /-- **(B) `∇` preserves normalization** (EM Lemma I.5.3). Precomposed with the bi-normalized
 inclusion, the shuffle map already lands in the normalized diagonal, so the diagonal
-renormalization round-trip `retractionN₂ ≫ inclusionN₂` (which equals `PInfty`) is a no-op.
-`@[reassoc]` so it rewrites underneath the trailing `alexanderWhitney ≫ retractionN₁`. -/
+renormalization round-trip `retractionNTwo ≫ inclusionNTwo` (which equals `PInfty`) is a no-op.
+`@[reassoc]` so it rewrites underneath the trailing `alexanderWhitney ≫ retractionNOne`. -/
 @[reassoc]
-lemma inclusionN₁_shuffleMap_diag_normalize (X : BisimplicialObject C) :
-    inclusionN₁ X ≫ shuffleMap X ≫ retractionN₂ X ≫ inclusionN₂ X
-      = inclusionN₁ X ≫ shuffleMap X := by
-  rw [retractionN₂, inclusionN₂]
+lemma inclusionNOne_shuffleMap_diag_normalize (X : BisimplicialObject C) :
+    inclusionNOne X ≫ shuffleMap X ≫ retractionNTwo X ≫ inclusionNTwo X
+      = inclusionNOne X ≫ shuffleMap X := by
+  rw [retractionNTwo, inclusionNTwo]
   erw [PInftyToNormalizedMooreComplex_comp_inclusionOfMooreComplexMap]
   rw [← Category.assoc]
   ext (_ | n)
   · simp
   · rw [HomologicalComplex.comp_f, PInfty_f]
-    exact (higherFacesVanish_inclusionN₁_shuffleMap X n).comp_P_eq_self
+    exact (higherFacesVanish_inclusionNOne_shuffleMap X n).comp_P_eq_self
 
 omit [Abelian C] in
 /-- **Summand merge.** For a single shuffle `x`, the four-map Eilenberg–Zilber ∘ Alexander–Whitney
@@ -661,11 +662,11 @@ private lemma ezawSummand_offDiag_comp_retraction_eq_zero (X : BisimplicialObjec
     omega
 
 /-- **(A) EM `f∇ = i` modulo norms.** Unnormalized, `shuffleMap ≫ alexanderWhitney = 𝟙 + D` with
-`D` landing in the degenerate subcomplex; the bi-normalized retraction `retractionN₁` annihilates
-`D`, leaving `retractionN₁`. The combinatorial core is the shuffle pairing
+`D` landing in the degenerate subcomplex; the bi-normalized retraction `retractionNOne` annihilates
+`D`, leaving `retractionNOne`. The combinatorial core is the shuffle pairing
 `ezComponent ≫ awComponent` (diagonal `(r,s) = (p,q)` ↦ identity; off-diagonal ↦ degenerate). -/
-lemma shuffleMap_alexanderWhitney_comp_retractionN₁ (X : BisimplicialObject C) :
-    shuffleMap X ≫ alexanderWhitney X ≫ retractionN₁ X = retractionN₁ X := by
+lemma shuffleMap_alexanderWhitney_comp_retractionNOne (X : BisimplicialObject C) :
+    shuffleMap X ≫ alexanderWhitney X ≫ retractionNOne X = retractionNOne X := by
   ext n
   simp only [HomologicalComplex.comp_f]
   apply HomologicalComplex₂.total.hom_ext
@@ -736,16 +737,16 @@ lemma shuffleMap_alexanderWhitney_comp_retractionN₁ (X : BisimplicialObject C)
 is the identity *strictly* — the degenerate cross-terms that obstruct this on the unnormalized
 complex vanish modulo norms. -/
 lemma normalizedShuffle_alexanderWhitney (X : BisimplicialObject C) :
-    normalizedShuffleMap X ≫ normalizedAlexanderWhitney X = 𝟙 (N₁.obj X) := by
+    normalizedShuffleMap X ≫ normalizedAlexanderWhitney X = 𝟙 (NOne.obj X) := by
   simp only [normalizedShuffleMap, normalizedAlexanderWhitney, Category.assoc]
-  rw [inclusionN₁_shuffleMap_diag_normalize_assoc,
-    shuffleMap_alexanderWhitney_comp_retractionN₁, inclusionN₁_comp_retractionN₁]
+  rw [inclusionNOne_shuffleMap_diag_normalize_assoc,
+    shuffleMap_alexanderWhitney_comp_retractionNOne, inclusionNOne_comp_retractionNOne]
 
 /-- **Eilenberg–Zilber theorem on normalized complexes** (Eilenberg–Mac Lane II, Thm 2.1a).
 The bi-normalized total complex is homotopy equivalent to the normalized Moore complex of the
 diagonal. One direction is a strict identity; the other uses the EM homotopy. -/
 noncomputable def eilenbergZilberNormalized (X : BisimplicialObject C) :
-    HomotopyEquiv (N₁.obj X) (N₂.obj X) where
+    HomotopyEquiv (NOne.obj X) (NTwo.obj X) where
   hom := normalizedShuffleMap X
   inv := normalizedAlexanderWhitney X
   homotopyHomInvId := Homotopy.ofEq (normalizedShuffle_alexanderWhitney X)
@@ -753,21 +754,21 @@ noncomputable def eilenbergZilberNormalized (X : BisimplicialObject C) :
 
 /-- The normalization comparison on the diagonal simplicial object. -/
 noncomputable abbrev diagonalNormalizationComparison (X : BisimplicialObject C) :
-    HomotopyEquiv (N₂.obj X) (F₂.obj X) :=
+    HomotopyEquiv (NTwo.obj X) (FTwo.obj X) :=
   homotopyEquivNormalizedMooreComplexAlternatingFaceMapComplex (A := C) (Y := diag.obj X)
 
-/-- The unnormalized Eilenberg–Zilber homotopy equivalence `F₁(X) ≃ F₂(X)`, obtained by
+/-- The unnormalized Eilenberg–Zilber homotopy equivalence `FOne(X) ≃ FTwo(X)`, obtained by
 transporting the normalized equivalence `eilenbergZilberNormalized` across the normalization
 comparisons:
 
-`F₁(X) ≃ N₁(X) ≃ N₂(X) ≃ F₂(X)`,
+`FOne(X) ≃ NOne(X) ≃ NTwo(X) ≃ FTwo(X)`,
 
 where `normalizationComparison` is the inner/outer Moore normalization of the total complex
 (`NormalizationComparison`),
 and `diagonalNormalizationComparison` is the corresponding comparison for the diagonal simplicial
 object. -/
 noncomputable def eilenbergZilber (X : BisimplicialObject C) :
-    HomotopyEquiv (F₁.obj X) (F₂.obj X) :=
+    HomotopyEquiv (FOne.obj X) (FTwo.obj X) :=
   (normalizationComparison X).symm.trans <| (eilenbergZilberNormalized X).trans <|
     diagonalNormalizationComparison X
 

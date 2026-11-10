@@ -4,7 +4,7 @@
 // Source: LeanPool/EilenbergZilber at 8bbde3a6de815108d41922c9362ebbe38422663a.
 // Original: jeffrey-dot-li/lean-homology at 40c5aae235b0f499ebfc1e68ce574a62b531203c.
 // Author release: fd0147a1ffe4f3c14c247574e148893d7cdf8cf6, LeanPool PR 588.
-// Modifications: mathematical exposition and typed Scribe document construction.
+// Modifications: mathematical exposition, canonical identifier spellings, and typed Scribe document construction.
 // Full legal custody: Library/HomologicalAlgebra/li2026bisimplicialeilenbergzilber.md.
 
 using static StrataLint.Scribe.DefinitionDsl;

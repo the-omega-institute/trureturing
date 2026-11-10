@@ -16,7 +16,8 @@ Original source: jeffrey-dot-li/lean-homology, revision
 40c5aae235b0f499ebfc1e68ce574a62b531203c; author release
 fd0147a1ffe4f3c14c247574e148893d7cdf8cf6 (LeanPool PR 588).
 Modifications: receiving namespace and imports, module boundaries, exposure of
-consumed private interfaces, and omission of unused companion and frontal material.
+consumed private interfaces, canonical identifier spellings, and omission of unused
+companion, reflexive binding, and frontal material.
 -/
 
 module
@@ -40,7 +41,7 @@ variable {C : Type*} [Category* C] [Abelian C]
 
 /-! ### Shuffle map
 
-The shuffle map `F₁(X) ⟶ F₂(X)` is defined on each bidegree `(p, q)` by the signed sum over
+The shuffle map `FOne(X) ⟶ FTwo(X)` is defined on each bidegree `(p, q)` by the signed sum over
 `(p, q)`-shuffles, and then assembled with `totalDesc`. -/
 
 /-- First projection of a shuffle as a `SimplexCategory` morphism `⦋p+q⦌ ⟶ ⦋p⦌`. -/
@@ -644,9 +645,9 @@ lemma ezComponent_boundary (X : BisimplicialObject C) (p q j : ℕ)
   erw [eqToHom_trans_assoc]
   exact ezComponent_boundary_aux X p q j h
 
-/-- The shuffle chain map `F₁(X) ⟶ F₂(X)`. -/
+/-- The shuffle chain map `FOne(X) ⟶ FTwo(X)`. -/
 noncomputable def shuffleMap (X : BisimplicialObject C) :
-    F₁.obj X ⟶ F₂.obj X where
+    FOne.obj X ⟶ FTwo.obj X where
   f n := HomologicalComplex₂.totalDesc (doubleComplex X) (fun p q h => by
     simp only [ComplexShape.π_def] at h
     exact ezComponent X p q ≫ eqToHom (by subst h; rfl :
@@ -745,7 +746,7 @@ lemma alexanderWhitney_comp_shuffleMap_f (X : BisimplicialObject C) (q : ℕ) :
 /-- In degree `0`, the composite `alexanderWhitney ≫ shuffleMap` is the identity. -/
 lemma awShuffle_f_zero (X : BisimplicialObject C) :
     (alexanderWhitney X ≫ shuffleMap X).f 0 =
-      (𝟙 (F₂.obj X) : (F₂.obj X) ⟶ (F₂.obj X)).f 0 := by
+      (𝟙 (FTwo.obj X) : (FTwo.obj X) ⟶ (FTwo.obj X)).f 0 := by
   rw [HomologicalComplex.comp_f]
   change _ = 𝟙 (((alternatingFaceMapComplex C).obj (diag.obj X)).X 0)
   dsimp only [shuffleMap]
@@ -782,14 +783,14 @@ instance : (normalizedMooreComplex C).Additive where
       Functor.map_add, Preadditive.comp_add]
 
 /-- The **bi-normalized total complex**: normalize both simplicial directions (via the
-normalized Moore complex), then take the total complex. The normalized analogue of `F₁`. -/
-noncomputable abbrev N₁ : BisimplicialObject C ⥤ ChainComplex C ℕ :=
+normalized Moore complex), then take the total complex. The normalized analogue of `FOne`. -/
+noncomputable abbrev NOne : BisimplicialObject C ⥤ ChainComplex C ℕ :=
   normalizedMooreComplex _ ⋙
     (normalizedMooreComplex C).mapHomologicalComplex _ ⋙
       HomologicalComplex₂.totalFunctor _ _ _ _
 
-/-- The **normalized Moore complex of the diagonal**. The normalized analogue of `F₂`. -/
-noncomputable abbrev N₂ : BisimplicialObject C ⥤ ChainComplex C ℕ :=
+/-- The **normalized Moore complex of the diagonal**. The normalized analogue of `FTwo`. -/
+noncomputable abbrev NTwo : BisimplicialObject C ⥤ ChainComplex C ℕ :=
   diag ⋙ normalizedMooreComplex C
 
 /-- The Moore inclusion `N[-] ⟶ K[-]` packaged as a natural transformation. Needed to lift the
@@ -813,43 +814,43 @@ lemma mooreInclusion_comp_mooreRetraction :
 
 variable (X : BisimplicialObject C)
 
-/-- Inclusion `N₁ ↪ F₁` of the bi-normalized total complex into the unnormalized total complex,
+/-- Inclusion `NOne ↪ FOne` of the bi-normalized total complex into the unnormalized total complex,
 obtained by including both simplicial directions (`inclusionOfMooreComplexMap` outer,
 `mooreInclusion` inner) and totalizing. -/
-noncomputable def inclusionN₁ : N₁.obj X ⟶ F₁.obj X :=
+noncomputable def inclusionNOne : NOne.obj X ⟶ FOne.obj X :=
   (HomologicalComplex₂.totalFunctor _ _ _ _).map
     (((normalizedMooreComplex C).mapHomologicalComplex _).map (inclusionOfMooreComplexMap X) ≫
       (NatTrans.mapHomologicalComplex mooreInclusion _).app
         ((alternatingFaceMapComplex (SimplicialObject C)).obj X))
 
-/-- Retraction `F₁ ↠ N₁` onto the bi-normalized total complex (via `PInfty` in both directions). -/
-noncomputable def retractionN₁ : F₁.obj X ⟶ N₁.obj X :=
+/-- Retraction `FOne ↠ NOne` onto the bi-normalized total complex (via `PInfty` in both directions). -/
+noncomputable def retractionNOne : FOne.obj X ⟶ NOne.obj X :=
   (HomologicalComplex₂.totalFunctor _ _ _ _).map
     ((NatTrans.mapHomologicalComplex mooreRetraction _).app
         ((alternatingFaceMapComplex (SimplicialObject C)).obj X) ≫
       ((normalizedMooreComplex C).mapHomologicalComplex _).map (PInftyToNormalizedMooreComplex X))
 
-/-- Inclusion `N₂ ↪ F₂` for the diagonal (the Moore inclusion). -/
-noncomputable def inclusionN₂ : N₂.obj X ⟶ F₂.obj X :=
+/-- Inclusion `NTwo ↪ FTwo` for the diagonal (the Moore inclusion). -/
+noncomputable def inclusionNTwo : NTwo.obj X ⟶ FTwo.obj X :=
   inclusionOfMooreComplexMap (diag.obj X)
 
-/-- Retraction `F₂ ↠ N₂` for the diagonal (the `PInfty` retraction). -/
-noncomputable def retractionN₂ : F₂.obj X ⟶ N₂.obj X :=
+/-- Retraction `FTwo ↠ NTwo` for the diagonal (the `PInfty` retraction). -/
+noncomputable def retractionNTwo : FTwo.obj X ⟶ NTwo.obj X :=
   PInftyToNormalizedMooreComplex (diag.obj X)
 
-/-- The shuffle map on normalized complexes, `∇ : N₁ → N₂`.
+/-- The shuffle map on normalized complexes, `∇ : NOne → NTwo`.
 
-Option 3: the unnormalized `shuffleMap` conjugated by the Dold–Kan inclusion `N₁ ↪ F₁` and the
-retraction `F₂ ↠ N₂`, so it is levelwise-concrete. -/
-noncomputable def normalizedShuffleMap : N₁.obj X ⟶ N₂.obj X :=
-  inclusionN₁ X ≫ shuffleMap X ≫ retractionN₂ X
+Option 3: the unnormalized `shuffleMap` conjugated by the Dold–Kan inclusion `NOne ↪ FOne` and the
+retraction `FTwo ↠ NTwo`, so it is levelwise-concrete. -/
+noncomputable def normalizedShuffleMap : NOne.obj X ⟶ NTwo.obj X :=
+  inclusionNOne X ≫ shuffleMap X ≫ retractionNTwo X
 
-/-- The Alexander–Whitney map on normalized complexes, `AW : N₂ → N₁`.
+/-- The Alexander–Whitney map on normalized complexes, `AW : NTwo → NOne`.
 
-Option 3: the unnormalized `alexanderWhitney` conjugated by the Dold–Kan inclusion `N₂ ↪ F₂` and the
-retraction `F₁ ↠ N₁`, so it is levelwise-concrete. -/
-noncomputable def normalizedAlexanderWhitney : N₂.obj X ⟶ N₁.obj X :=
-  inclusionN₂ X ≫ alexanderWhitney X ≫ retractionN₁ X
+Option 3: the unnormalized `alexanderWhitney` conjugated by the Dold–Kan inclusion `NTwo ↪ FTwo` and the
+retraction `FOne ↠ NOne`, so it is levelwise-concrete. -/
+noncomputable def normalizedAlexanderWhitney : NTwo.obj X ⟶ NOne.obj X :=
+  inclusionNTwo X ≫ alexanderWhitney X ≫ retractionNOne X
 
 
 end BisimplicialObject

@@ -16,7 +16,8 @@ Original source: jeffrey-dot-li/lean-homology, revision
 40c5aae235b0f499ebfc1e68ce574a62b531203c; author release
 fd0147a1ffe4f3c14c247574e148893d7cdf8cf6 (LeanPool PR 588).
 Modifications: receiving namespace and imports, module boundaries, exposure of
-consumed private interfaces, and omission of unused companion and frontal material.
+consumed private interfaces, canonical identifier spellings, and omission of unused
+companion, reflexive binding, and frontal material.
 -/
 
 module
@@ -35,12 +36,12 @@ public import Mathlib.AlgebraicTopology.DoldKan.Degeneracies
 # Alexander–Whitney and shuffle maps for bisimplicial objects
 
 For a bisimplicial object `X` in an abelian category `C`, this file compares the total complex
-`F₁(X)` of the double complex of alternating face maps with the alternating face map complex
-`F₂(X)` of the diagonal. It defines the Alexander–Whitney map `F₂(X) ⟶ F₁(X)` and the
-shuffle (Eilenberg–Zilber) map `F₁(X) ⟶ F₂(X)`, proves that the shuffle map is a chain map via
+`FOne(X)` of the double complex of alternating face maps with the alternating face map complex
+`FTwo(X)` of the diagonal. It defines the Alexander–Whitney map `FTwo(X) ⟶ FOne(X)` and the
+shuffle (Eilenberg–Zilber) map `FOne(X) ⟶ FTwo(X)`, proves that the shuffle map is a chain map via
 the boundary formula for its components, and computes `alexanderWhitney ≫ shuffleMap`
 degreewise (it is the identity in degree `0`). It also sets up the normalized complexes
-`N₁(X)` and `N₂(X)` together with their inclusions and retractions.
+`NOne(X)` and `NTwo(X)` together with their inclusions and retractions.
 -/
 
 @[expose] public section
@@ -96,13 +97,13 @@ instance (K : ChainComplex (ChainComplex C ℕ) ℕ) :
 
 /-- The total complex of the double complex obtained by taking alternating face map complexes in
 both simplicial directions. -/
-noncomputable abbrev F₁ : BisimplicialObject C ⥤ ChainComplex C ℕ :=
+noncomputable abbrev FOne : BisimplicialObject C ⥤ ChainComplex C ℕ :=
   alternatingFaceMapComplex _  ⋙
     (alternatingFaceMapComplex C).mapHomologicalComplex _ ⋙
       HomologicalComplex₂.totalFunctor _ _ _ _
 
 /-- The alternating face map complex of the diagonal simplicial object. -/
-abbrev F₂ : BisimplicialObject C ⥤ ChainComplex C ℕ :=
+abbrev FTwo : BisimplicialObject C ⥤ ChainComplex C ℕ :=
   diag ⋙ alternatingFaceMapComplex C
 
 /-- The double complex obtained by applying `alternatingFaceMapComplex` in both simplicial
@@ -125,15 +126,6 @@ def ιFront (p q : ℕ) : (⦋p⦌ : SimplexCategory) ⟶ ⦋p + q⦌ :=
 def ιBack (p q : ℕ) : (⦋q⦌ : SimplexCategory) ⟶ ⦋p + q⦌ :=
   SimplexCategory.mkHom ⟨fun j => ⟨p + j.1, by omega⟩, fun _ _ h => Nat.add_le_add_left h _⟩
 
-private lemma val_ιFront_apply (p q : ℕ) (i : Fin ((⦋p⦌ : SimplexCategory).len + 1)) :
-    ((ιFront p q).toOrderHom i : ℕ) = i := rfl
-
-private lemma val_ιBack_apply (p q : ℕ) (j : Fin ((⦋q⦌ : SimplexCategory).len + 1)) :
-    ((ιBack p q).toOrderHom j : ℕ) = p + j := rfl
-
-private lemma δ_apply {n : ℕ} (k : Fin (n + 2)) (i : Fin (n + 1)) :
-    (SimplexCategory.δ k).toOrderHom i = k.succAbove i := rfl
-
 private lemma val_eqToHom_apply {x y : SimplexCategory} (h : x = y) (i : Fin (x.len + 1)) :
     ((eqToHom h).toOrderHom i : ℕ) = i := by
   subst h
@@ -151,9 +143,9 @@ lemma ιFront_comp_δ_of_le (p q : ℕ) (k : Fin (p + q + 2))
   have hi' := hi
   simp only at hi'
   simp only [SimplexCategory.comp_toOrderHom, OrderHom.comp_coe, Function.comp_apply,
-    val_eqToHom_apply, δ_apply, Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
+    val_eqToHom_apply, SimplexCategory.δ, SimplexCategory.mkHom, SimplexCategory.Hom.toOrderHom_mk, OrderHom.coe_mk, Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
   split_ifs <;>
-    simp only [Fin.val_castSucc, Fin.val_succ, val_ιFront_apply,
+    simp only [Fin.val_castSucc, Fin.val_succ, ιFront, SimplexCategory.mkHom, SimplexCategory.Hom.toOrderHom_mk, OrderHom.coe_mk,
       SimplexCategory.len_mk] at * <;>
     omega
 
@@ -167,9 +159,9 @@ lemma ιFront_comp_δ_of_gt (p q : ℕ) (k : Fin (p + q + 2))
   have hi' := hi
   simp only at hi'
   simp only [SimplexCategory.comp_toOrderHom, OrderHom.comp_coe, Function.comp_apply,
-    val_eqToHom_apply, δ_apply, Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
+    val_eqToHom_apply, SimplexCategory.δ, SimplexCategory.mkHom, SimplexCategory.Hom.toOrderHom_mk, OrderHom.coe_mk, Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
   split_ifs <;>
-    simp only [Fin.val_castSucc, Fin.val_succ, val_ιFront_apply
+    simp only [Fin.val_castSucc, Fin.val_succ, ιFront, SimplexCategory.mkHom, SimplexCategory.Hom.toOrderHom_mk, OrderHom.coe_mk
       ] at *;
     omega
 
@@ -183,9 +175,9 @@ lemma ιBack_comp_δ_of_le (p q : ℕ) (k : Fin (p + q + 2))
   have hi' := hi
   simp only at hi'
   simp only [SimplexCategory.comp_toOrderHom, OrderHom.comp_coe, Function.comp_apply,
-    val_eqToHom_apply, δ_apply, Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
+    val_eqToHom_apply, SimplexCategory.δ, SimplexCategory.mkHom, SimplexCategory.Hom.toOrderHom_mk, OrderHom.coe_mk, Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
   split_ifs <;>
-    simp only [Fin.val_castSucc, Fin.val_succ, val_ιBack_apply
+    simp only [Fin.val_castSucc, Fin.val_succ, ιBack, SimplexCategory.mkHom, SimplexCategory.Hom.toOrderHom_mk, OrderHom.coe_mk
       ] at * <;>
     omega
 
@@ -200,9 +192,9 @@ lemma ιBack_comp_δ_of_gt (p q : ℕ) (k : Fin (p + q + 2))
   have hi' := hi
   simp only at hi'
   simp only [SimplexCategory.comp_toOrderHom, OrderHom.comp_coe, Function.comp_apply,
-    val_eqToHom_apply, δ_apply, Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
+    val_eqToHom_apply, SimplexCategory.δ, SimplexCategory.mkHom, SimplexCategory.Hom.toOrderHom_mk, OrderHom.coe_mk, Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
   split_ifs <;>
-    simp only [Fin.val_castSucc, Fin.val_succ, val_ιBack_apply,
+    simp only [Fin.val_castSucc, Fin.val_succ, ιBack, SimplexCategory.mkHom, SimplexCategory.Hom.toOrderHom_mk, OrderHom.coe_mk,
       SimplexCategory.len_mk] at * <;>
     omega
 
@@ -215,9 +207,9 @@ private lemma δ_last_comp_ιFront (p q : ℕ) :
   have hi' := hi
   simp only at hi'
   simp only [SimplexCategory.comp_toOrderHom, OrderHom.comp_coe, Function.comp_apply,
-    val_eqToHom_apply, δ_apply, Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
+    val_eqToHom_apply, SimplexCategory.δ, SimplexCategory.mkHom, SimplexCategory.Hom.toOrderHom_mk, OrderHom.coe_mk, Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
   split_ifs <;>
-    simp only [Fin.val_castSucc, Fin.val_succ, val_ιFront_apply,
+    simp only [Fin.val_castSucc, Fin.val_succ, ιFront, SimplexCategory.mkHom, SimplexCategory.Hom.toOrderHom_mk, OrderHom.coe_mk,
       Fin.val_last, SimplexCategory.len_mk] at *;
     omega
 
@@ -230,15 +222,15 @@ private lemma δ_zero_comp_ιBack (p q : ℕ) :
   have hi' := hi
   simp only at hi'
   simp only [SimplexCategory.comp_toOrderHom, OrderHom.comp_coe, Function.comp_apply,
-    val_eqToHom_apply, δ_apply, Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
+    val_eqToHom_apply, SimplexCategory.δ, SimplexCategory.mkHom, SimplexCategory.Hom.toOrderHom_mk, OrderHom.coe_mk, Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
   split_ifs <;>
-    simp only [Fin.val_castSucc, Fin.val_succ, val_ιBack_apply,
+    simp only [Fin.val_castSucc, Fin.val_succ, ιBack, SimplexCategory.mkHom, SimplexCategory.Hom.toOrderHom_mk, OrderHom.coe_mk,
       Fin.val_zero, SimplexCategory.len_mk] at * <;>
     omega
 
 /-! ### Alexander-Whitney map
 
-The Alexander-Whitney map `F₂(X) ⟶ F₁(X)` sends the diagonal chain complex to the total complex by
+The Alexander-Whitney map `FTwo(X) ⟶ FOne(X)` sends the diagonal chain complex to the total complex by
 copairing the component maps `awComponent X p q` over all decompositions `p + q = n`. -/
 
 /-- The `(p, q)` component of the Alexander-Whitney map. -/
@@ -418,9 +410,9 @@ private lemma zsmul_add_zsmul_eq_zero {M : Type*} [AddCommGroup M] {s t : ℤ} {
     (hst : s = -t) (hxy : x = y) : s • x + t • y = 0 := by
   rw [hst, hxy, neg_smul, neg_add_cancel]
 
-/-- The Alexander-Whitney chain map `F₂(X) ⟶ F₁(X)`. -/
+/-- The Alexander-Whitney chain map `FTwo(X) ⟶ FOne(X)`. -/
 noncomputable def alexanderWhitney (X : BisimplicialObject C) :
-    F₂.obj X ⟶ F₁.obj X where
+    FTwo.obj X ⟶ FOne.obj X where
   f n := by
     change (X.obj (Opposite.op ⦋n⦌)).obj (Opposite.op ⦋n⦌) ⟶ _
     exact ∑ p : Fin (n + 1),
