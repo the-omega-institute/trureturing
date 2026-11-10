@@ -12,7 +12,7 @@ import Mathlib.Analysis.Matrix.Spectrum
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 
 /-! Definitions 1--3 and Appendix B of arXiv:2610.01940v1, with the Section V
-uncontrolled-access substitution. No result or proof of either settlement is included.
+uncontrolled-access substitution. The result refutes the uniform ordinary-query upper bound.
 `true` denotes sigma = -1 and `false` denotes sigma = +1.
 -/
 
@@ -25,7 +25,7 @@ open scoped Kronecker
 open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap (conj)
 open D5.S3.Quantum.QuantumChannels.HarrowParallelChernoffExponentRefutation (diamondNorm)
 
-/-- U^sigma for sigma in {-1,+1}; Hermitian-oracle promises make adjoint the inverse. -/
+/-- U^sigma for sigma in {-1,+1}; The unitary-oracle promise makes adjoint the inverse. -/
 def query {d : ℕ} (negative : Bool) (U : Matrix (Fin d) (Fin d) ℂ) :
     Matrix (Fin d) (Fin d) ℂ :=
   if negative then U.conjTranspose else U
