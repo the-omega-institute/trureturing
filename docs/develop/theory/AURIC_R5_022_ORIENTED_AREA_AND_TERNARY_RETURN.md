@@ -4753,3 +4753,124 @@ Gulde–Stroppel，[arXiv:1012.0502v1，Theorem 2.10(b)–(e)、§6.10](https://
 直观地说，四次域中的三个方向占了除一槽以外的全部位置；乘法配对保证这个缺槽能检测其余三个独立系数。每个非稳定共同见证于是强迫窗口保留三维，并占用一个独立的四维 $K$ 方向；完整稳定方向占四维。余项能放多少，取决于是否把某个三维 $Hx$ 整块藏进去，其容量是 (23.7)。位置读数还会漏掉每个商方向接回缺槽的偏移；同一个向量能联合修正三个方向，却不表示不同偏移都能被一个域标量消掉。这一机制只依赖实际四次乘法和有限维性；“两次相乘的记录就是二次来源”另需平方关系，不能混用。特征零例子只给出所列有限扩张中的实际子空间与标量结论，不推出 $\mathbb Z$ 在 $\mathbb Q$ 中的丢番图定义、$H10(\mathbb Q)$、Born 规则、复数域或完整量子起源。
 
 ## 追加锚（本行以下为增补区）
+
+## 24　同一有理数八次域中的二元观察碰撞与共同见证分离
+
+**定义 24.1（原域内带比例标签的观察）。** 固定实数中的正根 $\theta=2^{1/8}$ 及实际域 $L=\mathbb Q(\theta)$，始终使用原域乘法。窗口是 $L$ 的四维 $\mathbb Q$-子空间，所比较的等价关系恰为
+
+$$
+W'\sim W\quad\Longleftrightarrow\quad
+W'=xW\text{，其中 }x\in L^\times.
+\tag{24.1}
+$$
+
+对窗口 $W$ 定义
+
+$$
+\begin{aligned}
+R(W)&=\{u/v:u,v\in W,\ v\ne0\}\subseteq L,\\
+d_W(r)&=\dim_{\mathbb Q}(W\cap rW),\qquad r\in L^\times,\\
+J_W(r,s)&=\dim_{\mathbb Q}(W\cap rW\cap sW),
+\qquad (r,s)\in(L^\times)^2.
+\end{aligned}
+\tag{24.2}
+$$
+
+$R(W)$ 包含 $0$。二元观察是保留原比例标签的整份函数 $r\mapsto d_W(r)$，不是只记各维数出现几次。$J_W(r,s)$ 要求同一个 $z\in L$ 同时满足 $z,z/r,z/s\in W$；其非零性要求这样的 $z\ne0$，不允许为两个比例各选一个不相关的 $z$。全部标签和标量均取原 $L$，不重标比例、不扩域，也不用一般线性等价替代 (24.1)。
+
+**命题 24.2（四维成对反例及指定三重交叠）。** 在定义 24.1 的同一实际域中取
+
+$$
+U=\operatorname{span}_{\mathbb Q}\{1,\theta,\theta^3,\theta^4\},\qquad
+V=\operatorname{span}_{\mathbb Q}\{1,\theta,\theta^2,\theta^5\}.
+\tag{24.3}
+$$
+
+两者均为四维，且
+
+$$
+\begin{gathered}
+d_U(r)=d_V(r)\quad\text{对每个 }r\in L^\times,\qquad R(U)=R(V),\\
+V\ne xU\quad\text{对每个 }x\in L^\times,\\
+U\cap\theta U\cap\theta^3U=\mathbb Q\theta^4,\qquad
+V\cap\theta V\cap\theta^3V=0.
+\end{gathered}
+\tag{24.4}
+$$
+
+所以完整二元观察，甚至与 $R(W)$ 一同给出，也不能在原域全部四维窗口上恢复 (24.1) 的轨道；而 $J_U(\theta,\theta^3)=1$、$J_V(\theta,\theta^3)=0$ 分开这一对轨道。
+
+证明。$X^8-2$ 在素数 $2$ 处 Eisenstein，故 $[L:\mathbb Q]=8$，且
+
+$$
+1,\theta,\theta^2,\ldots,\theta^7
+\tag{24.5}
+$$
+
+是原域的一组 $\mathbb Q$-基。这同时证明 (24.3) 的两个实际维数。令 $\lambda:L\to\mathbb Q$ 取 (24.5) 中的 $\theta^7$ 系数，记 $B(a,b)=\lambda(ab)$。所用非退化乘法配对是成熟输入，见 Bachoc–Serra–Zémor，[*Revisiting Kneser's theorem for field extensions*，arXiv:1510.01354v2，§2.2，式 (2)](https://arxiv.org/pdf/1510.01354v2)。在此实际基上，
+
+$$
+B(\theta^i,\theta^j)=
+\begin{cases}1&i+j=7,\\0&i+j\ne7,\end{cases}
+\qquad 0\le i,j\le7.
+\tag{24.6}
+$$
+
+确实 $i+j\le14$，达到八时用 $\theta^8=2$ 约去，只留下至多六次项。因此矩阵为反对角单位矩阵；消去与 $1,\theta,\theta^3,\theta^4$ 的配对，恰消去次数 $7,6,4,3$ 的系数，给出原域中的准确对应 $U^\perp=V$。
+
+现在固定任意 $r\in L^\times$，不限制其在 (24.5) 中的系数。乘法自伴随及普通正交补恒等式给
+
+$$
+\begin{aligned}
+(U+rU)^\perp&=V\cap r^{-1}V,\\
+d_U(r)&=8-\dim_{\mathbb Q}(U+rU)
+=\dim_{\mathbb Q}(V\cap r^{-1}V)
+=d_V(r).
+\end{aligned}
+\tag{24.7}
+$$
+
+最后一步是乘以同一个 $r$，将 $V\cap r^{-1}V$ 同构到 $rV\cap V$。这是半维对偶的既有维数推导在 (24.3) 上的直接应用，不是一条新的一般对偶定理。对每个非零 $r$，条件 $r=u/v$、$u,v\in W\setminus\{0\}$ 恰等价于 $0\ne u=rv\in W\cap rW$。因此
+
+$$
+R(W)=\{0\}\cup\{r\in L^\times:d_W(r)>0\},
+\qquad W\in\{U,V\},
+\tag{24.8}
+$$
+
+从而得到包含零的实际集合等式 $R(U)=R(V)$。这一步不涉及有限域计数或距离直方图。
+
+为排除全部原域标量，假设 $xU=V$。因 $1,\theta,\theta^3\in U$，有 $x,\theta x,\theta^3x\in V$。先由 $x\in V$ 唯一写成
+
+$$
+x=a_0+a_1\theta+a_2\theta^2+a_5\theta^5,
+\qquad a_0,a_1,a_2,a_5\in\mathbb Q.
+$$
+
+比较 $\theta x\in V$ 在 (24.5) 中的 $\theta^3,\theta^6$ 系数，得 $a_2=a_5=0$；再比较 $\theta^3x=a_0\theta^3+a_1\theta^4\in V$，得 $a_0=a_1=0$。于是 $x=0$，与 $x\in L^\times$ 矛盾。这里直接约束任意 $x$ 的全部可能系数，没有把标量限制为单项式。
+
+最后仍用同一实际基，$\theta^3V=\operatorname{span}_{\mathbb Q}\{1,\theta^3,\theta^4,\theta^5\}$，其中常数项来自 $\theta^8=2$。逐项相交得到
+
+$$
+\begin{aligned}
+U\cap\theta U&=\operatorname{span}_{\mathbb Q}\{\theta,\theta^4\},&
+U\cap\theta^3U&=\operatorname{span}_{\mathbb Q}\{\theta^3,\theta^4\},\\
+V\cap\theta V&=\operatorname{span}_{\mathbb Q}\{\theta,\theta^2\},&
+V\cap\theta^3V&=\operatorname{span}_{\mathbb Q}\{1,\theta^5\}.
+\end{aligned}
+\tag{24.9}
+$$
+
+第一行的两个平面交于 $\mathbb Q\theta^4$，第二行的两个平面交于零。这证明 (24.4) 的最后两式。对任意 $x\in L^\times$，乘以 $x$ 将 $W\cap rW\cap sW$ 同构到 $xW\cap r(xW)\cap s(xW)$；二元交叠也如此，且比值中的 $x$ 可约去。因此 $R,d,J$ 均保留 (24.1) 的轨道，指定 $J$ 的差异确实分开这两个轨道。$\square$
+
+文献与实际差额。Gluesing-Luerssen–Lehmann，[*Distance Distributions of Cyclic Orbit Codes*，arXiv:1912.05522v1，Definition 3.1(4)、Proposition 3.2](https://arxiv.org/pdf/1912.05522v1)，已在 $\mathbb F_{q^n}/\mathbb F_q$ 中把分式支持与非零标量交叠相联。其分式取非零分子、分母，并在底域非零标量下射影化，轨道由 $\mathbb F_{q^n}^\times$ 作用；这里 (24.8) 使用原 $L$ 内逐字相等的分式并补上零。Castello–Gluesing-Luerssen–Polverino–Zullo，[*Quasi-optimal cyclic orbit codes*，DOI 10.1007/s10623-025-01751-4，式 (4)、(5)、Proposition 4.1](https://doi.org/10.1007/s10623-025-01751-4)，已将 $U\times U$ 的射影线点权写成 $\dim(U\cap\alpha U)=\dim(U\cap\alpha^{-1}U)$，并逐每个 $\alpha\in\mathbb F_{q^n}^\times$ 给出标量乘法与迹正交补的对应。这比只有距离分布的陈述更精确；本条不把这一机制算作新增，也不将其有限域计数结论用于 $\mathbb Q$。
+
+§20 所引 Ueoka–Nagi–Akari–Sui，[*Weak Vishik Equivalence and Linear 2-Basis Blindness for Totally Singular Quadratic Forms*，Zenodo 21758447，Lemma 4.1、Theorem 4.2](https://zenodo.org/records/21758447)，已经给出乘法配对及半维正交补对所有非零标量的交叠维数相等。其全文二次型语境为特征二、$k=K^2$；(24.7) 只复用不依赖该特征的维数推导，不搬用添平方根的二次型解释。其 Lemma 6.1 的不相似对是 $K=\mathbb F_2(s,t,u,v)$、$k=K^2$ 中的两个八维值空间，排除的是全部 $K^\times$ 标量；Proposition 6.5 用实际四次中间域 $k(t,su)$ 的乘积张成维数分离它们。它没有给出 (24.3) 的有理数八次域四维对，或 (24.9) 的指定三重交叠。Bachoc–Serra–Zémor 的上述配对适用于任意域扩张，不要求可分性；它提供 (24.7) 所需的乘法自伴随性，不提供这对窗口的选取与非相似性。
+
+相对于这些指定原文及本卷 §§18–23，本条新增的数学内容限于 (24.3) 这一个实际成对反例：原 $\mathbb Q(2^{1/8})$ 中全部比例标签上的相同二元观察、全部原域标量下的不相似，以及 (24.9) 的共同见证分离。半维对偶、乘法配对、分式支持与普通基论证只作中间工具；不主张它们的新颖性，也不据这些来源范围主张全球首次。§19 的恢复结论带有特征二及平方条件，§23 的位置观察则固定 $H$ 并保留实际 $T,C,Q$；它们都没有断言定义 24.1 的二元函数足以恢复这里的四维窗口。
+
+白话说，二元读数逐个比例回答“窗口与它的这次倍乘共享几维”，甚至让每个原比例都保留名字。这对窗口对每一道这样的提问给出相同数字，可用的全部比值也相同；但一个原域数无法把整个窗口一起搬成另一个。丢掉的是不同提问之间的见证如何重合：在 $U$ 中，$z=\theta^4$ 同时以 $z/\theta=\theta^3$、$z/\theta^3=\theta$ 留在窗口内；在 $V$ 中，(24.9) 的两个二元见证平面各自仍有二维，却没有共同非零向量。$J$ 保留的是同一个原向量同时通过两次比例要求的关系，恰好切开二元观察中容纳这两个轨道的同一纤维。
+
+这里的分离仅针对这一对四维窗口。它既没有证明全部函数 $(r,s)\mapsto J_W(r,s)$ 能恢复原域全部四维窗口，也没有给出三维窗口在完整二元观察下的恢复或反例，更未证明三重观察是全局恢复所需的最小阶数。这些恢复命题在本条均未解决。本条的“同源”只指固定同一实际域及其乘法中的代数实现；它没有从代数入射推出 Born 规则、复 Hilbert 空间、量子测量公理、实际可取得的控制、$\mathbb Z$ 在 $\mathbb Q$ 中的丢番图定义或 $H10(\mathbb Q)$。这些结论各需另给相应的概率、内积、操作或算术桥梁。
+
+## 追加锚（本行以下为增补区）
