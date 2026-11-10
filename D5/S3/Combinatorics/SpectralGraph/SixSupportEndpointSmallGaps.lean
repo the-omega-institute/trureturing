@@ -48,7 +48,7 @@ private theorem strict_root {f : ℝ → ℝ} (l u : ℝ) (hlu : l < u)
 
 /-- A cubic with positive leading and constant coefficients cannot have
 three distinct positive roots. This retains the source uniqueness argument. -/
-private theorem no_three_positive (A B D E r s t : ℝ)
+theorem no_three_positive (A B D E r s t : ℝ)
     (hA : 0 < A) (hE : 0 < E) (hr0 : 0 < r) (hs0 : 0 < s) (ht0 : 0 < t)
     (hrs : r ≠ s) (hrt : r ≠ t) (hst : s ≠ t)
     (hr : A*r^3+B*r^2+D*r+E = 0)

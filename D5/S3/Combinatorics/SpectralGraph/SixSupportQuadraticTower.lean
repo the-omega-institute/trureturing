@@ -61,26 +61,7 @@ theorem coprime_N_D : IsCoprime N D := by
   norm_num [D, N, Polynomial.derivative_add, Polynomial.derivative_sub, Polynomial.derivative_mul, Polynomial.derivative_pow]
   ring
 
-theorem gcd_D : GCDMonoid.gcd D D.derivative = 1 := by
-  apply dvd_antisymm_of_normalize_eq (normalize_gcd _ _) normalize_one
-  · exact (coprime_D.isUnit_of_dvd' (gcd_dvd_left _ _) (gcd_dvd_right _ _)).dvd
-  · exact one_dvd _
-
-theorem gcd_N : GCDMonoid.gcd N N.derivative = 1 := by
-  apply dvd_antisymm_of_normalize_eq (normalize_gcd _ _) normalize_one
-  · exact (coprime_N.isUnit_of_dvd' (gcd_dvd_left _ _) (gcd_dvd_right _ _)).dvd
-  · exact one_dvd _
-
-theorem gcd_N_D : GCDMonoid.gcd N D = 1 := by
-  apply dvd_antisymm_of_normalize_eq (normalize_gcd _ _) normalize_one
-  · exact (coprime_N_D.isUnit_of_dvd' (gcd_dvd_left _ _) (gcd_dvd_right _ _)).dvd
-  · exact one_dvd _
-
-theorem special_A : eval (1/3 : ℚ) A = 0 := by norm_num [A]
-theorem special_B : eval (1/3 : ℚ) B = 4/27 := by norm_num [B]
 theorem special_D : eval (1/3 : ℚ) D = 16/729 := by norm_num [D]
-theorem special_N : eval (1/3 : ℚ) N = 368/729 := by norm_num [N]
-
 section FractionSquare
 variable {k : Type*} [Field k]
 -- Used on the live D-nonsquare path; no retained generic wrapper is proposed.
@@ -475,10 +456,6 @@ theorem z_generates : IntermediateField.adjoin (H k) {z k} = ⊤ := by
   apply (IntermediateField.adjoin_simple_eq_top_iff_of_isAlgebraic
     (IsIntegral.of_finite (H k) (z k)).isAlgebraic).2
   exact QuadraticAlgebra.adjoin_omega_eq_top
-
-theorem separable_H : Algebra.IsSeparable (K k) (H k) := inferInstance
-theorem separable_F_H : Algebra.IsSeparable (H k) (F k) := inferInstance
-theorem separable_F : Algebra.IsSeparable (K k) (F k) := inferInstance
 
 -- Formal coefficient extension of the actual polynomial A*(a*(t-a))^2+B*a*(t-a)+C.
 def actualQuartic : P[X] :=

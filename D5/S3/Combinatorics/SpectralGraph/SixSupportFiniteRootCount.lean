@@ -86,10 +86,6 @@ theorem actual_place_count [IsAlgClosed k] : Fintype.card (FiniteDPlace k) = 8 :
       (Fintype.card_congr (rootPlaceEquiv k)).symm
     _ = 8 := root_count k
 
-theorem actual_Qbar_place_count :
-    Fintype.card (FiniteDPlace (AlgebraicClosure ℚ)) = 8 :=
-  actual_place_count (AlgebraicClosure ℚ)
-
 /-- The actual prime picked by the inverse equivalence has all the previously
 constructed data. This theorem introduces no target-bearing structure. -/
 theorem every_place_data (Q : FiniteDPlace k) :

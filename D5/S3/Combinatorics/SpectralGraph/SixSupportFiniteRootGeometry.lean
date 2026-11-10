@@ -83,9 +83,6 @@ instance orderHFaithful : FaithfulSMul (Order k) (H k) :=
 theorem Y_squared : (Y k)^2 = algebraMap (R k) (Order k) (pk k D) := by
   simp [Y, pow_two, QuadraticAlgebra.omega_mul_omega_eq_algebraMap]
 
-theorem order_rank_two : Module.finrank (R k) (Order k) = 2 :=
-  QuadraticAlgebra.finrank_eq_two _ _
-
 instance orderNoetherian : IsNoetherianRing (Order k) := IsNoetherianRing.of_finite (R k) (Order k)
 
 instance baseHTorsionFree : Module.IsTorsionFree (R k) (H k) :=
@@ -99,9 +96,6 @@ instance closureFree : Module.Free (R k) (Closure k) :=
   IsIntegralClosure.module_free (R k) (K k) (H k) (Closure k)
 instance closureDedekind : IsDedekindDomain (Closure k) :=
   IsIntegralClosure.isDedekindDomain (R k) (K k) (H k) (Closure k)
-
-theorem closure_rank_two : Module.finrank (R k) (Closure k) = 2 := by
-  rw [IsIntegralClosure.rank (R k) (K k) (H k) (Closure k), degree_H]
 
 /-- Conjugation over k[b], with the scalar compatibility proved componentwise. -/
 def conjugation : H k →ₐ[R k] H k where

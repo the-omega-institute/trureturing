@@ -162,10 +162,6 @@ theorem actual_closure_place_count [IsAlgClosed k] : Fintype.card (ClosureDPlace
       (Fintype.card_congr (rootClosurePlaceEquiv k)).symm
     _ = 8 := root_count k
 
-theorem actual_Qbar_closure_place_count :
-    Fintype.card (ClosureDPlace (AlgebraicClosure ℚ)) = 8 :=
-  actual_closure_place_count (AlgebraicClosure ℚ)
-
 theorem closure_mapped_baseIdeal_square (r : DRoot k) :
     (baseIdeal k r).map (algebraMap (R k) (ClosureLocal k r)) =
       IsLocalRing.maximalIdeal (ClosureLocal k r)^2 := by

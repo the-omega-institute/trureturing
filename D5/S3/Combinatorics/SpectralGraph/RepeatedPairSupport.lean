@@ -40,7 +40,7 @@ def pairedValue (h : Finset ι → ℝ) (S : Finset (Fin 2 ⊕ ι)) : ℝ :=
   if S.toLeft = {0} then h S.toRight
   else if S.toLeft = {1} then -h S.toRight else 0
 
-private theorem sum_four (f : Finset (Fin 2 ⊕ ι) → ℝ) :
+theorem sum_four (f : Finset (Fin 2 ⊕ ι) → ℝ) :
     (∑ S, f S) = (∑ T, f ((∅ : Finset (Fin 2)).disjSum T))+
       (∑ T, f (({0} : Finset (Fin 2)).disjSum T))+
       (∑ T, f (({1} : Finset (Fin 2)).disjSum T))+
@@ -54,7 +54,7 @@ private theorem sum_four (f : Finset (Fin 2 ⊕ ι) → ℝ) :
   simp (disch := decide) only [sum_insert,sum_singleton]
   ring
 
-private theorem disjoint_sum (A B : Finset (Fin 2)) (T U : Finset ι) :
+theorem disjoint_sum (A B : Finset (Fin 2)) (T U : Finset ι) :
     Disjoint (A.disjSum T) (B.disjSum U) ↔ Disjoint A B ∧ Disjoint T U := by
   constructor
   · intro h
@@ -79,7 +79,7 @@ private theorem weight_sum (a : ℕ) (k : ι → ℕ) (A : Finset (Fin 2)) (T : 
       (a : ℝ)^A.card*supportWeight k T := by
   simp [supportWeight,Finset.prod_disjSum,pairExponents]
 
-private theorem pairedValue_sum (h : Finset ι → ℝ) (A : Finset (Fin 2)) (T : Finset ι) :
+theorem pairedValue_sum (h : Finset ι → ℝ) (A : Finset (Fin 2)) (T : Finset ι) :
     pairedValue h (A.disjSum T) =
       if A = {0} then h T else if A = {1} then -h T else 0 := by
   simp only [pairedValue,Finset.toLeft_disjSum,Finset.toRight_disjSum]
