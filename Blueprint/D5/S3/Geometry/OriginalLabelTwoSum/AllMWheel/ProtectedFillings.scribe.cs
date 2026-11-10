@@ -7,8 +7,8 @@ internal sealed class ProtectedFillingsDocument : IScribeDocumentDefinition
         DefinitionDsl.GeneralHeader(
             "D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/ProtectedFillings",
             "Path and excluded-cycle fillings.",
-            "original-coordinate-constructions",
-            Anchor.ParseCanonical("mathlib/module/Mathlib.Order.UpperLower.CompleteLattice")),
+            "all-m-protected-source-only",
+            [Anchor.ParseCanonical("mathlib/module/Mathlib.Order.UpperLower.CompleteLattice")]),
         H("Path and excluded-cycle fillings"),
         Blocks(Paragraph(Text("Maximal-critical protection constructs the path contract, the good-residue path Gamma, the zero filling on the unchanged tail ground and the excluded-residue cycle filling. The zero filling retains forbidden endpoint ghosts and the raw empty critical face in the small cases.")))));
 }

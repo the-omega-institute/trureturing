@@ -7,8 +7,8 @@ internal sealed class CycleWordConstructionDocument : IScribeDocumentDefinition
         DefinitionDsl.GeneralHeader(
             "D5/S3/Geometry/OriginalLabelTwoSum/AllMWheel/CycleWordConstruction",
             "Occurrence and attachment Word constructors.",
-            "original-coordinate-constructions",
-            Anchor.ParseCanonical("mathlib/module/Mathlib.Order.UpperLower.CompleteLattice")),
+            "actual-three-block-cycle-word-source-only",
+            [Anchor.ParseCanonical("mathlib/module/Mathlib.Order.UpperLower.CompleteLattice")]),
         H("Occurrence and attachment Word constructors"),
         Blocks(
             Paragraph(Text("Occurrence splitting, paired-cone lists and attachment words retain the original finite grounds, partition, coverage and dependency order. The public constructors below are consumed by the actual cycle Word.")),

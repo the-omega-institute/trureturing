@@ -7,8 +7,8 @@ internal sealed class FiniteIncidenceRootPruningDocument : IScribeDocumentDefini
         DefinitionDsl.GeneralHeader(
             "D5/S3/Geometry/FiniteIncidenceRootPruning",
             "Original-ground incidence pruning.",
-            "original-coordinate-constructions",
-            Anchor.ParseCanonical("mathlib/module/Mathlib.Order.UpperLower.CompleteLattice")),
+            "finite-incidence-pruning-construction",
+            [Anchor.ParseCanonical("mathlib/module/Mathlib.AlgebraicTopology.SimplicialComplex.Basic")]),
         H("Original-ground incidence pruning"),
         Blocks(Paragraph(Text("Finite incidence states retain their independent row and column types. The literal root complex, pruning constructors, terminal alternatives and collapse witnesses retain empty rows, original active labels and critical supports. Simplex, isolated-column and singleton-row constructions supply the recursive consumer.")))));
 }

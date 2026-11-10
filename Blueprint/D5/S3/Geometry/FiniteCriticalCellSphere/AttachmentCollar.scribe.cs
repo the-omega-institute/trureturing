@@ -7,8 +7,8 @@ internal sealed class AttachmentCollarDocument : IScribeDocumentDefinition
         DefinitionDsl.GeneralHeader(
             "D5/S3/Geometry/FiniteCriticalCellSphere/AttachmentCollar",
             "The attachment collar and core quotient.",
-            "original-coordinate-constructions",
-            Anchor.ParseCanonical("mathlib/module/Mathlib.Order.UpperLower.CompleteLattice")),
+            "finite-critical-cell-sphere",
+            [Anchor.ParseCanonical("mathlib/module/Mathlib.Topology.CompactOpen"), Anchor.ParseCanonical("mathlib/module/Mathlib.Topology.Piecewise")]),
         H("The attachment collar and core quotient"),
         Blocks(Paragraph(Text("The input retains the original ambient labels, a nonempty attached face, the exact union with its simplex and full-boundary intersection, and only a standalone based contraction of the core. Closed radial and attachment pasting constructs the collar, its endpoint quotient inverse and both homotopies fixing the retained basepoint.")),
             Describe.Lean(DescribeId.Create("diskrestrict"),

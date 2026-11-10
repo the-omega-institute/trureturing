@@ -7,8 +7,8 @@ internal sealed class HistoryForestComponentsDocument : IScribeDocumentDefinitio
         DefinitionDsl.GeneralHeader(
             "D5/S3/Geometry/OriginalLabelTwoSum/HistoryForestComponents",
             "Original-label path components.",
-            "original-coordinate-constructions",
-            Anchor.ParseCanonical("mathlib/module/Mathlib.Order.UpperLower.CompleteLattice")),
+            "original-projected-path-forest",
+            [Anchor.ParseCanonical("mathlib/module/Mathlib.Combinatorics.SimpleGraph.Paths")]),
         H("Original-label path components"),
         Blocks(Paragraph(Text("Rows keep their actual indices and multiplicities. Singleton constraints force original labels, while pruning removes only redundant size-two rows touching those forced labels. Connectivity is characterized by surviving consecutive cut intervals; component roots, singleton ghosts and untouched endpoint connectivity use the same original path positions.")))));
 }
