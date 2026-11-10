@@ -649,3 +649,1223 @@ $$
 用白话说，回到原问题后，需要估计的是同一原点对在大素数处共同落入多小的实际有限像，而不是另选点或只观察其中一个点。若这样的素数少到 (8.5) 的程度，已有逐素数界会连任意深的入口一起支付；目前给出的是这条充分桥，尚未给出它所需的稀疏计数。
 
 ## 追加锚（本行以下为增补区）
+
+## 9. 同一八次来源的完整四维盒与固定素数尾部
+
+**定义 9.1（共同来源、全盒与局部高度规范）。** 本节始终取 (7.4) 的同一固定数据
+
+$$
+E:y^2=x^3-x,\qquad K=\mathbb Q(i,\sqrt6,\sqrt{15}),\qquad
+P_1=(2,\sqrt6),\quad P_2=(4,2\sqrt{15}).
+\tag{9.1}
+$$
+
+直接复用定理 7.2 的八次性、非挠性及 Gaussian 模挠独立性，不另证明这些前件。固定整数 $q\ge1$，并在关系之前对每个 $p>5$ 各固定一次嵌入 $\sigma_p:K\hookrightarrow\overline{\mathbb Q}_p$；其所选地方记为 $v_p^*$。对整数 $L\ge1$，令
+
+$$
+\begin{gathered}
+B_L=\{z=(a,b,c,d)\in\mathbb Z^4:|a|,|b|,|c|,|d|\le L\}\setminus\{0\},\\
+Q_z=[q]\bigl([a+bi]P_1+[c+di]P_2\bigr),\qquad
+H_j=\widehat h_E(P_j)>0,\qquad
+H_L=\sum_{z\in B_L}\widehat h_E(Q_z).
+\end{gathered}
+\tag{9.2}
+$$
+
+模挠独立性保证全部 $Q_z$ 非挠，也保证 $z\mapsto Q_z$ 单射。$\widehat h_E$ 仍为 $2\widehat h_E=h_x+O_E(1)$ 的绝对规范。对 $v\in M_K$，有限地方取 $|p|_v=p^{-1}$，无穷地方取通常复绝对值，令 $\nu_v=-\log|\cdot|_v$；有限地方 $n_v=[K_v:\mathbb Q_p]=e_vf_v$，复地方 $n_v=2$。使用 [Silverman，*The Arithmetic of Elliptic Curves*，第二版，C.18.1–18.3，印刷页 454–455](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf) 的 $\lambda_v$。原文 C.18.1(ii) 是 $\lambda_v+\frac12\nu_v(x)$ 在 $O$ 处有有限极限；结合 IV.1 的 $x=t^{-2}(1+O(t))$，对参数 $t=-x/y$ 有
+
+$$
+\lambda_v(A)=-\log|t(A)|_v+O_v(1)\longrightarrow+\infty
+\quad(A\longrightarrow O),\qquad
+\widehat h_E(A)=\frac18\sum_{v\in M_K}n_v\lambda_v(A).
+\tag{9.3}
+$$
+
+第二式正是 C.18.2；$\frac18$ 只用于局部高度之和。以下经典高度与局部邻域事实仅作新盒消费者的中间输入；不主张文献优先性。
+
+**定理 9.2（实际 Galois 系数作用与完整盒的地方恒等式）。** 对任意有理地方 $r$，以及其上任一选定地方 $w$，令
+$S_v(L)=\sum_{z\in B_L}\lambda_v(Q_z)$。则每个有限 $L$ 都有
+
+$$
+S_w(L)=\frac18\sum_{v\mid r}n_vS_v(L).
+\tag{9.4}
+$$
+
+特别地，若 $p>5$，定义 7.1 的深度满足
+
+$$
+\sum_{z\in B_L}b_p(Q_z)\log p
+=S_{v_p^*}(L)
+=\frac18\sum_{v\mid p}n_v\sum_{z\in B_L}\lambda_v(Q_z).
+\tag{9.5}
+$$
+
+这是完整盒的恒等式，没有断言一般单点的选定地方读数等于全部地方平均。
+
+证明。把 $g\in\operatorname{Gal}(K/\mathbb Q)$ 写成
+$g(i)=\epsilon i,\ g(\sqrt6)=\delta_1\sqrt6,\ g(\sqrt{15})=\delta_2\sqrt{15}$，其中三个符号独立取 $\pm1$。由于 $g(P_j)=[\delta_j]P_j$，而 $g[i]=[\epsilon i]g$，实际系数作用为
+
+$$
+g(Q_z)=Q_{\rho_gz},\qquad
+\rho_g(a,b,c,d)=(\delta_1a,\epsilon\delta_1b,\delta_2c,\epsilon\delta_2d).
+\tag{9.6}
+$$
+
+全部八个作用如下；它们不互换两个固定点，只在四个整数坐标上作所列符号置换。
+
+| $\epsilon$ | $\delta_1$ | $\delta_2$ | $\rho_g(a,b,c,d)$ |
+|---|---|---|---|
+| $+$ | $+$ | $+$ | $(a,b,c,d)$ |
+| $+$ | $+$ | $-$ | $(a,b,-c,-d)$ |
+| $+$ | $-$ | $+$ | $(-a,-b,c,d)$ |
+| $+$ | $-$ | $-$ | $(-a,-b,-c,-d)$ |
+| $-$ | $+$ | $+$ | $(a,-b,c,-d)$ |
+| $-$ | $+$ | $-$ | $(a,-b,-c,d)$ |
+| $-$ | $-$ | $+$ | $(-a,b,c,-d)$ |
+| $-$ | $-$ | $-$ | $(-a,b,-c,d)$ |
+
+每个 $\rho_g$ 都双射地保持 $B_L$。按 $|u|_{g^{-1}v}=|g(u)|_v$ 定义地方运输；因为曲线在 $\mathbb Q$ 上，C.18.1 的唯一性给出
+$\lambda_v(gA)=\lambda_{g^{-1}v}(A)$。把 (9.6) 代入有限盒和并重编号，得 $S_v(L)=S_{g^{-1}v}(L)$。Galois 群在 $r$ 上方地方上可迁，且 $\sum_{v\mid r}n_v=8$，故 (9.4) 成立；无穷地方的四个复地方各权 $2$ 也在此式之内。
+
+对 $p>5$，本方程的判别式 $64$ 是单位，故即使完成域有分歧，也是好约化的极小整方程。C.18.3(b) 与 VII.2.1–2.2 给出
+
+$$
+\lambda_v(A)=\tfrac12\log\max(1,|x(A)|_v)
+=
+\begin{cases}
+v_p(t(A))\log p,&A\text{ 约化为 }O,\\
+0,&\text{否则}.
+\end{cases}
+\tag{9.7}
+$$
+
+这里 $v_p=\nu_v/\log p$，故在分歧完成域可取分数值，没有额外乘 $e_v$；分歧和剩余次数已在 $n_v=e_vf_v$ 中。入口时 $2v_p(y)=3v_p(x)$ 给出该深度，无需形式对数的等距范围。所选嵌入诱导的绝对值就是 $v_p^*$，于是 (9.7)、(9.4) 证明 (9.5)。全程只重排同一盒的关系，没有逐关系更换来源或嵌入。证毕。
+
+**定理 9.3（准确的规范高度多项式）。** 对每个整数 $L\ge1$，
+
+$$
+H_L=\frac23q^2(H_1+H_2)L(L+1)(2L+1)^4.
+\tag{9.8}
+$$
+
+证明。记 $(R_1,R_2,R_3,R_4)=(P_1,[i]P_1,P_2,[i]P_2)$。使用 [Silverman VIII.9.3(a)–(e)，印刷页 248–249](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf) 的双线性配对
+$\langle A,B\rangle=\widehat h_E(A+B)-\widehat h_E(A)-\widehat h_E(B)$，即 $\langle A,A\rangle=2\widehat h_E(A)$。因此准确地
+
+$$
+\widehat h_E(Q_z)
+=q^2\left(\sum_{j=1}^4z_j^2\widehat h_E(R_j)
++ \sum_{j<k}z_jz_k\langle R_j,R_k\rangle\right).
+\tag{9.9}
+$$
+
+此配对约定下交叉项前没有再乘 $2$。由 $x([i][m]P)=-x([m]P)$，横坐标绝对高度相等；用 VIII.9.3(b)、(e) 并令 $m\to\infty$，得 $\widehat h_E([i]P)=\widehat h_E(P)$。四个对角高度依次为 $H_1,H_1,H_2,H_2$。
+
+把原点加回求和不改变值。全盒允许任一坐标独立变号，故每个 $j\ne k$ 的 $\sum_z z_jz_k$ 为零，无需假定配对正交。置 $N=2L+1$，每个对角和为
+
+$$
+\sum_{z\in[-L,L]^4\cap\mathbb Z^4}z_j^2
+=N^3\sum_{a=-L}^La^2
+=\tfrac13L(L+1)N^4.
+\tag{9.10}
+$$
+
+把四个对角高度相加即得 (9.8)。另外，(9.9) 给出后文所需的逐点上界
+
+$$
+0\le\widehat h_E(Q_z)\le C_0q^2L^2,\qquad
+C_0=\sum_j\widehat h_E(R_j)+\sum_{j<k}|\langle R_j,R_k\rangle|,
+\tag{9.11}
+$$
+
+其中 $C_0$ 只依赖固定点对。这是规范高度本身的盒总和，不是未除局部次数的总和。证毕。
+
+**定理 9.4（每一固定地方的定量装箱余项）。** 对每个固定 $v\in M_K$ 和固定 $q\ge1$，存在在 $L$ 之前固定的常数 $C_{v,q}$，使全部整数 $L\ge1$ 都满足
+
+$$
+\sum_{z\in B_L}|\lambda_v(Q_z)|\le C_{v,q}L^{16/3}.
+\tag{9.12}
+$$
+
+证明。先支付所有地方的负部。由 C.18.1 的连续性、(9.3) 在原点趋于正无穷的性质及射影曲线 $E(K_u)$ 的紧性，每个地方都有固定 $c_u\ge0$ 使 $\lambda_u(A)\ge-c_u$。在有限好约化地方，C.18.3(b) 使它非负，故可取 $c_u=0$。本模型在全部奇素数处好约化，所以只需对
+$\mathcal B=\{u:u\mid2\text{ 或 }u\mid\infty\}$ 取非零常数。令
+$C_-=\sum_{u\in\mathcal B}n_uc_u$。对每个非零 $A\in E(K)$，(9.3) 于是给出
+
+$$
+-c_v\le\lambda_v(A)\le\frac8{n_v}\widehat h_E(A)+d_v,\qquad
+d_v=C_-/n_v.
+\tag{9.13}
+$$
+
+这一步没有把坏地方或复地方的高度误作非负。由 (9.11)，盒内的 $\lambda_v$ 统一有 $O_v(q^2L^2)$ 上包络。
+
+下面只在此固定 $v$ 选择一次邻域常数。C.18.1(ii) 和 [Silverman IV.1 的原点展开，印刷页 115–120；VII.2，印刷页 187–191](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf) 提供参数 $t=-x/y$ 的局部图及解析群运算。取原点邻域 $U_0$，使某个固定 $C_v\ge0$ 满足
+$|\lambda_v(A)+\log|t(A)|_v|\le C_v$ 于 $U_0\setminus\{O\}$。再取较小邻域 $U$ 和 $\kappa_v\ge1$，使对 $A,B\in U$ 有 $A-B\in U_0$ 且
+
+$$
+|t(A-B)|_v\le\kappa_v\max\{|t(A)|_v,|t(B)|_v\}.
+\tag{9.14}
+$$
+
+这些经典局部事实在这里的具体适用范围如下。有限地方用原整方程的形式差级数，它无常数项、系数整；在足够小的参数闭球上收敛，故可取 $\kappa_v=1$。若完成域在 $p$ 上的分歧指数为 $e_v$，球半径可取固定的 $p^{-m_v/e_v}<1$，其中整数 $m_v$ 在 $L$ 之前选定。坏约化处只用光滑泛纤维在 $O$ 的参数图，必要的缩小包含在这个 $m_v$ 中，不把整个约化核认作该图。复地方则在固定双圆盘内使用解析差映射 $F(s,t)$；它满足 $F(0,0)=0$，缩小圆盘并用其有界一阶导数得 (9.14)，再缩小使像在 $U_0$ 中。整个 $K$ 没有实地方。这些选择不使用局部形式对数，不需要无分歧、好约化或某个随 $L$ 变化的对数收敛阈值。
+
+紧集 $E(K_v)\setminus U$ 上的 $\lambda_v$ 有有限上界。故存在固定 $h_v\ge0$，使 $\lambda_v(A)>h_v$ 蕴涵 $A\in U$。由 (9.14) 和两次参数高度比较，对不同的 $A,B$ 得到
+
+$$
+\lambda_v(A),\lambda_v(B)>h_v
+\quad\Longrightarrow\quad
+\lambda_v(A-B)\ge
+\min\{\lambda_v(A),\lambda_v(B)\}-D_v,\qquad
+D_v=2C_v+\log\kappa_v.
+\tag{9.15}
+$$
+
+这明确把所用邻域、差映射损失及坏地方依赖都固定下来。
+
+现只用一个实际非挠方向 $R=[q]P_1$。对每个非零整数 $k$，$[k]R\ne O$，由 (9.13) 与规范高度的二次性有
+
+$$
+\lambda_v([k]R)\le a_vq^2k^2+d_v,\qquad a_v=8H_1/n_v.
+\tag{9.16}
+$$
+
+令 $1\le M\le N=2L+1$ 为整数，预置阈值
+$\tau_M=1+\max\{h_v,a_vq^2M^2+d_v+D_v\}$。固定 $(b,c,d)$，把 $a=-L,\ldots,L$ 依次分成前面各长 $M$、末块长度至多 $M$ 的连续块。每块的点是某个固定平移加上连续的 $[a]R$。若同一块内两个不同的非零关系都满足 $\lambda_v(Q_z)>\tau_M$，其差必为 $[k]R$，其中
+
+$$
+z-z'=(k,0,0,0),\qquad 0<|k|\le M-1.
+\tag{9.17}
+$$
+
+因此该差非零；(9.15) 使其局部高度严格大于 $a_vq^2M^2+d_v$，与 (9.16) 矛盾。此处只需上述一维循环差集，未对整个四维差集作不成立的分离断言。删去 $z=0$ 只会减少每块的点数。
+
+于是高于 $\tau_M$ 的关系最多有
+$N^3\lceil N/M\rceil\le N^4/M+N^3$ 个；后一项支付每条线末端不足一块的边界。其余关系由 (9.13) 的负部下界给出 $|\lambda_v(Q_z)|\le\tau_M+c_v$。高层则由 (9.11)、(9.13) 的上包络支付。故有一个只依赖 $v,q$ 及固定来源的常数 $C$，使
+
+$$
+\begin{aligned}
+\sum_{z\in B_L}|\lambda_v(Q_z)|
+&\le N^4(\tau_M+c_v)
+ +(N^4/M+N^3)\bigl(8C_0q^2L^2/n_v+d_v\bigr)\\
+&\le C\bigl(L^4M^2+L^6/M+L^5+L^4\bigr).
+\end{aligned}
+\tag{9.18}
+$$
+
+现在才取 $M=\lceil L^{2/3}\rceil$；它满足 $1\le M\le N$ 和
+$L^{2/3}\le M\le2L^{2/3}$。前两项各为 $O(L^{16/3})$，边界项 $L^5$ 与 $L^4$ 也被此阶支付，得到 (9.12)。常数的依赖顺序为：固定来源和高度负部、固定地方的参数图与差映射、固定 $q$，最后才是 $L,M$。没有使用逐点多对数估计，没有从紧性提取一个关于所有素数统一的常数。证毕。
+
+**定理 9.5（固定有限素数尾部围绕准确多项式的展开）。** 令 $\mathcal F$ 为任意固定有限有理素数集，保留定义 9.1 的同一嵌入族，并定义
+
+$$
+\begin{gathered}
+T_{\mathcal F}(L)=
+\sum_{z\in B_L}\sum_{\substack{p>5\\p\notin\mathcal F}}
+b_p(Q_z)\log p,\\
+\mathcal D_{\mathcal F}
+=\{v\in M_K:v\mid p,\ p\in\mathcal F\cup\{2,3,5\}\}
+ \ \cup\ \{v:v\mid\infty\}.
+\end{gathered}
+\tag{9.19}
+$$
+
+对每个有限 $L$，$T_{\mathcal F}(L)$ 是有限和，独立于全部所选嵌入，而且准确有
+
+$$
+T_{\mathcal F}(L)
+=H_L-\frac18\sum_{v\in\mathcal D_{\mathcal F}}
+n_v\sum_{z\in B_L}\lambda_v(Q_z).
+\tag{9.20}
+$$
+
+从而在 $L\to\infty$、$\mathcal F,q$ 固定时，
+
+$$
+\begin{gathered}
+T_{\mathcal F}(L)
+=\frac23q^2(H_1+H_2)L(L+1)(2L+1)^4
++O_{\mathcal F,q}(L^{16/3}),\\
+\lim_{L\to\infty}\frac{T_{\mathcal F}(L)}{q^2L^6}
+=\frac{32}{3}(H_1+H_2)>0.
+\end{gathered}
+\tag{9.21}
+$$
+
+证明。每个 $x(Q_z)\in K$ 只在有限多个有限地方有负赋值，且 $B_L$ 有限；其分母支持的并集仍有限。所有未删素数都是好约化素数，(9.7) 使其余局部高度全为零。因此可以交换此处全部求和而无需无穷级数的收敛假设。逐素数应用 (9.5)，再对每个 $Q_z$ 使用 (9.3)，就给出 (9.20)。每个素数的盒和已由 (9.4) 独立于地方选择，所以嵌入独立性在每个有限 $L$ 就成立，不是取极限后才成立。
+
+$\mathcal D_{\mathcal F}$ 固定且有限。定理 9.4 给出
+
+$$
+\left|T_{\mathcal F}(L)-H_L\right|
+\le\frac18\sum_{v\in\mathcal D_{\mathcal F}}n_v
+\sum_{z\in B_L}|\lambda_v(Q_z)|
+=O_{\mathcal F,q}(L^{16/3}).
+\tag{9.22}
+$$
+
+代入 (9.8) 即得第一式。将其除以 $q^2L^6$，误差趋于零，而
+$L(L+1)(2L+1)^4/L^6\to16$，得到第二式及其正性。特别地，(9.20) 的 $H_L$ 已经是规范高度总和，不再除以 $8$；被删除的地方包括所有无穷地方和 $\mathcal F\cup\{2,3,5\}$ 上方的全部地方。证毕。
+
+**命题 9.6（单点反例及固定清单的边界）。** (9.4) 不能一般化为本来源上每个单点的恒等式；(9.21) 也不提供移动素数截止或原共同小像筛选尾部的判定。
+
+证明。单点反例可在同一来源中直接给出。取 $q=1$，$S=P_1+P_2$，$A=[2]S=Q_{(2,0,2,0)}$。加法公式给出
+
+$$
+\xi=x(S)=\tfrac{21}{2}-3\sqrt{10},\qquad
+N_{\mathbb Q(\sqrt{10})/\mathbb Q}(\xi+1)=\tfrac{169}{4},
+\qquad
+x(A)=\frac{(\xi^2+1)^2}{4\xi(\xi^2-1)}.
+\tag{9.23}
+$$
+
+这里 $\sqrt{10}=\sqrt6\sqrt{15}/3\in K$。在 $13$ 处，$10$ 的两个平方根分别约化为 $6,-6$，由 Hensel 引理分别确定 $\mathbb Q_{13}$ 中的根。在第一支 $\xi\equiv-1$，第二支 $\xi\equiv9$。第二支的 $\xi+1$ 为单位，范数等式使第一支 $v_{13}(\xi+1)=2$；其中 $\xi,\xi-1,\xi^2+1$ 均为单位。因此第一支 $v_{13}(x(A))=-2$，第二支 $v_{13}(x(A))\ge0$。由 (9.7)，两支的局部高度分别是 $\log13$ 和 $0$。由 $[K:\mathbb Q(\sqrt{10})]=4$ 及局部次数的塔式，两支在 $K$ 上方的局部次数总和各为 $4$，所以全部地方的加权平均是 $\frac12\log13$，而选第二支的读数为零。这反驳单点恒等式；全盒恒等式依赖 (9.6) 的重编号，仍然成立。
+
+定理 9.4 中的邻域半径、差映射损失和高度常数分别依赖固定地方。定理 9.5 只将固定有限个这种常数相加，不附带这些常数的有效求取结论，也没有全部素数上的统一速度。因此不能把 $\mathcal F$ 换成随 $L$ 移动的清单，不能从 (9.21) 推出只保留 $p>L^4$ 或原 $p>R^2$ 的尾部渐近式。
+
+此外本节的 $B_L$ 是无筛选的完整四维盒，来源为 (9.1)；定义 8.1 的原来源、共同入口及共同小像条件并未出现在 (9.19) 中。全盒分母总量不能决定经该条件筛选后的质量，故没有证明或否定原 RG004 §70 的 $V_H(R)=o(q_H^2R^3)$，也没有证明 (8.5) 的算术稀疏性。原量子结构与数论对象之间的解释性桥梁仍属未证，本节没有给出物理实现或任何此类结构对应的证明。上述结论只使用明示的代数点、Galois 作用、局部群运算和高度关系。证毕。
+
+用白话说，把同一对点的四个整数系数全部装进一个对称盒后，共轭只会把盒中的标签重新排列，所以任意事先选定的地方都能接回全球高度。某个固定地方若要在一个短块里同时收取两笔很高的费用，两点之差就会迫使一个短倍点付出超过全球高度所给上限的费用；因此每块至多容纳一笔。平衡块长后，任意固定有限地方的总费用都低于六次主项，余下分母质量便有准确的正主项。这没有估计移动截止，也没有替原共同小像条件作筛选。
+
+## 追加锚（本行以下为增补区）
+
+## 10. 完整形式层的四维装箱与二次移动窗口
+
+**定义 10.1（同一全盒的逐素数质量与实际层纤维）。** 保持定义 9.1 的固定曲线、八次域、点对、整数 $q\ge1$、完整盒 $B_L$ 及事先选定的整族嵌入；直接复用定理 7.2 的非挠性与 Gaussian 模挠独立性。对每个 $p>5$，写 $F_p=K_{v_p^*}$，仍用 $v_p(p)=1$。定义
+
+$$
+A_p(L)=\sum_{z\in B_L}b_p(Q_z)\log p.
+\tag{10.1}
+$$
+
+对整数 $k\ge1$，令 $E_k(F_p)$ 为包含 $O$ 以及全部满足 $v_p(t(A))\ge k$ 的非零形式点的集合，令
+
+$$
+\Lambda_{p,k}=\{z\in\mathbb Z^4:Q_z\in E_k(F_p)\},\qquad
+N_{p,k}(L)=\#(B_L\cap\Lambda_{p,k}).
+\tag{10.2}
+$$
+
+这里 $Q_z$ 在 $F_p$ 中均指同一个 $\sigma_p(Q_z)$。仅在定义群同态 $z\mapsto Q_z$ 时置 $Q_0=O$；$0$ 不参加任何深度或局部高度求和，也不在 $O$ 上计算这些量。层纤维使用实际的 $F_p$，不预设某个对数商所在的子域。
+
+**定理 10.2（所有预选地方上的完整深度四次界）。** 存在只依赖固定来源和 $q$ 的常数 $C_q$，使所有素数 $p>5$、所有整数 $L\ge2$ 及所有事先选定的嵌入同时满足
+
+$$
+0\le A_p(L)\le C_qL^4.
+\tag{10.3}
+$$
+
+证明。先核对实际完成域和形式层。三个二次域 $\mathbb Q(i)$、$\mathbb Q(\sqrt6)$、$\mathbb Q(\sqrt{15})$ 的判别式分别为 $-4,24,60$，故在 $p>5$ 均不分歧；它们的局部合成也不分歧。每个二次局部因子均包含在唯一的不分歧二次扩张中，所以
+
+$$
+e(F_p/\mathbb Q_p)=1,\qquad n_{v_p^*}=[F_p:\mathbb Q_p]\in\{1,2\}.
+\tag{10.4}
+$$
+
+若 $p\equiv1\pmod4$，所选的 $\sigma_p(i)$ 在 $\mathbb Q_p$ 中，而 $F_p$ 仍可为不分歧二次域；若 $p\equiv3\pmod4$，则 $F_p=\mathbb Q_p(\sigma_p(i))$。两种情形中非零元素的赋值均为整数。本模型的判别式为 $64$，故在这些完成域上为好约化的极小整模型。
+
+以下均为本证明调用的经典局部输入。[Silverman VII.2.1–2.2，印刷页 188–191](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf) 将约化核识别为整形式群在极大理想上的点。整形式差级数使每个 $E_k(F_p)$ 为子群；因而 $\Lambda_{p,k}$ 为加法子群，特别有
+
+$$
+z,z'\in\Lambda_{p,k}\quad\Longrightarrow\quad
+Q_z-Q_{z'}=Q_{z-z'}\in E_k(F_p).
+\tag{10.5}
+$$
+
+CM 作用也保持这些层：[Streng，*Divisibility sequences for elliptic curves with complex multiplication*，Theorem 2.9、Corollary 2.10，印刷页 189](https://msp.org/ant/2008/2-2/ant-v2-n2-p04-s.pdf) 给出整系数的 CM 形式作用及 $\mathcal O$ 模过滤。本模型还直接满足 $t([i]A)=i\,t(A)$；整数形式乘法和形式加法于是实现任意 Gaussian 标量。这里标量经同一个 $\sigma_p$ 运输，不要求嵌入固定某个预先命名的 $p$ 进平方根。
+
+如使用形式对数，准确范围为 [Silverman IV.6.3–6.4，印刷页 131–132](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf) 的严格不等式 $v_p(t)>1/(p-1)$。由 (10.4)，全部非零第一层点已经满足 $v_p(t)\ge1>1/(p-1)$。故规范形式对数 $\ell_p:E_1(F_p)\to\mathfrak m_{F_p}$ 在全部这些层上保赋值，且
+
+$$
+\ell_p(O)=0,\qquad
+\ell_p([\alpha]A)=\sigma_p(\alpha)\ell_p(A),\qquad
+v_p(\ell_p(A))=v_p(t(A))\quad(A\ne O).
+\tag{10.6}
+$$
+
+式 (10.6) 中 $\alpha\in\mathcal O$、$A\in E_1(F_p)$；标量恒等式也由不变微分的拉回或 Streng Lemma 2.6 得到。其 Lemma 3.4，印刷页 195–196，所用严格阈值在此同样满足。尤其当 $A\ne O$ 已在形式群中时，$b_p([q]A)=b_p(A)+v_p(q)$；这不把非入口点擅自认作形式点。对任意局部点之对，证明均不需要其对数商属于 $\mathbb Q_p(i)$ 或任一整数环，也不把单点的 rank-of-apparition 消去理想当作两点纤维。下面实际只用子群关系 (10.5)。
+
+再取得对全部这些地方统一的全球上包络。直接复用 (9.11)、(9.13) 及其固定常数 $C_0,C_-$，置
+
+$$
+a=8C_0q^2>0,\qquad d=C_-\ge0.
+\tag{10.7}
+$$
+
+对每个非零 $w\in\mathbb Z^4$，在 (9.11) 中取 $L=\|w\|_\infty$，而在 (9.13) 中用 $n_v\ge1$，得到对每个 $v\mid p>5$ 都成立的
+
+$$
+0\le\lambda_v(Q_w)\le a\|w\|_\infty^2+d.
+\tag{10.8}
+$$
+
+这里 $Q_w$ 非零由定理 7.2 保证。负部费用 $d$ 只来自 $2$ 上方及无穷地方的固定下界，不能把这些地方的局部高度当成非负；好约化地方本身非负。此上包络复用的规范正是 Silverman VIII.9.3、C.18.1–18.3，即 $2\widehat h=h_x+O_E(1)$ 及 $\widehat h=\frac18\sum_v n_v\lambda_v$，没有漏掉局部次数或另改高度规范。
+
+由 (9.7)，非零 $w\in\Lambda_{p,k}$ 满足
+
+$$
+k\log p\le\lambda_{v_p^*}(Q_w)\le a\|w\|_\infty^2+d.
+\tag{10.9}
+$$
+
+因此盒内每个深度都有限，且
+
+$$
+N_{p,k}(L)=0\quad\text{若}\quad
+k>\frac{aL^2+d}{\log p}.
+\tag{10.10}
+$$
+
+这也排除了可能的无穷深关系：$Q_z\ne O$，其非零参数在有限完成域中只有有限赋值。若没有入口，全部 $N_{p,k}(L)$ 及 $A_p(L)$ 均为零。
+
+现支付实际的全部高层。固定 $k$，记 $s=k\log p$。当 $s>2d$ 且 $N_{p,k}(L)>0$ 时，置
+
+$$
+r=\sqrt{\frac{s-d}{a}}>0.
+\tag{10.11}
+$$
+
+由某个盒内非零关系的 (10.9) 有 $r\le L$。把实盒 $[-L,L]^4$ 的每个坐标区间等分为 $m=\lceil4L/r\rceil$ 个区间，并将边界点只分配给一侧。每个小盒的边长至多 $r/2$。若同一小盒含有两个不同的 $z,z'\in B_L\cap\Lambda_{p,k}$，则 $w=z-z'\ne0$ 且 $\|w\|_\infty\le r/2$。由 (10.5)、(10.8) 必有
+
+$$
+s\le\lambda_{v_p^*}(Q_w)
+\le a(r/2)^2+d
+=\frac{s-d}{4}+d<s,
+\tag{10.12}
+$$
+
+矛盾。这里每个实际非零四维差都由同一全球点对产生，其非零性与上包络均已支付；没有把坐标不同直接当成局部距离分离。每个小盒至多一个关系，且 $r\le L$ 给出 $m\le5L/r$，所以
+
+$$
+N_{p,k}(L)\le\frac{625a^2L^4}{(s-d)^2}
+\le\frac{2500a^2L^4}{(k\log p)^2}
+\qquad(k\log p>2d).
+\tag{10.13}
+$$
+
+若该层为空，同一上界当然仍成立。小盒的全部边界已经计入 $m^4$，没有遗留二维或三维边界费用。
+
+由 (10.4) 深度为非负整数，(10.10) 允许准确地按全部层求和：
+
+$$
+A_p(L)=\log p\sum_{k\ge1}N_{p,k}(L).
+\tag{10.14}
+$$
+
+右侧实际是有限和，不是只计算首次入口。对 $k\log p\le2d$ 的层，使用 $\#B_L\le(3L)^4$，其总费用至多 $162dL^4$。对其余全部层使用 (10.13)，以及初等界 $\sum_{k\ge1}k^{-2}\le2$，得
+
+$$
+\begin{aligned}
+A_p(L)
+&\le162dL^4+
+\frac{2500a^2L^4}{\log p}\sum_{k\ge1}\frac1{k^2}\\
+&\le\left(162d+\frac{5000a^2}{\log7}\right)L^4.
+\end{aligned}
+\tag{10.15}
+$$
+
+可取括号中数为 $C_q$。它只依赖固定来源与 $q$，不依赖 $p,L$ 或任何嵌入。所有 $p\mid q$ 仍保留在原纤维中；没有除去 $[q]$、假定它在局部可逆、或删掉其额外深度。分裂与惰性两种情形只通过各自实际的 $F_p$ 出现，未比较不同地方的单点读数。故 (10.3) 对整族预选嵌入统一成立。证毕。
+
+**定理 10.3（二次窗口外的完整盒正质量）。** 对同一固定来源与固定整数 $q\ge1$，任意整族事先选定的嵌入以及所有整数 $L\ge2$，有
+
+$$
+\sum_{5<p\le L^2}A_p(L)=O_q\!\left(\frac{L^6}{\log L}\right),
+\qquad
+\sum_{p>L^2}A_p(L)=H_L+O_q\!\left(\frac{L^6}{\log L}\right).
+\tag{10.16}
+$$
+
+这两个误差常数对嵌入族统一，且每个有限 $L$ 的素数和均有有限支持。准确地，
+
+$$
+\lim_{L\to\infty}
+\frac{1}{q^2L^6}\sum_{p>L^2}A_p(L)
+=\frac{32}{3}(H_1+H_2)>0.
+\tag{10.17}
+$$
+
+证明。只需经典 Chebyshev 上界 $\pi(x)\ll x/\log x$。作为此处的经典中间输入，其初等依据是：$\prod_{n<p\le2n}p$ 整除 $\binom{2n}{n}\le4^n$，故 $\vartheta(2n)-\vartheta(n)\le2n\log2$；沿 $2$ 的幂求和得到 $\vartheta(x)\ll x$。将素数分成 $p\le\sqrt x$ 和 $p>\sqrt x$，得到 $\pi(x)\le\sqrt x+2\vartheta(x)/\log x\ll x/\log x$。这不是新的素数计数定理。
+
+逐素数应用 (10.3)，立刻有
+
+$$
+0\le\sum_{5<p\le L^2}A_p(L)
+\le C_qL^4\pi(L^2)
+\ll_q\frac{L^6}{\log L}.
+\tag{10.18}
+$$
+
+另一方面，直接引用定理 9.5 在固定 $\mathcal F=\varnothing$ 时的完整总量，以及定理 9.3 的准确多项式：
+
+$$
+\sum_{p>5}A_p(L)=H_L+O_q(L^{16/3}),\qquad
+H_L=\frac23q^2(H_1+H_2)L(L+1)(2L+1)^4.
+\tag{10.19}
+$$
+
+此处只复用固定地方消费者；不将其固定清单换成移动清单。它删除的仅是 $2,3,5$ 上方及全部无穷地方，常数因而固定。由定理 9.2，其有限盒的总量本来就独立于各素数所选地方。
+
+每个 $z\in B_L$ 的 $x(Q_z)\in K$ 只有有限分母支持；盒本身有限，故所有非零深度的素数支持之并仍有限。可以从 (10.19) 精确减去 (10.18) 而不交换未经证明收敛的级数。因 $L^{16/3}=O(L^6/\log L)$，得到 (10.16) 的第二式。
+
+最后，$L(L+1)(2L+1)^4/L^6\to16$，而除以固定的 $q^2L^6$ 后误差为 $O_q(1/\log L)$。代入 (10.19) 得 (10.17)；$H_1,H_2>0$ 已由定理 7.2 保证。$H_L$ 已是规范高度之和，不再除以 $8$。证毕。
+
+用白话说，同一个深层里若挤进两个系数很近的关系，它们的差也必须同样深；但短系数产生的全球高度有限，无法支付这笔局部费用。四个方向一起装箱，使深层数量按层高的平方倒数下降，全部层的费用因此能相加。每个素数的总费用都有同一个四次上界，再用二次窗口内的素数个数，就只删去六次主项中趋于零的一部分。
+
+本节的量词始终是固定 $q$、固定 $K$ 和同一点对，结论仅为完整无筛选四维盒的 $p>L^2$ 尾部。它不提供移动 $q$ 或移动来源的统一常数，也不估计 $p>L^4$ 的尾部，不判定原 RG004 §70 的 $V_H$ 或 §8 的原共同小像筛选条件；这些量没有由 (10.16) 得到结算。
+
+## 追加锚（本行以下为增补区）
+
+## 11. 实际 Mordell–Weil 高度椭球与扩大对数窗口
+
+**定义 11.1（固定来源、完整挠点纤维与绝对规范）。** 固定椭圆曲线 $E/\mathbb Q$、有限 Galois 扩张 $K/\mathbb Q$ 及在 $G=\operatorname{Gal}(K/\mathbb Q)$ 下稳定的实际有限生成子群 $\Gamma\subset E(K)$。记
+
+$$
+N=[K:\mathbb Q],\quad T=\Gamma_{\rm tors},\quad t=|T|,\quad
+\Lambda=\Gamma/T,\quad V=\Lambda\otimes_{\mathbb Z}\mathbb R,\quad d=\operatorname{rank}\Lambda\ge3.
+\tag{11.1}
+$$
+
+以 $\pi:\Gamma\to\Lambda\subset V$ 表示商映射。规范高度仍采用 $2\widehat h=h_x+O_E(1)$；其在 $V$ 上的二次型记为 $Q$，范数记为 $\|x\|_Q=\sqrt{Q(x)}$。这里使用的经典输入为 [Silverman，*The Arithmetic of Elliptic Curves*，第二版，VIII.9.3、VIII.9.5–9.6，印刷页 248–252](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf)：高度配对消去挠点，并在 $E(K)\otimes\mathbb R$ 上给出正定二次型。$\Gamma/T$ 注入 $E(K)/E(K)_{\rm tors}$，故限制到 $V$ 仍正定。实正定性调用 VIII.9.6，连同其使用 VIII.6.1 的有界高度有限性；不以仅在非零格点上取正值替代这个输入。
+
+任取 $V$ 上 Lebesgue 测度 $\mu$，定义
+
+$$
+\mathcal B_Q=\{x\in V:Q(x)\le1\},\qquad
+c_\Gamma=\frac{\mu(\mathcal B_Q)}{\operatorname{covol}_\mu(\Lambda)}>0,\qquad
+S_R=\{P\in\Gamma:0<\widehat h(P)\le R^2\},\qquad
+H(R)=\sum_{P\in S_R}\widehat h(P).
+\tag{11.2}
+$$
+
+$R\ge1$ 为实数。比值 $c_\Gamma$ 与测度的标量选择无关，只附属于这个声明的子群及其高度；不将 $\Lambda$ 称为整个 $E(K)$ 的基，也不将该比值称为整个群的调节子。每个非零 $x\in\Lambda\cap R\mathcal B_Q$ 的全部 $t$ 个实际提升都在 $S_R$；$\pi^{-1}(0)=T$ 全部排除。这里没有选择 $G$ 等变截面。
+
+先固定一个有理整 Weierstrass 方程、全部地方绝对值及每个有理地方 $r$ 上方的一个选定地方 $v_r^*$；实现这些地方的嵌入也一次固定，同一地方的全部点共用它。有限地方使用 $|p|_v=p^{-1}$，实、复地方均使用通常绝对值，令 $\nu_v=-\log|\cdot|_v$。有限地方 $n_v=[K_v:\mathbb Q_p]$，实地方 $n_v=1$，复地方 $n_v=2$。使用 [Silverman C.18.1–18.3，印刷页 454–455](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf) 的局部高度；对 $A\ne O$，
+
+$$
+\widehat h(A)=\frac1N\sum_v n_v\lambda_v(A),\qquad
+\lambda_v(A)=-\log|t_v(A)|_v+O_v(1)\quad(A\to O).
+\tag{11.3}
+$$
+
+后一式由原文 C.18.1(ii) 的 $\lambda_v+\frac12\nu_v(x)$ 有有限极限及 $x=t_v^{-2}(1+O(t_v))$ 得到。每个地方均取该固定方程的原点参数 $t_v=-x/y$，并一次选定所需参数图。固定有限素数集 $\mathcal E$，包含该整方程判别式的素因子、$K/\mathbb Q$ 的分歧素数及 $2,3$。对 $p\notin\mathcal E$，完成域不分歧，所选整方程为好约化极小模型。仅对 $A\ne O$ 定义
+
+$$
+b_v(A)=
+\begin{cases}
+ v_p(-x(A)/y(A)),&A\in E_1(K_v),\\
+ 0,&A\notin E_1(K_v),
+\end{cases}
+\qquad
+A_p(R)=\log p\sum_{P\in S_R}b_{v_p^*}(P),\qquad v_p(p)=1.
+\tag{11.4}
+$$
+
+参数仅在第一种情形计算。VII.2.1–2.2 与 C.18.3(b) 给出 $b_v(A)\in\mathbb Z_{\ge0}$ 及 $\lambda_v(A)=b_v(A)\log p$。深度包含所有高阶层，不借用任何对数商的域归属。
+
+**定理 11.2（共同椭球的地方平均与高度主项）。** 对定义 11.1 的同一来源，$S_R$ 是有限、实际 $G$ 稳定的点集。令 $S_v(R)=\sum_{P\in S_R}\lambda_v(P)$。对任意有理地方 $r$ 及任意 $v\mid r$，准确有
+
+$$
+S_v(R)=\frac1N\sum_{w\mid r}n_wS_w(R).
+\tag{11.5}
+$$
+
+此外，当来源固定且 $R\to\infty$ 时，
+
+$$
+|S_R|=t c_\Gamma R^d+O_{E,K,\Gamma}(R^{d-1}),\qquad
+H(R)=t c_\Gamma\frac d{d+2}R^{d+2}+O_{E,K,\Gamma}(R^{d+1}).
+\tag{11.6}
+$$
+
+证明。正定性与格的离散性先保证 $S_R$ 有限，下面同时给出精确计数。绝对横坐标高度在 $G$ 下不变，乘法与 $G$ 交换；由规范高度的极限定义得到 $\widehat h(gP)=\widehat h(P)$。因 $g\Gamma=\Gamma$，$g$ 在实际 $S_R$ 上双射，包括所有挠点平移的提升，不需要在商群上先选等变提升。按 $|u|_{g^{-1}v}=|g(u)|_v$ 运输地方，C.18.1 的唯一性给出 $\lambda_v(gP)=\lambda_{g^{-1}v}(P)$。重编号有限点集得 $S_v(R)=S_{g^{-1}v}(R)$。$G$ 在 $r$ 上方地方上传递，且 $\sum_{w\mid r}n_w=N$，证明 (11.5)。无穷地方也在此论证内：实嵌入权 $1$，一对共轭复嵌入合为一个地方、权 $2$。这只是点集求和恒等式，不是一般单点恒等式。
+
+为同时支付椭球边界，取 $\Lambda$ 的有界半开基本平行体 $F$，使 $\|y\|_Q\le\rho$ 于 $F$。记 $M(u)=\#\{x\in\Lambda:0<\|x\|_Q\le u\}$。以 $x+F$ 铺满 $V$，对所有 $u\ge0$ 有
+
+$$
+c_\Gamma(u-\rho)_+^d\le M(u)+1\le c_\Gamma(u+\rho)^d,
+\qquad M(u)=c_\Gamma u^d+O_{Q,\Lambda}((1+u)^{d-1}).
+\tag{11.7}
+$$
+
+左边由半径 $(u-\rho)_+$ 的球落入中心范数不超过 $u$ 的格胞，右边由这些格胞均落入半径 $u+\rho$ 的球；零半径下界为零。闭球上的格点均计入，半开格胞使重叠边界不重复计量。这是固定格的经典体积计数在此处的直接使用。
+
+每个非零商点正好有 $t$ 个提升，高度相同，故 $|S_R|=tM(R)$。逐个格点积分可得准确等式
+
+$$
+H(R)=t\left(R^2M(R)-\int_0^R2uM(u)\,du\right).
+\tag{11.8}
+$$
+
+代入 (11.7)，主项为 $t c_\Gamma(1-2/(d+2))R^{d+2}$，误差为 $O(tR^{d+1})$。这证明 (11.6)，亦证明 $S_R$ 有限。被删去的是全部 $T$；没有在这些点上使用 $\lambda_v$，也没有遗失闭椭球边界。证毕。
+
+**定理 11.3（固定地方的完整绝对质量）。** 对每个固定地方 $v$，存在只依赖 $E,K,\Gamma,v$ 的常数，使所有 $R\ge1$ 满足
+
+$$
+\sum_{P\in S_R}|\lambda_v(P)|=O_{E,K,\Gamma,v}(R^d).
+\tag{11.9}
+$$
+
+证明。先统一支付负部。C.18.1 的连续性、原点的正无穷奇性与 $E(K_u)$ 的紧性给出 $c_u\ge0$，使所有 $A\ne O$ 满足 $\lambda_u(A)\ge-c_u$。在 $u\mid p\notin\mathcal E$ 可由好约化公式取 $c_u=0$。因此
+
+$$
+C_-=\sum_u n_uc_u<\infty,\qquad
+-c_v\le\lambda_v(A)\le a_v\widehat h(A)+b_v',\quad
+ a_v=N/n_v>0,\quad b_v'=C_-/n_v\ge0.
+\tag{11.10}
+$$
+
+右边来自 (11.3)，对所有实际非零点都成立，特别包括非零挠点。
+
+固定 $v$ 的小参数邻域 $U_0$，使 $|\lambda_v(A)+\log|t_v(A)|_v|\le C_v$。再取较小邻域 $U$，使互异非零 $A,B\in U$ 时 $A-B\in U_0$ 且
+
+$$
+|t_v(A-B)|_v\le\kappa_v\max(|t_v(A)|_v,|t_v(B)|_v),\qquad \kappa_v\ge1.
+\tag{11.11}
+$$
+
+这里的局部事实是 IV.1 的参数展开及 VII.2 的群参数化：有限地方把固定收敛的差级数限制到足够小的球，其无常数项给出该界；坏地方必要的缩小固定在 $U$ 内。实、复地方由局部解析差映射在较小圆盘上的有界一阶导数给出同一形式的界。此处不要求好约化、不分歧或形式对数的等距范围。
+
+紧集 $E(K_v)\setminus U$ 上 $\lambda_v$ 有上界。取固定 $h_v\ge0$，使 $\lambda_v(A)>h_v$ 蕴涵 $A\in U$。对不同的实际点 $A,B$，两次参数比较给出
+
+$$
+\lambda_v(A),\lambda_v(B)>h_v
+\ \Longrightarrow\
+\lambda_v(A-B)\ge\min(\lambda_v(A),\lambda_v(B))-D_v,
+\quad D_v=2C_v+\log\kappa_v\ge0.
+\tag{11.12}
+$$
+
+差点非零才使用其高度与参数；从未在 $O$ 上赋予无穷高度来代替这一步。
+
+令 $Z_v(s,R)=\{P\in S_R:\lambda_v(P)>s\}$。固定
+$s_0>1+h_v+2(D_v+b_v')$。当 $s\ge s_0$ 且 $P,P'\in Z_v(s,R)$ 不同时，(11.10)–(11.12) 给出
+
+$$
+a_v\|\pi(P)-\pi(P')\|_Q^2
+=a_v\widehat h(P-P')>s-D_v-b_v'>s/2.
+\tag{11.13}
+$$
+
+尤其若两点来自同一挠点纤维，它们的非零差是挠点，(11.10) 的上界为 $b_v'$，与 (11.12) 矛盾。因此高层上的商映射单射；在低层仍完整计入每个纤维的 $t$ 个点。该论证无需任何群截面。
+
+置 $r_s=\sqrt{s/(2a_v)}$。若 $Z_v(s,R)$ 非空，由 $s<\lambda_v(P)\le a_vR^2+b_v'$ 及 $s>2b_v'$ 得 $r_s\le R$。在 $Q$ 范数中，以投影点为中心的半径 $r_s/2$ 开球两两不交，均包含在半径 $R+r_s/2$ 的球内。所以
+
+$$
+\#Z_v(s,R)\le(1+2R/r_s)^d
+\le3^d(2a_v)^{d/2}R^d s^{-d/2}\quad(s\ge s_0).
+\tag{11.14}
+$$
+
+空层也满足该界。低层用 $|S_R|=O(R^d)$，高层用 (11.14)，对每个有限 $S_R$ 的正部积分得到
+
+$$
+\sum_{P\in S_R}\max(\lambda_v(P),0)
+=\int_0^\infty\#Z_v(s,R)\,ds
+\ll_v R^d\left(s_0+\int_{s_0}^\infty s^{-d/2}\,ds\right)\ll_v R^d.
+\tag{11.15}
+$$
+
+积分实际在 $a_vR^2+b_v'$ 之后为零。因 $d>2$，写到无穷的上界收敛；负部至多 $c_v|S_R|=O_v(R^d)$，证明 (11.9)。这同时核对了高局部高度的实际差点、固定阈值、挠点同纤维与全部地方的负部。证毕。
+
+**定理 11.4（整族预选地方上的全部形式层）。** 存在 $C=C(E,K,\Gamma,\mathcal E)$ 及 $p_0=p_0(E,K,\mathcal E)$，对所有 $p\notin\mathcal E$、所有事先选定的 $v_p^*$ 和全部 $R\ge1$，有
+
+$$
+0\le A_p(R)\le CR^d,\qquad
+A_p(R)\le\frac{CR^d}{(\log p)^{d/2-1}}\quad(p\ge p_0).
+\tag{11.16}
+$$
+
+每个 $R$ 的素数支持有限，且每个素数的全部高层都在有限截断内；常数不依赖所选地方族。
+
+证明。令 $v=v_p^*$，$F=K_v$。$p\notin\mathcal E$ 保证 $e(F/\mathbb Q_p)=1$，但允许任意剩余次数 $f=n_v$。因此 $v_p(F^\times)=\mathbb Z$，$\nu_v=v_p\log p$，局部次数仍只放在 (11.3) 的 $n_v$ 中。定义实际子群
+
+$$
+E_k(F)=\{O\}\cup\{A\in E_1(F)\setminus\{O\}:v_p(t_v(A))\ge k\},\qquad
+N_{p,k}(R)=\#(S_R\cap E_k(F))\quad(k\ge1).
+\tag{11.17}
+$$
+
+VII.2.2 的整形式群律及形式逆使 $E_k(F)$ 为子群，故同层的两个实际点之差仍在同层。这里只在群的集合定义中放入 $O$；不在 $O$ 上计算深度。对非零层点，C.18.3(b) 给出
+$\lambda_v(A)=v_p(t_v(A))\log p\ge k\log p$。从 (11.10) 取不依赖地方的较弱包络，得到
+
+$$
+\lambda_v(A)\le N\widehat h(A)+C_-,\qquad
+N_{p,k}(R)=0\quad\text{若}\quad k\log p>NR^2+C_-.
+\tag{11.18}
+$$
+
+因局部参数在非零形式点上不为零，每个实际深度有限。于是可先作有限层分解，再用收敛上界：
+
+$$
+A_p(R)=\log p\sum_{k\ge1}N_{p,k}(R).
+\tag{11.19}
+$$
+
+令 $s=k\log p>2C_-$。若同层两点不同，其实际差非零，且
+
+$$
+s\le\lambda_v(P-P')\le N\|\pi(P)-\pi(P')\|_Q^2+C_-.
+\tag{11.20}
+$$
+
+同纤维的非零挠点差将给出 $s\le C_-$，故此时投影单射。不同投影间距至少 $r=\sqrt{(s-C_-)/N}$；若该层非空，(11.18) 给出 $r\le R$。同 (11.14) 的开球体积比较，包括全部椭球边界，得到
+
+$$
+N_{p,k}(R)\le3^d\left(\frac{N}{s-C_-}\right)^{d/2}R^d
+\le B R^d(k\log p)^{-d/2},\qquad B=3^d(2N)^{d/2}.
+\tag{11.21}
+$$
+
+单点层也满足该界，空层同样如此。对于 $k\log p\le2C_-$ 的低层，定理 11.2 的格计数给出 $N_{p,k}(R)\le C_\Gamma'R^d$，其中 $C_\Gamma'$ 包含全部 $t$ 个提升；这些层乘上 $\log p$ 的总费用至多 $2C_-C_\Gamma'R^d$。对其余全部层用 (11.21)，令 $\beta=d/2>1$，得
+
+$$
+A_p(R)\le2C_-C_\Gamma'R^d+
+B R^d(\log p)^{1-\beta}\sum_{k\ge1}k^{-\beta}.
+\tag{11.22}
+$$
+
+级数收敛，$\log p\ge\log2$，即得第一界。若 $\log p>2C_-$，低层全无，(11.22) 的第一项删除，便得第二界；可把这个阈值及 $\mathcal E$ 吸收进固定 $p_0$。不要求该阈值有效计算。$d>2$ 正是完整深度级数收敛的条件；当 $d=2$，此证明只给出截断谐和和的对数损失，不能据此否定二维的更强结论。
+
+最后，$S_R$ 有限；每个非零 $P$ 的 $x(P)\in K$ 只有有限分母支持，好约化处深度非零恰意味着横坐标有负赋值。因此这些支持的有限并含有全部非零 $A_p(R)$。整族地方均在开始时固定；证明使用实际完成域与实际差点，没有换源、逐点换嵌入或使用形式对数。证毕。
+
+**定理 11.5（扩大对数窗口外的正质量）。** 令 $\alpha=d/2-1>0$，对 $R\ge2$ 置
+
+$$
+X_R=R^2(\log R)^\alpha.
+\tag{11.23}
+$$
+
+保持定义 11.1 的固定数据，$R\to\infty$ 时有
+
+$$
+\sum_{\substack{p>X_R\\p\notin\mathcal E}}A_p(R)
+=H(R)+O_{E,K,\Gamma,\mathcal E}\!\left(\frac{R^{d+2}}{\log R}\right),\qquad
+\lim_{R\to\infty}\frac1{R^{d+2}}
+\sum_{\substack{p>X_R\\p\notin\mathcal E}}A_p(R)
+=t c_\Gamma\frac d{d+2}>0.
+\tag{11.24}
+$$
+
+充分大的 $R$ 有 $X_R>\max\mathcal E$，此时可直接把求和写成 $\sum_{p>X_R}A_p(R)$；不额外删除任何随 $R$ 变化的例外素数。
+
+证明。记 $\mathcal D=\{v:v\mid\infty\text{ 或 }v\mid p\in\mathcal E\}$。由定理 11.4 的有限支持、(11.5) 的逐素数平均与 (11.3)，准确有
+
+$$
+\sum_{p\notin\mathcal E}A_p(R)
+=H(R)-\frac1N\sum_{v\in\mathcal D}n_vS_v(R)
+=H(R)+O_{E,K,\Gamma,\mathcal E}(R^d).
+\tag{11.25}
+$$
+
+第二步只对固定有限清单应用 (11.9)，并未把其地方依赖常数用于移动清单。$H(R)$ 已经是绝对规范高度之和，此式绝不能再将它除以 $N$。
+
+所需素数计数输入仅是经典 Chebyshev 上界 $\pi(x)\ll x/\log x$，其初等依据已在定理 10.3 的证明中列明。对固定 $\alpha>0$，将素数分为 $p\le\sqrt x$ 及 $\sqrt x<p\le x$，可得
+
+$$
+\sum_{p\le x}(\log p)^{-\alpha}
+\le(\log2)^{-\alpha}\sqrt x+
+(2/\log x)^\alpha\pi(x)
+\ll_\alpha\frac{x}{(\log x)^{\alpha+1}}\quad(x\ge3).
+\tag{11.26}
+$$
+
+这里 $\sqrt x=O_\alpha(x/(\log x)^{\alpha+1})$。有限个 $p<p_0$ 的费用由 (11.16) 第一界支付，其余用第二界，于是
+
+$$
+\sum_{\substack{p\le X_R\\p\notin\mathcal E}}A_p(R)
+\ll R^d+R^d\frac{X_R}{(\log X_R)^{\alpha+1}}
+\ll\frac{R^{d+2}}{\log R},
+\tag{11.27}
+$$
+
+因为 $\log X_R=2\log R+\alpha\log\log R\asymp\log R$。从有限和 (11.25) 减去 (11.27) 即得首式。再用 (11.6)，$R^{d+1}=O(R^{d+2}/\log R)$，得到极限及其正性。每个有限 $R$ 都有 (11.5)，所以全部素数和及尾部均独立于预选地方族，误差常数也对此族统一。证毕。
+
+**推论 11.6（现有八次来源的实际椭球消费者）。** 取 (9.1) 的同一曲线、八次域与点对，固定整数 $q\ge1$，令
+
+$$
+\Gamma_q=[q]\bigl(\mathbb ZP_1+\mathbb Z([i]P_1)+\mathbb ZP_2+\mathbb Z([i]P_2)\bigr)
+=[q]\bigl(\mathbb Z[i]P_1+\mathbb Z[i]P_2\bigr).
+\tag{11.28}
+$$
+
+其中 $\mathbb Z[i]P_j$ 表示 Gaussian 整数模生成的群。此实际子群 $G$ 稳定，$T=0,d=4$，且以 $([q]P_1,[q][i]P_1,[q]P_2,[q][i]P_2)$ 为整数基时
+
+$$
+Q(a,b,c,e)=q^2\bigl(H_1(a^2+b^2)+H_2(c^2+e^2)\bigr),\qquad
+c_{\Gamma_q}=\frac{\pi^2}{2q^4H_1H_2},\qquad
+H(R)=\frac{\pi^2}{3q^4H_1H_2}R^6+O_q(R^5).
+\tag{11.29}
+$$
+
+因此选 $\mathcal E=\{2,3,5\}$ 后，对同一实际 $S_R\subset\Gamma_q$、充分大的 $R$ 有
+
+$$
+\sum_{p>R^2\log R}A_p(R)
+=\frac{\pi^2}{3q^4H_1H_2}R^6+O_q(R^6/\log R),\qquad
+\lim_{R\to\infty}\frac1{R^6}\sum_{p>R^2\log R}A_p(R)
+=\frac{\pi^2}{3q^4H_1H_2}>0.
+\tag{11.30}
+$$
+
+证明。定理 7.2 已给出 Gaussian 模挠独立性，故这四个整数方向的任何非零组合均非挠。乘以固定 $q$ 后仍如此，故 $([q]P_1,[q][i]P_1,[q]P_2,[q][i]P_2)$ 是 $\Gamma_q$ 的整数基，$T=0$。使用定理 9.2 已核对的实际 Galois 作用：三个独立符号 $\epsilon,\delta_1,\delta_2$ 在四个方向上的字符分别为
+
+$$
+\chi_1=\delta_1,\quad\chi_2=\epsilon\delta_1,\quad
+\chi_3=\delta_2,\quad\chi_4=\epsilon\delta_2.
+\tag{11.31}
+$$
+
+它们两两不同且取值 $\pm1$。高度配对在 $G$ 下不变；任意两个不同字符的商是非平凡字符，存在一个 $g$ 使其值为 $-1$。于是相应两个生成点的配对等于其负值，故为零。这证明逐点正交性，不以盒中交叉项求和为零替代正交。定理 9.3 已证明 $\widehat h([i]P_j)=H_j$，故得到 (11.29) 的二次型。
+
+在该整数基中取协体积为 $1$ 的测度。单位四维球的体积为 $\pi^2/2$：按前两个实坐标的半径积分，体积为 $2\pi^2\int_0^1r(1-r^2)\,dr$。椭球四个半轴为 $(q\sqrt{H_1})^{-1}$ 两次及 $(q\sqrt{H_2})^{-1}$ 两次，故体积及 $c_{\Gamma_q}$ 为 (11.29) 所列值。将 $t=1,d=4$ 代入 (11.6)，主项为 $\frac23c_{\Gamma_q}R^6$，即给出的常数。
+
+本曲线判别式为 $64$；由定理 10.2 已核对，八次域在 $p>5$ 不分歧，因此 $\mathcal E=\{2,3,5\}$ 足够。即使 $p\mid q$ 也保留它在实际群中的全部深度，不需从层中消去 $[q]$。定理 11.5 取 $\alpha=1$ 即得 (11.30)，其中 $q$ 与来源固定。证毕。
+
+**说明 11.7（文献对应、可删前提与结论边界）。** 本节一般消费者及其层求和推导属于 repo-derived 应用，不作优先性主张。Silverman VIII.9.3、VIII.9.6 只承担规范高度、配对及实正定性，C.18.1–18.3 承担局部奇性、连续性、次数加权及好约化公式，VII.2.1–2.2 承担实际约化核和整形式群。格胞体积比较与 Chebyshev 上界也都是经典输入。§10 已有四维盒的完整层装箱，本节使用其实际差点机制，新增消费者是带完整挠点纤维的一般高度椭球及其对数扩大窗口。
+
+[Bhakta，*Perfect powers in the product of denominators of elliptic curves*，arXiv:2606.00466v3，§5.1，Lemmas 5.1–5.4，页 19–21](https://arxiv.org/pdf/2606.00466v3) 的对象是 $E(\mathbb Q)$ 的约化格、挠点约化陪集及入口支持计数。其 Lemma 5.3 是有界高度下非零横坐标赋值的点数界，Lemma 5.4 是小约化像群阶的素数支持界；它们没有给出 $\sum_kN_{p,k}$ 的完整深度质量。本节没有把这些入口结论当作 (11.19)–(11.22) 的证明，也不需要其更强筛法结论来替代实际层求和。
+
+用白话说，椭球画在“整数点的组合系数”所张成的 Mordell–Weil 实空间中。全球规范高度给这个空间一把正定的尺；共轭保持这把尺，所以把全部挠点提升都装入同一高度球后，共轭只会重排真实点。局部高度的次数加权公式由此能对整个球接回全球总量。单点在不同地方的读数仍可不同。
+
+一个地方收取的费用很高时，该点很靠近局部群原点。两个这样的实际点相减，差点也靠近原点；若它们的系数组合太近，差点的全球高度就不足以支付该局部费用。因此高层只能容纳相互分离的系数点。$d$ 维体积给出 $s^{-d/2}$ 的层数衰减，$d>2$ 使全部层可加。这里用的是实际局部群差和高度预算，不把原点的几何余维当作高度估计，也不从维数类比推断物理几何。
+
+一般定理删除了 CM、Gaussian 系数、独立坐标变号的矩形盒、对数商的有理性及等变截面前提；保留的是固定 Galois 来源、实际稳定子群、完整挠点纤维、正定高度、$d>2$、固定例外集与预选地方。CM 只用于明确 (11.28) 这个现有消费者，未参与一般层界。椭球族的结论不能改称原矩形全盒的同一统计，(11.30) 的常数也不是 (10.17) 的盒常数。
+
+原 $p>L^4$ 尾部、原 RG004 §70 的 $V_H$ 与量子起源桥仍未由本节证明。固定 $q$ 的误差不声称对移动 $q$ 统一；$d\le2$ 时本证明的完整层求和不能给出同一界。这里没有物理空间或量子公理的实现结论，也没有给出 $\mathbb Z$ 在 $\mathbb Q$ 中的丢番图定义。
+
+## 追加锚（本行以下为增补区）
+
+## 12. 自由秩一实际含挠来源的完整深度与三次尾部
+
+**定义 12.1（秩一来源、完整点集与地方规范）。** 固定椭圆曲线 $E/\mathbb Q$、有限 Galois 扩张 $K/\mathbb Q$ 以及 $G=\operatorname{Gal}(K/\mathbb Q)$ 稳定的实际有限生成子群 $\Gamma\subset E(K)$，要求 $\Gamma/T$ 的自由秩为一，其中 $T=\Gamma_{\rm tors}$。记 $N=[K:\mathbb Q]$、$t=|T|$。选取商群的一个正生成元及其任意实际提升 $P$，于是作为普通阿贝尔群有
+
+$$
+\Gamma=\mathbb ZP\oplus T,\qquad
+\pi(nP+\tau)=n,\qquad h=\widehat h(P)>0.
+\tag{12.1}
+$$
+
+不要求这个分裂与 $G$ 作用相容。规范高度采用 $2\widehat h=h_x+O_E(1)$ 的绝对规范，$h_x(A)=h(x(A))$，并置 $h_x(O)=0$。对实数 $R\ge1$，令
+
+$$
+L=\left\lfloor\frac{R}{\sqrt h}\right\rfloor,\qquad
+S_R=\{nP+\tau:0<|n|\le L,\ \tau\in T\}
+=\{A\in\Gamma:0<\widehat h(A)\le R^2\},\qquad
+H(R)=\sum_{A\in S_R}\widehat h(A).
+\tag{12.2}
+$$
+
+这里每个非零自由坐标的全部实际挠点提升均保留，零自由坐标的整个纤维 $T$ 均排除。$S_R$ 中没有 $O$；$L=0$ 时它是空集。高度的正性、整数倍二次律及挠点平移不改变高度，使用 [Silverman，*The Arithmetic of Elliptic Curves*，第二版，VIII.9.3(b)–(e)，印刷页 248–249](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf) 的规范与双线性配对。
+
+固定一个有理整 Weierstrass 方程，其判别式为 $\Delta\ne0$；每个有理地方 $r$ 上方选定一个地方 $v_r^*$，同一地方的全部点共用同一嵌入。有限地方取 $|p|_v=p^{-1}$，实、复地方均取通常绝对值。记 $\nu_v=-\log|\cdot|_v$；有限地方的权为 $n_v=[K_v:\mathbb Q_p]$，实地方为 $1$，复地方为 $2$。局部高度取 [Silverman C.18.1–18.3，印刷页 454–455](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf) 的 $\lambda_v$。对 $A\ne O$，其准确分解与原点奇性为
+
+$$
+\widehat h(A)=\frac1N\sum_{v\in M_K}n_v\lambda_v(A),\qquad
+\lambda_v(A)=-\log|t_v(A)|_v+O_v(1)\quad(A\longrightarrow O),
+\qquad t_v=-x/y.
+\tag{12.3}
+$$
+
+只在原点参数图内使用后一式。固定有限素数集 $\mathcal E$，包含 $\Delta$ 的素因子、$K/\mathbb Q$ 的分歧素数及 $2,3$；不要求加入 $t$ 或某个固定乘数的素因子。称 $p\notin\mathcal E$ 为允许素数。对 $v\mid p$，令 $F_v=K_v$。这些完成域不分歧，给定方程是好约化极小整模型。令 $E_1(F_v)$ 为实际约化核，并对整数 $k\ge1$ 定义
+
+$$
+E_k(F_v)=\{O\}\cup
+\{A\in E_1(F_v)\setminus\{O\}:v_p(t_v(A))\ge k\},
+\qquad v_p(p)=1.
+\tag{12.4}
+$$
+
+只有这里的非零形式点才计算参数；对任意实际非零点定义
+
+$$
+b_v(A)=
+\begin{cases}
+v_p(t_v(A)),&A\in E_1(F_v),\\
+0,&A\notin E_1(F_v),
+\end{cases}
+\qquad
+A_p(R)=\log p\sum_{A\in S_R}b_{v_p^*}(A),\qquad
+N_{p,k}(R)=\#(S_R\cap E_k(F_{v_p^*})).
+\tag{12.5}
+$$
+
+由 VII.2.1–2.2，印刷页 188–191，及 C.18.3(b)，允许地方满足
+
+$$
+b_v(A)\in\mathbb Z_{\ge0},\qquad
+\lambda_v(A)=b_v(A)\log p
+=\tfrac12\log\max(1,|x(A)|_v).
+\tag{12.6}
+$$
+
+若横坐标为零，最后一项仍为零；不在非形式点上计算 $-x/y$。
+
+**定理 12.2（实际循环入口、全深度与大素数正三次质量）。** 对定义 12.1 的固定来源及任意整族预选地方，下列结论同时成立。
+
+（一）点集有限，且有准确公式
+
+$$
+|S_R|=2tL,\qquad
+H(R)=\frac{th}{3}L(L+1)(2L+1)
+=\frac{2t}{3\sqrt h}R^3+O_{E,K,\Gamma}(R^2).
+\tag{12.7}
+$$
+
+（二）对每个允许素数 $p$，实际子群 $\mathcal K_p=\Gamma\cap E_1(F_{v_p^*})$ 无挠且在 $\Gamma$ 中有限指数。自由坐标投影在 $\mathcal K_p$ 上单射，其像是唯一的 $m_p\mathbb Z$，其中 $m_p\ge1$。存在唯一的正自由坐标生成元及实际挠点偏移
+
+$$
+Q_p=m_pP+\tau_p,\qquad \tau_p\in T,\qquad
+\mathcal K_p=\mathbb ZQ_p,\qquad [\Gamma:\mathcal K_p]=tm_p.
+\tag{12.8}
+$$
+
+置 $d_p=v_p(t_{v_p^*}(Q_p))\ge1$。全部层与全部倍数的深度准确为
+
+$$
+\begin{aligned}
+v_p(t_{v_p^*}([a]Q_p))&=d_p+v_p(a)
+&& (a\in\mathbb Z\setminus\{0\}),\\
+N_{p,k}(R)&=
+2\left\lfloor\frac{L}{m_pp^{\max(0,k-d_p)}}\right\rfloor
+&& (k\ge1),\\
+A_p(R)&=2\log p\left[
+\left\lfloor\frac L{m_p}\right\rfloor d_p
++\sum_{j\ge1}\left\lfloor\frac{L}{m_pp^j}\right\rfloor
+\right].
+\end{aligned}
+\tag{12.9}
+$$
+
+每个有限 $R$ 的层和、整数倍和及素数支持均有限；$L=0$ 或 $m_p>L$ 时该素数的全部质量为零。式 (12.8) 使用实际的 $\tau_p$，不以 $P$ 的约化阶替代 $m_p$。
+
+（三）存在只依赖固定来源及 $\mathcal E$ 的 $C$，对所有允许素数、所有预选地方和所有 $R\ge1$ 一致有
+
+$$
+0\le A_p(R)\le CR^2.
+\tag{12.10}
+$$
+
+（四）对每个固定地方 $v$，包括无穷、坏约化及分歧地方，有
+
+$$
+\sum_{A\in S_R}|\lambda_v(A)|=O_{E,K,\Gamma,v}(R^2).
+\tag{12.11}
+$$
+
+（五）完整实际点集 $S_R$ 在 $G$ 下重排。令 $S_v(R)=\sum_{A\in S_R}\lambda_v(A)$。对每个有理地方 $r$ 和每个 $v\mid r$，准确有
+
+$$
+S_v(R)=\frac1N\sum_{w\mid r}n_wS_w(R).
+\tag{12.12}
+$$
+
+这是整个实际点集的等式。结合固定有限例外质量，
+
+$$
+\sum_{p\notin\mathcal E}A_p(R)=H(R)+O_{E,K,\Gamma,\mathcal E}(R^2).
+\tag{12.13}
+$$
+
+（六）当 $R\to\infty$，有
+
+$$
+\begin{aligned}
+\sum_{\substack{p>R\\p\notin\mathcal E}}A_p(R)
+&=\frac{2t}{3\sqrt h}R^3+
+O_{E,K,\Gamma,\mathcal E}\!\left(\frac{R^3}{\log R}\right),\\
+\lim_{R\to\infty}\frac1{R^3}
+\sum_{\substack{p>R\\p\notin\mathcal E}}A_p(R)
+&=\frac{2t}{3\sqrt h}>0.
+\end{aligned}
+\tag{12.14}
+$$
+
+当 $R>\max\mathcal E$，这两个求和中的素数限制可直接写成 $p>R$。总量、尾部及误差常数对整族预选地方一致。
+
+证明。先确定实际点集。若 $nP+\tau=n'P+\tau'$，在 $\Gamma/T$ 中取像得 $n=n'$，继而 $\tau=\tau'$。高度二次律与配对消去挠点给出 $\widehat h(nP+\tau)=n^2h$，因此 (12.2) 的两种定义一致；它排除了全部零自由坐标，而不只是排除 $O$。有限点集恰有 $2tL$ 个点，且
+
+$$
+H(R)=2th\sum_{n=1}^Ln^2
+=\frac{th}{3}L(L+1)(2L+1).
+\tag{12.15}
+$$
+
+$L=R/\sqrt h+O(1)$，固定 $h,t$ 后展开即得 (12.7)，包括闭球边界上所有点。$L=0$ 时有限和为空，准确多项式仍为零。
+
+下面先取得高度截断，再处理所有深度。C.18.1 的连续性与原点正无穷奇性，结合 $E(K_u)$ 的紧性，给出每个地方的固定常数 $c_u\ge0$，使 $\lambda_u(A)\ge-c_u$ 于全部非零点。在 $u\mid p\notin\mathcal E$，由 (12.6) 可取 $c_u=0$。于是只有固定有限多个 $c_u$ 非零，可以定义
+
+$$
+C_-=\sum_un_uc_u<\infty,\qquad
+-c_v\le\lambda_v(A)\le a_v\widehat h(A)+b_v',
+\qquad a_v=\frac N{n_v},\quad b_v'=\frac{C_-}{n_v}.
+\tag{12.16}
+$$
+
+上界由 (12.3) 对其余地方使用负部下界得到；它对非零挠点同样成立。特别地，对每个允许地方以及 $A\in S_R$，
+
+$$
+0\le\lambda_v(A)\le NR^2+C_-.
+\tag{12.17}
+$$
+
+若 $A$ 属于第 $k$ 层，就有 $k\log p\le NR^2+C_-$。所以
+
+$$
+N_{p,k}(R)=0\quad\text{当 }k\log p>NR^2+C_-.
+\tag{12.18}
+$$
+
+每个允许素数的高层先已截断。若 $A_p(R)>0$，某个点的深度至少为一，故 $\log p\le NR^2+C_-$；这也先给出了素数支持的有限性。另一种等价的支持说明是：深度非零要求横坐标有负赋值，而有限点集的横坐标分母只有有限素数支持。以下所有按层及按素数的求和均在这些有限集合中进行。
+
+现固定一个允许素数和其选定完成域 $F=F_{v_p^*}$。VII.2.1–2.2 把 $E_1(F)$ 识别为整形式群 $\widehat E(\mathfrak m_F)$，参数为 $t=-x/y$，原点对应参数零。这里 $F/\mathbb Q_p$ 不分歧，所以 $v_p(F^\times)=\mathbb Z$、$v_p(p)=1$，且 $p>2$。调用 [Silverman IV.6.3–6.4，印刷页 131–132](https://www.math.ens.psl.eu/~obenoist/refs/Silverman.pdf) 时，其准确假设是规范化离散赋值下的整数半径 $r>v(p)/(p-1)$。本处可取 $r=1$，因为
+
+$$
+1>\frac1{p-1}.
+\tag{12.19}
+$$
+
+由恒等线性项归一化的形式对数，在整个第一形式层给出保赋值的群同构
+
+$$
+\ell_p:E_1(F)\xrightarrow{\ \sim\ }(\mathfrak m_F,+),\qquad
+\ell_p(O)=0,\qquad
+v_p(\ell_p(A))=v_p(t(A))\quad(A\ne O).
+\tag{12.20}
+$$
+
+这里的保赋值来自 IV.6.3 对对数及指数的首项估计；使用的是与 $t$ 对应、首项为 $t$ 的形式对数。只在 (12.19) 的范围内应用它，没有把一般分歧地方的整个 $E_1$ 认作这一范围。加法群 $\mathfrak m_F$ 无挠，所以 $E_1(F)$ 无挠，尤其 $T\cap E_1(F)=\{O\}$；允许素数即使整除 $t$，这一步仍成立。
+
+好约化的约化映射 $\Gamma\to\widetilde E(k_F)$ 的像有限，核正是 $\mathcal K_p$，故核在 $\Gamma$ 中有限指数。其自由坐标投影的核是 $T\cap E_1(F)$，所以该投影单射。约化点 $\overline P$ 的阶有限，因而某个正整数倍 $[r]P$ 属于核；投影像非零，必为唯一的 $m_p\mathbb Z$。在核中取投影为 $m_p$ 的点，就得到唯一的 $Q_p=m_pP+\tau_p$。对核中任意点减去相应倍数的 $Q_p$，差既在 $T$ 中又在 $E_1(F)$ 中，只能是 $O$。这证明 $\mathcal K_p=\mathbb ZQ_p$。
+
+更明确地，$\Gamma/\mathbb ZQ_p$ 中每个陪集有唯一代表 $nP+\tau$，其中 $0\le n<m_p$、$\tau\in T$：用 $Q_p$ 消去自由坐标的整除部分；若两个这种代表之差是 $Q_p$ 的倍数，比较自由坐标再比较挠点即得相同。因此指数为 $tm_p$。同时，因约化在 $T$ 上单射，
+
+$$
+m_p=\operatorname{ord}\bigl(\overline P\text{ 在 }
+\widetilde E(k_F)/\overline T\text{ 中的像}\bigr),\qquad
+\operatorname{ord}(\overline P)=m_p\,\operatorname{ord}(\tau_p).
+\tag{12.21}
+$$
+
+第二式也可直接由 $[r]P=[a]Q_p$ 等价于 $r=am_p$ 且 $[a]\tau_p=O$ 得到。所以除非 $\tau_p=O$，$m_p$ 确实不同于 $P$ 的约化阶。
+
+$Q_p$ 的自由坐标非零，故它非挠、非零，其形式参数也非零，$d_p$ 是有限正整数。对任意非零整数 $a$，形式对数满足 $\ell_p([a]Q_p)=a\ell_p(Q_p)$；$[a]Q_p$ 仍非零，由 (12.20) 得
+
+$$
+v_p(t([a]Q_p))=v_p(a\ell_p(Q_p))=d_p+v_p(a).
+\tag{12.22}
+$$
+
+这同时处理负整数倍，因 $v_p(-a)=v_p(a)$。零倍只用于核的群结构，不参加参数、深度或局部高度求和。入口点在 $S_R$ 中恰为
+
+$$
+S_R\cap E_1(F)=
+\{[a]Q_p:0<|a|\le M_p\},\qquad
+M_p=\left\lfloor\frac L{m_p}\right\rfloor.
+\tag{12.23}
+$$
+
+对自由坐标 $am_p$，唯一的入口挠点偏移是 $[a]\tau_p$。其余实际挠点提升仍在 $S_R$，但在这个地方不是入口点；这就是 (12.9) 不额外乘以 $t$ 的原因。
+
+由 (12.22)，$[a]Q_p$ 属于第 $k$ 层，当且仅当 $a$ 被 $p^{\max(0,k-d_p)}$ 整除。结合 (12.23) 得 (12.9) 的层计数。再对全部正、负整数倍求和，
+
+$$
+\begin{aligned}
+A_p(R)
+&=2\log p\sum_{a=1}^{M_p}(d_p+v_p(a))\\
+&=2\log p\left(M_pd_p+
+\sum_{j\ge1}\left\lfloor\frac{M_p}{p^j}\right\rfloor\right).
+\end{aligned}
+\tag{12.24}
+$$
+
+这里 $v_p(a)=\sum_{j\ge1}\mathbf1_{p^j\mid a}$；若 $M_p\ge1$，只会有 $p^j\le M_p$ 的项，若 $M_p=0$ 则所有项均为零。使用整数除法恒等式 $\lfloor\lfloor L/m_p\rfloor/p^j\rfloor=\lfloor L/(m_pp^j)\rfloor$，即为所述准确公式。它包含所有高阶深度，也等于已由 (12.18) 截断的 $\log p\sum_{k\ge1}N_{p,k}(R)$。
+
+这一步中使用的倍数增深律是经典形式群及 EDS 的局部规律。作为文献对应，[Streng，*Divisibility sequences for elliptic curves with complex multiplication*，Proposition 2.8，印刷页 188–189，及 Lemma 3.4，印刷页 195–196](https://msp.org/ant/2008/2-2/ant-v2-n2-p04-s.pdf) 在严格条件 $v(B_{\mathfrak a})>v(p)/(p-1)$ 下给出 $v(B_{\mathfrak a\mathfrak b})=v(B_{\mathfrak a})+v(\mathfrak b)$；其主理想情形来自形式对数。这里仅在实际入口 $Q_p$ 上使用整数倍情形，不需要 CM、理想指标或其原始因子定理；新的消费者是 (12.23) 中保留全部实际挠点纤维的点集。
+
+为证明逐素数统一界，若 $M_p=0$ 则无需估计。否则 $1\le m_p\le L$，将 (12.16) 用于实际生成元 $Q_p$，得到
+
+$$
+d_p\log p=\lambda_{v_p^*}(Q_p)
+\le Nh\,m_p^2+C_-.
+\tag{12.25}
+$$
+
+由 (12.24)、$M_p\le L/m_p$ 及几何级数，
+
+$$
+\begin{aligned}
+A_p(R)
+&\le 2\frac L{m_p}(Nh\,m_p^2+C_-)
+   +2M_p\frac{\log p}{p-1}\\
+&\le 2NhL^2+2(C_-+1)L\\
+&\le\left(2N+\frac{2(C_-+1)}{\sqrt h}\right)R^2.
+\end{aligned}
+\tag{12.26}
+$$
+
+第二步用 $\log p\le p-1$、$m_p\ge1$，最后一步用 $L\le R/\sqrt h$ 和 $R\ge1$。这给出 (12.10) 的来源常数，对 $p,R$ 和选定地方均统一，没有删除任何整除固定乘数或 $t$ 的允许素数。
+
+接着支付每个固定地方的完整绝对质量。固定 $v$，这里不要求好约化或不分歧。由 (12.3)，在一个原点参数邻域 $U_0$ 内有 $|\lambda_v(A)+\log|t_v(A)|_v|\le C_v$。局部群差映射在参数中解析且在 $(0,0)$ 处为零，故可取更小的原点邻域 $U$ 和固定 $\kappa_v\ge1$，使 $A,B\in U$ 时 $A-B\in U_0$，且对 $A\ne B$，
+
+$$
+|t_v(A-B)|_v
+\le\kappa_v\max(|t_v(A)|_v,|t_v(B)|_v).
+\tag{12.27}
+$$
+
+有限地方可把收敛的形式差级数限制到固定小球，利用无常数项及有界系数得到此界；在给定方程非极小的地方也只需缩小这个固定球。无穷地方则对参数图中的解析差映射，在一个较小实或复圆盘上用有界一阶导数得到此界。这些局部事实由 IV.1 的原点展开和 VII.2 的形式群参数化实现；此处没有使用浅层形式对数。
+
+紧集 $E(K_v)\setminus U$ 上的局部高度有上界。因此可取固定 $h_v\ge0$、$D_v=2C_v+\log\kappa_v\ge0$，使互异的实际非零点满足
+
+$$
+\lambda_v(A),\lambda_v(B)>h_v
+\quad\Longrightarrow\quad
+\lambda_v(A-B)\ge
+\min(\lambda_v(A),\lambda_v(B))-D_v.
+\tag{12.28}
+$$
+
+差点非零，因为 $A,B$ 是不同实际点；只有在此前提下才使用差点的高度与参数。
+
+取固定 $s_0>1+h_v+2(D_v+b_v')$，对 $s\ge0$ 令 $Z_v(s,R)=\{A\in S_R:\lambda_v(A)>s\}$。若 $s\ge s_0$，不同的 $A=nP+\tau$、$B=n'P+\tau'$ 属于 $Z_v(s,R)$，由 (12.16)、(12.28) 有
+
+$$
+a_v h(n-n')^2
+=a_v\widehat h(A-B)
+>s-D_v-b_v'>s/2.
+\tag{12.29}
+$$
+
+特别是 $n=n'$ 不可能：此时差为非零挠点，而其高度为零，不能支付 (12.29)。所以高层上的自由坐标投影单射；低层仍完整计入全部 $t$ 个提升。
+
+在以 $n\sqrt h$ 为坐标的实线上，这些投影位于 $[-R,R]$，两两距离大于 $r_s=\sqrt{s/(2a_v)}$。若该高层非空，由 (12.16) 有 $s<a_vR^2+b_v'$；因 $s>2b_v'$，故 $r_s<R$。将有限投影点从左到右排列，相邻间隔大于 $r_s$，得到
+
+$$
+\#Z_v(s,R)\le1+\frac{2R}{r_s}
+\le3\sqrt{2a_v}\,R\,s^{-1/2}\qquad(s\ge s_0).
+\tag{12.30}
+$$
+
+单点层也满足此界；空层按零计。由同一高度包络，
+
+$$
+Z_v(s,R)=\varnothing\quad\text{当 }s\ge U_v(R):=a_vR^2+b_v'.
+\tag{12.31}
+$$
+
+所以秩一所需的是有限截断积分，而非将 $s^{-1/2}$ 积分到无穷。对有限点集逐点积分其正部，得到
+
+$$
+\begin{aligned}
+\sum_{A\in S_R}\max(\lambda_v(A),0)
+&=\int_0^{U_v(R)}\#Z_v(s,R)\,ds\\
+&\le s_0|S_R|+
+3\sqrt{2a_v}\,R\int_{s_0}^{\max(s_0,U_v(R))}s^{-1/2}\,ds\\
+&\le s_0|S_R|+
+6\sqrt{2a_v}\,R\sqrt{\max(s_0,U_v(R))}
+=O_v(R^2).
+\end{aligned}
+\tag{12.32}
+$$
+
+末式使用 $|S_R|=2tL=O(R)$、$R\ge1$ 及固定的 $s_0,a_v,b_v'$。由 (12.16)，负部总和至多 $c_v|S_R|=O_v(R)$，因而得到 (12.11)。它保留了真实差点、同一自由坐标上的挠点差、单点层、空层以及所有负部；没有将 §11 的 $d>2$ 无穷积分公式代入 $d=1$。
+
+最后把局部质量接回同一实际来源。$G$ 保持 $T$，在 $\Gamma/T\simeq\mathbb Z$ 上作用为符号。因此对每个 $\sigma\in G$，存在 $\epsilon_\sigma\in\{1,-1\}$ 及 $c_\sigma\in T$，使
+
+$$
+\sigma(P)=\epsilon_\sigma P+c_\sigma,\qquad
+\sigma(nP+\tau)=\epsilon_\sigma nP+(nc_\sigma+\sigma(\tau)).
+\tag{12.33}
+$$
+
+这不是假定 $c_\sigma=O$。对每个 $n$，$\tau\mapsto nc_\sigma+\sigma(\tau)$ 是实际 $T$ 的双射；$0<|n|\le L$ 也由符号保持。所以 $\sigma$ 重排整个 $S_R$。绝对规范高度在共轭下不变，也可直接从 VIII.9 的极限定义及绝对横坐标高度的共轭不变性得到。
+
+按 $|u|_{\sigma^{-1}v}=|\sigma(u)|_v$ 运输地方。因 $E$ 的方程定义在 $\mathbb Q$ 上，C.18.1 的唯一性给出
+
+$$
+\lambda_v(\sigma A)=\lambda_{\sigma^{-1}v}(A).
+\tag{12.34}
+$$
+
+对有限 $S_R$ 重编号，得 $S_v(R)=S_{\sigma^{-1}v}(R)$。$G$ 在每个有理地方上方的地方集合中传递，且 $\sum_{w\mid r}n_w=N$，于是得到 (12.12)。无穷地方也在其中：实地方权一，复地方权二。该重编号只给出点集总和的相等，并不使一般单点在不同地方的读数相等。
+
+令固定有限地方清单 $\mathcal D=\{v:v\mid\infty\text{ 或 }v\mid p\in\mathcal E\}$。由 (12.6)、(12.12)，对允许素数准确有
+
+$$
+A_p(R)=S_{v_p^*}(R)=\frac1N\sum_{v\mid p}n_vS_v(R).
+\tag{12.35}
+$$
+
+在已经确定有限支持的和中使用 (12.3)，得到
+
+$$
+\sum_{p\notin\mathcal E}A_p(R)
+=H(R)-\frac1N\sum_{v\in\mathcal D}n_vS_v(R).
+\tag{12.36}
+$$
+
+对固定有限清单逐项使用 (12.11)，即为 (12.13)。这里 $H(R)$ 已是绝对规范高度之和；局部次数与 $1/N$ 已在 (12.35)–(12.36) 中支付，不能再把主项除以 $N$。
+
+仅需经典 Chebyshev 上界 $\pi(x)\ll x/\log x$，便由 (12.10) 得
+
+$$
+0\le\sum_{\substack{p\le R\\p\notin\mathcal E}}A_p(R)
+\le CR^2\pi(R)
+\ll\frac{R^3}{\log R}\qquad(R\ge3).
+\tag{12.37}
+$$
+
+该经典素数计数输入的初等依据与定理 10.3 中相同：区间 $(n,2n]$ 中素数的乘积整除 $\binom{2n}{n}\le4^n$，二进区间求和给出 $\vartheta(x)\ll x$，再分开 $p\le\sqrt x$ 和 $p>\sqrt x$ 即得所用的 $\pi(x)$ 上界。没有使用素数定理或关于约化阶分布的假设。
+
+从有限和 (12.36) 减去 (12.37)，再使用 (12.7)，因 $R^2=O(R^3/\log R)$，得到 (12.14) 及其正极限。每个有理地方的总量已由 (12.12) 固定，所以尾部不依赖所选地方族；(12.26) 的常数对这些选择也一致。证毕。
+
+本定理的局部对数与倍数增深律是上述经典输入；固定来源的完整挠纤维、实际循环入口、秩一有限高度截断与三次尾部在这里组成一个 repo-derived 消费者，不提出全球优先性主张。§11 已有 $d>2$ 的实际高度椭球与差点装箱；这里保留其局部差点机制，但在秩一使用 (12.31) 的有限包络。[Bhakta，*Perfect powers in the product of denominators of elliptic curves*，arXiv:2606.00466v3，§5.1，Lemmas 5.1–5.4，页 19–21](https://arxiv.org/pdf/2606.00466v3) 的约化格与挠点陪集计数提供相关入口背景；其 Lemma 5.3 计数非零横坐标赋值的点，Lemma 5.4 控制小约化像群阶的素数支持。这些入口结论本身不提供 (12.9) 的全部深度质量，也不替代 (12.32) 的固定地方截断证明。
+
+用白话说，每个自由整数坐标原本都带着整束真实挠点。某个允许素数处，进入原点小邻域的点却组成一条真实循环群；在一个自由坐标上至多有一个挠点偏移能进入。找到它的第一个正生成元后，所有更深的费用都由整数倍的素数赋值准确补齐。另一方面，靠近同一局部原点的两个点相减仍很靠近原点，因此它们的自由坐标不能太近。秩一的层数衰减虽不足以积到无穷，全球高度却给出了有限屋顶，足够把每个固定地方和每个允许素数的费用压到二次。完整点集的共轭只重排真实点，绝对高度便把剩余总量接成三次主项；不超过 $R$ 的素数只有 $O(R/\log R)$ 个，支付它们之后，$p>R$ 仍保留这个正主项。
+
+**定理 12.3（现有二次来源及其完整二挠纤维）。** 取
+
+$$
+E:y^2=x^3-x,\qquad K=\mathbb Q(\sqrt6),\qquad
+P_1=(2,\sqrt6),\qquad H_1=\widehat h_E(P_1)>0.
+\tag{12.38}
+$$
+
+固定整数 $q\ge1$。对 $\Gamma_q=\mathbb Z([q]P_1)$，定义 12.1 的 $h=q^2H_1$、$t=1$，可取 $\mathcal E=\{2,3\}$。令 $A_{p,q}(R)$ 为该实际来源的完整深度质量，$L_q=\lfloor R/(q\sqrt{H_1})\rfloor$。则
+
+$$
+\begin{aligned}
+H_q(R)&=\frac{q^2H_1}{3}L_q(L_q+1)(2L_q+1),\\
+\sum_{p>R}A_{p,q}(R)
+&=\frac{2}{3q\sqrt{H_1}}R^3+
+O_q\!\left(\frac{R^3}{\log R}\right),\\
+\lim_{R\to\infty}\frac1{R^3}\sum_{p>R}A_{p,q}(R)
+&=\frac{2}{3q\sqrt{H_1}}>0.
+\end{aligned}
+\tag{12.39}
+$$
+
+尾部式取 $R>3$。还可在同一曲线和同一域内取
+
+$$
+T_2=E[2](\mathbb Q)=\{O,(0,0),(1,0),(-1,0)\},\qquad
+\Gamma_{q,2}=\mathbb Z([q]P_1)\oplus T_2.
+\tag{12.40}
+$$
+
+对此来源，$h=q^2H_1$、$t=4$、$\mathcal E=\{2,3\}$，高度总和为 $4H_q(R)$，且其完整深度质量满足
+
+$$
+\sum_{p>R}A_{p,q,2}(R)
+=\frac{8}{3q\sqrt{H_1}}R^3+
+O_q\!\left(\frac{R^3}{\log R}\right),\qquad
+\lim_{R\to\infty}\frac1{R^3}\sum_{p>R}A_{p,q,2}(R)
+=\frac{8}{3q\sqrt{H_1}}>0.
+\tag{12.41}
+$$
+
+证明。定理 7.2 已证明 $P_1$ 非挠，故其在二次子域中的规范高度仍为绝对高度 $H_1>0$，不会随定义域次数重标定。非平凡共轭将 $P_1$ 送到 $-P_1$，所以 $\Gamma_q$ 是稳定的实际无挠秩一子群。乘法二次律给出 $\widehat h([q]P_1)=q^2H_1$。给定整方程判别式为 $64$，二次域判别式为 $24$；因此 $p>3$ 处方程好约化且域不分歧，$\{2,3\}$ 足够，包括 $p=5$。将这些数据代入定理 12.2 得到 (12.39)。
+
+四个列明的二挠点均为有理点，组成 $T_2$，并由共轭逐个固定。因 $[q]P_1$ 非挠，其循环群与 $T_2$ 交于 $O$，所以 (12.40) 确为普通直和、稳定且秩一；全部挠点纤维有四个点。再次使用定理 12.2，即得高度总和与 (12.41)。这里没有断言 $A_{p,q,2}(R)=4A_{p,q}(R)$；不同实际子群有各自的 $m_p,\tau_p,d_p$，只有各自的全球主项按其完整纤维大小给出。所有 $p\mid q$ 的允许素数仍在公式内；$q$ 固定，误差不对移动 $q$ 声称统一。证毕。
+
+本节尾部属于所声明的固定秩一实际来源与完整 $S_R$，不识别原十六次来源的共同小像筛选，不给出原 $V_H$、$p>R^2$ 或 $p>L^4$ 的尾部结论。它不建立量子起源桥，也不给出 $\mathbb Z$ 在 $\mathbb Q$ 中的丢番图定义；这些问题与 (12.14) 的正三次质量之间没有在此声称的实现或归约桥。
+
+## 追加锚（本行以下为增补区）

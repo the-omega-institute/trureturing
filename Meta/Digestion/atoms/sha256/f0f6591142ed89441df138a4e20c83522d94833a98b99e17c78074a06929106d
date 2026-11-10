@@ -1,0 +1,157 @@
+**Theorem 12.2 (source-specific survival edge and its three limits).**
+For every source and repair of Definition 12.1,
+
+$$
+S_n=\langle s,\mathsf A^{n-1}s\rangle_m>0\quad(n\ge1),\qquad
+S_n\longrightarrow0,\qquad
+S_n^{1/n}\longrightarrow1,\qquad
+\frac{S_{n+1}}{S_n}\longrightarrow1.
+\tag{12.3}
+$$
+
+In particular the conditional next-3 probability after observing
+only the event of $n$ consecutive non-3 labels tends to zero.
+This event-conditioned probability is not the posterior after any
+specified full word.
+
+*Proof.* The original read product, summed over $\{0,1,B\}$ at
+each position, gives
+$S_n=\langle1,M_r(PM_r)^{n-1}1\rangle_m$.
+Splitting the end multipliers into square roots gives (12.3)'s
+first identity. Positivity also follows from $r\ge3/4$, which gives
+$S_n\ge(3/4)^n$. The spectral theorem for the nonnegative $K$
+shows $0\le P\le I$ in quadratic-form order. Thus $\mathsf A$ is
+self-adjoint, $0\le\mathsf A\le I$, and positivity preserving.
+For a nonzero $v\in L^2(m)$,
+
+$$
+\langle v,\mathsf A v\rangle_m
+ \le\|sv\|_2^2
+ =\|v\|_2^2-\int f_3|v|^2\,dm<\|v\|_2^2.
+\tag{12.4}
+$$
+
+Strictness uses $f_3>0$ almost everywhere, not a positive uniform
+lower bound. Hence $1$ is not an eigenvalue of $\mathsf A$.
+If $\sigma_s$ is its scalar spectral measure at $s$, then
+
+$$
+S_n=\int_{[0,1]}\lambda^{n-1}\,d\sigma_s(\lambda),\qquad
+\sigma_s(\{1\})=0.
+\tag{12.5}
+$$
+
+Dominated convergence already proves $S_n\to0$.
+
+We prove that the upper support edge in (12.5) is exactly $1$
+from the original source inputs. Use the original group dilations
+$\delta_R(x,y,z,w)=(Rx,Ry,Rz,R^2w)$, whose Haar Jacobian is $R^5$.
+Choose nonnegative $\chi\in C_c^\infty(G\setminus\{e\})$, with
+$\|\chi\|_{L^2(\mu)}=1$, supported in a fixed annulus
+$1<\varrho<2$ for the gauge of [DPCR, Definition 14.1]. Set
+
+$$
+\phi_R(p)=R^{-5/2}\chi(\delta_{1/R}p),\qquad v_R=\phi_R/h.
+\tag{12.6}
+$$
+
+The positive smooth $h$ on punctured compact sets makes $v_R$ a
+nonnegative bounded smooth punctured test with $\|v_R\|_{L^2(m)}=1$.
+The exact full-domain correspondence [CONTACT, Theorem 115.3,
+(115.15)–(115.18)] puts it in the actual form domain and gives
+
+$$
+\begin{aligned}
+0\le\mathscr E[v_R]=q_H[\phi_R]
+ &=aR^{-2}\sum_{i=1}^3\|X_i\chi\|_{L^2(\mu)}^2
+   +\eta R^{-4}\|\partial_w\chi\|_{L^2(\mu)}^2\\
+ &\quad-16\sqrt{a\eta}\,R^{-3}
+                  \int\Gamma|\chi|^2\,d\mu
+ \le C_1R^{-2}+C_2R^{-4}.
+\end{aligned}
+\tag{12.7}
+$$
+
+Here $X_1=\partial_x$, $X_2=\partial_y+x\partial_w$,
+$X_3=\partial_z$, and $\Gamma$ has its original degree $-3$.
+All integrals in this calculation have compact support away from
+the source. The nonnegative lower bound is that of the actual
+$H$, not a replacement by its Friedrichs extension. The constants
+$C_1,C_2$ depend on the fixed source and $\chi$.
+
+[DPCR, Theorem 14.3] gives
+$\epsilon_R:=\operatorname{ess\,sup}_{\operatorname{supp}\phi_R}f_3
+\to0$ as $R\to\infty$. The spectral inequality
+$1-e^{-d\lambda}\le d\lambda$ and
+$0\le1-s=f_3/(1+s)\le f_3$ therefore give
+
+$$
+\begin{aligned}
+\langle v_R,Pv_R\rangle_m&\ge1-d\mathscr E[v_R],\\
+\langle v_R,\mathsf A v_R\rangle_m
+ &\ge\langle v_R,Pv_R\rangle_m-2\|(1-s)v_R\|_2\\
+ &\ge1-d(C_1R^{-2}+C_2R^{-4})-2\epsilon_R
+ \longrightarrow1.
+\end{aligned}
+\tag{12.8}
+$$
+
+The second line follows by replacing the two occurrences of $v_R$
+in the pairing with $sv_R$ one at a time, using the contraction
+bounds for $P,M_s$. This proves the source-specific spectral edge;
+no spectral hypothesis has been appended.
+
+For completeness the edge must also be visible to the survival
+vector $s$. For each fixed $R$, boundedness of $v_R$ and
+$s\ge\sqrt{3}/2$ give a finite $C_R$ with $0\le v_R\le C_Rs$.
+Positivity preservation of every integer power of $\mathsf A$
+and the spectral Jensen inequality for the unit vector $v_R$ give,
+for every integer $k\ge1$,
+
+$$
+C_R^2\langle s,\mathsf A^ks\rangle_m
+ \ge\langle v_R,\mathsf A^kv_R\rangle_m
+ \ge\langle v_R,\mathsf A v_R\rangle_m^k.
+\tag{12.9}
+$$
+
+The last inequality is the ordinary scalar Jensen inequality for
+$\lambda\mapsto\lambda^k$ on $[0,1]$. First taking $n$th roots
+with $k=n-1$, then using (12.8), proves
+$\liminf S_n^{1/n}\ge1$; the reverse bound is $S_n\le1$.
+This also verifies the support-edge assertion directly without an
+irreducibility assumption for a new killed continuous-time model.
+
+Cauchy–Schwarz in (12.5) gives
+$S_{n+1}^2\le S_nS_{n+2}$ for $n\ge1$. Thus
+$S_{n+1}/S_n$ is increasing and at most one. If its limit were
+less than one, the products of these ratios would force
+$\limsup S_n^{1/n}<1$, contrary to the preceding limit.
+Finally
+
+$$
+Q(Y_n=3\mid Y_0,\ldots,Y_{n-1}\ne3)
+ =1-S_{n+1}/S_n\longrightarrow0.
+\tag{12.10}
+$$
+
+The scalar spectral-measure argument is a mature intermediate:
+compare Keller–Lenz–Vogt–Wojciechowski,
+[*Note on basic features of large time behaviour of heat kernels*,
+arXiv:1101.0373v2, Theorem 1.1(b) and Theorem 2.1][EDGE].
+Their statements concern heat semigroups; the bounded-operator
+moment calculation needed here was given explicitly in
+(12.5), (12.9). Bounded spectral calculus and its dominated
+convergence are as in Teschl, [*Mathematical Methods in Quantum
+Mechanics*, §3.1, Theorem 3.1, (3.20)–(3.21)][SPCALC].
+The source-specific input to the edge is (12.6)–(12.8).
+All these integrals and exterior bounds are $m$-class statements.
+For each permitted repair its exceptional set is $m$-null. The
+stationary skeleton has marginal $m$, and the actual positive-time
+skeleton has marginals $g_{(j+2)d}m$; their countably many sampled
+states therefore avoid that set simultaneously almost surely.
+Conditioning on any positive finite history preserves this null
+statement. Thus the proof applies to every permitted repair,
+without an assertion about avoidance by the entire continuous path.
+$\square$
+
