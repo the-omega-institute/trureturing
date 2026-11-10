@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/RepeatedPairModularTables
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: checker; basis=consumer; consumer=D5/S3/Combinatorics/SpectralGraph/RepeatedPairModularTables.actual_five; premises=D5/S3/Combinatorics/SpectralGraph/RepeatedPairModularTables.five_table
+   utility: kind=checker; basis=consumer=D5/S3/Combinatorics/SpectralGraph/RepeatedPairModularTables.actual_five; instance=D5/S3/Combinatorics/SpectralGraph/RepeatedPairModularTables.five_table
    digest: Complete small-prime quadratic tables and arbitrary-tail actual graph consumers. -/
 import D5.S3.Combinatorics.SpectralGraph.RepeatedPairModularResidues
 

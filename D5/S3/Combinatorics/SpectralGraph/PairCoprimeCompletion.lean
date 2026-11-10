@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/SpectralGraph/PairCoprimeCompletion
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: numeric-reduction; basis=consumer; consumer=D5/S3/Combinatorics/SpectralGraph/PairCoprimeCompletion.actual_nonintegral; premises=D5/S3/Combinatorics/SpectralGraph/PairCoprimeCompletion.small_three_nonzero
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/SpectralGraph/PairCoprimeCompletion.actual_nonintegral; premises=D5/S3/Combinatorics/SpectralGraph/PairCoprimeCompletion.small_three_nonzero
    digest: Complete coprime repeated-minimum obstruction with all unbounded-tail quadratic rows. -/
 import D5.S3.Combinatorics.SpectralGraph.PairLowArithmetic
 
