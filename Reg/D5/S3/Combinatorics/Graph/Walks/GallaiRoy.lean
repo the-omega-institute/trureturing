@@ -61,6 +61,7 @@ def family : Registration arena.{u} (type_of% (@colorable_iff_exists_orientation
       intro he
       have hp := congrArg (fun G : SimpleGraph V => G.Adj ⟨false⟩ ⟨true⟩) he
       simp at hp
+      cases congrArg ULift.down hp
     simp [realize, colorable_one_iff, hne]
 
 def registration :
