@@ -19,6 +19,7 @@ The only public result collects the full literal-count settlement event.
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233196Strip
 import Mathlib.RingTheory.PowerSeries.Inverse
+import Mathlib.Tactic.FinCases
 
 /-!
 The cell domain has four columns. Horizontal, vertical and both diagonal
@@ -134,7 +135,8 @@ private theorem saturated_certificate : ∀ p : Boundary, proper p →
     (∀ c : Row, rowLegal c ∧ compatible p c ∧ good saturated c →
       finish saturated c = saturated ∧ proper (pairs c) ∧ kind (pairs c) = kind p) ∧
     step (fun _ _ => 1) saturated p = rate (kind p) := by
-  decide +kernel
+  intro p
+  fin_cases p <;> decide +kernel
 
 set_option maxRecDepth 1000000 in
 set_option maxHeartbeats 0 in
@@ -148,3 +150,143 @@ private theorem finite_certificate :
   decide +kernel
 
 
+private theorem continuation (n : ℕ) (p : Boundary) (hp : proper p) :
+    v n saturated p = rate (kind p)^n := by
+  induction n generalizing p with
+  | zero => simp [v, widthV]
+  | succ n ih =>
+    change step (v n) saturated p = _
+    have he : ∀ c : Row,
+        (if rowLegal c ∧ compatible p c ∧ good saturated c then
+          v n (finish saturated c) (pairs c) else 0) =
+        (if rowLegal c ∧ compatible p c ∧ good saturated c then (1 : ℤ) else 0) *
+          rate (kind p)^n := by
+      intro c
+      by_cases hc : rowLegal c ∧ compatible p c ∧ good saturated c
+      · have hh := (saturated_certificate p hp).1 c hc
+        rw [ite_eq_left hc, ite_eq_left hc, hh.1, ih (pairs c) hh.2.1, hh.2.2, one_mul]
+      · simp [hc]
+    change (∑ c : Row, if rowLegal c ∧ compatible p c ∧ good saturated c then
+      v n (finish saturated c) (pairs c) else 0) = _
+    simp_rw [he]
+    rw [← Finset.sum_mul]
+    change step (fun _ _ => 1) saturated p * rate (kind p)^n = _
+    rw [(saturated_certificate p hp).2, pow_succ']
+
+private theorem seed_congr (f g : Seen → Boundary → ℤ)
+    (he : ∀ p, proper p → f saturated p = g saturated p) :
+    total (step f) = total (step g) := by
+  apply Finset.sum_congr rfl
+  intro c _
+  by_cases hc : initial c
+  · change (if initial c then step f (finish (false,false,false) c) (pairs c) else 0) =
+      (if initial c then step g (finish (false,false,false) c) (pairs c) else 0)
+    rw [ite_eq_left hc, ite_eq_left hc]
+    apply Finset.sum_congr rfl
+    intro d _
+    by_cases hd : rowLegal d ∧ compatible (pairs c) d ∧ good (finish (false,false,false) c) d
+    · have hh := finite_certificate.1 c hc d hd
+      simp only [ite_eq_left hd, hh.1]
+      exact he (pairs d) hh.2
+    · simp only [ite_eq_right hd]
+  · change (if initial c then _ else 0) = (if initial c then _ else 0)
+    simp only [ite_eq_right hc]
+
+private theorem seed_linear (f g : Seen → Boundary → ℤ) (x y : ℤ) :
+    total (step (fun s p => x*f s p + y*g s p)) = x*total (step f) + y*total (step g) := by
+  have hi (P : Prop) [Decidable P] (a b : ℤ) :
+      (if P then x*a+y*b else 0) = x*(if P then a else 0)+y*(if P then b else 0) := by
+    split_ifs <;> ring
+  have hs : step (fun s p => x*f s p+y*g s p) =
+      fun s p => x*step f s p+y*step g s p := by
+    funext s p
+    unfold step widthStep
+    simp only [hi, Finset.sum_add_distrib, Finset.mul_sum]
+  rw [hs]
+  unfold total widthTotal
+  simp only [hi, Finset.sum_add_distrib, Finset.mul_sum]
+
+private theorem count_formula (n : ℕ) : (a (n+2) : ℤ) = 16*32^n+48*16^n := by
+  rw [show n+2=(n+1)+1 by omega, counting_bridge]
+  change total (step (v n)) = _
+  rw [seed_congr (v n)
+    (fun _ p => 32^n*(if kind p = true then 1 else 0)+16^n*(if kind p = false then 1 else 0))
+    (by
+      intro p hp
+      rw [continuation n p hp]
+      cases hk : kind p <;> simp [rate])]
+  rw [seed_linear]
+  rw [finite_certificate.2.2 true, finite_certificate.2.2 false]
+  norm_num
+  ring
+
+private theorem initial_counts : a 1 = 11 ∧ a 2 = 64 ∧ a 3 = 1280 := by
+  have h1 := counting_bridge 0
+  change (a 1 : ℤ) = total (fun _ _ => 1) at h1
+  rw [finite_certificate.2.1] at h1
+  have h2 : (a 2 : ℤ) = 64 := (count_formula 0).trans (by norm_num)
+  have h3 : (a 3 : ℤ) = 1280 := (count_formula 1).trans (by norm_num)
+  exact ⟨by exact_mod_cast h1, by exact_mod_cast h2, by exact_mod_cast h3⟩
+
+private theorem recurrence (n : ℕ) :
+    (a (n+4) : ℤ) = 48*a (n+3)-512*a (n+2) := by
+  rw [show n+4=(n+2)+2 by omega, count_formula,
+    show n+3=(n+1)+2 by omega, count_formula, count_formula]
+  simp only [pow_succ]
+  ring
+
+private theorem closed_formula (n : ℕ) :
+    a (n+2) = 4^(2*(n+2)-3)*(2^(n+2)+12) := by
+  have h : a (n+2) = 16*32^n+48*16^n := by exact_mod_cast count_formula n
+  rw [h, show 2*(n+2)-3 = 2*n+1 by omega, pow_succ, pow_mul, pow_add]
+  norm_num
+  have hp : (32:ℕ)^n = 16^n*2^n := by rw [← mul_pow]; norm_num
+  rw [hp]
+  ring
+
+private theorem zero_count : a 0 = 0 := by simp [a, Legal]
+
+open PowerSeries in
+private theorem product_identity :
+    (1-16*X)*(1-32*X)*(PowerSeries.mk fun n => (a n : ℚ)) =
+      X*(11-464*X+3840*X^2) := by
+  let F : PowerSeries ℚ := PowerSeries.mk fun n => (a n : ℚ)
+  have hp : (1-16*X)*(1-32*X)*F = F-48*(F*X^1)+512*(F*X^2) := by ring
+  have hr : (X*(11-464*X+3840*X^2) : PowerSeries ℚ) = 11*X-464*X^2+3840*X^3 := by ring
+  change (1-16*X)*(1-32*X)*F = _
+  rw [hp,hr]
+  ext n
+  simp only [map_add,map_sub,coeff_ofNat_mul,coeff_mul_X_pow',coeff_X,coeff_X_pow,F,coeff_mk]
+  by_cases hn : 4 ≤ n
+  · simp only [ite_eq_left (show 1 ≤ n by omega), ite_eq_left (show 2 ≤ n by omega),
+      ite_eq_right (show n ≠ 1 by omega), ite_eq_right (show n ≠ 2 by omega),
+      ite_eq_right (show n ≠ 3 by omega)]
+    have hh : (a (n-4+4) : ℚ) = 48*a (n-4+3)-512*a (n-4+2) := by
+      exact_mod_cast recurrence (n-4)
+    rw [show n-4+4=n by omega, show n-4+3=n-1 by omega,
+      show n-4+2=n-2 by omega] at hh
+    linarith
+  · interval_cases n <;> norm_num [zero_count,initial_counts.1,
+      initial_counts.2.1,initial_counts.2.2]
+
+open PowerSeries in
+/-- The complete literal-count event, including every positive-height formula. -/
+theorem result :
+    a 1 = 11 ∧ a 2 = 64 ∧ a 3 = 1280 ∧
+    (∀ n : ℕ, 1 < n → a n = 4^(2*n-3)*(2^n+12)) ∧
+    (∀ n : ℕ, 3 < n → (a n : ℤ) = 48*a (n-1)-512*a (n-2)) ∧
+    (PowerSeries.mk fun n => (a n : ℚ)) =
+      X*(11-464*X+3840*X^2)*((1-16*X)*(1-32*X))⁻¹ := by
+  refine ⟨initial_counts.1, initial_counts.2.1, initial_counts.2.2, ?_, ?_, ?_⟩
+  · intro n hn
+    simpa only [show n-2+2=n by omega] using closed_formula (n-2)
+  · intro n hn
+    simpa only [show n-4+4=n by omega, show n-4+3=n-1 by omega,
+      show n-4+2=n-2 by omega] using recurrence (n-4)
+  · apply (PowerSeries.eq_mul_inv_iff_mul_eq (by simp :
+      constantCoeff ((1-16*X)*(1-32*X) : PowerSeries ℚ) ≠ 0)).2
+    rw [mul_comm]
+    exact product_identity
+
+#print axioms result
+end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233164KingStrip
