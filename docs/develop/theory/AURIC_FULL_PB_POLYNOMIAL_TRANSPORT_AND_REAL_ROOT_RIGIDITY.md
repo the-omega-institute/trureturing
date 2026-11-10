@@ -1081,3 +1081,237 @@ Peirce 分解及角乘法术语沿 W119 所引 Hanche-Olsen–Størmer，[*Jorda
 **定义 15.3（完整直观解释）。** 始终固定原表里同一个问题的答案：当两个实际输入满足精确的 Jordan 特征关系时，两份真实外响应共享的预算比普通 Cauchy–Schwarz 更紧，多出的那一份约束不允许答案在第二输入的核里留下任何作用；先沿每个固定方向轻微改变数学读取，再在像的闭包内逼近，就能消灭整片核，而不让未知函数经过输入极限。这样，一条混合边真正属于哪个角便先被认清，即使第一输入还带着任意补角背景，也能把后续实际外调用合法送入已认识的整个角；投影标签锁住标准的非零边，余量既把向量送进核、又消灭核，只能为零。一般局部反对易族也由同一办法回到正确角内，无需虚构全局半单位、任意模块的有限秩支撑或可逆系数。这使单边的几何更直接，却没有把不同边同时出现时的同一个答案拆成可相加的几份：块和及任意环境整行仍欠真正的联合关系，而已分类域以外的静态重构、真实准备与完整 Born 菜单、共同联合、递归仪器的全部输出未来、Return、CountRead、正常性及物理动力学，继续由同一个完整原来源谓词逐项承担。
 
 ## 追加锚（本行以下为增补区）
+
+## 16. 等右 Gram 的相反双边与同一输出刚性
+
+**定义 16.1（完整原关系与双边输入域）。** 沿用定义 6.1–6.2 的完整原候选及其引文身份。具体取任意含单位复 C* 代数 $B$、$A=M_3(B)$，原域准确为 $E=A_{\rm sa}$，$S(u,v)=u\circ v=(uv+vu)/2$、$C=A_+$、单位 $1_A$、$N=\|\cdot\|$。同一原正实线性评价族 $\mathcal P$ 分离 $E$ 并准确决定 $C$；原 $\Omega/\mathrm{native}$、每个原标签、每份评价及全部零、不等、次归一和原表示意义下的非正常质量保持。未知量始终是同一个任意总映射 $D:E^2\to E$。
+
+完整 $\mathsf H_A(D)$ 保留全部有向 A1/P2：
+
+$$
+\begin{pmatrix}
+\gamma(u^2)&\gamma(u\circ v)-i\gamma D(u,v)\\
+\gamma(v\circ u)-i\gamma D(v,u)&\gamma(v^2)
+\end{pmatrix}\succeq0
+\quad(u,v\in E,\ \gamma\in\mathcal P),
+\tag{16.1}
+$$
+
+包括两种次序。A2 仍为全部相加三元组 $(u_1,u_2,u_3)=(u+v,u,v)$ 及其排列：实表 $(\gamma(u_i\circ u_j))_{i,j=1}^3$ 在整个 $\mathbb R^3$ 上半正定，$(1,-1,-1)$ 及相应排列给零二次值；A3 仍为 $1_A^2=1_A$，以及同一固定有理 $0<\vartheta\le1$ 下全部 $0\le u\le\vartheta1_A\Rightarrow u^2\le u$。对每个原 $c,u,v\in E$，全部实际内外层 PB 是
+
+$$
+\begin{gathered}
+V=D(c,u)-c\circ v,\qquad W=c\circ u+D(c,v),\\
+D(u+V,v+W)-D(u-V,v-W)=-2u\circ V-2v\circ W.
+\end{gathered}
+\tag{16.2}
+$$
+
+零、重复、全部实幅度、缩放、平移、背景及嵌套调用均在原量词内。不预给 $D$ 输入连续性、可测性、齐次性、可加性、协变性、压缩自然性、商下降、双对偶延拓或有限阶段输出闭合。
+
+令 $E_{ij}z$ 表示矩阵单元张量 $z\in B$，并固定
+
+$$
+\begin{gathered}
+p=E_{11}+E_{22},\quad q=E_{33},\quad
+h=E_{11}-E_{22},\quad e=E_{12}+E_{21},\\
+h^2=e^2=p,\qquad he=-eh,\qquad
+K_\sigma(u,v)=\frac{\sigma i}{2}[u,v],\quad\sigma\in\{1,-1\}.
+\end{gathered}
+\tag{16.3}
+$$
+
+对一般 $B$，明确要求同一个旧 $D$ 在**整个完成角** $pAp$ 上满足 (6.4)，普通符号为 $\sigma$。这不是仅一份 $M_2$ 子代数的分类，也不要求 $13$ 或 $23$ 角分类。对任意完成系数 $x,y\in B$，定义
+
+$$
+\begin{gathered}
+b_+(x)=E_{13}x+E_{31}x^*,\qquad
+b_-(y)=E_{23}y+E_{32}y^*,\\
+\mathcal B_{\rm bal}
+=\{b_+(x)+b_-(y):x,y\in B,\ x^*x=y^*y\}.
+\end{gathered}
+\tag{16.4}
+$$
+
+等右 Gram 是所研究的二元输入对 $(Rh,b)$ 中第二输入的限制，不是新公理。$L_a z=a\circ z$；若 $a=Rh$，则 $L_ab_+=(R/2)b_+$、$L_ab_-=-(R/2)b_-$。当 $R\ne0$ 且 $x,y\ne0$ 时，两个相反模同时存在，$b_++b_-$ 不属于单一特征空间。
+
+**定理 16.2（配平双边的完整原响应）。** 在定义 16.1 下，对任意 $R\in\mathbb R$ 和 $x,y\in B$，只要 $`x^*x=y^*y`$，就有
+
+$$
+\boxed{
+D(Rh,b_+(x)+b_-(y))
+=\frac{\sigma iR}{2}
+\bigl(E_{13}x-E_{31}x^*-E_{23}y+E_{32}y^*\bigr)
+=K_\sigma(Rh,b_+(x)+b_-(y)).}
+\tag{16.5}
+$$
+
+系数不要求可逆、正规、相互交换、闭值域或属于某个有限矩阵阶段；两种 $\sigma$ 和正、负、零 $R$ 全部包括。
+
+证明。原零槽直接复用 AH43.1。$B=0$、$R=0$ 或 $x=y=0$ 时结论为零；若 $x=0$ 或 $y=0$，等右 Gram 及 C* 恒等式迫使两者皆零。以下固定非零 $R$ 和给定的 $x,y$，始终记
+
+$$
+a=Rh,\quad b=b_+(x)+b_-(y),\quad
+g=D(a,b),\quad K=K_\sigma(a,b).
+\tag{16.6}
+$$
+
+只消费继承的主定理 7.1：对这个任意环境输入 $b$，同一输出已满足
+
+$$
+g=K+r,\qquad r=\operatorname{diag}(r_1,r_2,0),
+\qquad r_1=r_1^*,\ r_2=r_2^*\in B.
+\tag{16.7}
+$$
+
+主定理使用的正是 $pAp$ 的整体分类及完整原关系；此处不把 (16.7) 作为新假设。固定一份忠实含单位表示 $B\subseteq B(\mathcal H)$，使 $A$ 作用于 $\mathcal H^3$，内积第一槽共轭线性。AH43.1 的准确锥接口给每个未归一数学向量读取
+
+$$
+|\langle\xi,g\xi\rangle|^2
+\le\|a\xi\|^2\|b\xi\|^2
+-\bigl(\operatorname{Re}\langle a\xi,b\xi\rangle\bigr)^2
+\quad(\xi\in\mathcal H^3).
+\tag{16.8}
+$$
+
+这些读取不增加实际准备；其质量为 $\|\xi\|^2$，不作归一化。对任意 $w\in\mathcal H$ 和 $s\in\{1,-1\}$，取
+
+$$
+\eta_w=(xw,-yw,0),\qquad
+\zeta_{s,w}=(xw,-yw,s iRw).
+\tag{16.9}
+$$
+
+直接块相乘及等右 Gram 给
+
+$$
+\begin{gathered}
+b\eta_w=(0,0,(x^*x-y^*y)w)=0,\\
+a\zeta_{s,w}=R(xw,yw,0),\qquad
+b\zeta_{s,w}=s iR(xw,yw,0)=s i\,a\zeta_{s,w}.
+\end{gathered}
+\tag{16.10}
+$$
+
+由 (16.8)，$\langle\eta_w,g\eta_w\rangle=0$；由 $b\eta_w=0$，也有 $\langle\eta_w,K\eta_w\rangle=0$。故 $\langle\eta_w,r\eta_w\rangle=0$。因 $r$ 的第三行列为零，固定 $s,w$ 并写 $\zeta=\zeta_{s,w}$ 后，准确得到
+
+$$
+\langle\zeta,r\zeta\rangle=0,\qquad
+k_0:=\langle\zeta,K\zeta\rangle
+=-\sigma s\|a\zeta\|^2
+=-\sigma s R^2(\|xw\|^2+\|yw\|^2).
+\tag{16.11}
+$$
+
+若 $xw=yw=0$，则 $\zeta=(0,0,s iRw)$，(16.7) 已给 $r\zeta=0$。其余情形 $k_0\ne0$。为处理此情形，对任意 $\xi\in\mathcal H^3$ 只读取固定的 $K,r,g$，记
+
+$$
+\begin{aligned}
+k(\xi)&=\langle\xi,K\xi\rangle
+=-\sigma\operatorname{Im}\langle a\xi,b\xi\rangle,\\
+\rho(\xi)&=\langle\xi,r\xi\rangle,\\
+C(\xi)&=\|a\xi\|^2\|b\xi\|^2-|\langle a\xi,b\xi\rangle|^2\ge0,\\
+P(\xi)&=C(\xi)-2k(\xi)\rho(\xi)-\rho(\xi)^2\ge0.
+\end{aligned}
+\tag{16.12}
+$$
+
+最后一个不等式准确等价于原 (16.8)，因为 $\langle\xi,g\xi\rangle=k(\xi)+\rho(\xi)$。由 (16.10)–(16.11)，$C(\zeta)=P(\zeta)=0$。置固定向量 $v=r\zeta$，并仅改变读取向量 $\xi_\varepsilon=\zeta+\varepsilon v$，$\varepsilon\in\mathbb R$。自伴性给
+
+$$
+\rho(\xi_\varepsilon)
+=2\varepsilon\|v\|^2+\varepsilon^2\langle v,rv\rangle.
+\tag{16.13}
+$$
+
+复 Gram 行列式在第二向量减去第一向量的任意复倍数时不变。由 $(b-s i a)\zeta=0$，取 $d=(b-s i a)v$，得到准确多项式恒等式
+
+$$
+C(\xi_\varepsilon)
+=\varepsilon^2\left(
+\|a\xi_\varepsilon\|^2\|d\|^2
+-|\langle a\xi_\varepsilon,d\rangle|^2\right).
+\tag{16.14}
+$$
+
+因此 $C(\xi_\varepsilon)$ 没有常数项和一次项，$\rho(\xi_\varepsilon)^2$ 也没有一次项，而 $P(\xi_\varepsilon)$ 的一次系数正是
+
+$$
+-4k_0\|v\|^2.
+\tag{16.15}
+$$
+
+这是常数项为零、对正负全部实 $\varepsilon$ 均非负的实多项式，故一次系数只能为零：否则在足够小且与该系数异号的 $\varepsilon$ 上取负。$k_0\ne0$ 遂给 $v=0$。连同零向量分支，对每个 $w$ 及两种 $s$ 都有
+
+$$
+r\zeta_{s,w}=(r_1xw,-r_2yw,0)=0,
+\qquad r_1x=0,\quad r_2y=0,\quad rb=br=0.
+\tag{16.16}
+$$
+
+末尾 $br=0$ 也由 $rb=0$ 取伴随得到。全程 $a,b,g,K,r$ 是 (16.6)–(16.7) 中同一批固定元素；不同 $w,s,\varepsilon$ 只改变数学读取，没有出现变化输入上的未知 $D$。
+
+还须排除 $r$ 藏在 $b$ 的核上。令 $q_b$ 为表示中 $\ker b$ 的 Hilbert 正交投影，不要求 $q_b\in A$，也不对它调用 $D$。由 $br=rb=0$，有 $r=q_brq_b$。对每个 $\xi\in\ker b$，(16.8) 给 $\langle\xi,g\xi\rangle=0$；固定自伴输出的复极化给 $q_bgq_b=0$。又 $bq_b=q_bb=0$，所以 $q_bKq_b=0$。于是
+
+$$
+r=q_brq_b=q_b(g-K)q_b=0.
+\tag{16.17}
+$$
+
+忠实性将等式返回原 $A$，得到 (16.5)。不需要 $\operatorname{ran}b$ 或 $\operatorname{ran}x$ 闭合，没有取逆、极分解、输入极限或未知行的加法展开。∎
+
+**核边界 16.3（压缩与消灭核的区别）。** 证明只取得 $q_bgq_b=0$，没有使用或推出一般 $gq_b=0$。例如 $x=y=1_B$、$R\ne0$ 时，对非零 $w$，$\eta_w=(w,-w,0)$ 满足 $b\eta_w=0$，而标准量子响应本身满足
+
+$$
+K_\sigma(Rh,b)\eta_w=(0,0,-\sigma iRw)\ne0.
+\tag{16.18}
+$$
+
+两侧核支撑 (16.17) 是先由 $rb=br=0$ 对**余量**取得的；不能把定理 11.2 的单一 Jordan 特征关系前件赠给这里的相反双模之和。
+
+## 17. 三进 UHF 的实际应用、复用范围与剩余输入
+
+**推论 17.1（没有额外角分类假设的三进应用）。** 取 $A=M_{3^\infty}=M_3(B)$、$B=M_{3^\infty}$，原 $D$ 满足定义 6.1 的完整 $\mathsf H_A(D)$。则 AH72.1 的同一个普通符号 $\sigma$ 对全部 $R\in\mathbb R$、全部 $x,y\in B$ 且 $`x^*x=y^*y`$ 满足 (16.5)。
+
+证明。$p=E_{11}+E_{22}$ 是实际有限阶段矩阵秩二投影。AH71.2 以 W119.2–119.3、W 式 (120.2) 继承完整角接口，再分类整个 $pAp\cong M_2(B)$；AH72.1 供应共同 $\sigma$。这支付定义 16.1 的唯一角分类前件，故直接应用 16.2。所有完成系数均在其量词内；没有分类 $13$、$23$ 角的额外前提，也没有有限阶段输出闭合假设。∎
+
+特别，$y=x$ 及 $y=ux$（任意 $u\in B$ 酉）都属于此族，$u,x$ 不必交换；这里只验证 $`(ux)^*(ux)=x^*x`$，不对未知 $D$ 使用酉协变。$x=y=1_B$ 时，若投影 $t$ 同时支撑 $h,b$，则 $h^2=p$ 给 $t\ge p$，$b^2q=2q$ 给 $t\ge q$，所以 $t=1$。在三进模型后续阶段中，这仍是奇秩全支撑；不能直接把这一实际输入对放进某个已分类的实际偶角。
+
+**边界 17.2（未配平双边及任意环境整行）。** 对一般 $x,y$，记 $G=x^*x-y^*y$，则 (16.9) 的向量准确满足
+
+$$
+b\eta_w=(0,0,Gw),\qquad
+b\zeta_{s,w}=s i\,a\zeta_{s,w}+(0,0,Gw).
+\tag{17.1}
+$$
+
+当 $Gw\ne0$ 时，前者不再是核向量，后者不再是复等号向量；(16.11) 的零余量读数和 (16.14) 的二阶起始因子未获支付。本节没有据此否定不等 Gram 输入的标准响应，而是将它们保留为未结范围。任意环境 $b\in A_{\rm sa}$ 的对角块、$12$ 边及其与双边的任意和，也未由本定理取得旧行可加性。一般 $R\ne0$ 的首个未付原关系仍准确是定义 8.3 中的 $E_+=E_-$；式 (8.5) 仍以 $E_+-E_-=2Rhr$ 度量它，16.2 只在 $\mathcal B_{\rm bal}$ 上证明 $r=0$。
+
+**归属 17.3（既有结论与被消费的成熟事实）。** AH 的直接身份保持 `b1a95e41b9622e9f720e51f9bb899841f5b74ca1`；W、CC 的直接身份保持定义 6.1 所用的 `3b10aed60f60e4901bae6cf2e160bf439d642e64`；OP46–47 按 AH42.1 的引用链取 `bef9bba367a24ab5e250491dcb88ed85ebc29cf7`，各自递归引文不被压平。AH43.1 供应同表数学正读取与零槽；主定理 7.1 供应局部反射的全部非对角块。W119–120 的两输入同角闭合、CC147–150 的全单位框架和 AH59–60 的全单位反射及迹／窗前件，各守原范围。OP46–47 是指定 $M_2$ 多项式原域的既有小像及横向结论；AH5.3 的秩一行要求真实 Hilbert 秩一和原有限角提升。它们不把任意完成 $B$ 的模块块免费变成有限秩几何。定理 12.1–13.1 和应用 14.1 的已成范围直接复用，不把分别识别两条边当作其和的识别。
+
+忠实 C* 表示、态分离和数学 GNS 沿定义 10.1 的 Gelfand–Naimark、Segal；Peirce 角术语沿 Hanche-Olsen–Størmer，[*Jordan Operator Algebras*](https://hanche.folk.ntnu.no/joa/joa-m.pdf)，§2.6.2、Lemma 2.6.3；UHF 归纳模型沿 Blackadar，[*Operator Algebras*](https://bruceblackadar.com/Mathematics/Cycr.pdf)，II.8.2.2(iv)。复 Cauchy–Schwarz、Gram 行列式的列消元、复极化和非负实多项式零点的一次系数事实仅在上述证明内消费，不单列为新数学。这里的 $\texttt{repo-derived}$ 差额是：在原主定理留下的两份对角余量上，用等右 Gram 同时供应核向量与两个复等号向量，识别同一个相反双模之和的旧响应。归属限于所引范围内的条件纸面综合，不主张文献穷尽、历史原创或外部开放问题解决。
+
+## 18. 量子对应、完整来源与三块直观
+
+**对应 18.1（同一混合值与已有静态后端）。** 对定理 16.2 的这一份实际输入对，准确有
+
+$$
+S(a,b)-iD(a,b)
+=\frac{ab+ba}{2}+\frac\sigma2(ab-ba)
+=\begin{cases}ab,&\sigma=1,\\ba,&\sigma=-1.\end{cases}
+\tag{18.1}
+$$
+
+这是 (16.5) 的直接代入。在已整体分类的 $pAp$ 上，AH64.1、75.1 的既有后端给通常或相反 C* 乘法、全部有限旧复 Gram 正性及每份原限制评价的数学 GNS；其循环向量平方范数为 $\gamma(p)$，零角质量仍给零向量。式 (18.1) 增加指定混合值的识别，没有在一般环境上构造全域双线性、结合乘法、全部有限旧复 Gram 或物理动力学。
+
+Alfsen–Shultz，[*Orientation in operator algebras*](https://pmc.ncbi.nlm.nih.gov/articles/PMC22571/)，PNAS **95**，6596–6601，DOI `10.1073/pnas.95.12.6596`，Dynamical Correspondences、Theorem 1，给相容乘法的成熟对应；其前件是从含单位 JB 代数到 skew order derivations 的**线性** dynamical correspondence，不能据此给任意总 $D$ 补上线性，也不能把一般 C* 范数域替换成 von Neumann 原域。
+
+**定义 18.2（不变的全文来源谓词）。** 完整物理来源严格保持定义 10.2、15.2 及 AH28.1、64.2、75.1 的同一个 $\mathcal C_{47}^{\rm pin}(\Omega;S,D)$：SQ47.1–47.13 的全部定义、合同、公式、量词，及逐项递归纳入、逐层固定版本的上游全文同时合取。SQ 的主源身份仍按其自身 1.3、39、41.1、47.1 解析；`dcaebc0b9ca5a3a463fd8cfd161d38967df28668`、`0aa11dbc3dc337d667b98900673e07d67b99bf46` 的相应层级、OP/PT/PB/SM/C/AQ/R3/W/FR/XV/SF 的 `f24d1138a7b994da16abd9a47affedea64ea44ce`，以及 AH22.1、12.1 保留的 `2addd6f369b7387226c2b0cc984623dd3efe40a1`、`39a0505470ea889dd9d4301ad60cd9506a5e8b58` 全部不变。原根、静默及其他静态分支不改为三进模型；以下消费者说明不替代被纳入的任何全文。
+
+实际 Born 仍要求原事件绑定的实际完整菜单及严格正的相应质量；角菜单另需真实条件化，零质量不作除法。真正相关联合、张量与 typed CP 仍保留同一实际共同来源、全部相关输入、整台递归参考、原真支持及支持内补、全部所需有限深度和每个正精度。完整仪器、TP、Kraus、更新和 Lüders 保留各自完整 typed 菜单、接受端、校准、表示及收敛条件，并量化整个环境、全部成功／失败／细记录／port／post-port 输出和每份输出的每个仍合法未来。
+
+合法历史、真正分组遗忘、停止、拒绝、销毁、泄漏、同数两侧及逆向真实 Return、完整 CountRead 的活动 ready 和 producer，仍由同一全文合同承担；相同算子不合并原程序、记录、读序和未来权限，未定义请求不补零。正常性、指定前对偶、无限菜单及记录收敛，以及保持原域的实际连续可逆流、实际逆、物理钟和单位、适用生成元域、Hamiltonian 能量解释及共同正 $\hbar$ 均保留原前件。数学读取、$R$、$s$、$\varepsilon$ 和三块坐标不生产这些来源；本节没有完整奇数阶段 UHF 分类、物理来源满足性、kernel 证书或完整量子起源结论。
+
+**解释 18.3（完整直观解释）。** 把三个块想成两条带相反方向标记的通道和一个共同环境端点：第一输入在前两块分别取 $R$ 与 $-R$，在环境块取零；第二输入让两条边同时接到这个端点，因此必须研究原表对这整个输入给出的同一个答案，不能把两条已知单边答案相加。完整原关系和已经认识的整个小角先锁住答案的跨块部分，只留下前两块各自的对角余量。等右 Gram 说两条边对每个共同端点向量有相同的平方强度；它一方面造出两边恰好抵消的核向量，迫使余量在该向量上的读数为零，另一方面只在环境分量添上正、负纯虚幅度，就造出复 Cauchy–Schwarz 恰好取等的向量，同时保持余量读数为零。若余量还把这种向量送到非零处，就沿这个像轻轻改变数学读取：原预算在等号处没有一次松动，余量却产生一个非零一次项，正负两个方向必有一边违反正性。所以两份对角余量都必须消灭各自的边；剩下的余量只能藏在整个第二输入的核上，而原 P2 又消灭它在核上的压缩，最终只能为零。这个有限三块论证允许每块内部无限维、系数退化和非闭值域，不需要求逆，也不让未知函数经过输入极限。简化来自两种关系共同约束同一输出，没有减少原公理条数；不等 Gram 的双边、任意环境整行及完整量子起源仍未结清。已分类角有其复代数、正 Gram 和数学 Hilbert 表示，真实准备与完整 Born 菜单、共同联合、整台仪器全部输出未来、Return、CountRead、正常性和物理动力学仍须同一个完整来源谓词逐项成立。
+
+## 追加锚（本行以下为增补区）
