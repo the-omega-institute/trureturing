@@ -1,0 +1,17 @@
+**定义 C-14.1（度量与水平最小化）。** 按 [C-L5] 射线几何背景，本卷自定无量纲 Fubini–Study 约定
+
+
+<table><tbody><tr><td>
+
+```math
+ds_{\rm FS}^2=\langle d\psi,d\psi\rangle
+-|\langle\psi,d\psi\rangle|^2
+=\frac14\sum\frac{dp_s^2}{p_s}
++\sum p_s\,d\theta_s^2-(\sum p_s\,d\theta_s)^2.
+```
+
+</td></tr></tbody></table>
+
+
+本式在正支撑内部使用。[C-L5] 的 $`2\hbar`$ 尺度不作本卷尺度。固定 𝑋,𝑌,𝑍 后，对声明标架等价取最短代表，得到关系线元。
+
