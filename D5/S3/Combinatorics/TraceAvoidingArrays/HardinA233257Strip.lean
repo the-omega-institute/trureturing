@@ -18,7 +18,7 @@ cellOrder: proof_shape=bind-only; consumers=RowNormal, Canon, pattern_cards, wei
 RowNormal: proof_shape=bind-only; consumers=literal_card
 Canon: proof_shape=bind-only; consumers=Patterns
 literal_card: proof_shape=bind-only; consumers=weighted_count
-Col: proof_shape=bind-only; consumers=step, T, proper_word
+Col: proof_shape=bind-only; consumers=step, cl, proper_word
 step: proof_shape=bind-only; consumers=transfer_certificate, proper_word, proper_count
 cl: proof_shape=bind-only; consumers=transfer_certificate, proper_count
 T: proof_shape=bind-only; consumers=transfer_certificate, proper_count
