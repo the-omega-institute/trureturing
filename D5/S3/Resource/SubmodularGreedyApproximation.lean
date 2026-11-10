@@ -252,3 +252,191 @@ theorem cardinality_greedy_one_sub_inv_exp_guarantee
 #print axioms cardinality_greedy_one_sub_inv_exp_guarantee
 
 end D5.S3.Resource.SubmodularGreedyApproximation
+
+namespace D5.S3.Resource.SubmodularGreedyApproximation
+
+open Finset
+open scoped BigOperators
+noncomputable section
+
+variable {α : Type*} [DecidableEq α]
+
+/-- The gain from adding one element to a finite set. -/
+def marginal (f : Finset α → ℝ) (S : Finset α) (x : α) : ℝ :=
+  f (insert x S) - f S
+
+/-- Diminishing returns written in the union/intersection form. -/
+def Submodular (f : Finset α → ℝ) : Prop :=
+  ∀ A B, f A + f B ≥ f (A ∪ B) + f (A ∩ B)
+
+/-- A finite-set objective is monotone under inclusion. -/
+def Monotone (f : Finset α → ℝ) : Prop :=
+  ∀ ⦃A B⦄, A ⊆ B → f A ≤ f B
+
+/-- Diminishing returns for nested base sets. -/
+theorem marginal_antitone (f : Finset α → ℝ) (hf : Submodular f)
+    {A B : Finset α} (hAB : A ⊆ B) {x : α} (hx : x ∉ B) :
+    marginal f B x ≤ marginal f A x := by
+  have h := hf (insert x A) B
+  have hxi : x ∉ A := fun hxa => hx (hAB hxa)
+  have hunion : insert x A ∪ B = insert x B := by
+    ext z
+    simp only [mem_union, mem_insert]
+    aesop
+  have hinter : insert x A ∩ B = A := by
+    ext z
+    simp only [mem_inter, mem_insert]
+    aesop
+  rw [hunion, hinter] at h
+  dsimp [marginal]
+  linarith
+
+/-- The gain over a union is bounded by the sum of gains at the original base. -/
+theorem marginal_sum_bound (f : Finset α → ℝ) (hf : Submodular f)
+    (A B : Finset α) :
+    f (A ∪ B) - f A ≤ ∑ x ∈ B, marginal f A x := by
+  induction B using Finset.induction_on generalizing A with
+  | empty => simp
+  | @insert x B hx ih =>
+      by_cases hxa : x ∈ A
+      · have hunion : A ∪ insert x B = A ∪ B := by
+          ext z
+          simp [hxa]
+        rw [hunion, Finset.sum_insert hx]
+        simpa [marginal, hxa] using ih A
+      · have hxunion : x ∉ A ∪ B := by simp [hxa, hx]
+        have hstep := marginal_antitone f hf (A := A) (B := A ∪ B)
+          (Finset.subset_union_left) hxunion
+        have hmain := ih A
+        rw [Finset.sum_insert hx]
+        have hset : A ∪ insert x B = (A ∪ B) ∪ {x} := by
+          ext z
+          simp [Finset.union_left_comm, Finset.union_comm]
+        rw [hset]
+        have hset' : A ∪ B ∪ {x} = insert x (A ∪ B) := by
+          ext z
+          simp
+        rw [hset']
+        dsimp [marginal] at hstep hmain ⊢
+        linarith
+
+end
+end D5.S3.Resource.SubmodularGreedyApproximation
+
+namespace D5.S3.Resource.SubmodularGreedyApproximation
+
+variable {α : Type*} [DecidableEq α]
+
+/-- One greedy step captures at least the average remaining gain of any comparison set. -/
+theorem greedy_step_gap (f : Finset α → ℝ) (hfmono : Monotone f)
+    (hfsub : Submodular f) {k : ℕ}
+    {O S : Finset α} {e : α} (hO : O.card ≤ k)
+    (hgreedy : ∀ x, x ∉ S → marginal f S x ≤ marginal f S e) :
+    f O - f S ≤ (k : ℝ) * marginal f S e := by
+  have hunion : f O - f S ≤ f (S ∪ O) - f S := by
+    gcongr
+    exact hfmono Finset.subset_union_right
+  have hsum := marginal_sum_bound f hfsub S O
+  have hterm : ∀ x ∈ O, marginal f S x ≤ marginal f S e := by
+    intro x hxO
+    by_cases hxs : x ∈ S
+    · have hz : marginal f S x = 0 := by simp [marginal, hxs]
+      rw [hz]
+      have hnonneg : 0 ≤ marginal f S e := by
+        dsimp [marginal]
+        exact sub_nonneg.mpr (hfmono (Finset.subset_insert e S))
+      exact hnonneg
+    · exact hgreedy x hxs
+  have hsum' : (∑ x ∈ O, marginal f S x) ≤ ∑ x ∈ O, marginal f S e := by
+    exact Finset.sum_le_sum fun x hx => hterm x hx
+  have hcard : (O.card : ℝ) ≤ k := by exact_mod_cast hO
+  have hnonneg : 0 ≤ marginal f S e := by
+    dsimp [marginal]
+    exact sub_nonneg.mpr (hfmono (Finset.subset_insert e S))
+  have hsumconst : (∑ x ∈ O, marginal f S e) = (O.card : ℝ) * marginal f S e := by
+    simp
+  rw [hsumconst] at hsum'
+  calc
+    f O - f S ≤ f (S ∪ O) - f S := hunion
+    _ ≤ ∑ x ∈ O, marginal f S x := hsum
+    _ ≤ (O.card : ℝ) * marginal f S e := hsum'
+    _ ≤ (k : ℝ) * marginal f S e := by gcongr
+
+end D5.S3.Resource.SubmodularGreedyApproximation
+
+namespace D5.S3.Resource.SubmodularGreedyApproximation
+
+variable {α : Type*} [DecidableEq α]
+
+/-- The classical cardinality-greedy approximation guarantee for normalized monotone submodular objectives. -/
+theorem cardinality_greedy_one_sub_exp
+    (f : Finset α → ℝ) (hfzero : f ∅ = 0) (hfmono : Monotone f)
+    (hfsub : Submodular f) (k : ℕ) (hk : 0 < k)
+    (O : Finset α) (hO : O.card ≤ k)
+    (S : ℕ → Finset α) (e : ℕ → α)
+    (hS0 : S 0 = ∅)
+    (hstep : ∀ i, i < k → S (i + 1) = insert (e i) (S i))
+    (hgreedy : ∀ i, i < k → ∀ x, x ∉ S i →
+      marginal f (S i) x ≤ marginal f (S i) (e i)) :
+    f (S k) ≥ (1 - Real.exp (-1)) * f O := by
+  let g : ℕ → ℝ := fun i => f O - f (S i)
+  let q : ℝ := 1 - (1 : ℝ) / k
+  have hkRpos : (0 : ℝ) < k := by exact_mod_cast hk
+  have hkRone : (1 : ℝ) ≤ k := by
+    exact_mod_cast (Nat.one_le_iff_ne_zero.mpr (Nat.ne_of_gt hk))
+  have hq : 0 ≤ q := by
+    dsimp [q]
+    apply sub_nonneg.mpr
+    apply (div_le_iff₀ hkRpos).2
+    nlinarith
+  have hrec : ∀ i, i < k → g (i + 1) ≤ q * g i := by
+    intro i hi
+    have hgap := greedy_step_gap f hfmono hfsub hO (hgreedy i hi)
+    have hquot : g i / (k : ℝ) ≤ marginal f (S i) (e i) := by
+      apply (div_le_iff₀ hkRpos).2
+      dsimp [g]
+      simpa [mul_comm] using hgap
+    have hident : g (i + 1) = g i - marginal f (S i) (e i) := by
+      dsimp [g, marginal]
+      rw [hstep i hi]
+      ring
+    have hquot' :
+        (1 : ℝ) / (k : ℝ) * g i ≤ marginal f (S i) (e i) := by
+      simpa [div_eq_mul_inv, mul_comm, mul_left_comm, mul_assoc] using hquot
+    rw [hident]
+    dsimp [q]
+    linarith
+  have hiter : ∀ i, i ≤ k → g i ≤ q ^ i * g 0 := by
+    intro i hi
+    induction i with
+    | zero => simp
+    | succ i ih =>
+        have hil : i < k := by omega
+        have hri := hrec i hil
+        have hmul : q * g i ≤ q * (q ^ i * g 0) := by
+          exact mul_le_mul_of_nonneg_left (ih (by omega)) hq
+        calc
+          g (i + 1) ≤ q * g i := hri
+          _ ≤ q * (q ^ i * g 0) := hmul
+          _ = q ^ (i + 1) * g 0 := by ring
+  have hpow : q ^ k ≤ Real.exp (-1) := by
+    dsimp [q]
+    apply Real.one_sub_div_pow_le_exp_neg
+    exact hkRone
+  have hfinal := hiter k (le_rfl)
+  have hg0 : g 0 = f O := by
+    dsimp [g]
+    rw [hS0, hfzero]
+    ring
+  rw [hg0] at hfinal
+  have hmul : q ^ k * f O ≤ Real.exp (-1) * f O := by
+    exact mul_le_mul_of_nonneg_right hpow (by
+      have hnonnegO : 0 ≤ f O := by
+        have h := hfmono (Finset.empty_subset O)
+        rw [hfzero] at h
+        linarith
+      exact hnonnegO)
+  dsimp [g] at hfinal
+  linarith
+
+end D5.S3.Resource.SubmodularGreedyApproximation
