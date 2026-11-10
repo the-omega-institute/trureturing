@@ -93,7 +93,7 @@ internal sealed class NativeWeightedBaseRankSaturationDocument : IScribeDocument
             Seq(Instance(Call("Finite", e)), Comma, Sp,
                 All("w", new Formula.TypeArrow(e, real), All("B", Call("Set", e),
                     All("e", e, All("b", e,
-                        Imp(Seq(Neg, member), Imp(Seq(y, Sp, InMacro, Sp, b), identity)))))))));
+                        Imp(Seq(Neg, Sp, member), Imp(Seq(y, Sp, InMacro, Sp, b), identity)))))))));
     }
 
     private static Formula MainFormula()
