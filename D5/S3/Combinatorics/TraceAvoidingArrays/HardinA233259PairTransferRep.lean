@@ -8,14 +8,8 @@
 /-
 admission_basis: open-problem-resolution (#28807; Proved)
 escape_witness: none
-direct_frozen_dependencies (raw compiled type/value edges, union over this module):
-  D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177PairTransfer.class_rep
-    statement_id: sha256:125069a10992aa19c4ca95b52ff60cfb365793261de41862ec88865df5da0df5
-  D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177PairTransfer.class_relabel
-    statement_id: sha256:2fc2165388c4928a897e42d64e87aeffb3e5e4446e6b81598be964615720ad6e
-reused_unfrozen: HardinA233259PairTransferCore
 representative_rows: proof_shape=bind-only; consumers=quotient_rows
-quotient_rows: proof_shape=bind-only; consumers=HardinA233259PairTransfer.count_transfer
+quotient_rows: proof_shape=bind-only; consumers=HardinA233259PairTransferCount.count_transfer
 -/
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferCore
 import Mathlib.Tactic

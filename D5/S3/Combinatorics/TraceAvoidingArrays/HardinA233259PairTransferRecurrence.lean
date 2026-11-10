@@ -8,10 +8,8 @@
 /-
 admission_basis: open-problem-resolution (#28807; Proved)
 escape_witness: none
-direct_frozen_dependencies: []
-reused_unfrozen: TransferMatrix.scalarRelationShift, PairTransferCount.count_transfer,
-  PairTransferPowers.power_polynomial
-recurrence: proof_shape=bind-only; consumers=HardinA233259Strip.result
+shifted: proof_shape=bind-only; consumers=recurrence
+recurrence: proof_shape=bind-only; consumers=HardinA233259PairTransfer.recurrence
 -/
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferCount
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferPowers

@@ -9,7 +9,7 @@ internal sealed class HardinA233259PairTransferCoreDocument : IScribeDocumentDef
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Automata/hardin2013a233259");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("The four-row one-sided pair transfer definitions.", H("One-sided pair transfer core"), Blocks(
         Paragraph(Text("The core supplies the literal four-row proper-pattern predicate, its fourteen-class transfer matrix and the public grid transport used by the counting certificate.")),
-        Node("Col", "Four-label columns", Eq(Own("Col"), Product(Fin(D(3)), Product(Fin(D(3)), Product(Fin(D(3)), Fin(D(3)))))), DescribeRole.Definition),
+        Node("Col", "Four-row columns over three labels", Eq(Own("Col"), Product(Fin(D(3)), Product(Fin(D(3)), Product(Fin(D(3)), Fin(D(3)))))), DescribeRole.Definition),
         Node("column", "Column coordinates", ColumnFormula(), DescribeRole.Definition),
         Node("cls", "The fourteen equality classes", ClassFormula(), DescribeRole.Definition),
         Node("representatives", "First-appearance representatives", RepresentativesFormula(), DescribeRole.Definition),
@@ -17,6 +17,7 @@ internal sealed class HardinA233259PairTransferCoreDocument : IScribeDocumentDef
         Node("gridEquiv", "Grids as sequences of columns", GridEquivFormula(), DescribeRole.Definition),
         Node("column_grid", "Recovering a grid entry", ColumnGridFormula(), DescribeRole.Theorem),
         Node("compatible", "One-sided column compatibility", CompatibleFormula(), DescribeRole.Definition),
+        Node("instDecidableCompatible", "Deciding column compatibility", DecidableCompatibleFormula(), DescribeRole.Definition),
         Node("Proper", "Proper pair-label patterns", ProperFormula(), DescribeRole.Definition),
         Node("L", "Literal pair-pattern count", CountFormula(), DescribeRole.Definition),
         Node("Q", "Fourteen-class transfer matrix", MatrixFormula(), DescribeRole.Definition),
@@ -27,8 +28,8 @@ internal sealed class HardinA233259PairTransferCoreDocument : IScribeDocumentDef
     private static Formula ColumnFormula(){var c=V("c");return All("c",Own("Col"),Eq(App(Own("column"),c),Typed(Vector(App(Q("Prod.fst"),c),App(Q("Prod.fst"),App(Q("Prod.snd"),c)),App(Q("Prod.fst"),App(Q("Prod.snd"),App(Q("Prod.snd"),c))),App(Q("Prod.snd"),App(Q("Prod.snd"),App(Q("Prod.snd"),c)))),Arrow(Fin(D(4)),Fin(D(3))))));}
     private static Formula ClassFormula(){var c=V("c");var a=V("a");var b=V("b");var d=V("d");var e=V("e");Formula body=If(Eq(a,b),If(Eq(a,d),If(Eq(a,e),D(0),D(1)),If(Eq(a,e),D(2),If(Eq(d,e),D(3),D(4)))),If(Eq(a,d),If(Eq(a,e),D(5),If(Eq(b,e),D(6),D(7))),If(Eq(b,d),If(Eq(a,e),D(8),If(Eq(b,e),D(9),D(10))),If(Eq(a,e),D(11),If(Eq(b,e),D(12),D(13))))));body=Let("a",Fin(D(3)),App(Q("Prod.fst"),c),Let("b",Fin(D(3)),App(Q("Prod.fst"),App(Q("Prod.snd"),c)),Let("d",Fin(D(3)),App(Q("Prod.fst"),App(Q("Prod.snd"),App(Q("Prod.snd"),c))),Let("e",Fin(D(3)),App(Q("Prod.snd"),App(Q("Prod.snd"),App(Q("Prod.snd"),c))),body))));return All("c",Own("Col"),Eq(App(Own("cls"),c),Typed(body,Fin(D(14)))));}
     private static Formula RepresentativesFormula()=>Eq(Own("representatives"),Typed(Vector(Column(0,0,0,0),Column(0,0,0,1),Column(0,0,1,0),Column(0,0,1,1),Column(0,0,1,2),Column(0,1,0,0),Column(0,1,0,1),Column(0,1,0,2),Column(0,1,1,0),Column(0,1,1,1),Column(0,1,1,2),Column(0,1,2,0),Column(0,1,2,1),Column(0,1,2,2)),Arrow(Fin(D(14)),Own("Col"))));
-    private static Formula RelabelFormula(){var e=V("e");return All("e",Perm(),Eq(App(Own("relabel"),e),Q("D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer.relabel")));}
-    private static Formula GridEquivFormula(){var n=V("n");return All("n",Q("Nat"),Eq(App(Own("gridEquiv"),n),Q("D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer.gridEquiv")));}
+    private static Formula RelabelFormula()=>Eq(Own("relabel"),Q("D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer.relabel"));
+    private static Formula GridEquivFormula()=>Eq(Own("gridEquiv"),Q("D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer.gridEquiv"));
     private static Formula ColumnGridFormula()
     {
         var n=V("n"); var p=V("P"); var j=V("j"); var r=V("r");
@@ -48,14 +49,21 @@ internal sealed class HardinA233259PairTransferCoreDocument : IScribeDocumentDef
         var condition=Imp(Or(Eq(r,s),Eq(Add(Val(r),D(1)),Val(s))),Ne(App(p,Pair(s,j)),App(p,Pair(r,next))));
         return All("n",Q("Nat"),All("P",Arrow(Cells(n),Fin(D(3))),Eq(App(Own("Proper"),p),All("j",Fin(n),All("h",Lt(Add(Val(j),D(1)),n),All("r",Fin(D(4)),All("s",Fin(D(4)),condition)))))));
     }
+    private static Formula DecidableCompatibleFormula()
+    {
+        var a=V("a"); var b=V("b");
+        return All("a",Own("Col"),All("b",Own("Col"),
+            Typed(Own("instDecidableCompatible",a,b),Call("Decidable",Own("compatible",a,b)))));
+    }
     private static Formula CountFormula(){var n=V("n");var p=V("P");var arrays=Arrow(Cells(n),Fin(D(3)));return All("n",Q("Nat"),Eq(App(Own("L"),n),App(Q("Finset.card"),App(Q("Finset.filter"),Fn("P",arrays,App(Own("Proper"),p)),App(Q("Finset.univ"))))));}
     private static Formula MatrixFormula()=>Eq(Own("Q"),MatrixRows());
     private static Formula WeightsFormula()=>Eq(Own("weights"),Typed(Vector(48,48,24,48,24,24,12,12,24,48,24,12,12,24),Arrow(Fin(D(14)),Q("Int"))));
-    private static Formula CompatibleRelabelFormula(){var e=V("e");var a=V("a");var b=V("b");return All("e",Perm(),All("a",Own("Col"),All("b",Own("Col"),Eq(App(Own("compatible"),App(Q("D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer.relabel"),e,a),App(Q("D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer.relabel"),e,b)),App(Own("compatible"),a,b)))));}
+    private static Formula CompatibleRelabelFormula(){var e=V("e");var a=V("a");var b=V("b");return All("e",Perm(),All("a",Own("Col"),All("b",Own("Col"),Iff(App(Own("compatible"),App(Q("D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer.relabel"),e,a),App(Q("D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer.relabel"),e,b)),App(Own("compatible"),a,b)))));}
     private static Formula GridGoodFormula()
     {
         var n=V("n"); var p=V("P");
-        var good=App(Q("D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix.good"),Own("compatible"),Fn("x",Q("Fin"),And(Q("True"),Eq(V("x"),V("x")))),App(Q("List.ofFn"),App(App(Own("gridEquiv"),n),p)));
+        var unrestricted=Fn("_",Own("Col"),Fn("_",Own("Col"),Fn("_",Own("Col"),Q("True"))));
+        var good=App(Q("D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix.good"),Own("compatible"),unrestricted,App(Q("List.ofFn"),App(App(Own("gridEquiv"),n),p)));
         return All("n",Q("Nat"),All("P",Arrow(Cells(n),Fin(D(3))),Iff(App(Own("Proper"),p),good)));
     }
     private static Formula MatrixRows()=>Vector(Vector(2,2,2,2,0,2,2,0,2,2,0,0,0,0),Vector(1,1,0,1,1,1,0,1,0,1,1,0,0,0),Vector(1,1,0,0,0,0,0,0,1,1,0,0,0,0),Vector(1,1,1,1,0,0,0,0,0,1,1,0,1,1),Vector(0,0,0,1,1,0,0,0,0,0,0,1,0,1),Vector(1,1,1,1,0,0,0,0,0,0,0,0,0,0),Vector(1,1,0,0,0,0,0,0,0,0,0,0,0,0),Vector(0,0,0,1,1,0,0,0,0,0,0,0,0,0),Vector(1,1,0,0,0,1,0,1,0,0,0,0,0,0),Vector(1,1,1,1,0,1,1,0,1,1,0,0,0,0),Vector(0,0,0,1,1,0,0,0,0,1,1,0,0,0),Vector(0,0,0,0,0,0,0,0,0,0,0,1,0,1),Vector(0,0,0,0,0,0,0,0,1,1,0,0,0,0),Vector(0,0,0,0,0,0,0,0,0,1,1,0,1,1));

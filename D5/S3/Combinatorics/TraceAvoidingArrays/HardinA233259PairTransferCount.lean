@@ -8,10 +8,7 @@
 /-
 admission_basis: open-problem-resolution (#28807; Proved)
 escape_witness: none
-direct_frozen_dependencies: []
-reused_unfrozen: TransferMatrix.cardMatrix, HardinA233259PairTransferRep.quotient_rows,
-  HardinA233259PairTransferInitial.initial_weights
-count_transfer: proof_shape=bind-only; consumers=HardinA233259PairTransfer.initial_values, HardinA233259PairTransfer.recurrence
+count_transfer: proof_shape=bind-only; consumers=HardinA233259PairTransferBase.initial_values, HardinA233259PairTransferRecurrence.shifted
 -/
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferCore
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferRep

@@ -8,26 +8,38 @@
 /-
 admission_basis: open-problem-resolution (#28807; Proved)
 escape_witness: none
-direct_frozen_dependencies (raw compiled type/value edges, union over this module):
-  D5/S3/Observer/Separation/BooleanRankThreeK4.beta
-    statement_id: sha256:1abdc5f3db71567fe05de5aabbe80dddeb5ec5179e4ec7fd49fe71e500518481
-  D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip.colour_bond_iff
-    statement_id: sha256:b9273762bbccc68fc56c48c38b8aba02a46a50a53bfbbe70a660fd21867d6be8
-  D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.normalized_card
-    statement_id: sha256:fd80fd959d2ba7f8bcfcd620a17f6f0656556e92fefd45525f843b108518fde6
-  D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical.canonical_pattern_card
-    statement_id: sha256:1b8f752c790b7c23ce12b4d91e610a60a772b1e4d7fec94671b6f1c0300a777c
-  D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Ladder.normal
-    statement_id: sha256:0a78e1cd678c0972168d0e703f45dc8728aeded66dbc60a02b776341c02acec0
-  D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Ladder.two_label_classification
-    statement_id: sha256:8c32214dd883fe831617ed43ca1df4e9d08aeccfd5555749c95885469421ba89
-reused_unfrozen: HardinA233259PairTransfer.recurrence
 Legal: proof_shape=bind-only; consumers=instDecidableLegal, a, legal_iff
 instDecidableLegal: proof_shape=bind-only; consumers=a
-a: proof_shape=bind-only; consumers=literal_card, a_sum
-counting_bridge: proof_shape=bind-only; consumers=scale_recurrence
+a: proof_shape=bind-only; consumers=literal_card, a_sum, counting_bridge, finite_certificate, result
+cellOrder: proof_shape=bind-only; consumers=RowNormal, Canon, row_major_lt, a_sum, L_card
+RowNormal: proof_shape=bind-only; consumers=normal_iff, legal_iff, literal_card
+Canon: proof_shape=bind-only; consumers=alternating_canon, canon_two_eq, CanonicalPatterns
+row_major_lt: proof_shape=bind-only; consumers=normal_iff
+normal_iff: proof_shape=bind-only; consumers=legal_iff
+legal_iff: proof_shape=bind-only; consumers=literal_card
+literal_card: proof_shape=bind-only; consumers=a_sum
+used: proof_shape=bind-only; consumers=used_eq_card, used_two_or_three, omitted_label, alternating_used, canon_two_eq, canonical_two_card, a_sum, weighted_count
+used_eq_card: proof_shape=bind-only; consumers=used_two_or_three, alternating_used
+proper_relabel: proof_shape=bind-only; consumers=L_card
+proper_two_labels: proof_shape=bind-only; consumers=used_two_or_three, L_card
+columns_constant: proof_shape=bind-only; consumers=two_label_classification
+alternating: proof_shape=bind-only; consumers=alternating_proper, two_label_classification, alternating_used, alternating_canon, canon_two_eq, canonical_two_card
+alternating_proper: proof_shape=bind-only; consumers=canonical_two_card
+two_label_classification: proof_shape=bind-only; consumers=canon_two_eq
+used_two_or_three: proof_shape=bind-only; consumers=weighted_count
+omitted_label: proof_shape=bind-only; consumers=canon_two_eq
+alternating_used: proof_shape=bind-only; consumers=canonical_two_card
+alternating_canon: proof_shape=bind-only; consumers=canonical_two_card
+canon_two_eq: proof_shape=bind-only; consumers=canonical_two_card
+CanonicalPatterns: proof_shape=bind-only; consumers=canonical_two_card, a_sum, L_card, weighted_count, counting_bridge
+canonical_two_card: proof_shape=bind-only; consumers=weighted_count
+a_sum: proof_shape=bind-only; consumers=weighted_count
+L_card: proof_shape=bind-only; consumers=counting_bridge
+weighted_count: proof_shape=bind-only; consumers=counting_bridge
+counting_bridge: proof_shape=bind-only; consumers=scale_recurrence, Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259Strip.Bridge.family
+scale_recurrence: proof_shape=bind-only; consumers=finite_certificate, result
 finite_certificate: proof_shape=bind-only; consumers=result
-result: proof_shape=bind-only; consumers=external result of #28807
+result: proof_shape=bind-only; consumers=external-open-problem-resolution(#28807)
 -/
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
 import D5.S3.Observer.Separation.BooleanRankThreeK4
@@ -54,7 +66,9 @@ def Legal {n : ℕ} (A : Fin 4 × Fin n → Fin 6) : Prop :=
         (A (s, j)).val + (A (r, ⟨j.val + 1, h⟩)).val ≠ 5) ∧ normal A
 
 private instance instDecidableLegal {n : ℕ} (A : Fin 4 × Fin n → Fin 6) :
-    Decidable (Legal A) := inferInstanceAs (Decidable (_ ∧ _ ∧ _))
+    Decidable (Legal A) := by
+  letI := HardinA233177Ladder.instDecidableNormal A
+  exact inferInstanceAs (Decidable (_ ∧ _ ∧ _))
 
 def a (n : ℕ) : ℕ :=
   (Finset.univ.filter (fun A : Fin 4 × Fin n → Fin 6 => Legal A)).card

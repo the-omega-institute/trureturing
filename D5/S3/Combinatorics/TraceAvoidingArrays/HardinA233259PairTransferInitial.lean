@@ -8,9 +8,7 @@
 /-
 admission_basis: open-problem-resolution (#28807; Proved)
 escape_witness: none
-direct_frozen_dependencies: []
-reused_unfrozen: HardinA233259PairTransferCore
-initial_weights: proof_shape=bind-only; consumers=HardinA233259PairTransfer.count_transfer
+initial_weights: proof_shape=bind-only; consumers=HardinA233259PairTransferCount.count_transfer
 -/
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferCore
 import Mathlib.Tactic

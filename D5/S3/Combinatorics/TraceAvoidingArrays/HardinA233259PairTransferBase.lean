@@ -8,10 +8,7 @@
 /-
 admission_basis: open-problem-resolution (#28807; Proved)
 escape_witness: none
-direct_frozen_dependencies: []
-reused_unfrozen: HardinA233259PairTransferCount.count_transfer,
-  HardinA233259PairTransferPowers.powers_table
-initial_values: proof_shape=bind-only; consumers=HardinA233259PairTransferRecurrence.recurrence
+initial_values: proof_shape=bind-only; consumers=HardinA233259PairTransferRecurrence.recurrence, Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259Strip.Bridge.actual_dependence
 -/
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferCount
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferPowers

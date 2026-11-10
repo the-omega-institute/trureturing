@@ -8,14 +8,12 @@
 /-
 admission_basis: open-problem-resolution (#28807; Proved)
 escape_witness: none
-direct_frozen_dependencies: []
-reused_unfrozen: TransferMatrix.tabulatedPowers, HardinA233259PairTransferCore.Q
 W: proof_shape=bind-only; consumers=table_zero, table_steps, powers_table, power_polynomial
-coefficients: proof_shape=bind-only; consumers=power_polynomial, HardinA233259PairTransfer.recurrence
+coefficients: proof_shape=bind-only; consumers=power_polynomial, HardinA233259PairTransferRecurrence.shifted
 table_zero: proof_shape=bind-only; consumers=powers_table
 table_steps: proof_shape=bind-only; consumers=powers_table
-powers_table: proof_shape=bind-only; consumers=power_polynomial, HardinA233259PairTransfer.initial_values
-power_polynomial: proof_shape=bind-only; consumers=HardinA233259PairTransfer.recurrence
+powers_table: proof_shape=bind-only; consumers=power_polynomial, HardinA233259PairTransferBase.initial_values
+power_polynomial: proof_shape=bind-only; consumers=HardinA233259PairTransferRecurrence.shifted
 -/
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferCore
 import D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix

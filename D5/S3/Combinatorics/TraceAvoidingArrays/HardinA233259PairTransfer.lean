@@ -8,9 +8,7 @@
 /-
 admission_basis: open-problem-resolution (#28807; Proved)
 escape_witness: none
-direct_frozen_dependencies: []
-reused_unfrozen: HardinA233259PairTransferRecurrence.recurrence
-recurrence: proof_shape=bind-only; consumers=HardinA233259Strip.finite_certificate
+recurrence: proof_shape=bind-only; consumers=HardinA233259Strip.finite_certificate, HardinA233259Strip.result
 -/
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferCore
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferRep

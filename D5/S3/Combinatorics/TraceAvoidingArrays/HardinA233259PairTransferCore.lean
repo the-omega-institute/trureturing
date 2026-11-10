@@ -8,33 +8,22 @@
 /-
 admission_basis: open-problem-resolution (#28807; Proved)
 escape_witness: none
-direct_frozen_dependencies (raw compiled type/value edges, union over this module):
-  D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177PairTransfer.Col
-    statement_id: sha256:58a96b00c700fdc2e97a60f41346130ba89366c81c08a686797df427656983c2
-  D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177PairTransfer.column
-    statement_id: sha256:4ce9aae1f7889d98efb177000bdd5001f59a8f6dc7b63fee53ea3e2c52ee8dc6
-  D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177PairTransfer.cls
-    statement_id: sha256:c3077252f291946d2b7b564604c605d22a44010fe93d7f5d5ba8942e5d9bb419
-  D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177PairTransfer.representatives
-    statement_id: sha256:2067f4c2cdcabcf8935a46363352f15a911bd40b5940776cc4c9ae101d987369
-  D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177PairTransfer.relabel
-    statement_id: sha256:88389d32894c39de84bddac27d8616d8e252a5def677b3daa530bb191313d97a
-  D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177PairTransfer.gridEquiv
-    statement_id: sha256:f9e4b8b07e31a38f83f46de0213688dae683ba0a7a828eab02e6212deccb1748
-  D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177PairTransfer.column_grid
-    statement_id: sha256:68cd26e474b822bca602484f4f63cbe173ffd3258de0d3745a9e328d671cef3d
-  D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177PairTransfer.column_relabel
-    statement_id: sha256:c5015d866b36983cd7bccd75417c814d35b5e5c73c7b5075679455ee599212aa
-reused_unfrozen: TransferMatrix.good_iff_local
-Col: proof_shape=bind-only; consumers=column, cls, representatives, relabel, compatible
-column: proof_shape=bind-only; consumers=compatible, compatible_relabel
-cls: proof_shape=bind-only; consumers=Q, representatives
-representatives: proof_shape=bind-only; consumers=Q, class_rep
-relabel: proof_shape=bind-only; consumers=compatible_relabel, class_rep
-compatible: proof_shape=bind-only; consumers=compatible_relabel, representative_rows, quotient_rows, initial_weights, grid_good, count_transfer
-Q: proof_shape=bind-only; consumers=representative_rows, quotient_rows, count_transfer, table_steps, powers_table, power_polynomial
-weights: proof_shape=bind-only; consumers=initial_weights, count_transfer, initial_values
-compatible_relabel: proof_shape=bind-only; consumers=quotient_rows
+Col: proof_shape=bind-only; consumers=compatible, instDecidableCompatible, HardinA233259PairTransferRep.representative_rows, HardinA233259PairTransferInitial.initial_weights, HardinA233259PairTransferCount.count_transfer
+column: proof_shape=bind-only; consumers=compatible, grid_good
+cls: proof_shape=bind-only; consumers=HardinA233259PairTransferRep.representative_rows, HardinA233259PairTransferRep.quotient_rows, HardinA233259PairTransferInitial.initial_weights, HardinA233259PairTransferCount.count_transfer
+representatives: proof_shape=bind-only; consumers=HardinA233259PairTransferRep.representative_rows, HardinA233259PairTransferRep.quotient_rows
+relabel: proof_shape=bind-only; consumers=compatible_relabel, HardinA233259PairTransferRep.quotient_rows
+gridEquiv: proof_shape=bind-only; consumers=grid_good, HardinA233259PairTransferCount.count_transfer
+column_grid: proof_shape=bind-only; consumers=grid_good
+compatible: proof_shape=bind-only; consumers=instDecidableCompatible, grid_good, compatible_relabel, HardinA233259PairTransferRep.representative_rows, HardinA233259PairTransferInitial.initial_weights, HardinA233259PairTransferCount.count_transfer
+instDecidableCompatible: proof_shape=bind-only; consumers=HardinA233259PairTransferRep.representative_rows, HardinA233259PairTransferInitial.initial_weights, HardinA233259PairTransferRep.quotient_rows, HardinA233259PairTransferCount.count_transfer
+Proper: proof_shape=bind-only; consumers=instDecidableProper, L, grid_good, HardinA233259Strip.legal_iff
+instDecidableProper: proof_shape=bind-only; consumers=L
+L: proof_shape=bind-only; consumers=HardinA233259PairTransferCount.count_transfer, HardinA233259Strip.L_card
+grid_good: proof_shape=bind-only; consumers=HardinA233259PairTransferCount.count_transfer
+Q: proof_shape=bind-only; consumers=HardinA233259PairTransferRep.representative_rows, HardinA233259PairTransferCount.count_transfer, HardinA233259PairTransferPowers.table_steps, HardinA233259PairTransferPowers.power_polynomial
+weights: proof_shape=bind-only; consumers=HardinA233259PairTransferInitial.initial_weights, HardinA233259PairTransferCount.count_transfer
+compatible_relabel: proof_shape=bind-only; consumers=HardinA233259PairTransferRep.quotient_rows
 -/
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix
