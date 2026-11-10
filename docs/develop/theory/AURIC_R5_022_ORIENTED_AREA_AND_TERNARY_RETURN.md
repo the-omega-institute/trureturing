@@ -3114,3 +3114,547 @@ $$
 
 ## 追加锚（本行以下为增补区）
 
+## 18　实际交替乘法的线性记录与来源恢复
+
+**定义 18.1（固定实际乘法、窗口与来源）。** 设 $F$ 是特征二的域，$L/F$ 是有限域扩张，满足 $L^2\subseteq F$，记 $n=[L:F]$，允许 $n=1$。以下始终使用同一个实际 $L$ 的乘法及其诱导的 $F$-线性映射
+$$
+\kappa:\Lambda_F^2L\longrightarrow L/F,
+\qquad \kappa(u\wedge v)=uv+F.
+\tag{18.1}
+$$
+这里 $L/F$ 表示商向量空间。乘法模 $F$ 是交替双线性的，因为 $u^2\in F$；故 (18.1) 确定唯一的线性映射。它在整个 $L$ 上满射，因为 $\kappa(1\wedge h)=h+F$。不另选线性记录器。
+
+预先固定任意 $F$-子空间 $W\le L$，记 $m=\dim_FW$。对 $h\in L\setminus F$，置 $K_h=F(h)$。称实际二次中间域 $K_h$ 在 $W$ 中可见，当且仅当存在 $v\in L^\times$ 使 $vK_h\subseteq W$，并记
+$$
+\operatorname{Src}(W)=\{K_h:\exists v\in L^\times,
+\ vK_h\subseteq W\}.
+\tag{18.2}
+$$
+对一个指定记录 $r\in L/F$，其来源使用同一输入对定义为
+$$
+\operatorname{Src}_W(r)=
+\{F(u/v):u,v\in W\text{ 在 }F\text{ 上独立，且 }uv+F=r\}.
+\tag{18.3}
+$$
+所有向量、子域和存在量词均在原 $L/F$ 内。
+
+式 (18.1) 在完整四次域上直接沿用 Havlicek，[*Clifford Parallelisms and External Planes to the Klein quadric*，arXiv:1511.06308v1](https://arxiv.org/abs/1511.06308v1)，§3 case (B)、§5 式 (5.1)–(5.3) 的 $H/F$ 与 $\kappa$：case (B) 中共轭为恒等，因而 $\overline u v+F=uv+F$。该文的 case (B) 明确要求 $[H:F]=4$；这里只把同一公式用于已给定的任意有限指数一域，不借用其四维平行类分类处理高次域。
+
+**定理 18.2（实际乘积唯一绑定二次来源）。** 对任意独立的 $u,v\in L$，有
+$$
+uv\notin F,\qquad F(u/v)=F(uv),\qquad
+Fu+Fv=vF(u/v).
+\tag{18.4}
+$$
+每个非零 $r=h+F\in L/F$ 唯一确定一个实际二次域 $K_h$，且
+$$
+\operatorname{Src}_W(r)=
+\begin{cases}
+\{K_h\},&r\text{ 有 }W\text{ 内的实际独立输入对},\\
+\varnothing,&r\text{ 没有这样的输入对}.
+\end{cases}
+\qquad \operatorname{Src}_W(0)=\varnothing.
+\tag{18.5}
+$$
+改变 $r$ 的非零 $F$-倍数不改变其候选来源域。于是实际二次中间域与 $\mathbf P_F(L/F)$ 的 $F$-点一一对应，但一个候选域是否在 $W$ 可见仍是另一条件。
+
+证明。独立性给 $v\ne0$、$u/v\notin F$。因 $v^2\in F^\times$，
+$$
+uv=v^2(u/v),\qquad u/v=(v^2)^{-1}uv.
+$$
+这证明前两式，第三式由 $u=v(u/v)$ 得到。每个 $h\notin F$ 的平方在 $F$，所以 $K_h=F+Fh$ 是二次域；这里复用 [Stacks，09HF，Lemma 9.14.2](https://stacks.math.columbia.edu/tag/09HF) 在 $p=2$ 的不可约性结论。若 $h$ 加上标量，或乘以非零标量，$F(h)$ 都不变。反过来，$F(h)=F(h')$ 恰好意味着 $h'=\alpha+\beta h$，其中 $\alpha\in F$、$\beta\in F^\times$。这给所述射影点对应。若 $uv+F=h+F\ne0$，则 $F(u/v)=F(uv)=F(h)$，标签确实来自这同一对输入；零记录由 $uv\notin F$ 排除。最后，任一平面 $vK_h\subseteq W$ 可取一组独立基，其比值生成 $K_h$；故 (18.2) 与全部实际记录的来源并集相同。这一比值桥复用 §17 引理 17.3、定理 17.5 中同一实际 $h$ 的关系。$\square$
+
+**定义 18.3（实际集、线性像与射影中心）。** 置
+$$
+\begin{aligned}
+\mathcal A(W)&=\{u\wedge v:u,v\in W\text{ 在 }F\text{ 上独立}\},\\
+\mathcal T_\kappa(W)&=\kappa(\mathcal A(W)),\\
+I_\kappa(W)&=\kappa(\Lambda_F^2W).
+\end{aligned}
+\tag{18.6}
+$$
+非零虚假记录指 $I_\kappa(W)\setminus(\mathcal T_\kappa(W)\cup\{0\})$ 中的元素。$\mathcal A(W)$ 是去掉原点的实际分解锥；当 $m\le1$ 时它为空，$\mathcal T_\kappa(W)=\varnothing$，而 $\Lambda^2W=I_\kappa(W)=\{0\}$。对所有 $m$，均有
+$$
+I_\kappa(W)=\operatorname{span}_F\mathcal T_\kappa(W),
+\qquad 0\notin\mathcal T_\kappa(W).
+\tag{18.7}
+$$
+第一式由基外积张成性得到，第二式由 (18.4) 得到。
+
+Grassmann 点是 $\mathcal A(W)$ 的射影化：$\operatorname{Gr}_F(2,W)(F)=\mathcal A(W)/F^\times$，而不是 $\mathcal A(W)$ 本身。$\kappa_W=\kappa|_{\Lambda^2W}$ 的射影中心是 $\mathbf P_F(\ker\kappa_W)$；定理 18.2 保证它不含实际 Grassmann $F$-点。因此 $\mathbf P(\kappa_W)$ 在全部实际 Grassmann 点上有定义，其像经 $[h+F]\mapsto K_h$ 正是 $\operatorname{Src}(W)$。$\mathbf P_F(I_\kappa(W))(F)$ 则只给线性张成中的候选来源。扩到代数闭包后的 Grassmann 点、中心和投影须另取基变换；几何像或其闭包不能替代这里的实际 $F$-点像。
+
+这些外积与射影术语直接使用 Ghorpade–Patil–Pillai，[*Decomposable Subspaces, Linear Sections of Grassmann Varieties, and Higher Weights of Grassmann Codes*，arXiv:0710.5161v1](https://arxiv.org/abs/0710.5161v1)，§§1–2 的定义，以及 Havlicek 前引文 §2 的 Plücker 嵌入。它们是以下乘法恢复判据的经典输入。
+
+**定理 18.4（任意固定窗口的交叠、秩与完整实际纤维）。** 对任意 $W\le L$ 及 $h\in L\setminus F$，记 $r=h+F$、$K=K_h$，并置
+$$
+C_h(W)=W\cap hW.
+$$
+则 $C_h(W)$ 是 $K$-向量空间，而且下列条件等价：
+$$
+\begin{aligned}
+&K\in\operatorname{Src}(W);\\
+&r\in\mathcal T_\kappa(W);\\
+&C_h(W)\ne0;\\
+&\dim_K C_h(W)\ge1;\\
+&\operatorname{rank}_F\Phi_h<2m,
+\quad\Phi_h:W\oplus W\to L,\quad(x,y)\mapsto x+hy.
+\end{aligned}
+\tag{18.8}
+$$
+更准确地，置 $\rho_h=\operatorname{rank}_F\Phi_h$，有
+$$
+\dim_F C_h(W)=2m-\rho_h,
+\qquad
+\dim_K C_h(W)=m-\rho_h/2.
+\tag{18.9}
+$$
+取 $L$ 的任意 $F$-基，以列满秩矩阵 $B\in F^{n\times m}$ 表示 $W$ 的包含映射，以 $M_h\in F^{n\times n}$ 表示原域中乘以 $h$，则
+$$
+\rho_h=\operatorname{rank}_F[B\ \ M_hB].
+\tag{18.10}
+$$
+特别地，$m>n/2$ 时所有实际二次来源均可见，且 $I_\kappa(W)=L/F$、$\mathcal T_\kappa(W)=(L/F)\setminus\{0\}$。一般情况下，非零虚假记录恰为
+$$
+\{h+F\in I_\kappa(W)\setminus\{0\}:
+\operatorname{rank}_F[B\ \ M_hB]=2m\}.
+\tag{18.11}
+$$
+
+完整实际提升纤维还有如下参数化：$C=C_h(W)$ 时，存在自然双射
+$$
+\mathbf P_K(C)\ \longrightarrow
+\{\xi\in\mathcal A(W):\kappa(\xi)=r\},
+\qquad
+Kv\longmapsto \xi_v:=v\wedge\frac{hv}{v^2}.
+\tag{18.12}
+$$
+这里 $\mathbf P_K(0)=\varnothing$；右侧保留实际外积向量而非只保留射影类。每个 $Kv$ 同时给出窗口内同一来源的实际支撑平面。
+
+证明。因为 $h^2\in F^\times$，有
+$$
+C_h(W)=\{v\in W:hv\in W\}.
+\tag{18.13}
+$$
+若 $v\in W\cap hW$，写 $v=hy$、$y\in W$，则 $hv=h^2y\in W$；反向由 $v=h((h^2)^{-1}hv)$ 得到。式 (18.13) 也说明 $hC_h(W)\subseteq C_h(W)$，故 $C_h(W)$ 对 $F+Fh=K$ 稳定。这正是 §17 的固定 $h$ 交叠条件，其 $K$-线性结构无需另加假设。
+
+若 $C_h(W)$ 含非零 $v$，则 $vK\subseteq W$，且 $v,hv/v^2$ 独立，乘积恰为 $h$。所以同一输入对同时见证来源 $K$ 和指定记录 $r$。反过来，若 $u,v\in W$ 独立且 $uv+F=h+F$，写 $uv=h+\alpha$，$\alpha\in F$，便有
+$$
+hv=(uv+\alpha)v=v^2u+\alpha v\in W.
+$$
+因此 $0\ne v\in C_h(W)$。若从 $vK\subseteq W$ 出发，则也直接得到 $v\in C_h(W)$，支付前三项等价与来源标签的绑定。
+
+$\Phi_h$ 的像为 $W+hW$。其核由 $x=hy$ 描述，映射 $(hy,y)\mapsto y$ 将该核与 $C_h(W)$ 作 $F$-线性同构。秩—零度给 (18.9) 的第一式；$[K:F]=2$ 给第二式。矩阵表示就是 (18.10)。于是 (18.8)、(18.11) 均得证。若 $2m>n$，秩至多为 $n<2m$，每个非零 $r$ 都实际可得；这也与 §17 的半维交叠边界相接。这里给出的是固定来源的一次线性秩判据，不需要枚举输入对或先解分解存在性的定义。
+
+对 (18.12)，若 $v'=kv$、$k=\alpha+\beta h\in K^\times$，则双线性及 $h^2\in F$ 给
+$$
+v'\wedge hv'=k^2(v\wedge hv),\qquad (v')^2=k^2v^2,
+$$
+故 $\xi_{v'}=\xi_v$；其支撑平面恰为 $Kv$，所以不同 $K$-线给不同外积。反之，任一实际提升写成 $\xi=u\wedge v$。上面的计算说明 $v\in C_h(W)$，而 $uv=h+\alpha$ 给
+$$
+u=\frac{hv+\alpha v}{v^2},\qquad
+u\wedge v=\frac{hv}{v^2}\wedge v
+=v\wedge\frac{hv}{v^2}.
+$$
+最后一个等号使用特征二。因而该提升等于 $\xi_v$，双射成立。若换代表 $h'=\alpha+\beta h$、$\beta\ne0$，(18.13) 给 $C_{h'}(W)=C_h(W)$；所以判据也不依赖同一候选来源的代表。$\square$
+
+**定理 18.5（完整 Plücker 条件与整条乘法纤维的等价）。** 固定任意 $m$ 维窗口 $W$、一组 $F$-基 $w_1,\ldots,w_m$，并以 $L/F$ 的一组基表示记录。令 $T_W$ 的列为 $w_iw_j+F$（$i<j$）的坐标。对非零实际 $r=h+F$，下列条件均与 (18.8) 等价：
+$$
+\begin{gathered}
+\exists (p_{ij})\in F^{\binom m2},\quad T_Wp=r,\\
+p_{ij}p_{kl}+p_{ik}p_{jl}+p_{il}p_{jk}=0
+\quad\text{对全部 }1\le i<j<k<l\le m.
+\end{gathered}
+\tag{18.14}
+$$
+这里 $r$ 在矩阵等式中表示其坐标列，所有未知量必须属于 $F$。若 $r\in I_\kappa(W)$，任选一个解 $p_0$，则 (18.14) 恰等价于
+$$
+\exists k\in\ker T_W,\quad
+p_0+k\text{ 满足全部 Plücker 关系}.
+\tag{18.15}
+$$
+一个满足关系的非零实际提升足以证明存在；一个不满足关系的任意提升不能否定存在。$r=0$ 的纤维没有非零实际分解点，其来源为空。
+
+证明。这里使用经典二维 Plücker 判据作为中间步骤：非零 $p$ 是某个 $u\wedge v$ 的坐标，当且仅当它满足 (18.14) 的所有二次关系。为明确其任意域实际点含义，将 $p_{ji}=p_{ij}$、$p_{ii}=0$；取 $p_{ij}\ne0$，在该坐标片上可直接取
+$$
+x_k=p_{ik},\qquad y_k=p_{jk}/p_{ij}.
+$$
+Plücker 关系给 $x_ky_l+x_ly_k=p_{kl}$，包括指标重复的情形。因此 $x,y\in F^m$ 独立，$p=x\wedge y$；没有从代数闭包取解。反向将 $p_{ij}=x_iy_j+x_jy_i$ 代入即得这些关系。这是标准 Plücker 坐标计算；四维形式正是 Havlicek 前引文 §2 的 Klein 方程，分解与支撑平面的经典关系见 Ghorpade–Patil–Pillai 前引文 §2，Lemma 1、Corollary 2。
+
+由于 $T_W$ 正是原 $\kappa_W$ 的矩阵，$T_Wp=r\ne0$ 已强制 $p\ne0$。故上述中间判据把 (18.14) 与实际乘法纤维中的分解点等同，再由定理 18.4 与固定 $h$ 的秩条件等同。所有线性解恰为 $p_0+\ker T_W$，得到 (18.15)。对于 $r=0$，若有非零实际分解点，就会违反独立输入的 $uv\notin F$。
+
+一个确有核的边界说明为何必须保留整条纤维。取完整四次域 $L_0/F$，基为 $1,a,b,ab$，$a^2=s$、$b^2=t$，并取 $W=L_0$。同一记录 $a+F$ 有分解提升 $1\wedge a$，也有提升
+$$
+1\wedge a+1\wedge ab+a\wedge b.
+\tag{18.16}
+$$
+后者的像仍为 $a+F$，因为两个 $ab$ 相消；其 Klein Pfaffian 为 $1$，故不可分解。因而只检查这一坏提升会否定一个已由前一实际输入对见证的来源。此处仅将经典四维 Klein 方程用于原乘法纤维，不把不可分解提升本身叫作虚假输出。$\square$
+
+**定理 18.6（原乘法记录首次失真的两个最小量）。** 对同一实际交替乘法 (18.1)，以下边界成立：任意 $n$ 下，$m\le3$ 的所有窗口均无非零虚假记录；$n\le4$ 时，所有窗口均无非零虚假记录。存在 $m=4$、$n=8$ 的窗口有非零虚假记录。因此首次可能失真的最小窗口维数与最小整体次数分别为
+$$
+m_{\min}=4,\qquad n_{\min}=8.
+\tag{18.17}
+$$
+在上述无失真范围内，线性像足以恢复来源：$\operatorname{Src}(W)=\{F(h):0\ne h+F\in I_\kappa(W)\}$。两下界由同一个实例同时达到。具体地，取代数独立的 $s,t,z$，令
+$$
+F=\mathbf F_2(s,t,z),\quad
+L=F(a,b,c),\quad a^2=s,\quad b^2=t,\quad c^2=z,
+\qquad W=F1+Fa+Fb+Fc.
+\tag{18.18}
+$$
+则 $[L:F]=8$，$\kappa_W$ 单射，而
+$$
+r=a+bc+F
+=\kappa(1\wedge a+b\wedge c)
+\in I_\kappa(W)\setminus\mathcal T_\kappa(W).
+\tag{18.19}
+$$
+两项分别来自窗口内的实际输入对 $(1,a)$ 与 $(b,c)$，其来源分别为 $F(a)$ 与 $F(b/c)=F(bc)$。
+
+证明。经典低维外积事实给 $m\le3$ 时每个非零二外积均可分解；三维情形是 Ghorpade–Patil–Pillai 前引文 §2 Corollary 2 的 $\ell=m-1$ 情形，二维情形直接由基外积得到。任一非零 $r\in I_\kappa(W)$ 有非零提升，因而有实际独立输入对。事实上，此时 $\kappa_W$ 还必单射，否则非零核元的分解会违反 (18.4)。$m\le1$ 按定义为空集边界。
+
+若 $n\le4$，除上述 $m\le3$ 情形，只须考虑 $n=m=4$，这时 $W=L$，每个非零 $h+F$ 都由 $(1,h)$ 产生。特别是完整四次域中的非分解外积，在经过原 $\kappa$ 后不能据此称为虚假记录。有限指数一扩张的次数为二幂，这里直接复用 [Stacks，09HI，Lemma 9.14.5](https://stacks.math.columbia.edu/tag/09HI) 的逐次二次塔；所以排除 $n\le4$ 就排除了全部 $n<8$。
+
+对 (18.18)，可取代数独立的 $a,b,c$，令 $s=a^2,t=b^2,z=c^2$。按三个指数的奇偶分组，
+$$
+1,a,b,c,ab,ac,bc,abc
+\tag{18.20}
+$$
+是 $L/F$ 的基：对有理函数先同乘分母使分母成为平方，再按奇偶分组给出张成；任何线性关系清去 $F$ 中的分母后，不同奇偶类的多项式项不能相消，给出独立性。这与 §13 命题 13.17 的双变量实例使用同一基论证。
+
+在 $W$ 的有序基 $(1,a,b,c)$ 下，六个基外积的像依次为
+$$
+a+F,\ b+F,\ c+F,\ ab+F,\ ac+F,\ bc+F,
+$$
+由 (18.20) 独立。因此 $r$ 的提升唯一，正是 $1\wedge a+b\wedge c$。该提升在坐标 $p_{01}=p_{23}=1$、其余为零处的 Klein Pfaffian
+$$
+\operatorname{Pf}(p)=p_{01}p_{23}+p_{02}p_{13}+p_{03}p_{12}
+\tag{18.21}
+$$
+为 $1$。由定理 18.5 的经典分解条件，它不是实际分解点，且不存在另一提升可以补救。特征二中 $\xi\wedge\xi=0$ 恒成立，不能替代 (18.21)。这支付的是原乘法商输出的失真，而非忠实外积记录器的另一问题。$\square$
+
+**定理 18.7（同一 $L$、同一 $\kappa$、同像而不同的完整来源集）。** 在 (18.18) 的同一实际 $L/F$ 内，另取
+$$
+W'=F1+F(a+bc)+Fb+Fc.
+$$
+则
+$$
+I_\kappa(W)=I_\kappa(W')
+=F(a+F)+F(b+F)+F(c+F)+F(ab+F)+F(ac+F)+F(bc+F),
+\tag{18.22}
+$$
+但 $\operatorname{Src}(W)\ne\operatorname{Src}(W')$，而且两来源集互不包含。更准确地，对 $x=(A,B,C,D,E,G)\in F^6$，置
+$$
+H(x)=Aa+Bb+Cc+Dab+Eac+Gbc,
+\qquad Q(x)=AG+BE+CD.
+$$
+两个完整来源集分别为
+$$
+\begin{aligned}
+\operatorname{Src}(W)
+&=\{F(H(x)):0\ne x\in F^6,\ Q(x)=0\},\\
+\operatorname{Src}(W')
+&=\{F(H(x)):0\ne x\in F^6,
+\ Q(x)+A^2+tD^2+zE^2=0\}.
+\end{aligned}
+\tag{18.23}
+$$
+特别地，
+$$
+\begin{aligned}
+&F(a+bc)\in\operatorname{Src}(W')\setminus\operatorname{Src}(W),\\
+&F(a)\in\operatorname{Src}(W)\setminus\operatorname{Src}(W').
+\end{aligned}
+\tag{18.24}
+$$
+所以线性像本身不能恢复完整可见来源，即使这两个四维窗口上的 $\kappa$ 都单射。
+
+证明。$1,a+bc,b,c$ 由 (18.20) 独立。在此有序基下，$\kappa_{W'}$ 的六个基像为
+$$
+a+bc+F,\ b+F,\ c+F,\ ab+tc+F,\ ac+zb+F,\ bc+F.
+\tag{18.25}
+$$
+它们张成 (18.22)：用最后一项从第一项取回 $a+F$，用 $c+F,b+F$ 分别从第四、第五项取回 $ab+F,ac+F$。这六个向量独立，故 $\kappa_{W'}$ 也单射。
+
+在 $W$ 中，$H(x)+F$ 的唯一提升坐标就是 $(A,B,C,D,E,G)$，其 Pfaffian 为 $Q(x)$。在 $W'$ 中，同一输出的唯一提升坐标是
+$$
+(p'_{01},p'_{02},p'_{03},p'_{12},p'_{13},p'_{23})
+=(A,B+zE,C+tD,D,E,G+A).
+$$
+其 Pfaffian 为
+$$
+A(G+A)+(B+zE)E+(C+tD)D
+=Q(x)+A^2+tD^2+zE^2.
+$$
+因此 (18.23) 由同一乘法纤维的分解条件与定理 18.2 的唯一来源标签得到；它描述全部实际 $F$-点，而非只展示两个选定来源。候选来源在共同像中的参数正是 $F^6\setminus\{0\}$ 模非零标量，不存在另外的标签歧义。
+
+取 $x=(1,0,0,0,0,1)$，两方程的值分别为 $1$ 与 $0$，得到第一项；在 $W'$ 中，实际输入对就是 $(1,a+bc)$。取 $x=(1,0,0,0,0,0)$，两方程的值分别为 $0$ 与 $1$，得到第二项；在 $W$ 中输入对为 $(1,a)$。
+
+第一项还可直接用线性交叠核对。令 $h=a+bc$，对任意 $x_0+x_1a+x_2b+x_3c\in W$，乘以 $h$ 后在 $bc,abc,ab,ac$ 四个窗外基方向的系数依次是 $x_0,x_1,x_2,x_3$。故 $C_h(W)=0$。在 $W'$ 中，用基 $1,h,b,c$ 写向量，乘以 $h$ 后，$ab,ac$ 两个窗外方向的系数分别是 $b,c$ 的原系数；故
+$$
+C_h(W')=F1+Fh=K_h,
+\qquad \rho_h(W)=8,\quad \rho_h(W')=6.
+$$
+这使同源性、实际输入对和秩判据在同一 $h$ 上一致。$\square$
+
+**定理 18.8（四维的一个关系与原三维入口）。** 对任意四维窗口，实际来源的充分且必要恢复可由整条 $\kappa_W$ 仿射核纤维上的一个 Pfaffian 方程 (18.21) 完成，或等价地由每个候选 $h$ 的单个秩判定 (18.10) 完成。在 (18.18) 的单射窗口中，省去该 Pfaffian 条件就会纳入 (18.19) 的虚假记录。这里“一个关系”只表示四维 Plücker 判据有一个二次方程；不声称它是所有编码中的唯一最小信息，也不把高维的全部 Plücker 关系缩成一个方程。
+
+若另有 §13 定义 13.1 的全部 P+K 前件，且 $\operatorname{char}F=2$，则定理 13.9、13.11 给出同一个完整四次域 $(L,\pi)$、$V=\ker\pi$、$\dim_FV=3$。在这一原纯部窗口上，
+$$
+I_\kappa(V)=L/F,\qquad
+\mathcal T_\kappa(V)=(L/F)\setminus\{0\},\qquad
+\operatorname{Src}(V)=\{K_h:h\in L\setminus F\}.
+\tag{18.26}
+$$
+并且原响应 $D(u,v)=uv-\pi(uv)$ 满足 $\kappa(u\wedge v)=D(u,v)+F$。八次反例不满足该入口所强制的整体次数，不能据此改变其三维结论。
+
+证明。四维只有一个四指标组，定理 18.5 因而恰给 (18.21)；核存在时仍须使用 (18.15) 的存在量词。必要性的具体见证已由定理 18.6 给出；任意窗口的等价秩判定已由定理 18.4 给出。对于原纯部，$m=3>4/2$，故同一定理直接给 (18.26)，也可用定理 18.6 中三维 $\kappa_V$ 的单射性及两边维数同为三得到。$D$ 与 $\kappa$ 的关系则直接来自原公式。这里保留 P+K、实际四次域和指定投影；未从高次域的窗口记录推出新的 P+K、Born 规则或物理维数。$\square$
+
+**定义 18.9（真实面积相加的数学释义）。** 一对窗口内的独立方向给一块可分解面积 $u\wedge v$，实际记录是同一域乘法给出的 $uv+F$。这个非零输出已经唯一指定候选二次域 $F(uv)=F(u/v)$。将许多实际记录相加只保留线性张成；相加后的候选域能否仍由窗口中的一对方向产生，须有该记录纤维中的实际分解点。一个这样的点就足够；一个坏提升不够否定。四维时，保留 Pfaffian 与整条纤维恰好保留这一要求；任意维时，可用固定 $h$ 的交叠乘法秩判据直接恢复。八次实例中，两块真实面积的和具有唯一的不可分解提升，因此输出不再有单对实际方向；另一个窗口虽保留完全相同的线性像，却有不同的真实面积集合和实际来源。
+
+本节使用的经典输入是前引 Havlicek v1 的完整四次域 case (B)、$\kappa$ 与 Klein 方程，Ghorpade–Patil–Pillai v1 的外积及分解事实，和 Stacks 09HF、09HI 的纯不可分二次塔；比值与交叠复用本卷 §17。相对于这些输入，本节推导的是原乘法输出的来源绑定、任意固定窗口的秩与实际纤维连接、最小 $(m,n)=(4,8)$，以及 (18.22)–(18.24) 在同一实际域和同一乘法下的两个完整来源集。经典几何本身不在此取得新的名称或首次性主张。
+
+## 追加锚（本行以下为增补区）
+
+## 19　完整实际来源与窗口的标量恢复
+
+**定义 19.1（带标签来源所要恢复的对象）。** 固定定义 18.1 的同一个实际域扩张 $L/F$：$\operatorname{char}F=2$、$n=[L:F]<\infty$、$L^2\subseteq F$，仍用原映射 $\kappa(u\wedge v)=uv+F$。对 $W\le L$，记
+$$
+[W]_{L^\times}=\{xW:x\in L^\times\}.
+\tag{19.1}
+$$
+这里的恢复问题是：在 $m=\dim_FW$ 已知时，实际子域的集合 $\operatorname{Src}(W)$ 是否唯一决定 (19.1)。来源标签是原 $L$ 内的二次子域本身；观察不包含支撑平面、来源的重数或交空间的维数。
+
+令 $q:L\to L/F$ 为原商映射。对任意实际二次子域集合 $\mathcal S$，置
+$$
+\begin{aligned}
+\Sigma(\mathcal S)
+ &=\{h+F:h\in L\setminus F,\ F(h)\in\mathcal S\},\\
+E(\mathcal S)&=F\bigl(\bigcup_{K\in\mathcal S}K\bigr)\subseteq L,
+\qquad E(\varnothing)=F.
+\end{aligned}
+\tag{19.2}
+$$
+第一项是实际商向量的集合，第二项是由这些实际子域生成的子域。对非零窗口另记实际比值集
+$$
+R(W)=\{u/v:u\in W,\ 0\ne v\in W\}\subseteq L.
+\tag{19.3}
+$$
+
+**定理 19.2（标量不变性与来源所确定的生成域）。** 对任意 $W\le L$ 和 $x\in L^\times$，有
+$$
+\operatorname{Src}(xW)=\operatorname{Src}(W),\qquad
+\Sigma(\operatorname{Src}(W))=\mathcal T_\kappa(W),\qquad
+I_\kappa(W)=\operatorname{span}_F\Sigma(\operatorname{Src}(W)).
+\tag{19.4}
+$$
+若 $W\ne0$，则对每个 $w\in W\setminus\{0\}$，
+$$
+R(W)=F\ \cup\!\bigcup_{K\in\operatorname{Src}(W)}K,
+\qquad
+E(\operatorname{Src}(W))=F(w^{-1}W).
+\tag{19.5}
+$$
+因此右侧的实际生成域与归一化所选的 $w$ 无关。$\operatorname{Src}(W)=\varnothing$ 当且仅当 $\dim_FW\le1$；在这个空集情形仍须保留已知的维数。
+
+证明。对每个实际 $K$，乘以 $x$ 将 $vK\subseteq W$ 与 $(xv)K\subseteq xW$ 双向对应，故保留同一个标签 $K$。定理 18.2、18.4 说明：标签 $F(h)$ 可见，当且仅当指定记录 $h+F$ 由 $W$ 内的一对独立输入实际取得。这给 (19.4) 的第二式；第三式是 (18.7)，没有把线性张成当作完整来源。
+
+若 $h=u/v\notin F$，则 $u,v$ 独立，且 $vF(h)=Fv+Fu\subseteq W$，所以 $h$ 属于 (19.5) 第一式的右侧。若 $h\in K\in\operatorname{Src}(W)$，取 $vK\subseteq W$，便有 $h=(vh)/v\in R(W)$。任一非零 $w\in W$ 又给出 $\alpha=(\alpha w)/w\in R(W)$，其中 $\alpha\in F$。于是第一式成立，包括来源为空的非零窗口。
+
+令 $U=w^{-1}W$，则 $1\in U$。任一 $K\in\operatorname{Src}(U)$ 有 $0\ne v\in U$ 且 $vK\subseteq U$，故 $K\subseteq F(U)$。反过来，对每个 $u\in U\setminus F$，平面 $F+Fu$ 已在 $U$ 内，因而 $F(u)\in\operatorname{Src}(U)$。所以 $E(\operatorname{Src}(U))=F(U)$；再用标量不变性即得第二式。最后，维数至少二时任选两个独立向量就有来源；维数至多一时不能容纳一个二次域的标量副本。$\square$
+
+**定理 19.3（八次生成情形中的四维窗口重建）。** 设 $\dim_FW=4$，且 $E=E(\operatorname{Src}(W))$ 满足 $[E:F]=8$。完全从带标签来源定义
+$$
+\mathfrak B(\mathcal S)=
+\left\{q^{-1}(D):
+\begin{array}{l}
+D\le L/F,\quad\dim_FD=3,\\
+D\setminus\{0\}\subseteq\Sigma(\mathcal S),\\
+q^{-1}(D)\text{ 不是 }L\text{ 的子域}
+\end{array}\right\}.
+\tag{19.6}
+$$
+其中“子域”使用已固定的实际 $L$ 的乘法。则
+$$
+\mathfrak B(\operatorname{Src}(W))
+=\{uW:0\ne u\in W\}
+=\{X\in[W]_{L^\times}:1\in X\}.
+\tag{19.7}
+$$
+这给出整个标量轨道中所有含 $1$ 的代表；(19.6) 没有增加关于 $W$ 的交维数或支撑信息。
+
+证明。先支付 $\kappa_W$ 在这个范围内的单射性。选 $0\ne w\in W$，写
+$$
+U=w^{-1}W=F1+Fa+Fb+Fc.
+$$
+由定理 19.2，$E=F(a,b,c)$。$1,a,b$ 独立，所以 $[F(a,b):F]=4$：先有 $[F(a):F]=2$，再由 $b\notin F(a)$、$b^2\in F$ 得第二个二次扩张。$[E:F]=8$ 则迫使 $c\notin F(a,b)$。逐次二次塔给出 $E$ 的基
+$$
+1,a,b,ab,c,ac,bc,abc.
+\tag{19.8}
+$$
+因此 $\kappa_U$ 的六个基像 $a+F,b+F,c+F,ab+F,ac+F,bc+F$ 独立。乘以 $w$ 对外平方诱导的同构满足
+$$
+\kappa_W(wu\wedge wv)=w^2\kappa_U(u\wedge v),
+\qquad w^2\in F^\times,
+$$
+故 $\kappa_W:\Lambda_F^2W\to I_\kappa(W)$ 也是同构。
+
+现在取 (19.6) 中的 $D$。由 (19.4)，$D\subseteq I_\kappa(W)$。令 $A=\kappa_W^{-1}(D)$，则 $\dim_FA=3$。对每个 $0\ne\xi\in A$，其像属于 $\Sigma(\operatorname{Src}(W))=\mathcal T_\kappa(W)$，故有实际分解向量 $\eta\in\Lambda_F^2W$ 满足 $\kappa_W(\eta)=\kappa_W(\xi)$。单射性给 $\xi=\eta$。于是 $A$ 的每个非零实际 $F$ 向量都可分解。
+
+在这一步直接使用 Ghorpade–Patil–Pillai，[*Decomposable Subspaces, Linear Sections of Grassmann Varieties, and Higher Weights of Grassmann Codes*，arXiv:0710.5161v1](https://arxiv.org/abs/0710.5161v1)，§2 Theorem 6 及其前面的两类 close subspace 定义。该节的底域是任意域；代入其参数 $\ell=2$、$\dim_FV=4$、$r=3$、$V=W$，精确给出且只给出
+$$
+A=u\wedge W\quad(0\ne u\in W),
+\qquad\text{或}\qquad
+A=\Lambda_F^2V\quad(V\le W,\ \dim_FV=3).
+\tag{19.9}
+$$
+这是对原 $F$ 上全分解线性子空间的经典分类，不要求有限域，也不以代数闭包上的几何点替代实际点。
+
+第一种情形有 $q(uW)=D$，且 $u^2\in F^\times$ 使 $F\subseteq uW$。由于 $\dim_FuW=4$，遂有 $q^{-1}(D)=uW$。这个四维空间不能是子域 $H$：若是，则 $W=u^{-1}H$，由 (19.5) 得 $E(\operatorname{Src}(W))=H$，与 $[E:F]=8$ 矛盾。
+
+第二种情形选 $0\ne z\in V$，写 $z^{-1}V=F1+Fp+Ft$。其三个基向量独立，故与前面的二次塔论证相同，$H=F(p,t)$ 是实际四次子域，基为 $1,p,t,pt$。又因 $z^2\in F^\times$，
+$$
+\kappa(\Lambda_F^2V)
+=\operatorname{span}_F\{p+F,t+F,pt+F\}=H/F.
+\tag{19.10}
+$$
+故 $q^{-1}(D)=H$ 是子域。这一类恰被 (19.6) 的最后条件排除。
+
+反过来，每个 $u\wedge W$ 都是三维全分解子空间；其非零向量经 $\kappa_W$ 给出实际来源，故它的像满足 (19.6) 的前两项，而上面的八次生成条件保证其提升不是子域。因此所有 $uW$ 都在左侧，第一处集合等号成立。最后 $1\in uW$，因为 $u^{-1}=u/u^2\in W$。若 $X=xW$ 且 $1\in X$，则 $v=x^{-1}\in W\setminus\{0\}$，从而
+$$
+xW=v^{-1}W=(v^2)^{-1}vW=vW.
+$$
+非零 $F$ 标量不改变 $F$ 子空间，故第二处集合等号也成立。$\square$
+
+**文献应用 19.4（全部四维及以下窗口的准确恢复）。** 对固定的任意有限指数一实际扩张 $L/F$，若 $W,W'\le L$ 且
+$$
+\dim_FW=\dim_FW'=m\le4,
+$$
+则
+$$
+\operatorname{Src}(W)=\operatorname{Src}(W')
+\quad\Longleftrightarrow\quad
+\exists x\in L^\times\;W'=xW.
+\tag{19.11}
+$$
+这包括 $m=0,1$、$n=1$ 及所有允许的低次退化。维数超过 $n$ 的窗口不存在。此处相似结论归于 Zemková，[*Vishik equivalence and similarity of quasilinear p-forms and totally singular quadratic forms*，arXiv:2309.13346v2](https://arxiv.org/html/2309.13346v2)，Definition 3.2、Theorem 4.6 与 Corollary 3.5(ii)，经下面的窗口对应使用；它是定理 19.5 最小性所需的文献应用，不作为新的相似定理。
+
+证明与对象对应。反向已由定理 19.2 给出。$m=0$ 时两个窗口都是 $0$；$m=1$ 时写 $W=Fw$、$W'=Fw'$，便有 $W'=(w'/w)W$。这两类来源都为空，但各自的标量轨道唯一。以下设 $m\ge2$。
+
+在包含原 $L$ 的代数闭包内取 $\Omega=F^{1/2}$，则 $L\subseteq\Omega$ 且 $\Omega^2=F$。若 $w_1,\ldots,w_m$ 是 $W$ 的 $F$-基，在 $\Omega$ 上定义全奇异二次型
+$$
+\varphi_W=\langle w_1,\ldots,w_m\rangle,
+\qquad D_\Omega(\varphi_W)=W.
+\tag{19.12}
+$$
+这里 $D_\Omega$ 是该文的值集。$F$-线性独立性保证 $\varphi_W$ 各向异性；该文 Lemma 2.2 保证其等距类只取决于 $W$，并给出
+$$
+\varphi_{W'}\simeq c\varphi_W
+\quad\Longleftrightarrow\quad W'=cW
+\qquad(c\in\Omega^\times).
+\tag{19.12a}
+$$
+若右侧成立，任取 $0\ne w\in W$ 就有 $c=(cw)/w\in L^\times$。所以形式在 $\Omega$ 上的相似，双向恰对应原 $L^\times$ 标量轨道；没有把目标改成较大域中的轨道或抽象同构。按该文 §2.3 的范数域定义与 (19.5)，还得到
+$$
+N_\Omega(\varphi_W)=F(R(W))
+=E(\operatorname{Src}(W)).
+\tag{19.12b}
+$$
+
+对每个 $h\in\Omega\setminus F$，令 $d_h(W)=\dim_F(W\cap hW)$。因 $h^2\in F$，交空间在 $F(h)$ 下封闭，故 $d_h(W)$ 为偶数。又有 $\Omega(\sqrt h)^2=F(h)$ 及 $F(h)W=W+hW$，因此该文所用缺陷满足
+$$
+\begin{aligned}
+\mathfrak i_{\mathrm d}\bigl((\varphi_W)_{\Omega(\sqrt h)}\bigr)
+&=m-\dim_{F(h)}(W+hW)\\
+&=\tfrac12 d_h(W).
+\end{aligned}
+\tag{19.12c}
+$$
+这里用的是全奇异型的各向异性部分维数等于值集在平方子域上的维数，即该文 Lemma 2.2。若 $h\in\Omega\setminus L$，非零交点会给 $h=u/v\in L$，故此时缺陷为零。若 $h\in F$，则 $\sqrt h\in\Omega$，扩张平凡，缺陷也为零。对 $h\in L\setminus F$，定理 18.4 给出准确的标签对应
+$$
+F(h)\in\operatorname{Src}(W)
+\quad\Longleftrightarrow\quad
+\mathfrak i_{\mathrm d}\bigl((\varphi_W)_{\Omega(\sqrt h)}\bigr)>0.
+\tag{19.12d}
+$$
+来源只给出缺陷是否为正；Zemková 的 Definition 3.2 要求同维数并且对每个 $h\in\Omega$ 缺陷数本身相同，称为弱 Vishik 等价。两者在任意维数下不能直接等同。
+
+现在设两窗口的来源相同，记共同的实际生成域为 $E$。当 $m=2,3$ 时，非零的偶数 $d_h(W)\le m$ 只能为二。因此 (19.12c)–(19.12d) 已给两个形式在每个 $\Omega(\sqrt h)$ 上相同的缺陷。
+
+当 $m=4$ 时，归一化为 $U=w^{-1}W=F1+Fa+Fb+Fc$。由 $1,a,b$ 独立，$F(a,b)$ 是四次域；添入平方在 $F$ 内的 $c$ 后，$E=F(U)$ 的次数只能为四或八。若 $[E:F]=4$，则 $U=E$，故 $W=wE$；于是 $d_h(W)=4$ 恰在 $h\in E\setminus F$ 时成立，其余 $h\notin F$ 的交维数为零。两窗口因而仍有相同的缺陷。若 $[E:F]=8$，则 $d_h(W)=4$ 不可能：它会使 $hW=W$，归一化后的 $U$ 便是含 $1$ 的二维 $F(h)$-空间，写成 $F(h)+F(h)t$；由于 $t^2\in F$，这个空间就是四次域 $F(h,t)$，与 $F(U)=E$ 八次矛盾。因此八次生成时非零的 $d_h$ 仍只能为二。相同来源再次给出全部相同缺陷。这同时检查了 $h$ 在原 $L$ 之外的所有二次测试，故两形式确实满足 Definition 3.2 的全部量词。
+
+最后逐项核对相似定理的前件。$m=2,3$ 的归一化窗口分别生成二次、四次域：后者由 $U=F1+Fa+Fb$ 及 $b\notin F(a)$ 得到。结合 (19.12b)，这些形式的范数次数分别是 $2^{m-1}$；$m=4$、$[E:F]=8$ 时也如此。它们因此满足该文 Definition 2.11 的 minimal 条件，直接由 Theorem 4.6 得到相似。余下 $m=4$、$[E:F]=4$ 时，归一化的值空间是 $E=F(a,b)$，对应形式正是二重 quasi-Pfister 型 $\langle1,a,b,ab\rangle$，由 Corollary 3.5(ii) 得到相似，再撤销归一化。用 (19.12a) 回到原 $L$ 即得 (19.11)。定理 19.3 另给出了由实际标签直接构造所有含 $1$ 的代表的公式 (19.6)–(19.7)；该更具体的重建输出与已有相似结论相容，不使相似结论成为新数学。$\square$
+
+**定理 19.5（完整来源丢窗口的首次失效）。** 在 (18.18) 的同一个实际扩张
+$$
+F=\mathbf F_2(s,t,z),\qquad
+L=F(a,b,c),\qquad a^2=s,\ b^2=t,\ c^2=z,
+$$
+其中 $s,t,z$ 代数独立，取两个实际窗口
+$$
+W_5=\operatorname{span}_F\{1,a,b,c,ab\},\qquad
+W'_5=\operatorname{span}_F\{1,a,b,c,ac\}.
+\tag{19.13}
+$$
+它们满足 $\dim_FW_5=\dim_FW'_5=5$、$[L:F]=8$，并且
+$$
+\operatorname{Src}(W_5)=\operatorname{Src}(W'_5)
+=\{K\subseteq L:[K:F]=2\},
+\qquad W'_5\ne xW_5\quad\text{对所有 }x\in L^\times.
+\tag{19.14}
+$$
+因此，在维数已知的原恢复问题中，首次可能失效的最小窗口维数和最小整体次数分别是
+$$
+m_{\min}=5,\qquad n_{\min}=8,
+\tag{19.15}
+$$
+并由同一对窗口同时达到。
+
+证明。(18.20) 已给出这个实际 $L/F$ 的八个基单项式，故 (19.13) 中各五个向量确实独立。对每个实际 $h\in L\setminus F$，$5+5>8$ 保证 $W_5\cap hW_5\ne0$，对 $W'_5$ 亦然。由定理 18.4，二者都看见该同一个实际标签 $F(h)$。这支付全部二次子域的量词，而非仅比较两个来源子集或线性像。
+
+还须排除所有实际标量。令 $A=F(a,b)=\operatorname{span}_F\{1,a,b,ab\}$，则 $A\subseteq W_5$。假设 $xW_5=W'_5$，其中 $x\ne0$。必有 $xA\subseteq W'_5$，所以 $x,ax,bx,abx$ 都在 $W'_5$ 内。先写
+$$
+x=\alpha+\beta a+\gamma b+\delta c+\varepsilon ac,
+\qquad\alpha,\beta,\gamma,\delta,\varepsilon\in F.
+$$
+由
+$$
+ax=\beta s+\alpha a+\gamma ab+\delta ac+\varepsilon s c
+$$
+及八个基单项式的独立性，$ax\in W'_5$ 迫使 $\gamma=0$。再由
+$$
+bx=\alpha b+\beta ab+\delta bc+\varepsilon abc
+$$
+与 $bx\in W'_5$ 得 $\beta=\delta=\varepsilon=0$。于是 $x=\alpha$，而 $abx=\alpha ab\in W'_5$ 又迫使 $\alpha=0$，与 $x\ne0$ 矛盾。这一障碍是在同一个实际四次子域 $A$ 上得到的；没有改用抽象同构或半线性变换。
+
+这两个窗口的同来源也不等于弱 Vishik 等价。例如同一个实际 $b$ 给出
+$$
+W_5\cap bW_5=A,\qquad
+W'_5\cap bW'_5=F1+Fb.
+\tag{19.14a}
+$$
+第一式由 $W_5=A+Fc$、$bA=A$ 及 $c,bc$ 模去 $A$ 后独立得到；第二式由 $W'_5$ 的基与 $bW'_5=\operatorname{span}_F\{b,ab,t,bc,abc\}$ 逐项比较得到。因此 (19.12c) 在 $\Omega(\sqrt b)$ 上给出的缺陷分别为二与一。Zemková 前引文 Corollary 4.21 回答的 Question Q 采用 Definition 2.14，要求在所有域扩张上缺陷相同，即 full Vishik 等价；该文 Remark 4.19 也明确区分这一条件与弱等价。本例连弱等价都不满足，所以不受 Corollary 4.21 的五维相似结论覆盖。
+
+文献应用 19.4 排除了任意整体次数下全部 $m\le4$ 的反例。另一方面，有限指数一扩张可逐次添入平方在 $F$ 内的元素；每个非平凡步骤的次数都是二，故 $n$ 是二的幂。若 $n<8$，只有 $n=1,2,4$，所有可有的窗口维数都至多四，因而也被文献应用 19.4 排除。这给 (19.15) 的两个独立下界，(19.13) 同时达到它们。$\square$
+
+**定理 19.6（已知维数的必要性及两层信息损失）。** 即使保留实际标签，单独的 $\operatorname{Src}(W)$ 也不决定窗口维数。除 $0$ 与任一一维窗口的共同空来源外，在 (18.18) 的实际四次子域 $A=F(a,b)\subset L$ 内，
+$$
+U_3=F1+Fa+Fb,\qquad U_4=A
+$$
+也有
+$$
+\operatorname{Src}(U_3)=\operatorname{Src}(U_4)
+=\{K\subseteq A:[K:F]=2\},
+\qquad\dim_FU_3=3\ne4=\dim_FU_4.
+\tag{19.16}
+$$
+故 (19.11) 的同维数前件不可省。保留该前件时，线性记录丢来源的最小窗口维数是定理 18.6 的四，而完整来源丢标量窗口的最小窗口维数是定理 19.5 的五；两者的最小整体次数均为八。
+
+证明。若二次标签在 $U_i\subseteq A$ 中可见，取 $vK\subseteq U_i$，则 $v\in A^\times$，故 $K\subseteq A$。反过来，在整个实际扩张 $A/F$ 内，$\dim_FU_3=3>4/2$，所以定理 18.4 给每个二次 $K\subseteq A$ 的可见性；$U_4=A$ 当然也包含它们。于是 (19.16) 成立，异维数排除标量相似。关于两层最小量的结论分别直接引用定理 18.6、18.7 和文献应用 19.4、定理 19.5；它们分别涉及从线性张成恢复来源和从完整来源恢复标量轨道，后者的观察仍不包含交空间维数。$\square$
+
+**定义 19.7（完整来源恢复的数学白话与适用边界）。** 把窗口内任意两个独立方向作实际乘法，每个非零商输出都标出同一个 $L$ 内的一个二次子域。只保留这些输出的线性张成，会把本来没有实际输入对的标签也混进来；这是四维、八次时已经出现的第一层损失。现在保留全部真实标签，并事先知道窗口维数，四维及以下还能找回窗口的标量轨道。四维中最有区别的情形生成八次域：真实标签里所有三维线性片，提升回原 $L$ 后分成两种，一种本身是四次子域，另一种就是原窗口乘以其中的一个非零元素。实际乘法让这两类可以分开，因此不必再知道某个来源出现几次或支撑在哪里。到八次域的五维窗口，任何二次标签都已可见，来源集饱和；(19.13) 的两个窗口却不能由任何非零标量互相移到。全部来源相同由此仍可丢失窗口，这是与线性张成丢来源不同的第二层损失。
+
+本节的低维相似结论 (19.11) 是 Zemková v2 的 Theorem 4.6 与 Corollary 3.5(ii) 的应用；(19.12)–(19.12d) 明确了原窗口、实际来源、缺陷与相似标量的往返。Ghorpade–Patil–Pillai v1 的 Theorem 6 提供 (19.9) 的经典全分解子空间分类，本身也不作为新增结果。相对于这些输入，本节的具体综合内容是：利用同一个实际乘法，将两类全分解子空间的提升分别识别为标量窗口与实际四次子域，得到从标签直接定义的完整代表族 (19.6)–(19.7)；并在同一个实际八次域内给出 (19.13)–(19.14) 的同来源而非相似窗口，以已有低维相似结论和次数二幂性确定 (19.15) 的最小性。这些实际重建和反例结论不由上述相似定理直接给出；这里不主张它们的历史首次性。Havlicek v1 的 case (B) 仍只用于完整四次域的原 $\kappa$ 背景。
+
+若接回原三维入口，仍须具有定义 13.1 的全部 P+K 前件；定理 13.9、13.11 给出的是同一个完整四次域、原指定投影 $\pi$ 和 $V=\ker\pi$。此时 (18.26) 与 $m=3$ 相接，(19.11) 只恢复 $V$ 的标量轨道，不恢复指定投影本身，也不从高次窗口推出新的 P+K。这里的维数、域与记录均为上述代数对象，不给出 Born 规则、物理维数、复数域或全部量子起源的推导。
+
+## 追加锚（本行以下为增补区）

@@ -26,7 +26,7 @@ internal sealed class CellMomentBoundsDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "For N at least two, log N at least one, H and M at least one, and MH at most N, the normalized discrete increments are bounded by 4(M+1)sqrt(H log N). On [1,2], the continuous increments have the same bound plus (2 log(4N)+2)/sqrt(H log N), uniformly in 0<=a<=b<=M."))),
+                    "For N at least two, log N at least one, H and M at least one, and MH at most N, the normalized discrete increments are bounded by 4(M+1)sqrt(H log N) for natural n with floor(N)<=n<=ceil(2N). On [1,2], the continuous increments have the same bound plus (2 log(4N)+2)/sqrt(H log N), uniformly in 0<=a<=b<=M."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("sampling-memlp"),
@@ -44,6 +44,6 @@ internal sealed class CellMomentBoundsDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Assume the normalized singular series values, HL4 and the interval correlation bounds, with 0<alpha<beta<1/4 and M>=1. There is a constant C>=1 such that, for all sufficiently large N, the fourth integral of the normalized floor sampled increment on [1,2] is at most C, uniformly in natural H between N^alpha and N^beta and 0<=a<=b<=M."))),
+                    "Assume singular-series values one on the empty set and singletons, MeanSquareHL4(SS,beta) and the interval correlation bounds, with 0<alpha<beta<1/4 and M>=1. There is a constant C>=1 such that, for all sufficiently large N, the fourth integral of the normalized floor sampled increment on [1,2] is at most C, uniformly in natural H between N^alpha and N^beta and 0<=a<=b<=M."))),
                 DescribeRole.Theorem))));
 }

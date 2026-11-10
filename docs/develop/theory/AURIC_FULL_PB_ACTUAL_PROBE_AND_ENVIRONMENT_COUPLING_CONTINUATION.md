@@ -578,3 +578,652 @@ $$
 三维实例中，第三格确实通过 $V$ 接到第一格，残量仍可在 $|\rho|\le4/5$ 的闭区间内存在。这说明真实环境耦合本身不强迫固定 P2 刚性；允许半径还取决于完整实际耦合的幅度及原空间度量。它只是一条固定输入的代数结算：要回到 Omega 的完整量子起源，仍必须找到原始准备、事件、完整仪器、共同相关联合、全历史与未来、真实 Return 和 CountRead 的逐项来源。运输卷 §10 的移位星形全部探针反例边界和完整三维 FULL-$\mathsf H$ 支付各自保持原身份，不能被这个圆或这个向量替代。
 
 ## 新增锚（本行以下为后续增补区）
+## 13. 任意有限 Hermitian 环境的零模耦合分类
+
+### 13.1 同一个固定 P2 输入与已知环境的逆
+
+本节保留 §8 的全部数学输入，只删除已知环境块可逆这一条限制。准确地，令 $m\ge0$ 有限，
+
+$$
+C=\operatorname{diag}(c_1,c_2)>0,\qquad
+c=C\oplus0_m,\qquad
+t=\begin{pmatrix}B&V\\V^*&D\end{pmatrix}=t^*,\qquad
+s=\operatorname{diag}(s_1,s_2)\oplus0_m,
+\tag{13.1}
+$$
+
+其中 $B\in M_2(\mathbb C)$、$D\in M_m(\mathbb C)$ 均 Hermitian，$s_1,s_2\in\mathbb R$，$V$ 任意；$c_1=c_2$ 也允许。这里 $D$ 始终是已知输入 $t$ 的环境矩阵，不是未知总响应。对给定 $\sigma\in\{1,-1\}$，输出仍为 $g_\sigma=\sigma i[c,t]/2+s$。固定 P2 的完整量词是
+
+$$
+\phi(g_\sigma)^2\le
+\phi(c^2)\phi(t^2)-\phi(c\circ t)^2
+\qquad\bigl(\phi\ge0\text{ 遍取 }M_{2+m}(\mathbb C)\text{ 上全部正复线性泛函}\bigr).
+\tag{13.2}
+$$
+
+不归一化、不删零或不等质量，不缩成真角上的泛函。沿 §9.1 的双射重参数化，§2 的既有等价式准确成为
+
+$$
+\mathcal F_\sigma(w)=(t-wc)^*(t-wc)+2\sigma\operatorname{Im}(w)s\ge0
+\qquad(w\in\mathbb C).
+\tag{13.3}
+$$
+
+令 $D^\dagger$ 为这个已知有限 Hermitian 矩阵的 Moore–Penrose 逆：在每个非零谱值上取倒数，在核上为零。令
+
+$$
+N=\ker D,\qquad P_N=I-D^\dagger D,\qquad
+W=V|_N,\qquad N_0=\ker W\subseteq N,\qquad
+N_1=N\ominus N_0,\qquad r=\operatorname{rank}W\in\{0,1,2\},
+$$
+
+$$
+H=B-VD^\dagger V^*.
+\tag{13.4}
+$$
+
+$D^\dagger$、$P_N$ 和 $H$ 只是同一输入的谱分解与矩阵运算；没有对未知响应取逆、作函数演算或要求其与压缩、换基、取极限交换。特别是 $H$ 只消去环境的非零谱部分，不能在 $r>0$ 时把零模连线一起忽略。
+
+环境有实际正交分解 $\operatorname{ran}D\oplus N_1\oplus N_0$，且 $\dim N_1=r$。$c,t,s$ 在 $N_0$ 上都为零；自伴性还保证它是共同约化子空间。因此 (13.3) 正好是 $N_0^\perp$ 上的铅笔直和零，正性当且仅当缩小后的铅笔正。这里沿用原空间的正交限制和范数。通过 (13.2)–(13.3) 的原空间等价性，原来全部正泛函的域完整保留，包括在 $N_0$ 上有质量或与其有非对角密度块的泛函；这不是物理删口或未知响应的下降。
+
+### 13.2 秩一时的原空间行与锐条件
+
+若 $r=1$，取 $N_1$ 的单位生成元 $q$，置
+
+$$
+v=C^{-1/2}Vq,\qquad \gamma=\|v\|>0,\qquad n=v/\gamma,
+\qquad e^*n=0,\quad\|e\|=1,\quad U=[e,n],
+$$
+
+$$
+A=U^*C^{-1/2}HC^{-1/2}U
+=\begin{pmatrix}a&b\\\overline b&d\end{pmatrix},\qquad
+S_0=U^*C^{-1/2}\operatorname{diag}(s_1,s_2)C^{-1/2}U.
+\tag{13.5}
+$$
+
+$a,d$ 为实数。下列两行作用在原来的 $\mathbb C^2\oplus\mathbb C^m$ 右端项上，不重新选择环境度量：
+
+$$
+L=e^*C^{-1/2}\begin{bmatrix}I_2&-VD^\dagger\end{bmatrix},\qquad
+j=\gamma^{-1}\begin{bmatrix}0_{1\times2}&q^*\end{bmatrix},\qquad
+G=\begin{bmatrix}L-bj\\j\end{bmatrix},
+$$
+
+$$
+Q=(GG^*)^{-1}=\begin{pmatrix}q_1&h\\\overline h&q_2\end{pmatrix},\qquad
+R=\sqrt{q_1q_2},\qquad \Delta=R^2-|h|^2.
+\tag{13.6}
+$$
+
+$G$ 的第二行在演员两列为零，而第一行在那里为非零的 $e^*C^{-1/2}$；第二行本身非零。因此 $G$ 满行秩，$Q>0$，$q_1,q_2,\Delta>0$。两行均消去 $N_0$，所以在原空间或其正交约化空间计算 $GG^*$ 得到同一个矩阵。
+
+当原演员坐标中的 $|n_1|^2=|n_2|^2=1/2$ 时，称这个零模连线平衡。令 $Z=\operatorname{diag}(1,-1)$，则
+
+$$
+U^*ZU=\begin{pmatrix}0&\omega\\\overline\omega&0\end{pmatrix},\qquad
+\omega=(U^*ZU)_{12},\quad |\omega|=1,\qquad
+J=\operatorname{Im}(\overline h\,\omega).
+\tag{13.7}
+$$
+
+**定理 13.1（任意有限环境的完整固定-P2 分类）。** 对 (13.1) 的给定输入和给定取向 $\sigma$，(13.2) 有以下互斥且穷尽的分类。
+
+1. **$r=0$：复用可逆谱分类。** 在 $N_0^\perp=\mathbb C^2\oplus\operatorname{ran}D$ 上，直接应用定理 8.1，环境为 $D_1=D|_{\operatorname{ran}D}$，允许空环境。其 Schur 矩阵是 (13.4) 的 $H$。准确说，令 $A_0=C^{-1/2}HC^{-1/2}$；若 $(A_0)_{11}\ne(A_0)_{22}$ 或 $(A_0)_{12}=0$，则当且仅当 $s=0$。否则按 §8.1 的有序谱基 $U_0$、$\beta=|(A_0)_{12}|$，以 $G_0=U_0^*C^{-1/2}[I_2,-VD^\dagger]$ 计算原来的 $Q,R,\Delta,J$，结论正是 $s=\rho\operatorname{diag}(c_1,-c_2)\oplus0_m$ 及 (8.2)–(8.3)。这是既有结果的直接应用。
+2. **$r=1$：零模平衡分支。** 若 $|n_1|^2\ne|n_2|^2$，则当且仅当 $s=0$。若 $|n_1|^2=|n_2|^2=1/2$，则当且仅当 $s=\rho\operatorname{diag}(c_1,-c_2)\oplus0_m$，其中 $\rho\in\mathbb R$ 满足
+
+   $$
+   |h-i\sigma\rho\omega|+|\rho|\le R,
+   \tag{13.8}
+   $$
+
+   等价地，
+
+   $$
+   -\frac{\Delta}{2(R-\sigma J)}\le\rho\le
+   \frac{\Delta}{2(R+\sigma J)}.
+   \tag{13.9}
+   $$
+
+3. **$r=2$：完全刚性。** 固定 P2 当且仅当 $s=0$，与 $B$、非零谱环境及其连线的具体值无关。
+
+秩一的 (13.9) 中 $|J|\le|h|<R$，故分母严格正，两个端点均包括，区间内部包含 $0$ 的一个开邻域，特别包含非零残量。若分别对 $g_+$ 和 $g_-$ 要求两个取向，则必须取两个区间的交集。在平衡秩一分支，这个交集可进一步准确写为
+
+$$
+I_+\cap I_-=
+\left[-\frac{\Delta}{2(R+|J|)},\frac{\Delta}{2(R+|J|)}\right],
+\tag{13.10}
+$$
+
+因为两种符号的左端点取较大者、右端点取较小者，恰都选取分母 $R+|J|$。这没有把单个取向的非对称区间替换成对称区间。
+
+### 13.3 非实铅笔的精确消元
+
+以下证明新出现的 $r=1,2$ 分支；$r=0$ 只作上述复用。在 $N_0^\perp$ 的正交坐标 $\mathbb C^2\oplus\operatorname{ran}D\oplus N_1$ 上，写 $V_1=V|_{\operatorname{ran}D}$、$W_1=V|_{N_1}$，则
+
+$$
+X(w)=t-wc=
+\begin{pmatrix}B-wC&V_1&W_1\\V_1^*&D_1&0\\W_1^*&0&0\end{pmatrix}.
+\tag{13.11}
+$$
+
+对非实 $w$，若 $X(w)(u,y,z)^{\mathsf T}=0$，其二次型虚部给
+$-\operatorname{Im}(w)u^*Cu=0$，所以 $u=0$；第二行给 $y=0$，第一行给 $W_1z=0$。$W_1$ 在 $N_1$ 单射，故 $z=0$。有限维性于是给 $X(w)$ 可逆。空的 $\operatorname{ran}D$ 块按空方程处理。
+
+当 $r=1$，用 $q$ 作 $N_1$ 的坐标，$W_1=\gamma C^{1/2}n$。给定右端项 $\eta=(\eta_A,\eta_R,\eta_N)$，令 $\zeta=U^*C^{1/2}u$。第二、三行及第一行的 $e$ 分量依次给
+
+$$
+y=D_1^{-1}(\eta_R-V_1^*u),\qquad
+\zeta_2=\eta_N/\gamma=j\eta,\qquad
+(a-w)\zeta_1+b\zeta_2=L\eta.
+$$
+
+第一行剩余的 $n$ 分量唯一确定 $z$，不再限制 $\eta$。因此逆矩阵的演员部分准确为
+
+$$
+u=C^{-1/2}U T(w)G\eta,\qquad
+T(w)=\operatorname{diag}((a-w)^{-1},1).
+\tag{13.12}
+$$
+
+在原空间中，$L,j$ 正好就是 (13.6)，因为 $D^\dagger=D_1^{-1}\oplus0_N$；不存在把 $N_1$ 的坐标任意缩放成新度量的步骤。
+
+### 13.4 两个零对角约束与耦合秩二的刚性
+
+先看 $r=1$。在同一正交坐标中取
+
+$$
+\xi_a=\begin{pmatrix}
+C^{-1/2}e\\-D_1^{-1}V_1^*C^{-1/2}e\\-\overline b/\gamma
+\end{pmatrix}.
+\tag{13.13}
+$$
+
+由 (13.5)，消去 $\operatorname{ran}D$ 后，第一行的归一化值为
+$(A-aI)(1,0)^{\mathsf T}+\gamma(0,1)^{\mathsf T}(-\overline b/\gamma)=0$；另两行也为零。故 $(t-ac)\xi_a=0$。在 $N_0$ 上补零得到原空间向量。$a$ 为实数，§3 的既有实广义特征纤维引理遂给
+
+$$
+(S_0)_{11}=\xi_a^*s\xi_a=0.
+\tag{13.14}
+$$
+
+为读取第二对角，令 $w=x+iy$，$y\ne0$。将 (13.3) 对 $X(w)^{-1}$ 作合同变换，利用 (13.12)，准确得到
+
+$$
+I+G^*M(w)G\ge0,\qquad
+M(w)=2\sigma y\,T(w)^*S_0T(w).
+\tag{13.15}
+$$
+
+对任意 $z\in\mathbb C^2$，满足 $G\eta=z$ 的最小范数向量为 $\eta_0=G^*Qz$：它确实映到 $z$，与 $\ker G$ 正交，且 $\|\eta_0\|^2=z^*Qz$。其余向量为 $\eta_0+\kappa$，$\kappa\in\ker G$，范数平方多出 $\|\kappa\|^2$。所以 (13.15) 当且仅当
+
+$$
+Q+M(w)\ge0.
+\tag{13.16}
+$$
+
+由 (13.14)，$M_{11}=0$、$M_{22}=2\sigma y(S_0)_{22}$。若 $(S_0)_{22}\ne0$，选使 $\sigma y(S_0)_{22}<0$ 且 $2|y(S_0)_{22}|>q_2$ 的一个有限 $y$，就使 (13.16) 的第二对角为负。因而
+
+$$
+(S_0)_{11}=(S_0)_{22}=0.
+\tag{13.17}
+$$
+
+这里没有给未知响应加入连续性或无穷小输入规则。令 $p=|n_1|^2$、$\alpha_j=s_j/c_j$；二维酉性给 $|e_1|^2=1-p$，于是 (13.17) 正好是
+
+$$
+(1-p)\alpha_1+p\alpha_2=0,\qquad
+p\alpha_1+(1-p)\alpha_2=0.
+\tag{13.18}
+$$
+
+其系数行列式为 $1-2p$。不平衡时 $\alpha_1=\alpha_2=0$；平衡时恰为 $\alpha_1=-\alpha_2=\rho$，且 (13.7) 给 $(S_0)_{12}=\rho\omega$。这证明了秩一分支中残量形状的必要性。
+
+当 $r=2$，$W_1$ 是两个二维空间之间的可逆矩阵。(13.11) 的第三行对任何右端项都固定演员向量 $u=(W_1^*)^{-1}\eta_N$，完全不依赖 $w$。若 $s\ne0$，可取 $u$ 使 $u^*\operatorname{diag}(s_1,s_2)u\ne0$，并固定右端项 $\eta=(0,0,W_1^*u)$。对每个非实 $w$，$\xi(w)=X(w)^{-1}\eta$ 的演员部分就是这个 $u$。于是 (13.3) 必须给
+
+$$
+\|W_1^*u\|^2+2\sigma y\,u^*\operatorname{diag}(s_1,s_2)u\ge0
+\qquad(y\in\mathbb R\setminus\{0\}).
+\tag{13.19}
+$$
+
+选相反符号且足够大的有限 $y$ 即矛盾。因此 $s=0$。在秩一不平衡和秩二的各刚性分支，$s=0$ 的充分性统一由 (13.3) 的平方项直接支付。
+
+### 13.5 同一个圆、取向与全部端点
+
+秩一平衡时，(13.15)–(13.17) 的非对角元为
+
+$$
+M_{12}(w)=\sigma\rho\omega\,k(w),\qquad
+k(w)=\frac{2\operatorname{Im}w}{a-\overline w},\qquad
+\frac1{k(w)}=\frac{a-\operatorname{Re}w}{2\operatorname{Im}w}+\frac i2.
+\tag{13.20}
+$$
+
+固定任何一个非零虚部，改变实部就使倒数的实部遍历实轴。因此非实 $w$ 的像准确为
+
+$$
+|k+i|=1,\qquad k\ne0.
+\tag{13.21}
+$$
+
+$Q+M(w)$ 的对角元始终为严格正的 $q_1,q_2$，所以 (13.16) 恰好等价于 $|h+\sigma\rho\omega k|\le R$。在 (13.21) 的圆上取上确界，补点 $k=0$ 时的条件 $|h|<R$ 本来就成立，故
+
+$$
+\sup_{|k+i|=1,\ k\ne0}|h+\sigma\rho\omega k|
+=|h-i\sigma\rho\omega|+|\rho|.
+\tag{13.22}
+$$
+
+这证明 (13.8) 对全部非实点的必要与充分性。它与 §9 的圆包含机制相同，但圆的中心在这里为 $-i$，不能照抄 (8.2) 的符号或谱间距。
+
+展开 $|h-i\sigma\rho\omega|^2=|h|^2+\rho^2+2\sigma J\rho$，且保留 $R-|\rho|\ge0$，得到
+
+$$
+R|\rho|+\sigma J\rho\le\Delta/2.
+\tag{13.23}
+$$
+
+分别对 $\rho\ge0$ 和 $\rho\le0$ 整理，就是 (13.9)。反向地，(13.23) 蕴含
+
+$$
+|\rho|\le\frac{\Delta}{2(R-|J|)}
+\le\frac{R+|h|}{2}<R,
+$$
+
+所以反向平方没有引入伪解。严格正分母和 $\Delta>0$ 同时证明非零内点确实存在。整个推导使用非严格不等式，故保留闭端点、$\rho=0$ 及退化二表。
+
+若区间条件失败，(13.22) 给一个非零圆点使 $|h+\sigma\rho\omega k|>R$；即便一个上确界位置是补点，严格违反仍在附近非零圆点保持。由 (13.20) 取到非实 $w$，$Q+M(w)$ 的行列式为负。取 $z$ 使 $z^*(Q+M(w))z<0$，令 $\eta=G^*Qz$，再令 $\xi=X(w)^{-1}\eta$，则
+
+$$
+\xi^*\mathcal F_\sigma(w)\xi
+=\eta^*(I+G^*M(w)G)\eta
+=z^*(Q+M(w))z<0.
+\tag{13.24}
+$$
+
+在 $N_0$ 上补零即为原空间中的违反读取。由 §2 的等价性，该正向量泛函不能满足固定 P2。这也给出区间外的反证机制。
+
+对所有实 $w$，包括 $w=a$ 及任何其他实奇点，直接有 $\mathcal F_\sigma(w)=(t-wc)^2\ge0$；无需逆矩阵，更无需未知输入的极限。结合 (13.22)，完成全部复平面上的充分性，因而定理 13.1 的新分支证毕。∎
+
+### 13.6 相位与正交环境坐标不变性
+
+若 $q'=e^{i\chi}q$，则 $n'=e^{i\chi}n$；再令 $e'=e^{i\theta}e$，写 $T_0=\operatorname{diag}(e^{i\theta},e^{i\chi})$。直接由定义，
+
+$$
+b'=e^{i(\chi-\theta)}b,\qquad L'=e^{-i\theta}L,\qquad
+j'=e^{-i\chi}j,\qquad G'=T_0^*G,\qquad Q'=T_0^*QT_0.
+$$
+
+因此 $h$ 与 $\omega$ 同乘 $e^{i(\chi-\theta)}$，$q_1,q_2,R,\Delta,J$ 均不变，(13.8)–(13.10) 也不变。平衡性只取决于 $|n_1|^2,|n_2|^2$，不依赖这些选择。
+
+对任意环境酉换基 $E$，新坐标中 $V'=VE$、$D'=E^*DE$、$(D')^\dagger=E^*D^\dagger E$、$q'=E^*q$。此时 $H,v,\gamma,n$ 不变，$L'=L\operatorname{diag}(I_2,E)$、$j'=j\operatorname{diag}(I_2,E)$，故 $G'G'^*=GG^*$。零模耦合秩以及上述分类全部不变。这种不变性是同一个有限矩阵和原 Hilbert 范数的坐标不变性，不是未知响应的自然性公理，也不允许任意非酉环境变换后仍使用原来的 $Q$。
+
+## 14. 秩一零模的非对称区间与已付星形的回收
+
+### 14.1 一个带非零方向项的三维输入
+
+取
+
+$$
+C=\operatorname{diag}(1,2),\qquad D=(0),\qquad
+V=\begin{pmatrix}1\\\sqrt2\end{pmatrix},\qquad
+B=\begin{pmatrix}0&i\sqrt2\\-i\sqrt2&0\end{pmatrix},\qquad
+t=\begin{pmatrix}0&i\sqrt2&1\\-i\sqrt2&0&\sqrt2\\1&\sqrt2&0\end{pmatrix}.
+\tag{14.1}
+$$
+
+这里 $r=1$，取 $q=1$、$e=(1,-1)^{\mathsf T}/\sqrt2$、$n=(1,1)^{\mathsf T}/\sqrt2$、$\gamma=\sqrt2$。因 $D^\dagger=0$，$H=B$，在 $U=[e,n]$ 中
+
+$$
+A=\begin{pmatrix}0&i\\-i&0\end{pmatrix},\qquad a=0,\quad b=i,\quad\omega=1,
+$$
+
+$$
+G=\begin{pmatrix}1/\sqrt2&-1/2&-i/\sqrt2\\0&0&1/\sqrt2\end{pmatrix},\qquad
+GG^*=\begin{pmatrix}5/4&-i/2\\i/2&1/2\end{pmatrix}.
+\tag{14.2}
+$$
+
+其行列式为 $3/8$，故普通二阶逆给
+
+$$
+Q=\begin{pmatrix}4/3&4i/3\\-4i/3&10/3\end{pmatrix},\qquad
+R=\frac{2\sqrt{10}}3,\quad \Delta=\frac83,\quad J=-\frac43.
+\tag{14.3}
+$$
+
+对 $s=\rho\operatorname{diag}(1,-2,0)$，定理 13.1 因而给出准确充要条件
+
+$$
+\frac{2\sigma-\sqrt{10}}3\le\rho\le
+\frac{2\sigma+\sqrt{10}}3.
+\tag{14.4}
+$$
+
+例如左端点由 $-\Delta/[2(R-\sigma J)]=-2/(\sqrt{10}+2\sigma)=(2\sigma-\sqrt{10})/3$ 得到；右端点同理由 $2/(\sqrt{10}-2\sigma)$ 得到。分别要求两种取向时，两个不同区间的交集正是
+
+$$
+|\rho|\le\frac{\sqrt{10}-2}{3}.
+\tag{14.5}
+$$
+
+这是一个固定三维输入的全正泛函 P2 结论。它展示 $b\ne0$ 通过原空间行度量产生 $J\ne0$，使单个取向的允许区间偏离对称；不构成全部 PB、完整 $\mathsf H_A(D)$ 或未知总响应的反模型。
+
+### 14.2 已付实星形不再计作新成果
+
+将 (14.1) 的 $B$ 改为 $\lambda C$，$\lambda\in\mathbb R$，其余 $C,D,V$ 不变，便准确得到运输卷的已付移位实星形。此时 $H=\lambda C$，而归一化的 $A=\lambda I$、$b=0$；直接在 (13.6) 中取
+
+$$
+G=\begin{pmatrix}1/\sqrt2&-1/2&0\\0&0&1/\sqrt2\end{pmatrix},\qquad
+Q=\operatorname{diag}(4/3,2),\qquad h=J=0,\quad\omega=1.
+$$
+
+故 (13.8) 为 $2|\rho|\le\sqrt{8/3}$，恰好是 $\rho^2\le2/3$。这只回收[运输卷定理 11.2](https://github.com/the-omega-institute/trureturing/blob/caab4df341883a38bfc59b17ca04ad2c41af4e32/docs/develop/theory/AURIC_INTERVAL_ORIGINAL_RESPONSE_AND_VARIABLE_PROJECTION_TRANSPORT.md)在固定提交 `caab4df341883a38bfc59b17ca04ad2c41af4e32` 的全部正泛函阈值，包括所有实 $\lambda$、两种取向和端点；不把这条已付阈值或旧星形证书计作新增。该固定提交中的运输卷定理 11.4 与推论 11.6 分别提供实际非零探针的扩大排除域与必要残余包络，并未给出星形的全部探针充要分类。
+
+## 15. 精确增益、成熟归属与完整原来源边界
+
+本节新增的 repo-derived 综合是定理 13.1 在 $r=1,2$ 的完整推导，以及它与 $r=0$ 既有分类的共同组织：在同一个有限正秩二演员、对角标量角残量、任意有限 Hermitian 输入环境和全原空间正泛函的固定 P2 类中，去掉环境块可逆这一条数学前件，按 $\operatorname{rank}(V|_{\ker D})=0,1,2$ 完整分类。$r=0$ 的谱平衡结果直接复用定理 8.1；§14.2 的实星形阈值直接复用上述固定运输卷定理 11.2；有限三维及其他原范围内的 FULL-$\mathsf H$ 分类仍按 §11 的 AH42.4／PB22.1 等既有结果承担。§§11–12 关于奇异环境未付的原文字节保留，其缺口只在本节明确列出的有限输入类内由定理 13.1 闭合。
+
+Moore–Penrose 逆及有限 Hermitian 谱分解、非零谱块的 Schur 消元、正 Hermitian 二表、最小范数截面与 Gram 矩阵、二维行列式和圆的最大模均是成熟工具。Moore–Penrose 逆的背景可参见 Penrose，[*A generalized inverse for matrices*](https://doi.org/10.1017/S0305004100030401)，其余背景沿 §§5、11 的既有归属；这里给出的谱定义和逐行消元已列明全部所用性质。不将通用工具重称为本仓库原创，不作历史优先权、文献穷尽或独立外部原创主张。新的组合关系是：环境核留下的约束先固定演员的若干坐标，耦合秩决定剩余实根读取与非实参数读取怎样共同消去残量，再由保持原范数的 $G$ 确定锐区间。
+
+本节的固定运输卷引用严格为 `caab4df341883a38bfc59b17ca04ad2c41af4e32`；它不改写 §§8–12 的 `21e6dcd4cad211827c9df24646da9ff8fd2fd154` 或 §§1–7 的 `0fd6b8d8b80330b90beecbc012c9b7eb9a57f765` 引用身份。完整原目标和 §6 的同一 $\mathcal C_{47}^{\mathrm{pin}}$ 递归全文保持不变，包含定义 47.1、AH64.3 第1–7项、SF 定义 105.1 第1–7项及 (105.1)–(105.7)、SF96.1、PB153.2 和每份固定递归上游。
+
+具体说，七项消费者仍分别需要：原复 Hilbert／实际相干准备；原事件、Born、全菜单与全部质量；同一共同实现的真正相关联合、复合与张量；typed CP／Kraus 及整台递归参考；完整仪器、TP、条件更新与 Lüders；全部合法历史、全未来、真遗忘、真实 Return 与 CountRead；实际动力、物理钟、能量与共同正作用量。所有原准备、事件、过程、参考／副本、相关联合、零／不等／次归一质量、支持、控制、ready／flags、完整细记录、失败、拒绝、停止、销毁、中间切口和全未来权限仍逐项保留。数学向量、逆矩阵与正锥读取都不生成这些实际资源。
+
+原分析器仍须对字面旧程序 $\tau;T_P$ 的指定接受族，在全部原准备、切口、参考／副本、允许的分析词和树、原坐标、完整菜单及固定支持全质量上，实际供应准备无关的准确接受关联，保持原支持与未归一标尺。CountRead 仍须同一接受叶的完整活动输出、实际读后活动 ready、第一合法消费者以及读后同一完整活动输入对全部合法未来的真实 Return；不以接受关联替代整仪器或全部历史恒等。
+
+[native XI 定义 1.1–1.4](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_XI.md)仍给定其原复载体、矩阵、唯一 ready 和实际程序／保留读合同；[C139 定义 65.1](AURIC_C139_FIXED_SOURCE_COMPARATORS_AND_NATIVE_EVENT_BOUNDARY.md)仍以实际接受输出、已供应的固定返回及真实后历史上的条件地址律为前件，不能从边缘均匀反推它。OTF8 的选定有限 CP 衰减／返回结论也仍以声明的实际 CP 端口为前件，不供应这些端口的原物理来源。具有实际输入、调用、返回与 INITIAL 消费者结论的 native GP 使用其自身原始启动装置；未证它与这里原 AURIC 来源同一，不能移作供应者。
+
+尚未支付的是一般算子值角残量、更高演员秩、一般 $C^*$-代数中的固定 P2／全部 PB 探针分类，以及完整原分析器、CountRead 和全输入／全未来 Return 的实际来源。定理 13.1 不增加未知响应的正则性、公理或操作权限，也不降低原量子问题的全域、资源与物理合同。它是纸面有限矩阵分类，不承担 Lean kernel 认证；没有由此提出完整量子候选、完整总响应或原量子起源已完成的主张。
+
+## 16. 中文直观说明
+
+环境块不能取逆时，应先分清两种零方向。一种既不在环境内部起作用，也完全不连向演员；它是整个输入的共同零块，正交分开后原算子正性和全部正泛函读取都原样保留。另一种虽然在环境内部为零，却仍连向演员；这条连线不能用伪逆抹掉，正是本节保留的 $W$。
+
+如果这样的独立连线一条也没有，就回到原来的可逆环境证明：看消元后的两个谱方向是否平衡。若恰有一条，它把演员的一个坐标钉在右端项上；与它正交的坐标仍有一个实广义特征根。实根先读掉残量的一个对角项，非实铅笔的正负虚部再读掉另一个。原残量只有两格对角数值，只有零模对这两格同样用力时，两次数值读取才允许一正一负的非零余量。这就是“零模平衡”，与无零模时的“谱平衡”承担不同角色。若有两条独立连线，两个演员坐标都已固定，正负虚部立即把全部残量压成零。
+
+平衡秩一仍留下一个真实区间。全部非实参数通过 $k(w)$ 绕一个去掉零点的圆；行矩阵 $G$ 保留同一完整输入和原空间范数，给出正度量 $Q$。把所描圆放进二维正性允许的闭圆盘，仍是“中心距离加半径”的准确条件。圆心的符号解释了两个取向各自的非对称端点；要求两种取向时才取交集。§14.1 的虚交叉项让这种偏移可见，旧实星形则是方向项为零的已付特例。
+
+因而少掉的只是这类已知有限环境矩阵必须可逆的数学限制。没有少掉原世界的准备、真实相关、整台仪器、全部记录失败、ready、合法后继或 Return 义务，也没有从一个矩阵区间造出实际量子来源。原 Omega 的完整量子起源目标仍未完成。
+
+## 新增锚（本行以下为后续增补区）
+
+## 17. 全部原探针的共同六维读取支撑
+
+**定义 17.1（已知环境决定的原空间截面）。** 在原 Hilbert 空间 $\mathcal H=\mathbb C^2\oplus\mathcal E$、$\mathcal E=\mathbb C^m$ 上，取任意有限 $m\ge0$，并令
+
+$$
+\begin{gathered}
+C_A=\operatorname{diag}(1,2),\qquad
+c=C_A\oplus0_m,\qquad P=I_2\oplus0_m,\\
+t=\begin{pmatrix}B&V\\V^*&D_{\rm env}\end{pmatrix}=t^*,\qquad
+s=\operatorname{diag}(s_1,s_2)\oplus0_m,\qquad s_1,s_2\in\mathbb R.
+\end{gathered}
+\tag{17.1}
+$$
+
+$B$ 和 $D_{\rm env}$ 为任意 Hermitian 矩阵，$V$ 任意；$D_{\rm env}$ 只表示已知输入的环境块。每个 $\sigma\in\{1,-1\}$ 分别给出 $g=K_\sigma(c,t)+s$。沿用本卷 (1.1)–(1.2) 的全部原算子与乘法；以下以承载卷定义 41.1 的原符号 $S_\pm=t\pm(r+g)$ 书写本卷的同一 $V_\pm$，$R_\pm=x\pm(h-k)$、$L$ 和 $B_\phi$ 均不改变。探针始终是每个实际 $x=x^*=PxP$。对 $\xi\in\mathcal H$，记原全矩阵代数上的向量泛函为 $\phi_\xi(a)=\xi^*a\xi$，其质量为 $\|\xi\|^2$。
+
+令 $D_{\rm env}^\dagger$ 取 §13.1 的谱定义，置
+
+$$
+\begin{gathered}
+\mathcal R=\operatorname{ran}D_{\rm env},\qquad
+N=\ker D_{\rm env},\qquad W=V|_N,\\
+N_1=N\ominus\ker W,\qquad
+\mathcal W=\operatorname{ran}W,\qquad r_0=\dim\mathcal W,\qquad
+Q=\text{原 }\mathbb C^2\text{ 中到 }\mathcal W^\perp\text{ 的正交投影}.
+\end{gathered}
+$$
+
+以 $\Pi_{\mathcal R}$ 表示原环境内到 $\mathcal R$ 的正交投影。定义复子空间
+
+$$
+\begin{gathered}
+\mathcal K=\operatorname{ran}(\Pi_{\mathcal R}V^*)
+          +\operatorname{ran}(D_{\rm env}^\dagger V^*Q)
+          \subseteq\mathcal R,\\
+\mathcal E_0=N_1\oplus D_{\rm env}^\dagger\mathcal K,
+\qquad \mathcal H_0=\mathbb C^2\oplus\mathcal E_0
+\subseteq\mathcal H.
+\end{gathered}
+\tag{17.2}
+$$
+
+这里的直和正交，因为 $D_{\rm env}^\dagger\mathcal K\subseteq\mathcal R=N^\perp$。令 $J:\mathcal W\to N_1$ 为同一个 $W|_{N_1}$ 的逆；零空间之间的逆取唯一的零映射。对于 $\xi=(u,y)$，置
+
+$$
+\begin{gathered}
+q=D_{\rm env}y,\qquad q_0=\Pi_{\mathcal K}q,\qquad d=q-q_0,\\
+y_0=D_{\rm env}^\dagger q_0+
+J\bigl(Vy-VD_{\rm env}^\dagger q_0\bigr),\qquad
+T\xi=(u,y_0),\qquad \delta=\|d\|^2.
+\end{gathered}
+\tag{17.3}
+$$
+
+下述证明同时说明 $J$ 的该次实参确实属于 $\mathcal W$。所有正交投影与范数均取原空间度量。
+
+**定理 17.2（同一截面的精确预算等价）。** 对定义 17.1 的每份环境数据 $V,D_{\rm env}$，$\mathcal H_0$ 仅由这两者决定，且 $\dim_{\mathbb C}\mathcal H_0\le6$。映射 $T$ 良定义、复线性，值域为 $\mathcal H_0$，并在 $\mathcal H_0$ 上为恒等。它同时适用于任意 $B,s_1,s_2$、每个实际 Hermitian 角探针 $x$ 和两种分别解释的取向。
+
+准确地，对每个原空间向量 $\xi$，写 $\eta=T\xi=(u,y_0)$，则
+
+$$
+\begin{gathered}
+Vy_0=Vy,\qquad D_{\rm env}y_0=q_0,\qquad
+VD_{\rm env}y_0=VD_{\rm env}y,\\
+d\perp\operatorname{ran}V^*,\qquad d\perp q_0,\qquad
+\|D_{\rm env}y\|^2=\|D_{\rm env}y_0\|^2+\delta.
+\end{gathered}
+\tag{17.4}
+$$
+
+以下均为同一原算子在两份向量泛函上的恒等式，所有平方仍在原 $M_{m+2}(\mathbb C)$ 中计算：
+
+$$
+\begin{gathered}
+\phi_\xi(g)=\phi_\eta(g),\qquad
+\phi_\xi(c^2)=\phi_\eta(c^2),\qquad
+\phi_\xi(c\circ t)=\phi_\eta(c\circ t),\\
+\phi_\xi(t^2)=\phi_\eta(t^2)+\delta,\qquad
+\phi_\xi(L)=\phi_\eta(L),\\
+\phi_\xi(R_\pm^2)=\phi_\eta(R_\pm^2),\qquad
+\phi_\xi(R_\pm\circ S_\pm)=\phi_\eta(R_\pm\circ S_\pm),\\
+\phi_\xi(S_\pm^2)=\phi_\eta(S_\pm^2)+\delta.
+\end{gathered}
+\tag{17.5}
+$$
+
+因此，同一个 $\delta\ge0$ 给出
+
+$$
+\begin{aligned}
+B_{\phi_\xi}(c,t)
+ &=B_{\phi_\eta}(c,t)+\delta\,\phi_\eta(c^2),\\
+B_{\phi_\xi}(R_\pm,S_\pm)
+ &=B_{\phi_\eta}(R_\pm,S_\pm)+\delta\,\phi_\eta(R_\pm^2).
+\end{aligned}
+\tag{17.6}
+$$
+
+对于每个给定的有限质量 $\mu\ge0$，有两条分别成立的充要关系。其中 $\phi$ 遍取完整 $M_{m+2}(\mathbb C)$ 上全部正复线性泛函，不限制环境密度块：
+
+$$
+\begin{aligned}
+&\bigl[\mathsf{P2}\text{ 对全部 }\phi\ge0,\ \phi(I_{m+2})=\mu\text{ 成立}\bigr]\\
+&\hspace{8mm}\Longleftrightarrow
+\bigl[\mathsf{P2}\text{ 对全部 }\phi_\eta,\ \eta\in\mathcal H_0,
+\ \|\eta\|^2=\mu\text{ 成立}\bigr],\\[1mm]
+&\bigl[\mathsf{PB}_x\text{ 对全部 }\phi\ge0,\ \phi(I_{m+2})=\mu\text{ 成立}\bigr]\\
+&\hspace{8mm}\Longleftrightarrow
+\bigl[\mathsf{PB}_x\text{ 对全部 }\phi_\eta,\ \eta\in\mathcal H_0,
+\ \|\eta\|^2=\mu\text{ 成立}\bigr].
+\end{aligned}
+\tag{17.7}
+$$
+
+第二条对每个原 $x$ 单独成立，不以 P2 为附加前件。故也可以在第二条两侧同时加上全部原 $x$ 的全称量词，并与第一条合取；无需随 $x$、$\sigma$ 或 $\mu$ 改选 $\mathcal H_0$。
+
+证明。先构造截面。$W|_{N_1}$ 单射，且其像为 $\mathcal W$，故 $J$ 存在。因为 $D_{\rm env}$ 自伴，$\mathcal E=\mathcal R\oplus N$，$D_{\rm env}^\dagger$ 在 $\mathcal R$ 上是 $D_{\rm env}$ 的逆。$d\in\mathcal R\cap\mathcal K^\perp$，而 (17.2) 的两份像给
+
+$$
+Vd=0,\qquad QVD_{\rm env}^\dagger d=0.
+\tag{17.8}
+$$
+
+第一式也说明 $d\perp\operatorname{ran}V^*$。更准确地，$\mathcal R$ 内同时被 $V$ 和 $QVD_{\rm env}^\dagger$ 消去的向量恰好组成 $\mathcal R\cap\mathcal K^\perp$；故在保持这两份线性读取的所有环境像中，$q_0$ 是唯一最小范数者。这是正交分解的直接应用。写 $y=D_{\rm env}^\dagger q+n$，$n\in N$，便有
+
+$$
+Q\bigl(Vy-VD_{\rm env}^\dagger q_0\bigr)
+=QVD_{\rm env}^\dagger d+QVn=0.
+$$
+
+故 (17.3) 的 $J$ 实参在 $\ker Q=\mathcal W$ 内。其定义立即给 $Vy_0=Vy$、$D_{\rm env}y_0=q_0$；再用 (17.8)，得到 (17.4)。$q_0\perp d$ 则来自正交投影。所有映射复线性，且 $y_0\in\mathcal E_0$。若 $y\in\mathcal E_0$，则 $q\in\mathcal K$、$q_0=q$，并且 $J(Vy-VD_{\rm env}^\dagger q)$ 正好回收其 $N_1$ 分量，所以 $T$ 在 $\mathcal H_0$ 上为恒等。维数满足
+
+$$
+\dim\mathcal K\le2+(2-r_0)=4-r_0,\qquad
+\dim\mathcal H_0=2+r_0+\dim\mathcal K\le6.
+\tag{17.9}
+$$
+
+这些式子包含 $m=0$、$D_{\rm env}=0$ 和任意零模耦合秩；空块无需另作非零性假设。
+
+其次验证全部原读取。写 $z=\xi-\eta=(0,y-y_0)$。由 (17.4)，$V(y-y_0)=0$，从而
+
+$$
+cz=xz=hz=rz=sz=gz=kz=0,\qquad
+tz=(0,d),\qquad R_\pm z=0,\qquad S_\pm z=(0,d).
+\tag{17.10}
+$$
+
+这里对 $g,k$ 的读取使用同一原矩阵的准确块形状
+
+$$
+\begin{gathered}
+g=\begin{pmatrix}
+\frac{\sigma i}{2}[C_A,B]+\operatorname{diag}(s_1,s_2)
+ &\frac{\sigma i}{2}C_AV\\
+-\frac{\sigma i}{2}V^*C_A&0
+\end{pmatrix},\qquad
+k=\begin{pmatrix}C_A\circ B&C_AV/2\\V^*C_A/2&0\end{pmatrix}.
+\end{gathered}
+\tag{17.11}
+$$
+
+$g,k$ 的环境像在 $\operatorname{ran}V^*$ 内，故 $V(y-y_0)=0$ 还给 $\phi_\xi(g)=\phi_\eta(g)$。$c\eta$ 在演员空间内；$R_\pm\eta$ 的环境分量为 $\mp V^*C_Au/2$。$t\eta$ 的环境分量为 $V^*u+q_0$，$S_\pm\eta$ 的环境分量为
+
+$$
+V^*\left(I_2\mp\frac{\sigma i}{2}C_A\right)u+q_0.
+\tag{17.12}
+$$
+
+因此 (17.4) 使这些环境分量与 $d$ 全部正交。对自伴 $U,V$ 使用
+$\phi_\xi(U^2)=\|U\xi\|^2$ 和 $\phi_\xi(U\circ V)=\operatorname{Re}((U\xi)^*V\xi)$，结合 (17.10)，就得到 (17.5) 中除 $L$ 外的全部恒等式，包含两份平方增加同一个 $\delta$。
+
+对 $L$，准确使用原定义给
+
+$$
+\phi_\xi(L)=-2\operatorname{Re}\bigl((x\xi)^*(h-k)\xi\bigr)
+             -2\operatorname{Re}\bigl((t\xi)^*(r+g)\xi\bigr).
+\tag{17.13}
+$$
+
+第一项在 $\xi,\eta$ 之间完全相同。第二项的差仅为
+$-2\operatorname{Re}((0,d)^*(r+g)\eta)$，而 $(r+g)\eta$ 的环境分量为 $-\sigma iV^*C_Au/2$，故差也为零。这证明完整 (17.5)，代入原标量 $B_\phi$ 即得 (17.6)。所有恒等式对同一个 $\eta,d$ 同时成立，并未为两份符号、两个面积根或不同探针分别优化。
+
+最后证明质量与全正泛函的等价。$\mu=0$ 时，正泛函的有限维谱分解使它只能为零，右侧向量也只能为零，两条关系均成立。以下固定 $\mu>0$。原 P2 关于正泛函的正倍数是二次齐次的，原 PB 的两边是一次齐次的；因 $\phi_{a\eta}=a^2\phi_\eta$ 对每个实 $a>0$ 成立，某条预算在 $\mathcal H_0$ 上所有质量 $\mu$ 的向量成立，就在 $\mathcal H_0$ 上所有向量成立。这里也包含零向量，并不要求 $T$ 保持范数或质量。
+
+现在取任意原空间向量 $\xi$。P2 的左端由 (17.5) 不变，右端由 (17.6) 只增加非负量 $\delta\phi_\eta(c^2)$，所以支撑上的 P2 推出全部原向量上的 P2。同理，PB 的左端不变，每个根内量都增加非负量 $\delta\phi_\eta(R_\pm^2)$，故对固定 $x$ 的支撑预算推出同一 $x$ 在全部原向量上的预算。没有把失败的充分估计解释成预算失败；这里使用的是已证的单向单调性。
+
+还须将全部原向量结论提升到全部原正泛函。任意 $\phi\ge0$ 在完整 $M_{m+2}(\mathbb C)$ 上有有限谱分解
+
+$$
+\phi=\sum_j\phi_{\xi_j},\qquad
+\sum_j\|\xi_j\|^2=\phi(I_{m+2}).
+\tag{17.14}
+$$
+
+这里的 $\xi_j$ 是完整原空间向量，没有去掉环境密度块。对于 P2，全部向量预算准确等价于每个 Hermitian 二阶矩阵
+
+$$
+M_{\phi_{\xi_j}}=
+\begin{pmatrix}
+\phi_{\xi_j}(c^2)&\phi_{\xi_j}(c\circ t)-i\phi_{\xi_j}(g)\\
+\phi_{\xi_j}(c\circ t)+i\phi_{\xi_j}(g)&\phi_{\xi_j}(t^2)
+\end{pmatrix}
+$$
+
+为正：对角元本来非负，行列式正好是 P2 的余量。这是 §2 的既有二表写法。矩阵对泛函线性，故 $M_\phi=\sum_jM_{\phi_{\xi_j}}\ge0$，其行列式给 $\phi$ 的 P2，包括零对角和退化情形。
+
+对于 PB，直接使用[运输卷](https://github.com/the-omega-institute/trureturing/blob/caf0f3b3064a987b753b67aaa3836d6d86e73f75/docs/develop/theory/AURIC_INTERVAL_ORIGINAL_RESPONSE_AND_VARIABLE_PROJECTION_TRANSPORT.md)式 (9.28)–(9.30) 的成熟二阶正 Gram 行列式根不等式：对任意实际自伴 $U,V$，
+
+$$
+\sqrt{B_\phi(U,V)}\ge\sum_j\sqrt{B_{\phi_{\xi_j}}(U,V)}.
+\tag{17.15}
+$$
+
+该工具只用二阶矩阵相加，与谱分解的项数无关。将它分别用于同一原 $R_+,S_+$ 与 $R_-,S_-$，便有
+
+$$
+\begin{aligned}
+|\phi(L)|
+&\le\sum_j|\phi_{\xi_j}(L)|\\
+&\le\sum_j\left(\sqrt{B_{\phi_{\xi_j}}(R_+,S_+)}
+                 +\sqrt{B_{\phi_{\xi_j}}(R_-,S_-)}\right)\\
+&\le\sqrt{B_\phi(R_+,S_+)}+\sqrt{B_\phi(R_-,S_-)}.
+\end{aligned}
+\tag{17.16}
+$$
+
+取 (17.14) 的总质量为给定 $\mu$，即得 (17.7) 的两个反向蕴涵；正向蕴涵只用每个 $\phi_\eta$ 本身就是质量 $\mu$ 的原全空间正复线性泛函。两条证明分别使用自己的预算，没有相互增加前件。$T$ 的定义与任何探针和取向无关，故最后的同时量词断言也成立。∎
+
+## 18. 原平方与压缩平方的严格区别
+
+**命题 18.1（读取支撑可以不约化原输入）。** 定理 17.2 的 $\mathcal H_0$ 不必是 $t$ 的不变子空间。令 $\Pi_0$ 为原空间到它的正交投影，$t_0=\Pi_0t|_{\mathcal H_0}$；即使对 $\eta\in\mathcal H_0$，也不总有 $\phi_\eta(t^2)=\eta^*t_0^2\eta$。
+
+证明。取 $m=3$、$B=0$、$s=0$，并置
+
+$$
+D_{\rm env}=\operatorname{diag}(1,2,3),\qquad
+V=\begin{pmatrix}1&1&1\\0&0&0\end{pmatrix},\qquad
+v=(1,1,1)^{\mathsf T}.
+\tag{18.1}
+$$
+
+此时 $N_1=0$、$Q=I_2$，故定义 17.1 的环境支撑准确为
+
+$$
+\mathcal E_0=\operatorname{span}_{\mathbb C}
+\left\{(1,1/2,1/3)^{\mathsf T},(1,1/4,1/9)^{\mathsf T}\right\}.
+\tag{18.2}
+$$
+
+若 $v$ 是这两列以系数 $a,b$ 的组合，前两坐标给 $a+b=1$、$2a+b=4$，所以 $a=3,b=-2$；第三坐标却给 $a/3+b/9=7/9\ne1$。因此 $v\notin\mathcal E_0$。取原演员向量 $\eta=(e_1,0)\in\mathcal H_0$，则 $t\eta=(0,v)\notin\mathcal H_0$，并且
+
+$$
+\phi_\eta(t^2)=\|v\|^2=3
+>\|\Pi_{\mathcal E_0}v\|^2
+=\eta^*t_0^2\eta.
+\tag{18.3}
+$$
+
+一般的差准确是成熟的正交投影恒等式
+
+$$
+\Pi_0t^2|_{\mathcal H_0}-t_0^2
+=\Pi_0t(I-\Pi_0)t|_{\mathcal H_0}\ge0.
+\tag{18.4}
+$$
+
+本例使它在 $\eta$ 上严格正。因此 (17.7) 检验的是原全矩阵算子的原平方与原 Jordan 乘积，只缩小向量的读取范围。将 $t$ 换成 $t_0$ 再在小矩阵代数中作平方会改变这些预算的输入；定理 17.2 不提供这一步等价，也不能据此直接套用旧的小矩阵分类。∎
+
+**约定 18.2（分类范围与承重归属）。** 定理 17.2 是 (17.1) 整个有限输入类的共同读取支撑结论，既未断言全部原 PB 消去每个非零 $s$，也未给任何非零 $s$ 的全 PB 证书。关于固定 P2，直接复用本卷定理 13.1：$\operatorname{rank}(V|_{\ker D_{\rm env}})=2$ 或不平衡秩一时已经有 $s=0$；余下只有平衡秩一与秩零的 Schur 平衡非零区间。秩零的阈值继续由定理 8.1 支付，不重新计为定理 17.2 的内容。
+
+旧移位实星形的全部实参数已由上述固定提交的运输卷定理 12.3 精确分类；零移位星形和零演员对角、无角外连线类分别复用[承载卷](https://github.com/the-omega-institute/trureturing/blob/caf0f3b3064a987b753b67aaa3836d6d86e73f75/docs/develop/theory/AURIC_FULL_PB_POLYNOMIAL_TRANSPORT_AND_REAL_ROOT_RIGIDITY.md)定理 42.2、41.2。$s=0$ 的原预算充分性直接复用本卷 §1。已知有限维完整 $\mathsf H_A(D)$ 分类及[双角卷](https://github.com/the-omega-institute/trureturing/blob/caf0f3b3064a987b753b67aaa3836d6d86e73f75/docs/develop/theory/AURIC_FULL_PB_TWO_CORNER_POSITIVE_CERTIFICATE_CONTINUATION.md)定理 44.2 要求其各自更强前件，不是 (17.7) 的固定输出分类。平衡秩一和 Schur 平衡秩零中，除上述准确已付子类以外，全部原 PB 与非零残量区间的交仍待判定；定理 17.2 只把它等价地放到同一个原六维以内读取支撑上。
+
+(17.3) 的最小范数步骤是在环境像 $q=D_{\rm env}y$ 中保持线性读取后作正交投影，不是保持 $\|y\|$ 的断言。它使用成熟的最小范数插值／representer 原理，背景见 Argyriou–Micchelli–Pontil，[*When Is There a Representer Theorem? Vector Versus Matrix Regularizers*](https://jmlr.org/papers/v10/argyriou09a.html)，JMLR 10 (2009), 2507–2529，§§1–3；这里只使用复有限维正交分解，并已在证明中建立所需性质，不调用该文关于一般正则项的刻画。Moore–Penrose 逆沿 §15 的 Penrose 引文；正 Gram、谱分解和行列式根工具沿本卷及运输卷的既有归属。这些成熟工具不单列为新增数学定理。新的 repo-derived 综合是 (17.2) 同时保留两份环境线性读取、(17.5)–(17.6) 同一非负余项对全部原探针的恒等式，以及据此得到的逐质量、逐预算全正泛函等价；不作历史优先权或文献穷尽主张。
+
+此处只讨论已知矩阵和原数学泛函，不给未知总响应 $D$ 添加正则性、可加性、齐次性、协变性、单位平移中性、压缩或商自然性，也不增加实际准备或读取标签。运输卷 (12.29) 的一般共同实现义务 $\mathcal E_+^D=\mathcal E_-^D$、一般稳定性目标 $N_\omega(\varepsilon)^2\to0$、完整原 $\mathsf H$ 与总 $D$，以及本卷 §§6、15 的同一递归钉版实际物理来源全文均保持原范围。它们不是有限读取支撑的结论。
+
+## 新增锚（本行以下为后续增补区）

@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Normalized discrete cubic moments vanish uniformly for bounded variation weights. -/
+   digest: Mean-square prime correlations: Normalized discrete cubic moments vanish uniformly for bounded variation weights. -/
 
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.DiscreteMomentAsymptotics
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.NormalizedFormalIntegrals
@@ -72,7 +72,7 @@ private theorem p_third_normalized_estimate
 theorem eventual_discrete_third
     (SS : Finset ℕ → ℝ) (α β M : ℝ) (hα : 0 < α) (hαβ : α < β)
     (hβ : β < 1 / 4) (hSS : SS ∅ = 1) (hSS1 : ∀ d, SS {d} = 1)
-    (hHL : HL4 SS β) (hcor : IntervalCorrelations SS) (hM : 1 ≤ M)
+    (hMS : MeanSquareHL4 SS β) (hcor : IntervalCorrelations SS) (hM : 1 ≤ M)
     (δ : ℝ) (hδ : 0 < δ) :
     ∀ᶠ N : ℝ in atTop,
       ∀ H : ℕ, N ^ α ≤ (H : ℝ) → (H : ℝ) ≤ N ^ β →
@@ -82,7 +82,7 @@ theorem eventual_discrete_third
   obtain ⟨ε, hε, hεβ⟩ := transfer_epsilon_exists β hβ
   have hβ1 : β < 1 := by linarith
   obtain ⟨⟨C₁, hC₁, harith⟩, ⟨C₂, hC₂, η, hη, hanti, hlim, hformal⟩⟩ :=
-    discrete_moment_asymptotic_inputs SS α β hα hαβ hβ1 hSS hSS1 hHL hcor M hM ε hε
+    discrete_moment_asymptotic_inputs SS α β hα hαβ hβ1 hSS hSS1 hMS hcor M hM ε hε
   let t : ℝ := δ / (3 * (C₁ + C₂ + 1))
   have hC : 0 < C₁ + C₂ + 1 := by linarith
   have ht : 0 < t := div_pos hδ (mul_pos (by norm_num) hC)

@@ -10,6 +10,12 @@ internal sealed class WeightedArithmeticTransferDocument : IScribeDocumentDefini
         "BV weighted arithmetic moments agree with their quadratic formal integrals up to a uniform square-root error.",
         H("BV weighted arithmetic transfer"),
         Blocks(
+            Paragraph(Text(
+                "MeanSquareHL4 is the uniform mean-square correlation hypothesis on real cutoffs "
+                + "N<=y<=2N and injective positive shift tuples in [1,K], with 1<=K<=M N^beta. "
+                + "Chan, A note on primes in short intervals, International Journal of Number Theory 2 "
+                + "(2006), 105–110, is the single-interval mean-square precedent. The overlapping "
+                + "mixed-moment transfer with supported BV weights here is repo-derived.")),
             Describe.Lean(
                 DescribeId.Create("polynomial-weight-integrable"),
                 DeclarationHandle.Create(Prefix + "polynomial_weight_integrable"),
@@ -36,8 +42,8 @@ internal sealed class WeightedArithmeticTransferDocument : IScribeDocumentDefini
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "Assume zero less than alpha less than beta less than one, the strong "
-                        + "four-point Hardy–Littlewood hypothesis, and singular-series values one "
+                        "Assume zero less than alpha less than beta less than one, the uniform "
+                        + "four-point mean-square hypothesis MeanSquareHL4, and singular-series values one "
                         + "on the empty set and on singletons. Fix M at least one and positive "
                         + "epsilon. There is a nonnegative C such that, for every sufficiently "
                         + "large real N, every integer H between N to alpha and N to beta, "
@@ -51,9 +57,11 @@ internal sealed class WeightedArithmeticTransferDocument : IScribeDocumentDefini
                         "The quadratic reduction expresses every repeated-index tuple using "
                         + "centred distinct products with polynomial logarithmic coefficients. "
                         + "Only a fixed finite family of coefficient polynomials occurs for tuples "
-                        + "of length at most four. Apply centred BV correlation estimates uniformly "
-                        + "to that family, sum over subsets and shift tuples, and use a smaller "
-                        + "Hardy–Littlewood exponent to absorb the logarithms. The repeated-shift "
+                        + "of length at most four. Group all tuple-subset contributions by their "
+                        + "coefficient polynomial and apply the aggregate centred BV correlation "
+                        + "estimate to each group, using K=floor(M H). Its K^k bound is at most "
+                        + "M^4 H^k for k<=4. Summing over the fixed coefficient family and using "
+                        + "a smaller positive mean-square error exponent absorbs the logarithms. The repeated-shift "
                         + "collision estimate accounts for proper prime powers and for replacing "
                         + "log(n+d) by log n. This transfer uses no singular-series interval "
                         + "asymptotic hypothesis."))),
