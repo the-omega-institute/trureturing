@@ -21,7 +21,7 @@ proof_shape: IsUnitaryTwoDesign: bind-only; consumers: claim,DesignEntries.desig
 proof_shape: PurityEquality.probability_purity_one: bind-only; consumers: PurityEquality.density_purity_one_outer | PurityEquality.density_purity_one_outer: bind-only; consumers: ChannelPurity.maximal_choi_purity_unitary | ChoiRankOne.rank_one_choi_unitary: bind-only; consumers: ChannelPurity.maximal_choi_purity_unitary | ChannelPurity.canonical_action_trace: bind-only; consumers: ChannelPurity.canonical_choi_trace,ChannelPurity.maximal_choi_purity_unitary,ChannelPurity.strict_unitarity_value,TransferGeometry.canonical_projected_mass | ChannelPurity.canonical_action_choi_psd: bind-only; consumers: ChannelPurity.maximal_choi_purity_unitary,ChannelPurity.strict_unitarity_value,TransferGeometry.canonical_projected_mass.
 proof_shape: ChannelPurity.canonical_choi_trace: bind-only; consumers: ChannelPurity.maximal_choi_purity_unitary,ChannelPurity.strict_unitarity_value | ChannelPurity.maximal_choi_purity_unitary: bind-only; consumers: ChannelPurity.strict_unitarity_value | ChannelPurity.unitarityValue: bind-only; consumers: ChannelPurity.strict_unitarity_value,TransferGeometry.canonical_unitarity_mass,TransferGeometry.canonical_unitarity_nonneg,CanonicalSector.canonical_coefficient,CanonicalSector.canonical_tensor_strict | ChannelPurity.strict_unitarity_value: bind-only; consumers: CanonicalSector.canonical_one_copy_strict,CanonicalSector.canonical_tensor_strict | TransferGeometry.std_repr: bind-only; consumers: TransferGeometry.transfer_entry,TransferGeometry.transfer_action,TraceInterface.projection_matrix.
 proof_shape: TransferGeometry.transfer_entry: bind-only; consumers: TransferGeometry.transfer_choi_purity,TransferGeometry.transfer_scalar_row,ConjugationInterface.transfer_conjugation,FinalAssembly.inverse_entry | TransferGeometry.transfer_action: bind-only; consumers: TransferGeometry.transfer_scalar_image | TransferGeometry.transfer_choi_purity: bind-only; consumers: TransferGeometry.canonical_projected_mass | TransferGeometry.conjugationRep_action: bind-only; consumers: ConjugationInterface.scalar_rep_right | TransferGeometry.twirledTensorPower_two_reindex: bind-only; consumers: FinalAssembly.target_charpoly.
-proof_shape: DesignEntries.design_haar_entry: bind-only; consumers: DesignEntries.average_rep_entry | DesignEntries.conjugationRep: bind-only; consumers: DesignEntries.average_rep_entry,DesignEntries.averaged_endomorphism_entry,DesignEntries.averaged_traceless_endomorphism,DesignEntries.projected_gram_averages,DesignTensorBound.projected_tensor_bound,CanonicalSector.canonical_tensor_strict,ConjugationInterface.transfer_conjugation,ConjugationInterface.conjugationRep_star,ConjugationInterface.scalar_rep_right,ConjugationInterface.scalar_rep_left,ConjugationInterface.projector_rep_commute,ConjugationInterface.inverseConjugatedMap_transfer,ConjugationInterface.inverseConjugatedMap_compression,FinalAssembly.canonical_result | DesignEntries.average_rep_entry: bind-only; consumers: DesignEntries.averaged_endomorphism_entry | DesignEntries.diagonal_pair_sum: bind-only; consumers: DesignEntries.averaged_endomorphism_entry | DesignEntries.fourth_moment_reshaped: bind-only; consumers: DesignEntries.averaged_endomorphism_entry.
+proof_shape: DesignEntries.design_haar_entry: bind-only; consumers: DesignEntries.average_rep_entry | DesignEntries.average_rep_entry: bind-only; consumers: DesignEntries.averaged_endomorphism_entry | DesignEntries.diagonal_pair_sum: bind-only; consumers: DesignEntries.averaged_endomorphism_entry | DesignEntries.fourth_moment_reshaped: bind-only; consumers: DesignEntries.averaged_endomorphism_entry.
 proof_shape: DesignEntries.averaged_endomorphism_entry: bind-only; consumers: DesignEntries.averaged_traceless_endomorphism | DesignEntries.tracelessProjector: bind-only; consumers: DesignEntries.tracelessProjector_projection,DesignEntries.averaged_traceless_endomorphism,DesignEntries.tracelessProjector_trace,DesignEntries.tracelessProjector_kills_trace,DesignEntries.projected_gram_averages,TransferGeometry.transfer_traceless_compression,TransferGeometry.canonical_projected_mass,TransferGeometry.canonical_unitarity_mass,TransferGeometry.canonical_unitarity_nonneg,DesignTensorBound.projected_tensor_bound,CanonicalSector.canonical_coefficient,CanonicalSector.canonical_one_copy_strict,CanonicalSector.canonical_tensor_strict,TraceInterface.projection_matrix,TraceInterface.inclusion_projection_matrix,TraceInterface.smallMatrix_lift,ConjugationInterface.projector_rep_commute,ConjugationInterface.inverseConjugatedMap_compression,FinalAssembly.canonical_result | DesignEntries.traceVector_dot: bind-only; consumers: DesignEntries.tracelessProjector_kills_trace,TransferGeometry.transfer_scalar_mass | DesignEntries.scalarProjector_projection: bind-only; consumers: DesignEntries.tracelessProjector_projection,TransferGeometry.transfer_traceless_compression,TransferGeometry.canonical_projected_mass.
 proof_shape: DesignEntries.tracelessProjector_projection: bind-only; consumers: DesignEntries.projected_gram_averages,DesignTensorBound.projected_tensor_bound,CanonicalSector.canonical_one_copy_strict | DesignEntries.scalarProjector_entry: bind-only; consumers: DesignEntries.averaged_traceless_endomorphism | DesignEntries.averaged_traceless_endomorphism: bind-only; consumers: DesignEntries.projected_gram_averages,FinalAssembly.canonical_result | ProjectionMass.projection_mass_split: bind-only; consumers: TransferGeometry.canonical_projected_mass | ProjectionMass.trace_product_cauchy_generic: bind-only; consumers: ProjectionMass.strict_projected_one_copy_bound.
 proof_shape: ProjectionMass.strict_projected_one_copy_bound: bind-only; consumers: CanonicalSector.canonical_one_copy_strict | DesignEntries.scalarProjector_trace: bind-only; consumers: DesignEntries.tracelessProjector_trace | DesignEntries.tracelessProjector_trace: bind-only; consumers: CanonicalSector.canonical_one_copy_strict | DesignEntries.tracelessProjector_kills_trace: bind-only; consumers: DesignEntries.projected_gram_averages,FinalAssembly.canonical_result | DesignEntries.diagonal_pair_sum_zero_of_kills_trace: bind-only; consumers: DesignEntries.projected_gram_averages,FinalAssembly.canonical_result.
@@ -276,14 +276,13 @@ open scoped Kronecker
 namespace D5.S3.QuantumChannels.WallmanFlammiaTwoContractivity.DesignEntries
 private theorem design_haar_entry {d : ℕ} (G : Subgroup (Matrix.unitaryGroup (Fin d) ℂ)) [Fintype G] (hG : IsUnitaryTwoDesign G) (r c : ((Fin d × Fin d) × (Fin d × Fin d))) : (Fintype.card G : ℂ)⁻¹ * (∑ g : G, literalMoment g.val.val r c) = haarAverage (Fin d) r c := by
   simpa only [Matrix.smul_apply, Matrix.sum_apply, smul_eq_mul] using congrFun (congrFun hG r) c
-private def conjugationRep {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ) : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ := U.val ⊗ₖ U.val.map star
-private theorem average_rep_entry {d : ℕ} (G : Subgroup (Matrix.unitaryGroup (Fin d) ℂ)) [Fintype G] (hG : IsUnitaryTwoDesign G) (H : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ) (r c : Fin d × Fin d) : ((Fintype.card G : ℂ)⁻¹ • (∑ g : G, (conjugationRep g.val)ᴴ * H * conjugationRep g.val)) r c = ∑ q : Fin d × Fin d, ∑ p : Fin d × Fin d, H p q * haarAverage (Fin d) ((p.1,q.2),(p.2,q.1)) ((r.1,c.2),(r.2,c.1)) := by
+private theorem average_rep_entry {d : ℕ} (G : Subgroup (Matrix.unitaryGroup (Fin d) ℂ)) [Fintype G] (hG : IsUnitaryTwoDesign G) (H : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ) (r c : Fin d × Fin d) : ((Fintype.card G : ℂ)⁻¹ • (∑ g : G, ((g.val.val ⊗ₖ g.val.val.map star))ᴴ * H * (g.val.val ⊗ₖ g.val.val.map star))) r c = ∑ q : Fin d × Fin d, ∑ p : Fin d × Fin d, H p q * haarAverage (Fin d) ((p.1,q.2),(p.2,q.1)) ((r.1,c.2),(r.2,c.1)) := by
   classical
   simp only [Matrix.smul_apply, smul_eq_mul, Matrix.sum_apply, Matrix.mul_apply, Finset.sum_mul, Finset.mul_sum]; rw [Finset.sum_comm]; apply Finset.sum_congr rfl; intro q hq
   rw [Finset.sum_comm]; apply Finset.sum_congr rfl; intro p hp
   calc
     _ = H p q * ((Fintype.card G : ℂ)⁻¹ * ∑ g : G, literalMoment g.val.val ((p.1,q.2),(p.2,q.1)) ((r.1,c.2),(r.2,c.1))) := by
-      simp only [Finset.mul_sum, Matrix.conjTranspose_apply, conjugationRep, literalMoment, Matrix.kronecker, Matrix.kroneckerMap_apply, Matrix.map_apply, star_mul, star_star]
+      simp only [Finset.mul_sum, Matrix.conjTranspose_apply, literalMoment, Matrix.kronecker, Matrix.kroneckerMap_apply, Matrix.map_apply, star_mul, star_star]
       apply Finset.sum_congr rfl; intro g hg; ring
     _ = _ := by rw [design_haar_entry G hG]
 private theorem diagonal_pair_sum {d : ℕ} (H : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ) : (∑ q : Fin d × Fin d, ∑ p : Fin d × Fin d, H p q * (if p.1 = p.2 ∧ q.1 = q.2 then 1 else 0)) = ∑ i : Fin d, ∑ j : Fin d, H (i,i) (j,j) := by
@@ -292,7 +291,7 @@ private theorem diagonal_pair_sum {d : ℕ} (H : Matrix (Fin d × Fin d) (Fin d 
 private theorem fourth_moment_reshaped {d : ℕ} (hd : 2 ≤ d) (p q r c : Fin d × Fin d) : haarAverage (Fin d) ((p.1,q.2),(p.2,q.1)) ((r.1,c.2),(r.2,c.1)) = (((if r.1 = r.2 ∧ c.1 = c.2 then 1 else 0 : ℂ) - (if r = c then 1 else 0 : ℂ) / (d : ℂ)) / ((d : ℂ)^2-1)) * (if p.1 = p.2 ∧ q.1 = q.2 then 1 else 0) + (((if r = c then 1 else 0 : ℂ) - (if r.1 = r.2 ∧ c.1 = c.2 then 1 else 0 : ℂ) / (d : ℂ)) / ((d : ℂ)^2-1)) * (if p = q then 1 else 0) := by
   have h := haarAverageEntry ((p.1,q.2),(p.2,q.1)) ((r.1,c.2),(r.2,c.1)) (by simpa using hd)
   simpa [Prod.ext_iff, and_comm, and_left_comm, eq_comm] using h
-private theorem averaged_endomorphism_entry {d : ℕ} (hd : 2 ≤ d) (G : Subgroup (Matrix.unitaryGroup (Fin d) ℂ)) [Fintype G] (hG : IsUnitaryTwoDesign G) (H : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ) (r c : Fin d × Fin d) : ((Fintype.card G : ℂ)⁻¹ • (∑ g : G, (conjugationRep g.val)ᴴ * H * conjugationRep g.val)) r c = (((if r.1 = r.2 ∧ c.1 = c.2 then 1 else 0 : ℂ) - (if r = c then 1 else 0 : ℂ) / (d : ℂ)) / ((d : ℂ)^2-1)) * (∑ i : Fin d, ∑ j : Fin d, H (i,i) (j,j)) + (((if r = c then 1 else 0 : ℂ) - (if r.1 = r.2 ∧ c.1 = c.2 then 1 else 0 : ℂ) / (d : ℂ)) / ((d : ℂ)^2-1)) * H.trace := by
+private theorem averaged_endomorphism_entry {d : ℕ} (hd : 2 ≤ d) (G : Subgroup (Matrix.unitaryGroup (Fin d) ℂ)) [Fintype G] (hG : IsUnitaryTwoDesign G) (H : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ) (r c : Fin d × Fin d) : ((Fintype.card G : ℂ)⁻¹ • (∑ g : G, ((g.val.val ⊗ₖ g.val.val.map star))ᴴ * H * (g.val.val ⊗ₖ g.val.val.map star))) r c = (((if r.1 = r.2 ∧ c.1 = c.2 then 1 else 0 : ℂ) - (if r = c then 1 else 0 : ℂ) / (d : ℂ)) / ((d : ℂ)^2-1)) * (∑ i : Fin d, ∑ j : Fin d, H (i,i) (j,j)) + (((if r = c then 1 else 0 : ℂ) - (if r.1 = r.2 ∧ c.1 = c.2 then 1 else 0 : ℂ) / (d : ℂ)) / ((d : ℂ)^2-1)) * H.trace := by
   classical
   rw [average_rep_entry G hG]; simp_rw [fourth_moment_reshaped hd]; simp only [mul_add, Finset.sum_add_distrib]; congr 1
   · rw [← diagonal_pair_sum H]
@@ -324,7 +323,7 @@ private theorem scalarProjector_entry (d : ℕ) (r c : Fin d × Fin d) : D5.S3.Q
   classical
   simp only [scalarProjector_eq, Matrix.smul_apply, smul_eq_mul, Matrix.vecMulVec_apply, Matrix.vec, Matrix.one_apply, eq_comm]
   split_ifs <;> simp_all [div_eq_mul_inv]
-private theorem averaged_traceless_endomorphism {d : ℕ} (hd : 2 ≤ d) (G : Subgroup (Matrix.unitaryGroup (Fin d) ℂ)) [Fintype G] (hG : IsUnitaryTwoDesign G) (H : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ) (hzero : (∑ i : Fin d, ∑ j : Fin d, H (i,i) (j,j)) = 0) : (Fintype.card G : ℂ)⁻¹ • (∑ g : G, (conjugationRep g.val)ᴴ * H * conjugationRep g.val) = (H.trace / ((d : ℂ)^2 - 1)) • tracelessProjector d := by
+private theorem averaged_traceless_endomorphism {d : ℕ} (hd : 2 ≤ d) (G : Subgroup (Matrix.unitaryGroup (Fin d) ℂ)) [Fintype G] (hG : IsUnitaryTwoDesign G) (H : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ) (hzero : (∑ i : Fin d, ∑ j : Fin d, H (i,i) (j,j)) = 0) : (Fintype.card G : ℂ)⁻¹ • (∑ g : G, ((g.val.val ⊗ₖ g.val.val.map star))ᴴ * H * (g.val.val ⊗ₖ g.val.val.map star)) = (H.trace / ((d : ℂ)^2 - 1)) • tracelessProjector d := by
   classical
   ext r c; rw [averaged_endomorphism_entry hd G hG, hzero]
   simp only [mul_zero, zero_add, Matrix.smul_apply, smul_eq_mul, tracelessProjector, Matrix.sub_apply, Matrix.one_apply, scalarProjector_entry]; ring
@@ -376,8 +375,8 @@ private theorem diagonal_pair_sum_zero_of_kills_trace {d : ℕ} (H : Matrix (Fin
   simp_rw [h]; simp
 private theorem projected_gram_averages {d : ℕ} (hd : 2 ≤ d) (G : Subgroup (Matrix.unitaryGroup (Fin d) ℂ)) [Fintype G] (hG : IsUnitaryTwoDesign G) (L : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ) :
     let B := tracelessProjector d * L * tracelessProjector d
-    ((Fintype.card G : ℂ)⁻¹ • (∑ g : G, (conjugationRep g.val)ᴴ * (Bᴴ * B) * conjugationRep g.val) = ((Bᴴ * B).trace / ((d : ℂ)^2 - 1)) • tracelessProjector d) ∧
-    ((Fintype.card G : ℂ)⁻¹ • (∑ g : G, (conjugationRep g.val)ᴴ * (B * Bᴴ) * conjugationRep g.val) = ((Bᴴ * B).trace / ((d : ℂ)^2 - 1)) • tracelessProjector d) := by
+    ((Fintype.card G : ℂ)⁻¹ • (∑ g : G, ((g.val.val ⊗ₖ g.val.val.map star))ᴴ * (Bᴴ * B) * (g.val.val ⊗ₖ g.val.val.map star)) = ((Bᴴ * B).trace / ((d : ℂ)^2 - 1)) • tracelessProjector d) ∧
+    ((Fintype.card G : ℂ)⁻¹ • (∑ g : G, ((g.val.val ⊗ₖ g.val.val.map star))ᴴ * (B * Bᴴ) * (g.val.val ⊗ₖ g.val.val.map star)) = ((Bᴴ * B).trace / ((d : ℂ)^2 - 1)) • tracelessProjector d) := by
   classical
   intro B
   have hk := tracelessProjector_kills_trace (show 0 < d by omega)
@@ -585,12 +584,12 @@ private theorem projected_tensor_bound {d : ℕ} (hd : 2 ≤ d) (G : Subgroup (M
       let B := tracelessProjector d * L * tracelessProjector d
       (Bᴴ * B).trace / ((d : ℂ)^2 - 1) = (u : ℂ)) :
     let B := tracelessProjector d * L * tracelessProjector d
-    ‖(Fintype.card G : ℂ)⁻¹ • ∑ g : G, ((conjugationRep g.val)ᴴ * B * conjugationRep g.val) ⊗ₖ ((conjugationRep g.val)ᴴ * B * conjugationRep g.val)‖ ≤ u := by
+    ‖(Fintype.card G : ℂ)⁻¹ • ∑ g : G, (((g.val.val ⊗ₖ g.val.val.map star))ᴴ * B * (g.val.val ⊗ₖ g.val.val.map star)) ⊗ₖ (((g.val.val ⊗ₖ g.val.val.map star))ᴴ * B * (g.val.val ⊗ₖ g.val.val.map star))‖ ≤ u := by
   classical
   letI : Nonempty (Fin d) := ⟨⟨0, by omega⟩⟩
   intro B
   let R : G → Matrix.unitaryGroup (Fin d × Fin d) ℂ := fun g =>
-    ⟨conjugationRep g.val, Matrix.kronecker_mem_unitary g.val.property (Matrix.map_star_mem_unitaryGroup_iff.mpr g.val.property)⟩
+    ⟨(g.val.val ⊗ₖ g.val.val.map star), Matrix.kronecker_mem_unitary g.val.property (Matrix.map_star_mem_unitaryGroup_iff.mpr g.val.property)⟩
   let c : ℂ := (Real.sqrt ((Fintype.card G : ℝ)⁻¹) : ℂ)
   have hsc : star c = c := by simp [c]
   have hcc : c * c = (Fintype.card G : ℂ)⁻¹ := by
@@ -598,13 +597,13 @@ private theorem projected_tensor_bound {d : ℕ} (hd : 2 ≤ d) (G : Subgroup (M
     simp only [Complex.ofReal_inv, Complex.ofReal_natCast]
   have hgrams := projected_gram_averages hd G hG L
   have hleft : ∑ g : G, conjugateFamily R B c g * (conjugateFamily R B c g)ᴴ = (u : ℂ) • tracelessProjector d := by
-    simp_rw [family_left_gram, hsc, hcc]; rw [← Finset.smul_sum]; change (Fintype.card G : ℂ)⁻¹ • (∑ g : G, (conjugationRep g.val)ᴴ * (B * Bᴴ) * conjugationRep g.val) = _
+    simp_rw [family_left_gram, hsc, hcc]; rw [← Finset.smul_sum]; change (Fintype.card G : ℂ)⁻¹ • (∑ g : G, ((g.val.val ⊗ₖ g.val.val.map star))ᴴ * (B * Bᴴ) * (g.val.val ⊗ₖ g.val.val.map star)) = _
     rw [hgrams.2, hcoeff]
   have hright : ∑ g : G, (conjugateFamily R B c g)ᴴ * conjugateFamily R B c g = (u : ℂ) • tracelessProjector d := by
-    simp_rw [family_right_gram, hsc, hcc]; rw [← Finset.smul_sum]; change (Fintype.card G : ℂ)⁻¹ • (∑ g : G, (conjugationRep g.val)ᴴ * (Bᴴ * B) * conjugationRep g.val) = _
+    simp_rw [family_right_gram, hsc, hcc]; rw [← Finset.smul_sum]; change (Fintype.card G : ℂ)⁻¹ • (∑ g : G, ((g.val.val ⊗ₖ g.val.val.map star))ᴴ * (Bᴴ * B) * (g.val.val ⊗ₖ g.val.val.map star)) = _
     rw [hgrams.1, hcoeff]
   have hbound := TensorGram.projection_tensor_norm_bound (tracelessProjector d) (tracelessProjector_projection (by omega)) (conjugateFamily R B c) u hu hleft hright
-  have htensor : (∑ g : G, conjugateFamily R B c g ⊗ₖ conjugateFamily R B c g) = (Fintype.card G : ℂ)⁻¹ • ∑ g : G, ((conjugationRep g.val)ᴴ * B * conjugationRep g.val) ⊗ₖ ((conjugationRep g.val)ᴴ * B * conjugationRep g.val) := by
+  have htensor : (∑ g : G, conjugateFamily R B c g ⊗ₖ conjugateFamily R B c g) = (Fintype.card G : ℂ)⁻¹ • ∑ g : G, (((g.val.val ⊗ₖ g.val.val.map star))ᴴ * B * (g.val.val ⊗ₖ g.val.val.map star)) ⊗ₖ (((g.val.val ⊗ₖ g.val.val.map star))ᴴ * B * (g.val.val ⊗ₖ g.val.val.map star)) := by
     simp only [conjugateFamily, Matrix.smul_kronecker, Matrix.kronecker_smul, smul_smul, hcc, Finset.smul_sum]; rfl
   simpa only [htensor] using hbound
 end D5.S3.QuantumChannels.WallmanFlammiaTwoContractivity.DesignTensorBound
@@ -641,7 +640,7 @@ private theorem canonical_one_copy_strict {d : ℕ} (hd : 2 ≤ d) (Λ : Quantum
 private theorem canonical_tensor_strict {d : ℕ} (hd : 2 ≤ d) (Λ : QuantumChannel (Fin d) (Fin d)) (G : Subgroup (Matrix.unitaryGroup (Fin d) ℂ)) [Fintype G] (hG : IsUnitaryTwoDesign G) (hnot : ¬ ∃ U : Matrix.unitaryGroup (Fin d) ℂ, ∀ X : Matrix (Fin d) (Fin d) ℂ, CStarMatrix.ofMatrix.symm (Λ.toCompletelyPositiveMap (CStarMatrix.ofMatrix X)) = U.val * X * U.val.conjTranspose) :
     let B := tracelessProjector d * LinearMap.toMatrix (Matrix.stdBasis ℂ (Fin d) (Fin d)) (Matrix.stdBasis ℂ (Fin d) (Fin d)) (matrixAction Λ.toCompletelyPositiveMap) *
       tracelessProjector d
-    ‖(Fintype.card G : ℂ)⁻¹ • ∑ g : G, ((conjugationRep g.val)ᴴ * B * conjugationRep g.val) ⊗ₖ ((conjugationRep g.val)ᴴ * B * conjugationRep g.val)‖ < 1 := by
+    ‖(Fintype.card G : ℂ)⁻¹ • ∑ g : G, (((g.val.val ⊗ₖ g.val.val.map star))ᴴ * B * (g.val.val ⊗ₖ g.val.val.map star)) ⊗ₖ (((g.val.val ⊗ₖ g.val.val.map star))ᴴ * B * (g.val.val ⊗ₖ g.val.val.map star))‖ < 1 := by
   intro B
   exact lt_of_le_of_lt (DesignTensorBound.projected_tensor_bound hd G hG (LinearMap.toMatrix (Matrix.stdBasis ℂ (Fin d) (Fin d)) (Matrix.stdBasis ℂ (Fin d) (Fin d)) (matrixAction Λ.toCompletelyPositiveMap)) (ChannelPurity.unitarityValue Λ) (canonical_unitarity_nonneg hd Λ) (canonical_coefficient hd Λ)) (ChannelPurity.strict_unitarity_value hd Λ hnot)
 end D5.S3.QuantumChannels.WallmanFlammiaTwoContractivity.CanonicalSector
@@ -852,30 +851,30 @@ private theorem conjugationMap_trace {d : ℕ} (U : Matrix.unitaryGroup (Fin d) 
   change (U.val * X * U.valᴴ).trace = X.trace; rw [Matrix.trace_mul_comm, ← Matrix.mul_assoc, hU, Matrix.one_mul]
 private theorem conjugationMap_one {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ) : (Unitary.conjStarAlgAut ℂ (Matrix (Fin d) (Fin d) ℂ) U).toAlgEquiv.toLinearMap 1 = 1 := by
   exact (Unitary.conjStarAlgAut ℂ (Matrix (Fin d) (Fin d) ℂ) U).map_one
-private theorem transfer_conjugation {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ) : LinearMap.toMatrix (Matrix.stdBasis ℂ (Fin d) (Fin d)) (Matrix.stdBasis ℂ (Fin d) (Fin d)) ((Unitary.conjStarAlgAut ℂ (Matrix (Fin d) (Fin d) ℂ) U).toAlgEquiv.toLinearMap) = conjugationRep U := by
+private theorem transfer_conjugation {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ) : LinearMap.toMatrix (Matrix.stdBasis ℂ (Fin d) (Fin d)) (Matrix.stdBasis ℂ (Fin d) (Fin d)) ((Unitary.conjStarAlgAut ℂ (Matrix (Fin d) (Fin d) ℂ) U).toAlgEquiv.toLinearMap) = (U.val ⊗ₖ U.val.map star) := by
   classical
   ext r c; rw [transfer_entry]; change (U.val * Matrix.single c.1 c.2 (1 : ℂ) * U.valᴴ) r.1 r.2 = _
-  simp [conjugationRep, Matrix.single_eq_single_vecMulVec_single, Matrix.mul_vecMulVec, Matrix.vecMulVec_mul, Matrix.vecMulVec_apply, Matrix.conjTranspose_apply, Matrix.kroneckerMap_apply, Matrix.map_apply]
-private theorem conjugationRep_star {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ) : conjugationRep (star U) = (conjugationRep U)ᴴ := by
+  simp [Matrix.single_eq_single_vecMulVec_single, Matrix.mul_vecMulVec, Matrix.vecMulVec_mul, Matrix.vecMulVec_apply, Matrix.conjTranspose_apply, Matrix.kroneckerMap_apply, Matrix.map_apply]
+private theorem conjugationRep_star {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ) : ((star U).val ⊗ₖ (star U).val.map star) = ((U.val ⊗ₖ U.val.map star))ᴴ := by
   change U.valᴴ ⊗ₖ U.valᴴ.map star = (U.val ⊗ₖ U.val.map star)ᴴ
   rw [Matrix.conjTranspose_kronecker]
   congr 1
-private theorem scalar_rep_right {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ) : conjugationRep U * D5.S3.QuantumBounds.PeritoTsirelson.maxEntangled (Fin d) = D5.S3.QuantumBounds.PeritoTsirelson.maxEntangled (Fin d) := by
-  have hv : conjugationRep U *ᵥ (Matrix.vec (1 : Matrix (Fin d) (Fin d) ℂ)) = (Matrix.vec (1 : Matrix (Fin d) (Fin d) ℂ)) := by
+private theorem scalar_rep_right {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ) : (U.val ⊗ₖ U.val.map star) * D5.S3.QuantumBounds.PeritoTsirelson.maxEntangled (Fin d) = D5.S3.QuantumBounds.PeritoTsirelson.maxEntangled (Fin d) := by
+  have hv : (U.val ⊗ₖ U.val.map star) *ᵥ (Matrix.vec (1 : Matrix (Fin d) (Fin d) ℂ)) = (Matrix.vec (1 : Matrix (Fin d) (Fin d) ℂ)) := by
     ext r
     have h := conjugationRep_action U 1 r
     have hU : U.val * (1 : Matrix (Fin d) (Fin d) ℂ) * U.valᴴ = 1 := conjugationMap_one U
     rw [hU] at h
-    simpa only [conjugationRep, Matrix.mulVec, dotProduct, Matrix.vec, Matrix.one_apply, eq_comm] using h
+    simpa only [Matrix.mulVec, dotProduct, Matrix.vec, Matrix.one_apply, eq_comm] using h
   rw [scalarProjector_eq, Matrix.mul_smul, Matrix.mul_vecMulVec, hv]
-private theorem scalar_rep_left {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ) : D5.S3.QuantumBounds.PeritoTsirelson.maxEntangled (Fin d) * conjugationRep U = D5.S3.QuantumBounds.PeritoTsirelson.maxEntangled (Fin d) := by
+private theorem scalar_rep_left {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ) : D5.S3.QuantumBounds.PeritoTsirelson.maxEntangled (Fin d) * (U.val ⊗ₖ U.val.map star) = D5.S3.QuantumBounds.PeritoTsirelson.maxEntangled (Fin d) := by
   have h := scalar_rep_right (star U)
   have hSH : (D5.S3.QuantumBounds.PeritoTsirelson.maxEntangled (Fin d))ᴴ = D5.S3.QuantumBounds.PeritoTsirelson.maxEntangled (Fin d) := by
     simpa only [scalarProjector_eq_Q] using D5.S3.Quantum.Entanglement.ConicalDesignConcurrenceComparability.Q_hermitian d
   rw [conjugationRep_star] at h
   have hh := congrArg Matrix.conjTranspose h
   simpa only [Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose, hSH] using hh
-private theorem projector_rep_commute {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ) : tracelessProjector d * conjugationRep U = conjugationRep U * tracelessProjector d := by
+private theorem projector_rep_commute {d : ℕ} (U : Matrix.unitaryGroup (Fin d) ℂ) : tracelessProjector d * (U.val ⊗ₖ U.val.map star) = (U.val ⊗ₖ U.val.map star) * tracelessProjector d := by
   simp only [tracelessProjector, Matrix.sub_mul, Matrix.mul_sub, Matrix.one_mul, Matrix.mul_one, scalar_rep_left, scalar_rep_right]
 private def inverseConjugatedMap {d : ℕ}
     (Λ : QuantumChannel (Fin d) (Fin d)) (U : Matrix.unitaryGroup (Fin d) ℂ) :
@@ -890,18 +889,18 @@ private theorem inverseConjugatedMap_trace {d : ℕ}
   exact (Λ.trace_preserving (CStarMatrix.ofMatrix ((Unitary.conjStarAlgAut ℂ (Matrix (Fin d) (Fin d) ℂ) U).toAlgEquiv.toLinearMap X))).trans (conjugationMap_trace U X)
 private theorem inverseConjugatedMap_transfer {d : ℕ}
     (Λ : QuantumChannel (Fin d) (Fin d)) (U : Matrix.unitaryGroup (Fin d) ℂ) :
-    LinearMap.toMatrix (Matrix.stdBasis ℂ (Fin d) (Fin d)) (Matrix.stdBasis ℂ (Fin d) (Fin d)) (inverseConjugatedMap Λ U) = (conjugationRep U)ᴴ * LinearMap.toMatrix (Matrix.stdBasis ℂ (Fin d) (Fin d)) (Matrix.stdBasis ℂ (Fin d) (Fin d)) (matrixAction Λ.toCompletelyPositiveMap) * conjugationRep U := by
+    LinearMap.toMatrix (Matrix.stdBasis ℂ (Fin d) (Fin d)) (Matrix.stdBasis ℂ (Fin d) (Fin d)) (inverseConjugatedMap Λ U) = ((U.val ⊗ₖ U.val.map star))ᴴ * LinearMap.toMatrix (Matrix.stdBasis ℂ (Fin d) (Fin d)) (Matrix.stdBasis ℂ (Fin d) (Fin d)) (matrixAction Λ.toCompletelyPositiveMap) * (U.val ⊗ₖ U.val.map star) := by
   dsimp only [inverseConjugatedMap]
   rw [LinearMap.toMatrix_comp (Matrix.stdBasis ℂ (Fin d) (Fin d)) (Matrix.stdBasis ℂ (Fin d) (Fin d)) (Matrix.stdBasis ℂ (Fin d) (Fin d)), LinearMap.toMatrix_comp (Matrix.stdBasis ℂ (Fin d) (Fin d)) (Matrix.stdBasis ℂ (Fin d) (Fin d)) (Matrix.stdBasis ℂ (Fin d) (Fin d))]
   simp only [transfer_conjugation, conjugationRep_star, Matrix.mul_assoc]
 private theorem inverseConjugatedMap_compression {d : ℕ}
     (Λ : QuantumChannel (Fin d) (Fin d)) (U : Matrix.unitaryGroup (Fin d) ℂ) :
-    tracelessProjector d * LinearMap.toMatrix (Matrix.stdBasis ℂ (Fin d) (Fin d)) (Matrix.stdBasis ℂ (Fin d) (Fin d)) (inverseConjugatedMap Λ U) * tracelessProjector d = (conjugationRep U)ᴴ * (tracelessProjector d * LinearMap.toMatrix (Matrix.stdBasis ℂ (Fin d) (Fin d)) (Matrix.stdBasis ℂ (Fin d) (Fin d)) (matrixAction Λ.toCompletelyPositiveMap) * tracelessProjector d) * conjugationRep U := by
-  have hH : tracelessProjector d * (conjugationRep U)ᴴ = (conjugationRep U)ᴴ * tracelessProjector d := by
+    tracelessProjector d * LinearMap.toMatrix (Matrix.stdBasis ℂ (Fin d) (Fin d)) (Matrix.stdBasis ℂ (Fin d) (Fin d)) (inverseConjugatedMap Λ U) * tracelessProjector d = ((U.val ⊗ₖ U.val.map star))ᴴ * (tracelessProjector d * LinearMap.toMatrix (Matrix.stdBasis ℂ (Fin d) (Fin d)) (Matrix.stdBasis ℂ (Fin d) (Fin d)) (matrixAction Λ.toCompletelyPositiveMap) * tracelessProjector d) * (U.val ⊗ₖ U.val.map star) := by
+  have hH : tracelessProjector d * ((U.val ⊗ₖ U.val.map star))ᴴ = ((U.val ⊗ₖ U.val.map star))ᴴ * tracelessProjector d := by
     rw [← conjugationRep_star]; exact projector_rep_commute (star U)
   rw [inverseConjugatedMap_transfer]
   calc
-    _ = (tracelessProjector d * (conjugationRep U)ᴴ) * LinearMap.toMatrix (Matrix.stdBasis ℂ (Fin d) (Fin d)) (Matrix.stdBasis ℂ (Fin d) (Fin d)) (matrixAction Λ.toCompletelyPositiveMap) * (conjugationRep U * tracelessProjector d) := by simp only [Matrix.mul_assoc]
+    _ = (tracelessProjector d * ((U.val ⊗ₖ U.val.map star))ᴴ) * LinearMap.toMatrix (Matrix.stdBasis ℂ (Fin d) (Fin d)) (Matrix.stdBasis ℂ (Fin d) (Fin d)) (matrixAction Λ.toCompletelyPositiveMap) * ((U.val ⊗ₖ U.val.map star) * tracelessProjector d) := by simp only [Matrix.mul_assoc]
     _ = _ := by rw [hH, ← projector_rep_commute]; simp only [Matrix.mul_assoc]
 end D5.S3.QuantumChannels.WallmanFlammiaTwoContractivity.ConjugationInterface
 set_option backward.isDefEq.respectTransparency false
@@ -950,7 +949,7 @@ private theorem canonical_result {d : ℕ} (hd : 2 ≤ d) (Λ : QuantumChannel (
   let B := P * L * P
   let F := fun x : G => inverseConjugatedMap Λ x.val
   let A := fun x : G => smallMatrix hd0 b (F x)
-  let D := fun x : G => (conjugationRep x.val)ᴴ * B * conjugationRep x.val
+  let D := fun x : G => ((x.val.val ⊗ₖ x.val.val.map star))ᴴ * B * (x.val.val ⊗ₖ x.val.val.map star)
   let t : ℂ := (Fintype.card G : ℂ)⁻¹
   let f : ℂ := B.trace / ((d : ℂ)^2 - 1)
   have hWV : W * V = 1 := projection_inclusion_matrix hd0 b

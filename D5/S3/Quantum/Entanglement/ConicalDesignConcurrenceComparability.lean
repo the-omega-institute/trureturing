@@ -70,6 +70,7 @@ Escape audit unfinished:
 -/
 
 import D5.S3.Quantum.Foundation.FiniteTraceDistance
+import D5.S3.Quantum.Foundation.FiniteStateChannel
 import Mathlib.Data.Matrix.ColumnRowPartitioned
 
 noncomputable section

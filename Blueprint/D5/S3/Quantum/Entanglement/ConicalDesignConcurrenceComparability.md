@@ -304,4 +304,5 @@ Because both bounds are positive, replacing each B by max(0,B) preserves this st
 - Truth anchor: `D5/S3/Quantum/Entanglement/ConicalDesignConcurrenceComparability.swap`
 - Truth anchor: `D5/S3/Quantum/Entanglement/ConicalDesignConcurrenceComparability.traceNorm_isometry`
 - Truth anchor: `D5/S3/Quantum/Entanglement/ConicalDesignConcurrenceComparability.traceNorm_smul_nonneg`
+- Dependency: [D5/S3/Quantum/Foundation/FiniteStateChannel](../Foundation/FiniteStateChannel.md)
 - Dependency: [D5/S3/Quantum/Foundation/FiniteTraceDistance](../Foundation/FiniteTraceDistance.md)
