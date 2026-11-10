@@ -137,22 +137,22 @@ end Closed
 
 namespace Recurrence
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℕ)
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℤ)
 def actual : Realization signature :=
-  realize signature (fun _ _ n => a n) (fun e => nomatch e)
+  realize signature (fun _ _ n => (a n : ℤ)) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ _ n => a n + 1) (fun e => nomatch e)
+  realize signature (fun _ _ n => (a n : ℤ) + 1) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ n : ℕ, (R.readout () () (n+4) : ℤ) = 16 * (R.readout () () (n+3) : ℤ) - 48 * (R.readout () () (n+2) : ℤ)
+  Law R := ∀ n : ℕ, R.readout () () (n+4) =
+    16 * R.readout () () (n+3) - 48 * R.readout () () (n+2)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb := h 0
-  change ((a (0+4)+1 : ℕ) : ℤ) =
-    16 * ((a (0+3)+1 : ℕ) : ℤ) - 48 * ((a (0+2)+1 : ℕ) : ℤ) at hb
+  change (a (0+4) : ℤ) + 1 =
+    16 * ((a (0+3) : ℤ) + 1) - 48 * ((a (0+2) : ℤ) + 1) at hb
   have ha := recurrence 0
-  push_cast at hb
-  linarith
+  linarith only [ha, hb]
 def family : Registration arena (type_of% @recurrence) where
   actual := actual
   bridge := Iff.rfl
@@ -161,7 +161,9 @@ def family : Registration arena (type_of% @recurrence) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
-    exact ⟨(), 2, 3, sequence_varies⟩
+    refine ⟨(), 2, 3, ?_⟩
+    change (a 2 : ℤ) ≠ (a 3 : ℤ)
+    exact_mod_cast sequence_varies
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@recurrence) (Realization signature) Type Unit where
   unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233257Strip.Recurrence.auditUnit
@@ -175,7 +177,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ n => a n) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ n => (a n : ℤ)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -185,10 +187,10 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "fn", "arg", "arg"]
+      path := #["body", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := some #["arg"]
+      stateOperand := some #["arg", "arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
