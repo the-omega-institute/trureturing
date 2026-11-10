@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/FiniteGroups/GroupAlgebra/OddPrimeJetCommutantCore
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/FiniteGroups/GroupAlgebra/OddPrimeJetDeformation]
+   anchors: [mathlib/module/Mathlib.RingTheory.Nilpotent.Basic]
    utility: none
    digest: Generated-action bridge, unique degree coordinates and units of the actual Fp-linear commutant. -/
 import D5.S3.FiniteGroups.GroupAlgebra.OddPrimeJetDeformation

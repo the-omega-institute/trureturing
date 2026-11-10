@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/FiniteGroups/GroupAlgebra/OddPrimeJetCommutant
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/FiniteGroups/GroupAlgebra/OddPrimeJetCommutantCore]
+   anchors: []
    utility: none
    digest: Full actual-action Fp-linear commutant, unique Toeplitz coordinates, multiplication and units. -/
 import D5.S3.FiniteGroups.GroupAlgebra.OddPrimeJetCommutantCore
