@@ -8,7 +8,7 @@ internal sealed class GaussianThermometryJointMeasurementRefutationDocument : IS
 {
     private const string Prefix = "D5/S3/Estimation/GaussianThermometryJointMeasurementRefutation.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/QuantumStates/cenni2022gaussianthermometry");
+        LibraryNoteRef.Create("D5/L/Estimation/cenni2022gaussianthermometry");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The local-versus-global Gaussian thermometry conjecture in Eq. (47) of Cenni, Lami, Acín and Mehboudi is refuted by two unequal-frequency modes.",
