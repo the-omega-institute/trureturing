@@ -2,35 +2,23 @@
 
 ## Abstract
 
-Closed form, recurrence and generating function for the antidiagonal pair-exclusion strip.
+Closed form and generating function for the two-row antidiagonal strip.
 
-The strip has horizontal bonds in both rows and a bond from the lower cell of a column to the upper cell of the next column. Bonded colours differ and do not sum to five. The first cell is zero. Row-major order puts the whole upper row before the lower row. The empty coefficient is zero. All formula names are full Lean names; Fin.val and Int.ofNat display the relevant coercions.
+The strip has horizontal bonds in both rows and a bond from the lower cell of a column to the upper cell of the next column. Bonded colours differ and do not sum to five. The first cell is zero. Row-major order puts the whole upper row before the lower row. Normalization is the predicate D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.normal. The empty coefficient is zero. All formula names are full Lean names; Fin.val and Int.ofNat display the relevant coercions.
 
-**Definition 1.1 (Row-major first-occurrence normalization).**
+**Definition 1.1 (Literal bond and normalization predicate).**
 
-$$\forall (n: \operatorname{Nat}), (\forall (A: (\operatorname{Fin}\left(2\right)\times\operatorname{Fin}\left(n\right)) \to \operatorname{Fin}\left(6\right)), (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233257Strip}.\operatorname{normal}\left(A\right) = (\forall (p: \operatorname{Fin}\left(2\right)\times\operatorname{Fin}\left(n\right)), ((((A\left(p\right) = (2: \operatorname{Fin}\left(6\right))) \lor ((A\left(p\right) = (3: \operatorname{Fin}\left(6\right))) \lor (A\left(p\right) = (4: \operatorname{Fin}\left(6\right))))) \Rightarrow (\exists (q: \operatorname{Fin}\left(2\right)\times\operatorname{Fin}\left(n\right)), ((((\operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{fst}\left(q\right)\right)) \cdot (n)) + (\operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{snd}\left(q\right)\right)) < ((\operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{fst}\left(p\right)\right)) \cdot (n)) + (\operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{snd}\left(p\right)\right))) \land (A\left(q\right) = (1: \operatorname{Fin}\left(6\right)))))) \land ((A\left(p\right) = (3: \operatorname{Fin}\left(6\right))) \Rightarrow (\exists (q: \operatorname{Fin}\left(2\right)\times\operatorname{Fin}\left(n\right)), ((((\operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{fst}\left(q\right)\right)) \cdot (n)) + (\operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{snd}\left(q\right)\right)) < ((\operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{fst}\left(p\right)\right)) \cdot (n)) + (\operatorname{Fin}.\operatorname{val}\left(\operatorname{Prod}.\operatorname{snd}\left(p\right)\right))) \land (A\left(q\right) = (2: \operatorname{Fin}\left(6\right))))))))))$$
-
-*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233257Strip.normal` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Row-major first-occurrence normalization.
-
-**Definition 1.2 (Literal bond and normalization predicate).**
-
-$$\forall (n: \operatorname{Nat}), (\forall (A: (\operatorname{Fin}\left(2\right)\times\operatorname{Fin}\left(n\right)) \to \operatorname{Fin}\left(6\right)), (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233257Strip}.\operatorname{Legal}\left(A\right) = ((\exists (j: \operatorname{Fin}\left(n\right)), ((\operatorname{Fin}.\operatorname{val}\left(j\right) = 0) \land (A\left(((0: \operatorname{Fin}\left(2\right)), j)\right) = (0: \operatorname{Fin}\left(6\right))))) \land ((\forall (j: \operatorname{Fin}\left(n\right)), (\forall (h: (\operatorname{Fin}.\operatorname{val}\left(j\right)) + (1) < n), ((\forall (r: \operatorname{Fin}\left(2\right)), ((A\left((r, j)\right) \ne A\left((r, \operatorname{Fin}.\operatorname{mk}\left((\operatorname{Fin}.\operatorname{val}\left(j\right)) + (1), h\right))\right)) \land ((\operatorname{Fin}.\operatorname{val}\left(A\left((r, j)\right)\right)) + (\operatorname{Fin}.\operatorname{val}\left(A\left((r, \operatorname{Fin}.\operatorname{mk}\left((\operatorname{Fin}.\operatorname{val}\left(j\right)) + (1), h\right))\right)\right)) \ne 5))) \land ((A\left(((1: \operatorname{Fin}\left(2\right)), j)\right) \ne A\left(((0: \operatorname{Fin}\left(2\right)), \operatorname{Fin}.\operatorname{mk}\left((\operatorname{Fin}.\operatorname{val}\left(j\right)) + (1), h\right))\right)) \land ((\operatorname{Fin}.\operatorname{val}\left(A\left(((1: \operatorname{Fin}\left(2\right)), j)\right)\right)) + (\operatorname{Fin}.\operatorname{val}\left(A\left(((0: \operatorname{Fin}\left(2\right)), \operatorname{Fin}.\operatorname{mk}\left((\operatorname{Fin}.\operatorname{val}\left(j\right)) + (1), h\right))\right)\right)) \ne 5))))) \land (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233257Strip}.\operatorname{normal}\left(A\right))))))$$
+$$\forall (n: \operatorname{Nat}), (\forall (A: (\operatorname{Fin}\left(2\right)\times\operatorname{Fin}\left(n\right)) \to \operatorname{Fin}\left(6\right)), (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233257Strip}.\operatorname{Legal}\left(A\right) = ((\exists (j: \operatorname{Fin}\left(n\right)), ((\operatorname{Fin}.\operatorname{val}\left(j\right) = 0) \land (A\left(((0: \operatorname{Fin}\left(2\right)), j)\right) = (0: \operatorname{Fin}\left(6\right))))) \land ((\forall (j: \operatorname{Fin}\left(n\right)), (\forall (h: (\operatorname{Fin}.\operatorname{val}\left(j\right)) + (1) < n), ((\forall (r: \operatorname{Fin}\left(2\right)), ((A\left((r, j)\right) \ne A\left((r, \operatorname{Fin}.\operatorname{mk}\left((\operatorname{Fin}.\operatorname{val}\left(j\right)) + (1), h\right))\right)) \land ((\operatorname{Fin}.\operatorname{val}\left(A\left((r, j)\right)\right)) + (\operatorname{Fin}.\operatorname{val}\left(A\left((r, \operatorname{Fin}.\operatorname{mk}\left((\operatorname{Fin}.\operatorname{val}\left(j\right)) + (1), h\right))\right)\right)) \ne 5))) \land ((A\left(((1: \operatorname{Fin}\left(2\right)), j)\right) \ne A\left(((0: \operatorname{Fin}\left(2\right)), \operatorname{Fin}.\operatorname{mk}\left((\operatorname{Fin}.\operatorname{val}\left(j\right)) + (1), h\right))\right)) \land ((\operatorname{Fin}.\operatorname{val}\left(A\left(((1: \operatorname{Fin}\left(2\right)), j)\right)\right)) + (\operatorname{Fin}.\operatorname{val}\left(A\left(((0: \operatorname{Fin}\left(2\right)), \operatorname{Fin}.\operatorname{mk}\left((\operatorname{Fin}.\operatorname{val}\left(j\right)) + (1), h\right))\right)\right)) \ne 5))))) \land (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{normal}\left(A\right))))))$$
 
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233257Strip.Legal` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233257: two-row horizontal and antidiagonal complementary-pair exclusion*. URL: <https://oeis.org/A233257>.
 
 *Commentary.*
 
 Literal bond and normalization predicate.
 
-**Definition 1.3 (Literal filtered count).**
+**Definition 1.2 (Literal filtered count).**
 
 $$\forall (n: \operatorname{Nat}), (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233257Strip}.\operatorname{a}\left(n\right) = \operatorname{Finset}.\operatorname{card}\left(\operatorname{Finset}.\operatorname{filter}\left((\lambda (A: (\operatorname{Fin}\left(2\right)\times\operatorname{Fin}\left(n\right)) \to \operatorname{Fin}\left(6\right)) \mapsto \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233257Strip}.\operatorname{Legal}\left(A\right)), (\operatorname{Finset}.\operatorname{univ}: \operatorname{Finset}\left((\operatorname{Fin}\left(2\right)\times\operatorname{Fin}\left(n\right)) \to \operatorname{Fin}\left(6\right)\right))\right)\right))$$
 
@@ -42,7 +30,7 @@ $$\forall (n: \operatorname{Nat}), (\operatorname{D5}.\operatorname{S3}.\operato
 
 Literal filtered count.
 
-**Theorem 1.4 (The empty and one-column coefficients).**
+**Theorem 1.3 (The empty and one-column coefficients).**
 
 $$(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233257Strip}.\operatorname{a}\left(0\right) = 0) \land (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233257Strip}.\operatorname{a}\left(1\right) = 3)$$
 
@@ -50,11 +38,13 @@ $$(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatornam
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233257: two-row horizontal and antidiagonal complementary-pair exclusion*. URL: <https://oeis.org/A233257>.
+
 *Commentary.*
 
 The empty and one-column coefficients.
 
-**Theorem 1.5 (Barker's closed form).**
+**Theorem 1.4 (Barker's closed form).**
 
 $$\forall (n: \operatorname{Nat}), ((9) \cdot (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233257Strip}.\operatorname{a}\left((n) + (2)\right)) = (2^{((2) \cdot (n)) + (1)}) \cdot (((4) \cdot (3^{(n) + (2)})) + (9)))$$
 
@@ -62,11 +52,13 @@ $$\forall (n: \operatorname{Nat}), ((9) \cdot (\operatorname{D5}.\operatorname{S
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233257: two-row horizontal and antidiagonal complementary-pair exclusion*. URL: <https://oeis.org/A233257>.
+
 *Commentary.*
 
 Barker's closed form.
 
-**Theorem 1.6 (Hardin's integer recurrence).**
+**Theorem 1.5 (Hardin's integer recurrence).**
 
 $$\forall (n: \operatorname{Nat}), (\operatorname{Int}.\operatorname{ofNat}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233257Strip}.\operatorname{a}\left((n) + (4)\right)\right) = (((16: \operatorname{Int})) \cdot (\operatorname{Int}.\operatorname{ofNat}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233257Strip}.\operatorname{a}\left((n) + (3)\right)\right))) - (((48: \operatorname{Int})) \cdot (\operatorname{Int}.\operatorname{ofNat}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233257Strip}.\operatorname{a}\left((n) + (2)\right)\right))))$$
 
@@ -74,17 +66,21 @@ $$\forall (n: \operatorname{Nat}), (\operatorname{Int}.\operatorname{ofNat}\left
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233257: two-row horizontal and antidiagonal complementary-pair exclusion*. URL: <https://oeis.org/A233257>.
+
 *Commentary.*
 
 Hardin's integer recurrence.
 
-**Theorem 1.7 (Barker's generating function with the closed form and recurrence).**
+**Theorem 1.6 (Barker's generating function with the closed form and recurrence).**
 
 $$(((((1: \operatorname{PowerSeries}\left(\operatorname{Int}\right))) - (((4: \operatorname{PowerSeries}\left(\operatorname{Int}\right))) \cdot ((\operatorname{PowerSeries}.\operatorname{X}: \operatorname{PowerSeries}\left(\operatorname{Int}\right))))) \cdot (((1: \operatorname{PowerSeries}\left(\operatorname{Int}\right))) - (((12: \operatorname{PowerSeries}\left(\operatorname{Int}\right))) \cdot ((\operatorname{PowerSeries}.\operatorname{X}: \operatorname{PowerSeries}\left(\operatorname{Int}\right)))))) \cdot ((\operatorname{PowerSeries}.\operatorname{mk}\left((\lambda (n: \operatorname{Nat}) \mapsto \operatorname{Int}.\operatorname{ofNat}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233257Strip}.\operatorname{a}\left(n\right)\right))\right): \operatorname{PowerSeries}\left(\operatorname{Int}\right))) = ((\operatorname{PowerSeries}.\operatorname{X}: \operatorname{PowerSeries}\left(\operatorname{Int}\right))) \cdot ((((3: \operatorname{PowerSeries}\left(\operatorname{Int}\right))) - (((38: \operatorname{PowerSeries}\left(\operatorname{Int}\right))) \cdot ((\operatorname{PowerSeries}.\operatorname{X}: \operatorname{PowerSeries}\left(\operatorname{Int}\right))))) + (((88: \operatorname{PowerSeries}\left(\operatorname{Int}\right))) \cdot ((\operatorname{PowerSeries}.\operatorname{X}: \operatorname{PowerSeries}\left(\operatorname{Int}\right))^{2})))) \land ((\forall (n: \operatorname{Nat}), ((9) \cdot (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233257Strip}.\operatorname{a}\left((n) + (2)\right)) = (2^{((2) \cdot (n)) + (1)}) \cdot (((4) \cdot (3^{(n) + (2)})) + (9)))) \land (\forall (n: \operatorname{Nat}), (\operatorname{Int}.\operatorname{ofNat}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233257Strip}.\operatorname{a}\left((n) + (4)\right)\right) = (((16: \operatorname{Int})) \cdot (\operatorname{Int}.\operatorname{ofNat}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233257Strip}.\operatorname{a}\left((n) + (3)\right)\right))) - (((48: \operatorname{Int})) \cdot (\operatorname{Int}.\operatorname{ofNat}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233257Strip}.\operatorname{a}\left((n) + (2)\right)\right))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233257Strip.result` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233257: two-row horizontal and antidiagonal complementary-pair exclusion*. URL: <https://oeis.org/A233257>.
 
 *Commentary.*
 
@@ -98,9 +94,9 @@ The pair-label map D5.S3.Observer.Separation.BooleanRankThreeK4.beta turns every
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233257Strip.a`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233257Strip.closed_form`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233257Strip.finite_certificate`
-- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233257Strip.normal`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233257Strip.recurrence`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233257Strip.result`
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip](HardinA233175PairStrip.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical](HardinA233177Canonical.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip](HardinA233251TriangleStrip.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/TransferMatrix](TransferMatrix.md)
