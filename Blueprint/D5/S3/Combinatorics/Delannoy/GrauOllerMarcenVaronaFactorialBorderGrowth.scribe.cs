@@ -30,10 +30,6 @@ internal sealed class GrauOllerMarcenVaronaFactorialBorderGrowthDocument : IScri
                 "The sum includes j = 0 through m. The second factor is the unit-border array. The index m−j uses natural subtraction."),
             Theorem("diagonal_convolution", "The exact diagonal convolution", DiagonalFormula(),
                 "Induction in the two coordinates gives the full border convolution; its two symmetric terms agree on the diagonal."),
-            Definition("W", "The limiting factorial weights", WeightFormula("W", 2),
-                "The positive exponential-series weights are 2^k/k!."),
-            Definition("M", "A summable majorant", WeightFormula("M", 6),
-                "The weights 6^k/k! bound the entire normalized convolution, including indices past n."),
             Definition("Q", "The normalized unit-border kernel", QFormula(),
                 "For k ≤ n the numerator is the polynomial qAB(k,n) evaluated at one, the binomial sum for the unit-border Delannoy array. For k > n the kernel is zero."),
             Theorem("Q_of_gt", "The kernel vanishes past n", AllN("n", AllN("k",
@@ -43,21 +39,21 @@ internal sealed class GrauOllerMarcenVaronaFactorialBorderGrowthDocument : IScri
                 AtMost(D(0), Call("Q", N(), K())))),
                 "Every binomial summand and denominator is nonnegative."),
             Theorem("W_le_M", "The majorant bounds the limiting weights", AllN("k",
-                AtMost(Call("W", K()), Call("M", K()))),
+                AtMost(ExponentialCoefficient(2, K()), ExponentialCoefficient(6, K()))),
                 "The inequality follows from 2^k ≤ 6^k and the positive factorial denominator."),
             Theorem("Q_scaled_bound", "A global first-order bound", AllN("n", AllN("k",
-                AtMost(new Formula.Absolute(Multiply(Cast(N()), Subtract(Call("Q", N(), K()), Call("W", K())))),
-                    Multiply(Cast(K()), Call("M", K()))))),
+                AtMost(new Formula.Absolute(Multiply(Cast(N()), Subtract(Call("Q", N(), K()), ExponentialCoefficient(2, K())))),
+                    Multiply(Cast(K()), ExponentialCoefficient(6, K()))))),
                 "The lower-degree terms in the binomial kernel are bounded by k times the majorant, uniformly in n. The zero extension obeys the same bound."),
             Definition("G", "The fixed-index first-order coefficient", GFormula(),
                 "The finite sum has at most one nonzero term, namely i = k − 1 when k is positive."),
             Theorem("Q_scaled_limit", "The fixed-index first-order limit", AllN("k",
-                Tendsto(LambdaN("n", Multiply(Cast(N()), Subtract(Call("Q", N(), K()), Call("W", K())))), Call("G", K()))),
+                Tendsto(LambdaN("n", Multiply(Cast(N()), Subtract(Call("Q", N(), K()), ExponentialCoefficient(2, K())))), Call("G", K()))),
                 "The asymptotic formula for Nat.choose reduces each fixed-index quotient to a power of 1/n; only the immediately lower degree survives scaling by n."),
-            Theorem("summable_M", "The majorant is summable", Apply(Named("Summable"), F.Id("M")),
+            Theorem("summable_M", "The majorant is summable", Apply(Named("Summable"), Parenthesized(LambdaN("k", ExponentialCoefficient(6, K())))),
                 "This is the summability of the exponential series at six."),
             Theorem("summable_succ_M", "The linearly weighted majorant is summable",
-                Apply(Named("Summable"), Parenthesized(LambdaN("k", Multiply(Add(Cast(K()), D(1)), Call("M", K()))))),
+                Apply(Named("Summable"), Parenthesized(LambdaN("k", Multiply(Add(Cast(K()), D(1)), ExponentialCoefficient(6, K()))))),
                 "The additional polynomial factor is bounded by an exponential weight."),
             Theorem("tendsto_of_scaled", "First-order convergence implies convergence", ScaledConvergenceFormula(),
                 "Multiplying the scaled error by 1/n gives convergence of the unscaled error to zero."),
@@ -65,14 +61,14 @@ internal sealed class GrauOllerMarcenVaronaFactorialBorderGrowthDocument : IScri
                 "For k < n divide Q(n,k) by the real cast of the natural number n−k. Otherwise the correction is zero."),
             Theorem("P_scaled_bound", "The correction has a summable bound", AllN("n", AllN("k",
                 AtMost(new Formula.Absolute(Multiply(Cast(N()), Call("P", N(), K()))),
-                    Multiply(Add(Cast(K()), D(1)), Call("M", K()))))),
+                    Multiply(Add(Cast(K()), D(1)), ExponentialCoefficient(6, K()))))),
                 "The elementary inequality n ≤ (k+1)(n−k) bounds the additional factor on the nonzero branch."),
             Theorem("P_scaled_limit", "The fixed-index correction limit", AllN("k",
-                Tendsto(LambdaN("n", Multiply(Cast(N()), Call("P", N(), K()))), Call("W", K()))),
-                "For fixed k, n/(n−k) tends to one and Q(n,k) tends to W(k)."),
+                Tendsto(LambdaN("n", Multiply(Cast(N()), Call("P", N(), K()))), ExponentialCoefficient(2, K()))),
+                "For fixed k, n/(n−k) tends to one and Q(n,k) tends to 2^k/k!."),
             Theorem("diagonal_Q_scaled_limit", "The diagonal kernel is negligible",
                 Tendsto(LambdaN("n", Multiply(Cast(N()), Call("Q", N(), N()))), D(0)),
-                "The diagonal term is squeezed by n M(n), which tends to zero by summability."),
+                "The diagonal term is squeezed by n · 6^n/n!, which tends to zero by summability."),
             Theorem("Q_factorial", "The factorial form of the kernel", FactorialKernelFormula(),
                 "The factorial identity for Nat.choose converts the denominator to the normalized factorial border."),
             Theorem("ratio_transfer", "First-order ratio transfer", RatioTransferFormula(),
@@ -80,7 +76,7 @@ internal sealed class GrauOllerMarcenVaronaFactorialBorderGrowthDocument : IScri
             Node("result", "The factorial-border limit holds", ClaimBody(),
                 "The exact convolution splits the normalized diagonal into Q, P and its diagonal correction. "
                     + "Their global summable bounds permit first-order dominated convergence. "
-                    + "The limiting normalizing constant is positive because W(0) = 1. "
+                    + "The limiting normalizing constant is positive because the zeroth exponential-series coefficient is one. "
                     + "First-order ratio transfer then gives the stated additive-error limit. "
                     + "No explicit rate or second-order expansion is asserted.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
@@ -168,8 +164,12 @@ internal sealed class GrauOllerMarcenVaronaFactorialBorderGrowthDocument : IScri
             Subtract(Multiply(D(2), Call("conv", Apply(Named("delta"), b), N(), N())),
                 Multiply(Cast(Apply(b, D(0))), UnitArray(N(), N()))))));
     }
-    private static Formula WeightFormula(string name, byte value) => AllN("k", Equal(Call(name, K()),
-        new Formula.Fraction(new Formula.Power(Cast(D(value)), K()), Cast(Factorial(K())))));
+    private static Formula ExponentialCoefficient(byte value, Formula k)
+    {
+        var vector = Apply(Qualified("Function", "const"), Call("Fin", k), Cast(D(value)));
+        return Apply(Qualified("NormedSpace", "expSeries"), Reals(), Reals(), k, Parenthesized(vector));
+    }
+
     private static Formula QFormula()
     {
         var numerator = Apply(Qualified("Polynomial", "eval"), D(1), Call("qAB", K(), N()));

@@ -64,31 +64,7 @@ $$\forall b \in \mathbb{N} \to \mathbb{N},\; \forall n \in \mathbb{N},\; (\opera
 
 Induction in the two coordinates gives the full border convolution; its two symmetric terms agree on the diagonal.
 
-**Definition 1.6 (The limiting factorial weights).**
-
-$$\forall k \in \mathbb{N},\; \operatorname{W}\left(k\right) = \frac{(2 : \mathbb{R})^{k}}{(\operatorname{Nat}.\operatorname{factorial}\left(k\right) : \mathbb{R})}$$
-
-*Formalization.* `D5/S3/Combinatorics/Delannoy/GrauOllerMarcenVaronaFactorialBorderGrowth.W` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The positive exponential-series weights are 2^k/k!.
-
-**Definition 1.7 (A summable majorant).**
-
-$$\forall k \in \mathbb{N},\; \operatorname{M}\left(k\right) = \frac{(6 : \mathbb{R})^{k}}{(\operatorname{Nat}.\operatorname{factorial}\left(k\right) : \mathbb{R})}$$
-
-*Formalization.* `D5/S3/Combinatorics/Delannoy/GrauOllerMarcenVaronaFactorialBorderGrowth.M` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The weights 6^k/k! bound the entire normalized convolution, including indices past n.
-
-**Definition 1.8 (The normalized unit-border kernel).**
+**Definition 1.6 (The normalized unit-border kernel).**
 
 $$\forall n \in \mathbb{N},\; \forall k \in \mathbb{N},\; \operatorname{Q}\left(n, k\right) = \operatorname{if} (k \le n) \operatorname{then} \frac{\operatorname{Polynomial}.\operatorname{eval}\left(1, \operatorname{qAB}\left(k, n\right)\right)}{(\operatorname{Nat}.\operatorname{factorial}\left(k\right) : \mathbb{R}) \cdot (\operatorname{Nat}.\operatorname{choose}\left(n, k\right) : \mathbb{R})} \operatorname{else} 0$$
 
@@ -100,7 +76,7 @@ $$\forall n \in \mathbb{N},\; \forall k \in \mathbb{N},\; \operatorname{Q}\left(
 
 For k ≤ n the numerator is the polynomial qAB(k,n) evaluated at one, the binomial sum for the unit-border Delannoy array. For k > n the kernel is zero.
 
-**Theorem 1.9 (The kernel vanishes past n).**
+**Theorem 1.7 (The kernel vanishes past n).**
 
 $$\forall n \in \mathbb{N},\; \forall k \in \mathbb{N},\; n < k \Rightarrow (\operatorname{Q}\left(n, k\right) = 0)$$
 
@@ -112,7 +88,7 @@ $$\forall n \in \mathbb{N},\; \forall k \in \mathbb{N},\; n < k \Rightarrow (\op
 
 The zero branch gives finite support in k.
 
-**Theorem 1.10 (The kernel is nonnegative).**
+**Theorem 1.8 (The kernel is nonnegative).**
 
 $$\forall n \in \mathbb{N},\; \forall k \in \mathbb{N},\; 0 \le \operatorname{Q}\left(n, k\right)$$
 
@@ -124,9 +100,9 @@ $$\forall n \in \mathbb{N},\; \forall k \in \mathbb{N},\; 0 \le \operatorname{Q}
 
 Every binomial summand and denominator is nonnegative.
 
-**Theorem 1.11 (The majorant bounds the limiting weights).**
+**Theorem 1.9 (The majorant bounds the limiting weights).**
 
-$$\forall k \in \mathbb{N},\; \operatorname{W}\left(k\right) \le \operatorname{M}\left(k\right)$$
+$$\forall k \in \mathbb{N},\; \operatorname{NormedSpace}.\operatorname{expSeries}\left(\mathbb{R}, \mathbb{R}, k, (\operatorname{Function}.\operatorname{const}\left(\operatorname{Fin}\left(k\right), (2 : \mathbb{R})\right))\right) \le \operatorname{NormedSpace}.\operatorname{expSeries}\left(\mathbb{R}, \mathbb{R}, k, (\operatorname{Function}.\operatorname{const}\left(\operatorname{Fin}\left(k\right), (6 : \mathbb{R})\right))\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Delannoy/GrauOllerMarcenVaronaFactorialBorderGrowth.W_le_M` (`✓ std3`). ∎
 
@@ -136,9 +112,9 @@ $$\forall k \in \mathbb{N},\; \operatorname{W}\left(k\right) \le \operatorname{M
 
 The inequality follows from 2^k ≤ 6^k and the positive factorial denominator.
 
-**Theorem 1.12 (A global first-order bound).**
+**Theorem 1.10 (A global first-order bound).**
 
-$$\forall n \in \mathbb{N},\; \forall k \in \mathbb{N},\; \left|(n : \mathbb{R}) \cdot \left(\operatorname{Q}\left(n, k\right) - \operatorname{W}\left(k\right)\right)\right| \le (k : \mathbb{R}) \cdot \operatorname{M}\left(k\right)$$
+$$\forall n \in \mathbb{N},\; \forall k \in \mathbb{N},\; \left|(n : \mathbb{R}) \cdot \left(\operatorname{Q}\left(n, k\right) - \operatorname{NormedSpace}.\operatorname{expSeries}\left(\mathbb{R}, \mathbb{R}, k, (\operatorname{Function}.\operatorname{const}\left(\operatorname{Fin}\left(k\right), (2 : \mathbb{R})\right))\right)\right)\right| \le (k : \mathbb{R}) \cdot \operatorname{NormedSpace}.\operatorname{expSeries}\left(\mathbb{R}, \mathbb{R}, k, (\operatorname{Function}.\operatorname{const}\left(\operatorname{Fin}\left(k\right), (6 : \mathbb{R})\right))\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Delannoy/GrauOllerMarcenVaronaFactorialBorderGrowth.Q_scaled_bound` (`✓ std3`). ∎
 
@@ -148,7 +124,7 @@ $$\forall n \in \mathbb{N},\; \forall k \in \mathbb{N},\; \left|(n : \mathbb{R})
 
 The lower-degree terms in the binomial kernel are bounded by k times the majorant, uniformly in n. The zero extension obeys the same bound.
 
-**Definition 1.13 (The fixed-index first-order coefficient).**
+**Definition 1.11 (The fixed-index first-order coefficient).**
 
 $$\forall k \in \mathbb{N},\; \operatorname{G}\left(k\right) = \frac{1}{(\operatorname{Nat}.\operatorname{factorial}\left(k\right) : \mathbb{R})} \cdot \sum_{i \in \operatorname{Finset}.\operatorname{range}\left(k\right)} ((2 : \mathbb{R})^{i} \cdot (\operatorname{Nat}.\operatorname{choose}\left(k, i\right) : \mathbb{R}) \cdot \operatorname{if} (k = i + 1) \operatorname{then} (k : \mathbb{R}) \operatorname{else} 0)$$
 
@@ -160,9 +136,9 @@ $$\forall k \in \mathbb{N},\; \operatorname{G}\left(k\right) = \frac{1}{(\operat
 
 The finite sum has at most one nonzero term, namely i = k − 1 when k is positive.
 
-**Theorem 1.14 (The fixed-index first-order limit).**
+**Theorem 1.12 (The fixed-index first-order limit).**
 
-$$\forall k \in \mathbb{N},\; \operatorname{Filter}.\operatorname{Tendsto}\left((\operatorname{fun} (n:\mathbb{N}) \mapsto (n : \mathbb{R}) \cdot \left(\operatorname{Q}\left(n, k\right) - \operatorname{W}\left(k\right)\right)), \operatorname{Filter}.\operatorname{atTop}, (\mathcal{N}(\operatorname{G}\left(k\right)))\right)$$
+$$\forall k \in \mathbb{N},\; \operatorname{Filter}.\operatorname{Tendsto}\left((\operatorname{fun} (n:\mathbb{N}) \mapsto (n : \mathbb{R}) \cdot \left(\operatorname{Q}\left(n, k\right) - \operatorname{NormedSpace}.\operatorname{expSeries}\left(\mathbb{R}, \mathbb{R}, k, (\operatorname{Function}.\operatorname{const}\left(\operatorname{Fin}\left(k\right), (2 : \mathbb{R})\right))\right)\right)), \operatorname{Filter}.\operatorname{atTop}, (\mathcal{N}(\operatorname{G}\left(k\right)))\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Delannoy/GrauOllerMarcenVaronaFactorialBorderGrowth.Q_scaled_limit` (`✓ std3`). ∎
 
@@ -172,9 +148,9 @@ $$\forall k \in \mathbb{N},\; \operatorname{Filter}.\operatorname{Tendsto}\left(
 
 The asymptotic formula for Nat.choose reduces each fixed-index quotient to a power of 1/n; only the immediately lower degree survives scaling by n.
 
-**Theorem 1.15 (The majorant is summable).**
+**Theorem 1.13 (The majorant is summable).**
 
-$$\operatorname{Summable}\left(M\right)$$
+$$\operatorname{Summable}\left((\operatorname{fun} (k:\mathbb{N}) \mapsto \operatorname{NormedSpace}.\operatorname{expSeries}\left(\mathbb{R}, \mathbb{R}, k, (\operatorname{Function}.\operatorname{const}\left(\operatorname{Fin}\left(k\right), (6 : \mathbb{R})\right))\right))\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Delannoy/GrauOllerMarcenVaronaFactorialBorderGrowth.summable_M` (`✓ std3`). ∎
 
@@ -184,9 +160,9 @@ $$\operatorname{Summable}\left(M\right)$$
 
 This is the summability of the exponential series at six.
 
-**Theorem 1.16 (The linearly weighted majorant is summable).**
+**Theorem 1.14 (The linearly weighted majorant is summable).**
 
-$$\operatorname{Summable}\left((\operatorname{fun} (k:\mathbb{N}) \mapsto \left((k : \mathbb{R}) + 1\right) \cdot \operatorname{M}\left(k\right))\right)$$
+$$\operatorname{Summable}\left((\operatorname{fun} (k:\mathbb{N}) \mapsto \left((k : \mathbb{R}) + 1\right) \cdot \operatorname{NormedSpace}.\operatorname{expSeries}\left(\mathbb{R}, \mathbb{R}, k, (\operatorname{Function}.\operatorname{const}\left(\operatorname{Fin}\left(k\right), (6 : \mathbb{R})\right))\right))\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Delannoy/GrauOllerMarcenVaronaFactorialBorderGrowth.summable_succ_M` (`✓ std3`). ∎
 
@@ -196,7 +172,7 @@ $$\operatorname{Summable}\left((\operatorname{fun} (k:\mathbb{N}) \mapsto \left(
 
 The additional polynomial factor is bounded by an exponential weight.
 
-**Theorem 1.17 (First-order convergence implies convergence).**
+**Theorem 1.15 (First-order convergence implies convergence).**
 
 $$\forall r \in \mathbb{N} \to \mathbb{R},\; \forall C \in \mathbb{R},\; \forall K \in \mathbb{R},\; \operatorname{Filter}.\operatorname{Tendsto}\left((\operatorname{fun} (n:\mathbb{N}) \mapsto (n : \mathbb{R}) \cdot \left(r\left(n\right) - C\right)), \operatorname{Filter}.\operatorname{atTop}, (\mathcal{N}(K))\right) \Rightarrow (\operatorname{Filter}.\operatorname{Tendsto}\left((r), \operatorname{Filter}.\operatorname{atTop}, (\mathcal{N}(C))\right))$$
 
@@ -208,7 +184,7 @@ $$\forall r \in \mathbb{N} \to \mathbb{R},\; \forall C \in \mathbb{R},\; \forall
 
 Multiplying the scaled error by 1/n gives convergence of the unscaled error to zero.
 
-**Definition 1.18 (The preceding-border correction).**
+**Definition 1.16 (The preceding-border correction).**
 
 $$\forall n \in \mathbb{N},\; \forall k \in \mathbb{N},\; \operatorname{P}\left(n, k\right) = \operatorname{if} (k < n) \operatorname{then} \frac{\operatorname{Q}\left(n, k\right)}{((n - k : \mathbb{N}) : \mathbb{R})} \operatorname{else} 0$$
 
@@ -220,9 +196,9 @@ $$\forall n \in \mathbb{N},\; \forall k \in \mathbb{N},\; \operatorname{P}\left(
 
 For k < n divide Q(n,k) by the real cast of the natural number n−k. Otherwise the correction is zero.
 
-**Theorem 1.19 (The correction has a summable bound).**
+**Theorem 1.17 (The correction has a summable bound).**
 
-$$\forall n \in \mathbb{N},\; \forall k \in \mathbb{N},\; \left|(n : \mathbb{R}) \cdot \operatorname{P}\left(n, k\right)\right| \le \left((k : \mathbb{R}) + 1\right) \cdot \operatorname{M}\left(k\right)$$
+$$\forall n \in \mathbb{N},\; \forall k \in \mathbb{N},\; \left|(n : \mathbb{R}) \cdot \operatorname{P}\left(n, k\right)\right| \le \left((k : \mathbb{R}) + 1\right) \cdot \operatorname{NormedSpace}.\operatorname{expSeries}\left(\mathbb{R}, \mathbb{R}, k, (\operatorname{Function}.\operatorname{const}\left(\operatorname{Fin}\left(k\right), (6 : \mathbb{R})\right))\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Delannoy/GrauOllerMarcenVaronaFactorialBorderGrowth.P_scaled_bound` (`✓ std3`). ∎
 
@@ -232,9 +208,9 @@ $$\forall n \in \mathbb{N},\; \forall k \in \mathbb{N},\; \left|(n : \mathbb{R})
 
 The elementary inequality n ≤ (k+1)(n−k) bounds the additional factor on the nonzero branch.
 
-**Theorem 1.20 (The fixed-index correction limit).**
+**Theorem 1.18 (The fixed-index correction limit).**
 
-$$\forall k \in \mathbb{N},\; \operatorname{Filter}.\operatorname{Tendsto}\left((\operatorname{fun} (n:\mathbb{N}) \mapsto (n : \mathbb{R}) \cdot \operatorname{P}\left(n, k\right)), \operatorname{Filter}.\operatorname{atTop}, (\mathcal{N}(\operatorname{W}\left(k\right)))\right)$$
+$$\forall k \in \mathbb{N},\; \operatorname{Filter}.\operatorname{Tendsto}\left((\operatorname{fun} (n:\mathbb{N}) \mapsto (n : \mathbb{R}) \cdot \operatorname{P}\left(n, k\right)), \operatorname{Filter}.\operatorname{atTop}, (\mathcal{N}(\operatorname{NormedSpace}.\operatorname{expSeries}\left(\mathbb{R}, \mathbb{R}, k, (\operatorname{Function}.\operatorname{const}\left(\operatorname{Fin}\left(k\right), (2 : \mathbb{R})\right))\right)))\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Delannoy/GrauOllerMarcenVaronaFactorialBorderGrowth.P_scaled_limit` (`✓ std3`). ∎
 
@@ -242,9 +218,9 @@ $$\forall k \in \mathbb{N},\; \operatorname{Filter}.\operatorname{Tendsto}\left(
 
 *Commentary.*
 
-For fixed k, n/(n−k) tends to one and Q(n,k) tends to W(k).
+For fixed k, n/(n−k) tends to one and Q(n,k) tends to 2^k/k!.
 
-**Theorem 1.21 (The diagonal kernel is negligible).**
+**Theorem 1.19 (The diagonal kernel is negligible).**
 
 $$\operatorname{Filter}.\operatorname{Tendsto}\left((\operatorname{fun} (n:\mathbb{N}) \mapsto (n : \mathbb{R}) \cdot \operatorname{Q}\left(n, n\right)), \operatorname{Filter}.\operatorname{atTop}, (\mathcal{N}(0))\right)$$
 
@@ -254,9 +230,9 @@ $$\operatorname{Filter}.\operatorname{Tendsto}\left((\operatorname{fun} (n:\math
 
 *Commentary.*
 
-The diagonal term is squeezed by n M(n), which tends to zero by summability.
+The diagonal term is squeezed by n · 6^n/n!, which tends to zero by summability.
 
-**Theorem 1.22 (The factorial form of the kernel).**
+**Theorem 1.20 (The factorial form of the kernel).**
 
 $$\forall n \in \mathbb{N},\; \forall k \in \mathbb{N},\; k \le n \Rightarrow (\operatorname{Q}\left(n, k\right) = \frac{(\operatorname{Nat}.\operatorname{factorial}\left(n - k\right) : \mathbb{R}) \cdot (\operatorname{f}\left((\operatorname{fun} (_:\mathbb{N}) \mapsto 1), k, n\right) : \mathbb{R})}{(\operatorname{Nat}.\operatorname{factorial}\left(n\right) : \mathbb{R})})$$
 
@@ -268,7 +244,7 @@ $$\forall n \in \mathbb{N},\; \forall k \in \mathbb{N},\; k \le n \Rightarrow (\
 
 The factorial identity for Nat.choose converts the denominator to the normalized factorial border.
 
-**Theorem 1.23 (First-order ratio transfer).**
+**Theorem 1.21 (First-order ratio transfer).**
 
 $$\forall a \in \mathbb{N} \to \mathbb{R},\; \forall b \in \mathbb{N} \to \mathbb{R},\; \forall r \in \mathbb{N} \to \mathbb{R},\; \forall C \in \mathbb{R},\; \forall K \in \mathbb{R},\; \forall L \in \mathbb{R},\; \left(\left(\forall n \in \mathbb{N},\; b\left(n\right) \ne 0\right) \land \left(\left(\forall n \in \mathbb{N},\; a\left(n\right) = b\left(n\right) \cdot r\left(n\right)\right) \land \left(C \ne 0 \land \left(\operatorname{Filter}.\operatorname{Tendsto}\left((r), \operatorname{Filter}.\operatorname{atTop}, (\mathcal{N}(C))\right) \land \left(\operatorname{Filter}.\operatorname{Tendsto}\left((\operatorname{fun} (n:\mathbb{N}) \mapsto (n : \mathbb{R}) \cdot \left(r\left(n\right) - C\right)), \operatorname{Filter}.\operatorname{atTop}, (\mathcal{N}(K))\right) \land \operatorname{Filter}.\operatorname{Tendsto}\left((\operatorname{fun} (n:\mathbb{N}) \mapsto \frac{\frac{b\left(n + 1\right)}{b\left(n\right)}}{(n : \mathbb{R}) + 1}), \operatorname{Filter}.\operatorname{atTop}, (\mathcal{N}(L))\right)\right)\right)\right)\right)\right) \Rightarrow (\operatorname{Filter}.\operatorname{Tendsto}\left((\operatorname{fun} (n:\mathbb{N}) \mapsto \frac{a\left(n + 1\right)}{a\left(n\right)} - \frac{b\left(n + 1\right)}{b\left(n\right)}), \operatorname{Filter}.\operatorname{atTop}, (\mathcal{N}(0))\right))$$
 
@@ -280,7 +256,7 @@ $$\forall a \in \mathbb{N} \to \mathbb{R},\; \forall b \in \mathbb{N} \to \mathb
 
 A first-order expansion of r gives (n+1)(r(n+1)−r(n)) → 0. If a = b r with a nonzero limiting r, the diagonal and border ratios differ by a quantity tending to zero.
 
-**Theorem 1.24 (The factorial-border limit holds).**
+**Theorem 1.22 (The factorial-border limit holds).**
 
 $$\operatorname{Filter}.\operatorname{Tendsto}\left((\operatorname{fun} (n:\mathbb{N}) \mapsto \frac{(\operatorname{f}\left(\operatorname{Nat}.\operatorname{factorial}, n + 1, n + 1\right) : \mathbb{R})}{(\operatorname{f}\left(\operatorname{Nat}.\operatorname{factorial}, n, n\right) : \mathbb{R})} - ((n : \mathbb{R}) + 1)), \operatorname{Filter}.\operatorname{atTop}, (\mathcal{N}(0))\right)$$
 
@@ -292,12 +268,11 @@ $$\operatorname{Filter}.\operatorname{Tendsto}\left((\operatorname{fun} (n:\math
 
 *Commentary.*
 
-The exact convolution splits the normalized diagonal into Q, P and its diagonal correction. Their global summable bounds permit first-order dominated convergence. The limiting normalizing constant is positive because W(0) = 1. First-order ratio transfer then gives the stated additive-error limit. No explicit rate or second-order expansion is asserted.
+The exact convolution splits the normalized diagonal into Q, P and its diagonal correction. Their global summable bounds permit first-order dominated convergence. The limiting normalizing constant is positive because the zeroth exponential-series coefficient is one. First-order ratio transfer then gives the stated additive-error limit. No explicit rate or second-order expansion is asserted.
 
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Delannoy/GrauOllerMarcenVaronaFactorialBorderGrowth.G`
-- Truth anchor: `D5/S3/Combinatorics/Delannoy/GrauOllerMarcenVaronaFactorialBorderGrowth.M`
 - Truth anchor: `D5/S3/Combinatorics/Delannoy/GrauOllerMarcenVaronaFactorialBorderGrowth.P`
 - Truth anchor: `D5/S3/Combinatorics/Delannoy/GrauOllerMarcenVaronaFactorialBorderGrowth.P_scaled_bound`
 - Truth anchor: `D5/S3/Combinatorics/Delannoy/GrauOllerMarcenVaronaFactorialBorderGrowth.P_scaled_limit`
@@ -307,7 +282,6 @@ The exact convolution splits the normalized diagonal into Q, P and its diagonal 
 - Truth anchor: `D5/S3/Combinatorics/Delannoy/GrauOllerMarcenVaronaFactorialBorderGrowth.Q_of_gt`
 - Truth anchor: `D5/S3/Combinatorics/Delannoy/GrauOllerMarcenVaronaFactorialBorderGrowth.Q_scaled_bound`
 - Truth anchor: `D5/S3/Combinatorics/Delannoy/GrauOllerMarcenVaronaFactorialBorderGrowth.Q_scaled_limit`
-- Truth anchor: `D5/S3/Combinatorics/Delannoy/GrauOllerMarcenVaronaFactorialBorderGrowth.W`
 - Truth anchor: `D5/S3/Combinatorics/Delannoy/GrauOllerMarcenVaronaFactorialBorderGrowth.W_le_M`
 - Truth anchor: `D5/S3/Combinatorics/Delannoy/GrauOllerMarcenVaronaFactorialBorderGrowth.claimFactorial`
 - Truth anchor: `D5/S3/Combinatorics/Delannoy/GrauOllerMarcenVaronaFactorialBorderGrowth.conv`

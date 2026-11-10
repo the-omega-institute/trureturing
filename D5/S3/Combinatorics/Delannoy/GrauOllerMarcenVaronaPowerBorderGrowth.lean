@@ -8,14 +8,14 @@
 
 /-
 admission_basis: open-problem-resolution (#19939; Proved)
-escape_witness: none (admission is the external named problem settlement)
+escape_witness: R_scaled_limit, R_scaled_bound, R_border (admission remains external problem settlement)
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/22168
 Direct frozen dependencies: D5/S3/Combinatorics/Matroids/SpeyerUniformNormality.qAB,
 through the factorial-border kernel; qAB declaration statement_id: sha256:29896652822aaa7119e8470a97a0a75560731fffc4cbfc489026fab990c39f29.
 The recurrence and additive-limit statements use the conventions of #19938 and #19939.
 The unit-border array is qAB evaluated at one.
 All declarations have utility none: unbounded identities, estimates and limits.
-D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaPowerBorderGrowth.result: proof_shape: content; escape_witness: none; Direct frozen dependencies: qAB.
+D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaPowerBorderGrowth.result: proof_shape: content; escape_witness: R_scaled_limit, R_scaled_bound, R_border; Direct frozen dependencies: qAB.
 -/
 
 import D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth
@@ -122,12 +122,12 @@ private theorem R_scaled_bound (A : ℕ → ℝ) (ρ C : ℝ)
 
 private noncomputable def U (A : ℕ → ℝ) (n k : ℕ) : ℝ := Q n k * R A n k
 private noncomputable def V (A : ℕ → ℝ) (n k : ℕ) : ℝ := P n k * R A n (k+1)
-private noncomputable def Z (ρ : ℝ) (k : ℕ) : ℝ := W k * ρ^k
-private noncomputable def E (ρ c : ℝ) (k : ℕ) : ℝ := G k * ρ^k + W k * J ρ c k
-private noncomputable def B (C : ℝ) (k : ℕ) : ℝ := ((k:ℝ) + k*(C+k)) * M k
+private noncomputable def Z (ρ : ℝ) (k : ℕ) : ℝ := (NormedSpace.expSeries ℝ ℝ k (fun _ => (2:ℝ))) * ρ^k
+private noncomputable def E (ρ c : ℝ) (k : ℕ) : ℝ := G k * ρ^k + (NormedSpace.expSeries ℝ ℝ k (fun _ => (2:ℝ))) * J ρ c k
+private noncomputable def B (C : ℝ) (k : ℕ) : ℝ := ((k:ℝ) + k*(C+k)) * (NormedSpace.expSeries ℝ ℝ k (fun _ => (6:ℝ)))
 
 private theorem summable_B (C : ℝ) (hC : 0 ≤ C) : Summable (B C) := by
-  apply Summable.of_nonneg_of_le (fun k => by unfold B M; positivity) _
+  apply Summable.of_nonneg_of_le (fun k => by unfold B; simp only [NormedSpace.expSeries_apply_eq_div]; positivity) _
     ((Real.summable_pow_div_factorial 24).mul_left (C+2))
   intro k
   have hk : (k:ℝ) ≤ (2:ℝ)^k := by exact_mod_cast (Nat.lt_two_pow_self (n := k)).le
@@ -136,7 +136,7 @@ private theorem summable_B (C : ℝ) (hC : 0 ≤ C) : Summable (B C) := by
       _ ≤ ((2:ℝ)^k)^2 := pow_le_pow_left₀ (by positivity) hk _
       _ = (4:ℝ)^k := by rw [← pow_mul, Nat.mul_comm, pow_mul]; norm_num
   have h24 : (2:ℝ)^k ≤ (4:ℝ)^k := pow_le_pow_left₀ (by norm_num) (by norm_num) _
-  unfold B M
+  unfold B; simp only [NormedSpace.expSeries_apply_eq_div]
   simp only [← mul_div_assoc]
   apply div_le_div_of_nonneg_right _ (by positivity)
   calc
@@ -147,9 +147,9 @@ private theorem summable_B (C : ℝ) (hC : 0 ≤ C) : Summable (B C) := by
     _ = (C+2) * 24^k := by rw [mul_assoc, ← mul_pow]; norm_num
 
 private theorem summable_Z (ρ : ℝ) (hρ : 0 ≤ ρ ∧ ρ ≤ 1) : Summable (Z ρ) := by
-  apply Summable.of_nonneg_of_le (fun k => mul_nonneg (by unfold W; positivity) (pow_nonneg hρ.1 _)) _ summable_M
+  apply Summable.of_nonneg_of_le (fun k => mul_nonneg (by simp only [NormedSpace.expSeries_apply_eq_div]; positivity) (pow_nonneg hρ.1 _)) _ summable_M
   intro k
-  exact (mul_le_of_le_one_right (by unfold W; positivity) (pow_le_one₀ hρ.1 hρ.2)).trans (W_le_M k)
+  exact (mul_le_of_le_one_right (by simp only [NormedSpace.expSeries_apply_eq_div]; positivity) (pow_le_one₀ hρ.1 hρ.2)).trans (W_le_M k)
 
 private theorem U_summable (A : ℕ → ℝ) (n : ℕ) : Summable (U A n) := by
   apply summable_of_ne_finset_zero (s := range (n+1))
@@ -162,8 +162,8 @@ private theorem U_scaled_limit (A : ℕ → ℝ) (ρ c : ℝ)
     Tendsto (fun n : ℕ => (n:ℝ) * (U A n k - Z ρ k)) atTop (𝓝 (E ρ c k)) := by
   have hr := R_scaled_limit A ρ c h k
   have h0 := tendsto_of_scaled (fun n => R A n k) _ _ hr
-  have ht := ((Q_scaled_limit k).mul h0).add (hr.const_mul (W k))
-  change Tendsto _ _ (𝓝 (G k * ρ^k + W k * J ρ c k))
+  have ht := ((Q_scaled_limit k).mul h0).add (hr.const_mul ((NormedSpace.expSeries ℝ ℝ k (fun _ => (2:ℝ)))))
+  change Tendsto _ _ (𝓝 (G k * ρ^k + (NormedSpace.expSeries ℝ ℝ k (fun _ => (2:ℝ))) * J ρ c k))
   convert ht using 1
   ext n
   unfold U Z
@@ -173,14 +173,14 @@ private theorem U_scaled_bound (A : ℕ → ℝ) (ρ C : ℝ)
     (hA : ∀ n, 0 ≤ A n ∧ A n ≤ 1) (hρ : 0 ≤ ρ ∧ ρ ≤ 1) (hC : 0 ≤ C)
     (h : ∀ n : ℕ, |(n:ℝ) * (A n - ρ)| ≤ C) (n k : ℕ) : |(n:ℝ) * (U A n k - Z ρ k)| ≤ B C k := by
   have hr := R_bounds A hA n k
-  have hw : 0 ≤ W k := by unfold W; positivity
+  have hw : 0 ≤ (NormedSpace.expSeries ℝ ℝ k (fun _ => (2:ℝ))) := by simp only [NormedSpace.expSeries_apply_eq_div]; positivity
   calc
-    _ = |((n:ℝ)*(Q n k-W k))*R A n k + W k*((n:ℝ)*(R A n k-ρ^k))| := by
+    _ = |((n:ℝ)*(Q n k-(NormedSpace.expSeries ℝ ℝ k (fun _ => (2:ℝ)))))*R A n k + (NormedSpace.expSeries ℝ ℝ k (fun _ => (2:ℝ)))*((n:ℝ)*(R A n k-ρ^k))| := by
       unfold U Z; congr 1; ring
-    _ ≤ |(n:ℝ)*(Q n k-W k)| * R A n k + W k * |(n:ℝ)*(R A n k-ρ^k)| := by
+    _ ≤ |(n:ℝ)*(Q n k-(NormedSpace.expSeries ℝ ℝ k (fun _ => (2:ℝ))))| * R A n k + (NormedSpace.expSeries ℝ ℝ k (fun _ => (2:ℝ))) * |(n:ℝ)*(R A n k-ρ^k)| := by
       simpa only [abs_mul, abs_of_nonneg hr.1, abs_of_nonneg hw] using
-        abs_add_le (((n:ℝ)*(Q n k-W k))*R A n k) (W k*((n:ℝ)*(R A n k-ρ^k)))
-    _ ≤ (k:ℝ)*M k + W k*((k:ℝ)*(C+k)) :=
+        abs_add_le (((n:ℝ)*(Q n k-(NormedSpace.expSeries ℝ ℝ k (fun _ => (2:ℝ)))))*R A n k) ((NormedSpace.expSeries ℝ ℝ k (fun _ => (2:ℝ)))*((n:ℝ)*(R A n k-ρ^k)))
+    _ ≤ (k:ℝ)*(NormedSpace.expSeries ℝ ℝ k (fun _ => (6:ℝ))) + (NormedSpace.expSeries ℝ ℝ k (fun _ => (2:ℝ)))*((k:ℝ)*(C+k)) :=
       add_le_add ((mul_le_of_le_one_right (abs_nonneg _) hr.2).trans (Q_scaled_bound n k))
         (mul_le_mul_of_nonneg_left (R_scaled_bound A ρ C hA hρ hC h n k) hw)
     _ ≤ B C k := by
@@ -204,12 +204,12 @@ private theorem V_tsum_limit (A : ℕ → ℝ) (ρ c : ℝ)
     (hA : ∀ n, 0 ≤ A n ∧ A n ≤ 1)
     (h : Tendsto (fun n : ℕ => (n:ℝ) * (A n - ρ)) atTop (𝓝 c)) :
     Tendsto (fun n : ℕ => (n:ℝ) * ∑' k, V A n k) atTop
-      (𝓝 (∑' k, W k * ρ^(k+1))) := by
-  have hp (k : ℕ) : Tendsto (fun n : ℕ => (n:ℝ) * V A n k) atTop (𝓝 (W k * ρ^(k+1))) := by
+      (𝓝 (∑' k, (NormedSpace.expSeries ℝ ℝ k (fun _ => (2:ℝ))) * ρ^(k+1))) := by
+  have hp (k : ℕ) : Tendsto (fun n : ℕ => (n:ℝ) * V A n k) atTop (𝓝 ((NormedSpace.expSeries ℝ ℝ k (fun _ => (2:ℝ))) * ρ^(k+1))) := by
     have hr := tendsto_of_scaled (fun n => R A n (k+1)) _ _ (R_scaled_limit A ρ c h (k+1))
     convert (P_scaled_limit k).mul hr using 1
     ext n; unfold V; ring
-  have hb (n k : ℕ) : ‖(n:ℝ) * V A n k‖ ≤ ((k:ℝ)+1)*M k := by
+  have hb (n k : ℕ) : ‖(n:ℝ) * V A n k‖ ≤ ((k:ℝ)+1)*(NormedSpace.expSeries ℝ ℝ k (fun _ => (6:ℝ))) := by
     rw [Real.norm_eq_abs, V, ← mul_assoc, abs_mul, abs_of_nonneg (R_bounds A hA n (k+1)).1]
     exact (mul_le_of_le_one_right (abs_nonneg _) (R_bounds A hA n (k+1)).2).trans (P_scaled_bound n k)
   have ht := tendsto_tsum_of_dominated_convergence summable_succ_M hp (Eventually.of_forall hb)
@@ -304,7 +304,7 @@ private theorem border_first_order (b : ℕ → ℕ) (hb : ∀ n, b n ≠ 0) (ρ
     (hA : ∀ n, 0 ≤ A b n ∧ A b n ≤ 1) (hρ : 0 ≤ ρ ∧ ρ ≤ 1)
     (h : Tendsto (fun n : ℕ => (n:ℝ) * (A b n - ρ)) atTop (𝓝 c)) :
     Tendsto (fun n : ℕ => (n:ℝ) * ((f b n n:ℝ) / b n - 2 * ∑' k, Z ρ k)) atTop
-      (𝓝 (2 * (∑' k, E ρ c k) - 2 * ∑' k, W k * ρ^(k+1))) := by
+      (𝓝 (2 * (∑' k, E ρ c k) - 2 * ∑' k, (NormedSpace.expSeries ℝ ℝ k (fun _ => (2:ℝ))) * ρ^(k+1))) := by
   obtain ⟨C, hC, hbound⟩ := (Metric.isBounded_range_of_tendsto _ h).exists_pos_norm_le
   have hbnd (n : ℕ) : |(n:ℝ) * (A b n-ρ)| ≤ C := by
     simpa only [Real.norm_eq_abs] using hbound _ (Set.mem_range_self n)
@@ -453,8 +453,9 @@ theorem result : claimPower := by
   have hf := border_first_order powBorder powBorder_ne ρ (ρ/2) A_power_bounds hρ A_power_scaled_limit
   have hc : 0 < 2 * ∑' k, Z ρ k := by
     have hz : 0 < ∑' k, Z ρ k := by
-      apply (summable_Z ρ hρ).tsum_pos (fun k => by unfold Z W; positivity) 0
-      norm_num [Z, W]
+      apply (summable_Z ρ hρ).tsum_pos (fun k => by unfold Z; simp only [NormedSpace.expSeries_apply_eq_div]; positivity) 0
+      simp only [Z, NormedSpace.expSeries_apply_eq_div]
+      norm_num
     linarith
   have h0 := tendsto_of_scaled _ _ _ hf
   have ha (n : ℕ) : (f powBorder n n:ℝ) = (powBorder n:ℝ) * ((f powBorder n n:ℝ) / powBorder n) := by

@@ -8,7 +8,7 @@
 
 /-
 admission_basis: open-problem-resolution (#19938; Proved)
-escape_witness: none (admission is the external named problem settlement)
+escape_witness: border_convolution, d_eq_binomial (admission remains external problem settlement)
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/22168
 Direct frozen dependencies: D5/S3/Combinatorics/Matroids/SpeyerUniformNormality.qAB,
 D5/S3/Combinatorics/Matroids/SpeyerUniformNormality.qAB_pos.
@@ -16,7 +16,7 @@ qAB declaration statement_id: sha256:29896652822aaa7119e8470a97a0a75560731fffc4c
 The recurrence and additive-limit statements use the conventions of #19938 and #19939.
 The literal recurrence defines the unit-border array; proofs use qAB evaluated at one.
 All declarations have utility none: unbounded identities, estimates and limits.
-D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.diagonal_convolution: proof_shape: content; escape_witness: none; Direct frozen dependencies: none.
+D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.diagonal_convolution: proof_shape: content; escape_witness: border_convolution; Direct frozen dependencies: none.
 D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.Q_of_gt: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: qAB.
 D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.Q_nonneg: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: qAB, qAB_pos.
 D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.W_le_M: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none.
@@ -28,9 +28,9 @@ D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.tendsto_
 D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.P_scaled_bound: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: qAB.
 D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.P_scaled_limit: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: qAB.
 D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.diagonal_Q_scaled_limit: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: qAB.
-D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.Q_factorial: proof_shape: content; escape_witness: none; Direct frozen dependencies: qAB.
+D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.Q_factorial: proof_shape: content; escape_witness: d_eq_binomial; Direct frozen dependencies: qAB.
 D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.ratio_transfer: proof_shape: bind-only; escape_witness: none; Direct frozen dependencies: none.
-D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.result: proof_shape: content; escape_witness: none; Direct frozen dependencies: qAB.
+D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.result: proof_shape: content; escape_witness: border_convolution, d_eq_binomial; Direct frozen dependencies: qAB.
 -/
 
 import D5.S3.Combinatorics.Matroids.SpeyerUniformNormality
@@ -281,8 +281,6 @@ private theorem H_scaled_error_bound (n k : ℕ) (hkn : k ≤ n) :
       exact mul_le_mul_of_nonneg_left h (by positivity)
 
 
-noncomputable def W (k : ℕ) : ℝ := (2:ℝ)^k / k.factorial
-noncomputable def M (k : ℕ) : ℝ := (6:ℝ)^k / k.factorial
 noncomputable def Q (n k : ℕ) : ℝ :=
   if k ≤ n then (qAB k n).eval 1 / ((k.factorial:ℝ) * n.choose k) else 0
 
@@ -297,36 +295,37 @@ theorem Q_nonneg (n k : ℕ) : 0 ≤ Q n k := by
     · positivity
   · exact le_rfl
 
-theorem W_le_M (k : ℕ) : W k ≤ M k := by
-  unfold W M
+theorem W_le_M (k : ℕ) : (NormedSpace.expSeries ℝ ℝ k (fun _ => (2:ℝ))) ≤ (NormedSpace.expSeries ℝ ℝ k (fun _ => (6:ℝ))) := by
+  simp only [NormedSpace.expSeries_apply_eq_div]
   exact div_le_div_of_nonneg_right (pow_le_pow_left₀ (by norm_num) (by norm_num) _) (by positivity)
 
-private theorem Q_le_M (n k : ℕ) : Q n k ≤ M k := by
+private theorem Q_le_M (n k : ℕ) : Q n k ≤ (NormedSpace.expSeries ℝ ℝ k (fun _ => (6:ℝ))) := by
   by_cases hkn : k ≤ n
   · have hc : 0 < (n.choose k:ℝ) := by exact_mod_cast Nat.choose_pos hkn
     have hf : 0 < (k.factorial:ℝ) := by positivity
     rw [Q, if_pos hkn]
     apply (div_le_iff₀ (mul_pos hf hc)).2
     have ht := H_le_choose_mul_six_pow n k hkn
-    have he : M k * ((k.factorial:ℝ) * n.choose k) = (n.choose k:ℝ) * 6^k := by
-      unfold M
+    have he : (NormedSpace.expSeries ℝ ℝ k (fun _ => (6:ℝ))) * ((k.factorial:ℝ) * n.choose k) = (n.choose k:ℝ) * 6^k := by
+      simp only [NormedSpace.expSeries_apply_eq_div]
       field_simp
     rw [he]
     exact ht
   · simp only [Q, if_neg hkn]
-    unfold M
+    simp only [NormedSpace.expSeries_apply_eq_div]
     positivity
 
 private theorem Q_scaled_identity (n k : ℕ) (hkn : k ≤ n) :
-    (n:ℝ) * (Q n k - W k) =
+    (n:ℝ) * (Q n k - (NormedSpace.expSeries ℝ ℝ k (fun _ => (2:ℝ)))) =
       ((n:ℝ) * ((qAB k n).eval 1 - (2:ℝ)^k * n.choose k)) / ((k.factorial:ℝ) * n.choose k) := by
   have hc : (n.choose k:ℝ) ≠ 0 := by exact_mod_cast Nat.ne_of_gt (Nat.choose_pos hkn)
   have hf : (k.factorial:ℝ) ≠ 0 := by positivity
-  rw [Q, if_pos hkn, W]
+  rw [Q, if_pos hkn]
+  simp only [NormedSpace.expSeries_apply_eq_div]
   field_simp
   <;> ring
 
-theorem Q_scaled_bound (n k : ℕ) : |(n:ℝ) * (Q n k - W k)| ≤ (k:ℝ) * M k := by
+theorem Q_scaled_bound (n k : ℕ) : |(n:ℝ) * (Q n k - (NormedSpace.expSeries ℝ ℝ k (fun _ => (2:ℝ))))| ≤ (k:ℝ) * (NormedSpace.expSeries ℝ ℝ k (fun _ => (6:ℝ))) := by
   by_cases hkn : k ≤ n
   · have hc : 0 < (n.choose k:ℝ) := by exact_mod_cast Nat.choose_pos hkn
     have hf : 0 < (k.factorial:ℝ) := by positivity
@@ -334,18 +333,18 @@ theorem Q_scaled_bound (n k : ℕ) : |(n:ℝ) * (Q n k - W k)| ≤ (k:ℝ) * M k
     have ht := H_scaled_error_bound n k hkn
     rw [abs_of_nonneg (div_nonneg ht.1 (mul_nonneg hf.le hc.le))]
     apply (div_le_iff₀ (mul_pos hf hc)).2
-    have he : ((k:ℝ) * M k) * ((k.factorial:ℝ) * n.choose k) =
+    have he : ((k:ℝ) * (NormedSpace.expSeries ℝ ℝ k (fun _ => (6:ℝ)))) * ((k.factorial:ℝ) * n.choose k) =
         (k:ℝ) * n.choose k * 6^k := by
-      unfold M
+      simp only [NormedSpace.expSeries_apply_eq_div]
       field_simp
       <;> ring
     rw [he]
     exact ht.2
   · have hnk : n < k := Nat.lt_of_not_ge hkn
     rw [Q_of_gt n k hnk, zero_sub, mul_neg, abs_neg,
-      abs_of_nonneg (show 0 ≤ (n:ℝ) * W k by unfold W; positivity)]
+      abs_of_nonneg (show 0 ≤ (n:ℝ) * (NormedSpace.expSeries ℝ ℝ k (fun _ => (2:ℝ))) by simp only [NormedSpace.expSeries_apply_eq_div]; positivity)]
     calc
-      (n:ℝ) * W k ≤ (k:ℝ) * W k := mul_le_mul_of_nonneg_right (by exact_mod_cast hnk.le) (by unfold W; positivity)
+      (n:ℝ) * (NormedSpace.expSeries ℝ ℝ k (fun _ => (2:ℝ))) ≤ (k:ℝ) * (NormedSpace.expSeries ℝ ℝ k (fun _ => (2:ℝ))) := mul_le_mul_of_nonneg_right (by exact_mod_cast hnk.le) (by simp only [NormedSpace.expSeries_apply_eq_div]; positivity)
       _ ≤ _ := mul_le_mul_of_nonneg_left (W_le_M k) (by positivity)
 
 private theorem tendsto_scaled_choose_ratio (i k : ℕ) (hik : i < k) :
@@ -384,7 +383,7 @@ noncomputable def G (k : ℕ) : ℝ :=
     (2:ℝ)^i * k.choose i * (if k = i+1 then (k:ℝ) else 0)
 
 theorem Q_scaled_limit (k : ℕ) :
-    Tendsto (fun n : ℕ => (n:ℝ) * (Q n k - W k)) atTop (𝓝 (G k)) := by
+    Tendsto (fun n : ℕ => (n:ℝ) * (Q n k - (NormedSpace.expSeries ℝ ℝ k (fun _ => (2:ℝ))))) atTop (𝓝 (G k)) := by
   have ht : Tendsto (fun n : ℕ => (1 / (k.factorial:ℝ)) *
       ∑ i ∈ range k, (2:ℝ)^i * k.choose i * ((n:ℝ) * n.choose i / n.choose k))
       atTop (𝓝 (G k)) := by
@@ -403,28 +402,31 @@ theorem Q_scaled_limit (k : ℕ) :
   field_simp
   <;> ring
 
-private theorem summable_W : Summable W := Real.summable_pow_div_factorial 2
-theorem summable_M : Summable M := Real.summable_pow_div_factorial 6
-private theorem summable_scaled_M : Summable (fun k : ℕ => (k:ℝ) * M k) := by
-  apply Summable.of_nonneg_of_le (fun k => by unfold M; positivity) _
+private theorem summable_W : Summable (fun k : ℕ => NormedSpace.expSeries ℝ ℝ k (fun _ => (2:ℝ))) := by
+  simpa only [NormedSpace.expSeries_apply_eq_div] using Real.summable_pow_div_factorial 2
+theorem summable_M : Summable (fun k : ℕ => NormedSpace.expSeries ℝ ℝ k (fun _ => (6:ℝ))) := by
+  simpa only [NormedSpace.expSeries_apply_eq_div] using Real.summable_pow_div_factorial 6
+private theorem summable_scaled_M : Summable (fun k : ℕ => (k:ℝ) * (NormedSpace.expSeries ℝ ℝ k (fun _ => (6:ℝ)))) := by
+  apply Summable.of_nonneg_of_le (fun k => by simp only [NormedSpace.expSeries_apply_eq_div]; positivity) _
     (Real.summable_pow_div_factorial 12)
   intro k
   have hk : (k:ℝ) ≤ (2:ℝ)^k := by exact_mod_cast (Nat.lt_two_pow_self (n := k)).le
-  unfold M
+  simp only [NormedSpace.expSeries_apply_eq_div]
   rw [← mul_div_assoc]
   apply div_le_div_of_nonneg_right _ (by positivity)
   calc
     (k:ℝ) * (6:ℝ)^k ≤ (2:ℝ)^k * 6^k := mul_le_mul_of_nonneg_right hk (by positivity)
     _ = 12^k := by rw [← mul_pow]; norm_num
 
-theorem summable_succ_M : Summable (fun k : ℕ => ((k:ℝ)+1) * M k) := by
+theorem summable_succ_M : Summable (fun k : ℕ => ((k:ℝ)+1) * (NormedSpace.expSeries ℝ ℝ k (fun _ => (6:ℝ)))) := by
   convert summable_scaled_M.add summable_M using 1
   ext k
   ring
 
-private theorem W_tsum_pos : 0 < ∑' k, W k := by
-  apply summable_W.tsum_pos (fun k => by unfold W; positivity) 0
-  norm_num [W]
+private theorem W_tsum_pos : 0 < ∑' k, (NormedSpace.expSeries ℝ ℝ k (fun _ => (2:ℝ))) := by
+  apply summable_W.tsum_pos (fun k => by simp only [NormedSpace.expSeries_apply_eq_div]; positivity) 0
+  simp only [NormedSpace.expSeries_apply_eq_div]
+  norm_num
 
 private theorem Q_summable (n : ℕ) : Summable (Q n) := by
   apply summable_of_ne_finset_zero (s := range (n+1))
@@ -441,7 +443,7 @@ private theorem Q_tsum (n : ℕ) : ∑' k, Q n k = ∑ k ∈ range (n+1), Q n k 
   omega
 
 private theorem Q_scaled_tsum_limit :
-    Tendsto (fun n : ℕ => (n:ℝ) * ((∑' k, Q n k) - ∑' k, W k)) atTop
+    Tendsto (fun n : ℕ => (n:ℝ) * ((∑' k, Q n k) - ∑' k, (NormedSpace.expSeries ℝ ℝ k (fun _ => (2:ℝ))))) atTop
       (𝓝 (∑' k, G k)) := by
   have ht := tendsto_tsum_of_dominated_convergence summable_scaled_M Q_scaled_limit
     (Eventually.of_forall (fun n k => by simpa only [Real.norm_eq_abs] using Q_scaled_bound n k))
@@ -466,7 +468,7 @@ theorem tendsto_of_scaled (r : ℕ → ℝ) (C K : ℝ)
 noncomputable def P (n k : ℕ) : ℝ :=
   if k < n then Q n k / (n-k:ℕ) else 0
 
-theorem P_scaled_bound (n k : ℕ) : |(n:ℝ) * P n k| ≤ ((k:ℝ)+1) * M k := by
+theorem P_scaled_bound (n k : ℕ) : |(n:ℝ) * P n k| ≤ ((k:ℝ)+1) * (NormedSpace.expSeries ℝ ℝ k (fun _ => (6:ℝ))) := by
   by_cases hkn : k < n
   · have hp : 0 < (n-k:ℕ) := by exact Nat.zero_lt_sub_of_lt hkn
     have hpR : (0:ℝ) < (n-k:ℕ) := by exact Nat.cast_pos'.mpr hp
@@ -481,14 +483,14 @@ theorem P_scaled_bound (n k : ℕ) : |(n:ℝ) * P n k| ≤ ((k:ℝ)+1) * M k := 
     rw [P, if_pos hkn, abs_of_nonneg (by positivity)]
     calc
       (n:ℝ) * (Q n k / (n-k:ℕ)) = ((n:ℝ) / (n-k:ℕ)) * Q n k := by ring
-      _ ≤ ((k:ℝ)+1) * M k := mul_le_mul hrat (Q_le_M n k) (Q_nonneg n k) (by positivity)
+      _ ≤ ((k:ℝ)+1) * (NormedSpace.expSeries ℝ ℝ k (fun _ => (6:ℝ))) := mul_le_mul hrat (Q_le_M n k) (Q_nonneg n k) (by positivity)
   · simp only [P, if_neg hkn, mul_zero, abs_zero]
-    unfold M
+    simp only [NormedSpace.expSeries_apply_eq_div]
     positivity
 
 theorem P_scaled_limit (k : ℕ) :
-    Tendsto (fun n : ℕ => (n:ℝ) * P n k) atTop (𝓝 (W k)) := by
-  have hq := tendsto_of_scaled (fun n => Q n k) (W k) (G k) (Q_scaled_limit k)
+    Tendsto (fun n : ℕ => (n:ℝ) * P n k) atTop (𝓝 ((NormedSpace.expSeries ℝ ℝ k (fun _ => (2:ℝ))))) := by
+  have hq := tendsto_of_scaled (fun n => Q n k) ((NormedSpace.expSeries ℝ ℝ k (fun _ => (2:ℝ)))) (G k) (Q_scaled_limit k)
   have hn : Tendsto (fun n : ℕ => (n:ℝ) / (n-k:ℕ)) atTop (𝓝 (1:ℝ)) := by
     apply (tendsto_natCast_div_add_atTop (-(k:ℝ))).congr'
     filter_upwards [eventually_ge_atTop k] with n hn
@@ -509,7 +511,7 @@ private theorem P_tsum (n : ℕ) : ∑' k, P n k = ∑ k ∈ range (n+1), P n k 
   simp [P, hkn]
 
 private theorem P_scaled_tsum_limit :
-    Tendsto (fun n : ℕ => (n:ℝ) * ∑' k, P n k) atTop (𝓝 (∑' k, W k)) := by
+    Tendsto (fun n : ℕ => (n:ℝ) * ∑' k, P n k) atTop (𝓝 (∑' k, (NormedSpace.expSeries ℝ ℝ k (fun _ => (2:ℝ))))) := by
   have ht := tendsto_tsum_of_dominated_convergence summable_succ_M P_scaled_limit
     (Eventually.of_forall (fun n k => by simpa only [Real.norm_eq_abs] using P_scaled_bound n k))
   simpa only [tsum_mul_left] using ht
@@ -578,8 +580,8 @@ private theorem normalized_convolution (n : ℕ) :
 
 private theorem factorial_first_order :
     Tendsto (fun n : ℕ => (n:ℝ) *
-      ((f Nat.factorial n n:ℝ) / n.factorial - 2 * ∑' k, W k)) atTop
-      (𝓝 (2 * (∑' k, G k) - 2 * ∑' k, W k)) := by
+      ((f Nat.factorial n n:ℝ) / n.factorial - 2 * ∑' k, (NormedSpace.expSeries ℝ ℝ k (fun _ => (2:ℝ))))) atTop
+      (𝓝 (2 * (∑' k, G k) - 2 * ∑' k, (NormedSpace.expSeries ℝ ℝ k (fun _ => (2:ℝ))))) := by
   have ht := ((Q_scaled_tsum_limit.const_mul 2).sub
     (P_scaled_tsum_limit.const_mul 2)).sub diagonal_Q_scaled_limit
   simp only [sub_zero] at ht
@@ -643,7 +645,7 @@ private theorem factorial_of_first_order (C K : ℝ) (hC : C ≠ 0)
 
 
 theorem result : D5.S3.Combinatorics.Delannoy.GrauOllerMarcenVaronaFactorialBorderGrowth.claimFactorial := by
-  have hc : 0 < 2 * ∑' k, W k := by linarith [W_tsum_pos]
+  have hc : 0 < 2 * ∑' k, (NormedSpace.expSeries ℝ ℝ k (fun _ => (2:ℝ))) := by linarith [W_tsum_pos]
   exact factorial_of_first_order _ _ hc.ne'
     (tendsto_of_scaled _ _ _ factorial_first_order) factorial_first_order
 
