@@ -9,7 +9,7 @@ internal sealed class UnitaryPowerDilationDocument : IScribeDocumentDefinition
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/HilbertOperators/leanpool2026unitarypowerdilation");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Every contraction on a complete complex Hilbert space is the compression of every natural power of one unitary operator on one larger Hilbert space.",
+        "Every contraction on a complete complex Hilbert space admits a unitary dilation in which every natural power of the contraction is the compression of the corresponding power of that same unitary operator.",
         H("Common unitary dilation of all natural powers"),
         Blocks(Describe.Lean(DescribeId.Create("unitary-power-dilation"),
             DeclarationHandle.Create("D5/S3/HilbertOperators/UnitaryPowerDilation.exists_unitary_power_dilation"),

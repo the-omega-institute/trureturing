@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Every contraction on a complete complex Hilbert space is the compression of every natural power of one unitary operator on one larger Hilbert space.
+Every contraction on a complete complex Hilbert space admits a unitary dilation in which every natural power of the contraction is the compression of the corresponding power of that same unitary operator.
 
 **Theorem 1.1 (Arbitrary complex Hilbert-space power dilation).**
 
