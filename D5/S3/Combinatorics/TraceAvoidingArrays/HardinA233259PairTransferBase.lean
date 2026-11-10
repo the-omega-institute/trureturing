@@ -3,13 +3,14 @@
    mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferBase
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259Strip.result; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259Strip.finite_certificate
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferBase.initial_values; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferCount.count_transfer,D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferPowers.powers_table
    digest: Four-row transfer initial scalar values. -/
 /-
-admission_basis: open-problem-resolution (#28807; Proved)
-escape_witness: none
-initial_values: proof_shape=bind-only; consumers=HardinA233259PairTransferRecurrence.recurrence, Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259Strip.Bridge.actual_dependence
+admission_basis: escape-witness
+escape_witness: Rep.representative_rows, Initial.initial_weights and Powers.table_steps (via count_transfer and powers_table)
+initial_values: proof_shape=content; consumers=HardinA233259PairTransferRecurrence.recurrence, Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259Strip.Bridge.actual_dependence
 -/
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferCore
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferCount
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferPowers
 

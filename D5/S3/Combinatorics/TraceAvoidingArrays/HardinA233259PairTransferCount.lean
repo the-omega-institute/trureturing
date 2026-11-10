@@ -3,13 +3,14 @@
    mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferCount
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259Strip.result; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259Strip.finite_certificate
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferCount.count_transfer; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferRep.quotient_rows,D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferInitial.initial_weights
    digest: Four-row local-to-transfer counting bridge. -/
 /-
-admission_basis: open-problem-resolution (#28807; Proved)
-escape_witness: none
-count_transfer: proof_shape=bind-only; consumers=HardinA233259PairTransferBase.initial_values, HardinA233259PairTransferRecurrence.shifted
+admission_basis: escape-witness
+escape_witness: Rep.representative_rows and Initial.initial_weights (via quotient_rows and the two inputs to cardMatrix)
+count_transfer: proof_shape=content; consumers=HardinA233259PairTransferBase.initial_values, HardinA233259PairTransferRecurrence.shifted
 -/
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferCore
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferRep
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferInitial
@@ -17,6 +18,7 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix
 
 open scoped BigOperators
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferCount
+open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer (Col gridEquiv cls)
 open HardinA233259PairTransferCore
 open HardinA233259PairTransferRep (quotient_rows)
 open HardinA233259PairTransferInitial (initial_weights)

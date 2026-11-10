@@ -3,18 +3,11 @@
    mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferCore
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259Strip.result; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259Strip.finite_certificate
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferCount.count_transfer; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferCore.grid_good
    digest: Core definitions for the four-row one-sided pair transfer. -/
 /-
-admission_basis: open-problem-resolution (#28807; Proved)
-escape_witness: none
-Col: proof_shape=bind-only; consumers=compatible, instDecidableCompatible, HardinA233259PairTransferRep.representative_rows, HardinA233259PairTransferInitial.initial_weights, HardinA233259PairTransferCount.count_transfer
-column: proof_shape=bind-only; consumers=compatible, grid_good
-cls: proof_shape=bind-only; consumers=HardinA233259PairTransferRep.representative_rows, HardinA233259PairTransferRep.quotient_rows, HardinA233259PairTransferInitial.initial_weights, HardinA233259PairTransferCount.count_transfer
-representatives: proof_shape=bind-only; consumers=HardinA233259PairTransferRep.representative_rows, HardinA233259PairTransferRep.quotient_rows
-relabel: proof_shape=bind-only; consumers=compatible_relabel, HardinA233259PairTransferRep.quotient_rows
-gridEquiv: proof_shape=bind-only; consumers=grid_good, HardinA233259PairTransferCount.count_transfer
-column_grid: proof_shape=bind-only; consumers=grid_good
+admission_basis: consumed setup for the one-sided transfer; no standalone escape witness
+escape_witness: none (consumed setup; grid_good and compatible_relabel transport the literal one-sided predicate)
 compatible: proof_shape=bind-only; consumers=instDecidableCompatible, grid_good, compatible_relabel, HardinA233259PairTransferRep.representative_rows, HardinA233259PairTransferInitial.initial_weights, HardinA233259PairTransferCount.count_transfer
 instDecidableCompatible: proof_shape=bind-only; consumers=HardinA233259PairTransferRep.representative_rows, HardinA233259PairTransferInitial.initial_weights, HardinA233259PairTransferRep.quotient_rows, HardinA233259PairTransferCount.count_transfer
 Proper: proof_shape=bind-only; consumers=instDecidableProper, L, grid_good, HardinA233259Strip.legal_iff
@@ -27,18 +20,11 @@ compatible_relabel: proof_shape=bind-only; consumers=HardinA233259PairTransferRe
 -/
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix
-import Mathlib.Tactic
 
 open scoped BigOperators
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferCore
 
-abbrev Col := _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer.Col
-abbrev column := _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer.column
-abbrev cls := _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer.cls
-abbrev representatives := _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer.representatives
-abbrev relabel := _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer.relabel
-abbrev gridEquiv := _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer.gridEquiv
-abbrev column_grid := _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer.column_grid
+open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer (Col column relabel gridEquiv column_grid)
 
 def compatible (a b : Col) : Prop :=
   ∀ r s : Fin 4, (r = s ∨ r.val + 1 = s.val) → column a s ≠ column b r

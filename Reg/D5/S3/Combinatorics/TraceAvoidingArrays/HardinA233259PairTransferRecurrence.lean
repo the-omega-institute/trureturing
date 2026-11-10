@@ -1,3 +1,4 @@
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferCore
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferRecurrence
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferBase
 import Reg.Support.SingleDependentReadout

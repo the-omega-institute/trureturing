@@ -86,6 +86,22 @@ internal sealed class HardinA233259StripDocument : IScribeDocumentDefinition
         return n is null ? equation : All("n", Q("Nat"), equation);
     }
 
+    private static Formula NormalCondition(Formula n, Formula a)
+    {
+        var p = V("p"); var q = V("q");
+        var cells = Product(Fin(D(4)), Fin(n));
+        Formula Rank(Formula x) => Add(Mul(Val(Call("Prod.fst", x)), n),
+            Val(Call("Prod.snd", x)));
+        Formula Earlier(byte colour) => Ex("q", cells,
+            And(Lt(Rank(q), Rank(p)), Eq(App(a, q), Typed(D(colour), Fin(D(6))))));
+        var current = App(a, p);
+        return All("p", cells, And(
+            Imp(Or(Eq(current, Typed(D(2), Fin(D(6)))),
+                Or(Eq(current, Typed(D(3), Fin(D(6)))),
+                    Eq(current, Typed(D(4), Fin(D(6)))))), Earlier(1)),
+            Imp(Eq(current, Typed(D(3), Fin(D(6)))), Earlier(2))));
+    }
+
     private static Formula LegalFormula()
     {
         var n = V("n"); var a = V("A"); var j = V("j");
@@ -100,7 +116,7 @@ internal sealed class HardinA233259StripDocument : IScribeDocumentDefinition
         var bonds = All("j", Fin(n), All("h", Lt(Add(Val(j), D(1)), n),
             All("r", Fin(D(4)), All("s", Fin(D(4)), Imp(adjacent,
                 And(Ne(here, next), Ne(Add(Val(here), Val(next)), D(5))))))));
-        var normal = Call("D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder.normal", a);
+        var normal = NormalCondition(n, a);
         return All("n", Q("Nat"), All("A", Arrow(cells, Fin(D(6))),
             Eq(Own("Legal", a), Parenthesized(And(first, And(bonds, normal))))));
     }

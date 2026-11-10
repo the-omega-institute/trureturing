@@ -24,8 +24,8 @@ Recurrence.actual_dependence: proof_shape=bind-only; consumers=Recurrence.family
 Recurrence.family: proof_shape=bind-only; consumers=Recurrence.audit
 Recurrence.audit: proof_shape=bind-only; consumers=compiled-registration-reader
 -/
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferCore
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259Strip
-import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferBase
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
 

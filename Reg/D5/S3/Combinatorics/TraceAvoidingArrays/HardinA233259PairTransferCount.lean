@@ -1,5 +1,5 @@
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferCore
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferCount
-import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferBase
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
 

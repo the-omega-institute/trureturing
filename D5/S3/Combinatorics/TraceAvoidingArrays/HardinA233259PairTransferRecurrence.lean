@@ -3,24 +3,25 @@
    mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferRecurrence
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259Strip.result; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259Strip.finite_certificate
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferRecurrence.shifted; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferPowers.power_polynomial,D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferCount.count_transfer
    digest: Four-row scalar transfer recurrence for A233259. -/
 /-
-admission_basis: open-problem-resolution (#28807; Proved)
-escape_witness: none
-shifted: proof_shape=bind-only; consumers=recurrence
-recurrence: proof_shape=bind-only; consumers=HardinA233259PairTransfer.recurrence
+admission_basis: escape-witness
+escape_witness: Powers.power_polynomial on the successor path; Base.initial_values and its certified one-sided table inputs on the zero path
+shifted: proof_shape=content; consumers=recurrence
+recurrence: proof_shape=content; consumers=HardinA233259Strip.finite_certificate, HardinA233259Strip.result
 -/
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferCore
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferCount
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferPowers
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferBase
-import Mathlib.Tactic
+import D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix
 
 open scoped BigOperators
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferRecurrence
 open HardinA233259PairTransferCore
 open HardinA233259PairTransferCount (count_transfer)
-open HardinA233259PairTransferPowers (coefficients power_polynomial powers_table)
+open HardinA233259PairTransferPowers (coefficients power_polynomial)
 open HardinA233259PairTransferBase (initial_values)
 
 private theorem shifted (n : ℕ) : (L (n+10) : ℤ) + 6 =

@@ -1,3 +1,5 @@
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferCore
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferRep
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
@@ -7,6 +9,7 @@ import LeanInformationAuditInterface.Contract.Registration
 namespace Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferRep
 open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferRep
 open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferCore
+open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer (Col cls representatives)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 open scoped BigOperators

@@ -3,19 +3,20 @@
    mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferRep
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259Strip.result; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259Strip.finite_certificate
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferRep.quotient_rows; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferRep.representative_rows
    digest: Four-row representative orbit continuation certificate. -/
 /-
-admission_basis: open-problem-resolution (#28807; Proved)
-escape_witness: none
-representative_rows: proof_shape=bind-only; consumers=quotient_rows
-quotient_rows: proof_shape=bind-only; consumers=HardinA233259PairTransferCount.count_transfer
+admission_basis: escape-witness
+escape_witness: representative_rows (kernel checks every entry for the one-sided graph; used by quotient_rows)
+representative_rows: proof_shape=content; consumers=quotient_rows
+quotient_rows: proof_shape=content; consumers=HardinA233259PairTransferCount.count_transfer
 -/
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferCore
-import Mathlib.Tactic
 
 open scoped BigOperators
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferRep
+open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer (Col cls representatives relabel class_rep class_relabel)
 open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferCore
 
 set_option maxRecDepth 100000 in
@@ -33,12 +34,12 @@ theorem representative_rows : ∀ i s : Fin 14,
 theorem quotient_rows (b : Col) (s : Fin 14) :
     (∑ c : Col, if compatible b c ∧ cls c = s then (1 : ℤ) else 0) = Q (cls b) s := by
   obtain ⟨e, he⟩ :=
-    _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer.class_rep b
+    class_rep b
   calc
     _ = ∑ c : Col, if compatible (relabel e b) (relabel e c) ∧
         cls (relabel e c) = s then (1 : ℤ) else 0 := by
       simp only [compatible_relabel,
-        _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer.class_relabel]
+        class_relabel]
     _ = ∑ c : Col, if compatible (representatives (cls b)) c ∧
         cls c = s then (1 : ℤ) else 0 := by
       rw [he]

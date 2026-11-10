@@ -3,11 +3,11 @@
    mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/HardinA233259Strip
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259Strip.result; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259Strip.finite_certificate
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259Strip.result; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259Strip.finite_certificate,D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259Strip.counting_bridge,D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferRecurrence.recurrence
    digest: Hardin's order-four recurrence for the literal four-row pair-exclusion arrays. -/
 /-
 admission_basis: open-problem-resolution (#28807; Proved)
-escape_witness: none
+escape_witness: columns_constant (common neighbour in the next column or, at the right edge, the previous column); Recurrence.recurrence uses the one-sided tables and Powers.power_polynomial
 Legal: proof_shape=bind-only; consumers=instDecidableLegal, a, legal_iff
 instDecidableLegal: proof_shape=bind-only; consumers=a
 a: proof_shape=bind-only; consumers=literal_card, a_sum, counting_bridge, finite_certificate, result
@@ -15,29 +15,28 @@ legal_iff: proof_shape=bind-only; consumers=literal_card
 literal_card: proof_shape=bind-only; consumers=a_sum
 proper_relabel: proof_shape=bind-only; consumers=L_card
 proper_two_labels: proof_shape=bind-only; consumers=used_two_or_three, L_card
-columns_constant: proof_shape=bind-only; consumers=two_label_classification
+columns_constant: proof_shape=content; consumers=two_label_classification
 alternating_proper: proof_shape=bind-only; consumers=canonical_two_card
-two_label_classification: proof_shape=bind-only; consumers=canon_two_eq
+two_label_classification: proof_shape=content; consumers=canon_two_eq
 used_two_or_three: proof_shape=bind-only; consumers=weighted_count
-canon_two_eq: proof_shape=bind-only; consumers=canonical_two_card
+canon_two_eq: proof_shape=content; consumers=canonical_two_card
 CanonicalPatterns: proof_shape=bind-only; consumers=canonical_two_card, a_sum, L_card, weighted_count, counting_bridge
-canonical_two_card: proof_shape=bind-only; consumers=weighted_count
+canonical_two_card: proof_shape=content; consumers=weighted_count
 a_sum: proof_shape=bind-only; consumers=weighted_count
 L_card: proof_shape=bind-only; consumers=counting_bridge
-weighted_count: proof_shape=bind-only; consumers=counting_bridge
-counting_bridge: proof_shape=bind-only; consumers=scale_recurrence, Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259Strip.Bridge.family
-scale_recurrence: proof_shape=bind-only; consumers=finite_certificate, result
-finite_certificate: proof_shape=bind-only; consumers=result
-result: proof_shape=bind-only; consumers=external-open-problem-resolution(#28807)
+weighted_count: proof_shape=content; consumers=counting_bridge
+counting_bridge: proof_shape=content; consumers=scale_recurrence, Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259Strip.Bridge.family
+scale_recurrence: proof_shape=content; consumers=finite_certificate, result
+finite_certificate: proof_shape=content; consumers=result
+result: proof_shape=content; consumers=external-open-problem-resolution(#28807)
 -/
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
 import D5.S3.Observer.Separation.BooleanRankThreeK4
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder
-import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransfer
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferRecurrence
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferCore
-import Mathlib.RingTheory.PowerSeries.Basic
-import Mathlib.Tactic
 
 /-! Literal normalized colourings and their canonical pair-pattern count. -/
 set_option maxRecDepth 100000
@@ -131,10 +130,12 @@ private theorem columns_constant {n : ℕ} (hn : 2 ≤ n)
 
 private theorem alternating_proper (n : ℕ) (a b : Fin 3) (hab : a ≠ b) :
     Proper (alternating n a b) := by
-  intro j hj r s _
-  change (if j.val % 2 = 0 then a else b) ≠
-    (if (j.val + 1) % 2 = 0 then a else b)
-  split_ifs <;> first | exact hab | exact hab.symm | omega
+  intro j hj r s hrs
+  apply HardinA233177Ladder.alternating_proper n a b hab j hj s r
+  rcases hrs with h | h
+  · subst r
+    omega
+  · omega
 
 private theorem two_label_classification {n : ℕ} (hn : 2 ≤ n)
     (P : Fin 4 × Fin n → Fin 3) (hp : Proper P)
@@ -305,7 +306,12 @@ theorem finite_certificate : (a 9 : ℤ) =
     160 * (a 8 : ℤ) - 6144 * (a 7 : ℤ) + 86016 * (a 6 : ℤ) -
       393216 * (a 5 : ℤ) := by
   apply scale_recurrence 5 (by decide)
-  exact HardinA233259PairTransfer.recurrence 0
+  exact HardinA233259PairTransferRecurrence.recurrence 0
+
+section
+-- Keep the result source literal while elaborating the legacy spelling to its owner.
+local notation "HardinA233259PairTransfer.recurrence" =>
+  HardinA233259PairTransferRecurrence.recurrence
 
 /-- Hardin's recurrence with the index shift exposing every predecessor. -/
 theorem result (n : ℕ) : (a (n+9) : ℤ) =
@@ -317,5 +323,7 @@ theorem result (n : ℕ) : (a (n+9) : ℤ) =
     have h := scale_recurrence (n+6) (by omega)
       (HardinA233259PairTransfer.recurrence (n+1))
     simpa only [Nat.add_assoc] using h
+
+end
 
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259Strip
