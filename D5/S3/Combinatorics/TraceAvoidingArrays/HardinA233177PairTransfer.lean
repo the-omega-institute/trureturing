@@ -64,13 +64,13 @@ private instance instDecidableProper {n : ℕ} (P : Fin 4 × Fin n → Fin 3) :
 def L (n : ℕ) : ℕ :=
   (Finset.univ.filter (fun P : Fin 4 × Fin n → Fin 3 => Proper P)).card
 
-private abbrev Col := Fin 3 × Fin 3 × Fin 3 × Fin 3
-private def column (c : Col) : Fin 4 → Fin 3 := ![c.1, c.2.1, c.2.2.1, c.2.2.2]
+abbrev Col := Fin 3 × Fin 3 × Fin 3 × Fin 3
+def column (c : Col) : Fin 4 → Fin 3 := ![c.1, c.2.1, c.2.2.1, c.2.2.2]
 private def compatible (a b : Col) : Prop :=
   ∀ r s : Fin 4, (r.val ≤ s.val + 1 ∧ s.val ≤ r.val + 1) → column a r ≠ column b s
 private instance instDecidableCompatible (a b : Col) : Decidable (compatible a b) :=
   inferInstanceAs (Decidable (∀ _ _, _ → _))
-private def cls (c : Col) : Fin 14 :=
+def cls (c : Col) : Fin 14 :=
   let a := c.1; let b := c.2.1; let d := c.2.2.1; let e := c.2.2.2
   if a = b then
     if a = d then (if a = e then 0 else 1)
@@ -97,24 +97,24 @@ private def Q : Matrix (Fin 14) (Fin 14) ℤ :=
     ![0,0,0,0,0,0,0,0,0,0,0,0,0,0]]
 private def weights : Fin 14 → ℤ := ![48,24,12,24,0,12,6,0,6,24,6,0,0,0]
 
-private def representatives : Fin 14 → Col :=
+def representatives : Fin 14 → Col :=
   ![(0,0,0,0), (0,0,0,1), (0,0,1,0), (0,0,1,1), (0,0,1,2), (0,1,0,0),
     (0,1,0,1), (0,1,0,2), (0,1,1,0), (0,1,1,1), (0,1,1,2), (0,1,2,0),
     (0,1,2,1), (0,1,2,2)]
-private def relabel (e : Equiv.Perm (Fin 3)) : Col ≃ Col :=
+def relabel (e : Equiv.Perm (Fin 3)) : Col ≃ Col :=
   Equiv.prodCongr e (Equiv.prodCongr e (Equiv.prodCongr e e))
-private theorem column_relabel (e : Equiv.Perm (Fin 3)) (c : Col) (r : Fin 4) :
+theorem column_relabel (e : Equiv.Perm (Fin 3)) (c : Col) (r : Fin 4) :
     column (relabel e c) r = e (column c r) := by
   fin_cases r <;> rfl
 private theorem compatible_relabel (e : Equiv.Perm (Fin 3)) (a b : Col) :
     compatible (relabel e a) (relabel e b) ↔ compatible a b := by
   simp only [compatible, column_relabel, e.injective.ne_iff]
 set_option maxRecDepth 100000 in
-private theorem class_relabel : ∀ e : Equiv.Perm (Fin 3), ∀ c : Col,
+theorem class_relabel : ∀ e : Equiv.Perm (Fin 3), ∀ c : Col,
     cls (relabel e c) = cls c := by
   decide +kernel
 set_option maxRecDepth 100000 in
-private theorem class_rep : ∀ c : Col, ∃ e : Equiv.Perm (Fin 3),
+theorem class_rep : ∀ c : Col, ∃ e : Equiv.Perm (Fin 3),
     relabel e c = representatives (cls c) := by
   decide +kernel
 set_option maxRecDepth 100000 in
@@ -151,13 +151,13 @@ private theorem initial_weights : ∀ s : Fin 14,
       if compatible a b ∧ cls b = s then (1 : ℤ) else 0) = weights s := by
   decide +kernel
 
-private def gridEquiv (n : ℕ) : (Fin 4 × Fin n → Fin 3) ≃ (Fin n → Col) where
+def gridEquiv (n : ℕ) : (Fin 4 × Fin n → Fin 3) ≃ (Fin n → Col) where
   toFun P j := (P (0,j), P (1,j), P (2,j), P (3,j))
   invFun f p := column (f p.2) p.1
   left_inv P := by funext p; rcases p with ⟨r,j⟩; fin_cases r <;> rfl
   right_inv f := rfl
 
-private theorem column_grid (n : ℕ) (P : Fin 4 × Fin n → Fin 3)
+theorem column_grid (n : ℕ) (P : Fin 4 × Fin n → Fin 3)
     (j : Fin n) (r : Fin 4) : column (gridEquiv n P j) r = P (r,j) := by
   fin_cases r <;> rfl
 
