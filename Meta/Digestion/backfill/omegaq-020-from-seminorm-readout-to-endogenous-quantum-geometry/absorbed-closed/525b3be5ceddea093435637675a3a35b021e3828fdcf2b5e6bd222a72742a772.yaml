@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:525b3be5ceddea093435637675a3a35b021e3828fdcf2b5e6bd222a72742a772
   normalized_sha256: sha256:525b3be5ceddea093435637675a3a35b021e3828fdcf2b5e6bd222a72742a772
 cas_ref: sha256:525b3be5ceddea093435637675a3a35b021e3828fdcf2b5e6bd222a72742a772
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S1/FixedPoints/SignedCosineFeedback.signed_cosine_feedback_fixed_point
+    target_statement_id: sha256:9ea8be4388c723ed2f83956903db725e51285b0aeaa7ca118dd3e8585d16c0f9
 receipts:
   unresolved_subitems: []
