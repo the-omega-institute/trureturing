@@ -130,7 +130,7 @@ theorem eventual_discrete_fourth (SS : Finset ℕ → ℝ) (α β M : ℝ)
     exact (hformal H (Real.log x) hHlo hHhi hlower hupper).2 a b hab
   have hb := p_fourth_normalized_estimate SS N H M B C₁ C₂ (η H) ε w a b
     hgeom.1 hH1 hHN (by linarith) hC₁ hC₂ (hη H) hw hab
-    (htransfer H hHlo hHhi B w hw 4 (Or.inr rfl) a b hab) hf
+    (htransfer H hHlo hHhi B w hw 4 ⟨Or.inr (Or.inr rfl), le_rfl⟩ a b hab) hf
   have hB : 0 ≤ B := hw.2.2.1
   calc
     _ ≤ K * B * (η H + 1 / Real.log N +

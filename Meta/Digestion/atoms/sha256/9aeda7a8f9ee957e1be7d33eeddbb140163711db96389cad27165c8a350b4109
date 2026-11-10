@@ -1,0 +1,12 @@
+#### 定义 7.1：内部制备–读出–再编码协议
+
+在第 $n$ 轮，历史 $\mathcal F_n$ 确定控制角 $x_n$。 使用内部准备资源制备 $|\psi(x_n)\rangle=R_y(x_n)|0\rangle$，测量 $Z$， 结果 $Y_n\in\{-1,+1\}$ 满足
+
+$$
+\Pr(Y_n=b\mid\mathcal F_n)
+ =\frac{1+b\cos x_n}{2},\qquad
+ \mathbb E[Y_n\mid\mathcal F_n]=\cos x_n.
+$$
+
+每轮重复样本指条件于当前程序独立制备的新系统； 不默认对同一未知单拷贝反复测量能提供这些样本。
+

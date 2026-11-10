@@ -1,0 +1,13 @@
+#### 定义 2.1：注意控制合同
+
+以下为书写方便，按 $C\otimes(S\otimes R)\otimes M\otimes E$ 重排整体张量因子，未参与当前公式的因子写作恒等作用。 一个设置 $c$ 指定仪器 $\mathcal I_b^{(c)}$、 终端效应菜单、参考访问和记忆更新规则。 同一设置中的条件分支为
+
+$$
+\mathcal I_b^{(c)}(\rho)
+ =\sum_\mu K_{b\mu}^{(c)}\rho K_{b\mu}^{(c)\dagger},
+ \qquad
+ \sum_{b,\mu}K_{b\mu}^{(c)\dagger}K_{b\mu}^{(c)}=I.
+$$
+
+参考 $R$ 可并入这些 Kraus 算子作用的目标空间， 其准备与访问必须列在合同中。
+
