@@ -62,7 +62,7 @@ internal sealed class KurkovTriangularColumnSumDocument : IScribeDocumentDefinit
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
     private static Formula Eqn(Formula a, Formula b) => Seq(a, Sp, Eq, Sp, b);
     private static Formula LeqTo(Formula a, Formula b) => Seq(a, Sp, Leq, Sp, b);
-    private static Formula Lt(Formula a, Formula b) => Seq(a, Sp, Less, Sp, b);
+    private static Formula Lt(Formula a, Formula b) => Seq(a, Sp, F.Lt, Sp, b);
     private static Formula And(Formula a, Formula b) => Seq(Par(a), Sp, Land, Sp, Par(b));
     private static Formula Imp(Formula a, Formula b) => Seq(Par(a), Sp, Implies, Sp, Par(b));
     private static Formula All(string name, Formula type, Formula body) =>
@@ -111,7 +111,7 @@ internal sealed class KurkovTriangularColumnSumDocument : IScribeDocumentDefinit
         var summand = new Formula.Fraction(
             Mul(CastQ(A(j, k)), CastQ(Factorial(Add(n, fk)))),
             CastQ(Factorial(Add(fk, j))));
-        var sum = Seq(new Formula.Superscript(
+        var sum = Seq(new Formula.Power(
             new Formula.Subscript(Sum, Eqn(j, D(0))), n), Sp, Par(summand));
         var identity = Eqn(CastQ(A(n, Add(Add(k, fk), D(1)))), sum);
         var existence = Some("A", ArrayType(), Call("IsArray", V("A")));
