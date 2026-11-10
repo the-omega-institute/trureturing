@@ -4,10 +4,9 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The actual generated coordinate field controls full semilinear isotropy and orbit size. -/
+   digest: Generated normalized-coordinate fields control full semilinear isotropy and orbits. -/
 
 import D5.S3.FiniteGroups.Semilinear.WeightOneChart
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
 
 /-! The chart stabilizer is the fixing subgroup of the actual coordinate-generated field. -/
 
@@ -23,18 +22,21 @@ private theorem tuple_stabilizer (b : J → K) :
     MulAction.stabilizer Gal(K/F) b =
       (IntermediateField.adjoin F (Set.range b)).fixingSubgroup := by
   ext σ
-  rw [IntermediateField.mem_fixingSubgroup_iff,
-    IntermediateField.forall_mem_adjoin_smul_eq_self_iff F σ]
-  simp only [MulAction.mem_stabilizer_iff, funext_iff, Pi.smul_apply,
+  rw [IntermediateField.mem_fixingSubgroup_iff]
+  change (σ • b = b) ↔ ∀ x ∈ IntermediateField.adjoin F (Set.range b), σ • x = x
+  rw [IntermediateField.forall_mem_adjoin_smul_eq_self_iff F (E := K) σ]
+  simp only [funext_iff, Pi.smul_apply,
     AlgEquiv.smul_def, Set.forall_mem_range]
 
-local instance : MulAction (Group F K) (Option J → K) := weightedAction (chartWeights w)
 local instance : MulAction (Group F K) (Chart (K := K) (J := J) w) := chartAction w
 
 private theorem ambient_stabilizer (A : Chart (K := K) (J := J) w) :
+    letI := weightedAction (F := F) (K := K) (chartWeights w)
     MulAction.stabilizer (Group F K) A.val = MulAction.stabilizer (Group F K) A := by
+  let := weightedAction (F := F) (K := K) (chartWeights w)
   ext g
   simp only [MulAction.mem_stabilizer_iff]
+  change (g • A).val = A.val ↔ g • A = A
   exact Subtype.ext_iff.symm
 
 /-- The generated normalized-coordinate field controls the stabilizer and the full ambient
@@ -42,6 +44,7 @@ weighted-semilinear orbit. There is no finiteness or nonvanishing hypothesis on 
 theorem chart_field_degree (p n : ℕ) [Fact p.Prime]
     {K : Type} [Field K] [Fintype K] [Algebra (ZMod p) K]
     (A : Chart (K := K) (J := J) w) (hK : Fintype.card K = p ^ n) :
+    letI := weightedAction (F := ZMod p) (K := K) (chartWeights w)
     let L := IntermediateField.adjoin (ZMod p) (Set.range (normalize w A))
     let e := Module.finrank (ZMod p) L
     MulAction.stabilizer Gal(K/ZMod p) (normalize w A) = L.fixingSubgroup ∧
@@ -49,6 +52,7 @@ theorem chart_field_degree (p n : ℕ) [Fact p.Prime]
       Nat.card (MulAction.stabilizer (Group (ZMod p) K) A.val) = n / e ∧
       Nat.card (MulAction.orbit (Group (ZMod p) K) A.val) = (p ^ n - 1) * e := by
   classical
+  let := weightedAction (F := ZMod p) (K := K) (chartWeights w)
   let L := IntermediateField.adjoin (ZMod p) (Set.range (normalize w A))
   let e := Module.finrank (ZMod p) L
   have hL : MulAction.stabilizer Gal(K/ZMod p) (normalize w A) = L.fixingSubgroup :=
@@ -69,6 +73,7 @@ theorem chart_field_degree (p n : ℕ) [Fact p.Prime]
   have ho := Nat.card_congr
     (MulAction.orbitProdStabilizerEquivGroup (Group (ZMod p) K) A.val)
   rw [Nat.card_prod, hs, hg, ← ht, ← Nat.mul_assoc] at ho
+  simp only [ht] at ho
   have hd : Module.finrank L K ≠ 0 := Module.finrank_pos.ne'
   refine ⟨hL, ⟨Module.finrank L K, ht.symm⟩, ?_, ?_⟩
   · rw [hs, ← hn]

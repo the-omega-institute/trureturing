@@ -65,7 +65,7 @@ private theorem chart_ext {A B : Chart (K := K) (J := J) w}
 theorem normalize_smul (g : Group F K) (A : Chart (K := K) (J := J) w) :
     normalize w (g • A) = g.right • normalize w A := by
   funext j
-  change (((g.left⁻¹ : Kˣ) : K) * g.right (A.val none))⁻¹ ^ w j *
+  change (((g.left⁻¹ : Kˣ) : K) ^ 1 * g.right (A.val none))⁻¹ ^ w j *
     (((g.left⁻¹ : Kˣ) : K) ^ w j * g.right (A.val (some j))) =
       g.right ((A.val none)⁻¹ ^ w j * A.val (some j))
   simp [mul_inv_rev, mul_pow, map_mul, map_pow, map_inv₀,
@@ -78,7 +78,7 @@ def chartTransport (A B : Chart (K := K) (J := J) w) (σ : Gal(K/F)) : Group F K
 
 private theorem transport_head (A B : Chart (K := K) (J := J) w) (σ : Gal(K/F)) :
     ((chartTransport w A B σ) • A).val none = B.val none := by
-  change (σ (A.val none) / B.val none)⁻¹ * σ (A.val none) = B.val none
+  change ((σ (A.val none) / B.val none)⁻¹) ^ 1 * σ (A.val none) = B.val none
   simp [div_eq_mul_inv, A.property, B.property]
 
 private theorem transport_eq (A B : Chart (K := K) (J := J) w) (σ : Gal(K/F))
@@ -118,7 +118,8 @@ private theorem stabilizer_scalar (A : Chart (K := K) (J := J) w)
     (g.val.left : K) = g.val.right (A.val none) / A.val none := by
   have h := congrArg (fun B : Chart (K := K) (J := J) w => B.val none)
     (MulAction.mem_stabilizer_iff.mp g.property)
-  change ((g.val.left⁻¹ : Kˣ) : K) * g.val.right (A.val none) = A.val none at h
+  change ((g.val.left⁻¹ : Kˣ) : K) ^ 1 * g.val.right (A.val none) = A.val none at h
+  rw [pow_one] at h
   apply (eq_div_iff A.property).mpr
   calc
     (g.val.left : K) * A.val none =
