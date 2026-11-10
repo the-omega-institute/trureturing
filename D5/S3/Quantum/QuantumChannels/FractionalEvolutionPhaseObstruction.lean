@@ -94,9 +94,15 @@ private theorem fold_neg {d m N : ℕ} (A : Circuit d m N)
   induction L generalizing B with
   | nil => simp
   | cons j L ih =>
-    simp only [List.foldl_cons, query_neg, Matrix.kronecker_neg, Matrix.mul_neg,
-      Matrix.neg_mul, List.length_cons]
+    simp only [List.foldl_cons, List.length_cons]
     rw [ih]
+    have hq (j : Fin N) :
+        (1 : Matrix (Fin (m + 1)) (Fin (m + 1)) ℂ) ⊗ₖ query (A.negative j) (-U) =
+        -((1 : Matrix (Fin (m + 1)) (Fin (m + 1)) ℂ) ⊗ₖ query (A.negative j) U) := by
+      rw [query_neg]
+      ext p q
+      simp [Matrix.kroneckerMap_apply]
+    simp only [hq, Matrix.mul_neg, Matrix.neg_mul]
     have hs : ∀ (L : List (Fin N)) (z : ℂ) B,
         L.foldl (fun acc j => (A.W j.succ).val *
           ((1 : Matrix (Fin (m + 1)) (Fin (m + 1)) ℂ) ⊗ₖ query (A.negative j) U) * acc) (z • B) =
@@ -119,11 +125,171 @@ private theorem channel_neg {d m N : ℕ} (A : Circuit d m N)
     (U : Matrix (Fin d) (Fin d) ℂ) :
     conj (run A (-U) * initialization d m) = conj (run A U * initialization d m) := by
   rw [run_neg, Matrix.smul_mul]
-  ext X
+  apply LinearMap.ext
+  intro X
   change (((-1 : ℂ) ^ N) • (run A U * initialization d m)) * X *
     (((-1 : ℂ) ^ N) • (run A U * initialization d m))ᴴ = _
   simp only [Matrix.conjTranspose_smul, Matrix.smul_mul, Matrix.mul_smul, smul_smul,
     map_pow, map_neg, map_one, ← pow_add, ← two_mul, pow_mul]
   norm_num
+  simp [← mul_pow]
+
+
+private def logarithm (swapped : Bool) : Matrix (Fin 2) (Fin 2) ℂ :=
+  diagonal (fun j => ((if (j = 0) = (!swapped) then Real.pi / 2 else
+    3 * Real.pi / 2 : ℝ) : ℂ))
+
+private def oracle : Matrix (Fin 2) (Fin 2) ℂ :=
+  diagonal (fun j => if j = 0 then Complex.I else -Complex.I)
+
+private theorem logarithm_admissible (swapped : Bool) :
+    (logarithm swapped).IsHermitian ∧
+    ∀ x : ℝ, x ∈ spectrum ℝ (logarithm swapped) → 1 / 2 ≤ x ∧ x < 2 * Real.pi := by
+  constructor
+  · apply Matrix.isHermitian_diagonal_iff.mpr
+    intro j
+    simp [logarithm, isSelfAdjoint_iff]
+  · intro x hx
+    rw [← spectrum.algebraMap_mem_iff ℂ, logarithm, spectrum_diagonal] at hx
+    obtain ⟨j, hj⟩ := hx
+    have hr := congrArg Complex.re hj
+    simp only [Complex.ofReal_re, Algebra.algebraMap_eq_smul_one, Complex.real_smul,
+      Complex.one_re, mul_one] at hr
+    have hp := Real.pi_gt_three
+    split_ifs at hr <;> constructor <;> linarith
+
+private theorem logarithm_exp (swapped : Bool) :
+    NormedSpace.exp (Complex.I • logarithm swapped) =
+      if swapped then -oracle else oracle := by
+  have h3 : Complex.exp ((3 * (Real.pi : ℂ) / 2) * Complex.I) = -Complex.I := by
+    have he : 3 * (Real.pi : ℂ) / 2 * Complex.I =
+        (Real.pi : ℂ) / 2 * Complex.I + (Real.pi : ℂ) * Complex.I := by ring
+    rw [he, Complex.exp_add, Complex.exp_pi_div_two_mul_I, Complex.exp_pi_mul_I]
+    ring
+  rw [logarithm, ← Matrix.diagonal_smul, Matrix.exp_diagonal]
+  ext i j
+  fin_cases i <;> fin_cases j <;> cases swapped <;>
+    simp [oracle, Matrix.diagonal_apply, Pi.smul_apply, smul_eq_mul,
+      ← Complex.exp_eq_exp_ℂ, mul_comm Complex.I, Complex.exp_pi_div_two_mul_I, h3]
+
+
+open scoped ComplexOrder
+open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf (MatrixMap)
+open D5.S3.Quantum.Foundation.FiniteKrausChannel.PhyslibLeaf.MatrixMap (kron kron_def)
+open D5.S3.Quantum.Foundation.FiniteTraceDistance (traceNorm traceNorm_add_le
+  traceNorm_neg traceNorm_sub_orthogonal)
+
+private def inputVector : Fin 2 × Fin 2 → ℂ :=
+  fun p => if p.2 = 0 then 1 else 0
+
+private def inputDensity : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ :=
+  (1 / 2 : ℝ) • Matrix.vecMulVec inputVector (star inputVector)
+
+private theorem input_density : inputDensity.PosSemidef ∧ inputDensity.trace = 1 := by
+  constructor
+  · exact (Matrix.posSemidef_vecMulVec_self_star inputVector).smul (by norm_num)
+  · norm_num [inputDensity, inputVector, Matrix.trace, Fintype.sum_prod_type,
+      Fin.sum_univ_two, Matrix.vecMulVec, Pi.star_apply]
+
+private def outputVector (m : ℕ) (swapped : Bool) : (Fin (m + 1) × Fin 2) × Fin 2 → ℂ :=
+  fun p => if p.1.1 = 0 ∧ p.2 = 0 then
+    if p.1.2 = 0 then 1 else if swapped then -Complex.I else Complex.I
+    else 0
+
+private def outputDensity (m : ℕ) (swapped : Bool) :
+    Matrix ((Fin (m + 1) × Fin 2) × Fin 2) ((Fin (m + 1) × Fin 2) × Fin 2) ℂ :=
+  (1 / 2 : ℝ) • Matrix.vecMulVec (outputVector m swapped) (star (outputVector m swapped))
+
+private theorem output_density (m : ℕ) (swapped : Bool) :
+    (outputDensity m swapped).PosSemidef ∧ (outputDensity m swapped).trace = 1 := by
+  constructor
+  · exact (Matrix.posSemidef_vecMulVec_self_star (outputVector m swapped)).smul (by norm_num)
+  · cases swapped <;> simp [outputDensity, outputVector, Matrix.trace, Fintype.sum_prod_type,
+      Fin.sum_univ_two, Matrix.vecMulVec, Pi.star_apply] <;> norm_num
+
+private theorem output_orthogonal (m : ℕ) :
+    outputDensity m false * outputDensity m true = 0 := by
+  ext p q
+  simp [outputDensity, outputVector, Matrix.mul_apply, Fintype.sum_prod_type,
+    Fin.sum_univ_two, Matrix.vecMulVec, Pi.star_apply]
+  split_ifs <;> simp_all <;> ring_nf <;> simp
+
+private theorem output_separation (m : ℕ) :
+    traceNorm (outputDensity m false - outputDensity m true) = 2 := by
+  rw [traceNorm_sub_orthogonal _ _ (output_density m false).1
+    (output_density m true).1 (output_orthogonal m),
+    (output_density m false).2, (output_density m true).2]
+  norm_num
+
+
+private def halfDiagonal (swapped : Bool) : Matrix (Fin 2) (Fin 2) ℂ :=
+  diagonal (fun j => if j = 0 then (if swapped then Complex.I else 1)
+    else if swapped then 1 else Complex.I)
+
+private def commonPhase : ℂ := Complex.exp ((Real.pi : ℂ) / 4 * Complex.I)
+
+private theorem half_exp (swapped : Bool) :
+    NormedSpace.exp ((((1 / 2 : ℝ) : ℂ) * Complex.I) • logarithm swapped) =
+      commonPhase • halfDiagonal swapped := by
+  have h3 : Complex.exp ((3 * (Real.pi : ℂ) / 4) * Complex.I) = commonPhase * Complex.I := by
+    have he : 3 * (Real.pi : ℂ) / 4 * Complex.I =
+        (Real.pi : ℂ) / 4 * Complex.I + (Real.pi : ℂ) / 2 * Complex.I := by ring
+    rw [he, Complex.exp_add, Complex.exp_pi_div_two_mul_I]
+    rfl
+  have hsmall : NormedSpace.exp (((1 / 2 : ℝ) : ℂ) * Complex.I *
+      ((Real.pi / 2 : ℝ) : ℂ)) = commonPhase := by
+    rw [← Complex.exp_eq_exp_ℂ]
+    congr 1
+    push_cast
+    ring
+  have hlarge : NormedSpace.exp (((1 / 2 : ℝ) : ℂ) * Complex.I *
+      ((3 * Real.pi / 2 : ℝ) : ℂ)) = commonPhase * Complex.I := by
+    rw [← Complex.exp_eq_exp_ℂ]
+    convert h3 using 1 <;> congr 1 <;> push_cast <;> ring
+  rw [logarithm, ← Matrix.diagonal_smul, Matrix.exp_diagonal]
+  ext i j
+  fin_cases i <;> fin_cases j <;> cases swapped <;>
+    simp only [Bool.not_false, Bool.not_true, Bool.false_eq_true, not_false_eq_true,
+      Bool.true_eq_false, Matrix.diagonal_apply, halfDiagonal, Pi.smul_apply,
+      smul_eq_mul, Function.comp_apply] <;>
+    norm_num only [hsmall, hlarge, one_mul, mul_one, mul_zero, if_true, if_false] <;>
+    simp [mul_comm]
+
+private theorem common_phase_unit : commonPhase * star commonPhase = 1 := by
+  change Complex.exp _ * (starRingEnd ℂ) (Complex.exp _) = 1
+  rw [← Complex.exp_conj, ← Complex.exp_add]
+  norm_num [map_mul, map_div₀, Complex.conj_ofReal, Complex.conj_I]
+  simp only [map_ofNat]
+  ring_nf
+  simp
+
+private theorem half_channel (m : ℕ) (swapped : Bool) :
+    conj (initialization 2 m * NormedSpace.exp
+      ((((1 / 2 : ℝ) : ℂ) * Complex.I) • logarithm swapped)) =
+    conj (initialization 2 m * halfDiagonal swapped) := by
+  rw [half_exp, Matrix.mul_smul]
+  apply LinearMap.ext
+  intro X
+  change (commonPhase • (initialization 2 m * halfDiagonal swapped)) * X *
+    (commonPhase • (initialization 2 m * halfDiagonal swapped))ᴴ =
+    (initialization 2 m * halfDiagonal swapped) * X *
+      (initialization 2 m * halfDiagonal swapped)ᴴ
+  simp only [Matrix.conjTranspose_smul, Matrix.smul_mul, Matrix.mul_smul, smul_smul]
+  rw [common_phase_unit, one_smul]
+
+set_option maxHeartbeats 1600000 in
+private theorem amplified_target (m : ℕ) (swapped : Bool) :
+    kron (conj (initialization 2 m * NormedSpace.exp
+      ((((1 / 2 : ℝ) : ℂ) * Complex.I) • logarithm swapped)))
+      (LinearMap.id : MatrixMap (Fin 2) (Fin 2) ℂ) inputDensity =
+    outputDensity m swapped := by
+  rw [half_channel]
+  ext ⟨⟨a, i⟩, r⟩ ⟨⟨b, j⟩, s⟩
+  fin_cases i <;> fin_cases j <;> fin_cases r <;> fin_cases s <;> cases swapped <;>
+    simp [kron_def, conj, initialization, halfDiagonal, inputDensity, inputVector,
+      outputDensity, outputVector, Matrix.mul_apply, Fin.sum_univ_two,
+      Matrix.vecMulVec, Pi.star_apply, Matrix.conjTranspose_apply,
+      Matrix.single_apply] <;>
+    split_ifs <;> simp_all <;> ring
 
 end Trureturing.OpenProblems.FractionalEvolutionPhase
