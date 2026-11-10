@@ -1,0 +1,20 @@
+#### 命题 5.6：芝诺约束不会取消内部时钟
+
+设 $\mathcal H_T$ 是内部时钟，整体含 $H_\Omega=H_T\otimes I+I\otimes H_S$， 约束为 $\Pi=I_T\otimes P$。压缩生成元为
+
+$$
+\Pi H_\Omega\Pi=H_T\otimes P+I_T\otimes PH_SP.
+$$
+
+故时钟仍按 $H_T$ 演化。即使 $P=|\psi\rangle\langle \psi|$ 为秩一， 系统传播算子也保留 $e^{-\mathrm i\langle H_S\rangle_\psi t/\hbar}P$。
+
+**证明。**
+
+直接乘开 $\Pi H_\Omega\Pi$，其两个项对易。 秩一压缩满足 $PH_SP=\langle H_S\rangle_\psi P$。
+
+$\square$
+
+孤立射线的整体相位不可由其自身测量读出；加入可访问的相干参考后， 相应分支相位才可能成为相对相位。以上结论均未使用 “面积为零所以时间消失”的假设。
+
+<a id="section-6"></a>
+

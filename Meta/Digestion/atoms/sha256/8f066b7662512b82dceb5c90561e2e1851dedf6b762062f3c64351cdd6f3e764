@@ -1,0 +1,25 @@
+#### 定理 3.5：方向与测量强度相互独立
+
+令 $Z=Z^\dagger$、$Z^2=I$，$0\leq\eta\leq1$，
+
+$$
+E_b=\frac{I+b\eta Z}{2},\qquad K_b=\sqrt{E_b},\quad b=\pm1.
+$$
+
+非选择通道保持 $Z$ 的对角块，交叉块乘以 $\nu=\sqrt{1-\eta^2}$。 在 $Z=\sigma_z$ 时，
+
+$$
+(r_x,r_y,r_z)\longmapsto(\nu r_x,\nu r_y,r_z),
+ \qquad\mathbb E[b]=\eta r_z.
+$$
+
+**证明。**
+
+在 $Z$ 的本征基中，$K_b$ 的两个对角值为 $\sqrt{(1+b\eta)/2}$ 和 $\sqrt{(1-b\eta)/2}$。 对角概率系数求和为一， 交叉项系数求和为 $\sqrt{1-\eta^2}$。 结果均值为 $\operatorname{tr}\rho(E_+-E_-)=\eta\operatorname{tr}(\rho Z)$。
+
+$\square$
+
+$\eta=0$ 时仪器不给出状态信息且非选择通道为恒等； $\eta=1$ 时完全分块。 对同一测量轴，仅改变 $\eta$ 就产生不同的扰动， 所以一个相对夹角不是全部“注意”的参数。 若每步间隔 $\delta$、$\eta^2=2\kappa\delta+O(\delta^2)$， 则重复监测的交叉块极限为 $e^{-\kappa t}C$， 对应 $\dot\rho=(\kappa/2)(Z\rho Z-\rho)$。 这是物理耦合造成的效应，不以人是否观看为额外条件。
+
+<a id="section-4"></a>
+
