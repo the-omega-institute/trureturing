@@ -1,0 +1,27 @@
+**规定后缀。** 计算并保留 (10.2) 后，忽略全部旧获取、场及算术输出，恰接 OTF004 定义 17.1。为指定同一通道，记 $t_{\rm term}=d\tau_0=1/64$、$r_t=1-\cos t_{\rm term}$、$s_t=\sin t_{\rm term}$，在非参考 $B,A,F$ 上取该定义的固定矩阵
+
+$$
+\begin{aligned}
+O_i={}&-r_t\left[\sigma_{F,i}
++\frac{\sigma_{B,i}(\sigma_A\cdot\sigma_F)
++\sigma_{A,i}(\sigma_B\cdot\sigma_F)}2\right]
++\frac{s_t}2[(\sigma_B-\sigma_A)\times\sigma_F]_i,\\
+\Phi(X)&=\frac{\operatorname{Tr}(X)I_2+\sum_i\operatorname{Tr}(O_iX)\sigma_i}2,
+\qquad\widehat\Phi(X)=\frac{I_B}2\otimes\Phi(X)_A\otimes\frac{I_F}2,\\
+\mathcal E(X)&=\operatorname{Tr}(X)I_2/2.
+\end{aligned}
+\tag{10.9}
+$$
+
+其 CP、TP 性直接使用 OTF004 引理 17.2。准备固定 singlet
+$|\psi^-\rangle_{BA}=(|\uparrow\downarrow\rangle-|\downarrow\uparrow\rangle)/\sqrt2$。将 $B$ 送入第一个新 forward $V$；对 $H$ 在原始标签基退相干，保留 $H,E$、原始符号及实际副本，仅在负标签上交换 $B,A$。在 $+d e_x$ 独立重置 $F$，对 $BAF$ 施行恰为 (10.9) 的 $\widehat\Phi$。将其输出 $A$ 送入第二个新 forward $V$，作同样的原始标签退相干并保留两组原生记录及实际副本。随后对 $B,A,F$ 各施行声明的 $\mathcal E$ 并保留这些同名量子输出。
+
+最后，在 $+d e_x$ 另独立重置新鲜、此前未经改动的 $S_t$，恰一次施行
+
+$$
+U_{\rm term}=\exp[-idJ\cdot\sigma/m]
+\tag{10.10}
+$$
+
+并对同一 $S_t$ 施行声明的 $\mathcal E$，仍保留它。不调用其它终端或其逆。原始及实际复制符号、$B,A,F,S_t$、两个新 $H,E$、全部程序、路由及固定工作口均在最终 $K$ 中；(10.9) 不被换成另一个带不同实际输出的扩张。所有分支都执行该后缀。
+
