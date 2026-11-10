@@ -1,0 +1,42 @@
+**推论 39.3（任意有限插入字的混合矩形）。**在定义 39.1 的全部条件下，对字母表 $\{1,2\}$ 上的有限字递归定义
+
+$$
+W_{\varnothing}(a)=a,\qquad W_{wi}(a)=P_i(W_w(a))=W_w(a)\cdot p_i.
+\tag{39.20}
+$$
+
+对任意两个有限字 $w,z$（允许空字）及全部实际 $a,b\in M$，有
+
+$$
+D(W_w(a),W_z(b))-D(W_w(a),b)-D(a,W_z(b))+D(a,b)=0.
+\tag{39.21}
+$$
+
+**证明。**在定理 39.2 的同一个实际纤维对 $E$ 上，若 $w=i_1\cdots i_m$、$z=j_1\cdots j_\ell$，令
+
+$$
+L_w=L_{i_1}\cdots L_{i_m},\qquad R_z=R_{j_1}\cdots R_{j_\ell},
+\qquad L_{\varnothing}=R_{\varnothing}=I.
+\tag{39.22}
+$$
+
+由拉回的复合次序，$L_wg(a,b)=g(W_w(a),b)$、$R_zg(a,b)=g(a,W_z(b))$，恰好保留 (39.20) 中逐次插入的括号和字母顺序。有限望远镜恒等式给
+
+$$
+\begin{aligned}
+L_w-I&=\sum_{r=1}^m L_{i_1}\cdots L_{i_{r-1}}(L_{i_r}-I),\\
+R_z-I&=\sum_{s=1}^{\ell} R_{j_1}\cdots R_{j_{s-1}}(R_{j_s}-I).
+\end{aligned}
+\tag{39.23}
+$$
+
+不需要同端点交换。将两个有限和相乘并作用于 $h$，仅用异端点交换，每一项成为
+
+$$
+L_{i_1}\cdots L_{i_{r-1}}R_{j_1}\cdots R_{j_{s-1}}
+(L_{i_r}-I)(R_{j_s}-I)h=0,
+\tag{39.24}
+$$
+
+其中最后的零是定理 39.2 在整个 $E$ 上的四种矩形恒等式。因此 $(L_w-I)(R_z-I)h=0$，在任意 $(a,b)\in E$ 取值即得 (39.21)。若有空字，对应有限和为空，结论同样成立。证毕。
+
