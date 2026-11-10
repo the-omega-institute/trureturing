@@ -339,8 +339,21 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   exact Bool.noConfusion hh
 def family : Registration arena (type_of% @row_major_lt) where
   actual := actual
-  bridge := by simp [arena, actual, realize]
-  variation := ⟨by simpa [arena, actual, realize] using @row_major_lt,
+  bridge := by
+    change
+      (∀ {n : ℕ} (p q : Fin 4 × Fin n),
+        p.2.val + n * p.1.val < q.2.val + n * q.1.val ↔
+          p.1.val * n + p.2.val < q.1.val * n + q.2.val) ↔
+      (∀ {n : ℕ} (p q : Fin 4 × Fin n),
+        decide (p.2.val + n * p.1.val < q.2.val + n * q.1.val) = true ↔
+          p.1.val * n + p.2.val < q.1.val * n + q.2.val)
+    simp only [decide_eq_true_eq]
+  variation := ⟨by
+    intro n p q
+    change decide (p.2.val + n * p.1.val < q.2.val + n * q.1.val) = true ↔ _
+    rw [decide_eq_true_eq]
+    change @LT.lt (Fin 4 × Fin n) (cellOrder n).toLT p q ↔ _
+    exact row_major_lt p q,
     rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
