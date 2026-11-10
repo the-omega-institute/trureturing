@@ -44,7 +44,10 @@ internal sealed class MultiVirtualTwinZetaEightFaithfulnessRefutationDocument : 
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The universal answer is negative", Disp(new Formula.Not(Parenthesized(ClaimBody()))),
                 "At k = n = 3 let r alpha = PresentedGroup.of (Sum.inr (0, alpha)). The word [r 0 * r 1, r 0 * r 2] is nonidentity: sending both real generators to the identity and the three virtual colors to (01), (12), (23) on Fin 4 respects all nine relation families and sends the word to (02)(13). For every prescribed matrix homomorphism the two products are diagonal, with diagonals (y 1 / y 0, y 0 / y 1, 1) and (y 2 / y 0, y 0 / y 2, 1), and hence commute. The word therefore has identity image for every a, b, y. The universal assertion supplies a homomorphism at a = 2, b = 1 and all y = 1, contradicting its asserted injectivity. An independent construction of the arbitrary-parameter GL homomorphisms is not asserted here; the existence conjunct suffices for this negation. Theorem 4.2's existing nonfaithfulness conclusions are consistent with this extension. The generic one-color and two-color questions and other strand counts remain unsettled by this argument.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("keshari-mayassi-prabhakar-nasser-2026-zeta8-faithfulness"),
+                    ResolutionKind.Refuted))
         )));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,

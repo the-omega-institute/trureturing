@@ -120,6 +120,10 @@ $$\neg (\forall k \in \mathbb{N},\; \forall n \in \mathbb{N},\; 1 \le k \Rightar
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/Knot/MultiVirtualTwinZetaEightFaithfulnessRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/keshari-mayassi-prabhakar-nasser-2026-zeta8-faithfulness` (refuted) by `D5/S3/Quantum/Algebra/Knot/MultiVirtualTwinZetaEightFaithfulnessRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"keshari-mayassi-prabhakar-nasser-2026-zeta8-faithfulness","declaration_gid":"D5/S3/Quantum/Algebra/Knot/MultiVirtualTwinZetaEightFaithfulnessRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Vaibhav Keshari, Taher I. Mayassi, Madeti Prabhakar, and Mohamad N. Nasser (2026). *Presentations and Representations of the Multi-Virtual Twin Group and Associated Subgroups*. DOI: [10.48550/arXiv.2605.13090](https://doi.org/10.48550/arXiv.2605.13090). URL: <https://arxiv.org/abs/2605.13090v1>.
