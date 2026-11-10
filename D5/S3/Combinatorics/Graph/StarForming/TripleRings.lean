@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/TripleRings
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Graph/StarForming/TripleWitnesses]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex]
    utility: none
    digest: Arbitrary finite triple-port module rings with actual SF and beta attainment. -/
 

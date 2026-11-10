@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/CubicCertificate
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Graph/StarForming/RegularBound]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex]
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/Graph/StarForming/HeawoodParameters.claim; result=D5/S3/Combinatorics/Graph/StarForming/HeawoodParameters.result; claim=D5/S3/Combinatorics/Graph/StarForming/HeawoodParameters.claim
    digest: Exact finite local certificates and ambient graph deletion proofs. -/
 

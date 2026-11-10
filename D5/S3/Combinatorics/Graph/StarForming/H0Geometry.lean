@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/H0Geometry
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Graph/StarForming/Semantics, D5/S3/Combinatorics/Graph/StarForming/CyclicConnectivity]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex]
    utility: none
    digest: Actual local paths and all-size cyclic two-connectivity. -/
 

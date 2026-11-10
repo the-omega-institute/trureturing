@@ -12,17 +12,11 @@ open scoped BigOperators
 
 namespace Reg.D5.S3.Combinatorics.Graph.StarForming.WitnessBudget
 
-structure Input where
-  Vertex : Type
-  finite : Fintype Vertex
-  eq : DecidableEq Vertex
-  graph : SimpleGraph Vertex
-  adj : DecidableRel graph.Adj
-  d : ℕ
+abbrev Parameters := Σ V : Type, Σ _ : SimpleGraph V, ℕ
 
 abbrev signature : Signature where
-  Params := Input
-  State p := Finset p.Vertex
+  Params := Parameters
+  State p := Finset p.1
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -30,9 +24,9 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def observation : ∀ (_ : Unit) (p : Input), Finset p.Vertex → ℕ := fun _ _ S => S.card
+def observation : ∀ (_ : Unit) (p : Parameters), Finset p.1 → ℕ := fun _ _ S => S.card
 
-def noAnchor : ∀ (_ : Empty) (p : Input), Finset p.Vertex := fun e => nomatch e
+def noAnchor : ∀ (_ : Empty) (p : Parameters), Finset p.1 := fun e => nomatch e
 
 def bad : Realization signature := realize signature (fun _ _ S => S.card+1) noAnchor
 
@@ -42,7 +36,7 @@ abbrev arena : Arena where
     (G : SimpleGraph V) [a : DecidableRel G.Adj] (S : Finset V)
     (hS : IsMinimalStarForming G 2 S) (d : ℕ) (_hd : 1 ≤ d)
     (_hdegree : ∀ v, degree G v=d),
-    (2*d-1)*r.readout () ⟨V,f,e,G,a,d⟩ S+(isolates G S).card+
+    (2*d-1)*r.readout () ⟨V,G,d⟩ S+(isolates G S).card+
       (∑ x ∈ Finset.univ \ S, unused G S hS d x)=d*Fintype.card V
 
 abbrev SourceClaim : Prop := ∀ {V : Type} [Fintype V] [DecidableEq V]
@@ -78,7 +72,7 @@ def family : Registration arena SourceClaim where
       exact nomatch e
   dependence := by
     intro i
-    let p : Input := ⟨Fin 1,inferInstance,inferInstance,⊥,inferInstance,1⟩
+    let p : Parameters := ⟨Fin 1,⊥,1⟩
     refine ⟨p,∅,{(0 : Fin 1)},?_⟩
     change (∅ : Finset (Fin 1)).card ≠ ({(0 : Fin 1)} : Finset (Fin 1)).card
     simp

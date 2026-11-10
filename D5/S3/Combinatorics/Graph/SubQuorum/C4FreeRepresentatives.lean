@@ -2,8 +2,8 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Graph/StarForming/DegreeCapacity]
-   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.claim; result=result
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex]
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.claim; result=D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.result; claim=D5/S3/Combinatorics/Graph/SubQuorum/C4FreeRepresentatives.claim
    digest: C4-free pair ownership, finite Pappus/Heawood proofs and canonical dissociation obstruction. -/
 
 import D5.S3.Combinatorics.Graph.SubQuorum.C4RepresentativeBounds

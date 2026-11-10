@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/PaddingModule
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Graph/StarForming/FourPortCore, D5/S3/Combinatorics/Graph/StarForming/HeawoodPorts]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex]
    utility: none
    digest: Actual arbitrary-size Heawood padding modules with strict independent compensation. -/
 

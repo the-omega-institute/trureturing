@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/HeawoodAllDoubleCovers
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Graph/StarForming/BinaryCoverRepresentation, D5/S3/Combinatorics/Graph/StarForming/HeawoodCoverParameters]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex]
    utility: none
    digest: Actual parameter dichotomy for every two-sheeted Heawood neighborhood cover. -/
 

@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/BipartiteExchange
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Graph/StarForming/DegreeCapacity, D5/S3/Combinatorics/Graph/StarForming/CubicPathAccounting]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex]
    utility: none
    digest: Actual deletion-witness shapes for bipartite exchange selections. -/
 

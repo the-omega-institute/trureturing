@@ -11,8 +11,8 @@ open _root_.D5.S3.Combinatorics.Graph.StarFormingDissociationRefutation
 namespace Reg.D5.S3.Combinatorics.Graph.StarForming.CycleParameters
 
 abbrev signature : Signature where
-  Params := Unit
-  State _ := ℕ
+  Params := ℕ
+  State p := Finset (Fin p)
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -20,9 +20,9 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def observation : ∀ (_ : Unit) (_ : Unit), ℕ → ℕ := fun _ _ n => (selection n).card
+def observation : ∀ (_ : Unit) (p : ℕ), Finset (Fin p) → ℕ := fun _ _ S => S.card
 
-def noAnchor : ∀ (_ : Empty) (_ : Unit), ℕ := fun e => nomatch e
+def noAnchor : ∀ (_ : Empty) (p : ℕ), Finset (Fin p) := fun e => nomatch e
 
 def actual : Realization signature := realize signature observation noAnchor
 
@@ -30,7 +30,7 @@ def bad : Realization signature := realize signature (fun _ _ _ => 1) noAnchor
 
 abbrev arena : Arena where
   signature := signature
-  Law r := ∀ n : ℕ, r.readout () () n=2*n/3
+  Law r := ∀ n : ℕ, r.readout () n (selection n)=2*n/3
 
 private theorem bad_law : ¬ arena.Law bad := by
   intro h
@@ -54,9 +54,9 @@ def family : Registration arena SourceClaim where
       exact nomatch e
   dependence := by
     intro i
-    refine ⟨(),0,3,?_⟩
-    change (selection 0).card ≠ (selection 3).card
-    decide +kernel
+    refine ⟨1,∅,{(0 : Fin 1)},?_⟩
+    change (∅ : Finset (Fin 1)).card ≠ ({(0 : Fin 1)} : Finset (Fin 1)).card
+    simp
 
 noncomputable def selectionCardRegistration :
     Contract.Registration.{0,0,1,0,0,0,0,0,0,0,0,0}
@@ -86,7 +86,7 @@ noncomputable def selectionCardRegistration :
       path := #["body","fn","arg"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := some #["arg","arg"]
+      stateOperand := some #["arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none

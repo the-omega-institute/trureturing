@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/HeawoodConnectivity
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Graph/StarForming/HeawoodInterfaces, D5/S3/Combinatorics/Graph/StarForming/FiberConnectivity]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex]
    utility: none
    digest: Actual broken-block connectivity and reciprocal interface assemblies. -/
 

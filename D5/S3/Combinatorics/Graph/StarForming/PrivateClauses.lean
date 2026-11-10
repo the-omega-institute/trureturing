@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/PrivateClauses
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Graph/StarFormingDissociationRefutation]
+   anchors: []
    utility: none
    digest: Graph-local witness and selection proofs with exact source hypotheses. -/
 

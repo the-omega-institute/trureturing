@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/HeawoodPorts
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Graph/StarForming/HeawoodParameters]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex]
    utility: kind=checker; basis=consumer=D5/S3/Combinatorics/Graph/StarForming/HeawoodInterfaces.beta_graph; instance=D5/S3/Combinatorics/Graph/StarForming/HeawoodPorts.facts
    digest: Actual broken-Heawood dissociation cap and saturated selected ports. -/
 

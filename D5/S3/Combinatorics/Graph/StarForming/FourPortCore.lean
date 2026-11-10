@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/FourPortCore
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Graph/StarForming/EqualityCore, D5/S3/Combinatorics/Graph/StarForming/DissociationDeficiency, D5/S3/Combinatorics/Graph/StarForming/WeightedBalance]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex]
    utility: none
    digest: Actual periodic equality core with its two disjoint cut edges. -/
 

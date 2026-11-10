@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/DoubleStarSeparation
    mirror-E: none(waiver:kernel-checked-refutation)
-   anchors: [D5/S3/Combinatorics/Graph/StarFormingDissociationRefutation, D5/S3/Combinatorics/Graph/SubQuorum/DoubleStarGrafting]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex]
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/Graph/StarForming/DoubleStarSeparation.claim; result=D5/S3/Combinatorics/Graph/StarForming/DoubleStarSeparation.result; claim=D5/S3/Combinatorics/Graph/StarForming/DoubleStarSeparation.claim
    digest: The six-vertex double star has beta two and SF two equal to four but sub-quorum maximum five. -/
 

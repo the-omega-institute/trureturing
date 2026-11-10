@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/LongCoreWord
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Graph/StarForming/DissociationCover]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex]
    utility: kind=checker; basis=consumer=D5/S3/Combinatorics/Graph/StarForming/LongCoreWord.word_dissociates; instance=D5/S3/Combinatorics/Graph/StarForming/LongCoreWord.inside_dissociates
    digest: Actual separated words of twenty-vertex core patterns induce dissociation. -/
 

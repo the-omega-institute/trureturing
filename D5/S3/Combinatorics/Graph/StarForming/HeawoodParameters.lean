@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/HeawoodParameters
    mirror-E: none(waiver:kernel-checked-refutation)
-   anchors: [D5/S3/Combinatorics/Graph/StarForming/CubicCertificate, D5/S3/Combinatorics/Graph/StarForming/DegreeCapacity]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex]
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/Graph/StarForming/HeawoodParameters.claim; result=D5/S3/Combinatorics/Graph/StarForming/HeawoodParameters.result; claim=D5/S3/Combinatorics/Graph/StarForming/HeawoodParameters.claim
    digest: The original Heawood graph has beta two seven and upper two-star formation eight. -/
 

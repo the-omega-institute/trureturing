@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/CoreArchitecture
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Graph/StarForming/HeawoodPorts, D5/S3/Combinatorics/Graph/StarForming/RegularCompensation]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex]
    utility: none
    digest: Two actual dissociation witnesses in arbitrary shared-port core architectures. -/
 

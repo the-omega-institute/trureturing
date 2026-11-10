@@ -10,14 +10,9 @@ open _root_.D5.S3.Combinatorics.Graph.StarForming.LongCoreSignals
 
 namespace Reg.D5.S3.Combinatorics.Graph.StarForming.LongCoreSignals
 
-structure Input where
-  Index : Type
-  finite : Fintype Index
-  eq : DecidableEq Index
-
 abbrev signature : Signature where
-  Params := Input
-  State p := Finset (p.Index × Fin 62)
+  Params := Type
+  State p := Finset (p × Fin 62)
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -25,17 +20,17 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def observation : ∀ (_ : Unit) (p : Input), Finset (p.Index × Fin 62) → ℕ :=
+def observation : ∀ (_ : Unit) (p : Type), Finset (p × Fin 62) → ℕ :=
   fun _ _ S => S.card
 
-def noAnchor : ∀ (_ : Empty) (p : Input), Finset (p.Index × Fin 62) := fun e => nomatch e
+def noAnchor : ∀ (_ : Empty) (p : Type), Finset (p × Fin 62) := fun e => nomatch e
 
 def bad : Realization signature := realize signature (fun _ _ S => S.card+1) noAnchor
 
 abbrev arena : Arena where
   signature := signature
   Law r := ∀ {I : Type} [f : Fintype I] [e : DecidableEq I],
-    r.readout () ⟨I,f,e⟩ (selection (I := I))=34*Fintype.card I ∧
+    r.readout () I (selection (I := I))=34*Fintype.card I ∧
     (LongCoreRings.coreSet (selection (I := I))).card=10*Fintype.card I ∧
     (∀ i : I, ∀ j : Fin 3,
       (ClosedModule.blockSlice (LongCoreRings.slice (selection (I := I)) i) j).card=8)
@@ -66,7 +61,7 @@ def family : Registration arena SourceClaim where
       exact nomatch e
   dependence := by
     intro i
-    let p : Input := ⟨Fin 1,inferInstance,inferInstance⟩
+    let p : Type := Fin 1
     refine ⟨p,∅,{(0,0)},?_⟩
     change (∅ : Finset (Fin 1 × Fin 62)).card≠({(0,0)} : Finset (Fin 1 × Fin 62)).card
     simp

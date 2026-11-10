@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/H0Parameters
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Graph/StarForming/H0Geometry, D5/S3/Combinatorics/Graph/StarForming/DegreeCapacity]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex]
    utility: none
    digest: Actual H0 cyclic degrees and edge counts with the exact nontrivial-cycle domain. -/
 

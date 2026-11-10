@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/SubcubicExact
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Graph/StarForming/RegularBound]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex]
    utility: kind=checker; basis=consumer=D5/S3/Combinatorics/Graph/StarForming/SubcubicExact.ambient_core_cap; instance=D5/S3/Combinatorics/Graph/StarForming/SubcubicExact.dense_core_certificate
    digest: Exact finite local certificates and ambient graph deletion proofs. -/
 

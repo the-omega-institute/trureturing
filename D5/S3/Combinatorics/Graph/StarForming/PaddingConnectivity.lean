@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Graph/StarForming/PaddingConnectivity
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Graph/StarForming/PaddingModule, D5/S3/Combinatorics/Graph/StarForming/CyclicProjection]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex]
    utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/Graph/StarForming/PaddingConnectivity.module_two_connected; premises=D5/S3/Combinatorics/Graph/StarForming/PaddingConnectivity.core_parent_facts,D5/S3/Combinatorics/Graph/StarForming/PaddingConnectivity.marked_parent_facts
    digest: Exact local paths feed arbitrary-size padding connectivity. -/
 
