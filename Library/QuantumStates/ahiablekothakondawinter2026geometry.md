@@ -179,7 +179,7 @@ maximum in dimensions 7 through 13 is asserted by this update.
 
 ## Later literature
 
-[Tran, arXiv:2611.01492v1](tran2026puritymaxima.md), Theorem B, refutes
+[Tran, arXiv:2611.01492v1](AbsolutePPT/tran2026puritymaxima.md), Theorem B, refutes
 the unrestricted form of Conjecture 6.7 with full-rank APPT boundary spectra
 for every $m\ge10$ at both $n=4m-2$ and $n=4m$. Theorem C also answers the
 Section 7 question: for $2\le m\le n$, ordered state eigenvalues satisfying

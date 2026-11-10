@@ -58,7 +58,7 @@ precisely the unitary conjugates of a diagonal state with this spectrum.
 ## Theorem B: counterexamples to Conjecture 6.7
 
 Theorem B refutes the unrestricted conjecture recorded in
-[Ahiable–Kothakonda–Winter](ahiablekothakondawinter2026geometry.md), restated
+[Ahiable–Kothakonda–Winter](../ahiablekothakondawinter2026geometry.md), restated
 as Conjecture 1.1 in this preprint. For every integer $m\ge10$ and each
 $n\in\{4m-2,4m\}$, it gives an explicit full-rank APPT boundary spectrum
 whose purity strictly exceeds the inner-polytope maximum
@@ -73,7 +73,7 @@ The exact proof locators are Lemma 4.1 (the finite matrix APPT criterion
 for three distinct positive eigenvalues under its multiplicity assumptions),
 Corollary 4.2 (the two scalar conditions when the largest eigenvalue is
 simple), Proposition 4.3 (the full-rank APPT boundary family), and Theorem B
-with its proof in Section 4.2 (the strict purity comparisons in both branches).
+with its proof in Section 4.3 (the strict purity comparisons in both branches).
 The latter uses
 $$
 (A_m,B_m,C_m)=(17m+92,7m+42,7m+28),\qquad h_m=2m^2-4m,
