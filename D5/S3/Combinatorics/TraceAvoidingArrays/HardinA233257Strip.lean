@@ -7,7 +7,9 @@
    digest: Closed form and generating function for the two-row antidiagonal strip. -/
 /-
 admission_basis: open-problem-resolution (#28792; Proved)
-escape_witness: two_classification (inductive two-label parity classification).
+escape_witness: none; transfer and finite cases normalize; two-label classification is a
+  specialization of frozen HardinA233177Ladder.two_label_classification after copying the
+  upper row to four rows and recovering the lower row by finite three-label constraints.
 Legal: proof_shape=bind-only; consumers=a, literal_card
 decLegal: proof_shape=bind-only; consumers=a
 a: proof_shape=bind-only; consumers=literal_card, finite_certificate, weighted_count
@@ -33,14 +35,14 @@ relabel: proof_shape=bind-only; consumers=pattern_cards
 used_relabel: proof_shape=bind-only; consumers=pattern_cards
 alt: proof_shape=bind-only; consumers=alt_properties, two_classification, two_count
 alt_properties: proof_shape=bind-only; consumers=two_count
-two_classification: proof_shape=content; consumers=two_count
-two_count: proof_shape=content; consumers=pattern_cards
+two_classification: proof_shape=bind-only; consumers=two_count
+two_count: proof_shape=bind-only; consumers=pattern_cards
 Patterns: proof_shape=bind-only; consumers=pattern_cards, weighted_count
-pattern_cards: proof_shape=content; consumers=weighted_count
-weighted_count: proof_shape=content; consumers=closed_form, recurrence, result
-closed_form: proof_shape=content; consumers=result
-recurrence: proof_shape=content; consumers=result
-result: proof_shape=content; consumers=terminal result
+pattern_cards: proof_shape=bind-only; consumers=weighted_count
+weighted_count: proof_shape=bind-only; consumers=closed_form, recurrence, result
+closed_form: proof_shape=bind-only; consumers=result
+recurrence: proof_shape=bind-only; consumers=result
+result: proof_shape=bind-only; consumers=terminal result
 -/
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
