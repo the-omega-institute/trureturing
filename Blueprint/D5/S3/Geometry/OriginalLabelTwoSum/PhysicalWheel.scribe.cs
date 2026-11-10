@@ -29,9 +29,12 @@ internal sealed class PhysicalWheelDocument : IScribeDocumentDefinition
 
     // Quote every nonblank source line as typed text; omit blank separators.
     // These are lexical source quotations, not compiler-produced telescopes.
-    private static DocumentBlock SourceText(string value) => value.Contains('\n')
-        ? new DocumentBlock.Section(H("Exact source contract"), Blocks(Array.ConvertAll(
-            Array.FindAll(value.Split('\n'), line => line.Length != 0),
-            line => Paragraph(Text(line)))))
-        : Paragraph(Text(value));
+    private static DocumentBlock SourceText(string value)
+    {
+        if (!value.Contains('\n')) return Paragraph(Text(value));
+        var paragraphs = new List<DocumentBlock>();
+        foreach (var line in value.Split('\n'))
+            if (line.Length != 0) paragraphs.Add(Paragraph(Text(line)));
+        return new DocumentBlock.Section(H("Exact source contract"), Blocks(paragraphs.ToArray()));
+    }
 }
