@@ -102,7 +102,7 @@ theorem regular (next : Equiv.Perm I) (x : I × Fin 20) :
   rcases x with ⟨i,v⟩
   fin_cases v <;> simp [neighbors]
 
-private def color (v : Fin 20) : Bool :=
+def color (v : Fin 20) : Bool :=
   if 6 ≤ v.val ∧ v.val < 12 then decide (v.val % 2 = 0) else decide (v.val % 2 = 1)
 
 /-- The cell bipartition is unchanged by every interface permutation. -/

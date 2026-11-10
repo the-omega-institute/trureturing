@@ -20,6 +20,7 @@ internal sealed class EqualityCoreDocument : IScribeDocumentDefinition
             Node("neighbors", "neighbors", "Exact declaration: def neighbors (next : Equiv.Perm I) (x : I × Fin 20) : Finset (I × Fin 20).", DescribeRole.Definition),
             Node("mem_neighbors", "mem neighbors", "Exact declaration: theorem mem_neighbors (next : Equiv.Perm I) (x y : I × Fin 20) : y ∈ neighbors next x ↔ (graph next).Adj x y.", DescribeRole.Theorem),
             Node("regular", "regular", "Exact declaration: theorem regular (next : Equiv.Perm I) (x : I × Fin 20) : DegreeCapacity.degree (graph next) x = 3.", DescribeRole.Theorem),
+            Node("color", "color", "Exact declaration: def color (v : Fin 20) : Bool.", DescribeRole.Definition),
             Node("bipartite", "bipartite", "Exact declaration: theorem bipartite (next : Equiv.Perm I) : (graph next).Colorable 2.", DescribeRole.Theorem),
             Node("selected", "selected", "Exact declaration: abbrev selected (v : Fin 20) : Prop.", DescribeRole.Definition),
             Node("dissociation", "dissociation", "Exact declaration: abbrev dissociation (v : Fin 20) : Prop.", DescribeRole.Definition),
