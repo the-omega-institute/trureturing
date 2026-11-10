@@ -6,7 +6,7 @@ Mean-square prime correlations control polynomial logarithmic BV sums after aggr
 
 Assume MeanSquareHL4(SS,beta) and SS(empty)=1. The mean-square hypothesis bounds the sum of squared raw correlation errors over all ordered injective r-tuples in [1,K], for 1<=r<=4, by C N^(1+2 epsilon) K^r. Its constant and threshold are uniform in r, natural 1<=K<=M N^beta, and real N<=y<=2N, after epsilon>0 and M>=1 have been fixed. The centred singular series is the alternating subset transform of SS.
 
-Chan, A note on primes in short intervals, International Journal of Number Theory 2 (2006), 105–110, supplies the single-interval precedent for replacing pointwise correlation errors by mean-square errors. The interval-box aggregation, overlapping mixed moments and BV polynomial logarithmic weights here are repo-derived. Cauchy–Schwarz bounds total raw errors; the tuple-subset multiplicity estimate accounts for the unused shifts. Inclusion–exclusion then controls the total centred error.
+Chan, A note on primes in short intervals, International Journal of Number Theory 2 (2006), 105–110, supplies the single-interval precedent for replacing pointwise correlation errors by mean-square errors. The interval-box aggregation, overlapping mixed moments and BV polynomial logarithmic weights here are repo-derived. Cauchy–Schwarz bounds total raw errors; the tuple-subset multiplicity estimate accounts for the unused shifts. The commutative-ring centred product expansion then controls the total centred error.
 
 **Theorem 1.1 (Polynomial logarithmic weights on aggregated correlations).**
 
@@ -26,5 +26,6 @@ The tuple and subset sums are taken before BV partial summation, so no sum of se
 
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/CentredCorrelationSummation.centred_polynomial_log_correlation`
 - Dependency: [D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/BVCorrelationSummation](BVCorrelationSummation.md)
+- Dependency: [D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/CentredProductExpansion](CentredProductExpansion.md)
 - Dependency: [D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/MeanSquareCorrelation](MeanSquareCorrelation.md)
 - Dependency: [D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/TupleSubsetMultiplicity](TupleSubsetMultiplicity.md)
