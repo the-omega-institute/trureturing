@@ -83,14 +83,13 @@ def rejected : Realization signature :=
   realize signature (fun _ _ n => (a n : ℤ) + 1) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law R := (∀ n : ℕ, 4 ≤ n → (R.readout () () n : ℤ) =
-      12 * (R.readout () () (n - 1) : ℤ) - 44 * (R.readout () () (n - 2) : ℤ) + 48 * (R.readout () () (n - 3) : ℤ)) ∧
-    (R.readout () () 1 = 1 ∧ (R.readout () () 2 = 3 ∧ (R.readout () () 3 = 11 ∧ (R.readout () () 4 = 48))))
+  Law R := ∀ n : ℕ, 4 ≤ n → (R.readout () () n : ℤ) =
+      12 * (R.readout () () (n - 1) : ℤ) - 44 * (R.readout () () (n - 2) : ℤ) + 48 * (R.readout () () (n - 3) : ℤ)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have ha := finite_certificate.1
-  have hb := h.2.1
-  change (a 1 : ℤ) + 1 = 1 at hb
+  have ha := result 4 (by omega)
+  have hb := h 4 (by omega)
+  change (a 4 : ℤ) + 1 = 12 * ((a 3 : ℤ) + 1) - 44 * ((a 2 : ℤ) + 1) + 48 * ((a 1 : ℤ) + 1) at hb
   omega
 private theorem actual_dependence :
     actual.readout () () 1 ≠ actual.readout () () 2 := by
@@ -129,7 +128,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["fn", "arg", "body", "body", "fn", "arg"]
+      path := #["body", "body", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg", "arg"]

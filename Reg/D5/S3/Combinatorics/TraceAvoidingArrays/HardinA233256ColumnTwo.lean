@@ -83,14 +83,13 @@ def rejected : Realization signature :=
   realize signature (fun _ _ n => (a n : ℤ) + 1) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law R := (∀ n : ℕ, 3 ≤ n → (R.readout () () n : ℤ) =
-      20 * (R.readout () () (n - 1) : ℤ) - 64 * (R.readout () () (n - 2) : ℤ)) ∧
-    (R.readout () () 1 = 1 ∧ (R.readout () () 2 = 10 ∧ (R.readout () () 3 = 136)))
+  Law R := ∀ n : ℕ, 3 ≤ n → (R.readout () () n : ℤ) =
+      20 * (R.readout () () (n - 1) : ℤ) - 64 * (R.readout () () (n - 2) : ℤ)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have ha := finite_certificate.1
-  have hb := h.2.1
-  change (a 1 : ℤ) + 1 = 1 at hb
+  have ha := result 3 (by omega)
+  have hb := h 3 (by omega)
+  change (a 3 : ℤ) + 1 = 20 * ((a 2 : ℤ) + 1) - 64 * ((a 1 : ℤ) + 1) at hb
   omega
 private theorem actual_dependence :
     actual.readout () () 1 ≠ actual.readout () () 2 := by
@@ -129,7 +128,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["fn", "arg", "body", "body", "fn", "arg"]
+      path := #["body", "body", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg", "arg"]

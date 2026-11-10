@@ -108,11 +108,14 @@ theorem finite_certificate : (a 1 : ℤ) = 1 ∧ (a 2 : ℤ) = 3 ∧ (a 3 : ℤ)
   · exact (counting_bridge 3).trans h3
 
 theorem result :
-    (∀ n : ℕ, 4 ≤ n → (a n : ℤ) =
-      12 * a (n - 1) - 44 * a (n - 2) + 48 * a (n - 3)) ∧
-    ((a 1 : ℤ) = 1 ∧ (a 2 : ℤ) = 3 ∧ (a 3 : ℤ) = 11 ∧ (a 4 : ℤ) = 48) := by
-  refine ⟨?_, finite_certificate⟩
+    ∀ n : ℕ, 4 ≤ n → (a n : ℤ) =
+      12 * a (n - 1) - 44 * a (n - 2) + 48 * a (n - 3) := by
   intro n hn
+  by_cases hbase : n = 4
+  · subst n
+    obtain ⟨h1, h2, h3, h4⟩ := finite_certificate
+    norm_num only [show 4 - 1 = 3 from rfl, show 4 - 2 = 2 from rfl,
+      show 4 - 3 = 1 from rfl, h1, h2, h3, h4]
   have h := recurrence (n - 4)
   simpa only [show n - 4 + 4 = n by omega,
     show n - 4 + 3 = n - 1 by omega,

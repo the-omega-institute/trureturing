@@ -156,10 +156,12 @@ theorem finite_certificate : (a 1 : ℤ) = 1 ∧ (a 2 : ℤ) = 1 ∧ (a 3 : ℤ)
   · exact (counting_bridge 3).trans h3
 
 theorem result :
-    (∀ k : ℕ, 4 ≤ k → (a k : ℤ) = 6 * a (k - 1) - 8 * a (k - 2)) ∧
-    ((a 1 : ℤ) = 1 ∧ (a 2 : ℤ) = 1 ∧ (a 3 : ℤ) = 3 ∧ (a 4 : ℤ) = 10) := by
-  refine ⟨?_, finite_certificate⟩
+    ∀ k : ℕ, 4 ≤ k → (a k : ℤ) = 6 * a (k - 1) - 8 * a (k - 2) := by
   intro k hk
+  by_cases hbase : k = 4
+  · subst k
+    obtain ⟨_, h2, h3, h4⟩ := finite_certificate
+    norm_num only [show 4 - 1 = 3 from rfl, show 4 - 2 = 2 from rfl, h2, h3, h4]
   have h := recurrence (k - 4)
   simpa only [show k - 4 + 4 = k by omega,
     show k - 4 + 3 = k - 1 by omega,
