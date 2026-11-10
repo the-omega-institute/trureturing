@@ -641,7 +641,7 @@ private theorem h14Mass_evaluation : h14Mass =
   rw [h14Mass, heightRefinement_sixDefect_evaluation, h14EightDefect_evaluation,
     h14TenDefect_evaluation, h14TwelveDefect_evaluation, h14FourteenDefect_evaluation]
   unfold sixQ h14EightQ h14TenQ h14TwelveQ h14FourteenQ
-  norm_num only [Nat.cast_ofNat] 
+  norm_num only [Nat.cast_ofNat]
   ring
 
 

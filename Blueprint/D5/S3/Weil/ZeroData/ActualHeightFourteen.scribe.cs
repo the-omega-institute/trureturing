@@ -21,6 +21,28 @@ internal sealed class ActualHeightFourteenDocument : IScribeDocumentDefinition
 
     private static Formula Absolute(Formula value) => new Formula.Absolute(value);
 
+    private static Formula Nat => Seq(Mathbb, Grp(FormulaDsl.Id("N")));
+
+    private static Formula AtMost(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.LessThanOrEqual, right);
+
+    private static Formula Multiply(Formula left, Formula right) =>
+        new Formula.Binary(left, FormulaBinaryOperator.Multiply, right);
+
+    private static Formula Power(Formula value, Formula exponent) =>
+        new Formula.Power(value, exponent);
+
+    private static Formula NaturalMassFourteenFormula()
+    {
+        var k = DefinitionDsl.Id("k");
+        var ordinate = Call("im", Call("actualZero", k));
+        var inverse = Power(ordinate, new Formula.Negate(new Formula.Number(1)));
+        var term = Power(Seq(Left, Open, inverse, Right, Close), new Formula.Number(2));
+        var mass = Seq(Sum, Underscore, Grp(k, Sp, InMacro, Sp, Nat), Sp, term);
+        var factor = new Formula.Fraction(new Formula.Number(197), new Formula.Number(196));
+        return AtMost(mass, Multiply(factor, DefinitionDsl.Id("firstLiMass")));
+    }
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Unconditional full-family height fourteen and the exact natural-occurrence inverse-square mass.",
         H("Actual Zeta Height Fourteen"),
@@ -116,7 +138,7 @@ internal sealed class ActualHeightFourteenDocument : IScribeDocumentDefinition
                     DescribeId.Create("actualreciprocalsquareboundsheightfourteenmass"),
                     DeclarationHandle.Create("D5/S3/Weil/ZeroData/ActualHeightFourteen.actual_inverse_square_mass_le_height_fourteen"),
                     H("Complete Natural Occurrence Inverse Square Mass at Height Fourteen"),
-                    StatementSource.FromLean(),
+                    StatementSource.FromAuthor(Disp(NaturalMassFourteenFormula())),
                     AssessedProvenance.FromRepo(),
                     Blocks(
                         Paragraph(Text(

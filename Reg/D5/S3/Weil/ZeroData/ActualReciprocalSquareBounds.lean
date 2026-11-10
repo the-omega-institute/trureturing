@@ -21,13 +21,13 @@ def rejected : Realization signature :=
   realize signature (fun _ _ x => 0) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (rho : ℂ) (_h0 : 0 < rho.re) (_h1 : rho.re < 1),
+  Law R := ∀ {rho : ℂ} (_h0 : 0 < rho.re) (_h1 : rho.re < 1),
     0 < R.readout () () rho ∧ rho.re * (1 - rho.re) ≤ 1 / 4
 private theorem source_reconstruction :
     (type_of% (@heightRefinement_strip_product_bounds)) ↔ arena.Law actual := Iff.rfl
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hbad := (h (1 / 2 : ℂ) (by norm_num) (by norm_num)).1
+  have hbad := (h (rho := (1 / 2 : ℂ)) (by norm_num) (by norm_num)).1
   norm_num [rejected, realize] at hbad
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
@@ -82,13 +82,13 @@ def rejected : Realization signature :=
   realize signature (fun _ _ x => 0) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (rho : ℂ) (_h0 : 0 < rho.re) (_h1 : rho.re < 1),
+  Law R := ∀ {rho : ℂ} (_h0 : 0 < rho.re) (_h1 : rho.re < 1),
     0 < pairWeight rho ∧ 1 / (rho.im ^ 2 + 1) ≤ R.readout () () rho
 private theorem source_reconstruction :
     (type_of% (@heightRefinement_pairWeight_strip)) ↔ arena.Law actual := Iff.rfl
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hbad := (h (1 / 2 : ℂ) (by norm_num) (by norm_num)).2
+  have hbad := (h (rho := (1 / 2 : ℂ)) (by norm_num) (by norm_num)).2
   norm_num [rejected, realize] at hbad
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
