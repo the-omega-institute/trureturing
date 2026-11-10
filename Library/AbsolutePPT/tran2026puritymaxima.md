@@ -58,7 +58,7 @@ precisely the unitary conjugates of a diagonal state with this spectrum.
 ## Theorem B: counterexamples to Conjecture 6.7
 
 Theorem B refutes the unrestricted conjecture recorded in
-[Ahiable–Kothakonda–Winter](../ahiablekothakondawinter2026geometry.md), restated
+[Ahiable–Kothakonda–Winter](../QuantumStates/ahiablekothakondawinter2026geometry.md), restated
 as Conjecture 1.1 in this preprint. For every integer $m\ge10$ and each
 $n\in\{4m-2,4m\}$, it gives an explicit full-rank APPT boundary spectrum
 whose purity strictly exceeds the inner-polytope maximum
