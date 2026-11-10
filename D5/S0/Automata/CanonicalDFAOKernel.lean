@@ -7,10 +7,18 @@
    digest: Ordinary finite DFAOs correct only on canonical most-significant-first expansions have finite arithmetic kernels, including the independently read zero term. -/
 
 import D5.S0.Automata.FiniteKernelDFAO
-import D5.S1.Recurrence.AntiRecurrenceAutomaticity
+import D5.S0.Automata.DFAOStateLowerBound
 
 /-! Canonical MSDF machines are connected to the adopted arithmetic kernel.
 The n=0 kernel value is kept separately; no padding hypothesis is imposed. -/
+
+namespace D5.S1.Recurrence.AntiRecurrenceAutomaticity
+
+/-- Standard base-b digits, most significant first. The remainder operation is
+only a total coercion into Fin b; standard digits already lie below b. -/
+def msfDigits (b : ℕ) (hb : 0 < b) (n : ℕ) : List (Fin b) := (Nat.digits b n).reverse.map (fun d => ⟨d % b, Nat.mod_lt d hb⟩)
+
+end D5.S1.Recurrence.AntiRecurrenceAutomaticity
 
 namespace D5.S0.Automata.CanonicalDFAOKernel
 

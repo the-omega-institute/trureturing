@@ -7,6 +7,7 @@
    digest: Complementary positive linear recurrences and their finite-state discrepancy. -/
 
 import D5.S0.Automata.DFAOStateLowerBound
+import D5.S0.Automata.CanonicalDFAOKernel
 import Mathlib.Data.Nat.Nth
 import Mathlib.Data.Nat.Digits.Lemmas
 import Mathlib.Tactic
@@ -606,9 +607,6 @@ private theorem discrepancy_bounded {k : ℕ} {a : Fin k → ℕ} {A B : ℕ →
   rw [Int.toNat_of_nonneg hD]
   exact hbound n
 
-/-- Standard base-b digits, most significant first. The remainder operation is
-only a total coercion into Fin b; standard digits already lie below b. -/
-def msfDigits (b : ℕ) (hb : 0 < b) (n : ℕ) : List (Fin b) := (Nat.digits b n).reverse.map (fun d => ⟨d % b, Nat.mod_lt d hb⟩)
 private def value (b : ℕ) (w : List (Fin b)) : ℕ := w.foldl (fun n r => b * n + r.val) 0
 
 private theorem value_ofDigits (b : ℕ) (w : List (Fin b)) : value b w = Nat.ofDigits b (w.map Fin.val).reverse := by
