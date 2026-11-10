@@ -134,9 +134,9 @@ abbrev arena : Arena where
 theorem bridge : (type_of% (@norming_state_multiplication.{u})) ↔ arena.Law actual := by
   constructor
   · intro h p
-    simpa only [actual, realize, Bool.false_eq_true, ↓reduceIte] using (@h p.A _ _ _)
+    exact @h p.A _ _ _
   · intro h A _ _ _
-    simpa only [actual, realize, Bool.false_eq_true, ↓reduceIte] using (h ⟨A⟩)
+    exact h ⟨A⟩
 end Multiplication
 
 namespace Sandwich
