@@ -390,7 +390,7 @@ lemma primeHom_δ {q : ℕ} (i : Fin (q + 2)) :
     SimplexCategory.len_mk]
   simp only [(show ∀ {n : ℕ} (k : Fin (n + 2))
       (j : Fin ((⦋n⦌ : SimplexCategory).len + 1)),
-      (SimplexCategory.δ k).toOrderHom j = k.succAbove j from fun _ _ _ => rfl)]
+      (SimplexCategory.δ k).toOrderHom j = k.succAbove j from fun {_} _ _ => rfl)]
   simp only [Fin.succAbove, Fin.lt_def, Fin.val_castSucc, Fin.val_succ]
   have hj := j.isLt
   simp only [SimplexCategory.len_mk] at hj
@@ -415,7 +415,7 @@ lemma primeHom_σ {q : ℕ} (i : Fin (q + 1)) :
     SimplexCategory.len_mk]
   simp only [(show ∀ {n : ℕ} (k : Fin (n + 1))
       (j : Fin ((⦋n + 1⦌ : SimplexCategory).len + 1)),
-      (SimplexCategory.σ k).toOrderHom j = k.predAbove j from fun _ _ _ => rfl), Fin.predAbove]
+      (SimplexCategory.σ k).toOrderHom j = k.predAbove j from fun {_} _ _ => rfl), Fin.predAbove]
   have hj := j.isLt
   simp only [SimplexCategory.len_mk] at hj
   simp only [Fin.lt_def, Fin.val_castSucc, Fin.val_succ]

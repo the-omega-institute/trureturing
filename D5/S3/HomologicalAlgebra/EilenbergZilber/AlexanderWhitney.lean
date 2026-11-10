@@ -144,7 +144,7 @@ lemma ιFront_comp_δ_of_le (p q : ℕ) (k : Fin (p + q + 2))
   simp only at hi'
   simp only [SimplexCategory.comp_toOrderHom, OrderHom.comp_coe, Function.comp_apply,
     val_eqToHom_apply, (show ∀ {n : ℕ} (k : Fin (n + 2)) (i : Fin (n + 1)),
-      (SimplexCategory.δ k).toOrderHom i = k.succAbove i from fun _ _ _ => rfl), Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
+      (SimplexCategory.δ k).toOrderHom i = k.succAbove i from fun {_} _ _ => rfl), Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
   split_ifs <;>
     simp only [Fin.val_castSucc, Fin.val_succ, (show ∀ (p q : ℕ) (i : Fin ((⦋p⦌ : SimplexCategory).len + 1)),
       ((ιFront p q).toOrderHom i : ℕ) = i from fun _ _ _ => rfl),
@@ -162,7 +162,7 @@ lemma ιFront_comp_δ_of_gt (p q : ℕ) (k : Fin (p + q + 2))
   simp only at hi'
   simp only [SimplexCategory.comp_toOrderHom, OrderHom.comp_coe, Function.comp_apply,
     val_eqToHom_apply, (show ∀ {n : ℕ} (k : Fin (n + 2)) (i : Fin (n + 1)),
-      (SimplexCategory.δ k).toOrderHom i = k.succAbove i from fun _ _ _ => rfl), Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
+      (SimplexCategory.δ k).toOrderHom i = k.succAbove i from fun {_} _ _ => rfl), Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
   split_ifs <;>
     simp only [Fin.val_castSucc, Fin.val_succ, (show ∀ (p q : ℕ) (i : Fin ((⦋p⦌ : SimplexCategory).len + 1)),
       ((ιFront p q).toOrderHom i : ℕ) = i from fun _ _ _ => rfl)
@@ -180,7 +180,7 @@ lemma ιBack_comp_δ_of_le (p q : ℕ) (k : Fin (p + q + 2))
   simp only at hi'
   simp only [SimplexCategory.comp_toOrderHom, OrderHom.comp_coe, Function.comp_apply,
     val_eqToHom_apply, (show ∀ {n : ℕ} (k : Fin (n + 2)) (i : Fin (n + 1)),
-      (SimplexCategory.δ k).toOrderHom i = k.succAbove i from fun _ _ _ => rfl), Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
+      (SimplexCategory.δ k).toOrderHom i = k.succAbove i from fun {_} _ _ => rfl), Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
   split_ifs <;>
     simp only [Fin.val_castSucc, Fin.val_succ, (show ∀ (p q : ℕ) (j : Fin ((⦋q⦌ : SimplexCategory).len + 1)),
       ((ιBack p q).toOrderHom j : ℕ) = p + j from fun _ _ _ => rfl)
@@ -199,7 +199,7 @@ lemma ιBack_comp_δ_of_gt (p q : ℕ) (k : Fin (p + q + 2))
   simp only at hi'
   simp only [SimplexCategory.comp_toOrderHom, OrderHom.comp_coe, Function.comp_apply,
     val_eqToHom_apply, (show ∀ {n : ℕ} (k : Fin (n + 2)) (i : Fin (n + 1)),
-      (SimplexCategory.δ k).toOrderHom i = k.succAbove i from fun _ _ _ => rfl), Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
+      (SimplexCategory.δ k).toOrderHom i = k.succAbove i from fun {_} _ _ => rfl), Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
   split_ifs <;>
     simp only [Fin.val_castSucc, Fin.val_succ, (show ∀ (p q : ℕ) (j : Fin ((⦋q⦌ : SimplexCategory).len + 1)),
       ((ιBack p q).toOrderHom j : ℕ) = p + j from fun _ _ _ => rfl),
@@ -216,7 +216,7 @@ private lemma δ_last_comp_ιFront (p q : ℕ) :
   simp only at hi'
   simp only [SimplexCategory.comp_toOrderHom, OrderHom.comp_coe, Function.comp_apply,
     val_eqToHom_apply, (show ∀ {n : ℕ} (k : Fin (n + 2)) (i : Fin (n + 1)),
-      (SimplexCategory.δ k).toOrderHom i = k.succAbove i from fun _ _ _ => rfl), Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
+      (SimplexCategory.δ k).toOrderHom i = k.succAbove i from fun {_} _ _ => rfl), Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
   split_ifs <;>
     simp only [Fin.val_castSucc, Fin.val_succ, (show ∀ (p q : ℕ) (i : Fin ((⦋p⦌ : SimplexCategory).len + 1)),
       ((ιFront p q).toOrderHom i : ℕ) = i from fun _ _ _ => rfl),
@@ -233,7 +233,7 @@ private lemma δ_zero_comp_ιBack (p q : ℕ) :
   simp only at hi'
   simp only [SimplexCategory.comp_toOrderHom, OrderHom.comp_coe, Function.comp_apply,
     val_eqToHom_apply, (show ∀ {n : ℕ} (k : Fin (n + 2)) (i : Fin (n + 1)),
-      (SimplexCategory.δ k).toOrderHom i = k.succAbove i from fun _ _ _ => rfl), Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
+      (SimplexCategory.δ k).toOrderHom i = k.succAbove i from fun {_} _ _ => rfl), Fin.succAbove, Fin.lt_def, Fin.val_castSucc]
   split_ifs <;>
     simp only [Fin.val_castSucc, Fin.val_succ, (show ∀ (p q : ℕ) (j : Fin ((⦋q⦌ : SimplexCategory).len + 1)),
       ((ιBack p q).toOrderHom j : ℕ) = p + j from fun _ _ _ => rfl),
