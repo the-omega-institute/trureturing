@@ -77,21 +77,26 @@ theorem actual_positive : arena.{u, v, w}.Law actual.{u, v, w} :=
   bridge.mp (@continuous_surjective_equivariant_minimality.{u, v, w})
 
 def trivialInputs : Inputs.{u, v, w} := by
-  let actX : AddAction (ULift.{u} ℕ) (ULift.{v} PUnit.{1}) where
-    vadd _ x := x
-    zero_vadd _ := rfl
-    add_vadd _ _ _ := rfl
-  let actY : AddAction (ULift.{u} ℕ) (ULift.{w} PUnit.{1}) where
-    vadd _ x := x
-    zero_vadd _ := rfl
-    add_vadd _ _ _ := rfl
+  let actX : AddAction (ULift.{u} ℕ) (ULift.{v} PUnit.{1}) := {
+    vadd := fun _ x => x
+    zero_vadd := fun _ => rfl
+    add_vadd := fun _ _ _ => rfl }
+  let actY : AddAction (ULift.{u} ℕ) (ULift.{w} PUnit.{1}) := {
+    vadd := fun _ x => x
+    zero_vadd := fun _ => rfl
+    add_vadd := fun _ _ _ => rfl }
   have min : @AddAction.IsMinimal (ULift.{u} ℕ) (ULift.{v} PUnit.{1})
       inferInstance ULift.topologicalSpace actX := by
     refine ⟨?_⟩
     intro x
     rw [show AddAction.orbit (ULift.{u} ℕ) x = Set.univ by
       ext z
-      simp [AddAction.orbit, actX, Subsingleton.elim z x]]
+      constructor
+      · intro hz
+        trivial
+      · intro hz
+        refine ⟨0, ?_⟩
+        exact Subsingleton.elim _ _]
     exact dense_univ
   exact {
     M := ULift.{u} ℕ
@@ -117,14 +122,14 @@ def rejected : Realization signature.{u, v, w} :=
 
 private theorem rejected_law : ¬ arena.{u, v, w}.Law rejected := by
   intro h
-  have hp := h trivialInputs
+  have hp := h (trivialInputs.{u, v, w})
   simpa [rejected, realize] using hp
 
 private theorem dependence :
     ObservationalDependence signature.{u, v, w} actual.{u, v, w} := by
   intro i
-  refine ⟨trivialInputs, true, false, ?_⟩
-  by_cases hp : goal trivialInputs
+  refine ⟨trivialInputs.{u, v, w}, true, false, ?_⟩
+  by_cases hp : goal (trivialInputs.{u, v, w})
   · simp [actual, realize, hp]
   · simp [actual, realize, hp]
 
@@ -251,14 +256,14 @@ def rejected : Realization signature.{u, v} :=
 
 private theorem rejected_law : ¬ arena.{u, v}.Law rejected := by
   intro h
-  have hp := h trivialInputs
+  have hp := h (trivialInputs.{u, v})
   simpa [rejected, realize] using hp
 
 private theorem dependence :
     ObservationalDependence signature.{u, v} actual.{u, v} := by
   intro i
-  refine ⟨trivialInputs, true, false, ?_⟩
-  by_cases hp : goal trivialInputs
+  refine ⟨trivialInputs.{u, v}, true, false, ?_⟩
+  by_cases hp : goal (trivialInputs.{u, v})
   · simp [actual, realize, hp]
   · simp [actual, realize, hp]
 
