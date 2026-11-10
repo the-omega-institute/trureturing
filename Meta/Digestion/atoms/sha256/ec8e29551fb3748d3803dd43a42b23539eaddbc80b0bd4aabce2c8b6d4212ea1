@@ -1,0 +1,23 @@
+**定义 178.1（同一候选的一般 C* 条件分支）。** 候选仍准确取 128.1 的 A1–A3、同一无 R 的 Jordan/JB 接口、原 P2 与完整 PB；保留全部原来源、质量和量词。不把下述 $\mathsf F$ 加为原公理。本节只研究一个明确的中间背景：$A$ 是含单位复 C* 代数，$E=A_{\rm sa}$，$a\circ b=(ab+ba)/2$，旧 $D:E^2\to E$ 起初任意。原锥是 $A_+$，原正评价族分离并准确决定该锥。无需存在紧算子理想、极小投影或原有限矩阵角；但 $E=A_{\rm sa}$ 及其 C* 载体是明列的前件，不能换成一般不完备 Jordan 原域。
+
+对于每个非零不可约表示 $\pi:A\to B(H_\pi)$ 和每个单位向量 $\xi\in H_\pi$，定义输入作用观察
+
+$$
+\mathcal O_{\pi,\xi}(a,b)=(\pi(a)\xi,\pi(b)\xi).
+\tag{178.1}
+$$
+
+条件 $\mathsf F$ 是同一旧输出的标量读取在这个观察的每条纤维上不变：
+
+$$
+\begin{aligned}
+\mathcal O_{\pi,\xi}(a,b)=\mathcal O_{\pi,\xi}(a',b')
+\quad\Longrightarrow\quad
+\langle\xi,\pi D(a,b)\xi\rangle
+=\langle\xi,\pi D(a',b')\xi\rangle.
+\end{aligned}
+\tag{178.2}
+$$
+
+全部比较发生在同一个 $\pi,\xi$；$\pi$ 可以不忠实。这里要求标量输出读取相同，不要求 $\pi D(a,b)\xi$ 相同，也不预付共同实现者、酉协变、连续性、可测性或商上的输出向量。数学纯态及不可约向量读取仍只是原准确锥的对偶工具，没有增加实际准备。
+

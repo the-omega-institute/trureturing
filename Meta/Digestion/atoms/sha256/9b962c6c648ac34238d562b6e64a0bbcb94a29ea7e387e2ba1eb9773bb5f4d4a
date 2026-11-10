@@ -1,0 +1,56 @@
+**定理 139.2（内部有限闭合接到准确的完成层）。** 式(139.1)使 $E_{\mathbb C}$ 成为含单位pre-C*代数，$\mathfrak b$ 是其含单位星子代数。对 $z=a+ib$，其C*范数由原域内部给出：
+
+$$
+\boxed{\|a+ib\|_\star^2
+=N\bigl(a^2+b^2+2B_\star(a,b)\bigr).}
+\tag{139.3}
+$$
+
+它在自伴原域上就是 $N$。作为原环境中的复向量空间，两个完成准确为
+
+$$
+\begin{gathered}
+\mathcal C=X+iX,\qquad \mathcal C_{\rm sa}=X,\qquad
+\mathcal C_+=X\cap\mathcal A_+,\qquad C=E\cap\mathcal C_+,\\
+\mathcal B=Y+iY\subset\mathcal C,\qquad
+\mathcal B_{\rm sa}=Y,\qquad \mathfrak b_{\rm sa}=\mathcal B_0.
+\end{gathered}
+\tag{139.4}
+$$
+
+证明。仅在证明所用的原环境中定义
+
+$$
+z_+=\tfrac12(u+Q),\qquad z_-=\tfrac12(u-Q).
+\tag{139.5}
+$$
+
+它们是 $\mathcal A$ 的中央正交投影，和为 $u$；不要求属于 $E,X$ 或 $\mathcal C$。由(138.4)，对原复化中的 $x,y$ 有
+
+$$
+x\star y=z_+xy+z_-yx.
+\tag{139.6}
+$$
+
+在整个原环境向量空间上采用(139.6)，得到与
+
+$$
+z_+\mathcal A\ \oplus\ (z_-\mathcal A)^{\rm op}
+\tag{139.7}
+$$
+
+相同的C*代数结构：第二部分只反转乘法次序，范数和伴随保持原样。中央正交性给结合律；两部分的C*范数均为原范数，直和范数仍为 $\mathcal A$ 的原范数。因此无需把 $z_\pm$ 作为原输入，就可使用这个辅助环境证明 $\star$ 结合且保星。
+
+这一步是成熟的中央相反乘法构造。Najafi–Moslehian，[*Deformation of involution and multiplication in a C*-algebra*](https://arxiv.org/pdf/1304.8091)，Lemma 2.1及其证明给 $x\mathbin{\diamond}y=p x v y+(1-p)y v x$、$x^\#=v^*x^*v^*$；其中央投影 $p$ 取 $z_+$，酉参数 $v$ 取这里的单位 $u$，便是(139.6)–(139.7)。引用中的酉参数不是原三轴之一。这项成熟结果只承担辅助环境的C*性质，不承担原输出闭合或旧 $D$ 识别。
+
+138.2已独立支付 $B_\star(E,E)\subset E$，故 $E_{\mathbb C}$ 在这个辅助环境中是含单位星子代数；(138.3)同样使 $\mathfrak b$ 星闭合。$E_{\mathbb C}$ 的范数闭包恰为 $X+iX$：一方面 $E$ 在 $X$ 稠密，另一方面实部、虚部连续且 $X$ 闭，所以 $X+iX$ 闭。同理 $\overline{\mathfrak b}=Y+iY$。这证明两个完成及其自伴部的身份。
+
+相反C*代数与原代数具有相同的自伴正锥，中央直和也保持这个一级正锥；闭C*子代数继承环境正锥。因此 $\mathcal C_+=X\cap\mathcal A_+$，再用130.1得到原锥身份。直接在原复化中计算
+
+$$
+z^*\star z=a^2+b^2+2B_\star(a,b)\in E\cap\mathcal C_+=C.
+\tag{139.8}
+$$
+
+C*恒等式给(139.3)，也表明此范数由原 $S,N$ 和标记三轴决定。非零原 $z$ 的 $z^*\star z$ 不为零，因为辅助环境的C*范数忠实；故这不是半范数。全程没有对旧 $D$ 取极限。原 $\mathfrak b,E_{\mathbb C}$ 不因此根闭合、逆闭合或完备；连续函数演算仅可在已构造的C*完成中使用。∎
+

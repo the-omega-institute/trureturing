@@ -1,0 +1,61 @@
+**定理 17.2（原横向方向的准确距离证书）。** 在 $\mathsf B$ 加已经支付的原 $D$ 实双线性下，取任意原正交单位 $n,x\in V$，置
+
+$$
+y=\kappa(n,x),\qquad W=\operatorname{span}_{\mathbb R}\{n,x,y\},\qquad z=x-\mathrm i y.
+\tag{17.5}
+$$
+
+此时才在 $A_0=E\oplus\mathrm iE$ 上将原 $\star=S-\mathrm iD$ 复双线性延拓，以共轭为 $*$，令 $h_n(a,b)=\alpha_{m,n}(a^*\star b)$。对全部原实 $t=su+v$，有
+
+$$
+h_n(z,z)=0,\qquad
+h_n(t\star z,t\star z)=4m\|v-P_Wv\|^2.
+\tag{17.6}
+$$
+
+$P_W$ 是 $H$ 中的正交投影，且 $v-P_Wv\in V$。本公式不假定完整 R、Jacobi、零空间稳定、八元数分类或共同算子表示。
+
+证明。双线性及 $\kappa(x,y)\perp x,y$ 经实极化说明 $\langle\kappa(a,b),c\rangle$ 是交替三形式。将 (16.3) 最后一式的第一槽极化，得全部原 $a,b,c$ 上
+
+$$
+\kappa(a,\kappa(b,c))+\kappa(b,\kappa(a,c))
+=\langle a,c\rangle b+\langle b,c\rangle a-2\langle a,b\rangle c.
+\tag{17.7}
+$$
+
+这不是 Jacobi。面积、正交性和 NN 给 $n,x,y$ 正交单位，且 $\kappa(n,y)=-x$、$\kappa(x,y)=n$。
+
+此处的 $h_n$ 自动半正定：A11.2 证明内的 (11.9)–(11.10) 只使用双线性、交替三形式和面积恒等式，故以当前 $\kappa$ 逐项代入同一个平方和分解即可；不需要该证明所在的七维模型。对一般 $a+\mathrm ib$，其星平方为 $S(a,a)+S(b,b)+2D(a,b)\in C$。因而零向量与全部 $A_0$ 正交。原三轴乘法直接给
+
+$$
+\begin{gathered}
+z^*\star z=2(u-n),\qquad (u-n)^*\star(u-n)=2(u-n),\\
+u\star z=z,\quad n\star z=z,\quad
+x\star z=u-n,\quad y\star z=-\mathrm i(u-n).
+\end{gathered}
+\tag{17.8}
+$$
+
+$z,u-n$ 的 $h_n$ 长度都为零，所以 $(su+P_Wv)\star z$ 与全部 $A_0$ 正交。
+
+令 $w=v-P_Wv$、$p=\kappa(w,x)$、$q=\kappa(w,y)$。交替三形式给 $p,q\perp n$，面积式给 $\|p\|^2=\|q\|^2=\|w\|^2$。将 (17.7) 用于 $(a,b,c)=(n,w,y)$，因 $w\perp W$ 及 $\kappa(n,y)=-x$，得到 $\kappa(n,q)=p$。因此
+
+$$
+\langle n,\kappa(q,p)\rangle=\langle\kappa(n,q),p\rangle=\|w\|^2,
+\qquad w\star z=-q-\mathrm ip.
+\tag{17.9}
+$$
+
+由星平方公式，
+
+$$
+\begin{aligned}
+h_n(w\star z,w\star z)
+&=m\bigl(\|q\|^2+\|p\|^2+2\langle n,\kappa(q,p)\rangle\bigr)\\
+&=4m\|w\|^2.
+\end{aligned}
+\tag{17.10}
+$$
+
+(17.8) 的零向量正交性消掉平行部分及全部交叉项，遂得 (17.6)。所有乘法输入均为原实元或其已付复线性组合。∎
+

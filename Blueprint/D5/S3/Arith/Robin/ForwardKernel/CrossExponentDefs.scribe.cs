@@ -47,6 +47,24 @@ internal sealed class CrossExponentDefsDocument : IScribeDocumentDefinition
                     "The forward window average of u at x is the integral of u(x+r) for r from zero to R, divided by R."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("double-average"),
+                DeclarationHandle.Create(Prefix + "doubleAverage"),
+                H("Double forward averages"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The double average at scale R applies the forward window average of length R twice."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("smoothing-block"),
+                DeclarationHandle.Create(Prefix + "smoothingBlock"),
+                H("Dyadic smoothing blocks"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The smoothing block at scale R is the double average at scale R minus the double average at scale 2R."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("comparable-length-variance-upper-for"),
                 DeclarationHandle.Create(Prefix + "ComparableLengthVarianceUpperFor"),
                 H("Comparable-length variance bounds"),

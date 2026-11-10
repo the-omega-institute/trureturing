@@ -1,0 +1,11 @@
+**推论 83.3（原正读数的复正性与正则性成为结论）。** 82.1中每个具名 $f_\alpha$ 自动延为 $U$ 上的正连续泛函，范数准确为原质量 $m_\alpha=\alpha(u)$。对任意原有限词 $w_1,\ldots,w_k\in B$，有
+
+$$
+[f_\alpha(w_i^\ast w_j)]_{i,j=1}^k\succeq0.
+\tag{83.2}
+$$
+
+没有把这份全有限复Gram正性作为82.3的独立输入。
+
+证明。83.1经27.2重构原pre-$C^\ast$代数及完成 $A$；75.1给规范星同态 $\rho:U\to A$，在 $B$ 上核准确为 $\mathfrak n_{\mathcal F}$。同一原正评价 $\alpha$ 保留准确原锥，故延为 $A$ 上的正泛函 $\omega_\alpha$，范数为 $m_\alpha$。对 $w\in B$，$w-P(w)$ 在核中，而 $f_\alpha$ 是82.2中的读数，所以 $f_\alpha(w)=f_\alpha(P(w))=\omega_\alpha(\rho(w))$。因此 $\omega_\alpha\rho$ 是所求正连续延拓；$B$ 稠密给唯一性，单位取值给准确范数。零质量时两者恒零。对任意复系数 $c_i$，83.2的二次型为 $f_\alpha((\sum_i c_iw_i)^\ast(\sum_i c_iw_i))\ge0$。这只是静态有限词的读数正性；没有从中删除实际过程的完整参考层级或推出任意过程为CP。∎
+

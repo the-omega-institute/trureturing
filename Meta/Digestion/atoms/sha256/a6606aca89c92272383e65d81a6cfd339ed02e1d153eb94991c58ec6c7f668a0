@@ -1,0 +1,4 @@
+## 204. Pointwise envelopes decide ruling feasibility
+
+The scalarized bodies of Section 203 can be tested without carrying all label inequalities separately. For a fixed ruling factor, the pointwise simplex constraints become upper and lower envelopes for one scalar function or one scalar label coordinate.
+

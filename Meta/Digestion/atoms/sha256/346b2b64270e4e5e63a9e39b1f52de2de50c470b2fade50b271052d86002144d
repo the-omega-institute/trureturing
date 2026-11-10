@@ -1,0 +1,76 @@
+**定理 140.1（原稠密域与完成层的同一矩阵坐标）。** 存在保单位、保星的C*同构 $\Phi:\mathcal C\to M_2(\mathcal B)$，限制为原星代数同构 $E_{\mathbb C}\to M_2(\mathfrak b)$ 及原Jordan、范数、一级序同构
+
+$$
+\boxed{E\ \cong\ H_2(\mathfrak b):=M_2(\mathfrak b)_{\rm sa}.}
+\tag{140.1}
+$$
+
+对(137.4)的全部原 $a$，具体为
+
+$$
+\boxed{\Phi(a)=
+\begin{pmatrix}
+c_0+c_1&c_2+i c_3\\
+c_2-i c_3&c_0-c_1
+\end{pmatrix}.}
+\tag{140.2}
+$$
+
+矩阵内系数用 $\mathfrak b$ 或 $\mathcal B$ 的 $\star$ 相乘；不将它们改成交换标量。准确保持的是
+
+$$
+\begin{gathered}
+\Phi(u)=I_2,
+\quad \Phi(h)=\sigma_z,\quad\Phi(e)=\sigma_x,
+\quad\Phi(j)=-\sigma_y,\\
+\Phi(a\circ b)=\tfrac12\bigl(\Phi(a)\Phi(b)+\Phi(b)\Phi(a)\bigr),\\
+\Phi(B_\star(a,b))=\tfrac i2[\Phi(a),\Phi(b)],\\
+N(a)=\|\Phi(a)\|,\qquad
+\Phi(C)=H_2(\mathfrak b)\cap M_2(\mathcal B)_+.
+\end{gathered}
+\tag{140.3}
+$$
+
+证明。原轴在新乘法下满足 $h\star e=-ij$、$e\star j=-ih$、$j\star h=-ie$。在原复化中置
+
+$$
+f_{11}=\tfrac12(u+h),\quad f_{22}=\tfrac12(u-h),\quad
+f_{12}=\tfrac12(e-ij),\quad f_{21}=\tfrac12(e+ij).
+\tag{140.4}
+$$
+
+代入这些轴关系，得到
+
+$$
+f_{rs}^*=f_{sr},\qquad
+f_{rs}\star f_{tv}=\delta_{st}f_{rv},\qquad
+f_{11}+f_{22}=u.
+\tag{140.5}
+$$
+
+这只是使用成熟矩阵单位的具体中间步骤。先准确识别系数与角：$\mathcal B$ 正是 $\mathcal C$ 内三轴的共同 $\star$-交换子代数。确实，(139.6)给 $[x,s_r]_\star=Q[x,s_r]$，$Q$ 在辅助环境中可逆；实虚部再用(137.5)得到共同交换域恰为 $Y+iY$。因此 $\mathcal B$ 与全部 $f_{rs}$ 交换。
+
+系数到角的映射及其逆为
+
+$$
+\begin{aligned}
+\iota:\mathcal B&\longrightarrow f_{11}\star\mathcal C\star f_{11},
+&\iota(b)&=b\star f_{11},\\
+\iota^{-1}(t)&=t+f_{21}\star t\star f_{12}.
+\end{aligned}
+\tag{140.6}
+$$
+
+对角内 $t$，右侧与四个矩阵单位交换，所以属于 $\mathcal B$；其乘 $f_{11}$ 正好返回 $t$。反向由(140.5)及 $b$ 与矩阵单位交换得到 $\iota^{-1}(\iota(b))=b$。两式保乘法与伴随，单位 $u$ 对应角单位 $f_{11}$。相同论证在原 $\mathfrak b$ 与 $f_{11}\star E_{\mathbb C}\star f_{11}$ 上成立。这一步不能把对角嵌入的系数直接当作角内元素而省略。
+
+现在应用成熟的完整矩阵单位识别：Blackadar，[*Operator Algebras: Theory of C*-Algebras and von Neumann Algebras*](https://www.bruceblackadar.com/Mathematics/Cycr.pdf)，II.9.4.3，给含单位C*代数中 $\sum_rf_{rr}=u$ 时的同构 $x\mapsto(f_{1r}\star x\star f_{s1})_{r,s}$，其值域是角代数上的二阶矩阵。再逐项施加(140.6)，得到
+
+$$
+\Phi(x)_{rs}=\iota^{-1}(f_{1r}\star x\star f_{s1}).
+\tag{140.7}
+$$
+
+原域限制没有额外闭合要求：对任意 $(b_{rs})\in M_2(\mathfrak b)$，逆像是有限和 $\sum_{r,s}f_{r1}\star\iota(b_{rs})\star f_{1s}\in E_{\mathbb C}$。这同时证明原域限制的满射，而非只证明它稠密。把 $h,e,j$ 及共同交换系数代入(140.7)，正好得到(140.2)。完成层由同一公式给C*同构，因此自动等距并准确保正锥。
+
+若矩阵在 $M_2(\mathfrak b)$ 中自伴，两个对角元属于 $\mathcal B_0$，上非对角元唯一为 $c_2+ic_3$、$c_2,c_3\in\mathcal B_0$；两个对角元的半和与半差给 $c_0,c_1$。所以其逆像准确属于原 $E$。这证明(140.1)，而不是只找出一个Pauli子窗。结合(139.4)得到(140.3)。$f_{11},f_{22}$ 是原Jordan投影，$f_{12},f_{21}$ 是原复化元素；这不赋予任何一个元素实际仪器、准备或可取得程序的身份。∎
+

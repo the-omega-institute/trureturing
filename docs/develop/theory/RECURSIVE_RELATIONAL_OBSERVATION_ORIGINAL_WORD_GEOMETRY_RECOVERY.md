@@ -4808,3 +4808,155 @@ boundary and memory remains a further problem.
 [JET]: RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_SOURCE_JET_CERTIFICATION.md
 
 ## 追加锚（本行以下为增补区）
+
+## 24. Actual heat-image multiplication on the proved measured quotient
+
+**Definition 24.1 (the source and algebra correspondence).** Retain
+Assumptions 1.1–1.3 and all the source-limit and compact-domain
+hypotheses of §§22–23. Use the countable compact energy family
+and measured-quotient theorem of [EF, Definition 12.1 and Theorem
+14.1], with exactly this $U,\Omega,\widehat P,\mathsf B,
+\mathsf R,\Lambda$. In particular its $b=g_d$, $\gamma=dE$,
+$r=(1+\gamma)^{-1}$ and $s_d=\|\widehat P^{-1/2}b_o\|^2$
+are the symbols and trace in (12.2), (22.1), not new readouts
+or a replacement source. Write $\mathcal A_\infty$ for its
+recovered algebra. Its reference vector is cyclic on all
+$\widehat{\mathcal H}$, and its source realization is every
+bounded multiplier on the common-symmetry measured quotient.
+
+**Theorem 24.2 (the actual multiplier of the recovered heat
+image).** Put
+
+$$
+v_q=\widehat P\mathsf R\Omega,\qquad q=T_dr.
+\tag{24.1}
+$$
+
+The exact law determines a unique bounded operator $\mathsf C_q$
+by its action on the dense module $\mathcal A_\infty\Omega$:
+
+$$
+\mathsf C_q(A\Omega)=A v_q\quad(A\in\mathcal A_\infty).
+\tag{24.2}
+$$
+
+It is a positive self-adjoint contraction, belongs to
+$\mathcal A_\infty$, and satisfies
+
+$$
+U\mathsf C_qU^{-1}=M_q|_{\mathcal O},\qquad
+M_q\mathcal O\subseteq\mathcal O,\qquad
+M_q\mathcal O^\perp\subseteq\mathcal O^\perp.
+\tag{24.3}
+$$
+
+Thus this is actual multiplication on every original word
+vector and every vector of $\mathcal O$.
+
+*Proof.* Original Markov positivity and conservation, with
+$0<r\le1$, give $0\le q\le1$ almost everywhere. The actual
+full-source symmetries commute with $T_d$ and fix $r$, so $q$
+is in the common invariant sector. By [EF, Theorem 14.1], it
+has a bounded $\pi$-measurable representative. The full actual
+multiplier $M_q$ preserves that sector: a product of two
+$\pi$-measurable functions remains $\pi$-measurable, with the
+bounded factor preserving $L^2$. Self-adjointness then makes
+the orthogonal complement invariant as well. This is the
+reduction premise that the vector (24.1) alone did not provide.
+
+For $A\in\mathcal A_\infty$ let $a$ be its actual bounded
+quotient symbol. The already recovered vector has $Uv_q=q$.
+The proved multiplication-algebra correspondence, rather than
+an assumed product on arbitrary vectors, gives
+
+$$
+U(A v_q)=a q,\qquad
+\|A v_q\|^2=\int |a|^2q^2\,dm
+                \le\int |a|^2\,dm=\|A\Omega\|^2.
+\tag{24.4}
+$$
+
+In particular $A\Omega=0$ implies $A v_q=0$, proving that
+(24.2) is well defined. Its linear span is the same module,
+and (24.4) gives a unique bounded extension by density.
+On that module it agrees with actual $M_q$, so the extension
+has exactly (24.3). It is positive and self-adjoint because
+$q$ is real nonnegative, and is in $\mathcal A_\infty$ by
+the full algebra equality of [EF, (14.1)]. Every ingredient
+of (24.2) is intrinsic to the exact recovered tuple and algebra;
+the source argument proves its boundedness and identifies its
+actual action. It does not presume observable coordinate values
+or invariance of $D(K)$ under $M_q$. $\square$
+
+**Theorem 24.3 (original-word and ordered continuation consumers).**
+For every original word $u$,
+
+$$
+\mathbb E_e[q(Z_{2d})
+       \mathbf1_{\{Y_0\cdots Y_{|u|-1}=u\}}]
+ =\langle\widehat P b_o,\mathsf C_q F_u^o\rangle.
+\tag{24.5}
+$$
+
+In particular the unchanged $B3$ word consumes the actual
+multiplication action, not only the heat-image vector:
+
+$$
+\begin{gathered}
+U\mathsf C_q\widehat P b_o=(T_dr)g_{2d},\\
+\mathbb E_e[q(Z_{2d})\mathbf1_{\{Y_0=B,Y_1=3\}}]
+ =\frac c4\langle\widehat P b_o,
+                       \mathsf C_q\widehat P b_o\rangle.
+\end{gathered}
+\tag{24.6}
+$$
+
+More generally, for any finite list of bounded recovered quotient
+multipliers $\mathsf C_{k_j}\in\mathcal A_\infty$ and original
+labels $y_0,\ldots,y_\ell$, put $D_j=\mathsf C_{k_j}N_{y_j}$.
+Then
+
+$$
+\mathbb E_e\!\left[\prod_{j=0}^{\ell}
+       k_j(Z_{(j+2)d})\mathbf1_{\{Y_j=y_j\}}\right]
+ =\langle\widehat P b_o,
+        D_0\widehat P D_1\cdots\widehat P D_\ell\Omega\rangle.
+\tag{24.7}
+$$
+
+The choice $k_j=q$ is now permitted. Finite ordered products
+of these multipliers and $\widehat P^\tau$, $\tau\ge0$, have
+the corresponding actual source action on $\mathcal O$.
+
+*Proof.* The initial density is the same $g_{2d}=T_db$.
+Conditioning on the undisturbed path gives the original emission
+product, and backward Markov conditioning at gaps $d$ gives
+(24.5) and (24.7). This is the argument of Theorem 23.3, now
+with the actual reducing multipliers supplied by Theorem 24.2
+and [EF, (14.1)]. Every intermediate vector remains in
+$\mathcal O$, so these are bounded operator products without
+compression to $\mathcal H_{\rm rel}$. Since
+$F_{B3}^o=(c/4)\widehat P b_o$, (24.6) follows. Null repairs
+do not change finitely many positive-time expectations.
+Conjugating each bounded factor by $U$ proves the ordered
+product assertion, without commuting any multiplier past heat.
+$\square$
+
+**Definition 24.4 (scope of the heat-image consumer).** The
+source-specific new premise is [EF, Theorem 14.1], proved through
+actual global branch separation; the bounded cyclic-module
+argument in Theorem 24.2 consumes it. These are `repo-derived`
+conditional deductions. The marked tuple, heat-image vector,
+original word recursion, full heat domain, form and source trace
+are the suppliers of §§2–4, 12 and 22–23, not new constructions.
+No $D(K)$, form-domain or trace-preservation claim is made for
+arbitrary bounded invariant multipliers, including $M_q$.
+Old-factor membership of $q$, its role as a noncommutation
+witness, and strictness for a specified $q_\beta$ remain separate.
+The determined insertions in (24.5)–(24.7) are original-path
+expectations, not extra observed labels or physical controls.
+There is no finite-depth, effective-inverse, closure-rate or
+finite-acquisition conclusion for $\mathsf C_q$ here. The
+all-positive-parameter mutual-recovery programme remains open.
+
+## 追加锚（本行以下为增补区）

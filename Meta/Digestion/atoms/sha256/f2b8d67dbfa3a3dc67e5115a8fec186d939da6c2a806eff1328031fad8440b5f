@@ -1,0 +1,27 @@
+**定义 195.1（种子与两条内生指定行）。** 回到 188.1 的原 $p,v$，直接消费 188.2。置
+
+$$
+h=2p-u,\qquad j=2D(p,v),\qquad
+\rho=\sqrt2-1,\qquad c=\cos(\pi/8),\quad s=\sin(\pi/8),
+$$
+
+$$
+\gamma=\sqrt{1+\rho^6},\qquad \beta_0=\frac{\gamma}{2\rho}.
+$$
+
+原 $h,v,j$ 的平方均为 $u$ 且两两 Jordan 正交。记
+
+$$
+T_+=cv+sj,\quad T_-=cv-sj,\qquad
+E_+=sv-cj,\quad E_-=-sv-cj,
+$$
+
+$$
+P_\pm=\frac{u+E_\pm}{2},\qquad
+F_+=\frac{T_+-\rho^3h}{\gamma},\qquad
+F_-=\frac{T_-+\rho^3h}{\gamma}.
+\tag{195.1}
+$$
+
+这些仅为原实线性组合，故均在可能不完备的 $E$。已知乘法直接给 $P_\pm^2=P_\pm$、$F_\pm^2=u$ 和 $P_\pm\circ F_\pm=F_\pm/2$；且 $0<\rho<\beta_0$。非零代数中 $P_+-P_-=sv\ne0$，故是两条不同的原行。它们依赖同一份种子旧输出 $j$，不是任意外部指定的两行。
+

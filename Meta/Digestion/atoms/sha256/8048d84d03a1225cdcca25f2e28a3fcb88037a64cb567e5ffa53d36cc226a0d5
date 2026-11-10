@@ -1,0 +1,34 @@
+**定理 17.1（自由零空间下降支付旧总映射的双线性）。** 在 $\mathsf B$ 中，若一个 (16.4) 满足 $\mathsf Q_n$，则同一个原 $D$ 为有界实双线性，且
+
+$$
+N(D(a,b))\le N(a)N(b).
+\tag{17.1}
+$$
+
+这里不使用完整 R 或 A5.9。
+
+证明。半正定 Hermitian 型的 Cauchy–Schwarz 由 $h_n(f+\lambda g,f+\lambda g)\ge0$ 的二次式得到；因此 $\mathcal N_n$ 是线性子空间，并与全部 $\mathcal F$ 正交。若实系数原标签关系 $r=\sum_jr_j[a_j]$ 满足 $\sum_jr_ja_j=0$，则 $S$ 的双线性和 $D$ 的反对称性给
+
+$$
+h_n(r,r)=\alpha_{m,n}\!\left(S\!\left(\sum_jr_ja_j,\sum_jr_ja_j\right)\right)=0.
+\tag{17.2}
+$$
+
+虚部按 $(i,j)$ 与 $(j,i)$ 抵消，这一步没有展开未知 $D$。故 $\eta:E\to\mathcal F/\mathcal N_n$、$\eta(a)=[a]+\mathcal N_n$ 是实线性映射。对原纯向量 $v\in V$，
+
+$$
+\|\eta(v)\|^2=h_n([v],[v])=m\|v\|^2,
+\tag{17.3}
+$$
+
+所以 $\eta|_V$ 单射；不声称 $\eta$ 在整个 $E$ 上单射。
+
+将 (16.7) 用于 $[a+b]-[a]-[b]\in\mathcal N_n$。因 $S$ 已双线性，作用后在商中的实部为零，得到
+
+$$
+\eta\bigl(D(t,a+b)-D(t,a)-D(t,b)\bigr)=0.
+\tag{17.4}
+$$
+
+括号内是原 $V$ 中的元，由 (17.3) 必为零。将它用于 $[\lambda a]-\lambda[a]\in\mathcal N_n$，同样给全部 $\lambda\in\mathbb R$ 的齐次性。反对称给另一槽线性。因此确已认回原 $D$ 的双线性，而非只得到自由商的线性。最后 (16.3) 的面积界及 $N(su+x)=|s|+\|x\|$ 给 (17.1)。∎
+

@@ -136,7 +136,7 @@ private theorem embed_inner (v w : Carrier M.D) :
 private theorem embed_injective (k : ℕ) : Function.Injective (M.embed k) :=
   UniformSpace.Completion.coe_injective (M.Finite k)
 
-private theorem embed_dense (k : ℕ) : DenseRange (M.embed k) :=
+theorem embed_dense (k : ℕ) : DenseRange (M.embed k) :=
   UniformSpace.Completion.denseRange_coe (α := M.Finite k)
 
 /-- Embedded *algebraic* grade. Its closedness is proved, not assumed. -/

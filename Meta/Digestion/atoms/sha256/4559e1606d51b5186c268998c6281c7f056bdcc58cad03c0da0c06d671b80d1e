@@ -1,0 +1,16 @@
+**定理 498.1（带宏观权的重叠区间矩）。** 设 $\mathrm{HL}_4(\beta)$，$M\ge1$ 固定。则当 $N\to\infty$ 时，
+
+$$
+\frac1N\int_N^{2N}w(x/N)\prod_{j=1}^3Z_{N,H}(I_j;x)\,dx=o(1),
+\tag{498.2}
+$$
+
+$$
+\frac1N\int_N^{2N}w(x/N)\prod_{j=1}^4Z_{N,H}(I_j;x)\,dx=\langle w\rangle\,\kappa_{N,H}^2\,\mathcal W_4(I_1,\dots,I_4)+o(1),
+\tag{498.3}
+$$
+
+余项关于 $N^\alpha\le H\le N^\beta$、$I_j\subseteq[0,M]$（含空区间与任意重叠）与 $\|w\|_{\mathrm{BV}}\le1$ 一致。
+
+取 $\alpha<\theta<\beta$、$N=X$、$H=X^\theta$、$I_j=(0,c_j]$ 与 $w(t)=\mathbf 1_{[u,v]}(t)/(t\log2)$（$\langle w\rangle=\nu([u,v])$，$\|w\|_{\mathrm{BV}}\le3/\log2$），由于 $Z_{X,h}((0,c];x)=\widetilde B_X(c,x)$、$\kappa_{X,h}=1-\theta=\kappa$、$\sigma((0,c_i],(0,c_j])=\min(c_i,c_j)$，定理 498.1 给出 §497 的 $(\mathrm F_3)$ 与 $(\mathrm F_4)$。
+

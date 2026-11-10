@@ -1,0 +1,57 @@
+**定理 47.1（中心系数只要求最终输入原有）。** 在 46.1 下，取原 $b\in V_h$，记 $j=Jb$。若 $f,g\in Z$ 且环境组合
+
+$$
+y=fb+gj\in E,
+\tag{47.1}
+$$
+
+则 $y\in V_h$，同一旧行满足
+
+$$
+\boxed{Jy=fj-gb\in E.}
+\tag{47.2}
+$$
+
+无需 $f,g$ 原有，也无需四项 $fb,gj,fj,gb$ 分别属于 $E$。对全部实 $s,\ell$ 还有同一原调用的准确式
+
+$$
+D(sh,y+\ell u)=s(fj-gb).
+\tag{47.3}
+$$
+
+证明。$h$ 与 $b,j$ 分别反交换，$f,g$ 中央，所以 $h\circ y=0$。结合 (47.1) 得 $y\in V_h$；$Jy=D(a,y)/\rho$ 因而已经是原 $E$ 中定义的旧输出。
+
+令 $Z_0=C^*(u,f,g)\subset Z(A_0)$。对每个字符 $\chi$，令 $I_\chi$ 为 $A_0$ 中由 $z-\chi(z)u$（$z\in Z_0$）生成的闭双边理想，记
+
+$$
+\pi_\chi:A_0\longrightarrow A_\chi=A_0/I_\chi,
+\qquad Y_\chi=\pi_\chi(X),\qquad
+q_\chi=\pi_\chi|_X.
+\tag{47.4}
+$$
+
+这些都是非零含单位商。确实，字符 $\chi$ 的普通正延拓给 $A_0$ 上一个态 $\varphi$；在其 GNS 表示中，每个 $z-\chi(z)u$ 消去循环向量。由于它中央，也消去循环向量的整个稠密轨道，故 $I_\chi$ 被该非零含单位表示消去。因而 $I_\chi\ne A_0$。普通正延拓和 GNS 只作为成熟中间工具，取 Hanche-Olsen–Størmer，[*Jordan Operator Algebras*](https://hanche.folk.ntnu.no/joa/joa-m.pdf)，Lemma 1.2.4、Proposition 1.3.10，与 28.1 相同。
+
+同书 Proposition 3.4.3 的 Jordan 同态闭像定理给 $Y_\chi$ 范数闭；它以继承的单位、范数、Jordan 乘法和正锥成为含单位 JC 代数。$q_\chi$ 连续且满到这个像，$q_\chi(E)$ 在其中稠密，故逐项满足 24.1。这里没有把不闭的 $q_\chi(E)$ 当成完成代数。
+
+置实数 $\lambda=\chi(f)$、$\mu=\chi(g)$，构造真正原标签
+
+$$
+z_\chi=\lambda b+\mu j\in V_h.
+\tag{47.5}
+$$
+
+于是 $q_\chi(y)=q_\chi(z_\chi)$。固定同一实际 $a=\rho h$，26.2 的第二槽像纤维直接给
+
+$$
+q_\chi(Jy)=q_\chi(Jz_\chi)
+=\lambda q_\chi(j)-\mu q_\chi(b).
+\tag{47.6}
+$$
+
+最后一个等号只消费原自身平面式 (46.3)。实际调用是 $D(a,y)$ 与 $D(a,z_\chi)$，两份输入都原有；没有调用 $D(f,b)$、$D(\pi_\chi(a),\pi_\chi(y))$ 或任何完成输入上的未知响应。
+
+这些中央商联合分离 $A_0$。任意非零不可约表示在 $Z_0$ 上由 Schur 引理给一个字符，因而因子化过相应的 $\pi_\chi$；全部不可约表示分离 C* 代数。由 (47.6)，环境元素 $Jy-fj+gb$ 在每个商中为零，所以它在 $A_0$ 中为零，得到 (47.2)。右端返回原域的依据正是它等于已经存在的同一原 $Jy$，不是对四个乘积逐项增加闭合要求。
+
+$b=0$ 时 $j=0$ 且 $y=0$；任一商中 $q_\chi(b)=0$ 时，$q_\chi(j)=0$ 及 $q_\chi(Jy)=0$ 也由零像吸收给出。系数的零集、零因子和非唯一表示不影响 (47.6)，证明没有除 $b^2$ 或中心函数。最后 36.1 对原 $y$ 直接给 (47.3)，包括 $s=0$、负 $s$ 和任意单位偏移。∎
+

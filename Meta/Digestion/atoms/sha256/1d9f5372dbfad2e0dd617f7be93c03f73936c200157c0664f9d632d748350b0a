@@ -1,0 +1,91 @@
+**定理 33.1（有限共同分割的完整原响应）。** 保持30.1的同一完整原候选、实际 $h,e,j,Q$ 及31.1全部七项原来源合同。给定任意有限原投影分割
+
+$$
+p_a\in E,\qquad p_a^2=p_a,\qquad
+p_ap_b=0\ (a\ne b),\qquad \sum_{a=1}^m p_a=u,\qquad
+[p_a,h]=[p_a,e]=0,
+\tag{33.1}
+$$
+
+其中 $m\ge1$，允许零投影。对任意实 $\mu_a,\lambda_a,R$、任意原 $h$-奇 $z$，置 $c=\sum_a(\mu_a u+\lambda_a h)p_a$，则
+
+$$
+\boxed{D(Rh,c+z)=R\,iQhz=R\,D(h,c+z).}
+\tag{33.2}
+$$
+
+不要求不同格子的背景值相同，不排除零值或重值；不增加旧响应的线性、连续性、谱延拓或商下降。
+
+证明。所有所列乘积都是交换原元素的Jordan乘积，故 $c$ 为原标签。$R=0$ 用P2。以下 $R\ne0$，置 $x=c+z$、$k=hc$、$t=iQhz$、$g=D(Rh,x)=Rt+r$。中央续卷163.1给 $[h,r]=0$；尚未取得 $[p_a,r]=0$。定义原数学联合角
+
+$$
+q_{\epsilon,a}=\tfrac12(u+\epsilon h)p_a,\qquad
+v_{\epsilon,a}=\mu_a+\epsilon\lambda_a,
+\qquad \epsilon\in\{1,-1\}.
+\tag{33.3}
+$$
+
+这些角正交且和为 $u$，并有 $cq_{\epsilon,a}=v_{\epsilon,a}q_{\epsilon,a}$、$kq_{\epsilon,a}=\epsilon v_{\epsilon,a}q_{\epsilon,a}$。不同 $h$ 符号之间的 $r$ 块已经为零。现固定同一个 $\epsilon$ 和两个不同格子 $a,b$，简写 $v_a=v_{\epsilon,a}$、$v_b=v_{\epsilon,b}$、$q_a=q_{\epsilon,a}$、$q_b=q_{\epsilon,b}$。取同一原域内的实际反射及实系数
+
+$$
+s=u-2p_a,\quad H=hs,\quad
+A=R\epsilon(v_a+v_b),\quad B=R(v_b-v_a),\quad
+T=Au+BH,\quad V=T-2Rk.
+\tag{33.4}
+$$
+
+$s^2=u$ 且 $s$ 与 $h,e,c$ 交换，中央续卷182.2因此给实际 $H$ 框架及同一个 $Q$。在 $q_a$ 上 $s=-u$，在 $q_b$ 上 $s=u$，故 $Vq_a=Vq_b=q_aV=q_bV=0$。
+
+对实际PB $(Rh,x,T-Rk)$，第三标签与 $h$ 交换，中央续卷189.1给内值零。完整两份实际外层是
+
+$$
+\begin{gathered}
+A_+=x+g+R^2c-RhT,\qquad A_-=x-g-R^2c+RhT,\\
+B_+=T,\qquad B_-=V,\\
+D(A_+,T)-D(A_-,V)
+=J,\qquad
+J=-2x\circ g-2R^2z\circ c+2Rz\circ(hT).
+\end{gathered}
+\tag{33.5}
+$$
+
+这里仅展开已知Jordan乘法：$h\circ x=k$、$k^2=c^2$、$[c,T]=0$，所有含 $cT$ 的项抵消；$P_h^+J=-2c\circ r$，因为 $z\circ t=0$，其余 $z$ 项均为 $h$-奇。
+
+置同一实际旧输出 $W=D(V,A_-)$。对 $q=q_a+q_b$，合法原正读取 $\phi(y)=\omega(qyq)$ 在实际表 $(V,A_-,W)$ 的第一平方为零。P2及正泛函分离给 $qWq=0$，特别 $q_aWq_b=0$。另一方面，中央续卷163.1在实际 $H$ 框架上给 $P_H^-D(T,A_+)=B iQH P_H^-A_+$。两端角具有相同的 $h$ 符号、相反的 $s$ 符号，故提取这份块只保留 $A_+$ 的 $h$-偶、$s$-奇部分，即 $P_s^-r$。原反对称性把33.5写成 $W-D(T,A_+)=J$，于是准确得到
+
+$$
+\bigl[iQ\epsilon R(v_a-v_b)-(v_a+v_b)u\bigr]
+q_arq_b=0.
+\tag{33.6}
+$$
+
+这里 $BHq_a=\epsilon R(v_a-v_b)q_a$，而 $q_a(2c\circ r)q_b=(v_a+v_b)q_arq_b$；没有使用 $[c,r]=0$。中央 $Q^2=u$ 给
+
+$$
+\bigl[(v_a+v_b)^2+R^2(v_a-v_b)^2\bigr]q_arq_b=0.
+\tag{33.7}
+$$
+
+若实系数严格正，得 $q_arq_b=0$。若系数为零，$R\ne0$ 迫使 $v_a=v_b=0$，于是 $cq=kq=0$。同一实际支撑PB仍是
+
+$$
+D(Rh-g,Rk)-D(Rh+g,-Rk)=2Rhr.
+\tag{33.8}
+$$
+
+两个实际第二平方在上述 $q$ 读取下均为零；P2使两份实际输出的 $q$ 压缩都为零。因 $hq=\epsilon q$，压缩33.8给 $2R\epsilon qrq=0$，特别 $q_arq_b=0$。此处理包括零角，不要求反向的非退化判据。所有同符号的不同格子对因此都为零；加上原有不同 $h$ 符号零块，得到 $[p_a,r]=0$ 对所有 $a$ 成立，继而 $[c,r]=0$。
+
+最后对所有实 $\alpha$ 调用实际PB $(Rh,x,Rk+\alpha u)$，中央续卷161.5消去单位负外层，得到同一个实际旧输出
+
+$$
+\begin{gathered}
+D\bigl((1-R^2)c+z+g-R\alpha h,\,2Rk+\alpha u\bigr)=K,\\
+K=-2x\circ g+2R^2z\circ c.
+\end{gathered}
+\tag{33.9}
+$$
+
+对角 $q_{\epsilon,a}$ 取 $\alpha=-2R\epsilon v_{\epsilon,a}$，第二平方在该角读取下为零，P2给 $q_{\epsilon,a}Kq_{\epsilon,a}=0$。此时 $cr$ 已对整份共同分割分块对角，$K$ 的其余项均为 $h$-奇，故把全部有限角压缩相加准确给 $cr=0$。此处没有由对角读取排除任意非对角元素；非对角块已由33.6–33.8逐对支付。
+
+33.8的两份P2及中央续卷176.1–176.3的同一根式估计，保持当前强度，给 $|\phi(hr)|^2\le\phi(c^2)[R^2\phi(u)+\phi(g^2)]$。对所有环境归一数学态 $\omega$ 取 $\phi(y)=\omega(ryr)$，$cr=0$ 给 $\omega(hr^3)=0$，态分离、自伴性及 $h^2=u$ 遂给 $r=0$。没有除以读取质量，未要求态正常或 $D$ 连续。取 $R=1$ 得33.2第二等号。∎
+

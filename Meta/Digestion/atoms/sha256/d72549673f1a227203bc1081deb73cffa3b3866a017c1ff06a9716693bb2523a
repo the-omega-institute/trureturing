@@ -1,0 +1,226 @@
+**定理 45.2（固定有限正字的全域 $L^2$ 强制性）。** 定义 45.1 的事件成立。更强地，可以选择同一个 $W,K$ 使 (45.3) 对全部 $F\in L^2(S^2,\mu;\mathbb C)$ 成立。这里仅断言 $W,K$ 的存在，不给出显式字集、字长界或数值常数。该有限上下文 $L^2$ 结论与原卷定理 21.2 的全上下文 $L^\infty$ 估计使用不同的范数和上下文量词；本定理不主张有限上下文的 $L^\infty$ 估计。
+
+证明。先确定与原卷的坐标对应。原卷 (18.1) 和本卷 (37.4) 的轴为 $u_+=(2x\sqrt x,0,2x-1)$，记相应第二生成元为 $C_+=R_{u_+}(-\theta)$。取
+
+$$
+H_{\rm coord}=\operatorname{diag}(-1,-1,1)\in SO(3).
+\tag{45.4}
+$$
+
+则 $H_{\rm coord}u_+=u_-$，$H_{\rm coord}e_z=e_z$，故
+
+$$
+H_{\rm coord}AH_{\rm coord}^{-1}=A,\qquad
+H_{\rm coord}C_+H_{\rm coord}^{-1}=C,\qquad
+B_w=H_{\rm coord}B_w^+H_{\rm coord}^{-1}.
+\tag{45.5}
+$$
+
+两条轴的首分量符号不同，并非字面相同的轴。若 $T_HF=F\circ H_{\rm coord}^{-1}$，则 $T_H$ 保持面积及 $L^2$ 范数，$PT_H=T_HP$，且逐个 $j$ 有
+
+$$
+(T_HF)(B_wA^jn)=F(B_w^+A^jH_{\rm coord}^{-1}n).
+\tag{45.6}
+$$
+
+因此全部残差及投影通过同一 $H_{\rm coord}$ 运输，字序不变。以下使用负首分量轴；原卷命题 18.1 的密度及十阶正字逆作用经 (45.5) 直接适用。特别地，$\Gamma=\langle A,C\rangle$ 在 $SO(3)$ 稠密，$A^{10}=C^{10}=I$，$A^{-1}=A^9$、$C^{-1}=C^9$，故 $\Gamma$ 的每个元素及其逆均可由正字表示。这里复用的原源为[原卷 C117 §§17–21](https://github.com/the-omega-institute/trureturing/blob/14894fb6a1c3b3bb827cee3fd89faf12abc588ad/docs/develop/theory/AURIC_COMMON_SOURCE_SELF_REFERENCE_AND_OBSERVER_SEQUENCES_C117.md) 和本卷 §37。
+
+下面把近零残差、有限维循环空间与固定秩投影矛盾连在同一证明中。
+
+（一）准确的三股辫关系。用单位实四元数提升这两个旋转，置
+
+$$
+q=c+se_z,\qquad r=c-su_-,\qquad
+c=\cos(\theta/2),\quad s=\sin(\theta/2).
+$$
+
+由 $c^2=(2-x)/4$、$s^2=(2+x)/4$ 得
+
+$$
+\operatorname{Re}(qr)=c^2+s^2(2x-1)=\frac12.
+$$
+
+单位四元数满足
+
+$$
+qrq+r^{-1}=2\operatorname{Re}(qr)q=q,\qquad
+rqr+q^{-1}=2\operatorname{Re}(qr)r=r.
+$$
+
+又 $q+q^{-1}=r+r^{-1}=2c$，所以 $qrq=rqr$，投影到旋转群即
+
+$$
+ACA=CAC.
+\tag{45.7}
+$$
+
+（二）所需的统一共轭谱隙。令
+
+$$
+\nu=\frac{\delta_I+\delta_A+\delta_{A^{-1}}+\delta_C+\delta_{C^{-1}}}{5}.
+\tag{45.8}
+$$
+
+它对称，且由上述密度适应于整个 $SO(3)$。Rodrigues 公式中出现的 $x,\sqrt x,\sin\theta,\cos\theta$ 都是代数数，所以支撑中各旋转的矩阵元均为代数数；在 $\mathfrak{so}(3)$ 的叉乘基下，$\operatorname{Ad}(g)$ 的矩阵就是 $g$。因此可在这些实际参数上消费 Benoist–de Saxcé，[*A spectral gap theorem in simple Lie groups*, arXiv:1405.1808v1](https://arxiv.org/html/1405.1808v1)，Theorem 1.2、Theorem 1.1 及 Definition 2.1，得到
+
+$$
+\rho=\|T_\nu\|_{L^2_0(SO(3))}<1.
+\tag{45.9}
+$$
+
+这里 $L^2_0$ 为 Haar 均值零空间。对称性及 (45.8) 中的恒等原子也排除了负端点的范数一障碍。Peter–Weyl 分解于是使同一个 $\rho$ 控制每个非平凡连续不可约 $SO(3)$ 表示及其直和上的 $\nu$ 平均。
+
+记复次数 $\ell$ 球面调和空间为 $\mathcal H_\ell$，$d_\ell=2\ell+1$，取真正的群表示
+
+$$
+\pi_\ell(g)h(n)=h(g^{-1}n).
+$$
+
+在 Hilbert–Schmidt 空间 $\operatorname{End}(\mathcal H_\ell)$ 上，置 $`\tau_\ell(g)X=\pi_\ell(g)X\pi_\ell(g)^*`$。$\mathcal H_\ell$ 不可约，故共轭不变量恰为标量矩阵。由 (45.9)，对所有 $X$，
+
+$$
+\left\|\tau_\ell(\nu)X-\frac{\operatorname{tr}X}{d_\ell}I\right\|_{\rm HS}
+\le\rho\left\|X-\frac{\operatorname{tr}X}{d_\ell}I\right\|_{\rm HS}.
+\tag{45.10}
+$$
+
+特别地，对任意秩 $r$ 的正交投影 $E$，
+
+$$
+\begin{aligned}
+(1-\rho)\left\|E-\frac r{d_\ell}I\right\|_{\rm HS}
+ &\le\|E-\tau_\ell(\nu)E\|_{\rm HS},\\
+\left\|E-\frac r{d_\ell}I\right\|_{\rm HS}^2
+ &=r-\frac{r^2}{d_\ell}.
+\end{aligned}
+\tag{45.11}
+$$
+
+因此当 $d_\ell\to\infty$ 时，固定正秩投影不可能同时对 $A,C$ 渐近不变：两个生成元及其逆的交换子趋零会使 (45.11) 第一行右端趋零，第二行却趋于 $r>0$。
+
+（三）若有限上下文界失败，则产生逃向高次数的近零残差向量。由原卷定理 21.2 的投影识别，
+
+$$
+L^2(S^2,\mu;\mathbb C)=\widehat\bigoplus_{\ell\ge0}\mathcal H_\ell,\qquad
+P=P_0+P_1,\qquad
+\mathcal H_{\ge2}=(\mathcal H_0\oplus\mathcal H_1)^\perp.
+$$
+
+只需证明存在有限正字集 $W$ 及 $c_0>0$，使
+
+$$
+\sum_{w\in W}\|R(U_A)U_{B_w}h\|_2^2\ge c_0\|h\|_2^2
+\quad(h\in\mathcal H_{\ge2}).
+\tag{45.12}
+$$
+
+这里 $U_g=\pi(g^{-1})$；准确的逆变量恒等式为
+
+$$
+R(z^{-1})=-z^{-3}R(z),\qquad
+R(U_A)U_{B_w}=-\pi(A)^{-3}R(\pi(A))\pi(B_w^{-1}).
+\tag{45.13}
+$$
+
+式中 $-\pi(A)^{-3}$ 酉，故残差范数相同；$B_w^{-1}$ 又遍历同一 $\Gamma$。因此若 (45.12) 对每个有限正字集及每个正 $c_0$ 都失败，则对任意有限 $E\subset\Gamma$，正算子
+
+$$
+Q_{\ell,E}=\sum_{g\in E}
+ \bigl(R(\pi_\ell(A))\pi_\ell(g)\bigr)^*
+ \bigl(R(\pi_\ell(A))\pi_\ell(g)\bigr)
+\tag{45.14}
+$$
+
+的最小特征值在 $\ell\ge2$ 上的下确界为零。理由是旋转、残差及其平方都保持调和次数；其直和在 $\mathcal H_{\ge2}$ 上有正下界当且仅当各块有同一个正下界。
+
+同时，任意固定有限次数段 $2\le\ell\le L$ 都有一个有限上下文正下界。事实上，原卷定理 17.4 证明中的复化调和核结论给出全旋转上下文的共同核恰为 $\mathcal H_0\oplus\mathcal H_1$。$\Gamma$ 稠密及作用连续，故在 $\bigoplus_{\ell=2}^L\mathcal H_\ell$ 上，(45.14) 各残差的共同核为零。该有限维单位球面紧，遂有有限子族的残差平方和具有严格正最小值。这只复用准确核结论，不重新证明调和刚性，也不从全上下文估计直接断言全次数有限子族的存在。
+
+对 $j\ge2$ 取递增有限集 $E_j$ 穷尽 $\Gamma$，每个 $E_j$ 再包含上述 $2\le\ell\le j$ 的有限强制子族，记该低次数段的正下界为 $b_j$。在 (45.12) 失败的假设下，可选某个块及单位特征向量，使 (45.14) 的值小于 $\min\{b_j/2,j^{-2}\}$。该块不能在 $2\le\ell\le j$ 内。因此有 $\ell_j>j$、$v_j\in\mathcal H_{\ell_j}$、$\|v_j\|=1$，满足
+
+$$
+\|R(\pi_{\ell_j}(A))\pi_{\ell_j}(g)v_j\|\longrightarrow0
+\quad\text{对每个固定 }g\in\Gamma,
+\qquad d_{\ell_j}\longrightarrow\infty.
+\tag{45.15}
+$$
+
+（四）把这些近零残差变成三次 Hecke 代数的有限维循环表示。固定一个非主超滤子 $\mathcal U$，取 Hilbert 超积 $\mathcal H=\prod_{\mathcal U}\mathcal H_{\ell_j}$。逐项作用给离散群 $\Gamma$ 的酉表示 $\pi$，$v=[v_j]$ 为单位向量。这里不假设该超积表示延拓为连续的 $SO(3)$ 表示。定义闭循环空间
+
+$$
+V=\overline{\operatorname{span}}\{\pi(g)v:g\in\Gamma\}.
+\tag{45.16}
+$$
+
+由 (45.15)，$R(\pi(A))\pi(g)v=0$ 对每个 $g$ 成立，故 $R(\pi(A))|_V=0$。由辫关系 (45.7)，$C=(AC)A(AC)^{-1}$；$V$ 对整个 $\Gamma$ 不变，所以也有 $R(\pi(C))|_V=0$。因此 $s_1=\pi(A)|_V$、$s_2=\pi(C)|_V$ 满足
+
+$$
+s_1s_2s_1=s_2s_1s_2,\qquad
+s_i^3-x^2s_i^2+x^2s_i-I=0\quad(i=1,2).
+\tag{45.17}
+$$
+
+此处消费 Marin，[*The cubic Hecke algebra on at most 5 strands*, arXiv:1110.6621v1](https://arxiv.org/html/1110.6621v1)，参数环上的 $A_n$ 定义、Theorem 1.2 的三股部分及 Theorem 3.2(3)–(4)：在 $\mathbb Z[a,b,c,c^{-1}]$ 上，两个可逆生成元满足辫关系及 $s_i^3-a s_i^2-b s_i-c=0$ 的三股三次 Hecke 代数有一个 $24$ 元张成集。特化
+
+$$
+a=x^2,\qquad b=-x^2,\qquad c=1
+\tag{45.18}
+$$
+
+保留这个张成上界，因为 $c=1$ 可逆。故 (45.17) 的代数作用所生成的 $v$ 的轨道张成空间维数至多 $24$；生成元的逆已在该代数内，所有 $\Gamma$ 轨道均被包括。有限维空间闭，(45.16) 因而满足
+
+$$
+1\le r=\dim V\le24.
+\tag{45.19}
+$$
+
+这里使用的是特化后仍有效的张成结论，不使用一般参数的半单性、表示分类或五股结论。
+
+（五）从有限循环空间回到同一调和块中的固定秩投影。选 $V$ 的正交归一基 $e_1,\ldots,e_r$，分别以有界向量列 $a_{k,j}\in\mathcal H_{\ell_j}$ 表示。其 Gram 矩阵沿 $\mathcal U$ 收敛于 $I_r$，故在一个属于 $\mathcal U$ 的指标集上正定；以 Gram 矩阵的逆平方根校正，得到正交归一列 $e_{1,j},\ldots,e_{r,j}$，且仍表示原来的 $e_k$。其余指标可任取正交归一列；因 $d_{\ell_j}\to\infty$，舍去有限多个指标后总有 $d_{\ell_j}\ge r$。
+
+记等距 $T_j:\mathbb C^r\to\mathcal H_{\ell_j}$ 的列为这些 $e_{k,j}$，$`E_j=T_jT_j^*`$。对 $s\in\{A,C\}$，$V$ 上的 $\pi(s)$ 在所选基下是一个固定酉矩阵 $D_s$，所以超积中的不变性逐列给
+
+$$
+\lim_{\mathcal U}\|\pi_{\ell_j}(s)T_j-T_jD_s\|_{\rm HS}=0.
+\tag{45.20}
+$$
+
+两个等距的像投影之差，其 Hilbert–Schmidt 范数不超过这两个等距之差的两倍，故
+
+$$
+\begin{aligned}
+\|\pi_{\ell_j}(s)E_j\pi_{\ell_j}(s)^*-E_j\|_{\rm HS}
+ &\le2\|\pi_{\ell_j}(s)T_j-T_jD_s\|_{\rm HS},\\
+\lim_{\mathcal U}\|[E_j,\pi_{\ell_j}(s)]\|_{\rm HS}&=0.
+\end{aligned}
+\tag{45.21}
+$$
+
+这里每个 $E_j$ 的秩都是同一个正整数 $r$，不是随 $j$ 增长的秩。酉性使逆生成元的交换子有相同范数，因而由 (45.8) 得
+
+$$
+\lim_{\mathcal U}\|E_j-\tau_{\ell_j}(\nu)E_j\|_{\rm HS}=0.
+$$
+
+把这些同一块中的 $E_j$ 代入 (45.11)，得到
+
+$$
+(1-\rho)\sqrt{r-\frac{r^2}{d_{\ell_j}}}
+\le\|E_j-\tau_{\ell_j}(\nu)E_j\|_{\rm HS}.
+\tag{45.22}
+$$
+
+左侧沿 $\mathcal U$ 趋于 $(1-\rho)\sqrt r>0$，右侧趋于零，矛盾。于是 (45.12) 的失败假设不成立，存在所需有限正字集 $W$ 及 $c_0>0$。若空字尚不在其中，加入它只会增加残差平方和。
+
+（六）回到同一个 $F$ 及原来的四项次序。原卷 (17.12) 的因式分解表明 $R(U_A)$ 消去 $\mathcal H_0\oplus\mathcal H_1$；旋转保持这个子空间。故对任意 $F\in L^2$，令 $h=F-PF$，有 $h\in\mathcal H_{\ge2}$，且对每个 $w$，$R(U_A)U_{B_w}h=\Delta_wF$。由 (45.12)，
+
+$$
+\begin{aligned}
+\|F-PF\|_2^2
+ &\le c_0^{-1}\sum_{w\in W}\|\Delta_wF\|_2^2\\
+ &\le\frac{|W|}{c_0}\max_{w\in W}\|\Delta_wF\|_2^2.
+\end{aligned}
+\tag{45.23}
+$$
+
+取 $K=\sqrt{|W|/c_0}>0$ 即得结论，特别覆盖全部连续 $[0,1]$ 响应。式 (45.2) 直接展开给 $B_wA^3n,B_wAn,B_wn,B_wA^2n$，未交换任何上下文与四时作用。所有极限、超积及有限维投影只用于这个非构造存在性证明；(45.23) 中每个残差仍是整球面的 $L^2$ 范数。∎
+

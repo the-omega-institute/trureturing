@@ -10,6 +10,15 @@ internal sealed class WeightRemovalDocument : IScribeDocumentDefinition
         "Price removal for integrable moving profiles has a negligible mean-square error.",
         H("Removing the price weight from profiles"),
         Blocks(
+            Describe.Lean(
+                DescribeId.Create("weighted-profile-integral-bound"),
+                DeclarationHandle.Create(Prefix + "weighted_profile_integral_bound"),
+                H("Uniform bound for the price-weighted profile integral"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For an integrable profile g, x>=3, and a nonnegative uniform bound M for abs(E(x+s*x^theta)-E(x)) on 0<=s<=1, the absolute unit integral of g(s) times this increment times priceRatio(x,s*x^theta) is at most profileL1(g)*M. The price ratio lies between zero and one."))),
+                DescribeRole.Theorem),
             Paragraph(Text(
                 "Let E be locally bounded and Borel measurable, let g be an integrable "
                 + "Borel profile on (0,1), and put H(x)=x^theta. The unweighted response "
@@ -76,6 +85,19 @@ internal sealed class WeightRemovalDocument : IScribeDocumentDefinition
                     + "shows measurability. Compact boundedness of the increments, "
                     + "0<=rho<=1, and positivity of x^theta give a uniform bound "
                     + "by a constant times the L1 norm of g."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("profile-response-aestrongly-measurable"),
+                DeclarationHandle.Create(Prefix + "profileResponse_aestronglyMeasurable"),
+                H("Measurability of the weighted response"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For locally bounded Borel measurable E, an integrable Borel profile g, "
+                    + "any real theta and 3<=a<=b, the weighted profile response is almost "
+                    + "everywhere strongly measurable on (a,b] with respect to Lebesgue measure. "
+                    + "Multiply the already square-integrable response divided by sqrt(x) "
+                    + "by the continuous function sqrt(x)."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("profile-weight-removal-pointwise"),

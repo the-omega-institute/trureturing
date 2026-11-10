@@ -1,0 +1,48 @@
+**定义 226.1（纯三元组的全部原外层）。** 对任意原 $a,v,z\in S_R$，记
+
+$$
+p=a\circ z,\quad q=a\circ v,\quad
+d=D(a,v),\quad e=D(a,z),\quad
+A_{av}=d^2,\quad A_{az}=e^2.
+$$
+
+由 225.1–225.2，$p,q,A_{av},A_{az}\in\mathbb Ru+\mathbb RR+\mathbb RR^2$，且在 $B_R$ 中中央；$d,e$ 和所有下列标签仍在原 $E$。实际 PB 的完整位移和两外层为
+
+$$
+\begin{aligned}
+\nu&=d-p,&\omega&=q+e,\\
+x_\pm&=v\pm d\mp p,&
+y_\pm&=z\pm e\pm q,\\
+D(x_+,y_+)-D(x_-,y_-)&=2pv-2qz.
+\end{aligned}
+\tag{226.1}
+$$
+
+最后一式仅用 $v\circ d=z\circ e=0$ 化简 PB 右端；中央乘积等于对应 Jordan 乘积。特别没有删掉 $p,q$，也没有对未知 $D$ 拆和。
+
+这些已知原外层标签的平方和交叠准确为
+
+$$
+\begin{aligned}
+x_\pm^2&=v^2+A_{av}+p^2-2pd\mp2pv,\\
+y_\pm^2&=z^2+A_{az}+q^2+2qe\pm2qz,\\
+x_\pm\circ y_\pm&=T\pm U,\\
+T&=v\circ z+d\circ e+qd-pe-pq,\\
+U&=v\circ e+d\circ z+qv-pz.
+\end{aligned}
+\tag{226.2}
+$$
+
+证明。每一行只展开已知 Jordan 乘法，用 $v\circ d=z\circ e=0$ 及 $p,q$ 的中央性收集项。例如 $x_\pm$ 中的 $\pm d$ 与 $\mp p$ 相乘总给 $-2pd$，不能随符号改成 $\mp2pd$。四个中央移位交叉项分别给 $qd,-pe,-pq$ 和 $\pm(qv-pz)$，得到所列交叠。∎
+
+对任一 $\chi$，这些全部已知标签都可同时取 $\pi_\chi$ 像，并用 201.1 的态延拓读取原 P2。但原 $D(x_\pm,y_\pm)$ 尚未证明属于 $B_R$，因为 $x_\pm,y_\pm$ 一般不在 $S_R$。准确的两个预算始终是原环境态 $\phi$ 上的
+
+$$
+|\phi D(x_\pm,y_\pm)|^2
++\phi(T\pm U)^2
+\le\phi(x_\pm^2)\phi(y_\pm^2).
+\tag{226.3}
+$$
+
+两边读数的实际乘积不能以某个交叠读数的平方替代。即使 PB 右端为零、两个外层旧值相同，也不由此宣称两预算饱和、外层平方律已付，或 $D$ 已下降到中央商。
+

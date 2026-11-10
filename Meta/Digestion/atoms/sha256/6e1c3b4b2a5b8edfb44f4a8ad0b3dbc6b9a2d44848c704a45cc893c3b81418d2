@@ -1,0 +1,18 @@
+**推论 88.2（同背景的准确范数响应纤维）。** 比较两个完整原模型，要求局部背景确为同一个原 $\mathcal W_{rs}$、$g$、根 $A$、实际 $T_{rs}$、共同 $K$ 和给定 $u_*$，且 $\rho>0$；相应唯一剪切记为 $N,N'$。则
+
+$$
+\begin{aligned}
+&\Delta_j=\Delta'_j\quad(j=1,2,6)\\
+&\quad\Longleftrightarrow\quad N^\dagger N=N'^\dagger N'\\
+&\quad\Longleftrightarrow\quad
+\Delta_n=\Delta'_n\quad\text{对所有整数 }n\ge0.
+\end{aligned}
+\tag{88.4}
+$$
+
+有限维原 $K$ 中，同 Gram 还等价于存在某个抽象正交 $O:K\to K$ 使 $N'=ON$。
+
+证明。同背景使 (88.2) 的基、系数、$\rho$ 和每个 $v_n$ 完全相同，三式反解及二次型代入给 (88.4) 两向。若同 Gram，定义 $Nx\mapsto N'x$：$Nx=Ny$ 时，Gram 相等给 $\|N'(x-y)\|^2=\|N(x-y)\|^2=0$，所以良定义；内积也由同一 Gram 保持。它是 $\operatorname{im}N$ 到 $\operatorname{im}N'$ 的满等距，两像同维，分别补原 $K$ 的正交基便延拓为正交 $O$。反向由 $O^\dagger O=I$ 立即得到同 Gram。$K=0$ 同样成立。∎
+
+这只分类**这条实际 ready 边、这个给定输入、这一系列 $U_1^n$ 的标量范数响应**。抽象 $O$ 不是已许可的完整来源规范、运输变换、程序／菜单／历史身份或新物理操作。本结论不主张原全空间的算子范数资料或脉冲全矩阵相同，不识别各个 $N$ 本身，也不扩大到其它原字。$\rho=0$ 时不能用 (88.2)；所有这些响应均为零，不恢复 $Q$。原 $\rho$ 的数学已知性不自动成为物理可读取性。
+
