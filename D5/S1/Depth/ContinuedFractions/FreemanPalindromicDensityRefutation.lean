@@ -7,7 +7,7 @@
    digest: Freeman's upper-limsup palindromic-density bound is false. -/
 
 /-
-result: proof_shape: content; escape_witness: none.
+result: proof_shape: content; escape_witness: witness_density_one.
 admission_basis: open-problem-resolution (#22972; Refuted).
 Direct frozen dependencies: E, W, WL, WG (declaration identities below).
 The finite evaluator, positive digits and complete prefix enumeration follow #22972.
@@ -18,7 +18,17 @@ The only public theorem is result. Its escape audit is unfinished: https://githu
 Utility is none; no basis=refutes exemption is asserted.
 
 Declaration classification (same-delivery helpers are inlined for classification).
-Each row has escape_witness: none and the module basis above.
+Bind-only rows have escape_witness: bind-only and the module basis above.
+Content witnesses (each named declaration is on the expanded proof path):
+qmatList_nonneg: qmatList_nonneg; qmatList_pos: qmatList_pos.
+finiteCF_eq_p_div_u: finiteCF_eq_p_div_u.
+finiteCF_reverse_eq,finiteCF_mul_reverse_iff: finiteCF_eq_p_div_u.
+stage_length_lower,stage_length_pos: stage_length_lower.
+limitA_eq_stage,prefix_limitA,limitA_block,limitA_six,limitA_four: limitA_eq_stage.
+stage_pos,limitA_pos: stage_pos; limitA_aperiodic: limitA_aperiodic.
+limsup_nth_ratio_one: limsup_nth_ratio_one; stage_matrix_fixed: stage_matrix_fixed.
+qualifying_pow,qualifying_infinite: qualifying_pow.
+witness_density_one: limsup_nth_ratio_one; result: witness_density_one.
 Data definitions below prove no proposition.
 name | proof_shape | direct frozen dependencies | consumers
 finiteCF | bind-only | none
@@ -33,8 +43,7 @@ finiteCF_cons_cons | bind-only | none | finiteCF_eq_p_div_u
 smat | bind-only | none
   consumers: qmatList,qmatList_cons,qmatList_nonneg,qmatList_pos,finiteCF_eq_p_div_u,qmatList_reverse,theta_block,qmatList_pair
 qmatList | bind-only | none
-  consumers: qmatList_nil,qmatList_cons,qmatList_append,qmatList_nonneg,qmatList_pos,finiteCF_eq_p_div_u,qmatList_reverse,finiteCF_reverse_eq,finiteCF_mul_reverse_iff,qmat_pow_fixed,qmatList_pair,stage_matrix_fixed
-qmatList_nil | bind-only | none | qmatList_nonneg,qmatList_pos,finiteCF_eq_p_div_u,qmatList_pair
+  consumers: qmatList_cons,qmatList_append,qmatList_nonneg,qmatList_pos,finiteCF_eq_p_div_u,qmatList_reverse,finiteCF_reverse_eq,finiteCF_mul_reverse_iff,qmat_pow_fixed,qmatList_pair,stage_matrix_fixed
 qmatList_cons | bind-only | none | qmatList_nonneg,qmatList_pos,finiteCF_eq_p_div_u,qmatList_pair
 qmatList_append | bind-only | none | stage_matrix_fixed
 qmatList_nonneg | content | none | qmatList_pos
@@ -145,8 +154,6 @@ private def smat (t : ℕ) : Matrix (Fin 2) (Fin 2) ℚ := !![(t : ℚ), 1; 1, 0
 
 private def qmatList (w : List ℕ) : Matrix (Fin 2) (Fin 2) ℚ := (w.map smat).prod
 
-private theorem qmatList_nil : qmatList [] = 1 := rfl
-
 private theorem qmatList_cons (a : ℕ) (w : List ℕ) :
     qmatList (a :: w) = smat a * qmatList w := rfl
 
@@ -158,7 +165,7 @@ private theorem qmatList_nonneg (w : List ℕ) :
     0 ≤ (qmatList w) 0 0 ∧ 0 ≤ (qmatList w) 0 1 ∧
     0 ≤ (qmatList w) 1 0 ∧ 0 ≤ (qmatList w) 1 1 := by
   induction w with
-  | nil => norm_num [qmatList_nil]
+  | nil => norm_num [(show qmatList [] = 1 from rfl)]
   | cons a tail ih =>
       rcases ih with ⟨hp, hq, hu, hv⟩
       rw [qmatList_cons]
@@ -175,7 +182,7 @@ private theorem qmatList_pos (w : List ℕ) (hw : w ≠ []) (hpos : ∀ a ∈ w,
   | cons a tail ih =>
       have ha : 0 < (a : ℚ) := by exact_mod_cast hpos a (by simp)
       cases tail with
-      | nil => simpa [qmatList_cons, qmatList_nil, smat, Matrix.mul_apply, Fin.sum_univ_two] using ha
+      | nil => simpa [qmatList_cons, (show qmatList [] = 1 from rfl), smat, Matrix.mul_apply, Fin.sum_univ_two] using ha
       | cons b tail =>
           have htail : ∀ c ∈ b :: tail, 0 < c := by
             intro c hc
@@ -195,7 +202,7 @@ private theorem finiteCF_eq_p_div_u (w : List ℕ) (hw : w ≠ []) (hpos : ∀ a
   | cons a tail =>
       induction tail generalizing a with
       | nil =>
-          simp [finiteCF, GenContFract.convs', GenContFract.convs'Aux, qmatList_cons, qmatList_nil,
+          simp [finiteCF, GenContFract.convs', GenContFract.convs'Aux, qmatList_cons, (show qmatList [] = 1 from rfl),
             smat, Matrix.mul_apply, Fin.sum_univ_two]
       | cons b tail ih =>
           have htail : b :: tail ≠ [] := List.cons_ne_nil b tail
@@ -495,7 +502,7 @@ private lemma qmat_pow_fixed (m : ℕ) (hm : 0 < m) (w : List ℕ)
       exact (pow_succ' (qmatList w) n).symm.trans (pow_succ (qmatList w) n)
 
 private lemma qmatList_pair (a b : ℕ) : qmatList [a,b] = (· * ·) (smat a) (smat b) := by
-  simp only [qmatList_cons, qmatList_nil, mul_one]
+  simp only [qmatList_cons, (show qmatList [] = 1 from rfl), mul_one]
 
 private lemma stage_matrix_fixed (k : ℕ) : theta 2 (qmatList (stage k)) = qmatList (stage k) := by
   induction k with
