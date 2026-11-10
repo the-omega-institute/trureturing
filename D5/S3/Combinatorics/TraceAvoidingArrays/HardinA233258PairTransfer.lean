@@ -12,6 +12,8 @@ escape_witness: representative_rows, class_rep, initial_weights, power_polynomia
 import D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix
 import Mathlib.Tactic
 
+/-! Relabelling orbits and exact continuation vectors for three-row strips. -/
+set_option maxRecDepth 100000
 open scoped BigOperators
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233258PairTransfer
 open D5.S3.Combinatorics.TraceAvoidingArrays
@@ -54,9 +56,16 @@ private theorem class_rep : ∀ c : Col, ∃ e : Equiv.Perm (Fin 3),
     relabel e c = representatives (cls c) := by decide +kernel
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 10000000 in
+-- Count all 27 successors of each of the five orbit representatives.
 private theorem representative_rows : ∀ i s : Fin 5,
     (∑ c : Col, if compatible (representatives i) c ∧ cls c = s then (1 : ℤ) else 0) =
-      Q i s := by decide +kernel
+      Q i s := by
+  have h : List.ofFn (fun i : Fin 5 => List.ofFn (fun s : Fin 5 =>
+      ∑ c : Col, if compatible (representatives i) c ∧ cls c = s then (1 : ℤ) else 0)) =
+      List.ofFn (fun i : Fin 5 => List.ofFn (fun s : Fin 5 => Q i s)) := by
+    decide +kernel
+  intro i s
+  exact congrFun (List.ofFn_inj.mp (congrFun (List.ofFn_inj.mp h) i)) s
 private theorem quotient_rows (b : Col) (s : Fin 5) :
     (∑ c : Col, if compatible b c ∧ cls c = s then (1 : ℤ) else 0) = Q (cls b) s := by
   obtain ⟨e, he⟩ := class_rep b
@@ -72,6 +81,7 @@ private theorem quotient_rows (b : Col) (s : Fin 5) :
     _ = _ := representative_rows _ _
 set_option maxRecDepth 100000 in
 set_option maxHeartbeats 10000000 in
+-- Count the 729 ordered pairs of columns by their final orbit.
 private theorem initial_weights : ∀ s : Fin 5,
     (∑ a : Col, ∑ b : Col,
       if compatible a b ∧ cls b = s then (1 : ℤ) else 0) = weights s := by
@@ -93,11 +103,13 @@ private theorem grid_good (n : ℕ) (P : Fin 3 × Fin n → Fin 3) :
   constructor
   · intro h j hj
     have hj0 : j < n := by omega
-    simpa only [List.getD_ofFn, dif_pos hj0, dif_pos hj, compatible, column_grid]
+    simpa [List.getD_eq_getElem?_getD, List.getElem?_ofFn, hj0, hj,
+      compatible, column_grid]
       using h ⟨j, hj0⟩ hj
   · intro h j hj
     have hh := h j.val hj
-    simpa only [List.getD_ofFn, dif_pos j.isLt, dif_pos hj, compatible, column_grid]
+    simpa [List.getD_eq_getElem?_getD, List.getElem?_ofFn, j.isLt, hj,
+      compatible, column_grid]
       using hh
 
 section CountBridge
@@ -130,6 +142,7 @@ private theorem count_transfer (n : ℕ) :
     by_cases h : compatible a b ∧ cls b = s <;> simp [h]
 end CountBridge
 
+attribute [local irreducible] L
 private def W : Fin 6 → Fin 5 → ℤ :=
   ![![1,1,1,1,1], ![8,4,2,4,2], ![36,18,12,18,6],
     ![168,78,54,84,24], ![768,354,246,384,108], ![3504,1614,1122,1752,492]]
@@ -145,7 +158,11 @@ private theorem power_polynomial :
       ∑ j : Fin 3, coefficients j • (Q^(2+j.val)).mulVec (1 : Fin 5 → ℤ) := by
   have h : W 5 = ∑ j : Fin 3, coefficients j • W ⟨2+j.val, by omega⟩ := by
     decide +kernel
-  simpa only [powers_table] using h
+  rw [powers_table ⟨5, by decide⟩]
+  have hh (j : Fin 3) : (Q^(2+j.val)).mulVec (1 : Fin 5 → ℤ) =
+      W ⟨2+j.val, by omega⟩ := powers_table ⟨2+j.val, by omega⟩
+  simp_rw [hh]
+  exact h
 
 theorem initial_values (k : Fin 6) :
     (L (k.val+2) : ℤ) = ![96,432,1944,8856,40392,184248] k := by
@@ -157,7 +174,8 @@ private theorem recurrence_core (n : ℕ) :
   have h := TransferMatrix.scalarRelationShift Q weights 3 2 coefficients power_polynomial n
   simp only [coefficients, Fin.sum_univ_succ, Fin.val_zero, Fin.val_succ] at h
   simp only [← count_transfer] at h
-  simpa only [Nat.add_assoc] using h
+  norm_num [Nat.add_assoc] at h
+  linarith
 
 theorem recurrence (n : ℕ) :
     (L (n+6) : ℤ) + 6 =
