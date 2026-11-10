@@ -55,7 +55,7 @@ internal sealed class HardinA233259PairTransferCoreDocument : IScribeDocumentDef
         return All("a",Own("Col"),All("b",Own("Col"),
             Typed(Own("instDecidableCompatible",a,b),Call("Decidable",Own("compatible",a,b)))));
     }
-    private static Formula CountFormula(){var n=V("n");var p=V("P");var arrays=Arrow(Cells(n),Fin(D(3)));return All("n",Q("Nat"),Eq(App(Own("L"),n),App(Q("Finset.card"),App(Q("Finset.filter"),Fn("P",arrays,App(Own("Proper"),p)),App(Q("Finset.univ"))))));}
+    private static Formula CountFormula(){var n=V("n");var p=V("P");var arrays=Arrow(Cells(n),Fin(D(3)));return All("n",Q("Nat"),Eq(App(Own("L"),n),App(Q("Finset.card"),App(Q("Finset.filter"),Fn("P",arrays,App(Own("Proper"),p)),Q("Finset.univ")))));}
     private static Formula MatrixFormula()=>Eq(Own("Q"),MatrixRows());
     private static Formula WeightsFormula()=>Eq(Own("weights"),Typed(Vector(48,48,24,48,24,24,12,12,24,48,24,12,12,24),Arrow(Fin(D(14)),Q("Int"))));
     private static Formula CompatibleRelabelFormula(){var e=V("e");var a=V("a");var b=V("b");return All("e",Perm(),All("a",Own("Col"),All("b",Own("Col"),Iff(App(Own("compatible"),App(Q("D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer.relabel"),e,a),App(Q("D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer.relabel"),e,b)),App(Own("compatible"),a,b)))));}

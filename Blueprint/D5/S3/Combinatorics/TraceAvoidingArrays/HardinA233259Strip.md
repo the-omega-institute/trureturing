@@ -4,7 +4,7 @@
 
 Hardin's recurrence for the literal normalized four-row six-colour strip.
 
-Cells are Fin 4 times Fin n, with colour set Fin 6. Only bonds between consecutive columns are constrained: row indices may differ by at most one. A bond excludes equal colours and colours whose values sum to five. Vertical neighbours inside a column are free. The first cell is zero and the predecessor conditions use the strict row-major rank row.val*n+column.val.
+Cells are Fin 4 times Fin n, with colour set Fin 6. Only bonds between consecutive columns are constrained: the left row s and right row r satisfy r=s or r.val+1=s.val. A bond excludes equal colours and colours whose values sum to five. Vertical neighbours inside a column are free. The first cell is zero and the predecessor conditions use the strict row-major rank row.val*n+column.val.
 
 **Definition 1.1 (Literal array conditions).**
 
@@ -76,7 +76,7 @@ $$\forall (n: \operatorname{Nat}), ((\operatorname{D5}.\operatorname{S3}.\operat
 
 Hardin's shifted integer recurrence.
 
-The pair-pattern transfer has fourteen column classes. Its sextic tail polynomial, multiplied by x-1, gives the recurrence for L+6. Multiplication by 16^n scales the coefficient at lag j by 16^j. The finite base instance covers index nine, while the shifted tail relation covers all larger indices. Writing the index as n+9 makes the condition index>8 explicit. Counts are cast to Int before subtraction. Width one is exceptional for the counting bridge.
+The pair-pattern transfer has fourteen column classes. Its degree-four tail polynomial x^4-10*x^3+24*x^2-21*x+6 annihilates Q^4 times the all-ones vector. Since its value at one is zero, it also gives the recurrence for L+6. Multiplication by 16^n scales the coefficient at lag j by 16^j. The finite base instance covers index nine, while the shifted tail relation covers all larger indices. Writing the index as n+9 makes the condition index>8 explicit. Counts are cast to Int before subtraction. Width one is exceptional for the counting bridge.
 
 ## References
 

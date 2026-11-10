@@ -6,7 +6,7 @@ The four-row one-sided pair transfer definitions.
 
 The core supplies the literal four-row proper-pattern predicate, its fourteen-class transfer matrix and the public grid transport used by the counting certificate.
 
-**Definition 1.1 (Four-label columns).**
+**Definition 1.1 (Four-row columns over three labels).**
 
 $$\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233259PairTransferCore}.\operatorname{Col} = (\operatorname{Fin}\left(3\right)) \times ((\operatorname{Fin}\left(3\right)) \times ((\operatorname{Fin}\left(3\right)) \times (\operatorname{Fin}\left(3\right))))$$
 
@@ -18,7 +18,7 @@ $$\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname
 
 *Commentary.*
 
-Four-label columns.
+Four-row columns over three labels.
 
 **Definition 1.2 (Column coordinates).**
 
@@ -64,7 +64,7 @@ First-appearance representatives.
 
 **Definition 1.5 (Coordinatewise label permutations).**
 
-$$\forall e \in \operatorname{Equiv}.\operatorname{Perm}\left(\operatorname{Fin}\left(3\right)\right),\; \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233259PairTransferCore}.\operatorname{relabel}\left(e\right) = \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233177PairTransfer}.\operatorname{relabel}$$
+$$\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233259PairTransferCore}.\operatorname{relabel} = \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233177PairTransfer}.\operatorname{relabel}$$
 
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferCore.relabel` (`✓ std3`).
 
@@ -78,7 +78,7 @@ Coordinatewise label permutations.
 
 **Definition 1.6 (Grids as sequences of columns).**
 
-$$\forall n \in \operatorname{Nat},\; \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233259PairTransferCore}.\operatorname{gridEquiv}\left(n\right) = \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233177PairTransfer}.\operatorname{gridEquiv}$$
+$$\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233259PairTransferCore}.\operatorname{gridEquiv} = \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233177PairTransfer}.\operatorname{gridEquiv}$$
 
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferCore.gridEquiv` (`✓ std3`).
 
@@ -118,7 +118,21 @@ $$\forall a \in \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}
 
 One-sided column compatibility.
 
-**Definition 1.9 (Proper pair-label patterns).**
+**Definition 1.9 (Deciding column compatibility).**
+
+$$\forall a \in \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233259PairTransferCore}.\operatorname{Col},\; \forall b \in \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233259PairTransferCore}.\operatorname{Col},\; (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233259PairTransferCore}.\operatorname{instDecidableCompatible}\left(a, b\right): \operatorname{Decidable}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233259PairTransferCore}.\operatorname{compatible}\left(a, b\right)\right))$$
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferCore.instDecidableCompatible` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A233259: complementary-pair exclusion on a four-row strip*. URL: <https://oeis.org/A233259>.
+
+*Commentary.*
+
+Deciding column compatibility.
+
+**Definition 1.10 (Proper pair-label patterns).**
 
 $$\forall n \in \operatorname{Nat},\; \forall P \in (\operatorname{Fin}\left(4\right)) \times (\operatorname{Fin}\left(n\right)) \to \operatorname{Fin}\left(3\right),\; \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233259PairTransferCore}.\operatorname{Proper}\left(P\right) = \left(\forall j \in \operatorname{Fin}\left(n\right),\; \forall h \in (\operatorname{Fin}.\operatorname{val}\left(j\right)) + (1) < n,\; \forall r \in \operatorname{Fin}\left(4\right),\; \forall s \in \operatorname{Fin}\left(4\right),\; ((r = s) \lor ((\operatorname{Fin}.\operatorname{val}\left(r\right)) + (1) = \operatorname{Fin}.\operatorname{val}\left(s\right))) \Rightarrow (P\left((s, j)\right) \ne P\left((r, \operatorname{Fin}.\operatorname{mk}\left((\operatorname{Fin}.\operatorname{val}\left(j\right)) + (1), h\right))\right))\right)$$
 
@@ -132,7 +146,7 @@ $$\forall n \in \operatorname{Nat},\; \forall P \in (\operatorname{Fin}\left(4\r
 
 Proper pair-label patterns.
 
-**Definition 1.10 (Literal pair-pattern count).**
+**Definition 1.11 (Literal pair-pattern count).**
 
 $$\forall n \in \operatorname{Nat},\; \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233259PairTransferCore}.\operatorname{L}\left(n\right) = \operatorname{Finset}.\operatorname{card}\left(\operatorname{Finset}.\operatorname{filter}\left((\lambda (P: (\operatorname{Fin}\left(4\right)) \times (\operatorname{Fin}\left(n\right)) \to \operatorname{Fin}\left(3\right)) \mapsto \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233259PairTransferCore}.\operatorname{Proper}\left(P\right)), \operatorname{Finset}.\operatorname{univ}\left(\right)\right)\right)$$
 
@@ -146,7 +160,7 @@ $$\forall n \in \operatorname{Nat},\; \operatorname{D5}.\operatorname{S3}.\opera
 
 Literal pair-pattern count.
 
-**Definition 1.11 (Fourteen-class transfer matrix).**
+**Definition 1.12 (Fourteen-class transfer matrix).**
 
 $$\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233259PairTransferCore}.\operatorname{Q} = ![![2, 2, 2, 2, 0, 2, 2, 0, 2, 2, 0, 0, 0, 0], ![1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0], ![1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0], ![1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1], ![0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1], ![1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], ![1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], ![0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], ![1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0], ![1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0], ![0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0], ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1], ![0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0], ![0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1]]$$
 
@@ -160,7 +174,7 @@ $$\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname
 
 Fourteen-class transfer matrix.
 
-**Definition 1.12 (Class weights).**
+**Definition 1.13 (Class weights).**
 
 $$\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233259PairTransferCore}.\operatorname{weights} = (![48, 48, 24, 48, 24, 24, 12, 12, 24, 48, 24, 12, 12, 24]: \operatorname{Fin}\left(14\right) \to \operatorname{Int})$$
 
@@ -174,9 +188,9 @@ $$\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname
 
 Class weights.
 
-**Theorem 1.13 (Relabelling preserves compatibility).**
+**Theorem 1.14 (Relabelling preserves compatibility).**
 
-$$\forall e \in \operatorname{Equiv}.\operatorname{Perm}\left(\operatorname{Fin}\left(3\right)\right),\; \forall a \in \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233259PairTransferCore}.\operatorname{Col},\; \forall b \in \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233259PairTransferCore}.\operatorname{Col},\; \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233259PairTransferCore}.\operatorname{compatible}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233177PairTransfer}.\operatorname{relabel}\left(e, a\right), \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233177PairTransfer}.\operatorname{relabel}\left(e, b\right)\right) = \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233259PairTransferCore}.\operatorname{compatible}\left(a, b\right)$$
+$$\forall e \in \operatorname{Equiv}.\operatorname{Perm}\left(\operatorname{Fin}\left(3\right)\right),\; \forall a \in \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233259PairTransferCore}.\operatorname{Col},\; \forall b \in \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233259PairTransferCore}.\operatorname{Col},\; (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233259PairTransferCore}.\operatorname{compatible}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233177PairTransfer}.\operatorname{relabel}\left(e, a\right), \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233177PairTransfer}.\operatorname{relabel}\left(e, b\right)\right)) \Leftrightarrow (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233259PairTransferCore}.\operatorname{compatible}\left(a, b\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferCore.compatible_relabel` (`✓ std3`). ∎
 
@@ -188,9 +202,9 @@ $$\forall e \in \operatorname{Equiv}.\operatorname{Perm}\left(\operatorname{Fin}
 
 Relabelling preserves compatibility.
 
-**Theorem 1.14 (Grid locality characterization).**
+**Theorem 1.15 (Grid locality characterization).**
 
-$$\forall n \in \operatorname{Nat},\; \forall P \in (\operatorname{Fin}\left(4\right)) \times (\operatorname{Fin}\left(n\right)) \to \operatorname{Fin}\left(3\right),\; (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233259PairTransferCore}.\operatorname{Proper}\left(P\right)) \Leftrightarrow (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{TransferMatrix}.\operatorname{good}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233259PairTransferCore}.\operatorname{compatible}, (\lambda (x: \operatorname{Fin}) \mapsto (\operatorname{True}) \land (x = x)), \operatorname{List}.\operatorname{ofFn}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233259PairTransferCore}.\operatorname{gridEquiv}\left(n\right)\left(P\right)\right)\right))$$
+$$\forall n \in \operatorname{Nat},\; \forall P \in (\operatorname{Fin}\left(4\right)) \times (\operatorname{Fin}\left(n\right)) \to \operatorname{Fin}\left(3\right),\; (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233259PairTransferCore}.\operatorname{Proper}\left(P\right)) \Leftrightarrow (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{TransferMatrix}.\operatorname{good}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233259PairTransferCore}.\operatorname{compatible}, \operatorname{Function}.\operatorname{const}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233259PairTransferCore}.\operatorname{Col}, \operatorname{Function}.\operatorname{const}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233259PairTransferCore}.\operatorname{Col}, \operatorname{Function}.\operatorname{const}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233259PairTransferCore}.\operatorname{Col}, \operatorname{True}\right)\right)\right), \operatorname{List}.\operatorname{ofFn}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233259PairTransferCore}.\operatorname{gridEquiv}\left(n\right)\left(P\right)\right)\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferCore.grid_good` (`✓ std3`). ∎
 
@@ -215,6 +229,7 @@ Grid locality characterization.
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferCore.compatible_relabel`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferCore.gridEquiv`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferCore.grid_good`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferCore.instDecidableCompatible`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferCore.relabel`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferCore.representatives`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferCore.weights`

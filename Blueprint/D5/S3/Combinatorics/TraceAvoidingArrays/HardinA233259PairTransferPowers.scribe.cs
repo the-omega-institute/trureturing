@@ -40,7 +40,7 @@ internal sealed class HardinA233259PairTransferPowersDocument : IScribeDocumentD
     private static Formula Vector(params int[] xs) => Seq(Bang, OpenBracket, Seq(xs.SelectMany((x, i) => i == 0 ? new[] { Signed(x) } : new[] { Comma, Sp, Signed(x) }).ToArray()), CloseBracket);
     private static Formula Vector(params Formula[] xs) => Seq(Bang, OpenBracket, Seq(xs.SelectMany((x, i) => i == 0 ? new[] { x } : new[] { Comma, Sp, x }).ToArray()), CloseBracket);
     private static Formula Ints(params int[] xs) => Vector(xs);
-    private static Formula Signed(int x) => x < 0 ? Seq(Neg, Sp, D(-x)) : D(x);
+    private static Formula Signed(int x) => x < 0 ? new Formula.Negate(D(-x)) : D(x);
     private static Formula Sum(string n, Formula domain, Formula body) => Seq(new Formula.Subscript(F.Sum, Seq(V(n), Sp, InMacro, Sp, domain)), Sp, Parenthesized(body));
     private static Formula Smul(Formula a, Formula b) => App(Q("HSMul.hSMul"), a, b);
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(Parenthesized(a), FormulaBinaryOperator.Add, Parenthesized(b));
@@ -49,7 +49,8 @@ internal sealed class HardinA233259PairTransferPowersDocument : IScribeDocumentD
     private static Formula All(string n, Formula t, Formula b) => new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(n), t, b);
     private static Formula App(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
     private static Formula Own(string n, params Formula[] args) => Call("D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferPowers." + n, args);
-    private static Formula Call(string n, params Formula[] args) => App(Q(n), args);
+    private static Formula Call(string n, params Formula[] args) =>
+        args.Length == 0 ? Q(n) : App(Q(n), args);
     private static Formula Q(string n) => Seq(n.Split('.').SelectMany((part, i) => i == 0 ? new[] { Operatorname, Grp(V(part)) } : new[] { Dot, Operatorname, Grp(V(part)) }).ToArray());
     private static Formula V(string n) => F.Id(n);
     private static Formula D(int n) => StrataLint.Scribe.FormulaDsl.D(n.ToString(System.Globalization.CultureInfo.InvariantCulture).Select(c => (byte)(c - '0')).ToArray());
