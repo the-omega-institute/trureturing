@@ -47,6 +47,30 @@ internal sealed class HardinA233261LiteralDocument : IScribeDocumentDefinition
                 + "finite function count; the displayed bridge is asserted only at widths at least "
                 + "two. Absent colours remain allowed throughout. The recurrence has no premise "
                 + "about computation, finite cutoffs, or the occurrence of all colours.")),
+            Paragraph(Text("Proof classification: counting_bridge and result are both bind-only. "
+                + "The live consumer of counting_bridge is scale_recurrence, which feeds result. "
+                + "The structural two-label arguments are finite transports of the existing "
+                + "HardinA233258Strip.columns_constant and HardinA233177Ladder.two_label_classification "
+                + "suppliers; the unchanged proof repeats those arguments rather than importing "
+                + "an adapter. The transfer propagation directly reuses TransferMatrix.tabulatedPowers "
+                + "and TransferMatrix.scalarRelationShift. No escape witness or new general method "
+                + "is claimed. The result's proposed admission_basis is open-problem-resolution "
+                + "for the complete external assertion, with counting_bridge a consumed auxiliary.")),
+            Paragraph(Text("Problems/hardin233261.md gives the complete event, its clause-by-clause "
+                + "correspondence and Triage. Its immutable event identifier is "
+                + "932336f06d425b3988e1c636ab6db5275e017dd94af2eccba1f0f52fb052d93f; "
+                + "the preregistration is https://github.com/the-omega-institute/trureturing/issues/28857 "
+                + "and the fixed event is in comment 6768941004. The Proved claim concerns this "
+                + "whole event, including the literal finite-count definitions, not a finite prefix. "
+                + "Library/Automata/hardin2013a233261.md records the source and literature limits. "
+                + "Worldwide continued openness, priority and originality are unverified.")),
+            Paragraph(Text("The counting_bridge and result information-escape bindings remain "
+                + "declared_unresolved: IE-C050 ClosedTruthReadout reason=unclassified_form "
+                + "rule=source.residual_requires_open, empty site/readout, certificate=null and "
+                + "escape_from=null. Their compiled Reg attempts do not supply validated bindings. "
+                + "The unfinished-audit disclosure is "
+                + "https://github.com/the-omega-institute/trureturing/issues/28857#issuecomment-6771906994. "
+                + "Independent admission confirmation and canonical freezing remain pending.")),
             Paragraph(Text("Source: R. H. Hardin, OEIS A233261, revision 8, "
                 + "https://oeis.org/A233261. Source licensing: https://oeis.org/LICENSE. "
                 + "The source calls the recurrence Empirical; no literature priority claim is made.")))));
@@ -57,7 +81,10 @@ internal sealed class HardinA233261LiteralDocument : IScribeDocumentDefinition
             StatementSource.FromAuthor(Disp(formula)),
             AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(literature && !theorem ? OriginalName : title + "."))),
-            theorem ? DescribeRole.Theorem : DescribeRole.Definition);
+            theorem ? DescribeRole.Theorem : DescribeRole.Definition,
+            openProblemResolutionClaim: name == "result"
+                ? new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233261"), ResolutionKind.Proved)
+                : null);
     private static Formula BridgeFormula()
     {
         var n = V("n");
