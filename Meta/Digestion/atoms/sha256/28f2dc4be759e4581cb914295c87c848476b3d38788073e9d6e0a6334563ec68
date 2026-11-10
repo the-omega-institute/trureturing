@@ -1,0 +1,25 @@
+**合同 47.4（复 Hilbert、可观测量和实际相干叠加）。** 原具名可取得标签、比较权 $q$、native、共同跨评价配对、全部原词、parent、ready、合法控制、实际相干准备、全部根及静默分支保持。数学表示不生产任意向量准备、全 $B(H)$ 的可取得像、免费控制、复制或原设备。
+>
+> 指定原词空间仍为同一复空间 $V_{\rm nat}$、第一槽共轭线性的半正定 Hermitian 型 $K_{\rm nat}$、全部原 $\xi_\gamma$ 及原总集合映射 $\mathsf J_a:V_{\rm nat}\to V_{\rm nat}$，并完整要求
+>
+> $$
+> \begin{aligned}
+> K_{\rm nat}(\xi_\gamma,\mathsf J_a\xi_\gamma)&=\gamma(a),\\
+> K_{\rm nat}(\mathsf J_a z,\mathsf J_b w)
+> &=K_{\rm nat}(z,\mathsf J_{a\circ b}w)
+> -iK_{\rm nat}(z,\mathsf J_{D(a,b)}w),\\
+> V_{\rm nat}&=\operatorname{span}_{\mathbb C}
+> \{\mathsf J_{a_1}\cdots\mathsf J_{a_k}\xi_\gamma:
+> k\ge0,\ a_j\in E,\ \gamma\in\mathcal P\},\\
+> K_{\rm nat}(\xi_\gamma,\xi_\gamma)&\le m_\gamma,\\
+> K_{\rm nat}(\mathsf J_a\xi_\gamma,
+> \mathsf J_c(\mathsf J_a\xi_\gamma))&\ge0\qquad(c\in C).
+> \end{aligned}
+> \tag{47.5}
+> $$
+>
+> 第一行量化全部 $a\in E$、$\gamma\in\mathcal P$，第二行量化全部 $a,b\in E$、$z,w\in V_{\rm nat}$，末行量化全部 $a\in E$、$\gamma\in\mathcal P$、$c\in C$。词必须先按原总映射实际复合，再取有限复线性包；空词及任意有限长度都包括。这个共同 $K_{\rm nat}$ 保留全部指定跨评价配对和有限正表，不能用每份评价独立的 GNS 核替换。没有预给 $\mathsf J_a$ 线性、$\mathsf J_0=0$ 或 $\mathsf J_u=I$，其恢复依原消费者的次序。
+>
+> $q_{\rm nat},K_{\rm nat},\mathsf J$ 就是上游原 $q,K,J$，其权、零集、跨标签意义、词身份和读序不变。它们不同于辅助 $q_D$、数学复化标量 $i$ 或取向截面。静态存在式 Hilbert 表示本身不认证这个指定原词实现。
+>
+> 

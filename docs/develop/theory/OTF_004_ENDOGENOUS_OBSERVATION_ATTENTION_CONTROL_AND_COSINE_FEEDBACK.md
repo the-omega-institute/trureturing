@@ -3965,3 +3965,899 @@ $P$ 的相位门 $e^{i\phi(2P-I)}$、$P$ 控制的 NOT 及其所需额外控制�
 完整估计器仍须在全部原始 $n,h$ 上满足 (19.2) 的 $e$ 精度、$1-e$ 成功率、原始两项调用上限、规定终端和对全部实际 $K$ 自身边缘的返回要求。二元判别、这个受控反射或一个 QSVT 投影块均不满足这些全部条件。足以推进反例方向的未来完整返回目标是 $O(1/(D_e e^2))$；本节没有给出这一估计器，也没有给出沿合法正有理精度列的 $o(\log(1/e)/(D_e e^2))$ 原始成功见证。因此 (19.12) 的两种结算方向仍未解决。
 
 ## 追加锚（本行以下为增补区）
+
+## 25. 有限全方向估计器的直接参考访问反例与精确原生前缀障碍
+
+**定义 25.1（同一实际估计器的风险与返回）。** 全部精度参数沿定义 19.1 的正有理曲线：$0<e\le1/100$，$m=m_e=D_e-1$，$j=m/2$，$L=L_e=10N_e$，$Q=Q_e=18N_e+1$，$d=1/64$，$\tau_0=1$。参考空间仍为 $R=\operatorname{Sym}^m(\mathbb C^2)$，唯一初始未知方向源为 $\tau_h=|e_h\rangle\langle e_h|$。所有准备和控制参数均不依赖实际 $h,n$。固定允许场
+
+$$
+ n_*(x,y)=(x,y,\sqrt{1-x^2-y^2}),\qquad x^2+y^2<1/9.
+ \tag{25.1}
+$$
+
+对这个场，(19.2) 的目标为 $(h_y/2,-h_x/4,0,h_y/2)$。一个固定有限解码器输出两个有理数 $(\widehat a,\widehat b)$，完整输出解释为 $(\widehat a,\widehat b,0,\widehat a)$。对包括规定终端的同一个过程 $\Omega_h$，定义
+
+$$
+\begin{aligned}
+ \beta_e&=\sup_{h\in S^2}\Pr_h\!\left[
+ \max\{|\widehat a-h_y/2|,|\widehat b+h_x/4|\}>e\right],\\
+ \delta_e&=\sup_{h\in S^2}D_{\rm tr}\!\left(
+ \Omega_h,\tau_h\otimes\operatorname{Tr}_R\Omega_h\right),
+ \qquad D_{\rm tr}(X,Y)=\tfrac12\|X-Y\|_1.
+\end{aligned}
+\tag{25.2}
+$$
+
+$K$ 在这里始终是该过程自己的全部实际非参考输出：原始记录、实际副本、解码和工作输出、旧记忆、探针、场令牌、程序、路由、补偿和终端输出均保留。约化 CP 节点的形式 Kraus 指标只标记代数求和；它不自动是实际端口，另行产生的实际环境却必须计入 $K$。
+
+所考察的原生候选必要关系是：存在绝对 $c_0,c_1>0$ 及一个正有理精度窗口，使每个原始有限原生控制器及其实际解码器满足
+
+$$
+ \beta_e+\delta_e\ge c_0\exp(-c_1m_e e^2\delta_e).
+ \tag{25.3}
+$$
+
+它保留定义 19.1 的全部场、混合辅助、量子与经典记忆、反馈、探针回用、最坏调用上限和规定终端。本节另考察一个明确的放宽：在获取阶段允许一个直接作用于 $R$ 的、有限且与 $h,n$ 无关的约化 CPTP 仪器；其余完成过程仍用定义 17.1。这个额外 CP 节点没有被赋予原生槽成本，也不是原合同所许可的 $R$ 操作。
+
+**命题 25.2（原曲线、场及尺度）。** 场 (25.1) 满足定义 19.1 的全部场承诺。在精确原曲线上，
+
+$$
+\begin{gathered}
+ D=8{,}000{,}000N_e^2,\qquad m\ge D/2,\qquad m>L+1,\\
+ N_e\ge600e^{-2}\log(1/e),\qquad
+ De^3\ge C_{\rm curve}e^{-1}\log^2(1/e),\qquad
+ C_{\rm curve}=2{,}880{,}000{,}000{,}000.
+\end{gathered}
+\tag{25.4}
+$$
+
+特别地 $t:=me^2\to\infty$ 且 $et\to\infty$，极限取正有理 $e\downarrow0$。
+
+证明。$n_*$ 的前两个分量使其微分处处秩二；两条闭 $r=1/4$ 轴段均在开圆盘内。在原点两条轴向一阶导数的范数均为一；沿任一轴段，二阶导数的范数为 $(1-u^2)^{-3/2}<2$。在原点 $n_*=e_z$、$n_{*,x}=e_x$、$n_{*,y}=e_y$，逐项代入 (19.2) 得 (25.1) 后的四分量目标。
+
+由 $N_e\ge(3k_e+2)/10$，有 $k_e<10N_e/3$。又
+$N_e\ge(3/10)2048e^{-2}\log(18/e)\ge1/e$，故
+
+$$
+ 9k_e/e\le30N_e/e\le30N_e^2<8{,}000{,}000N_e^2.
+ \tag{25.5}
+$$
+
+最后一项本为整数，故定义 19.1 的外层取整给出 (25.4) 的精确 $D$，并非渐近替换。$D-1>10N_e+1$，且 $m=D-1\ge D/2$。同一下界还给
+$N_e\ge600e^{-2}\log(1/e)$；平方后乘 $8{,}000{,}000e^3$，即得 $C_{\rm curve}$。所述两个极限随之成立。$\square$
+
+**引理 25.3（平滑振幅与逐输出零流）。** 在复平面上令 $a=1-|w|^2$，并定义
+
+$$
+\begin{aligned}
+ q(w)&=\begin{cases}\exp(-1/a),&|w|<1,\\0,&|w|\ge1,\end{cases}
+ &\alpha(w)&=\bar w/a\quad(|w|<1),\\
+ u(\alpha)&=\left(e^{-|\alpha|^2/2}\frac{\alpha^k}{\sqrt{k!}}\right)_{k\ge0},
+ &F(w)&=\begin{cases}\sqrt{q(w)}u(\alpha(w)),&|w|<1,\\0,&|w|\ge1.\end{cases}
+\end{aligned}
+\tag{25.6}
+$$
+
+这是紧支撑的平滑 $\ell^2$ 值函数，且
+
+$$
+ \|F(w)\|^2=q(w),\qquad
+ \langle F(w),\partial_{\bar w}F(w)\rangle=0.
+ \tag{25.7}
+$$
+
+以下绝对常数只依赖这个固定函数。实导数取算子范数，置
+
+$$
+\begin{aligned}
+ z_0&=\int_{|w|<1}q(w)\,\frac{dA(w)}\pi>0,\\
+ M_F&=\sup_w\bigl(\|F(w)\|+\|DF(w)\|+\|D^2F(w)\|\bigr)<\infty,\\
+ A=B&=10{,}000(1+M_F)/\sqrt{z_0},\qquad R_0=4(A+B+2),\\
+ C_{\rm fail}&=1+256A^2,\qquad
+ C_{\rm return}=3R_0+257A^2+2,\\
+ H&=512C_{\rm return}+1,\qquad
+ C_{\rm sum}=256C_{\rm fail}+H,\\
+ t_*&=256\max\{100,R_0\}.
+\end{aligned}
+\tag{25.8}
+$$
+
+证明。指数级数给 $\|u(\alpha)\|=1$。对 $u$ 的任一固定阶实导数，其 $\ell^2$ 范数至多按 $|\alpha|$ 多项式增长：逐项求导后，范数平方中的求和是 Poisson 权重下固定阶多项式的矩。复合 $\alpha(w)$ 后，每个固定阶导数至多按 $a^{-1}$ 多项式增长，而 $\sqrt q=e^{-1/(2a)}$ 比每个这样的多项式衰减更快。故 $F$ 的所有阶导数在边界延拓为零，特别地 $M_F$ 有限。
+
+采用第一变量共轭线性的内积和 Wirtinger 导数，归一相干向量满足
+
+$$
+\begin{aligned}
+ \langle u(\alpha),\partial_{\bar w}u(\alpha)\rangle
+ &=\tfrac12\bigl(\bar\alpha\,\partial_{\bar w}\alpha
+             -\alpha\,\partial_{\bar w}\bar\alpha\bigr)
+ =\frac{w}{2a^2},\\
+ \partial_{\bar w}\log\sqrt q&=-\frac{w}{2a^2}.
+\end{aligned}
+\tag{25.9}
+$$
+
+两项精确相消，得 (25.7)。在边界及支撑外仍由平滑延拓成立。这个等式在全纯坐标替换下乘以相应的共轭导数因子，故零流性质不变。后面将对每个实际输出分别求 Kraus 分量和，不能只在不同实际输出之间相消。$\square$
+
+**引理 25.4（一次有限截断及正求积）。** 对任意满足 $t\ge t_*$ 的曲线参数，可选一个有理数 $s\in(e/16,e/8)$，令
+$\lambda=ms^2$、$\eta=1/\lambda$，并选有限 $K_0$、有限旋转 $g_1,\ldots,g_J\in SU(2)$ 和正权 $w_l$，$\sum_lw_l=1$，得到有限个标量函数 $f_{lk}$（$1\le l\le J$、$0\le k\le K_0$）。以 $f(h)=(f_{lk}(h))$ 记堆叠向量，它们同时满足
+
+$$
+\begin{aligned}
+ 1-\eta&\le\|f(h)\|^2\le1,\\
+ \|Df\|&\le A/s,\qquad \|D^2f\|\le B/s^2,\\
+ \sum_{l=1}^J\left|\sum_{k=0}^{K_0}
+ \overline{f_{lk}(h)}\,\partial_{\bar z}f_{lk}(h)\right|&\le\eta.
+\end{aligned}
+\tag{25.10}
+$$
+
+导数界适用于任意旋转球面坐标图的 $|z|\le1$，末式在以任意 $h$ 为中心的图成立。$c_l=g_l e_z$，每个 $f_{lk}$ 的支撑均在距 $c_l$ 角距离小于 $2s$ 的球冠中。$s$ 还可以同时满足命题 25.11 的非零系数条件。
+
+证明。$d\mu=d\omega/(4\pi)$ 为归一球面面积，$dg$ 为归一 Haar 测度。在北极为 $z=0$ 的立体坐标中，$d\mu=dA(z)/(\pi(1+|z|^2)^2)$。令 $z_g(h)=z(g^{-1}h)$，
+
+$$
+\begin{aligned}
+ Z_s&=\int_{S^2}q(z(h)/s)\,d\mu(h)
+ =s^2\int_{|w|<1}\frac{q(w)}{(1+s^2|w|^2)^2}\frac{dA(w)}\pi,\\
+ a_{gk}(h)&=Z_s^{-1/2}F_k(z_g(h)/s).
+\end{aligned}
+\tag{25.11}
+$$
+
+支撑外延拓为零。因为 $s<1/800$，
+$z_0s^2/2\le Z_s\le z_0s^2$。旋转不变性给每个 $h$ 上
+$\int\sum_k|a_{gk}(h)|^2dg=1$。其支撑距 $ge_z$ 不超过 $2\arctan s<2s$。由 (25.7) 及全纯坐标变换，对于每个固定 $g$，
+
+$$
+ \sum_{k\ge0}\overline{a_{gk}}\,\partial_{\bar z}a_{gk}=0.
+ \tag{25.12}
+$$
+
+在任意旋转图 $|z|\le1$ 中，Möbius 坐标变换在该支撑上的一、二阶实导数分别可界为 $2,4$。支撑的 Haar 测度至多 $s^2$。链式法则因此将积分的一阶导数平方和界为 $8M_F^2/(z_0s^2)$，二阶导数平方和界为 $128M_F^2/(z_0s^4)$。这两个界严格小于 $A^2/s^2,B^2/s^4$，留有统一余量。
+
+先选一个有限正交截断 $0\le k\le K_0$。$F$ 和 $DF$ 的像在 $\ell^2$ 中紧，故截断对这两个像一致收敛。截断损失的平方范数以及 (25.12) 截断后绝对流的 Haar 积分，均可一致小于 $\eta/100$；这里 $s$ 已固定，$Z_s>0$，坐标因子有界。正交截断不增加一、二阶导数范数。
+
+然后对这一个截断选一次有限正 Haar Riemann 和。被积函数包括平方范数、所有图方向上的一、二阶导数平方，以及每个 $g$ 的截断绝对流。参数集可取为旋转群、$|z|\le1$ 及单位实切向量的紧积；零延拓使这些函数连续。因此可用同一个有限正求积同时一致逼近所有这些量，归一化和绝对流的误差均小于 $\eta/100$。导数平方的误差取在上述严格余量内。将所得振幅统一再除以 $\sqrt{1+\eta/100}$，即
+
+$$
+ f_{lk}(h)=\frac{\sqrt{w_l}}{\sqrt{Z_s}\sqrt{1+\eta/100}}
+                F_k(z_{g_l}(h)/s).
+ \tag{25.13}
+$$
+
+若需要，可先把求积误差进一步减小；上界成为精确的 $\|f\|^2\le1$，下界至少 $1-\eta$，绝对流至多 $\eta$，导数界仍在余量内，得到 (25.10)。支撑没有改变。这是对每个 $e$ 一次选定的有限数据，非无限维实际装置，也没有把 Haar 参数当成替代统计实验。命题 25.11 只从 $(e/16,e/8)$ 排除一个没有内点的零集，故可以先选满足该条件的有理 $s$，再完成上述有限选择。$\square$
+
+**命题 25.5（同一有限 TP 仪器及其失败支）。** 用 (14.7) 的相干向量
+
+$$
+ e_z=(1+|z|^2)^{-m/2}
+       (|0\rangle+z|1\rangle)^{\otimes m},\qquad
+ T_m(a)=D\int_{S^2}a(u)\tau_u\,d\mu(u)
+ \tag{25.14}
+$$
+
+定义有限矩阵 $A_{lk}=T_m(f_{lk})$、$S=\sum_{lk}A_{lk}^\dagger A_{lk}$ 和 $A_0=\sqrt{I-S}$。则 $0\le S\le I$，以下仪器精确保迹：
+
+$$
+ \Psi(X)=\sum_{l=1}^J\left(\sum_{k=0}^{K_0}A_{lk}XA_{lk}^\dagger\right)
+                  \otimes|l\rangle\langle l|
+             +A_0XA_0^\dagger\otimes|0\rangle\langle0|.
+ \tag{25.15}
+$$
+
+其实际量子输出是原标记 $R$，实际原始获取记录是有限经典 $l$；$k$ 是形式 Kraus 指标。失败 $l=0$ 始终保留，且对每个输入态，其概率至多 $C_{\rm fail}/\lambda$。
+
+证明。按归一对称张量基展开 (25.14)，角积分使非对角项为零，径向 beta 积分给每个对角元 $1/D$，故
+
+$$
+ D\int\tau_u\,d\mu(u)=I,\qquad
+ |\langle e_u,e_h\rangle|=\cos^m(\theta(u,h)/2).
+ \tag{25.16}
+$$
+
+因此 $T_m$ 是从标量函数代数到有限矩阵的 unital CP 映射。其 Schwarz 不等式给
+$S\le T_m(\sum_{lk}|f_{lk}|^2)\le I$，于是 (25.15) 连同失败支精确 TP。可保留 $l$ 的确定性副本、固定程序及实际解码输出；这些是经典记录上的等距复制，不改变下述返回估计。
+
+为估计失败，令相干变换 $V_c\psi(u)=\sqrt D\langle e_u,\psi\rangle$，$P=V_cV_c^\dagger$。这是到平方可积相干截面的等距变换及其正交投影；局部相位选择不影响以下核范数。以 $M_f$ 表示乘以有限向量 $f$，由 $T_m(a)=V_c^\dagger M_aV_c$ 得精确恒等式
+
+$$
+ I-S=T_m(1-\|f\|^2)
+       +V_c^\dagger M_f^\dagger(I-P\otimes I)M_fV_c.
+ \tag{25.17}
+$$
+
+第一项范数至多 $\eta$。第二项是一个正平方，其平方根范数不超过
+$M_fP-(P\otimes I)M_f$ 的范数。这个算子的核为
+$D(f(u)-f(v))\langle e_u,e_v\rangle$。由 (25.10)，$f$ 对角距离为 $A/s$-Lipschitz；沿球面路径可逐点用中心坐标，其中球面单位速度对应的坐标速度至多一。Schur 核估计及 (25.16) 给
+
+$$
+ \|M_fP-(P\otimes I)M_f\|
+ \le\frac{A}{s}D\int\theta(u,v)\cos^m(\theta(u,v)/2)\,d\mu(v)
+ \le\frac{16A}{s\sqrt m}.
+ \tag{25.18}
+$$
+
+具体地 $r=\sin^2(\theta/2)$ 在归一面积下均匀分布于 $[0,1]$，$\theta\le\pi\sqrt r$、$(1-r)^{m/2}\le e^{-mr/2}$、$D\le2m$，故该积分至多
+$2\pi m\int_0^\infty r^{1/2}e^{-mr/2}dr
+=2\pi2^{3/2}\Gamma(3/2)/\sqrt m<16/\sqrt m$。
+两种 Schur 积分上界相同，亦适用于向量值核。由 (25.17)，
+
+$$
+ \|I-S\|\le\eta+\frac{256A^2}{ms^2}
+             =\frac{C_{\rm fail}}\lambda.
+ \tag{25.19}
+$$
+
+失败概率为 $\operatorname{Tr}[(I-S)X]$，结论成立。这里直接声明的是放宽类的约化 CP 原语；没有断言一个等距实现可以省去其实际环境。如果另一个实现产生额外实际系统，其完整输出必须另行估计，不能沿用 (25.15) 的端口结论。$\square$
+
+**定理 25.6（获取阶段的完整自身边缘返回）。** 对同一个有限仪器 (25.15)，令 $\omega_h=\Psi(\tau_h)$。则
+
+$$
+ \sup_hD_{\rm tr}\!\left(\omega_h,
+                   \tau_h\otimes\operatorname{Tr}_R\omega_h\right)
+ \le\frac{C_{\rm return}}\lambda.
+ \tag{25.20}
+$$
+
+证明。固定任意 $h$，仅在证明中选择以 $h$ 为北极的旋转相干坐标，记 $e_h=e_0$，第一降低向量为 $e_1$。这不是实施一个依赖未知 $h$ 的门。有限向量的 Taylor 展开为
+
+$$
+ f(z)=f(0)+zf_z(0)+\bar zf_{\bar z}(0)+r(z),\qquad
+ \|r(z)\|\le\frac{A+B+2}{s^2}|z|^2.
+ \tag{25.21}
+$$
+
+在 $|z|\le1$ 用 (25.10) 的二阶实导数界；在 $|z|\ge1$ 用
+$\|f(z)\|,\|f(0)\|\le1$、$\|Df(0)\|\le A/s$ 和 $s<1$，同样得到这个全局界。无穷远点为面积零集。
+
+由二项式展开及角积分，以下矩精确成立：
+
+$$
+\begin{gathered}
+ T_m(1)e_0=e_0,\qquad T_m(z)e_0=0,\qquad
+ T_m(\bar z)e_0=\frac{e_1}{\sqrt m},\\
+ D\int |z|^2|\langle e_z,e_0\rangle|\,d\mu(z)
+ =\frac{4(m+1)}{m(m+2)}\le\frac4m.
+\end{gathered}
+\tag{25.22}
+$$
+
+例如第三式仅保留基指标一，径向积分为
+$D\sqrt m\int_0^\infty u(1+u)^{-m-2}du=1/\sqrt m$；末式为
+$D\int_0^\infty u(1+u)^{-m/2-2}du$。这些积分在这里的 $m>2$ 都绝对收敛。
+
+将 (25.21) 代入同一 $T_m$，Minkowski 不等式和末矩给所有 $l,k$ 的堆叠估计
+
+$$
+\begin{aligned}
+ A_{lk}e_h&=f_{lk}(h)e_h+
+                \frac{\partial_{\bar z}f_{lk}(h)}{\sqrt m}e_1+r_{lk,h},\\
+ \left(\sum_{lk}\|r_{lk,h}\|^2\right)^{1/2}&\le\frac{R_0}\lambda=:r\le1.
+\end{aligned}
+\tag{25.23}
+$$
+
+记实际成功向量为 $v_{lk}=A_{lk}e_h$，删去余项后的向量为 $w_{lk}$。$\sum\|v_{lk}\|^2\le1$，且堆叠向量之差范数至多 $r$，故各实际 $l$ 块之和与相应领先块之和的迹范数差至多
+$(2+r)r\le3R_0/\lambda$。这来自
+$\|vv^\dagger-ww^\dagger\|_1\le(\|v\|+\|w\|)\|v-w\|$
+以及对 $l,k$ 的 Cauchy–Schwarz，不合并不同实际 $l$ 的相干项。
+
+在第 $l$ 个领先块中置
+
+$$
+ q_l=\sum_k|f_{lk}|^2,\qquad
+ a_l=\sum_k|\partial_{\bar z}f_{lk}|^2,\qquad
+ b_l=\sum_k\overline{f_{lk}}\,\partial_{\bar z}f_{lk}.
+ \tag{25.24}
+$$
+
+该块恰为
+$q_l\tau_h+(a_l/m)\tau_1+(b_l/\sqrt m)|e_1\rangle\langle e_h|+\text{h.c.}$，
+其中 $\tau_1=|e_1\rangle\langle e_1|$，h.c. 只补交叉项。其自身 $l$ 边缘权重为 $q_l+a_l/m$。与该权重乘 $\tau_h$ 的迹距离为
+$\sqrt{(a_l/m)^2+|b_l|^2/m}\le a_l/m+|b_l|/\sqrt m$。
+逐块求和并用 (25.10) 得
+
+$$
+ \sum_l\left(\frac{a_l}m+\frac{|b_l|}{\sqrt m}\right)
+ \le\frac{A^2}\lambda+\frac\eta{\sqrt m}
+ \le\frac{A^2+1}\lambda.
+ \tag{25.25}
+$$
+
+从领先成功态换回实际成功态，一次付半迹范数差，换回其自身实际成功边缘再付同样的半迹范数差，合计至多 $3R_0/\lambda$。失败块与同迹乘积块的迹距离至多其概率，按 (25.19) 至多 $C_{\rm fail}/\lambda$。因此完整距离至多
+
+$$
+ \frac{3R_0+A^2+1+C_{\rm fail}}\lambda
+ =\frac{C_{\rm return}}\lambda.
+ \tag{25.26}
+$$
+
+这一步使用同一个通道的实际边缘；没有用参考泄漏或边缘不保真度替代完整返回。交叉项的小量来自每个实际 $l$ 内的零流及其有限近似，而非在彼此可区分的输出之间求消。$\square$
+
+**定理 25.7（固定有限解码器的全方向尾界）。** 对 $l>0$，将中心目标 $(c_{l,y}/2,-c_{l,x}/4)$ 的两个分量各作有理舍入，误差至多 $e/8$；例如取间距 $e/16$ 的有理格点。$l=0$ 时输出 $(0,0)$。原始 $l$、解码输出、确定性副本和固定工作输出均保留。这个单一有限解码器满足
+
+$$
+ \beta_{\rm acq}\le\frac{C_{\rm fail}}\lambda
+          +4\exp\!\left(-\frac{(m+2)e^2}4\right),
+ \tag{25.27}
+$$
+
+其中风险对全部 $h\in S^2$ 取上确界。
+
+证明。固定 $h$。若一个非零结果 $l$ 在 (25.2) 的事件中为坏结果，则其未舍入目标至少有一个坐标距真值大于 $7e/8$。第一坐标迫使 $|c_{l,y}-h_y|>7e/4$，第二坐标则给更强的 $|c_{l,x}-h_x|>7e/2$。故两种情形均有球面角距离 $\theta(c_l,h)\ge|c_l-h|>7e/4$。
+由于支撑半径 $2s<e/4$，当 $\theta(u,h)<e$ 时，所有这些坏 $l$ 的 $f_{lk}(u)$ 都为零。实际非零坏结果的概率 $p_{\rm bad}$ 由 (25.15) 给出；对其 Kraus 向量堆叠使用 Minkowski 不等式及 $\|f(u)\|\le1$，得
+
+$$
+ \sqrt{p_{\rm bad}}\le
+ D\int_{\theta(u,h)\ge e}|\langle e_u,e_h\rangle|\,d\mu(u)
+ =\frac{2(m+1)}{m+2}\cos^{m+2}(e/2)
+ \le2e^{-(m+2)e^2/8}.
+ \tag{25.28}
+$$
+
+等号用 (25.16) 径向积分；最后用 $\log\cos x\le-x^2/2$。平方后加上实际失败支的 (25.19)，得 (25.27)。这是真正固定的有限解码器在全部方向上的风险，不是平均风险、局部承诺或按 $h$ 另选最优检验。$\square$
+
+**定理 25.8（同一规定终端、全部实际输出和绝对常数）。** 在 (25.15) 后原样接定义 17.1 的固定后缀，旧获取输出不参与它。得到 (25.2) 的同一个完成过程及解码器，并有
+
+$$
+\begin{aligned}
+ \delta_e&\le\frac{2C_{\rm return}}\lambda+\frac{80}D\le\frac Ht,\\
+ \beta_e&\le\frac{256C_{\rm fail}}t+4e^{-t/4},\\
+ \beta_e+\delta_e&\le\frac{C_{\rm sum}}t+4e^{-t/4},
+ \qquad t=me^2.
+\end{aligned}
+\tag{25.29}
+$$
+
+证明。对应定理 17.3 的参数精确为 $D=m_e+1$、$t_{\rm term}=d\tau_0=1/64$；其场令牌方向为 $v=n_*(+d e_x)$，并且该定理对任意 $h,v$ 一致。后缀先准备固定 singlet $BA$，用两个原生 $V$ 槽及定义 17.1 的退相干、条件交换、$\widehat\Phi$ 和非参考 $\mathcal E$ 节点；两枚场令牌均在 $+d e_x$ 独立重置，第二枚是此前未经改动的规定终端令牌 $S_t$。规定
+$U_{\rm term}=\exp[-idJ\cdot\sigma/m]$ 恰执行一次，不另供逆操作。
+
+最终实际 $K$ 保留旧 $l$、其解码输出和副本、全部旧工作输出，以及 $B,A,F,S_t$、两组新 $H,E$、实际原始及复制记录、程序、路由和所有声明工作输出。后缀约化节点采用定义 17.1 的实际端口；不省去任何实际口，也不把形式 Kraus 指标添成虚构端口。获取中的额外直接 $R$ 节点是唯一访问放宽。后缀实际增加两次 $V$ 和两次场重置，在原 $L,Q$ 内；额外直接 $R$ 节点没有虚构的原生调用数。
+
+记 $\rho_h=\operatorname{Tr}_R\omega_h$，用相同 CPTP 后缀分别作用于 $\omega_h$ 和 $\tau_h\otimes\rho_h$。两完整输出的距离由 (25.20) 至多 $C_{\rm return}/\lambda$。后一个输出是定理 17.3 的完成态张量 $\rho_h$，相对于它自己的实际边缘的返回小于 $80/D$。再把该边缘换成实际完成输出的边缘，由偏迹收缩性再付 $C_{\rm return}/\lambda$。这证明第一行首式，比较端确为最终自己的全部实际边缘。后缀 TP 且不改旧解码记录，故 (25.27) 原样成立。
+
+$s>e/16$ 给 $\lambda>t/256$；又 $80me^2/D<1$。用 (25.8) 得第一行末式及余下两行。所有估计来自同一有限仪器、同一实际解码器及同一完整后缀。$\square$
+
+**定理 25.9（任意 CPTP 充分捷径的有限反例）。** 对任意 $c_0,c_1>0$ 以及任意给定的充分小正有理精度窗口，存在其中的 $e$ 及上述有限完成过程，使 (25.3) 不成立。其 $t\delta_e\le H$ 而 $\beta_e+\delta_e\to0$。这是直接参考 CP 访问放宽类中的全方向两坐标估计器反例。
+
+证明。若有必要，将 $c_0$ 换成更小的 $\min\{c_0,1/2\}$；推翻较小右端也推翻原右端。令 $b=c_0e^{-c_1H}>0$。由命题 25.2，在给定窗口内选正有理 $e$ 使
+
+$$
+ t>\max\{t_*,2C_{\rm sum}/b,4\log(8/b)\}.
+ \tag{25.30}
+$$
+
+由 (25.29)，$\beta_e+\delta_e<b$，而
+$c_0\exp(-c_1t\delta_e)\ge c_0e^{-c_1H}=b$，矛盾。每个这样的 $e$ 所用的维数、输出数、截断和求积均有限，常数不依赖它们。还由 $et=me^3\to\infty$ 及 $t/\log(1/e)\to\infty$，(25.29) 给所有充分小 $e$ 上 $\beta_e\le e$。这只是在固定允许场 $n_*$ 上的成功，不是全部原始场上的均匀成功。$\square$
+
+**命题 25.10（原生前缀的参考系数次数）。** 令 $\mathcal P_T$ 为 $I$ 和 $J_x,J_y,J_z$ 中次数至多 $T$ 的全部非交换单项式的复线性张成。任意有限原生前缀若最多使用 $T$ 次前向 $V$，则其每个代数参考系数均属于 $\mathcal P_T$。这包括原始允许的固定混合辅助、量子和经典记忆、纠缠、反馈、探针回用及分支停止；各实际输出分块的 Choi 支撑均在 $\mathcal P_T$ 的向量化子空间内。一个单独计入的规定终端至多增加一次数。
+
+证明。由 (13.5)–(13.6)，每个原生投影对参考算子为仿射：$\Pi_+=(j+1+J\cdot\sigma)/D$、$\Pi_-=(j-J\cdot\sigma)/D$。其余操作在 $R$ 上为恒等。展开有限电路和每个声明的 CP 节点的 Kraus 求和，每个参考系数是至多 $T$ 个这样的仿射系数之积的线性组合。固定混合辅助可作谱分解；所有准备、旧记忆、结果反馈、探针回用及 Kraus 收缩只改变其余腿上的系数，不增加参考次数。分支补齐及求和也保留同一张成空间。对任一实际输出选基取矩阵系数后仍如此。Choi 矩阵是这些 Kraus 向量的正秩一和，故其支撑在上述子空间内。
+
+最后 $J\cdot\sigma$ 只有 $j,-j-1$ 两个本征值；规定终端是这两个投影的固定标量组合，亦为参考一次式，因而至多增加一次数。这里是因果复合的代数约束，不从一个任意有限 CPTP 通道的存在反推原生实现。$\square$
+
+**命题 25.11（展示出的获取块的精确 tensor-rank/Choi 障碍）。** 引理 25.4 可选择为：每个非零实际结果 $l$ 的 $A_{l0}$ 均有非零 rank-$m$ 不可约张量分量。因此获取仪器 (25.15) 没有至多 $L$ 次前向 $V$ 的精确原生前缀实现。结论针对该获取块，不是对整个已完成通道所有可能分解的排除，也不含任何近似误差下界。
+
+证明。$F_0(w)=\sqrt{q(w)}e^{-|\alpha(w)|^2/2}$ 在单位圆盘内为正径向函数。设 $P_m^{\rm Leg}$ 为 Legendre 多项式，定义
+
+$$
+ I_m(s)=\int_{|w|<1}F_0(w)
+ P_m^{\rm Leg}\!\left(\frac{1-s^2|w|^2}{1+s^2|w|^2}\right)
+ (1+s^2|w|^2)^{-2}\,dA(w).
+ \tag{25.31}
+$$
+
+固定 $m$ 后，它在正实轴附近实解析，并解析延拓到 $s=0$，那里
+$I_m(0)=\int F_0dA>0$。积分核在每个局部复邻域上有一致无奇点控制，故可逐项积分解析级数。解析函数的零点不能包含区间；其非零集在 $(e/16,e/8)$ 内含开区间，所以可以选有理 $s$ 使 $I_m(s)\ne0$。有限截断保留 $k=0$，正求积权重及共同正归一化也不使该系数消失。
+
+以 $c_l$ 为极轴，(25.31) 乘以非零归一化因子正是 $f_{l0}$ 的 degree-$m$ 球谐系数。Toeplitz 映射在这些阶数上不会杀掉该系数。具体地，$B_m a(h)=\langle e_h,T_m(a)e_h\rangle$ 的核为
+$D((1+x)/2)^m$，在 degree-$r$ 球谐上的乘子为
+
+$$
+ b_r=\frac{m+1}{2}\int_{-1}^1
+        \left(\frac{1+x}{2}\right)^m P_r^{\rm Leg}(x)\,dx
+ =\frac{(m+1)(m!)^2}{(m-r)!(m+r+1)!}>0,
+ \quad 0\le r\le m.
+ \tag{25.32}
+$$
+
+用 Rodrigues 公式 $P_r^{\rm Leg}(x)=(2^rr!)^{-1}(d/dx)^r(x^2-1)^r$，分部积分 $r$ 次，边界项为零；余项是
+$(m+1)m!/[2^{m+r+1}r!(m-r)!]$
+乘 $\int_{-1}^1(1+x)^m(1-x)^r dx$，beta 积分即给 (25.32)。
+
+旋转作用下 $\operatorname{End}(\operatorname{Sym}^m\mathbb C^2)$ 分解为各一份 rank $0,1,\ldots,m$ 的不可约张量；这就是 spin-$j$ 与其对偶的 Clebsch–Gordan 分解。相干符号映射旋转等变，而 $B_m$ 的 rank-$m$ 分量由 (25.31)–(25.32) 非零，故 $A_{l0}$ 的 rank-$m$ 算子分量非零。每个 $J_a$ 是 rank-one 张量，$T$ 个此类张量的乘积最多含 rank $T$，所以 $\mathcal P_T$ 只含这些低阶分量。由 $m>L$，$A_{l0}\notin\mathcal P_L$。
+
+固定一个非零实际 $l$，其 CP 块的 Choi 矩阵为
+$\sum_k|A_{lk}\rangle\!\rangle\langle\!\langle A_{lk}|$；有限正秩一和的支撑恰为这些 Kraus 向量的张成，包含 $|A_{l0}\rangle\!\rangle$。命题 25.10 则把任何 $L$ 次调用原生前缀的相应 Choi 支撑限制在 $\mathcal P_L$ 内。换 Kraus 表示不能改变同一 Choi 支撑，矛盾。
+
+若把规定终端另行计入，次数上界至多变为 $L+1$，且本曲线仍有 $m>L+1$；但这没有证明任意另一种完整通道分解必须保留上述获取块。非零高阶尾也没有任何已给出的定量下界，可能很小。因此结论既不排除近似合成，也不排除另一种已完成原生构造，不是全部原生控制器的分类。$\square$
+
+**推论 25.12（保留原成功域的条件消费者）。** 假设 (25.3) 对全部原始原生控制器及其实际解码器在某个窗口 $0<e\le e_{\rm hyp}$ 成立。不失一般性取 $0<c_0<1$。则对每个原始成功控制器及原来的全部实际输出，
+
+$$
+ \overline\delta\ge
+ \min\left\{e,\frac{\log(c_0/(2e))}{c_1m_e e^2}\right\}.
+ \tag{25.33}
+$$
+
+置
+
+$$
+ e_0=\min\{e_{\rm hyp},1/100,c_0^2/4,2C_{\rm curve}c_1\}.
+ \tag{25.34}
+$$
+
+对所有正有理 $0<e\le e_0$，原始下确界满足
+
+$$
+ R(e)\ge\frac{\log(1/e)}{2c_1D_e e^2},\qquad
+ \liminf_{\substack{e\downarrow0\\e\in\mathbb Q_{>0}}}
+ \frac{D_e e^2R(e)}{\log(1/e)}\ge\frac1{c_1}.
+ \tag{25.35}
+$$
+
+证明。原始成功是对全部场和全部方向的 (19.2) 四坐标成功，故在允许的 $n_*$ 上，同一实际解码器的前两坐标给 (25.2) 的 $\beta_e\le e$；这里没有换成一个二元最优检验。其 $\overline\delta=\sup_{n,h}\Delta_{n,h}$ 至少为 $\delta_e$。若 $\delta_e<e$，由假设
+$c_0e^{-c_1m_e e^2\delta_e}\le\beta_e+\delta_e<2e$，解出
+$\delta_e\ge\log(c_0/(2e))/(c_1m_e e^2)$。若 $\delta_e\ge e$ 则直接用这个下界，得到 (25.33)。
+
+当 $e\le c_0^2/4$ 时，$\log(c_0/(2e))\ge\tfrac12\log(1/e)$。在第二种情形，(25.4)、$\log(1/e)\ge1$ 及 $e\le2C_{\rm curve}c_1$ 给
+$D_e e^3\ge\log(1/e)/(2c_1)$，即
+$e\ge\log(1/e)/(2c_1D_e e^2)$。第一种情形用 $m_e<D_e$ 得同一界。这个下界对每个原始成功控制器、解码器和辅助维数一致；由定义 19.1 的原成功类非空，对原来的下确界取值即得 (25.35) 首式。
+
+更精确地，对 (25.33) 先取下确界再乘 $D_e e^2/\log(1/e)$，第一项由 (25.4) 趋于无穷，第二项为
+$(D_e/m_e)\log(c_0/(2e))/(c_1\log(1/e))\to1/c_1$，给出所述下极限。全部原始混合辅助、记忆、反馈、探针回用、$L_e,Q_e$、规定终端和实际 $K$ 的量词没有收缩。这只是以原生关系为前提的条件推论，不由放宽类反例推得该前提。$\square$
+
+**命题 25.13（成熟集中工具的范围与剩余转移义务）。** 定理 25.9 与 Frank 的 full-dimension 相干态集中定理相容，不能将后者的维数 $D$ 替换为 $m\delta$ 来获得 (25.3)。若未来在原生菜单内实现以下完整输出近似，则可反驳原生的 (25.3)：对每个 $e$ 有至多 $L_e-2$ 次前向 $V$、至多 $Q_e-2$ 次重置的有限前缀，并有一个固定的、与 $h,n$ 无关的非参考通道 $\mathcal T_e$，保留上述实际解码器并将其输出扩充至该前缀自己的全部实际端口，使在固定 $n_*$ 上
+
+$$
+ \sup_hD_{\rm tr}\!\left(\omega_h^{\rm native},
+       (\operatorname{id}_R\otimes\mathcal T_e)\Psi(\tau_h)\right)
+ \le E_e\le\frac1{m_e e^2}.
+ \tag{25.36}
+$$
+
+这里全部 $H,E$、场令牌、探针、旧记忆、原始与复制记录、读出、程序及截止输出均在同一个比较空间内，不许删去实际记录。此近似尚未给出，其不可能性亦未证明。
+
+证明。Frank, [arXiv:2210.14798v1，§5 定理 21](https://arxiv.org/html/2210.14798v1)，对不可约 spin-$J$ 表示中的单位向量给出，在 $d\mu=d\omega/(4\pi)$ 下
+
+$$
+ (2J+1)\int_E|\langle\psi_h,\psi\rangle|^2d\mu(h)
+ \le1-(1-\mu(E))^{2J+1}.
+ \tag{25.37}
+$$
+
+本节精确对应 $J=j=m/2$、$\psi_h=e_h$、$2J+1=D$。对正算子 $B$ 作谱分解，仅可线性推出
+
+$$
+ D\int_E\langle e_h|B|e_h\rangle d\mu(h)
+ \le\operatorname{Tr}(B)\,[1-(1-\mu(E))^D].
+ \tag{25.38}
+$$
+
+它没有给未经所需归一化的 Kraus-symbol 族一个 $m\delta$ 维数的集中界。本节反例同时保留正性、相干态解析结构及同一完成过程的完整输出，故这些最终 CPTP 性质本身不足以供应所需替换。(19.7)–(19.9) 的泄漏和能量界仍按其原域成立，不能充当额外的指数集中定理。§23 的直接访问二元例子也不替代这里的固定有限全方向估计器。
+
+若有 (25.36)，非参考通道收缩完整返回距离，并保留解码事件。事件概率收缩和两次自身边缘比较给
+
+$$
+ \beta_{\rm native,acq}\le\beta_{\rm acq}+E_e,\qquad
+ \delta_{\rm native,acq}\le\delta_{\rm acq}+2E_e.
+ \tag{25.39}
+$$
+
+再接同一个定义 17.1 后缀，逐一保留全部旧输出和新端口，可用定理 25.8 的相同三角比较得
+
+$$
+ \delta_{\rm native,final}
+ \le2\delta_{\rm acq}+4E_e+80/D_e
+ =O\!\left(\frac1{m_e e^2}\right).
+ \tag{25.40}
+$$
+
+连同 (25.27)，这会在原生类内给 $\beta+\delta\to0$ 而 $m_e e^2\delta$ 有界，从而反驳 (25.3)。它仍只在 $n_*$ 上服务该必要关系；若要给原 (19.12) 的负分支，还须构造在全部原始 $n,h$ 上满足 (19.2) 的成功消费者，并支付全部精度、资源、终端和实际输出成本。
+
+本节的中间成熟工具为有限 CP 仪器及 Choi–Kraus 对应、相干态分解与 Toeplitz 压缩、CP Schwarz、Schur 核估计、Taylor 余项、迹距离收缩及自旋张量分解。相干输入和端口语义复用 §§13–14；规定完成逐参数复用定义 17.1、定理 17.3；原成功类及非空性复用定义 19.1。新增推导是这些工具在上述同一有限仪器、实际解码器和完整返回过程上的组合，不主张历史原创或形式核验。
+
+因此下一项有区别作用的数学条件是 (25.36) 的原生访问、定量精度、槽数与全部共同实际输出对应，或者利用真实前向 $V$ 因果复合证明原生必要关系。有限矩阵分解、抽象仪器、静态 Hilbert/PB/CAR 或算术结果本身不供应该对应。展示出的获取块的精确障碍、近似合成、其它完整原生分解及原生关系各是不同命题；后面三者和原 (19.12) 都仍未解决。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 26. 保留相干工作系统的球冠极分解目标与完整返回缺陷
+
+**定义 26.1（原元组、内部尺度与绝对窗口）。** 精度、场、初始方向、允许控制器、成功事件、实际输出及两项资源上限均取定义 19.1；特别地，公共元组始终是 (19.1) 在 $e$ 处的元组，而非较小内部精度处的元组。置
+
+$$
+ a=e/64,\qquad s=a/12=e/768,\qquad m=m_e=D_e-1,\qquad
+ t=me^2,\qquad \lambda=ms^2=t/768^2.
+ \tag{26.1}
+$$
+
+沿用 (25.6) 的 $F,q,\alpha,u$ 以及 (25.8) 的固定函数常数 $z_0,M_F,A,B,R_0,C_{\rm fail},C_{\rm return},t_*$；这些常数不依赖 $e,m$、辅助维数或求积点数。定义
+
+$$
+\begin{aligned}
+ C_t&=1{,}440{,}000{,}000{,}000,\qquad B_*=3R_0+2C_{\rm fail},\\
+ \Lambda&=\max\{t_*,2C_{\rm fail},A^2,64B_*^2,64C_{\rm return}^2\},\\
+ K_{\rm risk}&=3\cdot768^2C_{\rm fail}+1,\\
+ e_*&=\min\left\{\frac1{100},
+ \sqrt{\frac{C_t}{768^2\Lambda}},
+ \frac{C_t}{6K_{\rm risk}},\frac{C_t}{393216}\right\},\\
+ r_0&=\max\{7,\lceil\log_2(1/e_*)\rceil\}.
+\end{aligned}
+\tag{26.2}
+$$
+
+以下均量化于每个正有理 $0<e\le e_*$，故包含每个 $e_r=2^{-r}$、$r\ge r_0$。命题 25.2 的精确原曲线关系直接给
+
+$$
+ t\ge C_t e^{-2}\log^2(1/e)\ge C_t/e^2,\qquad
+ \lambda\ge\Lambda,\qquad t\ge6K_{\rm risk}/e.
+ \tag{26.3}
+$$
+
+又 $\log(24/e)\le24/e$，结合 $e\le C_t/393216$ 得
+$t\ge16384\log(24/e)$；同时 $s<1/640$、$ma^2=144\lambda\ge t_*$。这里仅把 (25.4) 用于尺度比较，不改变原 $D_e,L_e,Q_e$。
+
+**定义 26.2（有限球冠堆叠、极分解与实际工作口）。** 在内部球冠精度 $a$、同一个原始 $m=m_e$ 上复用引理 25.4 的有限构造。此时 $a/16<s=a/12<a/8$，且不要求命题 25.11 的可选非零高阶系数条件。取同一有限截断 $0\le k\le K_0$ 和一次正 Haar 求积 $(g_l,w_l)_{l=1}^J$，$\sum_lw_l=1$，令
+
+$$
+\begin{aligned}
+ Z_s&=s^2\int_{|w|<1}\frac{q(w)}{(1+s^2|w|^2)^2}\frac{dA(w)}\pi,\\
+ f_{lk}(h)&=\frac{\sqrt{w_l}F_k(z_{g_l}(h)/s)}
+ {\sqrt{Z_s}\sqrt{1+1/(100\lambda)}},\qquad c_l=g_l e_z,\\
+ A_{lk}&=T_m(f_{lk}),\qquad
+ T_m(b)=D_e\int_{S^2}b(u)\tau_u\,d\mu(u),\\
+ A_{\rm stack}\psi&=\sum_{l,k}A_{lk}\psi\otimes|l\rangle_L\otimes|k\rangle_{K_{\rm work}},\\
+ S_{\rm op}&=A_{\rm stack}^\dagger A_{\rm stack},\qquad
+ W=A_{\rm stack}S_{\rm op}^{-1/2}.
+\end{aligned}
+\tag{26.4}
+$$
+
+有限选择还须满足引理 26.4 的范数乘积条件；其与既有条件的同时可选性由该引理证明。既有供应关系 (25.10)、(25.19)、(25.23)、(25.26) 在这里分别为
+
+$$
+\begin{gathered}
+ 1-1/\lambda\le\sum_{lk}|f_{lk}(h)|^2\le1,\qquad
+ \|Df\|\le A/s,\quad\|D^2f\|\le B/s^2,\\
+ \sum_l\left|\sum_k\overline{f_{lk}(h)}\partial_{\bar z}f_{lk}(h)\right|
+ \le1/\lambda,\qquad \operatorname{supp}f_{lk}\subset\{\theta(\,\cdot\,,c_l)<2s\},\\
+ 0\le I-S_{\rm op}\le(C_{\rm fail}/\lambda)I,\\
+ A_{lk}e_h=f_{lk}(h)e_0+
+       \frac{\partial_{\bar z}f_{lk}(h)}{\sqrt m}e_1+r_{lk,h},\qquad
+ \left(\sum_{lk}\|r_{lk,h}\|^2\right)^{1/2}\le R_0/\lambda.
+\end{gathered}
+\tag{26.5}
+$$
+
+最后一式只在证明中以 $h$ 为图中心，$e_0=e_h$、$e_1$ 为第一降低向量；它不是未知方向依赖的控制。每个球冠的导数界仍对既有旋转图一致。带实际 $l=0$ 失败支的约化仪器
+
+$$
+ \Psi_{\rm loc}(X)=\sum_{lk}A_{lk}XA_{lk}^\dagger\otimes|l\rangle\langle l|
+ +\sqrt{I-S_{\rm op}}X\sqrt{I-S_{\rm op}}\otimes|0\rangle\langle0|
+ \tag{26.6}
+$$
+
+仍有完整自身边缘返回至多 $C_{\rm return}/\lambda$，失败概率至多 $C_{\rm fail}/\lambda$。式 (26.5)–(26.6) 的估计是引理 25.4、命题 25.5 及定理 25.6 在内部尺度 $a$、原始 $m$ 上的对应。
+
+由 (26.3)、(26.5)，$S_{\rm op}$ 可逆，$W$ 是等距。所定义的另一目标先在数学上施行 $W$，再对 $L$ 作 Lüders 读出，保留测后 $L$、原始结果及所有选定副本，并附加旧两坐标解码器和三坐标方向解码器。精确写作
+
+$$
+\begin{aligned}
+ V_l\psi&=\sum_k A_{lk}S_{\rm op}^{-1/2}\psi\otimes|k\rangle_{K_{\rm work}},\\
+ \Phi_{\rm keep}(X)&=\sum_lV_lXV_l^\dagger\otimes|J_l\rangle\langle J_l|,
+ \qquad\sum_lV_l^\dagger V_l=I.
+\end{aligned}
+\tag{26.7}
+$$
+
+$|J_l\rangle$ 是互相正交的有限码，包含测后 $L$、原始 $l$、实际副本、旧解码器、引理 26.8 的有理 $\widehat h(l)$ 和固定程序及工作因子。可另声明概率为零的 $l=0$；所有未用或无效经典码的估计固定为零。无分支后选择。若一个实际实现出现失败、停止或截止，该分支仍在无条件态及其误差预算内。
+
+这里 $K_{\rm work}=\operatorname{span}\{|k\rangle:0\le k\le K_0\}$ 是特意生成并保留的相干实际输出，未被测量，也没有原始经典 $k$ 记录或 $k$ 副本。它不把 (26.6) 的代数 Kraus 指标冒充实际口。(26.7) 的实际 CP 读出口恰如所列，没有另行生成的环境；另一实现的额外实际环境必须另行保留。每个公共 $e$ 所用振幅、矩阵、字母表和解码器均有限，选择不依赖实际 $n,h$。这是有限目标的定义，不是原生 $R$ 门、原生程序或其调用数证书。
+
+**引理 26.3（消流导数的正交范数）。** 对 $b=1-|w|^2>0$，用 $\mathfrak a^\dagger$ 表示相干序列上的代数产生算子，则
+
+$$
+ \partial_{\bar w}F(w)=\sqrt{q(w)}b^{-2}
+       (\mathfrak a^\dagger-\overline{\alpha(w)})u(\alpha(w)),\qquad
+ \|F(w)\|\,\|\partial_{\bar w}F(w)\|=q(w)/b^2.
+ \tag{26.8}
+$$
+
+证明。相干序列的指数级数逐项求和给
+$\mathfrak a u=\alpha u$、$\langle u,\mathfrak a^\dagger u\rangle=\bar\alpha$，以及
+$\|(\mathfrak a^\dagger-\bar\alpha)u\|=1$；最后一式也由同一序列上的 $[\mathfrak a,\mathfrak a^\dagger]=I$ 得出。所有固定阶矩均有限，故这些运算在相干序列上合法。
+
+直接求导给 $\partial_{\bar w}\alpha=1/b^2$、
+$\partial_{\bar w}\log\sqrt q=-w/(2b^2)$。$\partial_{\bar w}u$ 平行于 $u$ 的分量为 $wu/(2b^2)$，恰与后一项相消；剩余正交分量即 (26.8)。所以 $\|F\|=\sqrt q$、$\|\partial_{\bar w}F\|=\sqrt q/b^2$。边界处由引理 25.3 的平坦零延拓成立。这在既有零标量流之外给出其未控制的正交范数；无限序列只用于推导，实际输出仍是有限截断。$\square$
+
+**引理 26.4（所有有限条件的一次同时选择）。** 定义 26.2 的有限选择可同时满足：对每个 $h$ 及每个以 $h$ 为中心的旋转图，记 $f_l=(f_{lk})_k$、$g_l=(\partial_{\bar z}f_{lk})_k$，则
+
+$$
+ \sum_l\|f_l(h)\|\,\|g_l(h)\|\ge\frac1{2s}.
+ \tag{26.9}
+$$
+
+证明。先取未截断的 Haar 族 $a_g=Z_s^{-1/2}F(z_g(h)/s)$。在中心图中，$SU(2)$ Möbius 变换满足
+$|z_g'(0)|=1+|z_g(h)|^2$；Haar 测度将 $z_g(h)$ 推前为
+$dA(z)/(\pi(1+|z|^2)^2)$。引理 26.3 因而给
+
+$$
+ \int\|a_g(h)\|\,\|\partial_{\bar z}a_g(h)\|\,dg
+ =\frac{s}{Z_s}\int_{|w|<1}
+ \frac{q(w)}{(1-|w|^2)^2(1+s^2|w|^2)}\frac{dA(w)}\pi
+ \ge\frac1s.
+ \tag{26.10}
+$$
+
+末步逐点使用
+$[(1-|w|^2)^2(1+s^2|w|^2)]^{-1}\ge(1+s^2|w|^2)^{-2}$，再代入 $Z_s$。
+
+对已固定的公共 $s$，按引理 25.4 对 $F$ 和一阶导数作一致正交截断。零延拓及紧性使范数乘积被积函数在旋转和中心图标架的紧参数集上一致收敛。可选一个 $K_0$，使其 Haar 积分的损失对全部 $h$、标架至多 $1/(8s)$，并使 (26.5) 所需的范数、流误差同时在各自容差内。
+
+再为这同一个截断选一次正有限 Haar 求积，使乘积积分再损失至多 $1/(8s)$，同时满足全部归一化、一阶、二阶导数及绝对流容差。所用连续函数族的参数集是旋转、图及单位切向量的紧积；有限个容差可以同时满足。未共同归一化时乘积和至少 $3/(4s)$。共同归一化将其除以 $1+1/(100\lambda)\le101/100$，故至少 $75/(101s)>1/(2s)$。既有导数界有严格余量，归一化和流容差也可同时进一步缩小，故 (26.5) 与 (26.9) 属于同一个有限选择，而非分别存在的最优值。$\square$
+
+**引理 26.5（该目标的极归一化扰动）。** 令 $\phi_h=\Phi_{\rm keep}(\tau_h)$，并在中心图中置
+
+$$
+ v_l=e_0\otimes f_l+e_1\otimes g_l/\sqrt m,\qquad
+ \Xi_h=\sum_l|v_l\rangle\langle v_l|\otimes|J_l\rangle\langle J_l|.
+ \tag{26.11}
+$$
+
+则 $\|W-A_{\rm stack}\|\le C_{\rm fail}/\lambda$，且
+
+$$
+ \|\phi_h-\Xi_h\|_1\le B_*/\lambda,\qquad
+ \Xi_h\ge0,\qquad\operatorname{Tr}\Xi_h\le1+A^2/\lambda\le2.
+ \tag{26.12}
+$$
+
+证明。写 $d_0=C_{\rm fail}/\lambda\le1/2$。由 $A_{\rm stack}=W\sqrt{S_{\rm op}}$，
+$\|W-A_{\rm stack}\|=\|I-\sqrt{S_{\rm op}}\|\le d_0$。对单位输入 $e_h$，极分解秩一输出与未归一化堆叠秩一输出的迹范数差至多 $2d_0$；这里两向量的范数分别为一及至多一。$L$ 的 Lüders 读出及确定性保留解码收缩此 Hermitian 差。
+
+(26.5) 将堆叠向量与其领先向量之差界为 $r=R_0/\lambda\le1$。前者范数至多一，故秩一差的迹范数至多 $(2+r)r\le3R_0/\lambda$；同一次读出后仍如此。两项相加得到 $B_*/\lambda$。最后由 $e_0\perp e_1$，
+$\operatorname{Tr}\Xi_h=\sum_l(\|f_l\|^2+\|g_l\|^2/m)\le1+A^2/\lambda$。$\Xi_h$ 不必归一化。这里用的是有限极分解和秩一迹范数不等式，结论针对同一目标的 (26.11)。$\square$
+
+**引理 26.6（完整工作分辨交叉块）。** 在 (26.7) 的全部实际输出空间上令 $P_h=\tau_h\otimes I$，则
+
+$$
+\begin{aligned}
+ \|P_h\phi_h(I-P_h)\|_1
+ &\ge\frac1{2\sqrt\lambda}-\frac{B_*}{\lambda}
+ \ge\frac1{4\sqrt\lambda},\\
+ d_{\rm keep}(h)&:=D_{\rm tr}(\phi_h,
+                   \tau_h\otimes\operatorname{Tr}_R\phi_h)
+ \ge\frac1{4\sqrt\lambda}=\frac{192}{\sqrt t}.
+\end{aligned}
+\tag{26.13}
+$$
+
+证明。$\Xi_h$ 的第 $l$ 个交叉块是
+$|e_0\rangle\langle e_1|\otimes|f_l\rangle\langle g_l|/\sqrt m$，附有其自己的正交实际码 $|J_l\rangle$。秩一迹范数为 $\|f_l\|\|g_l\|/\sqrt m$，不同 $l$ 块的迹范数相加。因此 (26.9) 给
+
+$$
+ \|P_h\Xi_h(I-P_h)\|_1
+ =\frac1{\sqrt m}\sum_l\|f_l\|\|g_l\|
+ \ge\frac1{2s\sqrt m}=\frac1{2\sqrt\lambda}.
+ \tag{26.14}
+$$
+
+左右压缩收缩迹范数，(26.12) 最多损失 $B_*/\lambda$。由 $\lambda\ge64B_*^2$，这个损失至多 $1/(8\sqrt\lambda)$，强于 (26.13) 所需。
+
+对任意态 $\rho$，乘积 $\tau_h\otimes\rho_K$ 的此交叉块为零。取 $P_h\rho(I-P_h)$ 的极分解部分等距及其伴随构成自伴非对角检验，算子范数为一，在 $\rho-\tau_h\otimes\rho_K$ 上的期望为 $2\|P_h\rho(I-P_h)\|_1$。迹范数对偶给
+$D_{\rm tr}(\rho,\tau_h\otimes\rho_K)\ge\|P_h\rho(I-P_h)\|_1$，并可取 $\rho_K=\operatorname{Tr}_R\rho$。故比较的是同一态自己的全部实际边缘。此处没有删去实际工作口，也没有在不同 $l$ 间抵消。$\square$
+
+**引理 26.7（与任意扩充约化球冠仪器的定量分离）。** 对任意固定且不依赖 $h$ 的非参考通道 $\mathcal T_e$，若其将 (26.6) 的输出扩充到 (26.7) 的输出空间，则对每个 $h$，
+
+$$
+ D_{\rm tr}\!\left(\phi_h,
+    (\operatorname{id}_R\otimes\mathcal T_e)\Psi_{\rm loc}(\tau_h)\right)
+ \ge\frac1{16\sqrt\lambda}.
+ \tag{26.15}
+$$
+
+证明。非参考通道收缩完整自身边缘返回，故右侧比较态的返回至多 $C_{\rm return}/\lambda$。自身边缘返回泛函对迹距离是 $2$-Lipschitz：插入另一联合态及其自身边缘，分别用联合距离和边缘收缩性即可。若两态距离为 $E$，则
+
+$$
+ 2E\ge d_{\rm keep}(h)-C_{\rm return}/\lambda
+ \ge\frac1{4\sqrt\lambda}-\frac1{8\sqrt\lambda}
+ =\frac1{8\sqrt\lambda},
+ \tag{26.16}
+$$
+
+其中用 $\lambda\ge64C_{\rm return}^2$。要求 $\mathcal T_e$ 还保持原始标签及解码器只缩小量词域。在保留已有系统的前提下，给 $\phi_h$ 附加固定输出也不能削弱此界，因为可偏迹回已有空间。
+
+这是完整输出尺度的近似分离；沿充分小 $e$，它不容许 $E\le1/t$，也不容许 $E=O(\sqrt{\log(1/e)}/t)$。它不只是非零 tensor-rank 或精确合成障碍，更不推得约化仪器 (26.6) 自身的原生近似下界。$\square$
+
+**引理 26.8（同一有限目标的全方向解码）。** 对每个 $l>0$，将 $c_l$ 的三个坐标各舍入到误差至多 $a=e/64$ 的有理数，保留 $\widehat h(l)$、旧解码器及原始 $l$。这个固定有限解码器满足
+
+$$
+ b_{\rm keep}:=\sup_h\Pr_h[\|\widehat h-h\|_\infty>e/16]
+ \le\frac{3C_{\rm fail}}\lambda
+       +4\exp[-(m+2)e^2/16384].
+ \tag{26.17}
+$$
+
+证明。先用 (26.6) 的未归一化成功块及其实际 $l=0$ 失败支。若一个非零标签坏，则某个中心坐标距 $h$ 大于 $e/16-a=3a$，从而其角距离大于 $3a$。其振幅支撑半径为 $2s=a/6$，故与 $h$ 的角半径 $a$ 球冠不交。对这些坏结果的 Kraus 向量作堆叠，按 (25.28) 的同一相干核积分得到
+
+$$
+ \sqrt{p_{\rm bad,nonzero}}
+ \le D\int_{\theta(u,h)\ge a}|\langle e_u,e_h\rangle|\,d\mu(u)
+ \le2e^{-(m+2)a^2/8}.
+ \tag{26.18}
+$$
+
+平方后为 $4e^{-(m+2)a^2/4}$；再加实际失败概率 $C_{\rm fail}/\lambda$。
+
+极分解读出与保留工作成功态的迹范数差至多 $2C_{\rm fail}/\lambda$；为与旧的归一化仪器比较，加入其失败块再付至多 $C_{\rm fail}/\lambda$。仅为计算这个指定经典事件而偏迹工作后，两个归一化解码分布的总变差至多 $3C_{\rm fail}/(2\lambda)\le2C_{\rm fail}/\lambda$。合计得到 (26.17)，因为 $a^2/4=e^2/16384$。计算经典事件的偏迹不构成完整返回上界；(26.13) 仍保留全部工作系统。所有舍入及结果均在给定 $h$ 之前一次固定。$\square$
+
+**引理 26.9（旁观记忆稳定的规定完成）。** 在 $\Phi_{\rm keep}$ 后附加 (19.4) 的独立场采样及保留的有理解码，然后恰接定义 17.1 的后缀。对每个原始允许场 $n$、每个 $h$，理想目标的同一完成态 $\Omega^{\rm keep}_{n,h}$ 满足
+
+$$
+ D_{\rm tr}\!\left(\Omega^{\rm keep}_{n,h},
+       \tau_h\otimes\operatorname{Tr}_R\Omega^{\rm keep}_{n,h}\right)
+ \ge\frac1{4\sqrt\lambda}.
+ \tag{26.19}
+$$
+
+证明。场采样只作用于独立非参考来源；将其全部输出态张量到 $\phi_h,\Xi_h$ 上。计算并保留最终解码器，同时保持原始标签和全部场数据，是这些非参考系统上的等距。因此它保持交叉块迹范数及差界 $B_*/\lambda$。以下将这些旧口统记为 $M$，并将相应扩充后的领先态仍写作 $\Xi_h$；其迹至多二。
+
+规定后缀不读取旧获取或场输出。令 $\mathcal F_v$ 为它的参考边缘通道，$v=n(+d e_x)$，并置 $\gamma=\sqrt m/D$、$W_1=\operatorname{span}\{e_h,e_1\}$。式 (17.12)、(22.9)、(22.10) 中两个原生等距与终端等距的算子范数差依次为 $6\gamma,6\gamma,8\gamma$；这些算子范数界张量任意旧旁观记忆后不变。
+
+在三个接触处作“理想前缀、实际后缀”的望远镜比较。理想前缀恒等作用于 $R$，故即使 $Y$ 在 $R,M$ 间相关，其参考支撑仍在 $W_1$。任意等距差 $\varepsilon$ 对应的联合迹范数差至多 $2\varepsilon\|Y\|_1$；其余非参考节点及实际后缀均为 CPTP。故直接在联合空间上有
+
+$$
+ \| (\mathcal F_v\otimes\operatorname{id}_M)(Y)-Y\|_1
+ \le(12+12+16)\gamma\|Y\|_1=40\gamma\|Y\|_1,
+ \quad\operatorname{supp}Y\subset W_1\otimes M.
+ \tag{26.20}
+$$
+
+这是 (22.11) 的原等距证明对任意旁观记忆的稳定延伸，不要求初态纯化，也不假定 $Y$ 是乘积。将它用于正的 $\Xi_h$，至多付 $80\gamma$。为取得下界检验，仅在完成态中偏迹新后缀系统；所得旧 $RM$ 态距 $\Xi_h$ 的迹范数至多 $B_*/\lambda+80\gamma$。于是其交叉块范数至少
+
+$$
+ \frac1{2\sqrt\lambda}-\frac{B_*}{\lambda}-80\gamma
+ \ge\frac1{2\sqrt\lambda}-\frac1{8\sqrt\lambda}
+                         -\frac1{8\sqrt\lambda}
+ =\frac1{4\sqrt\lambda},
+ \tag{26.21}
+$$
+
+因为 $\gamma\le1/\sqrt m=s/\sqrt\lambda$、$80s\le1/8$。引理 26.6 的对偶检验给约化态相对自身边缘的同一下界；迹距离收缩再给全部实际完成口的 (26.19)。偏迹新口只用于下界见证，实际比较仍包含全部新旧口，不删去任何记录，也不在可区分历史间求消。此结论只量化于忽略旧输出的定义 17.1 固定完成，不量化于任意反馈恢复后缀；它不是另一个单脉冲首退出限制。$\square$
+
+**命题 26.10（条件原生供应者的原全场成功与返回缺陷）。** 假设一个有限原生获取前缀 $\Gamma_e$ 用至多 $L_e-2$ 次前向 $V$、零次场重置、不执行规定终端，并保留 (26.7) 的逻辑口，且在仅忘记额外原生访问及工作口后满足
+
+$$
+ \sup_hD_{\rm tr}\!\left(\operatorname{Tr}_{\rm extra}\Gamma_e(\tau_h),
+                              \Phi_{\rm keep}(\tau_h)\right)
+ \le E_e\le1/t.
+ \tag{26.22}
+$$
+
+前缀不接入场源，故此条件及其输入律对所有原始 $n$ 相同。一个保留这些逻辑系统的完整输出近似证书必然蕴含 (26.22)；此假设没有断言供应者存在。接 (19.4) 的场采样部分、以下固定解码器及定义 17.1 的精确后缀，则同一实际运行在每个原始 $n,h$ 上以失败率至多 $2e/3\le e$ 达到 (19.2) 的 $e$ 精度，且其全部实际输出返回满足
+
+$$
+ \Delta_{n,h}\ge\frac1{4\sqrt\lambda}-2E_e
+ \ge\frac{192}{\sqrt t}-\frac2t
+ \ge\frac{96}{\sqrt t}.
+ \tag{26.23}
+$$
+
+证明。全部额外口仍在实际 $K$ 中，不假定它们与输入无关。公共场采样、解码及后缀收缩 (26.22) 的距离；投影到保留逻辑口所对应的完整理想完成空间后，距离仍至多 $E_e$。自身边缘返回的 $2$-Lipschitz 性及引理 26.9 给前两项；$t\ge1$ 给最后一项。由偏迹收缩，这个下界同时约束未投影的全部实际输出。
+
+参考方向好事件为 $\|\widehat h-h\|_\infty\le e/16$。引理 26.8 和 (26.22) 的事件概率收缩给其失败率
+
+$$
+ \frac{K_{\rm risk}}t+4e^{-t/16384}\le e/6+e/6=e/3,
+ \tag{26.24}
+$$
+
+这里分别用了 (26.3) 和 $t\ge16384\log(24/e)$。没有换成二元最优检验或依赖 $h$ 的解码器。
+
+仅复用 (19.4) 的场采样部分：在 $z=0,\pm u_e e_x,\pm u_e e_y$ 的每个点，对三个固定 Pauli 轴各取 $\ell_e$ 个样本。保留全部 $15\ell_e$ 枚令牌、测后态、原始结果及实际副本。所有场坐标估计误差至多 $eu_e/16$ 的好事件，其失败率为
+
+$$
+ 30\exp[-\ell_e e^2u_e^2/512]\le e/3.
+ \tag{26.25}
+$$
+
+令 $n_0=n(0)$、$n_a=\partial_a n(0)$、$\widehat n_0=\widehat n(0)$、
+$\widehat v_a=[\widehat n(+u_e e_a)-\widehat n(-u_e e_a)]/(2u_e)$，保留全部均值与差分，并精确输出有理四元组
+
+$$
+ \widehat D=\left(
+ \frac{\widehat h\cdot[\widehat n_0\times\widehat v_x]}2,
+ \frac{\widehat h\cdot[\widehat n_0\times\widehat v_y]}4,
+ 0,\frac{\widehat h\cdot\widehat v_y}2\right).
+ \tag{26.26}
+$$
+
+所有输入估计及 $u_e$ 为有理数，有限算术可以精确完成，不另付舍入误差；旧两坐标解码器、原始标签和实际算术工作输出仍保留。原轴向 $C^2$ 假设给中心差分偏差
+
+$$
+ \left\|\frac{n(u_e e_a)-n(-u_e e_a)}{2u_e}-n_a\right\|_2
+ \le\frac1{2u_e}\int_{-u_e}^{u_e}2|v|\,dv=u_e.
+$$
+
+场采样误差对中心差分再贡献至多 $\sqrt3e/16$。因此两好事件上，
+
+$$
+\begin{gathered}
+ \|\widehat h-h\|_2\le e/8,\qquad
+ \|\widehat n_0-n_0\|_2\le e^2/64,\\
+ \|\widehat v_a-n_a\|_2\le u_e+\sqrt3e/16\le e/4,\\
+ \|\widehat h\|,\|\widehat n_0\|,\|\widehat v_a\|\le2,
+ \qquad\|n_0\|=1,\quad\|n_a\|\le1.
+\end{gathered}
+\tag{26.27}
+$$
+
+具体分解为
+
+$$
+\begin{aligned}
+ &\left|\widehat h\cdot[\widehat n_0\times\widehat v_a]
+               -h\cdot[n_0\times n_a]\right|\\
+ &\le\|\widehat h-h\|_2\|n_0\|_2\|n_a\|_2
+ +\|\widehat h\|_2\bigl(
+ \|\widehat n_0-n_0\|_2\|\widehat v_a\|_2
+ +\|n_0\|_2\|\widehat v_a-n_a\|_2\bigr)\\
+ &\le e/8+2(2e^2/64+e/4)\le11e/16.
+\end{aligned}
+$$
+
+所以第一、二坐标误差分别至多 $11e/32,11e/64$；第四坐标误差至多
+$[e/8+2(e/4)]/2=5e/16$，第三坐标误差为零，均严格小于 $e$。两个好事件不必独立；联合坏概率由并集界至多 $2e/3$。TP 固定后缀不改实际解码边缘，故这是全部原始场及方向上的同一个成功消费者。
+
+资源也属于同一运行。获取之后，场部分用零次 $V$、$15\ell_e$ 次重置；定义 17.1 再用两次 $V$、两次独立 $+d e_x$ 重置。因此
+
+$$
+ T_V\le L_e,\qquad T_{\rm reset}=15\ell_e+2\le18N_e+1=Q_e,
+ \qquad T_R\le T_{\rm acq}+3.
+ \tag{26.28}
+$$
+
+重置界用 $18N_e\ge15\ell_e+1$。后缀的两枚令牌分别是定义 17.1 的 $F,S_t$，均在 $+d e_x$ 独立重置；$d=1/64$、$\tau_0=1$。只在第二枚新鲜且此前未经改动的 $S_t$ 上恰执行一次规定的 $U_{\rm term}=\exp[-idJ\cdot\sigma/m_e]$，不另供应其逆。不添加旧的 $3k_e$ 参考获取阶段；反馈、重试及截止均按最坏分支支付。
+
+若另有一个使用 $\nu_e$ 次 $Q_D$ 或受控 $Q_D$ 的逻辑字，并满足
+
+$$
+ q_e=\left\lceil\log_2(D_eL_e/e)\right\rceil,\qquad
+ \nu_eq_e\le L_e-2,
+ \tag{26.29}
+$$
+
+则定理 24.2、24.5 的完整访问替换误差至多
+$\nu_e e/(D_eL_e)\le e/D_e\le1/(2t)$。再有至多 $1/(2t)$ 的逻辑完整通道误差，才足以得到 (26.22)。每个逻辑逆仍是一次新的付费访问，使用新鲜记录 $Z_i$；旧记录全部保留。这里没有给出 $W$ 的逻辑字、次数、归一化或原生成本上界，也没有给其成本下界。访问的仿射压缩仍为 $(I+2J_{\rm axis})/D$，保留偏移和尺度；QSVT 投影块不成为确定性通道。
+
+具体地，逻辑获取口包含原标记 $R$、相干 $K_{\rm work}$、测后 $L$、原始 $l$ 及实际副本、旧两坐标解码器、有理 $\widehat h$、固定公共程序及路由和工作输出。条件原生实现还必须把每个实际探针及其回用、每次前向尝试的 $H,E$、$X$ 读出结果和测后系统、原始及复制访问结果、成功/失败/截止/停止寄存器、计数器、编译及 LCU/QSVT 工作区、旧量子及经典记忆、程序、路由和任何额外实际环境一并纳入 $K$。
+
+场与算术部分再加入全部 $15\ell_e$ 枚令牌及其测后态、原始测量结果和实际读出副本、均值、两条中心差分、最终四坐标有理解码及工作输出。规定后缀再加入 $B,A,F,S_t$、两组新的 $H,E$、两套原始符号历史及全部实际副本，以及定义 17.1 的程序、路由和步进输出。其约化节点沿用声明的实际端口；确实生成的额外环境也必须保留。
+
+实际经典记录不被擦除或为返回上界而偏迹。相干工作口也不能以代数求和替代：其领先交叉块范数为
+$\sum_l\|f_l\|\|g_l\|/\sqrt m$；只有偏迹该工作口才会变为小标量流
+$\sum_k\overline{f_{lk}}g_{lk}$。后者是 (26.6) 的性质，不是 (26.7) 的完整输出性质。
+
+在允许场 $n_*$ 上，用实际最终 (26.26) 的前两坐标定义 (25.2) 的风险，则 $\beta_e\le2e/3$，同一完成态有 $\delta_e\ge96/\sqrt t$，且 $\overline\delta\ge\delta_e$。这是对条件供应者的陈述，既不推翻原生关系 (25.3)，也不改变以它为假设的推论 25.12。
+
+该目标及每个满足上述近似和资源条件的供应者，其返回与 $\sqrt{\log(1/e)}/t$ 的比值趋于无穷，与 $\log(1/e)/t$ 的比值也趋于无穷。特别地，没有绝对常数能给此目标所要求的 $A\sqrt{\log(1/e)}/t$ 获取返回证书。完成后的原归一化量满足
+
+$$
+ \frac{D_e e^2\Delta_{n,h}}{\log(1/e)}
+ \ge96\frac{D_e}{m_e}\frac{\sqrt t}{\log(1/e)}
+ \longrightarrow+\infty,
+ \qquad\frac{\sqrt t}{\log(1/e)}\ge\frac{\sqrt{C_t}}e.
+ \tag{26.30}
+$$
+
+这是该单一保留工作目标的下界，不是下确界 $R(e)$ 的下界。量词不覆盖其它原生构造、改变工作接口的通道或读取旧输出的任意恢复后缀；定理 25.9 的约化直接参考访问放宽类反例也不被此结论否定。原 (19.12)、原生解码依赖关系及其它全方向原生构造仍是未解决命题。
+
+本推导的中间工具为相干振幅指数级数、有限极分解、秩一迹范数、紧集上一致逼近、迹范数对偶和 CP 收缩；其目标特定关系是 (26.9)、(26.13)、(26.15) 及对同一完整完成的 (26.19)、(26.23)。这些关系不以有限高阶分量非零代替近似下界，也不从抽象有限矩阵的存在推得原生实现。$\square$
+
+**定义 26.11（另一约化工作接口的待证候选）。** 可以另定义一个不同的候选通道：在尚未制造任何经典 $k$ 记录或副本前，对未测量的 $K_{\rm work}$ 作非参考的约化替换
+$X\mapsto\operatorname{Tr}_{K_{\rm work}}X\otimes\kappa_{K_{\rm work}}$，其中 $\kappa$ 为固定已知态，替换后的同名工作口及全部访问记录仍保留。这改变了 (26.7) 的输出接口；引理 26.6–26.9 对保留相干工作目标的结论不宣称适用于它。
+
+这个候选的付费原生分解、全部共同实际访问及工作输出上的返回界、最坏 $L_e-2$ 调用证书均为待证条件。若其实现确实生成额外实际环境，该环境也须纳入自身边缘比较并另给界。约化 CP 记号不供应上述条件，也不允许擦除已经存在的原始记录。此定义不蕴含候选的可实现性、充分返回率或原 (19.12) 的任一结论。
+
+## 追加锚（本行以下为增补区）
