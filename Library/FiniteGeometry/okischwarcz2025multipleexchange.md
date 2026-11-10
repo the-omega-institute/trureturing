@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/2511.16021v3
 claim: Two prescribed subsets of opposite base differences extend to a simultaneous exchange whose common cardinality is at most their union rank.
 strata_touched:
   - D5/S3/Combinatorics/Matroids/PrescribedExchange
+  - D5/S3/Combinatorics/Matroids/LocalSearchRobustness
 license: citation-only
 triage: anchor
 ---
@@ -48,3 +49,24 @@ Theorem 1.6(ii)'s oracle-query assertion is outside its scope.
 The paper attests the mathematical result and is cited without
 redistributing its PDF. The direct threshold telescoping is an
 application of the paper's paired submodular rank argument.
+
+## Local-search robustness
+
+Theorem 1.7 and Lemma 4.1 in Section 4, printed pages 19–20, concern
+arbitrary single-exchange paths of bases with real weights. The local
+error is the actual radius-one neighborhood maximum minus the next
+base's weight. Every such error is nonnegative, and their sum bounds
+the final base's deficit against every radius-k comparator around the
+initial base. No improvement or optimal-start assumption occurs.
+
+Lemma 4.1 is used in the natural-radius form
+$H_r(B_1)+H_1(B_0)\ge H_{r+1}(B_0)+W(B_1)$ for $r\ge0$.
+Its proof selects a maximizer in the neighborhood of $B_0$; the printed
+initial argmax uses an unspecified $B$, interpreted as $B_0$ by equation
+(21). The size-one prescribed-exchange branch selects a minimum-weight
+element of $A\setminus B_0$. The native proof first handles $A=B_0$ and
+uses the antichain property of bases to establish nonemptiness in the
+remaining branch. The direct simultaneous exchange supplier is
+Theorem 1.6(i), with singleton prescriptions. Cardinality and weight
+identities use the same pair of exchanged bases. The natural-radius
+indexing includes zero radius without truncated-subtraction ambiguity.

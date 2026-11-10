@@ -4,12 +4,9 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Actual neighborhood maxima control the accumulated local errors of finite native matroid base paths. -/
+   digest: Actual base-neighborhood maxima control accumulated local-search errors. -/
 
 import D5.S3.Combinatorics.Matroids.PrescribedExchange
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.Push
-import Mathlib.Tactic.FinCases
 
 /-! # Local-search robustness on native matroid bases -/
 
@@ -120,7 +117,8 @@ private theorem card_univ (S : Set E) :
     S.ncard = ∑ e : E, if e ∈ S then 1 else 0 := by
   classical
   have h : S.toFinite.toFinset = Finset.univ.filter (fun e => e ∈ S) := by ext; simp
-  rw [ncard_eq_toFinset_card, h, ← Finset.sum_boole]
+  rw [ncard_eq_toFinset_card, h]
+  simp
 
 private theorem adjacent_distance {A B0 B1 : Set E} {x y : E}
     (h01 : B0 \ B1 = {x}) (h10 : B1 \ B0 = {y}) :
@@ -132,11 +130,14 @@ private theorem adjacent_distance {A B0 B1 : Set E} {x y : E}
       (if e ∈ A \ B0 then 1 else 0) + (if e = x then (if x ∈ A then 1 else 0) else 0) := by
     have h0 := Set.ext_iff.mp h01 e
     have h1 := Set.ext_iff.mp h10 e
+    have hx : x ∈ B0 \ B1 := h01.symm ▸ mem_singleton x
+    have hy : y ∈ B1 \ B0 := h10.symm ▸ mem_singleton y
+    simp only [mem_sdiff, mem_singleton_iff] at h0 h1 hx hy
     by_cases heA : e ∈ A <;> by_cases he0 : e ∈ B0 <;> by_cases he1 : e ∈ B1 <;>
       by_cases hex : e = x <;> by_cases hey : e = y <;> simp_all
   have hh := Finset.sum_congr (s₁ := Finset.univ) rfl (fun e _ => hp e)
-  simpa only [Finset.sum_add_distrib, Finset.sum_ite_eq', Finset.mem_univ, if_true,
-    ← card_univ] using hh
+  simp only [Finset.sum_add_distrib, Finset.sum_ite_eq', Finset.mem_univ, ite_true] at hh
+  simpa only [card_univ, mem_sdiff] using hh
 
 
 /-- Oki–Schwarcz's joint-neighborhood comparison, with both maxima actually attained. -/
@@ -144,9 +145,9 @@ theorem neighborhood_comparison (M : Matroid E) (w : E → ℝ)
     (B0 B1 : {B : Set E // M.IsBase B}) (r : ℕ)
     (hstep : (B1.val \ B0.val).ncard ≤ 1) :
     neighborhoodMax M w B1 r + neighborhoodMax M w B0 1 ≥
-      neighborhoodMax M w B0 (r+1) + baseWeight w B1.val := by
+      neighborhoodMax M w B0 (r + 1) + baseWeight w B1.val := by
   classical
-  obtain ⟨A,hA,hd,hval,_⟩ := max_spec M w B0 (r+1)
+  obtain ⟨A,hA,hd,hval,_⟩ := max_spec M w B0 (r + 1)
   rw [← hval]
   have finish {D F : Set E} (hD : M.IsBase D) (hDr : (D \ B1.val).ncard ≤ r)
       (hF : M.IsBase F) (hFr : (F \ B0.val).ncard ≤ 1)
@@ -161,7 +162,7 @@ theorem neighborhood_comparison (M : Matroid E) (w : E → ℝ)
     apply finish B1.property (by simp) B0.property (by simp)
     exact le_of_eq (add_comm _ _)
   by_cases h01eq : B0.val = B1.val
-  · have hnon : (A \ B1.val).Nonempty := (ncard_pos _).mp (by omega)
+  · have hnon : (A \ B1.val).Nonempty := (ncard_pos (Set.toFinite _)).mp (by omega)
     obtain ⟨a,ha⟩ := hnon
     obtain ⟨b,hb,hD,hF⟩ := singleton_exchange M hA B1.property ha
     have hdist := exchange_distance (A := A) (B := B1.val) (U := {a}) (V := {b})
@@ -181,7 +182,7 @@ theorem neighborhood_comparison (M : Matroid E) (w : E → ℝ)
     apply finish hD hDr hF hFr
     exact le_of_eq (by simpa [union_singleton] using
       (pair_weight w (singleton_subset_iff.mpr ha) (singleton_subset_iff.mpr hb)).symm)
-  obtain h10empty | ⟨y,h10⟩ := (ncard_le_one_iff_eq _).mp hstep
+  obtain h10empty | ⟨y,h10⟩ := (ncard_le_one_iff_eq (Set.toFinite (B1.val \ B0.val))).mp hstep
   · exact (h01eq (B1.property.eq_of_subset_isBase B0.property
       (sdiff_eq_empty.mp h10empty)).symm).elim
   have h01card : (B0.val \ B1.val).ncard = 1 := by
@@ -203,7 +204,7 @@ theorem neighborhood_comparison (M : Matroid E) (w : E → ℝ)
         (singleton_subset_iff.mpr ⟨hxA,hx.2⟩) (singleton_subset_iff.mpr hb.1)
       simp only [union_singleton, ncard_singleton] at hDr
       have hr : ((insert b (A \ {x})) \ B1.val).ncard ≤ r := by
-        simp only [hyA,hxA,if_true] at hdist; omega
+        simp only [hyA,hxA,ite_true] at hdist; omega
       have hf : ((insert x (B1.val \ {b})) \ B0.val).ncard ≤ 1 := by
         apply (ncard_le_ncard (t := {y}) ?_).trans (by simp)
         intro e he
@@ -215,7 +216,7 @@ theorem neighborhood_comparison (M : Matroid E) (w : E → ℝ)
       exact le_of_eq (by simpa [union_singleton] using
         (pair_weight w (singleton_subset_iff.mpr ⟨hxA,hx.2⟩)
           (singleton_subset_iff.mpr hb)).symm)
-    · simp only [hyA,hxA,if_true,if_false,add_zero] at hdist
+    · simp only [hyA,hxA,ite_true,ite_false,add_zero] at hdist
       exact (hnear (by omega)).elim
   by_cases hxA : x ∈ A
   · have hnon : (A \ B0.val).Nonempty := by
@@ -240,11 +241,11 @@ theorem neighborhood_comparison (M : Matroid E) (w : E → ℝ)
     by_cases hsize : U.ncard = 1
     · have hUeq : U = {x} := by
         ext e
-        exact ⟨fun he => ((ncard_le_one_iff _).mp (by omega) he hxU') ▸ mem_singleton x,
+        exact ⟨fun he => ((ncard_le_one_iff (Set.toFinite U)).mp (by omega) he hxU') ▸ mem_singleton x,
           fun he => (mem_singleton_iff.mp he).symm ▸ hxU'⟩
       have hVeq : V = {y} := by
         ext e
-        exact ⟨fun he => ((ncard_le_one_iff _).mp (by omega) he hyV') ▸ mem_singleton y,
+        exact ⟨fun he => ((ncard_le_one_iff (Set.toFinite V)).mp (by omega) he hyV') ▸ mem_singleton y,
           fun he => (mem_singleton_iff.mp he).symm ▸ hyV'⟩
       have hA' : M.IsBase (insert y (A \ {x})) := by
         simpa [hUeq,hVeq,union_singleton] using hAU
@@ -275,25 +276,25 @@ theorem neighborhood_comparison (M : Matroid E) (w : E → ℝ)
         (singleton_subset_iff.mpr hb.1)
       simp only [union_singleton,ncard_singleton] at hDr0 hDr1
       have hDr : ((insert b ((insert y (A \ {x})) \ {amin})) \ B1.val).ncard ≤ r := by
-        simp only [hyA,hxA,if_false,if_true,add_zero] at hdist
+        simp only [hyA,hxA,ite_false,ite_true,add_zero] at hdist
         omega
       have hFr : ((insert a (B0.val \ {b})) \ B0.val).ncard ≤ 1 := by
         apply (ncard_le_ncard (t := {a}) ?_).trans (by simp)
         intro e he
+        have hn := he.2
         simp only [mem_sdiff,mem_insert_iff] at he
         rcases he.1 with he | he
         · exact he
-        · exact (he.2 he.1).elim
+        · exact (hn he.1).elim
       apply finish hD hDr hF hFr
-      rw [baseWeight_exchange w hyA hxA,
-        baseWeight_exchange w hamin'.2 hamin'.1,
+      rw [baseWeight_exchange w hb.2 hamin'.1, baseWeight_exchange w hyA hxA,
         baseWeight_exchange w ha.2 hb0.1, hB1, baseWeight_exchange w hy.2 hx.1]
       have hm := hmin a ha
       linarith
     · have hsize2 : U.ncard = 2 := by omega
       have hDr0 := exchange_distance hU (hV.trans sdiff_subset)
       have hDr : (((A \ U) ∪ V) \ B1.val).ncard ≤ r := by
-        simp only [hyA,hxA,if_false,if_true,add_zero] at hdist
+        simp only [hyA,hxA,ite_false,ite_true,add_zero] at hdist
         omega
       have hfsub : (((B1.val \ V) ∪ U) \ B0.val) ⊆ U \ {x} := by
         intro e he
@@ -314,18 +315,56 @@ theorem neighborhood_comparison (M : Matroid E) (w : E → ℝ)
       (singleton_subset_iff.mpr ha) (singleton_subset_iff.mpr hy.1)
     simp only [union_singleton,ncard_singleton] at hDr0
     have hDr : ((insert y (A \ {a})) \ B1.val).ncard ≤ r := by
-      simp only [hyA,hxA,if_false,add_zero] at hdist
+      simp only [hyA,hxA,ite_false,add_zero] at hdist
       omega
     have hFr : ((insert a (B1.val \ {y})) \ B0.val).ncard ≤ 1 := by
       apply (ncard_le_ncard (t := {a}) ?_).trans (by simp)
       intro e he
+      have hn := he.2
       rcases he.1 with he | he
       · exact he
-      · have hey := mem_singleton_iff.mp (h10.subset ⟨he.1,he.2.2⟩)
+      · have hey := mem_singleton_iff.mp (h10.subset ⟨he.1,hn⟩)
         exact (he.2 (mem_singleton_iff.mpr hey)).elim
     apply finish hD hDr hF hFr
     exact le_of_eq (by simpa [union_singleton,add_comm] using
       (pair_weight w (singleton_subset_iff.mpr ⟨hy.1,hyA⟩)
         (singleton_subset_iff.mpr ha)).symm)
+
+
+/-- The actual one-step neighborhood optimum minus the next base's weight. -/
+noncomputable def localError (M : Matroid E) (w : E → ℝ)
+    (B0 B1 : {B : Set E // M.IsBase B}) : ℝ :=
+  neighborhoodMax M w B0 1 - baseWeight w B1.val
+
+private theorem path_max_bound (M : Matroid E) (w : E → ℝ) (k : ℕ)
+    (B : Fin (k + 1) → {B : Set E // M.IsBase B})
+    (hstep : ∀ i : Fin k, ((B i.succ).val \ (B i.castSucc).val).ncard ≤ 1) :
+    neighborhoodMax M w (B 0) k ≤ baseWeight w (B (Fin.last k)).val +
+      ∑ i : Fin k, localError M w (B i.castSucc) (B i.succ) := by
+  induction k with
+  | zero => simpa using (max_zero M w (B 0)).le
+  | succ k ih =>
+    have hi := ih (fun i => B i.succ) (fun i => hstep i.succ)
+    have hc := neighborhood_comparison M w (B 0) (B 1) k (hstep 0)
+    simp only [Fin.sum_univ_succ]
+    dsimp [localError] at *
+    linarith
+
+/-- Every local error is nonnegative and their sum controls every radius-k comparator. -/
+theorem local_search_robustness (M : Matroid E) (w : E → ℝ) (k : ℕ)
+    (B : Fin (k + 1) → {B : Set E // M.IsBase B})
+    (hstep : ∀ i : Fin k, ((B i.succ).val \ (B i.castSucc).val).ncard ≤ 1) :
+    (∀ i : Fin k, 0 ≤ localError M w (B i.castSucc) (B i.succ)) ∧
+      ∀ C : Set E, M.IsBase C → (C \ (B 0).val).ncard ≤ k →
+        baseWeight w C ≤ baseWeight w (B (Fin.last k)).val +
+          ∑ i : Fin k, localError M w (B i.castSucc) (B i.succ) := by
+  constructor
+  · intro i
+    exact sub_nonneg.mpr (le_max M w (B i.castSucc) 1 (B i.succ).property (hstep i))
+  · intro C hC hdist
+    exact (le_max M w (B 0) k hC hdist).trans (path_max_bound M w k B hstep)
+
+#print axioms neighborhood_comparison
+#print axioms local_search_robustness
 
 end D5.S3.Combinatorics.Matroids.LocalSearchRobustness
