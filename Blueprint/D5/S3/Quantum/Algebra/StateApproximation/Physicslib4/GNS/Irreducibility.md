@@ -88,7 +88,7 @@ $$\forall \{A : Type u_1\} [CStarAlgebra.\{u_1\} A] \{H : Type u_2\} [NormedAddC
 
 *Commentary.*
 
-Taking adjoints of the commutation relation shows that star T also commutes with the representation. Hence the self-adjoint operators T+star T and i(star T-T) commute as well. Apply scalar_of_isSelfAdjoint_of_isPure to each, then reconstruct T as one half of the first plus i times the second.
+Taking adjoints of the commutation relation shows that star T also commutes with the representation. Hence the self-adjoint operators T+star T and i(star T-T) commute as well. Apply scalar_of_isSelfAdjoint_of_isPure to each, then reconstruct T as one half times the sum of the first and i times the second.
 
 **Theorem 1.8 (gnsVonNeumann_eq_univ_of_isIrreducible).**
 
