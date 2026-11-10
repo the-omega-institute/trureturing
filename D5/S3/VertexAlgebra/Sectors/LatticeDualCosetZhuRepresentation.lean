@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The full original Zhu quotient acts on the entire nonzero finite-dimensional dual-coset bottom. -/
+   digest: Full Zhu quotient action on the nonzero finite-dimensional dual-coset bottom. -/
 
 import D5.S3.VertexAlgebra.Sectors.LatticeDualCosetZhuZeroMode
 import D5.S3.VertexAlgebra.Lattice.ActualZhuAlgebra
@@ -44,7 +44,8 @@ private theorem circle_homogeneous (p q : ℕ) (a b : Carrier D)
         ((action D β (mu D a ((j : ℤ) - 2) b))[[((p : ℤ) + q - j)]]) v.val := by
     have hg := positive_actual_mode_grade D hD (p : ℤ) (q : ℤ) ((j : ℤ) - 2)
       a b ha hb
-    convert zeroMode_homogeneous D β μ hDual hD _ _ hg v using 1 <;> congr 2 <;> omega
+    have hi : ((p : ℤ) + q - ((j : ℤ) - 2) - 1) - 1 = (p : ℤ) + q - j := by omega
+    simpa only [hi, mu] using zeroMode_homogeneous D β μ hDual hD _ _ hg v
   change (zeroMode D β μ hDual hD
     (∑ j ∈ Finset.range (p + 1), (p.choose j : ℂ) • mu D a ((j : ℤ) - 2) b) v).val = 0
   simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply,
@@ -55,10 +56,7 @@ private theorem circle_homogeneous (p q : ℕ) (a b : Carrier D)
     (module_fullLaw D β a b) p q v.val
     (fun j => high_mode_kills_bottom D β μ hDual hD _ _ a v.val ha v.property (by omega))
     (fun j => high_mode_kills_bottom D β μ hDual hD _ _ b v.val hb v.property (by omega))
-  convert h using 1
-  apply Finset.sum_congr rfl
-  intro j hj
-  congr 3 <;> omega
+  simpa only [show ∀ j : ℕ, -2 + (j : ℤ) = (j : ℤ) - 2 from fun j => by omega] using h
 
 private theorem star_homogeneous_zeroMode (p q : ℕ) (a b : Carrier D)
     (ha : a ∈ grade D (p : ℤ)) (hb : b ∈ grade D (q : ℤ)) :
@@ -72,7 +70,8 @@ private theorem star_homogeneous_zeroMode (p q : ℕ) (a b : Carrier D)
         ((action D β (mu D a ((j : ℤ) - 1) b))[[((p : ℤ) + q - 1 - j)]]) v.val := by
     have hg := positive_actual_mode_grade D hD (p : ℤ) (q : ℤ) ((j : ℤ) - 1)
       a b ha hb
-    convert zeroMode_homogeneous D β μ hDual hD _ _ hg v using 1 <;> congr 2 <;> omega
+    have hi : ((p : ℤ) + q - ((j : ℤ) - 1) - 1) - 1 = (p : ℤ) + q - 1 - j := by omega
+    simpa only [hi, mu] using zeroMode_homogeneous D β μ hDual hD _ _ hg v
   rw [star_homogeneous D p a b ha]
   simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply,
     Submodule.coe_sum, Submodule.coe_smul, Module.End.mul_apply]
@@ -83,10 +82,9 @@ private theorem star_homogeneous_zeroMode (p q : ℕ) (a b : Carrier D)
     (module_fullLaw D β a b) p q v.val
     (fun j => high_mode_kills_bottom D β μ hDual hD _ _ a v.val ha v.property (by omega))
     (fun j => high_mode_kills_bottom D β μ hDual hD _ _ b v.val hb v.property (by omega))
-  convert h using 1
-  apply Finset.sum_congr rfl
-  intro j hj
-  congr 3 <;> omega
+  simpa only [show ∀ j : ℕ, -1 + (j : ℤ) = (j : ℤ) - 1 from fun j => by omega,
+    show ∀ j : ℕ, (p : ℤ) + ((q : ℤ) - 1) - j = (p : ℤ) + q - 1 - j
+      from fun j => by omega] using h
 
 /-- Every literal circle generator, with unrestricted second state, acts by zero. -/
 theorem zeroMode_circle (p : ℕ) (a b : Carrier D) (ha : a ∈ grade D (p : ℤ)) :
@@ -120,6 +118,7 @@ theorem zeroMode_star (a b : Carrier D) :
       star D (gradeProjection D p a) (gradeProjection D q b) := by
     conv_lhs => rw [← sum_gradeProjections D a, ← sum_gradeProjections D b]
     simp only [map_sum, LinearMap.sum_apply]
+    exact Finset.sum_comm
   rw [he, map_sum]
   have hm (p : ℤ) (hp : p ∈ stateEnergies D a) (q : ℤ) (hq : q ∈ stateEnergies D b) :
       zeroMode D β μ hDual hD (star D (gradeProjection D p a) (gradeProjection D q b)) =
@@ -178,6 +177,7 @@ theorem representation_mk (k : ℤ) (a : Carrier D) (ha : a ∈ grade D k)
       ((action D β a)[[k - 1]]) v.val :=
   zeroMode_homogeneous D β μ hDual hD k a ha v
 
+include β hDual in
 /-- The representation space is nonzero and finite dimensional, with every minimum retained. -/
 theorem bottom_nontrivial_finite :
     Nontrivial (Bottom D μ hD) ∧ FiniteDimensional ℂ (Bottom D μ hD) := by
@@ -194,6 +194,21 @@ theorem bottom_nontrivial_finite :
   · rw [← he]
     exact all_eigenspaces_finiteDimensional D β H hHG hGH μ hDual hD _
 
+/-- A finite nonzero representation together with its exact original-mode evaluation law. -/
+def finiteBottomRepresentation :
+    letI := Lattice.ActualZhuAlgebra.quotientRing D hD
+    letI := Lattice.ActualZhuAlgebra.quotientAlgebra D hD
+    {ρ : Lattice.ActualZhuAlgebra.Q D →ₐ[ℂ] Module.End ℂ (Bottom D μ hD) //
+      Nontrivial (Bottom D μ hD) ∧ FiniteDimensional ℂ (Bottom D μ hD) ∧
+      ∀ (k : ℤ) (a : Carrier D), a ∈ grade D k → ∀ v : Bottom D μ hD,
+        (ρ ((Lattice.ActualZhuFinite.zhuO D).mkQ a) v).val =
+          ((action D β a)[[k - 1]]) v.val} :=
+  ⟨representation D β μ hDual hD,
+    (bottom_nontrivial_finite D β μ hDual hD).1,
+    (bottom_nontrivial_finite D β μ hDual hD).2,
+    representation_mk D β μ hDual hD⟩
+
+#print axioms finiteBottomRepresentation
 #print axioms module_fullLaw
 #print axioms high_mode_kills_bottom
 #print axioms zeroMode_circle

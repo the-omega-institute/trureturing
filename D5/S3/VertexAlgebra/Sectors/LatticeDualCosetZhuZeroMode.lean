@@ -114,11 +114,15 @@ private def homogeneousZero (β : Charge D) (μ : Fin D.rank → ℚ)
     map_smul' c v := Subtype.ext (((action D β a.val)[[k - 1]]).map_smul c v.val) }
   refine { toFun := z, map_add' := ?_, map_smul' := ?_ }
   · intro a b
-    ext v
+    apply LinearMap.ext
+    intro v
+    apply Subtype.ext
     change ((action D β (a.val + b.val))[[k - 1]]) v.val = _
     simp [z]
   · intro c a
-    ext v
+    apply LinearMap.ext
+    intro v
+    apply Subtype.ext
     change ((action D β (c • a.val))[[k - 1]]) v.val = _
     simp [z]
 
