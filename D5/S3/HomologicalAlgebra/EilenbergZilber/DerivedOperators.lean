@@ -356,7 +356,7 @@ lemma primeHom_comp {s q r : ℕ} (g : (⦋r⦌ : SimplexCategory) ⟶ ⦋q⦌)
 
 /-- Letter-level multiplicativity of `prime`: `(l₂ ∘ l₁)' = l₂' ∘ l₁'`. -/
 lemma OpLetter.primeLetter_compLetter {s q r : ℕ} (l₂ : OpLetter q r) (l₁ : OpLetter s q) :
-    (l₂.compLetter l₁).primeLetter = l₂.primeLetter.comp l₁.primeLetter := by
+    (l₂.compLetter l₁).primeLetter = l₂.primeLetter.compLetter l₁.primeLetter := by
   simp only [OpLetter.primeLetter, OpLetter.compLetter, primeHom_comp]
 
 /-- **`prime` is multiplicative** (`(β∘γ)' = β'∘γ'`), so `(MTwo ∘ MOne)' = MTwo' ∘ MOne'`. The key fact
@@ -413,7 +413,7 @@ lemma primeHom_σ {q : ℕ} (i : Fin (q + 1)) :
   simp only [primeHom, SimplexCategory.mkHom, SimplexCategory.Hom.toOrderHom_mk, OrderHom.coe_mk,
     SimplexCategory.len_mk]
   simp only [SimplexCategory.σ, SimplexCategory.mkHom, SimplexCategory.Hom.toOrderHom_mk,
-    Fin.predAboveOrderHom_apply, Fin.predAbove]
+    Fin.predAboveOrderHom, OrderHom.coe_mk, Fin.predAbove]
   have hj := j.isLt
   simp only [SimplexCategory.len_mk] at hj
   simp only [Fin.lt_def, Fin.val_castSucc, Fin.val_succ]
