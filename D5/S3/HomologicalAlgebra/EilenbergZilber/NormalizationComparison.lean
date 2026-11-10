@@ -19,12 +19,11 @@ Modifications: receiving namespace and imports, module boundaries, exposure of
 consumed private interfaces, and omission of unused companion and frontal material.
 -/
 
-module
 
-public import D5.S3.HomologicalAlgebra.EilenbergZilber.Bisimplicial
-public import D5.S3.Topology.TauCeti.Algebra.Homology.FiniteDegreeComparison
-public import Mathlib.Algebra.Homology.BifunctorHomotopy
-public import Mathlib.AlgebraicTopology.DoldKan.HomotopyEquivalence
+import D5.S3.HomologicalAlgebra.EilenbergZilber.Bisimplicial
+import D5.S3.Topology.TauCeti.Algebra.Homology.FiniteDegreeComparison
+import Mathlib.Algebra.Homology.BifunctorHomotopy
+import Mathlib.AlgebraicTopology.DoldKan.HomotopyEquivalence
 
 /-!
 # The normalization comparison equivalence
@@ -40,7 +39,6 @@ The construction is factored as
 where `M₁` is outer-unnormalized and inner-normalized.
 -/
 
-@[expose] public section
 
 open CategoryTheory
 open AlgebraicTopology AlgebraicTopology.DoldKan CategoryTheory.Limits

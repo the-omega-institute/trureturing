@@ -180,7 +180,7 @@ lemma realize_zsmul {s q : ℕ} (X : BisimplicialObject C) (c : ℤ) (M : Derive
 
 /-- A single composed letter realizes to the composition of the realizations (the Pattern-5
 bifunctor merge: interleave the horizontal/vertical legs via naturality of `X.map _`). -/
-lemma OpLetter.realize_comp {s q r : ℕ} (X : BisimplicialObject C) (l₂ : OpLetter q r)
+private lemma OpLetter.realize_comp {s q r : ℕ} (X : BisimplicialObject C) (l₂ : OpLetter q r)
     (l₁ : OpLetter s q) :
     (l₂.comp l₁).realize X = l₁.realize X ≫ l₂.realize X := by
   change (X.obj (Opposite.op ⦋s⦌)).map (l₂.snd ≫ l₁.snd).op ≫

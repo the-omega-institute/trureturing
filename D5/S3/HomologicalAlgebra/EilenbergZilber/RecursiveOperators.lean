@@ -329,7 +329,7 @@ lemma prime_neg {s q : ℕ} (M : DerivedOp s q) : (-M).prime = -M.prime :=
   map_neg primeAddHom M
 
 /-- Associativity of letter composition (`≫`-associativity in each coordinate). -/
-lemma OpLetter.comp_assoc {s q r p : ℕ} (l₃ : OpLetter r p) (l₂ : OpLetter q r)
+private lemma OpLetter.comp_assoc {s q r p : ℕ} (l₃ : OpLetter r p) (l₂ : OpLetter q r)
     (l₁ : OpLetter s q) : (l₃.comp l₂).comp l₁ = l₃.comp (l₂.comp l₁) := by
   simp only [OpLetter.comp, Category.assoc]
 

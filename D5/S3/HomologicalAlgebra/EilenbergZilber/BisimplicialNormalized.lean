@@ -19,11 +19,10 @@ Modifications: receiving namespace and imports, module boundaries, exposure of
 consumed private interfaces, and omission of unused companion and frontal material.
 -/
 
-module
 
-public import D5.S3.HomologicalAlgebra.EilenbergZilber.Bisimplicial
-public import D5.S3.HomologicalAlgebra.EilenbergZilber.NormalizationComparison
-public import D5.S3.HomologicalAlgebra.EilenbergZilber.NormalizedHomotopy
+import D5.S3.HomologicalAlgebra.EilenbergZilber.Bisimplicial
+import D5.S3.HomologicalAlgebra.EilenbergZilber.NormalizationComparison
+import D5.S3.HomologicalAlgebra.EilenbergZilber.NormalizedHomotopy
 
 /-!
 # Normalized Eilenberg–Zilber for bisimplicial objects
@@ -40,7 +39,6 @@ This normalized equivalence is then transported to the unnormalized `F₁`/`F₂
 to obtain `eilenbergZilber : HomotopyEquiv (F₁.obj X) (F₂.obj X)`.
 -/
 
-@[expose] public section
 
 open CategoryTheory
 open AlgebraicTopology AlgebraicTopology.DoldKan CategoryTheory.Limits
