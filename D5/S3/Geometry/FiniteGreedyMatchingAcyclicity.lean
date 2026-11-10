@@ -68,7 +68,9 @@ theorem remaining_union {A B : Finset (Finset V)} (h : Separated A B) (v : V) :
     intro s hs hp
     exact Finset.disjoint_left.mp hd (paired_subset A v hp) hs
   ext s
-  rw [remaining, pairedFaces_union h]
+  change s ∈ (A ∪ B) \ pairedFaces (A ∪ B) v ↔
+    s ∈ (A \ pairedFaces A v) ∪ (B \ pairedFaces B v)
+  rw [pairedFaces_union h]
   simp only [Finset.mem_sdiff, Finset.mem_union, not_or]
   constructor
   · rintro ⟨hsA | hsB, hpa, hpb⟩
@@ -133,8 +135,16 @@ theorem acyclic_zones {α : Type*} {r : α → α → Prop} (z : α → Nat)
   intro a ha
   exact hk (z a) a (walk_one_zone z hz ha (z a) rfl rfl)
 
-namespace RelativeFamily
+end D5.S3.Geometry.FiniteGreedyMatchingAcyclicity
 
+namespace D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily
+
+open Set Finset
+open D5.S3.Geometry.FiniteGreedyMatchingAcyclicity
+open D5.S3.Geometry.FiniteAcyclicFaceMatching
+open D5.S3.Geometry.FiniteCoordinateGreedyMatching
+
+variable {V : Type*} [Fintype V] [DecidableEq V]
 variable (R : FiniteCoordinateGreedyMatching.RelativeFamily (V := V)) (v : V)
 
 theorem separated_branches : Separated (R.A v) (R.B v) :=
@@ -207,9 +217,16 @@ theorem zone_nondecreasing (vs : List V) {a b : Finset V}
   · have hba : b ⊆ a := by rw [heq]; exact subset_insert _ _
     have ha0 : b ∈ R.A v → a ∈ R.A v := fun h => R.A_upper v h ha hba
     have hb2 : a ∈ R.B v → b ∈ R.B v := fun h => R.B_lower v h hb hba
-    by_cases haa : a ∈ R.A v <;> by_cases hba' : b ∈ R.A v <;>
-      by_cases hab' : a ∈ R.B v <;> by_cases hbb : b ∈ R.B v <;>
-      simp_all [zone]
+    by_cases haa : a ∈ R.A v
+    · rw [R.zone_A v haa]
+      exact Nat.zero_le _
+    · by_cases hbb : b ∈ R.B v
+      · rw [R.zone_B v hbb]
+        unfold zone
+        split_ifs <;> omega
+      · have hba' : b ∉ R.A v := fun h => haa (ha0 h)
+        have hab' : a ∉ R.B v := fun h => hbb (hb2 h)
+        simp [zone, haa, hba', hab', hbb]
 
 theorem pair_in_A (vs : List V) {a b : Finset V} (ha : a ∈ R.A v)
     (hp : HasPair (greedy R.F (v::vs)) a b) : HasPair (greedy (R.A v) vs) a b := by
@@ -275,7 +292,8 @@ theorem paired_region_increases (vs : List V) {a b : Finset V}
         · exact (R.paired_not_B v haP (greedy_endpoints _ _ hp).1).elim
     obtain ⟨hwv, hl⟩ := (mem_roundPairs R.F v (a,w)).mp hr
     have hva := ((mem_lowers R.F v a).mp hl).2.1
-    subst w
+    have hwv' : w = v := by simpa using hwv
+    rw [hwv']
     have hc := Finset.card_insert_of_notMem hva
     simp only [pRank, if_neg hva, Finset.mem_insert_self, if_true]
     omega
@@ -302,9 +320,16 @@ theorem paired_region_increases (vs : List V) {a b : Finset V}
       simp only [pRank, if_neg hva, if_neg hvb]
       omega
 
-end RelativeFamily
+end D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily
 
-open RelativeFamily
+namespace D5.S3.Geometry.FiniteGreedyMatchingAcyclicity
+
+open Set Finset
+open D5.S3.Geometry.FiniteAcyclicFaceMatching
+open D5.S3.Geometry.FiniteCoordinateGreedyMatching
+open D5.S3.Geometry.FiniteCoordinateGreedyMatching.RelativeFamily
+
+variable {V : Type*} [Fintype V] [DecidableEq V]
 
 /-- Full acyclicity of the ACTUAL coordinate greedy algorithm on any relative
 complex, proved by induction on the coordinate list and the A/P/B partition. -/

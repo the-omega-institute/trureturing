@@ -33,7 +33,7 @@ theorem frame_mem {K L : PreAbstractSimplicialComplex V} (S : Sequence K L)
       have hi0 : i = 0 := by simpa [Sequence.pairs] using hi
       subst i
       simp [Sequence.frames, Sequence.pairs]
-  | step P T ih =>
+  | @step P L T ih =>
       cases i with
       | zero => simp [Sequence.frames, Sequence.pairs]
       | succ i =>
@@ -83,7 +83,6 @@ theorem elementary_face_count (P : CollapsePair V) :
       · exact hs
   rw [heq, Finset.card_insert_of_notMem (by simp [hne, hl]),
     Finset.card_insert_of_notMem hu]
-  omega
 
 /-- Every actual step removes two distinct nonempty faces. -/
 theorem sequence_face_count {K L : PreAbstractSimplicialComplex V}
@@ -151,7 +150,17 @@ theorem frames_supported {K L : PreAbstractSimplicialComplex V} (S : Sequence K 
     ∀ s ∈ J, s ⊆ W :=
   fun s hs => hW s (S.frames_le_source J hJ hs)
 
-namespace Pairing
+end D5.S3.Geometry.FiniteMatchingCollapse
+
+namespace D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing
+
+open Set Finset
+open D5.S3.Geometry.FiniteMatchingCollapse
+open D5.S3.Geometry.FiniteElementaryCollapse
+open D5.S3.Geometry.FiniteRelativeSimplicialCollapse
+open D5.S3.Geometry.FiniteVertexDominationCollapse (faceSet mem_faceSet)
+
+variable {V : Type*} [Fintype V] [DecidableEq V]
 
 variable {K : PreAbstractSimplicialComplex V} (M : Pairing K)
 
@@ -174,7 +183,8 @@ private theorem source_retained_saturated {L T : PreAbstractSimplicialComplex V}
   intro f hf
   by_cases hef : e = f
   · subst f
-    simp only [P.mem_retained_iff]
+    change (e.1 ∈ P.retained ↔ upper e ∈ P.retained)
+    rw [P.mem_retained_iff, P.mem_retained_iff]
     constructor <;> intro h
     · exact (h.2.1 rfl).elim
     · exact (h.2.2 rfl).elim
@@ -252,5 +262,4 @@ def sdrBetween (hacyc : M.IsAcyclic)
     (hL : M.Saturated L) (hcrit : ∀ s ∈ L, M.Unmatched s → s ∈ T) : RelativeSDR L T hTL :=
   (M.collapseBetween hacyc T hTK hT L hLK hTL hL hcrit).realize
 
-end Pairing
-end D5.S3.Geometry.FiniteMatchingCollapse
+end D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing

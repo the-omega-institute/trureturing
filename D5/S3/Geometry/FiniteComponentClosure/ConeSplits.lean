@@ -203,18 +203,10 @@ private def coneCoverEquiv (X Y C : PreAbstractSimplicialComplex V)
         (Quotient.mk (FiniteConeUnionWedge.subsetSetoid (P.right ⁻¹'
           {z | z.val ∈ FiniteConeCollapse.realization C}))
           (FiniteVertexCylinder.vertexPoint Y b hb)) := by
-  -- Cone-specific data supplies ONLY contractibility of C. The ambient quotient
-  -- then runs through the new arbitrary-subcomplex whole-cylinder supplier.
-  let Q : FiniteConeCollapse.ConePair V := ⟨C, C, le_rfl, a, haC, hcone⟩
-  letI : Nonempty Q.Collapse := ⟨Q.quotientMap Q.apexPoint⟩
-  letI : Subsingleton Q.Collapse := ⟨by
-    intro x y
-    refine Quotient.inductionOn₂ x y ?_
-    intro x y
-    exact Quotient.sound (Or.inr ⟨x.property, y.property⟩)⟩
-  letI : ContractibleSpace (FiniteSimplicialJoin.Space C) :=
-    Q.collapseEquiv.contractibleSpace
-  exact Classical.choose (contractible_cover_equivalence X Y C a b ha hb haC hbC hC hXY)
+  let Q : FiniteConeCollapse.ConePair V :=
+    ⟨X ⊔ Y, C, hC, a, haC, hcone⟩
+  let P := finiteConeCover X Y C a b ha hb haC hbC hXY
+  exact Q.collapseEquiv.trans P.quotientWedgeHomeomorph.symm.toHomotopyEquiv
 
 /-- Collapsing a whole closed summand leaves the other summand modulo their actual intersection.
 No contractibility of either summand or of the intersection is used. -/

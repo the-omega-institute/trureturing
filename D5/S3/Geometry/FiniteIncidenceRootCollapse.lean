@@ -18,7 +18,7 @@
   No kernel, axiom, Scribe, Reg, admission, gate, repository or publication
   result is claimed by this source-only artifact.
    Metadata author classification (source only; independent review pending):
-   State and rootK retain arbitrary finite I, J and Prop-valued incidence; Pruning and build construct Result by structural pruning. This is a parametrized geometric construction, not a bounded computation, certificate checker, numerical reduction or certified finite instance.
+   State and rootK retain arbitrary finite «I», J and Prop-valued incidence; Pruning and build construct Result by structural pruning. This is a parametrized geometric construction, not a bounded computation, certificate checker, numerical reduction or certified finite instance.
    No empirical mirror or compilation/acceptance claim is supplied.
 -/
 import D5.S3.Geometry.FiniteRelativeSimplicialCollapse
@@ -39,26 +39,26 @@ open FiniteVertexDominationCollapse
 open FiniteAlexanderDualCollapse
 open FiniteComponentClosure (vertexComplex)
 
-variable {I J : Type*} [Fintype I] [DecidableEq I] [Fintype J] [DecidableEq J]
+variable {«I» J : Type*} [Fintype «I»] [DecidableEq «I»] [Fintype J] [DecidableEq J]
 
 /-! ### Literal incidence presentations and their original ground -/
 
-structure State (ρ : I → J → Prop) where
-  active : Finset I
+structure State (ρ : «I» → J → Prop) where
+  active : Finset «I»
   rows : Finset J
 
-def rowNeighborhood (ρ : I → J → Prop) (q : State ρ) (b : J) : Finset I := by
+def rowNeighborhood (ρ : «I» → J → Prop) (q : State ρ) (b : J) : Finset «I» := by
   classical
   exact q.active.filter (fun x => ρ x b)
 
-@[simp] theorem mem_rowNeighborhood (ρ : I → J → Prop) (q : State ρ)
-    (x : I) (b : J) :
+@[simp] theorem mem_rowNeighborhood (ρ : «I» → J → Prop) (q : State ρ)
+    (x : «I») (b : J) :
     x ∈ rowNeighborhood ρ q b ↔ x ∈ q.active ∧ ρ x b := by
   classical
   simp [rowNeighborhood]
 
-private theorem mem_rowComplement (ρ : I → J → Prop) (q : State ρ)
-    (x : I) (b : J) :
+private theorem mem_rowComplement (ρ : «I» → J → Prop) (q : State ρ)
+    (x : «I») (b : J) :
     x ∈ q.active \ rowNeighborhood ρ q b ↔ x ∈ q.active ∧ ¬ ρ x b := by
   constructor
   · intro hx
@@ -68,12 +68,12 @@ private theorem mem_rowComplement (ρ : I → J → Prop) (q : State ρ)
     exact Finset.mem_sdiff.mpr ⟨hxA, fun hxN => hxρ
       ((mem_rowNeighborhood ρ q x b).mp hxN).2⟩
 
-def incidenceSimplex (lambda : Finset I) : PreAbstractSimplicialComplex I :=
+def incidenceSimplex (lambda : Finset «I») : PreAbstractSimplicialComplex «I» :=
   FiniteAlexanderDualCollapse.simplex lambda
 
-/-- The literal root K on the ORIGINAL type `I`.  `q.active` is a local
+/-- The literal root K on the ORIGINAL type `«I»`.  `q.active` is a local
     ground; a label outside it remains a genuine ghost of this face family. -/
-def rootK (ρ : I → J → Prop) (q : State ρ) : PreAbstractSimplicialComplex I where
+def rootK (ρ : «I» → J → Prop) (q : State ρ) : PreAbstractSimplicialComplex «I» where
   faces := {s | s.Nonempty ∧ ∃ b ∈ q.rows, s ⊆ q.active \ rowNeighborhood ρ q b}
   isRelLowerSet_faces := by
     rintro s ⟨hs, b, hb, hsb⟩
@@ -81,12 +81,12 @@ def rootK (ρ : I → J → Prop) (q : State ρ) : PreAbstractSimplicialComplex 
     intro t hts ht
     exact ⟨ht, b, hb, fun x hx => hsb (hts hx)⟩
 
-@[simp] theorem mem_rootK (ρ : I → J → Prop) (q : State ρ) (s : Finset I) :
+@[simp] theorem mem_rootK (ρ : «I» → J → Prop) (q : State ρ) (s : Finset «I») :
     s ∈ rootK ρ q ↔
       s.Nonempty ∧ ∃ b ∈ q.rows, s ⊆ q.active \ rowNeighborhood ρ q b := Iff.rfl
 
-def incidenceDual (ρ : I → J → Prop) (q : State ρ) :
-    PreAbstractSimplicialComplex I where
+def incidenceDual (ρ : «I» → J → Prop) (q : State ρ) :
+    PreAbstractSimplicialComplex «I» where
   faces := {s | s.Nonempty ∧ s ⊂ q.active ∧ ∀ b ∈ q.rows,
     ¬ rowNeighborhood ρ q b ⊆ s}
   isRelLowerSet_faces := by
@@ -99,10 +99,10 @@ def incidenceDual (ρ : I → J → Prop) (q : State ρ) :
     intro b hb hsub
     exact hrows b hb (hsub.trans hts)
 
-theorem rootK_dual (ρ : I → J → Prop) (q : State ρ) :
+theorem rootK_dual (ρ : «I» → J → Prop) (q : State ρ) :
     FiniteAlexanderDualCollapse.dual q.active (rootK ρ q) = incidenceDual ρ q := by
   classical
-  have havoid : ∀ {s : Finset I},
+  have havoid : ∀ {s : Finset «I»},
       s ⊂ q.active →
       (∀ b ∈ q.rows, ¬ rowNeighborhood ρ q b ⊆ s) →
         ¬ AugmentedFace (rootK ρ q) (q.active \ s) := by
@@ -146,56 +146,57 @@ theorem rootK_dual (ρ : I → J → Prop) (q : State ρ) :
 /- The dual proof is a fixed-ground bridge; it does not alter any active label
    or reintroduce an augmented empty face as an ordinary realization point. -/
 
-def eraseRow (ρ : I → J → Prop) (q : State ρ) (c : J) : State ρ :=
+def eraseRow (ρ : «I» → J → Prop) (q : State ρ) (c : J) : State ρ :=
   { q with rows := q.rows.erase c }
 
-def eraseColumn (ρ : I → J → Prop) (q : State ρ) (y : I) : State ρ :=
+def eraseColumn (ρ : «I» → J → Prop) (q : State ρ) (y : «I») : State ρ :=
   { q with active := q.active.erase y }
 
-def singletonChild (ρ : I → J → Prop) (q : State ρ) (a : I) : State ρ := by
+def singletonChild (ρ : «I» → J → Prop) (q : State ρ) (a : «I») : State ρ := by
   classical
   exact { active := q.active.erase a
           rows := q.rows.filter (fun b => ¬ ρ a b) }
 
-@[simp] theorem eraseRow_active (ρ : I → J → Prop) (q : State ρ) (c : J) :
+@[simp] theorem eraseRow_active (ρ : «I» → J → Prop) (q : State ρ) (c : J) :
     (eraseRow ρ q c).active = q.active := rfl
 
-@[simp] theorem eraseColumn_rows (ρ : I → J → Prop) (q : State ρ) (y : I) :
+@[simp] theorem eraseColumn_rows (ρ : «I» → J → Prop) (q : State ρ) (y : «I») :
     (eraseColumn ρ q y).rows = q.rows := rfl
 
-def RowSubset (ρ : I → J → Prop) (q : State ρ) (b c : J) : Prop :=
+def RowSubset (ρ : «I» → J → Prop) (q : State ρ) (b c : J) : Prop :=
   ∀ x ∈ q.active, ρ x b → ρ x c
 
-def ColumnSubset (ρ : I → J → Prop) (q : State ρ) (x y : I) : Prop :=
+def ColumnSubset (ρ : «I» → J → Prop) (q : State ρ) (x y : «I») : Prop :=
   ∀ b ∈ q.rows, ρ x b → ρ y b
 
-def IsolatedColumn (ρ : I → J → Prop) (q : State ρ) (x : I) : Prop :=
+def IsolatedColumn (ρ : «I» → J → Prop) (q : State ρ) (x : «I») : Prop :=
   ∀ b ∈ q.rows, ¬ ρ x b
 
-def SingletonRow (ρ : I → J → Prop) (q : State ρ) (b : J) (a : I) : Prop :=
+def SingletonRow (ρ : «I» → J → Prop) (q : State ρ) (b : J) (a : «I») : Prop :=
   b ∈ q.rows ∧ rowNeighborhood ρ q b = {a}
 
-theorem rowSubset_neighborhood (ρ : I → J → Prop) (q : State ρ)
+theorem rowSubset_neighborhood (ρ : «I» → J → Prop) (q : State ρ)
     {b c : J} (h : RowSubset ρ q b c) :
     rowNeighborhood ρ q b ⊆ rowNeighborhood ρ q c := by
   intro x hx
   rcases (mem_rowNeighborhood ρ q x b).mp hx with ⟨hxa, hxb⟩
   exact (mem_rowNeighborhood ρ q x c).mpr ⟨hxa, h x hxa hxb⟩
 
-theorem columnSubset_neighborhood (ρ : I → J → Prop) (q : State ρ)
-    {x y : I} (hy : y ∈ q.active) (h : ColumnSubset ρ q x y) :
+theorem columnSubset_neighborhood (ρ : «I» → J → Prop) (q : State ρ)
+    {x y : «I»} (hy : y ∈ q.active) (h : ColumnSubset ρ q x y) :
     ∀ b ∈ q.rows, x ∈ rowNeighborhood ρ q b → y ∈ rowNeighborhood ρ q b := by
   intro b hb hx
   rcases (mem_rowNeighborhood ρ q x b).mp hx with ⟨hxa, hxb⟩
   exact (mem_rowNeighborhood ρ q y b).mpr ⟨hy, h b hb hxb⟩
 
-theorem rootK_empty_rows (ρ : I → J → Prop) (q : State ρ) (h : q.rows = ∅) :
+theorem rootK_empty_rows (ρ : «I» → J → Prop) (q : State ρ) (h : q.rows = ∅) :
     rootK ρ q = ⊥ := by
   apply SetLike.coe_injective
   ext s
+  change (s.Nonempty ∧ ∃ b ∈ q.rows, s ⊆ q.active \ rowNeighborhood ρ q b) ↔ False
   simp [rootK, h]
 
-theorem rootK_full_rows (ρ : I → J → Prop) (q : State ρ)
+theorem rootK_full_rows (ρ : «I» → J → Prop) (q : State ρ)
     (hn : q.rows.Nonempty)
     (hfull : ∀ b ∈ q.rows, rowNeighborhood ρ q b = q.active) :
     rootK ρ q = ⊥ := by
@@ -203,11 +204,12 @@ theorem rootK_full_rows (ρ : I → J → Prop) (q : State ρ)
   ext s
   constructor
   · rintro ⟨hs, b, hb, hsub⟩
-    have hse : s ⊆ (∅ : Finset I) := by simpa [hfull b hb] using hsub
+    have hse : s ⊆ (∅ : Finset «I») := by simpa [hfull b hb] using hsub
     exact (hs.ne_empty (Finset.subset_empty.mp hse)).elim
-  · simp
+  · intro hs
+    exact (show False from hs).elim
 
-theorem rootK_empty_row (ρ : I → J → Prop) (q : State ρ) {b : J}
+theorem rootK_empty_row (ρ : «I» → J → Prop) (q : State ρ) {b : J}
     (hb : b ∈ q.rows) (hempty : rowNeighborhood ρ q b = ∅) :
     rootK ρ q = incidenceSimplex q.active := by
   apply SetLike.coe_injective
@@ -218,7 +220,7 @@ theorem rootK_empty_row (ρ : I → J → Prop) (q : State ρ) {b : J}
   · rintro ⟨hs, hsub⟩
     exact ⟨hs, b, hb, by simpa [hempty] using hsub⟩
 
-theorem rootK_row_erase (ρ : I → J → Prop) (q : State ρ)
+theorem rootK_row_erase (ρ : «I» → J → Prop) (q : State ρ)
     {b c : J} (hb : b ∈ q.rows) (hc : c ∈ q.rows) (hbc : b ≠ c)
     (hsub : RowSubset ρ q b c) :
     rootK ρ q = rootK ρ (eraseRow ρ q c) := by
@@ -237,8 +239,8 @@ theorem rootK_row_erase (ρ : I → J → Prop) (q : State ρ)
   · rintro ⟨hs, d, hd, hsd⟩
     exact ⟨hs, d, (Finset.mem_erase.mp hd).2, hsd⟩
 
-theorem rootK_column_delete (ρ : I → J → Prop) (q : State ρ)
-    {x y : I} (hy : y ∈ q.active) (hxy : x ≠ y)
+theorem rootK_column_delete (ρ : «I» → J → Prop) (q : State ρ)
+    {x y : «I»} (hy : y ∈ q.active) (hxy : x ≠ y)
     (hsub : ColumnSubset ρ q x y) :
     deletion (rootK ρ q) y = rootK ρ (eraseColumn ρ q y) := by
   apply SetLike.coe_injective
@@ -260,8 +262,8 @@ theorem rootK_column_delete (ρ : I → J → Prop) (q : State ρ)
       have hyA := ((mem_rowComplement ρ (eraseColumn ρ q y) y b).mp (hsb hys)).1
       exact (Finset.mem_erase.mp hyA).1 rfl
 
-theorem rootK_isolated_cone (ρ : I → J → Prop) (q : State ρ)
-    {x : I} (hx : x ∈ q.active) (hrows : q.rows.Nonempty)
+theorem rootK_isolated_cone (ρ : «I» → J → Prop) (q : State ρ)
+    {x : «I»} (hx : x ∈ q.active) (hrows : q.rows.Nonempty)
     (hiso : IsolatedColumn ρ q x) :
     rootK ρ q = cone x (rootK ρ (eraseColumn ρ q x)) := by
   classical
@@ -301,21 +303,21 @@ theorem rootK_isolated_cone (ρ : I → J → Prop) (q : State ρ)
 
 /-! ### Structural input certificate.  It contains no collapse/core field. -/
 
-inductive Pruning (ρ : I → J → Prop) : State ρ → Type
+inductive Pruning (ρ : «I» → J → Prop) : State ρ → Type _
   | void (q : State ρ) (hrows : q.rows = ∅) : Pruning ρ q
   | unit (q : State ρ) (hrows : q.rows.Nonempty)
       (hfull : ∀ b ∈ q.rows, rowNeighborhood ρ q b = q.active) : Pruning ρ q
   | emptyRow (q : State ρ) (b : J) (hb : b ∈ q.rows)
       (hempty : rowNeighborhood ρ q b = ∅) : Pruning ρ q
-  | isolatedColumn (q : State ρ) (x : I) (hx : x ∈ q.active)
+  | isolatedColumn (q : State ρ) (x : «I») (hx : x ∈ q.active)
       (hrows : q.rows.Nonempty) (hiso : IsolatedColumn ρ q x) : Pruning ρ q
   | redundantRow (q : State ρ) (b c : J) (hb : b ∈ q.rows) (hc : c ∈ q.rows)
       (hbc : b ≠ c) (hsub : RowSubset ρ q b c)
       (child : Pruning ρ (eraseRow ρ q c)) : Pruning ρ q
-  | dominatedColumn (q : State ρ) (x y : I) (hx : x ∈ q.active)
+  | dominatedColumn (q : State ρ) (x y : «I») (hx : x ∈ q.active)
       (hy : y ∈ q.active) (hxy : x ≠ y) (hsub : ColumnSubset ρ q x y)
       (child : Pruning ρ (eraseColumn ρ q y)) : Pruning ρ q
-  | singletonRow (q : State ρ) (b : J) (a : I)
+  | singletonRow (q : State ρ) (b : J) (a : «I»)
       (hsingle : SingletonRow ρ q b a)
       (child : Pruning ρ (singletonChild ρ q a)) : Pruning ρ q
 
@@ -326,48 +328,49 @@ inductive TerminalTag where
   | unit
 deriving DecidableEq
 
-def TerminalLaw (ρ : I → J → Prop) (q : State ρ) (tag : TerminalTag) : Prop :=
+def TerminalLaw (ρ : «I» → J → Prop) (q : State ρ) (tag : TerminalTag) : Prop :=
   match tag with
   | .void => q.rows = ∅
   | .unit => q.rows.Nonempty ∧
       ∀ b ∈ q.rows, rowNeighborhood ρ q b = q.active
 
-structure Witness (ρ : I → J → Prop) (q : State ρ) where
-  endpoint : PreAbstractSimplicialComplex I
+structure Witness (ρ : «I» → J → Prop) (q : State ρ) where
+  endpoint : PreAbstractSimplicialComplex «I»
   sequence : Sequence (rootK ρ q) endpoint
-  core : PreAbstractSimplicialComplex I
-  pivot : I
+  core : PreAbstractSimplicialComplex «I»
+  pivot : «I»
   pivot_mem : pivot ∈ q.active
   core_sequence : Sequence core (vertexComplex pivot)
-  critical : Option (Finset I)
+  critical : Option (Finset «I»)
   endpoint_eq_core : critical = none → endpoint = core
-  endpoint_eq_attach : ∀ σ, critical = some σ → endpoint = core ⊔ incidenceSimplex σ
-  critical_nonempty : ∀ σ, critical = some σ → σ.Nonempty
-  critical_outside : ∀ σ, critical = some σ → σ ∉ core
-  critical_boundary : ∀ σ, critical = some σ → ∀ t, t ⊂ σ → t = ∅ ∨ t ∈ core
+  endpoint_eq_attach : ∀ «σ», critical = some «σ» → endpoint = core ⊔ incidenceSimplex «σ»
+  critical_nonempty : ∀ «σ», critical = some «σ» → «σ».Nonempty
+  critical_outside : ∀ «σ», critical = some «σ» → «σ» ∉ core
+  critical_boundary : ∀ «σ», critical = some «σ» → ∀ t, t ⊂ «σ» → t = ∅ ∨ t ∈ core
 
-inductive Result (ρ : I → J → Prop) (q : State ρ) where
+inductive Result (ρ : «I» → J → Prop) (q : State ρ) where
   | terminal (tag : TerminalTag) (hK : rootK ρ q = ⊥)
       (hLaw : TerminalLaw ρ q tag) : Result ρ q
   | regular (w : Witness ρ q) : Result ρ q
 
-def augmentedTerminal (ρ : I → J → Prop) (q : State ρ) (tag : TerminalTag)
-    (s : Finset I) : Prop :=
+def augmentedTerminal (ρ : «I» → J → Prop) (q : State ρ) (tag : TerminalTag)
+    (s : Finset «I») : Prop :=
   match tag with
   | .void => s ∈ rootK ρ q
   | .unit => s = ∅ ∨ s ∈ rootK ρ q
 
-theorem terminal_semantics (ρ : I → J → Prop) {q : State ρ}
-    (tag : TerminalTag) (hK : rootK ρ q = ⊥) (s : Finset I) :
+theorem terminal_semantics (ρ : «I» → J → Prop) {q : State ρ}
+    (tag : TerminalTag) (hK : rootK ρ q = ⊥) (s : Finset «I») :
     augmentedTerminal ρ q tag s ↔
       match tag with | .void => False | .unit => s = ∅ := by
-  cases tag <;> simp [augmentedTerminal, hK]
+  have hbot : s ∈ (⊥ : PreAbstractSimplicialComplex «I») ↔ False := Iff.rfl
+  cases tag <;> simp [augmentedTerminal, hK, hbot]
 
 /-! Full simplex and cone constructors.  They use the native domination
     sequence, so every pair is a real `CollapsePair` on the original type. -/
 
-private theorem simplex_singleton (p : I) :
-    incidenceSimplex ({p} : Finset I) = vertexComplex p := by
+private theorem simplex_singleton (p : «I») :
+    incidenceSimplex ({p} : Finset «I») = vertexComplex p := by
   apply SetLike.coe_injective
   ext s
   constructor
@@ -380,16 +383,17 @@ private theorem simplex_singleton (p : I) :
     subst s
     exact ⟨Finset.singleton_nonempty _, le_rfl⟩
 
-private theorem simplex_empty : incidenceSimplex (∅ : Finset I) = ⊥ := by
+private theorem simplex_empty : incidenceSimplex (∅ : Finset «I») = ⊥ := by
   apply SetLike.coe_injective
   ext s
   constructor
   · rintro ⟨hs, hsub⟩
     exact (hs.ne_empty (Finset.subset_empty.mp hsub)).elim
-  · simp
+  · intro hs
+    exact (show False from hs).elim
 
-private theorem cone_bot_simplex (a : I) :
-    cone a (⊥ : PreAbstractSimplicialComplex I) = incidenceSimplex ({a} : Finset I) := by
+private theorem cone_bot_simplex (a : «I») :
+    cone a (⊥ : PreAbstractSimplicialComplex «I») = incidenceSimplex ({a} : Finset «I») := by
   apply SetLike.coe_injective
   ext s
   constructor
@@ -410,13 +414,13 @@ private theorem cone_bot_simplex (a : I) :
     exact (Finset.mem_erase.mp hx).1
       (Finset.mem_singleton.mp (hsub (Finset.mem_of_mem_erase hx)))
 
-private theorem simplex_extends (A : Finset I) {p y : I}
+private theorem simplex_extends (A : Finset «I») {p y : «I»}
     (hp : p ∈ A) (hy : y ∈ A) (hpy : p ≠ y) :
     Extends (incidenceSimplex A) p y := by
   intro s hs hyS
   exact ⟨Finset.insert_nonempty _ _, Finset.insert_subset_iff.mpr ⟨hp, hs.2⟩⟩
 
-private theorem simplex_delete (A : Finset I) {y : I} (hy : y ∈ A) :
+private theorem simplex_delete (A : Finset «I») {y : «I»} (hy : y ∈ A) :
     deletion (incidenceSimplex A) y = incidenceSimplex (A.erase y) := by
   apply SetLike.coe_injective
   ext s
@@ -428,7 +432,7 @@ private theorem simplex_delete (A : Finset I) {y : I} (hy : y ∈ A) :
     exact ⟨⟨hs, fun z hz => Finset.mem_of_mem_erase (hsA hz)⟩,
       fun hys => (Finset.mem_erase.mp (hsA hys)).1 rfl⟩
 
-def simplexCollapse : ∀ (A : Finset I) (p : I), p ∈ A →
+def simplexCollapse : ∀ (A : Finset «I») (p : «I»), p ∈ A →
     Sequence (incidenceSimplex A) (vertexComplex p)
   | A, p, hp => by
       classical
@@ -451,22 +455,23 @@ def simplexCollapse : ∀ (A : Finset I) (p : I), p ∈ A →
           rw [hA]
           exact simplex_singleton p
         exact (Sequence.refl (incidenceSimplex A)).cast rfl hK
-termination_by A.card
+termination_by A p hp => A.card
 decreasing_by
   exact Finset.card_erase_lt_of_mem (Finset.mem_of_mem_erase hy)
 
-private theorem isolated_extends (ρ : I → J → Prop) (q : State ρ)
-    {x y : I} (hx : x ∈ q.active) (hy : y ∈ q.active) (hxy : x ≠ y)
+private theorem isolated_extends (ρ : «I» → J → Prop) (q : State ρ)
+    {x y : «I»} (hx : x ∈ q.active) (hy : y ∈ q.active) (hxy : x ≠ y)
     (hrows : q.rows.Nonempty) (hiso : IsolatedColumn ρ q x) :
     Extends (rootK ρ q) x y := by
   rintro s ⟨hs, b, hb, hsb⟩ hyS
   refine ⟨Finset.insert_nonempty _ _, b, hb, ?_⟩
   intro z hz
-  rcases Finset.mem_insert.mp hz with rfl | hz
-  · exact (mem_rowComplement ρ q x b).mpr ⟨hx, hiso b hb⟩
+  rcases Finset.mem_insert.mp hz with hzx | hz
+  · rw [hzx]
+    exact (mem_rowComplement ρ q x b).mpr ⟨hx, hiso b hb⟩
   · exact hsb hz
 
-def isolatedCollapse : ∀ (ρ : I → J → Prop) (q : State ρ) (x : I),
+def isolatedCollapse : ∀ (ρ : «I» → J → Prop) (q : State ρ) (x : «I»),
     x ∈ q.active → q.rows.Nonempty → IsolatedColumn ρ q x →
     Sequence (rootK ρ q) (vertexComplex x)
   | ρ, q, x, hx, hrows, hiso => by
@@ -512,31 +517,31 @@ def isolatedCollapse : ∀ (ρ : I → J → Prop) (q : State ρ) (x : I),
             subst z
             exact (mem_rowComplement ρ q x b).mpr ⟨hx, hiso b hb⟩
         exact (Sequence.refl (rootK ρ q)).cast rfl hK
-termination_by q.active.card
+termination_by ρ q x hx hrows hiso => q.active.card
 decreasing_by
   exact Finset.card_erase_lt_of_mem (Finset.mem_of_mem_erase hy)
 
-private theorem rootK_le_full (ρ : I → J → Prop) (q : State ρ) :
+private theorem rootK_le_full (ρ : «I» → J → Prop) (q : State ρ) :
     rootK ρ q ≤ incidenceSimplex q.active := by
   rintro s ⟨hs, b, hb, hsb⟩
   exact ⟨hs, hsb.trans Finset.sdiff_subset⟩
 
-private theorem fresh_of_active_erase (A : Finset I) (a : I) :
+private theorem fresh_of_active_erase (A : Finset «I») (a : «I») :
     Fresh a (incidenceSimplex (A.erase a)) := by
   intro s hs ha
   exact (Finset.mem_erase.mp (hs.2 ha)).1 rfl
 
 /- A child core is lifted over the whole base; its terminal pair is used only
    in this separate core sequence, never across the retained critical simplex. -/
-def liftCoreToBase (A : Finset I) (C : PreAbstractSimplicialComplex I)
-    (a p : I) (hCD : C ≤ incidenceSimplex A)
+def liftCoreToBase (A : Finset «I») (C : PreAbstractSimplicialComplex «I»)
+    (a p : «I») (hCD : C ≤ incidenceSimplex A)
     (haD : Fresh a (incidenceSimplex A))
     (S : Sequence C (vertexComplex p))
     (hpA : p ∈ A) (hap : a ≠ p) :
     Sequence (incidenceSimplex A ⊔ cone a C) (vertexComplex p) := by
   let D := incidenceSimplex A
   let L := S.liftOver D a hCD haD
-  have hpd : ({p} : Finset I) ∈ D :=
+  have hpd : ({p} : Finset «I») ∈ D :=
     ⟨Finset.singleton_nonempty p, Finset.singleton_subset_iff.mpr hpA⟩
   let Q := terminalPair D a p haD hap hpd
   let T : Sequence Q.ambient D :=
@@ -545,14 +550,14 @@ def liftCoreToBase (A : Finset I) (C : PreAbstractSimplicialComplex I)
   exact (L.append T).append (simplexCollapse A p hpA)
 
 /-! Singleton-row exact decomposition. -/
-private theorem singleton_active (ρ : I → J → Prop) (q : State ρ)
-    {b : J} {a : I} (hsingle : SingletonRow ρ q b a) : a ∈ q.active := by
+private theorem singleton_active (ρ : «I» → J → Prop) (q : State ρ)
+    {b : J} {a : «I»} (hsingle : SingletonRow ρ q b a) : a ∈ q.active := by
   apply ((mem_rowNeighborhood ρ q a b).mp ?_).1
   rw [hsingle.2]
   exact Finset.mem_singleton_self _
 
-private theorem singleton_base_le (ρ : I → J → Prop) (q : State ρ)
-    {b : J} {a : I} (hsingle : SingletonRow ρ q b a) :
+private theorem singleton_base_le (ρ : «I» → J → Prop) (q : State ρ)
+    {b : J} {a : «I»} (hsingle : SingletonRow ρ q b a) :
     incidenceSimplex (q.active.erase a) ≤ rootK ρ q := by
   rintro s ⟨hs, hsU⟩
   refine ⟨hs, b, hsingle.1, ?_⟩
@@ -562,9 +567,9 @@ private theorem singleton_base_le (ρ : I → J → Prop) (q : State ρ)
   rw [hsingle.2] at hxN
   exact (Finset.mem_erase.mp (hsU hx)).1 (Finset.mem_singleton.mp hxN)
 
-theorem singleton_decomposition (ρ : I → J → Prop) (q : State ρ)
-    {b : J} (a : I) (hsingle : SingletonRow ρ q b a)
-    (hapex : ({a} : Finset I) ∈ rootK ρ q) :
+theorem singleton_decomposition (ρ : «I» → J → Prop) (q : State ρ)
+    {b : J} (a : «I») (hsingle : SingletonRow ρ q b a)
+    (hapex : ({a} : Finset «I») ∈ rootK ρ q) :
     rootK ρ q = incidenceSimplex (q.active.erase a) ⊔
       cone a (rootK ρ (singletonChild ρ q a)) := by
   classical
@@ -609,8 +614,8 @@ theorem singleton_decomposition (ρ : I → J → Prop) (q : State ρ)
           (hsc (Finset.mem_erase.mpr ⟨hxa, hx⟩)) with ⟨hxU, hxρ⟩
         exact (mem_rowComplement ρ q x c).mpr ⟨Finset.mem_of_mem_erase hxU, hxρ⟩
 
-theorem singleton_no_apex (ρ : I → J → Prop) (q : State ρ)
-    {b : J} (a : I) (hsingle : SingletonRow ρ q b a)
+theorem singleton_no_apex (ρ : «I» → J → Prop) (q : State ρ)
+    {b : J} (a : «I») (hsingle : SingletonRow ρ q b a)
     (hrows : (singletonChild ρ q a).rows = ∅) :
     rootK ρ q = incidenceSimplex (q.active.erase a) := by
   classical
@@ -627,12 +632,13 @@ theorem singleton_no_apex (ρ : I → J → Prop) (q : State ρ)
       exact Finset.notMem_empty c hcf
     exact ⟨hs, fun x hx => Finset.mem_erase.mpr
       ⟨fun hxa => ha (hxa ▸ hx), ((mem_rowComplement ρ q x c).mp (hsc hx)).1⟩⟩
-  · exact singleton_base_le ρ q hsingle
+  · intro hs
+    exact singleton_base_le ρ q hsingle hs
 
-theorem singleton_apex_of_child_rows (ρ : I → J → Prop) (q : State ρ)
-    {b : J} (a : I) (hsingle : SingletonRow ρ q b a)
+theorem singleton_apex_of_child_rows (ρ : «I» → J → Prop) (q : State ρ)
+    {b : J} (a : «I») (hsingle : SingletonRow ρ q b a)
     (hrows : (singletonChild ρ q a).rows.Nonempty) :
-    ({a} : Finset I) ∈ rootK ρ q := by
+    ({a} : Finset «I») ∈ rootK ρ q := by
   classical
   obtain ⟨c, hc⟩ := hrows
   refine ⟨Finset.singleton_nonempty _, c, (Finset.mem_filter.mp hc).1, ?_⟩
@@ -642,14 +648,14 @@ theorem singleton_apex_of_child_rows (ρ : I → J → Prop) (q : State ρ)
   exact (mem_rowComplement ρ q a c).mpr
     ⟨singleton_active ρ q hsingle, (Finset.mem_filter.mp hc).2⟩
 
-theorem singleton_apex_of_child_face (ρ : I → J → Prop) (q : State ρ)
-    {b : J} (a : I) (hsingle : SingletonRow ρ q b a)
-    {s : Finset I} (hs : s ∈ rootK ρ (singletonChild ρ q a)) :
-    ({a} : Finset I) ∈ rootK ρ q := by
+theorem singleton_apex_of_child_face (ρ : «I» → J → Prop) (q : State ρ)
+    {b : J} (a : «I») (hsingle : SingletonRow ρ q b a)
+    {s : Finset «I»} (hs : s ∈ rootK ρ (singletonChild ρ q a)) :
+    ({a} : Finset «I») ∈ rootK ρ q := by
   rcases hs with ⟨_, c, hc, _⟩
   exact singleton_apex_of_child_rows ρ q a hsingle ⟨c, hc⟩
 
-private theorem cone_sup (a : I) (C E : PreAbstractSimplicialComplex I) :
+private theorem cone_sup (a : «I») (C E : PreAbstractSimplicialComplex «I») :
     cone a (C ⊔ E) = cone a C ⊔ cone a E := by
   apply SetLike.coe_injective
   ext s
@@ -667,7 +673,7 @@ private theorem cone_sup (a : I) (C E : PreAbstractSimplicialComplex I) :
     · exact ⟨hs, Or.inl he⟩
     · exact ⟨hs, Or.inr (Or.inr hE)⟩
 
-private theorem cone_simplex (a : I) (τ : Finset I) :
+private theorem cone_simplex (a : «I») (τ : Finset «I») :
     cone a (incidenceSimplex τ) = incidenceSimplex (insert a τ) := by
   apply SetLike.coe_injective
   ext s
@@ -697,14 +703,14 @@ private theorem cone_simplex (a : I) (τ : Finset I) :
 
 /- The support inclusions use the endpoint description before sequence
    monotonicity.  core_sequence has the opposite direction for this purpose. -/
-private theorem witness_core_le_endpoint {ρ : I → J → Prop} {q : State ρ}
+private theorem witness_core_le_endpoint {ρ : «I» → J → Prop} {q : State ρ}
     (w : Witness ρ q) : w.core ≤ w.endpoint := by
   cases hc : w.critical with
   | none => simpa only [w.endpoint_eq_core hc] using (le_rfl : w.core ≤ w.core)
   | some τ => rw [w.endpoint_eq_attach τ hc]; exact le_sup_left
 
-private theorem witness_critical_support {ρ : I → J → Prop} {q : State ρ}
-    (w : Witness ρ q) {τ : Finset I} (hc : w.critical = some τ) :
+private theorem witness_critical_support {ρ : «I» → J → Prop} {q : State ρ}
+    (w : Witness ρ q) {τ : Finset «I»} (hc : w.critical = some τ) :
     τ ⊆ q.active := by
   have hτ : τ ∈ w.endpoint := by
     rw [w.endpoint_eq_attach τ hc]
@@ -713,7 +719,7 @@ private theorem witness_critical_support {ρ : I → J → Prop} {q : State ρ}
 
 /-! ### Recursive constructor -/
 
-def build {ρ : I → J → Prop} : {q : State ρ} → (c : Pruning ρ q) → Result ρ q
+def build {ρ : «I» → J → Prop} : {q : State ρ} → (c : Pruning ρ q) → Result ρ q
   | q, .void _ hrows =>
       .terminal .void (rootK_empty_rows ρ q hrows) hrows
   | q, .unit _ hrows hfull =>
@@ -733,10 +739,10 @@ def build {ρ : I → J → Prop} : {q : State ρ} → (c : Pruning ρ q) → Re
           core_sequence := Sequence.refl _
           critical := none
           endpoint_eq_core := by intro; rfl
-          endpoint_eq_attach := by intro σ h; cases h
-          critical_nonempty := by intro σ h; cases h
-          critical_outside := by intro σ h; cases h
-          critical_boundary := by intro σ h; cases h }
+          endpoint_eq_attach := by intro «σ» h; cases h
+          critical_nonempty := by intro «σ» h; cases h
+          critical_outside := by intro «σ» h; cases h
+          critical_boundary := by intro «σ» h; cases h }
       · have hAE : q.active = ∅ := Finset.eq_empty_iff_forall_notMem.mpr (fun x hx => hA ⟨x, hx⟩)
         have hfull : ∀ c ∈ q.rows, rowNeighborhood ρ q c = q.active := by
           intro c hc
@@ -756,10 +762,10 @@ def build {ρ : I → J → Prop} : {q : State ρ} → (c : Pruning ρ q) → Re
         core_sequence := Sequence.refl _
         critical := none
         endpoint_eq_core := by intro; rfl
-        endpoint_eq_attach := by intro σ h; cases h
-        critical_nonempty := by intro σ h; cases h
-        critical_outside := by intro σ h; cases h
-        critical_boundary := by intro σ h; cases h }
+        endpoint_eq_attach := by intro «σ» h; cases h
+        critical_nonempty := by intro «σ» h; cases h
+        critical_outside := by intro «σ» h; cases h
+        critical_boundary := by intro «σ» h; cases h }
   | q, .redundantRow _ b c hb hc hbc hsub child => by
       classical
       have hK := rootK_row_erase ρ q hb hc hbc hsub
@@ -884,10 +890,10 @@ def build {ρ : I → J → Prop} : {q : State ρ} → (c : Pruning ρ q) → Re
                   core_sequence := Sequence.refl _
                   critical := none
                   endpoint_eq_core := by intro; rfl
-                  endpoint_eq_attach := by intro σ h; cases h
-                  critical_nonempty := by intro σ h; cases h
-                  critical_outside := by intro σ h; cases h
-                  critical_boundary := by intro σ h; cases h }
+                  endpoint_eq_attach := by intro «σ» h; cases h
+                  critical_nonempty := by intro «σ» h; cases h
+                  critical_outside := by intro «σ» h; cases h
+                  critical_boundary := by intro «σ» h; cases h }
               · have hUE : U = ∅ := Finset.eq_empty_iff_forall_notMem.mpr (fun x hx => hU ⟨x, hx⟩)
                 have hact : q.active = {a} := by
                   apply Finset.eq_singleton_iff_nonempty_unique_mem.mpr
@@ -912,7 +918,10 @@ def build {ρ : I → J → Prop} : {q : State ρ} → (c : Pruning ρ q) → Re
                       exact Finset.mem_singleton.mp hz
                     subst z
                     exact (mem_rowNeighborhood ρ q a c).mpr ⟨haA, hac⟩
-                exact .terminal .unit (hK.trans (by rw [hUE]; exact simplex_empty))
+                exact .terminal .unit (hK.trans (by
+                  change incidenceSimplex U = ⊥
+                  rw [hUE]
+                  exact simplex_empty))
                   ⟨⟨b, hsingle.1⟩, hfull⟩
           | unit =>
               change (singletonChild ρ q a).rows.Nonempty ∧
@@ -924,7 +933,7 @@ def build {ρ : I → J → Prop} : {q : State ρ} → (c : Pruning ρ q) → Re
               by_cases hU : U.Nonempty
               · let p := Classical.choose hU
                 have hp := Classical.choose_spec hU
-                let Kparent := D ⊔ cone a (⊥ : PreAbstractSimplicialComplex I)
+                let Kparent := D ⊔ cone a (⊥ : PreAbstractSimplicialComplex «I»)
                 have hparent : rootK ρ q = Kparent := by
                   rw [hdec, hchild]
                 exact .regular {
@@ -934,29 +943,29 @@ def build {ρ : I → J → Prop} : {q : State ρ} → (c : Pruning ρ q) → Re
                   pivot := p
                   pivot_mem := Finset.mem_of_mem_erase hp
                   core_sequence := simplexCollapse U p hp
-                  critical := some ({a} : Finset I)
+                  critical := some ({a} : Finset «I»)
                   endpoint_eq_core := by intro h; cases h
                   endpoint_eq_attach := by
-                    intro σ hσ
-                    have he : ({a} : Finset I) = σ := Option.some.inj hσ
-                    subst σ
-                    change D ⊔ cone a (⊥ : PreAbstractSimplicialComplex I) =
+                    intro «σ» hσ
+                    have he : ({a} : Finset «I») = «σ» := Option.some.inj hσ
+                    subst «σ»
+                    change D ⊔ cone a (⊥ : PreAbstractSimplicialComplex «I») =
                       D ⊔ incidenceSimplex {a}
                     rw [cone_bot_simplex]
                   critical_nonempty := by
-                    intro σ hσ
-                    have he : ({a} : Finset I) = σ := Option.some.inj hσ
-                    subst σ
+                    intro «σ» hσ
+                    have he : ({a} : Finset «I») = «σ» := Option.some.inj hσ
+                    subst «σ»
                     exact Finset.singleton_nonempty _
                   critical_outside := by
-                    intro σ hσ hmem
-                    have he : ({a} : Finset I) = σ := Option.some.inj hσ
-                    subst σ
+                    intro «σ» hσ hmem
+                    have he : ({a} : Finset «I») = «σ» := Option.some.inj hσ
+                    subst «σ»
                     exact haD {a} hmem (Finset.mem_singleton_self _)
                   critical_boundary := by
-                    intro σ hσ t ht
-                    have he : ({a} : Finset I) = σ := Option.some.inj hσ
-                    subst σ
+                    intro «σ» hσ t ht
+                    have he : ({a} : Finset «I») = «σ» := Option.some.inj hσ
+                    subst «σ»
                     left
                     by_contra hne
                     have hte : t = {a} :=
@@ -967,7 +976,7 @@ def build {ρ : I → J → Prop} : {q : State ρ} → (c : Pruning ρ q) → Re
               · have hUE : U = ∅ := Finset.eq_empty_iff_forall_notMem.mpr (fun x hx => hU ⟨x, hx⟩)
                 have hparent : rootK ρ q = vertexComplex a := by
                   rw [hdec, hchild]
-                  change incidenceSimplex U ⊔ cone a (⊥ : PreAbstractSimplicialComplex I) = _
+                  change incidenceSimplex U ⊔ cone a (⊥ : PreAbstractSimplicialComplex «I») = _
                   simp [hUE, simplex_empty, cone_bot_simplex, simplex_singleton]
                 exact .regular {
                   endpoint := vertexComplex a
@@ -978,10 +987,10 @@ def build {ρ : I → J → Prop} : {q : State ρ} → (c : Pruning ρ q) → Re
                   core_sequence := Sequence.refl _
                   critical := none
                   endpoint_eq_core := by intro; rfl
-                  endpoint_eq_attach := by intro σ h; cases h
-                  critical_nonempty := by intro σ h; cases h
-                  critical_outside := by intro σ h; cases h
-                  critical_boundary := by intro σ h; cases h }
+                  endpoint_eq_attach := by intro «σ» h; cases h
+                  critical_nonempty := by intro «σ» h; cases h
+                  critical_outside := by intro «σ» h; cases h
+                  critical_boundary := by intro «σ» h; cases h }
       | regular w =>
           have hsourceD : rootK ρ (singletonChild ρ q a) ≤ D :=
             rootK_le_full ρ (singletonChild ρ q a)
@@ -992,8 +1001,8 @@ def build {ρ : I → J → Prop} : {q : State ρ} → (c : Pruning ρ q) → Re
           have hap : a ≠ w.pivot := by
             intro he
             exact (Finset.mem_erase.mp hpU).1 he.symm
-          have hpCore : ({w.pivot} : Finset I) ∈ w.core :=
-            w.core_sequence.monotone (show ({w.pivot} : Finset I) ∈ vertexComplex w.pivot from rfl)
+          have hpCore : ({w.pivot} : Finset «I») ∈ w.core :=
+            w.core_sequence.monotone (show ({w.pivot} : Finset «I») ∈ vertexComplex w.pivot from rfl)
           have hapex := singleton_apex_of_child_face ρ q a hsingle (hcoreRoot hpCore)
           have hdec := singleton_decomposition ρ q a hsingle hapex
           let main := (w.sequence.liftOver D a hsourceD haD).cast hdec.symm rfl
@@ -1013,28 +1022,28 @@ def build {ρ : I → J → Prop} : {q : State ρ} → (c : Pruning ρ q) → Re
               | none => rw [w.endpoint_eq_core hc]
               | some τ => simp [hc] at h
             endpoint_eq_attach := by
-              intro σ hσ
+              intro «σ» hσ
               cases hc : w.critical with
               | none => simp [hc] at hσ
               | some τ =>
-                  have he : insert a τ = σ := Option.some.inj (by simpa [hc] using hσ)
-                  subst σ
+                  have he : insert a τ = «σ» := Option.some.inj (by simpa [hc] using hσ)
+                  subst «σ»
                   rw [w.endpoint_eq_attach τ hc, cone_sup, cone_simplex, sup_assoc]
             critical_nonempty := by
-              intro σ hσ
+              intro «σ» hσ
               cases hc : w.critical with
               | none => simp [hc] at hσ
               | some τ =>
-                  have he : insert a τ = σ := Option.some.inj (by simpa [hc] using hσ)
-                  subst σ
+                  have he : insert a τ = «σ» := Option.some.inj (by simpa [hc] using hσ)
+                  subst «σ»
                   exact Finset.insert_nonempty _ _
             critical_outside := by
-              intro σ hσ hmem
+              intro «σ» hσ hmem
               cases hc : w.critical with
               | none => simp [hc] at hσ
               | some τ =>
-                  have he : insert a τ = σ := Option.some.inj (by simpa [hc] using hσ)
-                  subst σ
+                  have he : insert a τ = «σ» := Option.some.inj (by simpa [hc] using hσ)
+                  subst «σ»
                   have hτU : τ ⊆ U := witness_critical_support w hc
                   have haτ : a ∉ τ := fun ha => (Finset.mem_erase.mp (hτU ha)).1 rfl
                   rcases hmem with hD | hcone
@@ -1045,12 +1054,12 @@ def build {ρ : I → J → Prop} : {q : State ρ} → (c : Pruning ρ q) → Re
                     · exact (w.critical_nonempty τ hc).ne_empty he
                     · exact w.critical_outside τ hc hτC
             critical_boundary := by
-              intro σ hσ t ht
+              intro «σ» hσ t ht
               cases hc : w.critical with
               | none => simp [hc] at hσ
               | some τ =>
-                  have he : insert a τ = σ := Option.some.inj (by simpa [hc] using hσ)
-                  subst σ
+                  have he : insert a τ = «σ» := Option.some.inj (by simpa [hc] using hσ)
+                  subst «σ»
                   have hτU : τ ⊆ U := witness_critical_support w hc
                   by_cases hte : t = ∅
                   · exact Or.inl hte
@@ -1074,31 +1083,31 @@ def build {ρ : I → J → Prop} : {q : State ρ} → (c : Pruning ρ q) → Re
                         rcases Finset.mem_insert.mp (ht.subset hz) with hza | hzτ
                         · exact (hat (hza ▸ hz)).elim
                         · exact hzτ)⟩ }
-termination_by structural c
+termination_by structural q c => c
 
 /-! ### Public native-map and replay contracts -/
 
-def nativeSDR {ρ : I → J → Prop} {q : State ρ} (w : Witness ρ q) :
+def nativeSDR {ρ : «I» → J → Prop} {q : State ρ} (w : Witness ρ q) :
     RelativeSDR (rootK ρ q) w.endpoint w.sequence.monotone := w.sequence.realize
 
-def nativeInclusion {ρ : I → J → Prop} {q : State ρ} (w : Witness ρ q) :
+def nativeInclusion {ρ : «I» → J → Prop} {q : State ρ} (w : Witness ρ q) :
     C(Space w.endpoint, Space (rootK ρ q)) := w.sequence.inclusion
 
-def nativeRetraction {ρ : I → J → Prop} {q : State ρ} (w : Witness ρ q) :
+def nativeRetraction {ρ : «I» → J → Prop} {q : State ρ} (w : Witness ρ q) :
     C(Space (rootK ρ q), Space w.endpoint) := w.sequence.sequenceRetraction
 
-theorem nativeRetraction_inclusion {ρ : I → J → Prop} {q : State ρ}
+theorem nativeRetraction_inclusion {ρ : «I» → J → Prop} {q : State ρ}
     (w : Witness ρ q) (x : Space w.endpoint) :
     nativeRetraction w (nativeInclusion w x) = x :=
   w.sequence.sequenceRetraction_inclusion x
 
-theorem nativeHomotopy_fixed {ρ : I → J → Prop} {q : State ρ}
+theorem nativeHomotopy_fixed {ρ : «I» → J → Prop} {q : State ρ}
     (w : Witness ρ q) (t : Set.Icc (0 : ℝ) 1) (x : Space (rootK ρ q))
     (hx : x.val ∈ realization w.endpoint) :
     w.sequence.collapseHomotopy (t, x) = x :=
   w.sequence.collapseHomotopy_fixed t x hx
 
-def rootCertificate {ρ : I → J → Prop} {q : State ρ} (c : Pruning ρ q) :
+def rootCertificate {ρ : «I» → J → Prop} {q : State ρ} (c : Pruning ρ q) :
     Result ρ q := build c
 
 end D5.S3.Geometry.FiniteIncidenceRootCollapse

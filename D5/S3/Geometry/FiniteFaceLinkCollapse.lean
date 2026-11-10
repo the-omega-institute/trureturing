@@ -679,7 +679,7 @@ theorem faceLinkCollapse_frames
   have hiT : i < T.pairs.length + 1 := by rw [hlen]; exact hi
   have hp := Sequence.frames_append_getD_lt T U hiT
   rw [replayFrames_frames] at hp
-  have hmap := Sequence.list_getD_map (faceFrame K E) S.frames i (faceLink K E)
+  have hmap := List.getD_map S.frames (faceLink K E) (n := i) (faceFrame K E)
   rw [faceFrame_link_eq K E hE] at hp hmap
   simpa only [faceLinkCollapse, Sequence.frames_cast, T, U] using hp.trans hmap
 
