@@ -14,10 +14,10 @@ internal sealed class DottieInverseSeriesDocument : IScribeDocumentDefinition
             D(0), Sp, Lt, Sp, F.Id("theta"), Sp, Land, Sp,
             F.Id("theta"), Sp, Lt, Sp, D(1), Sp, Land, Sp,
             Call("cos", F.Id("theta")), Sp, Eq, Sp, F.Id("theta"), Sp, Land, Sp,
-            Grp(All("t", F.Id("Real"), Seq(
-                Grp(Seq(D(0), Sp, Lt, Sp, F.Id("t"), Sp, Land, Sp,
-                    Call("cos", F.Id("t")), Sp, Eq, Sp, F.Id("t"))), Sp, Implies, Sp,
-                F.Id("t"), Sp, Eq, Sp, F.Id("theta")))), Sp, Land, Sp,
+            Seq(Open, All("t", F.Id("Real"), Seq(
+                Seq(Open, D(0), Sp, Lt, Sp, F.Id("t"), Sp, Land, Sp,
+                    Call("cos", F.Id("t")), Sp, Eq, Sp, F.Id("t"), Close), Sp, Implies, Sp,
+                F.Id("t"), Sp, Eq, Sp, F.Id("theta"))), Close), Sp, Land, Sp,
             Call("Summable", Seq(F.Id("n"), Colon, Sp, F.Id("Nat"), Sp, Mapsto, Sp,
                 Call("abs", Call("c", F.Id("n"))), Sp, Call("piPower", F.Id("n")))),
             Sp, Land, Sp,

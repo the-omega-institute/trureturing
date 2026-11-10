@@ -54,7 +54,7 @@ B is exactly A.substInvOfIsUnit for the proof that the linear coefficient 4 is a
 
 **Theorem 1.5 (Absolute convergence at pi and the positive fixed point).**
 
-$$\exists theta \in Real,\; 0 < theta \land theta < 1 \land \operatorname{cos}\left(theta\right) = theta \land \forall t \in Real,\; 0 < t \land \operatorname{cos}\left(t\right) = t \implies t = theta \land \operatorname{Summable}\left(n: Nat \mapsto \operatorname{abs}\left(\operatorname{c}\left(n\right)\right) \operatorname{piPower}\left(n\right)\right) \land \operatorname{HasSum}\left(n: Nat \mapsto \operatorname{c}\left(n\right) \operatorname{piPower}\left(n\right), theta\right)$$
+$$\exists theta \in Real,\; 0 < theta \land theta < 1 \land \operatorname{cos}\left(theta\right) = theta \land {\forall t \in Real,\; {0 < t \land \operatorname{cos}\left(t\right) = t} \implies t = theta} \land \operatorname{Summable}\left(n: Nat \mapsto \operatorname{abs}\left(\operatorname{c}\left(n\right)\right) \operatorname{piPower}\left(n\right)\right) \land \operatorname{HasSum}\left(n: Nat \mapsto \operatorname{c}\left(n\right) \operatorname{piPower}\left(n\right), theta\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/PowerSeries/DottieInverseSeries.rational_inverse_endpoint` (`✓ std3`). ∎
 
