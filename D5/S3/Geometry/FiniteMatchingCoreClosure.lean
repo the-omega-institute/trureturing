@@ -52,7 +52,9 @@ theorem iterate_stable (f : Finset (Finset V) → Finset (Finset V))
     intro i hi he
     obtain ⟨k, hk⟩ := Nat.exists_eq_add_of_le hi
     have hsame : A N = A i := by simpa only [hk] using hafter i he k
-    exact hN (by rw [hsame, he])
+    apply hN
+    change f (A N) = A N
+    rw [hsame, he]
   have hgrow : ∀ i, i ≤ N + 1 → i ≤ (A i).card := by
     intro i
     induction i with
@@ -76,7 +78,14 @@ theorem iterate_stable (f : Finset (Finset V) → Finset (Finset V))
 def Downward (S : Finset (Finset V)) : Prop :=
   ∀ s ∈ S, ∀ t ⊆ s, t.Nonempty → t ∈ S
 
-namespace Pairing
+end D5.S3.Geometry.FiniteMatchingCoreClosure
+
+namespace D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing
+
+open FiniteAcyclicFaceMatching FiniteElementaryCollapse
+open FiniteRelativeSimplicialCollapse FiniteMatchingCoreClosure
+
+variable {V : Type*} [Fintype V] [DecidableEq V]
 
 variable {K : PreAbstractSimplicialComplex V} (M : Pairing K)
 
@@ -179,6 +188,7 @@ theorem closure_saturated (Q : Finset (Finset V)) : M.Saturated (M.closure Q) :=
     have hu : upper e ∈ M.expand (M.closureFaces Q) :=
       (M.mem_expand _ _).mpr (Or.inr
         ⟨(M.lower_nonempty e he).mono (subset_insert _ _), e, he, hl, le_rfl⟩)
+    change upper e ∈ M.closureFaces Q
     simpa only [M.closure_fixed Q] using hu
   · intro hu
     exact M.stage_downward Q _ _ hu _ (subset_insert _ _) (M.lower_nonempty e he)
@@ -249,7 +259,16 @@ theorem closure_dimension (Q : Finset (Finset V)) (D : Nat)
     | succ n ih => exact M.expand_dimension D ih
   exact fun s hs => (hi _ s hs).1
 
-end Pairing
+end D5.S3.Geometry.FiniteAcyclicFaceMatching.Pairing
+
+namespace D5.S3.Geometry.FiniteMatchingCoreClosure
+
+open FiniteAcyclicFaceMatching FiniteElementaryCollapse
+open FiniteRelativeSimplicialCollapse
+open FiniteComponentClosure (vertexComplex)
+open FiniteVertexDominationCollapse (faceSet mem_faceSet)
+
+variable {V : Type*} [Fintype V] [DecidableEq V]
 
 open Pairing
 
@@ -289,7 +308,7 @@ theorem seeds_unmatched : ∀ s ∈ A.seeds, M.Unmatched s := by
 theorem seeds_card : ∀ s ∈ A.seeds, s.card ≤ A.D := by
   intro s hs
   rcases Finset.mem_insert.mp hs with rfl | hs
-  · simpa using A.positive
+  · simpa only [Finset.card_singleton] using (Nat.succ_le_of_lt A.positive)
   · exact (A.cardinality s hs).le
 
 theorem X_le : A.X ≤ K := M.closure_le A.seeds A.seeds_mem
@@ -338,7 +357,8 @@ theorem point_in_C : ({A.p} : Finset V) ∈ A.C :=
 theorem vertex_le_C : vertexComplex A.p ≤ A.C := by
   intro s hs
   have he : s = {A.p} := Set.mem_singleton_iff.mp hs
-  simpa only [he] using A.point_in_C
+  subst s
+  exact A.point_in_C
 
 /-- Includes the augmented empty subface without treating it as a point. -/
 theorem proper_boundary {s t : Finset V} (hs : s ∈ A.critical) (hts : t ⊂ s) :

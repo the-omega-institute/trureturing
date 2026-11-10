@@ -16,10 +16,10 @@ noncomputable section
 open Set Finset
 open scoped unitInterval
 
-namespace D5.S3.Geometry.FiniteAcyclicMatchingCollapse
+namespace D5.S3.Geometry.FiniteMatchingCoreClosure
 
 open FiniteAcyclicFaceMatching FiniteMatchingCoreClosure
-open FiniteMatchingCoreClosure.Pairing FiniteMatchingCollapse.Pairing
+open FiniteAcyclicFaceMatching.Pairing
 open FiniteMatchingCollapse FiniteElementaryCollapse FiniteRelativeSimplicialCollapse
 open FiniteComponentClosure (vertexComplex)
 open FiniteVertexDominationCollapse (faceSet mem_faceSet)
@@ -193,8 +193,8 @@ theorem discrete_core_pairs (hD : A.D = 1) (hacyc : M.IsAcyclic) :
     A.corePairs hacyc = [] := by
   have hc := A.core_count hacyc
   rw [A.discrete_core hD, A.vertex_face_count] at hc
-  apply List.length_eq_zero.mp
+  apply List.length_eq_zero_iff.mp
   omega
 
 end CriticalData
-end D5.S3.Geometry.FiniteAcyclicMatchingCollapse
+end D5.S3.Geometry.FiniteMatchingCoreClosure

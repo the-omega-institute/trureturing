@@ -15,7 +15,7 @@ open Set Finset
 open scoped unitInterval
 namespace D5.S3.Geometry.FiniteCyclicNoncoverNativeEndpoints
 open FiniteCyclicNoncoverCollapse FiniteCyclicNoncoverNative
-open FiniteMatchingCoreClosure FiniteAcyclicMatchingCollapse
+open FiniteMatchingCoreClosure
 open FiniteAcyclicFaceMatching FiniteRelativeSimplicialCollapse
 open FiniteElementaryCollapse FiniteSimplicialJoin FiniteConeCollapse
 open FiniteCoordinateTruncation FiniteComponentClosure

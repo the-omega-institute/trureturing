@@ -26,6 +26,7 @@ namespace D5.S3.Geometry.FiniteCyclicNoncoverCollapse
 open FiniteAcyclicFaceMatching FiniteCoordinateGreedyMatching
 open FiniteGreedyMatchingAcyclicity
 open FiniteConeCollapse FiniteSimplicialJoin
+open FiniteConeUnionWedge (realizationInclusion)
 open FiniteCoordinateTruncation
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
@@ -73,6 +74,7 @@ theorem point_mem {n : Nat} (hn : 3 ≤ n) (s : Fin n ↪ V) :
   let i : Fin n := ⟨1, by omega⟩
   have his : successor (show 0 < n by omega) i = (⟨2, by omega⟩ : Fin n) := by
     apply Fin.ext
+    change (1 + 1) % n = 2
     exact Nat.mod_eq_of_lt (by omega)
   refine ⟨Finset.singleton_nonempty _, ?_, i, ?_, ?_⟩
   · intro v hv
@@ -126,6 +128,7 @@ def blockIndex {n r : Nat} (start : Nat)
   inj' := by
     intro a b hab
     have he := congrArg Fin.val hab
+    change start + 3 * a.1.val + a.2.val = start + 3 * b.1.val + b.2.val at he
     have ha := a.2.isLt
     have hb := b.2.isLt
     have hj : a.1.val = b.1.val := by omega
@@ -134,7 +137,7 @@ def blockIndex {n r : Nat} (start : Nat)
 
 def blocks {n r : Nat} (s : Fin n ↪ V) (start : Nat)
     (h : ∀ j : Fin r, ∀ b : Fin 2, start + 3 * j.val + b.val < n) : Finset V :=
-  Finset.univ.map (s.comp (blockIndex start h))
+  Finset.univ.map ((blockIndex start h).trans s)
 
 theorem blocks_card {n r : Nat} (s : Fin n ↪ V) (start : Nat)
     (h : ∀ j : Fin r, ∀ b : Fin 2, start + 3 * j.val + b.val < n) :
@@ -259,8 +262,8 @@ theorem criticalA_formula (q : Nat) (hq : 0 < q) (s : Fin (3*q) ↪ V) (i : Fin 
     · right
       apply (mem_blocks _ _ _ _).mpr
       rcases he with he | he
-      · exact ⟨⟨j-1, by omega⟩, ⟨0, by omega⟩, by omega⟩
-      · exact ⟨⟨j-1, by omega⟩, ⟨1, by omega⟩, by omega⟩
+      · exact ⟨⟨j-1, by omega⟩, ⟨0, by omega⟩, by dsimp only; omega⟩
+      · exact ⟨⟨j-1, by omega⟩, ⟨1, by omega⟩, by dsimp only; omega⟩
 
 theorem criticalB_formula (q : Nat) (hq : 0 < q) (s : Fin (3*q) ↪ V) (i : Fin (3*q)) :
     s i ∈ criticalB q hq s ↔ i.val+1 = 3*q ∨
@@ -278,8 +281,8 @@ theorem criticalB_formula (q : Nat) (hq : 0 < q) (s : Fin (3*q) ↪ V) (i : Fin 
     · right
       apply (mem_blocks _ _ _ _).mpr
       rcases he with he | he
-      · exact ⟨⟨j-1, by omega⟩, ⟨0, by omega⟩, by omega⟩
-      · exact ⟨⟨j-1, by omega⟩, ⟨1, by omega⟩, by omega⟩
+      · exact ⟨⟨j-1, by omega⟩, ⟨0, by omega⟩, by dsimp only; omega⟩
+      · exact ⟨⟨j-1, by omega⟩, ⟨1, by omega⟩, by dsimp only; omega⟩
 
 theorem criticalOne_formula (q : Nat) (s : Fin (3*q+1) ↪ V) (i : Fin (3*q+1)) :
     s i ∈ criticalOne q s ↔
@@ -293,8 +296,8 @@ theorem criticalOne_formula (q : Nat) (s : Fin (3*q+1) ↪ V) (i : Fin (3*q+1)) 
   · rintro ⟨j, hj, hjq, he⟩
     apply (mem_blocks _ _ _ _).mpr
     rcases he with he | he
-    · exact ⟨⟨j-1, by omega⟩, ⟨0, by omega⟩, by omega⟩
-    · exact ⟨⟨j-1, by omega⟩, ⟨1, by omega⟩, by omega⟩
+    · exact ⟨⟨j-1, by omega⟩, ⟨0, by omega⟩, by dsimp only; omega⟩
+    · exact ⟨⟨j-1, by omega⟩, ⟨1, by omega⟩, by dsimp only; omega⟩
 
 theorem criticalTwo_formula (q : Nat) (hq : 0 < q) (s : Fin (3*q+2) ↪ V) (i : Fin (3*q+2)) :
     s i ∈ criticalTwo q hq s ↔ i.val+1 = 2 ∨ i.val+1 = 3*q+1 ∨
@@ -314,8 +317,8 @@ theorem criticalTwo_formula (q : Nat) (hq : 0 < q) (s : Fin (3*q+2) ↪ V) (i : 
     · right; right
       apply (mem_blocks _ _ _ _).mpr
       rcases he with he | he
-      · exact ⟨⟨j-1, by omega⟩, ⟨0, by omega⟩, by omega⟩
-      · exact ⟨⟨j-1, by omega⟩, ⟨1, by omega⟩, by omega⟩
+      · exact ⟨⟨j-1, by omega⟩, ⟨0, by omega⟩, by dsimp only; omega⟩
+      · exact ⟨⟨j-1, by omega⟩, ⟨1, by omega⟩, by dsimp only; omega⟩
 
 theorem spoke_mem_ground {n : Nat} (s : Fin n ↪ V) (i : Fin n) : s i ∈ ground s :=
   Finset.mem_map.mpr ⟨i, Finset.mem_univ _, rfl⟩
@@ -340,6 +343,7 @@ theorem criticalA_avoids_zero (q : Nat) (hq : 0 < q) (s : Fin (3*q) ↪ V) :
     s ⟨0, by omega⟩ ∉ criticalA q hq s := by
   intro h
   have he := (criticalA_formula q hq s ⟨0, by omega⟩).mp h
+  dsimp only at he
   change 0+1 = 2 ∨ _ at he
   rcases he with he | ⟨j, hj, hjq, he⟩ <;> omega
 
@@ -347,6 +351,7 @@ theorem criticalB_avoids_zero (q : Nat) (hq : 0 < q) (s : Fin (3*q) ↪ V) :
     s ⟨0, by omega⟩ ∉ criticalB q hq s := by
   intro h
   have he := (criticalB_formula q hq s ⟨0, by omega⟩).mp h
+  dsimp only at he
   change 0+1 = 3*q ∨ _ at he
   rcases he with he | ⟨j, hj, hjq, he⟩ <;> omega
 
@@ -361,6 +366,7 @@ theorem criticalTwo_avoids_zero (q : Nat) (hq : 0 < q) (s : Fin (3*q+2) ↪ V) :
     s ⟨0, by omega⟩ ∉ criticalTwo q hq s := by
   intro h
   have he := (criticalTwo_formula q hq s ⟨0, by omega⟩).mp h
+  dsimp only at he
   change 0+1 = 2 ∨ 0+1 = 3*q+1 ∨ _ at he
   rcases he with he | he | ⟨j, hj, hjq, he⟩ <;> omega
 
@@ -437,7 +443,10 @@ They do not stand in for the missing universal greedy-survivor recurrence. -/
 theorem base_three_A (s : Fin 3 ↪ V) (i : Fin 3) :
     s i ∈ criticalA 1 (by omega) s ↔ i.val = 1 := by
   rw [criticalA_formula]
-  omega
+  constructor
+  · rintro (he | ⟨j, hj, hjq, _⟩) <;> omega
+  · intro he
+    exact Or.inl (by omega)
 
 theorem base_three_B (s : Fin 3 ↪ V) (i : Fin 3) :
     s i ∈ criticalB 1 (by omega) s ↔ i.val = 2 := by
@@ -454,7 +463,11 @@ theorem base_four (s : Fin 4 ↪ V) (i : Fin 4) :
 theorem base_five (s : Fin 5 ↪ V) (i : Fin 5) :
     s i ∈ criticalTwo 1 (by omega) s ↔ i.val = 1 ∨ i.val = 3 := by
   rw [criticalTwo_formula]
-  omega
+  constructor
+  · rintro (he | he | ⟨j, hj, hjq, _⟩) <;> omega
+  · rintro (he | he)
+    · exact Or.inl (by omega)
+    · exact Or.inr (Or.inl (by omega))
 
 /-- Explicit ghosts on the original ambient type, never globally retired. -/
 theorem ghost_coordinate {n : Nat} (hn : 0 < n) (s : Fin n ↪ V)

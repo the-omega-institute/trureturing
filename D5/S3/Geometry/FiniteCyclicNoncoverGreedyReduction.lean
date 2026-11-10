@@ -13,6 +13,8 @@ bases, not the missing all-n cyclic survivor equalities. It does not construct
 universal CriticalData. No new vertex or ambient label is introduced. -/
 
 noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 open Finset
 
 namespace D5.S3.Geometry.FiniteCyclicNoncoverGreedyReduction
@@ -28,8 +30,9 @@ def TailIndependent {n : Nat} (hn : 3 ≤ n) (s : Fin n ↪ V) (a : Finset V) : 
   ∀ i : Fin n, 0 < i.val → i.val + 1 < n →
     s i ∈ a ∨ s (successor (show 0 < n by omega) i) ∈ a
 
-def tailFaces {n : Nat} (hn : 3 ≤ n) (s : Fin n ↪ V) : Finset (Finset V) :=
-  Finset.univ.filter fun a => a.Nonempty ∧ a ⊆ ground s ∧ point hn s ∉ a ∧
+def tailFaces {n : Nat} (hn : 3 ≤ n) (s : Fin n ↪ V) : Finset (Finset V) := by
+  classical
+  exact Finset.univ.filter fun a => a.Nonempty ∧ a ⊆ ground s ∧ point hn s ∉ a ∧
     TailIndependent hn s a ∧ (s ⟨1, by omega⟩ ∉ a ∨ s ⟨n-1, by omega⟩ ∉ a)
 
 private theorem successor_internal {n : Nat} {i : Fin n} (h : i.val+1 < n) :
@@ -48,15 +51,16 @@ private theorem first_round_native (K : PreAbstractSimplicialComplex V) (p : V)
         have hmem : a.erase p ∈ K :=
           (K.isRelLowerSet_faces ha).2 (Finset.erase_subset _ _)
             (Finset.nonempty_iff_ne_empty.mpr he)
-        exact hn (by simpa [flip, hpa] using hmem)
-      exact Or.inl (by rw [← Finset.insert_erase hpa, he])
+        exact hn (by simpa [FiniteGreedyFamilyTransport.flip, hpa] using hmem)
+      exact Or.inl (by rw [← Finset.insert_erase hpa, he, Finset.insert_empty])
     · rintro (rfl | ⟨_, hn, _⟩)
       · refine ⟨hp, ?_⟩
         intro he
-        have he0 : (∅ : Finset V) ∈ K := by simpa [flip] using he
+        have he0 : (∅ : Finset V) ∈ K := by
+          simpa [FiniteGreedyFamilyTransport.flip] using he
         exact Finset.not_nonempty_empty ((K.isRelLowerSet_faces he0).1)
       · exact (hn hpa).elim
-  · simp only [flip, if_neg hpa]
+  · simp only [FiniteGreedyFamilyTransport.flip, if_neg hpa]
     constructor
     · rintro ⟨ha, hn⟩; exact Or.inr ⟨ha, hpa, hn⟩
     · rintro (rfl | ⟨ha, _, hn⟩)
@@ -68,6 +72,7 @@ private theorem tail_characterization {n : Nat} (hn : 3 ≤ n) (s : Fin n ↪ V)
     (a ∈ noncover (show 0 < n by omega) s ∧ point hn s ∉ a ∧
       insert (point hn s) a ∉ noncover (show 0 < n by omega) s) ↔
         a ∈ tailFaces hn s := by
+  classical
   have h0 : point hn s ∈ ground s := spoke_mem_ground s (pointIndex hn)
   have hlast : successor (show 0 < n by omega) ⟨n-1, by omega⟩ =
       (⟨0, by omega⟩ : Fin n) := successor_last _
@@ -101,7 +106,7 @@ private theorem tail_characterization {n : Nat} (hn : 3 ≤ n) (s : Fin n ↪ V)
         simpa only [he, hzero] using hj
       · by_cases hil : i.val+1 = n
         · right
-          have he : i = (⟨n-1, by omega⟩ : Fin n) := Fin.ext (by omega)
+          have he : i = (⟨n-1, by omega⟩ : Fin n) := Fin.ext (by dsimp only; omega)
           simpa only [he] using hi
         · have he := hind i (by omega) (by have hh := i.isLt; omega)
           exact (he.elim hi hj).elim
@@ -111,7 +116,8 @@ private theorem tail_characterization {n : Nat} (hn : 3 ≤ n) (s : Fin n ↪ V)
     refine ⟨?_, hp, ?_⟩
     · rcases hend with h1 | hl
       · exact ⟨hne, hground, ⟨0, by omega⟩, hp, by simpa only [hzero] using h1⟩
-      · exact ⟨hne, hground, ⟨n-1, by omega⟩, hl, by simpa only [hlast] using hp⟩
+      · exact ⟨hne, hground, ⟨n-1, by omega⟩, hl, by
+          simpa only [hlast, point, pointIndex] using hp⟩
     · rintro ⟨_, _, i, hi, hj⟩
       by_cases hi0 : i.val = 0
       · have he : i = (⟨0, by omega⟩ : Fin n) := Fin.ext hi0
@@ -119,11 +125,12 @@ private theorem tail_characterization {n : Nat} (hn : 3 ≤ n) (s : Fin n ↪ V)
         have he' : s i = point hn s := congrArg s he
         exact Finset.mem_insert.mpr (Or.inl he')
       · by_cases hil : i.val+1 = n
-        · have he : i = (⟨n-1, by omega⟩ : Fin n) := Fin.ext (by omega)
-          apply hj
+        · apply hj
           have he' : s (successor (show 0 < n by omega) i) = point hn s := by
-            rw [he, hlast]
-            rfl
+            apply congrArg s
+            apply Fin.ext
+            change (i.val + 1) % n = 0
+            rw [hil, Nat.mod_self]
           exact Finset.mem_insert.mpr (Or.inl he')
         · have he := hind i (by omega) (by have hh := i.isLt; omega)
           exact he.elim (fun h => hi (Finset.mem_insert_of_mem h))
@@ -138,8 +145,9 @@ theorem first_round {n : Nat} (hn : 3 ≤ n) (s : Fin n ↪ V) :
   rw [first_round_native _ _ (point_mem hn s), Finset.mem_insert, tail_characterization]
 
 theorem tail_omits_point {n : Nat} (hn : 3 ≤ n) (s : Fin n ↪ V)
-    {a : Finset V} (ha : a ∈ tailFaces hn s) : point hn s ∉ a :=
-  (Finset.mem_filter.mp ha).2.2.2.1
+    {a : Finset V} (ha : a ∈ tailFaces hn s) : point hn s ∉ a := by
+  classical
+  exact (Finset.mem_filter.mp ha).2.2.2.1
 
 theorem first_noBranch_faces {n : Nat} (hn : 3 ≤ n) (s : Fin n ↪ V) :
     ((nativeRelative (noncover (show 0 < n by omega) s)).noBranch (point hn s)).F =
@@ -169,7 +177,7 @@ theorem first_yesBranch_faces {n : Nat} (hn : 3 ≤ n) (s : Fin n ↪ V) :
   simp only [mem_faceSet, Finset.mem_singleton]
   constructor
   · rintro ⟨ha, hp, he⟩
-    rw [← Finset.insert_erase hp, he]
+    rw [← Finset.insert_erase hp, he, Finset.insert_empty]
   · rintro rfl
     exact ⟨point_mem hn s, by simp, by simp⟩
 
@@ -218,7 +226,7 @@ private theorem faceSet_map {n : Nat} (hn : 0 < n) (s : Fin n ↪ V) :
   · intro ha
     obtain ⟨b, hb, rfl⟩ := Finset.mem_image.mp ha
     obtain ⟨hbne, i, hi, hj⟩ := (mem_indexFaces n hn b).mp hb
-    refine ⟨hbne.map s, ?_, i, ?_, ?_⟩
+    refine ⟨hbne.map, ?_, i, ?_, ?_⟩
     · intro v hv
       obtain ⟨j, _, rfl⟩ := Finset.mem_map.mp hv
       exact spoke_mem_ground s j
@@ -237,15 +245,18 @@ theorem remainingFaces_map {n : Nat} (hn : 3 ≤ n) (s : Fin n ↪ V) :
 private theorem map_blocks {n r : Nat} (s : Fin n ↪ V) (start : Nat)
     (h : ∀ j : Fin r, ∀ b : Fin 2, start+3*j.val+b.val < n) :
     (blocks (Function.Embedding.refl (Fin n)) start h).map s = blocks s start h := by
-  simpa only [blocks, Finset.map_map]
+  simp only [blocks, Finset.map_map]
+  rfl
 
 private theorem map_A (q : Nat) (hq : 0 < q) (s : Fin (3*q) ↪ V) :
     (criticalA q hq (Function.Embedding.refl _)).map s = criticalA q hq s := by
-  simpa only [criticalA, Finset.map_insert, map_blocks]
+  simp only [criticalA, Finset.map_insert, map_blocks]
+  rfl
 
 private theorem map_B (q : Nat) (hq : 0 < q) (s : Fin (3*q) ↪ V) :
     (criticalB q hq (Function.Embedding.refl _)).map s = criticalB q hq s := by
-  simpa only [criticalB, Finset.map_insert, map_blocks]
+  simp only [criticalB, Finset.map_insert, map_blocks]
+  rfl
 
 private theorem map_One (q : Nat) (s : Fin (3*q+1) ↪ V) :
     (criticalOne q (Function.Embedding.refl _)).map s = criticalOne q s :=
@@ -253,7 +264,8 @@ private theorem map_One (q : Nat) (s : Fin (3*q+1) ↪ V) :
 
 private theorem map_Two (q : Nat) (hq : 0 < q) (s : Fin (3*q+2) ↪ V) :
     (criticalTwo q hq (Function.Embedding.refl _)).map s = criticalTwo q hq s := by
-  simpa only [criticalTwo, Finset.map_insert, map_blocks]
+  simp only [criticalTwo, Finset.map_insert, map_blocks]
+  rfl
 
 private theorem index_three :
     computeSurvivors (indexFaces 3 (by omega)) (List.finRange 3) =
@@ -273,17 +285,22 @@ theorem survivors_three (s : Fin 3 ↪ V) :
     remainingFaces (by omega) s =
       insert {point (by omega) s} {criticalA 1 (by omega) s, criticalB 1 (by omega) s} := by
   rw [remainingFaces_map, index_three]
-  simpa only [Finset.image_insert, Finset.image_singleton, map_A, map_B,
-    Finset.map_singleton]
+  simp only [Finset.image_insert, Finset.image_singleton, Finset.map_singleton]
+  rw [map_A 1 (by omega) s, map_B 1 (by omega) s]
+  rfl
 
 theorem survivors_four (s : Fin 4 ↪ V) :
     remainingFaces (by omega) s = insert {point (by omega) s} {criticalOne 1 s} := by
   rw [remainingFaces_map, index_four]
-  simpa only [Finset.image_insert, Finset.image_singleton, map_One, Finset.map_singleton]
+  simp only [Finset.image_insert, Finset.image_singleton, Finset.map_singleton]
+  rw [map_One 1 s]
+  rfl
 
 theorem survivors_five (s : Fin 5 ↪ V) :
     remainingFaces (by omega) s = insert {point (by omega) s} {criticalTwo 1 (by omega) s} := by
   rw [remainingFaces_map, index_five]
-  simpa only [Finset.image_insert, Finset.image_singleton, map_Two, Finset.map_singleton]
+  simp only [Finset.image_insert, Finset.image_singleton, Finset.map_singleton]
+  rw [map_Two 1 (by omega) s]
+  rfl
 
 end D5.S3.Geometry.FiniteCyclicNoncoverGreedyReduction
