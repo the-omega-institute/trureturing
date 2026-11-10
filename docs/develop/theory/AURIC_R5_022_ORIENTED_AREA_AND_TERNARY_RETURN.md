@@ -2508,3 +2508,329 @@ $u^iv^jw^k$、$i,j,k\in\{0,1\}$ 是 $F$ 的 $F^2$-基：有理函数分母乘以
 
 ## 追加锚（本行以下为增补区）
 
+## 15. 同一实际域的相对约化检测与纯部次数边界
+
+**定义 15.1（固定域的相对约化与归一化纯部）。** 设 $F$ 是特征二的域，$L/F$ 是有限域扩张，满足 $L^2\subseteq F$，记 $n=[L:F]=2^r$。允许 $r=0$，此时 $L=F$；$r\ge1$ 时扩张为纯不可分指数一。归一化投影指 $F$-线性映射 $\pi:L\to F$ 满足 $\pi(1)=1$。置
+
+$$
+V_\pi=\ker\pi,\qquad L=F1\oplus V_\pi,\qquad
+q_\pi(v)=v^2\in F.
+\tag{15.1}
+$$
+
+对每个交换含单位 $F$-代数 $R$，包括零环，置
+
+$$
+A_R=L\otimes_F R=R1\oplus V_{\pi,R},\qquad
+V_{\pi,R}=V_\pi\otimes_F R,\qquad
+\pi_R=\pi\otimes_F\operatorname{id}_R.
+\tag{15.2}
+$$
+
+按 $L$ 中原乘法定义 $A_R$ 的乘法。选择任意 $F$-基 $1,b_1,\ldots,b_{n-1}$，其中 $b_i\in V_\pi$，则
+
+$$
+\begin{aligned}
+q_{\pi,R}\Bigl(\sum_i t_i b_i\Bigr)&=\sum_i b_i^2t_i^2,\\
+Q_R\Bigl(s1+\sum_i t_i b_i\Bigr)&=s^2+\sum_i b_i^2t_i^2,\\
+x^2&=Q_R(x)1\qquad(x\in A_R).
+\end{aligned}
+\tag{15.3}
+$$
+
+这些式子由特征二和 $L^2\subseteq F$ 给出，与所选基无关。$R\to A_R$ 是直和分解中的单射，包括零环情形；因此 $Q_R$ 的标量值唯一。这里称 $q_{\pi,R}$ 各向异性，严格指全部向量上的条件
+
+$$
+\forall v\in V_{\pi,R},\quad q_{\pi,R}(v)=0\Longrightarrow v=0.
+\tag{15.4}
+$$
+
+不要求向量幺模。称 $R$ 对固定实际 $L/F$ 相对约化，是指 $A_R$ 没有非零幂零元。它只涉及这一个 $L$。与之分别，$R$ 自身约化只检验 $R$ 中的幂零元；$R$ 几何约化于 $F$ 则要求对每个扩域 $K/F$，$K\otimes_F R$ 都约化，沿用定义 14.3 及 [Stacks，030V](https://stacks.math.columbia.edu/tag/030V)。
+
+当 $n=4$ 且 $L$ 来自定义 14.3 的同一原入口 $D$ 时，其原投影为 §13 恢复的指定 $\pi$，$V_\pi$ 和 $q_\pi$ 就是原 $V$ 和 $q$。在同一实际 $L$ 上另选归一化投影时，定理 13.11 给相应的原模型 $(V_\pi,D_\pi)$，其中 $D_\pi(a,b)=ab-\pi(ab)1$。比较不同投影不表示同一 $D$ 可以任意改动其已恢复投影。对一般 $n$，本定义只取域乘法、投影与平方，不附加一个满足 P+K 的二元关系，也不假设扩底后的 K。
+
+**定理 15.2（纯部到全部扩底代数的全环桥）。** 在定义 15.1 中，若 $r\ge2$，则对每份归一化 $\pi$ 及每个交换含单位 $F$-代数 $R$，
+
+$$
+q_{\pi,R}\text{ 各向异性}
+\quad\Longleftrightarrow\quad
+L\otimes_F R\text{ 约化}.
+\tag{15.5}
+$$
+
+特别地，对定义 14.3 的同一四次原入口，准确的来源判据是
+
+$$
+\operatorname{Aut}_D(R)=\{I\}
+\quad\Longleftrightarrow\quad
+q_R\text{ 各向异性}
+\quad\Longleftrightarrow\quad
+L\otimes_F R\text{ 约化}.
+\tag{15.6}
+$$
+
+第一等价直接使用定理 14.4；最后一项推出中间项的四次情形直接使用定理 14.6 证明中的 (14.13)，其中只需所述扩底环约化。反向蕴涵不要求 $R$ 是整环、Noether 环或有限生成 $F$-代数。
+
+证明。先在本证明内给出所需域计算。对任意扩域 $E/F$，在 $E$ 的一份代数闭包中取 $L$ 的唯一 $F$-嵌入，记实际合成域为 $LE$。经典纯不可分逐次添根事实 [Stacks，09HF、09HI](https://stacks.math.columbia.edu/tag/09HI) 在此给出 $L=F(a_1,\ldots,a_r)$，其中 $a_i^2\in F$，逐次添入的次数均为二；故
+
+$$
+d=[LE:E]\in\{2^s:0\le s\le r\}.
+\tag{15.7}
+$$
+
+乘法映射
+
+$$
+\mu_E:A_E\longrightarrow LE,\qquad \ell\otimes e\longmapsto \ell e
+\tag{15.8}
+$$
+
+满射：其像是包含 $E,L$ 的有限维 $E$-子代数，且位于域中；非零元素的乘法在该有限维空间上单射，因而满射，故像本身是域，必等于 $LE$。对每个 $x\in A_E$，(15.3) 使
+
+$$
+\mu_E(x)=0\quad\Longleftrightarrow\quad x^2=0.
+\tag{15.9}
+$$
+
+正向用 $0=\mu_E(x)^2=Q_E(x)$，以及 $x^2=Q_E(x)1$；反向用域 $LE$ 中平方单射。任何幂零元的像在域中为零，而 (15.9) 的元素都是幂零元。因此
+
+$$
+N_E:=\ker\mu_E=\sqrt{(0)}_{A_E}
+=\{x\in A_E:x^2=0\},\qquad
+\dim_E N_E=n-d.
+\tag{15.10}
+$$
+
+等式不声称理想 $N_E$ 的乘积 $N_E^2$ 必为零，只说其中每个元素的平方为零。域上拟线性形式的零向量构成线性子空间是 [Scully，*Quasilinear quadratic forms and function fields of quadrics*，arXiv:1710.09692v1，§2A](https://arxiv.org/pdf/1710.09692v1) 的经典事实；此处 (15.8)—(15.10) 还明确识别了同一实际扩底代数中的该子空间。
+
+若 $d<n$，二的幂条件给 $d\le n/2$。$V_{\pi,E}$ 是 $A_E$ 的余维一子空间，故
+
+$$
+\dim_E(N_E\cap V_{\pi,E})\ge n-d-1\ge n/2-1>0
+\qquad(n\ge4).
+\tag{15.11}
+$$
+
+其非零元素由 (15.9) 给纯部非零零向量。若 $d=n$，$N_E=0$，纯部便没有非零零向量。因此在域 $E$ 上，纯部各向异性当且仅当 $d=n$，也当且仅当 $A_E$ 约化。没有要求 $\pi$ 对某个添根基是坐标投影。
+
+现在设 $q_{\pi,R}$ 各向异性。若 $R$ 非约化，从非零幂零元的最小消失幂可取 $0\ne t\in R$ 满足 $t^2=0$。取任意非零 $b\in V_\pi$ 并将它补成 $F$-基，则 $tb\ne0$，而 $q_{\pi,R}(tb)=b^2t^2=0$，矛盾。故 $R$ 约化。
+
+还须把纯部条件传到局部环，不能把它直接传到剩余域。设 $S\subset R$ 为乘法闭集，$w=v/s\in S^{-1}V_{\pi,R}$ 且 $q(w)=0$。自由模的有限个坐标允许取共同分母 $s\in S$。存在 $t\in S$ 使 $tq(v)=0$，于是 $q(tv)=t^2q(v)=0$，由假设 $tv=0$，故 $w=(tv)/(ts)=0$。所以纯部各向异性保持于任意局部化；该清分母论证没有使用 $R$ 约化或 $s,t$ 非零因子。
+
+对每个极小素理想 $\mathfrak p$，约化环 $R$ 的 $R_{\mathfrak p}$ 是域，且
+
+$$
+R\hookrightarrow
+\prod_{\mathfrak p\in\operatorname{Min}R}R_{\mathfrak p}.
+\tag{15.12}
+$$
+
+这是 [Stacks，00EU、00EW](https://stacks.math.columbia.edu/tag/00EW) 对任意约化环的结论，没有有限极小素或 Noether 假设。纯部条件经上述局部化成立于每个 $R_{\mathfrak p}$，域计算遂使每个 $A_R\otimes_R R_{\mathfrak p}$ 约化。取 $L$ 的有限 $F$-基，(15.12) 逐坐标给单射
+
+$$
+A_R\hookrightarrow
+\prod_{\mathfrak p\in\operatorname{Min}R}
+\bigl(L\otimes_F R_{\mathfrak p}\bigr).
+\tag{15.13}
+$$
+
+左侧幂零元在右侧每个因子中均为零，故本来就是零。这支付了任意 $R$ 上从纯部到整体的方向。
+
+反向对所有 $n$ 都成立：若 $A_R$ 约化，$v\in V_{\pi,R}$ 且 $q(v)=0$，则 (15.3) 给 $v^2=0$，因而 $v=0$。在四次情形这正是已引的 (14.13)。最后把定理 14.4 的原全环等价接上，得到 (15.6)，没有重新证明其自同构构造。零环中 $A_R=V_{\pi,R}=0$，约化与各向异性均成立，$\operatorname{Aut}_D(R)$ 只有恒等；因此它也满足全部等价。$\square$
+
+**定理 15.3（准确次数阈值与两个低次替代）。** 称一对 $(L,\pi)$ 具有普遍纯部检测性质，是指 (15.5) 对所有交换含单位 $F$-代数 $R$ 成立。在定义 15.1 的全部次数中，该性质当且仅当 $r\ge2$，且其真假与归一化投影的选择无关。低次的准确替代如下。
+
+若 $r=1$，对每份归一化投影可取 $0\ne\theta\in\ker\pi$，置 $a=\theta^2$，则 $a\in F^\times\setminus F^2$，$L=F(\theta)$，并且对所有 $R$，
+
+$$
+\begin{aligned}
+q_{\pi,R}(t\theta)&=a t^2,\\
+q_{\pi,R}\text{ 各向异性}&\quad\Longleftrightarrow\quad R\text{ 约化},\\
+L\otimes_F R\text{ 约化}
+&\quad\Longleftrightarrow\quad
+\bigl[s^2+a t^2=0\Longrightarrow s=t=0
+\text{ 对所有 }s,t\in R\bigr].
+\end{aligned}
+\tag{15.14}
+$$
+
+若 $r=0$，唯一投影是恒等，纯部为零，$q_{\pi,R}$ 对每个 $R$ 均各向异性，而 $L\otimes_F R$ 约化恰当且仅当 $R$ 约化。因而在所有次数中，固定 $L$ 后纯部各向异性的真假谓词都与 $\pi$ 无关；只有 $r\ge2$ 时，它才普遍检测整个扩底代数。
+
+证明。$r\ge2$ 的结论直接使用定理 15.2。设 $r=1$。$\ker\pi$ 一维且与 $F1$ 的交为零，故 $\theta\notin F$，且 $1,\theta$ 是基。若 $a=c^2$、$c\in F$，域中平方单射给 $\theta=c$，矛盾；$a=0$ 同样不可能。因此 $a$ 是所述非零非平方数。因为 $a$ 在每个非零 $F$-代数中为单位，$q$ 各向异性恰指 $R$ 中没有非零平方零元；这与约化等价：任何非零幂零元 $u$ 以其最小消失幂 $m\ge2$ 给非零平方零元 $u^{m-1}$。零环也满足这两个条件。
+
+对 (15.14) 的最后一项，$s+t\theta$ 的平方正是 $s^2+a t^2$。任意交换环约化当且仅当其平方零元只有零，故该二元条件正好检验整个 $A_R$。更一般地，定义 15.1 的每个次数都有
+
+$$
+A_R\text{ 约化}\quad\Longleftrightarrow\quad
+\bigl[Q_R(x)=0\Longrightarrow x=0\quad(x\in A_R)\bigr],
+\tag{15.15}
+$$
+
+因为 $Q_R(x)=0$ 与 $x^2=0$ 等价。纯部是这个完整条件的限制，二次时该限制仅保留原 $R$ 的约化信息。
+
+严格的二次反例取 $R=L$。环 $R$ 是域，故对任意归一化 $\pi$，纯部形式各向异性。然而
+
+$$
+0\ne z=\theta\otimes1+1\otimes\theta\in L\otimes_F L,
+\qquad z^2=a\otimes1+1\otimes a=0.
+\tag{15.16}
+$$
+
+非零性由 $1\otimes1,\theta\otimes1$ 是右侧自由 $L$-模的基给出：$z$ 在第二个基元上的系数为一。这也在二元条件中给出 $(s,t)=(\theta,1)$ 的非零零向量。故每一份二次 $(L,\pi)$ 都不具有普遍检测性质。
+
+若 $r=0$，$A_R=R$ 且纯部为零，取 $R=F[\epsilon]/(\epsilon^2)$，则纯部条件真而 $A_R$ 非约化，给一次情形的严格反例。所有次数已经穷尽。
+
+在 $r\ge2$ 时纯部维数是 $2^r-1$，故三维、七维、十五维及更高这些维数均具有所述检测性质。定理没有把 $r\ge3$ 的纯部赋予一个新的 P+K 入口；原三维性仍直接来自定理 13.4。普遍纯部检测性质本身不能在这些维数之间唯一选出三维。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 16. 相对约化的局部判据与标记信息
+
+**定义 16.1（局部环、剩余域与真假谓词）。** 保留定义 15.1。记 $\operatorname{Spec}R$、$\operatorname{Max}R$、$\operatorname{Min}R$ 分别为素理想、极大理想、极小素理想的集合。对素理想 $\mathfrak p$，$R_{\mathfrak p}$ 是局部环，$\kappa(\mathfrak p)=R_{\mathfrak p}/\mathfrak pR_{\mathfrak p}$ 是其剩余域。在 $\kappa(\mathfrak p)$ 的代数闭包中取唯一的 $L$ 嵌入以形成实际合成域 $L\kappa(\mathfrak p)$。定义下列真假谓词：
+
+$$
+\begin{aligned}
+\mathcal P_{L,\pi}(R)&: q_{\pi,R}\text{ 各向异性},\\
+\mathcal B_L(R)&:\ L\otimes_F R\text{ 约化},\\
+\mathcal C_{L,\pi}(R)&:\quad
+q_{\pi,\kappa(\mathfrak p)}\text{ 对每个 }
+\mathfrak p\in\operatorname{Spec}R\text{ 各向异性}.
+\end{aligned}
+\tag{16.1}
+$$
+
+$\mathcal P$ 检验原环中的全部纯向量，$\mathcal C$ 检验全部剩余域中的向量；后者先商去素理想再取分式，前者的局部化只容许清分母。这是不同的操作。零环的上述素理想集合均为空，涉及这些集合的全称条件按空真理解。
+
+**定理 16.2（准确的局部与整体条件）。** 对定义 15.1 的任意次数 $n$ 和任意 $R$，有
+
+$$
+\begin{aligned}
+\mathcal P_{L,\pi}(R)
+&\Longleftrightarrow
+\forall\mathfrak m\in\operatorname{Max}R,\quad
+\mathcal P_{L,\pi}(R_{\mathfrak m})\\
+&\Longleftrightarrow
+\forall\mathfrak p\in\operatorname{Spec}R,\quad
+\mathcal P_{L,\pi}(R_{\mathfrak p}),\\[2pt]
+\mathcal B_L(R)
+&\Longleftrightarrow
+\forall\mathfrak m\in\operatorname{Max}R,\quad
+\mathcal B_L(R_{\mathfrak m})\\
+&\Longleftrightarrow
+\forall\mathfrak p\in\operatorname{Spec}R,\quad
+\mathcal B_L(R_{\mathfrak p}).
+\end{aligned}
+\tag{16.2}
+$$
+
+其准确极小素判据为
+
+$$
+\mathcal B_L(R)
+\quad\Longleftrightarrow\quad
+\left[
+R\text{ 约化，且 }
+[L\kappa(\mathfrak p):\kappa(\mathfrak p)]=n
+\text{ 对每个 }\mathfrak p\in\operatorname{Min}R
+\right].
+\tag{16.3}
+$$
+
+若 $n\ge2$，另有
+
+$$
+\mathcal P_{L,\pi}(R)
+\quad\Longleftrightarrow\quad
+\left[
+R\text{ 约化，且 }
+q_{\pi,\kappa(\mathfrak p)}\text{ 各向异性}
+\text{ 对每个 }\mathfrak p\in\operatorname{Min}R
+\right].
+\tag{16.4}
+$$
+
+在 $n\ge4$ 时，(16.3)、(16.4) 的右侧等价；二次时 (16.4) 的剩余域条件自动成立，而 (16.3) 的次数条件仍不能省略。$n=1$ 时应使用定理 15.3 的零纯部结论，不能从纯部各向异性推出 $R$ 约化。
+
+证明。定理 15.2 证明中的清分母论证只使用 (15.3)，故适用于所有次数的 $\mathcal P$，给它保持于任意局部化。反向设 $0\ne v\in V_{\pi,R}$ 且 $q(v)=0$。其 $R$-模湮灭理想
+
+$$
+\operatorname{Ann}_R(v)=\{a\in R:av=0\}
+\tag{16.5}
+$$
+
+是一个真理想，取包含它的极大理想 $\mathfrak m$。若 $v/1=0$，便有 $s\notin\mathfrak m$ 使 $sv=0$，与 $s\in\operatorname{Ann}_R(v)\subseteq\mathfrak m$ 矛盾。故 $v/1$ 在该局部环中仍是非零零向量。这证明 $\mathcal P$ 的两项局部等价，且不要求向量幺模。
+
+对 $\mathcal B$，扩底与局部化交换。若 $A_R$ 约化，而 $x/s$ 是其局部化中的幂零元，则存在正整数 $k$ 及被倒置的 $t$，使 $tx^k=0$。于是 $(tx)^k=t^{k-1}(tx^k)=0$，约化性给 $tx=0$，故 $x/s=0$。反向若 $0\ne x\in A_R$ 幂零，取包含真理想 $\operatorname{Ann}_R(x)$ 的极大理想；与上一段相同的论证使 $x/1$ 仍非零且幂零。因此得到 $\mathcal B$ 的两项局部等价。
+
+若 $A_R$ 约化，单射 $R\to A_R$ 使 $R$ 约化。对极小素 $\mathfrak p$，经典事实 [Stacks，00EU](https://stacks.math.columbia.edu/tag/00EU) 给 $R_{\mathfrak p}$ 是域，故 $\mathfrak pR_{\mathfrak p}=0$ 且 $R_{\mathfrak p}=\kappa(\mathfrak p)$。$A_R$ 的局部化约化，由 (15.8)—(15.10) 得 $[L\kappa(\mathfrak p):\kappa(\mathfrak p)]=n$。反之，若 (16.3) 右侧成立，(15.10) 使所有这些域上的扩底环约化，而 [Stacks，00EW](https://stacks.math.columbia.edu/tag/00EW) 的约化环嵌入逐个有限自由坐标给出 (15.13)。故 $A_R$ 是约化环的积的子环，也约化。这证明 (16.3)。
+
+对 (16.4)，当 $n\ge2$ 时，定理 15.2 证明中用平方零标量乘非零纯基元的论证仍适用，故 $\mathcal P$ 强制 $R$ 约化。再局部化到极小素，得到所述剩余域条件。反之，若右侧成立，一个 $q(v)=0$ 的纯向量在每个 $R_{\mathfrak p}=\kappa(\mathfrak p)$ 中都为零，(15.12) 逐坐标使 $v=0$。$n\ge4$ 时的比较由 (15.10)—(15.11) 给出；二次的纯形式在任何域上都是系数非零的一元平方形式，故其剩余域条件自动成立。
+
+在 (16.3) 中，次数条件也恰好说 $L$ 与这些 $\kappa(\mathfrak p)$ 对实际嵌入线性不交：按 [Stacks，09IC，定义 9.27.2](https://stacks.math.columbia.edu/tag/09IC)，要求的正是 (15.8) 的乘法映射单射；其源维数为 $n$，像维数为所列次数。不能以实际交集最小代替此条件，反例已由命题 14.8 给出。
+
+几何约化的全部扩张量词蕴涵 $\mathcal B_L(R)$，但固定 $L$ 的检验一般不蕴涵几何约化。在命题 14.9 的同一 (14.21) 中，$E=F(\sqrt w)$ 不几何约化于 $F$，且原 $\operatorname{Aut}_D(E)=\{I\}$；(15.6) 因而给 $L\otimes_F E$ 约化。这直接复用该例，不另作来源构造。另一方面，若固定的有限 $L$ 恰好是 $F^{1/2}$，[Stacks，030V](https://stacks.math.columbia.edu/tag/030V) 使这一次检验确与几何约化等价。因此边界是一般不能以一个选定 $L$ 代表全部扩张；不是断言每一个有限 $L$ 的检验都严格较弱。(15.5) 对所有 $R$ 成立的量词也只给每个 $R$ 上两个条件的等价，不把 $\mathcal B_L(R)$ 改成对所有扩域的条件。$\square$
+
+**定理 16.3（全部剩余域判据的两个失败方向）。** 固定定义 14.3 的同一实际四次 $L/F$，对其每份归一化投影，下列两个蕴涵都不成立：
+
+$$
+\mathcal C_{L,\pi}(R)\Longrightarrow\mathcal P_{L,\pi}(R),
+\qquad
+\mathcal P_{L,\pi}(R)\Longrightarrow\mathcal C_{L,\pi}(R).
+\tag{16.6}
+$$
+
+第一项的反例可取所有剩余域都等于原 $F$ 的非约化局部环；第二项的反例可取扩底代数本身为整环的几何约化 $F$-代数。对原 $D$，按 (15.6)，两项同样是以全部剩余域上的刚性替代原环刚性的失败方向。
+
+证明。第一项取命题 14.9 已用的 $R_+=F[\epsilon]/(\epsilon^2)$。每个素理想包含幂零元 $\epsilon$，且商环 $F$ 是域，所以其唯一素理想是 $(\epsilon)$，剩余域为 $F$。原 $q_\pi$ 按定理 13.11 各向异性，故 $\mathcal C_{L,\pi}(R_+)$ 成立。然而对任何非零 $b\in V_\pi$，$\epsilon b$ 是非零平方零纯向量，故 $\mathcal P_{L,\pi}(R_+)$ 不成立。定理 14.4 给非恒等自同构，命题 14.9 的双数式已给具体实例。原环信息在取剩余域时被丢去。
+
+第二项令 $R_-=F[t]$。有 $L\otimes_F R_-=L[t]$，这是整环，故 (15.5) 给 $\mathcal P_{L,\pi}(R_-)$。任意扩域 $K/F$ 上 $K[t]$ 都是整环，也直接说明 $R_-$ 几何约化于 $F$。
+
+由原实际平方子域 $M=L^2$ 的 $[M:F^2]=4$，取 $c\in M\setminus F^2$。多项式 $t^2+c$ 按 [Stacks，09HF](https://stacks.math.columbia.edu/tag/09HF) 不可约，所以
+
+$$
+\mathfrak p=(t^2+c)\in\operatorname{Max}F[t],\qquad
+\kappa(\mathfrak p)\simeq E:=F(\sqrt c).
+\tag{16.7}
+$$
+
+这是定理 14.7 的原二次解锁域，故定理 14.4、14.7 给 $q_{\pi,E}$ 的非零零向量；因此 $\mathcal C_{L,\pi}(R_-)$ 不成立。这里的 $\mathfrak p$ 不是极小素，$F[t]$ 的唯一极小素是 $(0)$。其特殊纤维 $L\otimes_F E$ 的非约化性还能直接写出：在 $L$ 中令 $h=\sqrt c\notin F$，在 $E$ 中令 $s=\sqrt c$，则
+
+$$
+0\ne h\otimes1+1\otimes s\in L\otimes_F E,
+\qquad (h\otimes1+1\otimes s)^2=0.
+\tag{16.8}
+$$
+
+非零性由把 $1,h$ 补成 $L$ 的 $F$-基、再比较扩底后的 $E$-坐标给出。原环上的 $L[t]$ 没有幂零元，商出这个特殊纤维后却产生幂零元；(16.2) 中的实际局部环仍满足纯部各向异性，其剩余域则不满足。故两个方向的失败分别来自被抹去的原环幂零信息，以及取商后新出现的纤维退化。加上 $R$ 约化时，$\mathcal C$ 由 (16.4) 足以推出 $\mathcal P$，但第二个反例说明仍非必要。$\square$
+
+**定理 16.4（共同真假谓词不能恢复纯部标记）。** 固定同一实际四次 $L/F$。对任意两份归一化投影 $\pi,\pi'$，以及每个交换含单位 $F$-代数 $R$，
+
+$$
+\begin{aligned}
+\mathcal P_{L,\pi}(R)&=\mathcal P_{L,\pi'}(R)=\mathcal B_L(R),\\
+\bigl[\operatorname{Aut}_{D_\pi}(R)=\{I\}\bigr]
+&=\bigl[\operatorname{Aut}_{D_{\pi'}}(R)=\{I\}\bigr].
+\end{aligned}
+\tag{16.9}
+$$
+
+等号表示真假相同。若 $\pi\ne\pi'$，则其带标记代数不同构，原 $D_\pi,D_{\pi'}$ 模型不同构，而且纯二次形式 $q_\pi,q_{\pi'}$ 不 $F$-等距。因此即使知道对所有 $R$ 的共同真假谓词，仍不能恢复原投影、原纯部形式或原带标记对象。
+
+证明。(16.9) 逐份由 (15.6) 给出；右端只用同一实际 $L$。带标记代数不同构直接使用定理 13.13：固定 $F$ 的纯不可分实际域没有非恒等 $F$-自同构，因此不同投影不能通过这样的同构等同。原 $D$ 模型的结论直接使用定理 13.12，而不重作入口分类。
+
+还须核对纯形式本身。使用定理 13.13、推论 13.14 的同一实际 $M=L^2$ 及标记
+
+$$
+\lambda_\pi(m)=\pi(\sqrt m)^2\in F^2,\qquad
+q_\pi(V_\pi)=\ker\lambda_\pi\subset M,
+\tag{16.10}
+$$
+
+以及 $\pi'$ 的对应式。若 $\lambda_\pi=\lambda_{\pi'}$，对每个 $x\in L$ 取 $m=x^2$，平方单射便给 $\pi(x)=\pi'(x)$。因此不同投影有不同的归一化 $F^2$-线性标记。这些标记若有相同核 $H$，任意 $m\in M$ 可写成 $m=\lambda_\pi(m)1+h$、$h\in H$，而 $\lambda_{\pi'}(1)=1$ 会给 $\lambda_{\pi'}(m)=\lambda_\pi(m)$，矛盾。故不同投影的 (16.10) 表示集合不同。形式的 $F$-等距必保持全部表示值，因而不存在这样的等距；这也符合 [Scully，前引文，命题 2.1](https://arxiv.org/pdf/1710.09692v1) 的各向异性拟线性形式表示空间判据。
+
+不同投影确实存在：取原 $L$ 上非零 $F$-线性泛函 $\ell$ 满足 $\ell(1)=0$，则 $\pi'=\pi+\ell$ 仍归一化而不同于 $\pi$。所以该信息丢失有实际实例。式 (16.9) 只比较每个参数环上“是否只有恒等”的真值，既没有给出不同 $V_{\pi,R}$ 的指定等距，也没有给出完整自同构群函子之间的识别。原标记仍由 (16.10) 的实际 $F^2$ 值泛函及其核保留。$\square$
+
+**定义 16.5（同一关系、三维纯部与四维检验的完整白话释义）。** 这里把“同一实际域的有限检验”理解为：先保留原标量域和同一个二元响应，原关系要求响应再次作用时回到原输入平面，并排除原域上作用两次才消失的方向。§13 已证明这迫使整个原空间只有三维，并恢复比较形式；在特征二时，添上一个标量单位槽便得到四维实际域，原投影决定哪三维是纯部。现在给定任何系数环，检验的不是重新假设原核条件，而是问原三维纯部中是否出现非零却平方为零的向量。定理 14.4 已把这个问题同保关系自同构是否仍只有恒等精确连接；(15.5) 则说，仅检验由同一个四维域扩底得到的整个代数有没有非零幂零元，恰好就够了。这个环可以有零因子、幂零元或无限多极小素，零环也包含在内；证明在原环已有幂零元时由纯方向检出它，在原环约化时转到各极小素的域，再把各处结论接回原环。它不是把全部剩余域当作原环：剩余域能抹去双数方向，也能在一个原本约化的多项式来源的特殊纤维中新增退化。几何约化原先保证每一种扩域都不产生幂零元；这里对一个给定参数环只需同一实际四维域的这一次扩底，通常不必要求所有扩域。纯部检测整体也不是三维的唯一选择原则：次数为四、八、十六及更高二幂时，余下一维标量槽后的纯部都能这样检测；二次时纯部只有一维，只能看见原系数环是否约化，不能看见两槽之间的平方抵消。固定实际四维域以后，改变归一化投影不会改变每个参数环上的这些真假答案，却会改变原纯部的实际表示值、形式和带标记对象；共同真假答案也没有把完整群函子合并。这些结论只连接原代数关系、三维纯部、四维整体和固定域的约化检验，不增加物理控制、Born 规则、复合或时钟的含义。
+
+## 追加锚（本行以下为增补区）
+
