@@ -1,6 +1,6 @@
 /- GID: D5/S3/Topology/QuandleMarkovColoring
    generality: G
-   mirror-B: none(waiver:algebraically-proved)
+   mirror-B: D5/B/S3/Topology/QuandleMarkovColoring
    mirror-E: none(waiver:algebraically-proved)
    anchors: [lake/module/Mathlib.Algebra.Quandle]
    utility: none
@@ -48,14 +48,14 @@ private theorem inverse_crossing {n : ℕ} (i : Fin (n - 1)) (c : Colors Q n) :
   funext k
   by_cases h₁ : k = leftSlot i
   · subst k
-    simpa only [crossing, inverseCrossing, Function.update_same,
+    simpa only [crossing, inverseCrossing, Function.update_self,
       Function.update_of_ne (slots_ne i), Function.update_of_ne (Ne.symm (slots_ne i)),
       D5.S0.Certificates.Quandles.BraidColoringTransport.crossing,
       D5.S0.Certificates.Quandles.BraidColoringTransport.crossingInv] using
       congrArg Prod.fst hp
   · by_cases h₂ : k = rightSlot i
     · subst k
-      simpa only [crossing, inverseCrossing, Function.update_same,
+      simpa only [crossing, inverseCrossing, Function.update_self,
       Function.update_of_ne (slots_ne i), Function.update_of_ne (Ne.symm (slots_ne i)),
         D5.S0.Certificates.Quandles.BraidColoringTransport.crossing,
         D5.S0.Certificates.Quandles.BraidColoringTransport.crossingInv] using
@@ -69,14 +69,14 @@ private theorem crossing_inverse {n : ℕ} (i : Fin (n - 1)) (c : Colors Q n) :
   funext k
   by_cases h₁ : k = leftSlot i
   · subst k
-    simpa only [crossing, inverseCrossing, Function.update_same,
+    simpa only [crossing, inverseCrossing, Function.update_self,
       Function.update_of_ne (slots_ne i), Function.update_of_ne (Ne.symm (slots_ne i)),
       D5.S0.Certificates.Quandles.BraidColoringTransport.crossing,
       D5.S0.Certificates.Quandles.BraidColoringTransport.crossingInv] using
       congrArg Prod.fst hp
   · by_cases h₂ : k = rightSlot i
     · subst k
-      simpa only [crossing, inverseCrossing, Function.update_same,
+      simpa only [crossing, inverseCrossing, Function.update_self,
       Function.update_of_ne (slots_ne i), Function.update_of_ne (Ne.symm (slots_ne i)),
         D5.S0.Certificates.Quandles.BraidColoringTransport.crossing,
         D5.S0.Certificates.Quandles.BraidColoringTransport.crossingInv] using
@@ -293,8 +293,7 @@ def positiveStabilizationEquiv (n : ℕ) (hn : 0 < n) (b : Artin n) :
     exact h.1⟩
   left_inv c := by
     apply Subtype.ext
-    change Fin.init (Fin.snoc c.val (c.val (lastSlot n hn))) = c.val
-    exact Fin.init_snoc _ _
+    simp only [Fin.init_snoc]
   right_inv d := by
     apply Subtype.ext
     have h := (positive_fixed_iff n hn b (Fin.init d.val) (d.val (Fin.last n))).mp
@@ -314,8 +313,7 @@ def negativeStabilizationEquiv (n : ℕ) (hn : 0 < n) (b : Artin n) :
     exact h.1⟩
   left_inv c := by
     apply Subtype.ext
-    change Fin.init (Fin.snoc c.val (c.val (lastSlot n hn))) = c.val
-    exact Fin.init_snoc _ _
+    simp only [Fin.init_snoc]
   right_inv d := by
     apply Subtype.ext
     have h := (negative_fixed_iff n hn b (Fin.init d.val) (d.val (Fin.last n))).mp

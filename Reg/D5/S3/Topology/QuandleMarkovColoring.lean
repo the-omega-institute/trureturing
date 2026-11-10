@@ -52,6 +52,7 @@ abbrev arena : Arena where
 
 def actual_law : arena.Law actual := by
   intro Q _ _ b c h
+  change coloringCount Q b = coloringCount Q c
   exact quandle_coloring_markov_invariant h
 
 private abbrev upQuandle (Q : Type*) [Quandle Q] : Quandle (ULift.{u} Q) where
@@ -79,11 +80,10 @@ def rejected_law : ¬ arena.{u}.Law rejected.{u} := by
 
 /-- The actual observation distinguishes the one- and two-strand identity braids. -/
 private theorem test_identity (n : ℕ) (hn : 0 < n) :
-    actual.readout () testData (identityBraid n hn) = 2 ^ n := by
-  letI := testData.quandle
-  change Nat.card {c : Fin n → ULift.{u} (Quandle.Dihedral 2) //
-    braidAction (ULift.{u} (Quandle.Dihedral 2)) n (1 : Artin n) c = c} = 2 ^ n
-  simp only [map_one, Equiv.Perm.one_apply, eq_self_iff_true, Nat.card_subtype_true]
+    actual.{u}.readout () testData.{u} (identityBraid n hn) = 2 ^ n := by
+  simp only [actual, realize, coloringCount, identityBraid, ClosedColorings, map_one,
+    Equiv.Perm.one_apply, eq_self_iff_true, Nat.card_subtype_true]
+  change Nat.card (Fin n → ULift.{u} (Quandle.Dihedral 2)) = 2 ^ n
   rw [Nat.card_fun, Nat.card_ulift]
   simp [Quandle.Dihedral, Nat.card_eq_fintype_card, ZMod.card]
 
