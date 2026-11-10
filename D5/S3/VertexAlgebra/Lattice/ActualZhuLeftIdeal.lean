@@ -33,7 +33,7 @@ open private cbz cbz_nat cbz_apply_neg cbz_lt cbz_pascal cbz_upper_absorption
 open private translation_grade derivative_mu
   from D5.S3.VertexAlgebra.Lattice.ActualZhuProduct
 open private star_homogeneous_cbz
-  from D5.S3.VertexAlgebra.Lattice.ActualZhuAssociator
+  from D5.S3.VertexAlgebra.Lattice.ActualZhuAssociatorExpansion
 noncomputable section
 
 private theorem coeff_identity (K : ℕ) (i : ℤ) :
