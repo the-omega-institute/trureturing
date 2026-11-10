@@ -86,7 +86,9 @@ that conventional host module. There is no extra Lake dependency.
 ## Copyright, license and notice chain
 
 Every received D5 source unit retains its copyright and modification
-notice, including the complete original source header:
+notice. Scribe exposition adapted from the corresponding source descriptions
+carries the same copyright, release and modification notice. The complete
+original source header is:
 
 ```text
 Copyright (c) 2026 Jeffrey Li. All rights reserved.
