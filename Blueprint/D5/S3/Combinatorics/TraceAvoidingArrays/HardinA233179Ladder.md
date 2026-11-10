@@ -82,6 +82,10 @@ $$\forall (n: \operatorname{Nat}), ((\operatorname{D5}.\operatorname{S3}.\operat
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233179Ladder.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin233179` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233179Ladder.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin233179","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233179Ladder.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A233179: complementary-pair exclusion on a six-row ladder*. URL: <https://oeis.org/A233179>.

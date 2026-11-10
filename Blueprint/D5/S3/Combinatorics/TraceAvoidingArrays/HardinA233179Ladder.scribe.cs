@@ -37,12 +37,20 @@ internal sealed class HardinA233179LadderDocument : IScribeDocumentDefinition
                 + "is canonical. Thus, if C is the canonical-pattern count, L=6*C and "
                 + "a=2^(6*n-3)*(C+1), giving the displayed bridge.")),
             Node("finite_certificate", "The recurrence at width 26", RecurrenceFormula(null), true),
-            Node("result", "Hardin's shifted integer recurrence", RecurrenceFormula(V("n")), true),
+            Resolution("result", "Hardin's shifted integer recurrence", RecurrenceFormula(V("n"))),
             Paragraph(Text("Each column contributes six free side bits. Scaling the "
                 + "pair-pattern relation multiplies the coefficient at lag j by 64^j. "
                 + "The finite instance supplies width 26; the shifted transfer relation "
                 + "supplies every greater width. The index n+26 expresses exactly the "
                 + "published range index>25. Width one is outside the bridge's scope.")))));
+
+    private static DocumentBlock Resolution(string name, string title, Formula formula) =>
+        Describe.Lean(DescribeId.Create(name.Replace("_", "-").ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(title),
+            StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(title + "."))), DescribeRole.Theorem,
+            new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233179"),
+                ResolutionKind.Proved));
 
     private static DocumentBlock Node(string name, string title, Formula formula, bool theorem,
         bool literature = false) =>
