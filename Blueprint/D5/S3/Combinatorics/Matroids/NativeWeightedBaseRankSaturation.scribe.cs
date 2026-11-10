@@ -24,6 +24,18 @@ internal sealed class NativeWeightedBaseRankSaturationDocument : IScribeDocument
                         + "by the carrier."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("native-weighted-base-exchange-weight"),
+                DeclarationHandle.Create(Module + ".baseWeight_exchange"),
+                H("Weight of a single exchange"),
+                StatementSource.FromAuthor(ExchangeWeightFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For any finite carrier, any real weight function and any set B, removing b "
+                    + "from B and inserting e changes the weight by minus w(b) plus w(e), "
+                    + "provided b belongs to B and e does not. This identity is consumed by "
+                    + "the size-one exchange branch of LocalSearchRobustness.neighborhood_comparison."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("native-weighted-lower-weight-set"),
                 DeclarationHandle.Create(Module + ".lowerWeightSet"),
                 H("The native lower threshold set"),
@@ -66,6 +78,23 @@ internal sealed class NativeWeightedBaseRankSaturationDocument : IScribeDocument
                             + "every base by every real threshold and applies to native finite matroids "
                             + "with signed weights."))),
                 DescribeRole.Theorem))));
+
+    private static Formula ExchangeWeightFormula()
+    {
+        Formula e = F.Id("E"), w = F.Id("w"), b = F.Id("B");
+        Formula x = F.Id("e"), y = F.Id("b");
+        Formula real = Seq(Mathbb, Grp(F.Id("R")));
+        Formula member = Seq(x, Sp, InMacro, Sp, b);
+        Formula removed = Seq(Open, b, Sp, Setminus, Sp, OpenBrace, y, CloseBrace, Close);
+        Formula exchanged = Call("insert", x, removed);
+        Formula identity = Equal(Call("baseWeight", w, exchanged),
+            Seq(Call("baseWeight", w, b), Sp, Minus, Sp, Call("w", y), Sp, Plus, Sp, Call("w", x)));
+        return Disp(All("E", new Formula.Subscript(F.Id("Type"), F.Id("u")),
+            Seq(Instance(Call("Finite", e)), Comma, Sp,
+                All("w", new Formula.TypeArrow(e, real), All("B", Call("Set", e),
+                    All("e", e, All("b", e,
+                        Imp(Seq(Neg, member), Imp(Seq(y, Sp, InMacro, Sp, b), identity)))))))));
+    }
 
     private static Formula MainFormula()
     {
