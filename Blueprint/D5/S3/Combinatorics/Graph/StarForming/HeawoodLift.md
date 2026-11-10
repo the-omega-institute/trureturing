@@ -150,6 +150,30 @@ Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodLift.isomorphic_of
 
 Exact declaration: theorem isomorphic_of_phi_eq (s t : Signing) (h : phi s=phi t) : Nonempty (graph s ≃g graph t).
 
+**Definition 1.13 (signingOfVoltage).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodLift.signingOfVoltage`
+
+*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/HeawoodLift.signingOfVoltage` (`✓ std3`).
+
+*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+
+*Commentary.*
+
+Exact declaration: def signingOfVoltage (s : BinaryLift.Voltage base) : Signing.
+
+**Definition 1.14 (voltageIso).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/StarForming/HeawoodLift.voltageIso`
+
+*Formalization.* `D5/S3/Combinatorics/Graph/StarForming/HeawoodLift.voltageIso` (`✓ std3`).
+
+*Citation.* The Omega Institute repository contributors (2026). *Star-forming composition, certificate and cover results*. URL: <https://github.com/the-omega-institute/subquorum-colorings/tree/48728b42d39ab3de5de251c61da5a404ec418a69>.
+
+*Commentary.*
+
+Exact declaration: def voltageIso (s : BinaryLift.Voltage base) : BinaryLift.graph base s ≃g graph (signingOfVoltage s).
+
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodLift.Vertex`
@@ -163,6 +187,8 @@ Exact declaration: theorem isomorphic_of_phi_eq (s t : Signing) (h : phi s=phi t
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodLift.line`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodLift.point`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodLift.preconnected_iff`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodLift.signingOfVoltage`
 - Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodLift.voltage`
+- Truth anchor: `D5/S3/Combinatorics/Graph/StarForming/HeawoodLift.voltageIso`
 - Dependency: [D5/S3/Combinatorics/Graph/StarForming/BinaryLift](BinaryLift.md)
 - Dependency: [D5/S3/Combinatorics/Graph/StarForming/HeawoodSwitching](HeawoodSwitching.md)

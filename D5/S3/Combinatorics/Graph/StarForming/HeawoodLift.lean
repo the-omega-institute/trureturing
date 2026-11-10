@@ -119,4 +119,28 @@ theorem isomorphic_of_phi_eq (s t : Signing) (h : phi s=phi t) :
   rw [he] at e
   exact ⟨e⟩
 
+/-- Read the actual edge voltage on the original twenty-one Fano flags. -/
+def signingOfVoltage (s : BinaryLift.Voltage base) : Signing :=
+  fun e => s.sign (point e) (line e)
+
+/-- Every symmetric voltage on the actual base has exactly the original
+signing representation, including both orientations of every incidence. -/
+def voltageIso (s : BinaryLift.Voltage base) :
+    BinaryLift.graph base s ≃g graph (signingOfVoltage s) where
+  toEquiv := Equiv.refl _
+  map_rel_iff' := by
+    intro x y
+    have hs (v w : Vertex) (h : base.Adj v w) :
+        signingOfVoltage s (edgeIndex v w)=s.sign v w := by
+      change s.sign (point (edgeIndex v w)) (line (edgeIndex v w))=s.sign v w
+      rcases index_endpoints v w h with ⟨hv,hw⟩ | ⟨hw,hv⟩
+      · rw [← hv,← hw]
+      · rw [← hv,← hw]
+        exact s.symmetric w v (base.adj_symm h)
+    change (base.Adj x.1 y.1 ∧ x.2+y.2=signingOfVoltage s (edgeIndex x.1 y.1)) ↔
+      (base.Adj x.1 y.1 ∧ x.2+y.2=s.sign x.1 y.1)
+    by_cases h : base.Adj x.1 y.1
+    · rw [hs _ _ h]
+    · simp [h]
+
 end D5.S3.Combinatorics.Graph.StarForming.HeawoodLift

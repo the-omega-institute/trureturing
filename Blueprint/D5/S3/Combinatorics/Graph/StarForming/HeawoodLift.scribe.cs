@@ -25,5 +25,7 @@ internal sealed class HeawoodLiftDocument : IScribeDocumentDefinition
             Node("graph", "graph", "Exact declaration: abbrev graph (s : Signing).", DescribeRole.Definition),
             Node("coboundary_iff", "coboundary iff", "Exact declaration: theorem coboundary_iff (s : Signing) : (∃ t : Switches, ∀ v w, base.Adj v w → s (edgeIndex v w)=t v+t w) ↔ phi s=0.", DescribeRole.Theorem),
             Node("preconnected_iff", "preconnected iff", "Exact declaration: theorem preconnected_iff (s : Signing) : (graph s).Preconnected ↔ phi s≠0.", DescribeRole.Theorem),
-            Node("isomorphic_of_phi_eq", "isomorphic of phi eq", "Exact declaration: theorem isomorphic_of_phi_eq (s t : Signing) (h : phi s=phi t) : Nonempty (graph s ≃g graph t).", DescribeRole.Theorem)), []));
+            Node("isomorphic_of_phi_eq", "isomorphic of phi eq", "Exact declaration: theorem isomorphic_of_phi_eq (s t : Signing) (h : phi s=phi t) : Nonempty (graph s ≃g graph t).", DescribeRole.Theorem),
+            Node("signingOfVoltage", "signingOfVoltage", "Exact declaration: def signingOfVoltage (s : BinaryLift.Voltage base) : Signing.", DescribeRole.Definition),
+            Node("voltageIso", "voltageIso", "Exact declaration: def voltageIso (s : BinaryLift.Voltage base) : BinaryLift.graph base s ≃g graph (signingOfVoltage s).", DescribeRole.Definition)), []));
 }
