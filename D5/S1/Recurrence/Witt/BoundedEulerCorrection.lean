@@ -6,7 +6,7 @@
    utility: none
    digest: Every integer ghost weight has a unique bounded positive-index correction to an integral formal exponential. -/
 
-/- admission_basis: escape-witness. Proposed content: the strong proper-divisor recursion simultaneously constructs the bounded residue and integral Euler account; bounded_ledger_unique proves positive-index rigidity by strong induction. The Mobius identity and logarithmic bound consume this account. utility none: symbolic unbounded mathematics, no finite checker or certified instance. Reused frozen owners: PrimitiveEulerLedger and HannaDiagonalGhostPowerIntegrality; no new generic Euler factorization. All novelty claims remain unverified. -/
+/- admission_basis: escape-witness. Proposed content: the strong proper-divisor recursion simultaneously constructs the bounded residue and integral Euler account; bounded_ledger_unique proves positive-index rigidity by strong induction. Mobius inversion and the logarithmic estimate are applications of the constructed account, with their parameter correspondence and derivation in the accompanying exposition. utility none: symbolic unbounded mathematics, no finite checker or certified instance. Reused frozen owners: PrimitiveEulerLedger and HannaDiagonalGhostPowerIntegrality; no new generic Euler factorization. All novelty claims remain unverified. -/
 
 
 /- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/26516.
@@ -14,7 +14,6 @@ The full source telescope, enrolled readout, variation, sensitivity and actual
 observational dependence require current compiled binding evidence. -/
 
 import D5.S1.Recurrence.Witt.HannaDiagonalGhostPowerIntegrality
-import Mathlib.NumberTheory.Harmonic.Bounds
 
 noncomputable section
 
@@ -126,81 +125,5 @@ theorem correction_unique (w a : ℕ → ℤ) (ha : IsCorrection w a) :
 /-- The uncorrected Möbius transform; at power weights this is the Jordan sum. -/
 def moebiusTransform (w : ℕ → ℤ) (n : ℕ) : ℤ :=
   ∑ d ∈ n.divisors, ArithmeticFunction.moebius (n / d) * w d
-
-/-- Exact inversion of the constructed, rather than postulated, divisor account. -/
-theorem moebius_identity (w : ℕ → ℤ) (n : ℕ) (hn : 0 < n) :
-    (n : ℤ) * ledger w n = moebiusTransform w n -
-      ∑ d ∈ n.divisors, ArithmeticFunction.moebius (n / d) * correction w d := by
-  have hsum : ∀ (m : ℕ), 0 < m →
-      ∑ d ∈ m.divisors, (d : ℤ) * ledger w d = w m - correction w m := by
-    intro m hm
-    exact (correction_equation w m hm).symm
-  have h := (ArithmeticFunction.sum_eq_iff_sum_mul_moebius_eq.mp hsum) n hn
-  simp only [Int.cast_id] at h
-  rw [Nat.sum_divisorsAntidiagonal' (fun i j => (ArithmeticFunction.moebius i : ℤ) *
-    (w j - correction w j))] at h
-  simpa only [moebiusTransform, mul_sub, sum_sub_distrib] using h.symm
-
-private theorem divisor_harmonic_budget (n : ℕ) (hn : 0 < n) :
-    (∑ d ∈ n.divisors, (d : ℝ)) / n ≤ 1 + Real.log n := by
-  have hnR : (0 : ℝ) < n := by exact_mod_cast hn
-  have he : (∑ d ∈ n.divisors, (d : ℝ)) / n =
-      ∑ d ∈ n.divisors, (d : ℝ)⁻¹ := by
-    rw [← Nat.sum_div_divisors n (fun d => (d : ℝ)), sum_div]
-    apply sum_congr rfl
-    intro d hd
-    have hdn := Nat.dvd_of_mem_divisors hd
-    have hdR : (0 : ℝ) < d := by exact_mod_cast Nat.pos_of_mem_divisors hd
-    have hm : ((n / d : ℕ) : ℝ) * d = n := by
-      exact_mod_cast Nat.div_mul_cancel hdn
-    apply (div_eq_iff hnR.ne').mpr
-    field_simp
-    nlinarith
-  rw [he]
-  calc
-    _ ≤ ∑ d ∈ Icc 1 n, (d : ℝ)⁻¹ := by
-      apply sum_le_sum_of_subset_of_nonneg
-      · intro d hd
-        exact mem_Icc.mpr ⟨Nat.pos_of_mem_divisors hd,
-          Nat.le_of_dvd hn (Nat.dvd_of_mem_divisors hd)⟩
-      · intro d _ _
-        exact inv_nonneg.mpr (Nat.cast_nonneg d)
-    _ ≤ _ := by
-      simpa only [harmonic_eq_sum_Icc, Rat.cast_sum, Rat.cast_inv, Rat.cast_natCast]
-        using harmonic_le_one_add_log n
-
-/-- Uniform logarithmic error for every integer ghost weight. -/
-theorem logarithmic_error (w : ℕ → ℤ) (n : ℕ) (hn : 0 < n) :
-    |(ledger w n : ℝ) - (moebiusTransform w n : ℝ) / n| ≤ 1 + Real.log n := by
-  have hnR : (0 : ℝ) < n := by exact_mod_cast hn
-  let E : ℤ := ∑ d ∈ n.divisors,
-    ArithmeticFunction.moebius (n / d) * correction w d
-  have hE : |(E : ℝ)| ≤ ∑ d ∈ n.divisors, (d : ℝ) := by
-    calc
-      _ ≤ ∑ d ∈ n.divisors,
-          |((ArithmeticFunction.moebius (n / d) * correction w d : ℤ) : ℝ)| := by
-        simpa only [E, Int.cast_sum] using
-          (Finset.abs_sum_le_sum_abs
-            (fun d => ((ArithmeticFunction.moebius (n / d) * correction w d : ℤ) : ℝ))
-            n.divisors)
-      _ ≤ _ := by
-        apply sum_le_sum
-        intro d hd
-        have hb := correction_bounds w d (Nat.pos_of_mem_divisors hd)
-        have hb0 : (0 : ℝ) ≤ correction w d := by exact_mod_cast hb.1
-        have hble : (correction w d : ℝ) ≤ d := by exact_mod_cast hb.2.le
-        have hmu : |(ArithmeticFunction.moebius (n / d) : ℝ)| ≤ 1 := by
-          exact_mod_cast ArithmeticFunction.abs_moebius_le_one (n := n / d)
-        rw [Int.cast_mul, abs_mul, abs_of_nonneg hb0]
-        nlinarith
-  have hi := moebius_identity w n hn
-  have hiR : (n : ℝ) * ledger w n = (moebiusTransform w n : ℝ) - E := by
-    exact_mod_cast hi
-  have he : (ledger w n : ℝ) - (moebiusTransform w n : ℝ) / n = -(E : ℝ) / n := by
-    apply (eq_div_iff hnR.ne').mpr
-    field_simp
-    nlinarith
-  rw [he, abs_div, abs_neg, abs_of_pos hnR]
-  exact (div_le_div_of_nonneg_right hE hnR.le).trans (divisor_harmonic_budget n hn)
 
 end D5.S1.Recurrence.Witt.BoundedEulerCorrection
