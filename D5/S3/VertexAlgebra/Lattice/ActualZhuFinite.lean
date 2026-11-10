@@ -24,6 +24,9 @@ import D5.S3.VertexAlgebra.Lattice.ActualC2Cofinite
 import D5.S3.VertexAlgebra.Lattice.NormFourZhuFinite
 import D5.S3.VertexAlgebra.LatticeActualLZeroGrading
 
+/-! Finite homogeneous lifts, fixed-energy C2 projection, and strict circle descent
+on the original full lattice carrier. -/
+
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 
@@ -58,6 +61,7 @@ private theorem projection_c2 (D : LatticeData)
           mu D (gradeProjection D p a) (-2) (gradeProjection D q b) := by
       conv_lhs => rw [← sum_gradeProjections D a, ← sum_gradeProjections D b]
       simp only [mu, map_sum, Finset.sum_apply, LinearMap.sum_apply]
+      exact Finset.sum_comm
     rw [hexpand, map_sum]
     apply Submodule.sum_mem
     intro p hp
@@ -168,6 +172,7 @@ private theorem circle_absorption (D : LatticeData)
   classical
   apply Submodule.span_le.mpr
   rintro z ⟨p, q, a, b, ha, hb, hpq, rfl⟩
+  change mu D a (-2) b ∈ T
   let correction : Carrier D := ∑ k ∈ Finset.range p,
     (p.choose (k + 1) : ℂ) • mu D a ((k : ℤ) - 1) b
   have hc : NormFourZhuFinite.circle D p a b = mu D a (-2) b + correction := by
@@ -201,7 +206,7 @@ theorem positive_definite_zhu_quotient_finite (D : LatticeData)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) :
     FiniteDimensional ℂ (Carrier D ⧸ zhuO D) := by
   classical
-  letI := ActualC2Cofinite.positive_definite_c2_cofinite D hD
+  have := ActualC2Cofinite.positive_definite_c2_cofinite D hD
   obtain ⟨S, hS, htop⟩ := finite_homogeneous_representatives D hD
   let T := Submodule.span ℂ (S : Set (Carrier D)) ⊔ zhuO D
   have hgrade : ∀ N : ℕ, grade D (N : ℤ) ≤ T := by
@@ -218,12 +223,12 @@ theorem positive_definite_zhu_quotient_finite (D : LatticeData)
     apply Submodule.sum_mem
     intro n hn
     have hn0 := stateEnergies_nonneg hD v n hn
-    have hg := gradeProjection_mem D n v
-    rw [← Int.toNat_of_nonneg hn0] at hg
+    have hg : gradeProjection D n v ∈ grade D (n.toNat : ℤ) := by
+      simpa only [Int.toNat_of_nonneg hn0] using gradeProjection_mem D n v
     exact hgrade n.toNat hg
   have hmap : (Submodule.span ℂ (S : Set (Carrier D))).map (zhuO D).mkQ = ⊤ := by
-    apply Submodule.map_mkQ_eq_top.mpr
-    simpa only [sup_comm] using hT
+    rw [Submodule.map_mkQ_eq_top, sup_comm]
+    exact hT
   apply Module.Finite.of_fg_top
   rw [← hmap]
   exact (Submodule.fg_span S.finite_toSet).map _
