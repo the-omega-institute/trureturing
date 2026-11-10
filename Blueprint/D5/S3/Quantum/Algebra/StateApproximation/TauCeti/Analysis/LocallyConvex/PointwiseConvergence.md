@@ -4,7 +4,7 @@
 
 Linear functionals on pointwise convergence
 
-A continuous linear functional on a space of continuous linear maps with pointwise convergence is a finite sum of evaluations against continuous dual vectors. The finite set of input vectors arises from a basic neighborhood of zero. The spaces are normed over the real or complex scalars specified by the theorem.
+A continuous linear functional on a space of continuous linear maps with pointwise convergence is a finite sum of evaluations against continuous dual vectors. The finite set of input vectors arises from a basic neighborhood of zero. The source E is an additive commutative group with a topology and a module structure over an arbitrary normed field K1; the target F is a normed additive commutative group with a normed space structure over an RCLike field K.
 
 **Theorem 1.1 (exists_finset_sum_eq).**
 
