@@ -110,19 +110,9 @@ Lean statement: `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.euler_
 
 Every prefix through part size N agrees with the integer series through degree N. This is the original owner proof, publicly reused by the infinite product bridge.
 
-**Theorem 1.9 (An actual infinite Euler product).**
+For every integer sequence b, the existing eulerSeries b is the actual infinite product of eulerFactor(i+1,b(i)). The frozen low-degree coefficient vanishing gives order(eulerFactor(i+1,b(i))-1)>=i+1. Mathlib PowerSeries.WithPiTopology.multipliable_one_add_of_tendsto_order_atTop_nhds_top therefore gives multipliability. The continuous coefficient maps send its finite-prefix convergence to coefficient convergence. For each degree k, euler_series_represents makes those coefficients eventually constant at coeff k (eulerSeries b); uniqueness of limits identifies the product with eulerSeries b. This application uses the standard discrete topology on the integer coefficient ring and imposes no sign condition on b.
 
-Lean statement: `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.hasProd_eulerSeries`
-
-*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.hasProd_eulerSeries` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The orders of eulerFactor(i+1,b(i))-1 tend to infinity. Coefficientwise stabilization then identifies the topological infinite product with the existing integer Euler series. The coefficient ring has its standard discrete topology.
-
-**Theorem 1.10 (The actual constant coefficient).**
+**Theorem 1.9 (The actual constant coefficient).**
 
 Lean statement: `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.exponential_sum_constant`
 
@@ -134,7 +124,7 @@ Lean statement: `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.expone
 
 The formal logarithmic input has constant coefficient zero, so substituting into exp gives constant coefficient one. The original proof is now publicly consumed by coefficient and boundary arguments.
 
-**Theorem 1.11 (The actual differential equation).**
+**Theorem 1.10 (The actual differential equation).**
 
 Lean statement: `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.exponential_sum_equation`
 
@@ -146,7 +136,7 @@ Lean statement: `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.expone
 
 Formal differentiation of the actual exponential gives X*F prime equal to the positive-index ghost series times F. This original owner theorem is now shared by the coefficient-recurrence proof.
 
-**Theorem 1.12 (Euler series equal the literal formal exponential).**
+**Theorem 1.11 (Euler series equal the literal formal exponential).**
 
 Lean statement: `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.euler_series_exponential`
 
@@ -158,7 +148,7 @@ Lean statement: `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.euler_
 
 For any characteristic-zero field, agreement of all positive-index divisor ghosts identifies the mapped integer Euler series with the literal exponential. The bridge uses the existing Euler differential equation and coefficientwise differential uniqueness. Both the original Gauss-integrality proof and the corrected power family consume it.
 
-**Theorem 1.13 (Gauss congruences yield actual integrality).**
+**Theorem 1.12 (Gauss congruences yield actual integrality).**
 
 Lean statement: `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.gauss_exponential_integral`
 
@@ -170,7 +160,7 @@ Lean statement: `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.gauss_
 
 The original Mobius divisibility and Euler-ledger construction produce integer coefficients of the actual formal exponential. The proof now consumes the shared Euler-exponential bridge. No correction existence is assumed.
 
-**Definition 1.14 (Hanna's second-comment conjecture).**
+**Definition 1.13 (Hanna's second-comment conjecture).**
 
 $$claim = (\forall K: Type, [\operatorname{Field}\left(K\right)] [\operatorname{CharZero}\left(K\right)], \forall C: \mathbb{N} \to K, \operatorname{HannaLogarithmicPowerClosure}.\operatorname{IntegralSeries}\left(\operatorname{exponentialSum}\left(C\right)\right) \Rightarrow \operatorname{HannaLogarithmicPowerClosure}.\operatorname{IntegralSeries}\left(\operatorname{exponentialSum}\left((fun n: \mathbb{N} \mapsto C\left(n\right)^{n})\right)\right))$$
 
@@ -182,7 +172,7 @@ $$claim = (\forall K: Type, [\operatorname{Field}\left(K\right)] [\operatorname{
 
 OEIS A156216, internal revision #3, second comment (unpaginated): "More generally, if exp( Sum_{n>=1} C(n) * x^n/n ) equals a power series in x with integer coefficients, then exp( Sum_{n>=1} C(n)^n * x^n/n ) also equals a power series in x with integer coefficients (conjecture)." The sequence C ranges over all natural indices, its entry at zero is unused, and C(n)^n raises the nth entry to its own natural index. IntegralSeries is the existing predicate asserting that every ordinary coefficient is an embedded integer. All fields and both field instances are quantified.
 
-**Theorem 1.15 (Diagonal self-powers preserve integrality).**
+**Theorem 1.14 (Diagonal self-powers preserve integrality).**
 
 $$\forall K: Type, [\operatorname{Field}\left(K\right)] [\operatorname{CharZero}\left(K\right)], \forall C: \mathbb{N} \to K, \operatorname{HannaLogarithmicPowerClosure}.\operatorname{IntegralSeries}\left(\operatorname{exponentialSum}\left(C\right)\right) \Rightarrow \operatorname{HannaLogarithmicPowerClosure}.\operatorname{IntegralSeries}\left(\operatorname{exponentialSum}\left((fun n: \mathbb{N} \mapsto C\left(n\right)^{n})\right)\right)$$
 
@@ -213,7 +203,6 @@ The integral input series has an integer Euler ledger b. Its formal logarithmic 
 - Truth anchor: `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.exponential_sum_constant`
 - Truth anchor: `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.exponential_sum_equation`
 - Truth anchor: `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.gauss_exponential_integral`
-- Truth anchor: `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.hasProd_eulerSeries`
 - Truth anchor: `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.integral_input_ledger`
 - Truth anchor: `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.logarithmicInput`
 - Truth anchor: `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.result`

@@ -102,7 +102,7 @@ Lean statement: `D5/S3/Arith/Congruence/HannaUniformCorrection.correction_exists
 
 Existence and uniqueness hold on every positive index for every integer s>=0. Whole-function uniqueness is deliberately absent because the entry at zero is unused.
 
-For s>=0, map_Z_to_Q(eulerSeries(i ↦ c_s(i+1)))=F_s. Apply HannaDiagonalGhostPowerIntegrality.euler_series_exponential with the positive-index identity weight(s,n)-a_s(n)=divisorGhost(c_s,n), supplied by BoundedEulerCorrection.correction_equation. At divisors d>0, (d-1)+1=d. The integer Euler object has HasProd by HannaDiagonalGhostPowerIntegrality.hasProd_eulerSeries; this is an actual infinite product.
+For s>=0, map_Z_to_Q(eulerSeries(i ↦ c_s(i+1)))=F_s. Apply HannaDiagonalGhostPowerIntegrality.euler_series_exponential with the positive-index identity weight(s,n)-a_s(n)=divisorGhost(c_s,n), supplied by BoundedEulerCorrection.correction_equation. At divisors d>0, (d-1)+1=d. The integer Euler object has the actual HasProd property by the arbitrary-integer-sequence application derived in the owning HannaDiagonalGhostPowerIntegrality Scribe.
 
 **Theorem 1.9 (correction prime power).**
 
@@ -160,7 +160,19 @@ These are ordinary integer coefficients of the canonical Euler series. They are 
 
 For s>=0 and every n>=0, (f_s(n):Q)=coeff_n(F_s), by applying coeff_n to the Euler/exponential equality and using coeff_map. The integers f are extracted from the existing Euler series independently of this equality.
 
-**Definition 1.13 (ColouredPartition).**
+**Definition 1.13 (Independent finite coloured partitions).**
+
+Lean statement: `D5/S3/Arith/Congruence/HannaUniformCorrection.ColouredPartitionWithColors`
+
+*Formalization.* `D5/S3/Arith/Congruence/HannaUniformCorrection.ColouredPartitionWithColors` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any colors:N->N and degree n, take the sigma over p:Nat.Partition n of the dependent product over distinct parts d of Sym(Fin(colors(d)), multiplicity_p(d)). This finite carrier is defined independently of any Euler or exponential coefficient and allows zero colours.
+
+**Definition 1.14 (The corrected-power coloured carrier).**
 
 Lean statement: `D5/S3/Arith/Congruence/HannaUniformCorrection.ColouredPartition`
 
@@ -170,9 +182,11 @@ Lean statement: `D5/S3/Arith/Congruence/HannaUniformCorrection.ColouredPartition
 
 *Commentary.*
 
-The independent finite generic coloured carrier is specialized to (c_s(d)).toNat. Positive-index exponent bounds prove this natural colour count faithfully equals the integer exponent at every occurring part.
+Substitute colors(d)=(c_s(d)).toNat into the independent generic carrier. The definition applies at every natural degree, including zero.
 
-For s>=2 and n>=0, f_s(n)=Nat.card(ColouredPartition(s,n)). The exponent bound gives c_s(d)>=1 at d>0, so Int.toNat_of_nonneg identifies c_s(d) with its natural colour count. Substitute this into ColouredEulerLedger.coloured_coefficient. The generic finite carrier includes zero colours and degree zero; the latter has the unique empty partition.
+For every colors:N->N and every n:N, the integer coefficient of eulerSeries(i -> colors(i+1)) at n equals Nat.card(ColouredPartitionWithColors(colors,n)). Compute the latter by Fintype.card_sigma and Fintype.card_pi. Sym.card_sym_fin_eq_multichoose gives the sum over partitions p of the product over its distinct parts d of multichoose(colors(d),multiplicity_p(d)). Nat.Partition.coeff_genFun identifies this with the coefficient of the weighted partition generating function. Nat.Partition.hasProd_genFun supplies its actual infinite product. For each positive part size d, PrimitiveEulerLedger.coeff_eulerFactor and Ring.choose_neg' identify the local coefficient at N with multichoose(colors(d),N/d) when d divides N, and zero otherwise; the two sign factors cancel. ColouredOddMultiplicity.local_factor_of_coeff reconstructs the same local factor from these coefficients. Uniqueness of HasProd, using the arbitrary-integer Euler-product application in the owning HannaDiagonalGhostPowerIntegrality Scribe, identifies the two series and proves the coefficient/cardinality equality. All colours and all degrees are quantified: zero colours are permitted, degree zero has the unique empty partition, and colors(0) is unused because every actual part size is positive.
+
+For every integer s>=2 and every n>=0, f_s(n)=Nat.card(ColouredPartition(s,n)). At each d=i+1, exponent_bounds gives c_s(d)>=1, so Int.toNat_of_nonneg identifies the integer image of the natural colour count with c_s(d). Substitution into the preceding all-colours/all-degrees derivation gives exactly f_s(n), including degree zero. This is an application of the existing cardinality and product formulas, not an additional retained theorem or a new combinatorial proof.
 
 For every integer s, f_s(0)=1. At degree zero, the defining Euler series is ledgerProduct at the empty prefix; its constant coefficient is one.
 
@@ -182,7 +196,7 @@ For s>=2, f_s(n)>0 for every n>=0. On positive indices m, m^s>=m>a_s(m), so g(m)
 
 For s>=2, f_s is nondecreasing on all natural indices. The first corrected ghost is g(1)=1. For n>=1, write m^s=m*m^(s-1), use n^(s-1)<=(n+1)^(s-1) and (n+1)^(s-1)>=n+1 to get (n+1)^s-n^s>=n+1. Together with 0<=a_s(n)<n and 0<=a_s(n+1)<n+1 this gives g(n)<=g(n+1). EulerExponentialCoefficients.coefficient_monotone then applies, followed by coefficient transport.
 
-**Theorem 1.14 (correction boundary).**
+**Theorem 1.15 (correction boundary).**
 
 Lean statement: `D5/S3/Arith/Congruence/HannaUniformCorrection.correction_boundary`
 
@@ -194,7 +208,7 @@ Lean statement: `D5/S3/Arith/Congruence/HannaUniformCorrection.correction_bounda
 
 At weights zero and one, the bounded positive-index corrections are respectively zero and n-1. Their literal corrected ghosts equal one. Uniqueness comes from the same generic construction.
 
-**Theorem 1.15 (F boundary).**
+**Theorem 1.16 (F boundary).**
 
 Lean statement: `D5/S3/Arith/Congruence/HannaUniformCorrection.F_boundary`
 
@@ -209,6 +223,7 @@ Both actual boundary exponentials equal the inverse of one minus X. Coefficient 
 ## References
 
 - Truth anchor: `D5/S3/Arith/Congruence/HannaUniformCorrection.ColouredPartition`
+- Truth anchor: `D5/S3/Arith/Congruence/HannaUniformCorrection.ColouredPartitionWithColors`
 - Truth anchor: `D5/S3/Arith/Congruence/HannaUniformCorrection.F`
 - Truth anchor: `D5/S3/Arith/Congruence/HannaUniformCorrection.F_boundary`
 - Truth anchor: `D5/S3/Arith/Congruence/HannaUniformCorrection.IsPowerCorrection`
@@ -227,4 +242,3 @@ Both actual boundary exponentials equal the inverse of one minus X. Coefficient 
 - Dependency: [D5/S1/Recurrence/Witt/EulerExponentialCoefficients](../../../S1/Recurrence/Witt/EulerExponentialCoefficients.md)
 - Dependency: [D5/S3/Arith/Congruence/BoundedPowerCorrection](BoundedPowerCorrection.md)
 - Dependency: [D5/S3/Arith/Divisors/ProperDivisorPowerBudget](../Divisors/ProperDivisorPowerBudget.md)
-- Dependency: [D5/S3/Combinatorics/Partitions/ColouredEulerLedger](../../Combinatorics/Partitions/ColouredEulerLedger.md)
