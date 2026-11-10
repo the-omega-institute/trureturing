@@ -15,13 +15,13 @@ internal sealed class RectangleEndpointsDocument : IScribeDocumentDefinition
         H("RectangleEndpoints"),
         Blocks(
             Node("deletioncut", "deletionCut", "deletionCut",
-                "Exact deletion-rectangle endpoint, including every empty-fibre case. ", DescribeRole.Theorem),
+                "Exact deletion-rectangle endpoint, including every empty-fibre case.", DescribeRole.Theorem),
             Node("linkcut", "linkCut", "linkCut",
-                "Exact link-rectangle endpoint. L<=D accounts for the fibres already retained in D*delta(Z); an empty projected lower is handled without an ordinary move. ", DescribeRole.Theorem),
+                "Exact link-rectangle endpoint. L<=D accounts for the fibres already retained in D*delta(Z); an empty projected lower is handled without an ordinary move.", DescribeRole.Theorem),
             Node("deletionlift", "deletionLift", "deletionLift",
-                "Endpoint-transported deletion rule consumes its proved raw equality. ", DescribeRole.Definition),
+                "Endpoint-transported deletion rule consumes its proved raw equality.", DescribeRole.Definition),
             Node("linklift", "linkLift", "linkLift",
-                "Endpoint-transported link rule consumes its proved raw equality. ", DescribeRole.Definition)
+                "Endpoint-transported link rule consumes its proved raw equality.", DescribeRole.Definition)
         )));
 
     private static DocumentBlock Node(string id, string declaration, string title, string prose,

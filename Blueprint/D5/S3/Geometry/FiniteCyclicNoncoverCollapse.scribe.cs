@@ -73,7 +73,7 @@ internal sealed class FiniteCyclicNoncoverCollapseDocument : IScribeDocumentDefi
         string prose, string rawContract, DescribeRole role) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-            Blocks(SourceText(prose), SourceText("Exact attempted Lean contract: " + rawContract)), role);
+            Blocks(SourceText(prose), SourceText("Exact attempted Lean contract:" + rawContract)), role);
 
     // TextRun is one line. Keep every quoted source line, including blank separators,
     // as typed text; this is commentary, never a substitute for a Lean projection.

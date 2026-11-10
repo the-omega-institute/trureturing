@@ -104,8 +104,8 @@ internal sealed class FiniteSubcomplexCylinderDocument : IScribeDocumentDefiniti
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + selector), H(title),
             role == DescribeRole.Definition ? StatementSource.WithoutFormula() : StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(),
-            Blocks(SourceText(prose), SourceText("Lean name: " + leanName),
-                SourceText("Exact authored Lean header: " + rawContract)), role);
+            Blocks(SourceText(prose), SourceText("Lean name:" + leanName),
+                SourceText("Exact authored Lean header:" + rawContract)), role);
 
     // Preserve decoded multiline quotations using one valid TextRun per source line.
     // Quotations are commentary; theorem statements must come from Lean projection.

@@ -15,9 +15,9 @@ internal sealed class VerticalDocument : IScribeDocumentDefinition
         H("Vertical"),
         Blocks(
             Node("verticalgamma", "verticalGamma", "verticalGamma",
-                "Source/endpoints are literal Phi states with the single maximal left fibre removed. No parent collapse, collar, or endpoint equality is an assumption. ", DescribeRole.Definition),
+                "Source/endpoints are literal Phi states with the single maximal left fibre removed. No parent collapse, collar, or endpoint equality is an assumption.", DescribeRole.Definition),
             Node("verticalvoid", "verticalVoid", "verticalVoid",
-                "The separate VOID rule uses an original r in nonempty R. The empty right fibre emits lower=a, which is genuinely nonempty; it never collapses UNIT to VOID. ", DescribeRole.Definition)
+                "The separate VOID rule uses an original r in nonempty R. The empty right fibre emits lower=a, which is genuinely nonempty; it never collapses UNIT to VOID.", DescribeRole.Definition)
         )));
 
     private static DocumentBlock Node(string id, string declaration, string title, string prose,

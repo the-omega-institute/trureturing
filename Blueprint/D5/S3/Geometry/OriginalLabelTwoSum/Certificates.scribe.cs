@@ -15,19 +15,19 @@ internal sealed class CertificatesDocument : IScribeDocumentDefinition
         H("Certificates"),
         Blocks(
             Node("facets", "facets", "facets",
-                "A finite union of raw simplices, with the empty index family equal to VOID. ", DescribeRole.Definition),
+                "A finite union of raw simplices, with the empty index family equal to VOID.", DescribeRole.Definition),
             Node("endpoint", "endpoint", "endpoint",
-                "A finite union of raw simplices, with the empty index family equal to VOID. ", DescribeRole.Definition),
+                "A finite union of raw simplices, with the empty index family equal to VOID.", DescribeRole.Definition),
             Node("criticaldata", "CriticalData", "CriticalData",
-                "Exact ordinary critical-cell conditions, including ALL proper subfaces. ", DescribeRole.Definition),
+                "Exact ordinary critical-cell conditions, including ALL proper subfaces.", DescribeRole.Definition),
             Node("filling", "Filling", "Filling",
-                "A local filling need not have a contractible collar. ", DescribeRole.Definition),
+                "A local filling need not have a contractible collar.", DescribeRole.Definition),
             Node("certificate", "Certificate", "Certificate",
-                "A left input carries an actual vertex and ordinary main/core lists. ", DescribeRole.Definition),
+                "A left input carries an actual vertex and ordinary main/core lists.", DescribeRole.Definition),
             Node("critical-intersection", "critical_intersection", "critical_intersection",
-                "Actual literal simplex/core intersection, with the empty face retained. ", DescribeRole.Theorem),
+                "Actual literal simplex/core intersection, with the empty face retained.", DescribeRole.Theorem),
             Node("critical-overlap", "critical_overlap", "critical_overlap",
-                "Distinct retained cells meet only in proper boundary faces. ", DescribeRole.Theorem)
+                "Distinct retained cells meet only in proper boundary faces.", DescribeRole.Theorem)
         )));
 
     private static DocumentBlock Node(string id, string declaration, string title, string prose,

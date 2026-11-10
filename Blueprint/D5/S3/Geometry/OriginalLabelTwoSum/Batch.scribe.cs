@@ -15,11 +15,11 @@ internal sealed class BatchDocument : IScribeDocumentDefinition
         H("Batch"),
         Blocks(
             Node("fibrelayers", "fibreLayers", "fibreLayers",
-                "Literal union of indexed fibre families. Repeated indices are not needed. ", DescribeRole.Definition),
+                "Literal union of indexed fibre families. Repeated indices are not needed.", DescribeRole.Definition),
             Node("mem-fibrelayers", "mem_fibreLayers", "mem_fibreLayers",
-                "Membership retains the actual fibre index and local face. ", DescribeRole.Theorem),
+                "Membership retains the actual fibre index and local face.", DescribeRole.Theorem),
             Node("batchfibre", "batchFibre", "batchFibre",
-                "A finite batch, with actual evolving base (finished N-fibres and unfinished M-fibres). The pair list is precisely the concatenation of the lifted local lists, in the supplied finite index order. ", DescribeRole.Definition)
+                "A finite batch, with actual evolving base (finished N-fibres and unfinished M-fibres). The pair list is precisely the concatenation of the lifted local lists, in the supplied finite index order.", DescribeRole.Definition)
         )));
 
     private static DocumentBlock Node(string id, string declaration, string title, string prose,

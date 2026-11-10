@@ -15,13 +15,13 @@ internal sealed class ParentCellsDocument : IScribeDocumentDefinition
         H("ParentCells"),
         Blocks(
             Node("parentcore", "parentCore", "parentCore",
-                "Exact Cout from the ORIGINAL proof, on the full original parent ground. ", DescribeRole.Definition),
+                "Exact Cout from the ORIGINAL proof, on the full original parent ground.", DescribeRole.Definition),
             Node("parentcritical", "parentCritical", "parentCritical",
-                "Ordered-index provenance is retained by the compiler schedules; this finite set is the actual output critical family, after proving no unwanted inclusions. ", DescribeRole.Definition),
+                "Ordered-index provenance is retained by the compiler schedules; this finite set is the actual output critical family, after proving no unwanted inclusions.", DescribeRole.Definition),
             Node("mem-parentcritical", "mem_parentCritical", "mem_parentCritical",
-                "Literal critical provenance, consumed by the filling endpoint assembly. ", DescribeRole.Theorem),
+                "Literal critical provenance, consumed by the filling endpoint assembly.", DescribeRole.Theorem),
             Node("parentcelldata", "parentCellData", "parentCellData",
-                "Complete critical-face proof for the COMPUTED Cout. Compiler constructs the main and separate core lists; neither collapse is a hypothesis here. ", DescribeRole.Definition)
+                "Complete critical-face proof for the COMPUTED Cout. Compiler constructs the main and separate core lists; neither collapse is a hypothesis here.", DescribeRole.Definition)
         )));
 
     private static DocumentBlock Node(string id, string declaration, string title, string prose,

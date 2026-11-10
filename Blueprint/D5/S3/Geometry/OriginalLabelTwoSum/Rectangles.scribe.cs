@@ -15,11 +15,11 @@ internal sealed class RectanglesDocument : IScribeDocumentDefinition
         H("Rectangles"),
         Blocks(
             Node("phi-split", "phi_split", "phi_split",
-                "Exact split-coordinate membership of the raw parent, including raw empty. ", DescribeRole.Theorem),
+                "Exact split-coordinate membership of the raw parent, including raw empty.", DescribeRole.Theorem),
             Node("deletionrectangle", "deletionRectangle", "deletionRectangle",
-                "The deletion rectangle has no assumed local or parent schedule. All cofaces are derived from native child freeness, alpha not in L, and raw E downwardness. ", DescribeRole.Definition),
+                "The deletion rectangle has no assumed local or parent schedule. All cofaces are derived from native child freeness, alpha not in L, and raw E downwardness.", DescribeRole.Definition),
             Node("linkrectangle", "linkRectangle", "linkRectangle",
-                "A link projection can have an empty alpha. Its raw coface condition is obtained from an actual child e-containing pair by the caller. Every emitted lower is nonempty because each selected tau lies outside delta(Z). ", DescribeRole.Definition)
+                "A link projection can have an empty alpha. Its raw coface condition is obtained from an actual child e-containing pair by the caller. Every emitted lower is nonempty because each selected tau lies outside delta(Z).", DescribeRole.Definition)
         )));
 
     private static DocumentBlock Node(string id, string declaration, string title, string prose,

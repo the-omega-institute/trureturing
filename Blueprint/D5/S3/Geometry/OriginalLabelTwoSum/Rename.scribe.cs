@@ -15,21 +15,21 @@ internal sealed class RenameDocument : IScribeDocumentDefinition
         H("Rename"),
         Blocks(
             Node("renamefamily", "renameFamily", "renameFamily",
-                "Direct image of raw faces, without adjoining empty to a VOID source. ", DescribeRole.Definition),
+                "Direct image of raw faces, without adjoining empty to a VOID source.", DescribeRole.Definition),
             Node("project-rename", "project_rename", "project_rename",
-                "Projection agrees exactly with the pinned mathlib image-complex API. ", DescribeRole.Theorem),
+                "Projection agrees exactly with the pinned mathlib image-complex API.", DescribeRole.Theorem),
             Node("renamepair", "renamePair", "renamePair",
-                "Ordinary free pairs transport through an injective label map. Freeness is proved on all cofaces of the mapped ambient, rather than postulated. ", DescribeRole.Definition),
+                "Ordinary free pairs transport through an injective label map. Freeness is proved on all cofaces of the mapped ambient, rather than postulated.", DescribeRole.Definition),
             Node("renamesequence", "renameSequence", "renameSequence",
-                "Recursive transport of the ACTUAL native list. ", DescribeRole.Definition),
+                "Recursive transport of the ACTUAL native list.", DescribeRole.Definition),
             Node("renamesequence-pairs", "renameSequence_pairs", "renameSequence_pairs",
-                "Exact ordered coverage of the transported ordinary pairs. ", DescribeRole.Theorem),
+                "Exact ordered coverage of the transported ordinary pairs.", DescribeRole.Theorem),
             Node("rename-operations", "rename_operations", "rename_operations",
-                "Simplex, intersections and endpoint families are transported literally. ", DescribeRole.Theorem),
+                "Simplex, intersections and endpoint families are transported literally.", DescribeRole.Theorem),
             Node("renamefilling", "renameFilling", "renameFilling",
-                "A local filling can be installed on any fresh original labels. ", DescribeRole.Definition),
+                "A local filling can be installed on any fresh original labels.", DescribeRole.Definition),
             Node("renamecertificate", "renameCertificate", "renameCertificate",
-                "Absolute certificates transport with every original ground/ghost label. ", DescribeRole.Definition)
+                "Absolute certificates transport with every original ground/ghost label.", DescribeRole.Definition)
         )));
 
     private static DocumentBlock Node(string id, string declaration, string title, string prose,

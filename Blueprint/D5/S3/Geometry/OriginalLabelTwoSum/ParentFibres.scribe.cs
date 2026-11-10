@@ -15,17 +15,17 @@ internal sealed class ParentFibresDocument : IScribeDocumentDefinition
         H("ParentFibres"),
         Blocks(
             Node("criticalpart", "criticalPart", "criticalPart",
-                "These are literal X-parts; the removed label e is not an output coordinate. ", DescribeRole.Definition),
+                "These are literal X-parts; the removed label e is not an output coordinate.", DescribeRole.Definition),
             Node("localwindow", "localWindow", "localWindow",
-                "These are literal X-parts; the removed label e is not an output coordinate. ", DescribeRole.Definition),
+                "These are literal X-parts; the removed label e is not an output coordinate.", DescribeRole.Definition),
             Node("localbase", "localBase", "localBase",
-                "These are literal X-parts; the removed label e is not an output coordinate. ", DescribeRole.Definition),
+                "These are literal X-parts; the removed label e is not an output coordinate.", DescribeRole.Definition),
             Node("parent-fibre-base", "parent_fibre_base", "parent_fibre_base",
-                "Boundary and fibre-intersection facts for the COMPUTED Cbase. ", DescribeRole.Theorem),
+                "Boundary and fibre-intersection facts for the COMPUTED Cbase.", DescribeRole.Theorem),
             Node("parent-fibre-cross", "parent_fibre_cross", "parent_fibre_cross",
-                "Exact cross-fibre exclusion. The one direction that can intersect is the second-kind fibre into a first-kind block, and its right part then lies in Z. ", DescribeRole.Theorem),
+                "Exact cross-fibre exclusion. The one direction that can intersect is the second-kind fibre into a first-kind block, and its right part then lies in Z.", DescribeRole.Theorem),
             Node("parent-initial-fibres", "parent_initial_fibres", "parent_initial_fibres",
-                "The initial fibre decomposition is PROVED from proper-boundary membership, not assumed as an endpoint or desired parent row equation. ", DescribeRole.Theorem)
+                "The initial fibre decomposition is PROVED from proper-boundary membership, not assumed as an endpoint or desired parent row equation.", DescribeRole.Theorem)
         )));
 
     private static DocumentBlock Node(string id, string declaration, string title, string prose,

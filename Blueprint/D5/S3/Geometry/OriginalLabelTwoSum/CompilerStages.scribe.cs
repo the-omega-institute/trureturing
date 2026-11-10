@@ -15,15 +15,15 @@ internal sealed class CompilerStagesDocument : IScribeDocumentDefinition
         H("CompilerStages"),
         Blocks(
             Node("selectfilling", "selectFilling", "selectFilling",
-                "Select the actual P0/P1 or Q0/Q1 filling from the original critical-face interface test. ", DescribeRole.Definition),
+                "Select the actual P0/P1 or Q0/Q1 filling from the original critical-face interface test.", DescribeRole.Definition),
             Node("parentfillingstage", "parentFillingStage", "parentFillingStage",
-                "Construct the filling-main stage on the ACTUAL parent after child replay. The list is assembled from all P0/P1 lists; its target families are computed. ", DescribeRole.Definition),
+                "Construct the filling-main stage on the ACTUAL parent after child replay. The list is assembled from all P0/P1 lists; its target families are computed.", DescribeRole.Definition),
             Node("parentcollarstage", "parentCollarStage", "parentCollarStage",
-                "Construct all Q0/Q1 collar lists on Cout ALONE. Every emitted coface is checked against the other collars; the retained parent critical cells are absent from the domain of this Sequence. ", DescribeRole.Definition),
+                "Construct all Q0/Q1 collar lists on Cout ALONE. Every emitted coface is checked against the other collars; the retained parent critical cells are absent from the domain of this Sequence.", DescribeRole.Definition),
             Node("parentfillingstage-orderedpairs", "parentFillingStage_orderedPairs", "parentFillingStage_orderedPairs",
-                "Global ordered expansion of the filling-main batch. `fibres` is the real cardinality/finite-enumeration comparator, so this records descending critical order rather than an arbitrary permutation. ", DescribeRole.Theorem),
+                "Global ordered expansion of the filling-main batch. `fibres` is the real cardinality/finite-enumeration comparator, so this records descending critical order rather than an arbitrary permutation.", DescribeRole.Theorem),
             Node("parentcollarstage-orderedpairs", "parentCollarStage_orderedPairs", "parentCollarStage_orderedPairs",
-                "Global ordered expansion of the collar batch. Its domain is `Cout` alone; the retained critical simplices are not silently inserted into this list. ", DescribeRole.Theorem)
+                "Global ordered expansion of the collar batch. Its domain is `Cout` alone; the retained critical simplices are not silently inserted into this list.", DescribeRole.Theorem)
         )));
 
     private static DocumentBlock Node(string id, string declaration, string title, string prose,

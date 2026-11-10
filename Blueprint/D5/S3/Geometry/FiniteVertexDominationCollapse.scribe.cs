@@ -15,13 +15,13 @@ internal sealed class FiniteVertexDominationCollapseDocument : IScribeDocumentDe
             Anchor.ParseCanonical("mathlib/module/Mathlib.AlgebraicTopology.SimplicialComplex.Basic")),
         H("Finite dominated-vertex free-face deletion"),
         Blocks(
-            SourceText("The raw headers below are written in the section V : Type*, Fintype V, DecidableEq V. "
-                + "Unused section instances need not occur in the compiled telescope. "
-                + "K is a native PreAbstractSimplicialComplex, with nonempty faces only. "
-                + "No carrier, purity, connectedness, or realization-nonempty hypothesis is hidden. "
-                + "Canonical finite relative and elementary owners supply the native Sequence and SDR. "
-                + "This is the classical decreasing-face pairing proof, credited to the released "
-                + "CLI79532 ordinary verification, constructive_restricted_result.K_elementary_fold "
+            SourceText("The raw headers below are written in the section V : Type*, Fintype V, DecidableEq V."
+                + "Unused section instances need not occur in the compiled telescope."
+                + "K is a native PreAbstractSimplicialComplex, with nonempty faces only."
+                + "No carrier, purity, connectedness, or realization-nonempty hypothesis is hidden."
+                + "Canonical finite relative and elementary owners supply the native Sequence and SDR."
+                + "This is the classical decreasing-face pairing proof, credited to the released"
+                + "CLI79532 ordinary verification, constructive_restricted_result.K_elementary_fold"
                 + "and actual_Ind_F_certificate.graph_fold; no novelty is claimed."),
             Node("extends", "Extends", "Extends",
                 "For every face s of K containing v, insert u s is again a face. This is the sole combinatorial extension hypothesis and contains no collapse or geometric endpoint.",
@@ -143,20 +143,20 @@ internal sealed class FiniteVertexDominationCollapseDocument : IScribeDocumentDe
             Node("independence-deletion", "independence_deletion", "independence_deletion",
                 "Deleting v from the actual unrestricted independenceComplex is literally the same complex on V as restricting to labels different from v.",
                 "theorem independence_deletion (G : SimpleGraph V) (v : V) :\n    deletion (independenceComplex G).toPreAbstractSimplicialComplex v =\n      restricted G (fun a => a ≠ v)", DescribeRole.Theorem),
-            SourceText("The existing coordinate transfer/foldHomotopy/foldEquiv and forest "
-                + "leafEquiv are not re-proved or renamed here. The new content is the actual finite "
-                + "elementary Sequence with original-label pair data and literal deletion fixedness. "
-                + "The simultaneous fold need not equal the successive pairwise homotopy. "
-                + "No universal root-K supplier, unrestricted critical-face construction, sphere "
-                + "quotient, disk collar, or attached-cell branch is discharged by this module. "
-                + "Kernel and axiom-closure checks, faithful Reg source observation, Scribe coverage, "
+            SourceText("The existing coordinate transfer/foldHomotopy/foldEquiv and forest"
+                + "leafEquiv are not re-proved or renamed here. The new content is the actual finite"
+                + "elementary Sequence with original-label pair data and literal deletion fixedness."
+                + "The simultaneous fold need not equal the successive pairwise homotopy."
+                + "No universal root-K supplier, unrestricted critical-face construction, sphere"
+                + "quotient, disk collar, or attached-cell branch is discharged by this module."
+                + "Kernel and axiom-closure checks, faithful Reg source observation, Scribe coverage,"
                 + "all native gates, remote checks, publication and cleanup remain integration work."))));
 
     private static DocumentBlock Node(string id, string declaration, string title, string prose,
         string rawContract, DescribeRole role) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-            Blocks(SourceText(prose), SourceText("Exact attempted Lean contract: " + rawContract)), role);
+            Blocks(SourceText(prose), SourceText("Exact attempted Lean contract:" + rawContract)), role);
 
     // TextRun is one line. Keep every quoted source line, including blank separators,
     // as typed text; this is commentary, never a substitute for a Lean projection.
