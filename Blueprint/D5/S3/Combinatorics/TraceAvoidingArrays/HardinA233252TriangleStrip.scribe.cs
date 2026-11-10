@@ -210,7 +210,6 @@ internal sealed class HardinA233252TriangleStripDocument : IScribeDocumentDefini
         Seq(Parenthesized(a), Sp, Times, Sp, Parenthesized(b));
     private static Formula Pair(Formula a, Formula b) =>
         Parenthesized(Seq(a, Comma, Sp, b));
-    private static Formula Proj(Formula a, bool first) => Call(first ? "Prod.fst" : "Prod.snd", a);
     private static Formula Vector(params Formula[] entries) => Seq(
         new Formula[] { Bang, OpenBracket }.Concat(entries.SelectMany((f, i) =>
             i == 0 ? new[] { f } : new[] { Comma, Sp, f }))
