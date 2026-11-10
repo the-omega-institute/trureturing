@@ -18,7 +18,6 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233254TriangleStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255PairTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge
 import D5.S3.Observer.Separation.BooleanRankThreeK4
-import Mathlib.Tactic.FinCases
 import Lean.Elab.Tactic.Omega
 
 /-! Literal six-column square-strip counts and their all-height class reduction. -/
@@ -172,7 +171,8 @@ private theorem initial_valid : ∀ c : Row,
   simp only [Fin.forall_fin_succ_pi, Fin.forall_fin_zero_pi]
   decide +kernel
 
-private theorem initial_counts : ∀ k, firstCount k = ![16, 0, 16, 16, 16, 16, 16, 8, 8, 16, 8] k := by
+private theorem initial_counts : ∀ k,
+    firstCount k = ![16, 0, 16, 16, 16, 16, 16, 8, 8, 16, 8] k := by
   simp only [firstCount]
   simp_rw [← (Fin.consEquiv (fun _ : Fin 6 => Fin 6)).sum_comp,
     Fintype.sum_prod_type,
