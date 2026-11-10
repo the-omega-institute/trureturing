@@ -111,8 +111,8 @@ internal sealed class KurkovTriangularColumnSumDocument : IScribeDocumentDefinit
         var summand = new Formula.Fraction(
             Mul(CastQ(A(j, k)), CastQ(Factorial(Add(n, fk)))),
             CastQ(Factorial(Add(fk, j))));
-        var sum = Seq(new Formula.Power(
-            new Formula.Subscript(Sum, Eqn(j, D(0))), n), Sp, Par(summand));
+        var sum = Seq(new Formula.Subscript(Sum, Eqn(j, D(0))),
+            Caret, Grp(n), Sp, Par(summand));
         var identity = Eqn(CastQ(A(n, Add(Add(k, fk), D(1)))), sum);
         var existence = Some("A", ArrayType(), Call("IsArray", V("A")));
         var universal = All("A", ArrayType(), Imp(Call("IsArray", V("A")),
