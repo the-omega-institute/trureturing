@@ -9,6 +9,8 @@
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
 import Mathlib.Algebra.LinearRecurrence
 
+/-! Binary decimation representations and their common forward-recurrence mechanism. -/
+
 namespace D5.S1.Recurrence.BinaryDecimation
 
 variable {R : Type*} [CommRing R]
@@ -95,7 +97,7 @@ theorem arbitrary_matrix_iff (a : ℕ → R) :
       exact congrFun (h1 n) i
 
 
-theorem dyadic_matrix_recurrence (a : ℕ → R) (ha : MatrixFamily a) :
+theorem dyadic_matrix_recurrence [Nontrivial R] (a : ℕ → R) (ha : MatrixFamily a) :
     ∃ E : LinearRecurrence R, 0 < E.order ∧
       E.IsSolution (fun n => a (2 ^ (n + 2) + 1)) := by
   classical
@@ -137,7 +139,7 @@ theorem dyadic_matrix_recurrence (a : ℕ → R) (ha : MatrixFamily a) :
     ∑ i : Fin d, -(M0.charpoly.coeff i.val) * a (2 ^ (n + i.val + 2) + 1)
   rw [Fin.sum_univ_eq_sum_range (fun i => -M0.charpoly.coeff i * a (2 ^ (n + i + 2) + 1)) d]
   simp only [neg_mul, Finset.sum_neg_distrib]
-  linear_combination -h
+  linear_combination h
 
 /-- Every fixed linear combination of a forward shift and the original sequence
 obeys the same recurrence, without dividing by its coefficient. -/
