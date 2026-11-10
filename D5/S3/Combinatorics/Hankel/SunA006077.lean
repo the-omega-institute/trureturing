@@ -33,12 +33,6 @@ def w (n : ℕ) : ℤ := ∑ k ∈ range (n / 3 + 1),
 /-- The determinant has rows and columns numbered from zero through `n`. -/
 def W (n : ℕ) : ℤ := (Matrix.of fun i j : Fin (n+1) => w (i.val+j.val)).det
 
-/-- The exact all-index assertion in Sun's Conjecture 3.16. -/
-def claim : Prop := ∀ n : ℕ,
-  (n % 3 = 1 → W n = 0) ∧
-  (n % 3 ≠ 1 → ∃ z : ℤ, 0 < z ∧ Odd z ∧
-    (-1 : ℤ)^((n+1)/3) * W n = 6^n * z)
-
 /-- The sparse moments before translation by three. -/
 def sparse (n : ℕ) : ℤ := if n % 3 = 0 then (-1 : ℤ)^(n/3) * c (n/3) else 0
 

@@ -51,7 +51,7 @@ private theorem epsilon_odd (n : ℕ) : epsilon (2*n+1) = if n=0 then 1 else 0 :
     constructor
     · rintro ⟨k, hk⟩
       cases k with
-      | zero => simp at hk
+      | zero => simpa using hk
       | succ k => rw [pow_succ'] at hk; omega
     · rintro rfl
       exact ⟨0, rfl⟩
@@ -175,7 +175,8 @@ private theorem s_odd (k : ℕ) : S (2*k+1) = (T k)^2 := by
       simp
   let Q : Matrix (Fin k ⊕ Fin k) (Fin k ⊕ Fin k) (ZMod 2) := fromBlocks 0 1 1 0
   have hQ : Q.det=1 := by
-    have hp : (fromBlocks (1 : Matrix (Fin k) (Fin k) (ZMod 2)) 1 0 1).det=1 := by simp
+    have hp : (fromBlocks (1 : Matrix (Fin k) (Fin k) (ZMod 2))
+      (1 : Matrix (Fin k) (Fin k) (ZMod 2)) 0 1).det=1 := by simp
     have hh : fromBlocks (1 : Matrix (Fin k) (Fin k) (ZMod 2)) 1 0 1 * Q =
         fromBlocks 1 1 1 0 := by simp [Q,fromBlocks_multiply]
     have hd := congrArg Matrix.det hh

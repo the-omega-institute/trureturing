@@ -1,0 +1,34 @@
+using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Hankel;
+
+internal sealed class SunA006077BinaryDocument : IScribeDocumentDefinition
+{
+    private const string Prefix = "D5/S3/Combinatorics/Hankel/SunA006077Binary.";
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/sun2013a006077");
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Even and odd index splitting proves both determinant families equal one over F2.", H("The binary Hankel determinants"),
+        Blocks(Paragraph(Text("For a sequence b, H(b,k,s) is the k by k matrix with entry b(i+j+s), where 0 <= i,j < k; det of the empty matrix is one. Nat denotes the nonnegative integers, Z the integers, and all floor quotients are natural division.")),
+            Node("epsilon","The positive power-of-two indicator","epsilon",All("n",Nat,Eq(C("epsilon",V("n")),C("ite",Ex("k",Nat,Eq(V("n"),P(N(2),V("k")))),N(1),N(0)))),"Values lie in ZMod 2; epsilon(0)=0.",DescribeRole.Definition),
+            Node("s","The first binary family","S",All("k",Nat,Eq(C("S",V("k")),Det(Hk(V("epsilon"),V("k"),N(1))))),"This is the ordinary Rueppel determinant modulo two.",DescribeRole.Definition),
+            Node("t","The shifted binary family","T",All("k",Nat,Eq(C("T",V("k")),Det(Hk(V("epsilon"),V("k"),N(2))))),"This is the once-shifted Rueppel determinant modulo two.",DescribeRole.Definition),
+            Node("rueppel-determinants","Both determinants at every size","rueppel_determinants",All("n",Nat,And(Eq(C("S",V("n")),N(1)),Eq(C("T",V("n")),N(1)))),"Over ZMod 2, parity splitting gives S(2k)=S(k)^2, S(2k+1)=T(k)^2, T(2k)=S(k)T(k), and T(2k+1)=S(k+1)T(k). The exceptional first corner in the odd S case is separated before taking block determinants. Strong induction includes the empty and one-square cases. Rueppel determinant evaluations are published mathematics; see Cigler, A curious class of Hankel determinants.",DescribeRole.Theorem)), []));
+    private static DocumentBlock Node(string id,string title,string decl,Formula formula,string prose,DescribeRole role) =>
+        Describe.Lean(DescribeId.Create("sun-a006077-binary-"+id),DeclarationHandle.Create(Prefix+decl),
+            H(title),StatementSource.FromAuthor(Disp(formula)),AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(prose))),role);
+    private static Formula V(string s) => F.Id(s);
+    private static Formula N(long n) => new Formula.Number(n);
+    private static Formula C(string s, params Formula[] xs) => new Formula.Apply(V(s), [.. xs]);
+    private static Formula P(Formula x, Formula y) => new Formula.Power(x, y);
+    private static Formula Eq(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.Equal, y);
+    private static Formula And(Formula x, Formula y) => new Formula.Logic(x, FormulaLogicOperator.And, y);
+    private static Formula All(string s, Formula t, Formula f) => new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(s), t, f);
+    private static Formula Ex(string s, Formula t, Formula f) => new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(s), t, f);
+    private static Formula Nat => V("Nat");
+    private static Formula Hk(Formula b, Formula k, Formula s) => C("H", b, k, s);
+    private static Formula Det(Formula x) => C("det", x);
+
+}
