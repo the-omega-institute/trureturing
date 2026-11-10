@@ -95,9 +95,9 @@ internal sealed class OddPrimeJetGroupDocument : IScribeDocumentDefinition
     private static Formula All(string name, Formula type, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
     private static Formula Eq(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.Equal, y);
-    private static Formula Mul(Formula x, Formula y) => Seq(x, Star, y);
-    private static Formula Add(Formula x, Formula y) => Seq(x, Plus, y);
-    private static Formula Sub(Formula x, Formula y) => Seq(x, Minus, y);
+    private static Formula Mul(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Multiply, y);
+    private static Formula Add(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Add, y);
+    private static Formula Sub(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Subtract, y);
     private static Formula Pow(Formula x, Formula y) => new Formula.Power(x, y);
     private static Formula Nat() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
