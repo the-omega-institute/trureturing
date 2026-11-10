@@ -92,6 +92,10 @@ $$\forall (n: \operatorname{Int}), ((11 < n) \Rightarrow ((\operatorname{D5}.\op
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin233260` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin233260","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A233260: five-row complementary-pair antidiagonal arrays*. URL: <https://oeis.org/A233260>.

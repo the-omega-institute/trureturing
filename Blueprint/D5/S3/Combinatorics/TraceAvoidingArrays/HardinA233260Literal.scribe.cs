@@ -53,7 +53,9 @@ internal sealed class HardinA233260LiteralDocument : IScribeDocumentDefinition
             Blocks(Paragraph(Text(literature
                 ? "OEIS A233260, revision 7, " + (name == "result" ? "FORMULA: " + OriginalFormula : "NAME: " + OriginalName)
                 : title + "."))),
-            theorem ? DescribeRole.Theorem : DescribeRole.Definition);
+            theorem ? DescribeRole.Theorem : DescribeRole.Definition,
+            name == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("hardin233260"), ResolutionKind.Proved) : null);
     private static Formula BridgeFormula()
     {
         var n = V("n");
