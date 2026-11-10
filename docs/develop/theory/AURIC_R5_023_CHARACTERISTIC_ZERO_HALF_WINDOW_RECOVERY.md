@@ -587,10 +587,10 @@ $$
 
 $$
 \begin{aligned}
-J_W(r,s)&=\dim_F(W\cap rW\cap sW),\
-d_W(r)&=J_W(r,1)=\dim_F(W\cap rW),\
-D_W&=F\bigl(\{u/v:u,v\in W,\ v\ne0\}\bigr)\subseteq L,\
-E_W&=\{a\in L:aW\subseteq W\},\
+J_W(r,s)&=\dim_F(W\cap rW\cap sW),\\
+d_W(r)&=J_W(r,1)=\dim_F(W\cap rW),\\
+D_W&=F\bigl(\{u/v:u,v\in W,\ v\ne0\}\bigr)\subseteq L,\\
+E_W&=\{a\in L:aW\subseteq W\},\\
 N&=[D_W:F],\qquad e=[E_W:F],\\
 \delta_W&=\min\{d_W(r):r\in L^\times,\ d_W(r)>0\}.
 \end{aligned}
