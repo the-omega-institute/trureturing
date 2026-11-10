@@ -82,6 +82,10 @@ $$\neg (\forall (m: \mathbb{N}), 0<m \implies \forall (A: \mathbb{N} \to \mathbb
 
 *Proof.* Machine-checked in Lean as `D5/S1/Depth/ContinuedFractions/FreemanPalindromicDensityRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/palindromic-density` (refuted) by `D5/S1/Depth/ContinuedFractions/FreemanPalindromicDensityRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"palindromic-density","declaration_gid":"D5/S1/Depth/ContinuedFractions/FreemanPalindromicDensityRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* David M. Freeman (2017). *Generalized Palindromic Continued Fractions*. DOI: [10.1216/RMJ-2018-48-1-219](https://doi.org/10.1216/RMJ-2018-48-1-219). URL: <https://arxiv.org/abs/1604.06755v2>.

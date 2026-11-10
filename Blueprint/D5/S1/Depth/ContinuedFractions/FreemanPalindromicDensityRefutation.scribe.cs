@@ -69,12 +69,15 @@ internal sealed class FreemanPalindromicDensityRefutationDocument : IScribeDocum
                     + "every eventual period. Since 1/Real.goldenRatio<1, the asserted "
                     + "universal upper bound fails. The finite computations establish no "
                     + "infinite conclusion.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("palindromic-density"), ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
-            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Natural() => Seq(Mathbb, Grp(F.Id("N")));
