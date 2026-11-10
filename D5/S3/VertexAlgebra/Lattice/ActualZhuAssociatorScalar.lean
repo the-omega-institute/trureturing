@@ -346,9 +346,8 @@ private theorem split_a (K L : ℕ) (c : ℤ) (a : ℕ) :
   rw [show (K : ℤ) + (L : ℤ) - (a : ℤ) = (L : ℤ) + ((K : ℤ) - (a : ℤ)) from by ring,
     ← cbz_vandermonde (L : ℤ) ((K : ℤ) - (a : ℤ)) c, cbzConvol]
 
-/-- **The v-family scalar core of Zhu's associator** (Mathematica-verified over
-`K,L,δ ≤ 6`, `γ ∈ [-6,8]`).  The generalized-binomial identity collapsing the `v`-family
-double-residue into the right-hand convolution. -/
+/-- The V-family scalar identity collapses the signed double residue
+into the right-hand convolution for every integer mode. -/
 private theorem v_core (K L : ℕ) (γ : ℤ) (δ : ℕ) :
     (∑ a ∈ Finset.range (K + 1),
         cbz (K:ℤ) (a:ℤ)

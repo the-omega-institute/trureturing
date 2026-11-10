@@ -795,19 +795,6 @@ private theorem swap_finsum_NZ (F : ℕ → ℤ → (Carrier D))
       (f := fun p : ℕ × ℤ => F p.1 p.2)]
   rfl
 
-/-- For fixed `(i,b)`, `m ↦ uTerm` has finite support (bounded by `cbz K (m+1+i)`). -/
-private theorem uTerm_m_fin (D : LatticeData) (K L : ℕ) (u v w : (Carrier D)) (i : ℕ) (b : ℤ) :
-    (Function.support (fun m : ℤ => uTerm D K L u v w i b m)).Finite := by
-  apply Set.Finite.subset (Set.finite_Icc (-(i : ℤ) - 1) ((K : ℤ) - (i : ℤ)))
-  intro m hm
-  rw [Function.mem_support] at hm
-  simp only [Set.mem_Icc]
-  constructor
-  · by_contra h
-    apply hm; rw [uTerm, cbz_apply_neg (K : ℤ) (by omega), zero_mul, zero_mul, zero_smul]
-  · by_contra h
-    apply hm; rw [uTerm, cbz_lt (by positivity) (by omega), zero_mul, zero_mul, zero_smul]
-
 /-- For fixed `b`, the pair `(i,m) ↦ uTerm` has finite support. -/
 private theorem uTerm_im_fin (D : LatticeData) (K L : ℕ) (u v w : (Carrier D)) (b : ℤ) :
     (Function.support (fun p : ℕ × ℤ => uTerm D K L u v w p.1 b p.2)).Finite := by
@@ -881,26 +868,6 @@ private def uSideScalar (K L : ℕ) (b m : ℤ) : ℂ :=
   ∑ᶠ i : ℕ, cbz (K : ℤ) (m + 1 + (i : ℤ))
       * cbz ((K : ℤ) + (L : ℤ) - (m + 1 + (i : ℤ))) (b + 1 - (i : ℤ))
       * ((-1 : ℂ) ^ i * gBinom (m + (i : ℤ)) i)
-
-/-- The `i`-scalar has finite support (`cbz K (m+1+i)` bounds `i ≤ K-m-1`). -/
-private theorem uScalar_i_fin (K L : ℕ) (b m : ℤ) :
-    (Function.support (fun i : ℕ => cbz (K : ℤ) (m + 1 + (i : ℤ))
-        * cbz ((K : ℤ) + (L : ℤ) - (m + 1 + (i : ℤ))) (b + 1 - (i : ℤ))
-        * ((-1 : ℂ) ^ i * gBinom (m + (i : ℤ)) i))).Finite := by
-  apply Set.Finite.subset (Set.finite_Icc (0 : ℕ) ((K : ℤ) - m - 1).toNat)
-  intro i hi
-  rw [Function.mem_support] at hi
-  simp only [Set.mem_Icc]
-  refine ⟨Nat.zero_le _, ?_⟩
-  by_contra h
-  apply hi
-  -- i > (K-m-1).toNat ⟹ m+1+i > K ⟹ cbz K (m+1+i) = 0
-  have hile : ((K : ℤ) - m - 1).toNat + 1 ≤ i := by omega
-  have : ((K : ℤ) - m - 1) < (i : ℤ) := by
-    have := Int.self_le_toNat ((K : ℤ) - m - 1)
-    have hc : (((K : ℤ) - m - 1).toNat : ℤ) + 1 ≤ (i : ℤ) := by exact_mod_cast hile
-    omega
-  rw [cbz_lt (by positivity) (by omega : (K : ℤ) < m + 1 + (i : ℤ)), zero_mul, zero_mul]
 
 /-- Pull `u₍ₘ₎(v₍ᵦ₎w)` out of the `i`-finsum. -/
 private theorem uTerm_i_collapse (D : LatticeData) (K L : ℕ) (u v w : (Carrier D)) (b m : ℤ) :
