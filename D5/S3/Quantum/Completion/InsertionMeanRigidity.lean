@@ -36,27 +36,17 @@ private theorem step_bounds (g : Grid) (hn : ∀ q, 0 ≤ g q) (hr : Recurrent g
 
 private theorem grid_bound (g : Grid) (hn : ∀ q, 0 ≤ g q) (hr : Recurrent g) :
     ∀ m n, g (m, n) ≤ (4 : ℝ) ^ (m + n) * g (0, 0) := by
-  intro m
-  induction m with
-  | zero =>
-    intro n
-    induction n with
-    | zero => simp
-    | succ n ih =>
-      calc
-        g (0, n + 1) ≤ 4 * g (0, n) := (step_bounds g hn hr 0 n).2
-        _ ≤ 4 * ((4 : ℝ) ^ (0 + n) * g (0, 0)) :=
-          mul_le_mul_of_nonneg_left ih (by norm_num)
-        _ = (4 : ℝ) ^ (0 + (n + 1)) * g (0, 0) := by simp only [Nat.zero_add, pow_succ]; ring
-  | succ m ih =>
-    intro n
-    calc
-      g (m + 1, n) ≤ 4 * g (m, n) := (step_bounds g hn hr m n).1
-      _ ≤ 4 * ((4 : ℝ) ^ (m + n) * g (0, 0)) :=
-        mul_le_mul_of_nonneg_left (ih n) (by norm_num)
-      _ = (4 : ℝ) ^ (m + 1 + n) * g (0, 0) := by
-        rw [show m + 1 + n = (m + n) + 1 by omega, pow_succ]
-        ring
+  intro m n
+  calc
+    g (m, n) ≤ (4 : ℝ) ^ m * g (0, n) :=
+      le_geom (u := fun k => g (k, n)) (by norm_num) m
+        (fun k _ => (step_bounds g hn hr k n).1)
+    _ ≤ (4 : ℝ) ^ m * ((4 : ℝ) ^ n * g (0, 0)) :=
+      mul_le_mul_of_nonneg_left
+        (le_geom (u := fun k => g (0, k)) (by norm_num) n
+          (fun k _ => (step_bounds g hn hr 0 k).2))
+        (pow_nonneg (by norm_num) m)
+    _ = (4 : ℝ) ^ (m + n) * g (0, 0) := by rw [pow_add, mul_assoc]
 
 private theorem zero_grid (g : Grid) (hn : ∀ q, 0 ≤ g q) (hr : Recurrent g)
     (hz : g (0, 0) = 0) : g = 0 := by
@@ -405,13 +395,8 @@ private theorem bounded_axis (a : ℕ → ℝ) (hn : ∀ k, 0 ≤ a k)
     exact (le_div_iff₀ (hp n)).mp hh
   have hg : ∀ n, a 0 * r ^ n ≤ a n := by
     intro n
-    induction n with
-    | zero => simp
-    | succ n ih =>
-      calc
-        a 0 * r ^ (n + 1) = r * (a 0 * r ^ n) := by rw [pow_succ]; ring
-        _ ≤ r * a n := mul_le_mul_of_nonneg_left ih (by linarith)
-        _ ≤ a (n + 1) := hs n
+    simpa only [mul_comm] using
+      geom_le (u := a) (c := r) (by linarith) n (fun k _ => hs k)
   obtain ⟨n, _, hn⟩ := Filter.exists_lt_of_tendsto_atTop
     (tendsto_pow_atTop_atTop_of_one_lt hr) 0 (C / a 0)
   have hb' : C < r ^ n * a 0 := (div_lt_iff₀ (hp 0)).mp hn
