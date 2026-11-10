@@ -55,7 +55,9 @@ internal sealed class HardinA233128SquareStripDocument : IScribeDocumentDefiniti
                     + "proves the recurrence for the literal counts. The index n is any "
                     + "natural number, so the left side covers every height at least 15. "
                     + "Every count is cast to Int before signed arithmetic."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233128"),
+                    ResolutionKind.Proved)))));
 
     private static Formula Seen() => Name(Scanner + "Seen");
     private static Formula PairRow() => Name(BoundaryOwner + "PairRow");
