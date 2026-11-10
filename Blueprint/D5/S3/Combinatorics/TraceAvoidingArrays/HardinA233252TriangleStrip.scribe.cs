@@ -14,6 +14,8 @@ internal sealed class HardinA233252TriangleStripDocument : IScribeDocumentDefini
         "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.";
     private const string RowOwner =
         "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233125SquareStrip.";
+    private const string BoundaryOwner =
+        "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233124SquareStrip.";
     private const string Beta =
         "D5.S3.Observer.Separation.BooleanRankThreeK4.beta";
     private const string Gid =
@@ -35,6 +37,12 @@ internal sealed class HardinA233252TriangleStripDocument : IScribeDocumentDefini
                 "Rows and horizontal exclusions use HardinA233125SquareStrip.Row and "
                 + "HardinA233125SquareStrip.rowLegal. A row contains four colours; consecutive "
                 + "colours are unequal and are not complementary.")),
+            Paragraph(Text(
+                "Reachable boundary states use HardinA233124SquareStrip.Valid: the first "
+                + "scanner flag is true, adjacent boundary labels are distinct, and label two "
+                + "is absent before colour two is seen. HardinA233124SquareStrip.boundaryClass "
+                + "assigns class zero before colour two appears; after it appears, classes one "
+                + "and two distinguish equal and unequal endpoints.")),
             Entry("boundarytype", "Boundary", "Boundary label type",
                 Eq(Name(Root + "Boundary"), Arrow(Fin(3), Fin(3))),
                 "The antidiagonal boundary carries three complementary-pair labels."),
@@ -45,12 +53,6 @@ internal sealed class HardinA233252TriangleStripDocument : IScribeDocumentDefini
                 "The boundary records the labels at columns one, two, and three."),
             Entry("compatible", "compatible", "Antidiagonal label compatibility", Compatible(),
                 "Each preceding boundary label excludes the corresponding next-row colour label."),
-            Entry("valid", "Valid", "Reachable boundary states", Valid(),
-                "The first scanner flag has been seen; boundary labels are adjacent-distinct; "
-                + "before colour two is seen, its pair label is absent."),
-            Entry("boundary", "boundaryClass", "Three boundary classes", BoundaryClass(),
-                "Class zero is the unseen-colour-two sector. Classes one and two distinguish "
-                + "equal and unequal endpoints after colour two has appeared."),
             Entry("transfer", "transfer", "Class transition matrix", Transfer(),
                 "Rows are source classes and columns are destination classes."),
             Entry("classcount", "classCount", "One-row class counts", ClassCount(),
@@ -63,7 +65,9 @@ internal sealed class HardinA233252TriangleStripDocument : IScribeDocumentDefini
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "The exact scanner-fibre calculation gives the displayed transition "
-                    + "matrix and first-row vector."))), DescribeRole.Theorem),
+                    + "matrix and first-row vector. HardinA233125SquareStrip.label_sum "
+                    + "reindexes the four-label sum as four successive sums over Fin 3."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("result"),
                 DeclarationHandle.Create(Gid + "result"), H("Barker's three identities"),
                 StatementSource.FromAuthor(Disp(Result())),
@@ -124,29 +128,6 @@ internal sealed class HardinA233252TriangleStripDocument : IScribeDocumentDefini
                 Ne(At(p, j), Call(Beta, At(c, Call("Fin.castSucc", j))))))));
     }
 
-    private static Formula Valid()
-    {
-        var s = V("s"); var p = V("p"); var j = V("j");
-        var adjacent = All("j", Fin(2), Ne(At(p, Call("Fin.castSucc", j)),
-            At(p, Call("Fin.succ", j))));
-        var absent = Imp(Eq(Proj(s, false), Name("Bool.false")),
-            All("j", Fin(3), Ne(At(p, j), Typed(D(2), Fin(3)))));
-        return All("s", Name(Scanner + "Seen"), All("p", BoundaryType(),
-            Eq(Call(Root + "Valid", s, p), And(Eq(Proj(s, true), Name("Bool.true")),
-                And(adjacent, absent)))));
-    }
-
-    private static Formula BoundaryClass()
-    {
-        var s = V("s"); var p = V("p");
-        var p0 = At(p, Typed(D(0), Fin(3))); var p2 = At(p, Typed(D(2), Fin(3)));
-        return All("s", Name(Scanner + "Seen"), All("p", BoundaryType(),
-            Eq(Call(Root + "boundaryClass", s, p),
-                Conditional(Proj(s, false),
-                    Conditional(Eq(p0, p2), Typed(D(1), Fin(3)), Typed(D(2), Fin(3))),
-                    Typed(D(0), Fin(3))))));
-    }
-
     private static Formula Transfer()
     {
         var table = Vector(Vector(D(1, 6), D(3, 2), D(4, 0)),
@@ -159,7 +140,7 @@ internal sealed class HardinA233252TriangleStripDocument : IScribeDocumentDefini
     {
         var s = V("s"); var p = V("p"); var k = V("k"); var c = V("c");
         return And(Call(RowOwner + "rowLegal", c), And(Call(Root + "compatible", p, c),
-            And(Call(Scanner + "good", s, c), Eq(Call(Root + "boundaryClass",
+            And(Call(Scanner + "good", s, c), Eq(Call(BoundaryOwner + "boundaryClass",
                 Call(Scanner + "finish", s, c), Call(Root + "pairs", c)), k))));
     }
 
@@ -176,7 +157,7 @@ internal sealed class HardinA233252TriangleStripDocument : IScribeDocumentDefini
         var c = V("c"); var k = V("k"); var flags = Pair(Name("Bool.false"), Name("Bool.false"));
         var condition = And(Eq(At(c, Typed(D(0), Fin(4))), Typed(D(0), Fin(6))),
             And(Call(RowOwner + "rowLegal", c), And(Call(Scanner + "good", flags, c),
-                Eq(Call(Root + "boundaryClass", Call(Scanner + "finish", flags, c),
+                Eq(Call(BoundaryOwner + "boundaryClass", Call(Scanner + "finish", flags, c),
                     Call(Root + "pairs", c)), k))));
         return All("k", Fin(3), Eq(Call(Root + "firstCount", k),
             SumOver("c", Name(RowOwner + "Row"),
@@ -187,9 +168,9 @@ internal sealed class HardinA233252TriangleStripDocument : IScribeDocumentDefini
     {
         var s = V("s"); var p = V("p"); var k = V("k");
         var rows = All("s", Name(Scanner + "Seen"), All("p", BoundaryType(),
-            Imp(Call(Root + "Valid", s, p), All("k", Fin(3),
+            Imp(Call(BoundaryOwner + "Valid", s, p), All("k", Fin(3),
                 Eq(Call(Root + "classCount", s, p, k),
-                    Call(Root + "transfer", Call(Root + "boundaryClass", s, p), k))))));
+                    Call(Root + "transfer", Call(BoundaryOwner + "boundaryClass", s, p), k))))));
         return And(rows, All("k", Fin(3), Eq(Call(Root + "firstCount", k),
             At(Vector(D(4), D(2), D(4)), k))));
     }

@@ -9,11 +9,14 @@
 /-
 admission_basis: open-problem-resolution (#27709; Proved)
 escape_witness: none (open-problem-resolution; all declarations instantiate frozen owners and finite kernel decisions)
+Valid, instDecidableValid and boundaryClass are reused directly from HardinA233124SquareStrip.
+The four-label sum reindexing in row_counts uses HardinA233125SquareStrip.label_sum.
 finite_certificate: proof_shape=bind-only; consumers=v_eq_w, a_eq_w
 result: proof_shape=bind-only; consumers=terminal result
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233124SquareStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233125SquareStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge
@@ -30,6 +33,7 @@ open scoped BigOperators
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233252TriangleStrip
 
 open HardinA233175PairStrip (Seen good finish)
+open HardinA233124SquareStrip (Valid boundaryClass)
 open HardinA233125SquareStrip (Row rowLegal)
 open HardinA233251TriangleStrip
   (widthLegal widthV widthStep widthTotal width_counting_bridge colour_bond_iff)
@@ -40,6 +44,7 @@ attribute [local instance 2000] HardinA233251TriangleStrip.widthInstDecidableGoo
 attribute [local instance 2000] HardinA233251TriangleStrip.widthInstDecidableNormal
 attribute [local instance 2000] HardinA233251TriangleStrip.widthInstDecidableLegal
 attribute [local instance 2000] HardinA233125SquareStrip.decidableRowLegal
+attribute [local instance 2000] HardinA233124SquareStrip.instDecidableValid
 attribute [local instance 2000] Pi.instFintype
 
 abbrev Boundary := Fin 3 → Fin 3
@@ -75,17 +80,6 @@ private theorem counting_bridge (n : ℕ) :
     (a (n + 1) : ℤ) = total (v n) := by
   simpa [a, widthLegal] using
     (width_counting_bridge rowLegal pairs compatible bonds bonds_iff n)
-
-def Valid (s : Seen) (p : Boundary) : Prop :=
-  s.1 = true ∧ (∀ j : Fin 2, p j.castSucc ≠ p j.succ) ∧
-    (s.2 = false → ∀ j, p j ≠ 2)
-
-private instance instDecidableValid (s : Seen) (p : Boundary) :
-    Decidable (Valid s p) :=
-  inferInstanceAs (Decidable (_ ∧ (∀ _, _) ∧ (_ → ∀ _, _)))
-
-def boundaryClass (s : Seen) (p : Boundary) : Fin 3 :=
-  if s.2 then if p 0 = p 2 then 1 else 2 else 0
 
 def transfer (i k : Fin 3) : ℤ :=
   ![![16, 32, 40], ![0, 80, 80], ![0, 64, 64]] i k
@@ -125,21 +119,9 @@ private theorem class_fibres (s : Seen) (p : Boundary) (k : Fin 3) :
     simp [H, hg, rowLegal, compatible, pairs, ← colour_bond_iff,
       and_comm, and_left_comm]
 
-private theorem label_sum (g : (Fin 4 → Fin 3) → ℤ) :
-    (∑ q, g q) = ∑ a : Fin 3, ∑ b : Fin 3, ∑ c : Fin 3, ∑ d : Fin 3,
-      g ![a, b, c, d] := by
-  let e : (Fin 4 → Fin 3) ≃ Fin 3 × Fin 3 × Fin 3 × Fin 3 :=
-    { toFun := fun q => (q 0, q 1, q 2, q 3)
-      invFun := fun t => ![t.1, t.2.1, t.2.2.1, t.2.2.2]
-      left_inv := by intro q; ext j; fin_cases j <;> rfl
-      right_inv := by rintro ⟨a, b, c, d⟩; rfl }
-  rw [← e.symm.sum_comp, Fintype.sum_prod_type]
-  simp only [Fintype.sum_prod_type]
-  rfl
-
 private theorem row_counts : ∀ s p, Valid s p → ∀ k,
     classCount s p k = transfer (boundaryClass s p) k := by
-  simp only [class_fibres, label_sum]
+  simp only [class_fibres, HardinA233125SquareStrip.label_sum]
   decide +kernel
 
 private theorem initial_valid : ∀ c : Row,
