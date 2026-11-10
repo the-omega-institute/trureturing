@@ -12,11 +12,14 @@ internal sealed class SunA006077ResultDocument : IScribeDocumentDefinition
         "The literal finite sum satisfies every clause at every natural index.", H("Sun's complete determinant assertion"),
         Blocks(Paragraph(Text("Nat denotes the nonnegative integers and Z the integers. Matrix.of is displayed with Fin-sized row and column binders and explicit val projections; det of the empty matrix is one. All floor quotients are natural division.")),
             Node("claim","All clauses of the assertion","claim",Iff(V("claim"),ClaimFormula()),"The zero branch and the positive odd integral normalized branch both quantify over every natural n, including n=0. No prime congruence from a later version is included.",DescribeRole.Definition),
-            Node("result","The full all-index statement","result",ClaimFormula(),"The odd integral quotients d(m) and e(m) are nonzero, so their positive semidefinite real Hankel matrices are positive definite. Their determinants and therefore d(m),e(m) are positive. At indices 3m and 3m+2 the signed quotients are respectively d(m)e(m)^2 and d(m)e(m+1)^2. Both are positive odd integers; the remaining residue class vanishes. The index zero and empty shifted determinants are included. This states the v5 conjecture for its original finite sum. The zero branch, Rueppel parity evaluations and positive moment ingredients are established prior mathematics; this statement makes no claim of priority for their combination.",DescribeRole.Theorem)), []));
-    private static DocumentBlock Node(string id,string title,string decl,Formula formula,string prose,DescribeRole role,AssessedProvenance? provenance = null) =>
+            Node("result","The full all-index statement","result",ClaimFormula(),"The odd integral quotients d(m) and e(m) are nonzero, so their positive semidefinite real Hankel matrices are positive definite. Their determinants and therefore d(m),e(m) are positive. At indices 3m and 3m+2 the signed quotients are respectively d(m)e(m)^2 and d(m)e(m+1)^2. Both are positive odd integers; the remaining residue class vanishes. The index zero and empty shifted determinants are included. This states the v5 conjecture for its original finite sum. The zero branch, Rueppel parity evaluations and positive moment ingredients are established prior mathematics; this statement makes no claim of priority for their combination.",DescribeRole.Theorem,
+                resolution: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("sun-a006077-hankel-determinants"), ResolutionKind.Proved))), []));
+    private static DocumentBlock Node(string id,string title,string decl,Formula formula,string prose,DescribeRole role,AssessedProvenance? provenance = null,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("sun-a006077-result-"+id),DeclarationHandle.Create(Prefix+decl),
             H(title),StatementSource.FromAuthor(Disp(formula)),provenance ?? AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))),role);
+            Blocks(Paragraph(Text(prose))),role,resolution);
     private static Formula V(string s) => F.Id(s);
     private static Formula N(long n) => new Formula.Number(n);
     private static Formula C(string s, params Formula[] xs) => new Formula.Apply(V(s), [.. xs]);

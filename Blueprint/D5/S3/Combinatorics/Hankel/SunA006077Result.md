@@ -26,6 +26,10 @@ $$\forall n \in Nat,\; \left(n \bmod 3 = 1 \Rightarrow W\left(n\right) = 0\right
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Hankel/SunA006077Result.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/sun-a006077-hankel-determinants` (proved) by `D5/S3/Combinatorics/Hankel/SunA006077Result.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"sun-a006077-hankel-determinants","declaration_gid":"D5/S3/Combinatorics/Hankel/SunA006077Result.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Zhi-Wei Sun (2013). *On some determinants with Legendre symbol entries*. DOI: [10.48550/arXiv.1308.2900](https://doi.org/10.48550/arXiv.1308.2900). URL: <https://arxiv.org/abs/1308.2900v5>.
