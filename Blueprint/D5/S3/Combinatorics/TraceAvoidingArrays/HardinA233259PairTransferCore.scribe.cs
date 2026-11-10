@@ -62,7 +62,8 @@ internal sealed class HardinA233259PairTransferCoreDocument : IScribeDocumentDef
     private static Formula GridGoodFormula()
     {
         var n=V("n"); var p=V("P");
-        var unrestricted=Fn("_",Own("Col"),Fn("_",Own("Col"),Fn("_",Own("Col"),Q("True"))));
+        var unrestricted=Call("Function.const",Own("Col"),
+            Call("Function.const",Own("Col"),Call("Function.const",Own("Col"),Q("True"))));
         var good=App(Q("D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix.good"),Own("compatible"),unrestricted,App(Q("List.ofFn"),App(App(Own("gridEquiv"),n),p)));
         return All("n",Q("Nat"),All("P",Arrow(Cells(n),Fin(D(3))),Iff(App(Own("Proper"),p),good)));
     }
