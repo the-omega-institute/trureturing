@@ -60,7 +60,7 @@ $$\forall (n: \operatorname{Nat}), ((2 \le n) \Rightarrow ((48) \cdot ((\operato
 
 The pair-pattern counting bridge.
 
-The canonical-form theorems apply to the row-major cell order without changing their definitions. A canonical pair pattern using k labels has 2^(6*n-k) colour lifts. Proper patterns at width at least two use two or three labels, and each orbit has six members. If only two labels occur, a common neighbour forces successive rows within each column to agree, and column induction forces alternation. Exactly one such pattern is canonical. Thus, if C is the canonical-pattern count, L=6*C and a=2^(6*n-3)*(C+1), giving the displayed bridge.
+The canonical-form theorems apply to the row-major cell order without changing their definitions. A canonical pair pattern using k labels has 2^(6*n-k) colour lifts. Proper patterns at width at least two use two or three labels, and each orbit has six members. If only two labels occur, HardinA233177Ladder.two_label_classification applies to the four-row windows 0–3 and 2–5. Their restrictions inherit Proper and the omitted label by argument substitution. Shared row 2 at columns 0 and 1 identifies both alternating labels, so the restrictions combine coordinatewise. Exactly one such pattern is canonical. Thus, if C is the canonical-pattern count, L=6*C and a=2^(6*n-3)*(C+1), giving the displayed bridge.
 
 **Theorem 1.5 (The recurrence at width 26).**
 
@@ -100,7 +100,7 @@ Each column contributes six free side bits. Scaling the pair-pattern relation mu
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233179Ladder.finite_certificate`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233179Ladder.normal`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233179Ladder.result`
-- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Canonical](HardinA233177Canonical.md)
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233177Ladder](HardinA233177Ladder.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233179PairTransfer](HardinA233179PairTransfer.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip](HardinA233251TriangleStrip.md)
 - Dependency: [D5/S3/Observer/Separation/BooleanRankThreeK4](../../Observer/Separation/BooleanRankThreeK4.md)
