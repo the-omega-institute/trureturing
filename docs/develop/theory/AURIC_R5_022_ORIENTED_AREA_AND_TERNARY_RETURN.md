@@ -2834,3 +2834,283 @@ $$
 
 ## 追加锚（本行以下为增补区）
 
+
+## 17. 任意观察子空间的最小检测
+
+**定义 17.1（观察形式与检测性质）。** 设 $F$ 是特征二的域，$L/F$ 是有限扩张，满足
+$L^2\subseteq F$，并记
+$$
+n=[L:F]=2^r\ge2,\qquad M=L^2,\qquad [M:F^2]=n.
+$$
+不再选取投影或坐标。对任意 $F$-线性子空间 $W\le L$，由于平方映射在特征二下可加且 $L^2\subseteq F$，定义
+$$
+q_W(w)=w^2\in F\qquad(w\in W).
+$$
+对交换含单位 $F$-代数 $R$，记 $W_R=W\otimes_F R$，并定义
+$$
+q_{W,R}\left(\sum_i w_i\otimes t_i\right)
+=\sum_i w_i^2t_i^2\in R.
+\tag{17.1}
+$$
+称 $q_{W,R}$ 各向异性，是指对全部向量
+$$
+q_{W,R}(v)=0\Longrightarrow v=0\qquad(v\in W_R);
+\tag{17.2}
+$$
+这里不要求向量的坐标生成单位理想。置
+$$
+A_R=L\otimes_F R.
+$$
+称 $W$ 具有全环检测性质，是指
+$$
+\mathsf U(W):\qquad
+\forall R,\quad
+q_{W,R}\text{ 各向异性}
+\Longleftrightarrow
+A_R\text{ 约化},
+\tag{17.3}
+$$
+其中 $R$ 遍历全部交换含单位 $F$-代数，包括零环、带零因子环、非约化环和非 Noether 环。相应地，称 $W$ 具有全域检测性质，是指 (17.3) 只对所有域扩张 $E/F$ 成立。
+
+**引理 17.2（域上的核与观察交）。** 对任意域扩张 $E/F$，在代数闭包中取 $L$ 与 $E$ 的实际合成域 $LE$，令
+$$
+\mu_E:L\otimes_F E\longrightarrow LE,\qquad
+\ell\otimes e\longmapsto \ell e,
+$$
+并置 $d_E=[LE:E]$。则
+$$
+\dim_E\ker\mu_E=n-d_E,
+\tag{17.4}
+$$
+且
+$$
+\begin{aligned}
+L\otimes_F E\text{ 约化}
+&\Longleftrightarrow d_E=n,\\
+q_{W,E}\text{ 各向异性}
+&\Longleftrightarrow
+\ker\mu_E\cap W_E=0.
+\end{aligned}
+\tag{17.5}
+$$
+若 $d_E<n$，则 $d_E\le n/2$。
+
+证明。扩底后的平方恒等式与 (15.3) 相同：对 $x\in L\otimes_F E$，
+$$
+x^2=Q_E(x)1.
+$$
+于是 $\mu_E(x)=0$ 当且仅当 $x^2=0$：一方面零像的平方为零，另一方面 $x^2=0$ 时 $\mu_E(x)^2=0$，而 $LE$ 是域，故 $\mu_E(x)=0$。同一论证说明 $\ker\mu_E$ 正是 $L\otimes_F E$ 的幂零根，维数由满射 $\mu_E$ 的像维数 $d_E$ 给出。限制到 $W_E$ 即得第二个等价。
+
+$L/F$ 是有限指数一纯不可分扩张，逐次添入平方根的次数均为二；因此 $d_E$ 是 $n$ 的二幂。若它严格小于 $n$，便至多为 $n/2$。这正是旧§15 中 (15.7)--(15.10) 的域计算，所用条件恰为本引理的 $\operatorname{char}F=2$、$L^2\subseteq F$ 和有限性；没有加入投影、P+K 或扩域后的额外关系。$\square$
+
+**引理 17.3（半维以下的避交元）。** 若 $W\le L$ 的维数 $m$ 满足 $m\le n/2$，则存在 $h\in L\setminus F$ 使
+$$
+W\cap hW=0.
+\tag{17.6}
+$$
+对任意 $h\in L\setminus F$，(17.6) 等价于由乘法给出的 $E_h$-线性映射
+$$
+W\otimes_F E_h\longrightarrow L,\qquad
+x\otimes1+y\otimes h\longmapsto x+hy,
+\quad E_h=F(h),
+\tag{17.7}
+$$
+单射。
+
+证明。若 $W=0$，任选 $h\in L\setminus F$ 即可。以下设 $m\ge1$。本假设下 $F$ 必为无限域：若 $F$ 有限，则 $L$ 亦有限，单射的平方映射在 $L$ 上满射，故 $L=L^2\subseteq F$，与 $n\ge2$ 矛盾。
+
+令
+$$
+\mathcal S(W)=\{xy^{-1}:x,y\in W,\ y\ne0\}\subseteq L.
+$$
+对 $h\in L\setminus F$，存在非零向量同时属于 $W$ 和 $hW$，当且仅当 $h\in\mathcal S(W)$。又因 $W\ne0$，有 $F\subseteq\mathcal S(W)$。所以只须在 $L$ 中找一个不属于 $\mathcal S(W)$ 的实际元素。
+
+任选 $W$ 的 $F$-基 $w_1,\ldots,w_m$，并用 $L$ 的一组 $F$-基将其识别为 $\mathbf A_F^n$。对每个 $1\le j\le m$，取 $d=2m-1$ 个独立变元 $s_1,\ldots,s_m$ 及 $t_i\ (i\ne j)$，置
+$$
+X=\sum_{i=1}^m s_iw_i,\qquad
+Y_j=w_j+\sum_{i\ne j}t_iw_i,\qquad
+Q_j=Y_j^2=w_j^2+\sum_{i\ne j}t_i^2w_i^2\in F[t_i:i\ne j].
+$$
+$Q_j$ 的常数项为 $w_j^2\ne0$。在主开集 $U_j=\{Q_j\ne0\}\subseteq\mathbf A_F^d$ 上定义正则映射
+$$
+f_j:U_j\longrightarrow\mathbf A_F^n,\qquad
+f_j(s,t)=\frac{XY_j}{Q_j}.
+$$
+这里乘法取自 $L$ 的 $F$-代数结构，分母是 $F$ 上的标量多项式；每个坐标的分子和共同分母 $Q_j$ 的总次数均至多为二。在每个 $F$-点上，$Y_j\ne0$ 且 $Y_j^{-1}=Y_j/Q_j$，故 $f_j(s,t)=XY_j^{-1}\in\mathcal S(W)$。
+
+反过来，任取 $xy^{-1}\in\mathcal S(W)$，写 $y=\sum_i a_iw_i$，选取 $a_j\ne0$。同时把 $x,y$ 乘以 $a_j^{-1}$，比值不变，而新分母的第 $j$ 个坐标为一。因此它们给出 $U_j(F)$ 的一个点，像恰为 $xy^{-1}$。于是实际点的像满足
+$$
+\mathcal S(W)=\bigcup_{j=1}^m f_j\bigl(U_j(F)\bigr).
+$$
+
+因为 $d=2m-1<n$，每个 $f_j$ 的 $n$ 个坐标有理函数代数相关。所需的维数比较可直接验证：把这些坐标的全部总次数至多 $D$ 的单项式乘以 $Q_j^D$，便得到 $d$ 个变元中总次数至多 $2D$ 的多项式。这样的单项式有 $\binom{D+n}{n}$ 个，所在多项式空间的维数为 $\binom{2D+d}{d}$。由 $n>d$，当 $D$ 充分大时前者严格大于后者，故存在非平凡的 $F$-线性关系。这给出非零多项式
+$$
+P_j\in F[Z_1,\ldots,Z_n],\qquad P_j\circ f_j=0.
+$$
+关系是有理函数恒等式，故在 $U_j$ 的每个 $F$-点上成立；特别地，像的闭包包含于真闭集 $V(P_j)$。多项式 $P=\prod_{j=1}^m P_j$ 非零，并在整个 $\mathcal S(W)$ 上消失。无限域上的非零多项式不能在全部 $F^n$ 上消失，所以存在实际 $h\in L$ 满足 $P(h)\ne0$。这使 $h\notin\mathcal S(W)$，又由 $F\subseteq\mathcal S(W)$ 得 $h\notin F$，从而得到 (17.6)。特别在 $m=n/2$ 时仍有 $d=n-1<n$，因此同一证明覆盖等号边界。
+
+对 $h\in L\setminus F$，由 $h^2\in F$ 知 $1,h$ 是 $E_h$ 的 $F$-基，故 (17.7) 的源向量唯一写为 $x\otimes1+y\otimes h$。若其像为零，则 $x=hy\in W\cap hW$；交为零时 $x=0$，并由 $h\ne0$ 得 $y=0$。反过来，若 $0\ne x=hy\in W\cap hW$，则 $x\otimes1+y\otimes h$ 是非零核向量。因此 (17.6) 正好等价于 (17.7) 的单射性。$\square$
+
+**定理 17.4（任意观察子空间的精确全环判据）。** 在定义 17.1 的条件下，对任意 $W\le L$，令 $m=\dim_F W$。以下三项等价：
+$$
+\begin{aligned}
+&\text{$W$ 具有全环检测性质；}\\
+&\text{$W$ 具有全域检测性质；}\\
+&m>n/2.
+\end{aligned}
+\tag{17.8}
+$$
+因此最小检测维数为
+$$
+m_{\min}=n/2+1.
+\tag{17.9}
+$$
+这同时是给定 $W$、某个 $m$ 维 $W$ 和全部 $m$ 维 $W$ 三种量词的准确结论：
+$$
+\begin{array}{c|c}
+m>n/2&m\le n/2\\ \hline
+\text{每个 $m$ 维 $W$ 都检测}&
+\text{没有一个 $m$ 维 $W$ 检测}\\
+\text{存在一个 $m$ 维 $W$ 检测}&
+\text{不存在 $m$ 维 $W$ 检测}.
+\end{array}
+\tag{17.10}
+$$
+等号 $m=n/2$ 属于失败侧，不能并入成功侧。
+
+特别地，$W=0$ 总是失败，因为它的各向异性对所有 $R$ 都为真；$W=L$ 总是成功，因为它检验整个 $A_R$ 的平方零元。
+
+证明。先设 $m>n/2$。对任意域 $E/F$，若 $A_E$ 约化，则引理 17.2 给 $\ker\mu_E=0$，所以 $q_{W,E}$ 各向异性。若 $A_E$ 不约化，则 $d_E<n$，从而 $d_E\le n/2<m$。由维数公式
+$$
+\dim_E(W_E\cap\ker\mu_E)
+\ge m+(n-d_E)-n
+=m-d_E>0,
+\tag{17.11}
+$$
+引理 17.2 给 $q_{W,E}$ 的非零零向量。故全域检测成立。
+
+还须把这件事延伸到任意环。对非零 $W$，若 $R$ 非约化，取非零平方零元 $t\in R$ 和非零 $w\in W$；把 $w$ 补成 $W$ 的 $F$-基可见 $tw\ne0$，而
+$$
+q_{W,R}(tw)=t^2w^2=0.
+$$
+所以两边都为假。若 $R$ 约化，旧§16 的极小素桥对任意有限自由子模逐坐标适用：由 [Stacks，00EU](https://stacks.math.columbia.edu/tag/00EU) 和 [Stacks，00EW](https://stacks.math.columbia.edu/tag/00EW)，
+$$
+q_{W,R}\text{ 各向异性}
+\Longleftrightarrow
+q_{W,\kappa(\mathfrak p)}\text{ 各向异性对每个 }
+\mathfrak p\in\operatorname{Min}R.
+\tag{17.12}
+$$
+这一步只用局部化清分母和约化环嵌入极小素局部域的结论，不要求 $R$ 是整环、Noether 或有限生成。对同一批极小素，旧§16 的全环桥给
+$$
+A_R\text{ 约化}
+\Longleftrightarrow
+[L\kappa(\mathfrak p):\kappa(\mathfrak p)]=n
+\quad\text{对每个 }\mathfrak p\in\operatorname{Min}R.
+\tag{17.13}
+$$
+若右侧在某个 $\mathfrak p$ 失败，(17.11) 在剩余域上给非零核交；(17.12) 使 $q_{W,R}$ 失败。若右侧处处成立，$A_R$ 约化而 $q_{W,R}$ 自动各向异性。零环的极小素集合为空，两个全称条件都按空真处理，结论仍成立。
+
+反过来设 $m\le n/2$。由引理 17.3 取 $h\in L\setminus F$ 满足 $W\cap hW=0$，令
+$$
+c=h^2\in M\setminus F^2,\qquad E_h=F(h).
+\tag{17.14}
+$$
+$h\notin F$ 且平方映射在域上单射，所以 $c\notin F^2$，从而 $[E_h:F]=2$；这是同一实际 $L$ 内的二次子域。由于 $E_h\subset L$，
+$$
+[LE_h:E_h]=[L:E_h]=n/2<n,
+$$
+故 $A_{E_h}$ 非约化。另一方面，(17.7) 的单射性与引理 17.2 给
+$$
+q_{W,E_h}\text{ 各向异性}.
+$$
+这里使整体不约化与使观察形式各向异性的正是同一个 $h$ 和同一个实际子域 $E_h\subset L$。特别在 $m=n/2$ 时，(17.7) 是两个 $m$ 维 $E_h$-空间间的单射，故为同构；等号并不迫使出现观察零向量。所以全域检测失败，也因而全环检测失败。
+
+最小有限扩域次数不能为一：唯一的一次扩域是 $F$，而 $L\otimes_FF=L$ 是域。上面构造的 $E_h$ 次数为二，故每个 $m\le n/2$ 的失败 $W$ 的最小有限失败见证次数恰为二。$\square$
+
+**定理 17.5（二次失败来源的实际刻画）。** 设 $m\le n/2$。对 $h\in L\setminus F$，令 $E_h=F(h)$。则下列条件等价：
+$$
+\begin{aligned}
+&[E_h:F]=2,\quad L\otimes_FE_h\text{ 不约化，且 }q_{W,E_h}\text{ 各向异性};\\
+&h^2\in M\setminus F^2\quad\text{且}\quad W\cap hW=0;\\
+&\text{(17.7) 是单射。}
+\end{aligned}
+\tag{17.15}
+$$
+所有使整体退化而保留给定 $W$ 各向异性的二次来源，恰由这些条件给出。反之，若 $E/F$ 是任意二次扩域且 $L\otimes_FE$ 不约化，则 $E$ 必为某个 $E_h$，其中 $h\in L\setminus F$；它是否保留 $W$，仍须另外检查 $W\cap hW=0$。
+
+证明。第一行到第二行的平方根条件已在 (17.14) 中说明；(17.7) 的核由 $x+hy=0$ 描述，故其单射性正好是 $W\cap hW=0$。这也证明第二行与第三行等价。
+
+再设 $E/F$ 为二次且 $L\otimes_FE$ 不约化。若 $E/F$ 可分，则它与纯不可分扩张 $L/F$ 线性不交，故扩底仍为域。于是 $E/F$ 不可分，可写为 $E=F(\sqrt c)$，其中 $c\in F\setminus F^2$。令 $E^2=F^2(c)$。同一实际平方子域计算给
+$$
+[LE:E]=[ME^2:E^2]
+=\begin{cases}
+n/2,&c\in M\setminus F^2,\\
+n,&c\notin M.
+\end{cases}
+\tag{17.16}
+$$
+非约化性迫使第一种情形。唯一平方根 $h=\sqrt c$ 属于 $L$，于是 $E=F(h)$，且 $h^2=c\in M\setminus F^2$。这正是旧§14.7 的二次解锁计算在任意 $n=2^r$ 上的同一参数对应；它没有把破坏 $A_E$ 误当成保留给定 $W$，后者仍由交为零这一独立条件决定。$\square$
+
+**命题 17.6（固定参数环的准确等价条件）。** 对固定交换含单位 $F$-代数 $R$，令
+$$
+d_{\mathfrak p}=[L\kappa(\mathfrak p):\kappa(\mathfrak p)]
+$$
+并令
+$$
+\rho_{\mathfrak p}:W\otimes_F\kappa(\mathfrak p)
+\longrightarrow L\kappa(\mathfrak p)
+$$
+为乘法映射的限制。若 $W\ne0$，则
+$$
+q_{W,R}\text{ 各向异性}
+\Longleftrightarrow
+\left[
+R\text{ 约化，且 }\rho_{\mathfrak p}\text{ 对每个 }
+\mathfrak p\in\operatorname{Min}R\text{ 单射}
+\right].
+\tag{17.17}
+$$
+同时
+$$
+A_R\text{ 约化}
+\Longleftrightarrow
+\left[
+R\text{ 约化，且 }d_{\mathfrak p}=n
+\text{ 对每个 }\mathfrak p\in\operatorname{Min}R
+\right].
+\tag{17.18}
+$$
+因此，对 $W\ne0$，固定 $R$ 时
+$$
+q_{W,R}\text{ 各向异性}
+\Longleftrightarrow A_R\text{ 约化}
+\tag{17.19}
+$$
+当且仅当
+$$
+\begin{cases}
+R\text{ 非约化},\quad\text{或}\\
+R\text{ 约化且 }\bigl[
+d_{\mathfrak p}=n\ \text{对所有 }\mathfrak p,
+\ \text{或存在 }\mathfrak p\text{ 使 }\ker\rho_{\mathfrak p}\ne0
+\bigr].
+\end{cases}
+\tag{17.20}
+$$
+若 $W=0$，左侧在每个 $R$ 上恒真，故固定 $R$ 的等价条件恰为 $A_R$ 约化，即恰为 (17.18)。
+
+证明。$R$ 非约化时，非零平方零标量乘以 $W$ 中的非零向量，直接给出 (17.17) 的反向失败；这一步覆盖所有零因子和幂零情形。$R$ 约化时，若观察条件在 $R$ 中成立，局部化清分母给每个 $R_{\mathfrak p}$ 中的条件；反之若每个极小素局部域中成立，(17.12) 的逐坐标嵌入把任意零向量送成零，遂使它本身为零。极小素局部环是域，故得到 (17.17)。式 (17.18) 正是旧§16 的 (16.3)，其证明使用同一 [Stacks，00EU、00EW] 桥。将两式逐项比较即得 (17.20)。零环的极小素集合为空，且零模块上的各向异性按定义成立，所以所有边界仍相容。$\square$
+
+这里出现的始终是极小素理想；把 (17.17) 改成所有素理想的剩余域条件会落入§16.3所示的两个失败方向。式 (17.9) 是对所有参数环的普遍结论，不能替代 (17.20) 对一个固定 $R$ 的准确必要条件。
+
+**定义 17.7（维数边界与四次整体的白话释义）。** “观察 $W$ 能检测整体”不是说 $W$ 已经包含某个投影核，也不是说它闭合于乘法；它只说在每一个参数环上，$W$ 中的平方零向量与整个 $L\otimes_F R$ 的幂零退化同时出现或同时不出现。域上，整体退化的核至少有半个 $L$ 的维数；留下多于半维的观察部分，必与它相交。留下恰好半维时，交可以被避开，而且每个这样的 $W$ 都能在同一个实际 $L$ 内找到一个二次子域作为失败来源。这个二次来源必须同时满足 $h^2\in L^2\setminus F^2$ 与 $W\cap hW=0$；仅仅知道 $L\otimes_FE_h$ 退化，并不能说明给定 $W$ 看见了零向量。
+
+当原整体是四维时，$n=4$，最小检测维数为 $3$。因此“四次整体中的最小三维观察”是本定理的半维加一边界：任意三维 $F$-子空间都能检测全部交换含单位 $F$-代数，而任意二维子空间都在某个同一实际四次域的二次子域上失效。这里的三维最小性只描述检测任务；§13 由原 P+K 关系选出的三维纯部是另一条结论，不能由本检测定理单独推出。
+
+当 $n=8,16,\ldots$ 时，最小维数分别为 $5,9,\ldots$；旧纯部的维数 $n-1$ 当然仍能检测，却不再是最小观察。二次整体 $n=2$ 是极端边界，只有 $W=L$ 能作普遍检测。结论不选择实复数、复合、物理时间、完整 $\Omega$ 维数或任何新的高维 $D$、群和导子分类；它只刻画固定实际域的线性观察部分与扩底约化之间的关系。
+
+本单元的外部条件与旧桥逐一对应：有限指数一域的逐次二次塔和二次来源使用 [Stacks，09HF](https://stacks.math.columbia.edu/tag/09HF) 及 [Stacks，09HI](https://stacks.math.columbia.edu/tag/09HI) 所适用的纯不可分条件；任意环的极小素局部化与约化嵌入使用 [Stacks，00EU](https://stacks.math.columbia.edu/tag/00EU) 及 [Stacks，00EW](https://stacks.math.columbia.edu/tag/00EW)。域上平方形式核的识别沿用旧§15 已注明的 Scully，*Quasilinear quadratic forms and function fields of quadrics*，arXiv:1710.09692v1，§2A；这里新增的承重连接仅是把该核与任意 $W_E$ 的交作精确比较。$\square$
+
+## 追加锚（本行以下为增补区）
+
