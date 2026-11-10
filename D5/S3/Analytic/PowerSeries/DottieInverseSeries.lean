@@ -554,10 +554,21 @@ theorem rational_inverse_endpoint :
     have hr : ENNReal.ofNNReal r <
         (PowerSeries.toFMS ℂ (inverse.map (Rat.castHom ℂ))).radius := by
       apply lt_of_lt_of_le (b := (13 / 4 : ℝ≥0∞)) _ endpoint_series.r_le
-      exact_mod_cast (show Real.pi < 13 / 4 by linarith [Real.pi_lt_d2])
+      rw [← ENNReal.ofReal_coe_nnreal]
+      change ENNReal.ofReal Real.pi < 13 / 4
+      convert (ENNReal.ofReal_lt_ofReal_iff (show (0 : ℝ) < 13 / 4 by norm_num)).mpr
+        (show Real.pi < 13 / 4 by linarith [Real.pi_lt_d2]) using 1 <;>
+        norm_num [ENNReal.ofReal_div_of_pos]
     have hsum := (PowerSeries.toFMS ℂ (inverse.map (Rat.castHom ℂ))).summable_norm_mul_pow hr
-    simpa [r, PowerSeries.toFMS, FormalMultilinearSeries.ofScalars_norm,
-      ← Complex.ofReal_ratCast, Complex.norm_real, Real.norm_eq_abs] using hsum
+    have hn (n : ℕ) :
+        ‖PowerSeries.toFMS ℂ (inverse.map (Rat.castHom ℂ)) n‖ =
+          |((PowerSeries.coeff n inverse : ℚ) : ℝ)| := by
+      rw [PowerSeries.toFMS, FormalMultilinearSeries.ofScalars_norm,
+        PowerSeries.coeff_map]
+      change ‖((PowerSeries.coeff n inverse : ℚ) : ℂ)‖ = _
+      rw [← Complex.ofReal_ratCast, Complex.norm_real, Real.norm_eq_abs]
+    simp_rw [hn] at hsum
+    exact hsum
   · have hsum := endpoint_series.hasSum_sub (y := (Real.pi : ℂ)) (by
       rw [Metric.mem_eball, edist_dist]
       simp only [dist_zero_right, Complex.norm_real, Real.norm_eq_abs,
