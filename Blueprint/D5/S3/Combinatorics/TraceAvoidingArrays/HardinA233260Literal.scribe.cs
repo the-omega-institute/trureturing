@@ -49,7 +49,7 @@ internal sealed class HardinA233260LiteralDocument : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create(name.Replace("_", "-").ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)),
-            literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
+            literature && !theorem ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(literature
                 ? "OEIS A233260, revision 7, " + (name == "result" ? "FORMULA: " + OriginalFormula : "NAME: " + OriginalName)
                 : title + "."))),
