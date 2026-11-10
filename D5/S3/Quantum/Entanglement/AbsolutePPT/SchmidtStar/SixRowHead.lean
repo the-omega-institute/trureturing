@@ -36,6 +36,10 @@ private def leaf (q : Fin 4 → ℝ) : Fin 6 → ℝ :=
 private theorem leaf_nonneg (q : Fin 4 → ℝ) (hq : ∀ i,0 ≤ q i) :
     ∀ i,0 ≤ leaf q i := by
   intro i
+  have h0 := hq 0
+  have h1 := hq 1
+  have h2 := hq 2
+  have h3 := hq 3
   fin_cases i <;> simp [leaf] <;> positivity
 
 private theorem four_product (q : Fin 4 → ℝ) (beta : ℝ)
@@ -70,7 +74,7 @@ private theorem good_cycle (d c : Fin 6 → ℝ) (b : ℝ)
     rw [mul_sum]
   obtain ⟨k, _, hk⟩ := exists_le_of_sum_le
     (s := (univ : Finset (Fin 6))) univ_nonempty
-    (f := fun k => ∑ i,d (i+k)*c i) (g := fun _ => b) (by simpa [hav] using hb)
+    (f := fun _ => b) (g := fun k => ∑ i,d (i+k)*c i) (by simpa [hav] using hb)
   exact ⟨k,hk⟩
 
 private def rotate (k : Fin 6) : Equiv.Perm (Fin 15) :=
@@ -145,8 +149,7 @@ private theorem sorted_head (M : ℝ) (b c : Fin 4 → ℝ) (d : Fin 6 → ℝ)
       change Real.sqrt (M^2+X+Y+Z) ≤ _
       rw [hY,hZ]
       have hMX : M^2+X=0 := by simpa [hL] using hL2.symm
-      simp [hMX,leaf]
-      exact hM
+      simpa [hMX,leaf] using hM
     · have hLp : 0 < L := lt_of_le_of_ne (Real.sqrt_nonneg _) (Ne.symm hL)
       refine ⟨M/L,fun i => b i/L,0,div_nonneg hM hLp.le,
         fun i => div_nonneg (hb i) hLp.le,?_,?_⟩
@@ -159,7 +162,7 @@ private theorem sorted_head (M : ℝ) (b c : Fin 4 → ℝ) (d : Fin 6 → ℝ)
         simp only [add_zero,hcz,hdz,mul_zero,zero_mul,add_zero,sum_const_zero]
         have he : M*(M/L)+(∑ i,b i*(b i/L))=L := by
           calc
-            _ = (M^2+X)/L := by dsimp [X]; rw [sum_div]; ring
+            _ = (M^2+X)/L := by simp [X,Fin.sum_univ_succ]; ring
             _ = L := by rw [← hL2]; field_simp [hL]; ring
         exact le_of_eq (by simpa [L] using he.symm)
   · have hYp : 0 < Y := lt_of_le_of_ne hY0 (Ne.symm hY)
@@ -215,7 +218,10 @@ private theorem sorted_head (M : ℝ) (b c : Fin 4 → ℝ) (d : Fin 6 → ℝ)
     have ht : 0 < t := div_pos (Real.sqrt_pos.mpr hW) hL
     have hTn : 0 < Tn := by dsimp [Tn]; apply Real.sqrt_pos.mpr; positivity
     have hT0 : 0 < T0 := mul_pos hr hTn
-    have hL2 : L^2=alpha^2+W := Real.sq_sqrt (by dsimp [W]; positivity)
+    have hL2 : L^2=alpha^2+W := by
+      dsimp [L,W]
+      rw [Real.sq_sqrt (by positivity)]
+      ring
     have hW2 := Real.sq_sqrt hW.le
     have hn : s^2+t^2=1 := by
       dsimp [s,t]
@@ -284,13 +290,16 @@ private theorem sorted_head (M : ℝ) (b c : Fin 4 → ℝ) (d : Fin 6 → ℝ)
     have hhalf : (1+s)*Z/2 ≤ T0^2 := by
       have ha := mul_le_mul_of_nonneg_left hZY (show 0 ≤ 1+s by positivity)
       have hb := mul_nonneg hs (show 0 ≤ (1+s)*Y by positivity)
-      nlinarith only [ha,hb,hT0lower]
+      have hbase : 0 ≤ (1+s)*Y := by positivity
+      nlinarith only [ha,hb,hT0lower,hbase]
     have hA : t^2*(1+s)*Z/2 ≤ t*T0^2 := by
       have ha := mul_nonneg (sub_nonneg.mpr ht1) (show 0 ≤ (1+s)*Z/2 by positivity)
       have hb := mul_le_mul_of_nonneg_left hhalf ht.le
       have hmul := mul_nonneg ht.le ha
       nlinarith only [hmul,hb]
     have hmono := correction_monotone t (t^2*(1+s)*Z/2) T T0 ht.le hT0 hTcompare hA
+    have hmono' : t*T0+t^2*(1+s)*Z/(2*T0) ≤ t*T+t^2*(1+s)*Z/(2*T) := by
+      convert hmono using 1 <;> ring
     have hbound := SixRowHeadScalar.recipe_bound alpha kappa eta halpha hkappa hkappa1 heta heta1
     change Real.sqrt (alpha^2+1+kappa+kappa*eta) ≤
       alpha*s+t*Tn+t^2*(1+s)*kappa*eta/(2*Tn) at hbound
@@ -325,7 +334,7 @@ private theorem sorted_head (M : ℝ) (b c : Fin 4 → ℝ) (d : Fin 6 → ℝ)
       have ha := mul_le_mul_of_nonneg_left hell (sq_nonneg t)
       calc
         _ ≤ M*s+t*T0+t^2*(1+s)*Z/(2*T0) := hscalar
-        _ ≤ M*s+t*T+t^2*(1+s)*Z/(2*T) := by linarith only [hmono]
+        _ ≤ M*s+t*T+t^2*(1+s)*Z/(2*T) := by linarith only [hmono']
         _ ≤ _ := by linarith only [ha]
     refine ⟨s,fun i => t*q i,ell,hs,fun i => mul_nonneg ht.le (hq i),?_,?_⟩
     · simp_rw [mul_pow,← mul_sum,hqn,mul_one]

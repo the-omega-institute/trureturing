@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowHeadScalar
    mirror-E: none(waiver:noncomputational)
    anchors: []
-   utility: none
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowHead.head_exists; premises=D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowHeadCertificate.polynomial_nonneg
    digest: Same-vector scalar estimate for the exact K6 balanced-star head. -/
 import D5.S3.Quantum.Entanglement.AbsolutePPT.SchmidtStar.SixRowHeadCertificate
 set_option autoImplicit false
@@ -71,7 +71,8 @@ theorem half_angle_bound (z k h : ℝ) (hz : 0 < z) (hz' : z ≤ 3/4)
   have hpoly : 0 ≤ 4*s^4*Q^2*R-V^2 :=
     nonneg_of_mul_nonneg_left (by rw [hid]; exact hN) (by positivity)
   have hWV : 0 < W+t^2*k := by positivity
-  have hbound := square_bridge s T W (W+t^2*k) Q V hT hW hWV hQ rfl hpoly
+  have hbound := square_bridge s T W (W+t^2*k) Q V hT hW hWV hQ
+    (by dsimp only [V,R]; ring) hpoly
   have hRroot : Real.sqrt R = Real.sqrt W*T := by
     dsimp [R]
     rw [Real.sqrt_mul hW.le, Real.sqrt_sq hT.le]
@@ -108,7 +109,7 @@ theorem unit_bound (s t k h : ℝ) (hs : 0 ≤ s) (ht : 0 < t)
     apply (eq_div_iff (ne_of_gt hD)).mpr
     dsimp [z]
     field_simp [ne_of_gt h1s]
-    linear_combination t*hn
+    nlinarith only [hn]
   have hg : 0 ≤ constraint z k h := by
     have he : constraint z k h = (1+z^2)^2*(s^2*(1+k*h)-t^2/4) := by
       simp only [hsrep, htrep]
@@ -122,6 +123,7 @@ theorem unit_bound (s t k h : ℝ) (hs : 0 ≤ s) (ht : 0 < t)
     have he := constraint_upper z k h (3/4) 1 (3/2) (by norm_num)
       (le_of_lt (lt_of_not_ge hz')) hz1 hk hk' hh hh'
     norm_num [constraint] at he
+    dsimp only [constraint] at hg
     linarith only [he, hg]
   have hb := half_angle_bound z k h hz hz' hk hk' hh hh' hg
   simpa only [← hsrep, ← htrep] using hb
@@ -144,7 +146,8 @@ theorem recipe_bound (alpha k h : ℝ) (ha : 1/2 ≤ alpha)
   have hL : 0 < L := by dsimp [L]; apply Real.sqrt_pos.mpr; positivity
   have hL2 : L^2=alpha^2+W := by
     dsimp [L, W]
-    exact Real.sq_sqrt (by positivity)
+    rw [Real.sq_sqrt (by positivity)]
+    ring
   have hW2 := Real.sq_sqrt hW.le
   have hs : 0 ≤ s := div_nonneg (by linarith only [ha]) hL.le
   have ht : 0 < t := div_pos (Real.sqrt_pos.mpr hW) hL
@@ -172,11 +175,16 @@ theorem recipe_bound (alpha k h : ℝ) (ha : 1/2 ≤ alpha)
     <;> ring
   have hr : t*Real.sqrt (alpha^2+1+k+k*h) = Real.sqrt (W+t^2*k) := by
     apply (sq_eq_sq₀ (by positivity) (Real.sqrt_nonneg _)).mp
-    rw [mul_pow, Real.sq_sqrt (by dsimp [W]; positivity),
+    rw [mul_pow, Real.sq_sqrt (by positivity),
       Real.sq_sqrt (by positivity)]
-    dsimp [t]
-    field_simp [ne_of_gt hL]
-    nlinarith only [hL2, hW2]
+    have htL : t^2*L^2=W := by
+      dsimp only [t]
+      rw [div_pow]
+      field_simp [ne_of_gt hL]
+      exact hW2
+    calc
+      t^2*(alpha^2+1+k+k*h) = t^2*(L^2+k) := by rw [hL2]; dsimp [W]; ring
+      _ = W+t^2*k := by rw [mul_add,htL]
   rw [he, ← hr] at hb
   exact (mul_le_mul_iff_right₀ ht).mp hb
 
