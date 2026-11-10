@@ -747,7 +747,7 @@ private theorem cycle_weight_ofFn (n : ℕ) (v : Fin 2 → ℂ) (Ψ : Fin (n+1) 
     have hh := ih (fun j => Ψ j.succ)
     simpa only [Fin.succ_zero_eq_one, Fin.castSucc_zero, Fin.succ_castSucc, Fin.succ_last, mul_assoc] using
       congrArg ((star (Ψ 0) ⬝ᵥ Ψ 1) * ·) hh
-private theorem bargmann_path_product (n : ℕ) (Ψ : Fin (n+1) → Fin 2 → ℂ) : bargmann Ψ = (∏ j : Fin n, star (Ψ j.castSucc) ⬝ᵥ Ψ j.succ) * (star (Ψ (Fin.last n)) ⬝ᵥ Ψ 0) := by
+theorem bargmann_path_product (n : ℕ) (Ψ : Fin (n+1) → Fin 2 → ℂ) : bargmann Ψ = (∏ j : Fin n, star (Ψ j.castSucc) ⬝ᵥ Ψ j.succ) * (star (Ψ (Fin.last n)) ⬝ᵥ Ψ 0) := by
   unfold bargmann
   rw [List.ofFn_succ]; rw [show ((fun ψ : Fin 2 → ℂ => Matrix.vecMulVec ψ (star ψ)) (Ψ 0) :: List.ofFn fun j : Fin n => (fun ψ : Fin 2 → ℂ => Matrix.vecMulVec ψ (star ψ)) (Ψ j.succ)) =
       (Ψ 0 :: List.ofFn fun j : Fin n => Ψ j.succ).map (fun ψ : Fin 2 → ℂ => Matrix.vecMulVec ψ (star ψ)) by
