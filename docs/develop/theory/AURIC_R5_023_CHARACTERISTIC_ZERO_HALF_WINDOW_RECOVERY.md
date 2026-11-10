@@ -68,7 +68,7 @@ $$
 
 证明。先证明 (26.3)–(26.4)，再消费前卷 §25 的支持恢复机制。辅助域与辅助向量只用于证明存在性，最终的见证及 (26.2) 的集合都在原 $L$ 中。
 
-先缩写 $E=E_W$。有限维乘法稳定子的通常事实给出 $E$ 成域：它包含 $F$，对加法、减法、乘法封闭；若 $0\ne a\in E$，则乘以 $a$ 在有限维 $W$ 上单射，故 $aW=W$，从而 $a^{-1}W=W$。这里消费的事实见 Bachoc–Serra–Zémor，[*Revisiting Kneser's Theorem for Field Extensions*，arXiv:1510.01354v2，§3，Lemma 13 后的有限维说明](https://arxiv.org/pdf/1510.01354v2)。于是 $W$ 为 $E$-向量空间。设
+先缩写 $E=E_W$。有限维乘法稳定子的通常事实给出 $E$ 成域：它包含 $F$，对加法、减法、乘法封闭；若 $0\ne a\in E$，则乘以 $a$ 在有限维 $W$ 上单射，故 $aW=W$，从而 $a^{-1}W=W$。这里消费的事实见 Bachoc–Serra–Zémor，[*Revisiting Kneser's Theorem for Field Extensions*，arXiv:1510.01354v2，§2.3，Lemma 13 后的有限维说明](https://arxiv.org/pdf/1510.01354v2)。于是 $W$ 为 $E$-向量空间。设
 
 $$
 k=\dim_E W=m/e,\qquad N=[L:E]=2k.
@@ -180,7 +180,7 @@ $$
 
 这验证的是同一个 $W$ 所给行拟阵的对称性，不是假设 $W$ 在嵌入之间一般位置。对 $M$ 的全部基赋予均匀概率测度 $\mu$。基的集合非空且有限，$\mu$ 对每个基都严格为正；(26.15) 及传递性使 $\mu\{A:\sigma\in A\}$ 与 $\sigma$ 无关。每个基有 $k$ 个元素，故这些边缘概率均为 $k/N=1/2$。
 
-此时直接应用 Devriendt–Mulas，[*Uniform density in matroids, matrices and graphs*，arXiv:2306.15267v3，Theorem 2.10 的 (3)$\Rightarrow$(2)](https://arxiv.org/pdf/2306.15267v3)：全支撑的等边缘基测度给出均匀密度，且非连通分量并的子集满足严格密度不等式。由于刚才已经证明 $M$ 连通，每个非空真子集均不可能是连通分量的并。因此
+此时直接应用 Devriendt–Mulas，[*Uniform density in matroids, matrices and graphs*，arXiv:2306.15267v3，Theorem 2.10 的 (3)$\Rightarrow$(2)](https://arxiv.org/pdf/2306.15267v3)：全支撑的等边缘基测度给出均匀密度，且凡不是连通分量之并的子集都满足严格密度不等式。由于刚才已经证明 $M$ 连通，每个非空真子集均不可能是连通分量的并。因此
 
 $$
 \frac{|S|}{\rho(S)}<\frac{N}{k}=2,
@@ -267,8 +267,7 @@ $$
 
 $$
 \mathcal B(X,Y)=
-\left[\operatorname{diag}(BY)B\ \middle|\
-      \operatorname{diag}(BX)B\right],
+\left[\operatorname{diag}(BY)B\ \middle|\ \operatorname{diag}(BX)B\right],
 \qquad \operatorname{rank}_{K'}\mathcal B(X,Y)=N-1.
 \tag{26.23}
 $$
@@ -280,8 +279,7 @@ $$
 $$
 \mathcal C(X,Y)=
 \left[
-v(Y)w_1\ \cdots\ v(Y)w_k\ \middle|\
-u(X)w_1\ \cdots\ u(X)w_k
+v(Y)w_1\ \cdots\ v(Y)w_k\ \middle|\ u(X)w_1\ \cdots\ u(X)w_k
 \right]
 \in\operatorname{Mat}_{N\times 2k}(E[X,Y])
 \tag{26.24}
