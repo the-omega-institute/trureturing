@@ -26,7 +26,7 @@ Lean statement: `D5/S3/VertexAlgebra/Lattice/ActualZhuProduct.star_homogeneous`
 
 *Commentary.*
 
-For any natural p, any original state a in energy grade p and any original state b, star(a,b) is the complete sum from j=0 through p of choose(p,j) times a_(j-1)b. This consumed interface is bind-only; the higher-circle recursion supplies the substantive content of this module.
+For any natural p, any original state a in energy grade p and any original state b, star(a,b) is the complete sum from j=0 through p of choose(p,j) times a_(j-1)b. This finite formula is used to expand the star product in the right-argument O stability proof.
 
 **Definition 1.3 (Full higher-circle family).**
 
@@ -54,9 +54,9 @@ For positive-definite real Gram matrix, every natural n, homogeneous original a 
 
 Source-faithful native port of Fedor K. Popov, Lean_VOA, commit 013a799ca834a8a6b3afa8129e3e522025b3f45c, VOA/Modules/ZhuModule.lean, ZhuRingResidue.lean and ZhuRightIdeal.lean; Apache-2.0, with classical Zhu/Frenkel-Zhu attribution. The local carrier, fields, grading, derivative, commutator and O-space are the existing actual lattice construction. The local port is not independent mathematical novelty.
 
-The consuming chain establishes star(u,o) in the same full O for arbitrary original u and o in O under positive definiteness. Opposite-argument stability star(o,u) in O and associator membership (u star v) star w - u star (v star w) in O remain unproved. A bilinear product on the quotient requires both argument stabilities; an associative quotient Ring or Algebra requires further structure. Analytic CFT, fusion, anomaly, string theory and AdS/CFT remain outside this result.
+The consuming chain establishes star(u,o) in the same full O for arbitrary original u and o in O under positive definiteness. Opposite-argument stability star(o,u) in O and associator membership (u star v) star w - u star (v star w) in O are beyond this result. A bilinear product on the quotient requires both argument stabilities; an associative quotient Ring or Algebra requires further structure. Analytic CFT, fusion, anomaly, string theory and AdS/CFT remain outside this result.
 
-Four-slot escape registration for star_homogeneous and higherCircle_mem_zhuO is unfinished: no faithful enrolled original-statement reconstruction, scoped readout, law bridge, whole-family variation, sensitivity, actual observational dependence and source-selection/realization evidence is supplied. https://github.com/the-omega-institute/trureturing/issues/28732 tracks this product-chain audit. Issue #28685 concerns the prior finite quotient and exposed energy helpers. Neither compilation nor the linked issue establishes declared_validated registration.
+Four-slot escape registration for star_homogeneous and higherCircle_mem_zhuO is unfinished: no faithful enrolled original-statement reconstruction, scoped readout, law bridge, whole-family variation, sensitivity, actual observational dependence and source-selection/realization evidence is supplied. https://github.com/the-omega-institute/trureturing/issues/28732 tracks this product-chain audit. Neither compilation nor the linked issue establishes declared_validated registration.
 
 ## References
 
