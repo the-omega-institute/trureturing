@@ -90,8 +90,16 @@ private theorem slot_value (a : Fin 15 → ℝ) (s t : ℝ) (q : Fin 4 → ℝ)
       t^2*∑ i : Fin 6,a (σ (Fin.natAdd 9 (i+k)))*leaf q i := by
   unfold headValue
   rw [← edgeEquiv.sum_comp]
-  norm_num [edgeEquiv,edgeAt,rotate,leaf,Fin.sum_univ_succ,
-    finSumFinEquiv,Fin.add_def]
+  simp only [Equiv.trans_apply,Equiv.symm_apply_apply]
+  have he (i : Fin 15) : edgeEquiv i = edgeAt i := rfl
+  have hv : (Fin.cases 1 (Fin.cases s (fun i => t*q i)) : Fin 6 → ℝ) =
+      ![1,s,t*q 0,t*q 1,t*q 2,t*q 3] := by
+    funext i
+    fin_cases i <;> rfl
+  simp only [he,hv]
+  fin_cases k <;>
+    norm_num [edgeAt,rotate,leaf,Fin.sum_univ_succ,
+      finSumFinEquiv,Fin.add_def,Fin.addCases]
   <;> ring
 
 private theorem correction_monotone (t A v u : ℝ)
@@ -131,7 +139,7 @@ private theorem sorted_head (M : ℝ) (b c : Fin 4 → ℝ) (d : Fin 6 → ℝ)
   have hXM : X ≤ 4*M^2 := by
     have ht := sum_le_sum (fun i (_ : i ∈ (univ : Finset (Fin 4))) =>
       (sq_le_sq₀ (hb i) hM).mpr (hbM i))
-    simpa only [sum_const,card_univ,Fintype.card_fin,nsmul_eq_mul] using ht
+    simpa [X] using ht
   by_cases hY : Y=0
   · have hcz (i : Fin 4) : c i=0 := by
       have ht : (c i)^2 ≤ Y := single_le_sum (fun j _ => sq_nonneg _) (mem_univ i)
@@ -149,7 +157,7 @@ private theorem sorted_head (M : ℝ) (b c : Fin 4 → ℝ) (d : Fin 6 → ℝ)
       change Real.sqrt (M^2+X+Y+Z) ≤ _
       rw [hY,hZ]
       have hMX : M^2+X=0 := by simpa [hL] using hL2.symm
-      simpa [hMX,leaf] using hM
+      simpa [hMX,leaf,hdz] using hM
     · have hLp : 0 < L := lt_of_le_of_ne (Real.sqrt_nonneg _) (Ne.symm hL)
       refine ⟨M/L,fun i => b i/L,0,div_nonneg hM hLp.le,
         fun i => div_nonneg (hb i) hLp.le,?_,?_⟩
@@ -163,7 +171,7 @@ private theorem sorted_head (M : ℝ) (b c : Fin 4 → ℝ) (d : Fin 6 → ℝ)
         have he : M*(M/L)+(∑ i,b i*(b i/L))=L := by
           calc
             _ = (M^2+X)/L := by simp [X,Fin.sum_univ_succ]; ring
-            _ = L := by rw [← hL2]; field_simp [hL]; ring
+            _ = L := by rw [← hL2]; field_simp [hL]
         exact le_of_eq (by simpa [L] using he.symm)
   · have hYp : 0 < Y := lt_of_le_of_ne hY0 (Ne.symm hY)
     have hXp : 0 < X := hYp.trans_le hYX
@@ -183,11 +191,11 @@ private theorem sorted_head (M : ℝ) (b c : Fin 4 → ℝ) (d : Fin 6 → ℝ)
     have hZsix : Z ≤ 6*delta^2 := by
       have ht := sum_le_sum (fun i (_ : i ∈ (univ : Finset (Fin 6))) =>
         (sq_le_sq₀ (hd i) hdelta).mpr (hdd i))
-      simpa only [sum_const,card_univ,Fintype.card_fin,nsmul_eq_mul] using ht
+      simpa [Z] using ht
     have hYfour : 4*delta^2 ≤ Y := by
       have ht := sum_le_sum (fun i (_ : i ∈ (univ : Finset (Fin 4))) =>
         (sq_le_sq₀ hdelta (hc i)).mpr (hdc i))
-      simpa only [sum_const,card_univ,Fintype.card_fin,nsmul_eq_mul] using ht
+      simpa [Y] using ht
     have hZY : Z ≤ (3/2)*Y := by linarith only [hZsix,hYfour]
     let r := Real.sqrt X
     have hr : 0 < r := Real.sqrt_pos.mpr hXp
@@ -279,7 +287,9 @@ private theorem sorted_head (M : ℝ) (b c : Fin 4 → ℝ) (d : Fin 6 → ℝ)
         (show 0 ≤ 3*(1+s)*T by positivity)
       nlinarith only [ha,hb]
     have hav : 6*((1+s)*Z/(2*T)) ≤ R*(∑ i,leaf q i) := by
-      rw [hleaf,← mul_div_assoc]
+      rw [hleaf]
+      suffices hav' : 6*((1+s)*Z/(2*T)) ≤ R*P/T^2 by
+        simpa only [mul_div_assoc] using hav'
       apply (le_div_iff₀ (by positivity : 0 < T^2)).mpr
       have he : (6*((1+s)*Z/(2*T)))*T^2=3*(1+s)*Z*T := by
         field_simp [ne_of_gt hT]
@@ -314,7 +324,9 @@ private theorem sorted_head (M : ℝ) (b c : Fin 4 → ℝ) (d : Fin 6 → ℝ)
           <;> ring
     have hroot : r*Real.sqrt (alpha^2+1+kappa+kappa*eta)=Real.sqrt (M^2+X+Y+Z) := by
       apply (sq_eq_sq₀ (by positivity) (Real.sqrt_nonneg _)).mp
-      rw [mul_pow,Real.sq_sqrt (by positivity),Real.sq_sqrt (by positivity)]
+      have haSq := Real.sq_sqrt (show 0 ≤ alpha^2+1+kappa+kappa*eta by positivity)
+      have hfSq := Real.sq_sqrt (show 0 ≤ M^2+X+Y+Z by positivity)
+      rw [mul_pow,haSq,hfSq]
       exact hrad
     have hcorr : r*(kappa*eta)/Tn=Z/T0 := by
       rw [hkh]
@@ -332,10 +344,12 @@ private theorem sorted_head (M : ℝ) (b c : Fin 4 → ℝ) (d : Fin 6 → ℝ)
     rw [hroot,hright] at hscalar
     have hhead : Real.sqrt (M^2+X+Y+Z) ≤ M*s+t*T+t^2*∑ i,d (i+ell)*leaf q i := by
       have ha := mul_le_mul_of_nonneg_left hell (sq_nonneg t)
+      have ha' : t^2*(1+s)*Z/(2*T) ≤ t^2*∑ i,d (i+ell)*leaf q i := by
+        convert ha using 1 <;> ring
       calc
         _ ≤ M*s+t*T0+t^2*(1+s)*Z/(2*T0) := hscalar
         _ ≤ M*s+t*T+t^2*(1+s)*Z/(2*T) := by linarith only [hmono']
-        _ ≤ _ := by linarith only [ha]
+        _ ≤ _ := by linarith only [ha']
     refine ⟨s,fun i => t*q i,ell,hs,fun i => mul_nonneg ht.le (hq i),?_,?_⟩
     · simp_rw [mul_pow,← mul_sum,hqn,mul_one]
       exact hn
@@ -347,7 +361,7 @@ private theorem sorted_head (M : ℝ) (b c : Fin 4 → ℝ) (d : Fin 6 → ℝ)
             intro i _
             dsimp only [q]
             ring
-          _ = T := by rw [← hT2]; field_simp [ne_of_gt hT]; ring
+          _ = T := by rw [← hT2]; field_simp [ne_of_gt hT]
       have he : M*s+(∑ i,(b i+s*c i)*(t*q i))+
           (∑ i,d (i+ell)*leaf (fun j => t*q j) i) =
           M*s+t*T+t^2*∑ i,d (i+ell)*leaf q i := by
