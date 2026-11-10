@@ -851,3 +851,159 @@ Shi–Özbudak，[*Linear equivalence of full weight spectrum cyclic orbit codes
 本条只断言全部无限、无噪声、原标签精确读数下的集合论轨道识别。$D,E$、正规闭包、泛参数、子式、配对、正交补和见证向量都是证明对象，不是额外观察，也不改变原 $L^\times$ 的标量群。除 (28.19) 的适用分支外，没有主张一行支持统一足够；(28.21) 仅服务六次分支，不声称完整二元观察对所有四维窗口充分。不提供有限查询、有效算法、噪声结论或三重观察最小性，不扩展到任意维数的同式或任意维数的 $J$ 恢复，也不推出量子公理、$\mathbb Z$ 在 $\mathbb Q$ 中的丢番图定义或 $H10(\mathbb Q)$。
 
 ## 追加锚（本行以下为增补区）
+
+## 29　最小正交叠的中间域公式与六维、七维分界
+
+**定义 29.1（原标签与中间域张成）。** 设 $F$ 为特征零域，$L/F$ 为有限扩张，$0\ne W\le_F L$，$m=\dim_F W$。沿用 §§26–28 的原乘法、比值域和稳定子，记
+
+$$
+\begin{aligned}
+D&=F\bigl(\{p/q:p\in W,\ q\in W\setminus\{0\}\}\bigr),&
+E&=\{a\in L:aW\subseteq W\},\\
+N&=[D:F],& e&=[E:F],\\
+d_W(r)&=\dim_F(W\cap rW)\qquad(r\in L^\times),&
+\delta&=\min\{d_W(r):r\in L^\times,\ d_W(r)>0\}.
+\end{aligned}
+\tag{29.1}
+$$
+
+对每个实际中间域 $F\subseteq A\subseteq D$，记 $AW=\operatorname{span}_A W\subseteq L$。令 $a(A)=[A:F]$、$t(A)=\dim_F AW-m$。两个端点下界指由 $A=E$ 和 $A=D$ 给出的 $e$ 和 $2m-N$。所有标签均取自原 $L^\times$；由于 $d_W(1)=m>0$，最小值存在。
+
+**定理 29.2（中间域最优值及首个超出端点的维数）。** 对定义 29.1 的每个窗口，
+
+$$
+\boxed{\displaystyle
+\delta=\max_{F\subseteq A\subseteq D}\bigl(a(A)-2t(A)\bigr).
+}
+\tag{29.2}
+$$
+
+每个中间域项都下界所有正交叠；存在原 $p,q\in W\setminus\{0\}$ 使 $d_W(p/q)=\delta$。特别地，$1\le m\le6$ 时，
+
+$$
+\delta=\max\{e,\,2m-N\}.
+\tag{29.3}
+$$
+
+$m=7$ 时有精确判据
+
+$$
+\boxed{\displaystyle
+\delta>\max\{e,\,14-N\}
+\quad\Longleftrightarrow\quad
+N\ge16\quad\text{且存在 } F\subseteq A\subseteq D
+\text{ 使 } [A:F]=4,\ \dim_F AW=8 .
+}
+\tag{29.4}
+$$
+
+在 (29.4) 的两端成立时，$e=1$ 且 $\delta=2$；否则 $\delta=\max\{e,14-N\}$。次数条件不保证给定的 $D/F$ 有四次中间域；右端要求原域中确实有满足张成条件的那个域。
+
+**证明。** 先在原域中统一处理所有标签。按 (28.7)，$d_W(r)>0$ 当且仅当 $r=p/q$ 为两个非零窗口元素的原比值；特别是 $D$ 外的原标签交叠皆为零。任取 $w_0\in W\setminus\{0\}$，置 $U=w_0^{-1}W$。和 §28 一样，$1\in U\subseteq D$，$F(U)=D$，而 $d_U=d_W$、$E_U=E$、$\dim_F AU=\dim_F AW$。稳定子成域用 Bachoc–Serra–Zémor [arXiv:1510.01354v2，§2.3，Lemma 13 后的有限维说明](https://arxiv.org/pdf/1510.01354v2)：非零稳定元素在 $W$ 上给出单射，有限维使它满射，故逆元也稳定。由 $a w_0/w_0=a$ 对 $a\in E$ 得 $E\subseteq D$；$W$ 的 $E$-线性及域塔分别给出 $e\mid m$ 和 $e\mid N$。还有 $DW=w_0D$，因为 $1\in U\subseteq D$。这里既不把 $D$ 预设为 $L$，也不把 $E$ 预设为 $F$。
+
+若 $d_W(r)>0$，则 $AW\cap rAW$ 是含非零向量的 $A$-空间，故 $\dim_F(AW\cap rAW)\ge a(A)$。由 $W+rW\subseteq AW+rAW$ 得
+
+$$
+d_W(r)=2m-\dim_F(W+rW)
+\ \ge\ 2m-\dim_F(AW+rAW)
+\ \ge\ a(A)-2t(A).
+\tag{29.5}
+$$
+
+$A=E$ 时 $t(E)=0$，$A=D$ 时 $t(D)=N-m$，确得两个端点下界。此下界的维数机制见下文 Castello–Polverino–Zullo 的式 (13)。
+
+为证明一个中间域项给出准确值，使用 §§26、28 的分裂与原系数矩阵接口。取 $D/F$ 的有限正规闭包 $K/F$，包含原 $D$；$G=\operatorname{Gal}(K/F)$ 在 $\Omega=\operatorname{Hom}_F(D,K)$ 上按左复合传递作用，$|\Omega|=N$。取 $U$ 的 $F$-基 $u_1=1,u_2,\ldots,u_m$，记 $b_\sigma=(\sigma(u_1),\ldots,\sigma(u_m))$，$\rho(S)=\dim_K\langle b_\sigma:\sigma\in S\rangle_K$。特征零保证可分分裂 $D\otimes_F K\simeq K^\Omega$，故 $\rho(\Omega)=m$。各行首坐标为一；若两行成比例，则两嵌入在 $U$ 上相同，因 $F(U)=D$ 而是同一嵌入。因而 $P_\sigma=K(b_\sigma,0)\oplus K(0,b_\sigma)$ 是一族不同的二维子空间，非空子族 $S$ 的张成维数为 $2\rho(S)$。
+
+取独立的 $m$ 元不定元组 $X,Y$。在 $K(X,Y)$ 上，法向量为 $(X,-Y)$ 的超平面切每个 $P_\sigma$，所得直线的行向量为 $((b_\sigma\cdot Y)b_\sigma,(b_\sigma\cdot X)b_\sigma)$，即 (28.15) 的二因子接口。它们的秩为
+
+$$
+R=\min_{\mathcal P}\ \sum_{S\in\mathcal P}(2\rho(S)-1),
+\tag{29.6}
+$$
+
+其中 $\mathcal P$ 遍历 $\Omega$ 的非空块分拆。这里直接使用 Raz–Wigderson [arXiv:1901.09423v1，式 (3)、Definition 5.1、Theorems 5.2、7.1](https://arxiv.org/pdf/1901.09423v1) 的 Lovász 超平面公式：有限非零子空间族在特征零的 $K$ 上，两个独立参数组给出整个超平面参数空间的泛法向量，故满足 Definition 5.1 的一般位置条件。每块的代价是它所含子空间的总张成维数减一。
+
+由同一原文 Definition 2.1、Corollary 3.2，达到 (29.6) 且块数最少的分拆 $\mathcal P_*$ 唯一。对 $g\in G$，$g(b_\sigma)=b_{g\sigma}$，故 $\rho(gS)=\rho(S)$；于是 $g\mathcal P_*=\mathcal P_*$。现在把这个不变分拆接到原中间域。令 $S_0$ 为包含原包含嵌入 $\iota:D\hookrightarrow K$ 的块，$H=\{g\in G:gS_0=S_0\}$。任何固定 $\iota$ 的 $g$ 都保持 $S_0$，故 $\operatorname{Gal}(K/D)\subseteq H$。反过来，任一 $\sigma\in S_0$ 可写成 $g\iota$；此时 $gS_0$ 和 $S_0$ 同含 $\sigma$，从而 $g\in H$。由 Galois 对应，
+
+$$
+A=K^H,\qquad F\subseteq A\subseteq D,\qquad
+S_0=\{g\iota:g\in H\}=\operatorname{Hom}_A(D,K).
+\tag{29.7}
+$$
+
+最后一个等式中，$A$ 在 $K$ 内按原包含嵌入，固定 $A$ 的嵌入可延拓到 $K$ 的自同构。其余块是 $S_0$ 的 $G$-平移，故块数是 $[G:H]=[A:F]$，且各块秩相等。
+
+为计算该秩，对 $D/A$ 使用同一个分裂 $D\otimes_A K\simeq K^{S_0}$。矩阵 $(\sigma(u_j))_{\sigma\in S_0,j}$ 的列空间正是 $AU\otimes_A K$ 的像：$u_j$ 张成 $AU$，每个 $\sigma$ 在 $A$ 上都是包含嵌入，扩底后 $A$ 系数成为 $K$ 系数。由扩底保持包含及行列秩相等，$\rho(S_0)=\dim_A AU$。写 $a=[A:F]$、$k=\dim_A AU$，则
+
+$$
+R=a(2k-1),\qquad
+2m-R=a-2(ak-m)=a(A)-2t(A).
+\tag{29.8}
+$$
+
+因此最优分拆给出的值来自原 $D$ 内的实际中间域及同一窗口的张成，不是用可整除次数代替域。
+
+为取得原标签，记 $u(X)=\sum_j X_j u_j$、$v(Y)=\sum_j Y_j u_j$。以任一 $D/F$ 基记下各列 $v(Y)u_j$ 和 $u(X)u_j$ 的原乘法矩阵。其系数在 $F[X,Y]$；左乘可逆的嵌入矩阵就得到 (29.6) 所用的行矩阵。因此原矩阵有非零 $R$ 阶子式 $f\in F[X,Y]$，且更高阶子式恒零。按 §26 的无限域子式返回，$fX_1Y_1$ 在某个 $x,y\in F^m$ 非零。取 $u=u(x),v=v(y)$，均为原 $U$ 中的非零向量，有 $\dim_F(vU+uU)=R$。乘 $v^{-1}$ 接回原比值，得 $d_U(u/v)=2m-R$，为正是因为 $uv\in vU\cap uU$ 非零。令 $p=w_0u$、$q=w_0v$，则 $p/q=u/v$ 且 $d_W(p/q)=2m-R$。这与 (29.5)、(29.8) 合起来证明 (29.2) 和原域可达性。
+
+接下来设某个 $m$ 发生 $\delta>\max\{e,2m-N\}$，取 (29.2) 的取等中间域 $A$，仍写 $a=[A:F]$、$k=\dim_A AU$，并令 $t=ak-m$。若 $t=0$，则 $AW=W$，$A\subseteq E$，该项至多 $e$；故 $t\ge1$。若 $k=1$，则 $1\in U$ 使 $AU=A$，由 $F(U)=D$ 得 $A=D$，该项是 $2m-N$；故 $k\ge2$。严格超过 $e\ge1$ 给出 $a-2t\ge2$。从而
+
+$$
+m=ak-t\ \ge\ 2a-t\ \ge\ 3t+4\ \ge\ 7 .
+\tag{29.9}
+$$
+
+这证明 (29.3)，包括非平凡稳定子及真比值子域。若 $m=7$，(29.9) 处处取等，强制 $t=1$、$a=4$、$k=2$，于是 $\dim_F AW=8$、$\delta=2$、$e=1$。又因 $2>14-N$，有 $N>12$；$4\mid N$ 便给出 $N\ge16$。反之，若右端的实际中间域存在，$t(A)=1$，由 (29.5) 每个正交叠至少为二。因 $e\mid7$，若 $e\ne1$ 则 $W=w_0E$，进而 $D=E$、$N=7$，与 $N\ge16$ 矛盾。所以 $e=1$，且 $14-N\le-2$，二严格超过端点。已经证明的取等分析随即给出 $\delta=2$。$\square$
+
+**命题 29.3（同一十六次域内的同参数分离）。** 取 $\alpha^{16}=2$，$F=\mathbb Q$、$L=\mathbb Q(\alpha)$，令 $\beta=\alpha^4$、$A=\mathbb Q(\beta)$。设
+
+$$
+B=\ker\operatorname{Tr}_{A/\mathbb Q},\qquad
+W=B\oplus A\alpha,\qquad
+V=\langle 1,\alpha,\ldots,\alpha^6\rangle_{\mathbb Q}.
+\tag{29.10}
+$$
+
+两者的 $(m,N,e)$ 都是 $(7,16,1)$，但 $\delta_W=2$、$\delta_V=1$。所有原正交叠标签分别满足 $d_W(r)\ge2$ 和 $d_V(r)\ge1$，且两个界都在 $L^\times$ 中取到。具体地，
+
+$$
+r_0=\frac{\alpha^4}{\alpha^8+\alpha},\qquad
+W\cap r_0W=\langle\alpha^4,\alpha^8\rangle_{\mathbb Q},
+\qquad
+V\cap\alpha^6V=\mathbb Q\alpha^6 .
+\tag{29.11}
+$$
+
+**证明。** $x^{16}-2$ 和 $x^4-2$ 在素数二处满足 Eisenstein 判据，故 $[L:\mathbb Q]=16$、$[A:\mathbb Q]=4$，$[L:A]=4$。在 $A$ 的幂基 $1,\beta,\beta^2,\beta^3$ 中，乘 $\beta^j$（$1\le j\le3$）的矩阵对角线全为零，因为 $\beta^4=2$ 且指数模四移位；乘 $1$ 的迹为四。故 $B=\langle\beta,\beta^2,\beta^3\rangle_{\mathbb Q}$。$1,\alpha,\alpha^2,\alpha^3$ 在 $A$ 上独立，因而 $W$ 为直和，维数七，$AW=A\oplus A\alpha$ 的 $\mathbb Q$-维数八。$V$ 的七个幂向量亦独立。
+
+$W$ 的比值域含 $\alpha^5/\alpha=\beta$ 和 $\alpha/\beta$，因为 $\alpha,\alpha^5\in A\alpha$ 且 $\beta\in B$，故含 $\alpha$；$V$ 的比值域也含 $\alpha/1$。两者都等于原 $L$。由 $e\mid m$ 与 $e\mid N$，两稳定子均为 $\mathbb Q$。对于每个原 $r$，若 $W\cap rW\ne\{0\}$，在 (29.5) 取这个 $A$ 给出 $d_W(r)\ge4-2(8-7)=2$。而 $V$ 的每个非零交维至少为一。
+
+对 $W$，设 $q_0=\beta^2+\alpha\in W\setminus\{0\}$，则 $r_0=\beta/q_0\in L^\times$，且对任一 $x=b+c\alpha\in W$（$b\in B,c\in A$），$x\in r_0W$ 等价于 $q_0x\in\beta W$。展开得
+
+$$
+q_0 x=\beta^2 b+(b+\beta^2 c)\alpha+c\alpha^2,\qquad
+\beta W=\beta B\oplus A\alpha .
+\tag{29.12}
+$$
+
+由 $1,\alpha,\alpha^2$ 在 $A$ 上独立，条件等价于 $c=0$ 且 $\beta b\in B$。在 $B$ 的基 $\beta,\beta^2,\beta^3$ 中，只有最后一个方向乘 $\beta$ 会产生非零常数项，故 $b\in\langle\beta,\beta^2\rangle_{\mathbb Q}$。这证明 (29.11) 的第一个交叠等式。对 $V$，$\alpha^6V=\langle\alpha^6,\ldots,\alpha^{12}\rangle_{\mathbb Q}$，原域的十六个幂基向量中两组只共用 $\alpha^6$，故得第二个等式。两者各自达到全体正标签的下界。$\square$
+
+**原文对应与应用差额。** §§26–28 已给出半维、三维和全部四维的最小交叠，且 (28.10)–(28.16) 已将同一原乘法矩阵接到分拆秩、最少块唯一性与原系数子式。Raz–Wigderson 的 Definition 2.1 和 Corollary 3.2 保证的是最少块最优分拆的唯一性；Definition 5.1 与 Theorems 5.2、7.1 给出超平面的前件、维数及其泛性。Antolini–Dewar–Tanigawa [arXiv:2508.04798v1，§3.2，式 (7)–(9)](https://arxiv.org/pdf/2508.04798v1) 对两个复线性空间的基矩阵与各自泛点给出二因子行和超平面对应；这里两基矩阵均为 $(\sigma(u_j))_{\sigma,j}$，而两个参数组仍独立。Bernstein [arXiv:2003.10529v4，Theorem 3.1](https://arxiv.org/pdf/2003.10529v4) 给出两个不落在坐标超平面内的复线性空间的 Hadamard 像的代数拟阵，即相应秩和减一的 Dilworth 拟阵；这里首基向量 $1$ 满足无零坐标投影条件。在任意特征零辅助域上的秩等式使用 Raz–Wigderson 的原定理。上述原文中的超平面、分拆和二因子公式均是先例；从最优块到原比值域的固定域、再到张成维数的 (29.7)–(29.8) 才给出此处的域解释。Bachoc–Serra–Zémor 除有限维稳定子事实外，Theorems 2–3 控制的是普通乘积张成 $ST$ 及其稳定子，未给出对所有正比值取最小的 (29.2)。
+
+De Beule–Demuys–Polverino–Zullo，[*Few-Weight Linear Sets and Divisibility of Rank-Metric Codes*，arXiv:2611.08044v1，Theorem 3.7](https://arxiv.org/pdf/2611.08044v1)，给出直接的有限域对应。具体地，改在 $F=\mathbb F_q$、$D=\mathbb F_{q^N}$，取归一化的 $m$ 维窗口 $X\le_F D$，原文的环境向量空间 $V_{\mathrm{src}}$ 取 $D^2$，定义空间 $U_{\mathrm{src}}=X\times X$。原文的 $S=\langle U_{\mathrm{src}}\rangle_D=D^2$，因为两个坐标轴均有非零窗口向量，所以 $h=2$。原文扩张次数 $m_{\mathrm{src}}=N$、秩 $N_{\mathrm{src}}=2m$；其 $q\ge m_{\mathrm{src}}$、$N_{\mathrm{src}}\le(h-1)m_{\mathrm{src}}$ 分别成为 $q\ge N$、$2m\le N$。原文点权是与一条 $D$-直线的 $F$-交维：对 $D(r,1)$，以第一坐标同构到 $X\cap rX$，非零斜率的权就是 $d_X(r)$；两轴权皆为 $m$，不降低最小正权，故原文的 $a_{\mathrm{src}}=\delta_X$。若另有原环境扩域，域外比值标签仍全为零。
+
+在这些假设及 $a_{\mathrm{src}}>1$ 下，原文给出实际子域 $A=\mathbb F_{q^t}\subseteq D$，$t\mid N$，使 $W_{\mathrm{src}}=\langle U_{\mathrm{src}}\rangle_A=(AX)\times(AX)$ 定义相同的点集，并可取到相对 $A$ 权一的点。原文证明先保持点集而逐步扩大定义域，再用相对权一的点集基数下界与原最小权的基数上界，最后在原最小权点将交的商空间嵌入 $W_{\mathrm{src}}/U_{\mathrm{src}}$，得到精确秩
+$\dim_F W_{\mathrm{src}}=N_{\mathrm{src}}+t-a_{\mathrm{src}}$，且 $t\mid(N_{\mathrm{src}}-a_{\mathrm{src}})$、$a_{\mathrm{src}}\le t\le N_{\mathrm{src}}-a_{\mathrm{src}}$。代入即得 $\delta_X=t-2(\dim_F AX-m)$；再合用 (29.5) 的维数下界，就得到这个有限域范围内的同一个取等极值。$\delta_X=1$ 时，$A=F$ 已取等。Csajbók–Marino–Pepe [arXiv:2306.07488v2，Theorems 1–2](https://arxiv.org/pdf/2306.07488v2) 的 Theorem 1 在秩为扩张次数整数倍且最小正权 $w\ge2$ 时，给出 $w$ 整除扩张次数且原定义空间本身为 $\mathbb F_{q^w}$-线性。其 Theorem 2 在 $q\ge m_{\mathrm{src}}$、秩至多 $(h-1)m_{\mathrm{src}}$、最小正权至少二时给出保持点集的子域张成；后者正是上述放大步骤所用的原文结果。有限域的点数论证不适用于 (29.1) 的任意特征零底域，且其秩前提不含 $2m>N$。这里求的是交维极值，不声称保持放大后的整个点集。
+
+Castello–Polverino–Zullo 的 [arXiv:2405.19911v1，Definition 2.2、Theorems 4.4、5.2、6.3(ii) 及式 (13)](https://arxiv.org/pdf/2405.19911v1) 已在有限域定义相应的中间域张成维数，最小可容纳标量倍窗口的子域正是归一化窗口的生成域。Theorem 6.3(ii) 的条件是 $S=\overline S\oplus b\langle1,\lambda,\ldots,\lambda^{j-1}\rangle_{\mathbb F_q}$，其中 $\overline S$ 是 $\mathbb F_{q^t}$-空间，$\overline S\cap b\mathbb F_{q^t}=0$，$\mathbb F_q(\lambda)=\mathbb F_{q^t}\subseteq\mathbb F_{q^n}$，且 $(t+1)/2<j<t$（$j$ 对应原文的截短维数 $m$）。对应 (29.10) 的形状是 $t=4$、$j=3$、$\dim_A\overline S=1$、$\overline S=A\alpha$、$b=\lambda=\beta$，因为 $B=\beta\langle1,\beta,\beta^2\rangle_F$；原文的 $Y=\langle S\rangle_{\mathbb F_{q^t}}$ 对应 $AW$。式 (13) 的 $2j-2t+\dim_F(Y\cap rY)$ 在此给出正交叠至少二，正是 (29.5) 的同一维数机制。Theorem 4.4 已给有限域幂基窗口的完整距离分布；其 $k=7$、生成域次数 $t=16$ 满足 $1<k<t$ 及 $k\le t/2$，交维一对应距离 $2(k-1)$，在原公式中确实出现。它与 (29.11) 的幂基取等同型。
+
+上述 Theorem 5.2 引自 Napolitano–Polverino–Santonastaso–Zullo [arXiv:2201.02003v1，Proposition 6.3](https://arxiv.org/pdf/2201.02003v1)。这是一般域上的临界对分类，前提为 $\mu\notin F$ 且 $\mu$ 在 $F$ 上代数、$\dim_F L\ge k+2$ 及 $\dim_F(S+\mu S)=k+1$，其中 $k=\dim_F S$；它分类的是已给出一个交维 $k-1$ 的标签的形状。对 (29.10)，分别取 $\mu=\beta$ 和 $\mu=\alpha$，两个和空间都为八维：前者 $B+\beta B=A$ 且 $A\alpha$ 保持，后者是 $1$ 到 $\alpha^7$ 的幂张成。因而两种形状本身都落在该原文的分类内，分类前提并不结算最小正交叠。
+
+Castello–Polverino–Zullo [arXiv:2405.01652v1，Definition II.1、Lemma III.1、Theorem III.2、Lemma III.3、Proposition III.4](https://arxiv.org/pdf/2405.01652v1) 的交维 $k$ 或 $k-1$ 的结构、三维平方张成和超平面标量等价属于有限域；三维分类的半线性等价容许域自同构。Shi–Özbudak [arXiv:2611.04947v1，Theorem 1.1、§2](https://arxiv.org/pdf/2611.04947v1) 分类有限域两个全重量谱族各自的线性等价，分别有幂基次数条件及二次子域加一维的条件；§2 的生成域约化处理真子域。两者均未在任意特征零的原域中给出这里的七维充要条件。Clarke–Dewar–Gallet–Grasegger–Green Tripp–Smith [arXiv:2511.22646v1，Theorem 1.3](https://arxiv.org/pdf/2511.22646v1) 计数复线性空间 Hadamard 映射在泛目标处模环面缩放的纤维，所计对象是乘积的分解类，未给出原域商标签的交叠极值。
+
+本节相对于上述指定原文及 §§26–28 的仓内推导（repo-derived）是：在全部特征零窗口中将最优分拆下降为实际中间域，并取到原比值；把端点首次失效精确定位为 (29.4) 的四次域条件；在同一原数域给出 (29.11) 的两个不同最小值及其具体交空间。中间域放大的维数下界、有限域的取等公式与两类窗口的形状均有上述先例。这里的文献对应不主张全球优先权。
+
+白话说，原窗口在一个中间域下补齐以后，只要两份有任何交叠，补齐后的交叠便至少含一条该域上的直线。这条直线给出域次数那么多的底域方向；从两份空间各减去补入的方向，仍能得到原交叠的下界。分拆定理保证总有一个实际中间域的下界能在原窗口取到。要压过两个端点，至少要补一个方向，域次数至少为四，补齐后的窗口还至少要有两条该域上的独立方向。这首次用得上七维窗口：八个方向缺一个，最小仍须共享两个；在同一十六次域里的七维幂基窗口却只须共享一个。
+
+本节只讨论精确的原标签交维及其最小正值，不给出任意维数的三重观察恢复、有限查询、算法或噪声结论。
+
+## 追加锚（本行以下为增补区）
