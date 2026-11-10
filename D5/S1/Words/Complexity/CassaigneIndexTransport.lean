@@ -38,7 +38,6 @@ golden_indStar_replicated: proof_shape: content; escape_witness: _private.D5.S1.
 
 
 import D5.S0.Computability.Coding.BiasedMassFrontier
-import D5.S1.Words.Complexity.MorseHedlund
 import D5.S1.Words.Complexity.CassaigneRecurrenceTransport
 import D5.S1.Words.GoldenWord
 import D5.S1.Words.Powers.GoldenDesubstitution
@@ -335,7 +334,8 @@ private theorem one_le_real_exponent (u : ℕ → Bool) (a n : ℕ) (hn : 0 < n)
     1 ≤ (n : ℝ)/(per ((rayPrefix (fun index => u (a + index)) n)) : ℝ) := by
   have hp := (per_is_period ((rayPrefix (fun index => u (a + index)) n))).1
   have hpn : per ((rayPrefix (fun index => u (a + index)) n)) ≤ n :=
-    per_le_of_period _ _ ⟨hn, List.hasPeriod_of_length_le _ n (by simp [rayPrefix])⟩
+    per_le_of_period _ _ ((hasPeriod_iff_list _ _).mpr
+      ⟨hn, List.hasPeriod_of_length_le _ n (by simp [rayPrefix])⟩)
   apply (le_div_iff₀ (by exact_mod_cast hp)).mpr
   simpa only [one_mul] using (show (per ((rayPrefix (fun index => u (a + index)) n)) : ℝ) ≤ (n : ℝ) by exact_mod_cast hpn)
 

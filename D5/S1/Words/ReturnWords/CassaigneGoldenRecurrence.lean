@@ -31,7 +31,6 @@ golden_rhoStar_eq_sharp: proof_shape: content; escape_witness: _private.D5.S1.Wo
 
 
 import D5.S0.Computability.Coding.BiasedMassFrontier
-import D5.S1.Words.Complexity.MorseHedlund
 import D5.S0.Tower.GoldenGapWord
 import D5.S1.Phase.ThreeGap.Foundations
 import D5.S1.Phase.ThreeGap.Main

@@ -56,7 +56,6 @@ golden_indStar_eq_sharp: proof_shape: content; escape_witness: _private.D5.S1.Wo
 -/
 
 import D5.S0.Computability.Coding.BiasedMassFrontier
-import D5.S1.Words.Complexity.MorseHedlund
 import D5.S0.Tower.GoldenGapWord
 import D5.S1.Deficit.Displacement.GoldenSubstStartSharpness
 import D5.S1.Phase.ThreeGap.Classification
@@ -79,6 +78,7 @@ import D5.S1.Words.ReturnWords.GoldenOccurrenceGaps
 import D5.S1.Words.ReturnWords.GoldenPhaseShift
 import D5.S1.Words.ReturnWords.GoldenRankArcs
 import D5.S1.Words.ReturnWords.RotationGapArcs
+import D5.S3.Axis.AxisConvergence
 
 set_option maxHeartbeats 1600000
 
@@ -831,7 +831,8 @@ private theorem periodic_sharp_real_bound (a p L : ℕ) (hp : 0 < p)
     have hsum : (Nat.fib (q+2) : ℝ)=(Nat.fib (q+1) : ℝ)+(Nat.fib q : ℝ) := by simpa only [Nat.cast_add,add_comm] using congrArg (fun n : ℕ => (n : ℝ)) (@Nat.fib_add_two q)
     rw [hsum] at hL'
     have hf := Real.fib_succ_sub_goldenRatio_mul_fib q
-    have habs : |Real.goldenConj| ≤ 1 := by rw [abs_of_neg Real.goldenConj_neg]; linarith [Real.neg_one_lt_goldenConj]
+    have habs : |Real.goldenConj| ≤ 1 :=
+      D5.S3.Axis.AxisConvergence.goldenConj_abs_lt_one.le
     have hb : Real.goldenConj^q ≤ 1 := (le_abs_self _).trans (by rw [abs_pow]; exact pow_le_one₀ (abs_nonneg _) habs)
     rw [hpF']
     nlinarith
