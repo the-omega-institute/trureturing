@@ -9,6 +9,7 @@ internal sealed class UHFOneSidedProjectionMatchingDocument : IScribeDocumentDef
         "Actual completed-algebra projections localize in finite matrix stages and admit one-sided matching.",
         H("Intrinsic localization and one-sided projection matching"), Blocks(
             Paragraph(Text("FullMatrixModel C consists of natural stage sizes, injective unital complex star-algebra maps from the corresponding full matrix algebras into C, increasing ranges, and a norm-dense union of those ranges. Matrix norms are the L2 operator norms. Localization and matching are conclusions, not fields of the model.")),
+            Paragraph(Text("The shared coordinate-projection lemma proj_single states that the diagonal matrix unit with coefficient one is a self-adjoint projection in every natural dimension. Both the finite-stage matching proof and the projection-span argument for the sequential Born-rule dichotomy use this same lemma. It has no state, channel, or Born-rule premise.")),
             Describe.Lean(DescribeId.Create("completed-projection-finite-stage-localization"),
                 DeclarationHandle.Create("D5/S3/Quantum/Algebra/UHFOneSidedProjectionMatching.localize_projection"),
                 H("Exact finite-stage localization"), StatementSource.FromAuthor(Localization()),

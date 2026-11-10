@@ -7,7 +7,6 @@
    digest: Intrinsic finite-stage localization and one-sided projection matching. -/
 
 import D5.S3.Quantum.Analysis.RussoDye
-import D5.S3.Quantum.Measurements.SpatiotemporalBornRuleDichotomy
 import Mathlib.Analysis.CStarAlgebra.Matrix
 import Mathlib.Analysis.CStarAlgebra.Projection
 import Mathlib.Analysis.CStarAlgebra.Hom
@@ -20,6 +19,15 @@ namespace D5.S3.Quantum.Algebra.UHFOneSidedProjectionMatching
 
 open scoped Matrix.Norms.L2Operator
 open _root_.Matrix
+
+/-- A coordinate matrix unit on the diagonal is a self-adjoint projection. -/
+lemma proj_single {d : ℕ} (i : Fin d) :
+    IsStarProjection (single i i (1 : ℂ)) := by
+  constructor
+  · change single i i (1 : ℂ) * single i i 1 = single i i 1
+    simp only [single_mul_single_same, mul_one]
+  · change (single i i (1 : ℂ)).conjTranspose = single i i 1
+    rw [conjTranspose_single, star_one]
 
 variable {C : Type*} [CStarAlgebra C]
 
@@ -270,7 +278,7 @@ private theorem matrix_matching {d : ℕ} (P Q : Matrix (Fin d) (Fin d) ℂ)
   let W := fun i => (u : Matrix (Fin d) (Fin d) ℂ) * single i j 1 *
     star (v : Matrix (Fin d) (Fin d) ℂ)
   have hE (i : Fin d) : IsStarProjection (single i i (1 : ℂ)) :=
-    D5.S3.Quantum.Measurements.SpatiotemporalBornRuleDichotomy.proj_single i
+    proj_single i
   have hE0 (i : Fin d) : (single i i (1 : ℂ) : Matrix (Fin d) (Fin d) ℂ) ≠ 0 := by
     intro h
     have hi := congrArg (fun T : Matrix (Fin d) (Fin d) ℂ => T i i) h
