@@ -281,7 +281,7 @@ theorem constant_derivative (c : K) : D (constantLinear c) = 0 := by
   apply Subtype.ext
   simp [derivativeEnd, constantLinear]
 
-private theorem pow_constant (j : ℕ) (hj : 0 < j) (c : K) :
+theorem pow_constant (j : ℕ) (hj : 0 < j) (c : K) :
     (D^j) (constantLinear c) = 0 := by
   obtain ⟨j,rfl⟩ := Nat.exists_eq_succ_of_ne_zero (Nat.ne_of_gt hj)
   rw [pow_succ, Module.End.mul_apply, constant_derivative, map_zero]
@@ -594,7 +594,7 @@ def diagonalScale (c : K) (hc : c ≠ 0) : V ≃ₗ[K] V :=
       LinearEquiv.smulOfNeZero K K (c^i.val) (pow_ne_zero _ hc))) ≪≫ₗ
     (degreeLT.basis K p).equivFun.symm
 
-private theorem diagonalScale_coeff (c : K) (hc : c ≠ 0) (v : V) (i : Fin p) :
+theorem diagonalScale_coeff (c : K) (hc : c ≠ 0) (v : V) (i : Fin p) :
     (diagonalScale c hc v : K[X]).coeff i = c^i.val * (v : K[X]).coeff i := by
   change (degreeLT.basis K p).equivFun (diagonalScale c hc v) i = _
   simp only [diagonalScale, LinearEquiv.trans_apply, LinearEquiv.apply_symm_apply,
