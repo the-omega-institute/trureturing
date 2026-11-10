@@ -27,7 +27,7 @@ successors: proof_shape=content; consumers=successors_spec, representative_rows
 relabel: proof_shape=bind-only; consumers=column_relabel, class_rep
 column_relabel: proof_shape=bind-only; consumers=compatible_relabel
 compatible_relabel: proof_shape=bind-only; consumers=quotient_rows
-class_relabel: proof_shape=content; consumers=quotient_rows
+class_relabel: proof_shape=bind-only; consumers=quotient_rows
 class_rep: proof_shape=content; consumers=quotient_rows
 successors_spec: proof_shape=content; consumers=representative_rows
 representative_rows: proof_shape=content; consumers=quotient_rows
@@ -43,8 +43,8 @@ grid_good: proof_shape=bind-only; consumers=count_transfer
 count_transfer: proof_shape=content; consumers=initial_values, recurrence_core
 W: proof_shape=content; consumers=table_zero, table_steps, powers_table
 coefficients: proof_shape=content; consumers=power_polynomial, recurrence_core
-table_zero: proof_shape=content; consumers=powers_table
-table_steps: proof_shape=content; consumers=powers_table
+table_zero: proof_shape=bind-only; consumers=powers_table
+table_steps: proof_shape=bind-only; consumers=powers_table
 powers_table: proof_shape=content; consumers=initial_values, power_polynomial
 power_polynomial: proof_shape=content; consumers=recurrence_core
 initial_values: proof_shape=content; consumers=HardinA233179Ladder.finite_certificate

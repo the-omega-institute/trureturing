@@ -7,8 +7,8 @@
    digest: Hardin's order-24 recurrence for the literal normalized six-row complementary-pair ladder. -/
 /-
 admission_basis: open-problem-resolution (#28655; Proved)
-escape_witness: columns_constant, two_label_classification,
-  HardinA233179PairTransfer.successors_spec
+escape_witness: HardinA233179PairTransfer.successors_spec
+  (live through initial_values and recurrence after inlining unfrozen helpers)
 normal: proof_shape=bind-only; consumers=instDecidableNormal, Legal, normal_iff
 Legal: proof_shape=bind-only; consumers=instDecidableLegal, a
 instDecidableNormal: proof_shape=bind-only; consumers=instDecidableLegal
@@ -25,29 +25,28 @@ used: proof_shape=bind-only; consumers=used_two_or_three, weighted_count
 used_eq_card: proof_shape=bind-only; consumers=used_two_or_three, alternating_used
 proper_relabel: proof_shape=bind-only; consumers=L_card
 proper_two_labels: proof_shape=bind-only; consumers=used_two_or_three, L_card
-columns_constant: proof_shape=content; consumers=two_label_classification
 alternating: proof_shape=bind-only; consumers=canonical_two_card
 alternating_proper: proof_shape=bind-only; consumers=canonical_two_card
-two_label_classification: proof_shape=content; consumers=canon_two_eq
+two_label_classification: proof_shape=bind-only; consumers=canon_two_eq
 used_two_or_three: proof_shape=bind-only; consumers=weighted_count
 omitted_label: proof_shape=bind-only; consumers=canon_two_eq
 alternating_used: proof_shape=bind-only; consumers=canonical_two_card
 alternating_canon: proof_shape=bind-only; consumers=canonical_two_card
-canon_two_eq: proof_shape=content; consumers=canonical_two_card
+canon_two_eq: proof_shape=bind-only; consumers=canonical_two_card
 CanonicalPatterns: proof_shape=bind-only; consumers=weighted_count
-canonical_two_card: proof_shape=content; consumers=weighted_count
+canonical_two_card: proof_shape=bind-only; consumers=weighted_count
 a_sum: proof_shape=bind-only; consumers=weighted_count
 L_card: proof_shape=bind-only; consumers=counting_bridge
-weighted_count: proof_shape=content; consumers=counting_bridge
-counting_bridge: proof_shape=content; consumers=scale_recurrence
-scale_recurrence: proof_shape=content; consumers=finite_certificate, result
+weighted_count: proof_shape=bind-only; consumers=counting_bridge
+counting_bridge: proof_shape=bind-only; consumers=scale_recurrence
+scale_recurrence: proof_shape=bind-only; consumers=finite_certificate, result
 finite_certificate: proof_shape=content; consumers=result
 result: proof_shape=content; consumers=terminal result
 -/
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
 import D5.S3.Observer.Separation.BooleanRankThreeK4
 import Mathlib.Tactic
-import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233179PairTransfer
 
 /-! Canonical pair patterns reduce the literal normalization to independent side bits. -/
@@ -142,42 +141,6 @@ private theorem proper_two_labels {n : ℕ} (hn : 2 ≤ n)
   exact ⟨(0, ⟨0, by omega⟩), (0, ⟨1, by omega⟩),
     hp ⟨0, by omega⟩ (by change 0 + 1 < n; omega) 0 0 (by decide)⟩
 
-private theorem columns_constant {n : ℕ} (hn : 2 ≤ n)
-    (P : Fin 6 × Fin n → Fin 3) (hp : Proper P)
-    (d : Fin 3) (hd : ∀ i, P i ≠ d) : ∀ j r, P (r, j) = P (0, j) := by
-  have finite_fact : ∀ a b c d : Fin 3,
-      a ≠ d → b ≠ d → c ≠ d → a ≠ c → b ≠ c → a = b := by decide +kernel
-  intro j
-  have adjacent (r : Fin 5) : P (r.castSucc, j) = P (r.succ, j) := by
-    by_cases hj : j.val + 1 < n
-    · let k : Fin n := ⟨j.val + 1, hj⟩
-      exact finite_fact _ _ (P (r.castSucc, k)) d (hd _) (hd _) (hd _)
-        (hp j hj r.castSucc r.castSucc (by omega))
-        (hp j hj r.succ r.castSucc (by simp only [Fin.val_succ, Fin.val_castSucc]; omega))
-    · have hjpos : 0 < j.val := by have := j.isLt; omega
-      let k : Fin n := ⟨j.val - 1, by have := j.isLt; omega⟩
-      have hkn : k.val + 1 < n := by dsimp [k]; omega
-      have hkj : (⟨k.val + 1, hkn⟩ : Fin n) = j := by
-        apply Fin.ext
-        dsimp [k]
-        omega
-      have h1 := hp k hkn r.castSucc r.castSucc (by omega)
-      have h2 := hp k hkn r.castSucc r.succ
-        (by simp only [Fin.val_succ, Fin.val_castSucc]; omega)
-      rw [hkj] at h1 h2
-      exact finite_fact _ _ (P (r.castSucc, k)) d (hd _) (hd _) (hd _)
-        (Ne.symm h1) (Ne.symm h2)
-  intro r
-  fin_cases r
-  · rfl
-  · exact (adjacent 0).symm
-  · exact (adjacent 1).symm.trans (adjacent 0).symm
-  · exact (adjacent 2).symm.trans ((adjacent 1).symm.trans (adjacent 0).symm)
-  · exact (adjacent 3).symm.trans ((adjacent 2).symm.trans ((adjacent 1).symm.trans (adjacent
-    0).symm))
-  · exact (adjacent 4).symm.trans ((adjacent 3).symm.trans ((adjacent 2).symm.trans ((adjacent
-    1).symm.trans (adjacent 0).symm)))
-
 private def alternating (n : ℕ) (a b : Fin 3) : Fin 6 × Fin n → Fin 3 :=
   fun p => if p.2.val % 2 = 0 then a else b
 
@@ -192,35 +155,39 @@ private theorem two_label_classification {n : ℕ} (hn : 2 ≤ n)
     (P : Fin 6 × Fin n → Fin 3) (hp : Proper P)
     (d : Fin 3) (hd : ∀ i, P i ≠ d) :
     ∃ a b : Fin 3, a ≠ b ∧ P = alternating n a b := by
-  let a := P (0, ⟨0, by omega⟩)
-  let b := P (0, ⟨1, by omega⟩)
-  have hab : a ≠ b := hp ⟨0, by omega⟩ (by change 0 + 1 < n; omega) 0 0 (by decide)
-  have ha : a ≠ d := hd _
-  have hb : b ≠ d := hd _
-  have row_zero : ∀ k (hk : k < n),
-      P (0, ⟨k, hk⟩) = if k % 2 = 0 then a else b := by
-    intro k
-    induction k with
-    | zero => intro hk; rfl
-    | succ k ih =>
-      intro hk
-      have hk' : k < n := by omega
-      have hstep := hp ⟨k, hk'⟩ hk 0 0 (by decide)
-      have hpar : (k + 1) % 2 = 0 ↔ ¬ k % 2 = 0 := by omega
-      have finite_fact : ∀ a b c d : Fin 3,
-          a ≠ d → b ≠ d → c ≠ d → a ≠ c → b ≠ c → a = b := by decide +kernel
-      by_cases hj : k % 2 = 0
-      · have hcur : P (0, ⟨k, hk'⟩) = a := by simpa [hj] using ih hk'
-        rw [hcur] at hstep
-        simpa [hpar, hj] using finite_fact (P (0, ⟨k + 1, hk⟩)) b a d
-          (hd _) hb ha (Ne.symm hstep) (Ne.symm hab)
-      · have hcur : P (0, ⟨k, hk'⟩) = b := by simpa [hj] using ih hk'
-        rw [hcur] at hstep
-        simpa [hpar, hj] using finite_fact (P (0, ⟨k + 1, hk⟩)) a b d
-          (hd _) ha hb (Ne.symm hstep) hab
+  let upper : Fin 4 × Fin n → Fin 3 := fun p => P (⟨p.1.val, by omega⟩, p.2)
+  let lower : Fin 4 × Fin n → Fin 3 := fun p => P (⟨p.1.val + 2, by omega⟩, p.2)
+  have hu : HardinA233177PairTransfer.Proper upper := by
+    intro j hj r s hrs
+    exact hp j hj ⟨r.val, by omega⟩ ⟨s.val, by omega⟩ hrs
+  have hl : HardinA233177PairTransfer.Proper lower := by
+    intro j hj r s hrs
+    exact hp j hj ⟨r.val + 2, by omega⟩ ⟨s.val + 2, by omega⟩
+      (by dsimp; omega)
+  obtain ⟨a, b, hab, hu⟩ := HardinA233177Ladder.two_label_classification hn upper hu d
+    (fun p => hd (⟨p.1.val, by omega⟩, p.2))
+  obtain ⟨c, e, _, hl⟩ := HardinA233177Ladder.two_label_classification hn lower hl d
+    (fun p => hd (⟨p.1.val + 2, by omega⟩, p.2))
+  have hac : a = c := by
+    have h0 := congrFun hu (2, ⟨0, by omega⟩)
+    have h1 := congrFun hl (0, ⟨0, by omega⟩)
+    exact h0.symm.trans h1
+  have hbe : b = e := by
+    have h0 := congrFun hu (2, ⟨1, by omega⟩)
+    have h1 := congrFun hl (0, ⟨1, by omega⟩)
+    exact h0.symm.trans h1
+  subst c
+  subst e
   refine ⟨a, b, hab, ?_⟩
   funext p
-  exact (columns_constant hn P hp d hd p.2 p.1).trans (row_zero p.2.val p.2.isLt)
+  rcases p with ⟨r, j⟩
+  by_cases hr : r.val < 4
+  · exact congrFun hu (⟨r.val, hr⟩, j)
+  · have hr2 : r.val - 2 < 4 := by omega
+    have hrow : (⟨r.val - 2 + 2, by omega⟩ : Fin 6) = r := Fin.ext (by omega)
+    have h := congrFun hl (⟨r.val - 2, hr2⟩, j)
+    change P (⟨r.val - 2 + 2, _⟩, j) = alternating n a b (r, j) at h
+    simpa only [hrow] using h
 
 private theorem used_two_or_three {n : ℕ} (hn : 2 ≤ n)
     (P : Fin 6 × Fin n → Fin 3) (hp : Proper P) : used P = 2 ∨ used P = 3 := by

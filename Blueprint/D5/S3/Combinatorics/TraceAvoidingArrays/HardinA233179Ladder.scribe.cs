@@ -29,8 +29,11 @@ internal sealed class HardinA233179LadderDocument : IScribeDocumentDefinition
                 + "order without changing their definitions. A canonical pair pattern using "
                 + "k labels has 2^(6*n-k) colour lifts. Proper patterns at width at least two "
                 + "use two or three labels, and each orbit has six members. If only two labels "
-                + "occur, a common neighbour forces successive rows within each column to "
-                + "agree, and column induction forces alternation. Exactly one such pattern "
+                + "occur, HardinA233177Ladder.two_label_classification applies to the four-row "
+                + "windows 0–3 and 2–5. Their restrictions inherit Proper and the omitted "
+                + "label by argument substitution. Shared row 2 at columns 0 and 1 identifies "
+                + "both alternating labels, so the restrictions combine coordinatewise. "
+                + "Exactly one such pattern "
                 + "is canonical. Thus, if C is the canonical-pattern count, L=6*C and "
                 + "a=2^(6*n-3)*(C+1), giving the displayed bridge.")),
             Node("finite_certificate", "The recurrence at width 26", RecurrenceFormula(null), true),
