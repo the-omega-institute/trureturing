@@ -4,7 +4,7 @@
 
 Hardin's RowOne recurrence for literal normalized six-colour arrays.
 
-A one-row array is a path. Its adjacent cells exclude equal colours and colours summing to five. Transposition preserves its ordered cells and turns it into a width-one row transfer. After one initial continuation step, the reachable state vectors satisfy (t-2)(t-4). The index bound is essential: at width three the proposed right side would be minus two, while the literal count is three.
+A one-row array is a path. Its adjacent cells exclude equal colours and colours summing to five. Transposition preserves its ordered cells and turns it into a width-one row transfer. After one initial continuation step, the reachable state vectors satisfy a quadratic identity with coefficients 6 and minus 8. The index bound is essential: at width three the proposed right side would be minus two, while the literal count is three. Fin.val denotes the natural value of a finite index or colour. Exact initial counts give the recurrence at its first admissible index; the transfer identity gives every later case.
 
 **Definition 1.1 (The literal path conditions).**
 
@@ -46,15 +46,11 @@ $$((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorna
 
 Exact initial counts.
 
-**Theorem 1.4 (The integer recurrence and initial values).**
+**Theorem 1.4 (The integer recurrence).**
 
-$$(\forall (n: \operatorname{Nat}), ((4 \le n) \Rightarrow ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233256RowOne}.\operatorname{a}\left(n\right): \operatorname{Int}) = ((6) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233256RowOne}.\operatorname{a}\left((n) - (1)\right): \operatorname{Int}))) - ((8) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233256RowOne}.\operatorname{a}\left((n) - (2)\right): \operatorname{Int})))))) \land (((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233256RowOne}.\operatorname{a}\left(1\right): \operatorname{Int}) = 1) \land (((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233256RowOne}.\operatorname{a}\left(2\right): \operatorname{Int}) = 1) \land (((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233256RowOne}.\operatorname{a}\left(3\right): \operatorname{Int}) = 3) \land ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233256RowOne}.\operatorname{a}\left(4\right): \operatorname{Int}) = 10))))$$
+$$\forall (n: \operatorname{Nat}), ((4 \le n) \Rightarrow ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233256RowOne}.\operatorname{a}\left(n\right): \operatorname{Int}) = ((6) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233256RowOne}.\operatorname{a}\left((n) - (1)\right): \operatorname{Int}))) - ((8) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233256RowOne}.\operatorname{a}\left((n) - (2)\right): \operatorname{Int})))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233256RowOne.result` (`✓ std3`). ∎
-
-*Resolves.* `Problems/hardin233256-rowone` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233256RowOne.result`.
-
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin233256-rowone","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233256RowOne.result","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 
@@ -62,7 +58,7 @@ $$(\forall (n: \operatorname{Nat}), ((4 \le n) \Rightarrow ((\operatorname{D5}.\
 
 *Commentary.*
 
-The integer recurrence and initial values.
+The integer recurrence.
 
 ## References
 

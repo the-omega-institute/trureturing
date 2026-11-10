@@ -4,7 +4,7 @@
 
 Hardin's ColumnOne recurrence for literal normalized six-colour arrays.
 
-One column has no horizontal or antidiagonal bonds. The first cell is zero. Each 2, 3 or 4 has a strictly earlier 1, and each 3 a strictly earlier 2. The public row transfer at width one counts these words. Its continuation operator satisfies the polynomial (t-2)(t-4)(t-6); linearity propagates the finite state identity to all lengths.
+One column has no horizontal or antidiagonal bonds. The first cell is zero. Each 2, 3 or 4 has a strictly earlier 1, and each 3 a strictly earlier 2. The public row transfer at width one counts these words. The continuation vectors satisfy a cubic identity with coefficients 12, minus 44 and 48; linearity propagates the finite state identity to all lengths. Fin.val denotes the natural value of a finite index or colour. Exact initial counts give the recurrence at its first admissible index; the transfer identity gives every later case.
 
 **Definition 1.1 (The literal filtered array count).**
 
@@ -32,15 +32,11 @@ $$((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorna
 
 Exact initial counts.
 
-**Theorem 1.3 (The integer recurrence and initial values).**
+**Theorem 1.3 (The integer recurrence).**
 
-$$(\forall (n: \operatorname{Nat}), ((4 \le n) \Rightarrow ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233256ColumnOne}.\operatorname{a}\left(n\right): \operatorname{Int}) = (((12) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233256ColumnOne}.\operatorname{a}\left((n) - (1)\right): \operatorname{Int}))) - ((44) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233256ColumnOne}.\operatorname{a}\left((n) - (2)\right): \operatorname{Int})))) + ((48) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233256ColumnOne}.\operatorname{a}\left((n) - (3)\right): \operatorname{Int})))))) \land (((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233256ColumnOne}.\operatorname{a}\left(1\right): \operatorname{Int}) = 1) \land (((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233256ColumnOne}.\operatorname{a}\left(2\right): \operatorname{Int}) = 3) \land (((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233256ColumnOne}.\operatorname{a}\left(3\right): \operatorname{Int}) = 11) \land ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233256ColumnOne}.\operatorname{a}\left(4\right): \operatorname{Int}) = 48))))$$
+$$\forall (n: \operatorname{Nat}), ((4 \le n) \Rightarrow ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233256ColumnOne}.\operatorname{a}\left(n\right): \operatorname{Int}) = (((12) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233256ColumnOne}.\operatorname{a}\left((n) - (1)\right): \operatorname{Int}))) - ((44) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233256ColumnOne}.\operatorname{a}\left((n) - (2)\right): \operatorname{Int})))) + ((48) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233256ColumnOne}.\operatorname{a}\left((n) - (3)\right): \operatorname{Int})))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233256ColumnOne.result` (`✓ std3`). ∎
-
-*Resolves.* `Problems/hardin233256-columnone` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233256ColumnOne.result`.
-
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin233256-columnone","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233256ColumnOne.result","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 
@@ -48,7 +44,7 @@ $$(\forall (n: \operatorname{Nat}), ((4 \le n) \Rightarrow ((\operatorname{D5}.\
 
 *Commentary.*
 
-The integer recurrence and initial values.
+The integer recurrence.
 
 ## References
 
