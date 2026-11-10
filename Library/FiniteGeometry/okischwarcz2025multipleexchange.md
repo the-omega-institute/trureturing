@@ -8,7 +8,6 @@ url: https://arxiv.org/abs/2511.16021v3
 claim: Two prescribed subsets of opposite base differences extend to a simultaneous exchange whose common cardinality is at most their union rank.
 strata_touched:
   - D5/S3/Combinatorics/Matroids/PrescribedExchange
-  - D5/S3/Combinatorics/Matroids/LocalSearchRobustness
 license: citation-only
 triage: anchor
 ---
@@ -64,9 +63,29 @@ $H_r(B_1)+H_1(B_0)\ge H_{r+1}(B_0)+W(B_1)$ for $r\ge0$.
 Its proof selects a maximizer in the neighborhood of $B_0$; the printed
 initial argmax uses an unspecified $B$, interpreted as $B_0$ by equation
 (21). The size-one prescribed-exchange branch selects a minimum-weight
-element of $A\setminus B_0$. The native proof first handles $A=B_0$ and
+element of $A\setminus B_0$. The application derivation first handles $A=B_0$ and
 uses the antichain property of bases to establish nonemptiness in the
-remaining branch. The direct simultaneous exchange supplier is
+remaining branch before choosing the minimum. The direct simultaneous exchange supplier is
 Theorem 1.6(i), with singleton prescriptions. Cardinality and weight
 identities use the same pair of exchanged bases. The natural-radius
 indexing includes zero radius without truncated-subtraction ambiguity.
+
+The complete derivation is retained in the commentary of the existing
+PrescribedExchange Blueprint, as an application of its simultaneous
+exchange theorem, pinned finite extrema and ordinary base exchange. It
+is not a separate retained Lean theorem or a new scope or novelty claim.
+For every universe and finite native ambient type, arbitrary signed
+weights and a same-matroid path $B_0,\ldots,B_k$ with
+$|B_{i+1}\setminus B_i|\le1$, the actual finite nonempty neighborhoods
+attain $H_t(B)=\max\{W(D):D\text{ a base},|D\setminus B|\le t\}$.
+No maximizing base is assumed as input. For every $0\le i<k$,
+$\mathrm{err}_i=H_1(B_i)-W(B_{i+1})\ge0$, and every base $C$ with
+$|C\setminus B_0|\le k$ satisfies
+$W(C)\le W(B_k)+\sum_{0\le i<k}\mathrm{err}_i$.
+The comparison uses the same pair for both radius bounds and its
+weight inequality. In the size-one branch, two ordinary exchanges
+produce a correction $-w(a_{\min})+w(a)\ge0$. Base antichainness gives
+$H_0(B)=W(B)$ and closes the finite telescope. The result includes
+$k=0$, repeated bases, empty or proper native grounds, empty carriers,
+rank zero, loops, coloops and nonrepresentable matroids. It requires no
+strict improvement or optimal start and asserts no query complexity.

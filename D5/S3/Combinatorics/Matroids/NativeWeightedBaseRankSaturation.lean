@@ -33,7 +33,7 @@ noncomputable def baseWeight (w : E → ℝ) (B : Set E) : ℝ :=
 noncomputable def lowerWeightSet (M : Matroid E) (w : E → ℝ) (t : ℝ) : Set E :=
   {e | e ∈ M.E ∧ w e ≤ t}
 
-lemma baseWeight_exchange (w : E → ℝ) {B : Set E} {e b : E}
+private lemma baseWeight_exchange (w : E → ℝ) {B : Set E} {e b : E}
     (heB : e ∉ B) (hbB : b ∈ B) :
     baseWeight w (insert e (B \ {b})) = baseWeight w B - w b + w e := by
   classical

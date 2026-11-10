@@ -16,19 +16,7 @@ $$\forall (E: Type_{u}), ([\operatorname{Finite}\left(E\right)], \forall (w: E \
 
 For a finite carrier, baseWeight is the finite sum of the given real weight function over the actual base set. The ground is not silently replaced by the carrier.
 
-**Theorem 1.2 (Weight of a single exchange).**
-
-$$\forall (E: Type_{u}), ([\operatorname{Finite}\left(E\right)], \forall (w: E \to \mathbb{R}), (\forall (B: \operatorname{Set}\left(E\right)), (\forall (e: E), (\forall (b: E), ((\neg e \in B) \Rightarrow ((b \in B) \Rightarrow (\operatorname{baseWeight}\left(w, \operatorname{insert}\left(e, (B \setminus \{b\})\right)\right) = \operatorname{baseWeight}\left(w, B\right) - \operatorname{w}\left(b\right) + \operatorname{w}\left(e\right))))))))$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Matroids/NativeWeightedBaseRankSaturation.baseWeight_exchange` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For any finite carrier, any real weight function and any set B, removing b from B and inserting e changes the weight by minus w(b) plus w(e), provided b belongs to B and e does not. This identity is consumed by the size-one exchange branch of LocalSearchRobustness.neighborhood_comparison.
-
-**Definition 1.3 (The native lower threshold set).**
+**Definition 1.2 (The native lower threshold set).**
 
 $$\forall (E: Type_{u}), (\forall (M: \operatorname{Matroid}\left(E\right)), (\forall (w: E \to \mathbb{R}), (\forall (t: \mathbb{R}), (\operatorname{lowerWeightSet}\left(M, w, t\right) = \{x \mid x \in M.E \land \operatorname{w}\left(x\right) \le t\}))))$$
 
@@ -40,7 +28,7 @@ $$\forall (E: Type_{u}), (\forall (M: \operatorname{Matroid}\left(E\right)), (\f
 
 The threshold set retains precisely elements of the native ground M.E whose real weight is at most t.
 
-**Theorem 1.4 (Attainment and the complete every-base threshold-rank iff).**
+**Theorem 1.3 (Attainment and the complete every-base threshold-rank iff).**
 
 $$\forall (E: Type_{u}), ([\operatorname{Finite}\left(E\right)], \forall (M: \operatorname{Matroid}\left(E\right)), (\forall (w: E \to \mathbb{R}), ((\exists (B: \operatorname{Set}\left(E\right)), ((\operatorname{Matroid}.\operatorname{IsBase}\left(M, B\right)) \land (\forall (C: \operatorname{Set}\left(E\right)), ((\operatorname{Matroid}.\operatorname{IsBase}\left(M, C\right)) \Rightarrow (\operatorname{baseWeight}\left(w, B\right) \le \operatorname{baseWeight}\left(w, C\right)))))) \land (\forall (B: \operatorname{Set}\left(E\right)), ((\operatorname{Matroid}.\operatorname{IsBase}\left(M, B\right)) \Rightarrow ((\forall (C: \operatorname{Set}\left(E\right)), ((\operatorname{Matroid}.\operatorname{IsBase}\left(M, C\right)) \Rightarrow (\operatorname{baseWeight}\left(w, B\right) \le \operatorname{baseWeight}\left(w, C\right)))) \Leftrightarrow (\forall (t: \mathbb{R}), (\operatorname{Set}.\operatorname{ncard}\left(\operatorname{Set}.\operatorname{inter}\left(B, \operatorname{lowerWeightSet}\left(M, w, t\right)\right)\right) = \operatorname{ENat}.\operatorname{toNat}\left(\operatorname{Matroid}.\operatorname{eRk}\left(M, \operatorname{lowerWeightSet}\left(M, w, t\right)\right)\right)))))))))$$
 
@@ -61,7 +49,6 @@ Oki--Schwarcz, arXiv:2511.16021v3, Theorem 2.1 (https://arxiv.org/abs/2511.16021
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Matroids/NativeWeightedBaseRankSaturation.baseWeight`
-- Truth anchor: `D5/S3/Combinatorics/Matroids/NativeWeightedBaseRankSaturation.baseWeight_exchange`
 - Truth anchor: `D5/S3/Combinatorics/Matroids/NativeWeightedBaseRankSaturation.lowerWeightSet`
 - Truth anchor: `D5/S3/Combinatorics/Matroids/NativeWeightedBaseRankSaturation.native_weighted_base_rank_saturation`
 - Dependency: [D5/S3/Estimation/ExperimentCost/MinimumCostRoleBasis](../../Estimation/ExperimentCost/MinimumCostRoleBasis.md)
