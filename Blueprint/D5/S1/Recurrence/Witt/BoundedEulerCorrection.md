@@ -102,29 +102,11 @@ Lean statement: `D5/S1/Recurrence/Witt/BoundedEulerCorrection.moebiusTransform`
 
 The finite integer sum is the uncorrected Mobius transform of the arbitrary weight.
 
-**Theorem 1.9 (moebius identity).**
+For any integer weight w and positive n, write c(n)=ledger(w,n), a(n)=correction(w,n), M_w(n)=sum_{d|n} mu(n/d)w(d), and E_w(n)=sum_{d|n} mu(n/d)a(d). The exact ghost equation above is w(m)-a(m)=sum_{d|m} d*c(d) for every positive m. Apply ArithmeticFunction.sum_eq_iff_sum_mul_moebius_eq to the function m*c(m), and reindex with Nat.sum_divisorsAntidiagonal'. Distributing the subtraction gives n*c(n)=M_w(n)-E_w(n). This is an application of Mobius inversion to the constructed account.
 
-Lean statement: `D5/S1/Recurrence/Witt/BoundedEulerCorrection.moebius_identity`
+The residue bounds give 0<=a(d)<d for every divisor d of positive n. Using ArithmeticFunction.abs_moebius_le_one and Finset.abs_sum_le_sum_abs gives |E_w(n)|<=sum_{d|n} d. Complementary divisors, via Nat.sum_div_divisors, give (sum_{d|n} d)/n=sum_{d|n} 1/d. Each such divisor lies in {1,...,n}; all reciprocal terms are nonnegative. Thus this sum is at most the harmonic sum H_n, and harmonic_le_one_add_log bounds H_n by 1+log(n). Dividing the inversion identity by positive n proves |c(n)-M_w(n)/n|<=1+log(n). The absolute value and logarithm are over the reals, using the canonical casts of the integer sums. No sign restriction on w or condition on w(0) occurs, and no estimate at n=0 is asserted.
 
-*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Witt/BoundedEulerCorrection.moebius_identity` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Mobius inversion applies to the exact constructed ghost equation, producing the correction term with mu(n/d).
-
-**Theorem 1.10 (logarithmic error).**
-
-Lean statement: `D5/S1/Recurrence/Witt/BoundedEulerCorrection.logarithmic_error`
-
-*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Witt/BoundedEulerCorrection.logarithmic_error` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The absolute Mobius value is at most one and each positive-index correction is less than its index. Complementary divisors convert the normalized divisor sum into reciprocal divisors, bounded by the harmonic sum and one plus the natural logarithm. No positivity assumption on the original weights is used.
+For integer s>=0, set w_s(d)=(d:Z)^(s.toNat). HannaUniformCorrection.weight_cast identifies its rational image with (d:Q)^s, including d=0. Then HannaUniformCorrection.a(s)=correction(w_s) and HannaUniformCorrection.c(s)=ledger(w_s). The finite Jordan sum is J_s(n)=sum_{d|n} mu(n/d)*d^s, namely M_{w_s}(n); for s>=1 this is the usual Jordan totient. Consequently n*c_s(n)=J_s(n)-sum_{d|n} mu(n/d)*a_s(d) and |c_s(n)-J_s(n)/n|<=1+log(n) for every n>0. These formulas also use the same finite-sum definition for s=0, and include s=1 and the square case s=2. Neither this substitution nor the error estimate asserts positive Euler exponents for s=0 or s=1. The separate positivity result requires s>=2. The free zeroth correction remains outside every sum and uniqueness claim.
 
 ## References
 
@@ -134,8 +116,6 @@ The absolute Mobius value is at most one and each positive-index correction is l
 - Truth anchor: `D5/S1/Recurrence/Witt/BoundedEulerCorrection.correction_integral`
 - Truth anchor: `D5/S1/Recurrence/Witt/BoundedEulerCorrection.correction_unique`
 - Truth anchor: `D5/S1/Recurrence/Witt/BoundedEulerCorrection.ledger`
-- Truth anchor: `D5/S1/Recurrence/Witt/BoundedEulerCorrection.logarithmic_error`
 - Truth anchor: `D5/S1/Recurrence/Witt/BoundedEulerCorrection.moebiusTransform`
-- Truth anchor: `D5/S1/Recurrence/Witt/BoundedEulerCorrection.moebius_identity`
 - Truth anchor: `D5/S1/Recurrence/Witt/BoundedEulerCorrection.properGhost`
 - Dependency: [D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality](HannaDiagonalGhostPowerIntegrality.md)
