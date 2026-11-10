@@ -9,12 +9,11 @@ internal sealed class ActualRecordHigherLayerResidualDocument : IScribeDocumentD
         H("The literal residual, its finite estimates, and the remaining source obligation"),
         Blocks(
             Paragraph(Text(
-                "SOURCE PREPARATION ONLY: UNCOMPILED_UNACCEPTED. This packet contains three proposed finite "
-                + "Lean estimates with full proof bodies and faithful typed Reg source mirrors. The full "
-                + "uniform residual theorem is NOT declared: the uniform threshold and limiting-envelope "
-                + "assembly remains an exact source gap. The complete ordinary deduction below explains "
-                + "that gap without promoting it to a compiled theorem. Scribe has not been emitted or built, "
-                + "and no Reg registration is declared_validated.")),
+                "Three finite estimates give the literal higher-layer loss bound, a quantitative compact "
+                + "second-margin expansion, and the complete second-layer tube bound. The full uniform "
+                + "residual theorem is not declared: the uniform threshold and limiting-envelope assembly "
+                + "remain separate proof obligations. The ordinary deduction below describes the required "
+                + "assembly and its suppliers; it does not assert that this assembly is a Lean theorem.")),
             Paragraph(Text(
                 "Exact target, retained without weakening: for every epsilon>0 there exists X0>1, chosen "
                 + "before every natural m>=2 and every real mu>0, such that if the ORIGINAL objective at mu "
@@ -27,8 +26,9 @@ internal sealed class ActualRecordHigherLayerResidualDocument : IScribeDocumentD
             Paragraph(Text(
                 "Use the library's actualPressure=sup of goldenResourceObjective(referencePrice(X),n) "
                 + "over all n>=1, and its actualDefect=that pressure minus the objective of the same original "
-                + "integer. pressureOptimizer(X) chooses the minimal-count optimizer supplied by "
-                + "optimal_layer_count_spec. lossPrimes is the union of that optimizer's primeFactors and "
+                + "integer. The local pressureOptimizer notation reuses the canonical "
+                + "ActualTwoPriceDefect.strictInteger(referencePrice(X)); its counts and optimality come "
+                + "from strictInteger_counts and ActualGlobalBracketing.strict_is_optimal. lossPrimes is the union of that optimizer's primeFactors and "
                 + "the original integer's primeFactors; no primes of zero original valuation are discarded. "
                 + "For p,j put g=log(p)*(goldenLayerMarginal(p,j)-referencePrice(X)) and "
                 + "ell=max(g,0)-1_{j<=v_p(n)}g. This equals max(-g,0) on occupied layers and max(g,0) "
@@ -59,7 +59,7 @@ internal sealed class ActualRecordHigherLayerResidualDocument : IScribeDocumentD
                     Paragraph(Text(
                         "For X>1, every actual full predecessor record m>=2 at arbitrary mu>0, and any "
                         + "deterministic real R>=1 with R<P=largestPrime(m) and X log(X)<=log(2) R^3, "
-                        + "the proposed theorem gives 0<=D3, D3<=2 floor(R)/P+referencePrice(X)*M3(m), "
+                        + "the theorem gives 0<=D3, D3<=2 floor(R)/P+referencePrice(X)*M3(m), "
                         + "and D3<=2R/P+referencePrice(X)*Q3*log(4P^2). Here M3 is exactly the existing "
                         + "strict_inventory_third_layer_mass, with full original multiplicities.")),
                     Paragraph(Text(
@@ -188,12 +188,10 @@ internal sealed class ActualRecordHigherLayerResidualDocument : IScribeDocumentD
                 + "remainder and two-endpoint theta conditions, does not yet form the record subtype "
                 + "and prove its P-regime and normalized higher-envelope limit, and does not yet "
                 + "perform the fixed-delta epsilon/max-threshold assembly. Thus the full literal target "
-                + "has an ordinary proof from the stated suppliers and finite source proposals, but "
-                + "does NOT have a complete Lean proof in this packet. Every finite proof body also "
-                + "requires later native elaboration repair as needed. Each of its three public "
-                + "types has a faithful source-law/readout Reg mirror; whole-family variation, "
-                + "sensitivity, dependence, sourceSelection and binding evidence remain unprovided. "
-                + "No historical owner Reg scope or judge was changed.")),
+                + "has an ordinary proof from the stated suppliers and finite estimates, but "
+                + "does not have a complete Lean proof in this module. Four-slot source-bound audits are "
+                + "separate obligations: a source-law bridge alone does not establish whole-family "
+                + "variation, sensitivity, actual observational dependence or a current producer binding.")),
             H("5040 application and first-layer boundary"),
             Paragraph(Text(
                 "Once the record theorem is actually proved, its 5040 application uses only the existing "
@@ -204,7 +202,7 @@ internal sealed class ActualRecordHigherLayerResidualDocument : IScribeDocumentD
                 + "This is conditional on being an actual least crossing and constructs none. It "
                 + "asserts no Robin sign or RH conclusion. First-layer boundedness "
                 + "sqrt(X)*log(X)^3*C1=O(1) remains explicitly OPEN even if full residual isolation "
-                + "is later accepted. Neither finite source preparation nor the ordinary Pro proof "
+                + "is later accepted. Neither the finite estimates nor the ordinary Pro argument "
                 + "changes that boundary."))
         )));
 }

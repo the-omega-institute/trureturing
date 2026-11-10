@@ -14,12 +14,12 @@ import D5.S3.Arith.Robin.ActualGlobalBracketing
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 import Mathlib.Tactic
 
-/-! Source preparation only. No elaboration, kernel, Scribe or registration acceptance
-is asserted. The uniform full residual theorem is NOT declared in this file; its exact
-remaining proof obligations are in the accompanying source manifest and Scribe.
-The finite support below is obtained from the literal unrestricted optimizer, not an
-extra restriction on the given integer or its prime exponents. -/
+/-! The finite support below comes from the canonical unrestricted strict integer,
+without an extra restriction on the given integer or its prime exponents.
+The full uniform residual theorem is not declared here: the deterministic eventual
+conditions and uniform record/envelope assembly remain separate obligations. -/
 
+set_option maxHeartbeats 800000
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -32,6 +32,7 @@ open D5.S3.Arith.GoldenResourceOptimalInteger
 open D5.S3.Arith.GoldenLocalThreshold
 open D5.S3.Arith.GoldenResourceObjectiveFactorization
 open D5.S3.Arith.GoldenResource.GoldenResourceOptimalLayerCount
+open D5.S3.Arith.GoldenResource.GoldenResourceThresholdCriterion
 open D5.S3.Arith.GoldenResource.GoldenResourceSupremum
 open D5.S3.Arith.GoldenResource.ActualReserve.HarmonicReference
 open D5.S3.Arith.GoldenResource.ActualReserve.ActualReservePrimeMask
@@ -97,7 +98,7 @@ private theorem margin_active_iff {X : ℝ} (hX : 1 < X) {p j : ℕ}
     0 < rawLayerMargin X p j ↔ j ≤ optimalLayerCount (referencePrice X) p := by
   have hi := Set.ext_iff.mp
     (positive_layers_eq_count_interval (reference_price_pos hX) hp) j
-  simp only [Set.mem_setOf_eq, Set.mem_Icc] at hi
+  simp only [Set.mem_ofPred_eq, Set.mem_Icc] at hi
   have hg : 0 < rawLayerMargin X p j ↔ referencePrice X < goldenLayerMarginal p j := by
     unfold rawLayerMargin
     exact (mul_pos_iff_of_pos_left hp.log_pos).trans sub_pos
@@ -136,8 +137,8 @@ private theorem local_complete_loss {X : ℝ} (hX : 1 < X) (n : ℕ) {p : ℕ}
         intro j hj
         have hh := margin_active_iff hX hp (mem_Icc.mp hj).1
         by_cases hjc : j ≤ c
-        · rw [if_pos hjc, max_eq_left (hh.mpr hjc).le]
-        · rw [if_neg hjc, max_eq_right (le_of_not_gt (fun h => hjc (hh.mp h)))]
+        · rw [ite_eq_left hjc, max_eq_left (hh.mpr hjc).le]
+        · rw [ite_eq_right hjc, max_eq_right (le_of_not_gt (fun h => hjc (hh.mp h)))]
       _ = ∑ j ∈ (Icc 1 M).filter (fun j => j ≤ c), rawLayerMargin X p j :=
         (sum_filter _ _).symm
       _ = _ := by
@@ -153,11 +154,12 @@ private theorem local_complete_loss {X : ℝ} (hX : 1 < X) (n : ℕ) {p : ℕ}
     ext j
     simp only [mem_filter, mem_Icc]
     omega
-  change (∑ j ∈ Icc 1 M, max (rawLayerMargin X p j) 0 -
-    if j ≤ a then rawLayerMargin X p j else 0) = _
+  change (∑ j ∈ Icc 1 M, (max (rawLayerMargin X p j) 0 -
+    (if j ≤ a then rawLayerMargin X p j else 0))) = _
   rw [sum_sub_distrib, hpositive, hoccupied]
   rw [local_eq_layer_sum (referencePrice X) hp,
     local_eq_layer_sum (referencePrice X) hp]
+  rfl
 
 private theorem local_split_first_two {X : ℝ} (hX : 1 < X) (n : ℕ) {p : ℕ}
     (hp : p.Prime) :
@@ -169,16 +171,19 @@ private theorem local_split_first_two {X : ℝ} (hX : 1 < X) (n : ℕ) {p : ℕ}
   rcases (show M = 0 ∨ M = 1 ∨ 2 ≤ M by omega) with hm | hm | hm
   · have h1 := loss_above_cutoff hX n hp (by norm_num : 1 ≤ (1 : ℕ)) (by omega : M < 1)
     have h2 := loss_above_cutoff hX n hp (by norm_num : 1 ≤ (2 : ℕ)) (by omega : M < 2)
-    change (∑ j ∈ Icc 1 M, _) = _
+    change (∑ j ∈ Icc 1 M, layerLoss X n p j) =
+      layerLoss X n p 1 + layerLoss X n p 2 + ∑ j ∈ Icc 3 M, layerLoss X n p j
     simp [hm, h1, h2]
   · have h2 := loss_above_cutoff hX n hp (by norm_num : 1 ≤ (2 : ℕ)) (by omega : M < 2)
-    change (∑ j ∈ Icc 1 M, _) = _
+    change (∑ j ∈ Icc 1 M, layerLoss X n p j) =
+      layerLoss X n p 1 + layerLoss X n p 2 + ∑ j ∈ Icc 3 M, layerLoss X n p j
     simp [hm, h2]
   · have hs : Icc 1 M = insert 1 (insert 2 (Icc 3 M)) := by
       ext j
       simp only [mem_Icc, mem_insert]
       omega
-    change (∑ j ∈ Icc 1 M, _) = _
+    change (∑ j ∈ Icc 1 M, layerLoss X n p j) =
+      layerLoss X n p 1 + layerLoss X n p 2 + ∑ j ∈ Icc 3 M, layerLoss X n p j
     rw [hs, sum_insert (by simp), sum_insert (by simp)]
     ring
 
@@ -234,7 +239,7 @@ private theorem finite_raw_tail {p : ℕ} (hp : p.Prime) (a c : ℕ) :
   have hca0 : 0 < 1 - (p : ℝ)⁻¹ ^ (c + 1) :=
     sub_pos.mpr (pow_lt_one₀ hi0 hi (by omega))
   have htail0 : 0 ≤ -log (1 - (p : ℝ)⁻¹ ^ (a + 1)) := by
-    have hl := log_le_log ha0 (show 1 - (p : ℝ)⁻¹ ^ (a + 1) ≤ 1 by positivity)
+    have hl := log_le_log ha0 (sub_le_self _ (pow_nonneg hi0 _))
     rw [log_one] at hl
     exact neg_nonneg.mpr hl
   by_cases hac : a ≤ c
@@ -256,7 +261,7 @@ private theorem finite_raw_tail {p : ℕ} (hp : p.Prime) (a c : ℕ) :
     rw [heq, goldenPrimeLocalObjective, goldenPrimeLocalObjective]
     simp only [zero_mul, sub_zero]
     rw [log_div hca0.ne' (sub_pos.mpr hi).ne', log_div ha0.ne' (sub_pos.mpr hi).ne']
-    have hl := log_le_log hca0 (show 1 - (p : ℝ)⁻¹ ^ (c + 1) ≤ 1 by positivity)
+    have hl := log_le_log hca0 (sub_le_self _ (pow_nonneg hi0 _))
     rw [log_one] at hl
     linarith
   · have hs : Icc (a + 1) c = ∅ := by apply Icc_eq_empty; omega
@@ -279,7 +284,7 @@ private theorem higher_at_split (X : ℝ) (n p : ℕ) :
   intro j _
   unfold layerLoss
   by_cases hj : j ≤ n.factorization p
-  · rw [if_pos hj, if_pos hj, if_neg (not_lt.mpr hj), zero_add]
+  · rw [ite_eq_left hj, ite_eq_left hj, ite_eq_right (not_lt.mpr hj), zero_add]
     by_cases hg : 0 ≤ rawLayerMargin X p j
     · simp [max_eq_left hg, max_eq_right (neg_nonpos.mpr hg)]
     · have hg' : rawLayerMargin X p j ≤ 0 := le_of_not_ge hg
@@ -302,10 +307,11 @@ private theorem missing_higher_le_raw_tail {X : ℝ} (hX : 1 < X) (n : ℕ)
     have hh := margin_active_iff hX hp hj1
     by_cases haj : a < j
     · by_cases hjc : j ≤ c
-      · simp [haj, hjc, max_eq_left (hh.mpr hjc).le]
+      · simp only [show n.factorization p = a from rfl, haj, hjc, and_self,
+          ite_eq_left, max_eq_left (hh.mpr hjc).le]
       · have hn : rawLayerMargin X p j ≤ 0 := le_of_not_gt (fun h => hjc (hh.mp h))
-        simp [haj, hjc, max_eq_right hn]
-    · simp [haj]
+        simp [show n.factorization p = a from rfl, haj, hjc, max_eq_right hn]
+    · simp [show n.factorization p = a from rfl, haj]
   have hsub : T ⊆ Icc (a + 1) c := by
     intro j hj
     have := (mem_filter.mp hj).2
@@ -340,7 +346,7 @@ private theorem occupied_higher_bound {X : ℝ} (hX : 1 < X) (n : ℕ) {p : ℕ}
       apply sum_le_sum
       intro j hj
       apply max_le _ (by positivity)
-      have hg := raw_gain_nonneg hp (by have := (mem_Icc.mp hj).1; omega)
+      have hg := raw_gain_nonneg (j := j) hp (by have := (mem_Icc.mp hj).1; omega)
       unfold rawLayerMargin
       nlinarith
     _ = _ := by
@@ -368,8 +374,9 @@ private theorem positive_higher_prime_lt {X R : ℝ} (hX : 1 < X) (hR : 1 ≤ R)
   have hL : 0 < log X := log_pos hX
   have hstep : log 2 / (X * log X) < 1 / (p : ℝ) ^ 3 := by
     calc
-      _ ≤ referencePrice X * log p := by unfold referencePrice; nlinarith [
-        mul_le_mul_of_nonneg_left hlog2 (one_div_pos.mpr (mul_pos hX0 hL)).le]
+      _ ≤ referencePrice X * log p := by
+        simpa only [referencePrice, div_eq_mul_inv, one_mul, mul_comm] using
+          div_le_div_of_nonneg_right hlog2 (mul_pos hX0 hL).le
       _ < log p * goldenLayerMarginal p j := hprice
       _ ≤ (p : ℝ)⁻¹ ^ j := by simpa [mul_comm] using hb
       _ ≤ (p : ℝ)⁻¹ ^ 3 := hpow
@@ -400,7 +407,7 @@ theorem finite_complete_higher_layer_bound {X R : ℝ} {m : ℕ} {mu : ℝ}
   classical
   let P := largestPrime m
   let S := lossPrimes X m
-  let V := S.filter (fun p => (p : ℝ) ≤ R)
+  let V := S.filter (fun p : ℕ => (p : ℝ) ≤ R)
   obtain ⟨q, hq, hqm⟩ := Nat.exists_prime_and_dvd (by omega : m ≠ 1)
   have hP2 : 2 ≤ P := hq.two_le.trans
     (le_sup (f := id) (hq.mem_primeFactors hqm (by omega : m ≠ 0)))
@@ -522,8 +529,7 @@ private theorem second_margin_at_prime (X : ℝ) {p : ℕ} (hp : p.Prime) :
     rawLayerMargin X p 2 = secondRawMargin X p := by
   unfold rawLayerMargin goldenLayerMarginal secondRawMargin referencePrice
   norm_num only
-  field_simp [hp.log_pos.ne']
-  ring
+  field_simp [hp.log_pos.ne'] <;> ring
 
 private theorem real_second_gain_error {t : ℝ} (ht : 1 < t) :
     |log ((1 - t⁻¹ ^ 3) / (1 - t⁻¹ ^ 2)) - 1 / t ^ 2| ≤ 3 / (2 * t ^ 3) := by
@@ -561,7 +567,7 @@ private theorem real_second_gain_error {t : ℝ} (ht : 1 < t) :
   have hqSq : q ^ 2 ≤ 1 / t ^ 4 := by
     calc
       q ^ 2 ≤ (1 / t ^ 2) ^ 2 := pow_le_pow_left₀ hq hq2 2
-      _ = _ := by field_simp [ht0.ne']; ring
+      _ = _ := by field_simp [ht0.ne'] <;> ring
   have hfour : 1 / t ^ 4 ≤ 1 / t ^ 3 := by
     apply one_div_le_one_div_of_le (by positivity)
     calc
@@ -578,7 +584,7 @@ private theorem log_near_sqrt_two {h : ℝ} (hh : |h| ≤ sqrt 2 / 2) :
     |log (sqrt 2 + h) - log (sqrt 2)| ≤ 2 * |h| / sqrt 2 := by
   let a := sqrt (2 : ℝ)
   have ha : 0 < a := sqrt_pos.mpr (by norm_num)
-  have hab := abs_le.mp hh
+  have hab := by simpa only [neg_div] using abs_le.mp hh
   have hu : 0 < a + h := by linarith [hab.1]
   have hr : 0 < (a + h) / a := div_pos hu ha
   have hlog : log ((a + h) / a) = log (a + h) - log a := log_div hu.ne' ha.ne'
@@ -608,7 +614,7 @@ private theorem inverse_square_remainder {h : ℝ} (hh : |h| ≤ sqrt 2 / 2) :
   have ha : 0 < a := sqrt_pos.mpr (by norm_num)
   have ha2 : a ^ 2 = 2 := sq_sqrt (by norm_num)
   have ha3 : a ^ 3 = 2 * a := by nlinarith [congrArg (fun x : ℝ => a * x) ha2]
-  have hh' : -a / 2 ≤ h ∧ h ≤ a / 2 := abs_le.mp hh
+  have hh' : -a / 2 ≤ h ∧ h ≤ a / 2 := by simpa only [neg_div] using abs_le.mp hh
   have hu : 0 < a + h := by linarith [hh'.1]
   have hu2 : 1 / 2 ≤ (a + h) ^ 2 := by
     have hs := pow_le_pow_left₀ (by positivity : 0 ≤ a / 2)
@@ -677,12 +683,11 @@ theorem compact_second_raw_margin {X K s : ℝ} (hX : 1 < X) (hK : 0 ≤ K)
     have heq : L * (1 / u ^ 2 - 1 / 2) + s / a =
         L * (1 / u ^ 2 - 1 / 2 + h / a) := by
       dsimp [h]
-      field_simp [hL.ne']
-      ring
+      field_simp [hL.ne'] <;> ring
     rw [heq, abs_mul, abs_of_pos hL]
     calc
       _ ≤ L * (4 * h ^ 2) := mul_le_mul_of_nonneg_left hinv hL.le
-      _ = 4 * s ^ 2 / L := by dsimp [h]; field_simp [hL.ne']; ring
+      _ = 4 * s ^ 2 / L := by dsimp [h]; field_simp [hL.ne'] <;> ring
       _ ≤ _ := by gcongr
   have hgainbound : |X * L *
       (log ((1 - t⁻¹ ^ 3) / (1 - t⁻¹ ^ 2)) - 1 / t ^ 2)| ≤
@@ -714,7 +719,7 @@ theorem compact_second_raw_margin {X K s : ℝ} (hX : 1 < X) (hK : 0 ≤ K)
   calc
     _ ≤ |X * L * (log ((1 - t⁻¹ ^ 3) / (1 - t⁻¹ ^ 2)) - 1 / t ^ 2)| +
         |L * (1 / u ^ 2 - 1 / 2) + s / a| + |log u - log a| :=
-      (abs_sub _ _).trans (add_le_add_right (abs_add _ _) _)
+      (abs_sub _ _).trans (add_le_add (abs_add_le _ _) (le_refl _))
     _ ≤ 12 * L / (a ^ 3 * r) + 4 * K ^ 2 / L + (2 * K / a) / L := by
       linarith [hgainbound, hinvbound, hlogbound]
     _ = secondExpansionError X K := by unfold secondExpansionError; dsimp [a, L, r]; ring
@@ -736,7 +741,7 @@ private theorem second_margin_antitone {X : ℝ} (hX : 1 < X) :
   rw [hratio u hu, hratio v hv]
   have hden : u * (u + 1) ≤ v * (v + 1) := by nlinarith
   have harg : 1 + 1 / (v * (v + 1)) ≤ 1 + 1 / (u * (u + 1)) :=
-    add_le_add_left (one_div_le_one_div_of_le (by positivity) hden) 1
+    by linarith [one_div_le_one_div_of_le (by positivity : 0 < u * (u + 1)) hden]
   have hraw := log_le_log (by positivity : 0 < 1 + 1 / (v * (v + 1))) harg
   have hlog := log_le_log hu0 huv
   have hprice := div_le_div_of_nonneg_right hlog
@@ -760,12 +765,12 @@ private theorem second_loss_occupancy {X : ℝ} (hX : 1 < X) {n p : ℕ}
   unfold layerLoss
   rw [second_margin_at_prime X hp]
   by_cases h : p ≤ layerPrime n 2
-  · rw [if_pos h, if_pos (hiff.mpr h)]
+  · rw [ite_eq_left h, ite_eq_left (hiff.mpr h)]
     by_cases hg : 0 ≤ secondRawMargin X p
     · simp [max_eq_left hg, max_eq_right (neg_nonpos.mpr hg)]
     · have hg' : secondRawMargin X p ≤ 0 := le_of_not_ge hg
       simp [max_eq_right hg', max_eq_left (neg_nonneg.mpr hg')]
-  · rw [if_neg h, if_neg (fun hv => h (hiff.mp hv)), sub_zero]
+  · rw [ite_eq_right h, ite_eq_right (fun hv => h (hiff.mp hv)), sub_zero]
 
 /-- A finite, literal residual bound for the complete second layer. The analytic
 and theta premises are explicit finite tail conditions; they are not a pressure
@@ -814,7 +819,7 @@ theorem finite_actual_second_layer_tube_bound {X δ : ℝ} {n : ℕ}
   have hslo : |secondTubeCenter - δ| ≤ |secondTubeCenter| + 1 :=
     (abs_sub _ _).trans (by rw [abs_of_pos hδ]; linarith)
   have hshi : |secondTubeCenter + δ| ≤ |secondTubeCenter| + 1 :=
-    (abs_add _ _).trans (by rw [abs_of_pos hδ]; linarith)
+    (abs_add_le _ _).trans (by rw [abs_of_pos hδ]; linarith)
   have elo := (compact_second_raw_margin hX (by positivity : 0 ≤ |secondTubeCenter| + 1)
     hslo hlarge hA1).trans hrem
   have ehi := (compact_second_raw_margin hX (by positivity : 0 ≤ |secondTubeCenter| + 1)
@@ -877,9 +882,13 @@ theorem finite_actual_second_layer_tube_bound {X δ : ℝ} {n : ℕ}
     · exact Nat.prime_of_mem_primeFactors hp
     · exact Nat.prime_of_mem_primeFactors hp
   have hmemW (p : ℕ) : p ∈ W ↔ p.Prime ∧ A < (p : ℝ) ∧ (p : ℝ) ≤ B := by
-    simp only [W, mem_sdiff, Nat.mem_primesLE]
+    simp only [W, Finset.mem_sdiff, Nat.mem_primesLE]
     rw [Nat.le_floor_iff (by linarith : 0 ≤ B), Nat.le_floor_iff (by linarith : 0 ≤ A)]
-    tauto
+    constructor
+    · rintro ⟨⟨hpB, hp⟩, hn⟩
+      exact ⟨hp, lt_of_not_ge (fun h => hn ⟨h, hp⟩), hpB⟩
+    · rintro ⟨hp, hpA, hpB⟩
+      exact ⟨⟨hpB, hp⟩, fun h => hpA.not_ge h.1⟩
   have hzero (p : ℕ) (hp : p ∈ S) (hpW : p ∉ W) : layerLoss X n p 2 = 0 := by
     have hpp := hprime p hp
     have hcases : (p : ℝ) ≤ A ∨ B ≤ (p : ℝ) := by
@@ -888,18 +897,18 @@ theorem finite_actual_second_layer_tube_bound {X δ : ℝ} {n : ℕ}
     rw [second_loss_occupancy hX (by omega : 0 < n) hpp hanti]
     rcases hcases with hpa | hbp
     · have hpQ : p ≤ layerPrime n 2 := by exact_mod_cast hpa.trans hQlo.le
-      rw [if_pos hpQ]
+      rw [ite_eq_left hpQ]
       have hm := second_margin_antitone hX
-        (show (p : ℝ) ∈ Set.Ioi 1 by exact_mod_cast hpp.one_lt)
+        (show (p : ℝ) ∈ Set.Ioi 1 by change (1 : ℝ) < p; exact_mod_cast hpp.one_lt)
         (show A ∈ Set.Ioi 1 from hA1) hpa
       exact max_eq_right (by linarith)
     · have hpQ : ¬ p ≤ layerPrime n 2 := by
         have hh : (layerPrime n 2 : ℝ) < p := hQhi.trans_le hbp
         exact not_le_of_gt (by exact_mod_cast hh)
-      rw [if_neg hpQ]
+      rw [ite_eq_right hpQ]
       have hm := second_margin_antitone hX
         (show B ∈ Set.Ioi 1 from hB1)
-        (show (p : ℝ) ∈ Set.Ioi 1 by exact_mod_cast hpp.one_lt) hbp
+        (show (p : ℝ) ∈ Set.Ioi 1 by change (1 : ℝ) < p; exact_mod_cast hpp.one_lt) hbp
       exact max_eq_right (by linarith)
   have hθmass : Chebyshev.theta B - Chebyshev.theta A ≤ 3 * δ * r / L := by
     have hwidth : B - A = 2 * δ * r / L := by
@@ -910,7 +919,9 @@ theorem finite_actual_second_layer_tube_bound {X δ : ℝ} {n : ℕ}
     change -(δ * r / (2 * L)) ≤ Chebyshev.theta A - A at hlo
     change Chebyshev.theta B - B ≤ δ * r / (2 * L) at hhi
     have heq : δ * r / (2 * L) = δ * r / L / 2 := by ring
-    linarith
+    calc
+      _ ≤ B - A + 2 * (δ * r / (2 * L)) := by linarith only [hlo, hhi]
+      _ = 3 * δ * r / L := by rw [hwidth]; ring
   have hsumW : (∑ p ∈ W, log p) = Chebyshev.theta B - Chebyshev.theta A := by
     have hsub : Nat.primesLE ⌊A⌋₊ ⊆ Nat.primesLE ⌊B⌋₊ := by
       intro p hp
@@ -944,7 +955,7 @@ theorem finite_actual_second_layer_tube_bound {X δ : ℝ} {n : ℕ}
     have hterms (p : ℕ) (hp : p ∈ S) :
         layerLoss X n p 2 ≤ if p ∈ W then 3 * δ / (2 * a * X * L) else 0 := by
       by_cases hpW : p ∈ W
-      · rw [if_pos hpW]
+      · rw [ite_eq_left hpW]
         have hh := (hmemW p).mp hpW
         have hloss : layerLoss X n p 2 ≤ |secondRawMargin X p| := by
           rw [second_loss_occupancy hX (by omega : 0 < n) hh.1 hanti]
@@ -952,15 +963,13 @@ theorem finite_actual_second_layer_tube_bound {X δ : ℝ} {n : ℕ}
           · exact max_le (by rw [← abs_neg (secondRawMargin X p)]; exact le_abs_self _) (abs_nonneg _)
           · exact max_le (le_abs_self _) (abs_nonneg _)
         exact hloss.trans (hmargin p hh.2.1 hh.2.2)
-      · rw [if_neg hpW, hzero p hp hpW]
+      · rw [ite_eq_right hpW, hzero p hp hpW]
     calc
       completeSecondLayerLoss X n = ∑ p ∈ S, layerLoss X n p 2 := rfl
       _ ≤ ∑ p ∈ S, if p ∈ W then 3 * δ / (2 * a * X * L) else 0 := sum_le_sum hterms
       _ = ∑ p ∈ S ∩ W, 3 * δ / (2 * a * X * L) := by
         rw [← sum_filter]
         congr 1
-        ext p
-        simp
       _ ≤ ∑ p ∈ W, 3 * δ / (2 * a * X * L) :=
         sum_le_sum_of_subset_of_nonneg inter_subset_right (fun _ _ _ => hbound0)
       _ = _ := by simp
