@@ -11,6 +11,8 @@ import D5.S3.Geometry.FiniteCriticalCellSphere.AttachmentSphere
 import Mathlib.Topology.CompactOpen
 
 noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 open Set Finset Topology
 open scoped BigOperators unitInterval ContinuousMap
 
@@ -42,7 +44,7 @@ private def basedCompose {X Y Z : Type*} [TopologicalSpace X]
         change B.backward (C.left (t, B.forward x)) =
           B.backward (C.backward (C.forward (B.forward x)))
         rw [B.forward_point]
-        exact congrArg B.backward (C.left.eq_fst t (Set.mem_singleton_self y)) }
+        exact congrArg B.backward (C.left.eq_fst t (by simp)) }
   let R : ((C.forward.comp B.forward).comp (B.backward.comp C.backward)).HomotopyRel
       (C.forward.comp C.backward) {z} :=
     { toFun u := C.forward (B.right (u.1, C.backward u.2))
@@ -56,7 +58,7 @@ private def basedCompose {X Y Z : Type*} [TopologicalSpace X]
         change C.forward (B.right (t, C.backward z)) =
           C.forward (B.forward (B.backward (C.backward z)))
         rw [C.backward_point]
-        exact congrArg C.forward (B.right.eq_fst t (Set.mem_singleton_self y)) }
+        exact congrArg C.forward (B.right.eq_fst t (by simp)) }
   exact
     { forward := C.forward.comp B.forward
       backward := B.backward.comp C.backward

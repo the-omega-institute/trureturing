@@ -18,6 +18,9 @@ import Mathlib.Topology.Piecewise
 import Mathlib.Data.Fintype.Card
 
 noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
+set_option maxHeartbeats 1000000
 open Set Finset Topology
 open scoped BigOperators unitInterval ContinuousMap
 
@@ -79,7 +82,8 @@ variable {V : Type*} [Fintype V] [DecidableEq V]
 /-- All geometric inputs refer to the original ambient labels. The ONLY
 homotopy input is a standalone based contraction of the core P. -/
 structure Attachment (V : Type*) [Fintype V] [DecidableEq V] where
-  X P : PreAbstractSimplicialComplex V
+  X : PreAbstractSimplicialComplex V
+  P : PreAbstractSimplicialComplex V
   face : Finset V
   face_nonempty : face.Nonempty
   union_eq : X = P ⊔ FiniteAlexanderDualCollapse.simplex face
@@ -134,13 +138,16 @@ private def coreRestrict : C(A.coreSet, Space A.P) :=
   ⟨fun x => ⟨x.1.1, x.2⟩, (continuous_subtype_val.comp continuous_subtype_val).subtype_mk _⟩
 
 private def diskRestrict : C(A.diskSet, A.Disk) :=
-  (faceCoordinateHomeomorph A.face).symm.toContinuousMap.comp
+  (toContinuousMap (faceCoordinateHomeomorph A.face).symm).comp
     ⟨fun x => ⟨x.1.1, x.2⟩,
       (continuous_subtype_val.comp continuous_subtype_val).subtype_mk _⟩
 
 private theorem diskIn_restrict (x : A.diskSet) : A.diskIn (A.diskRestrict x) = x.1 := by
   apply Subtype.ext
-  exact congrArg Subtype.val ((faceCoordinateHomeomorph A.face).apply_symm_apply ⟨x.1.1, x.2⟩)
+  change (faceCoordinateHomeomorph A.face
+    ((faceCoordinateHomeomorph A.face).symm ⟨x.1.1, x.2⟩)).1 = x.1.1
+  exact congrArg (fun y : ↥(faceSimplex A.face) => y.1)
+    ((faceCoordinateHomeomorph A.face).apply_symm_apply ⟨x.1.1, x.2⟩)
 
 private theorem restrict_diskIn (x : A.Disk) :
     A.diskRestrict ⟨A.diskIn x, (faceCoordinateHomeomorph A.face x).2⟩ = x :=
@@ -248,9 +255,9 @@ def expand (x : A.Disk) (u : ℝ) (hu : 0 < u) (hr : A.rho x ≤ u) : A.Disk :=
         field_simp [hu.ne', cardR_ne (Λ := A.face)] <;> ring
       rw [he]
       exact div_nonneg h (mul_nonneg hm.le hu.le)
-    · change (∑ i, (barycenter A.face i + u⁻¹ * (x.1 i - barycenter A.face i))) = 1
-      rw [Finset.sum_add_distrib, ← Finset.mul_sum, Finset.sum_sub_distrib,
-        x.2.2, (barycenterPoint (Λ := A.face)).2.2]
+    · have hb : (∑ i, barycenter A.face i) = 1 := (barycenterPoint (Λ := A.face)).2.2
+      change (∑ i, (barycenter A.face i + u⁻¹ * (x.1 i - barycenter A.face i))) = 1
+      rw [Finset.sum_add_distrib, ← Finset.mul_sum, Finset.sum_sub_distrib, x.2.2, hb]
       ring⟩
 
 private theorem expand_coordinate (x : A.Disk) (u : ℝ) (hu : 0 < u)
@@ -276,6 +283,7 @@ private theorem expand_boundary (x : A.Disk) (hr : 0 < A.rho x) :
   refine ⟨i, ?_⟩
   rw [A.expand_coordinate, hi]
   have hm := cardR_ne (Λ := A.face)
+  change 0 < 1 - cardR A.face * minCoord x at hr
   dsimp [rho, sigma]
   field_simp [hm, hr.ne'] <;> ring
 
@@ -304,11 +312,11 @@ private theorem inner_closed : IsClosed A.innerRegion :=
 private theorem outer_closed : IsClosed A.outerRegion :=
   isClosed_le (A.continuous_cut.comp continuous_fst) (A.continuous_rho.comp continuous_snd)
 private theorem radial_cover (z : I × A.Disk) : z ∈ A.innerRegion ∨ z ∈ A.outerRegion :=
-  le_total _ _
+  le_total (A.rho z.2) (A.cut z.1)
 
 private def innerMap : C(A.innerRegion, Space A.X) :=
   A.diskIn.comp ⟨fun z => A.expand z.1.2 (A.cut z.1.1) (A.cut_pos _) z.2,
-    A.continuous_expand (fun z => z.1.2) (fun z => A.cut z.1.1)
+    A.continuous_expand (fun z : A.innerRegion => z.1.2) (fun z => A.cut z.1.1)
       (fun z => A.cut_pos _) (fun z => z.2)
       (continuous_snd.comp continuous_subtype_val)
       (A.continuous_cut.comp (continuous_fst.comp continuous_subtype_val))⟩
@@ -322,21 +330,21 @@ private theorem outer_rho_pos (z : A.outerRegion) : 0 < A.rho z.1.2 :=
 def projection : C(A.outerRegion, A.BDisk) :=
   ⟨fun z => ⟨A.expand z.1.2 (A.rho z.1.2) (A.outer_rho_pos z) le_rfl,
       A.expand_boundary z.1.2 (A.outer_rho_pos z)⟩,
-    (A.continuous_expand (fun z => z.1.2) (fun z => A.rho z.1.2)
+    (A.continuous_expand (fun z : A.outerRegion => z.1.2) (fun z => A.rho z.1.2)
       (fun z => A.outer_rho_pos z) (fun _ => le_rfl)
       (continuous_snd.comp continuous_subtype_val)
       (A.continuous_rho.comp (continuous_snd.comp continuous_subtype_val))).subtype_mk _⟩
 
-def outerTime : C(A.outerRegion, I) :=
-  ⟨fun z => ⟨2 * A.rho z.1.2 - 2 + (z.1.1 : ℝ), by
-    have h := z.2
+def outerTime : C(A.outerRegion, I) := by
+  refine ⟨fun z => ⟨2 * A.rho z.1.2 - 2 + (z.1.1 : ℝ), ?_⟩, ?_⟩
+  · have h := z.2
     dsimp [outerRegion, cut] at h
     constructor
     · linarith
-    · linarith [A.rho_le_one z.1.2, z.1.1.2.2]⟩,
-    (((continuous_const.mul (A.continuous_rho.comp
+    · linarith [A.rho_le_one z.1.2, z.1.1.2.2]
+  · exact (((continuous_const.mul (A.continuous_rho.comp
       (continuous_snd.comp continuous_subtype_val))).sub continuous_const).add
-        (continuous_subtype_val.comp (continuous_fst.comp continuous_subtype_val))).subtype_mk _⟩
+        (continuous_subtype_val.comp (continuous_fst.comp continuous_subtype_val))).subtype_mk _
 
 private def outerMap : C(A.outerRegion, Space A.X) :=
   A.coreIn.comp ⟨fun z => A.contraction (A.outerTime z, A.boundaryToCore (A.projection z)),
@@ -354,6 +362,8 @@ private theorem radial_seam (z : I × A.Disk) (hi : z ∈ A.innerRegion)
   change A.diskIn (A.expand z.2 (A.cut z.1) (A.cut_pos _) hi) =
     A.coreIn (A.contraction (A.outerTime ⟨z, ho⟩, A.boundaryToCore (A.projection ⟨z, ho⟩)))
   rw [ht, A.contraction.apply_zero]
+  change A.diskIn (A.expand z.2 (A.cut z.1) (A.cut_pos _) hi) =
+    A.coreIn (A.boundaryToCore (A.projection ⟨z, ho⟩))
   rw [A.boundaryToCore_in]
   apply congrArg A.diskIn
   exact A.expand_congr _ _ _ _ _ he.symm
@@ -365,11 +375,13 @@ def diskCollar : C(I × A.Disk, Space A.X) :=
 
 private theorem diskCollar_inner (s : I) (x : A.Disk) (hx : A.rho x ≤ A.cut s) :
     A.diskCollar (s, x) = A.diskIn (A.expand x (A.cut s) (A.cut_pos s) hx) :=
-  pasteClosed_left _ _ _ _ _ _ _ _ (s, x) hx
+  pasteClosed_left A.innerRegion A.outerRegion A.inner_closed A.outer_closed
+    A.radial_cover A.innerMap A.outerMap A.radial_seam (s, x) hx
 
 private theorem diskCollar_outer (s : I) (x : A.Disk) (hx : A.cut s ≤ A.rho x) :
     A.diskCollar (s, x) = A.outerMap ⟨(s, x), hx⟩ :=
-  pasteClosed_right _ _ _ _ _ _ _ _ (s, x) hx
+  pasteClosed_right A.innerRegion A.outerRegion A.inner_closed A.outer_closed
+    A.radial_cover A.innerMap A.outerMap A.radial_seam (s, x) hx
 
 private theorem diskCollar_zero (x : A.Disk) : A.diskCollar (0, x) = A.diskIn x := by
   have hc : A.cut 0 = 1 := by norm_num [cut]
@@ -389,7 +401,9 @@ private theorem diskCollar_boundary (s : I) (x : A.BDisk) :
     rw [hr]; ring
   have hp : A.projection ⟨(s, x.1), ho⟩ = x := by
     apply Subtype.ext
-    exact (A.expand_congr _ _ _ _ _ hr).trans (A.expand_one x.1)
+    change A.expand x.1 (A.rho x.1) (A.outer_rho_pos ⟨(s, x.1), ho⟩) le_rfl = x.1
+    exact (A.expand_congr x.1 (A.outer_rho_pos ⟨(s, x.1), ho⟩)
+      zero_lt_one le_rfl (A.rho_le_one x.1) hr).trans (A.expand_one x.1)
   change A.coreIn (A.contraction (A.outerTime ⟨(s, x.1), ho⟩,
     A.boundaryToCore (A.projection ⟨(s, x.1), ho⟩))) = _
   rw [ht, hp]
@@ -423,7 +437,8 @@ private theorem attachment_seam (z : I × Space A.X)
     (A.diskIn_mem_core_iff x).mp (hix.symm ▸ hp)
   have hc : A.boundaryToCore ⟨x, hb⟩ = A.coreRestrict ⟨z.2, hp⟩ := by
     apply Subtype.ext
-    exact congrArg Subtype.val hix
+    change (A.diskIn x).1 = z.2.1
+    exact congrArg (fun y : Space A.X => y.1) hix
   change A.coreIn (A.contraction (z.1, A.coreRestrict ⟨z.2, hp⟩)) = A.diskCollar (z.1, x)
   rw [A.diskCollar_boundary z.1 ⟨x, hb⟩, hc]
 
@@ -453,7 +468,9 @@ private theorem collar_zero_apply (x : Space A.X) : A.collar (0, x) = x := by
   · rw [A.collar_core_apply 0 ⟨x, hp⟩, A.contraction.apply_zero]
     exact Subtype.ext rfl
   · have hx := A.diskIn_restrict ⟨x, hd⟩
-    rw [← hx, A.collar_disk_apply, A.diskCollar_zero]
+    change A.diskIn (A.diskRestrict ⟨x, hd⟩) = x at hx
+    exact (congrArg (fun y => A.collar (0, y)) hx.symm).trans
+      ((A.collar_disk_apply 0 _).trans ((A.diskCollar_zero _).trans hx))
 
 private theorem collar_core_one (x : A.coreSet) : A.collar (1, x.1) = A.basepoint := by
   rw [A.collar_core_apply, A.contraction.apply_one]
@@ -468,7 +485,8 @@ private theorem collar_fixed (s : I) : A.collar (s, A.basepoint) = A.basepoint :
   have hb : A.basepoint ∈ A.coreSet := A.p.2
   rw [A.collar_core_apply s ⟨A.basepoint, hb⟩]
   change A.coreIn (A.contraction (s, A.p)) = A.coreIn A.p
-  rw [A.contraction.eq_fst s (Set.mem_singleton_self A.p)]
+  rw [A.contraction.eq_fst s (by simp)]
+  rfl
 
 /-- The literal subset quotient and its original canonical map. -/
 abbrev Q := Collapse A.coreSet
@@ -594,8 +612,8 @@ private def postHomeomorph {X Y Z : Type*} [TopologicalSpace X]
     [TopologicalSpace Y] [TopologicalSpace Z] {x : X} {y : Y}
     (B : SingletonRetractionBasedInverse.BasedEquivalence x y) (e : Y ≃ₜ Z) :
     SingletonRetractionBasedInverse.BasedEquivalence x (e y) where
-  forward := e.toContinuousMap.comp B.forward
-  backward := B.backward.comp e.symm.toContinuousMap
+  forward := (toContinuousMap e).comp B.forward
+  backward := B.backward.comp (toContinuousMap e.symm)
   forward_point := congrArg e B.forward_point
   backward_point := by change B.backward (e.symm (e y)) = x; rw [e.symm_apply_apply, B.backward_point]
   left :=
@@ -616,14 +634,18 @@ private def postHomeomorph {X Y Z : Type*} [TopologicalSpace X]
       continuous_toFun := e.continuous.comp (B.right.continuous.comp
         (continuous_fst.prodMk (e.symm.continuous.comp continuous_snd)))
       map_zero_left := by intro a; exact congrArg e (B.right.apply_zero (e.symm a))
-      map_one_left := by intro a; rw [B.right.apply_one, e.apply_symm_apply]; rfl
+      map_one_left := by
+        intro a
+        change e (B.right (1, e.symm a)) = a
+        rw [B.right.apply_one]
+        exact e.apply_symm_apply a
       prop' := by
         intro t a ha
         obtain rfl := Set.mem_singleton_iff.mp ha
         change e (B.right (t, e.symm (e y))) =
           e (B.forward (B.backward (e.symm (e y))))
         rw [e.symm_apply_apply]
-        exact congrArg e (B.right.eq_fst t (Set.mem_singleton_self y)) }
+        exact congrArg e (B.right.eq_fst t (by simp)) }
 
 namespace Attachment
 variable (A : Attachment V)
@@ -694,8 +716,13 @@ private theorem classMap_toQ (hm : 2 ≤ Fintype.card A.face) (x : Space A.X) :
   · rw [A.classMap_core hm x hp]
     apply Quotient.sound
     exact Or.inr ⟨(A.diskIn_mem_core_iff _).mpr (A.boundaryVertex hm).2, hp⟩
-  · rw [← A.diskIn_restrict ⟨x, hd⟩, A.classMap_disk]
-    rfl
+  · have hx : A.diskIn (A.diskRestrict ⟨x, hd⟩) = x := A.diskIn_restrict ⟨x, hd⟩
+    calc
+      A.simplexQuotientToQ (A.classMap hm x) =
+          A.simplexQuotientToQ (A.classMap hm (A.diskIn (A.diskRestrict ⟨x, hd⟩))) :=
+        congrArg (fun y => A.simplexQuotientToQ (A.classMap hm y)) hx.symm
+      _ = A.q (A.diskIn (A.diskRestrict ⟨x, hd⟩)) := by rw [A.classMap_disk]; rfl
+      _ = A.q x := congrArg A.q hx
 
 /-- Both directions are literal quotient lifts of actual coordinate maps.
 The proof needs a genuine boundary point, hence the explicit m>=2 premise. -/
@@ -719,28 +746,36 @@ No ambient label is used in this reindexing except the labels of face. -/
 def spherePsi (hm : 2 ≤ A.face.card) (x : A.Disk) :
     EuclideanSphereJoin.StdSphere (A.face.card - 1) := by
   have hm' : 2 ≤ Fintype.card A.face := by simpa using hm
-  simpa only [Fintype.card_coe] using
-    FiniteSimplexBoundarySphere.reindexSphere
+  have hc : Fintype.card A.face - 1 = A.face.card - 1 := congrArg (fun n => n - 1) (Fintype.card_coe A.face)
+  exact hc ▸ FiniteSimplexBoundarySphere.reindexSphere
       (FiniteSimplexBoundarySphere.stdIndex hm') (FiniteSimplexBoundarySphere.psi hm' x)
 
 def sphereNorth (hm : 2 ≤ A.face.card) : EuclideanSphereJoin.StdSphere (A.face.card - 1) := by
   have hm' : 2 ≤ Fintype.card A.face := by simpa using hm
-  simpa only [Fintype.card_coe] using
-    FiniteSimplexBoundarySphere.reindexSphere
+  have hc : Fintype.card A.face - 1 = A.face.card - 1 := congrArg (fun n => n - 1) (Fintype.card_coe A.face)
+  exact hc ▸ FiniteSimplexBoundarySphere.reindexSphere
       (FiniteSimplexBoundarySphere.stdIndex hm') (FiniteSimplexBoundarySphere.north (Λ := A.face))
 
 def sphereSouth (hm : 2 ≤ A.face.card) : EuclideanSphereJoin.StdSphere (A.face.card - 1) := by
   have hm' : 2 ≤ Fintype.card A.face := by simpa using hm
-  simpa only [Fintype.card_coe] using
-    FiniteSimplexBoundarySphere.reindexSphere
+  have hc : Fintype.card A.face - 1 = A.face.card - 1 := congrArg (fun n => n - 1) (Fintype.card_coe A.face)
+  exact hc ▸ FiniteSimplexBoundarySphere.reindexSphere
       (FiniteSimplexBoundarySphere.stdIndex hm') (FiniteSimplexBoundarySphere.south (Λ := A.face))
 
 /-- Actual Euclidean endpoint, composed with the frozen rational Psi map. -/
 def multiSphereHomeomorph (hm : 2 ≤ A.face.card) :
     A.Q ≃ₜ EuclideanSphereJoin.StdSphere (A.face.card - 1) := by
   have hm' : 2 ≤ Fintype.card A.face := by simpa using hm
-  simpa using (A.quotientSimplexHomeomorph hm').trans
+  have hc : Fintype.card A.face - 1 = A.face.card - 1 := congrArg (fun n => n - 1) (Fintype.card_coe A.face)
+  exact hc ▸ (A.quotientSimplexHomeomorph hm').trans
     (FiniteSimplexBoundarySphere.simplexBoundaryStdSphere hm')
+
+private theorem sphereTransport_apply {X : Type*} [TopologicalSpace X]
+    {n m : Nat} (h : n = m) (e : X ≃ₜ EuclideanSphereJoin.StdSphere n) (x : X) :
+    (h ▸ e : X ≃ₜ EuclideanSphereJoin.StdSphere m) x =
+      (h ▸ e x : EuclideanSphereJoin.StdSphere m) := by
+  subst m
+  rfl
 
 /-- Exact representative law, using rational Psi and the L2 isometric reindexing. -/
 theorem multiSphere_representative (hm : 2 ≤ A.face.card) (x : A.Disk) :
@@ -748,9 +783,15 @@ theorem multiSphere_representative (hm : 2 ≤ A.face.card) (x : A.Disk) :
   have hm' : 2 ≤ Fintype.card A.face := by simpa using hm
   have he := FiniteSimplexBoundarySphere.simplexBoundaryStdSphere_representative hm' x
   have hc : A.classMap hm' (A.diskIn x) = Quotient.mk _ x := A.classMap_disk hm' x
-  simpa only [multiSphereHomeomorph, spherePsi, Homeomorph.trans_apply,
-    quotientSimplexHomeomorph, qToSimplexQuotient, ContinuousMap.coe_mk,
-    Quotient.lift_mk, hc, Fintype.card_coe] using he
+  have hc' : Fintype.card A.face - 1 = A.face.card - 1 :=
+    congrArg (fun n => n - 1) (Fintype.card_coe A.face)
+  unfold multiSphereHomeomorph spherePsi
+  rw [sphereTransport_apply]
+  apply congrArg (fun y : EuclideanSphereJoin.StdSphere (Fintype.card A.face - 1) => hc' ▸ y)
+  change FiniteSimplexBoundarySphere.simplexBoundaryStdSphere hm'
+    (A.classMap hm' (A.diskIn x)) = _
+  rw [hc]
+  exact he
 
 /-- The collapsed P point is the actual south point. -/
 theorem multiSphere_core (hm : 2 ≤ A.face.card) (x : Space A.P) :
@@ -759,9 +800,15 @@ theorem multiSphere_core (hm : 2 ≤ A.face.card) (x : Space A.P) :
   have he := FiniteSimplexBoundarySphere.simplexBoundaryStdSphere_boundary
     hm' (A.boundaryVertex hm').1 (A.boundaryVertex hm').2
   have hc := A.classMap_core hm' (A.coreIn x) x.2
-  simpa only [multiSphereHomeomorph, sphereSouth, Homeomorph.trans_apply,
-    quotientSimplexHomeomorph, qToSimplexQuotient, ContinuousMap.coe_mk,
-    Quotient.lift_mk, hc, boundaryClass, Fintype.card_coe] using he
+  have hc' : Fintype.card A.face - 1 = A.face.card - 1 :=
+    congrArg (fun n => n - 1) (Fintype.card_coe A.face)
+  unfold multiSphereHomeomorph sphereSouth
+  rw [sphereTransport_apply]
+  apply congrArg (fun y : EuclideanSphereJoin.StdSphere (Fintype.card A.face - 1) => hc' ▸ y)
+  change FiniteSimplexBoundarySphere.simplexBoundaryStdSphere hm'
+    (A.classMap hm' (A.coreIn x)) = _
+  rw [hc]
+  exact he
 
 /-- The barycenter and every boundary representative have their exact pole values. -/
 theorem multiSphere_poles (hm : 2 ≤ A.face.card) :
@@ -771,11 +818,17 @@ theorem multiSphere_poles (hm : 2 ≤ A.face.card) :
   constructor
   · rw [A.multiSphere_representative]
     unfold spherePsi sphereNorth
-    rw [FiniteSimplexBoundarySphere.psi_barycenter]
+    dsimp only
+    congr 1
+    exact congrArg (FiniteSimplexBoundarySphere.reindexSphere _)
+      (FiniteSimplexBoundarySphere.psi_barycenter (Λ := A.face) _)
   · intro x hx
     rw [A.multiSphere_representative]
     unfold spherePsi sphereSouth
-    rw [FiniteSimplexBoundarySphere.psi_boundary _ hx]
+    dsimp only
+    congr 1
+    exact congrArg (FiniteSimplexBoundarySphere.reindexSphere _)
+      (FiniteSimplexBoundarySphere.psi_boundary (Λ := A.face) _ hx)
 
 /- The singleton branch retains the core point. It never identifies the
    one-point simplex / empty boundary with the two-point sphere. -/
@@ -819,11 +872,13 @@ private def boolMap (hm : A.face.card = 1) : C(Space A.X, Bool) :=
 
 private theorem boolMap_core (hm : A.face.card = 1) (x : Space A.P) :
     A.boolMap hm (A.coreIn x) = false :=
-  pasteClosed_left _ _ _ _ _ _ _ _ _ x.2
+  pasteClosed_left A.coreSet A.diskSet A.core_closed A.disk_closed A.cover
+    A.boolCore A.boolDisk (A.bool_seam hm) (A.coreIn x) x.2
 
 private theorem boolMap_disk (hm : A.face.card = 1) (x : A.Disk) :
     A.boolMap hm (A.diskIn x) = true :=
-  pasteClosed_right _ _ _ _ _ _ _ _ _ (faceCoordinateHomeomorph A.face x).2
+  pasteClosed_right A.coreSet A.diskSet A.core_closed A.disk_closed A.cover
+    A.boolCore A.boolDisk (A.bool_seam hm) (A.diskIn x) (faceCoordinateHomeomorph A.face x).2
 
 private def qBool (hm : A.face.card = 1) : C(A.Q, Bool) :=
   { toFun := Quotient.lift (A.boolMap hm) (by
@@ -848,17 +903,20 @@ def singletonQuotientHomeomorph (hm : A.face.card = 1) : A.Q ≃ₜ Bool where
     | h x =>
       rcases A.cover x with hp | hd
       · have he : A.qBool hm (A.q x) = false :=
-          pasteClosed_left _ _ _ _ _ _ _ _ x hp
+          pasteClosed_left A.coreSet A.diskSet A.core_closed A.disk_closed A.cover
+            A.boolCore A.boolDisk (A.bool_seam hm) x hp
         change A.boolToQ (A.qBool hm (A.q x)) = A.q x
         rw [he]
         apply Quotient.sound
         exact Or.inr ⟨A.p.2, hp⟩
       · have hx := A.diskIn_restrict ⟨x, hd⟩
+        change A.diskIn (A.diskRestrict ⟨x, hd⟩) = x at hx
         rw [← hx]
         change A.boolToQ (A.boolMap hm (A.diskIn (A.diskRestrict ⟨x, hd⟩))) = _
         rw [A.boolMap_disk]
         change A.q (A.diskIn barycenterPoint) = A.q (A.diskIn (A.diskRestrict ⟨x, hd⟩))
-        rw [A.singleton_disk_eq hm]
+        exact congrArg (fun y => A.q (A.diskIn y))
+          (A.singleton_disk_eq hm (A.diskRestrict ⟨x, hd⟩)).symm
   right_inv := by
     intro b
     cases b
@@ -872,18 +930,21 @@ end Attachment
 /-- The positive point of the actual one-dimensional Euclidean unit sphere. -/
 def s0Positive : EuclideanSphereJoin.StdSphere 0 :=
   ⟨WithLp.toLp 2 (fun _ : Fin 1 => (1 : ℝ)), by
+    change _ ∈ Metric.sphere (0 : EuclideanSpace ℝ (Fin 1)) 1
     rw [EuclideanSpace.sphere_zero_eq 1 zero_le_one]
     norm_num⟩
 
 /-- The negative point is the basepoint in the singleton attachment branch. -/
 def s0Negative : EuclideanSphereJoin.StdSphere 0 :=
   ⟨WithLp.toLp 2 (fun _ : Fin 1 => (-1 : ℝ)), by
+    change _ ∈ Metric.sphere (0 : EuclideanSpace ℝ (Fin 1)) 1
     rw [EuclideanSpace.sphere_zero_eq 1 zero_le_one]
     norm_num⟩
 
 private theorem s0_exhaust (y : EuclideanSphereJoin.StdSphere 0) :
     y = s0Positive ∨ y = s0Negative := by
   have hy := y.2
+  change y.1 ∈ Metric.sphere (0 : EuclideanSpace ℝ (Fin 1)) 1 at hy
   rw [EuclideanSpace.sphere_zero_eq 1 zero_le_one] at hy
   have hs : (y.1 (0 : Fin 1)) ^ 2 = 1 := by simpa using hy
   have hz : (y.1 0 - 1) * (y.1 0 + 1) = 0 := by nlinarith
@@ -891,14 +952,14 @@ private theorem s0_exhaust (y : EuclideanSphereJoin.StdSphere 0) :
   · left
     apply Subtype.ext
     ext i
-    have hi : i = (0 : Fin 1) := Subsingleton.elim _ _
+    have hi : i = (0 : Fin 1) := Fin.ext (by have := i.isLt; omega)
     subst i
     change y.1 0 = 1
     linarith
   · right
     apply Subtype.ext
     ext i
-    have hi : i = (0 : Fin 1) := Subsingleton.elim _ _
+    have hi : i = (0 : Fin 1) := Fin.ext (by have := i.isLt; omega)
     subst i
     change y.1 0 = -1
     linarith
@@ -943,8 +1004,8 @@ def singletonSphere0Homeomorph (hm : A.face.card = 1) :
 /-- Only the natural-number dimension is transported; no point is removed. -/
 def singletonSphereHomeomorph (hm : A.face.card = 1) :
     A.Q ≃ₜ EuclideanSphereJoin.StdSphere (A.face.card - 1) := by
-  simpa only [hm, Nat.sub_self] using
-    A.singletonSphere0Homeomorph hm
+  have hd : A.face.card - 1 = 0 := by omega
+  exact hd.symm ▸ A.singletonSphere0Homeomorph hm
 
 /-- No empty-boundary simplex quotient is used in this branch. -/
 theorem singletonSphere_points (hm : A.face.card = 1) :
@@ -976,8 +1037,8 @@ def sphereEquivalence : SingletonRetractionBasedInverse.BasedEquivalence
 
 /-- The inverse is still the endpoint collar after the actual quotient/sphere inverse. -/
 theorem sphere_maps :
-    A.sphereEquivalence.forward = A.sphereHomeomorph.toContinuousMap.comp A.q ∧
-    A.sphereEquivalence.backward = A.quotientInverse.comp A.sphereHomeomorph.symm.toContinuousMap :=
+    A.sphereEquivalence.forward = (toContinuousMap A.sphereHomeomorph).comp A.q ∧
+    A.sphereEquivalence.backward = A.quotientInverse.comp (toContinuousMap A.sphereHomeomorph.symm) :=
   ⟨rfl, rfl⟩
 
 /-- All original labels are preserved by the disk inclusion. A label outside

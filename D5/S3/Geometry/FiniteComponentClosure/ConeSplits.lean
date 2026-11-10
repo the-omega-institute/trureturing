@@ -133,7 +133,8 @@ theorem contractible_cover_equivalence (X Y C : PreAbstractSimplicialComplex V)
           (FiniteVertexCylinder.vertexPoint Y b hb)),
       e.toFun = P.quotientWedgeHomeomorph.symm.toHomotopyEquiv.toFun.comp
         (FiniteConeUnionWedge.collapseMap
-          {z | z.val ∈ FiniteConeCollapse.realization C}) := by
+          {z : FiniteSimplicialJoin.Space (X ⊔ Y) |
+            z.val ∈ FiniteConeCollapse.realization C}) := by
   let A : Set (FiniteSimplicialJoin.Space (X ⊔ Y)) :=
     {z | z.val ∈ FiniteConeCollapse.realization C}
   let R := FiniteSubcomplexCylinder.retraction (X ⊔ Y) C hC
@@ -153,15 +154,18 @@ theorem contractible_cover_equivalence (X Y C : PreAbstractSimplicialComplex V)
   let aA : A := j aC
   let RC := nativeCylinder C a haC
   let jp := j.prodCongr (Homeomorph.refl I)
+  have hmem (z : A × I) :
+      (jp (RC.map (jp.symm z)).val).2 = 0 ∨
+        (jp (RC.map (jp.symm z)).val).1 = aA := by
+    rcases (RC.map (jp.symm z)).property with ht | hx
+    · exact Or.inl ht
+    · exact Or.inr (congrArg j hx)
   -- This is transport along j×id, not a duplicate nativeCylinder implementation.
   let Ra : SingletonRetractionBasedInverse.CylinderRetraction aA :=
     { map :=
-        { toFun := fun z => ⟨jp (RC.map (jp.symm z)).val, by
-            rcases (RC.map (jp.symm z)).property with ht | hx
-            · exact Or.inl ht
-            · exact Or.inr (congrArg j hx)⟩
+        { toFun := fun z => ⟨jp (RC.map (jp.symm z)).val, hmem z⟩
           continuous_toFun := (jp.continuous.comp
-            (continuous_subtype_val.comp (RC.map.continuous.comp jp.symm.continuous))).subtype_mk _ }
+            (continuous_subtype_val.comp (RC.map.continuous.comp jp.symm.continuous))).subtype_mk hmem }
       fixed := by
         intro z hz
         have hz' : (jp.symm z).2 = 0 ∨ (jp.symm z).1 = aC := by

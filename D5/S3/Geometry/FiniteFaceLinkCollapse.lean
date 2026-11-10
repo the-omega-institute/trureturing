@@ -439,8 +439,8 @@ theorem pairs_liftOver_forall2
     (v : V) (hMD : M ≤ D) (hvD : Fresh v D) :
     List.Forall₂ (PairLiftedBy D v)
       (S.liftOver D v hMD hvD).pairs S.pairs := by
-  simpa [PairLiftedBy] using
-    (Sequence.pairs_liftOver_forall2 S v hMD hvD)
+  unfold PairLiftedBy
+  exact Sequence.pairs_liftOver_forall2 S v hMD hvD
 
 /-- A pair relation after all insertions have been performed.  The output pair
 is first, matching the chosen output prefix in `faceLinkCollapse_ordered_pairs`.

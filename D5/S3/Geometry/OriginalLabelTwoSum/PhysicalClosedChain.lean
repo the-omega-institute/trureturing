@@ -114,8 +114,9 @@ private theorem interface_not_second (n ghosts k : Nat) (hk : k ≤ n) :
   exact ⟨hne,interface_not_S n ghosts k hk⟩
 
 private theorem S_zero (n ghosts : Nat) : S n ghosts 0 = ∅ := by
-  ext x
-  simp only [S,Finset.mem_filter,Finset.mem_univ,true_and,Finset.notMem_empty]
+  apply Finset.eq_empty_iff_forall_notMem.mpr
+  intro x hx
+  have hh := (Finset.mem_filter.mp hx).2
   omega
 
 /-- An explicit union of the ORIGINAL r(j+1,3),r(j+1,4) values. -/
@@ -373,8 +374,12 @@ private theorem retained_recurrence (n ghosts k : Nat) (hk : k < n) :
     rintro rfl; exact hp
   have hvI : x = v n ghosts → x ≠ interface n ghosts k (by omega) := by
     rintro rfl; exact hev
+  haveI : NeZero (3+4*n+ghosts) := ⟨by omega⟩
   simp only [Fin.ext_iff,p,v,r] at *
-  dsimp only at *
+  have hz : (0 : Ambient n ghosts).val = 0 := rfl
+  simp only [Fin.val_zero, Fin.val_one, Fin.val_ofNat] at *
+  norm_num at *
+  set_option pp.explicit true in trace_state
   omega
 
 /-- Exact original-label ground, including k=0. Deleted interfaces are not
@@ -459,7 +464,6 @@ theorem critical_formula (n ghosts k : Nat) (hk : k ≤ n) :
   | zero =>
     change (K4.seed.critical.image (fun t => t.image (seedLabels n ghosts))) = _
     simp [K4.seed,first,second,S_zero,interface,seedLabels,u,v]
-    rfl
   | succ k ih =>
     change (PhysicalCertificate.certificate (graph n ghosts k (by omega))
       (input n ghosts k (by omega)).e (input n ghosts k (by omega)).retained
@@ -494,7 +498,7 @@ theorem closed_ground (n ghosts k : Nat) (hk : k < n) :
   constructor
   · rw [ground_formula]
     simp only [retained,interface_succ]
-  · simpa only [interface_succ] using ground_disjoint n ghosts (k+1) (by omega)
+  · simpa [interface] using ground_disjoint n ghosts (k+1) (by omega)
 
 /-- Actual root/core/cell support, transferred to the exact retained formula. -/
 theorem original_support (n ghosts k : Nat) (hk : k ≤ n) :
@@ -506,9 +510,9 @@ theorem original_support (n ghosts k : Nat) (hk : k ≤ n) :
   have hc := (PhysicalHistory.certificate (history n ghosts k hk)).core_supported
   have hs := (PhysicalHistory.certificate (history n ghosts k hk)).critical_supported
   change Supported (graph n ghosts k hk).ground (graph n ghosts k hk).rows.root at hr
-  rw [ground_formula] at hr hc hs
-  rw [critical_formula] at hs
-  exact ⟨hr,hc,hs⟩
+  exact ⟨by simpa only [ground_formula] using hr,
+    by simpa only [ground_formula] using hc,
+    by simpa only [ground_formula,critical_formula] using hs⟩
 
 /-- Source identity of the actual computed native endpoint: each step uses
 certificate_away_from_core, since its selected retained label differs from p. -/
@@ -646,7 +650,12 @@ theorem path_rows (n ghosts k : Nat) (hk : k < n) :
             {r n ghosts k hk 2,r n ghosts k hk 3},
             {r n ghosts k hk 3,r n ghosts k hk 0}] j := by
       intro j
-      fin_cases j <;> simp only [Finset.image_insert,Finset.image_singleton] <;> rfl
+      fin_cases j <;>
+        simp [Matrix.cons_val_zero, Matrix.cons_val_succ, i,
+          (input_labels n ghosts k hk).2.2.1,
+          (input_labels n ghosts k hk).2.2.2.1,
+          (input_labels n ghosts k hk).2.2.2.2.1,
+          (input_labels n ghosts k hk).2.2.2.2.2]
     exact hv d.1
 
 /-- The literal actual graph raw root is identified BEFORE nonempty projection. -/
@@ -666,7 +675,7 @@ theorem raw_root_step (n ghosts k : Nat) (hk : k < n) :
   change (graph n ghosts (k+1) (by omega)).rows.root =
     parentOf _ (Wheel.Y.image i.labels) (Wheel.Z.image i.labels)
       (interface n ghosts k (by omega)) _ _ at h
-  simpa only [i,input_Y n ghosts k hk,hz] using h
+  simpa only [i,g,input_Y n ghosts k hk,hz,(input_labels n ghosts k hk).1] using h
 
 /-- Exact existing RowHistory and its EVERY-index correspondence on this chain. -/
 theorem row_handoff (n ghosts k : Nat) (hk : k ≤ n) :

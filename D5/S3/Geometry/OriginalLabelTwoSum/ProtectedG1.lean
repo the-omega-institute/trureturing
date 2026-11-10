@@ -25,7 +25,33 @@ set_option maxRecDepth 4096
 open Finset SimpleGraph
 namespace D5.S3.Geometry.OriginalLabelTwoSum.ProtectedG1
 open FiniteElementaryCollapse FiniteRelativeSimplicialCollapse
-attribute [local reducible] facets delta cut project Supported endpoint
+
+private instance {V : Type*} [Fintype V] [DecidableEq V]
+    (F : Finset (Finset V)) : DecidablePred (fun s => s ∈ facets F) :=
+  fun s => inferInstanceAs (Decidable (∃ a ∈ F, s ⊆ a))
+
+private instance {V : Type*} [DecidableEq V] (W : Finset V) :
+    DecidablePred (fun s => s ∈ delta W) :=
+  fun s => inferInstanceAs (Decidable (s ⊆ W))
+
+private instance {V : Type*} [Fintype V] [DecidableEq V] (K : Family V)
+    [DecidablePred (fun s => s ∈ K)] (ls : Finset (Finset V)) :
+    DecidablePred (fun s => s ∈ cut K ls) :=
+  fun s => inferInstanceAs (Decidable (s ∈ K ∧ ∀ a ∈ ls, ¬ a ⊆ s))
+
+private instance {V : Type*} [Fintype V] [DecidableEq V] (K : Family V)
+    [DecidablePred (fun s => s ∈ K)] : DecidablePred (fun s => s ∈ project K) :=
+  fun s => inferInstanceAs (Decidable (s.Nonempty ∧ s ∈ K))
+
+private instance {V : Type*} (K L : Family V)
+    [DecidablePred (fun s => s ∈ K)] [DecidablePred (fun s => s ∈ L)] :
+    DecidablePred (fun s => s ∈ K ⊔ L) :=
+  fun s => inferInstanceAs (Decidable (s ∈ K ∨ s ∈ L))
+
+private instance {V : Type*} [Fintype V] [DecidableEq V]
+    (H : Finset (Finset V)) :
+    DecidablePred (fun s => s ∈ FinitePrescribedPairProtection.simplices H) :=
+  fun s => inferInstanceAs (Decidable (s.Nonempty ∧ ∃ q ∈ H, s ⊆ q))
 
 abbrev Label := Fin 7
 abbrev h : Label := 0
@@ -84,10 +110,12 @@ private theorem leftTree_isTree : leftTree.IsTree where
     exact leftBridge i)
 
 /-- Actual left graph, spanning tree, original edge labels and all chords. -/
-def left : GraphData (Fin 5) Label where
+abbrev left : GraphData (Fin 5) Label where
   graph := leftGraph
   tree := leftTree
-  tree_le := by decide
+  tree_le := by
+    change ∀ x y, _ → _
+    decide
   isTree := leftTree_isTree
   ground := {h,a,c,e}
   edge := ![s(0,1),s(1,2),s(1,3),s(0,4),s(0,0),s(0,0),s(0,0)]
@@ -100,26 +128,29 @@ def left : GraphData (Fin 5) Label where
   chord_not_tree := by decide
   chord_cover := by decide
 
-attribute [local reducible] left
 
-private abbrev leftChordPath (i : Fin 2) :
-    left.tree.Walk (left.start i) (left.finish i) := by
-  refine Fin.cases ?_ (fun j => ?_) i
-  · exact (.cons (show left.tree.Adj 0 1 from by decide) (.cons (show left.tree.Adj 1 2 from by decide) .nil))
-  · refine Fin.cases ?_ (fun j => Fin.elim0 j) j
-    exact (.cons (show left.tree.Adj 0 1 from by decide) (.cons (show left.tree.Adj 1 3 from by decide) .nil))
+private def leftChordPath : (i : Fin 2) →
+    left.tree.Walk (left.start i) (left.finish i)
+  | ⟨0, _⟩ => .cons (by decide : left.tree.Adj 0 1)
+      (.cons (by decide : left.tree.Adj 1 2) .nil)
+  | ⟨1, _⟩ => .cons (by decide : left.tree.Adj 0 1)
+      (.cons (by decide : left.tree.Adj 1 3) .nil)
+  | ⟨j+2, hj⟩ => False.elim (by omega)
 private theorem leftChordPath_isPath (i : Fin 2) :
     (leftChordPath i).IsPath := by
   fin_cases i <;> simp [leftChordPath,left,leftChordEnds,
-    SimpleGraph.Walk.cons_isPath_iff]
+    SimpleGraph.Walk.cons_isPath_iff, Fin.cases]
 
 /-- Rows derived from the actual unique marked-tree paths, with original labels. -/
 theorem left_rows (i : Fin 2) : left.rows.row i =
   ![{h,a},{h,c}] i := by
   have hp := left.path_eq i (leftChordPath i) (leftChordPath_isPath i)
-  change ({h,a,c,e} : Finset Label).filter (fun j => left.edge j ∈ (left.path i).edges) = _
+  simp only [GraphData.rows]
   rw [hp]
-  fin_cases i <;> decide
+  apply Finset.ext
+  intro j
+  simp only [Finset.mem_filter]
+  fin_cases i <;> fin_cases j <;> decide
 
 private abbrev parentEnds (i : Fin 6) : Fin 7 × Fin 7 :=
   ![(0,1),(1,2),(1,3),(5,0),(5,4),(5,6)] i
@@ -161,10 +192,12 @@ private theorem parentTree_isTree : parentTree.IsTree where
     exact parentBridge i)
 
 /-- Actual parent graph, spanning tree, original edge labels and all chords. -/
-def parent : GraphData (Fin 7) Label where
+abbrev parent : GraphData (Fin 7) Label where
   graph := parentGraph
   tree := parentTree
-  tree_le := by decide
+  tree_le := by
+    change ∀ x y, _ → _
+    decide
   isTree := parentTree_isTree
   ground := {h,a,c,one,two,three}
   edge := ![s(0,1),s(1,2),s(1,3),s(0,0),s(5,0),s(5,4),s(5,6)]
@@ -177,30 +210,33 @@ def parent : GraphData (Fin 7) Label where
   chord_not_tree := by decide
   chord_cover := by decide
 
-attribute [local reducible] parent
 
-private abbrev parentChordPath (i : Fin 4) :
-    parent.tree.Walk (parent.start i) (parent.finish i) := by
-  refine Fin.cases ?_ (fun j => ?_) i
-  · exact (.cons (show parent.tree.Adj 0 1 from by decide) (.cons (show parent.tree.Adj 1 2 from by decide) .nil))
-  · refine Fin.cases ?_ (fun j => ?_) j
-    · exact (.cons (show parent.tree.Adj 0 1 from by decide) (.cons (show parent.tree.Adj 1 3 from by decide) .nil))
-    · refine Fin.cases ?_ (fun j => ?_) j
-      · exact (.cons (show parent.tree.Adj 4 5 from by decide) (.cons (show parent.tree.Adj 5 6 from by decide) .nil))
-      · refine Fin.cases ?_ (fun j => Fin.elim0 j) j
-        exact (.cons (show parent.tree.Adj 6 5 from by decide) (.cons (show parent.tree.Adj 5 0 from by decide) .nil))
+private def parentChordPath : (i : Fin 4) →
+    parent.tree.Walk (parent.start i) (parent.finish i)
+  | ⟨0, _⟩ => .cons (by decide : parent.tree.Adj 0 1)
+      (.cons (by decide : parent.tree.Adj 1 2) .nil)
+  | ⟨1, _⟩ => .cons (by decide : parent.tree.Adj 0 1)
+      (.cons (by decide : parent.tree.Adj 1 3) .nil)
+  | ⟨2, _⟩ => .cons (by decide : parent.tree.Adj 4 5)
+      (.cons (by decide : parent.tree.Adj 5 6) .nil)
+  | ⟨3, _⟩ => .cons (by decide : parent.tree.Adj 6 5)
+      (.cons (by decide : parent.tree.Adj 5 0) .nil)
+  | ⟨j+4, hj⟩ => False.elim (by omega)
 private theorem parentChordPath_isPath (i : Fin 4) :
     (parentChordPath i).IsPath := by
   fin_cases i <;> simp [parentChordPath,parent,parentChordEnds,
-    SimpleGraph.Walk.cons_isPath_iff]
+    SimpleGraph.Walk.cons_isPath_iff, Fin.cases]
 
 /-- Rows derived from the actual unique marked-tree paths, with original labels. -/
 theorem parent_rows (i : Fin 4) : parent.rows.row i =
   ![{h,a},{h,c},{two,three},{three,one}] i := by
   have hp := parent.path_eq i (parentChordPath i) (parentChordPath_isPath i)
-  change ({h,a,c,one,two,three} : Finset Label).filter (fun j => parent.edge j ∈ (parent.path i).edges) = _
+  simp only [GraphData.rows]
   rw [hp]
-  fin_cases i <;> decide
+  apply Finset.ext
+  intro j
+  simp only [Finset.mem_filter]
+  fin_cases i <;> fin_cases j <;> decide
 
 /-- Physical inclusion of the five old vertices; the new vertices are 5 and 6. -/
 def oldVertex (v : Fin 5) : Fin 7 := ⟨v.val,by omega⟩
@@ -225,12 +261,11 @@ theorem physical_edges : ∀ x y : Fin 7, parent.graph.Adj x y ↔
       s(0,2),s(0,3),s(4,6),s(6,0)} : Finset (Sym2 (Fin 7))) := by decide
 
 /-- Literal left root on ALL h,a,c,e, with h a ghost. -/
-def leftRoot : Family Label := facets {{a,e},{c,e}}
+abbrev leftRoot : Family Label := facets {{a,e},{c,e}}
 /-- Literal parent root; no old ghost label is discarded from its full ground. -/
-def parentRoot : Family Label :=
+abbrev parentRoot : Family Label :=
   facets {{a,one,two,three},{c,one,two,three},{a,c,h,one},{a,c,h,two}}
 
-attribute [local reducible] leftRoot parentRoot
 
 theorem left_root : left.rows.root = leftRoot := by
   apply SetLike.ext
@@ -256,16 +291,15 @@ theorem full_grounds : left.ground = {h,a,c,e} ∧
     h ∈ left.ground ∧ ({h} : Finset Label) ∉ leftRoot ∧ e ∉ parent.ground := by decide
 
 /-- Unprotected base after the two lifted vertical pairs. -/
-def B0 : Family Label := facets
+abbrev B0 : Family Label := facets
   {{c,one,two,three},{a,c,h,one},{a,c,h,two}}
 /-- Terminal base is a genuine cone at c. -/
-def Bf : Family Label := facets {{c,three},{a,c,h,one},{a,c,h,two}}
+abbrev Bf : Family Label := facets {{c,three},{a,c,h,one},{a,c,h,two}}
 /-- Core computed by protection: its collar is retained only on the core. -/
-def C : Family Label := Bf ⊔ delta {c,one,two}
+abbrev C : Family Label := Bf ⊔ delta {c,one,two}
 /-- The one outside critical top. -/
-def q : Finset Label := {a,one,two}
+abbrev q : Finset Label := {a,one,two}
 
-attribute [local reducible] B0 Bf C q
 
 private abbrev leftLowers : List (Finset Label) := [{a},{e}]
 private abbrev leftApices : List Label := [e,c]
@@ -331,8 +365,8 @@ def verticalSequence : Sequence (project (parentRoot)) (project (B0 ⊔ delta q)
 
 private abbrev baseLowers : List (Finset Label) := [{one,two,three},{one,two},{one,three},{two,three}]
 private abbrev baseApices : List Label := [c,c,c,c]
-private abbrev baseLower (i : Fin 4) := baseLowers[i.val]'(by simp [baseLowers]; omega)
-private abbrev baseApex (i : Fin 4) := baseApices[i.val]'(by simp [baseApices]; omega)
+private abbrev baseLower (i : Fin 4) := baseLowers[i.val]'(by simpa only [baseLowers,List.length_cons,List.length_nil] using i.isLt)
+private abbrev baseApex (i : Fin 4) := baseApices[i.val]'(by simpa only [baseApices,List.length_cons,List.length_nil] using i.isLt)
 private abbrev baseState (n : Nat) : Family Label := cut (B0) (baseLowers.take n).toFinset
 private theorem baseFacts : ∀ i : Fin 4,
     (baseLower i).Nonempty ∧ baseApex i ∉ baseLower i ∧
@@ -357,7 +391,7 @@ private theorem baseFinal : baseState 4 = (Bf) := by
 
 /-- Genuine base native sequence, from finite current-coface proofs. -/
 def baseSequence : Sequence (project (B0)) (project (Bf)) :=
-  ((baseStep 0).append (baseStep 1).append (baseStep 2).append (baseStep 3)).cast
+  ((((baseStep 0).append (baseStep 1)).append (baseStep 2)).append (baseStep 3)).cast
     (by simp [baseState]) (congrArg project baseFinal)
 
 /-- The input left list is derived, not supplied; it has one vertical move. -/
@@ -393,30 +427,29 @@ private theorem project_union_simplices (K : Family Label) (H : Finset (Finset L
 theorem skipped_order :
     (FinitePrescribedPairProtection.skipped baseSequence.pairs {q}).map (fun P => (P.lower,P.upper)) =
       [({one,two},{c,one,two})] := by
-  simp [baseSequence,baseStep,Sequence.pairs_cast,Sequence.pairs_append,Sequence.pairs,basePair,emitPair,baseLower,baseApex,baseLowers,baseApices,CollapsePair.upper,FinitePrescribedPairProtection.skipped,FinitePrescribedPairProtection.emitted,FinitePrescribedPairProtection.blocked,q,Finset.subset_iff] <;> decide
+  simp [baseSequence,baseStep,Sequence.pairs_cast,Sequence.pairs_append,Sequence.pairs,basePair,emitPair,baseLower,baseApex,baseLowers,baseApices,CollapsePair.upper,FinitePrescribedPairProtection.skipped,FinitePrescribedPairProtection.emitted,FinitePrescribedPairProtection.blocked,q,Finset.subset_iff,h,a,c,one,two,three] <;> decide
 
 /-- The three later emitted link pairs are actual forward scan output. -/
 theorem emitted_order :
     (FinitePrescribedPairProtection.emitted baseSequence.pairs {q}).map (fun P => (P.lower,P.upper)) =
       [({one,two,three},{c,one,two,three}),({one,three},{c,one,three}),
         ({two,three},{c,two,three})] := by
-  simp [baseSequence,baseStep,Sequence.pairs_cast,Sequence.pairs_append,Sequence.pairs,basePair,emitPair,baseLower,baseApex,baseLowers,baseApices,CollapsePair.upper,FinitePrescribedPairProtection.skipped,FinitePrescribedPairProtection.emitted,FinitePrescribedPairProtection.blocked,q,Finset.subset_iff] <;> decide
+  simp [baseSequence,baseStep,Sequence.pairs_cast,Sequence.pairs_append,Sequence.pairs,basePair,emitPair,baseLower,baseApex,baseLowers,baseApices,CollapsePair.upper,FinitePrescribedPairProtection.skipped,FinitePrescribedPairProtection.emitted,FinitePrescribedPairProtection.blocked,q,Finset.subset_iff,h,a,c,one,two,three] <;> decide
 
 /-- The native scan also computes the exact ORIGINAL base indices. -/
 theorem scan_indices :
     FinitePrescribedPairProtection.skippedIndices baseSequence.pairs {q} = [1] ∧
     FinitePrescribedPairProtection.emittedIndices baseSequence.pairs {q} = [0,2,3] := by
-  simp [baseSequence,baseStep,Sequence.pairs_cast,Sequence.pairs_append,Sequence.pairs,basePair,emitPair,baseLower,baseApex,baseLowers,baseApices,CollapsePair.upper,FinitePrescribedPairProtection.skippedIndices,FinitePrescribedPairProtection.emittedIndices,FinitePrescribedPairProtection.skippedIndexed,FinitePrescribedPairProtection.emittedIndexed,FinitePrescribedPairProtection.blocked,q,Finset.subset_iff] <;> decide
+  simp [baseSequence,baseStep,Sequence.pairs_cast,Sequence.pairs_append,Sequence.pairs,basePair,emitPair,baseLower,baseApex,baseLowers,baseApices,CollapsePair.upper,FinitePrescribedPairProtection.skippedIndices,FinitePrescribedPairProtection.emittedIndices,FinitePrescribedPairProtection.skippedIndexed,FinitePrescribedPairProtection.emittedIndexed,FinitePrescribedPairProtection.blocked,q,Finset.subset_iff,h,a,c,one,two,three] <;> decide
 
 private theorem skipped_tops : FinitePrescribedPairProtection.skippedTops baseSequence.pairs {q} =
     {{c,one,two}} := by
-  simp [FinitePrescribedPairProtection.skippedTops,baseSequence,baseStep,Sequence.pairs_cast,Sequence.pairs_append,Sequence.pairs,basePair,emitPair,baseLower,baseApex,baseLowers,baseApices,CollapsePair.upper,FinitePrescribedPairProtection.skipped,FinitePrescribedPairProtection.emitted,FinitePrescribedPairProtection.blocked,q,Finset.subset_iff] <;> decide
+  simp [FinitePrescribedPairProtection.skippedTops,baseSequence,baseStep,Sequence.pairs_cast,Sequence.pairs_append,Sequence.pairs,basePair,emitPair,baseLower,baseApex,baseLowers,baseApices,CollapsePair.upper,FinitePrescribedPairProtection.skipped,FinitePrescribedPairProtection.emitted,FinitePrescribedPairProtection.blocked,q,Finset.subset_iff,h,a,c,one,two,three] <;> decide
 
 /-- The actual generic core is exactly the displayed G1 core. -/
 theorem core_identity : FinitePrescribedPairProtection.core baseSequence {q} = project C := by
   unfold FinitePrescribedPairProtection.core
   rw [skipped_tops,project_union_simplices,singleton_facets]
-  rfl
 
 private theorem base_union_identity : project B0 ⊔ FinitePrescribedPairProtection.simplices {q} =
     project (B0 ⊔ delta q) := by
@@ -470,7 +503,7 @@ theorem critical_data : CriticalData C {q} := by
 
 /-- The source's existing native cone theorem supplies the terminal core tail. -/
 def coneTail : Sequence (project Bf) (project (delta {c})) :=
-  collapseCone parent.ground Bf c (by decide) (by decide) (by decide)
+  collapseCone parent.ground Bf c (by unfold Supported; decide) (by decide) (by decide)
 
 /-- The skipped pair is run on C ALONE before appending the actual cone tail. -/
 def collar : Sequence (project C) (project Bf) :=
@@ -490,7 +523,7 @@ def certificate : Certificate parent.ground parent.rows.root where
   critical := {q}
   vertex := c
   vertex_mem := by decide
-  core_supported := by decide
+  core_supported := by unfold Supported; decide
   critical_supported := by decide
   cells := critical_data
   main := main.cast rfl (by rw [endpoint,singleton_facets])
@@ -517,18 +550,20 @@ theorem coneTail_order : coneTail.pairs.map (fun P => (P.lower,P.upper)) =
       (fun t => t.Nonempty ∧ t ∈ Bf))).map (fun t => (t,insert c t)) := by
   simp only [coneTail,collapseCone,Sequence.pairs_cast,rectangle_order,
     Finset.empty_union]
+  apply congrArg (fun F : Finset (Finset Label) =>
+    (fibres F).map (fun t => (t, insert c t)))
+  apply Finset.filter_congr_decidable
 
 namespace Regression
 abbrev RLabel := Fin 4
 /-- a=0,b=1,c=2,d=3, with no hidden label deletion. -/
-def initial : Family RLabel := facets {{0,1,2},{0,2,3},{1,2,3}}
-def critical : Finset RLabel := {0,1,3}
-attribute [local reducible] initial critical
+abbrev initial : Family RLabel := facets {{0,1,2},{0,2,3},{1,2,3}}
+abbrev critical : Finset RLabel := {0,1,3}
 
 private abbrev lowers : List (Finset RLabel) := [{0,1},{0,2},{1,2},{0},{1},{2}]
 private abbrev apices : List RLabel := [2,3,3,3,3,3]
-private abbrev lower (i : Fin 6) := lowers[i.val]'(by simp [lowers]; omega)
-private abbrev apex (i : Fin 6) := apices[i.val]'(by simp [apices]; omega)
+private abbrev lower (i : Fin 6) := lowers[i.val]'(by simpa only [lowers,List.length_cons,List.length_nil] using i.isLt)
+private abbrev apex (i : Fin 6) := apices[i.val]'(by simpa only [apices,List.length_cons,List.length_nil] using i.isLt)
 private abbrev state (n : Nat) : Family RLabel := cut initial (lowers.take n).toFinset
 private theorem facts : ∀ i : Fin 6,
     (lower i).Nonempty ∧ apex i ∉ lower i ∧ insert (apex i) (lower i) ∈ state i.val ∧
@@ -579,7 +614,10 @@ theorem core_is_initial : FinitePrescribedPairProtection.core original {critical
   simp only [original,step,Sequence.pairs_cast,Sequence.pairs_append,Sequence.pairs,
     List.map_append,List.map_cons,List.map_nil,pair,emitPair,CollapsePair.upper,
     lower,apex,lowers,apices]
+  apply SetLike.coe_injective
   ext s
+  change ((s.Nonempty ∧ s ⊆ {3}) ∨
+    (s.Nonempty ∧ ∃ q ∈ _, s ⊆ q)) ↔ s.Nonempty ∧ ∃ q ∈ _, s ⊆ q
   revert s
   decide
 
