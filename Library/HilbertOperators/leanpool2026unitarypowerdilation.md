@@ -113,3 +113,7 @@ when that pin contains an equivalent full arbitrary-complete-complex-Hilbert
 common-all-powers theorem, replace the transplanted endpoint by direct
 reuse and remove support made redundant by that supplier. Acceptance into
 some other upstream revision alone does not meet this condition.
+
+## Locator
+
+https://github.com/LeanPool/lean-pool/blob/89f2facbb6478492222a9b43047e9c837bc65be6/LeanPool/OperatorTheory/Operator/Dilation/Schaeffer.lean
