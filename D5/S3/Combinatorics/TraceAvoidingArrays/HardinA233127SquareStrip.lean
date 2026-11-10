@@ -23,6 +23,9 @@ import Lean.Elab.Tactic.Omega
 
 /-! Literal six-column square-strip counts and their all-height class reduction. -/
 
+set_option Elab.async false
+set_option maxRecDepth 100000
+
 open scoped BigOperators
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233127SquareStrip
 
@@ -148,8 +151,11 @@ private theorem class_fibres (s : Seen) (p : Boundary) (k : Fin 11) :
       boundaryClass (finish s c) (labels c) = k then 1 else 0) else 0
   by_cases hg : good s c <;> simp [hg]
 
-private theorem row_counts : ∀ s p, Valid s p → ∀ k,
-    classCount s p k = transfer (boundaryClass s p) k := by
+set_option maxHeartbeats 2000000 in
+private theorem row_counts_01 : ∀ (s : Seen) (p2 p3 p4 p5 : Fin 3),
+    Valid s ![0, 1, p2, p3, p4, p5] → ∀ k,
+    classCount s ![0, 1, p2, p3, p4, p5] k =
+      transfer (boundaryClass s ![0, 1, p2, p3, p4, p5]) k := by
   simp only [class_fibres]
   simp_rw [← (Fin.consEquiv (fun _ : Fin 6 => Fin 3)).sum_comp,
     Fintype.sum_prod_type,
@@ -163,14 +169,128 @@ private theorem row_counts : ∀ s p, Valid s p → ∀ k,
     Fintype.sum_prod_type,
     ← (Fin.consEquiv (fun _ : Fin 1 => Fin 3)).sum_comp,
     Fintype.sum_prod_type]
-  simp only [Fin.consEquiv, Fin.sum_univ_zero]
+  simp only [Fin.consEquiv]
+  decide +kernel
+
+set_option maxHeartbeats 2000000 in
+private theorem row_counts_02 : ∀ (s : Seen) (p2 p3 p4 p5 : Fin 3),
+    Valid s ![0, 2, p2, p3, p4, p5] → ∀ k,
+    classCount s ![0, 2, p2, p3, p4, p5] k =
+      transfer (boundaryClass s ![0, 2, p2, p3, p4, p5]) k := by
+  simp only [class_fibres]
+  simp_rw [← (Fin.consEquiv (fun _ : Fin 6 => Fin 3)).sum_comp,
+    Fintype.sum_prod_type,
+    ← (Fin.consEquiv (fun _ : Fin 5 => Fin 3)).sum_comp,
+    Fintype.sum_prod_type,
+    ← (Fin.consEquiv (fun _ : Fin 4 => Fin 3)).sum_comp,
+    Fintype.sum_prod_type,
+    ← (Fin.consEquiv (fun _ : Fin 3 => Fin 3)).sum_comp,
+    Fintype.sum_prod_type,
+    ← (Fin.consEquiv (fun _ : Fin 2 => Fin 3)).sum_comp,
+    Fintype.sum_prod_type,
+    ← (Fin.consEquiv (fun _ : Fin 1 => Fin 3)).sum_comp,
+    Fintype.sum_prod_type]
+  simp only [Fin.consEquiv]
+  decide +kernel
+
+set_option maxHeartbeats 2000000 in
+private theorem row_counts_10 : ∀ (s : Seen) (p2 p3 p4 p5 : Fin 3),
+    Valid s ![1, 0, p2, p3, p4, p5] → ∀ k,
+    classCount s ![1, 0, p2, p3, p4, p5] k =
+      transfer (boundaryClass s ![1, 0, p2, p3, p4, p5]) k := by
+  simp only [class_fibres]
+  simp_rw [← (Fin.consEquiv (fun _ : Fin 6 => Fin 3)).sum_comp,
+    Fintype.sum_prod_type,
+    ← (Fin.consEquiv (fun _ : Fin 5 => Fin 3)).sum_comp,
+    Fintype.sum_prod_type,
+    ← (Fin.consEquiv (fun _ : Fin 4 => Fin 3)).sum_comp,
+    Fintype.sum_prod_type,
+    ← (Fin.consEquiv (fun _ : Fin 3 => Fin 3)).sum_comp,
+    Fintype.sum_prod_type,
+    ← (Fin.consEquiv (fun _ : Fin 2 => Fin 3)).sum_comp,
+    Fintype.sum_prod_type,
+    ← (Fin.consEquiv (fun _ : Fin 1 => Fin 3)).sum_comp,
+    Fintype.sum_prod_type]
+  simp only [Fin.consEquiv]
+  decide +kernel
+
+set_option maxHeartbeats 2000000 in
+private theorem row_counts_12 : ∀ (s : Seen) (p2 p3 p4 p5 : Fin 3),
+    Valid s ![1, 2, p2, p3, p4, p5] → ∀ k,
+    classCount s ![1, 2, p2, p3, p4, p5] k =
+      transfer (boundaryClass s ![1, 2, p2, p3, p4, p5]) k := by
+  simp only [class_fibres]
+  simp_rw [← (Fin.consEquiv (fun _ : Fin 6 => Fin 3)).sum_comp,
+    Fintype.sum_prod_type,
+    ← (Fin.consEquiv (fun _ : Fin 5 => Fin 3)).sum_comp,
+    Fintype.sum_prod_type,
+    ← (Fin.consEquiv (fun _ : Fin 4 => Fin 3)).sum_comp,
+    Fintype.sum_prod_type,
+    ← (Fin.consEquiv (fun _ : Fin 3 => Fin 3)).sum_comp,
+    Fintype.sum_prod_type,
+    ← (Fin.consEquiv (fun _ : Fin 2 => Fin 3)).sum_comp,
+    Fintype.sum_prod_type,
+    ← (Fin.consEquiv (fun _ : Fin 1 => Fin 3)).sum_comp,
+    Fintype.sum_prod_type]
+  simp only [Fin.consEquiv]
+  decide +kernel
+
+set_option maxHeartbeats 2000000 in
+private theorem row_counts_20 : ∀ (s : Seen) (p2 p3 p4 p5 : Fin 3),
+    Valid s ![2, 0, p2, p3, p4, p5] → ∀ k,
+    classCount s ![2, 0, p2, p3, p4, p5] k =
+      transfer (boundaryClass s ![2, 0, p2, p3, p4, p5]) k := by
+  simp only [class_fibres]
+  simp_rw [← (Fin.consEquiv (fun _ : Fin 6 => Fin 3)).sum_comp,
+    Fintype.sum_prod_type,
+    ← (Fin.consEquiv (fun _ : Fin 5 => Fin 3)).sum_comp,
+    Fintype.sum_prod_type,
+    ← (Fin.consEquiv (fun _ : Fin 4 => Fin 3)).sum_comp,
+    Fintype.sum_prod_type,
+    ← (Fin.consEquiv (fun _ : Fin 3 => Fin 3)).sum_comp,
+    Fintype.sum_prod_type,
+    ← (Fin.consEquiv (fun _ : Fin 2 => Fin 3)).sum_comp,
+    Fintype.sum_prod_type,
+    ← (Fin.consEquiv (fun _ : Fin 1 => Fin 3)).sum_comp,
+    Fintype.sum_prod_type]
+  simp only [Fin.consEquiv]
+  decide +kernel
+
+set_option maxHeartbeats 2000000 in
+private theorem row_counts_21 : ∀ (s : Seen) (p2 p3 p4 p5 : Fin 3),
+    Valid s ![2, 1, p2, p3, p4, p5] → ∀ k,
+    classCount s ![2, 1, p2, p3, p4, p5] k =
+      transfer (boundaryClass s ![2, 1, p2, p3, p4, p5]) k := by
+  simp only [class_fibres]
+  simp_rw [← (Fin.consEquiv (fun _ : Fin 6 => Fin 3)).sum_comp,
+    Fintype.sum_prod_type,
+    ← (Fin.consEquiv (fun _ : Fin 5 => Fin 3)).sum_comp,
+    Fintype.sum_prod_type,
+    ← (Fin.consEquiv (fun _ : Fin 4 => Fin 3)).sum_comp,
+    Fintype.sum_prod_type,
+    ← (Fin.consEquiv (fun _ : Fin 3 => Fin 3)).sum_comp,
+    Fintype.sum_prod_type,
+    ← (Fin.consEquiv (fun _ : Fin 2 => Fin 3)).sum_comp,
+    Fintype.sum_prod_type,
+    ← (Fin.consEquiv (fun _ : Fin 1 => Fin 3)).sum_comp,
+    Fintype.sum_prod_type]
+  simp only [Fin.consEquiv]
+  decide +kernel
+
+private theorem row_counts : ∀ s p, Valid s p → ∀ k,
+    classCount s p k = transfer (boundaryClass s p) k := by
   simp only [Fin.forall_fin_succ_pi, Fin.forall_fin_zero_pi]
-  rintro ⟨b1, b2⟩ p0 p1 p2 p3 p4 p5 hp
-  cases b1
-  · cases hp.1
-  · cases b2 <;> fin_cases p0 <;> fin_cases p1 <;> fin_cases p2 <;>
-      fin_cases p3 <;> fin_cases p4 <;> fin_cases p5 <;>
-      simp [Valid] at hp <;> decide +kernel
+  intro s p0 p1 p2 p3 p4 p5 hp k
+  fin_cases p0 <;> fin_cases p1
+  · exact False.elim (hp.2.1 0 rfl)
+  · exact row_counts_01 s p2 p3 p4 p5 hp k
+  · exact row_counts_02 s p2 p3 p4 p5 hp k
+  · exact row_counts_10 s p2 p3 p4 p5 hp k
+  · exact False.elim (hp.2.1 0 rfl)
+  · exact row_counts_12 s p2 p3 p4 p5 hp k
+  · exact row_counts_20 s p2 p3 p4 p5 hp k
+  · exact row_counts_21 s p2 p3 p4 p5 hp k
+  · exact False.elim (hp.2.1 0 rfl)
 
 private theorem initial_valid (c : Row)
     (hc : c 0 = 0 ∧ rowLegal c ∧ good (false, false) c) :
@@ -190,24 +310,62 @@ private theorem initial_valid (c : Row)
       · exact ⟨i, hi⟩
   exact valid_next _ c (Or.inr hone) ⟨hc.2.1, hc.2.2⟩
 
+private theorem first_fibres (k : Fin 11) :
+    firstCount k = ∑ q : Fin 5 → Fin 3, rowWeight (false, false) q *
+      if (∀ j : Fin 5, (Fin.cons 0 q : Boundary) j.castSucc ≠
+        (Fin.cons 0 q : Boundary) j.succ) ∧
+        boundaryClass (rowFinish (false, false) q) (Fin.cons 0 q) = k then 1 else 0 := by
+  unfold firstCount
+  rw [← (Fin.consEquiv (fun _ : Fin 6 => Fin 6)).sum_comp, Fintype.sum_prod_type]
+  change (∑ x : Fin 6, ∑ c : Fin 5 → Fin 6,
+    if x = 0 ∧ rowLegal (Fin.cons x c) ∧ good (false, false) (Fin.cons x c) ∧
+      boundaryClass (finish (false, false) (Fin.cons x c)) (labels (Fin.cons x c)) = k
+      then (1 : ℤ) else 0) = _
+  rw [Finset.sum_eq_single (0 : Fin 6)]
+  · have hh := scanner_fibres 5 (false, false) (fun t q =>
+      if (∀ j : Fin 5, (Fin.cons 0 q : Boundary) j.castSucc ≠
+        (Fin.cons 0 q : Boundary) j.succ) ∧ boundaryClass t (Fin.cons 0 q) = k
+        then (1 : ℤ) else 0)
+    convert hh using 1
+    apply Finset.sum_congr rfl
+    intro c _
+    have hb : labels (Fin.cons 0 c) = Fin.cons 0 (fun j => beta (c j)) :=
+      Fin.comp_cons beta 0 c
+    have hg : good (false, false) (Fin.cons 0 c) ↔ good (false, false) c := by
+      change (HardinA233175PairStrip.allowed (false, false) 0 ∧
+        good (HardinA233175PairStrip.advance (false, false) 0) c) ↔ _
+      simp only [show HardinA233175PairStrip.allowed (false, false) (0 : Fin 6) from
+        by decide +kernel, show HardinA233175PairStrip.advance (false, false) (0 : Fin 6) =
+          (false, false) from by decide +kernel, true_and]
+    have hf : finish (false, false) (Fin.cons 0 c) = finish (false, false) c := rfl
+    have hr : (∀ j : Fin 5,
+        (Fin.cons 0 (fun i => beta (c i)) : Boundary) j.castSucc ≠
+        (Fin.cons 0 (fun i => beta (c i)) : Boundary) j.succ) ↔
+        rowLegal (Fin.cons 0 c) := by
+      rw [← hb]
+      simp only [labels, ← colour_bond_iff]
+      rfl
+    simp only [eq_self, true_and, hr, ← hb, hg, hf]
+    by_cases hc : good (false, false) c <;> simp [hc]
+  · intro x _ hx
+    simp [hx]
+  · simp
+
 private theorem initial_counts : ∀ k,
     firstCount k = ![16, 0, 16, 16, 16, 16, 16, 8, 8, 16, 8] k := by
-  simp only [firstCount]
-  simp_rw [← (Fin.consEquiv (fun _ : Fin 6 => Fin 6)).sum_comp,
+  simp only [first_fibres]
+  simp_rw [← (Fin.consEquiv (fun _ : Fin 5 => Fin 3)).sum_comp,
     Fintype.sum_prod_type,
-    ← (Fin.consEquiv (fun _ : Fin 5 => Fin 6)).sum_comp,
+    ← (Fin.consEquiv (fun _ : Fin 4 => Fin 3)).sum_comp,
     Fintype.sum_prod_type,
-    ← (Fin.consEquiv (fun _ : Fin 4 => Fin 6)).sum_comp,
+    ← (Fin.consEquiv (fun _ : Fin 3 => Fin 3)).sum_comp,
     Fintype.sum_prod_type,
-    ← (Fin.consEquiv (fun _ : Fin 3 => Fin 6)).sum_comp,
+    ← (Fin.consEquiv (fun _ : Fin 2 => Fin 3)).sum_comp,
     Fintype.sum_prod_type,
-    ← (Fin.consEquiv (fun _ : Fin 2 => Fin 6)).sum_comp,
-    Fintype.sum_prod_type,
-    ← (Fin.consEquiv (fun _ : Fin 1 => Fin 6)).sum_comp,
+    ← (Fin.consEquiv (fun _ : Fin 1 => Fin 3)).sum_comp,
     Fintype.sum_prod_type]
-  simp only [Fin.consEquiv, Fin.sum_univ_zero]
-  intro k
-  fin_cases k <;> decide +kernel
+  simp only [Fin.consEquiv]
+  decide +kernel
 
 /-- The exact single-row transitions and first-row distribution. -/
 theorem finite_certificate :
