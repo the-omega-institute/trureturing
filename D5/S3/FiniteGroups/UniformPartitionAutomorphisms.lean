@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Uniform partition automorphisms have unique destination-indexed semidirect coordinates. -/
+   digest: Uniform partition symmetries have unique semidirect coordinates. -/
 
 import D5.S3.FiniteGroups.SuccessorQuotient
 import Mathlib.GroupTheory.SemidirectProduct
@@ -83,7 +83,8 @@ private theorem fiber_bijective (p : Aut K L) (w : K) :
     have he : p.val ((blockPerm p).symm w, t) =
         p.val ((blockPerm p).symm w, u) := by
       apply Prod.ext
-      · exact (blockPerm_fst p _).symm.trans (blockPerm_fst p _)
+      · exact (blockPerm_fst p ((blockPerm p).symm w, t)).symm.trans
+          (blockPerm_fst p ((blockPerm p).symm w, u))
       · exact h
     exact congrArg Prod.snd (p.val.injective he)
   · intro u
@@ -111,7 +112,8 @@ noncomputable def coordinates : Aut K L ≃ Coordinates K L where
   invFun c := assemble c.left c.right
   left_inv p := by
     apply Subtype.ext
-    ext x
+    apply Equiv.ext
+    intro x
     apply Prod.ext
     · exact blockPerm_fst p x
     · change (p.val ((blockPerm p).symm (blockPerm p x.1), x.2)).2 = (p.val x).2
@@ -131,11 +133,13 @@ private def assemblyHom : Coordinates K L →* Aut K L where
   toFun c := assemble c.left c.right
   map_one' := by
     apply Subtype.ext
-    ext x
+    apply Equiv.ext
+    intro x
     rfl
   map_mul' c d := by
     apply Subtype.ext
-    ext x
+    apply Equiv.ext
+    intro x
     apply Prod.ext
     · rfl
     · change c.left (c.right (d.right x.1))
@@ -148,17 +152,21 @@ noncomputable def automorphismEquiv [Nonempty L] : Aut K L ≃* Coordinates K L 
   { coordinates with
     map_mul' p q := by
       apply coordinates.symm.injective
-      change coordinates.symm (coordinates (p * q)) =
-        assemblyHom (coordinates p * coordinates q)
-      rw [map_mul, coordinates.symm_apply_apply, coordinates.symm_apply_apply,
-        coordinates.symm_apply_apply] }
+      calc
+        coordinates.symm (coordinates (p * q)) = p * q :=
+          coordinates.symm_apply_apply _
+        _ = assemblyHom (coordinates p) * assemblyHom (coordinates q) := by
+          change p * q = coordinates.symm (coordinates p) * coordinates.symm (coordinates q)
+          rw [coordinates.symm_apply_apply, coordinates.symm_apply_apply]
+        _ = assemblyHom (coordinates p * coordinates q) :=
+          (assemblyHom.map_mul _ _).symm }
 
 /-- The factorial order is a consequence of the actual coordinate classification. -/
 theorem card_aut [Finite K] [Finite L] [Nonempty L] :
     Nat.card (Aut K L) = (Nat.card L).factorial ^ Nat.card K * (Nat.card K).factorial := by
   classical
-  letI := Fintype.ofFinite K
-  letI := Fintype.ofFinite L
+  let := Fintype.ofFinite K
+  let := Fintype.ofFinite L
   rw [Nat.card_congr automorphismEquiv.toEquiv,
     Nat.card_congr SemidirectProduct.equivProd, Nat.card_prod, Nat.card_fun]
   simp only [Nat.card_eq_fintype_card, Fintype.card_perm]
