@@ -456,8 +456,10 @@ contract, including the pairing and unit identities, with S on both
 factors and their locally tomographic composite. It also derives
 composite simplicity when both local comparison graphs are connected;
 for a self-composite, connectedness of its local system suffices.
-Existence of the compatible products, local tomography and the stated
-local graph connectedness remain separate inputs. The process contracts in the
+Compatible products and local tomography remain separate inputs.
+Connectedness is needed for the single-sector conclusion; the
+self-composite sector argument classifies complex matrix sectors without
+assuming connectedness. The process contracts in the
 [spectral strong-symmetry note](barnumhilgert2019spectral.md#complete-conditional-reconstruction-and-its-remaining-contracts)
 remain separate obligations.
 
