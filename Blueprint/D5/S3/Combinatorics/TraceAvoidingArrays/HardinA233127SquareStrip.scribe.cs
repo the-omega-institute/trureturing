@@ -43,7 +43,9 @@ internal sealed class HardinA233127SquareStripDocument : IScribeDocumentDefiniti
                     + "linear combination of its first eight distributions, coordinate by "
                     + "coordinate. Pairing this identity with any continuation height proves "
                     + "the recurrence for the literal filtered count at every n+9."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233127"),
+                    ResolutionKind.Proved)))));
 
     private const string Root =
         "D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233127SquareStrip.";
