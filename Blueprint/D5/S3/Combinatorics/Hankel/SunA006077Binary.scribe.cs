@@ -7,14 +7,14 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Hankel;
 internal sealed class SunA006077BinaryDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Hankel/SunA006077Binary.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/sun2013a006077");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Eigenstructure/sun2013a006077");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Even and odd index splitting proves both determinant families equal one over F2.", H("The binary Hankel determinants"),
         Blocks(Paragraph(Text("Nat denotes the nonnegative integers and Z the integers. Matrix.of is displayed with Fin-sized row and column binders and explicit val projections; det of the empty matrix is one. All floor quotients are natural division.")),
             Node("epsilon","The positive power-of-two indicator","epsilon",All("n",Nat,Eq(C("epsilon",V("n")),C("ite",Ex("k",Nat,Eq(V("n"),P(N(2),V("k")))),N(1),N(0)))),"Values lie in ZMod 2; epsilon(0)=0.",DescribeRole.Definition),
             Node("s","The first binary family","S",All("k",Nat,Eq(C("S",V("k")),Det(Hk(V("epsilon"),V("k"),N(1))))),"This is the ordinary Rueppel determinant modulo two.",DescribeRole.Definition),
             Node("t","The shifted binary family","T",All("k",Nat,Eq(C("T",V("k")),Det(Hk(V("epsilon"),V("k"),N(2))))),"This is the once-shifted Rueppel determinant modulo two.",DescribeRole.Definition),
-            Node("rueppel-determinants","Both determinants at every size","rueppel_determinants",All("n",Nat,And(Eq(C("S",V("n")),N(1)),Eq(C("T",V("n")),N(1)))),"Over ZMod 2, parity splitting gives S(2k)=S(k)^2, S(2k+1)=T(k)^2, T(2k)=S(k)T(k), and T(2k+1)=S(k+1)T(k). The exceptional first corner in the odd S case is separated before taking block determinants. Strong induction includes the empty and one-square cases. The cited note attests the ordinary and shifted integer evaluations and their reduction modulo two.",DescribeRole.Theorem,AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Combinatorics/cigler2018curious")))), []));
+            Node("rueppel-determinants","Both determinants at every size","rueppel_determinants",All("n",Nat,And(Eq(C("S",V("n")),N(1)),Eq(C("T",V("n")),N(1)))),"Over ZMod 2, parity splitting gives S(2k)=S(k)^2, S(2k+1)=T(k)^2, T(2k)=S(k)T(k), and T(2k+1)=S(k+1)T(k). The exceptional first corner in the odd S case is separated before taking block determinants. Strong induction includes the empty and one-square cases. The cited note attests the ordinary and shifted integer evaluations and their reduction modulo two.",DescribeRole.Theorem,AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Eigenstructure/cigler2018curious")))), []));
     private static DocumentBlock Node(string id,string title,string decl,Formula formula,string prose,DescribeRole role,AssessedProvenance? provenance = null) =>
         Describe.Lean(DescribeId.Create("sun-a006077-binary-"+id),DeclarationHandle.Create(Prefix+decl),
             H(title),StatementSource.FromAuthor(Disp(formula)),provenance ?? AssessedProvenance.FromRepo(Source),

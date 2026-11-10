@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Hankel;
 internal sealed class SunA006077ArithmeticDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Hankel/SunA006077Arithmetic.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/sun2013a006077");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Eigenstructure/sun2013a006077");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The quotient coefficient is odd exactly at positive powers of two.", H("Dividing multinomial coefficients by six"),
         Blocks(Paragraph(Text("Nat denotes the nonnegative integers and Z the integers. Matrix.of is displayed with Fin-sized row and column binders and explicit val projections; det of the empty matrix is one. All floor quotients are natural division.")),

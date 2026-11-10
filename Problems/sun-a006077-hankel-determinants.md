@@ -52,7 +52,7 @@ A natural index in the zero class with $W(n)\ne0$, or one in either other class 
 
 The exact Lean declaration is `D5/S3/Combinatorics/Hankel/SunA006077Result.result`. Its statement uses the integral witness identity above. The supporting statements cover the literal transform, residue blocks, normalized parity and positive semidefiniteness for every nonnegative shift and finite size.
 
-Literature ingredients: [Spivey and Steil, Theorem 6.1](../Library/Combinatorics/spivey2006binomial.md) for weighted binomial Hankel invariance; [Cigler, Theorems 1.1 and 2.1](../Library/Combinatorics/cigler2018curious.md) for the ordinary and once-shifted Rueppel determinant evaluations, used here modulo two; [Penson and Solomon, equation (6) and Example 9](../Library/Combinatorics/penson2001coherent.md) for the positive moment representation of $c_r$. Sun's [source note](../Library/Combinatorics/sun2013a006077.md) records the separate attribution of the zero branch.
+Literature ingredients: [Spivey and Steil, Theorem 6.1](../Library/Eigenstructure/spivey2006binomial.md) for weighted binomial Hankel invariance; [Cigler, Theorems 1.1 and 2.1](../Library/Eigenstructure/cigler2018curious.md) for the ordinary and once-shifted Rueppel determinant evaluations, used here modulo two; [Penson and Solomon, equation (6) and Example 9](../Library/Eigenstructure/penson2001coherent.md) for the positive moment representation of $c_r$. Sun's [source note](../Library/Eigenstructure/sun2013a006077.md) records the separate attribution of the zero branch.
 
 ## Triage
 
