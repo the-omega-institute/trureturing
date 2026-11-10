@@ -16,7 +16,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/PairTailSpectrum.bounded_eige
 
 *Commentary.*
 
-For every positive real a,b and c>=1 there is a nonzero full tensor eigenpair strictly between a+1 and (a+1)(b+1). The separately required second-root index is not supplied by existence alone.
+For every positive real a,b and c>=1 there is a nonzero full tensor eigenpair strictly between a+1 and (a+1)(b+1). The separate PairTailOrdering owner proves the ordered second-smallest window from the complete spectrum.
 
 **Theorem 1.2 (The full harmonic eigenpair window).**
 
@@ -28,7 +28,7 @@ Lean statement: `D5/S3/Combinatorics/SpectralGraph/PairTailSpectrum.harmonic_eig
 
 *Commentary.*
 
-For every positive real a and c>b>=1 the same full operator has an eigenpair between a+b+1 and a+1+2bc/(b+c), strictly below a+2b+1. This theorem states a genuine eigenpair; the source second-root indexing obligation remains separately open.
+For every positive real a and c>b>=1 the same full operator has an eigenpair between a+b+1 and a+1+2bc/(b+c), strictly below a+2b+1. This theorem states a genuine eigenpair; PairTailOrdering separately supplies the full source second-smallest indexing result.
 
 **Theorem 1.3 (All actual integral graphs force a positive quadratic root).**
 
