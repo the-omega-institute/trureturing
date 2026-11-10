@@ -4,7 +4,7 @@
 
 Parity of the original factorial-product OGF, its reversion quotient, and its unsigned even coefficients.
 
-Paul D. Hanna's OEIS A158119 conjecture states: a(m) == 1 (mod 2) iff m is a power of 2 or m=0. The original integer OGF and quotient are taken from A155585 and A157308. The pinned source is oeis/oeisdata commit 5d3c6f683f5e0f2876df39773b7e49710c4f5f80, seq/A158/A158119.seq, seq/A157/A157308.seq and seq/A155/A155585.seq. The source qualification and independent review remain separate obligations.
+Paul D. Hanna's OEIS A158119 conjecture states: a(m) == 1 (mod 2) iff m is a power of 2 or m=0. The original integer OGF and quotient are taken from A155585 and A157308. The pinned source is oeis/oeisdata commit 5d3c6f683f5e0f2876df39773b7e49710c4f5f80, seq/A158/A158119.seq, seq/A157/A157308.seq and seq/A155/A155585.seq. The source definition and bounded prior-work limits are documented in hanna2009a158119.
 
 Related prior work: Vladimir Reshetnikov's ProveIt article at commit b61f8e7e32b64b32a925c2d3cffab80bc20fb4c6, SetTheory/Cardinals/docs/reports/generating-functions-and-asymptotics/oeis-sequence-asymptotics/a290569-power-weighted-dyck-moments/article.tex, proves powers-of-two parity for the quartic sequence A338634. The inspected text does not explicitly state the original A158119 result. No priority or new-method claim is made here.
 
@@ -15,6 +15,8 @@ Lean statement: `D5/S1/Recurrence/Algebraic/HannaA158119Parity.summand`
 *Formalization.* `D5/S1/Recurrence/Algebraic/HannaA158119Parity.summand` (`✓ std3`).
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* Paul D. Hanna (2009). *OEIS A158119, parity of the original unsigned reversion bisection*. URL: <https://oeis.org/A158119>.
 
 *Commentary.*
 
@@ -28,6 +30,8 @@ Lean statement: `D5/S1/Recurrence/Algebraic/HannaA158119Parity.F`
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Paul D. Hanna (2009). *OEIS A158119, parity of the original unsigned reversion bisection*. URL: <https://oeis.org/A158119>.
+
 *Commentary.*
 
 The coefficient at degree d is the sum of the original summand coefficients for n=0,...,d. All omitted terms are divisible by X^(d+1). This is the coefficientwise meaning of the infinite ordinary generating series in A155585; factorials multiply the coefficients.
@@ -39,6 +43,8 @@ Lean statement: `D5/S1/Recurrence/Algebraic/HannaA158119Parity.Q`
 *Formalization.* `D5/S1/Recurrence/Algebraic/HannaA158119Parity.Q` (`✓ std3`).
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* Paul D. Hanna (2009). *OEIS A158119, parity of the original unsigned reversion bisection*. URL: <https://oeis.org/A158119>.
 
 *Commentary.*
 
@@ -52,6 +58,8 @@ Lean statement: `D5/S1/Recurrence/Algebraic/HannaA158119Parity.B`
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Paul D. Hanna (2009). *OEIS A158119, parity of the original unsigned reversion bisection*. URL: <https://oeis.org/A158119>.
+
 *Commentary.*
 
 B is F substituted at Q. Substitution into (X*F)(Q)=X gives B*Q=X. Its constant coefficient is 1. Since Q is nonzero and the integer power series ring is a domain, this uniquely specifies the original quotient X/Q.
@@ -63,6 +71,8 @@ Lean statement: `D5/S1/Recurrence/Algebraic/HannaA158119Parity.a`
 *Formalization.* `D5/S1/Recurrence/Algebraic/HannaA158119Parity.a` (`✓ std3`).
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* Paul D. Hanna (2009). *OEIS A158119, parity of the original unsigned reversion bisection*. URL: <https://oeis.org/A158119>.
 
 *Commentary.*
 
@@ -76,6 +86,8 @@ Lean statement: `D5/S1/Recurrence/Algebraic/HannaA158119Parity.quotient_equation
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Paul D. Hanna (2009). *OEIS A158119, parity of the original unsigned reversion bisection*. URL: <https://oeis.org/A158119>.
+
 *Commentary.*
 
 The original compositional inverse equation gives this identity directly. It is used in the parity proof to determine Q after reduction modulo two.
@@ -86,7 +98,13 @@ $$\forall m: \mathbb{N}, \operatorname{Odd}\left(a\left(m\right)\right) \iff (m 
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/HannaA158119Parity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hanna-a158119-original-parity` (proved) by `D5/S1/Recurrence/Algebraic/HannaA158119Parity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hanna-a158119-original-parity","declaration_gid":"D5/S1/Recurrence/Algebraic/HannaA158119Parity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
+
+*Acknowledgement.* Paul D. Hanna (2009). *OEIS A158119, parity of the original unsigned reversion bisection*. URL: <https://oeis.org/A158119>.
 
 *Commentary.*
 
