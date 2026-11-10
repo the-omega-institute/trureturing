@@ -4,10 +4,11 @@
    mirror-E: none(waiver:registration-template-not-established)
    anchors: [mathlib/module/Mathlib.Analysis.Matrix.Spectrum]
    utility: none
-   digest: Finite matrix scalar-image absorption and Jordan orthogonality. -/
+   digest: Finite matrix scalar-image rigidity from literal original PB and positive tables. -/
 
 import D5.S3.Quantum.Algebra.PBOriginalReadoutRealization
 import Mathlib.Analysis.Matrix.Spectrum
+import Mathlib.Analysis.InnerProductSpace.JointEigenspace
 import Mathlib.Analysis.Matrix.Order
 import Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.Basic
 import Mathlib.Topology.Algebra.Module.FiniteDimension
@@ -171,6 +172,266 @@ private theorem quadratic_read_zero (S T : H →ₗ[ℝ] H)
   have hgz : g = 0 := (mul_eq_zero.mp hfg).resolve_left hfne
   have he := congrArg (fun p : Polynomial ℝ => p.coeff 0) hgz
   simpa [g] using he
+
+private theorem scalar_positive (m z t : ℝ) (hm : 0 < m) (hz : 0 < z)
+    (ht : 0 ≤ t) (hfirst : z ^ 2 ≤ m ^ 2 * t)
+    (hall : ∀ η : ℝ, -1 ≤ η → η ≤ 1 →
+      (z * η) ^ 2 ≤ t * (m * (1 - t) * η - z) ^ 2) : t = 1 := by
+  by_contra hn
+  have htp : 0 < t := by nlinarith [sq_pos_of_pos hz]
+  let c := m * |1 - t|
+  have hc : 0 < c := mul_pos hm (abs_pos.mpr (sub_ne_zero.mpr (Ne.symm hn)))
+  have h : ∀ η : ℝ, 0 ≤ η → η ≤ 1 →
+      (z * η) ^ 2 ≤ t * (c * η - z) ^ 2 := by
+    intro η hη hη1
+    by_cases htl : t ≤ 1
+    · simpa only [c, abs_of_nonneg (by linarith : 0 ≤ 1-t)] using hall η (by linarith) hη1
+    · have he := hall (-η) (by linarith) (by linarith)
+      simpa only [c, abs_of_neg (by linarith : 1-t < 0), neg_mul, mul_neg, neg_sq] using he
+  have hzc : c < z := by
+    by_contra hh
+    have hle : z ≤ c := le_of_not_gt hh
+    have he := h (z / c) (div_nonneg hz.le hc.le) ((div_le_one hc).mpr hle)
+    have hcz : c * (z / c) - z = 0 := by field_simp; ring
+    simp only [hcz, ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true, zero_pow, mul_zero] at he
+    have hp : 0 < z * (z / c) := mul_pos hz (div_pos hz hc)
+    nlinarith [sq_pos_of_pos hp]
+  let r := Real.sqrt t
+  have hr : 0 < r := Real.sqrt_pos.mpr htp
+  have hr2 : r ^ 2 = t := Real.sq_sqrt ht
+  have hzero : z ≤ m * r := by
+    have hh : z ^ 2 ≤ (m*r) ^ 2 := by nlinarith only [hfirst, hr2]
+    nlinarith [mul_pos hm hr]
+  have hone : z ≤ r * (z-c) := by
+    have he := h 1 zero_le_one le_rfl
+    have hh : z ^ 2 ≤ (r*(z-c)) ^ 2 := by nlinarith only [he,hr2]
+    nlinarith [mul_pos hr (sub_pos.mpr hzc)]
+  have hrone : 1 < r := by
+    by_contra hh
+    have hrle : r ≤ 1 := le_of_not_gt hh
+    nlinarith [mul_nonneg (sub_nonneg.mpr hrle) (sub_pos.mpr hzc).le,
+      mul_pos hr hc]
+  have hcle : c ≤ m * (r-1) := by
+    have he := mul_le_mul_of_nonneg_left hzero (sub_pos.mpr hrone).le
+    nlinarith
+  have htl : 1 < t := by nlinarith
+  have hmul : m * (t-1) ≤ m * (r-1) := by
+    simpa only [c, abs_of_neg (by linarith : 1-t < 0), neg_sub] using hcle
+  have htr : t ≤ r := by nlinarith
+  nlinarith
+
+private theorem scalar_rigidity (μ z t : ℝ) (ht : 0 ≤ t)
+    (hfirst : z ^ 2 ≤ μ ^ 2 * t)
+    (hall : ∀ η : ℝ, -1 ≤ η → η ≤ 1 →
+      (z * η) ^ 2 ≤ t * (μ * (1 - t) * η - z) ^ 2) : (t - 1) * z = 0 := by
+  by_cases hz : z = 0
+  · simp [hz]
+  have hμ : μ ≠ 0 := by intro h; rw [h] at hfirst; nlinarith [sq_pos_of_ne_zero hz]
+  have habs : ∀ η : ℝ, -1 ≤ η → η ≤ 1 →
+      (|z| * η) ^ 2 ≤ t * (|μ| * (1 - t) * η - |z|) ^ 2 := by
+    intro η hη hη1
+    by_cases hm : 0 ≤ μ <;> by_cases hz' : 0 ≤ z
+    · simpa only [abs_of_nonneg hm, abs_of_nonneg hz'] using hall η hη hη1
+    · have he := hall (-η) (by linarith) (by linarith)
+      rw [abs_of_nonneg hm, abs_of_neg (lt_of_not_ge hz')]
+      convert he using 1 <;> ring
+    · have he := hall (-η) (by linarith) (by linarith)
+      rw [abs_of_neg (lt_of_not_ge hm), abs_of_nonneg hz']
+      convert he using 1 <;> ring
+    · have he := hall η hη hη1
+      rw [abs_of_neg (lt_of_not_ge hm), abs_of_neg (lt_of_not_ge hz')]
+      convert he using 1 <;> ring
+
+  have ht1 := scalar_positive |μ| |z| t (abs_pos.mpr hμ) (abs_pos.mpr hz) ht
+    (by simpa only [sq_abs] using hfirst) habs
+  simp [ht1]
+
+private theorem plane_bounds (B S : H →ₗ[ℝ] H)
+    (hB : B.IsSymmetric) (hS : S.IsSymmetric)
+    (hanti : ∀ v, S (B v) = -B (S v)) (μ t z : ℝ)
+    (hfirst : ∀ v, ⟪v,S v⟫ ^ 2 ≤ μ^2 *
+      (⟪v,v⟫ * ⟪B v,B v⟫ - ⟪v,B v⟫^2))
+    (hsecond : ∀ v, ((2*μ)*⟪v,S v⟫)^2 ≤
+      ⟪μ • (v-B (B v))-S v,μ • (v-B (B v))-S v⟫ *
+        ⟪(2*μ) • B v,(2*μ) • B v⟫ -
+      ⟪μ • (v-B (B v))-S v,(2*μ) • B v⟫^2)
+    (v : H) (hvv : ⟪v,v⟫ = 1) (htv : B (B v) = t • v)
+    (hzv : S v = z • v) (hz : z ≠ 0) :
+    0 ≤ t ∧ z^2 ≤ μ^2*t ∧
+      ∀ η : ℝ, -1 ≤ η → η ≤ 1 →
+        (z*η)^2 ≤ t*(μ*(1-t)*η-z)^2 := by
+  have hSBv : S (B v) = (-z) • B v := by simp [hanti, hzv]
+  have hvB : ⟪v,B v⟫ = 0 := by
+    have he := hS v (B v)
+    rw [hzv, hSBv] at he
+    simp only [real_inner_smul_left, real_inner_smul_right] at he
+    exact (mul_eq_zero.mp (by nlinarith : z * ⟪v,B v⟫ = 0)).resolve_left hz
+  have hBB : ⟪B v,B v⟫ = t := by
+    rw [hB v (B v), htv, real_inner_smul_right, hvv, mul_one]
+  have ht : 0 ≤ t := hBB ▸ real_inner_self_nonneg
+  have hf : z^2 ≤ μ^2*t := by simpa only [hzv, real_inner_smul_right, hvv, hvB, hBB, mul_one, zero_pow (by decide : 2 ≠ 0), sub_zero, one_mul] using hfirst v
+  have hμ : μ ≠ 0 := by intro he; rw [he] at hf; nlinarith [sq_pos_of_ne_zero hz]
+  have htp : 0 < t := by nlinarith [sq_pos_of_ne_zero hz]
+  let r := Real.sqrt t
+  have hr : 0 < r := Real.sqrt_pos.mpr htp
+  have hr2 : r^2 = t := Real.sq_sqrt ht
+  let w := r⁻¹ • B v
+  have hBv : B v = r • w := by simp [w, smul_smul, hr.ne']
+  have hBw : B w = r • v := by
+    simp only [w, map_smul, htv, smul_smul]
+    congr 1
+    rw [← hr2]
+    field_simp
+  have hSw : S w = (-z) • w := by simp [w, hSBv, smul_smul, mul_comm]
+  have hvw : ⟪v,w⟫ = 0 := by simp only [w, real_inner_smul_right, hvB, mul_zero]
+  have hwv : ⟪w,v⟫ = 0 := by rw [real_inner_comm]; exact hvw
+  have hww : ⟪w,w⟫ = 1 := by
+    simp only [w, real_inner_smul_left, real_inner_smul_right, hBB]
+    rw [← hr2]
+    field_simp
+  refine ⟨ht,hf,?_⟩
+  have hcs (c s : ℝ) :
+      (z*(c^2-s^2))^2 ≤ t*(μ*(1-t)*(c^2-s^2)-z*(c^2+s^2))^2 := by
+    let u := c • v + s • w
+    have hBu : B u = (r*s) • v + (r*c) • w := by
+      simp only [u,map_add,map_smul,hBv,hBw,smul_smul]
+      module
+    have hBBu : B (B u) = t • u := by
+      rw [hBu]
+      simp only [map_add,map_smul,hBv,hBw,smul_smul]
+      dsimp [u]
+      rw [← hr2]
+      module
+    have hSu : S u = (z*c) • v + (-z*s) • w := by
+      simp only [u,map_add,map_smul,hzv,hSw,smul_smul]
+      module
+    have hXu : μ • (u-B (B u))-S u =
+        ((μ*(1-t)-z)*c) • v + ((μ*(1-t)+z)*s) • w := by
+      rw [hBBu,hSu]
+      dsimp [u]
+      module
+    have hYu : (2*μ) • B u = (2*μ*r*s) • v + (2*μ*r*c) • w := by
+      rw [hBu]
+      module
+    have hZu : ⟪u,S u⟫ = z*(c^2-s^2) := by
+      rw [hSu]
+      dsimp [u]
+      simp only [inner_add_left,inner_add_right,real_inner_smul_left,
+        real_inner_smul_right,hvv,hvw,hwv,hww]
+      ring
+    have he := hsecond u
+    rw [hXu,hYu,hZu] at he
+    simp only [inner_add_left,inner_add_right,real_inner_smul_left,
+      real_inner_smul_right,hvv,hvw,hwv,hww] at he
+    have he' : (2*μ)^2*(z*(c^2-s^2))^2 ≤
+        (2*μ*r)^2*(μ*(1-t)*(c^2-s^2)-z*(c^2+s^2))^2 := by
+      convert he using 1 <;> ring
+    rw [mul_pow (2*μ) r 2,hr2] at he'
+    have hμsq : 0 < (2*μ)^2 := sq_pos_of_ne_zero (mul_ne_zero (by norm_num) hμ)
+    exact (mul_le_mul_iff_right₀ hμsq).mp
+      (by simpa only [mul_assoc] using he')
+  intro η hη hη1
+  let c := Real.sqrt ((1+η)/2)
+  let s := Real.sqrt ((1-η)/2)
+  have hc : c^2 = (1+η)/2 := Real.sq_sqrt (by linarith)
+  have hs : s^2 = (1-η)/2 := Real.sq_sqrt (by linarith)
+  have he := hcs c s
+  rw [hc,hs] at he
+  convert he using 1 <;> ring
+
+private theorem two_table_spectral [FiniteDimensional ℝ H]
+    (B S : H →ₗ[ℝ] H) (hB : B.IsSymmetric) (hS : S.IsSymmetric)
+    (hanti : ∀ v, S (B v) = -B (S v)) (μ : ℝ)
+    (hfirst : ∀ v, ⟪v,S v⟫ ^ 2 ≤ μ^2 *
+      (⟪v,v⟫ * ⟪B v,B v⟫ - ⟪v,B v⟫^2))
+    (hsecond : ∀ v, ((2*μ)*⟪v,S v⟫)^2 ≤
+      ⟪μ • (v-B (B v))-S v,μ • (v-B (B v))-S v⟫ *
+        ⟪(2*μ) • B v,(2*μ) • B v⟫ -
+      ⟪μ • (v-B (B v))-S v,(2*μ) • B v⟫^2) :
+    ∀ v, B (B (S v)) = S v := by
+  have hcomm : Commute (B*B) S := by
+    ext v
+    change B (B (S v)) = S (B (B v))
+    simp only [hanti,map_neg,neg_neg]
+  have hspan := LinearMap.IsSymmetric.iSup_iSup_eigenspace_inf_eigenspace_eq_top_of_commute
+    (hB.mul_of_commute hB (Commute.refl B)) hS hcomm
+  have hkill : (⨆ t : ℝ, ⨆ z : ℝ,
+      Module.End.eigenspace (B*B) t ⊓ Module.End.eigenspace S z) ≤
+      LinearMap.ker ((B*B-1)*S) := by
+    refine iSup_le fun t => iSup_le fun z => ?_
+    intro v hv
+    have htv : B (B v) = t • v := Module.End.mem_eigenspace_iff.mp hv.1
+    have hzv : S v = z • v := Module.End.mem_eigenspace_iff.mp hv.2
+    by_cases hv0 : v = 0
+    · subst v; exact Submodule.zero_mem _
+    by_cases hz : z = 0
+    · simp only [LinearMap.mem_ker,Module.End.mul_apply,LinearMap.sub_apply,
+        Module.End.one_apply,hzv,hz,zero_smul,map_zero,sub_self]
+    let e := ‖v‖⁻¹ • v
+    have hee : ⟪e,e⟫ = 1 := by
+      rw [real_inner_self_eq_norm_sq]
+      change ‖(‖v‖⁻¹ : ℝ) • v‖ ^ 2 = 1
+      simp [norm_smul, norm_ne_zero_iff.mpr hv0]
+    have hte : B (B e) = t • e := by
+      simp only [e,map_smul,htv,smul_smul]
+      module
+    have hze : S e = z • e := by
+      simp only [e,map_smul,hzv,smul_smul]
+      module
+    obtain ⟨ht,hf,ha⟩ := plane_bounds B S hB hS hanti μ t z hfirst hsecond e hee hte hze hz
+    have he := scalar_rigidity μ z t ht hf ha
+    change B (B (S v)) - S v = 0
+    rw [hzv,map_smul,map_smul,htv]
+    calc z • (t • v) - z • v = ((t-1)*z) • v := by module
+         _ = 0 := by rw [he,zero_smul]
+  intro v
+  have hv : v ∈ LinearMap.ker ((B*B-1)*S) := hkill (by rw [hspan]; trivial)
+  exact sub_eq_zero.mp hv
+
+private theorem final_sandwich (R : Readout (H := H) J u D ⊤) (hPB : PB J D)
+    (S : H →ₗ[ℝ] H) (hS : S.IsSymmetric) (μ : ℝ) (hμ : μ ≠ 0)
+    (x y : E) (hXS : ∀ v, R.op x (S v) = -S (S v))
+    (hd : ∀ v, R.op (D y x) v = (-2*μ) • S v)
+    (hzero : R.op (D y 0) = 0)
+    (hgS : ∀ v, R.op (J y x) (S v) = 0) : S = 0 := by
+  have hquad (v : H) : ⟪S (S v), S (S v)⟫ = 0 := by
+    let ν := D y x - J y 0
+    let ω := J y x + D y 0
+    have hν : R.op ν (S v) = (-2*μ) • S (S v) := by
+      simp only [ν,map_sub,map_zero,LinearMap.sub_apply,LinearMap.zero_apply,sub_zero]
+      exact hd (S v)
+    have hω : R.op ω (S v) = 0 := by
+      simp only [ω,map_add,LinearMap.add_apply,hzero,LinearMap.zero_apply,hgS,add_zero]
+    have hp := collinear_read_zero R (x+ν) (0+ω) (S v) 0 (by simpa only [map_add,map_zero,LinearMap.add_apply,
+      LinearMap.zero_apply,zero_add,zero_smul] using hω)
+    have hm := collinear_read_zero R (x-ν) (0-ω) (S v) 0 (by simpa only [map_sub,map_zero,LinearMap.sub_apply,
+      LinearMap.zero_apply,zero_sub,map_neg,LinearMap.neg_apply,neg_eq_zero,zero_smul] using hω)
+    have he := congrArg (reading R (S v)) (hPB y x 0)
+    change reading R (S v) (D (x+ν) (0+ω)-D (x-ν) (0-ω)) =
+      reading R (S v) ((-2 : ℝ) • (J x ν + J 0 ω)) at he
+    rw [(reading R (S v)).map_sub _ _,hp,hm] at he
+    rw [(reading R (S v)).map_smul (-2) _,(reading R (S v)).map_add _ _] at he
+    simp only [map_zero,LinearMap.zero_apply,add_zero,sub_self] at he
+    rw [reading_jordan R (by trivial) (by trivial),hXS,hν] at he
+    simp only [smul_eq_mul,inner_neg_left,real_inner_smul_right] at he
+    have hmul : μ * ⟪S (S v),S (S v)⟫ = 0 := by nlinarith only [he]
+    exact (mul_eq_zero.mp hmul).resolve_left hμ
+  have hfour : S ^ 4 = 0 := by
+    apply (hS.pow 4).inner_map_self_eq_zero.mp
+    intro v
+    change ⟪S (S (S (S v))), v⟫ = 0
+    rw [hS (S (S (S v))) v, hS (S (S v)) (S v)]
+    exact hquad v
+  have hS2 (v : H) : S (S v) = 0 := by
+    have hz : S (S (S (S v))) = 0 :=
+      congrArg (fun T : H →ₗ[ℝ] H => T v) hfour
+    apply (inner_self_eq_zero (𝕜 := ℝ)).mp
+    rw [← hS (S (S v)) (S v), ← hS (S (S (S v))) v, hz, inner_zero_left]
+  apply LinearMap.ext
+  intro v
+  have he := hS v (S v)
+  rw [hS2,inner_zero_right] at he
+  exact inner_self_eq_zero.mp he
 
 end Readout
 
@@ -554,8 +815,182 @@ theorem scalar_second_actual_table (O : OriginalData (A := A) (E := E) P)
     rw [sub_zero, hrhs] at he
     exact he
 
+/-- The two fixed actual P2 tables confine the original scalar-image response
+to the unit-square spectral subspace of the arbitrary second image. -/
+theorem scalar_image_spectral (O : OriginalData (A := A) (E := E) P)
+    (q : E →ₗ[ℝ] selfAdjoint (Matrix n n ℂ))
+    (hu : (q O.u : Matrix n n ℂ) = 1)
+    (hJ : ∀ a b, (q (O.J a b) : Matrix n n ℂ) =
+      (1 / 2 : ℝ) • ((q a : Matrix n n ℂ) * q b + (q b : Matrix n n ℂ) * q a))
+    (hpositive : ∀ a, 0 ≤ O.i a → (q a : Matrix n n ℂ).PosSemidef)
+    (hPB : PB O.J O.D) (hdense : DenseRange q) (a b : E) (μ : ℝ)
+    (ha : (q a : Matrix n n ℂ) = μ • (1 : Matrix n n ℂ)) :
+    ((q b : Matrix n n ℂ)^2 - 1) * (q (O.D a b) : Matrix n n ℂ) = 0 := by
+  let R := evalReadout O q hu hJ hpositive
+  let H := O.D a b
+  let B := R.op b
+  let S := R.op H
+  let x := a + (O.D b a - O.J b (μ • b))
+  let y := μ • b + (O.J b a + O.D b (μ • b))
+  let F := (Matrix.toEuclideanCLM (n := n) (𝕜 := ℂ)).toAlgEquiv.toAlgHom.restrictScalars ℝ
+  obtain ⟨hx,hy,hd⟩ := scalar_second_actual_table O q hu hJ hpositive hPB a b μ ha
+  have hx' : F (q x) = μ • (1 - F (q b)^2) - F (q H) := by
+    simpa only [x,H,map_sub,map_smul,map_one,map_pow] using congrArg F hx
+  have hy' : F (q y) = (2*μ) • F (q b) := by
+    simpa only [map_smul] using congrArg F hy
+  have hd' : F (q (O.D x y)) = (2*μ) • F (q H) := by
+    simpa only [x,y,H,selfAdjoint.val_smul,map_smul] using
+      congrArg (fun M : selfAdjoint (Matrix n n ℂ) => F M) hd
+  have ha' : F (q a) = μ • 1 := by
+    simpa only [map_smul,map_one] using congrArg F ha
+  have hxv (v : EuclideanSpace ℂ n) : R.op x v = μ • (v-B (B v))-S v := by
+    change F (q x) v = μ • (v-F (q b) (F (q b) v))-F (q H) v
+    simp only [hx',sub_apply,smul_apply,pow_two,mul_apply_eq_comp,one_apply_eq_self]
+  have hyv (v : EuclideanSpace ℂ n) : R.op y v = (2*μ) • B v := by
+    change F (q y) v = (2*μ) • F (q b) v
+    rw [hy']; rfl
+  have hdv (v : EuclideanSpace ℂ n) : R.op (O.D x y) v = (2*μ) • S v := by
+    change F (q (O.D x y)) v = (2*μ) • F (q H) v
+    rw [hd']; rfl
+  have hav (v : EuclideanSpace ℂ n) : R.op a v = μ • v := by
+    change F (q a) v = μ • v
+    simp only [ha',smul_apply,one_apply_eq_self]
+  have hjzero := scalar_second_jordan_zero O q hu hJ hpositive hPB hdense a b μ ha
+  have hjop : R.op (O.J b H) = 0 := by
+    apply LinearMap.ext
+    intro v
+    change (Matrix.toEuclideanCLM (n := n) (𝕜 := ℂ)) (q (O.J b H) : Matrix n n ℂ) v = 0
+    simp [H,hjzero]
+  have hanti (v : EuclideanSpace ℂ n) : S (B v) = -B (S v) := by
+    have he := congrArg (fun T : EuclideanSpace ℂ n →ₗ[ℝ] EuclideanSpace ℂ n => T v)
+      (R.jordan b (by trivial) H (by trivial))
+    rw [hjop] at he
+    change (0 : EuclideanSpace ℂ n) = (1/2 : ℝ) • (B (S v)+S (B v)) at he
+    have he' : B (S v)+S (B v) = 0 :=
+      (smul_eq_zero.mp he.symm).resolve_left (by norm_num)
+    exact eq_neg_of_add_eq_zero_right he'
+  have hp (v : EuclideanSpace ℂ n) : inner ℝ v (S v)^2 ≤ μ^2 *
+      (inner ℝ v v * inner ℝ (B v) (B v) - inner ℝ v (B v)^2) := by
+    have he := R.p2 v a b
+    change reading R v H^2 ≤ reading R v (O.J a a)*reading R v (O.J b b) -
+      reading R v (O.J a b)^2 at he
+    rw [reading_jordan R (by trivial) (by trivial),
+      reading_jordan R (by trivial) (by trivial),
+      reading_jordan R (by trivial) (by trivial)] at he
+    simp only [hav,real_inner_smul_left,real_inner_smul_right] at he
+    change inner ℝ v (S v)^2 ≤ _ at he
+    convert he using 1 <;> ring
+  have hp' (v : EuclideanSpace ℂ n) : ((2*μ)*inner ℝ v (S v))^2 ≤
+      inner ℝ (μ • (v-B (B v))-S v) (μ • (v-B (B v))-S v) *
+        inner ℝ ((2*μ) • B v) ((2*μ) • B v) -
+      inner ℝ (μ • (v-B (B v))-S v) ((2*μ) • B v)^2 := by
+    have he := R.p2 v x y
+    change inner ℝ v (R.op (O.D x y) v)^2 ≤
+      reading R v (O.J x x)*reading R v (O.J y y)-reading R v (O.J x y)^2 at he
+    rw [reading_jordan R (by trivial) (by trivial),
+      reading_jordan R (by trivial) (by trivial),
+      reading_jordan R (by trivial) (by trivial),hdv,real_inner_smul_right,hxv,hyv] at he
+    exact he
+  have hs := two_table_spectral B S (R.symmetric b) (R.symmetric H) hanti μ hp hp'
+  have hprod : (q b : Matrix n n ℂ)^2 * (q H : Matrix n n ℂ) = q H := by
+    apply (Matrix.toEuclideanCLM (n := n) (𝕜 := ℂ)).injective
+    simp only [map_mul,map_pow]
+    apply ContinuousLinearMap.ext
+    intro v
+    exact hs v
+  change ((q b : Matrix n n ℂ)^2-1)*(q H : Matrix n n ℂ)=0
+  rw [sub_mul,one_mul,hprod,sub_self]
+
+/-- Full finite-matrix scalar-image rigidity for the same arbitrary original
+response. Density supplies actual lifts; the final literal PB call is read at
+positive h-sandwich vectors, without any regularity or descent of D. -/
+theorem scalar_image_zero (O : OriginalData (A := A) (E := E) P)
+    (q : E →ₗ[ℝ] selfAdjoint (Matrix n n ℂ))
+    (hu : (q O.u : Matrix n n ℂ) = 1)
+    (hJ : ∀ a b, (q (O.J a b) : Matrix n n ℂ) =
+      (1 / 2 : ℝ) • ((q a : Matrix n n ℂ) * q b + (q b : Matrix n n ℂ) * q a))
+    (hpositive : ∀ a, 0 ≤ O.i a → (q a : Matrix n n ℂ).PosSemidef)
+    (hPB : PB O.J O.D) (hdense : DenseRange q) (a b : E) (μ : ℝ)
+    (ha : (q a : Matrix n n ℂ) = μ • (1 : Matrix n n ℂ)) :
+    q (O.D a b) = 0 := by
+  by_cases hμ : μ = 0
+  · have hqa : q a = 0 := Subtype.ext (by simpa only [hμ,zero_smul,ZeroMemClass.coe_zero] using ha)
+    have hz := zero_second_image O q hu hJ hpositive b a hqa
+    simpa only [hz,neg_zero] using eval_skew O q hu hJ hpositive b a
+  let R := evalReadout O q hu hJ hpositive
+  let H := O.D a b
+  let B := R.op b
+  let S := R.op H
+  let x := a + (O.D b a - O.J b (μ • b))
+  let y := μ • b + (O.J b a + O.D b (μ • b))
+  let F := (Matrix.toEuclideanCLM (n := n) (𝕜 := ℂ)).toAlgEquiv.toAlgHom.restrictScalars ℝ
+  obtain ⟨hx,hy,hd⟩ := scalar_second_actual_table O q hu hJ hpositive hPB a b μ ha
+  change (q x : Matrix n n ℂ) = μ • (1-(q b : Matrix n n ℂ)^2) - q H at hx
+  change (q y : Matrix n n ℂ) = (2*μ) • (q b : Matrix n n ℂ) at hy
+  change q (O.D x y) = (2*μ) • q H at hd
+  have hx' : F (q x) = μ • (1-F (q b)^2)-F (q H) := by
+    simpa only [x,H,map_sub,map_smul,map_one,map_pow] using congrArg F hx
+  have hxv (v : EuclideanSpace ℂ n) : R.op x v = μ • (v-B (B v))-S v := by
+    change F (q x) v = μ • (v-F (q b) (F (q b) v))-F (q H) v
+    simp only [hx',sub_apply,smul_apply,pow_two,mul_apply_eq_comp,one_apply_eq_self]
+  have hjzero := scalar_second_jordan_zero O q hu hJ hpositive hPB hdense a b μ ha
+  have hantiM : (q b : Matrix n n ℂ) * q H + (q H : Matrix n n ℂ) * q b = 0 := by
+    have he := hJ b H
+    have he' : (1/2 : ℝ) •
+        ((q b : Matrix n n ℂ) * q H + (q H : Matrix n n ℂ) * q b) = 0 := by
+      simpa only [H,hjzero,ZeroMemClass.coe_zero] using he.symm
+    exact (smul_eq_zero.mp he').resolve_left (by norm_num)
+  have hg : (q (O.J y x) : Matrix n n ℂ) =
+      (2*μ^2) • ((q b : Matrix n n ℂ)-(q b : Matrix n n ℂ)^3) := by
+    rw [hJ,hy,hx]
+    calc
+      (1/2 : ℝ) •
+        (((2*μ) • (q b : Matrix n n ℂ)) * (μ • (1-(q b : Matrix n n ℂ)^2)-q H) +
+          (μ • (1-(q b : Matrix n n ℂ)^2)-q H) * ((2*μ) • (q b : Matrix n n ℂ))) =
+        (2*μ^2) • ((q b : Matrix n n ℂ)-(q b : Matrix n n ℂ)^3) -
+          μ • ((q b : Matrix n n ℂ)*q H+(q H : Matrix n n ℂ)*q b) := by
+        simp only [Matrix.smul_mul,Matrix.mul_smul,Matrix.mul_sub,Matrix.sub_mul,
+          one_mul,mul_one,pow_succ,pow_zero,mul_assoc]
+        module
+      _ = _ := by rw [hantiM,smul_zero,sub_zero]
+  have hspectral := scalar_image_spectral O q hu hJ hpositive hPB hdense a b μ ha
+  have hprod : (q b : Matrix n n ℂ)^2 * (q H : Matrix n n ℂ) = q H := by
+    apply sub_eq_zero.mp
+    simpa only [H,sub_mul,one_mul] using hspectral
+  have hs' : F (q b)^2 * F (q H) = F (q H) := by
+    simpa only [map_mul,map_pow] using congrArg F hprod
+  have hspec (v : EuclideanSpace ℂ n) : B (B (S v)) = S v := by
+    exact congrArg (fun T : EuclideanSpace ℂ n →L[ℂ] EuclideanSpace ℂ n => T v) hs'
+  have hXS (v : EuclideanSpace ℂ n) : R.op x (S v) = -S (S v) := by
+    rw [hxv,hspec]; simp
+  have hgS (v : EuclideanSpace ℂ n) : R.op (O.J y x) (S v) = 0 := by
+    have he : F (q (O.J y x)) = (2*μ^2) • (F (q b)-F (q b)^3) := by
+      simpa only [map_smul,map_sub,map_pow] using congrArg F hg
+    change F (q (O.J y x)) (S v) = 0
+    rw [he]
+    change (2*μ^2) • (B (S v)-B (B (B (S v)))) = 0
+    rw [hspec,sub_self,smul_zero]
+  have hdq : q (O.D y x) = (-2*μ) • q H := by
+    rw [eval_skew O q hu hJ hpositive x y,hd]
+    module
+  have hdv (v : EuclideanSpace ℂ n) : R.op (O.D y x) v = (-2*μ) • S v := by
+    have he : F (q (O.D y x)) = (-2*μ) • F (q H) := by
+      simpa only [selfAdjoint.val_smul,map_smul] using
+        congrArg (fun M : selfAdjoint (Matrix n n ℂ) => F M) hdq
+    exact congrArg (fun T : EuclideanSpace ℂ n →L[ℂ] EuclideanSpace ℂ n => T v) he
+  have hzero : R.op (O.D y 0) = 0 := by
+    have hz := zero_second_image O q hu hJ hpositive y 0 (q.map_zero)
+    apply LinearMap.ext
+    intro v
+    change (Matrix.toEuclideanCLM (n := n) (𝕜 := ℂ)) (q (O.D y 0) : Matrix n n ℂ) v = 0
+    simp [hz]
+  exact evalOp_injective q H (final_sandwich R hPB S (R.symmetric H) μ hμ x y hXS hdv hzero hgS)
+
 #print axioms scalar_second_jordan_zero
 #print axioms semidefinite_second_image
+#print axioms scalar_second_actual_table
+#print axioms scalar_image_spectral
+#print axioms scalar_image_zero
 end Matrix
 
 end D5.S3.Quantum.Algebra.PBFiniteScalarAbsorption
