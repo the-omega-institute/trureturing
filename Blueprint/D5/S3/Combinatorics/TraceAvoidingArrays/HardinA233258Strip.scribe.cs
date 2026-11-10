@@ -28,8 +28,8 @@ internal sealed class HardinA233258StripDocument : IScribeDocumentDefinition
                 + "joins cells in consecutive columns when their row indices are equal "
                 + "or the old row is one greater than the new row. Each bond excludes "
                 + "equal colours and colours summing to five. The top left colour is "
-                + "zero; first occurrences obey the strict row-major rank r*n+j.")),
-            Node("normal", "Row-major predecessor conditions", NormalFormula(), false),
+                + "zero; first occurrences obey the strict row-major rank r*n+j, "
+                + "as defined by HardinA233176Ladder.normal.")),
             Node("Legal", "Literal array conditions", LegalFormula(), false),
             Node("a", "The literal filtered array count", CountFormula(), false, true),
             Node("counting_bridge", "The canonical-form counting bridge", BridgeFormula(), true),
@@ -57,7 +57,7 @@ internal sealed class HardinA233258StripDocument : IScribeDocumentDefinition
     private static Formula BridgeFormula()
     {
         var n = V("n");
-        return All("n", Q("Nat"), All("hn", Le(D(2), n), Eq(
+        return All("n", Q("Nat"), Imp(Le(D(2), n), Eq(
             Mul(Num(48), Typed(Own("a", n), Q("Int"))),
             Mul(Power(Typed(D(8), Q("Int")), n),
                 Add(Typed(Call("D5.S3.Combinatorics.TraceAvoidingArrays."
@@ -82,24 +82,6 @@ internal sealed class HardinA233258StripDocument : IScribeDocumentDefinition
             Mul(Num(3072), P(2))), Mul(Num(8192), P(3))), Mul(Num(16384), P(4))));
         return Eq(Mul(denominator, series), numerator);
     }
-    private static Formula NormalFormula()
-    {
-        var n = V("n"); var a = V("A"); var p = V("p"); var q = V("q");
-        var cells = Product(Fin(D(3)), Fin(n));
-        Formula Rank(Formula x) => Add(Mul(Val(Call("Prod.fst", x)), n),
-            Val(Call("Prod.snd", x)));
-        Formula Earlier(byte colour) => Ex("q", cells,
-            And(Lt(Rank(q), Rank(p)), Eq(App(a, q), Typed(D(colour), Fin(D(6))))));
-        var current = App(a, p);
-        var condition = All("p", cells, And(
-            Imp(Or(Eq(current, Typed(D(2), Fin(D(6)))),
-                Or(Eq(current, Typed(D(3), Fin(D(6)))),
-                    Eq(current, Typed(D(4), Fin(D(6)))))), Earlier(1)),
-            Imp(Eq(current, Typed(D(3), Fin(D(6)))), Earlier(2))));
-        return All("n", Q("Nat"), All("A", Arrow(cells, Fin(D(6))),
-            Eq(Own("normal", a), Parenthesized(condition))));
-    }
-
     private static Formula LegalFormula()
     {
         var n = V("n"); var a = V("A"); var j = V("j");
@@ -115,7 +97,8 @@ internal sealed class HardinA233258StripDocument : IScribeDocumentDefinition
             All("r", Fin(D(3)), All("s", Fin(D(3)), Imp(adjacent,
                 And(Ne(here, next), Ne(Add(Val(here), Val(next)), D(5))))))));
         return All("n", Q("Nat"), All("A", Arrow(cells, Fin(D(6))),
-            Eq(Own("Legal", a), Parenthesized(And(first, And(bonds, Own("normal", a)))))));
+            Eq(Own("Legal", a), Parenthesized(And(first, And(bonds,
+                Call("D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233176Ladder.normal", a)))))));
     }
 
     private static Formula CountFormula()

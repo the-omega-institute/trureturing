@@ -7,12 +7,11 @@
    digest: Hardin's recurrence and Barker's power series for literal three-row pair-exclusion arrays. -/
 /-
 admission_basis: open-problem-resolution (#28806; Proved)
-escape_witness: columns_constant, two_label_classification, canonical_two_card
-Frozen canonical-form applications in a_sum and L_card are instantiations.
-The three-row graph classification supplies the new counting content.
-normal: proof_shape=bind-only; consumers=Legal, instDecidableNormal, normal_iff
+escape_witness: none
+All declarations are bind-only: finite decisions, canonical-form instantiations,
+product/subtype transports and normalized counting and recurrence identities.
+Normalization and its decidability instance are reused from HardinA233176Ladder.
 Legal: proof_shape=bind-only; consumers=instDecidableLegal, a, legal_iff
-instDecidableNormal: proof_shape=bind-only; consumers=instDecidableLegal
 instDecidableLegal: proof_shape=bind-only; consumers=a
 a: proof_shape=bind-only; consumers=literal_card, zero_one, result
 cellOrder: proof_shape=bind-only; consumers=RowNormal, Canon, row_major_lt, a_sum, L_card
@@ -26,31 +25,32 @@ used: proof_shape=bind-only; consumers=used_eq_card, used_two_or_three, omitted_
 used_eq_card: proof_shape=bind-only; consumers=used_two_or_three, alternating_used
 proper_relabel: proof_shape=bind-only; consumers=L_card
 proper_two_labels: proof_shape=bind-only; consumers=used_two_or_three, L_card
-columns_constant: proof_shape=content; consumers=two_label_classification
+columns_constant: proof_shape=bind-only; consumers=two_label_classification
 alternating: proof_shape=bind-only; consumers=alternating_proper, two_label_classification, alternating_used, alternating_canon, canon_two_eq, canonical_two_card
 alternating_proper: proof_shape=bind-only; consumers=canonical_two_card
-two_label_classification: proof_shape=content; consumers=canon_two_eq
+two_label_classification: proof_shape=bind-only; consumers=canon_two_eq
 used_two_or_three: proof_shape=bind-only; consumers=weighted_count
 omitted_label: proof_shape=bind-only; consumers=canon_two_eq
 alternating_used: proof_shape=bind-only; consumers=canonical_two_card
-alternating_canon: proof_shape=content; consumers=canonical_two_card
-canon_two_eq: proof_shape=content; consumers=canonical_two_card
+alternating_canon: proof_shape=bind-only; consumers=canonical_two_card
+canon_two_eq: proof_shape=bind-only; consumers=canonical_two_card
 CanonicalPatterns: proof_shape=bind-only; consumers=canonical_two_card, a_sum, L_card, weighted_count, counting_bridge
-canonical_two_card: proof_shape=content; consumers=weighted_count
+canonical_two_card: proof_shape=bind-only; consumers=weighted_count
 a_sum: proof_shape=bind-only; consumers=weighted_count
 L_card: proof_shape=bind-only; consumers=counting_bridge
-weighted_count: proof_shape=content; consumers=counting_bridge
-counting_bridge: proof_shape=content; consumers=scale_recurrence, initial
-scale_recurrence: proof_shape=content; consumers=finite_certificate, recurrence
-finite_certificate: proof_shape=content; consumers=recurrence
-recurrence: proof_shape=content; consumers=generating_function, result
-zero_one: proof_shape=content; consumers=initial
-initial: proof_shape=content; consumers=generating_function
-generating_function: proof_shape=content; consumers=result
-result: proof_shape=content; consumers=external result of #28806
+weighted_count: proof_shape=bind-only; consumers=counting_bridge
+counting_bridge: proof_shape=bind-only; consumers=scale_recurrence, initial
+scale_recurrence: proof_shape=bind-only; consumers=finite_certificate, recurrence
+finite_certificate: proof_shape=bind-only; consumers=recurrence
+recurrence: proof_shape=bind-only; consumers=generating_function, result
+zero_one: proof_shape=bind-only; consumers=initial
+initial: proof_shape=bind-only; consumers=generating_function
+generating_function: proof_shape=bind-only; consumers=result
+result: proof_shape=bind-only; consumers=external result of #28806
 -/
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
 import D5.S3.Observer.Separation.BooleanRankThreeK4
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233176Ladder
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233258PairTransfer
 import Mathlib.RingTheory.PowerSeries.Basic
@@ -62,13 +62,7 @@ open scoped BigOperators
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233258Strip
 open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
 open D5.S3.Combinatorics.TraceAvoidingArrays
-
-def normal {n : ℕ} (A : Fin 3 × Fin n → Fin 6) : Prop :=
-  ∀ p,
-    ((A p = 2 ∨ A p = 3 ∨ A p = 4) →
-      ∃ q, q.1.val * n + q.2.val < p.1.val * n + p.2.val ∧ A q = 1) ∧
-    (A p = 3 →
-      ∃ q, q.1.val * n + q.2.val < p.1.val * n + p.2.val ∧ A q = 2)
+open HardinA233176Ladder (normal)
 
 def Legal {n : ℕ} (A : Fin 3 × Fin n → Fin 6) : Prop :=
   (∃ j : Fin n, j.val = 0 ∧ A (0, j) = 0) ∧
@@ -76,9 +70,6 @@ def Legal {n : ℕ} (A : Fin 3 × Fin n → Fin 6) : Prop :=
       (r = s ∨ r.val = s.val + 1) →
       A (r, j) ≠ A (s, ⟨j.val + 1, h⟩) ∧
         (A (r, j)).val + (A (s, ⟨j.val + 1, h⟩)).val ≠ 5) ∧ normal A
-
-private instance instDecidableNormal {n : ℕ} (A : Fin 3 × Fin n → Fin 6) :
-    Decidable (normal A) := inferInstanceAs (Decidable (∀ _, _ ∧ _))
 
 private instance instDecidableLegal {n : ℕ} (A : Fin 3 × Fin n → Fin 6) :
     Decidable (Legal A) := inferInstanceAs (Decidable (_ ∧ _ ∧ _))

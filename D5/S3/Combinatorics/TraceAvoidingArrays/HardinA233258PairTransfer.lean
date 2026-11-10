@@ -7,7 +7,9 @@
    digest: Five column orbits count three-row horizontal and antidiagonal pair patterns. -/
 /-
 admission_basis: open-problem-resolution (#28806; Proved)
-escape_witness: class_rep, representative_rows, initial_weights
+escape_witness: none
+All declarations are bind-only: finite class and orbit decisions, table sums,
+product/subtype transports and applications of the existing transfer theorems.
 direct_frozen_dependencies: []
 reused_unfrozen: TransferMatrix.cardMatrix, TransferMatrix.good_iff_local,
   TransferMatrix.tabulatedPowers, TransferMatrix.scalarRelationShift
@@ -26,23 +28,23 @@ relabel: proof_shape=bind-only; consumers=column_relabel, compatible_relabel, cl
 column_relabel: proof_shape=bind-only; consumers=compatible_relabel
 compatible_relabel: proof_shape=bind-only; consumers=quotient_rows
 class_relabel: proof_shape=bind-only; consumers=quotient_rows
-class_rep: proof_shape=content; consumers=quotient_rows
-representative_rows: proof_shape=content; consumers=quotient_rows
-quotient_rows: proof_shape=content; consumers=count_transfer
-initial_weights: proof_shape=content; consumers=count_transfer
+class_rep: proof_shape=bind-only; consumers=quotient_rows
+representative_rows: proof_shape=bind-only; consumers=quotient_rows
+quotient_rows: proof_shape=bind-only; consumers=count_transfer
+initial_weights: proof_shape=bind-only; consumers=count_transfer
 gridEquiv: proof_shape=bind-only; consumers=column_grid, grid_good, count_transfer
 column_grid: proof_shape=bind-only; consumers=grid_good
-grid_good: proof_shape=content; consumers=count_transfer
-count_transfer: proof_shape=content; consumers=initial_values, recurrence_core
+grid_good: proof_shape=bind-only; consumers=count_transfer
+count_transfer: proof_shape=bind-only; consumers=initial_values, recurrence_core
 W: proof_shape=bind-only; consumers=table_zero, table_steps, powers_table, power_polynomial, initial_values
 coefficients: proof_shape=bind-only; consumers=power_polynomial, recurrence_core
 table_zero: proof_shape=bind-only; consumers=powers_table
 table_steps: proof_shape=bind-only; consumers=powers_table
 powers_table: proof_shape=bind-only; consumers=power_polynomial, initial_values
 power_polynomial: proof_shape=bind-only; consumers=recurrence_core
-initial_values: proof_shape=content; consumers=recurrence, HardinA233258Strip.finite_certificate, HardinA233258Strip.initial
-recurrence_core: proof_shape=content; consumers=recurrence
-recurrence: proof_shape=content; consumers=HardinA233258Strip.recurrence
+initial_values: proof_shape=bind-only; consumers=recurrence, HardinA233258Strip.finite_certificate, HardinA233258Strip.initial
+recurrence_core: proof_shape=bind-only; consumers=recurrence
+recurrence: proof_shape=bind-only; consumers=HardinA233258Strip.recurrence
 -/
 import D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix
 import Mathlib.Tactic
