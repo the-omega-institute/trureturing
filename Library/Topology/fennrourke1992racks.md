@@ -14,6 +14,20 @@ triage: anchor
 
 # Rack transport and quandle closure colorings
 
+## Verified locator
+
+DOI: 10.1142/S0218216592000203
+
+Source: https://doi.org/10.1142/S0218216592000203
+
+Crossref bibliographic metadata identifies Roger Fenn and Colin Rourke,
+*Racks and links in codimension two*, *Journal of Knot Theory and Its
+Ramifications* 1(4) (1992), 343–406. This locator identifies the article;
+no specific theorem number is attributed to the algebraic Markov statements
+formalized here.
+
+## Scope and conventions
+
 Fenn and Rourke, *Journal of Knot Theory and Its Ramifications* 1 (1992),
 343–406, develop racks and their relationship with codimension-two links.
 The quandle specialization additionally requires idempotence. Joyce's
