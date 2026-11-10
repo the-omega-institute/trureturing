@@ -21,18 +21,10 @@ theorem polynomial_nonneg (z k h : ℝ) (hz : 0 ≤ z) (hZ : z ≤ 3/4) (hk : 0 
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowHeadCertificate.polynomial_nonneg`
+- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowHeadCertificate/Domain03](SixRowHeadCertificate/Domain03.md)
+- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowHeadCertificate/Domain04](SixRowHeadCertificate/Domain04.md)
+- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowHeadCertificate/Domain05](SixRowHeadCertificate/Domain05.md)
+- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowHeadCertificate/Domain06](SixRowHeadCertificate/Domain06.md)
 - Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowHeadCertificate/Part01](SixRowHeadCertificate/Part01.md)
-- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowHeadCertificate/Part02](SixRowHeadCertificate/Part02.md)
-- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowHeadCertificate/Part03](SixRowHeadCertificate/Part03.md)
-- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowHeadCertificate/Part04](SixRowHeadCertificate/Part04.md)
-- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowHeadCertificate/Part05](SixRowHeadCertificate/Part05.md)
-- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowHeadCertificate/Part06](SixRowHeadCertificate/Part06.md)
-- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowHeadCertificate/Part07](SixRowHeadCertificate/Part07.md)
-- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowHeadCertificate/Part08](SixRowHeadCertificate/Part08.md)
-- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowHeadCertificate/Part09](SixRowHeadCertificate/Part09.md)
 - Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowHeadCertificate/Part10](SixRowHeadCertificate/Part10.md)
 - Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowHeadCertificate/Part11](SixRowHeadCertificate/Part11.md)
-- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowHeadCertificate/Part12](SixRowHeadCertificate/Part12.md)
-- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowHeadCertificate/Part13](SixRowHeadCertificate/Part13.md)
-- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowHeadCertificate/Part14](SixRowHeadCertificate/Part14.md)
-- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowHeadCertificate/Part15](SixRowHeadCertificate/Part15.md)

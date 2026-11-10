@@ -9,6 +9,6 @@ internal sealed class Domain02Document : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("sixrowheadcertificate-domain02-node84"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowHeadCertificate/Domain02.node84"),
                 H("Feasible subtree"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("theorem node84 (z k h : ℝ)\n    (hz : (9 / 16) ≤ z) (hZ : z ≤ (21 / 32))\n    (hk : (1 / 2) ≤ k) (hK : k ≤ (3 / 4))\n    (hh : 0 ≤ h) (hH : h ≤ (3 / 8))\n    (hg : 0 ≤ constraint z k h) : 0 ≤ P z k h"))), DescribeRole.Theorem)
+                Blocks(Paragraph(Text("theorem node84 (z k h : ℝ)     (hz : (9 / 16) ≤ z) (hZ : z ≤ (21 / 32))     (hk : (1 / 2) ≤ k) (hK : k ≤ (3 / 4))     (hh : 0 ≤ h) (hH : h ≤ (3 / 8))     (hg : 0 ≤ constraint z k h) : 0 ≤ P z k h"))), DescribeRole.Theorem)
         )));
 }
