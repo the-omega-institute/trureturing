@@ -2908,7 +2908,7 @@ $$
 W\cap hW=0.
 \tag{17.6}
 $$
-若 $W\ne0$，这等价于存在一个 $h$ 使由乘法给出的 $E_h$-线性映射
+对任意 $h\in L\setminus F$，(17.6) 等价于由乘法给出的 $E_h$-线性映射
 $$
 W\otimes_F E_h\longrightarrow L,\qquad
 x\otimes1+y\otimes h\longmapsto x+hy,
@@ -2917,28 +2917,39 @@ x\otimes1+y\otimes h\longmapsto x+hy,
 $$
 单射。
 
-证明。令
+证明。若 $W=0$，任选 $h\in L\setminus F$ 即可。以下设 $m\ge1$。本假设下 $F$ 必为无限域：若 $F$ 有限，则 $L$ 亦有限，单射的平方映射在 $L$ 上满射，故 $L=L^2\subseteq F$，与 $n\ge2$ 矛盾。
+
+令
 $$
 \mathcal S(W)=\{xy^{-1}:x,y\in W,\ y\ne0\}\subseteq L.
 $$
-存在非零向量同时属于 $W$ 和 $hW$，当且仅当 $h\in\mathcal S(W)$。所以只须证明 $\mathcal S(W)$ 不含尽 $L\setminus F$。
+对 $h\in L\setminus F$，存在非零向量同时属于 $W$ 和 $hW$，当且仅当 $h\in\mathcal S(W)$。又因 $W\ne0$，有 $F\subseteq\mathcal S(W)$。所以只须在 $L$ 中找一个不属于 $\mathcal S(W)$ 的实际元素。
 
-若 $F$ 有限，写 $|F|=q$。由非零对 $(x,y)$ 的计数，
+任选 $W$ 的 $F$-基 $w_1,\ldots,w_m$，并用 $L$ 的一组 $F$-基将其识别为 $\mathbf A_F^n$。对每个 $1\le j\le m$，取 $d=2m-1$ 个独立变元 $s_1,\ldots,s_m$ 及 $t_i\ (i\ne j)$，置
 $$
-|\mathcal S(W)|\le(q^m-1)^2
-<q^n-q=|L\setminus F|,
+X=\sum_{i=1}^m s_iw_i,\qquad
+Y_j=w_j+\sum_{i\ne j}t_iw_i,\qquad
+Q_j=Y_j^2=w_j^2+\sum_{i\ne j}t_i^2w_i^2\in F[t_i:i\ne j].
 $$
-其中最后的不等式由 $n\ge2m$ 及 $n\ge2$ 给出，故可取 $h\in(L\setminus F)\setminus\mathcal S(W)$。
+$Q_j$ 的常数项为 $w_j^2\ne0$。在主开集 $U_j=\{Q_j\ne0\}\subseteq\mathbf A_F^d$ 上定义正则映射
+$$
+f_j:U_j\longrightarrow\mathbf A_F^n,\qquad
+f_j(s,t)=\frac{XY_j}{Q_j}.
+$$
+这里乘法取自 $L$ 的 $F$-代数结构，分母是 $F$ 上的标量多项式；每个坐标的分子和共同分母 $Q_j$ 的总次数均至多为二。在每个 $F$-点上，$Y_j\ne0$ 且 $Y_j^{-1}=Y_j/Q_j$，故 $f_j(s,t)=XY_j^{-1}\in\mathcal S(W)$。
 
-若 $F$ 无限，把 $L$ 看成 $n$ 维仿射空间。商去两个独立的标量伸缩后，$\mathcal S(W)$ 是有理映射
+反过来，任取 $xy^{-1}\in\mathcal S(W)$，写 $y=\sum_i a_iw_i$，选取 $a_j\ne0$。同时把 $x,y$ 乘以 $a_j^{-1}$，比值不变，而新分母的第 $j$ 个坐标为一。因此它们给出 $U_j(F)$ 的一个点，像恰为 $xy^{-1}$。于是实际点的像满足
 $$
-\mathbf P(W)\times\mathbf P(W)\times\mathbf G_m
-\dashrightarrow L,\qquad
-([x],[y],\lambda)\longmapsto\lambda xy^{-1}
+\mathcal S(W)=\bigcup_{j=1}^m f_j\bigl(U_j(F)\bigr).
 $$
-的像；其定义域维数为 $2m-1<n$。像的闭包因而是 $L$ 中的真闭子集。无限域上的真闭子集不可能包含仿射空间的全部 $F$-点，而 $L\setminus F$ 在 $L$ 中稠密，故仍可取所需的 $h$。当 $W=0$ 时结论显然成立。
 
-若 $x+hy=0$ 且 $x,y\in W$，便有 $x=hy\in W\cap hW$；反向也显然。因此 (17.6) 正好等价于 (17.7) 的单射性。$\square$
+因为 $d=2m-1<n$，每个 $f_j$ 的 $n$ 个坐标有理函数代数相关。所需的维数比较可直接验证：把这些坐标的全部总次数至多 $D$ 的单项式乘以 $Q_j^D$，便得到 $d$ 个变元中总次数至多 $2D$ 的多项式。这样的单项式有 $\binom{D+n}{n}$ 个，所在多项式空间的维数为 $\binom{2D+d}{d}$。由 $n>d$，当 $D$ 充分大时前者严格大于后者，故存在非平凡的 $F$-线性关系。这给出非零多项式
+$$
+P_j\in F[Z_1,\ldots,Z_n],\qquad P_j\circ f_j=0.
+$$
+关系是有理函数恒等式，故在 $U_j$ 的每个 $F$-点上成立；特别地，像的闭包包含于真闭集 $V(P_j)$。多项式 $P=\prod_{j=1}^m P_j$ 非零，并在整个 $\mathcal S(W)$ 上消失。无限域上的非零多项式不能在全部 $F^n$ 上消失，所以存在实际 $h\in L$ 满足 $P(h)\ne0$。这使 $h\notin\mathcal S(W)$，又由 $F\subseteq\mathcal S(W)$ 得 $h\notin F$，从而得到 (17.6)。特别在 $m=n/2$ 时仍有 $d=n-1<n$，因此同一证明覆盖等号边界。
+
+对 $h\in L\setminus F$，由 $h^2\in F$ 知 $1,h$ 是 $E_h$ 的 $F$-基，故 (17.7) 的源向量唯一写为 $x\otimes1+y\otimes h$。若其像为零，则 $x=hy\in W\cap hW$；交为零时 $x=0$，并由 $h\ne0$ 得 $y=0$。反过来，若 $0\ne x=hy\in W\cap hW$，则 $x\otimes1+y\otimes h$ 是非零核向量。因此 (17.6) 正好等价于 (17.7) 的单射性。$\square$
 
 **定理 17.4（任意观察子空间的精确全环判据）。** 在定义 17.1 的条件下，对任意 $W\le L$，令 $m=\dim_F W$。以下三项等价：
 $$
@@ -3013,7 +3024,7 @@ $$
 $$
 q_{W,E_h}\text{ 各向异性}.
 $$
-所以全域检测失败，也因而全环检测失败。
+这里使整体不约化与使观察形式各向异性的正是同一个 $h$ 和同一个实际子域 $E_h\subset L$。特别在 $m=n/2$ 时，(17.7) 是两个 $m$ 维 $E_h$-空间间的单射，故为同构；等号并不迫使出现观察零向量。所以全域检测失败，也因而全环检测失败。
 
 最小有限扩域次数不能为一：唯一的一次扩域是 $F$，而 $L\otimes_FF=L$ 是域。上面构造的 $E_h$ 次数为二，故每个 $m\le n/2$ 的失败 $W$ 的最小有限失败见证次数恰为二。$\square$
 
