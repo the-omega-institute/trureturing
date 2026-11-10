@@ -11,6 +11,11 @@ strata_touched:
   - D5/S1/Recurrence/Partitions/HalvingPartitionWeights
   - D5/S1/Recurrence/Partitions/HalvingPartitionWeightedNonregularity
   - D5/S1/Recurrence/Partitions/HalvingPartitionGrowth
+  - D5/S1/Recurrence/Partitions/HalvingPartitionAutomaticity
+  - D5/S1/Recurrence/Partitions/HalvingPartitionStatistics
+  - D5/S1/Recurrence/Partitions/HalvingPartitionDilation
+  - D5/S1/Recurrence/Partitions/HalvingPartitionOneZero
+  - D5/S3/Combinatorics/Partitions/HalvingPartitionDeficit
 license: CC-BY-4.0
 triage: anchor
 ---

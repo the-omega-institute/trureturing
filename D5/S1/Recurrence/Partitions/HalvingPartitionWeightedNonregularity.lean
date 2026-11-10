@@ -165,6 +165,72 @@ theorem weightedDifference_gap (t : R) (m r : ℕ) (hr : 1 ≤ r)
     simp only [show ¬(1 ≤ q ∧ 2 ^ q + q = m) from by omega,
       show ¬(1 ≤ q ∧ 2 ^ q + q + 1 = m) from by omega, ↓reduceIte]
 
+open Classical in
+/-- The actual unweighted count has a single unit impulse at J_r=2^r+r.
+The formula includes m=2 over every commutative ring. -/
+theorem count_difference (m : ℕ) (hm : 2 ≤ m) :
+    (count (2 ^ (m + 1) + 1) : R) - (count (2 ^ m + 1) : R) =
+      if ∃ r : ℕ, 1 ≤ r ∧ 2 ^ r + r = m then 1 else 0 := by
+  classical
+  have hs : weightedDifference (1 : R) m =
+      ∑ r ∈ Finset.range (m + 2),
+        if 1 ≤ r ∧ 2 ^ r + r = m then (1 : R) else 0 := by
+    unfold weightedDifference
+    rw [weightedCount_bounded (1 : R) (m + 1) (m + 2) (by omega) (by omega),
+      weightedCount_bounded (1 : R) m (m + 2) hm (by omega)]
+    calc
+      _ = ∑ r ∈ Finset.range (m + 2),
+          (weightedTail (1 : R) (m + 1) r - 1 * weightedTail (1 : R) m r) := by
+        rw [Finset.sum_sub_distrib, ← Finset.mul_sum]
+        simp only [one_pow, one_mul]
+        ring
+      _ = _ := by
+        apply Finset.sum_congr rfl
+        intro r _
+        rw [weightedTail_difference]
+        simp
+  have he : (count (2 ^ (m + 1) + 1) : R) - (count (2 ^ m + 1) : R) =
+      weightedDifference (1 : R) m := by
+    simp only [weightedDifference, weightedCount_one, one_mul]
+  rw [he, hs]
+  split_ifs with h
+  · obtain ⟨r, hr, hm⟩ := h
+    rw [Finset.sum_eq_single r]
+    · simp [hr, hm]
+    · intro q _ hqr
+      have hneq : ¬ (1 ≤ q ∧ 2 ^ q + q = m) := by
+        intro hq
+        rcases lt_or_gt_of_ne hqr with hlt | hgt
+        · have := thresholds_separated hlt
+          omega
+        · have := thresholds_separated hgt
+          omega
+      simp only [if_neg hneq]
+    · intro hnot
+      simp only [Finset.mem_range] at hnot
+      have hp : 0 < (2 : ℕ) ^ r := by positivity
+      omega
+  · apply Finset.sum_eq_zero
+    intro r _
+    exact if_neg (fun hr => h ⟨r, hr⟩)
+
+/-- There are exactly 2^r intervening zero positions after J_r and before
+J_(r+1); i=0 and i=2^r-1 are included. -/
+theorem count_difference_zero_block (r i : ℕ) (hr : 1 ≤ r) (hi : i < 2 ^ r) :
+    (count (2 ^ (2 ^ r + r + 1 + i + 1) + 1) : R) -
+      (count (2 ^ (2 ^ r + r + 1 + i) + 1) : R) = 0 := by
+  classical
+  have hp : 0 < (2 : ℕ) ^ r := by positivity
+  rw [count_difference _ (by omega)]
+  apply if_neg
+  rintro ⟨q, hq, he⟩
+  by_cases hqr : q ≤ r
+  · have hs := threshold_mono hqr
+    omega
+  · have hs := threshold_mono (r := r + 1) (s := q) (by omega)
+    rw [pow_succ] at hs
+    omega
+
 /-- No weight over any nonzero commutative ring admits fixed binary matrices.
 The recurrence is monic, and the proof never divides by t or by a coefficient. -/
 theorem weighted_nonregularity [Nontrivial R] (t : R) :

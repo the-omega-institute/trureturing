@@ -31,11 +31,12 @@ def evenSourceEquiv (n : ℕ) (hn : 0 < n) : SourceLists n ≃ SourceLists (2 * 
         have hf := p.prop.2.2
         rw [he] at hf
         have hx : x = n := by rcases hf.1 with h | h <;> omega
-        exact ⟨xs, by rw [hx] at he; exact he⟩
+        exact ⟨xs, by rw [hx]⟩
     obtain ⟨xs, hxs⟩ := hhead
     have hs := p.prop.2.1
     have hf := p.prop.2.2
     rw [hxs] at hs hf ⊢
+    simp only [List.tail_cons]
     refine ⟨fun x hx => p.prop.1 x (by simp [hxs, hx]), ?_, hf.2⟩
     simp only [List.sum_cons] at hs
     simpa only [List.tail_cons] using (show xs.sum = n by omega)⟩
@@ -48,7 +49,7 @@ def evenSourceEquiv (n : ℕ) (hn : 0 < n) : SourceLists n ≃ SourceLists (2 * 
       have hf := p.prop.2.2
       rw [he] at hf
       have hx : x = n := by rcases hf.1 with h | h <;> omega
-      simpa only [List.tail_cons] using congrArg (fun k => k :: xs) hx.symm
+      simpa only [he, List.tail_cons] using congrArg (fun k => k :: xs) hx.symm
 
 /-- Count invariance is transported through the actual forced-part bijection. -/
 theorem count_even (n : ℕ) : count (2 * n) = count n := by
@@ -61,6 +62,6 @@ theorem count_even_dilation (n v : ℕ) : count (2 ^ v * n) = count n := by
   induction v with
   | zero => simp
   | succ v ih =>
-    rw [pow_succ, show 2 ^ v * 2 * n = 2 * (2 ^ v * n) by omega, count_even, ih]
+    rw [pow_succ, show 2 ^ v * 2 * n = 2 * (2 ^ v * n) by ring, count_even, ih]
 
 end D5.S1.Recurrence.Partitions.HalvingPartitionNonregularity

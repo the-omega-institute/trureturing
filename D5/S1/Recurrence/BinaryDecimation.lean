@@ -97,11 +97,17 @@ theorem arbitrary_matrix_iff (a : ℕ → R) :
       exact congrFun (h1 n) i
 
 
-theorem dyadic_matrix_recurrence [Nontrivial R] (a : ℕ → R) (ha : MatrixFamily a) :
-    ∃ E : LinearRecurrence R, 0 < E.order ∧
+/-- The given dimension d is exactly the monic forward recurrence order.
+No independence, invertibility or torsion restriction is used. -/
+theorem dyadic_fixed_matrix_recurrence [Nontrivial R] (a : ℕ → R)
+    (d : ℕ) (hd : 0 < d) (F : ℕ → Fin d → R)
+    (M0 M1 : Matrix (Fin d) (Fin d) R)
+    (hf : ∀ n, F n ⟨0, hd⟩ = a n)
+    (he : ∀ n, F (2 * n) = M0.mulVec (F n))
+    (ho : ∀ n, F (2 * n + 1) = M1.mulVec (F n)) :
+    ∃ E : LinearRecurrence R, E.order = d ∧
       E.IsSolution (fun n => a (2 ^ (n + 2) + 1)) := by
   classical
-  obtain ⟨d, hd, F, M0, M1, hf, he, ho⟩ := ha
   let v (n : ℕ) := F (2 ^ (n + 1))
   have hstep (n : ℕ) : v (n + 1) = M0.mulVec (v n) := by
     dsimp [v]
@@ -121,7 +127,7 @@ theorem dyadic_matrix_recurrence [Nontrivial R] (a : ℕ → R) (ha : MatrixFami
     rw [show n + 2 = n + 1 + 1 by omega, pow_succ]
     omega
   let E : LinearRecurrence R := ⟨d, fun i => -M0.charpoly.coeff i.val⟩
-  refine ⟨E, hd, ?_⟩
+  refine ⟨E, rfl, ?_⟩
   intro n
   have hlead : M0.charpoly.coeff d = 1 := by
     simpa [Matrix.charpoly_natDegree_eq_dim] using M0.charpoly_monic.coeff_natDegree
@@ -140,6 +146,14 @@ theorem dyadic_matrix_recurrence [Nontrivial R] (a : ℕ → R) (ha : MatrixFami
   rw [Fin.sum_univ_eq_sum_range (fun i => -M0.charpoly.coeff i * a (2 ^ (n + i + 2) + 1)) d]
   simp only [neg_mul, Finset.sum_neg_distrib]
   linear_combination h
+
+/-- A finite matrix family supplies a positive-order monic recurrence. -/
+theorem dyadic_matrix_recurrence [Nontrivial R] (a : ℕ → R) (ha : MatrixFamily a) :
+    ∃ E : LinearRecurrence R, 0 < E.order ∧
+      E.IsSolution (fun n => a (2 ^ (n + 2) + 1)) := by
+  obtain ⟨d, hd, F, M0, M1, hf, he, ho⟩ := ha
+  obtain ⟨E, hE, hs⟩ := dyadic_fixed_matrix_recurrence a d hd F M0 M1 hf he ho
+  exact ⟨E, hE.symm ▸ hd, hs⟩
 
 /-- Every fixed linear combination of a forward shift and the original sequence
 obeys the same recurrence, without dividing by its coefficient. -/

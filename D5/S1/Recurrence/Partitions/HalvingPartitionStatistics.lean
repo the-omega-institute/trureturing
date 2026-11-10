@@ -63,7 +63,8 @@ theorem varianceLength_dyadic (m : ℕ) (hm : 2 ≤ m) :
   unfold varianceLength
   rw [sum_source_lengths m hm (fun ell => ((ell : ℚ) - meanLength (2 ^ m + 1)) ^ 2),
     meanLength_dyadic m hm,
-    Fin.sum_univ_eq_sum_range]
+    Fin.sum_univ_eq_sum_range (fun i : ℕ =>
+      (((m - thresholdCount m + i : ℕ) : ℚ) - (m + 1 - (thresholdCount m : ℚ) / 2)) ^ 2)]
   simp only [Nat.cast_add, ha]
   have hexpand : (∑ i ∈ Finset.range (thresholdCount m + 3),
       ((m : ℚ) - thresholdCount m + i - (m + 1 - (thresholdCount m : ℚ) / 2)) ^ 2) =
