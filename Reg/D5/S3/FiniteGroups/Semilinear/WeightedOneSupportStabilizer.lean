@@ -18,8 +18,7 @@ structure Scope where
 attribute [instance] Scope.fieldK Scope.finiteK Scope.algebraK
 
 private theorem primitive_exists :
-    ∃ (L : Type) (_ : Field L) (_ : Fintype L) (_ : Algebra (ZMod 5) L),
-      ∃ (hL : Fintype.card L = 15625) (ζ : L), IsPrimitiveRoot ζ 15624 := by
+    ∃ (p : Scope) (hL : Fintype.card p.K = 15625) (ζ : p.K), IsPrimitiveRoot ζ 15624 := by
   let L := GaloisField 5 6
   letI : Fintype L := Fintype.ofFinite L
   have hL : Fintype.card L = 15625 := by
@@ -29,7 +28,7 @@ private theorem primitive_exists :
   have hc : Nat.card Lˣ = 15624 := by
     rw [Nat.card_units, Nat.card_eq_fintype_card, hL]
   have hp : IsPrimitiveRoot z 15624 := IsPrimitiveRoot.iff_orderOf.mpr (hz.trans hc)
-  exact ⟨L, inferInstance, inferInstance, inferInstance, hL, z, IsPrimitiveRoot.coe_units_iff.mpr hp⟩
+  exact ⟨⟨L⟩, hL, z, IsPrimitiveRoot.coe_units_iff.mpr hp⟩
 
 namespace stabilizer_structure
 abbrev signature : Signature where
@@ -68,10 +67,11 @@ abbrev arena : Arena where
         (⟨betaIn z hz, Subgroup.mem_zpowers _⟩ : betaSubgroup z hz) ^ 4
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  obtain ⟨K, f, n, a, hK, ζ, hζ⟩ := primitive_exists
-  letI := f
-  letI := n
-  letI := a
+  obtain ⟨p, hK, ζ, hζ⟩ := primitive_exists
+  let K := p.K
+  letI := p.fieldK
+  letI := p.finiteK
+  letI := p.algebraK
   have hbad := (h hK ζ hζ).2.2.2.1
   change (0 : ℕ) = 21 at hbad
   norm_num at hbad
@@ -89,10 +89,11 @@ def family : Registration arena (type_of% (@WeightedSemilinear.OneSupport63.stab
       exact nomatch e
   dependence := by
     intro i
-    obtain ⟨K, f, n, a, hK, ζ, hζ⟩ := primitive_exists
-    letI := f
-    letI := n
-    letI := a
+    obtain ⟨p, hK, ζ, hζ⟩ := primitive_exists
+    let K := p.K
+    letI := p.fieldK
+    letI := p.finiteK
+    letI := p.algebraK
     refine ⟨⟨K⟩, 1, alpha (primitiveUnit ζ hζ), ?_⟩
     have horder := (WeightedSemilinear.OneSupport63.stabilizer_structure hK ζ hζ).2.2.2.1
     change orderOf (1 : Ambient K) ≠ orderOf (alpha (primitiveUnit ζ hζ))
@@ -163,10 +164,11 @@ abbrev arena : Arena where
       (galoisProjection hK z hz).comp s = MonoidHom.id _
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  obtain ⟨K, f, n, a, hK, ζ, hζ⟩ := primitive_exists
-  letI := f
-  letI := n
-  letI := a
+  obtain ⟨p, hK, ζ, hζ⟩ := primitive_exists
+  let K := p.K
+  letI := p.fieldK
+  letI := p.finiteK
+  letI := p.algebraK
   let z := primitiveUnit ζ hζ
   have hz : IsPrimitiveRoot z 15624 := IsPrimitiveRoot.coe_units_iff.mp hζ
   have hpos := WeightedSemilinear.OneSupport63.stabilizer_structure hK ζ hζ
@@ -192,10 +194,11 @@ def family : Registration arena (type_of% (@WeightedSemilinear.OneSupport63.galo
       exact nomatch e
   dependence := by
     intro i
-    obtain ⟨K, f, n, a, hK, ζ, hζ⟩ := primitive_exists
-    letI := f
-    letI := n
-    letI := a
+    obtain ⟨p, hK, ζ, hζ⟩ := primitive_exists
+    let K := p.K
+    letI := p.fieldK
+    letI := p.finiteK
+    letI := p.algebraK
     refine ⟨⟨K⟩, 1, tau (primitiveUnit ζ hζ), ?_⟩
     have hpos := WeightedSemilinear.OneSupport63.stabilizer_structure hK ζ hζ
     change (1 : Ambient K) ^ 3 ≠ tau (primitiveUnit ζ hζ) ^ 3
