@@ -31,6 +31,9 @@ internal sealed class HardinA233125SquareStripDocument : IScribeDocumentDefiniti
                 "A row contains four individual colours."),
             Entry("horizontal", "rowLegal", "Horizontal bonds", Horizontal(),
                 "Fin.castSucc and Fin.succ select consecutive columns."),
+            Entry("decidable-horizontal", "decidableRowLegal", "Deciding horizontal bonds",
+                DecidableHorizontal(),
+                "The defining expression is inferInstanceAs for the displayed universally quantified conjunction."),
             Entry("vertical", "bonds", "Vertical bonds", Vertical(),
                 "Only equal columns in consecutive rows are joined. Diagonals are free."),
             Entry("count", "a", "The literal filtered finite count", Count(),
@@ -90,6 +93,17 @@ internal sealed class HardinA233125SquareStripDocument : IScribeDocumentDefiniti
             literature ? AssessedProvenance.FromLiterature(Source)
                 : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
+
+    private static Formula DecidableHorizontal()
+    {
+        var c = V("c"); var j = V("j");
+        var x = At(c, Call("Fin.castSucc", j));
+        var y = At(c, Call("Fin.succ", j));
+        var body = All("j", Fin(3), And(Ne(x, y), Ne(Add(Val(x), Val(y)), D(5))));
+        return All("c", Name(Root + "Row"),
+            Eq(Typed(Call(Root + "decidableRowLegal", c), Call("Decidable", Parenthesized(Call(Root + "rowLegal", c)))),
+                Call("inferInstanceAs", Parenthesized(Call("Decidable", Parenthesized(body))))));
+    }
 
     private static Formula Horizontal()
     {
