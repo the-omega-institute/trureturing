@@ -4,7 +4,7 @@
 
 The complete uniform corrected-Euler power family
 
-The parameter s is an integer. The contract uses all s>=2 and every positive natural index. The internal integer weight uses s.toNat; weight_cast proves equality with the requested rational integer power for every s>=0, including zero. All appearances of s.toNat-1 and s.toNat*(r-1)-r represent the corresponding nonnegative integer exponents on their stated domains. The actual F is exp(sum over n>=1 of (n^s-a_s(n))*X^n/n). Its integer coefficients f are extracted independently from the canonical Euler series and then identified with the actual rational coefficients. Su, Theorems 7.1-7.2, owns the known square-weight conclusions; the supplied 4 November 2026 note by Haobo Ma and Wenlin Zhang motivates the uniform extension. Literature novelty of the all-s extension is unverified. Bala owns the cited universal-shift theorem for A082579, which is outside this module.
+The parameter s is an integer. The contract uses all s>=2 and every positive natural index. The internal integer weight uses s.toNat; weight_cast proves equality with the requested rational integer power for every s>=0, including zero. All appearances of s.toNat-1 and s.toNat*(r-1)-r represent the corresponding nonnegative integer exponents on their stated domains. The actual F is exp(sum over n>=1 of (n^s-a_s(n))*X^n/n). Its integer coefficients f are extracted independently from the canonical Euler series and then identified with the actual rational coefficients. Su, Theorems 7.1-7.2, owns the known square-weight conclusions; the supplied note attributed to Haobo Ma and Wenlin Zhang motivates the uniform extension. The note's authorship and literature novelty of the all-s extension are unverified. Bala owns the cited universal-shift theorem for A082579, which is outside this module.
 
 **Definition 1.1 (weight).**
 
@@ -210,31 +210,11 @@ Lean statement: `D5/S3/Arith/Congruence/HannaUniformCorrection.coefficient_cardi
 
 The independent carrier counts the actual coefficients. The proof transports nonnegative Euler exponents to natural colours and consumes the generic cardinality correspondence.
 
-**Theorem 1.18 (coefficient zero).**
+For every integer s, including negative parameters, f_s(0)=1 follows directly from the definitions. Set b(i)=c_s(i+1). By `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.eulerSeries`, f_s(0) is coefficient zero of ledgerProduct b 0. The definition `D5/S1/Recurrence/Witt/PrimitiveEulerLedger.ledgerProduct` makes this the product over the empty range, hence the constant series one, whose coefficient zero is one. This argument concerns the integer Euler series and requires neither nonnegative s nor an assertion about negative-power integrality.
 
-Lean statement: `D5/S3/Arith/Congruence/HannaUniformCorrection.coefficient_zero`
+For every integer s>=0 and every natural n, the same actual coefficients satisfy the integer identity n*f_s(n)=sum over 1<=j<=n of (j^(s.toNat)-a_s(j))*f_s(n-j). Apply `D5/S1/Recurrence/Witt/EulerExponentialCoefficients.coefficient_recurrence` with g(m)=((weight(s,m)-a_s(m)):Q). Its exponentialSum g is F_s because weight_cast identifies the integer weight with the rational integer power. The equality `D5/S3/Arith/Congruence/HannaUniformCorrection.coefficient_eq` identifies every rational coefficient with the cast of f_s. Injectivity of the integer-to-rational cast gives the displayed integer identity; replacing j by k+1 gives exactly the sum over k in range n. At n=0 both sides are zero. The reusable recurrence itself extracts coefficients from `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.exponential_sum_equation`: the positive-degree ghost series has coefficient g(j), the derivative contributes n times coefficient n, and multiplication gives the finite convolution. This is a consequence of the generic supplier and the coefficient correspondence, without defining f_s recursively.
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/HannaUniformCorrection.coefficient_zero` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The empty Euler prefix has constant coefficient one, so f_s(0)=1.
-
-**Theorem 1.19 (recurrence).**
-
-Lean statement: `D5/S3/Arith/Congruence/HannaUniformCorrection.recurrence`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/HannaUniformCorrection.recurrence` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The displayed range formulation is precisely the positive-index sum from k=1 through n, with k replaced by k+1. The proof transports the actual formal-exponential recurrence through the coefficient identity.
-
-**Theorem 1.20 (coefficient positive).**
+**Theorem 1.18 (coefficient positive).**
 
 Lean statement: `D5/S3/Arith/Congruence/HannaUniformCorrection.coefficient_positive`
 
@@ -246,7 +226,7 @@ Lean statement: `D5/S3/Arith/Congruence/HannaUniformCorrection.coefficient_posit
 
 The corrected ghost n^s-a_s(n) is strictly positive for s>=2 and n>0. The general exponential positivity theorem therefore applies to the actual f_s.
 
-**Theorem 1.21 (coefficient monotone).**
+**Theorem 1.19 (coefficient monotone).**
 
 Lean statement: `D5/S3/Arith/Congruence/HannaUniformCorrection.coefficient_monotone`
 
@@ -258,7 +238,7 @@ Lean statement: `D5/S3/Arith/Congruence/HannaUniformCorrection.coefficient_monot
 
 The difference (n+1)^s-n^s is at least n+1 for s>=2 and n>=1. The correction bounds make corrected ghosts increasing, with first ghost one. The general convolution comparison proves nondecreasing f_s.
 
-**Theorem 1.22 (correction boundary).**
+**Theorem 1.20 (correction boundary).**
 
 Lean statement: `D5/S3/Arith/Congruence/HannaUniformCorrection.correction_boundary`
 
@@ -270,7 +250,7 @@ Lean statement: `D5/S3/Arith/Congruence/HannaUniformCorrection.correction_bounda
 
 At weights zero and one, the bounded positive-index corrections are respectively zero and n-1. Their literal corrected ghosts equal one. Uniqueness comes from the same generic construction.
 
-**Theorem 1.23 (F boundary).**
+**Theorem 1.21 (F boundary).**
 
 Lean statement: `D5/S3/Arith/Congruence/HannaUniformCorrection.F_boundary`
 
@@ -284,6 +264,10 @@ Both actual boundary exponentials equal the inverse of one minus X. Coefficient 
 
 ## References
 
+- Truth anchor: `D5/S1/Recurrence/Witt/EulerExponentialCoefficients.coefficient_recurrence`
+- Truth anchor: `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.eulerSeries`
+- Truth anchor: `D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.exponential_sum_equation`
+- Truth anchor: `D5/S1/Recurrence/Witt/PrimitiveEulerLedger.ledgerProduct`
 - Truth anchor: `D5/S3/Arith/Congruence/HannaUniformCorrection.ColouredPartition`
 - Truth anchor: `D5/S3/Arith/Congruence/HannaUniformCorrection.F`
 - Truth anchor: `D5/S3/Arith/Congruence/HannaUniformCorrection.F_boundary`
@@ -292,9 +276,9 @@ Both actual boundary exponentials equal the inverse of one minus X. Coefficient 
 - Truth anchor: `D5/S3/Arith/Congruence/HannaUniformCorrection.c`
 - Truth anchor: `D5/S3/Arith/Congruence/HannaUniformCorrection.coefficient_cardinality`
 - Truth anchor: `D5/S3/Arith/Congruence/HannaUniformCorrection.coefficient_eq`
+- Truth anchor: `D5/S3/Arith/Congruence/HannaUniformCorrection.coefficient_eq`
 - Truth anchor: `D5/S3/Arith/Congruence/HannaUniformCorrection.coefficient_monotone`
 - Truth anchor: `D5/S3/Arith/Congruence/HannaUniformCorrection.coefficient_positive`
-- Truth anchor: `D5/S3/Arith/Congruence/HannaUniformCorrection.coefficient_zero`
 - Truth anchor: `D5/S3/Arith/Congruence/HannaUniformCorrection.correction_boundary`
 - Truth anchor: `D5/S3/Arith/Congruence/HannaUniformCorrection.correction_exists_unique`
 - Truth anchor: `D5/S3/Arith/Congruence/HannaUniformCorrection.correction_prime_power`
@@ -304,7 +288,6 @@ Both actual boundary exponentials equal the inverse of one minus X. Coefficient 
 - Truth anchor: `D5/S3/Arith/Congruence/HannaUniformCorrection.exponent_prime`
 - Truth anchor: `D5/S3/Arith/Congruence/HannaUniformCorrection.exponent_prime_power`
 - Truth anchor: `D5/S3/Arith/Congruence/HannaUniformCorrection.f`
-- Truth anchor: `D5/S3/Arith/Congruence/HannaUniformCorrection.recurrence`
 - Truth anchor: `D5/S3/Arith/Congruence/HannaUniformCorrection.weight`
 - Truth anchor: `D5/S3/Arith/Congruence/HannaUniformCorrection.weight_cast`
 - Dependency: [D5/S1/Recurrence/Witt/BoundedEulerCorrection](../../../S1/Recurrence/Witt/BoundedEulerCorrection.md)
