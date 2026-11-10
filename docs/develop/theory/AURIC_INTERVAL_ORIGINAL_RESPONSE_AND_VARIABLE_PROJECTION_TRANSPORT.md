@@ -649,3 +649,952 @@ SQ31的准确环境、全部数学正读取和共同取向，OP80.2／82.1／83.
 [HOS]: https://hanche.folk.ntnu.no/joa/
 
 ## 追加锚（本行以下为增补区）
+
+## 9. 演员轴平移保留 P2，却不运输原零探针预算
+
+### 9.1 固定矩阵的较弱接口与准确来源
+
+本节以[全 PB 多项式卷][AXF]为来源卷 $\mathsf F$，固定身份为 `2c1987c6ad3acbe4f9309ebde7bd204eacddd31a`。直接复用其 §41.1 的固定输出接口、式(39.7)的标准乘法恒等式及 §42 的零平移星形结论；不重证零平移刚性，不把标准零余量 PB 计为新内容。$\mathsf F$ §43 的分离背景稳定性保留自身形状前件，不用于下述真环境连线。
+
+**定义 9.1（轴平移星形的固定输出数据）。** 在本节局部记
+
+$$
+\begin{gathered}
+\mathcal A_\star=M_3(\mathbb C),\quad 1_\star=I_3,\quad
+P_\star=\operatorname{diag}(1,1,0),\quad
+\mathcal Q_\star=P_\star\mathcal A_\star P_\star,\\
+c=\operatorname{diag}(1,2,0),\quad d=\operatorname{diag}(1,-2,0),\quad
+t_0=\begin{pmatrix}0&0&1\\0&0&\sqrt2\\1&\sqrt2&0\end{pmatrix},\\
+t=t_\lambda=t_0+\lambda c,\quad s=\rho d,\quad
+K_\sigma(a,b)=\frac{\sigma i}{2}[a,b],\quad
+g_0=K_\sigma(c,t)=K_\sigma(c,t_0),\quad g=g_0+s,
+\qquad \lambda,\rho\in\mathbb R,\quad\sigma\in\{1,-1\}.
+\end{gathered}
+\tag{9.1}
+$$
+
+这里 $\mathcal Q_\star$ 是矩阵角，不是前文正锥 $C$；矩阵乘法、伴随和准确正锥均已给定。局部矩阵符号不替换前文 $E,F,J$。每份 $\phi$ 是 $\mathcal A_\star$ 上的数学正复线性泛函，原质量 $\phi(1_\star)$ 可为任意有限非负实数。对自伴 $U,V$ 置
+
+$$
+B_\phi(U,V)=\phi(U^2)\phi(V^2)-\phi(U\circ V)^2\ge0,
+\qquad U\circ V=(UV+VU)/2.
+\tag{9.2}
+$$
+
+只对实际 $x=x^*\in\mathcal Q_\star$ 定义全部原标签
+
+$$
+\begin{gathered}
+h=K_\sigma(c,x),\quad r=c\circ x,\quad k=c\circ t,\\
+R_+=x+h-k,\quad R_-=x-h+k,\quad
+S_+=t+r+g,\quad S_-=t-r-g,\\
+L_x=-2x\circ(h-k)-2t\circ(r+g),\\
+\mathsf{P2}:\quad \phi(g)^2\le B_\phi(c,t),\qquad
+\mathsf{PB}_x:\quad |\phi(L_x)|\le
+\sqrt{B_\phi(R_+,S_+)}+\sqrt{B_\phi(R_-,S_-)}\quad(\phi\ge0).
+\end{gathered}
+\tag{9.3}
+$$
+
+特别是 $r=c\circ x$，不是别的探针变量。该有限接口没有未知总响应 $D$、指定外响应或以 $t$ 为演员的原调用，也没有输入正则性、压缩自然性、相对单位中性或免费 CP 完成。它与定义1.2的 $\mathsf H_I(D)$ 严格分开；若完整模型实际供应已分类角和 $g=D(c,t)$，才按 $\mathsf F$ §41.1 的原 PB 与外层 P2 得到这些必要预算。
+
+### 9.2 每个非零平移的统一余量及区间消费者
+
+**定理 9.2（非零平移的全部正读取零探针余量）。** 对每个实数 $\lambda\ne0$ 定义
+
+$$
+\begin{aligned}
+T_\lambda&=\sqrt{5\lambda^2+6},&N_\lambda&=\sqrt{17\lambda^2+9/2},&j&=3/2,\\
+I_\lambda&=\sqrt{\frac9{16\lambda^2}+\frac43+\frac{16\lambda^2}{9}},&
+\kappa_\lambda&=\max\{|\lambda|,|\lambda|^{-1}\},\\
+m_\lambda&=\frac1{144\kappa_\lambda^2I_\lambda^6(T_\lambda^2+j^2)N_\lambda(T_\lambda+j)},&
+\varepsilon_\lambda&=\min\left\{\frac12,\frac{m_\lambda}{8(T_\lambda+N_\lambda)}\right\}.
+\end{aligned}
+\tag{9.4}
+$$
+
+则对任一 $\sigma$ 及全部 $|\rho|\le\varepsilon_\lambda$，(9.3)的 P2 对全部数学正泛函成立，且原 $x=0$ 的完整标签
+
+$$
+R_+=-k,\quad R_-=k,\quad S_\pm=t\pm g,\quad
+L_0=-\{t,g\},\qquad \{a,b\}=ab+ba
+\tag{9.5}
+$$
+
+满足统一余量
+
+$$
+\sqrt{B_\phi(-k,t+g)}+\sqrt{B_\phi(k,t-g)}-|\phi(-\{t,g\})|
+\ge\frac{m_\lambda}{2}\phi(1_\star)\qquad(\phi\ge0).
+\tag{9.6}
+$$
+
+因此每个非零 $\lambda$ 都容许明确的非零 $\rho$，例如取 $\rho=\varepsilon_\lambda/2>0$。特别地
+
+$$
+\lambda=1,\qquad \rho=\frac1{398131200}
+\quad\Longrightarrow\quad
+\text{(9.6)左侧}\ge\frac{\phi(1_\star)}{11059200}.
+\tag{9.7}
+$$
+
+同一定理的实际应用取定义1.1中 $n=3$ 的 $M=C([0,1],M_3(\mathbb C))$，将全部矩阵置为常值截面。对每份数学正泛函 $\Psi$，P2 与(9.6)原样成立，质量为 $\Psi(u)$。而同一非零 $\rho$ 在 $\lambda=0$ 的常值数据被 $\mathsf F$ 定理42.2的一份向量读取复合任意点值映射排除。因此演员轴平移的 P2 不变性不蕴含零探针预算的反向运输。此结论不声称任何非零探针预算、完整响应模型或 $\mathsf H_I(D)$。
+
+### 9.3 全复参数 P2 与明确的共同直线障碍
+
+**证明，P2。** 设 $a=\phi(c^2)$、$b=\phi(c\circ t_0)$、$e=\phi(t_0^2)$。成熟的实 Gram 剪切恒等式给
+
+$$
+B_\phi(c,t_0+\lambda c)
+=a(e+2\lambda b+\lambda^2a)-(b+\lambda a)^2=ae-b^2.
+\tag{9.8}
+$$
+
+又 $[c,t_0+\lambda c]=[c,t_0]$，故同一 $\rho$ 的 P2 预算读数完全不变；二表的每个条目不必相同。这不是 PB 运输。
+
+对 $z=X+iY$ 记 $\mathcal R=X^2+Y^2$，形成完整三维矩阵
+
+$$
+Q_z=(t_0-zc)^*(t_0-zc)+2\sigma Ys.
+\tag{9.9}
+$$
+
+写 $v=(1,\sqrt2)^{\mathsf T}$、$c_2=\operatorname{diag}(1,2)$、$s_2=\rho\operatorname{diag}(1,-2)$。$Q_z$ 右下角为 $3$，左上块为 $vv^*+\mathcal R c_2^2+2\sigma Ys_2$，右上列为 $-\bar zc_2v$。其 Schur 补为
+
+$$
+D_z=\begin{pmatrix}
+1+2\mathcal R/3+2\sigma\rho Y&\sqrt2(1-2\mathcal R/3)\\
+\sqrt2(1-2\mathcal R/3)&2+4\mathcal R/3-4\sigma\rho Y
+\end{pmatrix},
+\tag{9.10}
+$$
+
+$$
+(D_z)_{11}=\frac23X^2+\frac23\left(Y+\frac32\sigma\rho\right)^2+1-\frac32\rho^2,
+\qquad
+\det D_z=\frac{16}{3}X^2+\left(\frac{16}{3}-8\rho^2\right)Y^2.
+\tag{9.11}
+$$
+
+当 $|\rho|\le1/2$，首项严格正，行列式非负；配方给 $D_z\succeq0$，再对环境坐标配方给 $Q_z\succeq0$，包括 $z=0$。这里保留两条环境连线。
+
+置 $\mathcal P_w^\star=t_0^2-2\operatorname{Re}(w)(c\circ t_0)+|w|^2c^2+2\operatorname{Im}(w)g$。展开(9.9)给 $Q_{X+iY}=\mathcal P_{X+i\sigma Y}^\star$。对正 $\phi$，$\phi(\mathcal P_w^\star)$ 正是
+
+$$
+\begin{pmatrix}\phi(c^2)&\phi(c\circ t_0)-i\phi(g)\\
+\phi(c\circ t_0)+i\phi(g)&\phi(t_0^2)\end{pmatrix}
+\tag{9.12}
+$$
+
+在列 $(-w,1)^{\mathsf T}$ 上的二次值。这些列及其复数倍涵盖第二坐标非零的全部列；其余列由 $\phi(c^2)\ge0$ 处理。因此(9.12)半正定，行列式给原 P2；(9.8)将它传给所有 $\lambda$。没有除以质量或 Gram 对角，且尚未推出 PB。
+
+**证明，显式矩阵障碍。** 暂置 $\rho=0$，记
+
+$$
+J_\star=\begin{pmatrix}0&0&1/2\\0&0&\sqrt2\\-1/2&-\sqrt2&0\end{pmatrix},\quad
+g_0=i\sigma J_\star,\qquad
+k=\begin{pmatrix}\lambda&0&1/2\\0&4\lambda&\sqrt2\\1/2&\sqrt2&0\end{pmatrix}.
+\tag{9.13}
+$$
+
+$\det k=-3\lambda$，以下矩阵与 $k$ 两侧相乘均为 $1_\star$：
+
+$$
+k^{-1}=\begin{pmatrix}
+2/(3\lambda)&-\sqrt2/(6\lambda)&2/3\\
+-\sqrt2/(6\lambda)&1/(12\lambda)&\sqrt2/3\\
+2/3&\sqrt2/3&-4\lambda/3
+\end{pmatrix}.
+\tag{9.14}
+$$
+
+局部置 $\mathsf A_\lambda=tk^{-1}$、$\mathsf H_\lambda=J_\star k^{-1}$。在 $\lambda=1$ 有
+
+$$
+\mathsf A_1=\begin{pmatrix}4/3&\sqrt2/6&-2/3\\\sqrt2/3&5/6&-2\sqrt2/3\\1/3&-\sqrt2/12&4/3\end{pmatrix},\quad
+\mathsf H_1=\begin{pmatrix}1/3&\sqrt2/6&-2/3\\2\sqrt2/3&2/3&-4\sqrt2/3\\0&0&-1\end{pmatrix}.
+\tag{9.15}
+$$
+
+对 $\mathsf E_\lambda=\operatorname{diag}(\lambda,\lambda,1)$，(9.14)逐项给
+
+$$
+\mathsf A_\lambda=\mathsf E_\lambda\mathsf A_1\mathsf E_\lambda^{-1},\qquad
+\mathsf H_\lambda=\mathsf E_\lambda\mathsf H_1\mathsf E_\lambda^{-1}.
+\tag{9.16}
+$$
+
+交换子及其明确逆为
+
+$$
+\mathsf C_1=[\mathsf A_1,\mathsf H_1]
+=\begin{pmatrix}1/3&1/(6\sqrt2)&2/3\\0&-1/3&2\sqrt2\\1/3&-1/(6\sqrt2)&0\end{pmatrix},\quad
+\mathsf C_1^{-1}=\begin{pmatrix}
+9/8&-3/(8\sqrt2)&15/8\\9\sqrt2/4&-3/4&-9\sqrt2/4\\3/8&3/(8\sqrt2)&-3/8
+\end{pmatrix}.
+\tag{9.17}
+$$
+
+直接乘法给 $\mathsf C_1\mathsf C_1^{-1}=\mathsf C_1^{-1}\mathsf C_1=1_\star$。Frobenius 范数与相似变换给
+
+$$
+\|\mathsf C_1^{-1}\|^2\le\|\mathsf C_1^{-1}\|_F^2=\frac{1665}{64}<36,
+\qquad
+\|[\mathsf A_\lambda,\mathsf H_\lambda]^{-1}\|\le6\kappa_\lambda.
+\tag{9.18}
+$$
+
+同样逐项平方求和，连同 $J_\star$ 的双边星形，给
+
+$$
+\|t\|\le T_\lambda,\quad\|k\|\le N_\lambda,\quad
+\|k^{-1}\|\le I_\lambda,\quad\|J_\star\|=j,\quad
+\|\mathsf A_\lambda\|\le T_\lambda I_\lambda,\quad
+\|\mathsf H_\lambda\|\le jI_\lambda.
+\tag{9.19}
+$$
+
+特别是 $\|k^{-1}\|_F^2=9/(16\lambda^2)+4/3+16\lambda^2/9$，整个环境行列均在内。这里的相似关系仅比较已知矩阵，不比较未知响应或不同输入的 PB 标签。
+
+对复单位向量 $\eta$，置 $a=\eta^*\mathsf A_\lambda\eta$、$b=\eta^*\mathsf H_\lambda\eta$、$u_\eta=\mathsf A_\lambda\eta-a\eta$、$v_\eta=\mathsf H_\lambda\eta-b\eta$。二者均与 $\eta$ 复正交，且准确有
+
+$$
+[\mathsf A_\lambda,\mathsf H_\lambda]\eta
+=(\mathsf A_\lambda-a1_\star)v_\eta-(\mathsf H_\lambda-b1_\star)u_\eta.
+$$
+
+由于 $|a|\le\|\mathsf A_\lambda\|$、$|b|\le\|\mathsf H_\lambda\|$，(9.18)–(9.19)给共同直线障碍
+
+$$
+\frac1{6\kappa_\lambda}
+\le2I_\lambda(T_\lambda\|v_\eta\|+j\|u_\eta\|)
+\le2I_\lambda\sqrt{T_\lambda^2+j^2}\sqrt{\|u_\eta\|^2+\|v_\eta\|^2},
+\quad
+\|u_\eta\|^2+\|v_\eta\|^2\ge\frac1{144\kappa_\lambda^2I_\lambda^2(T_\lambda^2+j^2)}.
+\tag{9.20}
+$$
+
+### 9.4 两笔复亏量、真实面积与有限扰动
+
+**证明，零余量时的严格余量。** 在复向量上定义实 Gram 面积与复 Gram 行列式
+
+$$
+\mathcal A(y,z)=\sqrt{\|y\|^2\|z\|^2-(\operatorname{Re}(y^*z))^2},\qquad
+\Delta(y,z)=\|y\|^2\|z\|^2-|y^*z|^2.
+\tag{9.21}
+$$
+
+实正交投影给 $\mathcal A(y,z)=\|y\|\|\Pi_{y,\mathbb R}z\|$，并包括 $y=0$ 地给出
+
+$$
+|\mathcal A(y,z+w)-\mathcal A(y,z)|\le\|y\|\|w\|.
+\tag{9.22}
+$$
+
+向量泛函 $\phi_\xi(U)=\xi^*U\xi$ 满足 $\sqrt{B_{\phi_\xi}(U,V)}=\mathcal A(U\xi,V\xi)$。取 $\|\xi\|=1$、$y=k\xi$、$\eta=y/\|y\|$、$b_\pm=(t\pm g_0)\xi$；由 $k$ 可逆，$\|y\|\ge I_\lambda^{-1}$。又
+
+$$
+b_\pm=\|y\|(\mathsf A_\lambda\pm i\sigma\mathsf H_\lambda)\eta,
+\qquad
+\Delta(y,b_+)+\Delta(y,b_-)
+=2\|y\|^4(\|u_\eta\|^2+\|v_\eta\|^2)
+\ge\frac1{72\kappa_\lambda^2I_\lambda^6(T_\lambda^2+j^2)}.
+\tag{9.23}
+$$
+
+等号由到 $\eta$ 复正交补的投影和平行四边形恒等式给出；没有丢掉环境分量。记 $a_\pm=\mathcal A(y,b_\pm)$、$q_\pm=\operatorname{Im}(y^*b_\pm)$，则
+
+$$
+a_\pm^2-q_\pm^2=\Delta(y,b_\pm),\quad
+0\le|q_\pm|\le a_\pm\le N_\lambda(T_\lambda+j),\quad
+ a_\pm-|q_\pm|\ge\frac{\Delta(y,b_\pm)}{2N_\lambda(T_\lambda+j)}.
+\tag{9.24}
+$$
+
+末式在 $a_\pm+|q_\pm|>0$ 时由平方差分解得到；该和为零时两边均零。零 Gram 情形没有删去。
+
+为区分探针下标与余量，记 $L_0^{(0)}=-\{t,g_0\}$。由 $\{t,[c,t]\}=[c,t^2]$、$[k,t]=[c,t^2]/2$，准确有
+
+$$
+L_0^{(0)}=-\sigma i[k,t],\qquad
+\phi_\xi(L_0^{(0)})=\sigma(q_++q_-).
+\tag{9.25}
+$$
+
+这只是 $\mathsf F$(39.7) 的已知标准 PB 在零探针处的恒等式。结合(9.23)–(9.25)及标量三角不等式，得到
+
+$$
+\mathcal A(k\xi,(t+g_0)\xi)+\mathcal A(k\xi,(t-g_0)\xi)
+-|\phi_\xi(L_0^{(0)})|
+\ge(a_+-|q_+|)+(a_--|q_-|)\ge m_\lambda.
+\tag{9.26}
+$$
+
+新推断是用一个可逆交换子同时控制两笔复 Cauchy–Schwarz 亏量，从而取得真实预算的严格统一余量；并非重证标准零余量预算。
+
+**证明，支付两侧扰动。** 现在恢复 $s=\rho d$，$\|s\|=2|\rho|$。由(9.22)，两笔右端面积的总下降至多
+
+$$
+2\|k\xi\|\|s\xi\|\le4N_\lambda|\rho|.
+$$
+
+左端 $L_0=L_0^{(0)}-\{t,s\}$ 的绝对读数增加至多 $\|\{t,s\}\|\le4T_\lambda|\rho|$。故每个单位向量的完整原零探针余量至少为
+
+$$
+m_\lambda-4(T_\lambda+N_\lambda)|\rho|\ge m_\lambda/2.
+\tag{9.27}
+$$
+
+### 9.5 全部混合质量、确切有理常数及常值截面接线
+
+**证明，所有正泛函。** 对自伴 $U,V$ 及正泛函 $\psi$，实 Gram 矩阵
+
+$$
+G_\psi(U,V)=\begin{pmatrix}\psi(U^2)&\psi(U\circ V)\\\psi(U\circ V)&\psi(V^2)\end{pmatrix}\succeq0.
+\tag{9.28}
+$$
+
+承重的成熟二阶行列式根不等式为：$M,N\succeq0$ 时
+
+$$
+\sqrt{\det(M+N)}\ge\sqrt{\det M}+\sqrt{\det N}.
+\tag{9.29}
+$$
+
+若 $M>0$，合同变换给 $Q=M^{-1/2}NM^{-1/2}\succeq0$，而 $Q$ 的两个非负特征值给 $\operatorname{tr}Q\ge2\sqrt{\det Q}$；将此代入 $\det(1+Q)=1+\operatorname{tr}Q+\det Q$ 即得(9.29)。以 $M+\delta1$ 替代奇异 $M$，对明确有限矩阵取 $\delta\downarrow0$ 即包含奇异情形。这不涉及未知 $D$ 的任何极限，也不另立新一般定理。
+
+有限维谱分解给每个正泛函 $\phi=\sum_{j=1}^3w_j\phi_{\xi_j}$，其中 $w_j\ge0$、$\|\xi_j\|=1$、$\sum_jw_j=\phi(1_\star)$，零权保留。由(9.28)的线性、行列式根的一次齐次性和(9.29)，
+
+$$
+\sqrt{B_\phi(U,V)}\ge\sum_jw_j\sqrt{B_{\phi_{\xi_j}}(U,V)}.
+\tag{9.30}
+$$
+
+分别用于两对实际原标签，再用 $|\sum_jw_j\phi_{\xi_j}(L_0)|\le\sum_jw_j|\phi_{\xi_j}(L_0)|$，(9.27)给(9.6)。若质量为零，谱权全零、$\phi=0$，结论为 $0\ge0$。至此包含所有混合、次归一、不等及零质量；没有把向量检验直接冒充混合结论。
+
+**证明，有理消费者。** 在 $\lambda=1$，(9.14)给 $I_1=23/12\le2$，且 $\kappa_1=1$、$T_1=\sqrt{11}\le4$、$N_1=\sqrt{43/2}\le5$、$j=3/2\le2$。因此逐个支付分母因子后有
+
+$$
+m_1\ge\frac1{144\cdot64\cdot20\cdot5\cdot6}=\frac1{5529600},\quad
+\varepsilon_1\ge\min\left\{\frac12,\frac1{8\cdot9\cdot5529600}\right\}
+=\frac1{398131200},\quad \frac{m_1}2\ge\frac1{11059200}.
+\tag{9.31}
+$$
+
+这证明(9.7)。两条环境边仍非零，且 $s\ne0$ 时
+
+$$
+c\circ t-ig=\begin{cases}ct-is,&\sigma=1,\\tc-is,&\sigma=-1,\end{cases}
+\tag{9.32}
+$$
+
+所以通过该零探针接口的行确实有非标准余量。$|\rho|=1/2$ 的 P2 证书对所有平移成立，不表示该残差通过零探针 PB。
+
+**证明，同一定理在本卷区间对象上的消费。** 取含单位正嵌入
+
+$$
+\iota:\mathcal A_\star\hookrightarrow M,\qquad (\iota a)(\tau)=a,
+\qquad \iota(1_\star)=u,\qquad\tau\in[0,1],\qquad
+\iota(ab)=\iota(a)\iota(b),\quad\iota(a^*)=\iota(a)^*.
+\tag{9.33}
+$$
+
+它还是忠实的复线性保乘法、保伴随映射。因而平方、Jordan 乘法、交换子、反交换子与(9.3)中的全部原标签逐个交换：若 $\widetilde c=\iota c$、$\widetilde t=\iota t$、$\widetilde g=\iota g$、$X=\iota x$，则实际角为 $\iota(P_\star)M\iota(P_\star)$，且
+
+$$
+\widetilde h=\iota h,\quad\widetilde r=\widetilde c\circ X=\iota r,\quad
+\widetilde k=\iota k,\quad
+\widetilde R_\pm=\iota R_\pm,\quad\widetilde S_\pm=\iota S_\pm,\quad
+\widetilde L_X=\iota L_x.
+\tag{9.34}
+$$
+
+任一数学正泛函 $\Psi$ 给 $\phi=\Psi\circ\iota\ge0$，严格保持
+
+$$
+\phi(1_\star)=\Psi(u),\quad
+B_\Psi(\iota U,\iota V)=B_\phi(U,V),\quad
+\Psi(\widetilde L_X)=\phi(L_x),\quad\Psi(\widetilde g)=\phi(g).
+\tag{9.35}
+$$
+
+于是(9.8)的 P2 剪切不变性及(9.6)的 $X=0$ 余量逐字提升，保留全部质量。这里只传已给常值数据及其乘积，不假定任何未知响应与 $\iota$、压缩或点值交换。
+
+反向比较取同一个非零 $\rho$，在 $\lambda=0$ 直接调用 $\mathsf F$ 定理42.2：取其(42.5)–(42.7)的明确向量 $\xi_{\sigma,\rho}^{(0)}$，其质量为 $1+\varepsilon_\rho^2(1+\theta^2)$，其(42.8)的原零预算违反量至少 $\delta_\rho^2/(4M_\rho)>0$。对任意 $\tau\in[0,1]$，本域的实际点值映射 $\operatorname{ev}_\tau:M\to\mathcal A_\star$ 含单位且正，且 $\operatorname{ev}_\tau\iota=\operatorname{id}$。因此
+
+$$
+\Psi_{\tau,\sigma,\rho}^{(0)}
+=\phi_{\xi_{\sigma,\rho}^{(0)}}\circ\operatorname{ev}_\tau\ge0,\qquad
+\Psi_{\tau,\sigma,\rho}^{(0)}(u)=1+\varepsilon_\rho^2(1+\theta^2)
+\tag{9.36}
+$$
+
+在零平移常值标签上保留同一严格违反量。这里点值是明确已知映射，不是宣告它属于原物理评价族。因而 $t_0$ 与 $t_0+\lambda c$ 的 P2 预算相同，零预算合法性却不同；(9.33)–(9.36)是本卷实际常值截面消费者，不是独立的嵌入包装命题。定理得证。∎
+
+### 9.6 来源全文、物理接回与尚缺桥梁
+
+本节所需物理来源仍准确采用 $\mathsf F$ 定义41.4的 $\mathcal C_{47}^{\rm pin}(\Omega;S,D)$，$S$ 为原对称响应：沿 $41.4\Rightarrow40.1\Rightarrow36.1\Rightarrow32.3\Rightarrow\S27.1\Rightarrow26.3\Rightarrow22.3\Rightarrow18.2\Rightarrow\{10.2,15.2,\mathrm{AH}28.1,64.2,75.1\}\Rightarrow\mathrm{SQ}47.1\text{--}47.13$，将每份定义、合同、公式、量词及逐项递归纳入、逐层固定版本的全部上游全文，逐句、逐公式、逐量词同时合取。编号链和下面说明不替代任何全文或缩短任何量词。
+
+其 AH 直接身份为 `b1a95e41b9622e9f720e51f9bb899841f5b74ca1`，W/CC/PT 为 `3b10aed60f60e4901bae6cf2e160bf439d642e64`；SQ 自身 §§1.3、39、41.1、47.1 的两层主源 `dcaebc0b9ca5a3a463fd8cfd161d38967df28668`、`0aa11dbc3dc337d667b98900673e07d67b99bf46` 各守层级。OP/PT/PB/SM/C/AQ/R3/W/FR/XV/SF 的 `f24d1138a7b994da16abd9a47affedea64ea44ce`，AH22.1 的 `2addd6f369b7387226c2b0cc984623dd3efe40a1`，AH12.1 的 `39a0505470ea889dd9d4301ad60cd9506a5e8b58`，AH42.1 内的 `bef9bba367a24ab5e250491dcb88ed85ebc29cf7`，以及 R5 的 `aef46ce7497cf8ee6bef9bb7356a4483f3bfe6f0` 全部保持；直接身份不压平内层身份。前文1–8的固定引文、定义6.1和全部七合同另按自身版本完整保留，不在未证对应下将两套钉版谓词认作相同，也不宣告任何一套已实现。
+
+同一 $\Omega/\mathrm{native}$ 的对象、准备、事件、设备、程序、原比较权 $q$、共同全词 $K/\mathsf J$、parent、ready、合法控制、旗标、中心、经典及不等维块、无轴对象、中间切口、全部模式网络、根类、十一端点、配置、实际逆等距边、静默、零活动、终端及读器合同均保持。网络 $D,C$ 不替换成本响应或正锥；未定义请求不补零箭头。原评价族没有扩大为全部数学态或向量准备；(9.35)只是数学正泛函的拉回。
+
+已识别标准块的通常／相反乘法、数学 Hilbert/GNS 与 Born 配对仍按 $\mathsf F$ §§36.1、40.2及 AH64.1、75.1复用，角循环向量平方范数仍是原角质量。式(9.32)的非零余量不能插入标准行结论。实际准备、相干控制、事件绑定的完整 Born 菜单保留同一来源和全部原质量；全局归一须严格正单位质量，角归一另须真实条件化及严格正角质量，零、不等、次归一及非正常质量不删。真正相关联合与张量须同一实际共同来源、全部相关输入、忠实同向交换腿、共同生成、分离及重数；相同边缘、分别可达、数学谱格或辅助 GNS 不支付共同实现。
+
+typed CP、箭头下降、整台递归同源参考、真支持与支持内补、交织夹界、每个所需有限深度和每个正精度均保留。完整仪器、TP、Kraus、更新、Lüders仍需完整 typed 菜单、单位分区、接受端、校准、表示和收敛，量化整个环境、全部成功／失败／细记录／port／post-port 输出及每份完整输出的每个仍合法未来；只在严格正实际输出质量上归一，失败、零支与完整输出不删。合法顺序、自适应、并行历史、真分组遗忘、停止、拒绝、销毁、泄漏、同数两侧及逆向真实 Return、含活动 ready 和 producer 的完整 CountRead 均不被矩阵相等替代；原程序、记录、次序、$q$ 零集和未来权限不合并。
+
+正常性、指定前对偶、可数可加、无限菜单记录和收敛，各须原扩展来源；实际保持原域的连续可逆流及实际逆、物理钟单位、酉实现、生成元域、Hamiltonian 能量、作用量和共同正物理 $\hbar$ 各保留原前件。矩阵反演、数学相似、截面嵌入与有限谱分解不是可执行物理控制，不生产这些来源。R5 §12的非零交替双线性、同域及完整 P/N 入口不删。本节没有从条件量子消费者推出物理实现。
+
+一般原有限谱接口仍需证明 $\mathsf F$(41.28)的两份原缺陷相等：若这些固定数据实际来自完整原模型，则沿其已付恒等式有
+
+$$
+\mathcal E_+^D=D(c-g,k)-K_\sigma(c-g,k),\quad
+\mathcal E_-^D=D(c+g,-k)-K_\sigma(c+g,-k),\quad
+\mathcal E_+^D-\mathcal E_-^D=2cs,\qquad
+\mathcal E_+^D=\mathcal E_-^D\ \text{仍须证明}.
+\tag{9.37}
+$$
+
+没有构造这样的 $D$。原全局标量单位行保留既有结论；一般混合整行、未覆盖相对标量、无限谱、任意输入拼接和完整奇数阶段 UHF 仍须原桥梁。定性 $\omega(q)\to0$ 不支付增长分割的 $N\omega(q)^2\to0$，本节也未给相应率。前文3.1、5.2的全 H／总响应前件没有由零探针付清，故不存在与它们的矛盾或新的全 H 分类。
+
+实与复 Cauchy–Schwarz、正交投影、Schur 补、Frobenius 界、有限维谱分解和二阶行列式根的超可加性均为成熟工具，所需步骤在承重证明内展开。正泛函和表示背景沿 $\mathsf F$ §41.5 的 Blackadar《Operator Algebras》及 Hanche-Olsen–Størmer《Jordan Operator Algebras》。本节的关系推导是非零平移的严格统一余量及其常值截面消费者，不是 P2 剪切或行列式不等式的新一般定理；不作历史优先权、穷尽检索、外部开放问题解决或独立公理数减少主张。
+
+### 9.7 完整直观与全部非零探针的准确余项
+
+把前两个坐标看成刻度为一和二的两间房，第三个坐标是与两房都连通的环境。给输入加上沿演员刻度的对角部分，不改变原二表的面积预算或交换子，因此 P2 看不出这次移动，但原 PB 的外标签确实改变。零平移时，来源卷已用共同零方向及一次有限读取排除所有非零误差；非零平移时，完整的 $k$ 可以反演，得到两份明确三维作用，它们的交换子可逆，所以不可能同时把同一条复直线保持得任意精确。这一个共同障碍同时撑开两笔复 Gram 亏量，再变成真实面积相对左端的统一正余量；小误差对右边两面积的下降和左边绝对读数的增加都能分别付清。平移为一、误差为 $1/398131200$ 时，每份正读取至少留下其质量除以 $11059200$ 的余量；二阶行列式根的超可加性将所有向量读取提升到全部混合读取，零质量仍保留。把这些矩阵逐个放成区间上的常值截面，所有标签、乘积和质量原样通过，故这确是本卷原响应运输主题中的一个有限预算反例：P2 的轴剪切不授权零预算运输。它没有验证任何非零角内探针，更没有造出未知总响应；一般两份缺陷为何相等、增长谱分割如何累加，以及真实准备、完整 Born 菜单、同一相关来源、整台仪器的全部输出与未来、Return、CountRead、正常性、前对偶、物理钟、动力学和共同正作用量，仍由原来的关系与完整来源承担。
+
+准确的未解全探针命题仍是：对(9.1)的任意 $\lambda\ne0$，
+
+$$
+\bigl[\mathsf{P2}\ \land\ \mathsf{PB}_0\ \land\
+(\forall\,0\ne x=x^*\in\mathcal Q_\star)(\forall\phi\ge0)\ \mathsf{PB}_x\bigr]
+\ \stackrel{?}{\Longrightarrow}\ \rho=0.
+\tag{9.38}
+$$
+
+对(9.7)的候选，首个未付关系准确为
+
+$$
+(\forall\,0\ne x=x^*\in\mathcal Q_\star)(\forall\phi\ge0)\quad
+|\phi(L_x)|\le\sqrt{B_\phi(R_+,S_+)}+\sqrt{B_\phi(R_-,S_-)}.
+\tag{9.39}
+$$
+
+区间上还须将(9.39)的探针换成全部 $0\ne X=X^*\in\iota(P_\star)M\iota(P_\star)$，包括所有非常值截面，以(9.3)的同一公式和全部正 $\Psi$ 检验；这些非零常值及非常值探针、未知总 $D$ 的全部原调用均未由本节取得。没有给出该候选的全探针证书或失败非零探针，所以它不是(9.38)、完整 PB或完整原公理的反模型。
+
+[AXF]: https://github.com/the-omega-institute/trureturing/blob/2c1987c6ad3acbe4f9309ebde7bd204eacddd31a/docs/develop/theory/AURIC_FULL_PB_POLYNOMIAL_TRANSPORT_AND_REAL_ROOT_RIGIDITY.md
+
+## 追加锚（本行以下为增补区）
+
+## 10. 同一三维读取的双接触：非零角探针排除零探针候选
+
+### 10.1 原角内的明确有限结论
+
+**定义 10.1（保持全部原标签的参数区域）。** 沿用(9.1)–(9.3)的已给矩阵乘法、伴随、正锥及数学正复线性泛函，局部记 $A=\mathcal A_\star$、$P=P_\star$、$C_\star=PAP$。探针域始终是 $(C_\star)_{\rm sa}$，不是整个 $A_{\rm sa}$。取
+
+$$
+\lambda\ne0,\qquad 0<|\rho|\le\min\{1/4,|\lambda|\},\qquad
+q=-\operatorname{sgn}(\lambda\rho)\in\{1,-1\}.
+\tag{10.1}
+$$
+
+同一数据仍为 $t=t_0+\lambda c$、$s=\rho d$、$g=K_\sigma(c,t)+s$。为明确本节所检验的接口，再列出
+
+$$
+\begin{gathered}
+h=K_\sigma(c,x),\quad r=c\circ x,\quad k=c\circ t,\qquad
+R_\pm=x\pm(h-k),\quad S_\pm=t\pm(r+g),\\
+L_x=-2x\circ(h-k)-2t\circ(r+g),\qquad
+B_\phi(U,V)=\phi(U^2)\phi(V^2)-\phi(U\circ V)^2.
+\end{gathered}
+\tag{10.2}
+$$
+
+这里不引入未知总映射 $D$、已指定的外响应或以 $t$ 为演员的预算，也不给输入连续性、响应缩放、协变性、压缩自然性或单位平移中性。两条环境边保留在每个原标签中。
+
+**定理 10.2（双接触的实际非零探针）。** 对(10.1)中的每对参数及每个 $\sigma=\pm1$，下面(10.4)–(10.6)给出一个有限的实际 $0\ne x=x^*\in C_\star$ 和一个数学正向量泛函 $\phi_\xi$，使
+
+$$
+\boxed{\quad
+|\phi_\xi(L_x)|-\sqrt{B_{\phi_\xi}(R_+,S_+)}
+-\sqrt{B_{\phi_\xi}(R_-,S_-)}>8|\lambda\rho|>0.
+\quad}
+\tag{10.3}
+$$
+
+该读取的完整质量为 $\phi_\xi(1_\star)=\|u\|^2+|z|^2>0$，不作归一。与此同时，全部数学正泛函的 P2 仍由9.3中 $|\rho|\le1/2$ 的证书及(9.8)成立。因此本定理排除的是这份固定输出数据的全部原探针预算，不是构造完整 PB 或完整原公理的反模型。
+
+### 10.2 一个实根及同一块探针的完整定义
+
+**证明，根与可定义性。** 在(9.1)已经给定的实数模型中，令 $p$ 为
+
+$$
+H(p)=6p^3+31p^2+54p+39=0,\qquad
+-\frac{14}{5}<p<-\frac{11}{4}
+\tag{10.4}
+$$
+
+的根。这不是从纸面根构造推出实数载体。准确地，$H(-14/5)=-109/125<0$、$H(-11/4)=5/32>0$，而
+
+$$
+H'(r)=18(r+31/18)^2+11/18\ge11/18>0\qquad(r\in\mathbb R).
+$$
+
+介值定理及严格单调性给存在与唯一性，并同时保留上述严格有理端点界。
+
+先取 $\sigma=1$。定义
+
+$$
+\begin{gathered}
+b=p+iq,\quad c_0=\operatorname{diag}(1,2),\quad d_0=\operatorname{diag}(1,-2),\quad
+v=\binom1{\sqrt2},\quad w=\binom{1/2}{\sqrt2},\\
+u=\binom{\sqrt2(1+b)}{-(2+b)/2},\qquad C_j=u^*c_0^ju\quad(j=1,2,3),\\
+m=-q\lambda C_2,\quad D_b=(1-b)(2-b),\qquad
+Z=\frac{\lambda(2C_1-bC_2)-imD_b}{4p},\\
+z=-\sqrt2Z,\quad \xi=\binom{u}{z},\quad \tau=\lambda c_0u+vz,\\
+y=-i(c_0-bI_2)^{-1}c_0\tau,\qquad
+y_c=(b+2/b)y+(2i/b)\tau+i\lambda c_0^2u.
+\end{gathered}
+\tag{10.5}
+$$
+
+再置
+
+$$
+\begin{gathered}
+X=[\,y\ \ y_c\,][\,u\ \ c_0u\,]^{-1},\qquad
+a=\operatorname{diag}\left(\frac1{p-1},\frac{-2}{p-2}\right),\\
+x^{(0)}=X\oplus0,\qquad
+x=(X+\rho a)\oplus0,\qquad \phi_\xi(A_1)=\xi^*A_1\xi.
+\end{gathered}
+\tag{10.6}
+$$
+
+$p,b,1-b,2-b,p-1,p-2$ 均非零，且 $u_1u_2\ne0$，因为 $p<0$ 而 $\operatorname{Im}b=q\ne0$。所有矩阵逆具体为
+
+$$
+(c_0-bI_2)^{-1}=\operatorname{diag}((1-b)^{-1},(2-b)^{-1}),\qquad
+[\,u\ \ c_0u\,]^{-1}
+=\frac1{u_1u_2}\begin{pmatrix}2u_2&-u_1\\-u_2&u_1\end{pmatrix}.
+$$
+
+因此所有式子都是有限定义；尚须证明的是同一 $X$ 自伴以及预算的严格违反。正泛函 $\phi_\xi$ 的正性直接来自 $\xi^*A_1\xi\ge0$ 对每个 $A_1\ge0$ 成立，其质量是 $\|u\|^2+|z|^2$，其中 $u\ne0$。
+
+### 10.3 同一个矩阵的三项 Hermitian 配对
+
+**证明，自伴实现。** 写
+
+$$
+A_0=(p+1)^2+1,\quad B_0=(p+2)^2+1,\qquad
+C_1=2A_0+B_0/2,\quad C_2=2A_0+B_0,\quad C_3=2A_0+2B_0.
+\tag{10.7}
+$$
+
+代入多项式得
+
+$$
+2\{C_1-C_3+(p+3)C_2\}=H(p)=0.
+\tag{10.8}
+$$
+
+又有明确的环境配对
+
+$$
+W=w^*u=-\sqrt2/2,\qquad v^*u=-bW,\qquad z\overline W=Z.
+\tag{10.9}
+$$
+
+由定义 $Xu=y$、$Xc_0u=y_c$。矩阵 $[u\ c_0u]$ 可逆，因此成熟的 Hermitian 型合同判别（极化的二阶基坐标形式）在这里准确要求三项
+
+$$
+u^*y\in\mathbb R,\qquad
+u^*y_c=\overline{u^*c_0y},\qquad
+(c_0u)^*y_c\in\mathbb R.
+\tag{10.10}
+$$
+
+中间一项必须互为复共轭。两列构成基，故这三项正好是 $[u\ c_0u]^*X[u\ c_0u]$ 的两个对角实性及非对角共轭对称性，足以证明 $X=X^*$。
+
+先用 $u$ 的两个条目作通分，$c_1=1,c_2=2$，得到
+
+$$
+\sum_{j=1}^2\frac{c_j^2|u_j|^2}{c_j-b}=\frac{2C_1-bC_2}{D_b},\qquad
+\sum_{j=1}^2\frac{c_jv_j\bar u_j}{c_j-b}=\frac{2\sqrt2p}{D_b}.
+\tag{10.11}
+$$
+
+于是 $D_bu^*y=-i\lambda(2C_1-bC_2)-2i\sqrt2pz=mD_b$，即 $u^*y=m\in\mathbb R$，第一项成立。
+
+记 $\tau_j=u^*c_0^j\tau$，$j=0,1$，及 $n=u^*c_0y$。由(10.5)、(10.9)及 $(c_0-b)y=-ic_0\tau$，
+
+$$
+\tau_0=\lambda C_1-\bar bZ,\qquad \tau_1=\lambda C_2+2Z,\qquad
+n=bm-i\tau_1,\qquad
+u^*y_c=(b+2/b)m+(2i/b)\tau_0+i\lambda C_2.
+\tag{10.12}
+$$
+
+这里 $m=-q\lambda C_2$、$q^2=1$ 还给出便于逐项核对的实虚分解
+
+$$
+\operatorname{Re}Z=\frac{\lambda\{2C_1+3(1-p)C_2\}}{4p},\qquad
+\operatorname{Im}Z=\frac{q\lambda(p-3)C_2}{4}.
+\tag{10.13}
+$$
+
+因此 $2\operatorname{Re}(\bar bZ)=\lambda C_1-\lambda pC_2$。对中间配对直接相减，准确得到
+
+$$
+\frac b{2i}(u^*y_c-\bar n)
+=(bq-i)m+\lambda C_1-2\operatorname{Re}(\bar bZ)
+=pqm+\lambda pC_2=0.
+\tag{10.14}
+$$
+
+这证明第二项，而不是把 $u^*y_c$ 与 $n$ 无共轭地认作相等。
+
+最后由(10.12)代入 $y_c$，
+
+$$
+(c_0u)^*y_c=(b^2+2)m-ib\tau_1+i\lambda C_3,\qquad
+\operatorname{Re}(b\tau_1)=\lambda C_1+\lambda(3-p)C_2.
+\tag{10.15}
+$$
+
+第二式也直接由(10.13)求实部得到。第一式的虚部为
+
+$$
+2pqm-\operatorname{Re}(b\tau_1)+\lambda C_3
+=\lambda\{C_3-C_1-(p+3)C_2\}=0
+\tag{10.16}
+$$
+
+其零值由(10.8)给出。这完成全部三项，故 $X=X^*$；$a$ 是实对角矩阵，(10.6)确为实际自伴角探针。
+
+### 10.4 两对完整标签在同一三维向量上接触
+
+**证明，环境不被压缩的同时接触。** 暂令 $s=0$，在 $x^{(0)}$ 上形成全部原标签，以上标 $(0)$ 表示。设
+
+$$
+\mathsf X=x^{(0)}\xi,\quad \mathsf T=t\xi,\quad
+\mathsf A=(h^{(0)}-k)\xi,\quad
+\mathsf B=(r^{(0)}+g_0)\xi.
+$$
+
+前两坐标的完整式子是
+
+$$
+\begin{aligned}
+\mathsf X_{12}&=y,&\quad \mathsf T_{12}&=\tau,\\
+\mathsf A_{12}&=\tfrac i2(c_0y-y_c)-\tfrac12(c_0\tau+\lambda c_0^2u),&
+\mathsf B_{12}&=\tfrac12(c_0y+y_c)+iwz.
+\end{aligned}
+\tag{10.17}
+$$
+
+把 $y_c$ 及 $(c_0-b)y=-ic_0\tau$ 代入 $\mathsf A_{12}$，得 $\mathsf A_{12}=(\tau-iy)/b$。又因同一已知乘法中
+
+$$
+r^{(0)}-ih^{(0)}=cx^{(0)},\qquad g_0+ik=ict,
+$$
+
+有 $\mathsf B_{12}-i\mathsf A_{12}=c_0(y+i\tau)=by$。所以前两坐标满足 $\mathsf T=i\mathsf X+b\mathsf A$、$\mathsf B=b\mathsf X+i\mathsf A$。
+
+第三坐标须单独保留并核对。由(10.9)，准确为
+
+$$
+\mathsf X_3=0,\qquad \mathsf T_3=-bW,\qquad
+\mathsf A_3=-W,\qquad \mathsf B_3=-iW.
+\tag{10.18}
+$$
+
+它们也满足同样两式。因此在完整的 $\mathbb C^3$ 中
+
+$$
+\mathsf T=i\mathsf X+b\mathsf A,\qquad
+\mathsf B=b\mathsf X+i\mathsf A,\qquad
+S^{(0)}_+\xi=(i+b)R^{(0)}_+\xi,\quad
+S^{(0)}_-\xi=(i-b)R^{(0)}_-\xi.
+\tag{10.19}
+$$
+
+$q=1$ 时负对斜率为实数 $-p$，正对斜率为 $p+2i$；$q=-1$ 时正对斜率为实数 $p$，负对斜率为 $-p+2i$。这两条接触线由同一 $x^{(0)}$、同一 $\xi$ 同时实现，不是分别可达的两个极值。
+
+现在恢复同一非零 $s$ 与 $x=x^{(0)}+\rho(a\oplus0)$。实对角修正满足
+
+$$
+(pI_2-c_0)a=d_0,\qquad [a,c_0]=[a,d_0]=0.
+$$
+
+故在完整算子标签上准确有
+
+$$
+\begin{gathered}
+R_\pm=R^{(0)}_\pm+\rho(a\oplus0),\\
+S_+=S^{(0)}_++p\rho(a\oplus0),\qquad
+S_-=S^{(0)}_--p\rho(a\oplus0).
+\end{gathered}
+\tag{10.20}
+$$
+
+因而 $q=1$ 时仍有 $S_-\xi=-pR_-\xi$，$q=-1$ 时仍有 $S_+\xi=pR_+\xi$。实 Gram 公式遂使这一对的 $B_{\phi_\xi}$ 精确为零，且其 $K_1$ 读取也为零；不是只在 $\rho=0$ 接触。
+
+### 10.5 另一对的复 Gram 亏量与准确残差
+
+**证明，有限亏量。** 将另一对记作 $(R,S)$，定义
+
+$$
+\begin{gathered}
+R_0=\begin{cases}R^{(0)}_+\xi,&q=1,\\R^{(0)}_-\xi,&q=-1,\end{cases}
+\qquad e=\binom{au}{0},\qquad
+U=\|R_0\|^2,\quad V_0=\operatorname{Re}(R_0^*e),\quad W_0=\|e\|^2,\\
+J=2|\lambda|(p^2-1)>0.
+\end{gathered}
+\tag{10.21}
+$$
+
+(10.18)给 $(R_0)_3=-qW$，故 $U\ge1/2$。两条完整向量式为
+
+$$
+R\xi=R_0+\rho e,\qquad S\xi=(qp+2i)R_0+qp\rho e.
+\tag{10.22}
+$$
+
+对自伴 $R,S$，$\phi_\xi(K_1(R,S))=-\operatorname{Im}((R\xi)^*S\xi)$。直接代入(10.22)得
+
+$$
+Q:=\phi_\xi(K_1(R,S))=-2(U+\rho V_0).
+\tag{10.23}
+$$
+
+成熟的复 Gram 行列式在此给非负亏量
+
+$$
+\begin{aligned}
+\Delta&=\|R\xi\|^2\|S\xi\|^2-|(R\xi)^*S\xi|^2\\
+&=4\rho^2\{UW_0-|R_0^*e|^2\}\le4\rho^2UW_0.
+\end{aligned}
+\tag{10.24}
+$$
+
+具体地，$S\xi-(qp+2i)R\xi=-2i\rho e$；给第二列减去第一列的复数倍不改 Gram 行列式，而给 $R_0$ 加上 $\rho e$ 也不改它与 $e$ 的行列式。这证明等式，包括复线性相关情形。由实部、虚部的平方分解，
+
+$$
+B_{\phi_\xi}(R,S)=Q^2+\Delta.
+\tag{10.25}
+$$
+
+**证明，原左端的准确一次残差。** $\mathsf F$(39.7)只在已知标准乘法中复用：在 $s=0$，对任意实际 $x$，它给 $K_1(R_+,S_+)-K_1(R_-,S_-)=L_x$。在标签中恢复 $s$，外层两个交换子之差增加 $2K_1(x,s)$，而 $L_x$ 减少 $\{t,s\}$，所以完整矩阵恒等式为
+
+$$
+K_1(R_+,S_+)-K_1(R_-,S_-)-L_x
+=2K_1(x,s)+\{t,s\}.
+\tag{10.26}
+$$
+
+这不为未知外响应指定任何值。本节局部将右侧读取记为标量 $F$，不替换(1.8)的函数。因 $[a,d_0]=0$，它准确线性于 $\rho$：
+
+$$
+F=\phi_\xi(2K_1(x,s)+\{t,s\})
+=\rho\,\phi_\xi(2K_1(x^{(0)},d)+\{t,d\}).
+\tag{10.27}
+$$
+
+令 $j_0=u^*d_0y$、$h_0=u^*d_0c_0^{-1}y$，其中 $c_0^{-1}=\operatorname{diag}(1,1/2)$。由 $(c_0-b)y=-ic_0\tau$ 得 $\tau=iy-ibc_0^{-1}y$，从而
+
+$$
+\begin{aligned}
+\phi_\xi(2K_1(x^{(0)},d))&=2\operatorname{Im}j_0,\\
+\phi_\xi(\{t,d\})&=2\operatorname{Re}(u^*d_0\tau)
+=-2\operatorname{Im}j_0+2\operatorname{Im}(bh_0).
+\end{aligned}
+\tag{10.28}
+$$
+
+$d_0c_0^{-1}=3I_2-2c_0$ 给 $h_0=(3-2b)m+2i\tau_1$。再由(10.15)–(10.16)，
+
+$$
+\begin{aligned}
+\operatorname{Im}(bh_0)
+&=q(3-4p)m+2\operatorname{Re}(b\tau_1)\\
+&=3qm+2\lambda C_3
+=\lambda(2C_3-3C_2)
+=\lambda(B_0-2A_0)=-\lambda(p^2-1).
+\end{aligned}
+\tag{10.29}
+$$
+
+因此 $F=-2\lambda\rho(p^2-1)=q|\rho|J$。零面积对的交换子读取为零，另一对在(10.26)之差中的符号是 $q$，故
+
+$$
+\phi_\xi(L_x)=q(Q-|\rho|J).
+\tag{10.30}
+$$
+
+### 10.6 严格有限差额、非零性及两种符号
+
+**证明，完整余项界。** 有理根区间(10.4)给
+
+$$
+|u_1|^2<9,\quad |u_2|^2<1/2,\quad
+|a_{11}|<1/3,\quad |a_{22}|<1/2,\quad
+W_0<1+1/8=9/8<2,\quad
+J>\frac{105}{8}|\lambda|>12|\lambda|.
+\tag{10.31}
+$$
+
+记 $r_0=|\rho|$。复 Cauchy–Schwarz 给 $|V_0|\le\sqrt{UW_0}$，结合 $U\ge1/2$、$W_0<2$ 及 $r_0\le1/4$，
+
+$$
+U+\rho V_0\ge U-r_0\sqrt{UW_0}\ge U/2,\qquad
+Q<0,\qquad |Q|\ge U.
+\tag{10.32}
+$$
+
+由(10.24)–(10.25)的平方差分解，全部有限亏量满足
+
+$$
+\sqrt{B_{\phi_\xi}(R,S)}-|Q|
+=\frac{\Delta}{\sqrt{Q^2+\Delta}+|Q|}
+\le\frac{4r_0^2UW_0}{2U}=2r_0^2W_0<4r_0^2.
+\tag{10.33}
+$$
+
+没有除以零，因为 $U\ge1/2$。另一对面积精确为零，且由(10.30)、$Q<0$ 有 $|\phi_\xi(L_x)|=|Q|+r_0J$。于是
+
+$$
+\begin{aligned}
+&|\phi_\xi(L_x)|-\sqrt{B_{\phi_\xi}(R_+,S_+)}-\sqrt{B_{\phi_\xi}(R_-,S_-)}\\
+&\qquad\ge r_0J-2r_0^2W_0
+>12r_0|\lambda|-4r_0^2
+\ge8|\lambda\rho|>0,
+\end{aligned}
+\tag{10.34}
+$$
+
+最后一步仅用 $r_0\le|\lambda|$。这是一份实际有限探针的估计，没有极限探针或被省略的余项。
+
+还须排除 $x=0$。由 $u^*Xu=m$、$C_2\ge\|u\|^2>0$、$\|a\|<1/2$ 及 $r_0\le|\lambda|$，
+
+$$
+|u^*(X+\rho a)u|
+\ge|\lambda|C_2-r_0\|a\|\|u\|^2
+>\tfrac12|\lambda|C_2>0.
+\tag{10.35}
+$$
+
+故 $x\ne0$，其完整质量仍为 $\|u\|^2+|z|^2>0$。质量未被角质量或单位质量代换。
+
+对 $\sigma=-1$，取上述 $x,\xi$ 的逐项复共轭。$c,t,d$ 都是实矩阵，且 $K_{-1}(c,\bar x)=\overline{K_1(c,x)}$，故 $g,h,r,k,R_\pm,S_\pm,L_x$ 全部逐项复共轭。对自伴标签，$\phi_{\bar\xi}(\bar A_1)=\overline{\phi_\xi(A_1)}=\phi_\xi(A_1)$；平方、Jordan 读数及质量均保持。于是同一严格差额和实际非零性适用于另一符号。定理10.2得证。∎
+
+### 10.7 同一组数据的零探针与全探针分离
+
+**定理 10.3（全部正读取零预算仍不足）。** 对每个 $\lambda\ne0$，取(9.4)已经定义的 $\varepsilon_\lambda>0$，并置
+
+$$
+\rho_\lambda=\frac12\min\{\varepsilon_\lambda,1/4,|\lambda|\}>0.
+\tag{10.36}
+$$
+
+对每个符号，同一份 $c,t_\lambda,g_0+\rho_\lambda d$ 满足全部数学正泛函的 P2，以及全部数学正泛函的原 $x=0$ 预算，并有(9.6)的统一余量 $\frac{m_\lambda}{2}\phi(1_\star)$；但该同一数据被定理10.2的一份实际非零 $x$ 和正读取排除，违反量大于 $8|\lambda\rho_\lambda|$。正质量的零探针余量严格为正，零质量仍保留。
+
+特别地，(9.7)的同一有理候选满足上述 P2 和全部零探针余量，却有明确违反
+
+$$
+\lambda=1,\quad \rho=\frac1{398131200},\qquad
+|\phi_\xi(L_x)|-\sum_{\pm}\sqrt{B_{\phi_\xi}(R_\pm,S_\pm)}
+>\frac1{49766400}.
+\tag{10.37}
+$$
+
+**证明。** (10.36)同时支付 $0<\rho_\lambda\le\varepsilon_\lambda$ 和(10.1)，无需比较 $\varepsilon_\lambda$ 与另外两个上界的大小。定理9.2给全部正读取的 P2、混合质量及零预算余量，定理10.2给同一参数的非零探针。对(10.37)，P2 与零预算直接复用(9.7)、(9.31)；其参数落在(10.1)，而 $8/398131200=1/49766400$，故(10.34)给所示严格界。存在一个正读取的违反已否定全称预算，不需将该读取提升为全体读取上的违反。∎
+
+(9.39)对有理候选的全称命题由(10.37)否定；在(10.1)的整个区域，(9.38)的非零残差前件也被实际探针排除。零残差时，$\mathsf F$(39.7)及复 Cauchy–Schwarz 对每个 $\lambda$ 给全部原探针预算；零平移时，$\mathsf F$ 定理42.2已经排除每个非零 $\rho$。对 $\lambda\ne0$ 且 $|\rho|>\min\{1/4,|\lambda|\}$，这里没有消去残差或构造全探针模型；(9.38)在该剩余区域的全家族推断仍须证明。有限界(10.32)–(10.34)不适用，并不构成原命题的反例。
+
+### 10.8 实际常值角截面消费严格违反
+
+**定理 10.4（完整区间对象中的一个实际失败探针）。** 取本卷 $n=3$ 的 $M=C([0,1],M_3(\mathbb C))$，使用(9.33)的含单位忠实常值嵌入 $\iota$。对定理10.2的任意固定参数、符号和所造探针，令
+
+$$
+\widetilde P=\iota(P),\quad \widetilde c=\iota(c),\quad
+\widetilde t=\iota(t),\quad \widetilde g=\iota(g),\quad
+x_I=\iota(x)\in(\widetilde PM\widetilde P)_{\rm sa}.
+\tag{10.38}
+$$
+
+则 $x_I$ 是实际非零连续角截面。任取 $\tau_*\in[0,1]$，实际点值映射给数学正泛函
+
+$$
+\Psi=\phi_\xi\circ\operatorname{ev}_{\tau_*},\qquad
+\Psi(u)=\phi_\xi(1_\star)=\|u\|^2+|z|^2>0.
+\tag{10.39}
+$$
+
+在(10.2)的同一完整公式下，其全部标签满足
+
+$$
+\begin{gathered}
+\widetilde h=K_\sigma(\widetilde c,x_I)=\iota(h),\quad
+\widetilde r=\widetilde c\circ x_I=\iota(r),\quad
+\widetilde k=\widetilde c\circ\widetilde t=\iota(k),\quad
+\widetilde g=\iota(g),\\
+\widetilde R_\pm=\iota(R_\pm),\quad
+\widetilde S_\pm=\iota(S_\pm),\quad
+\widetilde L_{x_I}=\iota(L_x),\\
+B_\Psi(\widetilde R_\pm,\widetilde S_\pm)
+=B_{\phi_\xi}(R_\pm,S_\pm),\quad
+\Psi(\widetilde L_{x_I})=\phi_\xi(L_x).
+\end{gathered}
+\tag{10.40}
+$$
+
+因此该实际截面及同一质量正读取严格违反完整的探针预算，差额仍大于 $8|\lambda\rho|$。对定理10.3的相同常值数据，全部正 $\Psi'$ 的 P2 和原 $x_I=0$ 统一余量同时成立，却由(10.38)–(10.40)的一份非零常值截面排除全探针预算。
+
+**证明。** $\iota$ 保乘法、伴随、复线性和单位，故平方、Jordan 乘法、交换子、反交换子及每一个标签逐字运输。忠实性给 $x_I\ne0$，角关系由 $PxP=x$ 运输。点值是含单位正映射且 $\operatorname{ev}_{\tau_*}\iota=\operatorname{id}$，所以(10.39)–(10.40)连同完整质量准确成立。严格违反由(10.3)直接代入，不缩减第三坐标或质量。
+
+对全部正 $\Psi'$ 的零探针正余量，使用(9.35)的 $\phi=\Psi'\circ\iota$，其单位质量恰为 $\Psi'(u)$；定理9.2已支付的混合读取结论直接适用。这里的正泛函拉回与点值复合都是已知数学映射，不给未知 $D$ 增加任何自然性。
+
+若所提常值数据实际作为定义1.2的完整 $\mathsf H_I(D)$ 实现，且实际供应该角内的同号旧值 $D(\widetilde c,x_I)=K_\sigma(\widetilde c,x_I)$ 以及输出 $D(\widetilde c,\widetilde t)=\widetilde g$，则 $\mathsf F$ §41.1 的必要性接线把原 $\operatorname{PB}(\widetilde c;x_I,\widetilde t)$ 与两份实际外层 P2 送到上述预算，产生矛盾。原评价准确决定锥所给数学正读取不要求把 $\Psi$ 宣告为实际准备。因此这些输出和角接口不能共同成为完整实现。前文3.1、5.2仍保留自身全部全 H／总响应前件；本证明不通过假定 $D$ 与 $\iota$、点值或压缩交换来取得矛盾。
+
+一份实际非零常值截面已否定全探针全称，不需检验所有非常值截面。本定理没有验证它们的预算，也没有构造任何未知总 $D$。∎
+
+### 10.9 几何简化、量子对应与仍须共同实现的来源
+
+两间角内房间的刻度仍是一和二，第三间环境房间仍以两条非零边相连。零探针时，非零轴平移使两笔面积具有第9节的统一正余量，所以很小的固定误差能够藏在这幅图里。这里的简化是不用扫描全部探针，而让同一个三维向量同时实现两条相关的 Gram 接触线；三项 Hermitian 配对保证它们确由一块合法自伴探针实现。随后按同一误差加一份实对角修正，把一条实斜率线的面积始终钉在零；另一条线只有二次松弛，而原左端的残差失配准确是一阶量。有限界使这一次实际读取就严格失败。零探针遗漏的正是探针与两条完整标签之间的联合接触条件；两笔分别存在的余量没有支付这个共同条件。这说明零探针充分性的推断失效，不构成完整新量子公理或独立假设更少的结论。
+
+在本节给定代数中，准确的通常／相反量子行对应仍为
+
+$$
+c\circ t-ig=\begin{cases}ct-is,&\sigma=1,\\tc-is,&\sigma=-1.\end{cases}
+\tag{10.41}
+$$
+
+零残差时才得到标准行 $ct$ 或 $tc$；给定乘法、正锥和正读取并非从物理来源重构出来。已分类角的 $C^*$、Hilbert/GNS 与 Born 数学配对仍按9.6及 $\mathsf F$ §§36.1、40.2、41.5消费，循环向量平方范数保持原角质量。成熟的实／复 Gram、Cauchy–Schwarz、极化与二阶矩阵工具各在上述承重证明内使用，不另立已知定理作为新增结果；正泛函与表示背景保留 $\mathsf F$ §41.5 的 Blackadar《Operator Algebras》及 Hanche-Olsen–Størmer《Jordan Operator Algebras》归属。本节的双接触与残差比较不归为这些文献的既有定理，也不据此提出历史优先权或穷尽检索结论。
+
+一般原模型仍须在同一实际输入上处理(9.37)的两份原缺陷
+
+$$
+\mathcal E_+^D=D(c-g,k)-K_\sigma(c-g,k),\quad
+\mathcal E_-^D=D(c+g,-k)-K_\sigma(c+g,-k),\qquad
+\mathcal E_+^D-\mathcal E_-^D=2cs.
+\tag{10.42}
+$$
+
+本节只在(10.1)排除非零 $s$ 的固定输出预算，未普遍证明 $\mathcal E_+^D=\mathcal E_-^D$。任意环境耦合、一般混合整行与输入拼接、未覆盖相对标量、无限谱及完整奇数阶段 UHF 仍需各自原桥梁；全局标量单位行的既有结论不重开。增长分割还须 $N\omega(\varepsilon)^2\to0$，定性 $\omega(\varepsilon)\to0$ 和本节有限差额不给该速率。R5的全域几何必须保留自身的同域、非零交替双线性及全域关系入口，9.6所钉 §12 的 P/N 前件不变；全域 P/K 几何亦不能由这里一组三维读取代付。整个 $(M_3(\mathbb C))_{\rm sa}$ 不因这份构造成为三维 Pauli 域，也不推出 $\mathfrak{su}(3)$ 的三维叉积分类。
+
+本节的物理来源谓词严格就是9.6所纳入的 $\mathsf F$ 定义41.4、40.1、36.1的同一个 $\mathcal C_{47}^{\rm pin}(\Omega;S,D)$；沿
+
+$$
+41.4\Rightarrow40.1\Rightarrow36.1\Rightarrow32.3\Rightarrow\S27.1
+\Rightarrow26.3\Rightarrow22.3\Rightarrow18.2
+\Rightarrow\{10.2,15.2,\mathrm{AH}28.1,64.2,75.1\}
+\Rightarrow\mathrm{SQ}47.1\text{--}47.13
+$$
+
+逐句、逐公式、逐量词合取每份定义、合同及其逐项递归纳入、逐层固定版本的全部上游全文。此链和下述说明不替代任何全文。AH 的 `b1a95e41b9622e9f720e51f9bb899841f5b74ca1`、W/CC/PT 的 `3b10aed60f60e4901bae6cf2e160bf439d642e64`、SQ 的 `dcaebc0b9ca5a3a463fd8cfd161d38967df28668` 与 `0aa11dbc3dc337d667b98900673e07d67b99bf46` 两层、OP/PT/PB/SM/C/AQ/R3/W/FR/XV/SF 的 `f24d1138a7b994da16abd9a47affedea64ea44ce`、AH22.1 的 `2addd6f369b7387226c2b0cc984623dd3efe40a1`、AH12.1 的 `39a0505470ea889dd9d4301ad60cd9506a5e8b58`、AH42.1 内的 `bef9bba367a24ab5e250491dcb88ed85ebc29cf7` 及 R5 的 `aef46ce7497cf8ee6bef9bb7356a4483f3bfe6f0` 各守自身层级，不压平、不改钉。本卷6.1及1–8的旧钉版七合同另按自身全文保留，不在未证对应下将两套谓词认作相同。
+
+同一原 $\Omega/\mathrm{native}$ 的对象、准备、事件、设备、程序、比较权、共同全词核、parent、ready、合法控制、旗标、中心、经典与不等维块、无轴对象、中间切口、模式网络、根、十一端点、配置、实际逆等距边、静默、零活动、终端及读器合同不被矩阵取代；网络 $D,C$ 不替换成本响应或数学正锥，未定义请求不补零。数学正读取不制造实际准备、相干控制、事件绑定的完整 Born 菜单或同一相关共同来源；张量仍需全部相关输入、忠实同向交换腿、共同生成、分离及重数。全局归一须严格正实际单位质量，角归一另须真实条件化和严格正角质量，零、不等、次归一及非正常质量保留。
+
+typed CP、箭头下降、整台递归同源参考、真支持与支持内补、交织夹界、每个所需有限深度及每个正精度均守原前件。完整仪器、TP、Kraus、更新和 Lüders仍须完整 typed 菜单、单位分区、接受端、校准、表示与收敛，覆盖整个环境、所有成功／失败／细记录／port／post-port 输出及每份完整输出的每个仍合法未来；仅严格正实际输出质量可归一。合法顺序、自适应、并行历史、真分组遗忘、停止、拒绝、销毁、泄漏、同数两侧与逆向真实 Return、含活动 ready 和 producer 的完整 CountRead不因矩阵相等或当前读取相同而支付，原程序、历史、细记录、读取次序、比较权零集及未来权限不合并。正常性、指定前对偶、可数可加、无限菜单记录与收敛，以及实际保持原域的连续可逆流和实际逆、物理钟单位、酉实现、生成元域、Hamiltonian 能量、作用量及共同正物理 $\hbar$ 仍各由原来源承担。上述有限几何见证没有满足整个来源谓词，也没有完成一般全家族刚性或全局量子起源。
+
+## 追加锚（本行以下为增补区）
