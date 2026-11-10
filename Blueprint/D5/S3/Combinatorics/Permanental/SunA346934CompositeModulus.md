@@ -34,6 +34,10 @@ $$\forall n \in \mathbb{N},\; 1 \le n \Rightarrow \left(\neg (\operatorname{Nat.
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Permanental/SunA346934CompositeModulus.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/sun346934` (proved) by `D5/S3/Combinatorics/Permanental/SunA346934CompositeModulus.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"sun346934","declaration_gid":"D5/S3/Combinatorics/Permanental/SunA346934CompositeModulus.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Zhi-Wei Sun (2021). *OEIS A346934: signed-difference permanents*. URL: <https://oeis.org/A346934>.

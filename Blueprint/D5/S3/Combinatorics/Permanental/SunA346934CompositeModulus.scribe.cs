@@ -23,13 +23,15 @@ internal sealed class SunA346934CompositeModulusDocument : IScribeDocumentDefini
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "result", ClaimBody(),
                 "Expanding the additive integer matrix permanent and grouping permutations by their subset images gives factorial-split multiplicities. At order q-1, every multiplicity is divisible by the odd composite modulus q. Distinct factors in the larger factorial prove this divisibility, with the three central products 720, 576 and 720 treating q = 9. Taking q = 2*n+1 proves the stated divisibility for the signed-difference matrix.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))), []));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("sun346934"), ResolutionKind.Proved))), []));
 
     private static DocumentBlock Node(string id, string declaration, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) =>
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
             H(declaration), StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula ClaimBody() => All("n", Naturals(),
         ImpliesTo(LeqTo(D(1), F.Id("n")),
