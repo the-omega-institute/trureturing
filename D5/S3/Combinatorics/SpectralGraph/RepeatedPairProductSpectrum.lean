@@ -38,14 +38,14 @@ private theorem root_pos (k : ι → ℝ) (hk : ∀ i, 0 < k i) (T : Finset ι) 
 private theorem root_sq (k : ι → ℝ) (hk : ∀ i, 0 < k i) (T : Finset ι) :
     (rootWeight k T)^2 = weight k T := Real.sq_sqrt (weight_pos k hk T).le
 
-private theorem hermitian (a : ℝ) (k : ι → ℝ) : (symmetricK a k).IsHermitian := by
+theorem hermitian (a : ℝ) (k : ι → ℝ) : (symmetricK a k).IsHermitian := by
   ext T U
   by_cases h : T = U
   · subst U; simp [symmetricK,conjTranspose_apply]
   · simp [symmetricK,conjTranspose_apply,diagonal_apply,h,Ne.symm h,disjoint_comm]
     split_ifs <;> ring
 
-private theorem intertwine (a : ℝ) (k : ι → ℝ) (hk : ∀ i, 0 < k i) :
+theorem intertwine (a : ℝ) (k : ι → ℝ) (hk : ∀ i, 0 < k i) :
     diagonal (rootWeight k)*K a k = symmetricK a k*diagonal (rootWeight k) := by
   ext T U
   simp only [diagonal_mul,mul_diagonal,K,symmetricK,Matrix.add_apply,
@@ -59,7 +59,7 @@ private theorem intertwine (a : ℝ) (k : ι → ℝ) (hk : ∀ i, 0 < k i) :
   · simp only [diagonal_apply_ne _ h]
     split_ifs <;> ring
 
-private theorem eigenpair_transport (a : ℝ) (k : ι → ℝ) (hk : ∀ i, 0 < k i)
+theorem eigenpair_transport (a : ℝ) (k : ι → ℝ) (hk : ∀ i, 0 < k i)
     (e : ℝ) (v : Finset ι → ℝ) (hv : v ≠ 0) (he : symmetricK a k*ᵥv = e • v) :
     ∃ h : Finset ι → ℝ, h ≠ 0 ∧ K a k*ᵥh = e • h := by
   let D := diagonal (rootWeight k)

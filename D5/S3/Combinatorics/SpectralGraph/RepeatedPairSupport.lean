@@ -26,14 +26,14 @@ variable {ι : Type*} [Fintype ι] [DecidableEq ι]
 def pairExponents (a : ℕ) (k : ι → ℕ) : Fin 2 ⊕ ι → ℕ :=
   Sum.elim (fun _ => a) k
 
-def diagonalFactor (k : ι → ℝ) (T : Finset ι) : ℝ :=
+def diagonalFactor {R : Type*} [CommRing R] (k : ι → R) (T : Finset ι) : R :=
   ∏ i ∈ univ \ T, (k i+1)
 
-def disjointKernel (k : ι → ℝ) : Matrix (Finset ι) (Finset ι) ℝ :=
+def disjointKernel {R : Type*} [CommRing R] (k : ι → R) : Matrix (Finset ι) (Finset ι) R :=
   fun T U => if Disjoint T U then ∏ i ∈ U, k i else 0
 
 /-- Subset form of the entire tensor, with all 2^card(iota) coordinates. -/
-def K (a : ℝ) (k : ι → ℝ) : Matrix (Finset ι) (Finset ι) ℝ :=
+def K {R : Type*} [CommRing R] (a : R) (k : ι → R) : Matrix (Finset ι) (Finset ι) R :=
   diagonal (fun T => (a+1)*diagonalFactor k T)+a • disjointKernel k
 
 def pairedValue (h : Finset ι → ℝ) (S : Finset (Fin 2 ⊕ ι)) : ℝ :=
