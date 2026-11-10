@@ -1,5 +1,5 @@
 /- GID: D5/S3/Arith/Robin/PriceRecord/PrimeOccupationDefect
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Arith/Robin/PriceRecord/PrimeOccupationDefect
    mirror-E: none(waiver:analytic-inequality)
    anchors: []
@@ -16,6 +16,15 @@ import Mathlib.Tactic
 /-!
 The uniform theorem controls arbitrary finite prime selections.
 Every private lemma is consumed on its proof path.
+
+Generality I: the reference is the actual natural primes, with the fixed
+reciprocal-square cost, cutoff sqrt(2)*sqrt(z), scale sqrt(z)*log(z), literal
+threshold price and closed profile below. I-bearing inputs are
+OriginalEndpointFirstLayerBand's theta difference identity, PrimeSquareTail's
+uniform prime-square tail, and QuantitativePrimeAbel's prime intervals and
+square sums. The theorem does not quantify over other reference sequences,
+layer powers or cutoff constants; such extensions require their own estimates
+and profile derivation. Uniformity over all permitted H and X is unchanged.
 
 Two endpoint prices give an exact finite dual. Its two slopes converge to
 the same number. The bounded *total* theta mass pays their discrepancy;

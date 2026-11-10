@@ -27,6 +27,16 @@ internal sealed class PrimeOccupationDefectDocument : IScribeDocumentDefinition
                     + "All prime weights and cutoffs in the Lean statement are literal; "
                     + "no replacement of log(p) or log(y) by log(z)/2 occurs.")),
                 Paragraph(Text(
+                    "Generality I records the fixed actual-prime square layer: "
+                    + "the reference primes, reciprocal-square cost, r=sqrt(2), "
+                    + "scale D, literal price q and profile J are fixed. The "
+                    + "I-bearing inputs are OriginalEndpointFirstLayerBand's theta "
+                    + "difference identity, PrimeSquareTail's uniform prime-square "
+                    + "tail, and QuantitativePrimeAbel's prime intervals and square "
+                    + "sums. Other reference sequences, layer powers or cutoff "
+                    + "constants require their own estimates and profile derivation. "
+                    + "The stated uniformity over all permitted H and X is unchanged.")),
+                Paragraph(Text(
                     "For one mass b0>=0 set s=sqrt(1+b0^2), P=1+s, "
                     + "T=sqrt(b0^2+4*P), A=(T-b0)/2 and C=(T+b0)/2. "
                     + "Then AC=P, C-A=b0, A^(-2)+C^(-2)=1 and "
@@ -63,7 +73,7 @@ internal sealed class PrimeOccupationDefectDocument : IScribeDocumentDefinition
                     + "J by less than epsilon/2. A finite subcover and the "
                     + "intersection of finitely many eventual thresholds complete "
                     + "the uniform estimate. The compact object here is only the "
-                    + "scalar interval [0,M]. This is a general analytic estimate, "
+                    + "scalar interval [0,M]. This is an analytic estimate, "
                     + "not an enumeration, checker, numerical reduction or finite "
                     + "certified instance; utility kind is none.")),
                 Paragraph(Text(
