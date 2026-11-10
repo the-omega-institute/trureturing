@@ -16,7 +16,7 @@ internal sealed class AttachmentSphereDocument : IScribeDocumentDefinition
              Anchor.ParseCanonical("mathlib/module/Mathlib.Topology.Piecewise")]),
         H("The barycentric collar and the unchanged quotient"),
         Blocks(
-            Paragraph(Text("The standalone based contraction of P is the sole homotopy input. The full boundary, both based inverse homotopies, original labels and attached singleton S0 branch are preserved. No native acceptance or universal certificate supplier is claimed.")),
+            Paragraph(Text("The standalone based contraction of P is the sole homotopy input. The full boundary, both based inverse homotopies, original labels and attached singleton S0 branch are preserved. An unrestricted arbitrary-plane certificate supplier is not assumed.")),
             Node("attachment", "Attachment", "Actual-coordinate attachment input",
                 "The input consists of native X and P on the unchanged finite ambient type, a nonempty face, the exact union X=P union simplex(face), exact intersection P intersect simplex(face)=boundary(face), an actual point p of P, and a HomotopyRel contraction of P to p fixing p. The sole allowed homotopy input is this standalone based contraction of P to p fixing p. No contraction of X, desired sphere equivalence, collar or freeness across X is assumed.", DescribeRole.Definition),
             Node("attachment-faceinhabited", "faceInhabited", "A point of the face label type",
