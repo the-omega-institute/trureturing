@@ -7,7 +7,7 @@
    digest: Quaternionic Deutsch lower equality rigidity and simultaneous equality. -/
 
 /- proof_shape: result: content
-   escape_witness: none (external open-problem settlement admission)
+   escape_witness: D5.S3.QuantumBounds.QuaternionicDeutschEquality.lower_to_rigid
    admission_basis: open-problem-resolution (#23061; Proved)
    Direct frozen dependencies: none
    Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/27109
