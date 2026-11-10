@@ -37,7 +37,18 @@ internal sealed class ActualZhuAssociatorDocument : IScribeDocumentDefinition
                     + "https://github.com/Fedor-Popov/Lean_VOA/blob/013a799ca834a8a6b3afa8129e3e522025b3f45c/VOA/Modules/ZhuAssociator.lean. "
                     + "Its immutable SHA256 is 733725cca0c4ac72112b440392242d853378e35a7db197e80e5518d2591f468f. "
                     + "The port uses the repository's actual lattice fields and native Ring.choose rather "
-                    + "than importing the upstream VOA stack. The classical attribution is Zhu and Frenkel--Zhu.")),
+                    + "than importing the upstream VOA stack. Upstream uses Lean v4.30.0 and mathlib "
+                    + "c5ea00351c28e24afc9f0f84379aa41082b1188f; this native port uses Lean v4.35.0 and mathlib "
+                    + "56a005855ea17e0b0958f73ec801ae140b0a1679. It is literature-attested, with no claim "
+                    + "of independent mathematical novelty. The classical attribution is Zhu and Frenkel--Zhu.")),
+                Paragraph(Text("Four-slot escape registration for associator_mem_zhuO is unfinished under "
+                    + "https://github.com/the-omega-institute/trureturing/issues/28745. Missing evidence is a faithful "
+                    + "typed reconstruction and equivalence for the entire original telescope D, positive-definiteness hD "
+                    + "and arbitrary u,v,w, a lawful enrolled-template readout and actual-positive law, whole-family "
+                    + "intervention and sensitivity, and actual observational dependence. Rank-zero and other constant "
+                    + "degenerate fibres remain in scope; membership alone does not supply nonconstant sensitivity. "
+                    + "No declared_validated registration is asserted. Issues #28732 and #28685 concern the distinct "
+                    + "product-chain and finite-quotient audits.")),
                 Paragraph(Text("This theorem establishes associator membership in O. It does not construct "
                     + "a quotient Ring or Algebra, prove the opposite stability statement, or assert an "
                     + "analytic CFT, string-theory model, or AdS/CFT correspondence."))),

@@ -25,7 +25,15 @@ internal sealed class ActualZhuAssociatorScalarDocument : IScribeDocumentDefinit
                 + "1c678f98391c0a8e6b921bccb23b823fb9d10785a7fa787478044437d806fb3c. "
                 + "Native Ring.choose_neg supplies upper negation; the existing ActualZhuBinomial "
                 + "owner supplies signed binomials, Vandermonde, and trinomial revision. "
+                + "Upstream uses Lean v4.30.0 and mathlib c5ea00351c28e24afc9f0f84379aa41082b1188f; "
+                + "this native port uses Lean v4.35.0 and mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679. "
+                + "This is literature-attested, with no claim of independent mathematical novelty. "
                 + "The classical source is Zhu's associativity argument, also developed by Frenkel and Zhu.")),
+            Paragraph(Text("The unfinished typed audit of the public associator and mu_identity consumers is "
+                + "https://github.com/the-omega-institute/trureturing/issues/28745. It requires faithful full-telescope "
+                + "reconstruction and equivalence, a lawful enrolled-template readout and actual-positive law, "
+                + "whole-family intervention and sensitivity, and actual observational dependence, preserving constant "
+                + "and degenerate fibres. These private kernels supply no declared_validated registration.")),
             Paragraph(Text("These are private consumed helpers. ActualZhuAssociator uses both kernels "
                 + "to identify its two state-field iterate families with finite higher-circle towers. "
                 + "The scalar identities alone make no assertion about a quotient ring or a physical CFT.")))));

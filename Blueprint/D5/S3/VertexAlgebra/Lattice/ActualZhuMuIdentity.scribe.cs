@@ -44,7 +44,21 @@ internal sealed class ActualZhuMuIdentityDocument : IScribeDocumentDefinition
                         + "https://github.com/Fedor-Popov/Lean_VOA/blob/013a799ca834a8a6b3afa8129e3e522025b3f45c/VOA/Modules/ZhuMuIdentity.lean. "
                         + "The upstream file SHA256 is d5331d266fde48898921d23a276b1ced5af9d39e46f52132fea357543797385d. "
                         + "The local implementation uses native Ring.choose and mathlib forward differences. "
+                        + "Upstream uses Lean v4.30.0 and mathlib c5ea00351c28e24afc9f0f84379aa41082b1188f; "
+                        + "this native port uses Lean v4.35.0 and mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679. "
+                        + "This is literature-attested, with no claim of independent mathematical novelty. "
                         + "The classical mathematical sources are Zhu's associativity theorem and the work of Frenkel and Zhu.")),
+                    Paragraph(Text("ActualZhuAssociator.Ufam_inner consumes mu_identity to identify the finite "
+                        + "higher-circle tower; its swapped-parameter use also supplies Vfam_inner. Both paths reach "
+                        + "assoc_eq and associator_mem_zhuO. The coefficients and scalar identity are supplied with that "
+                        + "consumer, with no separate scalar delivery.")),
+                    Paragraph(Text("Four-slot escape registration for mu_identity is unfinished under "
+                        + "https://github.com/the-omega-institute/trureturing/issues/28745. Missing evidence is a faithful "
+                        + "typed reconstruction and equivalence for the full K,L,b : Nat and s : Int telescope, a lawful "
+                        + "enrolled-template readout and actual-positive law, whole-family intervention and sensitivity, "
+                        + "and actual observational dependence, including zero and negative-index boundary fibres. "
+                        + "No declared_validated registration is asserted. Issues #28732 and #28685 remain specific "
+                        + "to the product-chain and finite-quotient audits.")),
                     Paragraph(Text("The result is a finite scalar identity. It supplies coefficients for an associator "
                         + "argument and establishes no quotient multiplication, O-space stability, VOA associativity, "
                         + "analytic CFT, string theory, or AdS/CFT statement by itself."))),
