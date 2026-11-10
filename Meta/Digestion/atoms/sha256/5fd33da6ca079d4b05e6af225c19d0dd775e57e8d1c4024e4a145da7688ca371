@@ -1,0 +1,45 @@
+**命题 31.1（同一原 PB 的未付等式）。** 在定理 29.1 的条件下，固定任意 $t=t^*$，记 $g=D(c,t)$、$k=c\circ t$、$s=g-K_\sigma(c,t)$。定义两份真正外层缺陷
+
+$$
+E_+=D(c-g,k)-K_\sigma(c-g,k),\qquad
+E_-=D(c+g,-k)-K_\sigma(c+g,-k).
+\tag{31.1}
+$$
+
+则有精确恒等式
+
+$$
+\boxed{E_+-E_-=2cs.}
+\tag{31.2}
+$$
+
+对这份原输入，$D(c,t)=K_\sigma(c,t)$、$s=0$ 与 $E_+=E_-$ 三者等价。在定理 30.1 的范围内，进一步有
+
+$$
+E_+-E_-=2\sum_{a_i\ne0}a_i\rho_i p_i,
+\qquad
+\|E_+-E_-\|=2\max_{a_i\ne0}|a_i\rho_i|.
+\tag{31.3}
+$$
+
+证明。真正的 $\operatorname{PB}(t;c,0)$ 使用内值 $D(t,c)=-g$、$D(t,0)=0$，所以
+
+$$
+D(c-g,k)-D(c+g,-k)=2c\circ g.
+\tag{31.4}
+$$
+
+只对已知比较映射使用双线性，逐项相消给
+
+$$
+\begin{aligned}
+K_\sigma(c-g,k)-K_\sigma(c+g,-k)
+&=2K_\sigma(c,k)\\
+&=\frac{\jmath}{2}[c^2,t]
+=2c\circ K_\sigma(c,t).
+\end{aligned}
+\tag{31.5}
+$$
+
+相减并用 $[c,s]=0$ 得 $2c\circ s=2cs$。若 $cs=0$，左、右乘各非零谱投影给 $a_i p_i s p_i=0$；逐个非零实数 $a_i$ 消去后，(29.7) 给 $s=0$。这不要求 $c$ 在整个 $C$ 中可逆。反向直接成立。定理 30.1 将其化为正交有限谱和，范数即 (31.3)。∎
+
