@@ -28,6 +28,7 @@ internal sealed class HardinA233177LadderDocument : IScribeDocumentDefinition
             Node("instDecidableNormal", "Deciding the row-major conditions", DecidableNormalFormula(), false),
             Node("Legal", "Literal array conditions", LegalFormula(), false),
             Node("a", "The literal filtered count", CountFormula(), false, true),
+            Node("used", "Number of labels used", UsedFormula(), false),
             Node("alternating", "Two alternating constant columns", AlternatingFormula(), false),
             Node("two_label_classification", "Classification when one label is omitted",
                 TwoLabelClassificationFormula(), true),
@@ -118,6 +119,14 @@ internal sealed class HardinA233177LadderDocument : IScribeDocumentDefinition
             Mul(Num(33554432), A(3))), Mul(Num(1073741824), A(2)));
         var equation = Eq(A(9), rhs);
         return n is null ? equation : All("n", Q("Nat"), equation);
+    }
+
+    private static Formula UsedFormula()
+    {
+        var n = V("n"); var p = V("P");
+        var cells = Product(Fin(D(4)), Fin(n));
+        return All("n", Q("Nat"), All("P", Arrow(cells, Fin(D(3))),
+            Eq(Own("used", p), Call("Nat.card", Parenthesized(Call("Set.range", p))))));
     }
 
     private static Formula NormalCondition(Formula n, Formula a)
