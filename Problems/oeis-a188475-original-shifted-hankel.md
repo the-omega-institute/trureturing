@@ -43,7 +43,13 @@ The preregistered target is issue 29029.
 
 The current entry still calls the assertion a conjecture. The bounded
 prior-art screen in issue 29029 found no exact supplier in the inspected
-papers, repository, pinned Mathlib or third-party Lean search. A331474's
+papers, repository, pinned Mathlib or third-party Lean search.
+The paper exclusions are Goy–Shattuck (2023), Theorem 3, p. 425 and the
+recurrence argument p. 431 (https://doi.org/10.15330/cmp.15.2.420-436);
+Chang–Hu–Zhang (2013), Linear Algebra and its Applications 438:2523–2541,
+Theorem 3.5; and Liu–Wang–Zhang, arXiv:2607.18644v2, Theorems 1.5–1.8
+(https://arxiv.org/html/2607.18644v2). These are bounded exclusions of exact
+suppliers, not assertions that the methods are unrelated. A331474's
 signed Gram adjugate proof is source specific. The Cigler Motzkin family
 fixes the first descent weight at one, whereas this source requires two.
 Neither supplies this result by direct specialization.
@@ -84,17 +90,19 @@ D5/S3/Combinatorics/CatalanPowerHankel/BarryA188475.lean, namespace
 BarryA188475. Its public definitions q and hankel preserve the recurrence
 and the exact shift. The intended public theorem result has the two
 required equalities as a conjunction, quantifies over all natural n and
-has no hypotheses. A cache-guarded scoped Lean build verifies the complete theorem. Admission,
+has no hypotheses. A cache-guarded scoped Lean build verifies the complete
+theorem with axiom closure propext, Classical.choice and Quot.sound. Admission,
 independent review and publication remain separate obligations.
 
 ## Triage
 
 The all-index theorem is the sole resolution target. The auxiliary finite
 Gram, cofactor and orthogonality claims are consumed on its proof path.
-No theory volume or digestion atom corresponds to this target. Independent
-prefreeze review, complete registration evidence or its concrete linked
-issue exception, canonical freezing and publication remain separate from
-Stage A implementation.
+No theory volume or digestion atom corresponds to this target. The source-bound determinant registration has a compiled equivalence bridge,
+whole-family variation, single-role sensitivity and actual observational
+dependence on its rational matrix state. Its continuation is unknown; that
+records a residual and does not assert undecidability. Independent prefreeze
+review, canonical freezing and publication remain separate from implementation.
 
 Source evidence: the original OEIS assertion, cubic name, source recurrence
 and offset-change locators are retained in the associated library note.
