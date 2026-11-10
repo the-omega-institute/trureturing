@@ -250,4 +250,257 @@ theorem tight_witness_classes (d : ℕ) (hd : 1 ≤ d)
     change selectedDegree G S v=d ∧ selectedDegree G S x=1 ∧ ¬ G.Adj x v
     exact ⟨by omega,by omega,ha⟩
 
+/-- Tight capacity leaves no unreserved leaf: its actual failure would be a
+positive-capacity outside resource disjoint from the high-witness image. -/
+theorem tight_no_extra (color : V → Bool)
+    (hcolor : ∀ v w, G.Adj v w → color v ≠ color w)
+    (d : ℕ) (hd : 3 ≤ d) (hdegree : ∀ v, degree G v=d)
+    (ht : (2*d-1)*S.card+(isolates G S).card=d*Fintype.card V)
+    (u : V) : ¬ BipartiteExchange.Extra G S hS u := by
+  classical
+  intro hu
+  let x := BipartiteExchange.activeWitness G S hS u
+  have hf := BipartiteExchange.active_failure G S hS u (Or.inr hu)
+  have hx : x ∈ Finset.univ \ S := by simpa using hf.1
+  rcases (tight_outside_classes G S hS d (by omega) hdegree ht).2 x hx with he | he
+  · obtain ⟨v,hv,hvx⟩ := he
+    have hh := (high_iff G S v).mp hv
+    have hw : BipartiteExchange.activeWitness G S hS v = x := by
+      simpa only [BipartiteExchange.activeWitness,dif_pos hh] using hvx
+    have huv := BipartiteExchange.activeWitness_injective G S color hcolor hS u v
+      (Or.inr hu) (Or.inl hh) hw.symm
+    obtain ⟨h,hl⟩ := hu.1
+    exact BipartiteExchange.leaf_not_high G S u h hl (huv.symm ▸ hh)
+  · have hc := failure_selected_degree_le_two G S u x hf
+    omega
+
+/-- Every selected leaf is paired to a nonadjacent chosen high witness under
+tight regular capacity. This is used for the actual leaf bijections. -/
+theorem tight_leaf_reserved (color : V → Bool)
+    (hcolor : ∀ v w, G.Adj v w → color v ≠ color w)
+    (d : ℕ) (hd : 3 ≤ d) (hdegree : ∀ v, degree G v=d)
+    (ht : (2*d-1)*S.card+(isolates G S).card=d*Fintype.card V)
+    (u h : V) (hu : BipartiteExchange.LeafAt G S u h) :
+    BipartiteExchange.Reserved G S hS u := by
+  by_contra hn
+  exact tight_no_extra G S hS color hcolor d hd hdegree ht u ⟨⟨h,hu⟩,hn⟩
+
+/-- A high vertex incident to a selected leaf has full selected degree. -/
+theorem tight_leaf_full (hS : IsMinimalStarForming G 2 S) (color : V → Bool)
+    (hcolor : ∀ v w, G.Adj v w → color v ≠ color w)
+    (d : ℕ) (hd : 3 ≤ d) (hdegree : ∀ v, degree G v=d)
+    (ht : (2*d-1)*S.card+(isolates G S).card=d*Fintype.card V)
+    (u h : V) (hu : BipartiteExchange.LeafAt G S u h) :
+    selectedDegree G S h=d := by
+  obtain ⟨k,huk,hn,ha⟩ := BipartiteExchange.reserved_leaf G S hS u
+    (tight_leaf_reserved G S hS color hcolor d hd hdegree ht u h hu)
+  have he := BipartiteExchange.leaf_support_unique G S u k h huk hu
+  subst k
+  rcases tight_witness_classes G S hS d (by omega) hdegree ht h
+    ((high_iff G S h).mpr hu.2.1) with hc | hc
+  · exact (hn hc.2.2).elim
+  · exact hc.1
+
+/-- Every full-degree high vertex has exactly one selected leaf. Together
+with tight_leaf_full this gives the C--U bijection of the source partition. -/
+theorem tight_full_unique_leaf (hS : IsMinimalStarForming G 2 S) (color : V → Bool)
+    (hcolor : ∀ v w, G.Adj v w → color v ≠ color w)
+    (d : ℕ) (hd : 3 ≤ d) (hdegree : ∀ v, degree G v=d)
+    (ht : (2*d-1)*S.card+(isolates G S).card=d*Fintype.card V)
+    (v : V) (hv : v ∈ CertificateBound.high G S)
+    (hfull : selectedDegree G S v=d) :
+    ∃! u, BipartiteExchange.LeafAt G S u v := by
+  have hh := (high_iff G S v).mp hv
+  have hn : ¬ G.Adj (BipartiteExchange.witness G S hS v) v := by
+    rcases tight_witness_classes G S hS d (by omega) hdegree ht v hv with hc | hc
+    · omega
+    · exact hc.2.2
+  obtain ⟨u,hu,hxu,hunique⟩ := BipartiteExchange.nonadjacent_leaf G S hS v
+    (BipartiteExchange.witness G S hS v) hh
+    (BipartiteExchange.witness_failure G S hS v hh) hn
+  refine ⟨u,hu,?_⟩
+  intro w hw
+  obtain ⟨k,hwk,hnk,hxw⟩ := BipartiteExchange.reserved_leaf G S hS w
+    (tight_leaf_reserved G S hS color hcolor d hd hdegree ht w v hw)
+  have he := BipartiteExchange.leaf_support_unique G S w k v hwk hw
+  subst k
+  exact hunique w hw.1 hxw
+
+private theorem nonhigh_neighbor_leaf (u h : V) (hu : u ∈ S)
+    (hh : Regular.High G.Adj (· ∈ S) h) (hn : ¬ Regular.High G.Adj (· ∈ S) u)
+    (huh : G.Adj u h) : BipartiteExchange.LeafAt G S u h := by
+  exact ⟨hu,hh,huh,fun w hw huw =>
+    BipartiteExchange.nonhigh_unique G S u w h hu hn hw hh.1 huw huh⟩
+
+/-- The actual selected high graph in every isolate-tight regular bipartite
+graph is (d-1)-regular, in all degrees d>=3. Full highs lose precisely their
+unique selected leaf; degree-(d-1) highs have no selected leaf. -/
+theorem tight_high_regular (hS : IsMinimalStarForming G 2 S) (color : V → Bool)
+    (hcolor : ∀ v w, G.Adj v w → color v ≠ color w)
+    (d : ℕ) (hd : 3 ≤ d) (hdegree : ∀ v, degree G v=d)
+    (ht : (2*d-1)*S.card+(isolates G S).card=d*Fintype.card V)
+    (v : V) (hv : v ∈ CertificateBound.high G S) :
+    selectedDegree G (CertificateBound.high G S) v=d-1 := by
+  classical
+  have hh := (high_iff G S v).mp hv
+  rcases tight_witness_classes G S hS d (by omega) hdegree ht v hv with hc | hc
+  · have he : (CertificateBound.high G S).filter (G.Adj v)=S.filter (G.Adj v) := by
+      ext y
+      simp only [Finset.mem_filter]
+      constructor
+      · rintro ⟨hy,ha⟩
+        exact ⟨(Finset.mem_filter.mp hy).1,ha⟩
+      · rintro ⟨hy,ha⟩
+        refine ⟨(high_iff G S y).mpr ?_,ha⟩
+        by_contra hn
+        have hl := nonhigh_neighbor_leaf G S y v hy hh hn (G.adj_symm ha)
+        have hf := tight_leaf_full G S hS color hcolor d hd hdegree ht y v hl
+        omega
+    change ((CertificateBound.high G S).filter (G.Adj v)).card=d-1
+    rw [he]
+    exact hc.1
+  · obtain ⟨u,hu,hunique⟩ := tight_full_unique_leaf G S hS color hcolor d hd hdegree ht v hv hc.1
+    have hum : u ∈ S.filter (G.Adj v) := Finset.mem_filter.mpr ⟨hu.1,G.adj_symm hu.2.2.1⟩
+    have he : (CertificateBound.high G S).filter (G.Adj v)=(S.filter (G.Adj v)).erase u := by
+      ext y
+      simp only [Finset.mem_filter,Finset.mem_erase]
+      constructor
+      · rintro ⟨hy,ha⟩
+        refine ⟨?_,(Finset.mem_filter.mp hy).1,ha⟩
+        intro hyu
+        subst y
+        exact BipartiteExchange.leaf_not_high G S u v hu ((high_iff G S u).mp hy)
+      · rintro ⟨hyu,hy,ha⟩
+        refine ⟨(high_iff G S y).mpr ?_,ha⟩
+        by_contra hn
+        exact hyu (hunique y (nonhigh_neighbor_leaf G S y v hy hh hn (G.adj_symm ha)))
+    change ((CertificateBound.high G S).filter (G.Adj v)).card=d-1
+    rw [he,Finset.card_erase_of_mem hum]
+    change selectedDegree G S v-1=d-1
+    rw [hc.1]
+
+/-- Exact attainment of the order bound excludes all selected isolates. -/
+theorem order_tight_isolates (hS : IsMinimalStarForming G 2 S)
+    (d : ℕ) (hd : 1 ≤ d) (hdegree : ∀ v, degree G v=d)
+    (ht : (2*d-1)*S.card=d*Fintype.card V) : (isolates G S).card=0 := by
+  have hc := regular_selection_bound G S hS d hd hdegree
+  omega
+
+private theorem neighbor_of_no_isolates (hz : (isolates G S).card=0)
+    (u : V) (hu : u ∈ S) : ∃ w, w ∈ S ∧ G.Adj u w := by
+  have hn : selectedDegree G S u ≠ 0 := by
+    intro he
+    have hm : u ∈ isolates G S := Finset.mem_filter.mpr ⟨hu,he⟩
+    have hn := Finset.eq_empty_iff_forall_notMem.mp (Finset.card_eq_zero.mp hz) u
+    exact hn hm
+  obtain ⟨w,hw⟩ := Finset.card_pos.mp (by
+    change 0 < selectedDegree G S u
+    omega : 0<(S.filter (G.Adj u)).card)
+  exact ⟨w,(Finset.mem_filter.mp hw).1,(Finset.mem_filter.mp hw).2⟩
+
+/-- In every regular order-bound equality graph, including graphs with
+triangles, a selected leaf uses its support's actual chosen witness and its
+support has full selected degree. No bipartition premise is present. -/
+theorem order_tight_leaf_witness (hS : IsMinimalStarForming G 2 S)
+    (d : ℕ) (hd : 2 ≤ d) (hdegree : ∀ v, degree G v=d)
+    (ht : (2*d-1)*S.card=d*Fintype.card V)
+    (u h : V) (hu : BipartiteExchange.LeafAt G S u h) :
+    G.Adj (BipartiteExchange.witness G S hS h) u ∧ selectedDegree G S h=d := by
+  classical
+  have hz := order_tight_isolates G S hS d (by omega) hdegree ht
+  have hcap : (2*d-1)*S.card+(isolates G S).card=d*Fintype.card V := by rw [hz]; omega
+  obtain ⟨x,hf,hxu,hunique⟩ := Regular.selected_leaf_has_private_witness G.Adj (· ∈ S)
+    (fun _ => G.irrefl) (fun _ _ ha => G.adj_symm ha)
+    ((regular_minimal_iff G S).mpr hS)
+    (neighbor_of_no_isolates G S hz) u h hu.1 hu.2.1 hu.2.2.1 hu.2.2.2
+  have ha : selectedDegree G S x=1 := by
+    have he : S.filter (G.Adj x)={u} := by
+      ext w
+      simp only [Finset.mem_filter,Finset.mem_singleton]
+      constructor
+      · rintro ⟨hw,hxw⟩; exact hunique w hw hxw
+      · rintro rfl; exact ⟨hu.1,hxu⟩
+    simp only [selectedDegree,he,Finset.card_singleton]
+  have hx : x ∈ Finset.univ \ S := by simpa using hf.1
+  rcases (tight_outside_classes G S hS d (by omega) hdegree hcap).2 x hx with he | he
+  · obtain ⟨k,hk,hkx⟩ := he
+    have hh := (high_iff G S k).mp hk
+    have hnk : ¬ G.Adj x k := by
+      intro hax
+      have hku := hunique k hh.1 hax
+      exact BipartiteExchange.leaf_not_high G S u h hu (hku ▸ hh)
+    have hfk : Regular.Failure G.Adj (· ∈ S) k x := by
+      rw [← hkx]
+      exact BipartiteExchange.witness_failure G S hS k hh
+    obtain ⟨w,hw,hxw,hwunique⟩ := BipartiteExchange.nonadjacent_leaf G S hS k x hh hfk hnk
+    have hwu := hunique w hw.1 hxw
+    subst w
+    have hkh := BipartiteExchange.leaf_support_unique G S u k h hw hu
+    subst k
+    have hn : ¬ G.Adj (BipartiteExchange.witness G S hS h) h := by rw [hkx]; exact hnk
+    refine ⟨by rw [hkx]; exact hxu,?_⟩
+    rcases tight_witness_classes G S hS d (by omega) hdegree hcap h hk with hc | hc
+    · exact (hn hc.2.2).elim
+    · exact hc.1
+  · omega
+
+/-- All high selected vertices in an order-bound equality graph have full
+selected degree, with no triangle-free or bipartite assumption. -/
+theorem order_tight_high_full (hS : IsMinimalStarForming G 2 S)
+    (d : ℕ) (hd : 2 ≤ d) (hdegree : ∀ v, degree G v=d)
+    (ht : (2*d-1)*S.card=d*Fintype.card V)
+    (v : V) (hv : v ∈ CertificateBound.high G S) : selectedDegree G S v=d := by
+  classical
+  have hz := order_tight_isolates G S hS d (by omega) hdegree ht
+  have hcap : (2*d-1)*S.card+(isolates G S).card=d*Fintype.card V := by rw [hz]; omega
+  have hh := (high_iff G S v).mp hv
+  rcases tight_witness_classes G S hS d (by omega) hdegree hcap v hv with hc | hc
+  · let x := BipartiteExchange.witness G S hS v
+    have hf := BipartiteExchange.witness_failure G S hS v hh
+    have hxd : selectedDegree G S x = 2 := hc.2.1
+    have htwo : 1<(S.filter (G.Adj x)).card := by
+      change 1 < selectedDegree G S x
+      omega
+    obtain ⟨a,ha,b,hb,hab⟩ := Finset.one_lt_card.mp htwo
+    have he : ∃ u, u ∈ S ∧ u≠v ∧ G.Adj x u := by
+      by_cases hav : a=v
+      · exact ⟨b,(Finset.mem_filter.mp hb).1,by intro h; exact hab (hav.trans h.symm),
+          (Finset.mem_filter.mp hb).2⟩
+      · exact ⟨a,(Finset.mem_filter.mp ha).1,hav,(Finset.mem_filter.mp ha).2⟩
+    obtain ⟨u,hu,huv,hxu⟩ := he
+    have hunique : ∀ w ∈ S, G.Adj u w → w=v := by
+      intro w hw huw
+      by_contra hwv
+      exact hf.2 (Or.inr ⟨u,w,⟨hu,huv⟩,⟨hw,hwv⟩,hxu,huw⟩)
+    obtain ⟨w,hw,huw⟩ := neighbor_of_no_isolates G S hz u hu
+    have hwv := hunique w hw huw
+    have huv' : G.Adj u v := hwv ▸ huw
+    have hl : BipartiteExchange.LeafAt G S u v := ⟨hu,hh,huv',hunique⟩
+    have hfull := (order_tight_leaf_witness G S hS d hd hdegree ht u v hl).2
+    omega
+  · exact hc.1
+
+/-- Each high in every regular order-bound equality graph is paired with
+exactly one selected leaf. The chosen outside witness has that leaf as its
+unique selected neighbor; this is the actual H--U--X pairing. -/
+theorem order_tight_unique_leaf (hS : IsMinimalStarForming G 2 S)
+    (d : ℕ) (hd : 2 ≤ d) (hdegree : ∀ v, degree G v=d)
+    (ht : (2*d-1)*S.card=d*Fintype.card V)
+    (v : V) (hv : v ∈ CertificateBound.high G S) :
+    ∃! u, BipartiteExchange.LeafAt G S u v := by
+  have hz := order_tight_isolates G S hS d (by omega) hdegree ht
+  have hcap : (2*d-1)*S.card+(isolates G S).card=d*Fintype.card V := by rw [hz]; omega
+  have hh := (high_iff G S v).mp hv
+  have hfull := order_tight_high_full G S hS d hd hdegree ht v hv
+  have hn : ¬ G.Adj (BipartiteExchange.witness G S hS v) v := by
+    rcases tight_witness_classes G S hS d (by omega) hdegree hcap v hv with hc | hc
+    · omega
+    · exact hc.2.2
+  obtain ⟨u,hu,hxu,hunique⟩ := BipartiteExchange.nonadjacent_leaf G S hS v
+    (BipartiteExchange.witness G S hS v) hh
+    (BipartiteExchange.witness_failure G S hS v hh) hn
+  refine ⟨u,hu,?_⟩
+  intro w hw
+  exact hunique w hw.1 (order_tight_leaf_witness G S hS d hd hdegree ht w v hw).1
+
 end D5.S3.Combinatorics.Graph.StarForming.WitnessBudget
