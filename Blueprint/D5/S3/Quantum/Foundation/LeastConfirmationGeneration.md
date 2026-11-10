@@ -20,7 +20,9 @@ Lean statement: `D5/S3/Quantum/Foundation/LeastConfirmationGeneration.positive_d
 
 *Commentary.*
 
-Every positive f has a list of at most dim(A) pairs (c_i,p_i), with c_i>0 and f=sum_i c_i e_(p_i). Distinct positions have both cross evaluations zero, while every diagonal evaluation is one. The unweighted effect sum is at most u. If f=u, evaluation at each selected probe forces c_i=1; the resulting effects sum exactly to u and constitute a complete measurement. These conclusions do not require reciprocity, an inner product, spectrality, or reversible transformations.
+Every positive f has a list of at most dim(A) pairs (c_i,p_i), with c_i>0 and f=sum_i c_i e_(p_i). Distinct positions have both cross evaluations zero, while every diagonal evaluation is one. The unweighted effect sum is at most u. If f=u, evaluation at each selected probe forces c_i=1; the resulting effects sum exactly to u. On a nonzero normalized operational carrier this is a complete measurement. These conclusions do not require reciprocity, an inner product, spectrality, or reversible transformations.
+
+The maximal-value subtraction method is adapted from Niestegge, arXiv:2312.13213v2, Lemma 3(iv), Lemma 5 and Theorem 2(i). The source's state-effect hypotheses are not identified with this interface; the proper-effect premise bridge and remaining differences are set out in Library/QuantumStates/niestegge2023transition.md. No priority for the subtraction method or spectrality classification is claimed.
 
 For the operational carrier of Definition 26.1, the intended probes are the extreme points of the compact normalized state base. A formal application must identify pointwise positivity and the full proper-effect interval with the cone order and derive positive maximum attainment at an extreme point. Those compact convex and normalization bridges are not proved here. The theorem takes maximum attainment as an explicit assumption.
 
