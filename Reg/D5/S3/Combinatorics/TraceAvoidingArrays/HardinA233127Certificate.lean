@@ -38,7 +38,9 @@ abbrev arena : Arena where
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hp : Valid (true, true) ![0, 1, 0, 1, 0, 1] := by decide +kernel
+  have hp : Valid (true, true) ![0, 1, 0, 1, 0, 1] := by
+    unfold Valid
+    decide +kernel
   have hb := h (true, true) ![0, 1, 0, 1, 0, 1] hp 0
   have ha := row_counts (true, true) ![0, 1, 0, 1, 0, 1] hp 0
   change classCount (true, true) ![0, 1, 0, 1, 0, 1] 0 + 1 =
@@ -56,7 +58,9 @@ def family : Registration arena (type_of% @row_counts) where
     refine ⟨((true, true), ![0, 1, 0, 1, 0, 1]), 0, 1, ?_⟩
     change classCount (true, true) ![0, 1, 0, 1, 0, 1] 0 ≠
       classCount (true, true) ![0, 1, 0, 1, 0, 1] 1
-    have hp : Valid (true, true) ![0, 1, 0, 1, 0, 1] := by decide +kernel
+    have hp : Valid (true, true) ![0, 1, 0, 1, 0, 1] := by
+      unfold Valid
+      decide +kernel
     rw [row_counts _ _ hp 0, row_counts _ _ hp 1]
     decide +kernel
 
