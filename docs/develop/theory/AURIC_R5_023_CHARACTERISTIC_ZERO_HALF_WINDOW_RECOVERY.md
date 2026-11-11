@@ -2679,3 +2679,234 @@ $$
 结论只排除上述秩差造成的完整函数碰撞，并不恢复窗口本身或其原标量轨道。严格不等式只需一个方向；共轭根分支给出 $d_X(r)=3$、$d_Z(r)\le2$，没有排除 $d_Z(r)>0$，所以它不把正支持当作完整函数，也不声称正支持必能分离。不结算其它次数域上的任意四维剖面，不给有限查询、有效算法、噪声结论或物理量子、$\mathbb Z/\mathbb Q$、$H10(\mathbb Q)$ 的推论。
 
 ## 追加锚（本行以下为增补区）
+
+## 39. 单侧交维支配下的四维窗口标量刚性
+
+**定义 39.1（原商支持与交维函数）。** 设 $F$ 为特征零域，$D/F$ 为有限扩张。对非零有限维 $F$-子空间 $W\le_F D$，定义
+
+$$
+ d_W(r)=\dim_F(W\cap rW)\quad(r\in D^\times),
+ \qquad
+ Q(W)=\left\{\frac uv:u,v\in W\setminus\{0\}\right\}\subseteq D^\times .
+\tag{39.1}
+$$
+
+这里的商和标签都在同一个原域 $D$ 内。于是
+
+$$
+ r\in Q(W)\quad\Longleftrightarrow\quad d_W(r)>0.
+\tag{39.2}
+$$
+
+若 $E(W)=\{c\in D:cW\subseteq W\}$，则 $E(W)$ 是含 $F$ 的子域，且
+
+$$
+ [E(W):F]\mid \dim_F W.
+\tag{39.3}
+$$
+
+事实上，$cW\subseteq W$ 且 $c\ne0$ 时，乘法在有限维空间 $W$ 上单射，故 $cW=W$，再得 $c^{-1}W=W$。此外，对任意 $\gamma\in D^\times$，
+
+$$
+ d_{\gamma W}(r)=d_W(r),\qquad Q(\gamma W)=Q(W).
+\tag{39.4}
+$$
+
+**定理 39.2（单侧支配刚性）。** 设 $X,Z\le_F D$ 且
+
+$$
+ \dim_F X=\dim_F Z=4,
+ \qquad d_X(r)\le d_Z(r)\quad\text{对全部 }r\in D^\times .
+\tag{39.5}
+$$
+
+若存在 $\mu\in D\setminus F$ 使 $d_X(\mu)\ge3$，则存在 $\gamma\in D^\times$ 使
+
+$$
+ \boxed{Z=\gamma X}.
+\tag{39.6}
+$$
+
+因此实际上 $d_X(r)=d_Z(r)$ 对每一个原标签 $r$ 都成立。定理只使用同一 $D$ 内的逐标签交维支配；它不把商支持包含单独提升为完整交维支配。
+
+**引理 39.3（四维窗口的高交叠形状）。** 设 $\mu\in D\setminus F$，$W\le_F D$ 且 $\dim_F W=4$；令 $K=F(\mu)$、$t=[K:F]$。
+
+1. 若 $d_W(\mu)=4$，则 $W$ 是 $K$-空间，因而 $t\in\{2,4\}$。
+2. 若 $d_W(\mu)=3$，则只有两种形状：
+
+$$
+\begin{array}{ll}
+ t\ge5:& W=w\langle1,\mu,\mu^2,\mu^3\rangle_F,\\[2pt]
+ t=3:& W=wK\oplus Fb,qquad b\notin wK,
+\end{array}
+\tag{39.7}
+$$
+
+其中 $w\in D^\times$。特别地，$t=2,4$ 时交维恰为三不可能。
+
+**证明。** 若 $d_W(\mu)=4$，则 $\mu W=W$，所以 $W$ 是 $K=F[\mu]$-空间，$t$ 必须整除四；因 $\mu\notin F$，得到 $t=2$ 或 $4$。
+
+以下设 $d_W(\mu)=3$。置
+
+$$
+ W_i=\{w\in W:\mu^jw\in W\text{ 对 }0\le j\le i\}.
+$$
+
+则 $W_0=W$。乘以 $\mu$ 将 $W\cap\mu^{-1}W$ 同构地送到 $\mu W\cap W$，所以 $\dim_F W_1=d_W(\mu)=3$。对 $i\ge1$，映射
+$W_{i-1}\to W/W_1$、$w\mapsto\mu^{i-1}w+W_1$ 的核为 $W_i$，所以每次下降至多一维；从而
+
+$$
+ \dim_F W_2\ge2,\qquad \dim_F W_3\ge1.
+\tag{39.8}
+$$
+
+若 $t\ge4$，取 $0\ne w\in W_3$。因为 $1,\mu,\mu^2,\mu^3$ 在 $F$ 上独立，四个向量 $w,\mu w,\mu^2w,\mu^3w$ 构成 $W$ 的基，得到第一种形状。$t=4$ 时它等于 $wK$，于是 $\mu W=W$，与交维三矛盾，故只能有 $t\ge5$。
+
+若 $t=2$，$W_1$ 在乘以 $\mu$ 下稳定：$\mu^2$ 是 $1,\mu$ 的 $F$-线性组合。因此 $W_1$ 是 $K$-空间，三维不可能。若 $t=3$，同理 $W_2$ 在乘以 $\mu$ 下稳定。由 (39.8) 及 $W_2\subseteq W_1$，其维数介于二和三之间，又必须是三的倍数，故 $\dim_F W_2=3$。于是 $W_2=wK$，补上一条 $F$-方向即得第二种形状。证毕。
+
+**引理 39.4（同一三次子域的两标签支持刚性）。** 设 $F\subsetneq K\subseteq D$，$[K:F]=3$，并令
+
+$$
+ U=K\oplus Fa,qquad V=K\oplus Fb,qquad a,b\notin K.
+\tag{39.9}
+$$
+固定 $\kappa_0\in K\setminus F$。若
+
+$$
+ a\in Q(V),\qquad a+\kappa_0\in Q(V),
+\tag{39.10}
+$$
+则存在 $\lambda\in K^\times$ 使 $V=\lambda U$。特别地，$Q(U)\subseteq Q(V)$ 足以推出这一结论。
+
+**证明。** 由 $a\in Q(V)$，可写成
+
+$$
+ a=\frac{u+sb}{v+tb},qquad u,v\in K,\quad s,t\in F,\quad v+tb\ne0.
+\tag{39.11}
+$$
+若 $t=0$，则 $s\ne0$，否则 $a\in K$。于是
+
+$$
+ b=\frac vs a-\frac us,qquad
+ V=\frac vs(K+Fa)=\frac vs\,U.
+\tag{39.12}
+$$
+
+若 $t\ne0$，置 $c=s/t\in F$、$A=a-c$。则 $A\notin K$，并且由 (39.11)
+
+$$
+ b=h+\frac gA,qquad h=-\frac vt\in K,\quad g=\frac{u-cv}{t}\in K^\times.
+\tag{39.13}
+$$
+
+故
+
+$$
+ U=K+FA,qquad g^{-1}V=K+FA^{-1}.
+\tag{39.14}
+$$
+
+第二个原标签仍然是 $a+\kappa_0=A+\kappa$，其中 $\kappa=\kappa_0+c\in K\setminus F$。由其属于 $Q(V)=Q(g^{-1}V)$，存在 $p,q\in K$、$e,f\in F$ 使
+
+$$
+ A+\kappa=\frac{p+eA^{-1}}{q+fA^{-1}}=\frac{pA+e}{qA+f},qquad qA+f\ne0.
+\tag{39.15}
+$$
+
+交叉相乘得到
+
+$$
+ qA^2+(q\kappa+f-p)A+(f\kappa-e)=0.
+\tag{39.16}
+$$
+
+若 $1,A,A^2$ 在 $K$ 上独立，则 $q=0$、$p=f$、$f\kappa=e$。分母条件给 $f\ne0$，遂有 $\kappa=e/f\in F$，矛盾。因此 $A$ 在 $K$ 上的次数为二；写成
+
+$$
+ A^2+\rho A+\sigma=0,qquad \rho,\sigma\in K,\quad \sigma\ne0.
+\tag{39.17}
+$$
+于是 $A^{-1}=-\sigma^{-1}A-\rho/\sigma$，从 (39.14) 得
+
+$$
+ V=g(K+FA^{-1})=-\frac g\sigma(K+FA)=-\frac g\sigma U.
+\tag{39.18}
+$$
+证毕。
+
+**定理 39.2 的证明。** 由 (39.5) 先得
+
+$$
+ Q(X)\subseteq Q(Z).
+\tag{39.19}
+$$
+固定一个 $\mu$ 使 $d_X(\mu)\ge3$，置 $K=F(\mu)$、$t=[K:F]$。
+
+若 $d_X(\mu)=4$，则 (39.5) 及维数上界给 $d_Z(\mu)=4$。引理 39.3 说明 $X,Z$ 都是 $K$-空间，且 $t=2$ 或 $4$。当 $t=4$ 时二者都是一维 $K$-空间，立即互为标量倍。设 $t=2$，取 $X$ 的 $K$-基 $x,y$，令 $\nu=y/x\notin K$。则 $\nu\in Q(X)\subseteq Q(Z)$，故存在 $0\ne z\in Z$ 使 $z\nu\in Z$。由于 $Z$ 是 $K$-空间，$z(K+K\nu)\subseteq Z$；$1,\nu$ 的 $K$-独立性使左边的 $K$-维数为二，故 $Z=z(K+K\nu)=(z/x)X$。
+
+若 $d_X(\mu)=3$，则 $d_Z(\mu)\ge3$。引理 39.3 排除了 $t=2,4$。同时 $d_Z(\mu)=4$ 不可能：那会使 $Z$ 成为 $K$-空间，要求 $t\mid4$，而此处 $t=3$ 或 $t\ge5$。所以 $d_Z(\mu)=3$。
+
+当 $t\ge5$ 时，引理 39.3 给出
+
+$$
+ X=x\langle1,\mu,\mu^2,\mu^3\rangle_F,qquad
+ Z=z\langle1,\mu,\mu^2,\mu^3\rangle_F,
+$$
+故 $Z=(z/x)X$。当 $t=3$ 时，引理 39.3 给出
+
+$$
+ X=x(K+Fa),qquad Z=z(K+Fb),qquad a,b\notin K.
+$$
+由 (39.4) 可分别缩放两端并保持 (39.19)，得到 $Q(K+Fa)\subseteq Q(K+Fb)$。引理 39.4 应用于 $a$ 及 $a+\kappa_0$（这两个元素都属于 $Q(K+Fa)$），得到 $K+Fb=\lambda(K+Fa)$，从而 $Z=(z\lambda/x)X$。所有情形均已覆盖。最后使用 (39.4) 得到逐标签等式 $d_Z=d_X$。证毕。
+
+**边界 39.5（环境次数四、五以及稳定子）。** 若 $[D:F]=4$，四维窗口只能是 $D$ 本身，故所有四维窗口相同。若 $[D:F]=5$，任意四维窗口 $W$ 与 $rW$ 的交维至少为三；对 $r\notin F$，有 $F(r)=D$，而交维四会使 $W$ 成为 $D$-空间，矛盾。因此交维三，且引理 39.3 对任意 $\mu\notin F$ 给出
+
+$$
+ W=w\langle1,\mu,\mu^2,\mu^3\rangle_F.
+\tag{39.20}
+$$
+所以次数五中全部四维窗口互为标量倍。若 $E(W)\ne F$，(39.3) 给出 $[E(W):F]\in\{2,4\}$。一般地，$E(W)$ 也保持 $W\cap rW$，故其次数同时整除四维窗口和交维；交维恰三时由 $\gcd(4,3)=1$ 得 $E(W)=F$。在更高环境次数中，非平凡稳定子可能与交维二同时出现，但不影响定理 39.2；交维四的稳定子分支已在定理的第一种情形中处理。
+
+**反例 39.6（纯支持包含的最小环境边界）。** 仅知道一端具有三次子域加一条方向的形状，并把 $Q(X)\subseteq Q(Z)$ 作为唯一比较，不能推出标量等价。取
+
+$$
+ F=\mathbb Q,qquad D=\mathbb Q(\alpha),\quad \alpha^6=2,qquad K=\mathbb Q(\alpha^2),
+$$
+
+由 $T^6-2$ 及 $T^3-2$ 的 Eisenstein 判别法，$[D:F]=6$、$[K:F]=3$。令
+
+$$
+ X=K+\mathbb Q\alpha=\langle1,\alpha,\alpha^2,\alpha^4\rangle_{\mathbb Q},qquad
+ Z=\langle1,\alpha,\alpha^2,\alpha^3\rangle_{\mathbb Q}.
+\tag{39.21}
+$$
+
+对每个 $r\in D^\times$，维数公式给出
+$\dim_F(X\cap rX),\dim_F(Z\cap rZ)\ge4+4-6=2$，所以
+
+$$
+ Q(X)=Q(Z)=D^\times.
+\tag{39.22}
+$$
+
+但由 $1,\alpha,\ldots,\alpha^5$ 的 $F$-独立性和 $\alpha^6=2$，有
+
+$$
+\begin{array}{c|cc}
+ r&d_X(r)&d_Z(r)\\
+\hline
+ \alpha&2&3\\
+ \alpha^2&3&2
+\end{array}
+\tag{39.23}
+$$
+
+具体地，$X\cap\alpha X=\operatorname{span}_F\{\alpha,\alpha^2\}$、$Z\cap\alpha Z=\operatorname{span}_F\{\alpha,\alpha^2,\alpha^3\}$，而 $X\cap\alpha^2X=\operatorname{span}_F\{1,\alpha^2,\alpha^4\}$、$Z\cap\alpha^2Z=\operatorname{span}_F\{\alpha^2,\alpha^3\}$。次数小于四时不存在四维窗口；环境次数四、五已由边界 39.5 排除，故次数六是这种纯支持失败的最小环境次数。
+
+Napolitano–Polverino–Santonastaso–Zullo，[*Classifications and constructions of minimum size linear sets*，arXiv:2201.02003v1，Proposition 6.3](https://arxiv.org/html/2201.02003v1)，给出一般域版本的临界对分类：若 $T=\langle1,\mu\rangle_F$、$\mu\in L\setminus F$ 在 $F$ 上代数、$k=\dim_F S$、$k+2\le [L:F]$ 且 $\dim_F\langle ST\rangle_F=k+1$，令 $K=F(\mu)$、$t=[K:F]$，则 $t>k$ 时 $S$ 是 $\mu$ 的 $k$ 项幂链标量倍；$t\le k-1$ 时写 $k=t\ell+m$、$0<m<t$，有 $S=\bar S\oplus b\langle1,\mu,\ldots,\mu^{m-1}\rangle_F$，其中 $\bar S$ 是 $K$-空间且与 $bK$ 直和。本节的引理 39.3 直接证明所需四维特例，并与该命题的两种形状相合；本卷的分式支持引理及逐原标签拼接是该引用之外的应用推导。该引用不承担本定理的全球优先权，也不把特征零环境改成有限域或自动产生可计算恢复算法。
+
+白话说，四维窗口如果被同一个原数平移后仍重合三维，窗口的形状已经很窄：要么是四项连续幂，要么是一个完整三次子域再加一条底域方向。前一种形状两个窗口只有整体缩放的差别。后一种形状里，第一个窗口的两条原商标签被第二个窗口支持，就把第二个附加方向写成一个分式；如果分母真的含有附加方向，那么第二条标签会迫使这个分式中的新量满足二次关系，倒数重新变成同一条仿射方向，仍然只剩整体缩放。若只看“有没有某个商”，而不看每个标签的交维大小，六次扩张中的两个四维窗口可以拥有完全相同的支持，却在 $\alpha$ 与 $\alpha^2$ 处给出相反的交维大小；所以支持是入口，逐标签交维才是刚性所需的关系。
+
+本定理的结论范围是同一有限扩张内的四维 $F$-窗口和原标签逐点支配。它不声称一般维数、非有限环境、有限查询算法、噪声稳定性、量子起源或 $\mathbb Z/\mathbb Q$、$H10(\mathbb Q)$ 的推论；反例只说明删去交维大小后会丢失刚性。
+
+## 追加锚（本行以下为增补区）
