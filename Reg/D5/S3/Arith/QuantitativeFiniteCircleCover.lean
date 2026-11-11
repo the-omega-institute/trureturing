@@ -32,7 +32,7 @@ def actual : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (theta t w : ℝ) (N : ℕ),
-    0 < w → w < (1 : ℝ) / 4 → 4 / w ≤ (N : ℝ) →
+    0 < w → 4 / w ≤ (N : ℝ) →
       (∀ h a : ℤ, 1 ≤ h → h ≤ ⌈(4 : ℝ) / w⌉ →
         1 / (N : ℝ) < |(h : ℝ) * theta - (a : ℝ)|) →
       ∃ b : ℕ, N ≤ b ∧ b ≤ 2 * N ∧
@@ -43,14 +43,14 @@ abbrev sourceScope :=
 
 theorem source_bridge : sourceScope ↔ arena.Law actual := by
   constructor
-  · intro h theta t w N hw hw_upper hbudget havoid
+  · intro h theta t w N hw hbudget havoid
     obtain ⟨b, hbN, hb2, ell, hlt, hlt2⟩ :=
-      h theta t w N hw hw_upper hbudget havoid
+      h theta t w N hw hbudget havoid
     exact ⟨b, hbN, hb2, by
       exact ⟨ell, hlt, hlt2⟩⟩
-  · intro h theta t w N hw hw_upper hbudget havoid
+  · intro h theta t w N hw hbudget havoid
     obtain ⟨b, hbN, hb2, hinterval⟩ :=
-      h theta t w N hw hw_upper hbudget havoid
+      h theta t w N hw hbudget havoid
     obtain ⟨ell, hlt, hlt2⟩ := hinterval
     exact ⟨b, hbN, hb2, ell, hlt, hlt2⟩
 
@@ -94,7 +94,7 @@ theorem rejected_law : ¬ arena.Law rejected := by
       (1 : ℝ) / 1000 < |(h : ℝ) * ((1 : ℝ) / 33) - (a : ℝ)| := by
     norm_num
     exact havoid_1_over_33
-  have hh := h ((1 : ℝ) / 33) 0 ((1 : ℝ) / 8) 1000 (by norm_num) (by norm_num)
+  have hh := h ((1 : ℝ) / 33) 0 ((1 : ℝ) / 8) 1000 (by norm_num)
     (by norm_num) hhavoid
   obtain ⟨b, hbN, hb2, ell, hbad⟩ := hh
 
@@ -158,11 +158,11 @@ noncomputable def registration :
     coordinates := #[0, 1, 2, 3]
     readouts := #[{
       path := #[
-        "body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body", "body", "body",
         "arg", "body", "arg", "arg"]
-      stateBinder := 8
+      stateBinder := 7
       functionOperand := false
-      stateOperand := some #["arg", "body", "fn", "arg", "arg", "arg"]
+      stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none

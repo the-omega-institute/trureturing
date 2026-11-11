@@ -31,7 +31,7 @@ internal sealed class QuantitativeFiniteCircleCoverDocument : IScribeDocumentDef
                         + "a reduced rational r=p/q, 1<=q<=N, and "
                         + "|theta-r|<=1/((N+1)q). Multiplication by q gives "
                         + "|q theta-p|<=1/(N+1)<=1/N. The stated obstruction hypothesis "
-                        + "therefore excludes q<=H, so q>H>=4/w.")),
+                        + "therefore excludes q<=H, so q>H>=4/w. No upper bound on w is used.")),
                     Paragraph(Text(
                         "For x=t+w/2-N theta, put j=round(qx). Rat.reduced and "
                         + "Int.isCoprime_iff_nat_coprime give integers u,v with up+vq=1. "
@@ -94,7 +94,7 @@ internal sealed class QuantitativeFiniteCircleCoverDocument : IScribeDocumentDef
             And(Le(b, Mul(D(2), n)), Ex("ell", Integers(),
                 And(Lt(t, liftedPoint), Lt(liftedPoint, Add(t, w)))))));
         return All("theta", Reals(), All("t", Reals(), All("w", Reals(), All("N", Naturals(),
-            Imp(Lt(D(0), w), Imp(Lt(w, Div(D(1), D(4))),
-                Imp(Le(Div(D(4), w), n), Imp(nonresonance, witnesses))))))));
+            Imp(Lt(D(0), w),
+                Imp(Le(Div(D(4), w), n), Imp(nonresonance, witnesses)))))));
     }
 }
