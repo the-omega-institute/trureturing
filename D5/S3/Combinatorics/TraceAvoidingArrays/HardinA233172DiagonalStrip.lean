@@ -64,7 +64,7 @@ open HardinA233251TriangleStrip
 open HardinA233254TriangleStrip (Row rowLegal sum_rows)
 open HardinA233255PairTransfer (Boundary)
 open HardinA233255ShapeSymmetry (proper full_row)
-open HardinA233255LiteralBridge (rowFinish rowWeight scanner_fibres labelWeight labelAdvance)
+open HardinA233255LiteralBridge (rowFinish rowWeight scanner_fibres)
 open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
 
 attribute [local instance 2000] HardinA233251TriangleStrip.widthInstDecidableGood
@@ -206,9 +206,6 @@ private theorem finite_certificate : ∀ s p, Valid s p → ∀ k,
     simp (config := { failIfUnchanged := false }) only
       [class_fibres, (full_row 6 _).1, (full_row 6 _).2,
       sum_rows, mul_ite, mul_one, mul_zero] <;>
-    norm_num (config := { maxSteps := 1000000, failIfUnchanged := false })
-      [proper, boundaryClass, rowFinish, rowWeight, labelWeight, labelAdvance,
-        Fin.sum_univ_succ, Fin.sum_univ_zero] <;>
     simp (config := { failIfUnchanged := false }) only
       [Fin.forall_fin_succ_pi, Fin.forall_fin_zero_pi] <;>
     decide +kernel
