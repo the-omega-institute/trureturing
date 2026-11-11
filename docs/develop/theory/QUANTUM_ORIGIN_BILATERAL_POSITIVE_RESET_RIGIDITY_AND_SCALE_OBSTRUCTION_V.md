@@ -2382,3 +2382,638 @@ $$
 **来源与归属。** [F] Faraut–Korányi, *Analysis on Symmetric Cones*, [Chapter IV](https://doi.org/10.1093/oso/9780198534778.003.0004), Corollary IV.2.7；出版方摘要明确是不可约情形的完整框架传递性。[B] Barnum–Hilgert, [arXiv:1904.03753v1 §4.1](https://arxiv.org/html/1904.03753v1#S4.SS1), Proposition 4.7 的证明转引同一结论并说明有序框架范围；其所在 §4 为简单 EJA，不能将未限定的命题措辞推广为任意异型直和的纯态或部分框架强对称性。本章给出所需的完整无标签框架之逐因子推广，不增加该强对称前提。[H] von Neumann, [*Zum Haarschen Maß in topologischen Gruppen*](https://www.numdam.org/item/CM_1935__1__106_0/), Compositio Mathematica 1, 106—114：紧可分群不变积分；本章群为有限维紧矩阵群。有限维核比较、Haar 正交投影及简单因子迹零论证已在文中给出；它们是成熟工具，不作全球新颖性主张。[P] 本卷 78—80 及第四卷 65—72 的完整原接口、闭包、分类、方向、修复和消费者按原前件复用；归一化固定见证仅应用本卷 79.2、79.6—79.7。新增综合内容是同一原模型类的无极值平均缺陷、单个内在投影表示、最坏缺陷比较、原反例的精确平均及共同原映射修复的运输；这是纸面理论，不声称 Lean 内核核验、最少物理公理或物理可得性。
 
 ## 追加锚（本行以下为增补区）
+
+## 82. 同事件三腿固定探针的完整正性证书与有限二腿目录障碍
+
+本章第 65—72 章指第四卷，第 73—80 章指本卷。完整归一化原候选直接复用 (80.14)，也保留定义 79.14 的全部等价入口；不重复质量校准。这里处理另一条关系：**对同一个已经指定的局部事件，作用于一个位置后的加权平均，何时足以认证该事件的完全正性？** 三份相同标签给出一个固定数学探针及精确 Choi 压缩；整个二份正锥也足够，但任何预先固定的有限严格加权二份 PSD 检测目录都不足。后一个结论在单个非经典矩阵块上证明，不能外推为全经典或任意直和的混合反模型。
+
+### 82.1 约定、同映射加权提升与三腿压缩
+
+**定义 82.1（矩阵、迹和量词）。** 令 $\mathcal A=\bigoplus_{i\in I}M_{n_i}(\mathbb C)$，$I$ 有限非空，$n_i\ge1$，$A=\mathcal A_{\rm sa}$，$n=\sum_i n_i$，$u_A=\sum_i\operatorname{Tr}$。二份、三份为全部有序块的普通矩阵张量直和，包含整个 PSD 锥；不只包含可分离元。$\Phi:\mathcal A\to\mathcal A$ 为复线性保 Hermitian 映射（HP），其输入 $i$、输出 $j$ 的块记 $\Phi_{ji}$。实 Hermitian 线性映射一律取唯一的这种复延拓。
+在每个原块上任意固定一套共同矩阵标架，先于且独立于 $\Phi$；向量化及未归一 Choi 顺序取输出在前、输入在后：
+$$
+\operatorname{vec}X=\sum_{a,b}X_{ab}|a\rangle\otimes|b\rangle,\qquad
+J(\Phi_{ji})=\sum_{a,b=1}^{n_i}\Phi_{ji}(E_{ab})\otimes E_{ab}. \tag{82.1}
+$$
+令 $\Phi_\ell$ 只作用第 $\ell$ 位置，按块转移并对输入标签求和。例如三份的第一位置满足
+$$
+(\Phi_1Z)_{jkl}=\sum_i(\Phi_{ji}\otimes\operatorname{id}_{n_k}\otimes\operatorname{id}_{n_l})Z_{ikl}.
+$$
+定义
+$$
+\mathcal K_{2,t}(\Phi)=t\Phi_1+(1-t)\Phi_2,\quad 0\le t\le1,\qquad
+\mathcal K_{3,\alpha}(\Phi)=\sum_{\ell=1}^3\alpha_\ell\Phi_\ell,\quad
+\alpha_\ell\ge0,\quad\sum_\ell\alpha_\ell=1. \tag{82.2}
+$$
+每个位置必须是**同一份** $\Phi$；不能以三个不相关事件的平均替代。本章 CP 判据本身不要求 $\Phi$ 正、TP、保单位、遍历或混合。三腿和整个二腿锥判据允许权重端点，与第 79 章质量定理所需的严格 $t,s\in(0,1)$ 分开。
+
+**引理 82.2（单块的精确三腿 Choi 压缩）。** 对 $\Phi:M_d\to M_d$，置
+$$
+|G_d\rangle=d^{-1/2}\sum_{i=1}^d|iii\rangle,\qquad G_d=|G_d\rangle\langle G_d|,
+$$
+并定义复线性 $F_d:\mathbb C^d\otimes\mathbb C^d\to(\mathbb C^d)^{\otimes3}$：
+$$
+F_d(\operatorname{vec}B)=\sum_i B_{ii}|iii\rangle+
+\sum_{j\ne i}B_{ji}(|jii\rangle+|iji\rangle+|iij\rangle).
+\tag{82.3}
+$$
+则对定义 82.1 的全部三腿权重，
+$$
+\boxed{F_d^*\,\mathcal K_{3,\alpha}(\Phi)(G_d)\,F_d=J(\Phi)/d.} \tag{82.4}
+$$
+$F_d^*F_d$ 在对角矩阵单位坐标上为一，在非对角坐标上为三，故 $F_d$ 单射且 $F_d^*F_d\le3I$；它通常不是等距映射。
+
+**证明。** 对角字符串 $iii$ 与每组具有两个 $i$、一个不同 $j$ 的三个字符串互不相交；多数标签唯一确定 $i$，少数标签唯一确定 $j$。因此 (82.3) 给出的范数平方恰为 $\sum_i|B_{ii}|^2+3\sum_{j\ne i}|B_{ji}|^2$。
+HP 使 $J(\Phi)$ Hermitian。对它作有限谱分解，把每个特征向量反向量化为 $H_a$，由矩阵单位上的 Choi 对应得到带实符号的 Kraus 展开
+$$
+J(\Phi)=\sum_a c_a|\operatorname{vec}H_a\rangle\langle\operatorname{vec}H_a|,\qquad
+\Phi(X)=\sum_a c_aH_aXH_a^*,\qquad c_a\in\mathbb R. \tag{82.5}
+$$
+这里允许负 $c_a$，没有预用 CP。对每个 $H_a$ 和任一腿 $\ell$，直接比较字符串系数：
+$$
+\langle F_d(\operatorname{vec}B)|H_a^{(\ell)}|G_d\rangle
+=d^{-1/2}\sum_{j,i}\overline{B_{ji}}(H_a)_{ji}
+=d^{-1/2}\operatorname{Tr}(B^*H_a).
+$$
+三种位置得到完全相同的振幅。因此把 (82.5) 代入三腿平均并用 $\sum_\ell\alpha_\ell=1$，所得每个二次型都是 $d^{-1}\sum_ac_a|\operatorname{Tr}(B^*H_a)|^2$，即 $J(\Phi)/d$ 的二次型。Hermitian 极化给算子恒等式 (82.4)。$d=1$ 也直接成立。证毕。
+
+**定理 82.3（一个固定三份数学探针检测全部扇区）。** 在定义 82.1 的全部有序块上指定迹一正元
+$$
+\Xi_{iii}=\frac{n_i}{n}G_{n_i},\qquad \Xi_{ijk}=0\quad\text{若不全相等}. \tag{82.6}
+$$
+对任意固定的共同块标架、任意允许的 $\alpha$，
+$$
+\boxed{\mathcal K_{3,\alpha}(\Phi)(\Xi)\ge0
+\quad\Longleftrightarrow\quad\Phi\text{ CP}
+\quad\Longleftrightarrow\quad\mathcal K_{3,\alpha}(\Phi)\text{ 在整个三份锥上正}.} \tag{82.7}
+$$
+全部标量、不等维和重复标签扇区均在结论中。
+
+**证明。** 在输出 $iii$，其他种子的标签不可能只改一处便变成 $iii$；故该块恰为 $(n_i/n)\mathcal K_{3,\alpha}(\Phi_{ii})(G_{n_i})$。用 $F_{n_i}$ 压缩，得到 $J(\Phi_{ii})/n$。
+对 $j\ne i$，输出 $jii$ 只能来自种子 $iii$ 的第一腿。令 $V_i|a\rangle=|aa\rangle$，则 $V_i^*V_i=I$，且该块为
+$$
+[\mathcal K_{3,\alpha}(\Phi)(\Xi)]_{jii}
+=\frac{\alpha_1}{n}(I_{n_j}\otimes V_i)J(\Phi_{ji})(I_{n_j}\otimes V_i)^*. \tag{82.8}
+$$
+若 $\alpha_1>0$，以这个等距嵌入压缩就检测所有矩形 $J(\Phi_{ji})$。若第一权重为零，选择某个正权重腿，对 $iji$ 或 $iij$ 作相同论证与因子置换即可。至少一腿权重正。因此左边蕴含每个 $J(\Phi_{ji})\ge0$。
+成熟的矩形 Choi 定理给每个块 CP。有限直和映射 CP 当且仅当全部分量 CP：必要性由中心包含与投影，充分性由任意辅助矩阵放大后逐输出块求正和。于是得到 $\Phi$ CP。反向每个一腿放大 CP，非负权平均也 CP，故在整个三份锥正，特别在 $\Xi$ 正。证毕。
+
+$\Xi$ 是选定共同标架后的一个固定数学正元，独立于待测映射；任何这样的标架选择都适用。它不是自然、唯一或无基底的原物理准备选择器，不抵触 71.7 的自然单点障碍。$V_i$ 重复的是证明中的基标签，**不是**对未知态的复制程序。三份正元和压缩的存在不供应原 GHZ 制备、参考、副本或相干控制。
+
+### 82.2 归一坐标中的定量 CP 修正
+
+**推论 82.4（带明确迹规范的误差界）。** 设 $\epsilon\ge0$，在定义 82.1 的普通总迹规范中有
+$$
+\mathcal K_{3,\alpha}(\Phi)(\Xi)\ge-\epsilon I_E.
+$$
+令 $\delta=3n\epsilon$、$\Delta_A(X)=u_A(X)1_A$。则 $\Phi+\delta\Delta_A$ CP。若另外 $\Phi$ TP，
+$$
+\widehat\Phi=\frac{\Phi+\delta\Delta_A}{1+n\delta}\text{ 为 CPTP},\qquad
+\|\Phi-\widehat\Phi\|_\diamond\le2n\delta=6n^2\epsilon. \tag{82.9}
+$$
+$\|\cdot\|_\diamond$ 为各普通迹块直和上的完全有界迹范数；没有声称常数最优。
+
+**证明。** 对角输出的压缩给
+$$
+J(\Phi_{ii})/n\ge-\epsilon F_{n_i}^*F_{n_i}\ge-3\epsilon I.
+$$
+选择 $\alpha_\ell\ge1/3$ 的一腿，对任意非对角转移用 (82.8) 的等距压缩，得 $J(\Phi_{ji})\ge-(n/\alpha_\ell)\epsilon I\ge-3n\epsilon I$。所有块因此同有下界 $-\delta I$。$\Delta_A$ 的每个矩形 Choi 块都是 $I_{n_j}\otimes I_{n_i}$，所以相加后全为 PSD，按 Choi 定理得到 CP。
+$u_A\Delta_A=n u_A$，故 TP 时分母使 $\widehat\Phi$ 保迹。置 $\mathcal R=\Delta_A/n$，它 CPTP，并有
+$$
+\Phi=(1+n\delta)\widehat\Phi-n\delta\mathcal R,\qquad
+\Phi-\widehat\Phi=n\delta(\widehat\Phi-\mathcal R).
+$$
+CPTP 映射在该范数中为一（等价地，其每个放大的伴随为保单位 CP 映射，算子范数为一）。三角不等式给 (82.9)。$\epsilon=0$ 包括在内；未要求 $\Phi$ 本来正或遍历。证毕。
+
+这个修正是一份数学 CP 映射，不是原过程的已供应修复装置；不推断同菜单、记录或未来接头也被修复。原滤波坐标下的谱误差须另计滤波范数，不能原样使用 (82.9)。
+
+### 82.3 整个二份锥足够：复用相似转置的方法
+
+**定理 82.5（完整二份锥的精确判据）。** 对定义 82.1 的全部矩阵直和及每个 $0\le t\le1$，
+$$
+\boxed{\mathcal K_{2,t}(\Phi)\text{ 在整个二份 PSD 锥正}
+\quad\Longleftrightarrow\quad\Phi\text{ CP}.} \tag{82.10}
+$$
+不要求半群、连续时间、TP、局部正性或严格内点权重。
+
+**证明。** 先取单块 $M_d$，用 (82.5)。给任意复矩阵 $W$，存在可逆 $A$ 使 $A^{-1}WA=W^T$：每个复方阵与其转置有相同 Jordan 形，而每个 Jordan 块的转置经倒序基变换回原块。置 $B^*=A^{-1}W$，则
+$$
+AB^*=W,\qquad (B^*A)^T=W.
+$$
+向量化恒等式给每个 $H_a$ 的两个振幅
+$$
+\begin{aligned}
+\langle\operatorname{vec}B,(H_a\otimes I)\operatorname{vec}A\rangle
+ &=\operatorname{Tr}(AB^*H_a)=\operatorname{Tr}(WH_a),\\
+\langle\operatorname{vec}B,(I\otimes H_a)\operatorname{vec}A\rangle
+ &=\operatorname{Tr}((B^*A)^TH_a)=\operatorname{Tr}(WH_a).
+\end{aligned}
+$$
+若整个二份提升正，测试输入 $|\operatorname{vec}A\rangle\langle\operatorname{vec}A|$ 与输出向量 $\operatorname{vec}B$，得到
+$$
+0\le\sum_ac_a|\operatorname{Tr}(WH_a)|^2
+=\langle\operatorname{vec}(W^*),J(\Phi)\operatorname{vec}(W^*)\rangle. \tag{82.11}
+$$
+$W$ 任意，故 $J(\Phi)\ge0$，从而 CP。这里没有要求输入、测试向量正交，也未对 $W$ 加迹零条件。
+对直和，在输入中心块 $ii$、输出 $ii$ 上先用此单块证明取得 $\Phi_{ii}$ CP。对 $j\ne i$，若 $t>0$，输入 $ii$ 的 Bell 正元在输出 $ji$ 恰给正倍数 $J(\Phi_{ji})$；另一个位置输出在不同块 $ij$，不能抵消。若 $t=0$，改用第二位置的 $ij$ 即可。矩形 Choi 判据给所有转移 CP；标量输入同样成立。逆向由一腿 CP 与非负和立即得到。证毕。
+
+上述选择 $A,B$ 的步骤复用 Benatti–Floreanini–Romano [BFR] Lemma 3 的相似于转置方法。该文 Theorem 3 是 **HP、TP、连续半群** $\gamma_\tau$ 的 $\gamma_\tau\otimes\gamma_\tau$ 正性与 CP 的等价；它不是 (82.10) 这个瞬时加权和命题。其生成元证明使用正交、迹零条件，本章对完整 HP 映射的带符号 Choi 二次型无须这些限制。不能把一般张量平方正性改称 CP：转置的张量平方就是整块转置，虽正却非 CP。整个输入锥的量词也不能被有限固定输入表偷换。
+
+### 82.4 有限严格加权二份目录的精确障碍
+
+**引理 82.6（所用成熟负参数去极化族）。** 固定单块 $d\ge2$，$U$ 酉，$0<\eta<d-1$。令
+$$
+\Phi_{\eta,U}(X)=\frac{d\operatorname{Tr}(X)I_d-(1+\eta)UXU^*}{d^2-1-\eta},\quad
+w=\operatorname{vec}U/\sqrt d,\quad c_\eta=d^2-1-\eta. \tag{82.12}
+$$
+它是严格改善正性的 TP、保单位、非 CP 正映射，且其幂收敛于 $\mathcal R(X)=\operatorname{Tr}(X)I_d/d$；映射及其伴随的固定 Hermitian 空间都只有标量。其 Choi 为
+$$
+J(\Phi_{\eta,U})=\frac d{c_\eta}\bigl[I-(1+\eta)ww^*\bigr], \tag{82.13}
+$$
+沿 $w$ 的特征值为 $-d\eta/c_\eta<0$。
+
+**证明。** $c_\eta>0$。对非零 $X\ge0$，$UXU^*\le\operatorname{Tr}(X)I$，故分子至少为 $(d-1-\eta)\operatorname{Tr}(X)I>0$。取迹及代入 $I$ 分别给 TP 与保单位。$\mathcal R$ 的 Choi 为 $I/d$，酉共轭的 Choi 为 $dww^*$，故得 (82.13) 与非 CP。
+令 $q=-(1+\eta)/c_\eta$，则
+$$
+\Phi_{\eta,U}=(1-q)\mathcal R+q\operatorname{Ad}_U,\qquad
+\Phi_{\eta,U}^{\,N}=\mathcal R+q^N\operatorname{Ad}_{U^N}(\operatorname{id}-\mathcal R). \tag{82.14}
+$$
+由 $\eta<d-1$ 得 $2+2\eta<2d\le d^2$，故 $|q|<1$。$\operatorname{Ad}_U$ 及其伴随在迹二范数上等距，零迹空间的谱半径为 $|q|<1$；固定空间遂均只有标量，并得到幂收敛。这里“混合”只指这个有序空间正映射的幂收敛，**不是**把它称为量子通道或实际量子过程。该族是酉共轭下的标准负参数去极化映射；不把映射族或其阈值当作新数学。证毕。
+
+**引理 82.7（有限坏子空间不能占尽酉矩阵）。** 给 $M_d(\mathbb C)$ 的有限个真复线性子空间，总有酉 $U$ 的 $\operatorname{vec}U$ 不属于它们的并。
+
+**证明。** 酉群 $U(d)$ 是连通实解析流形：每个酉经谱分解写为 $V\operatorname{diag}(e^{i\theta_j})V^*$，把角度连续缩到零给路径；通常矩阵坐标给实解析结构。酉矩阵的复线性张成是整个 $M_d$。具体地，若 $D_j$ 是只在第 $j$ 个对角元为 $-1$ 的对角酉，则 $E_{jj}=(I-D_j)/2$；左乘一个将 $e_j$ 送到 $e_i$ 的置换酉，就把它变成 $E_{ij}$，仍为两个酉的线性组合。
+对每个真子空间取一个非零复线性泛函 $\ell$，使该子空间包含于 $\ker\ell$。实解析函数 $U\mapsto|\ell(\operatorname{vec}U)|^2$ 不恒零，否则违背上述张成。连通实解析流形上的恒等原理使其零集无内部；它又闭，故为闭无处稠密集。有限个这样的集合不能覆盖非空流形：在任意非空开集依次删去一个闭无内部集，总还能选取非空开子集。因而可同时避开全部子空间。证毕。
+
+**定理 82.8（任何固定有限严格加权 PSD 目录都不能认证 CP）。** 固定 $d\ge2$，任取有限个、事先独立于待测映射指定的 $\rho_l\ge0$ 于 $\mathbb C^d\otimes\mathbb C^d$，以及 $0<t_l<1$。允许 $\rho_l$ 纯、混合、秩亏、满秩、未归一或为零。存在引理 82.6 的正 TP、保单位、混合、标量固定效应而非 CP 映射，使
+$$
+\mathcal K_{2,t_l}(\Phi_{\eta,U})(\rho_l)\ge0\qquad\text{对每个 }l. \tag{82.15}
+$$
+严格的是平均权重，不是输入态的混合度。即使加入任意有限个纯探针，结论仍成立。
+
+**证明。** 对每个非零 $\rho_l$ 作有限谱分解，把其正特征值吸收进非零矩阵 $X$，写成若干 $|\operatorname{vec}X\rangle\langle\operatorname{vec}X|$ 之和。这只是在证明中分解给定正元，不宣布这些谱项是原准备或可调用分支。只须找同一 $U,\eta$ 使这个有限列表的每个纯分量通过其所属权重测试。
+令 $\mathsf S$ 为两因子交换酉，对列表中每个 $X$ 置
+$$
+A_X=I\otimes X^T,\qquad B_X=\mathsf S(I\otimes X),\qquad
+S_X=\operatorname{Ran}A_X+\operatorname{Ran}B_X.
+$$
+对任意 HP 映射的 Choi 矩阵 $C$，向量化和交换恒等式给纯输入的准确输出
+$$
+\mathcal K_{2,t}(\Phi)(|\operatorname{vec}X\rangle\langle\operatorname{vec}X|)
+=tA_XCA_X^*+(1-t)B_XCB_X^*. \tag{82.16}
+$$
+其中第一项来自 $\operatorname{vec}X=(I\otimes X^T)\operatorname{vec}I$；交换后的输入为 $\operatorname{vec}(X^T)$，再交换输出恰给第二项。没有转置错配或输入生成假设。
+先在 $\eta=0$ 的 CP 边界取 $C$ 的正倍数 $P=I-ww^*$。记
+$$
+\begin{aligned}
+Y_X&=tA_XPA_X^*+(1-t)B_XPB_X^*,\\
+Z_X&=tA_Xww^*A_X^*+(1-t)B_Xww^*B_X^*.
+\end{aligned} \tag{82.17}
+$$
+因为 $t,1-t>0$，
+$$
+v\in\ker Y_X\quad\Longleftrightarrow\quad
+A_X^*v\in\mathbb Cw\ \text{且}\ B_X^*v\in\mathbb Cw. \tag{82.18}
+$$
+若 $X$ 奇异，$A_X^*=I\otimes\overline X$、$B_X^*=(I\otimes X^*)\mathsf S$。这两个像空间的向量反向量化后秩都不超过 $\operatorname{rank}X<d$，而酉 $U$ 满秩，所以 $w$ 不属于任何一个像。于是 (82.18) 迫使两项都为零，恰得 $\ker Y_X=S_X^\perp$。这对每个酉 $U$ 都成立，无须一般位置假设。
+若 $X$ 可逆，则 $A_X,B_X$ 可逆。对非零 $v$，(82.18) 等价于 $w$ 是
+$$
+T_X=B_X^*(A_X^*)^{-1}
+$$
+的特征向量：先写 $v=c(A_X^*)^{-1}w$，其中 $c\ne0$，再代入第二条件。$T_X$ 不是标量；否则 $B_X$ 为 $A_X$ 的标量倍数，右乘 $I\otimes X^{-1}$ 将迫使 $\mathsf S=I\otimes R$。但 $\mathsf S(e_i\otimes e_j)=e_j\otimes e_i$，在 $i\ne j$ 时改变第一因子，而 $I\otimes R$ 不会，矛盾。
+每个非标量复矩阵的特征向量集是有限个真特征子空间的并。列表有限，引理 82.7 因而允许选择同一酉 $U$，使 $w$ 避开所有可逆 $X$ 的这些坏子空间。于是它们的 $Y_X$ 核为零；其 $S_X$ 也为全空间。结合奇异情形，所有非零分量统一满足
+$$
+\ker Y_X=S_X^\perp. \tag{82.19}
+$$
+现已固定 $U$。$Y_X$ 在非零有限维 $S_X$ 上严格正，令其最小特征值为 $\lambda_X>0$。$Y_X,Z_X$ 均自伴，像包含于 $S_X$，且消去 $S_X^\perp$，所以没有离开结构支撑的交叉项。选同一
+$$
+0<\eta<d-1,\qquad \eta\|Z_X\|<\lambda_X
+\quad\text{对所有 }Z_X\ne0\text{ 的分量}. \tag{82.20}
+$$
+有限性保证这种正 $\eta$ 存在；$Z_X=0$ 不加限制。每个 $Y_X-\eta Z_X$ 在 $S_X$ 正，在补空间为零。由 (82.13)、(82.16)—(82.17)，实际测试输出恰是 $(d/c_\eta)(Y_X-\eta Z_X)\ge0$。逐 $\rho_l$ 求这些正分量之和便得 (82.15)；零输入直接成立。若目录没有非零输入，任取酉及 $0<\eta<d-1$ 即可。引理 82.6 同时保证所需非 CP、正性、TP、保单位、混合及固定空间性质。证毕。
+
+**信息与适用域边界。** 定理只否定“有限个 $\mathcal K_{2,t_l}(\Phi)(\rho_l)\ge0$ 的合取即可推出 CP”。它**不**否定有限信息完备过程层析：一组张成输入的完整矩阵输出可以确定映射，再以跨输出的线性关系重构 $J(\Phi)$ 并检验 PSD；这种额外关系不是逐输出 PSD 合取。例如在该单块上，若完整输出已确定 $T=\mathcal K_{2,t}(\Phi)$，令 $\beta=\operatorname{Tr}[T(I\otimes I)]/d=\operatorname{Tr}\Phi(I)$，则 $t>0$ 时
+$$
+\Phi(X)=\frac{\operatorname{Tr}_2[T(X\otimes I)]-(1-t)\beta X}{td}.
+$$
+这是利用输出间关系的线性重构，不是仅检查每个输出的 PSD，也不供应任何实际制备。
+本障碍也不覆盖权重端点、按 $\Phi$ 反选见证、已带标签的实际单腿分支、额外实际控制、任意有类型过程或资源最优性。端点上一个 Bell 输入已是普通 Choi 测试，故严格权重不可删。$\eta$ 依赖给定目录及其支撑间隙，不给跨目录统一扰动半径。
+本障碍只在一个 $M_d$、$d\ge2$ 上建立，足以反驳适用于全部允许原模型的普遍有限二腿替换规则。全经典直和上正性已经等于 CP；这里没有证明一般直和上的混合非 CP 反模型扩张。全扇区三腿证书 82.3 则没有这个单块限制。
+
+### 82.5 一个 Bell 控制与原质量候选中的反模型范围
+
+**命题 82.9（固定对称 Bell 测试的简单控制）。** 在 $d=2$ 上取 Pauli 矩阵 $\sigma_y$，$1/4<h<1/2$，令
+$$
+\Phi(X)=\operatorname{Tr}(X)I_2/2-ih[\sigma_y,X]. \tag{82.21}
+$$
+它为正 TP、保单位、混合、标量固定效应的非 CP 映射，但对 $\Omega=|\Omega\rangle\langle\Omega|$、$|\Omega\rangle=(|00\rangle+|11\rangle)/\sqrt2$，
+$$
+\mathcal K_{2,1/2}(\Phi)(\Omega)=I_4/4.
+$$
+
+**证明。** Bloch 向量被送到 $2h(e_y\times r)$，其范数至多 $2h\|r\|$，且 $2h<1$。故态球映入内部，映射正；迹与单位直接保持，零迹子空间上幂收敛于零，固定效应只有标量。Choi 的重置部分为 $I_4/2$。令 $f=(\sigma_y\otimes I)|\Omega\rangle$，则 $f\perp\Omega$、$\|f\|=1$；其余部分为 $-2ih(|f\rangle\langle\Omega|-|\Omega\rangle\langle f|)$。因此 Choi 特征值为 $1/2\pm2h,1/2,1/2$，有负值。另一方面 $(\sigma_y\otimes I+I\otimes\sigma_y)|\Omega\rangle=0$，平均对易子项消失，两腿重置均送 $\Omega$ 到 $I_4/4$。这只击破该固定 Bell 测试，不击破定理 82.5 的整个二份锥。证毕。
+
+定理 82.8 的映射以及命题 82.9 可放在已付标准归一元组
+$$
+A=H_d,\quad D=H_{d^2},\quad E=H_{d^3},\quad
+L(d,c)=d\otimes c,\quad p=\operatorname{Tr}_1,\quad\omega=I_{d^2}/d^2.
+$$
+它的 PRE、NB、$\mathrm A_0$ 及全态全效应域直接按第四卷 65.11、66.7 的零方向单位滤波逆向和第 79 章复用。同一个 $p$ 两次实际给 $K(a)=I_d/d\otimes a$、$M(a,b)=a\otimes b$、$Q(a,b,c)=a\otimes b\otimes c$，未独立供应 $M$。两个质量已为乘积迹，故任何上述 TP 映射均满足 79.5；其固定效应条件亦成立。这样得到的是该元组中 **CP 接口** 的反模型，不是整个 $\Omega$ 的反模型，也没有供应一个实际非 CP 程序。82.8 的有限输出全正不使其二份延拓全锥正；82.5 保证仍有未列入目录的负输出方向。标量质量、有限逐输出 PSD 与完整过程合法性因而是不同关系。
+
+### 82.6 只替换同事件 CP 入口，不能供应单腿控制
+
+**定义 82.10（原同事件平均提升）。** 先在 (80.14) 或定义 79.14 的完整归一化原数据上，由既有定理得到 (79.17) 的普通 $M,L,p$。取一族已指定的原同载体事件 $e:A\to A$，逐个固定其实际实线性映射 $\Phi_e$、分支标签、完整记录及原定义域，不把它识别为第 79 章存在量化的校准见证 $\Phi_{\rm cal}$。对于每个 $e$，另须供应同一事件的实线性三份提升 $P_{E,e}$，满足所有原实输入上的精确关系
+$$
+\begin{aligned}
+P_{E,e}Q(a,b,c)={}&\alpha_{e,1}Q(\Phi_e a,b,c)
++\alpha_{e,2}Q(a,\Phi_e b,c)
++\alpha_{e,3}Q(a,b,\Phi_e c),\\
+&\alpha_{e,\ell}\ge0,\qquad\sum_\ell\alpha_{e,\ell}=1.
+\end{aligned} \tag{82.22}
+$$
+这是同事件、同原对象、同全实载体的 intertwining，不能由只在已准备样本、密度相同或矩阵综合上的相等替代。原 $Q$ 实张满整个 $E$，所以普通坐标中它唯一规定 $P_{E,e}=\mathcal K_{3,\alpha_e}(\Phi_e)$。线性唯一性不供应各平均加项作为分别可调用的实际分支，不供应随机开关、GHZ 输入或物理滤器。
+
+**定理 82.11（同事件 CP 的等价证书与递归正性的冗余）。** 在定义 82.10 的同一增广数据上，逐事件有
+$$
+P_{E,e}(\Xi)\ge0\quad\Longleftrightarrow\quad\Phi_e\text{ CP}
+\quad\Longleftrightarrow\quad P_{E,e}\text{ 全锥正}. \tag{82.23}
+$$
+若同一事件另给推论 79.8 形式的精确全实递归律
+$$
+\begin{aligned}
+P_{D,e}M(a,b)&=t_eM(\Phi_ea,b)+(1-t_e)M(a,\Phi_eb),\\
+P_{E,e}L(d,c)&=s_eL(P_{D,e}d,c)+(1-s_e)L(d,\Phi_ec),
+\qquad 0\le t_e,s_e\le1,
+\end{aligned} \tag{82.24}
+$$
+则 $P_{D,e}$ 全锥正已迫使 $\Phi_e$ CP，继而已唯一确定的 $P_{E,e}$ CP；因此在这些确切前件下，另列 $P_{E,e}$ 全锥正是冗余的。这里不从单独的质量关系推断 (82.24)。
+
+**证明。** 实张成与普通张量律把 (82.22) 唯一变成 (82.2)，82.3 给第一组等价。(82.24) 的第一式同样使 $P_{D,e}=\mathcal K_{2,t_e}(\Phi_e)$；由 82.5，其全锥正给 $\Phi_e$ CP。第二式及 $Q$ 张成再唯一给三腿权重 $(s_et_e,s_e(1-t_e),1-s_e)$，CP 蕴含该非负和 CP。反之对既有全实提升，CP 同时使二份、三份提升全锥正。没有为局部映射增加 TP 或遍历前提，也未把不存在的实际平均操作从数学存在式中生成。证毕。
+
+原过程的 TP、TNI、质量和完整菜单条件继续独立保留；正性冗余不删除它们。尤其第 79 章的 $\Phi_{\rm cal}$ 可以只是数学存在见证，不能因为它有某个正平均，就把每个任意原事件 $e$ 替换成它。
+
+**推论 82.12（未经校准的正合同只给精确等价）。** 若先只用 PRE+NB 得同时普通方向，复用第四卷 (66.15)—(66.16)、(69.2)：
+$$
+\begin{gathered}
+M=C_Dm,\quad Q=C_Eq,\qquad m(a,b)=a\otimes b,\quad q(a,b,c)=a\otimes b\otimes c,\\
+(C_DX)_{ij}=S_{ij}X_{ij}S_{ij},\quad S_{ij}=I_i\otimes\sqrt{u_{ij}},\\
+(C_EZ)_{ijk}=T_{ijk}Z_{ijk}T_{ijk},\quad
+T_{ijk}=I_i\otimes\sqrt{u_{ij}}\otimes\sqrt{g_{ijk}},\quad u_{ij},g_{ijk}>0.
+\end{gathered}
+$$
+满足同一全实平均律的提升唯一为 $C_D\mathcal K_2C_D^{-1}$、$C_E\mathcal K_3C_E^{-1}$。$C_D,C_E$ 是可逆 CP 合同，其逆也 CP 且全锥正；逆逐块分别夹乘 $S_{ij}^{-1}$、$T_{ijk}^{-1}$，由正定性确实存在。因此整个二份正性判据仍有效，三份则可测试
+$$
+\Xi_{\rm raw}=C_E\Xi/Z,\qquad Z=u_E(C_E\Xi)>0.
+$$
+其输出为 $Z^{-1}C_E\mathcal K_3(\Phi)(\Xi)$，故输出 PSD 仍等价于 CP。证明只需把全实平均律分别左乘 $C_D^{-1},C_E^{-1}$，用乘积实张成给唯一性；可逆正合同保持且反映 PSD，给全部等价。此处没有把 $\Xi_{\rm raw}$ 当成已供应物理准备或把滤波当成实际操作。
+若原输出只满足 $P_E(\Xi_{\rm raw})\ge-\epsilon I$，退滤波只能先给 $\mathcal K_3(\Phi)(\Xi)\ge-Z\epsilon C_E^{-1}(I)$。不控制 $Z$ 与逆滤波范数就不能移植 (82.9) 的归一常数。本章的定量界限于其明确普通总迹规范。证毕。
+
+### 82.7 完整候选及原量子消费者
+
+**定义 82.13（保留完整原模型的候选）。** 静态部分直接取已有 (80.14)：$\mathrm{PRE}_0^{\rm mix}+\mathcal D=0+\mathsf{Mass}_{t,s}+\mathrm A_0+\mathrm H13$，$t,s\in(0,1)$；它已与原 PRE+$C_{\rm joint}$+C13 同数据等价，不外加新的生成框架输入。也可取定义 79.14 的完整版本：每个原 $A,D,E$ 的整个态基与全部效应、完整纯参照有限混合比较 $S$ 及一般 EJA 忠实桥，或精确 77.16、77.18—77.19 的全部回路／任意混合余项入口；两层完整 $D_J,D_H$，或精确 75.4、76.3、78.4 的生成同标框架入口；全锥正的原 $L,p$、两实张成、同一个 $p$ 连用两次、原 $\omega$、全实 $Z$；原 NB 或 H13 的完整活跃／非活跃及零质量量词；79.3 的局部校准见证、两条全正质量关系和原 $\mathrm A_0$。这些是既有候选的等价版本，不能缩为纯二元比较或固定有限目录。
+在这同一原静态元组上，只对**已经另供定义 82.10 同事件平均提升**的同载体 $A\to A$ 事件族，把原逐事件 CP 认证谓词换成 (82.23) 的固定探针输出正。提升精确全实律、事件本身及其全部源合同仍是前件。82.11 证明的是这份共同增广数据上的等价 CP 证书；不声称旧 CP 谓词单独生成新的实际提升或探针。其他类型的原事件全部继续使用其原 CP／实际参考入口。原实际关联联合、参考、副本、全部控制与权限不因换证书而丢失。
+
+**推论 82.14（候选的准确替换范围）。** 定义 82.13 在其同一供应数据和全量词上恢复原静态结论与被覆盖同载体事件的 CP；保留其余原操作前件时，恢复相应量子消费者。它只替换所指定 CP 入口，不推出更多份、另一括号、任意有类型过程来源或完整 $\Omega$。
+
+**证明与消费者。** 80.14 或 79.15 首先给同一原 PRE、校准和 C13，故复用第四卷 66.3、66.8—66.10 及本卷 (79.17)、(79.27)：
+$$
+\begin{gathered}
+A=\bigoplus_iH_{n_i},\quad D=\bigoplus_{i,j}H_{n_in_j},\quad
+E=\bigoplus_{i,j,k}H_{n_in_jn_k},\\
+\rho_i\ge0,\quad\sum_i\operatorname{Tr}\rho_i=1,\quad0\le f_i\le I_i,\qquad
+\Pr(f\mid\rho)=\sum_i\operatorname{Tr}(f_i\rho_i),\\
+M(a,b)_{ij}=a_i\otimes b_j,\quad L(d,c)_{ijk}=d_{ij}\otimes c_k,\quad
+(pz)_{jk}=\sum_i\operatorname{Tr}_iz_{ijk},\quad
+(p_{13}z)_{ik}=\sum_j\operatorname{Tr}_jz_{ijk}.
+\end{gathered}
+$$
+单块纯态为复射影空间、模方 Born、不同中心块比较为零，均是已有结论。82.11 才在同事件全实提升上把固定三份 PSD 换成其 CP，没有借旧 Born／CP／QC 反推源。
+逐输入输出块 CP 给矩形 Kraus，但接到实际仪器仍须原有类型分支、同事件参考或 intertwining、真实记录及预算。对第 69 章固定旁观者族，未校准时完整保留局部／原联合两预算
+$$
+\sum_{a,j}F^a_{ji}\le I_i,\qquad
+\sum_{a,j}F^a_{ji}\otimes u_{jk}\le I_i\otimes u_{ik},\qquad
+F^a_{ji}=\sum_\ell K_{a,ji,\ell}^*K_{a,ji,\ell};
+$$
+完整菜单两边总 TP 时取等号；本候选已校准 $u=I$ 时相合为每个输入 $i$ 的 $\sum_{a,j,\ell}K_{a,ji,\ell}^*K_{a,ji,\ell}=I_i$。实际顺序复合、真粗粒化、共同重置补全各按 69.1—69.11、73.9 原域，不能从某个平均全正供应单独加项的可调用性。
+结果概率仍为原未归一输出质量；只有严格正质量才可除以它作条件态。零质量分支及记录、标签和未来权限照旧保留。Lüders 另需同一 CP 分支有锐投影效应且对每个确定接受态逐点不变；效应、CP、重复性或完备性本身不唯一指定更新。
+Hamiltonian 另需原物理时钟参数上的连续、时间齐次、可逆 $*$ 自同构群。连续性固定离散中心后，有限矩阵块才得到 $\dot\rho_i=-i[H_i,\rho_i]/\hbar$，$H_i$ 仍有加标量自由度；时间／能量单位及 $\hbar$ 的物理对应由原动力学源承担。82.7 的三腿是给定三份系统的证书，不识别独立另一括号，不供应四份以上相容性或时间动力学。证毕。
+
+### 82.8 白话、成熟来源和未构造的原接口
+
+**完整普通解释。** 一个事件在单独系统上把所有正元送成正元，仍可能在与参考相关联时露出负值；完全正性就是要排除这种错误。若只能看到“同一个事件随机落在某一位置”的平均，两个位置产生的坏方向可以互相遮住。看遍所有二份输入依然能找出它：按照想检测的矩阵，选择一对相似转置所连接的输入和读出，让两项恰好暴露同一个坏读数。但这个输入一般随待找坏方向而变，不能直接改成预先固定的有限表。
+三份提供了另一种几何。用三个相同标签叠加的一个指定数学态，再把每个非对角矩阵元放进“一个不同标签在三个位置轮换”的三个互不重叠坐标。无论事件落在哪一腿，这个读出都得到同一个振幅，所以三个加项没有机会用不同方向互相遮掩。准确压缩后就是整个 Choi 矩阵，不只是它的迹或某几个校准值；连标签转移到不等维、标量扇区的块也被保留下来。因此一个固定三份数学正元就够，任意固定共同标架都可用。
+有限二份目录的障碍不是说它没有信息。把完整输出保存下来，一组有限张成输入可以重建整个映射，再计算 CP；这里限制的是只问每个输出“是否 PSD”。证明从一个成熟的 CP 边界映射出发，其 Choi 只有一个零方向。对任何有限输入表，可选择一个酉方向，使两位置输出的零方向不会额外重合；奇异输入不可避免的零空间也被原封不动保留。然后沿该方向推入一点负值，每个目录输出仍然正，但完整 Choi 已负。小量取决于整张目录，没有统一误差额度。这说明平均输出分别合格并不等于原事件对所有参考合法；也不说明三份准备、实际控制或资源更容易获得。
+原归一化质量定理解决倍率，本章解决指定事件的 CP 证书，两者不是同一件事。数学上写出一个三份态和一个平均式，仍没有造出这份准备，也没有把其中每条单腿过程变成可调用分支；真实来源必须逐事件给同一个对象、同一个完整记录和同一条全实关系。
+
+**成熟来源与增量范围。** [C] M.-D. Choi，*Completely positive linear maps on complex matrices*，Linear Algebra and its Applications **10** (1975), 285–290，[DOI](https://doi.org/10.1016/0024-3795(75)90075-0)；A. Jamiołkowski，*Linear transformations which preserve trace and positive semidefiniteness of operators*，Reports on Mathematical Physics **3** (1972), 275–278，[DOI](https://doi.org/10.1016/0034-4877(72)90011-0)。矩形 Choi／Kraus、谱分解和迹预算直接沿[Watrous 条目](../../../Library/Quantum/watrous2018theory.md#complete-channel-representations)的 Theorems 2.22、2.26 及第四卷 69.2—69.4 使用，不计为新增结果。
+[BFR] F. Benatti、R. Floreanini、R. Romano，*Complete positivity and dissipative factorized dynamics*，[arXiv:quant-ph/0208023v1](https://arxiv.org/abs/quant-ph/0208023v1)，pp.4—6 的 Theorem 3、Lemmas 1—3、Remarks 4；Journal of Physics A **35**(39) (2002), **L551–L556**，[DOI](https://doi.org/10.1088/0305-4470/35/39/101)。相似于转置的输入／读出配对方法归于该文；其半群和生成元条件不得省略后再把本章瞬时和命题归为该文原定理。
+[F] G. M. D’Ariano、P. Lo Presti，*Imprinting Complete Information about a Quantum Channel on its Output State*，Physical Review Letters **91** (2003), 047902，[DOI](https://doi.org/10.1103/PhysRevLett.91.047902)，为信息完备探针的背景；它不等于逐输出 PSD 合取。负参数去极化族、矩阵相似、酉群实解析结构与有限真子空间规避都是成熟工具。新增仓内纸面综合是 (82.4) 的精确三腿压缩、其全扇区与定量连接、以及借结构支撑和有限坏子空间规避得到的 82.8 与其原 CP 接口边界；不主张优先权、全球新颖性或文献穷尽。
+[R] [第四卷 §§65—72](QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES_IV.md)与本卷 §§73—80 的完整静态分类、原两次同 $p$ 恢复、下降、参考、递归支撑、原 $D$ 恢复、操作预算与质量／方向入口，均按各自已证纸面域复用。尤其 80.14 是已有更简洁完整归一化候选，本章没有重复其证明，也没有把固定标架探针称作自然原态。
+
+**原来源的已得部分与未得部分。** [原观察卷 §§23—24](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ORIGINAL_INTERFACE_EXPOSURE_AND_RECOVERY.md)的原 $G_V$ 进展域已经取得实际有序操作数、独立 guard、真实下一 Entry、完整原绑定、原 Plan／Send、服务返回、历史批次、HandbackResume、Stop／验证／消费与共同 INITIAL 终端答案。[第二卷 §9](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ORIGINAL_INTERFACE_EXPOSURE_AND_RECOVERY_II.md#9-attribution-and-the-remaining-recovery-problem)在其两种新安装模式、有限已达 completed canonical GuardAcquired 边界上取得实际当前调用恢复；完整过去 capture/use 历史保留。已有下降、参考、递归支撑、原 $D$ 恢复及[有限返回卷 §165](AURIC_C139_FINITE_RETURN_CALIBRATION_AND_LOAD_STABILITY_CONTINUATION.md)的条件完整图正常完成，各按原准确域保留，不把它们倒称全缺失，也不外推 Busy、部分切口、无新 boot 或无限重复统一资源。
+[固定来源卷 (23.7)](AURIC_C139_FIXED_SOURCE_COMPARATORS_AND_NATIVE_EVENT_BOUNDARY.md)所需原具名 analyzer 当前接受接口证书，及[有限返回卷 164.1](AURIC_C139_FINITE_RETURN_CALIBRATION_AND_LOAD_STABILITY_CONTINUATION.md)中原 $B_r$ 到 active-ready 的接头，仍未由本章构造。该卷 162 的七项消费者与其完整递归来源合同继续保留。矩阵相等、纯校准、操作逆字、存在菜单、数学谱分解、矩阵综合、静态密度或扩大源的候选返回均不能供应这两个原接头，更不能以密度相同识别历史。
+完整原 $\Omega$ 的全部准备、事件、过程、参考、副本、实际相关联合、零及不等质量、原时钟与单位、控制、ready／flags、完整记录、失败、停止、销毁、返回、未来，以及旧全菜单、固定支撑和每个已量化中间切口义务一项不减。没有免费准备生成、复制、相干控制或实际彩票。本章不声称形式内核认证、物理资源减少、最少独立公理或完整量子起源目标完成。
+
+## 追加锚（本行以下为增补区）
+
+## 83. 显式二阶对角权的乘积平均与 Pythagorean 完整候选
+
+本章第 65—72 章指第四卷，第 73—82 章指本卷。第 81 章的同框架平均保留其原定义；这里另用两个几何积分变量，独立证明一个不同标量具有同一完整原 PRE 零集。候选的定义只使用原源的显式二阶对角权与两个 Hilbert–Schmidt 范数，不再使用四阶框架相关矩、循环张成空间或极值。
+
+### 83.1 完整原域与显式对角权
+
+**定义 83.1（同一原基底的固定对半入口）。** 完整保留定义 80.1 的 $\mathrm{PRE}_0^{\rm mix}$ 的全部原对象与其他谓词，只将比较主入口取为下述 FH1，记所得同类基底为 $\mathrm{PRE}_0^{1/2}$。具体地，每个 $X=A,D,E$ 非零有限维，具有闭尖生成锥 $X_+$、在非零正元上严格正的 $u_X$、整个紧态基 $K_X=\{x\in X_+:u_X(x)=1\}$、全部 proper 效应 $[0,u_X]$ 及纯态集 $P_X=\operatorname{ext}K_X$。对全部纯 $\xi,\eta\in P_X$ 及全部原混态 $x\in K_X$，要求
+$$
+T^X_\xi(x)=\inf\{f(x):0\le f\le u_X,\ f(\xi)=1\},\qquad
+T^X_\xi\!\left(\frac{\eta+x}{2}\right)=\frac{T^X_\eta(\xi)+T^X_\xi(x)}2.
+\tag{83.1}
+$$
+先应用固定来源 [FH] 的同载体完整定理 $\mathrm B_{1/2}\Longleftrightarrow S\Longleftrightarrow\mathrm B_{\rm mix}$，在每个原 $X$ 上恢复全部实 $t\in[0,1]$ 的纯端加混态比较律与完整有限混合律 $S$，再复用同一一般有限 EJA 条件纸面桥；正对偶生成、忠实态效应对应、共同框架、面投影、项目性与滤波纯性等义务全部保留。这里仅应用已有固定对半证明，不将它计作本章新数学；混态余项遍及整个原态基，不能缩为纯二项 $S_2$。忠实坐标中 $u_X=\tau_X$，原态基、效应区间、单位和比较配对均被保留。允许异型直和、秩一及 Albert，不预设复型、不可约性或 $\mathsf{JG}_3$。
+唯一供应的映射仍为全锥正实双线性 $L:D\times A\to E$ 和同一个全锥正实线性 $p:E\to D$，原参考 $\omega=1_D/\tau_D1_D$；正性覆盖全部原联合锥，包括纠缠方向。定义
+$$
+\begin{aligned}
+K(a)&=pL(\omega,a),&M(a,b)&=pL(K(a),b),&J(a)&=M(a,1_A),\\
+H_{\rm s}(d)&=L(d,1_A),&B_1&=pH_{\rm s},&U&=M(1_A,1_A),\quad G=H_{\rm s}1_D,\\
+F&=P_{U^{-1/2}}M,&\mathcal T&=H_{\rm s}\widetilde F:A\otimes_{\mathbb R}A\to E.
+\end{aligned}\tag{83.2}
+$$
+保留 $\operatorname{span}_{\mathbb R}M(A,A)=D$、$\operatorname{span}_{\mathbb R}L(D,A)=E$ 和全部实 $a,b$ 上的 $Z:B_1M(a,b)=\tau_A(a)Jb$。两次读回均为这一个 $p$，不能独立供应 $M$。正性及两实张成先给 $U,G>0$，故零关系之前 $F$ 已正且 $F(1_A,1_A)=1_D$；这里使用 75.2／80.1 的先行内点结论。
+
+**定义 83.2（只由原源确定的权）。** 写原中心简单理想分解 $A=\bigoplus_iA_i$，单位为 $1_i$，规范迹为 $\tau_i$，秩、实维数为 $r_i,d_i$。令 $n=\tau_A1_A=\sum_i r_i$，并在原迹 Hilbert 空间中定义
+$$
+P_i a_i=\frac{\tau_i(a_i)}{r_i}1_i,\qquad P_i^0=I_{A_i}-P_i,\qquad
+\mathsf C_i=\begin{cases}I_{A_i},&r_i=1,\\ P_i+\dfrac{r_i-1}{d_i-1}P_i^0,&r_i>1,\end{cases}
+\qquad \mathsf C_A=\bigoplus_i\mathsf C_i,\quad \mathsf D_A=\mathsf C_A^{1/2}.
+\tag{83.3}
+$$
+秩一简单因子为 $\mathbb R$，没有迹零项，不出现 $0/0$。在 $r_i>1$ 的因子上，$\mathsf D_i=P_i+\sqrt{(r_i-1)/(d_i-1)}P_i^0$。因此 $\mathsf C_A>0$；定义没有任意基框架、字典或未指定投影。因子重排不改变算子，且每个中央单位都是特征值一方向。
+
+**定理 83.3（乘积平均的显式范数式）。** 对定义 83.1 的全部原模型，令
+$$
+\boxed{\mathcal Q_\times(z)=\|U\|_2^2+\|G\|_2^2
+-\|J\mathsf D_A\|_{\rm HS}^2
+-\|\mathcal T(\mathsf D_A\otimes\mathsf D_A)\|_{\rm HS}^2,\qquad z=(L,p).}
+\tag{83.4}
+$$
+它非负，在固定原 EJA 三元组上连续，并在全部原数据共同按保原迹 Jordan 同构运输时不变。其证明中的积分表征如下：对完整无标签本原框架 $B,C$，置 $\Pi_B=\sum_{e\in B}|e\rangle\langle e|$，则
+$$
+\begin{aligned}
+h_z(B,C)&=\|U\|_2^2-\sum_{e\in B}\|Je\|_2^2
++\|G\|_2^2-\sum_{e\in B,f\in C}\|H_{\rm s}F(e,f)\|_2^2,\\
+\mathsf C_A&=\int\Pi_B\,d\nu_A(B),\qquad
+\mathcal Q_\times(z)=\iint h_z(B,C)\,d\nu_A(B)d\nu_A(C).
+\end{aligned}\tag{83.5}
+$$
+这里 $\nu_A$ 严格指投影轨道上的唯一不变全支撑概率；框架记号仅用于写其求和。乘积测度只作用于这两个数学变量，没有给原系统、制备、事件或 $L,p,\omega$ 增加物理独立性。
+
+**证明。** 81.2 的完整无标签投影轨道非空紧，$\operatorname{Aut}_J(A)$ 为紧正交群且在该轨道上传递。其准确一般直和理由是：每个本原幂等元位于一个简单理想，每套完整框架在该理想内恰有 $r_i$ 项；逐因子用简单 EJA 的完整框架传递性即可，不需要跨异型因子的有序框架或纯态传递性。Haar 推前的唯一性及全支撑沿 81.2，乘积概率同样全支撑。
+为核实 (83.3) 的范围，逐因子应用 81.4 的论证：平均投影固定 $1_i$、自伴且与自同构交换。简单因子的迹零表示不可约，因为非零不变子空间内的非零谱系数，经同一框架的所有排列，其差张满迹零对角空间；再运输谱框架便得到全部迹零元。这里所需的有序框架传递性只在简单因子使用。自伴平均算子的特征空间因而迫使迹零部分为标量；$\operatorname{Tr}\Pi_B=r_i$ 给 $1+c(d_i-1)=r_i$。每个 $\Pi_B$ 已按原理想块对角，故无跨理想项；同型因子置换也不改变结果。这是 (81.9) 的复用，不增加不可约性假设。Albert 的 $r=3,d=27$ 给迹零权 $1/13$，不使用八元数的结合矩阵表示。
+对每个 $B,C$，$(Je)_{e\in B}$ 是 $U$ 的正分解，$(H_{\rm s}F(e,f))_{B\times C}$ 是 $G$ 的正分解，因为双重和为 $H_{\rm s}F(1,1)=G$。每个缺陷均为不同部分之全部交叉内积的两倍，由自对偶性非负；此时不要求 $F(e,f)$ 幂等。
+框架原子在原迹内积下正交归一，故两平方和分别为 $\operatorname{Tr}(J^*J\Pi_B)$、$\operatorname{Tr}(\mathcal T^*\mathcal T(\Pi_B\otimes\Pi_C))$。有限维 Fubini 给 $\iint\Pi_B\otimes\Pi_C=\mathsf C_A\otimes\mathsf C_A$，再用 $\|XS\|_{\rm HS}^2=\operatorname{Tr}(X^*XS^2)$ 得 (83.4)。这里 $\operatorname{Tr}$ 为实 Hilbert 空间的算子迹，与 Jordan 迹 $\tau_X$ 区分。连续性来自 $U>0$ 上二次表示与逆平方根的连续性；共同同构保持全部原迹、派生映射和 (83.3)，给不变性。证毕。
+
+### 83.2 独立的零集证明与几何边界
+
+**定理 83.4（完整原零集）。** 在同一完整原基底中，
+$$
+\boxed{\mathcal Q_\times=0\quad\Longleftrightarrow\quad\mathcal D_{\rm old}=0
+\quad\Longleftrightarrow\quad \bigl(D_J\ \&\ D_H\bigr).}\tag{83.6}
+$$
+$\mathcal D_{\rm old}$ 指 (80.2)，并写 $q_{\rm old}(B)=h_z(B,B)$；$D_J,D_H$ 保持原全部正交正元对的量词，特别是整个纠缠锥上的第二层量词。
+
+**证明。** 先明确逐点分解与正表的行列关系。对任意完整原框架 $B,C$，令
+$$
+\begin{aligned}
+q_J(B)&=\|U\|_2^2-\sum_{e\in B}\|Je\|_2^2,\\
+x_{ef}&=H_{\rm s}F(e,f),\qquad
+ g_z(B,C)=\|G\|_2^2-\sum_{e\in B,f\in C}\|x_{ef}\|_2^2,\\
+a(B)&=\|G\|_2^2-\sum_{e\in B}\|H_{\rm s}F(e,1_A)\|_2^2,\\
+b(C)&=\|G\|_2^2-\sum_{f\in C}\|H_{\rm s}F(1_A,f)\|_2^2,\qquad
+h_z(B,C)=q_J(B)+g_z(B,C).
+\end{aligned}
+$$
+所有 $x_{ef}$ 属于原 $E_+$；行和为 $\sum_f x_{ef}=H_{\rm s}F(e,1_A)$，列和为 $\sum_e x_{ef}=H_{\rm s}F(1_A,f)$，总和为 $G$，故 $a(B),b(C)$ 分别就是此表的行、列缺陷，且与另一槽的框架无关。另因 $(Je)_{e\in B}$ 是 $U$ 的正分解，有 $q_J(B)\ge0$。
+
+以下只在这里完整展开一次所需的有限正表恒等式。对自对偶锥内任意有限表 $x_{ij}$，令
+$$
+v=\sum_{i,j}x_{ij},\qquad r_i=\sum_jx_{ij},\qquad c_j=\sum_ix_{ij},
+$$
+并置
+$$
+\delta=\|v\|^2-\sum_{i,j}\|x_{ij}\|^2,\quad
+\delta_{\rm row}=\|v\|^2-\sum_i\|r_i\|^2,\quad
+\delta_{\rm col}=\|v\|^2-\sum_j\|c_j\|^2.
+$$
+按有序指标逐项展开，得到
+$$
+\begin{aligned}
+\delta&=\sum_{(i,j)\ne(k,\ell)}\langle x_{ij},x_{k\ell}\rangle,\\
+\delta_{\rm row}&=\sum_{i\ne k}\sum_{j,\ell}\langle x_{ij},x_{k\ell}\rangle,\qquad
+\delta_{\rm col}=\sum_{j\ne\ell}\sum_{i,k}\langle x_{ij},x_{k\ell}\rangle,\\
+\delta-\delta_{\rm row}&=\sum_i\sum_{j\ne\ell}\langle x_{ij},x_{i\ell}\rangle,\qquad
+\delta-\delta_{\rm col}=\sum_j\sum_{i\ne k}\langle x_{ij},x_{kj}\rangle,\\
+\delta_{\rm row}+\delta_{\rm col}-\delta
+&=\sum_{i\ne k,\ j\ne\ell}\langle x_{ij},x_{k\ell}\rangle.
+\end{aligned}
+$$
+每项内积因自对偶性非负，故
+$$
+0\le\delta_{\rm row},\delta_{\rm col}\le\delta\le
+\delta_{\rm row}+\delta_{\rm col},\qquad
+0\le a(B),b(C)\le g_z(B,C)\le a(B)+b(C).
+\tag{83.6a}
+$$
+后一组不等式是把同一展开用于上述 $x_{ef}$。再分别在两槽取同一框架，得到 $a(B)\le g_z(B,B)$、$b(C)\le g_z(C,C)$，从而
+$$
+\begin{aligned}
+h_z(B,C)&\le q_J(B)+a(B)+b(C)\\
+&\le q_J(B)+g_z(B,B)+g_z(C,C)\\
+&\le h_z(B,B)+h_z(C,C).
+\end{aligned}
+\tag{83.6b}
+$$
+这保留同一原 $F$、同一个 $p$ 两次、原纠缠锥上的全部正输入及两槽先后，不需要产品框架分类。
+
+现在 $h_z$ 是完整投影对上的连续非负函数。若其积分零而某点严格正，连续性在某非空乘积开邻域给正下界，全支撑使积分严格正，矛盾。所以 $\mathcal Q_\times=0$ 迫使所有 $B,C$ 上 $h_z(B,C)=0$。取 $C=B$ 即有 $q_{\rm old}(B)=0$，故 $\mathcal D_{\rm old}=0$；对角线即使测度为零也无妨，因为取对角线发生在已经得到处处零之后。
+反向，若 $\mathcal D_{\rm old}=0$，即非负函数 $q_{\rm old}$ 的最大值为零，则所有 $h_z(B,B)=0$，(83.6b) 给 $0\le h_z(B,C)\le0$，积分即给 $\mathcal Q_\times=0$。最后按 80.3 的原顺序，先 $D_J$、再第一接口、最后整个原 $D_+$ 上的 $D_H$，恢复同一完整 PRE，得到
+$$
+\mathcal Q_\times=0\quad\Longleftrightarrow\quad\mathcal D_{\rm old}=0
+\quad\Longleftrightarrow\quad\bigl(D_J\ \&\ D_H\bigr).
+$$
+这里 $D_J,D_H$ 始终是原全量词谓词，未将它们定义成数值缺陷。证毕。
+
+**推论 83.5（Pythagorean 等式的准确意义）。** 令 $S_z=\|U\|_2^2+\|G\|_2^2>0$，定义实 Hilbert–Schmidt 算子
+$$
+X_z=\operatorname{diag}\bigl(J\mathsf D_A,\mathcal T(\mathsf D_A\otimes\mathsf D_A)\bigr):
+A\oplus(A\otimes_{\mathbb R}A)\longrightarrow D\oplus E,\qquad \Phi_z=X_z/\sqrt{S_z}.
+\tag{83.7}
+$$
+全部原模型都有 $\|\Phi_z\|_{\rm HS}\le1$；零缺陷恰为其可实现派生像中的球面点，即
+$$
+\|J\mathsf D_A\|_{\rm HS}^2+\|\mathcal T(\mathsf D_A\otimes\mathsf D_A)\|_{\rm HS}^2
+=\|U\|_2^2+\|G\|_2^2.\tag{83.8}
+$$
+**证明与范围。** (83.4) 给 $\|X_z\|_{\rm HS}^2=S_z-\mathcal Q_\times$，再用 83.4。该直接重写不是独立的新结构定理：原 $L,p$、同 $p$ 两次、$Z$、正性及 $F$ 的约束仍为原约束，未证明 $z\mapsto\Phi_z$ 满射到整球。原态正锥与效应区间没有被换成球或椭球。
+第 81 章的 $\mathsf W_A=\int\Pi_B\otimes\Pi_B$ 仍是同变量相关矩。对简单 $A$ 且 $d>n>1$，81.10 的同一 $\Xi$ 给 $\langle\Xi,\mathsf W_A\Xi\rangle=n$，而 $\langle\Xi,(\mathsf C_A\otimes\mathsf C_A)\Xi\rangle=1+(n-1)^2/(d-1)<n$。本章改变被平均的非负函数及积分域，绝没有证明 $\mathsf W_A=\mathsf C_A\otimes\mathsf C_A$，也不把 $\mathcal Q_\times$ 与原 $\mathcal Q$ 视为同一标量。
+
+### 83.3 最坏缺陷比较、共同原映射修复及有限证书
+
+**定理 83.6（乘积域比较）。** 只为证明和误差界，令下列函数均限制在 83.3 证明中的完整无标签投影轨道上：
+$$
+V=\{\Pi\mapsto\operatorname{Tr}(R\Pi):R=R^*\in\operatorname{End}_{\mathbb R}(A)\},\quad
+k=\dim V,\quad \mathcal D_{\rm pair}=\max_{B,C}h_z(B,C).
+\tag{83.9}
+$$
+则 $1\le k\le d(d+1)/2$，$d=\dim_{\mathbb R}A$，并有
+$$
+\boxed{\begin{gathered}
+0\le\mathcal Q_\times\le\mathcal D_{\rm pair},\\
+\mathcal D_{\rm old}\le\mathcal D_{\rm pair}
+\le\min\{2\mathcal D_{\rm old},\kappa\mathcal Q_\times\},\qquad
+\kappa:=\min\{k^2,2k\}.
+\end{gathered}}\tag{83.10}
+$$
+以下比较无需假定 $\mathcal Q_\times\le\mathcal D_{\rm old}$；这里也未证明或反驳这条额外不等式。全部原正交正元满足
+$$
+0\le\langle Ja,Jb\rangle_D\le\frac{\kappa\mathcal Q_\times}{2}\|a\|_\infty\|b\|_\infty.
+\tag{83.11}
+$$
+
+**证明。** 83.4 的同一正表步骤 (83.6a)—(83.6b) 已在完整原域上给出 $h_z\ge0$、$0\le a,b\le g_z\le a+b$ 及 $h_z(B,C)\le h_z(B,B)+h_z(C,C)$；此处仍用同一原 $F$、同一个 $p$ 两次及全部纠缠正输入，不另选映射或缩小第二层量词。取平均给 $\mathcal Q_\times\le\mathcal D_{\rm pair}$，取对角给 $\mathcal D_{\rm old}\le\mathcal D_{\rm pair}$，对最后一个逐点上界取最大值得 $\mathcal D_{\rm pair}\le2\mathcal D_{\rm old}$。
+
+为完整给出当前评价核的依据，由 $\operatorname{Tr}\Pi=n>0$，取 $R=I_A/n$ 可知常数一属于 $V$，而自伴算子空间的维数给 $1\le k\le d(d+1)/2$。原 Jordan 自同构的正交共轭保持投影轨道及 $V$，不变概率使其在 $V$ 上的作用保持 $L^2(\nu_A)$ 内积。全支撑保证该内积正定：连续函数若有某个非零值，便在一个正质量开集上平方严格正，故可取 $L^2$ 正交归一基 $f_1,\ldots,f_k$。评价核 $K(B,C)=\sum_{j=1}^k f_j(B)f_j(C)$ 的对角由群作用的传递性恒定，而其对角积分为 $\sum_j\int f_j^2=k$，所以 $K(B,B)=k$。乘积空间 $V\otimes V$ 的评价核为两个单变量核的乘积，对角为 $k^2$；由 (83.5) 的迹表达及常数属于 $V$，有 $h_z\in V\otimes V$，Cauchy–Schwarz 遂给
+$$
+\mathcal D_{\rm pair}^2\le k^2\iint h_z(B,C)^2
+\le k^2\mathcal D_{\rm pair}\mathcal Q_\times.
+$$
+$\mathcal D_{\rm pair}=0$ 时结论直接成立，否则约去一个 $\mathcal D_{\rm pair}$ 得到原 $k^2$ 界 $\mathcal D_{\rm pair}\le k^2\mathcal Q_\times$。
+
+还可得到同一比较定理内的行列强化。83.4 定义的 $q_J,a,b$ 都属于 $V$ 且逐点非负：它们分别是常数减去 $J^*J$、$(a\mapsto H_{\rm s}F(a,1_A))^*(a\mapsto H_{\rm s}F(a,1_A))$、$(a\mapsto H_{\rm s}F(1_A,a))^*(a\mapsto H_{\rm s}F(1_A,a))$ 在相应 $\Pi$ 上的评价。对任意逐点非负 $f\in V$，上述单变量评价核给
+$$
+\|f\|_\infty^2\le k\int f^2\le k\|f\|_\infty\int f,
+$$
+所以 $\|f\|_\infty\le k\int f$（零函数情形显然）。由 (83.6a)，
+$$
+\begin{aligned}
+\mathcal D_{\rm pair}
+&\le\|q_J+a\|_\infty+\|b\|_\infty\\
+&\le k\left(\int q_J+\int a+\int b\right)\\
+&\le k\left(\int q_J+2\iint g_z\right)
+\le2k\mathcal Q_\times.
+\end{aligned}
+$$
+其中 $\int a,\int b\le\iint g_z$，且 $\mathcal Q_\times=\int q_J+\iint g_z$；所用积分均为 $\nu_A$ 或其乘积。两条上界合并即 $\kappa$ 界。由于
+$$
+\kappa\le\kappa_d:=
+\min\left\{\left[\frac{d(d+1)}2\right]^2,d(d+1)\right\},
+$$
+也可统一用纯 $d$ 常数 $\kappa_d$ 代替 $\kappa$。这是同一完整模型类内的常数选择；本章的两个显式范数不保证误差常数也更优，不主张它与第 81 章常数有普遍严格比较。最后由 (80.4) 将 $\mathcal D_{\rm pair}$ 的界代入，得到 (83.11)。群的乘积只用于函数空间，不是给原实际联合增加独立性。证毕。
+
+**推论 83.7（修复同一对原映射）。** 固定原 EJA 三元组及其全部原比较几何，取 (80.9) 的同一个有界不塌缩类 $\mathscr K$：
+$$
+\begin{gathered}
+\|\widetilde L\|,\|p\|\le R_0,\quad
+\widetilde M\widetilde M^*\succeq\zeta^2I_D,\quad\widetilde L\widetilde L^*\succeq\zeta^2I_E,\\
+\alpha1_D\le U\le\beta1_D,\qquad\alpha1_E\le G\le\beta1_E,\qquad R_0,\zeta,\alpha>0,\qquad\alpha\le\beta.
+\end{gathered}\tag{83.12}
+$$
+该类紧，精确零集仍为 $\mathscr Z=\mathscr K\cap\mathrm{PRE}$。空类无对象；非空而 $\mathscr Z=\varnothing$ 时，$\min_{\mathscr K}\mathcal Q_\times\ge \kappa^{-1}\min_{\mathscr K}\mathcal D_{\rm old}>0$。零集非空时，用 (80.13) 的单调模量，有
+$$
+\operatorname{dist}_{\rm pair}(z,\mathscr Z)\le\eta_{\mathscr K}(\kappa\mathcal Q_\times),\qquad
+r_J\le \kappa\mathcal Q_\times/2,\qquad
+r_H\le2R_0nm\,\eta_{\mathscr K}(\kappa\mathcal Q_\times),\quad m=\operatorname{rank}D.
+\tag{83.13}
+$$
+距离为 (80.11) 的原 $(\widetilde L,p)$ 对的 Hilbert–Schmidt 距离；$r_J,r_H$ 分别在全部谱范数至多一的原正交正元对上取最大值。最近零点仍使用同一个 $p_0$ 两次、同一原 $\omega$、全原锥和全实 $Z$。
+**证明与范围。** 83.4 保持同一零集，83.6 与 $\eta_{\mathscr K}$ 单调性直接运输 80.5；这里用同一比较定理的 $\kappa$ 界，原 $k^2$ 界仍是合法的较弱替代。若 $\dim_{\mathbb R}D=d^2$，行下界使全部 $\widetilde M$ 可逆且逆一致有界；整个原 C13 子类 $\mathscr K_C$ 紧。将 $\mathscr K,\mathscr Z,\eta_{\mathscr K}$ 一并替换为该子类及其零集、模量，便修复到同类 PRE+C13。若维数不等，65.3 排除精确零点，非空类有正间隙。这不提供有噪单混态 H13 桥、统一幂率、修复算法或自然最近点选择。
+
+**推论 83.8（有限精确求积的存在边界）。** 对每个固定原 $A$，存在至多 $k$ 个投影轨道点 $\Pi_{B_j}$ 与严格正权 $w_j$、$\sum_jw_j=1$，使
+$$
+\mathsf C_A=\sum_jw_j\Pi_{B_j},\qquad
+\mathcal Q_\times(z)=\sum_{j,\ell}w_jw_\ell h_z(B_j,B_\ell)
+\quad\text{对全部原 }z\text{ 同时成立}.\tag{83.14}
+$$
+**证明。** $\dim\operatorname{span}\{\Pi_B\}=k$，其凸包包含概率平均，且全轨道处于 $\operatorname{Tr}\Pi=n$ 的仿射超平面内，仿射维数至多 $k-1$。有限维 Carathéodory 定理给至多 $k$ 点，删除零权即可；取乘积给至多 $k^2$ 对并用 (83.5)。该成熟凸包工具不计作新内容。如果精确节点与精确原读数另已供应，非负性给数学有限零证书；存在性不选自然节点、不供应物理制备或有限精度认证，也不声称任何有限精确证书不可能。
+
+### 83.4 同一个完整转置平均模型的纸面值
+
+**命题 83.9（保留完整原接口的非零检验）。** 对 (78.16) 的同一模型，$0<\lambda<1$ 时
+$$
+\boxed{\mathcal Q_{\times,\lambda}=\frac{72}{25}(1-\lambda^2)(13+2\lambda^2)>0.}\tag{83.15}
+$$
+**证明。** 保留全部原态效应及其比较入口，$A=H_4(\mathbb C),D=H_{16}(\mathbb C),E=H_{64}(\mathbb C)$，原全锥上
+$$
+T_\lambda a=\tfrac{1+\lambda}{2}a+\tfrac{1-\lambda}{2}a^T,\qquad
+L(d,a)=d\otimes T_\lambda a,\qquad p=\operatorname{Tr}_1,\qquad\omega=I_{16}/16.
+\tag{83.16}
+$$
+这里 $p$ 始终是同一个四维首腿偏迹。$T_\lambda$ 正、保单位、保迹且实线性可逆，$L$ 对全部纠缠 $d\ge0$ 仍正，$p$ 对整个 $E_+$ 正。两次实际调用给
+$$
+K(a)=I_4/4\otimes T_\lambda a,\quad M(a,b)=T_\lambda a\otimes T_\lambda b,\quad J(a)=T_\lambda a\otimes I_4,\quad
+H_{\rm s}d=d\otimes I_4,\quad U=I_{16},\ G=I_{64},\ F=M.
+\tag{83.17}
+$$
+可逆性及 Hermitian 简单张量的实张成给两条原实张成；$B_1(d)=(\operatorname{Tr}_1d)\otimes I_4$，故 $B_1M(a,b)=\tau_A(a)Jb$ 对全部实 $a,b$ 成立。$\widetilde M=T_\lambda\otimes T_\lambda$ 在 $I^{\rm raw}=\widetilde T_{\rm raw}\widetilde M^{-1}$ 中抵消两端 $T_\lambda$，原插入是普通中间插入 $I_4$，对整个纠缠锥正；所以整个原 C13 成立。$H_{\rm s}$ 保全部正交正元，而 78.20 的同一对正交 $p_\pm$ 有 $\langle Jp_+,Jp_-\rangle=2(1-\lambda^2)>0$。这个正缺陷对象不被预先赋予分阶段 H13 资格。
+(83.3) 给 $\mathsf C_A=P_{\mathbb R I_4}+\frac15P_{A^0}$。$T_\lambda$ 在实对称十维为恒等，在纯虚反对称六维乘 $\lambda$，因此
+$$
+S=\operatorname{Tr}(T_\lambda^*T_\lambda\mathsf C_A)
+=1+\tfrac95+\tfrac65\lambda^2=\tfrac{14+6\lambda^2}{5},\qquad
+\|J\mathsf D_A\|_{\rm HS}^2=4S,\quad
+\|\mathcal T(\mathsf D_A\otimes\mathsf D_A)\|_{\rm HS}^2=4S^2.
+\tag{83.18}
+$$
+于是 $\mathcal Q_\times=80-4S-4S^2$，展开得 (83.15)，不需要同框架四阶积分。实框架仍有旧 $q(B)=0$，所以零平均约束并非定义恒真。与 (81.11) 的同框架值比较，$\mathcal Q_{\times,\lambda}-\mathcal Q_\lambda=\frac{72}{175}(1-\lambda^2)^2>0$，显式展示两个平均不同。$\lambda=0$ 的极限丢失实张成，不把它算作完整原模型。证毕。
+
+### 83.5 固定质量关系、分阶段 H13 与完整同数据等价
+
+**定义 83.10（固定质量入口与原方向关系）。** 由原单位固定数学映射 $R_A(a)=u_A(a)1_A/n$，令 $m_2(a,b)=u_DM(a,b)$、$m_3(a,b,c)=u_EL(M(a,b),c)$。对全部原正输入，包括零与不等质量，要求
+$$
+\begin{aligned}
+\mathsf E_2:\quad m_2(a,b)&=\tfrac12[m_2(R_Aa,b)+m_2(a,R_Ab)],\\
+\mathsf E_3:\quad m_3(a,b,c)&=\tfrac13[m_3(R_Aa,b,c)+m_3(a,R_Ab,c)+m_3(a,b,R_Ac)],\\
+\mathrm A_0:\quad&u_EL(\omega,1_A/n)=1.
+\end{aligned}\tag{83.19}
+$$
+这不供应实际重置或随机控制；$R_A$、等权与原锚不是额外可调输入。
+只在 (83.8) 恢复精确 PRE 后，才定义原 H13。取 $D_{ik}=\operatorname{span}_{\mathbb R}F(A_i,A_k)$ 及其中心投影 $\pi_{ik}$，令 $\alpha_{ik}=F(-,1_k)|_{A_i}$、$\beta_{ik}=F(1_i,-)|_{A_k}$，活跃集 $\mathcal I=\{(i,k):r_i,r_k\ge2\}$。所有伴随使用原规范迹，并令
+$$
+\begin{aligned}
+\mathcal H(F)=\{\rho\in K_D:\ \forall(i,k)\in\mathcal I,\ x=\pi_{ik}\rho,\quad
+\alpha_{ik}\alpha_{ik}^*x-x\not\succeq0\ \text{或}\ \beta_{ik}\beta_{ik}^*x-x\not\succeq0\},\\
+T_{\rm raw}(a,c)=L(Ja,c),\quad I^{\rm raw}=\widetilde T_{\rm raw}\widetilde M^{-1},\qquad
+\mathrm H13:\exists\rho\in\mathcal H(F),\ I^{\rm raw}\rho\in E_+,\qquad
+\mathrm{C13}:I^{\rm raw}(D_+)\subseteq E_+.
+\end{aligned}\tag{83.20}
+$$
+每个活跃块至少一差有严格负方向，不要求两差都不正或负定；活跃块正质量随之成立。铺回使用未经维数归一化的单位。非活跃块任取正元含零；活跃集空时 $\mathcal H(F)=K_D$。始终检测同一个原总迹一混态的整个原输出，不换态、参考、固定效应或总迹读数。
+
+**定理 83.11（显式二阶权的完整候选）。** 在同一实际原模型类中，
+$$
+\boxed{\mathrm{PRE}_0^{1/2}+(83.8)+\mathsf E_2+\mathsf E_3+\mathrm A_0+\mathrm H13
+\quad\Longleftrightarrow\quad\mathrm{PRE}+C_{\rm joint}+\mathrm{C13}.}\tag{83.21}
+$$
+这里 $C_{\rm joint}$ 严格取原双迹条件 $\delta+\gamma\le2n^3$，$\delta=u_EL(1_D,1_A)$、$\gamma=u_D(p1_E)$。删去质量、锚及 $C_{\rm joint}$，得到同样成立的未校准版本。
+**证明。** 在各原载体上，(83.1) 先由 [FH] 恢复全部实混合权重及完整 $S$，其余原对象与谓词不变，故与原 $\mathrm{PRE}_0^{\rm mix}$ 同类；(83.8) 与 83.4 再恢复同一 PRE。$R_A$ 正保原质量，且全部实泛函满足 $fR_A=f\Longleftrightarrow f=f(1_A/n)u_A$，故固定泛函恰为 $\mathbb Ru_A$。(83.19) 正是 79.2 的 $t=1/2,s=2/3$，因为三槽权重 $st,s(1-t),1-s$ 均为 $1/3$。79.5—79.7 与同一原锚先于 H13 给 $C_{\rm joint}$；72.7—72.8 再由非空 $\mathcal H(F)$ 及同一原输出给 C13。
+反向，原 PRE 的完整比较律由 [FH] 给同一 (83.1)，且 PRE+$C_{\rm joint}$ 由 79.6—79.7 给 $m_2=u_A^{\otimes2}$、$m_3=u_A^{\otimes3}$ 及原锚，所以这个固定 $R_A$ 满足两条等权关系；83.4 给 (83.8)，原 C13 与 72.7 给 H13。所有关系在同一个原 $L,p,\omega$ 上成立。此处仅应用既有质量定理，不把固定数学见证重计为新质量定理。证毕。
+
+### 83.6 量子消费者、简化尺度与完整白话
+
+**推论 83.12（回接的全部附加条件）。** (83.21) 接回旧量子公理的范围，严格为 80.7／81.8 的同数据消费者，并按固定来源 [CP] 的 82.10—82.11 复用指定同载体事件的 CP 入口：
+
+| 结构 | 必须保留的条件与结论范围 |
+| --- | --- |
+| 复 Hilbert 表示、密度态、全效应、Born 配对 | 全态全效应、全部混态余项的 (83.1) 先由 [FH] 恢复完整 $S$ 与全部实混合权重，再经完整一般 EJA 条件桥；零缺陷恢复两层全域保零，65—66、75.7 才给有限复 Hermitian 直和及配对 $\sum_i\operatorname{Tr}(\rho_if_i)$，不预选单一非经典扇区。 |
+| 原二份、三份张量与普通相对方向 | PRE 后的同一原 H13 检测整个原输出，恢复整个原 C13；再用 72.7—72.8、66.10 的方向桥。不识别另给的另一括号或四份以上共同来源。 |
+| 原尺度、标准准备与偏迹 | 两条固定质量关系及原 $\mathrm A_0$ 先恢复 $C_{\rm joint}$，方向条件随后使同一个原 $M,L,p$ 同时标准归一化；零范数差本身不校准倍率。 |
+| CP 事件与仪器 | 在已归一化原数据上，对另供的同一实际同载体事件 $e:A\to A$、满足精确全实三份平均律的同事件提升 $P_{E,e}$ 及原完整记录／来源合同，[CP] 的 82.10—82.11 给 $P_{E,e}(\Xi)\ge0\Longleftrightarrow\Phi_e\text{ CP}\Longleftrightarrow P_{E,e}\text{ 全锥正}$。事件、提升与探针的实际来源均须另供；其他类型事件仍使用 69.1—69.11 的实际旁观者、同事件联合正性及每输入扇区有正权且参考足够大的实际联合参考入口，局部与原联合两概率预算、实际分支、完整菜单及共同重置的同族补全与输入行一致条件全部保留，不能由数学 $R_A$ 代替。 |
+| Lüders 更新 | 除上述事件合同，仍需锐投影效应及全部确定接受态逐点不变等原中性前提；Born 效应或 CP 本身不唯一确定更新。 |
+| Hamiltonian 动力学 | 仍需原物理时间上的连续齐次可逆 $*$-自同构群；静态候选不产生该群、时间尺度、单位或 $\hbar$。 |
+
+**证明与边界。** 83.11 恢复同一个 PRE+$C_{\rm joint}$+C13，逐项调用上述原定理即可，不重证成熟分类、Choi/Kraus 或更新工具。第 82 章的数学 $\Xi$ 与共同标架不被称为自然或可准备，平均提升不供应每个单腿的实际控制，校准见证 $\Phi_{\rm cal}$ 也不等同任意事件。完整原 $\Omega$ 的准备、事件、参考、副本、实际相关联合、零与不等质量、单位与时钟、ready 与 flags、失败、停止、销毁、返回、未来、每个原全菜单及中间切口义务全部保留；也未完成无限维一致性、实际装置供应或经验对应。固定来源 RRO-II 的第 18.3 节定理与第 19.3 节命题对原单元接收切口给出原生续接与发生账；它仍把任意 busy 切口、内部 compiler/loan/copy、原 $Q$/终端 kernel、结构最小性和物理实现列为未决。因此该源域进展不自动完成量子实际准备、事件、参考及完整原 $\Omega$ 桥。
+本章简化的尺度只比较同一完整模型类的自由输入、固定几何对象、优化和矩层级：显式 (83.3) 加两个范数替代同框架四阶相关矩及其循环空间；任意局部质量见证和权重已在 81.7 固定，不能再算一次新增简化。证明仍使用全部框架，修复运输使用 $\kappa$（或纯 $d$ 的 $\kappa_d$）；原 $k^2$ 界仍保留。这些结论不证明独立物理前提最少、自然有限实验、物理可得性或全球原创。
+
+**完整白话。** 保留原来所有状态和所有测试，比较入口只要求“纯端加任意混态对半；共同最小确认效应可换任意权重”。已有固定对半定理保证同一个确认效应在全部有限纯态支撑上共同取到最小值，因而能换成任意实概率权重，恢复完整比较律；混态余项仍遍及整个原态基，不能只测两个纯态。也保留一个原准备与同一个原读回连续使用两次的整套关系。现在让左右两张完整互斥方向图分别走遍原几何；这两个变量只在数学积分里分开，不表示两个实际系统独立。每对图上的各部分都为正且总和固定，所以“总长度平方减去各部分长度平方之和”仍只记录非负交叉重叠。平均为零就逼每对图都没有重叠，特别包含左右相同的旧图，因而恢复整个原接口；反过来，精确原接口使任意左右图都正交。两个积分分开后，每边只需同一个显式几何权：每个中央单位权为一，每个简单因子的迹零方向按秩和维数给固定权。公式因此只剩两个算子长度的平方相加恰好等于两个总量长度的平方。它与先前让左右始终使用同一张图的平均数不同，但选择的精确模型相同。随后由两条固定质量关系及原锚校准倍率，再用同一个原混态的方向条件排除错误转置，按各自额外合同接回量子态、Born、张量和过程。有界且不塌缩时，小缺陷保证同一对原准备、读回接近某个精确原模型；没有精确模型的类则有正间隙。这个球面等式描述的是满足原约束的派生映射像，没有把状态变成球，也没有凭空制造实际制备、事件或时间。
+
+**数学来源与归属。** [J] Jeong–Gowda, *Spectral sets and functions on Euclidean Jordan algebras*, LAA 518 (2017), 31–56, [作者原文](https://userpages.umbc.edu/~gowda/papers/trGOW16-06.pdf), [DOI](https://doi.org/10.1016/j.laa.2016.12.020)：pp. 36—37 的 Proposition 2、3 及 p. 55 的 Appendix Theorem 11；其框架按有序对象理解，简单因子的传递性与一般直和的限制均保持原条件。逐理想的无标签投影论证不声称一般直和有序框架或纯态全局传递。[H] von Neumann, [*Zum Haarschen Maß in topologischen Gruppen*](https://www.numdam.org/item/CM_1935__1__106_0/), Compositio Mathematica 1 (1935), 106—114：紧可分群的不变概率与非空开集正质量；此处群是有限维紧矩阵群。Carathéodory、有限维评价核及紧性均为成熟工具。[P] 本卷 75—81 及第四卷 65—72 的固定接口，取 [1b2e8ef358413a6230c43718fc0ce44c7797683b](https://github.com/the-omega-institute/trureturing/tree/1b2e8ef358413a6230c43718fc0ce44c7797683b) 所载原文，条件桥、质量、方向、共同修复与消费者仅按原范围复用。 [FH] [Library 固定对半入口](https://github.com/the-omega-institute/trureturing/blob/9fc08bdbd0c3f530279b76dd419b5c4ade8bd81d/Library/QuantumStates/mullerududec2012selfduality.md)，*Appendix: a fixed-half pure–mixed entrance to S*：在同一非零有限有序载体、整个原态基及全部 proper 效应上，FH1 与完整 $S$、$\mathrm B_{\rm mix}$ 等价，包含任意混态余项和全部实概率权重；其同类替换仅用于本章 (83.1)、83.11—83.12。[CP] [本卷第 82 章](https://github.com/the-omega-institute/trureturing/blob/9fc08bdbd0c3f530279b76dd419b5c4ade8bd81d/docs/develop/theory/QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_V.md)，82.10—82.11：只在已归一化原数据及另供的同一实际同载体事件、精确全实三份提升、完整记录与来源合同上复用固定探针 CP 等价，不供应实际事件、探针准备、单腿控制或其他类型事件的来源。
+ [RRO-II] `RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ORIGINAL_INTERFACE_EXPOSURE_AND_RECOVERY_II.md`，固定源版本 `e0d88f7785c79e7a863611cd332c2549adbea64e`，仅用于上述第 18.3 节与第 19.3 节的数学范围对应。新增承重推导是乘积平均在完整原模型上的双向零集、显式二阶范数入口、乘积最坏缺陷控制及同一完整反例的新标量；不将标准平均、(81.9) 或归一化应用当作新工具。
+
+## 追加锚（本行以下为增补区）
