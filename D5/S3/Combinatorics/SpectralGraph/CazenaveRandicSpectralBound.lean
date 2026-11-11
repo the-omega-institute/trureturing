@@ -22,6 +22,7 @@
    D5/S3/Combinatorics/SpectralGraph/LinWangCaiBroomSpectralRatio.lapEig;
    declaration statement_id: sha256:eda0b70a8c5ea56bbd5dea6f6726ddadf958c9aa40fa7abc33647ba73f8c4369.
    Used by claim, lap_second_degree and result; all other declarations: none.
+   Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/29101.
    The adjacency spectrum uses decreasing algebraic order; the edge sum counts each edge once.
 -/
 
