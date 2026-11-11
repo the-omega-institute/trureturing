@@ -102,7 +102,7 @@ private theorem exists_symmetric_bijective_extension {E : Type*}
       have hsq : ⟪Q x, Q x⟫_ℂ = ((‖Q x‖ ^ 2 : ℝ) : ℂ) := by
         exact (inner_self_eq_norm_sq_to_K (𝕜 := ℂ) _).trans (Complex.ofReal_pow _ _).symm
       rw [hsq, Complex.add_im, hh, Complex.I_mul_im, Complex.ofReal_re, zero_add] at hx'
-      exact hx' 
+      exact hx'
     have hqx : Q x = 0 := norm_eq_zero.mp (by nlinarith)
     have hxm : x ∈ M := by
       have hz : Mᗮ.starProjection x = 0 := hqx
