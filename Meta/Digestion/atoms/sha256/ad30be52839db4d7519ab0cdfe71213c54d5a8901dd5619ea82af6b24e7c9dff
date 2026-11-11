@@ -1,0 +1,30 @@
+**定义 39.1（原商支持与交维函数）。** 设 $F$ 为特征零域，$D/F$ 为有限扩张。对非零有限维 $F$-子空间 $W\le_F D$，定义
+
+$$
+ d_W(r)=\dim_F(W\cap rW)\quad(r\in D^\times),
+ \qquad
+ Q(W)=\left\{\frac uv:u,v\in W\setminus\{0\}\right\}\subseteq D^\times .
+\tag{39.1}
+$$
+
+这里的商和标签都在同一个原域 $D$ 内。于是
+
+$$
+ r\in Q(W)\quad\Longleftrightarrow\quad d_W(r)>0.
+\tag{39.2}
+$$
+
+若 $E(W)=\{c\in D:cW\subseteq W\}$，则 $E(W)$ 是含 $F$ 的子域，且
+
+$$
+ [E(W):F]\mid \dim_F W.
+\tag{39.3}
+$$
+
+事实上，$cW\subseteq W$ 且 $c\ne0$ 时，乘法在有限维空间 $W$ 上单射，故 $cW=W$，再得 $c^{-1}W=W$。此外，对任意 $\gamma\in D^\times$，
+
+$$
+ d_{\gamma W}(r)=d_W(r),\qquad Q(\gamma W)=Q(W).
+\tag{39.4}
+$$
+
