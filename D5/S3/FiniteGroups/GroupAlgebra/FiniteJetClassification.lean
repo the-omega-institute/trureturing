@@ -65,7 +65,7 @@ private theorem weight_cancel {n : ℕ} (i : Fin (n - 1)) (c : Kˣ) :
   rw [he, pow_add, mul_assoc, ← mul_pow, ← Units.val_mul]
   simp
 
-private theorem scalar_coefficients_iff {n : ℕ} (A B : Fin (n - 1) → K)
+theorem scalar_coefficients_iff {n : ℕ} (A B : Fin (n - 1) → K)
     (c : Kˣ) (σ : K ≃ₐ[F] K) :
     (∀ i, (c : K) ^ (p ^ (i.val + 1)) * B i = (c : K) ^ (p - 1) * σ (A i)) ↔
     (∀ i, B i = ((c⁻¹ : Kˣ) : K) ^ weight p n i * σ (A i)) := by

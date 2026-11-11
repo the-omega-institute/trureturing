@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:eb845a908b82fe65a8b1091f5b38194cd8484ba2ed7b7f0047999773d0436eff
+  normalized_sha256: sha256:eb845a908b82fe65a8b1091f5b38194cd8484ba2ed7b7f0047999773d0436eff
+cas_ref: sha256:eb845a908b82fe65a8b1091f5b38194cd8484ba2ed7b7f0047999773d0436eff
+coverage_gids:
+  - gid: D5/S3/Quantum/Completion/RawRightGroupPropagation.right_invariant
+    target_statement_id: sha256:e8ff8835e490d86976014dcfa4fccb97c0e1ae802ec9a6b00aea9dd06dcef5e8
+receipts:
+  unresolved_subitems: []
