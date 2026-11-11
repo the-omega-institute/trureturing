@@ -1,0 +1,108 @@
+**定理 30.2（两实际窗口的精确中间域极值）。** 对定义 30.1 的全部窗口对，包括 $W\ne V$、$m\ne n$ 及非平凡个别稳定子的情形，
+
+$$
+\boxed{\displaystyle
+\delta=\max_{F\subseteq A\subseteq D}
+\left([A:F]-(\dim_F AW-m)-(\dim_F AV-n)\right).
+}
+\tag{30.5}
+$$
+
+每个中间域项都下界每一个正原标签的交维；且存在原 $p\in W\setminus\{0\}$、$q\in V\setminus\{0\}$ 使 $d_{W,V}(p/q)=\delta$。特别地，
+
+$$
+\delta\ge\max\{e,m+n-N\}.
+\tag{30.6}
+$$
+
+证明。按 §§26–29 已用的有限维稳定子事实，$E_W,E_V$ 是域：非零稳定元素在相应有限维空间上单射，故满射，逆元也稳定。又 $c\in E_W$ 蕴含 $c=(cw_0)/w_0\in D_W$，同理 $E_V\subseteq D_V$；所以 $E\subseteq D$，$e$ 整除 $m,n,N$。两个原空间及其每个交叠都是 $E$-线性的。由 (30.3)，只须对含 $1$ 的 $X,Y\subseteq D$ 建立极值与原域见证；$\dim_F AX=\dim_F AW$、$\dim_F AY=\dim_F AV$，因为原标量乘法给出对应的线性同构。
+
+先保留每个原标签。若 $W\cap rV\ne\{0\}$，则 $AW\cap rAV$ 是非零 $A$-空间，故其 $F$-维数至少为 $a(A)$。由 $W+rV\subseteq AW+rAV$ 及维数公式，
+
+$$
+\begin{aligned}
+d_{W,V}(r)
+&=m+n-\dim_F(W+rV)\\
+&\ge m+n-\dim_F(AW+rAV)\\
+&\ge m+n-\dim_F AW-\dim_F AV+a(A)=\Lambda(A).
+\end{aligned}
+\tag{30.7}
+$$
+
+这一步允许 $r\notin D$。取 $A=E$ 时两项损失均为零，取 $A=D$ 时 $DW=w_0D$、$DV=v_0D$，分别得到 $e$、$m+n-N$。这是 §29 的中间域维数下界在两个空间上的同一用法。
+
+以下消费 §29 的可分分裂、最少块最优分拆及原系数子式接口，明确两组不同空间所需的对应。取包含原 $D$ 的有限正规闭包 $K/F$，令 $G=\operatorname{Gal}(K/F)$、$\Omega=\operatorname{Hom}_F(D,K)$。选 $X,Y$ 的 $F$-基 $x_1=1,x_2,\ldots,x_m$ 及 $y_1=1,y_2,\ldots,y_n$，写
+
+$$
+\begin{aligned}
+b_\sigma&=(\sigma(x_1),\ldots,\sigma(x_m)),&
+c_\sigma&=(\sigma(y_1),\ldots,\sigma(y_n)),\\
+\rho_X(S)&=\dim_K\langle b_\sigma:\sigma\in S\rangle_K,&
+\rho_Y(S)&=\dim_K\langle c_\sigma:\sigma\in S\rangle_K.
+\end{aligned}
+\tag{30.8}
+$$
+
+可分分裂 $D\otimes_F K\simeq K^\Omega$ 给出总秩 $m,n$。在 $K^m\oplus K^n$ 中令 $P_\sigma=K(b_\sigma,0)\oplus K(0,c_\sigma)$。每个 $P_\sigma$ 二维，且这些空间互异：若 $P_\sigma=P_\tau$，限制到两个直和因子分别使 $b_\sigma,b_\tau$ 及 $c_\sigma,c_\tau$ 成比例；两基的首项均为 $1$，比例只能为一。两嵌入因而在 $X,Y$ 上一致，$F(X,Y)=D$ 再使 $\sigma=\tau$。这里不要求任意一个空间单独生成 $D$。
+
+取独立的不定元组 $z=(z_1,\ldots,z_m)$、$h=(h_1,\ldots,h_n)$，令 $\mathcal K=K(z,h)$、$u(z)=\sum z_jx_j$、$v(h)=\sum h_jy_j$。对子空间族 $\{P_\sigma\}$ 使用泛超平面 $z\cdot a-h\cdot b=0$，切出的直线由
+
+$$
+\bigl((c_\sigma\cdot h)b_\sigma,\ (b_\sigma\cdot z)c_\sigma\bigr)
+\tag{30.9}
+$$
+
+张成。各点积均为非零多项式。两组参数的合并法向量是整个超平面参数空间的泛点，故满足 Raz–Wigderson [arXiv:1901.09423v1，Definition 5.1、Theorems 5.2、7.1](https://arxiv.org/pdf/1901.09423v1) 的前件；特征零是其泛性结论允许的特征。非空子族 $S$ 的总张成维数恰为 $\rho_X(S)+\rho_Y(S)$。因此 (30.9) 所成行矩阵的秩为
+
+$$
+R=\min_{\mathcal P}\sum_{S\in\mathcal P}
+\bigl(\rho_X(S)+\rho_Y(S)-1\bigr),
+\tag{30.10}
+$$
+
+其中块非空。这里正是 Antolini–Dewar–Tanigawa [arXiv:2508.04798v1，§3.2，式 (7)–(9)](https://arxiv.org/pdf/2508.04798v1) 的两个不同基矩阵接口；一般超平面的秩结论直接由上引特征零定理承担。
+
+原文 Raz–Wigderson 的 Definition 2.1、Corollary 3.2 保证最优分拆中块数最少者 $\mathcal P_*$ 唯一。$G$ 同时半线性地置换两组行，保持 $\rho_X,\rho_Y$，故保持 $\mathcal P_*$。按 (29.7) 的固定域构造，令 $S_0$ 为包含原包含嵌入的块，$H=\{g\in G:gS_0=S_0\}$。则 $\operatorname{Gal}(K/D)\subseteq H$，且
+
+$$
+A=K^H\subseteq D,\qquad
+S_0=\operatorname{Hom}_A(D,K),\qquad
+|\mathcal P_*|=[A:F].
+\tag{30.11}
+$$
+
+为核对该构造并未制造子域，若 $\sigma\in S_0$，取 $g\in G$ 使 $g\iota=\sigma$，则 $gS_0$ 与 $S_0$ 相交，因而相等，所以 $g\in H$；反方向由 $H$ 稳定该块立即成立。其余块为 $S_0$ 的平移。对子扩张 $D/A$ 使用同一个分裂，分别得到
+
+$$
+\rho_X(S_0)=\dim_A AX=k,\qquad
+\rho_Y(S_0)=\dim_A AY=\ell.
+\tag{30.12}
+$$
+
+理由与 (29.8) 相同：在固定 $A$ 的各嵌入上，原基向量列的 $K$-张成分别是 $AX\otimes_A K$、$AY\otimes_A K$ 的分裂像。扩底保持维数。各块的两个秩也分别相同，所以写 $a=[A:F]$ 后，
+
+$$
+R=a(k+\ell-1),\qquad
+m+n-R=a-(ak-m)-(a\ell-n)=\Lambda(A).
+\tag{30.13}
+$$
+
+最后落实原域可达性。在原 $D/F$ 的任一固定基下，写出列为 $v(h)x_1,\ldots,v(h)x_m,u(z)y_1,\ldots,u(z)y_n$ 的矩阵 $\mathcal C(z,h)$。其系数在 $F[z,h]$；可逆的嵌入矩阵将其变为 (30.9) 的行矩阵，故原矩阵有一个非零 $R$ 阶子式 $f\in F[z,h]$，更高阶子式恒零。$F$ 无限，§26 已用的非零多元多项式取值事实使 $fz_1h_1$ 在某个 $(z^0,h^0)\in F^m\times F^n$ 非零。于是原 $u=u(z^0)\in X\setminus\{0\}$、$v=v(h^0)\in Y\setminus\{0\}$ 满足
+
+$$
+\dim_F(vX+uY)=R,\qquad
+\dim_F\bigl(X\cap(u/v)Y\bigr)=m+n-R>0.
+\tag{30.14}
+$$
+
+末项为正，因为 $uv\in vX\cap uY$ 非零。取原 $p=w_0u$、$q=v_0v$，则其原标签为 $p/q=(w_0/v_0)(u/v)$，(30.3) 给出 $d_{W,V}(p/q)=m+n-R$。结合 (30.7)、(30.13)，有
+
+$$
+\max_B\Lambda(B)\le\delta\le m+n-R=\Lambda(A)
+\le\max_B\Lambda(B),
+$$
+
+故所有不等式取等，(30.5) 及原窗口比值见证均成立。最大值由 (30.11) 的一个实际中间域达到。$\square$
+
+本定理保留几个退化接口。若 $m=1$ 或 $n=1$，每个正交维都为一，故 $\delta=1$，且 (30.5) 的 $A=F$ 已取等。若两窗口分别为同一个实际子域 $B/F$ 的标量倍，则归一化后 $X=Y=B$、$D=E=B$，正原标签恰为 $(w_0/v_0)B^\times$，其交维全为 $[B:F]$。若只知道共同稳定子 $E$，(30.6) 仍保留该域所强制的整倍数与下界，但不把它当作完整极值。取 $W=V$ 并用相同归一化，(30.5) 还原 (29.2)；不同窗口使用的两个损失则可不相等。
+
