@@ -1078,3 +1078,283 @@ $T_p=e_p$ separately retains leastness.  The result does not select complex
 quantum theory, composites, dynamics, measurement-sequence commutativity, or
 physical availability of every mathematical automorphism.  It is a paper
 argument and makes no formal-verification claim.
+
+## Appendix: bounded uniform preparations and common confirmation
+
+Keep the original nonzero finite-dimensional real space $A$, closed pointed generating cone $C$,
+strictly positive $u\in A^*$, compact full base $K=\{x\in C:u(x)=1\}$, and **all** effects $[0,u]$.
+Write $P=\operatorname{ext}K$. No symmetry, Jordan structure or closedness of $P$ is assumed here.
+This appendix applies elementary finite convex geometry and compactness to (17); the subsequent
+spectral and Jordan consequences reuse the attributed paper bridges above, including their proof
+boundaries. This is a paper result, without a Lean-verification or literature-priority claim.
+
+### The intrinsic bound and the exact minimum criterion
+
+For $p\in P$ define, in the original effect geometry,
+$$
+F_p=\{f\in[0,u]:f(p)=1\},\qquad r_p=\operatorname{affdim}F_p,\qquad
+T_p(x)=\min_{f\in F_p}f(x)\quad(x\in C).
+\tag{BU1}
+$$
+The minimum agrees with the earlier infimum. Indeed, $[0,u]$ is closed and bounded: choose a
+finite spanning family in $K$, on which all effects have values in $[0,1]$; these evaluations
+bound their coordinates in $A^*$. Thus $F_p$ is compact, convex and nonempty, containing $u$.
+In particular $r_p$ is defined before imposing S or invoking a Jordan representation.
+For each pure $q$ let $H_q=\{f\in F_p:f(q)=T_p(q)\}$, with $p$ fixed in this notation.
+These are nonempty closed exposed faces, possibly all of $F_p$.
+
+For any finite pure tuple $(q_j)$ and strictly positive probability weights $(a_j)$,
+$$
+T_p\!\left(\sum_j a_jq_j\right)\ge\sum_j a_jT_p(q_j),\qquad
+\text{equality}\ \Longleftrightarrow\ \bigcap_jH_{q_j}\ne\varnothing.
+\tag{BU2}
+$$
+To prove the equivalence, minimize the continuous sum on compact $F_p$. Its excess over the
+right side is $\sum_j a_j[f(q_j)-T_p(q_j)]$, a sum of nonnegative terms. It is zero exactly
+when every term is zero. Conversely a common minimizer gives equality. Zero weights can be
+discarded. Thus an exact equality asserts simultaneous attainment, not just separate minima.
+
+**Effect-face intersection lemma.** If $r_p\ge1$, any finite family of the $H_q$ with empty
+intersection has an empty subfamily of at most $r_p$ members.
+To see the improvement over the generic $r_p+1$ bound, take an inclusion-minimal empty family
+$H_{q_1},\ldots,H_{q_t}$. Each face is nonempty, so $t\ge2$. Choose $f_i$ in every face except
+$H_{q_i}$, and put $c_j=T_p(q_j)$ and $d_j=f_j(q_j)-c_j>0$. Then
+$$
+f_i(q_j)=c_j+\delta_{ij}d_j.
+\tag{BU3}
+$$
+An affine dependence $\sum_i\lambda_i f_i=0$, $\sum_i\lambda_i=0$, evaluated at each $q_j$, gives $\lambda_jd_j=0$. Hence the $f_i$ are affinely independent and $t\le r_p+1$. If $t=r_p+1$, they span $\operatorname{aff}F_p$, so $u=\sum_i b_i f_i$ with $\sum_i b_i=1$.
+Evaluation at $q_j$ gives $b_j=(1-c_j)/d_j\ge1$, since $f_j(q_j)\le1$.
+This contradicts $\sum_i b_i=1$ and $t\ge2$. Consequently $t\le r_p$.
+The extra ingredient is the common upper effect $u$, not an unproved strengthening of Helly's
+theorem. If $r_p=0$, $F_p$ is a singleton and every $H_q$ is that singleton.
+
+### Bounded uniform comparison is equivalent to full S
+
+Use $\mathsf{Cmp}_{\rm bd}$ for the following law, avoiding the symbol $U$ reserved below for $M(1_A,1_A)$. It quantifies **every** pure reference $p$ and **every** pure tuple, with repetitions:
+$$
+T_p\!\left(\frac1h\sum_{j=1}^h q_j\right)
+=\frac1h\sum_{j=1}^h T_{q_j}(p),\qquad
+1\le h\le\max(1,r_p),\quad q_j\in P.
+\tag{BU4}
+$$
+**Bounded-arity theorem.** On the stated full carrier, $\mathsf{Cmp}_{\rm bd}$ is equivalent
+to the full weighted finite law S in (17), and hence to reciprocal **least** proper confirmation.
+
+**Proof.** S immediately gives (BU4). Conversely its $h=1$ case gives $T_p(q)=T_q(p)$.
+Fix $p$. For $r_p\ge1$, (BU2) and (BU4) imply that every family of at most $r_p$ pure-state
+minimum faces has a common point. The effect-face lemma makes every finite intersection
+nonempty. For $r_p=0$ this already holds because $F_p$ is a singleton. Compactness of $F_p$
+then gives a point $e_p\in\bigcap_{q\in P}H_q$, even when $P$ is not closed.
+For any $f\in F_p$, $e_p(q)=T_p(q)\le f(q)$ on all pure $q$. Finite-dimensional compact
+convex decomposition gives $K=\operatorname{conv}P$, and positive rescaling gives
+$C=\operatorname{cone}P$. Therefore $e_p\le f$ on $C$. Since $e_p\in F_p$, it is a least
+effect, below **every** confirming effect, rather than merely an undominated minimal one.
+It is unique, and $T_p(x)=e_p(x)$ for every $x\in C$. Thus for arbitrary real probability
+weights, including zeros,
+$$
+T_p\!\left(\sum_j a_jq_j\right)=\sum_j a_je_p(q_j)
+=\sum_j a_jT_{q_j}(p).
+\tag{BU5}
+$$
+This proves S without a rational-weight approximation. The argument also works at one fixed
+reference if singleton reciprocity and its bounded tuple laws are assumed there. $\square$
+
+When $r_p=1$, the lemma says that all the individually nonempty minimum faces already have
+common intersection; the only comparison requirement is singleton reciprocity. When $r_p=0$
+that same requirement is retained by $\max(1,r_p)$. If $K=\{p\}$, generation makes $C$ a ray,
+$F_p=\{u\}$, $r_p=0$, and every preparation consists of repetitions of $p$, so both laws hold.
+Repeated pure states cause no change to a minimum face or to the argument. No maximum over $P$
+or limiting pure-state argument was used; compactness was used in effect space instead.
+
+The equality $T_p=e_p$ here is on $C$, especially $K$. The functional $e_p$ has a linear
+extension to all signed vectors in $A$; this is distinct from taking the original pointwise
+infimum on signed inputs. For $x\in C$ that infimum at $-x$ is $-\max_{f\in F_p}f(x)$,
+which need not equal $-e_p(x)$. In ordinary geometry, each $H_q$ records tests that confirm
+$p$ while accepting $q$ as little as possible. The bounded comparisons force these demands
+to fit one test; compactness joins all such demands, and cone order makes that test least.
+The bound measures the freedom of this confirming-effect face, not a number of instruments.
+
+### Two separate sharpness controls on full carriers
+
+For either compact full-dimensional convex body $B\subset W$ below, use the exact carrier
+$A_B=\mathbb R\oplus W$, $C_B=\{(t,tx):t\ge0,x\in B\}$ and $u_B(t,y)=t$.
+Its cone is closed, pointed and generating, its normalization is strictly positive away from
+zero, and its normalized base is $\{1\}\times B$. Linear proper effects are exactly all
+affine functions $B\to[0,1]$. We suppress the leading coordinate in naming states.
+
+**Fixed-reference sharpness.** Let $r\ge2$ and
+$K_r=\operatorname{conv}\{0,e_1,\ldots,e_r,\mathbf1\}\subset\mathbb R^r$, with $p=\mathbf1$.
+These listed points are exactly its pure vertices: $0$ uniquely minimizes the coordinate sum,
+$\mathbf1$ uniquely maximizes it, and $e_i$ uniquely maximizes
+$x_i-\varepsilon\sum_{j\ne i}x_j$ for $0<\varepsilon<1$.
+For a confirming affine effect write $d_i=1-f(e_i)$. Affinity and $f(\mathbf1)=1$ give
+$$
+0\le d_i\le1,\quad \sum_i d_i\le r-1,\qquad
+f(0)=1-\frac{\sum_i d_i}{r-1}.
+\tag{BU6}
+$$
+These conditions are also sufficient for a proper effect, since they give values in $[0,1]$ at every vertex. They describe a full-dimensional truncated cube, so $r_p=r$.
+For every other pure vertex $q$, $T_p(q)=T_q(p)=0$: coordinate effects $x_k$ confirm $p$
+and vanish at $0$ and at $e_i$ when $k\ne i$; effects $1-x_k$ confirm $0$, and confirm
+$e_i$ when $k\ne i$, while vanishing at $p$.
+A tuple of length at most $r-1$ omits some $e_k$. The effect $x_k$ simultaneously gives
+zero at all its non-$p$ entries and one at its $p$ entries. Hence the law at this fixed
+reference holds through $r-1$, with repetitions. But (BU6) gives
+$$
+T_p\!\left(\frac1r\sum_{i=1}^r e_i\right)=\frac1r>0
+=\frac1r\sum_{i=1}^rT_{e_i}(p).
+\tag{BU7}
+$$
+Thus $r_p$ cannot generally be lowered at a fixed reference. This control makes no assertion that $K_r$ satisfies the corresponding weakened comparison law at every reference.
+
+**No universal fixed arity, even with all references tested.** For $m\ge2$ let
+$H=\{z\in\mathbb R^m:\sum_i z_i=0\}$, $W=H\oplus H$, and
+$$
+a_i=(e_i-\mathbf1/m,0),\qquad b_i=(0,e_i-\mathbf1/m),\qquad
+B_m=\operatorname{conv}\{a_1,\ldots,a_m,b_1,\ldots,b_m\}.
+\tag{BU8}
+$$
+The two centered $(m-1)$-simplices lie in complementary subspaces and have common barycentre $0$. The base dimension is $2m-2$, the carrier dimension is $2m-1$, and all $2m$ listed
+vertices are exposed: the appropriate block coordinate uniquely maximizes at its own vertex.
+Their sole affine dependence is $\sum_i a_i-\sum_i b_i=0$, with each sum zero. Thus the allowed
+affine effect values $\alpha_i=f(a_i),\beta_i=f(b_i)$ are **exactly**
+$$
+0\le\alpha_i,\beta_i\le1,\qquad \sum_i\alpha_i=\sum_i\beta_i.
+\tag{BU9}
+$$
+Necessity follows from the common barycentre; sufficiency follows because this sole relation
+is precisely the consistency condition for an affine function on the spanning vertices.
+To confirm $a_s$, set $\alpha_s=1$ and all other $\alpha_i=0$, and place one value $1$
+at any chosen $b_j$, the other $\beta_i$ being zero. To make a distinct target $b_t$ zero,
+choose $j\ne t$; distinct targets in the $a$ block are already zero. Interchanging blocks
+proves $T_v(w)=\delta_{vw}$ for every pair of pure vertices, so reciprocity holds globally.
+For any reference $a_s$ and any tuple of length at most $m-1$, there is an unlisted $b_j$. The same effect then vanishes at every nonreference entry and equals one at every reference
+entry. The symmetric construction works at a $b$ reference. Thus **all** short tuple laws
+hold, including repetitions and every reference. Yet for the length-$m$ tuple $(b_1,\ldots,b_m)$,
+$$
+T_{a_s}(0)=\min_{\alpha_s=1}\frac1m\sum_i\alpha_i=\frac1m,
+\qquad \frac1m\sum_iT_{b_i}(a_s)=0.
+\tag{BU10}
+$$
+The minimum is attainable by the displayed effects. Taking $m=k+1$ rules out every universal fixed positive arity $k$. Here $r_{a_s}=r_{b_s}=2m-2$: fix $\alpha_s=1$, take every other
+$\alpha_i=1/2$ and all $\beta_i=(m+1)/(2m)$, strictly inside every remaining inequality in (BU9).
+These are different conclusions: (BU7) is pointwise sharpness; (BU10) excludes a fixed global
+cutoff. Neither proves that $\max(1,r_p)$ is the smallest possible adaptive bound when
+comparison laws at all other references are available as additional constraints.
+
+### Substitution into the complete same-index candidate
+
+Let [V](../../docs/develop/theory/QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_V.md)
+denote the existing volume, specifically Definitions 75.1, 76.1–76.2 and (76.8).
+Define $\mathrm{PRE}_0^{\rm bd}$ by substituting **only** (BU4) for its full comparison
+premise on **each** $X=A,D,E$, using the intrinsic $F^X_\xi,r^X_\xi$ of (BU1).
+All three original full carriers, state bases and effect intervals remain as in (BU1).
+The theorem restores S on each; the complete paper S-to-EJA bridge of [V] §75.1 and the
+preceding sections of this note is retained, not replaced by endpoint reciprocity or by an
+independent Jordan axiom. In its faithful coordinates $\tau_X\Phi_X=u_X$,
+$\Phi_XU_X=1_X$ and $B_X(x,y)=\tau_X(\Phi_Xx\circ\Phi_Xy)$; the whole original state and
+effect domains correspond, and every primitive idempotent has canonical trace one.
+Initially general EJAs, including direct sums, rank-one and Albert factors, remain allowed.
+For completeness, the rest of this replacement candidate is the following exact original data.
+Use canonical trace pairings, $P_x=2\ell_x^2-\ell_{x^2}$, $n=\tau_A1_A$, $d=\tau_D1_D$.
+Supply only real-bilinear $L:D\times A\to E$, real-linear $p:E\to D$, positive on the
+**entire** respective cones, and the original reference $\omega=1_D/d$. Define internally
+$$
+\begin{aligned}
+\mathcal B(d',c)&=pL(d',c),& K(a)&=pL(\omega,a),& M(a,b)&=pL(K(a),b),\\
+J(a)&=M(a,1_A),&H_{\rm s}(d')&=L(d',1_A),&B_1&=pH_{\rm s},\\
+Q(a,b,c)&=L(M(a,b),c),&U&=M(1_A,1_A),&G&=H_{\rm s}1_D.
+\end{aligned}
+\tag{BU11}
+$$
+The two calls use this same $p$. Retain both real spans and the all-real reset/slice law
+$$
+\operatorname{span}_{\mathbb R}M(A,A)=D,\quad
+\operatorname{span}_{\mathbb R}L(D,A)=E,\qquad
+B_1M(a,b)=\tau_A(a)Jb\quad(a,b\in A).
+\tag{BU12}
+$$
+Full positivity includes every entangled direction; real spanning is not positive-product
+cone generation. As in [V] §§75.1–76.1 these premises give $U,G>0$ before either zero table,
+so $F=P_{U^{-1/2}}M$ is defined. Choose one family $\mathfrak B=(B_t)_{t=1}^s$ of complete
+primitive frames in this same geometry, with $1\le s\le3$, whose members Jordan-generate $A$
+($\mathsf{JG}_3$ of Definition 75.2). Repeated frames are allowed; neither linear spanning of their
+members nor natural or physical availability of the witness is assumed. On that **same** family impose (76.3)–(76.4):
+$$
+\begin{gathered}\langle Je,Je'\rangle_D=0\quad(e\ne e'\in B_t),\\
+\langle H_{\rm s}F(e,f),H_{\rm s}F(e',f')\rangle_E=0\\
+((e,f)\ne(e',f')\in B_t\times B_t),\quad 1\le t\le s.\end{gathered}
+\tag{BU13}
+$$
+There is no cross-index $B_t\times B_{t'}$ requirement. After these tables restore PRE, read H13 exactly as in Definition 76.2: use central units $c_i$ of $A_i$, $n_i=\tau_Ac_i$,
+$D_{ik}=\operatorname{span}_{\mathbb R}F(A_i,A_k)$, its central projection $\pi_{ik}$,
+$\alpha_{ik}=F(-,c_k)|_{A_i}$, $\beta_{ik}=F(c_i,-)|_{A_k}$ and $\mathcal Q=\{(i,k):n_i,n_k\ge2\}$.
+With original canonical-trace adjoints set
+$$
+\mathcal H(F)=\{\rho\in K_D:\ \forall(i,k)\in\mathcal Q,\ x=\pi_{ik}\rho,
+\ \alpha_{ik}\alpha_{ik}^*x-x\not\succeq0\ \text{or}\ \beta_{ik}\beta_{ik}^*x-x\not\succeq0\},
+$$
+$$
+T_{\rm raw}(a,c)=L(Ja,c),\quad I^{\rm raw}=\widetilde T_{\rm raw}\widetilde M^{-1},\quad
+\mathrm H13:\exists\rho\in\mathcal H(F),\ I^{\rm raw}\rho\in E_+.
+\tag{BU14}
+$$
+Each active block needs at least one strictly negative direction, not both differences negative
+or negative definite. Inactive blocks may be zero; only the same original total trace-one
+constraint applies, and $\mathcal Q=\varnothing$ gives all $K_D$. The marginal extensions use
+unnormalized units, with no purity, Schmidt-spectrum or conditional-block restriction.
+Eligibility reads the first interface only; the test reads the **whole original output** of
+the same original $\rho$, not a transported state, a chosen effect or its trace alone.
+
+Consequently, forgetting the frame witness, the full replacement candidate satisfies
+$$
+\boxed{\mathrm{PRE}_0^{\rm bd}+\mathsf{JG}_3+\mathsf J_{\mathfrak B}
++\mathsf H^{\rm diag}_{\mathfrak B}+\mathrm H13}
+\ \Longleftrightarrow\ \mathrm{PRE}+\mathrm{C13},\qquad
+\mathrm{C13}:I^{\rm raw}(D_+)\subseteq E_+.
+\tag{BU15}
+$$
+Indeed (BU4) restores precisely the comparison premise, after which [V] (76.8) applies on the
+same actual data; conversely S gives (BU4). Deleting H13/C13 on both sides retains the
+corresponding equivalence. No other premise, map, reference, trace or cone is changed.
+
+### Retained quantum consumers and limits
+
+By [V] §§75.7, 76.5, with their full conditional bridges, the carriers have complex Hermitian
+sectors of sizes $n_i$, $n_in_k$, $n_in_jn_k$. The complete density and effect domains are
+$\rho_\lambda\ge0$, $\sum_\lambda\operatorname{Tr}\rho_\lambda=1$, $0\le f_\lambda\le I_\lambda$,
+with Born rule $\Pr(f\mid\rho)=\sum_\lambda\operatorname{Tr}(f_\lambda\rho_\lambda)$.
+Single-system pure geometry is $\bigsqcup_i\mathbb{CP}^{n_i-1}$, same-sector comparison is
+squared overlap, and different-sector comparison is zero. Classical and multiple sectors remain.
+Only after H13 restores C13 can the auxiliary two- and three-copy tensors be simultaneously
+ordinary. The exact original positive-filter family and unique readback remain (74.19)–(74.20):
+$u_{ik},g_{ijk}>0$, $\sum_{i,k}n_i\operatorname{Tr}(u_{ik}^{-1})=n^2$, with the same $\omega$.
+Auxiliary normalization does not make original $M,H_{\rm s}$ unital or $p$ trace preserving,
+or impose cross-block symmetry or commutation of weights. The optional standard calibration of
+Definitions 73.2, 73.10 and Theorems 73.11, 73.16 retains both original interfaces'
+four bilateral positive reset completions with their full-cone, same-joining and fixed-reset
+quantifiers, plus $\mathrm A_0:\tau_E L(\omega,1_A/n)=1$; together these force $u=g=I$.
+
+Process consumers retain [V] §75.7 and Atlas IV §§69.1–69.11. In the fixed spectator family
+$\Psi_\Phi=C_DT_\Phi C_D^{-1}$, $(T_\Phi X)_{jk}=\sum_i(\Phi_{ji}\otimes\mathrm{id}_k)X_{ik}$,
+branches must be block CP, with $F^a_{ji}=\sum_\ell K_{a,ji,\ell}^\dagger K_{a,ji,\ell}$ satisfying both aggregate budgets
+$\sum_{a,j}F^a_{ji}\le I_i$ and $\sum_{a,j}F^a_{ji}\otimes u_{jk}\le I_i\otimes u_{ik}$.
+Complete instruments require equality in both. Fix any output sector $j_0$, density $\sigma$ there,
+and $0<c\le1$, with $R(a)_j=\delta_{j,j_0}(\sum_i\operatorname{Tr}a_i)\sigma$ as in [V] §75.7.
+Simultaneous TP completion of $cR$ in that same family is equivalent to $u_{ik}=v_k$; a small
+positive $c$ alone is insufficient, and row consistency leaves $v_k,g$ uncalibrated. Branch probabilities use original output traces, conditional
+states require positive probability, and sequential composition and coarse graining stay in
+that fixed family. Deriving CP from events still needs the same event's product extensions
+and full-cone positivity on actual references at least as large as each input block's dimension
+for the Choi/Bell criterion. Unique Lüders updates still need the actual CP branch's effect to be
+the sharp projection and pointwise invariance of every certainly accepted normalized state;
+Hamiltonian evolution still needs the supplied continuous time-homogeneous reversible $*$-automorphism group, with physical time, energy units and $\hbar$ identified separately.
+
+白话说，完整候选仍保留三个系统的全部态、全部测试、全锥正的原接合与同一读回、原参考、两条实张成和全实重置关系；
+只是把每个纯参照的任意权重、任意长度比较，等价改写成按其确认效应面维数限定长度的所有等份纯态比较。
+这些比较保证各个最省误接受的要求能由同一个最小确认测试共同实现；随后仍须同一族至多三套 Jordan 生成框架、
+第一零表、同标产品第二零表，以及原 H13 对同一原混态的完整输出检测，才与原 PRE+C13 等价。
+Born 概率、全密度态、全效应和复射影纯态几何按原条件接回，权重、校准、共同重置补全、实际参考和过程前件均保留。
+两两端点互反是静态比较，混合相容保证共同测试，两者都不表示先后测量交换；所得是量词缩减，
+不是较少独立假设、通用有限实验清单或最少量子公理，也不完成整体量子起源、四份以上组合或无限维与动力学的来源任务。
