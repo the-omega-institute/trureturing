@@ -24,6 +24,10 @@ $$\forall n \in \mathbb{N},\; \operatorname{coeff}\left(n, \operatorname{source}
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/BalaTrinomialCoefficientIdentity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a351858-bala-coefficient-identity` (proved) by `D5/S1/Recurrence/BalaTrinomialCoefficientIdentity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a351858-bala-coefficient-identity","declaration_gid":"D5/S1/Recurrence/BalaTrinomialCoefficientIdentity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Peter Bala (2022). *OEIS A351858 finite-binomial coefficient identity*. URL: <https://oeis.org/A351858>.
