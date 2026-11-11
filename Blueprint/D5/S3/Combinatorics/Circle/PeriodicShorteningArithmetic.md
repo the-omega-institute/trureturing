@@ -115,5 +115,5 @@ This is a repository derivation of the conditional periodic-shortening construct
 - Truth anchor: `D5/S3/Combinatorics/Circle/PeriodicShorteningArithmetic.native_charge_alignment`
 - Truth anchor: `D5/S3/Combinatorics/Circle/PeriodicShorteningArithmetic.periodic_source_equations`
 - Dependency: [D5/S3/Combinatorics/Circle/GeometricSourceRelocation](GeometricSourceRelocation.md)
+- Dependency: [D5/S3/Combinatorics/Circle/Orbit/ZeroSumSubsets](Orbit/ZeroSumSubsets.md)
 - Dependency: [D5/S3/Combinatorics/Circle/TwoRunSource](TwoRunSource.md)
-- Dependency: [D5/S3/Combinatorics/Circle/ZeroSumSubsets](ZeroSumSubsets.md)

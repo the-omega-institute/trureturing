@@ -20,13 +20,12 @@ open private vMask rawBanks banks terminals word newBanks enlarged inventory ban
   label_charge literal_ear freshCut cut_bound from
   D5.S3.Combinatorics.Circle.FourNegative.OppositeFirstThirdMaximum.Source
 open private full from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakPaidV.Banks
-open private size sourceMod base newBase charge oldValue newValue chainLength chainStart
-  nextBase nextNewBase negatives chain_values source_totals new_base_bounds source_signs
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open private sourceMod charge nextBase nextNewBase chain_values source_totals new_base_bounds source_signs from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size base newBase oldValue newValue chainLength chainStart negatives)
 open private native_masses from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
 open private four_strip from D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule
 open private actual_nat_joint_iff from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
-open private insertAt from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (insertAt)
 
 private def heads (p q : Fin 4→ℤ) : Fin 3→ℤ :=
   ![p 0,p 0+q 0+p 1,p 0+q 0+p 1+q 1+p 2]
