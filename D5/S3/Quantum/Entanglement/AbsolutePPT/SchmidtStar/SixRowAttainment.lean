@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowAttainment
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowAttainment
    mirror-E: none(waiver:noncomputational)
    anchors: []
