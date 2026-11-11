@@ -70,6 +70,9 @@ def sideLaw (L : Realization signature.{u}) : Prop :=
     ∃ (x : p.R.Face → ZMod 2) (I J : Set p.V),
       (∃ f, x f = 1) ∧ (∃ f, x f = 0) ∧
       L.readout () p x = (fun e : p.G.edgeSet => if e.val ∈ q.edges then 1 else 0) ∧
+      (∃ r : p.G.Walk a a, (r = q ∨ r = q.reverse) ∧ ∀ d : p.G.Dart,
+        ((x (p.R.face d) = 1 ∧ x (p.R.face d.symm) = 0) ↔ d ∈ r.darts) ∧
+        ((x (p.R.face d) = 0 ∧ x (p.R.face d.symm) = 1) ↔ d ∈ r.reverse.darts)) ∧
       (∀ v, v ∉ q.support ↔ v ∈ I ∨ v ∈ J) ∧ Disjoint I J ∧
       (∀ d : p.G.Dart, d.fst ∉ q.support →
         (d.fst ∈ I ↔ x (p.R.face d) = 1) ∧ (d.fst ∈ J ↔ x (p.R.face d) = 0)) ∧

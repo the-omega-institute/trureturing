@@ -10,7 +10,7 @@ internal sealed class RotationFacesDocument : IScribeDocumentDefinition
         LibraryNoteRef.Create("D5/L/StatisticalMechanics/cimasoni2007dimers");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Signed-Euler-two actual-dart rotations have exact binary facial boundaries, connected edge-selected cycle sides and actual matching restrictions.",
+        "Signed-Euler-two actual-dart rotations have exact binary facial boundaries, connected edge-selected cycle sides, regional Euler identities and actual matching restrictions.",
         H("Actual facial boundaries and cycle sides"),
         Blocks(
             Paragraph(Text(
@@ -48,13 +48,20 @@ internal sealed class RotationFacesDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "Under exactly the same model hypotheses, fix any vertex a, actual closed walk p from a to a, and proof that p is a simple cycle. "
                         + "There exist a binary face function x and vertex sets I and J. Both a face with x equal to one and a face with x equal to zero exist. "
-                        + "B(x) is exactly the unordered-edge indicator of p. For every vertex v, v is outside p.support if and only if v belongs to I or J, and I and J are disjoint. "
+                        + "B(x) is exactly the unordered-edge indicator of p. There exists q equal to p or p.reverse such that, for every actual dart d, "
+                        + "the facial shore values (one,zero) are equivalent to d belonging to q.darts, and (zero,one) are equivalent to d belonging to q.reverse.darts. "
+                        + "This identifies both directed side boundaries with the actual cycle traversal or its reversal. The local proof uses the two actual cycle edges at each vertex and the rotor interval between them. "
+                        + "For every vertex v, v is outside p.support if and only if v belongs to I or J, and I and J are disjoint. "
                         + "For every actual dart starting outside p.support, its first vertex belongs to I exactly when its face has x-value one, and belongs to J exactly when that value is zero. "
                         + "There is no original G edge between a vertex of I and a vertex of J.")),
                     Paragraph(Text(
                         "For every pair (S,b) equal to (I,1) or (J,0), an actual subgraph H of G exists. "
                         + "Its vertex set is the union of p.support and S. For every original dart d, H contains the edge of d exactly when it is a cycle edge or both facial shores have x-value b. "
-                        + "H is connected. This is an edge-selected subgraph: a chord on the opposite facial side is excluded even when both its endpoints lie on the cycle. "
+                        + "H is connected. Its signed Euler expression card(H.verts) minus card(H.coe.edgeSet) plus card of the faces with x-value b equals one. "
+                        + "Equivalently, card(S) minus the number of selected edges outside the actual cycle edge set plus that same face count equals one. "
+                        + "Every subtraction in both identities takes place in the integers. The proof injects functions supported on each proper facial side into the cycle space of its actual edge-selected graph. "
+                        + "The existing connected cycle-rank theorem gives two inequalities; the global signed Euler equation and the exact vertex and edge union/intersection counts force equality for both sides. "
+                        + "This is an edge-selected subgraph: a chord on the opposite facial side is excluded even when both its endpoints lie on the cycle. "
                         + "The proof connects each off-cycle vertex to the cycle along an original graph walk until it first reaches the cycle, then uses the actual cycle subgraph.")),
                     Paragraph(Text(
                         "Let M be any subgraph of the actual graph G induced on the vertices outside p.support, and suppose M is a perfect matching. "
@@ -66,6 +73,6 @@ internal sealed class RotationFacesDocument : IScribeDocumentDefinition
             Paragraph(Text(
                 "The two facial subsets are x inverse-image of one and x inverse-image of zero; binary values make them complementary and both are nonempty. "
                 + "These results establish face-to-cycle exactness, actual side separation, connected edge-selected regions and matching restriction. "
-                + "They do not establish either signed regional Euler identity, compatibility of the directed boundary with p or its reversal, or existence of the face-odd and nice-cycle-odd orientation. "
+                + "They do not establish existence of the face-odd and nice-cycle-odd orientation. "
                 + "Those are necessary remaining statements for the complete orientation prerequisite. Geometric embedding correspondence, matching-sign transport, the Pfaffian expansion, Cayley's identity, nonnegative weights, rational bit complexity and general bipartite counting complexity also remain outside these results."))), []));
 }

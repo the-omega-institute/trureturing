@@ -783,6 +783,192 @@ private theorem region_internal_euler [Fintype V] [DecidableEq V]
   simp only [Nat.card_coe_set_eq] at hE ⊢
   omega
 
+private theorem two_cuts {A : Type*} [Finite A] (r : Equiv.Perm A) (l : A → ZMod 2)
+    (a b : A) (hab : a ≠ b) (hc : r.SameCycle a b)
+    (hs : ∀ t, r.SameCycle t a → t ≠ a → t ≠ b → l (r t) = l t) : l (r a) = l b := by
+  classical
+  have hex := hc.exists_nat_pow_eq
+  let n := Nat.find hex
+  have hn : (r ^ n) a = b := Nat.find_spec hex
+  have hmin (k : ℕ) (hk : k < n) : (r ^ k) a ≠ b := Nat.find_min hex hk
+  have hna : n ≠ 0 := by
+    intro h
+    have hh := hn
+    change Nat.find hex = 0 at h
+    change (r ^ Nat.find hex) a = b at hh
+    rw [h,pow_zero,Equiv.Perm.one_apply] at hh
+    exact hab hh
+  have hno (k : ℕ) (hk : 0 < k) (hkn : k < n) : (r ^ k) a ≠ a := by
+    intro he
+    apply hmin (n-k) (by omega)
+    calc
+      (r ^ (n-k)) a = (r ^ (n-k)) ((r ^ k) a) := by rw [he]
+      _ = (r ^ n) a := by rw [← Equiv.Perm.mul_apply, ← pow_add, Nat.sub_add_cancel (by omega)]
+      _ = b := hn
+  have hi : ∀ k, 0 < k → k ≤ n → l ((r ^ k) a) = l (r a) := by
+    intro k
+    induction k with
+    | zero => omega
+    | succ k ih =>
+      intro hk hkn
+      by_cases hz : k = 0
+      · subst k; simp
+      · rw [pow_succ',Equiv.Perm.mul_apply,hs _ ((Equiv.Perm.sameCycle_pow_left).mpr (.refl _ _)) (hno k (by omega) (by omega)) (hmin k (by omega))]
+        exact ih (by omega) (by omega)
+  exact (hi n (by omega) le_rfl).symm.trans (congrArg l hn)
+
+private theorem cycle_turn [Fintype V] [DecidableEq V] [DecidableRel G.Adj]
+    {a : V} (p : G.Walk a a) (hp : p.IsCycle)
+    (x : R.Face → ZMod 2) (hx : R.boundary x = fun e : G.edgeSet => if e.val ∈ p.edges then 1 else 0)
+    (d e : G.Dart) (hd : d.edge ∈ p.edges) (he : e.edge ∈ p.edges)
+    (hde : d.snd = e.fst) (hne : d.edge ≠ e.edge) : x (R.face d) = x (R.face e) := by
+  classical
+  have hne' : d.symm ≠ e := fun h => hne (by rw [← h,Dart.edge_symm])
+  have hsame : R.rotor.SameCycle d.symm e := (R.same_vertex _ _).mpr hde
+  have hmarks (t : G.Dart) (ht : t.fst = d.snd) (htp : t.edge ∈ p.edges) : t = d.symm ∨ t = e := by
+    have hn : d.fst ≠ e.snd := by
+      intro hh
+      apply hne
+      change s(d.fst,d.snd) = s(e.fst,e.snd)
+      rw [← hde,hh,Sym2.eq_swap]
+    have hv : d.snd ∈ p.support := cycle_edge_endpoint p d.symm (by simpa using hd)
+    have hcard := hp.ncard_neighborSet_toSubgraph_eq_two hv
+    have hdmem : d.fst ∈ p.toSubgraph.neighborSet d.snd := by
+      change p.toSubgraph.Adj d.snd d.fst
+      exact p.adj_toSubgraph_iff_mem_edges.mpr (by simpa [Dart.edge,Sym2.eq_swap] using hd)
+    have hemem : e.snd ∈ p.toSubgraph.neighborSet d.snd := by
+      change p.toSubgraph.Adj d.snd e.snd
+      rw [hde]
+      exact p.adj_toSubgraph_iff_mem_edges.mpr he
+    have hset : ({d.fst,e.snd} : Set V) = p.toSubgraph.neighborSet d.snd := by
+      apply Set.eq_of_subset_of_ncard_le (ht := Set.toFinite _)
+      · intro v hv
+        simp only [Set.mem_insert_iff,Set.mem_singleton_iff] at hv
+        rcases hv with rfl | rfl
+        · exact hdmem
+        · exact hemem
+      · rw [Set.ncard_pair hn,hcard]
+    have htmem : t.snd ∈ p.toSubgraph.neighborSet d.snd := by
+      change p.toSubgraph.Adj d.snd t.snd
+      rw [← ht]
+      exact p.adj_toSubgraph_iff_mem_edges.mpr htp
+    rw [← hset] at htmem
+    simp only [Set.mem_insert_iff,Set.mem_singleton_iff] at htmem
+    rcases htmem with hh | hh
+    · exact Or.inl (Dart.ext _ _ (Prod.ext ht hh))
+    · exact Or.inr (Dart.ext _ _ (Prod.ext (ht.trans hde) hh))
+  have hlabel := two_cuts R.rotor (fun t => x (R.face t)) d.symm e hne' hsame (by
+    intro t htc htd hte
+    have ht : t.fst = d.snd := (R.same_vertex _ _).mp htc
+    have htp : t.edge ∉ p.edges := by
+      intro htp
+      exact (hmarks t ht htp).elim htd hte
+    have hb := congrFun hx ⟨t.edge,t.edge_mem⟩
+    rw [R.boundary_dart,ite_eq_right htp] at hb
+    have hh : x (R.face t) = x (R.face t.symm) :=
+      (add_eq_zero_iff_eq_neg.mp hb).trans (ZModModule.neg_eq_self _)
+    have hs := congrArg x (R.face_step t.symm)
+    change x (R.face (R.rotor t)) = x (R.face t.symm) at hs
+    exact hs.trans hh.symm)
+  have hs := congrArg x (R.face_step d)
+  change x (R.face (R.rotor d.symm)) = x (R.face d) at hs
+  exact hs.symm.trans hlabel
+
+private theorem cycle_boundary_directed [Fintype V] [DecidableEq V] [DecidableRel G.Adj]
+    {a : V} (p : G.Walk a a) (hp : p.IsCycle)
+    (x : R.Face → ZMod 2) (hx : R.boundary x = fun e : G.edgeSet => if e.val ∈ p.edges then 1 else 0) :
+    ∃ b : ZMod 2, ∀ d ∈ p.darts,
+      x (R.face d) = b ∧ x (R.face d.symm) = 1 + b := by
+  classical
+  have hpair : p.darts.Pairwise (fun d e => d.edge ≠ e.edge) := by
+    have hh := hp.isTrail.edges_nodup
+    rw [p.edges_eq_map_darts] at hh
+    exact List.pairwise_map.mp hh
+  have hchain : p.darts.IsChain (fun d e => x (R.face d) = x (R.face e)) := by
+    apply List.isChain_iff_getElem.mpr
+    intro i hi
+    apply R.cycle_turn p hp x hx
+    · rw [p.edges_eq_map_darts]
+      exact List.mem_map.mpr ⟨_, List.getElem_mem (by omega), rfl⟩
+    · rw [p.edges_eq_map_darts]
+      exact List.mem_map.mpr ⟨_, List.getElem_mem hi, rfl⟩
+    · exact List.isChain_iff_getElem.mp p.isChain_dartAdj_darts i hi
+    · exact List.isChain_iff_getElem.mp hpair.isChain i hi
+  have hm : (p.darts.map (fun d => x (R.face d))).IsChain (· = ·) :=
+    (List.isChain_map _).mpr hchain
+  have hconst : ∃ b : ZMod 2, ∀ d ∈ p.darts, x (R.face d) = b := by
+    cases p with
+    | nil => exact (hp.ne_nil rfl).elim
+    | @cons a b c hab q =>
+      let d : G.Dart := ⟨(a,b),hab⟩
+      refine ⟨x (R.face d), fun e he => ?_⟩
+      have hr := List.isChain_eq_iff_eq_replicate.mp hm (x (R.face d)) (by simp [Walk.darts_cons,d])
+      have hh : x (R.face e) ∈ ((Walk.cons hab q).darts.map (fun d => x (R.face d))) :=
+        List.mem_map.mpr ⟨e,he,rfl⟩
+      rw [hr] at hh
+      exact (List.mem_replicate.mp hh).2
+  obtain ⟨b,hb⟩ := hconst
+  refine ⟨b, fun d hd => ⟨hb d hd,?_⟩⟩
+  have he : d.edge ∈ p.edges := by rw [p.edges_eq_map_darts]; exact List.mem_map.mpr ⟨d,hd,rfl⟩
+  have hh := congrFun hx ⟨d.edge,d.edge_mem⟩
+  rw [R.boundary_dart,ite_eq_left he,hb d hd] at hh
+  calc
+    x (R.face d.symm) = (b + x (R.face d.symm)) + b := by rw [add_comm b,add_assoc,ZModModule.add_self,add_zero]
+    _ = 1 + b := by rw [hh]
+
+
+private theorem cycle_boundary_walk [Fintype V] [DecidableEq V] [DecidableRel G.Adj]
+    {a : V} (p : G.Walk a a) (hp : p.IsCycle)
+    (x : R.Face → ZMod 2) (hx : R.boundary x = fun e : G.edgeSet => if e.val ∈ p.edges then 1 else 0) :
+    ∃ q : G.Walk a a, (q = p ∨ q = p.reverse) ∧ ∀ d : G.Dart,
+      ((x (R.face d) = 1 ∧ x (R.face d.symm) = 0) ↔ d ∈ q.darts) ∧
+      ((x (R.face d) = 0 ∧ x (R.face d.symm) = 1) ↔ d ∈ q.reverse.darts) := by
+  classical
+  have he (d : G.Dart) : d.edge ∈ p.edges ↔ d ∈ p.darts ∨ d.symm ∈ p.darts := by
+    rw [p.edges_eq_map_darts]
+    constructor
+    · intro hd
+      obtain ⟨e,he,hed⟩ := List.mem_map.mp hd
+      rcases (dart_edge_eq_iff e d).mp hed with h | h
+      · exact Or.inl (h ▸ he)
+      · exact Or.inr (h ▸ he)
+    · rintro (hd | hd)
+      · exact List.mem_map.mpr ⟨d,hd,rfl⟩
+      · exact List.mem_map.mpr ⟨d.symm,hd,d.edge_symm⟩
+  have hdiff (d : G.Dart) (h1 : x (R.face d) = 1) (h0 : x (R.face d.symm) = 0) : d.edge ∈ p.edges := by
+    by_contra hn
+    have hh := congrFun hx ⟨d.edge,d.edge_mem⟩
+    rw [R.boundary_dart,h1,h0,ite_eq_right hn] at hh
+    exact (one_ne_zero : (1 : ZMod 2) ≠ 0) (by simpa using hh)
+  obtain ⟨b,hb⟩ := R.cycle_boundary_directed p hp x hx
+  have hq : ∃ q : G.Walk a a, (q = p ∨ q = p.reverse) ∧
+      ∀ d, (x (R.face d) = 1 ∧ x (R.face d.symm) = 0) ↔ d ∈ q.darts := by
+    rcases binary_zero_or_one b with rfl | rfl
+    · refine ⟨p.reverse,Or.inr rfl,fun d => ?_⟩
+      rw [Walk.mem_darts_reverse]
+      constructor
+      · rintro ⟨h1,h0⟩
+        rcases (he d).mp (hdiff d h1 h0) with hd | hd
+        · exact (one_ne_zero (h1.symm.trans (hb d hd).1)).elim
+        · exact hd
+      · intro hd
+        have hh := hb d.symm hd
+        simpa only [Dart.symm_symm,add_zero] using ⟨hh.2,hh.1⟩
+    · refine ⟨p,Or.inl rfl,fun d => ?_⟩
+      constructor
+      · rintro ⟨h1,h0⟩
+        rcases (he d).mp (hdiff d h1 h0) with hd | hd
+        · exact hd
+        · exact (zero_ne_one (h0.symm.trans (hb d.symm hd).1)).elim
+      · intro hd
+        have hh := hb d hd
+        simpa only [ZModModule.add_self] using hh
+  obtain ⟨q,hq,hmain⟩ := hq
+  refine ⟨q,hq,fun d => ⟨hmain d,?_⟩⟩
+  rw [Walk.mem_darts_reverse,← hmain d.symm,Dart.symm_symm,and_comm]
+
+
+
 /-- Actual simple-cycle sides have connected edge-selected regions, signed regional
 Euler characteristic one, and restrictions of every actual complement matching. -/
 theorem cycle_face_sides [Fintype V] [DecidableEq V] [DecidableRel G.Adj]
@@ -793,6 +979,9 @@ theorem cycle_face_sides [Fintype V] [DecidableEq V] [DecidableRel G.Adj]
     ∃ (x : R.Face → ZMod 2) (I J : Set V),
       (∃ f, x f = 1) ∧ (∃ f, x f = 0) ∧
       R.boundary x = (fun e : G.edgeSet => if e.val ∈ p.edges then 1 else 0) ∧
+      (∃ q : G.Walk a a, (q = p ∨ q = p.reverse) ∧ ∀ d : G.Dart,
+        ((x (R.face d) = 1 ∧ x (R.face d.symm) = 0) ↔ d ∈ q.darts) ∧
+        ((x (R.face d) = 0 ∧ x (R.face d.symm) = 1) ↔ d ∈ q.reverse.darts)) ∧
       (∀ v, v ∉ p.support ↔ v ∈ I ∨ v ∈ J) ∧ Disjoint I J ∧
       (∀ d : G.Dart, d.fst ∉ p.support →
         (d.fst ∈ I ↔ x (R.face d) = 1) ∧ (d.fst ∈ J ↔ x (R.face d) = 0)) ∧
@@ -836,7 +1025,7 @@ theorem cycle_face_sides [Fintype V] [DecidableEq V] [DecidableRel G.Adj]
     have hh := (haL d).mpr (Or.inl (by rw [hd]; exact p.mem_edges_toSubgraph.mp he))
     change d.edge ∈ L.edgeSet at hh
     simpa only [hd] using hh
-  refine ⟨x,I,J,h1,h0,hx,hpart,hdis,hlabels,hnc,?_,hmatch⟩
+  refine ⟨x,I,J,h1,h0,hx,R.cycle_boundary_walk p hp x hx,hpart,hdis,hlabels,hnc,?_,hmatch⟩
   intro S b hb
   rcases hb with ⟨rfl,rfl⟩ | ⟨rfl,rfl⟩
   · exact ⟨H,hvH,haH,hH,hE.1,hint _ (Or.inl rfl) H hvH (hsubset H 1 haH) _ hE.1⟩
