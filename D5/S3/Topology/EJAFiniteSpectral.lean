@@ -48,10 +48,10 @@ private def jpow (x : J) : ℕ → J
   | (n + 1) => x * jpow x n
 
 omit [IsCommJordan J] in
-@[simp] theorem jpow_zero (x : J) : jpow x 0 = x := rfl
+@[simp] private theorem jpow_zero (x : J) : jpow x 0 = x := rfl
 
 omit [IsCommJordan J] in
-@[simp] theorem jpow_succ (x : J) (n : ℕ) : jpow x (n + 1) = x * jpow x n := rfl
+@[simp] private theorem jpow_succ (x : J) (n : ℕ) : jpow x (n + 1) = x * jpow x n := rfl
 
 omit [IsCommJordan J] in
 private theorem jpow_succ' (x : J) (n : ℕ) : jpow x (n + 1) = jpow x n * x := by
@@ -95,20 +95,20 @@ private theorem commuteAt_of_cm {x : J} {i : ℕ} (h : ∀ w, cm x 0 i w = 0) : 
 
 private theorem cm_cyclic (x : J) (i j : ℕ) (hij : jpow x i * jpow x j = jpow x (i + j + 1)) (w : J) :
     cm x j (i + 1) w + cm x 0 (i + j + 1) w + cm x i (j + 1) w = 0 := by
+  let B (b c : J) := b * (c * w) - c * (b * w)
   have h := congrArg (fun f : AddMonoid.End J => f w)
-    (two_nsmul_lie_lmul_lmul_add_add_eq_zero (jpow x 0) (jpow x i) (jpow x j))
+    (two_nsmul_lie_lmul_lmul_add_add_eq_zero x (jpow x i) (jpow x j))
   simp only [two_smul, Ring.lie_def] at h
-  simp only [jpow_zero] at h
-  rw [show x * jpow x i = jpow x (i + 1) from rfl,
-    show jpow x j * x = jpow x (j + 1) from jpow_succ' x j |>.symm,
-    hij] at h
-  change (cm x 0 (i + j + 1) w + cm x i (j + 1) w + cm x j (i + 1) w) +
-    (cm x 0 (i + j + 1) w + cm x i (j + 1) w + cm x j (i + 1) w) = 0 at h
-  have hz : (2 : ℝ) • (cm x 0 (i + j + 1) w +
-      cm x i (j + 1) w + cm x j (i + 1) w) = 0 := by
+  change (B x (jpow x i * jpow x j) + B (jpow x i) (jpow x j * x) +
+    B (jpow x j) (x * jpow x i)) +
+    (B x (jpow x i * jpow x j) + B (jpow x i) (jpow x j * x) +
+    B (jpow x j) (x * jpow x i)) = 0 at h
+  have hz : (2 : ℝ) • (B x (jpow x i * jpow x j) +
+      B (jpow x i) (jpow x j * x) + B (jpow x j) (x * jpow x i)) = 0 := by
     simpa only [two_smul] using h
   have he := (smul_eq_zero.mp hz).resolve_left (by norm_num)
-  simpa only [add_comm, add_left_comm, add_assoc] using he
+  rw [hij, ← jpow_succ' x j, ← jpow_succ x i] at he
+  simpa only [B, cm, jpow_zero, add_comm, add_left_comm, add_assoc] using he
 
 private theorem cm_eq_zero (x : J) (N : ℕ) : ∀ i j : ℕ, i + j ≤ N → ∀ w : J, cm x i j w = 0 := by
   induction N with
@@ -262,12 +262,12 @@ private noncomputable def jeval (x : J) : Polynomial ℝ →ₗ[ℝ] J where
     exact Finset.sum_congr rfl fun n _ => (mul_smul r _ _)
 
 omit [IsCommJordan J] [IsScalarTower ℝ J J] in
-@[simp] theorem jeval_monomial (x : J) (n : ℕ) (a : ℝ) :
+@[simp] private theorem jeval_monomial (x : J) (n : ℕ) (a : ℝ) :
     jeval x (monomial n a) = a • jpow x n :=
   Polynomial.sum_monomial_index a (fun n a => a • jpow x n) (zero_smul _ _)
 
 omit [IsCommJordan J] [IsScalarTower ℝ J J] in
-@[simp] theorem jeval_one (x : J) : jeval x 1 = x := by
+@[simp] private theorem jeval_one (x : J) : jeval x 1 = x := by
   rw [← C_1, ← monomial_zero_left, jeval_monomial, one_smul, jpow_zero]
 
 omit [IsCommJordan J] in
