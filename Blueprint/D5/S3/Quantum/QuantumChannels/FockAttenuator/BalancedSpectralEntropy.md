@@ -62,7 +62,7 @@ Lean statement: `D5/S3/Quantum/QuantumChannels/FockAttenuator/BalancedSpectralEn
 
 *Commentary.*
 
-For every density rho the preceding floor holds with pointMassEnvironment 1. This specializes the odd-occupation theorem and is consumed by both minimization theorems in BalancedAttainment. It supplies no separate escape witness.
+For every density rho the preceding floor holds with pointMassEnvironment 1. This specializes the odd-occupation theorem and is consumed by both minimization theorems in BalancedAttainment. The occupation one satisfies the oddness hypothesis.
 
 **Theorem 1.5 (A half-projection polynomial gives exact entropy).**
 

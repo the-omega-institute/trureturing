@@ -22,7 +22,7 @@ Lean statement: `D5/S3/Quantum/QuantumChannels/FockAttenuator/BalancedHalfCap.ba
 
 *Commentary.*
 
-The real parameter one half belongs to the closed interval from zero to one. This proof is consumed as the admissibility argument of the actual beamSplitter and attenuator throughout these modules. It is a scalar helper and supplies no independent escape witness.
+The real parameter one half belongs to the closed interval from zero to one. This proof is consumed as the admissibility argument of the actual beamSplitter and attenuator throughout these modules. This follows from the rational inequalities 0 <= 1/2 and 1/2 <= 1.
 
 **Theorem 1.2 (The actual completed output is skew).**
 
