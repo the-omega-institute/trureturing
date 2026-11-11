@@ -87,13 +87,13 @@ theorem actual_higher_mass_response {X s : ℝ} (hX : exp 2 ≤ X)
       rw [show (2 : ℝ) = 1 + 1 by norm_num, exp_add]
       ring
     nlinarith
-  let «λ» := referencePrice X
-  let ηm := (1 - s) * «λ»
-  let ηp := (1 + s) * «λ»
-  have h«λ» : 0 < «λ» := one_div_pos.mpr (mul_pos hX0 hL0)
-  have hm : 0 < ηm := mul_pos (by linarith) h«λ»
-  have hp : 0 < ηp := mul_pos (by linarith) h«λ»
-  have hmp : ηm ≤ ηp := mul_le_mul_of_nonneg_right (by linarith) h«λ».le
+  let lam := referencePrice X
+  let ηm := (1 - s) * lam
+  let ηp := (1 + s) * lam
+  have hlam : 0 < lam := one_div_pos.mpr (mul_pos hX0 hL0)
+  have hm : 0 < ηm := mul_pos (by linarith) hlam
+  have hp : 0 < ηp := mul_pos (by linarith) hlam
+  have hmp : ηm ≤ ηp := mul_le_mul_of_nonneg_right (by linarith) hlam.le
   let Cm := coordinates (strictInteger ηm)
   let Cp := coordinates (strictInteger ηp)
   let C := Cm \ Cp
@@ -116,7 +116,7 @@ theorem actual_higher_mass_response {X s : ℝ} (hX : exp 2 ≤ X)
       exact hcp ((canonical_mem hp).mpr ⟨hpp, hj, hh⟩)
     exact ⟨hpp, hj, le_of_not_gt (fun h => hbp ((cutoff_occupancy hj hp hp2).mpr h)),
       (cutoff_occupancy hj hm hp2).mp hbm⟩
-  have hηm : ηm = (1 - s) / (X * log X) := by dsimp [ηm, «λ», referencePrice]; ring
+  have hηm : ηm = (1 - s) / (X * log X) := by dsimp [ηm, lam, referencePrice]; ring
   have hJ (j : ℕ) (hj : j ∈ J) : 2 ≤ j ∧ 2 < cutoff j ((1 - s) / (X * log X)) := by
     obtain ⟨⟨p, k⟩, hc, hk⟩ := mem_image.mp hj
     dsimp at hk
@@ -160,7 +160,7 @@ theorem actual_higher_mass_response {X s : ℝ} (hX : exp 2 ≤ X)
   have hmovement (j : ℕ) (hj : j ∈ J) :
       cutoff j ηm - cutoff j ηp ≤ 9 * s * (cutoff j ηm / j) := by
     simpa [ηm, ηp, div_eq_mul_inv, mul_assoc] using
-      cutoff_movement (hJ j hj).1 h«λ» hs hs2
+      cutoff_movement (hJ j hj).1 hlam hs hs2
   have hmoveSum : (∑ j ∈ J, cutoff j ηm - cutoff j ηp) ≤ 333 * s * sqrt X := by
     have hh := sum_le_sum hmovement
     have hn : 0 ≤ 9 * s := by positivity
@@ -173,7 +173,7 @@ theorem actual_higher_mass_response {X s : ℝ} (hX : exp 2 ≤ X)
     simp only [sum_const, nsmul_eq_mul, mul_one]
     have hh := add_le_add hmoveSum hcardJ
     have hm := mul_le_mul_of_nonneg_right hh hL0.le
-    nlinarith
+    convert hm using 1 <;> ring
   rw [hmass]
   refine ⟨sum_nonneg (fun c hc => ?_), ?_⟩
   · exact (hC c.1 c.2 hc).1.log_pos.le

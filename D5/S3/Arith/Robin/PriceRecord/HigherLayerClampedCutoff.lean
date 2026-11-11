@@ -77,24 +77,24 @@ theorem log_price_ratio_le {s : ℝ} (hs : 0 < s) (hs2 : s ≤ 1 / 2) :
   rw [log_inv] at h2
   have hi : (1 - s)⁻¹ - 1 ≤ 2 * s := by
     apply (sub_le_iff_le_add).mpr
-    rw [inv_le_iff₀ hm]
-    nlinarith only [mul_nonneg hs.le (show 0 ≤ 1 - 2 * s by linarith)]
+    field_simp [hm.ne']
+    nlinarith [mul_nonneg hs.le (show 0 ≤ 1 - 2 * s by linarith)]
   rw [log_div hp.ne' hm.ne']
   linarith
 
 /-- Movement for a relative price change. The clamped endpoint is included. -/
-theorem cutoff_movement {j : ℕ} (hj : 2 ≤ j) {«λ» s : ℝ}
-    (h«λ» : 0 < «λ») (hs : 0 < s) (hs2 : s ≤ 1 / 2) :
-    cutoff j ((1 - s) * «λ») - cutoff j ((1 + s) * «λ») ≤
-      9 * s * cutoff j ((1 - s) * «λ») / j := by
-  let a := cutoff j ((1 + s) * «λ»)
-  let b := cutoff j ((1 - s) * «λ»)
-  have hm : 0 < (1 - s) * «λ» := mul_pos (by linarith) h«λ»
-  have hp : 0 < (1 + s) * «λ» := mul_pos (by linarith) h«λ»
+theorem cutoff_movement {j : ℕ} (hj : 2 ≤ j) {lam s : ℝ}
+    (hlam : 0 < lam) (hs : 0 < s) (hs2 : s ≤ 1 / 2) :
+    cutoff j ((1 - s) * lam) - cutoff j ((1 + s) * lam) ≤
+      9 * s * cutoff j ((1 - s) * lam) / j := by
+  let a := cutoff j ((1 + s) * lam)
+  let b := cutoff j ((1 - s) * lam)
+  have hm : 0 < (1 - s) * lam := mul_pos (by linarith) hlam
+  have hp : 0 < (1 + s) * lam := mul_pos (by linarith) hlam
   have ha := cutoff_spec hj hp
   have hb := cutoff_spec hj hm
   have hab : a ≤ b := cutoff_antitone hj hm hp
-    (mul_le_mul_of_nonneg_right (by linarith) h«λ».le)
+    (mul_le_mul_of_nonneg_right (by linarith) hlam.le)
   have ha2 : 2 ≤ a := ha.1
   have hb2 : 2 ≤ b := hb.1
   have hj0 : (0 : ℝ) < j := by exact_mod_cast (show 0 < j by omega)
@@ -104,7 +104,7 @@ theorem cutoff_movement {j : ℕ} (hj : 2 ≤ j) {«λ» s : ℝ}
     rw [hb0, ha0, sub_self]
     positivity
   have hbgt : 2 < b := lt_of_le_of_ne hb2 (Ne.symm hb0)
-  have hroot : beta j b = (1 - s) * «λ» := hb.2.2.1 hbgt
+  have hroot : beta j b = (1 - s) * lam := hb.2.2.1 hbgt
   have hslope := log_beta_drop hj ha2 hab
   have hratio : beta j a / beta j b ≤ (1 + s) / (1 - s) := by
     rw [hroot]
@@ -120,9 +120,14 @@ theorem cutoff_movement {j : ℕ} (hj : 2 ≤ j) {«λ» s : ℝ}
   have hlogab : log (b / a) = log b - log a := log_div (by linarith) (by linarith)
   rw [hlogab] at hbound
   have hsmall : (b - a) / b ≤ log b - log a := by
-    have he : a / b - 1 = -(b - a) / b := by ring
+    have he : a / b - 1 = -(b - a) / b := by
+      field_simp
+      ring
     rw [he] at hround
-    linarith
+    have hbpos : 0 < b := by linarith
+    have hn := neg_le_neg hround
+    rw [neg_sub] at hn
+    convert hn using 1 <;> field_simp [hbpos.ne'] <;> ring
   have hh := mul_le_mul_of_nonneg_left hsmall (show 0 ≤ (j : ℝ) / 3 by positivity)
   change b - a ≤ 9 * s * b / j
   apply (le_div_iff₀ hj0).mpr
@@ -135,7 +140,8 @@ theorem two_mul_index_le_two_pow {j : ℕ} (hj : 2 ≤ j) : 2 * j ≤ 2 ^ j := b
   | base => norm_num
   | succ j hj ih =>
     rw [pow_succ]
-    nlinarith [Nat.pow_pos (by norm_num : 0 < 2) j]
+    have hp : 0 < (2 : ℕ) ^ j := Nat.pow_pos (by norm_num)
+    nlinarith
 
 /-- Uniform root bound and active-layer bound. j is not fixed as X grows. -/
 theorem active_root_bounds {X s : ℝ} (hX : exp 2 ≤ X)
@@ -152,6 +158,7 @@ theorem active_root_bounds {X s : ℝ} (hX : exp 2 ≤ X)
   have hη : 0 < (1 - s) / (X * log X) :=
     div_pos (by linarith) (mul_pos hX0 hL0)
   have hu : 2 < u := hactive
+  have hu0 : 0 < u := by linarith
   have hr := (cutoff_spec hj hη).2.2.1 hactive
   have hβ := beta_le_inv_pow_log hu.le (by omega : 1 ≤ j)
   have hhalf : 1 / (2 * X * log X) ≤ (1 - s) / (X * log X) := by
@@ -161,6 +168,7 @@ theorem active_root_bounds {X s : ℝ} (hX : exp 2 ≤ X)
   have hbase : u ^ j * log u ≤ 2 * X * log X := by
     rw [hr] at hβ
     have h := hhalf.trans hβ
+    have huL : 0 < log u := log_pos (by linarith)
     exact (one_div_le_one_div (by positivity : 0 < 2 * X * log X)
       (by positivity : 0 < u ^ j * log u)).mp h
   have hpow : u ^ j ≤ 2 * j * X := by

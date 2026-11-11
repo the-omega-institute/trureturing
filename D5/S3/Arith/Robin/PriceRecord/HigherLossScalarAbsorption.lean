@@ -117,7 +117,15 @@ theorem scalar_absorption {X E R : ℝ} (hX : 1 < X) (hE : 0 ≤ E) (hR0 : 0 ≤
     exact hR
   have htwo : R ≤ 2 * a ^ 2 * Z ^ 2 + 2 * d * Z * Y + 4 / X := by
     change a * (T / X) * R ≤ 1 / 4 * R at hlin
-    nlinarith only [hnorm, hYoung, hlin]
+    have hm : R ≤ R / 4 + a ^ 2 * Z ^ 2 + 1 / 4 * R + d * Z * Y + 2 / X :=
+      hnorm.trans (add_le_add (add_le_add (add_le_add hYoung hlin) le_rfl) le_rfl)
+    let M := a ^ 2 * Z ^ 2 + d * Z * Y + 2 / X
+    have he : R / 4 + a ^ 2 * Z ^ 2 + 1 / 4 * R + d * Z * Y + 2 / X = R / 2 + M := by
+      dsimp [M]
+      ring
+    rw [he] at hm
+    have hh : R ≤ 2 * M := by linarith only [hm]
+    exact hh.trans_eq (by dsimp [M]; ring)
   have hsecond : 2 * Z * Y ≤ Z ^ 2 + Y ^ 2 := by nlinarith only [sq_nonneg (Z - Y)]
   have hd0 : 0 ≤ d := by norm_num [d]
   have hsecondD := mul_le_mul_of_nonneg_left hsecond hd0
@@ -128,7 +136,7 @@ theorem scalar_absorption {X E R : ℝ} (hX : 1 < X) (hE : 0 ≤ E) (hR0 : 0 ≤
   have hYbound : Y ^ 2 ≤ 1 / X := by
     rw [hY2]
     apply (div_le_div_iff₀ (mul_pos hX0 hs0) hX0).mpr
-    exact mul_le_mul_of_nonneg_right hlog hX0.le
+    simpa only [one_mul, mul_comm X (sqrt X)] using mul_le_mul_of_nonneg_right hlog hX0.le
   have hT2 : T ^ 2 ≤ 2 * E ^ 2 + 50 * X := by
     dsimp [T]
     nlinarith only [sq_nonneg (E - 5 * sqrt X), sq_sqrt hX0.le]
@@ -150,7 +158,7 @@ theorem scalar_absorption {X E R : ℝ} (hX : 1 < X) (hE : 0 ≤ E) (hR0 : 0 ≤
   have hqZ := mul_le_mul_of_nonneg_left hZbound hq
   have hdY := mul_le_mul_of_nonneg_left hYbound hd0
   have hb : R ≤ 2 * q * (E ^ 2 / X ^ (5 / 2 : ℝ)) + (50 * q + d + 4) * (1 / X) := by
-    nlinarith only [habsorb, hqZ, hdY]
+    exact (habsorb.trans (add_le_add (add_le_add hqZ hdY) (le_refl (4 / X)))).trans_eq (by ring)
   have hfirst : 2 * q ≤ finalConstant := by norm_num [finalConstant, q, a, d]
   have hlast : 50 * q + d + 4 ≤ finalConstant := by norm_num [finalConstant, q, a, d]
   have hm1 := mul_le_mul_of_nonneg_right hfirst

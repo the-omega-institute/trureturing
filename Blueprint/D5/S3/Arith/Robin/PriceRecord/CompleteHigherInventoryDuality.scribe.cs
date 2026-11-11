@@ -84,7 +84,7 @@ internal sealed class CompleteHigherInventoryDualityDocument : IScribeDocumentDe
                 DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/CompleteHigherInventoryDuality.finite_dual_abs"),
                 H("finite dual abs"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Complete Lean statement: theorem finite_dual_abs {ι : Type*} (S : Finset ι) (b w : ι → ℝ) (i : ι → Bool) (hw : ∀ c ∈ S, 0 ≤ w c) {«λ» t : ℝ} (ht : 0 < t) : let F := fun η => ∑ c ∈ S, max (b c - η * w c) 0 let h := fun η => ∑ c ∈ S, if 0 < b c - η * w c then w c else 0 let H := ∑ c ∈ S, if i c then w c else 0 let B := ∑ c ∈ S, if i c then b c else 0 let R := F «λ» - B + «λ» * H |H - h «λ»| ≤ R / t + h («λ» - t) - h («λ» + t)"))),
+                Blocks(Paragraph(Text("Complete Lean statement: theorem finite_dual_abs {ι : Type*} (S : Finset ι) (b w : ι → ℝ) (i : ι → Bool) (hw : ∀ c ∈ S, 0 ≤ w c) {lam t : ℝ} (ht : 0 < t) : let F := fun η => ∑ c ∈ S, max (b c - η * w c) 0 let h := fun η => ∑ c ∈ S, if 0 < b c - η * w c then w c else 0 let H := ∑ c ∈ S, if i c then w c else 0 let B := ∑ c ∈ S, if i c then b c else 0 let R := F lam - B + lam * H |H - h lam| ≤ R / t + h (lam - t) - h (lam + t)"))),
                 DescribeRole.Theorem)
         )));
 }

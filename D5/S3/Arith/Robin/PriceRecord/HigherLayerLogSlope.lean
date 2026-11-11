@@ -204,7 +204,7 @@ theorem log_beta_drop {j : ℕ} (hj : 2 ≤ j) {u v : ℝ}
       HasDerivAt f (((j : ℝ) / 3 - logarithmicSlope j t) / t) t := by
     convert (log_beta_hasDerivAt ht (by omega : 1 ≤ j)).add
       ((Real.hasDerivAt_log (by linarith : t ≠ 0)).const_mul ((j : ℝ) / 3)) using 1 <;>
-      try rfl <;> ring
+      simp only [div_eq_mul_inv] <;> ring
   have hanti : AntitoneOn f (Set.Ici 2) := by
     apply antitoneOn_of_hasDerivWithinAt_nonpos (convex_Ici 2)
     · intro t ht

@@ -63,10 +63,10 @@ theorem higherMass_eq_coordinate_sum (n : ℕ) :
   apply sum_congr rfl
   intro p _
   simp only [sum_const, Nat.card_Icc, nsmul_eq_mul]
-  congr 1 <;> omega
+  congr 1
 
 theorem higherMass_nonneg (n : ℕ) : 0 ≤ higherMass n :=
-  sum_nonneg fun p hp => mul_nonneg (Nat.cast_nonneg _)
+  sum_nonneg fun _ hp => mul_nonneg (Nat.cast_nonneg _)
     (Nat.prime_of_mem_primeFactors hp).log_pos.le
 
 theorem canonical_mem {η : ℝ} (hη : 0 < η) {p j : ℕ} :
@@ -234,6 +234,7 @@ theorem literal_loss_identity {X : ℝ} (hX : 1 < X) {n : ℕ} (hn : 1 ≤ n)
       · intro hc
         exact mem_filter.mpr ⟨hsub (mem_union_right _ hc), (mem_coordinates.mp hc).2.2⟩
     rw [hfilter, sum_sub_distrib, ← mul_sum, higherMass_eq_coordinate_sum]
+    rfl
   have hraw (c : ℕ × ℕ) : rawLayerMargin X c.1 c.2 =
       coordinateGain c - referencePrice X * coordinateWeight c := by
     dsimp [rawLayerMargin, coordinateGain, coordinateWeight]
@@ -248,22 +249,22 @@ theorem literal_loss_identity {X : ℝ} (hX : 1 < X) {n : ℕ} (hn : 1 ≤ n)
 /-- Finite convex duality. Zero margins are excluded from the strict mass;
 actual occupancies at zero margins still enter the loss identity. -/
 theorem finite_dual_abs {ι : Type*} (S : Finset ι) (b w : ι → ℝ) (i : ι → Bool)
-    (hw : ∀ c ∈ S, 0 ≤ w c) {«λ» t : ℝ} (ht : 0 < t) :
+    (hw : ∀ c ∈ S, 0 ≤ w c) {lam t : ℝ} (ht : 0 < t) :
     let F := fun η => ∑ c ∈ S, max (b c - η * w c) 0
     let h := fun η => ∑ c ∈ S, if 0 < b c - η * w c then w c else 0
     let H := ∑ c ∈ S, if i c then w c else 0
     let B := ∑ c ∈ S, if i c then b c else 0
-    let R := F «λ» - B + «λ» * H
-    |H - h «λ»| ≤ R / t + h («λ» - t) - h («λ» + t) := by
+    let R := F lam - B + lam * H
+    |H - h lam| ≤ R / t + h (lam - t) - h (lam + t) := by
   classical
   dsimp only
   let F := fun η => ∑ c ∈ S, max (b c - η * w c) 0
   let h := fun η => ∑ c ∈ S, if 0 < b c - η * w c then w c else 0
   let H := ∑ c ∈ S, if i c then w c else 0
   let B := ∑ c ∈ S, if i c then b c else 0
-  let R := F «λ» - B + «λ» * H
-  change |H - h «λ»| ≤ R / t + h («λ» - t) - h («λ» + t)
-  have hRdef : R = F «λ» - B + «λ» * H := rfl
+  let R := F lam - B + lam * H
+  change |H - h lam| ≤ R / t + h (lam - t) - h (lam + t)
+  have hRdef : R = F lam - B + lam * H := rfl
   have hopt (η : ℝ) : B - η * H ≤ F η := by
     dsimp [B, H, F]
     rw [mul_sum, ← sum_sub_distrib]
@@ -273,35 +274,35 @@ theorem finite_dual_abs {ι : Type*} (S : Finset ι) (b w : ι → ℝ) (i : ι 
       mul_zero, sub_self, zero_sub, sub_zero]
     · exact le_max_right _ _
     · exact le_max_left _ _
-  have hlower : F («λ» - t) - F «λ» ≤ t * h («λ» - t) := by
+  have hlower : F (lam - t) - F lam ≤ t * h (lam - t) := by
     dsimp [F, h]
     rw [← sum_sub_distrib, mul_sum]
     apply sum_le_sum
     intro c hc
     have hwc := hw c hc
-    by_cases hlo : 0 < b c - («λ» - t) * w c
+    by_cases hlo : 0 < b c - (lam - t) * w c
     · rw [if_pos hlo, max_eq_left hlo.le]
-      have hm := le_max_left (b c - «λ» * w c) 0
+      have hm := le_max_left (b c - lam * w c) 0
       nlinarith
-    · have hbase : b c - «λ» * w c ≤ 0 := by nlinarith [mul_nonneg ht.le hwc]
+    · have hbase : b c - lam * w c ≤ 0 := by nlinarith [mul_nonneg ht.le hwc]
       simp [hlo, max_eq_right (le_of_not_gt hlo), max_eq_right hbase]
-  have hupper : t * h («λ» + t) ≤ F «λ» - F («λ» + t) := by
+  have hupper : t * h (lam + t) ≤ F lam - F (lam + t) := by
     dsimp [F, h]
     rw [← sum_sub_distrib, mul_sum]
     apply sum_le_sum
     intro c hc
     have hwc := hw c hc
-    by_cases hhi : 0 < b c - («λ» + t) * w c
-    · have hbase : 0 ≤ b c - «λ» * w c := by nlinarith [mul_nonneg ht.le hwc]
+    by_cases hhi : 0 < b c - (lam + t) * w c
+    · have hbase : 0 ≤ b c - lam * w c := by nlinarith [mul_nonneg ht.le hwc]
       rw [if_pos hhi, max_eq_left hhi.le, max_eq_left hbase]
       ring_nf
+      exact le_rfl
     · rw [if_neg hhi, max_eq_right (le_of_not_gt hhi)]
-      simpa using le_max_right (b c - «λ» * w c) 0
+      simpa using le_max_right (b c - lam * w c) 0
   have hmono (η ζ : ℝ) (hηζ : η ≤ ζ) : h ζ ≤ h η := by
     apply sum_le_sum
     intro c hc
     have hwc := hw c hc
-    dsimp
     split_ifs with hζ hη
     · exact le_rfl
     · exfalso
@@ -310,14 +311,14 @@ theorem finite_dual_abs {ι : Type*} (S : Finset ι) (b w : ι → ℝ) (i : ι 
       nlinarith
     · exact hwc
     · exact le_rfl
-  have hlow := hmono («λ» - t) «λ» (by linarith)
-  have hhigh := hmono «λ» («λ» + t) (by linarith)
-  have hleft := hopt («λ» - t)
-  have hright := hopt («λ» + t)
-  have hleft_mul : (H - h («λ» - t)) * t ≤ R := by
+  have hlow := hmono (lam - t) lam (by linarith)
+  have hhigh := hmono lam (lam + t) (by linarith)
+  have hleft := hopt (lam - t)
+  have hright := hopt (lam + t)
+  have hleft_mul : (H - h (lam - t)) * t ≤ R := by
     rw [hRdef]
     nlinarith only [hleft, hlower]
-  have hright_mul : (h («λ» + t) - H) * t ≤ R := by
+  have hright_mul : (h (lam + t) - H) * t ≤ R := by
     rw [hRdef]
     nlinarith only [hright, hupper]
   have hleft_div := (le_div_iff₀ ht).mpr hleft_mul
