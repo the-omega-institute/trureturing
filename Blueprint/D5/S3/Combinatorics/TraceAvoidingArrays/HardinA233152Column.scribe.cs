@@ -12,7 +12,7 @@ internal sealed class HardinA233152ColumnDocument : IScribeDocumentDefinition
         "The literal 5-column count obeys a recurrence determined by its finite row quotient.",
         H("OEIS A233152"), Blocks(
             Node("T5",All("n",NatF(),Eq(C("T5",V("n")),FilterCard(N(5),V("n")))),"Every labelled function satisfying the two bond conditions is counted.",true),
-            Node("classify",All("r",RowF(N(5)),Eq(C("classify",V("r")),Seq(V("classes"),OpenBracket,Val(C("finFunctionFinEquiv",V("r"))),CloseBracket,Bang))),"The finite code table assigns the successor class of a row."),
+            Node("classify",All("r",RowF(N(5)),Eq(C("classify",V("r")),A(V("classes"),A(V("r"),N(0)), A(V("r"),N(1)), A(V("r"),N(2)), A(V("r"),N(3)), A(V("r"),N(4))))),"The finite decision tree assigns the successor class of a row."),
             Node("quotient",Eq(C("quotient"),Vec(Vec(N(5), N(8), N(3)), Vec(N(4), N(7), N(3)), Vec(N(2), N(5), N(3)))),"The quotient entry counts legal compatible successors in each class."),
             Node("weights",Eq(C("weights"),Vec(N(12), N(24), N(12))),"The weights count legal rows in each class."),
             Node("finite_certificate",CertificateFormula(),"The three finite identities give the successor counts, initial class multiplicities and a polynomial relation among quotient powers.",theorem:true),
