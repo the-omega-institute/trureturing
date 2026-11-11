@@ -18,7 +18,7 @@ internal sealed class OddPrimeJetPrincipalSplittingDocument : IScribeDocumentDef
                 Blocks(Paragraph(Text("For the coefficient presentation q=Q(n,A), the label stabilizer acts on K through the field automorphism supplied by its native coefficient formula. This action is multiplicative on labels and induces the corresponding native action on K units. The construction uses the actual label group and does not choose a lift of a larger automorphism group."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("odd-prime-jet-principal-semilinear"),
                 DeclarationHandle.Create(Owner + "coherentLift_semilinear"),
-                H("The coherent section preserves the constant line"),
+                H("The coherent section is semilinear"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The fixed canonical shear preserves every constant polynomial, while the degree lift acts semilinearly by the native field automorphism. Therefore the coherent actual label section is semilinear on the chosen K-vector-space structure. This statement concerns the constructed section only; arbitrary elements of the full original group and arbitrary End_F(K) top maps remain unrestricted."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("odd-prime-jet-principal-scalar-covariance"),
