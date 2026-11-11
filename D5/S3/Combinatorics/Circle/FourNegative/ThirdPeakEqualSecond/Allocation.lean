@@ -23,8 +23,8 @@ open private roundedW adjacent_middle quadruple_middle separated_middle
   from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakEqualSecond.Rounded
 open private rowBase rowSeams rowHeads source_certificate
   from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakEqualSecond.SourceCertificate
-open private base newBase charge chain_values new_base_bounds
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open private charge chain_values new_base_bounds from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (base newBase)
 open private gap_power power_split half_power
   from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.Arithmetic
 

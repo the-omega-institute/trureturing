@@ -18,6 +18,6 @@ The scheduler applies to the explicit unbounded three-row family. The final phys
 
 ## References
 
+- Dependency: [D5/S3/Combinatorics/Circle/Orbit/ZeroSumSubsets](Orbit/ZeroSumSubsets.md)
 - Dependency: [D5/S3/Combinatorics/Circle/SourceWidth](SourceWidth.md)
 - Dependency: [D5/S3/Combinatorics/Circle/ThreeRowParameters](ThreeRowParameters.md)
-- Dependency: [D5/S3/Combinatorics/Circle/ZeroSumSubsets](ZeroSumSubsets.md)

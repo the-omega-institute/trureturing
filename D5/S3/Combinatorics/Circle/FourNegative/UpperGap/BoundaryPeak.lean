@@ -11,8 +11,8 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.UpperGap
 open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm
-open private base newBase charge
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open private charge from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (base newBase)
 open private standardMargins standard_certificate
   from D5.S3.Combinatorics.Circle.FourNegative.UpperGap.BoundaryPackets
 open private zpow_four zpow_one head_separation peak_middle_bounds
