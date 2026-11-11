@@ -20,8 +20,8 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterFirstEarJointLift
 
-open private mask_complement mask_labels mask_labels_bound mask_labels_disjoint
-  mask_labels_sum labelled_permutation from D5.S3.Combinatorics.Circle.ThreeBitSource
+open private mask_labels mask_labels_bound mask_labels_disjoint mask_labels_sum labelled_permutation from D5.S3.Combinatorics.Circle.ThreeBitSource
+open D5.S3.Combinatorics.Circle.ThreeBitSource (mask_complement)
 open private label lift_order marked_word from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 
 open SourceWidth PeriodicShortening RunFirstEarTransport
