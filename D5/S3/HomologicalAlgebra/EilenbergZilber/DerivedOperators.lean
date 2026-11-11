@@ -211,7 +211,7 @@ lemma DerivedOp.add_comp {s q r : ℕ} (M N : DerivedOp q r) (K : DerivedOp s q)
   · intro a b₁ b₂; simp only [mul_add, Finsupp.single_add]
 
 /-- `comp` on a right `single`. -/
-private lemma DerivedOp.comp_single_right {s q r : ℕ} (MTwo : DerivedOp q r) (l₁ : OpLetter s q)
+lemma DerivedOp.comp_single_right {s q r : ℕ} (MTwo : DerivedOp q r) (l₁ : OpLetter s q)
     (c : ℤ) :
     MTwo.comp (Finsupp.single l₁ c) = MTwo.sum fun l₂ c₂ => Finsupp.single (l₂.compLetter l₁) (c * c₂) := by
   rw [DerivedOp.comp, Finsupp.sum_single_index (by simp)]
