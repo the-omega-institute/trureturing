@@ -34,7 +34,7 @@ internal sealed class RealThreePathFiniteQueryBoundaryDocument : IScribeDocument
         var conclusion=And(
             Equal(q,Call("perturbedReadout",s,e)),
             Member(D(0),s),
-            All("r",Call("Recipe"),Implies(Member(r,m),Seq(Call("readPoints",r),Sp,Subseteq,Sp,s))),
+            All("r",V("Recipe"),Implies(Member(r,m),Seq(Call("readPoints",r),Sp,Subseteq,Sp,s))),
             Call("ContDiff",Real,Infty,q),
             All("z",Complex,Seq(D(0),Sp,Le,Sp,Call("q",z))),
             All("z",Complex,Implies(Seq(z,Sp,Neq,Sp,D(0)),Seq(D(0),Sp,Lt,Sp,Call("q",z)))),
@@ -42,10 +42,10 @@ internal sealed class RealThreePathFiniteQueryBoundaryDocument : IScribeDocument
             All("z",Complex,Equal(Call("q",Mul(V("omega"),z)),Call("q",z))),
             All("z",Complex,Equal(Call("q",Seq(Minus,z)),Call("q",z))),
             All("a",Complex,Implies(Member(a,s),Equal(Call("q",a),Call("NormSq",a)))),
-            All("r",Call("Recipe"),Implies(Member(r,m),Call("Passes",q,r))),
+            All("r",V("Recipe"),Implies(Member(r,m),Call("Passes",q,r))),
             Seq(Neg,Call("Balance",V("U"),q)));
-        return All("M",Call("Finset",Call("Recipe")),All("epsilon",Real,
-            Implies(hypotheses,Seq(V("let"),Sp,V("S"),Sp,Eq,Sp,Call("phaseClosure",Call("biUnion",m,V("readPoints"))),
+        return All("M",Call("Finset",V("Recipe")),All("epsilon",Real,
+            Implies(hypotheses,Seq(F.Text,Grp(V("let")),Sp,V("S"),Sp,Eq,Sp,Call("phaseClosure",Call("biUnion",m,V("readPoints"))),
                 Semi,Sp,ExistsF("q",Arrow(Complex,Real),conclusion)))));
     }
 
