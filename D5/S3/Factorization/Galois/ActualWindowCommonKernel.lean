@@ -67,7 +67,8 @@ private def kernelEquiv (W : ι → Submodule F L) (k : ι)
   let project : LinearMap.ker (constraint W k p) →ₗ[F]
       intersection W (fun i => p k / p i) :=
     { toFun := fun v => ⟨(v.1 k : L), by
-        change ∀ i, (p k / p i)⁻¹ * (v.1 k : L) ∈ W i
+        simp only [intersection, Submodule.mem_iInf, Submodule.mem_comap,
+          LinearMap.mulLeft_apply]
         intro i
         rw [inv_div, kernel_coordinate W k p (hp k) v i]
         exact (v.1 i).2⟩
@@ -75,7 +76,8 @@ private def kernelEquiv (W : ι → Submodule F L) (k : ι)
       map_smul' := fun _ _ => Subtype.ext rfl }
   refine LinearEquiv.ofBijective project ⟨?_, ?_⟩
   · intro v w h
-    have hcoord : (v.1 k : L) = (w.1 k : L) := congrArg Subtype.val h
+    have hcoord := congrArg (fun x : intersection W (fun i => p k / p i) => (x : L)) h
+    change (v.1 k : L) = (w.1 k : L) at hcoord
     apply Subtype.ext
     funext i
     apply Subtype.ext
@@ -83,7 +85,7 @@ private def kernelEquiv (W : ι → Submodule F L) (k : ι)
       ← kernel_coordinate W k p (hp k) w i, hcoord]
   · intro x
     let v : ∀ i, W i := fun i => ⟨p i / p k * (x : L), by
-      have hx := (Submodule.mem_iInf.mp x.2) i
+      have hx := (Submodule.mem_iInf _).mp x.2 i
       change (p k / p i)⁻¹ * (x : L) ∈ W i at hx
       simpa only [inv_div] using hx⟩
     have hv : v ∈ LinearMap.ker (constraint W k p) := by
@@ -91,7 +93,7 @@ private def kernelEquiv (W : ι → Submodule F L) (k : ι)
       ext i
       change p k * (p i / p k * (x : L)) -
         p i * (p k / p k * (x : L)) = 0
-      field_simp
+      field_simp [hp k]
       <;> ring
     refine ⟨⟨v, hv⟩, Subtype.ext ?_⟩
     change p k / p k * (x : L) = (x : L)
@@ -100,7 +102,8 @@ private def kernelEquiv (W : ι → Submodule F L) (k : ι)
 private theorem ratio_mem (W : ι → Submodule F L) (k : ι)
     (p : ∀ i, W i) (hp : ∀ i, (p i : L) ≠ 0) :
     (p k : L) ∈ intersection W (fun i => (p k : L) / (p i : L)) := by
-  change ∀ i, ((p k : L) / (p i : L))⁻¹ * (p k : L) ∈ W i
+  simp only [intersection, Submodule.mem_iInf, Submodule.mem_comap,
+    LinearMap.mulLeft_apply]
   intro i
   rw [inv_div, div_mul_cancel₀ _ (hp k)]
   exact (p i).2
@@ -130,19 +133,19 @@ private theorem original_tuple (W : ι → Submodule F L) (k : ι)
     (hI : intersection W r ≠ ⊥) :
     ∃ p : ∀ i, W i, (∀ i, (p i : L) ≠ 0) ∧
       (fun i => (p k : L) / (p i : L)) = r := by
-  obtain ⟨w, hw, hne⟩ := Submodule.ne_bot_iff.mp hI
+  obtain ⟨w, hw, hne⟩ := (intersection W r).ne_bot_iff.mp hI
   let p : ∀ i, W i := fun i => ⟨(r i)⁻¹ * w, by
-    exact (Submodule.mem_iInf.mp hw) i⟩
+    exact (Submodule.mem_iInf _).mp hw i⟩
   have hp : ∀ i, (p i : L) ≠ 0 := fun i => mul_ne_zero (inv_ne_zero (hr i)) hne
   refine ⟨p, hp, ?_⟩
   funext i
   change ((r k)⁻¹ * w) / ((r i)⁻¹ * w) = r i
   rw [hk]
-  field_simp
+  field_simp [hne, hr i]
 
 /-- One tuple in the original windows simultaneously maximizes common-constraint
 rank and attains the minimum positive dimension over all original labels. -/
-theorem exists_joint_rank_minimizer [Fintype ι] [FiniteDimensional F L]
+theorem exists_joint_rank_minimizer [Finite ι] [FiniteDimensional F L]
     (W : ι → Submodule F L) (k : ι) (hW : ∀ i, W i ≠ ⊥) :
     ∃ p : ∀ i, W i, (∀ i, (p i : L) ≠ 0) ∧
       (∀ (q : ∀ i, W i), (∀ i, (q i : L) ≠ 0) →
@@ -153,8 +156,9 @@ theorem exists_joint_rank_minimizer [Fintype ι] [FiniteDimensional F L]
         finrank F (intersection W (fun i => (p k : L) / (p i : L))) ≤
           finrank F (intersection W r)) := by
   classical
+  letI : Fintype ι := Fintype.ofFinite ι
   have hex (i : ι) : ∃ x : W i, (x : L) ≠ 0 := by
-    obtain ⟨x, hx, hn⟩ := Submodule.ne_bot_iff.mp (hW i)
+    obtain ⟨x, hx, hn⟩ := (W i).ne_bot_iff.mp (hW i)
     exact ⟨⟨x, hx⟩, hn⟩
   choose q hq using hex
   let S : Set ℕ := {n | ∃ p : ∀ i, W i, (∀ i, (p i : L) ≠ 0) ∧
@@ -175,7 +179,8 @@ theorem exists_joint_rank_minimizer [Fintype ι] [FiniteDimensional F L]
   · intro r hr hk hpos
     have hI : intersection W r ≠ ⊥ := Submodule.one_le_finrank_iff.mp hpos
     obtain ⟨q, hq, heq⟩ := original_tuple W k r hr hk hI
-    simpa only [heq] using hmin q hq
+    rw [← heq]
+    exact hmin q hq
 
 #print axioms common_kernel_rank_identity
 #print axioms exists_joint_rank_minimizer
