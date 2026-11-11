@@ -54,7 +54,19 @@ Lean statement: `D5/S3/Analytic/Fourier/PositiveDefiniteImaginaryAxis.finite_dif
 
 For natural k and m with m at most 2k, put u(j)=(-1)^j choose(k,j) for j from zero to k. The sum over i and j of u(i)u(j)(i-j)^m is zero below degree 2k and is (-1)^k (2k)! at degree 2k. Two successive forward differences give the identity, including the case k=0.
 
-**Theorem 1.5 (The imaginary radius lower bound).**
+**Lemma 1.5 (All Taylor coefficients of a real-preserving germ).**
+
+$$\forall F \in Complex \to Complex,\; \operatorname{AnalyticAt}\left(Complex, F, 0\right) \land \operatorname{EventuallyRealOnRealAxis}\left(F\right) \implies \operatorname{AnalyticAt}\left(Real, \operatorname{realRestriction}\left(F\right), 0\right) \land \forall n \in Nat,\; \operatorname{im}\left(\operatorname{div}\left(\operatorname{iteratedDeriv}\left(n, F, 0\right), \operatorname{factorial}\left(Complex, n\right)\right)\right) = 0 \land \operatorname{re}\left(\operatorname{div}\left(\operatorname{iteratedDeriv}\left(n, F, 0\right), \operatorname{factorial}\left(Complex, n\right)\right)\right) = \operatorname{div}\left(\operatorname{iteratedDeriv}\left(n, \operatorname{realRestriction}\left(F\right), 0\right), \operatorname{factorial}\left(Real, n\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Fourier/PositiveDefiniteImaginaryAxis.real_taylor_data` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let F be complex analytic at zero, with imaginary part zero at every real argument in some neighborhood of zero. Its real restriction is the real function x mapped to Re(F(x)), with the real argument embedded in the complex numbers. This restriction is real analytic at zero. For every natural n, the complex coefficient iteratedDeriv(n,F,0)/n! has imaginary part zero and real part equal to the corresponding derivative coefficient of the real restriction. Degree zero is included. The construction precomposes the scalar-restricted series by the real-to-complex continuous linear embedding before projecting real and imaginary parts.
+
+**Theorem 1.6 (The imaginary radius lower bound).**
 
 Lean statement: `D5/S3/Analytic/Fourier/PositiveDefiniteImaginaryAxis.le_re_of_positiveDefinite`
 
@@ -75,6 +87,7 @@ Binomial vectors test positive semidefiniteness at arbitrarily small real step s
 - Truth anchor: `D5/S3/Analytic/Fourier/PositiveDefiniteImaginaryAxis.double_weighted_shift`
 - Truth anchor: `D5/S3/Analytic/Fourier/PositiveDefiniteImaginaryAxis.finite_difference_moment`
 - Truth anchor: `D5/S3/Analytic/Fourier/PositiveDefiniteImaginaryAxis.le_re_of_positiveDefinite`
+- Truth anchor: `D5/S3/Analytic/Fourier/PositiveDefiniteImaginaryAxis.real_taylor_data`
 - Truth anchor: `D5/S3/Analytic/Fourier/PositiveDefiniteImaginaryAxis.weight`
 - Truth anchor: `D5/S3/Analytic/Fourier/PositiveDefiniteImaginaryAxis.weighted_shift`
 - Dependency: [D5/S3/Weil/ZetaLinear/FiniteInversePoissonCriterion](../../Weil/ZetaLinear/FiniteInversePoissonCriterion.md)
