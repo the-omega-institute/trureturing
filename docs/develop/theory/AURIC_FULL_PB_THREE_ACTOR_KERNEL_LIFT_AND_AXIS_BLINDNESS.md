@@ -3561,3 +3561,473 @@ $s=0$ 的充分性、零质量正泛函只能为零及其零等式均复用 §39
 定理 40.2 是指定固定输出矩阵模型中的条件关系推导；$x_\rho,\xi_\rho,\phi$ 不生成实际准备、可访问控制或新服务，不实现完整来源的共根或可达性。共同正规根态 $\omega$、全部有限与无限历史、递归参考、量子与经典选择、实际时间／作用量和物理空间维数三均未由本定理取得；GNS 向量不因此成为纯态或物理全局酉演化，$\zeta,J,\omega$ 不被合并，三个演员不等于物理三维。完整原量子起源与全部原成功条件仍保持未完成。
 
 ## 新增锚（本行以下为后续增补区）
+
+## 41. 秩二谱环境中零第三对角的完整 PB 有限排除
+
+### 41.1 同一固定输入与全类结论
+
+**定义 41.1（零第三对角的原秩二输入）。** 完整沿用 (40.1) 的有序基、原代数、角投影和全部乘积，只在本节要求 $B_{33}=0$。准确地说，固定
+
+$$
+\begin{gathered}
+A=M_5(\mathbb C),\qquad P=I_3\oplus0_2,\qquad
+c=\operatorname{diag}(1,2,3,0,0),\\
+t=\begin{pmatrix}B&V\\V^*&D_{\rm env}\end{pmatrix},\qquad
+B=B^*\in M_3(\mathbb C),\quad B_{33}=0,\qquad
+V=[\kappa e_1,\gamma e_2],\quad D_{\rm env}=\operatorname{diag}(0,d),\\
+\kappa,\gamma>0,\quad d\in\mathbb R\setminus\{0\},\qquad
+\iota=\sigma i,\quad \sigma\in\{1,-1\}\text{ 分别固定},\\
+\mathsf E_s=sE_{33},\quad g=K(c,t)+\mathsf E_s,\qquad
+K(a,b)=\iota[a,b]/2,\quad a\circ b=(ab+ba)/2 .
+\end{gathered}
+\tag{41.1}
+$$
+
+$s$ 为实数。$R_\delta,S_\delta,L,B_\phi$ 准确取 (32.2)，PB 准确取 (32.3)，其中所有平方和 Jordan 乘积均在完整原 $M_5$ 中计算。沿 (40.2) 写 $a=(B_{12},B_{13})$，并在本节写
+$b=B_{22}\in\mathbb R$、$z=B_{23}\in\mathbb C$、$T=\left(\begin{smallmatrix}b&z\\\overline z&0\end{smallmatrix}\right)$。
+其余原 $B$ 条目任意，不要求任何演员平面对 $B$ 不变。
+
+**定理 41.2（$B_{33}=0$ 的有限共同见证）。** 对每份 (41.1) 的固定原输入、每个分别固定的 $\sigma$、每个实 $s\ne0$ 和每个预先指定的 $0<\mu<\infty$，存在一个有限 Hermitian 原角探针 $x=PxP$ 和一个完整原 $M_5$ 上的正复线性向量泛函 $\phi$，同时满足
+
+$$
+\phi(I_5)=\mu,\qquad
+\sqrt{B_\phi(R_+,S_+)}>0,\qquad
+\sqrt{B_\phi(R_-,S_-)}>0,\qquad
+|\phi(L)|>\sum_{\delta=\pm1}\sqrt{B_\phi(R_\delta,S_\delta)} .
+\tag{41.2}
+$$
+
+两笔预算使用同一 $x,\phi,c,t,g$，所有原环境参数及任意复 $B$ 条目保持原值。因而在这个固定输入类，全体原角探针与质量恰为任一指定 $\mu>0$ 的全体完整正泛函上的 PB 当且仅当 $s=0$。零残量的全正泛函充分性直接引用 §39.6；下文只证明非零残量的必要性见证。
+
+### 41.2 单一有限参数的原探针与原向量
+
+证明。固定 $s\ne0$。对暂任意的有限 $\lambda>0$，置
+
+$$
+\begin{gathered}
+p=-\frac{163s}{160},\qquad h_0=p+s=-\frac{3s}{160},\qquad
+\rho=-\frac{s}{\lambda}\ne0,\qquad
+u=(\rho,1)^{\mathsf T},\\
+X_\lambda=
+\begin{pmatrix}
+-\lambda^2/s&\iota\lambda/5\\
+-\iota\lambda/5&p
+\end{pmatrix},\qquad
+q=2B_{12}\rho+3B_{13},\qquad
+\ell_2=-\frac{\iota q}{\rho},\quad \ell_3=\iota q .
+\end{gathered}
+\tag{41.3}
+$$
+
+$X_\lambda$ 是 (40.4) 中任意 Hermitian $X$ 的合法实例，$u_2u_3=\rho\ne0$；引理 40.3 并不要求 $\rho>0$，也不要求 $X$ 属于 (40.13) 的专门族。取其同一个原空间中的
+
+$$
+\begin{gathered}
+\xi_\lambda=
+\left(0,\rho,1,-\frac{B_{12}\rho+B_{13}}{\kappa},0\right)^{\mathsf T},\\
+x_\lambda=
+\begin{pmatrix}
+0&\ell_2&\ell_3&0&0\\
+\overline{\ell_2}&-\lambda^2/s&\iota\lambda/5&0&0\\
+\overline{\ell_3}&-\iota\lambda/5&p&0&0\\
+0&0&0&0&0\\
+0&0&0&0&0
+\end{pmatrix},\qquad
+\chi_\lambda(Y)=\xi_\lambda^*Y\xi_\lambda .
+\end{gathered}
+\tag{41.4}
+$$
+
+每个有限正 $\lambda$ 都给有限原 $x_\lambda$；其自伴性与 $x_\lambda=Px_\lambda P$ 由矩阵直接成立。向量第三格为一，故非零。引理 40.3 已支付第一轴和第一环境格的准确补偿、完整作用列回接及存活第二环境的预算代价，这里直接消费该引理，不把二维预算当成完整预算。最后的唯一质量归一因子将是
+
+$$
+N_\lambda=\|\xi_\lambda\|^2
+ =1+\frac{s^2}{\lambda^2}
+  +\frac{|B_{13}-B_{12}s/\lambda|^2}{\kappa^2}>0 .
+\tag{41.5}
+$$
+
+### 41.3 完整原作用列与非零残量读数
+
+记
+
+$$
+\begin{gathered}
+\alpha_\delta=1+\frac{\delta}{10}+\frac{\iota}{5},\qquad
+\vartheta=2+\frac{\iota}{2},\qquad
+\beta_\delta=p-\frac{\delta s}{10}+\frac{\iota s}{5},\\
+\eta_\delta=\delta\left(3p+s+\frac{\iota s}{2}\right),\qquad
+m_\delta=\frac{2+\delta}{20}>0 .
+\end{gathered}
+\tag{41.6}
+$$
+
+首先，在 (40.7) 的准确回接中代入
+
+$$
+\begin{aligned}
+X_\lambda u&=(\lambda(1+\iota/5),p+\iota s/5)^{\mathsf T},\\
+K(C_E,X_\lambda)u&=(\lambda/10,-s/10)^{\mathsf T},\\
+(C_E\circ X_\lambda)u&=(\lambda\vartheta,3p+\iota s/2)^{\mathsf T},\\
+Tu&=(z+b\rho,\overline z\rho)^{\mathsf T},\\
+(C_E\circ T)u&=(5z/2+2b\rho,5\overline z\rho/2)^{\mathsf T},\\
+(K(C_E,T)+sP_3)u&=(-\iota z/2,s+\iota\overline z\rho/2)^{\mathsf T}.
+\end{aligned}
+\tag{41.7}
+$$
+
+其中 $C_E=\operatorname{diag}(2,3)$，$P_3=\operatorname{diag}(0,1)$。例如 $K(C_E,X_\lambda)$ 的两个非对角条目都是 $\lambda/10$，给出第二行。由这些乘积和 (40.5)，完整原五维作用列准确为
+
+$$
+\mathbf R_\delta(\lambda):=R_\delta(x_\lambda)\xi_\lambda
+ =
+\begin{pmatrix}
+0\\
+\lambda\alpha_\delta-5\delta z/2+2\delta bs/\lambda\\
+\beta_\delta+5\delta s\overline z/(2\lambda)\\
+0\\
+\delta\gamma s/\lambda
+\end{pmatrix},
+\tag{41.8}
+$$
+
+$$
+\mathbf S_\delta(\lambda):=S_\delta(x_\lambda)\xi_\lambda
+ =
+\begin{pmatrix}
+0\\
+\delta\lambda\vartheta+z(1-\delta\iota/2)-bs/\lambda\\
+\eta_\delta-s\overline z(1+\delta\iota/2)/\lambda\\
+0\\
+-\gamma s(1-\delta\iota)/\lambda
+\end{pmatrix}.
+\tag{41.9}
+$$
+
+两个完整输出的 $f_2$ 格均已保留。原 $d$ 不出现在这两列中，是因为输入的 $f_2$ 格为零；这不是删除原 $D_{\rm env}$。$e_1,f_1$ 格为零是引理 40.3 的准确相消，不是假定原 $B_{12},B_{13}$ 为零。
+
+令 $\operatorname{Im}_\iota w=(w-\overline w)/(2\iota)$。原残量接触在同一向量上准确为
+
+$$
+\begin{aligned}
+F_\lambda
+&:=\chi_\lambda\bigl(K(x_\lambda,\mathsf E_s)+t\circ\mathsf E_s\bigr)\\
+&=s\,\operatorname{Im}_\iota(p+\iota s/5)
+   +s\,\operatorname{Re}(\overline z\rho)
+ =\frac{s^2}{5}-\frac{s^2\operatorname{Re}z}{\lambda}.
+\end{aligned}
+\tag{41.10}
+$$
+
+这里使用 (40.8) 及其自伴换位形式
+$\chi_\lambda(K(U,Z))=-\operatorname{Im}_\iota((U\xi_\lambda)^*Z\xi_\lambda)$：
+$\mathsf E_s\xi_\lambda=se_3$、$(x_\lambda\xi_\lambda)_3=p+\iota s/5$、
+$(t\xi_\lambda)_3=\overline z\rho$。因此 (41.10) 是完整残量期望，不是只保留 $sB_{33}$ 的一部分。
+
+### 41.4 带符号实 Gram 余量的正差额
+
+由 (38.4)、(40.20) 的结合乘法恒等式，在完整原 $M_5$ 中仍有
+
+$$
+\begin{gathered}
+L=K(R_+,S_+)-K(R_-,S_-)
+       -2K(x_\lambda,\mathsf E_s)-2t\circ\mathsf E_s,\\
+\chi_\lambda(L)=-M_+(\lambda)+M_-(\lambda)-2F_\lambda,\qquad
+M_\delta(\lambda)=
+\operatorname{Im}_\iota(\mathbf R_\delta(\lambda)^*\mathbf S_\delta(\lambda)).
+\end{gathered}
+\tag{41.11}
+$$
+
+对两条完整复列使用标准复 Gram 恒等式。具体取复外积的范数约定
+$\|v\wedge_{\mathbb C}w\|^2=\sum_{j<k}|v_jw_k-v_kw_j|^2$，则
+
+$$
+\begin{aligned}
+H_\delta(\lambda)
+&:=\|\mathbf R_\delta\|^2\|\mathbf S_\delta\|^2
+       -|\mathbf R_\delta^*\mathbf S_\delta|^2
+ =\|\mathbf R_\delta\wedge_{\mathbb C}\mathbf S_\delta\|^2\ge0,\\
+\mathcal A_\delta(\lambda)
+&:=\sqrt{B_{\chi_\lambda}(R_\delta,S_\delta)}
+ =\sqrt{M_\delta(\lambda)^2+H_\delta(\lambda)} .
+\end{aligned}
+\tag{41.12}
+$$
+
+这些等式也可由坐标逐项展开得到；外积只是计算原实 Gram 行列式的工具，没有替换预算。其对换位读数的非负余量为
+
+$$
+\mathcal A_\delta-|M_\delta|
+ =\frac{H_\delta}{\mathcal A_\delta+|M_\delta|}
+ \quad\text{当 }M_\delta\ne0 .
+\tag{41.13}
+$$
+
+为计算并定量控制这个余量，把 (41.8)–(41.9) 写成完整五维列
+
+$$
+\begin{gathered}
+\mathbf R_\delta=\lambda v_\delta+r_{0,\delta}+r_{1,\delta}/\lambda,
+\qquad
+\mathbf S_\delta=\lambda w_\delta+s_{0,\delta}+s_{1,\delta}/\lambda,\\
+v_\delta=\alpha_\delta e_2,\qquad w_\delta=\delta\vartheta e_2,\\
+r_{0,\delta}=-5\delta z e_2/2+\beta_\delta e_3,\qquad
+r_{1,\delta}=2\delta bs e_2+5\delta s\overline z e_3/2+\delta\gamma s f_2,\\
+s_{0,\delta}=z(1-\delta\iota/2)e_2+\eta_\delta e_3,\qquad
+s_{1,\delta}=-bs e_2-s\overline z(1+\delta\iota/2)e_3
+                         -\gamma s(1-\delta\iota)f_2 .
+\end{gathered}
+\tag{41.14}
+$$
+
+所有系数与 $\lambda$ 无关。直接计算首项给
+
+$$
+\operatorname{Im}_\iota(v_\delta^*w_\delta)=\delta m_\delta,
+\qquad m_+=3/20,\quad m_-=1/20 .
+\tag{41.15}
+$$
+
+因为 $v_\delta,w_\delta$ 沿同一复轴，两者的复外积为零，但虚内积不为零且两符号相反。下一外积系数为
+
+$$
+\begin{aligned}
+j_{0,\delta}
+&:=v_\delta\wedge_{\mathbb C}s_{0,\delta}
+              +r_{0,\delta}\wedge_{\mathbb C}w_\delta
+ =D_\delta\,e_2\wedge_{\mathbb C}e_3,\\
+D_\delta
+&=\alpha_\delta\eta_\delta-\delta\vartheta\beta_\delta\\
+&=\delta\left[
+  \left(1+\frac{3\delta}{10}\right)h_0
+  +\iota\left(\frac{h_0}{10}+2s m_\delta\right)\right].
+\end{aligned}
+\tag{41.16}
+$$
+
+其中所有 $z$ 项都落在 $e_2\wedge e_2=0$ 中，环境格在 (41.14) 的下一阶；它们仍参与下节的有限余量界。由 (41.16)，
+
+$$
+\begin{aligned}
+\sum_{\delta=\pm1}\frac{|D_\delta|^2}{2m_\delta}
+ &=\frac{2s^2}{5}+\frac{2sh_0}{5}+\frac{32h_0^2}{3}
+ =\frac{317s^2}{800},\\
+D_+&=\frac{s(-39+477\iota)}{1600},\qquad
+D_-=\frac{s(21-157\iota)}{1600},\\
+g_0&:=\frac{2s^2}{5}
+        -\sum_{\delta=\pm1}\frac{|D_\delta|^2}{2m_\delta}
+ =\frac{3s^2}{800}>0 .
+\end{aligned}
+\tag{41.17}
+$$
+
+第一行的两个 $h_0^2$ 系数分别为 $17/3,5$，两个 $sh_0$ 系数各为 $1/5$，两个 $s^2$ 系数为 $3/10,1/10$；代入 $h_0=-3s/160$ 即得所示数值。将 $p$ 取成 $-s$ 会使 $h_0=0$，从而该差额为零；非零对角位移在此承担严格符号。
+
+由 (41.11)，一旦 $M_+>0,M_-<0$，无需预先假定 $F_\lambda$ 的符号，就有
+
+$$
+|\chi_\lambda(L)|-\mathcal A_+-\mathcal A_-
+ \ge 2F_\lambda-\sum_{\delta=\pm1}
+                 (\mathcal A_\delta-|M_\delta|).
+\tag{41.18}
+$$
+
+下面直接给出有限 $\lambda$，使右端严格正。
+
+### 41.5 包括全部环境项的显式有限尺度
+
+对每个 $\delta$，用 (41.14) 的固定完整列定义下列有限非负数及外积：
+
+$$
+\begin{gathered}
+\mathscr R_\delta=\|r_{0,\delta}\|+\|r_{1,\delta}\|,\qquad
+\mathscr S_\delta=\|s_{0,\delta}\|+\|s_{1,\delta}\|,\\
+U_\delta=\|v_\delta\|\mathscr S_\delta
+             +\|w_\delta\|\mathscr R_\delta
+             +\mathscr R_\delta\mathscr S_\delta,\\
+j_{1,\delta}=v_\delta\wedge_{\mathbb C}s_{1,\delta}
+        +r_{0,\delta}\wedge_{\mathbb C}s_{0,\delta}
+        +r_{1,\delta}\wedge_{\mathbb C}w_\delta,\\
+j_{2,\delta}=r_{0,\delta}\wedge_{\mathbb C}s_{1,\delta}
+        +r_{1,\delta}\wedge_{\mathbb C}s_{0,\delta},\qquad
+j_{3,\delta}=r_{1,\delta}\wedge_{\mathbb C}s_{1,\delta},\\
+J_\delta=\|j_{1,\delta}\|+\|j_{2,\delta}\|+\|j_{3,\delta}\|,\qquad
+V_\delta=2\|j_{0,\delta}\|J_\delta+J_\delta^2,\\
+W_\delta=2U_\delta+\|j_{0,\delta}\|+J_\delta,\qquad
+E_\delta=\frac{V_\delta}{m_\delta}
+        +\frac{\|j_{0,\delta}\|^2W_\delta}{2m_\delta^2}.
+\end{gathered}
+\tag{41.19}
+$$
+
+这里 $V_\delta$ 是数值界，不是原环境耦合 $V$；$E_\delta$ 也不是原残量矩阵 $\mathsf E_s$。每个分母 $m_\delta$ 严格正。
+
+对 $\lambda\ge1$，(41.14) 的内积展开及三角不等式给
+
+$$
+\left|\frac{M_\delta(\lambda)}{\lambda^2}
+                    -\delta m_\delta\right|
+ \le\frac{U_\delta}{\lambda}.
+\tag{41.20}
+$$
+
+例如两条归一列相对 $v_\delta,w_\delta$ 的误差范数分别至多
+$\mathscr R_\delta/\lambda,\mathscr S_\delta/\lambda$；交叉误差至多
+$\mathscr R_\delta\mathscr S_\delta/\lambda^2$，而 $\lambda^{-2}\le\lambda^{-1}$。
+因而若 $\lambda\ge2U_\delta/m_\delta$，则
+$\operatorname{sgn}M_\delta=\delta$ 且 $|M_\delta|\ge m_\delta\lambda^2/2>0$。
+
+同样，外积的准确展开是
+
+$$
+\Omega_\delta(\lambda)
+ :=\frac{\mathbf R_\delta\wedge_{\mathbb C}\mathbf S_\delta}{\lambda}
+ =j_{0,\delta}+\frac{j_{1,\delta}}{\lambda}
+        +\frac{j_{2,\delta}}{\lambda^2}
+        +\frac{j_{3,\delta}}{\lambda^3}.
+\tag{41.21}
+$$
+
+因此在 $\lambda\ge1$ 时，
+
+$$
+\|\Omega_\delta-j_{0,\delta}\|\le J_\delta/\lambda,\qquad
+\bigl|\|\Omega_\delta\|^2-\|j_{0,\delta}\|^2\bigr|
+ \le V_\delta/\lambda,\qquad
+\|\Omega_\delta\|\le\|j_{0,\delta}\|+J_\delta .
+\tag{41.22}
+$$
+
+现在设 $\lambda\ge\max\{1,2U_\delta/m_\delta\}$，记
+$y_\delta=M_\delta/\lambda^2$ 及
+
+$$
+T_\delta(\lambda)
+ =\sqrt{y_\delta^2+\|\Omega_\delta\|^2/\lambda^2}+|y_\delta| .
+$$
+
+则 $T_\delta\ge2|y_\delta|\ge m_\delta$。由
+$0\le\sqrt{a^2+b^2}-|a|\le|b|$、(41.20) 与 (41.22)，有
+
+$$
+\begin{aligned}
+|T_\delta-2m_\delta|
+&\le\frac{\|\Omega_\delta\|}{\lambda}
+                 +2\bigl||y_\delta|-m_\delta\bigr|
+ \le W_\delta/\lambda,\\
+\mathcal A_\delta-|M_\delta|
+&=\frac{\|\Omega_\delta\|^2}{T_\delta}.
+\end{aligned}
+\tag{41.23}
+$$
+
+第二式是 (41.13) 的准确重写，其中
+$H_\delta=\lambda^2\|\Omega_\delta\|^2$；没有把这一阶误作四次阶。分母下界与平方范数差界给出
+
+$$
+\begin{aligned}
+\left|\mathcal A_\delta-|M_\delta|
+                    -\frac{|D_\delta|^2}{2m_\delta}\right|
+&\le
+ \frac{\bigl|\|\Omega_\delta\|^2-\|j_{0,\delta}\|^2\bigr|}{T_\delta}
+ +\frac{\|j_{0,\delta}\|^2|T_\delta-2m_\delta|}
+                   {2m_\delta T_\delta}\\
+&\le \frac{E_\delta}{\lambda}.
+\end{aligned}
+\tag{41.24}
+$$
+
+这同时给出余量极限及其有限误差；证明只使用完整原列的范数与外积。
+
+最后取
+
+$$
+\begin{gathered}
+C_* =2s^2|\operatorname{Re}z|+E_++E_-\ge0,\\
+\lambda_*=
+\max\left\{1,\frac{2U_+}{m_+},\frac{2U_-}{m_-},
+                 \frac{2(1+C_*)}{g_0}\right\}<\infty .
+\end{gathered}
+\tag{41.25}
+$$
+
+固定输入和 $s\ne0$ 使 (41.19) 的数全部有限，$g_0>0$ 保证最后一个除法合法，故 $\lambda_*$ 是明确有限正数。它同时支付两个符号的估计。由 (41.10)、(41.17)、(41.18)、(41.24)，
+
+$$
+\begin{aligned}
+|\chi_{\lambda_*}(L)|
+       -\mathcal A_+(\lambda_*)-\mathcal A_-(\lambda_*)
+&\ge g_0-\frac{2s^2|\operatorname{Re}z|+E_++E_-}{\lambda_*}\\
+&=g_0-\frac{C_*}{\lambda_*}
+ >\frac{g_0}{2}=\frac{3s^2}{1600}>0 .
+\end{aligned}
+\tag{41.26}
+$$
+
+这是一份有限同输入严格违反，不以无穷探针或极限向量充当见证。
+
+### 41.6 两笔正预算、指定质量及合并结论
+
+由 (41.20)、(41.25)，每份完整预算根均满足
+$\mathcal A_\delta(\lambda_*)\ge|M_\delta(\lambda_*)|
+ \ge m_\delta\lambda_*^2/2>0$。
+此外，直接消费 (40.6) 的存活环境项还给出
+
+$$
+\mathcal A_\delta(\lambda_*)\ge
+ \gamma^2|\rho_*|^2=\frac{\gamma^2s^2}{\lambda_*^2}>0,
+\qquad \rho_*=-s/\lambda_* .
+\tag{41.27}
+$$
+
+因而无须另作探针扰动。两条完整原环境列及同一泛函始终没有改变。
+
+取 $x=x_{\lambda_*}$，在整个原 $M_5$ 上定义
+$\phi(Y)=\mu\,\xi_{\lambda_*}^*Y\xi_{\lambda_*}/N_{\lambda_*}$。
+其复线性及正性由向量泛函的标准性质成立，亦可直接由
+$\phi(Y^*Y)=\mu\|Y\xi_{\lambda_*}\|^2/N_{\lambda_*}\ge0$ 看出，且
+$\phi(I_5)=\mu$。每个预算乘 $(\mu/N_{\lambda_*})^2$，左端及两个预算根各乘同一个正因子 $\mu/N_{\lambda_*}$。所以
+
+$$
+\begin{gathered}
+\sqrt{B_\phi(R_\delta,S_\delta)}
+ \ge\frac{\mu\gamma^2s^2}{N_{\lambda_*}\lambda_*^2}>0,\\
+|\phi(L)|-\sum_{\delta=\pm1}\sqrt{B_\phi(R_\delta,S_\delta)}
+ >\frac{3\mu s^2}{1600N_{\lambda_*}}>0 .
+\end{gathered}
+\tag{41.28}
+$$
+
+这证明 (41.2)。必要性只用一个合法完整向量泛函；零残量对全部完整正泛函的充分性按 §39.6 引用，不从单个向量的性质外推。定理 41.2 得证。
+
+**推论 41.3（原固定秩二接口不再要求第三对角非零）。** 保持 (40.1) 的每一项原条件，允许任意 Hermitian $B$，不限制 $B_{33}$。对每个分别固定的取向及每个指定 $0<\mu<\infty$，
+
+$$
+\left[
+ \text{全部原 Hermitian 角探针和全部质量恰为 }\mu
+ \text{ 的完整正泛函满足 PB}
+\right]
+\quad\Longleftrightarrow\quad s=0 .
+\tag{41.29}
+$$
+
+对全部质量的正泛函量化也有同一结论。每个 $s\ne0$ 都有有限同输入、质量恰为 $\mu$、两笔预算根同时正的严格违反。
+
+证明。$B_{33}\ne0$ 时直接应用定理 40.2；$B_{33}=0$ 时直接应用定理 41.2；$s=0$ 时直接复用 §39.6 的全正泛函充分性。Hermitian 性使 $B_{33}$ 为实数，两类穷尽且不改变任何原参数。证毕。
+
+### 41.7 准确边界、成熟归属与完整原合同
+
+$s$ 可以为任一非零实数；构造不除以任何 $B$ 条目或 $\gamma$。特别，$b,z,B_{12},B_{13}$ 可独立为零，$B_{11}$ 和其余复条目任意。$B_{12},B_{13}$ 进入准确补偿及真实范数 (41.4)–(41.5)，并非从输入删去；$b,z,\gamma$ 进入完整列及有限尺度。$\kappa>0$ 保证补偿有定义，$d\ne0$ 与 $\gamma>0$ 保持原值。没有断言对 $\kappa=0$、其他 $V,D_{\rm env}$ 或一般矩阵残量也成立。$s=0$ 时不使用含 $1/s$ 的构造，直接走既有充分性；质量零只有零正泛函，仍是 §39.6 的零等式。每个指定非零 $s$、每份固定输入的见证有限，但没有 $s\to0$、$\kappa\to0$ 或原参数变化时统一有界的探针范数、尺度、取得成本或归一化差额。
+
+全部等式只用 $\iota^2=-1$、$\overline\iota=-\iota$ 和同一份原复条目；两取向分别执行，无须共轭或替换原 $B$。两取向不必共用同一个见证。式 (40.21) 的 $sB_{33}$ 接触值以 (40.13) 的专门 $X_\rho,u_\rho$ 为前提，不是引理 40.3 中任意 $X,u$ 的接触恒等式；本节的准确完整读取是 (41.10)。
+
+本节数学归属为 repo-derived：新增承重关系是 (41.3)、(41.8)–(41.10)、(41.16)–(41.28) 的各向异性共同族、非零 $s^2$ 接触、带符号完整实 Gram 余量及有限正差额。引理 40.3 的回接与 (40.6) 的环境代价、(38.4) 的结合乘法恒等式和 §39.6 的充分性均为直接前置，不作为本节新增结果。定理 40.2 解决其原 $B_{33}\ne0$ 域。定理 32.3 与 §39 分别要求三格支撑或共振两腿零模；本输入的 $\mathcal W=\mathbb C e_1$ 不满足这两个前件。(38.33) 的轴行条件不容纳这里第二条原环境连线。[续卷 II §§32、41–43](AURIC_FULL_PB_ACTUAL_PROBE_AND_ENVIRONMENT_COUPLING_CONTINUATION_II.md) 的两演员、可逆环境及固定来源接触条件保持原域，不提供本节原三演员的必要性。推论 41.3 只合并这个准确秩二接口的两个 $B_{33}$ 分支，不给一般 $V$、一般残量或未知总响应 $D$ 的全域分类。
+
+正向量泛函和复 Cauchy–Schwarz 的成熟背景沿 §40.5 所引 Blackadar，[*Operator Algebras*](https://bruceblackadar.com/Mathematics/Cycr.pdf)；实／复 Gram、外积范数及 Hermitian 矩阵的标准线性代数背景沿 Horn–Johnson，[*Matrix Analysis*](https://doi.org/10.1017/CBO9781139020411)。这里的复外积恒等式用于原未中心化预算。Nha，[*Unitary equivalence between ordinary intelligent states and generalized intelligent states*](https://arxiv.org/html/0709.3307v2)，§II 式 (4)–(5) 的等号背景使用中心化向量 $\Delta A|\Psi\rangle,\Delta B|\Psi\rangle$ 的复线性依赖；其 §III 的酉等价另要求可实施相应旋转的酉算子。本节既未中心化原 PB，也未借该旋转改变原演员或生成控制。以上成熟事实只承担所述工具范围，特定原秩二 PB 族的列、符号和有限界已在证明中给出；不主张历史优先权、文献穷尽、最优尺度或最小公理组。
+
+完整原目标和全部未来合同严格保留 §40.5、§39.8 所引用的父卷 §6 的 (6.1)–(6.2)、§30A.5，以及[有限返回续卷定义 162.1、复用命题 162.2、定义 164.1](AURIC_C139_FINITE_RETURN_CALIBRATION_AND_LOAD_STABILITY_CONTINUATION.md) 的同一全文和全部递归钉版上游；这些引用保留原对象和完整量词，而不由本节的矩阵定义替换。原 $\Omega$/native、旧 $D$、固定 $K/J$、原准备／发生／parent／ownership／ready、实际相关参考与副本、固定支持全质量、完整菜单及中间切口、全部环境及完整输出／失败／零标签、控制／钟／单位和每份完整输出的每个旧合法未来均保持原身份。原活动接头、旧接受关联和全未来 Return 的来源义务及既得消费者仍按其原范围承担。
+
+复 $M_5$、完整正锥与数学泛函是定理的声明前提，不是由二元关系推出的量子力学。$x_{\lambda_*},\xi_{\lambda_*}$ 只是该模型中的数学见证，不是实际可访问准备、控制或新的生产服务。共同正规根态 $\omega$、全部有限与无限历史、递归参考、原生产者、根相干与可达性、量子与经典选择、动力学、实际时间／作用量及物理空间维数三均未由本节取得；$\zeta,J,\omega$ 保持区别，GNS 向量不因此成为纯态或物理全局酉演化，三个演员不等于物理三维。[Endogenous Cut IV 定义 64.1、64.17](QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES_IV.md) 的 $\omega=1_D/m$ 仍是其有限静态条件中的迹一参考，不能识别为原全域共同根。这里取得的是明确表示内的条件关系约束；完整原量子起源与全部原成功条件保持未完成。
+
+## 新增锚（本行以下为后续增补区）
