@@ -45,7 +45,7 @@ internal sealed class RawReadoutOperatorRefutationDocument : IScribeDocumentDefi
         )));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula, string prose, DescribeRole role) =>
-        Describe.Lean(DescribeId.Create("raw-readout-" + declaration.ToLowerInvariant()),
+        Describe.Lean(DescribeId.Create("raw-readout-" + declaration.ToLowerInvariant().Replace('_', '-')),
             DeclarationHandle.Create(Prefix + declaration), H(title), StatementSource.FromAuthor(Disp(formula)),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
     private static Formula V(string name) => F.Id(name);
@@ -68,7 +68,6 @@ internal sealed class RawReadoutOperatorRefutationDocument : IScribeDocumentDefi
     private static Formula T(Formula c) => Call("T",c);
     private static Formula P(Formula c) => Call("P",c);
     private static Formula Pi(Formula c) => Call("pi",c);
-    private static Formula Norm(Formula c) => Call("norm",c);
     private static Formula Read(Formula c) => Call("p",c);
     private static Formula Mem(Formula c) => Seq(c, Sp, InMacro, Sp,V("N"));
     private static Formula Iff(Formula a, Formula b) => new Formula.Logic(Par(a),FormulaLogicOperator.Iff,Par(b));

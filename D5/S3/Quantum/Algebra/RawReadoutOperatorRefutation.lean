@@ -183,7 +183,7 @@ private lemma quotient_map_P (c : Raw) :
     Ideal.Quotient.mk N (P c) = quotientP (Ideal.Quotient.mk N c) := by
   apply quotientEquiv.injective
   change (P c).1 = c.1
-  exact congrArg Prod.fst (p_action c)
+  simpa using congrArg Prod.fst (p_action c)
 
 private lemma quotient_cubic (x : Readable) :
     quotientT (quotientT (quotientT x)) = (-16 : ℝ) • quotientT x := by
