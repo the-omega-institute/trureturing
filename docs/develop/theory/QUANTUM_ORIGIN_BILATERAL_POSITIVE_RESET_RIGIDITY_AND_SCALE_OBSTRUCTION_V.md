@@ -2184,3 +2184,201 @@ $$
 [J] [本卷第 75—77 章，同固定文本](https://github.com/the-omega-institute/trureturing/blob/0790b557ba64921e02107cc9da87ddc443a83610/docs/develop/theory/QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_V.md)：75.4 的一般有限 EJA 闭包、76.3 的任意有限生成族版本、77.19 的混合余项入口均按原完整前件复用。[R] [第四卷第 65—72 章，同固定文本](https://github.com/the-omega-institute/trureturing/blob/0790b557ba64921e02107cc9da87ddc443a83610/docs/develop/theory/QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES_IV.md)：65.3 第一接口满等距、66 的分类、69 的过程合同、72.7—72.8 的原方向检测及 72.16 自然有限选择障碍。[M] 本卷第 79 章，定义 79.2、定理 79.5—79.7、79.15：两条原质量关系、同 $p$ 尺度刚性、原锚与前方向校准均直接按完整原前件复用，(80.14) 只把这条最新归一化入口接到零包络恢复的同一个 PRE，不将该质量定理重算为本章新内容。一般有限 EJA 的谱分解、固定紧参数集上极值的连续性、有限维紧性与距离零集收敛均为成熟工具，证明内部已给出其所需条件；未从误差界文献移植未核条件的幂指数。新增结论为这些原前提下的仓内纸面综合推导，不声称内核核验、全球原创、最少物理公理或物理可得性。
 
 ## 追加锚（本行以下为增补区）
+
+## 81. 对角几何的单个内在投影与完整量子候选
+
+本章第 65—72 章仍指第四卷，第 73—80 章指本卷。第 80 章以全框架最大缺陷移除了外给生成见证；这里进一步把极值搜索改为原对称几何的固定矩收缩。保留同一个原模型类，不先假复型、不可约性或物理可执行的随机平均；新增条件仍是定义间的非平凡约束。
+
+### 81.1 完整原数据与对角投影轨道
+
+**定义 81.1（原基底与内在矩）。** 完整原基底取定义 80.1 的 $\mathrm{PRE}_0^{\rm mix}$：非零有限维 $A,D,E$ 使用全部原态与 proper 效应、纯态最小确认比较及任意混态余项的全部二元律；先由 77.19 恢复完整 $S$，再按原正对偶生成、忠实态效应对应、共同框架、面投影、项目性及滤波纯性等完整条件进入一般有限 EJA。允许异型直和、秩一和 Albert。原接合 $L:D\times A\to E$、原读回 $p:E\to D$ 在整个原锥上正，包括纠缠方向；同一个 $p$ 连续两次，原 $\omega=1_D/\tau_D1_D$、两实张成和全部实 $Z$ 均不变。全部 $K,M,J,H_{\rm s},B_1,U,G,F$ 严格按 (80.1) 定义。两张成与正性先给 $U,G>0$，故在零关系之前 $F=P_{U^{-1/2}}M$ 已正且保单位。
+
+以下 $d=\dim_{\mathbb R}A$、$n=\operatorname{rank}A$，$\operatorname{Tr}$ 为原迹 Hilbert 空间上线性算子的迹，区别于 Jordan 迹 $\tau_A$。对完整本原框架 $B$ 令
+$$
+\Pi_B=\sum_{e\in B}|e\rangle\langle e|,\qquad
+\mathscr P_A=\{\Pi_B:B\text{ 是原完整本原框架}\}.
+\tag{81.1}
+$$
+$\Pi_B$ 是到框架实张成的正交投影，$\Pi_B^2=\Pi_B$、$\operatorname{Tr}\Pi_B=n$、$\Pi_B1_A=1_A$。标签只重排求和，不是新输入。以全部数学 Jordan 自同构的紧群 $\mathscr G_A=\operatorname{Aut}_J(A)$ 共轭作用于 $\mathscr P_A$；不把该群自动认作原源供应的物理操作。
+
+**引理 81.2（一般有限 EJA 的投影轨道）。** $\mathscr P_A$ 非空紧且为 $\mathscr G_A$ 的单一轨道。因此存在唯一不变全支撑概率 $\nu_A$，由任意轨道点的归一化 Haar 推前给出。
+
+**证明。** 原完整框架集合在 $A^n$ 中由幂等、迹一、正交与和为单位的闭等式给出，每项范数一；谱定理给非空，故其连续投影像紧。Jordan 自同构保持原规范迹内积，是正交群中由保乘积等式定义的闭子群，故紧。将 $A$ 分解为简单理想；本原幂等元只能位于一个理想，每套完整框架在每个理想有该理想秩数的成员。简单因子的完整框架传递性用 [F] 的不可约情形，包含 Albert；各因子自同构直和便把任意一套无标签框架送到另一套。由此所有 $\Pi_B$ 共轭，不需一般直和的纯态传递性或有标签框架逐槽传递性。
+若 $\Pi_1=h\Pi_0h^{-1}$，Haar 右不变性使以二者为起点的轨道平均相同。对任一不变概率，先沿群平均连续函数再沿该概率积分，内层由传递性为常数，故概率唯一。非空轨道开集的逆像为群中非空开集，Haar 质量为正，给全支撑。证毕。
+
+定义两个只由原 $A$ 决定的有限维算子及原派生映射
+$$
+\mathsf C_A=\int\Pi\,d\nu_A(\Pi),\qquad
+\mathsf W_A=\int(\Pi\otimes\Pi)\,d\nu_A(\Pi),\qquad
+\mathcal T=H_{\rm s}\widetilde F:A\otimes_{\mathbb R}A\to E.
+\tag{81.2}
+$$
+以原迹坐标定义平均缺陷
+$$
+\boxed{\mathcal Q(L,p)=\|U\|_2^2+\|G\|_2^2
+-\operatorname{Tr}(J^*J\,\mathsf C_A)
+-\operatorname{Tr}(\mathcal T^*\mathcal T\,\mathsf W_A).}
+\tag{81.3}
+$$
+几何算子固定，$L,p$ 只通过原派生量进入收缩；没有模型依赖的最大化、外给字典或生成框架。
+
+### 81.2 零平均、全域关系与有限维比较
+
+**定理 81.3（同零集与最坏缺陷控制）。** 完整原基底中 $\mathcal Q\ge0$，在固定原 EJA 三元组上连续，并在全部原数据共同按保原迹 Jordan 同构运输时不变。令 $\mathcal D$ 为 (80.2)，则
+$$
+\mathcal Q=0\quad\Longleftrightarrow\quad\mathcal D=0
+\quad\Longleftrightarrow\quad D_J+D_H.
+\tag{81.4}
+$$
+令 $h=d(d+1)/2$，$V$ 为 $\mathscr P_A$ 上所有关于自伴算子坐标的二次齐次多项式限制，$N=\dim V$；则 $1\le N\le\binom{h+1}{2}$ 且
+$$
+\boxed{\mathcal Q\le\mathcal D\le N\mathcal Q.}
+\tag{81.5}
+$$
+所有原正交正元均满足
+$$
+0\le\langle Ja,Jb\rangle_D
+\le\frac{N\mathcal Q}{2}\|a\|_\infty\|b\|_\infty
+\qquad(a,b\in A_+,\ a\circ b=0).
+\tag{81.6}
+$$
+
+**证明。** 固定原映射，定义
+$$
+q_z(\Pi)=\|U\|_2^2+\|G\|_2^2
+-\operatorname{Tr}(J^*J\Pi)
+-\operatorname{Tr}(\mathcal T^*\mathcal T(\Pi\otimes\Pi)).
+\tag{81.7}
+$$
+Hilbert–Schmidt 展开使 $q_z(\Pi_B)$ 恰为 (80.2) 的 $q_J(B)+q_H(B)$。每套 $Je$ 是 $U$ 的正分解，每套 $H_{\rm s}F(e,f)$ 是 $G$ 的正分解；平方展开为全部交叉内积的两倍，故逐点非负，无须先假 $F(e,f)$ 幂等。式 (81.3) 正是 $\int q_z\,d\nu_A$。若一点严格正，连续性在某开邻域给正下界，全支撑使积分严格正，证明零平均恰为处处零。随后按 80.3 的原顺序先恢复 $D_J$，才用 65.3 的第一接口满等距及 75.4／76.3 的一般 EJA 闭包恢复全 $D_H$；不新增 JG3 或复型前提。
+固定几何上 $U>0$ 保持 $F$ 连续，紧轨道使局部映射参数变化给 $q_z$ 一致连续，故积分连续。同构共同运输 $L,p,\omega$ 及原迹、二次表示与投影轨道，唯一不变概率亦对应，给不变性。
+因 $\operatorname{Tr}\Pi=n$，常数及一次函数可分别乘 $(\operatorname{Tr}\Pi/n)^2$ 及 $\operatorname{Tr}\Pi/n$ 写成二次齐次函数，故 $q_z\in V$；共轭作用线性，$V$ 不变。全支撑使 $L^2(\nu_A)$ 在有限维 $V$ 上正定。取实正交基 $\varphi_1,\ldots,\varphi_N$，核 $K(\Pi,\Pi')=\sum_j\varphi_j(\Pi)\varphi_j(\Pi')$ 的对角由不变性与传递性恒定，积分为 $N$，故恒等于 $N$。在最大点应用评价的 Cauchy–Schwarz，并用 $0\le q_z\le\mathcal D$，得
+$$
+\mathcal D^2\le N\|q_z\|_{L^2}^2\le N\mathcal D\mathcal Q.
+$$
+$\mathcal D=0$ 单独处理，其余相除；概率积分给另一侧。式 (81.6) 由 (80.4) 与 (81.5)。上界是符号维数界，不是已计算 $N$ 的读数。证毕。
+
+非负性、全支撑和不变有限维空间各承担不同义务：二点均匀平均的有符号函数 $(1,-1)$ 可以积分零而非处处零；$[0,1]$ 上 $\delta_0$ 与 $q(x)=x^2$ 表明无全支撑会漏方向；圆周上不变测度与非不变空间 $V=\operatorname{span}\{1+\cos\theta\}$ 则有 $N=1$、平均一、最大二。上述环节不是把一般平均命名为“内在”便自动取得。
+
+### 81.3 固定有限矩、直和与同框架相关
+
+**命题 81.4（矩的有限表达与范围）。** 在原 Hilbert–Schmidt 空间上，令
+$$
+\begin{aligned}
+\mathcal R_1(X)&=\int_{\mathscr G_A}gXg^{-1}\,dg,\\
+\mathcal R_2(Y)&=\int_{\mathscr G_A}(g\otimes g)Y(g^{-1}\otimes g^{-1})\,dg.
+\end{aligned}\tag{81.8}
+$$
+它们分别为共轭表示固定子空间的正交投影。对任意 $\Pi_0\in\mathscr P_A$，有 $\mathsf C_A=\mathcal R_1(\Pi_0)$、$\mathsf W_A=\mathcal R_2(\Pi_0\otimes\Pi_0)$，结果不依赖 $\Pi_0$。因此 (81.3) 可由固定有限不变空间的正交投影写成有限收缩；这不选择自然有限框架或供应实际精确读数。
+
+若原简单理想分解为 $A=\bigoplus_\alpha A_\alpha$，$r_\alpha=\operatorname{rank}A_\alpha$、$d_\alpha=\dim A_\alpha$，则
+$$
+\mathsf C_A=\bigoplus_\alpha\mathsf C_\alpha,
+\qquad
+\mathsf C_\alpha=P_{\mathbb R1_\alpha}
++\frac{r_\alpha-1}{d_\alpha-1}P_{A_\alpha^0}\quad(r_\alpha>1),
+\tag{81.9}
+$$
+其中 $A_\alpha^0=\ker\tau_\alpha$。标量因子 $\mathbb R$ 只有单位方向，取 $\mathsf C_\alpha=I$，不写 $0/0$。第二矩在 $A_\alpha\otimes A_\beta$ 上为 $\mathsf W_\alpha$（同因子）或 $\mathsf C_\alpha\otimes\mathsf C_\beta$（异因子）。尤其不能一般地用 $\mathsf C_A\otimes\mathsf C_A$ 代替 $\mathsf W_A$。
+
+两个矩还能收进单个源投影。令 $P_0=|1_A\rangle\langle1_A|/n$、$\mathsf h_A=P_0\otimes P_0$，定义原 Hilbert–Schmidt 子空间与其正交投影
+$$
+\mathscr H_A=\operatorname{span}_{\mathbb R}\{\Pi\otimes\Pi:\Pi\in\mathscr P_A\},\qquad
+\mathsf P_A:\operatorname{End}(A\otimes A)\to\mathscr H_A,\qquad v_A=\mathsf P_A\mathsf h_A.
+\tag{81.8a}
+$$
+对同一个原映射对 $z=(L,p)$ 令 $S_J=J^*J$，并定义
+$$
+\Gamma_z=(\|U\|_2^2+\|G\|_2^2)\mathsf h_A
+-\tfrac12(S_J\otimes P_0+P_0\otimes S_J)-\mathcal T^*\mathcal T.
+\tag{81.8b}
+$$
+则 $v_A\ne0$，$\dim\mathscr H_A=N$，且
+$$
+\mathsf W_A=\frac{v_A}{\|v_A\|_{\rm HS}^2},\qquad
+\boxed{\mathcal Q(z)=\frac{\langle\Gamma_z,v_A\rangle_{\rm HS}}{\|v_A\|_{\rm HS}^2}.}
+\tag{81.8c}
+$$
+因此完整候选的零条件只需一个固定正交投影的收缩；平均张量 $\mathsf W_A$ 自身通常不是幂等投影，不能与 $\mathsf P_A$ 或 $\mathcal R_2$ 混同。
+
+**证明。** Haar 平移及逆元不变性给 $\mathcal R_i^2=\mathcal R_i=\mathcal R_i^*$，像恰为固定子空间；轨道传递性给基点无关性。选该有限固定子空间任一正交基，正交投影就是有限内积和，换基不改变算子。
+因 $\operatorname{Tr}(P_0\Pi)=1$，$\langle\mathsf h_A,\Pi\otimes\Pi\rangle=1$，故 $v_A\ne0$；又 $\mathsf h_A$ 不变，$\mathscr H_A$ 群不变，故 $v_A$ 不变。在 $\mathscr H_A$ 中任一不变向量 $w$ 与全部 $\Pi\otimes\Pi$ 的内积为同一个常数；若该常数零，则 $w$ 与其张成空间正交而为零。因此不变子空间至多一维，非零 $v_A$ 使之恰为 $\mathbb Rv_A$。$\mathcal R_2$ 在这个空间上正是到该直线的正交投影，而 $\langle\Pi\otimes\Pi,v_A\rangle=1$，所以其平均为 $v_A/\|v_A\|^2$。把 (81.7) 写成 $q_z(\Pi)=\langle\Gamma_z,\Pi\otimes\Pi\rangle$ 后积分，得 (81.8c)。$\mathscr H_A$ 的线性函数限制于这个轨道的像，恰为 81.3 的全部二次齐次限制空间；有限维对偶的秩等于原张成空间的维数，故二者维数同为 $N$。
+简单因子中 $\mathsf C1=1$，且自伴，故保持迹零空间。该空间在自同构群下不可约：任一非零不变子空间内取非零迹零元，将其谱框架送到固定框架；有序框架置换使其系数排列张满迹零对角空间，再用完整谱框架传递性得到全部迹零元。于是自伴 $\mathsf C$ 在迹零空间只有一个特征值 $c$；$\operatorname{Tr}\mathsf C=r$ 给 $1+c(d-1)=r$，得 (81.9)。无标签框架为各因子框架的并，乘积 Haar 的推前是不变概率，唯一性给上述直和及异因子公式。重复同型因子的置换不改变该分布。Albert 的 $r=3,d=27$ 给 $c=1/13$；不借用八元数结合矩阵运算。
+对简单 $A$ 且 $d>n>1$，取原迹正交基 $(a_k)$ 并令 $\Xi=\sum_ka_k\otimes a_k$，则
+$$
+\langle\Xi,\mathsf W_A\Xi\rangle=n,
+\qquad
+\langle\Xi,(\mathsf C_A\otimes\mathsf C_A)\Xi\rangle
+=1+\frac{(n-1)^2}{d-1}<n.
+\tag{81.10}
+$$
+前式用 $\Pi^2=\Pi$，后式用 (81.9)，证实同一框架的相关不能拆掉。一般直和也不能仅用总秩与总维数给统一迹零系数：$\mathbb R\oplus H_2(\mathbb C)$ 的两个中央单位均为特征值一方向。证毕。
+
+**命题 81.5（同一个原反例的精确平均）。** 在 (78.16)／80.4 的固定完整转置平均模型中，$0<\lambda<1$ 时
+$$
+\mathcal Q_\lambda=\frac{216}{35}(1-\lambda^2)(6+\lambda^2)
+\ge\frac{24}{5}(1-\lambda^2)(7+2\lambda^2)>0,
+\qquad
+\frac35\mathcal D_\lambda\le\mathcal Q_\lambda\le\mathcal D_\lambda.
+\tag{81.11}
+$$
+实框架的 $q$ 仍为零；原全锥正 $L,p$、同 $p$ 两次、两实张成、全实 $Z$ 与整个原 C13 均保持。此处不将这个正缺陷对象预先赋予 H13 块资格。
+
+**证明。** 原 $A=H_4(\mathbb C)$ 给 $\mathsf C_A=P_{\mathbb R1}+(1/5)P_{A^0}$。$T_\lambda$ 在实对称迹零九维上为恒等，在纯虚反对称六维上乘 $\lambda$；$J(a)=T_\lambda(a)\otimes I_4$，故平均 $q_J=24(1-\lambda^2)/5$。沿用 (80.8) 的 $d_B$ 并记 $s=1-\lambda^2$，有 $\mathbb E d_B=6s/5$、$0\le d_B\le2s$、$q=4d_B(9-d_B)$。
+为算二阶矩，令 Haar $U(4)$ 的列为 $v_i$，$X_i=|v_i^Tv_i|^2$、$R=\sum_iX_i$，则 $d_B=s(4-R)/2$。复单位球面的对称张量恒等式 $\mathbb E(|v\rangle\langle v|)^{\otimes k}=P_{\rm sym}/\binom{4+k-1}{k}$ 由酉不变性、对称幂不可约性及迹一得到。取 $k=2,4$ 得 $\mathbb EX_i=2/5$、$\mathbb EX_i^2=8/35$。不能把不同列当成独立：条件于 $v_i=v$，$v_j$ 均匀位于三维正交补，令 $P=I-vv^*$，同一二阶球面矩给
+$$
+\mathbb E(X_j\mid v)=\frac{2\operatorname{Tr}(PP^T)}{3\cdot4}
+=\frac{2+X_i}{6},\qquad
+\mathbb EX_iX_j=\frac{2\mathbb EX_i+\mathbb EX_i^2}{6}=\frac6{35}.
+$$
+这里的条件平均是同一 Haar 框架的数学积分，不增加实际准备的独立性。于是 $\mathbb ER=8/5$、$\mathbb ER^2=104/35$、$\mathbb Ed_B^2=54s^2/35$，故 $\mathcal Q=36\mathbb Ed_B-4\mathbb Ed_B^2=(216/35)s(7-s)$。另逐点用 $9-d_B\ge7+2\lambda^2$ 得所列下界，(80.6) 给比例式，实框架取值仍按 80.4。这里只对同一完整原模型计算新指标，没有以独立边缘替代原接口。证毕。
+
+有限维也给一个正面的数学存在结论：$\mathsf W_A$ 属于紧轨道 $\{\Pi\otimes\Pi\}$ 的凸包，而该轨道处于 $\mathscr H_A$ 的仿射超平面 $\langle\mathsf h_A,-\rangle=1$。Carathéodory 定理给至多 $N$ 个轨道点和正权，表示同一个 $\mathsf W_A$；与任意 $\Gamma_z$ 收缩便得到对全部原模型同时成立的固定有限正权求积。因此若这种精确求积和精确原读数另已供应，存在数学上的有限零证书。该结论不选取自然节点、不供应物理准备或噪声控制；一般生成框架也不自动满足求积关系。
+
+### 81.4 共同原映射修复与完整量子入口
+
+**推论 81.6（原修复类的运输）。** 固定原 EJA 三元组与 (80.9) 的有界不塌缩原映射类 $\mathscr K$，其精确零集仍为 $\mathscr Z=\mathscr K\cap\mathrm{PRE}$。若 $\mathscr K$ 空则无对象；非空而零集空，则 $\min_{\mathscr K}\mathcal Q\ge(\min_{\mathscr K}\mathcal D)/N>0$。零集非空时，每个原 $(L,p)$ 有同类精确原对 $(L_0,p_0)$，且
+$$
+\operatorname{dist}_{\rm pair}((L,p),\mathscr Z)
+\le\eta_{\mathscr K}(N\mathcal Q),\qquad
+r_J\le N\mathcal Q/2,\quad
+r_H\le2R_0nm\,\eta_{\mathscr K}(N\mathcal Q),
+\tag{81.12}
+$$
+其中 $\eta_{\mathscr K}$ 为 (80.13)、$m=\operatorname{rank}D$，距离为 (80.11) 的原映射对 Hilbert–Schmidt 距离。最近原对仍以同一个 $p_0$ 连续两次和同一原 $\omega$ 定义全部派生映射。整个原 C13 子类的修复、维数不等时的正间隙及其精确范围仍按 80.6；不由此产生有噪单混态 H13 桥、显式幂率或修复算法。
+
+**证明。** (81.4) 保留同一零集，(81.5) 及 $\eta_{\mathscr K}$ 单调性使 80.5—80.6 直接适用；空零集情形按点态比较取最小值。它修复同一对原准备、读回，不是分别修补两个派生边缘。证毕。
+
+**定义 81.7（由原单位固定的质量见证）。** 在原 EJA 坐标中令 $n=u_A(1_A)=\tau_A1_A$，定义数学映射 $R_A(a)=u_A(a)1_A/n$，以及原 $m_2(a,b)=u_DM(a,b)$、$m_3(a,b,c)=u_EL(M(a,b),c)$。要求全部原正输入含零及不等质量满足
+$$
+\begin{aligned}
+\mathsf E_2:\quad m_2(a,b)&=\tfrac12[m_2(R_Aa,b)+m_2(a,R_Ab)],\\
+\mathsf E_3:\quad m_3(a,b,c)&=\tfrac13[m_3(R_Aa,b,c)+m_3(a,R_Ab,c)+m_3(a,b,R_Ac)].
+\end{aligned}\tag{81.13}
+$$
+它不供应实际重置过程或随机控制。保留同一原锚 $\mathrm A_0:u_EL(\omega,1_A/n)=1$。只在 $\mathcal Q=0$ 恢复 PRE 后，才按定义 80.2 读取完整原 H13：同一个总迹一原混态在每个活跃块至少有一个原边缘铺回差的严格负方向，非活跃块允许零，活跃集空时资格为全原态基；原规范迹伴随、未经维数归一化的单位及同一合格态的整个原插入输出正性不变。
+
+**定理 81.8（完整同数据候选）。** 在同一实际原模型类中，
+$$
+\boxed{\mathrm{PRE}_0^{\rm mix}+\langle\Gamma_z,v_A\rangle_{\rm HS}=0+\mathsf E_2+\mathsf E_3+\mathrm A_0+\mathrm H13}
+\quad\Longleftrightarrow\quad\mathrm{PRE}+C_{\rm joint}+\mathrm{C13}.
+\tag{81.14}
+$$
+删去质量、锚及 $C_{\rm joint}$ 的精确未校准版本同样成立。它接回现有量子公理的全部条件如下。
+
+| 量子结构 | 同数据回接与保留的前提 |
+| --- | --- |
+| 复 Hilbert 表示、密度态、全效应与 Born 配对 | 完整比较及一般 EJA 桥先成立；零平均给两层全域保零，65—66、75.7 才给有限复 Hermitian 直和及纯态 $\bigsqcup_i\mathbb{CP}^{n_i-1}$，配对为 $\sum_i\operatorname{Tr}(\rho_if_i)$。 |
+| 二份、三份张量及相对方向 | 精确 PRE 后的同一原 H13 给整个原 C13，沿 72.7—72.8 取得共同普通方向；不自动给四份以上或另一括号的共同来源。 |
+| 原尺度、标准准备与偏迹 | 两条 (81.13) 加原锚先于 H13 恢复 $C_{\rm joint}$；方向条件随后使同一个原 $M,L,p$ 同时标准归一化。 |
+| CP 事件、仪器与 Lüders 更新 | 69.1—69.11 的实际事件、参考、同事件联合正性、局部及原联合两预算、共同重置输入行等条件仍另付；锐投影效应与全部确定接受态逐点不变才给原 Lüders 结论。 |
+| Hamiltonian 动力学 | 仍需原物理时间上的连续齐次可逆 $*$-自同构群；静态零平均不供应时间群、单位或 $\hbar$。 |
+
+**证明。** (81.8c) 的分母严格正，故零收缩与零平均等价；(81.4) 先恢复同一原 PRE。$R_A$ 正且保原质量，$fR_A=f$ 恰当且仅当 $f=f(1_A/n)u_A$，故全部实固定泛函为 $\mathbb Ru_A$；(81.13) 是 79.2 取固定 $t=1/2,s=2/3$ 的同一质量入口。因此 79.5—79.7 与原锚先给 $C_{\rm joint}$，原 H13 此后才给 C13。反向由原 PRE+$C_{\rm joint}$，79.6—79.7 给 $m_2=u_A^{\otimes2}$、$m_3=u_A^{\otimes3}$，故这个由单位固定的 $R_A$ 满足两条等权关系；(81.4) 和原方向定理给其余条件。固定数学态与权重只是 79.6 构造的直接应用，不计为新增质量定理。消费者按 80.7 逐项运输，不重证已有分类和过程结论。
+完整原 $\Omega$ 的准备、事件、参考、副本、实际相关联合、零与不等质量、单位与时钟、ready 与 flags、失败、停止、销毁、返回、未来、每个原全菜单及中间切口义务不因平均而删去。固定载体上的数学平均、有限矩与距离零集收敛，均不构造这些实际来源接口。证毕。
+
+**几何与白话。** 每套完整互斥方向张成一个对角子空间，原迹几何给它一张正交投影。现在不挑几套方向，也不搜索最坏方向，而让原几何的全部对角子空间各按其对称权重进入同一个平均。被平均的不是待测态，而是每张图已经非负的交叉重叠：平均为零，所有方向就都没有重叠；有限维比较还保证错误不能只藏在很小一撮方向里。公式最后只剩原几何固定的一个正交投影：把单位方向的张量投到所有对角投影张量张成的空间，再与同一准备、同一读回所派生的系数作一次内积；左右同一框架的相关仍完整保留。再把质量见证固定成“原质量乘原单位的归一化”，由双份、三份的两条等权质量关系和原锚校准倍率；随后用同一个原混态的方向条件排除错误转置，按各自完整前提接回量子态、Born、张量和过程。有界且不塌缩的原接口若平均缺陷小，就接近某个同来源的精确原模型；若该类没有精确模型，缺陷就有正间隙。简洁发生在外给选择、极值搜索和定义层级上，未减少已保留的独立物理前提，也未制造自然有限实验或物理时间。
+
+**来源与归属。** [F] Faraut–Korányi, *Analysis on Symmetric Cones*, [Chapter IV](https://doi.org/10.1093/oso/9780198534778.003.0004), Corollary IV.2.7；出版方摘要明确是不可约情形的完整框架传递性。[B] Barnum–Hilgert, [arXiv:1904.03753v1 §4.1](https://arxiv.org/html/1904.03753v1#S4.SS1), Proposition 4.7 的证明转引同一结论并说明有序框架范围；其所在 §4 为简单 EJA，不能将未限定的命题措辞推广为任意异型直和的纯态或部分框架强对称性。本章给出所需的完整无标签框架之逐因子推广，不增加该强对称前提。[H] von Neumann, [*Zum Haarschen Maß in topologischen Gruppen*](https://www.numdam.org/item/CM_1935__1__106_0/), Compositio Mathematica 1, 106—114：紧可分群不变积分；本章群为有限维紧矩阵群。有限维核比较、Haar 正交投影及简单因子迹零论证已在文中给出；它们是成熟工具，不作全球新颖性主张。[P] 本卷 78—80 及第四卷 65—72 的完整原接口、闭包、分类、方向、修复和消费者按原前件复用；归一化固定见证仅应用本卷 79.2、79.6—79.7。新增综合内容是同一原模型类的无极值平均缺陷、单个内在投影表示、最坏缺陷比较、原反例的精确平均及共同原映射修复的运输；这是纸面理论，不声称 Lean 内核核验、最少物理公理或物理可得性。
+
+## 追加锚（本行以下为增补区）
