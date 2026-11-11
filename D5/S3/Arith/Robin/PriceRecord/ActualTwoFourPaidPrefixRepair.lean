@@ -52,6 +52,28 @@ private def uniformW (X : ℝ) : ℝ :=
 private theorem price_positive {X : ℝ} (hX : 1 < X) : 0 < referencePrice X :=
   one_div_pos.mpr (mul_pos (by linarith) (log_pos hX))
 
+private theorem log_two_le_one : log (2 : ℝ) ≤ 1 := by
+  have hh := log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 2)
+  norm_num at hh
+  exact hh
+
+private theorem log_two_nonneg : 0 ≤ log (2 : ℝ) := by
+  exact Real.log_nonneg (by norm_num : (1 : ℝ) ≤ 2)
+
+private theorem log_two_sq_le_one : log (2 : ℝ) ^ 2 ≤ 1 := by
+  have hh : log (2 : ℝ) * log (2 : ℝ) ≤ (1 : ℝ) * 1 :=
+    mul_self_le_mul_self log_two_nonneg log_two_le_one
+  simpa [pow_two] using hh
+
+private theorem three_curvature_div_four_pos {c : ℝ} (hc : 0 < c) :
+    0 < 3 * c / 4 := by
+  positivity
+
+private theorem le_div_log_sq {a b L : ℝ} (hL : 0 < L)
+    (h : L ^ 2 * a ≤ b) : a ≤ b / L ^ 2 := by
+  apply (le_div_iff₀ (sq_pos_of_pos hL)).mpr
+  simpa [mul_comm] using h
+
 private theorem weighted_shell_error (n : ℕ) :
     Tendsto (fun X : ℝ => shellError X * log X ^ n / X) atTop (𝓝 0) := by
   apply Metric.tendsto_nhds.mpr
@@ -90,23 +112,27 @@ private theorem weighted_shell_error (n : ℕ) :
           div_le_div_of_nonneg_right
             (mul_le_mul_of_nonneg_left hpow (abs_nonneg _)) hX0.le
         _ = (|Chebyshev.theta y - y| * log y ^ n / y) * 2 ^ n * (y / X) := by
-          field_simp [hy0.ne', hX0.ne']; ring
+          field_simp [hy0.ne', hX0.ne']
         _ ≤ (ε / K) * 2 ^ n * 2 := by
-          gcongr
-          · exact hp.le
-          · exact (div_le_iff₀ hX0).mpr hy.2
+          calc
+            _ ≤ (ε / K) * 2 ^ n * (y / X) := by
+              exact mul_le_mul_of_nonneg_right
+                (mul_le_mul_of_nonneg_right hp.le (by positivity)) (by positivity)
+            _ ≤ (ε / K) * 2 ^ n * 2 := by
+              apply mul_le_mul_of_nonneg_left ((div_le_iff₀ hX0).mpr hy.2)
+              positivity
         _ = ε / 2 := by
           dsimp [K]
           rw [pow_add]
           norm_num
           field_simp [(pow_pos (by norm_num : (0 : ℝ) < 2) n).ne']
           ring
-    exact (div_le_iff₀ (pow_pos hL n)).mpr
-      ((div_le_iff₀ hX0).mp hpoint)
+    apply (le_div_iff₀ (pow_pos hL n)).mpr
+    exact (div_le_iff₀ hX0).mp hpoint
   have h0 : 0 ≤ shellError X * log X ^ n / X := by
     exact div_nonneg (mul_nonneg (shellError_nonneg hX0.le) (pow_nonneg hL.le n)) hX0.le
   rw [Real.dist_eq, sub_zero, abs_of_nonneg h0]
-  have hh := (div_le_iff₀ (pow_pos hL n)).mp henv
+  have hh := (le_div_iff₀ (pow_pos hL n)).mp henv
   have hu : shellError X * log X ^ n / X ≤ ε / 2 := (div_le_iff₀ hX0).mpr hh
   linarith
 
@@ -128,7 +154,9 @@ private theorem uniformW_small (n : ℕ) :
   have hsq := sq_sqrt hX.le
   field_simp [hX.ne', hs0]
   rw [pow_add]
-  nlinarith only [hsq]
+  ring_nf
+  have hsq' := congrArg (fun t : ℝ => log X ^ n * t * 3) hsq
+  linarith only [hsq']
 
 private theorem eventual_scalar_estimates : ∀ᶠ X : ℝ in atTop,
     10 ≤ log X ∧
@@ -195,9 +223,14 @@ private theorem finite_seed_coefficients {L α δ δ₀ : ℝ}
     rw [hcard]
     exact Nat.ceil_lt_add_one (by linarith : 0 ≤ 100 * L)
   have hsumL : (S.card : ℝ) * (L - log 2) ≤ ∑ p ∈ S, log p := by
-    simpa using sum_le_sum (fun p hp => (hS p hp).1)
+    calc
+      _ = ∑ _p ∈ S, (L - log 2) := by rw [sum_const, nsmul_eq_mul]
+      _ ≤ ∑ p ∈ S, log p := sum_le_sum (fun p hp => (hS p hp).1)
   have hsumU : (∑ p ∈ S, log p) ≤ (S.card : ℝ) * (L + log 2) := by
-    simpa using sum_le_sum (fun p hp => (hS p hp).2)
+    calc
+      (∑ p ∈ S, log p) ≤ ∑ _p ∈ S, (L + log 2) :=
+        sum_le_sum (fun p hp => (hS p hp).2)
+      _ = _ := by rw [sum_const, nsmul_eq_mul]
   let Δ := δ₀ + ∑ p ∈ S, log p
   have hΔL : 90 * L ^ 2 ≤ Δ := by
     have hm := mul_le_mul_of_nonneg_right hsL (by linarith : 0 ≤ L - log 2)
@@ -283,14 +316,21 @@ private theorem eventual_roster_geometry : ∀ᶠ X : ℝ in atTop,
   obtain ⟨_, hreg⟩ := insertion_regret hj2 hp (by linarith) hLambda hroot hκ0 hpl.le hpu
   have hcur : goldenLayerMarginal p j < referencePrice X := by
     rw [← beta_nat hp (by omega : 1 ≤ j), ← hroot]
-    exact beta_strictAntiOn hj2 (by linarith) (by exact_mod_cast hp.two_le) hpl
+    have hcut2 : (2 : ℝ) ≤ cutoff j (referencePrice X) := by linarith [hρ]
+    exact beta_strictAntiOn hj2 hcut2
+      (by change (2 : ℝ) ≤ p; exact_mod_cast hp.two_le) hpl
   have hbetaL : referencePrice X / 2 ≤ beta j (p : ℝ) := by
     have hjr : (j : ℝ) ≤ 4 := by exact_mod_cast hj4
     rw [← beta_nat hp (by omega : 1 ≤ j)] at hreg
     have hm := mul_le_mul_of_nonneg_right hjr hκ0
     have hh := mul_le_mul_of_nonneg_right hm hLambda.le
     have hκLambda := mul_lt_mul_of_pos_right hκX hLambda
-    nlinarith only [hreg, hh, hκLambda]
+    have hbound : referencePrice X - beta j (p : ℝ) ≤
+        8 * (1 / log X ^ 6) * referencePrice X := by
+      exact hreg.trans (by nlinarith only [hh])
+    have hsmall : 8 * (1 / log X ^ 6) * referencePrice X < referencePrice X / 2 := by
+      nlinarith only [hκLambda]
+    nlinarith only [hbound, hsmall]
   have hprev := adjacent_layer_strict hj2 (by exact_mod_cast hp.two_le : (2 : ℝ) ≤ p)
   have hprev' : referencePrice X < goldenLayerMarginal p (j - 1) := by
     rw [← beta_nat hp (by omega : 1 ≤ j - 1)]
@@ -335,12 +375,12 @@ private theorem fresh_rosters : ∃ T : ℝ, 1 < T ∧ ∀ X : ℝ, T ≤ X →
   have hcard₂ : 2 * A ≤ S₂.card := by
     have hh : (2 * A : ℝ) ≤ (S₂.card : ℝ) := by
       push_cast
-      nlinarith only [hAB, hc₂, Nat.cast_nonneg B]
+      nlinarith only [hAB, hc₂, (Nat.cast_nonneg B : (0 : ℝ) ≤ B)]
     exact_mod_cast hh
   have hcard₄ : 4 * B ≤ S₄.card := by
     have hh : (4 * B : ℝ) ≤ (S₄.card : ℝ) := by
       push_cast
-      nlinarith only [hAB, hc₄, Nat.cast_nonneg A]
+      nlinarith only [hAB, hc₄, (Nat.cast_nonneg A : (0 : ℝ) ≤ A)]
     exact_mod_cast hh
   obtain ⟨P₂, hP₂, hcard₂⟩ := exists_subset_card_eq hcard₂
   obtain ⟨P₄, hP₄, hcard₄⟩ := exists_subset_card_eq hcard₄
@@ -367,9 +407,14 @@ private theorem roster_log_error {X u : ℝ} (hu : 0 < u) (P : Finset ℕ)
   have hpoint (p : ℕ) (hp : p ∈ P) : 0 ≤ log ((p : ℝ) / u) ∧
       log ((p : ℝ) / u) ≤ 1 / log X ^ 6 := by
     obtain ⟨hprime, hl, hh⟩ := hP p hp
-    have hr : 1 ≤ (p : ℝ) / u := (le_div_iff₀ hu).mpr hl.le
-    have hrU : (p : ℝ) / u ≤ 1 + 1 / log X ^ 6 := (div_le_iff₀ hu).mpr hh
-    have hlog := log_le_sub_one_of_pos (div_pos (by exact_mod_cast hprime.pos) hu)
+    have hr : 1 ≤ (p : ℝ) / u := by
+      apply (le_div_iff₀ hu).mpr
+      simpa using hl.le
+    have hrU : (p : ℝ) / u ≤ 1 + 1 / log X ^ 6 := by
+      apply (div_le_iff₀ hu).mpr
+      simpa [mul_comm] using hh
+    have hp0 : (0 : ℝ) < p := by exact_mod_cast hprime.pos
+    have hlog := log_le_sub_one_of_pos (div_pos hp0 hu)
     exact ⟨log_nonneg hr, by linarith⟩
   refine ⟨?_, sum_nonneg (fun p hp => (hpoint p hp).1), ?_⟩
   · calc
@@ -382,10 +427,12 @@ private theorem roster_log_error {X u : ℝ} (hu : 0 < u) (P : Finset ℕ)
   · have hh := sum_le_sum (fun p hp => (hpoint p hp).2)
     simpa only [sum_const, nsmul_eq_mul, div_eq_mul_inv, one_mul] using hh
 
-/-- One uniform threshold, chosen before every real clock and every actual
+/- One uniform threshold, chosen before every real clock and every actual
 Budget. The integer is constructed from the complete reference higher core,
 an actual retained prime prefix, and exactly 2A/4B distinct fresh insertions.
 The displayed remainder is the full all-layer arithmetic loss. -/
+set_option maxHeartbeats 4000000 in
+-- The proof combines the finite-sum, curvature, and full residual estimates.
 theorem actual_two_four_paid_prefix_repair :
     ∃ X0 : ℝ, 1 < X0 ∧ ∀ X : ℝ, X0 ≤ X →
       ∀ b : Budget, b.spec X → ∃ k Qprime : ℕ,
@@ -408,6 +455,7 @@ theorem actual_two_four_paid_prefix_repair :
       with X hX hXD hXF hscalar hgeo
     intro b hb
     obtain ⟨hL10, hαL, hαU, hδpos, hδα, hcL, hcU, heSmall, hCSmall, hLbig⟩ := hscalar
+    have hb_spec := hb
     obtain ⟨hb2, hbdef, hhdef, hh0, hh, hQold, hd0, hdlog, hds,
       hbudget, hpref, hr, hXr, hrX, hroot, hhigher⟩ := hb
     have hX0 : 0 < X := by linarith
@@ -417,10 +465,10 @@ theorem actual_two_four_paid_prefix_repair :
     let s : ℕ := ⌈100 * log X⌉₊
     have hs : (s : ℝ) ≤ 1000 * log X ^ 2 := by
       have hh := Nat.ceil_lt_add_one (by positivity : 0 ≤ 100 * log X)
-      dsimp [s]
+      change (⌈100 * log X⌉₊ : ℝ) ≤ 1000 * log X ^ 2
       nlinarith only [hh, hL10]
     obtain ⟨Qs, Ds, hQsprime, hQslo, hQsQ, hDs, hDscard, hDsmem, hDssum, hDsU⟩ :=
-      hTD X hXD b hb s (hs.trans (by nlinarith [sq_nonneg (log X)]))
+      hTD X hXD b hb_spec s (hs.trans (by nlinarith [sq_nonneg (log X)]))
     have hseed (p : ℕ) (hp : p ∈ Ds) :
         log X - log 2 ≤ log p ∧ log p ≤ log X + log 2 := by
       obtain ⟨hprime, hpQs, hpQ⟩ := hDsmem p hp
@@ -441,9 +489,9 @@ theorem actual_two_four_paid_prefix_repair :
     have hAB : (A + B : ℝ) ≤ 1000 * log X ^ 2 := by
       dsimp [M] at hM'
       push_cast at hM' ⊢
-      linarith only [hM', Nat.cast_nonneg s]
+      linarith only [hM', (Nat.cast_nonneg s : (0 : ℝ) ≤ s)]
     obtain ⟨Q, D, hQprime, hQlo, hQb, hD, hDcard, hDmem, hDsum, hDU⟩ :=
-      hTD X hXD b hb M (hM'.trans (by nlinarith [sq_nonneg (log X)]))
+      hTD X hXD b hb_spec M (hM'.trans (by nlinarith [sq_nonneg (log X)]))
     have hQs : Q ≤ Qs := by
       by_contra! hn
       have hsub : D ⊆ Ds := by
@@ -456,8 +504,11 @@ theorem actual_two_four_paid_prefix_repair :
         rw [hDs]
         exact mem_sdiff.mpr ⟨Nat.mem_primesLE.mpr ⟨hQb, hQprime⟩,
           fun hp => hn.not_ge (Nat.mem_primesLE.mp hp).1⟩
-      have hQnot : Q ∉ D := by rw [hD]; simp
-      have hc := card_lt_card (ssubset_iff_subset_ne.mpr ⟨hsub, by
+      have hQnot : Q ∉ D := by
+        rw [hD]
+        intro h
+        exact (mem_sdiff.mp h).2 (Nat.mem_primesLE.mpr ⟨le_rfl, hQprime⟩)
+      have hc := Finset.card_lt_card (Finset.ssubset_iff_subset_ne.mpr ⟨hsub, by
         intro he
         exact hQnot (he.symm ▸ hQDs)⟩)
       rw [hDcard, hDscard] at hc
@@ -470,7 +521,7 @@ theorem actual_two_four_paid_prefix_repair :
       exact mem_sdiff.mpr ⟨hpold, fun hpQ => hpnot ((Nat.primesLE_mono hQs) hpQ)⟩
     let T := D \ Ds
     have hTcard : T.card = A + B := by
-      rw [show T = D \ Ds from rfl, card_sdiff hseedsub, hDcard, hDscard]
+      rw [show T = D \ Ds from rfl, Finset.card_sdiff_of_subset hseedsub, hDcard, hDscard]
       dsimp [M]
       omega
     obtain ⟨P₂, P₄, hP₂card, hP₄card, hdis, hP₂, hP₄⟩ := hTF X hXF A B hAB
@@ -484,7 +535,13 @@ theorem actual_two_four_paid_prefix_repair :
       have hpρ := (cutoff_occupancy (by norm_num : 2 ≤ 2) hLambda
         (by exact_mod_cast hp.two_le)).mp hactive
       have hρU : cutoff 2 (referencePrice X) ≤
-          cutoff 2 (referencePrice X) * (1 + 1 / log X ^ 6) := by nlinarith [hgeo.1]
+          cutoff 2 (referencePrice X) * (1 + 1 / log X ^ 6) := by
+        have hcut : 0 ≤ cutoff 2 (referencePrice X) := by linarith [hgeo.1]
+        have hkappa : 0 ≤ 1 / log X ^ 6 := by positivity
+        calc
+          cutoff 2 (referencePrice X) = cutoff 2 (referencePrice X) * 1 := by ring
+          _ ≤ cutoff 2 (referencePrice X) * (1 + 1 / log X ^ 6) := by
+            exact mul_le_mul_of_nonneg_left (by linarith) hcut
       exact_mod_cast (hpρ.trans_le (hρU.trans (hgeo.2.2.1.le.trans hQlo.le))).le
     let n := strictInteger (referencePrice X)
     let base := higherCore n * prefixInteger Q
@@ -501,7 +558,8 @@ theorem actual_two_four_paid_prefix_repair :
     change log (k : ℝ) = _ at hkl
     change actualDefect X k - completeFirstLayerLoss X k = _ at hkr
     rw [← hhdef] at hkl
-    obtain ⟨hCraw, hlocal⟩ := finite_prefix_deletion_cost hX b hb hk2 hkp hQshell hQb D hD hDcard
+    obtain ⟨hCraw, hlocal⟩ :=
+      finite_prefix_deletion_cost hX b hb_spec hk2 hkp hQshell hQb D hD hDcard
     have hW0 : 0 ≤ uniformW X := by
       have hE := shellError_nonneg hX0.le
       dsimp [uniformW]
@@ -533,6 +591,8 @@ theorem actual_two_four_paid_prefix_repair :
       have ht : eD = (∑ p ∈ T, log p) - (A + B : ℝ) * log X := by
         dsimp [eD]
         rw [sum_sub_distrib, sum_const, nsmul_eq_mul, hTcard]
+        push_cast
+        ring
       change (∑ p ∈ T, log p) + (∑ p ∈ Ds, log p) = ∑ p ∈ D, log p at hs
       linarith only [hs, ht]
     have hθbudget : b.h + Chebyshev.theta (b.Q : ℝ) + b.δ = X := by
@@ -580,44 +640,73 @@ theorem actual_two_four_paid_prefix_repair :
       calc
         _ ≤ ∑ p ∈ T, |log p - log X| := abs_sum_le_sum_abs _ _
         _ ≤ ∑ _p ∈ T, (2 / X) * uniformW X := sum_le_sum hlocal'
-        _ = _ := by rw [sum_const, nsmul_eq_mul, hTcard]; ring
+        _ = _ := by
+          rw [sum_const, nsmul_eq_mul, hTcard]
+          push_cast
+          ring
     have hcount : (P₂.card + P₄.card : ℝ) ≤ 4000 * log X ^ 2 := by
       rw [hP₂card, hP₄card]
       push_cast
-      nlinarith only [hAB, Nat.cast_nonneg A]
+      nlinarith only [hAB, (Nat.cast_nonneg A : (0 : ℝ) ≤ A)]
     have heabs : |e| ≤ 4000 / log X ^ 4 + 2000 * log X ^ 2 * uniformW X / X := by
-      have he0 := (abs_sub_le (e₂ + e₄) eD).trans
-        (add_le_add_right (abs_add_le e₂ e₄) _)
-      rw [abs_of_nonneg he₂L, abs_of_nonneg he₄L] at he0
+      have he0 : |e₂ + e₄ - eD| ≤ |e₂ + e₄| + |eD| := by
+        simpa [sub_zero, zero_sub, abs_neg] using (abs_sub_le (e₂ + e₄) 0 eD)
+      have he₂L' : 0 ≤ e₂ := by simpa [e₂] using he₂L
+      have he₄L' : 0 ≤ e₄ := by simpa [e₄] using he₄L
+      have he0' := he0.trans (add_le_add_left (abs_add_le e₂ e₄) |eD|)
+      rw [abs_of_nonneg he₂L', abs_of_nonneg he₄L'] at he0'
       have hc := div_le_div_of_nonneg_right hcount (by positivity : 0 ≤ log X ^ 6)
       have hd := mul_le_mul_of_nonneg_right hAB (by positivity : 0 ≤ (2 / X) * uniformW X)
       have halg : 4000 * log X ^ 2 / log X ^ 6 = 4000 / log X ^ 4 := by
-        field_simp [hL.ne']; ring
-      dsimp [e] at *
+        field_simp [hL.ne']
+      dsimp [e, e₂, e₄] at *
       rw [halg] at hc
-      nlinarith only [he0, he₂U, he₄U, hc, heDU, hd]
+      have hsum : e₂ + e₄ ≤ (P₂.card + P₄.card : ℝ) / log X ^ 6 := by
+        calc
+          _ ≤ (P₂.card : ℝ) / log X ^ 6 + (P₄.card : ℝ) / log X ^ 6 :=
+            add_le_add he₂U he₄U
+          _ = _ := by ring
+      have hsum' : e₂ + e₄ ≤ 4000 / log X ^ 4 := hsum.trans hc
+      have hD' : |eD| ≤ 2000 * log X ^ 2 * uniformW X / X := by
+        calc
+          _ ≤ (A + B : ℝ) * (2 / X) * uniformW X := heDU
+          _ ≤ 1000 * log X ^ 2 * (2 / X * uniformW X) := by
+            simpa [mul_assoc] using hd
+          _ = 2000 * log X ^ 2 * uniformW X / X := by ring
+      exact he0'.trans (add_le_add hsum' hD')
     have hequarter : |e| ≤ curvature X / 4 := by
       have hs := mul_le_mul_of_nonneg_left heabs (sq_nonneg (log X))
       have healg : log X ^ 2 * (4000 / log X ^ 4 + 2000 * log X ^ 2 * uniformW X / X) =
           4000 / log X ^ 2 + 2000 * (uniformW X * log X ^ 4 / X) := by
-        field_simp [hL.ne', hX0.ne']; ring
+        field_simp [hL.ne', hX0.ne']
       rw [healg] at hs
-      apply (mul_le_mul_left (sq_pos_of_pos hL)).mp
-      nlinarith only [hs, heSmall, hcL]
+      have hprod : log X ^ 2 * |e| ≤ log X ^ 2 * (curvature X / 4) := by
+        nlinarith only [hs, heSmall, hcL]
+      exact le_of_mul_le_mul_left hprod (sq_pos_of_pos hL)
     have hslackL : 3 * curvature X / 4 ≤ X - log (k : ℝ) := by
       rw [hlogexact]
       have heL := (abs_le.mp hequarter).2
       have hmesh := hmeshL
       change curvature X ≤ Δ - A * offset 2 X - B * (2 * offset 2 X + curvature X) at hmesh
-      dsimp only [curvature] at hmesh ⊢
-      linarith only [hmesh, heL]
+      have hmesh' : curvature X ≤ Δ - A * offset 2 X - B * offset 4 X := by
+        calc
+          _ ≤ Δ - A * offset 2 X - B * (2 * offset 2 X + curvature X) := hmesh
+          _ = Δ - A * offset 2 X - B * offset 4 X := by
+            dsimp [curvature]
+            ring
+      nlinarith only [hmesh', heL]
     have hslackU : X - log (k : ℝ) < 9 * curvature X / 4 := by
       rw [hlogexact]
       have heL := (abs_le.mp hequarter).1
       have hmesh := hmeshU
       change Δ - A * offset 2 X - B * (2 * offset 2 X + curvature X) < 2 * curvature X at hmesh
-      dsimp only [curvature] at hmesh ⊢
-      linarith only [hmesh, heL]
+      have hmesh' : Δ - A * offset 2 X - B * offset 4 X < 2 * curvature X := by
+        calc
+          _ = Δ - A * offset 2 X - B * (2 * offset 2 X + curvature X) := by
+            dsimp [curvature]
+            ring
+          _ < _ := hmesh
+      nlinarith only [hmesh', heL]
     have hCscaled : |completeFirstLayerLoss X k - completeFirstLayerLoss X b.k| ≤
         referencePrice X / log X ^ 2 := by
       have hbound : |completeFirstLayerLoss X k - completeFirstLayerLoss X b.k| ≤
@@ -634,42 +723,76 @@ theorem actual_two_four_paid_prefix_repair :
           _ ≤ (1000 * log X ^ 2) * ((6 / X ^ 2) * uniformW X) :=
             mul_le_mul_of_nonneg_right hM' (by positivity)
           _ ≤ _ := by
-            have hp := mul_nonneg hW0 (sq_nonneg (log X))
-            apply (div_le_iff₀ (sq_pos_of_pos hX0)).mpr
-            field_simp [hX0.ne']
-            nlinarith only [hp]
+            have hfactor : 0 ≤ uniformW X * log X ^ 2 / X ^ 2 := by positivity
+            have heq :
+                (1000 * log X ^ 2) * ((6 / X ^ 2) * uniformW X) =
+                  6000 * (uniformW X * log X ^ 2 / X ^ 2) := by
+              field_simp [hX0.ne']
+              ring
+            rw [heq]
+            calc
+              _ ≤ 24000 * (uniformW X * log X ^ 2 / X ^ 2) :=
+                mul_le_mul_of_nonneg_right (by norm_num : (6000 : ℝ) ≤ 24000) hfactor
+              _ = 24000 * uniformW X * log X ^ 2 / X ^ 2 := by ring
       apply hbound.trans
       have heq : 24000 * uniformW X * log X ^ 2 / X ^ 2 =
           (24000 * (uniformW X * log X ^ 5 / X)) * (referencePrice X / log X ^ 2) := by
         dsimp [referencePrice]
         field_simp [hX0.ne', hL.ne']
-        ring
       rw [heq]
       exact mul_le_of_le_one_left (div_nonneg hLambda.le (sq_nonneg _)) hCSmall
     have hRhigher : actualDefect X k - completeFirstLayerLoss X k ≤
         referencePrice X / log X ^ 2 := by
-      have hroot₂ := (cutoff_spec (by norm_num : 2 ≤ 2) hLambda).2.2.1 (by linarith [hgeo.1])
-      have hroot₄ := (cutoff_spec (by norm_num : 2 ≤ 4) hLambda).2.2.1 (by linarith [hgeo.2.1])
+      have hcut₂ : (2 : ℝ) < cutoff 2 (referencePrice X) := by
+        linarith only [hgeo.1]
+      have hroot₂ := (cutoff_spec (by norm_num : 2 ≤ 2) hLambda).2.2.1 hcut₂
+      have hroot₄ := (cutoff_spec (by norm_num : 2 ≤ 4) hLambda).2.2.1
+        (by linarith only [hgeo.2.1])
       have hterm₂ (p : ℕ) (hp : p ∈ P₂) :
           (referencePrice X - goldenLayerMarginal p 2) * log p ≤
             8 * (1 / log X ^ 6) * referencePrice X * log X := by
         have he := insertion_regret (by norm_num : 2 ≤ 2) (hP₂ p hp).1
-          (by linarith [hgeo.1]) hLambda hroot₂ hκ (hP₂ p hp).2.1.le (hP₂ p hp).2.2.1
+          hcut₂.le hLambda hroot₂ hκ (hP₂ p hp).2.1.le (hP₂ p hp).2.2.1
         norm_num only [Nat.cast_ofNat] at he
         have hlog := (hP₂ p hp).2.2.2.2.2
         have hl0 := (hP₂ p hp).1.log_pos.le
         calc
           _ ≤ 4 * (1 / log X ^ 6) * referencePrice X * log X := by
-            simpa using mul_le_mul he.2 hlog hl0 (by positivity : 0 ≤ 4 * (1 / log X ^ 6) * referencePrice X)
-          _ ≤ _ := by gcongr; norm_num
+            calc
+              _ ≤ (4 * (1 / log X ^ 6) * referencePrice X) * log p :=
+                mul_le_mul_of_nonneg_right he.2 hl0
+              _ ≤ (4 * (1 / log X ^ 6) * referencePrice X) * log X :=
+                mul_le_mul_of_nonneg_left hlog (by positivity)
+              _ = _ := by ring
+          _ ≤ _ := by
+            calc
+              4 * (1 / log X ^ 6) * referencePrice X * log X =
+                  4 * ((1 / log X ^ 6) * referencePrice X * log X) := by ring
+              _ ≤ 8 * ((1 / log X ^ 6) * referencePrice X * log X) := by
+                exact mul_le_mul_of_nonneg_right (by norm_num) (by positivity)
+              _ = 8 * (1 / log X ^ 6) * referencePrice X * log X := by ring
       have hterm₄ (p : ℕ) (hp : p ∈ P₄) :
           (referencePrice X - goldenLayerMarginal p 4) * log p ≤
             8 * (1 / log X ^ 6) * referencePrice X * log X := by
+        have hcut4 : (2 : ℝ) < cutoff 4 (referencePrice X) := by
+          linarith only [hgeo.2.1]
         have he := insertion_regret (by norm_num : 2 ≤ 4) (hP₄ p hp).1
-          (by linarith [hgeo.2.1]) hLambda hroot₄ hκ (hP₄ p hp).2.1.le (hP₄ p hp).2.2.1
+          hcut4.le hLambda hroot₄ hκ (hP₄ p hp).2.1.le (hP₄ p hp).2.2.1
         norm_num only [Nat.cast_ofNat] at he
         exact mul_le_mul he.2 (hP₄ p hp).2.2.2.2.2 (hP₄ p hp).1.log_pos.le (by positivity)
-      have hsum := add_le_add (sum_le_sum hterm₂) (sum_le_sum hterm₄)
+      have hsum₂ : (∑ p ∈ P₂, (referencePrice X - goldenLayerMarginal p 2) * log p) ≤
+          ∑ _p ∈ P₂, 8 * (1 / log X ^ 6) * referencePrice X * log X :=
+        by
+          apply sum_le_sum
+          intro p hp
+          exact hterm₂ p hp
+      have hsum₄ : (∑ p ∈ P₄, (referencePrice X - goldenLayerMarginal p 4) * log p) ≤
+          ∑ _p ∈ P₄, 8 * (1 / log X ^ 6) * referencePrice X * log X :=
+        by
+          apply sum_le_sum
+          intro p hp
+          exact hterm₄ p hp
+      have hsum := add_le_add hsum₂ hsum₄
       rw [sum_const, sum_const, nsmul_eq_mul, nsmul_eq_mul] at hsum
       have hcount' := mul_le_mul_of_nonneg_right hcount
         (by positivity : 0 ≤ 8 * (1 / log X ^ 6) * referencePrice X * log X)
@@ -686,24 +809,31 @@ theorem actual_two_four_paid_prefix_repair :
       have hh := mul_le_mul_of_nonneg_right hLbig
         (mul_nonneg hLambda.le (sq_nonneg (log X)))
       nlinarith only [hh]
-    have hlog2U : log (2 : ℝ) ≤ 1 := by
-      simpa using log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 2)
-    have hlog20 : 0 ≤ log (2 : ℝ) := (log_pos (by norm_num)).le
-    have hlog2sq : log (2 : ℝ) ^ 2 ≤ 1 := by nlinarith only [hlog2U, hlog20]
+    have hlog2U : log (2 : ℝ) ≤ 1 := log_two_le_one
+    have hlog20 : 0 ≤ log (2 : ℝ) := log_two_nonneg
+    have hlog2sq : log (2 : ℝ) ^ 2 ≤ 1 := log_two_sq_le_one
     have hslackCost : referencePrice X * (X - log (k : ℝ)) ≤
         (9 / 2 : ℝ) * log 2 ^ 2 * (referencePrice X / log X ^ 2) := by
       have hδU : curvature X ≤ 2 * log 2 ^ 2 / log X ^ 2 :=
-        (le_div_iff₀ (sq_pos_of_pos hL)).mpr (by nlinarith only [hcU])
+        le_div_log_sq (a := curvature X) (b := 2 * log 2 ^ 2)
+          (L := log X) hL hcU
       have hsu : X - log (k : ℝ) ≤ (9 / 4 : ℝ) * curvature X := by
         linarith only [hslackU.le]
-      have hh := mul_le_mul_of_nonneg_left (hsu.trans
-        (mul_le_mul_of_nonneg_left hδU (by norm_num : (0 : ℝ) ≤ 9 / 4))) hLambda.le
+      have hmul : (9 / 4 : ℝ) * curvature X ≤
+          (9 / 4 : ℝ) * (2 * log 2 ^ 2 / log X ^ 2) :=
+        mul_le_mul_of_nonneg_left hδU (by norm_num)
+      have hgap : X - log (k : ℝ) ≤
+          (9 / 4 : ℝ) * (2 * log 2 ^ 2 / log X ^ 2) := hsu.trans hmul
+      have hh := mul_le_mul_of_nonneg_left hgap hLambda.le
       convert hh using 1 <;> ring
     refine ⟨k, Q, hk2, hQprime, hQlo, hQshell.2, hkp, ?_, ?_⟩
-    · linarith only [hslackL, hδpos]
+    · have hpos : 0 < 3 * curvature X / 4 :=
+        three_curvature_div_four_pos (c := curvature X) hδpos
+      have hgap : 0 < X - log (k : ℝ) := lt_of_lt_of_le hpos hslackL
+      linarith only [hgap]
     · have htarget : 10 / (X * log X ^ 3) = 10 * (referencePrice X / log X ^ 2) := by
         dsimp [referencePrice]
-        field_simp [hX0.ne', hL.ne'] <;> ring
+        field_simp [hX0.ne', hL.ne']
       rw [htarget]
       have hh := mul_le_mul_of_nonneg_right hlog2sq
         (by positivity : 0 ≤ referencePrice X / log X ^ 2)
