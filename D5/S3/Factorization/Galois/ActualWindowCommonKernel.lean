@@ -4,7 +4,7 @@
    mirror-E: none(waiver:algebraically-proved)
    anchors: []
    utility: none
-   digest: Actual common kernels identify simultaneous window intersections and rank minimizers. -/
+   digest: Common window kernels and source drafts of general-position common-row partition rank. -/
 
 import Mathlib.Algebra.Algebra.Operations
 import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
@@ -553,8 +553,7 @@ private theorem span_common_rows_eq_cut {β : Type*} (b : β → E)
       simp [hxφ, smul_smul, hk]
   have himage : π '' Set.range b =
       Set.range (fun i => φ (b k) • b i - φ (b i) • b k) := by
-    rw [Set.image_range]
-    rfl
+    exact Set.image_range π b
   rw [show P = Submodule.span K (Set.range b) from rfl,
     Submodule.map_span, himage] at hmap
   exact hmap
