@@ -424,27 +424,19 @@ theorem cycle_face_sides [Fintype V] [DecidableEq V] [DecidableRel G.Adj]
       · exact hw
   have hrestrict (S : Set V) (hS : S ∈ ({I, J} : Set (Set V))) :=
     restrict_matching (G.induce {v | v ∉ p.support}) {v | v.val ∈ S} (hclosed S hS) M hm
-  refine ⟨hrestrict, ?_, ?_⟩
-  all_goals
-    have hS : ∀ v, v ∈ I → v ∉ p.support := fun _ h => h.1
-    try { clear hS; have hS : ∀ v, v ∈ J → v ∉ p.support := fun _ h => h.1 }
-    first
-    | obtain ⟨N, hN, _⟩ := hrestrict I (by simp)
-      have hcard := hN.even_card
-      let e : {v : {v | v ∉ p.support} // v.val ∈ I} ≃ I := {
-        toFun := fun v => ⟨v.val.val, v.property⟩
-        invFun := fun v => ⟨⟨v.val, v.property.1⟩, v.property⟩
-        left_inv := fun _ => rfl
-        right_inv := fun _ => rfl }
-      rwa [← Nat.card_eq_fintype_card, Nat.card_congr e] at hcard
-    | obtain ⟨N, hN, _⟩ := hrestrict J (by simp)
-      have hcard := hN.even_card
-      let e : {v : {v | v ∉ p.support} // v.val ∈ J} ≃ J := {
-        toFun := fun v => ⟨v.val.val, v.property⟩
-        invFun := fun v => ⟨⟨v.val, v.property.1⟩, v.property⟩
-        left_inv := fun _ => rfl
-        right_inv := fun _ => rfl }
-      rwa [← Nat.card_eq_fintype_card, Nat.card_congr e] at hcard
+  have heven (S : Set V) (hS : S ∈ ({I, J} : Set (Set V)))
+      (hsub : ∀ v ∈ S, v ∉ p.support) : Even (Nat.card S) := by
+    obtain ⟨N, hN, _⟩ := hrestrict S hS
+    have hcard := hN.even_card
+    let e : {v : {v | v ∉ p.support} // v.val ∈ S} ≃ S := {
+      toFun := fun v => ⟨v.val.val, v.property⟩
+      invFun := fun v => ⟨⟨v.val, hsub v.val v.property⟩, v.property⟩
+      left_inv := fun _ => rfl
+      right_inv := fun _ => rfl }
+    rw [← Nat.card_eq_fintype_card] at hcard
+    exact (Nat.card_congr e) ▸ hcard
+  exact ⟨hrestrict, heven I (by simp) (fun _ h => h.1),
+    heven J (by simp) (fun _ h => h.1)⟩
 
 #print axioms cycle_face_sides
 
