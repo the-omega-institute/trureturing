@@ -2,7 +2,7 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.FiniteGroups;
+namespace StrataLint.Scribe.Blueprint.D5.S3.FiniteGroups.Partitions;
 
 internal sealed class UniformPartitionAutomorphismsDocument : IScribeDocumentDefinition
 {
@@ -24,7 +24,7 @@ internal sealed class UniformPartitionAutomorphismsDocument : IScribeDocumentDef
         string text, DescribeRole role = DescribeRole.Definition) =>
         Describe.Lean(DescribeId.Create("uniform-partition-" +
                 (name == "Coordinates" ? "coordinate-type" : name.Replace('_', '-').ToLowerInvariant())),
-            DeclarationHandle.Create("D5/S3/FiniteGroups/UniformPartitionAutomorphisms." + name),
+            DeclarationHandle.Create("D5/S3/FiniteGroups/Partitions/UniformPartitionAutomorphisms." + name),
             H(title), StatementSource.FromAuthor(Disp(f)), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(text))), role);
 

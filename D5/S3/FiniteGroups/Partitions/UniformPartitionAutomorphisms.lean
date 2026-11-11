@@ -1,4 +1,4 @@
-/- GID: D5/S3/FiniteGroups/UniformPartitionAutomorphisms
+/- GID: D5/S3/FiniteGroups/Partitions/UniformPartitionAutomorphisms
    generality: G
    mirror-B: none(waiver:no-separate-boolean-mirror-claimed)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)

@@ -10,7 +10,7 @@ For x and y in K times L, the relation is equality of first coordinates. Aut is 
 
 $$\forall K \in Typeu,\; \forall L \in Typev,\; \operatorname{Subgroup}\left(\operatorname{Perm}\left(\operatorname{Product}\left(K, L\right)\right)\right)$$
 
-*Formalization.* `D5/S3/FiniteGroups/UniformPartitionAutomorphisms.Aut` (`✓ std3`).
+*Formalization.* `D5/S3/FiniteGroups/Partitions/UniformPartitionAutomorphisms.Aut` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -22,7 +22,7 @@ The subgroup consists of precisely those p for which the first coordinates of p(
 
 $$\forall K \in Typeu,\; \forall L \in Typev,\; \operatorname{MonoidHom}\left(\operatorname{Perm}\left(K\right), \operatorname{MulAut}\left(K \to \operatorname{Perm}\left(L\right)\right)\right)$$
 
-*Formalization.* `D5/S3/FiniteGroups/UniformPartitionAutomorphisms.reindex` (`✓ std3`).
+*Formalization.* `D5/S3/FiniteGroups/Partitions/UniformPartitionAutomorphisms.reindex` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -34,7 +34,7 @@ For a block permutation alpha, reindex(alpha)(tau)(w) is tau(alpha inverse(w)). 
 
 $$\forall K \in Typeu,\; \forall L \in Typev,\; \operatorname{Coordinates}\left(K, L\right) = \operatorname{SemidirectProduct}\left(K \to \operatorname{Perm}\left(L\right), \operatorname{Perm}\left(K\right), \operatorname{reindex}\left(K, L\right)\right)$$
 
-*Formalization.* `D5/S3/FiniteGroups/UniformPartitionAutomorphisms.Coordinates` (`✓ std3`).
+*Formalization.* `D5/S3/FiniteGroups/Partitions/UniformPartitionAutomorphisms.Coordinates` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -46,7 +46,7 @@ Writing coordinates as (sigma,alpha), their product with (tau,beta) is (eta,alph
 
 $$\forall K \in Typeu,\; \forall L \in Typev,\; \left(K \to \operatorname{Perm}\left(L\right)\right) \to \left(\operatorname{Perm}\left(K\right) \to \operatorname{Aut}\left(K, L\right)\right)$$
 
-*Formalization.* `D5/S3/FiniteGroups/UniformPartitionAutomorphisms.assemble` (`✓ std3`).
+*Formalization.* `D5/S3/FiniteGroups/Partitions/UniformPartitionAutomorphisms.assemble` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -58,7 +58,7 @@ assemble(s,a) sends (v,t) to (a(v),s(a(v))(t)). It is built with prodCongr follo
 
 $$\forall K \in Typeu,\; \forall L \in Typev,\; \operatorname{Nonempty}\left(L\right) \Rightarrow \operatorname{Equiv}\left(\operatorname{Aut}\left(K, L\right), \operatorname{Coordinates}\left(K, L\right)\right)$$
 
-*Formalization.* `D5/S3/FiniteGroups/UniformPartitionAutomorphisms.coordinates` (`✓ std3`).
+*Formalization.* `D5/S3/FiniteGroups/Partitions/UniformPartitionAutomorphisms.coordinates` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -70,7 +70,7 @@ Choose any t in the nonempty fiber type. For p in Aut, alpha(v) is the first coo
 
 $$\forall K \in Typeu,\; \forall L \in Typev,\; \operatorname{Nonempty}\left(L\right) \Rightarrow \operatorname{MulEquiv}\left(\operatorname{Aut}\left(K, L\right), \operatorname{Coordinates}\left(K, L\right)\right)$$
 
-*Formalization.* `D5/S3/FiniteGroups/UniformPartitionAutomorphisms.automorphismEquiv` (`✓ std3`).
+*Formalization.* `D5/S3/FiniteGroups/Partitions/UniformPartitionAutomorphisms.automorphismEquiv` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -82,7 +82,7 @@ The coordinate equivalence is multiplicative. Composing two assembled actions gi
 
 $$\forall K \in Typeu,\; \forall L \in Typev,\; \left(\operatorname{Finite}\left(K\right) \land \left(\operatorname{Finite}\left(L\right) \land \operatorname{Nonempty}\left(L\right)\right)\right) \Rightarrow \operatorname{card}\left(\operatorname{Aut}\left(K, L\right)\right) = \operatorname{power}\left(\operatorname{factorial}\left(\operatorname{card}\left(L\right)\right), \operatorname{card}\left(K\right)\right) \cdot \operatorname{factorial}\left(\operatorname{card}\left(K\right)\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/UniformPartitionAutomorphisms.card_aut` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/Partitions/UniformPartitionAutomorphisms.card_aut` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -94,11 +94,11 @@ This construction supplies the full uniform-block symmetry structure needed afte
 
 ## References
 
-- Truth anchor: `D5/S3/FiniteGroups/UniformPartitionAutomorphisms.Aut`
-- Truth anchor: `D5/S3/FiniteGroups/UniformPartitionAutomorphisms.Coordinates`
-- Truth anchor: `D5/S3/FiniteGroups/UniformPartitionAutomorphisms.assemble`
-- Truth anchor: `D5/S3/FiniteGroups/UniformPartitionAutomorphisms.automorphismEquiv`
-- Truth anchor: `D5/S3/FiniteGroups/UniformPartitionAutomorphisms.card_aut`
-- Truth anchor: `D5/S3/FiniteGroups/UniformPartitionAutomorphisms.coordinates`
-- Truth anchor: `D5/S3/FiniteGroups/UniformPartitionAutomorphisms.reindex`
-- Dependency: [D5/S3/FiniteGroups/SuccessorQuotient](SuccessorQuotient.md)
+- Truth anchor: `D5/S3/FiniteGroups/Partitions/UniformPartitionAutomorphisms.Aut`
+- Truth anchor: `D5/S3/FiniteGroups/Partitions/UniformPartitionAutomorphisms.Coordinates`
+- Truth anchor: `D5/S3/FiniteGroups/Partitions/UniformPartitionAutomorphisms.assemble`
+- Truth anchor: `D5/S3/FiniteGroups/Partitions/UniformPartitionAutomorphisms.automorphismEquiv`
+- Truth anchor: `D5/S3/FiniteGroups/Partitions/UniformPartitionAutomorphisms.card_aut`
+- Truth anchor: `D5/S3/FiniteGroups/Partitions/UniformPartitionAutomorphisms.coordinates`
+- Truth anchor: `D5/S3/FiniteGroups/Partitions/UniformPartitionAutomorphisms.reindex`
+- Dependency: [D5/S3/FiniteGroups/SuccessorQuotient](../SuccessorQuotient.md)
