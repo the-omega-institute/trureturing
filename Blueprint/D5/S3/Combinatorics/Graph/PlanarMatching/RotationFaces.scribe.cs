@@ -10,7 +10,7 @@ internal sealed class RotationFacesDocument : IScribeDocumentDefinition
         LibraryNoteRef.Create("D5/L/StatisticalMechanics/cimasoni2007dimers");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Signed-Euler-two actual-dart rotations have exact binary facial boundaries, connected edge-selected cycle sides, regional Euler identities and actual matching restrictions.",
+        "Signed-Euler-two actual-dart rotations have exact binary facial boundaries, connected edge-selected cycle sides, regional Euler identities, actual matching restrictions and nice-cycle orientations.",
         H("Actual facial boundaries and cycle sides"),
         Blocks(
             Paragraph(Text(
@@ -70,9 +70,30 @@ internal sealed class RotationFacesDocument : IScribeDocumentDefinition
                         + "Thus the restriction retains exactly the original matching edges. Both Nat.card I and Nat.card J are even, by the existing IsPerfectMatching.even_card theorem and the explicit vertex-subtype equivalence. "
                         + "No matching on a replacement carrier and no supplied interior parity is used."))),
                 DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("face-odd-nice-cycle-orientation"),
+                DeclarationHandle.Create(Prefix + "face_odd_nice_cycle_orientation"),
+                H("Face-odd orientations are odd on actual nice even cycles"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(
+                    Paragraph(Text(
+                        "For every finite V, connected actual simple graph G with a dart, and Rotation satisfying the signed integer Euler equation, suppose card(V) is even. "
+                        + "There exists an actual dart function epsilon with values in ZMod 2. For every actual dart d, epsilon(alpha(d)) equals one plus epsilon(d). "
+                        + "For every face f, faceOpposition epsilon f equals one. faceOpposition sums epsilon(d) over all actual darts whose facial class is f, retaining dart multiplicity and every face orbit. "
+                        + "For every vertex a and actual simple closed walk p at a of even length, and every actual perfect matching M of G induced on the vertices outside p.support, "
+                        + "the sum of epsilon over the list p.darts equals one.")),
+                    Paragraph(Text(
+                        "Start with an arbitrary actual orientation and solve its facial defects through the transpose of the binary boundary map. "
+                        + "The already proved constant kernel identifies the only compatibility condition: the total defect is zero. The signed global Euler equation and even vertex count prove that condition. "
+                        + "The existing algebraic dual-map theorem supplies an edge correction. Applying it to both darts of each edge preserves opposition reversal and makes every facial orbit odd.")),
+                    Paragraph(Text(
+                        "The nice-cycle proof consumes cycle_face_sides on that exact G and p. It sums the face equations over one proved side. "
+                        + "Each selected internal edge contributes one, and the proved directed boundary contributes the epsilon sum over p or p.reverse. "
+                        + "The signed regional Euler identity turns this sum into one plus the off-cycle side cardinality. "
+                        + "The actual complement matching restricts through the proved no-cross-edge result, so the existing perfect-matching parity theorem makes that side cardinality even. "
+                        + "Reversal preserves the epsilon sum because p has even length. Interior parity, side separation and regional Euler are conclusions of this chain."))),
+                DescribeRole.Theorem),
             Paragraph(Text(
                 "The two facial subsets are x inverse-image of one and x inverse-image of zero; binary values make them complementary and both are nonempty. "
-                + "These results establish face-to-cycle exactness, actual side separation, connected edge-selected regions and matching restriction. "
-                + "They do not establish existence of the face-odd and nice-cycle-odd orientation. "
-                + "Those are necessary remaining statements for the complete orientation prerequisite. Geometric embedding correspondence, matching-sign transport, the Pfaffian expansion, Cayley's identity, nonnegative weights, rational bit complexity and general bipartite counting complexity also remain outside these results."))), []));
+                + "These results establish face-to-cycle exactness, actual side separation, connected edge-selected regions, both regional Euler identities, directed boundaries, matching restriction and the face-odd nice-cycle orientation. "
+                + "Geometric embedding correspondence and arbitrary graph cases, matching-sign transport, compatible Pfaffian expansion, Cayley's identity and nonnegative-weight partition identities including zero cases, rational input and bit complexity, and general bipartite counting complexity remain outside these results. This is an application of mature Kasteleyn theory in the stated finite rotation model; no research originality or full Chapter 30 completion is claimed."))), []));
 }

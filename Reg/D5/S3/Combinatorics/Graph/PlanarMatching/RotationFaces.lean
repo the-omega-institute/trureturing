@@ -114,7 +114,8 @@ def orientationSignature : Signature where
   finiteAnchor := inferInstance
 
 def orientationActual : Realization orientationSignature :=
-  realize orientationSignature (fun _ p ε => p.R.faceOpposition ε) (fun e => nomatch e)
+  realize orientationSignature (fun _ p ε =>
+    @Rotation.faceOpposition p.V p.G p.R p.vertices p.adjacency ε) (fun e => nomatch e)
 
 def orientationLaw (L : Realization orientationSignature.{u}) : Prop :=
   ∀ p, model p → Even (Fintype.card p.V) →
@@ -135,6 +136,15 @@ theorem orientation_bridge :
     exact @h p.V p.G p.R p.vertices p.vertexEq p.adjacency hc he hE hEven
   · intro h V G R fV dV dG hc he hE hEven
     exact h ⟨V,fV,dV,G,dG,R⟩ ⟨hc,he,hE⟩ hEven
+
+theorem face_actual : faceArena.{u}.Law actual.{u} :=
+  face_bridge.mp (@Rotation.face_cycle_exact.{u})
+
+theorem side_actual : sideArena.{u}.Law actual.{u} :=
+  side_bridge.mp (@Rotation.cycle_face_sides.{u})
+
+theorem orientation_actual : orientationArena.{u}.Law orientationActual.{u} :=
+  orientation_bridge.mp (@Rotation.face_odd_nice_cycle_orientation.{u})
 
 #print axioms orientation_bridge
 
