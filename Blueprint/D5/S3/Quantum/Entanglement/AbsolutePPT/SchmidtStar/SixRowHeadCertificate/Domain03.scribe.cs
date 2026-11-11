@@ -9,6 +9,6 @@ internal sealed class Domain03Document : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("sixrowheadcertificate-domain03-node325"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowHeadCertificate/Domain03.node325"),
                 H("Feasible subtree"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("theorem node325 (z k h : ℝ)\n    (hz : (21 / 32) ≤ z) (hZ : z ≤ (3 / 4))\n    (hk : (3 / 4) ≤ k) (hK : k ≤ 1)\n    (hh : (3 / 8) ≤ h) (hH : h ≤ (3 / 4))\n    (hg : 0 ≤ constraint z k h) : 0 ≤ P z k h"))), DescribeRole.Theorem)
+                Blocks(Paragraph(Text("theorem node325 (z k h : ℝ)     (hz : (21 / 32) ≤ z) (hZ : z ≤ (3 / 4))     (hk : (3 / 4) ≤ k) (hK : k ≤ 1)     (hh : (3 / 8) ≤ h) (hH : h ≤ (3 / 4))     (hg : 0 ≤ constraint z k h) : 0 ≤ P z k h"))), DescribeRole.Theorem)
         )));
 }
