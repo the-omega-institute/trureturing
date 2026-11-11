@@ -2435,3 +2435,197 @@ a literature-priority claim or completion of the sustained origin goal.
 保迹，缺少的 $p_{12}=[L(\cdot,1_A)]^*$ 由未归一化单位唯一给出，得到含
 经典扇区的复量子几何、Born 概率与普通张量积；同一三份系统上可构造换
 括号和换标签，物理仪器、参考扩张、测量时间、动力学及更高份一致性仍各自独立。
+
+## One preparation determines the binary preparation
+
+The primitive bilinear map $M$ and its separately supplied positivity
+can both be deleted from the
+[three-map presentation](#three-primitive-maps-and-the-forced-missing-pair-view).
+The following repo-derived reconstruction uses only its trace identities
+and spanning to extend the crossing laws. It precedes, and does not
+invoke, the binary marginal theorem or a Jordan classification.
+
+### Reconstruction even from an initially nonpositive preparation
+
+Let $A,D,E$ be actual nonzero finite-dimensional canonical-trace EJAs
+with the full cones, states, effects and trace pairings specified in
+(39). Let $M:A\times A\to D$ be real-bilinear and real-spanning,
+**without assuming positivity of $M$**. Retain real-bilinear
+$L:D\times A\to E$, positive on the entire $D_+\times A_+$ and with
+real span $E$. Retain globally positive real-linear
+$r:D\to A$, $p_{13},p_{23}:E\to D$, TP only for $r,p_{13}$, and
+exactly the three identities (39) for all real $a,b,c$.
+
+**Reconstruction theorem.** For every real $d\in D$ and $a,b\in A$,
+
+$$
+F_d(a,b):=p_{23}L\bigl(p_{13}L(d,a),b\bigr)
+       =\tau_D(d)M(a,b).
+\tag{51}
+$$
+
+Consequently $M$ is positive and $p_{23}$ is TP. The equality includes
+signed and trace-zero $d$, with no interiority or sector restriction.
+
+**Proof.** The trace calculation (41) uses no positivity of $M$:
+$\tau_DM(a,b)=\tau_A(a)\tau_A(b)$ follows from TP of $r$ and its law.
+TP of $p_{13}$ and its crossing law then give
+$\tau_EQ(a,b,c)=\tau_A(a)\tau_A(b)\tau_A(c)$, where
+$Q(a,b,c)=L(M(a,b),c)$. The $p_{23}$ law gives the same value for
+$\tau_Dp_{23}Q(a,b,c)$. The two spans imply that these $Q$-products
+span $E$, proving $\tau_Dp_{23}=\tau_E$. Expanding an arbitrary $d$
+in $M$-products also proves
+$\tau_EL(d,c)=\tau_D(d)\tau_A(c)$ for every real $d,c$.
+
+Put $c_0=1_A/\tau_A(1_A)$ and $K(d)=L(d,c_0)$. Nonzeroness makes
+the denominator positive. Full-domain positivity and the trace formula
+make $K$ positive TP. Thus the derived $r_2=rp_{23}K$ is positive TP,
+and (39) gives $r_2M(a,b)=\tau_A(a)b$. These values on spanning
+products make $r_2$ unique and independent of the chosen normalized
+positive $c_0$. Checking the two crossing laws on $M$-products and
+extending by bilinearity now gives the decisive all-vector extensions:
+
+$$
+p_{13}L(d,c)=M(rd,c),\qquad
+p_{23}L(d,c)=M(r_2d,c)
+\quad(d\in D,\ c\in A).
+\tag{52}
+$$
+
+For arbitrary real $d,a$, set $S_d(a)=p_{13}L(d,a)$. The first identity
+and the $r_2$ product law give
+$r_2S_d(a)=\tau_A(rd)a=\tau_D(d)a$. The second identity therefore gives
+$F_d(a,b)=M(r_2S_d(a),b)=\tau_D(d)M(a,b)$, proving (51).
+Choose any $\omega\ge0$ with $\tau_D(\omega)=1$, for example
+$1_D/\tau_D(1_D)$. For $a,b\ge0$ the defining composition for
+$F_\omega(a,b)$ is positive, using full-domain positivity of $L$ at
+the intermediate $S_\omega(a)\in D_+$. Equation (51)
+identifies it with $M(a,b)$, proving positivity without a binary theorem.
+Moreover $S_\omega$ is positive TP by the trace formula, and
+$r_2S_\omega=\mathrm{id}_A$. Neither $r_2$ nor $S_\omega$ was supplied.
+Scalar, direct-sum and exceptional EJAs are all allowed at this stage.
+
+### Complete reduced Jordan candidate and unique extension
+
+The primitive data are **only** the actual nonzero finite-dimensional
+canonical-trace EJAs $A,D,E$, a real-bilinear $L:D\times A\to E$,
+and real-linear $r:D\to A$, $p_{13},p_{23}:E\to D$. Keep all square
+cones, all positive trace-one states and all effects $[0,1_X]$, with
+primitive-idempotent trace one in every sector. Define internally
+
+$$
+\omega_0:=\frac{1_D}{\tau_D(1_D)},\qquad
+M_0(a,b):=p_{23}L\bigl(p_{13}L(\omega_0,a),b\bigr),\qquad
+Q_0(a,b,c):=L(M_0(a,b),c).
+\tag{53}
+$$
+
+Require $L(D_+,A_+)\subseteq E_+$ on the **whole** indicated cone pair,
+including entangled $d$, and global positivity of **all three** readbacks,
+including $r$. Require TP only as $\tau_Ar=\tau_D$ and
+$\tau_Dp_{13}=\tau_E$. Retain exactly two actual real spans,
+
+$$
+\operatorname{span}_{\mathbb R}\{M_0(a,b):a,b\in A\}=D,\qquad
+\operatorname{span}_{\mathbb R}\{L(d,c):d\in D,c\in A\}=E,
+\tag{54}
+$$
+
+and the three original laws, on **all real** $a,b,c\in A$,
+
+$$
+\begin{aligned}
+rM_0(a,b)&=\tau_A(b)a,\\
+p_{13}Q_0(a,b,c)&=\tau_A(b)M_0(a,c),\\
+p_{23}Q_0(a,b,c)&=\tau_A(a)M_0(b,c).
+\end{aligned}
+\tag{55}
+$$
+
+This is a complete conditional candidate by presentation equivalence.
+Indeed (53) is bilinear in $a,b$ and positive by composition, so
+adjoining $M=M_0$ gives exactly (39), its two preparation spans and its
+positivity scopes. Conversely, forgetting $M$ from any such model and
+forming (53) recovers $M_0=M$ by (51). Forgetting and adjoining are
+mutually inverse on the fixed actual carriers and retained maps.
+Uniqueness holds even among initially nonpositive bilinear spanning
+extensions $M$ with these same maps and laws: (51) forces each to equal
+$M_0$. Applied to this extension it also gives
+$F_d=\tau_D(d)M_0$ for every real $d$. Every normalized positive
+spectator, even one in a proper sector, therefore recovers the same map.
+The exact deletion is primitive $M$ and its separate positivity premise;
+none of the displayed retained laws is deleted, and no independent axiom
+minimum is asserted.
+
+The vector $\omega_0$ is a mathematically defined normalized state of
+the already specified Jordan carrier. It is neither another primitive
+map nor a reference-device axiom. Its use as an argument of $L$ proves
+no physical preparation availability, reference extension or cost bound.
+
+### Comparison entry and the retained conditional representation
+
+Before Jordan coordinates, take exactly the actual nonzero finite-dimensional
+real ordered carriers $A,D,E$, closed pointed generating cones, strictly
+positive normalizations $u_X$, compact full state bases
+$K_X=\{x\ge0:u_X(x)=1\}$ and full dual effects $[0,u_X]$ defined
+with (49). Keep its definition of least comparison $T_p$ and its full
+finite-mixture S law (49) on **each of $A,D,E$**, for every pure reference,
+finite pure family and probability weights. Supply only real-bilinear $L$
+and real-linear $r,p_{13},p_{23}$ with the positivity and normalization
+scopes above, using $u$ before
+transport. Separately retain the normalization-preserving
+[S-to-canonical-trace-Jordan paper bridge](mullerududec2012selfduality.md#complete-conditional-candidate-and-its-scope)
+on each carrier, including its canonical primitive-trace-one normalization
+and full effects. **After** that bridge gives the Jordan units and traces,
+define (53) and impose exactly (54)–(55). There is no canonical primal
+unit or silently chosen $\omega_0$ on a bare ordered carrier. Endpoint
+symmetry alone does not replace S. The whole bridge remains conditional;
+this reduction neither certifies it nor adds a homogeneity premise.
+
+Once positivity of $M_0$ has been established, invoke the existing
+[three-map theorem](#three-primitive-maps-and-the-forced-missing-pair-view)
+as **one conditional paper input**, with its stated upstream bridges.
+It supplies the unique globally positive TP
+$p_{12}=[L(\cdot,1_A)]^*$ and
+$p_{12}L(d,c)=\tau_A(c)d$, using the **unnormalized** $1_A$ and no rank
+divisor. It also supplies (29)–(30) on these same actual carriers:
+fixed trace-preserving Jordan order coordinates
+$A\simeq\bigoplus_iH_{n_i}$,
+$D\simeq\bigoplus_{i,j}H_{n_in_j}$,
+$E\simeq\bigoplus_{i,j,k}H_{n_in_jn_k}$, with a finite nonempty sector
+set and $n_i\ge1$, simultaneously making $M_0,L$ ordinary block tensors
+and all readbacks block partial traces. This includes $L(d,c)$ for every
+real $d$, not only prepared or separable $d$; no classification is repeated.
+The cited [quantum correspondence](#complete-finite-comparison-candidate-and-quantum-correspondence)
+then gives full PSD trace-one block states, all effects $0\le F_i\le I$,
+Born probabilities $\sum_i\operatorname{Tr}(F_i\rho_i)$ and pure
+components $\mathbb{CP}^{n_i-1}$. Comparisons are $\operatorname{Tr}(pq)$
+within a sector and zero across sectors. Scalar sectors remain; a single
+$n_i=2$ sector is the Bloch ball, while selecting one sector requires the
+separate connectedness/no-superselection condition. The same input's
+[right-preparation and label-change construction](#construct-the-other-bracket-and-all-three-label-changes)
+chooses a right preparation on $E_R=E$ with identity reassociation and
+positive TP $S_3$ order automorphisms; these are consequences, not inputs
+to (51), and identify no independently supplied right carrier.
+
+The [noisy-$r$ and omitted-view boundaries](#three-omitted-condition-boundaries)
+remain in force: in particular recovering positive $M_0$ does not justify
+dropping positivity of $r$. The cited GHZ boundary still prevents pair
+marginals from determining arbitrary triple states; real spanning does
+not assert separability. The
+[operation application](../Quantum/watrous2018theory.md#one-actual-self-reference-for-finite-sector-operations)
+retains its own reference-extension, process, instrument and physical
+availability conditions. No physical device or CP realization, temporal
+measurement exchange, dynamics, clock, Hamiltonian or $\hbar$, higher
+coherence or infinite-dimensional extension follows here. This is a paper
+derivation, with no Lean/kernel, novelty, priority or full-origin claim.
+
+完整条件是：在实际单份、双份、三份有限系统上保留全部态和效应、每个系统
+的有限混合比较规则，以及保归一化的比较到规范迹 Jordan 几何条件桥；桥后
+只给一个在整个正锥上为正的准备 $L$ 和三个全局正取回映射 $r,p_{13},p_{23}$，
+仅预设 $r,p_{13}$ 保迹，再要求两个实际实张成条件，以及由内部归一化单位定义
+的 $M_0$ 满足三条全部实向量取回恒等式。于是二元准备及其正性不必另给，任意归一化
+正态都重建同一个 $M_0$；条件性复用原三映射定理后，得到含经典扇区的复量子
+几何、Born 概率、普通张量积及同一三份系统上的换标签。这只给出静态统计
+结构，内部归一化态不等于可用物理参考设备，也不推出测量时间交换、动力学
+或更高份一致性，更不声称这些保留条件彼此独立且数目最少。
