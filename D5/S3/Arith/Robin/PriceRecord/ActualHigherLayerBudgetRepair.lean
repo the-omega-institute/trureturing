@@ -123,6 +123,7 @@ private theorem fixed_endpoints {J : ℕ} (hJ : 3 ≤ J) {τ : ℝ}
 
 /- All analytic choices precede the Budget. The PNT supplier has a fixed
 cardinality and fixed multiplicative endpoints; J never varies with X. -/
+set_option maxHeartbeats 800000 in
 private theorem candidate_roster {η τ : ℝ} (hη : 0 < η)
     (hτ : 0 < τ) (hτ1 : τ < 1) {J : ℕ} (hJ : 3 ≤ J)
     (hJη : 1 / (J : ℝ) < η / 2) : ∀ᶠ X : ℝ in atTop,
