@@ -2039,3 +2039,612 @@ CountRead 仍须同一接受叶的完整活动输出、实际读后 active-ready
 所以这批原输入不再需要“第二、第三演员与外面隔离”的前件。但“可以把一份向量见证准确接回原矩阵”仍不同于“原世界已经有那台准备、分析器或返回装置”。任意平面自作用、任意环境像、完整总响应及实际来源仍须各自补齐；局部三残量清零没有把完整量子起源变成已完成目标。
 
 ## 新增锚（本行以下为后续增补区）
+
+## 38. 任意 Hermitian 二演员块的零模回接与第三残量刚性
+
+本节只在 §37 的原轴环境中推进剩余的第三格问题。二维比较块现在是任意
+Hermitian
+$$
+T=\begin{pmatrix}d&z\\\overline z&e\end{pmatrix},\qquad d,e\in\mathbb R,\quad z\in\mathbb C,
+$$
+而残量只写成 $sP_3$，其中 $P_3=\operatorname{diag}(0,1)$、$s\in\mathbb R$。
+本节的新结论由逐项矩阵恒等式给出：不把二维矩阵当成实际压缩，不改变原 $B$、原环境或实际探针域。§36.2 继续负责前两格，§37.2 负责把同一份二维见证接回完整原矩阵；本节只支付 §37.6 中「任意 $T$ 的非零对角项尚未分类」这一条在本轴环境内的缺口。
+
+### 38.1 二维资料、面积和质量
+
+固定一个取向 $\sigma\in\{1,-1\}$，写 $\iota=\sigma i$，并在二维空间固定
+$C_E=\operatorname{diag}(2,3)$。对 Hermitian $X$ 定义
+
+$$
+\begin{gathered}
+K(A,B)=\frac{\iota}{2}[A,B],\qquad A\circ B=\frac{AB+BA}{2},\\
+h=K(C_E,X),\quad k=C_E\circ T,\quad r=C_E\circ X,\quad
+ g=K(C_E,T)+sP_3,\\
+R_\delta=X+\delta(h-k),\qquad
+S_\delta=T+\delta(r+g),\qquad \delta\in\{1,-1\},\\
+L=-2X\circ(h-k)-2T\circ(r+g).
+\end{gathered}
+\tag{38.1}
+$$
+
+对非零 $u\in\mathbb C^2$ 记 $\psi_u(A)=u^*Au$。因为 $R_\delta$、$S_\delta$
+自伴，完整 PB 面积的未归一形式是
+
+$$
+\mathcal A_\delta(X,u)^2
+ =\|R_\delta u\|^2\|S_\delta u\|^2
+  -\bigl(\operatorname{Re}((R_\delta u)^*S_\delta u)\bigr)^2
+ =B_{\psi_u}(R_\delta,S_\delta)\ge0 .
+\tag{38.2}
+$$
+
+这里的平方是实化后的 Gram 行列式。任给 $0<\mu<\infty$，
+
+$$
+\phi_{\mu,u}(A)=\frac{\mu}{\|u\|^2}u^*Au
+\tag{38.3}
+$$
+
+是全矩阵代数上的正复线性泛函，且 $\phi_{\mu,u}(I)=\mu$；其左端和每个
+面积分别乘以 $\mu/\|u\|^2$，预算本身乘以该因子的平方。
+
+### 38.2 接触恒等式和实际的单侧核
+
+**引理 38.1（残量接触恒等式）。** 令 $P=P_3$。在 (38.1) 的同一固定取向下恒有
+
+$$
+L=K(R_+,S_+)-K(R_-,S_-)-2K(X,sP)-2T\circ(sP).
+\tag{38.4}
+$$
+
+若某个非零 $u$ 满足
+
+$$
+R_+u=0,\qquad S_-u=\lambda Xu,\qquad \lambda\in\mathbb R,
+\tag{38.5}
+$$
+则两份面积都为零，并且令
+
+$$
+ v=\operatorname{Im}_{\iota}\bigl((Xu)^*Pu\bigr),\qquad
+ w=\operatorname{Re}\bigl((Tu)^*Pu\bigr),\qquad
+\operatorname{Im}_{\iota}(q)=\frac{q-\overline q}{2\iota},
+$$
+就有
+
+$$
+\psi_u(L)=-2s(w-v).
+\tag{38.6}
+$$
+
+证明。先把 $g$ 的残量去掉，写 $g_0=K(C_E,T)$、
+$A=h-k$、$B_0=r+g_0$。直接展开双线性换位得
+
+$$
+K(R_+,S_+)-K(R_-,S_-)=2K(X,B_0+sP)+2K(A,T).
+\tag{38.7}
+$$
+
+把 $h=K(C_E,X)$、$r=C_E\circ X$、$k=C_E\circ T$、
+$g_0=K(C_E,T)$ 代入右端，按乘积的次序展开；含 $C_EX T$、
+$TC_EX$、$XTC_E$、$C_ETX$ 的项分别成对抵消，剩余项正好是
+
+$$
+2K(X,B_0)+2K(A,T)
+ =-2X\circ A-2T\circ B_0.
+\tag{38.8}
+$$
+
+因此 (38.4) 成立。这是有限矩阵乘法恒等式，没有使用 PB 或压缩平方。
+若 (38.5) 成立，则 $R_-u=2Xu$；第一份 Gram 面积含有零列，第二份的两列是
+$2Xu$ 与实倍数 $\lambda Xu$，所以两者均为零。对任意自伴 $Y,Z$，
+$u^*K(Y,Z)u=-\operatorname{Im}_{\iota}((Yu)^*Zu)$；将 (38.5) 代回
+(38.4)，并用 $u^*(T\circ P)u=w$，即得 (38.6)。证毕。
+
+这里使用的是实际含残量的非齐次 $R_+$ 的一个向量核。通常
+$R_-u=2Xu\ne0$，也没有为两种符号同时构造残量去掉后的齐次列。因而这
+一步不取得 §33.2 所说的两份严格正斜率的同时齐次核，也不产生
+$F(E_{33})\ne0$ 的合法同时核分离；§33.2 的核盲区保持原义。
+
+### 38.3 相位回拉与同一取向的符号运输
+
+先处理复相位。若 $z\ne0$，令 $b=|z|>0$、
+$d_z=z/b$，并取
+
+$$
+U=\operatorname{diag}(d_z,1).
+\tag{38.9}
+$$
+
+正确的坐标关系是
+
+$$
+U^*TU=\begin{pmatrix}d&b\\b&e\end{pmatrix},\qquad
+U^*C_EU=C_E,\qquad U^*P_3U=P_3.
+\tag{38.10}
+$$
+
+第一式的两个非对角项分别是 $\overline{d_z}z=b$ 和
+$\overline z d_z=b$；若 $z=0$ 则取 $b=0$、$U=I_E$。对实矩阵 $T'=U^*TU$ 取得 $X'$、$u'$ 后，回到原坐标必须取
+
+$$
+X_{\mathrm{orig}}=UX'U^*,\qquad u_{\mathrm{orig}}=Uu'.
+\tag{38.11}
+$$
+
+因为 $U$ 与 $C_E,P_3$ 对易，每个换位、Jordan 乘积、$R_\delta$、$S_\delta$
+和 $L$ 都按 $U(\cdot)U^*$ 共轭；所有范数和实部内积保持不变。这是二维数学坐标的拉回，不是对实际输入施加一个相干控制，也没有改变实际 $B$ 或环境。
+
+在 $T=\begin{pmatrix}d&b\\b&e\end{pmatrix}$ 实对称时，固定同一个
+$\iota=\sigma i$，对任意已构造的 $(s,X,u)$ 置
+
+$$
+\widetilde s=-s,\qquad \widetilde X=-\overline X,\qquad
+\widetilde u=\overline u .
+\tag{38.12}
+$$
+
+这里的横线是逐项复共轭，取向 $\sigma$ 不变。由于 $C_E,T,P_3$ 为实矩阵，
+逐项有
+
+$$
+\widetilde R_\delta=-\overline{R_{-\delta}},\qquad
+\widetilde S_\delta=\overline{S_{-\delta}},\qquad
+\widetilde L=-\overline L .
+\tag{38.13}
+$$
+
+证明在于 $\widetilde h=\overline h$、$\widetilde k=k$、
+$\widetilde r=-\overline r$、$\widetilde g=-\overline g$；其中
+$\overline{K(C_E,T)}=-K(C_E,T)$，而残量同时变成 $-sP_3$。于是
+$\widetilde R_\delta\widetilde u=-\overline{R_{-\delta}u}$、
+$\widetilde S_\delta\widetilde u=\overline{S_{-\delta}u}$。实 Gram 面积不变而两种符号交换，且
+$\widetilde u^*\widetilde L\widetilde u=-\overline{u^*Lu}$；
+自伴性使这个期望为实数，故绝对值严格差额不变。这是在同一个固定取向下
+的符号运输，未把 $\sigma$ 换成 $-\sigma$。
+
+### 38.4 任意 Hermitian 二维块的有限严格向量分类
+
+**定理 38.2（任意 $T$ 的非零残量严格见证）。** 对任意实 $d,e$、任意
+$z\in\mathbb C$、任意 $s\ne0$ 和任意固定取向 $\sigma$，存在一个 Hermitian
+$X$ 与一个两个坐标均非零的有限向量 $u$，使
+
+$$
+|\psi_u(L)|>\mathcal A_+(X,u)+\mathcal A_-(X,u).
+\tag{38.14}
+$$
+
+下面先给出实 $z=b\ge0$ 的全部分支，再用 (38.9)–(38.13) 回到任意复 $z$ 和
+实际给定的符号 $s$。
+
+**情形 A：$e\ne0$ 且 $b>0$。** 先由 (38.12) 取 $se>0$。置
+
+$$
+M=-\frac{7e}{2}-s,qquad
+X=\begin{pmatrix}
+2d+\dfrac{5b^2}{M}&\iota b\\
+-\iota b&-\dfrac e2-s
+\end{pmatrix},\qquad
+u=\begin{pmatrix}1\\\dfrac{(2+\iota)b}{M}\end{pmatrix}.
+\tag{38.15}
+$$
+
+因为 $se>0$，$M$ 不为零；$b>0$ 还保证 $u_2u_3\ne0$。直接计算
+
+$$
+R_+=\begin{pmatrix}
+\dfrac{5b^2}{M}&(-2+\iota)b\\
+(-2-\iota)b&M
+\end{pmatrix},\qquad
+R_+u=0,
+\tag{38.16}
+$$
+
+确切地，第一行乘以 $u$ 是
+$5b^2/M+(-2+\iota)(2+\iota)b^2/M=0$，第二行乘以 $u$ 是
+$(-2-\iota)b+(2+\iota)b=0$。
+
+其中 $( -2+\iota)(2+\iota)=-5$，而第二行满足
+$(-2-\iota)+(2+\iota)=0$。逐项形成的另一列是
+
+$$
+S_-=\begin{pmatrix}
+-3d-\dfrac{10b^2}{M}&(1-2\iota)b\\
+(1+2\iota)b&\dfrac{5e}{2}+2s
+\end{pmatrix}
+=-\frac32X-\frac12R_+ .
+\tag{38.17}
+$$
+
+第一行、第二行的等式分别由
+$-3d-10b^2/M=-3X_{11}/2-5b^2/(2M)$、
+$5e/2+2s=-3X_{22}/2-M/2$ 以及对应的非对角条目直接给出，故
+$S_-u=-3Xu/2$。
+
+系数 $-3/2$、$-1/2$ 都是真实数，所以 (38.5) 可用。令
+
+$$
+ n=|u_3|^2=\frac{5b^2}{M^2},\qquad
+w=\operatorname{Re}(u^*TP_3u)=\frac{2b^2}{M}+en,\qquad
+v=\operatorname{Im}_{\iota}(u^*XP_3u)=\frac{2b^2}{M}.
+\tag{38.18}
+$$
+
+第一项来自 $b u_3$ 的实部，第二项来自
+$\iota b u_3=(-1+2\iota)b^2/M$；$X_{22}$ 项为实数。故
+$w-v=en$，由 (38.6)
+
+$$
+\psi_u(L)=-2sen=-\frac{10seb^2}{M^2}\ne0,qquad
+\mathcal A_+=\mathcal A_-=0 .
+\tag{38.19}
+$$
+
+所有分母均已在 $M\ne0$ 处核对，$d$ 没有任何限制。
+
+**情形 B：$e\ne0$ 且 $b=0$。** 取 $X=0$、$u=(\rho,1)^{\mathsf T}$。此时
+
+$$
+R_\delta u=(-2\delta d\rho,-3\delta e)^{\mathsf T},\qquad
+S_\delta u=(d\rho,e+\delta s)^{\mathsf T},\qquad
+\psi_u(L)=-2se .
+\tag{38.20}
+$$
+
+两列为实列，故二维实面积就是行列式的绝对值：
+
+$$
+\mathcal A_\delta=|d\rho|\,|\delta e-2s|,qquad
+H_0=|e-2s|+|e+2s|>0 .
+\tag{38.21}
+$$
+
+若 $d\ne0$，取
+$\rho=|se|/(|d|H_0)>0$；则两笔面积之和是 $|se|$，而
+$|\psi_u(L)|=2|se|$。若 $d=0$，取 $\rho=1$，两笔面积都为零而左端为
+$2|se|$。所以两种情况下都有有限严格差额，且两个坐标均非零。
+
+**情形 C：$e=0$、$d\ne0$ 且 $b\ge0$。** 先由 (38.12) 取 $ds>0$。置
+
+$$
+H=\sqrt{b^2+\frac{8ds}{5}},\qquad q=b+H,\qquad
+\theta=\frac{b}{2H},
+\tag{38.22}
+$$
+
+以及
+
+$$
+X=\begin{pmatrix}
+-\dfrac{5q^2}{4s}&(2+\iota)b+\dfrac{(6+8\iota)H}{5}\\
+(2-\iota)b+\dfrac{(6-8\iota)H}{5}&-\dfrac{2Hs}{q}
+\end{pmatrix},\qquad
+u=\begin{pmatrix}1\\\dfrac{q(1-\iota/2)}{s}\end{pmatrix}.
+\tag{38.23}
+$$
+
+由于 $ds>0$，$H>b\ge0$、$q>0$、$H,s,q$ 均非零；故根式为实数，矩阵和向量
+的每个条目有限，且两个坐标均非零。利用
+$H^2-b^2=8ds/5$，逐项得到
+
+$$
+R_+=\begin{pmatrix}
+-\dfrac{5Hq}{2s}&(2+\iota)H\\
+(2-\iota)H&-\dfrac{2Hs}{q}
+\end{pmatrix},\qquad R_+u=0,
+\tag{38.24}
+$$
+
+并得到另一个完整的算子恒等式。其逐项矩阵为
+
+$$
+S_-=\begin{pmatrix}
+ d+\dfrac{5q^2}{2s}&(-4-2\iota)b-(3+4\iota)H\\
+ (-4+2\iota)b-(3-4\iota)H&\dfrac{6Hs}{q}-s
+\end{pmatrix}
+=-\frac52X+\theta R_+ .
+\tag{38.25}
+$$
+
+第一行乘以 $u$ 时，
+$-5Hq/(2s)+(2+\iota)Hq(1-\iota/2)/s=0$；第二行乘以 $u$ 时，
+$(2-\iota)H-2H(1-\iota/2)=0$。因此 $R_+u=0$，且
+$S_-u=-5Xu/2$；$-5/2$ 与 $\theta=b/(2H)$ 都是真实数。
+
+计算接触项时，
+
+$$
+ w=\operatorname{Re}(u^*TP_3u)=\frac{bq}{s},\qquad
+ v=\operatorname{Im}_{\iota}(u^*XP_3u)=\frac{Hq}{s},
+\tag{38.26}
+$$
+
+因为
+$ (1-\iota/2)X_{12}=5b/2+(2+\iota)H$，而 $X_{22}|u_3|^2$
+是实数。因此 $w-v=(b-H)q/s=(b^2-H^2)/s=-8d/5$，由 (38.6)
+
+$$
+\psi_u(L)=\frac{16ds}{5}>0,qquad
+\mathcal A_+=\mathcal A_-=0 .
+\tag{38.27}
+$$
+
+这也覆盖 $b=0$、$d\ne0$，没有小耦合或小对角项的假设。
+
+**情形 D：两条已付分支。** 当 $d=e=0$、$b>0$ 时，直接消费 §36.3 的纯混合见证
+
+$$
+X=b\begin{pmatrix}0&2+\iota\\2-\iota&0\end{pmatrix},\qquad
+u=\begin{pmatrix}1\\(2-\iota)/8\end{pmatrix},\qquad
+\psi_u(L)=-\frac{sb}{2},\quad
+\mathcal A_+=0,\quad
+\mathcal A_- =\frac{5\sqrt5}{32}|sb|,
+\tag{38.28}
+$$
+
+其严格差额是 $(16-5\sqrt5)|sb|/32>0$；这里不重写已付的列乘法。当
+$d=e=b=0$ 时直接消费 §35.1 的零矩阵见证
+
+$$
+X=\frac{s}{2}\begin{pmatrix}-5&4+\iota\\4-\iota&-4\end{pmatrix},\qquad
+u=\begin{pmatrix}1\\1\end{pmatrix},\qquad
+\psi_u(L)=\frac{9s^2}{4},\quad
+\mathcal A_+=\frac{5s^2}{8},\quad
+\mathcal A_- =\frac{5\sqrt5\,s^2}{8},
+\tag{38.29}
+$$
+
+其严格差额是 $(13-5\sqrt5)s^2/8>0$，且两笔面积已经严格正。
+
+这四种情形穷尽所有实 $d,e,b\ge0$：先按 $e$ 是否为零、再按 $b$ 是否为零，
+当 $e=0$ 时按 $d$ 是否为零分开。A、C 的根式和分母已逐项核对，B 的
+$H_0$ 非零；D 的两个向量均有两个非零坐标。对一般复 $z$ 用 (38.9)–(38.11)
+拉回，对实际符号用 (38.12)–(38.13) 拉回；同一固定取向下，严格差额和有限性均保持。
+因此 (38.14) 对所有 $T$、所有 $s\ne0$ 成立。
+
+### 38.5 从边界见证到两笔严格正预算
+
+**引理 38.3（有限内部扰动）。** 保持定理 38.2 所得的同一个 $T,s,u$，对实数
+$\varepsilon$ 置 $X_\varepsilon=X+\varepsilon I_E$。则
+
+$$
+R_{\delta,\varepsilon}u=R_\delta u+\varepsilon u,\qquad
+S_{\delta,\varepsilon}u=S_\delta u+\delta\varepsilon C_Eu .
+\tag{38.30}
+$$
+
+每个未归一平方面积
+
+$$
+G_\delta(\varepsilon)=\|R_{\delta,\varepsilon}u\|^2
+ \|S_{\delta,\varepsilon}u\|^2
+ -\bigl(\operatorname{Re}((R_{\delta,\varepsilon}u)^*
+ S_{\delta,\varepsilon}u)\bigr)^2
+\tag{38.31}
+$$
+
+都是取值于 $[0,\infty)$ 的实系数多项式，且最高次项为
+
+$$
+\bigl(\|u\|^2\|C_Eu\|^2-(u^*C_Eu)^2\bigr)\varepsilon^4
+=|u_2|^2|u_3|^2\varepsilon^4 .
+\tag{38.32}
+$$
+
+证明。(38.30) 只用 $K(C_E,I_E)=0$、
+$C_E\circ(X+\varepsilon I_E)=r+\varepsilon C_E$。因此 (38.31) 是实多项式，
+非负性是两个实化列的 Gram 行列式。其四次系数由最高次列 $u$ 和
+$\delta C_Eu$ 给出；写 $a=|u_2|^2$、$b_0=|u_3|^2$，则
+
+$$
+(a+b_0)(4a+9b_0)-(2a+3b_0)^2=a b_0=|u_2|^2|u_3|^2>0.
+$$
+
+所以每个 $G_\delta$ 都不是零多项式，两个实根集合均为有限集。记
+$\Delta(\varepsilon)$ 为左端绝对值减去两笔平方根；作用列和 $L$ 关于
+$\varepsilon$ 连续，平方根在 $[0,\infty)$ 上连续，而定理 38.2 给出
+$\Delta(0)>0$。取一个只由连续性得到的非零邻域，使
+$\Delta(\varepsilon)>0$，再从其中避开两个有限根集和 $0$，即可选取有限的
+$\varepsilon\ne0$，使 $G_+(\varepsilon)>0$、$G_-(\varepsilon)>0$ 且仍严格违反 PB。
+这里没有给出统一的 $\varepsilon$ 或量化半径；每个见证只需一个这样的有限选择。
+对任意指定 $\mu>0$，用 (38.3) 乘以正因子即可使质量恰为 $\mu$，并保持
+两笔预算严格正和严格差额。∎
+
+### 38.6 同一原环境中的精确回接
+
+现在回到 §37.1 的同一完整有限环境，固定
+
+$$
+ t=\begin{pmatrix}
+ \beta&a&v\\
+ a^*&T&0\\
+ v^*&0&D
+ \end{pmatrix},\qquad
+ c=\operatorname{diag}(1,C_E,0_m),\qquad
+ S=\operatorname{diag}(s_1,s_2,s_3),
+\tag{38.33}
+$$
+
+其中 $\beta\in\mathbb R$、$a\in M_{1,2}(\mathbb C)$、$D=D^*$，并且
+$v(\ker D)\ne0$。$B$ 或 $T$、$a$、$v$、$D$ 都是实际原输入的同一份条目，
+不作替换。取同一原环境中的 $z_0\in\ker D$ 满足 $vz_0=1$。
+
+**定理 38.4（二维严格见证的完整原运输）。** 对定理 38.2 或引理 38.3 的任意
+$u=(u_2,u_3)^{\mathsf T}$（两个坐标非零）和任意 Hermitian $X$，置
+
+$$
+ p=au,\qquad q=aC_Eu,\qquad w_0=-p z_0,\qquad
+ \xi=(0,u,w_0),\qquad
+ \ell=\left(-\frac{\iota q}{u_2},\frac{\iota q}{u_3}\right),
+\tag{38.34}
+$$
+
+并在原探针域中取
+
+$$
+ x=\begin{pmatrix}0&\ell&0\\\ell^*&X&0\\0&0&0_m\end{pmatrix}.
+\tag{38.35}
+$$
+
+则 $x=x^*=PxP$。设二维量仍由 (38.1) 计算，完整原量由 (32.1)–(32.2)
+计算。逐项有
+
+$$
+\ell u=0,\qquad \ell C_Eu=\iota q,\qquad vw_0=-p,\qquad Dw_0=0,
+\tag{38.36}
+$$
+
+从而完整作用列为
+
+$$
+\begin{array}{c|ccc}
+ &e_1&E&\mathrm{env}\\ \hline
+ x\xi&0&Xu&0\\
+ xc\xi&\iota q&XC_Eu&0\\
+ cx\xi&0&C_EXu&0\\
+ t\xi&0&Tu&0\\
+ tc\xi&q&TC_Eu&0\\
+ ct\xi&0&C_ETu&0
+\end{array}
+\tag{38.37}
+$$
+
+并且由原换位和 Jordan 乘积得到
+
+$$
+\begin{array}{c|ccc}
+ &e_1&E&\mathrm{env}\\ \hline
+ h\xi&q/2&h_Eu&0\\
+ k_t\xi&q/2&k_Eu&0\\
+ r\xi&\iota q/2&r_Eu&0\\
+ g\xi&-\iota q/2&g_Eu&0
+\end{array}
+\tag{38.38}
+$$
+
+所以
+
+$$
+\begin{gathered}
+(h-k_t)\xi=(0,(h_E-k_E)u,0),\qquad
+(r+g)\xi=(0,(r_E+g_E)u,0),\\
+R_\delta\xi=(0,R_{\delta,E}u,0),\qquad
+S_\delta\xi=(0,S_{\delta,E}u,0),
+\end{gathered}
+\tag{38.39}
+$$
+
+这里的 $s_1$ 第一格因 $\xi_1=0$ 不产生额外项。对任意原自伴 $U,Z$，
+$\xi^*U^2\xi=\|U\xi\|^2$、
+$\xi^*(U\circ Z)\xi=\operatorname{Re}((U\xi)^*Z\xi)$；因此完整乘积而非
+压缩平方满足
+
+$$
+\xi^*L\xi=u^*L_Eu,\qquad
+B_{\phi_\xi}(R_\delta,S_\delta)
+ =B_{\psi_u}(R_{\delta,E},S_{\delta,E}),\qquad
+\phi_\xi(A)=\xi^*A\xi .
+\tag{38.40}
+$$
+
+证明就是 (38.36) 的四个有限列等式代入 (38.37)–(38.38)，再逐项应用上述
+自伴列恒等式；没有丢掉第一轴或环境列。特别，(38.40) 不断言
+$L\xi$ 等于嵌入的 $L_Eu$，也不声称全部原算子的乘积在 $E$ 上交织。
+
+原向量的实际归一因子是
+
+$$
+N_u=\|\xi\|^2=\|u\|^2+|au|^2\|z_0\|^2>0,qquad
+\phi_{\mu}^{\mathrm{orig}}(A)=\frac{\mu}{N_u}\xi^*A\xi .
+\tag{38.41}
+$$
+
+它在完整原代数上正且质量恰为 $\mu$；左端和每笔面积准确乘
+$\mu/N_u$。补偿行 $\ell$ 依赖所选 $u$ 而与 $X$ 无关，交叉探针本身不依赖
+$X$，故 $X+\varepsilon I_E$ 的扰动仍使用同一个 $\xi,\ell,N_u$。这正是
+定理 37.2 的精确运输；它不要求 $E$ 为 $t$ 的 reducing plane，也不把不同 $u$
+的二维资料拼成一份固定混合泛函。
+
+### 38.7 原轴环境中的三残量全称分类
+
+**推论 38.5（删除零对角 $T$ 限制）。** 在 (38.33) 的同一原轴环境中，令
+$T$ 为任意 Hermitian $2\times2$ 块，$a$、$\beta$、$v$、$D$ 任意满足上述条件。
+对每个分别固定的取向 $\sigma$ 和任意指定 $0<\mu<\infty$，全部原 Hermitian
+探针与质量为 $\mu$ 的全部原正复线性泛函满足完整 PB，当且仅当
+
+$$
+ s_1=s_2=s_3=0.
+\tag{38.42}
+$$
+
+证明。若 $(s_1,s_2)\ne(0,0)$，直接消费 §36.2 的同一原环境见证；它已经允许
+任意 Hermitian $B$、任意 $a$、任意 $v(\ker D)\ne0$ 和任意 $s_3$，并且可以把
+两笔预算同时做成严格正。因此全称 PB 先迫使 $s_1=s_2=0$。若此时 $s_3=s\ne0$，
+定理 38.2 和引理 38.3 给出任意 Hermitian $T$ 上两个坐标均非零、两笔预算
+同时严格正的有限二维见证；定理 38.4 用同一个实际 $t$、同一个环境和
+$N_u=\|u\|^2+|au|^2\|z_0\|^2$ 将其完整回接，故原 PB 严格失败。于是
+$s_3=0$。反向 $S=0$ 的充分性直接消费已付的 §34.13、§36.25 及父卷 §1 的
+一般原算子恒等式与全正泛函复 Cauchy–Schwarz；它涵盖混合、奇异、零预算和
+任意有限正质量。正质量结论对两种分别固定的 $\sigma$ 各自成立，未用一个取向
+去替代另一个取向。证毕。
+
+这个推论只在 (38.33) 的轴向环境、可用的同一零模和对角残量范围内删除
+§37.6 的「任意 Hermitian $T$ 尚未分类」边界；它没有改变实际 $B$ 或环境，也
+没有把二维矩阵见证变成实际制备、实际菜单或相干控制。任意规定的有限正质量
+均由 (38.41) 给出；零质量的正泛函为零，仍不会单独辨别残量。
+
+### 38.8 归属、原来源合同和确切剩余边界
+
+接触恒等式、A/C 两族的系数、B 的行列式预算、符号与相位运输，以及 (38.34)–
+(38.41) 的组合，都是本卷在已有定义上的手工矩阵推导。复 Gram／Cauchy–Schwarz、
+Hermitian 矩阵、Jordan 乘积、有限维连续性和对角酉坐标的成熟背景继续沿
+§35.4、§36.5、§37.6 已有归属；本节没有把未检索的文献标签当作原始来源，
+不主张历史新颖性、常数最优性、全局最小性或 Lean／kernel 认证。
+
+§35.4、§36.5、§37.6 及其递归来源合同继续完整有效。C139 §23.3 式 (23.7) 仍要求
+字面旧程序 $\tau;T_P$ 在全部原准备、事件、中间切口、参考／副本、合法分析词和树、
+原坐标、固定支持全质量及完整菜单上供应同一实际接受端的准备无关准确关联，并
+保持原支持与未归一标尺；矩阵相等、纯校准、合法逆或矩阵综合不提供该证书。
+有限返回卷定义 162.1、命题 162.2 和定义 164.1 仍要求同一接受叶的整份活动
+输出、实际读后 active-ready、首个合法消费者，以及读后同一整份活动输入对全部
+旧合法未来的真实 Return，连同原参考、控制和物理钟的对应。C139 固定源 §§50–85、
+C128 原词 §§385–392 的下降、参考、递归支持、容量和同一原 $D$ 恢复继续按已付
+域计入；本节不重复计为新成果。
+
+全部原对象与量词保持不变：原 Omega/native、准备、事件、过程、参考／副本、真正
+相关联合、零／不等／次归一质量、钟、单位、控制、parent、ready、flags、完整记录、
+失败、拒绝、停止、销毁、泄漏、真遗忘、两侧及逆向 Return、固定支持全质量、完整
+菜单、所有中间切口及每份完整输出的每个旧合法未来都保留。数学 $X,u,\xi,x,U$
+不生成准备，不生成实际菜单，不复制，不提供自由相干控制，也不替代原类型、记录、
+历史或返回合同。复 Hilbert／相干、Born、张量、typed CP／Kraus、完整仪器／TP／
+更新／Lüders、全部历史／Return、Hamiltonian／物理钟及共同正作用量，仍只在各自
+原来源合同成立时消费。
+
+未由本节解决的边界是明确的：一般 $V$ 或一般非零 $\mathcal W$ 没有可用零模时，
+非对角三格残量时，非轴向的完整算子块、未知总响应、
+$\mathcal E_+^D=\mathcal E_-^D$、$N_\omega(\varepsilon)^2\to0$，以及实际全响应、
+准备无关来源、完整菜单、物理过程和七项消费者，仍无结论。这里的分类也没有把
+局部 PB 排除提升为完整量子起源或无缺口的全局量子公理；它只在 (38.33) 的准确
+轴环境中把第三格任意 Hermitian 块纳入已有两格结论。
+
+### 38.9 中文几何说明
+
+把 $u$ 的两组输出看成实二维平面中的两根箭头，平方根就是它们张成的平行四边形
+面积。A、C 先手工把正号列压到零，再让负号列与 $Xu$ 沿同一条实直线；接触恒等式
+把残量留下的读数直接化成 $-2s(w-v)$。A 中这个读数是
+$-10seb^2/M^2$，C 中是 $16ds/5$；B 则用两列的行列式把两笔面积的总预算
+精确压到 $|se|$。
+
+纯混合分支消费已经付出的线性缺额，零矩阵分支消费已经付出的两笔内部面积；所有
+分支都先在有限边界上找到同一份严格违反。把 $X$ 沿单位矩阵轻微移动时，每笔面积
+的平方仍是非负实多项式，两个坐标都非零使其四次项严格为正，所以可以避开有限个
+根而让两块面积同时打开。严格缺额的连续性保证这次移动仍然不满足 PB，但没有把
+这个存在性半径宣称成统一常数。
+
+回接原环境时，零模中的 $w_0$ 抵消第一轴的实际输出，探针的两条离面条目使换位尺和
+Jordan 尺各自留下的第一轴分量在所需组合中抵消。原环境向量仍留在 $\xi$ 中，代价是
+(38.41) 的真实范数分母；因此这是同一实际矩阵上的一次完整列运输，不是删去环境的
+压缩，也不是声称整个原算子共享一个不变平面。局部第三残量刚性已经扩展到任意
+Hermitian $T$，而来源、装置和完整 Omega 目标仍按上面的未决边界继续开放。
+
+## 新增锚（本行以下为后续增补区）
