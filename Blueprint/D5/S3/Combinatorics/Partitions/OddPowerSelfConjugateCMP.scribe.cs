@@ -23,7 +23,9 @@ internal sealed class OddPowerSelfConjugateCMPDocument : IScribeDocumentDefiniti
             Node("claim", "Question 5.14", "claim", Equal(Call("claim"), ClaimBody()),
                 "Question 5.14, printed page 404: “When m is odd, are there any self-conjugate CMPs of odd powers of m?” The displayed proposition is its negative answer, with m ≥ 2, Odd m, exponent 2s+1, literal YoungDiagram equality for self-conjugacy, and the two m-ary conditions.", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
             Node("result", "Negative answer", "result", ClaimBody(),
-                "The finite row fibers are differences of adjacent column-height ranges. The m-ary hypotheses make every positive row and column height congruent to 1 modulo m−1; self-conjugacy identifies the largest row and column. Summing the fibers gives (m−1)^2 dividing N−(2L−1), then oddness gives 2(m−1) dividing N−1. For N=m^(2s+1), the same divisor also divides N−m, forcing it to divide m−1, which contradicts m ≥ 2.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))
+                "The finite row fibers are differences of adjacent column-height ranges. The m-ary hypotheses make every positive row and column height congruent to 1 modulo m−1; self-conjugacy identifies the largest row and column. Summing the fibers gives (m−1)^2 dividing N−(2L−1), then oddness gives 2(m−1) dividing N−1. For N=m^(2s+1), the same divisor also divides N−m, forcing it to divide m−1, which contradicts m ≥ 2.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("dfl514-selfconj"), ResolutionKind.Proved))
         ), []));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,

@@ -43,7 +43,10 @@ internal sealed class StrictFirstSumsGapfreeOddPartsDocument : IScribeDocumentDe
                 + "takes h to 2h-1, giving exact initial odd support. Restrict the original "
                 + "equivalence to this property and to total weight n, and transport via "
                 + "the original list/partition equivalences. No extra hypothesis is needed.",
-                DescribeRole.Theorem),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a392707-gapfree-odd-combinatorial-bridge"),
+                    ResolutionKind.Proved)),
             Paragraph(Text("The sibling's auxiliaries are private in a legacy Lean module. "
                 + "A local elaborator resolves their unique original constants in the "
                 + "imported environment, so their definitions and proofs are reused verbatim "
