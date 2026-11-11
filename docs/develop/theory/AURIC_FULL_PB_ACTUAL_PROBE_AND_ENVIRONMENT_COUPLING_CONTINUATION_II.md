@@ -1712,3 +1712,1117 @@ Schur 补、秩一矩阵范数、加权方差、Cauchy–Schwarz、有限维实�
 尚未建立的是：在一个共同 P2 允许参数上，两份匹配谱的实际来源具有相反的全部 PB 结果。定理 36.1 与命题 36.4 的公共分离参数在两输入都通过全部 PB，排除完全来自其中一份输入的 P2；对共享 P2 区间内的 PB 单独分离不构成证据。一般相位下分别取向联合集的宽侧精确端点、整个集合是否为区间、最优 PB 常数以及任意预先给定较大 $h$ 的对应分类，也都不由本文得到。接触检验的非负只提供必要检验，不能反推全称充分性。本文既无 Lean／kernel 认证，也不作物理实现或外部原创性认证。
 
 ## 追加锚（本行以下为增补区）
+
+## 37. 单位演员归一的全部原探针接触闭包极限定理
+
+本节固定式 (35.5) 的来源，使用 §32 的基准强制估计，将 §35.8 的有限接触必要检验扩展为可见列闭包上的序列下极限与恢复定理。数值变分域只对演员分量作单位归一；原 PB 的全部探针、完整正泛函及任意正有限质量均保留。来源方向 $a$、演员作用 $a_{\rm act}$、残量尺度系数 $k$ 与原加权方差系数分别记号。旧式号 (17.x)、(27.x)、(30.x)、(31.x) 取前卷在本卷所引钉版 `315e167044afd2593b851f6546a82470ca16d446` 的含义。
+
+### 37.1 精确来源与完整原条件
+
+固定 $a\in\mathbb C^2\setminus\{0\}$，记 $m=\|a\|^2>0$。固定实数 $h$，使 $H=2C+hJ_A\succ0$ 且 $h$ 位于 §32、(35.16) 的强制估计邻域内。这里
+
+$$
+C=\operatorname{diag}(1,2),\qquad
+T_A=\operatorname{diag}(1,-2),\qquad
+J_A=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad B=H+C.
+\tag{37.1}
+$$
+
+对每个有限 $\lambda>0$，在同一演员、环境分解 $\mathbb C^2\oplus(\mathbb C^2\oplus\mathbb C)$ 中，来源准确为
+
+$$
+\begin{gathered}
+\delta_\lambda=\lambda^{-3},\qquad
+F=\begin{bmatrix}C\\0\end{bmatrix},\quad V=F^*,\quad
+G_\lambda=\begin{bmatrix}I_2\\\lambda a^*\end{bmatrix},\\
+D_\lambda^{\rm env}=
+\begin{pmatrix}
+C+\delta_\lambda\lambda^2aa^*&-\delta_\lambda\lambda a\\
+-\delta_\lambda\lambda a^*&\delta_\lambda
+\end{pmatrix},\qquad
+t_\lambda^{\rm src}=\begin{pmatrix}B&V\\F&D_\lambda^{\rm env}\end{pmatrix}.
+\end{gathered}
+\tag{37.2}
+$$
+
+这正是命题 35.2 的式 (35.5)。对 $v\in\mathbb C^2,z\in\mathbb C$，环境二次型是
+
+$$
+v^*Cv+\delta_\lambda|z-\lambda a^*v|^2,
+$$
+
+故 $D_\lambda^{\rm env}\succ0$。块乘法及 Schur 补逐一给出
+
+$$
+\begin{gathered}
+D_\lambda^{\rm env}G_\lambda=F,\qquad
+G_\lambda=(D_\lambda^{\rm env})^{-1}F,\qquad
+F^*F=C^2,\qquad G_\lambda^*F=C,\\
+G_\lambda^*G_\lambda=I_2+\lambda^2aa^*,\qquad
+B-F^*(D_\lambda^{\rm env})^{-1}F=H,\qquad t_\lambda^{\rm src}\succ0,\\
+F_{3\cdot}=0,\qquad (G_\lambda)_{3\cdot}=\lambda a^*.
+\end{gathered}
+\tag{37.3}
+$$
+
+特别地 $M_0=C^2,M_1=C,M_2=I_2+\lambda^2aa^*$ 精确成立，环境零模像 $W=0$。这些等式只归属于 (37.2)，不使用 §34 的另一条环境实现。
+
+固定一个取向 $\iota=\sigma i$，$\sigma\in\{1,-1\}$；整节对每个取向分别成立。以 $A\circ B=(AB+BA)/2$、$K_\sigma(A,B)=\iota[A,B]/2$ 定义原运算。在完整 $M_5(\mathbb C)$ 中取
+
+$$
+\begin{gathered}
+c=C\oplus0_3,\quad s_\rho=\rho T_A\oplus0_3,\quad
+x=X\oplus0_3,\quad X=X^*,\quad
+g=K_\sigma(c,t_\lambda^{\rm src})+s_\rho,\\
+h_x=K_\sigma(c,x),\quad k_c=c\circ t_\lambda^{\rm src},\quad r_x=c\circ x,\\
+R_\tau=x+\tau(h_x-k_c),\qquad
+S_\tau=t_\lambda^{\rm src}+\tau(r_x+g),\quad \tau=\pm1,\\
+L_{\rm PB}=-2x\circ(h_x-k_c)-2t_\lambda^{\rm src}\circ(r_x+g),\\
+B_\phi(R,S)=\phi(R^2)\phi(S^2)-\phi(R\circ S)^2.
+\end{gathered}
+\tag{37.4}
+$$
+
+原 PB 指：对每个 $X=X^*$ 及完整代数上每个正复线性泛函 $\phi$，
+
+$$
+|\phi(L_{\rm PB})|\le
+\sqrt{B_\phi(R_+,S_+)}+\sqrt{B_\phi(R_-,S_-)}.
+\tag{37.5}
+$$
+
+原 P2 指 $\phi(g)^2\le\phi(c^2)\phi((t_\lambda^{\rm src})^2)-\phi(c\circ t_\lambda^{\rm src})^2$，量化相同的完整正泛函。本节的接触定理首先判原 PB；涉及 P2 时另列其实际区间。
+
+### 37.2 单位演员变分域与环境的精确消元
+
+**定义 37.1（归一原域及有限代价）。** 归一原测试遍取
+
+$$
+\begin{gathered}
+\xi=(u,y),\qquad \|u\|=1,\quad y\in\mathbb C^3,\quad X=X^*\in M_2(\mathbb C),\\
+\epsilon\in\{1,-1\},\qquad
+\alpha_+,\alpha_->0,\quad \beta_+,\beta_-\in\mathbb R.
+\end{gathered}
+\tag{37.6}
+$$
+
+除 $\|u\|=1$ 外，没有范数、参数比值或预算非退化限制。所有参数在每个有限阶段均有限，但可随 $\lambda$ 逃逸。固定实数 $k$，以后始终令 $\rho=k/\lambda^2$。对 $\phi_\xi(A)=\xi^*A\xi$，定义带符号原有限代价
+
+$$
+\mathcal D_\lambda^{\rm orig}=
+\sum_{\tau=\pm1}\left(
+\alpha_\tau\|R_\tau\xi\|^2+
+\alpha_\tau^{-1}\|(S_\tau-\beta_\tau R_\tau)\xi\|^2\right)
+-2\epsilon\phi_\xi(L_{\rm PB}).
+\tag{37.7}
+$$
+
+前卷 (27.12) 的原二列变分恒等式说明：对同一 $X,\xi$，(37.7) 在所有有限参数与两个 $\epsilon$ 上非负，当且仅当该向量满足 PB。恒等式包括 Gram 退化及下确界不取到的情形；某个有限 (37.7) 严格负已经足以给出 PB 严格失败。
+
+为列出精确消元，写
+
+$$
+\begin{gathered}
+z_\tau=\beta_\tau-\tau\epsilon\iota\alpha_\tau
+       =\iota+\nu+\tau\ell,\qquad
+A=(\alpha_++\alpha_-)/2=-\epsilon\operatorname{Im}_\iota\ell,\\
+A>|1+\operatorname{Im}_\iota\nu|,\qquad
+\alpha_\tau=A-\tau\epsilon(1+\operatorname{Im}_\iota\nu),\qquad
+\beta_\tau=\operatorname{Re}(\nu+\tau\ell),\\
+r=|\ell|>0,\quad n=|\nu|,\quad r+n\ge1,\quad
+b=(r+n)^2/r\ge1,\\
+w_\tau=\alpha_\tau^{-1},\quad s_\alpha=w_++w_-,\quad
+\omega=(w_+-w_-)/s_\alpha\in(-1,1).
+\end{gathered}
+\tag{37.8}
+$$
+
+这里 $\operatorname{Im}_\iota$ 是基 $1,\iota$ 下的虚系数。反过来，上述严格合法性条件与实部公式恰好恢复全部原 $\alpha_\tau,\beta_\tau$，并未缩小变分域。置
+
+$$
+\begin{gathered}
+p=Xu,\quad q=XCu,\quad a_{\rm act}=Bu+Vy,\quad v=a_{\rm act}-\iota p,\quad
+U=\iota q+BCu+Cv,\\
+\mathsf P=v-\nu p+\ell U/2,\qquad
+\mathsf Q=\iota Cv-\ell p+\rho T_Au+\nu U/2,\qquad
+\zeta=\operatorname{Re}(v^*T_Au),\\
+t_{\rm req}=a_{\rm act}-Hu+(\ell+\omega\nu)C^2u/2,\qquad
+\mathcal A=\sum_{\tau=\pm1}w_\tau\|\mathsf P+\tau\mathsf Q\|^2,\qquad
+v_{\rm var}=\frac{|\nu|^2}{2A}.
+\end{gathered}
+\tag{37.9}
+$$
+
+$v_{\rm var}$ 是 (31.10) 的非负方差系数，不是残量系数 $k$。原环境列令 $d=Fu+D_\lambda^{\rm env}y$，$e=d+(\ell+\omega\nu)FCu/2$。由 (37.3) 有 $G_\lambda^*e=t_{\rm req}$。原 (32.5)、(35.13) 的列展开与加权方差恒等式给
+
+$$
+\begin{aligned}
+((S_\tau-z_\tau R_\tau)\xi)_{\rm act}&=\mathsf P+\tau\mathsf Q,\\
+((S_\tau-z_\tau R_\tau)\xi)_{\rm env}
+ &=e+(\tau-\omega)\nu FCu/2,\\
+\mathcal D_\lambda^{\rm orig}
+ &=\mathcal A+s_\alpha\|e\|^2+v_{\rm var}\|C^2u\|^2
+   +4\epsilon k\lambda^{-2}\zeta.
+\end{aligned}
+\tag{37.10}
+$$
+
+令 $R_\lambda=(I_2+\lambda^2aa^*)^{-1}$。约束 $G_\lambda^*e=t_{\rm req}$ 的全部解及范数分解是
+
+$$
+e=G_\lambda R_\lambda t_{\rm req}+e_0,\qquad
+G_\lambda^*e_0=0,\qquad
+\|e\|^2=t_{\rm req}^*R_\lambda t_{\rm req}+\|e_0\|^2.
+\tag{37.11}
+$$
+
+这是正定二次型的正交最小范数公式，直接复用 (31.12)。据此定义
+
+$$
+\begin{aligned}
+S_\lambda&=\mathcal A+s_\alpha t_{\rm req}^*R_\lambda t_{\rm req}
+                    +v_{\rm var}\|C^2u\|^2,\\
+\mathcal D_\lambda^{\rm red}&=S_\lambda+4\epsilon k\lambda^{-2}\zeta,\\
+\mathcal D_\lambda^{\rm orig}
+ &=\mathcal D_\lambda^{\rm red}+s_\alpha\|e_0\|^2.
+\end{aligned}
+\tag{37.12}
+$$
+
+约化域是 (37.6) 去掉 $y$，改让 $a_{\rm act}\in\mathbb C^2$ 任意。这个改变精确保留原域：给定任意约化测试，取 $e=G_\lambda R_\lambda t_{\rm req}$ 及
+
+$$
+y=(D_\lambda^{\rm env})^{-1}
+\left(e-(\ell+\omega\nu)FCu/2-Fu\right).
+\tag{37.13}
+$$
+
+于是 $Bu+Vy=Hu+G_\lambda^*e-(\ell+\omega\nu)C^2u/2=a_{\rm act}$。因此同一来源上的两个归一数值下确界精确相同：
+
+$$
+f_\lambda(k)=\inf_{\text{归一原测试}}\lambda^2\mathcal D_\lambda^{\rm orig}
+            =\inf_{\text{归一约化测试}}\lambda^2\mathcal D_\lambda^{\rm red}.
+\tag{37.14}
+$$
+
+此时暂允许下确界为 $-\infty$；§37.7 将先证明尾部一致下有界。
+
+### 37.3 可见 Hermitian 图的闭包与零需求排除
+
+**引理 37.2（包括演员轴的可见图闭包）。** 在 $\|u\|=1$ 的有限维空间中，实际图 $(u,Xu,XCu)$、$X=X^*$ 的闭包 $\overline{\mathcal G}$，恰由
+
+$$
+u^*p\in\mathbb R,\qquad (Cu)^*q\in\mathbb R,\qquad u^*q=p^*Cu
+\tag{37.15}
+$$
+
+定义。若 $u_1u_2\ne0$，唯一实际矩阵为 $X=[p\ q][u\ Cu]^{-1}$。若 $u=z e_j$，$|z|=1$，$l\ne j$，则条件恰为 $p_j/z\in\mathbb R$、$q_j=c_jp_j$；$p_l,q_l$ 无额外限制，其中 $c_1=1,c_2=2$。
+
+证明。三条件就是 $[u\ Cu]^*[p\ q]$ 为 Hermitian，故对实际图成立并在极限保留；非轴时反乘可逆矩阵证明充分性。在轴上逐项代入即得所列条件。为证明每个轴点都在闭包，设
+
+$$
+d=c_l-c_j,\qquad
+s_{\rm ax}=(c_lp_l-q_l)/d,\qquad
+t_{\rm ax}=(q_l-c_jp_l)/d.
+\tag{37.17}
+$$
+
+若 $t_{\rm ax}=0$，令 $X_{lj}=p_l/z$、$X_{jl}=\overline{X_{lj}}$、$X_{jj}=p_j/z$，另一对角元任取实数，即实际实现原列。若 $t_{\rm ax}\ne0$，对 $0<\tau<1$ 取
+
+$$
+\begin{gathered}
+u_{l,\tau}=\tau t_{\rm ax}/|t_{\rm ax}|,\qquad
+u_{j,\tau}=z\sqrt{1-\tau^2},\\
+X_{lj,\tau}=s_{\rm ax}/u_{j,\tau},\quad
+X_{jl,\tau}=\overline{X_{lj,\tau}},\quad
+X_{ll,\tau}=|t_{\rm ax}|/\tau,\quad X_{jj,\tau}=p_j/z.
+\end{gathered}
+\tag{37.18}
+$$
+
+所得 $X_\tau$ Hermitian、$\|u_\tau\|=1$，且
+
+$$
+(X_\tau u_\tau)_l=s_{\rm ax}+t_{\rm ax}=p_l,\qquad
+(X_\tau Cu_\tau)_l=c_js_{\rm ax}+c_lt_{\rm ax}=q_l.
+$$
+
+另两个可见列坐标及 $u_\tau-u$ 都是 $O(\tau)$。这证明闭包描述；没有删除发散的 $X_{ll,\tau}$。∎
+
+**定义 37.3（增广接触与极限代价）。** 对固定 $a,h,\iota$，$\mathcal C_\iota(a)$ 遍取 $\epsilon=\pm1$、$(u,p,q)\in\overline{\mathcal G}$、$\ell\in\mathbb C$、$a_{\rm act}\in\mathbb C^2$、$\eta\in\mathbb C$，满足
+
+$$
+\begin{gathered}
+A=-\epsilon\operatorname{Im}_\iota\ell>1,\qquad
+s(A)=\frac{2A}{A^2-1},\\
+a_{\rm act}=\iota(I_2-\ell C^{-1})p,\qquad
+q=(\ell I_2+2C^{-1})p+\iota BCu,\\
+a_{\rm act}-Hu+\ell C^2u/2=\eta a.
+\end{gathered}
+\tag{37.19}
+$$
+
+保留两个 $\epsilon$。定义
+
+$$
+\zeta(c)=\operatorname{Re}((a_{\rm act}-\iota p)^*T_Au),\qquad
+J_k(c)=s(A)|\eta|^2+4\epsilon k\zeta(c),\qquad
+j(k)=\inf_{c\in\mathcal C_\iota(a)}J_k(c),
+\tag{37.20}
+$$
+
+空集下确界约定为 $+\infty$。这些定义尚不宣称接触由一个有限轴上 $X$ 精确实现。
+
+**引理 37.4（闭包上的零需求不可能）。** 将 (37.19) 的 $A>1$ 放宽到 $A\ge1$，仍要求其中两条演员接触等式；则
+
+$$
+a_{\rm act}-Hu+\ell C^2u/2\ne0.
+\tag{37.21}
+$$
+
+特别地，每个 $\mathcal C_\iota(a)$ 中的 $\eta$ 非零。
+
+证明。反设需求为零。用引理 37.2 取实际图 $(u_\delta,p_\delta,q_\delta)$ 逼近给定闭包点，误差 $o(\delta)$；实际点可保持不动。令
+
+$$
+\ell_\delta=\ell-\epsilon\iota\delta,\quad
+A_\delta=A+\delta>1,\quad \nu_\delta=\rho_\delta=0,\quad
+\alpha_{\tau,\delta}=A_\delta-\tau\epsilon,\quad
+a_{{\rm act},\delta}=Hu_\delta-\ell_\delta C^2u_\delta/2.
+$$
+
+在 §32 基准来源 $F_b=D_b=C,G_b=I_2$ 上，这些是合法实际测试，环境需求恰为零，演员缺陷 $\mathsf P_\delta,\mathsf Q_\delta=O(\delta)$。若 $A=1$，较大权重为 $O(\delta^{-1})$；若 $A>1$，权重有界。因此基准平方和 $S_b=O(\delta)$ 趋零。可是 (35.16) 给 $S_b\ge\gamma b_\delta\ge\gamma>0$，矛盾。此论证同时覆盖演员轴和一个 $\alpha_\tau\to0$ 的边界。∎
+
+### 37.4 每个缩放上子水平集的紧性
+
+**定理 37.5（全部归一原测试的序列紧性与下极限）。** 固定上述 $a,h,\iota$ 及任意实 $k,M$。对每个 $\lambda_j\to\infty$ 和归一原测试序列，若
+
+$$
+\lambda_j^2\mathcal D_{\lambda_j}^{\rm orig}\le M,
+\tag{37.22}
+$$
+
+则约化可见数据 $(\epsilon,u,p,q,a_{\rm act},\ell,\nu,\alpha_\pm,\beta_\pm)$ 有收敛子列。每个这样的收敛子列的极限满足 $\nu=0$，并通过 (37.19) 确定一个 $c\in\mathcal C_\iota(a)$；沿该子列都有
+
+$$
+\liminf_j\lambda_j^2\mathcal D_{\lambda_j}^{\rm orig}\ge J_k(c).
+\tag{37.23}
+$$
+
+同一结论对 $\mathcal D^{\rm red}$ 成立。所有尾部上界、正下界和误差常数可依赖固定 $C,H,a,h,k,M$，不依赖 $\lambda_j$ 或所选测试。没有对无界 $k$ 的一致性结论，也不要求 $X_j$ 或 $y_j$ 有界。
+
+证明先控制残量抵消。由 (37.12)，只需处理约化代价。用同一 $u,X,a_{\rm act}$ 和原有限参数在 §32 基准来源上取环境需求 $t_{\rm req}$，其平方和为
+
+$$
+S_b=\mathcal A+s_\alpha\|t_{\rm req}\|^2
+               +\frac{n^2}{2A}\|C^2u\|^2.
+\tag{37.24}
+$$
+
+这确实是一个原基准测试：取 $d_b=t_{\rm req}-(\ell+\omega\nu)C^2u/2$，$y_b=C^{-1}(d_b-Cu)$，即可使 $Bu+Cy_b=a_{\rm act}$。由 (35.16) 和秩一逆矩阵的最小特征值，尾部 $|\rho|\le r_0$ 上有
+
+$$
+\begin{gathered}
+S_b\ge\gamma b,\qquad
+|\zeta|\le K\bigl(b+\sqrt{bS_b}+|\rho|\bigr),\\
+S_b\le L_\lambda S_\lambda,\qquad L_\lambda=1+\lambda^2m.
+\end{gathered}
+\tag{37.25}
+$$
+
+将 $M$ 增至 $\max(M,0)$，置 $x_b=S_b/b$。从 $\lambda^2S_\lambda\le M+4|k||\zeta|$ 得到准确的不等式
+
+$$
+x_b\le(m+\lambda^{-2})
+\left[M+4K|k|\left(1+\sqrt{x_b}+|\rho|/b\right)\right].
+\tag{37.26}
+$$
+
+因 $b\ge1$ 且尾部 $|\rho|\le1$，这是 $\sqrt{x_b}$ 的二次上界，故 $x_b$ 一致有界。重新代回即得
+
+$$
+S_b\le Cb,\qquad S_\lambda\le Cb/\lambda^2.
+\tag{37.27}
+$$
+
+这里没有把有符号代价的上界误作正平方和的上界，而是先控制了允许的抵消。
+
+方差项与 $\|C^2u\|\ge1$ 给
+
+$$
+\frac{n^2}{2A}\le S_\lambda,\qquad
+\frac{n}{r+n}\le C/\lambda,\qquad
+\frac nr\le C'/\lambda,\qquad \liminf r\ge1.
+\tag{37.28}
+$$
+
+最后一步使用 $r+n\ge1$。半和、半差的加权 Cauchy–Schwarz，以及 $s_\alpha\ge2/A$，又给
+
+$$
+\|\mathsf P\|+\|\mathsf Q\|\le Cr/\lambda,\qquad
+\|t_{\rm req}\|\le Cr,\qquad \|a_{\rm act}\|\le Cr.
+\tag{37.29}
+$$
+
+例如 $\|t_{\rm req}\|^2\le L_\lambda S_\lambda/s_\alpha\le Cr^2$；这里已由 (37.28) 使 $b/r$ 有界。
+
+现在排除 $r\to\infty$。若存在这种子列，置 $\chi=\nu/\ell$、$e_\ell=\ell/r$，$|e_\ell|=1$。原演员列的准确消元是
+
+$$
+\mathsf Q-\chi\mathsf P=(\iota C-\chi I_2)a_{\rm act}-Zp+\rho T_Au,
+\qquad
+Z=\bigl[\ell(1-\chi^2)-\iota\chi\bigr]I_2-C.
+\tag{37.30}
+$$
+
+由 $\chi=O(\lambda^{-1})$，尾部 $\|Z^{-1}\|\le C/r$；结合 (37.29) 得 $p=O(1)$。再由 $\mathsf P=v-\nu p+\ell U/2$ 得 $U=O(1)$。用 $U$ 的定义和 $\mathsf Q$ 的等式，分别得到
+
+$$
+\frac qr-e_\ell p=O(\lambda^{-1}+r^{-1}),\qquad
+\frac{a_{\rm act}}r+\iota e_\ell C^{-1}p
+                  =O(\lambda^{-1}+r^{-1}).
+\tag{37.31}
+$$
+
+实际 Hermitian 图的 $u^*q=p^*Cu$ 与 $p=O(1)$ 使
+$u^*p=O(\lambda^{-1}+r^{-1})$；它本来是实数。另一个 Hermitian 条件 $(Cu)^*q\in\mathbb R$ 使
+
+$$
+\operatorname{Im}_\iota\bigl(e_\ell(Cu)^*p\bigr)
+                  =O(\lambda^{-1}+r^{-1}).
+\tag{37.32}
+$$
+
+准确使用 $C^{-1}T_A=3I_2-2C$，(37.31) 给
+
+$$
+\frac\zeta r=
+\operatorname{Re}\!\left(\iota\overline{e_\ell}
+       [3p^*u-2p^*Cu]\right)+O(\lambda^{-1}+r^{-1})
+       =O(\lambda^{-1}+r^{-1}).
+\tag{37.33}
+$$
+
+最后一个等号同时用了上述两个 Hermitian 配对；仅控制 $u^*p$ 不足以得此消失。另一方面，(37.25) 给
+
+$$
+\frac{\lambda^2S_\lambda}{r}
+\ge\frac{\gamma b}{r(m+\lambda^{-2})}
+\ge\frac\gamma{m+\lambda^{-2}}.
+\tag{37.34}
+$$
+
+(37.33)–(37.34) 与
+$\lambda^2\mathcal D_\lambda^{\rm red}/r\le M/r\to0$ 矛盾，因其左侧下极限至少为 $\gamma/m>0$。所以 $r$ 有界；此排除没有除以可能为零的 $\zeta$。
+
+现在 $n=O(\lambda^{-1})$，$a_{\rm act}$ 有界，$\mathsf P,\mathsf Q\to0$。合法性给 $\liminf A\ge1$，故 (37.30) 中 $Z$ 尾部具有一致有界逆：其极限是虚系数绝对值至少 $1$ 的 $\ell I_2-C$。因而 $p$ 有界；由 $\mathsf P$ 得 $U$ 有界，再由其定义得 $q$ 有界。所有可见数据于是可取收敛子列，图极限属于 $\overline{\mathcal G}$，原 $\beta_\tau=\operatorname{Re}(\nu+\tau\ell)$ 也有界。
+
+还须排除 $A\to1$，不能预设两权重的正下界。由 (37.27) 及 $r$ 有界，
+
+$$
+s_\alpha\|t_{\rm req}\|^2
+\le(m+\lambda^{-2})\lambda^2S_\lambda\le C.
+\tag{37.35}
+$$
+
+若 $A\to1$，则 $\nu\to0$ 使一个 $\alpha_\tau\to0$，故 $s_\alpha\to\infty$，进而 $t_{\rm req}\to0$。在 $\mathsf P=\mathsf Q=0,\nu=\rho=0$ 的极限中，先由 $\mathsf Q=0$ 得 $v=-\iota\ell C^{-1}p$，再由 $\mathsf P=0$ 得 $U=2\iota C^{-1}p$。这些正是 (37.19) 的两条演员接触等式，给出了被引理 37.4 排除的 $A=1$ 零需求。故尾部 $A\ge1+\delta$，$\delta>0$；两 $\alpha_\tau$ 均离零且有上界。
+
+最后令 $\Pi_a=aa^*/m$、$\Pi_a^\perp=I_2-\Pi_a$。有
+
+$$
+R_\lambda=\Pi_a^\perp+(1+\lambda^2m)^{-1}\Pi_a.
+\tag{37.36}
+$$
+
+$\lambda^2S_\lambda\le C$ 使 $\Pi_a^\perp t_{\rm req}=O(\lambda^{-1})$。因此每个可见收敛子列都满足 $t_{\rm req}\to\eta a$，并由引理 37.4 得 $\eta\ne0$。此子列的极限就是 (37.19) 的一个增广接触。设 $\eta_\lambda=a^*t_{\rm req}/m\to\eta$，则
+
+$$
+\liminf \lambda^2s_\alpha t_{\rm req}^*R_\lambda t_{\rm req}
+\ge\lim s_\alpha\frac{\lambda^2m}{1+\lambda^2m}|\eta_\lambda|^2
+=s(A)|\eta|^2.
+\tag{37.37}
+$$
+
+其余缺陷平方与方差非负，$\zeta$ 连续收敛；原环境剩余项也非负。这证明每个收敛子列上的 (37.23)。当需要整列的下极限时，先取实现该下极限的子列，再用已经证明的紧性取子列；并不声称任意极限接触都实现整列下极限。∎
+
+### 37.5 同一实际来源上的逐接触恢复
+
+**定理 37.6（包括非实际轴接触的恢复）。** 对每个 $c\in\mathcal C_\iota(a)$、每个固定实数 $k$，存在对所有充分大有限 $\lambda$ 定义的归一原测试，使可见数据趋于 $c$，且
+
+$$
+\lambda^2\mathcal D_\lambda^{\rm orig}\longrightarrow J_k(c).
+\tag{37.38}
+$$
+
+恢复使用 (37.2) 的同一实际 $D_\lambda^{\rm env},F,G_\lambda$；不改变源的三个矩。
+
+证明。若接触有实际 $X$，保持 $u,X$。否则它是引理 37.2 的轴点，用 (37.18) 并取 $\tau_\lambda=\lambda^{-3}$，得到实际 $u_\lambda,X_\lambda$，且
+
+$$
+\|u_\lambda-u\|+\|X_\lambda u_\lambda-p\|
+ +\|X_\lambda Cu_\lambda-q\|=O(\lambda^{-3}).
+\tag{37.39}
+$$
+
+保持接触的 $a_{\rm act},\ell,\epsilon$，令
+
+$$
+\nu_\lambda=0,\qquad
+\alpha_{\tau,\lambda}=A-\tau\epsilon>0,\qquad
+\beta_{\tau,\lambda}=\tau\operatorname{Re}\ell,\qquad
+\rho_\lambda=k/\lambda^2.
+\tag{37.40}
+$$
+
+此时 $\mathsf P_\lambda=O(\lambda^{-3})$，$\mathsf Q_\lambda=O(\lambda^{-3})+O(\lambda^{-2})$，方差恰为零。令
+
+$$
+\begin{gathered}
+t_\lambda=a_{\rm act}-Hu_\lambda+\ell C^2u_\lambda/2
+             =\eta a+O(\lambda^{-3}),\\
+e_\lambda=G_\lambda R_\lambda t_\lambda,\qquad
+y_\lambda=(D_\lambda^{\rm env})^{-1}
+       (e_\lambda-\ell FCu_\lambda/2-Fu_\lambda).
+\end{gathered}
+\tag{37.41}
+$$
+
+原矩阵 $D_\lambda^{\rm env}$ 在每个有限阶段可逆，故这个 $y_\lambda$ 有限，且直接由 (37.3) 得 $Bu_\lambda+Vy_\lambda=a_{\rm act}$。所用环境列正是原最小范数列，$e_0=0$。因此
+
+$$
+\lambda^2\mathcal A_\lambda=O(\lambda^{-2})\to0,\qquad
+\lambda^2s_\alpha t_\lambda^*R_\lambda t_\lambda
+             \to s(A)|\eta|^2,\qquad \zeta_\lambda\to\zeta(c).
+\tag{37.42}
+$$
+
+例如垂直误差贡献为 $O(\lambda^2\lambda^{-6})$，平行项由 (37.36) 计算；这证明 (37.38)。恢复列可以由发散的 Hermitian 对角元产生，但每个有限阶段都是原来允许的探针。∎
+
+**推论 37.7（严格负接触的原失败、两笔正预算与任意质量）。** 若 $J_k(c)<0$，定理 37.6 的原测试对所有充分大有限 $\lambda$ 严格违反 (37.5)，且两笔原预算严格正。对任意指定 $\mu\in(0,\infty)$ 都有质量 $\phi(I)=\mu$ 的这样的反例。
+
+证明。(37.38) 给 (37.7) 严格负，(27.12) 即给原 PB 严格失败。还须检查预算本身，而不能仅由代价为负推断预算正性。由同一来源的精确末行，
+
+$$
+(e_\lambda)_3=\frac{\lambda a^*t_\lambda}{1+\lambda^2m}
+               =\frac\eta\lambda+O(\lambda^{-3})\ne0.
+\tag{37.43}
+$$
+
+同时 $FCu_\lambda=(C^2u_\lambda,0)^{\mathsf T}$，末坐标恰为零，首块非零。原 $R_\tau\xi_\lambda$ 的环境块是 $-\tau FCu_\lambda/2$，而 $E_\tau=(S_\tau-z_\tau R_\tau)\xi_\lambda$ 的环境块恰是 $e_\lambda$。两列复线性独立，对每个 $\tau$ 都有
+
+$$
+B_{\phi_{\xi_\lambda}}(R_\tau,S_\tau)
+\ge\frac{\|C^2u_\lambda\|^2|(e_\lambda)_3|^2}{4}>0.
+\tag{37.44}
+$$
+
+该下界先来自环境复 Gram 行列式，加入演员块只增加半正定 Gram 矩阵；原实 Gram 行列式又不小于复 Gram 行列式。$\eta\ne0$ 已由引理 37.4 证明。最后用 $\mu/\|\xi_\lambda\|^2$ 正倍缩放同一向量泛函，严格失败和两笔正预算一起保留。∎
+
+### 37.6 从单位演员域回到全部正泛函
+
+若任意原向量 $\xi=(w,y)$ 的演员分量 $w\ne0$，令 $b_w=\|w\|$，则
+
+$$
+\xi=b_w(u,y/b_w),\qquad u=w/b_w,\quad \|u\|=1.
+\tag{37.45}
+$$
+
+同一 $X$ 与所有变分参数保持不动，(37.7) 和 PB 的两侧都按 $b_w^2$ 缩放。故归一对符号判定充分，即使 $b_w$ 任意小。若 $w=0$，直接由原列有 $x\xi=h_x\xi=r_x\xi=s_\rho\xi=0$，并且
+
+$$
+\phi_\xi(L_{\rm PB})=-2\operatorname{Re}((Vy)^*\iota CVy/2)=0;
+\tag{37.46}
+$$
+
+因此 PB 自动成立，包括零向量。
+
+完整正泛函具有有限谱和 $\phi=\sum_j\phi_{\xi_j}$。对每个固定 $X$，分别把 (17.15) 的二阶实 Gram 行列式根超可加性用于两笔预算，得到
+
+$$
+\sqrt{B_\phi(R_\tau,S_\tau)}\ge
+\sum_j\sqrt{B_{\phi_{\xi_j}}(R_\tau,S_\tau)},\qquad \tau=\pm1.
+\tag{37.47}
+$$
+
+这是 (17.14)–(17.16) 的谱和提升；结合左侧的三角不等式即可从全部向量 PB 得到 (37.5)。反向只需取向量泛函。环境密度及演员、环境混合块始终留在完整原代数中。固定任意正有限质量的全称条件等价，因为正倍缩放使 PB 两侧同阶齐次；零质量只有零泛函。两个取向的结论分别应用，要求双取向时两份全称条件同时保留。
+
+这个符号等价不赋予未归一域相同的数值下确界。本节的 (37.14) 不得改成全部 $\xi$ 上的数值下确界：例如 $k=0$ 时，未归一域含零向量而代价非负，其下确界恰为零；归一域却由 (37.25) 得 $\lambda^2\mathcal D_\lambda\ge\gamma/(m+\lambda^{-2})$。以下下确界定理只指单位演员域。
+
+### 37.7 下有界性与全局归一下确界极限
+
+**定理 37.8（先下有界，再取全局极限）。** 对每个固定 $a,h,\iota,k$，存在有限 $C_0,\lambda_0$，使对所有 $\lambda\ge\lambda_0$ 和全部归一原或约化测试，
+
+$$
+\lambda^2\mathcal D_\lambda\ge-C_0.
+\tag{37.48}
+$$
+
+非空接触域上的 $j(k)>-\infty$；若接触域非空则 $j(k)\in\mathbb R$，若为空则 $j(k)=+\infty$。且在扩展实数意义下
+
+$$
+\boxed{\ \lim_{\lambda\to\infty}f_\lambda(k)
+       =\inf_{c\in\mathcal C_\iota(a)}J_k(c).\ }
+\tag{37.49}
+$$
+
+证明。若 (37.48) 不成立，可选 $\lambda_n\ge n$ 和归一测试，使 $\lambda_n^2\mathcal D_{\lambda_n}\le-n$。定理 37.5 对上界 $M=0$ 适用，给一个收敛可见子列及有限接触值 $J_k(c)$，并给其下极限至少为 $J_k(c)>-\infty$，与趋于 $-\infty$ 矛盾。这既排除尾部任何 $f_\lambda=-\infty$，也建立统一有限下界。每个有限 $\lambda$ 有有限参数的归一测试，故 $f_\lambda<+\infty$。
+
+若接触值无下界，可取 $c_n$ 满足 $J_k(c_n)\le-2n$，再对每个 $c_n$ 用定理 37.6 选充分大的 $\lambda_n\ge n$，使恢复值不大于 $-n$。这又违反 (37.48)。因此在引用近极小列以前，归一下确界及接触下确界的下有界性都已建立。
+
+接触域非空时，每个固定接触的恢复给 $\limsup f_\lambda(k)\le J_k(c)$；对 $c$ 取下确界得上极限不超过有限的 $j(k)$。取实现 $\liminf_{\lambda\to\infty}f_\lambda(k)$ 的 $\lambda_n\to\infty$，再取有限近极小测试，使其值在 $[f_{\lambda_n},f_{\lambda_n}+1/n]$ 内。已有上下界使这些值具有共同有限上界。定理 37.5 给子列与接触 $c$，从而
+
+$$
+\liminf_{\lambda\to\infty}f_\lambda(k)
+\ge J_k(c)\ge j(k).
+$$
+
+上下极限相合。若接触域为空，而 $f_\lambda$ 不趋于 $+\infty$，则存在 $\lambda_n\to\infty$ 和有限 $M$，使 $f_{\lambda_n}\le M$。取误差至多 $1$ 的近极小测试，定理 37.5 就会产生一个接触，矛盾。因此空域时极限确为 $+\infty$。整个证明使用序列紧性和实际恢复，没有交换未经证明的下确界与极限。∎
+
+### 37.8 全称 PB 的严格阈值及临界边界
+
+**推论 37.9（逐接触的必要性与严格充分性）。** 固定实 $k$。若 (37.2) 在 $\rho=k/\lambda^2$ 对所有充分大 $\lambda$ 满足全部原 PB，则每个 $c\in\mathcal C_\iota(a)$ 有 $J_k(c)\ge0$。若每个接触都有 $J_k(c)>0$，则对所有充分大 $\lambda$ 满足全部原 PB。
+
+证明。负接触由推论 37.7 给尾部失败，证明必要性。反之，若存在 $\lambda_n\to\infty$ 上的失败，由 §37.6 的全正泛函提升及 (27.12) 选出归一原有限测试使 $\mathcal D_{\lambda_n}^{\rm orig}<0$。定理 37.5 对 $M=0$ 给一个接触，且
+
+$$
+J_k(c)\le\liminf_n\lambda_n^2\mathcal D_{\lambda_n}^{\rm orig}\le0,
+$$
+
+矛盾。此处逐接触严格正已经足够，不额外假设一个统一正间隙。空接触域也由同一矛盾论证给充分性。∎
+
+对当前固定取向，定义两个带方向的阈值；其 $h,\iota$ 依赖在记号中省略：
+
+$$
+\begin{aligned}
+K_{\rm positive}(a)
+ &=\inf_{c\in\mathcal C_\iota(a):\ \epsilon\zeta(c)<0}
+       \frac{s(A)|\eta|^2}{-4\epsilon\zeta(c)},\\
+K_{\rm negative}(a)
+ &=\inf_{c\in\mathcal C_\iota(a):\ \epsilon\zeta(c)>0}
+       \frac{s(A)|\eta|^2}{4\epsilon\zeta(c)}.
+\end{aligned}
+\tag{37.50}
+$$
+
+空下确界仍为 $+\infty$。对每个固定 $k\ge0$，$k<K_{\rm positive}(a)$ 时 $\rho=k/\lambda^2$ 最终通过全部原 PB；$k>K_{\rm positive}(a)$ 时最终严格失败。理由是前一范围使每个 $J_k>0$，后一范围由下确界定义找到一个 $J_k<0$。对 $\rho=-k/\lambda^2$，用 $K_{\rm negative}(a)$ 得相同的严格两侧结论。要求两个取向时，分别检查各自的阈值。
+
+在有限阈值等号处，定义只保证所有接触的领先值非负；若有零接触，(37.38) 不决定有限 $\lambda$ 的次阶符号。即使阈值下确界不取到，也必须按实际 $J_k$ 检查：若它们仍逐点严格正，推论 37.9 可用。本文不把非负替换为严格正，不宣称一般的临界等号分类。
+
+### 37.9 一个可恢复而非实际的轴接触
+
+取 $\iota=i$、$0<h$ 充分小，仍处于 §32 邻域。固定实际方向及接触数据
+
+$$
+\begin{gathered}
+a=(1,\sqrt2)^{\mathsf T}/\sqrt2,\quad m=3/2,\quad
+\epsilon=1,\quad u=e_1,\quad \ell=-1-2\iota,\quad A=2,\\
+\eta=\sqrt2(-11/2+2\iota),\qquad p_1=q_1=3/2,\\
+p_2=\frac{h+\eta}{-1+3\iota/2},\qquad
+q_2=-2\iota p_2+\iota h,\qquad
+a_{\rm act}=(-3+3\iota,h+\eta)^{\mathsf T}.
+\end{gathered}
+\tag{37.51}
+$$
+
+三个 Hermitian 闭包条件在第一轴只要求 $p_1$ 实且 $q_1=p_1$，故满足。第一接触等式的坐标为
+$\iota(1-\ell)(3/2)=-3+3\iota$ 和
+$\iota(1-\ell/2)p_2=(-1+3\iota/2)p_2=h+\eta$。
+第二接触等式的第一坐标是 $(\ell+2)(3/2)+3\iota=3/2$，第二坐标恰是所给 $q_2$。最后需求的两个坐标分别为 $-11/2+2\iota=\eta/\sqrt2$ 和 $\eta$。所以 (37.19) 全部成立，且
+
+$$
+\zeta=-3,\qquad |\eta|^2=137/2,\qquad s(A)=4/3,\qquad
+J_k=274/3-12k.
+\tag{37.52}
+$$
+
+在 $h=0$，$q_2-p_2=(-1-2\iota)\eta/(-1+3\iota/2)\ne0$，故固定充分小正 $h$ 后仍非零。实际第一轴探针却必有 $q=p$，所以这是一个没有有限轴上实现的接触。引理 37.2 的发散对角元恢复给实际趋轴探针；它表明闭包不可直接删去。
+
+每个固定 $k>137/18$ 由此给同源有限阶段的严格 PB 排除与两笔正预算。它们也最终通过两个取向的原 P2：令 $\beta=h/\sqrt2$、$U_0=2^{-1/2}\left(\begin{smallmatrix}1&1\\1&-1\end{smallmatrix}\right)$。这里 $U_0^*C^{-1/2}a=e_1$，实际 P2 的逆坐标矩阵为
+
+$$
+\mathsf K=\begin{pmatrix}3/2+\lambda^2&1/2\\1/2&3/2\end{pmatrix}.
+$$
+
+由 (30.29)，其精确双取向半径为
+
+$$
+\frac{h/\sqrt2}{\sqrt{(3/2+\lambda^2)(3/2)}}.
+\tag{37.53}
+$$
+
+它为正的 $\lambda^{-1}$ 阶，故支配每个固定 $k/\lambda^2$。例子不声称 $137/18$ 锐，也不声称此轴值低于全部精确有限 $\nu=0$ 接触的下确界。
+
+### 37.10 同谱比较所需的共同尺度与未决边界
+
+若要比较两个实际方向在共同 $M_2$ 谱 $(1,L)$ 下的 PB 阈值，必须分别令
+
+$$
+\lambda^2=(L-1)/m,\qquad \rho=q_{\rm shared}/(L-1),\qquad k=q_{\rm shared}/m.
+\tag{37.54}
+$$
+
+这里 $q_{\rm shared}\in\mathbb R$ 是共同残量尺度。正方向应比较 $mK_{\rm positive}(a)$，负方向应比较 $mK_{\rm negative}(a)$。只比较未乘 $m$ 的阈值不能推出共同 $\rho$ 的差异。
+
+每份来源还必须独立通过实际 P2。若 $a=C^{1/2}U_0w$，$w\in\mathbb C^2\setminus\{0\}$，$h>0$，令
+
+$$
+\mathsf K=\begin{pmatrix}3/2&1/2\\1/2&3/2\end{pmatrix}
+          +\frac{L-1}{m}ww^*,\qquad z=\mathsf K_{12},\qquad
+\beta=h/\sqrt2.
+\tag{37.55}
+$$
+
+这是该来源的实际逆矩阵坐标。前卷 (30.29) 对取向 $\sigma$ 给精确闭区间
+
+$$
+I_\sigma=
+\left[
+-\frac{\beta}{\sqrt{\mathsf K_{11}\mathsf K_{22}}+\sigma\operatorname{Im}z},\quad
+ \frac{\beta}{\sqrt{\mathsf K_{11}\mathsf K_{22}}-\sigma\operatorname{Im}z}
+\right].
+\tag{37.56}
+$$
+
+正定性使两分母严格正。任何拟议的共同 $\rho=q_{\rm shared}/(L-1)$ 都须代入两份实际区间；要求双取向则还须分别取两取向的交。
+
+本节尚未给出两个方向具有严格不同的 $mK_{\rm positive}(a)$ 或 $mK_{\rm negative}(a)$ 的证明，也没有给出共同 P2 允许的 $q_{\rm shared}$ 上一份全部 PB 成立、另一份 PB 失败的成对见证。§36 的共轭相位对不被提升为这种 PB 分离。
+
+本节的 `repo-derived` 纸面增量是同一固定 $M_0$ 来源、单位演员域上的全部上子水平紧性、可见图轴闭包恢复及由此得到的归一下确界极限与严格阈值。原列、变分和完整正泛函提升复用 §§17、27、31 及 (32.4)–(32.7)、(35.13)；全部参数上的基准强制估计复用 §32、(35.16)。正交最小范数、加权方差、Schur 补、Cauchy–Schwarz、有限维序列紧性和谱和 Gram 根不等式均按成熟数学直接使用。本文没有外部文献穷尽或历史优先权主张，没有 Lean／kernel 核验，也不主张物理实现。
+
+增广接触下确界与精确有限 $\nu=0$ 接触下确界是否相同，需要另外的密度或等价论证；本节只恢复近接触的实际原测试，不假设该等式。临界零值的次阶符号、阈值的显式最优值及共同 P2 内的成对 PB 分离仍未解决。
+
+## 追加锚（本行以下为增补区）
+
+## 38. 共同完整 P2 区间内的更强实际有限轴恢复排除
+
+本节固定 (35.5)、(37.2) 的两个实来源方向 $a_\tau=(1/\sqrt2,\tau)^{\mathsf T}$，$\tau=\pm1$。两份来源的完整原 P2 区间完全相同，但在该区间的严格内部，每个固定 $k>809/480$、$\rho=k/\lambda^2$ 都在充分大的有限阶段违反原 PB。这里的界严格加强 §37.9 的 $k>137/18$：
+
+$$
+\frac{809}{480}<\frac{137}{18}.
+$$
+
+证明直接构造有限 Hermitian 探针及同一来源上的环境向量，并保留两笔严格正的原预算。原残量矩阵始终是 $T_A=\operatorname{diag}(1,-2)$；本节不将它替换成归一化后的 $\operatorname{diag}(1,-1)$。前卷式号仍取 §37 所引钉版的含义。
+
+### 38.1 两个实际来源、原条件与排除定理
+
+在 $\mathbb C^2\oplus(\mathbb C^2\oplus\mathbb C)$ 上置
+
+$$
+\begin{gathered}
+C=\operatorname{diag}(1,2),\qquad T_A=\operatorname{diag}(1,-2),\qquad
+J_A=\begin{pmatrix}0&1\\1&0\end{pmatrix},\\
+a_\tau=(1/\sqrt2,\tau)^{\mathsf T},\qquad b=\|a_\tau\|^2=3/2,\qquad
+H=2C+hJ_A,\qquad B=H+C,\\
+\delta_\lambda=\lambda^{-3},\qquad
+F=\begin{bmatrix}C\\0\end{bmatrix},\qquad
+G_{\tau,\lambda}=\begin{bmatrix}I_2\\\lambda a_\tau^*\end{bmatrix},\\
+D_{\tau,\lambda}=\begin{pmatrix}
+C+\delta_\lambda\lambda^2a_\tau a_\tau^*&-\delta_\lambda\lambda a_\tau\\
+-\delta_\lambda\lambda a_\tau^*&\delta_\lambda
+\end{pmatrix},\qquad
+t_{\tau,\lambda}=\begin{pmatrix}B&F^*\\F&D_{\tau,\lambda}\end{pmatrix}.
+\end{gathered}
+\tag{38.1}
+$$
+
+这就是 (35.5) 的原实际实现。固定一份来源后，简写 $D=D_{\tau,\lambda}$、$G=G_{\tau,\lambda}$、$t=t_{\tau,\lambda}$。环境正二次型及精确矩恒等式为
+
+$$
+\begin{gathered}
+(v,z)^*D(v,z)=v^*Cv+\delta_\lambda|z-\lambda a_\tau^*v|^2,\\
+DG=F,\qquad F^*F=C^2,\qquad F^*G=G^*F=C,\qquad
+M_2=G^*G=I_2+\lambda^2a_\tau a_\tau^*,\\
+B-F^*D^{-1}F=H.
+\end{gathered}
+\tag{38.2}
+$$
+
+因此每个有限 $\lambda>0$ 上 $D\succ0$；当 $0<h<2\sqrt2$ 时，$H$ 的首主子式为 $2$、行列式为 $8-h^2>0$，从而 $t\succ0$。两份来源共享 $H,M_0=C^2,M_1=C,W=0$ 及 $M_2$ 的整个谱 $\{1,1+(3/2)\lambda^2\}$，并各自保留自己的实际环境。
+
+为区分来源符号 $\tau$ 与两笔预算，用 $d=\pm1$ 标记原列。给定取向 $\iota=\sigma i$、$\sigma=\pm1$，在完整 $M_5(\mathbb C)$ 上定义
+
+$$
+\begin{gathered}
+A\circ B=(AB+BA)/2,\qquad K_\sigma(A,B)=\sigma i[A,B]/2,\\
+c=C\oplus0_3,\quad s_\rho=\rho T_A\oplus0_3,\quad
+x=X\oplus0_3,\quad X=X^*,\quad g=K_\sigma(c,t)+s_\rho,\\
+h_x=K_\sigma(c,x),\qquad k_c=c\circ t,\qquad r_x=c\circ x,\\
+R_d=x+d(h_x-k_c),\qquad S_d=t+d(r_x+g),\\
+L_{\rm PB}=-2x\circ(h_x-k_c)-2t\circ(r_x+g),\\
+B_\phi(R,S)=\phi(R^2)\phi(S^2)-\phi(R\circ S)^2.
+\end{gathered}
+\tag{38.3}
+$$
+
+完整原 P2 要求每个正复线性泛函 $\phi$ 满足
+
+$$
+\phi(g)^2\le\phi(c^2)\phi(t^2)-\phi(c\circ t)^2.
+\tag{38.4}
+$$
+
+全部原 PB 要求每个实际 $X=X^*$ 及每个这样的 $\phi$ 满足
+
+$$
+|\phi(L_{\rm PB})|\le\sqrt{B_\phi(R_+,S_+)}+\sqrt{B_\phi(R_-,S_-)}.
+\tag{38.5}
+$$
+
+所有平方、乘积与泛函均在 (38.1) 的完整原代数中计算。
+
+**定理 38.1（$809/480$ 的实际有限恢复排除）。** 固定 $0<h<2\sqrt2$、有限实数 $k>809/480$ 及任意指定质量 $\mu\in(0,\infty)$。存在有限 $\Lambda(h,k)>1$，使每个有限 $\lambda>\Lambda(h,k)$、每份 $\tau=\pm1$ 来源、每个取向 $\sigma=\pm1$ 都满足：
+
+1. 其完整原 P2 的精确允许集均为同一个闭区间
+
+   $$
+   I_{\tau,\sigma}=\left[-\frac{h/\sqrt2}{T_\lambda},\frac{h/\sqrt2}{T_\lambda}\right],
+   \qquad T_\lambda=\sqrt{\frac32\left(\frac32+\lambda^2\right)},
+   \tag{38.6}
+   $$
+
+   且 $\rho=k/\lambda^2$ 严格位于其内部。
+2. 存在有限实际 Hermitian 探针 $x=X\oplus0_3$ 和同一来源上的一个向量正泛函 $\phi$，$\phi(I)=\mu$，使 (38.5) 严格失败，并且
+
+   $$
+   B_\phi(R_+,S_+)>0,\qquad B_\phi(R_-,S_-)>0.
+   \tag{38.7}
+   $$
+
+见证可随来源与取向变化；每份输入内的两笔预算使用同一 $x$、同一 $\phi$ 和该输入自己的 $D,F,G$。固定 $h$ 后，对任意紧区间 $k\in[m,M]$、$m>809/480$，可选共同的有限截止 $\Lambda(h,[m,M])$。特别地，结论适用于 §37 所需的充分小固定正 $h$；以下证明本身只用 $0<h<2\sqrt2$。
+
+### 38.2 精确轴接触与常数
+
+先取 $\sigma=+1$。固定合法有限变分参数
+
+$$
+\begin{gathered}
+\epsilon=1,\qquad \ell=-1-9i,\qquad \nu=0,\\
+\alpha_+=8,\quad\alpha_-=10,\quad\beta_+=-1,\quad\beta_-=1,\\
+z_d=\beta_d-di\alpha_d=i+d\ell,\qquad
+s_\alpha=\alpha_+^{-1}+\alpha_-^{-1}=9/40.
+\end{gathered}
+\tag{38.8}
+$$
+
+令 $u=e_1$，并定义目标可见列
+
+$$
+\begin{gathered}
+p_1=q_1=1/3,\qquad (a_{\rm act})_1=-3+2i/3,\\
+d_{01}=-11/2-23i/6,\qquad\eta=\sqrt2\,d_{01},\qquad
+(a_{\rm act})_2=h+\eta\tau,\\
+p_2=\frac{h+\eta\tau}{i(1-\ell/2)},\qquad
+q_2=(\ell+1)p_2+ih,\qquad
+i(1-\ell/2)=-9/2+3i/2\ne0,\\
+v=a_{\rm act}-ip,\qquad U=iq+BCu+Cv.
+\end{gathered}
+\tag{38.9}
+$$
+
+逐坐标代入给出
+
+$$
+v_1=-3+i/3=-i\ell/3,\quad U_1=2i/3,\qquad
+v_2=-i\ell p_2/2,\quad U_2=ip_2.
+$$
+
+所以两条零残量演员接触恰为
+
+$$
+P_0=v+\ell U/2=0,\qquad Q_0=iCv-\ell p=0.
+\tag{38.10}
+$$
+
+需求列及残量配对也完全确定：
+
+$$
+\begin{gathered}
+d_0=a_{\rm act}-Hu+\ell C^2u/2=(d_{01},\eta\tau)^{\mathsf T}
+      =\eta a_\tau,\\
+|d_{01}|^2=\frac{121}{4}+\frac{529}{36}=\frac{809}{18},\qquad
+|\eta|^2=\frac{809}{9},\qquad
+\operatorname{Re}(v^*T_Au)=-3.
+\end{gathered}
+\tag{38.11}
+$$
+
+在 $u=e_1$ 上实际探针必须有 $q=p$；(38.9) 不以 $q_2=p_2$ 为前提。因此必须先恢复实际有限列，才能把这些接触数据用于原 PB。
+
+### 38.3 包括零差分支的有限 Hermitian 恢复
+
+记
+
+$$
+s_{\rm vis}=2p_2-q_2,\qquad t_{\rm vis}=q_2-p_2.
+$$
+
+若 $t_{\rm vis}\ne0$，对每个有限 $\lambda>1$ 置
+
+$$
+\begin{gathered}
+\varepsilon_\lambda=\lambda^{-3},\qquad
+(u_\lambda)_2=\varepsilon_\lambda\frac{t_{\rm vis}}{|t_{\rm vis}|},\qquad
+(u_\lambda)_1=\sqrt{1-\varepsilon_\lambda^2},\\
+X_\lambda=\begin{pmatrix}
+1/3&\overline{s_{\rm vis}}/(u_\lambda)_1\\
+s_{\rm vis}/(u_\lambda)_1&|t_{\rm vis}|/\varepsilon_\lambda
+\end{pmatrix},\qquad
+p_\lambda=X_\lambda u_\lambda,\qquad q_\lambda=X_\lambda Cu_\lambda.
+\end{gathered}
+\tag{38.12}
+$$
+
+矩阵逐项有限且 Hermitian，$\|u_\lambda\|=1$，所有分母非零。直接相乘，第二坐标精确为
+
+$$
+(p_\lambda)_2=s_{\rm vis}+t_{\rm vis}=p_2,\qquad
+(q_\lambda)_2=s_{\rm vis}+2t_{\rm vis}=q_2.
+$$
+
+第一坐标分别为
+
+$$
+(p_\lambda)_1=\frac{(u_\lambda)_1}{3}
+ +\frac{\overline{s_{\rm vis}}(u_\lambda)_2}{(u_\lambda)_1},\qquad
+(q_\lambda)_1=\frac{(u_\lambda)_1}{3}
+ +\frac{2\overline{s_{\rm vis}}(u_\lambda)_2}{(u_\lambda)_1}.
+$$
+
+若 $t_{\rm vis}=0$，则 $q=p$，改取
+
+$$
+u_\lambda=e_1,\qquad
+X_\lambda=\begin{pmatrix}1/3&\overline{p_2}\\p_2&0\end{pmatrix},
+\qquad p_\lambda=p,\quad q_\lambda=q.
+\tag{38.13}
+$$
+
+此分支不除以 $t_{\rm vis}$，也不除以零演员坐标。两种情形共同给出实际 $x_\lambda=X_\lambda\oplus0_3$，以及
+
+$$
+u_\lambda-u=O(\lambda^{-3}),\qquad
+p_\lambda-p=O(\lambda^{-3}),\qquad q_\lambda-q=O(\lambda^{-3}).
+\tag{38.14}
+$$
+
+这些是可见列估计，不要求 $X_\lambda$ 一致有界。
+
+### 38.4 同一来源上的精确环境提升
+
+保持 $a_{\rm act},\ell$ 及 (38.8) 固定。对刚构造的实际 $u_\lambda,X_\lambda$ 定义
+
+$$
+\begin{gathered}
+d_\lambda=a_{\rm act}-Hu_\lambda+\ell C^2u_\lambda/2,\qquad
+w_\lambda=FCu_\lambda=(C^2u_\lambda,0)^{\mathsf T},\\
+e_\lambda=GM_2^{-1}d_\lambda,\qquad
+y_\lambda=D^{-1}(e_\lambda-\ell w_\lambda/2-Fu_\lambda),\qquad
+\xi_\lambda=(u_\lambda,y_\lambda).
+\end{gathered}
+\tag{38.15}
+$$
+
+全部量在每个有限 $\lambda>1$ 上有限。由 (38.2) 有 $G^*e_\lambda=d_\lambda$，故
+
+$$
+\begin{gathered}
+Fu_\lambda+Dy_\lambda=e_\lambda-\ell w_\lambda/2,\\
+Bu_\lambda+F^*y_\lambda
+ =Hu_\lambda+d_\lambda-\ell C^2u_\lambda/2=a_{\rm act}.
+\end{gathered}
+\tag{38.16}
+$$
+
+因此演员列及两条环境缺陷确由同一原向量 $\xi_\lambda$ 同时实现。
+
+由 (38.11)、(38.14)，$d_\lambda=\eta a_\tau+\Delta_\lambda$，其中 $\Delta_\lambda=O(\lambda^{-3})$。令 $L_\lambda=1+b\lambda^2$，则
+
+$$
+\begin{gathered}
+M_2^{-1}=I_2-\frac{\lambda^2a_\tau a_\tau^*}{L_\lambda},\qquad
+M_2^{-1}a_\tau=\frac{a_\tau}{L_\lambda},\qquad
+\|GM_2^{-1}\|\le1,\\
+\|e_\lambda\|^2=d_\lambda^*M_2^{-1}d_\lambda
+ =\frac{|\eta|^2b}{L_\lambda}+O(\lambda^{-4}),\qquad
+\lambda^2\|e_\lambda\|^2\longrightarrow\frac{809}{9}.
+\end{gathered}
+\tag{38.17}
+$$
+
+这里算子范数界来自 $(GM_2^{-1})^*(GM_2^{-1})=M_2^{-1}\le I_2$；主环境列范数为 $O(\lambda^{-1})$，扰动列为 $O(\lambda^{-3})$，给出所列误差。尤其，原环境的最后坐标满足精确公式
+
+$$
+(e_\lambda)_3=\frac{\lambda a_\tau^*d_\lambda}{L_\lambda}
+ =\frac{\eta}{\lambda}+O(\lambda^{-3})\ne0
+\quad\text{对所有充分大有限 }\lambda.
+\tag{38.18}
+$$
+
+### 38.5 原作用列与严格负缺陷
+
+以下所有 $R_d,S_d,L_{\rm PB}$ 均取当前实际 $x_\lambda,t_{\tau,\lambda},\rho$。置
+
+$$
+\begin{gathered}
+v_\lambda=a_{\rm act}-ip_\lambda,\qquad
+U_\lambda=iq_\lambda+BCu_\lambda+Cv_\lambda,\\
+P_\lambda=v_\lambda+\ell U_\lambda/2,\qquad
+Q_\lambda=iCv_\lambda-\ell p_\lambda+\rho T_Au_\lambda.
+\end{gathered}
+\tag{38.19}
+$$
+
+前卷 (31.6)–(31.7) 的原列，在此记号下直接成为
+
+$$
+\begin{aligned}
+R_d\xi_\lambda&=(p_\lambda-dU_\lambda/2,-dw_\lambda/2),\\
+S_d\xi_\lambda&=\left(a_{\rm act}
+ +d\left(\frac{Cp_\lambda+q_\lambda+iCa_{\rm act}-iBCu_\lambda}{2}
+                +\rho T_Au_\lambda\right),\,
+ Fu_\lambda+Dy_\lambda-di w_\lambda/2\right).
+\end{aligned}
+\tag{38.20}
+$$
+
+由 $z_d=i+d\ell$ 及 (38.16)，其完成列精确为
+
+$$
+E_d=(S_d-z_dR_d)\xi_\lambda=(P_\lambda+dQ_\lambda,e_\lambda).
+\tag{38.21}
+$$
+
+对同一个原正向量泛函 $\phi_\lambda(A)=\xi_\lambda^*A\xi_\lambda$ 定义所选有限变分缺陷
+
+$$
+\mathcal D_\lambda=
+\sum_{d=\pm1}\left(\alpha_d\|R_d\xi_\lambda\|^2
+ +\alpha_d^{-1}\|(S_d-\beta_dR_d)\xi_\lambda\|^2\right)
+ -2\phi_\lambda(L_{\rm PB}).
+\tag{38.22}
+$$
+
+原恒等式 (31.9)，等价于 (32.4)，对 (38.20)–(38.21) 给出精确等式
+
+$$
+\mathcal D_\lambda=
+\sum_{d=\pm1}\alpha_d^{-1}\|P_\lambda+dQ_\lambda\|^2
+ +\frac9{40}\|e_\lambda\|^2
+ +4\rho\operatorname{Re}(v_\lambda^*T_Au_\lambda).
+\tag{38.23}
+$$
+
+它保留实际演员误差与实际环境误差。由 (38.10)、(38.14) 有
+
+$$
+P_\lambda=O(\lambda^{-3}),\qquad
+Q_\lambda=\rho T_Au_\lambda+O(\lambda^{-3}),\qquad
+\operatorname{Re}(v_\lambda^*T_Au_\lambda)=-3+O(\lambda^{-3}).
+$$
+
+取 $\rho=k/\lambda^2$，演员平方和为 $O(\lambda^{-4})$。结合 (38.17) 得
+
+$$
+\lambda^2\mathcal D_\lambda\longrightarrow
+\frac9{40}\frac{809}{9}-12k=\frac{809}{40}-12k<0
+\qquad(k>809/480).
+\tag{38.24}
+$$
+
+因而每个充分大的有限阶段都有 $\mathcal D_\lambda<0$。前卷 (27.12) 的实 Gram 变分不等式，对这里同一对实际原列分别给
+
+$$
+2\sqrt{B_{\phi_\lambda}(R_d,S_d)}\le
+\alpha_d\|R_d\xi_\lambda\|^2
+ +\alpha_d^{-1}\|(S_d-\beta_dR_d)\xi_\lambda\|^2.
+$$
+
+相加并用 (38.22)，得到
+
+$$
+\phi_\lambda(L_{\rm PB})>
+\sqrt{B_{\phi_\lambda}(R_+,S_+)}+
+\sqrt{B_{\phi_\lambda}(R_-,S_-)}\ge0.
+\tag{38.25}
+$$
+
+这严格违反原绝对值 PB，不要求所选变分参数达到任一 Gram 根的下确界。两份来源只有有限个 $\tau$ 值；各误差对有界 $k$ 一致，故 (38.24) 在每个 $[m,M]$、$m>809/480$ 上一致严格为负。
+
+### 38.6 两笔实际预算同时严格正
+
+由 (38.20)，$R_d\xi_\lambda$ 的最后环境坐标恰为零，而 $E_d$ 的该坐标由 (38.18) 非零。又 $R_d\xi_\lambda$ 的环境首块为 $-dC^2u_\lambda/2\ne0$。因此 $R_d\xi_\lambda$ 与 $E_d$ 复线性独立；$S_d\xi_\lambda=z_dR_d\xi_\lambda+E_d$，故 $R_d\xi_\lambda,S_d\xi_\lambda$ 也复线性独立。
+
+更明确地，复 Gram 行列式的二坐标子式展开，只取最后环境坐标与其余两个环境坐标，就给
+
+$$
+\begin{aligned}
+B_{\phi_\lambda}(R_d,S_d)
+&=\|R_d\xi_\lambda\|^2\|S_d\xi_\lambda\|^2
+ -\bigl[\operatorname{Re}((R_d\xi_\lambda)^*S_d\xi_\lambda)\bigr]^2\\
+&\ge\|R_d\xi_\lambda\|^2\|S_d\xi_\lambda\|^2
+ -|(R_d\xi_\lambda)^*S_d\xi_\lambda|^2\\
+&\ge\frac{\|C^2u_\lambda\|^2|(e_\lambda)_3|^2}{4}>0,
+\qquad d=\pm1.
+\end{aligned}
+\tag{38.26}
+$$
+
+第二个不等式也可直接对 $R_d\xi_\lambda,E_d$ 作同一子式展开，因为增加 $z_dR_d\xi_\lambda$ 不改变这些子式。这个原预算下界适用于实际随 $\lambda$ 变化的全部列，无须另加探针扰动。
+
+### 38.7 完整 P2 的精确共同区间与严格内点
+
+归一化 Schur 矩阵及其有序谱基为
+
+$$
+C^{-1/2}HC^{-1/2}=2I_2+\beta J_A,\qquad
+\beta=h/\sqrt2>0,\qquad
+U_0=\frac1{\sqrt2}\begin{pmatrix}1&1\\1&-1\end{pmatrix}.
+$$
+
+有 $U_0^*C^{-1/2}a_+=e_1$、$U_0^*C^{-1/2}a_-=e_2$。故原 P2 的精确逆矩阵坐标为
+
+$$
+\begin{aligned}
+\mathsf K_+&=U_0^*C^{-1/2}(I_2+M_{2,+})C^{-1/2}U_0
+ =\begin{pmatrix}3/2+\lambda^2&1/2\\1/2&3/2\end{pmatrix},\\
+\mathsf K_-&=\begin{pmatrix}3/2&1/2\\1/2&3/2+\lambda^2\end{pmatrix},\qquad
+\mathfrak d_\lambda=\det\mathsf K_\tau=2+(3/2)\lambda^2.
+\end{aligned}
+\tag{38.27}
+$$
+
+前卷 (30.29) 中 $\omega=1$，$Q_M=\mathsf K_\tau^{-1}$ 的非对角元是实数 $-1/(2\mathfrak d_\lambda)$。因此两份来源、两个取向都准确满足
+
+$$
+J=0,\qquad \Delta=\frac1{\mathfrak d_\lambda},\qquad
+R=\frac{T_\lambda}{\mathfrak d_\lambda}.
+$$
+
+代入该完整原 P2 判据，所得恰是 (38.6)，包括两个端点。这是对完整正泛函的允许集，并非只检验所构造的向量泛函。
+
+对于 $k>0$，$\rho=k/\lambda^2$ 严格在 (38.6) 内的充要条件为
+
+$$
+h^2\lambda^4>3k^2(\lambda^2+3/2).
+\tag{38.28}
+$$
+
+固定 $h,k$ 后此式最终成立。具体地，$\lambda^2\ge3/2$ 时 $T_\lambda\le\sqrt3\lambda$，所以再取 $\lambda>\sqrt6\,k/h$ 就足够；对 $k\in[m,M]$ 将此界中的 $k$ 换成 $M$。P2 端点的非零尺度为 $\lambda^{-1}$，严格内点的残量尺度为 $\lambda^{-2}$。
+
+### 38.8 两个取向、指定质量及结论边界
+
+(38.1) 的两份来源和原 $T_A$ 全为实矩阵。逐项复共轭将 $\sigma=+1$ 的 $X_\lambda,\xi_\lambda$ 送到 $\sigma=-1$ 的实际 Hermitian 探针与实际向量，同时将 $i,\ell,a_{\rm act}$ 共轭，保持 $\alpha_d,\beta_d,\epsilon$ 不变。原 $R_d,S_d,L_{\rm PB}$ 的作用列也逐项共轭，所以 (38.25) 的实数值与 (38.26) 的两笔预算均保持不变。因此每份来源在两个取向都具有所需严格失败。
+
+又 $\|u_\lambda\|=1$，故 $\xi_\lambda\ne0$。对任意指定 $\mu\in(0,\infty)$，取
+
+$$
+\widehat\xi_\lambda=\frac{\sqrt\mu}{\|\xi_\lambda\|}\xi_\lambda,\qquad
+\widehat\phi_\lambda(A)=\widehat\xi_\lambda^*A\widehat\xi_\lambda.
+\tag{38.29}
+$$
+
+则 $\widehat\phi_\lambda(I)=\mu$。正倍缩放使 PB 两端同倍变化、两笔预算同一个正数平方倍变化，故严格失败与两笔正预算同时保留。P2 的完整泛函判据不受此见证质量的选择影响。将有限个来源、取向及严格内点所需截止取最大值，完成定理 38.1 的全部量词；紧 $k$ 区间的统一版本由 (38.24)、(38.28) 给出。
+
+实 Gram 变分、正交最小范数及 Schur 补沿前卷 §§27、30、31 的成熟背景使用；本节的显式接触 (38.8)–(38.11) 与原来源代入 (38.12)–(38.29) 给出具体的纸面加强。结论只把 $809/480$ 作为这组恢复轴见证的充分最终排除界，不判等号，不给必要性、最优常数或全部 PB 分类。它没有给出较小 $k$ 的 PB 成功证书，也没有给出共同 P2 内一份来源全部 PB 成功、另一份失败的成对分离。这里每个违反均属于有限矩阵、有限实际探针与同一实际正泛函；不涉及物理实现结论。
+
+## 追加锚（本行以下为增补区）
