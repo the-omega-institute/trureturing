@@ -16,17 +16,20 @@ import Mathlib.Order.Partition.Finpartition
 import Mathlib.LinearAlgebra.Matrix.Rank
 import Mathlib.Tactic
 
-noncomputable section
-
 /-!
-The declarations below develop the deterministic general-position implication in Raz--Wigderson, arXiv:1901.09423v1, Definition
-5.1, Theorem 5.2 and Lemma 5.3. Genericity (Theorem 7.1) is a separate obligation.
+The declarations below develop the deterministic general-position implication in
+Raz--Wigderson, arXiv:1901.09423v1, Definition 5.1, Theorem 5.2 and Lemma 5.3.
+Genericity (Theorem 7.1) is a separate obligation.
 
 For R5 (31.5)--(31.7), V(sigma) is the direct sum of the block-supported
 embedding rows and phi is the ONE common hyperplane functional. Class splitting
 below is the recursive independence step of the partition-rank proof, not a
 rank-nullity assertion about the original window kernel.
 -/
+
+noncomputable section
+
+open scoped Classical
 
 namespace D5.S3.Factorization.Galois.ActualWindowCommonKernel.HyperplaneRank
 
@@ -78,7 +81,7 @@ private theorem cutSpan_sup_parts (V : ι → Submodule K E) (φ : E →ₗ[K] K
 
 private theorem finrank_sup_le_sum [FiniteDimensional K E]
     {α : Type*} (s : Finset α) (V : α → Submodule K E) :
-    finrank K (s.sup V) ≤ ∑ i ∈ s, finrank K (V i) := by
+    finrank K (s.sup V : Submodule K E) ≤ ∑ i ∈ s, finrank K (V i) := by
   classical
   induction s using Finset.induction_on with
   | empty => simp
@@ -89,7 +92,7 @@ private theorem finrank_sup_le_sum [FiniteDimensional K E]
 
 private theorem finrank_sup_of_supIndep [FiniteDimensional K E]
     {α : Type*} (s : Finset α) (V : α → Submodule K E) (h : s.SupIndep V) :
-    finrank K (s.sup V) = ∑ i ∈ s, finrank K (V i) := by
+    finrank K (s.sup V : Submodule K E) = ∑ i ∈ s, finrank K (V i) := by
   classical
   revert h
   induction s using Finset.induction_on with
@@ -128,7 +131,7 @@ private theorem extension_finrank [FiniteDimensional K E]
   have hinter : cutSpan V φ s ⊓ V i = V i ⊓ LinearMap.ker φ := by
     apply le_antisymm
     · exact le_inf inf_le_right (inf_le_left.trans (cutSpan_le_ker V φ s))
-    · exact le_inf (Finset.le_sup hi) inf_le_left
+    · exact le_inf (Finset.le_sup (f := fun j => V j ⊓ LinearMap.ker φ) hi) inf_le_left
   have hd := Submodule.finrank_sup_add_finrank_inf_eq (cutSpan V φ s) (V i)
   rw [hinter] at hd
   have hcut := finrank_inf_ker_add_one φ (V i) hout
@@ -173,7 +176,8 @@ private theorem extensionPart_sup (V : ι → Submodule K E) (φ : E →ₗ[K] K
     have hij := (Finset.mem_filter.mp (hB ▸ hj)).2
     exact hij.symm ▸ (show V j ≤ cutSpan V φ s ⊔ V j from le_sup_right)
   · refine sup_le le_sup_left ?_
-    exact (Finset.le_sup (hB.symm ▸ Finset.mem_filter.mpr ⟨hi, rfl⟩)).trans le_sup_right
+    exact (Finset.le_sup (f := V)
+      (hB.symm ▸ Finset.mem_filter.mpr ⟨hi, rfl⟩)).trans le_sup_right
 
 private theorem extensionPart_separated [FiniteDimensional K E]
     {V : ι → Submodule K E} {φ : E →ₗ[K] K} {s : Finset ι}
@@ -274,64 +278,64 @@ private theorem exists_tight_partition [FiniteDimensional K E]
       ∃ P : Finpartition s, finrank K (cutSpan V φ s) =
         ∑ B ∈ P.parts, (finrank K (familySpan V B) - 1) := by
   classical
-  induction s using Finset.strongInductionOn with
-  | h s ih =>
-      intro gp
-      by_cases hs : s = ∅
-      · subst s
-        exact ⟨Finpartition.empty (Finset ι), by simp [cutSpan]⟩
-      by_cases hall : ∀ i ∈ s, ∀ j ∈ s,
-          cutSpan V φ s ⊔ V i = cutSpan V φ s ⊔ V j
-      · obtain ⟨i, hi⟩ := Finset.nonempty_iff_ne_empty.mpr hs
-        have hspan : familySpan V s = cutSpan V φ s ⊔ V i := by
-          apply le_antisymm
-          · apply Finset.sup_le
-            intro j hj
-            rw [hall i hi j hj]
-            exact le_sup_right
-          · exact sup_le (cutSpan_le_span V φ s) (Finset.le_sup hi)
-        have hdim := extension_finrank V φ hi (gp.1 i hi)
-        rw [← hspan] at hdim
-        refine ⟨Finpartition.indiscrete hs, ?_⟩
-        simp only [Finpartition.indiscrete_parts, Finset.sum_singleton]
-        omega
-      · let P := extensionPartition V φ s
-        have hproper : ∀ B ∈ P.parts, B ⊂ s := by
-          intro B hB
-          refine Finset.ssubset_iff_subset_ne.mpr ⟨P.le hB, ?_⟩
-          intro hBs
-          obtain ⟨i, hi, hBi⟩ := extensionPart_repr V φ hB
-          have hsame : ∀ j ∈ s, cutSpan V φ s ⊔ V i = cutSpan V φ s ⊔ V j := by
-            intro j hj
-            have hjB : j ∈ B := hBs.symm ▸ hj
-            exact (Finset.mem_filter.mp (hBi ▸ hjB)).2
-          exact hall fun j hj k hk => (hsame j hj).symm.trans (hsame k hk)
-        have hrec : ∀ B ∈ P.parts, ∃ Q : Finpartition B,
-            finrank K (cutSpan V φ B) =
-              ∑ C ∈ Q.parts, (finrank K (familySpan V C) - 1) := by
-          intro B hB
-          exact ih B (hproper B hB) (generalPosition_mono gp (P.le hB))
-        let Q : ∀ B ∈ P.parts, Finpartition B := fun B hB => (hrec B hB).choose
-        have hQ : ∀ B (hB : B ∈ P.parts), finrank K (cutSpan V φ B) =
-            ∑ C ∈ (Q B hB).parts, (finrank K (familySpan V C) - 1) := by
-          intro B hB
-          exact (hrec B hB).choose_spec
-        have hind : P.parts.SupIndep (cutSpan V φ) :=
-          cut_parts_supIndep gp P (fun B hB C hC => extensionPart_separated gp hB hC)
-        refine ⟨P.bind Q, ?_⟩
-        calc
-          finrank K (cutSpan V φ s) =
-              ∑ B ∈ P.parts, finrank K (cutSpan V φ B) := by
-            rw [← cutSpan_sup_parts V φ P]
-            exact finrank_sup_of_supIndep P.parts (cutSpan V φ) hind
-          _ = ∑ B ∈ P.parts.attach,
-              ∑ C ∈ (Q B.1 B.2).parts, (finrank K (familySpan V C) - 1) := by
-            rw [← Finset.sum_attach]
-            exact Finset.sum_congr rfl (fun B _ => hQ B.1 B.2)
-          _ = ∑ C ∈ (P.bind Q).parts, (finrank K (familySpan V C) - 1) := by
-            simpa only [Finpartition.bind, Finpartition.copy_parts] using
-              (Finpartition.sum_combine (fun B : P.parts => Q B.1 B.2)
-                P.supIndep.attach (fun C => finrank K (familySpan V C) - 1)).symm
+  refine Finset.strongInductionOn s ?_
+  intro s ih
+  intro gp
+  by_cases hs : s = ∅
+  · subst s
+    exact ⟨Finpartition.empty (Finset ι), by simp [cutSpan]⟩
+  by_cases hall : ∀ i ∈ s, ∀ j ∈ s,
+      cutSpan V φ s ⊔ V i = cutSpan V φ s ⊔ V j
+  · obtain ⟨i, hi⟩ := Finset.nonempty_iff_ne_empty.mpr hs
+    have hspan : familySpan V s = cutSpan V φ s ⊔ V i := by
+      apply le_antisymm
+      · apply Finset.sup_le
+        intro j hj
+        rw [hall i hi j hj]
+        exact le_sup_right
+      · exact sup_le (cutSpan_le_span V φ s) (Finset.le_sup hi)
+    have hdim := extension_finrank V φ hi (gp.1 i hi)
+    rw [← hspan] at hdim
+    refine ⟨Finpartition.indiscrete hs, ?_⟩
+    simp only [Finpartition.indiscrete_parts, Finset.sum_singleton]
+    omega
+  · let P := extensionPartition V φ s
+    have hproper : ∀ B ∈ P.parts, B ⊂ s := by
+      intro B hB
+      refine Finset.ssubset_iff_subset_ne.mpr ⟨P.le hB, ?_⟩
+      intro hBs
+      obtain ⟨i, hi, hBi⟩ := extensionPart_repr V φ hB
+      have hsame : ∀ j ∈ s, cutSpan V φ s ⊔ V i = cutSpan V φ s ⊔ V j := by
+        intro j hj
+        have hjB : j ∈ B := hBs.symm ▸ hj
+        exact (Finset.mem_filter.mp (hBi ▸ hjB)).2
+      exact hall fun j hj k hk => (hsame j hj).symm.trans (hsame k hk)
+    have hrec : ∀ B ∈ P.parts, ∃ Q : Finpartition B,
+        finrank K (cutSpan V φ B) =
+          ∑ C ∈ Q.parts, (finrank K (familySpan V C) - 1) := by
+      intro B hB
+      exact ih B (hproper B hB) (generalPosition_mono gp (P.le hB))
+    let Q : ∀ B ∈ P.parts, Finpartition B := fun B hB => (hrec B hB).choose
+    have hQ : ∀ B (hB : B ∈ P.parts), finrank K (cutSpan V φ B) =
+        ∑ C ∈ (Q B hB).parts, (finrank K (familySpan V C) - 1) := by
+      intro B hB
+      exact (hrec B hB).choose_spec
+    have hind : P.parts.SupIndep (cutSpan V φ) :=
+      cut_parts_supIndep gp P (fun B hB C hC => extensionPart_separated gp hB hC)
+    refine ⟨P.bind Q, ?_⟩
+    calc
+      finrank K (cutSpan V φ s) =
+          ∑ B ∈ P.parts, finrank K (cutSpan V φ B) := by
+        rw [← cutSpan_sup_parts V φ P]
+        exact finrank_sup_of_supIndep P.parts (cutSpan V φ) hind
+      _ = ∑ B ∈ P.parts.attach,
+          ∑ C ∈ (Q B.1 B.2).parts, (finrank K (familySpan V C) - 1) := by
+        rw [← Finset.sum_attach]
+        exact Finset.sum_congr rfl (fun B _ => hQ B.1 B.2)
+      _ = ∑ C ∈ (P.bind Q).parts, (finrank K (familySpan V C) - 1) := by
+        simpa only [Finpartition.bind, Finpartition.copy_parts] using
+          (Finpartition.sum_combine (fun B : P.parts => Q B.1 B.2)
+            P.supIndep.attach (fun C => finrank K (familySpan V C) - 1)).symm
 
 /-- Deterministic Lovasz partition-rank implication, with its actual attaining
 partition. This does not assert that an algebraically independent normal is in
@@ -379,7 +383,7 @@ private theorem span_common_rows_eq_cut {β : Type*} (b : β → E)
       simp [hxφ, smul_smul, hk]
   have himage : π '' Set.range b =
       Set.range (fun i => φ (b k) • b i - φ (b i) • b k) := by
-    exact Set.image_range π b
+    exact (Set.range_comp π b).symm
   rw [show P = Submodule.span K (Set.range b) from rfl,
     Submodule.map_span, himage] at hmap
   exact hmap
@@ -444,7 +448,7 @@ private theorem familySpan_blockRows (b : ∀ i, ι → κ i → K) (B : Finset 
     intro j hj
     by_cases hji : j = i
     · subst j
-      simpa [blockRows] using
+      simpa [blockRows, blockSpan] using
         (Submodule.subset_span (show b i σ ∈ b i '' (B : Set ι) from ⟨σ, hσ, rfl⟩))
     · simpa [blockRows, Pi.single_eq_of_ne hji] using (blockSpan b B j).zero_mem
   · intro x hx
@@ -456,7 +460,7 @@ private theorem familySpan_blockRows (b : ∀ i, ι → κ i → K) (B : Finset 
         familySpan (fun σ => Submodule.span K (Set.range (blockRows b σ))) B := by
       rw [blockSpan, Submodule.map_span_le]
       rintro _ ⟨σ, hσ, rfl⟩
-      exact (Finset.le_sup hσ)
+      exact (Finset.le_sup (f := fun τ => Submodule.span K (Set.range (blockRows b τ))) hσ)
         (Submodule.subset_span (Set.mem_range_self i))
     exact hmap (Submodule.mem_map_of_mem (hx i (Set.mem_univ i)))
 
@@ -527,7 +531,9 @@ private theorem commonConstraintMatrix_rank [Fintype ι]
       rintro _ ⟨⟨σ, i⟩, rfl⟩
       exact ⟨φ (blockRows b σ k) • blockRows b σ i -
           φ (blockRows b σ i) • blockRows b σ k,
-        (Finset.le_sup (Finset.mem_univ σ))
+        (Finset.le_sup (f := fun τ => Submodule.span K (Set.range fun j =>
+          φ (blockRows b τ k) • blockRows b τ j - φ (blockRows b τ j) • blockRows b τ k))
+          (Finset.mem_univ σ))
           (Submodule.subset_span (Set.mem_range_self i)), rfl⟩
   rw [Matrix.rank_eq_finrank_span_row, ← hspan, e.finrank_map_eq]
 
