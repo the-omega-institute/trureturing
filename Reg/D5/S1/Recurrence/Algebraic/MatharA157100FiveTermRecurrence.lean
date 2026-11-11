@@ -41,7 +41,8 @@ private theorem changed_law (i : Fin 5) : ¬ arena.Law (changed i) := by
   intro h
   have hh := h 4 (by decide)
   have ha := result 4 (by decide)
-  fin_cases i <;> norm_num [changed, realize] at hh <;> norm_num at ha <;> linarith
+  fin_cases i <;> norm_num [changed, realize, Fin.ext_iff] at hh <;>
+    norm_num at ha <;> linarith
 
 private theorem initial_coefficients : a 0 = 1 ∧ a 1 = 2 := by
   have ht : HasSubst (X * (1 - X ^ 2) : PowerSeries ℚ) := HasSubst.X'.mul_left
