@@ -12,7 +12,7 @@ internal sealed class HardinA233158RowDocument : IScribeDocumentDefinition
         "The number of labelled 5-row arrays obeys the order-7 recurrence from OEIS A233158.",
         H("OEIS A233158"), Blocks(
             Node("U5",All("n",NatF(),Eq(C("U5",V("n")),FilterCard(N(5),V("n")))),"Every labelled function satisfying horizontal and antidiagonal sum exclusion is counted.",true),
-            Node("classes", Cast(C("classes"), Arr(FinF(N(3)), Arr(FinF(N(3)), Arr(FinF(N(3)), Arr(FinF(N(3)), Arr(FinF(N(3)), FinF(N(41)))))))), "The fixed lookup table assigns a class in Fin 41 to each tuple of 5 colors according to its equality pattern."),
+            Node("classes", Cast(C("classes"), ClassTableType(5, 41)), "The fixed lookup table assigns a class in Fin 41 to each tuple of 5 colors according to its equality pattern."),
             Node("classify",All("r",RowF(N(5)),Eq(C("classify",V("r")),A(C("classes"),A(V("r"),N(0)), A(V("r"),N(1)), A(V("r"),N(2)), A(V("r"),N(3)), A(V("r"),N(4))))),"The coordinates select one of the 41 equality classes."),
             Node("representatives", Cast(C("representatives"), Arr(FinF(N(41)), RowF(N(5)))), "The fixed table selects one canonical 5-entry column for each of the 41 equality classes."),
             Node("quotient", Cast(C("quotient"), C("Matrix", FinF(N(41)), FinF(N(41)), IntF())), "The fixed 41 by 41 integer table records compatible successor multiplicities between equality classes."),

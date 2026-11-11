@@ -18,7 +18,7 @@ Every labelled function satisfying horizontal and antidiagonal sum exclusion is 
 
 **Definition 1.2 (classes).**
 
-$$classes = (![![![0, 1, 1], ![2, 3, 4], ![2, 4, 3]], ![![3, 2, 4], ![1, 0, 1], ![4, 2, 3]], ![![3, 4, 2], ![4, 3, 2], ![1, 1, 0]]]: Fin\left(3\right) \to \left(Fin\left(3\right) \to \left(Fin\left(3\right) \to Fin\left(5\right)\right)\right))$$
+$$(classes: Fin\left(3\right) \to \left(Fin\left(3\right) \to \left(Fin\left(3\right) \to Fin\left(5\right)\right)\right))$$
 
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233156Row.classes` (`✓ std3`).
 
@@ -28,7 +28,7 @@ $$classes = (![![![0, 1, 1], ![2, 3, 4], ![2, 4, 3]], ![![3, 2, 4], ![1, 0, 1], 
 
 *Commentary.*
 
-The table assigns a class to every column according to its equality pattern.
+The fixed lookup table assigns a class in Fin 5 to each tuple of 3 colors according to its equality pattern.
 
 **Definition 1.3 (classify).**
 
@@ -46,7 +46,7 @@ The coordinates select one of the 5 equality classes.
 
 **Definition 1.4 (representatives).**
 
-$$representatives = ![![0, 0, 0], ![0, 0, 1], ![0, 1, 0], ![0, 1, 1], ![0, 1, 2]]$$
+$$(representatives: Fin\left(5\right) \to Row\left(3\right))$$
 
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233156Row.representatives` (`✓ std3`).
 
@@ -56,11 +56,11 @@ $$representatives = ![![0, 0, 0], ![0, 0, 1], ![0, 1, 0], ![0, 1, 1], ![0, 1, 2]
 
 *Commentary.*
 
-Each equality pattern has a representative using colors in order of first occurrence.
+The fixed table selects one canonical 3-entry column for each of the 5 equality classes.
 
 **Definition 1.5 (quotient).**
 
-$$quotient = ![![2, 2, 2, 2, 0], ![1, 1, 0, 1, 1], ![1, 1, 0, 0, 0], ![1, 1, 1, 1, 0], ![0, 0, 0, 1, 1]]$$
+$$(quotient: Matrix\left(Fin\left(5\right), Fin\left(5\right), \operatorname{Int}\right))$$
 
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233156Row.quotient` (`✓ std3`).
 
@@ -70,11 +70,11 @@ $$quotient = ![![2, 2, 2, 2, 0], ![1, 1, 0, 1, 1], ![1, 1, 0, 0, 0], ![1, 1, 1, 
 
 *Commentary.*
 
-An entry counts compatible successor columns in the indicated equality class.
+The fixed 5 by 5 integer table records compatible successor multiplicities between equality classes.
 
 **Definition 1.6 (weights).**
 
-$$weights = ![3, 6, 6, 6, 6]$$
+$$(weights: Fin\left(5\right) \to \operatorname{Int})$$
 
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233156Row.weights` (`✓ std3`).
 
@@ -84,7 +84,7 @@ $$weights = ![3, 6, 6, 6, 6]$$
 
 *Commentary.*
 
-The weights count all columns in each class, including constant columns.
+The fixed 5-entry integer vector records three labelled constant columns in the constant class and six labelled columns in every other equality class.
 
 **Theorem 1.7 (finite_certificate).**
 

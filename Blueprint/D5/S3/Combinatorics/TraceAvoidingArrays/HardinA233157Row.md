@@ -18,7 +18,7 @@ Every labelled function satisfying horizontal and antidiagonal sum exclusion is 
 
 **Definition 1.2 (classes).**
 
-$$classes = (![![![![0, 1, 1], ![2, 3, 4], ![2, 4, 3]], ![![5, 6, 7], ![8, 9, 10], ![11, 12, 13]], ![![5, 7, 6], ![11, 13, 12], ![8, 10, 9]]], ![![![9, 8, 10], ![6, 5, 7], ![12, 11, 13]], ![![3, 2, 4], ![1, 0, 1], ![4, 2, 3]], ![![13, 11, 12], ![7, 5, 6], ![10, 8, 9]]], ![![![9, 10, 8], ![12, 13, 11], ![6, 7, 5]], ![![13, 12, 11], ![10, 9, 8], ![7, 6, 5]], ![![3, 4, 2], ![4, 3, 2], ![1, 1, 0]]]]: Fin\left(3\right) \to \left(Fin\left(3\right) \to \left(Fin\left(3\right) \to \left(Fin\left(3\right) \to Fin\left(14\right)\right)\right)\right))$$
+$$(classes: Fin\left(3\right) \to \left(Fin\left(3\right) \to \left(Fin\left(3\right) \to \left(Fin\left(3\right) \to Fin\left(14\right)\right)\right)\right))$$
 
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233157Row.classes` (`✓ std3`).
 
@@ -28,7 +28,7 @@ $$classes = (![![![![0, 1, 1], ![2, 3, 4], ![2, 4, 3]], ![![5, 6, 7], ![8, 9, 10
 
 *Commentary.*
 
-The table assigns a class to every column according to its equality pattern.
+The fixed lookup table assigns a class in Fin 14 to each tuple of 4 colors according to its equality pattern.
 
 **Definition 1.3 (classify).**
 
@@ -46,7 +46,7 @@ The coordinates select one of the 14 equality classes.
 
 **Definition 1.4 (representatives).**
 
-$$representatives = ![![0, 0, 0, 0], ![0, 0, 0, 1], ![0, 0, 1, 0], ![0, 0, 1, 1], ![0, 0, 1, 2], ![0, 1, 0, 0], ![0, 1, 0, 1], ![0, 1, 0, 2], ![0, 1, 1, 0], ![0, 1, 1, 1], ![0, 1, 1, 2], ![0, 1, 2, 0], ![0, 1, 2, 1], ![0, 1, 2, 2]]$$
+$$(representatives: Fin\left(14\right) \to Row\left(4\right))$$
 
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233157Row.representatives` (`✓ std3`).
 
@@ -56,11 +56,11 @@ $$representatives = ![![0, 0, 0, 0], ![0, 0, 0, 1], ![0, 0, 1, 0], ![0, 0, 1, 1]
 
 *Commentary.*
 
-Each equality pattern has a representative using colors in order of first occurrence.
+The fixed table selects one canonical 4-entry column for each of the 14 equality classes.
 
 **Definition 1.5 (quotient).**
 
-$$quotient = ![![2, 2, 2, 2, 0, 2, 2, 0, 2, 2, 0, 0, 0, 0], ![1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0], ![1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0], ![1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1], ![0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1], ![1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], ![1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], ![0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], ![1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0], ![1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0], ![0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0], ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1], ![0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0], ![0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1]]$$
+$$(quotient: Matrix\left(Fin\left(14\right), Fin\left(14\right), \operatorname{Int}\right))$$
 
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233157Row.quotient` (`✓ std3`).
 
@@ -70,11 +70,11 @@ $$quotient = ![![2, 2, 2, 2, 0, 2, 2, 0, 2, 2, 0, 0, 0, 0], ![1, 1, 0, 1, 1, 1, 
 
 *Commentary.*
 
-An entry counts compatible successor columns in the indicated equality class.
+The fixed 14 by 14 integer table records compatible successor multiplicities between equality classes.
 
 **Definition 1.6 (weights).**
 
-$$weights = ![3, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6]$$
+$$(weights: Fin\left(14\right) \to \operatorname{Int})$$
 
 *Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233157Row.weights` (`✓ std3`).
 
@@ -84,7 +84,7 @@ $$weights = ![3, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6]$$
 
 *Commentary.*
 
-The weights count all columns in each class, including constant columns.
+The fixed 14-entry integer vector records three labelled constant columns in the constant class and six labelled columns in every other equality class.
 
 **Theorem 1.7 (finite_certificate).**
 

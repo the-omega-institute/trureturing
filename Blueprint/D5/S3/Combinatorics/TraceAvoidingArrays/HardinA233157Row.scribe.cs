@@ -12,7 +12,7 @@ internal sealed class HardinA233157RowDocument : IScribeDocumentDefinition
         "The number of labelled 4-row arrays obeys the order-3 recurrence from OEIS A233157.",
         H("OEIS A233157"), Blocks(
             Node("U4",All("n",NatF(),Eq(C("U4",V("n")),FilterCard(N(4),V("n")))),"Every labelled function satisfying horizontal and antidiagonal sum exclusion is counted.",true),
-            Node("classes", Cast(C("classes"), Arr(FinF(N(3)), Arr(FinF(N(3)), Arr(FinF(N(3)), Arr(FinF(N(3)), FinF(N(14))))))), "The fixed lookup table assigns a class in Fin 14 to each tuple of 4 colors according to its equality pattern."),
+            Node("classes", Cast(C("classes"), ClassTableType(4, 14)), "The fixed lookup table assigns a class in Fin 14 to each tuple of 4 colors according to its equality pattern."),
             Node("classify",All("r",RowF(N(4)),Eq(C("classify",V("r")),A(C("classes"),A(V("r"),N(0)), A(V("r"),N(1)), A(V("r"),N(2)), A(V("r"),N(3))))),"The coordinates select one of the 14 equality classes."),
             Node("representatives", Cast(C("representatives"), Arr(FinF(N(14)), RowF(N(4)))), "The fixed table selects one canonical 4-entry column for each of the 14 equality classes."),
             Node("quotient", Cast(C("quotient"), C("Matrix", FinF(N(14)), FinF(N(14)), IntF())), "The fixed 14 by 14 integer table records compatible successor multiplicities between equality classes."),
