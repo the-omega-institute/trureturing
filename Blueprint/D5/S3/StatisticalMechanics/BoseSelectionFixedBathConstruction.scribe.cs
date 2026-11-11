@@ -7,7 +7,7 @@ internal sealed class BoseSelectionFixedBathConstructionDocument : IScribeDocume
         "Fixed orthogonal bath realization and normalized five-mode selection in every finite dimension at least five.",
         H("Fixed bath Hamiltonian construction"),
         Blocks(
-            Paragraph(Text("The same two fixed coordinate projections are realized by orthonormal bath amplitude rows. The five-dimensional rows and the higher-dimensional rational certificates give actual real symmetric and complex Hermitian Hamiltonians. The occupation is normalized explicitly, and uniqueness allows competitors on arbitrary supports. This construction uses the original cubic asymmetry and signed Pfaffian proof; the matrix topology and complete scientific scope are stated in BoseSelectionFixedOrthogonalBaths.")),
+            Paragraph(Text("Following Haobo Ma and Wenlin Zhang, Five Bose-selected modes with orthogonal bath projectors (CC BY 4.0), the same two fixed coordinate projections are realized by orthonormal bath amplitude rows. The five-dimensional rows and the higher-dimensional rational certificates give actual real symmetric and complex Hermitian Hamiltonians. The occupation is normalized explicitly, and uniqueness allows competitors on arbitrary supports. This construction uses the original cubic asymmetry and signed Pfaffian proof; the matrix topology and complete scientific scope are stated in BoseSelectionFixedOrthogonalBaths.")),
             Describe.Lean(DescribeId.Create("coordinateprojector"),
                 DeclarationHandle.Create("D5/S3/StatisticalMechanics/BoseSelectionFixedBathConstruction.coordinateProjector"),
                 H("coordinateProjector"), StatementSource.WithoutFormula(),

@@ -14,13 +14,13 @@ For k=n-5 positive the proof specializes the source Gram–Schmidt construction 
 
 The source first proves existence using small positive t; the uniform certificate fixes t explicitly and proves the same all-finite-dimension result. For the extra levels f/g=468/25 exceeds 16, while every old g/f is below 16. Each old contribution to each new-row drift is therefore negative. The selected block is common to all positive k. The construction does not shrink the domain to a tested list of dimensions.
 
-The old BS1–BS8 record is preserved. BS1 is the earlier independent-weight cubic example with F=(5,4,4,4,4), G=(6,6,3,3,3), common sum 21 and occupation (14,56,21,8,1)/100, and its positive-Pfaffian open family remains in the original refutation. BS2 records rank four, determinant 504² and normalized uniqueness for that earlier block; the general skew-support and minor lemmas here supply reusable mechanisms but no new named assertion silently certifies the entire earlier neighborhood.
+The old BS1–BS8 record is preserved. BS1 is the earlier independent-weight cubic example with F=(5,4,4,4,4), G=(6,6,3,3,3), common sum 21 and occupation (14,56,21,8,1)/100, and its positive-Pfaffian open family remains in the original refutation. BS2 records rank four and normalized uniqueness for that earlier block. For its unnormalized integer cubic matrix B, deleting the first row and column gives a four by four principal minor with determinant 504²; the corresponding minor of A=B/441 has determinant 504²/441⁴. The leading four by four minor of B instead has determinant 36². The general skew-support and minor lemmas here supply reusable mechanisms but no new named assertion silently certifies the entire earlier neighborhood.
 
 BS3 remains the source positive/inverted bath rate statement for T1>0>T2: with delta=e(i)-e(j), R_ij=f_i f_j delta³/(exp(delta/T1)-1)-g_i g_j delta³/(exp(delta/T2)-1) off the diagonal. Its nonnegativity and R_ij-R_ji=A_ij require their own exponential-denominator proof; no experimental inverted-bath realization is inferred. BS4 is the earlier joint neighborhood in exponent, energies and independent couplings; fixed-matrix local exponent persistence here does not silently finish that broader joint statement.
 
 BS5 is the earlier all-M independent-weight extension with new normalized weights 2t/(1+2kt) and t/(1+kt), appropriately rescaled old weights, distinct higher energies and strict outside drift. The present all-M construction enforces the additional orthogonal-amplitude constraint and does not erase or substitute away that earlier parameter family.
 
-BS6 retains the source common odd integer monomial q at least one, at least one signed bath, strictly positive couplings and one-dimensional selected kernel: M_S ≤ (q+1) M_B -1. Its bath-power factorization, even skew rank and nondegeneracy argument are not formalized by this return. BS7 retains the source strictly ordered energies, d>0 and any number of positive same-sign baths: the only selected mode is the lowest for positive signs and highest for negative signs, with the earlier single-bath attribution intact. BS8 retains the necessity of nondegeneracy (opposite identical couplings give A=0) and the open seven-mode attainability question. None is replaced by an exponent-independent bound.
+BS6 retains the source common odd integer monomial q at least one, one or more baths, each with a nonzero signed strength and strictly positive couplings, a nonempty selected set and a one-dimensional selected kernel: M_S ≤ (q+1) M_B -1. The source also derives the one-dimensional selected kernel from uniqueness of the normalized strict solution by a small normalized kernel-direction perturbation. Its bath-power factorization, even skew rank and this nondegeneracy implication are not formalized by this return. BS7 retains the source strictly ordered energies, d>0 and any positive number of baths with strictly positive couplings and strengths of a common nonzero sign: the only selected mode is the lowest for positive signs and highest for negative signs, with the earlier single-bath attribution intact. BS8 retains the necessity of nondegeneracy (opposite identical couplings give A=0) and the open seven-mode attainability question. None is replaced by an exponent-independent bound.
 
 The written note turns open matrix sets into positive GOE/GUE probability using their everywhere positive Gaussian densities on the actual real symmetric and complex Hermitian spaces. The Lean source proves the open sets, not the identification of either actual law or its full support. A generic measure with an assumed positive-open-set property does not close this gap. No ensemble frequency, almost-sure typicality, dimension-uniform probability lower bound or matrix-neighborhood radius follows.
 
@@ -166,37 +166,9 @@ Lean statement: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.ex
 
 *Commentary.*
 
-For any RCLike field, n at least five and continuity of each increasing ordered eigenvalue on its Hermitian matrix space, there exists a nonempty open set of simple-spectrum matrices. Every member has a normalized first-five cubic selection, selected rank four and global normalized uniqueness allowing all competing supports. The continuity premise is explicitly discharged for the real and complex fields in the following results.
+For any RCLike field, n at least five and continuity of each increasing ordered eigenvalue on its Hermitian matrix space, there exists a nonempty open set of simple-spectrum matrices. Every member has a normalized first-five cubic selection, selected rank four and global normalized uniqueness allowing all competing supports. The exported conclusion leaves strict positivity of all bath weights throughout O unspecified. The continuity premise is explicitly discharged for the real and complex fields by the continuity theorems above. The real symmetric conclusion is the direct application exists_open_fixedBathHamiltonians (𝕜 := ℝ) hn continuous_increasingSpectrum_real; the complex Hermitian conclusion uses (𝕜 := ℂ) and continuous_increasingSpectrum_complex. Both retain arbitrary finite n at least five and every competing support.
 
-**Theorem 1.11 (exists_open_real_fixedBathHamiltonians).**
-
-Lean statement: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.exists_open_real_fixedBathHamiltonians`
-
-*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.exists_open_real_fixedBathHamiltonians` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Schnell, Alexander; Ketzmerick, Roland; Eckardt, André (2018). *On the number of Bose-selected modes in driven-dissipative ideal Bose gases*. DOI: [10.1103/PhysRevE.97.032136](https://doi.org/10.1103/PhysRevE.97.032136). URL: <https://arxiv.org/abs/1802.04088v2>.
-
-*Commentary.*
-
-For every natural n at least five, a nonempty open subset of the actual real symmetric n by n matrix space consists of matrices with simple increasing spectrum and normalized first-five cubic selection, selected rank four, and unique normalized occupation among all strict selections on arbitrary supports. No probability law is a premise or conclusion.
-
-**Theorem 1.12 (exists_open_complex_fixedBathHamiltonians).**
-
-Lean statement: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.exists_open_complex_fixedBathHamiltonians`
-
-*Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.exists_open_complex_fixedBathHamiltonians` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Schnell, Alexander; Ketzmerick, Roland; Eckardt, André (2018). *On the number of Bose-selected modes in driven-dissipative ideal Bose gases*. DOI: [10.1103/PhysRevE.97.032136](https://doi.org/10.1103/PhysRevE.97.032136). URL: <https://arxiv.org/abs/1802.04088v2>.
-
-*Commentary.*
-
-For every natural n at least five, a nonempty open subset of the full complex Hermitian n by n matrix space has simple increasing spectrum and the same normalized first-five cubic selection, rank-four and global uniqueness conclusion. This is an open set in the full complex Hermitian space, not only the embedded real subspace.
-
-**Theorem 1.13 (fixedBath_local_exponent).**
+**Theorem 1.11 (fixedBath_local_exponent).**
 
 Lean statement: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.fixedBath_local_exponent`
 
@@ -215,9 +187,7 @@ For every dimension n at least five, RCLike field and fixed Hermitian H whose cu
 - Truth anchor: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.HermitianSpace`
 - Truth anchor: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.continuous_increasingSpectrum_complex`
 - Truth anchor: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.continuous_increasingSpectrum_real`
-- Truth anchor: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.exists_open_complex_fixedBathHamiltonians`
 - Truth anchor: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.exists_open_fixedBathHamiltonians`
-- Truth anchor: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.exists_open_real_fixedBathHamiltonians`
 - Truth anchor: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.fixedBath_local_exponent`
 - Truth anchor: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.increasingSpectrum`
 - Truth anchor: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.lagrangeProjector`
