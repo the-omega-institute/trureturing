@@ -122,17 +122,7 @@ internal sealed class KhetanSixCellPeriodicityDocument : IScribeDocumentDefiniti
                 + "Polynomial.exists_eq_pow_rootMultiplicity_mul_and_not_dvd, "
                 + "Complex.exists_root and IsAlgClosed.exists_pow_nat_eq. The Lean source "
                 + "retains the full MIT notice for Boon Suan Ho; existing action and recurrence "
-                + "attribution remains with their owning modules and Library/FiniteGeometry/ho2026nivat.md.")),
-            Paragraph(Text(
-                "The Lean source and exact final telescope compile in the scoped target "
-                + "build with the standard axiom closure Classical.choice, Quot.sound and "
-                + "propext; the report is restricted to the selected targets and their imports. "
-                + "Public escape registrations remain incomplete under issue 29287. The preserved "
-                + "OneDirectionPeriodizer mirror compiles, but its native registration assessment "
-                + "is declared_unresolved. The nine proof modules have canonical frozen state pins. "
-                + "Compiler and canonical pin records alone do not certify independent admission "
-                + "review or official CI acceptance. "
-                + "No priority claim is made."))),
+                + "attribution remains with their owning modules and Library/FiniteGeometry/ho2026nivat.md."))),
         [DocumentEdge.Dependency.Create(GidRef.Create("D5/S1/Dynamics/Symbolic/KhetanDirectionalCoprimality")),
          DocumentEdge.Dependency.Create(GidRef.Create("D5/S1/Dynamics/Symbolic/KhetanLineFactorCancellation"))]));
 }

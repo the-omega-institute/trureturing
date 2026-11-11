@@ -161,3 +161,12 @@ assessment is `declared_unresolved`, with IE-C050 at
 - [open] Other cardinalities and higher-dimensional given-orbit-closure
   questions require separate arguments. The eight-cell counterexample in
   the pinned source prevents a blanket extension to arbitrary finite F.
+
+## ASSUMED-UNVERIFIED
+
+Literature novelty and priority have not been established. Official
+required CI acceptance has not yet passed. Public escape registrations
+remain incomplete under issue #29287; the existing audit evidence and
+`declared_unresolved` assessment are disclosed in Evidence. The compiled
+theorem has exactly the hypotheses and standard axiom closure stated in
+Evidence; extensions beyond its stated scope remain unasserted.

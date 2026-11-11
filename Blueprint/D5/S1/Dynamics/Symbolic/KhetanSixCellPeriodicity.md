@@ -44,8 +44,6 @@ The question is arXiv:2607.09830v2, §3.5. The general finitary integral periodi
 
 The exact formal suppliers searched include the project’s existing Khetan modules, Mathlib at revision 56a005855ea17e0b0958f73ec801ae140b0a1679, and boonsuan/nivat at revision 4e3614024227acd273c3e8ab41df92c2709e5ab0. The upstream lattice-basis theorem supplies a gcd normalization pattern, but no primitive normalization of a genuine Laurent line divisor was found in the inspected suppliers. The present bridge uses Int.exists_gcd_one, AddMonoidAlgebra.mapDomain_injective, LaurentPolynomial.exists_T_pow, Polynomial.exists_eq_pow_rootMultiplicity_mul_and_not_dvd, Complex.exists_root and IsAlgClosed.exists_pow_nat_eq. The Lean source retains the full MIT notice for Boon Suan Ho; existing action and recurrence attribution remains with their owning modules and Library/FiniteGeometry/ho2026nivat.md.
 
-The Lean source and exact final telescope compile in the scoped target build with the standard axiom closure Classical.choice, Quot.sound and propext; the report is restricted to the selected targets and their imports. Public escape registrations remain incomplete under issue 29287. The preserved OneDirectionPeriodizer mirror compiles, but its native registration assessment is declared_unresolved. The nine proof modules have canonical frozen state pins. Compiler and canonical pin records alone do not certify independent admission review or official CI acceptance. No priority claim is made.
-
 ## References
 
 - Truth anchor: `D5/S1/Dynamics/Symbolic/KhetanSixCellPeriodicity.primitive_line_divisor`
