@@ -111,10 +111,9 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hb := h 0
   have ha := result 0
-  change (T6 4 : ℤ) + 1 = _ at hb
-  simp only [rejected, realize] at hb
-  norm_num at hb ha
-  omega
+  change (T6 4 : ℤ) + 1 = 25 * (T6 3 : ℤ) - 90 * (T6 2 : ℤ) + 81 * (T6 1 : ℤ) at hb
+  have hc : (T6 4 : ℤ) + 1 = (T6 4 : ℤ) := hb.trans ha.symm
+  exact (by omega : ∀ z : ℤ, z + 1 ≠ z) _ hc
 def family : Registration arena (type_of% @result) where
   actual := actual
   bridge := Iff.rfl
@@ -133,8 +132,11 @@ def family : Registration arena (type_of% @result) where
         ((quotient ^ 1).mulVec (1 : Fin 8 → ℤ)) = 1944 := by decide +kernel
     change (T6 2 : ℤ) = dotProduct weights
       ((quotient ^ 1).mulVec (1 : Fin 8 → ℤ)) at h2
-    rw [hv] at h2
-    exact_mod_cast (by omega : T6 1 ≠ T6 2)
+    have h2z : (T6 2 : ℤ) = 1944 := h2.trans hv
+    have h1z : (T6 1 : ℤ) = 96 := congrArg Int.ofNat h1
+    intro he
+    have hc : (96 : ℤ) = 1944 := h1z.symm.trans (he.trans h2z)
+    exact (by decide : (96 : ℤ) ≠ 1944) hc
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@result) (Realization signature) Type Unit where
