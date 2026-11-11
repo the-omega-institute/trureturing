@@ -463,24 +463,6 @@ theorem full_mixture_iff_circuit_balance
     rw [he p q, he q p]
     exact hs q p
 
--- Temporary specialization check; removed from the delivered mathematical surface.
-example :
-    fullMixture (PointedCone.positive ℝ ℝ) (LinearMap.id : ℝ →ₗ[ℝ] ℝ) ↔
-      ∀ p : pure (PointedCone.positive ℝ ℝ) (LinearMap.id : ℝ →ₗ[ℝ] ℝ),
-        balanced (pure (PointedCone.positive ℝ ℝ) (LinearMap.id : ℝ →ₗ[ℝ] ℝ))
-          (fun q => comparison (PointedCone.positive ℝ ℝ) LinearMap.id q p) := by
-  have hspan : Submodule.span ℝ ((PointedCone.positive ℝ ℝ : PointedCone ℝ ℝ) : Set ℝ) = ⊤ := by
-    apply top_unique
-    intro x _
-    have h1 : (1 : ℝ) ∈ Submodule.span ℝ
-        ((PointedCone.positive ℝ ℝ : PointedCone ℝ ℝ) : Set ℝ) :=
-      Submodule.subset_span (by change (0 : ℝ) ≤ 1; exact zero_le_one)
-    simpa only [smul_eq_mul, mul_one] using (Submodule.span ℝ
-      ((PointedCone.positive ℝ ℝ : PointedCone ℝ ℝ) : Set ℝ)).smul_mem x h1
-  exact (full_mixture_iff_circuit_balance (PointedCone.positive ℝ ℝ) LinearMap.id
-    (show IsClosed ((PointedCone.positive ℝ ℝ : PointedCone ℝ ℝ) : Set ℝ) from isClosed_Ici)
-    (fun x hx hne => lt_of_le_of_ne hx (Ne.symm hne)) hspan).1
-
 #print axioms circuit_balance_least_confirmation
 #print axioms full_mixture_iff_circuit_balance
 
