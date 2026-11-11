@@ -2498,8 +2498,8 @@ $r_2S_d(a)=\tau_A(rd)a=\tau_D(d)a$. The second identity therefore gives
 $F_d(a,b)=M(r_2S_d(a),b)=\tau_D(d)M(a,b)$, proving (51).
 Choose any $\omega\ge0$ with $\tau_D(\omega)=1$, for example
 $1_D/\tau_D(1_D)$. For $a,b\ge0$ the defining composition for
-$F_\omega(a,b)$ is positive, using positivity of $L$ also at the
-possibly entangled intermediate $S_\omega(a)\in D_+$. Equation (51)
+$F_\omega(a,b)$ is positive, using full-domain positivity of $L$ at
+the intermediate $S_\omega(a)\in D_+$. Equation (51)
 identifies it with $M(a,b)$, proving positivity without a binary theorem.
 Moreover $S_\omega$ is positive TP by the trace formula, and
 $r_2S_\omega=\mathrm{id}_A$. Neither $r_2$ nor $S_\omega$ was supplied.
