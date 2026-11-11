@@ -1,0 +1,3 @@
+Repair quantitative budget normalization proofs
+
+Apply direct negation normalization and inverse-power simplification in the quantitative budget repair.

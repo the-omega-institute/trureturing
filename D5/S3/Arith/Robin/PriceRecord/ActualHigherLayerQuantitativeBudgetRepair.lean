@@ -210,7 +210,7 @@ theorem moving_interval_marginals {j : ℕ} (hj : 3 ≤ j) {ρ priceLambda q : �
     have hneg : -(2 * (j : ℝ) * log (q / ρ)) ≤
         log (beta j q) - log priceLambda := by linarith only [hlog]
     have hneg' : -2 / (j : ℝ) ≤ -(2 * (j : ℝ) * log (q / ρ)) := by
-      linarith only [hmul]
+      convert neg_le_neg hmul using 1 <;> ring
     exact hneg'.trans hneg
   have hexp := exp_le_exp.mpr hlogs
   have hlow : exp (-2 / (j : ℝ)) * priceLambda ≤ beta j q := by
@@ -417,7 +417,7 @@ theorem root_pnt_suppression {c1 A0 L y : ℝ} (hc : 0 < c1)
       change exp (((6 : ℕ) : ℝ) * log L) = L ^ 6
       rw [Real.exp_nat_mul, exp_log (by linarith : 0 < L)]
     rw [exp_neg, hpow]
-    rfl
+    simp [one_div]
   exact hexp.trans_eq heq
 
 private theorem endpoint_theta_mass {c A L ρ : ℝ} {j : ℕ}
