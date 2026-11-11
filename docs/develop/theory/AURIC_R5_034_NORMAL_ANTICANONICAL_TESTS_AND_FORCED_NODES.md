@@ -50,42 +50,23 @@ $$
 
 在这个平坦有限表示族中，非光滑 locus $\Sigma$ 是源的闭子集；其几何纤维就是相应几何纤维的非正则 locus。几何泛纤维正规，故该 locus 维数至多为 $n-2$。$\Sigma$ 对底仍射影，纤维维数上半连续；移去满足 $\dim\Sigma_W\ge n-1$ 的闭集，便得非空 $F$-开集。其几何纤维满足 $R_1$，与 $S_2$ 合用 Serre 正规判据即得正规性。这里所有收缩都保留泛点，且由原 $F$ 上的族定义；没有用任意分裂行元组代替一个实际 $F$-窗口。$\square$
 
-**定理 86.3（高余秩像界与正规测试除子）。** 对 $\mathcal U_Y$ 的每个几何窗口，令
+## 87. 结构化原乘法族的正规反典范定理
+
+**定理 87.1（结构化原乘法族的正规反典范几何）。** 在约定 86.1 的同一实际 $D/F$、目标 $C$ 和窗口空间 $X$ 上，对 $\mathcal U_Y$ 的每个几何窗口，令
 
 $$
 Z_W=\{U\in T_W:\operatorname{corank}K_U\ge2\}_{\mathrm{red}}.
-\tag{86.5}
+\tag{87.1}
 $$
 
-则 $\dim Z_W\le n-2$，即其在 $T_W$ 中余维至少为二。$T_W$ 正规；$\pi_W$ 是在余秩一开集上为概形同构的射影双有理态射。因此，对每个实际 $W\in\mathcal U_Y(F)$，$T_W$ 是原 $F$ 上的几何正规、几何整反典范除子。
+则 $\dim Z_W\le n-2$，即其在 $T_W$ 中余维至少为二。$T_W$ 正规；$\pi_W$ 是在余秩一开集上为概形同构的射影双有理态射。
 
-证明。全在几何底域上论证。$Y_W$、$T_W$ 整且同维，满射 (86.4) 的泛纤维维数为零。其完整纤维是射影线性空间，故泛点的核维数为一。于是余秩一开集非空，$Z_W$ 是由子式定义的真闭集，$E=\pi_W^{-1}(Z_W)$ 是 $Y_W$ 的真闭集，满足 $\dim E\le n-1$。
-
-取 $Z_W$ 的任一不可约分支 $Z$。在其泛点，(86.4) 的纤维是维数至少一的射影空间。故 $E$ 有一个支配 $Z$ 的分支 $E_Z$，其泛纤维维数至少一；纤维维数公式给
-
-$$
-\dim Z+1\le\dim E_Z\le n-1.
-\tag{86.6}
-$$
-
-这证明所需界。关键使用了完整核纤维的正维性；单说“射影双有理”不提供这项计算。
-
-source033 的余秩一 Schur 补图使 $\pi_W$ 在 $T_W\setminus Z_W$ 上成为概形同构。$T_W$ 的每个余维一点都在该开集中，对应 $Y_W$ 的余维一点。$Y_W$ 正规，故这些局部环正则，$T_W$ 满足 $R_1$。另一方面，$T_W$ 是光滑 $G$ 上的有效 Cartier 除子，局部环为正则局部环模一个非零因子，因而 Cohen–Macaulay，满足 $S_2$。Serre 的 $R_1+S_2$ 判据给出正规性。论证对任意几何扩底成立；反典范类由定理 87.1 计算。$\square$
-
-**推论 86.4（系数底上的一般正规性与实际窗口）。** 存在非空 $F$-开集 $\Gamma^{\mathrm{nor}}\subset\Gamma_D\setminus\{p\}$，使每个几何 $q\in\Gamma^{\mathrm{nor}}$ 的 $T_q$ 几何正规且几何整。并且 $\mathcal U_Y(F)$ 非空；它的每个非空 $F$-开子集都有实际窗口。
-
-证明。系数映射占优，定理 86.3 的几何泛窗口结论沿函数域扩张下降，得到系数几何泛点处的正规性。复用 source033 的几何整系数开集。通用除子族在 $\Gamma_D\setminus\{p\}$ 上相对 Cartier 且平坦，各纤维都是维数 $n$ 的 Cohen–Macaulay 概形。其非光滑 locus 对系数底射影；如引理 86.2，用该 locus 的纤维维数上半连续性，从泛点的 $R_1$ 得到非空 $F$-开集上的 $R_1$，再用 $S_2$。这给出 $\Gamma^{\mathrm{nor}}$。
-
-$X$ 的原 $F$ 大胞腔是 $\mathbb A_F^{m^2}$，且 $F$ 无限。任一非空 $F$-开集与此胞腔交于非空开集，其中含有一个非零多项式的非消失主开集。非零多项式不可能在无限域的全部 $F$-元组上消失，故存在实际 $F$-点。这也适用于 $\mathcal U_Y$ 的任意非空 $F$-开子集。$\square$
-
-## 87. 反典范类、常数行列式线与结构层上同调
-
-**定理 87.1（经典伴随公式在原乘法除子上的应用）。** 对任意实际 $W\in X^*(F)$，令
+该结构族的反典范类及结构层上同调如下；这些经典计算适用于更大的范围，即任意实际 $W\in X^*(F)$，不要求这个特化正规。令
 
 $$
 A_W=\det_F D\otimes_F(\det_F W^\vee)^{\otimes2},\qquad
 \Lambda_{C,W}=(\det_F C^\vee)^{\otimes2}\otimes_F A_W.
-\tag{87.1}
+\tag{87.2}
 $$
 
 这些都是一维 $F$-向量空间。原乘法行列式是 $\mathcal O_G(m)\otimes_F A_W$ 的截面，且有
@@ -96,64 +77,10 @@ $$
 \mathcal O_G(T_W)&\simeq\mathcal O_G(m)\otimes_F A_W,\\
 \omega_{T_W}&\simeq\mathcal O_{T_W}\otimes_F\Lambda_{C,W}.
 \end{aligned}
-\tag{87.2}
-$$
-
-特别地，$T_W$ 是 Gorenstein，$\omega_G\simeq\mathcal O_G(-m)$、$\omega_{T_W}\simeq\mathcal O_{T_W}$ 作为线丛同构成立。后一写法不指定典范的非零体积形式。若 $W\in\mathcal U_Y(F)$，这就是一个正规、几何整的反典范除子。
-
-证明。令 $\mathcal Q=(C\otimes_F\mathcal O_G)/\mathcal S$。Grassmannian 的切丛为 $\mathcal S^\vee\otimes\mathcal Q$，其中两因子秩分别为二和 $m-2$。由行列式张量公式和 tautological 正合列，
-
-$$
-\begin{aligned}
-\det T_G
-&=(\det\mathcal S^\vee)^{\otimes(m-2)}\otimes(\det\mathcal Q)^{\otimes2}\\
-&=\mathcal O_G(m)\otimes_F(\det_F C)^{\otimes2}.
-\end{aligned}
 \tag{87.3}
 $$
 
-取对偶得到第一式。对 (86.2) 取行列式，其截面所属线丛为
-
-$$
-\det_F D\otimes\det(\mathcal S\otimes_F W)^\vee
-=\mathcal O_G(m)\otimes_F A_W.
-\tag{87.4}
-$$
-
-source033 的核等式保证此截面非零；光滑整 $G$ 上的非零截面是非零因子，给出第二式。有效 Cartier 除子嵌入的经典伴随公式给
-
-$$
-\omega_{T_W}\simeq
-(\omega_G\otimes\mathcal O_G(T_W))|_{T_W},
-\tag{87.5}
-$$
-
-即第三式。具体而言，局部正合列 $0\to\mathcal O_G(-T_W)\to\mathcal O_G\to\mathcal O_{T_W}\to0$ 计算出的 $\mathcal E xt^1_G(\mathcal O_{T_W},\omega_G)$ 正是右端；低余维 Cartier 嵌入的对偶理论将其识别为对偶层。正则局部环是 Gorenstein，模一个非零因子仍是 Gorenstein，所以这里不要求 $T_W$ 光滑或先验正规。
-
-一维常数向量空间张成的线丛均可平凡化，故得到所述线丛同构。将 $\Lambda_{C,W}$ 认作 $F$ 需要选择一个非零元素；改变窗口帧、目标体积或其他行列式平凡化会相应改变这个选择。式 (87.2) 保留了这些因子，不从反典范类推出一个未作选择的规范体积形式。$\square$
-
-**引理 87.2（Grassmannian 的经典结构层消失）。** 在原 $F$ 上，
-
-$$
-H^0(G,\mathcal O_G)=F,\qquad
-H^a(G,\mathcal O_G)=0\quad(a>0).
-\tag{87.6}
-$$
-
-证明。考虑旗簇 $\mathcal F=\{(\ell,U):\ell\subset U\subset C,\ \dim\ell=1,\ \dim U=2\}$。投影 $\mathcal F\to G$ 是纤维为 $\mathbb P^1$ 的射影丛；投影 $\mathcal F\to\mathbb P(C)$ 是纤维为 $\mathbb P^{m-2}$ 的射影丛，后者参数为 $C/\ell$ 中的一维子空间。
-
-经典射影丛上同调公式在任一仿射平凡化底上给 $p_*\mathcal O=\mathcal O$、$R^a p_*\mathcal O=0$（$a>0$）；它们由射影空间的结构层上同调计算得出，并在交上相容。两次 Leray 谱序列因而给出
-
-$$
-H^a(G,\mathcal O_G)
-\simeq H^a(\mathcal F,\mathcal O_{\mathcal F})
-\simeq H^a(\mathbb P(C),\mathcal O_{\mathbb P(C)}).
-\tag{87.7}
-$$
-
-最后一项在 $a=0$ 为 $F$，在 $a>0$ 为零。这是射影丛消失定理的应用，不需要把奇异 $T_W$ 当作 Kodaira 消失的光滑底。$\square$
-
-**推论 87.3（反典范除子的完整结构层上同调）。** 对定理 87.1 的每个 $T_W$，
+并且
 
 $$
 \begin{aligned}
@@ -161,12 +88,79 @@ H^0(T_W,\mathcal O_{T_W})&=F,\\
 H^a(T_W,\mathcal O_{T_W})&=0&& (0<a<2m-5),\\
 H^{2m-5}(T_W,\mathcal O_{T_W})&\simeq\Lambda_{C,W}^\vee\simeq F.
 \end{aligned}
+\tag{87.4}
+$$
+
+特别地，$T_W$ 是 Gorenstein，$\omega_G\simeq\mathcal O_G(-m)$、$\omega_{T_W}\simeq\mathcal O_{T_W}$ 作为线丛同构成立。后一写法不指定典范的非零体积形式；(87.4) 末尾的 $F$ 同构也是向量空间同构，未选择 $\Lambda_{C,W}$ 的平凡化时应保留中间的一维线。因此，对每个实际 $W\in\mathcal U_Y(F)$，同一个原乘法测试除子 $T_W$ 几何正规、几何整且反典范，并具有所列全部结构层上同调。
+
+证明。先证明结构化核关联给出的余维界与正规性，再在这一族中应用经典伴随、射影丛上同调和 Serre 对偶。
+
+全在几何底域上论证第一部分。$Y_W$、$T_W$ 整且同维，满射 (86.4) 的泛纤维维数为零。其完整纤维是射影线性空间，故泛点的核维数为一。于是余秩一开集非空，$Z_W$ 是由子式定义的真闭集，$E=\pi_W^{-1}(Z_W)$ 是 $Y_W$ 的真闭集，满足 $\dim E\le n-1$。
+
+取 $Z_W$ 的任一不可约分支 $Z$。在其泛点，(86.4) 的纤维是维数至少一的射影空间。故 $E$ 有一个支配 $Z$ 的分支 $E_Z$，其泛纤维维数至少一；纤维维数公式给
+
+$$
+\dim Z+1\le\dim E_Z\le n-1.
+\tag{87.5}
+$$
+
+这证明所需界。关键使用了完整核纤维的正维性；单说“射影双有理”不提供这项计算。
+
+source033 的余秩一 Schur 补图使 $\pi_W$ 在 $T_W\setminus Z_W$ 上成为概形同构。$T_W$ 的每个余维一点都在该开集中，对应 $Y_W$ 的余维一点。$Y_W$ 正规，故这些局部环正则，$T_W$ 满足 $R_1$。另一方面，$T_W$ 是光滑 $G$ 上的有效 Cartier 除子，局部环为正则局部环模一个非零因子，因而 Cohen–Macaulay，满足 $S_2$。Serre 的经典 $R_1+S_2$ 判据（Stacks Project，Tag 031S）给出正规性。论证对任意几何扩底成立。
+
+现在固定任意实际 $W\in X^*(F)$，计算同一指定族的行列式线。令 $\mathcal Q=(C\otimes_F\mathcal O_G)/\mathcal S$。Grassmannian 的经典切丛公式为 $T_G\simeq\mathcal S^\vee\otimes\mathcal Q$，其中两因子秩分别为二和 $m-2$。由行列式张量公式和 tautological 正合列，
+
+$$
+\begin{aligned}
+\det T_G
+&=(\det\mathcal S^\vee)^{\otimes(m-2)}\otimes(\det\mathcal Q)^{\otimes2}\\
+&=\mathcal O_G(m)\otimes_F(\det_F C)^{\otimes2}.
+\end{aligned}
+\tag{87.6}
+$$
+
+取对偶得到 (87.3) 的第一式。对原乘法映射 (86.2) 取行列式，其截面所属线丛为
+
+$$
+\det_F D\otimes\det(\mathcal S\otimes_F W)^\vee
+=\mathcal O_G(m)\otimes_F A_W.
+\tag{87.7}
+$$
+
+source033 的核等式保证此截面非零；光滑整 $G$ 上的非零截面是非零因子，给出 (87.3) 的第二式。有效 Cartier 除子嵌入的经典伴随公式（Stacks Project，Tags 0B4B、0AA4）给
+
+$$
+\omega_{T_W}\simeq
+(\omega_G\otimes\mathcal O_G(T_W))|_{T_W},
 \tag{87.8}
 $$
 
-末尾的 $F$ 同构是向量空间同构；未选择 $\Lambda_{C,W}$ 的平凡化时，应保留中间的一维线。此结论也适用于非正规特化，只要截面非零。
+即第三式。具体而言，局部正合列 $0\to\mathcal O_G(-T_W)\to\mathcal O_G\to\mathcal O_{T_W}\to0$ 计算出的 $\mathcal E xt^1_G(\mathcal O_{T_W},\omega_G)$ 正是右端；低余维 Cartier 嵌入的对偶理论将其识别为对偶层。正则局部环是 Gorenstein，模一个非零因子仍是 Gorenstein，所以这里不要求 $T_W$ 光滑或先验正规。
 
-证明。由 (87.2) 有 $\mathcal O_G(-T_W)=\omega_G\otimes_F\Lambda_{C,W}^\vee$。光滑射影 $g$ 维 $G$ 上的 Serre 对偶与 (87.6) 给
+一维常数向量空间张成的线丛均可平凡化，故得到所述线丛同构。将 $\Lambda_{C,W}$ 认作 $F$ 需要选择一个非零元素；改变窗口帧、目标体积或其他行列式平凡化会相应改变这个选择。式 (87.3) 保留了这些因子，不从反典范类推出一个未作选择的规范体积形式。
+
+为计算这些原乘法除子的完整上同调，先使用经典射影丛上同调公式（Stacks Project，Tags 01XT、01XX）在原 $F$ 上取得中间等式
+
+$$
+H^0(G,\mathcal O_G)=F,\qquad
+H^a(G,\mathcal O_G)=0\quad(a>0).
+\tag{87.9}
+$$
+
+具体地，考虑旗簇 $\mathcal F=\{(\ell,U):\ell\subset U\subset C,\ \dim\ell=1,\ \dim U=2\}$。投影 $\mathcal F\to G$ 是纤维为 $\mathbb P^1$ 的射影丛；投影 $\mathcal F\to\mathbb P(C)$ 是纤维为 $\mathbb P^{m-2}$ 的射影丛，后者参数为 $C/\ell$ 中的一维子空间。
+
+经典射影丛上同调公式在任一仿射平凡化底上给 $p_*\mathcal O=\mathcal O$、$R^a p_*\mathcal O=0$（$a>0$）；它们由射影空间的结构层上同调计算得出，并在交上相容。两次 Leray 谱序列因而给出
+
+$$
+H^a(G,\mathcal O_G)
+\simeq H^a(\mathcal F,\mathcal O_{\mathcal F})
+\simeq H^a(\mathbb P(C),\mathcal O_{\mathbb P(C)}).
+\tag{87.10}
+$$
+
+最后一项在 $a=0$ 为 $F$，在 $a>0$ 为零，故得 (87.9)。这是射影丛消失定理的应用，不需要把奇异 $T_W$ 当作 Kodaira 消失的光滑底。
+
+由 (87.3) 有 $\mathcal O_G(-T_W)=\omega_G\otimes_F\Lambda_{C,W}^\vee$。光滑射影 $g$ 维 $G$ 上的经典 Serre 对偶（Stacks Project，Tag 0FVZ；$G$ 为纯维 Cohen–Macaulay）与 (87.9) 给
 
 $$
 H^a(G,\mathcal O_G(-T_W))
@@ -175,10 +169,16 @@ H^a(G,\mathcal O_G(-T_W))
 \Lambda_{C,W}^\vee,&a=g,\\
 0,&a\ne g.
 \end{cases}
-\tag{87.9}
+\tag{87.11}
 $$
 
-将它和 (87.6) 代入 Cartier 正合列的上同调长正合列。由于 $g\ge4$，次数零处给 $H^0(T_W,\mathcal O)=F$；$0<a<g-1$ 处全部为零；次数 $g-1$ 处连接态射给 $H^{g-1}(T_W,\mathcal O)\simeq\Lambda_{C,W}^\vee$。这证明全部式子。伴随公式、射影丛消失和 Serre 对偶均是经典输入；本节承担的是它们对指定原乘法族的准确参数对应。$\square$
+将它和 (87.9) 代入 Cartier 正合列的上同调长正合列。由于 $g\ge4$，次数零处给 $H^0(T_W,\mathcal O)=F$；$0<a<g-1$ 处全部为零；次数 $g-1$ 处连接态射给 $H^{g-1}(T_W,\mathcal O)\simeq\Lambda_{C,W}^\vee$，即 (87.4)；高于 $n=g-1$ 的次数由维数消失。伴随公式、射影丛消失和 Serre 对偶均只作为本结构族定理的经典证明输入；与第一部分合用，得到所述正规反典范原乘法族。$\square$
+
+**推论 87.2（系数底上的一般正规性与实际窗口）。** 存在非空 $F$-开集 $\Gamma^{\mathrm{nor}}\subset\Gamma_D\setminus\{p\}$，使每个几何 $q\in\Gamma^{\mathrm{nor}}$ 的 $T_q$ 几何正规且几何整。并且 $\mathcal U_Y(F)$ 非空；它的每个非空 $F$-开子集都有实际窗口。
+
+证明。系数映射占优，定理 87.1 的几何泛窗口结论沿函数域扩张下降，得到系数几何泛点处的正规性。复用 source033 的几何整系数开集。通用除子族在 $\Gamma_D\setminus\{p\}$ 上相对 Cartier 且平坦，各纤维都是维数 $n$ 的 Cohen–Macaulay 概形。其非光滑 locus 对系数底射影；如引理 86.2，用该 locus 的纤维维数上半连续性，从泛点的 $R_1$ 得到非空 $F$-开集上的 $R_1$，再用 $S_2$。这给出 $\Gamma^{\mathrm{nor}}$。
+
+$X$ 的原 $F$ 大胞腔是 $\mathbb A_F^{m^2}$，且 $F$ 无限。任一非空 $F$-开集与此胞腔交于非空开集，其中含有一个非零多项式的非消失主开集。非零多项式不可能在无限域的全部 $F$-元组上消失，故存在实际 $F$-点。这也适用于 $\mathcal U_Y$ 的任意非空 $F$-开子集。$\square$
 
 ## 88. 基点分支的全部低阶交与强制奇异层
 
@@ -269,7 +269,7 @@ $$
 
 取原 $D/F$ 的一个有限 Galois 分裂域 $L$。上述条件全部在 $L$ 上定义，$\operatorname{Gal}(L/F)$ 只置换原嵌入指标并对系数作相应作用；$C$ 是原实际目标。由于同时要求所有无序对的条件，这个开集及其闭补集 Galois 不变，遂下降为非空 $F$-开集。该下降也与窗口换帧相容；没有把独立给定的分裂行误认作原域点。
 
-最后与引理 86.2 的 $\mathcal U_Y$ 相交。$X$ 几何整，所以交仍为非空 $F$-开集，记为 $\mathcal U_{\mathrm{node}}$；定理 86.3 保证 $T_W$ 正规。推论 86.4 的原大胞腔论证给出 $\mathcal U_{\mathrm{node}}(F)\ne\varnothing$。故所证非空性确实产生同一个实际域 $D$ 内的窗口，并非仅有分裂坐标元组。$\square$
+最后与引理 86.2 的 $\mathcal U_Y$ 相交。$X$ 几何整，所以交仍为非空 $F$-开集，记为 $\mathcal U_{\mathrm{node}}$；定理 87.1 保证 $T_W$ 正规。推论 87.2 的原大胞腔论证给出 $\mathcal U_{\mathrm{node}}(F)\ne\varnothing$。故所证非空性确实产生同一个实际域 $D$ 内的窗口，并非仅有分裂坐标元组。$\square$
 
 **定理 89.4（每个强制点的秩四二次初始式）。** 对任意代数闭扩域 $k/F$ 及 $W\in\mathcal U_{\mathrm{node}}(k)$，$T_W$ 在全部扩底后的 $U_{ij}$ 处都是普通二重点。在 $G_k$ 的四个正则局部参数中，其方程的二次初始式等价于
 
@@ -360,7 +360,7 @@ $$
 
 这二十八个点的原始标签不是任选的八个复数或一个新造分裂模型，而是原扩张的八个嵌入的无序不同二元对。它们整体构成一个规范的二十八次有限 étale 原域概形，并经目标的共同核映射嵌入测试除子。原扩张为域，嵌入的 Galois 作用传递，故没有任何一对能单独下降为原域有理点；这些强制节点在几何上存在，却都不是原域有理节点。这个结论没有把正规性改成光滑性，也没有断言二十八点穷尽全部奇异点。
 
-证明。原乘法与指定 Grassmannian 截面的对应为约定 86.1 的 (86.2)–(86.4)，其线性系和准确核来自 source031、source033 的已述输入。引理 86.2 与定理 86.3 以完整射影核纤维排除余维一的高余秩像，再用余秩一概形图和 $R_1+S_2$ 得正规性；推论 86.4 保证一般条件是同一原域上有实际点的非空开集。定理 87.1 和推论 87.3 给 Gorenstein、平凡对偶层及全部结构层上同调；它们保留常数行列式线，所以一维向量空间和体积形式的选择不混同。
+证明。原乘法与指定 Grassmannian 截面的对应为约定 86.1 的 (86.2)–(86.4)，其线性系和准确核来自 source031、source033 的已述输入。引理 86.2 与定理 87.1 以完整射影核纤维排除余维一的高余秩像，再用余秩一概形图和 $R_1+S_2$ 得正规性；推论 87.2 保证一般条件是同一原域上有实际点的非空开集。定理 87.1 的证明在这一结构族内应用经典伴随、射影丛上同调及 Serre 对偶，给出 Gorenstein、平凡对偶层及全部结构层上同调；其中保留常数行列式线，所以一维向量空间和体积形式的选择不混同。
 
 定理 88.1 给共同核 Grassmannian 及理想幂中的消失，推论 88.2 给八次的二十八个互异点。定理 89.3 先在实际结构化行族中证明每一对条件非空，再有限相交、换帧下降和 Galois 下降到原窗口空间；定理 89.4 的 Schur 补及秩四二次型证明给出各点的普通二重点性质。定理 90.2 将同一组原嵌入的无序对等变下降为有限 étale 子概形，并用原域扩张的传递性排除其 $F$-点。因此白话陈述中的每个几何和原域结论都保持了同一个 $D/F$、$C$ 与 $W$。$\square$
 
@@ -371,7 +371,7 @@ $$
 | [source031，§72](https://github.com/the-omega-institute/trureturing/blob/20094c4ddd6fda9277d9f41f64bb457041a6c5ad/docs/develop/theory/AURIC_R5_031_TARGET_OWNED_POSITIVE_GRASSMANN_GEOMETRY.md)；[source033，§§81–83](https://github.com/the-omega-institute/trureturing/blob/974984733cb1d619221ff97000612a9194bc8828/docs/develop/theory/AURIC_R5_033_ALL_DEGREE_ARITHMETIC_POSITIVE_CERTIFICATES.md) | 原实际对象、指定线性系及其核、基点支撑、秩一排除、几何整与几何正规泛关联、完整核纤维和余秩一概形图。正规泛纤维依据 §82 的泛点局部化证明；联合空间奇异集公式不被特化为所有纤维的奇异集。 |
 | Stacks Project，[Serre 正规判据，Tag 031S](https://stacks.math.columbia.edu/tag/031S)；[射影态射纤维维数上半连续，Tag 0D4I](https://stacks.math.columbia.edu/tag/0D4I)；[几何正规性的扩底判据，Tag 038O](https://stacks.math.columbia.edu/tag/038O) | Noetherian 环的 $R_1+S_2$ 等价正规；proper 有限型族的纤维维数上半连续；特征零泛参数域为完美域，普通正规性给几何正规性。引理 86.2 另外检查平坦性、局部完全交和非光滑闭集，以取得几何纤维开集。 |
 | Stacks Project，[Cartier 嵌入对偶计算，Tag 0B4B](https://stacks.math.columbia.edu/tag/0B4B)、[其张量版本，Tag 0AA4](https://stacks.math.columbia.edu/tag/0AA4)；[proper、等维 CM 概形的 Serre 对偶，Tag 0FVZ](https://stacks.math.columbia.edu/tag/0FVZ) | Cartier 法线丛的 $\mathcal E xt^1$ 计算给伴随；对偶应用的 $G$ 光滑、射影、纯维数 $g$。不要求奇异除子光滑。Gorenstein 性也可由正则局部环模非零因子的经典定理得到。 |
-| Stacks Project，[射影空间上同调，Tag 01XT](https://stacks.math.columbia.edu/tag/01XT)；[射影丛版本，Tag 01XX](https://stacks.math.columbia.edu/tag/01XX) | 对 $\mathcal O$ 的直接像为底的结构层、高阶直接像为零；两次用于旗簇投影，严格给出 (87.6)。因此无需额外的奇异空间消失假设。 |
+| Stacks Project，[射影空间上同调，Tag 01XT](https://stacks.math.columbia.edu/tag/01XT)；[射影丛版本，Tag 01XX](https://stacks.math.columbia.edu/tag/01XX) | 对 $\mathcal O$ 的直接像为底的结构层、高阶直接像为零；作为定理 87.1 证明的中间输入，两次用于旗簇投影，严格给出 (87.9)。因此无需额外的奇异空间消失假设。 |
 | Stacks Project，[有限 étale 概形与有限 Galois 集，Tag 0BNE](https://stacks.math.columbia.edu/tag/0BNE) | 原域的八个嵌入及其无序异元对的有限 étale 下降；不把二元子集作用传递性当作单点作用传递性的推论。 |
 | Honma–Manabe，*Determinantal Calabi–Yau varieties in Grassmannians and the Givental I-functions*，[arXiv:1810.03685v1，§2.1–2.2](https://arxiv.org/abs/1810.03685v1) | 行列式退化 locus、核关联和 Grassmannian 上典范类条件的既有总体框架。其一般映射的预期余维和光滑性不能替代本卷结构化行族的非空性与正规性证明；其物理模型不作为这里的结论。 |
 | Ahmadinezhad–Cheltsov–Park–Shramov，*Double Veronese cones with 28 nodes*，[arXiv:1910.10533v2，§10，印刷页 42–43](https://arxiv.org/abs/1910.10533v2) | 正则 Cayley 八点对应的二次曲面网给 $\operatorname{Gr}(2,4)$ 中一个 $(2,3)$ 三维簇，其二十八个奇点按八点对标记。这是“二十八个二元对标签”的明确文献重叠；本卷是 $\operatorname{Gr}(2,4)$ 上 $\mathcal O_G(4)$ 行列式除子，未把任意统一八行认作正则 Cayley 八点，也未证明两族同构或双有理。 |
