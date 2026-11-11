@@ -1,0 +1,24 @@
+**定义 77.1（载体与 $S_k$）。** 取非零有限维实向量空间 $A$，$d=\dim_{\mathbb R}A$，闭、尖、生成的锥 $C$，以及在 $C\setminus\{0\}$ 上严格正的线性泛函 $u$。始终使用整个态基 $K=\{x\in C:u(x)=1\}$、$P=\operatorname{ext}K$ 及整个 proper 效应区间
+
+$$
+[0,u]=\{f\in A^*: f(C)\ge0,\ (u-f)(C)\ge0\}.
+$$
+
+对纯 $p$，定义确认集与比较
+
+$$
+F_p=\{f\in[0,u]:f(p)=1\},\qquad
+T_p(x)=\min_{f\in F_p}f(x)\quad(x\in K).
+\tag{77.1}
+$$
+
+$S_k$ 对每个 $p\in P$、每个 $1\le r\le k$、所有 $q_1,\ldots,q_r\in P$ 及所有 $w_j\ge0,\sum_jw_j=1$ 要求
+
+$$
+T_p\!\left(\sum_{j=1}^r w_jq_j\right)
+ =\sum_{j=1}^r w_jT_{q_j}(p).
+\tag{77.2}
+$$
+
+零权、重复纯态和不等正权都在量词中。完整 $S$ 要求每个有限 $r$；$S_1$ 恰为纯端点互反 $T_p(q)=T_q(p)$。这里元数数的是制备纯项，不是参照 $p$ 加上这些项的总标签数，更不是 Hilbert 维数。固定参照版本 $S_k(p)$ 仅固定 (77.2) 的第一端点，其余量词不动。
+
