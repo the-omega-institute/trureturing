@@ -11,6 +11,7 @@ strata_touched:
   - D5/S3/Topology/StoneCech/SectionDenseSelector
   - D5/S3/Topology/StoneCech/SectionClosedGraph
   - D5/S3/Geometry/Orthogonality/RationalSixAxisCover
+  - D5/S3/Topology/StoneCech/DeletedSquareChromatic
 license: citation-only
 triage: anchor
 ---
@@ -152,6 +153,55 @@ the primary finite-block proposal is the application provenance. The
 open status reported in this particular version establishes neither a
 literature exclusion nor global priority, novelty, uniqueness or
 official acceptance. No external exclusion search is claimed.
+
+## Question 2 and the deleted square
+
+Section 5 asks "Is the second implication strict?" after compactness implies
+the finite open chromatic property implies the bounded clique property.
+Both properties quantify over every whole-product closed orthogonality.
+An open coloring is a finite cover by open independent sets, with overlaps
+allowed. The author repository at the inspected commit also marks
+`ChromaticQuestion` open. The bounded subsequent-solution search did not
+locate a solution; broad search engine and API limitations prevent a claim
+of exhaustive literature exclusion.
+
+`DeletedSquareChromatic.result` supplies the concrete Hausdorff space
+$X=\{(p,q)\in\operatorname{Ultrafilter}(\mathbb N)^2:p\ne q\}$ with the
+induced product topology. It has the bounded clique property for every
+whole-product closed symmetric irreflexive relation. Its swap graph is one
+such relation and has no finite open independent cover.
+
+The proof first establishes countable compactness of $D(K)^{\mathbb N}$
+for every compact Hausdorff extremally disconnected K. It reuses the native
+point-pair clopen separation theorem and infinite-pool diagonal. A cluster
+point in the compact ambient product lies in each fixed closed clopen cross
+and hence stays off every coordinate diagonal. This is not a sequential
+compactness claim or a product theorem for arbitrary countably compact spaces.
+
+Feldman–Wilce Theorem 1 supplies the mathematical countable-power criterion
+for bounded cliques. Its native proof is independently written: arbitrarily
+large finite cliques yield a power cluster point with pairwise adjacent
+coordinates, whose own cluster point forces a forbidden diagonal pair.
+Infinite clique subsets are separately excluded. The author repository has
+no granted Lean source license, and none of its implementation is copied.
+
+The obstruction records both full finite-cover membership patterns of
+ordered principal pairs and invokes the existing Apache-2.0 infinite Ramsey
+theorem of Yann Pequignot, already retained with provenance in
+`NathansonProblem9`. Disjoint infinite homogeneous supports yield distinct
+free ultrafilters. Any relative open cover member containing their pair
+contains a support rectangle realizing principal pairs in both order
+orientations. Homogeneity then contradicts independence. The argument does
+not require a disjoint cover and does not identify those two pairs as swaps.
+
+The question and countable-power criterion are attributed to Feldman–Wilce.
+The deleted-square construction is supplied mathematical input, implemented
+using native separation, diagonal and Ramsey results. The local scoped Lean
+build verifies the complete endpoint with axiom closure `propext`,
+`Classical.choice`, and `Quot.sound`. Source fidelity, official CI, priority
+and author acceptance remain distinct from this kernel result. No CH or MA
+premise is used. Extra local compactness, separability and chromatic-cardinal
+assertions are not needed for the Question 2 endpoint.
 
 ## Question 3 and the rational six-axis upper bound
 
