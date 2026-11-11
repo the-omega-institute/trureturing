@@ -24,12 +24,16 @@ internal sealed class BalaTrinomialCoefficientIdentityDocument : IScribeDocument
                     "For positive n, formal substitution X=T/(1-T), followed by multiplication by (1-T)^(n-1), preserves the degree-n coefficient. The proof checks this using finite coefficient substitution and the coefficients of powers of the geometric series. Under this weighted substitution the source becomes (1+T^2/(1-T))^(3n)/(1-T).",
                     "The binomial expansion has terms binom(3n,k) T^(2k)/(1-T)^(k+1). The degree-n coefficient of each term is binom(3n,k) binom(n-k,k) when 2k is at most n, and zero otherwise. Thus only the inclusive range through floor(n/2) contributes. The proof treats n=0 separately, where both sides equal one; n=1 is included in the positive case. The final cast identifies the rational sum with the cast of the natural sum.",
                     "The separate supercongruence on the same sequence is outside this identity."
-                ], DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                ], DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a351858-bala-coefficient-identity"),
+                    ResolutionKind.Proved)))));
     private static DocumentBlock Node(string name, string title, Formula formula, string[] prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("bala-a351858-" + name), DeclarationHandle.Create(Prefix + name),
         H(title), StatementSource.FromAuthor(formula), provenance,
-        Blocks([.. prose.Select(text => Paragraph(Text(text)))]), role);
+        Blocks([.. prose.Select(text => Paragraph(Text(text)))]), role, resolution);
     private static Formula Pow(Formula value, Formula exponent) => new Formula.Power(value, exponent);
     private static Formula N() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
