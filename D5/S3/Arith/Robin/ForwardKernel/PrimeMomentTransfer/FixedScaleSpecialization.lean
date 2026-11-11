@@ -83,8 +83,8 @@ private theorem p_power_in_band (α θ β : ℝ) (hαθ : α ≤ θ) (hθβ : θ
     Real.rpow_le_rpow_of_exponent_le hX hθβ⟩
 
 private theorem p_fixed_scale_third_limit :
-∀ (β θ M : ℝ), 0 < θ → θ < β → β < 1/4 →
-  MeanSquareHL4 concreteSS β → IntervalCorrelations concreteSS → 0 < M →
+∀ (β θ M : ℝ), 0 < θ → θ < β → β < 1/3 →
+  MeanSquareHL 3 concreteSS β → IntervalCorrelations concreteSS → 0 < M →
   ∀ (c : Fin 3 → ℝ), (∀ i, c i ∈ Icc (0:ℝ) M) →
   ∀ u v : ℝ, 1 ≤ u → u < v → v ≤ 2 →
   Tendsto (fixedBlockMoment (fun x => Chebyshev.psi x-x) θ 3 c u v) atTop (𝓝 (0)) := by
@@ -154,8 +154,8 @@ private theorem p_fixed_scale_fourth_limit :
 
 /-- The Chebyshev error satisfies the third fixed-scale mixed-moment interface. -/
 theorem fixed_scale_third :
-∀ β θ : ℝ, 0 < θ → θ < β → β < 1/4 →
-  MeanSquareHL4 concreteSS β → IntervalCorrelations concreteSS →
+∀ β θ : ℝ, 0 < θ → θ < β → β < 1/3 →
+  MeanSquareHL 3 concreteSS β → IntervalCorrelations concreteSS →
   FixedScaleMixedMoments (fun x => Chebyshev.psi x-x) θ 3 (fun _ => 0) := by
   intro β θ hθ hθβ hβ hMS hcor M hM c hc u v hu huv hv
   simpa only [mul_zero] using
