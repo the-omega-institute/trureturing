@@ -4,16 +4,16 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: A transitive finite partition into nontrivial collinear blocks admits a block avoiding each closure. -/
+   digest: Transitive finite linear incidence partitions admit whole-block avoidance. -/
 
 import Mathlib.Combinatorics.Enumerative.DoubleCounting
 import Mathlib.GroupTheory.GroupAction.Transitive
 import Mathlib.Tactic
 
+/-! Block avoidance for a finite transitive linear incidence geometry. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-
-/-! Block avoidance for a finite transitive linear incidence geometry. -/
 
 namespace D5.S3.Factorization.RankThreeBlockAvoidance
 
@@ -52,8 +52,8 @@ one common point, and not all closures coincide. Then every closure avoids a
 whole original block. The hypotheses concern the incidence geometry, rather
 than presumed counting equations. -/
 theorem exists_block_disjoint_of_transitive_linear_closures
-    {G P I : Type*} [Group G] [Fintype P] [Fintype I]
-    [DecidableEq P] [DecidableEq I]
+    {G P I : Type*} [Group G] [Fintype P] [Finite I]
+    [DecidableEq I]
     [MulAction G P] [MulAction G I] [MulAction.IsPretransitive G P]
     (owner : P → I) (L : I → Finset P)
     (hsize : ∀ i, 2 ≤ (Finset.univ.filter (fun x => owner x = i)).card)
@@ -65,12 +65,14 @@ theorem exists_block_disjoint_of_transitive_linear_closures
     (hnonconstant : ∃ i j, L i ≠ L j) :
     ∀ i, ∃ j, ∀ x, owner x = j → x ∉ L i := by
   classical
-  open Finset in
+  let _ : Fintype I := Fintype.ofFinite I
   have hpoint : ∀ i, ∃ x, owner x = i := by
     intro i
-    obtain ⟨x, hx⟩ := Finset.card_pos.mp (by have := hsize i; omega)
+    have hpos : 0 < (Finset.univ.filter (fun x => owner x = i)).card :=
+      lt_of_lt_of_le (by decide : 0 < 2) (hsize i)
+    obtain ⟨x, hx⟩ := Finset.card_pos.mp hpos
     exact ⟨x, (Finset.mem_filter.mp hx).2⟩
-  have htrans : ∀ i j, ∃ g : G, g • i = j := by
+  have htrans : ∀ i j : I, ∃ g : G, g • i = j := by
     intro i j
     obtain ⟨x, hx⟩ := hpoint i
     obtain ⟨y, hy⟩ := hpoint j
@@ -82,7 +84,7 @@ theorem exists_block_disjoint_of_transitive_linear_closures
       _ = j := by rw [hg, hy]
   intro i
   by_contra hbad
-  push_neg at hbad
+  push Not at hbad
   have hmeet : ∀ a j, ∃ x, owner x = j ∧ x ∈ L a := by
     intro a j
     obtain ⟨g, hg⟩ := htrans i a
@@ -154,7 +156,7 @@ theorem exists_block_disjoint_of_transitive_linear_closures
     have hcard : 1 < (Finset.univ : Finset I).card :=
       Finset.one_lt_card.mpr ⟨u, Finset.mem_univ _, v, Finset.mem_univ _,
         fun h => huv (congrArg L h)⟩
-    simpa [m] using hcard
+    simpa only [Finset.card_univ] using Nat.succ_le_of_lt hcard
   have hb : 2 ≤ b := hsize i
   have herase : ∀ x ∈ L i,
       ((Finset.univ.erase i).filter (fun j => x ∈ L j)).card = d - 1 := by
