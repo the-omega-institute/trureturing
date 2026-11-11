@@ -15,12 +15,16 @@ triage: anchor
 <!-- GID: D5/L/AnalyticClosure/kaplan2007dottie -->
 # The Dottie number and its inverse series
 
-## Source and scope
+## Verified locator
 
 Samuel R. Kaplan, “The Dottie Number,” Mathematics Magazine 80(1),
 73–74, DOI 10.1080/0025570X.2007.11953455.
+
+Archived primary PDF: <https://web.archive.org/web/20190504193821id_/https://www.maa.org/sites/default/files/Kaplan2007-131105.pdf>.
 The two-page primary PDF has 70177 bytes and SHA256
 `b37baf3288eaf6416721550615344264ab283ab1f07bfac7ace3da4c29ad80bc`.
+
+## Mathematical scope
 
 The article describes the inverse-Taylor construction of the odd rational
 pi series and gives its first coefficients 1/4 and -1/768. It does not
