@@ -311,6 +311,69 @@ private theorem restrict_matching {W : Type*} (H : SimpleGraph W) (S : Set W)
   intro t ht
   exact Subtype.ext (hu t.val ht)
 
+private theorem region_subgraph [Fintype V] [DecidableEq V]
+    (hc : G.Connected) {a : V} (p : G.Walk a a)
+    (x : R.Face → ZMod 2) (S : Set V) (b : ZMod 2)
+    (hoff : ∀ d : G.Dart, d.fst ∉ p.support → x (R.face d) = x (R.face d.symm))
+    (hS : ∀ d : G.Dart, d.fst ∉ p.support → (d.fst ∈ S ↔ x (R.face d) = b)) :
+    ∃ H : G.Subgraph,
+      H.verts = {v | v ∈ p.support ∨ v ∈ S} ∧
+      (∀ d : G.Dart, H.Adj d.fst d.snd ↔
+        d.edge ∈ p.edges ∨ (x (R.face d) = b ∧ x (R.face d.symm) = b)) ∧ H.Connected := by
+  classical
+  let H : G.Subgraph := {
+    verts := {v | v ∈ p.support ∨ v ∈ S}
+    Adj := fun v w => ∃ h : G.Adj v w,
+      s(v,w) ∈ p.edges ∨ (x (R.face ⟨(v,w),h⟩) = b ∧ x (R.face ⟨(w,v),h.symm⟩) = b)
+    adj_sub := fun ⟨h, _⟩ => h
+    edge_vert := by
+      rintro v w ⟨h, he | he⟩
+      · exact Or.inl (cycle_edge_endpoint p ⟨(v,w),h⟩ he)
+      · by_cases hv : v ∈ p.support
+        · exact Or.inl hv
+        · exact Or.inr ((hS ⟨(v,w),h⟩ hv).mpr he.1)
+    symm := ⟨by
+      rintro v w ⟨h, he | he⟩
+      · exact ⟨h.symm, Or.inl (by simpa only [Sym2.eq_swap] using he)⟩
+      · exact ⟨h.symm, Or.inr ⟨he.2, he.1⟩⟩⟩ }
+  have hadj (d : G.Dart) : H.Adj d.fst d.snd ↔
+      d.edge ∈ p.edges ∨ (x (R.face d) = b ∧ x (R.face d.symm) = b) := by
+    change (∃ h : G.Adj d.fst d.snd, _) ↔ _
+    exact ⟨fun ⟨_, h⟩ => h, fun h => ⟨d.adj, h⟩⟩
+  have hpH : p.toSubgraph ≤ H := by
+    constructor
+    · intro v hv; exact Or.inl (p.mem_verts_toSubgraph.mp hv)
+    · intro v w hvw
+      exact ⟨p.toSubgraph.adj_sub hvw,
+        Or.inl (p.adj_toSubgraph_iff_mem_edges.mp hvw)⟩
+  let root : H.verts := ⟨a, Or.inl p.start_mem_support⟩
+  have hcycle (v : H.verts) (hv : v.val ∈ p.support) : H.coe.Reachable v root := by
+    exact (p.toSubgraph_connected ⟨v.val, p.mem_verts_toSubgraph.mpr hv⟩
+      ⟨a, p.start_mem_verts_toSubgraph⟩).map (Subgraph.inclusion hpH)
+  have hwalk {v : V} (q : G.Walk v a) :
+      ∀ hv : v ∈ H.verts, H.coe.Reachable ⟨v,hv⟩ root := by
+    induction q with
+    | nil => intro hv; exact Reachable.rfl
+    | @cons v w a hvw q ih =>
+      intro hv
+      by_cases hvc : v ∈ p.support
+      · exact hcycle ⟨v,hv⟩ hvc
+      · have hvs : v ∈ S := hv.resolve_left hvc
+        let d : G.Dart := ⟨(v,w),hvw⟩
+        have hdx : x (R.face d) = b := (hS d hvc).mp hvs
+        have hdy : x (R.face d.symm) = b := (hoff d hvc).symm.trans hdx
+        have hw : w ∈ H.verts := by
+          by_cases hwc : w ∈ p.support
+          · exact Or.inl hwc
+          · exact Or.inr ((hS d.symm hwc).mpr hdy)
+        have hdH : H.coe.Adj ⟨v,hv⟩ ⟨w,hw⟩ :=
+          (hadj d).mpr (Or.inr ⟨hdx,hdy⟩)
+        exact hdH.reachable.trans (ih p hoff hS hadj hpH hcycle hw)
+  refine ⟨H, rfl, hadj, ⟨?_⟩⟩
+  apply (SimpleGraph.connected_iff_exists_forall_reachable H.coe).mpr
+  refine ⟨root, fun v => ?_⟩
+  exact (hwalk (hc.preconnected v.val a).some v.property).symm
+
 /-- A simple cycle has a nontrivial binary facial side, and all off-cycle
 vertices belong to one of two actual sides with no original edge between them.
 Every perfect matching of the actual vertex-deleted complement restricts to
@@ -327,6 +390,11 @@ theorem cycle_face_sides [Fintype V] [DecidableEq V] [DecidableRel G.Adj]
       (∀ d : G.Dart, d.fst ∉ p.support →
         (d.fst ∈ I ↔ x (R.face d) = 1) ∧ (d.fst ∈ J ↔ x (R.face d) = 0)) ∧
       (∀ v ∈ I, ∀ w ∈ J, ¬G.Adj v w) ∧
+      (∀ (S : Set V) (b : ZMod 2), (S = I ∧ b = 1) ∨ (S = J ∧ b = 0) →
+        ∃ H : G.Subgraph,
+          H.verts = {v | v ∈ p.support ∨ v ∈ S} ∧
+          (∀ d : G.Dart, H.Adj d.fst d.snd ↔
+            d.edge ∈ p.edges ∨ (x (R.face d) = b ∧ x (R.face d.symm) = b)) ∧ H.Connected) ∧
       (∀ (M : (G.induce {v | v ∉ p.support}).Subgraph), M.IsPerfectMatching →
         (∀ S ∈ ({I, J} : Set (Set V)),
           ∃ N : ((G.induce {v | v ∉ p.support}).induce {v | v.val ∈ S}).Subgraph,
@@ -407,7 +475,15 @@ theorem cycle_face_sides [Fintype V] [DecidableEq V] [DecidableRel G.Adj]
     have hh := hoff d hv.1
     rw [hdx, hdy] at hh
     exact one_ne_zero hh
-  refine ⟨x, I, J, h1, h0, hx, hpart, hdis, fun d hd => ⟨hI d hd, hJ d hd⟩, hnc, ?_⟩
+  have hregions (S : Set V) (b : ZMod 2)
+      (hb : (S = I ∧ b = 1) ∨ (S = J ∧ b = 0)) := by
+    apply R.region_subgraph hc p x S b hoff
+    intro d hd
+    rcases hb with ⟨rfl,rfl⟩ | ⟨rfl,rfl⟩
+    · exact hI d hd
+    · exact hJ d hd
+  refine ⟨x, I, J, h1, h0, hx, hpart, hdis, fun d hd => ⟨hI d hd, hJ d hd⟩,
+    hnc, hregions, ?_⟩
   intro M hm
   have hclosed (S : Set V) (hS : S ∈ ({I, J} : Set (Set V))) :
       ∀ v : {v | v ∉ p.support}, v.val ∈ S →
