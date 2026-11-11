@@ -1,0 +1,36 @@
+**定义 32.1（最小正共同交维的首次前缀超额）。** 沿用定义 31.1 的原有限特征零扩张 $L/F$，现在每一份窗口都取同一个非零 $F$-子空间 $W\le_F L$。记
+
+$$
+\begin{aligned}
+m&=\dim_F W,&D&=F(W/W),&N&=[D:F],\\
+E&=\{c\in L:cW\subseteq W\},&e&=[E:F],\\
+I_j(r)&=W\cap r_2W\cap\cdots\cap r_jW,&
+d_j(r)&=\dim_F I_j(r),\\
+\delta_j(W)&=\min_{r\in(L^\times)^{j-1},\ d_j(r)>0}d_j(r),&
+b_j(W)&=\max\{e,jm-(j-1)N\}.
+\end{aligned}
+\tag{32.1}
+$$
+
+$j=1$ 时元组为空、$I_1=W$、$\delta_1=b_1=m$。正元组总存在，例如所有标签都为一。对指定整数 $h\ge3$，称 $W$ 在第 $h$ 阶首次前缀超额，指
+
+$$
+\delta_j(W)=b_j(W)\quad(1\le j<h),\qquad
+\delta_h(W)>b_h(W).
+\tag{32.2}
+$$
+
+这里比较的是各阶最小正值；不要求、也不推断不同窗口在每个相同原标签上的低阶交维相等。若给出一个无限原标签列 $r_2,r_3,\ldots$，其第 $j$ 个前缀始终指同一个 $I_j(r)$，不得为不同阶更换已选标签。
+
+以下只把 §31 证明中的 (31.4)、(31.10) 作为已有共同见证桥使用。对每个实际中间域 $F\subseteq C\subseteq D$，置 $c=[C:F]$、$t_C=\dim_F CW-m$，则
+
+$$
+\begin{aligned}
+d_j(r)&\ge c-jt_C&&\text{对每一个 }d_j(r)>0\text{ 的原元组},\\
+\delta_j(W)&=\max_{F\subseteq C\subseteq D}(c-jt_C).
+\end{aligned}
+\tag{32.3}
+$$
+
+第一行是原共同非零向量 $w\in I_j(r)$ 上的商映射 $Cw\longrightarrow\bigoplus_{i=1}^j r_iCW/r_iW$ 的核维数下界，$r_1=1$；它不是分别选择 $j$ 个共同向量的结论。第二行的原域取等已由 §31 的同一泛超平面、实际域下降及原系数非零子式给出，本节不另立一般秩定理。任取 $b\in W\setminus\{0\}$ 后，$X=b^{-1}W\subseteq D$ 含 $1$ 且 $F(X)=D$；若原交叠为正，则 $r_i=p_1/p_i\in D^\times$，其中所有 $p_i\in W\setminus\{0\}$ 来自同一个共同向量。因此全部正原元组的窗口都位于同一个 $bD$ 中，另有环境下界 $d_j(r)\ge jm-(j-1)N$。稳定子下界 $d_j(r)\ge e$ 则来自 $I_j(r)$ 的 $E$-线性。这些下界均覆盖原 $L^\times$ 中的全部正元组，不只覆盖构造所选的标签。
+

@@ -1,0 +1,99 @@
+**定理 35.3（任意扩张次数下的实际三次域秩恢复）。** 对定义 35.1 中的每个实际三次域 $A$，若 $N=3$，则 $A=D$、$r_W(A)=1$。若 $N>3$，则 $r_W(A)\in\{2,3\}$，并且对任一块 $S_\tau$ 都有完整判据
+
+$$
+\boxed{\quad
+r_W(A)=2\ \Longleftrightarrow\ Y_W\cap T_{S_\tau}\ne\varnothing,
+\qquad
+r_W(A)=3\ \Longleftrightarrow\ Y_W\cap T_{S_\tau}=\varnothing.
+\quad}
+\tag{35.5}
+$$
+
+特别地，$N=6$ 时每个这样的 $A$ 均有 $r_W(A)=2$。对同一个原 $D$ 中任意三维 $F$-子空间 $X,Z$，只要 $F(X/X)=D$，就有
+
+$$
+\boxed{\quad Q_X=Q_Z\quad\Longrightarrow\quad
+\dim_A AX=\dim_A AZ\quad
+\text{对每个实际 }A\subseteq D\text{， }[A:F]=3.\quad}
+\tag{35.6}
+$$
+
+因此这些域上的 $t_X(A)$ 与 $t_Z(A)$ 也逐项相同。没有实际三次域时，最后的全称命题为空；$3\mid N$ 本身不制造子域。
+
+证明。先沿用 §§26–28 的归一化、可分分裂与半线性行拟阵接口，在本三维参数下写明其前件。整体乘原标量给出 $Q_U=Q_W$、$\dim_A AU=\dim_A AW$，且 $1\in U\subseteq D$、$F(U)=D$。标准可分分裂给出
+
+$$
+D\otimes_F K\simeq K^\Omega,\qquad
+G=\operatorname{Gal}(K/F),\qquad
+g(h_\sigma)=h_{g\circ\sigma},\qquad
+\rho_W(gS)=\rho_W(S).
+\tag{35.7}
+$$
+
+分裂同构将 $U\otimes_F K$ 单射到 $K^\Omega$，像为 $H_W$，所以 $\rho_W(\Omega)=3$。每行首坐标为一；两行若成比例就必相等，两个嵌入遂在 $U$ 上相同，由 $F(U)=D$ 在整个 $D$ 上相同。因此行拟阵简单。正规闭包使每个 $F$-嵌入 $D\to K$ 延拓成 $K/F$ 的自同构，故 $G$ 在 $\Omega$ 上传递。式 (35.7) 是半线性等式；域自同构保持子式的零与非零，故它确实给出同一个行拟阵的自同构，未假设嵌入行一般位置。
+
+$A/F$ 可分且次数为三，每个 $F$-嵌入 $A\to K$ 可延拓到 $D$。限制映射因此给出恰好三个非空块，$G$ 保持该分拆并在块上传递，各块大小为 $b=N/3=[D:A]$。取原包含嵌入 $\iota:A\hookrightarrow K$。对 $D/A$ 的同一分裂
+
+$$
+D\otimes_A K\simeq K^{S_\iota}
+$$
+
+把 $AU\otimes_A K$ 单射到右边，其像由 $u_1,u_2,u_3$ 的嵌入列张成。扩底保维及行列秩相等给出 $\rho_W(S_\iota)=\dim_A AU$；再由 (35.7) 将此等式传至其余两块，得到
+
+$$
+\rho_W(S_\tau)=r_W(A)\qquad\text{对全部三个 }\tau.
+\tag{35.8}
+$$
+
+这复用的是 §29 中实际域张成与嵌入块秩的对应。若该秩为一，$1\in U$ 迫使 $AU=A$，从而 $D=F(U)\subseteq A$，故只能 $D=A$、$N=3$。反之 $N=3$ 时 $W=D$，结论成立。此后 $N>3$，所以 $b\ge2$，且 $2\le r_W(A)\le3$；$N=6$ 时还有 $r_W(A)\le[D:A]=2$，这也核对了既有 §33 的三次域条目。
+
+现在建立从原商到几何闭包的一向桥。由于 $F$ 无限，$F^n$ 在 $k^n$ 中 Zariski 稠密：若一个 $k$ 系数多项式在全部 $F^n$ 上消失，按变量数归纳，一元多项式在无限子域上有无限多个根就为零，逐个系数也为零。将六个坐标都限制在无限集 $F^\times$ 上，同一归纳仍成立，故 $a,b\in F^3\setminus\{0\}$ 的点对在 $k^6$ 中稠密。考虑非空开集
+
+$$
+\mathcal O=\{(a,b)\in k^3\times k^3:a\ne0,\ \prod_{\sigma\in\Omega}(h_\sigma b)\ne0\}
+$$
+
+上的态射 $\phi(a,b)=[((h_\sigma a)/(h_\sigma b))_\sigma]$。总秩三保证 $B_Wa\ne0$。对每一对 $a,b\in F^3\setminus\{0\}$，原元素 $\sum a_ju_j$、$\sum b_ju_j$ 均非零；域嵌入使分母的所有坐标非零，故这些点全在 $\mathcal O$。它们的像恰是 $\{[(\sigma(r))_\sigma]:r\in Q_W\setminus\{0\}\}$。任何包含这些像的射影闭集，其在 $\mathcal O$ 中的逆像都是包含稠密点集的闭集，因而包含整个 $\mathcal O$。由 $Y_W$ 的定义遂得
+
+$$
+Y_W=\overline{\{[(\sigma(r))_{\sigma\in\Omega}]:r\in Q_W\setminus\{0\}\}}^{\mathrm{Zar}}.
+\tag{35.9}
+$$
+
+所以原商相等蕴含同一固定坐标中的 $Y_X=Y_Z$；这里不使用闭包相等推出原商相等的逆命题。式 (35.9) 也表明 $Y_W$ 不依赖归一化或基的选择。
+
+若 $r_W(A)=2$，由 (35.8) 三个块都是秩二。引理 35.2 使它们各自为平坦。固定 $S=S_\tau$，取非零列向量 $a\in K^3$，使 $h_\sigma a=0$ 对 $\sigma\in S$ 成立。块秩二使该公共核为一维；平坦性说明任何块外的行都不在块内行的张成中，所以 $h_\sigma a\ne0$ 对全部 $\sigma\notin S$ 成立。取 $b=(1,0,0)^{\mathsf T}$，则 $B_Wb=\boldsymbol1$。于是 $[B_Wa]=\phi(a,b)$ 已在几何商像中，并且恰好在 $S$ 上为零。这证明 $Y_W\cap T_S\ne\varnothing$。这里的 $a$ 可以在 $K^3$ 中选择，但未声称能在 $F^3$ 中选择。
+
+余下的排除只需一个必要行列式。对射影坐标的任一代表 $q$，置
+
+$$
+M_W(q)=[\,B_W\mid-\operatorname{diag}(q)B_W\,].
+\tag{35.10}
+$$
+
+在几何商像的代表 $q_\sigma=(h_\sigma a)/(h_\sigma b)$ 上，$M_W(q)(a,b)^{\mathsf T}=0$，其中 $b\ne0$，故这是非零核向量。因而每个六阶子式均为零。这样的子式在 $q$ 中齐次三次，因为每一行列式项恰从后三列取三个含 $q$ 的因子；故其零集是射影闭集，包含整个 $Y_W$。这仅为必要方程，不要求这些子式完整定义 $Y_W$。
+
+若一个子集 $S$ 及其补集都为秩三，分别选三行基 $I\subseteq S$、$J\subseteq\Omega\setminus S$。在 $T_S$ 上，按先 $I$ 后 $J$ 排列所选六行，矩阵 (35.10) 的右上三阶块为零，故其六阶子式为
+
+$$
+\det\!\left((M_W(q))_{I\cup J}\right)
+=\pm\det\!\left((B_W)_I\right)\det\!\left((B_W)_J\right)\prod_{\sigma\in J}q_\sigma\ne0.
+\tag{35.11}
+$$
+
+两个三阶行子式及全部补集坐标都非零，故 $Y_W\cap T_S=\varnothing$。当 $r_W(A)=3$ 时，(35.8) 使 $S_\tau$ 为秩三，而其补集含另一整个秩三块，也为秩三，恰好满足此排除前件。结合秩一已排除及秩二的可达性，得到 (35.5)。没有将块秩三直接替代补集秩的核对。
+
+最后设 $Q_X=Q_Z$。集合相等先给出 $F(Z/Z)=F(X/X)=D$，所以两个窗口都满足上述全部前件。独立归一化不改变各自的原商或 $A$-张成秩。固定同一个 $K,\Omega,A$ 及同一个块 $S_\tau$，(35.9) 给 $Y_X=Y_Z$；$N=3$ 的既有分支或 $N>3$ 的 (35.5) 随即给出 $r_X(A)=r_Z(A)$。任取实际 $A$ 都可如此处理，故结论是逐个原有子域的相等，并非只比较可能的次数或无标签的秩集合。式 (35.1) 给损失相等。$\square$
+
+本定理的文献对应与推导范围。归一化、可分分裂和正规闭包的半线性行对称性已在 §§26–28 使用；(35.8) 的实际域接口已见 (29.7)–(29.8)，$N=3,6$ 的秩结算分别属于 §§27、33。无限域的多项式稠密性也是标准中间工具，这些均不作为新增基础。
+
+Bernstein，[*Generic symmetry-forced infinitesimal rigidity: translations and rotations*，arXiv:2003.10529v4，Definition 2.10、Theorem 3.1](https://arxiv.org/html/2003.10529v4)，定义 Hadamard 乘积为逐坐标乘积像的 Zariski 闭包，并对两个不落在坐标超平面内的复线性空间给出 $\mathcal M(U\star V)=\mathcal M(r_U+r_V-1)$。Antolini–Dewar–Tanigawa，[*Dilworth truncations and Hadamard products of linear spaces*，arXiv:2508.04798v1，Examples 2.2–2.3、§3.2 式 (7)–(9)](https://arxiv.org/html/2508.04798v1)，给出秩函数和线性子空间族的对应，以及两个线性因子的泛切面矩阵接口。这些成熟的拟阵与 Hadamard 工具已有先例；此处商像的第二因子经过逐坐标取逆，不能预设为第二个线性空间而直接套用两线性因子公式。证明 (35.5) 只用三个块的平坦性和必要行列式，不要求窗口一般位置、完整消元方程或热带化的完整描述。
+
+Napolitano–Polverino–Santonastaso–Zullo，[*Classifications and constructions of minimum size linear sets*，arXiv:2201.02003v1，§2.1](https://arxiv.org/html/2201.02003v1)，分别定义线性集的点支持、相对于定义空间的点权及几何线性域；Castello–Polverino–Zullo，[*Full weight spectrum one-orbit cyclic subspace codes*，arXiv:2405.19911v1，Definition 2.2](https://arxiv.org/html/2405.19911v1)，已定义子域张成秩 $\delta_t(S)=\dim_{\mathbb F_{q^t}}\langle S\rangle_{\mathbb F_{q^t}}$。在相应有限域记号中，取定义空间 $W\times W\subseteq D^2$，其线性集的有限斜率支持正是 $Q_W$；非零斜率 $r$ 的点权是 $\dim_F(W\cap rW)$，零斜率和无穷远点的权均为三。这里保留的是支持，没有附送点权；也不把有限域计数或其唯一子域性质移用于特征零。
+
+相对于这些指定定义、定理及 §§26–28、33–34，仓内新增推导（repo-derived）是引理 35.2 与 (35.5)–(35.6) 的连接：三块对称性排除块闭包中的额外行，精确零坐标层区分实际三次域的秩二与秩三，再由原商的稠密性将该判据接回固定标签支持。上述先例归属不主张全球文献优先权。
+
+白话说，同一个三次子域把所有嵌入分成三组。若窗口在这个子域下只需两条方向，每组都能出现一个恰好在该组消失的几何边界点；若需要三条方向，一个行列式便排除这种边界。完整原商支持确定同一份几何闭包，因此两份相同支持不能对这个三次子域给出不同张成秩。这些零坐标点只是证明工具：非零原域元素的每个嵌入都非零，不能把边界点冒作原域非零商。
+
+结论只恢复每个实际三次域的张成秩，不恢复全部中间域剖面，也未判定三维窗口是否由 $Q_W$ 决定原标量轨道。§33 的最小值序列损失与 §34 的六维窗口反例仍保持原范围；§34 留下的任意 $N$ 下完整二元函数丢失全部实际域剖面的最小窗口维数仍为 open，本节只排除三维窗口在三次域条目上的此种损失，其它次数的域条目不在此结算。式 (35.9) 不给出几何闭包相等到原商相等的逆桥，也不提供有限查询、有效算法或噪声结论；它不推出量子起源、$\mathbb Z$ 在 $\mathbb Q$ 中的丢番图定义或 $H10(\mathbb Q)$。
+
