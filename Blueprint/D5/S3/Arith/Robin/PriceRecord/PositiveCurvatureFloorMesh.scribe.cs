@@ -3,7 +3,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin.PriceRecord;
 internal sealed class PositiveCurvatureFloorMeshDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "PositiveCurvatureFloorMesh", H("SOURCE ONLY candidate"),
+        "PositiveCurvatureFloorMesh", H("D5 source compiled; RegUNVALIDATED"),
         Blocks(Paragraph(Text("The statements below concern the finite floor mesh and actual two/four cutoff curvature. They do not establish the complete paid-prefix repair or Robin inequality. RegUNVALIDATED: lawful registration, variation and source binding remain unfinished under issue 28966.")),
             Describe.Lean(
                 DescribeId.Create("actual-two-four-positive-curvature-floor-mesh"),

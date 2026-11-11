@@ -6,12 +6,12 @@ internal sealed class ActualFirstLayerPrefixCancellationDocument : IScribeDocume
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Finite complete first-layer cancellation and actual-record budget comparison.",
-        H("Prepared source: UNCOMPILED_UNACCEPTED"),
+        H("D5 source compiled; RegUNVALIDATED"),
         Blocks(
             Paragraph(Text(
-                "These anchors describe a prepared Lean candidate. No Lean build, kernel check, "
-                + "native report, Scribe compilation, registration, freezing or official acceptance "
-                + "has run for this candidate. The loss, raw margin, optimizer layer count and "
+                "These anchors describe a D5 source target with a current scoped Lean build. Its Reg mirror remains unvalidated for kernel checking, "
+                + "source binding, variation and official acceptance "
+                + "remains incomplete. The loss, raw margin, optimizer layer count and "
                 + "unrestricted actual defect are reused from the canonical library. The companion "
                 + "patch only exposes original consumed helpers. No second loss, margin, optimizer "
                 + "or root definition is introduced. The mathematical mechanism is elementary; "
@@ -84,14 +84,14 @@ internal sealed class ActualFirstLayerPrefixCancellationDocument : IScribeDocume
                 DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualFirstLayerPrefixCancellation.ordered_prefix_difference"),
                 H("ordered_prefix_difference"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("UNCOMPILED_UNACCEPTED / RegUNVALIDATED. Exact full candidate statement: theorem ordered_prefix_difference {X : ℝ} (hX : 1 < X)     {m k P Q : ℕ} (hmprefix : m.primeFactors = Nat.primesLE P)     (hkprefix : k.primeFactors = Nat.primesLE Q) (hPQ : P ≤ Q) :     completeFirstLayerLoss X k - completeFirstLayerLoss X m =       -(∑ p ∈ block (P : ℝ) Q, rawLayerMargin X p 1)"))),
+                Blocks(Paragraph(Text("D5 compiled / RegUNVALIDATED. Exact full candidate statement: theorem ordered_prefix_difference {X : ℝ} (hX : 1 < X)     {m k P Q : ℕ} (hmprefix : m.primeFactors = Nat.primesLE P)     (hkprefix : k.primeFactors = Nat.primesLE Q) (hPQ : P ≤ Q) :     completeFirstLayerLoss X k - completeFirstLayerLoss X m =       -(∑ p ∈ block (P : ℝ) Q, rawLayerMargin X p 1)"))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("actual-two-four-raw-first-bound-at-root"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualFirstLayerPrefixCancellation.raw_first_bound_at_root"),
                 H("raw_first_bound_at_root"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("UNCOMPILED_UNACCEPTED / RegUNVALIDATED. Exact full candidate statement: theorem raw_first_bound_at_root {X r t : ℝ} (hX : 4 < X)     (hr : r ∈ Set.Icc (X / 2) (2 * X))     (hroot : firstLayerPrice r = referencePrice X)     (ht : t ∈ Set.Icc (X / 2) (2 * X)) :     |log (1 + 1 / t) - log t / (X * log X)| ≤ (6 / X ^ 2) * |t - r|"))),
+                Blocks(Paragraph(Text("D5 compiled / RegUNVALIDATED. Exact full candidate statement: theorem raw_first_bound_at_root {X r t : ℝ} (hX : 4 < X)     (hr : r ∈ Set.Icc (X / 2) (2 * X))     (hroot : firstLayerPrice r = referencePrice X)     (ht : t ∈ Set.Icc (X / 2) (2 * X)) :     |log (1 + 1 / t) - log t / (X * log X)| ≤ (6 / X ^ 2) * |t - r|"))),
                 DescribeRole.Theorem)
 
 ,

@@ -6,13 +6,13 @@ internal sealed class ActualRecordAllLogBudgetRemainderDocument : IScribeDocumen
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "An actual prefix-budget candidate for every fixed real logarithmic weight.",
-        H("Prepared source: UNCOMPILED_UNACCEPTED"),
+        H("D5 source compiled; Reg audit incomplete"),
         Blocks(
             Paragraph(Text(
-                "This document anchors a prepared Lean source candidate. Neither Lean elaboration, "
-                + "kernel checking, a native report, Scribe compilation nor official acceptance has "
-                + "run for it. Its finite prefix-cancellation dependency is itself an uncompiled "
-                + "candidate, preserved byte for byte with its original source attribution. "
+                "This document anchors a D5 source target with a current scoped Lean build. The attempted Reg mirror was not retained after its source_bridge mismatch and sorryAx report; "
+                + "the exact candidate is preserved in the runner packet under issue 28966. "
+                + "Its finite prefix-cancellation dependency retains its original "
+                + "source attribution. "
                 + "The completed source has been reconciled with current canonical source under Lean 4.35 "
                 + "and Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679. The critical file retains "
                 + "namespace ActualRecordHigherLayerResidual; its exact prime-escape proof is exposed "
@@ -24,49 +24,49 @@ internal sealed class ActualRecordAllLogBudgetRemainderDocument : IScribeDocumen
                 DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualRecordAllLogBudgetRemainder.original_record_bounds"),
                 H("Existing consumed helper: original_record_bounds"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("UNCOMPILED_UNACCEPTED; RegUNVALIDATED. Exposure of an existing consumed full proof, with unchanged mathematical type and body. Complete candidate Lean statement: theorem original_record_bounds {α : Type*} {l : Filter α}     (m : α → ℕ) (mu : α → ℝ) (hm : ∀ x, 2 ≤ m x) (hmu : ∀ x, 0 < mu x)     (hrecord : ∀ x k, 0 < k → k < m x →       goldenResourceObjective (mu x) k < goldenResourceObjective (mu x) (m x))     (hX : Tendsto (fun x => log (m x : ℝ)) l atTop) : ∀ᶠ x in l,     let X := log (m x : ℝ)     let P := largestPrime (m x)     (P : ℝ) ∈ Set.Icc (X / 2) (2 * X) ∧       0 ≤ X - Chebyshev.theta (P : ℝ) ∧       X - Chebyshev.theta (P : ℝ) ≤ 4 * sqrt X"))),
+                Blocks(Paragraph(Text("D5 compiled; Reg audit incomplete. Exposure of an existing consumed full proof, with unchanged mathematical type and body. Complete candidate Lean statement: theorem original_record_bounds {α : Type*} {l : Filter α}     (m : α → ℕ) (mu : α → ℝ) (hm : ∀ x, 2 ≤ m x) (hmu : ∀ x, 0 < mu x)     (hrecord : ∀ x k, 0 < k → k < m x →       goldenResourceObjective (mu x) k < goldenResourceObjective (mu x) (m x))     (hX : Tendsto (fun x => log (m x : ℝ)) l atTop) : ∀ᶠ x in l,     let X := log (m x : ℝ)     let P := largestPrime (m x)     (P : ℝ) ∈ Set.Icc (X / 2) (2 * X) ∧       0 ≤ X - Chebyshev.theta (P : ℝ) ∧       X - Chebyshev.theta (P : ℝ) ≤ 4 * sqrt X"))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("source-exposure-canonical-budget-eventually"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualRecordAllLogBudgetRemainder.canonical_budget_eventually"),
                 H("Existing consumed helper: canonical_budget_eventually"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("UNCOMPILED_UNACCEPTED; RegUNVALIDATED. Exposure of an existing consumed full proof, with unchanged mathematical type and body. Complete candidate Lean statement: theorem canonical_budget_eventually : ∀ᶠ X : ℝ in atTop,     ∃ b : Budget, b.spec X"))),
+                Blocks(Paragraph(Text("D5 compiled; Reg audit incomplete. Exposure of an existing consumed full proof, with unchanged mathematical type and body. Complete candidate Lean statement: theorem canonical_budget_eventually : ∀ᶠ X : ℝ in atTop,     ∃ b : Budget, b.spec X"))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("source-exposure-log-shell"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualRecordAllLogBudgetRemainder.log_shell"),
                 H("Existing consumed helper: log_shell"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("UNCOMPILED_UNACCEPTED; RegUNVALIDATED. Exposure of an existing consumed full proof, with unchanged mathematical type and body. Complete candidate Lean statement: theorem log_shell {X : ℝ} (hX : 4 < X) :     0 < log (X / 2) ∧ log X / 2 ≤ log (X / 2) ∧ log (2 * X) ≤ 2 * log X"))),
+                Blocks(Paragraph(Text("D5 compiled; Reg audit incomplete. Exposure of an existing consumed full proof, with unchanged mathematical type and body. Complete candidate Lean statement: theorem log_shell {X : ℝ} (hX : 4 < X) :     0 < log (X / 2) ∧ log X / 2 ≤ log (X / 2) ∧ log (2 * X) ≤ 2 * log X"))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("source-exposure-prefix-integer-log"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualRecordAllLogBudgetRemainder.prefix_integer_log"),
                 H("Existing consumed helper: prefix_integer_log"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("UNCOMPILED_UNACCEPTED; RegUNVALIDATED. Exposure of an existing consumed full proof, with unchanged mathematical type and body. Complete candidate Lean statement: theorem prefix_integer_log (Q : ℕ) :     log (prefixInteger Q : ℝ) = Chebyshev.theta (Q : ℝ)"))),
+                Blocks(Paragraph(Text("D5 compiled; Reg audit incomplete. Exposure of an existing consumed full proof, with unchanged mathematical type and body. Complete candidate Lean statement: theorem prefix_integer_log (Q : ℕ) :     log (prefixInteger Q : ℝ) = Chebyshev.theta (Q : ℝ)"))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("source-exposure-higher-core-log"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualRecordAllLogBudgetRemainder.higher_core_log"),
                 H("Existing consumed helper: higher_core_log"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("UNCOMPILED_UNACCEPTED; RegUNVALIDATED. Exposure of an existing consumed full proof, with unchanged mathematical type and body. Complete candidate Lean statement: theorem higher_core_log {n P : ℕ} (hn : 0 < n)     (hprefix : n.primeFactors = Nat.primesLE P) :     log (higherCore n : ℝ) = log (n : ℝ) - Chebyshev.theta (P : ℝ)"))),
+                Blocks(Paragraph(Text("D5 compiled; Reg audit incomplete. Exposure of an existing consumed full proof, with unchanged mathematical type and body. Complete candidate Lean statement: theorem higher_core_log {n P : ℕ} (hn : 0 < n)     (hprefix : n.primeFactors = Nat.primesLE P) :     log (higherCore n : ℝ) = log (n : ℝ) - Chebyshev.theta (P : ℝ)"))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("source-exposure-prefix-integer-pos"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualRecordAllLogBudgetRemainder.prefix_integer_pos"),
                 H("Existing consumed helper: prefix_integer_pos"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("UNCOMPILED_UNACCEPTED; RegUNVALIDATED. Exposure of an existing consumed full proof, with unchanged mathematical type and body. Complete candidate Lean statement: theorem prefix_integer_pos (Q : ℕ) : 0 < prefixInteger Q"))),
+                Blocks(Paragraph(Text("D5 compiled; Reg audit incomplete. Exposure of an existing consumed full proof, with unchanged mathematical type and body. Complete candidate Lean statement: theorem prefix_integer_pos (Q : ℕ) : 0 < prefixInteger Q"))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("source-exposure-higher-core-pos"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualRecordAllLogBudgetRemainder.higher_core_pos"),
                 H("Existing consumed helper: higher_core_pos"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("UNCOMPILED_UNACCEPTED; RegUNVALIDATED. Exposure of an existing consumed full proof, with unchanged mathematical type and body. Complete candidate Lean statement: theorem higher_core_pos (n : ℕ) : 0 < higherCore n"))),
+                Blocks(Paragraph(Text("D5 compiled; Reg audit incomplete. Exposure of an existing consumed full proof, with unchanged mathematical type and body. Complete candidate Lean statement: theorem higher_core_pos (n : ℕ) : 0 < higherCore n"))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("actual-record-every-fixed-real-log-budget-remainder"),
