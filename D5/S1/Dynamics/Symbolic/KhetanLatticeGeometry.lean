@@ -60,7 +60,7 @@ def FullDifferenceSpan (F : Finset Lattice) : Prop :=
 def frame (a u : Lattice) : Lattice →ₗ[ℤ] Lattice where
   toFun z := z.1 • a + z.2 • u
   map_add' x y := by simp [add_smul]; abel
-  map_smul' k z := by simp [smul_add, smul_smul, mul_comm]
+  map_smul' k z := by ext <;> simp [smul_add] <;> ring
 
 def AffineGrid (F : Finset Lattice) (p a u : Lattice) (b c : ℤ) : Prop :=
   F = (({0, 1} : Finset ℤ).product ({0, b, c} : Finset ℤ)).image
@@ -277,11 +277,14 @@ private lemma complete_incidence_of_two
     exact Finset.mem_product.mpr
       ⟨Finset.mem_image_of_mem r hx, Finset.mem_image_of_mem c hx⟩
   have hle := Finset.card_le_card hsub
-  rw [Finset.card_image_of_injective s hinj, Finset.card_product, hs, hR] at hle
+  rw [Finset.card_image_of_injective s hinj, Finset.product_eq_sprod,
+    Finset.card_product, hs, hR] at hle
   have hc3 : (s.image c).card = 3 := by omega
+  have hkey : (s.image key).card = 6 := by
+    simpa only [key, hs] using Finset.card_image_of_injective s hinj
   have heq : s.image key = (s.image r).product (s.image c) := by
     apply Finset.eq_of_subset_of_card_le hsub
-    simp [Finset.card_product, hR, hc3, Finset.card_image_of_injective s hinj, hs]
+    simp [Finset.card_product, hR, hc3, hkey]
   refine ⟨hc3, ?_⟩
   intro i hi j hj
   have : (i, j) ∈ s.image key := by rw [heq]; exact Finset.mem_product.mpr ⟨hi, hj⟩
@@ -305,7 +308,7 @@ private lemma actual_fiber_character (F : Finset Lattice) (u v : Lattice)
     change Complex.exp (Complex.log root / (det u v : ℂ)) ^ det u v = root
     rw [← Complex.exp_int_mul]
     have hmul : (det u v : ℂ) * (Complex.log root / (det u v : ℂ)) =
-        Complex.log root := by field_simp [hD]; ring
+        Complex.log root := by field_simp [hD]
     rw [hmul, Complex.exp_log hc.1]
   refine ⟨fun j => μ ^ j, fun j => zpow_ne_zero j hμ, ?_⟩
   intro i hi
@@ -321,7 +324,10 @@ private lemma actual_fiber_character (F : Finset Lattice) (u v : Lattice)
     have hd : det q v = det p v + det u v * fiberCoordinate u (q - p) := by
       calc
         det q v = det p v + det (q - p) v := by simp [det]; ring
-        _ = _ := by rw [hz]; simp [det]; ring
+        _ = _ := by
+          conv_lhs => rw [hz]
+          simp [det]
+          ring
     rw [hd, zpow_add₀ hμ, zpow_mul, hroot]
   change (fiber F u p).sum (fun q => μ ^ det q v) = 0
   calc
@@ -394,37 +400,33 @@ private lemma rectangular_grid (F : Finset Lattice) (u v : Lattice)
   have hq1eq : q₁ = p₀ + a + b • u := by
     apply det_keys_injective u v huv
     apply Prod.ext
-    · rw [hq1r]
+    · change det u q₁ = det u (p₀ + a + b • u)
+      rw [hq1r]
       rw [← hq0eq]
       dsimp [det] at hq0r ⊢
-      simp only [Prod.fst_add, Prod.snd_add, Prod.smul_fst, Prod.smul_snd,
-        smul_eq_mul]
       linear_combination -hq0r
-    · rw [hq1c]
+    · change det q₁ v = det (p₀ + a + b • u) v
+      rw [hq1c]
       have : det q₀ v = det p₀ v := hq0c.trans hp0c.symm
       have : det (p₀ + a + b • u) v = det p₁ v := by
         rw [hp1eq, ← hq0eq]
         dsimp [det] at this ⊢
-        simp only [Prod.fst_add, Prod.snd_add, Prod.smul_fst, Prod.smul_snd,
-          smul_eq_mul]
         linear_combination this
       exact hp1c.symm.trans this.symm
   have hq2eq : q₂ = p₀ + a + c • u := by
     apply det_keys_injective u v huv
     apply Prod.ext
-    · rw [hq2r]
+    · change det u q₂ = det u (p₀ + a + c • u)
+      rw [hq2r]
       rw [← hq0eq]
       dsimp [det] at hq0r ⊢
-      simp only [Prod.fst_add, Prod.snd_add, Prod.smul_fst, Prod.smul_snd,
-        smul_eq_mul]
       linear_combination -hq0r
-    · rw [hq2c]
+    · change det q₂ v = det (p₀ + a + c • u) v
+      rw [hq2c]
       have : det q₀ v = det p₀ v := hq0c.trans hp0c.symm
       have : det (p₀ + a + c • u) v = det p₂ v := by
         rw [hp2eq, ← hq0eq]
         dsimp [det] at this ⊢
-        simp only [Prod.fst_add, Prod.snd_add, Prod.smul_fst, Prod.smul_snd,
-          smul_eq_mul]
         linear_combination this
       exact hp2c.symm.trans this.symm
   have hb0 : b ≠ 0 := by
@@ -465,7 +467,8 @@ private lemma rectangular_grid (F : Finset Lattice) (u v : Lattice)
     exact frame_injective a u hau (add_left_cancel he)
   have hScard : S.card = 6 := by
     dsimp only [S]
-    rw [Finset.card_image_of_injective _ hSinj, Finset.card_product]
+    rw [Finset.card_image_of_injective _ hSinj, Finset.product_eq_sprod,
+      Finset.card_product]
     simp [hb0, hc0', hbc, Ne.symm hb0, Ne.symm hc0']
   exact (Finset.eq_of_subset_of_card_le hsub (by omega)).symm
 
@@ -570,14 +573,15 @@ private lemma grid_gcd_one (F : Finset Lattice) (p a u : Lattice) (b c : ℤ)
       smul_mem' := by
         intro k x hx
         change d ∣ (e.symm (k • x)).2
-        simpa [smul_eq_mul] using dvd_mul_of_dvd_right hx k }
+        rw [map_smul]
+        simpa only [Prod.smul_snd, smul_eq_mul] using dvd_mul_of_dvd_right hx k }
   have hdiv : ∀ z ∈ ({0, b, c} : Finset ℤ), d ∣ z := by
     intro z hz
     simp only [Finset.mem_insert, Finset.mem_singleton] at hz
-    rcases hz with rfl | rfl | rfl
-    · exact dvd_zero _
-    · exact Int.gcd_dvd_left b c
-    · exact Int.gcd_dvd_right b c
+    rcases hz with hz | hz | hz
+    · rw [hz]; exact dvd_zero _
+    · rw [hz]; exact Int.gcd_dvd_left b c
+    · rw [hz]; exact Int.gcd_dvd_right b c
   have hle : Submodule.span ℤ {z : Lattice | ∃ x ∈ F, ∃ y ∈ F, z = x - y} ≤ N := by
     apply Submodule.span_le.mpr
     rintro z ⟨x, hx, y, hy, rfl⟩
@@ -641,7 +645,8 @@ private lemma affine_exact_cover_transport
     exact add_left_cancel hij
   conv_lhs at h =>
     unfold exactCoverCount
-    rw [hg, Finset.sum_image (fun i _ j _ hij => hinj hij), Finset.sum_product]
+    rw [hg, Finset.sum_image (fun i _ j _ hij => hinj hij),
+      Finset.product_eq_sprod, Finset.sum_product]
   have hpoint (i j : ℤ) :
       e (x, y) - (p + frame a u (i, j)) = e (x - i, y - j) - p := by
     rw [← he (i, j)]
@@ -679,14 +684,16 @@ private lemma affine_period_transport
   rcases hp with hp | hp
   · left
     have hp0 : Period (fun z => T (e z - p)) (2, 0) := by
-      intro z
-      simpa using hp z.1 z.2
+      rintro ⟨x, y⟩
+      change T (e (x + 2, y + 0) - p) ↔ T (e (x, y) - p)
+      simpa only [add_zero] using hp x y
     have ht := (affine_period_iff T p e (2, 0)).mp hp0
     simpa [he, frame] using ht
   · right
     have hp0 : Period (fun z => T (e z - p)) (0, 3) := by
-      intro z
-      simpa using hp z.1 z.2
+      rintro ⟨x, y⟩
+      change T (e (x + 0, y + 3) - p) ↔ T (e (x, y) - p)
+      simpa only [add_zero] using hp x y
     have ht := (affine_period_iff T p e (0, 3)).mp hp0
     simpa [he, frame] using ht
 
