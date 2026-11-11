@@ -447,7 +447,7 @@ theorem one_direction_periodic
     intro hz
     have he := hcu
     have he' := congrArg Prod.snd he
-    simpa [hz] using he' 
+    simp [hz] at he'
   obtain ⟨ρ, hρ, α, β, hbezout⟩ := KhetanLaurentElimination.clear_laurent_bezout
     (K := K) (coordinates P) (coordinates B)
     (transverse_product_coprime P u hu hline transverse ht)
