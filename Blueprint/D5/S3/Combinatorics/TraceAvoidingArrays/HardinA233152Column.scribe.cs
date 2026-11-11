@@ -12,6 +12,7 @@ internal sealed class HardinA233152ColumnDocument : IScribeDocumentDefinition
         "The literal 5-column count obeys a recurrence determined by its finite row quotient.",
         H("OEIS A233152"), Blocks(
             Node("T5",All("n",NatF(),Eq(C("T5",V("n")),FilterCard(N(5),V("n")))),"Every labelled function satisfying the two bond conditions is counted.",true),
+            Node("classes",Cast(C("classes"),ClassTableType(5,3)),"The complete nested lookup table on the 5 row coordinates, including its zero entries."),
             Node("classify",All("r",RowF(N(5)),Eq(C("classify",V("r")),A(V("classes"),A(V("r"),N(0)), A(V("r"),N(1)), A(V("r"),N(2)), A(V("r"),N(3)), A(V("r"),N(4))))),"The finite decision tree assigns the successor class of a row."),
             Node("quotient",Eq(C("quotient"),Vec(Vec(N(5), N(8), N(3)), Vec(N(4), N(7), N(3)), Vec(N(2), N(5), N(3)))),"The quotient entry counts legal compatible successors in each class."),
             Node("weights",Eq(C("weights"),Vec(N(12), N(24), N(12))),"The weights count legal rows in each class."),
@@ -55,6 +56,7 @@ internal sealed class HardinA233152ColumnDocument : IScribeDocumentDefinition
     private static Formula Pow(Formula a, Formula b) => new Formula.Power(P(a), b);
     private static Formula N(int n) => n < 0 ? Seq(Minus, N(-n)) : D(n.ToString(System.Globalization.CultureInfo.InvariantCulture).Select(c => (byte)(c - '0')).ToArray());
     private static Formula FinF(Formula n) => C("Fin", n);
+    private static Formula ClassTableType(int width, int q) { Formula t = FinF(N(q)); for (int i = 0; i < width; ++i) t = Arr(FinF(N(3)), t); return t; }
     private static Formula NatF() => Op("Nat");
     private static Formula IntF() => Op("Int");
     private static Formula Cast(Formula x, Formula t) => P(Seq(x, Colon, Sp, t));
