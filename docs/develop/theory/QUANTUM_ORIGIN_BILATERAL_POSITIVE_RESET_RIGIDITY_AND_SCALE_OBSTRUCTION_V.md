@@ -518,3 +518,194 @@ $$
 完整原 $\Omega$ 的全部准备、事件、过程、参考、副本、实际相关联合、零与不等质量、时钟与单位、控制、ready 与 flags、完整记录、失败、停止、销毁、返回及未来，连同全部原全菜单、固定支撑和每个已量化中间切口义务，都在其原域保留。没有免费相干控制、复制、参考、重置或滤波。数学存在性候选没有取代原 analyzer/menu/source 与过程合同；原全目标仍未完成，也没有缩成矩阵校准目标。本节全部是条件范围内的纸面定义、定理和手工证明，不包含形式内核验证或物理实现。
 
 ## 追加锚（本行以下为增补区）
+
+## 74. 有限张成局部框架的两层零关系与完整原态候选
+
+本章的第 65—72 章引用仍指第四卷，74 编号属于本卷。本章在第 72 章完整 PRE 的同一实际数据上，以同一个有限局部框架族的两层二元零比较，精确替换全锥 $D_J,D_H$；其余前件及原混态 H13 全部保留。一般 EJA 的平方不等式、支撑归一化和谱分解是成熟中间工具，本章的综合是有限关系在原 PRE 中的同数据替换及其完整消费者，不另主张一般正交保持分类的新意。既有条件纸面接口按 [1]—[3] 的范围使用。
+
+### 74.1 完整保留的原系统与删除两条零关系后的基底
+
+**定义 74.1（$\mathrm{PRE}_0$）。** 对每个 $X=A,D,E$，保留非零有限维实空间、闭尖生成锥 $C_X$、在非零正元上严格正的线性泛函 $u_X$、紧全态基 $K_X=\{x\in C_X:u_X(x)=1\}$、全部效应 $[0,u_X]$ 及 $P_X=\operatorname{ext}K_X$。仅在纯第一端点定义比较，并要求完整有限混合律：
+$$
+T^X_\xi(x)=\inf\{f(x):0\le f\le u_X,\ f(\xi)=1\},\quad \xi\in P_X,\ x\in K_X,\qquad
+T^X_\xi\!\left(\sum_\ell v_\ell\eta_\ell\right)=\sum_\ell v_\ell T^X_{\eta_\ell}(\xi). \tag{74.1}
+$$
+最后一式量化每个有限纯态族、每组概率权重及每个纯 $\xi$，不是仅要求纯端点互反。完整复用 65.1、66.1、72.1 及 [2] 的 $S$ 到一般有限 EJA 条件纸面桥，包括正对偶生成、共同框架、面投影、项目性及滤波纯性推导；不另加 Jordan 公理，也不把仓内综合归给一个前件较强的外文定理。其忠实坐标满足 $\tau_X\Phi_X=u_X$、$\Phi_XU_X=1_X$、$B_X(x,y)=\tau_X(\Phi_Xx\circ\Phi_Xy)$ 及 $T^X_\xi(x)=B_X(\xi,x)$，双射整个原态基与整个原效应区间。此后就在该坐标中书写，原对象不变。
+规范迹 $\tau_X$ 令每个简单理想的每个本原幂等元迹一；写 $\langle x,y\rangle_X=\tau_X(x\circ y)$、$\ell_xy=x\circ y$、$P_x=2\ell_x^2-\ell_{x^2}$。对正元，$x\perp y$ 指零迹配对，等价于 $x\circ y=0$ 及支撑正交。$x>0$ 表示正可逆内点；一般 EJA 始终允许 Albert、直和与秩一因子。
+令 $n=\tau_A1_A$、$m=\tau_D1_D$。唯一供应的映射及原参考为
+$$
+L:D\times A\to E\ \text{实双线性},\quad p:E\to D\ \text{实线性},\quad
+L(D_+,A_+)\subseteq E_+,\quad p(E_+)\subseteq D_+,\quad \omega=1_D/m. \tag{74.2}
+$$
+内部对象全部由同一个原 $p$ 定义，两次调用不能独立供应：
+$$
+\begin{aligned}
+\mathcal B(d,c)&=pL(d,c),& K(a)&=pL(\omega,a),&M(a,b)&=pL(K(a),b),\\
+J(a)&=M(a,1_A),&H_{\mathrm s}(d)&=L(d,1_A),&B_1&=pH_{\mathrm s},\\
+Q(a,b,c)&=L(M(a,b),c),&U&=M(1_A,1_A),&G&=H_{\mathrm s}1_D.
+\end{aligned} \tag{74.3}
+$$
+要求两条实张成和全部实输入上的 $Z$：
+$$
+\operatorname{span}_{\mathbb R}M(A,A)=D,\qquad \operatorname{span}_{\mathbb R}L(D,A)=E,\qquad
+B_1M(a,b)=\tau_A(a)Jb\quad(a,b\in A). \tag{74.4}
+$$
+$\mathrm{PRE}_0$ 正是 72.1 的 PRE 只删除 $D_J,D_H$。被删的两条分别是 $a,b\in A_+,a\perp b\Rightarrow Ja\perp Jb$ 与 $d,d'\in D_+,d\perp d'\Rightarrow H_{\mathrm s}d\perp H_{\mathrm s}d'$。原 $L,p$ 的正性仍遍及整个锥，包括双份、三份全部纠缠方向；实张成不表示正乘积生成正锥。此时没有 C13、校准、原保单位或保迹、CP 或物理滤波输入。
+
+### 74.2 定理 74.7 的平方缺陷与支撑中间步骤
+
+以下两步只作为定理 74.7 的证明工具，复用一般 EJA 的成熟结构事实，不单列为新增定理。
+
+**证明中间步骤（一般 EJA 的平方缺陷）。** 若 $\Phi:X\to Y$ 全锥正且保单位，则 $\Delta(a)=\Phi(a^2)-(\Phi a)^2\ge0$。若 $\Delta(a)=0$，则 $\Phi(a\circ x)=\Phi a\circ\Phi x$ 对全部实 $x\in X$ 成立。
+**证明。** 在完整谱框架中写 $a=\sum_i\lambda_i e_i$，令 $z_i=\Phi e_i\ge0$、$b=\Phi a$。二次表示的定义直接给
+$$
+P_{\lambda1-b}=\lambda^2\mathrm{id}-2\lambda\ell_b+P_b,\qquad
+\Phi(a^2)-b^2=\sum_iP_{\lambda_i1-b}z_i\ge0. \tag{74.5}
+$$
+等式由 $\sum_i z_i=1$、$\sum_i\lambda_i z_i=b$、$P_b1=b^2$ 得到。每一项正，是因为一般 EJA 的 $P_v$ 对任意实 $v$ 都保锥；这里绝不要求 $\lambda_i1-b\ge0$。此成熟二次表示事实及下用的谱、Peirce 支撑事实沿 65.4 的一般 EJA 范围复用，不经矩阵表示或复 Schwarz 不等式。
+当 $\Delta(a)=0$ 时，对任意实 $t$，
+$$
+0\le\Delta(a+tx)=2t\,[\Phi(a\circ x)-\Phi a\circ\Phi x]+t^2\Delta(x). \tag{74.6}
+$$
+分别取两侧符号的 $t$，除以 $|t|$ 并趋于零；闭尖锥迫使一次系数为零。特别地，若 $e$ 与 $\Phi e$ 均幂等，则 $\Delta(e)=0$，得到该幂等元的乘法交织。∎
+
+**证明中间步骤（有限张成框架工具）。** 设非零有限 EJA 间的实线性 $T:X\to Y$ 全锥正，$h=T1_X>0$。固定完整本原框架族，其并实张成 $X$。则每个指定框架内不同成员的像正交，当且仅当 $T$ 保持全部正元对的正交；等价地，$\varphi=P_{h^{-1/2}}T$ 为保单位 Jordan 同态且 $[\ell_h,\ell_{\varphi x}]=0$ 对全部 $x\in X$ 成立。
+**证明。** 在任一指定框架 $(e_i)$ 内，$x_i=Te_i\ge0$ 的支撑 $q_i$ 两两正交；$\sum_i x_i=h>0$ 给 $\sum_iq_i=1_Y$。相对于每个 $q_i$，$h$ 无 Peirce 半空间分量，其 $Y_1(q_i)$ 分量恰为 $x_i$。角内谱演算遂给
+$$
+\varphi e_i=P_{h^{-1/2}}x_i=q_i,\qquad [\ell_h,\ell_{q_i}]=0. \tag{74.7}
+$$
+允许 $x_i=0,q_i=0$，逆仅施于全局 $h$；不对零像求逆。二次表示及此处的逆全锥正，所以 $\varphi$ 正且保单位。本节平方缺陷步骤 给 $\varphi(e_i\circ x)=\varphi e_i\circ\varphi x$；框架并集张成使之随第一变量线性延拓，故 $\varphi$ 保全部 Jordan 乘积。同一张成将 (74.7) 的交换子延拓到全部 $\varphi x$。
+反之，若有上述同态及交换性，$T=P_{\sqrt h}\varphi$。令 $z=\varphi y$，将 $[\ell_h,\ell_z]=0$ 作用于 $h$，得 $\ell_h^2z=\ell_{h^2}z$，所以 $P_hz=h^2\circ z$。利用二次表示自伴随、$P_{\sqrt h}^2=P_h$ 及迹的结合性，
+$$
+\langle Tx,Ty\rangle_Y=\langle\varphi x,P_h\varphi y\rangle_Y
+=\langle\varphi x\circ\varphi y,h^2\rangle_Y
+=\langle\varphi(x\circ y),h^2\rangle_Y. \tag{74.8}
+$$
+于是 $x,y\ge0,x\perp y$ 给像配对为零；全域正交保持当然包含指定框架情形。权重交换在此不可省，任意正可逆滤波本身不保持零配对。∎
+不从 $h>0$ 推断单射：例如 $T:\mathbb R^2\to\mathbb R,(a,b)\mapsto a$ 消去一个本原元。若一般工具中 $h\ge0$ 奇异，由 $-c1\le x\le c1$ 得 $-ch\le Tx\le ch$，全像在 $Y_1(\operatorname{supp}h)$ 内；在该角用相对单位作同一证明即可。$h=0$ 时 $T=0$。本章实际应用的 $U,G$ 则如下独立证明为内点。
+
+### 74.3 非循环归一化与有限框架见证
+
+**命题 74.4（先有内点）。** 在 $\mathrm{PRE}_0$ 中，不使用 $D_J,D_H$ 即有 $U>0,G>0$，故可预先定义 $C_D=P_{\sqrt U}$、$F=C_D^{-1}M=P_{U^{-1/2}}M$。
+**证明。** (74.2) 使实际 $M$ 在正乘积上正。若 $0\le a\le r1_A,0\le b\le t1_A$，双线性正性给 $0\le M(a,b)\le rtU$，所以全部正乘积像在 $U$ 的支撑面中。锥生成、双线性及第一条实张成迫使该面的实张成为整个 $D$，即 $\operatorname{supp}U=1_D$。同理 $0\le L(d,c)\le rtG$ 与第二条实张成给 $\operatorname{supp}G=1_E$。此步连 $Z$ 都未使用。∎
+
+**定义与存在命题 74.5。** 取同一个有限完整本原框架族 $\mathfrak B=(\mathsf B_1,\ldots,\mathsf B_s)$，要求 $\operatorname{span}_{\mathbb R}\bigcup_r\mathsf B_r=A$。框架符号 $\mathsf B_r$ 不同于映射 $B_1=pH_{\mathrm s}$。令 $d=\dim_{\mathbb R}A$、$n=\operatorname{rank}A=\tau_A1_A$，这样的族总存在且可取
+$$
+1\le s\le d-n+1. \tag{74.9}
+$$
+**证明。** 先取一套完整本原框架，其 $n$ 个成员线性无关，已张成 $n$ 维。若累计张成仍为真子空间，谱分解所给的本原元张成性保证存在其外的本原元；将它补成完整框架，至少增加一维。至多再补 $d-n$ 套便结束。直和中按全部简单理想补框架；$d=n$ 的经典情形一套即足。此为存在上界，不主张最少、自然选法、物理可制备性或跨无界维数的统一有限表。∎
+
+### 74.4 两层有限关系逐原数据恢复全部零关系
+
+**定义 74.6（$\mathrm{FJ},\mathrm{FH}$）。** 对上述实际 $J,H_{\mathrm s},F$ 和同一个族要求
+$$
+\mathrm{FJ}:\quad\langle Je,Jf\rangle_D=0\quad(e\ne f\in\mathsf B_r;\ 1\le r\le s), \tag{74.10}
+$$
+$$
+\mathrm{FH}:\quad\langle H_{\mathrm s}F(e,f),H_{\mathrm s}F(e',f')\rangle_E=0
+\quad\substack{e,e'\in\mathsf B_r,\ f,f'\in\mathsf B_t,\ (e,f)\ne(e',f');\\1\le r,t\le s}. \tag{74.11}
+$$
+只比较每个框架内部，不要求不同框架之间交叉正交，也不预设 $F(e,f)$ 本原。$F$ 已由命题 74.4 定义，未借用 $D_H$ 或 C13。
+
+**定理 74.7（精确替换）。** 对每个 $\mathrm{PRE}_0$ 实际元组及每个预先固定的完整张成族，
+$$
+D_J\land D_H\quad\Longleftrightarrow\quad\mathrm{FJ}\land\mathrm{FH}. \tag{74.12}
+$$
+**证明。** $J$ 全锥正且 $J1_A=U>0$；对 $J$ 应用74.2 节的有限框架步骤，第一层先恢复整个 $A_+$ 上的 $D_J$。此时才调用定理 65.3：其第一接口明确不使用 $D_H$ 或 C13，给满规范迹等距同构 $\widetilde F:A\otimes_{\mathbb R}A\to D$、$m=n^2$、$F(1,1)=1_D$、正乘积的正性及本原对的本原性。
+对每个 $r,t$ 令 $\mathsf C_{rt}=F(\mathsf B_r\times\mathsf B_t)$。由第一接口，
+$$
+\langle F(e,f),F(e',f')\rangle_D=\langle e,e'\rangle_A\langle f,f'\rangle_A. \tag{74.13}
+$$
+所以不同输入对的像正交、各像本原、和为 $1_D$；$\mathsf C_{rt}$ 确为含 $n^2$ 个成员的完整本原框架。又因 $\bigcup_r\mathsf B_r$ 实张成 $A$，全部 $e\otimes f$ 实张成 $A\otimes_{\mathbb R}A$；$\widetilde F$ 满射使全部 $\mathsf C_{rt}$ 的并实张成整个 $D$。
+现在 $H_{\mathrm s}:D\to E$ 在整个 $D_+$ 上正且 $H_{\mathrm s}1_D=G>0$；再用74.2 节的有限框架步骤，第二层恢复整个 $D_+$ 上的 $D_H$，包括所有纠缠正元及本原元。此时未预设 $E$ 为复矩阵，故没有用 CP、复 Schwarz 或复型分类循环证明 $D_H$。
+反向，$D_J$ 给第一层；65.3 和 (74.13) 给上述完整框架，$D_H$ 即给第二层。每一步均作用于原映射和原参考。∎
+故“存在一个完整张成族通过”与“每个完整张成族通过”均等价于原 PRE；忘掉框架见证后是相同实际 $(A,D,E,L,p)$ 模型类。两层至多分别列出
+$$
+s\binom n2,\qquad s^2\binom{n^2}2,\qquad s\le\dim_{\mathbb R}A-\operatorname{rank}A+1 \tag{74.14}
+$$
+个无序零等式，重复可保留。这只有限化两条零关系；完整 $S$、全锥正性、两条实张成与全实 $Z$ 没有因此有限化，也不是实验次数或误差稳定性界。
+
+### 74.5 完整候选仍测试同一个原混态
+
+**定义 74.8（$\mathrm{PRE}_{\rm fin}+\mathrm H13$）。** $\mathrm{PRE}_{\rm fin}$ 是全部 $\mathrm{PRE}_0$ 加一个定义 74.5 的族及两层关系。恢复 PRE 后，沿 66.2—66.3 取 $A_i$ 的中心单位 $c_i$、秩 $n_i$，原块 $D_{ik}=\operatorname{span}_{\mathbb R}F(A_i,A_k)$ 及中心投影 $\pi_{ik}$。原规范迹伴随给
+$$
+\alpha_{ik}(a)=F(a,c_k),\quad\beta_{ik}(b)=F(c_i,b),\quad\mathcal Q=\{(i,k):n_i,n_k\ge2\},\quad
+R_i(x)=\alpha_{ik}\alpha_{ik}^*x-x,\quad R_k(x)=\beta_{ik}\beta_{ik}^*x-x.
+$$
+完整保留 72.3 的关系与 72.17 的原态条件：
+$$
+\mathcal H(F)=\{\rho\in K_D:\ \forall(i,k)\in\mathcal Q,\ R_i(\pi_{ik}\rho)\not\succeq0\ \text{或}\ R_k(\pi_{ik}\rho)\not\succeq0\}, \tag{74.15}
+$$
+$$
+T_{\rm raw}(a,c)=L(Ja,c),\quad I^{\rm raw}=\widetilde T_{\rm raw}\widetilde M^{-1},\qquad
+\mathrm H13:\ \exists\rho\in\mathcal H(F),\ I^{\rm raw}\rho\in E_+. \tag{74.16}
+$$
+$\widetilde M$ 的逆只在第一接口建立后使用。资格只读第一接口、中心限制、原序与原伴随，不读插入或输出；$\not\succeq0$ 指不在正锥中。$R_i,R_k$ 分别标记左右槽，即使 $i=k$ 仍是两种边缘扩张。非活跃块任意正且可为零，无活跃块时为整个 $K_D$；不加活跃块纯性、固定谱、质量下界或先按块条件化，块非零及正质量由严格违例推出。边缘铺回使用单位，不能改成单位除以维数。测试始终是同一原 $\rho$ 的完整输出，不能换成 $C_D^{-1}\rho$ 或仅看选定输出面。
+
+**定理 74.9（完整同数据等价）。** 忘掉框架见证后，
+$$
+\mathrm{PRE}_{\rm fin}+\mathrm H13\ \equiv\ \mathrm{PRE}+\mathrm H13\ \equiv\ \mathrm{PRE}+\mathrm{C13},\qquad
+\mathrm{C13}:I^{\rm raw}(D_+)\subseteq E_+. \tag{74.17}
+$$
+H13 改成每个合格原态都通过仍给同一类；全部原 $\omega,p,\rho$ 和权重数据不换。
+**证明。** 第一个等价由定理 74.7，且没有改变 $F,\mathcal H(F),I^{\rm raw}$。命题 72.7 给非空性，定理 72.8 给每个原成员的通过与 C13 等价，故得到第二个及全称版本。其依赖的关键几何仍是：任一活跃原块的边缘非支配蕴含 NPT；证明用 $\mathrm{Red}_d=\Psi_d\circ T$，其中 $\Psi_d(Y)=\sum_{a<b}(E_{ab}-E_{ba})Y(E_{ab}-E_{ba})^\dagger$。所以 PPT 会使两种边缘差都正，逆否即得 NPT。
+在 72.2 的真实恢复接口中，证明内的 $C_D^{-1}$ 只对原块施加可逆局部合同，保持 NPT，未必保持 reduction 资格；坏相对方向的单腿转置因而仍有负值，插入未经归一化的中间单位（包括标量中间扇区）保留负值，$C_E$ 的序同构不能消除它。不同中心块不能抵消，所以每个合格原态都拒绝坏插入。这里直接复用实际 65.6、66.2、72.2 的 $C_E$ 与精确恢复式，不以另一不完整滤波公式替代。∎
+
+### 74.6 原量子几何与全部未校准权重
+
+**推论 74.10（原静态消费者及逆向）。** 恢复 PRE 后，66.3、66.8 在 C13 之前已给保原迹 Jordan 坐标中的
+$$
+A=\bigoplus_iH_{n_i}(\mathbb C),\quad D=\bigoplus_{i,j}H_{n_in_j}(\mathbb C),\quad E=\bigoplus_{i,j,k}H_{n_in_jn_k}(\mathbb C),\quad n=\sum_i n_i,
+$$
+$$
+\Pr(f\mid\rho)=\sum_\lambda\operatorname{Tr}(f_\lambda\rho_\lambda),\qquad
+\rho_\lambda\ge0,\quad\sum_\lambda\operatorname{Tr}\rho_\lambda=1,\quad0\le f_\lambda\le I_\lambda. \tag{74.18}
+$$
+扇区集有限非空，$n_i\ge1$；全部有序块、重复标签、经典标量及混合扇区都保留。纯态是单扇区射影纯态，同区比较为平方重叠、异区为零；全部纠缠态仍在原态基。H13 只补组合的相对方向相容性。
+**证明与参数。** C13 前必须保留 66.4—66.7 的有序转置位及全锥正读回的完整方向限制；不能提前取共同普通方向。由定理 74.9 恢复 C13 后，才按 66.10、65.9—65.11 同时取辅助 $F(a,b)_{ij}=a_i\otimes b_j$、$N(d,c)_{ijk}=d_{ij}\otimes c_k$。全部原始模型恰是
+$$
+M(a,b)_{ij}=a_i\otimes\sqrt{u_{ij}}b_j\sqrt{u_{ij}},\qquad
+L(d,c)_{ijk}=d_{ij}\otimes\sqrt{g_{ijk}}c_k\sqrt{g_{ijk}},\qquad
+u_{ij},g_{ijk}>0,\quad\sum_{i,j}n_i\operatorname{Tr}(u_{ij}^{-1})=n^2. \tag{74.19}
+$$
+置 $A_{jk}=I_j\otimes\sqrt{u_{jk}}$、$W_{ijk}=I_i\otimes u_{ij}^{-1/2}\otimes g_{ijk}^{-1/2}$，同一个原读回在整个 $E$ 上唯一为
+$$
+(pz)_{jk}=A_{jk}\left[\sum_i\operatorname{Tr}_1(W_{ijk}z_{ijk}W_{ijk})\right]A_{jk},\qquad \omega_{ij}=I_{n_in_j}/n^2. \tag{74.20}
+$$
+65.11 的逆向从这些 $L,p$、原 $\omega$ 重算同一个 $p$ 两次，给实际 $M$ 及所有原前件；定理 74.7 与 72.8 再给有限关系和 H13，故双向闭合。唯一权重约束是所列逆迹平衡，不另要求跨块对称、共同对角化或同腿的 $u,g$ 交换。辅助归一化一般不保原迹一截面，不能删去权重或转送为原 $M,H_{\mathrm s}$ 保单位、原 $p$ 保迹；其精确边界仍按 65.12、66.8—66.9，原插入伴随也一般不保迹。∎
+
+### 74.7 操作消费者与可选的同读回校准
+
+有限候选本身不供应标准仪器。若另按 69.1—69.4 固定同一旁观者族 $\Psi_\Phi=C_DT_\Phi C_D^{-1}$、$(T_\Phi X)_{jk}=\sum_i(\Phi_{ji}\otimes\mathrm{id}_k)X_{ik}$，分支限定为块 CP，则有限分支的 Kraus 效应 $F^a_{ji}=\sum_\ell K_{a,ji,\ell}^\dagger K_{a,ji,\ell}$ 必须满足双预算
+$$
+\sum_{a,j}F^a_{ji}\le I_i,\qquad
+\sum_{a,j}F^a_{ji}\otimes u_{jk}\le I_i\otimes u_{ik}\quad(\forall i,k). \tag{74.21}
+$$
+部分仪器用聚合预算，完整仪器要求两式均等号，即局部及原始联合总映射都 TP；单分支可容许不等于可共同补全。原始 Choi/Kraus、顺序复合、粗粒化及条件更新仅在此固定族内沿 69.3—69.11 复用。
+具体地，固定输出扇区 $j_0$、其中任意密度 $\sigma$、同一个 $0<c\le1$，令 $R(a)_j=\delta_{j,j_0}(\sum_i\operatorname{Tr}a_i)\sigma$。69.8 的精确附加条件是正权弱共同重置 $cR$ 可按同族补成两边均 TP 的有限 CP 仪器；它等价于 $u_{ik}=v_k$ 与输入行 $i$ 无关。此时 $\Psi_\Phi=T_\Phi$，双预算合为普通 Kraus 预算，才取得整个标准有限局部 CP 仪器菜单。充分小的 $c>0$ 仅保证分支双预算，不能代替共同补全。概率用原分支输出迹，正概率时除以该迹给条件态；行一致不迫使 $v_k=I_k$，也不校准 $g$ 或保证每对原制备迹一。
+另一项可选附加校准是 [3] 定理 1.3，绝非有限判据前提：预先固定任意上述局部全重置 $R$，由 $R_2M(a,b)=M(Ra,Rb)$、$R_3Q(a,b,c)=Q(Ra,Rb,Rc)$ 唯一线性延拓到整个 $D,E$，则在恢复的完整 PRE 上
+$$
+(p\text{ 全域 TP 且 }R_2\text{ 全域 TP})\ \Longleftrightarrow\
+(p\text{ 全域 TP 且 }R_3\text{ 全域 TP})\ \Longleftrightarrow\ u_{ij}=I_j,\ g_{ijk}=I_k\ \text{对全部块}. \tag{74.22}
+$$
+这是同一原 $p$ 与实际并行全重置的联合条件，允许任意秩的 $\sigma$；另一重置也随之 TP。该定理使用原 $pQ(a,b,c)=\tau_A(a)M(b,c)$、实张成与逆迹平衡，不用 C13，也不自动推出 C13，不能与弱重置补全混同。
+数学框架、正滤波和 CP 映射的存在均不供应装置可用性、制备成本或鲁棒性。效应本身不唯一决定更新，唯一 Lüders 压缩还需“确定接受的态逐点不变”等锐中性前件。一般操作重建、动力学、Hamiltonian、物理钟、$\hbar$、独立右载体、四份或更高份兼容组合及无限维一致性仍不由此得到；比较互反不等于实际测量次序交换。
+
+### 74.8 删除边界与自然选择障碍
+
+**命题 74.11（两个 $H_2$ 纸面控制）。** 张成与全锥正性都不能从74.2 节的有限框架步骤 的前件中删去。
+**证明。** 取 $H_2(\mathbb C)$ 的 Pauli 矩阵 $X,Y,Z$ 及本原框架 $\{(I\pm V)/2\}$。删张成时，$\Phi(x)=(x+x^T)/2$ 正且保单位，固定 $X,Z$ 两套完整框架；它们的并只张成 $I,X,Z$。$Y$ 框架的两个正交本原元却都映成 $I/2$，像配对为 $\operatorname{Tr}(I/4)=1/2$，所以有限通过不推出全域零关系。
+删全锥正性时，实线性规定 $T(I)=I,T(X)=T(Y)=T(Z)=Z$。三套 Pauli 框架的并张成 $H_2$，每套均映成完整正交 $Z$ 框架；但正交纯投影 $p_\pm=(I\pm(X+Y+Z)/\sqrt3)/2$ 的像为 $(I\pm\sqrt3Z)/2$，有特征值 $(1-\sqrt3)/2<0$，且像配对为 $-1$。这些是中间工具的删项反例，不冒充满足其余 PRE 的完整反模型。∎
+这也说明有限框架上看见正输出不能替代 (74.2) 的全锥量词。全部产品框架实张成 $D$，其正包一般仍小于 $D_+$；纠缠方向的控制依靠 $H_{\mathrm s}$ 已有的全锥正性及上述步骤的代数刚性。作为权重边界，$h=\left(\begin{smallmatrix}2&1\\1&2\end{smallmatrix}\right)$、$T=P_{\sqrt h}$ 的归一化虽是恒等同态，却有 $\langle TE_{11},TE_{22}\rangle=|h_{12}|^2=1$，再次说明交换性不可漏。
+定理 72.16 仍有效：第一接口自然、集合等变的非空有限原态选集，不能靠逐成员完整插入输出正性在全 PRE 中完备检测 C13。本章另付一个完整张成框架族见证，测试的是 $J,H_{\mathrm s}$ 的二元零关系，且仍保留完整 H13，没有构造该定理禁止的选集。即使在 $H_2$，有限本原元集若在连通酉共轭群下集合不变，每个轨道也只能是单点；全酉固定矩阵仅为标量，故不存在这样的本原框架自然选择。任一固定有效族都可用，不表示可以自然选出一个族。关系成员的平均还可能丢失 72.14 的负方向；本章没有将 H13 换成平均点。
+
+### 74.9 完整中文候选与几何图像
+
+在三个非零有限实际系统中，保留全部状态、全部效应与完整随机纯制备比较律，只沿既有条件桥取得规范迹 Jordan 几何。供应整个双份正锥上的原正接合和整个三份正锥上的同一个正读回，以原参考连续调用它两次；保留两条实张成及所有实方向的 $Z$。选择有限多套完整局部本原框架，使它们共同覆盖全部实方向：第一层要求每套框架经原第一切片后仍互不混淆；恢复第一接口后，用同一族的全部两两产品形成双份框架，第二层要求它们经原第二切片后仍互不混淆。这精确恢复原来的两条全锥零关系。随后在每个两端非标量有序块，要求原联合态的至少一种边缘铺回盖不住原块；保留混态、任意谱和全部原归一化，要求一个这样的原态经实际逆准备所定义的原插入后完整为正。所得恰是原 PRE+C13 的实际模型类，原 $\omega,p$ 与所有正权重都在。
+几何上，每套框架像一组把空间分开的面单位。正交正像先占据互不重叠的支撑面；单位输出是内点，保证这些面合起来铺满目标单位。除去面内厚度后，它们成为幂等元；平方缺陷沿正负两向的扰动不能留下线性偏差，因而锁定与这些方向的全部 Jordan 交叉乘积。框架共同张成后，剩余方向也随之锁定。两层框架并未把纠缠浮雕变成产品平板的概率混合，而是利用全锥正性排除映射扭坏剩余零关系的自由。最后 H13 仍在每个活跃端点寻找边缘铺不开的纹理，用同一个原态抓住坏相对翻转。真正缩短的是 DJ、DH 的零比较列表；全态效应、正性、实张成、$Z$、见证成本和完整原态输出判据仍在，不主张公理最少、全球新颖或完整物理量子起源。
+
+**数学引文及复用范围。** [1] [固定 dev db6fde5df77，Atlas IV §§65—72](https://github.com/the-omega-institute/trureturing/blob/db6fde5df77b82e4c869ee075d04f786708f5e18/docs/develop/theory/QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES_IV.md)：65.1、66.1、72.1 的完整忠实入口；65.3 不含 DH/C13 的第一接口；65.4 的一般 EJA 谱、Peirce 与二次表示工具；65.6、66.2、72.2 的真实恢复接口；66.3—66.10 的复载体、有序方向及 C13 后同时定向；65.9—65.12 的完整原权重及逆向；69 的固定 CP 族、双预算与弱共同重置补全；72.3、72.7—72.8、72.14、72.16—72.18 的原混态资格、非空性、逐成员等价及边界。
+[2] [同版本 Library，Complete conditional candidate and its scope](https://github.com/the-omega-institute/trureturing/blob/db6fde5df77b82e4c869ee075d04f786708f5e18/Library/QuantumStates/mullerududec2012selfduality.md#complete-conditional-candidate-and-its-scope)：完整 $S$ 的仓内条件纸面桥及逆向；其 Barnum–Müller–Ududec Theorem 16 的前件按该桥供应，单独的纯端点互反或正对偶结论不代替它。
+[3] [dev 77c459c3513，同读回与并行重置校准 §1.3](https://github.com/the-omega-institute/trureturing/blob/77c459c351371a4d05cc4f2f148d1b8b883b5967/docs/develop/theory/QUANTUM_ORIGIN_SAME_READBACK_AND_PARALLEL_RESET_CALIBRATION.md)：仅作 (74.22) 的可选同数据联合校准，沿其完整 PRE、预固定重置、全空间 TP 及实际同读回范围使用，不添加为有限零关系判据前提。
+
+## 追加锚（本行以下为增补区）
