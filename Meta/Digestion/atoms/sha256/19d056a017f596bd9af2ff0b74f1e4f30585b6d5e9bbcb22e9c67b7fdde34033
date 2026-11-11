@@ -1,0 +1,67 @@
+**命题 24.4（正坐标与非结合树的严格范围见证）。**令 $S_0=\mathbb N^3$，取
+
+$$
+\rho(n_0,n_1,n_2)=(n_2,n_0,n_1),\qquad
+\phi(n)=n_0+\omega n_1+\omega^2n_2,\qquad e_0=(1,0,0).
+$$
+
+令 $\mathcal T$ 为三种叶标签 $x_0,x_1,x_2$ 的自由含幺有序二元 magma：添加单位 $e_{\mathcal T}$，乘法 $*$ 遇到单位时约简，否则是新的有序树节点。不同括号、次序和叶标签仍不同。定义
+
+$$
+\begin{gathered}
+f(e_{\mathcal T})=0,\qquad f(x_r)=\omega^r,\qquad
+f(s*t)=f(s)+f(t),\\
+\sigma(e_{\mathcal T})=e_{\mathcal T},\qquad
+\sigma x_r=x_{r+1\ ({\rm mod}\ 3)},\qquad
+\sigma(s*t)=(\sigma s)* (\sigma t).
+\end{gathered}
+$$
+
+在全部原标签上置
+
+$$
+\begin{aligned}
+M&=S_0\times\mathcal T,\qquad e=(0,e_{\mathcal T}),\\
+(n,s)\cdot(m,r)&=(n+m,s*r),\\
+U(n,s)&=(\rho n+e_0,\sigma s),\\
+d((n,s),(m,r))&=|\phi(n)-\phi(m)|^2+|f(s)-f(r)|^2,\\
+S&=S_0\times\{e_{\mathcal T}\}.
+\end{aligned}
+\tag{24.23}
+$$
+
+则定义 24.1 的全部前件成立，最小总空间为 $\mathbb C^2$，漂移非零；$M$ 非结合且非交换，只有 $e$ 可逆，没有任何包含 $e$ 的 $U$-稳定实际子群。因此本模型满足定理 24.2 的结构而不满足 §23 的结构。
+
+**证明。**$S$ 的继承乘法是 $\mathbb N^3$ 加法，且 $U(S)\subseteq S$。右乘 $S$ 中标签只平移正坐标、不改变树，故 (24.2) 对全部原 $a\in M$ 成立。结构递归给 $\phi(\rho n)=\omega\phi(n)$、$f(\sigma s)=\omega f(s)$、$\sigma^3s=s$。置
+
+$$
+F(n,s)=(\phi(n),f(s)),\qquad t=(1,0).
+$$
+
+于是 $Fe=0$、$F(ab)=Fa+Fb$、$F(Ua)=\omega Fa+t$、$d(a,b)=\|Fa-Fb\|^2$。对任意原有序四元组，令 $A=Fa-Fb$、$B'=Fu-Fv$；同相漂移在差中相消，直接平方展开给
+
+$$
+\sum_{j=0}^2d(a\cdot U^ju,b\cdot U^jv)
+=\sum_{j=0}^2\|A+\omega^jB'\|^2
+=3\|A\|^2+3\|B'\|^2.
+\tag{24.24}
+$$
+
+所以完整原始关系成立，核有限、非负、零对角。像中包含 $(1,0)$ 和 $(0,1)$，最小复空间确为 $\mathbb C^2$。对外部树标签 $\alpha_r=(0,x_r)$，有 $d(\alpha_0,e)=1$、$d(\alpha_0,\alpha_1)=3$，非尾巴部分没有被全部压成零读数。
+
+树的两个括号 $(x_0*x_1)*x_2$、$x_0*(x_1*x_2)$ 不同，交换叶次序也不同，故原全局结合与交换律失败。若 $(n,s)$ 有任一侧的逆，非负坐标和必须为零，迫 $n=0$；树叶数在乘法下相加，且非单位树叶数正，又迫 $s=e_{\mathcal T}$。所以实际可逆元只有 $e$。任何以原 $e$ 为单位的实际子群只能是 $\{e\}$，但 $Ue=(e_0,e_{\mathcal T})\ne e$，它不稳定。
+
+此外，
+
+$$
+\begin{gathered}
+p_1=(e_0,e_{\mathcal T}),\quad
+p_2=((1,1,0),e_{\mathcal T}),\quad
+p_3=((1,1,1),e_{\mathcal T})\ne e,\\
+U^3(n,s)=(n+(1,1,1),s).
+\end{gathered}
+\tag{24.25}
+$$
+
+$U$ 每次使正坐标总数增加一，故没有实际周期点；特别 $U^3$ 没有实际固定点。$F(p_3)=0$ 而 $d(p_1,e)=1$，两端核返回与非零漂移同时保留。所有正坐标和树仍是原标签，不因这个核看不见其某些区别就删除。证毕。
+

@@ -1,0 +1,26 @@
+**Theorem 5.3 (regular-table risk/readout compatibility).** Let a regular table on one acquired circulation have both endpoint configuration risks at most $\rho_p+e$ and $\rho_\beta+e$, respectively. Then
+
+$$
+e+20t_p+52t_\beta>\frac1{25000}.
+\tag{5.8}
+$$
+
+**Proof.** Compare the table with the constant assignment of Lemma 5.1 on its same $B,A,\pi,\tau$. Theorem 4.1 yields
+
+$$
+\pi\operatorname{TV}(Q,G_*)\le20t_p+52t_\beta.
+$$
+
+For either endpoint, triangle inequality configuration by configuration gives
+
+$$
+\operatorname{TV}(G_*,P_{p,r})
+\le\pi\operatorname{TV}(Q,P_{p,r})+
+     \pi\operatorname{TV}(Q,G_*)
+\le\rho_p+e+20t_p+52t_\beta.
+$$
+
+Combine with (5.5). This uses one entire generated law pair and the actual common acquired circulation. $\square$
+
+The endpoint assumptions alone suffice here. Every additionally supported interior target and every supplied motion, directional, interiority, residual and return constraint must still be met by a proposed common attainer. Nothing in the proof removes those targets or restricts the remaining kernels to a previously excluded class.
+

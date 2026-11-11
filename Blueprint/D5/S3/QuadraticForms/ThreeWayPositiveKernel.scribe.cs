@@ -27,8 +27,42 @@ internal sealed class ThreeWayPositiveKernelDocument : IScribeDocumentDefinition
                 Paragraph(Text("The complex Gram K uses the convention conjugate-linear in its first label. For complex coefficients z, its quadratic sum is the real Gram quadratic sum on the same labels x and Ux with coefficients Re(z)+Im(z)/sqrt(3) and 2Im(z)/sqrt(3). This proves positivity for every finite support, including the zero kernel. The covariance is K(Ux,y)=conj(omega)K(x,y).")),
                 Paragraph(Text("The scalar kernel is lifted to K(x,y) times the identity continuous linear map on the complex numbers. RKHS.posSemidef_iff_re_sum_kernel' supplies the exact interface, RKHS.OfKernel supplies the completed carrier, and RKHS.OfKernel.kernel_ofKernel recovers the original entries. Kernel vectors at value 1 define the additive labels. Their diagonal inner product gives q, covariance gives omega, and RKHS.kerFun_dense gives the closed complex span. No independent completion framework is constructed.")),
                 Paragraph(Text("For any two complete minimal representations, real polarization and the specified phase force their full complex Gram to equal K. Each embeds into functions on the original labels by v mapped to the inner products of each label with v; density makes this map injective. The resulting reproducing kernel spaces have identical kernels, so RKHS.equiv and RKHS.equiv_kerFun give a label-preserving complex-linear isometry equivalence. Density of the original label span proves that any other such equivalence agrees everywhere. No nontriviality assumption excludes the zero representation.")),
-                Paragraph(Text("Conversely, the norm-square identity in any representation gives the balance law: omega has modulus one and 1+omega+omega squared is zero, so all mixed inner-product terms cancel. This establishes both directions under the original additive-group hypotheses. The construction is mathematical completion and scalar extension; it asserts no native physical real-scalar operation or process implementation."))),
+                Paragraph(Text("Conversely, the norm-square identity in any representation gives the balance law: omega has modulus one and 1+omega+omega squared is zero, so all mixed inner-product terms cancel. This establishes both directions under the original additive-group hypotheses. The construction is mathematical completion and scalar extension; it asserts no native physical real-scalar operation or process implementation.")),
+                PhaseDistanceApplication()),
             DescribeRole.Theorem))));
+
+    private static DocumentBlock PhaseDistanceApplication() =>
+        new DocumentBlock.Section(H("Application: recovering an overlap from three distances"), Blocks(
+            Paragraph(Text("Let H already be a complex inner-product space, with conjugate-linear first slot, and let x,y be arbitrary vectors. Set omega=-1/2+i sqrt(3)/2 and d_k(x,y)=norm(x-omega^k y)^2 for k=0,1,2. The complex scalars and phase operations are premises of this application. Unit norms and completeness are unnecessary for the following reconstruction.")),
+            new DocumentBlock.DisplayFormula(PhaseDistanceFormula()),
+            Paragraph(Text("Mathlib norm_sub_sq and inner_smul_right give d_k=norm(x)^2+norm(y)^2-2 Re(omega^k inner(x,y)), since each phase has modulus one. Multiplying these three equalities by conjugate(omega^k) and adding cancels the common norm terms, because 1+omega+omega^2=0. Expanding the real parts leaves -3 inner(x,y). Thus this is an application of the existing norm expansion and finite phase algebra, rather than an additional representation theorem.")),
+            Paragraph(Text("For original labels a,b, use one HilbertRepresentation U q from the displayed characterization. Its additive label map iota, norm-square identity q(a)=norm(iota(a))^2, and phase identity iota(Ua)=omega iota(a) give the parameter correspondence below. Existence of such a representation follows under AddCommGroup A, additive U, q nonnegative on every label, and the universal three-way balance law above; the comparison readings alone do not supply those premises.")),
+            new DocumentBlock.DisplayFormula(LabelDistanceFormula()),
+            Paragraph(Text("If additionally norm(x)=norm(y)=1, Cauchy--Schwarz gives normSq(inner(x,y)) <= 1. This is a squared-overlap bound. A Born probability interpretation requires a separate operational rule.")),
+            Paragraph(Text("Endpoint reversal conjugates the inner product: inner(y,x)=conjugate(inner(x,y)). For distances the corresponding identity is d_k(x,y)=d_{-k mod 3}(y,x), so swapping endpoints also conjugates the phase. A fixed non-real phase need not give a symmetric reading: with x=1,y=i and phase i, the two squared distances are 4 and 0. These endpoint identities say nothing about reversing the order of successive physical measurements.")),
+            Paragraph(Text("Completing the label image to a complex Hilbert space introduces mathematical linear combinations. It does not establish that the original labels are closed under physically available superposition preparations. This application derives no preparation or effect system, Born interpretation, probability additivity, state update, tensor composition, or dynamics.")),
+            Paragraph(Text("白话：已经有复内积结构时，给同一对对象加上三个指定相位，测三个平方距离，就能还原它们的复重叠；对象不必先归一化。若两者均为单位范数，平方重叠就不超过 1。交换两端还必须反转相位，这不是证明先测谁后测谁都一样，也没有从比较本身推出量子物理。"))));
+
+    private static Formula PhaseDistanceFormula()
+    {
+        var k = V("k");
+        var phase = Seq(V("omega"), Caret, Grp(k));
+        var sum = Seq(new Formula.Subscript(Sum, Seq(k, Sp, InMacro, Sp,
+            Call("Fin", D(3)))), Sp, Call("conj", phase), Sp, Cdot, Sp,
+            Call("d", k, V("x"), V("y")));
+        return All("x", V("H"), All("y", V("H"), Equal(
+            Call("inner", V("x"), V("y")),
+            Seq(Minus, Frac, Grp(D(1)), Grp(D(3)), Sp, Cdot, Sp, Paren(sum)))));
+    }
+
+    private static Formula LabelDistanceFormula()
+    {
+        var a = V("a"); var b = V("b"); var k = V("k");
+        var ukb = Call("apply", Seq(V("U"), Caret, Grp(k)), b);
+        return All("a", V("A"), All("b", V("A"), All("k", Call("Fin", D(3)),
+            Equal(Call("d", k, Call("iota", a), Call("iota", b)),
+                Call("q", Seq(a, Sp, Minus, Sp, ukb))))));
+    }
 
     private static Formula Statement()
     {

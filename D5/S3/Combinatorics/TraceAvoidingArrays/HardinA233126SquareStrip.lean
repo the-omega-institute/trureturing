@@ -129,7 +129,7 @@ open HardinA233251TriangleStrip
   (widthLegal widthV widthStep widthTotal width_counting_bridge colour_bond_iff)
 open HardinA233253TriangleStrip (Row rowLegal)
 open HardinA233254TriangleStrip (Boundary Valid)
-open private instDecidableRowLegal sum_rows from
+open private sum_rows from
   D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233253TriangleStrip
 open HardinA233255LiteralBridge (rowFinish rowWeight scanner_fibres)
 open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
@@ -211,7 +211,7 @@ private theorem class_fibres (s : Seen) (p : Boundary) (k : Fin 7) :
       boundaryClass (finish s c) (labels c) = k then 1 else 0) else 0
   by_cases hg : good s c <;> simp [hg]
 
-private theorem label_sum (g : Boundary → ℤ) :
+theorem label_sum (g : Boundary → ℤ) :
     (∑ q, g q) = ∑ a : Fin 3, ∑ b : Fin 3, ∑ c : Fin 3, ∑ d : Fin 3, ∑ e : Fin 3,
       g ![a, b, c, d, e] := by
   let e : Boundary ≃ Fin 3 × Fin 3 × Fin 3 × Fin 3 × Fin 3 :=
@@ -228,7 +228,7 @@ private theorem row_counts : ∀ s p, Valid s p → ∀ k,
   simp only [class_fibres, label_sum]
   decide +kernel
 
-private theorem initial_valid : ∀ c : Row,
+theorem initial_valid : ∀ c : Row,
     c 0 = 0 ∧ rowLegal c ∧ good (false, false) c →
       Valid (finish (false, false) c) (labels c) := by
   simp only [Fin.forall_fin_succ_pi, Fin.forall_fin_zero_pi]

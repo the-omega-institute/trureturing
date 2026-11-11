@@ -1,0 +1,22 @@
+**引理 26.7（与任意扩充约化球冠仪器的定量分离）。** 对任意固定且不依赖 $h$ 的非参考通道 $\mathcal T_e$，若其将 (26.6) 的输出扩充到 (26.7) 的输出空间，则对每个 $h$，
+
+$$
+ D_{\rm tr}\!\left(\phi_h,
+    (\operatorname{id}_R\otimes\mathcal T_e)\Psi_{\rm loc}(\tau_h)\right)
+ \ge\frac1{16\sqrt\lambda}.
+ \tag{26.15}
+$$
+
+证明。非参考通道收缩完整自身边缘返回，故右侧比较态的返回至多 $C_{\rm return}/\lambda$。自身边缘返回泛函对迹距离是 $2$-Lipschitz：插入另一联合态及其自身边缘，分别用联合距离和边缘收缩性即可。若两态距离为 $E$，则
+
+$$
+ 2E\ge d_{\rm keep}(h)-C_{\rm return}/\lambda
+ \ge\frac1{4\sqrt\lambda}-\frac1{8\sqrt\lambda}
+ =\frac1{8\sqrt\lambda},
+ \tag{26.16}
+$$
+
+其中用 $\lambda\ge64C_{\rm return}^2$。要求 $\mathcal T_e$ 还保持原始标签及解码器只缩小量词域。在保留已有系统的前提下，给 $\phi_h$ 附加固定输出也不能削弱此界，因为可偏迹回已有空间。
+
+这是完整输出尺度的近似分离；沿充分小 $e$，它不容许 $E\le1/t$，也不容许 $E=O(\sqrt{\log(1/e)}/t)$。它不只是非零 tensor-rank 或精确合成障碍，更不推得约化仪器 (26.6) 自身的原生近似下界。$\square$
+

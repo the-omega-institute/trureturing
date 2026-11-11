@@ -1,0 +1,17 @@
+**推论 14.4（获取可行元组上的正返回排除）。** 若固定解码器在一对反向任务上错误不超过 $\beta$，且目标球相隔大于 $2\epsilon$，置 $a=1-2\beta$，则
+$$
+\overline\delta\ge
+\left(\frac{2a}{\sqrt{\pi^2(2j)+4a}+\pi\sqrt{2j}}\right)^2
+\ge\frac{a^2}{(1+\pi\sqrt{2j})^2}.
+\tag{14.23}
+$$
+证明第一式是令 $x=\sqrt{\overline\delta}$ 解
+$x^2+\pi\sqrt{2j}\,x-a\ge0$；第二式用 $\overline\delta\le1$。对 (13.12) 的固定获取可行协议，取 $a=q=49/50$。若某同一原始控制器在同一元组上还满足
+$$
+\overline\delta\le\delta_{\rm test}:=\frac{q^2}{100D},
+\tag{14.24}
+$$
+则 (14.16) 的右端小于
+$\delta_{\rm test}+\pi\sqrt{(D-1)\delta_{\rm test}}<q/100+4q/10=41q/100<q$，
+矛盾。故 (13.27) 以及整个 (13.4) 可行族上都有一个严格正的排除；它不是把获取任务改成不可行任务。
+

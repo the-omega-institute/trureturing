@@ -1,0 +1,59 @@
+**定义 27A.1（原四维输入与有限探针族）。** 取 $\varepsilon>0$、$\rho\in\mathbb R$，在原 $M_4(\mathbb C)$ 中令
+
+$$
+\begin{gathered}
+P=\operatorname{diag}(1,1,0,0),\qquad
+c=\operatorname{diag}(1,2,0,0),\qquad b=\rho+1-2\varepsilon^2,\\
+t=\begin{pmatrix}
+\rho/2&1&\varepsilon&0\\
+1&b&0&1\\
+\varepsilon&0&1&0\\
+0&1&0&1
+\end{pmatrix},\qquad
+s=\rho\operatorname{diag}(1,-2,0,0)=\rho(4P-3c),\\
+K_\sigma(A,B)=\frac{\sigma i}{2}[A,B],\qquad
+A\circ B=\frac{AB+BA}{2},\qquad g_\sigma=K_\sigma(c,t)+s.
+\end{gathered}
+\tag{27A.1}
+$$
+
+这是 (25.1) 的矩阵公式，未将该式原有的小参数限制加入定义。实际 $V=\operatorname{diag}(\varepsilon,1)$ 满行秩，$D_{\rm env}=I_2$；它不是总耦合秩一或零环境边的替代输入。对每个分别固定的 $\sigma$，原标签准确为
+
+$$
+\begin{gathered}
+h=K_\sigma(c,x),\qquad r=c\circ x,\qquad k=c\circ t,\\
+R_\pm=x\pm(h-k),\qquad S_\pm=t\pm(r+g_\sigma),\\
+L=-2x\circ(h-k)-2t\circ(r+g_\sigma).
+\end{gathered}
+\tag{27A.2}
+$$
+
+所有乘积在同一个原 $M_4(\mathbb C)$ 中进行。对原正泛函仍使用 (22.1) 的差额
+
+$$
+\mathcal G_\sigma(x,\phi)
+=|\phi(L)|-\sqrt{B_\phi(R_+,S_+)}-\sqrt{B_\phi(R_-,S_-)}.
+\tag{27A.3}
+$$
+
+当 $\rho\ne0$ 时，定义实数及复数
+
+$$
+\tau=-\frac{21\rho}{29},\qquad d=\frac{625\rho}{174},\qquad
+ a=\frac{29}{84\rho},\qquad U_\sigma=\tau(3+2\sigma i).
+$$
+
+对每个实际有限 $\delta>0$，取
+
+$$
+x_\delta=\begin{pmatrix}
+d&\delta^{-1}\\
+\delta^{-1}&a\delta^{-2}
+\end{pmatrix}\oplus0_2,\qquad
+\xi_{\sigma,\delta}=(1,\delta U_\sigma,0,0)^{\mathsf T},\qquad
+\phi_{\sigma,\delta}(A)=\xi_{\sigma,\delta}^*A\xi_{\sigma,\delta}.
+\tag{27A.4}
+$$
+
+$x_\delta=x_\delta^*=Px_\delta P$ 是原允许探针，不要求为正；$\phi_{\sigma,\delta}$ 是完整原代数上的正复线性泛函。其质量是 $1+\delta^2|U_\sigma|^2$，不归一化也合法。
+
