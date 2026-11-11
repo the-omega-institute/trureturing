@@ -48,6 +48,10 @@ $$\forall n \in \mathbb{N},\; 4 \le n \Rightarrow ((n:\mathbb{Q}) + 1) \cdot \op
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/MatharA157100FiveTermRecurrence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a157100-five-term-recurrence` (proved) by `D5/S1/Recurrence/Algebraic/MatharA157100FiveTermRecurrence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a157100-five-term-recurrence","declaration_gid":"D5/S1/Recurrence/Algebraic/MatharA157100FiveTermRecurrence.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. J. Mathar; Paul Barry; OEIS Foundation Inc. (2015). *OEIS A157100 — five-term recurrence for a Catalan transform*. URL: <https://oeis.org/A157100>.
