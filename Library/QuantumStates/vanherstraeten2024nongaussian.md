@@ -68,3 +68,32 @@ PDF p. 12, and the mixed-environment channel definition.
 Journal DOI: https://doi.org/10.1142/S0219749924400033.
 The quoted statement and channel are read from the arXiv source; the journal
 text has not been compared sentence by sentence.
+
+
+## Prior balanced one-photon minimum
+
+Zixuan He, *The energy cost of optical noise*, version 1.0,
+DOI [10.5281/zenodo.23629201](https://doi.org/10.5281/zenodo.23629201),
+publication date 25 October 2026, gives the balanced pure-one-photon
+all-density spectral minimum and attainment by every coherent input.
+This is a preprint; no journal acceptance is asserted.
+
+Section 2 defines normal states as arbitrary positive trace-class
+trace-one operators and allows infinite entropy. Equation (8) at
+`j = 2` and `eta = 1/2` gives the pure one-photon environment.
+Theorem 2 (PDF page 5) gives spectrum `(1/2, 1/2)`, the all-input
+majorization bound, and minimum spectral entropy `log 2`, attained by
+every coherent input. Appendix A.2-A.3 (PDF pages 18-19) treats the
+completed optical isometry, actual attenuator identity (67), and
+operator cap (69), including mixed normal states and arbitrary tails.
+
+The corresponding native formalization is in `BalancedHalfCap`,
+`BalancedSpectralEntropy`, and `BalancedAttainment` under
+`D5/S3/Quantum/QuantumChannels/FockAttenuator`. It retains all density
+inputs and the native extended spectral entropy. Its all-odd-occupation
+balanced cap and entropy floor assert no attainment for odd occupations
+greater than one and no priority for that application. It does not
+claim a new literature resolution, other transmissivities, a full
+Conjecture 1 resolution, or equality with the separate basis-infimum
+entropy API. The preprint's broader claims are outside this
+formalization's scope.
