@@ -94,7 +94,7 @@ For every real t different from a, the equivalence holds under the original non-
 
 **Theorem 1.8 (The join radius is central exactly when each occupied component has another occupied component).**
 
-$$a \in \operatorname{center}\left(J\right) \iff \forall i, \operatorname{X}\left(i\right) \Rightarrow \exists j, \operatorname{Nonempty}\left(\operatorname{X}\left(j\right)\right) \land j \neq i$$
+$$a \in \operatorname{center}\left(J\right) \iff \forall i, \forall x:\operatorname{X}\left(i\right), \exists j, \operatorname{Nonempty}\left(\operatorname{X}\left(j\right)\right) \land j \neq i$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Geometry/UltrametricConstantJoin.top_mem_center_iff` (`✓ std3`). ∎
 
@@ -106,7 +106,7 @@ The strict component-distance bound is assumed. The implication from an element 
 
 **Theorem 1.9 (The exact distance center separates the join radius from the other radii).**
 
-$$\operatorname{center}\left(J\right) = \{t \mid 0 \leq t \land t \neq a \land \forall i, t \in \operatorname{center}\left(\operatorname{X}\left(i\right)\right)\} \cup \{t \mid t = a \land \forall i, \operatorname{X}\left(i\right) \Rightarrow \exists j, \operatorname{Nonempty}\left(\operatorname{X}\left(j\right)\right) \land j \neq i\}$$
+$$\operatorname{center}\left(J\right) = \{t \mid 0 \leq t \land t \neq a \land \forall i, t \in \operatorname{center}\left(\operatorname{X}\left(i\right)\right)\} \cup \{t \mid t = a \land \forall i, \forall x:\operatorname{X}\left(i\right), \exists j, \operatorname{Nonempty}\left(\operatorname{X}\left(j\right)\right) \land j \neq i\}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Geometry/UltrametricConstantJoin.center_eq` (`✓ std3`). ∎
 
@@ -114,7 +114,7 @@ $$\operatorname{center}\left(J\right) = \{t \mid 0 \leq t \land t \neq a \land \
 
 *Commentary.*
 
-Under strict component-distance bounds, this set equality combines the two preceding equivalences. It uses the project's original center and keeps every empty-index and empty-component case. It is the reusable center calculation used by the prescribed-count construction.
+Under strict component-distance bounds, this set equality combines the two preceding equivalences. It uses the original distance center and keeps every empty-index and empty-component case. The prescribed-count construction uses this formula at the outer join and the componentwise equivalence mem_center_iff at the inner joins.
 
 ## References
 

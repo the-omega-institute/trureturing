@@ -4,6 +4,8 @@
 
 A divisor recurrence gives exactly all orders of finite nonempty ultrametrics with prescribed central radii and pointwise sphere counts, including realizations for every prescribed pair in every gap.
 
+The central-graph edge comparison is the separate result `D5/S3/Combinatorics/Geometry/DovgosheyRovenskaCentralEdges.result`. The classification below concerns pointwise sphere counts at every radius in the distance center.
+
 The center throughout is the existing distance-center predicate `D5/S3/Combinatorics/Geometry/DovgosheyRovenskaCentralEdges.center`. It consists of the nonnegative radii attained from every point; witnesses may depend on the point. No replacement notion of center is used. The classification quantifies over arbitrary natural h and n, real-valued radii c on the naturals, and natural-valued counts b. The required initial radius and strict increases are $\operatorname{c}\left(0\right) = 0, \forall i < h, \operatorname{c}\left(i\right) < \operatorname{c}\left(i+1\right)$. When positivity of counts is assumed it means every index through h, including zero.
 
 **Remark 1.1 (Nonempty finite sums with repetition).**
@@ -119,6 +121,7 @@ Assume only the initial radius, strict increases and positive counts through h. 
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Geometry/DovgosheyRovenskaCentralEdges.center`
+- Truth anchor: `D5/S3/Combinatorics/Geometry/DovgosheyRovenskaCentralEdges.result`
 - Truth anchor: `D5/S3/Combinatorics/Geometry/UltrametricCenterSphereOrders.Model`
 - Truth anchor: `D5/S3/Combinatorics/Geometry/UltrametricCenterSphereOrders.PositiveSum`
 - Truth anchor: `D5/S3/Combinatorics/Geometry/UltrametricCenterSphereOrders.allowed`

@@ -55,7 +55,7 @@ internal sealed class UltrametricConstantJoinDocument : IScribeDocumentDefinitio
             Node("center-at-top", "The join radius is central exactly when each occupied component has another occupied component",
                 "top_mem_center_iff",
                 Disp(Seq(F.Id("a"), Sp, InMacro, Sp, Call("center", F.Id("J")), Sp, Iff, Sp,
-                    Forall, Sp, F.Id("i"), Comma, Sp, Call("X", F.Id("i")), Sp, Rightarrow, Sp,
+                    Forall, Sp, F.Id("i"), Comma, Sp, Forall, Sp, F.Id("x"), Colon, Call("X", F.Id("i")), Comma, Sp,
                     Exists, Sp, F.Id("j"), Comma, Sp, Call("Nonempty", Call("X", F.Id("j"))),
                     Sp, Land, Sp, F.Id("j"), Sp, Neq, Sp, F.Id("i"))),
                 Blocks(Paragraph(Text("The strict component-distance bound is assumed. The implication from an element of X i retains the vacuous empty-component cases. In particular the formula also applies to an empty join or to a join with a single index; it does not silently require two occupied components.")))),
@@ -65,10 +65,10 @@ internal sealed class UltrametricConstantJoinDocument : IScribeDocumentDefinitio
                     F.Id("t"), Sp, Neq, Sp, F.Id("a"), Sp, Land, Sp, Forall, Sp, F.Id("i"), Comma, Sp,
                     F.Id("t"), Sp, InMacro, Sp, Call("center", Call("X", F.Id("i"))), CloseBrace,
                     Sp, Cup, Sp, OpenBrace, F.Id("t"), Sp, Mid, Sp, F.Id("t"), Sp, Eq, Sp, F.Id("a"),
-                    Sp, Land, Sp, Forall, Sp, F.Id("i"), Comma, Sp, Call("X", F.Id("i")), Sp, Rightarrow,
+                    Sp, Land, Sp, Forall, Sp, F.Id("i"), Comma, Sp, Forall, Sp, F.Id("x"), Colon, Call("X", F.Id("i")), Comma,
                     Sp, Exists, Sp, F.Id("j"), Comma, Sp, Call("Nonempty", Call("X", F.Id("j"))),
                     Sp, Land, Sp, F.Id("j"), Sp, Neq, Sp, F.Id("i"), CloseBrace)),
-                Blocks(Paragraph(Text("Under strict component-distance bounds, this set equality combines the two preceding equivalences. It uses the project's original center and keeps every empty-index and empty-component case. It is the reusable center calculation used by the prescribed-count construction.")))))));
+                Blocks(Paragraph(Text("Under strict component-distance bounds, this set equality combines the two preceding equivalences. It uses the original distance center and keeps every empty-index and empty-component case. The prescribed-count construction uses this formula at the outer join and the componentwise equivalence mem_center_iff at the inner joins.")))))));
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula, BlockSequence narrative) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),

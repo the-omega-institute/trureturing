@@ -160,7 +160,12 @@ theorem eight_center : center (Eight u v hu huv hv) = ({0, 1, 2} : Set ℝ) := b
   · intro ht
     simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at ht
     rcases ht with rfl | rfl | rfl
-    · exact ⟨le_rfl, fun p => ⟨p, dist_self p⟩⟩
+    · refine ⟨le_rfl, fun p => ?_⟩
+      have hn : 0 < Nat.card (Metric.sphere p 0) := by
+        rw [sphere_zero_card u v hu huv hv p]
+        norm_num
+      obtain ⟨y⟩ := (Nat.card_pos_iff.mp hn).1
+      exact ⟨y.val, y.property⟩
     · refine ⟨by norm_num, fun p => ?_⟩
       have hn : 0 < Nat.card (Metric.sphere p 1) := by
         rw [sphere_one_card u v hu huv hv p]

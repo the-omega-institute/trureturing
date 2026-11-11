@@ -12,6 +12,9 @@ internal sealed class UltrametricCenterSphereOrdersDocument : IScribeDocumentDef
         "A divisor recurrence gives exactly all orders of finite nonempty ultrametrics with prescribed central radii and pointwise sphere counts, including realizations for every prescribed pair in every gap.",
         H("Complete classification of prescribed central sphere counts"),
         Blocks(
+            Paragraph(Text("The central-graph edge comparison is the separate result "),
+                Ref("D5/S3/Combinatorics/Geometry/DovgosheyRovenskaCentralEdges.result"),
+                Text(". The classification below concerns pointwise sphere counts at every radius in the distance center.")),
             Paragraph(Text("The center throughout is the existing distance-center predicate "),
                 Ref("D5/S3/Combinatorics/Geometry/DovgosheyRovenskaCentralEdges.center"),
                 Text(". It consists of the nonnegative radii attained from every point; witnesses may depend on the point. No replacement notion of center is used. The classification quantifies over arbitrary natural h and n, real-valued radii c on the naturals, and natural-valued counts b. The required initial radius and strict increases are "),

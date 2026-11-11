@@ -317,7 +317,12 @@ private def realize_step (c : ℕ → ℝ) (b : ℕ → ℕ) (u v : ℕ → ℝ)
     · intro hd
       by_cases hdt : d = c (i + 1)
       · exact ⟨i + 1, Set.mem_Iic.mpr le_rfl, hdt.symm⟩
-      · have hgcent := (mem_center_iff G (c (i + 1)) htop hbouter hdt).mp hd
+      · have hformula := ConstantCrossDistance.center_eq G (c (i + 1)) htop hbouter houter
+        have hgcent : 0 ≤ d ∧ ∀ g, d ∈ center (G g) := by
+          rw [hformula] at hd
+          rcases hd with hd | hd
+          · exact ⟨hd.1, hd.2.2⟩
+          · exact (hdt hd.1).elim
         let g1 : Fin (k + 1) := ⟨1, by omega⟩
         have hg10 : g1 ≠ 0 := by intro he; have := congrArg Fin.val he; simp [g1] at this
         have hdiff : a 0 ≠ a g1 := by simpa [a, hg10] using hgap.2.1.ne
@@ -446,7 +451,7 @@ theorem possible_orders_unrestricted_iff (c : ℕ → ℝ) (b : ℕ → ℕ) (h 
       constructor
       · linarith
       · constructor <;> linarith
-    obtain ⟨M⟩ := sufficient c b u v h n hc0 hc hg hb0 hb hn
+    obtain ⟨M⟩ := (possible_orders_iff c b u v h n hc0 hc hg hb).mpr ⟨hb0, hn⟩
     exact ⟨M.carrier, M.metric, M.ultra, M.finite, M.nonempty, M.order_eq, M.center_eq, M.counts⟩
 
 end UltrametricCenterSphereOrders
