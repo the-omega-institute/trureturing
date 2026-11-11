@@ -20,9 +20,8 @@ The new definitions A, a and claim are consumed by result.
 The private inhomogeneous identity is consumed by result.
 Direct frozen dependencies:
   D5/S1/Recurrence/A308815DFiniteRecurrence.euler_coeff.
-The original cat_ode in that same owner is exposed without changing its statement
-or proof; inhomogeneous is its new live consumer. Its owner requires canonical
-repinning after independent pre-freeze review.
+The cat_ode declaration in that same owner is used by inhomogeneous and by its
+original certificate consumer.
 -/
 
 set_option autoImplicit false

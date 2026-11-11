@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S1.Recurrence.Algebraic.MatharA157100FiveTermRecurrence
 import Reg.Support.SingleDependentReadout
 
+/-! Source-bound registration of the complete five-term recurrence. -/
+
 namespace Reg.D5.S1.Recurrence.Algebraic.MatharA157100FiveTermRecurrence
 open _root_.D5.S1.Recurrence.Algebraic.MatharA157100FiveTermRecurrence
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -34,19 +36,27 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 
 private theorem initial_coefficients : a 0 = 1 ∧ a 1 = 2 := by
   have ht : HasSubst (X * (1 - X ^ 2) : PowerSeries ℚ) := HasSubst.X'.mul_left
+  have hz : MvPowerSeries.constantCoeff (X * (1 - X ^ 2) : PowerSeries ℚ) = 0 := by
+    change constantCoeff (X * (1 - X ^ 2) : PowerSeries ℚ) = 0
+    simp
+  have hs (f : PowerSeries ℚ) :
+      constantCoeff (subst (X * (1 - X ^ 2)) f) = constantCoeff f := by
+    exact constantCoeff_subst_of_constantCoeff_zero hz f
+  have hd : constantCoeff (derivative (R := ℚ)
+      (PowerSeries.catalanSeries.map (Nat.castRingHom ℚ))) = 1 := by
+    rw [← coeff_zero_eq_constantCoeff_apply, coeff_derivative]
+    simp
+  have hc : constantCoeff (PowerSeries.catalanSeries.map (Nat.castRingHom ℚ)) = 1 := by
+    rw [← coeff_zero_eq_constantCoeff_apply]
+    simp
   have h0 : a 0 = 1 := by
-    simp [a, A, coeff_zero_eq_constantCoeff,
-      constantCoeff_subst_of_constantCoeff_zero (by simp :
-        constantCoeff (X * (1 - X ^ 2) : PowerSeries ℚ) = 0)]
+    simp [a, A, coeff_zero_eq_constantCoeff, hs, hc]
   refine ⟨h0, ?_⟩
   have h : coeff 0 (derivative (R := ℚ) A) = a 1 := by
     simp [a, coeff_derivative]
   rw [← h]
-  simp [A, Derivation.leibniz, derivative_subst ht, derivative_pow,
-    smul_eq_mul, coeff_zero_eq_constantCoeff,
-    constantCoeff_subst_of_constantCoeff_zero (by simp :
-      constantCoeff (X * (1 - X ^ 2) : PowerSeries ℚ) = 0),
-    ← coeff_zero_eq_constantCoeff, coeff_derivative, coeff_map, catalanSeries_coeff]
+  simp [A, Derivation.leibniz, derivative_subst ht,
+    smul_eq_mul, coeff_zero_eq_constantCoeff, hs, hd, hc]
 
 def family : Registration arena (type_of% result) where
   actual := actual
@@ -62,7 +72,7 @@ def family : Registration arena (type_of% result) where
     norm_num
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-    result (Realization signature) Unit Unit where
+    result (Realization signature) Type Unit where
   unitName := `Reg.D5.S1.Recurrence.Algebraic.MatharA157100FiveTermRecurrence.auditUnit
   realizationName := `Reg.D5.S1.Recurrence.Algebraic.MatharA157100FiveTermRecurrence.family
   realizationSource := none
@@ -87,16 +97,22 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
       path := #[] }
     coordinates := #[]
     readouts := #[
-      { path := #["body", "body", "fn", "arg", "fn", "arg", "fn", "arg", "fn", "arg", "fn", "arg", "arg"]
-        stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false },
+      { path := #["body", "body", "fn", "arg", "fn", "arg", "fn", "arg", "fn", "arg",
+          "fn", "arg", "arg"]
+        stateBinder := 0, functionOperand := false,
+        stateOperand := some #["arg"], booleanPredicate := false },
       { path := #["body", "body", "fn", "arg", "fn", "arg", "fn", "arg", "fn", "arg", "arg", "arg"]
-        stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false },
+        stateBinder := 0, functionOperand := false,
+        stateOperand := some #["arg"], booleanPredicate := false },
       { path := #["body", "body", "fn", "arg", "fn", "arg", "fn", "arg", "arg", "arg"]
-        stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false },
+        stateBinder := 0, functionOperand := false,
+        stateOperand := some #["arg"], booleanPredicate := false },
       { path := #["body", "body", "fn", "arg", "fn", "arg", "arg", "arg"]
-        stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false },
+        stateBinder := 0, functionOperand := false,
+        stateOperand := some #["arg"], booleanPredicate := false },
       { path := #["body", "body", "fn", "arg", "arg", "arg"]
-        stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] }
+        stateBinder := 0, functionOperand := false,
+        stateOperand := some #["arg"], booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]

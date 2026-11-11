@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S1.Recurrence.A308815DFiniteRecurrence
 import Reg.Support.SingleDependentReadout
 
+/-! Source-bound registration of the exposed original Catalan differential identity. -/
+
 namespace Reg.D5.S1.Recurrence.A308815DFiniteRecurrence
 open _root_.D5.S1.Recurrence.A308815DFiniteRecurrence
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -44,7 +46,7 @@ def family : Registration arena (type_of% cat_ode) where
     simp
 
 def catOdeAudit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-    cat_ode (Realization signature) Unit Unit where
+    cat_ode (Realization signature) Type Unit where
   unitName := `Reg.D5.S1.Recurrence.A308815DFiniteRecurrence.catOdeUnit
   realizationName := `Reg.D5.S1.Recurrence.A308815DFiniteRecurrence.family
   realizationSource := none

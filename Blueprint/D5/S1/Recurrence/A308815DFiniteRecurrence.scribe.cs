@@ -60,7 +60,8 @@ internal sealed class A308815DFiniteRecurrenceDocument : IScribeDocumentDefiniti
 
     private static DocumentBlock Node(string name, string title, Formula formula,
         AssessedProvenance provenance, string prose, DescribeRole role, OpenProblemResolutionClaim? resolution = null) =>
-        Describe.Lean(DescribeId.Create("a308815-" + (name == "euler_coeff" ? "euler-coeff" : name)),
+        Describe.Lean(DescribeId.Create("a308815-" + (name switch {
+                "euler_coeff" => "euler-coeff", "cat_ode" => "cat-ode", _ => name })),
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
