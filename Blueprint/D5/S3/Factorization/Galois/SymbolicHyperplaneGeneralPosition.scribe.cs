@@ -39,8 +39,9 @@ internal sealed class SymbolicHyperplaneGeneralPositionDocument : IScribeDocumen
                 StatementSource.FromAuthor(Disp(BasisRank())),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
-                    Paragraph(Text("Assume every base row b(i,sigma) is nonzero on the finite family. The same independent coordinate tuple is used in every block and every embedding. For each sigma, the rows indexed by i different from the distinguished k are linearly independent: inspecting block i isolates its coefficient, while the common coefficient U(k,sigma) and the selected coordinate of b(i,sigma) are both nonzero. The distinguished row is zero, so these h-1 rows span exactly the scalar-extended block-row space intersected with the one common kernel hyperplane.")),
-                    Paragraph(Text("The theorem combines that explicit basis statement with the preceding symbolic partition-rank result. It returns one attaining nonempty-block partition and the upper bound for every partition, with no general-position premise, no quotient construction and no Galois descent. The coefficient tuple is the same coordinate family used by coefficientNormal throughout (31.6). For normalized embedding bases whose first entry is one, the row nonvanishing premise is immediate. This closes the source's basis clause but leaves the later intermediate-field identifications and original-field specialization outside this declaration. Four-slot Reg registration remains unfinished under https://github.com/the-omega-institute/trureturing/issues/29247; no declared_validated status is asserted."))), DescribeRole.Theorem))));
+                    Paragraph(Text("Assume every base row b(i,sigma) is nonzero on the finite family. Put U(b,sigma,i)=Normal(T)(BlockRows(Lift(b),sigma,i)), and let Rows(b,k,sigma) be the family U(b,sigma,k) BlockRows(Lift(b),sigma,i)-U(b,sigma,i) BlockRows(Lift(b),sigma,k), indexed by the actual subtype of blocks i different from k. Cut(b,sigma) is span_K of all block rows for sigma intersected with ker(Normal(T)). The theorem returns every U(b,sigma,i) nonzero. The same independent tuple T is used in every block and every embedding. Inspecting block i in a zero linear combination of Rows isolates its coefficient; U(b,sigma,k) and a selected coordinate of b(i,sigma) are nonzero, giving linear independence. The original span_common_rows_eq_cut is reused for spanning; omitting its zero distinguished row preserves that span. Thus these exact h-1 displayed rows form a basis of Cut(b,sigma).")),
+                    Paragraph(Text("BaseCost(b,P) denotes the sum over nonempty parts A0 of P of [(sum over i of dim_F blockSpan(b,A0,i))-1]. Scalar inclusion preserves each finite row-span dimension: a base-field basis remains independent by Mathlib's linearIndependent_algebraMap_comp_iff, and its lifted span equals the lifted original row span. Consequently these are the original q_i(A0) of (31.5), before adjoining T. The same theorem combines the explicit basis with one attaining partition and every-partition upper bound for the total common-row span, which includes only an extra zero row for each sigma. Its GP input is proved internally by the preceding symbolic theorem.")),
+                    Paragraph(Text("For the exact embedding application take this theorem's F to be the normal-closure field K_0, I to be the full type Hom_{F_0}(D,K_0), s to be its universe, J(i)=Fin(n_i+1), so the source dimension m_i=n_i+1, and b=ActualWindowCommonKernel.embeddingRows(id,X,x), where x is the actual F_0-basis of each normalized window X_i and x(i,0)=1. Applying an embedding to that first entry gives b(i,sigma,0)=1, discharging every row-nonvanishing premise. The distinguished block is the source's first block; the coordinate family is z(i,j), and K is K_0(z). This application, including basis and the original K_0-valued q_i costs, is checked transiently without retaining a bind-only specialization. A singleton block has an empty displayed basis and zero cut; an empty s has the empty partition. Empty coordinate blocks with an active nonzero row cannot satisfy the premise. No lower bound on h or distinctness of the subspaces is needed. The later intermediate-field identifications, Galois invariance/descent, original polynomial map and original-F simultaneous attainment remain separate. Four-slot Reg registration remains unfinished under https://github.com/the-omega-institute/trureturing/issues/29247; no declared_validated status is asserted."))), DescribeRole.Theorem))));
 
     private static Formula GeneralPosition()
     {
@@ -79,17 +80,20 @@ internal sealed class SymbolicHyperplaneGeneralPositionDocument : IScribeDocumen
 
     private static Formula BasisRank()
     {
-        Formula row = App(I("commonRow"), I("b"), I("k"), I("sigma"), I("i"));
-        Formula basis = And(App(I("LinearIndependent"), row),
-            Eq(App(I("span"), row), App(I("cut"), I("b"), I("k"), I("sigma"))));
+        Formula rows = App(I("Rows"), I("b"), I("k"), I("sigma"));
+        Formula basis = And(All("i", I("B"),
+                Rel(App(I("U"), I("b"), I("sigma"), I("i")), FormulaRelationOperator.NotEqual, D(0))),
+            And(App(I("LinearIndependent"), I("K"), rows),
+                Eq(App(I("span"), I("K"), App(I("range"), rows)),
+                    App(I("Cut"), I("b"), I("sigma")))));
         Formula rank = App(I("CR"), I("b"), I("k"), I("s"));
         Formula result = Ex("P", App(I("Finpartition"), I("s")),
             And(All("sigma", I("I"), Imp(
                     Rel(I("sigma"), FormulaRelationOperator.MemberOf, I("s")), basis)),
-                And(Eq(rank, App(I("Cost"), I("b"), I("P"))),
+                And(Eq(rank, App(I("BaseCost"), I("b"), I("P"))),
                     All("Q", App(I("Finpartition"), I("s")),
                         Rel(rank, FormulaRelationOperator.LessThanOrEqual,
-                            App(I("Cost"), I("b"), I("Q")))))));
+                            App(I("BaseCost"), I("b"), I("Q")))))));
         Formula nonzero = All("sigma", I("I"), Imp(
             Rel(I("sigma"), FormulaRelationOperator.MemberOf, I("s")),
             All("i", I("B"), Rel(App(I("b"), I("i"), I("sigma")),

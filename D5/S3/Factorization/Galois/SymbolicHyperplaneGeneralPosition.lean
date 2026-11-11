@@ -10,6 +10,7 @@ import D5.S3.Factorization.Galois.ActualWindowCommonKernel
 import Mathlib.Algebra.MvPolynomial.Derivation
 import Mathlib.RingTheory.Localization.FractionRing
 import Mathlib.RingTheory.Etale.Kaehler
+import Mathlib.LinearAlgebra.LinearIndependent.BaseChange
 
 /-!
 The symbolic normal uses the fraction field of the full multivariate polynomial
@@ -259,6 +260,49 @@ variable {β : Type*} {κ : β → Type*} [Fintype β] [∀ i, Fintype (κ i)]
 def liftRows (b : ∀ i, ι → κ i → F) : ∀ i, ι → κ i → SymbolicField F (Σ i, κ i) :=
   fun i σ j => algebraMap F _ (b i σ j)
 
+private theorem blockSpan_liftRows_finrank (b : ∀ i, ι → κ i → F)
+    (B : Finset ι) (i : β) :
+    Module.finrank (SymbolicField F (Σ i, κ i)) (blockSpan (liftRows b) B i) =
+      Module.finrank F (blockSpan b B i) := by
+  classical
+  -- Use the same scalar extension argument with the full common coordinate field.
+  let K := SymbolicField F (Σ i, κ i)
+  let V := blockSpan b B i
+  let bV := Module.Basis.ofVectorSpace F V
+  let _ := bV.fintypeIndexOfRankLtAleph0 (Module.rank_lt_aleph0 F V)
+  let c : (κ i → F) →ₗ[F] (κ i → K) :=
+    { toFun := fun v j => algebraMap F K (v j)
+      map_add' := by intro v w; ext j; exact map_add _ _ _
+      map_smul' := by intro a v; ext j; simp [Algebra.smul_def] }
+  have hspan : Submodule.span F (Set.range fun j => (bV j : κ i → F)) = V := by
+    change Submodule.span F (Set.range (V.subtype ∘ bV)) = V
+    rw [Set.range_comp, Submodule.span_image, bV.span_eq, Submodule.map_top,
+      Submodule.range_subtype]
+  have hli := bV.linearIndependent.map' V.subtype (Submodule.ker_subtype V)
+  have hlift : LinearIndependent K (fun j => c (bV j : κ i → F)) :=
+    (linearIndependent_algebraMap_comp_iff (R := F) (S := K)
+      (v := fun j => (bV j : κ i → F))).mpr hli
+  have hext : Submodule.span K (Set.range fun j => c (bV j : κ i → F)) =
+      blockSpan (liftRows b) B i := by
+    have hbasis : Submodule.span K (c '' (V : Set (κ i → F))) =
+        Submodule.span K (Set.range fun j => c (bV j : κ i → F)) := by
+      calc
+        _ = Submodule.span K (c '' (Submodule.span F
+            (Set.range fun j => (bV j : κ i → F)) : Set (κ i → F))) :=
+          congrArg (fun W : Submodule F (κ i → F) =>
+            Submodule.span K (c '' (W : Set (κ i → F)))) hspan.symm
+        _ = _ := by
+          rw [← Submodule.map_coe, Submodule.map_span, ← Set.range_comp,
+        Submodule.span_span_of_tower]
+          rfl
+    rw [← hbasis]
+    change Submodule.span K (c '' (Submodule.span F (b i '' (B : Set ι)) : Set _)) = _
+    rw [← Submodule.map_coe, Submodule.map_span, Submodule.span_span_of_tower,
+      Set.image_image]
+    rfl
+  change Module.finrank K (blockSpan (liftRows b) B i) = Module.finrank F V
+  rw [← hext, finrank_span_eq_card hlift, Module.finrank_eq_card_basis bV]
+
 open Classical in
 /-- The common-constraint partition rank with the symbolic GP antecedent
 discharged. The rows are arbitrary constant rows, so in particular may be the
@@ -402,6 +446,8 @@ theorem symbolic_block_common_rows_basis_partition_rank [CharZero F]
     (hrows : ∀ σ ∈ s, ∀ i, b i σ ≠ 0) :
     ∃ P : Finpartition s,
       (∀ σ ∈ s,
+        (∀ i, coefficientNormal (coordinate (F := F) (α := Σ i, κ i))
+            (blockRows (liftRows b) σ i) ≠ 0) ∧
         LinearIndependent (SymbolicField F (Σ i, κ i))
           (fun i : {i // i ≠ k} =>
             coefficientNormal (coordinate (F := F) (α := Σ i, κ i)) (blockRows (liftRows b) σ k) •
@@ -420,14 +466,12 @@ theorem symbolic_block_common_rows_basis_partition_rank [CharZero F]
       Module.finrank (SymbolicField F (Σ i, κ i))
           (commonRowSpan (blockRows (liftRows b)) (coefficientNormal (coordinate (F := F) (α := Σ i, κ i))) k s) =
         ∑ B ∈ P.parts,
-          ((∑ i, Module.finrank (SymbolicField F (Σ i, κ i))
-              (blockSpan (liftRows b) B i)) - 1) ∧
+          ((∑ i, Module.finrank F (blockSpan b B i)) - 1) ∧
       ∀ Q : Finpartition s,
         Module.finrank (SymbolicField F (Σ i, κ i))
             (commonRowSpan (blockRows (liftRows b)) (coefficientNormal (coordinate (F := F) (α := Σ i, κ i))) k s) ≤
           ∑ B ∈ Q.parts,
-            ((∑ i, Module.finrank (SymbolicField F (Σ i, κ i))
-                (blockSpan (liftRows b) B i)) - 1) := by
+            ((∑ i, Module.finrank F (blockSpan b B i)) - 1) := by
   classical
   let K := SymbolicField F (Σ i, κ i)
   let e : ((i : β) → κ i → K) ≃ₗ[K] ((a : Σ i, κ i) → K) :=
@@ -465,6 +509,7 @@ theorem symbolic_block_common_rows_basis_partition_rank [CharZero F]
     rwa [hnormal] at hn
   obtain ⟨P, hP, hbound⟩ := symbolic_block_common_rows_partition_rank b k s
     (fun σ hσ => hrows σ hσ k)
+  simp only [blockSpan_liftRows_finrank] at hP hbound
   refine ⟨P, ?_, hP, hbound⟩
   intro σ hσ
   have hbaseRows : ∀ i, liftRows b i σ ≠ 0 := by
@@ -474,7 +519,7 @@ theorem symbolic_block_common_rows_basis_partition_rank [CharZero F]
     intro j
     have hj := congrFun hz j
     simpa [liftRows] using hj
-  refine ⟨?_, ?_⟩
+  refine ⟨hUi σ hσ, ?_, ?_⟩
   · exact block_common_rows_linearIndependent (liftRows b)
       (coefficientNormal (coordinate (F := F) (α := Σ i, κ i))) k σ
       (hUi σ hσ k) hbaseRows
