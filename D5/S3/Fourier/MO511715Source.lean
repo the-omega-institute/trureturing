@@ -687,5 +687,6 @@ theorem result : ¬ claim := by
   exact uniform_estimate_fails f hs.1.continuous.continuousAt hz f.hasCompactSupport
     (h.1 f hs)
 
+
 end
 end D5.S3.Fourier.MO511715Source
