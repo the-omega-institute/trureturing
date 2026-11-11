@@ -38,6 +38,10 @@ $$\forall (n: \operatorname{Nat}), ((\operatorname{D5}.\operatorname{S3}.\operat
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233172DiagonalStrip.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin233172` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233172DiagonalStrip.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin233172","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233172DiagonalStrip.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A233172: six-column complementary-pair diagonal strips*. URL: <https://oeis.org/A233172>.

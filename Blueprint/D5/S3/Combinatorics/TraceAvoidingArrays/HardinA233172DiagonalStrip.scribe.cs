@@ -49,7 +49,9 @@ internal sealed class HardinA233172DiagonalStripDocument : IScribeDocumentDefini
                     + "combination of its preceding ten vectors. Pairing this vector identity "
                     + "with any continuation vector proves the recurrence for every natural n. "
                     + "Thus the first applicable sequence index is eleven."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233172"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Entry(string id, string declaration, string title,
         Formula formula, string prose, bool literature = false) => Describe.Lean(
