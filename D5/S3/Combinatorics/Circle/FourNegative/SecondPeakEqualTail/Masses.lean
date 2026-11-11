@@ -15,8 +15,8 @@ open D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers
 open private bank from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualTail.Source
 open private Submask submask_xor full_submask from
   D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualTail.Dilation
-open private base newBase chainLength chainStart oldValue newValue chain_values from
-  D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open private chain_values from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (base newBase chainLength chainStart oldValue newValue)
 
 private theorem bank_masses (a b c alpha M v J : ℕ)
     (ha : 2≤a) (hb : 2≤b) (hc : 2≤c)

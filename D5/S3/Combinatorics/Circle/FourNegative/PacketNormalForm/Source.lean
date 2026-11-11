@@ -16,28 +16,28 @@ namespace D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open private source_table from D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.SourceTable
 
-private def size (a b c d : ℕ) : ℕ := a + b + c + d
+def size (a b c d : ℕ) : ℕ := a + b + c + d
 private def seed (a b c : ℕ) : ℕ := 1 + 2 ^ a + 2 ^ (a+b) + 2 ^ (a+b+c)
 private def sourceMod (a b c d : ℕ) : ℤ :=
   (2 : ℤ)^a * 2^b * 2^c * 2^d - 1
-private def base (a b c d : ℕ) : Fin 4 → ℤ :=
+def base (a b c d : ℕ) : Fin 4 → ℤ :=
   ![2^a * 2^b * 2^c + (1 + 2^a + 2^a * 2^b),
     2^d * (1 + 2^a + 2^a * 2^b) + 1,
     2^d * (2^c * (1 + 2^a)) + 1 + 2^c,
     2^d * (2^b * 2^c) + 1 + 2^b + 2^b * 2^c]
 private def charge (b c : ℕ) : Fin 4 → ℤ := ![0, 1, 1+2^c, 1+2^b+2^b*2^c]
-private def newBase (a b c d : ℕ) (r : Fin 4) : ℤ := 2 * base a b c d r - charge b c r
-private def chainLength (a b c d : ℕ) : Fin 4 → ℕ := ![d,c,b,a]
-private def chainStart (b c d : ℕ) : Fin 4 → ℕ := ![0,d,d+c,d+c+b]
+def newBase (a b c d : ℕ) (r : Fin 4) : ℤ := 2 * base a b c d r - charge b c r
+def chainLength (a b c d : ℕ) : Fin 4 → ℕ := ![d,c,b,a]
+def chainStart (b c d : ℕ) : Fin 4 → ℕ := ![0,d,d+c,d+c+b]
 private def nextBase (a b c d : ℕ) : Fin 4 → ℤ :=
   ![base a b c d 1, base a b c d 2, base a b c d 3, base a b c d 0]
 private def nextNewBase (a b c d : ℕ) : Fin 4 → ℤ :=
   ![newBase a b c d 1, newBase a b c d 2, newBase a b c d 3, base a b c d 0]
-private def oldValue (a b c d i : ℕ) : ℤ :=
+def oldValue (a b c d i : ℕ) : ℤ :=
   centered (sourceMod a b c d) ((2 : ℤ)^i * base a b c d 0)
-private def newValue (a b c d i : ℕ) : ℤ :=
+def newValue (a b c d i : ℕ) : ℤ :=
   centered (2 * sourceMod a b c d + 1) ((2 : ℤ)^i * (2 * base a b c d 0))
-private def negatives (a b c d : ℕ) : List ℕ :=
+def negatives (a b c d : ℕ) : List ℕ :=
   [d-1,d+c-1,d+c+b-1,size a b c d-1]
 
 private theorem actual_values (a b c d : ℕ) :
@@ -205,7 +205,7 @@ private theorem source_totals (a b c d : ℕ)
     List.sum_singleton, he] at hg
   exact ⟨hf, by omega, he⟩
 
-private def chainOf (b c d i : ℕ) : Fin 4 :=
+def chainOf (b c d i : ℕ) : Fin 4 :=
   if i < d then 0 else if i < d+c then 1 else if i < d+c+b then 2 else 3
 
 private theorem chain_index (a b c d i : ℕ)
@@ -233,11 +233,11 @@ private theorem positive_values (a b c d : ℕ)
   rw [he, if_pos (hp hn)] at hf hg
   exact ⟨hf,hg⟩
 
-private def weightedMask (b c d : ℕ) (P : Finset ℕ) (r : Fin 4) : ℤ :=
+def weightedMask (b c d : ℕ) (P : Finset ℕ) (r : Fin 4) : ℤ :=
   ∑ i ∈ P, if chainOf b c d i = r then
     (2 : ℤ)^(i-chainStart b c d (chainOf b c d i)) else 0
 
-private theorem packet_masses (a b c d : ℕ)
+theorem packet_masses (a b c d : ℕ)
     (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c) (hd : 2 ≤ d)
     (P : Finset ℕ) (hp : ∀ i ∈ P, i < size a b c d ∧ i ∉ negatives a b c d) :
     (∑ i ∈ P, oldValue a b c d i) =

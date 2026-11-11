@@ -19,13 +19,14 @@ open private A B L K SU SV SW window oldSeams newSeams oldHeads newHeads Windows
   D5.S3.Combinatorics.Circle.FourNegative.OppositeSecondFourthMaximum.Arithmetic
 open private full stock complement stock_split canonical_inventory stock_good stock_mass complement_mass
   from D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakPaidV.Banks
-open private size base newBase charge sourceMod oldValue newValue negatives chainLength chainStart
-  nextBase nextNewBase source_totals chain_values source_signs new_base_bounds from
+open private charge sourceMod nextBase nextNewBase source_totals chain_values source_signs new_base_bounds from
   D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm
+  (size base newBase oldValue newValue negatives chainLength chainStart)
 open private native_masses from
   D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
 open private four_strip from D5.S3.Combinatorics.Circle.FourNegative.AscendingD2.Schedule
-open private insertAt from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (insertAt)
 open private actual_nat_joint_iff from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
 
 private def rawBanks (a s c m n : ℕ) : Fin 4 → List ℕ :=
