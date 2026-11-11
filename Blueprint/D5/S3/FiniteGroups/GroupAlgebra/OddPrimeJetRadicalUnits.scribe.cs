@@ -1,0 +1,12 @@
+using static StrataLint.Scribe.DefinitionDsl;
+namespace StrataLint.Scribe.Blueprint.D5.S3.FiniteGroups.GroupAlgebra;
+internal sealed class OddPrimeJetRadicalUnitsDocument : IScribeDocumentDefinition
+{
+    private const string Prefix = "D5/S3/FiniteGroups/GroupAlgebra/OddPrimeJetRadicalUnits.";
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The principal units of the actual odd-prime commutant.", H("Principal units"), Blocks(
+            Paragraph(Text("Let p be any odd prime and K any field, in any universe, over F=ZMod p. For every F-linear q with q(1)=0, take the actual commutant algebra on polynomials of degree less than p. Its leading-zero ideal is J. Principal units are its invertible operators with leading scalar one.")),
+            Describe.Lean(DescribeId.Create("odd-prime-jet-principal-commute"), DeclarationHandle.Create(Prefix + "principalUnits_commute"), H("Commutativity"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Subtracting the identity from each principal unit gives two elements of the commutative ideal J, so the original units commute under actual composition."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("odd-prime-jet-principal-pow"), DeclarationHandle.Create(Prefix + "principalUnits_pow"), H("Prime exponent"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Each principal unit has p-th power one. For u=1+j, the characteristic-p binomial identity gives u^p=1+j^p=1. This includes p=3 and requires no logarithm or exponential construction."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("odd-prime-jet-principal-cardinality"), DeclarationHandle.Create(Prefix + "principalUnits_cardinality"), H("The exact order"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("If K is finite of order p^n, the principal unit group has order p^(n(p−2)+n²). Subtracting the identity identifies its underlying set with J. The actual commutant coordinate equivalence leaves p−2 free K-valued coefficients and one arbitrary F-linear endomorphism of K, of prime-field dimension n². No condition on T(1) or trace(T) is imposed. These statements use classical nilpotent-ideal and characteristic-p calculus and make no literature-novelty assertion."))), DescribeRole.Theorem))));
+}

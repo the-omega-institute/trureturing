@@ -47,8 +47,11 @@ bisimplicial total/diagonal statement and identifies the two maps; see
 Eilenberg–Mac Lane's *On the groups H(Π,n), II*, Theorem 2.1a (printed 51),
 uses normalized product/tensor quotient chains; see
 `eilenbergmaclane1954groupsii`. The software uses Moore kernels.
-No unproved identification of those normalization conventions or extra
-side identities is claimed.
+The classical product or quotient statements and the software normalization
+comparison do not by themselves supply the side identities for the received
+recursive Moore homotopy. The local universal paired-map cancellation and
+Moore-projector proof establish those identities without identifying the
+quotient and Moore conventions.
 
 ## Immutable source correspondence
 
@@ -77,8 +80,8 @@ The selected declarations keep their mathematical statements and proof
 bodies, up to the receiving identifier spellings and local definitional
 exposure in the face, degeneracy and flip calculations. The receiving
 namespace, imports and module boundaries differ;
-consumed private interfaces are exposed. Unused companion and frontal
-material and unused reflexive binding declarations are omitted.
+consumed private interfaces are exposed. Unused companion material and
+unused reflexive binding declarations are omitted.
 Canonical receiving spellings replace F₁/F₂, N₁/N₂ and M₁/M₂ fragments
 by FOne/FTwo, NOne/NTwo and MOne/MTwo, and totalMapHomotopy₂ by
 totalMapHomotopyTwo. Letter-level realize, prime and comp are
@@ -91,6 +94,18 @@ without an alias or duplicate implementation. The total-symmetry instance is reu
 that existing implementation is exposed without replacing its proof.
 The final two comparison consumers use conventional imports to receive
 that conventional host module. There is no extra Lake dependency.
+
+The additional frontal and norm closure is from a separate source snapshot,
+`LeanPool/lean-pool` at author release `fd0147a1ffe4f3c14c247574e148893d7cdf8cf6`:
+
+| Pool source | Bytes | SHA-256 | Retained closure |
+| --- | ---: | --- | --- |
+| `LeanPool/EilenbergZilber/BisimplicialDerivedOp.lean` | 99808 | `1eb49def7e416e4b03613000727ba8d0b792db9a285fcd34349245a19a8fcea9` | `IsFrontalHom`, `primeHom_frontal`, `primeHom_comp_degenZero` in `SpecialContractionShuffle`; operator frontality and norm closure in `SpecialContraction` |
+
+`hOp_horizontal_frontal` is a local calculation for the horizontal shuffle
+summands. The local ordered-repeat and signed-shuffle cancellation and
+Moore-projector argument establish the three side identities for the
+existing recursive normalized homotopy.
 
 ## Copyright, license and notice chain
 

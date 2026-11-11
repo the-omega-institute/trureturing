@@ -654,6 +654,18 @@ A diagonal degeneracy on the output side kills any composite after `retractionNT
 
 In this notation, lemma realize_comp_diagLetter_not_mono_comp_retractionNTwo {r s q : ℕ} (X : BisimplicialObject C) (θ : (⦋q⦌ : SimplexCategory) ⟶ ⦋s⦌) (hθ : ¬ Mono θ) (N : DerivedOp r s) : DerivedOp.realize X (DerivedOp.comp (Finsupp.single (⟨θ, θ⟩ : OpLetter s q) 1) N) ≫ (retractionNTwo X).f q = 0.
 
+**Theorem 1.47 (comp_single_right).**
+
+Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.comp_single_right`
+
+*Proof.* Machine-checked in Lean as `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.comp_single_right` (`✓ std3`). ∎
+
+*Citation.* Jeffrey Li (2026). *Bisimplicial Eilenberg–Zilber equivalence and recursive normalized homotopy*. URL: <https://github.com/LeanPool/lean-pool/tree/8bbde3a6de815108d41922c9362ebbe38422663a/LeanPool/EilenbergZilber>.
+
+*Commentary.*
+
+For every s,q,r : Nat, MTwo : DerivedOp q r, lOne : OpLetter s q and c : Int, MTwo.comp (Finsupp.single lOne c) = MTwo.sum (fun lTwo cTwo => Finsupp.single (lTwo.compLetter lOne) (c*cTwo)). Composition with a single input letter is the integer-linear sum over the output operator.
+
 ## References
 
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.D0op`
@@ -666,6 +678,7 @@ In this notation, lemma realize_comp_diagLetter_not_mono_comp_retractionNTwo {r 
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.comp`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.compLetter`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.comp_add_right`
+- Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.comp_single_right`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.faceOp`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.faceZero_comp_primeHom`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/DerivedOperators.face_zero_comp_D0`
