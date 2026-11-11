@@ -22,16 +22,16 @@ abbrev signature : DependentFamily.Signature where
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Prop
+  Output _ _ := ℕ
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : DependentFamily.Realization signature :=
-  DependentFamily.realize signature (fun _ p n => n ∈ orders p.2.1 p.2.2)
+  DependentFamily.realize signature (fun _ _ n => n)
     (fun e => nomatch e)
 
 def rejected : DependentFamily.Realization signature :=
-  DependentFamily.realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  DependentFamily.realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 
 def arena : DependentFamily.Arena where
   signature := signature
@@ -42,7 +42,7 @@ def arena : DependentFamily.Arena where
       IsUltrametricDist X ∧ Finite X ∧ Nonempty X ∧ Nat.card X = n ∧
         center X = c '' Set.Iic h ∧
         (∀ i ≤ h, ∀ x : X, Nat.card (Metric.sphere x (c i)) = b i)) ↔
-      b 0 = 1 ∧ R.readout () ⟨c, b, h⟩ n
+      b 0 = 1 ∧ R.readout () ⟨c, b, h⟩ n ∈ orders b h
 
 abbrev sourceScope := type_of%
   (@_root_.UltrametricCenterSphereOrders.possible_orders_unrestricted_iff)
@@ -61,13 +61,14 @@ theorem rejected_law : ¬ arena.Law rejected := by
   have hn : 1 ∈ orders b 0 := by simp [orders]
   have he := (_root_.UltrametricCenterSphereOrders.possible_orders_unrestricted_iff
     c b 0 1 rfl hc hb).mpr ⟨rfl, hn⟩
-  exact (h c b 0 1 rfl hc hb).mp he |>.2
+  have hz := (h c b 0 1 rfl hc hb).mp he |>.2
+  simpa [rejected, DependentFamily.realize, orders] using hz
 
 theorem dependence : ∀ i : Unit, ∃ (p : signature.Params) (s t : signature.State p),
     actual.readout i p s ≠ actual.readout i p t := by
   intro i
   let p : Parameters := ⟨fun _ => 0, fun _ => 1, 0⟩
-  exact ⟨p, 1, 2, by simp [actual, DependentFamily.realize, p, orders]⟩
+  exact ⟨p, 1, 2, by simp [actual, DependentFamily.realize]⟩
 
 def familyRegistration : DependentFamily.Registration arena sourceScope where
   actual := actual
@@ -99,7 +100,7 @@ noncomputable def registration :
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (DependentFamily.realize signature
-    (fun _ p n => n ∈ orders p.2.1 p.2.2) (fun e => nomatch e))
+    (fun _ _ n => n) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -109,7 +110,7 @@ noncomputable def registration :
     definition := none
     coordinates := #[0, 1, 2]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "arg", "arg"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "arg", "arg", "arg"]
       stateBinder := 3
       functionOperand := false
       stateOperand := none
