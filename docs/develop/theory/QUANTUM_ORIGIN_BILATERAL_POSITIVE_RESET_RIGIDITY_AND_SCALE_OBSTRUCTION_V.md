@@ -1692,3 +1692,165 @@ $$
 [D] E. Størmer，[Multiplicative properties of positive maps，math/0607090v1，§1](https://arxiv.org/abs/math/0607090v1)：正映射平方缺陷、标量态 Cauchy–Schwarz 及 definite-domain 思路；其 C*/JC 范围不自动含 Albert，故 (78.9)—(78.15) 使用一般有限 EJA 的直接谱、二次表示和 Peirce 证明。[C] J. van de Wetering，[Commutativity in Jordan Operator Algebras，1912.01903v1，§§2—3](https://arxiv.org/abs/1912.01903v1)：二次表示、算子交换及 Jordan 结构工具；本章未从文献中的全域近似同态稳定性直接移植任何指数。所有新增结论为给定前提下的纸面数学，不宣称形式核验、全球原创、最少公理或物理可得性。
 
 ## 追加锚（本行以下为增补区）
+
+## 79. 全框架缺陷的内在上包络与共同原映射修复
+
+本章第 65—72 章仍指第四卷，第 73—78 章指本卷。第 78 章证明，某个生成见证上的小缺陷不足以控制整个原接口：框架可接近真子代数，掩盖固定错误。本章把见证从外加数据中移除，以原几何所有完整框架上的最大缺陷定义一个标量；证明精确候选、第一接口的线性全域界，以及有界完整原接口类中对同一对原 $L,p$ 的条件修复。该包络保留全框架量词，不是一次实验或有限检测表。
+
+### 79.1 原对象与一个内在最大值
+
+**定义 79.1（完整原基底与全框架缺陷）。** $\mathrm{PRE}_0^{\rm mix}$ 完全取定义 78.1：每个 $X=A,D,E$ 非零有限维，使用整个紧态基、全部 proper 效应、纯态最小确认比较，及所有纯 $\xi,\eta$、所有原混态 $x$、$0\le t\le1$ 的混合余项二元律
+$$
+T^X_\xi(t\eta+(1-t)x)=tT^X_\eta(\xi)+(1-t)T^X_\xi(x).
+$$
+先按 77.19 恢复完整 $S$，再使用同一一般有限 EJA 条件桥，包括正对偶生成、忠实态效应对应、共同框架、面投影、项目性与滤波纯性。在其原规范迹坐标中，不预设复型、不可约性、结合性或三框架生成，允许直和、秩一和 Albert。
+唯一供应的接合与读回仍为全锥正实双线性 $L:D\times A\to E$ 和同一个全锥正实线性 $p:E\to D$；原参考 $\omega=1_D/\tau_D1_D$。全部内部量按原式
+$$
+\begin{aligned}
+K(a)&=pL(\omega,a),&M(a,b)&=pL(K(a),b),&J(a)&=M(a,1_A),\\
+H_{\mathrm s}(d)&=L(d,1_A),&B_1&=pH_{\mathrm s},&U&=M(1_A,1_A),\quad G=H_{\mathrm s}1_D,\quad F=P_{U^{-1/2}}M.
+\end{aligned} \tag{79.1}
+$$
+保留 $\operatorname{span}_{\mathbb R}M(A,A)=D$、$\operatorname{span}_{\mathbb R}L(D,A)=E$ 及全部实 $a,b$ 上的 $Z:B_1M(a,b)=\tau_A(a)Jb$。$L,p$ 的正性覆盖整个原锥和纠缠方向；同一个 $p$ 连续两次、原迹与原参考均不变。正性与两实张成先给 $U,G>0$，故零关系之前 $F$ 已正且 $F(1,1)=1_D$。
+令 $\mathcal F(A)$ 为原 $A$ 的全部完整本原 Jordan 框架；每个框架有 $n=\operatorname{rank}A$ 个成员。框架标签只用于求和。对 $B\in\mathcal F(A)$ 定义
+$$
+\begin{aligned}
+q_J(B)&=\|U\|_2^2-\sum_{e\in B}\|Je\|_2^2,\\
+q_H(B)&=\|G\|_2^2-\sum_{e,f\in B}\|H_{\mathrm s}F(e,f)\|_2^2,\\
+q(B)&=q_J(B)+q_H(B),\qquad
+\boxed{\mathcal D(L,p)=\max_{B\in\mathcal F(A)}q(B).}
+\end{aligned} \tag{79.2}
+$$
+这是 78.3 的单套同标方格缺陷在整个原框架几何上的上包络。既不指定外加框架，也不输入字典、生成系数或条件数；全框架量词本身没有被删除。
+
+**定义 79.2（原方向条件）。** 只在 $\mathcal D=0$ 恢复 PRE 后，按定义 78.2／76.2 读取 H13：同一个原总迹一混态 $\rho$ 在每个两端秩至少二的活跃块上，至少一项原边缘铺回差有严格负方向；原规范迹伴随及未经维数归一化的单位不变。非活跃块任取正元含零，活跃集空时资格为整个原态基。以原 $\widetilde M$ 与 $T_{\rm raw}(a,c)=L(Ja,c)$ 定义 $I^{\rm raw}=\widetilde T_{\rm raw}\widetilde M^{-1}$，要求同一合格原 $\rho$ 的整个原输出 $I^{\rm raw}\rho$ 正。C13 仍为 $I^{\rm raw}(D_+)\subseteq E_+$；此分阶段定义不赋予正缺陷对象未经证明的块结构。
+
+### 79.2 完整候选、内在性与第一接口的线性界
+
+**定理 79.3。** (79.2) 的最大值达到且非负，在固定 EJA 三元组上对原 $L,p$ 连续。它在保持原迹的 Jordan 同构以及框架重标号下不变。在整个原基底中，
+$$
+\mathcal D=0\quad\Longleftrightarrow\quad D_J+D_H,
+\qquad
+\boxed{\mathrm{PRE}_0^{\rm mix}+\mathcal D=0+\mathrm H13}
+\quad\Longleftrightarrow\quad\mathrm{PRE}+\mathrm{C13}. \tag{79.3}
+$$
+删去第二个等价两边的 H13、C13 仍为同一实际模型类的等价。没有三框架生成前件，也没有提前使用复型。
+此外，在任何原 $\mathrm{PRE}_0^{\rm mix}$ 模型中，全部正交正元均有
+$$
+0\le\langle Ja,Jb\rangle_D\le\frac{\mathcal D}{2}\|a\|_\infty\|b\|_\infty
+\qquad(a,b\in A_+,\ a\circ b=0). \tag{79.4}
+$$
+
+**证明。** 一般有限 EJA 的有标签完整本原框架集合非空紧：$e_i^2=e_i$、$\tau e_i=1$、互相正交与和为单位都是闭条件，每个 $e_i$ 的迹二范数一。$U,G>0$ 使 $F$ 连续，故 $q(B)$ 连续并取得最大值。每套 $Je$ 与 $H_{\mathrm s}F(e,f)$ 分别为 $U,G$ 的正分解，78.8 给
+$$
+q_J(B)=2\sum_{e<e'}\langle Je,Je'\rangle_D\ge0,\qquad
+q_H(B)=2\sum_{(e,f)<(e',f')}\langle H_{\mathrm s}F(e,f),H_{\mathrm s}F(e',f')\rangle_E\ge0. \tag{79.5}
+$$
+此时不要求 $F(e,f)$ 幂等。固定载体时，局部原映射参数及紧框架集的联合连续性给 $\sup_B|q_z(B)-q_{z'}(B)|\to0$，故最大值连续；它不是随模型移动的开生成族上的下确界。Jordan 同构保持单位、规范迹、二次表示及所有完整框架；将 $L,p,\omega$ 同时按原同构运输，(79.1) 的全部派生映射及 (79.2) 的求和与最大值均对应，给不变性。不能只运输一张边缘表而保留不相容的联合映射。
+正交正 $a,b$ 的支撑正交，可在支撑及其补面内谱分解，得到同一个完整框架 $B=(e_i)$ 及不交支持集 $I,J$，使 $a=\sum_{i\in I}\alpha_i e_i$、$b=\sum_{j\in J}\beta_j e_j$，系数非负。零元直接处理。于是
+$$
+\langle Ja,Jb\rangle=\sum_{i\in I,j\in J}\alpha_i\beta_j\langle Je_i,Je_j\rangle
+\le\|a\|_\infty\|b\|_\infty\sum_{i\in I,j\in J}\langle Je_i,Je_j\rangle
+\le\frac{q_J(B)}2\|a\|_\infty\|b\|_\infty,
+$$
+因为每个跨支持无序对只出现一次，其余交叉项非负。$q_J(B)\le q(B)\le\mathcal D$ 给 (79.4)，特别地 $\mathcal D=0$ 先恢复整个 $D_J$。
+现在才用不依赖 $D_H$/C13 的 65.3，取得原归一化的两边缘保单位 Jordan 嵌入 $\alpha=F(-,1),\beta=F(1,-)$、交换乘法算子以及 $F(a,b)=\alpha(a)\circ\beta(b)$；其满规范迹等距使每个 $F(B\times B)$ 为完整本原框架。
+取 $A$ 的任一实线性基，每个基元作谱分解。所得至多 $d=\dim_{\mathbb R}A$ 套完整框架的并集线性张满，因而 Jordan 生成 $A$；这只是证明中取有限子族，不是新的模型输入。$\mathcal D=0$ 使它们每套的 (79.5) 均逐项为零。同标方格的行和、列和分别包含 $\alpha(e),\beta(e)$，故其 Jordan 闭包包含 $\alpha(A),\beta(A)$，再由乘积及第一实张成覆盖整个 $D$。对 $H_{\mathrm s}$ 应用 75.4 的一般 EJA 闭包工具，或者直接用 76.3 的任意有限生成族版本，得到整个纠缠锥上的 $D_H$。
+逆向由 $D_J$ 得每套第一表及这些完整产品框架，由 $D_H$ 得每套第二表，故所有 $q(B)=0$。这证明第一个等价。原 H13 此后按 72.7—72.8 逐原成员检测 C13，取得完整候选及逆向。整个前向闭包没有预设复数、三生成框架或 Albert 的结合矩阵表示。证毕。
+
+第一层界 (79.4) 不需要字典或谱条件数；它使用整个原框架量词。三框架见证的有限压缩仍可按 78.5 等价取回，但从一个特选框架的小缺陷不能推导 (79.4)。$\mathcal D$ 是不变量，最大化框架集合可以有很多成员；标量与集值极值不提供自然有限选框架。标准量子模型的每个 $q(B)=0$，其最大化集就是全部框架，72.16 的自然选择障碍仍保留。
+
+### 79.3 固定错误不能藏在极值中
+
+**命题 79.4（完整转置平均模型的包络）。** 在 78.5 的固定完整原接口 (78.16) 中，$0<\lambda<1$ 时
+$$
+\boxed{\mathcal D_\lambda=8(1-\lambda^2)(7+2\lambda^2)>0.} \tag{79.6}
+$$
+同一个模型在全部单框架上的最小 $q$ 却为零；在真正生成整个 $A$ 的三框架族上，旧 $\delta$ 的下确界为零而没有零见证。因此最小单框架、生成族下确界与全框架最大值不能互换。
+
+**证明。** 保留 (78.16) 的全部原 $A,D,E,L,p,\omega$，包括同一个四维首腿偏迹、两实张成、全实 $Z$、$U=I_{16},G=I_{64}$ 和整个原锥上的 C13；该模型的 $D_J$ 失败、$D_H$ 成立。这里只计算新包络，不另造边缘代替实际接口。对单位 $v\in\mathbb C^4$ 及 $e=vv^*$，令 $a=(1+\lambda)/2,b=(1-\lambda)/2$。$e^T=\bar v v^T$，故 $\operatorname{Tr}(ee^T)=|v^Tv|^2$，从而
+$$
+\operatorname{Tr}[(T_\lambda e)^2]=a^2+b^2+2ab|v^Tv|^2
+=\frac{1+\lambda^2}{2}+\frac{1-\lambda^2}{2}|v^Tv|^2. \tag{79.7}
+$$
+对任意完整秩一框架 $B$，置 $S_B=\sum_{e\in B}\operatorname{Tr}[(T_\lambda e)^2]$、$d_B=4-S_B$。由 $0\le|v^Tv|^2\le1$，有 $0\le d_B\le2(1-\lambda^2)$。同一原接口的第一表平方范数和为 $4S_B$，第二表为 $4S_B^2$；因此
+$$
+q_J(B)=4d_B,\qquad q_H(B)=4d_B(8-d_B),\qquad q(B)=4d_B(9-d_B). \tag{79.8}
+$$
+最后的多项式在 $0\le d_B\le2$ 上严格递增。取两个不交 $2\times2$ 角中 $Y$ 的正负本原投影，即由 $(1,\pm i,0,0)/\sqrt2$、$(0,0,1,\pm i)/\sqrt2$ 给出的完整框架。四个向量均有 $v^Tv=0$，达到 $d_B=2(1-\lambda^2)$，代入即得 (79.6)。实正交基给 $d_B=q(B)=0$，证明最小单框架为零。78.5 的真生成族 $\mathfrak B_\theta$ 则满足 $\delta(\mathfrak B_\theta)\to0$，而固定的 $\langle Jp_+,Jp_-\rangle=2(1-\lambda^2)>0$ 排除任何生成族零见证。后者是非闭生成族上的下确界，不是已达到的生成族最小值。证毕。
+
+### 79.4 修复的是同一对原准备与读回
+
+**定理 79.5（没有源字典前件的共同原映射修复）。** 固定非零有限 EJA 三元组 $A,D,E$ 及其全部原态、效应、比较桥和迹坐标。给定 $R_0,\zeta,\alpha,\beta>0$、$\alpha\le\beta$，令 $\mathscr K$ 为满足整个 $\mathrm{PRE}_0^{\rm mix}$ 及以下原接口界的全部 $z=(L,p)$：
+$$
+\begin{gathered}
+\|\widetilde L\|,\|p\|\le R_0,\qquad
+\widetilde M\widetilde M^*\succeq\zeta^2 I_D,\qquad
+\widetilde L\widetilde L^*\succeq\zeta^2 I_E,\\
+\alpha1_D\le U\le\beta1_D,\qquad
+\alpha1_E\le G\le\beta1_E.
+\end{gathered} \tag{79.9}
+$$
+波浪号为原实线性化，算子范数与伴随使用原迹 Hilbert 张量坐标。没有框架输入、Jordan 字配方或源字典行下界。此类紧，其精确零集
+$$
+\mathscr Z=\{z\in\mathscr K:\mathcal D(z)=0\}
+=\mathscr K\cap\{\text{原 PRE 模型}\} \tag{79.10}
+$$
+有如下穷尽情形。$\mathscr K$ 空则结论无对象；$\mathscr K$ 非空而 $\mathscr Z$ 空，则 $\min_{\mathscr K}\mathcal D>0$。若 $\mathscr Z$ 非空，则有有限模量 $\eta_{\mathscr K}$，满足 $\eta_{\mathscr K}(0)=0$、$\eta_{\mathscr K}(t)\to0$，使每个 $z\in\mathscr K$ 均有同类中的精确原模型 $z_0=(L_0,p_0)\in\mathscr Z$，且
+$$
+\left(\|\widetilde L-\widetilde L_0\|_{\rm HS}^2+\|p-p_0\|_{\rm HS}^2\right)^{1/2}
+\le\eta_{\mathscr K}(\mathcal D(z)). \tag{79.11}
+$$
+$z_0$ 使用同一个 $p_0$ 连续两次、同一原 $\omega$、全部原锥和全部实 $Z$；并非分别修复两个派生映射后假定它们相容。令 $r_J,r_H$ 分别为谱范数至多一的全部正交正元对上的两层残差最大值。若 $n=\operatorname{rank}A,m=\operatorname{rank}D$，则
+$$
+r_J\le\mathcal D/2,\qquad
+r_H\le2R_0nm\,\eta_{\mathscr K}(\mathcal D). \tag{79.12}
+$$
+这里不主张显式幂率或可计算的修复算法。
+
+**证明。** 原映射空间有限维，范数界给有界性。全锥正性和全实 $Z$ 闭；两条行下界保持原实张成，谱下界保持 $U,G$ 内点和 $F$ 连续。其余比较几何已经固定，所以 $\mathscr K$ 闭且紧。由 79.3，$\mathcal D$ 连续，零点恰为同一原 PRE，而不是换载体或换边缘的模型。紧集上的正连续函数取得严格正最小值，给空零集时的间隙。
+若零集非空，它是紧集。使用 (79.11) 左端定义原映射对的距离，最近零点存在。定义
+$$
+\eta_{\mathscr K}(t)=\sup\bigl(\{\operatorname{dist}(z,\mathscr Z):z\in\mathscr K,\ \mathcal D(z)\le t\}\cup\{0\}\bigr). \tag{79.13}
+$$
+它有限且零点处为零。若 $t_j\downarrow0$ 而距离上确界不趋零，取与零集保持固定正距离的近似极值点并抽紧子列；其极限同属 $\mathscr K$，连续性给 $\mathcal D=0$，却仍与零集保持正距离，矛盾。该紧性论证是成熟有限维工具；实质应用在于其零集已识别为保留同一原定义关系的完整 PRE 对。
+第一界由 (79.4)。对最近的 $z_0$，$H_0=L_0(-,1_A)$ 精确保零。$\|1_A\|_2=\sqrt n$ 给
+$$
+\|H_{\mathrm s}\|,\|H_0\|\le R_0\sqrt n,\qquad
+\|H_{\mathrm s}-H_0\|\le\sqrt n\|\widetilde L-\widetilde L_0\|_{\rm HS}.
+$$
+若 $d,d'\in D_+$ 正交、谱范数至多一，则二者迹二范数至多 $\sqrt m$。从 $\langle H_0d,H_0d'\rangle=0$ 展开差，按两个因子的范数估计，得
+$$
+0\le\langle H_{\mathrm s}d,H_{\mathrm s}d'\rangle
+\le2R_0nm\|\widetilde L-\widetilde L_0\|_{\rm HS}.
+$$
+取全域最大值并用 (79.11)，得第二界。证毕。
+
+**推论 79.6（全原插入正性下的修复范围）。** 若 $\dim_{\mathbb R}D=(\dim_{\mathbb R}A)^2$，则 (79.9) 使 $\widetilde M$ 可逆且逆一致有界。令 $\mathscr K_C$ 为 $\mathscr K$ 中还满足整个原 C13 的子集。它紧，79.5 的间隙／修复结论可在其中原样使用；零点恰为同一原 PRE+C13。维数不等时，$\mathscr K$ 中没有精确零点，故非空 $\mathscr K$ 有严格正缺陷间隙。
+
+**证明。** 同维时行下界给 $\|\widetilde M^{-1}\|\le\zeta^{-1}$，故由同一 $L,p$ 构造的 $I^{\rm raw}=\widetilde T_{\rm raw}\widetilde M^{-1}$ 连续。固定整个原锥上的正性是闭条件，$\mathscr K_C$ 因而为紧集，且每个最近零点仍具有整个原 C13。对它用 79.3—79.5 即得结论。维数不等时，若存在零点，79.3 恢复 $D_J$，65.3 将给 $\widetilde F:A\otimes_{\mathbb R}A\to D$ 满迹等距同构，与维数矛盾。证毕。
+
+全 C13 是此推论的显式额外前件，不是把正缺陷时尚无块定义的 H13 擅自解释为近似资格。原单混态方向条件的有噪版本仍需负方向裕量、活跃块质量与滤波控制；本章未给这条桥。不同 EJA 类型之间的近似分类、统一幂率与自然修复选择也不由固定载体紧性得到。
+
+### 79.5 量子公理的回接与几何范围
+
+**推论 79.7（完整精确理论的消费者）。** 完整候选 (79.3) 精确成立时，它恢复同一个原 PRE+C13，因而 78.7 的消费者和所有额外前件逐项保留：
+
+| 既有量子结构 | 从本候选回接的条件链 |
+| --- | --- |
+| 复 Hilbert 表示、密度态、全效应与 Born 迹配对 | 完整混合比较入口先恢复 $S$；原一般 EJA 桥及两层全域保零，沿 65—66、75.7 给有限复 Hermitian 直和，纯态几何为 $\bigsqcup_i\mathbb{CP}^{n_i-1}$。 |
+| 普通二份、三份辅助张量及相对方向 | 精确 PRE 后的原 H13 恢复 C13，沿 72.7—72.8 排除错误相对转置；仍检测同一合格原混态的整个原输出。 |
+| 原准备的标准归一化与偏迹 | 仍另需 73.2、73.10—73.16 的双侧正重置补全及一次原总迹锚 $\mathrm A_0$；零包络不把原正滤波权重自动变成单位。 |
+| CP 事件、仪器、Lüders 更新 | 仍需 69.1—69.11 的实际旁观者、同事件联合正性、足够大参考和局部／原联合两预算；共同重置的输入行权重一致、锐效应与确定接受态逐点不变仍按原合同另付。 |
+| Hamiltonian 动力学 | 仍需原物理时间的连续齐次可逆 $*$-自同构群；静态关系不产生该群、时间尺度或 $\hbar$。 |
+
+**证明与边界。** 用 79.3 将完整候选直接代入 78.7，而非重证已有消费者。79.5 的近似结论只在固定载体和 (79.9) 的原接口类内给到某个精确 PRE 对的距离；79.6 才在额外整个原 C13 下给 PRE+C13 修复。它们不产生原实际仪器、装置、全菜单、四份以上组合、无限维一致性或新物理时间。完整原 $\Omega$ 的所有准备、事件、参考、副本、实际相关联合、零与不等质量、单位与时钟、ready 与 flags、失败、停止、销毁、返回、未来以及每个原全菜单与中间切口义务，均不因包络定义而删去。证毕。
+
+**几何解释。** 仍是正分解的 Pythagorean 饱和：总向量平方长度减去部分平方长度之和，恰为全部交叉重叠的两倍。上一章以一套生成见证传播零关系；这里直接在原完整框架几何上取上包络，把外给见证和字典从候选的输入中移去。$\mathcal D=0$ 要求每套原分解都饱和，正好与已有精确候选等价。内在性指缺陷及其量词由原结构定义；零约束仍筛选模型，79.4 证明它并非定义自动恒真。其简洁性是同一原模型类中自由输入和定义层级的减少；全称框架信息被保留，因此不据此推断独立物理假设更少、有限认证成本更低或存在自然最优有限实验。
+
+**完整白话。** 保留所有状态和测试、随机制备的完整比较规则，以及一个准备和同一个读回连续用两次的原系统。现在不先挑几套方向来替整个空间作证，而是把原几何中每一套完整互斥方向都放进同一个公式：先看第一接口，再把左右相同方向排成双份方格看第二接口。每张图中各部分都是正的，总和固定；总量长度的平方减去部分长度平方之和，记录的就是交叉重叠。把所有图中最大的这项重叠叫作缺陷。最大值为零，每一张图就都没有漏出的重叠，原来的全域保零关系随之恢复；随后仍用原混态的方向条件排除错误转置，并按各自额外条件接回量子态、Born 配对、张量和过程。取最大值也堵住了上一章的漏洞：哪怕特选方向越来越贴近平面、把错误藏起来，总有另一张完整图把它照出来。若整个原接口保持有界且不塌缩，小最大缺陷还保证同一对准备、读回接近某个精确原模型；若这样的精确模型根本不存在，缺陷便隔着一条正间隙。公式少了外加见证，却仍要看遍所有方向，不能把这种简洁直接说成一次实验或无条件推出全部物理。
+
+**数学来源与归属。** [P] [本卷第 78 章，固定文本 0790b557](https://github.com/the-omega-institute/trureturing/blob/0790b557ba64921e02107cc9da87ddc443a83610/docs/develop/theory/QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_V.md)：78.1—78.2 的完整原基底、78.4 的精确零集、78.5 的固定完整接口反例、78.6 的条件紧性及 78.7 的全部消费者边界。本章新增的是不带生成见证的全框架上包络、第一层无字典线性界、原反例的极值公式以及对共同原映射对的条件修复，而非平方展开或紧性工具本身。
+[J] [本卷第 75—77 章，同固定文本](https://github.com/the-omega-institute/trureturing/blob/0790b557ba64921e02107cc9da87ddc443a83610/docs/develop/theory/QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_V.md)：75.4 的一般有限 EJA 闭包、76.3 的任意有限生成族版本、77.19 的混合余项入口均按原完整前件复用。[R] [第四卷第 65—72 章，同固定文本](https://github.com/the-omega-institute/trureturing/blob/0790b557ba64921e02107cc9da87ddc443a83610/docs/develop/theory/QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES_IV.md)：65.3 第一接口满等距、66 的分类、69 的过程合同、72.7—72.8 的原方向检测及 72.16 自然有限选择障碍。一般有限 EJA 的谱分解、固定紧参数集上极值的连续性、有限维紧性与距离零集收敛均为成熟工具，证明内部已给出其所需条件；未从误差界文献移植未核条件的幂指数。新增结论为这些原前提下的仓内纸面综合推导，不声称内核核验、全球原创、最少物理公理或物理可得性。
+
+## 追加锚（本行以下为增补区）
