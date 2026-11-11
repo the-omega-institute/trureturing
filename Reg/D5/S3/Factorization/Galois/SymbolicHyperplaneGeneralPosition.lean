@@ -1,6 +1,9 @@
 import D5.S3.Factorization.Galois.SymbolicHyperplaneGeneralPosition
 import Reg.Support.DependentFamily
 import LeanInformationAuditInterface.Contract.Registration
+import Mathlib.Algebra.Field.ULift
+
+/-! Exact family bridges for symbolic GP and its common-row partition consumer. -/
 
 open D5.S3.Factorization.Galois.SymbolicHyperplaneGeneralPosition
 open D5.S3.Factorization.Galois.ActualWindowCommonKernel.HyperplaneRank
@@ -127,8 +130,8 @@ def rejected : Realization signature := realize _ (fun _ _ _ _ => False) (fun e 
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ {F : Type u} {ι : Type v} {β : Type w} {κ : β → Type t}
-    [Field F] [Fintype β] [∀ i, Fintype (κ i)] [CharZero F]
+  Law R := ∀ {F : Type u} {ι : Type v} [Field F] {β : Type w} {κ : β → Type t}
+    [Fintype β] [∀ i, Fintype (κ i)] [CharZero F]
     (b : ∀ i, ι → κ i → F) (k : β) (s : Finset ι) (_hk : ∀ σ ∈ s, b k σ ≠ 0),
     ∃ P : Finpartition s,
       R.readout () ()
@@ -185,7 +188,17 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
-  sourceSelection := none
+  sourceSelection := some {
+    owner := `D5.S3.Factorization.Galois.SymbolicHyperplaneGeneralPosition
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "arg", "body", "fn", "arg", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
