@@ -14,21 +14,21 @@ internal sealed class ActualHigherMassCoercivityDocument : IScribeDocumentDefini
                 DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualHigherMassCoercivity.actual_dual_estimate"),
                 H("actual dual estimate"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Complete Lean statement:\ntheorem actual_dual_estimate {X s : ℝ} (hX : exp 2 ≤ X) {n : ℕ} (hn : 1 ≤ n)\n    (hs : 0 < s) (hs2 : s ≤ 1 / 2) :\n    |higherMass n - higherMass (strictInteger (referencePrice X))| ≤\n      (actualDefect X n - completeFirstLayerLoss X n) * X * log X / s +\n        400 * s * sqrt X * log X + 400 * log X ^ 2"))),
+                Blocks(Paragraph(Text("Complete Lean statement: theorem actual_dual_estimate {X s : ℝ} (hX : exp 2 ≤ X) {n : ℕ} (hn : 1 ≤ n) (hs : 0 < s) (hs2 : s ≤ 1 / 2) : |higherMass n - higherMass (strictInteger (referencePrice X))| ≤ (actualDefect X n - completeFirstLayerLoss X n) * X * log X / s + 400 * s * sqrt X * log X + 400 * log X ^ 2"))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("actualhighermasscoercivity-balance-response"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualHigherMassCoercivity.balance_response"),
                 H("balance response"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Complete Lean statement:\ntheorem balance_response {Δ R q L : ℝ} (hR : 0 ≤ R) (hq : 0 < q) (hL : 0 < L)\n    (hbound : ∀ s : ℝ, 0 < s → s ≤ 1 / 2 →\n      Δ ≤ R * q ^ 2 * L / s + 400 * s * q * L + 400 * L ^ 2) :\n    Δ ≤ 1000 * (q * sqrt q * L * sqrt R + q ^ 2 * L * R + L ^ 2)"))),
+                Blocks(Paragraph(Text("Complete Lean statement: theorem balance_response {Δ R q L : ℝ} (hR : 0 ≤ R) (hq : 0 < q) (hL : 0 < L) (hbound : ∀ s : ℝ, 0 < s → s ≤ 1 / 2 → Δ ≤ R * q ^ 2 * L / s + 400 * s * q * L + 400 * L ^ 2) : Δ ≤ 1000 * (q * sqrt q * L * sqrt R + q ^ 2 * L * R + L ^ 2)"))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("actualhighermasscoercivity-actual-complete-higher-mass-coercivity"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualHigherMassCoercivity.actual_complete_higher_mass_coercivity"),
                 H("actual complete higher mass coercivity"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Complete Lean statement:\ntheorem actual_complete_higher_mass_coercivity {X : ℝ} (hX : exp 2 ≤ X)\n    (n : ℕ) (hn : 1 ≤ n) :\n    let R := actualDefect X n - completeFirstLayerLoss X n\n    0 ≤ R ∧\n    |higherMass n - higherMass (strictInteger (referencePrice X))| ≤\n      1000 * (X ^ (3 / 4 : ℝ) * log X * sqrt R + X * log X * R + log X ^ 2)"))),
+                Blocks(Paragraph(Text("Complete Lean statement: theorem actual_complete_higher_mass_coercivity {X : ℝ} (hX : exp 2 ≤ X) (n : ℕ) (hn : 1 ≤ n) : let R := actualDefect X n - completeFirstLayerLoss X n 0 ≤ R ∧ |higherMass n - higherMass (strictInteger (referencePrice X))| ≤ 1000 * (X ^ (3 / 4 : ℝ) * log X * sqrt R + X * log X * R + log X ^ 2)"))),
                 DescribeRole.Theorem)
         )));
 }

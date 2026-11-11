@@ -14,7 +14,7 @@ internal sealed class ActualHigherMassResponseDocument : IScribeDocumentDefiniti
                 DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualHigherMassResponse.actual_higher_mass_response"),
                 H("actual higher mass response"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Complete Lean statement:\ntheorem actual_higher_mass_response {X s : ℝ} (hX : exp 2 ≤ X)\n    (hs : 0 < s) (hs2 : s ≤ 1 / 2) :\n    0 ≤ higherMass (strictInteger ((1 - s) * referencePrice X)) -\n      higherMass (strictInteger ((1 + s) * referencePrice X)) ∧\n    higherMass (strictInteger ((1 - s) * referencePrice X)) -\n      higherMass (strictInteger ((1 + s) * referencePrice X)) ≤\n      400 * (s * sqrt X * log X + log X ^ 2)"))),
+                Blocks(Paragraph(Text("Complete Lean statement: theorem actual_higher_mass_response {X s : ℝ} (hX : exp 2 ≤ X) (hs : 0 < s) (hs2 : s ≤ 1 / 2) : 0 ≤ higherMass (strictInteger ((1 - s) * referencePrice X)) - higherMass (strictInteger ((1 + s) * referencePrice X)) ∧ higherMass (strictInteger ((1 - s) * referencePrice X)) - higherMass (strictInteger ((1 + s) * referencePrice X)) ≤ 400 * (s * sqrt X * log X + log X ^ 2)"))),
                 DescribeRole.Theorem)
         )));
 }

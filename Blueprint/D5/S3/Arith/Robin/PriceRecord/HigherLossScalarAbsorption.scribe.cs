@@ -14,21 +14,21 @@ internal sealed class HigherLossScalarAbsorptionDocument : IScribeDocumentDefini
                 DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/HigherLossScalarAbsorption.scalar_budget_reduction"),
                 H("scalar budget reduction"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Complete Lean statement:\ntheorem scalar_budget_reduction {X T V W Δ δ R : ℝ}\n    (hX : exp 2 ≤ X) (hT : 0 ≤ T) (hV : 0 ≤ V) (hW : 0 ≤ W)\n    (hVT : V ≤ T) (hWΔ : W ≤ Δ + δ) (hδ0 : 0 ≤ δ)\n    (hδ : δ ≤ 2 * log X) (hhalf : log X / 2 ≤ log (X / 2))\n    (hR : R ≤ 6 * V * W / (X ^ 2 * log (X / 2)) + δ / (X * log X))\n    (hΔ : Δ ≤ 1000 * (X ^ (3 / 4 : ℝ) * log X * sqrt R +\n      X * log X * R + log X ^ 2)) :\n    R ≤ a * T / X ^ (5 / 4 : ℝ) * sqrt R + a * (T / X) * R +\n      d * T * log X / X ^ 2 + 2 / X"))),
+                Blocks(Paragraph(Text("Complete Lean statement: theorem scalar_budget_reduction {X T V W Δ δ R : ℝ} (hX : exp 2 ≤ X) (hT : 0 ≤ T) (hV : 0 ≤ V) (hW : 0 ≤ W) (hVT : V ≤ T) (hWΔ : W ≤ Δ + δ) (hδ0 : 0 ≤ δ) (hδ : δ ≤ 2 * log X) (hhalf : log X / 2 ≤ log (X / 2)) (hR : R ≤ 6 * V * W / (X ^ 2 * log (X / 2)) + δ / (X * log X)) (hΔ : Δ ≤ 1000 * (X ^ (3 / 4 : ℝ) * log X * sqrt R + X * log X * R + log X ^ 2)) : R ≤ a * T / X ^ (5 / 4 : ℝ) * sqrt R + a * (T / X) * R + d * T * log X / X ^ 2 + 2 / X"))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("higherlossscalarabsorption-scalar-absorption"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/HigherLossScalarAbsorption.scalar_absorption"),
                 H("scalar absorption"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Complete Lean statement:\ntheorem scalar_absorption {X E R : ℝ} (hX : 1 < X) (hE : 0 ≤ E) (hR0 : 0 ≤ R)\n    (hsmall : a * ((E + 5 * sqrt X) / X) ≤ 1 / 4)\n    (hlog : log X ^ 2 ≤ sqrt X)\n    (hR : R ≤ a * (E + 5 * sqrt X) / X ^ (5 / 4 : ℝ) * sqrt R +\n      a * ((E + 5 * sqrt X) / X) * R +\n      d * (E + 5 * sqrt X) * log X / X ^ 2 + 2 / X) :\n    R ≤ finalConstant * (E ^ 2 / X ^ (5 / 2 : ℝ) + 1 / X)"))),
+                Blocks(Paragraph(Text("Complete Lean statement: theorem scalar_absorption {X E R : ℝ} (hX : 1 < X) (hE : 0 ≤ E) (hR0 : 0 ≤ R) (hsmall : a * ((E + 5 * sqrt X) / X) ≤ 1 / 4) (hlog : log X ^ 2 ≤ sqrt X) (hR : R ≤ a * (E + 5 * sqrt X) / X ^ (5 / 4 : ℝ) * sqrt R + a * ((E + 5 * sqrt X) / X) * R + d * (E + 5 * sqrt X) * log X / X ^ 2 + 2 / X) : R ≤ finalConstant * (E ^ 2 / X ^ (5 / 2 : ℝ) + 1 / X)"))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("higherlossscalarabsorption-log-rounding-eventually"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/HigherLossScalarAbsorption.log_rounding_eventually"),
                 H("log rounding eventually"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Complete Lean statement:\ntheorem log_rounding_eventually : ∀ᶠ X : ℝ in atTop, log X ^ 2 ≤ sqrt X"))),
+                Blocks(Paragraph(Text("Complete Lean statement: theorem log_rounding_eventually : ∀ᶠ X : ℝ in atTop, log X ^ 2 ≤ sqrt X"))),
                 DescribeRole.Theorem)
         )));
 }

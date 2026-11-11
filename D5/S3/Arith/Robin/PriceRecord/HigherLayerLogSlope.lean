@@ -35,8 +35,9 @@ theorem powerSum_nonneg {u : ℝ} (hu : 0 ≤ u) (j : ℕ) : 0 ≤ powerSum j u 
 theorem last_power_le_sum {u : ℝ} (hu : 0 ≤ u) {j : ℕ} (hj : 1 ≤ j) :
     u ^ j ≤ powerSum j u := by
   obtain ⟨k, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : j ≠ 0)
+  change u ^ (k + 1) ≤ powerSum (k + 1) u
   rw [powerSum_succ]
-  linarith [powerSum_nonneg hu k]
+  exact le_add_of_nonneg_left (powerSum_nonneg hu k)
 
 theorem powerSum_pos {u : ℝ} (hu : 0 < u) {j : ℕ} (hj : 1 ≤ j) :
     0 < powerSum j u := (pow_pos hu j).trans_le (last_power_le_sum hu.le hj)
@@ -110,10 +111,8 @@ theorem beta_nat {p j : ℕ} (hp : p.Prime) (hj : 1 ≤ j) :
   have hs := powerSum_pos hp0 hj
   have hg := powerSum_geometric j (p : ℝ)
   have hden : 1 - (p : ℝ)⁻¹ ^ j ≠ 0 := by
-    rw [inv_pow, ← one_div]
-    have := one_div_lt_one_div_of_lt (by norm_num : (0 : ℝ) < 1) hpow
-    norm_num at this
-    linarith
+    rw [inv_pow]
+    exact sub_ne_zero.mpr (ne_of_gt ((inv_lt_one₀ (pow_pos hp0 j)).mpr hpow))
   have heq : (1 - (p : ℝ)⁻¹ ^ (j + 1)) / (1 - (p : ℝ)⁻¹ ^ j) =
       1 + 1 / powerSum j (p : ℝ) := by
     apply (div_eq_iff hden).mpr
@@ -139,9 +138,13 @@ theorem log_beta_hasDerivAt {u : ℝ} (hu : 2 ≤ u) {j : ℕ} (hj : 1 ≤ j) :
   have hB := hG.div (Real.hasDerivAt_log hu0.ne') hl.ne'
   have h := hB.log (beta_pos hu hj).ne'
   convert h using 1 <;> try rfl
-  dsimp [logarithmicSlope, beta, gain]
-  field_simp [hu0.ne', hs.ne', (show log (1 + 1 / powerSum j u) ≠ 0 from hg.ne'),
-    hl.ne', (show 1 + 1 / powerSum j u ≠ 0 by positivity)]
+  simp only [Pi.add_apply, Pi.div_apply, zero_mul, one_mul, zero_sub, zero_add]
+  change -logarithmicSlope j u / u =
+    ((-(powerSumDerivative j u) / powerSum j u ^ 2 / (1 + 1 / powerSum j u) *
+      log u - gain j u * u⁻¹) / log u ^ 2) / (gain j u / log u)
+  unfold logarithmicSlope
+  field_simp [hu0.ne', hs.ne', hg.ne', hl.ne',
+    (show 1 + 1 / powerSum j u ≠ 0 by positivity)]
   <;> ring
 
 /-- Uniform for ALL j>=2 and ALL real u>=2. -/
@@ -177,12 +180,14 @@ theorem logarithmicSlope_ge {u : ℝ} (hu : 2 ≤ u) {j : ℕ} (hj : 2 ≤ j) :
   have hA0 : 0 ≤ u * powerSumDerivative j u / powerSum j u := by linarith
   have hmul := mul_le_mul hA hB (by norm_num : (0 : ℝ) ≤ 4 / 5) hA0
   have hl : 0 < log u := log_pos (by linarith)
-  dsimp [logarithmicSlope]
-  nlinarith only [hmul, hj0, mul_nonneg hA0 (one_div_pos.mpr hl).le]
+  unfold logarithmicSlope
+  exact (show (j : ℝ) / 3 ≤ (j : ℝ) / 2 * (4 / 5) by linarith).trans
+    (hmul.trans (le_add_of_nonneg_right (one_div_pos.mpr hl).le))
 
 theorem beta_continuousOn {j : ℕ} (hj : 1 ≤ j) :
     ContinuousOn (beta j) (Set.Ici 2) := by
   intro u hu
+  change 2 ≤ u at hu
   have hS := (powerSum_hasDerivAt j u).continuousAt
   have hs := powerSum_pos (by linarith : 0 < u) hj
   have h := ((continuousAt_const.add (continuousAt_const.div hS hs.ne')).log
@@ -199,7 +204,7 @@ theorem log_beta_drop {j : ℕ} (hj : 2 ≤ j) {u v : ℝ}
       HasDerivAt f (((j : ℝ) / 3 - logarithmicSlope j t) / t) t := by
     convert (log_beta_hasDerivAt ht (by omega : 1 ≤ j)).add
       ((Real.hasDerivAt_log (by linarith : t ≠ 0)).const_mul ((j : ℝ) / 3)) using 1 <;>
-      dsimp [f] <;> ring
+      try rfl <;> ring
   have hanti : AntitoneOn f (Set.Ici 2) := by
     apply antitoneOn_of_hasDerivWithinAt_nonpos (convex_Ici 2)
     · intro t ht
@@ -209,7 +214,7 @@ theorem log_beta_drop {j : ℕ} (hj : 2 ≤ j) {u v : ℝ}
     · intro t ht
       exact div_nonpos_of_nonpos_of_nonneg
         (sub_nonpos.mpr (logarithmicSlope_ge (interior_subset ht) hj))
-        (by have := interior_subset ht; linarith)
+        (by have ht2 : 2 ≤ t := interior_subset ht; linarith)
   have h := hanti hu (hu.trans huv) huv
   dsimp [f] at h
   rw [log_div (by linarith : v ≠ 0) (by linarith : u ≠ 0),
@@ -219,6 +224,8 @@ theorem log_beta_drop {j : ℕ} (hj : 2 ≤ j) {u v : ℝ}
 theorem beta_strictAntiOn {j : ℕ} (hj : 2 ≤ j) :
     StrictAntiOn (beta j) (Set.Ici 2) := by
   intro u hu v hv huv
+  change 2 ≤ u at hu
+  change 2 ≤ v at hv
   have h := log_beta_drop hj hu huv.le
   have hratio : 1 < v / u := (lt_div_iff₀ (by linarith : 0 < u)).mpr (by linarith)
   have hjpos : 0 < (j : ℝ) := by exact_mod_cast (show 0 < j by omega)
