@@ -48,17 +48,25 @@ theorem normalized_gain_bounds {j : ℕ} (hj : 1 ≤ j) {u : ℝ} (hu : 2 ≤ u)
     simpa only [gain, he] using hh
   have hgeom : (powerSum j u + 1) * (u - 1) = u ^ (j + 1) - 1 := by
     have hh := powerSum_geometric j u
-    rw [pow_succ] at *
-    nlinarith only [hh]
+    calc
+      (powerSum j u + 1) * (u - 1) = (u - 1) * powerSum j u + (u - 1) := by ring
+      _ = u * (u ^ j - 1) + (u - 1) := by rw [hh]
+      _ = u ^ (j + 1) - 1 := by rw [pow_succ]; ring
   have hnorm : 1 - 1 / u ≤ u ^ j / (powerSum j u + 1) := by
     apply (le_div_iff₀ (by positivity : 0 < powerSum j u + 1)).mpr
     have he : u * ((1 - 1 / u) * (powerSum j u + 1)) = u ^ j * u - 1 := by
-      field_simp [hu0.ne']
-      nlinarith only [hgeom]
-    apply (mul_le_mul_left hu0).mp
-    nlinarith only [he]
+      calc
+        u * ((1 - 1 / u) * (powerSum j u + 1)) =
+            (powerSum j u + 1) * (u - 1) := by
+              field_simp [hu0.ne']
+        _ = u ^ (j + 1) - 1 := hgeom
+        _ = u ^ j * u - 1 := by rw [pow_succ]
+    apply le_of_mul_le_mul_left ?_ hu0
+    rw [he]
+    linarith
   have hlo : 1 - 1 / u ≤ gain j u * u ^ j := hnorm.trans (by
-    simpa only [div_eq_mul_inv, mul_comm] using mul_le_mul_of_nonneg_right hlow hp.le)
+    simpa only [one_mul, div_eq_mul_inv, mul_comm] using
+      mul_le_mul_of_nonneg_right hlow hp.le)
   have hhi : gain j u * u ^ j ≤ 1 := by
     have hh := mul_le_mul_of_nonneg_right (gain_le_inv_pow hu0 hj) hp.le
     simpa only [one_div_mul_cancel hp.ne'] using hh
@@ -123,8 +131,8 @@ private theorem scaled_root_error {j : ℕ} (hj : 2 ≤ j) :
     apply hh.congr'
     filter_upwards [eventually_gt_atTop (0 : ℝ), (root_atTop hj).eventually_gt_atTop 0]
       with X hX hu
+    dsimp only [Function.comp_def, Pi.div_apply]
     field_simp [hX.ne', hu.ne', (rpow_pos_of_pos hX ((j : ℝ)⁻¹)).ne']
-    ring
   have hbound : ∀ᶠ X : ℝ in atTop,
       |log X ^ 2 * η j X| ≤ 2 * (log X ^ 2 / cutoff j (referencePrice X)) := by
     filter_upwards [(root_atTop hj).eventually_ge_atTop 2] with X hu
@@ -133,7 +141,10 @@ private theorem scaled_root_error {j : ℕ} (hj : 2 ≤ j) :
     have he : |η j X| ≤ 2 / cutoff j (referencePrice X) := by
       dsimp [η]
       rw [abs_of_nonpos hhi]
-      linarith only [hlo]
+      have hlo' : -(2 / cutoff j (referencePrice X)) ≤
+          log (gain j (cutoff j (referencePrice X)) * cutoff j (referencePrice X) ^ j) := by
+        simpa only [neg_div] using hlo
+      linarith only [hlo']
     have hh := mul_le_mul_of_nonneg_left he (sq_nonneg (log X))
     convert hh using 1 <;> ring
   apply squeeze_zero_norm' hbound
@@ -145,9 +156,11 @@ private theorem F_secant {L a b : ℝ} (hL : 0 < L) (ha : 0 ≤ a) (hb : 0 ≤ b
       HasDerivAt (F L) (1 + 1 / (L + x)) x := by
     have hh := (hasDerivAt_id x).add
       (((hasDerivAt_id x).div_const L).const_add 1 |>.log (by positivity : 1 + x / L ≠ 0))
-    convert hh using 1 <;> dsimp [F]
-    field_simp [hL.ne', (by positivity : L + x ≠ 0)]
-    ring
+    convert hh using 1
+    · funext y
+      rfl
+    · simp only [id_eq]
+      field_simp [hL.ne', (by positivity : L + x ≠ 0)]
   have hordered (a b : ℝ) (ha : 0 ≤ a) (hab : a < b) :
       ∃ q : ℝ, 1 ≤ q ∧ q ≤ 1 + 1 / L ∧ F L b - F L a = (b - a) * q := by
     have hc : ContinuousOn (F L) (Set.Icc a b) := fun x hx =>
@@ -165,7 +178,7 @@ private theorem F_secant {L a b : ℝ} (hL : 0 < L) (ha : 0 ≤ a) (hb : 0 ≤ b
   rcases lt_trichotomy a b with hab | hab | hab
   · exact hordered a b ha hab
   · subst b
-    exact ⟨1, le_rfl, by positivity, by ring⟩
+    exact ⟨1, le_rfl, by linarith [one_div_pos.mpr hL], by ring⟩
   · obtain ⟨q, hq0, hq1, hq⟩ := hordered b a hb hab
     exact ⟨q, hq0, hq1, by linarith only [hq]⟩
 
@@ -202,6 +215,8 @@ theorem actual_two_four_curvature_tendsto :
       tendsto_const_nhds.add (haL.const_mul 2)
   have hscaledz : Tendsto (fun X : ℝ => a X ^ 2 / (1 + 2 * a X / log X))
       atTop (𝓝 (log (2 : ℝ) ^ 2)) := by
+    change Tendsto ((fun X : ℝ => a X ^ 2) /
+      (fun X : ℝ => 1 + 2 * a X / log X)) atTop (𝓝 (log (2 : ℝ) ^ 2))
     simpa only [div_one] using (ha.pow 2).div hfac one_ne_zero
   have hz : Tendsto z atTop (𝓝 0) := by
     have hh := hscaledz.div_atTop
@@ -211,15 +226,17 @@ theorem actual_two_four_curvature_tendsto :
       with X hX haX
     dsimp [z]
     have ha0 : 0 < a X := haX.1
-    field_simp [(log_pos hX).ne', (by positivity :
-      1 + 2 * a X / log X ≠ 0)]
-    ring
+    have hL : 0 < log X := log_pos hX
+    have hden : 0 < 1 + 2 * a X / log X := by positivity
+    field_simp [hL.ne', hden.ne']
   have hzpos : ∀ᶠ X : ℝ in atTop, 0 < z X := by
     filter_upwards [eventually_gt_atTop (1 : ℝ), actual_root_equation (by norm_num : 2 ≤ 2)]
       with X hX haX
     dsimp [z]
     have ha0 : 0 < a X := haX.1
-    exact div_pos (sq_pos_of_pos ha0) (by positivity)
+    have hL : 0 < log X := log_pos hX
+    have hden : 0 < log X ^ 2 + 2 * a X * log X := by positivity
+    exact div_pos (sq_pos_of_pos ha0) hden
   have hzright : Tendsto z atTop (𝓝[>] (0 : ℝ)) :=
     tendsto_nhdsWithin_iff.mpr ⟨hz, hzpos⟩
   have hlogquot : Tendsto (fun X : ℝ => log (1 + z X) / z X) atTop (𝓝 1) := by
@@ -235,9 +252,10 @@ theorem actual_two_four_curvature_tendsto :
       actual_root_equation (by norm_num : 2 ≤ 2)] with X hX hzX haX
     dsimp [z] at hzX ⊢
     have ha0 : 0 < a X := haX.1
-    field_simp [(log_pos hX).ne', (sq_pos_of_pos ha0).ne',
-      (by positivity : log X ^ 2 + 2 * a X * log X ≠ 0),
-      (by positivity : 1 + 2 * a X / log X ≠ 0)] <;> ring
+    have hL : 0 < log X := log_pos hX
+    have hden : 0 < log X ^ 2 + 2 * a X * log X := by positivity
+    have hfacden : 0 < 1 + 2 * a X / log X := by positivity
+    field_simp [hL.ne', (sq_pos_of_pos ha0).ne', hden.ne', hfacden.ne', hzX.ne']
   let good := fun X : ℝ => 1 < X ∧ 0 < a X ∧ 0 < b X
   have hgood : ∀ᶠ X : ℝ in atTop, good X := by
     filter_upwards [eventually_gt_atTop (1 : ℝ), actual_root_equation (by norm_num : 2 ≤ 2),
@@ -276,17 +294,28 @@ theorem actual_two_four_curvature_tendsto :
     change F (log X) (d 4 X) - F (log X) (2 * d 2 X) = _
     change 2 * F (log X) (d 2 X) - F (log X) (2 * d 2 X) = _ at hcurv
     rw [h2.2.2] at hcurv
-    rw [h4.2.2, hlog4]
+    rw [h4.2.2]
     dsimp [z, a]
-    linarith only [hcurv]
+    linarith only [hcurv, hlog4]
   have hq0 : q X ≠ 0 := by linarith [hqX.1]
+  change (log X ^ 2 * log (1 + z X) +
+      (log X ^ 2 * η 4 X - 2 * (log X ^ 2 * η 2 X))) / q X = _
   rw [div_eq_iff hq0]
   change log X ^ 2 * log (1 + z X) +
-      (log X ^ 2 * η 4 X - 2 * (log X ^ 2 * η 2 X)) = _
+      (log X ^ 2 * η 4 X - 2 * (log X ^ 2 * η 2 X)) =
+        (log X ^ 2 * (4 * log (cutoff 4 (referencePrice X)) - log X -
+          2 * (2 * log (cutoff 2 (referencePrice X)) - log X))) * q X
   have heq := hqX.2.2.symm.trans he
   have hscaled := congrArg (fun t : ℝ => log X ^ 2 * t) heq
-  dsimp [d, a, b] at hscaled
-  nlinarith only [hscaled]
+  calc
+    log X ^ 2 * log (1 + z X) +
+        (log X ^ 2 * η 4 X - 2 * (log X ^ 2 * η 2 X)) =
+        log X ^ 2 * ((b X - 2 * a X) * q X) := by
+          linarith only [hscaled]
+    _ = (log X ^ 2 * (4 * log (cutoff 4 (referencePrice X)) - log X -
+          2 * (2 * log (cutoff 2 (referencePrice X)) - log X))) * q X := by
+          dsimp [b, a, d]
+          ring
 
 #print axioms normalized_gain_bounds
 #print axioms actual_two_four_curvature_tendsto

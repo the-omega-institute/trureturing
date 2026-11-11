@@ -6,9 +6,9 @@ internal sealed class FixedLayerRootAsymptoticDocument : IScribeDocumentDefiniti
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "FixedLayerRootAsymptotic",
-        H("UNCOMPILED_UNACCEPTED source components"),
+        H("Fixed-layer source components"),
         Blocks(
-            Paragraph(Text("SOURCE ONLY: UNCOMPILED_UNACCEPTED / RegUNVALIDATED. All proof bodies are uncompiled candidates. No Lean/Scribe/Reg build, kernel/axiom closure, lawful enrollment, source binding, official/RH acceptance, novelty or consensus is asserted. Ordinary Pro reasoning is fallible input. The final uniform paid-prefix repair, its uniform original-price consumer, and the optional elementary-energy consumer remain unfinished. The finite components must not be presented as those final theorems. Existing owners are imported with exact unapplied consumed-helper patches. Each public target has a faithful full-telescope typed Reg attempt; rejected lawful families, whole-family variation, sensitivity, observational dependence and exact source binding remain missing.")),
+            Paragraph(Text("The module supplies fixed-layer asymptotic and shrinking-roster components. These components do not establish the final uniform paid-prefix repair, its uniform original-price consumer or an elementary-energy consumer. RegUNVALIDATED under issue 28966: faithful full-telescope typed Reg attempts are present; lawful families, whole-family variation, sensitivity, observational dependence and exact source binding remain unfinished.")),
             Describe.Lean(
                 DescribeId.Create("fixedlayerrootasymptotic-fixed-layer-root-offset-tendsto"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/FixedLayerRootAsymptotic.fixed_layer_root_offset_tendsto"),
