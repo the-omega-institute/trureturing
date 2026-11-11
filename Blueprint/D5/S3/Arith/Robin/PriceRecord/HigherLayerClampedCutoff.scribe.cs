@@ -49,7 +49,7 @@ internal sealed class HigherLayerClampedCutoffDocument : IScribeDocumentDefiniti
                 DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/HigherLayerClampedCutoff.cutoff_movement"),
                 H("cutoff movement"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Complete Lean statement: theorem cutoff_movement {j : ℕ} (hj : 2 ≤ j) {λ s : ℝ} (hλ : 0 < λ) (hs : 0 < s) (hs2 : s ≤ 1 / 2) : cutoff j ((1 - s) * λ) - cutoff j ((1 + s) * λ) ≤ 9 * s * cutoff j ((1 - s) * λ) / j"))),
+                Blocks(Paragraph(Text("Complete Lean statement: theorem cutoff_movement {j : ℕ} (hj : 2 ≤ j) {«λ» s : ℝ} (h«λ» : 0 < «λ») (hs : 0 < s) (hs2 : s ≤ 1 / 2) : cutoff j ((1 - s) * «λ») - cutoff j ((1 + s) * «λ») ≤ 9 * s * cutoff j ((1 - s) * «λ») / j"))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("higherlayerclampedcutoff-two-mul-index-le-two-pow"),

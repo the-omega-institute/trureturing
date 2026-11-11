@@ -38,7 +38,7 @@ theorem pointwise_le_shellError {X y : ℝ} (hX : 0 ≤ X)
   le_csSup (errorValues_bddAbove hX) ⟨y, hy, rfl⟩
 
 theorem shellError_nonneg {X : ℝ} (hX : 0 ≤ X) : 0 ≤ shellError X :=
-  (abs_nonneg _).trans (pointwise_le_shellError hX ⟨by linarith, by linarith⟩)
+  (abs_nonneg _).trans (pointwise_le_shellError (y := X) hX ⟨by linarith, by linarith⟩)
 
 theorem shellError_le {X A : ℝ} (hX : 0 ≤ X)
     (hA : ∀ y : ℝ, y ∈ Set.Icc (X / 2) (2 * X) → |Chebyshev.theta y - y| ≤ A) :
@@ -118,7 +118,9 @@ theorem shellError_global_power {σ B K Y : ℝ} (hK : 0 ≤ K)
   have hL0 : 0 < log X := log_pos (by linarith)
   have hlog4 : 2 * log (2 : ℝ) ≤ log X := by
     have hh := log_le_log (by norm_num : (0 : ℝ) < 4) hX4.le
-    have he : log (4 : ℝ) = 2 * log 2 := by simpa using log_pow (2 : ℝ) 2
+    have he : log (4 : ℝ) = 2 * log 2 := by
+      rw [show (4 : ℝ) = 2 ^ (2 : ℕ) by norm_num, log_pow]
+      rfl
     linarith
   apply shellError_le hX0.le
   intro y hy

@@ -68,8 +68,8 @@ theorem scalar_budget_reduction {X T V W Δ δ R : ℝ}
     have hne : X ^ (5 / 4 : ℝ) ≠ 0 := (rpow_pos_of_pos hX0 _).ne'
     dsimp [a, d]
     field_simp [hX0.ne', hL0.ne', hne]
-    nlinarith [congrArg (fun z : ℝ => T * log X * sqrt R * z) hpow,
-      mul_nonneg hT hL0.le]
+    nlinarith only [congrArg (fun z : ℝ => T * sqrt R * z) hpow,
+      mul_nonneg (mul_nonneg hT hL0.le) (rpow_nonneg hX0.le (5 / 4 : ℝ))]
   have hnorm : (12 * T / (X ^ 2 * log X)) * (Δ + δ) =
       12 * T * (Δ + δ) / (X ^ 2 * log X) := by ring
   rw [hnorm] at hmul
@@ -117,19 +117,21 @@ theorem scalar_absorption {X E R : ℝ} (hX : 1 < X) (hE : 0 ≤ E) (hR0 : 0 ≤
     exact hR
   have htwo : R ≤ 2 * a ^ 2 * Z ^ 2 + 2 * d * Z * Y + 4 / X := by
     change a * (T / X) * R ≤ 1 / 4 * R at hlin
-    linarith only [hnorm, hYoung, hlin]
-  have hsecond : 2 * Z * Y ≤ Z ^ 2 + Y ^ 2 := by nlinarith [sq_nonneg (Z - Y)]
+    nlinarith only [hnorm, hYoung, hlin]
+  have hsecond : 2 * Z * Y ≤ Z ^ 2 + Y ^ 2 := by nlinarith only [sq_nonneg (Z - Y)]
   have hd0 : 0 ≤ d := by norm_num [d]
   have hsecondD := mul_le_mul_of_nonneg_left hsecond hd0
   have hq : 0 ≤ q := by norm_num [q, a, d]
-  have habsorb : R ≤ q * Z ^ 2 + d * Y ^ 2 + 4 / X := by dsimp [q]; nlinarith
+  have habsorb : R ≤ q * Z ^ 2 + d * Y ^ 2 + 4 / X := by
+    dsimp [q]
+    nlinarith only [htwo, hsecondD]
   have hYbound : Y ^ 2 ≤ 1 / X := by
     rw [hY2]
     apply (div_le_div_iff₀ (mul_pos hX0 hs0) hX0).mpr
-    nlinarith [mul_le_mul_of_nonneg_right hlog hX0.le]
+    exact mul_le_mul_of_nonneg_right hlog hX0.le
   have hT2 : T ^ 2 ≤ 2 * E ^ 2 + 50 * X := by
     dsimp [T]
-    nlinarith [sq_nonneg (E - 5 * sqrt X), sq_sqrt hX0.le]
+    nlinarith only [sq_nonneg (E - 5 * sqrt X), sq_sqrt hX0.le]
   have hden : X ^ 2 ≤ X ^ (5 / 2 : ℝ) := by
     have hh := rpow_le_rpow_of_exponent_le hX.le (by norm_num : (2 : ℝ) ≤ 5 / 2)
     simpa only [rpow_two] using hh
@@ -140,25 +142,25 @@ theorem scalar_absorption {X E R : ℝ} (hX : 1 < X) (hE : 0 ≤ E) (hR0 : 0 ≤
     have hratio : 50 * X ≤ 50 / X * X ^ (5 / 2 : ℝ) := by
       have hh : 50 * X ≤ (50 * X ^ (5 / 2 : ℝ)) / X := by
         apply (le_div_iff₀ hX0).mpr
-        nlinarith [mul_le_mul_of_nonneg_left hden (by norm_num : (0 : ℝ) ≤ 50)]
+        nlinarith only [mul_le_mul_of_nonneg_left hden (by norm_num : (0 : ℝ) ≤ 50)]
       convert hh using 1 <;> ring
     have heq : 2 * E ^ 2 / X ^ (5 / 2 : ℝ) * X ^ (5 / 2 : ℝ) = 2 * E ^ 2 :=
       div_mul_cancel₀ _ hden0.ne'
-    nlinarith
+    nlinarith only [hT2, hratio, heq]
   have hqZ := mul_le_mul_of_nonneg_left hZbound hq
   have hdY := mul_le_mul_of_nonneg_left hYbound hd0
   have hb : R ≤ 2 * q * (E ^ 2 / X ^ (5 / 2 : ℝ)) + (50 * q + d + 4) * (1 / X) := by
-    nlinarith
-  have hfirst : 2 * q ≤ finalConstant := by dsimp [finalConstant]; nlinarith
-  have hlast : 50 * q + d + 4 ≤ finalConstant := by dsimp [finalConstant]; nlinarith
+    nlinarith only [habsorb, hqZ, hdY]
+  have hfirst : 2 * q ≤ finalConstant := by norm_num [finalConstant, q, a, d]
+  have hlast : 50 * q + d + 4 ≤ finalConstant := by norm_num [finalConstant, q, a, d]
   have hm1 := mul_le_mul_of_nonneg_right hfirst
     (show 0 ≤ E ^ 2 / X ^ (5 / 2 : ℝ) by positivity)
   have hm2 := mul_le_mul_of_nonneg_right hlast (show 0 ≤ 1 / X by positivity)
-  nlinarith
+  nlinarith only [hb, hm1, hm2]
 
 theorem log_rounding_eventually : ∀ᶠ X : ℝ in atTop, log X ^ 2 ≤ sqrt X := by
   have hsmall : Tendsto (fun X : ℝ => log X ^ 2 / sqrt X) atTop (𝓝 0) := by
-    simpa only [rpow_natCast, ← sqrt_eq_rpow] using
+    simpa only [rpow_two, ← sqrt_eq_rpow] using
       (isLittleO_log_rpow_rpow_atTop (2 : ℝ)
         (by norm_num : (0 : ℝ) < 1 / 2)).tendsto_div_nhds_zero
   filter_upwards [eventually_gt_atTop (0 : ℝ),

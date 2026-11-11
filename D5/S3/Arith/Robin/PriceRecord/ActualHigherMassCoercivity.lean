@@ -33,22 +33,22 @@ theorem actual_dual_estimate {X s : ℝ} (hX : exp 2 ≤ X) {n : ℕ} (hn : 1 �
   have hX0 : 0 < X := (exp_pos 2).trans_le hX
   have hL : 2 ≤ log X := (le_log_iff_exp_le hX0).mpr hX
   have hX1 : 1 < X := (log_pos_iff hX0.le).mp (by linarith : 0 < log X)
-  let λ := referencePrice X
-  let t := s * λ
-  have hλ : 0 < λ := one_div_pos.mpr (mul_pos hX0 (by linarith : 0 < log X))
-  have ht : 0 < t := mul_pos hs hλ
-  have ht_le : t ≤ (1 / 2 : ℝ) * λ := mul_le_mul_of_nonneg_right hs2 hλ.le
-  have hm : 0 < λ - t := by linarith
-  have hp : 0 < λ + t := add_pos hλ ht
-  let S := coordinates n ∪ coordinates (strictInteger (λ - t))
+  let «λ» := referencePrice X
+  let t := s * «λ»
+  have h«λ» : 0 < «λ» := one_div_pos.mpr (mul_pos hX0 (by linarith : 0 < log X))
+  have ht : 0 < t := mul_pos hs h«λ»
+  have ht_le : t ≤ (1 / 2 : ℝ) * «λ» := mul_le_mul_of_nonneg_right hs2 h«λ».le
+  have hm : 0 < «λ» - t := by linarith
+  have hp : 0 < «λ» + t := add_pos h«λ» ht
+  let S := coordinates n ∪ coordinates (strictInteger («λ» - t))
   have hprime (c : ℕ × ℕ) (hc : c ∈ S) : c.1.Prime ∧ 2 ≤ c.2 := by
     rcases mem_union.mp hc with hc | hc <;>
       exact ⟨(mem_coordinates.mp hc).1, (mem_coordinates.mp hc).2.1⟩
   have hnS : coordinates n ⊆ S := subset_union_left
-  have hmS : coordinates (strictInteger (λ - t)) ⊆ S := subset_union_right
-  have hbS : coordinates (strictInteger λ) ⊆ S :=
-    (canonical_coordinates_antitone hm hλ (by linarith)).trans hmS
-  have hpS : coordinates (strictInteger (λ + t)) ⊆ S :=
+  have hmS : coordinates (strictInteger («λ» - t)) ⊆ S := subset_union_right
+  have hbS : coordinates (strictInteger «λ») ⊆ S :=
+    (canonical_coordinates_antitone hm h«λ» (by linarith)).trans hmS
+  have hpS : coordinates (strictInteger («λ» + t)) ⊆ S :=
     (canonical_coordinates_antitone hm hp (by linarith)).trans hmS
   let i := fun c : ℕ × ℕ => decide (c ∈ coordinates n)
   have hH : (∑ c ∈ S, if i c then coordinateWeight c else 0) = higherMass n := by
@@ -72,19 +72,19 @@ theorem actual_dual_estimate {X s : ℝ} (hX : exp 2 ≤ X) {n : ℕ} (hn : 1 �
   have hid := literal_loss_identity hX1 hn S hprime (union_subset hbS hnS)
   have hd := finite_dual_abs S coordinateGain coordinateWeight i
     (fun c hc => (hprime c hc).1.log_pos.le) ht
-  change |(∑ c ∈ S, if i c then coordinateWeight c else 0) - strictMass S λ| ≤
-    (potential S λ - (∑ c ∈ S, if i c then coordinateGain c else 0) +
-      λ * (∑ c ∈ S, if i c then coordinateWeight c else 0)) / t +
-      strictMass S (λ - t) - strictMass S (λ + t) at hd
-  rw [hH, hB, strictMass_eq hλ hprime hbS, strictMass_eq hm hprime hmS,
+  change |(∑ c ∈ S, if i c then coordinateWeight c else 0) - strictMass S «λ»| ≤
+    (potential S «λ» - (∑ c ∈ S, if i c then coordinateGain c else 0) +
+      «λ» * (∑ c ∈ S, if i c then coordinateWeight c else 0)) / t +
+      strictMass S («λ» - t) - strictMass S («λ» + t) at hd
+  rw [hH, hB, strictMass_eq h«λ» hprime hbS, strictMass_eq hm hprime hmS,
     strictMass_eq hp hprime hpS, ← hid] at hd
-  have hlow : λ - t = (1 - s) * referencePrice X := by dsimp [λ, t]; ring
-  have hhigh : λ + t = (1 + s) * referencePrice X := by dsimp [λ, t]; ring
+  have hlow : «λ» - t = (1 - s) * referencePrice X := by dsimp [«λ», t]; ring
+  have hhigh : «λ» + t = (1 + s) * referencePrice X := by dsimp [«λ», t]; ring
   rw [hlow, hhigh] at hd
   have hresponse := (actual_higher_mass_response hX hs hs2).2
   have hden : (actualDefect X n - completeFirstLayerLoss X n) / t =
       (actualDefect X n - completeFirstLayerLoss X n) * X * log X / s := by
-    dsimp [t, λ, referencePrice]
+    dsimp [t, «λ», referencePrice]
     field_simp [hs.ne', hX0.ne', (show log X ≠ 0 by linarith)]
   rw [hden] at hd
   linarith
