@@ -11,21 +11,8 @@ internal sealed class ActualWindowCommonKernelDocument : IScribeDocumentDefiniti
         LibraryNoteRef.Create("D5/L/Factorization/razwigderson2019subspace");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Common kernels and original window labels", H("Common kernels and original window labels"),
+        "Common hyperplane cuts and embedding constraint rigidity", H("Common hyperplane cuts and embedding constraint rigidity"),
         Blocks(
-            Paragraph(Text("Let F be a field and L an extension field of finite dimension over F. Let T be a finite index type with a distinguished index k, and let W assign an F-linear subspace of L to each index. Sections(W) denotes the dependent product of the subspaces W(i); vectors in a section are viewed as elements of L. For nonzero labels r(i), J(W,r) is the intersection of the actual scaled subspaces r(i)W(i). Equivalently, x belongs to J(W,r) exactly when the product of the inverse of r(i) and x belongs to W(i) for every i. Write d(W,r) for its F-dimension, and M(W) for the sum of the F-dimensions of the windows.")),
-            Paragraph(Text("For a tuple p, C(W,k,p) sends a section v to the tuple whose i-th coordinate is p(k)v(i) minus p(i)v(k). Its k-th output coordinate is zero. Write R(W,k,p) for the F-dimension of its range, and ratio(k,p)(i) for p(k)/p(i). All these objects lie in the given extension field.")),
-            Describe.Lean(DescribeId.Create("actual-window-common-kernel-rank"),
-                DeclarationHandle.Create("D5/S3/Factorization/Galois/ActualWindowCommonKernel.common_kernel_rank_identity"),
-                H("Common kernel rank and positive intersection"),
-                StatementSource.FromAuthor(Disp(RankIdentity())), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Projection of a kernel vector to coordinate k is an F-linear equivalence onto J(W,ratio(k,p)). The inverse reconstructs every coordinate as p(i)/p(k) times that one vector. Thus all window conditions constrain the same vector. Rank-nullity gives the displayed equality, and p(k) is a nonzero element of the intersection. A singleton index type gives the zero constraint and the original window."))), DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("actual-window-joint-rank-minimizer"),
-                DeclarationHandle.Create("D5/S3/Factorization/Galois/ActualWindowCommonKernel.exists_joint_rank_minimizer"),
-                H("Simultaneous original-label attainment"),
-                StatementSource.FromAuthor(Disp(JointMinimum())), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Choose the least intersection dimension among tuples with every coordinate nonzero. Any positive original-label intersection contains a nonzero vector w; the section with coordinate r(i) inverse times w belongs to the original windows, has no zero coordinates, and reconstructs precisely those labels when r(k) is one. This supplies the full comparison with original labels. The common-kernel rank identity then shows that the same chosen tuple maximizes constraint rank. The argument works in any characteristic and for independently scaled windows. The rank optimum over actual tuples alone does not identify an intermediate field or give a subfield dimension formula."))), DescribeRole.Theorem),
-            Paragraph(Text("UNVERIFIED source drafts: the following partition-rank statements and their proof paths have no current compilation, axiom-closure, emitted mirror or registration evidence. They state the deterministic general-position implication and its actual common-row application. They do not establish that an algebraically independent normal satisfies general position, or that an optimizing partition descends to an actual intermediate field.")),
             Paragraph(Text("For the next statement K is a field, E a finite-dimensional K-vector space, I any index type, V(i) a K-subspace of E, phi a K-linear functional and s a finite subset of I. Write S(V,A) for the supremum of V(i) over i in A, T(V,phi,A) for the supremum of V(i) intersect ker(phi) over i in A, and C(V,P) for the sum over B in P.parts of dim_K S(V,B) minus one. Finpartition(s) means a finite partition of s into nonempty disjoint blocks; the empty s has the empty partition. GP(V,phi,s) means both: no V(i), for i in s, is contained in ker(phi); and for all finite A,B,C contained in s, if (T(V,phi,A)+S(V,B)) intersect (T(V,phi,A)+S(V,C)) is contained in ker(phi), then that intersection equals T(V,phi,A). The middle family A may be empty, as in the footnote to Definition 5.1 and the base case of Lemma 5.3.")),
             Describe.Lean(DescribeId.Create("common-hyperplane-partition-rank"),
                 DeclarationHandle.Create(HyperplanePrefix + "hyperplane_partition_rank"),
@@ -40,8 +27,16 @@ internal sealed class ActualWindowCommonKernelDocument : IScribeDocumentDefiniti
                 H("The common-constraint block row partition formula"),
                 StatementSource.FromAuthor(Disp(BlockPartitionRank())),
                 AssessedProvenance.FromRepo(HyperplaneSource),
-                Blocks(Paragraph(Text("The common rows for a fixed sigma span BF(b)(sigma) intersect ker(phi): the linear map v to phi(blockRows(b,sigma,k))v minus phi(v)blockRows(b,sigma,k) maps the uncut span onto that intersection whenever its distinguished coefficient is nonzero. The span of the uncut subspaces for A is the product, over coordinate blocks i, of span(b(i,sigma): sigma in A). Thus its dimension is the sum of q(b,A,i). Substituting these actual row spaces into the attaining-partition theorem gives the displayed equality and every partition upper bound. This is a live mathematical consumer of the recursive partition construction.")),
-                    Paragraph(Text("For R5 (31.5)-(31.7), take the scalar field to be the fraction field K(z) over the normal closure K, I to be the embedding type Omega, B to be the window indices, J(i) to index the chosen basis of X(i), and b(i,sigma)(j)=sigma(x(i,j)) after scalar extension. Take s to be all embeddings, k the first window and phi(v)=sum over i,j of z(i,j)v(i,j). Then phi(blockRows(b,sigma,i)) is U(i,sigma), and the displayed rows are exactly U(1,sigma) times the i-th block row minus U(i,sigma) times the first block row. The nonzero U(1,sigma) and GP premises still need an actual generic-parameter proof. In particular, for every three subfamilies A,B,C of the scalar-extended constant arrangement, one must prove that (T(A)+S(B)) intersect (T(A)+S(C)) being annihilated by the generic normal forces that intersection to equal T(A). Nonvanishing on the individual subspaces does not supply this second condition. Raz and Wigderson, Lemmas 7.3 and 7.5, supply the separate affine-spanning and skew-matrix arguments for this step. The unique fewest-block optimum, Galois invariance, descent inside the original ratio field, the rank of the original polynomial matrix, a nonzero original-coefficient minor, and original-F specialization remain outside these statements. No maximizing field or original-label tuple is produced here."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("The common rows for a fixed sigma span BF(b)(sigma) intersect ker(phi): the linear map v to phi(blockRows(b,sigma,k))v minus phi(v)blockRows(b,sigma,k) maps the uncut span onto that intersection whenever its distinguished coefficient is nonzero. The span of the uncut subspaces for A is the product, over coordinate blocks i, of span(b(i,sigma): sigma in A). Thus its dimension is the sum of q(b,A,i). Substituting these actual row spaces into the attaining-partition theorem gives the displayed equality and every partition upper bound. The embedding-kernel rigidity theorem below uses both the attaining partition and these universal partition bounds.")),
+                    Paragraph(Text("For R5 (31.5)-(31.7), take the scalar field to be the fraction field K(z) over the normal closure K, I to be the embedding type Omega, B to be the window indices, J(i) to index the chosen basis of X(i), and b(i,sigma)(j)=sigma(x(i,j)) after scalar extension. Take s to be all embeddings, k the first window and phi(v)=sum over i,j of z(i,j)v(i,j). Then phi(blockRows(b,sigma,i)) is U(i,sigma), and the displayed rows are exactly U(1,sigma) times the i-th block row minus U(i,sigma) times the first block row. The nonzero U(1,sigma) and GP premises still need an actual generic-parameter proof. In particular, for every three subfamilies A,B,C of the scalar-extended constant arrangement, one must prove that (T(A)+S(B)) intersect (T(A)+S(C)) being annihilated by the generic normal forces that intersection to equal T(A). Nonvanishing on the individual subspaces does not supply this second condition. Raz and Wigderson, Lemmas 7.3 and 7.5, supply the separate affine-spanning and skew-matrix arguments for this step. The unique fewest-block optimum, Galois invariance, descent inside the original ratio field, the rank of the original polynomial matrix, a nonzero original-coefficient minor, and original-F specialization remain outside these statements. No maximizing field or original-label tuple is produced here."))), DescribeRole.Theorem),
+            Paragraph(Text("For the rigidity statement, F and D are fields, D and K are F-algebras, emb is a finite family of F-algebra embeddings D to K, X(i) is an F-subspace of D, and x(i) is an F-basis of X(i) indexed by J(i). Set ER(emb,X,x)(i,sigma,j)=emb(sigma)(x(i,j)). CoefficientSpace(K,B,J) is the space of K-valued functions on the pairs (i,j). A coefficient tuple z is indexed by those pairs; M is the sum of the cardinalities of J(i). Let N(z)(v)=sum over (i,j) of v(i,j)z(i,j). CM(b,phi,k) has rows indexed by (sigma,i) and columns by (j,l); its row is the flattened vector phi(blockRows(b,sigma,k)) blockRows(b,sigma,i) minus phi(blockRows(b,sigma,i)) blockRows(b,sigma,k). Ker(CM) means the kernel of its multiplication map on coefficient columns. Line(K,z) is the K-linear span of z. Write GPall(b,N(z)) for GP(BF(b),N(z),univ), NZall(b,N(z),k) for nonvanishing of every distinguished coefficient, and BC(b,P) for the partition cost already defined.")),
+            Describe.Lean(DescribeId.Create("actual-embedding-common-kernel-rigidity"),
+                DeclarationHandle.Create(HyperplanePrefix + "embedding_common_kernel_rigidity"),
+                H("Rigidity of the actual simultaneous embedding constraints"),
+                StatementSource.FromAuthor(Disp(EmbeddingRigidity())),
+                AssessedProvenance.FromRepo(HyperplaneSource),
+                Blocks(Paragraph(Text("The matrix here acts on an actual coefficient column c. At (sigma,i) its value is U(k,sigma) times sum over j of emb(sigma)(x(i,j))c(i,j), minus U(i,sigma) times sum over j of emb(sigma)(x(k,j))c(k,j). Hence its kernel is the simultaneous embedding-coordinate version of the common constraint, rather than just an abstract cut span. The same z is in this kernel, since the two products U(k,sigma)U(i,sigma) cancel. Flattening dependent coordinate blocks is a linear equivalence; pinned Mathlib row-rank equality identifies the matrix rank with the common-row span rank. Rank-nullity and the nonzero kernel vector z show that the kernel has dimension at least one. If the kernel is Line(K,z), its dimension is one, and each partition bound forces cost at least M-1. Conversely, applying the lower threshold to the attaining partition forces the kernel dimension to be one. The inclusion Line(K,z) in the kernel is then equality. Thus all simultaneous coefficient solutions are scalar multiples of this same tuple exactly under the stated partition criterion.")),
+                    Paragraph(Text("For the source correspondence, take K=K_0(z) with K_0 the normal closure, emb the complete family Hom_F(D,K_0) followed by scalar inclusion, X and x the normalized windows and bases of (31.5), and k=1. This theorem is a conditional rigidity consequence of (31.5)-(31.7) for the scalar-extended embedding-coordinate constraint. Its premises are the explicit general-position law, nonzero distinguished coefficients, and a nonzero common coefficient tuple. It assumes neither a rank formula nor genericity, field descent, original-F specialization, or (31.10). Proving those hypotheses for independent indeterminates, transferring the embedding output coordinates to the original polynomial map, and returning an original-F attaining tuple remain separate obligations. Registration for these public targets is unfinished; no declared_validated status is asserted."))), DescribeRole.Theorem))));
 
     private static Formula HyperplanePartitionRank()
     {
@@ -84,46 +79,37 @@ internal sealed class ActualWindowCommonKernelDocument : IScribeDocumentDefiniti
         return All("K", Ty(), All("I", Ty(), All("B", Ty(), All("J", Arrow(I("B"), Ty()), result))));
     }
 
-    private static Formula RankIdentity()
+    private static Formula EmbeddingRigidity()
     {
-        Formula p = I("p");
-        Formula labels = App(I("ratio"), I("k"), p);
-        Formula result = And(Eq(Seq(Rank(p), Plus, Dimension(labels)), App(I("M"), I("W"))),
-            Rel(D(0), FormulaRelationOperator.LessThan, Dimension(labels)));
-        return Inputs(true, All("p", Sections(), Imp(Nonzero(p), result)));
+        Formula b = App(I("ER"), I("emb"), I("X"), I("x"));
+        Formula normal = App(I("N"), I("z"));
+        Formula matrix = App(I("CM"), b, normal, I("k"));
+        Formula cost = All("P", App(I("Finpartition"), App(I("univ"), I("I"))),
+            Rel(Seq(I("M"), Minus, D(1)), FormulaRelationOperator.LessThanOrEqual,
+                App(I("BC"), b, I("P"))));
+        Formula result = new Formula.Logic(
+            Eq(App(I("Ker"), matrix), App(I("Line"), I("K"), I("z"))),
+            FormulaLogicOperator.Iff, cost);
+        result = Imp(Rel(I("z"), FormulaRelationOperator.NotEqual, D(0)),
+            Imp(App(I("NZall"), b, normal, I("k")),
+                Imp(App(I("GPall"), b, normal), result)));
+        result = All("emb", Arrow(I("I"), App(I("AlgHom"), I("F"), I("D"), I("K"))),
+            All("X", Arrow(I("B"), App(I("Submodule"), I("F"), I("D"))),
+            All("x", All("i", I("B"), App(I("Basis"), App(I("J"), I("i")), I("F"), App(I("X"), I("i")))),
+            All("z", App(I("CoefficientSpace"), I("K"), I("B"), I("J")),
+            All("k", I("B"), result)))));
+        result = Inst(All("i", I("B"), App(I("Fintype"), App(I("J"), I("i")))), result);
+        result = Inst(App(I("Fintype"), I("B")), result);
+        result = Inst(App(I("Fintype"), I("I")), result);
+        result = Inst(App(I("Algebra"), I("F"), I("K")), result);
+        result = Inst(App(I("Algebra"), I("F"), I("D")), result);
+        result = Inst(App(I("Field"), I("K")), result);
+        result = Inst(App(I("Field"), I("D")), result);
+        result = Inst(App(I("Field"), I("F")), result);
+        return All("F", Ty(), All("D", Ty(), All("K", Ty(), All("I", Ty(),
+            All("B", Ty(), All("J", Arrow(I("B"), Ty()), result))))));
     }
 
-    private static Formula JointMinimum()
-    {
-        Formula p = I("p");
-        Formula maximum = All("q", Sections(), Imp(Nonzero(I("q")),
-            Rel(Rank(I("q")), FormulaRelationOperator.LessThanOrEqual, Rank(p))));
-        Formula minimum = All("r", Arrow(I("T"), I("L")), Imp(Nonzero(I("r")),
-            Imp(Eq(App(I("r"), I("k")), D(1)),
-            Imp(Rel(D(0), FormulaRelationOperator.LessThan, Dimension(I("r"))),
-                Rel(Dimension(App(I("ratio"), I("k"), p)),
-                    FormulaRelationOperator.LessThanOrEqual, Dimension(I("r")))))));
-        return Inputs(false, Imp(All("i", I("T"),
-            Rel(App(I("W"), I("i")), FormulaRelationOperator.NotEqual, Q("Bot", "bot"))),
-            Ex("p", Sections(), And(Nonzero(p), And(maximum, minimum)))));
-    }
-
-    private static Formula Inputs(bool fintype, Formula body)
-    {
-        body = All("W", Arrow(I("T"), App(I("Submodule"), I("F"), I("L"))), All("k", I("T"), body));
-        body = Inst(App(I("FiniteDimensional"), I("F"), I("L")), body);
-        body = Inst(App(I(fintype ? "Fintype" : "Finite"), I("T")), body);
-        body = Inst(App(I("Algebra"), I("F"), I("L")), body);
-        body = Inst(App(I("Field"), I("L")), body);
-        body = Inst(App(I("Field"), I("F")), body);
-        return All("F", Ty(), All("L", Ty(), All("T", Ty(), body)));
-    }
-
-    private static Formula Sections() => App(I("Sections"), I("W"));
-    private static Formula Dimension(Formula r) => App(I("d"), I("W"), r);
-    private static Formula Rank(Formula p) => App(I("R"), I("W"), I("k"), p);
-    private static Formula Nonzero(Formula p) => All("i", I("T"),
-        Rel(App(p, I("i")), FormulaRelationOperator.NotEqual, D(0)));
     private static Formula I(string name) => F.Id(name);
     private static Formula Ty() => Seq(I("Type"), Star);
     private static Formula Q(string a, string b) => Seq(Operatorname, Grp(I(a)), Dot, Operatorname, Grp(I(b)));

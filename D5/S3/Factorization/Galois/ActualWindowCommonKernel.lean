@@ -4,7 +4,7 @@
    mirror-E: none(waiver:algebraically-proved)
    anchors: []
    utility: none
-   digest: Common window kernels and source drafts of general-position common-row partition rank. -/
+   digest: Conditional hyperplane partition rank and rigidity of actual embedding constraints. -/
 
 import Mathlib.Algebra.Algebra.Operations
 import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
@@ -12,188 +12,14 @@ import Mathlib.LinearAlgebra.Dimension.Constructions
 import Mathlib.LinearAlgebra.Pi
 import Mathlib.LinearAlgebra.Dual.Lemmas
 import Mathlib.LinearAlgebra.Finsupp.LinearCombination
-import Mathlib.Order.Lattice.Nat
 import Mathlib.Order.Partition.Finpartition
+import Mathlib.LinearAlgebra.Matrix.Rank
 import Mathlib.Tactic
-
-/-!
-The common constraint uses one tuple in the original extension field. Its
-distinguished output coordinate is zero; retaining that coordinate also covers
-a singleton family without a separate codomain convention.
-
-For a nonzero label r, inverse multiplication describes the actual scaled
-window r W. No passage to an abstract degree lattice or to independent pairwise
-minimizers occurs. The kernel construction is the linear-algebraic interface
-for the original-label return from a common constraint matrix.
--/
 
 noncomputable section
 
-namespace D5.S3.Factorization.Galois.ActualWindowCommonKernel
-
-open Module
-
-variable {F L ι : Type*} [Field F] [Field L] [Algebra F L]
-
-/-- The actual intersection of the windows scaled by nonzero labels. -/
-def intersection (W : ι → Submodule F L) (r : ι → L) : Submodule F L :=
-  ⨅ i, (W i).comap (LinearMap.mulLeft F (r i)⁻¹)
-
-/-- All coordinates are constrained against the same distinguished coordinate. -/
-def constraint (W : ι → Submodule F L) (k : ι) (p : ι → L) :
-    (∀ i, W i) →ₗ[F] (ι → L) where
-  toFun v i := p k * (v i : L) - p i * (v k : L)
-  map_add' v w := by
-    ext i
-    simp only [Pi.add_apply, Submodule.coe_add]
-    ring
-  map_smul' a v := by
-    ext i
-    simp only [Pi.smul_apply, Submodule.coe_smul, RingHom.id_apply, Algebra.smul_def]
-    ring
-
-private theorem kernel_coordinate (W : ι → Submodule F L) (k : ι)
-    (p : ι → L) (hp : p k ≠ 0) (v : LinearMap.ker (constraint W k p)) (i : ι) :
-    p i / p k * (v.1 k : L) = (v.1 i : L) := by
-  have h := congrFun (LinearMap.mem_ker.mp v.2) i
-  change p k * (v.1 i : L) - p i * (v.1 k : L) = 0 at h
-  rw [div_mul_eq_mul_div]
-  apply (div_eq_iff hp).mpr
-  simpa only [mul_comm] using (sub_eq_zero.mp h).symm
-
-/-- Projection to one coordinate, with the simultaneous inverse reconstructed
-inside the original windows. -/
-private def kernelEquiv (W : ι → Submodule F L) (k : ι)
-    (p : ι → L) (hp : ∀ i, p i ≠ 0) :
-    LinearMap.ker (constraint W k p) ≃ₗ[F]
-      intersection W (fun i => p k / p i) := by
-  let project : LinearMap.ker (constraint W k p) →ₗ[F]
-      intersection W (fun i => p k / p i) :=
-    { toFun := fun v => ⟨(v.1 k : L), by
-        simp only [intersection, Submodule.mem_iInf, Submodule.mem_comap,
-          LinearMap.mulLeft_apply]
-        intro i
-        rw [inv_div, kernel_coordinate W k p (hp k) v i]
-        exact (v.1 i).2⟩
-      map_add' := fun _ _ => Subtype.ext rfl
-      map_smul' := fun _ _ => Subtype.ext rfl }
-  refine LinearEquiv.ofBijective project ⟨?_, ?_⟩
-  · intro v w h
-    have hcoord := congrArg (fun x : intersection W (fun i => p k / p i) => (x : L)) h
-    change (v.1 k : L) = (w.1 k : L) at hcoord
-    apply Subtype.ext
-    funext i
-    apply Subtype.ext
-    rw [← kernel_coordinate W k p (hp k) v i,
-      ← kernel_coordinate W k p (hp k) w i, hcoord]
-  · intro x
-    let v : ∀ i, W i := fun i => ⟨p i / p k * (x : L), by
-      have hx := (Submodule.mem_iInf _).mp x.2 i
-      change (p k / p i)⁻¹ * (x : L) ∈ W i at hx
-      simpa only [inv_div] using hx⟩
-    have hv : v ∈ LinearMap.ker (constraint W k p) := by
-      apply LinearMap.mem_ker.mpr
-      ext i
-      change p k * (p i / p k * (x : L)) -
-        p i * (p k / p k * (x : L)) = 0
-      field_simp [hp k]
-      <;> ring
-    refine ⟨⟨v, hv⟩, Subtype.ext ?_⟩
-    change p k / p k * (x : L) = (x : L)
-    rw [div_self (hp k), one_mul]
-
-private theorem ratio_mem (W : ι → Submodule F L) (k : ι)
-    (p : ∀ i, W i) (hp : ∀ i, (p i : L) ≠ 0) :
-    (p k : L) ∈ intersection W (fun i => (p k : L) / (p i : L)) := by
-  simp only [intersection, Submodule.mem_iInf, Submodule.mem_comap,
-    LinearMap.mulLeft_apply]
-  intro i
-  rw [inv_div, div_mul_cancel₀ _ (hp k)]
-  exact (p i).2
-
-/-- Rank-nullity for the common constraint gives the dimension of the actual
-original-label intersection. The same tuple witnesses positive intersection. -/
-theorem common_kernel_rank_identity [Fintype ι] [FiniteDimensional F L]
-    (W : ι → Submodule F L) (k : ι) (p : ∀ i, W i)
-    (hp : ∀ i, (p i : L) ≠ 0) :
-    finrank F (LinearMap.range (constraint W k (fun i => (p i : L)))) +
-        finrank F (intersection W (fun i => (p k : L) / (p i : L))) =
-      ∑ i, finrank F (W i) ∧
-    0 < finrank F (intersection W (fun i => (p k : L) / (p i : L))) := by
-  constructor
-  · have h := (constraint W k (fun i => (p i : L))).finrank_range_add_finrank_ker
-    rw [(kernelEquiv W k (fun i => (p i : L)) hp).finrank_eq,
-      Module.finrank_pi_fintype] at h
-    exact h
-  · apply Submodule.one_le_finrank_iff.mpr
-    intro hbot
-    have hm := ratio_mem W k p hp
-    rw [hbot, Submodule.mem_bot] at hm
-    exact hp k hm
-
-private theorem original_tuple (W : ι → Submodule F L) (k : ι)
-    (r : ι → L) (hr : ∀ i, r i ≠ 0) (hk : r k = 1)
-    (hI : intersection W r ≠ ⊥) :
-    ∃ p : ∀ i, W i, (∀ i, (p i : L) ≠ 0) ∧
-      (fun i => (p k : L) / (p i : L)) = r := by
-  obtain ⟨w, hw, hne⟩ := (intersection W r).ne_bot_iff.mp hI
-  let p : ∀ i, W i := fun i => ⟨(r i)⁻¹ * w, by
-    exact (Submodule.mem_iInf _).mp hw i⟩
-  have hp : ∀ i, (p i : L) ≠ 0 := fun i => mul_ne_zero (inv_ne_zero (hr i)) hne
-  refine ⟨p, hp, ?_⟩
-  funext i
-  change ((r k)⁻¹ * w) / ((r i)⁻¹ * w) = r i
-  rw [hk]
-  field_simp [hne, hr i]
-
-/-- One tuple in the original windows simultaneously maximizes common-constraint
-rank and attains the minimum positive dimension over all original labels. -/
-theorem exists_joint_rank_minimizer [Finite ι] [FiniteDimensional F L]
-    (W : ι → Submodule F L) (k : ι) (hW : ∀ i, W i ≠ ⊥) :
-    ∃ p : ∀ i, W i, (∀ i, (p i : L) ≠ 0) ∧
-      (∀ (q : ∀ i, W i), (∀ i, (q i : L) ≠ 0) →
-        finrank F (LinearMap.range (constraint W k (fun i => (q i : L)))) ≤
-          finrank F (LinearMap.range (constraint W k (fun i => (p i : L))))) ∧
-      (∀ r : ι → L, (∀ i, r i ≠ 0) → r k = 1 →
-        0 < finrank F (intersection W r) →
-        finrank F (intersection W (fun i => (p k : L) / (p i : L))) ≤
-          finrank F (intersection W r)) := by
-  classical
-  letI : Fintype ι := Fintype.ofFinite ι
-  have hex (i : ι) : ∃ x : W i, (x : L) ≠ 0 := by
-    obtain ⟨x, hx, hn⟩ := (W i).ne_bot_iff.mp (hW i)
-    exact ⟨⟨x, hx⟩, hn⟩
-  choose q hq using hex
-  let S : Set ℕ := {n | ∃ p : ∀ i, W i, (∀ i, (p i : L) ≠ 0) ∧
-    finrank F (intersection W (fun i => (p k : L) / (p i : L))) = n}
-  have hS : S.Nonempty := ⟨_, q, hq, rfl⟩
-  obtain ⟨p, hp, hd⟩ := Nat.sInf_mem hS
-  have hmin (q : ∀ i, W i) (hq : ∀ i, (q i : L) ≠ 0) :
-      finrank F (intersection W (fun i => (p k : L) / (p i : L))) ≤
-        finrank F (intersection W (fun i => (q k : L) / (q i : L))) := by
-    rw [hd]
-    exact Nat.sInf_le (show _ ∈ S from ⟨q, hq, rfl⟩)
-  refine ⟨p, hp, ?_, ?_⟩
-  · intro q hq
-    have hpdim := (common_kernel_rank_identity W k p hp).1
-    have hqdim := (common_kernel_rank_identity W k q hq).1
-    have hle := hmin q hq
-    omega
-  · intro r hr hk hpos
-    have hI : intersection W r ≠ ⊥ := Submodule.one_le_finrank_iff.mp hpos
-    obtain ⟨q, hq, heq⟩ := original_tuple W k r hr hk hI
-    rw [← heq]
-    exact hmin q hq
-
-#print axioms common_kernel_rank_identity
-#print axioms exists_joint_rank_minimizer
-
-end D5.S3.Factorization.Galois.ActualWindowCommonKernel
-
 /-!
-UNVERIFIED source draft. The declarations below have no current compilation,
-axiom-closure, mirror or registration evidence. They develop the deterministic
-general-position implication in Raz--Wigderson, arXiv:1901.09423v1, Definition
+The declarations below develop the deterministic general-position implication in Raz--Wigderson, arXiv:1901.09423v1, Definition
 5.1, Theorem 5.2 and Lemma 5.3. Genericity (Theorem 7.1) is a separate obligation.
 
 For R5 (31.5)--(31.7), V(sigma) is the direct sum of the block-supported
@@ -660,6 +486,122 @@ theorem block_common_rows_partition_rank
   · simpa only [familySpan_blockRows_finrank] using hP
   · intro Q
     simpa only [familySpan_blockRows_finrank] using hbound Q
+
+
+/-- The common normal in coefficient coordinates. The flattened index is the
+source pair (i,j); commutativity identifies this with sum z(i,j)v(i,j). -/
+def coefficientNormal (z : (Σ i, κ i) → K) : ((i : β) → κ i → K) →ₗ[K] K where
+  toFun v := ∑ a, v a.1 a.2 * z a
+  map_add' v w := by simp [add_mul, Finset.sum_add_distrib]
+  map_smul' c v := by simp [mul_assoc, Finset.mul_sum]
+
+/-- Matrix of the simultaneous constraint in embedding output coordinates.
+The row (sigma,i) is exactly the row of (31.6), including the zero k-row. -/
+def commonConstraintMatrix [Fintype ι] (b : ∀ i, ι → κ i → K)
+    (φ : ((i : β) → κ i → K) →ₗ[K] K) (k : β) :
+    Matrix (ι × β) (Σ i, κ i) K :=
+  fun r a => φ (blockRows b r.1 k) * blockRows b r.1 r.2 a.1 a.2 -
+    φ (blockRows b r.1 r.2) * blockRows b r.1 k a.1 a.2
+
+private theorem commonConstraintMatrix_rank [Fintype ι]
+    (b : ∀ i, ι → κ i → K) (φ : ((i : β) → κ i → K) →ₗ[K] K) (k : β) :
+    (commonConstraintMatrix b φ k).rank =
+      finrank K (commonRowSpan (blockRows b) φ k Finset.univ) := by
+  classical
+  let e : ((i : β) → κ i → K) ≃ₗ[K] ((a : Σ i, κ i) → K) :=
+    (LinearEquiv.piCurry K (fun _ _ => K)).symm
+  have hspan : (commonRowSpan (blockRows b) φ k Finset.univ).map e.toLinearMap =
+      Submodule.span K (Set.range (commonConstraintMatrix b φ k).row) := by
+    apply le_antisymm
+    · have hle : commonRowSpan (blockRows b) φ k Finset.univ ≤
+          (Submodule.span K (Set.range (commonConstraintMatrix b φ k).row)).comap
+            e.toLinearMap := by
+        apply Finset.sup_le
+        intro σ hσ
+        apply Submodule.span_le.mpr
+        rintro _ ⟨i, rfl⟩
+        exact Submodule.subset_span ⟨(σ, i), rfl⟩
+      rintro y ⟨v, hv, rfl⟩
+      exact hle hv
+    · apply Submodule.span_le.mpr
+      rintro _ ⟨⟨σ, i⟩, rfl⟩
+      exact ⟨φ (blockRows b σ k) • blockRows b σ i -
+          φ (blockRows b σ i) • blockRows b σ k,
+        (Finset.le_sup (Finset.mem_univ σ))
+          (Submodule.subset_span (Set.mem_range_self i)), rfl⟩
+  rw [Matrix.rank_eq_finrank_span_row, ← hspan, e.finrank_map_eq]
+
+variable {F D : Type*} [Field F] [Field D] [Algebra F D] [Algebra F K]
+
+/-- Actual embedding rows of bases of the original normalized windows X_i.
+The scalar field K may already include the parameter extension K_0(z). -/
+def embeddingRows (emb : ι → D →ₐ[F] K) (X : β → Submodule F D)
+    (x : ∀ i, Basis (κ i) F (X i)) : ∀ i, ι → κ i → K :=
+  fun i σ j => emb σ (x i j : D)
+
+/-- A source-mathematics consumer of partition rank: the actual simultaneous
+embedding constraints have only the shared coefficient direction as solutions
+iff every partition cost is at least M-1. This is a rigidity statement about
+vectors in the kernel, not a renamed row-rank formula.
+
+For (31.5)--(31.7), F is the original field, D the ratio field, K is K_0(z),
+emb lists Hom_F(D,K_0) followed by K_0 -> K_0(z), X and x are the source
+normalized windows and their F-bases, k=1, and z is the SAME coefficient tuple
+in all output embeddings. The conclusion concerns this scalar-extended
+embedding-coordinate system only; it proves neither genericity nor descent
+nor specialization of the polynomial constraint over F. -/
+theorem embedding_common_kernel_rigidity [Fintype ι]
+    (emb : ι → D →ₐ[F] K) (X : β → Submodule F D)
+    (x : ∀ i, Basis (κ i) F (X i)) (z : (Σ i, κ i) → K) (k : β)
+    (hz : z ≠ 0)
+    (hk : ∀ σ, coefficientNormal z (blockRows (embeddingRows emb X x) σ k) ≠ 0)
+    (gp : InGeneralPosition
+      (fun σ => Submodule.span K (Set.range (blockRows (embeddingRows emb X x) σ)))
+      (coefficientNormal z) Finset.univ) :
+    LinearMap.ker
+        (commonConstraintMatrix (embeddingRows emb X x) (coefficientNormal z) k).mulVecLin =
+      K ∙ z ↔
+    ∀ P : Finpartition (Finset.univ : Finset ι),
+      (∑ i, Fintype.card (κ i)) - 1 ≤
+        ∑ B ∈ P.parts, ((∑ i, finrank K (blockSpan (embeddingRows emb X x) B i)) - 1) := by
+  classical
+  let b := embeddingRows emb X x
+  let A := commonConstraintMatrix b (coefficientNormal z) k
+  obtain ⟨P, hP, hbound⟩ := block_common_rows_partition_rank b (coefficientNormal z)
+    k Finset.univ (fun σ _ => hk σ) gp
+  have hrank : A.rank = finrank K (commonRowSpan (blockRows b)
+      (coefficientNormal z) k Finset.univ) := commonConstraintMatrix_rank b _ k
+  have hnull := A.mulVecLin.finrank_range_add_finrank_ker
+  change A.rank + finrank K (LinearMap.ker A.mulVecLin) =
+    finrank K ((Σ i, κ i) → K) at hnull
+  rw [Module.finrank_pi, Fintype.card_sigma] at hnull
+  have hzker : z ∈ LinearMap.ker A.mulVecLin := by
+    apply LinearMap.mem_ker.mpr
+    ext ⟨σ, i⟩
+    change coefficientNormal z ((coefficientNormal z (blockRows b σ k)) •
+      blockRows b σ i - (coefficientNormal z (blockRows b σ i)) • blockRows b σ k) = 0
+    simp [mul_comm]
+  have hline : K ∙ z ≤ LinearMap.ker A.mulVecLin :=
+    (Submodule.span_singleton_le_iff_mem _ _).mpr hzker
+  have hline_dim : finrank K (K ∙ z) = 1 := finrank_span_singleton hz
+  have hpos : 1 ≤ finrank K (LinearMap.ker A.mulVecLin) := by
+    simpa only [hline_dim] using Submodule.finrank_mono hline
+  constructor
+  · intro heq Q
+    have hdim : finrank K (LinearMap.ker A.mulVecLin) = 1 := by
+      rw [heq, hline_dim]
+    have hle := hbound Q
+    rw [← hrank] at hle
+    omega
+  · intro hc
+    have hcost := hc P
+    have hrP := hrank.trans hP
+    have hdim : finrank K (LinearMap.ker A.mulVecLin) = 1 := by omega
+    exact (Submodule.eq_of_le_of_finrank_eq hline (hline_dim.trans hdim.symm)).symm
+
+#print axioms hyperplane_partition_rank
+#print axioms block_common_rows_partition_rank
+#print axioms embedding_common_kernel_rigidity
 
 end BlockRows
 
