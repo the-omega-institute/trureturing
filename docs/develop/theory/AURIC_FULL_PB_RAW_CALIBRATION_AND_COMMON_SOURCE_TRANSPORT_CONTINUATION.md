@@ -1876,3 +1876,223 @@ $F^ne_1=2^{-n}e_1$、$F^ne_4=e_4$，给前两式；$Ge_4=0$、$Ge_1=\sqrt3e_1/2$
 实际原源是否供应这些选定核分支、计数合法 $q$、两份同一 native 响应及完整七矩，是否存在 65.3 的种子、可重复保留过滤字和全部实际接续，均未由矩阵检测定理推出。模型内实双线性、完整忠实复表示与原响应的识别仍须按 C128 等原桥取得；Hilbert／复结构、Born、张量／真正相关组成、过程／CP-Kraus／TP-更新-Lüders、物理动力学及单位的原来源义务完整保留。给定矩阵模型内 $D=\sigma K$ 可调用 60.3 的保谱流，但不将数学参数认作物理时间或给出 $\hbar$。这些结论不构成完整原合同障碍，也不结算完整量子起源。
 
 ## 追加锚（本行以下为增补区）
+
+## 66. 原七地址轨道在字面四维角上的完整七矩
+
+**定义 66.1（同一读前来源与秩四输入）。** 本节的来源条件完整取 [固定来源卷定理 61.1、式 (61.2)、(61.5)](AURIC_C139_FIXED_SOURCE_COMPARATORS_AND_NATIVE_EVENT_BOUNDARY.md#61-原生代码角中的三投影参考请求)，以下简称来源 §61；其中 [native XI 定义 1.1–1.4、假设 6.1、推论 6.2](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_XI.md) 的静态 Born 选择、实际因果过程与真实细档案充分性都是前件。仍用其同一 $\mathcal K=\mathbb C^{89}$、$J:H\otimes\mathbb C^2\to\mathcal K$、$\dim H=13$、唯一 ready 和原程序。令 $\epsilon_1,\ldots,\epsilon_4$ 为 $\mathbb C^4$ 的标准基，固定
+
+$$
+\begin{gathered}
+V\epsilon_1=e_{00000},\quad V\epsilon_2=e_{00001},\quad
+V\epsilon_3=e_{00010},\quad V\epsilon_4=e_{00100},\\
+Q\xi=J(V\xi\otimes|0\rangle),\quad Q^*Q=I_4,\quad
+e_0=QQ^*,\quad \iota_0(A)=QAQ^*,\quad H_4=\operatorname{Herm}_4(\mathbb C).
+\end{gathered}
+\tag{66.1}
+$$
+
+四个词均是 [II 定义 77.1、式 (77.2)](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_II.md#77-原十站点的整个十三维扇区及编织对应) 的不同合法五位词。$\iota_0$ 是完整 $M_4$ 到 $e_0M_{89}e_0$ 的忠实乘法嵌入，单位像为 $e_0$，不是 $I_{89}$。完整余空间维数为 $85$，不作为失败、零态或被删除的输出。
+
+对每个实际有限七地址前缀 $a\in\mathsf W_7=\{0,\ldots,6\}^{<\infty}$，来源 (61.2) 给
+
+$$
+\begin{gathered}
+v_0=e_{00100},\quad e_{\rm r}=J(v_0\otimes|0\rangle),\quad
+\chi_a=K_ae_{\rm r}=J(U_av_0\otimes|0\rangle),\\
+z_a=Q^*\chi_a=V^*U_av_0,\qquad
+\phi_a(A)=\langle\chi_a,\iota_0(A)\chi_a\rangle=z_a^*Az_a,\\
+\mu_a=\phi_a(I_4)=\|z_a\|^2\in[0,1].
+\end{gathered}
+\tag{66.2}
+$$
+
+这里 $K_a$ 作用于完整原载体，$U_a$ 是同一七地址字在 $H$ 上的作用；调用次序仍为 $K_{af}=K_fK_a$、$U_{af}=U_fU_a$。$\phi_a$ 是原前缀在该角上的未归一评价，不是执行投影 $e_0$ 后取得的新准备。$\mu_a=0$ 时整份角泛函为零，质量 $1-\mu_a$ 及其全部原记录仍在完整来源中。
+
+**命题 66.2（原前缀、固定未来框架与选定检测的响应供应）。** 在定义 66.1 的来源条件下，一个独立于前缀、PB 元组和 $D_4$ 的固定有限原未来框架，可以重构每个 $\iota_0(A)$、$A\in H_4$ 的响应。原七地址前缀的密度满足
+
+$$
+\overline{\operatorname{cone}\{z_az_a^*:a\in\mathsf W_7\}}
+=(H_4)_+.
+\tag{66.3}
+$$
+
+因此，对每个分别固定的实双线性交替 $D_4:H_4^2\to H_4$，以及每份分别固定的合法 (56.1) 元组 $\mathfrak t=(U,x,q)$，有
+
+$$
+m_{\mathfrak t,D_4}\bigl((M_4)_+^*\bigr)
+\subseteq\overline{\operatorname{cone}
+ \{m_{\mathfrak t,D_4}(\phi_a):a\in\mathsf W_7\}}.
+\tag{66.4}
+$$
+
+这里 $m_{\mathfrak t,D_4}$ 是 (60.1) 的完整七矩映射；右侧暂为可重构的矩阵响应向量锥，只有在 §67 的原标签、同一旧 $D$ 和 PB 资格桥成立时，才是可用于原 PB 的向量锥。
+
+证明。先固定实际未来框架。由来源 §61 已消费的 II77.2、II79.2 的系统张成，选择 $N=169$ 个实际有限七地址未来 $f_\ell$ 及合法终端词 $\beta_\ell$，使
+
+$$
+B_\ell=U_{f_\ell}^*P_{\beta_\ell}U_{f_\ell},\qquad
+P_\beta=|e_\beta\rangle\langle e_\beta|,\qquad 1\le\ell\le N,
+\tag{66.5}
+$$
+
+为 $\operatorname{Herm}(H)$ 的实线性基。因此实际未来字的不同取值至多 $169$ 个。这里仅从既有张成族中选择有限基，不执行闭包中的酉。来源 (61.5) 取参考指数 $t=0$、$i=0$、$h_0=\epsilon$，准确给原事件
+
+$$
+\begin{gathered}
+E_\ell=K_{f_\ell}^*M_0N_{w_{\beta_\ell}}K_{f_\ell}
+ =J(B_\ell\otimes|0\rangle\langle0|)J^*,\qquad
+w_\beta=10\beta010,\\
+p_\ell(a)=\Pr_{\mathsf R(af_\ell,\epsilon)}(I=0,W=w_{\beta_\ell})
+=\langle\chi_a,E_\ell\chi_a\rangle.
+\end{gathered}
+\tag{66.6}
+$$
+
+这使用同一原读者和紧随其后的旧终端；$f_\ell$ 在读者之前，不是 $\mathsf R(a,f_\ell)$ 的读后控制。所有请求在选择未来以前共享同一个实际前缀 $a$，按 XI 假设 6.1 的共同过去实现；没有要求不相容请求在一次运行中同时测量。
+
+唯一的实线性系数 $b_\ell(A)$ 由 $VAV^*=\sum_\ell b_\ell(A)B_\ell$ 定义。于是完整 $89$ 维中准确有
+
+$$
+\iota_0(A)=\sum_\ell b_\ell(A)E_\ell,\qquad
+\phi_a(A)=\sum_\ell b_\ell(A)p_\ell(a).
+\tag{66.7}
+$$
+
+系数可以有符号；它们只是响应后处理的实线性系数，不是新的原操作数、新事件的概率、实际彩票或准备权。有限线性响应重构的成熟接口沿 §51 所引 D’Ariano–Perinotti–Sacchi，[*Informationally complete measurements and group representation*，arXiv:quant-ph/0310013v2，§2](https://arxiv.org/pdf/quant-ph/0310013v2)；该线性接口不推出非线性 PB。
+
+对固定 $\mathfrak t,D_4$，在完整 $H_4$ 中按 (56.1) 形成 $h=D_4(c,x)$、$g=D_4(c,t)$、$R_\delta,S_\delta,L$，再取七个 Hermitian 标签
+
+$$
+(F_1,\ldots,F_7)=
+(L,R_+^2,S_+^2,R_+\circ S_+,R_-^2,S_-^2,R_-\circ S_-).
+\tag{66.8}
+$$
+
+同一个框架给 $m_{\mathfrak t,D_4}(\phi_a)_k=\sum_\ell b_\ell(F_k)p_\ell(a)$。系数此时依赖固定元组和固定 $D_4$，框架本身不依赖它们，七项都评价同一个 $\phi_a$。因 $Q^*Q=I_4$，
+
+$$
+\iota_0(AB)=\iota_0(A)\iota_0(B),\qquad
+\iota_0(A^2)=\iota_0(A)^2,\qquad
+\iota_0(A\circ B)=\iota_0(A)\circ\iota_0(B).
+\tag{66.9}
+$$
+
+故平方与乘积先在完整四维输入中形成；这里没有先压缩未知 native 输出再作平方。两份 Gram 预算也没有通过有符号组合不同 PB 不等式取得。
+
+接着，直接消费 II77.2 的原 ready 轨道射影密度。对每个单位 $\psi\in\mathbb C^4$，可选有限原字 $a_n$ 和仅用于范数比较的相位 $\lambda_n$，使
+
+$$
+|\lambda_n|=1,\quad
+\varepsilon_n:=\|\lambda_nU_{a_n}v_0-V\psi\|\longrightarrow0,\quad
+\|\lambda_nz_{a_n}-\psi\|\le\varepsilon_n.
+\tag{66.10}
+$$
+
+相位不作为物理门执行。由于 $\|z_a\|\le1$，当 $\varepsilon_n<1$ 时，
+
+$$
+\mu_{a_n}\ge(1-\varepsilon_n)^2>0,\qquad
+\mu_{a_n}\to1,\qquad
+|\phi_{a_n}(A)-\psi^*A\psi|\le2\|A\|\varepsilon_n.
+\tag{66.11}
+$$
+
+因此未归一纯泛函本身趋于目标；若只在数学上除以 $\mu_{a_n}$，归一泛函也趋于同一目标。这个除法不宣称来源允许条件化。所有 $z_az_a^*$ 都正；反向，对任意 $s\ge0$ 作至多四项谱分解 $s=\sum_jr_j\psi_j\psi_j^*$，$r_j\ge0$，对每个非零谱项用 (66.10)，便以 $\sum_jr_jz_{a_{j,n}}z_{a_{j,n}}^*$ 逼近 $s$，得 (66.3)。这是 §51 已用的有限维谱分解在本来源上的应用，成熟矩阵态接口沿该节所引 Watrous，[*The Theory of Quantum Information*，§1.2](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)。正锥系数仍只是数学系数，不安装随机制备。
+
+对固定的七个 $F_k$，$s\mapsto(\operatorname{Tr}(sF_k))_{k=1}^7$ 连续且实线性，因而上述谱和同时运输完整七向量，给 (66.4)。该论证先固定每个合法 $q$、完整元组及同一个 $D_4$，再取前缀逼近极限；不是在 $q$ 变化时假设统一前缀或统一误差。没有统一字长、精确任意准备、物理混合或噪声鲁棒性的结论。∎
+
+## 67. 同一旧响应的原标签桥与首项完整平方
+
+**假设 67.1（原标签、完整输出与合格前缀）。** 在 60.5、65.4 的全部原合同内，于定义 66.1 的同一读前切口另供以下来源对应。设 $\mathcal A_{\rm old}$ 为该切口的原标签代数，$\circ_{\rm old}$ 为原 Jordan 乘积，$D_{\rm old}$ 为预先固定的同一旧有向关系。存在实际原标签实线性单射 $\kappa:H_4\to\mathcal A_{\rm old}$ 和在该对象完整输出上忠实的实线性 Jordan 读回 $j:\mathcal A_{\rm old}\to\operatorname{Herm}(\mathcal K)$，满足
+
+$$
+\begin{gathered}
+j\kappa(A)=\iota_0(A),\qquad
+\kappa(A\circ B)=\kappa(A)\circ_{\rm old}\kappa(B),\qquad
+\kappa(A^2)=\kappa(A)^2,\qquad j(\kappa(I_4))=e_0.
+\end{gathered}
+\tag{67.1}
+$$
+
+$\kappa(I_4)$ 是这个原角的单位，不替换原整体单位。$j$ 保持原 Jordan 乘积、平方及所需正评价，并覆盖完整原输出，不以压缩、仅演员块或仅相同终端响应的商替代忠实性。对于同一个原前缀准备的评价 $\alpha_a$，有
+
+$$
+\alpha_a(\kappa(A))
+=\langle\chi_a,j\kappa(A)\chi_a\rangle=\phi_a(A).
+\tag{67.2}
+$$
+
+同一 $D_{\rm old}$ 的实双线性与交替性须在全部 $\kappa(H_4)$ 输入上取得；另存在一个固定的实双线性交替 $D_4:H_4^2\to H_4$，使整个输出满足
+
+$$
+D_{\rm old}(\kappa(A),\kappa(B))=\kappa(D_4(A,B))
+\qquad(A,B\in H_4).
+\tag{67.3}
+$$
+
+这不是只要求 $Q^*j(D_{\rm old}(\kappa(A),\kappa(B)))Q=D_4(A,B)$；所有角外输出也必须符合 (67.3)。特别 $h$ 和 $g$ 均由这一份旧 $D$ 取得，不预先标定其中之一。
+
+对 64.1 所需每份固定元组 $\mathfrak t$，存在实际合格前缀族 $\mathsf A_{\mathfrak t}\subseteq\mathsf W_7$。在每个所用前缀上，原 $c,x,t$ 标签、全部七个完整输出标签、(66.6) 的未来响应和原 PB 均实际合法，接受及质量对应来自同一份原准备／保留分支；同一七向量内不换分支、不单独正规化预算、不丢失败或细记录。若接受另带比例因子，须已证明七项共同乘同一个严格正有限因子，才能用 PB 齐次性消去它。角质量仍是 (66.2) 的 $\mu_a$，不把它置为一。只需该族对本元组每个所需单位目标 $\psi$ 满足
+
+$$
+\inf_{a\in\mathsf A_{\mathfrak t},\ |\lambda|=1}
+\|\lambda U_av_0-V\psi\|=0.
+\tag{67.4}
+$$
+
+若所有原七地址前缀都具有这些实际 PB 资格，(67.4) 由 II77.2 供应；若只有逐元组合格子族，须在该子族内另证 (67.4)，无条件轨道密度不推出这一点。更弱而仍足够的是直接供应 65.1 所需目标七向量在合格 PB 向量闭正锥中的包含。上述对应均是来源假设，(66.7) 的层析不能取得它们。
+
+**推论 67.2（原轨道对选定完整检测的条件应用）。** 在定义 66.1 与假设 67.1 下，64.1 的检测强制该同一个旧 $D$ 在 $\kappa(H_4)$ 上为
+
+$$
+D_{\rm old}(\kappa(A),\kappa(B))
+=\kappa\!\left(\sigma\frac{i}{2}[A,B]\right),
+\qquad \sigma\in\{-1,+1\}\text{ 为一个整体常数}.
+\tag{67.5}
+$$
+
+证明。对每份固定合法元组，先用 (67.4) 及 (66.10)–(66.11)，使其目标纯泛函的完整七向量成为同元组合格 PB 向量的正比例的极限；若有共同接受因子，先按齐次性消去。充分接近的前缀具有严格正角质量；它们无需精确等于目标准备。两份完整 Gram 矩阵在极限下仍正，行列式根连续，故由 §51 的闭七矩锥运输取得该目标 PB。非单位 $v_j,w_*,w_n$ 所带的正有限质量再按原齐次性恢复。
+
+在每个有限 $n$、固定合法 $q$ 的目标 PB 已得到以后，才使用 64.1 自己的核族 $q\to0$ 极限及下强度 $n\to\infty$ 极限；不交换这两层量词。由 65.2 得同一个全域 $D_4=\sigma K$，再用 (67.3)。整体方向不依赖前缀、元组或历史。反向的数学正泛函 PB 仍精确由 58.2 给出，但不由此取得假设 67.1 的实际原接口。∎
+
+**命题 67.3（第一下强度元组的未付等式与泄漏诊断）。** 固定 64.1 第三族的首项
+
+$$
+U=I_4,\quad c=\operatorname{diag}(1,2,3,0),\quad x=E_{11},\quad
+q=(1/4,1/8,0)^{\mathsf T},\quad
+ t=\tfrac14(E_{14}+E_{41})+\tfrac18(E_{24}+E_{42}).
+\tag{67.6}
+$$
+
+在这个有限合法元组，来源 §61 的响应供应之后，尚须首先识别原输出本身：是否有同一个完整域响应 $D_4$ 的 $g=D_4(c,t)$，使
+
+$$
+D_{\rm old}(\kappa(c),\kappa(t))=\kappa(g),\qquad
+j\!\left(D_{\rm old}(\kappa(c),\kappa(t))\right)=QgQ^*.
+\tag{67.7}
+$$
+
+$\kappa,j$ 未取得时，连这组原标签等式都尚未供应，不能写 $D_{\rm old}(c,t)$ 冒充其已定义矩阵值。[C128 原词卷定义 319.1、假设 319.2](AURIC_C128_ORIGINAL_WORD_CALIBRATION_AND_FIXED_RELATION.md#319-同一原有向关系的字面端点标定问题) 已明确区分原抽象 $d_A$ 与 native $89$ 维矩阵的采用 $\theta$；其保原响应 Jordan 采用和原 ready 评价是额外前件。那些完整前件若已满足，可提供此处相应坐标，不能仅凭矩阵事件张成视为已付。
+
+若这个原输出的完整 Hermitian $89$ 维代表 $G$ 已经供应，则复用[实际探针卷命题 18.1、式 (18.4)](AURIC_FULL_PB_ACTUAL_PROBE_AND_ENVIRONMENT_COUPLING_CONTINUATION.md#18-原平方与压缩平方的严格区别)，在同一个 $e_0$ 上有准确诊断
+
+$$
+\begin{aligned}
+\mathcal L_G&=e_0G(1-e_0)Ge_0\ge0,\\
+e_0G^2e_0-(e_0Ge_0)^2&=\mathcal L_G,\\
+Q^*G^2Q-(Q^*GQ)^2&=Q^*\mathcal L_GQ.
+\end{aligned}
+\tag{67.8}
+$$
+
+证明。所引命题已给读取子空间不约化原输入的具体反控制及完整平方差；这里仅将其投影取为 (66.1) 的 $e_0$。正性来自 $\mathcal L_G=((1-e_0)Ge_0)^*((1-e_0)Ge_0)$，所以零残量恰好表示该输出没有从角向外的连线。若残量非零，其在角内有严格正向量评价，(66.10) 的原前缀逼近亦给严格正响应。已知 $G$ 时，残量属于 $e_0M_{89}e_0$，故 (66.7) 可以表达其响应；这既未取得 $G$，也未将残量安装为新测量。
+
+于是非零残量直接否定该代表的 (67.7) 完整角输出对应，并说明把 $Q^*GQ$ 的平方代替原 $G^2$ 会漏掉什么。即使残量为零，仍可有非零 $(1-e_0)G(1-e_0)$；它不保证整个 (67.7)，更不解决伴随的 $h$、全部输入、接受、原 PB 或 Return。这是指定首项输出的精确条件诊断，没有有限精度证书，也不是原完整来源的无解定理。∎
+
+**定义 67.4（应用范围与量子起源的保留条件）。** §§66–67 的新增关系是把来源 §61 的实际读前片段和 II77.2 的同一原轨道，直接接到本卷已给的 64.1、65.2 检测；有限框架、谱分解、连续性和 §51 的 Gram／行列式根锥运输只作该应用内部的成熟工具，不另立一般层析、锥运输或纯化定理。其几何为秩四角内稠密的纯射线评价及闭正锥；$85$ 维补空间和完整原输出从未被投影掉。响应锥由 (66.3)–(66.4) 支付，实际 PB 锥仍取决于 (67.1)–(67.4)。这里不主张文献穷尽、历史首创或有限步认证。
+
+[双侧正重置卷 V §80](QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_V.md#80-全框架缺陷的内在上包络与共同原映射修复) 的全框架缺陷，在完整 $\mathrm{PRE}_0^{\rm mix}$、全锥正 $L,p$、同一个 $p$ 两次、两条实张成及全实 $Z$ 等原前件下，零缺陷恢复同一 PRE；H13、归一化和固定载体的有界非塌缩修复各按 80.2–80.7 的额外条件使用。其联合载体 $D_{\rm PRE}$ 与本节有向响应 $D_{\rm old}$ 不同；该条件几何不供应 (67.7)、native 门、原接受或本节的同源 PB。其规范参考也不自动等于原物理整体态。[R5_031 定理 72.3、74.1–74.2、75.1](AURIC_R5_031_TARGET_OWNED_POSITIVE_GRASSMANN_GEOMETRY.md) 在实际可分域扩张、窗口行列式绝对不可约及指定原域开集等条件下给算术窗口的二平面恢复；这些 Grassmann 二平面不是秩二量子态准备，算术提升不取得本来源的状态或操作。
+
+60.5、65.4 及其递归上游的全部原对象、状态、操作、记录、每份完整输出的每个旧合法未来和两侧／逆向 Return 合同逐项合取保留；没有缩小全菜单、中间切口、参考／副本、真正相关组成、零／不等／次归一质量、失败、端口或物理单位范围。来源 §61 已消费静态 Born 与实际过程充分性，故本应用不能循环称为这些前件的推导。Hilbert／复结构、Born、真正相关张量组成、合法过程与 CP-Kraus／TP-更新-Lüders、原物理时间／动力学／能量单位及 $\hbar$ 的来源义务仍各按原范围承担。数学 $D_4=\sigma K$ 后的保谱流只按 60.3 的条件使用，不把其参数认作物理时间。原七地址前缀足以提供这里所需的数学响应方向，不代表旧 $D$ 与实际完整 PB 已经取得，也不结算完整量子起源。
+
+## 追加锚（本行以下为增补区）
