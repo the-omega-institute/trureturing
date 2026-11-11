@@ -4616,3 +4616,108 @@ CountRead 仍须同一接受叶的完整活动输出、实际读后 active-ready
 直观地说，原来的两张面积图在第三对角不为零时可以一起压小，再用那一格留下的读数找出残量；第三对角为零，这把尺就失灵了。这里仍用原来的五维桌面、两条环境连线和同一份输入，只将同一探针的一格按 $1/\rho^2$、一条斜边按 $1/\rho$ 放大。两张面积图都变大，但原乘法恒等式准确支付了它们共同的大项；真正额外的面积由同一对复列的内积和外积分开计算，一笔趋零，另一笔只花去 $5s^2/6$，而残量留下 $s^2$，所以仍有正差额。原第二环境列并未消失，它的每个交叉面积都留在有限系数里；明确选取一个有限正的 $\rho_*$ 就能同时压住这些低阶代价，得到两笔预算都正、质量恰为任意指定正数的原 PB 违反。这说明这个固定矩阵分支不能容纳非零残量，却不会把矩阵见证变成实际物理准备、完整菜单、真实返回或整个量子宇宙。
 
 ## 新增锚（本行以下为后续增补区）
+
+
+## 43. 同一零探针的全复环境幅度与不平方下界
+
+**定理 43.1（固定家族的相位完备充要条件）。** 准确保持定义 41.1、(41.4) 的完整四维模型、同一原 $q$、分别固定的 $\sigma$、$\iota=\sigma i$、同一实际对角残量 $E$，以及定理 41.4 的 $x=0$ 和
+
+$$
+u=(2/\overline{q_1},-1/\overline{q_2},0)^{\mathsf T},\qquad
+\xi_w=(u,w),\qquad \phi_w(A)=\xi_w^*A\xi_w.
+\tag{43.1}
+$$
+
+将 $w$ 的范围扩大为整个 $\mathbb C$。这个家族对全部复 $w$ 满足原 PB，当且仅当原条件 (41.16) 成立；没有比实幅度家族更强的新必要条件。结论不涉及全部演员探针的完整允许集分类。
+
+证明。采用与 (41.15) 相同的 $m,n,b,a,d,F,G,H$，另写 $r=s_1-s_2$ 和 $V=1+4s_1^2/m+s_2^2/n$，即
+
+$$
+\begin{gathered}
+b=m+4n,\quad a=m+2n,\quad d=2s_1-s_2+s_0,\\
+F=bV-4r^2=b+(4\sqrt{n/m}\,s_1+\sqrt{m/n}\,s_2)^2>0,\\
+G=b(m+n+b/4+s_0^2)-a^2,\qquad H=bd-2ar.
+\end{gathered}
+\tag{43.2}
+$$
+
+对 $w\ne0$，唯一地取 $\rho=|w|>0$ 和实数 $X,Y$ 使
+
+$$
+w=\rho(X+\iota Y),\qquad X^2+Y^2=1.
+\tag{43.3}
+$$
+
+这里 $Y=\sigma\operatorname{Im}(w)/\rho$；不能把 (43.3) 改为 $\rho(X+iY)$ 而继续使用下面不含 $\sigma$ 的 $Y$ 系数。原 $q$ 的任意相位只通过 $q^*u=1$、$q^*Cu=0$、$(Cq)^*Du=2r$ 收缩，$D=\operatorname{diag}(s_1,s_2,s_3)$。没有旋转原环境或改变 $t$。
+
+(41.17) 的完整列对复 $w$ 仍准确成立：
+
+$$
+R_\delta\xi_w=(-\delta wCq/2,0),\qquad
+S_\delta\xi_w=(\delta Du+wq+\delta\iota wCq/2,\ 1+\delta s_0w).
+\tag{43.4}
+$$
+
+取同一列的范数和实内积，得到
+
+$$
+\begin{aligned}
+\phi_w(L)&=-2d\rho X,\\
+\|R_\delta\xi_w\|^2&=b\rho^2/4,\\
+\|S_\delta\xi_w\|^2
+ &=V+2\delta d\rho X-2r\rho Y
+       +(m+n+b/4+s_0^2)\rho^2,\\
+\operatorname{Re}\langle R_\delta\xi_w,S_\delta\xi_w\rangle
+ &=-r\rho X-\delta a\rho^2/2,\\
+\frac{4B_{\phi_w}(R_\delta,S_\delta)}{\rho^2}
+ &=F+4r^2Y^2+\rho(-2brY+2\delta HX)+G\rho^2.
+\end{aligned}
+\tag{43.5}
+$$
+
+例如 $\operatorname{Re}(\iota w)=-\rho Y$ 给第三行的 $-2r\rho Y$；第四行使用 $\operatorname{Re}\overline w=\rho X$。第四输出的平方 $s_0^2\rho^2$ 和交叉项 $2\delta s_0\rho X$ 都在第三行内，未压缩掉环境。最后一行由前两范数的乘积减去第四行的平方得到，仍是实 Gram 预算。
+
+必要性直接限制到实 $w$，应用定理 41.4；若 $4d^2>F$，(41.21) 已给有限实幅度的严格双正预算见证。以下证明充分性而不对两个根式的和反复平方。直接展开 (43.2) 给
+
+$$
+\begin{aligned}
+T&:=G-b^2/4=mn+bs_0^2>0,\\
+FT-H^2
+ &=\frac{b}{mn}(-mn+ms_2s_0+4ns_1s_0)^2\ge0.
+\end{aligned}
+\tag{43.6}
+$$
+
+置
+
+$$
+A=F+4r^2Y^2-2brY\rho+G\rho^2,\qquad K_0=2HX\rho.
+$$
+
+因 $X^2\le1$ 和 $H^2/F\le T$，有准确配方
+
+$$
+\begin{aligned}
+A-F-\frac{K_0^2}{4F}
+ &=(2rY-b\rho/2)^2
+       +\rho^2\left(T-\frac{H^2X^2}{F}\right)\ge0,\\
+A\pm K_0&\ge\left(\sqrt F\pm\frac{K_0}{2\sqrt F}\right)^2,\\
+\sqrt{A+K_0}+\sqrt{A-K_0}
+ &\ge\left|\sqrt F+\frac{K_0}{2\sqrt F}\right|
+       +\left|\sqrt F-\frac{K_0}{2\sqrt F}\right|
+ \ge2\sqrt F.
+\end{aligned}
+\tag{43.7}
+$$
+
+这些不等式包括根式为零的情况，没有假定严格正预算。原 PB 在 $\rho>0$ 时准确为
+
+$$
+4|dX|\le\sqrt{A+K_0}+\sqrt{A-K_0}.
+$$
+
+若 $4d^2\le F$，则 $4|dX|\le4|d|\le2\sqrt F$，由 (43.7) 即成立。$w=0$ 时两端均为零，不作除法。两笔预算始终使用同一 $\xi_w,x,t,g,\phi_w$，充分性没有拼接分别最小的列。这证明全复幅度的充要条件。∎
+
+本条的 repo-derived 内容是 (43.4)–(43.7) 对定理 41.4 的相位完备扩展和同一完整列的不平方下界。正泛函 Schwarz、实 Gram 与平方配方作为成熟中间工具，沿 §41.8 的数学归属使用。该扩展不改变 (41.41) 的夹逼，不给非分级残量的全称充分模型，也不消去定理 41.5 的 $s_0^2\eta\rho^2$ 代价。原来源和七项消费者严格合取 §41.8、§39.8 的完整合同，未由这份固定零探针家族供应。相同 M4 原始探针的正映射运输问题见[原始标定与共同源运输续卷 §44](AURIC_FULL_PB_RAW_CALIBRATION_AND_COMMON_SOURCE_TRANSPORT_CONTINUATION.md)。§42 是另一份 M5 秩二原环境模型，不用于本条或该 M4 标定。
+
+## 新增锚（本行以下为后续增补区）
