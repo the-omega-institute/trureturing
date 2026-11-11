@@ -1159,3 +1159,381 @@ with no legal joint state: its only candidate matrix gives a negative
 value on a full joint effect, even though local product-test entries
 remain valid probabilities. These are conditions on statistical
 descriptions and say nothing about exchanging measurements in time.
+
+## Positive marginals recover the joint-effect contract
+
+The following application starts at the trace-normalized EJA stage of
+the [single-system S-to-Jordan paper bridge](mullerududec2012selfduality.md#complete-conditional-candidate-and-its-scope).
+It replaces the independently supplied binary effect product by two
+globally positive marginals and preparation spanning. The implication
+below is a paper composition of existing Jordan facts, not a theorem
+quoted verbatim from a source, a novelty claim or a Lean result.
+
+The spectral facts used are [Barnum–Hilgert, arXiv:1904.03753v1](https://arxiv.org/html/1904.03753v1#S4),
+Theorem 4.2, Definition 4.3 and Proposition 4.4: spectral expansions in
+primitive frames, the canonical trace base, and its pure states.
+For ambient operator commutation, [van de Wetering, *Commutativity in
+Jordan Operator Algebras*, arXiv:1912.01903v1](https://arxiv.org/html/1912.01903v1#S2.counter12),
+Proposition 2.12, states that an idempotent and another element of a
+Jordan algebra operator commute exactly when they generate an associative
+subalgebra. Theorem 3.13 gives the corresponding equivalence for arbitrary
+elements of a JB-algebra. These facts include exceptional EJAs; they are
+not restricted to Hermitian matrix subalgebras. Source use is citation-only.
+[Barnum–Graydon–Wilce, arXiv:1606.09331v3](https://arxiv.org/abs/1606.09331v3),
+Definition 4.1 and Proposition 4.3, pages 22–23, give related composite
+identities with dynamical extension and adjoint compatibility among their
+hypotheses. Those extra hypotheses are not imported here. Likewise the
+product-test requirement in Barnum–Wilce's Lemma 8 is not assumed before
+the joint effects have been constructed.
+
+### Exact marginal input and conclusion
+
+Let $A,B,D$ be nonzero finite-dimensional Euclidean Jordan algebras,
+with units $1_X$, cones of squares $X_+$ and canonical traces $\tau_X$.
+Each primitive idempotent has trace one, including in every direct-sum
+sector. Use the associative inner products
+
+$$
+\langle x,y\rangle_X=\tau_X(x\circ y).
+$$
+
+The normalized states are **all** $x\ge0$ with $\tau_X(x)=1$; the effects
+are the **full** intervals $[0,1_X]$, identified with functionals by these
+pairings. Arbitrarily rescaled sector traces are not substituted for
+this normalization. Supply real-bilinear $M:A\times B\to D$, positive
+on every pair $x\in A_+,y\in B_+$, and real-linear maps
+$R_A:D\to A$, $R_B:D\to B$ such that
+
+$$
+\begin{gathered}
+R_A(D_+)\subseteq A_+,\qquad R_B(D_+)\subseteq B_+,\\
+\tau_A R_A=\tau_D=\tau_B R_B,\\
+R_A M(x,y)=\tau_B(y)x,\qquad
+R_B M(x,y)=\tau_A(x)y\quad(x\in A,\ y\in B),\\
+\operatorname{span}_{\mathbb R}\{M(x,y):x\in A,y\in B\}=D.
+\end{gathered}
+\tag{15}
+$$
+
+The marginal maps are positive on the **whole joint cone**, not just on
+prepared product states; their trace identities hold on all vectors.
+The two identities for $R_A M$ and $R_B M$ quantify over all local
+vectors. By bilinearity they can equivalently be checked on all normalized product
+states. Real spanning does not say that every joint state is a convex
+mixture of products.
+
+Set $a=R_A^*$, $b=R_B^*$ for the displayed trace inner products. Then
+$a,b$ are unital injective Jordan homomorphisms with
+
+$$
+[L_{a(x)},L_{b(y)}]=0\quad(x\in A,y\in B),\qquad
+N(f,g):=a(f)\circ b(g),\qquad L_z(w)=z\circ w.
+\tag{16}
+$$
+
+The map $N$ is positive bilinear, $N(1_A,1_B)=1_D$, and
+
+$$
+\langle N(f,g),M(x,y)\rangle_D
+=\langle f,x\rangle_A\langle g,y\rangle_B
+\quad(f,x\in A,\ g,y\in B).
+\tag{17}
+$$
+
+Thus $e(f,g)(z)=\langle N(f,g),z\rangle_D$ supplies the entire earlier
+joint-effect contract, including separation. Moreover $M=N$ under the
+trace identifications, $M(1_A,1_B)=1_D$, the tensor linearization is an
+isometric vector-space isomorphism, pure products are pure, and
+
+$$
+\dim D=\dim A\dim B,\qquad
+\operatorname{rank}D=\operatorname{rank}A\operatorname{rank}B.
+\tag{18}
+$$
+
+No effect product, product purity, factorized trace, rank-minimality or
+complex matrix type is an assumption in (15).
+
+### Faithfulness and the exceptional-inclusive support bridge
+
+First, trace preservation and (15) give
+$\tau_D M(x,y)=\tau_A(x)\tau_B(y)$. Self-duality of the cones makes
+$a,b$ positive; the trace identities make them unital. Put
+$V=M(1_A,1_B)$. For positive $x\le s1_A$, $y\le t1_B$, positive
+bilinearity gives $0\le M(x,y)\le stV$. If $h\ge0$ satisfies
+$\langle h,V\rangle_D=0$, it therefore annihilates every positive
+product. Positive vectors span each factor, so it annihilates every
+product and, by (15), all of $D$. Hence $h=0$. By finite-dimensional
+self-duality, $V$ is interior to $D_+$: it has support $1_D$. This does
+not yet say $V=1_D$ or that it has minimum possible rank.
+
+Here is the support calculation without associative matrix multiplication.
+For an idempotent $r$, the orthogonal Peirce decomposition is
+$D=D_1(r)\oplus D_{1/2}(r)\oplus D_0(r)$, with $L_r$ having the indicated
+eigenvalues. The zero and one spaces are Jordan subalgebras, with zero
+product between them. For $z=t^2\ge0$, associativity of the trace form
+gives
+
+$$
+\langle r,z\rangle_D=\langle L_rt,t\rangle_D
+=\|t_1\|^2+\tfrac12\|t_{1/2}\|^2.
+\tag{19}
+$$
+
+Consequently zero pairing puts $t$, and then $z$, in $D_0(r)$.
+Its support $s(z)$, the sum of its positive spectral projections, is
+therefore below $1_D-r$. Spectrally expanding a positive $c$ and using
+self-duality shows that $\langle c,z\rangle=0$ puts $s(z)$ in the zero
+spectral space of $c$. In particular, for an effect $d$ and nonzero
+$z\ge0$, probability zero confines $s(z)$ to the zero-eigenvalue
+projection of $d$, while
+$\langle d,z\rangle=\tau_D(z)$ confines it to the unit-eigenvalue
+projection, by applying the zero statement to $1_D-d$. In these two
+cases $d\circ s(z)$ equals zero and $s(z)$, respectively. These Peirce
+and spectral statements apply to every EJA summand, including an Albert
+summand; no special-Jordan embedding is used.
+
+Choose complete primitive frames $(p_i)$ in $A$ and $(q_j)$ in $B$ and
+write
+
+$$
+\rho_{ij}=M(p_i,q_j),\quad e_i=a(p_i),\quad f_j=b(q_j),
+\quad r_{ij}=s(\rho_{ij}).
+$$
+
+The $\rho_{ij}$ are nonzero normalized positive vectors summing to $V$.
+The $e_i$ and $f_j$ are effects summing to $1_D$. The marginal identities
+give $\langle e_i,\rho_{kl}\rangle=\delta_{ik}$ and
+$\langle f_j,\rho_{kl}\rangle=\delta_{jl}$. The support calculation
+therefore yields
+
+$$
+e_i\circ r_{kl}=\delta_{ik}r_{kl},\qquad
+f_j\circ r_{kl}=\delta_{jl}r_{kl}.
+\tag{20}
+$$
+
+Two distinct $r_{ij}$ are orthogonal: a differing first index places
+them in the orthogonal unit and zero spectral projections of one $e_i$;
+a differing second index uses one $f_j$. Their sum $r$ is a projection
+and every $\rho_{ij}$ belongs to $D_1(r)$. Thus $V$ belongs to $D_1(r)$.
+Faithfulness of $V$ forces $r=1_D$. Multiplying this unit decomposition
+by $e_i$ or $f_j$ gives
+
+$$
+\sum_{ij}r_{ij}=1_D,\qquad e_i=\sum_j r_{ij},\qquad
+f_j=\sum_i r_{ij},\qquad e_i\circ f_j=r_{ij}.
+\tag{21}
+$$
+
+In particular the local images are sharp projections. The $r_{ij}$
+are not asserted to be primitive at this step.
+
+For arbitrary spectral expansions $x=\sum_i\lambda_i p_i$ and
+$y=\sum_j\mu_jq_j$, (21) shows that $a(x)^2=a(x^2)$ and similarly
+for $b$. Polarization gives Jordan homomorphisms. If $a(x)=0$, testing
+against $M(z,q)$ for one primitive $q$ gives
+$\langle x,z\rangle_A=0$ for every $z$, so $x=0$; likewise $b$ is
+injective. Both $a(x)$ and $b(y)$ are diagonal in the same orthogonal
+projection decomposition (21). Refining it to a primitive Jordan frame,
+their multiplication operators act by scalars on each common Peirce
+space: on an off-diagonal space the scalar is the average of the two
+corresponding diagonal coefficients. Thus they commute on **all** of
+$D$, proving the ambient assertion in (16). This also follows from
+the cited idempotent commutation criterion and linearity.
+
+Equation (21) now gives
+$N(f,g)=\sum_{ij}\lambda_i\mu_jr_{ij}\ge0$ when $f,g\ge0$ have
+nonnegative spectral coefficients. Bilinearity and unitality follow
+from its definition. It sends proper-effect pairs to proper effects:
+$1_D-N(f,g)=N(1_A-f,g)+N(1_A,1_B-g)\ge0$.
+
+### Construct pairing and separation before using product purity
+
+For primitive $p,q$, let $\rho=M(p,q)$. Given a proper effect $g$ of
+$B$, define $c_g\in A$ by the trace-dual identity
+
+$$
+\langle f,c_g\rangle_A=\langle N(f,g),\rho\rangle_D
+\quad(f\in A).
+$$
+
+Positivity of $N$ gives $0\le c_g\le p$, since
+$N(f,1_B)=a(f)$ and $R_A\rho=p$. The ray through $p$ is extreme,
+so $c_g=\lambda_g p$. Evaluation at $1_A$ gives
+$\lambda_g=\langle b(g),\rho\rangle_D=\langle g,q\rangle_B$.
+This proves (17) for pure product states. Proper effects span the local
+spaces, primitive states span them by spectrality, and all the maps are
+bilinear. Hence (17) holds for all four vector arguments.
+
+Testing (17) with dual local bases makes the linearization
+$\widetilde M:A\otimes_{\mathbb R}B\to D$ injective; preparation spanning
+makes it surjective. The same pairings show that product $N$ effects
+separate $D$. At this point the whole old binary contract has been
+established. Its marginals agree with $R_A,R_B$, because
+$N(f,1_B)=a(f)$ and $N(1_A,g)=b(g)$.
+
+Now directly apply [A pure marginal fixes every conditional
+state](#a-pure-marginal-fixes-every-conditional-state), whose positivity,
+pairing and separation hypotheses have just been derived. It makes
+every $M(p,q)$ pure. Proposition 4.4 of Barnum–Hilgert identifies a
+normalized pure vector with a primitive idempotent. Consequently
+$\rho_{ij}=r_{ij}$ in (21), and summing gives $V=1_D$. Choosing frames
+through any $p,q$ gives $M(p,q)=a(p)\circ b(q)=N(p,q)$; spanning and
+bilinearity give $M=N$ on all inputs. Equation (17) is now trace-form
+factorization and proves the tensor isometry. Equation (21) is a
+complete **primitive** product frame, proving the rank formula in (18).
+The earlier least-comparison factorization applies with no new premise.
+This dependency order uses neither the old effect contract nor purity
+to construct $N$.
+
+### Equivalent binary contract and genuine boundaries
+
+Conversely, start with the earlier full positive state/effect product
+contract on these trace-normalized EJAs. Define $R_A$ by
+$\langle f,R_Az\rangle_A=e(f,1_B)(z)$, and similarly for $R_B$.
+Positive effect products make these maps globally positive. The product
+unit makes them trace preserving; exact pairing gives their identities
+on $M(x,y)$. The earlier dual-basis and separation argument gives
+preparation spanning. Thus the two presentations have exactly the same
+binary models at the supplied EJA stage. For a given $M$, its tensor
+isomorphism and pairing determine $N$ uniquely, so no independently
+chosen effect map remains.
+
+| Primitive data or law | Marginal presentation |
+| --- | --- |
+| Positive bilinear independent preparation | Retained as $M$ |
+| Globally positive access to both local marginals | Explicit $R_A,R_B$, with trace preservation and (15) |
+| Joint informational completeness | Real preparation spanning; effect separation is derived |
+| Separate positive effect product, product unit and exact effect pairing | Constructed as (16)–(17) |
+| Product purity, rank multiplication and trace factorization | Consequences; no rank-minimality input |
+| Full carriers and single-system S/spectral/Jordan bridge | Retained independently |
+
+This removes primitive effect data and separately stated effect laws;
+it does not establish a smaller independently measured axiom count.
+The surviving marginal and spanning premises have not been derived from
+endpoint reciprocity.
+
+Both global positivity and spanning have substance. In complex matrix
+coordinates, take $B=H_m$, $m\ge2$, $0<t<1$ and the invertible
+depolarization $\Lambda_t(y)=ty+(1-t)\operatorname{Tr}(y)I_m/m$.
+On $D=H_{nm}$ put $M(x,y)=x\otimes\Lambda_t(y)$,
+$R_A=\operatorname{Tr}_B$ and
+$R_B=\Lambda_t^{-1}\operatorname{Tr}_A$. All requirements of (15)
+except positivity of $R_B$ hold, including real spanning. For a pure
+$q$, $\Lambda_t^{-1}(q)$ has eigenvalue $-(1-t)/(tm)$ on $q^\perp$;
+evaluating $R_B$ on a normalized product with second factor $q$
+therefore witnesses nonpositivity. A pure prepared pair has rank $m$.
+Interchanging factors gives the other missing-marginal boundary.
+For $m=1$ depolarization is the identity, so this failure requires a
+nontrivial matrix factor.
+
+Alternatively $M(x,y)=x\otimes y\otimes\sigma$ in $H_{nmk}$, $k\ge2$,
+with a fixed mixed density matrix $\sigma$, has both positive
+trace-preserving recovery maps. Its real product span has dimension
+$n^2m^2$, whereas the joint dimension is $n^2m^2k^2$. A full-rank
+$\sigma$ even makes $V$ faithful, but does not repair spanning or product
+purity. This construction fails an explicit hypothesis and is not a
+countermodel to the theorem. With a pure ancilla, spanning still fails.
+The proof itself covers scalar factors: for $A=\mathbb R$ the map
+$y\mapsto M(1,y)=b(y)$ is a trace-preserving Jordan isomorphism onto
+$D$; the other one-factor case is symmetric. With both factors scalar,
+$D=\mathbb R$ and $M$ is ordinary multiplication in these coordinates.
+
+### Complete finite candidate with the marginal presentation
+
+Keep the same **actual** four carriers $A,D,E_L,E_R$ and fixed copy
+labels from [One spectator swap and positive reassociation](#one-spectator-swap-and-positive-reassociation).
+Each is a nonzero finite-dimensional real ordered space with closed
+pointed generating cone, strictly positive normalization $u_X$, compact
+normalized base $K_X$, and all effects $[0,u_X]$. For each pure
+$p\in\operatorname{ext}K_X$ define
+
+$$
+T_p(x)=\inf\{f(x):0\le f\le u_X,\ f(p)=1\}\quad(x\in K_X).
+$$
+
+Require the same finite-mixture S on **each** of these four carriers:
+
+$$
+T_p\!\left(\sum_{i=1}^{\ell}a_iq_i\right)
+=\sum_{i=1}^{\ell}a_iT_{q_i}(p),\qquad
+\ell\ge1,\quad p,q_i\text{ pure},\quad
+a_i\ge0,\quad\sum_i a_i=1.
+\tag{22}
+$$
+
+A singleton gives endpoint reciprocity; all finite preparations supply
+the additional mixture consistency. The existing S-to-spectral/Jordan
+paper bridge supplies each canonical trace-normalized EJA separately;
+the present composite argument begins only after that bridge.
+
+For the actual pairs $(A,A)\to D$, $(D,A)\to E_L$ and
+$(A,D)\to E_R$, retain positive bilinear preparation and two globally
+positive normalization-preserving linear marginals, with the all-vector
+identities $R_XM(x,y)=u_Y(y)x$, $R_YM(x,y)=u_X(x)y$, and real product
+spanning. Both triple brackets reuse the **same** actual self-composite
+$D$ and its preparation map. Under the single-system representations
+these are precisely (15); apply the proved paper deduction to each
+actual pair to construct its effect product.
+
+Let $J_L,J_R$ be the resulting tensor linearizations of the nested
+preparations $q_L(a,b,c)$ and $q_R(a,b,c)$ defined above. Retain, as
+independent common-record inputs,
+
+$$
+\alpha=J_RJ_L^{-1}\text{ an order isomorphism},\qquad
+P_{12}=J_L\tau_{12}J_L^{-1}\text{ positive on the whole }(E_L)_+.
+\tag{23}
+$$
+
+Equivalently, with the now constructed effects, the two brackets have
+the same set of whole legal local records and swapping the first two
+labels preserves that set, as specified in the common-record condition.
+This includes entangled states, every sector and scalar spectators;
+it is not a requirement that a record's individual entries remain fixed.
+Neither part of (23) follows just from the recovered binary contract.
+
+The existing sector proof now applies with all its binary hypotheses
+derived. Its restricted simple self-composites have the squared rank
+and dimension required by van de Wetering, arXiv:1803.11139v3,
+Proposition 40, page 19. The existing complex-sector argument therefore
+gives $A\simeq\bigoplus_iH_{n_i}$ and
+$D\simeq\bigoplus_{i,j}H_{n_i n_j}$, and the corresponding triple
+blocks. This invokes Proposition 40, not the extra sequential-product
+compatibility of that paper's Theorem 3. The existing Xu–Zheng–Fošner
+application and three-copy orientation proof then put these actual
+products simultaneously in standard coordinates using (23). Their
+proofs and scalar boundaries need not be repeated.
+
+Consequently states are positive trace-one block tuples, full effects
+are $0\le F_i\le I$, and probabilities are
+$\sum_i\operatorname{Tr}(F_i\rho_i)$. Pure states form
+$\mathbb{CP}^{n_i-1}$ in sector $i$; their least comparison is
+$\operatorname{Tr}(pq)$ within a sector and zero across sectors. A
+connected nonclassical pure-comparison graph is still the extra condition
+for the one-sector finite complex case. The [existing operation
+application](../Quantum/watrous2018theory.md#one-actual-self-reference-for-finite-sector-operations) remains available with its
+own reference-extension, instrument and physical-availability premises;
+none has been supplied by marginal positivity.
+
+In particular the positive trace-preserving marginals can contain
+transpose choices: $M(x,y)=x\otimes y^T$ has
+$R_A=\operatorname{Tr}_B$, $R_B=T\operatorname{Tr}_A$. Thus no CP
+extension, or positivity of the product linearization on the entire
+entangled PSD cone in preassigned coordinates, is inferred. The
+commutation in (16) concerns different-factor observables, not temporal
+measurement order. Higher-composite coherence beyond the specified
+actual triples, physical devices and instruments, a clock and a
+Hamiltonian remain independent questions. The S-to-Jordan bridges and
+this composite application remain paper mathematics; no kernel truth or
+completion of the quantum-origin programme follows.
+
+简短地说：在完整的有限有序态空间中，比较必须既能交换两个纯态端点，
+又尊重同一混合态的每一种有限随机准备。局部准备须能双线性地合并；
+从任意合法联合态取回任一局部态都须保持正性与归一化，并在独立准备上
+取回原态；独立准备的实线性组合须覆盖整个联合向量空间，这不要求所有
+联合态都是可分混合。借助独立的单系统 Jordan 桥，这些条件可推出联合
+测试及其乘积概率，无需另给联合效应或最小秩。还须有同一实际双份系统的
+两种三份组合，并要求重括号和带旁观者的换标签保持整套合法记录；这些
+全局相容条件、混合准备一致性和测量时间先后是三件不同的事。
