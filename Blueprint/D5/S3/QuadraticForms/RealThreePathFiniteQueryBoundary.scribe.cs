@@ -52,7 +52,7 @@ internal sealed class RealThreePathFiniteQueryBoundaryDocument : IScribeDocument
     private static Formula Definitions()
     {
         var z=V("z"); var a=V("a"); var p=Call("P",z);
-        return Seq(Equal(p,Seq(Prod,Underscore,Grp(Seq(a,InMacro,V("S"))),Call("NormSq",Sub(z,a)))),
+        return Seq(Equal(p,Seq(Prod,Underscore,Grp(Seq(a,Sp,InMacro,Sp,V("S"))),Call("NormSq",Sub(z,a)))),
             Comma,Sp,Equal(Call("q",z),Add(Call("NormSq",z),Mul(V("epsilon"),Pow(p,D(2))))));
     }
 
