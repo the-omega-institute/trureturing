@@ -9,6 +9,7 @@ import Mathlib.Algebra.Algebra.Operations
 
 set_option autoImplicit false
 noncomputable section
+open scoped BigOperators
 
 namespace D5.S3.FiniteGroups.GroupAlgebra.OddPrimeJetSectionConjugacy
 
