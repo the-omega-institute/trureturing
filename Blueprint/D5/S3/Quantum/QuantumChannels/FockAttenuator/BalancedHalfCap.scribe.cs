@@ -7,12 +7,13 @@ internal sealed class BalancedHalfCapDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Quantum/QuantumChannels/FockAttenuator/BalancedHalfCap.";
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/QuantumStates/vanherstraeten2024nongaussian");
+    private static readonly LibraryNoteRef PriorOnePhoton = LibraryNoteRef.Create("D5/L/QuantumStates/he2026energy");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Odd Fock occupation at balance imposes a half-identity cap on every density output.",
         H("Completed antisymmetry and the odd-occupation half cap"),
         Blocks(
-            Paragraph(Text("The balanced one-photon all-density spectral minimum and attainment by every coherent input are already proved in Zixuan He, The energy cost of optical noise, v1.0, DOI 10.5281/zenodo.23629201, Theorem 2 (PDF page 5) and Appendix A.2-A.3 (PDF pages 18-19). This attributed formalization preserves that physical result. No new literature resolution or priority for the odd-occupation application is claimed.")),
+            Paragraph(Text("The balanced one-photon all-density spectral minimum and attainment by every coherent input are already proved in "), Ref(PriorOnePhoton.Value), Text(", Theorem 2 (PDF page 5) and Appendix A.2-A.3 (PDF pages 18-19). This attributed formalization preserves that physical result. No new literature resolution or priority for the odd-occupation application is claimed.")),
             Paragraph(Text("All spaces and operators are the existing FockAttenuator objects. Fock is lp (fun _ : Nat => Complex) 2 and TwoMode is lp (fun _ : Nat => Fock) 2. V j is the retained-mode column indexed by discarded occupation j; its retained coefficient at i is V j i. tensor u a has column a(j) times u. The identity is the bounded identity on the full completed Fock space, the order is Mathlib Loewner order, and the scalar is the complex embedding of the real one half.")),
             Paragraph(Text("The paper states Conjecture 1 for pure number-state environments at every transmissivity and occupation. Here transmissivity is exactly one half. Every odd occupation has an output cap; no attainer for odd n greater than one, other transmissivity, or even-occupation bound is asserted. BalancedAttainment supplies the one-photon spectral minimum. These are repo-derived arguments on the actual physical APIs, with the paper acknowledged for its problem and convention and no literature priority claim.")),
             Node("balanced", "The balanced parameter is admissible",
