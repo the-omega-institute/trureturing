@@ -192,7 +192,7 @@ private theorem columns_constant {n : ℕ} (hn : 2 ≤ n)
 def alternating (n : ℕ) (a b : Fin 3) : Fin 4 × Fin n → Fin 3 :=
   fun p => if p.2.val % 2 = 0 then a else b
 
-private theorem alternating_proper (n : ℕ) (a b : Fin 3) (hab : a ≠ b) :
+theorem alternating_proper (n : ℕ) (a b : Fin 3) (hab : a ≠ b) :
     Proper (alternating n a b) := by
   intro j hj r s _
   dsimp [alternating]
