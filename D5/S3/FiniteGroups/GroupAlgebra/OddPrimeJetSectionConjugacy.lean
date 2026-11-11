@@ -40,7 +40,7 @@ theorem weighted_semilinear_cocycle_coboundary
           (∑ h : Γ, σ (g * h) θ) • f g := by
     dsimp [b]
     rw [map_sum]
-    simp_rw [hsemi, hσ, hdiff, smul_sub]
+    simp_rw [hsemi, hdiff, ← hσ, smul_sub]
     rw [Finset.sum_sub_distrib, ← Finset.sum_smul]
   have hρ' : ρ g b = b - f g := by
     rw [hρ]
