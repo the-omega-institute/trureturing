@@ -473,7 +473,7 @@ private theorem interlace_phase (s t : FixedPointFreeInvolution X) (x : X) :
     obtain ⟨n, hn⟩ := h.exists_nat_pow_eq
     refine ⟨(n : ℕ), ?_⟩
     rw [zpow_natCast]
-    rw [← (hp n).1, pow_mul] 
+    rw [← (hp n).1, pow_mul]
     exact hn
   · intro h
     obtain ⟨n, hn⟩ := h.exists_nat_pow_eq
