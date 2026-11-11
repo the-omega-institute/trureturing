@@ -52,9 +52,14 @@ justifies unordered, two-tail and symmetric interpretations.
 Pinned Mathlib supplies hasSum_choose_mul_geometric_of_norm_lt_one,
 summable_prod_of_nonneg, Summable.of_norm, Summable.tsum_comm,
 Complex.hasSum_taylorSeries_neg_log, and Complex.ofReal_log.
-The new argument proves joint absolute summability of the triangular
+The application establishes joint absolute summability of the triangular
 variable-exponent coefficients by an eventual geometric row majorant.
 The owning Scribe gives the cancellation and all source-domain bridges.
+The full event and its 18 consumed private theorem helpers have
+`proof_shape: bind-only`; no escape witness is claimed. The proposed
+admission basis is `open-problem-resolution` for the single source problem
+in [the owning dossier](../../Problems/bala-a292179-a292178-bilateral-logarithm.md),
+with the original preregistration and bounded qualification in issue #29113.
 
 ## Literature search boundary
 
