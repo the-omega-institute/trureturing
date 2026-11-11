@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Fourier/MO511715Source
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: none
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Fourier/MO511715Source.claim; result=D5/S3/Fourier/MO511715Source.result; claim=D5/S3/Fourier/MO511715Source.claim
    digest: The Euclidean five-dimensional cutoff series and its original nested time integral. -/
 
 import Mathlib.Analysis.InnerProductSpace.PiL2
@@ -574,7 +574,7 @@ private lemma block_mass_lower {F : Type*} [RCLike F] (ζ : Space → F) (ρ : �
     _ ≤ _ := Finset.sum_le_sum hterm
 
 /-- Joint cutoff control and disjoint actual blocks force linear growth in the number of scales. -/
-theorem phi_dyadic_growth {F : Type*} [RCLike F] (ζ : Space → F)
+theorem phi_dyadic_growth {F : Type} [RCLike F] (ζ : Space → F)
     (hc : ContinuousAt ζ 0) (hz : ζ 0 = 1) (hs : HasCompactSupport ζ) :
     ∃ ρ : ℝ, 0 < ρ ∧ ρ ≤ 1 ∧ ∀ J : ℕ,
       blockConstant * (J + 1) ≤ phi ζ selectedMask (ρ / (5 * (2 : ℝ) ^ J)) 1 firstUnit := by
@@ -604,7 +604,7 @@ theorem phi_dyadic_growth {F : Type*} [RCLike F] (ζ : Space → F)
       (Finset.sum_biUnion (fun i _ j _ hij => pairBlock_disjoint i j hij)).symm
     _ ≤ _ := hsum.sum_le_tsum S (fun p _ => hn p)
 
-private lemma uniform_estimate_fails {F : Type*} [RCLike F] (ζ : Space → F)
+private lemma uniform_estimate_fails {F : Type} [RCLike F] (ζ : Space → F)
     (hc : ContinuousAt ζ 0) (hz : ζ 0 = 1) (hs : HasCompactSupport ζ) :
     ¬ UniformEstimate ζ := by
   obtain ⟨ρ, hρ, hρ1, hgrowth⟩ := phi_dyadic_growth ζ hc hz hs

@@ -8,7 +8,7 @@ internal sealed class MO511715SourceDocument : IScribeDocumentDefinition
     private const string Module = "D5/S3/Fourier/MO511715Source.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The exact Euclidean five-dimensional cutoff series and a lower bound for its nested time integral.",
+        "The exact Euclidean five-dimensional cutoff series and the failure of its uniform cutoff estimate.",
         H("The five-dimensional cutoff series in MathOverflow 511715"),
         Blocks(
             Paragraph(Text(
@@ -235,11 +235,11 @@ internal sealed class MO511715SourceDocument : IScribeDocumentDefinition
     {
         Formula n = Id("N"), a = Id("a"), b = Id("b");
         Formula hypotheses = And(Le(F.D(1), n), And(
-            new Formula.Relation(a, FormulaRelationOperator.MemberOf, Call("B", n)),
-            new Formula.Relation(b, FormulaRelationOperator.MemberOf, Call("B", n))));
+            new Formula.Relation(a, FormulaRelationOperator.MemberOf, Call("blockBox", n)),
+            new Formula.Relation(b, FormulaRelationOperator.MemberOf, Call("blockBox", n))));
         return All("N", F.Seq(F.Mathbb, F.Grp(Id("N"))), All("a", Z, All("b", Z,
-            Imp(hypotheses, Le(new Formula.Fraction(Id("kappa"), new Formula.Power(n, F.D(1, 0))),
-                Call("kernel", Id("selectedMask"), F.D(1), Id("e"), Add(a, b), b))))));
+            Imp(hypotheses, Le(new Formula.Fraction(Call("kernelConstant"), new Formula.Power(n, F.D(1, 0))),
+                Call("kernel", Call("selectedMask"), F.D(1), Call("firstUnit"), Add(a, b), b))))));
     }
 
     private static Formula GrowthFormula()
@@ -250,8 +250,8 @@ internal sealed class MO511715SourceDocument : IScribeDocumentDefinition
         Formula scale = new Formula.Fraction(r, Mul(F.D(5), new Formula.Power(F.D(2), j)));
         Formula conclusion = Exists("r", R, And(Lt(F.D(0), r), And(Le(r, F.D(1)),
             All("J", F.Seq(F.Mathbb, F.Grp(Id("N"))),
-                Le(Mul(Id("c"), Add(j, F.D(1))),
-                    Call("phi", z, Id("selectedMask"), scale, F.D(1), Id("e")))))));
+                Le(Mul(Call("blockConstant"), Add(j, F.D(1))),
+                    Call("phi", z, Call("selectedMask"), scale, F.D(1), Call("firstUnit")))))));
         return All("F", Call("RCLike"), All("z", Fn(E, f), Imp(hypotheses, conclusion)));
     }
 }
