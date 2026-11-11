@@ -1377,3 +1377,351 @@ $$
 若原环境本来就会把第二、第三格送往别处，就必须把送到整个原空间的长度计入 $T$。两列作用像各改变多少，便给它们张成面积改变多少；同一原左端也有一份可直接估计的改变。三份误差合起来得到 (35.10)：残量带来的原缺额若超过这些影响，原 PB 就不可能对全部探针成立。$T=0$ 时其他方向再复杂也不会影响这份见证；$T>0$ 时估计只划出一块不能成立的区域，区域之外还须真正证明，不能把“尚未被这把尺排除”说成“已经成立”。实际分析器能接受什么、读后是否活动就绪、完整输入能否对全部旧未来返回，仍由原来源承担。
 
 ## 新增锚（本行以下为后续增补区）
+## 36. 非零第二、第三演员混合下的三残量刚性与固定探针面积见证
+
+本节的 §§36.1–36.6、定义／命题／定理 36.x 与公式 (36.x) 均为本卷局部编号；§§32–35 指本卷，父卷 §§1–31（含 §30A）及其全部递归来源仍按卷首钉版解释。原 PB 始终是 (32.2)–(32.3) 的完整原乘积与全部原探针、全部原正复线性泛函。本节处理实际 $23$ 连线非零的轴像类：先把父卷两份轴读取作为完整三维齐次列消费，再以一个固定探针分离剩余第三格；不把 $12$ 压缩平方当作原平方。$23$ 平面仍是原 $c,t$ 的约化平面，但原 $t$ 在其中非零，故不再使用 $t$ 湮灭该平面的前件。
+
+### 36.1 实际混合输入与全称检验的准确域
+
+**定义 36.1（带非零 $23$ 混合的原轴像输入）。** 在定义 32.1 的同一原空间 $\mathcal H=\mathbb C^3\oplus\mathbb C^m$、$m\ge1$ 任意有限、$c=\operatorname{diag}(1,2,3)\oplus0_m$ 中，限定
+
+$$
+\begin{gathered}
+B=\beta E_{11}+b(E_{23}+E_{32}),\qquad
+\beta,b\in\mathbb R,\quad b\ne0,\qquad V=e_1v,\\
+v\in M_{1,m}(\mathbb C),\qquad D_{\rm env}=D_{\rm env}^*,
+\qquad v(\ker D_{\rm env})\ne\{0\},\\
+t=\begin{pmatrix}B&V\\V^*&D_{\rm env}\end{pmatrix},\qquad
+S=\operatorname{diag}(s_1,s_2,s_3),\quad s_j\in\mathbb R,\qquad
+g=K_\sigma(c,t)+(S\oplus0_m).
+\end{gathered}
+\tag{36.1}
+$$
+
+这里 $\mathcal W=V(\ker D_{\rm env})=\mathbb C e_1$，每次分别固定 $\sigma=\pm1$、$\iota=\sigma i$。原环境、$v$ 的复条目和非零环境谱均不改变。$E=\operatorname{span}_{\mathbb C}(e_2,e_3)$ 对原 $c,t$ 约化，且
+
+$$
+c|_E=\begin{pmatrix}2&0\\0&3\end{pmatrix},\qquad
+t|_E=b\begin{pmatrix}0&1\\1&0\end{pmatrix}\ne0 .
+\tag{36.2}
+$$
+
+相反，$\operatorname{span}(e_1,e_2)\oplus\mathbb C^m$ 不被原 $t$ 保持，因为 $te_2=be_3$。定理 34.4 的 (34.16) 约化论证不适用于 (36.1)。下文的前两格读取直接在完整原空间中运输。
+
+### 36.2 原轴的前两格读取与完整三维有限运输
+
+**命题 36.2（被三残量分类消费的前两格刚性）。** 保持定义 32.1，允许 $B$ 为任意原 Hermitian 三维块，仅要求 $V=e_1v$、$v(\ker D_{\rm env})\ne\{0\}$，$D_{\rm env}$ 任意原有限 Hermitian 块。若全部原 PB 成立，或在任一指定有限正质量上全称成立，则必有 $s_1=s_2=0$。若 $(s_1,s_2)\ne(0,0)$，任意 $s_3$、任意指定 $\mu>0$ 都有同一原环境中的有限严格违反，并可使两笔预算同时严格正。此命题的活消费者是定理 36.4；它不分类任意 $B$ 下的第三格残量。
+
+证明。只消费父卷 (29.19)–(29.22)、(30A.11)–(30A.18) 中属于轴 $1$ 的两条读取，不使用轴 $2$ 的像向量。将其 $u,w$ 补第三坐标零，将 $X$ 补第三行、列零。第一条的完整参数为
+
+$$
+\begin{gathered}
+u^{(a)}=e_1,\qquad X^{(a)}=\operatorname{diag}(1,1,0),
+\qquad w^{(a)}=-e_1,\\
+(\alpha_+,\alpha_-)=(1/3,1),\qquad
+(\beta_+,\beta_-)=(0,-4),\qquad
+(\zeta_+,\zeta_-)=(-\iota/3,-4+\iota).
+\end{gathered}
+\tag{36.3}
+$$
+
+依 (32.5) 的齐次定义，它的三维作用列准确为
+
+$$
+\mathsf R_+=\tfrac32e_1,\quad
+\mathsf R_-=\tfrac12e_1,\quad
+\mathsf S_+=-\tfrac\iota2e_1,\quad
+\mathsf S_-=(-2+\tfrac\iota2)e_1,
+\qquad F_a(S)=-s_1 .
+\tag{36.4}
+$$
+
+两份比例 $\mathsf S_\delta=\zeta_\delta\mathsf R_\delta$ 逐项成立。第二条为父卷的混合轴 $1$ 读取：
+
+$$
+\begin{gathered}
+ u^{(m)}=\frac{(-8+10\iota,\ 5-4\iota,\ 0)^{\mathsf T}}{\sqrt{205}},\qquad
+ w^{(m)}=\frac{(1-\iota,0,0)^{\mathsf T}}{\sqrt{205}},\\
+ X^{(m)}=\begin{pmatrix}
+ 1&(55+3\iota)/41&0\\
+ (55-3\iota)/41&2&0\\0&0&0
+ \end{pmatrix},\\
+ (\alpha_+,\alpha_-)=(4/5,2/17),\qquad
+ (\beta_+,\beta_-)=(-3/5,-9/17),\\
+ (\zeta_+,\zeta_-)=\bigl((-3-4\iota)/5,\ (-9+2\iota)/17\bigr).
+\end{gathered}
+\tag{36.5}
+$$
+
+两份 $u$ 都是单位向量；第一份是轴向量，第二份的前两坐标均非零。运输不要求第一份也双非零。为逐列核对第二份，直接乘同一个 Hermitian $X^{(m)}$ 得
+
+$$
+\begin{aligned}
+\sqrt{205}\,X^{(m)}u^{(m)}&=(-1+5\iota,\ 6\iota,\ 0)^{\mathsf T},\\
+\sqrt{205}\,X^{(m)}Cu^{(m)}&=(6,\ 10-2\iota,\ 0)^{\mathsf T},\\
+\sqrt{205}\,(w^{(m)}-\iota X^{(m)}u^{(m)})&=(6,6,0)^{\mathsf T},\\
+\sqrt{205}\,\mathsf R_+&=(-4+2\iota,\ -7+\iota,\ 0)^{\mathsf T},\\
+\sqrt{205}\,\mathsf R_-&=(2+8\iota,\ 7+11\iota,\ 0)^{\mathsf T},\\
+\sqrt{205}\,\mathsf S_+&=(4+2\iota,\ 5+5\iota,\ 0)^{\mathsf T},\\
+\sqrt{205}\,\mathsf S_-&=(-2-4\iota,\ -5-5\iota,\ 0)^{\mathsf T}.
+\end{aligned}
+\tag{36.6}
+$$
+
+将 (36.5) 的两份 $\zeta$ 分别乘 (36.6) 的两份 $\mathsf R$ 就得到对应 $\mathsf S$。所有第三坐标都准确为零，因为这里的齐次列只使用 $C,X,u,w$，而不是删除了实际 $B$ 的输出。两份 $\alpha$ 都严格正且有限，虚部方向为 $-\delta\iota\alpha_\delta$。配对为
+
+$$
+F_m(S)=\operatorname{Re}((w^{(m)}-\iota X^{(m)}u^{(m)})^*Su^{(m)})
+=\frac{-48s_1+30s_2}{205} .
+\tag{36.7}
+$$
+
+因此 $(s_1,s_2)\ne(0,0)$ 时，(36.4)、(36.7) 至少一条非零；$s_3u_3=0$ 仅使这次配对不读取第三格。
+
+下面明确消费本卷 (32.21)–(32.28) 的三维原环境运输。取所选核对的 $F\ne0$，以定义 32.1 的同一原逆取 $y=Jw$，所以 $Vy=w$、$D_{\rm env}y=0$。对实 $q$ 令 $x_q=qX\oplus0_m$、$\xi_q=(u,qy)$。完整作用列为
+
+$$
+\begin{aligned}
+R_\delta(x_q)\xi_q
+ &=q(\mathsf R_\delta,0)
+   +\bigl(-\delta(C\circ B)u,-\delta V^*Cu/2\bigr),\\
+S_{\delta,0}(x_q)\xi_q
+ &=q(\mathsf S_\delta,0)
+   +\bigl((B+\delta\iota[C,B]/2)u,
+              V^*(I-\delta\iota C/2)u\bigr),\\
+S_{\delta,S}(x_q)\xi_q
+ &=S_{\delta,0}(x_q)\xi_q+\delta(Su,0),\qquad
+ t\xi_q=(Bu+qw,V^*u).
+\end{aligned}
+\tag{36.8}
+$$
+
+下标 $0$ 仅去掉残量，不改变实际 $t$。特别在 (36.1) 中，常数列包含
+
+$$
+(C\circ B)u=\beta u_1e_1+\tfrac{5b}{2}u_2e_3,\qquad
+(B+\delta K_\sigma(C,B))u
+=\beta u_1e_1+b(1+\delta\iota/2)u_2e_3 .
+\tag{36.9}
+$$
+
+混合读取的 $u_2\ne0$，这些实际第三格输出确实存在；它们与 $V^*u,V^*Cu$ 一同保留于下式常数项。
+
+写 $\ell_S(q)=\xi_q^*L(x_q)\xi_q$，用所选的正有限 $\alpha_\delta$、实 $\beta_\delta$ 定义
+
+$$
+Q_S(q)=\sum_{\delta=\pm1}\left[
+ \alpha_\delta\|R_\delta\xi_q\|^2+
+ \alpha_\delta^{-1}\|S_{\delta,S}\xi_q-\beta_\delta R_\delta\xi_q\|^2
+ \right]-2\ell_S(q).
+\tag{36.10}
+$$
+
+零残量的原换位恒等式及复平方配方正是 (32.23)：
+
+$$
+Q_0(q)=\sum_\delta\alpha_\delta^{-1}
+ \|S_{\delta,0}\xi_q-\zeta_\delta R_\delta\xi_q\|^2=Q_0(0).
+\tag{36.11}
+$$
+
+最后一个等号使用的是 (36.4)、(36.6) 的完整三维比例：各平方内的 $q$ 系数为零。再写 $M_\delta=S_{\delta,0}\xi_q-\beta_\delta R_\delta\xi_q$、$v_S=(Su,0)$，则
+
+$$
+\begin{aligned}
+Q_S-Q_0={}&2\sum_\delta\delta\alpha_\delta^{-1}
+ \operatorname{Re}(M_\delta^*v_S)
+ +(\alpha_+^{-1}+\alpha_-^{-1})\|v_S\|^2
+ +4\operatorname{Re}((t\xi_q)^*v_S),\\
+Q_S(q)={}&4q\operatorname{Re}((w-\iota Xu)^*Su)+\Gamma_S
+          =4qF+\Gamma_S,\qquad \Gamma_S=Q_S(0)\in\mathbb R .
+\end{aligned}
+\tag{36.12}
+$$
+
+线性系数来自 $M_\delta$ 的 $q$ 系数 $-\delta\iota\alpha_\delta(\mathsf R_\delta,0)$、$\mathsf R_++\mathsf R_-=2Xu$ 和 $t\xi_q$ 的 $q$ 系数 $(w,0)$。这同时验证符号；$\Gamma_S$ 按 (36.8) 的全输出计算，不丢弃 (36.9)。令
+
+$$
+\Lambda=-\frac{\Gamma_S+1}{4F},\qquad
+x=x_\Lambda,\quad \xi=\xi_\Lambda,\qquad
+Q_S(\Lambda)=-1 .
+\tag{36.13}
+$$
+
+所有数有限。对实化内积 $\langle a,z\rangle_{\mathbb R}=\operatorname{Re}(a^*z)$，面积不随 $z\mapsto z-\beta a$ 改变，且不超过 $\|a\|\|z-\beta a\|$。逐笔用算术几何平均，(36.10) 因而给
+
+$$
+\xi^*L\xi\ge\frac12+
+ \sum_\delta\sqrt{B_{\phi_\xi}(R_\delta,S_{\delta,S})},\qquad
+\phi_\xi(a)=\xi^*a\xi .
+\tag{36.14}
+$$
+
+这在正的左侧给严格违反，故也违反原绝对值形式。取 $\xi_\mu=\sqrt\mu\,\xi/\|\xi\|$，其中 $\|\xi\|^2=1+\Lambda^2\|Jw\|^2$，得到质量恰为 $\mu$、差额至少 $\mu/(2\|\xi\|^2)>0$ 的同一原向量泛函。
+
+最后保持该泛函，只将 $x$ 改成 $x+\lambda((E_{12}+E_{21})\oplus0_m)$。两笔预算均是非负实四次以下多项式，各自四次系数按 (32.28) 为
+
+$$
+\frac{9\mu^2}{16\|\xi\|^4}>0 .
+\tag{36.15}
+$$
+
+这一系数只要求单位 $u$ 支撑在前两格，不要求 $u_1u_2\ne0$，故也适用于 (36.3)。两份实零点集有限；原严格差额在零的某个开邻域内仍正，在其中避开这些零点与零选一个有限实 $\lambda$，两笔预算便同时严格正。两种 $\sigma$ 的核等式均只使用 $\iota^2=-1$ 与 $\bar\iota=-\iota$；原 $B,V,D_{\rm env},J$ 不共轭。于是任一非零前两格残量都不可能满足全称 PB，命题得证。∎
+
+### 36.3 非零混合平面上的固定探针与线性差额
+
+**定理 36.3（第三格残量的固定探针严格见证）。** 在 (36.1) 中先取 $s_1=s_2=0$、$s_3=s$。对任意 $s\ne0$、任意指定有限 $\mu>0$ 和任一个分别固定的 $\sigma$，取下列原角探针与原完整代数泛函：
+
+$$
+\begin{gathered}
+ X|_E=b\begin{pmatrix}0&2+\iota\\2-\iota&0\end{pmatrix},
+ \qquad X|_{E^\perp}=0,\\
+ u=e_2+\frac{2-\iota}{8}e_3,\qquad \|u\|^2=\frac{69}{64},\qquad
+ \phi_\mu(a)=\frac{64\mu}{69}u^*au,\quad \phi_\mu(I)=\mu .
+\end{gathered}
+\tag{36.16}
+$$
+
+则同一个 $X,\phi_\mu$ 的完整数据准确为
+
+$$
+\begin{gathered}
+ \phi_\mu(L)=-\frac{32\mu sb}{69},\qquad
+ \sqrt{B_{\phi_\mu}(R_+,S_+)}=0,\qquad
+ \sqrt{B_{\phi_\mu}(R_-,S_-)}=\frac{10\sqrt5\,\mu|sb|}{69},\\
+ |\phi_\mu(L)|-\sum_\delta\sqrt{B_{\phi_\mu}(R_\delta,S_\delta)}
+ =\frac{32-10\sqrt5}{69}\,\mu|sb|>0 .
+\end{gathered}
+\tag{36.17}
+$$
+
+保持同一泛函，只作 $X_\varepsilon=X+\varepsilon P_E$，便存在 $\eta>0$，使每个 $0<|\varepsilon|<\eta$ 都严格违反原 PB，且两笔预算同时严格正。$X$ 本身不依赖 $s$；严格差额对 $|sb|$ 一次齐次。
+
+证明。所有计算都是原完整空间的作用列；(36.2) 的实际约化性保证这些列留在 $E$，没有用压缩平方代替原平方。记 $B_E=t|_E$、$C_E=c|_E$。原定义逐条给
+
+$$
+\begin{gathered}
+ h|_E=b\begin{pmatrix}0&1/2-\iota\\1/2+\iota&0\end{pmatrix},\qquad
+ k_t|_E=\tfrac52B_E,\qquad (X+h)|_E=k_t|_E,\\
+ r|_E=\tfrac52X|_E,\qquad
+ K_\sigma(c,t)|_E=b\begin{pmatrix}0&-\iota/2\\\iota/2&0\end{pmatrix},\\
+ (r+K_\sigma(c,t))|_E=B_E+2X|_E,\\
+ R_+|_E=0,\quad R_-|_E=2X|_E,\qquad
+ S_+|_E=2(B_E+X|_E)+sE_{33}|_E,\quad
+ S_-|_E=-2X|_E-sE_{33}|_E .
+\end{gathered}
+\tag{36.18}
+$$
+
+其中 $(1-\iota/2)(2+\iota)=5/2$ 核对了第一份消去。又
+
+$$
+ X^2|_E=5b^2I_E,\qquad B_E^2=b^2I_E,\qquad
+ B_E\circ X|_E=2b^2I_E,
+$$
+
+所以原左端算子在 $E$ 上为
+
+$$
+ L|_E=2X^2|_E-2B_E^2-4B_E\circ X|_E-2B_E\circ(sE_{33}|_E)
+ =-sb\begin{pmatrix}0&1\\1&0\end{pmatrix} .
+\tag{36.19}
+$$
+
+没有将 $t\circ(r+g)$ 丢掉；正是它的非零混合项留下 (36.19)。$u^*(E_{23}+E_{32})u=1/2$，故 $u^*Lu=-sb/2$，质量因子给 (36.17) 第一项。
+
+为核对预算，置
+
+$$
+ a=R_-u=\frac{5b}{4}e_2+2b(2-\iota)e_3,\qquad
+ z=E_{33}u=\frac{2-\iota}{8}e_3 .
+\tag{36.20}
+$$
+
+则 $S_-u=-a-sz$，且逐项内积为
+
+$$
+ \|a\|^2=\frac{345b^2}{16},\qquad
+ \|z\|^2=\frac5{64},\qquad
+ a^*z=\frac{5b}{4}\in\mathbb R,\qquad
+ \|a\|^2\|z\|^2-\bigl(\operatorname{Re}(a^*z)\bigr)^2
+ =\frac{125b^2}{1024} .
+\tag{36.21}
+$$
+
+PB 使用的是实化 Gram，不是以 $|a^*z|^2$ 替换实部平方的一般复 Gram；在 (36.21) 这一个内积恰为实数，两者数值相等。对任意自伴原 $U,Z$，原平方准确给
+
+$$
+ \phi_\mu(U^2)=\frac{64\mu}{69}\|Uu\|^2,\qquad
+ \phi_\mu(U\circ Z)=\frac{64\mu}{69}
+                    \operatorname{Re}((Uu)^*Zu) .
+\tag{36.22}
+$$
+
+加实倍数 $-a$ 不改变实面积，故第二笔面积为
+$(64\mu/69)|s|\sqrt{125b^2/1024}=10\sqrt5\mu|sb|/69$；预算本身为 $500\mu^2s^2b^2/4761>0$。第一笔由 $R_+u=0$ 准确为零。$32^2>100\cdot5$ 证明差额正；$s$ 与 $b$ 的两种符号均由绝对值保留，没有把负左侧误作违反。
+
+对实 $\varepsilon$，(36.18) 直接给
+
+$$
+\begin{aligned}
+ R_+(X_\varepsilon)u&=\varepsilon u,\\
+ S_+(X_\varepsilon)u&=2(B_E+X|_E)u+sE_{33}u+\varepsilon C_Eu,\\
+ \bigl(S_+(X_\varepsilon)u\bigr)_2&=b(7-\iota)/4+2\varepsilon .
+\end{aligned}
+\tag{36.23}
+$$
+
+$u_2=1$，而最后一项的通常虚部是 $-\sigma b/4\ne0$。所以 $S_+(X_\varepsilon)u$ 对每个实 $\varepsilon$ 都不是 $u$ 的实倍数；$\varepsilon\ne0$ 时第一笔实 Gram 严格正。第二笔预算在零为上述正数，原绝对值差额在零为 (36.17) 的正数；它们均连续。各取一个零邻域保持为零处值的一半以上，再取两邻域交，便有有限 $\eta>0$。因此每个 $0<|\varepsilon|<\eta$ 同时保留第二笔正性与严格违反，并由 (36.23) 支付第一笔正性。质量、环境与泛函均未改变。
+
+取向改变只改变上述演员构造中的 $\iota$，所有恒等式仍由 $\iota^2=-1$、$\bar\iota=-\iota$ 成立。$\beta,v,D_{\rm env}$ 在 $E^\perp$ 保持原值，无须共轭它们。两种取向各自得到同一实预算与绝对值差额。∎
+
+### 36.4 全部三个独立残量的精确分类
+
+**定理 36.4（非零 $23$ 混合原轴像类的全部 PB）。** 对定义 36.1 的每份实际输入、每个分别固定的 $\sigma$，全部原 Hermitian 三演员角探针和全部原完整代数正复线性泛函满足 PB，当且仅当
+
+$$
+ \boxed{\quad S=0 .\quad}
+\tag{36.24}
+$$
+
+对任意指定 $0<\mu<\infty$，只在质量恰为 $\mu$ 的全部原正泛函上全称检验也有同一结论。每个非零 $S$ 均有同一原环境、指定质量、两笔预算同时严格正的有限实际见证。该结论对任意实 $\beta$、任意实非零 $b$、任意有限原 $v,D_{\rm env}$ 满足 (36.1) 成立，不要求 P2、平衡残量或环境可逆。
+
+证明。若 $(s_1,s_2)\ne(0,0)$，直接消费命题 36.2，任意 $s_3$ 已有原三维严格正预算违反。若 $s_1=s_2=0$ 而 $s_3\ne0$，消费定理 36.3 的有限非零 $\varepsilon$ 见证。两种情形穷尽每个非零 $S$，每份违反内部始终使用同一探针、同一原泛函与同一质量；没有把不同读取的面积拼在一起。
+
+若 $S=0$，直接复用 (34.13)、(35.17) 的一般原算子恒等式与全部正泛函复 Cauchy–Schwarz：
+
+$$
+ L=\sum_{\delta=\pm1}\delta K_\sigma(R_\delta,S_{\delta,0}),\qquad
+ |\phi(K_\sigma(U,Z))|^2
+ \le\phi(U^2)\phi(Z^2)-\phi(U\circ Z)^2 .
+\tag{36.25}
+$$
+
+因此 $|\phi(L)|\le\sum_\delta\sqrt{B_\phi(R_\delta,S_{\delta,0})}$ 对每个原正复线性泛函成立，包括混合与奇异密度、零预算及任意有限质量；充分性没有仅从向量态外推。质量零的正泛函为零泛函，仍是零等式，不能单独强制 $S=0$。这证明全部断言。$b=0$ 的输入直接复用定理 34.4，不另造同义分类。∎
+
+### 36.5 与既有两根工具、同时核盲区及完整来源的关系
+
+父卷 §30A 的轴读取在命题 36.2 中直接消费，本卷 (32.21)–(32.28) 的原空间有限运输亦被直接消费；它们不计为新的数学机制。特别，(36.8)–(36.12) 对任意 $B$ 的应用只支付前两格，(36.9) 说明非零 $23$ 作用并未被压缩掉。定理 36.3 的固定 $X$、具体列 (36.18)–(36.23) 与有限线性 $|bs|$ 差额是这批输入上的 $\texttt{repo-derived}$ 构造，不作最优性、全局最小性或历史优先权主张。
+
+[父卷所引承载卷定理 41.2](https://github.com/the-omega-institute/trureturing/blob/caf0f3b3064a987b753b67aaa3836d6d86e73f75/docs/develop/theory/AURIC_FULL_PB_POLYNOMIAL_TRANSPORT_AND_REAL_ROOT_RIGIDITY.md#412-两个明确斜率的有限充分定理) 已用两个实根处理 $c=p+2q$、$t=ptq+qtp+b_\perp$、无支撑与补块连线的域，并携带原固定 P2 前件。该结论按原域保留；本节不把仅更名谱值的两根消去称为新机制。这里实际读取的谱值是 $2,3$，完整原输入还有第一轴及其实际环境连线，定理 36.4 的前件只有 PB；上述钉版定理并不是以这些同一假设直接给出 (36.24) 的现成结论。所需特定应用的完整系数与证明已列在定理 36.3，未把成熟两根思想归为本节原创。
+
+实化 Gram 面积、正泛函复 Cauchy–Schwarz、算术几何平均与有限维连续性是成熟工具，归属沿 §35.4、§32.6 及父卷 §§1、5、27–30A；正泛函背景仍见 Blackadar，[*Operator Algebras*](https://bruceblackadar.com/Mathematics/Cycr.pdf)。原环境逆与核回收保持 §32.6 所引 Penrose／广义 Schur 背景；本节没有以这些文献认证特定系数、文献优先权、实际装置或 Lean／kernel 证明。
+
+定理 33.2 的全称合法同时齐次核盲区保持成立。定理 36.3 起点只有实际有限列的 $R_+u=0$；这不产生 (33.1) 的合法同时齐次核。实际零残量列还满足 $R_-u=a\ne0$、$S_{-,0}u=-a$，实比例 $-1$ 要求 $\alpha_-=0$，不合 (33.1) 的严格正斜率条件；实际 $S_{+,0}u$ 的第二格为 $b(7-\iota)/4\ne0$，也不能与零 $R_+u$ 成比例。这里没有把实际列冒称齐次列，也没有宣称 $F(E_{33})\ne0$ 的合法同时核分离。小扰动运输的是严格 PB 缺额，不是补出被 33.2 排除的核。
+
+**准确剩余域与完整目标。** §35.4、§32.6、父卷 [§6（尤其式 (6.1)）](#6-完整原问题与七项物理合同的精确身份) 与 [§30A.5](#30a5-准确的前件删除来源与完整目标)，以及[有限返回续卷定义 162.1、复用命题 162.2 与定义 164.1](AURIC_C139_FINITE_RETURN_CALIBRATION_AND_LOAD_STABILITY_CONTINUATION.md) 的同一全文及全部递归钉版来源在本节严格合取保留；这些是完整原合同的准确引用，不以以下说明替代任何对象、公式、量词或七项消费者前件。§§32–35 已得结论均保持其原域。一般任意 $B,V,D_{\rm env}$、每个非零 $\mathcal W$ 的三残量全 PB 分类仍未证明；本节也未去掉实际 $23$ 平面的约化性。一般算子块、完整 $\mathsf H$／任意总 $D$、$\mathcal E_+^D=\mathcal E_-^D$ 与 $N_\omega(\varepsilon)^2\to0$ 仍不由此解决。只在 (36.1) 的固定输出域中，PB 排除全部残量后可消费标准 $K_\sigma$ 的全正 P2；不从完整 $\mathsf H_A(D)$ 删除 A1/P2，也不删除父卷所引定义 41.1 的实际外层预算桥。
+
+完整 Omega 中全部原准备、事件、过程、参考／副本、真正相关联合、零／不等／次归一质量、钟／单位／控制、parent／ready／flags、完整记录与失败／拒绝／停止／销毁／泄漏／遗忘、两侧与逆向返回、固定支持全质量、完整菜单、全部已量化切口及所有旧合法未来均按上述全文保留。复 Hilbert／相干、Born／全菜单、实际张量联合、typed CP／Kraus、完整仪器／TP／更新／Lüders、全部历史／Return、Hamiltonian／物理钟／共同正作用量七项仍仅在各自原完整合同成立时消费。数学 $u,x,\xi,J$ 不生成准备、菜单、复制、相干控制或物理源，不能由旧 Born／CP／QC、密度／历史身份、操作逆或矩阵综合回填这些关系。
+
+§35.4 所列 C139 固定源 §§50–85、C128 原词 §§385–392 及有限返回 §162 的已付成果均按原域保留。实际来源仍须供应 [C139 §23.3 式 (23.7)](AURIC_C139_FIXED_SOURCE_COMPARATORS_AND_NATIVE_EVENT_BOUNDARY.md) 对字面 $\tau;T_P$ 指定接受族的准备无关准确实际接受关联，覆盖全部原准备、切口、参考／副本、合法分析词／树、固定支持全质量与完整菜单。CountRead 仍须同一接受叶的完整活动输出、实际读后 active-ready、第一合法消费者，以及有限返回定义 164.1 所区分的原 $B_{r_\star}$ 活动接头：读后同一完整活动输入保留原参考、控制、钟并对全部旧合法未来真实 Return。另增查询服务和这份面积见证都不构造该接头。完整原 Omega 量子起源、无缺口来源的完整量子公理候选与整体严格更简目标仍为进行中的未完成目标；局部分类不改其完成判据。
+
+### 36.6 中文几何：让真实混合留下可读的面积缺额
+
+前两格的误差用父卷已有的两把尺读取。一把正对第一轴，另一把同时穿过第一、第二格；它们对两个误差给不成比例的实读数，所以不能同时抵消。现在第二格确实连着第三格，这两把尺的实际作用也会落到第三格。完整三维运输把这些输出全部计入有限常数，齐次方向仍使二次代价相消；非零误差留下的一次项便能在一个有限尺度上超过它。这里没有剪断连线，也没有把压缩后的平方冒充原平方。
+
+前两格清零后，第三格仍不能靠合法同时核读取看见，但完整 PB 比核读取更强。在第二、第三格上选同一个固定探针，它与真实混合准确相配，使第一张面积暂时为零。真实混合与第三格误差共同给左端一个 $|bs|$ 量级的非零读数；第二张面积也同量级增长，却只有 $10\sqrt5$ 对 $32$ 的系数。两张面积的和因而严格不够。混合再小，只要实际 $b\ne0$，每个实际 $s\ne0$ 都留下正缺额；这不是只排除足够大的误差，也不是把未排除区域当作成立区域。
+
+再给探针对角加一个足够小的实数，第一列由零变成读取方向本身，而第二列仍带有无法与它实平行的虚部，第一张面积立即变正。第二张面积和已有严格缺额因连续性继续为正。这一步说明边界上的发现可以成为两笔预算都正的有限见证，却不制造合法同时核，更不取消 33.2 的盲区。所得结论只排除了这批真实混合输入的全部对角误差；真实分析器、活动就绪与原完整返回仍须由原世界的来源关系供应。
+
+## 新增锚（本行以下为后续增补区）
