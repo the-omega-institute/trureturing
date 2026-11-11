@@ -135,8 +135,8 @@ private theorem orbit_near_of_approx (theta x : ℝ) (N : ℕ) (hN : 0 < N)
 small-denominator obstructions. The witness lies in `[N,2*N]` and in the open
 lifted interval `(t,t+w)`. No Diophantine or irrationality assumption is added.
 
-This is a SOURCE-ONLY UNCOMPILED candidate; no kernel or axiom acceptance is
-asserted. The original all-B/all-record/RH power-scale goal remains open. -/
+The original all-B/all-record/RH power-scale goal remains open; this theorem
+only supplies the stated finite-window result under its explicit hypotheses. -/
 theorem quantitative_finite_circle_cover (theta t w : ℝ) (N : ℕ)
     (hw : 0 < w) (_hw_upper : w < (1 : ℝ) / 4)
     (hbudget : 4 / w ≤ (N : ℝ))
