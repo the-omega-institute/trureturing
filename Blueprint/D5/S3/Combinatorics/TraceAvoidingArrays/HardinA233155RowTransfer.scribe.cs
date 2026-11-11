@@ -91,7 +91,7 @@ internal sealed class HardinA233155RowTransferDocument : IScribeDocumentDefiniti
     private static Formula Grid(Formula k, Formula n) => Arr(Seq(FinF(n), Sp, Times, Sp, FinF(k)), FinF(N(3)));
     private static Formula At(Formula f, Formula i, Formula j) => A(f, P(Seq(i, Comma, Sp, j)));
     private static Formula RowAt(Formula f, Formula i, Formula k) => Lam("j", FinF(k), At(f, i, V("j")));
-    private static Formula Next(Formula j) => Seq(Langle, PlusF(Val(j), N(1)), Comma, Sp, V("h"), Rangle);
+    private static Formula Next(Formula j) => Seq(Langle, Sp, PlusF(Val(j), N(1)), Comma, Sp, V("h"), Rangle);
     private static Formula Sum(string v, Formula ty, Formula f) => Seq(new Formula.Subscript(F.Sum, P(Seq(V(v), Colon, Sp, ty))), Sp, f);
     private static Formula Ite(Formula p, Formula a, Formula b) => Seq(Op("if"), Sp, p, Sp, Op("then"), Sp, a, Sp, Op("else"), Sp, b);
     private static Formula FilterCard(Formula k, Formula n) => C("Finset.card", C("Finset.filter", Lam("f", Grid(k,n), C("Legal",V("f"))), Op("Finset.univ")));

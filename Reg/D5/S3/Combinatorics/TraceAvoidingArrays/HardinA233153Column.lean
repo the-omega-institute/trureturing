@@ -16,9 +16,8 @@ set_option maxRecDepth 100000
 namespace Certificate
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature (Row 6) (fun _ => Fin 8) (fun _ => ℤ)
-def actual : Realization signature := by
-  classical
-  exact realize signature (fun _ r s =>
+def actual : Realization signature :=
+  realize signature (fun _ r s =>
     ∑ c : Row 6, if rowLegal c ∧ compatible r c ∧ classify c = s then (1 : ℤ) else 0)
       (fun e => nomatch e)
 def rejected : Realization signature :=
@@ -73,7 +72,9 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some actual
+  readout := some (realize signature (fun _ r s =>
+      ∑ c : Row 6, if rowLegal c ∧ compatible r c ∧ classify c = s then (1 : ℤ) else 0)
+        (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -152,7 +153,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some actual
+  readout := some (realize signature (fun _ _ n => (T6 n : ℤ)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -165,7 +166,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
       path := #["body", "fn", "arg"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := none
+      stateOperand := some #["arg", "arg"]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
