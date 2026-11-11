@@ -10,6 +10,13 @@ internal sealed class HigherLayerInsertionRegretDocument : IScribeDocumentDefini
         Blocks(
             Paragraph(Text("The D5 source target has a current scoped Lean build. The Reg mirror remains unvalidated for compiler/kernel audit, lawful registration, source occurrence binding and official/RH acceptance; no literature novelty or consensus claim is made. Every public declaration below has a faithful full-telescope typed Reg attempt. The terminal elementary coercivity snapshot and completed D5 producers retain their attribution; no proof escapes or external target suppliers are introduced.")),
             Describe.Lean(
+                DescribeId.Create("higherlayerinsertionregret-slope-upper"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/HigherLayerInsertionRegret.slope_upper"),
+                H("Uniform upper slope"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural j>=2 and real u>=2, logarithmicSlope(j,u) <= 2*j. The original weighted-sum and logarithm estimate supplies log_drop_upper and ActualHigherLayerQuantitativeBudgetRepair.uniform_beta_and_slope. The domain includes u=2 and j=2."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("higherlayerinsertionregret-log-drop-upper"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/HigherLayerInsertionRegret.log_drop_upper"),
                 H("Uniform logarithmic drop"),

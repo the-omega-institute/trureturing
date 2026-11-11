@@ -76,6 +76,58 @@ private theorem source_bridge :
 end seeded_two_layer_coefficients
 
 
+namespace two_roster_integer_ledger
+/- Source readout: total actual defect in the entire source telescope. RegUNVALIDATED. -/
+abbrev signature : Signature where
+  Params := ℝ
+  State _ := ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ X n => actualDefect X n) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law V := ∀ {X : ℝ} (hX : 4 < X) {Q : ℕ}
+    (hQ2 : 2 ≤ Q) (hQ : (Q : ℝ) ∈ Set.Icc (X / 2) (2 * X))
+    {r : ℝ} (hr : r ∈ Set.Icc (X / 2) (2 * X))
+    (hroot : firstLayerPrice r = referencePrice X)
+    (hsupport : ∀ p : ℕ, p.Prime →
+      2 ≤ (strictInteger (referencePrice X)).factorization p → p ≤ Q)
+    (A₂ A₃ : Finset ℕ) (hdis : Disjoint A₂ A₃)
+    (hA₂ : ∀ p ∈ A₂, p.Prime ∧ p ≤ Q ∧ optimalLayerCount (referencePrice X) p = 1)
+    (hA₃ : ∀ p ∈ A₃, p.Prime ∧ p ≤ Q ∧ optimalLayerCount (referencePrice X) p = 2),
+    let n := strictInteger (referencePrice X)
+    let base := higherCore n * prefixInteger Q
+    let k := base * (∏ p ∈ A₂, p) * (∏ p ∈ A₃, p)
+    2 ≤ k ∧ k.primeFactors = Nat.primesLE Q ∧
+      (∀ p : ℕ, k.factorization p =
+        base.factorization p + (if p ∈ A₂ then 1 else 0) + (if p ∈ A₃ then 1 else 0)) ∧
+      log (k : ℝ) = log (higherCore n : ℝ) + Chebyshev.theta (Q : ℝ) +
+        (∑ p ∈ A₂, log p) + (∑ p ∈ A₃, log p) ∧
+      log (higherCore k : ℝ) = log (higherCore n : ℝ) +
+        (∑ p ∈ A₂, log p) + (∑ p ∈ A₃, log p) ∧
+      (V.readout ()) X k - completeFirstLayerLoss X k =
+        (∑ p ∈ A₂, (referencePrice X - goldenLayerMarginal p 2) * log p) +
+        (∑ p ∈ A₃, (referencePrice X - goldenLayerMarginal p 3) * log p) ∧
+      (∀ p : ℕ, p.Prime → p ∉ A₂ ∪ A₃ → ∀ j : ℕ, 2 ≤ j →
+        (j ≤ k.factorization p ↔ j ≤ optimalLayerCount (referencePrice X) p))
+
+private theorem actual_law : arena.Law actual := by
+  exact @_root_.D5.S3.Arith.Robin.PriceRecord.TwoFixedLayerPrefixBudget.two_roster_integer_ledger
+
+private theorem source_bridge :
+    (type_of% (@_root_.D5.S3.Arith.Robin.PriceRecord.TwoFixedLayerPrefixBudget.two_roster_integer_ledger)) ↔ arena.Law actual := Iff.rfl
+
+#print axioms actual_law
+#print axioms source_bridge
+end two_roster_integer_ledger
+
 namespace finite_paid_prefix_comparison
 /- Source readout: total actual defect in the entire source telescope. RegUNVALIDATED. -/
 abbrev signature : Signature where

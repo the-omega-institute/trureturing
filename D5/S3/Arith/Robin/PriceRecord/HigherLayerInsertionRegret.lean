@@ -20,7 +20,7 @@ open Real Finset
 open D5.S3.Arith.GoldenResourceOptimalInteger
 open D5.S3.Arith.Robin.PriceRecord.HigherLayerLogSlope
 
-private theorem slope_upper {u : ℝ} (hu : 2 ≤ u) {j : ℕ} (hj : 2 ≤ j) :
+theorem slope_upper {u : ℝ} (hu : 2 ≤ u) {j : ℕ} (hj : 2 ≤ j) :
     logarithmicSlope j u ≤ 2 * j := by
   have hu0 : 0 < u := by linarith
   have hj1 : 1 ≤ j := by omega
@@ -119,6 +119,7 @@ theorem insertion_regret {j p : ℕ} (hj : 2 ≤ j) (hp : p.Prime)
   rw [← beta_nat hp (by omega : 1 ≤ j)]
   exact ⟨sub_nonneg.mpr hanti, by nlinarith only [hlow, hlog, hwin]⟩
 
+#print axioms slope_upper
 #print axioms log_drop_upper
 #print axioms insertion_regret
 end D5.S3.Arith.Robin.PriceRecord.HigherLayerInsertionRegret

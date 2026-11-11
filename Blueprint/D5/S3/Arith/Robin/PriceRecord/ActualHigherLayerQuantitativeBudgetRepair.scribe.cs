@@ -8,7 +8,17 @@ internal sealed class ActualHigherLayerQuantitativeBudgetRepairDocument : IScrib
         "Growing higher-layer quantitative budget repair.",
         H("D5 source compiled; RegUNVALIDATED"),
         Blocks(
+            Paragraph(Text("The uniform package uses the canonical HigherLayerInsertionRegret.slope_upper, whose log_drop_upper also supplies moving_interval_marginals. The package has no D5 proof consumer; after expanding co-delivered helpers it still reaches the new beta and slope estimates, so it is not classified bind-only merely as a conjunction.")),
             Paragraph(Text("Single repo-prior-exposed source attempt. The D5 source target has a current scoped Lean build; typed Reg mirrors remain unvalidated for kernel/official acceptance, source binding and variation/sensitivity. This does not assert a consensus result or literature novelty. Existing Budget/prefix/fixed arithmetic owners are reused without copying. The three-helper patch is unapplied. Every typed Reg law reproduces its full telescope with a literal readout; enrollment, current source binding and variation/sensitivity evidence remain unvalidated.")),
+            Describe.Lean(
+                DescribeId.Create("growing-quantitative-uniform-beta-and-slope"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualHigherLayerQuantitativeBudgetRepair.uniform_beta_and_slope"),
+                H("uniform_beta_and_slope"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("All natural j>=2 and all real u>=2. Geometric sums give 1/(2*u^j*log u)<=beta<=1/(u^j*log u). Weighted differentiation and the elementary lower logarithm bound give 0<slope<=2*j and the exact log-beta derivative.")),
+                    Paragraph(Text("Exact source telescope (D5-compiled): ∀ {j : ℕ} (hj : 2 ≤ j) {u : ℝ} (hu : 2 ≤ u),     1 / (2 * u ^ j * log u) ≤ beta j u ∧       beta j u ≤ 1 / (u ^ j * log u) ∧       0 < logarithmicSlope j u ∧ logarithmicSlope j u ≤ 2 * (j : ℝ) ∧       HasDerivAt (fun v => log (beta j v)) (-logarithmicSlope j u / u) u"))),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("growing-quantitative-adjacent-layer-strict"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualHigherLayerQuantitativeBudgetRepair.adjacent_layer_strict"),

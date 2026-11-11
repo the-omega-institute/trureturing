@@ -77,6 +77,17 @@ private theorem beta_uniform_bounds {u : ℝ} (hu : 2 ≤ u) {j : ℕ} (hj : 1 �
   refine ⟨?_, beta_le_inv_pow_log hu hj⟩
   simpa only [beta, gain, div_div] using hh
 
+/-- Uniform in the full natural index and the full real half-line. -/
+theorem uniform_beta_and_slope {j : ℕ} (hj : 2 ≤ j) {u : ℝ} (hu : 2 ≤ u) :
+    1 / (2 * u ^ j * log u) ≤ beta j u ∧
+      beta j u ≤ 1 / (u ^ j * log u) ∧
+      0 < logarithmicSlope j u ∧ logarithmicSlope j u ≤ 2 * (j : ℝ) ∧
+      HasDerivAt (fun v => log (beta j v)) (-logarithmicSlope j u / u) u := by
+  have hb := beta_uniform_bounds hu (show 1 ≤ j by omega)
+  have hj0 : (0 : ℝ) < j := by exact_mod_cast (show 0 < j by omega)
+  exact ⟨hb.1, hb.2, (div_pos hj0 (by norm_num)).trans_le (logarithmicSlope_ge hu hj),
+    HigherLayerInsertionRegret.slope_upper hu hj, log_beta_hasDerivAt hu (by omega)⟩
+
 /-- Strict adjacent separation. It includes j=2 and u=2. -/
 theorem adjacent_layer_strict {j : ℕ} (hj : 2 ≤ j) {u : ℝ} (hu : 2 ≤ u) :
     u * beta j u < beta (j - 1) u := by
@@ -1007,6 +1018,7 @@ theorem actual_record_quantitative_repaired_prefix_residual :
     have hx := hB (log (n : ℝ)) ((le_max_left _ _).trans hlarge) x rfl
     simpa only [X, m, μ] using hx
 
+#print axioms uniform_beta_and_slope
 #print axioms adjacent_layer_strict
 #print axioms moving_interval_marginals
 #print axioms uniform_root_geometry
