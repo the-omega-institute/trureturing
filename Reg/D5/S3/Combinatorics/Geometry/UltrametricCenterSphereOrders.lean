@@ -14,13 +14,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape
 open _root_.D5.S3.Combinatorics.Geometry.DovgosheyRovenskaCentralEdges
 open _root_.UltrametricCenterSphereOrders
 
-structure Parameters where
-  c : ℕ → ℝ
-  b : ℕ → ℕ
-  h : ℕ
-  zero : c 0 = 0
-  increasing : ∀ i < h, c i < c (i + 1)
-  positive : ∀ i ≤ h, 0 < b i
+abbrev Parameters := Σ _ : (ℕ → ℝ), Σ _ : (ℕ → ℕ), ℕ
 
 abbrev signature : DependentFamily.Signature where
   Params := Parameters
@@ -33,7 +27,7 @@ abbrev signature : DependentFamily.Signature where
   finiteAnchor := inferInstance
 
 def actual : DependentFamily.Realization signature :=
-  DependentFamily.realize signature (fun _ p n => n ∈ orders p.b p.h)
+  DependentFamily.realize signature (fun _ p n => n ∈ orders p.2.1 p.2.2)
     (fun e => nomatch e)
 
 def rejected : DependentFamily.Realization signature :=
@@ -48,7 +42,7 @@ def arena : DependentFamily.Arena where
       IsUltrametricDist X ∧ Finite X ∧ Nonempty X ∧ Nat.card X = n ∧
         center X = c '' Set.Iic h ∧
         (∀ i ≤ h, ∀ x : X, Nat.card (Metric.sphere x (c i)) = b i)) ↔
-      b 0 = 1 ∧ R.readout () ⟨c, b, h, hc0, hc, hb⟩ n
+      b 0 = 1 ∧ R.readout () ⟨c, b, h⟩ n
 
 abbrev sourceScope := type_of%
   (@_root_.UltrametricCenterSphereOrders.possible_orders_unrestricted_iff)
@@ -72,7 +66,7 @@ theorem rejected_law : ¬ arena.Law rejected := by
 theorem dependence : ∀ i : Unit, ∃ (p : signature.Params) (s t : signature.State p),
     actual.readout i p s ≠ actual.readout i p t := by
   intro i
-  let p : Parameters := ⟨fun _ => 0, fun _ => 1, 0, rfl, by omega, by simp⟩
+  let p : Parameters := ⟨fun _ => 0, fun _ => 1, 0⟩
   exact ⟨p, 1, 2, by simp [actual, DependentFamily.realize, p, orders]⟩
 
 def familyRegistration : DependentFamily.Registration arena sourceScope where
@@ -92,7 +86,7 @@ def familyRegistration : DependentFamily.Registration arena sourceScope where
 noncomputable def registration :
     Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, 0, 0, 0}
       (@_root_.UltrametricCenterSphereOrders.possible_orders_unrestricted_iff)
-      (DependentFamily.Realization signature) Type Unit where
+      (DependentFamily.Realization signature) Unit Unit where
   unitName := `UltrametricCenterSphereOrders.possible_orders_unrestricted_iff.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Geometry.UltrametricCenterSphereOrders.familyRegistration
   realizationSource := none
@@ -103,11 +97,11 @@ noncomputable def registration :
   localNames := false
   realization := .source arena ⟨familyRegistration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
-  bundleNonempty := .evidence ⟨(show True from trivial)⟩ trivial
+  bundleNonempty := .absent
   readout := some (DependentFamily.realize signature
-    (fun _ p n => n ∈ orders p.b p.h) (fun e => nomatch e))
-  variation := .evidence ⟨(show True from trivial)⟩ trivial
-  sensitivity := .evidence ⟨(show True from trivial)⟩ trivial
+    (fun _ p n => n ∈ orders p.2.1 p.2.2) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {

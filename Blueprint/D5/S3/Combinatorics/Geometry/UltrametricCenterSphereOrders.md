@@ -108,7 +108,7 @@ Assume the initial radius, strict increases, every prescribed gap inequality, an
 
 **Theorem 1.9 (The same recurrence classifies all realizations without a distance-support restriction).**
 
-$$(\exists X:Type, \exists m:\operatorname{MetricSpace}\left(X\right), \operatorname{IsUltrametricDist}\left(X\right) \land \operatorname{Finite}\left(X\right) \land \operatorname{Nonempty}\left(X\right) \land \operatorname{card}\left(X\right) = n \land \operatorname{center}\left(X\right) = \operatorname{image}\left(c, \operatorname{Iic}\left(h\right)\right) \land \forall i \leq h, \forall x \in X, \operatorname{card}\left(\operatorname{sphere}\left(x, \operatorname{c}\left(i\right)\right)\right) = \operatorname{b}\left(i\right)) \iff (\operatorname{b}\left(0\right) = 1 \land n \in \operatorname{orders}\left(b, h\right))$$
+$$(\exists X:Type, \exists m:\operatorname{MetricSpace}\left(X\right), \operatorname{IsUltrametricDist}\left(X\right) \land \operatorname{Finite}\left(X\right) \land \operatorname{Nonempty}\left(X\right) \land \operatorname{card}\left(X\right) = n \land \operatorname{center}\left(X\right) = \operatorname{image}\left(c, \operatorname{Iic}\left(h\right)\right) \land \forall i \leq h, \forall x:X, \operatorname{card}\left(\operatorname{sphere}\left(x, \operatorname{c}\left(i\right)\right)\right) = \operatorname{b}\left(i\right)) \iff (\operatorname{b}\left(0\right) = 1 \land n \in \operatorname{orders}\left(b, h\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Geometry/UltrametricCenterSphereOrders.possible_orders_unrestricted_iff` (`✓ std3`). ∎
 

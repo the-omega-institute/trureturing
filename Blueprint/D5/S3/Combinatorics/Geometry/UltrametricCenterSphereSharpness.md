@@ -6,7 +6,7 @@ The pointwise counts one, two and four at central radii zero, one and two force 
 
 **Theorem 1.1 (Every realization has order eight and two distinct distances below one).**
 
-$$\operatorname{card}\left(X\right) = 8 \land \exists p,q,r,s \in X, 0 < \operatorname{dist}\left(p, q\right) < 1 \land 0 < \operatorname{dist}\left(r, s\right) < 1 \land \operatorname{dist}\left(p, q\right) \neq \operatorname{dist}\left(r, s\right)$$
+$$\operatorname{card}\left(X\right) = 8 \land \exists p,q,r,s:X, 0 < \operatorname{dist}\left(p, q\right) < 1 \land 0 < \operatorname{dist}\left(r, s\right) < 1 \land \operatorname{dist}\left(p, q\right) \neq \operatorname{dist}\left(r, s\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Geometry/UltrametricCenterSphereSharpness.order_eight_and_two_gap_distances` (`✓ std3`). ∎
 

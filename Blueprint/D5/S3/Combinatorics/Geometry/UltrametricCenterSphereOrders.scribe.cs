@@ -71,7 +71,7 @@ internal sealed class UltrametricCenterSphereOrdersDocument : IScribeDocumentDef
                     Call("Nonempty", F.Id("X")), Sp, Land, Sp, Call("card", F.Id("X")), Sp, Eq, Sp, F.Id("n"),
                     Sp, Land, Sp, Call("center", F.Id("X")), Sp, Eq, Sp, Call("image", F.Id("c"), Call("Iic", F.Id("h"))),
                     Sp, Land, Sp, Forall, Sp, F.Id("i"), Sp, Leq, Sp, F.Id("h"), Comma, Sp,
-                    Forall, Sp, F.Id("x"), Sp, InMacro, Sp, F.Id("X"), Comma, Sp,
+                    Forall, Sp, F.Id("x"), Colon, F.Id("X"), Comma, Sp,
                     Call("card", Call("sphere", F.Id("x"), Call("c", F.Id("i")))), Sp, Eq, Sp, Call("b", F.Id("i")),
                     Close, Sp, Iff, Sp, Open, Criterion(), Close)),
                 "Assume only the initial radius, strict increases and positive counts through h. The left side existentially chooses a carrier and its metric; all other structures and sphere counts refer to that same chosen metric. There is no hypothesis restricting the remaining distances. The converse chooses one-third and two-thirds of each prescribed gap and applies the stronger construction. This is the unrestricted existence iff, including the initial-count obstruction and the singleton boundary."))));
