@@ -1821,3 +1821,146 @@ De Beule–Demuys–Polverino–Zullo 的 [*Few-Weight Linear Sets and Divisibil
 结论限于有限特征零扩张、实际中间域及原标签的精确共同交维与最小正值。它不把次数整除当成子域存在，不把最小值前缀相等当成完整低阶关系相等，也不给出有限查询、噪声、物理、量子或 $H10(\mathbb Q)$ 的结论。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 33. 全部最小交维序列的剖面损失与首个规模的实际域充要条件
+
+**定义 33.1（同原比值域上的剖面逆问题）。** 设 $F$ 为特征零域，$L/F$ 为有限扩张，$0\ne X\le_F L$。沿用 (32.1) 的 $m=\dim_F X$、$D_X=F(X/X)$、$E_X=\{c\in L:cX\subseteq X\}$、$N=[D_X:F]$、$e=[E_X:F]$ 及最小正共同交维 $\delta_j(X)$。对每个实际中间域 $F\subseteq A\subseteq D_X$，定义函数
+
+$$
+\mathcal T_X(A)=t_X(A)=\dim_F AX-m,
+\qquad AX=\operatorname{span}_A X\subseteq L.
+\tag{33.1}
+$$
+
+比较 $W,V$ 时，要求 $D_W=D_V=D$ 为原 $L$ 中同一个子域，并有相同的 $m,N,e$。剖面相等指对每一个实际 $A\subseteq D$ 逐项相等；只比较子域次数不构成这项条件。问题是全部序列 $(\delta_j)_{j\ge1}$ 相等能否强制 $\mathcal T_W=\mathcal T_V$。规模按先 $m$ 后 $N$ 的字典序比较。
+
+任取 $x\in X\setminus\{0\}$，已有的归一化给出 $U=x^{-1}X\subseteq D_X$、$1\in U$、$F(U)=D_X$；整体缩放不改变上述维数或稳定子。若原共同交空间 $I_j=X\cap r_2X\cap\cdots\cap r_jX$ 非零，则从同一个 $z\in I_j\setminus\{0\}$ 得 $r_i=z/(z/r_i)\in D_X$，所以这些空间全在同一个 $xD_X$ 中。以下只消费 (31.4)、(32.3) 已有的全正元组下界：对每个实际 $A\subseteq D_X$、$a=[A:F]$，
+
+$$
+\dim_F I_j\ge
+\max\{e,\,jm-(j-1)N,\,a-jt_X(A)\}
+\quad\text{只要 }I_j\ne\{0\}.
+\tag{33.2}
+$$
+
+其中第三项来自同一条 $Az$ 上的映射 $Az\longrightarrow\bigoplus_{i=1}^j r_iAX/r_iX$，$r_1=1$：其核为 $Az\cap I_j$，各商空间维数均为 $t_X(A)$。前两项分别来自 $E_X$-线性与 $xD_X$ 中的余维和。域外标签的交空间为零。这是已有共同见证的维数机制，不另提出秩公式。
+
+**定理 33.2（固定实际六次域的完整剖面表与精确分离判据）。** 固定原 $F\subseteq D\subseteq L$，$[D:F]=6$。对每一个三维窗口 $X\le_F L$、$D_X=D$，都有 $E_X=F$，且
+
+$$
+\delta_1(X)=3,\qquad \delta_j(X)=1\quad(j\ge2).
+\tag{33.3}
+$$
+
+每个这样的 $X$ 均有一列原标签，使所有阶的嵌套前缀同时达到 (33.3)。它在每一个实际中间域上的剖面恰为下表；没有相应子域时不产生该行的条目。
+
+| 实际域 $A\subseteq D$ | $\dim_A AX$ | $t_X(A)$ |
+| --- | --- | --- |
+| $A=F$ | $3$ | $0$ |
+| $[A:F]=2$，且 $\dim_A AX=2$ | $2$ | $1$ |
+| $[A:F]=2$，且 $\dim_A AX=3$ | $3$ | $3$ |
+| $[A:F]=3$，每一个这样的实际域 | $2$ | $3$ |
+| $A=D$ | $1$ | $3$ |
+
+因此对任何两个这样的 $W,V$，
+
+$$
+\mathcal T_W\ne\mathcal T_V
+\quad\Longleftrightarrow\quad
+\exists A\subseteq D:\ [A:F]=2,\quad
+\{\dim_A AW,\dim_A AV\}=\{2,3\}.
+\tag{33.4}
+$$
+
+若该实际二次域存在，它唯一。一个固定实际六次域中存在剖面不同的窗口对，当且仅当它包含这个实际二次域；存在时，两种表列剖面都能实现。将 (33.4) 中的窗口排序为 $\dim_A AW=2$、$\dim_A AV=3$ 后，对任一原 $\gamma\in A\setminus F$，
+
+$$
+\dim_F(W\cap\gamma W)=2,\qquad
+\dim_F(V\cap\gamma V)=0.
+\tag{33.5}
+$$
+
+所以同一条实际二次标签已分离它们的完整二元函数；(33.3) 相等的是全部最小值，绝非完整逐标签函数相等。
+
+证明。归一化为 $1\in U=x^{-1}X\subseteq D$。消费 §§27、29 的稳定子事实，$E_X\subseteq D$ 成域，其次数整除三。若该次数为三，则 $X=xE_X$，其比值域就是 $E_X$，与 $[D:F]=6$ 矛盾。因此 $E_X=F$。
+
+定理 27.2 的次数至少五分支已给原 $p,q\in X\setminus\{0\}$，满足 $X\cap(p/q)X=Fp$。固定 $r_2=p/q$，并对所有 $i\ge3$ 取 $r_i=r_2$。于是同一列标签的每个 $j\ge2$ 前缀交空间都是 $Fp$；$p$ 在每份后续缩放窗口中的原像均为 $q$。另一方面，每个原正元组的交维至少为一，由 (33.2) 亦可直接读出。这证明全部窗口的 (33.3) 及单列嵌套取等，不需要另一个高阶取等公式，也没有拼接分别最优的元组。
+
+域塔使实际中间域的次数只能为一、二、三、六。$F$ 行显然，$DU=D$ 给出 $D$ 行。若 $[C:F]=3$，则 $\dim_C CU\le[D:C]=2$；若它等于一，由 $1\in U$ 得 $U\subseteq C$，从而 $D=F(U)\subseteq C$，矛盾。因此每一个实际三次域都给 $CU=D$、$t_X(C)=6-3=3$，无论这样的域有几个。若 $[A:F]=2$，三维 $U$ 不可能容在一条二维的 $A$-直线上，而 $\dim_A D=3$，故 $\dim_A AU$ 恰为二或三，对应 $t_X(A)=1$ 或三。表已穷尽全部实际域，因而立即得到 (33.4)。
+
+两个不同二次域 $A_1,A_2\subseteq D$ 的合成域在 $A_1$ 上次数为二，在 $F$ 上次数为四；它不能容在六次域 $D$ 内。因此实际二次域至多一个。这里先有实际子域，才使用域塔，并未从 $2\mid6$ 推出其存在。
+
+若实际二次域 $A$ 存在，特征零的本原元定理给原 $\theta\in D$、$F(\theta)=D$。于是 $A(\theta)=D$、$[D:A]=3$，原 $1,\theta,\theta^2$ 在 $A$ 上独立。采用已有的部分域与幂窗口形状，取
+
+$$
+W_0=A\oplus F\theta,\qquad
+V_0=\langle1,\theta,\theta^2\rangle_F.
+\tag{33.6}
+$$
+
+两者三维、含 $1$，分别生成 $A(\theta)=D$ 与 $F(\theta)=D$，故比值域都是这个原 $D$。已有的稳定子论证给 $E_{W_0}=E_{V_0}=F$。它们的 $A$-秩分别为二和三，故两种剖面均实现；而没有实际二次域时，上表对所有窗口完全相同，不能分离。
+
+这些存在见证也能显式选单列标签。在 $1,\theta,\theta^2$ 的 $A$-坐标中比较系数得 $W_0\cap\theta W_0=F\theta$；原 $1,\theta,\ldots,\theta^4$ 在 $F$ 上独立，又给 $V_0\cap\theta^2 V_0=F\theta^2$。分别从第二项起重复原标签 $\theta$、$\theta^2$，所有前缀便保持所示一线。
+
+最后证明适用于全部窗口的 (33.5)，不要求它们是 (33.6) 的形状。$AW$ 为四维 $F$-空间，且被 $\gamma$ 保持，故其中两个三维空间 $W,\gamma W$ 的交维至少为二；等于三会使 $\gamma\in E_W=F$，矛盾，故恰为二。若 $\dim_A AV=3$，$V$ 的任一 $F$-基 $v_1,v_2,v_3$ 同时是 $AV$ 的 $A$-基。等式 $\sum_i f_iv_i=\gamma\sum_i g_iv_i$、$f_i,g_i\in F$，迫使 $f_i=\gamma g_i$ 对每个 $i$ 成立。因 $\gamma\notin F$，所有系数为零，故 $V\cap\gamma V=\{0\}$。定理得证。$\square$
+
+**命题 33.3（原有理六次域中的准确反恢复见证）。** 取 $\alpha$ 为 $x^6-2$ 的正实根，在同一个原域中令
+
+$$
+F=\mathbb Q,\quad L=D=\mathbb Q(\alpha),\quad
+A=\mathbb Q(\alpha^3),\quad
+W=\langle1,\alpha,\alpha^3\rangle_{\mathbb Q},\quad
+V=\langle1,\alpha,\alpha^2\rangle_{\mathbb Q}.
+\tag{33.7}
+$$
+
+两者共同的 $(m,N,e)$ 为 $(3,6,1)$，原稳定子都是 $\mathbb Q$，全部序列均为 $(3,1,1,\ldots)$，但 $t_W(A)=1$、$t_V(A)=3$。取一列 $r_i=\alpha$、另一列 $s_i=\alpha^2$（$i\ge2$），则准确的嵌套前缀为
+
+$$
+I_1^W=W,\quad I_j^W=\mathbb Q\alpha\ (j\ge2),\qquad
+I_1^V=V,\quad I_j^V=\mathbb Q\alpha^2\ (j\ge2).
+\tag{33.8}
+$$
+
+原标签 $\beta=\alpha^3\in A\setminus\mathbb Q$ 则给
+
+$$
+W\cap\beta W=\langle1,\beta\rangle_{\mathbb Q}=A,
+\qquad V\cap\beta V=\{0\}.
+\tag{33.9}
+$$
+
+证明。$x^6-2$ 及 $x^2-2$ 在素数二处满足 Eisenstein 判据，故 $[L:\mathbb Q]=6$、$[A:\mathbb Q]=2$。原 $1,\alpha,\ldots,\alpha^5$ 为有理基，$W,V$ 均三维且都含 $1,\alpha$，所以两比值域同为 $L$。定理 33.2 给两稳定子均为 $\mathbb Q$。用 $L/A$ 的基 $1,\alpha,\alpha^2$，有 $AW=A\oplus A\alpha$、$AV=L$，故两个损失分别为 $4-3=1$ 和 $6-3=3$。
+
+在原有理幂基中，$\alpha W=\langle\alpha,\alpha^2,\alpha^4\rangle_{\mathbb Q}$，与 $W$ 只共用 $\alpha$ 方向；$\alpha^2V=\langle\alpha^2,\alpha^3,\alpha^4\rangle_{\mathbb Q}$，与 $V$ 只共用 $\alpha^2$ 方向。重复各自标签得到 (33.8)；共同原向量分别是 $\alpha$、$\alpha^2$，在每一份缩放窗口中的原像都是 $1$。对任意其他原正元组，交维仍至少为一；它们与 (33.8) 的取等共同证明全部阶数的最小值。最后 $\beta W=\langle\beta,\alpha^4,2\rangle_{\mathbb Q}$、$\beta V=\langle\alpha^3,\alpha^4,\alpha^5\rangle_{\mathbb Q}$，直接给出 (33.9)。$\square$
+
+**定理 33.4（剖面不恢复的字典序首个规模）。** 在定义 33.1 的全部窗口对中，全部最小值序列相同而实际中间域张成剖面不同的首个规模恰为 $(m,N)=(3,6)$。这包括排除任意比值域次数下的 $m=1,2$，以及排除 $m=3$、$N<6$；首个规模中每一个固定实际 $D/F$ 的全部分离，恰由 (33.4) 描述。
+
+证明。以下在相同实际 $D$ 上证明更强的结论：较早规模的任意窗口都有相同剖面，甚至不必先假设最小值序列相同。
+
+若 $m=1$，$X=xF$，故 $D=F$，唯一条目 $t_X(F)=0$。若 $m=2$，归一化写 $x^{-1}X=F+F\theta$，其中 $\theta\notin F$、$D=F(\theta)$。对每个实际真中间域 $F\subseteq A\subsetneq D$，必有 $\theta\notin A$，否则 $D\subseteq A$。所以 $1,\theta$ 在 $A$ 上独立，而 $D$ 张成的秩为一，得
+
+$$
+t_X(A)=
+\begin{cases}
+2[A:F]-2,&A\subsetneq D,\\
+N-2,&A=D.
+\end{cases}
+\tag{33.10}
+$$
+
+这对任意次数 $N$ 成立，完全由同一实际域 $D$ 及其实际中间域决定。
+
+若 $m=3$，归一化的三维空间容在 $D$ 内，故 $N\ge3$。$N=3$ 时空间就是 $D$，所有条目为零。$N=4$ 时，$F$ 条目为零，$D$ 条目为一；每个实际真非平凡中间域都为二次，三维空间的 $A$-张成不可能只有二维，故必为整个 $D$，条目也是一。$N=5$ 为素数，没有真非平凡中间域，只有 $t_X(F)=0$、$t_X(D)=2$。这些剖面均与窗口无关，因此排除了全部较早规模。命题 33.3 在 $(3,6)$ 取到分离；定理 33.2 已给这个规模的完整实际域充要条件。$\square$
+
+上述逆问题与既有形状须分别归属。Castello–Polverino–Zullo，[*On one-orbit cyclic subspace codes of $\mathcal G_q(n,3)$*，arXiv:2405.01652v1，Definition II.3、Theorem III.2(3.1)–(3.2)](https://arxiv.org/html/2405.01652v1)，已定义子域张成的相对维数，并在有限域的三维平方张成分类中区分幂窗口的二次域秩三与部分二次域窗口的秩二。其记号 $\delta_t(S)$ 是子域张成秩，不是这里的第 $j$ 阶最小交维；在该有限域对应中，$t_X(\mathbb F_{q^t})=t\delta_t(X)-m$。这些秩分支及窗口形状不是本节新增的分类。
+
+Napolitano–Polverino–Santonastaso–Zullo，[*Classifications and constructions of minimum size linear sets*，arXiv:2201.02003v1，Examples 6.2、6.4、Proposition 6.3](https://arxiv.org/html/2201.02003v1)，已给一般域的部分子域方向与幂窗口的临界对形状。对 (33.6)，$W_0+\gamma W_0=AW_0$（$\gamma\in A\setminus F$）及 $V_0+\theta V_0=\langle1,\theta,\theta^2,\theta^3\rangle_F$ 均为四维；其 $k=3$、环境维数六满足 Proposition 6.3 的 $k+2\le\dim_F D$，分别属于其二次域部分方向与次数六的幂方向。这里直接采用这些形状作存在见证，不重立临界对定理。
+
+Castello–Polverino–Zullo，[*Full weight spectrum one-orbit cyclic subspace codes*，arXiv:2405.19911v1，Definition 2.2、Theorem 4.4、Proposition 4.8、Corollary 4.11、Theorem 5.2](https://arxiv.org/html/2405.19911v1)，已给子域张成与最小容纳域、有限域幂窗口分布和部分二次域族，并直接引用上述一般域 Proposition 6.3。取其幂窗口参数 $k=3,t=n=6$，及部分二次域族参数 $\ell=1,[\mathbb F_{q^2}(\theta):\mathbb F_{q^2}]=3$，已有正交维一的标签。重复同一标签即延续到全部阶；这个延续不构成新的高阶机制。Shi–Özbudak，[*Linear equivalence of full weight spectrum cyclic orbit codes*，arXiv:2611.04947v1，Theorem 1.1、§2](https://arxiv.org/html/2611.04947v1)，进一步给这两类有限域码各自的线性等价判据，包括真子域参数：幂族用分式线性变换及 Frobenius，部分二次域族用二次域仿射变换及 Frobenius。其分类不作为本节的窗口标量轨道分类；本节也没有断言秩三的全部窗口均为幂窗口。
+
+仓内定理 27.2 已承担特征零三维窗口的原域单线取等；(29.2)、(31.4)、(32.3) 已承担剖面到极小值的正向关系、共同见证下界及一般超平面的取等桥。本节不重立这些机制。相对于上述指定原文与这些既有结论，本节的仓内推导（repo-derived）差额是反向信息损失的精确结算：全部最小值仍不能恢复实际域剖面，首个字典序规模为 $(3,6)$，且每一个固定实际六次域上的全部剖面差异恰为唯一实际二次域的秩二与秩三之别。有限域中两类已知形状的秩差与单线取等本身已有先例；这些来源对应不推出全球优先权。
+
+白话说，把每一阶最少还能相交多少个方向全部列出，仍会丢掉窗口在某个实际子域下需要补几个方向的信息。六次域里的三维窗口已经发生这种损失：两种窗口都能在第二份加入时只剩一线，此后重复它便永远只剩这一线；但二次域补齐一个窗口只添一维，补齐另一个却添三维。这个尺度没有其他域条目可以分离它们，而且二次域若存在便只有一个。保留该域中任一非底域的实际标签，交维二与零就能重新显出差异。完整标签关系因此保留了被全部最小值汇总删掉的信息。
+
+## 追加锚（本行以下为增补区）
