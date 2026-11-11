@@ -16,10 +16,10 @@ modulusDegree: proof_shape: bind-only; consumers: coefficientEquiv, coefficientE
 The labels i : Fin n represent the source labels i.val + 1.
 The parity expressions use the disclosed products 10 * 8^(k-1) and 3 * 8^k.
 Coefficients lie in ZMod 2; truncations use AdjoinRoot of a power of Polynomial.X.
-three_column_extension: proof_shape: content; escape_witness: D5.S3.Combinatorics.Riordan.LabeledComplementAlgebra.three_column_extension; consumers: columns_of_annihilator.
-columns_of_annihilator: proof_shape: content; escape_witness: D5.S3.Combinatorics.Riordan.LabeledComplementAlgebra.three_column_extension; consumers: columns_iff_annihilator, unit_parameter_criterion.
+three_column_extension: proof_shape: bind-only; consumers: columns_of_annihilator.
+columns_of_annihilator: proof_shape: bind-only; consumers: columns_iff_annihilator, unit_parameter_criterion.
 square_discrepancy: proof_shape: bind-only; consumers: columns_iff_annihilator.
-columns_iff_annihilator: proof_shape: content; escape_witness: D5.S3.Combinatorics.Riordan.LabeledComplementAlgebra.three_column_extension; consumers: unit_parameter_criterion.
+columns_iff_annihilator: proof_shape: bind-only; consumers: unit_parameter_criterion.
 all_graphs_one: proof_shape: bind-only; consumers: count_one.
 count_one: proof_shape: bind-only; consumers: claim_of_sum, D5.S3.Combinatorics.Riordan.LabeledComplementCount.count_sum.
 prefix_succ: proof_shape: bind-only; consumers: difference_of_sum, prefix_two_step.
@@ -31,7 +31,7 @@ truncatedCoeff_truncateMap: proof_shape: bind-only; consumers: truncateMap_canon
 truncateMap_eq_iff: proof_shape: bind-only; consumers: image_square_annihilator, truncateMap_canonicalSeries, truncateMap_eq_zero_iff, D5.S3.Combinatorics.Riordan.LabeledComplementClassification.column_equation_coeff, D5.S3.Combinatorics.Riordan.LabeledComplementClassification.graph_eq_iff_columns, D5.S3.Combinatorics.Riordan.LabeledComplementClassification.unitParametersToGraph_injective.
 truncateMap_eq_zero_iff: proof_shape: bind-only; consumers: image_square_annihilator, D5.S3.Combinatorics.Riordan.LabeledComplementClassification.graph_complement_factor_criterion.
 complement_orientation_card: proof_shape: content; escape_witness: D5.S3.Combinatorics.Riordan.LabeledComplementAlgebra.complement_orientation_card; consumers: D5.S3.Combinatorics.Riordan.LabeledComplementCount.count_all.
-unit_parameter_criterion: proof_shape: content; escape_witness: D5.S3.Combinatorics.Riordan.LabeledComplementAlgebra.three_column_extension; consumers: D5.S3.Combinatorics.Riordan.LabeledComplementClassification.graph_complement_criterion.
+unit_parameter_criterion: proof_shape: bind-only; consumers: D5.S3.Combinatorics.Riordan.LabeledComplementClassification.graph_complement_criterion.
 truncateMap_surjective: proof_shape: bind-only; consumers: truncateMap_canonicalSeries.
 truncateMap_isUnit: proof_shape: bind-only; consumers: D5.S3.Combinatorics.Riordan.LabeledComplementClassification.graph_complement_criterion, D5.S3.Combinatorics.Riordan.LabeledComplementClassification.unitParametersToGraph_injective.
 allOnes_constant: proof_shape: bind-only; consumers: D5.S3.Combinatorics.Riordan.LabeledComplementClassification.graph_complement_criterion, D5.S3.Combinatorics.Riordan.LabeledComplementCount.classToUnitParams, D5.S3.Combinatorics.Riordan.LabeledComplementCount.classToUnitParams_surjective, D5.S3.Combinatorics.Riordan.LabeledComplementCount.class_complement.
