@@ -1,6 +1,6 @@
 /- GID: D5/S3/FiniteGroups/UniformPartitionAutomorphisms
    generality: G
-   mirror-B: D5/B/S3/FiniteGroups/UniformPartitionAutomorphisms
+   mirror-B: none(waiver:no-separate-boolean-mirror-claimed)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
