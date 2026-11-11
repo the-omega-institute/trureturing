@@ -3826,3 +3826,598 @@ $$
 完整原 $\Omega$ 中每个准备、事件、过程、参考、副本和实际相关联合，零质量及不等质量，原时钟、单位、控制、ready、flags，完整记录、失败、停止、销毁、返回与未来，以及全部既有全菜单、固定支撑和每个已经量化的中间切口义务，都在原域原样保留。一份正迹一探针只是额外关系的数学见证，不限制这些原输入；没有免费相干控制、复制、滤波或制备。有限单／双／三份接口不自动识别独立右括号载体，不给四份、任意高份数或无限维一致性。第 69 节已取得的条件有限 CP／仪器接口保持其完整适用域；本节支撑结果本身不构造物理参考、操作设备或任意操作的原过程合同。时间、Hamiltonian、$\hbar$ 与原空间几何仍须各自来源。本节改进了完整静态候选的检测支撑及其精确障碍，没有把原完整量子起源目标改成较小的支撑优化目标，也未宣告原目标完成。
 
 ## 追加锚（本行以下为增补区）
+
+## 71. 联合纯—局部混的内在边缘关系与统一负值检测
+
+本章把第一接口的探针改写成内在的边缘条件。它比先选 Bell 向量、二维支持和均匀权重更简洁：关系只看第一接口的块、纯性和边缘谱，不把坐标见证当作物理选择。所有条件仍处在已发表 64、65、66 所明示的有限维、条件纸面桥范围内。
+
+### 71.1 完整 PRE 与 C13 之前的接口
+
+**定义 71.1（PRE）。** 对每个实际载体 $X=A,D,E$，取非零有限维实向量空间、闭尖生成锥 $C_X$、严格正归一化泛函 $u_X$、完整紧态基
+
+$$
+K_X=\{x\in C_X:u_X(x)=1\},
+\qquad P_X=\operatorname{ext}K_X .
+$$
+
+保留全部对偶效应 $[0,u_X]$。对纯第一端点 $\xi\in P_X$ 和 $x\in K_X$，令
+
+$$
+T^X_\xi(x)=\inf\{f(x):0\le f\le u_X,\ f(\xi)=1\}.
+$$
+
+对任意有限纯态族 $(\eta_r)$ 和概率权重 $v_r$，要求完整有限混合律
+
+$$
+\begin{aligned}
+\mathrm S\qquad
+T^X_\xi\!\left(\sum_rv_r\eta_r\right)
+ &=\sum_rv_rT^X_{\eta_r}(\xi).
+\end{aligned}
+\tag{71.1}
+$$
+
+本章仅复用定义 65.1、66.1 及其已引 Library 的完整 $S$ 到有限 EJA 的条件纸面接口，包括正对偶生成、共同框架、面投影及滤波纯性的原有推导义务（文末 [1]）。在该接口下，忠实坐标 $\Phi_X$ 满足 $\tau_X\Phi_X=u_X$，双射整个原态基到规范迹一态基，对偶双射整个原效应区间到 $[0,1_X]$，且 $T^X_\xi(x)=\tau_X(\Phi_X\xi\circ\Phi_Xx)$；每个简单块的每个本原幂等元迹为一，没有扇区迹重标度。定义 64.1 的另行 Jordan 桥是独立入口，不并入本章从完整 $S$ 复用的同一前件，也不把纯端点互反当成完整桥。以下在上述忠实坐标中写
+
+$$
+\langle x,y\rangle_X=\tau_X(x\circ y),\qquad
+n=\tau_A1_A,\quad m=\tau_D1_D,\quad \omega=1_D/m .
+$$
+
+原始数据只有实双线性 $L:D\times A\to E$ 和实线性 $p:E\to D$，并且
+
+$$
+L(D_+,A_+)\subseteq E_+,\qquad p(E_+)\subseteq D_+ .
+\tag{71.2}
+$$
+
+全部内部映射由同一个实际 $p$ 和同一个原始 $\omega$ 定义：
+
+$$
+\begin{aligned}
+\mathcal B(d,c)&=pL(d,c),&K(a)&=\mathcal B(\omega,a),\\
+M(a,b)&=\mathcal B(K(a),b),&J(a)&=M(a,1_A),\\
+H(d)&=L(d,1_A),&B_1&=pH,\\
+Q(a,b,c)&=L(M(a,b),c),&U&=M(1_A,1_A).
+\end{aligned}
+\tag{71.3}
+$$
+
+要求
+
+$$
+\begin{aligned}
+&\operatorname{span}_{\mathbb R}M(A,A)=D,\qquad
+\operatorname{span}_{\mathbb R}L(D,A)=E,\\
+D_J:\quad &a,b\in A_+,\ \langle a,b\rangle_A=0\Rightarrow
+\langle Ja,Jb\rangle_D=0,\\
+D_H:\quad &d,d'\in D_+,\ \langle d,d'\rangle_D=0\Rightarrow
+\langle Hd,Hd'\rangle_E=0,\\
+Z:\quad &B_1M(a,b)=\tau_A(a)Jb\qquad(a,b\in A).
+\end{aligned}
+\tag{71.4}
+$$
+
+这里 $D_H$ 覆盖整个 $D_+$，包括任意实际纠缠正元，$Z$ 覆盖全部实方向。PRE 不额外假定原 $p$ 保迹、$M,H$ 保单位、$W_J,W_H$、校准上界或独立供应一个 $M$。相对于 65.1–65.2，唯一删去的是 C13。
+
+**复用约定 71.2（前交叉接口）。** 以下是定理 65.3–65.6、推论 65.7 经命题 66.2 明确抽出的已发表接口及 66.3–66.9 的调用记号，不另立本章的新分类命题或附加公理。令
+
+$$
+\begin{gathered}
+C_D=P_{\sqrt U},\quad F=C_D^{-1}M,\quad
+\alpha=F(-,1_A),\quad\beta=F(1_A,-),\\
+G=H1_D,\quad C_G=P_{\sqrt G},\quad N=C_G^{-1}L,\quad
+\eta=N(-,1_A),\\
+C_E=C_GP_{\sqrt{\eta(U)}},\quad
+Q_0(a,b,c)=N(F(a,b),c),\quad p_0=C_D^{-1}pC_E .
+\end{gathered}
+\tag{71.5}
+$$
+
+该接口给出 $U,G$ 正可逆，$F,N$ 全正、保乘积单位，线性化是满规范迹内积等距同构；$C_D,C_E$ 及其逆均全锥正，并有
+
+$$
+\begin{gathered}
+m=n^2,\qquad M=C_DF,\qquad L(d,c)=C_EN(C_D^{-1}d,c),\\
+Q=C_EQ_0,\qquad p_0Q_0(a,b,c)=\tau_A(a)F(b,c),\qquad
+p_0:E_+\to D_+\text{ 保规范迹}.
+\end{gathered}
+\tag{71.6}
+$$
+
+这些等式由同一个实际 $p$ 在同一个 $\omega$ 上连续两次重算 $M$ 得到；因此 $F$ 不是独立添加的准备。此处只复用 C13 之前的接口，不使用 C13 成立后才可取得的同时定向坐标。
+
+为固定这座桥的全部量词，再记
+
+$$
+\begin{gathered}
+s=\beta^*C_D^{-1}\ge0,\qquad V=U^{-1},\qquad \tau_DV=n^2,\qquad
+w=s\omega>0,\quad \tau_Aw=1,\\
+sM(a,b)=\tau_A(a)b,\qquad K(a)=M(w,a),\qquad
+\mathcal B(d,c)=M(sd,c),\qquad B_1=Js,\\
+pQ(a,b,c)=\tau_A(a)M(b,c),\qquad
+p=C_Dp_0C_E^{-1}.
+\end{gathered}
+\tag{71.6a}
+$$
+
+这些式子仍是前 C13 的恢复式；它们没有把原 $p$ 换成一个独立的保迹读回，也没有把滤波后的辅助载体当成原始系统。
+
+在 66.3–66.6 的前 C13 坐标中，存在有限标签集 $I$、$n_i\ge1$，使
+
+$$
+A=\bigoplus_iH_{n_i},\quad D=\bigoplus_{i,k}H_{n_in_k},\quad
+E=\bigoplus_{i,j,k}H_{n_in_jn_k},
+\tag{71.7}
+$$
+
+所有有序块都出现，包括 $i=k$ 和标量块，并可写
+
+$$
+F(a,b)_{ik}=a_i\otimes b_k^{T^{\varepsilon_{ik}}},\qquad
+N(d,c)_{ijk}=d_{ij}\otimes c_k^{T^{\delta_{ijk}}}.
+\tag{71.8}
+$$
+
+实际权重 $u_{ik}>0$、$g_{ijk}>0$ 仍保留。特别地，66.5 给出块上具体的局部合同
+
+$$
+(C_D^{-1}x)_{ik}=(I_i\otimes u_{ik}^{-1/2})x_{ik}
+(I_i\otimes u_{ik}^{-1/2}),
+\tag{71.9}
+$$
+
+对任意实双线性映射 $T$，以 $\widetilde T$ 表示其在实张量积上的线性化。由 66.2 的可逆线性化前件，$\widetilde F:A\otimes_{\mathbb R}A\to D$ 是满等距同构，$\widetilde M=C_D\widetilde F$ 因而可逆；此后才定义
+
+$$
+\begin{aligned}
+T_{\rm raw}(a,c)&=L(Ja,c),&
+I^{\rm raw}&=\widetilde T_{\rm raw}\widetilde M^{-1}:D\to E,\\
+T_0(a,c)&=N(F(a,1_A),c),&
+I^0&=\widetilde T_0\widetilde F^{-1}:D\to E.
+\end{aligned}
+\tag{71.9a}
+$$
+
+原条件 $\mathrm{C13}$ 指这个 $I^{\rm raw}$ 在整个 $D_+$ 上正；插入不是原始供应的数据。令 $\operatorname{ins}_j$ 在端点之间插入未归一化单位 $I_j$，因子顺序为 $i,j,k$。由 $T_{\rm raw}=C_ET_0$ 及 66.9 得
+
+$$
+\begin{aligned}
+(I^0z)_{ijk}&=\operatorname{ins}_j\!\left[
+(\operatorname{id}_i\otimes T_k^{\delta_{ijk}\oplus\varepsilon_{ik}})z_{ik}\right],\\
+I^{\rm raw}&=C_EI^0C_D^{-1},\\
+\mathrm{C13}&\Longleftrightarrow
+\delta_{ijk}=\varepsilon_{ik}\quad(n_i,n_k\ge2),
+\quad\text{对每个 }j,
+\end{aligned}
+\tag{71.10}
+$$
+
+其中每个 $j$ 包括 $n_j=1$ 的标量中间块。若端点有标量腿，剩余操作是恒等或单个端点的整块转置，自动正。这里不能用任意全锥自同构代替 (71.9) 的局部可逆合同。
+
+### 71.2 第一接口的内在块、边缘与关系
+
+令 $A_i$ 为 $A$ 的简单中心理想，$c_i$ 为其中心单位，$n_i=\tau_A(c_i)$。记
+
+$$
+z_{ik}=F(c_i,c_k),\qquad
+D_{ik}=z_{ik}D=\operatorname{span}_{\mathbb R}F(A_i,A_k).
+\tag{71.11}
+$$
+
+这是第一接口内在确定的有序块；$z_{ik}$ 是 $D_{ik}$ 的单位，且 $i=k$ 仍表示两个有序出现。定义限制到该块的嵌入
+
+$$
+\alpha_{ik}(a)=F(a,c_k),\qquad
+\beta_{ik}(b)=F(c_i,b),
+\tag{71.12}
+$$
+
+以及规范迹伴随
+
+$$
+R^{(1)}_{ik}=\alpha_{ik}^{*}:D_{ik}\to A_i,\qquad
+R^{(2)}_{ik}=\beta_{ik}^{*}:D_{ik}\to A_k.
+\tag{71.13}
+$$
+
+**引理 71.3（内在边缘的坐标识别与纯—混对应）。** $\alpha_{ik},\beta_{ik}$ 是保单位 Jordan 嵌入，其规范迹伴随在整个 $D_{ik,+}$ 上正且保迹：
+
+$$
+\tau_{A_i}(\alpha_{ik}^{*}x)=\tau_{D_{ik}}x,\qquad
+\tau_{A_k}(\beta_{ik}^{*}x)=\tau_{D_{ik}}x.
+\tag{71.14}
+$$
+
+对纯态 $\pi\in K_{D_{ik}}$，令
+
+$$
+m^{(1)}=R^{(1)}_{ik}\pi,\qquad m^{(2)}=R^{(2)}_{ik}\pi.
+\tag{71.15}
+$$
+
+在 66.3–66.4 的前 C13 规范迹坐标中，
+
+$$
+\pi=|\psi\rangle\langle\psi|,\qquad
+m^{(1)}=\operatorname{Tr}_k\pi,\qquad
+m^{(2)}=(\operatorname{Tr}_i\pi)^{T^{\varepsilon_{ik}}}.
+\tag{71.16}
+$$
+
+因此两边缘同时纯或同时混，并有
+
+$$
+\tau((m^{(1)})^2)<1\Longleftrightarrow
+\tau((m^{(2)})^2)<1\Longleftrightarrow
+\operatorname{Schmidt\,rank}\psi\ge2.
+\tag{71.17}
+$$
+
+**证明。** 在 (71.8) 中，$\alpha_{ik}(a)=a\otimes I_k$、$\beta_{ik}(b)=I_i\otimes b^{T^{\varepsilon_{ik}}}$，故对全部实 Hermitian $a,b,x$，迹配对给出
+
+$$
+\begin{aligned}
+\langle\alpha_{ik}^{*}x,a\rangle
+ &=\operatorname{Tr}[x(a\otimes I_k)]
+ =\operatorname{Tr}[(\operatorname{Tr}_kx)a],\\
+\langle\beta_{ik}^{*}x,b\rangle
+ &=\operatorname{Tr}[x(I_i\otimes b^{T^{\varepsilon_{ik}}})]
+ =\operatorname{Tr}[(\operatorname{Tr}_ix)^{T^{\varepsilon_{ik}}}b].
+\end{aligned}
+$$
+
+当 $x\ge0$ 且 $a,b\ge0$ 时右端配对非负，由全矩阵锥自对偶性，两伴随在整个块正锥上正。再以各输入单位配对，因两嵌入都把单位送到 $z_{ik}$，得到 (71.14)，所以确实保规范迹。满迹配对的非退化性同时唯一识别上述两个偏迹公式，令 $x=\pi$ 就得 (71.16)。这些边缘只限制到同一有序块，不把其他块求和；上标 $(1),(2)$ 在 $i=k$ 时仍区分两个槽。
+
+作为这个坐标识别后的标准工具，对单位向量作 Schmidt 分解 $\psi=\sum_{r=1}^{R}s_rx_r\otimes y_r$，其中 $s_r>0$、$\sum_rs_r^2=1$；可由系数矩阵的奇异值分解得到，亦见 [2] §V.1。两偏迹的非零谱都是 $s_r^2$，而整块转置不改谱，故 $\sum_rs_r^4<1$ 当且仅当 $R\ge2$，证明 (71.17)。这里新增的桥是内在迹伴随到这些矩阵边缘的识别，Schmidt 事实只在证明内部使用。$\square$
+
+令
+
+$$
+\mathcal P=\{(i,k):n_i\ge2,\ n_k\ge2\},\qquad q=|\mathcal P|.
+\tag{71.18}
+$$
+
+**定义 71.4（内在联合纯—局部混关系）。** 若 $q>0$，令 $\mathfrak E(F)\subset K_D$ 为所有满足下列条件的 $\rho$：对每个活跃有序块 $(i,k)\in\mathcal P$，
+
+$$
+t_{ik}=\tau_{D_{ik}}(\rho_{ik})>0,\qquad
+\pi_{ik}=\rho_{ik}/t_{ik}\in\operatorname{ext}K_{D_{ik}},\qquad
+\tau_{A_i}\bigl((R^{(1)}_{ik}\pi_{ik})^2\bigr)<1.
+\tag{71.19}
+$$
+
+非活跃块取任意正锥分量（可为零），全部块迹之和为一。按引理 71.3，条件中的一个边缘混等价于两个边缘混。若 $q=0$，定义
+
+$$
+\mathfrak E(F)=K_D.
+\tag{71.20}
+$$
+
+关系只读 $A,D,F$ 及其比较几何；不读 $E,L,p,I^0,I^{\rm raw}$ 或测试输出，也不指定 Bell 基、二维子空间、最大纠缠、均匀 Schmidt 谱、均匀块权重或滤波后运输态。
+
+**命题 71.5（非空与同槽自然性）。** $\mathfrak E(F)$ 非空。若 $g_A,g_D$ 是保规范迹 Jordan 序同构且
+
+$$
+g_DF(a,b)=F'(g_Aa,g_Ab),
+\tag{71.21}
+$$
+
+则 $g_D\mathfrak E(F)=\mathfrak E(F')$。同一个 $g_A$ 同时作用两个槽；不同简单理想上的局部酉仍可独立。
+
+**证明。** 每个活跃块 $H_{n_in_k}$ 中取任一 Schmidt 秩至少二的纯投影，各取任意 $t_{ik}>0$，使总权重为一，非活跃块置零，即得关系成员；若 $q=0$，态基本身非空。由 (71.21)，中心单位按同一扇区置换送到 $z'_{\sigma(i)\sigma(k)}$，伴随满足
+
+$$
+\alpha_{\sigma(i)\sigma(k)}^{\prime *}g_D
+=g_A\alpha_{ik}^*,\qquad
+\beta_{\sigma(i)\sigma(k)}^{\prime *}g_D
+=g_A\beta_{ik}^*.
+$$
+
+块迹、纯性和边缘平方迹均保持，故得到集合相等。证明没有把两个槽换成独立的自然性群。
+
+在坐标描述中，每个活跃块的允许纯投影空间是
+
+$$
+\mathbb{CP}^{\,n_in_k-1}\setminus
+\bigl(\mathbb{CP}^{\,n_i-1}\times\mathbb{CP}^{\,n_k-1}\bigr),
+\tag{71.22}
+$$
+
+即纯态射影空间去掉积纯态的 Segre 子集，再配上任意正中心权重和非活跃正分量；Segre 描述是在已取得的块 Hilbert 张量分解下复用的标准工具 [3]，不由它推导张量载体。坐标只用于说明这个集合，定义仍是 (71.19) 的内在边缘条件。活跃块的这些开补集与正质量参数本可构成光滑乘积，不同 Schmidt 谱或块权重本身不阻止光滑性；非活跃 PSD 分量的变秩支撑边界可产生分层。自然性也不把所有 Schmidt 谱与块权重统一成一个轨道，故此处不作统一的单一流形或单一轨道断言。
+
+### 71.3 每个关系成员的统一检测定理
+
+**定理 71.6（逐成员完备性）。** 对每个 PRE 模型及每个 $\rho\in\mathfrak E(F)$，有
+
+$$
+\boxed{
+\mathrm{C13}\Longleftrightarrow I^0\rho\in E_+
+\Longleftrightarrow I^{\rm raw}\rho\in E_+ .}
+\tag{71.23}
+$$
+
+因此
+
+$$
+\mathrm{C13}\Longleftrightarrow
+\exists\rho\in\mathfrak E(F):I^{\rm raw}\rho\in E_+
+\Longleftrightarrow
+\forall\rho\in\mathfrak E(F):I^{\rm raw}\rho\in E_+ .
+\tag{71.24}
+$$
+
+同样的三条等价式对 $I^0$ 成立。
+
+**证明。** 若 C13 成立，$I^0$ 在整个 $D_+$ 上正；(71.6) 中 $C_D,C_E$ 及其逆全锥正，所以 $I^{\rm raw}$ 也在整个 $D_+$ 上正。
+
+反设 C13 失败。由 (71.10)，存在活跃有序 $(i,k)$ 和某个中间 $j$（包括标量中间）使
+
+$$
+\chi=\delta_{ijk}\oplus\varepsilon_{ik}=1.
+$$
+
+取任意关系成员。其该块为 $t_{ik}|\psi\rangle\langle\psi|$，且 $t_{ik}>0$、Schmidt 秩至少二。用 66.5 的具体局部合同，不把任意全锥自同构冒充局部滤波，令
+
+$$
+|\chi_0\rangle=\sqrt{t_{ik}}\,(I_i\otimes u_{ik}^{-1/2})|\psi\rangle .
+\tag{71.25}
+$$
+
+则 (71.9) 的该块是 $|\chi_0\rangle\langle\chi_0|$。若原向量系数矩阵为 $X$，该局部滤波把它变为 $\sqrt{t_{ik}}X(u_{ik}^{-1/2})^T$；右乘因子可逆，故纯性和 Schmidt 秩保持。作为本定理证明内部的标准部分转置工具（[2] Proposition 8，(48)–(49)），写 $\chi_0=\sum_rs_rx_r\otimes y_r$，任取 $r\ne l$ 且 $s_r,s_l>0$，就有
+
+$$
+\begin{aligned}
+v_{rl}&=(x_r\otimes\overline y_l-x_l\otimes\overline y_r)/\sqrt2,\\
+\langle v_{rl},(|\chi_0\rangle\langle\chi_0|)^{T_k}v_{rl}\rangle
+ &=-s_rs_l<0.
+\end{aligned}
+$$
+
+在固定转置基中对 $y$ 取共轭，正是这条两维交换块的负本征向量。插入中间 $I_j$ 后，在中间任意单位向量上取期望仍为上述负值；这包括 $n_j=1$。
+
+这个输出块只由输入块 $(i,k)$ 贡献，其他中心块不能抵消它。若 $I^{\rm raw}\rho=C_EI^0C_D^{-1}\rho$ 为正，则施加 $C_E^{-1}$ 这个全锥正逆会迫使上述 $I^0C_D^{-1}\rho$ 为正，矛盾。直接对 $I^0\rho$ 也有同样的 Schmidt 负性，因为 $\rho_{ik}$ 本身已是 Schmidt 秩至少二的纯正元；局部可逆合同只改变负方向和负值大小。于是两项均不正。若 $q=0$，所有端点标量，(71.10) 自动正，且 (71.20) 给出整个 $K_D$。非空性和逐成员等价立即给出 (71.24)。$\square$
+
+这一定理使用的是原态 $\rho$ 的同一实际 $p$ 和同一原 $\omega$ 所得到的 $I^{\rm raw}$，没有先把探针改成 $C_D\rho$ 或使用第二接口的成功结果。辅助 $I^0$ 只是前 C13 桥中的等价坐标测试。
+
+### 71.4 关系的几何控制与反事实删项
+
+**命题 71.6a（几何与删项控制）。** 当 $q>0$ 时，$\mathfrak E(F)$ 非凸、非闭且非紧；其活跃纯态与正质量参数允许光滑乘积描述，非活跃 PSD 支撑边界则须按变秩情况处理。定理 71.7 的固定坏模型上没有对全关系统一的严格负间隙；删去块纯性、删去边缘混性，或漏检其异常活跃有序块，都允许 C13 失败而修改后的条件放行。当 $q=0$ 时，关系为整个紧凸基。
+
+**证明。** 对 $q>0$，固定所有块质量并只改变一个活跃块，取其中两个不同的纠缠纯投影，它们的严格中点在该块秩至少二，不再满足块纯性，故非凸。让该块的 Schmidt 系数趋于
+
+$$
+(\sqrt{1-\eta^2},\eta,0,\ldots),\qquad \eta\downarrow0,
+\tag{71.26}
+$$
+
+其极限是积纯态，边缘变纯而被关系排除，故非闭；由于它是紧基 $K_D$ 的非闭子集，故非紧。(71.22) 是复射影流形的开子集，正质量参数在相应质量单纯形的相对内部光滑；若没有非活跃块，两者的有限乘积就是光滑描述。若有非活跃块，附加的 PSD 分量允许零支撑及变秩边界，按固定秩与质量边界可作分层；这不支持一个不分情形的单一流形结论。$q=0$ 时按定义就是整个紧凸基 $K_D$。
+
+固定坏模型 71.7 中，(71.26) 的坏输出负谱为一个正块权重乘以 $-\eta\sqrt{1-\eta^2}$，趋于零。因此关系有精确等价，却没有统一负间隙，也不自动给出实验误差下的鲁棒性。
+
+三个反事实均可在同一固定坏模型中实现。若删去块纯性，取各活跃块的全混条件态，其边缘仍混，坏的单腿转置却为正，整态可通过。若删去边缘混性，取各活跃块的积纯态，局部滤波保持积性，单腿转置仍为正，也可通过。若漏掉异常活跃有序块 $(r,t)$，将该块置零而其余活跃块取正质量合格态，坏方向就不会出现；反向块或标量中间不能代替被漏掉的有序槽位。这些是控制性反事实，不是公理最小性或条件独立性证明。$\square$
+
+### 71.5 一个固定 n=5 模型与所有不变态量词
+
+**定理 71.7（全类自然单点障碍）。** 存在一个固定 PRE 模型 $\mathsf P_*$，其第一接口所有不变态都通过原插入，而 C13 失败；因此全 PRE 不存在由第一接口只读的完备自然单点规则。
+
+**证明。** 取三个标签 $r,t,s$，令
+
+$$
+A=H_2\oplus H_2\oplus\mathbb R,\qquad
+n_r=n_t=2,\quad n_s=1,\quad n=5,
+$$
+
+$$
+D=\bigoplus_{i,j\in\{r,t,s\}}H_{n_in_j},\qquad
+E=\bigoplus_{i,j,k\in\{r,t,s\}}H_{n_in_jn_k}.
+$$
+
+三个锥都是全 PSD 直和锥，态为总迹一正元。只令 $(r,s,t)$ 的异常位为一：
+
+$$
+L(d,c)_{ijk}=d_{ij}\otimes c_k^{T^{\chi_{ijk}}},\qquad
+(pz)_{jk}=\sum_i\left(\operatorname{Tr}_i z_{ijk}\right)^{T^{\chi_{ijk}}}.
+\tag{71.27}
+$$
+
+对任意纠缠 $d_{ij}\ge0$ 和 $c_k\ge0$，$L$ 每块仍是正张量；$p$ 是偏迹后接恒等或整个保留块转置，故在整个 $E_+$ 上正且保迹。令 $sd$ 的 $j$-块为 $\sum_i\operatorname{Tr}_i d_{ij}$。异常处 $j=s$ 为标量，因而同一个 $p$ 给出
+
+$$
+\mathcal B(d,c)_{jk}=(sd)_j\otimes c_k,\qquad
+\omega=1_D/25,\qquad (s\omega)_j=I_j/5.
+$$
+
+第一次实际调用原 $p$ 给 $K(a)=\mathcal B(\omega,a)$；其丢弃计算及同一 $p$ 的第二次调用为
+
+$$
+\begin{aligned}
+K(a)_{jk}&=I_j/5\otimes a_k,\\
+(sK(a))_k&=\sum_j\operatorname{Tr}_j[(I_j/5)\otimes a_k]
+ =\left(\sum_jn_j/5\right)a_k=a_k,\\
+M(a,b)_{ij}&=(pL(K(a),b))_{ij}
+ =(sK(a))_i\otimes b_j=a_i\otimes b_j.
+\end{aligned}
+\tag{71.28}
+$$
+
+并且
+
+$$
+U=1_D,\quad G=1_E,\quad C_D=C_E=\operatorname{id},\quad
+J(a)_{ij}=a_i\otimes I_j,\quad H(d)_{ijk}=d_{ij}\otimes I_k.
+$$
+
+Hermitian 块的实张成给两条张成；$J^*J=5\operatorname{id}_A$、$H^*H=5\operatorname{id}_D$ 给 $D_J,D_H$，后者确实覆盖全部纠缠正元；$sM(a,b)=\tau_A(a)b$ 和 $B_1=Js$ 给全部实方向的 $Z$。全 PSD 直和的纯态是支撑于单一块的秩一投影 $q$。若全效应 $0\le f\le I$ 满足 $f(q)=\operatorname{Tr}(fq)=1$，则 $I-f\ge0$ 与 $q$ 配对为零，故支撑于 $q$ 的正交补；再由 $I-f\le I$ 得 $I-f\le I-q$，即 $f\ge q$。取 $f=q$ 达到下界，所以对整个态基 $T_q(x)=\tau(qx)$；迹配对的对称性和线性性逐项证明 (71.1)，包含三个载体、任意跨块有限纯制备及全部效应。
+
+为明确其余等式，定义规范迹伴随 $r=J^*:D\to A$、$h=H^*:E\to D$，并约定 $sp=s\circ p$；这里的 $r,s$ 作映射记号时，与下标中的扇区标签区分。它们满足 $(rd)_i=\sum_j\operatorname{Tr}_j d_{ij}$、$(hz)_{ij}=\sum_k\operatorname{Tr}_k z_{ijk}$。故 $r,h,s$ 是全锥正、保总规范迹的偏迹求和；$p$ 已是全锥正保迹，所以 $sp$ 也在整个 $E_+$ 上正且保迹。对全部实 $a,b,c,d$，有
+
+$$
+rM(a,b)=\tau_A(b)a,\quad hL(d,c)=\tau_A(c)d,\quad
+(sp)L(d,c)=\tau_D(d)c,\quad pQ(a,b,c)=\tau_A(a)M(b,c),
+\tag{71.29}
+$$
+
+此处 $n=\tau_A1_A=5$、$m=\tau_D1_D=25=n^2$、$\tau_E1_E=nm=125$；特别地 $r1_D=s1_D=n1_A$、$h1_E=p1_E=n1_D$，并有 $\tau_D(p1_E)=125=n^3$。因此该模型还实际满足原 $p$ 保迹、$M(1_A,1_A)=1_D$、$H1_D=1_E$ 及 (71.29) 的全实丢弃恒等式，但这些较强校准仍没有消除异常方向。
+
+由 (71.10)，唯一坏块是 $D_{rt}\to E_{rst}$：取该块的二级 Bell 投影 $b$，输出为 $b^{T_t}=\operatorname{Swap}_2/2$，在反对称向量上为 $-1/2$，所以 C13 失败。
+
+另一方面，第一接口有同槽自同构子群
+
+$$
+(g_Aa)_i=U_ia_iU_i^*,\qquad
+(g_Dz)_{ij}=(U_i\otimes U_j)z_{ij}(U_i\otimes U_j)^*,
+\tag{71.30}
+$$
+
+其中 $U_r,U_t$ 独立而 $U_s=1$。任一对此子群不变的态，其 $rt$-块同时与 $U_r\otimes I$ 及 $I\otimes U_t$ 交换，故
+
+$$
+\sigma_{rt}=\lambda I_4,\qquad \lambda\ge0.
+\tag{71.31}
+$$
+
+坏转置对该块仍给正元，其他输出块本来对任意正输入正。因此对一个固定 $\mathsf P_*$，有完整量词
+
+$$
+\forall\sigma\in K_D^{\operatorname{Aut}(A,D,F)},\qquad
+I^{\rm raw}_{\mathsf P_*}\sigma=I^0_{\mathsf P_*}\sigma\in E_+,
+\tag{71.32}
+$$
+
+而 C13 为假。这里是一个固定模型放行全部第一接口不变态，不是对每个态另找模型；辅助和运输测试因 $C_D=C_E=\operatorname{id}$ 也同样放行。任何全类自然单点的值必须是不变态，故不能逐模型完备。这里不扩张为其他集合规则或全类公理最小性的结论。$\square$
+
+### 71.6 单简单扇区的无基最高谱点
+
+**命题 71.7a（单简单子类的无基谱点）。** 在受限 PRE 子类 $A=H_d$、$D=H_{d^2}$ 中，取任意规范迹实正交归一基 $(e_\ell)_{\ell=1}^{d^2}$，定义
+
+$$
+C_F=\sum_\ell F(e_\ell,e_\ell),\qquad
+\sigma_F=\frac{\Pi_{\max}(C_F)}{\tau_D\Pi_{\max}(C_F)}.
+\tag{71.33}
+$$
+
+这个态无基、同槽自然且只读第一接口，并在该子类上完备检测 C13：原插入测试与辅助测试各自通过当且仅当 C13；$d=1$ 时三者自动成立。
+
+**证明。** 实正交换基不改变该和；同槽自然同构中的 $g_A$ 保持规范迹内积，故 $g_D$ 把 $C_F$ 送到对应 $C_{F'}$，并将最高谱值的**整个**谱幂等元送到对应整个谱幂等元。重谱不在其子空间内另挑向量；若谱值为 $\lambda_1<\cdots<\lambda_v$，最高投影可在 $1_D,C_F$ 生成的结合 Jordan 子代数中写为
+
+$$
+\Pi_{\max}(C_F)=\prod_{r<v}^{\circ}
+\frac{C_F-\lambda_r1_D}{\lambda_v-\lambda_r}.
+\tag{71.34}
+$$
+
+因此 $\sigma_F$ 是一个无基、同槽自然的正迹一态；它只读 $A,D,F$，不读第二接口或测试结果。
+
+在 66.4 的相对位 $\varepsilon$ 坐标中，令 $S_d$ 为交换算子、
+
+$$
+\Phi_d=d^{-1/2}\sum_r|rr\rangle,\qquad B_d=|\Phi_d\rangle\langle\Phi_d|.
+$$
+
+由实 Hermitian 正交基的收缩，
+
+$$
+\sum_\ell e_\ell\otimes e_\ell=S_d,\qquad
+\sum_\ell e_\ell\otimes e_\ell^T=dB_d,
+$$
+
+故
+
+$$
+\begin{array}{c|c|c}
+\varepsilon&C_F&\sigma_F\\\hline
+0&S_d&(I+S_d)/(d(d+1))\\
+1&dB_d&B_d.
+\end{array}
+\tag{71.35}
+$$
+
+全锥正 $p_0$ 的具体式为
+
+$$
+p_0z=(T^\varepsilon\otimes T^{\delta\oplus\varepsilon})\operatorname{Tr}_1z.
+\tag{71.36}
+$$
+
+偏迹满射到整个保留正锥，故 $d\ge2$ 时全锥正迫使 $\delta=0$：若 $\delta=1$，保留两腿的 Bell 投影会被单腿转置送到严格负元。于是
+
+$$
+\mathrm{C13}\Longleftrightarrow\varepsilon=0
+\Longleftrightarrow I^0\sigma_F\ge0
+\Longleftrightarrow I^{\rm raw}\sigma_F\ge0
+\qquad(d\ge2).
+\tag{71.37}
+$$
+
+$\varepsilon=1$ 时 $\sigma_F=B_d$ 是 Schmidt 秩 $d$ 的关系成员，按定理 71.6，包括原态上的局部可逆滤波，必被负值检测；$\varepsilon=0$ 时 $\sigma_F$ 是对称混态，$d\ge2$ 时不属于 $\mathfrak E(F)$，但 C13 已保证整个正锥通过。若 $d=1$，所有转置位不可见，逆迹平衡给 $u=1$，末级正权重仍可任意，$\sigma_F=1$，C13 及两个测试自动成立；(71.34) 的空乘积取 $1_D$。这个单简单谱点不能推广为全直和类的单点，定理 71.7 的固定模型已经阻止该推广。$\square$
+
+### 71.7 凸化、有限 Pauli 平均与量词
+
+**命题 71.7b（凸包全称与平均存在的区别）。** 对每个 PRE 模型，
+
+$$
+\mathrm{C13}\Longleftrightarrow
+\forall\rho\in\operatorname{conv}\mathfrak E(F),\quad
+I^{\rm raw}\rho\in E_+ .
+\tag{71.38}
+$$
+
+辅助 $I^0$ 有同样的全称等价，但“凸包中存在一个通过点”及用群平均点检测一般不完备。
+
+**证明。** C13 时整个正锥通过，反向凸包包含原非空关系，故定理 71.6 给出 (71.38) 及辅助版本。存在量词的反例无需 Haar 平均：在定理 71.7 的固定模型中任取 $\rho\in\mathfrak E(F)$，对扇区 $r,t$ 分别用四个 Pauli 共轭 $I,X,Y,Z$ 作 16 项平均；每项的同一个 $g_A$ 仍同时作用 $F$ 两槽，所以每一项都在原关系中。单边 Pauli 平均清掉对应矩阵基中所有非标量系数；两扇区独立平均后
+
+$$
+\overline\rho_{rt}=t_{rt}I_4/4.
+\tag{71.39}
+$$
+
+其余块的插入本来正，异常 $rt$-块的转置也对标量元正，所以 $\overline\rho\in\operatorname{conv}\mathfrak E(F)$ 通过坏模型，尽管 C13 失败。这个有限群平均点已经丢失完备性；对全自同构群不变的平均点，定理 71.7 还给出全部不变态的障碍。因此群平均没有普遍保留逐成员检测，凸包的全称测试则仍然完备。$\square$
+
+### 71.8 完整候选、量子对应与边界
+
+**定义 71.8（内在关系候选）。** 在完整 PRE 上加条件
+
+$$
+\mathrm{NB}:\qquad
+\exists\rho\in\mathfrak E(F),\quad I^{\rm raw}\rho\in E_+.
+\tag{71.40}
+$$
+
+**命题 71.8a（同一实际模型类与条件量子对应）。** PRE+NB 与 PRE+C13 具有完全相同的实际 $(A,D,E,L,p)$ 模型类；把存在改成“每个关系成员通过”或改成辅助 $I^0$ 测试也给出同一精确类。在此条件桥范围内，原复载体、全部态与效应及 Born 配对在 C13 之前已经由 66 取得；NB 的新增作用是补回指定组合的相对方向相容性。恢复 C13 后，才可调用 65.9–65.12 的同时普通张量表示与完整原正权重族。
+
+**证明。** 定理 71.6 及命题 71.5 的非空性逐模型给出 NB 与 C13 等价，实际原始数据没有改变。关系先由第一接口定义，其成员并非根据第二接口的通过结果反选。依 66.3、66.8，PRE 下原始量子几何已经是复 Hermitian 有限直和
+
+$$
+A=\bigoplus_iH_{n_i},\quad D=\bigoplus_{i,k}H_{n_in_k},\quad
+E=\bigoplus_{i,j,k}H_{n_in_jn_k},
+$$
+
+每个载体保留全部密度矩阵、全部效应和射影纯态；概率仍是
+
+$$
+\Pr(f\mid\rho)=\sum_\lambda\operatorname{Tr}(f_\lambda\rho_\lambda),\qquad
+\rho_\lambda\ge0,\quad\sum_\lambda\operatorname{Tr}\rho_\lambda=1,\quad
+0\le f_\lambda\le I_\lambda.
+\tag{71.41}
+$$
+
+这些正是原全态基、原全效应和实际概率的忠实表示，不是滤波后另选的态基。NB 恢复 C13 后，66.10 先补齐相对方向并处理标量边界，继而 65.9–65.12 同时给出普通的辅助张量 $F,N$ 与原始 $L,p,M$ 的完整正滤波族；全部 $u_{ik},g_{ijk}>0$ 及唯一逆迹平衡 $\sum_{i,k}n_i\operatorname{Tr}(u_{ik}^{-1})=n^2$ 仍是实际数据。一般原 $M,H$ 保单位、原 $p$ 保迹的额外条件精确见 (65.37)，不由 NB 自动推出；辅助 $F,N,p_0$ 的归一化不能转送给原映射，原插入伴随也一般不保迹（66.9）。这证明所述同数据模型类等价及其结论边界。$\square$
+
+与操作层的衔接沿已发表第 69 节（引文 5）：NB 与 C13 的等价给回 69.1 的静态前件；69 另外固定同一旁观者族 $\Psi_\Phi=C_DT_\Phi C_D^{-1}$，其中 $T_\Phi$ 按全部有序块作用为 $\Phi\otimes\operatorname{id}$，并把分支限定为块 CP，分别施加局部及原始联合全锥的 TNI 预算，部分仪器须满足聚合预算，完整仪器则要求两边总映射都 TP。在这些额外操作前提下，69.3、69.4、69.11 已给出原始 Choi/Kraus 接口、有限仪器的 Born 结果概率与正概率条件输出，以及顺序复合和粗粒化。依 69.7–69.9，固定一个输出扇区 $j_0$、其中任意密度 $\sigma$ 及同一个 $0<c\le1$，令 $R$ 把所有输入的总迹重置到 $\sigma$；正权分支 $cR$ 可按同一旁观者规则补成局部及原始两边都 TP 的有限 CP 仪器，当且仅当 $u_{ik}=v_k$ 与输入行 $i$ 无关。充分小的正 $c$ 总能满足分支的两个预算，但这本身不保证共同补全。行一致时 $\Psi_\Phi=T_\Phi$，两个预算合为普通局部 Kraus 完备式，因此全部标准有限局部 CP 仪器菜单及其概率、条件更新均恢复；这是一项附加操作条件下对既有接口的应用，不是 NB 单独推出的结论。
+
+数学上的关系非空、正滤波存在及插入等价不自动供应制备或滤波的物理实现、成本、误差或实验鲁棒性。NB 不单独供应上述操作前提、弱共同重置补全或参考与 CP 分支的物理可用性；行一致仍不迫使单位滤波，不保证每对原始制备归一化，也不校准三份侧 $g$（69.10）。效应本身不唯一决定更新；对投影效应的正实线性分支，另要求每个确定接受的归一态逐点不变，才沿 [Watrous 条目的既有中性接口](../../../Library/Quantum/watrous2018theory.md#sharp-neutral-branches-reuse-the-existing-uniqueness-argument) 得到逐块 Lüders 压缩，不能从 NB、CP、完备性或弱重置补全独自推出其唯一性。未付出的桥还包括超出上述固定旁观者族的一般操作重建与时间动力学，时钟、Hamiltonian、$\hbar$ 与几何相位的动力学解释，独立右载体，四份或任意多份的兼容组合，以及无限维一致性。静态比较互反也不等于实际测量次序可交换。本章不证明公理最少、条件独立或任何更强的物理起源结论。
+
+**定义 71.8 的完整中文展开。** 在三个非零有限维实际系统中保留全部状态和效应，用“确定接受纯参照时对另一态至少接受多少”定义比较，并要求有限随机纯制备满足逐项交换端点后的平均律；复用 65.1、66.1 及其已引 Library 的完整条件纸面桥，只把同一个实际读回以同一个原始 $\omega$ 连续调用两次，保留全域正 $L,p$、两条实张成、$D_J,D_H,Z$ 及全部有序块。由第一接口 $F$ 的简单中心单位 $c_i$ 形成 $z_{ik}=F(c_i,c_k)$ 和 $D_{ik}$，在两端都非标量的每个有序块要求条件态联合纯而其内在边缘混合，各块质量任意严格正，非活跃块可取任意正元包括零，总迹为一；没有活跃块时取整个原态基。要求一个这样的原态经原插入为正，就与原 C13 对每个实际模型逐成员等价。原复载体、全态效应和 Born 概率原已由 66 确定，新关系补回组合相对方向，之后才同时取得普通二份三份辅助张量及完整原正滤波族。单简单 $H_d$ 子类另有无基最高谱点，但一般直和类不能由一个自然单点完备检测；平均关系成员也会丢失负方向。
+
+**白话图像。** 每个可能出错的端点块都放一个“整体是纯态、两边看起来却混合”的态，并给它任意非零份额。局部混合说明至少有两个 Schmidt 分量；坏接合只要翻转一条腿，这两个分量的乘积就露出负方向。局部可逆权重不能消灭它，别的中心块也不能抵消它，所以任何一个合格成员都能把坏翻转照出来。态越接近积态，负值越小；把许多成员平均后，负方向可能互相抹平。这里得到的是条件范围内的精确等价，未替物理制备、误差鲁棒性或更高阶动力学支付额外桥接。
+
+**数学引文与适用范围。** 本章的既有接口与成熟工具按以下范围使用：
+
+1. [固定发表源，ce81，卷 IV §§64–66](https://github.com/the-omega-institute/trureturing/blob/ce81a81165df77896f51d50d0fe44bf07d190c92/docs/develop/theory/QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES_IV.md)：65.1、66.1 是完整 $S$ 与全态全效应的条件桥；65.3–65.7、66.2 是前交叉恢复接口；66.3–66.9 是已发表的原复载体、权重、有序方向及实际逆插入；恢复 C13 后才用 66.10、65.9–65.12 的同时方向与完整正滤波分类。64.1 的独立 Jordan 入口及 64.10 的既有机制仅保留原条件范围，不另计本章成果。
+2. G. Vidal–R. F. Werner，[arXiv:quant-ph/0102117v1 正文](https://arxiv.org/html/quant-ph/0102117v1)，§V.1、Proposition 8、(48)–(49)：仅复用已给 Hilbert 张量分解下纯态的 Schmidt／部分转置计算；严格负值在定理 71.6 内实际展开，不把这一标准工具另立为新增承重定理。
+3. J. Grabowski–M. Kuś–G. Marmo，[arXiv:math-ph/0507045v3 正文](https://arxiv.org/html/math-ph/0507045v3)，§6、(77)–(79)、Proposition 6：Segre 积纯态及其局部酉不变性以**已给定** Hilbert 张量分解为前提，只用于 (71.22) 的几何说明，不承担从 PRE 推导复张量载体的桥。
+4. 有限 EJA 的谱、Peirce、二次表示、简单自复合秩维数及秩一乘积保持工具，沿 [1] 已引 Library 的精确前件复用。具体为 65.1 所引完整条件桥及其中 Barnum–Müller–Ududec Theorem 16 的有限项目性、互反、纯性前件，66.2 的满本原角与保规范迹接口，66.3 所引 van de Wetering arXiv:1803.11139v3 Proposition 40 的秩维数结论，及 66.4 所引 Xu–Zheng–Fošner p.409 Main Theorem (1.1)–(1.2) 的实线性单射、输入尺寸、秩一产品保持前件与标量边界。完整 $S$ 桥属于 [1] 明示的仓内条件纸面推导，不冒称 Müller–Ududec 或 Barnum–Hilgert 的外文定理可从本章较弱前件直接推出。
+5. [固定发表源，c1eb，第 69 节](https://github.com/the-omega-institute/trureturing/blob/c1eb7191b4769e06bc0d0a6f91c8b55bdbf5ded4/docs/develop/theory/QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES_IV.md)：69.1–69.4 固定原始旁观者族、Choi/Kraus 对应与局部／原始双预算；69.6–69.9 给出同族补全及正权共同重置补全与行一致的等价；69.10–69.11 给出剩余滤波、全部有限局部 CP 仪器菜单、概率和条件更新的准确范围。标准表示与锐中性 Lüders 更新沿其所引 [Watrous 文献接口](../../../Library/Quantum/watrous2018theory.md#one-actual-self-reference-for-finite-sector-operations) 复用，不把额外操作前提归入 NB，也不另计为本章的新定理。
+
+## 追加锚（本行以下为增补区）
