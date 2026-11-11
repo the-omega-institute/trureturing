@@ -49,4 +49,4 @@ The separate supercongruence on the same sequence is outside this identity.
 - Truth anchor: `D5/S1/Recurrence/BalaTrinomialCoefficientIdentity.result`
 - Truth anchor: `D5/S1/Recurrence/BalaTrinomialCoefficientIdentity.source`
 - Dependency: [D5/S1/Recurrence/Invariants/CompositionalIterateCongruence](Invariants/CompositionalIterateCongruence.md)
-- Dependency: [D5/S1/Recurrence/Residue/CompositionalSquareDyadicDenominators](Residue/CompositionalSquareDyadicDenominators.md)
+- Dependency: [D5/S1/Recurrence/Invariants/MatharA000159Recurrence](Invariants/MatharA000159Recurrence.md)

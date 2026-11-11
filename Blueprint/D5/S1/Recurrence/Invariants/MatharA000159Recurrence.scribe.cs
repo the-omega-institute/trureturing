@@ -70,7 +70,7 @@ internal sealed class MatharA000159RecurrenceDocument : IScribeDocumentDefinitio
     private static DocumentBlock Node(string name, string title, Formula formula,
         string prose, DescribeRole role, AssessedProvenance provenance,
         OpenProblemResolutionClaim? claim = null) => Describe.Lean(
-        DescribeId.Create("mathar-a000159-" + name.ToLowerInvariant()),
+        DescribeId.Create("mathar-a000159-" + name.Replace('_', '-').ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
         provenance, Blocks(Paragraph(Text(prose))), role, claim);
 
