@@ -51,6 +51,8 @@ internal sealed class HardinA233159RowsDocument : IScribeDocumentDefinition
     private static Formula N(int n) => n < 0 ? Seq(Minus, N(-n)) : D(n.ToString(System.Globalization.CultureInfo.InvariantCulture).Select(c => (byte)(c - '0')).ToArray());
     private static Formula FinF(Formula n) => C("Fin", n);
     private static Formula NatF() => Op("Nat");
+    private static Formula IntF() => Op("Int");
+    private static Formula Cast(Formula x, Formula t) => P(Seq(x, Colon, Sp, t));
     private static Formula RowF(Formula k) => C("Row", k);
     private static Formula Grid(Formula k, Formula n) => Arr(P(Seq(FinF(k), Sp, Times, Sp, FinF(n))), FinF(N(3)));
     private static Formula Ite(Formula p, Formula a, Formula b) => Seq(Op("if"), Sp, p, Sp, Op("then"), Sp, a, Sp, Op("else"), Sp, b);

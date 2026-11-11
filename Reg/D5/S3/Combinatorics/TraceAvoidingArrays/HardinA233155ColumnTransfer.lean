@@ -15,14 +15,14 @@ noncomputable section
 set_option maxRecDepth 100000
 
 namespace Quotient
-abbrev Coordinates := Σ k : ℕ, Σ q : ℕ, (Row k → Fin q) × Fin q
+abbrev Coordinates := Σ k : ℕ, Σ q : ℕ, (Row k → Fin q) × Row k
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Coordinates
-    (fun p => Row p.1) (fun _ => ℤ)
+    (fun p => Fin p.2.1) (fun _ => ℤ)
 -- The readout counts successors in one observed class.
 def actual : Realization signature :=
-  realize signature (fun _ p r =>
-    ∑ c : Row p.1, if columnCompatible r c ∧ p.2.2.1 c = p.2.2.2 then (1 : ℤ) else 0)
+  realize signature (fun _ p s =>
+    ∑ c : Row p.1, if columnCompatible p.2.2.2 c ∧ p.2.2.1 c = s then (1 : ℤ) else 0)
       (fun e => nomatch e)
 def rejected : Realization signature :=
   realize signature (fun _ p r => actual.readout () p r + 1) (fun e => nomatch e)
@@ -34,7 +34,7 @@ abbrev arena : Arena where
     (∀ r, ∃ e : Equiv.Perm (Fin 3), relabel e r = rep (cls r)) →
     (∀ i s, ((successorClasses cls (rep i)).map
       (fun j => if j = s then (1 : ℤ) else 0)).sum = Q i s) →
-    ∀ (r : Row k) (s : Fin q), R.readout () ⟨k, q, cls, s⟩ r = Q (cls r) s
+    ∀ (r : Row k) (s : Fin q), R.readout () ⟨k, q, cls, r⟩ s = Q (cls r) s
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hcls : ∀ (e : Equiv.Perm (Fin 3)) (r : Row 0),
@@ -52,8 +52,8 @@ private theorem rejected_law : ¬ arena.Law rejected := by
     (fun _ => 0) 0
   have ha := quotient_rows 0 1 (fun _ => 0) (fun _ _ => 0) (fun _ _ => 1)
     hcls hrep ht (fun _ => 0) 0
-  change actual.readout () ⟨0, 1, (fun _ => 0), 0⟩ (fun _ => 0) + 1 = _ at hb
-  change actual.readout () ⟨0, 1, (fun _ => 0), 0⟩ (fun _ => 0) = _ at ha
+  change actual.readout () ⟨0, 1, (fun _ => 0), (fun _ => 0)⟩ 0 + 1 = _ at hb
+  change actual.readout () ⟨0, 1, (fun _ => 0), (fun _ => 0)⟩ 0 = _ at ha
   have hc := hb.trans ha.symm
   exact (by omega : ∀ z : ℤ, z + 1 ≠ z) _ hc
 def family : Registration arena (type_of% @quotient_rows) where
@@ -65,7 +65,7 @@ def family : Registration arena (type_of% @quotient_rows) where
   dependence := by
     intro i
     cases i
-    refine ⟨⟨1, 2, (fun r => if r 0 = 0 then 0 else 1), 0⟩, (fun _ => 0), (fun _ => 2), ?_⟩
+    refine ⟨⟨1, 2, (fun r => if r 0 = 2 then 0 else 1), (fun _ => 0)⟩, 0, 1, ?_⟩
     decide +kernel
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
@@ -81,8 +81,8 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ p r =>
-      ∑ c : Row p.1, if columnCompatible r c ∧ p.2.2.1 c = p.2.2.2 then (1 : ℤ) else 0)
+  readout := some (realize signature (fun _ p s =>
+      ∑ c : Row p.1, if columnCompatible p.2.2.2 c ∧ p.2.2.1 c = s then (1 : ℤ) else 0)
         (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
@@ -91,10 +91,10 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155ColumnTransfer
     definition := none
-    coordinates := #[0, 1, 2, 9]
+    coordinates := #[0, 1, 2, 8]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
-      stateBinder := 8
+      stateBinder := 9
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }

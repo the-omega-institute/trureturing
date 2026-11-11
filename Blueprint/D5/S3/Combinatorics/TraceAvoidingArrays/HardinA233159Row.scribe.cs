@@ -12,7 +12,7 @@ internal sealed class HardinA233159RowDocument : IScribeDocumentDefinition
         "Equality patterns and their quotient determine labelled six-row strip counts.",
         H("OEIS A233159"), Blocks(
             Node("finite_certificate",CertificateFormula(),"The three identities specify the quotient, the initial class counts and the finite relation among matrix powers.",theorem:true),
-            Node("result",ResultFormula(),"Multiplication by every further matrix power extends the finite relation to all strip lengths in the displayed range.",theorem:true)), []));), []));
+            Node("result",ResultFormula(),"Multiplication by every further matrix power extends the finite relation to all strip lengths in the displayed range.",theorem:true)), []));
     private static Formula MV(Formula n) => C("Matrix.mulVec",Pow(C("quotient"),n),Cast(N(1),Arr(FinF(N(122)),IntF())));
     private static Formula CertificateFormula() {
         var row=All("r",RowF(N(6)),All("s",FinF(N(122)),Eq(Sum("c",RowF(N(6)),Ite(And(C("columnCompatible",V("r"),V("c")),Eq(C("classify",V("c")),V("s"))),Cast(N(1),IntF()),N(0))),A(C("quotient"),C("classify",V("r")),V("s")))));

@@ -19,31 +19,31 @@ noncomputable section
 set_option maxRecDepth 100000
 namespace Certificate
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature (Row 6) (fun _ => Fin 122) (fun _ => ℤ)
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => Fin 122) (fun _ => ℤ)
 def actual : Realization signature :=
-  realize signature (fun _ r s =>
-    ∑ c : Row 6, if columnCompatible r c ∧ classify c = s then (1 : ℤ) else 0)
-      (fun e => nomatch e)
+  realize signature (fun _ _ s => weights s) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ r s => actual.readout () r s + 1) (fun e => nomatch e)
+  realize signature (fun _ _ s => actual.readout () () s + 1) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
   Law R :=
     (∀ r : Row 6, ∀ s : Fin 122,
-      R.readout () r s = quotient (classify r) s) ∧
+      (∑ c : Row 6, if columnCompatible r c ∧ classify c = s then (1 : ℤ) else 0) =
+        quotient (classify r) s) ∧
     (∀ s : Fin 122, (∑ c : Row 6, if classify c = s then (1 : ℤ) else 0) =
-      weights s) ∧
+      R.readout () () s) ∧
     (quotient ^ (6+9)).mulVec (1 : Fin 122 → ℤ) =
       ∑ j : Fin 9, (![-4128, 17216, -27636, 21056, -6705, -573, 1038, -283, 30] : Fin 9 → ℤ) j •
         (quotient ^ (6+j.val)).mulVec (1 : Fin 122 → ℤ)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hb := h.1 (fun _ => 0) 0
-  have ha := finite_certificate.1 (fun _ => 0) 0
-  change actual.readout () (fun _ => 0) 0 + 1 = _ at hb
-  change actual.readout () (fun _ => 0) 0 = _ at ha
-  have hc := hb.trans ha.symm
-  exact (by omega : ∀ z : ℤ, z + 1 ≠ z) _ hc
+  have hb := h.2.1 0
+  have ha := finite_certificate.2.1 0
+  change _ = actual.readout () () 0 + 1 at hb
+  change _ = actual.readout () () 0 at ha
+  have hc := ha.symm.trans hb
+  exact (by omega : ∀ z : ℤ, z ≠ z + 1) _ hc
+
 def family : Registration arena (type_of% @finite_certificate) where
   actual := actual
   bridge := Iff.rfl
@@ -52,14 +52,10 @@ def family : Registration arena (type_of% @finite_certificate) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
-    refine ⟨(fun _ => 0), 0, 4, ?_⟩
-    have h0 := finite_certificate.1 (fun _ => 0) 0
-    have h1 := finite_certificate.1 (fun _ => 0) 4
-    change actual.readout () (fun _ => 0) 0 = _ at h0
-    change actual.readout () (fun _ => 0) 4 = _ at h1
-    rw [h0, h1]
-    change (2 : ℤ) ≠ 0
+    refine ⟨(), 0, 1, ?_⟩
+    change (3 : ℤ) ≠ 6
     omega
+
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@finite_certificate) (Realization signature) Type Unit where
@@ -74,9 +70,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ r s =>
-      ∑ c : Row 6, if columnCompatible r c ∧ classify c = s then (1 : ℤ) else 0)
-        (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ s => weights s) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -84,11 +78,11 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233159Row
     definition := none
-    coordinates := #[0]
+    coordinates := #[]
     readouts := #[{
-      path := #["fn", "arg", "body", "body", "fn", "arg"]
-      stateBinder := 1
-      functionOperand := false
+      path := #["arg", "fn", "arg", "body", "arg", "fn"]
+      stateBinder := 0
+      functionOperand := true
       stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
