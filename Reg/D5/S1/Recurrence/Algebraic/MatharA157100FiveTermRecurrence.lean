@@ -55,7 +55,7 @@ private theorem initial_coefficients : a 0 = 1 ∧ a 1 = 2 := by
   have h : coeff 0 (derivative (R := ℚ) A) = a 1 := by
     simp [a, coeff_derivative]
   rw [← h]
-  simp [A, Derivation.leibniz, derivative_subst ht,
+  norm_num [A, Derivation.leibniz, derivative_subst ht,
     smul_eq_mul, coeff_zero_eq_constantCoeff, hs, hd, hc]
 
 def family : Registration arena (type_of% result) where
