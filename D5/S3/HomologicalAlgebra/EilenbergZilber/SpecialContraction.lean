@@ -283,17 +283,14 @@ universe u v
 
 variable {C : Type u} [Category.{v} C] [Abelian C]
 
-private lemma realize_diagOp (X : BisimplicialObject C) (n : ℕ) (i : Fin (n + 1)) :
-    (diagOp n i).realize X = (diag.obj X).σ i := by
-  rw [diagOp, realize_single, one_smul, OpLetter.realizeLetter, SimplicialObject.σ, diag_obj_map]
-  exact (X.map (SimplexCategory.σ i).op).naturality (SimplexCategory.σ i).op
-
 private lemma vanishes_of_diagOp (X : BisimplicialObject C) {n m : ℕ}
     (M : DerivedOp (n + 1) m) (h : ∀ i : Fin (n + 1), IsNorm (M.comp (diagOp n i))) :
     DegeneraciesVanish (X := diag.obj X) (M.realize X ≫ (retractionNTwo X).f m) := by
   intro i
   have h' := (h i).kill X
-  rwa [realize_comp, Category.assoc, realize_diagOp] at h'
+  rw [realize_comp, Category.assoc, diagOp, diagLetter,
+    realize_diagLetter X (SimplexCategory.σ i)] at h'
+  exact h'
 
 private lemma absorb_projector (X : BisimplicialObject C) {n m : ℕ}
     (M : DerivedOp n m)

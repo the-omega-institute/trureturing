@@ -600,9 +600,11 @@ Copyright (c) 2026 Jeffrey Li. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Jeffrey Li
 
-The frontal simplex map declarations below are from
+The declarations IsFrontalHom, primeHom_frontal and primeHom_comp_degenZero are from
 LeanPool/EilenbergZilber/BisimplicialDerivedOp.lean, author release
 fd0147a1ffe4f3c14c247574e148893d7cdf8cf6 (LeanPool PR 588).
+Modifications: hOp_horizontal_frontal is a local calculation for the horizontal
+coordinate of the shuffle summands.
 The legal chain is recorded in Library/HomologicalAlgebra/li2026bisimplicialeilenbergzilber.md.
 Use these declarations with the received phiOp definition. Retire the transplanted
 closure when the pinned upstream library supplies equivalent declarations.
