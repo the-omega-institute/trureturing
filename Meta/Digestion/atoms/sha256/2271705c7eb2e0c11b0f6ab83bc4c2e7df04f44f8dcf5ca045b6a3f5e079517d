@@ -1,0 +1,39 @@
+**证明工具 73.4（正重置的整直和固定点）。** 在任一非零有限 Hermitian 直和 $V$ 上，若 $T=cR_\sigma+\Gamma$ 局部 TP、$\Gamma\ge0$、$\tau\sigma=1$、$\sigma\ge0$、$0<c\le1$，则
+
+$$
+\operatorname{Fix}(T^*)=\mathbb R1_V.
+\tag{73.13}
+$$
+
+具体地，对任意 Hermitian $h$，定义整个直和的谱振幅
+
+$$
+\operatorname{osc}(h)
+ =\max_k\lambda_{\max}(h_k)-\min_k\lambda_{\min}(h_k).
+$$
+
+有
+
+$$
+\operatorname{osc}(T^*h)\le(1-c)\operatorname{osc}(h).
+\tag{73.14}
+$$
+
+这是正保单位映射的标准序单位／Hopf 振幅方法的共同重置特例，见文末 Gaubert–Qu §6；不将它计为新的振幅或遍历定理。
+
+**证明。** 局部 TP 给 $\Gamma^*1=(1-c)1$，而
+
+$$
+R_\sigma^*h=\tau(\sigma h)1.
+$$
+
+设 $a=\min_k\lambda_{\min}(h_k)$、$b=\max_k\lambda_{\max}(h_k)$。正性给
+
+$$
+(1-c)a1\le\Gamma^*h\le(1-c)b1.
+$$
+
+加上同一个标量 $c\tau(\sigma h)1$ 只平移谱区间，故得 (73.14)。固定点振幅必为零，即每块都是相同标量，反向由 $T^*1=1$ 得到。$c=1$ 时上述两界都为零，直接给 $\Gamma^*h=0$，无需除以 $1-c$。证明只用 $\sigma$ 正且迹一，允许它仅支撑一个块及该块任意秩；不要求它是内点。若存在非标量方向，取 $\Gamma=(1-c)\operatorname{id}$ 即达到系数 $1-c$。$\square$
+
+只在每个块内部计算振幅是不够的：它不能区分不同块上的不同标量。(73.13) 针对整个直和的同一单位，正是下面跨右标签校准所需的结论。
+

@@ -1,0 +1,75 @@
+**定理 75.4。** 在定义 75.1 的同一实际数据上，对任意固定的有限 Jordan 生成完整框架族，
+$$
+\mathsf J_{\mathfrak B}+\mathsf H_{\mathfrak B}\quad\Longleftrightarrow\quad D_J+D_H. \tag{75.10}
+$$
+而且，存在同一见证族使
+$$
+\boxed{\mathrm{PRE}_0+\mathsf{JG}_3+\mathsf J_{\mathfrak B}+\mathsf H_{\mathfrak B}+\mathrm H13}
+\quad\Longleftrightarrow\quad \mathrm{PRE}+\mathrm{C13}. \tag{75.11}
+$$
+这里比较的是遗忘框架见证后的实际 $(A,D,E,C_X,u_X,L,p)$ 模型类。删去两边的 H13、C13，仍有相同的 PRE 等价。对 $\operatorname{rank}A=n$，两张表分别至多 $3\binom n2$、$9\binom{n^2}2$ 条零比较。
+
+**证明。** 以下平方缺陷域、交换子、谱和矩阵单位计算仅是本定理的内部步骤；其一般结构归属见 [D]、[C]、[F]。
+**（一）零平方缺陷的 Jordan 闭包。** 暂取一般有限 EJA $X,Y$，正保单位实线性映射 $\Phi:X\to Y$。对 $a=\sum_i\lambda_ie_i$ 的完整谱框架，置 $z_i=\Phi e_i\ge0,b=\Phi a$。由 $\sum_i z_i=1,\sum_i\lambda_i z_i=b$ 及二次表示保正，
+$$
+P_{\lambda1-b}=\lambda^2\mathrm{id}-2\lambda\ell_b+P_b,\qquad
+\Delta(a):=\Phi(a^2)-b^2=\sum_iP_{\lambda_i1-b}z_i\ge0. \tag{75.12}
+$$
+求和三项分别为 $\Phi(a^2),-2b^2,b^2$；不要求 $\lambda_i1-b\ge0$，所以此证包含 Albert。若 $\Delta(a)=0$，对任意实 $t$、任意 $x$，
+$$
+0\le\Delta(a+tx)=2t[\Phi(a\circ x)-\Phi a\circ\Phi x]+t^2\Delta(x). \tag{75.13}
+$$
+分别令 $t$ 从正、负两侧趋零，锥闭且尖即得 $\Phi(a\circ x)=\Phi a\circ\Phi x$。若 $a,c$ 均零缺陷，展开 $\Delta(a+c)$ 并用此混合恒等式得零；$\Delta(ta)=t^2\Delta(a)$，故 $\mathcal D_\Phi=\{a:\Delta(a)=0\}$ 是含单位的实线性空间。还需闭平方：幂结合性与混合恒等式依次给 $\Phi(a^2)=b^2,\Phi(a^3)=b^3,\Phi(a^4)=b^4$，从而 $\Delta(a^2)=b^4-(b^2)^2=0$。极化遂使 $\mathcal D_\Phi$ 成为 Jordan 子代数；仅有线性闭包尚不足以得到这点。
+**（二）权重交换域的 Jordan 闭包。** 对任意实 $h\in Y$，取完整本原谱细化 $h=\sum_i\lambda_ic_i$，写同时 Peirce 分解 $y=\sum_i y_{ii}+\sum_{i<j}y_{ij}$。直接作用于 $c_i$ 得
+$$
+[\ell_h,\ell_y]c_i=\frac14\sum_{j\ne i}(\lambda_j-\lambda_i)y_{ij},\qquad
+\mathcal C_h:=\{y:[\ell_h,\ell_y]=0\}
+=\bigoplus_{\lambda\in\operatorname{spec}h}Y_1(e_\lambda),\quad
+e_\lambda=\sum_{\lambda_i=\lambda}c_i. \tag{75.14}
+$$
+第一式及 Peirce 空间直和强迫不同谱值之间的分量消失。反向，右侧的 $y$ 对每个 $e_\lambda$ 都在 $Y_1(e_\lambda)\oplus Y_0(e_\lambda)$ 中；Peirce 规则使 $\ell_y$ 保持该幂等元的 $1,1/2,0$ 空间，故与 $\ell_{e_\lambda}$、进而与 $\ell_h$ 交换。各 $Y_1(e_\lambda)$ 闭乘积，异块乘积为零，单位和为一，故 $\mathcal C_h$ 是 Jordan 子代数。这些 Peirce-one 代数是交换子子代数的块，并非一般都为整个 $Y$ 的理想。重谱必须合块；标量 $h$ 给整个 $Y$。直和中的零 Peirce 空间与 Albert 的非结合 Peirce 空间均在论证内。
+**（三）支撑归一化推广有限保零。** 仍在一般 EJA 中，设 $T:X\to Y$ 正实线性，$h=T1>0$，且在某个 Jordan 生成完整框架族的每套内部保零。固定其中一套，写 $x_i=Te_i$、$q_i=\operatorname{supp}x_i$，零像规定 $q_i=0$。支撑两两正交；$\sum_i x_i=h>0$ 蕴含 $\sum_iq_i=1$，非零 $x_i$ 在其 $Y_1(q_i)$ 角内正可逆。块内谱计算遂给
+$$
+\Phi=P_{h^{-1/2}}T,\qquad \Phi1=1,\qquad
+\Phi e_i=q_i,\qquad [\ell_h,\ell_{q_i}]=0. \tag{75.15}
+$$
+逆只施于全局 $h$；零像不求逆，也不要求 $q_i$ 本原。$\Phi$ 正且每个选定 $e_i$ 零平方缺陷，故（一）与源生成性给 $\mathcal D_\Phi=X$，$\Phi$ 为保单位 Jordan 同态。由（二），$\Phi^{-1}(\mathcal C_h)$ 是含全部选定原子的 Jordan 子代数；再次用生成性得 $\Phi(X)\subseteq\mathcal C_h$。两个闭包分别负责同态性与权重交换，不能省略后者。
+对 $z\in\Phi(X)$，把 $[\ell_h,\ell_z]=0$ 作用于 $h$，得 $\ell_h^2z=\ell_{h^2}z$，从而 $P_hz=h^2\circ z$。自伴随性、$P_{\sqrt h}^2=P_h$ 及迹内积结合性给全部实 $x,y$ 的
+$$
+\langle Tx,Ty\rangle_Y
+=\langle\Phi x,P_h\Phi y\rangle_Y
+=\langle\Phi x\circ\Phi y,h^2\rangle_Y
+=\langle\Phi(x\circ y),h^2\rangle_Y. \tag{75.16}
+$$
+因此正交正元的像正交；反向，全域保零当然给每套框架内保零。此步骤无单射、无非零像、无结合矩阵表示或 CP 前件。
+**（四）先第一接口、后整个双份锥。** 对 $J$ 用（三）：$J$ 正，$J1=U>0$ 已在两表之前证明，故第一表恢复整个 $D_J$。此后才调用不使用 $D_H$、C13 的定理 65.3 [R]，得到
+$$
+F(a,b)=\alpha(a)\circ\beta(b),\quad\alpha=F(-,1),\quad\beta=F(1,-),\qquad
+\widetilde F\text{ 为满规范迹等距},\quad m=n^2, \tag{75.17}
+$$
+其中 $\alpha,\beta$ 是保单位 Jordan 嵌入，两个像的乘法算子在环境 $D$ 上交换。于是每个 $F(B_r\times B_t)$ 都是完整本原框架：交换幂等元之积是幂等元，等距性给其范数平方一、故迹一而本原；不同成员零配对，双重求和为 $F(1,1)=1_D$。
+令 $W$ 为这些产品成员的 Jordan 闭包。固定一边求和，$W$ 含所有选定的 $\alpha(e)=\sum_{f\in B_t}F(e,f)$ 和 $\beta(f)=\sum_{e\in B_r}F(e,f)$。源生成性及同态性给 $\alpha(A),\beta(A)\subseteq W$，故 $F(A,A)\subseteq W$；原第一实张成经可逆 $C_D^{-1}$ 给 $\operatorname{span}_{\mathbb R}F(A,A)=D$，所以 $W=D$。所选产品成员自身并不必线性张成 $D$。
+现在 $H_{\mathrm s}$ 在整个 $D_+$ 上正，$H_{\mathrm s}1=G>0$；对这些完整生成框架用（三），第二表恢复整个 $D_H$，包括全部纠缠正元。反向，$D_J$ 给第一表，65.3 给产品框架性质，$D_H$ 给第二表，证明 (75.10)。
+**（五）至多三套的逆向存在构造。** 从旧 PRE 出发，先由 66.3 [R] 得 $A=\bigoplus_iH_{n_i}(\mathbb C)$；此分类不使用 C13。对每个 $N\ge3$ 因子，取对角框架 $e_j=E_{jj}$ 及下述 Hermitian $B$ 的任意完整本原谱框架：
+$$
+B_{12}=B_{23}=1,\quad B_{13}=i,\quad B_{k,k+1}=1\ (3\le k<N),\quad
+B_{ji}=\overline{B_{ij}},\qquad\text{其余项为零}. \tag{75.18}
+$$
+生成代数含 $B$ 及全部 $e_j$。重谱时在每个谱空间任取正交秩一细化即可，因为 $B$ 仍为该框架的实加权和，不要求细化投影都是 $B$ 的多项式。记 $R_{jk}=E_{jk}+E_{kj}$、$I_{jk}=iE_{jk}-iE_{kj}$（$j<k$）。$4e_j\circ(e_k\circ B)$ 提取 $jk$ 边，故已有 $R_{12},R_{23},I_{13}$ 及实尾边。矩阵单位乘法给
+$$
+2R_{12}\circ R_{23}=R_{13},\quad
+2R_{12}\circ I_{13}=I_{23},\quad
+2R_{23}\circ I_{13}=I_{12}. \tag{75.19}
+$$
+连同前三个对角元即得整个 $H_3$ 角。若已有 $H_k$ 角，令 $\ell=k+1$，对任意 $j<k$，
+$$
+2R_{jk}\circ R_{k\ell}=R_{j\ell},\quad
+2I_{jk}\circ R_{k\ell}=I_{j\ell},\quad
+2R_{jk}\circ I_{j\ell}=I_{k\ell}. \tag{75.20}
+$$
+因此得到全部新实、虚边及 $e_\ell$，归纳得到 $H_N$ 的整个实基。这两套完整框架 Jordan 生成该因子。
+对 $H_2$，写 $H_2=\mathbb RI\oplus\{u\cdot\sigma:u\in\mathbb R^3\}$，$(u\cdot\sigma)\circ(v\cdot\sigma)=(u\cdot v)I$。任意两套完整框架的 Bloch 轴为 $u,v$，其生成代数包含于闭乘积空间 $\operatorname{span}_{\mathbb R}\{I,u\cdot\sigma,v\cdot\sigma\}$，维数至多三而 $\dim H_2=4$；三个 Pauli 轴的谱框架则线性张成整个 $H_2$。标量因子只需一套。
+各因子的列表以重复补到三槽，逐槽把各因子的嵌入原子并成全直和的一套框架。每个中心单位是该因子原子之和，各局部生成运算都留在对应嵌入角内，故三槽生成整个直和；同构因子也不会被锁成对角副本。于是旧 PRE 给 $\mathsf{JG}_3$，原 $D_J,D_H$ 给两表。结合（四），也证明删去 H13、C13 的同数据等价。
+**（六）原混态方向条件。** （四）恢复 PRE 后，原命题 72.7 给 $\mathcal H(F)\ne\varnothing$，总含全秩态，有活跃块时还含非纯混态；原定理 72.8 给每个 $\rho\in\mathcal H(F)$ 的 $I^{\rm raw}\rho\in E_+\Longleftrightarrow\mathrm{C13}$。其准确机制是：两边缘差至少一项不正蕴含原活跃块 NPT；原 $C_D^{-1}$ 是可逆局部合同，保持 NPT；错误单腿转置后插入未经归一化的中间单位仍有负方向，输出中心块直和与可逆 $C_E$ 不能消去它。此处只复用 NPT 的合同不变性，不声称 reduction 资格本身被滤波保持。
+因此前向由一般 EJA 的（一）至（四）先得 PRE，再由 H13 得 C13；逆向由旧 PRE 分类和（五）选框架，再以 C13 与 72.7—72.8 得同一原 H13，证明 (75.11)，也给“全部合格成员通过”的等价版本。前向未预设复数，逆向未用新候选证明旧分类。每套局部框架有 $n$ 个成员、每套产品框架有 $n^2$ 个成员，分别数无序不同成员对即得所列条目上界。证毕。
+
