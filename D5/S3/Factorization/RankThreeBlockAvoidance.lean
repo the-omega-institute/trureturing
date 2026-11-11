@@ -8,6 +8,7 @@
 
 import Mathlib.Combinatorics.Enumerative.DoubleCounting
 import Mathlib.GroupTheory.GroupAction.Transitive
+import Mathlib.Combinatorics.Matroid.Rank.ENat
 import Mathlib.Tactic
 
 /-! Block avoidance for a finite transitive linear incidence geometry. -/
@@ -237,5 +238,141 @@ theorem exists_block_disjoint_of_transitive_linear_closures
         _ = m - 1 := by simp [m]
     omega
   exact incidence_count_contradiction hb hm countB countL
+
+/-- Independence-preserving permutations of the actual ground preserve actual
+closure incidence. The ambient type need not equal the ground or be finite. -/
+private theorem ground_closure_equivariant
+    {α G : Type*} [Group G] (M : Matroid α) [MulAction G M.E]
+    (hauto : ∀ (g : G) (S : Set M.E),
+      M.Indep (Subtype.val '' ((fun x => g • x) '' S)) ↔
+        M.Indep (Subtype.val '' S))
+    (g : G) (S : Set M.E) (x : M.E) :
+    (g • x).val ∈ M.closure (Subtype.val '' ((fun x => g • x) '' S)) ↔
+      x.val ∈ M.closure (Subtype.val '' S) := by
+  let N := M.comap (Subtype.val : M.E → α)
+  have hmap : N.comap (fun x : M.E => g • x) = N := by
+    apply Matroid.ext_indep
+    · ext x
+      simp [N]
+    · intro I _
+      simpa only [Matroid.comap_indep_iff,
+        (MulAction.injective g).injOn, Subtype.val_injective.injOn, and_true] using
+        hauto g I
+  have hc := congrArg (fun K : Matroid M.E => K.closure S) hmap
+  rw [Matroid.comap_closure_eq] at hc
+  have hx := Set.ext_iff.mp hc x
+  simpa only [N, Matroid.comap_closure_eq, Set.mem_preimage] using hx
+
+/-- A finite simple rank-three matroid with a transitive automorphism action
+preserving a partition into rank-two blocks admits whole-original-block
+avoidance. `blocks` consists of sets of actual ground elements. `hpartition`
+is exactly unique membership, and `hstable` only says that each point-action
+image is again an original block; no action on block labels is supplied.
+Simplicity is expressed by independence of distinct ground pairs, and
+automorphisms by preservation of independence on the actual ground. -/
+theorem exists_original_block_disjoint_closure
+    {α G : Type*} [Group G] (M : Matroid α) [Finite M.E]
+    [MulAction G M.E] [MulAction.IsPretransitive G M.E]
+    (hM : M.eRank = 3)
+    (hsimple : ∀ x y : M.E, x ≠ y → M.Indep {x.val, y.val})
+    (hauto : ∀ (g : G) (S : Set M.E),
+      M.Indep (Subtype.val '' ((fun x => g • x) '' S)) ↔
+        M.Indep (Subtype.val '' S))
+    (blocks : Set (Set M.E))
+    (hpartition : ∀ x : M.E, ∃! B : blocks, x ∈ B.val)
+    (hstable : ∀ (g : G) (B : blocks), (fun x => g • x) '' B.val ∈ blocks)
+    (hrank : ∀ B : blocks, M.eRk (Subtype.val '' B.val) = 2) :
+    ∀ B : blocks, ∃ C : blocks,
+      Disjoint (Subtype.val '' C.val) (M.closure (Subtype.val '' B.val)) := by
+  classical
+  letI : Fintype M.E := Fintype.ofFinite M.E
+  letI : MulAction G blocks := {
+    smul := fun g B => ⟨(fun x => g • x) '' B.val, hstable g B⟩
+    one_smul := by intro B; apply Subtype.ext; simp
+    mul_smul := by
+      intro g h B
+      apply Subtype.ext
+      simp only [Set.image_image, mul_smul, Function.comp_def] }
+  let owner : M.E → blocks := fun x => (hpartition x).choose
+  have hown : ∀ x, x ∈ (owner x).val := fun x => (hpartition x).choose_spec.1
+  have howner_iff : ∀ x B, owner x = B ↔ x ∈ B.val := by
+    intro x B
+    exact ⟨fun h => h ▸ hown x, fun h => ((hpartition x).choose_spec.2 B h).symm⟩
+  have howner : ∀ (g : G) x, owner (g • x) = g • owner x := by
+    intro g x
+    apply (howner_iff _ _).mpr
+    exact Set.mem_image_of_mem _ (hown x)
+  let L : blocks → Finset M.E := fun B =>
+    Finset.univ.filter (fun x => x.val ∈ M.closure (Subtype.val '' B.val))
+  have hmem : ∀ B x, x ∈ L B ↔ x.val ∈ M.closure (Subtype.val '' B.val) := by
+    intro B x
+    simp [L]
+  have hsize : ∀ B, 2 ≤ (Finset.univ.filter (fun x => owner x = B)).card := by
+    intro B
+    have heq : B.val = (↑(Finset.univ.filter (fun x => owner x = B)) : Set M.E) := by
+      ext x
+      simp [howner_iff]
+    have hc := M.eRk_le_encard (Subtype.val '' B.val)
+    rw [hrank, Subtype.val_injective.encard_image, heq,
+      Set.encard_coe_eq_coe_finsetCard] at hc
+    exact_mod_cast hc
+  have hcontain : ∀ x, x ∈ L (owner x) := by
+    intro x
+    apply (hmem _ _).mpr
+    apply M.subset_closure _ (by rintro _ ⟨y, _, rfl⟩; exact y.property)
+    exact Set.mem_image_of_mem _ (hown x)
+  have hline : ∀ (g : G) B x, g • x ∈ L (g • B) ↔ x ∈ L B := by
+    intro g B x
+    rw [hmem, hmem]
+    exact ground_closure_equivariant M hauto g B.val x
+  have hsep : ∀ B C, L B ≠ L C → ∀ x ∈ L B, ∀ y ∈ L B,
+      x ∈ L C → y ∈ L C → x = y := by
+    intro B C hne x hx y hy hxC hyC
+    by_contra hxy
+    have hval : x.val ≠ y.val := fun h => hxy (Subtype.ext h)
+    have hpair : M.eRk {x.val, y.val} = 2 := by
+      rw [(hsimple x y hxy).eRk_eq_encard, Set.encard_pair hval]
+    have hcl : ∀ D : blocks, x ∈ L D → y ∈ L D →
+        M.closure {x.val, y.val} = M.closure (Subtype.val '' D.val) := by
+      intro D hxD hyD
+      have hsub : {x.val, y.val} ⊆ M.closure (Subtype.val '' D.val) := by
+        exact Set.pair_subset ((hmem _ _).mp hxD) ((hmem _ _).mp hyD)
+      have he := (M.isRkFinite_of_finite (Set.toFinite {x.val, y.val})).
+        closure_eq_closure_of_subset_of_eRk_ge_eRk hsub
+          (by rw [M.eRk_closure_eq, hrank, hpair])
+      simpa only [Matroid.closure_closure] using he
+    have he := (hcl B hx hy).symm.trans (hcl C hxC hyC)
+    apply hne
+    ext z
+    rw [hmem, hmem, he]
+  have hnonconstant : ∃ B C, L B ≠ L C := by
+    by_contra hn
+    push Not at hn
+    have hE : Nonempty M.E := by
+      by_contra he
+      have hempty : M.E = ∅ := by
+        apply Set.eq_empty_iff_forall_notMem.mpr
+        intro x hx
+        exact he ⟨⟨x, hx⟩⟩
+      have hr := M.eRk_ground
+      rw [hempty, Matroid.eRk_empty, hM] at hr
+      norm_num at hr
+    let x : M.E := Classical.choice hE
+    let B := owner x
+    have hsub : M.E ⊆ M.closure (Subtype.val '' B.val) := by
+      intro y hy
+      have hm := hcontain (⟨y, hy⟩ : M.E)
+      rw [hn (owner ⟨y, hy⟩) B] at hm
+      exact (hmem _ _).mp hm
+    have hr := M.eRk_mono hsub
+    rw [Matroid.eRk_ground, hM, Matroid.eRk_closure_eq, hrank] at hr
+    norm_num at hr
+  have hav := exists_block_disjoint_of_transitive_linear_closures owner L
+    hsize hcontain howner hline hsep hnonconstant
+  intro B
+  obtain ⟨C, hC⟩ := hav B
+  refine ⟨C, Set.disjoint_left.mpr ?_⟩
+  rintro _ ⟨x, hx, rfl⟩ hxl
+  exact hC x ((howner_iff x C).mpr hx) ((hmem B x).mpr hxl)
 
 end D5.S3.Factorization.RankThreeBlockAvoidance
