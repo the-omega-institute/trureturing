@@ -104,7 +104,7 @@ theorem uniform_discrete_second_bound (SS : Finset ℕ → ℝ) (α β M : ℝ)
       _ ≤ N * (H : ℝ) := mul_le_mul_of_nonneg_right hpower (by positivity)
       _ ≤ N * (H : ℝ) * Real.log N := le_mul_of_one_le_right (by positivity) hL
       _ = _ := by ring
-  have ht := harith H hlo hhi 3 w hw 2 ⟨Or.inl rfl, by norm_num⟩ _ _ hhab
+  have ht := harith H hlo hhi 3 w hw 2 ⟨by norm_num, by norm_num⟩ _ _ hhab
   rw [hd] at ht
   have htri := abs_sub_le
     (∑ n ∈ Finset.Ioc ⌊N⌋₊ ⌊2 * N⌋₊, |S H a b n| ^ 2)
