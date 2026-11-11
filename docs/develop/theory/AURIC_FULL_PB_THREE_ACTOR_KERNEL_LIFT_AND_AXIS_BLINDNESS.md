@@ -3191,3 +3191,373 @@ CountRead 仍须同一接受叶的完整活动输出、实际读后 active-ready
 所得刚性回答的是这批原矩阵关系能否容纳对角误差；它已经排除全部非零误差。它并不回答原 Omega 中哪台旧装置实际供应这些菜单、读后是否真 ready、同一活动输入能否对所有旧未来返回。那些完整来源合同及既得成果继续原样承担各自作用，局部可证明的约束不改变完整目标的成功标准。
 
 ## 新增锚（本行以下为后续增补区）
+
+## 40. 秩二谱环境中非零第三对角的有限双正预算排除
+
+### 40.1 原固定输入与条件结论
+
+**定义 40.1（两条原环境连线的固定输出）。** 完整沿用定义 32.1、(32.2)–(32.3)，专门取原有序基 $(e_1,e_2,e_3,f_1,f_2)$ 中的
+
+$$
+\begin{gathered}
+\mathcal H=\mathbb C^3\oplus\mathbb C^2,\qquad A=M_5(\mathbb C),
+\qquad P=I_3\oplus0_2,\qquad c=\operatorname{diag}(1,2,3,0,0),\\
+t=\begin{pmatrix}B&V\\V^*&D_{\rm env}\end{pmatrix},\qquad
+B=B^*\in M_3(\mathbb C),\qquad
+V=[\kappa e_1,\gamma e_2],\qquad D_{\rm env}=\operatorname{diag}(0,d),\\
+\kappa,\gamma>0,\qquad d\in\mathbb R\setminus\{0\},\qquad
+\mathsf E_s=sE_{33}=\operatorname{diag}(0,0,s,0,0),\qquad s\in\mathbb R,\\
+\sigma\in\{1,-1\}\text{ 分别固定},\qquad \iota=\sigma i,\qquad
+K(a,b)=\frac{\iota}{2}[a,b],\qquad g=K(c,t)+\mathsf E_s .
+\end{gathered}
+\tag{40.1}
+$$
+
+所有 $R_\delta,S_\delta,L,B_\phi$ 仍由完整原乘积 (32.2) 定义，PB 仍为 (32.3)。这里 $s$ 是第三格的实残量系数，$E_{33}$ 是完整 $M_5$ 的原矩阵单位；不改动原来源合同中的域或响应符号。记
+
+$$
+a=(B_{12},B_{13}),\qquad C_E=\operatorname{diag}(2,3),\qquad
+T=\begin{pmatrix}b_0&z\\\overline z&e\end{pmatrix}
+ =(B_{jk})_{j,k\in\{2,3\}},\qquad
+b_0,e\in\mathbb R,\quad z\in\mathbb C .
+\tag{40.2}
+$$
+
+这里 $T$ 是原主子块，不要求 $\operatorname{span}(e_2,e_3)$ 对 $B$ 不变。二维 $R_{\delta,E},S_{\delta,E},L_E$ 只表示 (38.1) 中参数恰为 $C_E,T,X,sP_3$ 的比较式，$P_3=\operatorname{diag}(0,1)$。其与原空间的关系须由下述完整作用列支付。
+
+**定理 40.2（$B_{33}\ne0$ 的原秩二输入排除第三残量）。** 对每份满足 (40.1) 且 $e=B_{33}\ne0$ 的固定原输入，每个分别固定的 $\sigma$、每个实 $s\ne0$ 和每个指定 $0<\mu<\infty$，存在一个有限原 Hermitian 角探针 $x=x^*=PxP$ 和一个完整原 $M_5$ 上的正向量泛函 $\phi$，使
+
+$$
+\phi(I_5)=\mu,\qquad
+B_\phi(R_+,S_+)>0,\qquad B_\phi(R_-,S_-)>0,\qquad
+|\phi(L)|>\sum_{\delta=\pm1}\sqrt{B_\phi(R_\delta,S_\delta)}.
+\tag{40.3}
+$$
+
+所有原 $B,\kappa,\gamma,d$、两条环境列及演员基在同一见证中保持原值。因此在这个 $B_{33}\ne0$ 的固定输入类，全部原探针与质量恰为任一指定 $\mu>0$ 的全部完整正泛函上的 PB 迫使 $s=0$；对全部正泛函量化亦然。$s=0$ 的全正泛函充分性直接复用父卷 §1 与本卷 §39.6，不作为新增结论。
+
+### 40.2 保留第二环境列的准确向量回接
+
+**引理 40.3（存活环境的实 Gram 代价）。** 在 (40.1) 中暂不要求 $e\ne0$。对任意 $u=(u_2,u_3)^{\mathsf T}$、$u_2u_3\ne0$ 和任意 Hermitian $X\in M_2(\mathbb C)$，取
+
+$$
+\begin{gathered}
+q=aC_Eu,\qquad w=-\frac{au}{\kappa},\qquad
+\ell=\left(-\frac{\iota q}{u_2},\frac{\iota q}{u_3}\right),\qquad
+\xi=(0,u_2,u_3,w,0)^{\mathsf T},\\
+x=\begin{pmatrix}0&\ell&0_{1,2}\\
+\ell^*&X&0_{2,2}\\0_{2,1}&0_{2,2}&0_{2,2}\end{pmatrix},\qquad
+\chi_\xi(A)=\xi^*A\xi .
+\end{gathered}
+\tag{40.4}
+$$
+
+则 $x=x^*=PxP$，$\xi\ne0$，且原完整作用列准确满足
+
+$$
+\begin{aligned}
+R_\delta\xi&=(0,R_{\delta,E}u,0,-\delta\gamma u_2),\\
+S_\delta\xi&=(0,S_{\delta,E}u,0,\gamma(1-\delta\iota)u_2),\\
+\chi_\xi(L)&=u^*L_Eu .
+\end{aligned}
+\tag{40.5}
+$$
+
+上式的块顺序是 $e_1,(e_2,e_3),f_1,f_2$。令
+
+$$
+\begin{gathered}
+A_\delta=\|R_{\delta,E}u\|^2,\qquad
+D_\delta=\|S_{\delta,E}u\|^2,\qquad
+C_\delta=\operatorname{Re}((R_{\delta,E}u)^*S_{\delta,E}u),\\
+G_{\delta,E}=A_\delta D_\delta-C_\delta^2,\qquad
+n=\gamma^2|u_2|^2>0 .
+\end{gathered}
+$$
+
+则完整原预算为
+
+$$
+\begin{aligned}
+B_{\chi_\xi}(R_\delta,S_\delta)
+ &=G_{\delta,E}+n(2A_\delta+D_\delta+2\delta C_\delta)+n^2,\\
+2A_\delta+D_\delta+2\delta C_\delta
+ &=\|S_{\delta,E}u+\delta R_{\delta,E}u\|^2
+   +\|R_{\delta,E}u\|^2\ge0,\\
+\sqrt{B_{\chi_\xi}(R_\delta,S_\delta)}&\ge n>0 .
+\end{aligned}
+\tag{40.6}
+$$
+
+证明。首先 $\ell u=0$、$\ell C_Eu=\iota q$、$\kappa w=-au$。在原完整空间中直接相乘给
+
+$$
+\begin{array}{c|cccc}
+ &e_1&E&f_1&f_2\\ \hline
+x\xi&0&Xu&0&0\\
+xc\xi&\iota q&XC_Eu&0&0\\
+cx\xi&0&C_EXu&0&0\\
+t\xi&0&Tu&0&\gamma u_2\\
+tc\xi&q&TC_Eu&0&2\gamma u_2\\
+ct\xi&0&C_ETu&0&0
+\end{array}
+\tag{40.7}
+$$
+
+于是 $h\xi$ 与 $k_t\xi$ 的第一格均为 $q/2$，$r\xi$ 与 $g\xi$ 的第一格分别为 $\iota q/2$、$-\iota q/2$；其 $E$ 块准确是二维定义的对应列。它们的 $f_1$ 格均为零，$f_2$ 格依次是 $0,\gamma u_2,0,-\iota\gamma u_2$，故得到 (40.5) 的前两式。由原自伴列恒等式
+
+$$
+\chi_\xi(U^2)=\|U\xi\|^2,\qquad
+\chi_\xi(U\circ Z)=\operatorname{Re}((U\xi)^*Z\xi)
+\tag{40.8}
+$$
+
+计算 $L$，新增的环境贡献只有
+$-2\operatorname{Re}(\overline{\gamma u_2}(-\iota\gamma u_2))=0$，给出第三式。两笔预算各自使用同一个完整向量和探针，其两范数平方为 $A_\delta+n,D_\delta+2n$，实内积为 $C_\delta-\delta n$。展开
+$(A_\delta+n)(D_\delta+2n)-(C_\delta-\delta n)^2$ 即为 (40.6)。$G_{\delta,E}\ge0$ 是二维列的实 Gram 非负性。
+
+因此第二环境列增加了必须保留的代价，不能由二维严格违反直接推出完整 PB 严格违反。(40.5) 只断言所选向量上的两列与一个期望值；没有断言 $L\xi$ 为 $L_Eu$ 的嵌入，也没有算子交织或全正泛函之间的等价。原归一因子为
+
+$$
+N_u=\|u\|^2+\frac{|au|^2}{\kappa^2}>0,\qquad
+\phi_{\mu,u}(A)=\frac{\mu}{N_u}\xi^*A\xi .
+\tag{40.9}
+$$
+
+它在完整原 $M_5$ 上正且质量恰为 $\mu$；PB 左端与每笔预算平方根均乘同一个正因子 $\mu/N_u$。证毕。
+
+### 40.3 任意复 $B_{23}$ 的实比例边界族
+
+现在证明定理 40.2。固定 $s\ne0,e\ne0$。二次方程
+
+$$
+F(p):=3p^2+4sp+s^2-7e^2=0
+\tag{40.10}
+$$
+
+有两个不同实根
+$p=(-2s\pm\sqrt{s^2+21e^2})/3$。至少一个满足 $p^2\ne9e^2$：否则两个不同根只能是 $3e,-3e$，其和为零，与根和 $-4s/3\ne0$ 矛盾。固定任一这样的根，置
+
+$$
+\begin{gathered}
+D_p=p^2-9e^2\ne0,\qquad
+\beta_\delta=\frac{e+\delta(3p+s)}{p-3\delta e}\in\mathbb R,\\
+\alpha=\frac{\beta_++\beta_-}{2}
+ =\frac{e(10p+3s)}{D_p},\qquad
+\lambda=\frac{\beta_+-\beta_-}{2}
+ =\frac{3e^2+3p^2+sp}{D_p} .
+\end{gathered}
+\tag{40.11}
+$$
+
+这些实数满足
+
+$$
+\alpha^2-\lambda(\lambda-2)=-\frac{F(p)}{D_p}=0,
+\qquad \alpha\ne0 .
+\tag{40.12}
+$$
+
+第一式可由 $\alpha^2-\lambda^2=\beta_+\beta_-$ 直接计算。若 $\alpha=0$，则 $10p+3s=0$，将 $s=-10p/3$ 代入 $F(p)=0$ 得 $7p^2/9-7e^2=0$，与 $D_p\ne0$ 矛盾。因此下列除法全部合法。
+
+令 $b=|z|$，当 $b>0$ 时取 $\theta=z/b$，当 $b=0$ 时取 $\theta=1$；始终有 $|\theta|=1,z=b\theta$。定义
+
+$$
+\begin{gathered}
+r_0=\frac{5b}{\alpha},\qquad
+Q_0=b\left(\frac{2\lambda-4}{\alpha}+\iota\right),\qquad
+P_0=r_0+Q_0=b\left(\frac{1+2\lambda}{\alpha}+\iota\right),\\
+H_0=-2b+\frac{\iota(2-\lambda)b}{\alpha},\qquad
+F_0=\frac{5\lambda b}{\alpha}+2\iota b,\\
+u_\rho=(\rho\theta,1)^{\mathsf T},\qquad
+X_\rho=\begin{pmatrix}r_0/\rho&\theta Q_0\\
+\overline{\theta Q_0}&p\end{pmatrix},\qquad \rho>0 .
+\end{gathered}
+\tag{40.13}
+$$
+
+每个有限 $\rho>0$ 都给有限 Hermitian $X_\rho$ 和两个坐标非零的 $u_\rho$。没有旋转原基或改变 $T$；$\theta$ 只是同一原探针与向量的系数。直接计算有
+
+$$
+\begin{aligned}
+X_\rho u_\rho&=(\theta P_0,p+\rho\overline{Q_0})^{\mathsf T},\\
+Tu_\rho&=(\theta(b+b_0\rho),e+b\rho)^{\mathsf T},\\
+K(C_E,X_\rho)u_\rho
+ &=(-\iota\theta Q_0/2,\iota\rho\overline{Q_0}/2)^{\mathsf T},\\
+(C_E\circ T)u_\rho
+ &=\left(\theta(5b/2+2b_0\rho),3e+5b\rho/2\right)^{\mathsf T},\\
+(C_E\circ X_\rho)u_\rho
+ &=\left(\theta(2r_0+5Q_0/2),3p+5\rho\overline{Q_0}/2\right)^{\mathsf T},\\
+(K(C_E,T)+sP_3)u_\rho
+ &=(-\iota b\theta/2,s+\iota b\rho/2)^{\mathsf T} .
+\end{aligned}
+\tag{40.14}
+$$
+
+(40.12) 恰好支付两条实比例相容式
+
+$$
+\alpha P_0+\lambda H_0=b,\qquad
+\lambda P_0+\alpha H_0=F_0,
+\qquad
+b+\delta F_0=\beta_\delta(P_0+\delta H_0).
+\tag{40.15}
+$$
+
+例如第一式的虚系数是
+$b(\alpha+\lambda(2-\lambda)/\alpha)=0$，第二式的实系数是
+$b(\lambda+2\lambda^2-2\alpha^2)/\alpha=5\lambda b/\alpha$，虚系数是 $2b$。最后一式使用 $\beta_\delta=\alpha+\delta\lambda$。第三坐标的比例另由 (40.11) 给出
+
+$$
+e+\delta(3p+s)=\beta_\delta(p-3\delta e).
+\tag{40.16}
+$$
+
+### 40.4 完整作用列、准确残量与显式有限尺度
+
+对 (40.13) 应用引理 40.3。这里
+
+$$
+\begin{gathered}
+q_\rho=2B_{12}\rho\theta+3B_{13},\qquad
+\ell_\rho=(-\iota q_\rho/(\rho\theta),\iota q_\rho),\\
+\xi_\rho=(0,\rho\theta,1,-(B_{12}\rho\theta+B_{13})/\kappa,0)^{\mathsf T},
+\end{gathered}
+\tag{40.17}
+$$
+
+$x_\rho$ 则由 (40.4) 的同一块公式给出。为展示所有存活列，在完整原五维基中写
+
+$$
+\begin{aligned}
+\mathbf v_\delta&=(0,\theta(P_0+\delta H_0),p-3\delta e,0,0)^{\mathsf T},\\
+\mathbf a_\delta&=\left(0,-2\delta b_0\theta,
+ \overline{Q_0}+\delta(\iota\overline{Q_0}/2-5b/2),0,-\delta\gamma\theta\right)^{\mathsf T},\\
+\mathbf b_\delta&=\left(0,b_0\theta,
+ b+\delta(5\overline{Q_0}/2+\iota b/2),0,
+ \gamma(1-\delta\iota)\theta\right)^{\mathsf T} .
+\end{aligned}
+\tag{40.18}
+$$
+
+将 (40.14) 代回 (40.5)，再用 (40.15)–(40.16)，得到每个 $\rho>0$ 上的准确完整列
+
+$$
+\mathbf R_\delta(\rho):=R_\delta\xi_\rho
+ =\mathbf v_\delta+\rho\mathbf a_\delta,\qquad
+\mathbf S_\delta(\rho):=S_\delta\xi_\rho
+ =\beta_\delta\mathbf v_\delta+\rho\mathbf b_\delta .
+\tag{40.19}
+$$
+
+因此 $\rho\downarrow0$ 时两个作用对分别趋于实平行，且保留的环境分量趋于零。这里尚未以极限探针为见证；下一步直接选择严格正的有限尺度。
+
+引理 38.1 的 (38.4) 是仅用结合乘法与 $\iota^2=-1$ 的恒等式，同样适用于完整原 $c,x_\rho,t$。故
+
+$$
+L=K(R_+,S_+)-K(R_-,S_-)
+ -2K(x_\rho,\mathsf E_s)-2t\circ\mathsf E_s .
+\tag{40.20}
+$$
+
+由 (40.14)、(40.7) 和 $\operatorname{Im}_\iota Q_0=b$，每个 $\rho>0$ 上准确有
+
+$$
+\begin{aligned}
+\chi_{\xi_\rho}(K(x_\rho,\mathsf E_s))
+ &=-s\operatorname{Im}_\iota(p+\rho Q_0)=-s\rho b,\\
+\chi_{\xi_\rho}(t\circ\mathsf E_s)&=s(e+b\rho),\\
+\chi_{\xi_\rho}(K(x_\rho,\mathsf E_s)+t\circ\mathsf E_s)&=se\ne0 .
+\end{aligned}
+\tag{40.21}
+$$
+
+此处 $\operatorname{Im}_\iota w=(w-\overline w)/(2\iota)$，并使用自伴列恒等式
+$\chi_\xi(K(U,Z))=-\operatorname{Im}_\iota((U\xi)^*Z\xi)$。所以残量读数并非只在极限才非零。
+
+记完整原实 Gram 面积为
+
+$$
+\mathcal A_\delta(\rho)=
+\left(\|\mathbf R_\delta(\rho)\|^2\|\mathbf S_\delta(\rho)\|^2
+ -\operatorname{Re}(\mathbf R_\delta(\rho)^*\mathbf S_\delta(\rho))^2\right)^{1/2} .
+$$
+
+因为 $\beta_\delta$ 实，从第二列减去 $\beta_\delta$ 倍第一列不改变这个实 Gram 行列式。由 (40.19)，对 $0<\rho\le1$ 得
+
+$$
+\begin{aligned}
+\mathcal A_\delta(\rho)
+ &\le\|\mathbf v_\delta+\rho\mathbf a_\delta\|
+       \|\rho(\mathbf b_\delta-\beta_\delta\mathbf a_\delta)\|\\
+ &\le\rho(\|\mathbf v_\delta\|+\|\mathbf a_\delta\|)
+             \|\mathbf b_\delta-\beta_\delta\mathbf a_\delta\| .
+\end{aligned}
+\tag{40.22}
+$$
+
+所有系数已由固定输入与 $s,\sigma$ 明确给出，故以下数有限：
+
+$$
+\mathscr C=\sum_{\delta=\pm1}
+ (\|\mathbf v_\delta\|+\|\mathbf a_\delta\|)
+ \|\mathbf b_\delta-\beta_\delta\mathbf a_\delta\|\ge0,
+\qquad
+\rho_* =\min\left\{1,\frac{|se|}{2(1+\mathscr C)}\right\}>0 .
+\tag{40.23}
+$$
+
+这个尺度实际为有限正数，且
+
+$$
+\sum_\delta\mathcal A_\delta(\rho_*)\le\rho_*\mathscr C<\frac{|se|}{2}.
+\tag{40.24}
+$$
+
+为从面积控制左端，对任意两条完整复列 $v,w$，复 Cauchy–Schwarz 给
+$|\operatorname{Im}_\iota(v^*w)|^2\le\|v\|^2\|w\|^2-\operatorname{Re}(v^*w)^2$。将其用于 (40.20) 的两项，并用 (40.21)，得到同一探针和同一向量上的
+
+$$
+\begin{aligned}
+|\chi_{\xi_{\rho_*}}(L)|
+ -\sum_\delta\mathcal A_\delta(\rho_*)
+ &\ge2|se|-2\sum_\delta\mathcal A_\delta(\rho_*)\\
+ &>|se|>0 .
+\end{aligned}
+\tag{40.25}
+$$
+
+另一方面，引理 40.3 没有删除第二条环境列，故对每个符号准确保证
+
+$$
+\mathcal A_\delta(\rho_*)\ge\gamma^2\rho_*^2>0 .
+\tag{40.26}
+$$
+
+最后取完整原向量的范数与指定质量
+
+$$
+N_{\rho_*}=1+\rho_*^2+
+ \frac{|B_{12}\rho_*\theta+B_{13}|^2}{\kappa^2}>0,\qquad
+\phi(A)=\frac{\mu}{N_{\rho_*}}\xi_{\rho_*}^*A\xi_{\rho_*} .
+\tag{40.27}
+$$
+
+$\phi$ 是完整 $M_5$ 上的一个正复线性泛函，$\phi(I_5)=\mu$。将 (40.25)–(40.26) 乘 $\mu/N_{\rho_*}>0$，得到 (40.3)，其中每笔预算平方根至少为
+$\mu\gamma^2\rho_*^2/N_{\rho_*}$，严格差额大于 $\mu|se|/N_{\rho_*}$。这完成必要性及有限双正预算见证。零残量的全正泛函充分性按 §39.6 复用，未由单个向量外推。证毕。
+
+### 40.5 退化边界、既有结果与完整原来源
+
+$z=B_{23}=0$ 时，(40.13) 中 $b=r_0=P_0=Q_0=H_0=F_0=0$、$\theta=1$，所有公式仍成立；无需非零混合假设。$B_{11},B_{12},B_{13},B_{22}$ 以及 $z$ 的其余取值任意。$B_{12},B_{13}$ 只通过同一原第一环境零模的准确补偿进入 (40.17)、(40.27)，没有把它们设零。原 $d\ne0$ 保持不变，因所选向量的 $f_2$ 输入格为零而不出现在作用列中；原 $\gamma>0$ 则在两条完整输出列中产生 (40.26)。$\kappa>0$ 保证补偿格有定义。所有公式只用 $\overline\iota=-\iota,\iota^2=-1$，所以两个分别固定的取向各自成立，任意复 $B$ 无须共轭或替换。
+
+$s=0$ 的充分性、零质量正泛函只能为零及其零等式均复用 §39.6。$e=B_{33}=0$ 不在定理 40.2 的域内：(40.21) 的分离读数此时为零，(40.23) 也不给正尺度。这不证明任何非零残量满足全称 PB，也不证明它必定失败；相同秩二输入中 $B_{33}=0$ 的原第三残量问题仍未回答。$\rho\downarrow0$ 时某些探针条目可无界，但见证只使用明确有限的 $\rho_*>0$；没有统一有界探针或资源上界。
+
+本节数学归属为 `repo-derived`：新增承重关系是 (40.5)–(40.6) 的存活环境准确代价与 (40.10)–(40.27) 的任意复混合边界族、恒定非零残量读取及有限双正预算排除。前者由定理 40.2 实际消费，不单独充当全称分类。原 $\mathcal W=V(\ker D_{\rm env})=\mathbb C e_1$，所以定理 32.3 的三格支撑前件不满足，§39 的 $q_1q_2\ne0$ 零模前件也不满足；总 $V$ 的秩为二，(38.33) 的完整轴行条件不满足。§38 的二维恒等式与回接方法仍是直接前置，但其零环境列预算不能代替 (40.6)。[续卷 II §§32、41–43](AURIC_FULL_PB_ACTUAL_PROBE_AND_ENVIRONMENT_COUPLING_CONTINUATION_II.md) 保持其固定两演员输入与接触前提，不提供本定理的三演员结论；父卷 §13 的固定 P2 子类也不作为这里 PB 单独必要性的供应者。
+
+正泛函及复 Cauchy–Schwarz 的成熟背景沿 §32.6、§39.8 所引 Blackadar，[*Operator Algebras*](https://bruceblackadar.com/Mathematics/Cycr.pdf)；Hermitian 矩阵和实 Gram 的标准线性代数沿 Horn–Johnson，[*Matrix Analysis*](https://doi.org/10.1017/CBO9781139020411)。本节所用准确列、相容式、实面积界和质量因子均已在证明中给出，不将这些书籍归为特定 PB 排除族的作者，不主张历史新颖性、文献穷尽、最优尺度或 Lean／kernel 认证。
+
+完整原目标严格保留父卷 [§6 的 (6.1)–(6.2)](#6-完整原问题与七项物理合同的精确身份)、[§30A.5](#30a5-准确的前件删除来源与完整目标)、本卷 §39.8 以及[有限返回续卷定义 162.1、复用命题 162.2、定义 164.1](AURIC_C139_FINITE_RETURN_CALIBRATION_AND_LOAD_STABILITY_CONTINUATION.md) 的同一全文和全部递归钉版上游。这些完整合同共同保留每个原对象与量词，以上矩阵条件不替换或缩短它们：原 $\Omega$/native、旧 $D$、固定 $K/J$、原准备与发生、ownership／parent／ready、真正相关参考与副本、固定支持全质量、完整菜单、全部中间切口、环境及完整输出／失败／零标签、控制／钟／单位和每份完整输出的每个旧合法未来均守原身份。§39.8 中实际旧程序接受关联、原活动接头与全未来 Return 的来源义务及已付消费者仍按各自原域保留。
+
+定理 40.2 是指定固定输出矩阵模型中的条件关系推导；$x_\rho,\xi_\rho,\phi$ 不生成实际准备、可访问控制或新服务，不实现完整来源的共根或可达性。共同正规根态 $\omega$、全部有限与无限历史、递归参考、量子与经典选择、实际时间／作用量和物理空间维数三均未由本定理取得；GNS 向量不因此成为纯态或物理全局酉演化，$\zeta,J,\omega$ 不被合并，三个演员不等于物理三维。完整原量子起源与全部原成功条件仍保持未完成。
+
+## 新增锚（本行以下为后续增补区）
