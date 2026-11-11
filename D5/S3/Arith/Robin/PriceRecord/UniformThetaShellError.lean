@@ -9,8 +9,8 @@ import D5.S3.Arith.Robin.EulerLayerRootCorrection
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 import Mathlib.Tactic
 
-/-! UNCOMPILED_UNACCEPTED. The supremum ranges over REAL y, including all
-jumps of theta. Coarse PNT is used here, not in the finite coercivity theorem. -/
+/-! The supremum ranges over every real point of the shell, including the
+jumps of theta. The sublinearity estimate uses the coarse prime number theorem. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -31,7 +31,7 @@ theorem errorValues_bddAbove {X : ℝ} (hX : 0 ≤ X) : BddAbove (errorValues X)
   have hy0 : 0 ≤ y := by linarith [hy.1]
   have hθ0 := Chebyshev.theta_nonneg y
   have hθ := Chebyshev.theta_mono hy.2
-  exact abs_le.mpr ⟨by linarith [Chebyshev.theta_nonneg (2 * X)], by linarith⟩
+  exact abs_le.mpr ⟨by linarith [Chebyshev.theta_nonneg (2 * X), hy.2], by linarith⟩
 
 theorem pointwise_le_shellError {X y : ℝ} (hX : 0 ≤ X)
     (hy : y ∈ Set.Icc (X / 2) (2 * X)) : |Chebyshev.theta y - y| ≤ shellError X :=
@@ -62,7 +62,7 @@ theorem shellError_eventually_le_mul {ε : ℝ} (hε : 0 < ε) :
   have hh : |Chebyshev.theta y / y - 1| < ε / 2 := by
     simpa only [Real.dist_eq] using hY y hyY
   have hid : Chebyshev.theta y / y - 1 = (Chebyshev.theta y - y) / y := by
-    field_simp
+    field_simp [hy0.ne']
   rw [hid, abs_div, abs_of_pos hy0] at hh
   have hm := (div_lt_iff₀ hy0).mp hh
   have hupper := mul_le_mul_of_nonneg_left hy.2 (show 0 ≤ ε / 2 by positivity)

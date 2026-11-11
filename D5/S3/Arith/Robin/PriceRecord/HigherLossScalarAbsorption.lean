@@ -8,8 +8,7 @@
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 import Mathlib.Tactic
 
-/-! UNCOMPILED_UNACCEPTED. These are scalar implications. The application
-owner below constructs every input from the literal record and budget. -/
+/-! Scalar reduction of the finite budget and absorption of its error terms. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -35,7 +34,8 @@ theorem scalar_budget_reduction {X T V W Δ δ R : ℝ}
   have hL : 2 ≤ log X := (le_log_iff_exp_le hX0).mpr hX
   have hL0 : 0 < log X := by linarith
   have hhalf0 : 0 < log (X / 2) := by linarith
-  have hδsq : δ ≤ log X ^ 2 := by nlinarith
+  have hδsq : δ ≤ log X ^ 2 := by
+    nlinarith only [hδ, mul_nonneg hL0.le (sub_nonneg.mpr hL)]
   have hslack : δ / (X * log X) ≤ 2 / X := by
     apply (div_le_div_iff₀ (mul_pos hX0 hL0) hX0).mpr
     nlinarith [mul_le_mul_of_nonneg_right hδ hX0.le]
@@ -116,8 +116,8 @@ theorem scalar_absorption {X E R : ℝ} (hX : 1 < X) (hE : 0 ≤ E) (hR0 : 0 ≤
     rw [show d * T * log X / X ^ 2 = d * Z * Y by rw [mul_assoc d Z Y, hZY]; ring] at hR
     exact hR
   have htwo : R ≤ 2 * a ^ 2 * Z ^ 2 + 2 * d * Z * Y + 4 / X := by
-    dsimp [T] at hnorm
-    nlinarith
+    change a * (T / X) * R ≤ 1 / 4 * R at hlin
+    linarith only [hnorm, hYoung, hlin]
   have hsecond : 2 * Z * Y ≤ Z ^ 2 + Y ^ 2 := by nlinarith [sq_nonneg (Z - Y)]
   have hd0 : 0 ≤ d := by norm_num [d]
   have hsecondD := mul_le_mul_of_nonneg_left hsecond hd0

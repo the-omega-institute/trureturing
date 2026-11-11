@@ -8,9 +8,8 @@
 import D5.S3.Arith.Robin.PriceRecord.ActualHigherMassResponse
 import Mathlib.Tactic
 
-/-! UNCOMPILED_UNACCEPTED. The all-support identity, response and numerical
-optimization are proved in the source closure. No response hypothesis, RH,
-PNT, record hypothesis, or restriction on n's support/exponents occurs here. -/
+/-! Finite duality and the canonical response bound give coercivity for
+arbitrary actual prime support and exponents. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -38,8 +37,9 @@ theorem actual_dual_estimate {X s : ℝ} (hX : exp 2 ≤ X) {n : ℕ} (hn : 1 �
   let t := s * λ
   have hλ : 0 < λ := one_div_pos.mpr (mul_pos hX0 (by linarith : 0 < log X))
   have ht : 0 < t := mul_pos hs hλ
-  have hm : 0 < λ - t := by dsimp [t]; nlinarith
-  have hp : 0 < λ + t := by positivity
+  have ht_le : t ≤ (1 / 2 : ℝ) * λ := mul_le_mul_of_nonneg_right hs2 hλ.le
+  have hm : 0 < λ - t := by linarith
+  have hp : 0 < λ + t := add_pos hλ ht
   let S := coordinates n ∪ coordinates (strictInteger (λ - t))
   have hprime (c : ℕ × ℕ) (hc : c ∈ S) : c.1.Prime ∧ 2 ≤ c.2 := by
     rcases mem_union.mp hc with hc | hc <;>

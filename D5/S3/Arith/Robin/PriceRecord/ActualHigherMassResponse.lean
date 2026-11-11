@@ -9,8 +9,7 @@ import D5.S3.Arith.Robin.PriceRecord.HigherLayerClampedCutoff
 import D5.S3.Arith.Robin.PriceRecord.CompleteHigherInventoryDuality
 import Mathlib.Tactic
 
-/-! Prepared source: UNCOMPILED_UNACCEPTED. The response is a conclusion.
-Only canonical inventories are root-bounded; no actual n appears in a cutoff. -/
+/-! Only canonical inventories are bounded by the cutoffs. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -94,7 +93,7 @@ theorem actual_higher_mass_response {X s : ℝ} (hX : exp 2 ≤ X)
   have hλ : 0 < λ := one_div_pos.mpr (mul_pos hX0 hL0)
   have hm : 0 < ηm := mul_pos (by linarith) hλ
   have hp : 0 < ηp := mul_pos (by linarith) hλ
-  have hmp : ηm ≤ ηp := by dsimp [ηm, ηp]; nlinarith
+  have hmp : ηm ≤ ηp := mul_le_mul_of_nonneg_right (by linarith) hλ.le
   let Cm := coordinates (strictInteger ηm)
   let Cp := coordinates (strictInteger ηp)
   let C := Cm \ Cp
@@ -146,7 +145,9 @@ theorem actual_higher_mass_response {X s : ℝ} (hX : exp 2 ≤ X)
       have hr := rpow_le_rpow_of_exponent_le (show 1 ≤ X by linarith) he
       rw [← sqrt_eq_rpow] at hr
       have hsqrt : 2 * sqrt X ≤ X := by
-        nlinarith [sq_sqrt hX0.le, sqrt_nonneg X]
+        have htwo : 2 ≤ sqrt X := (le_sqrt (by norm_num) hX0.le).mpr (by simpa using hX4)
+        have hh := mul_le_mul_of_nonneg_right htwo (sqrt_nonneg X)
+        rwa [← pow_two, sq_sqrt hX0.le] at hh
       exact hh.2.2.2.le.trans (hb.trans ((mul_le_mul_of_nonneg_left hr (by norm_num)).trans hsqrt))
     calc
       _ ≤ ∑ _p ∈ layerPrimes C j, log X := by

@@ -11,8 +11,7 @@ import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Tactic
 
-/-! Prepared source only: UNCOMPILED_UNACCEPTED. Every index below is arbitrary;
-there is no fixed list of layers. No prime-counting theorem is imported. -/
+/-! The logarithmic slope bound is uniform in the layer index. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -60,7 +59,7 @@ theorem powerSum_le_twice {u : ℝ} (hu : 2 ≤ u) (j : ℕ) :
 theorem powerSum_hasDerivAt (j : ℕ) (u : ℝ) :
     HasDerivAt (powerSum j) (powerSumDerivative j u) u := by
   unfold powerSum powerSumDerivative
-  convert HasDerivAt.sum (u := range j)
+  convert HasDerivAt.fun_sum (u := range j)
     (fun k _ => (hasDerivAt_id u).pow (k + 1)) using 1 <;> simp
 
 theorem weighted_last_le {u : ℝ} (hu : 0 ≤ u) {j : ℕ} (hj : 1 ≤ j) :
@@ -139,12 +138,11 @@ theorem log_beta_hasDerivAt {u : ℝ} (hu : 2 ≤ u) {j : ℕ} (hj : 1 ≤ j) :
     ((hasDerivAt_const u (1 : ℝ)).div hS hs.ne')).log (by positivity : 1 + 1 / powerSum j u ≠ 0)
   have hB := hG.div (Real.hasDerivAt_log hu0.ne') hl.ne'
   have h := hB.log (beta_pos hu hj).ne'
-  convert h using 1
-  · rfl
-  · dsimp [logarithmicSlope, beta, gain]
-    field_simp [hu0.ne', hs.ne', hg.ne', hl.ne',
-      (show 1 + 1 / powerSum j u ≠ 0 by positivity)]
-    <;> ring
+  convert h using 1 <;> try rfl
+  dsimp [logarithmicSlope, beta, gain]
+  field_simp [hu0.ne', hs.ne', (show log (1 + 1 / powerSum j u) ≠ 0 from hg.ne'),
+    hl.ne', (show 1 + 1 / powerSum j u ≠ 0 by positivity)]
+  <;> ring
 
 /-- Uniform for ALL j>=2 and ALL real u>=2. -/
 theorem logarithmicSlope_ge {u : ℝ} (hu : 2 ≤ u) {j : ℕ} (hj : 2 ≤ j) :
@@ -176,11 +174,11 @@ theorem logarithmicSlope_ge {u : ℝ} (hu : 2 ≤ u) {j : ℕ} (hj : 2 ≤ j) :
     have hh := mul_le_mul_of_nonneg_left hlog (show 0 ≤ 1 + 1 / powerSum j u by positivity)
     have hz0 : 0 ≤ 1 / powerSum j u := by positivity
     nlinarith [mul_nonneg hz0 (show 0 ≤ 1 / 4 - 1 / powerSum j u by linarith)]
-  have hmul := mul_le_mul hA hB (by norm_num : (0 : ℝ) ≤ 4 / 5)
-    (by linarith : 0 ≤ u * powerSumDerivative j u / powerSum j u)
+  have hA0 : 0 ≤ u * powerSumDerivative j u / powerSum j u := by linarith
+  have hmul := mul_le_mul hA hB (by norm_num : (0 : ℝ) ≤ 4 / 5) hA0
   have hl : 0 < log u := log_pos (by linarith)
   dsimp [logarithmicSlope]
-  nlinarith [one_div_pos.mpr hl]
+  nlinarith only [hmul, hj0, mul_nonneg hA0 (one_div_pos.mpr hl).le]
 
 theorem beta_continuousOn {j : ℕ} (hj : 1 ≤ j) :
     ContinuousOn (beta j) (Set.Ici 2) := by

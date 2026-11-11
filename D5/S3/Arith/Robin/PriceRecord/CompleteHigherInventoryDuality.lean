@@ -9,8 +9,7 @@ import D5.S3.Arith.Robin.PriceRecord.ActualRecordHigherLayerResidual
 import D5.S3.Arith.Robin.ActualTwoPriceDefect
 import Mathlib.Tactic
 
-/-! SOURCE ONLY: UNCOMPILED_UNACCEPTED. Consumes the minimal exposure patch.
-The finite set used in duality includes the arbitrary actual inventory. -/
+/-! The finite set used in duality includes the arbitrary actual inventory. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -237,9 +236,12 @@ theorem literal_loss_identity {X : ℝ} (hX : 1 < X) {n : ℕ} (hn : 1 ≤ n)
     rw [hfilter, sum_sub_distrib, ← mul_sum, higherMass_eq_coordinate_sum]
     dsimp [inventoryGain, coordinateWeight]
     ring
+  have hraw (c : ℕ × ℕ) : rawLayerMargin X c.1 c.2 =
+      coordinateGain c - referencePrice X * coordinateWeight c := by
+    dsimp [rawLayerMargin, coordinateGain, coordinateWeight]
+    ring
   rw [← hsum]
-  unfold layerLoss rawLayerMargin
-  simp only [mul_sub]
+  simp_rw [layerLoss, hraw]
   rw [sum_sub_distrib]
   change potential S (referencePrice X) - _ = _
   rw [hoccupied]

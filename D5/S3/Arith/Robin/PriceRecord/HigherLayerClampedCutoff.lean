@@ -9,8 +9,7 @@ import D5.S3.Arith.Robin.PriceRecord.HigherLayerLogSlope
 import Mathlib.Topology.Order.IntermediateValue
 import Mathlib.Tactic
 
-/-! UNCOMPILED_UNACCEPTED. Cutoffs are constructed here, never premises.
-A cutoff equal to 2 excludes 2, and an ordinary root excludes its endpoint. -/
+/-! A cutoff equal to 2 excludes 2, and an ordinary root excludes its endpoint. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -79,7 +78,7 @@ theorem log_price_ratio_le {s : ℝ} (hs : 0 < s) (hs2 : s ≤ 1 / 2) :
   have hi : (1 - s)⁻¹ - 1 ≤ 2 * s := by
     apply (sub_le_iff_le_add).mpr
     rw [inv_le_iff₀ hm]
-    nlinarith
+    nlinarith only [mul_nonneg hs.le (show 0 ≤ 1 - 2 * s by linarith)]
   rw [log_div hp.ne' hm.ne']
   linarith
 
@@ -94,14 +93,15 @@ theorem cutoff_movement {j : ℕ} (hj : 2 ≤ j) {λ s : ℝ}
   have hp : 0 < (1 + s) * λ := mul_pos (by linarith) hλ
   have ha := cutoff_spec hj hp
   have hb := cutoff_spec hj hm
-  have hab : a ≤ b := cutoff_antitone hj hm hp (by nlinarith)
+  have hab : a ≤ b := cutoff_antitone hj hm hp
+    (mul_le_mul_of_nonneg_right (by linarith) hλ.le)
   have ha2 : 2 ≤ a := ha.1
   have hb2 : 2 ≤ b := hb.1
   have hj0 : (0 : ℝ) < j := by exact_mod_cast (show 0 < j by omega)
   by_cases hb0 : b = 2
   · have ha0 : a = 2 := by linarith
     change b - a ≤ 9 * s * b / j
-    rw [hb0, ha0]
+    rw [hb0, ha0, sub_self]
     positivity
   have hbgt : 2 < b := lt_of_le_of_ne hb2 (Ne.symm hb0)
   have hroot : beta j b = (1 - s) * λ := hb.2.2.1 hbgt
@@ -109,7 +109,8 @@ theorem cutoff_movement {j : ℕ} (hj : 2 ≤ j) {λ s : ℝ}
   have hratio : beta j a / beta j b ≤ (1 + s) / (1 - s) := by
     rw [hroot]
     apply (div_le_div_iff₀ hm (by linarith : 0 < 1 - s)).mpr
-    nlinarith [ha.2.1]
+    have hs0 : 0 ≤ 1 - s := by linarith
+    nlinarith only [mul_le_mul_of_nonneg_right ha.2.1 hs0]
   have hlog := log_le_log (div_pos (beta_pos ha2 (by omega))
     (beta_pos hb2 (by omega))) hratio
   have hbound : (j : ℝ) / 3 * log (b / a) ≤ 3 * s :=
@@ -148,22 +149,26 @@ theorem active_root_bounds {X s : ℝ} (hX : exp 2 ≤ X)
   have hL : 2 ≤ log X := (le_log_iff_exp_le hX0).mpr hX
   have hL0 : 0 < log X := by linarith
   have hj0 : (0 : ℝ) < j := by exact_mod_cast (show 0 < j by omega)
-  have hη : 0 < (1 - s) / (X * log X) := by positivity
+  have hη : 0 < (1 - s) / (X * log X) :=
+    div_pos (by linarith) (mul_pos hX0 hL0)
   have hu : 2 < u := hactive
   have hr := (cutoff_spec hj hη).2.2.1 hactive
   have hβ := beta_le_inv_pow_log hu.le (by omega : 1 ≤ j)
   have hhalf : 1 / (2 * X * log X) ≤ (1 - s) / (X * log X) := by
     apply (div_le_div_iff₀ (by positivity : 0 < 2 * X * log X) (mul_pos hX0 hL0)).mpr
-    nlinarith
+    nlinarith only [mul_le_mul_of_nonneg_right (show (1 : ℝ) ≤ 2 * (1 - s) by linarith)
+      (mul_pos hX0 hL0).le]
   have hbase : u ^ j * log u ≤ 2 * X * log X := by
-    have h := hhalf.trans (hr ▸ hβ)
+    rw [hr] at hβ
+    have h := hhalf.trans hβ
     exact (one_div_le_one_div (by positivity : 0 < 2 * X * log X)
       (by positivity : 0 < u ^ j * log u)).mp h
   have hpow : u ^ j ≤ 2 * j * X := by
     by_contra! hnot
     have hy : X < u ^ j := by
       have hj2 : (2 : ℝ) ≤ j := by exact_mod_cast hj
-      nlinarith
+      have hh := mul_le_mul_of_nonneg_right hj2 hX0.le
+      nlinarith only [hnot, hh, hX0]
     have hlog := log_lt_log hX0 hy
     rw [log_pow] at hlog
     have hm := mul_lt_mul_of_pos_right hnot hL0
