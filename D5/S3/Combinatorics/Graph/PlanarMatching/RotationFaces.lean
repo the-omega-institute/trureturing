@@ -10,6 +10,7 @@ import D5.S3.Fourier.CharacterSelection.SimpleGraphCycleSpace
 import Mathlib.Combinatorics.SimpleGraph.Dart
 import Mathlib.GroupTheory.Perm.Cycle.Basic
 import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+import Mathlib.Combinatorics.SimpleGraph.Matching
 
 /-! Facial incidence uses actual darts and the complete integer-power orbit quotient. -/
 
@@ -100,7 +101,8 @@ private theorem invariant_vertex [Finite G.Dart] (x : R.Face → ZMod 2)
 
 /-- In a connected graph, a facial labelling with zero edge boundary is constant.
 No Euler or geometric assumption is used for this dual-connectivity fact. -/
-theorem boundary_eq_zero_iff [Fintype V] [DecidableRel G.Adj] (hc : G.Connected) (x : R.Face → ZMod 2) :
+private theorem boundary_eq_zero_iff [Fintype V] [DecidableRel G.Adj]
+    (hc : G.Connected) (x : R.Face → ZMod 2) :
     R.boundary x = 0 ↔ ∃ c : ZMod 2, x = fun _ => c := by
   classical
   constructor
@@ -128,8 +130,6 @@ theorem boundary_eq_zero_iff [Fintype V] [DecidableRel G.Adj] (hc : G.Connected)
   · rintro ⟨c, rfl⟩
     ext e
     exact ZModModule.add_self c
-
-#print axioms boundary_eq_zero_iff
 
 private theorem sum_darts [Fintype V] [DecidableRel G.Adj]
     {K : Type*} [AddCommMonoid K] (f : G.Dart → K) :
@@ -205,7 +205,7 @@ private theorem boundary_relation [Fintype V] [DecidableRel G.Adj]
   exact ZModModule.add_self _
 
 /-- Every facial boundary is a binary combination of actual simple cycles. -/
-theorem boundary_mem_cycle_space [Fintype V] [DecidableEq V] [DecidableRel G.Adj]
+private theorem boundary_mem_cycle_space [Fintype V] [DecidableEq V] [DecidableRel G.Adj]
     (x : R.Face → ZMod 2) :
     R.boundary x ∈
       D5.S3.Fourier.CharacterSelection.SimpleGraphCycleSpace.simpleCycleSpace G := by
@@ -215,8 +215,6 @@ theorem boundary_mem_cycle_space [Fintype V] [DecidableEq V] [DecidableRel G.Adj
   letI : Fintype G.ConnectedComponent := Fintype.ofFinite _
   rw [(D5.S3.Fourier.CharacterSelection.SimpleGraphCycleSpace.finite_graph_cycle_space G).1.1]
   exact R.boundary_relation x
-
-#print axioms boundary_mem_cycle_space
 
 /-- In the signed-Euler-two model every binary simple-cycle combination is a
 facial boundary. The kernel consists exactly of constant face functions. -/
@@ -265,6 +263,190 @@ theorem face_cycle_exact [Fintype V] [DecidableEq V] [DecidableRel G.Adj]
   omega
 
 #print axioms face_cycle_exact
+
+private theorem binary_zero_or_one (z : ZMod 2) : z = 0 ∨ z = 1 := by
+  have h : z.val = 0 ∨ z.val = 1 := by have := z.val_lt; omega
+  rcases h with h | h
+  · left; apply ZMod.val_injective; simpa using h
+  · right; apply ZMod.val_injective; norm_num at *; exact h
+
+private theorem invariant_vertex_local [Finite G.Dart] (x : R.Face → ZMod 2)
+    (d e : G.Dart) (hv : d.fst = e.fst)
+    (h : ∀ t : G.Dart, t.fst = d.fst → x (R.face t) = x (R.face t.symm)) :
+    x (R.face d) = x (R.face e) := by
+  obtain ⟨n, hn⟩ := ((R.same_vertex d e).mpr hv).exists_nat_pow_eq
+  have hfst (n : ℕ) : ((R.rotor ^ n) d).fst = d.fst :=
+    (R.same_vertex _ _).mp ((Equiv.Perm.sameCycle_pow_left).mpr (.refl _ _))
+  have hi : ∀ n : ℕ, x (R.face ((R.rotor ^ n) d)) = x (R.face d) := by
+    intro n
+    induction n with
+    | zero => rfl
+    | succ n ih =>
+      rw [pow_succ', Equiv.Perm.mul_apply]
+      have hs := congrArg x (R.face_step ((R.rotor ^ n) d).symm)
+      change x (R.face (R.rotor ((R.rotor ^ n) d))) =
+        x (R.face ((R.rotor ^ n) d).symm) at hs
+      exact hs.trans ((h _ (hfst n)).symm.trans ih)
+  exact (hi n).symm.trans (congrArg (fun t => x (R.face t)) hn)
+
+private theorem cycle_edge_endpoint {a : V} (p : G.Walk a a) (d : G.Dart)
+    (h : d.edge ∈ p.edges) : d.fst ∈ p.support :=
+  Walk.mem_support_iff_exists_mem_edges.mpr (Or.inr ⟨d.edge, h, by simp [Dart.edge]⟩)
+
+private theorem restrict_matching {W : Type*} (H : SimpleGraph W) (S : Set W)
+    (hclosed : ∀ v ∈ S, ∀ w, H.Adj v w → w ∈ S)
+    (M : H.Subgraph) (hm : M.IsPerfectMatching) :
+    ∃ N : (H.induce S).Subgraph, N.IsPerfectMatching ∧
+      ∀ v w, N.Adj v w ↔ M.Adj v.val w.val := by
+  let N : (H.induce S).Subgraph := {
+    verts := Set.univ
+    Adj := fun v w => M.Adj v.val w.val
+    adj_sub := fun h => M.adj_sub h
+    edge_vert := fun _ => Set.mem_univ _
+    symm := ⟨fun _ _ h => M.adj_symm h⟩ }
+  refine ⟨N, SimpleGraph.Subgraph.isPerfectMatching_iff.mpr ?_, fun _ _ => Iff.rfl⟩
+  intro v
+  obtain ⟨w, hw, hu⟩ := SimpleGraph.Subgraph.isPerfectMatching_iff.mp hm v.val
+  refine ⟨⟨w, hclosed v.val v.property w (M.adj_sub hw)⟩, hw, ?_⟩
+  intro t ht
+  exact Subtype.ext (hu t.val ht)
+
+/-- A simple cycle has a nontrivial binary facial side, and all off-cycle
+vertices belong to one of two actual sides with no original edge between them.
+Every perfect matching of the actual vertex-deleted complement restricts to
+both sides, so each side has even cardinality. -/
+theorem cycle_face_sides [Fintype V] [DecidableEq V] [DecidableRel G.Adj]
+    (hc : G.Connected) (he : Nonempty G.Dart)
+    (hEuler : (Fintype.card V : ℤ) - (Nat.card G.edgeSet : ℤ) +
+      (Nat.card R.Face : ℤ) = 2)
+    (a : V) (p : G.Walk a a) (hp : p.IsCycle) :
+    ∃ (x : R.Face → ZMod 2) (I J : Set V),
+      (∃ f, x f = 1) ∧ (∃ f, x f = 0) ∧
+      R.boundary x = (fun e : G.edgeSet => if e.val ∈ p.edges then 1 else 0) ∧
+      (∀ v, v ∉ p.support ↔ v ∈ I ∨ v ∈ J) ∧ Disjoint I J ∧
+      (∀ d : G.Dart, d.fst ∉ p.support →
+        (d.fst ∈ I ↔ x (R.face d) = 1) ∧ (d.fst ∈ J ↔ x (R.face d) = 0)) ∧
+      (∀ v ∈ I, ∀ w ∈ J, ¬G.Adj v w) ∧
+      (∀ (M : (G.induce {v | v ∉ p.support}).Subgraph), M.IsPerfectMatching →
+        (∀ S ∈ ({I, J} : Set (Set V)),
+          ∃ N : ((G.induce {v | v ∉ p.support}).induce {v | v.val ∈ S}).Subgraph,
+            N.IsPerfectMatching ∧ ∀ v w, N.Adj v w ↔ M.Adj v.val w.val) ∧
+        Even (Nat.card I) ∧ Even (Nat.card J)) := by
+  classical
+  let z : G.edgeSet → ZMod 2 := fun e => if e.val ∈ p.edges then 1 else 0
+  have hz : z ∈ D5.S3.Fourier.CharacterSelection.SimpleGraphCycleSpace.simpleCycleSpace G :=
+    Submodule.subset_span ⟨a, p, hp, rfl⟩
+  rw [← (R.face_cycle_exact hc he hEuler).2.2] at hz
+  obtain ⟨x, hx⟩ := hz
+  have hzn : z ≠ 0 := by
+    intro h
+    cases p with
+    | nil => exact hp.ne_nil rfl
+    | @cons a b c hab q =>
+      have hh := congrFun h ⟨s(a,b), hab⟩
+      simp [z, Walk.edges_cons] at hh
+  have h1 : ∃ f, x f = 1 := by
+    by_contra h
+    have hzero : x = 0 := by
+      funext f
+      exact (binary_zero_or_one (x f)).resolve_right (fun hf => h ⟨f, hf⟩)
+    exact hzn (hx.symm.trans (by rw [hzero, map_zero]))
+  have h0 : ∃ f, x f = 0 := by
+    by_contra h
+    have hone : x = fun _ => 1 := by
+      funext f
+      exact (binary_zero_or_one (x f)).resolve_left (fun hf => h ⟨f, hf⟩)
+    exact hzn (hx.symm.trans ((R.boundary_eq_zero_iff hc x).mpr ⟨1, hone⟩))
+  have hoff (d : G.Dart) (hd : d.fst ∉ p.support) :
+      x (R.face d) = x (R.face d.symm) := by
+    have hed : d.edge ∉ p.edges := fun h => hd (cycle_edge_endpoint p d h)
+    have hh := congrFun hx ⟨d.edge, d.edge_mem⟩
+    rw [R.boundary_dart] at hh
+    have hh' : x (R.face d) + x (R.face d.symm) = 0 := by simpa [z, hed] using hh
+    exact (add_eq_zero_iff_eq_neg.mp hh').trans (ZModModule.neg_eq_self _)
+  let I : Set V := {v | v ∉ p.support ∧ ∃ d : G.Dart, d.fst = v ∧ x (R.face d) = 1}
+  let J : Set V := {v | v ∉ p.support ∧ ∃ d : G.Dart, d.fst = v ∧ x (R.face d) = 0}
+  have hconst (d e : G.Dart) (hv : d.fst = e.fst) (hd : d.fst ∉ p.support) :
+      x (R.face d) = x (R.face e) := by
+    apply R.invariant_vertex_local x d e hv
+    intro t ht
+    exact hoff t (by simpa only [ht] using hd)
+  have hI (d : G.Dart) (hd : d.fst ∉ p.support) : d.fst ∈ I ↔ x (R.face d) = 1 := by
+    constructor
+    · rintro ⟨_, t, ht, hx1⟩
+      exact (hconst d t ht.symm hd).trans hx1
+    · intro hx1; exact ⟨hd, d, rfl, hx1⟩
+  have hJ (d : G.Dart) (hd : d.fst ∉ p.support) : d.fst ∈ J ↔ x (R.face d) = 0 := by
+    constructor
+    · rintro ⟨_, t, ht, hx0⟩
+      exact (hconst d t ht.symm hd).trans hx0
+    · intro hx0; exact ⟨hd, d, rfl, hx0⟩
+  have hpart : ∀ v, v ∉ p.support ↔ v ∈ I ∨ v ∈ J := by
+    intro v
+    constructor
+    · intro hv
+      letI : Nontrivial V := nontrivial_of_ne (Classical.choice he).fst (Classical.choice he).snd
+        (Classical.choice he).fst_ne_snd
+      obtain ⟨w, hvw⟩ := hc.preconnected.exists_adj_of_nontrivial v
+      let d : G.Dart := ⟨(v,w),hvw⟩
+      rcases binary_zero_or_one (x (R.face d)) with h | h
+      · exact Or.inr ((hJ d hv).mpr h)
+      · exact Or.inl ((hI d hv).mpr h)
+    · rintro (h | h) <;> exact h.1
+  have hdis : Disjoint I J := by
+    apply Set.disjoint_left.mpr
+    rintro v ⟨hv, d, hd, hxd⟩ ⟨_, e, he', hxe⟩
+    have hh := hconst d e (hd.trans he'.symm) (by simpa only [hd] using hv)
+    rw [hxd, hxe] at hh
+    exact one_ne_zero hh
+  have hnc : ∀ v ∈ I, ∀ w ∈ J, ¬G.Adj v w := by
+    intro v hv w hw hvw
+    let d : G.Dart := ⟨(v,w),hvw⟩
+    have hdx : x (R.face d) = 1 := (hI d hv.1).mp hv
+    have hdy : x (R.face d.symm) = 0 := (hJ d.symm hw.1).mp hw
+    have hh := hoff d hv.1
+    rw [hdx, hdy] at hh
+    exact one_ne_zero hh
+  refine ⟨x, I, J, h1, h0, hx, hpart, hdis, fun d hd => ⟨hI d hd, hJ d hd⟩, hnc, ?_⟩
+  intro M hm
+  have hclosed (S : Set V) (hS : S ∈ ({I, J} : Set (Set V))) :
+      ∀ v : {v | v ∉ p.support}, v.val ∈ S →
+        ∀ w : {v | v ∉ p.support}, G.Adj v.val w.val → w.val ∈ S := by
+    simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hS
+    rcases hS with rfl | rfl
+    · intro v hv w hvw
+      rcases (hpart w.val).mp w.property with hw | hw
+      · exact hw
+      · exact (hnc v.val hv w.val hw hvw).elim
+    · intro v hv w hvw
+      rcases (hpart w.val).mp w.property with hw | hw
+      · exact (hnc w.val hw v.val hv hvw.symm).elim
+      · exact hw
+  have hrestrict (S : Set V) (hS : S ∈ ({I, J} : Set (Set V))) :=
+    restrict_matching (G.induce {v | v ∉ p.support}) {v | v.val ∈ S} (hclosed S hS) M hm
+  refine ⟨hrestrict, ?_, ?_⟩
+  all_goals
+    have hS : ∀ v, v ∈ I → v ∉ p.support := fun _ h => h.1
+    try { clear hS; have hS : ∀ v, v ∈ J → v ∉ p.support := fun _ h => h.1 }
+    first
+    | obtain ⟨N, hN, _⟩ := hrestrict I (by simp)
+      have hcard := hN.even_card
+      let e : {v : {v | v ∉ p.support} // v.val ∈ I} ≃ I := {
+        toFun := fun v => ⟨v.val.val, v.property⟩
+        invFun := fun v => ⟨⟨v.val, v.property.1⟩, v.property⟩
+        left_inv := fun _ => rfl
+        right_inv := fun _ => rfl }
+      rwa [← Nat.card_eq_fintype_card, Nat.card_congr e] at hcard
+    | obtain ⟨N, hN, _⟩ := hrestrict J (by simp)
+      have hcard := hN.even_card
+      let e : {v : {v | v ∉ p.support} // v.val ∈ J} ≃ J := {
+        toFun := fun v => ⟨v.val.val, v.property⟩
+        invFun := fun v => ⟨⟨v.val, v.property.1⟩, v.property⟩
+        left_inv := fun _ => rfl
+        right_inv := fun _ => rfl }
+      rwa [← Nat.card_eq_fintype_card, Nat.card_congr e] at hcard
+
+#print axioms cycle_face_sides
 
 end Rotation
 end D5.S3.Combinatorics.Graph.PlanarMatching
