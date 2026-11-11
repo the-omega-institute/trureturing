@@ -1,0 +1,32 @@
+# Finite spectra on the original JB carrier
+
+## Abstract
+
+The six JB laws on a finite-dimensional real normed carrier supply finite spectral resolutions for its specified product and unit, without assuming spectral data or a square-defect inequality.
+
+The data are a finite-dimensional real normed space X, a symmetric bilinear product S, a unit u, the Jordan identity, the product norm bound and both JB square norm laws, all on the same X with its given norm. Finite dimensionality supplies completeness. No associative or matrix representation of X is assumed.
+
+**Theorem 1.1 (The actual finite spectral supplier).**
+
+Lean statement: `D5/S3/Topology/JBFiniteSpectral.finite_spectral_resolutions`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Topology/JBFiniteSpectral.finite_spectral_resolutions` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every a in X this constructs finitely many original idempotents e_i with real coefficients r_i, such that their sum is u, their r-weighted sum is a and their r-squared-weighted sum is S(a,a). The construction takes place in the actual closed single-generated subspace Generated(A,a), whose associative real algebra and original norm are supplied by JBAlgebra and JBComplexification. A nonzero minimal polynomial supplies its finite set of distinct real roots. Mathlib's Lagrange basis is evaluated at the actual generator. The existing real character and Gelfand norm equalities separate elements and turn the Lagrange character values into idempotence, pairwise orthogonality, unit and generator reconstruction. Orthogonality is then used in the double-sum expansion of the square. The original subtype inclusion preserves S and u and transports all sums back to X. A finite equivalence reindexes the root subtype by Fin n.
+
+Repeated polynomial roots are deduplicated. A real root not realized by any character contributes a zero idempotent. Singleton root sets use the empty product. The zero algebra is covered explicitly with an empty family. No primitive idempotent or trace normalization is asserted. The new proof content is the actual finite spectral construction and its transport; minimal-polynomial existence, Lagrange evaluation and the existing Gelfand separation inputs are reused directly.
+
+Live application to Quantum Origin V 75.4(I), equation 75.12, and the square-defect input to 78.9-15: pass finite_spectral_resolutions(A) directly as hspec to the existing JBSquareDefect.square_defect_of_spectral. The Reg mirror compiles this exact application for every same-carrier positive unital real linear Phi into any complete six-law JB target. It produces an actual square root of Phi(S(a,a))-T(Phi(a),Phi(a)); no positivity of the defect is assumed. This application is audit evidence and is not delivered as a duplicate D5 square-defect theorem. The existing multiplicative_of_spanning_idempotents can consume the same supplier when its real spanning premise holds; Jordan generation alone does not establish that premise.
+
+Realization boundary: this supplies finite spectra for genuine finite-dimensional six-law JB data. A general EJA must still be given its actual spectral JB norm on the same carrier. Its canonical unnormalized trace, square-cone self-duality, primitive frame refinement, Peirce calculus and rank-dependent norm constants remain separate obligations. In particular an EJA trace inner-product norm cannot simply be declared the JB norm. No full general-EJA realization, original J or H_s interface, full 75.4 or 78.7, PRE, H13 or C13 conclusion is claimed. The source assertions remain at their full original scope and receive no freeze or coverage from this auxiliary construction.
+
+The construction is a repository formal derivation using standard finite-dimensional commutative spectral theory and Lagrange interpolation. The mathematical tools are not claimed as original. The Reg source reconstructs the complete quantified six-law family and verifies the actual consumer application; it does not claim declared_validated four-slot registration.
+
+## References
+
+- Truth anchor: `D5/S3/Topology/JBFiniteSpectral.finite_spectral_resolutions`
+- Dependency: [D5/S3/Topology/JBSquareDefect](JBSquareDefect.md)
