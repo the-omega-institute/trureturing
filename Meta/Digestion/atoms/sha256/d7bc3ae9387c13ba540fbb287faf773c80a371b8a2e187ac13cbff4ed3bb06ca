@@ -1,0 +1,145 @@
+**定理 63.2（第一切片恢复完整 I）。** 定义 63.1 的条件及定义 62.1 引用的二元边缘纸面接口 (15)–(18) 推出
+
+$$
+\begin{gathered}
+U:=M(1_A,1_A)=1_D,\qquad m=n^2,\\
+s:=r\,pL(\mathord\cdot,e):D\to A\text{ 在整个正锥上正},\\
+\mathrm{(I)}\quad rM(a,b)=\tau_A(b)a,\qquad
+sM(a,b)=\tau_A(a)b\quad(a,b\in A),\\
+\tau_Ar=\tau_D=\tau_As,\qquad
+\mathcal M(a\otimes b):=M(a,b)
+\text{ 是 }A\otimes_{\mathbb R}A\to D\text{ 的满迹内积等距同构}.
+\end{gathered}
+\tag{63.5}
+$$
+
+这一步不使用 $W_H$、$p$ 保迹、$L$ 的 $E$ 张成或交叉插入正性；它们继续保留在完整候选中。
+
+**证明。** （一）$B,M,J$ 正，平方锥自对偶使 $r=J^*$ 正。$W_J$ 给出 $rM(b,e)=b$，所以 III 给出正映射 $s$ 的全部实向量律及其线性扩展：
+
+$$
+sM(a,b)=\tau_A(a)b,\qquad
+B(d,c)=M(sd,c)\quad(d\in D,c\in A).
+\tag{63.6}
+$$
+
+第二式在 $d=M(a,b)$ 上由 III 成立，再用 $M$ 实张成。把它代入确切的两次同一个 $p$ 定义，得到
+
+$$
+\begin{aligned}
+M(a,b)&=M\bigl(sM(s\omega,a),b\bigr)
+       =\tau_A(s\omega)M(a,b),\\
+\tau_A(s\omega)&=1,\qquad
+V:=s^*1_A\ge0,\qquad \tau_D(V)=m.
+\end{aligned}
+\tag{63.7}
+$$
+
+$D\ne0$ 和 $M$ 张成保证存在非零乘积，故第二行合法。这只是一个标量迹平衡，尚不是 $V=1_D$。对正 $a\le\lambda1_A,b\le\mu1_A$ 有 $0\le M(a,b)\le\lambda\mu U$；正元若与 $U$ 正交，就消去所有正乘积，再由锥生成性与实张成消去整个 $D$。零谱值将产生这样的非零正元，故 $U$ 为内点。而 $W_J$ 给出 $\tau_D(U^2)=\langle1_A,J^*J1_A\rangle_A=n^2$。
+
+（二）写 $\ell_x(y)=x\circ y$ 和标准二次表示 $P_x=2\ell_x^2-\ell_{x^2}$，置
+
+$$
+C=P_{\sqrt U},\quad C^{-1}=P_{U^{-1/2}},\qquad
+F=C^{-1}M,\quad R=sC,\quad
+\alpha(a)=F(a,1_A),\quad\beta(b)=F(1_A,b).
+\tag{63.8}
+$$
+
+此处 $F=C^{-1}M$，不同于 (62.13) 的 $\widehat M=CM$；不改变标准迹。所用二次表示正性正是 (62.11) 引用的 [van de Wetering, Propositions 2.21、2.25](https://arxiv.org/html/1912.01903v1#S2.counter21)，公式采用该文引言的 $P_x$。在对角化 $U$ 的本原框架中，$C$ 的对角与非对角 Peirce 系数分别为 $u_i$、$\sqrt{u_iu_j}$，$u_i>0$；显示的逆取倒数。迹形式结合性使两者自伴随，二次表示正性使两者全锥正，且
+
+$$
+C1_D=U,\quad C^{-1}U=1_D,\quad C^{-1}1_D=U^{-1},\qquad
+F(1_A,1_A)=1_D,\quad RF(a,b)=\tau_A(a)b.
+\tag{63.9}
+$$
+
+$F$ 正双线性且实张成 $D$，$R$ 正，$\alpha,\beta$ 正且保单位；尚未断言 $F$ 等距或 $R$ 保迹。上述谱与支撑事实均包括例外 EJA 和直和。
+
+（三）取 $A$ 的任意完整本原框架 $(q_i)$。由 $W_J$，正元 $x_i=Jq_i$ 两两迹正交，故其支撑 $c_i$ 为正交幂等元，和为 $1_D$，因为 $\sum_i x_i=U$ 为内点；支撑规则见 (62.18) 或二元接口 (19)。在 $D_1(c_i)$ 上 $U$ 就是 $x_i$，由同一 Peirce 系数计算得
+
+$$
+C^{-1}x_i=c_i,\qquad \alpha(q_i)=c_i.
+\tag{63.10}
+$$
+
+因此谱展开给出 $\alpha(a^2)=\alpha(a)^2$，极化使 $\alpha$ 为保单位 Jordan 同态。它单射，因为 $J^*J=n\,\mathrm{id}_A$ 且 $C$ 可逆。对 $b\ge0$，取 $b\le\lambda1_A$，则 $0\le F(q_i,b)\le\lambda c_i$，故 $F(q_i,b)\in D_1(c_i)$。于是 $\beta(b)=\sum_iF(q_i,b)$ 在这些支撑块上对角，并有
+
+$$
+F(q_i,b)=c_i\circ\beta(b),\qquad
+F(a,b)=\alpha(a)\circ\beta(b),\qquad
+[\ell_{\alpha(a)},\ell_{\beta(b)}]=0\quad(a,b\in A).
+\tag{63.11}
+$$
+
+最后两式由谱展开及实线性延拓。这里是整个 $D$ 上的算子交换：对每个 $c_i$，块内元素及其他正交块内元素的乘法都保持 $D_1(c_i),D_{1/2}(c_i),D_0(c_i)$，由 Peirce 乘法规则使 $\ell_{\beta(b)}$ 与 $\ell_{c_i}$ 交换，再对 $\alpha(a)=\sum_i\lambda_i c_i$ 线性组合。这不是只在所生成子代数内交换；亦可用上述主文 Proposition 2.12 的幂等元判据。没有用特殊 Jordan 矩阵嵌入，也尚未假定 $\beta$ 保平方。
+
+（四）对任意本原 $q\in A$，令 $c=\alpha(q)$。由同态性和 (63.11)，$P_c=2\ell_c^2-\ell_c$ 与 $\ell_{\beta(b)}$ 交换，故
+
+$$
+\begin{aligned}
+P_{\alpha(q)}F(a,b)&=F(P_q a,b),&P_q a&=\langle q,a\rangle_Aq,\\
+R_q&:=R P_{\alpha(q)}:D\to A,&
+R_qF(a,b)&=\langle q,a\rangle_A b.
+\end{aligned}
+\tag{63.12}
+$$
+
+第一式还用了 $P_c\alpha(a)=\alpha(P_q a)$；本原性使 $A_1(q)=\mathbb Rq$，而正交 Peirce 投影 $P_q$ 因 $\|q\|^2=1$ 有显示形状。二次表示正性使 $R_q$ 在整个 $D_+$ 上正。设 $\mathcal F:A\otimes_{\mathbb R}A\to D$ 线性化 $F$。若 $\mathcal Fz=0$，则对所有本原 $q$ 及所有实 $g\in A$，
+
+$$
+\langle q\otimes g,z\rangle
+ =\langle R_q^*g,\mathcal Fz\rangle_D=0.
+\tag{63.13}
+$$
+
+本原元实张成 $A$，所以 $z=0$。$F$ 张成给出满射；至此才第一次得到张量逆，未从张成直接跳到单射。
+
+（五）现在定义对偶准备，且保留所有原标准迹：
+
+$$
+N(f,g)=(\mathcal F^*)^{-1}(f\otimes g),\qquad
+\langle N(f,g),F(a,b)\rangle_D
+ =\langle f,a\rangle_A\langle g,b\rangle_A.
+\tag{63.14}
+$$
+
+(63.12) 和非退化配对给出 $N(q,g)=R_q^*g$，故本原 $q$ 与任意 $g\ge0$ 给出正向量；对正 $f$ 作本原谱展开，得到 $N(A_+,A_+)\subseteq D_+$。其线性化可逆，因而 $N$ 实张成 $D$。$\alpha,\beta$ 正且保单位，使 $\alpha^*,\beta^*$ 全锥正且标准保迹。由 $\alpha(a)=F(a,1_A)$、$\beta(b)=F(1_A,b)$ 及 (63.14)，对全部实 $f,g$ 有
+
+$$
+\alpha^*N(f,g)=\tau_A(g)f,\qquad
+\beta^*N(f,g)=\tau_A(f)g.
+\tag{63.15}
+$$
+
+这恰好满足 Library「Positive marginals recover the joint-effect contract」(15) 的每一项：实际标准迹 EJA、全域正双线性准备、实张成、两个全锥正保迹边缘及全部实向量丢弃律。此时才把其 (16)–(18) 用于 $(N,\alpha^*,\beta^*)$，在没有 $r,s$ 保迹前得到 $\mathcal N$ 为满等距同构、$N(1_A,1_A)=1_D$ 及 $m=n^2$。因
+
+$$
+\mathcal N=(\mathcal F^*)^{-1},\qquad
+\mathcal F=(\mathcal N^*)^{-1}=\mathcal N,
+\tag{63.16}
+$$
+
+$F=N$，$\mathcal F$ 也是满等距同构，(63.15) 同时成为 $F$ 的两条普通边缘律。这仅用接口已经给出的等距性，不额外假定其乘积公式。
+
+（六）(63.9)、(63.15) 和 $F$ 张成给出 $R=\beta^*$。因此
+
+$$
+CV=R^*1_A=\beta(1_A)=1_D,\qquad V=U^{-1}.
+\tag{63.17}
+$$
+
+(63.7) 及 $W_J$ 已分别给出 $\tau_D(U^{-1})=m$、$\tau_D(U^2)=n^2=m$。对 $U$ 的完整本原谱框架，恰有 $m$ 个正谱值 $\lambda_k$，包括各扇区。于是
+
+$$
+\begin{aligned}
+0&=\sum_{k=1}^{m}\bigl(\lambda_k^2+2/\lambda_k-3\bigr),\\
+\lambda^2+2/\lambda-3
+ &=\frac{(\lambda-1)^2(\lambda+2)}{\lambda}\ge0
+ \quad(\lambda>0).
+\end{aligned}
+\tag{63.18}
+$$
+
+每项必须为零，故 $U=1_D$、$C=\mathrm{id}_D$、$M=F=N$。又 $J=\alpha$，故 $r=\alpha^*$、$s=\beta^*$，(63.15) 给出完整 I、第二边缘律及保迹性，得到 (63.5)。恢复的缺失条件是完整 I 及其所需归一化：其中 $V$ 的迹平衡来自同一个 $p$ 的内部一致性，不能提前把它当成 $V=1_D$。$\square$
+

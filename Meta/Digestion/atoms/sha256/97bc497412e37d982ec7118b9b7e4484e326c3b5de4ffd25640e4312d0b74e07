@@ -1,0 +1,6 @@
+**推论 3.4（Uniqueness of a pure lift inside the fixed carrier）。** When a pure lift exists, its ray is unique exactly when one sector is populated, its visible rank is one and that sector has $m_\alpha=1$.
+
+**证明。** In this case the only right-frame freedom is one common phase. In every other case, either a relative central-sector phase or a change of right frame produces a distinct ray with the same visible functional. This concerns the fixed represented $H$, rather than arbitrary larger completions. $\square$
+
+<a id="statement-purity-3-5"></a>
+

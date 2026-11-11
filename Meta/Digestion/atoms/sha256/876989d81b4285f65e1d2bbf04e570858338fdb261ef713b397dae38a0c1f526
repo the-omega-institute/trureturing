@@ -1,0 +1,24 @@
+**定义 54.3（The original real coefficients）。** For $E\in K_{S,N}$ write $E_{jk}=x_{jk}+iy_{jk}$ for $j<k$ in $J$. The coefficients $\alpha_Q(E)$ are exactly those of Part I, (16.6):
+
+$$
+ \begin{aligned}
+ E&=\sum_{j\in J}a_jD_j+
+       \sum_{\substack{j<k\\j,k\in J}}(2x_{jk}R_{jk}+2y_{jk}J_{jk})
+       =\sum_{Q\in\mathcal B_S}\alpha_Q(E)Q,\\
+ a_j&=E_{jj}-\sum_{\substack{k<j\\k\in J}}(x_{kj}+y_{kj})
+                  -\sum_{\substack{k>j\\k\in J}}(x_{jk}+y_{jk}).
+ \end{aligned}
+\tag{54.7}
+$$
+
+Taking traces and using the first coefficient inequality of Part I, (16.7), with $d=3$, gives
+
+$$
+ \sum_Q\alpha_Q(E)=\operatorname{Tr}E,\qquad
+ \sum_Q|\alpha_Q(E)|\le27\|E\|_{\rm op}\le27,\qquad
+ |1-\operatorname{Tr}E|\le2.
+\tag{54.8}
+$$
+
+The coefficient inequality is valid for every effect; its use here does not require the local-ball condition $27\|E\|\le1$ used later in Part I's local proof.
+

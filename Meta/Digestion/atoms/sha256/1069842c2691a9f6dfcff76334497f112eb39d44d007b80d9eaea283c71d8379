@@ -1,0 +1,32 @@
+**命题 23.1（Paid heralding with complete flags）。** Under (23.1), the actual product-return error obeys
+
+<a id="eq-reference-23-2"></a>
+
+$$
+\begin{aligned}
+\varepsilon_j
+&:=D\bigl(\mathcal T(\eta_j),p_j\otimes\eta_j\bigr)\\
+&=\sum_{x\in\mathrm{fail}}
+p_j(x)D(\eta_{j,x},\eta_j)
+\le f_j.
+\end{aligned}
+\tag{23.2}
+$$
+
+Consequently,
+
+<a id="eq-reference-23-3"></a>
+
+$$
+f_0+f_1
+\ge\frac{[1-d-\beta^n]_+}{n}
+\qquad(n\ge1),
+\tag{23.3}
+$$
+
+where $\beta$ is the affinity of the complete actual record laws.
+
+**证明。** Trace norm adds over the classical blocks. The successful blocks vanish from the joint difference by (23.1); each failure-state distance is at most one, giving (23.2). Apply (19.4) with these actual errors to obtain (23.3). $\square$
+
+Separately normalized successful distributions cannot replace the complete distributions in $\beta$. Both success probability and the failure reference state remain in the budget. Equation (23.3) is a necessary bound, not an optimal heralded-measurement frontier or a prohibition on paid postselection. For a mixed reference, return of the success marginal while it remains correlated with its detailed record does not establish (23.1).
+

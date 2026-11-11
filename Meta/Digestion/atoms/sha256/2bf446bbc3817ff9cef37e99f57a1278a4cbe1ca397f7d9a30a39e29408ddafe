@@ -1,0 +1,15 @@
+**推论 16.2（Generators of continuous reversible closure）。** A continuous one-parameter group $U_t=e^{-itH_0}$ preserves $\mathcal A$ for every $t$ exactly when
+
+<a id="eq-future-16-1"></a>
+
+$$
+H_0=\bigoplus_\alpha
+\left(h_\alpha\otimes I+I\otimes k_\alpha\right),
+\qquad h_\alpha=h_\alpha^*,\quad k_\alpha=k_\alpha^*.
+\tag{16.1}
+$$
+
+**证明。** Along a continuous path from the identity, no central sector can be permuted. Differentiate the resulting finite matrix-algebra automorphisms. On a full matrix block, a derivation is a commutator with a matrix, as verified on matrix units. Subtract the self-adjoint left generator from $H_0$; the remainder commutes with every left matrix unit and hence has the right-factor form in (16.1). A scalar may be shifted between $h_\alpha$ and $k_\alpha$ without changing their sum. Conversely (16.1) preserves $\mathcal A$ for every $t$. $\square$
+
+The essential quantifier is every joint density state, or every equivalent pure pair, at one fixed full-algebra interface. On a stipulated ready-input family, global unitary dilations can implement noisy local channels. The nonselective parity operation of §14 is itself a completely positive measurement channel; its unitary dilation uses an extra initialized record. No autonomy on all states of that further enlarged carrier has been asserted, so this does not contradict Theorem 16.1.
+

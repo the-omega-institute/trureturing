@@ -1,0 +1,30 @@
+### 33.3. Positive conditioning gives a linear calibration rate
+
+For a domain $Q$ containing at least two states, a sufficient Lipschitz condition is
+
+<a id="eq-preparation-33-3"></a>
+
+$$
+s_Q
+=\inf_{\substack{\rho,\sigma\in Q\\\rho\ne\sigma}}
+\frac{\lVert\mathsf M(\rho-\sigma)\rVert_2}
+{\lVert\rho-\sigma\rVert_2}
+>0.
+\tag{33.3}
+$$
+
+Trace norm is at most $\sqrt D$ times Hilbert–Schmidt norm, by the Euclidean comparison of the $D$ eigenvalues. Therefore
+
+<a id="eq-preparation-33-4"></a>
+
+$$
+D(\rho,\sigma)
+\le\frac{\sqrt D}{2s_Q}
+\lVert\mathsf p(\rho)-\mathsf p(\sigma)\rVert_2.
+\tag{33.4}
+$$
+
+On a singleton domain, state distance is identically zero and no conditioning constant is needed.
+
+For a nontrivial affine direction space $L=\operatorname{span}_{\mathbb R}(Q-Q)$, a directly computable sufficient constant is the least singular value $s_L$ of $\mathsf M|_L$, using Hilbert–Schmidt norm on $L$. If $\mathsf M$ is injective on $L$, finite dimension gives $s_L>0$ and $s_Q\ge s_L$, so (33.4) may use $s_L$. In an orthonormal basis of $L$, $s_L$ is the square root of the smallest eigenvalue of the measurement Gram operator $\mathsf M^*\mathsf M$.
+

@@ -1,0 +1,108 @@
+**定理 64.4（单位律之前的归一化二元接口）。** 定义 64.1–64.3 下，仅用正性、$M$ 实张成、$D_J,Z$，便有 $U$ 内点及正映射 $j:D\to A$、$s=jB_1:D\to A$。令
+
+$$
+C=P_{\sqrt U},\qquad F=C^{-1}M,\qquad
+\alpha(a)=F(a,1_A),\quad\beta(b)=F(1_A,b),\quad V=s^*1_A.
+$$
+
+则 $F$ 满足完整归一化二元接口，而且
+
+$$
+\begin{gathered}
+jJ=\operatorname{id}_A,\quad sM(a,b)=\tau_A(a)b,\quad
+B_1=Js,\quad sK=\operatorname{id}_A,\quad\tau_A(s\omega)=1,\\
+m=n^2,\qquad sC=\beta^*,\qquad V=U^{-1},\qquad\tau_D(V)=m.
+\end{gathered}
+\tag{64.5}
+$$
+
+此时不宣称实际 $M$ 等距、$U=1_D$、$s$ 保迹或完整 III；也未使用 $W_H,N$、$L$ 张成或插入正性。
+
+**证明。** 对正 $a\le\lambda1_A,b\le\mu1_A$，有 $0\le M(a,b)\le\lambda\mu U$。若正元与 $U$ 零配对，它消去所有正乘积；正锥生成及 $M$ 张成使它为零。故 $U$ 内点。若 $a\ge0$ 且 $Ja=0$，同样的第二因子支配给出 $M(a,b)=0$。$Z$ 遂给出 $\tau_A(a)Jb=0$。若 $a\ne0$，规范迹严格正，便有 $J=0$，与 $U$ 内点矛盾。因此 $J$ 无非零正核。
+
+$C$ 与其逆 $P_{U^{-1/2}}$ 均全锥正、自伴随，且
+
+$$
+C1_D=U,\quad C^{-1}U=1_D,\quad C^{-1}1_D=U^{-1},\quad
+F(1_A,1_A)=1_D.
+\tag{64.6}
+$$
+
+取任意完整本原框架 $(q_i)$。$D_J$ 使 $Jq_i$ 的支撑 $c_i$ 两两正交，其和为 $1_D$。在 $D_1(c_i)$ 内，$U$ 等于 $Jq_i$；二次表示的谱公式给出 $C^{-1}Jq_i=c_i$。所以 $\alpha$ 把每个完整本原框架映到一个正交幂等分解，谱展开和极化使它保单位且保 Jordan 乘积。若 $\alpha(a)=0$，则 $\alpha(a^2)=0$，从而 $J(a^2)=0$；无正核给出 $a=0$。故 $\alpha$ 单射。
+
+置 $T=\alpha^*\alpha$。形式 $\langle\alpha x,\alpha y\rangle_D$ 正定且结合，因 $\alpha$ 保乘积而满足
+$\langle T(x\circ a),y\rangle_A=\langle Tx,a\circ y\rangle_A$。因此 $T$ 与每个 $\ell_a$ 交换。它保持每个简单理想；在一个简单理想内，$T$ 的每个特征空间也是理想，所以 $T$ 在该理想上是严格正标量。故 $T^{-1}$ 正。由自对偶性，$\alpha^*$ 正，于是
+
+$$
+j=T^{-1}\alpha^*C^{-1}\ge0,\qquad jJ=\operatorname{id}_A.
+\tag{64.7}
+$$
+
+$Z$ 和 $M$ 实张成立即给出
+
+$$
+\begin{aligned}
+s&=jB_1,&sM(a,b)&=\tau_A(a)b,&B_1&=Js,\\
+B_1K&=J,&sK&=jB_1K=jJ=\operatorname{id}_A,&
+sJx&=\tau_A(x)1_A.
+\end{aligned}
+\tag{64.8}
+$$
+
+这里 $B_1K=J$ 正是 $M$ 的原定义。又 $K1_A=B_1\omega=J(s\omega)$，故
+
+$$
+1_A=sK1_A=sJ(s\omega)=\tau_A(s\omega)1_A,\qquad
+\tau_A(s\omega)=1,\qquad\tau_D(s^*1_A)=m.
+\tag{64.9}
+$$
+
+这只用了已定型的实际映射复合，没有施加额外的 $K$ 固定点条件。
+
+接着完成二元接口的全部前提。令 $R=sC$。对 $b\ge0$，$F(q_i,b)$ 被正倍数的 $c_i$ 支配，故位于 $D_1(c_i)$。将这些块求和得到 $\beta(b)$，因而
+
+$$
+F(a,b)=\alpha(a)\circ\beta(b),\qquad
+[\ell_{\alpha(a)},\ell_{\beta(b)}]=0,\qquad
+RF(a,b)=\tau_A(a)b.
+\tag{64.10}
+$$
+
+算子交换发生在整个 $D$：$\beta(b)$ 对各 $c_i$ 无 Peirce 半空间分量，故与每个 $c_i$ 算子交换，再对 $\alpha(a)$ 的谱分解线性化。此时 $\beta$ 只已知正且保单位，尚不预设保平方。
+
+对任意本原 $q\in A$，$R_q=R P_{\alpha(q)}$ 全锥正，并且
+
+$$
+P_{\alpha(q)}F(a,b)=F(P_qa,b),\qquad
+P_qa=\langle q,a\rangle_Aq,\qquad
+R_qF(a,b)=\langle q,a\rangle_A b.
+\tag{64.11}
+$$
+
+第一式由 $\alpha$ 同态及 (64.10) 中环境算子交换得到。若 $\widetilde Fz=0$，则 $\langle q\otimes g,z\rangle=\langle R_q^*g,\widetilde Fz\rangle=0$ 对所有本原 $q$、实 $g$ 成立；本原元实张成，故 $z=0$。$F$ 张成使 $\widetilde F$ 满射。现在才定义对偶准备
+
+$$
+G(f,g)=(\widetilde F^*)^{-1}(f\otimes g),\qquad
+\langle G(f,g),F(a,b)\rangle_D
+ =\langle f,a\rangle_A\langle g,b\rangle_A.
+\tag{64.12}
+$$
+
+由 (64.11)，$G(q,g)=R_q^*g$ 对本原 $q$ 和正 $g$ 为正；谱展开给出 $G$ 全正，且可逆线性化使其张成 $D$。$\alpha,\beta$ 正且保单位，故 $\alpha^*,\beta^*$ 在整个 $D_+$ 上正、规范保迹。(64.12) 给出全部实方向的
+
+$$
+\alpha^*G(f,g)=\tau_A(g)f,\qquad
+\beta^*G(f,g)=\tau_A(f)g.
+\tag{64.13}
+$$
+
+定义 64.3 的每一输入现已齐备，故可应用于 $(G,\alpha^*,\beta^*)$：$\widetilde G$ 为满等距同构。由于 $\widetilde G=(\widetilde F^*)^{-1}$，有 $\widetilde F=(\widetilde G^*)^{-1}=\widetilde G$。所以 $F=G$，$F$ 也是满等距，$m=n^2$，两嵌入现在都是 Jordan 同态，且 $F$ 具有纯乘积和精确全效应配对。由 $RF(a,b)=\tau_A(a)b$ 与张成，$R=\beta^*$，所以
+
+$$
+CV=R^*1_A=\beta1_A=1_D,\qquad
+V=C^{-1}1_D=U^{-1},\qquad\tau_D(U^{-1})=m.
+\tag{64.14}
+$$
+
+最后一个迹式来自 (64.9)，没有使用第一参考的范数条件。$\square$
+

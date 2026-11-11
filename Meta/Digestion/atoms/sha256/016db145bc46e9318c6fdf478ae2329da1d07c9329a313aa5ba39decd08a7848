@@ -1,0 +1,13 @@
+**推论 2.2（Interfaces preserving purity of every global vector）。** Every unit vector in $H$ restricts to a pure state of $\mathcal A$ if and only if
+
+$$
+\mathcal A=\mathbb C I_H
+\quad\text{or}\quad
+\mathcal A=B(H).
+\tag{2.2}
+$$
+
+**证明。** Two central sectors admit a unit vector with half its squared norm in each, whose restriction is mixed. In a single sector with $n\ge2$ and $m\ge2$, a two-term equal Schmidt vector has mixed restriction. The remaining single-sector cases are $n=1$, giving $\mathbb C I_H$, and $m=1$, giving $B(H)$; each has the asserted property. In dimension one these algebras coincide. $\square$
+
+Thus the purity of represented global vectors alone does not select a nontrivial intermediate observable algebra.
+

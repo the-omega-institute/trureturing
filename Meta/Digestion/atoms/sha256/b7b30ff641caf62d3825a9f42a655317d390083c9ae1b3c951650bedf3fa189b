@@ -1,0 +1,13 @@
+**例 7.1（The two-observable disk and its larger algebra closure）。** On one qubit, take the self-adjoint observable span of $I,X,Z$. The image of all qubit density states under the two means is exactly
+
+<a id="eq-purity-7-1"></a>
+
+$$
+(x,z),\qquad x^2+z^2\le1.
+\tag{7.1}
+$$
+
+Necessity follows from the Bloch ball, and $\rho=(I+xX+zZ)/2$ witnesses sufficiency. The orthogonal pure states $|+y\rangle$ and $|-y\rangle$ both give the disk centre. This response is not extreme: it is the midpoint of $(1,0)$ and $(-1,0)$. Nevertheless the mathematically generated $*$-algebra of $X$ and $Z$ is all of $M_2(\mathbb C)$, since their product supplies $Y$ up to a scalar factor.
+
+The complete-algebra criterion of §2 applies only if the generated algebra's effects belong to the declared observation contract. Generating $Y$ in a calculation does not install a $Y$ measurement. This disk is the response image of the common qubit model, rather than the larger square obtained by separately normalizing arbitrary binary menus without a shared-state condition. Compatibility, algebra closure and actual control access are distinct conditions.
+

@@ -1,0 +1,40 @@
+**定义 33.3（实单线正则化）。** 在同一完整 $M_5(\mathbb C)$、分块 $\mathbb C^2\oplus\mathbb C^2\oplus\mathbb C$ 上，取
+
+$$
+\begin{gathered}
+n=\frac1{\sqrt2}(1,1)^{\mathsf T},\qquad
+a=C^{1/2}n=(1/\sqrt2,1)^{\mathsf T},\qquad \|a\|^2=3/2,\\
+H_h=2C+hJ_A,\qquad h,\gamma\in\mathbb R,\quad\delta>0,\quad
+\lambda=\gamma/\delta,\\
+D_{\rm env}=C\oplus\delta,\qquad
+V=[C,\gamma a],\qquad
+B=3C+hJ_A+\frac{\gamma^2}{\delta}aa^\ast,\\
+t_{h,\gamma,\delta}=
+\begin{pmatrix}
+3C+hJ_A+\gamma^2aa^\ast/\delta&C&\gamma a\\
+C&C&0\\
+\gamma a^\ast&0&\delta
+\end{pmatrix},\qquad
+t_h^0=
+\begin{pmatrix}
+3C+hJ_A&C&0\\
+C&C&0\\
+0&0&0
+\end{pmatrix}.
+\end{gathered}
+\tag{33.21}
+$$
+
+原 $c,P,s$ 分别是 $C\oplus0_3$、$I_2\oplus0_3$、$\rho T_A\oplus0_3$。环境可逆，故 $W=0$，实际矩为
+
+$$
+\begin{gathered}
+M_0=C^2+\gamma^2aa^\ast,\qquad
+M_1=C+\frac{\gamma^2}{\delta}aa^\ast
+   =C+\delta\lambda^2aa^\ast,\\
+M_2=I_2+\lambda^2aa^\ast,\qquad H=H_h,\qquad
+L_\lambda:=\|M_2\|=1+\frac32\lambda^2.
+\end{gathered}
+\tag{33.22}
+$$
+

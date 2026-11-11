@@ -1,0 +1,63 @@
+**Proposition 42.1 (what scalar effects certify).** A fixed probability
+vector p obeys q_s(rho)=p_s for every density rho on H exactly when
+
+$$
+M_s^*(I_R)=p_s I_H\quad\text{for every }s.
+\tag{42.1}
+$$
+
+Under (42.1), the output setting is independent of every untouched
+reference T after discarding R:
+
+$$
+\tau_{ST}=p\otimes\rho_T
+\quad\text{for every input }\rho_{HT}.
+\tag{42.2}
+$$
+
+These conditions do not imply independence of S from R tensor T.
+
+Proof. The trace defining q_s is the expectation of M_s^*(I_R).
+Density matrices span the real Hermitian space, so equality of all
+these expectations is equivalent to (42.1). Pairing the s-th block
+of tau_ST with any effect F_T gives
+Tr[rho_HT (M_s^*(I_R) tensor F_T)]=p_s Tr(rho_T F_T).
+Effects determine the Hermitian block, giving (42.2).
+
+For the failed implication take H=R=C^2, Z=diag(1,-1), and
+
+$$
+M_0(X)=\tfrac12 X,\qquad M_1(X)=\tfrac12 ZXZ.
+\tag{42.3}
+$$
+
+Both setting effects equal I/2. For rho=|+><+| the returned branch
+states are |+><+| and |-><-|. They are orthogonal. The setting law
+is uniform, the source marginal is I/2, and
+
+$$
+\delta(\rho)=\tfrac12.
+\tag{42.4}
+$$
+
+Indeed each conditional source has trace distance 1/2 from I/2;
+the classical block norm in (41.2) averages these distances. The
+setting law is input-independent while its post-generation source
+is setting-dependent. This counterexample retains both outcomes.
+
+It also has a pure-global isometric realization:
+
+$$
+V|\psi\rangle=\frac1{\sqrt2}\sum_{s=0}^1
+ |s\rangle_S\otimes Z^s|\psi\rangle_R\otimes|s\rangle_E.
+\tag{42.5}
+$$
+
+The mutually orthogonal S,E records give V^dagger V=I. The omitted
+E is stipulated never to return. Tracing E gives the same recorded
+channel. For the pure input |+>, both conditional returned sources
+are pure with spectrum (1,0), while delta remains 1/2. Global purity
+and equal conditional spectra therefore do not imply the missing
+setting-source relation. The isometry is a declared construction,
+not a history already acquired from a native gate menu.
+

@@ -1,0 +1,60 @@
+**定理 66.7（无 C13 原始系统的双向分类）。** 任取有限非空 $I$、整数 $n_i\ge1$、满足 (66.20) 的有序位、满足 (66.14) 的正定 $u_{ij}$ 及任意正定 $g_{ijk}$。在 (66.9) 的完整矩阵直和锥、全部总迹一态及全部效应上，只供应 (66.16) 的 $L$ 和 (66.17) 的 $p$。则定义 66.1 的每条保留条件均成立，并且从原 $\omega=1_D/n^2$ 用同一个 $p$ 两次生成的实际 $M$ 正是 (66.16)。因此 (66.14)、(66.20) 是所述未校准系统的全部参数限制。
+
+证明。先暂把 (66.16) 第一式记为 $\widehat M$，它不是额外供应的准备。对全部实 $d,c,a,b$，(66.19) 及转置抵消直接给
+
+$$
+pL(d,c)=\widehat M(sd,c),\qquad
+s\widehat M(a,b)=\tau_A(a)b.
+\tag{66.21}
+$$
+
+用原 $\omega$ 计算 $w=s\omega$，得到 (66.18) 的正定 $w_j$，而 (66.14) 给 $\tau_Aw=1$。于是第一次实际读回给 $K(a)=\widehat M(w,a)$、$sK(a)=a$，第二次使用同一个实际 $p$ 给
+
+$$
+M(a,b)=pL(K(a),b)
+ =\widehat M(sK(a),b)=\widehat M(a,b).
+\tag{66.22}
+$$
+
+这验证内部构造，不以一个独立供应的 $M$ 代替它。实际 $J,H,Q,\mathcal B,B_1$ 因而都是 (66.16)、(66.18) 所列映射。
+
+$L$ 在整个 $D_+\times A_+$ 上正：每块是完整正矩阵 $d_{ij}$ 与 $c_k$ 的转置后正合同像的张量积。$d_{ij}$ 可在前两腿任意纠缠。定理 66.6 和两端正序同构证明 $p$ 对整个 $E_+$ 正。Hermitian 简单张量实张成完整 Hermitian 空间；固定输入中心支撑可分别选取每个有序块，转置与正定合同可逆，所以 $M(A,A)$、$L(D,A)$ 分别实张满 $D,E$。此论证不声称每个正元可分离。
+
+对正 $a,b$，每项 $\operatorname{Tr}(a_ib_i)\ge0$，故若原配对之和为零，则各项皆零，从而
+
+$$
+\langle Ja,Jb\rangle_D
+ =\sum_{i,j}\operatorname{Tr}(a_ib_i)\operatorname{Tr}(u_{ij}^2)=0.
+\tag{66.23}
+$$
+
+同样，对整个实际 $D_+$ 中任意 $d,d'$，各 $\operatorname{Tr}(d_{ij}d'_{ij})\ge0$；配对为零给
+
+$$
+\langle Hd,Hd'\rangle_E
+ =\sum_{i,j,k}\operatorname{Tr}(d_{ij}d'_{ij})
+ \operatorname{Tr}(g_{ijk}^2)=0.
+\tag{66.24}
+$$
+
+因此精确 $D_J,D_H$ 均成立，包括全部纠缠二级输入。$B_1=Js$ 及 (66.21) 给全部实输入的
+
+$$
+B_1M(a,b)=\tau_A(a)Jb,\qquad
+pQ(a,b,c)=\tau_A(a)M(b,c).
+\tag{66.25}
+$$
+
+最后在三个载体上逐一验证完整有限 $S$。纯态 $q$ 是一个简单块内的迹一本原投影。若 $0\le e\le1$ 且 $\langle e,q\rangle=1$，则 $r=1-e\ge0$ 与 $q$ 正交，处于互补支持面；所以
+$r=P_{1-q}r\le P_{1-q}1=1-q$，即 $e\ge q$。取 $e=q$ 达到下界，故
+
+$$
+T_q(x)=\langle q,x\rangle,\qquad
+T_q\left(\sum_\ell v_\ell q_\ell\right)
+ =\sum_\ell v_\ell\langle q,q_\ell\rangle
+ =\sum_\ell v_\ell T_{q_\ell}(q).
+\tag{66.26}
+$$
+
+这包括跨中心扇区的任意有限纯制备，不要求跨扇区强对称性。所有保留条件现已分别检查；前向从实际数据抽取参数，反向又从相同原定义重建实际数据，故无其他隐藏参数条件。$\square$
+

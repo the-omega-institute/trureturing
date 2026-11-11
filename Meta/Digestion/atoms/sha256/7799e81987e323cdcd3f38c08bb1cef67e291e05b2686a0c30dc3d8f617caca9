@@ -1,0 +1,30 @@
+**定义 9.1（Current response equivalence and future width）。** Let $H$ be a finite-dimensional nonzero complex Hilbert space. Let $W\subseteq\operatorname{Herm}(H)$ be a real linear subspace containing $I$. It can be the real span of a declared effect menu; multiplication closure is not assumed. Define
+
+<a id="eq-future-9-1"></a>
+
+$$
+\rho\sim_W\sigma
+\quad\Longleftrightarrow\quad
+\operatorname{Tr}((\rho-\sigma)w)=0
+\quad\text{for every }w\in W.
+\tag{9.1}
+$$
+
+All state quantifiers refer to the full density cone unless a smaller domain is explicitly specified. Comparing all allowed realizations with identical current responses is stronger than following one actual state; one trajectory alone supplies no such uniform conclusion.
+
+For a Hermitian future readout $B$, put
+
+<a id="eq-future-9-2"></a>
+
+$$
+\begin{aligned}
+\Delta_W(B)
+&=\max_{\rho\sim_W\sigma}
+|\operatorname{Tr}(B(\rho-\sigma))|,\\
+d_W(B)&=\min_{b\in W}\lVert B-b\rVert_{\mathrm{op}}.
+\end{aligned}
+\tag{9.2}
+$$
+
+For an effect $B$, $\Delta_W(B)\in[0,1]$. It is a possible difference between future event probabilities in two density realizations sharing every current response. Existence of an extremal mathematical pair does not provide devices that prepare it or measure $B$.
+

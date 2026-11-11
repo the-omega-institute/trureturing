@@ -1,0 +1,66 @@
+**推论 33.5（同一源极限上的不同联合区间）。** 定义 33.3 的原源距离精确为
+
+$$
+\begin{gathered}
+t_{h,\gamma,\delta}-t_h^0
+ =\delta
+ \begin{bmatrix}\lambda a\\0_2\\1\end{bmatrix}
+ \begin{bmatrix}\lambda a\\0_2\\1\end{bmatrix}^{\!\ast},\\
+\boxed{\quad
+\|t_{h,\gamma,\delta}-t_h^0\|
+ =\delta\left(1+\frac32\lambda^2\right)
+ =\delta+\frac{3\gamma^2}{2\delta}.
+\quad}
+\end{gathered}
+\tag{33.30}
+$$
+
+任取两个有限实数 $\lambda_1,\lambda_2$，满足
+$|\lambda_1|\ne|\lambda_2|$。取
+$\Lambda\ge\max(|\lambda_1|,|\lambda_2|)$，
+并固定任一 $0<|h|<h_\Lambda$。
+沿 $\gamma=\lambda_j\delta$、$\delta\downarrow0$ 的两条路径，原输入均趋于同一个 $t_h^0$，
+$M_0\to C^2$、$M_1\to C$，但两个取向的联合允许集分别等于不同的非退化闭区间
+$I_{\lambda_j}(h)$。其相对种子半径为
+
+$$
+\frac{r_{\lambda_j}(h)}{r_0(h)}
+ =\left(1+\frac23\lambda_j^2\right)^{-1/2}.
+\tag{33.31}
+$$
+
+更一般地，在同一个有界比率范围内，若 $\lambda\to\lambda_\ast$、$\delta\to0$，则联合区间趋于 $I_{\lambda_\ast}(h)$。
+
+证明。式 (33.30) 是同一个实际矩阵差的秩一展开；因 $\delta>0$，其算子范数等于 $\delta$ 乘该列的平方范数。矩的极限由 (33.22) 得到，联合区间由 (33.28) 得到。式 (33.31) 由 (33.23) 相除；固定非零 $h$ 时，它随 $|\lambda_j|$ 严格减小，故两个绝对比率不同就给不同区间。对收敛有界比率使用同一个共同覆盖及半径公式的连续性即得最后断言。∎
+
+上述路径中，$M_2$ 的路径极限是
+$I_2+\lambda_\ast^2aa^\ast$，而极限原输入 $t_h^0$ 自身按谱伪逆计算的第二矩是 $I_2$。因此原源与第一矩收敛并不推出第二矩收敛到极限源的第二矩。仅在定义 33.3 这一单线族内，额外标量记录
+
+$$
+n^\ast C^{-1/2}(M_2-I_2)C^{-1/2}n=\lambda^2
+\tag{33.32}
+$$
+
+对固定的 $h$，已经足以通过 (33.23) 确定 P2 半径。在满足 (33.24) 和 (33.26) 的覆盖条件时，该半径也是联合半径；满足 (33.28) 的有界比率路径已经具备这些条件。这不声称该标量恢复任意来源的 $M_2$，也不声称它是一般输入的最小记录。
+
+现固定非零 $h$，取任意满足
+
+$$
+\delta_k\downarrow0,\qquad
+|\lambda_k|=|\gamma_k|/\delta_k\to\infty,\qquad
+\gamma_k^2/\delta_k\to0
+\tag{33.33}
+$$
+
+的实单线路径。例如 $\gamma_k=\delta_k^{3/4}$ 满足这些条件。式 (33.30) 仍使原源趋于 $t_h^0$，第一矩仍趋于 $C$。无须假设这一范围的全部 PB 已有精确分类，就有
+
+$$
+0\in\mathcal J_\sigma(h,\gamma_k,\delta_k)
+ \subseteq I_{\lambda_k}(h),\qquad
+\sup_{\rho\in\mathcal J_\sigma(h,\gamma_k,\delta_k)}|\rho|
+ \le r_{\lambda_k}(h)\longrightarrow0.
+\tag{33.34}
+$$
+
+第一项使用标准零残量的 P2 与全部 PB，第二项只使用精确 P2 必要性。因此两个取向的联合允许集及其交都被挤向 $\{0\}$。这里没有断言每个有限 $k$ 的联合集等于 P2 区间，也没有由这个挤压结论分类 PB 单独的允许集。若同时让 $h_k$ 满足 (33.29) 后的双重缩放条件，则定理 33.4 才进一步给每个满足邻域条件的有限阶段的精确联合区间。
+

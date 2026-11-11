@@ -1,0 +1,16 @@
+**推论 21.2（A connected phase orbit has a constant exact-return record law）。** Let
+
+<a id="eq-reference-21-1"></a>
+
+$$
+\eta_\theta
+=U_R(\theta)\eta_0U_R(\theta)^*
+\tag{21.1}
+$$
+
+be a continuous finite-dimensional phase orbit. Suppose one common device returns each $\eta_\theta$ exactly decoupled from its complete record. For a fixed common data input, its record distribution is constant on the connected phase circle.
+
+**证明。** Continuity makes the trace distance between sufficiently nearby program states less than one. Proposition 21.1 makes their record laws equal. The law is therefore locally constant, hence constant on the connected circle. $\square$
+
+The conclusion excludes a phase-dependent record under the exact decoupled-return promise, including a desired unsharp readout. It does not apply to different granted query operations $Q_\theta$ solely because their carrier is finite dimensional. Such operations still require the common-processor state-program bridge of §18.
+

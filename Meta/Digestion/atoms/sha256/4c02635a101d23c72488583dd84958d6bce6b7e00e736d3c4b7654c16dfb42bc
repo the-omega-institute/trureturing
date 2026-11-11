@@ -1,0 +1,62 @@
+**定理 66.3（无 C13 的全部原始复 Born 载体）。** 在上述条件纸面接口下，存在有限非空扇区集 $I$ 和整数 $n_i\ge1$，使原载体在保迹 Jordan 序坐标中恰为
+
+$$
+A=\bigoplus_i H_{n_i}(\mathbb C),\qquad
+D=\bigoplus_{i,j}H_{n_in_j}(\mathbb C),\qquad
+E=\bigoplus_{i,j,k}H_{n_in_jn_k}(\mathbb C),\qquad
+n=\sum_i n_i.
+\tag{66.9}
+$$
+
+全部有序块均出现，包括重复标签、标量块及混合块。该结论先于任何共同方向选择。
+
+证明。先将 [Library 的中心扇区与简单自复合论证](../../../Library/QuantumStates/barnumhilgert2019spectral.md#sector-composites-without-a-connectedness-input) 精确施用于命题 66.2 的二元接口。一般地，设 $T:X\times Y\to Z$ 具有该处的正性、乘积单位、本原性、满迹等距及交换 Jordan 嵌入 $\alpha_T,\beta_T$。由交换及同态性质，
+
+$$
+\alpha_T(x)\circ T(x',y)=T(x\circ x',y).
+\tag{66.10}
+$$
+
+若 $c_i,d_j$ 是局部简单理想的中心单位，则在 $T$ 的张成坐标上，$\ell_{\alpha_T(c_i)}=\ell_{c_i}\otimes\operatorname{id}$ 是投影。因此幂等元 $\alpha_T(c_i)$ 没有 Peirce 半空间，零、一空间是互补理想，即该幂等元在 $Z$ 中心；$\beta_T(d_j)$ 同理。它们的乘积 $z_{ij}=T(c_i,d_j)$ 非零、中心、两两正交且和为 $1_Z$，其理想恰为
+
+$$
+Z_{ij}=\operatorname{span}_{\mathbb R}T(X_i,Y_j),\qquad
+\dim Z_{ij}=\dim X_i\dim Y_j.
+\tag{66.11}
+$$
+
+这里的维数等式来自实线性化单射，不是只数产品态。
+
+每个简单 EJA 的本原比较图连通：不同连通分支的本原元两两正交，其实张成空间也正交；正元的谱分解及正交正元乘积为零，使交叉 Jordan 乘积为零。结合迹内积的结合性，各分支张成空间成为互补理想，故简单性排除多个分支。迹等距给
+
+$$
+\langle T(q,r),T(q',r')\rangle
+ =\langle q,q'\rangle\langle r,r'\rangle.
+$$
+
+固定一腿、沿另一腿的本原比较图移动，便连接 $Z_{ij}$ 的全部乘积本原像。一个本原元只属一个简单理想，非零比较不能跨理想，因此这些像同属一个简单理想；它们又张满 $Z_{ij}$，故 $Z_{ij}$ 简单。两个完整本原框架的像是两两正交本原元，和为 $z_{ij}$，于是
+
+$$
+\operatorname{rank}Z_{ij}
+ =\operatorname{rank}X_i\operatorname{rank}Y_j.
+\tag{66.12}
+$$
+
+先取 $T=F$。若 $A_i$ 的秩、实维数为 $r,d$，实际简单块 $D_{ii}$ 的秩、维数必须是 $r^2,d^2$。使用 [Library 的简单自复合维数筛选](../../../Library/QuantumStates/barnumhilgert2019spectral.md#complex-sectors-from-a-single-self-composite)，即 van de Wetering, [arXiv:1803.11139v3, Proposition 40](https://arxiv.org/abs/1803.11139v3) 的秩维数结论，而不使用其额外的 sequential-product 兼容条件。具体边界为：秩一简单块是 $\mathbb R=H_1(\mathbb C)$；秩二的任意简单 spin 因子需要一个秩四简单块，其可能维数仅为 $10,16,28$，其中只有 $16$ 是整数平方，故局部维数为 $4$，即复 qubit。对 $r\ge3$，实矩阵型的平方维数低于秩 $r^2$ 简单块的最小维数，差为
+
+$$
+\frac{r^2(r^2+1)}2-\left(\frac{r(r+1)}2\right)^2
+ =\frac{r^2(r-1)^2}{4}>0.
+$$
+
+四元数型的平方维数高于该秩的最大维数，差为
+
+$$
+\bigl(r(2r-1)\bigr)^2-r^2(2r^2-1)
+ =2r^2(r-1)^2>0.
+$$
+
+Albert 块 $(r,d)=(3,27)$ 则需要秩九、维数 $729$，而该秩简单块维数只有 $45,81,153$。因此 $A_i=H_{n_i}(\mathbb C)$。
+
+每个混合 $D_{ij}$ 简单，秩 $q=n_in_j$、维数 $q^2$。$q=1$ 是标量，$q=2$ 是四维 spin 因子；$q\ge3$ 的实、复、四元数维数表仅允许复型，$q=3$ 时亦排除维数 $27$ 的 Albert 块。再且仅再将同一个扇区论证用于 $N:D\times A\to E$，得每个 $E_{ijk}$ 简单、秩 $q=n_in_jn_k$、维数 $q^2$，同一分类表给复型。没有用三读回表示反推 $A,D,E$，也没有要求整个 $A$ 的本原比较图连通。$\square$
+

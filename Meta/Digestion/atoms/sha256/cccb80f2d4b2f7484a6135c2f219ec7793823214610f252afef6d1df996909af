@@ -1,0 +1,32 @@
+**推论 19.2（Return-error and record-contrast forms）。** Writing $[t]_+=\max\{t,0\}$, each positive integer $n$ gives
+
+<a id="eq-reference-19-4"></a>
+
+$$
+\varepsilon_0+\varepsilon_1
+\ge\frac{[1-d-\beta^n]_+}{n}.
+\tag{19.4}
+$$
+
+If $v$ is the total variation distance between the two complete target-record distributions, then also
+
+<a id="eq-reference-19-5"></a>
+
+$$
+\varepsilon_0+\varepsilon_1
+\ge\frac{[1-d-(1-v^2)^{n/2}]_+}{n}.
+\tag{19.5}
+$$
+
+**证明。** Rearranging (19.2) gives (19.4). For (19.5), write
+
+$$
+|p_0(x)-p_1(x)|
+=|\sqrt{p_0(x)}-\sqrt{p_1(x)}|
+\bigl(\sqrt{p_0(x)}+\sqrt{p_1(x)}\bigr).
+$$
+
+Cauchy–Schwarz yields $v\le\sqrt{1-\beta^2}$, hence $\beta^n\le(1-v^2)^{n/2}$. Substitute this into (19.4). $\square$
+
+These are necessary finite-use budgets. No optimization over processors, attaining device or sharpness of these lower bounds is asserted.
+

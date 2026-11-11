@@ -1,0 +1,44 @@
+### 37.9 一个可恢复而非实际的轴接触
+
+取 $\iota=i$、$0<h$ 充分小，仍处于 §32 邻域。固定实际方向及接触数据
+
+$$
+\begin{gathered}
+a=(1,\sqrt2)^{\mathsf T}/\sqrt2,\quad m=3/2,\quad
+\epsilon=1,\quad u=e_1,\quad \ell=-1-2\iota,\quad A=2,\\
+\eta=\sqrt2(-11/2+2\iota),\qquad p_1=q_1=3/2,\\
+p_2=\frac{h+\eta}{-1+3\iota/2},\qquad
+q_2=-2\iota p_2+\iota h,\qquad
+a_{\rm act}=(-3+3\iota,h+\eta)^{\mathsf T}.
+\end{gathered}
+\tag{37.51}
+$$
+
+三个 Hermitian 闭包条件在第一轴只要求 $p_1$ 实且 $q_1=p_1$，故满足。第一接触等式的坐标为
+$\iota(1-\ell)(3/2)=-3+3\iota$ 和
+$\iota(1-\ell/2)p_2=(-1+3\iota/2)p_2=h+\eta$。
+第二接触等式的第一坐标是 $(\ell+2)(3/2)+3\iota=3/2$，第二坐标恰是所给 $q_2$。最后需求的两个坐标分别为 $-11/2+2\iota=\eta/\sqrt2$ 和 $\eta$。所以 (37.19) 全部成立，且
+
+$$
+\zeta=-3,\qquad |\eta|^2=137/2,\qquad s(A)=4/3,\qquad
+J_k=274/3-12k.
+\tag{37.52}
+$$
+
+在 $h=0$，$q_2-p_2=(-1-2\iota)\eta/(-1+3\iota/2)\ne0$，故固定充分小正 $h$ 后仍非零。实际第一轴探针却必有 $q=p$，所以这是一个没有有限轴上实现的接触。引理 37.2 的发散对角元恢复给实际趋轴探针；它表明闭包不可直接删去。
+
+每个固定 $k>137/18$ 由此给同源有限阶段的严格 PB 排除与两笔正预算。它们也最终通过两个取向的原 P2：令 $\beta=h/\sqrt2$、$U_0=2^{-1/2}\left(\begin{smallmatrix}1&1\\1&-1\end{smallmatrix}\right)$。这里 $U_0^*C^{-1/2}a=e_1$，实际 P2 的逆坐标矩阵为
+
+$$
+\mathsf K=\begin{pmatrix}3/2+\lambda^2&1/2\\1/2&3/2\end{pmatrix}.
+$$
+
+由 (30.29)，其精确双取向半径为
+
+$$
+\frac{h/\sqrt2}{\sqrt{(3/2+\lambda^2)(3/2)}}.
+\tag{37.53}
+$$
+
+它为正的 $\lambda^{-1}$ 阶，故支配每个固定 $k/\lambda^2$。例子不声称 $137/18$ 锐，也不声称此轴值低于全部精确有限 $\nu=0$ 接触的下确界。
+

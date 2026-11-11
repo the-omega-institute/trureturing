@@ -1,0 +1,71 @@
+### 40.3 固定实际来源后的完整导数
+
+将十个实未知量写成五个复变量 $(z,p_j,p_l,\ell,\eta)$。在基点的变化记为
+
+$$
+Z=\dot z,\qquad P=\dot p_j,\qquad T=\dot p_l,
+\qquad m=\dot\ell,\qquad n=\dot\eta.
+\tag{40.10}
+$$
+
+由于 $\sqrt{1-|z|^2}$ 在 $z=0$ 的导数为零，固定同一 $a_r,h$ 后，来源方程的导数精确是
+
+$$
+\begin{aligned}
+D_jP+(c_j^2/2-ix/c_j)m-hZ-a_jn&=0,\\
+D_lT-i\pi m/c_l+(\ell_0c_l^2/2-2c_l)Z-a_ln&=0.
+\end{aligned}
+\tag{40.11}
+$$
+
+对任意 $(Z,P,m)$，第一式因 $a_j\ne0$ 唯一确定 $n$；第二式因 $D_l\ne0$ 唯一确定 $T$。所以 $\dot E=0$ 的空间恰为六实维，以 $(Z,P,m)$ 为坐标。这一步使用了实际来源坐标，而没有把来源需求当成自由向量。
+
+记 $Q=\dot q_j$。由 (40.4) 的占据坐标得
+
+$$
+Q=(\ell_0+2/c_j)P+x m+ihc_lZ.
+\tag{40.12}
+$$
+
+四个实图方程的导数为
+
+$$
+\begin{gathered}
+\operatorname{Im}(P+\overline Z\pi)=0,\qquad
+\operatorname{Im}(c_jQ+c_l\overline Z\chi)=0,\\
+Q+\overline Z\chi-c_j\overline P-c_l\overline\pi Z=0.
+\end{gathered}
+\tag{40.13}
+$$
+
+最后一式为一个复方程。令 $d=c_l-c_j\ne0$。第一式给 $\operatorname{Im}P=\operatorname{Im}(Z\overline\pi)$，从而最后一式可逆地化为
+$Q-c_jP=d\overline\pi Z-\overline Zw$。将它代入第二式，该式的虚部变为 $-d\operatorname{Im}(Z\overline w)=0$。因此 (40.13) 准确等价于
+
+$$
+\begin{gathered}
+\operatorname{Im}P=\operatorname{Im}(Z\overline\pi),\qquad
+\operatorname{Im}(Z\overline w)=0,\\
+(\ell_0+2/c_j-c_j)P+x m
+ +(ihc_l-d\overline\pi)Z+\overline Zw=0.
+\end{gathered}
+\tag{40.14}
+$$
+
+若 $w\ne0$，第二个实条件恰要求 $Z=bw$、$b\in\mathbb R$。于是八方程导数的全部核向量唯一由 $(R,b)\in\mathbb R^2$ 给出：
+
+$$
+\begin{aligned}
+Z&=bw,\\
+P&=R+i\operatorname{Im}(Z\overline\pi),\\
+m&=-\bigl[(\ell_0+2/c_j-c_j)P
+ +(ihc_l-d\overline\pi)Z+\overline Zw\bigr]/x,\\
+n&=\bigl[D_jP+(c_j^2/2-ix/c_j)m-hZ\bigr]/a_j,\\
+T&=\bigl[i\pi m/c_l-(\ell_0c_l^2/2-2c_l)Z+a_ln\bigr]/D_l.
+\end{aligned}
+\tag{40.15}
+$$
+
+各步都有唯一逆解，故没有遗漏核向量。十实维定义域上的导数核恰为二维，因而八实方程的导数满秩八。取 $R=0,b=1$ 可得横向非零切向量 $\dot z=w$。
+
+若 $w=0$，(40.14) 的第二个实条件恒等消失，第一条件唯一确定 $\operatorname{Im}P$，最后的复条件因 $x\ne0$ 唯一确定 $m$；$Z\in\mathbb C$ 和 $\operatorname{Re}P\in\mathbb R$ 自由。再由 (40.11) 唯一确定 $n,T$，故核为三维，导数秩恰为七。这一退化正对应 (40.9) 的已经实际轴分支，不在其上错误使用满秩八。
+

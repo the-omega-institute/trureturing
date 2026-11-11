@@ -1,0 +1,95 @@
+**定理 68.7（模型无关固定一态的严格障碍）。** 固定 $A=H_2,D=H_4,E=H_8$ 的全部 PSD 态锥、总迹一态、全部效应和标准迹比较，固定产品基及原参考 $\omega=I_4/4$。对每个 $W\in U(4)$ 定义原始映射
+
+$$
+L_W(d,c)=(W^*dW)\otimes c^{\mathsf T},\qquad
+p_W(z)=W\bigl(\operatorname{Tr}_1z\bigr)^{\mathsf T}W^*.
+\tag{68.26}
+$$
+
+其中 $\operatorname{Tr}_1:H_8\to H_4$ 迹掉首个二维因子，$p_W$ 的转置作用在偏迹后整个四维矩阵上。则每个模型均满足 PRE，甚至满足旧 $W_H,\mathrm{(N)}$、原 $p_W$ 保迹和两个原单位律，但其实际插入不全锥正。并且
+
+$$
+\forall\rho\in D_+,\ \operatorname{Tr}\rho=1,
+\quad\exists W\in U(4):\quad
+I_W(\rho)\ge0\quad\text{且}\quad I_W(D_+)\nsubseteq E_+,
+\tag{68.27}
+$$
+
+这里 $I_W$ 按 (68.7) 从该模型的实际 $M_W,L_W$ 定义。
+
+**证明。** 首先检查全域正性和比较入口。$d\mapsto W^*dW$、整个转置及偏迹均保持完整 PSD 锥；两个正矩阵的张量积为正。因此 $L_W(D_+,A_+)\subseteq E_+$，且 $p_W$ 对整个 $E_+$ 为正并保迹。这里没有只检查乘积 $z$。每个载体的纯态为秩一投影 $q$，最小确认效应为 $q$：若 $0\le f\le I$、$\operatorname{Tr}(fq)=1$，则 $I-f$ 支撑在 $q$ 的正交补上，从而 $f\ge q$。因此 $T_q(x)=\operatorname{Tr}(qx)$，完整有限混合律 (68.1) 成立；原几何就是标准规范迹几何。
+
+对全部实 $d,c$ 直接计算，注意偏迹后的整个转置同时作用于两个保留因子：
+
+$$
+\mathcal B_W(d,c)
+ =W\left[\bigl(\operatorname{Tr}_1(W^*dW)\bigr)^{\mathsf T}
+ \otimes c\right]W^*.
+\tag{68.28}
+$$
+
+此式内 $\operatorname{Tr}_1:H_4\to H_2$ 迹掉双份矩阵的首因子。由于 $W^*\omega W=I_4/4$，原参考给
+
+$$
+\begin{aligned}
+K_W(a)&=W(I_2/2\otimes a)W^*,\\
+M_W(a,b)&=\mathcal B_W(K_W(a),b)
+ =W(a^{\mathsf T}\otimes b)W^*.
+\end{aligned}
+\tag{68.29}
+$$
+
+两行由同一个 $p_W$ 依次算出；没有另行指定 $M_W$。所以
+
+$$
+\begin{gathered}
+J_W(a)=W(a^{\mathsf T}\otimes I_2)W^*,\qquad
+H_W(d)=(W^*dW)\otimes I_2,\\
+Q_W(a,b,c)=a^{\mathsf T}\otimes b\otimes c^{\mathsf T},\qquad
+U_W=I_4,\quad G_W=I_8.
+\end{gathered}
+\tag{68.30}
+$$
+
+Hermitian 实简单张量张成全部 Hermitian 张量矩阵；转置和酉共轭可逆，故 $M_W(A,A)$ 实张成 $D$，$L_W(D,A)$ 实张成 $E$。对整个相应实空间都有
+
+$$
+\langle J_Wa,J_Wb\rangle_D=2\operatorname{Tr}(ab),\qquad
+\langle H_Wd,H_Wd'\rangle_E=2\operatorname{Tr}(dd').
+\tag{68.31}
+$$
+
+这同时给 $D_J$、包括所有纠缠输入的 $D_H$，以及 $W_J,W_H$。再取 (68.28) 中 $c=I_2$，代入实际 $M_W$ 得
+
+$$
+B_{1,W}M_W(a,b)=\operatorname{Tr}(a)J_W(b)
+\qquad(a,b\in H_2).
+\tag{68.32}
+$$
+
+因而全实 $Z$ 成立。更一般 $p_WQ_W(a,b,c)=\operatorname{Tr}(a)M_W(b,c)$，所以完整 III 也成立。$p_W$ 保迹给旧 $\gamma_W=\operatorname{Tr}(p_WI_8)=8=2^3$，满足 $\mathrm{(N)}$。至此 PRE 及声称的额外校准条件均已检查；其内在 $C_D,C_E$ 都是恒等。
+
+令 $\operatorname{ins}_{13}$ 在两端之间插入 $I_2$，作用的因子顺序与 (68.20) 相同。从 (68.29) 得 $\widetilde M_W$ 可逆，而 $T_W(a,c)=a^{\mathsf T}\otimes I_2\otimes c^{\mathsf T}$。在 $d=M_W(a,c)$ 上计算，再由实张成延拓到全部 $d\in H_4$，得到实际插入
+
+$$
+I_W(d)=\operatorname{ins}_{13}
+ \left[(\mathrm{id}\otimes T)(W^*dW)\right].
+\tag{68.33}
+$$
+
+现在固定任意 $\rho\ge0$、$\operatorname{Tr}\rho=1$。有限维 Hermitian 谱定理允许选 $W$，使 $W^*\rho W$ 在事先固定的产品基 $\{|00\rangle,|01\rangle,|10\rangle,|11\rangle\}$ 中为非负对角矩阵。重根和零特征值均不妨碍选取正交本征基。这个对角矩阵在第二因子转置下不变；插入 $I_2$ 保持正性，故 (68.33) 给 $I_W(\rho)\ge0$。
+
+对于同一个 $W$，取 $v=(|00\rangle+|11\rangle)/\sqrt2$、$b=vv^*$ 和正迹一元 $d_W=WbW^*$。由 (68.21)，
+
+$$
+I_W(d_W)=\operatorname{ins}_{13}(\mathsf S_2/2).
+$$
+
+它在每个归一化向量 $(|0,k,1\rangle-|1,k,0\rangle)/\sqrt2$（$k=0,1$）上有本征值 $-1/2$。故 $I_W$ 对整个 $D_+$ 不正，证明 (68.27)。$\square$
+
+这里的 $W$ 改变同一原载体上的实际 $L_W,p_W,M_W$；原 $\rho$、比较、效应、产品基和 $\omega$ 始终固定。没有同时把 $\rho$ 也搬走。因此 (68.27) 严格排除了下述可能：在这些固定载体上存在一个与模型无关的正迹一态，使它的完整输出正性对所有 PRE 模型都等价于 C13。反例已位于全校准子类内，故同样阻止在更大的未校准类中采用这种固定一态。
+
+这不妨碍定理 68.4。对 (68.26)，可取第一接口初始形 $V=W$、$(\varepsilon,\delta)=(1,0)$；其模型适配探针恰为 $WbW^*$，会检出上述负方向。任意其他合格规约也由定理 68.4 得出相同失败结论。$W=I_4$ 是定理 64.11 的既有控制；本章增加的是对每个固定 $\rho$ 选取模型的严格量词结论，所用谱定理和 Bell 部分转置均是标准机制。
+
+对角化一步只是说明每个固定谱都存在一个产品基对角代表；它不声称该谱的所有酉轨道都可分或都为 PPT，也不把此存在量词叫作绝对可分性。定理没有声称一个坏模型通过所有 $\rho$，没有排除任意有限探针族，也没有给出最小测量或最小探针数。
+

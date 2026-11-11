@@ -1,0 +1,34 @@
+## 32. Actual product pairs span the full partial-trace kernel
+
+Let $H=S\otimes E$ with $\dim S=d\ge1$ and $\dim E=e\ge2$. Take
+
+$$
+W=\operatorname{Herm}(S)\otimes I_E,
+$$
+
+so that equal current responses mean equality of the entire system marginal.
+
+Choose $d^2$ pure system densities $\rho_i$: the $d$ coordinate projections and, for every $j<k$, the projections onto
+
+$$
+\frac{|j\rangle+|k\rangle}{\sqrt2},
+\qquad
+\frac{|j\rangle+i|k\rangle}{\sqrt2}.
+$$
+
+They span $\operatorname{Herm}(S)$ over $\mathbb R$. Subtracting half the two coordinate projections from each added density gives a real or imaginary off-diagonal matrix direction.
+
+Choose a Hilbert–Schmidt orthonormal basis $H_a$, $1\le a\le e^2-1$, of the traceless Hermitian environmental space. Put
+
+<a id="eq-preparation-32-1"></a>
+
+$$
+\tau_a^\pm
+=I_E/e\pm H_a/(2e),
+\qquad
+\xi_{ia}^\pm=\rho_i\otimes\tau_a^\pm.
+\tag{32.1}
+$$
+
+<a id="statement-preparation-32-1"></a>
+

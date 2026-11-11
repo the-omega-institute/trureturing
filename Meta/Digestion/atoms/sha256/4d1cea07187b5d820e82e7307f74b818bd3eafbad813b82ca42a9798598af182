@@ -1,0 +1,16 @@
+## 29. Convex preparation domains identify the hidden directions
+
+Suppose $Q$ is convex and put $L=\operatorname{span}_{\mathbb R}(Q-Q)$. Choose a relative-interior point $\rho_0\in Q$ and $r>0$ with
+
+<a id="eq-preparation-29-1"></a>
+
+$$
+\rho_0+\{h\in L:\lVert h\rVert_2\le r\}
+\subseteq Q.
+\tag{29.1}
+$$
+
+Such a point and radius exist in finite dimension. Choose an affinely independent finite subset of $Q$ spanning its affine hull. Convexity places its simplex inside $Q$. At the barycenter all barycentric coordinates are strictly positive; continuity gives an open relative ball inside the simplex. Choose $r$ smaller than that radius to obtain the closed ball (29.1). For a singleton $Q$, $L=\{0\}$ and the ensuing zero-space statements are immediate. This existence argument provides neither a known numerical radius nor a physical method for preparing the ball.
+
+<a id="statement-preparation-29-1"></a>
+

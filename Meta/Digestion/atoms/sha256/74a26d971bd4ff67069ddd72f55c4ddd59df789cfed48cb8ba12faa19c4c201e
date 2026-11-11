@@ -1,0 +1,88 @@
+**定理 67.6（精确尺度刚性）。** 在 $\mathcal B+D_H$ 下，以下条件等价：
+
+$$
+\begin{aligned}
+&\delta\gamma=R^2;\\
+&\text{存在 }c>0:\ U=1_D,\quad H1_D=c1_E.
+\end{aligned}
+\tag{67.14}
+$$
+
+此时 $c$ 唯一，$c=\delta/R=R/\gamma=\sqrt{\delta/\gamma}$，并强制
+
+$$
+\begin{gathered}
+p^*1_D=c^{-1}1_E,\qquad\tau_Dp=c^{-1}\tau_E,
+\qquad H^*H=c^2n\operatorname{id}_D,\\
+hL(d,a)=c^2\tau_A(a)d,\qquad tL(d,a)=\tau_D(d)a,\\
+\tau_Dh=c\tau_E,\qquad\tau_At=c^{-1}\tau_E.
+\end{gathered}
+\tag{67.15}
+$$
+
+第一接口完全归一化：$M=F$、完整 I、$W_J$、$r,s$ 全锥正保迹、$r\omega=s\omega=e$ 及完整 III 都成立。派生尺度坐标
+
+$$
+L_0=L/c,\quad p_0=cp,\quad H_0=H/c,\quad h_0=h/c,\quad t_0=ct
+\tag{67.16}
+$$
+
+满足第 64 节全部归一化的探针之前结论；其内部 $B,K,M,J,U$ 与原实际数据逐点相同。反之，任意满足第 64 节归一化探针之前条件的数据，取实际 $L=cL_0,p=c^{-1}p_0$，便得到此等号类。对指定 $c>0$，$\delta/c+c\gamma=2R$ 当且仅当 (67.14) 以此 $c$ 成立。
+
+**证明。** 乘积等号迫使定理 67.5 证明中的两次 AM–GM 分别等号，故每个 $\zeta_\alpha=c$、每个 $\eta_\alpha=c^{-1}$。对所选框架，这给出
+
+$$
+z_q=cP_q,\qquad Y_q=c^{-1}P_q,\qquad Z=c1_E.
+$$
+
+因而 $K_q=c\Theta_q$，$\ell_q=K_q^*Y_q=1_A$。将此代入 (67.9)，保留定理 66.5 的全部有序权重及命题 66.4 的第一接口转置位，得到
+
+$$
+u_{jk}^{T^{\varepsilon_{jk}}}=\lambda_{ij,s}I_{n_k}
+\qquad\text{对每个 }i,j,s,k.
+\tag{67.17}
+$$
+
+固定 $j$ 并任选 $i,s$，出行 $j$ 的全部矩阵均为同一正标量 $a_j$ 乘单位。于是 $u_{ij}=a_iI_{n_j}$，其每个本征值为 $a_i$；代回 (67.17) 得 $a_j=a_i$ 对全部有序 $i,j$ 成立。故 $U=a1_D$。已有的 (66.14)，即 $\tau_D(U^{-1})=m$，强制 $a=1$。这一步消去的是内部权重，不消去外部尺度 $c$；它不止证明中心性，且包括单扇区、标量扇区和 $n=1$。
+
+接着只假定 $U=1_D,Z=c1_E$，给出剩余全局结论，也同时证明反向。现在命题 66.2 中 $C_D=\operatorname{id}$，第一接口为实际 $M=F$，$r=\alpha^*$、$s=\beta^*$；其满迹等距、乘积单位和 (66.8) 给出完整 I、$W_J$、保迹、$r\omega=s\omega=e$ 及完整 III。
+
+必须对任意本原 $q\in D$ 重新使用 $D_H$，而不局限于所选框架。两个正元 $Hq,H(1_D-q)$ 支撑正交且和为 $c1_E$，故 $Hq=cP_q$。命题 67.3 的 $K_q/c$ 现在自身就是保单位 Jordan 同构，保持继承的规范迹。因此
+
+$$
+\tau_EL(q,a)=c\tau_A(a),\qquad
+\tau_EL(d,a)=c\tau_D(d)\tau_A(a)
+\tag{67.18}
+$$
+
+对全部本原 $q$ 和全部实 $d,a$ 成立，第二式由本原元实张成而来。另一方面，$pL(d,a)=M(sd,a)$ 及第一接口保迹给出
+
+$$
+\tau_DpL(d,a)=\tau_D(d)\tau_A(a).
+$$
+
+比较并用实际 $L(D,A)$ 张成整个 $E$，才得到 $\tau_Dp=c^{-1}\tau_E$ 和 $Y=c^{-1}1_E$。仅由所选 $Y_q=c^{-1}P_q$ 不能推出这个全局结论。
+
+再对任意本原 $q$ 使用 (67.6)，有
+
+$$
+\begin{aligned}
+\langle q,hL(d,a)\rangle_D
+&=\langle Hq,L(d,a)\rangle_E\\
+&=c\langle P_q,\Pi_qL(d,a)\rangle_E\\
+&=c^2\langle q,d\rangle_D\tau_A(a).
+\end{aligned}
+$$
+
+本原元张成给出 (67.15) 的第二插入公式；取 $a=1_A$ 得 $H^*H=c^2n\operatorname{id}$。$tL$ 由 $V=1_D$ 得到；两个全局迹式分别由 $H1_D=c1_E$ 和 $t=sp$、$s$ 保迹得到。
+
+因此 $(L_0,h_0,t_0)$ 在整个锥上正、两个边缘全局规范保迹，满足全部实方向的两条丢弃律及实际实张成。直接使用命题 66.2 的精确恢复：$U=1_D,Z=c1_E$ 时 $C_D=\operatorname{id}$、$C_E=c\operatorname{id}_E$，其 $N=L_0$、辅助读回为 $p_0=cp$。命题 66.2 直接给出 $F,N$ 的满迹等距、乘积单位和全效应配对。第一接口的 $\widetilde M$ 满等距使 $\widetilde Q_0$ 也满等距；原实际线性化则满足
+
+$$
+\widetilde M^*\widetilde M=\operatorname{id},\qquad
+\widetilde L^*\widetilde L=c^2\operatorname{id},\qquad
+\widetilde Q^*\widetilde Q=c^2\operatorname{id}.
+$$
+
+它们均满射。又 $p_0L_0=pL$，所以两次同一个读回产生的内部 $M$ 没有改变。特别是 $H_0^*H_0=n\operatorname{id}$、$p_0$ 保迹及 $\gamma_0=R$，故第 64 节所有探针之前结论均适用。若从 $U=1_D,Z=c1_E$ 出发，(67.18) 和全局读回迹式给出 $\delta=cR,\gamma=R/c$，完成反向。反向缩放构造的正性、张成、内部定义、$D_J,Z,D_H$ 同样逐项保留。最后指定尺度的和等号由 (67.12) 每项为零刻画。式 (67.16) 是尺度分类；原来的实际映射仍明确是 $L=cL_0,p=c^{-1}p_0$，$c\ne1$ 时没有把它们称为已归一化。$\square$
+

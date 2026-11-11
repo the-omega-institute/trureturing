@@ -1,0 +1,28 @@
+**定理 4.1（Cyclic space and finite GNS dimension）。** For the vector in (3.2), let $S_\alpha$ be the span of its right Schmidt vectors. Then
+
+<a id="eq-purity-4-1"></a>
+
+$$
+\begin{aligned}
+K_\Psi
+&=\operatorname{span}\{a\Psi:a\in\mathcal A\}
+=\bigoplus_\alpha(V_\alpha\otimes S_\alpha),\\
+\dim K_\Psi&=\sum_\alpha n_\alpha r_\alpha.
+\end{aligned}
+\tag{4.1}
+$$
+
+This is also the dimension of the cyclic GNS representation of this functional. In the fixed faithful block representation (1.1), $\Psi$ is cyclic for all of $H$ exactly when $r_\alpha=m_\alpha$ in every sector; in particular no sector of $H$ may be unpopulated.
+
+**证明。** Every left action stays in the displayed space. Conversely, a central projection isolates each sector. For each positive Schmidt coefficient, the left matrix unit $|x\rangle\langle u_{\alpha j}|$ sends its component to
+
+$$
+\sqrt{\lambda_{\alpha j}}\,x\otimes v_{\alpha j}.
+$$
+
+Varying $x,j$ spans the summand, proving (4.1).
+
+The map $[a]\mapsto a\Psi$ identifies the finite GNS quotient with $K_\Psi$: its inner product is $\omega_\Psi(a^*b)$ and its zero vectors are exactly the GNS null space. Hence the displayed dimension is the least dimension of a cyclic representation of this particular functional. The representation may act as zero on unpopulated central sectors; the dimension does not claim that the actual represented carrier $H$ is minimal. Finally, $S_\alpha=W_\alpha$ in every sector is exactly the stated full-carrier cyclicity condition. $\square$
+
+<a id="statement-purity-4-2"></a>
+

@@ -1,0 +1,72 @@
+**定理 65.10（唯一逆迹约束下的完整原始映射族）。** 在定理 65.9 的同时坐标中，对每个有序 $i,j$ 存在正定 $u_{ij}\in H_{n_j}$，对每个有序 $i,j,k$ 存在正定 $g_{ijk}\in H_{n_k}$，唯一参数约束为
+
+$$
+\boxed{\ \sum_{i,j}n_i\operatorname{Tr}(u_{ij}^{-1})=n^2.\ }
+\tag{65.28}
+$$
+
+所有有序块都出现，包括重复标签与标量块；不同 $u,g$ 之间没有隐藏的块对称或共同对角化要求。实际单位输出及滤波为
+
+$$
+\begin{aligned}
+U_{ij}&=I_i\otimes u_{ij},&
+G_{ijk}&=I_i\otimes I_j\otimes g_{ijk},\\
+(C_Dd)_{ij}&=(I_i\otimes\sqrt{u_{ij}})d_{ij}(I_i\otimes\sqrt{u_{ij}}),\\
+(C_Ez)_{ijk}&=C_{ijk}z_{ijk}C_{ijk},&
+C_{ijk}&=I_i\otimes\sqrt{u_{ij}}\otimes\sqrt{g_{ijk}}.
+\end{aligned}
+\tag{65.29}
+$$
+
+全部实际准备是
+
+$$
+\begin{aligned}
+M(a,b)_{ij}&=a_i\otimes(\sqrt{u_{ij}}b_j\sqrt{u_{ij}}),\\
+L(d,c)_{ijk}&=d_{ij}\otimes(\sqrt{g_{ijk}}c_k\sqrt{g_{ijk}}),\\
+Q(a,b,c)_{ijk}&=a_i\otimes(\sqrt{u_{ij}}b_j\sqrt{u_{ij}})
+ \otimes(\sqrt{g_{ijk}}c_k\sqrt{g_{ijk}}).
+\end{aligned}
+\tag{65.30}
+$$
+
+置 $A_{jk}=I_j\otimes\sqrt{u_{jk}}$、$W_{ijk}=I_i\otimes u_{ij}^{-1/2}\otimes g_{ijk}^{-1/2}$，则原始读回在整个 $E$ 上唯一为
+
+$$
+(pz)_{jk}=A_{jk}\left[\sum_i\operatorname{Tr}_1
+ (W_{ijk}z_{ijk}W_{ijk})\right]A_{jk}.
+\tag{65.31}
+$$
+
+其中 $\operatorname{Tr}_1$ 是未归一化普通首因子偏迹。其余全部内部映射恢复为
+
+$$
+\begin{aligned}
+(sd)_j&=\sum_i u_{ij}^{-1/2}(\operatorname{Tr}_1d_{ij})u_{ij}^{-1/2},\\
+V_{ij}&=I_i\otimes u_{ij}^{-1},&
+\omega_{ij}&=(I_i\otimes I_j)/n^2,\\
+w_j&=\frac1{n^2}\sum_i n_i u_{ij}^{-1},&\tau_Aw&=1,\\
+\mathcal B(d,c)&=M(sd,c),&
+K(a)_{ij}&=w_i\otimes(\sqrt{u_{ij}}a_j\sqrt{u_{ij}}),\\
+J(a)_{ij}&=a_i\otimes u_{ij},&H(d)_{ijk}&=d_{ij}\otimes g_{ijk},\\
+B_1&=Js.&
+\end{aligned}
+\tag{65.32}
+$$
+
+这些等式量化全部实输入，不限于已准备态。若 $\operatorname{ins}_{13,j}(x_{ik})$ 表示在首、末因子插入 $x_{ik}$ 并在中间插入 $I_j$，即 $x_{ik}\otimes I_j$ 的固定因子置换，则同一个原 C13 映射为
+
+$$
+(I_{13}^{\rm raw}z)_{ijk}
+ =C_{ijk}\operatorname{ins}_{13,j}
+ (A_{ik}^{-1}z_{ik}A_{ik}^{-1})C_{ijk}.
+\tag{65.33}
+$$
+
+**证明。** 定理 65.3 已给 $U$ 与 $\alpha(A)$ 算子交换；定理 65.4 已给 $G$ 与整个 $\eta(D)$ 算子交换。在复 Hermitian 块中
+$[\ell_x,\ell_y]z=[[x,y],z]/4$。若该算子对所有 Hermitian $z$ 为零，则矩阵 $[x,y]$ 中心，且其矩阵迹为零，故 $[x,y]=0$。因此这些环境算子交换条件正是普通矩阵交换条件。
+
+(65.24) 给 $\alpha(a)_{ij}=a_i\otimes I_j$、$\eta(d)_{ijk}=d_{ij}\otimes I_k$，其交换子分别是 $I_i\otimes H_{n_j}$ 与 $I_i\otimes I_j\otimes H_{n_k}$，得到 (65.29) 的 $U,G$；标量因子同样成立。$\tau_D(U^{-1})=m=n^2$ 恰为 (65.28)，不限制任何 $g$。矩阵二次表示是合同变换；代入 (65.19)、(65.24) 得 (65.29)–(65.31)，代入 $s=\beta^*C_D^{-1}$、$w=s\omega$ 得 (65.32)。插入恢复式 (65.21) 得 (65.33)。
+
+$\widetilde Q=C_E\widetilde Q_0$ 满射，所以原全实 III 在 $Q$ 上规定的 $p$ 唯一确定整个 $E$ 上的线性映射；不能额外添加在乘积外自由作用的读回项。固定同时坐标后，参数 $u_{ij},g_{ijk}$ 分别由实际 $U,G$ 唯一读出。坐标本身仍可作同时的保迹 Jordan 改变，不宣称扇区命名或基底规范唯一。$\square$
+

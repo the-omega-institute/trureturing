@@ -1,0 +1,73 @@
+**定理 64.9（共同校准、全局保迹及完整第二接口）。** 定义 64.1–64.3 的全部前置条件推出
+
+$$
+\begin{gathered}
+U=1_D,\qquad H1_D=1_E,\qquad \gamma=R_E=n^3,\\
+\mathrm{(W_J)}\quad J^*J=n\operatorname{id}_A,\qquad
+\mathrm{(I)}\quad rM(a,b)=\tau_A(b)a,\\
+\tau_A r=\tau_D=\tau_A s,\qquad r\omega=s\omega=e,\qquad
+\tau_Dp=\tau_E,\\
+\mathrm{(II)}\quad hL(d,c)=\tau_A(c)d,\qquad
+ tL(d,c)=\tau_D(d)c,\qquad
+\tau_Dh=\tau_E=\tau_At.
+\end{gathered}
+$$
+
+以下统一记 $\mathcal M=\widetilde M:A\otimes_{\mathbb R}A\to D$、$\mathcal L=\widetilde L:D\otimes_{\mathbb R}A\to E$、$\mathcal Q=\widetilde Q:A\otimes_{\mathbb R}A\otimes_{\mathbb R}A\to E$，分别将简单张量送到 $M,L,Q$。这三个映射均为满迹内积等距同构。所有等式量化其类型内全部实向量。
+
+**证明。** 将定理 64.8 的实际框架 $\mathcal Q$ 的各 $z_q$ 细化为完整环境谱表，恰有 $R_E=mn=n^3$ 个正谱值 $\zeta_\alpha$。$W_H$ 给出 $\sum_\alpha\zeta_\alpha^2=\sum_q\|Hq\|^2=mn=R_E$。第一次 AM–GM 因此给出
+$\prod_q\det(z_q)\le1$，等号当且仅当每个 $\zeta_\alpha=1$。由 (64.21)–(64.23)，$\prod_q\det(Y_q)\ge1$。
+
+另一方面，各面支撑和为 $1_E$，所以即使 $Y$ 有面外 Peirce 分量，仍有 $\sum_q\tau_E(Y_q)=\tau_E(Y)=\gamma$。各 $Y_q$ 的正谱表也恰有 $R_E$ 项。第二次 AM–GM 及 $N$ 给出
+
+$$
+\gamma\ \ge\ R_E\left(\prod_q\det(Y_q)\right)^{1/R_E}
+ \ \ge\ R_E=n^3\ \ge\ \gamma.
+\tag{64.24}
+$$
+
+所以每步都是等号：每个 $Y_q$ 谱值为一，$\prod_q\det(Y_q)=1$，继而 $\prod_q\det(z_q)=1$，第一次等号使每个 $z_q$ 谱值也为一。因此对所选框架 $Y_q=P_q^{\mathrm s}=z_q$，求和得到 $H1_D=1_E$。这里并未从压缩相等推出 $Y=1_E$。
+
+由 $\ell_q=K_q^*Y$ 和 (64.22)，此时 $\ell_q=1_A$。故对每个 $i,j\in\Lambda$、每个 $s=1,\ldots,n_j$ 和每个 $k\in\Lambda$，都保留原式
+
+$$
+u_{jk}^{T^{\delta_{jk}}}=\lambda_{ij,s}I_{n_k}
+\qquad\text{对全部 }i,j,s,k.
+\tag{64.25}
+$$
+
+固定 $j$ 并任选一个输入 $i,s$，原式表明出行 $j$ 的每个矩阵均是同一严格正标量 $c_j$ 乘单位。故 $u_{jk}=c_jI_{n_k}$ 对所有 $j,k$，特别是 $u_{ij}=c_iI_{n_j}$；后者的实际谱值是 $\lambda_{ij,s}=c_i$。把这两个事实代回 (64.25)，得到 $c_j=c_i$ 对所有 $i,j$。于是 $U=c1_D$，$c>0$。已推得的 $\tau_D(U^{-1})=m$ 给出 $m/c=m$，故 $c=1$。论证包含一个扇区、标量扇区和 $n=1$。
+
+现在 $C=\operatorname{id}$、$M=F$、$J=\alpha$、$r=\alpha^*$、$s=\beta^*$。第一二元接口给出完整 I、$r,s$ 全锥正保迹及 $\widetilde M$ 等距，特别是 $W_J$。又 $s\beta(x)=n x$，所以
+$\langle s\omega,x\rangle=\tau_D(\beta x)/m=n\tau_A(x)/n^2=\langle e,x\rangle$；同理 $r\omega=e$。因此 $K=M(e,-)$ 是此时的推论。
+
+必须再对每个本原 $q$ 证明 $Hq$ 为幂等元，而不限于所选框架：$Hq$ 与 $H(1_D-q)$ 正交且和为 $1_E$，支撑分解遂使 $Hq$ 等于其支撑投影。定理 64.7 的 $K_q$ 因而自身就是保单位 Jordan 同构到 $F_q$，保持继承的规范迹，故 $\tau_EL(q,c)=\tau_A(c)$ 对每个本原 $q$ 及全部实 $c$ 成立。谱展开给出
+
+$$
+\tau_EL(d,c)=\tau_D(d)\tau_A(c)
+ =\tau_DpL(d,c)\qquad(d\in D,c\in A).
+$$
+
+右等式来自 (64.15)、$s$ 保迹及第一二元接口的迹因子化。实际 $L$ 实张成使 $\tau_Dp=\tau_E$ 在全部 $E$ 上成立，至此才有 $Y=1_E$。所以 $t=sp$ 全锥正保迹，$H1_D=1_E$ 也使 $h$ 全锥正保迹。
+
+最后，由任意本原 $q$ 的 (64.19)，
+
+$$
+\begin{aligned}
+\langle q,hL(d,c)\rangle_D
+ &=\langle Hq,L(d,c)\rangle_E\\
+ &=\langle q,d\rangle_D\tau_A(c).
+\end{aligned}
+$$
+
+本原元实张成给出完整 II。此时 $(L,h,t)$ 具有整个实际锥上的正性、两个全局正保迹边缘、两条全部实方向的丢弃律和实际实张成，才可第二次使用定义 64.3，得到 $\widetilde L$ 满等距；与 $\widetilde M$ 复合得到 $\widetilde Q$ 满等距。原先未给定的辅助映射也恢复为
+
+$$
+s=r\,pL(\mathord\cdot,e),\qquad
+B(d,c)=M(sd,c),\qquad
+\widetilde Q=\widetilde L(\widetilde M\otimes\operatorname{id}_A).
+\tag{64.26}
+$$
+
+第一式因为 $rB(d,e)=rM(sd,e)=sd$。没有在两个单位律之前使用第二接口。$\square$
+

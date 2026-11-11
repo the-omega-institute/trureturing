@@ -1,0 +1,18 @@
+## 11. Pure fibres detect every closure failure of a complete observable algebra
+
+Specialize to $W=\mathcal A_{\mathrm{sa}}$ for the represented unital $*$-algebra
+
+<a id="eq-future-11-1"></a>
+
+$$
+H=\bigoplus_\alpha(V_\alpha\otimes W_\alpha),
+\qquad
+\mathcal A=\bigoplus_\alpha
+\bigl(B(V_\alpha)\otimes I_{W_\alpha}\bigr).
+\tag{11.1}
+$$
+
+Write $d_{\mathcal A}$ for distance to $\mathcal A_{\mathrm{sa}}$. For unit vectors, let $\delta_{\mathcal A}(B)$ be the largest expectation difference among pairs with the same restriction to $\mathcal A$.
+
+<a id="statement-future-11-1"></a>
+

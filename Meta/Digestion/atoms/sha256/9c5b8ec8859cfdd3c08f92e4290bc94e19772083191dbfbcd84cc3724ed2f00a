@@ -1,0 +1,73 @@
+**定理 36.1（精确而严格嵌套的双取向联合区间）。** 固定一次
+
+$$
+0<h<\min(h_0,2\sqrt2,c_{\rm PB}/\sqrt2),\qquad\beta=h/\sqrt2,
+\tag{36.1}
+$$
+
+其中 $h_0,c_{\rm PB}$ 取自定理 35.4，故 $2\beta<c_{\rm PB}$。对任意实 $L\ge16$ 及任意 $\theta\in(0,\pi/6]$，令
+
+$$
+\theta_0=0,\quad\theta_1=\theta,\qquad
+s_j=(3+\sin\theta_j)/2,\quad
+\lambda_j^2=(L-1)/s_j,\quad
+t_j=t_{h,\lambda_j,a_{\theta_j}},\quad j=0,1.
+\tag{36.2}
+$$
+
+该族包含 $\theta=L^{-1/4}$：当 $L\ge16$ 时，$0<L^{-1/4}\le1/2<\pi/6$。这两份实际输入都严格正定、$D_j\succ0$，在同一个完整 $M_5(\mathbb C)$ 上满足相同的
+
+$$
+B,\ F,\ H,\ M_0=C^2,\ M_1=C,\ W=0,\qquad
+\operatorname{spec}(M_{2,j})=\{1,L\}.
+\tag{36.3}
+$$
+
+记
+
+$$
+b_j=\frac\beta{\displaystyle 3/2+
+\frac{(L-1)(1+\cos\theta_j)}{3+\sin\theta_j}}.
+\tag{36.4}
+$$
+
+则有精确不等式和精确集合等式
+
+$$
+\begin{gathered}
+b_0=\frac{6\beta}{4L+5}<b_1<\frac{2\beta}{L}<\frac{c_{\rm PB}}L,\\
+\boxed{\quad\mathcal J_{\rm both}(t_j)=[-b_j,b_j],\quad j=0,1,\qquad
+\mathcal J_{\rm both}(t_0)\subsetneq\mathcal J_{\rm both}(t_1).\quad}
+\end{gathered}
+\tag{36.5}
+$$
+
+两个分别取向的相应短侧也完全确定：
+
+$$
+\mathcal J_+(t_j)\cap[0,\infty)=[0,b_j],\qquad
+\mathcal J_-(t_j)\cap(-\infty,0]=[-b_j,0].
+\tag{36.6}
+$$
+
+所有闭端点都属于原全正泛函、全部原探针的联合允许集。
+
+证明。由 $M_{2,j}=I_2+\lambda_j^2a_{\theta_j}a_{\theta_j}^*$，其两个特征值准确为 $1,1+\lambda_j^2s_j= L$，不涉及渐近匹配。其余共享量来自命题 35.2。$3/2\le s_j\le7/4$ 给 $\lambda_j^2\ge60/7>4$；$0\le\theta_j\le\pi/6$ 给 $\cos\theta_j>0$。定理 35.5 因而给两取向 P2 的交正是 $[-b_j,b_j]$。
+
+在 $[0,\pi/6]$ 上，
+
+$$
+\frac{d}{d\theta}\frac{1+\cos\theta}{3+\sin\theta}
+=-\frac{1+\cos\theta+3\sin\theta}{(3+\sin\theta)^2}<0.
+\tag{36.7}
+$$
+
+所以 $b_1>b_0$。取 $\theta=0$ 直接得到 $b_0$ 的值。对整个相位范围，$\sin\theta_j\le1/2$、$\cos\theta_j\ge\sqrt3/2$，故 (36.4) 的短侧分母满足
+
+$$
+d_{{\rm s},j}\ge\frac32+\frac{2+\sqrt3}{7}(L-1)>\frac L2,
+\tag{36.8}
+$$
+
+其中 $(2+\sqrt3)/7>1/2$，且 $L-1>0$。从而 $b_j<2\beta/L<c_{\rm PB}/L$。由定理 35.4，整个 $[-b_j,b_j]$ 在两份输入各自的两个取向都满足全部原 PB；P2 的必要性排除其外的双取向联合成员，故得 (36.5)。相同理由在 $+$ 的非负半轴及 $-$ 的非正半轴给 (36.6)。这里无需知道分别取向宽侧的 PB 边界。∎
+

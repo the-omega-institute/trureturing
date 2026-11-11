@@ -1,0 +1,48 @@
+### 40.4 实解析隐函数定理与精确横向恢复
+
+现在固定 $w\ne0$ 的轴接触及其常数 $x,w$。在八个实方程外添加两个实方程
+
+$$
+\operatorname{Re}p_j=x,\qquad
+\frac{\operatorname{Re}(z\overline w)}{|w|^2}=s,
+\qquad s\in\mathbb R.
+\tag{40.16}
+$$
+
+在核 (40.15) 上，新增左边的导数分别为 $R$ 和 $b$。所以十方程对十未知量的导数核为零，确为可逆线性映射。方程的实、虚部及坐标 (40.5) 在基点邻域实解析；(40.8) 给出的非零分母都保持非零。有限维实解析隐函数定理于是给出对充分小实 $s$ 唯一的局部实解析解曲线，基点为指定接触，并有
+
+$$
+z(s)=s w+O(s^2).
+\tag{40.17}
+$$
+
+这证明实际来源条件在整条曲线上精确成立，而非只在导数或极限中成立。由于 $w\ne0$，对所有充分小 $s\ne0$ 有 $z(s)\ne0$；又 $u_j(s)>0$，所以两演员坐标都非零。由连续性，缩小参数区间后 $A(s)=-\epsilon\operatorname{Im}\ell(s)>1$，$\epsilon$ 保持原值。原有限变分参数可取
+
+$$
+\nu(s)=0,\qquad
+\alpha_d(s)=A(s)-d\epsilon>0,\qquad
+\beta_d(s)=d\operatorname{Re}\ell(s),\qquad d=\pm1.
+\tag{40.18}
+$$
+
+定义
+
+$$
+V(s)=[u(s)\ Cu(s)],\qquad W(s)=[p(s)\ q(s)],\qquad
+X(s)=W(s)V(s)^{-1}.
+\tag{40.19}
+$$
+
+非轴时 $\det V(s)=(c_2-c_1)u_1(s)u_2(s)\ne0$。图条件使 $V(s)^*W(s)$ 为 Hermitian，亦即 $V(s)^*X(s)V(s)$ 为 Hermitian；左右乘可逆矩阵得到 $X(s)=X(s)^*$。每个非零 $s$ 上它是有限矩阵，且精确给 $Xu=p$、$XCu=q$。
+
+此外，令 $w(s)=q_l(s)-c_jp_l(s)=w+O(s)$，逐列相减给出精确等式
+
+$$
+w(s)=(c_l-c_j)X_{ll}(s)u_l(s)=dX_{ll}(s)z(s).
+\tag{40.20}
+$$
+
+结合 (40.17) 即得 $X_{ll}(s)=1/(ds)+O(1)$。恢复任意原相位 $z_0$ 时，$w(s)$ 和 $u_l(s)$ 同乘 $z_0$，比值和矩阵 $X(s)$ 不变。因此相位不影响 (40.3)。
+
+所用实解析隐函数定理是成熟工具，参见 S. G. Krantz 与 H. R. Parks, *The Implicit Function Theorem: History, Theory, and Applications*（Birkhäuser）。这里的十变量方程、实际来源消元、满秩与横向切向量分别由 (40.4)–(40.16) 给出，不从抽象工具直接假定。
+

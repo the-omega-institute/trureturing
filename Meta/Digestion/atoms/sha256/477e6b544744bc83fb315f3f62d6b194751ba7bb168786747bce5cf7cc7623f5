@@ -1,0 +1,15 @@
+## 19. Retained complete records give a finite reuse budget
+
+Put
+
+<a id="eq-reference-19-1"></a>
+
+$$
+d=D(\eta_0,\eta_1),
+\qquad
+\beta=\sum_x\sqrt{p_0(x)p_1(x)}\in[0,1].
+\tag{19.1}
+$$
+
+<a id="statement-reference-19-1"></a>
+

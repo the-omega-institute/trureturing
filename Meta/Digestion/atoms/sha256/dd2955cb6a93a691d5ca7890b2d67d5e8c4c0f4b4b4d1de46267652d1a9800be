@@ -1,0 +1,46 @@
+**命题 11.1（Pure-fibre commutant formula and bounds）。** For Hermitian $B$,
+
+<a id="eq-future-11-2"></a>
+
+$$
+\begin{aligned}
+\delta_{\mathcal A}(B)
+&=\max_{U'\in\mathcal U(\mathcal A')}
+\lVert B-U'^*BU'\rVert_{\mathrm{op}},\\
+d_{\mathcal A}(B)
+&\le\delta_{\mathcal A}(B)
+\le2d_{\mathcal A}(B).
+\end{aligned}
+\tag{11.2}
+$$
+
+**证明。** Equality of the restrictions of $\Psi$ and $\Phi$ is equivalent to $\Phi=U'\Psi$ for a commutant unitary, as in Theorem 3.2. Explicitly, choose a common left eigenbasis for each reduced sector density. The right orthonormal Schmidt frames differ by a unitary on the corresponding $W_\alpha$, including central-sector phases. Maximizing a Hermitian expectation over $\Psi$ then gives the norm in (11.2).
+
+Average $U'^*BU'$ over the compact unitary group of $\mathcal A'$. The resulting trace-preserving conditional expectation belongs to $\mathcal A$ and has block formula
+
+<a id="eq-future-11-3"></a>
+
+$$
+E_{\mathcal A}(B)=
+\bigoplus_\alpha
+\left(
+\operatorname{Tr}_{W_\alpha}(P_\alpha BP_\alpha)
+\otimes\frac{I_{W_\alpha}}{m_\alpha}
+\right).
+\tag{11.3}
+$$
+
+This is unital completely positive as a mathematical average of unitary conjugations. The average gives
+
+$$
+d_{\mathcal A}(B)
+\le\lVert B-E_{\mathcal A}(B)\rVert_{\mathrm{op}}
+\le\delta_{\mathcal A}(B).
+$$
+
+For the other bound, subtract any $b\in\mathcal A_{\mathrm{sa}}$, which commutes with every $U'$, and apply the triangle inequality. $\square$
+
+Thus pure pairs detect every nonzero failure, but no equality between $\delta_{\mathcal A}(B)$ and $2d_{\mathcal A}(B)$ is asserted in general.
+
+<a id="statement-future-11-2"></a>
+

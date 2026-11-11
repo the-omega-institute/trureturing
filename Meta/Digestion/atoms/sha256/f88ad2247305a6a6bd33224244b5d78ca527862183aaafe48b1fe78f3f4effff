@@ -1,0 +1,87 @@
+**定理 43.5（简单根条件下的完整阈值一阶公式）。** 在 $h=0$ 的接触上写 $\tau=\sqrt t\,e^{i\theta}$。$E_0$ 的实 Jacobian 以 $(t,\theta)$ 为列变量时，行列式精确为
+
+$$
+\det D_{(t,\theta)}(\operatorname{Re}E_0,\operatorname{Im}E_0)
+=-\tfrac12P'(t).
+\tag{43.14}
+$$
+
+若 $P'(t)\ne0$，固定 $\ell$ 的实解析延续对参数 $g$ 有
+
+$$
+\left.\frac{dt}{dg}\right|_0
+=-\frac{2\operatorname{Re}(\overline GE_1)}{P'(t)},\qquad
+\mathcal D=\mathcal S-
+\frac{2\operatorname{Re}(\overline GE_1)}{P'(t)}\,\partial_t\mathcal R_0.
+\tag{43.15}
+$$
+
+$\mathcal D$ 是完整受约束值的导数；$\partial_t$ 固定 $x,y$。令 $\mathcal M$ 为源对齐、整体相位商后的整个 $h=0$ 全局极小接触集，两个 $y$ 符号均包括在内。作如下明确的附加假设：
+
+$$
+P'(t)\ne0\qquad\text{对每个 }(x,y,t,\theta)\in\mathcal M.
+\tag{43.16}
+$$
+
+则当 $h\downarrow0$，
+
+$$
+K_+(h)-K_-(h)
+=h\left(\min_{\mathcal M}\mathcal D+\max_{\mathcal M}\mathcal D\right)+o(h).
+\tag{43.17}
+$$
+
+(43.16) 尚未为当前问题证成；(43.17) 的系数也未确定符号或是否为零。
+
+证明。在零阶根上，$G=\sqrt2F\overline\tau$，所以
+
+$$
+\partial_\theta E_0=-iG,\qquad
+\partial_tE_0=\sqrt2(F'+F/(2t))\overline\tau-G'.
+$$
+
+实 Jacobian 的行列式是
+
+$$
+\begin{aligned}
+\operatorname{Im}(\overline{\partial_tE_0}\,\partial_\theta E_0)
+ &=-\operatorname{Re}(\overline{\partial_tE_0}G)\\
+ &=-\left[2t\operatorname{Re}(\overline{F'}F)+|F|^2
+             -\operatorname{Re}(\overline{G'}G)\right]
+ =-P'(t)/2.
+\end{aligned}
+$$
+
+这也精确标出特殊集 $P=P'=0$，没有把它从三次枚举中删除。若 $P'\ne0$，实解析隐函数定理以 $x,y,g$ 为外参数，给唯一局部 $t,\theta$ 分支；$y(Z_0-gv)>0$ 是开条件，在不利基点附近保留。对 (43.11) 关于 $g$ 在零处求导，二次右边导数为零，立即给 (43.15) 的根运动。零阶值 $\mathcal R_0$ 不依赖 $\theta$，所以将 (43.13) 沿分支求导，得恰为 $\mathcal D$，包括强制根运动项。
+
+源反射令 $S=\operatorname{diag}(1,-1)$。由 $SH_hS=H_{-h}$、$SB_hS=B_{-h}$、$Sa_r=a_{-r}$，将 $u,p,q,a_{\rm act}$ 同时左乘 $S$，其余参数不变，给保持 $A,|\eta|,\zeta,\mathscr R$ 及不利条件的双射。因此
+
+$$
+K_r(h)=K_{-r}(-h).
+\tag{43.18}
+$$
+
+设 $\mathcal K(g)=K_+(g)$，则 $K_-(h)=\mathcal K(-h)$；源对齐图中的方程和值函数只依赖 $g$。这个反射改变 $h$ 的符号，并不比较同一正 $h$ 的两个阈值。
+
+在假设 (43.16) 下，$\mathcal M$ 非空且紧：非空及全部极小点的存在由定理 42.1 给出，联合紧性和相位商保证紧性。连续函数 $|P'|$ 在它上面有正下界。有限个隐函数图因而覆盖 $\mathcal M$，每个图都以 $x,y$ 为自由参数、$g$ 为微扰参数；缩小邻域后所有值展开有一致 $o(|g|)$ 余项。$\mathcal D$ 连续，故在整个 $\mathcal M$ 上取到最小值和最大值。
+
+延续任一 $\mathcal M$ 成员即给 $\mathcal K(g)\le\mathcal K(0)+O(|g|)$。另一方面，对任何 $g_j\to0$ 的全局极小接触列，联合紧性给收敛子列；其极限是零阶完整接触，比值极限不超过 $\mathcal K(0)$，又不能小于零阶下确界，故属于 $\mathcal M$。因此全部小 $g$ 极小点到 $\mathcal M$ 的距离趋于零，并最终落在上述有限图内。
+
+对每个实际移动极小点，沿它所在的图将 $g$ 置零、保持其 $x,y$，得到零阶完整不利接触 $c^0_g$，其值至少为 $\mathcal K(0)$。这些零阶对应点也趋于 $\mathcal M$。局部值展开给
+
+$$
+\mathcal K(g)=\mathcal R_0(c^0_g)+g\mathcal D(c^0_g)+o(|g|),
+$$
+
+余项一致；所以对 $g>0$，下界为 $\mathcal K(0)+g\min_{\mathcal M}\mathcal D+o(g)$，对 $g<0$，下界为 $\mathcal K(0)+g\max_{\mathcal M}\mathcal D+o(|g|)$。上界分别由延续取得 $\min\mathcal D$、$\max\mathcal D$ 的成员给出。于是
+
+$$
+\begin{aligned}
+\mathcal K(g)&=\mathcal K(0)+g\min_{\mathcal M}\mathcal D+o(g),&&g\downarrow0,\\
+\mathcal K(g)&=\mathcal K(0)+g\max_{\mathcal M}\mathcal D+o(|g|),&&g\uparrow0.
+\end{aligned}
+\tag{43.19}
+$$
+
+两式相减并用 (43.18) 得 (43.17)。此证明不要求唯一极小点或二次增长，却必须在整个零阶极小集上有 (43.16)。∎
+

@@ -1,0 +1,57 @@
+**推论 66.10（加回 C13 后的同时方向消除）。** 记 $I_+=\{i:n_i\ge2\}$。条件 (66.20)、(66.30) 共同给出
+
+$$
+\varepsilon_{ik}=\varepsilon_{ij}\oplus\varepsilon_{jk}
+\quad(i,j,k\in I_+),\qquad
+\varepsilon_{ij}=t_i\oplus t_j\quad(i,j\in I_+).
+\tag{66.32}
+$$
+
+存在兼容全部标量边界的保单位、保迹整块转置坐标，使 $F,N$ 同时为普通产品，$p_0$ 为普通首腿偏迹求和；原始 $u,g$ 仍为正权重。
+
+证明。全部有序三重块存在，故重复标签也可代入余循环，给 $\varepsilon_{ii}=0$、$\varepsilon_{ij}=\varepsilon_{ji}$。若 $I_+\ne\varnothing$，固定 $h\in I_+$，令 $t_i=\varepsilon_{hi}$；对标量扇区取 $t_i=0$。于是得 (66.32)，没有额外的“活跃图断开”情形。若 $I_+=\varnothing$，所有矩阵块均标量，全部位都不可见。
+
+明确令
+
+$$
+\ell_{ij}=\begin{cases}
+t_i,&n_i\ge2,\\
+\varepsilon_{ij}\oplus t_j,&n_i=1, n_j\ge2,\\
+0,&n_i=n_j=1,
+\end{cases}\qquad
+r_{ijk}=\begin{cases}
+\ell_{ij},&n_in_j\ge2,\\
+\delta_{ijk}\oplus t_k,&n_i=n_j=1, n_k\ge2,\\
+0,&n_i=n_j=n_k=1.
+\end{cases}
+\tag{66.33}
+$$
+
+采用整块坐标变化
+
+$$
+a'_i=a_i^{T^{t_i}},\qquad
+d'_{ij}=d_{ij}^{T^{\ell_{ij}}},\qquad
+z'_{ijk}=z_{ijk}^{T^{r_{ijk}}}.
+\tag{66.34}
+$$
+
+它们都是所在完整简单块的 Jordan 序自同构，保持单位和规范迹。$F$ 的两腿剩余位分别为 $t_i\oplus\ell_{ij}$、$\varepsilon_{ij}\oplus t_j\oplus\ell_{ij}$；每条非标量腿上的位都为零。$N$ 的第一因子非标量时 $r_{ijk}=\ell_{ij}$；若末腿也非标量，须且有
+
+$$
+\delta_{ijk}=\ell_{ij}\oplus t_k.
+\tag{66.35}
+$$
+
+当 $i$ 活跃时，C13 及 (66.32) 直接给它，包括标量 $j$；当 $i$ 标量、$j$ 活跃时，(66.20) 及 (66.32) 给它。若前两腿均标量，(66.33) 的第二分支消去末腿方向；若 $k$ 标量，末腿转置本无作用。故所有混合边界都闭合，得到
+
+$$
+F'(a,b)_{ij}=a_i\otimes b_j,\qquad
+N'(d,c)_{ijk}=d_{ij}\otimes c_k,\qquad
+(p'_0z)_{jk}=\sum_i\operatorname{Tr}_i z_{ijk}.
+\tag{66.36}
+$$
+
+最后一式由 $Q'_0$ 张成和全实读回恒等式唯一确定。权重变为
+$u'_{ij}=u_{ij}^{T^{\ell_{ij}}}$、$g'_{ijk}=g_{ijk}^{T^{r_{ijk}}}$，仍严格正且满足原逆迹平衡；它们不被迫为单位。因此 C13 增加的是这些接合的相对方向相容性，不是原复数状态几何的选择，也不恢复原始校准。$\square$
+

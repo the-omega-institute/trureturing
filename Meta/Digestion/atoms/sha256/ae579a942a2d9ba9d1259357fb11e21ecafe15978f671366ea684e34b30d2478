@@ -1,0 +1,202 @@
+**定理 33.1（两矩近邻与统一反二阶矩尺度）。** 存在常数 $\delta_0,c>0$，与环境维数和 $L$ 无关，使下述断言成立。任取有限 $m\ge0$、实际 Hermitian 输入
+$t=\left(\begin{smallmatrix}B&V\\V^\ast&D_{\rm env}\end{smallmatrix}\right)$，并令
+
+$$
+\begin{gathered}
+W=V|_{\ker D_{\rm env}}=0,\qquad
+F=V^\ast,\qquad G=D_{\rm env}^{\dagger}F,\\
+M_0=F^\ast F,\qquad M_1=G^\ast F=F^\ast G,\qquad
+M_2=G^\ast G,\qquad H=B-M_1.
+\end{gathered}
+\tag{33.1}
+$$
+
+若 $L\ge1$ 且
+
+$$
+\|H-2C\|<\delta_0,\qquad
+\|M_1-C\|<\delta_0,\qquad
+\|M_2\|\le L,
+\tag{33.2}
+$$
+
+则同一输入对每个 $|\rho|\le c/L$ 同时满足两个取向的全部原 PB。这里包括每个实际 Hermitian 角探针和完整 $M_{m+2}(\mathbb C)$ 上全部正复线性泛函；在任一指定正有限质量上全称检验也成立，零质量给零等式。
+
+不对 $M_0$ 另加接近性、正下界或上界假设。等价地，任意满足前卷 (30.3) 的兼容三矩，在取 $B=H+M_1$ 后，只要满足 (33.2)，其每份实际实现都有上述结论。兼容性不能删除：本定理不把任意三个形式矩阵当作实际来源。
+
+证明。先在 $\|H-2C\|,\|M_1-C\|\le1$ 内取常数，随后缩小邻域。固定任意原单位演员 $u$、同一 $X=X^\ast$ 和环境向量 $y$；原索引中的 $\sigma,\epsilon=\pm1$、$0<\alpha_\pm<\infty$、$\beta_\pm\in\mathbb R$ 均任意。使用 §32 的 $\iota=\sigma i$、$\nu,\ell,A,w_\pm,\omega$、$\mathsf P,\mathsf Q$、$S_0,\mathcal D_\rho$，并置
+
+$$
+r_\ell=|\ell|,\qquad n_0=|\nu|,\qquad
+b_\theta=\frac{(r_\ell+n_0)^2}{r_\ell},\qquad
+\mathcal S=L S_0.
+\tag{33.3}
+$$
+
+式 (32.6) 仍给
+$|1+\operatorname{Im}_\iota\nu|<A=-\epsilon\operatorname{Im}_\iota\ell\le r_\ell$、
+$r_\ell+n_0\ge1$，因而 $r_\ell>0$、$b_\theta\ge1$。没有限制 $\alpha_+/\alpha_-$，也没有对任何单个 $\alpha_\pm$ 取正下界。
+
+在实际环境内令 $d=Fu+D_{\rm env}y$、
+$a=Bu+Vy$、
+$e=d+(\ell+\omega\nu)FCu/2$。由 $W=0$ 得 $a=Hu+G^\ast d$。因此 (32.4)–(32.5)、(32.9) 保持原式；(32.7) 的准确替换是
+
+$$
+\begin{aligned}
+\sum_{\tau=\pm1}w_\tau
+ \|(E_\tau)_{\rm env}\|^2
+ &=(w_++w_-)\|e\|^2+\frac{n_0^2}{2A}\|FCu\|^2,\\
+a&=Hu+G^\ast e-\frac{\ell+\omega\nu}{2}M_1Cu,\\
+\mathcal D_\rho
+ &=S_0+4\epsilon\rho\operatorname{Re}(v^\ast T_Au),
+ \qquad v=a-\iota p,\quad p=Xu.
+\end{aligned}
+\tag{33.4}
+$$
+
+这里 $\tau$ 只标两笔原预算。第一行是同一对环境列的加权方差，第二行使用实际恒等式 $G^\ast F=M_1$；没有替换环境度量。
+
+取 $\|M_1-C\|\le1/2$。因 $\|G\|^2\le L$，对任意演员向量 $z$ 有
+
+$$
+\|M_1z\|^2=\|G^\ast Fz\|^2\le L\|Fz\|^2,
+\qquad
+M_0\succeq L^{-1}M_1^2\succeq\frac1{4L}I_2.
+\tag{33.5}
+$$
+
+特别地 $L\|FCu\|^2\ge1/4$。这就是所需的 $M_0$ 下界，其来源是实际因子而非额外假设。由 (33.4) 的方差及两份演员列的加权半和、半差，得到
+
+$$
+\begin{gathered}
+\mathcal S\ge\frac{n_0^2}{8r_\ell},\\
+\|\mathsf P\|+\|\mathsf Q\|+\|G^\ast e\|
+ \le3\sqrt{r_\ell\mathcal S},\\
+\|a\|\le K\bigl(1+r_\ell+n_0+\sqrt{r_\ell\mathcal S}\bigr).
+\end{gathered}
+\tag{33.6}
+$$
+
+例如 $\|\mathsf P\|,\|\mathsf Q\|\le\sqrt{AS_0/2}$、
+$\|e\|\le\sqrt{AS_0/2}$，而
+$\|G^\ast e\|\le\sqrt{L}\|e\|$；这说明 $K$ 不依赖 $m,L$ 或 $\|F\|$。
+
+先证明存在共同的 $\eta_H,\eta_M,\eta_\rho,\gamma_0>0$，使
+
+$$
+\mathcal S\ge\gamma_0 b_\theta
+\quad\text{当}\quad
+\|H-2C\|<\eta_H,\quad
+\|M_1-C\|<\eta_M,\quad |\rho|\le\eta_\rho,
+\tag{33.7}
+$$
+
+对所有 $L\ge1$、所有实际环境及全部原索引成立。这里的强制性只在所列局部 $\rho$ 邻域断言。
+
+若不存在这样的四个常数，就有一列实际输入和原测试，允许其环境维数及 $L$ 变化，使
+$H\to2C$、$M_1\to C$、$\rho\to0$ 且
+$\mathcal S/b_\theta\to0$。取子列固定 $\sigma,\epsilon$。由 (33.6)，
+
+$$
+\frac{\mathcal S}{b_\theta}
+ \ge\frac{n_0^2}{8(r_\ell+n_0)^2}
+\quad\Longrightarrow\quad
+\frac{\nu}{\ell}\to0,\qquad
+\liminf r_\ell\ge1,\qquad
+\frac{\mathcal S}{r_\ell}\to0.
+\tag{33.8}
+$$
+
+设 $\kappa=\nu/\ell$，
+$Z=[\ell(1-\kappa^2)-\iota\kappa]I_2-C$。原消元式仍是
+
+$$
+\mathsf Q-\kappa\mathsf P
+ =(\iota C-\kappa I_2)a-Zp+\rho T_Au.
+\tag{33.9}
+$$
+
+若 $r_\ell\to\infty$，(33.6) 使
+$\|\mathsf P\|+\|\mathsf Q\|+\|G^\ast e\|=o(r_\ell)$。
+式 (33.4) 给
+$a/\ell+C^2u/2\to0$；同时 $Z/\ell\to I_2$。将 (33.9) 除以 $\ell$ 并解出 $p$，得到
+
+$$
+p+\frac{\iota}{2}C^3u\longrightarrow0.
+\tag{33.10}
+$$
+
+但 $u^\ast p=u^\ast Xu$ 必为实数，而
+$u^\ast C^3u\ge1$，故 (33.10) 不可能。这一分支没有对发散探针取紧性极限。
+
+若 $r_\ell$ 有界，则 (33.8) 给 $\nu\to0$、$\mathcal S\to0$；
+$\mathsf P,\mathsf Q,G^\ast e\to0$。只对单位演员 $u$、有界 $\ell$ 取子列。极限满足
+$|\operatorname{Im}_\iota\ell|\ge1$，故 $\ell I_2-C$ 可逆。(33.9) 控制可见列 $p$，再由
+$\mathsf P=v-\nu p+\ell U/2$、
+$U=\iota q+BCu+Cv$ 控制可见列 $q=XCu$。在极限中 $B\to3C$，恰得到 §32 已排除的基准接触系统：
+
+$$
+\begin{gathered}
+a=(2C-\ell C^2/2)u=\iota(I_2-\ell C^{-1})p,\\
+q=(\ell I_2+2C^{-1})p+3\iota C^2u,\qquad
+p_j=-\iota A_j u_j,\\
+A_1=\frac{2-\ell/2}{1-\ell}
+ =\frac12+\frac{3}{2(1-\ell)},\qquad A_2=4.
+\end{gathered}
+\tag{33.11}
+$$
+
+为明确极限边界，若两个演员坐标均非零，实际 Hermitian 探针给
+$(c_l p_j-q_j)/u_j\in\mathbb R$，其中 $c_1=1,c_2=2,l\ne j$。
+代入 (33.11) 得
+$\operatorname{Re}(\ell A_j)=3c_j^2$。
+第二坐标迫使 $\operatorname{Re}\ell=3$；写 $\ell=3+\iota t_0$，第一坐标却给
+$\operatorname{Re}(\ell A_1)=-3/(4+t_0^2)$，不能等于 $3$。
+在第二演员轴，$u^\ast p=-4\iota$，也不可能。
+在第一轴，可见极限列均在该轴，连续恒等式
+$u^\ast p\in\mathbb R$、$u^\ast q=p^\ast Cu$ 给 $q=p$。
+于是 $(\ell+1)A_1=3$，即 $\ell^2-9\ell+2=0$，其根均为实数，仍矛盾。
+这些排除包括 $A=1$ 的极限；不要求极限的两个 $\alpha_\pm$ 仍严格正。整个紧性步骤只涉及演员空间的 $u,p,q,\ell$，不要求 $X$、$y$ 或环境空间有共同紧集。这证明 (33.7)。
+
+最后控制残量项。至少一个 $j$ 满足
+$|\ell(1-\kappa^2)-\iota\kappa-c_j|\ge1/2$。
+在该坐标上使用 (33.9) 和 (33.6)，按 §32 的同一 Hermitian 实性关系得到
+
+$$
+\begin{aligned}
+|\operatorname{Re}(v^\ast T_Au)|
+ &\le K\bigl(b_\theta+\sqrt{b_\theta\mathcal S}+|\rho|\bigr),\\
+\mathcal D_\rho
+ &\ge\frac{S_0}{2}
+       -K\bigl(|\rho|+L\rho^2\bigr)b_\theta.
+\end{aligned}
+\tag{33.12}
+$$
+
+具体地，$u^\ast p\in\mathbb R$ 使两个
+$\operatorname{Im}_\iota(\overline{p_j}u_j)$ 互为相反数，故任选一个坐标都有
+$|\operatorname{Re}(\iota p^\ast T_Au)|\le3|p_j||u_j|$。
+只需控制上述分离坐标，即使另一坐标共振也无妨。
+此外
+$(1+n_0/r_\ell)(1+r_\ell+n_0)\le2b_\theta$、
+$(1+n_0/r_\ell)\sqrt{r_\ell\mathcal S}=\sqrt{b_\theta\mathcal S}$。
+第一行因而成立，包括 $u_j=0$。
+第二行对 $4K|\rho|\sqrt{b_\theta L S_0}$ 使用 Young 不等式，并用 $L,b_\theta\ge1$ 吸收余项。
+
+取 $\delta_0\le\min(1/2,\eta_H,\eta_M)$，再取
+$0<c\le\eta_\rho$ 使 $K(c+c^2)\le\gamma_0/4$。
+当 $|\rho|\le c/L$ 时，(33.7)、(33.12) 给
+
+$$
+\mathcal D_\rho
+ \ge\frac{S_0}{2}-\frac{\gamma_0b_\theta}{4L}
+ \ge\frac{S_0}{4}
+ \ge\frac{\gamma_0b_\theta}{4L}>0.
+\tag{33.13}
+$$
+
+所有常数对两个取向、两个绝对值符号及全部有限变分参数共同有效。对固定的同一 $X,\xi=(u,y)$，用 (27.12) 对四个参数取下确界，即得原向量 PB；退化 Gram 不要求下确界达到。一般非零演员分量按其范数同比缩放，演员分量为零时原 $L$ 的读取为零，PB 自动成立。
+
+对完整原代数上的任意正泛函，取原空间谱分解
+$\phi=\sum_j\phi_{\xi_j}$，分别对同一 $R_+,S_+$ 和同一 $R_-,S_-$ 使用 (17.15) 的二阶正 Gram 行列式根不等式，再对左端使用三角不等式，正好得到 (17.16)。这一步保留环境密度块及给定总质量；零质量只有零泛函。证明完成。∎
+

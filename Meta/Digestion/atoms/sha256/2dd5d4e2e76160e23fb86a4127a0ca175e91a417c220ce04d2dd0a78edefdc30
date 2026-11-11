@@ -1,0 +1,57 @@
+**推论 65.12（原态几何、原映射单位及保迹的区别）。** 每个原载体 $X$ 的全态、全效应及实际效应概率，在上述忠实坐标中是
+
+$$
+\rho_\lambda\ge0,\quad\sum_\lambda\operatorname{Tr}\rho_\lambda=1,
+\qquad 0\le E_\lambda\le I_\lambda,
+\qquad \Pr(E\mid\rho)=\sum_\lambda\operatorname{Tr}(E_\lambda\rho_\lambda).
+\tag{65.36}
+$$
+
+$A$ 的纯态空间为 $\coprod_i\mathbb{CP}^{n_i-1}$，同区比较为 $|\langle\psi,\phi\rangle|^2$，异区为零。$D,E$ 分别使用有序对、三元块，保留其全部纠缠正态。另一方面，原始映射的归一化条件分别是
+
+$$
+\begin{aligned}
+M(1_A,1_A)=1_D&\iff u_{ij}=I_j\quad(\forall i,j),\\
+H1_D=1_E&\iff g_{ijk}=I_k\quad(\forall i,j,k),\\
+\tau_Dp=\tau_E&\iff
+I_i\otimes u_{ij}^{-1}\otimes
+ (g_{ijk}^{-1/2}u_{jk}g_{ijk}^{-1/2})=I_{ijk}
+ \quad(\forall i,j,k).
+\end{aligned}
+\tag{65.37}
+$$
+
+它们均不是本节候选的普遍推论。
+
+**证明。** (65.4) 的全态与全效应对应及后续保迹 Jordan 坐标给出 (65.36)，本原投影的迹配对给纯态比较。前两个等价直接由实际 $U,G$ 读出。最后一个由 $p=C_Dp_0C_E^{-1}$ 求伴随得到
+
+$$
+(p^*1_D)_{ijk}
+ =I_i\otimes u_{ij}^{-1}\otimes
+ (g_{ijk}^{-1/2}u_{jk}g_{ijk}^{-1/2}),
+\tag{65.38}
+$$
+
+再用规范迹的 Riesz 唯一性。
+
+三个控制族说明这些条件不能省略为结论。第一，$A=\mathbb R$ 时约束强制 $u=1$ 而 $g>0$ 任意：$D=E=\mathbb R$，$M(a,b)=ab$、$L(d,c)=gdc$、$p(z)=z/g$，原插入为 $g\operatorname{id}:D\to E$，其伴随为 $g\operatorname{id}:E\to D$。$g\ne1$ 时原 $H$ 不保单位、原 $p$ 不保迹。
+
+第二，经典 $A=\mathbb R^2$、所有 $n_i=1$，取
+
+$$
+u_{1j}=2,\qquad u_{2j}=2/3\quad(j=1,2),\qquad g_{ijk}=1.
+$$
+
+则 $\sum_{i,j}u_{ij}^{-1}=4=n^2$、$w=(1/2,1/2)$，原 $M(a,b)_{ij}=u_{ij}a_ib_j$ 非保单位。原 $p$ 对支撑在 $(i,j,k)=(1,2,1)$ 的质量一输入输出总质量 $u_{21}/u_{12}=1/3$，所以不保迹。辅助 $M_0=F$ 是普通分块乘法，与原 $M$ 不同。
+
+第三，单复矩阵扇区 $n_1=2$，取
+
+$$
+u=\operatorname{diag}(2,2/3),\qquad g=\operatorname{diag}(3,1).
+$$
+
+$2\operatorname{Tr}(u^{-1})=4$，所以逆定理适用，包括整个纠缠锥及 C13。原 $U=I_2\otimes u$、$G=I_4\otimes g$ 均非单位，并有
+$p^*1_D=I_2\otimes\operatorname{diag}(1/2,3/2)\otimes(2I_2/3)\ne1_E$。$C_E$ 不是共同标量，且 $w=\operatorname{diag}(1/4,3/4)$，故原 $K,M$ 与辅助者不同。还可将 $g$ 换成任意非对角正定矩阵，如 $\left(\begin{smallmatrix}2&1\\1&2\end{smallmatrix}\right)$，它与 $u$ 不交换，逆定理仍适用。
+
+任意标量及非标量扇区混合都由同一公式覆盖；全经典、重复标签、标量旁观者和非均匀矩阵滤波均未排除。这些是对较强原始单位、保迹主张的反例，同时是本节分类的实际模型。$\square$
+

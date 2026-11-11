@@ -1,0 +1,85 @@
+**定理 68.4（未校准的单态等价）。** 对每个 PRE 模型及每个定义 68.3 的合格预选规约，
+
+$$
+\boxed{
+I_{13}^{\mathrm{raw}}(\rho_*)\in E_+
+\quad\Longleftrightarrow\quad
+I_{13}^{\mathrm{raw}}(D_+)\subseteq E_+.
+}
+\tag{68.17}
+$$
+
+两边指向同一个原始 $L,p$、同一个原参考和同一个实际插入。左边记为 $\mathrm{P}_*$；它要求一个输入的完整输出正性，不要求输出迹一。
+
+**证明。** 在 PRE 下先定义
+
+$$
+T_0(a,c)=N(F(a,1_A),c),\qquad
+I_{13}^0=\widetilde T_0\widetilde F^{-1}.
+$$
+
+由 (68.10)，$T=C_ET_0$、$\widetilde M=C_D\widetilde F$。因此不论插入是否正，都有定理 65.8 的代数等式
+
+$$
+I_{13}^{\mathrm{raw}}=C_EI_{13}^0C_D^{-1}.
+\tag{68.18}
+$$
+
+由于两端滤波及其逆保持整个锥，C13 等价于 $I_{13}^0(D_+)\subseteq E_+$。引理 68.2 允许对 $(N,p_0)$ 应用定理 64.10，而该定理按 $M_0=F$ 选出的态正是 (68.15) 中的 $\sigma_*$，所以
+
+$$
+I_{13}^0(\sigma_*)\in E_+
+\quad\Longleftrightarrow\quad I_{13}^0(D_+)\subseteq E_+.
+\tag{68.19}
+$$
+
+为明确此步没有从测试后结论倒选探针，写出其关键结构。在 $E$ 上另取仅供证明的独立初始坐标。旧 (64.29)–(64.32) 给出酉 $R_{ijk}$、三元转置位 $t_1,t_2,t_3$，使
+
+$$
+\begin{aligned}
+(I_{13}^0d)_{ijk}
+ &=\operatorname{Ad}(R_{ijk})\,
+ \operatorname{ins}_{13,j}\left[
+ (T^{u_{ijk}}\otimes T^{v_{ijk}})
+ \bigl(\operatorname{Ad}(V_{ik}^*)d_{ik}\bigr)\right],\\
+u_{ijk}&=\varepsilon_{ik}\oplus t_1,\qquad
+v_{ijk}=\delta_{ik}\oplus t_3.
+\end{aligned}
+\tag{68.20}
+$$
+
+这里 $\operatorname{Ad}(R)x=RxR^*$，$\operatorname{ins}_{13,j}$ 在端点之间插入未归一化 $I_{n_j}$，即把 $x\otimes I_{n_j}$ 作固定因子置换。$R,t$ 只参与证明。
+
+若一个端点为标量，(68.20) 的端点操作至多是一个整个矩阵转置，自动正。两端非标量时，$u=v$ 给恒等或整个转置；$u\ne v$ 给单腿转置。在两维 Bell 子空间内，
+
+$$
+(\mathrm{id}\otimes T)b_{ik}
+ =(T\otimes\mathrm{id})b_{ik}=\tfrac12\mathsf S_2,
+\qquad
+\mathsf S_2\frac{|01\rangle-|10\rangle}{\sqrt2}
+ =-\frac{|01\rangle-|10\rangle}{\sqrt2}.
+\tag{68.21}
+$$
+
+$\mathsf S_2$ 是该四维子空间的交换算子。预选输入在 (68.20) 中先被正确解开为 $V_{ik}^*(V_{ik}b_{ik}V_{ik}^*)V_{ik}=b_{ik}$，故任何坏块在 $I_{13}^0\sigma_*$ 中产生 $-1/(2r)$，按 $n_j$ 重复。不同有序端点块处于不同输出中心块，不能抵消；$n_j=1$ 也保留负方向。因此测试迫使每个活跃有序端点对和每个中间标签都满足 $u_{ijk}=v_{ijk}$，从而整锥正。反向由 $\sigma_*\ge0$ 立即得出。$r=0$ 时全为标量块，插入自动正。这就是 (68.19) 的既有 Bell 机制。
+
+最后，(68.15)–(68.18) 给
+
+$$
+I_{13}^{\mathrm{raw}}(\rho_*)
+ =\frac1{h_*}C_EI_{13}^0(\sigma_*).
+\tag{68.22}
+$$
+
+$h_*>0$，$C_E$ 有全正逆，故 (68.22) 为正当且仅当 $I_{13}^0\sigma_*$ 为正。与 (68.19) 及整锥滤波等价合并，得到 (68.17)。$\square$
+
+在辅助系统中 $\tau_EI_{13}^0(\sigma_*)=n$，这是定理 64.10 的迹结论；一般的原 $I_{13}^{\mathrm{raw}}\rho_*$ 没有固定输出迹。正确的伴随方向为
+
+$$
+(I_{13}^{\mathrm{raw}})^*=C_D^{-1}p_{13}^0C_E,
+\qquad p_{13}^0=(I_{13}^0)^*.
+\tag{68.23}
+$$
+
+只有 $\mathrm{P}_*$ 已推出 C13 后，才使用定理 65.8 的正保迹 $p_{13}^0$ 及 $p_{13}^0Q_0(a,b,c)=\tau_A(b)F(a,c)$；原伴随一般不保迹。
+

@@ -1,0 +1,6 @@
+**命题 31.1（Finite test of complete recorded autonomy on $Q$）。** The following are equivalent:
+
+1. Every pair of preparations in $Q$ with the same $W$ responses gives the same complete recorded output state restricted to $\mathcal A_{\rm out}$.
+2. $F_x(E_\ell)\perp\mathcal K_Q$ for every $x,\ell$.
+3. Every selected finite gap in (31.1) is zero.
+

@@ -1,0 +1,6 @@
+**命题 11.2（Exact pure witness with an unobserved purification carrier）。** Supply a carrier $R$ of dimension $\dim H$, excluded from current tests. On $H\otimes R$, pure vectors agreeing on $\mathcal A\otimes I_R$ can attain future expectation difference $2d_{\mathcal A}(B)$ for $B\otimes I_R$, and cannot exceed it.
+
+**证明。** Purify the attaining mixed pair of Theorem 10.1 on $H\otimes R$. The purifications agree on $\mathcal A\otimes I_R$ and retain the same $B\otimes I_R$ expectations. Conversely, reducing any admissible pure pair to $H$ gives a pair in (9.2), so (10.1) bounds its difference. $\square$
+
+Adding joint $\mathcal A$–$R$ tests changes the equivalence relation. This existence statement neither acquires those purifications nor supplies a clean-return reference protocol.
+

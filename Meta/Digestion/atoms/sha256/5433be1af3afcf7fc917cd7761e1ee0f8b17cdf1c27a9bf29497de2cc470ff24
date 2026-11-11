@@ -1,0 +1,15 @@
+**定理 69.2（唯一旁观者延拓）。** 对任意实线性 $\Phi:A\to A$，以 $\Phi_{ji}$ 同时记其输入 $i$、输出 $j$ 块在全矩阵上的唯一复线性保 Hermitian 延拓。定义
+
+$$
+(T_\Phi X)_{jk}=\sum_i(\Phi_{ji}\otimes\operatorname{id}_{H_k})(X_{ik}).
+$$
+
+唯一满足 $\Psi_\Phi M(a,b)=M(\Phi(a),b)$、量化全部实 $a,b$ 的实线性映射是
+
+$$
+\boxed{\ \Psi_\Phi=C_DT_\Phi C_D^{-1}.\ }
+\tag{69.3}
+$$
+
+证明。Hermitian 简单张量实张成每个完整块，选取中心支持可分别张成每个有序 $(i,k)$ 块。可逆 $C_D$ 保持张成。右式在每个 $M(a,b)$ 上有要求的值，故存在且唯一。这一步不使用 $\Phi$ 的正性或迹条件。$\square$
+

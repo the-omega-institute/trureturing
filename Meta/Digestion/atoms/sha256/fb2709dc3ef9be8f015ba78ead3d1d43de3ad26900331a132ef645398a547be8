@@ -1,0 +1,46 @@
+**命题 67.3（已获无 C13 接口的支持面形式）。** 在 $\mathcal B+D_H$ 下，直接采用命题 66.2 的 $F,N,s$ 及同一实际 $p$ 的恢复接口。存在全锥正 $s:D\to A$、$t=sp:E\to A$，使
+
+$$
+\begin{gathered}
+m=n^2,\quad V=U^{-1}>0,\quad\tau_D(V)=m,\\
+tL(d,a)=\langle V,d\rangle_Da.
+\end{gathered}
+\tag{67.5}
+$$
+
+$Z$ 是 $E_+$ 内点，$H$ 没有非零正核。对任意本原 $q\in D$，令
+
+$$
+z_q=Hq,\quad P_q=\operatorname{supp}(z_q),\quad
+F_q=E_1(P_q),\quad\Pi_q=P_{P_q},\quad
+K_q(a)=L(q,a),\quad v_q=\langle V,q\rangle_D>0.
+$$
+
+则对全部实 $d,a$，
+
+$$
+\Pi_qL(d,a)=\langle q,d\rangle_DK_q(a),\qquad
+K_q(A)=F_q,\qquad K_q^{-1}=t|_{F_q}/v_q.
+\tag{67.6}
+$$
+
+$K_q$ 是序同构，$\Theta_q=P_{z_q^{-1/2}}K_q$ 是到面 $F_q$ 的保单位 Jordan 同构。因此每个 $F_q$ 秩为 $n$；任意完整 $D$ 本原框架的 $P_q$ 两两正交且和为 $1_E$，从而 $R_E=mn=R$。这里没有 $\|z_q\|^2=n$ 的结论。
+
+**证明。** 命题 66.2 在这些前提下直接适用。其全部输入正是这里的完整比较入口、全锥正 $L,p$、同一个 $p$ 两次形成的 $M$、两条实张成、$D_J,D_H$ 和全实 $\mathrm{(Z)}$。将其中 $G,C_G,N$ 分别写为 $Z,C_Z=P_{\sqrt Z},N_Z=C_Z^{-1}L$，已有 $Z>0$、$\eta=C_Z^{-1}H$ 为保单位 Jordan 嵌入、$Z$ 与 $\eta(D)$ 算子交换，以及
+
+$$
+V=U^{-1}>0,\quad \tau_DV=m=n^2,\qquad
+tL(d,a)=\langle V,d\rangle_Da.
+$$
+
+后一个式子也可直接从 (66.8) 的 $pL(d,a)=M(sd,a)$、$sM(b,a)=\tau_A(b)a$ 和 $s^*1_A=U^{-1}$ 读出。对每个实际本原 $q$，命题 66.2 已供应整个本原角的等式与 Jordan 同构
+
+$$
+P_q=\eta(q),\qquad E_1(P_q)=N_Z(q,A),\qquad
+N_Z(q,-):A\longrightarrow E_1(P_q).
+$$
+
+故 $z_q=C_ZP_q$、$K_q=P_{\sqrt{z_q}}N_Z(q,-)$，于是 $K_q(A)=F_q$、$\Theta_q=N_Z(q,-)$；由 $tK_q=v_q\operatorname{id}_A$ 得所示正逆。其已获二次交织给 $P_{P_q}N_Z(d,a)=\langle q,d\rangle_DN_Z(q,a)$；$C_Z$ 与该角压缩交换，立即给 (67.6)。满角、交织和满迹等距均是命题 66.2 的接口，不把正左逆单独当成满射。
+
+Jordan 同构保持继承的规范迹、秩及元素行列式；完整框架经 $\eta$ 的像和为 $1_E$，故每个角秩为 $n$，总秩为 $mn=n^3$。$Hq=C_Z\eta(q)$ 也表明 $H$ 无非零正核。不同角之间仍允许非零 Peirce 半空间，不把这些面误作整个 $E$ 的向量空间直和。这些支持、载体和恢复事实均为第 66 节的既有结果，本节不将其计作新增内容。$\square$
+

@@ -1,0 +1,23 @@
+**定义 69.1（实际原始操作模型）。** 复用定理 65.9–65.11 在完整有限比较律 $S$、定义 65.2 的实际映射条件及 C13 下给出的同时矩阵坐标；也可从第 66 节加回 C13 后的同一普通乘积方向读取这些坐标。本节不重新证明该条件性静态分类。固定有限非空扇区集 $I$、整数 $n_i\ge1$，记 $H_i=\mathbb C^{n_i}$、$n=\sum_i n_i$，取
+
+$$
+A=\bigoplus_i\operatorname{Herm}(H_i),\qquad
+D=\bigoplus_{i,k}\operatorname{Herm}(H_i\otimes H_k),\qquad
+u_{ik}>0,\qquad \sum_{i,k}n_i\operatorname{Tr}(u_{ik}^{-1})=n^2.
+\tag{69.1}
+$$
+
+所有有序块都在，正锥是各整个 PSD 锥，迹是原来的各块普通迹之和；任意纠缠正元均在量词内。$u_{ik}\in\operatorname{Herm}(H_k)$ 不要求交换、标量、对称或等维。第 65 节三份侧的全部 $g_{ijk}>0$ 仍任意，本节不添加关于 $g$ 的约束。令
+
+$$
+\begin{aligned}
+S_{ik}&=I_i\otimes\sqrt{u_{ik}},&
+(C_DX)_{ik}&=S_{ik}X_{ik}S_{ik},\\
+m(a,b)_{ik}&=a_i\otimes b_k,&
+M(a,b)&=C_Dm(a,b).
+\end{aligned}
+\tag{69.2}
+$$
+
+$C_D$ 及其逆都是全锥正的可逆合同，且关于迹内积自伴随；它们通常不保迹。它们只是分解实际 $M$ 的数学坐标滤波，不另定义态的归一化，也不被指定为物理装置。旁观者始终是同一个实际 $D$ 的第二腿。
+

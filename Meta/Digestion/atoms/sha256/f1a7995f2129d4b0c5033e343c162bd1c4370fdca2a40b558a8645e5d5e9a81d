@@ -1,0 +1,65 @@
+### 34.1 基准演员接触
+
+先固定取向 $\iota=i$，绝对值符号 $\epsilon=1$，并取 $\nu=0$、$\ell=b-it_*$，其中 $b\in\mathbb R$、$t_*=\sqrt6$。这样 $\zeta_\tau=i+\tau\ell=\beta_\tau-\tau i\alpha_\tau$，其中 $\tau=\pm1$，$\beta_\tau=\tau b$、$\alpha_\tau=t_*-\tau>0$。记 $B=3C+hJ_A$、$H=2C+hJ_A$、$p=Xu$、$q=XCu$，以 $a_{\rm act}$ 表示待实现的演员作用列，令 $v=a_{\rm act}-ip$、$U=iq+BCu+Cv$。
+
+为看清接触条件，在实际输入上写 $d=Fu+D_{\rm env}y$、$\xi=(u,y)$、$a_{\rm act}=Bu+Vy$，其中 $F=V^*$。前卷 (27.4)–(27.5) 的原列 $R_\tau\xi$ 的两块为 $p-\tau U/2$、$-\tau FCu/2$；$S_\tau\xi$ 的两块为 $a_{\rm act}+\tau[(Cp+q+iCa_{\rm act}-iBCu)/2+\rho T_Au]$、$d-\tau iFCu/2$。减去 $\zeta_\tau R_\tau\xi$ 后，演员常项为 $a_{\rm act}-ip+\ell U/2$，演员的 $\tau$ 项为 $iCv-\ell p+\rho T_Au$，环境项中的 $\tau iFCu/2$ 抵消。因此 §32 的原缺陷写成
+$$
+\begin{aligned}
+E_\tau&=S_\tau\xi-\zeta_\tau R_\tau\xi
+       =(\mathsf P+\tau\mathsf Q,\ d+\ell FCu/2),\\
+\mathsf P&=v+\ell U/2,\qquad
+\mathsf Q=iCv-\ell p+\rho T_Au .
+\end{aligned}
+\tag{34.2}
+$$
+在 $\rho=0$，先由 $\mathsf Q=0$ 解出 $v$，再由 $\mathsf P=0$ 得 $U=-2v/\ell=2iC^{-1}p$，故接触条件等价于
+$$
+v=-i\ell C^{-1}p,\qquad
+a_{\rm act}=i(I_2-\ell C^{-1})p,\qquad
+q=(\ell I_2+2C^{-1})p+iBCu .
+\tag{34.3}
+$$
+
+为使两列由同一个 Hermitian $X$ 产生，取
+$$
+u=\frac{(\sqrt r,e^{i\theta})^{\mathsf T}}{\sqrt{1+r}},\qquad
+r>0,\qquad p_j=z_j u_j,\qquad z_1\in\mathbb R,\ z_2\in\mathbb C .
+$$
+因 $c_1=1,c_2=2$，从 $p=Xu$、$q=XCu$ 逐行消去非对角元得到
+$$
+x_{11}=(2p_1-q_1)/u_1,\qquad x_{22}=(q_2-p_2)/u_2 .
+$$
+这两列可由一个 Hermitian $X$ 实现，当且仅当 $x_{11},x_{22}$ 都为实数，且
+$$
+r(z_1-x_{11})=\overline{z_2-x_{22}}.
+\tag{34.4}
+$$
+确实，取 $X_{12}=(z_1-x_{11})u_1/u_2$，取 $X_{21}=\overline{X_{12}}$，再代入第二行 $p$ 即得 (34.4)；对角定义随后给回 $q$ 的两行。
+
+在 $h=0$，(34.3) 给 $x_{11}=-\ell z_1-3i$、$x_{22}=\ell z_2+12i$。写 $z_2=B_2+iD_2'$。对角虚部条件是 $t_*z_1-3=0$、$bD_2'-t_*B_2+12=0$。施加这两式后，(34.4) 的虚部给 $D_2'=0$，实部给 $r(1+b)z_1=(1-b)B_2$。故在 $0<b<1$ 上，四个 Hermitian 条件给出
+$$
+z_j=\frac{3c_j^2}{t_*},\qquad r=\frac{4(1-b)}{1+b}.
+\tag{34.5}
+$$
+
+接着令 $d_0=a_{\rm act}-Hu+\ell C^2u/2$，要求 $d_0$ 与 $a$ 共线。写 $D_j=(d_0)_j/u_j$；在基准 $h=0$，由 (34.3)、(34.5) 和 $t_*^2=6$ 得
+$$
+D_j=-5c_j+\frac{b c_j^2}{2}-i\frac{3b c_j}{t_*}.
+\tag{34.6}
+$$
+两实部在 $0<b<1$ 上均严格为负。条件 $(d_0)_2=\sqrt2(d_0)_1$ 的模长方程为 $|D_2|^2=2r|D_1|^2$。由 (34.6)，
+$$
+\begin{aligned}
+|D_1|^2&=25-5b+\tfrac74 b^2,\qquad |D_2|^2=100-40b+10b^2,\\
+f(b)&=(1+b)|D_2|^2-8(1-b)|D_1|^2
+     =-100+300b-84b^2+24b^3 .
+\end{aligned}
+\tag{34.7}
+$$
+$f(0)=-100$、$f(1)=140$，且 $f'(b)=300-168b+72b^2>0$ 于 $[0,1]$，故唯一根 $b_0$ 在 $(0,1)$。在此根取相位 $\theta_0$，使 $e^{i\theta_0}D_2/(\sqrt r D_1)=\sqrt2$。此时 $d_0=\eta a$，其中 $\eta=\sqrt2(d_0)_1\ne0$。又由 (34.3) 得 $\operatorname{Re}(v_j/u_j)=-3c_j$，从而
+$$
+\zeta:=\operatorname{Re}(v^*T_Au)=\frac{3(4-r)}{1+r}>0 ,
+\tag{34.8}
+$$
+因为 (34.5) 在 $b_0$ 处给 $0<r<4$。这里 $\zeta$ 是实配对，与变分系数 $\zeta_\tau$ 分开。
+

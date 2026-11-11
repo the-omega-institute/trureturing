@@ -1,0 +1,52 @@
+**定理 5.2（Exact nearest-pure distances）。** Set
+
+$$
+\eta=\max_\alpha\lambda_{\max}(\sigma_\alpha),
+\qquad
+\mathcal F_{\mathcal A}
+=\{\Phi\in H:\lVert\Phi\rVert=1,
+\ \omega_\Phi|_{\mathcal A}\text{ is pure}\}.
+$$
+
+For the globally pure input $P_\Psi$ and this fixed block interface,
+
+<a id="eq-purity-5-2"></a>
+
+$$
+\begin{aligned}
+\min_{\nu\in\operatorname{Pure}(\mathcal A)}
+D_{\mathcal A}(\omega_\Psi,\nu)&=1-\eta,\\
+\min_{\Phi\in\mathcal F_{\mathcal A}}
+D(P_\Psi,P_\Phi)&=\sqrt{1-\eta}.
+\end{aligned}
+\tag{5.2}
+$$
+
+**证明。** A pure visible state has density $P_u$ in one sector. Testing its represented effect $P_u\otimes I_{W_\alpha}$ bounds the visible distance below by
+
+$$
+1-\langle u,\sigma_\alpha u\rangle\ge1-\eta.
+$$
+
+Choose a top eigenvector in a maximizing sector. The two visible densities then commute, and the sum of absolute eigenvalue differences is $2(1-\eta)$, proving the first equality and its attainment.
+
+For the second equality, Theorem 2.1 says that $\Phi$ must be a product vector in a single sector. The largest squared overlap with such vectors is $\eta$, by the largest Schmidt coefficient in each sector. Directly, for fixed unit $u\in V_\alpha$, maximization over the right unit vector gives
+
+$$
+\max_{\lVert v\rVert=1}
+|\langle u\otimes v,\Psi_\alpha\rangle|^2
+=\lVert(\langle u|\otimes I)\Psi_\alpha\rVert^2
+=\langle u,\sigma_\alpha u\rangle.
+$$
+
+Maximization over $u$ and the sectors gives $\eta$. Two rank-one densities have half trace distance
+
+$$
+D(P_\Psi,P_\Phi)
+=\sqrt{1-|\langle\Psi,\Phi\rangle|^2},
+$$
+
+as diagonalization on their two-dimensional span shows. This proves the second equality, including attainment. $\square$
+
+Consequently, for $\varepsilon\ge0$, visible distance at most $\varepsilon$ from the pure-state set is equivalent to the existence of a vector with pure $\mathcal A$ restriction within global half trace distance $\sqrt\varepsilon$, for this globally pure input and fixed block interface. The square-root exponent and coefficient are exact. No noise estimate from an incomplete finite menu is substituted for (5.1).
+

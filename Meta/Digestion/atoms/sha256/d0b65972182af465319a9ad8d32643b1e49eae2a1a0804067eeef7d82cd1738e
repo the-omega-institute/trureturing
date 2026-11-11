@@ -1,0 +1,17 @@
+**定理 66.6（首腿丢弃的精确正性判据）。** (66.17) 中 $p_0$ 全锥正，当且仅当
+
+$$
+\boxed{\delta_{ijk}=\varepsilon_{ij}\oplus\varepsilon_{jk}
+ \quad\text{对每个 }i,j,k\text{ 满足 }n_j,n_k\ge2.}
+\tag{66.20}
+$$
+
+当 $j$ 或 $k$ 为标量时，不由 $p_0$ 强制任何额外位等式。原始 $p$ 全锥正与此完全等价。
+
+证明。对 $r,s\ge2$，$T_r^e\otimes T_s^f$ 正当且仅当 $e=f$：两位都零为恒等，两位都一为整块转置，均正；两位不等时，在两个二维子空间上取 Bell 投影 $q=|\Phi\rangle\langle\Phi|$、$\Phi=(|00\rangle+|11\rangle)/\sqrt2$，单腿转置得到 $q^{T_2}=\mathrm{Swap}/2$，在反对称向量上的特征值为 $-1/2$。$r=1$ 或 $s=1$ 时，剩余转置是恒等或唯一非平凡因子的整块转置，两者均正。
+
+固定源块 $(i,j,k)$，令其余块为零。$\operatorname{Tr}_i$ 满射到整个保留块 PSD 锥：给任意 $x\ge0$，取迹一本原 $q_i$ 并用 $q_i\otimes x$。因此第一式 (66.17) 的该块正性恰为
+$T_j^{\varepsilon_{ij}}\otimes T_k^{\delta_{ijk}\oplus\varepsilon_{jk}}$ 正，给出 (66.20)。只激活一个源块使不同 $i$ 的求和不能掩盖负值。反之每个源块映射正则求和正，故充分。无论位如何，偏迹和转置都保迹，所以 $p_0$ 保迹；这不等于原 $p$ 保迹。两端滤波及其逆都是全锥正序同构，给原 $p$ 的等价性。
+
+特别地，当仅一条保留腿非标量时，整块转置仍合法，不能强行补上 (66.20) 的等式。这里没有出现 $\varepsilon_{ik}$；任何有序 $\varepsilon$ 都可在活跃 $j,k$ 上令 $\delta=\varepsilon_{ij}\oplus\varepsilon_{jk}$，其余 $\delta$ 自由选取，再由下述逆向构造实现。无 C13 时不能据此推出端点余循环。$\square$
+

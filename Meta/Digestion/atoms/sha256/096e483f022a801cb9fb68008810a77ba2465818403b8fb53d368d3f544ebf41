@@ -1,0 +1,29 @@
+**命题 69.11（同族仪器的完整参数接口）。** 在行一致之前，有限兼容仪器恰为块 Kraus 族
+
+$$
+(\Phi_r a)_j=\sum_{i,\ell}K_{r,ji,\ell}a_iK_{r,ji,\ell}^*,
+\qquad F^r_{ji}=\sum_\ell K_{r,ji,\ell}^*K_{r,ji,\ell},
+$$
+
+同时满足
+
+$$
+\sum_{r,j}F^r_{ji}=I_i\quad(\forall i),\qquad
+\sum_{r,j}F^r_{ji}\otimes u_{jk}=I_i\otimes u_{ik}\quad(\forall i,k).
+\tag{69.26}
+$$
+
+等价地，可取任意 PSD Choi 块 $Q^r_{ji}$，令 $F^r_{ji}=(\operatorname{Tr}_{H_j}Q^r_{ji})^{\mathsf T}$，并施加同样的两个总预算；实际原始 Kraus 由 (69.6) 给出。行一致后，两式合为普通局部 Kraus 完备式，原始 Kraus 就是 $K_{r,ji,\ell}\otimes I_k$，因此恰恢复整个有限局部 CP 仪器菜单。
+
+证明。直接复用 Watrous 条目的矩形 Choi/Kraus 对应、定理 2.26 与已有有限仪器接口，再应用定理 69.4。这里新增的是原始预算与该标准接口的对应，不重新证明标准表示定理。$\square$
+
+对实际局部密度 $a$，结果概率是 $p_r=\operatorname{Tr}_A\Phi_r(a)$；对实际联合密度 $\rho$，则是 $p_r=\operatorname{Tr}_D\Psi_r(\rho)$。各自完整仪器的概率和为一，正概率时的条件输出分别为 $\Phi_r(a)/p_r$、$\Psi_r(\rho)/p_r$。这些都是已有 Born 迹规则和分支归一化。复合及粗粒化满足
+
+$$
+\Psi_\Theta\Psi_\Phi=C_DT_{\Theta\circ\Phi}C_D^{-1},\qquad
+\sum_{r\in B}\Psi_{\Phi_r}=\Psi_{\sum_{r\in B}\Phi_r}.
+\tag{69.27}
+$$
+
+两个双预算完整仪器的顺序复合仍在同族并完整；对非零历史概率按联合分支迹归一。该对应不要求先后操作交换。效应只固定概率，不唯一决定更新：已有 Watrous 条目的同效应异更新控制仍适用。理想锐测量的 Lüders 唯一性另需“确定接受的态逐点不变”等既有中性前提，不能由 CP、完备性或弱重置补全独自推出。
+

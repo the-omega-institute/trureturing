@@ -1,0 +1,22 @@
+**推论 65.7（原参考下同一个 $p_0$ 的两次使用）。** 在相同实际载体、原迹与原 $\omega$ 上，定义
+
+$$
+\mathcal B_0=p_0N,\quad K_0(a)=\mathcal B_0(\omega,a),\quad
+M_0(a,b)=\mathcal B_0(K_0(a),b).
+$$
+
+则对全部实输入，
+
+$$
+\begin{aligned}
+\mathcal B_0(d,c)&=F(\beta^*d,c),\\
+K_0(a)&=F(1_A/n,a),\qquad M_0(a,b)=F(a,b).
+\end{aligned}
+\tag{65.20}
+$$
+
+辅助 $\mathcal B_0,K_0,M_0$ 一般不同于实际 $\mathcal B,K,M$。
+
+**证明。** (65.19) 在 $d=F(a,b)$ 上给出第一式，因为 $\beta^*F(a,b)=\tau_A(a)b$；$F$ 张成把它延拓到全部 $d$。等距性给 $\beta^*1_D=n1_A$，而 $m=n^2$，所以第二式成立。再算
+$\beta^*K_0(a)=a$，将它代入第一式，得到用同一个 $p_0$ 两次重算的第三式。未更换参考。原 $\mathcal B(d,c)=M(sd,c)$ 则使用 $s=\beta^*C_D^{-1}$ 和 $M=C_DF$，没有一般理由等同于 (65.20)。$\square$
+

@@ -1,0 +1,44 @@
+**命题 35.2（固定 $M_0$ 的实际正定实现）。** 给定 $a\in\mathbb C^2\setminus\{0\}$、$\lambda>0$ 和实 $h$，在同一个完整 $M_5(\mathbb C)$ 中取
+
+$$
+\begin{gathered}
+\delta=\lambda^{-3},\qquad F=\begin{bmatrix}C\\0\end{bmatrix},\qquad V=F^*,\qquad
+D=\begin{pmatrix}
+C+\delta\lambda^2aa^*&-\delta\lambda a\\
+-\delta\lambda a^*&\delta
+\end{pmatrix},\\
+B=3C+hJ_A,\qquad
+t_{h,\lambda,a}=\begin{pmatrix}B&V\\F&D\end{pmatrix},\qquad
+G=\begin{bmatrix}I_2\\\lambda a^*\end{bmatrix}.
+\end{gathered}
+\tag{35.5}
+$$
+
+则 $D\succ0$、$DG=F$，并且
+
+$$
+\boxed{\quad W=0,\quad M_0=F^*F=C^2,\quad
+M_1=G^*F=C,\quad M_2=G^*G=I_2+\lambda^2aa^*,\quad
+H=B-M_1=2C+hJ_A.\quad}
+\tag{35.6}
+$$
+
+若 $|h|<2\sqrt2$，则整个 $t_{h,\lambda,a}\succ0$。设 $t_h^0$ 为 §32 的 $t_h$ 添一条不耦合零模，在环境排序 $\mathbb C^2\oplus\mathbb C$ 下与 (35.5) 比较，则
+
+$$
+\|t_{h,\lambda,a}-t_h^0\|=\frac{\|a\|^2}{\lambda}+\lambda^{-3},\qquad
+\|t_{h,\lambda,a}-t_0^0\|
+=\max\left(|h|,\frac{\|a\|^2}{\lambda}+\lambda^{-3}\right).
+\tag{35.7}
+$$
+
+证明。对 $D$ 的右下正标量 $\delta$ 作 Schur 补，所得恰为 $C\succ0$，不要求 $\lambda>1$。直接块乘法给 $DG=(C,0)^{\mathsf T}=F$，继而给出全部矩恒等式。对整个 $t$ 作 $D$ 的 Schur 补得到 $H$；它的首主子式为 $2$，行列式为 $8-h^2$，故在所列范围内正定。环境差准确为
+
+$$
+D-(C\oplus0)=\delta
+\begin{bmatrix}\lambda a\\-1\end{bmatrix}
+\begin{bmatrix}\lambda a\\-1\end{bmatrix}^{\!*}.
+$$
+
+它是秩一正矩阵，范数为 $\delta(\lambda^2\|a\|^2+1)$。$B,F$ 在同一 $h$ 下不变，给第一式；相对 $h=0$ 的差由演员上的 $hJ_A$ 与该环境差正交直和，给第二式。∎
+

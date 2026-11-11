@@ -1,0 +1,80 @@
+**定理 65.5（无需单位或保迹输入的第二接口）。** 定理 65.4 下，存在定义在整个 $E_+$ 上的正映射 $R:E\to A$，满足
+
+$$
+RN(d,c)=\tau_D(d)c\qquad(d\in D,c\in A).
+\tag{65.15}
+$$
+
+由此 $\widetilde N:D\otimes_{\mathbb R}A\to E$ 是满规范迹等距同构，$\eta,\zeta$ 是保单位 Jordan 嵌入，且
+
+$$
+\begin{gathered}
+\eta^*N(d,c)=\tau_A(c)d,\qquad
+\zeta^*N(d,c)=\tau_D(d)c,\\
+\eta^*,\zeta^*\text{ 在全锥上正且全局保迹},\qquad
+\operatorname{rank}E=mn=n^3,\qquad\eta^*\eta=n\operatorname{id}_D.
+\end{gathered}
+\tag{65.16}
+$$
+
+两个本原输入的 $N$-乘积本原。
+
+**证明。** 取 $t'=spC_G$、$v=V^{-1/2}$，定义
+
+$$
+R=t'P_{\eta(v)}.
+$$
+
+每个因子在整个源锥上正。由 (65.11)、(65.13) 及二次表示自伴随性，
+
+$$
+\begin{aligned}
+RN(d,c)&=t'N(P_vd,c)
+ =\langle V,P_vd\rangle_Dc\\
+ &=\langle P_vV,d\rangle_Dc=\tau_D(d)c,
+\end{aligned}
+$$
+
+因为 $P_{V^{-1/2}}V=1_D$。没有以原 $p$ 保迹或原 $G=1_E$ 代入。
+
+下面给出直接本原角证明，并写出它使用的全部一般前提。设规范迹 EJA $X,Y,Z$ 上的正双线性 $T:X\times Y\to Z$ 满足：乘积实张成 $Z$，$T(1,1)=1$，$\theta=T(-,1)$ 是保单位 Jordan 嵌入，以及某个全锥正 $R_T:Z\to Y$ 满足 $R_TT(x,y)=\tau_X(x)y$。本节的代入是
+
+$$
+(X,Y,Z,T,\theta,R_T)=(D,A,E,N,\eta,R);
+$$
+
+正性、张成、单位与 Jordan 性来自定理 65.4，最后一条刚刚证明，故全部前提已建立。
+
+对 $X$ 的幂等元 $e$，支配 $0\le T(e,y)\le t\theta(e)$ 及互补幂等元的同一支配说明
+$T(x,y)=\theta(x)\circ\chi(y)$、$\chi=T(1,-)$，并且两像在整个 $Z$ 上算子交换。与 (65.13) 相同的多项式推导给
+$P_{\theta(a)}T(x,y)=T(P_ax,y)$。
+
+固定本原 $e$，置 $q=\theta(e)$、$T_e(y)=T(e,y)$。由于 $P_ex=\langle e,x\rangle_Xe$，张成及交织给
+
+$$
+\begin{aligned}
+Z_1(q)&=P_qZ
+ =\operatorname{span}\{T(P_ex,y):x\in X,y\in Y\}\\
+ &=T_e(Y),\qquad R_TT_e=\operatorname{id}_Y.
+\end{aligned}
+\tag{65.17}
+$$
+
+因此 $T_e:Y\to Z_1(q)$ 是保单位序同构，其正逆是 $R_T$ 在整个角上的限制。只有正左逆不足以得到此结论；这里的满角等式是必要步骤。
+
+保单位序同构保持效应区间极点，故保持幂等元；同一框架的像之和为单位，故它们正交，谱展开及极化使它成为 Jordan 同构。角内本原元也是环境本原元，所以角的规范迹就是环境迹的限制，不带重数。于是 $T_e$ 保规范迹内积。对实 $x,y,y'$，
+
+$$
+\begin{aligned}
+\langle T(e,y),T(x,y')\rangle_Z
+ &=\langle T(e,y),P_qT(x,y')\rangle_Z\\
+ &=\langle e,x\rangle_X\langle T_e(y),T_e(y')\rangle_Z\\
+ &=\langle e,x\rangle_X\langle y,y'\rangle_Y.
+\end{aligned}
+$$
+
+本原元实张成 $X$，得到全部输入的乘积迹内积；张成使 $\widetilde T$ 成为满等距同构。对完整框架 $(e_r)$，各 $T_{e_r}(Y)$ 属于正交角，故
+$\chi(y)^2=\sum_rT_{e_r}(y)^2=\chi(y^2)$；$\chi$ 保单位、单射且保 Jordan 乘积。各 $T_{e_r}$ 把 $Y$ 框架送到本原框架，合起来是 $Z$ 的完整框架，证明秩乘法和乘积本原性。
+
+回到 $N$，与 $N(x,1_A)$、$N(1_D,y)$ 配对便得 (65.16) 的边缘公式。正性和保单位的对偶性给出全锥正保迹；与 $N(d,1_A)$ 配对给 $\eta^*\eta=n\operatorname{id}_D$。所以第二接口是在本原角满射和规范迹上得到的结论，没有借用原始范数律。$\square$
+

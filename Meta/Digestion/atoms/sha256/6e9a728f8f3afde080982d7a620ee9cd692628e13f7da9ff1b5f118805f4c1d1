@@ -1,0 +1,64 @@
+**定理 44.6（完整正则条件下的双侧全局包络）。** 假设对每个 $c\in\mathcal M$，
+
+$$
+\operatorname{rank}D_{(z,\theta)}\mathcal C_0(c)=2.
+\tag{44.26}
+$$
+
+由于 $c$ 是严格过滤条件下约束流形上的全局极小点，约束一阶必要条件给出唯一的 $\lambda(c)=(\lambda_1,\lambda_2)\in\mathbb R^2$，满足
+
+$$
+D_{(z,\theta)}\mathcal C_0(c)^{\mathsf T}\lambda(c)
+=\nabla_{(z,\theta)}\mathcal R_0(c).
+\tag{44.27}
+$$
+
+唯一性来自 (44.26) 的满行秩。
+
+定义
+
+$$
+\Phi(c)=\partial_g\mathcal R_g(c)|_{g=0}
+-\lambda_1(c)\operatorname{Re}E_1(c)
+-\lambda_2(c)\operatorname{Im}E_1(c).
+\tag{44.28}
+$$
+
+则 $\lambda$ 和 $\Phi$ 在 $\mathcal M$ 上连续，并且
+
+$$
+\begin{aligned}
+K_+(h)&=K_+(0)+h\min_{c\in\mathcal M}\Phi(c)+o(h),&&h\downarrow0,\\
+K_+(g)&=K_+(0)+g\max_{c\in\mathcal M}\Phi(c)+o(|g|),&&g\uparrow0.
+\end{aligned}
+\tag{44.29}
+$$
+
+特别地，由既有源反射 (43.18)，
+
+$$
+K_+(h)-K_-(h)
+=h\left(\min_{c\in\mathcal M}\Phi(c)+\max_{c\in\mathcal M}\Phi(c)\right)+o(h),
+\qquad h\downarrow0.
+\tag{44.30}
+$$
+
+在 (43.13) 的记号下，$\partial_g\mathcal R_g|_0=\mathcal S$，所以 (44.28) 是包含全部强制根运动的完整系数。由 (44.31)，$\Phi(c)$ 等于通过 $c$ 的可行延续的点值导数，乘子修正可以为零；(44.29)–(44.30) 的全局包络依赖整个 $\mathcal M$ 上的 $\Phi$，不能由单独的 $\mathcal S$ 或任选一根的导数替代。
+
+**证明。** 由 (44.26)，每个 $c\in\mathcal M$ 有一个隐函数坐标图：在保留两个自由坐标的同时，用两个接触坐标解出 $\mathcal C_g=0$。沿任一这样的可行曲线 $w(g)$ 有
+
+$$
+D_w\mathcal C_0(c)w'(0)+\partial_g\mathcal C_g(c)|_0=0.
+$$
+
+(44.27) 因而给出
+
+$$
+\frac d{dg}\mathcal R_g(w(g))\bigg|_{0}
+=\partial_g\mathcal R_g|_0+\nabla\mathcal R_0\cdot w'(0)
+=\Phi(c).
+\tag{44.31}
+$$
+
+秩条件、紧性和连续性使 $\mathcal M$ 有限个这样的图覆盖，并使 (44.31) 的一阶余项一致。每个图给出相应的可行延续，故正 $g$ 的上界由 $\min_{\mathcal M}\Phi$ 给出，负 $g$ 的上界由 $\max_{\mathcal M}\Phi$ 给出。反过来，取任意 $g_n\to0$ 的全局极小接触列；定理 41.4 的联合紧性给出收敛子列，其极限属于 $\mathcal M$。把移动点投回 $g=0$ 的同一图，零阶值不低于 $K_+(0)$，而 (44.31) 给出统一下界。上下界相合，得到 (44.29)。最后用 (43.18) 把 $K_-(h)$ 写成 $K_+(-h)$，即得 (44.30)。此证明只要求完整接触秩条件，不要求 $P_t\ne0$、根简单、极小点唯一或二次增长。∎
+

@@ -1,0 +1,13 @@
+**推论 10.2（Exact prediction criterion and scalar minimax interpretation）。** Current responses determine the expectation of $B$ for every density matrix exactly when $B\in W$. Moreover $d_W(B)$ is the optimal worst scalar error among affine current-response predictors $\operatorname{Tr}(\rho b)$ with $b\in W$:
+
+$$
+\sup_\rho
+|\operatorname{Tr}(\rho(B-b))|
+=\lVert B-b\rVert_{\mathrm{op}}.
+\tag{10.2}
+$$
+
+**证明。** The first assertion follows from (10.1), since $W$ is closed in finite dimension. The second follows by testing the largest absolute eigenvalue of the Hermitian matrix $B-b$. Minimizing gives (9.2). Here $b$ is a mathematical predictor; the optimization does not make it an available effect or a complete-positive state update. $\square$
+
+The witness in Theorem 10.1 is one common state pair. Independently optimized marginal extrema are not combined into a fictitious joint realization.
+

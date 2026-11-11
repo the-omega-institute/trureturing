@@ -1,0 +1,23 @@
+**定理 63.5（几何与解释范围）。** 在定理 63.3 的完整条件下，复用定理 62.7，得到同一实际数据的保迹 Jordan 序坐标
+
+$$
+A\simeq\bigoplus_i\operatorname{Herm}_{n_i}(\mathbb C),\qquad
+D\simeq\bigoplus_{i,j}\operatorname{Herm}_{n_in_j}(\mathbb C),\qquad
+E\simeq\bigoplus_{i,j,k}\operatorname{Herm}_{n_in_jn_k}(\mathbb C),\quad n_i\ge1,
+\tag{63.22}
+$$
+
+指标集有限非空。相同实际 $M,L,p$ 与派生读回由 (62.48) 给出普通分块张量及部分迹，$L$ 的公式覆盖全部纠缠输入。全态、全效应、Born 概率和纯态分支分别为
+
+$$
+\rho_i\ge0,\quad\sum_i\operatorname{Tr}\rho_i=1,\quad
+0\le F_i\le I_{n_i},\quad
+\Pr(F\mid\rho)=\sum_i\operatorname{Tr}(F_i\rho_i),\qquad
+P_A=\coprod_i\mathbb{CP}^{n_i-1}.
+\tag{63.23}
+$$
+
+同扇区纯态比较是 $\operatorname{Tr}(\xi\eta)=|\langle\psi,\phi\rangle|^2$，异扇区为零；经典标量扇区仍保留，选择单扇区需要额外条件。
+
+**证明。** 定理 63.3 已建立第 62 节的全部完整前提，故直接应用定理 62.7，不重新分类。只在这些坐标建立后，(62.50)–(62.51) 构造同一个 $E$ 上所选右括号与 $S_3$ 标签作用；不识别一个独立给定的右载体。(62.52) 的两种 GHZ 态仍有相同三个两两边缘，故张成与读回唯一性均不等于成对层析。$\square$
+

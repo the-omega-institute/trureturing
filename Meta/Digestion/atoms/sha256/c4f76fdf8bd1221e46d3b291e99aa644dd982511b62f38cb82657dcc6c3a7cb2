@@ -1,0 +1,11 @@
+### 44.6 完整约束下的全极小集一阶包络
+
+令
+
+$$
+\mathcal C_g(z,\theta)=\bigl(\operatorname{Re}E_g(\sqrt t e^{i\theta}),
+\operatorname{Im}E_g(\sqrt t e^{i\theta})\bigr),
+$$
+
+令 $\mathcal R_g(z,\theta)$ 表示 (43.4) 的原比值，且令 $\mathcal M$ 为 $g=0$ 的整个不利零阶全局极小集（两个 $y$ 符号均包含）。
+

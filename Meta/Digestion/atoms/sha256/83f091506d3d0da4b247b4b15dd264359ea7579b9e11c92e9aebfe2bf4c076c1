@@ -1,0 +1,54 @@
+**定义 39.1（本节的完整接触域）。** 写
+
+$$
+\ell=b+\iota t,\qquad b,t\in\mathbb R,\qquad
+A=|t|>1,\qquad \epsilon=-\operatorname{sign}(t).
+$$
+
+接触遍取 $u,p,q,a_{\rm act}\in\mathbb C^2$、$\eta\in\mathbb C$，其中 $\|u\|=1$，并要求
+
+$$
+\begin{gathered}
+u^*p\in\mathbb R,\qquad (Cu)^*q\in\mathbb R,\qquad u^*q=p^*Cu,\\
+a_{\rm act}=\iota(I_2-\ell C^{-1})p,\qquad
+q=(\ell I_2+2C^{-1})p+\iota BCu,\\
+\mathbf d_{\rm src}:=a_{\rm act}-Hu+\ell C^2u/2=\eta a_r.
+\end{gathered}
+\tag{39.4}
+$$
+
+这正是 (37.15)、(37.19)，包括两条演员轴；$A=-\epsilon\operatorname{Im}_\iota\ell$。向量 $\mathbf d_{\rm src}$ 专指来源需求，不用它的记号表示矩差。置
+
+$$
+\begin{gathered}
+v=a_{\rm act}-\iota p=-\iota\ell C^{-1}p,\qquad
+\zeta=\operatorname{Re}(v^*T_Au),\qquad s(A)=\frac{2A}{A^2-1},\\
+J_k=s(A)|\eta|^2+4\epsilon k\zeta,\qquad
+\mathcal R(c)=\frac{s(A)|\eta|^2}{4|\zeta|}\quad(\zeta\ne0).
+\end{gathered}
+\tag{39.5}
+$$
+
+比值 $\mathcal R$ 是无符号量。它在 $k>0$ 下只有对 $\epsilon\zeta<0$ 的接触才是失效阈值；$\epsilon\zeta>0$ 时一次项为正。由引理 37.4，所有这些接触均有 $\eta\ne0$。
+
+共同 P2 在这里仍是完整泛函判据的结果。具体地，令 $\beta=h/\sqrt2$、$U_0=2^{-1/2}\left(\begin{smallmatrix}1&1\\1&-1\end{smallmatrix}\right)$。由于 $U_0^*C^{-1/2}a_+=e_1$、$U_0^*C^{-1/2}a_-=e_2$，原钉版前卷 (30.29) 的逆坐标矩阵恰为
+
+$$
+\mathsf K_+=\begin{pmatrix}3/2+\lambda^2&1/2\\1/2&3/2\end{pmatrix},\qquad
+\mathsf K_-=\begin{pmatrix}3/2&1/2\\1/2&3/2+\lambda^2\end{pmatrix}.
+\tag{39.6}
+$$
+
+其共同行列式为 $\mathfrak d_\lambda=2+(3/2)\lambda^2$，逆矩阵的非对角元为实数。在 (30.29) 中，$\omega=1$、$J=0$、$\Delta=1/\mathfrak d_\lambda$、$R=T_\lambda/\mathfrak d_\lambda$，其中 $T_\lambda=\sqrt{(3/2)(3/2+\lambda^2)}$。因此两来源、两取向的完整原 P2 集合均为
+
+$$
+I_{r,\sigma}=\left[-\frac{\beta}{T_\lambda},\frac{\beta}{T_\lambda}\right].
+\qquad
+\frac{k}{\lambda^2}\in\operatorname{int}I_{r,\sigma}
+\quad\Longleftrightarrow\quad
+h^2\lambda^4>3k^2(\lambda^2+3/2).
+\tag{39.7}
+$$
+
+此处等价式适用于任意实 $k$；固定 $h>0,k$ 后最终成立。以上直接复用 (38.27)–(38.28) 及其完整 P2 来源，不用 $M_2$ 的谱或某一个向量测试代替它。
+

@@ -1,0 +1,96 @@
+**引理 68.2（PRE 的辅助系统）。** 在 PRE 下，不使用 C13，令 $\ell_x(y)=x\circ y$、$P_x=2\ell_x^2-\ell_{x^2}$，并定义
+
+$$
+\begin{gathered}
+C_D=P_{\sqrt U},\quad F=C_D^{-1}M,\quad
+\alpha=F(-,1_A),\quad\beta=F(1_A,-),\\
+G=H1_D,\quad C_G=P_{\sqrt G},\quad
+\eta=C_G^{-1}H,\quad N=C_G^{-1}L,\quad\zeta=N(1_D,-),\\
+C_E=C_GP_{\sqrt{\eta(U)}},\quad
+Q_0(a,b,c)=N(F(a,b),c),\quad p_0=C_D^{-1}pC_E.
+\end{gathered}
+\tag{68.8}
+$$
+
+则在同一个 $A,D,E$、同一规范迹、同一 $\omega$ 上，以 $L_{\mathrm{aux}}=N$、$p_{\mathrm{aux}}=p_0$ 代入，得到满足定理 64.10 全部测试前提的辅助系统。特别地，用同一个 $p_0$ 两次按原定义算出的第一准备恰为 $F$。
+
+**证明。** 先记录定理 65.3–65.6 在 C13 之前给出的数据。$U,G$ 为正可逆元；$C_D,C_E$ 是自伴随锥自同构，逆也全锥正。$G$ 与 $\eta(D)$ 算子交换，故 $C_G$ 与 $P_{\sqrt{\eta(U)}}$ 交换，这保证 (68.8) 中 $C_E$ 的上述性质。两个线性化 $\widetilde F,\widetilde N$ 都是满规范迹等距，$m=n^2$、$\tau_E1_E=n^3$，且
+
+$$
+\begin{gathered}
+F(1_A,1_A)=1_D,\qquad N(1_D,1_A)=1_E,\\
+\alpha^*F(a,b)=\tau_A(b)a,\qquad
+\beta^*F(a,b)=\tau_A(a)b,\\
+\eta^*N(d,c)=\tau_A(c)d,\qquad
+\zeta^*N(d,c)=\tau_D(d)c.
+\end{gathered}
+\tag{68.9}
+$$
+
+四个伴随边缘全锥正、全局保迹。两个接口均保持本原乘积，$\alpha,\beta,\eta,\zeta$ 是保单位 Jordan 单射；同一接口的两个像在整个输出上算子交换。另有全部实输入的
+
+$$
+\begin{aligned}
+M&=C_DF,& L(d,c)&=C_EN(C_D^{-1}d,c),\\
+Q&=C_EQ_0,&p&=C_Dp_0C_E^{-1},\\
+p_0Q_0(a,b,c)&=\tau_A(a)F(b,c).
+\end{aligned}
+\tag{68.10}
+$$
+
+$N$ 全正且实张成 $E$，$p_0$ 在整个 $E_+$ 上正。为说明其保迹并未循环使用交叉插入，$\widetilde Q_0=\widetilde N(\widetilde F\otimes\mathrm{id}_A)$ 是满等距且把三个单位送到 $1_E$，所以
+
+$$
+\tau_EQ_0(a,b,c)=\tau_A(a)\tau_A(b)\tau_A(c)
+ =\tau_Dp_0Q_0(a,b,c).
+$$
+
+$Q_0$ 实张成 $E$，于是 $\tau_Dp_0=\tau_E$ 在整个 $E$ 上成立。以上只使用定理 65.3–65.6。
+
+逐项对接旧定理还须保留内部定义，不能直接把 $F$ 宣告成辅助准备。令
+
+$$
+\mathcal B_0=p_0N,\qquad K_0(a)=\mathcal B_0(\omega,a),\qquad
+M_0(a,b)=\mathcal B_0(K_0(a),b).
+$$
+
+由 (68.9)–(68.10) 及 $F$ 实张成，
+
+$$
+\mathcal B_0(d,c)=F(\beta^*d,c).
+$$
+
+$\beta^*1_D=n1_A$，$m=n^2$，故
+
+$$
+K_0(a)=F(1_A/n,a),\qquad
+\beta^*K_0(a)=a,\qquad M_0(a,b)=F(a,b).
+\tag{68.11}
+$$
+
+这也重述并核对了推论 65.7 的同一 $p_0$、同一原参考结论。由此旧系统的内部对象逐一是
+
+$$
+\begin{gathered}
+J_0=\alpha,\quad H_0=\eta,\quad U_0=1_D,\quad
+Q_{\mathrm{aux}}=Q_0,\quad B_{1,0}=p_0\eta,\\
+r_0=J_0^*=\alpha^*,\quad s_0=\beta^*,\quad
+h_0=H_0^*=\eta^*,\quad t_0=\zeta^*=\beta^*p_0.
+\end{gathered}
+\tag{68.12}
+$$
+
+最后一个等式可在全部 $N(d,c)$ 上由 (68.9)、$\mathcal B_0=F(\beta^*-, -)$ 验证，再由张成延拓。
+
+现在检查定义 64.1–64.3 及定理 64.9–64.10 的各项输入和所用结论。
+
+* 全态、全效应、完整 $S$ 和每本原迹一的规范 EJA 几何，由 (68.1)–(68.2) 及定义 65.1 供应。旧定义 64.1 所需的 EJA 数据因而已经存在，无须再加一条独立桥。
+* 原始类型与全锥正性正确：$N:D\times A\to E$ 全正，$p_0:E\to D$ 全锥正；$F=C_D^{-1}M$ 实张成 $D$，$N=C_G^{-1}L$ 实张成 $E$。滤波可逆，故输入域仍是整个实际锥。
+* 同一个辅助读回两次及原 $\omega$ 已由 (68.11) 检查。$e,\omega$ 未变，且 $r_0\omega=s_0\omega=e$。
+* $\alpha^*\alpha=n\mathrm{id}_A$，$\eta^*\eta=n\mathrm{id}_D$，分别来自两个满迹等距。因此辅助 $D_J,D_H$ 以及旧 $W_J,W_H$ 全部成立，后者是在整个实空间上的等式。这里没有给原 $J,H$ 加上范数律。
+* 对全部实 $a,b,c$，有 $p_0N(F(a,b),c)=\tau_A(a)F(b,c)$；取 $c=1_A$ 就是 $B_{1,0}F(a,b)=\tau_A(a)J_0b$。故旧 $Z$ 及完整 III 成立。
+* 旧总标定条件 $\mathrm{(N)}$ 的标量是 $\gamma_0=\tau_D(p_01_E)=\tau_E1_E=n^3$，恰满足其上界。此 $\mathrm{(N)}$ 与映射 $N$ 不是同一个对象，等式只约束辅助系统。
+* 旧完整 I、II、两个接口的单位、正保迹边缘及全部实方向的丢弃律，正是 (68.9)–(68.12)；$\widetilde F,\widetilde N,\widetilde Q_0$ 的满等距也已建立。尚未要求 $p_{13}^0$ 正。
+
+所以旧定理的测试前提齐备。此处只使用定理 64.6 的早期扇区结论和 (64.27)–(64.29) 的独立初始正规形；不用定理 65.9 的同时消转置坐标。$\square$
+

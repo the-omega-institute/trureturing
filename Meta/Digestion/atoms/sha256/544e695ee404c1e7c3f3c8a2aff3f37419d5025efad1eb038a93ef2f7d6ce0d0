@@ -1,0 +1,55 @@
+**定理 35.5（固定 $M_0$ 相位族的精确 P2）。** 在 (35.5) 中令
+
+$$
+\begin{gathered}
+w_\theta=\frac1{\sqrt2}(1,i e^{i\theta})^{\mathsf T},\qquad
+a_\theta=C^{1/2}U_0w_\theta
+=\frac12(1+i e^{i\theta},\sqrt2(1-i e^{i\theta}))^{\mathsf T},\\
+s(\theta)=\|a_\theta\|^2=\frac{3+\sin\theta}{2},\qquad
+L_{\lambda,\theta}=\|M_2\|=1+s(\theta)\lambda^2,\qquad
+0<h<2\sqrt2,\quad\beta=h/\sqrt2.
+\end{gathered}
+\tag{35.19}
+$$
+
+对每个实 $\theta$、每个 $\lambda>0$，有精确公式
+
+$$
+\begin{gathered}
+K=Q_M^{-1}=K_0+\lambda^2w_\theta w_\theta^*,\qquad
+K_0=\begin{pmatrix}3/2&1/2\\1/2&3/2\end{pmatrix},\qquad
+\det K=L_{\lambda,\theta}+1,\\
+T=\sqrt{K_{11}K_{22}}=\frac32+\frac{\lambda^2}{2},\qquad
+q=\operatorname{Im}K_{12}=-\frac{\lambda^2\cos\theta}{2},\\
+d_{\rm w}=T+q=\frac32+\frac{\lambda^2(1-\cos\theta)}2,\qquad
+d_{\rm s}=T-q=\frac32+\frac{\lambda^2(1+\cos\theta)}2,\\
+\boxed{\quad I_+(t_{h,\lambda,a_\theta})=[-\beta/d_{\rm w},\beta/d_{\rm s}],\qquad
+I_-(t_{h,\lambda,a_\theta})=[-\beta/d_{\rm s},\beta/d_{\rm w}].\quad}
+\end{gathered}
+\tag{35.20}
+$$
+
+其中下标 w、s 仅在 $\cos\theta\ge0$ 时分别表示宽侧、短侧。两个取向同时满足 P2 的集合总是
+
+$$
+I_+(t)\cap I_-(t)=\left[-\frac\beta{T+|q|},\frac\beta{T+|q|}\right].
+\tag{35.21}
+$$
+
+固定 $h>0$，若 $\lambda\to\infty$、$\theta_\lambda\to0$ 且扩展实极限
+$\lambda^2(1-\cos\theta_\lambda)\to\gamma\in[0,\infty]$ 存在，则分别取向的闭区间按 Hausdorff 距离收敛为
+
+$$
+I_+\longrightarrow[-A_\gamma,0],\qquad
+I_-\longrightarrow[0,A_\gamma],\qquad
+A_\gamma=\frac\beta{3/2+\gamma/2},\quad A_\infty=0.
+\tag{35.22}
+$$
+
+所有 $A_\gamma\in[0,2\beta/3]$ 都能实现：有限 $\gamma$ 可取 $\theta_\lambda=\sqrt{2\gamma}/\lambda$，无穷 $\gamma$ 可取 $\theta_\lambda=\lambda^{-1/2}$。特别地 $\theta_\lambda=s_*/\lambda$ 给 $A_\gamma=\beta/(3/2+s_*^2/4)$。
+
+证明。归一化 Schur 块为 $2I_2+\beta J_A$，有序谱基为上述实 $U_0$，(30.29) 中 $\omega=1$。由 (35.6)，直接得到
+$K=U_0^*C^{-1/2}(2I_2+\lambda^2a_\theta a_\theta^*)C^{-1/2}U_0$，即 (35.20) 的第一式。其非对角元为 $1/2-\lambda^2(\sin\theta+i\cos\theta)/2$；展开二阶行列式得 $\det K=2+s(\theta)\lambda^2$。在 (30.29) 中 $R=T/\det K$、$\Delta=1/\det K$、$J=q/\det K$，于是得到两个精确闭区间及其交。正定性保证分母严格正；这里两分母也都直接不小于 $3/2$。
+
+沿所列相位路径，$d_{\rm w}\to3/2+\gamma/2$，而 $d_{\rm s}\sim\lambda^2$，逐端点给出闭区间极限和实现路径。每个有限阶段的端点都包含在 P2 内；极限端点本身是否最终属于有限阶段的区间，不能由区间收敛自动推出。与此同时 (35.21) 的半径渐近于 $\beta/\lambda^2$，所以两个取向同时满足 P2 的集合已经趋于 $\{0\}$。∎
+

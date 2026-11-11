@@ -1,0 +1,22 @@
+**定理 13.2（Exact recorded-fibre gap with a common witness pair）。** Let $L_{\mathrm{rec}}$ be the largest complete flag-and-$\mathcal A$ operational half trace distance over pairs satisfying $\rho|_{\mathcal A}=\sigma|_{\mathcal A}$. Then
+
+<a id="eq-future-13-2"></a>
+
+$$
+L_{\mathrm{rec}}(\{\Phi_x\})
+=2\max_{\substack{a_x\in\mathcal A\\0\le a_x\le I}}
+d_{\mathcal A}\left(\sum_xF_x(a_x)\right).
+\tag{13.2}
+$$
+
+**证明。** A complete flag-and-$\mathcal A$ effect chooses a separate effect $a_x$ in each classical block. Its probability difference is
+
+$$
+\left|\sum_x
+\operatorname{Tr}\bigl(a_x(\Phi_x(\rho)-\Phi_x(\sigma))\bigr)\right|.
+$$
+
+The pulled-back effect is $B=\sum_xF_x(a_x)$, with $0\le B\le I$ by instrument completeness. Maximize its probability difference over one current fibre by (10.1), then maximize over the block effects. This gives (13.2). The witness is one common state pair for the whole sum $B$; optimizing branches separately on different pairs is a different objective. $\square$
+
+Choosing all $a_x$ equal recovers the nonselective gap as a lower bound; independently chosen $a_x$ can reveal a strictly larger gap. These formulas use the full normalized output with complete flags. Equal normalized successful poststates, without equal success probabilities, do not establish (13.1) or a complete recorded-state quotient.
+

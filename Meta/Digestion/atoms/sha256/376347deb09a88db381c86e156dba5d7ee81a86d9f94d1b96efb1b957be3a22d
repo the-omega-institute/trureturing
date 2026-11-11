@@ -1,0 +1,83 @@
+**Proposition 47.1 (a complete-norm upper certificate).** Put
+
+$$
+\begin{aligned}
+C&=\sum_i u_i+2\sum_{i<j}
+          (u^+_{ij}+u^{\mathrm{i}}_{ij}+u_i+u_j),\\
+\varepsilon&=\min\{1,C/2\}.
+\end{aligned}
+\tag{47.3}
+$$
+
+For every finite T and joint input density rho_HT,
+
+$$
+\begin{aligned}
+\|\Delta\|_\diamond&\le\min\{2,C\},\\
+D\bigl((\Gamma\otimes\mathrm{id})(\rho),
+             p\otimes(\Theta\otimes\mathrm{id})(\rho)\bigr)
+             &\le\varepsilon,\\
+\delta(\rho)&\le\min\{1,2\varepsilon\}.
+\end{aligned}
+\tag{47.4}
+$$
+
+If the actual setting marginal on that input is p, the last bound
+improves to delta(rho)<=epsilon. In particular that improvement
+holds on all inputs when (42.1) is exact.
+
+Proof. From (46.2), (47.2) and the triangle inequality,
+
+$$
+\|\Delta(E_{ii})\|_1\le u_i,\qquad
+\|\Delta(E_{ij})\|_1,
+\|\Delta(E_{ji})\|_1
+ \le u^+_{ij}+u^{\mathrm{i}}_{ij}+u_i+u_j.
+\tag{47.5}
+$$
+
+For arbitrary complex X on H tensor T, expand
+X=sum_ij E_ij tensor X_ij. Each block is an isometric compression
+of X on the left and right, so ||X_ij||_1<=||X||_1. Tensor
+multiplicativity of trace norm and the triangle inequality give
+
+$$
+\begin{aligned}
+\|(\Delta\otimes\mathrm{id})(X)\|_1
+&\le\sum_{i,j}\|\Delta(E_{ij})\|_1\|X_{ij}\|_1\\
+&\le\left(\sum_{i,j}\|\Delta(E_{ij})\|_1\right)\|X\|_1
+ \le C\|X\|_1.
+\end{aligned}
+\tag{47.6}
+$$
+
+This is uniform over every finite reference dimension and every
+complex input operator, hence bounds the diamond norm. The norm
+of a CPTP map is one, giving the separate bound two for Delta.
+The second line of (47.4) follows by applying the norm bound to a
+unit-trace density and dividing by two.
+
+Let tau be that actual output, sigma its actual RT marginal, and q
+its actual S marginal. The comparison state is p tensor sigma:
+the source marginal is exactly the same because sum_s M_s=Theta.
+Marginal contraction gives D(q,p)<=epsilon. Therefore
+
+$$
+\begin{aligned}
+\delta(\rho)
+&\le D(\tau,p\otimes\sigma)+D(p\otimes\sigma,q\otimes\sigma)\\
+&\le\varepsilon+D(p,q)\le2\varepsilon.
+\end{aligned}
+\tag{47.7}
+$$
+
+Trace distance is at most one. If q=p, the second term vanishes.
+
+The coefficient in (47.3) is a conservative reconstruction bound,
+not an optimal stability constant. It converts full-output errors
+to a reference-complete claim using linearity; it does not treat
+unassisted scalar-response errors as a diamond-norm certificate.
+If the actual instrument varies with the probe or the source
+preparation procedure, a single map Delta has not been supplied
+and this argument cannot be used.
+

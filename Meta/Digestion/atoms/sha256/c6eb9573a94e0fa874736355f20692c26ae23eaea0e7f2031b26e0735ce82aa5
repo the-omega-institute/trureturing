@@ -1,0 +1,95 @@
+**定理 57.1（Uniform finite certificate on all dyadic scales at least 1024）。** Let $m\ge10$, $N=2^m$, and let $a,b\in\mathbb Z[i]$ satisfy $|a|^2+|b|^2=N-1$. With the same matrices as Part I, Proposition 19.1, put
+
+$$
+ U=\begin{pmatrix}a&b\\-\overline b&\overline a\end{pmatrix},\qquad
+ V=\begin{pmatrix}I_2\\U\end{pmatrix},\qquad P=VV^*/N.
+\tag{57.1}
+$$
+
+There are finite lists of original legal rows $r_j\in\mathcal R_{4,N}$, actual anchors $F_\ell\in\mathcal B_4\cup\{0\}\subset\mathcal A_N$, and real coefficients with
+
+$$
+ \delta_P=\sum_j\lambda_jr_j+\sum_\ell\beta_\ell\delta_{F_\ell},
+ \qquad \sum_j|\lambda_j|\le1328033,\qquad
+ \sum_\ell|\beta_\ell|\le56.
+\tag{57.2}
+$$
+
+In particular the total coefficient cost is at most $1328089$, independently of $m,a,b$ in this domain. Every symbol uses the one original grid with denominator $N$.
+
+Proof. Reuse the complementary-column identities of Part I, Proposition 19.1. Set
+
+$$
+ W=\begin{pmatrix}-U^*\\I_2\end{pmatrix},\qquad
+ w_j=We_j,\qquad Q_j=w_jw_j^*/N\quad(j=1,2).
+\tag{57.3}
+$$
+
+Here $e_j$ in (57.3) is the $j$th coordinate vector of $\mathbb C^2$. Since $U^*U=UU^*=(N-1)I_2$,
+
+$$
+ W^*W=NI_2,\qquad VV^*+WW^*=NI_4,\qquad
+ Q_1Q_2=0,\qquad Q_1+Q_2=I_4-P.
+\tag{57.4}
+$$
+
+Each $Q_j$ is a rank-one projection with Gaussian-integer numerator and denominator $N$. Explicitly,
+
+$$
+ w_1=(-\overline a,-\overline b,1,0)^{\mathsf T},\qquad
+ w_2=(b,-a,0,1)^{\mathsf T}.
+\tag{57.5}
+$$
+
+Thus $Q_1$ is supported on the coordinate face $\{1,2,3\}$, while $D_3Q_2=0$. Define
+
+$$
+ E=I_4-Q_2-D_3.
+\tag{57.6}
+$$
+
+The orthogonality of $Q_2,D_3$ makes $E$ a rank-two original-grid projection, and $E$ is supported on $\{1,2,4\}$. Put
+
+$$
+ A=D_3,\qquad B=Q_1,\qquad X=P-D_3.
+\tag{57.7}
+$$
+
+Then $X$ is a signed Hermitian matrix on the original grid, and the five effects required for legality are exactly
+
+$$
+ A=D_3,\quad B=Q_1,\quad A+X=P,\quad
+ B+X=P+Q_1-D_3=E,\quad
+ I_4-A-B-X=Q_2.
+\tag{57.8}
+$$
+
+All five are projections in $K_{4,N}$. Hence the original row
+
+$$
+ r=\delta_P+\delta_{Q_1}-\delta_{D_3}-\delta_E
+\tag{57.9}
+$$
+
+is legal, and $\delta_P=r+\delta_{D_3}+\delta_E-\delta_{Q_1}$.
+
+Apply Theorem 55.1 to $E$ on $S_{124}=D_1+D_2+D_4$ and to $Q_1$ on $S_{123}=D_1+D_2+D_3$. Theorem 56.1 embeds their finite row combinations $R_E,R_{Q_1}$ legally into $W_{4,N}$. Their traces are $2,1$, respectively, so substitution gives the exact certificate
+
+$$
+ \begin{aligned}
+ \delta_P={}&r+R_E-R_{Q_1}+\delta_{D_3}-\delta_0\\
+ &+\sum_{Q\in\mathcal B_{S_{124}}}\alpha_Q(E)\delta_Q
+   -\sum_{Q\in\mathcal B_{S_{123}}}\alpha_Q(Q_1)\delta_Q.
+ \end{aligned}
+\tag{57.10}
+$$
+
+There is no residual effect symbol in (57.10). The row cost is at most $1+2\cdot664016=1328033$. The anchor cost is at most $1+1+27+27=56$, where the two unit terms are $D_3$ and $0$. Combining repeated symbols can only decrease the resulting absolute coefficient sum. Altogether,
+
+$$
+ 1+1+2\cdot664016+27+27+1=1328089.
+\tag{57.11}
+$$
+
+Both face lists are finite by the finite convex-combination step in Theorem 55.1, and the direct row adds one further row. $\square$
+

@@ -1,0 +1,65 @@
+**命题 29.1（Convex-domain hidden span）。** Under convexity,
+
+<a id="eq-preparation-29-2"></a>
+
+$$
+\boxed{\mathcal K_Q=L\cap W^\perp.}
+\tag{29.2}
+$$
+
+**证明。** The forward inclusion holds for every $Q$. For nonzero $h\in L\cap W^\perp$, the two states
+
+$$
+\rho_0\pm r\frac{h}{\lVert h\rVert_2}
+$$
+
+belong to $Q$ by (29.1) and have the same $W$ responses. Their difference is a nonzero multiple of $h$, so $h\in\mathcal K_Q$. The zero vector needs no additional pair. $\square$
+
+The ball here belongs to the actual affine preparation domain. A neighborhood in a larger ambient state space cannot substitute for it.
+
+Choose a Hilbert–Schmidt orthonormal basis $H_a$ of $\mathcal K_Q$. The $2k$ states
+
+<a id="eq-preparation-29-3"></a>
+
+$$
+\rho_a^\pm=\rho_0\pm rH_a,
+\qquad
+g_a(B)
+=\operatorname{Tr}\bigl(B(\rho_a^+-\rho_a^-)\bigr)
+=2r\operatorname{Tr}(BH_a)
+\tag{29.3}
+$$
+
+form a finite equal-response certificate. In this orthonormal basis,
+
+<a id="eq-preparation-29-4"></a>
+
+$$
+\begin{aligned}
+\lVert R_Q(B)\rVert_2
+&=\frac{\lVert g(B)\rVert_2}{2r},\\
+2r\lVert R_Q(B)\rVert_2
+&\le\Delta_{Q,W}(B)
+\le\operatorname{diam}_2(Q)\lVert R_Q(B)\rVert_2.
+\end{aligned}
+\tag{29.4}
+$$
+
+The residual coordinates give the first equality. For the lower bound when the residual is nonzero, use the single admissible pair
+
+$$
+\rho_0\pm r\frac{R_Q(B)}{\lVert R_Q(B)\rVert_2}
+$$
+
+in the same relative ball. Its future gap is $2r\lVert R_Q(B)\rVert_2$. The zero case is immediate, and Cauchy–Schwarz gives the upper bound. This uses one jointly admissible pair; it does not assert simultaneous use of independently optimal coordinate pairs.
+
+For the full density set, $\rho_0=I/D$ and $r=1/(2D)$ satisfy (29.1) on the full trace-zero Hermitian space. Indeed,
+
+$$
+\lVert h\rVert_{\rm op}\le\lVert h\rVert_2\le\frac1{2D}
+\quad\Longrightarrow\quad
+I/D+h\succeq I/(2D).
+$$
+
+The full-source positive-perturbation mechanism is already present in the repository's tomography completeness result. The sharper all-density width identity is supplied by §10. Equation (29.4) is a convenient conditioned finite-test bound and makes no optimal-constant claim.
+

@@ -1,0 +1,85 @@
+**定理 66.5（全部原始映射及唯一逆迹平衡）。** 在 (66.13) 的坐标中，存在任意正定 $u_{ij}\in H_{n_j}$、$g_{ijk}\in H_{n_k}$，其权重限制恰为
+
+$$
+\boxed{\sum_{i,j}n_i\operatorname{Tr}(u_{ij}^{-1})=n^2.}
+\tag{66.14}
+$$
+
+定义
+
+$$
+\begin{aligned}
+&U_{ij}=I_i\otimes u_{ij},\quad
+G_{ijk}=I_i\otimes I_j\otimes g_{ijk},\quad V=U^{-1},\\
+&A_{ij}=I_i\otimes\sqrt{u_{ij}},\quad
+C_{ijk}=I_i\otimes\sqrt{u_{ij}}\otimes\sqrt{g_{ijk}},\quad
+W_{ijk}=C_{ijk}^{-1},\\
+&(C_Dd)_{ij}=A_{ij}d_{ij}A_{ij},\qquad
+(C_Ez)_{ijk}=C_{ijk}z_{ijk}C_{ijk}.
+\end{aligned}
+\tag{66.15}
+$$
+
+则实际准备及三元映射为
+
+$$
+\begin{aligned}
+M(a,b)_{ij}&=a_i\otimes
+ (\sqrt{u_{ij}}b_j^{T^{\varepsilon_{ij}}}\sqrt{u_{ij}}),\\
+L(d,c)_{ijk}&=d_{ij}\otimes
+ (\sqrt{g_{ijk}}c_k^{T^{\delta_{ijk}}}\sqrt{g_{ijk}}),\\
+Q(a,b,c)_{ijk}&=a_i\otimes
+ (\sqrt{u_{ij}}b_j^{T^{\varepsilon_{ij}}}\sqrt{u_{ij}})
+ \otimes(\sqrt{g_{ijk}}c_k^{T^{\delta_{ijk}}}\sqrt{g_{ijk}}).
+\end{aligned}
+\tag{66.16}
+$$
+
+以 $\operatorname{Tr}_i$ 表示所示块首 Hilbert 因子的普通未归一化偏迹。在整个实 $E$ 上，唯一读回为
+
+$$
+\begin{aligned}
+(p_0z)_{jk}
+ &=\sum_i\left(T_j^{\varepsilon_{ij}}\otimes
+ T_k^{\delta_{ijk}\oplus\varepsilon_{jk}}\right)
+ (\operatorname{Tr}_i z_{ijk}),\\
+(pz)_{jk}
+ &=A_{jk}\left[\sum_i\left(T_j^{\varepsilon_{ij}}\otimes
+ T_k^{\delta_{ijk}\oplus\varepsilon_{jk}}\right)
+ \left(\operatorname{Tr}_i(W_{ijk}z_{ijk}W_{ijk})\right)\right]A_{jk}.
+\end{aligned}
+\tag{66.17}
+$$
+
+全部内部映射，包括原参考的非均匀权重，恰为
+
+$$
+\begin{aligned}
+(sd)_j&=\sum_i\left[u_{ij}^{-1/2}
+ (\operatorname{Tr}_i d_{ij})u_{ij}^{-1/2}\right]^{T^{\varepsilon_{ij}}},\\
+\omega_{ij}&=I_{ij}/n^2,&
+w_j&=\frac1{n^2}\sum_i n_i(u_{ij}^{-1})^{T^{\varepsilon_{ij}}},\\
+\mathcal B(d,c)&=M(sd,c),&K(a)&=M(w,a),\\
+J(a)_{ij}&=a_i\otimes u_{ij},&H(d)_{ijk}&=d_{ij}\otimes g_{ijk},\\
+B_1&=Js,&(B_1d)_{jk}&=(sd)_j\otimes u_{jk}.
+\end{aligned}
+\tag{66.18}
+$$
+
+所有等式量化全部实输入；$s\ge0$、$w>0$、$\tau_Aw=1$，且不对 $g$ 添加归一化约束。
+
+证明。在这些坐标中 $\alpha(a)_{ij}=a_i\otimes I_j$、$\eta(d)_{ijk}=d_{ij}\otimes I_k$。矩阵 Jordan 算子满足 $[\ell_x,\ell_y]z=[[x,y],z]/4$；环境算子交换迫使矩阵交换子中心，迹零又使它为零。故 $U$ 属于完整第一矩阵代数的交换子，必为 $I_i\otimes u_{ij}$；$G$ 同理为 $I_i\otimes I_j\otimes g_{ijk}$。$\tau_D(U^{-1})=n^2$ 正是 (66.14)。$C_E=C_GP_{\sqrt{\eta(U)}}$ 给 (66.15)，恢复等式消去 $L$ 前两腿上的 $C_D^{-1}$，得到 (66.16)。
+
+$Q_0(a,b,c)_{ijk}=a_i\otimes b_j^{T^{\varepsilon_{ij}}}\otimes c_k^{T^{\delta_{ijk}}}$ 实张满每个完整 $E_{ijk}$，而 $p_0Q_0=\tau_A(a)F(b,c)$ 唯一迫使 (66.17) 第一式。它没有在纠缠方向上的未定延拓。再代入 $p=C_Dp_0C_E^{-1}$ 得第二式；求 $s=\beta^*C_D^{-1}$、$w=s\omega$ 得 (66.18)。逆权重必须先夹乘、再作偏迹后的指定转置；外层 $A_{jk}$ 位于求和和转置之后，无须 $u_{jk}$ 与 $g_{ijk}$ 交换。
+
+为显式核对腿数，对任意完整二腿矩阵 $d_{ij}$，
+
+$$
+W_{ijk}L(d,c)_{ijk}W_{ijk}
+ =\left[(I_i\otimes u_{ij}^{-1/2})d_{ij}
+ (I_i\otimes u_{ij}^{-1/2})\right]\otimes c_k^{T^{\delta_{ijk}}}.
+\tag{66.19}
+$$
+
+偏迹将第一括号变为 $u_{ij}^{-1/2}(\operatorname{Tr}_id_{ij})u_{ij}^{-1/2}$；末腿的两个转置合成为 $T_k^{\varepsilon_{jk}}$，故 $pL(d,c)=M(sd,c)$。同理 $sM(a,b)=\tau_A(a)b$。权重平衡给 $\tau_Aw=1$，其余内部映射立即恢复。$\square$
+

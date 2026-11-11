@@ -1,0 +1,45 @@
+**命题 20.1（Pure marginal to complete joint return）。** The complete-record product-return error satisfies
+
+<a id="eq-reference-20-2"></a>
+
+$$
+\begin{aligned}
+D\bigl(\mathcal T(P_{r_j}),p_j\otimes P_{r_j}\bigr)
+&=\sum_xp_j(x)D(\eta_{j,x},P_{r_j})\\
+&\le\sqrt{\delta_j}.
+\end{aligned}
+\tag{20.2}
+$$
+
+**证明。** Trace norm adds over the orthogonal classical blocks, giving the equality. Diagonalize each $\eta_{j,x}$. The pure-state trace-distance formula, convexity of trace distance and concavity of square root give
+
+$$
+D(\eta_{j,x},P_{r_j})
+\le\sqrt{1-\langle r_j,\eta_{j,x}r_j\rangle}.
+$$
+
+Apply square-root concavity again over the complete classical flags. Their weighted fidelity defect is exactly (20.1), giving (20.2). $\square$
+
+Combining (19.4) with (20.2) yields
+
+<a id="eq-reference-20-3"></a>
+
+$$
+\sqrt{\delta_0}+\sqrt{\delta_1}
+\ge\frac{[1-d-\beta^n]_+}{n}
+\qquad(n\ge1).
+\tag{20.3}
+$$
+
+In particular, if both defects are at most $\delta$, then
+
+$$
+\delta\ge
+\left(\frac{[1-d-\beta^n]_+}{2n}\right)^2
+\qquad(n\ge1).
+$$
+
+If a target distribution differs from the actual complete-record distribution by total variation $\alpha_j$, a further triangle inequality bounds its error in (18.2) by $\alpha_j+\sqrt{\delta_j}$.
+
+Exact return of a pure marginal forces every positive-probability conditional reference state to equal that same pure state. It therefore supplies the decoupled return required in (18.2). Approximate marginal fidelity gives the displayed square-root bound. For an arbitrary mixed marginal, neither this pure-state implication nor an analogous joint-return conclusion is assumed.
+

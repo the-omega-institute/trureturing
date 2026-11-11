@@ -1,0 +1,39 @@
+### 3.2 交叉插入的精确块公式
+
+在 $\mathcal M$ 已可逆后定义
+
+$$
+\mathcal T(a\otimes c)=Q(a,1_A,c),\qquad
+I_{13}=\mathcal T\mathcal M^{-1}:D\to E.
+\tag{64.30}
+$$
+
+对 $x\in H_{n_in_k}$，令 $\iota_j(x)$ 把未归一化的中间单位插入两个端点之间：若 $S_j$ 把 $|a,c,b\rangle$ 送到 $|a,b,c\rangle$，则
+
+$$
+\iota_j(x)=S_j(x\otimes I_{n_j})S_j^*.
+$$
+
+令 $\Gamma_{u,v}=T^u\otimes T^v$，其中 $T$ 是整个矩阵转置。对
+
+$$
+ u_{ijk}=\varepsilon_{ik}\oplus t_1,\qquad
+ v_{ijk}=\delta_{ik}\oplus t_3,
+\tag{64.31}
+$$
+
+得到每个初始坐标块的精确公式
+
+$$
+\bigl(I_{13}d\bigr)_{ijk}
+=\operatorname{Ad}(W_{ijk})\,
+ \iota_j\!\left[
+ \Gamma_{u_{ijk},v_{ijk}}
+ \left(\operatorname{Ad}(U_{ik}^*)d_{ik}\right)
+ \right].
+\tag{64.32}
+$$
+
+证明必须先把 $U_{ik}$ 解开：对 $d=M_{ik}(a,c)$，先得到
+$\operatorname{Ad}(U_{ik}^*)d=a^{T^{\varepsilon_{ik}}}\otimes c^{T^{\delta_{ik}}}$，再施加 $\Gamma$，最后插入 $I_{n_j}$ 并共轭 $W_{ijk}$。因为 $M_{ik}(A_i,A_k)$ 实张成整块，(64.32) 对每个纠缠 $d_{ik}$ 也成立。不同端点块落在互不相交的中心块中，不会相互抵消；被插入的 $1_j$ 只消去中间转置，不产生迹或除数。
+

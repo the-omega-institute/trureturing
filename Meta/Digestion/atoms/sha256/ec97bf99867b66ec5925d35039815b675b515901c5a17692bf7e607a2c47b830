@@ -1,0 +1,38 @@
+**定理 67.5（双迹下界和精确余量）。** 在 $\mathcal B+D_H$ 下，$\delta,\gamma>0$，并有
+
+$$
+\delta\gamma\ge R^2,\qquad\delta+\gamma\ge2R,
+\qquad\frac\delta c+c\gamma\ge2R\quad(c>0).
+\tag{67.11}
+$$
+
+置 $\varphi(x)=x-1-\log x$。对定理 67.4 所选谱和任意 $c>0$，有精确非负恒等式
+
+$$
+\frac\delta c+c\gamma-2R
+=\sum_{\alpha=1}^R\varphi(\zeta_\alpha/c)
+ +\sum_{\alpha=1}^R\varphi(c\eta_\alpha).
+\tag{67.12}
+$$
+
+特别取 $c=1$，这就是 $\delta+\gamma-2R$ 的精确非负谱余量。还成立
+
+$$
+\left\|\sqrt{Z/c}-1_E\right\|_2^2
++\sum_{q\in\mathcal Q}
+ \left\|\sqrt{cY_q}-P_q\right\|_2^2
+\le\frac\delta c+c\gamma-2R.
+\tag{67.13}
+$$
+
+第二项在相应面内开平方，范数来自固定规范迹。
+
+**证明。** 令 $G=(\prod_\alpha\zeta_\alpha)^{1/R}$。两次普通 AM–GM 与 (67.8) 给出 $\delta\ge RG$、$\gamma\ge R/G$，故乘积至少 $R^2$；再对 $\delta/c,c\gamma$ 用两数 AM–GM 即得其余下界。两份缩放谱的总乘积仍为一，故它们的对数和为零，展开 $\varphi$ 就得到 (67.12)。$\log x\le x-1$ 使每项非负。最后
+
+$$
+\varphi(x)-(\sqrt x-1)^2
+=2(\sqrt x-1-\log\sqrt x)\ge0.
+$$
+
+对两份谱求和即为 (67.13)。取 $c=\sqrt{\delta/\gamma}$ 时右端是 $2(\sqrt{\delta\gamma}-R)$。该估计只控制 $Z$ 及所选 $Y_q$ 的平方根谱偏差；它不控制完整 $Y$ 的面间分量、完整映射的算子范数误差或任何物理资源成本。$\square$
+

@@ -1,0 +1,25 @@
+**定义 64.1（有限比较入口与另行的 Jordan 桥）。** 对每个实际载体 $X=A,D,E$，取非零有限维实有序空间、闭尖生成锥 $X_+$、严格正归一化泛函 $u_X$、紧的全态基底 $K_X=\{x\in X_+:u_X(x)=1\}$ 和全部对偶效应 $[0,u_X]$。记纯态集合为 $P_X$。对每个 $\xi\in P_X$、$x\in K_X$ 定义
+
+$$
+T_\xi(x)=\inf\{f(x):0\le f\le u_X,\ f(\xi)=1\}.
+$$
+
+在三个实际载体上分别要求有限混合律 $S$：对任意整数 $\ell\ge1$、任意 $\xi,\eta_1,\ldots,\eta_\ell\in P_X$ 及任意 $w_j\ge0$、$\sum_jw_j=1$，
+
+$$
+\mathrm{(S)}\qquad
+T_\xi\!\left(\sum_{j=1}^{\ell}w_j\eta_j\right)
+ =\sum_{j=1}^{\ell}w_jT_{\eta_j}(\xi).
+$$
+
+另行保留三个实际载体各自到有限 Euclidean Jordan 代数的保归一化条件桥。桥后仍使用整个平方锥、所有正规范迹一态及全部效应 $[0,1_X]$；每个简单直和扇区的每个本原幂等元都有规范迹一。此桥是独立前提，不由这里的 $S$ 或其单点端点互反直接代替。记
+
+$$
+\langle x,y\rangle_X=\tau_X(x\circ y),\qquad
+n=\tau_A(1_A)>0,\quad m=\tau_D(1_D)>0,\quad
+R_E=\tau_E(1_E),\qquad e=1_A/n,\quad\omega=1_D/m.
+\tag{64.1}
+$$
+
+这些迹等于各代数的秩，不允许扇区重标度。所有伴随均取这些固定的规范迹内积。张量积只指实向量空间张量积及其乘积内积，不预设张量正锥。
+

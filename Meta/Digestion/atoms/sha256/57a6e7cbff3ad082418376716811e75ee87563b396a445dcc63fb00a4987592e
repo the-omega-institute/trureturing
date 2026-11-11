@@ -1,0 +1,26 @@
+**定理 67.7（第二范数律和单独上界的精确替换）。** 仍记原第二范数律为 $W_H:H^*H=n\operatorname{id}_D$、原归一化上界为 $N:\gamma\le R$；这里的条件 $N$ 与命题 66.2 的辅助双线性映射按类型区分。在同一 $\mathcal B$ 的实际数据上，
+
+$$
+\bigl(W_H\ \&\ N\bigr)
+\quad\Longleftrightarrow\quad
+\bigl(D_H\ \&\ C_{\rm joint}\bigr),\qquad
+C_{\rm joint}:\ \delta+\gamma\le2R.
+\tag{67.19}
+$$
+
+右侧强制 $\delta=\gamma=R$、$c=1$，故 $U=1_D$、$H1_D=1_E$、$p^*1_D=1_E$ 及定理 64.9 全部结论成立。
+
+**证明。** 新方向由
+
+$$
+2R\ge\delta+\gamma\ge2\sqrt{\delta\gamma}\ge2R
+$$
+
+迫使全部等号，再用定理 67.6，得到 $c=1$、$W_H$ 及 $N$。反向，$W_H$ 对全部实方向的配对恒等式立即给出 $D_H$。此时可用命题 67.3 和定理 67.4，但尚不使用定理 64.9：对所选完整框架，$W_H$ 给出
+
+$$
+\sum_\alpha\zeta_\alpha^2=\sum_{q\in\mathcal Q}\|Hq\|^2=mn=R.
+$$
+
+$R$ 项 Cauchy–Schwarz 使 $\delta\le R$，而原 $N$ 给出 $\gamma\le R$，故 $C_{\rm joint}$ 成立。两方向保持同一 $A,D,E,L,p$，不存在换模型或暗中重标度。此等价只在全部保留前提下成立，不是条件独立性、最少公理或完整模型类严格扩大的定理。$\square$
+

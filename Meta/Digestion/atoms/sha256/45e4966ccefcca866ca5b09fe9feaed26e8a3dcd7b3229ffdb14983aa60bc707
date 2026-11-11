@@ -1,0 +1,40 @@
+**引理 37.2（包括演员轴的可见图闭包）。** 在 $\|u\|=1$ 的有限维空间中，实际图 $(u,Xu,XCu)$、$X=X^*$ 的闭包 $\overline{\mathcal G}$，恰由
+
+$$
+u^*p\in\mathbb R,\qquad (Cu)^*q\in\mathbb R,\qquad u^*q=p^*Cu
+\tag{37.15}
+$$
+
+定义。若 $u_1u_2\ne0$，唯一实际矩阵为 $X=[p\ q][u\ Cu]^{-1}$。若 $u=z e_j$，$|z|=1$，$l\ne j$，则条件恰为 $p_j/z\in\mathbb R$、$q_j=c_jp_j$；$p_l,q_l$ 无额外限制，其中 $c_1=1,c_2=2$。
+
+证明。三条件就是 $[u\ Cu]^*[p\ q]$ 为 Hermitian，故对实际图成立并在极限保留；非轴时反乘可逆矩阵证明充分性。在轴上逐项代入即得所列条件。为证明每个轴点都在闭包，设
+
+$$
+d=c_l-c_j,\qquad
+s_{\rm ax}=(c_lp_l-q_l)/d,\qquad
+t_{\rm ax}=(q_l-c_jp_l)/d.
+\tag{37.17}
+$$
+
+若 $t_{\rm ax}=0$，令 $X_{lj}=p_l/z$、$X_{jl}=\overline{X_{lj}}$、$X_{jj}=p_j/z$，另一对角元任取实数，即实际实现原列。若 $t_{\rm ax}\ne0$，对 $0<\tau<1$ 取
+
+$$
+\begin{gathered}
+u_{l,\tau}=\tau t_{\rm ax}/|t_{\rm ax}|,\qquad
+u_{j,\tau}=z\sqrt{1-\tau^2},\\
+X_{lj,\tau}=s_{\rm ax}/u_{j,\tau},\quad
+X_{jl,\tau}=\overline{X_{lj,\tau}},\quad
+X_{ll,\tau}=|t_{\rm ax}|/\tau,\quad X_{jj,\tau}=p_j/z.
+\end{gathered}
+\tag{37.18}
+$$
+
+所得 $X_\tau$ Hermitian、$\|u_\tau\|=1$，且
+
+$$
+(X_\tau u_\tau)_l=s_{\rm ax}+t_{\rm ax}=p_l,\qquad
+(X_\tau Cu_\tau)_l=c_js_{\rm ax}+c_lt_{\rm ax}=q_l.
+$$
+
+另两个可见列坐标及 $u_\tau-u$ 都是 $O(\tau)$。这证明闭包描述；没有删除发散的 $X_{ll,\tau}$。∎
+

@@ -1,0 +1,9 @@
+### 44.5 根投影正则性与完整接触正则性
+
+令 $z=(x,y,t)$、$\tau=\sqrt t\,e^{i\theta}$，并在零阶接触处定义
+
+$$
+C_0(z,\theta)=\bigl(\operatorname{Re}E_0(\tau),\operatorname{Im}E_0(\tau)\bigr)\in\mathbb R^2.
+\tag{44.21}
+$$
+

@@ -1,0 +1,39 @@
+### 39.1 原来源、接触约定与共同完整 P2
+
+用 $r\in\{+1,-1\}$ 标来源符号，用 $d\in\{+1,-1\}$ 标两笔原预算。固定
+
+$$
+\begin{gathered}
+C=\operatorname{diag}(1,2),\qquad T_A=\operatorname{diag}(1,-2),\qquad
+J_A=\begin{pmatrix}0&1\\1&0\end{pmatrix},\\
+a_r=(1/\sqrt2,r)^{\mathsf T},\qquad
+H=2C+hJ_A,\qquad B=H+C,\qquad \iota=\sigma i,\quad\sigma=\pm1.
+\end{gathered}
+\tag{39.1}
+$$
+
+除明确只谈代数恒等式的地方外，$h>0$ 始终固定在 §37.1 所要求的强制估计邻域中，因而 $H\succ0$，引理 37.4、定理 37.6 和推论 37.7、37.9 均可应用。条带定理另外要求 $h\le1/1000$；这项充分范围不改变其外的原问题。
+
+对每个有限 $\lambda>0$，$D_{r,\lambda},F,G_{r,\lambda},t_{r,\lambda}$ 精确取 (38.1) 的实际矩阵，仅将来源下标 $\tau$ 改记为 $r$；特别地，仍有
+
+$$
+\delta_\lambda=\lambda^{-3},\qquad
+G_{r,\lambda}=\begin{bmatrix}I_2\\\lambda a_r^*\end{bmatrix},\qquad
+\rho=\frac{k}{\lambda^2}.
+\tag{39.2}
+$$
+
+原 P2、PB、实际探针 $x=X\oplus0_3$ 和两笔预算准确取 (37.4)–(37.7)、(38.3)–(38.5) 的含义：$X=X^*$ 任意，正复线性泛函遍取完整 $M_5(\mathbb C)$，不删除环境或混合密度块。实际恒等式 (37.3)、(38.2) 给
+
+$$
+\begin{gathered}
+D_{r,\lambda}\succ0,\qquad D_{r,\lambda}G_{r,\lambda}=F,\qquad W=0,\\
+M_0=C^2,\qquad M_1=C,\qquad M_{2,r}=I_2+\lambda^2a_ra_r^*,\\
+\|a_r\|^2=3/2,\qquad
+\operatorname{spec}(M_{2,r})=\{1,1+(3/2)\lambda^2\}.
+\end{gathered}
+\tag{39.3}
+$$
+
+两份来源使用同一个 $\lambda$ 和同一个 $\rho$；不借重标度制造阈值差异。若改用 (37.54) 的共同全谱坐标，则两份来源的因子 $m=3/2$ 相同。
+

@@ -1,0 +1,23 @@
+**定理 12.1（Full-state autonomy and Heisenberg closure）。** Let $\Phi$ be a completely positive trace-preserving channel on $B(H)$, with unital completely positive Heisenberg dual $F$. Then
+
+<a id="eq-future-12-1"></a>
+
+$$
+\begin{gathered}
+\rho|_{\mathcal A}=\sigma|_{\mathcal A}
+\ \Longrightarrow\
+\Phi(\rho)|_{\mathcal A}=\Phi(\sigma)|_{\mathcal A}
+\quad\text{for all density matrices }\rho,\sigma\\
+\Longleftrightarrow\quad F(\mathcal A)\subseteq\mathcal A.
+\end{gathered}
+\tag{12.1}
+$$
+
+On closure, $T=F|_{\mathcal A}$ is unital completely positive in the inherited matrix orders and its dual defines an affine update on the restricted states. Testing constancy on every currently equivalent pure-vector pair already implies the same closure.
+
+**证明。** A future expectation of $a\in\mathcal A$ is the current expectation of $F(a)$. Apply Theorem 10.1 to each self-adjoint $a$ for both directions of (12.1); complex linearity extends the inclusion to all of $\mathcal A$. Restricting a unital completely positive map to a preserved algebra retains its matrix-order positivity and unit. For the pure-pair version, Proposition 11.1 makes zero pure-fibre width equivalent to $F(a)\in\mathcal A_{\mathrm{sa}}$. $\square$
+
+For a general real unital space $W$, the corresponding one-step expectation criterion is $F(W)\subseteq W$. It does not require replacing $W$ by the $*$-algebra it generates. The existing future-statistics closure result supplies the minimal linear predictor space for all finite iterates. Computing an algebraic completion may add tests and has a different operation contract.
+
+<a id="statement-future-12-2"></a>
+

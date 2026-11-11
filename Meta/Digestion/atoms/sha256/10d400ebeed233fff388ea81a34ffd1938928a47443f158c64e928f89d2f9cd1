@@ -1,0 +1,4 @@
+## 35. 固定零阶矩的正定环境、临界相位与全部原预算的共同尺度
+
+本节及 §36 固定 §32 的 $C=\operatorname{diag}(1,2)$、$T_A=\operatorname{diag}(1,-2)$、$J_A$ 和 $U_0=2^{-1/2}\left(\begin{smallmatrix}1&1\\1&-1\end{smallmatrix}\right)$。旧式号 (17.x)、(27.x)、(30.x)、(31.x) 指[前卷](AURIC_FULL_PB_ACTUAL_PROBE_AND_ENVIRONMENT_COUPLING_CONTINUATION.md)。§32 与前卷的引用取共同钉版 `315e167044afd2593b851f6546a82470ca16d446`；§34 的演员接触是本卷纸面前提。以下反二阶矩 PB 下界只使用 §32，不使用 §33.1 的两矩近邻定理。各节陈述均属纸面推导，不构成 Lean／kernel 认证。
+

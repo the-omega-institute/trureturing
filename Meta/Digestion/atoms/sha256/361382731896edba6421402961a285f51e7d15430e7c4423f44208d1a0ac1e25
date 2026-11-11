@@ -1,0 +1,16 @@
+**定义 32.1（固定三矩的四维族）。** 在完整 $M_4(\mathbb C)$ 上取演员与环境各为 $\mathbb C^2$，固定
+
+$$
+\begin{gathered}
+C=\operatorname{diag}(1,2),\qquad T_A=\operatorname{diag}(1,-2),
+\qquad J_A=\begin{pmatrix}0&1\\1&0\end{pmatrix},\\
+c=C\oplus0_2,\qquad P=I_2\oplus0_2,\qquad V=D_{\rm env}=C,\\
+H_h=2C+hJ_A,\qquad B_h=H_h+C,\qquad
+t_h=\begin{pmatrix}B_h&C\\C&C\end{pmatrix},\qquad
+s=\rho T_A\oplus0_2,\qquad h,\rho\in\mathbb R .
+\end{gathered}
+\tag{32.1}
+$$
+
+沿用 (1.1)–(1.2)、(17.1) 的原 P2、原 PB 与全部实际探针 $x=X\oplus0_2$，其中 $X=X^*$。取向 $\sigma$ 的输出仍为 $g_\sigma=\sigma i[c,t_h]/2+s$。因 $D_{\rm env}$ 可逆，$W=V|_{\ker D_{\rm env}}=0$。按 (30.2) 有 $F=C$、$G=I_2$，故原三矩恰为 $(M_0,M_1,M_2)=(C^2,C,I_2)$，Schur 块恰为 $H_h$。环境块与三个矩在全族中固定。
+

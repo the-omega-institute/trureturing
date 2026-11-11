@@ -1,0 +1,24 @@
+**命题 27.2（Exact restricted-source prediction criterion）。** For every Hermitian $B$,
+
+<a id="eq-preparation-27-2"></a>
+
+$$
+\Delta_{Q,W}(B)=0
+\quad\Longleftrightarrow\quad
+B\perp\mathcal K_Q.
+\tag{27.2}
+$$
+
+**证明。** The width vanishes exactly when $B$ annihilates every generating equal-response difference in (27.1). This is equivalent to annihilating their real span. $\square$
+
+Replacing $Q$ by all density matrices changes the comparison unless the two equal-response difference spans agree. For an effect $B$, the width belongs to $[0,1]$; its interpretation as a probability difference still uses the stipulated state/effect and Born contract.
+
+For an arbitrary preparation set, one has only
+
+$$
+\mathcal K_Q
+\subseteq\operatorname{span}_{\mathbb R}(Q-Q)\cap W^\perp.
+$$
+
+Equality needs an additional premise or a direct calculation of the span. In particular, taking the intersection after spanning all preparation differences can introduce directions that no equal-response pair in the original $Q$ supplies. Section 30 gives an explicit example.
+

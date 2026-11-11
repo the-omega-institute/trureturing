@@ -1,0 +1,43 @@
+**定理 66.9（C13 的精确新增条件与伴随方向）。** $\widetilde M$ 已由上述接口可逆，现在且仅现在定义
+
+$$
+T_{\rm raw}(a,c)=L(M(a,1_A),c),\qquad
+I_{13}^{\rm raw}=\widetilde T_{\rm raw}\widetilde M^{-1}:D\to E.
+$$
+
+令 $\operatorname{ins}_j$ 在端点块 $H_{n_in_k}$ 中插入中间 $I_j$，保持因子顺序为 $i,j,k$。则
+
+$$
+\begin{aligned}
+(I_{13}^0z)_{ijk}
+ &=\operatorname{ins}_j\left[
+ (\operatorname{id}_i\otimes T_k^{\delta_{ijk}\oplus\varepsilon_{ik}})z_{ik}\right],\\
+I_{13}^{\rm raw}&=C_EI_{13}^0C_D^{-1}:D\to E,\\
+(I_{13}^{\rm raw})^*&=C_D^{-1}(I_{13}^0)^*C_E:E\to D.
+\end{aligned}
+\tag{66.29}
+$$
+
+因此原 C13 当且仅当
+
+$$
+\boxed{\delta_{ijk}=\varepsilon_{ik}
+ \quad\text{当 }n_i,n_k\ge2,\quad\text{对每个 }j\text{，包括 }n_j=1.}
+\tag{66.30}
+$$
+
+若首尾有一腿标量，则无额外等式。
+
+证明。取 $T_0(a,c)=Q_0(a,1_A,c)$，其 $(i,j,k)$ 块为 $a_i\otimes I_j\otimes c_k^{T^{\delta_{ijk}}}$。实际逆映射满足 $\widetilde M^{-1}=\widetilde F^{-1}C_D^{-1}$；$F_{ik}^{-1}$ 必须先撤去端点第二腿的 $T^{\varepsilon_{ik}}$。故 $I_{13}^0=\widetilde T_0\widetilde F^{-1}$ 正是 (66.29) 的首式，原始恢复给第二式，自伴随滤波给第三式。这里用实际 $F$ 的逆，不能把端点方向预先设为零。
+
+两端滤波是双向全锥正，故 C13 等价于 $I_{13}^0$ 在整个 $D_+$ 上正。非标量端点的单腿转置由 Bell 投影检出负特征值 $-1/2$；插入任何中间 $I_j$ 后，在中间任意单位向量上取期望仍保留负值，故每个 $j$ 都必须满足 (66.30)，标量中间腿没有例外。反向若端点剩余位为零则插入正；若端点有标量腿，剩余操作是恒等或端点整块转置，仍正。独立选择输入块和输出块给逐块必要性。
+
+$I_{13}^01_D=1_E$，故在 C13 下 $p_{13}^0=(I_{13}^0)^*$ 全锥正保迹，且由 $F,N$ 等距及张成有
+
+$$
+p_{13}^0Q_0(a,b,c)=\tau_A(b)F(a,c).
+\tag{66.31}
+$$
+
+但是实际伴随是 (66.29) 第三式，一般不保迹，也没有由 (66.31) 自动得到的原始丢弃恒等式。它与给定 $p$ 是不同对象，且方向与插入相反。例如全标量 $A=D=E=\mathbb R$、$u=1$、$g>0$ 时，原插入及其伴随均为 $g\operatorname{id}$；$g\ne1$ 即非保迹，虽然 C13 成立。$\square$
+

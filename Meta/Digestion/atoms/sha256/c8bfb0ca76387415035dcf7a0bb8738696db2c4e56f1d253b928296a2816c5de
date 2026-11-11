@@ -1,0 +1,18 @@
+**定理 38.1（$809/480$ 的实际有限恢复排除）。** 固定 $0<h<2\sqrt2$、有限实数 $k>809/480$ 及任意指定质量 $\mu\in(0,\infty)$。存在有限 $\Lambda(h,k)>1$，使每个有限 $\lambda>\Lambda(h,k)$、每份 $\tau=\pm1$ 来源、每个取向 $\sigma=\pm1$ 都满足：
+
+1. 其完整原 P2 的精确允许集均为同一个闭区间
+
+   $$
+   I_{\tau,\sigma}=\left[-\frac{h/\sqrt2}{T_\lambda},\frac{h/\sqrt2}{T_\lambda}\right],
+   \qquad T_\lambda=\sqrt{\frac32\left(\frac32+\lambda^2\right)},
+   \tag{38.6}
+   $$
+
+   且 $\rho=k/\lambda^2$ 严格位于其内部。
+2. 存在有限实际 Hermitian 探针 $x=X\oplus0_3$ 和同一来源上的一个向量正泛函 $\phi$，$\phi(I)=\mu$，使 (38.5) 严格失败，并且
+
+   $$
+   B_\phi(R_+,S_+)>0,\qquad B_\phi(R_-,S_-)>0.
+   \tag{38.7}
+   $$
+

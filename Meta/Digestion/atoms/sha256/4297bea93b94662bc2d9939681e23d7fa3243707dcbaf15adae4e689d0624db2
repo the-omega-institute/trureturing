@@ -1,0 +1,30 @@
+**定义 34.1（Uniform complete-instrument residual bounds）。** For every allowed control $j$, supply one fixed finite instrument $\{\Lambda_x^j\}_x$ on $H$. Each branch is completely positive and trace nonincreasing, their sum is trace preserving, and all failure outcomes are retained. Write the recorded channel and its block norm as
+
+<a id="eq-hidden-34-1"></a>
+
+$$
+\Gamma_j(h)=\bigoplus_x\Lambda_x^j(h),
+\qquad
+\left\lVert\bigoplus_xh_x\right\rVert_1
+=\sum_x\lVert h_x\rVert_1.
+\tag{34.1}
+$$
+
+On recorded outputs, $P$ and $Q$ act separately in each classical block. Suppose common constants $b\ge0$ and $0\le\beta<1$ satisfy, for every allowed $j$ and every Hermitian $h\in K$,
+
+<a id="eq-hidden-34-2"></a>
+
+$$
+\begin{aligned}
+\sum_x\lVert P\Lambda_x^j(h)\rVert_1
+&\le b\lVert h\rVert_1,\\
+\sum_x\lVert Q\Lambda_x^j(h)\rVert_1
+&\le\beta\lVert h\rVert_1.
+\end{aligned}
+\tag{34.2}
+$$
+
+The first line measures immediate transfer of currently hidden differences into complete visible output. The second independently bounds the remaining hidden part. Small immediate transfer, scalar occupation decay or a spectral gap measured in another norm does not establish the second line. The signed map $Q$ is not a positive physical operation.
+
+Trace-norm contraction of the recorded channel and of $P$ supplies a first-line constant at most one. There is no corresponding trace-norm contraction guarantee for $Q=\operatorname{id}-P$, so a hidden constant below one is a substantive premise.
+

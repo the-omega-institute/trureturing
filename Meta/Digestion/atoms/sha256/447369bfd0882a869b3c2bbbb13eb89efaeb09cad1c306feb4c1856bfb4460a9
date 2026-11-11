@@ -1,0 +1,64 @@
+**Proposition 44.1 (unreferenced product-output classification).** Suppose
+that for every density rho on H the S,R output is a product of its own
+marginals:
+
+$$
+\Gamma(\rho)=q(\rho)\otimes\Theta(\rho).
+\tag{44.1}
+$$
+
+Then at least one of the following holds:
+
+1. q is constant on the entire density space, and (43.1) holds.
+2. There is one density sigma_0 on R with
+
+$$
+\Theta(X)=\operatorname{Tr}(X)\sigma_0,\qquad
+M_s(X)=\operatorname{Tr}(F_s X)\sigma_0,
+\quad F_s\ge0,\quad\sum_sF_s=I_H.
+\tag{44.2}
+$$
+
+Conversely either displayed type implies (44.1). The two types can
+overlap. Neither the product-output classification nor the second
+type asserts global information destruction.
+
+Proof. Apply (44.1) to rho, sigma and t rho+(1-t)sigma for 0<t<1.
+Linearity of Gamma, q and Theta yields
+
+$$
+t(1-t)[q(\rho)-q(\sigma)]\otimes
+       [\Theta(\rho)-\Theta(\sigma)]=0.
+\tag{44.3}
+$$
+
+A tensor of two finite real vectors is zero only if a factor is zero.
+If q is constant, Hermitian spanning gives (43.1). Otherwise choose
+rho_a,rho_b with different q values. Equation (44.3) gives
+Theta(rho_a)=Theta(rho_b)=sigma_0. For any third density rho, either
+q(rho) differs from q(rho_a), or it equals that value and differs
+from q(rho_b). Applying (44.3) to the corresponding pair gives
+Theta(rho)=sigma_0. In (44.1) each branch is now q_s(rho)sigma_0.
+Put F_s=M_s^*(I_R) and extend by spanning to get (44.2).
+Positivity and normalization of these effects follow from the
+instrument. Conversely each type directly has product output.
+The maps in (44.2) are CP: if sigma_0=sum_k lambda_k|k><k| and
+F_s=sum_a f_sa|v_sa><v_sa|, Kraus operators
+sqrt(lambda_k f_sa)|k><v_sa| give the stated branch.
+
+The second alternative can fail the reference-complete property.
+Take a qubit H, any fixed sigma_0 and F_s=|s><s| for s=0,1.
+Every unreferenced output is q(rho) tensor sigma_0. On a Bell
+input Phi_2 with untouched T, however, the output is
+
+$$
+\tau_{SRT}=\frac12\sum_{s=0}^1
+ |s\rangle\langle s|\otimes\sigma_0\otimes|s\rangle\langle s|,
+\qquad \delta(\Phi_2)=\tfrac12.
+\tag{44.4}
+$$
+
+The returned R has forgotten the input, while the untouched source
+reference retains its setting correlation. Independence from R alone
+therefore does not justify independence from the complete source.
+

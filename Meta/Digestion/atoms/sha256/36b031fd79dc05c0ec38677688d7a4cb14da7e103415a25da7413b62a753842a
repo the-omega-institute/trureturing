@@ -1,0 +1,49 @@
+**命题 66.2（只取 $F,N$ 及原始恢复接口）。** 定义 66.1 下，定理 65.3–65.6、推论 65.7 的前交叉证明给出以下接口。置
+
+$$
+\begin{aligned}
+&C_D=P_{\sqrt U},\quad F=C_D^{-1}M,\quad
+\alpha=F(-,1_A),\quad\beta=F(1_A,-),\\
+&G=H1_D,\quad C_G=P_{\sqrt G},\quad
+N=C_G^{-1}L,\quad\eta=N(-,1_A),\quad\zeta=N(1_D,-),\\
+&C_E=C_GP_{\sqrt{\eta(U)}},\quad
+Q_0(a,b,c)=N(F(a,b),c),\quad p_0=C_D^{-1}pC_E.
+\end{aligned}
+\tag{66.7}
+$$
+
+$U,G$ 正可逆，$\widetilde F:A\otimes_{\mathbb R}A\to D$、$\widetilde N:D\otimes_{\mathbb R}A\to E$ 均是满规范迹内积等距同构；$F,N$ 在各自全正乘积域为正、保乘积单位、将本原对送到本原元。$\alpha,\beta$ 以及 $\eta,\zeta$ 分别为环境中算子交换的保单位 Jordan 嵌入，且
+
+$$
+F(a,b)=\alpha(a)\circ\beta(b),\qquad
+N(d,c)=\eta(d)\circ\zeta(c).
+$$
+
+$U$ 与 $\alpha(A)$、$G$ 与 $\eta(D)$ 算子交换。$C_D,C_E$ 是自伴随全锥序自同构，$C_E$ 的两个因子交换。全部实输入上有
+
+$$
+\begin{gathered}
+m=n^2,\quad\operatorname{rank}E=n^3,\quad
+s=\beta^*C_D^{-1}\ge0,\quad V=U^{-1},\quad\tau_DV=n^2,\\
+w=s\omega>0,\quad\tau_Aw=1,\quad
+sM(a,b)=\tau_A(a)b,\quad K(a)=M(w,a),\\
+\mathcal B(d,c)=M(sd,c),\quad B_1=Js,\quad
+pQ(a,b,c)=\tau_A(a)M(b,c),\\
+M=C_DF,\quad L(d,c)=C_EN(C_D^{-1}d,c),\quad Q=C_EQ_0,\\
+p=C_Dp_0C_E^{-1},\qquad
+p_0Q_0(a,b,c)=\tau_A(a)F(b,c).
+\end{gathered}
+\tag{66.8}
+$$
+
+$p_0$ 全锥正且保规范迹。此处没有使用 13 插入、13 读回或三读回的同时定向表示。
+
+证明。定理 65.3 的证明明确不使用 $D_H$ 或 C13；定理 65.4 只再使用 $D_H$ 和实际 $L$ 的全域正性、张成。第二接口的关键是定理 65.5 的满本原角，而非预设复矩阵类型：全锥正
+$R=(spC_G)P_{\eta(V^{-1/2})}$ 满足 $RN(d,c)=\tau_D(d)c$。对本原 $e\in D$，支撑交织和张成给
+
+$$
+E_1(\eta e)=N(e,A),\qquad RN(e,-)=\operatorname{id}_A.
+$$
+
+故 $N(e,-)$ 是整个角上的保单位序同构，正逆是 $R$ 的限制。它保持效应区间极点、幂等元及谱分解，成为保规范迹的 Jordan 同构；角本原元也是环境本原元，不产生额外迹倍数。各本原角的配对给 $\widetilde N$ 等距及乘积本原性。定理 65.6 的交换二次表示计算给恢复等式，$Q_0$ 张成把其迹恒等式推广到全 $E$；推论 65.7 使用同一原 $\omega$ 重算辅助映射。以上均在定理 65.8 的 C13 步骤之前闭合，因而可原样复用。$\square$
+

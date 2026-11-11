@@ -1,0 +1,24 @@
+**定义 52.1（Fixed kernel-basis constants）。** Retain $R$, $e$, $\mathcal S_4$, $\tau$, $\alpha$, $c$, $L$, $M$, $A_*$ and $C_*$ from Definition 50.1, with the same original table and tomography. Put
+
+$$
+ r_0=\max\left\{1,\left\lceil\frac{3M}{2\tau}\right\rceil\right\},
+ \qquad
+ \mathcal A=\{a\in R^3:a\text{ is primitive},\ 1\le\|a\|^2\le r_0\}.
+\tag{52.1}
+$$
+
+This is a nonempty finite set. For each $a\in\mathcal A$, choose a Gaussian unimodular matrix $T_a$ satisfying $a^*T_a=e_3^*$. Successive elementary Gaussian column operations reduce the primitive row $a^*$ to a unit coordinate row; multiplication by a unit and a column permutation give the stated $T_a$. All these operations are unimodular. Write $u_{a,1},u_{a,2}$ for its first two columns, so they form an $R$-basis of $\ker(a^*:R^3\to R)$. Define the finite constants
+
+$$
+\begin{aligned}
+ J_0&=\max\bigl(\{1\}\cup
+       \{\|u_{a,j}\|^2:a\in\mathcal A,\ 1\le j\le2\}\bigr),\\
+ K_0&=3MJ_0,\\
+ A_\dagger&=1+\max\{A_*,\ (6\tau^2L^2+1)^2,
+                         \ 2K_0(\tau+2K_0)\}.
+\end{aligned}
+\tag{52.2}
+$$
+
+These choices concern only a bounded set of three-coordinate integer vectors, not a restriction of the original targets or menus. They are independent of $N,\epsilon,p$ and $G$.
+

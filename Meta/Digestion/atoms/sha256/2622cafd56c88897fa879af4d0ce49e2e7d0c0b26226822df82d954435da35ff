@@ -1,0 +1,17 @@
+**应用 32.2（Finite input certificate for the existing product-unitary theorem）。** Let
+
+$$
+\Lambda(\rho)=\operatorname{Tr}_E(U\rho U^*)
+$$
+
+for one fixed global unitary $U$ on $S\otimes E$. If its system output matrices agree on every selected pair in (32.1), then (32.2) supplies the all-joint-state autonomy premise of V38 Theorem 8.1. Directly reusing that theorem gives
+
+<a id="eq-preparation-32-3"></a>
+
+$$
+U=W_S\otimes V_E.
+\tag{32.3}
+$$
+
+The product-unitary result is an existing supplier, not a new proof or novelty claim here. The finite actual product-pair test supplies its conditional input certificate. A single fixed environmental ready state does not supply (32.2) and cannot replace these tests. For $e=1$, the hidden kernel and test list are empty and the product decomposition is automatic.
+

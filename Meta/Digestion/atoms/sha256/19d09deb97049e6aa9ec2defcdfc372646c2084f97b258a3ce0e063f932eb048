@@ -1,0 +1,52 @@
+**例 14.1（A reversible return and a recorded-only return）。** On two qubits $S,E$, take $\mathcal A=M_2(S)\otimes I_E$ and
+
+<a id="eq-future-14-1"></a>
+
+$$
+|\Psi_\pm\rangle=
+\frac{|00\rangle\pm|11\rangle}{\sqrt2}.
+\tag{14.1}
+$$
+
+Both marginals, on $S$ and on $E$, are $I/2$, while the global pure vectors are orthogonal. Thus both one-party marginals agree and the joint phase differs.
+
+First declare a joint controlled-NOT with $S$ as control,
+
+$$
+U=P_0\otimes I+P_1\otimes X.
+$$
+
+It sends the pair to $|+\rangle_S\otimes|0\rangle_E$ and $|-\rangle_S\otimes|0\rangle_E$. A terminal $X_S$ test perfectly distinguishes them. Its positive effect pulls back to
+
+<a id="eq-future-14-2"></a>
+
+$$
+B=U^*\left(\frac{I+X_S}{2}\otimes I_E\right)U
+=\frac{I+X_S\otimes X_E}{2}.
+\tag{14.2}
+$$
+
+The current predictor $I/2$ is within operator norm $1/2$ of $B$. The probability difference one on (14.1) and Theorem 10.1 give the reverse bound, so $d_{\mathcal A}(B)=1/2$ exactly. Global unitarity preserves each source spectrum and their distinguishability, while the chosen local summary fails autonomy.
+
+Now declare a different operation: the projective parity instrument
+
+$$
+P_+=\frac{I+X_S\otimes X_E}{2},\qquad
+P_-=I-P_+,\qquad
+\Phi_\pm(\rho)=P_\pm\rho P_\pm.
+$$
+
+Its nonselective Heisenberg action is
+
+<a id="eq-future-14-3"></a>
+
+$$
+\sum_{s=\pm}P_s(a\otimes I_E)P_s
+=\frac12(a+X_SaX_S)\otimes I_E.
+\tag{14.3}
+$$
+
+Consequently the nonselective $S$ update is the same dephasing channel for every joint input, and (12.2) is zero. But the plus-branch effect on $I$ is $P_+\notin\mathcal A$. The complete outcome is plus with probability one on $\Psi_+$ and minus with probability one on $\Psi_-$. Thus the recorded gap (13.2) is exactly one. On each source's probability-one branch, the normalized $S$ marginal remains $I/2$; in this operation the distinguishing response lies entirely in the outcome flag.
+
+The pair, controlled-NOT and parity measurement are standard finite quantum examples. They distinguish (12.1) from (13.1) using the same common pair with identical marginals and an exact norm reading. The joint controls are declared premises, rather than operations obtained from a local $X$ menu.
+

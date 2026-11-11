@@ -1,0 +1,14 @@
+## 34. Fix the visible projection and every complete instrument
+
+This continuation is a conditional application of telescoping, trace-norm contraction, geometric summation and finite-dimensional rank arguments to the declared prediction problem. The observable algebra, preparations, common instruments and complete-record resources are supplied premises. These standard tools do not obtain those interfaces or establish a new general principle of quantum origin.
+
+Let $H$ have finite complex dimension $D$, and let $\mathcal A$ be a represented unital $*$-algebra on $H$. Its complete effect interval is the declared current observation interface. Let $P$ be the trace-preserving conditional expectation onto $\mathcal A$, and put $Q=\operatorname{id}-P$. Thus $P$ is completely positive, trace preserving, idempotent and self-adjoint for the real Hilbert–Schmidt pairing $\operatorname{Tr}(XY)$.
+
+The represented density $P\rho$ is the block conditional expectation, including normalized identities on multiplicity factors as in §§1–8. It is not the smaller direct-sum visible density used in that classification. The distinction matters when taking norms on the original represented carrier.
+
+Use real Hermitian spaces and trace norm. Two density matrices have the same current $\mathcal A$ responses exactly when $P\rho=P\sigma$. Their difference $h=\rho-\sigma$ belongs to $K=\ker P$ and has trace zero. The projection represents the visible state mathematically; its use below applies neither a physical reset nor an actual $P$ operation to the source.
+
+If $K=\{0\}$, every equal-response pair is identical. All prediction widths are zero, and $b=\beta=0$ may be chosen in the vacuous hidden inequalities. No probe Gram matrix or smallest Gram eigenvalue is used in this case. The nonzero hidden-difference premise in §39 then has no instance.
+
+<a id="statement-hidden-34-1"></a>
+

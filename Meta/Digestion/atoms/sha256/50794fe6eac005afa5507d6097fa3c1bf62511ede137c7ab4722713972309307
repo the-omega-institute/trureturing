@@ -1,0 +1,34 @@
+**例 30.1（Three classical preparations change their hidden span under convexification）。** Take qutrit coordinate projections and
+
+$$
+Q=\{P_0,P_1,P_2\},
+\qquad
+W=\operatorname{span}_{\mathbb R}\{I,Z\},
+\qquad
+Z=\operatorname{diag}(0,1,2).
+$$
+
+Their current $Z$ readings are respectively $0,1,2$, so no distinct preparations have the same current responses. Hence $\mathcal K_Q=\{0\}$, whereas
+
+<a id="eq-preparation-30-1"></a>
+
+$$
+L\cap W^\perp
+=\operatorname{span}_{\mathbb R}
+\{\operatorname{diag}(1,-2,1)\}
+\ne\{0\}.
+\tag{30.1}
+$$
+
+For $Q'=\operatorname{conv}Q$, the states $P_1$ and $(P_0+P_2)/2$ have the same $Z$ expectation $1$. The future effect $B=P_1$ has expectations $1$ and $0$ on that pair. Therefore
+
+$$
+\Delta_{Q,W}(P_1)=0,
+\qquad
+\Delta_{Q',W}(P_1)=1.
+$$
+
+When a randomized preparation choice is admitted and its label is unavailable to the subsequent device, a fixed quantum operation evaluates the corresponding mixture affinely. Admitting all such mixtures as source states still requires that randomization and label contract. If a preparation label or correlated memory is retained by the device, it must be included in $H$ and in its input state. The marginal mixture alone need not describe the full input. One actual $\omega$ trajectory does not supply the alternative preparations or a convex domain.
+
+<a id="statement-preparation-30-2"></a>
+

@@ -1,0 +1,23 @@
+### 33.1. Calibration belongs to the declared preparation domain
+
+For a target pair $d_a=\rho_a-\sigma_a$, suppose the two actual preparations are at trace distances at most $\zeta_a^+,\zeta_a^-$ from their targets. For a common input effect $0\le B\le I$, the resulting probability-gap bias is at most $\zeta_a^++\zeta_a^-$: each effect expectation changes by at most the corresponding trace distance. Add the specified readout-estimation errors to obtain $\nu_a$ in (28.5). A simultaneous confidence guarantee requires its own sampling assumptions and is not supplied here.
+
+Current $W$ responses can supply full trace-distance calibration when they determine the state on the declared domain with a controlled inverse error bound. An incomplete interface on that domain need not do so. Completeness on a restricted domain differs from completeness on all density matrices.
+
+For an explicit finite-dimensional calibration contract, let $F_1,\ldots,F_m$ be the measured effects and write
+
+<a id="eq-preparation-33-1"></a>
+
+$$
+\mathsf p(\rho)
+=\bigl(\operatorname{Tr}(F_\ell\rho)\bigr)_{\ell=1}^m,
+\qquad
+\mathsf M(h)
+=\bigl(\operatorname{Tr}(F_\ell h)\bigr)_{\ell=1}^m.
+\tag{33.1}
+$$
+
+The target and the actual prepared state must belong to the same known domain $Q$.
+
+If all calibration effects lie in $W$ and their responses are injective on this same $Q$, then $\mathcal K_Q=\{0\}$; a nontrivial equal-response pair cannot be fully calibrated from those $W$ responses alone without additional information.
+

@@ -1,0 +1,41 @@
+**定理 69.6（同一旁观者族的双预算补全）。** 给定有限个块 CP 分支 $\Phi_r$，记其效应为 $F^r_{ji}$，并令
+
+$$
+\begin{aligned}
+E_{ji}&=\sum_r F^r_{ji},&
+\Delta A_i&=I_i-\sum_jE_{ji},\\
+\Delta U_{ik}&=I_i\otimes u_{ik}-\sum_jE_{ji}\otimes u_{jk}.
+\end{aligned}
+\tag{69.12}
+$$
+
+部分仪器必须对这个聚合 $E$ 施加 $\Delta A_i\ge0$、$\Delta U_{ik}\ge0$；仅每个分支分别 TNI 不足以保证概率总和不超过一。按同一 (69.3) 规则增加有限个局部 CP 分支，使局部和原始总映射都 TP，当且仅当存在同一组 $G_{ji}\ge0$，满足
+
+$$
+\boxed{\quad
+\sum_jG_{ji}=\Delta A_i\quad(\forall i),\qquad
+\sum_jG_{ji}\otimes u_{jk}=\Delta U_{ik}\quad(\forall i,k).
+\quad}
+\tag{69.13}
+$$
+
+只要可行，一个失败结果的局部 CP 映射已经足够；完整仪器的总通道不必是恒等通道。
+
+证明。必要性取全部新增分支的聚合效应，再用 (69.7)–(69.8)。充分性在每个输出扇区任选密度 $\tau_j\ge0$、$\operatorname{Tr}\tau_j=1$，定义一个新增结果
+
+$$
+\Gamma_{ji}(X)=\operatorname{Tr}(G_{ji}X)\tau_j.
+\tag{69.14}
+$$
+
+其 Choi 块为 $\tau_j\otimes G_{ji}^{\mathsf T}\ge0$，效应恰为 $G_{ji}$，故 CP。与原分支合并后，(69.13) 恰好填平两边预算；所有分支的效应为正，完整预算也自动给各分支 TNI。该证明不需要任何 $u$ 交换。$\square$
+
+若仅要求原始 $D$ 完备，删除 (69.13) 的第一组等式；这不再保证局部完备。还须区分任意 $D$ 上的 CP 补映射：给定聚合原始 CP TNI 映射 $\Psi$，任选实际 $D$ 的密度 $\tau_D$，则
+
+$$
+X\longmapsto\operatorname{Tr}[(1_D-\Psi^*1_D)X]\tau_D
+\tag{69.15}
+$$
+
+是一个使总映射 TP 的 CP 补映射。然而它未必是任何局部 $\Gamma$ 的同族 $\Psi_\Gamma$，也不供应局部 TP。两个缺额分别为正并不证明存在 (69.13) 的共同解。
+

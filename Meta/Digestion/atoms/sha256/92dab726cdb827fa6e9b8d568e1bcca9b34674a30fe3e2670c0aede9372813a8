@@ -1,0 +1,29 @@
+**命题 35.9（最小范数缺陷给出的有限必要条件）。** 对固定的 $h,a$，若已有一组与 $\lambda$ 无关的合法有限 $\nu=0$ 演员接触数据，使 $\|u\|=1$、$\mathsf P=\mathsf Q|_{\rho=0}=0$、$d_0=\eta a$、$\eta\ne0$，记 $\alpha_a=\|a\|^2$、$s_\alpha=\sum_\tau\alpha_\tau^{-1}$、$N=\|T_Au\|^2$、$\zeta=\operatorname{Re}((a_{\rm act}-\iota Xu)^*T_Au)$。则 (35.5) 的全部 PB 成立的必要条件，是对每组这样的接触都有
+
+$$
+s_\alpha\left(N\rho^2+\frac{|\eta|^2\alpha_a}{1+\lambda^2\alpha_a}\right)
++4\epsilon\rho\zeta\ge0.
+\tag{35.40}
+$$
+
+若某一组使左端严格负，它给同一来源的有限原 PB 违反，且两笔原预算严格正。若沿 $\rho_\lambda=k/\lambda^2$ 全部 PB 最终成立，其中接触数据和 $k$ 固定，则必有
+
+$$
+s_\alpha|\eta|^2+4\epsilon k\zeta\ge0.
+\tag{35.41}
+$$
+
+证明。复用 (31.12) 的实际最小范数缺陷，令
+
+$$
+e_{\min}=GM_2^{-1}d_0
+=\frac\eta{1+\lambda^2\alpha_a}
+\begin{bmatrix}a\\\lambda\alpha_a\end{bmatrix},\qquad
+\|e_{\min}\|^2=\frac{|\eta|^2\alpha_a}{1+\lambda^2\alpha_a}.
+\tag{35.42}
+$$
+
+取 $y=D^{-1}(e_{\min}-\ell FCu/2-Fu)$，仍由 $G^*e_{\min}=d_0$ 给 $Bu+Vy=a_{\rm act}$。两份演员缺陷是 $\tau\rho T_Au$，两环境缺陷都是 $e_{\min}$，故原有限代价正是 (35.40) 左端。它若负，即按 (27.12) 严格违反 PB。$e_{\min}$ 的末坐标为非零数 $\eta\lambda\alpha_a/(1+\lambda^2\alpha_a)$，而 $FCu=(C^2u,0)^{\mathsf T}$；故两条环境列复线性无关，两笔原实 Gram 预算严格正。将 (35.40) 乘以 $\lambda^2$ 取极限即得 (35.41)；若极限严格负，充分大的有限阶段已经失败。∎
+
+本必要检验不保证某个指定方向一定存在接触，也不把全部已测接触代价非负提升成全部 PB 的充分条件。尤其不能由此宣称两个同谱来源在共同 P2 内有相反 PB 结果。
+

@@ -1,0 +1,17 @@
+### 49.1. Source correspondence
+
+The pinned source is
+`docs/develop/theory/AURIC_SINGLE_PURE_WHOLE_SETTING_SOURCE_RELATIONS_V78_CONTINUATION.md`
+at commit `93e104ec4047c81aa471a5b65140c754e231c2c6`.
+Its Hypothesis 1.2 and Definition 2.2 fix the returned-memory cut and defect;
+Theorems 2.3 and 3.2 and Corollary 3.4 supply the reused
+common-source consumers; Definition 6.4 states the native
+acquisition bridge.
+
+The elementary product-image argument, instrument/POVM distinction,
+Choi identity, spanning probes and complete-norm estimates are used
+as standard finite-dimensional mathematics. No claim is made that
+the channel classification or the certificate is a new theorem in
+the literature. These are conditional paper deductions, without Lean compilation
+or physical verification.
+

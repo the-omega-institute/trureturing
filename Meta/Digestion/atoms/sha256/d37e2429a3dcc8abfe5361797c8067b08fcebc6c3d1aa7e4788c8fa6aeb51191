@@ -1,0 +1,46 @@
+**定理 69.4（局部预算与原始联合预算）。** 设每个 $\Phi_{ji}$ CP，复用其矩形 Kraus 表示，记
+
+$$
+\Phi_{ji}(X)=\sum_\ell K_{ji,\ell}XK_{ji,\ell}^*,\qquad
+F_{ji}=\Phi_{ji}^*(I_j)=\sum_\ell K_{ji,\ell}^*K_{ji,\ell}\ge0.
+$$
+
+从输入 $(i,k)$ 到输出 $(j,k)$ 的原始 Kraus 算子恰为
+
+$$
+V_{ji,k,\ell}=K_{ji,\ell}\otimes
+                 (\sqrt{u_{jk}}\,u_{ik}^{-1/2}).
+\tag{69.6}
+$$
+
+局部 $A$ 上迹非增（TNI）或保迹（TP）分别当且仅当
+
+$$
+\sum_jF_{ji}\le I_i\quad\text{或}\quad\sum_jF_{ji}=I_i
+\qquad(\forall i).
+\tag{69.7}
+$$
+
+原始 $D$ 上 TNI 或 TP 则分别当且仅当
+
+$$
+\sum_j F_{ji}\otimes u_{jk}\le I_i\otimes u_{ik}
+\quad\text{或}\quad
+\sum_j F_{ji}\otimes u_{jk}=I_i\otimes u_{ik}
+\qquad(\forall i,k).
+\tag{69.8}
+$$
+
+证明。代入两端合同得到 (69.6)，其中两个旁观者矩阵的乘法顺序不可颠倒。求整个直和映射的效应得
+
+$$
+(\Psi_\Phi^*1_D)_{ik}
+ =\sum_jF_{ji}\otimes
+          (u_{ik}^{-1/2}u_{jk}u_{ik}^{-1/2}).
+\tag{69.9}
+$$
+
+正映射在所有正输入上迹非增当且仅当其效应不超过单位；等号情形就是保迹。对 (69.9) 作 $S_{ik}$ 合同得到 (69.8)。对局部效应作同样的迹对偶论证得到 (69.7)。这是两个完整算子预算，均测试整个相应正锥，不只测试乘积态。$\square$
+
+数学分支可容许性在此独立定义为块 CP 加上所要求的局部、原始 TNI 预算；它不预先意味着存在一个完整仪器。对一般 $u$，两个预算应分别核对。原始输出 $Y$ 的一次总迹等于一或普通参考边缘不变，都不代替 (69.8)。
+

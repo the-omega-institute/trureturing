@@ -1,0 +1,11 @@
+### 33.4. Convex domains and a separated nonconvex catalog have different conditioning
+
+For convex $Q$, injectivity of $\mathsf p$ on $Q$ is equivalent to injectivity of $\mathsf M$ on $L$. Indeed, a nonzero kernel direction in $L$ and the relative ball of §29 would produce two distinct states of $Q$ with the same responses. Conversely, the difference of an indistinguishable pair lies in that kernel. Every direction in $L$ is realized by a scaled difference from the relative ball. Hence $s_Q=s_L$ for a nontrivial convex domain.
+
+For nonconvex $Q$, the equivalence fails. The three-state catalog of §30 is separated by the single effect $\operatorname{diag}(0,1/2,1)$, although its two-dimensional diagonal affine direction space has a nonzero measurement kernel. Its minimum nonzero response gap is $1/2$, and every pairwise Hilbert–Schmidt state distance is $\sqrt2$. Thus
+
+$$
+s_Q=\frac1{2\sqrt2}>0,
+\qquad s_L=0.
+$$
+

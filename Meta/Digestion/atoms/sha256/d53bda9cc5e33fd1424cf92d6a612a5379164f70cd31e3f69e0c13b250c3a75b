@@ -1,0 +1,169 @@
+**命题 34.1（固定 $h$ 的两种尺度）。** 对每个固定的充分小的 $h>0$，存在下文给出的实际输入族，参数为 $\lambda\to+\infty$，满足 $D_{\rm env}\succ0$、$W=0$、$M_1=C$、$H=2C+hJ_A$。写 $L_\lambda=\|M_2\|$，则 $L_\lambda=\tfrac32\lambda^2+O(1)$。两个取向的原 P2 允许区间均为 $[-R_\lambda,R_\lambda]$，其中 $R_\lambda\sim\beta\sqrt{2/3}/\lambda\sim\beta/\sqrt{L_\lambda}$。存在常数 $K_*>0$，使充分大的 $\lambda$ 上，每个 $K_*/\lambda^2\le|\rho|\le R_\lambda$ 都在两个取向分别有严格违反原 PB 的有限见证，每份见证的两笔原预算均严格正。
+
+再取 $h$ 落在定理 33.1 的邻域内，应用其一致反二阶矩下界，则存在 $c'>0$，使充分大的 $\lambda$ 上，两个取向各自的原 P2 与全部原 PB 的联合允许集，以及要求两个取向同时成立的联合允许集 $\mathcal J_\lambda$，均满足同样的双包含。对 $\mathcal J_\lambda$，即
+$$
+[-c'/\lambda^2,c'/\lambda^2]\ \subseteq\ \mathcal J_\lambda\
+\subseteq\ [-K_*/\lambda^2,K_*/\lambda^2].
+\tag{34.1}
+$$
+故在上述 $h$ 范围内，联合允许范围的内外尺度均为 $L_\lambda^{-1}$。
+
+### 34.1 基准演员接触
+
+先固定取向 $\iota=i$，绝对值符号 $\epsilon=1$，并取 $\nu=0$、$\ell=b-it_*$，其中 $b\in\mathbb R$、$t_*=\sqrt6$。这样 $\zeta_\tau=i+\tau\ell=\beta_\tau-\tau i\alpha_\tau$，其中 $\tau=\pm1$，$\beta_\tau=\tau b$、$\alpha_\tau=t_*-\tau>0$。记 $B=3C+hJ_A$、$H=2C+hJ_A$、$p=Xu$、$q=XCu$，以 $a_{\rm act}$ 表示待实现的演员作用列，令 $v=a_{\rm act}-ip$、$U=iq+BCu+Cv$。
+
+为看清接触条件，在实际输入上写 $d=Fu+D_{\rm env}y$、$\xi=(u,y)$、$a_{\rm act}=Bu+Vy$，其中 $F=V^*$。前卷 (27.4)–(27.5) 的原列 $R_\tau\xi$ 的两块为 $p-\tau U/2$、$-\tau FCu/2$；$S_\tau\xi$ 的两块为 $a_{\rm act}+\tau[(Cp+q+iCa_{\rm act}-iBCu)/2+\rho T_Au]$、$d-\tau iFCu/2$。减去 $\zeta_\tau R_\tau\xi$ 后，演员常项为 $a_{\rm act}-ip+\ell U/2$，演员的 $\tau$ 项为 $iCv-\ell p+\rho T_Au$，环境项中的 $\tau iFCu/2$ 抵消。因此 §32 的原缺陷写成
+$$
+\begin{aligned}
+E_\tau&=S_\tau\xi-\zeta_\tau R_\tau\xi
+       =(\mathsf P+\tau\mathsf Q,\ d+\ell FCu/2),\\
+\mathsf P&=v+\ell U/2,\qquad
+\mathsf Q=iCv-\ell p+\rho T_Au .
+\end{aligned}
+\tag{34.2}
+$$
+在 $\rho=0$，先由 $\mathsf Q=0$ 解出 $v$，再由 $\mathsf P=0$ 得 $U=-2v/\ell=2iC^{-1}p$，故接触条件等价于
+$$
+v=-i\ell C^{-1}p,\qquad
+a_{\rm act}=i(I_2-\ell C^{-1})p,\qquad
+q=(\ell I_2+2C^{-1})p+iBCu .
+\tag{34.3}
+$$
+
+为使两列由同一个 Hermitian $X$ 产生，取
+$$
+u=\frac{(\sqrt r,e^{i\theta})^{\mathsf T}}{\sqrt{1+r}},\qquad
+r>0,\qquad p_j=z_j u_j,\qquad z_1\in\mathbb R,\ z_2\in\mathbb C .
+$$
+因 $c_1=1,c_2=2$，从 $p=Xu$、$q=XCu$ 逐行消去非对角元得到
+$$
+x_{11}=(2p_1-q_1)/u_1,\qquad x_{22}=(q_2-p_2)/u_2 .
+$$
+这两列可由一个 Hermitian $X$ 实现，当且仅当 $x_{11},x_{22}$ 都为实数，且
+$$
+r(z_1-x_{11})=\overline{z_2-x_{22}}.
+\tag{34.4}
+$$
+确实，取 $X_{12}=(z_1-x_{11})u_1/u_2$，取 $X_{21}=\overline{X_{12}}$，再代入第二行 $p$ 即得 (34.4)；对角定义随后给回 $q$ 的两行。
+
+在 $h=0$，(34.3) 给 $x_{11}=-\ell z_1-3i$、$x_{22}=\ell z_2+12i$。写 $z_2=B_2+iD_2'$。对角虚部条件是 $t_*z_1-3=0$、$bD_2'-t_*B_2+12=0$。施加这两式后，(34.4) 的虚部给 $D_2'=0$，实部给 $r(1+b)z_1=(1-b)B_2$。故在 $0<b<1$ 上，四个 Hermitian 条件给出
+$$
+z_j=\frac{3c_j^2}{t_*},\qquad r=\frac{4(1-b)}{1+b}.
+\tag{34.5}
+$$
+
+接着令 $d_0=a_{\rm act}-Hu+\ell C^2u/2$，要求 $d_0$ 与 $a$ 共线。写 $D_j=(d_0)_j/u_j$；在基准 $h=0$，由 (34.3)、(34.5) 和 $t_*^2=6$ 得
+$$
+D_j=-5c_j+\frac{b c_j^2}{2}-i\frac{3b c_j}{t_*}.
+\tag{34.6}
+$$
+两实部在 $0<b<1$ 上均严格为负。条件 $(d_0)_2=\sqrt2(d_0)_1$ 的模长方程为 $|D_2|^2=2r|D_1|^2$。由 (34.6)，
+$$
+\begin{aligned}
+|D_1|^2&=25-5b+\tfrac74 b^2,\qquad |D_2|^2=100-40b+10b^2,\\
+f(b)&=(1+b)|D_2|^2-8(1-b)|D_1|^2
+     =-100+300b-84b^2+24b^3 .
+\end{aligned}
+\tag{34.7}
+$$
+$f(0)=-100$、$f(1)=140$，且 $f'(b)=300-168b+72b^2>0$ 于 $[0,1]$，故唯一根 $b_0$ 在 $(0,1)$。在此根取相位 $\theta_0$，使 $e^{i\theta_0}D_2/(\sqrt r D_1)=\sqrt2$。此时 $d_0=\eta a$，其中 $\eta=\sqrt2(d_0)_1\ne0$。又由 (34.3) 得 $\operatorname{Re}(v_j/u_j)=-3c_j$，从而
+$$
+\zeta:=\operatorname{Re}(v^*T_Au)=\frac{3(4-r)}{1+r}>0 ,
+\tag{34.8}
+$$
+因为 (34.5) 在 $b_0$ 处给 $0<r<4$。这里 $\zeta$ 是实配对，与变分系数 $\zeta_\tau$ 分开。
+
+### 34.2 用实隐函数定理延续到固定非零 $h$
+
+在基准解附近，对实变量 $(z_1,\operatorname{Re}z_2,\operatorname{Im}z_2,r,b,\theta)$，保留两条对角虚部方程、(34.4) 的实部与虚部，以及 $(d_0)_2-\sqrt2(d_0)_1=0$ 的两个实分量。所有方程在 $r>0$ 的局部坐标中光滑；最后一对也可写成 $(d_0)_2/(d_0)_1-\sqrt2=0$，因为基准解的 $(d_0)_1\ne0$。固定 $(b,\theta)$，基准的前四式按 (34.5) 的顺序消元：取对角虚部、左边减右边的非对角虚部与实部，主元依次为 $t_*,-t_*,1,(1+b_0)z_1$，均非零。
+
+消去这四个变量后，在 $h=0$，最后一对方程的复读数为 $Z-\sqrt2$，其中 $Z=e^{i\theta}D_2/(\sqrt r D_1)$。沿消元所得的解，
+$$
+|Z|^2-2=\frac{f(b)}{(1+b)r|D_1|^2}.
+$$
+在根处，对 $b$ 的导数非零，所以 $\partial_b Z$ 有非零径向分量；而 $\partial_\theta Z=i\sqrt2$ 是非零切向分量。这给出可逆的剩余实 $2\times2$ 雅可比块，从而全六维实雅可比可逆。有限维实隐函数定理遂给出每个充分小 $h$ 的局部解。用 (34.4) 的构造恢复实际 $X=X^*$，由 (34.3) 得对应作用列。缩小 $h$ 的邻域后，$r>0$、$\eta\ne0$ 和 $\zeta>0$ 由连续性保留。下文固定其中任一 $h>0$；这些演员数据不随 $\lambda$ 或 $\rho$ 变化。
+
+### 34.3 固定 $H,M_1$ 的实际正定环境
+
+对 $\lambda>1$，取
+$$
+\begin{gathered}
+\delta_\lambda=\lambda^{-3},\qquad
+P_\lambda=C-\delta_\lambda\lambda^2aa^*,\qquad
+D_{\rm env}=C\oplus\delta_\lambda,\\
+F=\begin{bmatrix}C^{1/2}P_\lambda^{1/2}\\ \delta_\lambda\lambda a^*\end{bmatrix},
+\qquad
+V=F^*,\qquad
+t_\lambda=\begin{pmatrix}3C+hJ_A&V\\ F&D_{\rm env}\end{pmatrix}.
+\end{gathered}
+\tag{34.9}
+$$
+$C^{-1/2}P_\lambda C^{-1/2}=I_2-\lambda^{-1}nn^*\succ0$，所以正平方根存在，且 $F$ 的首块可逆。各输入块为实矩阵；$D_{\rm env}\succ0$ 给 $W=0$。取 $G=D_{\rm env}^{-1}F$，其首块为 $C^{-1/2}P_\lambda^{1/2}$、末行为 $\lambda a^*$。逐块相乘得到
+$$
+\begin{aligned}
+M_1&=G^*F=P_\lambda+\delta_\lambda\lambda^2aa^*=C,\qquad
+H=B-M_1=2C+hJ_A,\\
+M_2&=G^*G=P_\lambda^{1/2}C^{-1}P_\lambda^{1/2}+\lambda^2aa^* .
+\end{aligned}
+\tag{34.10}
+$$
+随 $\lambda\to+\infty$，$P_\lambda\to C$，由正平方根的连续性，$M_2$ 的第一项趋于 $I_2$。由算子范数的三角不等式与反向三角不等式，$L_\lambda=\lambda^2\|a\|^2+O(1)=\tfrac32\lambda^2+O(1)$。同时 $F$ 的首块趋于 $C$，末行趋于零，$D_{\rm env}\to C\oplus0$，所以 $t_\lambda$ 在范数中趋于同一固定 $h$ 的 §32 输入添一条不耦合零模所得的矩阵。这个输入极限不要求探针向量的环境分量有界。
+
+### 34.4 原 P2 的精确读取
+
+$C^{-1/2}HC^{-1/2}=2I_2+(h/\sqrt2)J_A$。取 $n_-=(1,-1)^{\mathsf T}/\sqrt2$，则 $U_0=[n,n_-]$ 按 $2+\beta,2-\beta$ 排列归一化 Schur 矩阵的特征值。前卷 (30.29) 的 $\omega=1$。令 $K=Q_M^{-1}$；由 $C^{-1/2}a=n$，
+$$
+K=K_{\rm base}+\lambda^2 e_1e_1^*,\qquad
+K_{\rm base}\longrightarrow U_0^*\operatorname{diag}(2,1)U_0
+ =\begin{pmatrix}3/2&1/2\\1/2&3/2\end{pmatrix},
+\tag{34.11}
+$$
+其中 $e_1=(1,0)^{\mathsf T}$ 是谱坐标中的首轴。$K$ 为实正定矩阵，故 (30.29) 的 $J=0$；又 $d_1=K_{22}/\det K$、$d_2=K_{11}/\det K$、$\Delta=1/\det K$。因此两个取向的精确原 P2 半径相同：
+$$
+R_\lambda=\frac{\beta}{\sqrt{K_{11}K_{22}}}
+ \ \sim\ \frac{\beta\sqrt{2/3}}{\lambda}.
+\tag{34.12}
+$$
+
+### 34.5 同一实际输入上的两侧原 PB 见证
+
+在 (34.9) 的环境中，使用延续后的 $u,X,\ell,\eta$，取
+$$
+e=(0,0,\eta/\lambda)^{\mathsf T},\qquad
+y=D_{\rm env}^{-1}(e-\ell FCu/2-Fu),\qquad \xi=(u,y).
+\tag{34.13}
+$$
+由 $G$ 的末行，$G^*e=\eta a=d_0$。同一实际向量给出 $d=Fu+D_{\rm env}y=e-\ell FCu/2$，于是
+$$
+Bu+Vy=Hu+G^*d=Hu+d_0-\ell C^2u/2=a_{\rm act}.
+$$
+这里用到 $G^*D_{\rm env}=V$、$G^*F=C$。因此演员接触与两条环境缺陷在同一个 $x=X\oplus0_3$、$\xi$ 上实现。由 (34.2)–(34.3)，$\mathsf P=0$、$\mathsf Q=\rho T_Au$，两条环境缺陷都为 $e$。对每个有限 $\lambda$，(34.13) 的向量有限。
+
+写 $\phi_\xi(A)=\xi^*A\xi$，将原 PB 左侧的算子暂记为 $L_{\rm PB}$，以区别于 $L_\lambda$。式 (32.3)–(32.4) 的带符号有限代价，是两笔 (27.12) 的所选变分值之和减去 $2\epsilon\phi_\xi(L_{\rm PB})$。展开 $E_\tau$ 的平方时，虚交叉项按 §32 的原换位恒等式消去零残量部分；加入 $s$ 后，剩余改变量为 $4\epsilon\rho\operatorname{Re}(v^*T_Au)$。这里该恒等式只用原作用列，对 (34.9) 仍适用。设 $N=\|T_Au\|^2$、$w=(t_*-1)^{-1}+(t_*+1)^{-1}=2t_* /(t_*^2-1)$，则当前 $\iota=i,\epsilon=1$ 的有限代价恰为
+$$
+\mathcal D_\rho=w\left(N\rho^2+\frac{|\eta|^2}{\lambda^2}\right)+4\rho\zeta .
+\tag{34.14}
+$$
+这组选取用于 $\rho<0$。对于 $\rho>0$，保持 $\iota=i$ 和同一份实输入及同一个 $\rho$，改取 $(u,\ell,X,\epsilon)=(\overline u,\overline\ell,-\overline X,-1)$，其中右侧为前一组数据。此时 $p,q$ 变为 $-\overline p,-\overline q$，由 (34.3)，$v,a_{\rm act},d_0$ 变为各自的共轭，(34.13) 的 $e,y$ 也随之共轭。新的 $\alpha_\tau=t_*+\tau$ 交换两个正权，$\beta_\tau$ 不变；$\zeta,N,|\eta|$ 都不变。故对正、负两侧分别使用所选见证，统一得到
+$$
+\mathcal D_\rho=w\left(N\rho^2+\frac{|\eta|^2}{\lambda^2}\right)-4\zeta|\rho|.
+\tag{34.15}
+$$
+另一取向 $\iota=-i$ 由对每侧的全部原列取复共轭得到，同时将 $\iota,\ell$ 共轭，保留该侧的 $\epsilon,\alpha_\tau,\beta_\tau$；原输入和 $\rho$ 为实，范数及实配对不变，故仍为 (34.15)。
+
+由 (34.12)，充分大的 $\lambda$ 满足 $wN R_\lambda\le2\zeta$。取 $K_*=1+w|\eta|^2/(2\zeta)$；在 $K_*/\lambda^2\le|\rho|\le R_\lambda$ 时，
+$$
+\mathcal D_\rho\le \frac{w|\eta|^2}{\lambda^2}-2\zeta|\rho|
+ \le -\frac{2\zeta}{\lambda^2}<0.
+\tag{34.16}
+$$
+按前卷 (27.12)–(27.13)，每笔原预算根的两倍至多为所选的有限变分值。因此 (34.16) 给同一实际 $x,\phi_\xi$ 的严格原 PB 违反，无需让变分参数取极限。
+
+两笔原预算均严格正：对每个 $\tau$，$(R_\tau\xi)_{\rm env}=-\tau FCu/2$，而 $(E_\tau)_{\rm env}=e$。$FCu$ 的首两坐标非零（作为一个二元列），因为 $C^{1/2}P_\lambda^{1/2}$ 可逆且 $Cu\ne0$；$e$ 的首两坐标为零、末坐标非零，因为 $\eta$ 在基准和延续后都非零。故这两条环境列复线性无关，进而 $R_\tau\xi$ 与 $S_\tau\xi=E_\tau+\zeta_\tau R_\tau\xi$ 复线性无关。原预算是这两条原像的实 Gram 行列式，因而严格正。取共轭或更换上述符号时，同一论证成立。向量 $\xi$ 的演员分量为单位向量，故将同一泛函乘以 $\mu/\|\xi\|^2$ 即可取得任一指定正有限质量 $\mu$；严格违反与预算正性均保留。
+
+### 34.6 条件下界与结论范围
+
+两侧排除已经由 (34.16) 给出，区间外则由原 P2 排除。对于内含界，应用定理 33.1：在 $\|H-2C\|,\|M_1-C\|<\delta_0$、$W=0$ 且 $\|M_2\|\le L$、$L\ge1$ 时，$|\rho|\le c/L$ 保证同一输入在两个取向满足全部原 PB。这里 $\|H-2C\|=h$、$M_1=C$、$W=0$；固定 $0<h<\delta_0$ 并取 $L=L_\lambda$，充分大的 $\lambda$ 有 $1\le L_\lambda\le2\lambda^2$。于是可取 $c'=\min(c/2,K_*/2)>0$，得到 $|\rho|\le c'/\lambda^2$ 的全部原 PB；由 (34.12)，这些点最终严格在两个原 P2 区间之内。这就给出 (34.1)，含原下界所覆盖的全部正有限质量及零质量。
+
+本节按通常形式使用实隐函数定理、正平方根的连续性及实 Gram 行列式的变分公式；原列和原 P2 读取分别沿 §32 与前卷 (30.29)，零模与伪逆连续性的背景沿 §33 已列归属。这里给出的是该正定族的两侧排除与依赖 §33.1 的阶数比较，不判定联合允许集的形状或最优常数。
+

@@ -1,0 +1,43 @@
+**定理 64.5（加权参考及全实三元读回）。** 在定理 64.4 的阶段，令 $w=s\omega$、$t=sp$。则 $w$ 内点、正迹一，并有
+
+$$
+\begin{gathered}
+K(a)=M(w,a),\\
+\mathrm{(III)}\quad B(M(x,a),b)=\tau_A(x)M(a,b)
+ \quad(x,a,b\in A),\\
+B(d,c)=M(sd,c)\quad(d\in D,c\in A),\qquad
+tL(d,c)=\langle V,d\rangle_Dc.
+\end{gathered}
+\tag{64.15}
+$$
+
+这里尚未用 $w=e$ 或任一单位律。
+
+**证明。** (64.14) 给出
+$w=\beta^*(U^{-1})/m$。对每个非零正 $a$，$\beta(a)\ne0$ 且 $U^{-1}$ 内点，故 $\langle w,a\rangle>0$；(64.9) 已给出 $\tau_A(w)=1$。令 $\widehat K=C^{-1}K$。它全锥正，满足 $\beta^*\widehat K=sK=\operatorname{id}_A$，所以由 $\beta^*$ 保迹得到 $\widehat K$ 保迹；而
+$\widehat K1_A=C^{-1}Jw=\alpha(w)=F(w,1_A)$。
+
+对任意本原 $a$，纯第二边缘刚性给出 $\widehat K(a)=F(\rho_a,a)$，其中 $\rho_a\ge0$、$\tau_A(\rho_a)=1$。取含 $a$ 的任意完整本原框架 $(a_j)$。由 $\widehat K1_A=F(w,1_A)$，与 $F(x,a_k)$ 作等距配对，有
+$\langle x,\rho_{a_k}\rangle=\langle x,w\rangle$ 对所有实 $x$ 成立。因此每个 $\rho_{a_k}=w$；每个本原可纳入这样的框架，谱展开给出 $K=M(w,-)$。同一个 $p$ 的两次定义遂给出
+$B(M(w,a),b)=M(a,b)$。
+
+取任意本原 $q,a,b$。$w$ 内点使某个 $\varepsilon>0$ 满足 $w\ge\varepsilon1_A\ge\varepsilon q$。正性给出
+$0\le B(M(q,a),b)\le\varepsilon^{-1}M(a,b)$。
+$F(a,b)$ 本原，$C$ 是锥自同构，故 $M(a,b)$ 位于极射线；存在非负 $\lambda_q(a,b)$ 使
+$B(M(q,a),b)=\lambda_q(a,b)M(a,b)$。取含任意 $b$ 的完整本原框架 $(b_j)$，由 $B_1=Js$、$sM(q,a)=a$，
+
+$$
+\sum_j\lambda_q(a,b_j)M(a,b_j)=B_1M(q,a)=Ja
+ =\sum_jM(a,b_j).
+$$
+
+$\widetilde M=C\widetilde F$ 单射，所以固定非零 $a$ 后这些向量线性独立，所有系数都等于一。三份本原元分别实张成 $A$，三线性延拓给出全实 III。再由 $M$ 张成，$B(d,c)=M(sd,c)$。施加 $s$ 得到 $tL(d,c)=\tau_A(sd)c=\langle V,d\rangle c$。此外
+
+$$
+\tau_DpL(d,c)=\tau_D M(sd,c)
+\qquad(d\in D,c\in A)
+\tag{64.16}
+$$
+
+仍只是复合迹式，尚非 $p$ 全局保迹。$\square$
+

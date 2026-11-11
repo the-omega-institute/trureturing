@@ -1,0 +1,54 @@
+**定理 69.8（弱重置补全的精确等价）。** 固定任意 $j_0$、任意上述 $\sigma$ 及任意 $0<c\le1$。在同一个 (69.1)–(69.3) 模型中，下列条件等价：
+
+1. 分支 $cR$ 能以同一旁观者扩展规则补成局部及原始两边都 TP 的有限 CP 仪器。
+2. 对每个 $k$，$u_{ik}=v_k$ 与输入扇区 $i$ 无关。
+3. 这个固定的完整重置 $R$ 的原始延拓 TP。
+4. 每个局部 CPTP 映射的原始延拓 TP。
+5. 每个有限局部 CP 完备仪器的原始延拓都是完备仪器。
+
+证明。先证 1 蕴含 2。对含 $cR$ 的完整仪器取总效应 $F_{ji}$，则
+
+$$
+F_{ji}\ge0,\quad \sum_jF_{ji}=I_i,\quad
+F_{j_0i}\ge cI_i,\quad
+\sum_jF_{ji}\otimes u_{jk}=I_i\otimes u_{ik}.
+\tag{69.18}
+$$
+
+令 $p_{ij}=\operatorname{Tr}(F_{ji})/n_i$。这里必须除以实际输入维数 $n_i$，才能对不等维扇区得到同一个行随机矩阵。对最后的等式施加首腿归一偏迹，得
+
+$$
+\sum_jp_{ij}=1,\qquad p_{ij_0}\ge c,\qquad
+u_{ik}=\sum_jp_{ij}u_{jk}\quad(\forall i,k).
+\tag{69.19}
+$$
+
+把每个行元组放在同一个实向量空间
+
+$$
+\mathbf v_i=(u_{ik})_{k\in I}\ \in\ V=\bigoplus_k\operatorname{Herm}(H_k).
+$$
+
+$V$ 不依赖输入维数 $n_i$；(69.19) 就是 $\mathbf v_i=\sum_jp_{ij}\mathbf v_j$，且每行共有至少 $c$ 的同一锚点质量。若 $0<c<1$，写
+
+$$
+p_{ij}=c\delta_{j,j_0}+(1-c)q_{ij},\qquad
+\mathbf v_i=c\mathbf v_{j_0}+(1-c)z_i,\qquad
+z_i=\sum_jq_{ij}\mathbf v_j\in\operatorname{conv}\{\mathbf v_j\}.
+\tag{69.20}
+$$
+
+这里 $q$ 也是行随机矩阵。任选 $V$ 上的范数，令 $d=\max_{i,l}\|\mathbf v_i-\mathbf v_l\|$。凸包中任意两点之差是 $\mathbf v_j-\mathbf v_h$ 的凸平均，故其距离至多 $d$。所以 $d\le(1-c)d$，推出 $d=0$。若 $c=1$，随机行只能集中于 $j_0$，直接得所有 $\mathbf v_i=\mathbf v_{j_0}$。这就是共同锚点的有限凸包收缩论证；它不需要不可约性、同时对角化、等维、$\sigma$ 满秩或逆迹平衡。
+
+若 2 成立，$C_D$ 只作用在旁观者上，跨扇区也与每个 $T_\Phi$ 交换，于是
+
+$$
+\Psi_\Phi=T_\Phi,\qquad
+\sqrt{u_{jk}}\,u_{ik}^{-1/2}=I_k.
+\tag{69.21}
+$$
+
+两个预算完全对应，得到 4、5；用 $\Gamma=(1-c)\operatorname{id}_A$ 或 $\Gamma=(1-c)R$ 即构造 1 的一个失败结果。总映射分别为 $cR+(1-c)\operatorname{id}_A$ 或 $R$，均是通道，不要求等于恒等。4 蕴含 3；3 的原始预算是 $u_{j_0k}=u_{ik}$，故蕴含 2。5 包含只有一个结果的局部通道，故也蕴含 4，闭合全部等价。$\square$
+
+几何上，行元组是一个具有共同锚点列的随机平均的调和向量；正共同份额消去所有非恒定行。它是已知有限随机收缩方法在此预算关系上的应用，不是新的随机矩阵定理。一个正权弱重置补全只是整个局部菜单闭包的更短等价见证，不能据此宣称独立公理减少。
+

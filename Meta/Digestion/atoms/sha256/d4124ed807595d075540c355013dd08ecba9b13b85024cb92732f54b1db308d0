@@ -1,0 +1,76 @@
+## 41. Fix the whole returned source at one cut
+
+These are conditional paper deductions about independent settings,
+proportional instrument branches and returned memory. All finite
+quantum interfaces, preparations, instruments, output calibration and
+corrections below are supplied premises. The arguments use standard
+finite-dimensional channel linearity, convexity, Choi reconstruction and
+trace-norm estimates. No mathematical priority or physical realization
+claim is made.
+
+Let H and R be nonzero finite-dimensional complex Hilbert spaces, with
+d=dim H. Let S be a nonempty finite set of classical setting labels.
+An actual, fixed instrument consists of complex-linear CP maps
+M_s:B(H)->B(R), with
+
+$$
+\Theta=\sum_{s\in S}M_s\quad\hbox{CPTP},\qquad
+\Gamma(X)=\sum_{s\in S}|s\rangle\langle s|\otimes M_s(X).
+\tag{41.1}
+$$
+
+Every failure, stop and other outcome belongs to S, or to a declared
+complete record refining S. No success normalization is used. If some
+outcomes cannot be assigned a setting with the required local readout,
+the later four-setting consumer does not apply to those runs without
+an additional complete-output construction.
+
+For a coarser designated setting s, retain any other relevant record
+labels in R when defining M_s. Dropping those labels before the tests
+cannot certify independence from the complete returned source.
+
+R contains every returned source degree, controller, clock, auxiliary
+and memory that can later affect results. An untouched reference T can
+be correlated with H, and R tensor T is then the full returned source.
+The designated setting record S is separate: its subsequent use is
+only through the declared setting-controlled result interfaces. An
+additional source-side copy of S is part of R if it can return and
+affect results. It cannot be silently discarded in an independence
+claim about that source.
+
+The instrument describes the classical-record protocol. Its claims do
+not extend to later coherent interference between setting branches.
+Any environment omitted from R tensor T is stipulated never to return
+or control the later result. This is a finite operational cut, not a
+claim of globally destroyed information.
+
+The same CP instrument must act on the whole admitted input family.
+Correlated setting seeds and controller memory cannot be hidden in a
+fixed ancillary state: include operated degrees in H and untouched
+source references in T, or restrict the claim to an explicitly
+justified input domain. A fixed ready ancilla in a dilation is a
+resource premise, not a consequence of a globally pure input.
+
+The universal propositions below use all densities on H tensor T.
+Independence on a restricted domain alone does not assert (43.1)
+outside that domain.
+
+For an arbitrary input density rho_HT, put
+
+$$
+\begin{aligned}
+\tau_{SRT}&=(\Gamma\otimes\mathrm{id}_T)(\rho_{HT}),\\
+q_s(\rho_H)&=\operatorname{Tr}M_s(\rho_H),\\
+\sigma_{RT}&=(\Theta\otimes\mathrm{id}_T)(\rho_{HT}),\\
+\delta(\rho_{HT})&=
+ D(\tau_{SRT},q(\rho_H)\otimes\sigma_{RT}),\qquad
+ D(\alpha,\beta)=\tfrac12\|\alpha-\beta\|_1.
+\end{aligned}
+\tag{41.2}
+$$
+
+Probability vectors also denote their diagonal density matrices.
+The comparison in (41.2) uses the actual output marginals. It is not a
+supplied physical decorrelation operation. A statement about every
+rho_HT is stronger than independence for one actual source state.
+

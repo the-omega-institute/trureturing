@@ -1,0 +1,26 @@
+### 34.3 固定 $H,M_1$ 的实际正定环境
+
+对 $\lambda>1$，取
+$$
+\begin{gathered}
+\delta_\lambda=\lambda^{-3},\qquad
+P_\lambda=C-\delta_\lambda\lambda^2aa^*,\qquad
+D_{\rm env}=C\oplus\delta_\lambda,\\
+F=\begin{bmatrix}C^{1/2}P_\lambda^{1/2}\\ \delta_\lambda\lambda a^*\end{bmatrix},
+\qquad
+V=F^*,\qquad
+t_\lambda=\begin{pmatrix}3C+hJ_A&V\\ F&D_{\rm env}\end{pmatrix}.
+\end{gathered}
+\tag{34.9}
+$$
+$C^{-1/2}P_\lambda C^{-1/2}=I_2-\lambda^{-1}nn^*\succ0$，所以正平方根存在，且 $F$ 的首块可逆。各输入块为实矩阵；$D_{\rm env}\succ0$ 给 $W=0$。取 $G=D_{\rm env}^{-1}F$，其首块为 $C^{-1/2}P_\lambda^{1/2}$、末行为 $\lambda a^*$。逐块相乘得到
+$$
+\begin{aligned}
+M_1&=G^*F=P_\lambda+\delta_\lambda\lambda^2aa^*=C,\qquad
+H=B-M_1=2C+hJ_A,\\
+M_2&=G^*G=P_\lambda^{1/2}C^{-1}P_\lambda^{1/2}+\lambda^2aa^* .
+\end{aligned}
+\tag{34.10}
+$$
+随 $\lambda\to+\infty$，$P_\lambda\to C$，由正平方根的连续性，$M_2$ 的第一项趋于 $I_2$。由算子范数的三角不等式与反向三角不等式，$L_\lambda=\lambda^2\|a\|^2+O(1)=\tfrac32\lambda^2+O(1)$。同时 $F$ 的首块趋于 $C$，末行趋于零，$D_{\rm env}\to C\oplus0$，所以 $t_\lambda$ 在范数中趋于同一固定 $h$ 的 §32 输入添一条不耦合零模所得的矩阵。这个输入极限不要求探针向量的环境分量有界。
+

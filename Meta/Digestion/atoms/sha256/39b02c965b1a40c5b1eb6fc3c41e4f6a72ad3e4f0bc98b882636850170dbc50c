@@ -1,0 +1,14 @@
+**推论 4.2（Commutant criterion on the cyclic space）。** On $K_\Psi$, the represented commutant is
+
+$$
+\bigoplus_{\alpha:p_\alpha>0}
+\bigl(I_{n_\alpha}\otimes M_{r_\alpha}(\mathbb C)\bigr).
+\tag{4.2}
+$$
+
+It consists only of scalars exactly when one sector is populated and its visible rank is one.
+
+**证明。** Apply the central-projection and left-matrix-unit argument of Theorem 3.2 to the representation on $\bigoplus_\alpha(V_\alpha\otimes S_\alpha)$. Multiple populated sectors give independent scalar central actions, and a populated block with $r_\alpha>1$ gives a non-scalar right matrix action. The remaining case has one multiplicity-one block. This is the standard purity/irreducibility criterion in the explicit finite setting. $\square$
+
+Thus a cyclic GNS unit vector can encode a mixed functional: cyclicity does not replace extremality. The integer $\sum_\alpha n_\alpha r_\alpha$ counts mathematical Hilbert dimension of that cyclic representation. It is no bound on preparation cost, physical memory acquisition, operational control complexity or spacetime dimension.
+

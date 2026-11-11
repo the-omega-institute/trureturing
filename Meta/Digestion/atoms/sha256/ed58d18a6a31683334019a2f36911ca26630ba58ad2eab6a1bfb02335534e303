@@ -1,0 +1,28 @@
+**定理 37.8（先下有界，再取全局极限）。** 对每个固定 $a,h,\iota,k$，存在有限 $C_0,\lambda_0$，使对所有 $\lambda\ge\lambda_0$ 和全部归一原或约化测试，
+
+$$
+\lambda^2\mathcal D_\lambda\ge-C_0.
+\tag{37.48}
+$$
+
+非空接触域上的 $j(k)>-\infty$；若接触域非空则 $j(k)\in\mathbb R$，若为空则 $j(k)=+\infty$。且在扩展实数意义下
+
+$$
+\boxed{\ \lim_{\lambda\to\infty}f_\lambda(k)
+       =\inf_{c\in\mathcal C_\iota(a)}J_k(c).\ }
+\tag{37.49}
+$$
+
+证明。若 (37.48) 不成立，可选 $\lambda_n\ge n$ 和归一测试，使 $\lambda_n^2\mathcal D_{\lambda_n}\le-n$。定理 37.5 对上界 $M=0$ 适用，给一个收敛可见子列及有限接触值 $J_k(c)$，并给其下极限至少为 $J_k(c)>-\infty$，与趋于 $-\infty$ 矛盾。这既排除尾部任何 $f_\lambda=-\infty$，也建立统一有限下界。每个有限 $\lambda$ 有有限参数的归一测试，故 $f_\lambda<+\infty$。
+
+若接触值无下界，可取 $c_n$ 满足 $J_k(c_n)\le-2n$，再对每个 $c_n$ 用定理 37.6 选充分大的 $\lambda_n\ge n$，使恢复值不大于 $-n$。这又违反 (37.48)。因此在引用近极小列以前，归一下确界及接触下确界的下有界性都已建立。
+
+接触域非空时，每个固定接触的恢复给 $\limsup f_\lambda(k)\le J_k(c)$；对 $c$ 取下确界得上极限不超过有限的 $j(k)$。取实现 $\liminf_{\lambda\to\infty}f_\lambda(k)$ 的 $\lambda_n\to\infty$，再取有限近极小测试，使其值在 $[f_{\lambda_n},f_{\lambda_n}+1/n]$ 内。已有上下界使这些值具有共同有限上界。定理 37.5 给子列与接触 $c$，从而
+
+$$
+\liminf_{\lambda\to\infty}f_\lambda(k)
+\ge J_k(c)\ge j(k).
+$$
+
+上下极限相合。若接触域为空，而 $f_\lambda$ 不趋于 $+\infty$，则存在 $\lambda_n\to\infty$ 和有限 $M$，使 $f_{\lambda_n}\le M$。取误差至多 $1$ 的近极小测试，定理 37.5 就会产生一个接触，矛盾。因此空域时极限确为 $+\infty$。整个证明使用序列紧性和实际恢复，没有交换未经证明的下确界与极限。∎
+

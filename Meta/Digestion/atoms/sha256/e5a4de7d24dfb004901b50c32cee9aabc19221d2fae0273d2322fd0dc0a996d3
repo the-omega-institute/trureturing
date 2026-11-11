@@ -1,0 +1,6 @@
+## 13. Complete recorded autonomy requires every branch, including failure
+
+Let $\{\Phi_x\}$ be a finite complete completely positive instrument on $B(H)$, so $\sum_x\Phi_x$ is trace preserving. All failure and rejection outcomes are included among the labels $x$. Let $F_x$ be the Heisenberg branch maps. The complete recorded output contains $x$ and the restricted subnormalized state of $\Phi_x(\rho)$ on $\mathcal A$.
+
+<a id="statement-future-13-1"></a>
+

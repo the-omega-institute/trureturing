@@ -1,0 +1,15 @@
+**命题 25.2（Failure bound for unambiguous program identification）。** For this two-program unambiguous-label task, the failure probabilities obey
+
+<a id="eq-reference-25-2"></a>
+
+$$
+f_0f_1\ge c^2.
+\tag{25.2}
+$$
+
+Equal failure rates are therefore at least $c$, attained by (25.1).
+
+**证明。** Retain a Stinespring isometry and complete outcome flags. Successful labels for the two programs are orthogonal and cannot contribute to the input inner product. That inner product comes only from the failure vectors, whose squared norms are $f_0,f_1$. Cauchy–Schwarz gives $c\le\sqrt{f_0f_1}$, which is (25.2). $\square$
+
+This sharp statement belongs to unambiguous program identification. It is not a universal minimum failure probability for an arbitrary pair of measurements without the identification task. The known catalog, its discriminator and controlled target measurements are extra operations. The construction is not asserted to be covariant on a whole phase orbit, uniform on a continuous catalog, native, or clean on failure. A successful filter can therefore coexist with the complete-resource obstruction to deterministic catalytic reuse without contradicting §21.
+

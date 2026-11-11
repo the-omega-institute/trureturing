@@ -1,0 +1,53 @@
+**定义 62.2（二映射的前置条件）。** 在定义 62.1 的桥后，$A,D,E$ 是实际非零有限维实 Euclidean Jordan 代数，取整个平方锥、全部正迹一态、全部效应区间 $[0,1_X]$，以及
+
+$$
+\langle x,y\rangle_X=\tau_X(x\circ y),\qquad
+n=\tau_A(1_A)=\operatorname{rank}A>0,\qquad e=\frac{1_A}{n},\qquad
+\omega=\frac{1_D}{\tau_D(1_D)}.
+\tag{62.2}
+$$
+
+每个直和扇区的每个本原幂等元的标准迹均为一，不另作扇区迹缩放。实张量积只取乘积迹内积，尚不预设张量正锥或正重括号映射。仅给两个原始映射：实双线性 $L:D\times A\to E$ 与实线性 $p:E\to D$，满足
+
+$$
+L(D_+,A_+)\subseteq E_+,\qquad p(E_+)\subseteq D_+,
+\qquad \tau_Dp=\tau_E.
+\tag{62.3}
+$$
+
+这里 $L$ 的正性覆盖每个 $d\in D_+$，包括纠缠 $d$；$p$ 的正性覆盖整个 $E_+$。依次定义
+
+$$
+\begin{aligned}
+B(d,c)&=pL(d,c),& B&:D\times A\to D,\\
+M(a,b)&=B(B(\omega,a),b),& M&:A\times A\to D,\\
+Q(a,b,c)&=L(M(a,b),c),& Q&:A^3\to E,\\
+J(a)&=M(a,1_A),& r&=J^*:D\to A,\\
+H(d)&=L(d,1_A),& h&=H^*:E\to D.
+\end{aligned}
+\tag{62.4}
+$$
+
+$M$ 的两次读回都用同一个 $p$；$J,H$ 插入的都是未归一化单位 $1_A$。保留两条实际实张成条件
+
+$$
+\operatorname{span}_{\mathbb R}\{M(a,b):a,b\in A\}=D,\qquad
+\operatorname{span}_{\mathbb R}\{L(d,c):d\in D,c\in A\}=E,
+\tag{62.5}
+$$
+
+以及 I、W、III 三条全部实向量恒等式：
+
+$$
+\begin{aligned}
+\mathrm{(I)}\quad&rM(a,b)=\tau_A(b)a &&(a,b\in A),\\
+\mathrm{(W)}\quad&H^*H=n\,\mathrm{id}_D &&\text{在整个实 }D\text{ 上},\\
+\mathrm{(III)}\quad&pQ(a,b,c)=\tau_A(a)M(b,c) &&(a,b,c\in A).
+\end{aligned}
+\tag{62.6}
+$$
+
+W 等价于 $\langle Hd,Hd'\rangle_E=n\langle d,d'\rangle_D$ 对所有实 $d,d'\in D$ 成立，包含纠缠方向，并非只检验已准备的乘积。它只保留旧律 $hL(d,c)=\tau_A(c)d$ 在 $c=1_A$ 的未归一化单位切片；完整旧律记为 (II)，将在定理 62.3 中推出。归一化插入 $L(d,e)=H(d)/n$ 的比较配对因子是 $1/n$，不是一。
+
+这些量词包括有符号和迹零向量。此阶段不另给 $r,h$ 的正性或保迹性，不给 $M,L$ 的单位律，不给任何张量等距性。实张成也不表示每个联合正态都是乘积态的凸组合。
+

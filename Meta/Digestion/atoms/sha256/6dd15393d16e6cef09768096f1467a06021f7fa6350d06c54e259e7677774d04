@@ -1,0 +1,62 @@
+**定义 65.2（未校准的完整候选）。** 在定义 65.1 已导出的几何上，令
+
+$$
+n=\tau_A1_A,\qquad m=\tau_D1_D,\qquad \omega=1_D/m.
+$$
+
+唯一原始映射为实双线性 $L:D\times A\to E$ 和实线性 $p:E\to D$，满足
+
+$$
+L(D_+,A_+)\subseteq E_+,\qquad p(E_+)\subseteq D_+.
+\tag{65.5}
+$$
+
+第一个条件覆盖整个实际 $D_+$ 中的正元，第二个覆盖整个实际 $E_+$。在矩阵坐标中，它们包括全部纠缠正元。为与配对 $B_X$ 区分，将复合双线性映射记为 $\mathcal B$：
+
+$$
+\begin{aligned}
+\mathcal B(d,c)&=pL(d,c),& K(a)&=\mathcal B(\omega,a),\\
+M(a,b)&=\mathcal B(K(a),b),&J(a)&=M(a,1_A),\\
+H(d)&=L(d,1_A),&B_1&=pH,\\
+Q(a,b,c)&=L(M(a,b),c),&U&=M(1_A,1_A).
+\end{aligned}
+\tag{65.6}
+$$
+
+特别地 $M(a,b)=pL(pL(\omega,a),b)$，两次均为同一个实际 $p$，参考始终是原比较单位给出的 $\omega$。$U$ 是原准备的单位输出，不是载体比较单位 $1_D$ 的另一记号。要求
+
+$$
+\operatorname{span}_{\mathbb R}M(A,A)=D,\qquad
+\operatorname{span}_{\mathbb R}L(D,A)=E,
+\tag{65.7}
+$$
+
+以及
+
+$$
+\begin{aligned}
+D_J:\quad &a,b\in A_+,\ \langle a,b\rangle_A=0
+ \Longrightarrow\langle Ja,Jb\rangle_D=0,\\
+D_H:\quad &d,d'\in D_+,\ \langle d,d'\rangle_D=0
+ \Longrightarrow\langle Hd,Hd'\rangle_E=0,\\
+Z:\quad &B_1M(a,b)=\tau_A(a)Jb\qquad(a,b\in A).
+\end{aligned}
+\tag{65.8}
+$$
+
+$D_H$ 量化整个实际锥，$Z$ 量化全部实方向。先由下面的第一接口证明 $\widetilde M:A\otimes_{\mathbb R}A\to D$ 可逆，此后才定义
+
+$$
+T(a,c)=L(Ja,c),\qquad
+I_{13}^{\rm raw}=\widetilde T\widetilde M^{-1}:D\longrightarrow E.
+$$
+
+完整候选再保留同一个整锥条件
+
+$$
+\mathrm{C13}:\qquad I_{13}^{\rm raw}(D_+)\subseteq E_+.
+\tag{65.9}
+$$
+
+此处没有供应 $W_J,W_H$、范数或总标定上界、原 $M,H$ 保单位、原 $p$ 保迹或独立读回。它与定义 64.1–64.3 的系统前提及校准目标分别陈述：第 64 节的独立 Jordan 桥、$W_H,N$ 及其探针完整条件仍按原文适用；本节使用完整 $S$ 的既有纸面推论，以 $D_H$ 和明确的整锥 C13 处理另一个原始映射类，不改判那些较强前提下的结论。
+

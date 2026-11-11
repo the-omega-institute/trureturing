@@ -1,0 +1,80 @@
+**命题 36.3（任意相位路径的共同来源极限与不同的重标度联合极限）。** 在 (36.2) 中允许 $\theta_1=\theta(L)$ 为任意取值于 $(0,\pi/6]$ 的相位函数，不要求相位趋于零。两份实际来源在 $L\to\infty$ 时均在范数中趋于同一个固定 $h$ 的 $t_h^0$，并有精确式
+
+$$
+\|t_j-t_h^0\|=s_j/\lambda_j+\lambda_j^{-3}\longrightarrow0,
+\qquad j=0,1.
+\tag{36.10}
+$$
+
+逐有限 $L$，两份精确双取向联合区间仍满足 (36.5) 的严格嵌套；两区间都按 Hausdorff 距离趋于 $\{0\}$。若相位固定为任意 $\theta_*\in(0,\pi/6]$，令
+
+$$
+R_{\theta_*}=\frac{\beta(3+\sin\theta_*)}{1+\cos\theta_*}>
+R_0=\frac{3\beta}{2}.
+$$
+
+则重标度后的联合区间有不同的 Hausdorff 极限：这里 $L A=\{L\rho:\rho\in A\}$，且
+
+$$
+\begin{gathered}
+L b_0\longrightarrow R_0,\qquad L b_1\longrightarrow R_{\theta_*},\\
+L\mathcal J_{\rm both}(t_0)\longrightarrow[-R_0,R_0],\qquad
+L\mathcal J_{\rm both}(t_1)\longrightarrow[-R_{\theta_*},R_{\theta_*}].
+\end{gathered}
+\tag{36.10a}
+$$
+
+特别地，固定 $\theta_1=\pi/6$ 时，每个有限 $L\ge16$ 都有
+
+$$
+\begin{gathered}
+s_1=7/4,\qquad\lambda_1^2=4(L-1)/7,\\
+b_0=\frac\beta{3/2+2(L-1)/3},\qquad
+b_1=\frac\beta{3/2+(L-1)(2+\sqrt3)/7},
+\end{gathered}
+\tag{36.10b}
+$$
+
+因而
+
+$$
+\begin{gathered}
+L b_0\longrightarrow\frac{3\beta}{2},\qquad
+L b_1\longrightarrow\frac{7\beta}{2+\sqrt3}>\frac{3\beta}{2},\\
+L\mathcal J_{\rm both}(t_0)\longrightarrow
+[-3\beta/2,3\beta/2],\\
+L\mathcal J_{\rm both}(t_1)\longrightarrow
+\left[-\frac{7\beta}{2+\sqrt3},\frac{7\beta}{2+\sqrt3}\right].
+\end{gathered}
+\tag{36.10c}
+$$
+
+这些不同的重标度极限与相同实际来源极限相容；每个有限 $L$ 上两输入仍共享 $H,M_0,M_1,W$ 及 $\operatorname{spec}(M_2)=\{1,L\}$。固定正相位的两个分别取向 P2 区间均趋于 $\{0\}$，零相位则保留非零的单侧极限：
+
+$$
+\begin{gathered}
+I_+(t_0)\longrightarrow[-2\beta/3,0],\qquad
+I_-(t_0)\longrightarrow[0,2\beta/3],\\
+I_+(t_1)\longrightarrow\{0\},\qquad
+I_-(t_1)\longrightarrow\{0\}\quad(\theta_1=\theta_*>0).
+\end{gathered}
+\tag{36.10d}
+$$
+
+证明。由 $3/2\le s_j\le7/4$ 及 $\lambda_j^2=(L-1)/s_j$，无论相位函数是否收敛，两份 $\lambda_j$ 都趋于无穷，且 (35.7) 的右侧一致趋于零。这就在同一固定的实际载体与固定演员、耦合块上给出 (36.10)，不需要让探针向量或变分参数有界。由 (36.5)，双取向联合区间半径都小于 $2\beta/L$，故未重标度的极限均为 $\{0\}$。
+
+若 $\theta_1=\theta_*$ 固定，将 (36.4) 的分子分母同除以 $L$，得到 (36.10a) 的端点极限；(36.7) 说明 $R_{\theta_*}>R_0$。闭区间的端点收敛即给所列 Hausdorff 极限。在 $\theta_* =\pi/6$ 代入 $\sin\theta_*=1/2$、$\cos\theta_*=\sqrt3/2$，即得 (36.10b)–(36.10c)。此结论没有把极限来源的允许集代入有限来源的全称条件。
+
+对分别取向的 P2，直接用 (35.20)。零相位有 $d_{\rm w}=3/2$、$d_{\rm s}=3/2+\lambda_0^2$；每个固定正相位有 $1-\cos\theta_*>0$，所以 $d_{\rm w},d_{\rm s}$ 都趋于无穷。这给出 (36.10d)，无需把只适用于趋零相位的 (35.22) 用在固定正相位上。
+
+保留的趋零相位例（$\theta_1=L^{-1/4}$ 的临界相位对照）。该例的共同来源收敛已由上面的任意相位论证覆盖。其临界参数满足
+
+$$
+\lambda_0^2(1-\cos\theta_0)=0,\qquad
+\lambda_1^2(1-\cos\theta_1)
+\sim\frac{L}{3/2}\frac{L^{-1/2}}2
+=\frac{\sqrt L}{3}\longrightarrow\infty.
+$$
+
+此时可以应用 (35.22)：零相位的两个 P2 极限仍是 (36.10d) 的非零单侧区间，趋零正相位的两个 P2 极限则都是 $\{0\}$。精确双取向联合区间逐有限 $L$ 仍严格不同；但 $L b_0,L b_1$ 都趋于 $3\beta/2$，所以该趋零例的两个重标度联合极限相同。固定正相位族正好给出 (36.10a) 中仍然不同的极限。任意振荡相位函数的共同来源收敛不额外保证其分别取向 P2 区间存在极限。∎
+

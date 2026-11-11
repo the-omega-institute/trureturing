@@ -1,0 +1,76 @@
+### 37.1 精确来源与完整原条件
+
+固定 $a\in\mathbb C^2\setminus\{0\}$，记 $m=\|a\|^2>0$。固定实数 $h$，使 $H=2C+hJ_A\succ0$ 且 $h$ 位于 §32、(35.16) 的强制估计邻域内。这里
+
+$$
+C=\operatorname{diag}(1,2),\qquad
+T_A=\operatorname{diag}(1,-2),\qquad
+J_A=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad B=H+C.
+\tag{37.1}
+$$
+
+对每个有限 $\lambda>0$，在同一演员、环境分解 $\mathbb C^2\oplus(\mathbb C^2\oplus\mathbb C)$ 中，来源准确为
+
+$$
+\begin{gathered}
+\delta_\lambda=\lambda^{-3},\qquad
+F=\begin{bmatrix}C\\0\end{bmatrix},\quad V=F^*,\quad
+G_\lambda=\begin{bmatrix}I_2\\\lambda a^*\end{bmatrix},\\
+D_\lambda^{\rm env}=
+\begin{pmatrix}
+C+\delta_\lambda\lambda^2aa^*&-\delta_\lambda\lambda a\\
+-\delta_\lambda\lambda a^*&\delta_\lambda
+\end{pmatrix},\qquad
+t_\lambda^{\rm src}=\begin{pmatrix}B&V\\F&D_\lambda^{\rm env}\end{pmatrix}.
+\end{gathered}
+\tag{37.2}
+$$
+
+这正是命题 35.2 的式 (35.5)。对 $v\in\mathbb C^2,z\in\mathbb C$，环境二次型是
+
+$$
+v^*Cv+\delta_\lambda|z-\lambda a^*v|^2,
+$$
+
+故 $D_\lambda^{\rm env}\succ0$。块乘法及 Schur 补逐一给出
+
+$$
+\begin{gathered}
+D_\lambda^{\rm env}G_\lambda=F,\qquad
+G_\lambda=(D_\lambda^{\rm env})^{-1}F,\qquad
+F^*F=C^2,\qquad G_\lambda^*F=C,\\
+G_\lambda^*G_\lambda=I_2+\lambda^2aa^*,\qquad
+B-F^*(D_\lambda^{\rm env})^{-1}F=H,\qquad t_\lambda^{\rm src}\succ0,\\
+F_{3\cdot}=0,\qquad (G_\lambda)_{3\cdot}=\lambda a^*.
+\end{gathered}
+\tag{37.3}
+$$
+
+特别地 $M_0=C^2,M_1=C,M_2=I_2+\lambda^2aa^*$ 精确成立，环境零模像 $W=0$。这些等式只归属于 (37.2)，不使用 §34 的另一条环境实现。
+
+固定一个取向 $\iota=\sigma i$，$\sigma\in\{1,-1\}$；整节对每个取向分别成立。以 $A\circ B=(AB+BA)/2$、$K_\sigma(A,B)=\iota[A,B]/2$ 定义原运算。在完整 $M_5(\mathbb C)$ 中取
+
+$$
+\begin{gathered}
+c=C\oplus0_3,\quad s_\rho=\rho T_A\oplus0_3,\quad
+x=X\oplus0_3,\quad X=X^*,\quad
+g=K_\sigma(c,t_\lambda^{\rm src})+s_\rho,\\
+h_x=K_\sigma(c,x),\quad k_c=c\circ t_\lambda^{\rm src},\quad r_x=c\circ x,\\
+R_\tau=x+\tau(h_x-k_c),\qquad
+S_\tau=t_\lambda^{\rm src}+\tau(r_x+g),\quad \tau=\pm1,\\
+L_{\rm PB}=-2x\circ(h_x-k_c)-2t_\lambda^{\rm src}\circ(r_x+g),\\
+B_\phi(R,S)=\phi(R^2)\phi(S^2)-\phi(R\circ S)^2.
+\end{gathered}
+\tag{37.4}
+$$
+
+原 PB 指：对每个 $X=X^*$ 及完整代数上每个正复线性泛函 $\phi$，
+
+$$
+|\phi(L_{\rm PB})|\le
+\sqrt{B_\phi(R_+,S_+)}+\sqrt{B_\phi(R_-,S_-)}.
+\tag{37.5}
+$$
+
+原 P2 指 $\phi(g)^2\le\phi(c^2)\phi((t_\lambda^{\rm src})^2)-\phi(c\circ t_\lambda^{\rm src})^2$，量化相同的完整正泛函。本节的接触定理首先判原 PB；涉及 P2 时另列其实际区间。
+

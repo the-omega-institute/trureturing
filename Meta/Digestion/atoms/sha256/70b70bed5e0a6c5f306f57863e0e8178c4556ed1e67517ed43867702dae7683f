@@ -1,0 +1,20 @@
+### 33.2. Compact injectivity gives an inverse modulus
+
+For compact $Q$ and $\delta\ge0$, define
+
+<a id="eq-preparation-33-2"></a>
+
+$$
+\omega_Q(\delta)
+=\max_{\substack{\rho,\sigma\in Q\\
+\lVert\mathsf p(\rho)-\mathsf p(\sigma)\rVert_2\le\delta}}
+D(\rho,\sigma),
+\qquad
+D(\rho,\sigma)=\frac12\lVert\rho-\sigma\rVert_1.
+\tag{33.2}
+$$
+
+The constraint set is nonempty and compact, so the maximum exists. The response map $\mathsf p$ is injective on $Q$ exactly when $\omega_Q(0)=0$. Under injectivity, $\omega_Q(\delta)\to0$ as $\delta$ decreases to zero.
+
+To prove the last assertion, suppose instead that pairs with response differences tending to zero have state distances bounded below by a positive number. Compactness of $Q\times Q$ gives a convergent subsequence. The limits remain distinct but have equal responses, contradicting injectivity. This is the standard compact inverse-continuity argument. It gives no numerical convergence rate by itself.
+

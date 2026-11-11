@@ -1,0 +1,32 @@
+**定理 10.1（Exact finite response-fibre width）。** For every $B\in\operatorname{Herm}(H)$,
+
+<a id="eq-future-10-1"></a>
+
+$$
+\Delta_W(B)=2d_W(B).
+\tag{10.1}
+$$
+
+If $d_W(B)>0$, an attaining pair can be chosen with orthogonal supports.
+
+**证明。** For any $b\in W$ and $\rho\sim_W\sigma$, subtract $b$ from $B$ and use $\lVert\rho-\sigma\rVert_1\le2$. Then
+
+$$
+|\operatorname{Tr}(B(\rho-\sigma))|
+\le2\lVert B-b\rVert_{\mathrm{op}},
+$$
+
+which proves the upper bound.
+
+For the reverse bound, suppose $d_W(B)>0$. Finite-dimensional real Hahn–Banach duality on $\operatorname{Herm}(H)/W$ supplies a real norm-one functional annihilating $W$ and taking $B$ to $d_W(B)$. Its trace representative is a Hermitian $X$. The operator-norm dual on Hermitian matrices is trace norm: diagonalizing $X$ and testing its spectral sign gives the dual norm $\operatorname{Tr}|X|$. Consequently $\lVert X\rVert_1=1$. Since $I\in W$, $\operatorname{Tr}X=0$, so its positive and negative spectral parts each have trace $1/2$.
+
+Set $\rho=2X_+$ and $\sigma=2X_-$. They are density matrices with orthogonal supports, their difference annihilates $W$, and
+
+$$
+\operatorname{Tr}(B(\rho-\sigma))=2d_W(B).
+$$
+
+If $d_W(B)=0$, the upper bound already gives the equality. The relevant extrema exist in finite dimension. $\square$
+
+<a id="statement-future-10-2"></a>
+

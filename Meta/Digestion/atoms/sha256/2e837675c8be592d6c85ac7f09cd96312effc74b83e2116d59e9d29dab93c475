@@ -1,0 +1,28 @@
+**推论 37.9（逐接触的必要性与严格充分性）。** 固定实 $k$。若 (37.2) 在 $\rho=k/\lambda^2$ 对所有充分大 $\lambda$ 满足全部原 PB，则每个 $c\in\mathcal C_\iota(a)$ 有 $J_k(c)\ge0$。若每个接触都有 $J_k(c)>0$，则对所有充分大 $\lambda$ 满足全部原 PB。
+
+证明。负接触由推论 37.7 给尾部失败，证明必要性。反之，若存在 $\lambda_n\to\infty$ 上的失败，由 §37.6 的全正泛函提升及 (27.12) 选出归一原有限测试使 $\mathcal D_{\lambda_n}^{\rm orig}<0$。定理 37.5 对 $M=0$ 给一个接触，且
+
+$$
+J_k(c)\le\liminf_n\lambda_n^2\mathcal D_{\lambda_n}^{\rm orig}\le0,
+$$
+
+矛盾。此处逐接触严格正已经足够，不额外假设一个统一正间隙。空接触域也由同一矛盾论证给充分性。∎
+
+对当前固定取向，定义两个带方向的阈值；其 $h,\iota$ 依赖在记号中省略：
+
+$$
+\begin{aligned}
+K_{\rm positive}(a)
+ &=\inf_{c\in\mathcal C_\iota(a):\ \epsilon\zeta(c)<0}
+       \frac{s(A)|\eta|^2}{-4\epsilon\zeta(c)},\\
+K_{\rm negative}(a)
+ &=\inf_{c\in\mathcal C_\iota(a):\ \epsilon\zeta(c)>0}
+       \frac{s(A)|\eta|^2}{4\epsilon\zeta(c)}.
+\end{aligned}
+\tag{37.50}
+$$
+
+空下确界仍为 $+\infty$。对每个固定 $k\ge0$，$k<K_{\rm positive}(a)$ 时 $\rho=k/\lambda^2$ 最终通过全部原 PB；$k>K_{\rm positive}(a)$ 时最终严格失败。理由是前一范围使每个 $J_k>0$，后一范围由下确界定义找到一个 $J_k<0$。对 $\rho=-k/\lambda^2$，用 $K_{\rm negative}(a)$ 得相同的严格两侧结论。要求两个取向时，分别检查各自的阈值。
+
+在有限阈值等号处，定义只保证所有接触的领先值非负；若有零接触，(37.38) 不决定有限 $\lambda$ 的次阶符号。即使阈值下确界不取到，也必须按实际 $J_k$ 检查：若它们仍逐点严格正，推论 37.9 可用。本文不把非负替换为严格正，不宣称一般的临界等号分类。
+

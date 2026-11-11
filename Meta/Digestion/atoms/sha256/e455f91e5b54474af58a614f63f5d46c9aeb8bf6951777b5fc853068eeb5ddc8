@@ -1,0 +1,195 @@
+**定理 52.2（An absolute anchor from the compressed ternary determinant）。** Let $N=2^m\ge2048$ and let $G\in\operatorname{Herm}_4(R)$ be a positive-definite integral interval atom satisfying
+
+$$
+ d=\det G\le11,\qquad
+ 0\prec G\prec NI_4,\qquad
+ \lambda_{\max}(G)\le N-A_\dagger/N.
+\tag{52.3}
+$$
+
+Put $B=NI_4-G$. Choose a balanced basis $V=(v_1,v_2,v_3,v_4)$ as in (50.2), with heights $h_j$, and write
+
+$$
+ V_3=(v_1,v_2,v_3),\qquad
+ C=V_3^*BV_3,\qquad
+ \Delta=\det C=h_1h_2h_3,\qquad
+ \nu(C)=\min_{0\ne a\in R^3}a^*C^{-1}a.
+\tag{52.4}
+$$
+
+For every original table of Definition 50.1, the additional branch
+
+$$
+ h_1<\tau,\qquad h_2,h_3\le L,\qquad
+ \nu(C)\le\frac1{2\tau}
+ \quad\Longrightarrow\quad
+ |e(G/N)|\le C_*\epsilon
+\tag{52.5}
+$$
+
+has an absolute anchor. In particular $\Delta\ge64\tau^3$ is sufficient for this branch. In this branch there are explicitly constructed independent vectors $q,w\in R^4$ such that
+
+$$
+ W=\tau(qq^*+ww^*)\in\mathcal S_4,\qquad
+ W\preceq\tfrac34B,\qquad
+ \mu_1(G+W)\ge\tau,\qquad G+W\in\mathcal S_4.
+\tag{52.6}
+$$
+
+Consequently, if the bound $|e(G/N)|\le C_*\epsilon$ fails, its basis from Theorem 50.2 can be chosen with all the properties there and, in addition,
+
+$$
+ \begin{gathered}
+ \nu(C)>\frac1{2\tau},\qquad
+ 1\le\Delta<64\tau^3,\qquad
+ \det B=d+kN,\quad k\in\mathbb Z_{\ge1},\\
+ q=V^{-*}e_4,\qquad
+ k\|q\|^2<\Delta<64\tau^3.
+ \end{gathered}
+\tag{52.7}
+$$
+
+In particular the original-coordinate normal $q$, up to multiplication by a Gaussian unit, and the positive integer $k$ range over finite sets independent of the scale. The restriction $C$ and the short $G$ vectors within its saturated submodule are not thereby fixed.
+
+**证明。** In the branch of (52.5), expansion of (50.2) gives
+
+$$
+ C_{jj}\le M\quad(1\le j\le3),\qquad
+ \|C\|_{\rm op}\le3M,\qquad
+ \Delta<\tau L^2.
+\tag{52.8}
+$$
+
+Write the full reduced matrix in blocks as
+
+$$
+ V^*BV=\begin{pmatrix}C&b\\b^*&\beta\end{pmatrix},
+ \qquad h_4=\beta-b^*C^{-1}b.
+\tag{52.9}
+$$
+
+The determinant quantization in Part II, Theorem 164.2 applies because $A_\dagger>44$. Therefore
+
+$$
+ \Delta h_4=\det B\ge N+d,\qquad
+ h_4>\frac{N}{\tau L^2}>6\tau.
+\tag{52.10}
+$$
+
+For the last inequality, (52.3) and $G\succ0$ force $N^2>A_\dagger$, while (52.2) forces $\sqrt{A_\dagger}>6\tau^2L^2+1$.
+
+The dual minimum in (52.4) is attained because $C^{-1}$ is positive definite and $R^3$ is discrete. Under the hypothesis of (52.5), choose a nonzero $a\in R^3$ with $\rho:=a^*C^{-1}a\le1/(2\tau)$. For the determinant sufficient condition, use the ordinary real six-dimensional Hermite bound on this dual lattice, exactly with the normalization in Part I, (57.2):
+
+$$
+ \nu(C)\le\gamma_6\Delta^{-1/3}
+ <2\Delta^{-1/3}\le\frac1{2\tau}
+ \qquad(\Delta\ge64\tau^3).
+\tag{52.11}
+$$
+
+Here $\gamma_6=2/3^{1/6}<2$ is an ordinary-lattice bound: Vance, [*A Mordell Inequality for Lattices over Maximal Orders*, §4.2, Table 3 and the paragraph preceding it](https://arxiv.org/html/0810.2336v5#S4.T3), records both this value and ordinary-lattice optimality in dimension six. No Eisenstein-module hypothesis is imposed on $C$. Dividing $a$ by the Gaussian gcd of its coordinates if necessary makes it primitive and cannot increase $\rho$. Moreover
+
+$$
+ \|a\|^2\le\|C\|_{\rm op}\rho
+ \le\frac{3M}{2\tau}\le r_0,
+\tag{52.12}
+$$
+
+so this $a$ belongs to the finite set in Definition 52.1.
+
+Choose a nearest Gaussian integer $s$ to $b^*C^{-1}a$; independent rounding of its real and imaginary parts gives
+
+$$
+ |s-b^*C^{-1}a|^2\le\tfrac12.
+$$
+
+Construct the original-coordinate vectors
+
+$$
+ q=V^{-*}e_4,\qquad
+ w=V^{-*}\binom a s.
+\tag{52.13}
+$$
+
+They are integral and independent, since $V$ is Gaussian unimodular and $a\ne0$. The block inverse formula in (52.9) gives the actual dual costs
+
+$$
+ q^*B^{-1}q=\frac1{h_4},\qquad
+ w^*B^{-1}w
+ =\rho+\frac{|s-b^*C^{-1}a|^2}{h_4}
+ \le\rho+\frac1{2h_4}.
+\tag{52.14}
+$$
+
+For each vector $x$, Cauchy--Schwarz gives $xx^*\preceq(x^*B^{-1}x)B$. Using $\rho\le1/(2\tau)$ and (52.10) therefore proves
+
+$$
+ W=\tau(qq^*+ww^*)
+ \preceq\tau\left(\rho+\frac3{2h_4}\right)B
+ \prec\tfrac34B.
+\tag{52.15}
+$$
+
+The use of $3B/4$ leaves a strictly positive complementary interval; no bound $W\preceq B/4$ is needed.
+
+It remains to control the common kernel, rather than to assume that the new direction detects every short $G$ vector. For $z\in R^4$,
+
+$$
+ q^*z=w^*z=0
+ \quad\Longleftrightarrow\quad
+ z\in F R^2,\qquad
+ F=V_3(u_{a,1},u_{a,2}).
+\tag{52.16}
+$$
+
+Indeed $V^{-1}z$ is integral, its fourth coordinate must vanish, and its first three coordinates then belong exactly to $\ker a^*$. This also proves saturation of the displayed rank-two submodule. Its two basis columns $f_j$ satisfy
+
+$$
+ f_j^*Bf_j=u_{a,j}^*Cu_{a,j}\le3MJ_0=K_0.
+\tag{52.17}
+$$
+
+Set $P=F^*F$ and $D_2=F^*BF$. The Euclidean Gram matrix $P$ is positive definite and integral, so $\det P$ is a positive integer. Since $B\succeq(A_\dagger/N)I_4$,
+
+$$
+ \operatorname{Tr}P\le\frac{2K_0N}{A_\dagger},\qquad
+ \|D_2\|_{\rm op}\le2K_0,\qquad
+ \lambda_{\min}(P)\ge\frac1{\operatorname{Tr}P}
+ \ge\frac{A_\dagger}{2K_0N}.
+\tag{52.18}
+$$
+
+Using the exact original complement identity now gives
+
+$$
+ F^*GF=NP-D_2
+ \succeq\left(\frac{A_\dagger}{2K_0}-2K_0\right)I_2
+ \succ\tau I_2.
+\tag{52.19}
+$$
+
+Thus every nonzero integral vector in the common kernel has $G$-value greater than $\tau$. Outside it, at least one of $q^*z,w^*z$ is a nonzero Gaussian integer, so $z^*Wz\ge\tau$. This proves $\mu_1(G+W)\ge\tau$ without a congruence transformation of any table value.
+
+The large-minimum representation theorem of Beli--Chan--Icaza--Liu, [*On a Waring's problem for integral quadratic and hermitian forms*, Proposition 5.3](https://arxiv.org/html/1702.08854v1), applies to the positive-definite integral rank-four matrix $G+W$, by the fixed choice of $\tau$ in Definition 50.1. Hence $G+W\in\mathcal S_4$. Also $W\in\mathcal S_4$ directly, since $\tau$ is an integer. Equation (52.15) proves
+
+$$
+ 0\preceq W\prec NI_4,\qquad
+ 0\prec G+W\preceq NI_4-B/4\prec NI_4.
+\tag{52.20}
+$$
+
+Both Gram estimates (50.6) therefore concern the supplied original table. The same actual ternary and binary menus as in (50.8) give $|e(G/N)|\le(2S+2)\epsilon=C_*\epsilon$, proving (52.5)--(52.6).
+
+For (52.7), suppose this error bound fails. Theorem 50.2 leaves $h_1<\tau$ and $h_2,h_3\le L$, and the argument just given forces $\nu(C)>1/(2\tau)$ and $\Delta<64\tau^3$. Part II, Theorem 164.2 gives $\det B=d+kN$ with integer $k\ge1$. Since $B\prec NI_4$, its inverse satisfies $B^{-1}\succ N^{-1}I_4$. Equations (52.9) and (52.14) consequently give
+
+$$
+ \frac{\|q\|^2}{N}<\frac1{h_4},\qquad
+ kN+d=\Delta h_4<\frac{\Delta N}{\|q\|^2},
+ \qquad k\|q\|^2<\Delta.
+\tag{52.21}
+$$
+
+This proves the asserted finite ranges. The short-vector obstruction in (50.5) still applies because (52.3) implies its margin hypothesis.
+
+The new capacity in (52.13)--(52.15) uses a ternary dual short vector and a rounded fourth coordinate; (52.16)--(52.19) prove the required rank-two compression for its actual common kernel. These constructions supply the additional branch of the original atom estimate (57.15) of Part I, with the original complementary-menu transfer (164.11) of Part II. The Hermite and large-minimum representation results are credited intermediate tools. No claim of global literature priority is made for this deduction. The cases remaining in (52.7), including their short $G$ vectors from (50.5), have not acquired an absolute error bound here. Neither existence nor nonexistence of uniform constants for the full original event follows from these necessary conditions. $\square$
+

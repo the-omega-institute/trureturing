@@ -1,0 +1,29 @@
+**Proposition 46.1 (finite exact branch certificate).** Suppose the
+preparations in (46.1) and complete unnormalized output tomography on
+the entire R, in every branch, are supplied for the same instrument.
+For one fixed probability vector p, check
+
+$$
+M_s(P)=p_s\Theta(P)
+\quad\text{for every }s\text{ and every probe }P\text{ in (46.1)}.
+\tag{46.3}
+$$
+
+Then (43.1) holds, hence independence holds for every input and every
+untouched reference. Conversely (43.1) implies all these checks.
+
+Proof. Equations (46.2) and complex linearity extend (46.3) to every
+matrix unit, hence every matrix. Apply Proposition 43.1.
+
+Traces of the tests establish only (42.1). Normalized poststates
+without their branch probabilities do not give (46.3). Summing over s
+before comparison always returns Theta(P), which cannot test the
+branch equality. Restricted visible-output tomography must first
+be proved sufficient on the declared output domain; it does not
+automatically provide full-R matrix equality or trace-norm errors.
+
+The case d=1 uses its one density and no off-diagonal probes.
+Zero-probability branches cause no division: they are tested as
+zero maps. The certificate is exact and finite, not a free ability
+to prepare the probes or to measure every returned memory.
+

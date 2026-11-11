@@ -1,0 +1,58 @@
+**定理 67.4（两份正谱的总乘积一）。** 在命题 67.3 下，存在完整实际 $D$ 本原框架 $\mathcal Q$，使 $Y_q=\Pi_qY$ 是 $F_q$ 内点，$\ell_q=K_q^*Y$ 是 $A$ 内点，并有
+
+$$
+\det_{F_q}(Y_q)=\frac{\det_A(\ell_q)}{\det_{F_q}(z_q)},\qquad
+\prod_{q\in\mathcal Q}\det_A(\ell_q)=1.
+\tag{67.7}
+$$
+
+令 $\zeta_1,\ldots,\zeta_R$ 为各 $z_q$ 的合并本原正谱表，$\eta_1,\ldots,\eta_R$ 为各 $Y_q$ 的合并面内正谱表，则
+
+$$
+\prod_{\alpha=1}^R\zeta_\alpha\prod_{\alpha=1}^R\eta_\alpha=1,
+\qquad\sum_\alpha\zeta_\alpha=\delta,\qquad
+\sum_\alpha\eta_\alpha=\gamma.
+\tag{67.8}
+$$
+
+**证明。** 直接取定理 66.3 的原始复直和载体、命题 66.4 的有序正规形及定理 66.5 的原始权重公式，不作扇区交换或 C13 假设。写 $A=\bigoplus_iH_{n_i}$、$D=\bigoplus_{i,j}H_{n_in_j}$、$n=\sum_i n_i$，权重为 $u_{ij}>0$，第一接口转置位为 $\varepsilon_{ij}$，第二接口位为 $\delta_{ijk}$。由 (66.16)、(66.18) 的实际 $pL(d,a)=M(sd,a)$ 及其规范迹，任意本原 $q\in D_{ij}$ 满足
+
+$$
+(\ell_q)_k=v_q u_{jk}^{T^{\varepsilon_{jk}}},\qquad
+v_q=\operatorname{Tr}\!\left(u_{ij}^{-1}\operatorname{Tr}_iq\right)>0.
+\tag{67.9}
+$$
+
+这里 $sq$ 只在扇区 $j$ 非零，其迹为 $v_q$；对 (66.16) 的 $M(sq,a)$ 取迹即得所示 $\ell_q$，不使用 $H$ 的范数、第二单位律或交叉正性。由 $K_q=P_{\sqrt{z_q}}\Theta_q$、$\Theta_q$ 的迹等距性和 $K_q(A)=F_q$，有
+
+$$
+Y_q=P_{z_q^{-1/2}}\Theta_q(\ell_q)>0\quad\hbox{于 }F_q.
+$$
+
+因此 $\ell_q$、$Y_q$ 均可逆。通过 $\Theta_q$，每个面已识别为 $A$ 的复矩阵直和；逐块使用 $\det(z^{-1/2}\ell z^{-1/2})=\det(\ell)/\det(z)$，即得 (67.7) 第一式。这是元素的 Jordan 行列式，分母幂次是一，不是二次表示算子的行列式或其维数幂次。
+
+令 $u_{ij}$ 的本征值为 $\lambda_{ij,s}>0$，$s=1,\ldots,n_j$。在每个有序 $D_{ij}$ 选第一因子的任意正交基及第二因子的 $u_{ij}$ 本征基，形成
+$q_{ijrs}=|r\rangle\langle r|\otimes|s\rangle\langle s|$，$r=1,\ldots,n_i$。这些元组成完整实际框架，且
+
+$$
+\begin{aligned}
+v_{q_{ijrs}}&=\lambda_{ij,s}^{-1},\\
+\det_A(\ell_{q_{ijrs}})&=\lambda_{ij,s}^{-n}\prod_k\det(u_{jk}),\\
+\prod_{i,j,r,s}\det_A(\ell_{q_{ijrs}})
+&=\left[\prod_{i,j}\det(u_{ij})^{-nn_i}\right]
+  \left[\prod_{j,k}\det(u_{jk})^{nn_j}\right]=1.
+\end{aligned}
+\tag{67.10}
+$$
+
+第一括号中，每个本征值重复 $n_i$ 次。第二括号中，固定 $j$ 的框架元数为 $\sum_i n_in_j=nn_j$；因此每个有序 $\det(u_{ab})$ 在两括号中的指数恰为 $-nn_a$、$+nn_a$。这里只改名求积的哑指标，没有交换数据 $u_{ij},u_{ji}$。转置不改行列式。定理 64.8 的循环消去由此完整保留，未用任何范数值。
+
+命题 67.3 使两份谱各有 $R$ 项；$Z=\sum_qz_q$ 的谱是第一份合并谱。第二份的迹满足
+
+$$
+\sum_q\tau_E(Y_q)=\sum_q\langle P_q,Y\rangle_E
+=\langle1_E,Y\rangle_E=\gamma.
+$$
+
+结合 (67.7) 即得 (67.8)。两份谱不要求逐项互为倒数，且此时不要求 $Y$ 没有面间 Peirce 分量。$\square$
+

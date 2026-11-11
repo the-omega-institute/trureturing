@@ -1,0 +1,39 @@
+**定理 65.3（实际第一接口的未校准复用）。** 定义 65.1–65.2 下，不使用 $D_H$ 或 C13，令
+
+$$
+C_D=P_{\sqrt U},\qquad F=C_D^{-1}M,\qquad
+\alpha=F(-,1_A),\quad\beta=F(1_A,-).
+$$
+
+则 $U>0$，$\widetilde F$ 是满规范迹内积等距同构；$\alpha,\beta$ 是保单位单射 Jordan 同态，其乘法算子在整个 $D$ 上交换，$U$ 与 $\alpha(A)$ 算子交换，且
+
+$$
+F(a,b)=\alpha(a)\circ\beta(b),\qquad m=n^2.
+\tag{65.10}
+$$
+
+存在全锥正 $s:D\to A$，置 $V=s^*1_A$、$w=s\omega$，则
+
+$$
+\begin{gathered}
+s=\beta^*C_D^{-1},\quad V=U^{-1},\quad\tau_D(U^{-1})=m,
+\quad w>0,\quad\tau_Aw=1,\\
+sM(a,b)=\tau_A(a)b,\quad B_1=Js,\quad sK=\operatorname{id}_A,
+\quad K(a)=M(w,a),\\
+pQ(a,b,c)=\tau_A(a)M(b,c),\qquad
+\mathcal B(d,c)=M(sd,c),\\
+spL(d,c)=\langle V,d\rangle_Dc
+\qquad(a,b,c\in A,\ d\in D).
+\end{gathered}
+\tag{65.11}
+$$
+
+**证明。** (65.3)–(65.4) 已建立定理 64.4–64.5 证明所需的全部规范迹 EJA 前提；(65.5)–(65.8) 逐点就是那两条证明实际使用的正性、同一个 $p$ 的内部定义、$M$ 张成、$D_J,Z$。其中 $\mathcal B$ 对应原文双线性 $B$，$C_D$ 对应其 $C$。那两条证明明确不使用 $W_H,N$、$L$ 张成或晚期插入，故可直接复用，不把旧完整候选的额外条件一并带入。
+
+精确的依赖链是：支撑支配给出 $U$ 内点及 $J$ 无正核；$D_J$ 归一化出 $\alpha$，正中心权重 $\alpha^*\alpha$ 的逆构造正左逆 $j$；$s=jB_1$ 由 $Z$ 得到 $sM=\tau_A(-)\operatorname{id}$、$B_1=Js$ 及 $sK=\operatorname{id}$。由实际恒等式 $K1_A=B_1\omega=J(s\omega)$ 得 $\tau_A(s\omega)=1$。支撑分解和正对偶准备随后建立 [Library 二元接口 (15)–(18)](../../../Library/QuantumStates/barnumhilgert2019spectral.md#positive-marginals-recover-the-joint-effect-contract) 的全部正保迹边缘前提，才得到 $F$ 等距、$m=n^2$、$sC_D=\beta^*$ 及 $V=U^{-1}$。于是 $\tau_DV=m$ 来自同一 $p$ 与原 $\omega$，不是校准。
+
+其中 $U$ 与 $\alpha(A)$ 的算子交换也直接来自同一支撑构造：对于任意完整框架 $(q_r)$，$Jq_r$ 的支撑 $e_r=\alpha(q_r)$ 两两正交，$U=\sum_rJq_r$ 对每个 $e_r$ 无 Peirce 半空间分量，所以 $[\ell_U,\ell_{e_r}]=0$。对任意 $a$ 选其谱框架并线性延拓，便有 $[\ell_U,\ell_{\alpha(a)}]=0$，不要求 $U$ 中心。
+
+定理 64.5 再由纯第二边缘刚性得 $K=M(w,-)$。对本原 $q,a,b$，$w\ge\varepsilon q$ 给
+$0\le\mathcal B(M(q,a),b)\le\varepsilon^{-1}M(a,b)$；$F(a,b)$ 本原且 $C_D$ 为锥自同构，所以此输出在 $M(a,b)$ 的极射线上。对含 $b$ 的完整框架求和，$Z$ 与 $\widetilde M$ 单射使每个系数为一。本原元张成及三线性延拓给出全实 III，$M$ 张成给出 $\mathcal B(d,c)=M(sd,c)$，施加 $s$ 得最后一式。这正是所引既有证明的全实结论，而非面压缩读数。$\square$
+

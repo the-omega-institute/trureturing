@@ -1,0 +1,22 @@
+## 20. Pure-reference marginal fidelity controls decoupled return
+
+Suppose $\eta_j=P_{r_j}=|r_j\rangle\langle r_j|$ is pure, and let $p_j$ now be the actual complete-record distribution on this input. Write the classical–quantum output as
+
+$$
+\mathcal T(P_{r_j})
+=\sum_xp_j(x)|x\rangle\langle x|\otimes\eta_{j,x},
+$$
+
+where zero-probability terms are omitted. Define the mean reference-fidelity defect
+
+<a id="eq-reference-20-1"></a>
+
+$$
+\delta_j
+=1-\langle r_j,
+\operatorname{Tr}_C\mathcal T(P_{r_j})r_j\rangle.
+\tag{20.1}
+$$
+
+<a id="statement-reference-20-1"></a>
+

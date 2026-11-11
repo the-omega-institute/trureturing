@@ -1,0 +1,44 @@
+**命题 66.11（全锥正保迹读回仍不能推出 C13）。** 取单扇区
+
+$$
+A=H_2(\mathbb C),\quad D=H_4(\mathbb C),\quad E=H_8(\mathbb C),\qquad
+u=g=I_2,\quad\varepsilon=1,\quad\delta=0,
+$$
+
+以及全部 PSD 锥、总迹一态、效应，定义
+
+$$
+L(d,c)=d\otimes c,\qquad p(z)=(\operatorname{Tr}_1z)^T,
+\tag{66.37}
+$$
+
+其中 $T$ 是保留的两腿合成的 $4\times4$ 块的整体转置。它满足定义 66.1 的所有条件，乃至 $U=1_D$、$G=1_E$、原 $p$ 保迹及 $`J^*J=2\operatorname{id}_A`$、$`H^*H=2\operatorname{id}_D`$，但 C13 失败。
+
+证明。逆迹平衡为 $2\operatorname{Tr}I_2=4$，方向平衡为 $0=1\oplus1$。直接使用同一个 $p$ 得
+
+$$
+\begin{aligned}
+\omega&=I_4/4,&s(d)&=(\operatorname{Tr}_1d)^T,\\
+\mathcal B(d,c)&=(\operatorname{Tr}_1d)^T\otimes c^T,&
+K(a)&=(I_2/2)\otimes a^T,\\
+M(a,b)&=\mathcal B(K(a),b)=a\otimes b^T,&
+Q(a,b,c)&=a\otimes b^T\otimes c,\\
+J(a)&=a\otimes I_2,&H(d)&=d\otimes I_2,\\
+B_1d&=(\operatorname{Tr}_1d)^T\otimes I_2,&
+B_1M(a,b)&=\operatorname{Tr}(a)b\otimes I_2.
+\end{aligned}
+\tag{66.38}
+$$
+
+$p$ 是偏迹后接整块转置，故在整个 $E_+$ 上正且保迹；$L$ 对整个 $D_+\times A_+$ 正。矩阵实张量基证明两条张成；$J,H$ 的配对分别乘以 $2$，故 $D_J,D_H$ 乃至所述校准都成立，$H$ 的计算包含任意纠缠 $d$。最后一式给全实 $Z$；完整有限 $S$ 已由 (66.26) 在三个完整载体上成立。
+
+然而从实际 $M$ 的逆得到
+
+$$
+I_{13}^{\rm raw}z=I_{13}^0z
+ =\operatorname{ins}_2[(\operatorname{id}\otimes T)z].
+\tag{66.39}
+$$
+
+对端点 Bell 投影，单腿转置为 $\mathrm{Swap}/2$；取端点反对称向量并在中间取任意单位向量，输出特征值为 $-1/2$。所以插入不正。该模型严格区分原完整 Born 状态几何与接合方向相容性，并显示即使添加这些校准也不能由保留条件推出 C13。$\square$
+

@@ -1,0 +1,21 @@
+**定义 1.1（Represented block interface）。** Fix finite-dimensional complex spaces and the represented unital complex $*$-algebra
+
+<a id="eq-purity-1-1"></a>
+
+$$
+\begin{aligned}
+H&=\bigoplus_{\alpha\in I}(V_\alpha\otimes W_\alpha),\\
+\mathcal A&=\bigoplus_{\alpha\in I}
+\bigl(B(V_\alpha)\otimes I_{W_\alpha}\bigr),\\
+n_\alpha&=\dim V_\alpha\ge1,
+\qquad m_\alpha=\dim W_\alpha\ge1.
+\end{aligned}
+\tag{1.1}
+$$
+
+This is the standard represented block form of a finite-dimensional unital complex $C^*$-algebra; the arguments use the displayed form directly. Applying the formulas to a native menu requires its algebra closure and represented block form first. A linear span of available effects need not be such an algebra, as §7 illustrates.
+
+Operational states here are all positive normalized functionals on $\mathcal A$, tested by every effect $0\le a\le I$ in $\mathcal A$. Purity means extremality in this whole state space, rather than in a separately restricted preparation list. Physical access to the entire effect interval is an additional interface condition.
+
+<a id="statement-purity-1-2"></a>
+

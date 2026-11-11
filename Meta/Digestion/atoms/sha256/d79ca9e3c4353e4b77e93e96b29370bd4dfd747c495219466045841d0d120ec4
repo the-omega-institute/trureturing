@@ -1,0 +1,110 @@
+**定理 55.1（Fine-scale finite-dual face supplier）。** Suppose $N=2^m\ge1024$. For every coordinate face $S$ of Definition 54.2 and every $E\in K_{S,N}$ there are a finite list $r_1,\ldots,r_k\in\mathcal R_{S,N}$ and real coefficients $\lambda_1,\ldots,\lambda_k$ such that
+
+$$
+ \begin{aligned}
+ \delta_E&=R_E+\sum_{Q\in\mathcal B_S}\alpha_Q(E)\delta_Q
+                 +(1-\operatorname{Tr}E)\delta_0,\\
+ R_E&=\sum_{j=1}^k\lambda_jr_j,\qquad
+ \sum_{j=1}^k|\lambda_j|\le664016.
+ \end{aligned}
+\tag{55.1}
+$$
+
+The coefficients $\alpha_Q(E)$ are fixed by (54.7); the row coefficients need not be unique. Counting rows, tomography symbols and the zero symbol together gives total absolute coefficient sum at most $664045$.
+
+Proof. Let $f:K_{S,N}\to\mathbb R$ be arbitrary, and use the same letter for its linear extension to $W_{S,N}$. Set
+
+$$
+ \rho=\max_{r\in\mathcal R_{S,N}}|f(r)|,\qquad
+ g(E)=f(E)-f(0),\qquad
+ h(E)=g(E)-\frac{\operatorname{Tr}E}{3}g(S).
+\tag{55.2}
+$$
+
+For $A,B\ge0$ on the original grid with $A+B\le S$, the row $r(0,B,A)$ has endpoints $0,B,A,A+B$ and complement $S-A-B$. Thus it is legal, and
+
+$$
+ |g(A)+g(B)-g(A+B)|\le\rho.
+\tag{55.3}
+$$
+
+The trace correction is additive. Consequently (55.3) holds with $h$ in place of $g$, and $h(0)=h(S)=0$. For every labelled two-entry menu $E_1+E_2=S$ it follows that
+
+$$
+ |h(E_1)+h(E_2)|\le\rho.
+\tag{55.4}
+$$
+
+For every labelled three-entry menu $E_1+E_2+E_3=S$, the partial sum $E_1+E_2$ is an original-grid effect. Two applications of (55.3) give
+
+$$
+ |h(E_1)+h(E_2)+h(E_3)|\le2\rho.
+\tag{55.5}
+$$
+
+These arguments include every zero entry and every repetition.
+
+There are positive finite endpoint margins. Indeed, positivity implies $\operatorname{Tr}E=0$ only at $E=0$, and positivity of $S-E$ implies $\operatorname{Tr}E=3$ only at $E=S$. Hence, writing $q(E)=\operatorname{Tr}E/3$,
+
+$$
+ \eta=\min_{E\in K_{S,N}\setminus\{0,S\}}
+                  \min\{q(E),1-q(E)\}>0,
+ \qquad M=\max_{E\in K_{S,N}}|h(E)|<\infty.
+\tag{55.6}
+$$
+
+The set defining $\eta$ is nonempty, since it contains the coordinate rank-one projections. Choose, for example,
+
+$$
+ 0<t\le\min\left\{\frac{\eta}{2(1+M)},\frac1{20(1+\rho)}\right\},
+ \qquad p_t(E)=q(E)+t h(E),\qquad \epsilon=2t\rho.
+\tag{55.7}
+$$
+
+At $0,S$ the values are exactly $0,1$. At every other effect, $|t h(E)|\le\eta/2$, so $0\le p_t(E)\le1$. Equations (55.4)--(55.5), together with $\sum_jq(E_j)=1$, verify every two- and three-entry menu condition with defect at most $\epsilon\le1/10$. If $\rho=0$, this choice has $\epsilon=0$. No bound on $f$, and no endpoint margin uniform in $N$, is required.
+
+Apply the fine clause of Part I, Theorem 33.1, namely its bound (33.20), to this complete table on its own three-dimensional identity $S$. Its threshold $N\ge648$ holds here. For any real table $u$ on this face let $H_u$ be the unique Hermitian operator on $S\mathbb C^4$ with $\operatorname{Tr}(H_uQ)=u(Q)$ for every $Q\in\mathcal B_S$. This is a linear function of $u$, and $H_q=S/3$. Therefore
+
+$$
+ \begin{aligned}
+ |p_t(E)-\operatorname{Tr}(H_{p_t}E)|
+   &=t|h(E)-\operatorname{Tr}(H_hE)|\\
+   &\le332008\epsilon=664016t\rho.
+ \end{aligned}
+\tag{55.8}
+$$
+
+Division by $t>0$ is legitimate also when $\rho=0$. By (54.7), $\operatorname{Tr}(H_hE)=\sum_Q\alpha_Q(E)h(Q)$. Since every $Q$ has trace one and $\sum_Q\alpha_Q(E)=\operatorname{Tr}E$, direct substitution from (55.2) cancels the trace correction and gives
+
+$$
+ \begin{aligned}
+ h(E)-\sum_Q\alpha_Q(E)h(Q)
+   &=f(E)-\sum_Q\alpha_Q(E)f(Q)
+                         -(1-\operatorname{Tr}E)f(0),\\
+ v_E&=\delta_E-\sum_Q\alpha_Q(E)\delta_Q
+                         -(1-\operatorname{Tr}E)\delta_0,\\
+ |f(v_E)|&\le664016\max_{r\in\mathcal R_{S,N}}|f(r)|.
+ \end{aligned}
+\tag{55.9}
+$$
+
+This inequality has been established for every real linear functional on the free space, without assuming positivity or normalization of that functional.
+
+Now use the standard finite-dimensional separating-hyperplane theorem, as in R. T. Rockafellar, *Convex Analysis*, §11. This is an intermediate convex-geometric fact. The set
+
+$$
+ C=\operatorname{conv}\bigl(\{0\}\cup
+                    \{r,-r:r\in\mathcal R_{S,N}\}\bigr)
+\tag{55.10}
+$$
+
+is compact, convex and symmetric in the finite-dimensional space $W_{S,N}$. If $v_E\notin664016C$, strict separation from this compact convex set would give a linear functional $f$ with
+
+$$
+ f(v_E)>664016\sup_{c\in C}f(c)
+       =664016\max_{r\in\mathcal R_{S,N}}|f(r)|,
+\tag{55.11}
+$$
+
+contrary to (55.9). Thus $v_E\in664016C$. A finite convex combination in (55.10), with signs absorbed into the coefficients, supplies $v_E=\sum_j\lambda_jr_j$ and $\sum_j|\lambda_j|\le664016$. This is exact equality of free symbols, not equality modulo unspecified relations. Finally (54.8) gives $664016+27+2=664045$. $\square$
+

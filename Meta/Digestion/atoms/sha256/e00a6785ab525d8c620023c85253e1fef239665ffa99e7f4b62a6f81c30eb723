@@ -1,0 +1,33 @@
+**例 24.1（Repeated classical copying preserves correlations）。** On a qubit reference, take the commuting family
+
+$$
+\eta_p=pP_0+(1-p)P_1.
+$$
+
+A blank classical record and a controlled copy of the reference basis give
+
+<a id="eq-reference-24-1"></a>
+
+$$
+\mathcal T(\eta_p)
+=pP_0^C\otimes P_0^R
++(1-p)P_1^C\otimes P_1^R.
+\tag{24.1}
+$$
+
+The $R$ marginal returns exactly while the record depends on $p$. For $0<p<1$, the joint output is correlated and differs from $p_{\rm record}\otimes\eta_p$.
+
+After $n$ copies all record bits agree. Only the strings $0^n$ and $1^n$ occur, with masses $p$ and $1-p$. They are not an independent Bernoulli sample of length $n$. For program hypotheses $p,q$, the complete-record total variation remains $|p-q|$ at every $n$, equal to the initial program trace distance. Repetition creates no additional distinguishability.
+
+The exact one-use distance from the product of the two marginals is
+
+<a id="eq-reference-24-2"></a>
+
+$$
+D\bigl(\mathcal T(\eta_p),p_{\rm record}\otimes\eta_p\bigr)
+=2p(1-p).
+\tag{24.2}
+$$
+
+Indeed, the four diagonal differences are $p(1-p),-p(1-p),-p(1-p),p(1-p)$, whose absolute values give (24.2) under the half trace-norm convention. This example fails the zero joint-error premise of (18.2). It is a classical mixed-program example, not an exception for a continuous covariant phase orbit.
+

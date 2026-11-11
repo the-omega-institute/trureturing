@@ -1,0 +1,58 @@
+### 38.2 精确轴接触与常数
+
+先取 $\sigma=+1$。固定合法有限变分参数
+
+$$
+\begin{gathered}
+\epsilon=1,\qquad \ell=-1-9i,\qquad \nu=0,\\
+\alpha_+=8,\quad\alpha_-=10,\quad\beta_+=-1,\quad\beta_-=1,\\
+z_d=\beta_d-di\alpha_d=i+d\ell,\qquad
+s_\alpha=\alpha_+^{-1}+\alpha_-^{-1}=9/40.
+\end{gathered}
+\tag{38.8}
+$$
+
+令 $u=e_1$，并定义目标可见列
+
+$$
+\begin{gathered}
+p_1=q_1=1/3,\qquad (a_{\rm act})_1=-3+2i/3,\\
+d_{01}=-11/2-23i/6,\qquad\eta=\sqrt2\,d_{01},\qquad
+(a_{\rm act})_2=h+\eta\tau,\\
+p_2=\frac{h+\eta\tau}{i(1-\ell/2)},\qquad
+q_2=(\ell+1)p_2+ih,\qquad
+i(1-\ell/2)=-9/2+3i/2\ne0,\\
+v=a_{\rm act}-ip,\qquad U=iq+BCu+Cv.
+\end{gathered}
+\tag{38.9}
+$$
+
+逐坐标代入给出
+
+$$
+v_1=-3+i/3=-i\ell/3,\quad U_1=2i/3,\qquad
+v_2=-i\ell p_2/2,\quad U_2=ip_2.
+$$
+
+所以两条零残量演员接触恰为
+
+$$
+P_0=v+\ell U/2=0,\qquad Q_0=iCv-\ell p=0.
+\tag{38.10}
+$$
+
+需求列及残量配对也完全确定：
+
+$$
+\begin{gathered}
+d_0=a_{\rm act}-Hu+\ell C^2u/2=(d_{01},\eta\tau)^{\mathsf T}
+      =\eta a_\tau,\\
+|d_{01}|^2=\frac{121}{4}+\frac{529}{36}=\frac{809}{18},\qquad
+|\eta|^2=\frac{809}{9},\qquad
+\operatorname{Re}(v^*T_Au)=-3.
+\end{gathered}
+\tag{38.11}
+$$
+
+在 $u=e_1$ 上实际探针必须有 $q=p$；(38.9) 不以 $q_2=p_2$ 为前提。因此必须先恢复实际有限列，才能把这些接触数据用于原 PB。
+

@@ -1,0 +1,64 @@
+## 38. An incomplete one-step interface need not establish hidden decay
+
+Fix $0<\epsilon<1$ and retain the reveal branches $\epsilon\operatorname{Tr}(P_aX)u$. Give two instruments the same additional outcome $f$, but choose its map differently:
+
+$$
+\Lambda_f^{\rm keep}(X)=(1-\epsilon)X,
+\qquad
+\Lambda_f^{\rm erase}(X)
+=(1-\epsilon)\operatorname{Tr}(X)u.
+$$
+
+For every input density, the reveal probabilities and the failure probability $1-\epsilon$ agree. At the scalar visible algebra, their entire one-step visible recorded output channels are identical. Both have immediate coefficient $b=\epsilon$, while their hidden coefficients are $\beta=1-\epsilon$ and $\beta=0$, respectively.
+
+After $n$ repetitions from $P_0$ versus $P_1$, the first instrument has complete-record total variation $1-(1-\epsilon)^n$. The second has exactly $\epsilon$: an initial failure erases the bit and makes all later records common; an initial reveal already distinguishes the two disjoint first labels. All failure records are retained in both models.
+
+Even exact one-step visible tomography on every input therefore does not determine hidden contraction or the unlimited-depth budget. A hidden-output measurement or an additional structural channel contract can distinguish these poststate realizations.
+
+This ambiguity concerns the incomplete output interface in the example. Full output tomography on a spanning input family would determine the branch poststates and distinguish the two instruments.
+
+The finite preparation certificate makes the extra evidence explicit. For one fixed instrument, let $b_*,\beta_*$ denote its least operator constants in the two inequalities of (34.2), without assuming $\beta_*<1$.
+
+If $K=\{0\}$, take $b_*=\beta_*=0$ and omit the Gram division. The following Gram estimates assume $\dim K>0$.
+
+Let $d_a$ be a real basis of $K$ selected from actual equal-response preparation differences, with positive-definite Gram matrix $G_{ab}=\operatorname{Tr}(d_ad_b)$. Define
+
+<a id="eq-hidden-38-1"></a>
+
+$$
+V_a=\bigoplus_xP\Lambda_x(d_a),
+\qquad
+Z_a=\bigoplus_xQ\Lambda_x(d_a).
+\tag{38.1}
+$$
+
+Finite reconstruction gives valid, possibly loose estimates
+
+<a id="eq-hidden-38-2"></a>
+
+$$
+\begin{aligned}
+b_*
+&\le
+\frac{\left(\sum_a\lVert V_a\rVert_1^2\right)^{1/2}}
+{\sqrt{\lambda_{\min}(G)}},\\
+\beta_*
+&\le
+\frac{\left(\sum_a\lVert Z_a\rVert_1^2\right)^{1/2}}
+{\sqrt{\lambda_{\min}(G)}}.
+\end{aligned}
+\tag{38.2}
+$$
+
+Indeed, for $h=\sum_ac_ad_a$,
+
+$$
+\lVert c\rVert_2
+\le\frac{\lVert h\rVert_2}{\sqrt{\lambda_{\min}(G)}}
+\le\frac{\lVert h\rVert_1}{\sqrt{\lambda_{\min}(G)}}.
+$$
+
+Apply the triangle inequality to the corresponding $V_a$ or $Z_a$ sum, followed by scalar Cauchy–Schwarz. This proves both estimates. Certified output-norm upper errors and a certified Gram lower bound can be included. An obtained upper bound at least one does not prove failure of actual hidden contraction.
+
+Sufficiently complete visible-output tomography can determine the $V_a$ under its preparation contract. The $Z_a$ require hidden-output information or a verified full map. The same visible probability table does not supply them, as the paired example demonstrates. Exact zero visible gaps on the chosen pairs certify $b=0$; small visible gaps alone do not certify $\beta<1$.
+

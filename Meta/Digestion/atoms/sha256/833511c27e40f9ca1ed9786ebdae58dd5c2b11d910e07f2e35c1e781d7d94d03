@@ -1,0 +1,10 @@
+**命题 21.1（Exact-return information obstruction）。** For the same fixed device of §18, if $d<1$ and $\varepsilon_0=\varepsilon_1=0$, then $p_0=p_1$.
+
+**证明。** If the two normalized complete-record laws differ, their affinity satisfies $\beta<1$. Taking $n$ large in (19.2) gives $1\le d<1$, a contradiction. $\square$
+
+This is the standard information-without-disturbance obstruction under an explicit retained-record contract. It allows noisy readouts and mixed program states when exact product return holds.
+
+For finite density states, $d=1$ exactly when their supports are orthogonal. Orthogonal supports give distance one directly. Conversely, a maximizing Helstrom projection at distance one has probability one on one state and zero on the other. Positivity places their supports in its orthogonal range and kernel. Thus $d<1$ covers every pair with nonorthogonal supports.
+
+<a id="statement-reference-21-2"></a>
+

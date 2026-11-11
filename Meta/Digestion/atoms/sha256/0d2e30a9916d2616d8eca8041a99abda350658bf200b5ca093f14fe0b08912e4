@@ -1,0 +1,23 @@
+## 35. Adaptive complete histories retain the same residual budget
+
+Fix a finite depth $n$. A policy selects the next allowed control from the entire preceding classical history, by the same rule under both source hypotheses. Retain all old records. Each stage is then a completely positive trace-preserving map $\Gamma_t$ from the direct sum over old histories to the direct sum over extended histories. Different history blocks can select different controls. Let $P_t$ act as $P$ on every block and let $Q_t=\operatorname{id}-P_t$.
+
+For a blockwise hidden Hermitian input, summing (34.2) over histories preserves the same constants $b,\beta$. A randomized policy is included when its randomness is common and source independent: retain the random labels and use the corresponding convex mixture. The policy may not read an additional hidden preparation label outside this channel contract.
+
+Define the actual recorded process and a mathematical residual chain by
+
+<a id="eq-hidden-35-1"></a>
+
+$$
+\begin{aligned}
+T_n&=\Gamma_n\cdots\Gamma_1,\\
+h_0&=h,
+\qquad h_t=Q_t\Gamma_t(h_{t-1}).
+\end{aligned}
+\tag{35.1}
+$$
+
+Each $h_t$ is blockwise in $\ker P$, and $\lVert h_t\rVert_1\le\beta^t\lVert h\rVert_1$. These are signed residual operators, not density states or an additional experimental procedure.
+
+<a id="statement-hidden-35-1"></a>
+

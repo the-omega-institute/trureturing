@@ -1,0 +1,120 @@
+**定理 39.3（全接触的无界条带排除）。** 在 §37 的上述 $h$ 邻域中再取
+
+$$
+0<h\le\frac1{1000},\qquad |b|\le\frac1{2000},\qquad A=|t|>1.
+\tag{39.11}
+$$
+
+对任一来源 $r=\pm1$、任一取向和相应合法符号的每个接触，若 $\zeta\ne0$，则
+
+$$
+\mathcal R(c)>\frac{50}{27}>\frac{809}{480}.
+\tag{39.12}
+$$
+
+包括 $\zeta=0$ 的全部此类接触，都在 $0\le k\le809/480$ 上满足 $J_k>0$。这里没有对 $A$ 设置上界。
+
+证明。只用第一条演员接触和来源需求，令
+
+$$
+E=H-C^3/2=\operatorname{diag}(3/2,0)+hJ_A,\qquad
+R=C(C-\ell I_2)^{-1}.
+$$
+
+由于 $|t|>1$，每个 $c_j-\ell$ 都非零，其中 $c_1=1,c_2=2$。求解 $\iota(I_2-\ell C^{-1})p=Hu-\ell C^2u/2+\eta a_r$，准确得到
+
+$$
+p=-\frac{\iota}{2}C^3u-\iota R(Eu+\eta a_r).
+\tag{39.13}
+$$
+
+所用分解是 $R(H-\ell C^2/2)=C^3/2+RE$。取 $u^*p$ 的虚系数为零，得
+
+$$
+\operatorname{Re}(\eta u^*Ra_r)
+ =-\frac12u^*C^3u-\operatorname{Re}(u^*REu).
+\tag{39.14}
+$$
+
+下文的向量范数为 Euclidean 范数，矩阵范数为其算子范数。对 $|b|\le1/2000$，
+
+$$
+\operatorname{Re}\frac{c_j}{c_j-b-\iota t}
+ =\frac{c_j(c_j-b)}{(c_j-b)^2+t^2}>0,\qquad
+\|R\|\le\frac2A.
+$$
+
+因此 $E$ 的对角部分对 $\operatorname{Re}(u^*REu)$ 的贡献非负，非对角部分则不小于 $-h\|R\|\|u\|\|J_Au\|\ge-2h/A$。又 $u^*C^3u/2\ge1/2$。由 (39.14)，其右侧严格为负，并有
+
+$$
+\begin{gathered}
+|\eta|\,|u^*Ra_r|\ge\frac12-\frac{2h}{A}\ge\frac12-2h,\\
+|u^*Ra_r|\le\|Ra_r\|\le\frac{\|Ca_r\|}{A}
+ =\frac{3}{\sqrt2 A},\\
+v_\eta:=\frac{|\eta|}{A}
+ \ge\frac{\sqrt2}{3}\left(\frac12-2h\right)
+ \ge\frac{83\sqrt2}{500}>\frac15.
+\end{gathered}
+\tag{39.15}
+$$
+
+这里 $\|Ca_r\|^2=1/2+4=9/2$ 对两个来源相同；最后的严格不等式等价于 $2\cdot83^2>100^2$。式 (39.15) 对所有 $A>1$ 有效，没有先把 $A$ 限在紧区间。
+
+同一精确列恒等式 (39.13) 还给
+
+$$
+\begin{aligned}
+\|p\|
+&\le\frac12\|C^3\|+\|R\|\|E\|
+        +|\eta|\,\|Ra_r\|\\
+&\le4+\frac{2(3/2+h)}{A}+\frac{3}{\sqrt2}v_\eta
+ \le7+2h+3v_\eta.
+\end{aligned}
+\tag{39.16}
+$$
+
+由 (39.8)，$|x|,|y|\le1/2$、$|L|\le4+h/2$，并且
+
+$$
+2|Z|\le|\overline{u_1}p_1|+|\overline{u_2}p_2|
+ \le\|u\|\|p\|=\|p\|.
+$$
+
+将这些界用于 (39.10) 的最后一式，得到
+
+$$
+\begin{aligned}
+|\zeta|
+&\le\frac{Ah}{2}+|b|\bigl(\|p\|+3|L|\bigr)\\
+&\le\frac{Ah}{2}+|b|\left(19+\frac72h+3v_\eta\right)\\
+&\le\frac{Ah}{2}+|b|(20+3v_\eta)\\
+&\le A\left[\frac h2+|b|(20+3v_\eta)\right].
+\end{aligned}
+\tag{39.17}
+$$
+
+倒数使用时，方括号严格正，因为 $h>0$。对 $\zeta\ne0$，由 $|\eta|=Av_\eta$ 得
+
+$$
+\mathcal R(c)
+ \ge\frac{A^2v_\eta^2}
+ {2(A^2-1)[h/2+|b|(20+3v_\eta)]}
+ >\frac{v_\eta^2}{2[h/2+|b|(20+3v_\eta)]}.
+\tag{39.18}
+$$
+
+为合法代入 $v_\eta>1/5$，置 $c_0=h/2+20|b|>0$、$d_0=3|b|\ge0$。函数 $v^2/(c_0+d_0v)$ 在 $v>0$ 上严格递增，因为其导数是 $v(2c_0+d_0v)/(c_0+d_0v)^2>0$。再对 $h,|b|$ 用各自上界，得
+
+$$
+\mathcal R(c)>
+\frac{1/25}{2[1/2000+(1/2000)(20+3/5)]}
+ =\frac{1/25}{2[1/2000+103/10000]}
+ =\frac{50}{27}.
+\tag{39.19}
+$$
+
+由于 $50\cdot480=24000>21843=809\cdot27$，(39.12) 成立。对任意合法 $\epsilon$ 及 $0\le k\le809/480$，
+$J_k\ge4|\zeta|(\mathcal R(c)-k)>0$。若 $\zeta=0$，不能用比值，但引理 37.4 给 $\eta\ne0$，故 $J_k=s(A)|\eta|^2>0$。这完成包括零配对分支的证明。∎
+
+该定理对一个完整无界条带给下界，而非从选定接触给阈值上界。它只排除条带内的接触作为所列 $k$ 范围的失效原因，不能把条带外未验的接触一起判为正。
+

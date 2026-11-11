@@ -1,0 +1,98 @@
+**定理 53.3（Absolute original-table bound for the entire upper-margin atom class）。** Let $N=2^m\ge2048$ and let the single table satisfy Definition 50.1, with its original $H$ and $\epsilon\in[0,1/10]$. For every positive-definite Gaussian integral interval atom $G$ with
+
+$$
+ 0\prec G\prec NI_4,\qquad
+ \det G\le11,\qquad
+ \lambda_{\max}(G/N)\le1-\frac{A_0}{N^2},
+\tag{53.20}
+$$
+
+one has
+
+$$
+ \boxed{\ |p(G/N)-\operatorname{Tr}(HG/N)|
+          \le C_0\left(\epsilon+\frac1N\right).\ }
+\tag{53.21}
+$$
+
+For $N>N_0$, the stronger bound $(C_*+TK_{\mathrm{tr}})\epsilon$ holds. In particular (53.21) covers the entire residual class (52.7), for every residual basis satisfying its stated conditions. No short-$G$-vector condition is an additional premise.
+
+**证明。** First suppose $N\le N_0$. Part I, Theorem 16.2 gives $\|H\|_{\mathrm{op}}\le8$. Since $0\preceq G/N\preceq I_4$ and $p(G/N)\in[0,1]$,
+
+$$
+ |e(G/N)|\le1+8\operatorname{Tr}(G/N)\le33
+ \le\frac{33N_0}{N}\le\frac{C_0}{N}.
+\tag{53.22}
+$$
+
+This accounts for every allowed coarse scale.
+
+Now let $N>N_0$, and suppose for contradiction that $G_0=G$ satisfies
+
+$$
+ |e(G_0/N)|>(C_*+TK_{\mathrm{tr}})\epsilon.
+\tag{53.23}
+$$
+
+We construct $G_0,\ldots,G_T$ using Lemma 53.2. Put $B_k=NI_4-G_k$ and $\mathcal D_k=\det B_k$. At each stage the error transfer gives
+
+$$
+ |e(G_k/N)|>
+   \bigl(C_*+(T-k)K_{\mathrm{tr}}\bigr)\epsilon
+ \ge C_*\epsilon.
+\tag{53.24}
+$$
+
+In particular $G_k\ne0$: the menu hypotheses give $p(0)\le2\epsilon$, while $C_*>2$.
+
+The margin needed to apply Theorems 50.2 and 52.2 persists throughout these $T$ steps. Indeed, the margin part of (53.3), Bernoulli's inequality, $N>2TD_0$, and (53.20) give, for $0\le k\le T$,
+
+$$
+\begin{aligned}
+ B_k
+ &\succeq\left(1-\frac{D_0}{N}\right)^k B_0\\
+ &\succeq\left(1-\frac{kD_0}{N}\right)B_0
+ \succeq\frac12B_0
+ \succeq\frac{A_\dagger}{N}I_4.
+\end{aligned}
+\tag{53.25}
+$$
+
+This is an inductive estimate: the initial inequality holds at $k=0$, and Lemma 53.2 supplies its next step once the current stage has the stated margin and residual conditions.
+
+At every current stage, (53.24)--(53.25) allow the failure implication (52.7) to be applied to $G_k$. It supplies a balanced basis, with its associated $C_k,\Delta_k,q_k$, such that
+
+$$
+ \nu(C_k)>\frac1{2\tau},\qquad
+ 1\le\Delta_k<D_0,\qquad
+ \mathcal D_k=d_k+j_kN,\qquad
+ j_k\ge1,\qquad
+ j_k\|q_k\|^2<\Delta_k.
+\tag{53.26}
+$$
+
+Here $d_k=\det G_k\le11$. Since $q_k$ is a nonzero integral vector, $\|q_k\|^2\ge1$. Thus each such stage satisfies
+
+$$
+ N\le \mathcal D_k<D_0N+11.
+\tag{53.27}
+$$
+
+Equations (53.26)--(53.27) are exactly the input needed for Lemma 53.2. For $k<T$ it produces the next atom $G_{k+1}$ with (53.24), (53.25), and $\mathcal D_{k+1}>\lambda \mathcal D_k$. The zero alternative would contradict (53.24), so the construction reaches $G_T$. The same failure implication at $k=T$ gives the upper bound in (53.27).
+
+On the other hand, the determinant growth and the integer choice of $T$ give
+
+$$
+ \mathcal D_T>\lambda^T\mathcal D_0
+ \ge\lambda^TN
+ \ge\left(1+\frac{T}{4\tau}\right)N
+ =(D_0+2)N>D_0N+11,
+\tag{53.28}
+$$
+
+The initial lower bound $\mathcal D_0\ge N$ follows from (53.27), and the last inequality uses $N\ge2048$. This contradicts (53.27). Consequently (53.23) is impossible, proving the asserted stronger fine-scale bound and, with (53.22), (53.21).
+
+The construction uses only one supplied table at one scale. The constants in (53.1) are independent of every target and every basis; the residual bases may change at successive stages. Theorem 52.2 supplies necessary conditions only when its own bound fails, and those conditions are used here to continue the contradiction, not as a sufficient anchor or as a replacement event. In particular no extra hypothesis from the short-vector consequence (50.5) enters the proof.
+
+The new deduction is the combination of the cofactor congruence (53.7), the transverse extraction (53.10)--(53.12), and the strict determinant increase (53.18)--(53.28). The original rank-one and trace-group estimates of Part I and the failure implication of Theorem 52.2 are reused with their stated hypotheses. The ordinary Hermite bound is credited above; the balanced reduction and large-minimum representation theorem of Beli--Chan--Icaza--Liu, [*On a Waring's problem for integral quadratic and hermitian forms*, Proposition 5.3](https://arxiv.org/html/1702.08854v1), enter through Theorems 50.2 and 52.2. This is a repo-derived ordinary mathematical conclusion, with no global literature-priority assertion. It establishes the upper-margin atom estimate with $A=A_0\ge A_\dagger$, including the entire residual class, and does not assert an unrestricted estimate for the complementary boundary band. $\square$
+

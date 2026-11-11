@@ -1,0 +1,51 @@
+**定理 37.6（包括非实际轴接触的恢复）。** 对每个 $c\in\mathcal C_\iota(a)$、每个固定实数 $k$，存在对所有充分大有限 $\lambda$ 定义的归一原测试，使可见数据趋于 $c$，且
+
+$$
+\lambda^2\mathcal D_\lambda^{\rm orig}\longrightarrow J_k(c).
+\tag{37.38}
+$$
+
+恢复使用 (37.2) 的同一实际 $D_\lambda^{\rm env},F,G_\lambda$；不改变源的三个矩。
+
+证明。若接触有实际 $X$，保持 $u,X$。否则它是引理 37.2 的轴点，用 (37.18) 并取 $\tau_\lambda=\lambda^{-3}$，得到实际 $u_\lambda,X_\lambda$，且
+
+$$
+\|u_\lambda-u\|+\|X_\lambda u_\lambda-p\|
+ +\|X_\lambda Cu_\lambda-q\|=O(\lambda^{-3}).
+\tag{37.39}
+$$
+
+保持接触的 $a_{\rm act},\ell,\epsilon$，令
+
+$$
+\nu_\lambda=0,\qquad
+\alpha_{\tau,\lambda}=A-\tau\epsilon>0,\qquad
+\beta_{\tau,\lambda}=\tau\operatorname{Re}\ell,\qquad
+\rho_\lambda=k/\lambda^2.
+\tag{37.40}
+$$
+
+此时 $\mathsf P_\lambda=O(\lambda^{-3})$，$\mathsf Q_\lambda=O(\lambda^{-3})+O(\lambda^{-2})$，方差恰为零。令
+
+$$
+\begin{gathered}
+t_\lambda=a_{\rm act}-Hu_\lambda+\ell C^2u_\lambda/2
+             =\eta a+O(\lambda^{-3}),\\
+e_\lambda=G_\lambda R_\lambda t_\lambda,\qquad
+y_\lambda=(D_\lambda^{\rm env})^{-1}
+       (e_\lambda-\ell FCu_\lambda/2-Fu_\lambda).
+\end{gathered}
+\tag{37.41}
+$$
+
+原矩阵 $D_\lambda^{\rm env}$ 在每个有限阶段可逆，故这个 $y_\lambda$ 有限，且直接由 (37.3) 得 $Bu_\lambda+Vy_\lambda=a_{\rm act}$。所用环境列正是原最小范数列，$e_0=0$。因此
+
+$$
+\lambda^2\mathcal A_\lambda=O(\lambda^{-2})\to0,\qquad
+\lambda^2s_\alpha t_\lambda^*R_\lambda t_\lambda
+             \to s(A)|\eta|^2,\qquad \zeta_\lambda\to\zeta(c).
+\tag{37.42}
+$$
+
+例如垂直误差贡献为 $O(\lambda^2\lambda^{-6})$，平行项由 (37.36) 计算；这证明 (37.38)。恢复列可以由发散的 Hermitian 对角元产生，但每个有限阶段都是原来允许的探针。∎
+

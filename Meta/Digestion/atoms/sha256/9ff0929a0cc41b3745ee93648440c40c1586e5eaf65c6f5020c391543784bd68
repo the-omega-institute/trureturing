@@ -1,0 +1,59 @@
+**定理 39.4（两条增广轴的完整参数化）。** 固定 $j\in\{1,2\}$、$l\ne j$，写 $u=ze_j$、$|z|=1$。对每个 $t\in\mathbb R$、$|t|>1$，该轴上的全部 (39.4) 接触准确由下列公式给出：
+
+$$
+\begin{gathered}
+b=c_j-2/c_j=2c_j-3,\qquad \ell=b+\iota t,\qquad
+\epsilon=-\operatorname{sign}(t),\\
+p_j=-\frac{3c_j^2}{t}z,\qquad q_j=c_jp_j,\\
+\delta_j(t)=-5c_j+\frac{(2c_j-3)c_j^2}{2}
+       +\iota\left(\frac{tc_j^2}{2}-\frac6t\right),\qquad
+\eta=\frac{z\delta_j(t)}{(a_r)_j},\\
+p_l=\frac{hz+\eta(a_r)_l}{\iota(1-\ell/c_l)},\qquad
+q_l=(\ell+2/c_l)p_l+\iota h c_jz,\qquad
+a_{\rm act}=\iota(I_2-\ell C^{-1})p.
+\end{gathered}
+\tag{39.20}
+$$
+
+在两轴上分别有
+
+$$
+\begin{gathered}
+j=1:\quad b=-1,\quad
+\delta_1(t)=-11/2+\iota(t/2-6/t),\quad\zeta=-3,\\
+j=2:\quad b=1,\quad
+\delta_2(t)=-8+\iota(2t-6/t),\quad\zeta=12.
+\end{gathered}
+\tag{39.21}
+$$
+
+参数化包括每个来源符号和每个取向。所有分母非零：$t\ne0$、$(a_r)_j\ne0$，且 $1-\ell/c_l\ne0$ 由 $t\ne0$ 保证。
+
+证明。引理 37.2 在 $u=ze_j$ 上恰要求 $w=p_j/z\in\mathbb R$、$q_j=c_jp_j$，对 $p_l,q_l$ 不另加限制。接触的第 $j$ 个 $q$ 坐标成为
+
+$$
+(\ell+2/c_j-c_j)w+3\iota c_j^2=0.
+$$
+
+其虚系数给 $tw=-3c_j^2$，所以 $w\ne0$；实部遂给 $b=c_j-2/c_j$。在 $c_j=1,2$ 上，这正是 $b=2c_j-3$。第 $j$ 个需求坐标除以 $z$ 为
+
+$$
+\iota(1-\ell/c_j)w-2c_j+\ell c_j^2/2
+=-5c_j+bc_j^2/2+\iota(tc_j^2/2-6/t),
+$$
+
+给出 $\delta_j$ 和 $\eta$。在另一坐标，$u_l=0$、$(Hu)_l=hz$，需求等式准确给出 (39.20) 的 $p_l$；再用第二条演员接触给 $q_l$。这是必要性。
+
+反之，取任意所列 $t,z$ 并按公式定义。第 $j$ 个接触方程由上面的实、虚等式成立；两需求坐标分别为 $z\delta_j=\eta(a_r)_j$ 和 $\eta(a_r)_l$。$p_j/z$ 为实数且 $q_j=c_jp_j$，所以全部闭包条件成立；其余接触等式按定义成立。这证明充分性。最后把 $m_j=1$、$x=0$ 代入 (39.10)，得到两个 $\zeta$ 值。∎
+
+增广轴与实际轴仍须区分。对同一个有限实际 $X$，$Cu=c_ju$ 强制整列 $q=c_jp$；闭包只强制该等式的第 $j$ 个坐标。因此 (39.20) 给实际轴接触当且仅当
+
+$$
+q_l=c_jp_l
+\quad\Longleftrightarrow\quad
+\ell p_l+\iota h c_jz=0.
+\tag{39.22}
+$$
+
+这里用了 $2/c_l=c_j$。此条件也充分：取 $X_{jj}=p_j/z\in\mathbb R$、$X_{lj}=p_l/z$、$X_{jl}=\overline{X_{lj}}$，令 $X_{ll}$ 任意实数，便有 $Xu=p$、$XCu=q$。没有通过 (39.22) 的增广轴点依然由定理 37.6 恢复为实际趋轴探针；不能把它们删出接触比较，也不能称它们本身为有限实际轴探针。
+

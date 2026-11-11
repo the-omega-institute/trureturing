@@ -1,0 +1,84 @@
+**定理 35.4（保留全部原探针的 $c_{\rm PB}/L$ 下界）。** 存在 $h_0,c_{\rm PB}>0$，使每份有限实际 $W=0$ 输入，只要
+
+$$
+M_1=C,\qquad H=2C+hJ_A,\qquad |h|<h_0,\qquad
+\|M_2\|\le L,\quad L\ge1,
+\tag{35.11}
+$$
+
+就在每个 $|\rho|\le c_{\rm PB}/L$ 满足两个取向的全部原 PB。结论不要求 $M_0$ 的额外界，也不要求 $D$ 可逆；在 (35.5) 中当然适用。
+
+证明。以 $G=D^\dagger F$ 记实际环境映射；$W=0$ 保证 $DG=F$、$G^*D=V$。固定任意原 $X=X^*$、单位演员 $u$、任意环境向量 $y$、两个符号和全部有限参数 $\alpha_\tau>0,\beta_\tau\in\mathbb R$。不优化或更换这份实际测试。令
+
+$$
+\begin{gathered}
+p=Xu,\quad q=XCu,\quad a_{\rm act}=Bu+Vy,\quad v=a_{\rm act}-\iota p,\quad
+d=Fu+Dy,\quad U=\iota q+BCu+Cv,\\
+\mathsf P=v-\nu p+\ell U/2,\qquad
+\mathsf Q=\iota Cv-\ell p+\rho T_Au+\nu U/2,\\
+\chi_\tau=\alpha_\tau^{-1},\quad s_\alpha=\chi_++\chi_-,\quad
+\omega_\chi=(\chi_+-\chi_-)/s_\alpha,\quad
+\bar b=(\ell+\omega_\chi\nu)/2,\quad e=d+\bar b FCu,\\
+\kappa=\frac{|\nu|^2\chi_+\chi_-}{s_\alpha}\ge0,\qquad
+A_{\rm act}=\sum_{\tau=\pm1}\chi_\tau\|\mathsf P+\tau\mathsf Q\|^2.
+\end{gathered}
+\tag{35.12}
+$$
+
+注意 $\bar b$ 只是加权复系数的名称，不表示取共轭。由 (32.5)、(31.9)–(31.10) 的原列与加权方差，实际缺陷平方和及配对准确为
+
+$$
+S=A_{\rm act}+s_\alpha\|e\|^2+\kappa\|FCu\|^2,\qquad
+\mathcal D_\rho=S+4\epsilon\rho R,\quad
+R=\operatorname{Re}(v^*T_Au),\quad
+a_{\rm act}=Hu+G^*e-\bar b C^2u.
+\tag{35.13}
+$$
+
+在 §32 的基准环境 $F_b=C,G_b=I_2,D_b=C$ 中，取同一 $B,H,X,u,\rho$ 及全部变分参数，仅定义用于比较的
+
+$$
+e_b=G^*e,\qquad d_b=e_b-\bar b C^2u,\qquad
+y_b=C^{-1}(d_b-Cu).
+\tag{35.14}
+$$
+
+则 $Bu+Cy_b=Hu+d_b=a_{\rm act}$。所以演员原列、$\mathsf P,\mathsf Q$ 和 $R$ 完全相同。该基准测试的平方和为
+
+$$
+S_b=A_{\rm act}+s_\alpha\|G^*e\|^2+\kappa\|C^2u\|^2\le LS.
+\tag{35.15}
+$$
+
+最后一步只用三条逐项不等式：$A_{\rm act}\le LA_{\rm act}$、$\|G^*e\|^2\le L\|e\|^2$，以及
+$\|C^2u\|^2=\|G^*FCu\|^2\le L\|FCu\|^2$，其中 $\|G\|^2=\|M_2\|\le L$。这不是为不同预算各选一个最优环境：同一个 $e_b,y_b$ 同时比较两条原缺陷。
+
+现明确使用 §32 的常数范围。在其 (32.9)–(32.14) 及 (32.15) 前的统一下界中，存在 $\gamma,K_0,h_0,r_0>0$，可取 $r_0\le1$，使对每个基准测试和 $|h|<h_0,|\rho|\le r_0$ 有
+
+$$
+S_b\ge\gamma b_\vartheta,\qquad
+|R|\le K_0\bigl(b_\vartheta+\sqrt{b_\vartheta S_b}+|\rho|\bigr),\qquad
+b_\vartheta=\frac{(|\ell|+|\nu|)^2}{|\ell|}\ge1.
+\tag{35.16}
+$$
+
+这里参数合法性正是 (32.6)，$|\ell|>0$；$\vartheta$ 是原变分索引，不是下文外部相位。§32 的大尺度、紧域和方差三域下界对两个取向、两个绝对值符号以及全部有限参数共同成立；配对界是在 (32.10) 之前取得。取闭的较小 $r_0$ 即可保留上述端点。由 $|\rho|\le1\le b_\vartheta$，
+
+$$
+|R|\le A_0S_b\le A_0LS,\qquad
+A_0=K_0\left(\frac2\gamma+\frac1{\sqrt\gamma}\right),\qquad
+c_{\rm PB}=\min\left(r_0,\frac1{8A_0}\right)>0.
+\tag{35.17}
+$$
+
+于是 $|\rho|\le c_{\rm PB}/L$ 时原有限代价满足
+
+$$
+\mathcal D_\rho\ge(1-4A_0L|\rho|)S\ge S/2\ge0.
+\tag{35.18}
+$$
+
+对固定的同一个实际 $X,\xi$，在全部有限变分参数上取 (27.12) 的下确界，即得原向量 PB，包括下确界不取到的退化 Gram。演员分量非单位时同比缩放整个向量；演员分量为零时，$x\xi=h_x\xi=r\xi=s_\rho\xi=0$，且 $\phi_\xi(L_{\rm PB})=-2\operatorname{Re}((Vy)^*\iota CVy/2)=0$，所以 PB 自动成立。
+
+最后，任意完整原代数正泛函都有 (17.14) 的谱和 $\phi=\sum_j\phi_{\xi_j}$。把 (17.15) 分别用于原两笔实 Gram，结合 $|\sum_j\phi_{\xi_j}(L_{\rm PB})|\le\sum_j|\phi_{\xi_j}(L_{\rm PB})|$，正是 (17.16) 的全正泛函提升。所有环境密度块、全部原 $X$ 和同一实际 $t$ 均保留，任意给定正有限总质量不变，零泛函亦满足零等式。∎
+

@@ -1,0 +1,22 @@
+**定理 3.2（Equality of visible responses is a commutant-unitary fibre）。** For unit vectors $\Psi,\Phi$ in this same represented $H$,
+
+<a id="eq-purity-3-3"></a>
+
+$$
+\begin{aligned}
+\omega_\Psi|_{\mathcal A}=\omega_\Phi|_{\mathcal A}
+&\quad\Longleftrightarrow\quad
+\Phi=U'\Psi\ \text{for a unitary }U'\in\mathcal A',\\
+\mathcal A'
+&=\bigoplus_\alpha
+\bigl(I_{V_\alpha}\otimes B(W_\alpha)\bigr).
+\end{aligned}
+\tag{3.3}
+$$
+
+**证明。** A commuting unitary preserves all expectations. Conversely, equality of all block-matrix expectations gives the same $\sigma_\alpha$. Choose a common eigenbasis for each of these blocks. Both vectors then have expansions (3.2) with identical nonzero coefficients and left vectors, but possibly different orthonormal right frames. In each $W_\alpha$, map one right frame to the other and extend to a unitary. Their block sum gives $U'$. Zero sectors impose no condition; independent central-sector phases are included in these unitaries. Commuting first with central projections and then with every left matrix unit gives the displayed formula for $\mathcal A'$. $\square$
+
+This is equality of current response fibres. It neither supplies $U'$ as a native operation nor makes it invisible to an enlarged future interface. A future test outside $\mathcal A$ changes the observation task.
+
+<a id="statement-purity-3-3"></a>
+

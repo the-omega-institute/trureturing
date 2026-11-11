@@ -1,0 +1,59 @@
+### 38.3 包括零差分支的有限 Hermitian 恢复
+
+记
+
+$$
+s_{\rm vis}=2p_2-q_2,\qquad t_{\rm vis}=q_2-p_2.
+$$
+
+若 $t_{\rm vis}\ne0$，对每个有限 $\lambda>1$ 置
+
+$$
+\begin{gathered}
+\varepsilon_\lambda=\lambda^{-3},\qquad
+(u_\lambda)_2=\varepsilon_\lambda\frac{t_{\rm vis}}{|t_{\rm vis}|},\qquad
+(u_\lambda)_1=\sqrt{1-\varepsilon_\lambda^2},\\
+X_\lambda=\begin{pmatrix}
+1/3&\overline{s_{\rm vis}}/(u_\lambda)_1\\
+s_{\rm vis}/(u_\lambda)_1&|t_{\rm vis}|/\varepsilon_\lambda
+\end{pmatrix},\qquad
+p_\lambda=X_\lambda u_\lambda,\qquad q_\lambda=X_\lambda Cu_\lambda.
+\end{gathered}
+\tag{38.12}
+$$
+
+矩阵逐项有限且 Hermitian，$\|u_\lambda\|=1$，所有分母非零。直接相乘，第二坐标精确为
+
+$$
+(p_\lambda)_2=s_{\rm vis}+t_{\rm vis}=p_2,\qquad
+(q_\lambda)_2=s_{\rm vis}+2t_{\rm vis}=q_2.
+$$
+
+第一坐标分别为
+
+$$
+(p_\lambda)_1=\frac{(u_\lambda)_1}{3}
+ +\frac{\overline{s_{\rm vis}}(u_\lambda)_2}{(u_\lambda)_1},\qquad
+(q_\lambda)_1=\frac{(u_\lambda)_1}{3}
+ +\frac{2\overline{s_{\rm vis}}(u_\lambda)_2}{(u_\lambda)_1}.
+$$
+
+若 $t_{\rm vis}=0$，则 $q=p$，改取
+
+$$
+u_\lambda=e_1,\qquad
+X_\lambda=\begin{pmatrix}1/3&\overline{p_2}\\p_2&0\end{pmatrix},
+\qquad p_\lambda=p,\quad q_\lambda=q.
+\tag{38.13}
+$$
+
+此分支不除以 $t_{\rm vis}$，也不除以零演员坐标。两种情形共同给出实际 $x_\lambda=X_\lambda\oplus0_3$，以及
+
+$$
+u_\lambda-u=O(\lambda^{-3}),\qquad
+p_\lambda-p=O(\lambda^{-3}),\qquad q_\lambda-q=O(\lambda^{-3}).
+\tag{38.14}
+$$
+
+这些是可见列估计，不要求 $X_\lambda$ 一致有界。
+

@@ -1,0 +1,20 @@
+### 44.7 合法下降、固定参数凸性与真正剩余的奇异系统
+
+在一个固定的 $\ell=x+iy$ 和不利符号扇区内，令
+
+$$
+C_y=\frac{|y|}{3(y^2-1)},\qquad \sigma=\operatorname{sgn}(y),\qquad z_t=4t-1,
+$$
+
+并置 $B=F(1/4)$、$w=|f_1|^2/16$、$c_B=|B|^2$。则在 $\sigma z_t>0$ 时有精确恒等式
+
+$$
+\mathcal R_0
+=C_y\sigma\left[wz_t+\frac12\operatorname{Re}(\overline Bf_1)+\frac{c_B}{z_t}\right],
+\qquad
+\partial_t\mathcal R_0=4C_y\sigma\left(w-\frac{c_B}{z_t^2}\right).
+\tag{44.32}
+$$
+
+若 $Bf_1\ne0$，则第二导数为 $32C_y\sigma c_B/z_t^3>0$。因此固定 $\ell$ 的每个内部临界点是该不利扇区中固定参数值的唯一全局极小点；这不能推出另一合法根存在，也不能推出另一根的值更低。
+

@@ -1,0 +1,8 @@
+The existing suppliers and their distinct interfaces are:
+
+- *AURIC_COMPLETE_QUANTUM_PROCESSES_INTERNAL_MEMORY_AND_RANK_BOUNDARY_STABILITY_V38.md*, Theorem 8.1: all-joint-state autonomy forces a product unitary. Its adjacent discussion already separates a fixed environmental ready-state input family.
+- `D5/S3/Quantum/Tomography/InformationalCompletenessEquivalence.lean`: centered response spans and positive perturbations around $I/D$ supply the full-state tomography equivalence. This is a source reference, without a current compilation claim.
+- `D5/S3/Quantum/PredictionDepth/FiniteInformationalEffectCertificate.lean`: an informationally complete effect family has a finite separating subfamily of at most $D^2-1$ effects. This selects effects and does not itself supply preparation pairs inside an arbitrary $Q$.
+- Quantum-origin atlas II §§90–93: finite weighted state-design tests concern a different fixed-chart decoder frontier. Their moment calculation and preparation-resource boundary retain their scope; no design-to-fibre identification is asserted.
+- Sections 9–17 of this volume: the all-density predictor-distance and complete recorded-instrument closure results are distinct from a restricted-source span. Sections 27–32 keep the comparison quantifiers attached to the declared preparation domain and give its finite linear certificates.
+

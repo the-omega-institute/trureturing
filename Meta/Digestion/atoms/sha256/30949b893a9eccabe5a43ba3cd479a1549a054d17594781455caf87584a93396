@@ -1,0 +1,28 @@
+**有限维检验 39.1（A fixed closed unitary cannot contract an oversized full hidden kernel）。** For a fixed unitary $U$ on the same carrier, let $m=\operatorname{rank}_{\mathbb R}P$ on $\operatorname{Herm}(H)$. Then $\dim K=D^2-m$. If $D^2-m>m-1$, the real linear map
+
+<a id="eq-hidden-39-2"></a>
+
+$$
+P\operatorname{Ad}_U|_K:
+K\longrightarrow\operatorname{ran}P\cap\operatorname{Herm}_0(H)
+\tag{39.2}
+$$
+
+has a nonzero kernel, since its target has dimension $m-1$. For a nonzero $h$ in that kernel,
+
+$$
+Q\operatorname{Ad}_U(h)=\operatorname{Ad}_U(h),
+\qquad
+\lVert\operatorname{Ad}_U(h)\rVert_1=\lVert h\rVert_1.
+$$
+
+The least full-hidden one-step coefficient is thus at least one, and the strict full-kernel premise of (34.2) fails for every such unitary.
+
+For $H=S\otimes E$ with $\dim S=d$ and $\dim E=e\ge2$, take
+
+$$
+P(X)=\operatorname{Tr}_E(X)\otimes I_E/e.
+$$
+
+Then $m=d^2$ and $D^2-m=d^2(e^2-1)>d^2-1$. No closed joint unitary on this same carrier therefore strictly contracts the entire hidden kernel in one-step trace norm. The claim concerns that full kernel and that one-step norm. It does not exclude a restricted invariant source subspace, a longer mathematical projected-product envelope, a growing record space or an effective channel that discards an environment.
+

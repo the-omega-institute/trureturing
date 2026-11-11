@@ -1,0 +1,29 @@
+## 46. Finite exact tomography certifies the full map equality
+
+Fix an orthonormal basis |i>, 1<=i<=d, of H. Use the following d^2
+pure density matrices:
+
+$$
+\begin{aligned}
+P_i&=|i\rangle\langle i|,\\
+P^+_{ij}&=\tfrac12(|i\rangle+|j\rangle)
+                        (\langle i|+\langle j|),\\
+P^{\mathrm{i}}_{ij}&=\tfrac12(|i\rangle+\mathrm{i}|j\rangle)
+                        (\langle i|-\mathrm{i}\langle j|),
+\qquad i<j.
+\end{aligned}
+\tag{46.1}
+$$
+
+They span Herm(H) over the reals. In particular, with E_ij=|i><j|,
+
+$$
+\begin{aligned}
+A_{ij}&=2P^+_{ij}-P_i-P_j=E_{ij}+E_{ji},\\
+B_{ij}&=2P^{\mathrm{i}}_{ij}-P_i-P_j
+                              =-\mathrm{i}E_{ij}+\mathrm{i}E_{ji},\\
+E_{ij}&=(A_{ij}+\mathrm{i}B_{ij})/2.
+\end{aligned}
+\tag{46.2}
+$$
+

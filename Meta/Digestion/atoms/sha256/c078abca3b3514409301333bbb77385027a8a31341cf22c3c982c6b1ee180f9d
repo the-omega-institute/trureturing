@@ -1,0 +1,27 @@
+## 39. Conserved complete distinguishability imposes an exit budget
+
+Suppose a nonzero initial hidden difference retains its full trace norm under every complete $n$-stage process being compared:
+
+$$
+\lVert T_nh\rVert_1=\lVert h\rVert_1.
+$$
+
+This conservation premise concerns the modeled complete output, including every quantum memory needed for the assertion. Equation (35.4) gives
+
+<a id="eq-hidden-39-1"></a>
+
+$$
+1\le\beta^n+b\frac{1-\beta^n}{1-\beta},
+\qquad
+\boxed{b\ge1-\beta.}
+\tag{39.1}
+$$
+
+For $\beta<1$, any $n\ge1$ gives the second inequality after dividing by $1-\beta^n$. The strict ratio $b/(1-\beta)<1$ therefore cannot coexist with conserved hidden distinguishability. For the general envelope in §36, if $a_n\to0$ and complete distinguishability is conserved, the cumulative exit budget $\sum_{t\ge1}b_ta_{t-1}$ must be at least one.
+
+This is a necessary condition on norm budgets; it does not say that every quantum model has a visible event attaining that budget. The rare-readout instrument with $b=1-\beta$ preserves the norm of the difference of the two classical basis states and transfers it to its record over increasing finite horizons. It need not preserve arbitrary unknown quantum superpositions, because classical revelation has a different coherence contract.
+
+A closed isometry acting on all modeled source and memory degrees of freedom preserves the trace norm of every Hermitian difference. If an effective channel has $\beta<1$ and $b/(1-\beta)<1$, its complete modeled output cannot retain the conserved hidden distinguishability above. This does not establish global information destruction. An omitted dilation environment, a discarded quantum record, a restricted source family or a weaker meaning of conservation can remove that premise. The missing degrees of freedom must be identified before applying a closed-system information-conservation interpretation.
+
+<a id="statement-hidden-39-1"></a>
+

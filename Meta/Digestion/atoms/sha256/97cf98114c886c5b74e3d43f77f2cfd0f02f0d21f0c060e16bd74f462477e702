@@ -1,0 +1,87 @@
+**定义 68.1（PRE）。** 对每个 $X=A,D,E$，给定非零有限维实向量空间、闭尖生成锥 $C_X$、在 $C_X\setminus\{0\}$ 上严格正的线性泛函 $u_X$。态集和效应集分别是完整的
+
+$$
+K_X=\{x\in C_X:u_X(x)=1\},\qquad [0,u_X],
+\qquad P_X=\operatorname{ext}K_X.
+$$
+
+要求 $K_X$ 紧。对每个纯参照 $\xi\in P_X$ 和每个 $x\in K_X$，定义
+
+$$
+T^X_\xi(x)=\inf\{f(x):0\le f\le u_X,\ f(\xi)=1\}.
+$$
+
+三个载体各自满足完整有限混合律：对所有整数 $\ell\ge1$、所有纯态 $\xi,\eta_1,\ldots,\eta_\ell$ 和所有 $w_j\ge0$、$\sum_jw_j=1$，
+
+$$
+T^X_\xi\left(\sum_jw_j\eta_j\right)
+ =\sum_jw_jT^X_{\eta_j}(\xi).
+\tag{68.1}
+$$
+
+沿用定义 65.1 明确引用的完整 $S$ 纸面定理，得到忠实的规范迹 EJA 坐标 $\Phi_X$。它们满足
+
+$$
+\tau_X\Phi_X=u_X,\qquad
+B_X(x,y)=\tau_X(\Phi_Xx\circ\Phi_Xy),\qquad
+\Phi_XU_X=1_X.
+\tag{68.2}
+$$
+
+这里 $B_X$ 是该定理导出的比较配对，$B_X(U_X,-)=u_X$；每个简单扇区的本原幂等元规范迹为一。$\Phi_X$ 双射整个原锥与原态基到规范锥与规范迹一基，$f\mapsto f\Phi_X^{-1}$ 双射全部原效应到规范效应区间，保留全部效应概率。以下就在这些忠实坐标中写 $X_+$、$\tau_X$、$1_X$ 及 $\langle x,y\rangle_X=\tau_X(x\circ y)$；所有线性映射伴随均取这些规范迹内积。这一步是对定义 65.1 的复用，未增加独立 Jordan 桥或扇区迹重标度。
+
+唯一原始映射是实双线性 $L:D\times A\to E$ 和实线性 $p:E\to D$。要求
+
+$$
+L(d,c)\in E_+\quad(d\in D_+,\ c\in A_+),\qquad
+p(z)\in D_+\quad(z\in E_+).
+\tag{68.3}
+$$
+
+这些量词覆盖完整实际锥，包括矩阵表示中的全部纠缠正元。令
+
+$$
+\begin{gathered}
+n=\tau_A1_A,\qquad m=\tau_D1_D,\qquad
+e=1_A/n,\qquad\omega=1_D/m,\\
+\mathcal B(d,c)=pL(d,c),\qquad K(a)=\mathcal B(\omega,a),\\
+M(a,b)=\mathcal B(K(a),b)=pL\bigl(pL(\omega,a),b\bigr),\\
+J(a)=M(a,1_A),\quad H(d)=L(d,1_A),\quad B_1=pH,\\
+Q(a,b,c)=L(M(a,b),c),\qquad U=M(1_A,1_A).
+\end{gathered}
+\tag{68.4}
+$$
+
+两次 $p$ 是同一个原始读回，$\omega$ 始终由原比较单位给出；$J,H$ 插入未归一化单位。再要求
+
+$$
+\operatorname{span}_{\mathbb R}M(A,A)=D,\qquad
+\operatorname{span}_{\mathbb R}L(D,A)=E,
+\tag{68.5}
+$$
+
+以及下列完整量词的关系：
+
+$$
+\begin{aligned}
+D_J:\quad &a,b\in A_+,\ \langle a,b\rangle_A=0
+ \ \Longrightarrow\ \langle Ja,Jb\rangle_D=0,\\
+D_H:\quad &d,d'\in D_+,\ \langle d,d'\rangle_D=0
+ \ \Longrightarrow\ \langle Hd,Hd'\rangle_E=0,\\
+Z:\quad &B_1M(a,b)=\tau_A(a)Jb\qquad(a,b\in A).
+\end{aligned}
+\tag{68.6}
+$$
+
+以上恰为定义 65.1–65.2 除 C13 外的全部条件，统称 PRE。两条实张成不要求全正锥由正乘积生成。PRE 不含原 $p$ 保迹、原 $M,H$ 保单位、原 $W_H$ 或总标定上界。
+
+对双线性映射加波浪号表示其在实张量积上的线性化；此处不预设张量正锥。定理 65.3 在 PRE 下已保证 $\widetilde M$ 可逆，故可定义同一个实际交叉插入
+
+$$
+T(a,c)=L(Ja,c),\qquad
+I_{13}^{\mathrm{raw}}=\widetilde T\widetilde M^{-1}:D\longrightarrow E.
+\tag{68.7}
+$$
+
+旧条件仍记为 $\mathrm{C13}: I_{13}^{\mathrm{raw}}(D_+)\subseteq E_+$。下面给出它的单态替代，所有辅助映射和探针均为导出对象。
+

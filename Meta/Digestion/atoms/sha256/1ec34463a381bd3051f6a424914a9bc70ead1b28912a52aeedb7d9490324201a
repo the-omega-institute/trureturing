@@ -1,0 +1,36 @@
+### 34.5 同一实际输入上的两侧原 PB 见证
+
+在 (34.9) 的环境中，使用延续后的 $u,X,\ell,\eta$，取
+$$
+e=(0,0,\eta/\lambda)^{\mathsf T},\qquad
+y=D_{\rm env}^{-1}(e-\ell FCu/2-Fu),\qquad \xi=(u,y).
+\tag{34.13}
+$$
+由 $G$ 的末行，$G^*e=\eta a=d_0$。同一实际向量给出 $d=Fu+D_{\rm env}y=e-\ell FCu/2$，于是
+$$
+Bu+Vy=Hu+G^*d=Hu+d_0-\ell C^2u/2=a_{\rm act}.
+$$
+这里用到 $G^*D_{\rm env}=V$、$G^*F=C$。因此演员接触与两条环境缺陷在同一个 $x=X\oplus0_3$、$\xi$ 上实现。由 (34.2)–(34.3)，$\mathsf P=0$、$\mathsf Q=\rho T_Au$，两条环境缺陷都为 $e$。对每个有限 $\lambda$，(34.13) 的向量有限。
+
+写 $\phi_\xi(A)=\xi^*A\xi$，将原 PB 左侧的算子暂记为 $L_{\rm PB}$，以区别于 $L_\lambda$。式 (32.3)–(32.4) 的带符号有限代价，是两笔 (27.12) 的所选变分值之和减去 $2\epsilon\phi_\xi(L_{\rm PB})$。展开 $E_\tau$ 的平方时，虚交叉项按 §32 的原换位恒等式消去零残量部分；加入 $s$ 后，剩余改变量为 $4\epsilon\rho\operatorname{Re}(v^*T_Au)$。这里该恒等式只用原作用列，对 (34.9) 仍适用。设 $N=\|T_Au\|^2$、$w=(t_*-1)^{-1}+(t_*+1)^{-1}=2t_* /(t_*^2-1)$，则当前 $\iota=i,\epsilon=1$ 的有限代价恰为
+$$
+\mathcal D_\rho=w\left(N\rho^2+\frac{|\eta|^2}{\lambda^2}\right)+4\rho\zeta .
+\tag{34.14}
+$$
+这组选取用于 $\rho<0$。对于 $\rho>0$，保持 $\iota=i$ 和同一份实输入及同一个 $\rho$，改取 $(u,\ell,X,\epsilon)=(\overline u,\overline\ell,-\overline X,-1)$，其中右侧为前一组数据。此时 $p,q$ 变为 $-\overline p,-\overline q$，由 (34.3)，$v,a_{\rm act},d_0$ 变为各自的共轭，(34.13) 的 $e,y$ 也随之共轭。新的 $\alpha_\tau=t_*+\tau$ 交换两个正权，$\beta_\tau$ 不变；$\zeta,N,|\eta|$ 都不变。故对正、负两侧分别使用所选见证，统一得到
+$$
+\mathcal D_\rho=w\left(N\rho^2+\frac{|\eta|^2}{\lambda^2}\right)-4\zeta|\rho|.
+\tag{34.15}
+$$
+另一取向 $\iota=-i$ 由对每侧的全部原列取复共轭得到，同时将 $\iota,\ell$ 共轭，保留该侧的 $\epsilon,\alpha_\tau,\beta_\tau$；原输入和 $\rho$ 为实，范数及实配对不变，故仍为 (34.15)。
+
+由 (34.12)，充分大的 $\lambda$ 满足 $wN R_\lambda\le2\zeta$。取 $K_*=1+w|\eta|^2/(2\zeta)$；在 $K_*/\lambda^2\le|\rho|\le R_\lambda$ 时，
+$$
+\mathcal D_\rho\le \frac{w|\eta|^2}{\lambda^2}-2\zeta|\rho|
+ \le -\frac{2\zeta}{\lambda^2}<0.
+\tag{34.16}
+$$
+按前卷 (27.12)–(27.13)，每笔原预算根的两倍至多为所选的有限变分值。因此 (34.16) 给同一实际 $x,\phi_\xi$ 的严格原 PB 违反，无需让变分参数取极限。
+
+两笔原预算均严格正：对每个 $\tau$，$(R_\tau\xi)_{\rm env}=-\tau FCu/2$，而 $(E_\tau)_{\rm env}=e$。$FCu$ 的首两坐标非零（作为一个二元列），因为 $C^{1/2}P_\lambda^{1/2}$ 可逆且 $Cu\ne0$；$e$ 的首两坐标为零、末坐标非零，因为 $\eta$ 在基准和延续后都非零。故这两条环境列复线性无关，进而 $R_\tau\xi$ 与 $S_\tau\xi=E_\tau+\zeta_\tau R_\tau\xi$ 复线性无关。原预算是这两条原像的实 Gram 行列式，因而严格正。取共轭或更换上述符号时，同一论证成立。向量 $\xi$ 的演员分量为单位向量，故将同一泛函乘以 $\mu/\|\xi\|^2$ 即可取得任一指定正有限质量 $\mu$；严格违反与预算正性均保留。
+

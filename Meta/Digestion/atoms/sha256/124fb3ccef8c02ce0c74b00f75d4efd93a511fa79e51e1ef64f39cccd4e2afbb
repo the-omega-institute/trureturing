@@ -1,0 +1,32 @@
+**定理 3.1（Pure-lift existence in the fixed carrier）。** A state family $\{\sigma_\alpha\}$ has a unit-vector realization in the particular represented $H$ of (1.1) if and only if
+
+<a id="eq-purity-3-1"></a>
+
+$$
+r_\alpha:=\operatorname{rank}\sigma_\alpha\le m_\alpha
+\quad\text{for every }\alpha.
+\tag{3.1}
+$$
+
+**证明。** Necessity is the Schmidt-rank bound in each sector. For sufficiency, diagonalize each nonzero block as
+
+$$
+\sigma_\alpha=\sum_{j=1}^{r_\alpha}
+\lambda_{\alpha j}|u_{\alpha j}\rangle\langle u_{\alpha j}|,
+$$
+
+choose $r_\alpha$ orthonormal vectors $v_{\alpha j}$ in $W_\alpha$, and set
+
+<a id="eq-purity-3-2"></a>
+
+$$
+\Psi=\bigoplus_\alpha\sum_{j=1}^{r_\alpha}
+\sqrt{\lambda_{\alpha j}}\,
+ u_{\alpha j}\otimes v_{\alpha j}.
+\tag{3.2}
+$$
+
+Its squared norm is the total block trace, hence one, and its restrictions are the prescribed blocks. This is ordinary purification in each central sector. $\square$
+
+<a id="statement-purity-3-2"></a>
+

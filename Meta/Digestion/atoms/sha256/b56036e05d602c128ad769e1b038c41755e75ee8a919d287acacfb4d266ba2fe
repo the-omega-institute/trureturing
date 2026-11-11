@@ -1,0 +1,39 @@
+**定理 65.8（插入与读回的正确类型）。** 定义
+
+$$
+T_0(a,c)=N(F(a,1_A),c),\quad
+I_{13}^0=\widetilde T_0\widetilde F^{-1}:D\to E.
+$$
+
+则
+
+$$
+I_{13}^{\rm raw}=C_EI_{13}^0C_D^{-1}:D\to E,
+\qquad
+(I_{13}^{\rm raw})^*=C_D^{-1}p_{13}^0C_E:E\to D,
+\quad p_{13}^0=(I_{13}^0)^*.
+\tag{65.21}
+$$
+
+原 C13 当且仅当 $I_{13}^0$ 在同一个整个 $D_+$ 上正。此时 $p_{13}^0$ 全锥正保迹，且唯一满足
+
+$$
+p_{13}^0Q_0(a,b,c)=\tau_A(b)F(a,c)
+\qquad(a,b,c\in A).
+\tag{65.22}
+$$
+
+**证明。** $\widetilde M=C_D\widetilde F$ 已可逆，故原插入良定义。由 (65.19)，$T=C_ET_0$，立即给出第一式。自伴随滤波给第二式，方向不能互换。因为滤波及其逆全锥正，原插入正性与辅助插入正性相互推出，量词仍为整个原锥。
+
+$\widetilde F(1_A\otimes1_A)=1_D$ 及 $N(1_D,1_A)=1_E$ 给 $I_{13}^01_D=1_E$，所以其正伴随保迹。对所有实 $x,y$，
+
+$$
+\begin{aligned}
+\langle F(x,y),p_{13}^0Q_0(a,b,c)\rangle_D
+ &=\langle N(F(x,1_A),y),N(F(a,b),c)\rangle_E\\
+ &=\tau_A(b)\langle x,a\rangle_A\langle y,c\rangle_A.
+\end{aligned}
+$$
+
+$F$ 张成给出 (65.22)，$Q_0$ 张成给出读回唯一性。原伴随一般不保迹，不能由 $p_{13}^0$ 的性质直接赋予。$\square$
+

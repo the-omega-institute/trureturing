@@ -1,0 +1,62 @@
+**定理 64.13（同载体的复直和张量几何）。** 定理 64.12 的完整条件及所列纸面接口下，存在固定的保迹 Jordan 序坐标，使
+
+$$
+A\simeq\bigoplus_iH_{n_i},\qquad
+D\simeq\bigoplus_{i,j}H_{n_in_j},\qquad
+E\simeq\bigoplus_{i,j,k}H_{n_in_jn_k},\qquad n_i\ge1,
+\tag{64.41}
+$$
+
+同一实际映射为
+
+$$
+\begin{aligned}
+M(a,b)_{ij}&=a_i\otimes b_j,&L(d,c)_{ijk}&=d_{ij}\otimes c_k,\\
+(rd)_i&=\sum_j\operatorname{Tr}_2d_{ij},&
+(sd)_j&=\sum_i\operatorname{Tr}_1d_{ij},\\
+(hz)_{ij}&=\sum_k\operatorname{Tr}_3z_{ijk},&
+(pz)_{jk}&=\sum_i\operatorname{Tr}_1z_{ijk},\\
+(p_{13}z)_{ik}&=\sum_j\operatorname{Tr}_2z_{ijk}.
+\end{aligned}
+\tag{64.42}
+$$
+
+$L$ 的公式覆盖任意实际 $d$，包括纠缠正元。全态、全效应及概率为
+
+$$
+\rho_i\ge0,\qquad \sum_i\operatorname{Tr}\rho_i=1,\qquad
+0\le F_i\le I_{n_i},\qquad
+\Pr(F\mid\rho)=\sum_i\operatorname{Tr}(F_i\rho_i).
+\tag{64.43}
+$$
+
+纯态空间是 $\coprod_i\mathbb{CP}^{n_i-1}$，同扇区的最小确认比较为平方重叠，异扇区为零。单一 $n_i=2$ 扇区的全态空间是 Bloch 球。
+
+**证明。** 第一、第二二元接口给出 (64.27) 的简单中心块和独立初始正规形；这一阶段只给类型，尚未固定相对转置位。记 $\kappa_{ij}=\varepsilon_{ij}\oplus\delta_{ij}$，在两个非标量因子时有内对关系 $t_1\oplus t_2=\kappa_{ij}$。由全实读回及 $Q$ 张成，每个初始块上的原 $p$ 与唯一 $p_{13}$ 必须分别为
+
+$$
+\begin{aligned}
+p|_{E_{ijk}}
+ &=\operatorname{Ad}(U_{jk})\,
+ \Gamma_{\varepsilon_{jk}\oplus t_2,\,\delta_{jk}\oplus t_3}
+ \operatorname{Tr}_1\operatorname{Ad}(W_{ijk}^*),\\
+p_{13}|_{E_{ijk}}
+ &=\operatorname{Ad}(U_{ik})\,
+ \Gamma_{\varepsilon_{ik}\oplus t_1,\,\delta_{ik}\oplus t_3}
+ \operatorname{Tr}_2\operatorname{Ad}(W_{ijk}^*),
+\end{aligned}
+$$
+
+各式仅进入标出的输出扇区。部分迹满射到整个保留因子 PSD 锥：把任意保留正元与一个被丢弃的正规范迹一本原元张量即可。全域 $p,p_{13}$ 正性于是迫使保留掩码正；两活跃因子时，Bell 的负本征值排除恰一个转置，给出
+$t_2\oplus t_3=\kappa_{jk}$、$t_1\oplus t_3=\kappa_{ik}$。
+
+对三个活跃位置，三条边关系给出
+$\kappa_{ik}=\kappa_{ij}\oplus\kappa_{jk}$。重复标签给出 $\kappa_{ii}=0$ 和 $\kappa_{ij}=\kappa_{ji}$；这两式是结论，不是扇区交换假设。任选活跃扇区 $h$，令 $s_i=\kappa_{hi}$，便有 $\kappa_{ij}=s_i\oplus s_j$。恰有两个活跃位置时，所需边分别来自内对、$p$ 或 $p_{13}$，最后一种明确包括标量中间旁观者。至多一个活跃位置时，有效转置本就是整个矩阵转置。故每个三元掩码在其活跃位置上只与 $(s_i,s_j,s_k)$ 相差一个共同位。
+
+在 $A_i$ 坐标施加 $T^{s_i}$；在 $D,E$ 的每个中心块解开其固定输出酉，再消去相应共同整块转置。这些都是全锥正、保迹 Jordan 序同构，给出同时固定的 (64.41)–(64.42)。该构造正是 [Part III 定理 62.7](QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES_III.md#62-两个原始映射内部插入与严格恢复) 的表示；此处使用它时三个边关系已具备。$M$ 张成把 $L$ 在乘积上的公式延拓到全部实 $d$，读回公式由对应张成唯一确定。全标量情形就是普通经典直和张量，$A=\mathbb R$ 时由张成得 $D=E=\mathbb R$。
+
+全态全效应和保迹序坐标直接给出 (64.43)。若 $\xi=|\psi\rangle\langle\psi|$ 本原，接受它概率一的效应在其射线上必须等于一，其余正部分只会增加对正态的配对；最小者是 $\xi$ 本身。故 $T_\xi(\rho)=\operatorname{Tr}(\xi\rho)$，对同扇区纯态给出 $|\langle\psi,\phi\rangle|^2$，异扇区可取零效应分量，比较为零。该式也逐项满足全部有限混合 $S$。反向地，任意有限非空 $\Lambda$、$n_i\ge1$ 的标准分块矩阵载体与 (64.42) 都满足完整候选：原两次 $p$ 的准备确为张量，$Z,W_H,D_J$ 由迹配对直接给出，$\gamma=n^3$，插入是未归一化中间单位而全锥正，所以原探针通过。
+
+在同一个 $E$ 上还可选右准备
+$R(a,d)_{ijk}=a_i\otimes d_{jk}$，两种括号均为同一 $a_i\otimes b_j\otimes c_k$，重括号识别为恒等；标准因子置换连同扇区标签置换给出正保迹的 $S_3$ 自同构。它构造一个所选右结构，不识别独立给定的右载体或其映射。$\square$
+

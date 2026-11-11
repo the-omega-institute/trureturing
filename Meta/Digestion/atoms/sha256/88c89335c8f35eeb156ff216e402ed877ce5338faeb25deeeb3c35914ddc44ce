@@ -1,0 +1,7 @@
+The reused mathematical context has distinct interfaces:
+
+- *CONTEXTUAL_SPACETIME_ARITHMETIC_QUANTUM.md*, Definition 56.1 and Proposition 56.3: geometric hidden-block bounds give finite task memory-tail budgets. Example 56.5 retains norm-envelope and nonnormality qualifications. Those linear-tail results provide context, without a new proof or novelty claim for geometric summation.
+- *AURIC_APPROXIMATE_CLOSURE_HIDDEN_MEMORY_AND_NATIVE_RECURSION_V40.md*, Theorems 3.2–3.3: exact block memory kernels. Its §§2.3–2.4 distinguish occupation decay, full-state contraction, a final channel and a retained first-transfer archive. That amplitude model is not identified with the instruments of §37.
+- Sections 9–17: complete recorded-instrument closure differs from the nonselective channel. The finite-horizon sum of approximation errors there is not promoted to a uniform unbounded estimate.
+- Sections 27–33: actual equal-response pair spans and Gram conditioning supply the finite reconstruction interface used in (38.1)–(38.2). They remain conditional paper dependencies and provide no fresh Lean compilation evidence.
+

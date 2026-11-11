@@ -1,0 +1,34 @@
+**定义 54.1（One grid, its free symbols and its legal rows）。** Fix $m\ge1$, $N=2^m$, and $R=\mathbb Z[i]$. In $\mathbb C^4$ let
+
+$$
+ K_{4,N}=\{E\in\operatorname{Herm}_4(N^{-1}R):0\le E\le I_4\},
+ \qquad W_{4,N}=\bigoplus_{E\in K_{4,N}}\mathbb R\delta_E.
+\tag{54.1}
+$$
+
+A legal row is
+
+$$
+ r(A,B,X)=\delta_{A+X}+\delta_B-\delta_A-\delta_{B+X}
+\tag{54.2}
+$$
+
+when $X\in\operatorname{Herm}_4(N^{-1}R)$ and all five matrices $A,B,A+X,B+X,C=I_4-A-B-X$ belong to $K_{4,N}$. The increment $X$ may have either sign. Write $\mathcal R_{4,N}$ for this finite set of rows. Let $\mathcal B_4$ be precisely the basis of [Part I, Definition 16.1](QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES.md):
+
+$$
+ D_i=e_ie_i^*,\qquad
+ R_{ij}=(D_i+D_j+S_{ij})/2,\qquad
+ J_{ij}=(D_i+D_j+T_{ij})/2,
+\tag{54.3}
+$$
+
+where $S_{ij}$ has entries $1,1$ in positions $(i,j),(j,i)$ and $T_{ij}$ has entries $i,-i$ there. The actual anchor set is
+
+$$
+ \mathcal A_N=\mathcal B_4\ \cup\
+ \{F\in K_{4,N}:\|F\|_{\rm op}\le1/52\}.
+\tag{54.4}
+$$
+
+All equalities of symbols below are in the free real vector space (54.1). In particular, matrix addition is not imposed as a relation between symbols.
+

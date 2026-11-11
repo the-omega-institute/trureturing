@@ -1,0 +1,35 @@
+**推论 66.8（C13 之前的原始 Born 几何）。** 每个原载体的全部态、效应和实际概率已为
+
+$$
+\rho_\lambda\ge0,\quad\sum_\lambda\operatorname{Tr}\rho_\lambda=1,\qquad
+0\le e_\lambda\le I_\lambda,\qquad
+\Pr(e\mid\rho)=\sum_\lambda\operatorname{Tr}(e_\lambda\rho_\lambda).
+\tag{66.27}
+$$
+
+$A$ 的块标签为 $i$，$D$ 为全部 $(i,j)$，$E$ 为全部 $(i,j,k)$。$A$ 的纯态空间为 $\coprod_i\mathbb{CP}^{n_i-1}$，同区比较为 $|\langle\psi,\phi\rangle|^2$，异区为零。$D,E$ 的全部纠缠正态都保留。
+
+证明。(66.3) 忠实对应原态基与原全效应，后续只用了保迹 Jordan 坐标，故 (66.9) 给出 (66.27)。$C_D,C_E$ 则是另一种操作：它们用来分解原始映射，一般不保迹，不能将其像当作原总迹一基，亦不因序可逆就取得物理可用性或成本结论。原始权重 $u,g$ 因此不能借“归一化”名称消去。
+
+全标量情形可明确写为 $A=\mathbb R^r$、$D=\mathbb R^{r^2}$、$E=\mathbb R^{r^3}$，$u_{ij},g_{ijk}>0$、$\sum_{i,j}u_{ij}^{-1}=r^2$，并有
+
+$$
+M(a,b)_{ij}=a_i u_{ij}b_j,\qquad
+L(d,c)_{ijk}=d_{ij}g_{ijk}c_k,\qquad
+(pz)_{jk}=u_{jk}\sum_i\frac{z_{ijk}}{u_{ij}g_{ijk}}.
+$$
+
+此时方向不可见，C13 自动成立；但权重仍可使原始映射不保单位或不保迹。一般矩阵情形中，$`J^*J`$ 在 $A_i$ 上乘以 $\sum_j\operatorname{Tr}(u_{ij}^2)$，$`H^*H`$ 在 $D_{ij}$ 上乘以 $\sum_k\operatorname{Tr}(g_{ijk}^2)$。所以 $D_J,D_H$ 的零比较保持不等同于固定这些系数的范数校准。
+
+例如辅助系统确实满足
+
+$$
+\mathcal B_0(d,c)=p_0N(d,c)=F(\beta^*d,c),\quad
+K_0(a)=F(1_A/n,a),\quad
+\mathcal B_0(K_0(a),b)=F(a,b),
+\tag{66.28}
+$$
+
+这是推论 65.7 在同一原 $\omega$ 下的结果；实际系统则使用
+$\mathcal B(d,c)=M(sd,c)$、$K(a)=M(w,a)$，一般 $w\ne1_A/n$。两组“同一读回两次”分别成立，不允许彼此替换。$\square$
+

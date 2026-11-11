@@ -1,0 +1,32 @@
+**定义 50.1（Successive minima and fixed reduction constants）。** Retain exactly the single dimension-four original table, all labelled binary and ternary menus, zero and repeated effects, and its original tomography matrix $H$ from [Part I, Definition 16.1](QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES.md). Write $R=\mathbb Z[i]$ and $e(X)=p(X)-\operatorname{Tr}(HX)$. Let $\mathcal S_4$ denote the integral matrices expressible as finite sums of $vv^*$ with $v\in R^4$, including the empty sum. For $B\succ0$ integral, define the squared complex successive minima
+
+$$
+\mu_j(B)=\min\left\{t:\text{there are }j\text{ complex-linearly independent }v_a\in R^4
+\text{ with }v_a^*Bv_a\le t\right\},\qquad 1\le j\le4.
+\tag{50.1}
+$$
+
+Fix an integer $\tau\ge5$ at least the threshold $G_{\mathbb Q(i)}(4)$ in Beli--Chan--Icaza--Liu, [*On a Waring's problem for integral quadratic and hermitian forms*, Proposition 5.3](https://arxiv.org/html/1702.08854v1). Thus $\mu_1(F)\ge\tau$ implies $F\in\mathcal S_4$ for every positive-definite integral $F$. Their Proposition 2.3, Lemma 3.3 and equations (3.1)--(3.2), in the fixed field and rank, also give constants $\alpha,c\ge1$ such that every $B$ has a basis $V\in\operatorname{GL}_4(R)$ with
+
+$$
+ V^*BV=X^*\operatorname{diag}(h_1,h_2,h_3,h_4)X,
+ \quad h_1=\mu_1(B),\quad
+ h_i\le\alpha h_j\ (i<j),
+ \quad |X_{ij}|,|(X^{-1})_{ij}|\le c.
+\tag{50.2}
+$$
+
+Here $X$ is upper triangular unipotent and $h_i>0$. Only this established fixed-rank reduction and the established large-minimum representation theorem are used from that paper. Set
+
+$$
+\begin{aligned}
+ L&=64\alpha c^2\tau,& K&=2c^2L,& M&=3c^2L,\\
+ N_c&=4\tau^2L^2+1,&
+ A_*&=1+\max\{44,(\tau+K)^2,2K(\tau+2K),N_c^2\},\\
+ S&=902826,& C_*&=2S+2=1805654.
+\end{aligned}
+\tag{50.3}
+$$
+
+All these constants are fixed independently of $N,p,\epsilon$ and the target. No numerical value of the reduction constants is needed.
+

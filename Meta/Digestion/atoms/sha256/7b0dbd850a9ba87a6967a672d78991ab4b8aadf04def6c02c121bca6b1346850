@@ -1,0 +1,14 @@
+## 8. Relation to AURIC sources and the remaining operational interfaces
+
+The source pin is `6b24b302e37ea2ead041655259d42ef4866d3249`. V78, *AURIC_ENDOGENOUS_RELATIONAL_QUANTUM_THEORY_UNIFIED_RELATIONAL_AXIOMS_V78_SYNTHESIS.md*, Definition 3.4, Theorems 7.2–7.3 and §7.1 define visible states and classify pure states for a complete effect interface. Its Theorem 10.2 supplies finite purification with the minimum record rank; Theorem 14.1 supplies the record Gram-rank mechanism. These provide the factor-case foundation reused here.
+
+V58, *AURIC_RELATIONAL_AXIOMS_COMMON_COMPLEX_PHASE_AND_CONDITIONAL_QUANTUM_RECONSTRUCTION_V58.md*, §7 and Explanation 7.2 already distinguish GNS uniqueness for a specified functional from uniqueness of the actual state, and a global unit vector from purity on the original observable algebra. The explicit blocks, fibres and distances above retain these distinctions.
+
+The existing declaration `bell_pure_state_has_maximally_mixed_marginal` in `D5/S3/Quantum/Entanglement/BellPureStateMixedMarginal.lean` supplies the named Bell-marginal result. `D5/S3/Quantum/Foundation/FiniteDensityPurification.lean` supplies canonical finite density purification. These named interfaces are source references; this conditional paper application makes no claim of a current build or fresh Lean verification.
+
+Finite represented algebra blocks, Schmidt purification, commuting-unitary freedom and cyclic GNS representations are standard mathematics. General purification and trace-distance background is J. Watrous, [*The Theory of Quantum Information*, Chapter 2](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf). The displayed block and distance calculations are conditional applications. No priority or originality claim is made for their packaging.
+
+For the $\Omega/\omega$ distinction, $\Omega$ supplies the stipulated structures, legal tests and operations, while $\omega$ is a functional relative to that interface. Choosing a pure vector representation neither selects $\omega$ nor proves that the actual interface is all of $B(H)$. If future histories return and reveal a multiplicity degree of freedom, their tests enlarge the interface; its purity and fibre calculation must use that enlarged task.
+
+Shared-source independence, source availability, native reference controls and clean reference return require their own relations. The N2 shared-history dimension budget concerns the rank of a residual cross-wing relation map; $r_\alpha$ here is a density support rank. Relating them requires a supplied bridge between those objects. The cyclic dimension in (4.1) is not identified with that budget and settles none of these physical acquisition questions. The displayed results remain conditional paper deductions, without Lean compilation or physical validation.
+

@@ -1,0 +1,39 @@
+## 22. A covariant processor makes the phase-reference condition explicit
+
+Let a fixed instrument $\mathcal M$ act on $R\otimes S$ and output $R\otimes C$, with the output factors written in this order. Let $C$ again be the complete classical record. Assume covariance:
+
+<a id="eq-reference-22-1"></a>
+
+$$
+\begin{aligned}
+&\mathcal M\bigl[
+(U_R(\theta)\otimes U_S(\theta))
+X(U_R(\theta)\otimes U_S(\theta))^*
+\bigr]\\
+&\qquad=(U_R(\theta)\otimes I_C)
+\mathcal M(X)
+(U_R(\theta)\otimes I_C)^*.
+\end{aligned}
+\tag{22.1}
+$$
+
+Suppose, for every data density $\rho$,
+
+$$
+\mathcal M(\eta_0\otimes\rho)
+=\eta_0\otimes p_0(\rho).
+$$
+
+Covariance then gives
+
+<a id="eq-reference-22-2"></a>
+
+$$
+\mathcal M(\eta_\theta\otimes\rho)
+=\eta_\theta\otimes
+p_0\bigl(U_S(\theta)^*\rho U_S(\theta)\bigr).
+\tag{22.2}
+$$
+
+<a id="statement-reference-22-1"></a>
+

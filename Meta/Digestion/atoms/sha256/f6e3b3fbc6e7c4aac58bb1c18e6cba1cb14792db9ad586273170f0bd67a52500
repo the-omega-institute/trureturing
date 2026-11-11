@@ -1,0 +1,28 @@
+**命题 39.7（取向等价与正负残量阈值等价）。** 对每个固定 $a_r,h$，两个取向的 (37.50) 阈值相同；同一取向的正、负残量阈值也相同。记其共同值为 $K_r(h)$。这些等价保持来源符号 $r$，不建立 $K_+(h)=K_-(h)$。
+
+证明。首先同时取复共轭，并将 $\iota$ 改为 $-\iota$：
+
+$$
+(\iota,u,p,q,\ell,a_{\rm act},\eta,\epsilon)
+\longmapsto
+(-\iota,\overline u,\overline p,\overline q,
+ \overline\ell,\overline{a_{\rm act}},\overline\eta,\epsilon).
+\tag{39.32}
+$$
+
+由于 $C,H,B,T_A,a_r$ 均为实矩阵或实向量，(39.4) 逐项共轭后仍为同一来源在另一取向的接触。$\operatorname{Im}_{-\iota}\overline\ell=\operatorname{Im}_\iota\ell=t$，故 $A,\epsilon$ 保留；$v$ 变为 $\overline v$，从而 $|\eta|,\zeta,J_k$ 全部保留。此双射给两取向的阈值等价。
+
+其次，固定 $\iota$，作
+
+$$
+(u,p,q,\ell,a_{\rm act},\eta,\epsilon)
+\longmapsto
+(\overline u,-\overline p,-\overline q,
+ \overline\ell,\overline{a_{\rm act}},\overline\eta,-\epsilon).
+\tag{39.33}
+$$
+
+图的两个实配对成为原实配对的负共轭，交叉等式两边也同取负共轭，所以图条件保留。第一演员等式满足
+$\iota(I_2-\overline\ell C^{-1})(-\overline p)=\overline{a_{\rm act}}$；第二演员等式满足
+$-\overline q=(\overline\ell I_2+2C^{-1})(-\overline p)+\iota BC\overline u$；需求等式是原式的共轭。$t$ 和 $\epsilon$ 同时反号，故 $A$ 保留，且 $v$ 再次变为 $\overline v$。因此 $|\eta|,\zeta$ 保留，但新的 $J_k$ 是原来的 $J_{-k}$。它在 (37.50) 的两个带方向接触集合之间给保持比值的双射，证明正负阈值相同。两种操作都没有将 $a_r$ 变为 $a_{-r}$；不能将同源对称性用作来源对之间的等价证明。∎
+

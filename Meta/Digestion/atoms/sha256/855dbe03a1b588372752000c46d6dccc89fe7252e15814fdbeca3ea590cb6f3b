@@ -1,0 +1,19 @@
+**例 6.1（Bell–Schmidt mechanism at three interfaces）。** Let
+
+$$
+H=\mathbb C^2\otimes\mathbb C^2,
+\qquad\mathcal A=M_2(\mathbb C)\otimes I_2,
+\qquad
+\Psi=\sqrt t\,|00\rangle+\sqrt{1-t}\,|11\rangle,
+\qquad0<t<1.
+\tag{6.1}
+$$
+
+The complete visible state is $\operatorname{diag}(t,1-t)$, with rank two and cyclic dimension $2\cdot2=4$. The GNS cyclic vector is one ray in that representation, while the functional on $\mathcal A$ is mixed. Right-factor unitary changes preserve its visible state.
+
+Here $\eta=\max(t,1-t)$, so the exact visible distance to pure states is $\min(t,1-t)$ and the global distance to $\mathcal F_{\mathcal A}$ is $\sqrt{\min(t,1-t)}$. At $t=1/2$ these are respectively $1/2$ and $1/\sqrt2$.
+
+Reduce the interface to the diagonal left algebra. The same two visible weights remain, and the functional is again mixed, now through central-sector mixture with one-dimensional left blocks. Enlarge the interface to all of $B(H)$, and the vector state is pure. These are three declared interfaces on the same carrier, with different purity classifications.
+
+This reuses the Bell/Schmidt mechanism, rather than supplying a new Bell counterexample. The block-fibre and exact distance formulas identify the data on which that mechanism depends.
+

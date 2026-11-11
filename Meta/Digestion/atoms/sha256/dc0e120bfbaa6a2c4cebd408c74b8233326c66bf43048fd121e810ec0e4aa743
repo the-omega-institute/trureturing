@@ -1,0 +1,16 @@
+## 17. Sources, reused results and remaining native-interface obligations
+
+The source pin is `6b24b302e37ea2ead041655259d42ef4866d3249`. V78 synthesis Definition 3.4 requires retaining memory that can return in future tests. Its §§7.1 and 10 distinguish complete mathematical effects from actual resources and event probabilities from recorded updates.
+
+V38, *AURIC_COMPLETE_QUANTUM_PROCESSES_INTERNAL_MEMORY_AND_RANK_BOUNDARY_STABILITY_V38.md*, Theorem 8.1 already gives the product-unitary conclusion under all-joint-state autonomy. Its ready-input exception and §§8.2–8.3 retain reset and finite-memory costs. V40 §6 supplies finite-period completely positive rigidity with its separate reference-sensitive norm contract. None of these results is presented as a new AURIC theorem here.
+
+The existing declaration `future_statistics_iff_annihilates_infinite_system` in `D5/S3/Quantum/Fibers/FutureStatisticsEquivalence.lean` supplies the linear Heisenberg prediction-closure relation. `LeastInvariantObservableAlgebra.lean` is a separate commutative function-algebra construction, not a theorem imported for noncommuting matrices. The former orbit-predictor application already distinguishes operator-system closure from adding algebraic products. These are source references, without a current build or fresh Lean verification.
+
+Sections 1–8 provide the finite-algebra purity, Schmidt-frame and current pure-fibre interfaces used in §11. The needed frame argument is stated again there to keep the hypotheses explicit. These conditional paper dependencies provide no new Lean evidence.
+
+Real Hahn–Banach, finite Schatten duality, Schmidt purification, conditional expectations and finite matrix-algebra automorphisms are standard tools. *AURIC_OMEGA_FULL_INPUT_RECOVERY_CERTIFICATES.md*, §§28–29, also uses real Hahn–Banach and Schatten duality for a different restricted-channel contract: Theorem 28.1 contains the norming-functional duality proof, while §29 consumes that dual and distinguishes pointwise choices from a single linear selection. Those source-specific domains are not identified with $W$ here. General finite-state, instrument and Choi background is J. Watrous, [*The Theory of Quantum Information*, Chapter 2](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf). No priority or originality claim is made for this application.
+
+The exact widths compare alternative realizations under declared tests and operations. An assertion of one actual world or one $\omega$ alone does not supply these variations, common-source preparations, measurement access or legal operations. Placing controls and records inside one encompassing $\Omega$ likewise does not make their probabilities functions of the current local $\omega$. An adequate native future quotient requires the corresponding closure relations on its actual input and operation family.
+
+No free controls, purification, reset or clean-return reference service is supplied. The scalar widths and finite-horizon bounds make no reference-amplified or unbounded-horizon claim and are not identified with the N2 shared-history rank budget. The formulas remain conditional paper deductions, without Lean compilation or physical validation.
+

@@ -1,0 +1,164 @@
+**定理 62.3（单位切片推出完整丢弃律）。** 定义 62.2 的前置条件及定义 62.1 的二元接口推出 $M,J,r$ 正，且有正保迹的 $s:D\to A$ 满足第二边缘律。更确切地，
+
+$$
+\begin{gathered}
+M(1_A,1_A)=1_D,\qquad L(1_D,1_A)=1_E,\\
+rM(a,b)=\tau_A(b)a,\qquad sM(a,b)=\tau_A(a)b,\\
+\tau_Ar=\tau_D=\tau_As,\qquad
+\tau_Dh=\tau_E,\qquad t:=sp\text{ 正且保迹},\\
+hL(d,c)=\tau_A(c)d,\qquad tL(d,c)=\tau_D(d)c.
+\end{gathered}
+\tag{62.7}
+$$
+
+$h$ 也在整个 $E_+$ 上正。线性化
+
+$$
+\begin{aligned}
+\mathcal M &: A\otimes_{\mathbb R}A\longrightarrow D,
+ &\mathcal M(a\otimes b)&=M(a,b),\\
+\mathcal L &: D\otimes_{\mathbb R}A\longrightarrow E,
+ &\mathcal L(d\otimes c)&=L(d,c),\\
+\mathcal Q&=\mathcal L(\mathcal M\otimes\mathrm{id}_A)
+ &: (A\otimes_{\mathbb R}A)\otimes_{\mathbb R}A&\longrightarrow E
+\end{aligned}
+\tag{62.8}
+$$
+
+均为满迹内积等距同构。在其余前置条件下，W 与完整 (II) 等价；此推导不使用交叉插入 $I_{13}$ 的正性。
+
+**证明。** 先只用 I、III 建立归一化，不使用 II 或 W。正双线性与正映射的复合使 $B,M,J$ 正；平方锥自对偶使 $r=J^*$ 正。置 $U=M(1_A,1_A)\ge0$，定义正映射
+
+$$
+s=r\,pL(\mathord\cdot,e):D\to A.
+\tag{62.9}
+$$
+
+由 (III) 再用 (I)，对全部实 $a,b$ 有
+
+$$
+sM(a,b)=\tau_A(a)rM(b,e)=\tau_A(a)b,
+\qquad r^*1_A=U=s^*1_A.
+\tag{62.10}
+$$
+
+最后的伴随等式尚非保迹断言：$r^*1_A=J(1_A)=U$，而在每个 $M(a,b)$ 上，$s^*1_A$ 与 $U$ 的配对都等于 $\tau_A(a)\tau_A(b)$，再由 (62.5) 的 $D$ 张成得到相等。
+
+$U$ 在 $D_+$ 内部。对 $a,b\ge0$，取 $a\le\lambda1_A$、$b\le\mu1_A$，正双线性给出 $0\le M(a,b)\le\lambda\mu U$。若 $z\ge0$ 且 $\langle z,U\rangle_D=0$，则 $z$ 消去全部正乘积；锥生成性使它消去全部实乘积，实张成遂使 $z=0$。若 $U$ 的某个谱值为零，该谱空间的非零本原幂等元就给出这样的 $z$。故每个扇区的谱值都严格为正。
+
+采用上述 Library 条目「Readback from unit insertion」(58)–(60) 中的二次表示归一化，写成
+
+$$
+\ell_x(y)=x\circ y,\qquad P_x=2\ell_x^2-\ell_{x^2},\qquad
+C=P_{\sqrt U},\qquad C^{-1}=P_{U^{-1/2}}.
+\tag{62.11}
+$$
+
+这里使用的标准二次表示正性由 [van de Wetering, Proposition 2.21 及包含 EJA 的 Proposition 2.25](https://arxiv.org/html/1912.01903v1#S2.counter21) 承担；公式采用该文引言中的 $P_x$ 公式。其余所需关系可直接由 Peirce 分解核对：对角化 $U$ 的本原框架中，设谱值为 $u_i>0$，则 $C$ 在对角空间上系数为 $u_i$，在非对角 Peirce 空间上系数为 $\sqrt{u_i u_j}$；显示的逆取对应倒数。迹形式结合性使 $\ell_x$ 自伴随，因而两者自伴随。它们均正，且
+
+$$
+C^{-1}U=1_D,\qquad CU=U^2.
+\tag{62.12}
+$$
+
+这同时覆盖例外 EJA 与直和，不需要矩阵嵌入。置
+
+$$
+\widehat M=CM,\qquad \widehat R=rC^{-1},\qquad
+\widehat S=sC^{-1}.
+\tag{62.13}
+$$
+
+逐项检查第一次二元接口：$\widehat M$ 正双线性，因 $C$ 可逆仍实张成 $D$；两条边缘在整个 $D_+$ 上正；(62.10) 给出全部实向量的两条乘积丢弃律。再由自伴随性及 (62.12)，
+
+$$
+\widehat R^*1_A=\widehat S^*1_A=C^{-1}U=1_D.
+\tag{62.14}
+$$
+
+故两条边缘都对未改动的标准迹保迹。现在才将 Library (15)–(18) 应用于 $(\widehat M,\widehat R,\widehat S)$。其单位结论给出 $1_D=\widehat M(1_A,1_A)=CU=U^2$。$U\ge0$ 的谱值于是全为一，故 $U=1_D$、$C=\mathrm{id}_D$。同一次二元结论遂给出原 $M$ 的单位律及 $\mathcal M$ 的满等距性，$r,s$ 也已正且保迹。特别地，
+
+$$
+\tau_DM(a,b)=\tau_A(a)\tau_A(b),\qquad
+\langle M(a,b),M(x,y)\rangle_D
+ =\langle a,x\rangle_A\langle b,y\rangle_A.
+\tag{62.15}
+$$
+
+接着 $t=sp:E\to A$ 正且保迹，这里使用原始 $p$ 的已给保迹性。由 (III) 与 (62.10)，
+
+$$
+\begin{aligned}
+tL(M(a,b),c)
+ &=\tau_A(a)sM(b,c)\\
+ &=\tau_A(a)\tau_A(b)c
+ =\tau_D(M(a,b))c.
+\end{aligned}
+\tag{62.16}
+$$
+
+$M$ 的实张成将它扩展为所有实 $d,c$ 的 $tL(d,c)=\tau_D(d)c$。由于 $t$ 保迹，尚未使用 W 或 II 就有
+
+$$
+\tau_EL(d,c)=\tau_AtL(d,c)=\tau_D(d)\tau_A(c)
+\quad(d\in D,\ c\in A).
+\tag{62.17}
+$$
+
+以下使用标准 EJA 谱、支撑及范数事实；谱展开、规范迹基底和本原纯态的对应见 [Barnum–Hilgert, Theorem 4.2、Definition 4.3、Proposition 4.4](https://arxiv.org/html/1904.03753v1#S4)。为明确包含直和与例外代数，所需支撑推论可直接由 Peirce 分解给出：对幂等元 $v$ 及 $z=w^2\ge0$，迹形式结合性给出
+
+$$
+\langle v,z\rangle
+ =\langle\ell_vw,w\rangle
+ =\|w_1\|^2+\tfrac12\|w_{1/2}\|^2.
+\tag{62.18}
+$$
+
+因此零配对迫使 $z\in E_0(v)$。对效应 $F$ 作谱展开，$\langle F,z\rangle=0$ 将 $z$ 限于 $F$ 的零谱支撑面；$\langle F,z\rangle=\tau(z)$ 则由 $1-F$ 将它限于一谱支撑面。这两个谱支撑面正交，故被同一效应分别以概率一和零接受的两个正迹一态彼此正交。对正元作谱展开也给出：零迹配对蕴涵零 Jordan 乘积。又若 $z\ge0,\tau(z)=1$，其非负谱系数 $\lambda_k$ 满足
+
+$$
+\|z\|^2=\sum_k\lambda_k^2\le1,\qquad
+\|z\|^2=1\ \Longleftrightarrow\ z\text{ 是本原幂等元}.
+\tag{62.19}
+$$
+
+若本原 $q$ 还满足 $\langle q,z\rangle=1$，则 $\langle1-q,z\rangle=0$ 迫使 $z\in E_1(q)=\mathbb Rq$，所以 $z=q$。这里 $E_1(q)$ 为一维，否则该子代数的谱分解会把 $q$ 分成两个非零正交幂等元，与本原性矛盾。这些论证逐扇区成立，不使用矩阵实现。
+
+现固定任意本原 $q\in D$。由 (62.17)，$K_q(c):=L(q,c)$ 是正保迹映射，且 $tK_q=\mathrm{id}_A$。取 $A$ 的任意完整本原框架 $(f_j)_{j=1}^n$，令 $\rho_j=K_q(f_j)$。它们正且迹一；$t$ 正保迹使 $t^*$ 正且保单位，故同一个完整效应族给出
+
+$$
+0\le t^*f_j\le1_E,\qquad \sum_jt^*f_j=1_E,\qquad
+\langle t^*f_j,\rho_k\rangle_E=\delta_{jk}.
+\tag{62.20}
+$$
+
+上述一、零饱和支撑论证使 $\rho_j$ 两两正交。现在才使用 W：$Hq=\sum_j\rho_j$，而 $\|q\|^2=1$，所以
+
+$$
+n=\|Hq\|^2=\sum_{j=1}^n\|\rho_j\|^2.
+\tag{62.21}
+$$
+
+每项至多一，故每项恰为一，所有 $\rho_j$ 都是本原幂等元。任意本原 $f\in A$ 均可补成完整框架，因此每个 $L(q,f)$ 都纯。这不是仅在指定乘积族上的额外检验或假设。
+
+再取 $D$ 的完整本原框架 $(q_i)$，置 $\rho_{ij}=L(q_i,f_j)$。同一行已正交；不同行由 W 得 $\langle Hq_i,Hq_k\rangle_E=0$。每个 $0\le\rho_{ij}\le Hq_i$，故正锥自对偶性使所有跨行配对也为零。由零配对支撑事实，全部 $\rho_{ij}$ 是正交本原幂等元，因而
+
+$$
+V:=L(1_D,1_A)=\sum_{i,j}\rho_{ij},\qquad V^2=V.
+\tag{62.22}
+$$
+
+还须证明 $V=1_E$，不能由等距性直接断言保单位。对任意 $d,c\ge0$，取 $d\le\lambda1_D,c\le\mu1_A$，全域正双线性给出 $0\le L(d,c)\le\lambda\mu V$。若 $z\ge0$ 且 $\langle z,V\rangle_E=0$，则它消去所有正乘积，再由锥生成性及 $L$ 实张成消去整个 $E$，所以 $z=0$。零谱值会提供非零正交本原元，故 $V$ 为内点。内点幂等元的全部谱值只能为一，遂 $V=1_E$。$H$ 正使 $h=H^*$ 在整个 $E_+$ 上正，且对所有实 $z$，$\tau_D(hz)=\langle H1_D,z\rangle_E=\tau_E(z)$，故 $h$ 保迹。
+
+对任意本原 $q\in D,f\in A$，选择经过 $f$ 的框架，则 $\rho=L(q,f)$ 是 $Hq$ 的一个正交本原框架和项。因此 $h\rho$ 正且迹一，并有 $\langle q,h\rho\rangle_D=\langle Hq,\rho\rangle_E=1$。上述本原饱和事实迫使 $hL(q,f)=q$。两代数的本原幂等元各自实张成，实谱线性遂给出
+
+$$
+\mathrm{(II)}\qquad hL(d,c)=\tau_A(c)d
+\quad\text{对所有实 }d\in D,c\in A.
+\tag{62.23}
+$$
+
+反向只须在 II 中取 $c=1_A$，即得 $hH=H^*H=n\,\mathrm{id}_D$，恰为 W。完整 II 至此在第二次二元接口之前成立。
+
+逐项检查第二次二元接口：两局部载体为标准迹 $D,A$，准备 $L$ 在整个 $D_+\times A_+$ 上正且实张成 $E$；两条边缘 $h:E\to D$、$t:E\to A$ 在整个 $E_+$ 上正且标准保迹；两条全部实向量的普通丢弃律正是 (II) 和 (62.16) 的线性扩展。现在应用同一 (15)–(18)，得到 $\mathcal L$ 满等距。与 $\mathcal M$ 复合即得 (62.8) 的 $\mathcal Q$。这只是指定实张量空间间的恒等式，没有预设独立右载体或正重括号映射。$\square$
+

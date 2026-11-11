@@ -1,0 +1,8 @@
+**定理 16.1（Finite represented-algebra unitary normalizer）。** For a fixed unitary $U$ on $H$, the inclusion $U^*\mathcal AU\subseteq\mathcal A$ is equality. Such a $U$ permutes only central sectors with identical pairs $(n_\alpha,m_\alpha)$ and has product form $V_\alpha\otimes W_\alpha$ between matching sectors.
+
+**证明。** Finite dimension turns the inclusion into equality, so conjugation restricts to a $*$-automorphism. It permutes minimal central projections. The dimensions of the corresponding simple matrix algebras force $n_\alpha=n_\beta$, and their represented Hilbert ranks then force $m_\alpha=m_\beta$.
+
+Choose a left unitary implementing each matrix-algebra isomorphism. Its inverse times the corresponding block of $U$ commutes with every left matrix unit. This commutant is $I\otimes B(W)$, so the remaining unitary acts only on the multiplicity factor, giving the product form. The one-sector conclusion is V38 Theorem 8.1 and is reused here. $\square$
+
+<a id="statement-future-16-2"></a>
+

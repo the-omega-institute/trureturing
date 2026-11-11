@@ -1,0 +1,20 @@
+**定义 62.4（已定型的插入及保留的整锥条件）。** 先用定理 62.3 得到可逆 $\mathcal M$，再定义双线性 $T$、其线性化 $\mathcal T$ 和线性插入 $I_{13}$：
+
+$$
+\begin{aligned}
+T(a,c)&=L(M(a,1_A),c),& T&:A\times A\to E,\\
+\mathcal T(a\otimes c)&=T(a,c),&\mathcal T&:A\otimes_{\mathbb R}A\to E,\\
+I_{13}&=\mathcal T\mathcal M^{-1},&I_{13}&:D\to E.
+\end{aligned}
+\tag{62.24}
+$$
+
+因此 $I_{13}M(a,c)=Q(a,1_A,c)$ 在整个 $D$ 上给出唯一良定义的线性映射。这里使用的逆属于 $\mathcal M$；不能把定义域为 $D\otimes A$ 的 $\mathcal L$ 直接当成三份 $A$ 的映射来复合。完整二映射条件在此前置阶段之上，明确再要求一条几何条件：
+
+$$
+I_{13}(D_+)\subseteq E_+\quad\text{对整个实际正锥成立}.
+\tag{62.25}
+$$
+
+随后才定义 $p_{13}:=I_{13}^*:E\to D$，并记 $p_{23}=p$。条件 (62.25) 保留了原来交叉读回的整锥正性内容；正乘积上的正性不能替代它，给它改名也没有删去它。
+

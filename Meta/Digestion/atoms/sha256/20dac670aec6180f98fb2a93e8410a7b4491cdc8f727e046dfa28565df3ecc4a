@@ -1,0 +1,11 @@
+**定理 56.1（Same-grid face embedding with actual anchors）。** Every row in $\mathcal R_{S,N}$ embeds as a legal row in $\mathcal R_{4,N}$. Every tomography symbol and the zero symbol in (55.1) is an actual anchor in $\mathcal A_N$.
+
+Proof. The four face endpoints embed by zero on the missing coordinate, retain their entries in $N^{-1}R$, and satisfy $0\le E\le S\le I_4$. The signed increment remains an original-grid Hermitian matrix. If the fifth face effect is $C_3=S-A-B-X$, then its four-dimensional complement is
+
+$$
+ C_4=I_4-A-B-X=(I_4-S)+C_3.
+\tag{56.1}
+$$
+
+The two summands have orthogonal supports, with $0\le C_3\le S$. Hence $0\le C_4\le I_4$, and $C_4$ also belongs to the original grid. This checks all five required effects. The embedding $W_{S,N}\to W_{4,N}$ sends distinct effect symbols to distinct effect symbols, so it preserves (55.1) as an exact equality. By (54.6), each $Q\in\mathcal B_S$ is literally a member of $\mathcal B_4$. Also $0\in K_{4,N}$ and $\|0\|=0\le1/52$. Thus all delivered anchors are in $\mathcal B_4\cup\{0\}$; the proof uses no positive-radius small effect as an anchor. $\square$
+

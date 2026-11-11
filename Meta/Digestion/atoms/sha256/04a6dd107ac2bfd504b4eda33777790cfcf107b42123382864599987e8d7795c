@@ -1,0 +1,4 @@
+## 34. 固定非零 Schur 耦合下，全部原 PB 缩小正定环境的原 P2 允许范围
+
+沿用 §32 的 $C=\operatorname{diag}(1,2)$、$T_A=\operatorname{diag}(1,-2)$、$J_A=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$，以及[前卷](AURIC_FULL_PB_ACTUAL_PROBE_AND_ENVIRONMENT_COUPLING_CONTINUATION.md)的原 P2、原 PB 与有限变分记号。设 $n=(1,1)^{\mathsf T}/\sqrt2$、$a=C^{1/2}n=(1,\sqrt2)^{\mathsf T}/\sqrt2$、$\beta=h/\sqrt2$。下文在同一个完整 $M_5(\mathbb C)$ 上工作：演员为 $\mathbb C^2$，环境为 $\mathbb C^2\oplus\mathbb C$，原探针是 $x=X\oplus0_3$，其中 $X=X^*$；原输出为 $g_\sigma=\sigma i[c,t_\lambda]/2+s$，其中 $c=C\oplus0_3$、$s=\rho T_A\oplus0_3$。
+

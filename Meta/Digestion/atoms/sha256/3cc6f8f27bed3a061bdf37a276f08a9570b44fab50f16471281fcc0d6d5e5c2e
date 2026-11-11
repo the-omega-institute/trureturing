@@ -1,0 +1,56 @@
+**定义 68.3（合格规约及滤波探针）。** 在测试之前，固定只使用 $A,D$ 的比较几何、标签、基及实际 $M$ 的坐标规约。先由 $M$ 取 $U$、$C_D$ 和 $F$。由定理 64.6 的早期结论，可以在 $A,D$ 选择保迹 Jordan 序坐标
+
+$$
+A=\bigoplus_{i\in\Lambda}H_{n_i},\qquad
+D=\bigoplus_{(i,k)\in\Lambda^2}H_{n_in_k},\qquad
+D_{ik}=\operatorname{span}F(A_i,A_k),
+\tag{68.13}
+$$
+
+其中 $H_q=\operatorname{Herm}_q(\mathbb C)$，$n_i\ge1$，$\Lambda$ 有限非空，$n=\sum_i n_i$。相同维数的不同中心标签仍分开。记初始坐标为 $\theta_A^0,\theta_D^0$。仅用 $F$ 的系数选择每块的酉 $V_{ik}$ 和位 $\varepsilon_{ik},\delta_{ik}\in\{0,1\}$，使
+
+$$
+F(a,c)_{ik}=V_{ik}
+ \bigl(a_i^{T^{\varepsilon_{ik}}}\otimes
+ c_k^{T^{\delta_{ik}}}\bigr)V_{ik}^*.
+\tag{68.14}
+$$
+
+$T^0$ 为恒等、$T^1$ 为固定基下的整个转置；$V_{ik}$ 不与实际单位输出 $U$ 混淆。(68.14) 是把旧 (64.28) 用于 $M_0=F$，并非测试后得到的同时正规形。
+
+允许任意事先固定的合格选择。如需单值，先固定标签与矩阵元顺序，按 $(00,01,10,11)$ 取首个非空酉解集的位对，再依顺序逐项最小化矩阵元的实部、虚部。有限基乘积上的等式足以规定解集；它是酉群中的非空闭紧集，逐项极小化后仍非空紧，最终确定全部矩阵元。这只规定数学选择，不承诺其算法复杂度或物理实现。
+
+令 $\mathcal P=\{(i,k):n_i,n_k\ge2\}$、$r=|\mathcal P|$。对每个有序 $(i,k)\in\mathcal P$，在固定基的前两维取
+
+$$
+v_{ik}=\frac{|0_i0_k\rangle+|1_i1_k\rangle}{\sqrt2},\qquad
+b_{ik}=v_{ik}v_{ik}^*,\qquad
+\beta_{ik}=(\theta_D^0|_{D_{ik}})^{-1}
+ \bigl(V_{ik}b_{ik}V_{ik}^*\bigr),
+$$
+
+其中 $\beta_{ik}$ 在其他中心块为零。定义
+
+$$
+\sigma_*(F)=
+\begin{cases}
+\displaystyle\frac1r\sum_{(i,k)\in\mathcal P}\beta_{ik},&r>0,\\
+1_D/m,&r=0,
+\end{cases}
+\qquad
+h_*:=\tau_D(C_D\sigma_*),\qquad
+\rho_*:=\frac{C_D\sigma_*}{h_*}.
+\tag{68.15}
+$$
+
+每个 $\beta_{ik}$ 是正迹一元，故 $\sigma_*\ge0$、$\tau_D\sigma_*=1$。又 $C_D1_D=U$ 且 $C_D$ 自伴随，所以
+
+$$
+h_*=\langle U,\sigma_*\rangle_D>0.
+\tag{68.16}
+$$
+
+严格性可直接由 $U\ge\epsilon1_D$、$\epsilon>0$ 得 $h_*\ge\epsilon$。因此 $\rho_*\in D_+$、$\tau_D\rho_*=1$；它可以在锥边界。原坐标中的态是 $\Phi_D^{-1}\rho_*$，其原归一化 $u_D$ 恰为一。
+
+整个规则只读 $A,D$ 的原比较几何、预选规约和实际 $M$；没有读取 $E,N,Q_0,I_{13}^0,I_{13}^{\mathrm{raw}}$ 或测试结果。后面的 $E$ 初始坐标仅用于证明。不同合格规约可以给出不同的态，定理对每个这样的规约分别成立。
+

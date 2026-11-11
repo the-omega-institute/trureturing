@@ -1,0 +1,32 @@
+**引理 35.3（同一实际来源上的精确反射）。** 对任一固定实际 $t$ 及 (35.1) 的残量族，
+
+$$
+I_-(t)=-I_+(t),\qquad
+\mathcal B_-(t)=-\mathcal B_+(t),\qquad
+\mathcal J_-(t)=-\mathcal J_+(t).
+\tag{35.8}
+$$
+
+此结论保留同一个环境、同一个完整正泛函和同一个原向量，不要求 $t$ 为实矩阵。
+
+证明。在同一个 $t$ 上作 $(\sigma,\rho,X)\mapsto(-\sigma,-\rho,-X)$，则 $g'=-g$、$h'_x=h_x$、$k'=k$、$r'=-r$。于是作为完整原算子有
+
+$$
+R'_\tau=-R_{-\tau},\qquad S'_\tau=S_{-\tau},\qquad
+L'_{\rm PB}=-L_{\rm PB}.
+\tag{35.9}
+$$
+
+两笔实 Gram 预算交换，左端绝对值不变；$X\mapsto-X$ 是全部 Hermitian 探针的双射，故全部 PB 等价。P2 中仅 $g$ 变号，故亦等价。
+
+为核对后文有限见证，令 $\iota=\sigma i$，采用 (32.3) 的 $\zeta_\tau=\iota+\nu+\tau\ell=\beta_\tau-\tau\epsilon\iota\alpha_\tau$。同步取
+
+$$
+(\iota,\epsilon,\rho,X,\nu,\ell)
+\mapsto(-\iota,-\epsilon,-\rho,-X,-\nu,\ell),\qquad
+\alpha'_\tau=\alpha_{-\tau}>0,\quad\beta'_\tau=-\beta_{-\tau}.
+\tag{35.10}
+$$
+
+则 $\zeta'_\tau=-\zeta_{-\tau}$，故 $E'_\tau=E_{-\tau}$。在同一 $\xi=(u,y)$ 上，$a_{\rm act}=Bu+Vy$ 不变，$p'= -p$、$q'=-q$，而 $v=a_{\rm act}-\iota p$、$U=\iota q+BCu+Cv$ 均不变。有限带符号代价亦完全不变。这是对原算子对称性的复用；它比较的是不同取向下的 $\rho$ 与 $-\rho$，不把同一个非零 $\rho$ 的两个取向混为一谈。∎
+

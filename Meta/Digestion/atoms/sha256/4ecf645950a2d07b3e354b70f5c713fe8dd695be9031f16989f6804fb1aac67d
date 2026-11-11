@@ -1,0 +1,20 @@
+**引理 37.4（闭包上的零需求不可能）。** 将 (37.19) 的 $A>1$ 放宽到 $A\ge1$，仍要求其中两条演员接触等式；则
+
+$$
+a_{\rm act}-Hu+\ell C^2u/2\ne0.
+\tag{37.21}
+$$
+
+特别地，每个 $\mathcal C_\iota(a)$ 中的 $\eta$ 非零。
+
+证明。反设需求为零。用引理 37.2 取实际图 $(u_\delta,p_\delta,q_\delta)$ 逼近给定闭包点，误差 $o(\delta)$；实际点可保持不动。令
+
+$$
+\ell_\delta=\ell-\epsilon\iota\delta,\quad
+A_\delta=A+\delta>1,\quad \nu_\delta=\rho_\delta=0,\quad
+\alpha_{\tau,\delta}=A_\delta-\tau\epsilon,\quad
+a_{{\rm act},\delta}=Hu_\delta-\ell_\delta C^2u_\delta/2.
+$$
+
+在 §32 基准来源 $F_b=D_b=C,G_b=I_2$ 上，这些是合法实际测试，环境需求恰为零，演员缺陷 $\mathsf P_\delta,\mathsf Q_\delta=O(\delta)$。若 $A=1$，较大权重为 $O(\delta^{-1})$；若 $A>1$，权重有界。因此基准平方和 $S_b=O(\delta)$ 趋零。可是 (35.16) 给 $S_b\ge\gamma b_\delta\ge\gamma>0$，矛盾。此论证同时覆盖演员轴和一个 $\alpha_\tau\to0$ 的边界。∎
+

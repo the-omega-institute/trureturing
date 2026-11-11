@@ -1,0 +1,55 @@
+**定理 67.8（锐利双曲可行域的显式实现）。** 固定 $n\ge2$ 和数学载体 $A=H_n$、$D=H_{n^2}$、$E=H_{n^3}$，均取全部矩阵正锥、标准迹、全态和全效应。满足 $\mathcal B+D_H$ 的数据的双迹像恰好是
+
+$$
+\{(\delta,\gamma)\in(0,\infty)^2:\delta\gamma\ge n^6\}.
+\tag{67.20}
+$$
+
+对任意正定 $w\in H_n$，一个实现族为
+
+$$
+\begin{aligned}
+L_w(d,a)&=d\otimes w^{1/2}aw^{1/2},\\
+p_w(X)&=(I_n\otimes w^{-1/2})\operatorname{Tr}_1(X)
+             (I_n\otimes w^{-1/2}),
+\end{aligned}
+\tag{67.21}
+$$
+
+其中 $\operatorname{Tr}_1$ 丢弃三份中的第一份。此族满足
+
+$$
+\delta=n^2\operatorname{Tr}w,\qquad
+\gamma=n^2\operatorname{Tr}w^{-1}.
+\tag{67.22}
+$$
+
+**证明。** 这个族直接取定理 66.7 的单扇区参数 $n_1=n$、$u_{11}=I_n$、$g_{111}=w$，并取有序位 $\varepsilon_{11}=\delta_{111}=0$；(66.14) 为 $n\operatorname{Tr}I_n=n^2$，(66.20) 也成立。(66.16)–(66.18) 的 $L,p$ 恰为 (67.21)，所以整个实际锥上的正性、两条实张成、同一个 $p_w$ 两次的内部定义、$D_J,D_H,Z$ 和完整比较入口，均直接由该既有无 C13 逆定理供应，包含纠缠方向。取零位还由定理 66.9 的 (66.30) 得到这个实现族的整锥插入正性。该族的分类与存在性不是本节新成果，也不把这个带 C13 的充分实现族用于普遍无 C13 迹下界的证明。为计算新迹读数，直接将 (66.18) 的对应内部映射列为
+
+$$
+\begin{aligned}
+B_w(d,a)&=(\operatorname{Tr}_1d)\otimes a,\\
+K_w(a)&=(I_n/n)\otimes a=e\otimes a,\\
+M_w(a,b)&=a\otimes b,\qquad J_w(a)=a\otimes I_n,\\
+H_w(d)&=d\otimes w.
+\end{aligned}
+\tag{67.23}
+$$
+
+单位上 $H_w1_D=I_{n^2}\otimes w$、$p_w1_E=nI_n\otimes w^{-1}$，取原规范迹即得新的 (67.22)。正定谱的 Cauchy–Schwarz 给出 $\operatorname{Tr}w\operatorname{Tr}w^{-1}\ge n^2$，等号恰为 $w$ 标量，符合定理 67.6。
+
+为实现任意 $d_0,g_0>0$ 且 $d_0g_0\ge n^6$，令
+
+$$
+c=\sqrt{d_0/g_0},\qquad S=\frac{\sqrt{d_0g_0}}{n^2}\ge n,
+\qquad t=S-n+2\ge2.
+$$
+
+取 $x=(t+\sqrt{t^2-4})/2\ge1$，则 $x+x^{-1}=t$。置
+
+$$
+w=c\operatorname{diag}(x,x^{-1},1,\ldots,1).
+$$
+
+两迹分别为 $cS,c^{-1}S$，所以 (67.22) 恰为 $\delta=d_0,\gamma=g_0$。这是显式手算恒等式，不依赖搜索或数值枚举。定理 67.5 给出所有允许数据的必要区域，此固定载体族实现整个区域，故 (67.20) 为精确像。$n=1$ 时，第一二元接口及支持面秩使 $A=D=E=\mathbb R$；$U=1$ 和内部定义使实际数据为 $L(d,a)=cda,p(x)=c^{-1}x$，只有 $\delta\gamma=1$ 的边界。经典和一般直和情形仍由前述普遍定理覆盖；这里的满区域实现专指 $n\ge2$ 的固定简单矩阵载体。该族构造数学映射，不构造原始 $\Omega$ 的实际准备或设备。$\square$
+

@@ -1,0 +1,37 @@
+**定义 27.1（Restricted preparation fibres）。** Let $H$ be a nonzero complex Hilbert space of dimension $D$. Regard $\operatorname{Herm}(H)$ as a real inner-product space with
+
+$$
+\langle A,B\rangle=\operatorname{Tr}(AB),
+\qquad\lVert A\rVert_2^2=\operatorname{Tr}(A^2).
+$$
+
+Let $W\subseteq\operatorname{Herm}(H)$ be a real subspace containing $I$, and let $Q$ be a nonempty set of density matrices admitted by the declared common source and operation contract. Put
+
+<a id="eq-preparation-27-1"></a>
+
+$$
+\begin{aligned}
+\rho\sim_W\sigma
+&\quad\Longleftrightarrow\quad
+\operatorname{Tr}((\rho-\sigma)w)=0
+\quad\text{for every }w\in W,\\
+\mathcal K_Q
+&=\operatorname{span}_{\mathbb R}
+\{\rho-\sigma:\rho,\sigma\in Q,\ \rho\sim_W\sigma\},\\
+\Delta_{Q,W}(B)
+&=\sup_{\substack{\rho,\sigma\in Q\\\rho\sim_W\sigma}}
+|\operatorname{Tr}(B(\rho-\sigma))|.
+\end{aligned}
+\tag{27.1}
+$$
+
+The supremum is used even when $Q$ is not closed. Identical pairs are allowed, so the comparison set is nonempty. Since $I\in W$, every element of $\mathcal K_Q$ has trace zero, and
+
+$$
+\mathcal K_Q\subseteq W^\perp,
+\qquad
+k:=\dim\mathcal K_Q\le D^2-\dim W.
+$$
+
+<a id="statement-preparation-27-2"></a>
+

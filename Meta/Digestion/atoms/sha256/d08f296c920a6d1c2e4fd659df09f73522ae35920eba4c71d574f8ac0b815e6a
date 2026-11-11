@@ -1,0 +1,21 @@
+**推论 69.10（行一致严格弱于单位滤波）。** 定理 69.8 的行一致条件使静态逆迹平衡恰化为
+
+$$
+\sum_k\operatorname{Tr}(v_k^{-1})=n.
+\tag{69.24}
+$$
+
+它不迫使 $v_k=I_k$。两标量扇区的相同行 $(2,2/3)$ 满足 (69.24)；单个复 qubit 扇区的 $v=\operatorname{diag}(2,2/3)$ 也满足 $\operatorname{Tr}v^{-1}=2$。只有总维数一时此平衡强制 $u=1$。
+
+对一般原始模型，额外要求 $M$ 将每一对局部正迹一输入都送到实际正迹一态，当且仅当所有 $u_{ik}=I_k$。证明是
+
+$$
+\operatorname{Tr}_D M(a,b)
+ =\sum_{i,k}\operatorname{Tr}(a_i)\operatorname{Tr}(u_{ik}b_k).
+\tag{69.25}
+$$
+
+将 $a,b$ 分别支持于任意 $i,k$，并遍历 $H_k$ 的所有密度矩阵，就要求 $\operatorname{Tr}(u_{ik}b_k)=1$ 对所有这些矩阵成立；秩一态分离 Hermitian 矩阵，故 $u_{ik}=I_k$。反向代入即得。特别地，行一致后仍有 $\operatorname{Tr}M(a,b)=\operatorname{Tr}(a)\sum_k\operatorname{Tr}(v_kb_k)$，不能把它默认为一。$\square$
+
+逆迹平衡用于保证参数属于第 65 节的实际静态模型；它没有参与共同锚点的必要性证明或同族补全构造。行一致、每对制备归一化及三份侧 $g$ 的校准是不同信息。
+

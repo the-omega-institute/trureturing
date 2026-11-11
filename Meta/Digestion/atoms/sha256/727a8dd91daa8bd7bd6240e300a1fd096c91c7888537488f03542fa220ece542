@@ -1,0 +1,112 @@
+**定义 37.1（归一原域及有限代价）。** 归一原测试遍取
+
+$$
+\begin{gathered}
+\xi=(u,y),\qquad \|u\|=1,\quad y\in\mathbb C^3,\quad X=X^*\in M_2(\mathbb C),\\
+\epsilon\in\{1,-1\},\qquad
+\alpha_+,\alpha_->0,\quad \beta_+,\beta_-\in\mathbb R.
+\end{gathered}
+\tag{37.6}
+$$
+
+除 $\|u\|=1$ 外，没有范数、参数比值或预算非退化限制。所有参数在每个有限阶段均有限，但可随 $\lambda$ 逃逸。固定实数 $k$，以后始终令 $\rho=k/\lambda^2$。对 $\phi_\xi(A)=\xi^*A\xi$，定义带符号原有限代价
+
+$$
+\mathcal D_\lambda^{\rm orig}=
+\sum_{\tau=\pm1}\left(
+\alpha_\tau\|R_\tau\xi\|^2+
+\alpha_\tau^{-1}\|(S_\tau-\beta_\tau R_\tau)\xi\|^2\right)
+-2\epsilon\phi_\xi(L_{\rm PB}).
+\tag{37.7}
+$$
+
+前卷 (27.12) 的原二列变分恒等式说明：对同一 $X,\xi$，(37.7) 在所有有限参数与两个 $\epsilon$ 上非负，当且仅当该向量满足 PB。恒等式包括 Gram 退化及下确界不取到的情形；某个有限 (37.7) 严格负已经足以给出 PB 严格失败。
+
+为列出精确消元，写
+
+$$
+\begin{gathered}
+z_\tau=\beta_\tau-\tau\epsilon\iota\alpha_\tau
+       =\iota+\nu+\tau\ell,\qquad
+A=(\alpha_++\alpha_-)/2=-\epsilon\operatorname{Im}_\iota\ell,\\
+A>|1+\operatorname{Im}_\iota\nu|,\qquad
+\alpha_\tau=A-\tau\epsilon(1+\operatorname{Im}_\iota\nu),\qquad
+\beta_\tau=\operatorname{Re}(\nu+\tau\ell),\\
+r=|\ell|>0,\quad n=|\nu|,\quad r+n\ge1,\quad
+b=(r+n)^2/r\ge1,\\
+w_\tau=\alpha_\tau^{-1},\quad s_\alpha=w_++w_-,\quad
+\omega=(w_+-w_-)/s_\alpha\in(-1,1).
+\end{gathered}
+\tag{37.8}
+$$
+
+这里 $\operatorname{Im}_\iota$ 是基 $1,\iota$ 下的虚系数。反过来，上述严格合法性条件与实部公式恰好恢复全部原 $\alpha_\tau,\beta_\tau$，并未缩小变分域。置
+
+$$
+\begin{gathered}
+p=Xu,\quad q=XCu,\quad a_{\rm act}=Bu+Vy,\quad v=a_{\rm act}-\iota p,\quad
+U=\iota q+BCu+Cv,\\
+\mathsf P=v-\nu p+\ell U/2,\qquad
+\mathsf Q=\iota Cv-\ell p+\rho T_Au+\nu U/2,\qquad
+\zeta=\operatorname{Re}(v^*T_Au),\\
+t_{\rm req}=a_{\rm act}-Hu+(\ell+\omega\nu)C^2u/2,\qquad
+\mathcal A=\sum_{\tau=\pm1}w_\tau\|\mathsf P+\tau\mathsf Q\|^2,\qquad
+v_{\rm var}=\frac{|\nu|^2}{2A}.
+\end{gathered}
+\tag{37.9}
+$$
+
+$v_{\rm var}$ 是 (31.10) 的非负方差系数，不是残量系数 $k$。原环境列令 $d=Fu+D_\lambda^{\rm env}y$，$e=d+(\ell+\omega\nu)FCu/2$。由 (37.3) 有 $G_\lambda^*e=t_{\rm req}$。原 (32.5)、(35.13) 的列展开与加权方差恒等式给
+
+$$
+\begin{aligned}
+((S_\tau-z_\tau R_\tau)\xi)_{\rm act}&=\mathsf P+\tau\mathsf Q,\\
+((S_\tau-z_\tau R_\tau)\xi)_{\rm env}
+ &=e+(\tau-\omega)\nu FCu/2,\\
+\mathcal D_\lambda^{\rm orig}
+ &=\mathcal A+s_\alpha\|e\|^2+v_{\rm var}\|C^2u\|^2
+   +4\epsilon k\lambda^{-2}\zeta.
+\end{aligned}
+\tag{37.10}
+$$
+
+令 $R_\lambda=(I_2+\lambda^2aa^*)^{-1}$。约束 $G_\lambda^*e=t_{\rm req}$ 的全部解及范数分解是
+
+$$
+e=G_\lambda R_\lambda t_{\rm req}+e_0,\qquad
+G_\lambda^*e_0=0,\qquad
+\|e\|^2=t_{\rm req}^*R_\lambda t_{\rm req}+\|e_0\|^2.
+\tag{37.11}
+$$
+
+这是正定二次型的正交最小范数公式，直接复用 (31.12)。据此定义
+
+$$
+\begin{aligned}
+S_\lambda&=\mathcal A+s_\alpha t_{\rm req}^*R_\lambda t_{\rm req}
+                    +v_{\rm var}\|C^2u\|^2,\\
+\mathcal D_\lambda^{\rm red}&=S_\lambda+4\epsilon k\lambda^{-2}\zeta,\\
+\mathcal D_\lambda^{\rm orig}
+ &=\mathcal D_\lambda^{\rm red}+s_\alpha\|e_0\|^2.
+\end{aligned}
+\tag{37.12}
+$$
+
+约化域是 (37.6) 去掉 $y$，改让 $a_{\rm act}\in\mathbb C^2$ 任意。这个改变精确保留原域：给定任意约化测试，取 $e=G_\lambda R_\lambda t_{\rm req}$ 及
+
+$$
+y=(D_\lambda^{\rm env})^{-1}
+\left(e-(\ell+\omega\nu)FCu/2-Fu\right).
+\tag{37.13}
+$$
+
+于是 $Bu+Vy=Hu+G_\lambda^*e-(\ell+\omega\nu)C^2u/2=a_{\rm act}$。因此同一来源上的两个归一数值下确界精确相同：
+
+$$
+f_\lambda(k)=\inf_{\text{归一原测试}}\lambda^2\mathcal D_\lambda^{\rm orig}
+            =\inf_{\text{归一约化测试}}\lambda^2\mathcal D_\lambda^{\rm red}.
+\tag{37.14}
+$$
+
+此时暂允许下确界为 $-\infty$；§37.7 将先证明尾部一致下有界。
+

@@ -1,0 +1,17 @@
+**定义 53.1（Uniform constants and the unchanged table）。** Retain the single original dimension-four table, all labelled binary and ternary menus including zeros and repetitions, the original tomography matrix $H$, and $e(E)=p(E)-\operatorname{Tr}(HE)$ from Definition 50.1. Retain $\tau$, $A_\dagger$ and $C_*$ from Definitions 50.1 and 52.1. Define the finite constants
+
+$$
+\begin{aligned}
+ D_0&=64\tau^3,&
+ T&=4\tau(D_0+1),&
+ \lambda&=1+\frac1{4\tau},\\
+ K_{\mathrm{tr}}&=53142+2+902824=955968,\\
+ N_0&=1+\max\{2048,\ D_0+64,\ (4\tau+2)D_0,\ 2TD_0\},\\
+ A_0&=2A_\dagger,&
+ C_0&=\max\{C_*+TK_{\mathrm{tr}},\ 33N_0\}.
+\end{aligned}
+\tag{53.1}
+$$
+
+Here $D_0,T,N_0$ are positive integers. None of these constants depends on the scale, table, tolerance, target or reduced basis.
+

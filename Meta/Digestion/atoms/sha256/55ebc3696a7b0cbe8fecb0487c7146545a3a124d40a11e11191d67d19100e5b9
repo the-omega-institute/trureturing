@@ -1,0 +1,105 @@
+**定理 62.6（两项保留条件的反例）。** 对每个整数 $n\ge2$，存在满足定义 62.1–62.2 和定理 62.3 全部结论，却违反 (62.25) 的矩阵实例；另有全经典实例满足除 W 外的全部完整候选条件，包括 (62.25)，但完整 II 失败。
+
+**证明。** 取标准迹和整个正半定锥上的
+
+$$
+A=\operatorname{Herm}_n(\mathbb C),\qquad
+D=\operatorname{Herm}_{n^2}(\mathbb C),\qquad
+E=\operatorname{Herm}_{n^3}(\mathbb C).
+\tag{62.37}
+$$
+
+所有转置在固定矩阵基中进行。$T_D$ 表示剩余两个因子的全转置，$\operatorname{Tr}_j$ 表示丢掉所标因子的普通部分迹。令
+
+$$
+L(d,c)=d\otimes c^{\mathsf T},\qquad
+p=T_D\operatorname{Tr}_1:E\to D.
+\tag{62.38}
+$$
+
+$L$ 对全部 $d,c\ge0$ 正，包括纠缠 $d$，因为转置保持单个矩阵正性，两个正矩阵的张量积正。部分迹全域正且保迹，剩余双份的全转置也是正保迹序自同构，所以 $p$ 对整个 $E_+$ 正且保迹。转置可逆，Hermitian 简单张量实张成全部 Hermitian 矩阵空间，所以所需两条张成均成立。全效应矩阵载体上对 $x\in K_X$ 的比较是 $T_\xi(x)=\operatorname{Tr}(\xi x)$，故满足有限混合 S 和已指定 Jordan 条件桥。
+
+由原始定义直接计算，对全部实 Hermitian 输入，
+
+$$
+\begin{aligned}
+B(d,c)&=(\operatorname{Tr}_1d)^{\mathsf T}\otimes c,\\
+\omega&=I_{n^2}/n^2,\qquad B(\omega,a)=(I_n/n)\otimes a,\\
+M(a,b)&=B(B(\omega,a),b)=a^{\mathsf T}\otimes b,\\
+Q(a,b,c)&=a^{\mathsf T}\otimes b\otimes c^{\mathsf T}.
+\end{aligned}
+\tag{62.39}
+$$
+
+两个单位均保留，两个准备的迹张量等距性也可由转置保持迹配对直接验证。$J(a)=a^{\mathsf T}\otimes I_n$、$H(d)=d\otimes I_n$，故其指定伴随为 $r=T\operatorname{Tr}_2$、$h=\operatorname{Tr}_3$。于是
+
+$$
+\begin{aligned}
+rM(a,b)&=\operatorname{Tr}(b)a,\\
+hL(d,c)&=\operatorname{Tr}(c^{\mathsf T})d=\operatorname{Tr}(c)d,\\
+pQ(a,b,c)&=\operatorname{Tr}(a)(b^{\mathsf T}\otimes c)
+ =\operatorname{Tr}(a)M(b,c).
+\end{aligned}
+\tag{62.40}
+$$
+
+这逐项验证所有实输入的 (I)、(III) 及完整 (II)，而非只在正乘积上验证；$H(d)=d\otimes I_n$ 也直接给出 $H^*H=n\,\mathrm{id}_D$，故满足 W。
+
+由 (62.24) 的唯一线性定义，插入满足
+
+$$
+I_{13}(a^{\mathsf T}\otimes c)
+ =a^{\mathsf T}\otimes I_n\otimes c^{\mathsf T}.
+\tag{62.41}
+$$
+
+因此它先对 $D$ 的第二个因子作部分转置，再把两个标签置于第一、第三位置并插入中间的未归一化单位。它保单位，而且在每个准备的正乘积上正，却不在整个 $D_+$ 上正。令
+
+$$
+|\Omega\rangle=\frac1{\sqrt n}\sum_{j=0}^{n-1}|j,j\rangle,
+\qquad \rho=|\Omega\rangle\langle\Omega|\ge0,
+\qquad (\mathrm{id}\otimes T)\rho=\frac Fn,
+\tag{62.42}
+$$
+
+其中 $F|i,j\rangle=|j,i\rangle$。把中间单位插入，得到 $I_{13}(\rho)=F_{13}/n$；这里 $F_{13}$ 交换第一、第三因子且在中间因子上为恒等。对任意中间基向量 $|k\rangle$，
+
+$$
+v_k=\frac{|0,k,1\rangle-|1,k,0\rangle}{\sqrt2},\qquad
+I_{13}(\rho)v_k=-\frac1n v_k.
+\tag{62.43}
+$$
+
+所以 (62.25) 失败，$n=2$ 时负本征值恰为 $-1/2$。此控制例证明这个二映射表示必须保留该整锥条件，不能用乘积正性替代；它没有证明每个其他条件独立。原始条件只要求全域正性，不能另加完全正性来排除此例，再称已从原条件推出结论。
+
+对 W 的控制取经典 $A=\mathbb R^2,D=\mathbb R^4,E=\mathbb R^8$，均用坐标正锥、坐标和迹及全态全效应。令
+
+$$
+P=\begin{pmatrix}3/4&1/4\\1/4&3/4\end{pmatrix},\qquad
+L(d,c)=((P\otimes\mathrm{id})d)\otimes c,\qquad
+p=\operatorname{Tr}_1.
+\tag{62.44}
+$$
+
+$P$ 双随机且可逆，故 $L,p$ 全域正、$p$ 保迹，两条实张成成立。经典纯态为坐标本原元，比较为坐标配对，故有限混合 S 及标准迹 Jordan 桥成立。直接算得 $B(d,c)=(\operatorname{Tr}_1d)\otimes c$，$\omega=1_4/4$，$B(\omega,a)=(1_2/2)\otimes a$，从而两次同一个 $p$ 给出 $M(a,b)=a\otimes b$。于是 $r=\operatorname{Tr}_2$，I 成立；$Q(a,b,c)=Pa\otimes b\otimes c$ 给出 III。插入在全部实简单张量上为
+
+$$
+I_{13}(a\otimes c)=Pa\otimes1_2\otimes c,
+\qquad (I_{13}d)_{ijk}=\sum_\ell P_{i\ell}d_{\ell k}.
+\tag{62.45}
+$$
+
+后式逐坐标非负，验证整个经典 $D_+$ 上的 (62.25)，不仅是乘积上正。然而
+
+$$
+\begin{gathered}
+P^{\mathsf T}P=P^2=
+\begin{pmatrix}5/8&3/8\\3/8&5/8\end{pmatrix}\ne\mathrm{id},\\
+H^*H=2(P^{\mathsf T}P\otimes\mathrm{id})\ne2\,\mathrm{id}_D,\qquad
+hL(d,c)=\tau_A(c)(P^{\mathsf T}P\otimes\mathrm{id})d.
+\end{gathered}
+\tag{62.46}
+$$
+
+例如对坐标基 $e_0,e_1$，取 $d=e_0\otimes e_0,c=e_0$，末式为 $\tfrac58e_0\otimes e_0+\tfrac38e_1\otimes e_0\ne d$。故删除 W 会丢失比较校准，不能推出 II；这两个控制不声称全部条件独立或最小。$\square$
+

@@ -1,0 +1,19 @@
+**定理 2.1（Central concentration and one Schmidt direction）。** The state $\omega_\Psi$ is pure on $\mathcal A$ if and only if exactly one sector $\alpha$ has $p_\alpha=1$ and its normalized density $\rho_\alpha$ has rank one. Equivalently,
+
+<a id="eq-purity-2-1"></a>
+
+$$
+\Psi=u\otimes v
+\quad\text{in one sector }V_\alpha\otimes W_\alpha,
+\qquad\lVert u\rVert=\lVert v\rVert=1.
+\tag{2.1}
+$$
+
+**证明。** If two central weights are positive, conditioning on one central projection gives a nontrivial decomposition into distinct states. If only one sector is populated but its density has at least two positive eigenvalues, the spectral decomposition again decomposes the functional nontrivially.
+
+Conversely, a rank-one density in one sector is extreme. In a positive convex decomposition, each summand has zero expectation on the positive effects outside that sector and outside its one-dimensional support. Positivity therefore forces both summands into the same rank-one visible support, and trace one makes them identical. Finally, the Schmidt rank of $\Psi_\alpha$ equals $\operatorname{rank}\sigma_\alpha$, giving (2.1). $\square$
+
+There are two independent sources of visible mixture: weights across distinguishable central sectors and Schmidt rank inside a sector. Both refer to one specified vector and one specified observation interface.
+
+<a id="statement-purity-2-2"></a>
+

@@ -1,0 +1,150 @@
+**定理 37.5（全部归一原测试的序列紧性与下极限）。** 固定上述 $a,h,\iota$ 及任意实 $k,M$。对每个 $\lambda_j\to\infty$ 和归一原测试序列，若
+
+$$
+\lambda_j^2\mathcal D_{\lambda_j}^{\rm orig}\le M,
+\tag{37.22}
+$$
+
+则约化可见数据 $(\epsilon,u,p,q,a_{\rm act},\ell,\nu,\alpha_\pm,\beta_\pm)$ 有收敛子列。每个这样的收敛子列的极限满足 $\nu=0$，并通过 (37.19) 确定一个 $c\in\mathcal C_\iota(a)$；沿该子列都有
+
+$$
+\liminf_j\lambda_j^2\mathcal D_{\lambda_j}^{\rm orig}\ge J_k(c).
+\tag{37.23}
+$$
+
+同一结论对 $\mathcal D^{\rm red}$ 成立。所有尾部上界、正下界和误差常数可依赖固定 $C,H,a,h,k,M$，不依赖 $\lambda_j$ 或所选测试。没有对无界 $k$ 的一致性结论，也不要求 $X_j$ 或 $y_j$ 有界。
+
+证明先控制残量抵消。由 (37.12)，只需处理约化代价。用同一 $u,X,a_{\rm act}$ 和原有限参数在 §32 基准来源上取环境需求 $t_{\rm req}$，其平方和为
+
+$$
+S_b=\mathcal A+s_\alpha\|t_{\rm req}\|^2
+               +\frac{n^2}{2A}\|C^2u\|^2.
+\tag{37.24}
+$$
+
+这确实是一个原基准测试：取 $d_b=t_{\rm req}-(\ell+\omega\nu)C^2u/2$，$y_b=C^{-1}(d_b-Cu)$，即可使 $Bu+Cy_b=a_{\rm act}$。由 (35.16) 和秩一逆矩阵的最小特征值，尾部 $|\rho|\le r_0$ 上有
+
+$$
+\begin{gathered}
+S_b\ge\gamma b,\qquad
+|\zeta|\le K\bigl(b+\sqrt{bS_b}+|\rho|\bigr),\\
+S_b\le L_\lambda S_\lambda,\qquad L_\lambda=1+\lambda^2m.
+\end{gathered}
+\tag{37.25}
+$$
+
+将 $M$ 增至 $\max(M,0)$，置 $x_b=S_b/b$。从 $\lambda^2S_\lambda\le M+4|k||\zeta|$ 得到准确的不等式
+
+$$
+x_b\le(m+\lambda^{-2})
+\left[M+4K|k|\left(1+\sqrt{x_b}+|\rho|/b\right)\right].
+\tag{37.26}
+$$
+
+因 $b\ge1$ 且尾部 $|\rho|\le1$，这是 $\sqrt{x_b}$ 的二次上界，故 $x_b$ 一致有界。重新代回即得
+
+$$
+S_b\le Cb,\qquad S_\lambda\le Cb/\lambda^2.
+\tag{37.27}
+$$
+
+这里没有把有符号代价的上界误作正平方和的上界，而是先控制了允许的抵消。
+
+方差项与 $\|C^2u\|\ge1$ 给
+
+$$
+\frac{n^2}{2A}\le S_\lambda,\qquad
+\frac{n}{r+n}\le C/\lambda,\qquad
+\frac nr\le C'/\lambda,\qquad \liminf r\ge1.
+\tag{37.28}
+$$
+
+最后一步使用 $r+n\ge1$。半和、半差的加权 Cauchy–Schwarz，以及 $s_\alpha\ge2/A$，又给
+
+$$
+\|\mathsf P\|+\|\mathsf Q\|\le Cr/\lambda,\qquad
+\|t_{\rm req}\|\le Cr,\qquad \|a_{\rm act}\|\le Cr.
+\tag{37.29}
+$$
+
+例如 $\|t_{\rm req}\|^2\le L_\lambda S_\lambda/s_\alpha\le Cr^2$；这里已由 (37.28) 使 $b/r$ 有界。
+
+现在排除 $r\to\infty$。若存在这种子列，置 $\chi=\nu/\ell$、$e_\ell=\ell/r$，$|e_\ell|=1$。原演员列的准确消元是
+
+$$
+\mathsf Q-\chi\mathsf P=(\iota C-\chi I_2)a_{\rm act}-Zp+\rho T_Au,
+\qquad
+Z=\bigl[\ell(1-\chi^2)-\iota\chi\bigr]I_2-C.
+\tag{37.30}
+$$
+
+由 $\chi=O(\lambda^{-1})$，尾部 $\|Z^{-1}\|\le C/r$；结合 (37.29) 得 $p=O(1)$。再由 $\mathsf P=v-\nu p+\ell U/2$ 得 $U=O(1)$。用 $U$ 的定义和 $\mathsf Q$ 的等式，分别得到
+
+$$
+\frac qr-e_\ell p=O(\lambda^{-1}+r^{-1}),\qquad
+\frac{a_{\rm act}}r+\iota e_\ell C^{-1}p
+                  =O(\lambda^{-1}+r^{-1}).
+\tag{37.31}
+$$
+
+实际 Hermitian 图的 $u^*q=p^*Cu$ 与 $p=O(1)$ 使
+$u^*p=O(\lambda^{-1}+r^{-1})$；它本来是实数。另一个 Hermitian 条件 $(Cu)^*q\in\mathbb R$ 使
+
+$$
+\operatorname{Im}_\iota\bigl(e_\ell(Cu)^*p\bigr)
+                  =O(\lambda^{-1}+r^{-1}).
+\tag{37.32}
+$$
+
+准确使用 $C^{-1}T_A=3I_2-2C$，(37.31) 给
+
+$$
+\frac\zeta r=
+\operatorname{Re}\!\left(\iota\overline{e_\ell}
+       [3p^*u-2p^*Cu]\right)+O(\lambda^{-1}+r^{-1})
+       =O(\lambda^{-1}+r^{-1}).
+\tag{37.33}
+$$
+
+最后一个等号同时用了上述两个 Hermitian 配对；仅控制 $u^*p$ 不足以得此消失。另一方面，(37.25) 给
+
+$$
+\frac{\lambda^2S_\lambda}{r}
+\ge\frac{\gamma b}{r(m+\lambda^{-2})}
+\ge\frac\gamma{m+\lambda^{-2}}.
+\tag{37.34}
+$$
+
+(37.33)–(37.34) 与
+$\lambda^2\mathcal D_\lambda^{\rm red}/r\le M/r\to0$ 矛盾，因其左侧下极限至少为 $\gamma/m>0$。所以 $r$ 有界；此排除没有除以可能为零的 $\zeta$。
+
+现在 $n=O(\lambda^{-1})$，$a_{\rm act}$ 有界，$\mathsf P,\mathsf Q\to0$。合法性给 $\liminf A\ge1$，故 (37.30) 中 $Z$ 尾部具有一致有界逆：其极限是虚系数绝对值至少 $1$ 的 $\ell I_2-C$。因而 $p$ 有界；由 $\mathsf P$ 得 $U$ 有界，再由其定义得 $q$ 有界。所有可见数据于是可取收敛子列，图极限属于 $\overline{\mathcal G}$，原 $\beta_\tau=\operatorname{Re}(\nu+\tau\ell)$ 也有界。
+
+还须排除 $A\to1$，不能预设两权重的正下界。由 (37.27) 及 $r$ 有界，
+
+$$
+s_\alpha\|t_{\rm req}\|^2
+\le(m+\lambda^{-2})\lambda^2S_\lambda\le C.
+\tag{37.35}
+$$
+
+若 $A\to1$，则 $\nu\to0$ 使一个 $\alpha_\tau\to0$，故 $s_\alpha\to\infty$，进而 $t_{\rm req}\to0$。在 $\mathsf P=\mathsf Q=0,\nu=\rho=0$ 的极限中，先由 $\mathsf Q=0$ 得 $v=-\iota\ell C^{-1}p$，再由 $\mathsf P=0$ 得 $U=2\iota C^{-1}p$。这些正是 (37.19) 的两条演员接触等式，给出了被引理 37.4 排除的 $A=1$ 零需求。故尾部 $A\ge1+\delta$，$\delta>0$；两 $\alpha_\tau$ 均离零且有上界。
+
+最后令 $\Pi_a=aa^*/m$、$\Pi_a^\perp=I_2-\Pi_a$。有
+
+$$
+R_\lambda=\Pi_a^\perp+(1+\lambda^2m)^{-1}\Pi_a.
+\tag{37.36}
+$$
+
+$\lambda^2S_\lambda\le C$ 使 $\Pi_a^\perp t_{\rm req}=O(\lambda^{-1})$。因此每个可见收敛子列都满足 $t_{\rm req}\to\eta a$，并由引理 37.4 得 $\eta\ne0$。此子列的极限就是 (37.19) 的一个增广接触。设 $\eta_\lambda=a^*t_{\rm req}/m\to\eta$，则
+
+$$
+\liminf \lambda^2s_\alpha t_{\rm req}^*R_\lambda t_{\rm req}
+\ge\lim s_\alpha\frac{\lambda^2m}{1+\lambda^2m}|\eta_\lambda|^2
+=s(A)|\eta|^2.
+\tag{37.37}
+$$
+
+其余缺陷平方与方差非负，$\zeta$ 连续收敛；原环境剩余项也非负。这证明每个收敛子列上的 (37.23)。当需要整列的下极限时，先取实现该下极限的子列，再用已经证明的紧性取子列；并不声称任意极限接触都实现整列下极限。∎
+

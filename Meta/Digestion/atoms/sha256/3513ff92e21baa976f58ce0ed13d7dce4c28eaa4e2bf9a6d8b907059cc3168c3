@@ -1,0 +1,26 @@
+## 28. A fixed preparation family has a finite actual-pair certificate
+
+Suppose $k>0$. Finite basis extraction from the generating set in (27.1) selects $k$ actual pairs $(\rho_a,\sigma_a)$ in $Q$ with equal current responses, whose differences
+
+$$
+d_a=\rho_a-\sigma_a
+\qquad(1\le a\le k)
+$$
+
+are linearly independent and span $\mathcal K_Q$. The selected states are members of the original preparation set. Arbitrary linear combinations are not declared to be available preparations.
+
+Define the positive-definite real Gram matrix, future gap coordinates and hidden residual by
+
+<a id="eq-preparation-28-1"></a>
+
+$$
+G_{ab}=\operatorname{Tr}(d_ad_b),
+\qquad
+b_a(B)=\operatorname{Tr}(Bd_a),
+\qquad
+R_Q(B)=P_{\mathcal K_Q}B.
+\tag{28.1}
+$$
+
+<a id="statement-preparation-28-1"></a>
+

@@ -1,0 +1,123 @@
+**定理 42.1（严格轴间隙及统一实际达到）。** 存在共同常数
+
+$$
+0<h_0\le10^{-3},\qquad \gamma_0>0,\qquad c_0>0,\qquad M_0<\infty,
+$$
+
+使对每个实 $|h|\le h_0$、$r=\pm1$ 及两个取向，均有
+
+$$
+K_r(h)\le K_{\rm ax}-\gamma_0.
+\tag{42.1}
+$$
+
+每个不利接触若 $\mathscr R\le K_{\rm ax}-\gamma_0$，则 $|u_1u_2|\ge c_0$。特别地，每个全局极小接触都有唯一有限 Hermitian 实现
+
+$$
+X=[p,q][u,Cu]^{-1}=X^*,\qquad \|X\|\le M_0.
+\tag{42.2}
+$$
+
+实际有限 Hermitian 接触阈值与增广阈值相同，且两者均取到。这是接触阈值达到性。
+
+证明。$K_{\rm ax}$ 及其唯一第二轴极小尺度 $A_*>1$ 直接取定理 39.5，故 $K_{\rm ax}<85/72<6/5$；完整轴分类仍取定理 39.4。以下构造在固定 $A>1$ 下给出轴外严格下降。
+
+令
+
+$$
+\ell=1+\delta+iA,\qquad u=(\omega,c),\qquad
+c=\sqrt{1-|\omega|^2}>0,
+\tag{42.3}
+$$
+
+其中 $\delta$ 实、$\omega$ 复，均在零附近。沿用 (41.4) 的 $\beta,d$ 和 (41.6) 的 $\zeta$，并令 $x=1+\delta$。由命题 39.6 的唯一列重构，置
+
+$$
+\begin{gathered}
+\alpha=\frac{(x-1)\beta/A+hd}{2},\qquad
+\chi=-\frac{(x+1)\beta/A+hd}{2},\\
+b=\frac{\zeta-x\beta-Ahd}{2x},\qquad
+p_2=(\chi-ib)/c.
+\end{gathered}
+\tag{42.4}
+$$
+
+先用来源第二坐标固定幅度，再用第一坐标固定 $p_1$：
+
+$$
+\begin{aligned}
+\eta&=r\left[i(1-\ell/2)p_2-(4-2\ell)c-h\omega\right],\\
+p_1&=\frac{\eta/\sqrt2+(2-\ell/2)\omega+hc}{i(1-\ell)}.
+\end{aligned}
+\tag{42.5}
+$$
+
+这精确强制两个来源坐标为 $\eta/\sqrt2,\eta r$，只剩一个复方程
+
+$$
+\Psi_r(h,\delta,\omega):=\overline\omega p_1-(\alpha+ib)=0.
+\tag{42.6}
+$$
+
+因为 $\overline u_2p_2=\chi-ib$ 已成立，(42.6) 精确给回全部四实图条件。$q,a_{\rm act}$ 按原定义重建。
+
+当 $\delta=\omega=0$ 时，$\beta=\zeta=12$、$\alpha=b=0$、$\chi=-12/A$，且
+
+$$
+\eta=r g_A,\qquad g_A=-8+i(2A-6/A),\qquad
+p_1=(h+rg_A/\sqrt2)/A.
+$$
+
+故对所有小 $h$ 均有 $\Psi_r(h,0,0)=0$。在 $h=0$，对 $\omega=\omega_R+i\omega_I$ 求导，实 Jacobian 为
+
+$$
+\begin{pmatrix}\operatorname{Re}P_r&\operatorname{Im}P_r\\
+\operatorname{Im}P_r&-\operatorname{Re}P_r\end{pmatrix},\qquad
+P_r=\frac{rg_A}{\sqrt2 A},\qquad
+\det=-\frac{|g_A|^2}{2A^2}<0.
+\tag{42.7}
+$$
+
+这里 $\beta,\zeta$ 在 $h=\omega=0$ 的 $\omega$ 导数为零，所以 (42.7) 来自 $\overline\omega P_r$，没有遗漏图约束的导数。实解析隐函数定理给精确分支 $\omega_r(h,\delta)$，并由局部唯一性有 $\omega_r(h,0)=0$。在 $h=\delta=0$，
+
+$$
+\overline{\omega_\delta}P_r=6/A-6i\ne0.
+$$
+
+因而缩小共同邻域后，$\omega_r(h,\delta)/\delta$ 连续且非零，所有非零小 $\delta$ 的接触均非轴。这里两来源只有两个，可取共同邻域。
+
+在基点，沿此精确分支有
+
+$$
+\beta_\delta=\zeta_\delta=0,\quad
+\alpha_\delta=6/A,\quad\chi_\delta=-6/A,\quad b_\delta=-6,
+$$
+
+因此 $(p_2)_\delta=-6/A+6i$，由 (42.5) 得
+
+$$
+(\eta r)_\delta=-4+i(3A+3/A).
+$$
+
+由于 $A$ 固定，代入原比值得
+
+$$
+\left.\partial_\delta\mathscr R_r\right|_{h=\delta=0}
+=D(A):=\frac{3A^4+10A^2-9}{6A(A^2-1)}>0.
+\tag{42.8}
+$$
+
+分子在 $A^2>1$ 上递增且在 $A=1$ 为 $4$，故正性覆盖全部 $A>1$，不是数值猜测。现在取 $A=A_*$。轴值对所有 $h,r$ 都是 $K_{\rm ax}$。分支的 $\zeta$ 仍为正，$y=A_*>1$，故附近比值均属不利接触。
+
+由解析性，选共同闭矩形 $|h|\le h_0$、$\delta_0\le\delta\le0$，其中 $\delta_0<0$、$h_0>0$，使 $\partial_\delta\mathscr R_r\ge D(A_*)/2$；同时保持所有上述分母非零、$c>0$ 及非轴性质。于是
+
+$$
+\mathscr R_r(h,\delta_0)
+\le K_{\rm ax}+\delta_0 D(A_*)/2
+=K_{\rm ax}-\gamma_0,\qquad
+\gamma_0=-\delta_0D(A_*)/2>0.
+\tag{42.9}
+$$
+
+这给的是固定来源方程上的真实有限下降，并由导数在矩形上的下界控制了余项。它直接证明 (42.1)。
+

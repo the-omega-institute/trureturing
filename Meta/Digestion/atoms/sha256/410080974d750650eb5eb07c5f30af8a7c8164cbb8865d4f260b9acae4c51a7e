@@ -1,0 +1,24 @@
+**定义 37.3（增广接触与极限代价）。** 对固定 $a,h,\iota$，$\mathcal C_\iota(a)$ 遍取 $\epsilon=\pm1$、$(u,p,q)\in\overline{\mathcal G}$、$\ell\in\mathbb C$、$a_{\rm act}\in\mathbb C^2$、$\eta\in\mathbb C$，满足
+
+$$
+\begin{gathered}
+A=-\epsilon\operatorname{Im}_\iota\ell>1,\qquad
+s(A)=\frac{2A}{A^2-1},\\
+a_{\rm act}=\iota(I_2-\ell C^{-1})p,\qquad
+q=(\ell I_2+2C^{-1})p+\iota BCu,\\
+a_{\rm act}-Hu+\ell C^2u/2=\eta a.
+\end{gathered}
+\tag{37.19}
+$$
+
+保留两个 $\epsilon$。定义
+
+$$
+\zeta(c)=\operatorname{Re}((a_{\rm act}-\iota p)^*T_Au),\qquad
+J_k(c)=s(A)|\eta|^2+4\epsilon k\zeta(c),\qquad
+j(k)=\inf_{c\in\mathcal C_\iota(a)}J_k(c),
+\tag{37.20}
+$$
+
+空集下确界约定为 $+\infty$。这些定义尚不宣称接触由一个有限轴上 $X$ 精确实现。
+

@@ -1,0 +1,42 @@
+**定义 64.2（同一个读回的完整候选前置条件）。** 唯一原始映射为实双线性 $L:D\times A\to E$ 和实线性 $p:E\to D$，要求
+
+$$
+L(D_+,A_+)\subseteq E_+,\qquad p(E_+)\subseteq D_+.
+$$
+
+第一个量词覆盖所有实际 $d\in D_+$，包括纠缠正元；第二个覆盖整个 $E_+$。定义
+
+$$
+\begin{aligned}
+B(d,c)&=pL(d,c),&K(a)&=B(\omega,a),&
+M(a,b)&=B(K(a),b),\\
+J(a)&=M(a,1_A),&r&=J^*,&U&=J1_A,\\
+H(d)&=L(d,1_A),&h&=H^*,&B_1&=pH,\\
+Q(a,b,c)&=L(M(a,b),c).
+\end{aligned}
+\tag{64.2}
+$$
+
+$M$ 中两次出现的 $p$ 是同一个实际映射。$J,H$ 插入的是未归一化单位；$e,\omega$ 才是迹一参考。要求两条实际实张成
+
+$$
+\operatorname{span}_{\mathbb R}M(A,A)=D,\qquad
+\operatorname{span}_{\mathbb R}L(D,A)=E,
+\tag{64.3}
+$$
+
+并保留如下四条输入：
+
+$$
+\begin{gathered}
+\mathrm{(D_J)}\quad a,b\in A_+,\ \langle a,b\rangle_A=0
+ \ \Longrightarrow\ \langle Ja,Jb\rangle_D=0,\\
+\mathrm{(Z)}\quad B_1M(a,b)=\tau_A(a)Jb\quad(a,b\in A),\\
+\mathrm{(W_H)}\quad H^*H=n\,\operatorname{id}_D,\\
+\mathrm{(N)}\quad \gamma:=\tau_D\bigl(p1_E\bigr)\le n^3.
+\end{gathered}
+\tag{64.4}
+$$
+
+$Z$ 量化全部实方向，$W_H$ 是整个实 $D$ 上的范数恒等式。两条张成不是可分态假设。这里尚无 $W_J$、完整 I、II、III、全局 $p$ 保迹或任一单位律。完整候选在第 3 节追加且只追加那里精确定义的 $I_{13}(\sigma_*)\in E_+$；该条件在两个归一化二元接口建立以后才使用。
+

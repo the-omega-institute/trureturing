@@ -1,0 +1,43 @@
+**定义 35.1（同一实际来源上的允许集）。** 在演员为 $\mathbb C^2$、环境为 $\mathbb C^m$ 的完整原代数上，令
+
+$$
+\begin{gathered}
+t=\begin{pmatrix}B&V\\V^*&D\end{pmatrix}=t^*,\qquad
+c=C\oplus0_m,\qquad s_\rho=\rho T_A\oplus0_m,\qquad
+x=X\oplus0_m,\quad X=X^*,\\
+A\circ B=(AB+BA)/2,\qquad K_\sigma(A,B)=\sigma i[A,B]/2,\qquad
+g_{\sigma,\rho}=K_\sigma(c,t)+s_\rho,\\
+h_x=K_\sigma(c,x),\quad k=c\circ t,\quad r=c\circ x,\qquad
+R_\tau=x+\tau(h_x-k),\quad S_\tau=t+\tau(r+g_{\sigma,\rho}),\quad\tau=\pm1,\\
+L_{\rm PB}=-2x\circ(h_x-k)-2t\circ(r+g_{\sigma,\rho}),\\
+B_\phi(R,S)=\phi(R^2)\phi(S^2)-\phi(R\circ S)^2.
+\end{gathered}
+\tag{35.1}
+$$
+
+这里 $D=D_{\rm env}$。沿前卷的三矩记号，$F=V^*$、$G=D^\dagger F$、$M_0=F^*F$、$M_1=G^*F$、$M_2=G^*G$、$H=B-M_1$、$W=V|_{\ker D}$，其中 $D^\dagger$ 是 Hermitian 矩阵的谱 Moore–Penrose 逆。符号 $h_x$ 不表示 Schur 扰动参数 $h$。原 P2 是对完整代数的每个正复线性泛函 $\phi$ 都有
+
+$$
+\phi(g_{\sigma,\rho})^2\le
+\phi(c^2)\phi(t^2)-\phi(c\circ t)^2;
+\tag{35.2}
+$$
+
+原全部 PB 是对每个这样的 $\phi$ 及每个实际 Hermitian $X$ 都有
+
+$$
+|\phi(L_{\rm PB})|\le
+\sqrt{B_\phi(R_+,S_+)}+\sqrt{B_\phi(R_-,S_-)}.
+\tag{35.3}
+$$
+
+分别以 $I_\sigma(t)$、$\mathcal B_\sigma(t)$ 记满足原 P2、全部原 PB 的实参数 $\rho$ 集，定义
+
+$$
+\mathcal J_\sigma(t)=I_\sigma(t)\cap\mathcal B_\sigma(t),\qquad
+\mathcal J_{\rm both}(t)=\mathcal J_+(t)\cap\mathcal J_-(t).
+\tag{35.4}
+$$
+
+所有乘积、平方、原像和泛函都属于同一个完整原代数。固定任意正有限质量 $\mu$ 而量化全部 $\phi(I)=\mu$，得到相同允许集；这是前卷 (17.14)–(17.16) 及正齐次性的应用。若只取质量零，则只有零泛函，(35.2)–(35.3) 都是零等式，不能单独定义上述非平凡允许集。
+

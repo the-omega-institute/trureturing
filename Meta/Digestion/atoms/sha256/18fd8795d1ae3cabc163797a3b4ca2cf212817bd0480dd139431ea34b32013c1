@@ -1,0 +1,79 @@
+**定理 43.2（全部四实图条件与两来源坐标的等价方程）。** 对 $|h|<1$，(43.1) 图中的完整接触与 $E_{rh}(\tau)=0$ 一一对应，差别仅为整体相位。其源幅度及不利比值为
+
+$$
+\widehat\eta=\sqrt2(F+gL_1),\qquad \eta=\widehat\eta/n,
+\qquad
+\mathcal R_g=\frac{A|F+gL_1|^2}{(A^2-1)|Z_0-gv|},
+\tag{43.4}
+$$
+
+不利过滤条件精确为 $y(Z_0-gv)>0$。所有这些接触均有 $\eta\ne0$ 且有有限 Hermitian 实现。
+
+证明。为保持归一化清晰，将可见列先写成 $P=np$、$Q=nq$、$A_{\rm act}=na_{\rm act}$。对一般未归一演员 $U$，设
+
+$$
+\begin{gathered}
+\beta=3|U_1|^2+12|U_2|^2+3h\operatorname{Re}(\overline U_1U_2),\\
+Z=-3|U_1|^2+12|U_2|^2-h\operatorname{Re}(\overline U_1U_2),\qquad
+d_U=\operatorname{Im}(\overline U_1U_2).
+\end{gathered}
+$$
+
+命题 39.6 的重构等价地说，全部四个实图条件是
+
+$$
+\begin{gathered}
+\overline U_1P_1=\alpha+i\kappa,\qquad
+\overline U_2P_2=\chi-i\kappa,\\
+\alpha=\frac{(x-1)\beta/y+hd_U}{2},\qquad
+\chi=-\frac{(x+1)\beta/y+hd_U}{2},\qquad
+\kappa=\frac{Z-x\beta-yhd_U}{2x}.
+\end{gathered}
+\tag{43.5}
+$$
+
+这里没有舍弃交叉条件的实部或虚部：$m=U^*P=-\beta/y$，$\operatorname{Re}(U^*CP)=-[(x+3)\beta/y+hd_U]/2$，$\operatorname{Im}(\ell U^*CP)=-\gamma$，其中 $\gamma=3|U_1|^2+24|U_2|^2+4h\operatorname{Re}(\overline U_1U_2)$，正是 (41.5) 的齐次版本。
+
+代入 $U=(1,r\tau)$，得到
+
+$$
+\beta=\beta_0+3gv,\qquad Z=Z_0-gv,\qquad hd_U=gd,
+$$
+
+故 $\alpha=\alpha_0+g\alpha_1$、$\chi=\chi_0+g\chi_1$、$\kappa=\kappa_0+g\kappa_1$。据 (43.5) 取
+
+$$
+P=\left(\alpha+i\kappa,\ \frac{r(\chi-i\kappa)}{\overline\tau}\right)^{\mathsf T},\quad
+Q=(\ell I_2+2C^{-1})P+iB_hCU,\quad
+A_{\rm act}=i(I_2-\ell C^{-1})P.
+$$
+
+所有图条件和两演员接触已成立。把实际来源需求记为
+
+$$
+\mathbf D=A_{\rm act}-H_hU+\ell C^2U/2.
+$$
+
+其两个坐标分别满足
+
+$$
+D_1=F+gL_1,\qquad
+r\overline\tau D_2=G+gL_2.
+\tag{43.6}
+$$
+
+第一来源坐标 $D_1=\widehat\eta/\sqrt2$ 固定了 $\widehat\eta$。第二来源坐标 $D_2=r\widehat\eta$ 因 $\tau\ne0$ 等价于
+
+$$
+G+gL_2=\sqrt2(F+gL_1)\overline\tau,
+$$
+
+即 $E_g=0$。除以 $n$ 恢复原归一接触；逆过程唯一给回全部数据，故是必要且充分的精确方程。定理 41.2 的齐次非消失估计给 $\eta\ne0$，非轴有限 Hermitian 重构沿用 (39.30)。最后
+
+$$
+\zeta=(Z_0-gv)/(1+t),\qquad
+|\eta|^2=2|F+gL_1|^2/(1+t),
+$$
+
+代入原比值及 $y\zeta>0$ 即得 (43.4) 及过滤条件。两个实际来源坐标始终都在等价链中。∎
+

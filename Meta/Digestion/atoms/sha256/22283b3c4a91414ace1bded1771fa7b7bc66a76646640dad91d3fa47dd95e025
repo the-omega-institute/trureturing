@@ -1,0 +1,54 @@
+**命题 39.6（列重构的必要性与充分性）。** 给定任意 $\|u\|=1$、$u_1u_2\ne0$、$\ell=b+\iota t$，其中 $|t|>1,b\ne0$。从 $u$ 定义 (39.8) 的 $m_j,x,y,L,N$，然后依次置
+
+$$
+\begin{gathered}
+S=-\frac{3L}{t},\qquad
+\Delta_P=hy-bS,\qquad
+P_1=\frac{S+\Delta_P}{2},\qquad P_2=\frac{S-\Delta_P}{2},\\
+Z=\frac{-3(3+b)L-thy+2N}{2b},\\
+p_1=\frac{P_1+\iota Z}{\overline{u_1}},\qquad
+p_2=\frac{P_2-\iota Z}{\overline{u_2}},\\
+q=(\ell I_2+2C^{-1})p+\iota BCu,\qquad
+a_{\rm act}=\iota(I_2-\ell C^{-1})p,\\
+\mathbf d_{\rm src}=\iota(I_2-\ell C^{-1})p-Hu+\ell C^2u/2.
+\end{gathered}
+\tag{39.29}
+$$
+
+则这是一对满足可见图条件和两条演员接触等式的唯一列 $p,q$。它们来自唯一实际 Hermitian 矩阵
+
+$$
+X=[p\ q][u\ Cu]^{-1}.
+\tag{39.30}
+$$
+
+对于指定来源 $a_r$，剩余条件准确是单个复标量方程
+
+$$
+\boxed{\quad
+(\mathbf d_{\rm src})_2=r\sqrt2(\mathbf d_{\rm src})_1,\qquad
+\eta=\sqrt2(\mathbf d_{\rm src})_1.\quad}
+\tag{39.31}
+$$
+
+第一个等式等价于两个实方程，不因列消元而自动成立。满足它当且仅当 (39.29) 产生该来源的接触，此时 $\eta\ne0$，合法符号是 $\epsilon=-\operatorname{sign}(t)$。
+
+证明。$t\ne0$、$b\ne0$、$u_1u_2\ne0$ 逐一保证了 (39.29) 的所有除法合法。若一个接触存在，引理 39.2 先唯一确定 $S,\Delta_P,P_1,P_2$，再由
+
+$$
+\begin{aligned}
+2bZ
+ &=3tS-t\Delta_P+2N\\
+ &=3tS-thy+tbS+2N
+ =-3(3+b)L-thy+2N
+\end{aligned}
+$$
+
+唯一确定 $Z$，继而唯一确定 $p$ 和 $q$。这证明必要性及唯一性。
+
+反向地，按 (39.29) 定义后，$u^*p=S\in\mathbb R$。上面的 $Z$ 公式给回第三条 (39.9)，其余两条按定义成立。引理 39.2 证明中关于 $u^*q-p^*Cu$ 的实部、虚系数及 $(Cu)^*q$ 虚系数的计算均可逆，因此这三式正好给回全部 (39.4) 的图条件。非轴时 $[u\ Cu]$ 可逆；引理 37.2 于是给 (39.30) 的 Hermitian 性和两列的实际实现。两条演员接触由 $q,a_{\rm act}$ 的定义成立。
+
+最后，$\mathbf d_{\rm src}=\eta(1/\sqrt2,r)^{\mathsf T}$ 等价于 (39.31)，因为第一来源坐标 $1/\sqrt2$ 非零。若满足 (39.31) 却有 $\eta=0$，两个需求坐标都为零，与引理 37.4 在这些图条件和演员接触下的零需求排除矛盾。所以它准确给出来源条件，没有引入伪零需求解。∎
+
+列重构去掉了自由的 $p,q,X$，并未求解 (39.31)，也未给所有满足该方程的 $u,b,t$ 上的代价下界。定理 39.3 的作用是：在其 $h$ 范围及原定 $k$ 范围内，可能影响符号的接触不在 $|b|\le1/2000$，因而非轴部分可合法使用这里的 $1/b$ 公式。未满足条带定理的 $h$ 不因此排除 $b=0$。
+

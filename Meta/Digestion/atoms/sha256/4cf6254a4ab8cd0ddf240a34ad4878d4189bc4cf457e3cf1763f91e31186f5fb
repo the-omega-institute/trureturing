@@ -1,0 +1,70 @@
+**引理 39.2（残量配对的全闭包恒等式）。** 对每个 (39.4) 接触，定义实矩
+
+$$
+\begin{gathered}
+m_j=|u_j|^2,\qquad \overline{u_1}u_2=x+\iota y,\qquad
+m_1+m_2=1,\quad x^2+y^2=m_1m_2,\\
+\overline{u_1}p_1=P_1+\iota Z,\qquad
+\overline{u_2}p_2=P_2-\iota Z,\qquad
+S=P_1+P_2,\qquad \Delta_P=P_1-P_2,\\
+L=m_1+4m_2+hx,\qquad N=3m_1+24m_2+4hx.
+\end{gathered}
+\tag{39.8}
+$$
+
+同一个实数 $Z$ 存在，因为 $u^*p$ 为实数。则
+
+$$
+\boxed{\quad
+ tS=-3L,\qquad \Delta_P=hy-bS,\qquad
+ bZ=t(P_1+2P_2)+N.\quad}
+\tag{39.9}
+$$
+
+特别地，原残量配对准确消去可见列，成为
+
+$$
+\boxed{\quad
+\zeta=t\Delta_P+2bZ=3tS+2N
+      =-3m_1+12m_2-hx
+      =2bZ+3bL+thy.\quad}
+\tag{39.10}
+$$
+
+这些恒等式不要求 $b\ne0$ 或 $u_1u_2\ne0$。它们消去的是配对值中的列变量；哪些 $u,\ell$ 真正满足来源条件，仍受 (39.4) 限制。
+
+证明。由 $B=3C+hJ_A$ 直接有
+
+$$
+ u^*BCu=3m_1+12m_2+3hx+\iota hy=3L+\iota hy,
+ \qquad (Cu)^*BCu=N.
+$$
+
+对第二条演员接触等式分别左乘 $u^*$、$(Cu)^*$。第一式给
+
+$$
+\begin{aligned}
+u^*q
+ &=\ell S+2P_1+P_2+\iota Z+3\iota L-hy,\\
+p^*Cu&=P_1+2P_2+\iota Z.
+\end{aligned}
+$$
+
+比较实部与 $\iota$ 虚系数，即得 $\Delta_P=hy-bS$ 和 $tS=-3L$。第二式给
+
+$$
+(Cu)^*q=\ell(P_1+2P_2-\iota Z)+2S+\iota N.
+$$
+
+其虚系数为零，正是 $bZ=t(P_1+2P_2)+N$。
+
+最后，$C^{-1}T_A=\operatorname{diag}(1,-1)$，而
+$p^*C^{-1}T_Au=\Delta_P-2\iota Z$。所以
+
+$$
+\zeta=\operatorname{Re}\bigl(\iota\overline\ell
+          (\Delta_P-2\iota Z)\bigr)=t\Delta_P+2bZ.
+$$
+
+把 (39.9) 代入，先得 $3tS+2N=-9L+2N=-3m_1+12m_2-hx$；另用 $t\Delta_P=thy-tbS=thy+3bL$，得到最后一种表达。整个推导没有除以演员坐标，故同时覆盖增广轴点。∎
+

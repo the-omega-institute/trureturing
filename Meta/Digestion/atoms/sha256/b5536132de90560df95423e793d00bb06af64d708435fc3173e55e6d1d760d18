@@ -1,0 +1,24 @@
+**命题 3.5（Every density extension of a pure visible state）。** If the visible state is pure in sector $\alpha$ and direction $u$, every density operator on $H$ extending it has the exact form
+
+<a id="eq-purity-3-5"></a>
+
+$$
+R=|u\rangle\langle u|\otimes\tau
+\quad\text{in that sector},
+\qquad\tau\succeq0,\quad\operatorname{Tr}\tau=1.
+\tag{3.5}
+$$
+
+Its extension to all of $B(H)$ is unique if and only if $m_\alpha=1$.
+
+**证明。** The visible projection $Q=P_u\otimes I_{W_\alpha}$, extended by zero to other sectors, has expectation one. If $R\succeq0$ has trace one, then
+
+$$
+\operatorname{Tr}(R(I-Q))=0
+\quad\Longrightarrow\quad
+(I-Q)R^{1/2}=0
+\quad\Longrightarrow\quad R=QRQ.
+$$
+
+The support is therefore $u\otimes W_\alpha$, giving (3.5). Every such density has the stated visible response, and its invisible density is unique precisely in multiplicity dimension one. A pure visible response alone does not select an invisible record state when $m_\alpha>1$. $\square$
+

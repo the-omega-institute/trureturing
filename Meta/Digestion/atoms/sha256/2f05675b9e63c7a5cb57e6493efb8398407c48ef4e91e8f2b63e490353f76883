@@ -1,0 +1,63 @@
+**定义 67.1（不含第二范数律和归一化上界的基底）。** 记 $\mathcal B$ 为以下全部条件。三个实际载体 $X=A,D,E$ 非零、有限维，分别具有闭尖生成正锥、严格正归一化泛函 $u_X$、紧全态基底 $K_X=\{x\in X_+:u_X(x)=1\}$ 和全部对偶效应 $[0,u_X]$。纯态是 $K_X$ 的极点；对全部纯态 $\xi$ 及全部态 $x$，比较仍定义为
+
+$$
+T_\xi(x)=\inf\{f(x):0\le f\le u_X,\ f(\xi)=1\}.
+$$
+
+每个载体均要求定义 64.1 的完整有限混合律：对每个 $\ell\ge1$、纯态 $\xi,\eta_1,\ldots,\eta_\ell$ 及 $w_j\ge0$、$\sum_jw_j=1$，
+
+$$
+T_\xi\!\left(\sum_jw_j\eta_j\right)=\sum_jw_jT_{\eta_j}(\xi).
+$$
+
+完整比较入口正是定义 66.1 的 (66.1)–(66.3)；直接复用其中已承接定义 65.1 及 (65.3)–(65.4) 的完整 $S$ 到规范迹 EJA 条件纸面桥和忠实归一化，得到保原归一化的坐标、整个平方锥、所有规范迹一态和全部效应 $[0,1_X]$。原比较配对、原单位、原态及原效应分别对应规范迹内积、$1_X$、全态基及全效应区间；每个简单扇区的每个本原幂等元迹一，不允许调节扇区迹权。这里的 Jordan 入口由所引既有纸面结果供应，不另列独立 Jordan 假设，也不将这条桥计为本节新成果。内积、参考和秩仍为
+
+$$
+\langle x,y\rangle_X=\tau_X(x\circ y),\quad
+n=\tau_A1_A,\quad m=\tau_D1_D,\quad
+R_E=\tau_E1_E,\quad e=1_A/n,\quad\omega=1_D/m.
+$$
+
+只给实际实双线性 $L:D\times A\to E$ 和实际实线性 $p:E\to D$，要求 $L(D_+,A_+)\subseteq E_+$、$p(E_+)\subseteq D_+$；前者量化整个实际 $D_+$，包含所有纠缠方向。内部定义原样保留：
+
+$$
+\begin{aligned}
+B(d,a)&=pL(d,a),&K(a)&=B(\omega,a),&M(a,b)&=B(K(a),b),\\
+J(a)&=M(a,1_A),&r&=J^*,&U&=J1_A,\\
+H(d)&=L(d,1_A),&h&=H^*,&B_1&=pH,\\
+Q(a,b,c)&=L(M(a,b),c).
+\end{aligned}
+\tag{67.1}
+$$
+
+$M$ 内两次使用同一个实际 $p$。要求 $\operatorname{span}_{\mathbb R}M(A,A)=D$、$\operatorname{span}_{\mathbb R}L(D,A)=E$，并保留
+
+$$
+\begin{gathered}
+\mathrm{(D_J)}\quad a,b\ge0,\ \langle a,b\rangle_A=0
+\ \Longrightarrow\ \langle Ja,Jb\rangle_D=0,\\
+\mathrm{(Z)}\quad B_1M(a,b)=\tau_A(a)Jb\qquad(a,b\in A).
+\end{gathered}
+\tag{67.2}
+$$
+
+定义 64.3 的全正、实张成、正保迹二元边缘接口及其精确适用条件继续保留；有限 EJA 分类、定理 64.6 所用乘积秩一保持接口也继续保留。它们只在各自输入已经得到以后使用。$\mathcal B$ 不含 $W_H$、归一化上界 $N$、联合校准 $C_{\rm joint}$、$p$ 保迹、第二单位律、Bell 条件或 C13。加入下述 $D_H$ 后，实际数据恰满足定义 66.1 的无 C13 保留条件；这里只使用该定义明列的条件纸面桥和工具，不增加新的物理输入。
+
+相对于基底，另保留第二个二元零关系
+
+$$
+\mathrm{(D_H)}\quad d,d'\in D_+,\quad\langle d,d'\rangle_D=0
+\ \Longrightarrow\ \langle Hd,Hd'\rangle_E=0.
+\tag{67.3}
+$$
+
+设 $R=n^3$，并记
+
+$$
+Z=H1_D,\qquad Y=p^*1_D,\qquad
+\delta=\tau_E(Z),\qquad\gamma=\tau_D(p1_E)=\tau_E(Y).
+\tag{67.4}
+$$
+
+这里正元 $Z$ 与关系 $\mathrm{(Z)}$ 以字体和类型区分。$\delta$、$\gamma$ 都是原实际映射在原单位参考上的读数。
+

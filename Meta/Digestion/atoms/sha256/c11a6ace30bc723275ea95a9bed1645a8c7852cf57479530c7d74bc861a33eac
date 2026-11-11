@@ -1,0 +1,36 @@
+**定理 15.1（Finite-horizon scalar observation budget）。** For a sequence of completely positive trace-preserving channels with Heisenberg maps $F_j$, use the mathematical conditional expectation (11.3) to define
+
+<a id="eq-future-15-1"></a>
+
+$$
+T_j=E_{\mathcal A}F_j|_{\mathcal A},
+\qquad
+\varepsilon_j=
+\max_{\substack{a\in\mathcal A\\0\le a\le I}}
+\lVert F_j(a)-T_j(a)\rVert_{\mathrm{op}}.
+\tag{15.1}
+$$
+
+Each $T_j$ is unital completely positive on $\mathcal A$. For an $\mathcal A$ effect $a$, in the physical Heisenberg order,
+
+<a id="eq-future-15-2"></a>
+
+$$
+\lVert F_1\cdots F_L(a)-T_1\cdots T_L(a)\rVert_{\mathrm{op}}
+\le\sum_{j=1}^L\varepsilon_j.
+\tag{15.2}
+$$
+
+The terminal probability error is at most $\min(1,\sum_j\varepsilon_j)$ for every density input. Two current-equivalent states differ at that terminal test by at most $\min(1,2\sum_j\varepsilon_j)$.
+
+**证明。** Replace factors from right to left. The telescoping summands are
+
+$$
+F_1\cdots F_{j-1}(F_j-T_j)
+T_{j+1}\cdots T_L(a).
+$$
+
+The right suffix stays an $\mathcal A$ effect, and the left factors are unital positive operator-norm contractions. Each summand therefore has norm at most $\varepsilon_j$, proving (15.2). Evaluation in any density gives the scalar probability bound, truncated at one. The compressed terminal effect belongs to $\mathcal A$, so current-equivalent states have identical predicted expectations; applying the one-state error bound twice gives the second estimate. $\square$
+
+These are finite-horizon scalar observation bounds. $E_{\mathcal A}$ constructs a predictor; no projection, physical reset or state reacquisition is applied to the actual source. Repeated ready preparation and an unbounded-horizon guarantee are outside this conclusion. A channel norm retaining an arbitrary extra reference requires its own matrix-amplified error budget.
+

@@ -1,0 +1,41 @@
+**定理 64.11（全锥正的转置控制与有序跨扇区控制）。** 下述两个实例满足定理 64.9 的全部前置条件及结论，却违反预选探针条件。
+
+**证明。** 对任意整数 $q\ge2$，在 $A=H_q,D=H_{q^2},E=H_{q^3}$ 中取
+
+$$
+L(d,c)=d\otimes c^{\mathsf T},\qquad
+p(z)=\bigl(\operatorname{Tr}_1z\bigr)^{\mathsf T},
+$$
+
+其中 $p$ 的转置是迹掉第一份后剩余两份上的**整个**转置。两映射在全锥上正，$p$ 保迹；直接计算给出
+
+$$
+M(a,b)=a^{\mathsf T}\otimes b,\quad
+Q(a,b,c)=a^{\mathsf T}\otimes b\otimes c^{\mathsf T},\quad
+H(d)=d\otimes I_q,
+$$
+
+以及 $W_J,W_H,\mathrm{I},\mathrm{III}$ 和两条张成。$D_J$ 随 $W_J$ 成立，$Z$ 随 III 成立；$p$ 保迹给出 $\gamma=q^3=n^3$，故满足 $N$。全矩阵态和效应满足定义 64.1 的比较及 Jordan 条件。这里 $(\varepsilon,\delta)=(1,0)$、$(t_1,t_2,t_3)=(1,0,1)$，故插入位为 $(0,1)$。当 $q=2$ 时，预选 Bell 态的输出在第 1、3 份上是 $F_{13}/2$，对
+$|0,k,1\rangle-|1,k,0\rangle$ 的归一化向量本征值为 $-1/2$。这证明整锥插入条件仍有实质作用，不能由两个单位切片或 $N$ 删除。
+
+还可检验有序跨扇区和标量中间不能被对角测试代替。令
+$A=H_2\oplus H_3\oplus\mathbb R$，标签为 $u,v,s$，取标准分块 $D,E$。令
+$\chi_{ijk}=1$ 当且仅当 $(i,j,k)=(u,s,v)$，其余为零，并定义
+
+$$
+L(d,c)_{ijk}=d_{ij}\otimes c_k^{T^{\chi_{ijk}}},\qquad
+(pz)_{jk}=\sum_i\bigl(\operatorname{Tr}_1z_{ijk}\bigr)^{T^{\chi_{ijk}}}.
+\tag{64.38}
+$$
+
+每个 $p$ 分块都在全锥上正并保迹，$L$ 在全部实际 $D_+\times A_+$ 上正。唯一异常块的中间因子 $j=s$ 为标量，故 $\operatorname{Tr}_1d_{us}$ 的整转置不改变它；其他块两次转置位为零。因此对所有实 $d,c$，
+
+$$
+B(d,c)_{jk}=\left(\sum_i\operatorname{Tr}_1d_{ij}\right)\otimes c_k,
+\qquad M(a,b)_{ij}=a_i\otimes b_j.
+$$
+
+于是 $M,L$ 两条实张成、$W_J,D_J$、完整 I、III 和 $Z$ 全部成立；$H(d)_{ijk}=d_{ij}\otimes I_{n_k}$，$H^*H=6\operatorname{id}_D$，而 $\gamma=6^3=n^3$，故 $W_H,N$ 成立。全矩阵直和也满足定义 64.1 的入口。所有对角端点测试都通过，反向交叉也没有缺陷；但从 $D_{uv}$ 到 $E_{usv}$ 的插入在标量中间 $s$ 的旁观下对 $v$ 作部分转置。四个有序非标量端点对等权时，(64.36) 给出负本征值 $-1/8$。所以探针必须覆盖所有有序端点对和标量中间，而不是只选一个自复合块。$\square$
+
+**一次探针的中文结论。** 在定理 64.9 已恢复两个单位、$p$ 保迹、完整 II 和两个二元接口之后，先在尚未同时 untwist 的标号矩阵坐标中按 $M$ 预选每个有序非标量端点对的 Bell 态，再等权组成一个实际正迹一态。解开 $U^*\beta U$ 后，任何单因子转置的错误都会在相应的输出直和块留下负本征值；中间扇区即使是标量也不消除它。因此一个整态测试等价于整锥 $I_{13}$ 正性，且结论覆盖任意允许的初始正规形选择。
+

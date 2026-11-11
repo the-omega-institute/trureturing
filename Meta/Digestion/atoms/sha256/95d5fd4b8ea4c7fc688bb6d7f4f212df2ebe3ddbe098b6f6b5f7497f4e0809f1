@@ -1,0 +1,25 @@
+## 47. A conservative error certificate valid with arbitrary references
+
+Define the actual comparison map and its difference by
+
+$$
+\mathcal B(X)=p\otimes\Theta(X),\qquad
+\Delta=\Gamma-\mathcal B.
+\tag{47.1}
+$$
+
+Both Gamma and B are CPTP. Supply certified trace-norm bounds on
+the full, unnormalized probe-output differences:
+
+$$
+\|\Delta(P_i)\|_1\le u_i,\quad
+\|\Delta(P^+_{ij})\|_1\le u^+_{ij},\quad
+\|\Delta(P^{\mathrm{i}}_{ij})\|_1\le u^{\mathrm{i}}_{ij}.
+\tag{47.2}
+$$
+
+The u's are nonnegative and include preparation, full-output
+calibration and reconstruction uncertainty needed to justify these
+inequalities for the actual maps. Merely observing small scalar
+probability errors does not supply (47.2).
+

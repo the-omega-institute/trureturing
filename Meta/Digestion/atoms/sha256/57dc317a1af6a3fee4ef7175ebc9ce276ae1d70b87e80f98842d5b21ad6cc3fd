@@ -1,0 +1,21 @@
+**定理 12.2（Exact hidden one-step distinguishability）。** For the complete $\mathcal A$ interface,
+
+<a id="eq-future-12-2"></a>
+
+$$
+\begin{aligned}
+L_{\mathcal A}(\Phi)
+&:=\max_{\rho|_{\mathcal A}=\sigma|_{\mathcal A}}
+D_{\mathcal A}(\Phi(\rho),\Phi(\sigma))\\
+&=2\max_{\substack{a\in\mathcal A\\0\le a\le I}}
+d_{\mathcal A}(F(a)).
+\end{aligned}
+\tag{12.2}
+$$
+
+Here $D_{\mathcal A}$ is the operational half trace distance of restricted states, namely their largest probability difference over $\mathcal A$ effects. The value lies in $[0,1]$ and is attained by one pair and one effect.
+
+**证明。** Interchange the two compact maxima, over a current-equivalent pair and an $\mathcal A$ effect. Theorem 10.1 evaluates the pair maximum for the pulled-back Hermitian observable $F(a)$ as $2d_{\mathcal A}(F(a))$. $\square$
+
+This is distinguishability under the stated measurement interface, rather than a diamond distance or implementation cost.
+

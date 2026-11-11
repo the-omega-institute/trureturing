@@ -1,0 +1,50 @@
+## 45. A supplied correction can remove branch dependence
+
+Suppose R=H and actual branches are known to have the form
+
+$$
+M_s(X)=p_sU_s XU_s^\dagger,
+\tag{45.1}
+$$
+
+where each U_s is a unitary and p is fixed. If the protocol supplies
+the setting-controlled correction U_s^dagger on the whole returned
+source, the corrected branches are
+
+$$
+M'_s(X)=U_s^\dagger M_s(X)U_s=p_sX.
+\tag{45.2}
+$$
+
+Thus Proposition 43.1 supplies independence including every untouched
+reference. In (42.3), applying Z on branch 1 and identity on branch 0
+does this. Every setting record remains; there is no postselection.
+
+The corrected source in (45.2) must be the complete returned source.
+For example, if a returned controller C also contains an orthogonal
+copy |s><s|, correcting the logical source alone gives
+
+$$
+M'_s(X)=p_sX\otimes|s\rangle\langle s|_C.
+\tag{45.3}
+$$
+
+For two equally likely labels this still has delta=1/2 for every
+input. A supplied controlled uncomputation can restore a known
+controller copy to a common ready state while preserving S, but that
+operation and its action on all other returned memory require proof.
+There is no inference from logical-source restoration alone.
+
+A calibrated pure ready marginal is mathematically uncorrelated with
+the rest: a positive joint density supported on its one-dimensional
+ready subspace factors with that marginal. Acquiring that marginal,
+resetting it between uses and implementing (45.1)-(45.2) are resource
+premises, rather than consequences of global pure-state notation.
+
+If S is the pair (x,y), choosing a fixed full-support p_xy in (45.1)
+and achieving (45.2) supplies the common-source input condition of the
+existing CHSH result. It supplies no native gate menu or local
+readout by itself. Fixed p is essential when invoking Proposition 43.1:
+an input-dependent setting law is detectable by a binary correlated
+reference, independently of a logical-source restoration claim.
+

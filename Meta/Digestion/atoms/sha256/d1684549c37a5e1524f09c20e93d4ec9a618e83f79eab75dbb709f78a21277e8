@@ -1,0 +1,210 @@
+**定理 32.2（统一 PB 半径与闭区间的两个端点）。** 存在 $h_*,\rho_*>0$，使对每个 $|h|<h_*$，同一 (32.1) 输入在每个 $|\rho|<\rho_*$ 时满足两个取向的全部原 PB。对每个 $0<h<h_*$ 以及任意实 $\rho$，以下结论等价：该输入在两个取向均满足原 P2 与全部原 PB；该输入在任一个分别固定的取向满足原 P2 与全部原 PB；以及
+
+$$
+\boxed{\quad -\frac{\sqrt2\,h}{3}\ \le \rho\le\ \frac{\sqrt2\,h}{3}.\quad}
+\tag{32.2}
+$$
+
+这里所有预算都在完整原代数上对全部正复线性泛函成立，包括任意指定正有限质量与零质量。区间的两个非零端点均严格位于 $|\rho|<\rho_*$ 内。特别地，可固定 $h=h_*/2$ 和 $\rho=\sqrt2\,h/3$，在同一份 $t_h,s$ 上同时得到两个取向的非零残量解。
+
+**证明：原带符号二次型。** 暂写 $B=B_h$、$H=H_h$、$t=t_h$，并记 $\iota=\sigma i$。对复数 $z$ 定义 $\operatorname{Im}_\iota z$ 为 $z$ 在基 $1,\iota$ 下的虚系数。固定 (27.6) 的任意索引 $\theta$，即单位演员 $u$、绝对值符号 $\epsilon\in\{1,-1\}$ 及两对有限参数 $\alpha_\delta>0,\ \beta_\delta\in\mathbb R$。在同一原向量 $\xi=(u,y)$、同一实际 $X=X^*$ 上写 $\mathbf R_\delta=R_\delta\xi$、$\mathbf S_\delta=S_\delta\xi$，其中 $S_\delta=t+\delta(r+g_\sigma)$ 是 (27.10) 的原算子。置
+
+$$
+\begin{aligned}
+\zeta_\delta&=\beta_\delta-\delta\epsilon\iota\alpha_\delta
+             =\iota+\nu+\delta\ell,\qquad
+E_\delta=\mathbf S_\delta-\zeta_\delta\mathbf R_\delta,\qquad
+S_0=\sum_{\delta=\pm1}\alpha_\delta^{-1}\|E_\delta\|^2,\\
+\mathcal D_\rho&=\sum_{\delta=\pm1}
+  \left(\alpha_\delta\|\mathbf R_\delta\|^2+
+        \alpha_\delta^{-1}\|\mathbf S_\delta-\beta_\delta\mathbf R_\delta\|^2\right)
+        -2\epsilon\phi_\xi(L).
+\end{aligned}
+\tag{32.3}
+$$
+
+$S_0$ 是同一输入在当前 $\rho$ 上的平方和。把平方展开，其交叉项为
+$2\delta\epsilon\operatorname{Im}_\iota(\mathbf R_\delta^*\mathbf S_\delta)$，即 $-2\delta\epsilon\phi_\xi(K_\sigma(R_\delta,S_\delta))$。因此
+
+$$
+\mathcal D_\rho-S_0
+=2\epsilon\,\phi_\xi\!\left(\sum_\delta\delta K_\sigma(R_\delta,S_\delta)-L\right).
+$$
+
+前卷 §1 的原换位恒等式给括号内的零残量部分为零。写 $a=Bu+Vy$、$p=Xu$、$v=a-\iota p$。加入 $s$ 使 $S_\delta$ 增加 $\delta s$、使 $L$ 减去 $2t\circ s$，而 $R_++R_-=2x$。故括号内的改变量是 $2K_\sigma(x,s)+2t\circ s$。其向量读数为 $2\rho\operatorname{Re}(v^*T_Au)$，因为 $\phi_\xi(K_\sigma(x,s))=\rho\operatorname{Re}(\iota p^*T_Au)$。这给出原二次型的精确恒等式
+
+$$
+\mathcal D_\rho=S_0+4\epsilon\rho\operatorname{Re}(v^*T_Au).
+\tag{32.4}
+$$
+
+**证明：实际作用列与加权方差。** 记 $q=XCu$、$d=Fu+D_{\rm env}y$、$U=\iota q+BCu+Cv$。按 (27.4)–(27.5) 在 $\tau=1$ 的原作用列，$\mathbf R_\delta$ 的两块为 $p-\delta U/2$、$-\delta FCu/2$；$\mathbf S_\delta$ 的两块为
+
+$$
+a+\delta\left(\frac{Cp+q+\iota Ca-\iota BCu}{2}+\rho T_Au\right),
+\qquad d-\frac{\delta\iota}{2}FCu .
+$$
+
+代入 $\zeta_\delta$ 后，$E_\delta$ 的演员与环境块分别是
+
+$$
+\begin{aligned}
+(E_\delta)_{\rm act}&=\mathsf P+\delta\mathsf Q,\qquad
+\mathsf P=v-\nu p+\ell U/2,\qquad
+\mathsf Q=\iota Cv-\ell p+\rho T_Au+\nu U/2,\\
+(E_\delta)_{\rm env}&=d+(\ell+\delta\nu)FCu/2 .
+\end{aligned}
+\tag{32.5}
+$$
+
+令 $r_\ell=|\ell|$、$n=|\nu|$、$A=(\alpha_++\alpha_-)/2$。两条 $\zeta_\delta$ 的虚系数给出
+
+$$
+|1+\operatorname{Im}_\iota\nu|<A=-\epsilon\operatorname{Im}_\iota\ell\le r_\ell,
+\qquad r_\ell+n\ge1 .
+\tag{32.6}
+$$
+
+反过来，给定满足 (32.6) 首行的 $\nu,\ell,A$，取 $\alpha_\delta=A-\delta\epsilon(1+\operatorname{Im}_\iota\nu)$、$\beta_\delta=\operatorname{Re}(\nu+\delta\ell)$ 即还原原参数。特别地 $r_\ell>0$。记 $w_\delta=\alpha_\delta^{-1}$、$\omega=(w_+-w_-)/(w_++w_-)$ 及 $e=d+(\ell+\omega\nu)FCu/2$。以 $e$ 为同一对环境列的加权平均，交叉项相消，且 $w_+w_-/(w_++w_-)=1/(2A)$，故
+
+$$
+\begin{aligned}
+\sum_\delta w_\delta\|(E_\delta)_{\rm env}\|^2
+ &=(w_++w_-)\|e\|^2+\frac{n^2}{2A}\|FCu\|^2,\\
+a&=Hu+G^*e-\frac{\ell+\omega\nu}{2}\,C^2u .
+\end{aligned}
+\tag{32.7}
+$$
+
+第二行用 $a=Hu+G^*d$、$G^*F=C$。由加权 Cauchy–Schwarz 对 $\mathsf P$ 和 $\mathsf Q$ 的半和、半差分别估计，每项范数至多 $\sqrt{2AS_0}/2$。又 $w_++w_-\ge2/A$，故 $\|e\|\le\sqrt{AS_0/2}$。于是
+
+$$
+\|\mathsf P\|+\|\mathsf Q\|+\|e\|\le3\sqrt{r_\ell S_0},
+\qquad
+\|a\|\le K(1+r_\ell+n+\sqrt{r_\ell S_0}).
+\tag{32.8}
+$$
+
+下文的 $K$ 可逐式增大，均只依赖固定矩阵与一个预先固定的有界邻域 $\|H-2C\|\le1$，与取向、符号及整个探针索引无关。这里用到 $|\omega|\le1$，没有给任何单个 $\alpha_\delta$ 加正下界。
+
+**证明：一个分离坐标控制残量配对。** 令 $\kappa=\nu/\ell$、$z_0=\ell(1-\kappa^2)-\iota\kappa$、$Z=z_0 I_2-C$。由 (32.5) 消去 $U$ 并代入 $v=a-\iota p$，得到
+
+$$
+\mathsf Q-\kappa\mathsf P=(\iota C-\kappa I_2)a-Zp+\rho T_Au.
+\tag{32.9}
+$$
+
+记 $c_1=1,c_2=2$。至少一个 $j$ 有 $|z_0-c_j|\ge1/2$；只在该坐标上除法。(32.8)–(32.9) 给
+
+$$
+|p_j|\le K\left[\left(1+\frac{n}{r_\ell}\right)
+ (1+r_\ell+n+\sqrt{r_\ell S_0})+|\rho|\right].
+$$
+
+设 $z_j'=\overline{p_j}u_j$。由 $u^*p=u^*Xu\in\mathbb R$，两项 $\operatorname{Im}_\iota z_j'$ 互为相反数，故任取其中一个坐标都有
+$|\operatorname{Re}(\iota p^*T_Au)|=3|\operatorname{Im}_\iota z_j'|\le3|p_j||u_j|$。
+因此 $|\operatorname{Re}(v^*T_Au)|\le2\|a\|+3|p_j||u_j|$，包括 $u_j=0$。另一个坐标即使恰好共振，也不必估计其幅值。
+
+置 $b_\theta=(r_\ell+n)^2/r_\ell$。由 (32.6)，$b_\theta\ge1$，且
+
+$$
+\left(1+\frac{n}{r_\ell}\right)(1+r_\ell+n)\le2b_\theta,
+\qquad
+\left(1+\frac{n}{r_\ell}\right)\sqrt{r_\ell S_0}=\sqrt{b_\theta S_0}.
+$$
+
+以上给 $|\operatorname{Re}(v^*T_Au)|\le K(b_\theta+\sqrt{b_\theta S_0}+|\rho|)$。在 (32.4) 中对 $4K|\rho|\sqrt{b_\theta S_0}$ 用 Young 不等式，耗去至多 $S_0/2+8K^2\rho^2 b_\theta$。由 $b_\theta\ge1$，增大常数后得到
+
+$$
+\mathcal D_\rho\ \ge\ \frac{S_0}{2}-K(|\rho|+\rho^2)b_\theta .
+\tag{32.10}
+$$
+
+**证明：近零比率的大尺度下界。** 先在 $\|H-2C\|\le1,\ |\rho|\le1$ 内取常数。设 $|\kappa|\le\eta_{\rm tail}\le1/2$，记 $\lambda=\ell(1-\kappa^2)$。有 $|\lambda|\ge3r_\ell/4$、$\|C+\iota\kappa I_2\|\le5/2$。当 $r_\ell\ge8$ 时，$Z=\lambda I_2-C-\iota\kappa I_2$ 可逆，$\|Z^{-1}\|\le4/r_\ell$。由 $Z^{-1}-\lambda^{-1}I_2=\lambda^{-1}Z^{-1}(C+\iota\kappa I_2)$，两逆的差范数至多 $K/r_\ell^2$。将 (32.7) 代入 (32.9)，得到
+
+$$
+p=-\frac{1+\omega\kappa}{2(1-\kappa^2)}(\iota C-\kappa I_2)C^2u+\mathsf E,
+\qquad
+\|\mathsf E\|\le K\left(\frac{1+|\rho|}{r_\ell}+\sqrt{S_0/r_\ell}\right).
+\tag{32.11}
+$$
+
+确切地，$Z^{-1}$ 作用于 $(\iota C-\kappa I_2)(Hu+G^*e)+\rho T_Au-(\mathsf Q-\kappa\mathsf P)$ 的贡献由 (32.8) 给右侧界；用 $\lambda^{-1}I_2$ 替换 $Z^{-1}$ 作用于剩下的 $\ell$ 倍项，误差至多 $K/r_\ell$。主项在 $\kappa=0$ 时为 $-\iota C^3u/2$。在 $|\kappa|\le1/2$ 上，由 $|1-\kappa^2|\ge3/4$ 和 $|\omega|\le1$，主项与 $-\iota C^3u/2$ 的差范数至多 $K|\kappa|$。由于 $u^*C^3u\ge1$，该基准主项与 $u$ 配对的 $\iota$ 虚系数至多 $-1/2$；实际 $u^*p$ 的虚系数为零。先选 $\eta_{\rm tail}>0$ 使 $K\eta_{\rm tail}\le1/8$，再选 $R\ge8$ 使 $2K/R\le1/8$，则 (32.11) 给 $1/4\le K\sqrt{S_0/r_\ell}$。因此某个 $c_{\rm tail}>0$ 满足
+
+$$
+S_0\ge c_{\rm tail} r_\ell
+\qquad(r_\ell\ge R,\ n\le\eta_{\rm tail}r_\ell).
+\tag{32.12}
+$$
+
+**证明：有界尺度的基准方程。** 考察 $H=2C,\ \rho=\nu=0$ 的极限方程 $\mathsf P=\mathsf Q=e=0$，允许 $|\operatorname{Im}_\iota\ell|\ge1$，含等号边界。由 $\mathsf Q=0$ 得 $v=-\iota\ell C^{-1}p$；$\mathsf P=0$ 给 $U=2\iota C^{-1}p$。再用 $U$ 的定义、$B=3C$ 以及 (32.7)，得到
+
+$$
+q=(\ell I_2+2C^{-1})p+3\iota C^2u,\qquad
+a=(2C-\ell C^2/2)u=\iota(I_2-\ell C^{-1})p.
+$$
+
+此处 $I_2-\ell C^{-1}$ 可逆。于是逐坐标
+
+$$
+p_j=-\iota A_j u_j,\qquad
+A_1=\frac{2-\ell/2}{1-\ell}=\frac12+\frac{3}{2(1-\ell)},\qquad A_2=4.
+\tag{32.13}
+$$
+
+若两坐标均非零，实际探针恒满足 $c_l p_j-q_j=(c_l-c_j)X_{jj}u_j$，其中 $l\ne j$。实对角元 $X_{jj}$ 要求 $(c_l p_j-q_j)/u_j$ 为实数。将 $q_j,p_j$ 的上式代入，利用 $c_l=2/c_j$，恰得 $\operatorname{Re}(\ell A_j)=3c_j^2$。第二坐标强制 $\operatorname{Re}\ell=3$；写 $\ell=3+\iota t_0$，则 $\operatorname{Re}(\ell A_1)=-3/(4+t_0^2)$，与第一坐标所需的 $3$ 矛盾。
+
+在第二轴，(32.13) 使 $u^*p=-4\iota$，违背 Hermitian 条件。在第一轴，$q=p$，故 $(\ell+1)A_1=3$，即 $\ell^2-9\ell+2=0$。两根均为实数，与 $|\operatorname{Im}_\iota\ell|\ge1$ 矛盾。
+
+**证明：有界尺度的一致正下界。** 对 (32.12) 固定的 $R$，存在 $\eta_{\rm comp},\delta_H,\delta_\rho,c_{\rm comp}>0$，使
+
+$$
+S_0\ge c_{\rm comp}\qquad
+(r_\ell\le R,\ n\le\eta_{\rm comp}r_\ell,\
+\|H-2C\|\le\delta_H,\ |\rho|\le\delta_\rho).
+\tag{32.14}
+$$
+
+否则令四个候选正常数都趋于零，取对应反例序列，则 $H\to2C,\ \rho\to0,\ n/r_\ell\to0,\ S_0\to0$。因 $r_\ell\le R$，有 $\nu\to0$。取子列固定 $\sigma,\epsilon$，使单位 $u$ 和有界 $\ell$ 收敛；(32.6) 给极限 $|\operatorname{Im}_\iota\ell|\ge1$。式 (32.8) 给 $\mathsf P,\mathsf Q,e\to0$；(32.7) 给 $a\to(2C-\ell C^2/2)u$，其中右侧取极限值。由 $\kappa\to0$，(32.9) 中 $Z$ 趋于可逆的 $\ell I_2-C$，故 $p$ 有界；(32.5) 的 $\mathsf P$ 等式在 $\ell$ 远离零时控制 $U$，继而 $U$ 的定义控制 $q$。取收敛子列后，极限满足前述基准方程。
+
+非轴极限上，两条实对角元条件按 $(c_l p_j-q_j)/u_j\in\mathbb R$ 直接取极限，故已被排除。轴向极限上，(32.13) 和基准 $q$ 公式都把极限的 $p,q$ 留在同一轴上。原 Hermitian 探针的两个连续条件 $u^*p\in\mathbb R$ 与 $u^*q=p^*Cu$ 在极限保持；在第 $j$ 轴，它们给 $p=x_0u,\ q=c_jp$，其中 $x_0\in\mathbb R$。这正是上面排除两轴所用的条件。整个论证只对可见的 $p,q$ 取极限，未假设 $X$ 有界；未被读到的对角元可以发散。也未要求 $\alpha_\delta$ 在极限仍为正。矛盾证明 (32.14)。
+
+**证明：统一半径与原全正泛函。** 取 $\eta=\min(\eta_{\rm tail},\eta_{\rm comp})>0$，并把 $\delta_H,\delta_\rho$ 缩到不超过 $1$。在 $n\le\eta r_\ell$ 时有 $b_\theta\le(1+\eta)^2 r_\ell$，故 (32.12) 在 $r_\ell\ge R$ 控制 $b_\theta$，(32.14) 在 $r_\ell\le R$ 以 $b_\theta\le(1+\eta)^2R$ 控制它。余下 $n>\eta r_\ell$ 时，直接由 (32.7) 中的方差，及 $A\le r_\ell$、$\|FCu\|=\|C^2u\|\ge1$，得到
+
+$$
+S_0\ \ge\ \frac{n^2}{2r_\ell}
+  \ \ge\ \frac{\eta^2}{2(1+\eta)^2}\,b_\theta.
+$$
+
+三域给出同一常数 $\gamma>0$，例如取 $c_{\rm tail}/(1+\eta)^2$、$c_{\rm comp}/((1+\eta)^2R)$ 和 $\eta^2/(2(1+\eta)^2)$ 的最小值。在整个原索引域有 $S_0\ge\gamma b_\theta$。选 $0<\rho_*\le\delta_\rho$，使 $K(\rho_*+\rho_*^2)\le\gamma/4$。于是在 $\|H-2C\|\le\delta_H,\ |\rho|<\rho_*$ 下，(32.10) 给
+
+$$
+\mathcal D_\rho\ge \frac{S_0}{4}\ge\frac{\gamma b_\theta}{4}>0.
+\tag{32.15}
+$$
+
+这些常数对两个取向和两个绝对值符号共同有效。参数范围由 (32.6) 完整保留，既没有限制两 $\alpha_\delta$ 的比值，也没有排除一项趋零或 $\beta_\delta$ 无界的序列。
+
+对每个固定的同一 $X,\xi$，将 (32.15) 对全部有限变分参数取下确界，按 (27.12)–(27.13) 得原向量 PB。一般向量若演员分量非零，提取其范数为共同尺度，并同比缩放环境分量，原预算两侧按同一因子变化。若演员分量为零，$\xi=(0,y)$ 给 $x\xi=h_{\rm PB}\xi=r\xi=s\xi=0$，其中 $h_{\rm PB}=K_\sigma(c,x)$。原 $L$ 的读数是 $-2\operatorname{Re}((Vy)^*\iota C Vy/2)=0$，故 PB 自动成立，包括零向量。最后用定理 17.2 的 (17.14)–(17.16) 将同一实际 $X$ 的向量 PB 提升到原全正泛函：谱和的两份预算各用原二阶 Gram 行列式根不等式，左端用三角不等式。谱和保留给定总质量，未将 $\phi$ 归一，也未丢弃环境密度块；零质量仅有零泛函。由 $\|H_h-2C\|=|h|$，半径 $\rho_*$ 可在同一 $h$ 邻域使用。
+
+**证明：原 P2 的精确闭区间。** 对 $h>0$，(30.27)–(30.28) 的对应为
+
+$$
+\mathcal A=C^{-1/2}H_hC^{-1/2}=2I_2+\frac{h}{\sqrt2}J_A,\qquad
+(\alpha,\beta)=(2,h/\sqrt2),\qquad
+U_0=\frac{1}{\sqrt2}\begin{pmatrix}1&1\\1&-1\end{pmatrix}.
+$$
+
+原残量参数就是 (30.29) 所用的 $\rho$。以 $M_2=I_2$ 代入 (30.29)，得
+
+$$
+Q_M=U_0^*\operatorname{diag}(1/2,1)U_0
+=\begin{pmatrix}3/4&-1/4\\-1/4&3/4\end{pmatrix},
+\qquad
+\omega_{\rm P2}=1,\quad J=0,\quad R_{\rm P2}=3/4,\quad\Delta=1/2 .
+$$
+
+这里 $\omega_{\rm P2}$ 和 $R_{\rm P2}$ 分别是 (30.29) 的 $\omega$ 和 $R$，与上面的方差权重及尺度截断无关。于是 $I_+(B_h,M)=I_-(B_h,M)$，共同值正是 (32.2)。取 $h_*=\min(\delta_H,3\rho_*/(2\sqrt2))$。若 $0<h<h_*$，则 $\sqrt2\,h/3<\rho_*$，所以闭区间的每个点，包括两个端点，都满足 (32.15) 的全部原 PB 测试。在区间外，(30.29) 的必要性使原 P2 对每个取向都失败；正有限质量上的失败随原 P2 的二次齐次性保留。由此得到精确的 P2 与 PB 交及所述固定非零例。∎
+
+本节的 `repo-derived` 结论是固定三矩 $(C^2,C,I_2)$ 的一致 PB 半径及其对整个原 P2 闭区间的覆盖。原 P2 区间直接复用 (30.29)，原正泛函、实／复 Gram 与行列式根的归属沿前卷 §§17、27 及其中所引运输卷 (9.28)–(9.30)。加权方差、Cauchy–Schwarz、Young 不等式及有限维紧性均按其通常形式使用。结论仅分类 (32.1) 在 $0<h<h_*$ 上的 P2 与 PB 之交；不确定该族的最大 PB 半径，也不分类任意 $W=0$ 输入或给出物理实现。
+

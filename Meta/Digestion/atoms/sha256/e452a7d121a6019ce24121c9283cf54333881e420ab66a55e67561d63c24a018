@@ -1,0 +1,21 @@
+### 38.6 两笔实际预算同时严格正
+
+由 (38.20)，$R_d\xi_\lambda$ 的最后环境坐标恰为零，而 $E_d$ 的该坐标由 (38.18) 非零。又 $R_d\xi_\lambda$ 的环境首块为 $-dC^2u_\lambda/2\ne0$。因此 $R_d\xi_\lambda$ 与 $E_d$ 复线性独立；$S_d\xi_\lambda=z_dR_d\xi_\lambda+E_d$，故 $R_d\xi_\lambda,S_d\xi_\lambda$ 也复线性独立。
+
+更明确地，复 Gram 行列式的二坐标子式展开，只取最后环境坐标与其余两个环境坐标，就给
+
+$$
+\begin{aligned}
+B_{\phi_\lambda}(R_d,S_d)
+&=\|R_d\xi_\lambda\|^2\|S_d\xi_\lambda\|^2
+ -\bigl[\operatorname{Re}((R_d\xi_\lambda)^*S_d\xi_\lambda)\bigr]^2\\
+&\ge\|R_d\xi_\lambda\|^2\|S_d\xi_\lambda\|^2
+ -|(R_d\xi_\lambda)^*S_d\xi_\lambda|^2\\
+&\ge\frac{\|C^2u_\lambda\|^2|(e_\lambda)_3|^2}{4}>0,
+\qquad d=\pm1.
+\end{aligned}
+\tag{38.26}
+$$
+
+第二个不等式也可直接对 $R_d\xi_\lambda,E_d$ 作同一子式展开，因为增加 $z_dR_d\xi_\lambda$ 不改变这些子式。这个原预算下界适用于实际随 $\lambda$ 变化的全部列，无须另加探针扰动。
+

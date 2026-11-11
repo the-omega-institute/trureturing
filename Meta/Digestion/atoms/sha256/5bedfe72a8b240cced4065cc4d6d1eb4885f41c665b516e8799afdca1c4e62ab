@@ -1,0 +1,34 @@
+**定理 44.5（完整 Jacobian 的精确判据）。** 在任一零阶非轴接触处，
+
+$$
+\operatorname{rank}D_{(x,y,t,\theta)}C_0=2
+\quad\Longleftrightarrow\quad
+\nabla_{x,y,t}P\ne0.
+\tag{44.22}
+$$
+
+所以 $P_t=0$ 只表示以 $t$ 为投影坐标的根轨迹奇异；只要 $P_x$ 或 $P_y$ 非零，完整四实接触约束仍然正则。
+
+**证明。** 定理 43.3 给出 $G\ne0$，而在接触上
+
+$$
+\partial_\theta E_0=-iG\ne0.
+\tag{44.23}
+$$
+
+对 $j=x,y,t$ 直接微分 $P=2t|F|^2-|G|^2$，并使用 $G=\sqrt2F\overline\tau$，得到
+
+$$
+P_j=2\operatorname{Re}\bigl(\overline G\,\partial_jE_0\bigr).
+\tag{44.24}
+$$
+
+对 $j=t$，$\partial_t\overline\tau=\overline\tau/(2t)$ 产生的附加项正好给出 $2|F|^2$，故 (44.24) 仍成立；这是不能把 $t$ 当作常数的关键。令 $w_\theta=\partial_\theta E_0=-iG$，则
+
+$$
+P_j=2\operatorname{Im}\bigl(\overline{w_\theta}\,\partial_jE_0\bigr).
+\tag{44.25}
+$$
+
+右侧是 $\partial_jE_0$ 在 $w_\theta$ 的实正交方向上的坐标。由于 $w_\theta\ne0$，四个实列向量的秩为一，当且仅当三个 $z$ 列都与 $w_\theta$ 实平行；由 (44.25) 这又当且仅当 $P_x=P_y=P_t=0$。秩只能为一或二，故 (44.22) 成立。∎
+

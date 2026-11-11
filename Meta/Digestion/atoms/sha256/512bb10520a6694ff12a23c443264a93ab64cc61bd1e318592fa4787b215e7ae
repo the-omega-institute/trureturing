@@ -1,0 +1,41 @@
+**定义 43.1（源对齐图及标量函数）。** 以下仍固定取向 $i$，$\ell=x+iy$，$x\ne0$、$|y|>1$。固定整体相位后，将非轴演员写成
+
+$$
+U=(1,r\tau)^{\mathsf T},\qquad
+\tau=v+id\ne0,\qquad t=|\tau|^2>0,\qquad
+u=U/n,\quad n=\sqrt{1+t},\quad g=rh.
+\tag{43.1}
+$$
+
+此处 $t$ 是非轴坐标的模平方，代替 §41 中的第二演员质量记号。$g$ 只作源对齐后的参数，原来源仍是 $a_r=(1/\sqrt2,r)^{\mathsf T}$。置
+
+$$
+\begin{gathered}
+\beta_0=3+12t,\qquad Z_0=-3+12t,\\
+\alpha_0=\frac{(x-1)\beta_0}{2y},\qquad
+\chi_0=-\frac{(x+1)\beta_0}{2y},\qquad
+\kappa_0=\frac{Z_0-x\beta_0}{2x},\\
+F(t)=i(1-\ell)(\alpha_0+i\kappa_0)-(2-\ell/2)=f_0+f_1t,\\
+G(t)=i(1-\ell/2)(\chi_0-i\kappa_0)-(4-2\ell)t=g_0+g_1t.
+\end{gathered}
+\tag{43.2}
+$$
+
+$f_j,g_j$ 是固定 $\ell$ 的复系数，$g_j$ 不表示参数 $g$。再置
+
+$$
+\begin{gathered}
+\alpha_1=\tfrac12[3(x-1)v/y+d],\qquad
+\chi_1=-\tfrac12[3(x+1)v/y+d],\\
+\kappa_1=\frac{-(1+3x)v-yd}{2x},\\
+L_1(\tau)=i(1-\ell)(\alpha_1+i\kappa_1)-\tau,\\
+L_2(\tau)=i(1-\ell/2)(\chi_1-i\kappa_1)-\overline\tau,\\
+E_0(\tau)=\sqrt2F(t)\overline\tau-G(t),\qquad
+E_1(\tau)=\sqrt2L_1(\tau)\overline\tau-L_2(\tau),\\
+E_g(\tau)=E_0(\tau)+gE_1(\tau).
+\end{gathered}
+\tag{43.3}
+$$
+
+所有函数还依赖固定或变化的 $x,y$；$E_g=E_0+rhE_1$ 是精确等式。
+

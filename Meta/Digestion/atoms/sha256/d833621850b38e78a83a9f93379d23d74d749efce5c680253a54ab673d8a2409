@@ -1,0 +1,93 @@
+**定理 33.4（精确 P2 区间与共同 PB 覆盖条件）。** 对定义 33.3 的每个实 $h,\gamma$ 和每个 $\delta>0$，两个取向各自的原全正 P2 区间均为
+
+$$
+I_\lambda(h)=[-r_\lambda(h),r_\lambda(h)],\qquad
+r_\lambda(h)=
+\frac{\sqrt2\,|h|}{3\sqrt{1+2\lambda^2/3}}.
+\tag{33.23}
+$$
+
+令 $\mathcal J_\sigma(h,\gamma,\delta)$ 为该同一输入在取向 $\sigma$ 下满足原 P2 与全部原 PB 的实 $\rho$ 集合。若
+
+$$
+|h|<\delta_0,\qquad \frac32\delta\lambda^2<\delta_0,
+\tag{33.24}
+$$
+
+则对每个 $\sigma$ 有
+
+$$
+\left[-\min\left(r_\lambda(h),\frac{c}{L_\lambda}\right),
+       \min\left(r_\lambda(h),\frac{c}{L_\lambda}\right)\right]
+\subseteq\mathcal J_\sigma(h,\gamma,\delta)
+\subseteq I_\lambda(h).
+\tag{33.25}
+$$
+
+特别地，若另外满足
+
+$$
+|h|\le
+\frac{3c}{\sqrt2}\,
+\frac{\sqrt{1+2\lambda^2/3}}{1+3\lambda^2/2},
+\tag{33.26}
+$$
+
+则 $\mathcal J_+=\mathcal J_-=I_\lambda(h)$，两个取向的联合允许集也等于此闭区间，包括两端点。这里的全正泛函量词可分别限制到任一指定正有限质量；零质量仍是零等式。
+
+证明。先直接消费 (30.29) 的原 P2 判据。对 $h>0$，
+$\mathcal A=2I_2+(h/\sqrt2)J_A$ 的有序谱基为 §32 的 $U_0$，第一列恰为 $n$。由 (33.22)，
+
+$$
+\begin{aligned}
+U_0^\ast C^{-1/2}(I_2+M_2)C^{-1/2}U_0
+ &=\begin{pmatrix}3/2+\lambda^2&1/2\\1/2&3/2\end{pmatrix},\\
+Q_M&=\frac1{d_\lambda}
+ \begin{pmatrix}3/2&-1/2\\-1/2&3/2+\lambda^2\end{pmatrix},
+ \qquad d_\lambda=2+\frac32\lambda^2,\\
+\Delta&=\frac1{d_\lambda},\qquad
+R=\frac{\sqrt{(3/2)(3/2+\lambda^2)}}{d_\lambda},\qquad
+J=0,\qquad \beta=\frac{h}{\sqrt2}.
+\end{aligned}
+\tag{33.27}
+$$
+
+因此 $\beta\Delta/R$ 正是 (33.23)。
+当 $h<0$，交换两个谱列不改变 $R,\Delta$，仍有 $J=0$，只把 $\beta$ 改为 $|h|/\sqrt2$。
+当 $h=0$，归一化 Schur 矩阵为标量，(30.27)–(30.28) 直接给 $\rho=0$，也与 (33.23) 相符。这里保留原 P2 的必要性、充分性及闭端点，没有以 PB 估计替代它。
+
+另一方面，
+$\|H_h-2C\|=|h|$、
+$\|M_1-C\|=3\delta\lambda^2/2$。
+定理 33.1 于是保证 $|\rho|\le c/L_\lambda$ 的全部原 PB，给出 (33.25) 左包含；右包含仅用 P2。式 (33.26) 准确等价于
+$r_\lambda(h)\le c/L_\lambda$，故此时两包含合成所述等式。∎
+
+对任意固定有限 $\Lambda\ge0$，可取
+
+$$
+\delta_\Lambda=\frac{\delta_0}{3(1+\Lambda^2)},\qquad
+h_\Lambda=
+\min\left\{\frac{\delta_0}{2},
+ \frac{3c}{2\sqrt2(1+3\Lambda^2/2)}\right\}.
+\tag{33.28}
+$$
+
+于是所有 $|\lambda|\le\Lambda$、
+$0<\delta<\delta_\Lambda$、
+$|h|<h_\Lambda$ 的原输入都有
+$\mathcal J_+=\mathcal J_-=I_\lambda(h)$。
+这是同一有界比率族的共同覆盖，不随某个探针或泛函改选输入。
+
+式 (33.26) 还给出无界比率可用的双重缩放条件。事实上
+
+$$
+\frac{L_\lambda}{\sqrt{1+2\lambda^2/3}}
+ \le\frac32\sqrt{\frac32}(1+|\lambda|).
+\tag{33.29}
+$$
+
+因此可固定
+$c'=\min\{\delta_0/2,c\}>0$；
+只要 $0<|h|\le c'/(1+|\lambda|)$ 以及
+$3\delta\lambda^2/2<\delta_0$，就有 (33.24)、(33.26)，整个 P2 闭区间均被 PB 覆盖。这个充分条件允许 $|\lambda|\to\infty$，但同时要求 $h$ 缩小；它不确定固定非零 $h$、无界比率时的精确有限阶段联合半径。
+

@@ -1,0 +1,59 @@
+**Proposition 43.1 (proportional branches).** The following are equivalent.
+
+1. For every finite untouched T and every density rho_HT,
+   delta(rho_HT)=0.
+2. The same independence holds for every input with a binary classical
+   reference T, including all equally weighted flags of two densities.
+3. There is one fixed probability vector p such that
+
+$$
+\boxed{M_s=p_s\Theta\quad\text{as complex-linear maps, for every }s.}
+\tag{43.1}
+$$
+
+The fixed p is allowed to have zero entries. Full support is a separate
+condition needed by a four-conditional-setting consumer.
+
+Proof. The first item includes the second. Under the second, feed
+
+$$
+\rho_{HT}=\tfrac12\rho_0\otimes|0\rangle\langle0|
+           +\tfrac12\rho_1\otimes|1\rangle\langle1|
+\tag{43.2}
+$$
+
+for arbitrary densities rho_0,rho_1. Independence of S from R tensor T
+implies independence from the classical flag alone. Its two conditional
+setting laws q(rho_0),q(rho_1) must therefore agree. Since the two
+densities were arbitrary, there is a single setting law p on all
+inputs. The product relation for an input rho tensor |0><0| now reads
+M_s(rho)=p_s Theta(rho). Real Hermitian spanning and complex linearity
+give (43.1) on every matrix. Conversely (43.1), tensored with id_T, gives
+tau=p tensor sigma for every joint input, establishing the first item.
+
+The scalar-effect condition (42.1) follows from (43.1), but (42.3) shows
+that its converse fails. Equation (43.1) requires equality of complete
+unnormalized branch poststates, rather than just their traces.
+
+There is also a single entangled mathematical test. Let T=C^d and
+Phi_d be the density of d^(-1/2) sum_i |i>_H|i>_T. Independence of
+S from R tensor T for the one input Phi_d is equivalent to (43.1),
+where p_s=Tr M_s(I_H/d). In fact the s-th Choi block must equal p_s
+times the Choi matrix of Theta. The explicit expansion
+
+$$
+(M_s\otimes\mathrm{id})(\Phi_d)
+ =\frac1d\sum_{i,j}M_s(E_{ij})\otimes E_{ij}
+\tag{43.3}
+$$
+
+then identifies every matrix-unit image. This is the standard Choi
+injectivity argument. The ability to prepare and measure that joint
+input is not supplied by its mathematical existence. Section 46 gives
+an alternative exact test using ordinary input densities.
+
+Failure of (43.1) does not refute independence on one actual input.
+For example, (42.3) is independent on rho=I/2, although it fails on
+rho=|+><+|. The universal and actual-source claims have different
+quantifiers.
+

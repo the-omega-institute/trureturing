@@ -1,0 +1,55 @@
+### 40.2 轴坐标、相位与退化分支
+
+先证 $\iota=i$。用 (39.4) 消去 $q,a_{\rm act}$，将来源方程写成两个复方程
+
+$$
+E=i(I_2-\ell C^{-1})p-Hu+\ell C^2u/2-\eta a_r=0,
+\qquad q=(\ell I_2+2C^{-1})p+iBCu.
+\tag{40.4}
+$$
+
+它们与 (37.15) 的四个实图条件共为八个实方程。若轴点为 $u=z_0e_j$、$|z_0|=1$，同时将 $u,p,q,a_{\rm act},\eta$ 乘以 $\overline{z_0}$，而保持 $\ell,\epsilon$，即可化为 $u=e_j$。此操作逐项保留来源方程、全部接触和 $J_k$，也保留实际矩阵 $X$；构造完成后乘回 $z_0$。因此只需在 $e_j$ 附近处理。
+
+固定 $l\ne j$，在轴附近取实解析坐标
+
+$$
+u_j=\sqrt{1-|z|^2},\qquad u_l=z,\qquad |z|<1.
+\tag{40.5}
+$$
+
+这里固定的是全局相位；$z$ 为横向复坐标。在基点用下标 $0$ 标记 $\ell_0,\eta_0$，并写
+
+$$
+p_j=x\in\mathbb R,\qquad q_j=c_jx,\qquad
+p_l=\pi,\qquad q_l=\chi,\qquad w=\chi-c_j\pi.
+\tag{40.6}
+$$
+
+这些轴图条件正是引理 37.2 的代数结论，不使用小 $h$ 估计。由 $q$ 的占据坐标公式，
+
+$$
+(\ell_0+2/c_j-c_j)x+3ic_j^2=0.
+\tag{40.7}
+$$
+
+故 $x\ne0$。写 $t_0=\operatorname{Im}\ell_0$，则
+
+$$
+\operatorname{Re}\ell_0=c_j-2/c_j,\qquad
+|t_0|>1,\qquad x=-3c_j^2/t_0,\qquad
+D_m:=i(1-\ell_0/c_m)\ne0\quad(m=j,l).
+\tag{40.8}
+$$
+
+最后一个非零性由 $t_0\ne0$ 得到，且 $a_j:=(a_r)_j\ne0$、$a_l:=(a_r)_l\ne0$。
+
+若 $w=0$，则 $q=c_jp$，直接取
+
+$$
+X_{jj}=x,\qquad X_{lj}=\pi,\qquad
+X_{jl}=\overline\pi,\qquad X_{ll}\in\mathbb R
+\tag{40.9}
+$$
+
+便有 $X=X^*$、$Xu=p$、$XCu=q$。反过来，在轴上 $Cu=c_ju$ 使任一实际矩阵都必须满足 $q=c_jp$，即 $w=0$。因此 $w=0$ 恰是已经实际的轴分支，以下只须恢复 $w\ne0$ 的点。
+

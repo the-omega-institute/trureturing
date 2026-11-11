@@ -1,0 +1,42 @@
+**命题 19.1（Finite repeated-use inequality）。** Under Definitions 18.1–18.2, for every positive integer $n$,
+
+<a id="eq-reference-19-2"></a>
+
+$$
+\boxed{
+1-\beta^n\le d+n(\varepsilon_0+\varepsilon_1).
+}
+\tag{19.2}
+$$
+
+**证明。** Let $\Omega_j^{(n)}$ be the actual joint state of the $n$ retained classical records and $R$, after applying the same $\mathcal T$ successively to $R$ alone. Induction gives
+
+<a id="eq-reference-19-3"></a>
+
+$$
+D\bigl(\Omega_j^{(n)},p_j^{\otimes n}\otimes\eta_j\bigr)
+\le n\varepsilon_j.
+\tag{19.3}
+$$
+
+The case $n=1$ is (18.2). For the induction step, apply $\operatorname{id}_{\rm old\ records}\otimes\mathcal T$ to the previous actual and ideal states. Their trace distance contracts. On the ideal input, the old records are $p_j^{\otimes n}$ and the persistent input is $\eta_j$, so the extra one-use error is at most $\varepsilon_j$ by (18.2). Tensoring with a positive trace-one state preserves trace norm. The triangle inequality gives the next instance of (19.3).
+
+The actual complete $n$-use process is one common completely positive trace-preserving map applied to the initial program state. Consequently,
+
+$$
+D\bigl(\Omega_0^{(n)},\Omega_1^{(n)}\bigr)\le d.
+$$
+
+Discard $R$, use (19.3), and apply the triangle inequality to obtain
+
+$$
+D\bigl(p_0^{\otimes n},p_1^{\otimes n}\bigr)
+\le d+n(\varepsilon_0+\varepsilon_1).
+$$
+
+For classical distributions $P,Q$, total variation is $1-\sum_x\min\{P(x),Q(x)\}$. Since $\min\{P(x),Q(x)\}\le\sqrt{P(x)Q(x)}$, and affinity multiplies under tensor products, the left side is at least $1-\beta^n$. This proves (19.2). $\square$
+
+The independent records in this proof are an ideal comparison family. The actual reused records need not be independent, and independence is not inferred from one-use accuracy or from return of a reference marginal. Every ideal and actual state belongs to the same repeated device and the same initial program hypothesis.
+
+<a id="statement-reference-19-2"></a>
+

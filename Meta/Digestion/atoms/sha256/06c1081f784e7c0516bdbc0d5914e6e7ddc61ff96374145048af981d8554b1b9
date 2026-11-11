@@ -1,0 +1,41 @@
+**定理 65.6（原始映射与辅助三元组）。** 令
+
+$$
+C_E=C_GP_{\sqrt{\eta(U)}},\qquad
+Q_0(a,b,c)=N(F(a,b),c),\qquad p_0=C_D^{-1}pC_E.
+\tag{65.18}
+$$
+
+$C_D,C_E$ 均由实际 $U,G$ 及比较导出的 Jordan 运算决定，是自伴随锥自同构，其逆全锥正。并有全部实输入的
+
+$$
+\begin{aligned}
+M(a,b)&=C_DF(a,b),\\
+L(d,c)&=C_EN(C_D^{-1}d,c),\\
+Q(a,b,c)&=C_EQ_0(a,b,c),\\
+p&=C_Dp_0C_E^{-1},\qquad
+p_0Q_0(a,b,c)=\tau_A(a)F(b,c).
+\end{aligned}
+\tag{65.19}
+$$
+
+$p_0$ 在整个 $E_+$ 上正，在整个 $E$ 上保原规范迹。
+
+**证明。** $G$ 与 $\eta(D)$ 算子交换，故与 $\eta(U)$ 有共同谱框架。其谱函数的二次表示相互交换，所以 $C_G$ 与 $P_{\sqrt{\eta(U)}}$ 交换；两者自伴随、正且有正逆，乘积也如此。由 Jordan 同态及 (65.13)，
+
+$$
+P_{\sqrt{\eta(U)}}N(d,c)
+ =P_{\eta(\sqrt U)}N(d,c)=N(C_Dd,c).
+$$
+
+这给出前三条恢复式；第四条是定义的逆式，最后一条由原全实 III 得到。
+
+$\widetilde Q_0=\widetilde N(\widetilde F\otimes\operatorname{id}_A)$ 是满迹内积等距，且 $Q_0(1_A,1_A,1_A)=1_E$。故
+
+$$
+\tau_EQ_0(a,b,c)=\tau_A(a)\tau_A(b)\tau_A(c)
+ =\tau_Dp_0Q_0(a,b,c).
+$$
+
+$Q_0$ 实张成整个 $E$，所以 $\tau_Dp_0=\tau_E$ 全局成立。这不是从产品正性或选定面上的等式冒推全锥性质。$\square$
+

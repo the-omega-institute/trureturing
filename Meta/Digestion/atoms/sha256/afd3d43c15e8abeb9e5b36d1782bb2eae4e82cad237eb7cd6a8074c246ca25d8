@@ -1,0 +1,90 @@
+### 38.5 原作用列与严格负缺陷
+
+以下所有 $R_d,S_d,L_{\rm PB}$ 均取当前实际 $x_\lambda,t_{\tau,\lambda},\rho$。置
+
+$$
+\begin{gathered}
+v_\lambda=a_{\rm act}-ip_\lambda,\qquad
+U_\lambda=iq_\lambda+BCu_\lambda+Cv_\lambda,\\
+P_\lambda=v_\lambda+\ell U_\lambda/2,\qquad
+Q_\lambda=iCv_\lambda-\ell p_\lambda+\rho T_Au_\lambda.
+\end{gathered}
+\tag{38.19}
+$$
+
+前卷 (31.6)–(31.7) 的原列，在此记号下直接成为
+
+$$
+\begin{aligned}
+R_d\xi_\lambda&=(p_\lambda-dU_\lambda/2,-dw_\lambda/2),\\
+S_d\xi_\lambda&=\left(a_{\rm act}
+ +d\left(\frac{Cp_\lambda+q_\lambda+iCa_{\rm act}-iBCu_\lambda}{2}
+                +\rho T_Au_\lambda\right),\,
+ Fu_\lambda+Dy_\lambda-di w_\lambda/2\right).
+\end{aligned}
+\tag{38.20}
+$$
+
+由 $z_d=i+d\ell$ 及 (38.16)，其完成列精确为
+
+$$
+E_d=(S_d-z_dR_d)\xi_\lambda=(P_\lambda+dQ_\lambda,e_\lambda).
+\tag{38.21}
+$$
+
+对同一个原正向量泛函 $\phi_\lambda(A)=\xi_\lambda^*A\xi_\lambda$ 定义所选有限变分缺陷
+
+$$
+\mathcal D_\lambda=
+\sum_{d=\pm1}\left(\alpha_d\|R_d\xi_\lambda\|^2
+ +\alpha_d^{-1}\|(S_d-\beta_dR_d)\xi_\lambda\|^2\right)
+ -2\phi_\lambda(L_{\rm PB}).
+\tag{38.22}
+$$
+
+原恒等式 (31.9)，等价于 (32.4)，对 (38.20)–(38.21) 给出精确等式
+
+$$
+\mathcal D_\lambda=
+\sum_{d=\pm1}\alpha_d^{-1}\|P_\lambda+dQ_\lambda\|^2
+ +\frac9{40}\|e_\lambda\|^2
+ +4\rho\operatorname{Re}(v_\lambda^*T_Au_\lambda).
+\tag{38.23}
+$$
+
+它保留实际演员误差与实际环境误差。由 (38.10)、(38.14) 有
+
+$$
+P_\lambda=O(\lambda^{-3}),\qquad
+Q_\lambda=\rho T_Au_\lambda+O(\lambda^{-3}),\qquad
+\operatorname{Re}(v_\lambda^*T_Au_\lambda)=-3+O(\lambda^{-3}).
+$$
+
+取 $\rho=k/\lambda^2$，演员平方和为 $O(\lambda^{-4})$。结合 (38.17) 得
+
+$$
+\lambda^2\mathcal D_\lambda\longrightarrow
+\frac9{40}\frac{809}{9}-12k=\frac{809}{40}-12k<0
+\qquad(k>809/480).
+\tag{38.24}
+$$
+
+因而每个充分大的有限阶段都有 $\mathcal D_\lambda<0$。前卷 (27.12) 的实 Gram 变分不等式，对这里同一对实际原列分别给
+
+$$
+2\sqrt{B_{\phi_\lambda}(R_d,S_d)}\le
+\alpha_d\|R_d\xi_\lambda\|^2
+ +\alpha_d^{-1}\|(S_d-\beta_dR_d)\xi_\lambda\|^2.
+$$
+
+相加并用 (38.22)，得到
+
+$$
+\phi_\lambda(L_{\rm PB})>
+\sqrt{B_{\phi_\lambda}(R_+,S_+)}+
+\sqrt{B_{\phi_\lambda}(R_-,S_-)}\ge0.
+\tag{38.25}
+$$
+
+这严格违反原绝对值 PB，不要求所选变分参数达到任一 Gram 根的下确界。两份来源只有有限个 $\tau$ 值；各误差对有界 $k$ 一致，故 (38.24) 在每个 $[m,M]$、$m>809/480$ 上一致严格为负。
+

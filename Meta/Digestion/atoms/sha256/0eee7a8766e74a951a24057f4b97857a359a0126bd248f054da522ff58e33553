@@ -1,0 +1,22 @@
+**命题 3.3（Dimension of the pure-completion ray fibre）。** Fix the left eigenvectors in (3.2), omit zero sectors and assume the lift condition (3.1). The vector-ray fibre is
+
+<a id="eq-purity-3-4"></a>
+
+$$
+\left(\prod_{\alpha:p_\alpha>0}
+\operatorname{St}_{\mathbb C}(r_\alpha,m_\alpha)\right)/U(1),
+\qquad
+\dim_{\mathbb R}=
+\sum_{\alpha:p_\alpha>0}
+(2m_\alpha r_\alpha-r_\alpha^2)-1.
+\tag{3.4}
+$$
+
+Here $\operatorname{St}_{\mathbb C}(r,m)$ denotes ordered orthonormal complex $r$-frames in $\mathbb C^m$. The single quotiented phase multiplies all populated sectors together.
+
+**证明。** With the left eigenbasis fixed, every lift is uniquely specified by its right orthonormal frames. Each right vector is recovered by contraction against its fixed left vector and division by the specified positive square root. Thus eigenvalue degeneracy creates no additional quotient.
+
+A complex $r$-frame has $2mr$ real coordinates and $r^2$ independent real orthonormality constraints. At a frame $F$, the derivative of $F^*F$ sends the variation $FH/2$ to any given Hermitian matrix $H$, proving independence. The global $U(1)$ action is free, so its quotient subtracts one real dimension. This proves (3.4). $\square$
+
+<a id="statement-purity-3-4"></a>
+

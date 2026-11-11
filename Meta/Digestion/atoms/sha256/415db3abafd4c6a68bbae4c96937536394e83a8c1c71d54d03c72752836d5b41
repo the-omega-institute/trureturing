@@ -1,0 +1,81 @@
+**引理 35.6（复相位方向上的有限演员接触）。** 存在 $h_c,\theta_c,\zeta_{\min},\eta_{\min},\eta_{\max}>0$，其中可取 $h_c<2\sqrt2$、$\theta_c\le\pi/6$，以及关于 $(h,\theta)$ 光滑的有限演员数据
+$u,X,p,q,a_{\rm act},v,\ell,\eta$，使在 $|h|\le h_c,|\theta|\le\theta_c$ 上
+
+$$
+\begin{gathered}
+\|u\|=1,\quad u_1u_2\ne0,\quad X=X^*,\quad p=Xu,\quad q=XCu,\qquad
+\ell=b-i\sqrt6,\quad b\in\mathbb R,\\
+v=-i\ell C^{-1}p,\quad a_{\rm act}=i(I_2-\ell C^{-1})p,\quad
+q=(\ell I_2+2C^{-1})p+iBCu,\quad B=3C+hJ_A,\\
+d_0:=a_{\rm act}-Hu+\ell C^2u/2=\eta a_\theta,\qquad
+\eta_{\min}\le|\eta|\le\eta_{\max},\qquad
+\zeta:=\operatorname{Re}(v^*T_Au)\ge\zeta_{\min},\qquad
+N:=\|T_Au\|^2\le4.
+\end{gathered}
+\tag{35.23}
+$$
+
+这些数据不依赖 $\lambda$ 或 $\rho$。它们满足原有限参数 $\nu=0$、$\iota=i$、$\epsilon=1$、$\alpha_\tau=\sqrt6-\tau>0$、$\beta_\tau=\tau b$ 下的演员接触 $\mathsf P=\mathsf Q|_{\rho=0}=0$。
+
+证明。沿 §34.1–§34.2 的接触方程，但以 $\varphi$ 记演员相位，保留 $\theta$ 专指外部方向 $a_\theta$。写
+
+$$
+u=\frac{(\sqrt r,e^{i\varphi})^{\mathsf T}}{\sqrt{1+r}},\quad
+p_j=z_ju_j,\quad z_1\in\mathbb R,\quad z_2\in\mathbb C,\quad r>0,
+\tag{35.24}
+$$
+
+并由 (35.23) 的前三个接触等式定义 $v,a_{\rm act},q$。两列由同一 Hermitian $X$ 实现的充要条件仍为
+
+$$
+x_{11}=(2p_1-q_1)/u_1\in\mathbb R,\quad
+x_{22}=(q_2-p_2)/u_2\in\mathbb R,\quad
+r(z_1-x_{11})=\overline{z_2-x_{22}}.
+\tag{35.25}
+$$
+
+这是四个实方程。满足时定义 $X_{12}=(z_1-x_{11})u_1/u_2$、$X_{21}=\overline{X_{12}}$，便同时恢复 $p=Xu,q=XCu$。
+
+在 $h=0$ 时，这四式不依赖 $\varphi$。记 $t_*=\sqrt6$，先由第一条对角虚部得 $z_1=3/t_*$；施加两对角实条件后，非对角方程的虚部给 $\operatorname{Im}z_2=0$；第二条对角虚部给 $\operatorname{Re}z_2=12/t_*$；最后的实部给
+
+$$
+z_j=3c_j^2/t_*,\qquad r=4(1-b)/(1+b),\quad 0<b<1.
+\tag{35.26}
+$$
+
+这些消元的非零系数分别可取 $t_*,1,-t_*,(1+b)z_1$，所以前四式对四变量 $(z_1,\operatorname{Im}z_2,\operatorname{Re}z_2,r)$ 的实雅可比可逆。
+
+如 §34 的 (34.6)–(34.7)，在这条基准解上
+
+$$
+\begin{gathered}
+D_j=(d_0)_j/u_j=-5c_j+bc_j^2/2-i\,3bc_j/t_*,\\
+|D_1|^2=25-5b+7b^2/4,\qquad |D_2|^2=100-40b+10b^2,\\
+f(b)=-100+300b-84b^2+24b^3.
+\end{gathered}
+\tag{35.27}
+$$
+
+$f(0)<0<f(1)$ 且 $f'(b)>0$ 于 $[0,1]$，故唯一 $b_0\in(0,1)$ 给 $|D_2|^2=2r|D_1|^2$。两 $D_j$ 的实部均为负，特别地 $D_1\ne0$。此处目标方向是
+
+$$
+k(\theta)=\frac{(a_\theta)_2}{(a_\theta)_1}
+=\sqrt2\frac{1-i e^{i\theta}}{1+i e^{i\theta}},\qquad k(0)=-i\sqrt2.
+\tag{35.28}
+$$
+
+分母在零附近非零。选演员相位 $\varphi_0$ 使
+$Z=e^{i\varphi}D_2/(\sqrt rD_1)$ 在 $(b_0,\varphi_0)$ 等于 $-i\sqrt2$；相对于 §34 的实方向基准，只是将演员相位减去 $\pi/2$。这不改变前四式、$r$ 或配对
+$\zeta=3(4-r)/(1+r)>0$。
+
+将后两个实方程取为 $Z-k(\theta)=0$。沿前四式消元的基准解，有
+
+$$
+|Z|^2-2=\frac{f(b)}{(1+b)r|D_1|^2}.
+\tag{35.29}
+$$
+
+在 $b_0$ 处其 $b$ 导数非零，故 $\partial_bZ$ 有非零径向分量；$\partial_\varphi Z=iZ$ 则是非零切向向量。剩余实 $2\times2$ 块可逆，与前四式组成的六维实雅可比因而可逆。对参数 $(h,\theta)$ 应用有限维实隐函数定理，得到全部接触数据。这里外部相位是参数，演员相位是待解变量，两者没有被设为相同。
+
+取一个闭参数盒，严格位于上述存在邻域内；连续性及紧性给 $r>0$、$u_1u_2\ne0$、$\eta=(d_0)_1/(a_\theta)_1\ne0$ 和 $\zeta>0$ 的共同上下界。最后 $N\le\|T_A\|^2=4$。原参数合法性由 $\alpha_\tau=t_*-\tau>0$ 直接保证。∎
+

@@ -1,0 +1,37 @@
+### 33.5. An injective arc has a sharp square-root rate without a Lipschitz inverse
+
+Injectivity on a compact nonconvex family need not give positive $s_Q$. On a qubit, take the known preparation arc
+
+<a id="eq-preparation-33-5"></a>
+
+$$
+\begin{aligned}
+\rho_t&=|\psi_t\rangle\langle\psi_t|,
+\qquad
+|\psi_t\rangle=\cos t|0\rangle+\sin t|1\rangle,\\
+0&\le t\le\pi/4,
+\qquad F=|1\rangle\langle1|.
+\end{aligned}
+\tag{33.5}
+$$
+
+The measured probability $p(t)=\sin^2t$ is strictly increasing and identifies every state on this declared arc. For $0\le s\le t\le\pi/4$,
+
+<a id="eq-preparation-33-6"></a>
+
+$$
+\begin{aligned}
+D(\rho_t,\rho_s)&=\sin(t-s),\\
+p(t)-p(s)
+&=\sin(t+s)\sin(t-s)
+\ge\sin^2(t-s).
+\end{aligned}
+\tag{33.6}
+$$
+
+The inequality uses $t+s\ge t-s$ and monotonicity of sine on $[0,\pi/2]$. It follows that $D(\rho_t,\rho_s)\le\sqrt{|p(t)-p(s)|}$, with equality for $s=0$. Consequently the inverse modulus is exactly $\omega_Q(\delta)=\sqrt\delta$ for $0\le\delta\le1/2$.
+
+Nevertheless $s_Q=0$: at $s=0$, the ratio in (33.3) is $\sin t/\sqrt2$ and tends to zero. This restricted-domain readout is complete and has a sharp square-root calibration rate, while admitting no finite Lipschitz inverse constant.
+
+Every state on the arc has spectrum $(1,0)$, so spectral data do not improve that rate. If the source instead admits the signed arc $-\pi/4\le t\le\pi/4$, then $p(t)=p(-t)$ although $\rho_t\ne\rho_{-t}$ for $t\ne0$. The spectrum and current $F$ response no longer identify the state. The additional effect $|+\rangle\langle+|$ has response difference $\sin(2t)$ between $\rho_t$ and $\rho_{-t}$; at $t=\pi/4$ it distinguishes them perfectly. The sign restriction is part of the source contract and is not inferred from the single measured probability.
+

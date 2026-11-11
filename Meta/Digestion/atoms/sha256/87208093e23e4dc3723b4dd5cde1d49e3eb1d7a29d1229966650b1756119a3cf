@@ -1,0 +1,43 @@
+**定理 64.8（未归一化权重的精确平衡）。** 在定理 64.7 的阶段，令 $Y=p^*1_D\ge0$、$Y_q=\Pi_qY$、$\ell_q=K_q^*Y\in A$。可选择一个完整实际 $D$ 本原框架 $\mathcal Q$，使
+
+$$
+\prod_{q\in\mathcal Q}\det_A(\ell_q)=1,\qquad
+\det_{F_q}(Y_q)=\frac{\det_A(\ell_q)}{\det_{F_q}(z_q)}.
+\tag{64.21}
+$$
+
+所有行列式均为元素的 Jordan 行列式，即每个本原谱值的乘积，不是线性算子的行列式；分母幂次为一。
+
+**证明。** 对任意本原 $q\in D_{ij}$，(64.15) 和 (64.17) 在所有实 $c$ 上给出
+
+$$
+\begin{aligned}
+\langle\ell_q,c\rangle_A
+ &=\tau_DpL(q,c)=\tau_DM(sq,c),\\
+(\ell_q)_k&=v_q u_{jk}^{T^{\delta_{jk}}}\quad(k\in\Lambda),\\
+v_q&=\operatorname{Tr}\!\left(u_{ij}^{-1}\operatorname{Tr}_i q\right)>0,\\
+Y_q&=P_{z_q^{-1/2}}\Theta_q(\ell_q).
+\end{aligned}
+\tag{64.22}
+$$
+
+最后一式来自 $K_q=P_{\sqrt{z_q}}\Theta_q$ 的伴随及 $\Theta_q$ 的规范迹等距性，不假定 $Y=1_E$。每个 $\ell_q$ 内点，故 $Y_q$ 也为面内点。以 $\Theta_q$ 识别 $F_q$ 和 $A$，在每个已分类复矩阵块上，
+$\det(z^{-1/2}\ell z^{-1/2})=\det(\ell)/\det(z)$。
+对所有简单块相乘得到 (64.21) 第二式。这里的本原规范迹不产生维数或 Peirce 重数幂次。
+
+令 $u_{ij}$ 的实际本征值为 $\lambda_{ij,s}>0$，$s=1,\ldots,n_j$。在 $D_{ij}$ 取第一因子的任意正交基及第二因子的 $u_{ij}$ 本征基，令
+$q_{ijrs}=|r\rangle\langle r|\otimes|s\rangle\langle s|$，$r=1,\ldots,n_i$。所有有序 $i,j$ 的这些元组成 $\mathcal Q$。有 $v_{q_{ijrs}}=\lambda_{ij,s}^{-1}$，从而
+
+$$
+\begin{aligned}
+\det_A(\ell_{q_{ijrs}})
+ &=\lambda_{ij,s}^{-n}\prod_k\det(u_{jk}),\\
+\prod_{i,j,r,s}\det_A(\ell_{q_{ijrs}})
+ &=\left[\prod_{i,j}\det(u_{ij})^{-n n_i}\right]
+   \left[\prod_{j,k}\det(u_{jk})^{n n_j}\right]=1.
+\end{aligned}
+\tag{64.23}
+$$
+
+第一括号中每个谱值重复 $n_i$ 次；第二括号中固定 $j$ 有 $\sum_i n_in_j=n n_j$ 个框架元。重命名第二括号的行、列指标后，每个有序 $\det(u_{ij})$ 的指数分别是 $-n n_i$ 与 $+n n_i$。转置不改行列式；没有交换 $i,j$，也没有假定 $u_{ij}=u_{ji}$。$\square$
+

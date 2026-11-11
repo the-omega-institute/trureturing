@@ -1,0 +1,40 @@
+**推论 35.8（无 §33 前提的双包含与分别取向比较）。** 固定
+$0<h<\min(h_U,h_0,2\sqrt2)$，令 $\beta=h/\sqrt2$。对全部 $|\theta|\le\theta_c$、$\lambda\ge2$，记 $L=L_{\lambda,\theta}$，则存在仅依赖这些固定数据的正常数 $c_{\rm in}(h),K_{\rm out}(h)$，使
+
+$$
+\begin{gathered}
+[-c_{\rm in}/L,c_{\rm in}/L]\subseteq\mathcal J_\sigma(t)
+\subseteq[-K_{\rm out}/L,K_{\rm out}/L],\qquad\sigma=\pm1,\\
+[-c_{\rm in}/L,c_{\rm in}/L]\subseteq\mathcal J_{\rm both}(t)
+\subseteq[-K_{\rm out}/L,K_{\rm out}/L].
+\end{gathered}
+\tag{35.37}
+$$
+
+特别地，在定理 35.5 的每条临界相位路径上，两个分别取向的联合允许集及同时取向的联合允许集都按 Hausdorff 距离趋于 $\{0\}$。若 $\gamma<\infty$ 且 $0<r_*<A_\gamma$，则充分大的每个有限 $\lambda$ 上，同一实际来源的 $\rho=-r_*$ 属于 $I_+$ 却严格违反该取向 PB；$\rho=r_*$ 对取向 $-$ 有反射后的同一结论，每个违反的两笔原预算均严格正。
+
+证明。由 $\theta_c\le\pi/6$、$\lambda\ge2$，有
+
+$$
+\lambda^2\le L\le2\lambda^2,\qquad
+\frac\beta{d_{\rm s}}\ge\frac\beta{2\lambda^2}\ge\frac\beta{2L},\qquad
+\frac\beta{d_{\rm s}}\le\frac{2\beta}{\lambda^2}.
+\tag{35.38}
+$$
+
+取 $c_{\rm in}(h)=\min(c_{\rm PB},\beta/2)>0$，定理 35.4 及精确 P2 的短端点共同给内含界。定理 35.7 排除 $+$ 的宽负尾，P2 自身控制其短正尾；取向 $-$ 反射。因此
+
+$$
+\mathcal J_+(t)\subseteq[-K_{\rm tail}/\lambda^2,2\beta/\lambda^2],\qquad
+\mathcal J_-(t)\subseteq[-2\beta/\lambda^2,K_{\rm tail}/\lambda^2].
+\tag{35.39}
+$$
+
+可取 $K_{\rm out}(h)=2\max(K_{\rm tail},2\beta)$。这是集合包含，不宣称分别取向的集合是区间或已经找出其宽侧精确端点。
+
+每个原 P2、PB 测试对 $\rho$ 的余量连续，故这些允许集是闭集；它们包含零，且由 (35.37) 有界，遂得上述 Hausdorff 极限。固定严格内点 $-r_*$ 的 P2 成员身份来自 (35.22)，而 $r_*\ge K_{\rm tail}/\lambda^2$ 最终成立，给原有限 PB 排除；反射给另一取向。∎
+
+这里分别取向的比较是实质区别：当 $\gamma<\infty$ 时，各自 P2 保留非零的一侧极限，加入全部 PB 才使该联合集合趋于零。要求两个取向同时成立时，P2 的交本来就已按 $\lambda^{-2}$ 缩小，不能把这种收缩再计作 PB 的额外排除。$h\downarrow0$ 时不存在由本推导支持的、独立于 $h$ 的正常数 $c_{\rm in}$；短 P2 端点本身正比于 $\beta$。在 $h=0$，归一化 Schur 块为标量，前卷 (30.27)–(30.28) 直接迫使 $\rho=0$。
+
+由 (35.7) 与 $1\le s(\theta)\le2$，所有相位路径的实际正定来源均趋于同一个 $t_h^0$。若再固定 $h$ 位于定理 32.2 的范围内，则奇异极限来源本身的两个联合允许集都是 $[-2\beta/3,2\beta/3]$。因此正定路径上联合集趋于零，并不等于极限来源的联合集。没有在原全称量词、变分下确界与奇异来源极限之间交换极限；反例见证始终在有限阶段取得，其环境向量范数可以发散。
+

@@ -1,0 +1,50 @@
+**命题 22.1（Exact decoupled return permits only invariant effects）。** Under the preceding covariance and return assumptions, the distributions in (22.2) are independent of $\theta$ for each fixed $\rho$. If
+
+$$
+p_0(x\mid\rho)=\operatorname{Tr}(E_x\rho),
+$$
+
+then
+
+<a id="eq-reference-22-3"></a>
+
+$$
+U_S(\theta)E_xU_S(\theta)^*=E_x
+\qquad\text{for every }x,\theta.
+\tag{22.3}
+$$
+
+**证明。** For each fixed independent data input $\rho$, the same $\mathcal M$ is one fixed channel from the program to its returned reference and classical record. Apply Corollary 21.2. Equality of the resulting probabilities for every data density implies equality of the effects, giving (22.3). $\square$
+
+If $\eta_0$ is pure, exact marginal return for every data density supplies the product premise by §20. Mixed marginal return is not promoted to this stronger premise.
+
+For an explicit target, let $S$ be a qubit, take $U_S(\theta)=e^{-i\theta Z/2}$, and let $p_0$ be the sharp $X$ measurement. The supplied common coherent probe $\rho=P_{+x}$ gives complete target laws
+
+<a id="eq-reference-22-4"></a>
+
+$$
+p_0=(1,0),
+\qquad
+p_\theta=
+\bigl(\cos^2(\theta/2),\sin^2(\theta/2)\bigr),
+\qquad
+\beta=|\cos(\theta/2)|.
+\tag{22.4}
+$$
+
+Any approximate product-return implementation of this same state-program task obeys
+
+<a id="eq-reference-22-5"></a>
+
+$$
+\varepsilon_0+\varepsilon_\theta
+\ge
+\frac{
+[1-D(\eta_0,\eta_\theta)-|\cos(\theta/2)|^n]_+
+}{n}
+\qquad(n\ge1).
+\tag{22.5}
+$$
+
+Small nonzero $\theta$ gives different target records while the reference-state distance is below one. This excludes exact product return and leaves finite-error protocols within the displayed budget. The coherent probe, its independent preparation, covariance and the common processor are supplied premises. A common-history label supplies none of these operations or preparations.
+

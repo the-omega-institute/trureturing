@@ -1,0 +1,8 @@
+**Proposition 43.1 (proportional branches).** The following are equivalent.
+
+1. For every finite untouched T and every density rho_HT,
+   delta(rho_HT)=0.
+2. The same independence holds for every input with a binary classical
+   reference T, including all equally weighted flags of two densities.
+3. There is one fixed probability vector p such that
+

@@ -1,0 +1,46 @@
+**定理 65.4（由 $D_H$ 得到的 Jordan 切片）。** 在定理 65.3 的阶段，令
+
+$$
+G=H1_D=L(1_D,1_A),\quad C_G=P_{\sqrt G},\quad
+\eta=C_G^{-1}H,\quad N=C_G^{-1}L,\quad\zeta=N(1_D,-).
+\tag{65.12}
+$$
+
+则 $G>0$，$\eta:D\to E$ 是保单位单射 Jordan 同态，$G$ 与 $\eta(D)$ 算子交换。$N$ 在全正域为正、实张成 $E$，且对全部实 $a,d\in D,c\in A$，
+
+$$
+\begin{aligned}
+N(d,c)&=\eta(d)\circ\zeta(c),&N(d,1_A)&=\eta(d),\\
+[\ell_{\eta(d)},\ell_{\zeta(c)}]&=0,&
+P_{\eta(a)}N(d,c)&=N(P_ad,c).
+\end{aligned}
+\tag{65.13}
+$$
+
+算子交换及二次交织均在整个 $E$ 上成立，此时还没有假设 $N$ 等距或 $\zeta$ 保平方。
+
+**证明。** 正 $d\le r1_D,c\le t1_A$ 给 $0\le L(d,c)\le rtG$。若正元与 $G$ 正交，它消去全部正乘积，并由正锥生成及 $L$ 张成消去整个 $E$；故该元为零，$G$ 是内点。由 (65.11)，
+
+$$
+spH(d)=\langle V,d\rangle_D1_A.
+\tag{65.14}
+$$
+
+$V>0$，所以 $H$ 没有非零正核。取任意完整本原框架 $(q_r)$，$D_H$ 使非零 $Hq_r$ 的支撑 $e_r$ 两两正交，和 $\sum_rHq_r=G>0$ 使 $\sum_re_r=1_E$。在 $E_1(e_r)$ 内 $G$ 与 $Hq_r$ 相同，谱公式给 $C_G^{-1}Hq_r=e_r$。谱展开和极化遂使 $\eta$ 保平方及 Jordan 乘积，且保单位。若 $\eta(d)=0$，则 $H(d^2)=C_G\eta(d^2)=0$，无正核推出 $d^2=0$，故单射。
+
+$G$ 对每个 $(e_r)$ 均无 Peirce 半空间分量，故与每个 $e_r$ 算子交换，进而与所有 $\eta(d)$ 算子交换。正平方根及逆平方根继承这一性质。
+
+对于 $c\ge0$，取 $c\le t1_A$，则
+$0\le N(q_r,c)\le t\eta(q_r)=te_r$，故 $N(q_r,c)\in E_1(e_r)$。其和 $\zeta(c)$ 对各 $e_r$ 分块对角，且 $e_r\circ\zeta(c)=N(q_r,c)$。对 $d$ 的谱展开及 $c$ 的实线性延拓得到乘积公式和整个 $E$ 上的算子交换。特别地，$\ell_{\zeta(c)}$ 同时与 $\ell_{\eta(a)}$、$\ell_{\eta(a^2)}$ 交换，所以
+
+$$
+\begin{aligned}
+P_{\eta(a)}N(d,c)
+ &=P_{\eta(a)}\ell_{\zeta(c)}\eta(d)\\
+ &=\ell_{\zeta(c)}P_{\eta(a)}\eta(d)
+ =\ell_{\zeta(c)}\eta(P_ad)=N(P_ad,c).
+\end{aligned}
+$$
+
+这是二次表示的多项式计算，不把三个任意 Jordan 元素当作可结合乘积。所用谱、Peirce 与二次表示事实为定义 64.3 引用的 [Barnum–Hilgert §4](https://arxiv.org/html/1904.03753v1#S4) 及 [van de Wetering, Propositions 2.12、2.21、2.25、Theorem 3.13](https://arxiv.org/html/1912.01903v1)。$\square$
+

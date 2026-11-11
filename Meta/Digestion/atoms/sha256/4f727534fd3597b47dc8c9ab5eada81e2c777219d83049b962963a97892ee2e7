@@ -1,0 +1,14 @@
+### 33.6. Readout errors feed into the preparation calibration
+
+Suppose estimates satisfy $|\widetilde p_\ell-p_\ell(\rho_{\rm actual})|\le\eta_\ell$, and the target $\rho_*$ lies in the same domain $Q$. Put $e_\ell=|\widetilde p_\ell-p_\ell(\rho_*)|+\eta_\ell$. A supplied inverse modulus gives
+
+<a id="eq-preparation-33-7"></a>
+
+$$
+D(\rho_{\rm actual},\rho_*)
+\le\omega_Q(\lVert e\rVert_2).
+\tag{33.7}
+$$
+
+In the positive-conditioning case, (33.4) gives the upper bound $\sqrt D\lVert e\rVert_2/(2s_Q)$, or the version with certified $s_L$. These estimates can supply $\zeta_a^+$ and $\zeta_a^-$ for the probe targets in §33.1. They require membership in the declared state domain, known effects, common calibration conventions and a certified rate. Admitting unmodeled hidden components changes the domain and requires checking the restricted inverse guarantee again.
+

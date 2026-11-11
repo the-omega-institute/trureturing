@@ -1,0 +1,63 @@
+**命题 35.1（Complete-history telescoping with later hidden reentry retained）。** The actual process has the exact decomposition
+
+<a id="eq-hidden-35-2"></a>
+
+$$
+T_nh
+=h_n+
+\sum_{t=1}^n
+\Gamma_n\cdots\Gamma_{t+1}
+P_t\Gamma_t(h_{t-1}),
+\tag{35.2}
+$$
+
+where the suffix at $t=n$ is the identity. Consequently,
+
+<a id="eq-hidden-35-3"></a>
+
+$$
+\boxed{
+\lVert P_nT_nh\rVert_1
+\le b\frac{1-\beta^n}{1-\beta}\lVert h\rVert_1,
+}
+\tag{35.3}
+$$
+
+and the complete output satisfies
+
+<a id="eq-hidden-35-4"></a>
+
+$$
+\lVert T_nh\rVert_1
+\le
+\left(\beta^n+b\frac{1-\beta^n}{1-\beta}\right)
+\lVert h\rVert_1.
+\tag{35.4}
+$$
+
+Both left sides additionally obey the ordinary completely positive trace-preserving bound $\lVert h\rVert_1$.
+
+**证明。** Expand $\Gamma_t(h_{t-1})=P_t\Gamma_t(h_{t-1})+h_t$ successively to obtain (35.2). After a term enters the $P_t$ component, its full subsequent physical channel stays in that term. Later transfer back into hidden degrees of freedom is therefore included. This is an identity of signed operators, not a positive probability-history decomposition.
+
+Each physical suffix in (35.2) contracts trace norm on Hermitian inputs. Applying $P_n$ kills $h_n$. The $t$th remaining term has norm at most $b\lVert h_{t-1}\rVert_1\le b\beta^{t-1}\lVert h\rVert_1$. Summing the finite geometric series gives (35.3). Retaining $h_n$ and its bound gives (35.4). Finally, $T_n$ and $P_nT_n$ are completely positive and trace preserving, giving their separate ordinary contraction bounds. $\square$
+
+For source states with $P\rho=P\sigma$, put $\delta_0=\lVert\rho-\sigma\rVert_1/2$ and use $D(A,B)=\lVert A-B\rVert_1/2$. Then
+
+<a id="eq-hidden-35-5"></a>
+
+$$
+\begin{aligned}
+D(P_nT_n\rho,P_nT_n\sigma)
+&\le\delta_0\min\left\{
+1,b\frac{1-\beta^n}{1-\beta}\right\}\\
+&\le\delta_0\min\left\{1,\frac b{1-\beta}\right\}.
+\end{aligned}
+\tag{35.5}
+$$
+
+Because the interface includes every $\mathcal A$ effect in each history block, this controls every final event depending jointly on the complete classical history and a terminal $\mathcal A$ measurement. In particular it bounds total variation of the entire classical record. No unlikely failure has been conditioned away.
+
+The estimate is uniform over every finite depth and every policy meeting the common-instrument contract. It requires no physically completed infinite process and no fixed finite register storing all possible histories. Each declared finite run must supply its actual record backing and common control resources.
+
+One may instead impose (34.2) on a real subspace $K_0\subseteq\ker P$ when it contains all permitted initial equal-response differences and every branch $Q\Lambda_x^j$ preserves $K_0$. Without this invariance, a bound tested only on the initial preparation span does not control the residual chain in (35.1).
+

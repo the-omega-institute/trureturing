@@ -1,0 +1,19 @@
+## 23. Success-only return retains a complete failure budget
+
+Specify success as a subset of the actual complete classical outcomes. Suppose that, on each program input, the whole successful block factors with the original persistent state:
+
+<a id="eq-reference-23-1"></a>
+
+$$
+\sum_{x\in\mathrm{succ}}
+|x\rangle\langle x|\otimes\mathcal T_x(\eta_j)
+=
+\sum_{x\in\mathrm{succ}}
+p_j(x)|x\rangle\langle x|\otimes\eta_j.
+\tag{23.1}
+$$
+
+Here $p_j$ is the actual complete outcome distribution, and $\mathrm{fail}$ denotes every outcome outside the success subset, including rejection. Put $f_j=\sum_{x\in\mathrm{fail}}p_j(x)$. Conditional reference outputs on failure are arbitrary.
+
+<a id="statement-reference-23-1"></a>
+

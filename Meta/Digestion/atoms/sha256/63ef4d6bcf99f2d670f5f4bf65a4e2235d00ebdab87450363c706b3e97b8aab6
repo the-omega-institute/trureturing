@@ -1,0 +1,39 @@
+### 37.10 同谱比较所需的共同尺度与未决边界
+
+若要比较两个实际方向在共同 $M_2$ 谱 $(1,L)$ 下的 PB 阈值，必须分别令
+
+$$
+\lambda^2=(L-1)/m,\qquad \rho=q_{\rm shared}/(L-1),\qquad k=q_{\rm shared}/m.
+\tag{37.54}
+$$
+
+这里 $q_{\rm shared}\in\mathbb R$ 是共同残量尺度。正方向应比较 $mK_{\rm positive}(a)$，负方向应比较 $mK_{\rm negative}(a)$。只比较未乘 $m$ 的阈值不能推出共同 $\rho$ 的差异。
+
+每份来源还必须独立通过实际 P2。若 $a=C^{1/2}U_0w$，$w\in\mathbb C^2\setminus\{0\}$，$h>0$，令
+
+$$
+\mathsf K=\begin{pmatrix}3/2&1/2\\1/2&3/2\end{pmatrix}
+          +\frac{L-1}{m}ww^*,\qquad z=\mathsf K_{12},\qquad
+\beta=h/\sqrt2.
+\tag{37.55}
+$$
+
+这是该来源的实际逆矩阵坐标。前卷 (30.29) 对取向 $\sigma$ 给精确闭区间
+
+$$
+I_\sigma=
+\left[
+-\frac{\beta}{\sqrt{\mathsf K_{11}\mathsf K_{22}}+\sigma\operatorname{Im}z},\quad
+ \frac{\beta}{\sqrt{\mathsf K_{11}\mathsf K_{22}}-\sigma\operatorname{Im}z}
+\right].
+\tag{37.56}
+$$
+
+正定性使两分母严格正。任何拟议的共同 $\rho=q_{\rm shared}/(L-1)$ 都须代入两份实际区间；要求双取向则还须分别取两取向的交。
+
+本节尚未给出两个方向具有严格不同的 $mK_{\rm positive}(a)$ 或 $mK_{\rm negative}(a)$ 的证明，也没有给出共同 P2 允许的 $q_{\rm shared}$ 上一份全部 PB 成立、另一份 PB 失败的成对见证。§36 的共轭相位对不被提升为这种 PB 分离。
+
+本节的 `repo-derived` 纸面增量是同一固定 $M_0$ 来源、单位演员域上的全部上子水平紧性、可见图轴闭包恢复及由此得到的归一下确界极限与严格阈值。原列、变分和完整正泛函提升复用 §§17、27、31 及 (32.4)–(32.7)、(35.13)；全部参数上的基准强制估计复用 §32、(35.16)。正交最小范数、加权方差、Schur 补、Cauchy–Schwarz、有限维序列紧性和谱和 Gram 根不等式均按成熟数学直接使用。本文没有外部文献穷尽或历史优先权主张，没有 Lean／kernel 核验，也不主张物理实现。
+
+增广接触下确界与精确有限 $\nu=0$ 接触下确界是否相同，需要另外的密度或等价论证；本节只恢复近接触的实际原测试，不假设该等式。临界零值的次阶符号、阈值的显式最优值及共同 P2 内的成对 PB 分离仍未解决。
+

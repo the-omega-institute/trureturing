@@ -1,0 +1,17 @@
+**定义 18.2（Decoupled complete-record return）。** For two possible initial states $\eta_0,\eta_1$ of this same $R$, fix target complete-record distributions $p_0,p_1$ and errors $\varepsilon_0,\varepsilon_1$ satisfying
+
+<a id="eq-reference-18-2"></a>
+
+$$
+D\bigl(\mathcal T(\eta_j),p_j\otimes\eta_j\bigr)
+\le\varepsilon_j,
+\qquad
+D(A,B)=\frac12\lVert A-B\rVert_1,
+\qquad j\in\{0,1\}.
+\tag{18.2}
+$$
+
+The classical distribution $p_j$ is identified with its diagonal density on $C$. The product in (18.2) requires return of the entire persistent system and decoupling from its new complete record. For mixed $\eta_j$, return of the $R$ marginal alone is a weaker condition. If ready work is included in $R$, its residual state is included in the same joint error.
+
+The hypothesis index $j$ appears only in $\eta_j$. A family of query operators $Q_j$, different classically selected apparatus settings, or a $j$-dependent data preparation changes the processor or its common input. Such an interface becomes a state program only after a separate bridge establishes (18.1). In particular, the calibrated controlled-$Q$ services in the AURIC atlas are not automatically finite reference-state programs.
+

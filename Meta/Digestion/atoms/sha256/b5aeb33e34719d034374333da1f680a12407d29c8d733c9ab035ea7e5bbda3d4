@@ -1,0 +1,37 @@
+### 40.6 同一原来源上的有限环境与指定质量
+
+对任意一个精确有限接触，取其有限矩阵 $X$，并在任意固定有限 $\lambda>0$ 上使用 (38.1) 的同一来源 $D=D_{r,\lambda},F,G=G_{r,\lambda}$。令
+
+$$
+\begin{gathered}
+R_\lambda=(I_2+\lambda^2a_ra_r^*)^{-1},\qquad
+e=GR_\lambda\eta a_r,\\
+y=D^{-1}(e-\ell FCu/2-Fu),\qquad
+\xi=(u,y),\qquad x_{\rm probe}=X\oplus0_3.
+\end{gathered}
+\tag{40.21}
+$$
+
+由 (38.2) 的 $DG=F$、$G^*G=R_\lambda^{-1}$、$F^*G=C$ 和 $B-F^*D^{-1}F=H$，精确有
+
+$$
+\begin{aligned}
+Fu+Dy&=e-\ell FCu/2,\qquad G^*e=\eta a_r,\\
+Bu+F^*y&=Hu+\eta a_r-\ell C^2u/2=a_{\rm act}.
+\end{aligned}
+\tag{40.22}
+$$
+
+所以演员列和环境列来自同一原向量及同一实际来源，$D,F,G$ 没有被替换。$\|u\|=1$ 保证 $\xi\ne0$。任意指定有限质量 $\mu>0$ 可由
+
+$$
+\widehat\xi=\frac{\sqrt\mu}{\|\xi\|}\xi,\qquad
+\widehat\phi(M)=\widehat\xi^*M\widehat\xi,
+\qquad \widehat\phi(I_5)=\mu
+\tag{40.23}
+$$
+
+实现；原探针仍为 $x_{\rm probe}$，两笔原预算均使用这个同一泛函。这只是同一原域上的精确提升，并不赋予任意接触一个 PB 成功或失败结论。
+
+“精确接触”专指 (39.4)。有限 $\lambda$ 上的环境列 $e$ 一般不为零；即使演员接触成立，在 $\rho=k/\lambda^2$ 时仍保留原有限残量项。故这里既不把接触方程等同于全部有限阶段缺陷消失，也不把 (40.2) 等同于有限阶段 PB 变分的取到性。
+

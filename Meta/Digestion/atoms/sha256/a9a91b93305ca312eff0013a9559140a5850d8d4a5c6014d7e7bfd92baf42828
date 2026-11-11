@@ -1,0 +1,65 @@
+**定理 62.7（条件性复量子几何与同一三份载体）。** 在定义 62.1–62.4 的完整条件下，复用定理 62.5 所接回的既有三映射纸面表示，得到同一实际 $A,D,E$ 上固定的保迹 Jordan 序坐标：存在有限非空指标集 $\Lambda$ 和整数 $n_i\ge1$，使
+
+$$
+\begin{aligned}
+A&\simeq\bigoplus_{i\in\Lambda}\operatorname{Herm}_{n_i}(\mathbb C),\\
+D&\simeq\bigoplus_{i,j\in\Lambda}\operatorname{Herm}_{n_in_j}(\mathbb C),\\
+E&\simeq\bigoplus_{i,j,k\in\Lambda}\operatorname{Herm}_{n_in_jn_k}(\mathbb C).
+\end{aligned}
+\tag{62.47}
+$$
+
+记这些坐标同构为 $\theta_A,\theta_D,\theta_E$。在同时选定的这些坐标中，准备是普通分块张量，读回是分块部分迹：
+
+$$
+\begin{aligned}
+M(a,b)_{ij}&=a_i\otimes b_j,&
+L(d,c)_{ijk}&=d_{ij}\otimes c_k,\\
+(r d)_i&=\sum_j\operatorname{Tr}_2d_{ij},&
+(h z)_{ij}&=\sum_k\operatorname{Tr}_3z_{ijk},\\
+(p z)_{jk}&=\sum_i\operatorname{Tr}_1z_{ijk},&
+(p_{13}z)_{ik}&=\sum_j\operatorname{Tr}_2z_{ijk}.
+\end{aligned}
+\tag{62.48}
+$$
+
+$L$ 的坐标公式包括整个实际 $D$ 上的实向量及纠缠正向量。局部态、效应与 Born 读数为
+
+$$
+\rho_i\ge0,\quad\sum_i\operatorname{Tr}\rho_i=1,
+\qquad 0\le F_i\le I_{n_i},\qquad
+\Pr(F\mid\rho)=\sum_i\operatorname{Tr}(F_i\rho_i).
+\tag{62.49}
+$$
+
+纯态分支是 $\mathbb{CP}^{n_i-1}$，同扇区比较为 $\operatorname{Tr}(\xi\eta)=|\langle\psi,\phi\rangle|^2$，异扇区比较为零；$n_i=2$ 的态基底是 Bloch 球，$n_i=1$ 的标量扇区仍在。单扇区非经典选择需要另外的条件。
+
+**证明。** 定理 62.5 已在不改变实际 $L,p$ 的前提下建立旧条件的全部前提。故直接应用 Library「Three primitive maps and the forced missing pair view」到「One actual triple and three positive pair views」的表示 (29)–(30)，得到 (62.47)–(62.48)；同条目「Complete finite comparison candidate and quantum correspondence」给出 (62.49) 及纯态、比较和扇区解释。这里没有新的分类步骤。
+
+只在该结果之后，依 Library「Construct the other bracket and all three-label changes」(36)，在同一个 $E$ 上选择右准备
+
+$$
+\mu_R(a,d)=\theta_E^{-1}\bigl(\theta_A(a)\otimes\theta_D(d)\bigr),
+\qquad \mu_R(a,M(b,c))=Q(a,b,c).
+\tag{62.50}
+$$
+
+它对全部 $A_+\times D_+$ 正且实张成。同一实三张量空间的两种括号按典范向量空间结合识别后，左右嵌套线性化均为 $\mathcal Q$，所以所选重括号在 $E$ 上为恒等。又可定义
+
+$$
+P_\sigma=\mathcal Q\,\tau_\sigma\,\mathcal Q^{-1},\qquad
+P_\sigma P_\pi=P_{\sigma\pi}\quad(\sigma,\pi\in S_3),
+\tag{62.51}
+$$
+
+其中 $\tau_\sigma$ 为三个 $A$ 标签的普通置换。在 (62.47) 坐标中，它们是扇区及矩阵因子的普通置换，故为保迹序自同构。它们是所得表示上的构造，不是此前另给的独立右载体或旁观置换条件。
+
+上述实乘积张成不等于两两边缘层析。既有三量子比特实例的
+
+$$
+|G_\pm\rangle=\frac{|000\rangle\pm|111\rangle}{\sqrt2}
+\tag{62.52}
+$$
+
+给出两个不同的正迹一态，但三个两两约化态都相同，均为对应基中的 $\tfrac12(|00\rangle\langle00|+|11\rangle\langle11|)$。故读回映射的唯一性不意味着任意三份态可从三条两两边缘唯一恢复。$\square$
+

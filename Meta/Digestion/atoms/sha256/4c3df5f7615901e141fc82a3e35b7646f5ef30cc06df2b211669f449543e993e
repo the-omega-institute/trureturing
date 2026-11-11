@@ -1,0 +1,40 @@
+### 38.7 完整 P2 的精确共同区间与严格内点
+
+归一化 Schur 矩阵及其有序谱基为
+
+$$
+C^{-1/2}HC^{-1/2}=2I_2+\beta J_A,\qquad
+\beta=h/\sqrt2>0,\qquad
+U_0=\frac1{\sqrt2}\begin{pmatrix}1&1\\1&-1\end{pmatrix}.
+$$
+
+有 $U_0^*C^{-1/2}a_+=e_1$、$U_0^*C^{-1/2}a_-=e_2$。故原 P2 的精确逆矩阵坐标为
+
+$$
+\begin{aligned}
+\mathsf K_+&=U_0^*C^{-1/2}(I_2+M_{2,+})C^{-1/2}U_0
+ =\begin{pmatrix}3/2+\lambda^2&1/2\\1/2&3/2\end{pmatrix},\\
+\mathsf K_-&=\begin{pmatrix}3/2&1/2\\1/2&3/2+\lambda^2\end{pmatrix},\qquad
+\mathfrak d_\lambda=\det\mathsf K_\tau=2+(3/2)\lambda^2.
+\end{aligned}
+\tag{38.27}
+$$
+
+前卷 (30.29) 中 $\omega=1$，$Q_M=\mathsf K_\tau^{-1}$ 的非对角元是实数 $-1/(2\mathfrak d_\lambda)$。因此两份来源、两个取向都准确满足
+
+$$
+J=0,\qquad \Delta=\frac1{\mathfrak d_\lambda},\qquad
+R=\frac{T_\lambda}{\mathfrak d_\lambda}.
+$$
+
+代入该完整原 P2 判据，所得恰是 (38.6)，包括两个端点。这是对完整正泛函的允许集，并非只检验所构造的向量泛函。
+
+对于 $k>0$，$\rho=k/\lambda^2$ 严格在 (38.6) 内的充要条件为
+
+$$
+h^2\lambda^4>3k^2(\lambda^2+3/2).
+\tag{38.28}
+$$
+
+固定 $h,k$ 后此式最终成立。具体地，$\lambda^2\ge3/2$ 时 $T_\lambda\le\sqrt3\lambda$，所以再取 $\lambda>\sqrt6\,k/h$ 就足够；对 $k\in[m,M]$ 将此界中的 $k$ 换成 $M$。P2 端点的非零尺度为 $\lambda^{-1}$，严格内点的残量尺度为 $\lambda^{-2}$。
+

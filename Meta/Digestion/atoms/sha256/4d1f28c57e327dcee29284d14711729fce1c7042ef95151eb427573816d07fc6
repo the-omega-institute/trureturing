@@ -1,0 +1,63 @@
+**命题 28.1（Gram reconstruction and finite exact certificate）。** For these actual equal-response pairs,
+
+<a id="eq-preparation-28-2"></a>
+
+$$
+\begin{aligned}
+R_Q(B)&=\sum_a(G^{-1}b(B))_a d_a,\\
+\lVert R_Q(B)\rVert_2^2
+&=b(B)^{\mathsf T}G^{-1}b(B).
+\end{aligned}
+\tag{28.2}
+$$
+
+Consequently,
+
+<a id="eq-preparation-28-3"></a>
+
+$$
+\Delta_{Q,W}(B)=0
+\quad\Longleftrightarrow\quad
+b_a(B)=0\quad(1\le a\le k).
+\tag{28.3}
+$$
+
+**证明。** Taking the inner product of the first expression in (28.2) with $d_c$ gives $(GG^{-1}b)_c=b_c(B)$. The reconstructed vector belongs to $\mathcal K_Q$ and has the same inner products with its basis as $B$, so it is the orthogonal projection. Its squared norm gives the second formula. Apply (27.2) to obtain (28.3). $\square$
+
+This is an existence statement and a conditional finite-test certificate. A description of $Q$ need not provide its dimension, a search algorithm, the selected preparations or their calibration. Mathematical basis extraction does not acquire a native preparation procedure. If $k=0$, all widths vanish and the certificate contains zero pairs. The Gram estimates below concern $k>0$.
+
+Write
+
+$$
+\operatorname{diam}_2(Q)
+=\sup_{\rho,\sigma\in Q}\lVert\rho-\sigma\rVert_2.
+$$
+
+Density matrices satisfy $\operatorname{Tr}(\rho^2)\le1$ and $\operatorname{Tr}(\rho\sigma)\ge0$, so $\operatorname{diam}_2(Q)\le\sqrt2$. Every permitted equal-response difference belongs to $\mathcal K_Q$. Cauchy–Schwarz and the actual selected pairs give
+
+<a id="eq-preparation-28-4"></a>
+
+$$
+\max_a|b_a(B)|
+\le\Delta_{Q,W}(B)
+\le\operatorname{diam}_2(Q)
+\sqrt{b(B)^{\mathsf T}G^{-1}b(B)}.
+\tag{28.4}
+$$
+
+The lower bound tests actual individual witness pairs. The upper bound uses the residual of one common future observable $B$; it does not combine source realizations optimized separately.
+
+If the estimated coordinates satisfy $|b_a(B)-\widetilde b_a|\le\nu_a$, then
+
+<a id="eq-preparation-28-5"></a>
+
+$$
+\Delta_{Q,W}(B)
+\le
+\frac{\operatorname{diam}_2(Q)}{\sqrt{\lambda_{\min}(G)}}
+\left(\sum_a(|\widetilde b_a|+\nu_a)^2\right)^{1/2}.
+\tag{28.5}
+$$
+
+Indeed, (28.2) bounds the residual norm by $\lVert b(B)\rVert_2/\sqrt{\lambda_{\min}(G)}$, and the coordinate error bounds control $\lVert b(B)\rVert_2$. The positive smallest eigenvalue belongs to the calibrated target differences. Exact spanning without a quantitative Gram bound does not give a uniform stable certificate.
+

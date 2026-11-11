@@ -1,0 +1,10 @@
+**例 30.2（Small probe gaps can have poor sensitivity）。** On a qubit, take
+
+$$
+W=\operatorname{span}_{\mathbb R}\{I,Z\},
+\qquad
+B=\frac{I+X}{2}.
+$$
+
+The full-source width is $1$. For $0<\epsilon\le1$, the probes $I/2\pm\epsilon X/2$ have equal $W$ responses and future gap $\epsilon$. Letting $\epsilon$ decrease makes that gap arbitrarily small while the full-source width of the same $B$ remains $1$. The Gram eigenvalue of the shrinking difference records exactly the sensitivity loss appearing in (28.5). A small raw gap alone is not a dimension-free accuracy certificate.
+

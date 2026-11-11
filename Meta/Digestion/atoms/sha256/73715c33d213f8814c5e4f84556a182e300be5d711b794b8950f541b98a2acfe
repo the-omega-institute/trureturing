@@ -1,0 +1,124 @@
+**定理 62.5（同载体、同映射上的严格唯一扩张）。** 定义 62.1–62.4 的完整条件，与将 W 换回完整 II 而其余数据及条件不变的二映射表示逐点等价；也与 Library「Readback from unit insertion」的 (53)、(56)、(57) 条件严格唯一扩张等价。该旧条件保留原始 $L,p_{13},p_{23}$，以混合式内部定义准备；本节只保留相同实际 $L,p=p_{23}$，以两次相同 $p$ 内部定义准备。互忘与互补保持实际载体及这两个映射逐个不变，并逐点恢复旧 $p_{13}$ 和两种内部 $M$。具体地，新条件推出
+
+$$
+\begin{gathered}
+p_{13}\text{ 在整个 }E_+\text{ 上正},\qquad \tau_Dp_{13}=\tau_E,\\
+p_{13}Q(a,b,c)=\tau_A(b)M(a,c),\\
+M(a,b)=pL\bigl(p_{13}L(\omega,a),b\bigr)
+\quad(a,b,c\in A).
+\end{gathered}
+\tag{62.26}
+$$
+
+**证明。** 先从完整二映射条件出发。定理 62.3 已在没有 (62.25) 时建立定义 62.4 的良定义性和单位律，故
+
+$$
+I_{13}(1_D)=L(M(1_A,1_A),1_A)=1_E.
+\tag{62.27}
+$$
+
+此时使用 (62.25) 及自对偶性得到 $p_{13}=I_{13}^*$ 在整个 $E_+$ 上正。对所有实 $z\in E$，
+
+$$
+\tau_D(p_{13}z)=\langle I_{13}1_D,z\rangle_E=\tau_E(z),
+\tag{62.28}
+$$
+
+故 $p_{13}$ 保迹。由 $\mathcal Q$ 的等距性，对全部实 $x,y,a,b,c\in A$，
+
+$$
+\begin{aligned}
+\langle M(x,y),p_{13}Q(a,b,c)\rangle_D
+ &=\langle Q(x,1_A,y),Q(a,b,c)\rangle_E\\
+ &=\langle x,a\rangle_A\tau_A(b)\langle y,c\rangle_A\\
+ &=\langle M(x,y),\tau_A(b)M(a,c)\rangle_D.
+\end{aligned}
+\tag{62.29}
+$$
+
+$M$ 实张成给出 (62.26) 的交叉律，另一条交叉律已是 (III)。
+
+还必须恢复原来的混合内部定义。先由两条交叉律及 $M$ 实张成，将它们线性扩展到所有实 $d\in D,c\in A$：
+
+$$
+p_{13}L(d,c)=M(rd,c),\qquad
+pL(d,c)=M(sd,c).
+\tag{62.30}
+$$
+
+例如第一式在 $d=M(a,b)$ 上两边均为 $\tau_A(b)M(a,c)$，第二式两边均为 $\tau_A(a)M(b,c)$，所以线性扩展合法。这也正是 Library (52) 的全向量形状。由 $M$ 单位律、(I) 及 (62.15)，$r1_D=n1_A$、$\tau_D(1_D)=n^2$，从而
+
+$$
+r\omega=e,\qquad
+sM(r\omega,a)=\tau_A(e)a=a.
+\tag{62.31}
+$$
+
+现在用 (62.30) 得到
+
+$$
+\begin{aligned}
+pL\bigl(p_{13}L(\omega,a),b\bigr)
+ &=pL(M(r\omega,a),b)\\
+ &=M(sM(r\omega,a),b)=M(a,b).
+\end{aligned}
+\tag{62.32}
+$$
+
+这没有在证明混合定义相等之前调用依赖该定义的旧条件。至此旧条件的全部前提已逐项成立：$L$ 全域正且张成，两个旧交叉读回全锥正，$p_{13}$ 保迹，(53) 的内部准备与当前 $M$ 相同，$J,r,Q$ 因而相同，两条实张成和 (57) 的三条全部实向量律也相同，其中完整 (II) 已由 W 推出。于是可以复用旧唯一扩张及表示定理。
+
+反向从旧 (53)、(56)、(57) 条件出发，以 $\bar M,\bar Q,\bar r$ 表示其混合定义的映射，保留相同 $L,p=p_{23}$。此时旧「Readback from unit insertion」的归一化结论及其到「Three primitive maps and the forced missing pair view」的等价已适用；「One preparation determines the binary preparation」(51)–(52) 提供全向量扩展；(40)、(48) 提供缺失丢弃。精确取用的结论是：$p$ 保迹，$\bar M$ 保单位，$\bar{\mathcal M},\bar{\mathcal L},\bar{\mathcal Q}$ 满迹等距，且
+
+$$
+\begin{gathered}
+\bar s=\bar r\,pL(\mathord\cdot,e)\text{ 正且保迹},\\
+\bar s\bar M(a,b)=\tau_A(a)b,\qquad
+pL(d,c)=\bar M(\bar s d,c)\quad(d\in D,c\in A),\\
+h=H^*\text{ 是旧 }p_{12},\qquad hL(d,c)=\tau_A(c)d.
+\end{gathered}
+\tag{62.33}
+$$
+
+这些纸面接口的前提正是当前完整旧条件，不把乘积上的断言冒充全向量断言。由 (62.33)，对每个实 $d,a,b$，
+
+$$
+\begin{aligned}
+pL\bigl(pL(d,a),b\bigr)
+ &=pL\bigl(\bar M(\bar s d,a),b\bigr)\\
+ &=\bar M\bigl(\bar s\bar M(\bar s d,a),b\bigr)\\
+ &=\tau_A(\bar s d)\bar M(a,b)
+ =\tau_D(d)\bar M(a,b).
+\end{aligned}
+\tag{62.34}
+$$
+
+取 $d=\omega$，便得二映射内部的 $M=\bar M$。因此 $J,r,Q$ 分别等于旧 $\bar J,\bar r,\bar Q$；两条实张成、(I)、(III) 直接保留；(62.33) 中旧派生 $p_{12}$ 满足完整 (II)，在 $c=1_A$ 处即给出 W。定义 62.2 的全部前置条件已经成立，故依 (62.24) 定义新的 $I_{13}$。
+
+还需证明它确为旧 $p_{13}$ 的伴随，而非另一个同名插入。用旧交叉律和旧 $\bar{\mathcal M}$ 等距性，对所有实 $a,c,x,y,z\in A$，
+
+$$
+\begin{aligned}
+\langle p_{13}^*\bar M(a,c),\bar Q(x,y,z)\rangle_E
+ &=\langle\bar M(a,c),p_{13}\bar Q(x,y,z)\rangle_D\\
+ &=\tau_A(y)\langle a,x\rangle_A\langle c,z\rangle_A\\
+ &=\langle\bar Q(a,1_A,c),\bar Q(x,y,z)\rangle_E\\
+ &=\langle I_{13}\bar M(a,c),\bar Q(x,y,z)\rangle_E.
+\end{aligned}
+\tag{62.35}
+$$
+
+倒数第二步用旧 $\bar{\mathcal Q}$ 的等距性。$\bar Q$ 乘积实张成 $E$，故两向量相等；$\bar M$ 乘积实张成 $D$，故整个 $D$ 上 $I_{13}=p_{13}^*$。旧 $p_{13}$ 全锥正，自对偶性于是给出恰好 (62.25)。
+
+从二映射条件补入 $p_{13}=I_{13}^*$ 再忘去它，保留的实际 $L,p$ 不变；从旧条件忘去 $p_{13}$ 再补入，由 (62.35) 得回原 $p_{13}$，由 (62.34) 得回原 $M$。若另一个实线性读回满足相同旧交叉律，它在每个张成的 $Q(a,b,c)$ 上都与 $p_{13}$ 相同，因而在 $E$ 上唯一。这是同一实际对象上的严格逆关系，不只是选取矩阵坐标后的同构类对应。$\square$
+
+此处既减少原始映射数据，也将完整 (II) 缩为其未归一化单位切片 W；在其余保留条件内，这是实际的切片冗余，不只是改名。幸存的 $p$ 仍直接要求保迹，旧 $p_{13}$ 的全锥正性仍为 (62.25)。完整 II、纯乘积、$r,h$ 保迹、两个单位律及等距性均已推导，没有另行假设。由 (62.17)，正的归一化插入 $K=L(\mathord\cdot,e)=H/n$ 保迹，且
+
+$$
+\langle Hd,Hd'\rangle_E=n\langle d,d'\rangle_D,\qquad
+\langle Kd,Kd'\rangle_E=\frac1n\langle d,d'\rangle_D
+\quad(d,d'\in D).
+\tag{62.36}
+$$
+
+数学单位插入不表示物理上可用的装置；未由此得到全部剩余条件相互独立或公理数最小的结论。
+

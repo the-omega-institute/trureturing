@@ -1,0 +1,14 @@
+**定理 13.1（Branchwise closure for the recorded state quotient）。** This complete recorded output is autonomous on current $\mathcal A$ states exactly when
+
+<a id="eq-future-13-1"></a>
+
+$$
+F_x(\mathcal A)\subseteq\mathcal A
+\quad\text{for every }x.
+\tag{13.1}
+$$
+
+**证明。** Test each branch against every $\mathcal A$ effect and use Theorem 10.1. Testing $I$ retains its branch probability. Closure gives induced completely positive subunital maps on $\mathcal A$ whose sum is unital; their duals provide the subnormalized poststates. Normalization occurs only after retaining the appropriate nonzero branch probability. Conversely these restrictions make all recorded branch responses functions of the current restricted state. Invariance of the summed map alone is weaker. $\square$
+
+<a id="statement-future-13-2"></a>
+

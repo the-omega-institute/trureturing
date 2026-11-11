@@ -1,0 +1,56 @@
+## 48. Consume the existing common-source result without changing it
+
+Identify S with the four joint settings (x,y), and the complete
+returned source Q with R tensor T. The common-source paper at
+the source pin below defines the same own-marginal defect delta.
+Its Theorem 2.3 supplies the conditional-state interpretation;
+Theorem 3.2 supplies, for fixed local self-adjoint contraction
+readouts and actual positive q_min,
+
+$$
+|S_{\rm obs}|\le
+ \min\{4,\ 2\sqrt2+2\delta/q_{\min}\}.
+\tag{48.1}
+$$
+
+No CHSH result is reproved here. If p_min=min_s p_s>0 and
+epsilon<p_min, marginal contraction in (47.4) gives
+q_s>=p_s-epsilon, so q_min>=p_min-epsilon>0. Substitution yields
+
+$$
+|S_{\rm obs}|\le
+ \min\left\{4,\ 2\sqrt2+
+                  \frac{4\varepsilon}{p_{\min}-\varepsilon}\right\}.
+\tag{48.2}
+$$
+
+If q=p exactly, the stronger defect bound gives instead
+
+$$
+|S_{\rm obs}|\le
+ \min\{4,\ 2\sqrt2+2\varepsilon/p_{\min}\}.
+\tag{48.3}
+$$
+
+For uniform p, (48.3) has correction 8 epsilon. Exact proportional
+branches give delta=0 and permit zero probe-error bounds and epsilon=0.
+No positive conditional-setting support follows from an error bound
+epsilon>=p_min, and none is
+inserted into (48.2) in that case.
+
+These statements retain the local-readout, same-source-cut and
+complete-record hypotheses of the cited consumer. They do not
+replace a missing realization of those hypotheses. Moment-level
+conditions can suffice for the four CHSH correlators, as the cited
+Corollary 3.4 states; failing the stronger full-channel certificate
+does not refute those weaker sufficient conditions.
+
+For a prior classical history h, Proposition 43.1 can be applied
+conditionally. If all positive histories have the same setting law
+p, retaining h gives the joint product
+p tensor sum_h w_h |h><h| tensor sigma_h, even when the source
+depends on h. With different p^h, independence conditional on h
+does not itself imply independence from the complete source
+including h, nor after forgetting h. This reuses the history
+boundary of the common-source paper, Proposition 6.3.
+

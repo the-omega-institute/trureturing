@@ -1,0 +1,20 @@
+**推论 37.7（严格负接触的原失败、两笔正预算与任意质量）。** 若 $J_k(c)<0$，定理 37.6 的原测试对所有充分大有限 $\lambda$ 严格违反 (37.5)，且两笔原预算严格正。对任意指定 $\mu\in(0,\infty)$ 都有质量 $\phi(I)=\mu$ 的这样的反例。
+
+证明。(37.38) 给 (37.7) 严格负，(27.12) 即给原 PB 严格失败。还须检查预算本身，而不能仅由代价为负推断预算正性。由同一来源的精确末行，
+
+$$
+(e_\lambda)_3=\frac{\lambda a^*t_\lambda}{1+\lambda^2m}
+               =\frac\eta\lambda+O(\lambda^{-3})\ne0.
+\tag{37.43}
+$$
+
+同时 $FCu_\lambda=(C^2u_\lambda,0)^{\mathsf T}$，末坐标恰为零，首块非零。原 $R_\tau\xi_\lambda$ 的环境块是 $-\tau FCu_\lambda/2$，而 $E_\tau=(S_\tau-z_\tau R_\tau)\xi_\lambda$ 的环境块恰是 $e_\lambda$。两列复线性独立，对每个 $\tau$ 都有
+
+$$
+B_{\phi_{\xi_\lambda}}(R_\tau,S_\tau)
+\ge\frac{\|C^2u_\lambda\|^2|(e_\lambda)_3|^2}{4}>0.
+\tag{37.44}
+$$
+
+该下界先来自环境复 Gram 行列式，加入演员块只增加半正定 Gram 矩阵；原实 Gram 行列式又不小于复 Gram 行列式。$\eta\ne0$ 已由引理 37.4 证明。最后用 $\mu/\|\xi_\lambda\|^2$ 正倍缩放同一向量泛函，严格失败和两笔正预算一起保留。∎
+

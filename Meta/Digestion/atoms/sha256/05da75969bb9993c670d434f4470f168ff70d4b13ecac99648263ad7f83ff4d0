@@ -1,0 +1,60 @@
+**定义 65.1（全有限混合比较系统）。** 对每个 $X=A,D,E$，取非零有限维实向量空间、闭尖生成锥 $C_X$、在 $C_X\setminus\{0\}$ 上严格正的线性泛函 $u_X$，以及完整紧态基
+$K_X=\{x\in C_X:u_X(x)=1\}$。保留全部线性效应 $[0,u_X]$，记 $P_X=\operatorname{ext}K_X$。对于纯参照 $\xi\in P_X$ 及任意 $x\in K_X$，定义
+
+$$
+T^X_\xi(x)=\inf\{f(x):0\le f\le u_X,\ f(\xi)=1\}.
+\tag{65.1}
+$$
+
+要求每个 $X$ 满足完整有限混合律：对任意有限纯态族 $\eta_1,\ldots,\eta_\ell$、任意概率权重 $w_j$ 及纯 $\xi$，
+
+$$
+T^X_\xi\left(\sum_jw_j\eta_j\right)
+ =\sum_jw_jT^X_{\eta_j}(\xi).
+\tag{65.2}
+$$
+
+单点族给出纯端点互反；再代入一般族便得到混合仿射性。它要求同一状态的不同有限制备关系给出一致比较，不只是纯端点的一张对称数表。第一端点仍限于纯态；不把同一 infimum 定义延伸到混合第一端点。
+
+本节复用 [Library 的完整 $S$ 到 EJA 纸面定理及其逆向](../../../Library/QuantumStates/mullerududec2012selfduality.md#complete-conditional-candidate-and-its-scope)，包括其中的正对偶生成、共同框架、面投影及滤波纯性推导。该结果供应唯一对称正定配对 $B_X$、最小确认效应 $e_\xi=B_X(\xi,-)$、自对偶性及有限 EJA 锥几何。定义原比较单位 $U_X$ 为
+
+$$
+B_X(U_X,x)=u_X(x).
+$$
+
+每个完整正交纯框架之和是 $U_X$，其长度为正整数 $n_X=u_X(U_X)$。这些是所引纸面结果的推论，未另行供应内积、谱兼容、齐次性、强对称性或 Jordan 桥。
+
+为明确原归一化的对应，即使只取该分类的锥同构 $\Psi:X\to J_X$，原泛函也唯一表示为
+
+$$
+u_X\Psi^{-1}(z)=\tau_{J_X}(h_X\circ z),\qquad h_X>0.
+$$
+
+这里及下文 $h_X>0$ 表示内点正可逆，$\tau_{J_X}$ 是每个简单理想中每个本原幂等元迹一的规范谱迹。严格正性排除 $h_X$ 的零谱值。令 $\ell_a(b)=a\circ b$、$P_a=2\ell_a^2-\ell_{a^2}$，置
+
+$$
+\Phi_X=P_{\sqrt{h_X}}\Psi.
+\tag{65.3}
+$$
+
+二次表示自伴随、全锥正且有正逆，$P_{\sqrt{h_X}}1=h_X$，所以 $\tau_{J_X}\Phi_X=u_X$。因此 $\Phi_X$ 双射整个原态基到底层规范迹一基，且将纯态送到迹一本原幂等元；对偶拉回 $f\mapsto f\Phi_X^{-1}$ 双射整个原效应区间到 $[0,1]$，不是只对应一组选定效应。
+
+这里可直接应用所引 EJA 逆向的最小效应结论。具体地，若 $q$ 本原、$0\le b\le1$、$\langle b,q\rangle=1$，则 $r=1-b$ 在互补面 $J_1(1-q)$ 内，且
+
+$$
+r=P_{1-q}r\le P_{1-q}1=1-q.
+$$
+
+所以 $b\ge q$，而 $q$ 自身是确认效应。全效应区间的对应遂给出
+
+$$
+T^X_\xi(x)=\tau_{J_X}(\Phi_X\xi\circ\Phi_Xx),\qquad
+B_X(x,y)=\tau_{J_X}(\Phi_Xx\circ\Phi_Xy),\qquad
+\Phi_XU_X=1_{J_X}.
+\tag{65.4}
+$$
+
+第二式由纯态实张成延拓，第三式由原 $U_X$ 的 Riesz 定义及满射性得出。因此没有额外的谱兼容输入，也没有可任意选择的扇区迹倍数。此后在这些忠实坐标中书写，仍记实际载体为 $X$，原 $u_X$、$B_X$、$U_X$ 分别写作 $\tau_X$、$\langle-,-\rangle_X$、$1_X$。原态与效应没有被替换。
+
+上述单系统桥是仓内纸面综合推导，不能归给 Müller–Ududec 的 bit symmetry 定理本身；其分类接口是 [Barnum–Müller–Ududec, Theorem 16](https://arxiv.org/html/1403.4147v4)，其有限项目性、互反及纯性前提由所引 Library 推导供应。它不是 Barnum–Hilgert 强对称性分类在较弱前提下的直接应用。
+

@@ -1,0 +1,17 @@
+**定义 54.2（A coordinate face and its own identity）。** For a three-element subset $J\subset\{1,2,3,4\}$ put $S=\sum_{j\in J}D_j$ and
+
+$$
+ K_{S,N}=\{E\in\operatorname{Herm}_4(N^{-1}R):E=SES,\ 0\le E\le S\},
+ \qquad W_{S,N}=\bigoplus_{E\in K_{S,N}}\mathbb R\delta_E.
+\tag{54.5}
+$$
+
+The space $S\mathbb C^4$ is identified with $\mathbb C^3$ by its ordered coordinate basis; its identity is $S$, with $\operatorname{Tr}S=3$. Define $\mathcal R_{S,N}$ by (54.2), with every matrix supported on $S$ and complement $C_3=S-A-B-X$ required to lie in $K_{S,N}$. Let
+
+$$
+ \mathcal B_S=\{D_j:j\in J\}\cup\{R_{jk},J_{jk}:j<k,\ j,k\in J\}.
+\tag{54.6}
+$$
+
+Thus $\mathcal B_S\subset\mathcal B_4$ consists of nine original-grid rank-one projections, all of trace one. The sets $K_{S,N}$ and $\mathcal R_{S,N}$ are finite: an effect has bounded entries on a discrete grid, and a row is determined by its finitely many endpoints.
+

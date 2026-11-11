@@ -1,0 +1,46 @@
+**命题 33.6（同一实方向上的非零零模比较）。** 在同一 $M_5(\mathbb C)$ 上另取
+
+$$
+\widehat t_{h,\gamma}=
+\begin{pmatrix}
+3C+hJ_A&C&\gamma a\\
+C&C&0\\
+\gamma a^\ast&0&0
+\end{pmatrix},
+\qquad h\in\mathbb R,\quad\gamma\in\mathbb R\setminus\{0\}.
+\tag{33.35}
+$$
+
+则 $W\ne0$，两个取向各自的全正 P2 区间恰为
+
+$$
+\widehat I_+=\widehat I_-=
+[-|\gamma|/\sqrt6,\ |\gamma|/\sqrt6],
+\tag{33.36}
+$$
+
+但全部原 PB 在任一取向都当且仅当 $\rho=0$。
+每个非零 $\rho$ 的 PB 失败均可在任意指定正有限质量上取得同一原泛函下的两笔严格正预算见证。
+
+证明。此时
+$D_{\rm env}=C\oplus0$、
+$V=[C,\gamma a]$、
+$H=2C+hJ_A$，零模连线的归一化演员方向是平衡方向 $n$。
+在 (13.5) 取 $e=(1,-1)^{\mathsf T}/\sqrt2$；因 $e,n$ 都是
+$C^{-1/2}HC^{-1/2}$ 的特征向量，其交叉元 $b=0$。
+按 (13.6) 的原空间两行，第一行的平方范数为
+$2e^\ast C^{-1}e=3/2$，第二行的平方范数为 $\gamma^{-2}$，两行正交。故该处的矩阵为
+
+$$
+GG^\ast=\operatorname{diag}(3/2,\gamma^{-2}),\qquad
+Q=\operatorname{diag}(2/3,\gamma^2),\qquad
+R=|\gamma|\sqrt{2/3},\qquad
+\Delta=2\gamma^2/3,\qquad J=0.
+\tag{33.37}
+$$
+
+这里 $G$ 仅指 (13.6) 的两行矩阵，不是 (33.1) 的矩因子。
+代入 (13.9) 得 (33.36)，包括闭端点。PB 的单独刚性及正预算见证直接由定理 30A.2 给出，不以 P2 为前件。∎
+
+当 $\gamma\to0$，$\widehat t_{h,\gamma}\to t_h^0$。所以同一个原源极限附近，真正的非零零模连线具有非退化 P2 区间，却在所有非零 $\rho$ 上被全部 PB 排除；正则化单线的有界比率路径则在所列小 $h$ 条件下具有非退化联合区间。两者属于不同的实际环境分支，不能用删除零模连线的伪逆操作互相替代。
+

@@ -1,0 +1,39 @@
+**定义 1.2（Subnormalized visible blocks）。** For a unit vector $\Psi=\bigoplus_\alpha\Psi_\alpha$, put
+
+<a id="eq-purity-1-2"></a>
+
+$$
+\sigma_\alpha=\operatorname{Tr}_{W_\alpha}
+|\Psi_\alpha\rangle\langle\Psi_\alpha|,
+\qquad p_\alpha=\operatorname{Tr}\sigma_\alpha,
+\qquad\rho_\alpha=\frac{\sigma_\alpha}{p_\alpha}
+\quad(p_\alpha>0).
+\tag{1.2}
+$$
+
+Thus $\sigma_\alpha\succeq0$, $\sum_\alpha p_\alpha=1$, and the restricted functional is
+
+<a id="eq-purity-1-3"></a>
+
+$$
+\omega_\Psi(a)=
+\sum_\alpha\operatorname{Tr}(\sigma_\alpha a_\alpha),
+\qquad
+ a=\bigoplus_\alpha(a_\alpha\otimes I_{W_\alpha}).
+\tag{1.3}
+$$
+
+The blocks $\sigma_\alpha$ are subnormalized; their traces, rather than each block separately, sum to one. The matrix $\sigma=\bigoplus_\alpha\sigma_\alpha$ is a trace-one density on the abstract visible space $\bigoplus_\alpha V_\alpha$. Passing from this abstract visible density to a density in the represented algebra on $H$ requires the multiplicity factors.
+
+For example, with the ordinary represented trace on $H$, the trace-preserving conditional expectation of $P_\Psi=|\Psi\rangle\langle\Psi|$ into $\mathcal A$ is instead
+
+$$
+\bigoplus_\alpha
+\left(\sigma_\alpha\otimes\frac{I_{W_\alpha}}{m_\alpha}\right).
+\tag{1.4}
+$$
+
+The multiplicity factors cannot be dropped when comparing these two matrix representations.
+
+<a id="statement-purity-1-3"></a>
+

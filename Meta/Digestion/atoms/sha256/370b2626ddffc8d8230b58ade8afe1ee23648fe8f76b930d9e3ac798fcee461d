@@ -1,0 +1,9 @@
+**定义 57.2（The remaining scale domain）。** The dyadic scales outside Theorem 57.1 are exactly
+
+$$
+ N\in\{2,4,8,16,32,64,128,256,512\}.
+\tag{57.12}
+$$
+
+For every pair $a,b$ with $|a|^2+|b|^2=N-1$ at each of these nine scales, this argument supplies no certificate and claims no finite exact coefficient cost. The term proportional to $N^{-1}$ in the coarse clause of Part I, Theorem 33.1, does not give the homogeneous functional inequality (55.9) by division by arbitrarily small $t$. A finite number of remaining grids alone establishes neither row-and-anchor span nor a finite certificate cost. The assertion of one uniform cost for every $m\ge1$ therefore remains unresolved by these theorems, as does any implication to the parent approximate-density existence question. The fine-scale family result concerns the original-Hermitian error relations of Part I, Definition 18.1, before positivity repair.
+

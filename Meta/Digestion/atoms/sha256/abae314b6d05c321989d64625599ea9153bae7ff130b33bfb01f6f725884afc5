@@ -1,0 +1,11 @@
+**定义 40.1（精确有限接触子集）。** 固定 $r\in\{+1,-1\}$、$0<h<2\sqrt2$ 和 $\iota\in\{i,-i\}$，取 (39.1) 的 $C,H,B,T_A,a_r$。令 $\mathcal C_\iota(a_r;h)$ 为 (39.4) 的全部接触，仍要求 $\|u\|=1$、$A=-\epsilon\operatorname{Im}_\iota\ell>1$；令
+
+$$
+\mathcal C^{\rm fin}_\iota(a_r;h)=
+\{c\in\mathcal C_\iota(a_r;h):\quad
+ p=Xu,\ q=XCu\ \text{对某个有限 }X=X^*\in M_2(\mathbb C)\}.
+\tag{40.1}
+$$
+
+拓扑为 $(u,p,q,a_{\rm act},\ell,\eta)$ 的通常有限维拓扑和 $\epsilon$ 的离散拓扑。代价 $J_k$ 仍取 (39.5)，$k\in\mathbb R$。本节的 $h$ 范围只保证原来源的 $H\succ0$，不要求 §37 的强制估计邻域；以下稠密性证明不使用引理 37.4 或定理 37.5。
+

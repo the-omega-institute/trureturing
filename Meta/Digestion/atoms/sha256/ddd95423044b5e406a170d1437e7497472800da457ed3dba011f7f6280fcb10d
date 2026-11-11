@@ -1,0 +1,61 @@
+**定义 66.1（不要求 C13 的实际系统）。** 对每个 $X=A,D,E$，保留定义 65.1 的非零有限实载体、闭尖生成锥 $C_X$、严格正归一化 $u_X$、完整紧态基 $K_X=\{x\in C_X:u_X(x)=1\}$ 和全部效应 $[0,u_X]$。记纯态集 $P_X=\operatorname{ext}K_X$，仍只对纯第一端点定义
+
+$$
+T^X_\xi(x)=\inf\{f(x):0\le f\le u_X, f(\xi)=1\},
+\qquad \xi\in P_X, x\in K_X.
+\tag{66.1}
+$$
+
+对每个 $X$、每个纯 $\xi$、每个有限纯态族 $(\eta_\ell)$ 及每组概率权重 $(v_\ell)$，要求
+
+$$
+T^X_\xi\left(\sum_\ell v_\ell\eta_\ell\right)
+ =\sum_\ell v_\ell T^X_{\eta_\ell}(\xi).
+\tag{66.2}
+$$
+
+复用定义 65.1 所引 [完整 $S$ 到一般有限 EJA 的条件纸面桥](../../../Library/QuantumStates/mullerududec2012selfduality.md#complete-conditional-candidate-and-its-scope)，而不另加独立 Jordan 公理。该桥的项目性、共同框架和滤波纯性义务保持原范围；纯端点互反本身不代替这些推导。若其锥坐标 $\Psi_X$ 中原归一化表示为 $\tau_X(h_X\circ-)$、$h_X>0$，使用 $\Phi_X=P_{\sqrt{h_X}}\Psi_X$。由 (65.3)–(65.4)，此坐标保持原全态基、全效应区间及原比较配对：
+
+$$
+\tau_X\Phi_X=u_X,\qquad
+B_X(x,y)=\tau_X(\Phi_Xx\circ\Phi_Xy),\qquad
+\Phi_XU_X=1_X.
+\tag{66.3}
+$$
+
+以下在该忠实坐标中写 $A,D,E$，每个理想的每个本原幂等元迹一。令 $n=\tau_A1_A$、$m=\tau_D1_D$、$\omega=1_D/m$。原始数据仅为实双线性 $L:D\times A\to E$ 和实线性 $p:E\to D$，要求
+
+$$
+L(D_+,A_+)\subseteq E_+,\qquad p(E_+)\subseteq D_+.
+\tag{66.4}
+$$
+
+定义全部实际内部映射为
+
+$$
+\begin{aligned}
+\mathcal B(d,c)&=pL(d,c),&K(a)&=\mathcal B(\omega,a),\\
+M(a,b)&=\mathcal B(K(a),b),&J(a)&=M(a,1_A),\\
+H(d)&=L(d,1_A),&B_1&=pH,\\
+Q(a,b,c)&=L(M(a,b),c),&U&=M(1_A,1_A).
+\end{aligned}
+\tag{66.5}
+$$
+
+这里两次调用的是同一个实际 $p$，参考是同一个原 $\omega$。保留两条实张成以及全部原量词：
+
+$$
+\begin{gathered}
+\operatorname{span}_{\mathbb R}M(A,A)=D,\qquad
+\operatorname{span}_{\mathbb R}L(D,A)=E,\\
+a,b\in A_+, \langle a,b\rangle_A=0
+ \Longrightarrow \langle Ja,Jb\rangle_D=0\quad(D_J),\\
+d,d'\in D_+, \langle d,d'\rangle_D=0
+ \Longrightarrow \langle Hd,Hd'\rangle_E=0\quad(D_H),\\
+B_1M(a,b)=\tau_A(a)Jb\qquad(a,b\in A)\quad(Z).
+\end{gathered}
+\tag{66.6}
+$$
+
+相对于定义 65.1–65.2，仅删除 C13。$D_H$ 仍覆盖整个实际 $D_+$，包括矩阵表示中的纠缠正元；$Z$ 覆盖全部实输入。不添加 $W_J,W_H$、原始保单位、原始保迹、校准或独立准备 $M$。第 65 节保留 C13 的条件结论保持其原范围。
+

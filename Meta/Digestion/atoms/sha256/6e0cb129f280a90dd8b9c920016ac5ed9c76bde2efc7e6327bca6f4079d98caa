@@ -1,0 +1,19 @@
+**定义 18.1（Common processor and persistent memory）。** Let $R$ contain the reference and every persistent auxiliary memory that can interact on a later use. Fix one data density $\rho$, independent of $R$, and the same auxiliary initialization under both program hypotheses. One use of the device is a single fixed channel
+
+<a id="eq-reference-18-1"></a>
+
+$$
+\begin{aligned}
+\mathcal T:B(R)&\longrightarrow B(C\otimes R),\\
+\mathcal T(\eta)
+&=\sum_x|x\rangle\langle x|_C\otimes\mathcal T_x(\eta).
+\end{aligned}
+\tag{18.1}
+$$
+
+The branch maps $\mathcal T_x$ are completely positive and their sum is trace preserving on the full input matrix cone. The finite classical register $C$ records every outcome, including success, failure and rejection. Earlier records are retained and are not fed back into $\mathcal T$.
+
+Each new use supplies the same fixed data state $\rho$ and explicitly initialized fresh auxiliary resources. It does not reset $R$. In particular, work or memory that can return on a later use belongs to $R$, rather than being discarded from the return obligation.
+
+<a id="statement-reference-18-2"></a>
+

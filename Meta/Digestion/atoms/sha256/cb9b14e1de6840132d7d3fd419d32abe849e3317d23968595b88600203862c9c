@@ -1,0 +1,43 @@
+**定义 63.1（全载体入口与两切片条件）。** 对每个实际非零有限全态全效应载体 $X=A,D,E$，保留定义 62.1 的整个有序空间、全态基底和全部对偶效应，以及其有限混合律 S：
+
+$$
+T_\xi(x)=\inf\{f(x):0\le f\le u_X,\ f(\xi)=1\},\qquad
+T_\xi\!\left(\sum_\ell w_\ell\eta_\ell\right)
+ =\sum_\ell w_\ell T_{\eta_\ell}(\xi)
+\tag{63.1}
+$$
+
+对每个纯态 $\xi$、每个有限纯态族 $(\eta_\ell)$ 和每个概率权重族 $(w_\ell)$ 成立。对三个实际载体分别另保留定义 62.1 引用的保归一化 S 到标准迹 Jordan 纸面桥；S 本身不替代该桥。桥后取实际有限 EJA 的整个平方锥、全部正迹一态及全部效应 $[0,1_X]$，每个扇区的每个本原幂等元迹一，并用未变的标准迹配对。记
+
+$$
+\langle x,y\rangle_X=\tau_X(x\circ y),\qquad
+n=\tau_A(1_A),\quad m=\tau_D(1_D),\quad e=1_A/n,\quad\omega=1_D/m.
+\tag{63.2}
+$$
+
+只给实双线性 $L:D\times A\to E$ 与实线性 $p:E\to D$，要求 $L(D_+,A_+)\subseteq E_+$、$p(E_+)\subseteq D_+$ 和 $\tau_Dp=\tau_E$。$L$ 的量词包括全部纠缠 $d\in D_+$，$p$ 的保迹律在整个实空间成立。沿用同一个 $p$ 的内部定义：
+
+$$
+\begin{aligned}
+B(d,c)&=pL(d,c),& M(a,b)&=B(B(\omega,a),b),\\
+Q(a,b,c)&=L(M(a,b),c),&J(a)&=M(a,1_A),&r&=J^*,\\
+H(d)&=L(d,1_A),&h&=H^*.
+\end{aligned}
+\tag{63.3}
+$$
+
+$J,H$ 均插入未归一化的 $1_A$。两条实张成与全部实方向的三条律为
+
+$$
+\begin{gathered}
+\operatorname{span}_{\mathbb R}M(A,A)=D,\qquad
+\operatorname{span}_{\mathbb R}L(D,A)=E,\\
+\mathrm{(W_J)}\quad J^*J=n\,\mathrm{id}_A,\qquad
+\mathrm{(W_H)}\quad H^*H=n\,\mathrm{id}_D,\\
+\mathrm{(III)}\quad pQ(a,b,c)=\tau_A(a)M(b,c)\quad(a,b,c\in A).
+\end{gathered}
+\tag{63.4}
+$$
+
+这把 (62.6) 中完整 I 换成其 $b=1_A$ 切片 $W_J$，并保留原 W 为 $W_H$；两切片的配对律都量化于所有实向量，包括迹零方向。没有另给 $r,s,h$ 保迹、联合效应律、CP、右载体或迹规范变换；实张成不表示可分离性。定义 63.1 暂不使用 $I_{13}$，其良定义与完整候选的附加条件见定理 63.3。
+

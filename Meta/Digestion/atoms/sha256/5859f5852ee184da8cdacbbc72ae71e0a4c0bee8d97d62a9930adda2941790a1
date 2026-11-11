@@ -1,0 +1,24 @@
+## 36. Ordered residual envelopes and the limits of the comparison
+
+The same telescoping permits depth-dependent constants $b_t,\beta_t$:
+
+<a id="eq-hidden-36-1"></a>
+
+$$
+\lVert P_nT_nh\rVert_1
+\le
+\left(\sum_{t=1}^n b_t\prod_{s<t}\beta_s\right)
+\lVert h\rVert_1.
+\tag{36.1}
+$$
+
+More generally, if every permitted hidden residual chain has a verified envelope $\lVert h_t\rVert_1\le a_t\lVert h\rVert_1$ with $a_0=1$, the budget is $\sum_{t=1}^n b_ta_{t-1}$. An envelope $\lVert h_t\rVert_1\le Mr^t\lVert h\rVert_1$, with $M\ge1$ and $0\le r<1$, gives the conservative uniform upper budget $bM/(1-r)$ when $b_t\le b$.
+
+Such an envelope concerns the actual ordered hidden products under every allowed switch. Individual asymptotic eigenvalue radii do not supply it.
+
+The comparison is between two actual processes that begin with the same current observations. It is not an error bound between $T_n$ and a proposed Markov predictor, and it certifies no particular completely positive quotient update. A canonical representative chosen inside a fibre still needs an actual completely positive interface.
+
+Classical adaptive records are covered. An extra coherent controller or untouched quantum reference changes the state space and the equivalence relation. A reference-stable version requires the needed matrix-amplified instances of (34.2), with $P\otimes\operatorname{id}$ and equality under that enlarged projection. Ordinary trace-norm inequalities do not certify this stronger contract. Every persistent quantum controller must already belong to the modeled $H$ or be included through the amplified bounds.
+
+The preparation family remains part of the task. Enlarging its hidden span, allowing new operations or inspecting extra memory changes the hypotheses of (34.2), rather than merely changing a reported prediction.
+

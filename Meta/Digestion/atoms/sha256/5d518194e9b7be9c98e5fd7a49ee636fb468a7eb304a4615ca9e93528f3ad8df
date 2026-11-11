@@ -1,0 +1,4 @@
+# AURIC 全部探针与环境耦合的固定输出延续 II：零模耦合为零的可行闭区间
+
+本卷承接[前卷 §17](AURIC_FULL_PB_ACTUAL_PROBE_AND_ENVIRONMENT_COUPLING_CONTINUATION.md#17-全部原探针的共同六维读取支撑) 的共同读取与全正泛函提升、[§27](AURIC_FULL_PB_ACTUAL_PROBE_AND_ENVIRONMENT_COUPLING_CONTINUATION.md#27-全有限类的联合探针与环境系数判据) 的原联合二次型、[§27A](AURIC_FULL_PB_ACTUAL_PROBE_AND_ENVIRONMENT_COUPLING_CONTINUATION.md#27a-满行秩原四维族的线性尺度正预算排除域) 的四维排除域、[§28](AURIC_FULL_PB_ACTUAL_PROBE_AND_ENVIRONMENT_COUPLING_CONTINUATION.md#28-原输入的齐次核与环境零模像上的值域障碍) 的核与值域条件、[§29](AURIC_FULL_PB_ACTUAL_PROBE_AND_ENVIRONMENT_COUPLING_CONTINUATION.md#29-平衡零模像线的有限核反例与整类残量刚性) 和 [§30A](AURIC_FULL_PB_ACTUAL_PROBE_AND_ENVIRONMENT_COUPLING_CONTINUATION.md#30a-非零零模像上全部原-pb-消去两个独立对角残量) 的非零零模像结论，以及 [§30](AURIC_FULL_PB_ACTUAL_PROBE_AND_ENVIRONMENT_COUPLING_CONTINUATION.md#30-零模耦合为零的三矩实现与最小真实环境) 的零模耦合为零分支。下文编号为 §32；未加前缀的旧式号均指前卷。这里在 (30.30) 的可实现三矩域中给出一条固定矩族：一个与 Schur 块小扰动无关的 PB 半径包含该族的整个原 P2 闭区间。
+

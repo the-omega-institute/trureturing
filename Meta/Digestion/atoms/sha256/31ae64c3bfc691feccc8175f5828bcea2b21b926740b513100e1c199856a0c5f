@@ -1,0 +1,28 @@
+**命题 32.1（Finite product-pair basis of hidden joint differences）。** Every $\tau_a^\pm$ is a faithful density with minimum eigenvalue at least $1/(2e)$. Each pair $\xi_{ia}^+,\xi_{ia}^-$ consists of product states with the same system marginal $\rho_i$. Their differences form a real basis of
+
+<a id="eq-preparation-32-2"></a>
+
+$$
+\ker\operatorname{Tr}_E
+=\operatorname{Herm}(S)\otimes\operatorname{Herm}_0(E)
+=W^\perp.
+\tag{32.2}
+$$
+
+There are exactly $d^2(e^2-1)$ selected pairs, requiring at most $2d^2(e^2-1)$ preparations.
+
+**证明。** Each $H_a$ is traceless and $\lVert H_a\rVert_{\rm op}\le\lVert H_a\rVert_2=1$, so (32.1) has trace one and is bounded below by $I_E/(2e)$. Tensoring with $\rho_i$ gives the stated product states and equal system marginals. Their differences are
+
+$$
+\xi_{ia}^+-\xi_{ia}^-
+=\rho_i\otimes H_a/e.
+$$
+
+The $d^2$ spanning system densities form a real basis, as do the environmental $H_a$. Their tensor products form a basis of the middle space in (32.2). Expanding the environmental factor in its normalized identity and traceless basis shows that partial trace kills exactly the traceless-factor terms. This gives (32.2) and the exact pair count. $\square$
+
+No entangled preparation is required by this particular certificate. The finite-dimensional complex tensor factorization and the ability to vary the environment remain supplied premises.
+
+For any one fixed channel $\Lambda$ on the joint input and any specified output effect span, equality of output responses on every selected pair is therefore equivalent to equality on every pair of joint density matrices with the same system marginal. This uses the same linear channel and the exact span (32.2); it does not assert physical preparability of the untested states. A list of $d^2$ spanning system output effects suffices to compare complete system output matrices. For recorded instruments, use that list separately in every branch, as in §31.
+
+<a id="statement-preparation-32-2"></a>
+

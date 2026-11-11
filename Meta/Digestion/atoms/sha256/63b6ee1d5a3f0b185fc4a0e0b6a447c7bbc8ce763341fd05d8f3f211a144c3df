@@ -1,0 +1,51 @@
+### 38.4 同一来源上的精确环境提升
+
+保持 $a_{\rm act},\ell$ 及 (38.8) 固定。对刚构造的实际 $u_\lambda,X_\lambda$ 定义
+
+$$
+\begin{gathered}
+d_\lambda=a_{\rm act}-Hu_\lambda+\ell C^2u_\lambda/2,\qquad
+w_\lambda=FCu_\lambda=(C^2u_\lambda,0)^{\mathsf T},\\
+e_\lambda=GM_2^{-1}d_\lambda,\qquad
+y_\lambda=D^{-1}(e_\lambda-\ell w_\lambda/2-Fu_\lambda),\qquad
+\xi_\lambda=(u_\lambda,y_\lambda).
+\end{gathered}
+\tag{38.15}
+$$
+
+全部量在每个有限 $\lambda>1$ 上有限。由 (38.2) 有 $G^*e_\lambda=d_\lambda$，故
+
+$$
+\begin{gathered}
+Fu_\lambda+Dy_\lambda=e_\lambda-\ell w_\lambda/2,\\
+Bu_\lambda+F^*y_\lambda
+ =Hu_\lambda+d_\lambda-\ell C^2u_\lambda/2=a_{\rm act}.
+\end{gathered}
+\tag{38.16}
+$$
+
+因此演员列及两条环境缺陷确由同一原向量 $\xi_\lambda$ 同时实现。
+
+由 (38.11)、(38.14)，$d_\lambda=\eta a_\tau+\Delta_\lambda$，其中 $\Delta_\lambda=O(\lambda^{-3})$。令 $L_\lambda=1+b\lambda^2$，则
+
+$$
+\begin{gathered}
+M_2^{-1}=I_2-\frac{\lambda^2a_\tau a_\tau^*}{L_\lambda},\qquad
+M_2^{-1}a_\tau=\frac{a_\tau}{L_\lambda},\qquad
+\|GM_2^{-1}\|\le1,\\
+\|e_\lambda\|^2=d_\lambda^*M_2^{-1}d_\lambda
+ =\frac{|\eta|^2b}{L_\lambda}+O(\lambda^{-4}),\qquad
+\lambda^2\|e_\lambda\|^2\longrightarrow\frac{809}{9}.
+\end{gathered}
+\tag{38.17}
+$$
+
+这里算子范数界来自 $(GM_2^{-1})^*(GM_2^{-1})=M_2^{-1}\le I_2$；主环境列范数为 $O(\lambda^{-1})$，扰动列为 $O(\lambda^{-3})$，给出所列误差。尤其，原环境的最后坐标满足精确公式
+
+$$
+(e_\lambda)_3=\frac{\lambda a_\tau^*d_\lambda}{L_\lambda}
+ =\frac{\eta}{\lambda}+O(\lambda^{-3})\ne0
+\quad\text{对所有充分大有限 }\lambda.
+\tag{38.18}
+$$
+

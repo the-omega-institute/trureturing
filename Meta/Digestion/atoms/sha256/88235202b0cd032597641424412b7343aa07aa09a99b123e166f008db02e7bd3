@@ -1,0 +1,24 @@
+**定理 40.2（同来源、同符号的精确接触稠密性）。** 对定义 40.1 的每个固定来源、$h$ 和取向：
+
+1. 每个没有有限 Hermitian 实现的增广轴接触 $c_0$ 都是一条实解析曲线 $c(s)$ 的极限，其中 $c(0)=c_0$，且对所有充分小的非零实 $s$，$c(s)\in\mathcal C^{\rm fin}_\iota(a_r;h)$、$u_1(s)u_2(s)\ne0$。曲线上 $a_r,h,\epsilon,\iota$ 固定，全部 (39.4) 方程精确成立；$\ell(s),\eta(s)$ 及全部可见列趋于其指定值。
+2. 每个增广接触或已属于 $\mathcal C^{\rm fin}_\iota(a_r;h)$，或具有第 1 项的恢复。因此在接触域的相对拓扑中，
+
+   $$
+   \overline{\mathcal C^{\rm fin}_\iota(a_r;h)}^{\,\mathcal C_\iota(a_r;h)}
+    =\mathcal C_\iota(a_r;h),\qquad
+   \inf_{\mathcal C^{\rm fin}_\iota(a_r;h)}J_k
+    =\inf_{\mathcal C_\iota(a_r;h)}J_k
+    \quad(k\in\mathbb R).
+   \tag{40.2}
+   $$
+
+   下确界按扩展实数解释，空集下确界为 $+\infty$。
+3. 在第 1 项的恢复中，若 $j$ 是原轴、$l\ne j$、$d=c_l-c_j$，$c_1=1,c_2=2$，则可取参数使
+
+   $$
+   X_{ll}(s)=\frac1{ds}+O(1)\qquad(s\to0,\ s\ne0).
+   \tag{40.3}
+   $$
+
+   每个 $X(s)$ 有限而其范数无一致上界。已具有有限实现的退化轴点只需保持原接触；本定理不要求在这些点作非轴恢复。
+

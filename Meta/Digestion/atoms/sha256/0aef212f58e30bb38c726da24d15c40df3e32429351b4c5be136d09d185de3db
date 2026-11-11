@@ -1,0 +1,16 @@
+**命题 66.4（先固定 $D$、再固定 $E$）。** 在 (66.9) 的逐块保迹 Jordan 坐标中，可以取有序位 $\varepsilon_{ij},\delta_{ijk}\in\{0,1\}$，使
+
+$$
+F(a,b)_{ij}=a_i\otimes b_j^{T^{\varepsilon_{ij}}},\qquad
+N(d,c)_{ijk}=d_{ij}\otimes c_k^{T^{\delta_{ijk}}}.
+\tag{66.13}
+$$
+
+$T$ 是固定基底的普通转置，$T^0=\operatorname{id}$、$T^1=T$；同一个标签在不同位置仍按有序块处理。
+
+证明。采用 [Library 的 Xu–Zheng–Fošner 精确秩保持接口](../../../Library/QuantumStates/barnumhilgert2019spectral.md#conditional-normal-form-theorem-and-proof)，文献为 *Linear maps preserving tensor products of rank-one Hermitian matrices*, J. Aust. Math. Soc. 98 (2015), 407–428，[DOI 10.1017/S1446788714000603](https://doi.org/10.1017/S1446788714000603)，p.409 Main Theorem (1.1)–(1.2)。其前件是实线性单射、各输入尺寸至少二、目标尺寸不小于输入尺寸之积，并将每个秩一 Hermitian 产品送到秩一 Hermitian 矩阵；不要求输出可分离。
+
+$F_{ij}$ 的线性化因满迹等距而单射，两个本原输入的像秩一；非零秩一 Hermitian 元是本原投影的实倍数，故满足完整秩一前件。目标与输入乘积尺寸相等，没有零填充。定理给符号 $\lambda\in\{-1,1\}$、可逆 $S$ 及两个输入转置。正本原像迫使 $\lambda=1$，其迹一及产品本原投影的实张成使 $S^*S=I$。吸收输出酉共轭，再用整块输出转置同时翻转两输入位，令第一位为零，得到 $F$ 的公式。
+
+保留这组已经固定的 $D$ 坐标，对 $N_{ijk}:H_{n_in_j}\times H_{n_k}\to H_{n_in_jn_k}$ 重复同一精确应用，只改变 $E$ 坐标，得第二式。若恰有一个因子非标量，则该单因子映射为保单位序同构：正性、迹等距和自对偶性使其逆亦正。文献 pp.410–411 Proposition 2.1 给可选整块转置与酉共轭；两因子都为标量时直接为乘法。因而所有标量边界也成立。作用于标量腿的位不可见；作用于唯一非标量腿的位仍可能表示整块转置。允许位冗余，不主张参数最小性或先验共同定向。$\square$
+

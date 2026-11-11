@@ -1,0 +1,20 @@
+## 31. A complete recorded instrument has a finite branchwise certificate
+
+Let $\{\Lambda_x\}$ be one fixed finite instrument on the input $H$, with an output carrier. Each branch is completely positive and trace nonincreasing, and their sum is trace preserving. Let $\mathcal A_{\rm out}$ be a represented unital output observable algebra, and choose a finite real basis of effects $E_1,\ldots,E_m$ for $(\mathcal A_{\rm out})_{\rm sa}$. Such an effect basis is obtained by starting with $I$ and a Hermitian basis, then shifting and scaling the remaining basis elements into $[0,I]$.
+
+Write $F_x=\Lambda_x^*$. For the selected actual pairs from §28, use $\rho_a^+=\rho_a$ and $\rho_a^-=\sigma_a$; the convex-ball pairs of §29 use their existing signs. In either case put $d_a=\rho_a^+-\rho_a^-$. The unnormalized recorded probabilities satisfy
+
+<a id="eq-preparation-31-1"></a>
+
+$$
+\begin{aligned}
+p_{a,x,\ell}^\pm
+&=\operatorname{Tr}\bigl(E_\ell\Lambda_x(\rho_a^\pm)\bigr),\\
+p_{a,x,\ell}^+-p_{a,x,\ell}^-
+&=\operatorname{Tr}\bigl(F_x(E_\ell)d_a\bigr).
+\end{aligned}
+\tag{31.1}
+$$
+
+<a id="statement-preparation-31-1"></a>
+

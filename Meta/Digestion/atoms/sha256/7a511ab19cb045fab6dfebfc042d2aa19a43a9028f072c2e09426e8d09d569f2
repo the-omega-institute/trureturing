@@ -1,0 +1,43 @@
+### 3.1 正规形只在归一化之后取得
+
+由定理 64.9，$p$ 已全局保迹，$h,t$ 已规范保迹，$M,L$ 的两个二元接口和 $Q$ 的等距性已经成立；这一步仍未使用 $I_{13}$ 正性。定理 64.6 已经选定 $A,D$ 的类型。现在将同一中心块和连通比较论证用于第二接口，得到实际简单块 $E_{ijk}=\operatorname{span}L(D_{ij},A_k)$，秩为 $n_in_jn_k$，维数为其平方。同一有限 EJA 分类表遂选定 $E$ 的复矩阵类型，包括秩一和秩二边界。因此
+
+$$
+A=\bigoplus_i H_{n_i},\quad
+D=\bigoplus_{i,k}H_{n_in_k},\quad
+E=\bigoplus_{i,j,k}H_{n_in_jn_k},
+\qquad H_q=\operatorname{Herm}_q(\mathbb C).
+\tag{64.27}
+$$
+
+这里另取任意允许的初始坐标，不要求沿用 (64.17) 吸收输出酉的坐标。对每个标号扇区固定初始矩阵坐标，记所得坐标同构为 $\theta_A^0,\theta_D^0,\theta_E^0$。在两个活跃因子时，矩阵乘积秩一保持定理（[Xu–Zheng–Fošner, Main Theorem, journal p.409, (1.1)–(1.2)](https://doi.org/10.1017/S1446788714000603)）及其单活跃因子的 Proposition 2.1 给出所需正规形；其输入是二元等距性给出的实线性单射、对纯矩阵乘积保持秩一、输出维数等于因子维数乘积，且正性和迹归一化固定共同符号与酉共轭。于是
+
+$$
+M_{ik}(a,c)=U_{ik}\bigl(a^{T^{\varepsilon_{ik}}}\otimes c^{T^{\delta_{ik}}}\bigr)U_{ik}^*.
+\tag{64.28}
+$$
+
+$U_{ik}$ 是酉矩阵；$\varepsilon_{ik},\delta_{ik}\in\{0,1\}$。标量槽位的转置位没有相对意义，只作无害记号。对 $L$ 同样取正规形，复合得到
+
+$$
+Q_{ijk}(a,b,c)=W_{ijk}
+ \bigl(a^{T^{t_1}}\otimes b^{T^{t_2}}\otimes c^{T^{t_3}}\bigr)W_{ijk}^*.
+\tag{64.29}
+$$
+
+具体写 $L_{ijk}(d,c)=V_{ijk}(d^{T^{\lambda_{ijk}}}\otimes c^{T^{\mu_{ijk}}})V_{ijk}^*$。这里 $V_{ijk}$ 为酉，$\lambda_{ijk},\mu_{ijk}\in\{0,1\}$，并且
+
+$$
+\begin{gathered}
+t_1=\varepsilon_{ij}\oplus\lambda_{ijk},\qquad
+t_2=\delta_{ij}\oplus\lambda_{ijk},\qquad t_3=\mu_{ijk},\\
+W_{ijk}=\begin{cases}
+ V_{ijk}(U_{ij}\otimes I_{n_k}),&\lambda_{ijk}=0,\\
+ V_{ijk}(\overline{U_{ij}}\otimes I_{n_k}),&\lambda_{ijk}=1.
+\end{cases}
+\end{gathered}
+$$
+
+若 $L$ 的第一个输入先转置，则使用
+$(U\,x\,U^*)^{\mathsf T}=\overline U\,x^{\mathsf T}U^{\mathsf T}$，没有把纠缠 $U$ 与部分转置错误地交换。到此只得到初始正规形，尚未作同时 untwist，也未使用跨扇区约束或插入正性。
+

@@ -1,0 +1,39 @@
+**定理 69.3（原始参考与完整 Choi 恢复）。** 固定每个 $H_i$ 的基、$w_i>0$ 及 $\sum_iw_i=1$。令
+
+$$
+|\phi_i\rangle=\frac1{\sqrt{n_i}}\sum_{r=1}^{n_i}|r\rangle\otimes|r\rangle,
+\quad q_i=|\phi_i\rangle\langle\phi_i|,\quad
+(\Omega_w)_{ik}=\begin{cases}w_iq_i&i=k,\\0&i\ne k.\end{cases}
+$$
+
+一个指定的实际正迹一态为
+
+$$
+\rho_w=\frac{C_D\Omega_w}{Z},\qquad
+Z=\operatorname{Tr}_D(C_D\Omega_w)
+ =\sum_i\frac{w_i}{n_i}\operatorname{Tr}(u_{ii})>0.
+\tag{69.4}
+$$
+
+定义未归一 Choi 块及实际输出 $Y=\Psi_\Phi(\rho_w)$，则
+
+$$
+\begin{aligned}
+Q_{ji}&=\sum_{r,s=1}^{n_i}\Phi_{ji}(|r\rangle\langle s|)
+                         \otimes|r\rangle\langle s|,\\
+Y_{ji}&=\frac{w_i}{n_iZ}(I_j\otimes\sqrt{u_{ji}})
+                    Q_{ji}(I_j\otimes\sqrt{u_{ji}}),\\
+Q_{ji}&=\frac{n_iZ}{w_i}(I_j\otimes u_{ji}^{-1/2})
+                    Y_{ji}(I_j\otimes u_{ji}^{-1/2}),\\
+\Phi_{ji}(X)&=\operatorname{Tr}_{H_i}
+                    [Q_{ji}(I_j\otimes X^{\mathsf T})].
+\end{aligned}
+\tag{69.5}
+$$
+
+因而下列条件等价：每个 $\Phi_{ji}$ 为 CP；$\Psi_\Phi$ 为 CP；$\Psi_\Phi$ 在整个实际 $D_+$ 上正；这个指定参考的整个输出 $Y$ 为 PSD。
+
+证明。将 (69.3) 作用于 (69.4)，用已有归一接口的 Choi 块公式，得到 (69.5)。正定合同及严格正系数使 $Y\ge0$ 当且仅当每个 $Q_{ji}\ge0$；直接应用 [Watrous 条目的实际参考接口及定理 2.22](../../../Library/Quantum/watrous2018theory.md#one-actual-self-reference-for-finite-sector-operations)，后者当且仅当每个矩形块 CP。块 CP 使 $T_\Phi$ CP，而 $C_D,C_D^{-1}$ 都是 CP 合同，所以 $\Psi_\Phi$ CP。CP 蕴含整锥正，整锥正又可测试实际 $\rho_w$，闭合等价。$\square$
+
+输出 $(j,i)$ 中的 $i$ 是保留的输入扇区标签，不合并等维扇区。零块可用空 Kraus 列表；$n_i=1$ 的参考是标量，$n_j\ne n_i$ 时仍用同一个矩形 Choi 公式。参考第二边缘忠实不等于联合态满秩。这里测试的是一个指定输入的整个联合 PSD 输出，不是一个标量读数、任意 $D\to D$ 映射的完整辨识、有效层析或实际参考制备可用性的结论。
+

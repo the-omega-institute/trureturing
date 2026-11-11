@@ -1,0 +1,95 @@
+**定理 41.2（全域保源约化及定量非消失）。** 对 $|h|<1$，置
+
+$$
+\begin{gathered}
+s=|u_1|^2,\quad t=|u_2|^2,\quad
+\overline{u_1}u_2=v+id,\quad s+t=1,\quad |v+id|\le1/2,\\
+\beta=3s+12t+3hv,\qquad \gamma=3s+24t+4hv,\qquad
+m=u^*p,\quad n=u^*Cp.
+\end{gathered}
+\tag{41.4}
+$$
+
+引理 39.2 的四个实图条件，在两条演员接触等式下，等价于
+
+$$
+m=-\frac{\beta}{y},\qquad
+2\operatorname{Re}n+\frac{(x+3)\beta}{y}+hd=0,\qquad
+\operatorname{Im}(\ell n)+\gamma=0.
+\tag{41.5}
+$$
+
+这里第一式为复数等式，包含 $\operatorname{Im}m=0$，故共计四个实条件。沿用 (39.10) 的消元，
+
+$$
+\zeta=-3s+12t-hv=u^*Z_hu,\qquad
+Z_h=\begin{pmatrix}-3&-h/2\\-h/2&12\end{pmatrix}.
+\tag{41.6}
+$$
+
+定义新的源读数
+
+$$
+\begin{gathered}
+R_\ell=(C-\ell I_2)^{-1},\qquad
+\mathsf E_h=CH_h-C^4/2=\begin{pmatrix}3/2&h\\2h&0\end{pmatrix},\\
+c_3=s+8t,\qquad D_r=u^*R_\ell Ca_r,\\
+N=-c_3/2-u^*R_\ell\mathsf E_hu-i\beta/y.
+\end{gathered}
+\tag{41.7}
+$$
+
+每个接触满足
+
+$$
+\begin{gathered}
+p=-i\left[(C^3/2+R_\ell\mathsf E_h)u+\eta R_\ell Ca_r\right],\qquad
+\eta D_r=N,\\
+-y\operatorname{Im}N\ge3+9t-3|h|>0,\\
+D_r\ne0,\qquad
+|\eta|\ge\sqrt2(1+3t-|h|)\ge\sqrt2(1-|h|)>0.
+\end{gathered}
+\tag{41.8}
+$$
+
+反之，任取 $\ell=x+iy$、$|y|>1$ 和 $[u]\in\mathbb {CP}^1$ 的单位代表，若 $D_r\ne0$，令 $\eta=N/D_r$，按 (41.8) 定义 $p$，再按 (39.4) 定义 $q,a_{\rm act}$。这些数据是完整接触，当且仅当 (41.5) 的后两条实方程成立。这是四个实参数、两个实方程的精确约化，未除以 $x,u_1,u_2$。
+
+证明。(41.5) 只是 (39.9) 的等价写法，(41.6) 直接取 (39.10)，这里不另立矩消元结论。为核对四个实条件的计数，$2C^{-1}=3I_2-C$ 给
+
+$$
+u^*q=(\ell+3)m-n+i(\beta+ihd),\qquad
+(Cu)^*q=\ell n+2m+i\gamma.
+$$
+
+要求 $m$ 实、第一式等于 $\overline n$、第二式实，即得 (41.5)，且每一步可逆。
+
+来源方程左乘 $C$，再用
+
+$$
+CH_h-\ell C^3/2=(C-\ell I_2)C^3/2+\mathsf E_h,
+$$
+
+即可解出 (41.8) 的 $p$。所有逆矩阵存在，因为 $y\ne0$。将 $u^*p=-\beta/y$ 代回，恰得 $\eta D_r=N$。
+
+令 $R_j=(j-\ell)^{-1}$。有
+
+$$
+u^*R_\ell\mathsf E_hu=\tfrac32R_1s+hR_1(v+id)+2hR_2(v-id),
+\qquad |yR_j|\le1,\quad y\operatorname{Im}R_1\ge0.
+$$
+
+故
+
+$$
+\begin{aligned}
+-y\operatorname{Im}N
+ &=\beta+y\operatorname{Im}(u^*R_\ell\mathsf E_hu)\\
+ &\ge3s+12t-6|h||u_1u_2|\\
+ &\ge3+9t-3|h|>0.
+\end{aligned}
+$$
+
+又 $A|D_r|\le\|Ca_r\|=3/\sqrt2$，因而 $A|\eta||D_r|=A|N|\ge3+9t-3|h|$ 给出幅度下界及 $D_r\ne0$。反向构造中，$\eta D_r=N$ 精确强制第一条复等式 $m=-\beta/y$；剩下两条就是尚待满足的全部图条件。来源等式已由逆式成立，因此必要性与充分性均得证。
+
+同时将 $u,p,q,a_{\rm act},\eta$ 乘以单位复数，保持来源向量 $a_r$ 固定，全部方程和比值不变；$N$ 不变，$D_r$ 乘该相位的共轭。因此 $[u]$ 是精确的相位商。该约化含两轴及 $x=0$；有限 Hermitian 实现与轴核条件仍按引理 37.2、(39.22) 区分。∎
+

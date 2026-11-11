@@ -1,0 +1,38 @@
+## 37. A rare-readout instrument attains both finite geometric bounds
+
+Take a hidden qubit with coordinate densities $P_0,P_1$, write $u=I_2/2$, and use the scalar visible algebra. Thus $P(X)=\operatorname{Tr}(X)u$. For $0\le b\le1-\beta$ and $0\le\beta<1$, supply the four outcomes reveal-$0$, reveal-$1$, keep and erase:
+
+<a id="eq-hidden-37-1"></a>
+
+$$
+\begin{aligned}
+\Lambda_{r_a}(X)
+&=b\operatorname{Tr}(P_aX)u
+\quad(a=0,1),\\
+\Lambda_k(X)&=\beta X,\\
+\Lambda_e(X)
+&=(1-b-\beta)\operatorname{Tr}(X)u.
+\end{aligned}
+\tag{37.1}
+$$
+
+Every branch is completely positive and trace nonincreasing, and the sum is trace preserving. For a trace-zero Hermitian $h$, the reveal outputs are visible, the keep output is hidden and the erase output is zero. The first coefficient in (34.2) is at most $b$ and the second is exactly $\beta$. Taking $h=P_0-P_1$ also attains the first coefficient $b$.
+
+Repeat this same instrument, keep every outcome, and compare initial states $P_0,P_1$. Until the first non-keep outcome, the qubit retains the original bit. A reveal records its exact value and leaves $u$. An erase also leaves $u$, so subsequent records contain no further information about the original bit. Once revealed, the earlier recorded value remains available.
+
+Only histories with a reveal before the first erase differ visibly. Their total probability is
+
+<a id="eq-hidden-37-2"></a>
+
+$$
+b\sum_{t=0}^{n-1}\beta^t
+=b\frac{1-\beta^n}{1-\beta}.
+\tag{37.2}
+$$
+
+The two source labels are disjoint on those histories; all other visible histories have identical laws. Thus the complete-record total variation is exactly (37.2), attaining (35.5) with $\delta_0=1$. The only extra joint distinguishability lies on the all-keep history, of probability $\beta^n$, where the hidden qubit still differs. The same initial state pair therefore attains (35.4) as well.
+
+These are stipulated mathematical instruments. Their measurements, storage and fresh environments, including an erasure dilation, are distinct resources. The completely positive reset is an explicit branch of this example and was not inserted as a free operation into the proof of (35.2).
+
+For $b=\epsilon$, $\beta=1-\epsilon$ and $0<\epsilon<1$, each step has arbitrarily small immediate visible leakage as $\epsilon$ decreases, while the complete record distinguishes the original bit with probability $1-(1-\epsilon)^n$, tending to one. The uniform ratio $b/(1-\beta)$ equals one throughout this family.
+

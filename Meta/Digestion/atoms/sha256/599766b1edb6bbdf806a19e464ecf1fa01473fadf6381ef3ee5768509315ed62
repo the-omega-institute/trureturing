@@ -1,0 +1,72 @@
+**定理 35.7（宽侧尾部的严格原 PB 排除与两笔正预算）。** 缩小引理 35.6 的正 $h$ 邻域后，存在 $h_U>0$ 及常数 $K_{\rm tail}>0$，使每个固定 $0<h<h_U$、每个 $|\theta|\le\theta_c$、每个 $\lambda\ge2$ 上，(35.5) 的同一来源满足：凡
+
+$$
+\rho\in I_+(t),\qquad \rho<0,\qquad |\rho|\ge K_{\rm tail}/\lambda^2,
+\tag{35.30}
+$$
+
+都有一个有限实际原探针和向量泛函严格违反取向 $+$ 的 PB，且两笔原预算均严格正。取向 $-$ 的对应排除是 $\rho>0$、$\rho\in I_-(t)$、$\rho\ge K_{\rm tail}/\lambda^2$。两取向的对应见证保留同一环境与同一向量，按引理 35.3 反射。
+
+证明。使用引理 35.6 的数据，在固定 $M_0$ 的 (35.5) 中明确取
+
+$$
+e=(0,0,\eta/\lambda)^{\mathsf T},\qquad
+y=D^{-1}(e-\ell FCu/2-Fu),\qquad \xi=(u,y).
+\tag{35.31}
+$$
+
+这里 $F$ 的首块是 $C$、末行是零，$G$ 的首块是 $I_2$、末行是 $\lambda a_\theta^*$，所以
+
+$$
+G^*e=\eta a_\theta=d_0,\qquad
+d=Fu+Dy=e-\ell FCu/2,\qquad
+Bu+Vy=Hu+G^*d=a_{\rm act}.
+\tag{35.32}
+$$
+
+最后一式用 $G^*F=C$，从而 $G^*FCu=C^2u$。这三式把演员接触与两份环境缺陷接到同一个实际 $X,\xi,t$；不需要 §34.3 的可变 $F$ 实现。每个有限 $\lambda$ 的 $D^{-1},y$ 都有限，不对其随 $\lambda$ 的范数作有界假设。
+
+原 (32.5) 于是给 $E_\tau=(\tau\rho T_Au,e)$。由 (31.9) 或 (32.4) 的精确带符号恒等式，当前 $\iota=i,\epsilon=1$ 的所选有限变分代价准确为
+
+$$
+\mathcal D_\rho=w_\alpha\left(N\rho^2+\frac{|\eta|^2}{\lambda^2}\right)+4\rho\zeta,
+\qquad w_\alpha=(\sqrt6-1)^{-1}+(\sqrt6+1)^{-1}=2\sqrt6/5.
+\tag{35.33}
+$$
+
+因负侧 P2 总有 $|\rho|\le2\beta/3$，可选 $0<h_U\le h_c$ 使
+$8w_\alpha(h_U/\sqrt2)/3\le2\zeta_{\min}$。于是每个所列 $h,\theta,\rho<0$ 都有 $w_\alpha N|\rho|\le2\zeta_{\min}\le2\zeta$。取
+
+$$
+K_{\rm tail}=1+\frac{w_\alpha\eta_{\max}^2}{2\zeta_{\min}}.
+$$
+
+则在 (35.30) 内
+
+$$
+\mathcal D_\rho\le
+\frac{w_\alpha\eta_{\max}^2}{\lambda^2}-2\zeta_{\min}|\rho|
+\le-\frac{2\zeta_{\min}}{\lambda^2}<0.
+\tag{35.34}
+$$
+
+所选有限变分和不小于原两笔预算根之和的两倍，正是 (27.12)。因此 $\mathcal D_\rho<0$ 推出同一个 $x,\phi_\xi$ 的原 PB 严格失败，无需达到任何下确界。另一取向用 (35.10)，即 $\rho'=-\rho$、$X'=-X$、$\epsilon'=-1$，保持 $u,y,\ell$ 与复环境不变，代价仍为同一负数。
+
+现在量化两笔原预算的严格正性。在本实现中
+
+$$
+(R_\tau\xi)_{\rm env}=-\tau(C^2u,0)^{\mathsf T}/2,\qquad
+(E_\tau)_{\rm env}=e=(0,0,\eta/\lambda)^{\mathsf T}.
+\tag{35.35}
+$$
+
+这两列正交且非零。$S_\tau\xi=E_\tau+\zeta_\tau R_\tau\xi$，故其环境复 Gram 行列式是 $\|C^2u\|^2|\eta|^2/(4\lambda^2)$。加入演员块使复 Gram 矩阵增加半正定矩阵，其二阶行列式不减；实 Gram 行列式又等于复 Gram 行列式加上内积虚部的平方。因此两个原预算逐一满足
+
+$$
+B_{\phi_\xi}(R_\tau,S_\tau)\ge
+\frac{\|C^2u\|^2|\eta|^2}{4\lambda^2}>0,\qquad \tau=\pm1.
+\tag{35.36}
+$$
+
+反射只交换两笔预算和一个列的符号，严格正性保留。由于 $\|u\|=1$，将同一 $\phi_\xi$ 乘以 $\mu/\|\xi\|^2$ 即得每个指定正有限质量 $\mu$，严格违反与两笔正预算一同保留。∎
+

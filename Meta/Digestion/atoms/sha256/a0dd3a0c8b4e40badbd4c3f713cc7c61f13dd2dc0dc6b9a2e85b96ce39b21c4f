@@ -1,0 +1,15 @@
+## 40. Existing tools and the remaining complete-memory interface
+
+The fixed dev source pin is `e307ede5b6d5d591f8bc44a4ec150d302e7f31a6`. Atlas II §§156–163 contain the all-spectrum transposition application, attributing the affine optimum to Brzić–Grinko–Studziński–Quintino, [arXiv:2603.23628v3](https://arxiv.org/abs/2603.23628v3). Atlas III §§1–8 contain the visible-purity and invisible-fibre results. Neither supplies (34.2) from current preparation records.
+
+The reused mathematical context has distinct interfaces:
+
+- *CONTEXTUAL_SPACETIME_ARITHMETIC_QUANTUM.md*, Definition 56.1 and Proposition 56.3: geometric hidden-block bounds give finite task memory-tail budgets. Example 56.5 retains norm-envelope and nonnormality qualifications. Those linear-tail results provide context, without a new proof or novelty claim for geometric summation.
+- *AURIC_APPROXIMATE_CLOSURE_HIDDEN_MEMORY_AND_NATIVE_RECURSION_V40.md*, Theorems 3.2–3.3: exact block memory kernels. Its §§2.3–2.4 distinguish occupation decay, full-state contraction, a final channel and a retained first-transfer archive. That amplitude model is not identified with the instruments of §37.
+- Sections 9–17: complete recorded-instrument closure differs from the nonselective channel. The finite-horizon sum of approximation errors there is not promoted to a uniform unbounded estimate.
+- Sections 27–33: actual equal-response pair spans and Gram conditioning supply the finite reconstruction interface used in (38.1)–(38.2). They remain conditional paper dependencies and provide no fresh Lean compilation evidence.
+
+The complete-record telescoping, adaptive-policy estimate, paired poststate realizations and conservation/rank tests apply those established tools to the specified prediction question. The source must still supply common instruments, the complete quantum memory model, preparation alternatives, output calibration, allowed policies and a genuine hidden norm envelope. Scalar decay, a spectral catalogue or one actual $\omega$ path alone discharges none of these obligations. Conversely, effective-channel assumptions cannot be silently imported into a fully closed information-conserving interpretation.
+
+These are conditional paper deductions, without a novelty claim, fresh Lean compilation or physical validation. They do not settle quantum origin, source-setting independence or the existence of a universal state.
+

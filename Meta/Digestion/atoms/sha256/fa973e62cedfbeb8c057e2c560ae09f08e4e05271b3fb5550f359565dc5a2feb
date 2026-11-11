@@ -1,0 +1,4 @@
+## 33. 两矩近邻的一致反二阶矩 PB 半径与实单线极限
+
+本节沿用 §32 的 $C=\operatorname{diag}(1,2)$、$T_A=\operatorname{diag}(1,-2)$、$J_A$、两个取向及原 P2、PB 标签。旧式号 (17.x)、(27.x)、(30.x)、(30A.x)、(31.x) 均指[前卷](AURIC_FULL_PB_ACTUAL_PROBE_AND_ENVIRONMENT_COUPLING_CONTINUATION.md)。所有平方、Jordan 乘积及正泛函均取同一个完整原矩阵代数；实际探针仍遍取全部 $x=X\oplus0_m$、$X=X^\ast$。本节只取平衡残量 $s=\rho T_A\oplus0_m$，不增加原泛函的归一或环境密度限制。
+

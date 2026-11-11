@@ -1,0 +1,27 @@
+**命题 67.9（遗漏控制的精确读数）。** 单独的联合迹校准不能替代 $D_H$；单独的最小迹乘积不能固定实际插入尺度；二者归一化后仍不能删除定理 64.10 的独立整输出 Bell 条件。
+
+**证明。** 第一项复用 (62.44)–(62.46) 的经典例。取 $A=\mathbb R^2,D=\mathbb R^4,E=\mathbb R^8$，$P=\left(\begin{smallmatrix}3/4&1/4\\1/4&3/4\end{smallmatrix}\right)$，$L(d,a)=((P\otimes\operatorname{id})d)\otimes a$、$p=\operatorname{Tr}_1$。原例已经给出全锥正性、两条张成、同一个 $p$ 的内部普通张量 $M$、$D_J,Z$ 及全锥交叉插入正性。$P1=1$ 且 $p$ 保迹，故 $Z=1_E$、$\delta=\gamma=8$，正好满足联合校准。可是对任意坐标本原 $e_j\in\mathbb R^2$，两个正交本原元 $q=e_0\otimes e_j$、$q'=e_1\otimes e_j$ 的像满足
+
+$$
+\langle Hq,Hq'\rangle
+=\left(\frac34\frac14+\frac14\frac34\right)\langle e_j,e_j\rangle
+ \langle1_2,1_2\rangle=\frac34>0.
+\tag{67.24}
+$$
+
+所以 $D_H$ 失败。原 $P^{\mathsf T}P$ 的非零交叉项也使 $W_H$ 和完整 II 失败。这是已有控制的新零关系读数，不重复计作新的模型构造。
+
+第二项可取 (67.21) 的 $w=\lambda I_n$，或任意标准直和张量数据的全局尺度族 $L=\lambda L_{\rm tens}$、$p=\lambda^{-1}p_{\rm tr}$，$\lambda>0$。两次内部读回仍产生相同 $M$，$D_H$ 保持，而
+
+$$
+\delta=\lambda R,\quad\gamma=R/\lambda,\quad
+\delta\gamma=R^2,\quad
+\delta+\gamma=R(\lambda+\lambda^{-1}),\quad
+H^*H=\lambda^2n\operatorname{id}.
+\tag{67.25}
+$$
+
+因此 $W_H$ 当且仅当 $\lambda=1$；$\lambda>1$ 时甚至仍满足旧 $N$，却未固定实际尺度。迹和的最小值恰好排除这一个自由度。
+
+第三项直接复用命题 66.11 的复 qubit 全锥正保迹转置控制：它满足旧 $W_H,N$，故由定理 67.7 满足新 $D_H,C_{\rm joint}$，但 (66.39) 在端点 Bell 投影的整个插入输出上仍有负本征值 $-1/2$。定理 64.11 的有序跨扇区和标量中间旁观者控制同样保留。零关系及迹校准只恢复探针之前的接口，没有免除交叉插入的独立条件。$\square$
+

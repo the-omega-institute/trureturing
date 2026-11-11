@@ -1,0 +1,42 @@
+**定理 64.7（$W_H$ 的全本原支持面）。** 加上 $W_H$ 和实际 $L$ 实张成。对任意本原 $q\in D$，令
+
+$$
+z_q=Hq,\qquad P_q^{\mathrm s}=\operatorname{supp}(z_q),\qquad
+F_q=E_1(P_q^{\mathrm s}),\qquad K_q(c)=L(q,c),\qquad
+v_q=\langle V,q\rangle_D>0.
+$$
+
+则 $K_q:A\to F_q$ 是序同构，正逆为 $t|_{F_q}/v_q$，并且
+
+$$
+\operatorname{rank}(F_q)=n,\qquad\|z_q\|^2=n,\qquad
+R_E=mn=n^3.
+\tag{64.18}
+$$
+
+这不使用 $N,p$ 保迹、$H1_D=1_E$ 或第二二元接口。
+
+**证明。** $W_H$ 使 $z_q\ne0$，且与 $H(1_D-q)$ 正交。对 $y\in(F_q)_+$，正的 $h$ 满足
+$\langle1_D-q,hy\rangle=\langle H(1_D-q),y\rangle=0$。支撑规则和 $q$ 本原给出 $hy=\langle z_q,y\rangle q$。对 $c\ge0$ 取 $c\le a1_A$，则作为整个 $D$ 上的正映射序，$0\le L_c\le aH$，故
+$0\le L_c^*y\le ahy$。极射线 $\mathbb R_+q$ 迫使 $L_c^*y$ 为 $q$ 的倍数。又 $0\le K_q(c)\le az_q$，故 $K_q(c)\in F_q$。配对再实线性延拓给出
+
+$$
+\Pi_qL(d,c)=\langle q,d\rangle_DK_q(c)
+\quad(d\in D,c\in A),\qquad \Pi_q=P_{P_q^{\mathrm s}}.
+\tag{64.19}
+$$
+
+投影实际 $L$ 张成得到 $K_q(A)=F_q$。而 (64.15) 给出 $tK_q=v_q\operatorname{id}_A$，故 $K_q$ 单射且逆为所述正映射。这一步没有要求 $t$ 保迹。
+
+在面 $F_q$ 内，$z_q$ 可逆且
+
+$$
+\Theta_q=P_{z_q^{-1/2}}K_q:A\to F_q,
+\qquad K_q=P_{\sqrt{z_q}}\Theta_q
+\tag{64.20}
+$$
+
+是保单位序同构。有限 EJA 区间 $[0,1]$ 的极点正好是幂等元：非零、一的谱值可作双向小扰动；反向用互补 Peirce 支撑规则。故 $\Theta_q$ 及其逆保持幂等元。一个完整框架映成幂等分解，其两两正交性由平方求和及正配对得出；谱展开和极化使 $\Theta_q$ 为 Jordan 同构。它保持本原元，而面本原元也是环境本原元，故保持继承的规范迹和谱。于是面秩为 $n$，$W_H$ 给出 $\|z_q\|^2=n$。
+
+对任意完整 $D$ 本原框架 $\mathcal Q$，各 $z_q$ 支撑正交。$H1_D$ 内点：每个正 $L(d,c)$ 被 $H1_D$ 的正倍数支配，与它零配对的正元遂消去全部 $L$-乘积，再由张成消去 $E$。所以 $\sum_{q\in\mathcal Q}P_q^{\mathrm s}=1_E$。细化每个面到本原框架，得到完整环境框架，秩恰为 $mn=n^3$。面之间允许存在非零 Peirce 半空间；这里没有把这些面当成 $E$ 的向量空间直和。$\square$
+

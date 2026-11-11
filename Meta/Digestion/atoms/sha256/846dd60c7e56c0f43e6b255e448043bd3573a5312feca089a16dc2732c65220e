@@ -1,0 +1,10 @@
+**命题 34.1（固定 $h$ 的两种尺度）。** 对每个固定的充分小的 $h>0$，存在下文给出的实际输入族，参数为 $\lambda\to+\infty$，满足 $D_{\rm env}\succ0$、$W=0$、$M_1=C$、$H=2C+hJ_A$。写 $L_\lambda=\|M_2\|$，则 $L_\lambda=\tfrac32\lambda^2+O(1)$。两个取向的原 P2 允许区间均为 $[-R_\lambda,R_\lambda]$，其中 $R_\lambda\sim\beta\sqrt{2/3}/\lambda\sim\beta/\sqrt{L_\lambda}$。存在常数 $K_*>0$，使充分大的 $\lambda$ 上，每个 $K_*/\lambda^2\le|\rho|\le R_\lambda$ 都在两个取向分别有严格违反原 PB 的有限见证，每份见证的两笔原预算均严格正。
+
+再取 $h$ 落在定理 33.1 的邻域内，应用其一致反二阶矩下界，则存在 $c'>0$，使充分大的 $\lambda$ 上，两个取向各自的原 P2 与全部原 PB 的联合允许集，以及要求两个取向同时成立的联合允许集 $\mathcal J_\lambda$，均满足同样的双包含。对 $\mathcal J_\lambda$，即
+$$
+[-c'/\lambda^2,c'/\lambda^2]\ \subseteq\ \mathcal J_\lambda\
+\subseteq\ [-K_*/\lambda^2,K_*/\lambda^2].
+\tag{34.1}
+$$
+故在上述 $h$ 范围内，联合允许范围的内外尺度均为 $L_\lambda^{-1}$。
+

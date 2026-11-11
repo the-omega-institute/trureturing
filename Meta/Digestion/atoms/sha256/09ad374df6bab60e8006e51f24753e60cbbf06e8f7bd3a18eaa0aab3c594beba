@@ -1,0 +1,19 @@
+**定义 5.1（Distance for the complete effect interface）。** For two states of $\mathcal A$, represented by their subnormalized visible blocks, set
+
+<a id="eq-purity-5-1"></a>
+
+$$
+\begin{aligned}
+D_{\mathcal A}(\sigma,\tau)
+&=\frac12\sum_\alpha
+\lVert\sigma_\alpha-\tau_\alpha\rVert_1\\
+&=\sup_{\substack{0\le a\le I\\a\in\mathcal A}}
+|\omega_\sigma(a)-\omega_\tau(a)|.
+\end{aligned}
+\tag{5.1}
+$$
+
+The equality follows by choosing the positive spectral projection of the block-diagonal trace-zero difference. It presupposes the complete effect interval in §1; an actually restricted menu can distinguish less.
+
+<a id="statement-purity-5-2"></a>
+

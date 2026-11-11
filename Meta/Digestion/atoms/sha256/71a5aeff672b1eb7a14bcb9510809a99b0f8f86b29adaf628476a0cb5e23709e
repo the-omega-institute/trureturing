@@ -1,0 +1,4 @@
+**命题 1.3（Classification of the functionals at the declared interface）。** Every state of $\mathcal A$ has one unique family $\sigma_\alpha\succeq0$ with $\sum_\alpha\operatorname{Tr}\sigma_\alpha=1$ representing it by (1.3). Conversely each such family defines a state.
+
+**证明。** Restrict the functional to each central sector and apply finite matrix trace duality. Positivity gives positive blocks and normalization gives total trace one; trace duality also gives uniqueness. The converse follows directly from (1.3). This classifies functionals, while §3 separately determines which have vector lifts in the fixed $H$. $\square$
+

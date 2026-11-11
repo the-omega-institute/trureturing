@@ -1,0 +1,16 @@
+**定义 62.1（比较入口与条件性接口）。** 对每个实际载体 $X=A,D,E$，先取非零有限维实有序空间、闭尖生成锥 $X_+$、严格正的归一化泛函 $u_X$、紧的全态基底 $K_X=\{x\in X_+:u_X(x)=1\}$ 和全部对偶效应 $[0,u_X]$。记纯态集合为 $P_X$，对 $x\in K_X$ 定义最小确认读数，并在每个载体上保留有限混合律 S：
+
+$$
+\begin{aligned}
+T_\xi(x)&=\inf\{f(x):0\le f\le u_X,\ f(\xi)=1\},\\
+T_\xi\!\left(\sum_\ell w_\ell\eta_\ell\right)
+ &=\sum_\ell w_\ell T_{\eta_\ell}(\xi)
+\quad\left(\xi,\eta_\ell\in P_X,\quad w_\ell\ge0,\quad\sum_\ell w_\ell=1\right).
+\end{aligned}
+\tag{62.1}
+$$
+
+第二式量化于每个有限纯态族及每个概率权重族。另行保留 [Müller–Ududec 条目「Complete conditional candidate and its scope」](../../../Library/QuantumStates/mullerududec2012selfduality.md#complete-conditional-candidate-and-its-scope) 中保归一化的 S 到标准迹 Jordan 几何的纸面桥，应用于三个实际全载体。只有该桥之后，才使用下面的 Jordan 单位、标准迹和迹伴随。单点混合给出的端点互反不能替代有限混合律，也不能替代这条条件桥。
+
+下述推导复用 [Library 条目中的仓内推导「Positive marginals recover the joint-effect contract」](../../../Library/QuantumStates/barnumhilgert2019spectral.md#positive-marginals-recover-the-joint-effect-contract) 的二元边缘纸面接口 (15)–(18)：标准迹 EJA 间的正双线性且实张成的准备，若有两条在整个联合正锥上正且标准保迹的边缘，并满足两条全部实向量的普通乘积丢弃律，则准备保单位，其实张量线性化为满迹内积等距同构。两次使用前均须满足这组完整前提。最终几何只在严格恢复之后复用同条目「Three primitive maps and the forced missing pair view」的既有表示结论，不重新分类。
+
