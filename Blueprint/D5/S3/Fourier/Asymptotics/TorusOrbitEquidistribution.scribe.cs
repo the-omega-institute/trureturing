@@ -107,7 +107,7 @@ internal sealed class TorusOrbitEquidistributionDocument : IScribeDocumentDefini
                     + "Its value depends on "
                     + "alpha, W and epsilon; the application asserts no uniformity over alpha or W, "
                     + "no effective rate, no uniqueness claim for invariant measures, and no physical "
-                    + "fairness interpretation. It is a finite reuse of the frozen suppliers, not a "
+                    + "fairness interpretation or model-pi_perp claim. It is a finite reuse of the frozen suppliers, not a "
                     + "new theorem or a claim of literature novelty."))),
             DescribeRole.Theorem))));
 
