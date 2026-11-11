@@ -62,7 +62,7 @@ private theorem weighted_max_eq (alpha : ι → ℝ) (hpos : ∀ i, 0 < alpha i)
 
 /-- A maximizing tuple can be replaced, one coordinate at a time, by the same normalized
 fixed vector. The weights are strictly positive; equality is scalar equality at the global maximum. -/
-theorem maximum_at_fixed_tuple (Phi : A →ₗ[ℝ] A) (u : Module.Dual ℝ A)
+private theorem maximum_at_fixed_tuple (Phi : A →ₗ[ℝ] A) (u : Module.Dual ℝ A)
     (hmass : u.comp Phi = u)
     (hdual : ∀ f : Module.Dual ℝ A, f.comp Phi = f → ∃ c : ℝ, f = c • u)
     {K : Set A} (hK : IsCompact K) (hconv : Convex ℝ K)
@@ -90,7 +90,7 @@ theorem maximum_at_fixed_tuple (Phi : A →ₗ[ℝ] A) (u : Module.Dual ℝ A)
       change f y = F a at hy
       change f (c • x + d • y) = F a
       simp only [map_add, map_smul, hx, hy, smul_eq_mul]
-      nlinarith)
+      rw [← add_mul, hcd, one_mul])
     have hbB : b i ∈ B := ⟨hb i (Set.mem_univ i), by simpa [f] using hba⟩
     have hup (x : A) (hx : x ∈ K) : Function.update b i x ∈ cube := by
       intro j _
@@ -143,7 +143,7 @@ theorem maximum_at_fixed_tuple (Phi : A →ₗ[ℝ] A) (u : Module.Dual ℝ A)
   simpa using hfinite Finset.univ
 
 /-- Every asynchronous harmonic multilinear form is constant on the entire normalized cube. -/
-theorem constant_on_normalized_cube (Phi : A →ₗ[ℝ] A) (u : Module.Dual ℝ A)
+private theorem constant_on_normalized_cube (Phi : A →ₗ[ℝ] A) (u : Module.Dual ℝ A)
     (hmass : u.comp Phi = u)
     (hdual : ∀ f : Module.Dual ℝ A, f.comp Phi = f → ∃ c : ℝ, f = c • u)
     {K : Set A} (hK : IsCompact K) (hconv : Convex ℝ K)

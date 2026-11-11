@@ -38,24 +38,18 @@ def M (a b : A) : D := data.p (data.L (data.K a) b)
 def Q (a b c : A) : E := data.L (data.M a b) c
 
 private def massTwo (uD : Module.Dual ℝ D) :
-    MultilinearMap ℝ (fun _ : Fin 2 => A) ℝ where
-  toFun a := uD (data.M (a 0) (a 1))
-  map_update_add' := by
-    intro a i x y
-    fin_cases i <;> simp [M, K, map_add, LinearMap.add_apply]
-  map_update_smul' := by
-    intro a i r x
-    fin_cases i <;> simp [M, K, map_smul, LinearMap.smul_apply, smul_eq_mul]
+    MultilinearMap ℝ (fun _ : Fin 2 => A) ℝ :=
+  MultilinearMap.mk' (fun a => uD (data.M (a 0) (a 1)))
+    (by intro a i x y; fin_cases i <;> simp [M, K, map_add, LinearMap.add_apply])
+    (by intro a i r x; fin_cases i <;>
+      simp [M, K, map_smul, LinearMap.smul_apply, smul_eq_mul])
 
 private def massThree (uE : Module.Dual ℝ E) :
-    MultilinearMap ℝ (fun _ : Fin 3 => A) ℝ where
-  toFun a := uE (data.Q (a 0) (a 1) (a 2))
-  map_update_add' := by
-    intro a i x y
-    fin_cases i <;> simp [Q, M, K, map_add, LinearMap.add_apply]
-  map_update_smul' := by
-    intro a i r x
-    fin_cases i <;> simp [Q, M, K, map_smul, LinearMap.smul_apply, smul_eq_mul]
+    MultilinearMap ℝ (fun _ : Fin 3 => A) ℝ :=
+  MultilinearMap.mk' (fun a => uE (data.Q (a 0) (a 1) (a 2)))
+    (by intro a i x y; fin_cases i <;> simp [Q, M, K, map_add, LinearMap.add_apply])
+    (by intro a i r x; fin_cases i <;>
+      simp [Q, M, K, map_smul, LinearMap.smul_apply, smul_eq_mul])
 
 private theorem mass_nonneg (C : ProperCone ℝ D) (u : Module.Dual ℝ D)
     (hu : ∀ x ∈ C, x ≠ 0 → 0 < u x) {x : D} (hx : x ∈ C) : 0 ≤ u x := by
@@ -65,7 +59,7 @@ private theorem mass_nonneg (C : ProperCone ℝ D) (u : Module.Dual ℝ D)
 
 /-- Real spanning of the actual M and L implies real spanning of the actual Q=L(M,-).
 No claim of generation of the positive joint cone by positive products is made. -/
-theorem original_Q_spans
+private theorem original_Q_spans
     (hspanM : Submodule.span ℝ (Set.range fun ab : A × A => data.M ab.1 ab.2) = ⊤)
     (hspanL : Submodule.span ℝ (Set.range fun dc : D × A => data.L dc.1 dc.2) = ⊤) :
     Submodule.span ℝ
@@ -137,7 +131,11 @@ theorem original_mass_factorization [Nontrivial A] [Nontrivial D] [Nontrivial E]
     alpha halpha halphasum (data.massTwo uD) htwoH
   let beta : Fin 3 → ℝ := ![s*t, s*(1-t), 1-s]
   have hbeta : ∀ i, 0 < beta i := by
-    intro i; fin_cases i <;> simp [beta] <;> positivity
+    intro i
+    fin_cases i
+    · exact mul_pos hs ht
+    · exact mul_pos hs (sub_pos.mpr ht1)
+    · exact sub_pos.mpr hs1
   have hbetasum : ∑ i, beta i = 1 := by simp [beta, Fin.sum_univ_succ]; ring
   have hthreeH : ∀ a ∈ Set.pi Set.univ (fun _ : Fin 3 => K),
       data.massThree uE a = ∑ i, beta i * data.massThree uE (update a i (Phi (a i))) := by
@@ -197,7 +195,7 @@ theorem original_mass_factorization [Nontrivial A] [Nontrivial D] [Nontrivial E]
 
 /-- Mass calibration from the factorized original tensors and the full real recovery law.
 The first scale is derived, rather than assumed, by using the same p twice at omega. -/
-theorem original_scale_rigidity (uA : Module.Dual ℝ A) (uD : Module.Dual ℝ D)
+private theorem original_scale_rigidity (uA : Module.Dual ℝ A) (uD : Module.Dual ℝ D)
     (uE : Module.Dual ℝ E) (homega : uD data.omega = 1)
     (sigma : A) (hsigma : uA sigma = 1)
     (lambda kappa : ℝ) (hlambda : 0 < lambda) (hkappa : 0 < kappa)
@@ -256,6 +254,49 @@ theorem original_scale_rigidity (uA : Module.Dual ℝ A) (uD : Module.Dual ℝ D
   refine ⟨hscale, ?_, ?_, hpl⟩
   · intro z; simpa [hscale, one_div] using hp z
   · intro d c; simpa [hscale] using hL d c
+
+/-- The actual mass laws imply calibration using the same p twice, provided the original
+full real recovery law is available. No mass factorization is assumed. The derivation of
+recovery from the remaining PRE clauses is a separate predecessor. -/
+theorem original_mass_calibration [Nontrivial A] [Nontrivial D] [Nontrivial E]
+    (CA : ProperCone ℝ A) (CD : ProperCone ℝ D) (CE : ProperCone ℝ E)
+    (uA : Module.Dual ℝ A) (uD : Module.Dual ℝ D) (uE : Module.Dual ℝ E)
+    (hgenA : Submodule.span ℝ (CA : Set A) = ⊤)
+    (hgenD : Submodule.span ℝ (CD : Set D) = ⊤)
+    (hgenE : Submodule.span ℝ (CE : Set E) = ⊤)
+    (hposA : ∀ x ∈ CA, x ≠ 0 → 0 < uA x)
+    (hposD : ∀ x ∈ CD, x ≠ 0 → 0 < uD x)
+    (hposE : ∀ x ∈ CE, x ≠ 0 → 0 < uE x)
+    (hLpos : ∀ d ∈ CD, ∀ a ∈ CA, data.L d a ∈ CE)
+    (hppos : ∀ z ∈ CE, data.p z ∈ CD) (homega : data.omega ∈ CD)
+    (hspanM : Submodule.span ℝ (Set.range fun ab : A × A => data.M ab.1 ab.2) = ⊤)
+    (hspanL : Submodule.span ℝ (Set.range fun dc : D × A => data.L dc.1 dc.2) = ⊤)
+    (Phi : A →ₗ[ℝ] A) (hPhiPos : ∀ a ∈ CA, Phi a ∈ CA)
+    (hPhiMass : uA.comp Phi = uA)
+    (hdual : ∀ f : Module.Dual ℝ A, f.comp Phi = f → ∃ c : ℝ, f = c • uA)
+    (t s : ℝ) (ht : 0 < t) (ht1 : t < 1) (hs : 0 < s) (hs1 : s < 1)
+    (hTwo : ∀ a ∈ CA, ∀ b ∈ CA, uD (data.M a b) =
+      t * uD (data.M (Phi a) b) + (1-t) * uD (data.M a (Phi b)))
+    (hThree : ∀ a ∈ CA, ∀ b ∈ CA, ∀ c ∈ CA, uE (data.Q a b c) =
+      (s*t) * uE (data.Q (Phi a) b c) + (s*(1-t)) * uE (data.Q a (Phi b) c) +
+        (1-s) * uE (data.Q a b (Phi c)))
+    (homegaMass : uD data.omega = 1)
+    (hrecover : ∀ a b c, data.p (data.Q a b c) = uA a • data.M b c) :
+    ∃ kappa : ℝ, 0 < kappa ∧
+      (∀ a b, uD (data.M a b) = uA a * uA b) ∧
+      (∀ a b c, uE (data.Q a b c) = kappa * uA a * uA b * uA c) ∧
+      (∀ z, uD (data.p z) = kappa⁻¹ * uE z) ∧
+      (∀ d c, uE (data.L d c) = kappa * uD d * uA c) ∧
+      (∀ d c, uD (data.p (data.L d c)) = uD d * uA c) := by
+  obtain ⟨lambda, kappa, hl, hk, hmTwo, hmThree⟩ := data.original_mass_factorization
+    CA CD CE uA uD uE hgenA hgenD hgenE hposA hposD hposE hLpos hppos homega
+    hspanM hspanL Phi hPhiPos hPhiMass hdual t s ht ht1 hs hs1 hTwo hThree
+  obtain ⟨⟨sigma, hsigma⟩, _⟩ :=
+    ProperConeMassBase.entire_base_geometry CA uA hgenA hposA
+  obtain ⟨hscale, hp, hL, hpl⟩ := data.original_scale_rigidity uA uD uE
+    homegaMass sigma hsigma.2 lambda kappa hl hk hmTwo hmThree hspanM
+    (data.original_Q_spans hspanM hspanL) hrecover
+  exact ⟨kappa, hk, (by simpa only [hscale, one_mul] using hmTwo), hmThree, hp, hL, hpl⟩
 
 end OriginalData
 end D5.S3.Quantum.OriginalMassCalibration

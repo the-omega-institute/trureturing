@@ -67,6 +67,7 @@ theorem entire_base_geometry (C : ProperCone ℝ A) (u : Module.Dual ℝ A)
     have hmy : u v ≤ ‖y‖⁻¹ := by
       simpa only [map_smul, smul_eq_mul, hy.2, mul_one] using hm
     have hmul : u v * ‖y‖ ≤ 1 := (le_div_iff₀ hnormpos).mp (by simpa [one_div] using hmy)
+    rw [← one_div]
     apply (le_div_iff₀ hvpos).mpr
     simpa [one_div, mul_comm] using hmul
   have hclosed : IsClosed (base C u) := C.isClosed.inter
