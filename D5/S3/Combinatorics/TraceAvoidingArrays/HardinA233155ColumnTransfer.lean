@@ -20,9 +20,9 @@ bond_relabel: proof_shape=bind-only; consumers=compatible_relabel
 compatible_relabel: proof_shape=bind-only; consumers=quotient_rows
 successorClasses: proof_shape=bind-only; consumers=successor_sum, quotient_rows
 successor_sum: proof_shape=bind-only; consumers=quotient_rows
-quotient_rows: proof_shape=bind-only; consumers=HardinA233156Row.finite_certificate
+quotient_rows: proof_shape=bind-only; consumers=HardinA233156Row.row_counts, HardinA233157Row.row_counts, HardinA233158Row.row_counts, HardinA233159Row.row_counts
 grid_good: proof_shape=bind-only; consumers=count_transfer
-count_transfer: proof_shape=bind-only; consumers=HardinA233156Row.counting_bridge
+count_transfer: proof_shape=bind-only; consumers=HardinA233156Row.counting_bridge, HardinA233157Row.counting_bridge, HardinA233158Row.counting_bridge, HardinA233159Row.counting_bridge
 -/
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155RowTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix
