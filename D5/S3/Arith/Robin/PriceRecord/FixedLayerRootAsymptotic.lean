@@ -98,7 +98,7 @@ private theorem scaled_beta_tendsto {j : ℕ} (hj : 1 ≤ j) {c : ℝ} (hc : 0 <
   simp only [mul_one, one_mul] at h
   apply h.congr'
   filter_upwards [eventually_gt_atTop (1 : ℝ), hcT.eventually_gt_atTop 1] with t ht hct
-  dsimp only [Function.comp_def] 
+  dsimp only [Function.comp_def]
   unfold beta referencePrice
   rw [log_pow, mul_pow]
   field_simp [hc.ne', (by linarith : t ≠ 0), (log_pos ht).ne', (log_pos hct).ne']

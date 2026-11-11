@@ -63,8 +63,8 @@ theorem normalized_gain_bounds {j : ℕ} (hj : 1 ≤ j) {u : ℝ} (hu : 2 ≤ u)
     have hh := mul_le_mul_of_nonneg_right (gain_le_inv_pow hu0 hj) hp.le
     simpa only [one_div_mul_cancel hp.ne'] using hh
   have hbase : 0 < 1 - 1 / u := by
-    have hh := one_div_le_one_div_of_le (by norm_num : (0 : ℝ) < 2) hu
-    norm_num at hh
+    have hh : 1 / u ≤ (1 / 2 : ℝ) :=
+      one_div_le_one_div_of_le (by norm_num : (0 : ℝ) < 2) hu
     linarith
   have hloglo := log_le_log hbase hlo
   have hbasic := one_sub_inv_le_log_of_pos hbase
@@ -189,6 +189,7 @@ theorem actual_two_four_curvature_tendsto :
       ((4 * log (cutoff 4 (referencePrice X)) - log X) -
         2 * (2 * log (cutoff 2 (referencePrice X)) - log X)))
       atTop (𝓝 (log (2 : ℝ) ^ 2)) := by
+  classical
   let a := d 2
   let b := d 4
   let z := fun X : ℝ => a X ^ 2 / (log X ^ 2 + 2 * a X * log X)
