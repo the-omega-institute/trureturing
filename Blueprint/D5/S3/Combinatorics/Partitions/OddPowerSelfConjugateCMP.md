@@ -60,10 +60,6 @@ $$\forall m \in \mathbb{N},\; ((2 \le m) \Rightarrow ((\operatorname{Odd}\left(m
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Partitions/OddPowerSelfConjugateCMP.result` (`✓ std3`). ∎
 
-*Resolves.* `Problems/dfl514-selfconj` (proved) by `D5/S3/Combinatorics/Partitions/OddPowerSelfConjugateCMP.result`.
-
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"dfl514-selfconj","declaration_gid":"D5/S3/Combinatorics/Partitions/OddPowerSelfConjugateCMP.result","resolution_kind":"proved"} -->
-
 *Source.* Repository-derived.
 
 *Acknowledgement.* Geoffrey D. Dietz, Timothy B. Flowers, and Shannon R. Lockard (2026). *A study of m-ary partitions whose conjugates are q-ary*. DOI: [10.13069/jacodesmath.v13i3.393](https://doi.org/10.13069/jacodesmath.v13i3.393). URL: <https://arxiv.org/abs/2609.08799v1>.
