@@ -7,7 +7,7 @@ internal sealed class BalancedHalfCapDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Quantum/QuantumChannels/FockAttenuator/BalancedHalfCap.";
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/QuantumStates/vanherstraeten2024nongaussian");
-    private static readonly LibraryNoteRef PriorOnePhoton = LibraryNoteRef.Create("D5/L/QuantumStates/he2026energy");
+    private static readonly LibraryNoteRef PriorOnePhoton = LibraryNoteRef.Create("D5/L/Entropy/he2026energy");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Odd Fock occupation at balance imposes a half-identity cap on every density output.",

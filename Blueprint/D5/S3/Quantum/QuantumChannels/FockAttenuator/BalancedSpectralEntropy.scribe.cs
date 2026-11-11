@@ -7,7 +7,7 @@ internal sealed class BalancedSpectralEntropyDocument : IScribeDocumentDefinitio
 {
     private const string Prefix = "D5/S3/Quantum/QuantumChannels/FockAttenuator/BalancedSpectralEntropy.";
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/QuantumStates/vanherstraeten2024nongaussian");
-    private static readonly LibraryNoteRef PriorOnePhoton = LibraryNoteRef.Create("D5/L/QuantumStates/he2026energy");
+    private static readonly LibraryNoteRef PriorOnePhoton = LibraryNoteRef.Create("D5/L/Entropy/he2026energy");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The native extended spectral entropy inherits the physical half-cap floor.",

@@ -4,7 +4,7 @@
 
 The native extended spectral entropy inherits the physical half-cap floor.
 
-The balanced one-photon all-density spectral minimum and attainment by every coherent input are already proved in `D5/L/QuantumStates/he2026energy`, Theorem 2 (PDF page 5) and Appendix A.2-A.3 (PDF pages 18-19). This attributed formalization preserves that physical result. No new literature resolution or priority for the odd-occupation application is claimed.
+The balanced one-photon all-density spectral minimum and attainment by every coherent input are already proved in `D5/L/Entropy/he2026energy`, Theorem 2 (PDF page 5) and Appendix A.2-A.3 (PDF pages 18-19). This attributed formalization preserves that physical result. No new literature resolution or priority for the odd-occupation application is claimed.
 
 Entropy means QuantumLogEnergy.spectralEntropy from TraceClass.SpectralEnergy: on its native complete eigenbasis it is the ENNReal sum of ENNReal.ofReal(-lambda*log(lambda)). The zero contribution is zero, the complete zero eigenspace is retained, and infinite entropy is allowed. Natural logarithms give nats. FockAttenuator.Entropy.vonNeumannEntropy is a separate basis-infimum API; no equality with that API is assumed or proved here.
 
