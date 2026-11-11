@@ -18,7 +18,6 @@ weights: proof_shape=bind-only; consumers=HardinA233154Column.finite_certificate
 classCount: proof_shape=bind-only; consumers=HardinA233154CertificateZero.row_counts, HardinA233154CertificateOne.row_counts, HardinA233154CertificateTwo.row_counts
 -/
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155RowTransfer
-import Mathlib.Tactic
 
 /-! Legal row codes and their quotient data. -/
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233154Rows
