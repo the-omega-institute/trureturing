@@ -204,10 +204,10 @@ internal sealed class RankThreeBlockAvoidanceDocument : IScribeDocumentDefinitio
     private static Formula MatroidFormula()
     {
         Formula A = F.Id("A"), G = F.Id("G"), M = F.Id("M");
-        Formula P = Call("Ground", M), blocks = Named("blocks");
+        Formula P = Call("Ground", M), blocks = F.Id("blocks");
         Formula g = F.Id("g"), S = F.Id("S"), B = F.Id("B"), C = F.Id("C");
         Formula x = F.Id("x");
-        Formula v = Named("v");
+        Formula v = Call("v", M);
         Formula U(Formula block) => Call("U", block);
         Formula V(Formula block) => Call("image", v, U(block));
         Formula Image(Formula set) => Call("image", v, set);
