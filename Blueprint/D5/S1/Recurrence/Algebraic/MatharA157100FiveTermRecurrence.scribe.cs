@@ -35,7 +35,8 @@ internal sealed class MatharA157100FiveTermRecurrenceDocument : IScribeDocumentD
 
     private static DocumentBlock Node(string name, string title, Formula body,
         AssessedProvenance provenance, string prose, DescribeRole role) =>
-        Describe.Lean(DescribeId.Create("a157100-" + name), DeclarationHandle.Create(Prefix + name),
+        Describe.Lean(DescribeId.Create("a157100-" + (name == "A" ? "series" : name)),
+            DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(Disp(body)), provenance,
             Blocks(Paragraph(Text(prose))), role);
 
