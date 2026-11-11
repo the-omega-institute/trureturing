@@ -11,7 +11,6 @@ open LeanInformationAudit
 open scoped BigOperators
 noncomputable section
 set_option maxRecDepth 100000
-set_option maxHeartbeats 10000000
 
 namespace RowSum
 abbrev signature : Signature :=

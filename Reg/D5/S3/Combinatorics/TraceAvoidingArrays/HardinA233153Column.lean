@@ -13,8 +13,6 @@ open LeanInformationAudit
 open scoped BigOperators
 noncomputable section
 set_option maxRecDepth 100000
-set_option maxHeartbeats 10000000
-attribute [local irreducible] T6
 namespace Certificate
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature (Row 6) (fun _ => Fin 8) (fun _ => ℤ)
@@ -108,12 +106,15 @@ abbrev arena : Arena where
   Law R := ∀ n : ℕ, R.readout () () (n+4) =
     25 * R.readout () () (n+3) - 90 * R.readout () () (n+2) + 81 * R.readout () () (n+1)
 private theorem rejected_law : ¬ arena.Law rejected := by
-  intro h
-  have hb := h 0
-  have ha := result 0
-  change (T6 4 : ℤ) + 1 = 25 * (T6 3 : ℤ) - 90 * (T6 2 : ℤ) + 81 * (T6 1 : ℤ) at hb
-  have hc : (T6 4 : ℤ) + 1 = (T6 4 : ℤ) := hb.trans ha.symm
-  exact (by omega : ∀ z : ℤ, z + 1 ≠ z) _ hc
+  have obstruction (u : ℕ → ℤ)
+      (hu : ∀ n, u (n+4) = 25 * u (n+3) - 90 * u (n+2) + 81 * u (n+1))
+      (hb : ∀ n, (u (n+4) + if n+4 = 4 then 1 else 0) =
+        25 * (u (n+3) + if n+3 = 4 then 1 else 0) - 90 * (u (n+2) + if n+2 = 4 then 1 else 0) + 81 * (u (n+1) + if n+1 = 4 then 1 else 0)) : False := by
+    have h0 := hu 0
+    have h1 := hb 0
+    norm_num at h0 h1
+    linarith only [h0, h1]
+  exact obstruction (fun n => (T6 n : ℤ)) result
 def family : Registration arena (type_of% @result) where
   actual := actual
   bridge := Iff.rfl

@@ -15,7 +15,6 @@ open LeanInformationAudit
 open scoped BigOperators
 noncomputable section
 set_option maxRecDepth 100000
-set_option maxHeartbeats 10000000
 
 namespace Block
 abbrev signature : Signature :=
@@ -54,7 +53,7 @@ def family : Registration arena (type_of% @row_counts) where
     change actual.readout () 1 0 = _ at h0
     change actual.readout () 1 2 = _ at h1
     rw [h0, h1]
-    change (1 : ℤ) ≠ 2
+    change (4 : ℤ) ≠ 3
     omega
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}

@@ -15,8 +15,6 @@ open LeanInformationAudit
 open scoped BigOperators
 noncomputable section
 set_option maxRecDepth 100000
-set_option maxHeartbeats 10000000
-attribute [local irreducible] T7
 namespace Certificate
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature (Row 7) (fun _ => Fin 16) (fun _ => ℤ)
@@ -111,12 +109,15 @@ abbrev arena : Arena where
     42 * R.readout () () (n+4) - 351 * R.readout () () (n+3) +
       972 * R.readout () () (n+2) - 810 * R.readout () () (n+1)
 private theorem rejected_law : ¬ arena.Law rejected := by
-  intro h
-  have hb := h 0
-  have ha := result 0
-  change (T7 5 : ℤ) + 1 = 42 * (T7 4 : ℤ) - 351 * (T7 3 : ℤ) + 972 * (T7 2 : ℤ) - 810 * (T7 1 : ℤ) at hb
-  have hc : (T7 5 : ℤ) + 1 = (T7 5 : ℤ) := hb.trans ha.symm
-  exact (by omega : ∀ z : ℤ, z + 1 ≠ z) _ hc
+  have obstruction (u : ℕ → ℤ)
+      (hu : ∀ n, u (n+5) = 42 * u (n+4) - 351 * u (n+3) + 972 * u (n+2) - 810 * u (n+1))
+      (hb : ∀ n, (u (n+5) + if n+5 = 5 then 1 else 0) =
+        42 * (u (n+4) + if n+4 = 5 then 1 else 0) - 351 * (u (n+3) + if n+3 = 5 then 1 else 0) + 972 * (u (n+2) + if n+2 = 5 then 1 else 0) - 810 * (u (n+1) + if n+1 = 5 then 1 else 0)) : False := by
+    have h0 := hu 0
+    have h1 := hb 0
+    norm_num at h0 h1
+    linarith only [h0, h1]
+  exact obstruction (fun n => (T7 n : ℤ)) result
 def family : Registration arena (type_of% @result) where
   actual := actual
   bridge := Iff.rfl

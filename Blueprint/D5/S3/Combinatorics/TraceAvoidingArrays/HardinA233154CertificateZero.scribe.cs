@@ -12,7 +12,7 @@ internal sealed class HardinA233154CertificateZeroDocument : IScribeDocumentDefi
         "Successor counts in one block of seven-column row codes.", H("Quotient row block 0"),
         Blocks(Node("row_counts",Statement(),"Every legal source code in the block has the stated number of successors in each quotient class.",theorem:true)), []));
     private static Formula Statement() {
-        var code=Seq(Langle,PlusF(Mul(N(3),Val(V("a"))),N(0)),Comma,Sp,Op("bound"),Rangle);
+        var code=Seq(Langle,PlusF(Mul(N(3),Val(V("a"))),N(0)),Comma,Sp,Seq(Op("by"),Sp,Op("omega")),Rangle);
         var row=C("decode",N(7),code);
         return All("a",FinF(N(729)),Imp(C("rowLegal",row),All("s",FinF(N(16)),
             Eq(C("classCount",row,V("s")),A(C("quotient"),C("classify",row),V("s"))))));
