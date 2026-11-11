@@ -13,6 +13,18 @@ The source omits the onset; n ≥ 4 is its maximal well-formed offset-zero inter
 Polynomial scalars are rational; lagged sequence indices use natural subtraction.
 -/
 
+/-
+admission_basis: open-problem-resolution (#29385)
+proof_shape: bind-only for inhomogeneous and result; escape_witness: none.
+The new definitions A, a and claim are consumed by result.
+The private inhomogeneous identity is consumed by result.
+Direct frozen dependencies:
+  D5/S1/Recurrence/A308815DFiniteRecurrence.euler_coeff.
+The original cat_ode in that same owner is exposed without changing its statement
+or proof; inhomogeneous is its new live consumer. Its owner requires canonical
+repinning after independent pre-freeze review.
+-/
+
 set_option autoImplicit false
 
 namespace D5.S1.Recurrence.Algebraic.MatharA157100FiveTermRecurrence
@@ -47,10 +59,10 @@ private theorem inhomogeneous :
     coe_substAlgHom] at h
   dsimp [A]
   rw [Derivation.leibniz, derivative_subst ht]
+  dsimp [t] at h ⊢
   simp only [map_add, map_sub, derivative_one, derivative_X, derivative_pow,
     Derivation.leibniz, smul_eq_mul, add_zero, zero_add, mul_one, one_mul,
     Nat.add_sub_cancel, Nat.cast_ofNat]
-  dsimp [t] at h ⊢
   linear_combination (1 - 3 * X ^ 2) * h
 
 theorem result : claim := by
@@ -69,14 +81,12 @@ theorem result : claim := by
     ring
   rw [hex] at h
   simp only [map_add, map_sub, coeff_C_mul, coeff_X_pow_mul', euler_coeff] at h
-  simp only [if_pos (show 1 ≤ n by omega), if_pos (show 2 ≤ n by omega),
-    if_pos (show 3 ≤ n by omega), if_pos hn] at h
-  simp only [euler_coeff] at h
-  have h1 : (n - 1 : ℕ) ≠ 0 := by omega
+  simp only [ite_eq_left (show 1 ≤ n by omega), ite_eq_left (show 2 ≤ n by omega),
+    ite_eq_left (show 3 ≤ n by omega), ite_eq_left hn] at h
   have h2 : n ≠ 2 := by omega
   have h0 : n ≠ 0 := by omega
-  simp only [coeff_one, if_neg h0, coeff_ofNat_mul, coeff_X_pow,
-    if_neg h2, mul_zero, sub_zero] at h
+  simp only [coeff_one, ite_eq_right h0, coeff_ofNat_mul, coeff_X_pow,
+    ite_eq_right h2, mul_zero, sub_zero] at h
   simp only [Nat.cast_sub (show 1 ≤ n by omega), Nat.cast_sub (show 2 ≤ n by omega),
     Nat.cast_sub (show 3 ≤ n by omega), Nat.cast_sub hn, Nat.cast_one, Nat.cast_ofNat] at h
   dsimp [a]
