@@ -2900,4 +2900,4 @@ $L,p_{13},p_{23}$，只预设 $p_{13}$ 保迹，按 (53) 内部定义 $\omega_0,
 
 ## Two primitive maps and the retained insertion condition
 
-[Quantum-origin Part III, section 62](../../docs/develop/theory/QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES_III.md#62-两个原始映射内部插入与严格恢复) gives the two-map presentation, its staged normalization proof, strict unique-extension equivalence to (53), (56), (57), and the Bell partial-transpose boundary for the retained whole-cone insertion condition.
+[Quantum-origin Part III, section 62](../../docs/develop/theory/QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES_III.md#62-两个原始映射内部插入与严格恢复) gives the two-map presentation with I, W, III, the unit-slice proof of full II before the second binary interface, strict unique-extension equivalence to (53), (56), (57), and the classical-blur and Bell partial-transpose controls for W and the retained whole-cone insertion condition.
