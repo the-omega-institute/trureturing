@@ -166,6 +166,10 @@ $$\neg(\forall t: \mathbb{N}, \forall r: \mathbb{N}, (1 \le t) \Rightarrow ((1 \
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/NewtonPolytopes/TwistedSchurSingleOrbitRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/marin-conjecture-8-1` (refuted) by `D5/S3/Geometry/NewtonPolytopes/TwistedSchurSingleOrbitRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"marin-conjecture-8-1","declaration_gid":"D5/S3/Geometry/NewtonPolytopes/TwistedSchurSingleOrbitRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Carles Marín (2026). *Schur polynomials twisted by roots of unity and reciprocal pairs: torsion filters, fusion quotients, and total unimodularity at odd order*. DOI: [10.48550/arXiv.2608.18302](https://doi.org/10.48550/arXiv.2608.18302). URL: <https://arxiv.org/abs/2608.18302v2>.
