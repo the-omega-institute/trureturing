@@ -1258,7 +1258,7 @@ $$
 
 **命题 14.2（实际交换两个相同扇区时的单 ready 控制）。** 删除 (13.9) 后，即使完整 S、局部三维最小面、有限秩及统计回返都成立，真正单一 ready 的实际轨道张成也不排除两个相同复扇区。
 
-证明。取 $J=\operatorname{Herm}_2(\mathbb C)\oplus\operatorname{Herm}_2(\mathbb C)$ 的全 PSD 直和锥及总迹单位，ready 为 $(P_z,0)$。用 14.1 的三个球旋转所对应的酉共轭分别作用于两个块，得六个字母；第七个字母为实际块交换 $\sigma(X,Y)=(Y,X)$，另四个为单位。全部字母在态空间上的阶整除二，故满足统计 $\mathrm R_{10}$。取原终端效应 $E=(P_z,P_z/2)$，置 $p(a)=\operatorname{Tr}(E G_a(P_z,0))$，其中 $G_a$ 是这些原字母的顺序复合。
+证明。取 $P_z=\operatorname{diag}(1,0)=(I+\sigma_z)/2$、$\sigma_z=\operatorname{diag}(1,-1)$。令 $J=\operatorname{Herm}_2(\mathbb C)\oplus\operatorname{Herm}_2(\mathbb C)$，取其全 PSD 直和锥及总迹单位，ready 为 $(P_z,0)$。用 14.1 的三个球旋转所对应的酉共轭分别作用于两个块，得六个字母；第七个字母为实际块交换 $\sigma(X,Y)=(Y,X)$，另四个为单位。全部字母在态空间上的阶整除二，故满足统计 $\mathrm R_{10}$。取原终端效应 $E=(P_z,P_z/2)$，置 $p(a)=\operatorname{Tr}(E G_a(P_z,0))$，其中 $G_a$ 是这些原字母的顺序复合。
 
 严格的行分离由
 
