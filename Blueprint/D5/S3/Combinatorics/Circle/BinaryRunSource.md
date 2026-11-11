@@ -101,5 +101,5 @@ For the actual centered source, the oriented unsigned code is -actualSource plus
 - Truth anchor: `D5/S3/Combinatorics/Circle/BinaryRunSource.separated_run_bound`
 - Dependency: [D5/S1/Words/AssociatedMersenne/CircularWords](../../../S1/Words/AssociatedMersenne/CircularWords.md)
 - Dependency: [D5/S3/Combinatorics/Circle/ExpandingSourcePath](ExpandingSourcePath.md)
+- Dependency: [D5/S3/Combinatorics/Circle/Orbit/ZeroSumSubsets](Orbit/ZeroSumSubsets.md)
 - Dependency: [D5/S3/Combinatorics/Circle/SourceWidth](SourceWidth.md)
-- Dependency: [D5/S3/Combinatorics/Circle/ZeroSumSubsets](ZeroSumSubsets.md)
