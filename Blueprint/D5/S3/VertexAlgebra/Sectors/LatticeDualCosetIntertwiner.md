@@ -150,7 +150,7 @@ Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetIntertwiner.mode_sm
 
 *Commentary.*
 
-For all D,I, complex c, source u, rational tau and input v, mode I (c smul u) tau v = c smul mode I u tau v. No Lawful or inverse hypotheses. Derived by source linearity. proof_shape: bind-only; consumed by coefficient_charge, charged_source_recurrence and reconstruct_source.
+For all D,I, complex c, source u, rational tau and input v, mode I (c smul u) tau v = c smul mode I u tau v. No Lawful or inverse hypotheses. Derived by source linearity. Used by coefficient_charge, charged_source_recurrence and reconstruct_source.
 
 **Theorem 1.13 (mode_add_source).**
 
@@ -162,7 +162,7 @@ Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetIntertwiner.mode_ad
 
 *Commentary.*
 
-For all D,I,u,w,tau,v, mode I (u+w) tau v is the sum of the two source modes. No Lawful or inverse hypotheses. Derived by source linearity. proof_shape: bind-only; consumed by reconstruct_source and ground_sequence_detects_zero.
+For all D,I,u,w,tau,v, mode I (u+w) tau v is the sum of the two source modes. No Lawful or inverse hypotheses. Derived by source linearity. Used by reconstruct_source and ground_sequence_detects_zero.
 
 **Theorem 1.14 (ward).**
 
@@ -174,7 +174,7 @@ Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetIntertwiner.ward`
 
 *Commentary.*
 
-For every Lawful I, all algebra h, source u, input v, integer p and rational tau: action(a+b,h)[p](mode I u tau v) - mode I u tau(action(b,h)[p]v) = sum_i leftTerm(D,a,I,h,u,v,p,0,tau,i). Set r=0 in full Jacobi; the other binomial sums each collapse to i=0. No inverse or duality hypotheses. proof_shape: bind-only; consumed by ground_current_ward, energy_ward and coefficient_charge.
+For every Lawful I, all algebra h, source u, input v, integer p and rational tau: action(a+b,h)[p](mode I u tau v) - mode I u tau(action(b,h)[p]v) = sum_i leftTerm(D,a,I,h,u,v,p,0,tau,i). Set r=0 in full Jacobi; the other binomial sums each collapse to i=0. No inverse or duality hypotheses. Used by ground_current_ward, energy_ward and coefficient_charge.
 
 **Theorem 1.15 (current_ground).**
 
@@ -186,7 +186,7 @@ Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetIntertwiner.current
 
 *Commentary.*
 
-For arbitrary integral d,n, colour i and natural j, action(d,currentState i)[j](ground n) equals (bilinear(unitCharge i,n)+d_i) smul ground n if j=0 and zero otherwise. No I, Lawful or inverse hypotheses. Substitute the native current coefficients and differentiate the constant polynomial. proof_shape: bind-only; consumed by ground_current_ward and pair_ground_detects_zero.
+For arbitrary integral d,n, colour i and natural j, action(d,currentState i)[j](ground n) equals (bilinear(unitCharge i,n)+d_i) smul ground n if j=0 and zero otherwise. No I, Lawful or inverse hypotheses. Substitute the native current coefficients and differentiate the constant polynomial. Used by ground_current_ward and pair_ground_detects_zero.
 
 **Theorem 1.16 (ground_current_ward).**
 
@@ -198,7 +198,7 @@ Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetIntertwiner.ground_
 
 *Commentary.*
 
-For every Lawful I, integral n, arbitrary input v, colour i, integer p and rational tau, the current commutator on mode I (ground n) tau v equals (bilinear(unitCharge i,n)+a_i) smul mode I (ground n) (p+tau) v. Apply ward and current_ground; all positive source-current terms vanish. No inverse or duality hypotheses. proof_shape: bind-only; consumed by pair_ground_detects_zero and reconstruct_input.
+For every Lawful I, integral n, arbitrary input v, colour i, integer p and rational tau, the current commutator on mode I (ground n) tau v equals (bilinear(unitCharge i,n)+a_i) smul mode I (ground n) (p+tau) v. Apply ward and current_ground; all positive source-current terms vanish. No inverse or duality hypotheses. Used by pair_ground_detects_zero and reconstruct_input.
 
 **Theorem 1.17 (energy_ward).**
 
@@ -210,7 +210,7 @@ Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetIntertwiner.energy_
 
 *Commentary.*
 
-For every Lawful I and all u,v,tau, moduleL(a+b,H,0)(mode I u tau v) - mode I u tau(moduleL(b,H,0)v) = mode I (moduleL(a,H,0)u) tau v - (tau+1) smul mode I u tau v. Use ward with the original omega and p=1, then the actual source-translation law. No inverse or duality hypotheses. proof_shape: bind-only; consumed by ground_eigen.
+For every Lawful I and all u,v,tau, moduleL(a+b,H,0)(mode I u tau v) - mode I u tau(moduleL(b,H,0)v) = mode I (moduleL(a,H,0)u) tau v - (tau+1) smul mode I u tau v. Use ward with the original omega and p=1, then the actual source-translation law. No inverse or duality hypotheses. Used by ground_eigen.
 
 **Theorem 1.18 (current_component).**
 
@@ -222,7 +222,7 @@ Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetIntertwiner.current
 
 *Commentary.*
 
-For all D,d,i, integer m, arbitrary carrier v and charge k, the charge k component of action(d,currentState i)[m]v is shiftedCurrentPolynomial D d 1 i k m (v k). The proof extends the native single-charge current formula through finite-support linear induction. No I, Lawful or inverse hypotheses. proof_shape: content; live in coefficient_charge and pair_ground_detects_zero.
+For all D,d,i, integer m, arbitrary carrier v and charge k, the charge k component of action(d,currentState i)[m]v is shiftedCurrentPolynomial D d 1 i k m (v k). The proof extends the native single-charge current formula through finite-support linear induction. No I, Lawful or inverse hypotheses. Used in coefficient_charge and pair_ground_detects_zero.
 
 **Theorem 1.19 (coefficient_charge).**
 
@@ -234,7 +234,7 @@ Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetIntertwiner.coeffic
 
 *Commentary.*
 
-For every Lawful I with H G_C=1, integral source/input/output charges n,l,k, arbitrary oscillator polynomials u,v and rational tau, a nonzero charge k component of mode I (single n u) tau (single l v) forces k=n+l. Zero-current Ward identities give all Gram row equations; cancel the nonzero polynomial and apply the original Gram left inverse. No right-inverse, positivity or rational-duality hypothesis. proof_shape: content; escape-witness is forced charge support, consumed by ground_charge.
+For every Lawful I with H G_C=1, integral source/input/output charges n,l,k, arbitrary oscillator polynomials u,v and rational tau, a nonzero charge k component of mode I (single n u) tau (single l v) forces k=n+l. Zero-current Ward identities give all Gram row equations; cancel the nonzero polynomial and apply the original Gram left inverse. No right-inverse, positivity or rational-duality hypothesis. This forces charge support, as used by ground_charge.
 
 **Theorem 1.20 (ground_charge).**
 
@@ -246,7 +246,7 @@ Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetIntertwiner.ground_
 
 *Commentary.*
 
-For every Lawful I with H G_C=1 and every n,l,k,tau, a nonzero charge k component of the ground-to-ground mode forces k=n+l. This is coefficient_charge at the constant source and input polynomials. proof_shape: content after inlining the new coefficient_charge proof; consumed by ground_charge_projection.
+For every Lawful I with H G_C=1 and every n,l,k,tau, a nonzero charge k component of the ground-to-ground mode forces k=n+l. This is coefficient_charge at the constant source and input polynomials. Used by ground_charge_projection.
 
 **Theorem 1.21 (ground_charge_projection).**
 
@@ -258,7 +258,7 @@ Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetIntertwiner.ground_
 
 *Commentary.*
 
-For every Lawful I with H G_C=1 and all n,l,tau, the whole ground-to-ground mode equals single(n+l, its n+l component). Use ground_charge to eliminate every other charge. No right inverse or rational duality is required. proof_shape: content after inlining the new charge selection; consumed by ground_leading and pair_ground_detects_zero.
+For every Lawful I with H G_C=1 and all n,l,tau, the whole ground-to-ground mode equals single(n+l, its n+l component). Use ground_charge to eliminate every other charge. No right inverse or rational duality is required. Used by ground_leading and pair_ground_detects_zero.
 
 **Theorem 1.22 (ground_energy_difference).**
 
@@ -270,7 +270,7 @@ Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetIntertwiner.ground_
 
 *Commentary.*
 
-For every D, rational mu,nu and integral n,l, q_(mu+nu)(n+l)-q_mu(n)-q_nu(l)=groundPower(mu,nu,n,l). Expand the original quadratic form using symmetry and bilinearity. No I, inverse or exact-duality hypothesis. proof_shape: bind-only; consumed by ground_spectrum.
+For every D, rational mu,nu and integral n,l, q_(mu+nu)(n+l)-q_mu(n)-q_nu(l)=groundPower(mu,nu,n,l). Expand the original quadratic form using symmetry and bilinearity. No I, inverse or exact-duality hypothesis. Used by ground_spectrum.
 
 **Theorem 1.23 (ground_L0).**
 
@@ -282,7 +282,7 @@ Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetIntertwiner.ground_
 
 *Commentary.*
 
-For every D,H, integral d, both inverse equations, rational mu with G_Q mu=d and integral n, actual moduleL(d,H,0)(ground n)=q_mu(n) smul ground n. Specialize moduleL_basis_zero to oscillator exponent zero. No Lawful field is required. proof_shape: bind-only; consumed by ground_eigen.
+For every D,H, integral d, both inverse equations, rational mu with G_Q mu=d and integral n, actual moduleL(d,H,0)(ground n)=q_mu(n) smul ground n. Specialize moduleL_basis_zero to oscillator exponent zero. No Lawful field is required. Used by ground_eigen.
 
 **Theorem 1.24 (dual_add).**
 
@@ -294,7 +294,7 @@ Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetIntertwiner.dual_ad
 
 *Commentary.*
 
-For every D and integral a,b, rational mu,nu with G_Q mu=a and G_Q nu=b, G_Q(mu+nu)=a+b coordinatewise. Distribute the finite sums. No I or inverse hypotheses. proof_shape: bind-only; consumed by ground_spectrum.
+For every D and integral a,b, rational mu,nu with G_Q mu=a and G_Q nu=b, G_Q(mu+nu)=a+b coordinatewise. Distribute the finite sums. No I or inverse hypotheses. Used by ground_spectrum.
 
 **Theorem 1.25 (ground_eigen).**
 
@@ -306,7 +306,7 @@ Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetIntertwiner.ground_
 
 *Commentary.*
 
-Under the full hypotheses, for all n,l and rational raw power s, actual moduleL(a+b,H,0) on (I(ground n)).coeff s (ground l) is multiplication by q_mu(n)+q_nu(l)+s. Apply energy_ward at tau=-s-1 and the two actual ground_L0 equations. The coefficient may be zero. proof_shape: bind-only; consumed by ground_spectrum.
+Under the full hypotheses, for all n,l and rational raw power s, actual moduleL(a+b,H,0) on (I(ground n)).coeff s (ground l) is multiplication by q_mu(n)+q_nu(l)+s. Apply energy_ward at tau=-s-1 and the two actual ground_L0 equations. The coefficient may be zero. Used by ground_spectrum.
 
 **Theorem 1.26 (ground_spectrum).**
 
@@ -318,7 +318,7 @@ Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetIntertwiner.ground_
 
 *Commentary.*
 
-Under the full hypotheses, for every n,l,k, oscillator exponent e and rational raw power s, a nonzero polynomial coefficient e in charge k of the ground-to-ground field implies BOTH k=n+l and s=groundPower(mu,nu,n,l)+oscillatorEnergy(e). Combine charge selection with actual moduleL_coeff, cancel the nonzero coefficient and use the quadratic energy difference. This derives the rational exponent restriction from the laws. proof_shape: content; escape-witness is the joint charge/energy restriction, consumed by ground_below, ground_leading and pair_ground_detects_zero.
+Under the full hypotheses, for every n,l,k, oscillator exponent e and rational raw power s, a nonzero polynomial coefficient e in charge k of the ground-to-ground field implies BOTH k=n+l and s=groundPower(mu,nu,n,l)+oscillatorEnergy(e). Combine charge selection with actual moduleL_coeff, cancel the nonzero coefficient and use the quadratic energy difference. This derives the rational exponent restriction from the laws. This joint charge/energy restriction is used by ground_below, ground_leading and pair_ground_detects_zero.
 
 **Theorem 1.27 (ground_below).**
 
@@ -330,7 +330,7 @@ Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetIntertwiner.ground_
 
 *Commentary.*
 
-Under the full hypotheses, for all n,l and rational s strictly below groundPower(mu,nu,n,l), the entire raw coefficient is zero. A hypothetical nonzero charge/monomial coefficient contradicts ground_spectrum and nonnegative natural oscillator energy. proof_shape: content after inlining the new spectrum inference; consumed by mode_below and the charged recurrences.
+Under the full hypotheses, for all n,l and rational s strictly below groundPower(mu,nu,n,l), the entire raw coefficient is zero. A hypothetical nonzero charge/monomial coefficient contradicts ground_spectrum and nonnegative natural oscillator energy. Used by mode_below and the charged recurrences.
 
 **Theorem 1.28 (ground_leading).**
 
@@ -342,7 +342,7 @@ Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetIntertwiner.ground_
 
 *Commentary.*
 
-Under the full hypotheses, for every n,l, the full raw coefficient at groundPower equals groundScalar(mu,nu,n,l) smul ground(n+l). Charge projection and the spectrum force oscillator energy zero, hence exponent zero. The scalar can vanish. proof_shape: content after inlining the new spectrum inference; consumed by mode_leading and the charged recurrences.
+Under the full hypotheses, for every n,l, the full raw coefficient at groundPower equals groundScalar(mu,nu,n,l) smul ground(n+l). Charge projection and the spectrum force oscillator energy zero, hence exponent zero. The scalar can vanish. Used by mode_leading and the charged recurrences.
 
 **Theorem 1.29 (charged_ground_leading).**
 
@@ -354,7 +354,7 @@ Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetIntertwiner.charged
 
 *Commentary.*
 
-For all D and integral d,m,n, the actual charged action at integer mode -chargedPower(d,m,n)-1 sends ground n to epsilon(D,m,n) smul ground(m+n). Compute the native creation coefficient at zero with the original cocycle. No inverse, rational duality or Lawful field hypotheses. proof_shape: bind-only; consumed by charged_source_recurrence and charged_input_recurrence.
+For all D and integral d,m,n, the actual charged action at integer mode -chargedPower(d,m,n)-1 sends ground n to epsilon(D,m,n) smul ground(m+n). Compute the native creation coefficient at zero with the original cocycle. No inverse, rational duality or Lawful field hypotheses. Used by charged_source_recurrence and charged_input_recurrence.
 
 **Theorem 1.30 (charged_ground_above).**
 
@@ -366,7 +366,7 @@ Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetIntertwiner.charged
 
 *Commentary.*
 
-For all D,d,m,n and integer j strictly greater than -chargedPower(d,m,n)-1, the charged action at j on ground n is zero. The native creation index is negative. No inverse, duality or Lawful field hypotheses. proof_shape: bind-only; consumed by both charged recurrences.
+For all D,d,m,n and integer j strictly greater than -chargedPower(d,m,n)-1, the charged action at j on ground n is zero. The native creation index is negative. No inverse, duality or Lawful field hypotheses. Used by both charged recurrences.
 
 **Theorem 1.31 (chargedPower_add).**
 
@@ -378,7 +378,7 @@ Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetIntertwiner.charged
 
 *Commentary.*
 
-For all D,a,b,m,n,l, chargedPower(a+b,m,n+l)=chargedPower(a,m,n)+chargedPower(b,m,l). Distribute bilinear and coordinate pairings. No I, H or rational duality is required. proof_shape: bind-only; consumed by both charged recurrences.
+For all D,a,b,m,n,l, chargedPower(a+b,m,n+l)=chargedPower(a,m,n)+chargedPower(b,m,l). Distribute bilinear and coordinate pairings. No I, H or rational duality is required. Used by both charged recurrences.
 
 **Theorem 1.32 (groundPower_source_shift).**
 
@@ -390,7 +390,7 @@ Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetIntertwiner.groundP
 
 *Commentary.*
 
-For all D,b, rational mu,nu with G_Q nu=b, and integral m,n,l, groundPower(mu,nu,m+n,l)=groundPower(mu,nu,n,l)+chargedPower(b,m,l). Expand the rational Gram pairing and use physical_pairing_integral. No inverse or Lawful field hypotheses; no duality assumption on mu. proof_shape: bind-only; consumed by charged_source_recurrence and groundPower_input_shift.
+For all D,b, rational mu,nu with G_Q nu=b, and integral m,n,l, groundPower(mu,nu,m+n,l)=groundPower(mu,nu,n,l)+chargedPower(b,m,l). Expand the rational Gram pairing and use physical_pairing_integral. No inverse or Lawful field hypotheses; no duality assumption on mu. Used by charged_source_recurrence and groundPower_input_shift.
 
 **Theorem 1.33 (groundPower_input_shift).**
 
@@ -402,9 +402,9 @@ Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetIntertwiner.groundP
 
 *Commentary.*
 
-For all D,a, rational mu,nu with G_Q mu=a, and integral m,n,l, groundPower(mu,nu,n,m+l)=groundPower(mu,nu,n,l)+chargedPower(a,m,n). Use groundPower_source_shift with the arguments exchanged and symmetry. No inverse or Lawful field hypotheses; no duality assumption on nu. proof_shape: bind-only; consumed by charged_input_recurrence.
+For all D,a, rational mu,nu with G_Q mu=a, and integral m,n,l, groundPower(mu,nu,n,m+l)=groundPower(mu,nu,n,l)+chargedPower(a,m,n). Use groundPower_source_shift with the arguments exchanged and symmetry. No inverse or Lawful field hypotheses; no duality assumption on nu. Used by charged_input_recurrence.
 
-admission_basis: escape-witness, with coefficient_charge and ground_spectrum on the live path to ground rigidity. The elementary linearity, Ward specializations, quadratic expansion, actual ground L0 specialization, dual addition and charged leading-index formulas are bind-only helpers with the consumers named above; they supply no independent admission claim. current_component uses finite-charge induction. Private lawful_zero, lawful_add and lawful_smul are bind-only closure helpers consumed by operatorSpace. The module specifies the full-law space and derives constraints on any element. It proves neither the existence of a nonzero lawful field nor a dimension-one equality, categorical fusion equivalence, physical realization or completion of string theory.
+coefficient_charge and ground_spectrum supply the charge and energy restrictions used in ground rigidity. The derivation uses source linearity, Ward specializations, quadratic expansion, actual ground L0 specialization, dual addition and charged leading-index formulas in the proofs named above. current_component uses finite-charge induction. Private lawful_zero, lawful_add and lawful_smul establish the closure properties used to define operatorSpace. The module specifies the full-law space and derives constraints on any element. It proves neither the existence of a nonzero lawful field nor a dimension-one equality, categorical fusion equivalence, physical realization or completion of string theory.
 
 ## References
 
