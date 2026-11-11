@@ -8,6 +8,71 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 noncomputable section
 attribute [local irreducible] a L
+namespace ColumnsConstant
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature (Σ n : ℕ, Fin 5 × Fin n → Fin 3)
+    (fun p => Fin 5 × Fin p.1) (fun _ => Fin 3)
+def actual : Realization signature :=
+  realize signature (fun _ p x => p.2 x) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {n : ℕ}, 2 ≤ n → ∀ (P : Fin 5 × Fin n → Fin 3), Proper P →
+    ∀ (d : Fin 3), (∀ i, P i ≠ d) → ∀ (j : Fin n) (r : Fin 5),
+      R.readout () ⟨n, P⟩ (r, j) = P (0, j)
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  let P : Fin 5 × Fin 2 → Fin 3 := fun p => if p.2 = 0 then 0 else 1
+  have hp : Proper P := by decide +kernel
+  have hd : ∀ i, P i ≠ 2 := by decide +kernel
+  have hh := h (by decide) P hp 2 hd 0 0
+  change (1 : Fin 3) = 0 at hh
+  exact (by decide : (1 : Fin 3) ≠ 0) hh
+def family : Registration arena (type_of% @columns_constant) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@columns_constant, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    refine ⟨⟨1, fun x => if x.1 = 0 then 0 else 1⟩, (0, 0), (1, 0), ?_⟩
+    change (0 : Fin 3) ≠ 1
+    decide
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@columns_constant) (Realization signature) Type Unit where
+  unitName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233260Literal.ColumnsConstant.auditUnit
+  realizationName := `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233260Literal.ColumnsConstant.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ p x => p.2 x) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233260Literal
+    definition := none
+    coordinates := #[0, 2]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end ColumnsConstant
+
 namespace Bridge
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℤ)
