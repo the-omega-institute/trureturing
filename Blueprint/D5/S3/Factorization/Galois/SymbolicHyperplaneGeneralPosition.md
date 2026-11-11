@@ -40,39 +40,23 @@ Flatten the dependent coordinate blocks and take V(sigma) to be the F-span of th
 
 For the actual embedding application of R5, take F here to be the normal-closure field K_0 of the excerpt and b(i,sigma,j)=sigma(x(i,j)), before adjoining the common parameter tuple. This substitution produces the actual rows of (31.6) and the partition formula in terms of their scalar-extended block-span dimensions. The theorem does not identify those dimensions with degrees of intermediate fields, prove distinctness or completeness of the embedding family, establish independence of the h-1 original common rows, identify the rank of the original-F polynomial map, prove Galois descent or uniqueness of a fewest-block optimum, or return an original-F simultaneous attaining tuple. Those remain separate obligations of the source. The following theorem supplies the missing row-basis assertion. Four-slot Reg registration remains unfinished under https://github.com/the-omega-institute/trureturing/issues/29247; no declared_validated status is asserted.
 
+**Theorem 1.3 (The displayed common rows form the exact cut basis and attain partition rank).**
 
-**Theorem 1.3 (The displayed rows are the exact common-cut basis and attain the partition rank).**
-
-For every finite block type $B$, finite coordinate types $J(i)$, characteristic-zero field $F$, base array $b(i,\sigma,j)$, distinguished $k\in B$, and finite $s\subseteq I$, assume
-$b(i,\sigma)\ne0$ for every $i\in B$ and $\sigma\in s$. Put
-$K=\operatorname{Frac}(F[T(a):a\in\sum_iJ(i)])$ and use the same independent tuple $T$ in every row. Then there is a partition $P$ of $s$ such that, for each $\sigma\in s$, the family
-
-$$
-\left\{
-U_{k,\sigma}\,\widetilde b_{i,\sigma}-U_{i,\sigma}\,\widetilde b_{k,\sigma}: i\in B,\ i\ne k
-\right\}
-$$
-
-is linearly independent and spans exactly
-
-$$
-\left\langle\widetilde b_{i,\sigma}:i\in B\right\rangle_K
-\cap\ker\!\left(\sum_aT(a)(-)\right).
-$$
-Moreover the total span of all displayed rows satisfies
-
-$$
-\operatorname{rank}=\min_{Q\in\operatorname{Finpartition}(s)}
-\sum_{A\in Q}\left(\sum_i q_i(A)-1\right),
-$$
-
-with equality at $P$. The distinguished row is zero, so the basis contains exactly $|B|-1$ rows. No general-position antecedent, quotient basis, Galois descent, or original-field specialization is assumed.
+$$\forall F \in Type*,\; \forall I \in Type*,\; \forall B \in Type*,\; \forall J \in B \to Type*,\; [Field\left(F\right)], [CharZero\left(F\right)], [Fintype\left(B\right)], [\forall i \in B,\; Fintype\left(J\left(i\right)\right)], \forall b \in \left(\forall i \in B,\; I \to J\left(i\right) \to F\right),\; \forall k \in B,\; \forall s \in Finset\left(I\right),\; \left(\forall sigma \in I,\; sigma \in s \Rightarrow \left(\forall i \in B,\; b\left(i, sigma\right) \ne 0\right)\right) \Rightarrow \left(\exists P \in Finpartition\left(s\right),\; \left(\forall sigma \in I,\; sigma \in s \Rightarrow \left(\left(\forall i \in B,\; U\left(b, sigma, i\right) \ne 0\right) \land \left(LinearIndependent\left(K, Rows\left(b, k, sigma\right)\right) \land span\left(K, range\left(Rows\left(b, k, sigma\right)\right)\right) = Cut\left(b, sigma\right)\right)\right)\right) \land \left(CR\left(b, k, s\right) = BaseCost\left(b, P\right) \land \left(\forall Q \in Finpartition\left(s\right),\; CR\left(b, k, s\right) \le BaseCost\left(b, Q\right)\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Factorization/Galois/SymbolicHyperplaneGeneralPosition.symbolic_block_common_rows_basis_partition_rank` (`✓ std3`). ∎
 
+*Source.* Repository-derived.
+
+*Acknowledgement.* Orit E. Raz; Avi Wigderson (2019). *Subspace arrangements, graph rigidity and derandomization through submodular optimization*. URL: <https://arxiv.org/abs/1901.09423v1>.
+
 *Commentary.*
 
-The symbolic normal gives every $U_{i,\sigma}\ne0$ from the nonzero constant row and the independent coordinate variables. In a linear relation among the displayed rows, inspection of the $i$th original block isolates the coefficient of the $i$th row, proving independence. The existing common-row span identity removes the zero distinguished row and identifies the span with the one common kernel cut. The preceding no-GP partition theorem supplies the same attaining partition and the universal partition bound. For normalized embedding bases with first entry one, the nonzero-row premise is immediate. This theorem closes the exact basis clause of (31.6) while leaving the later intermediate-field, descent, and original-$F$ specialization steps outside its statement. Four-slot Reg registration remains unfinished under https://github.com/the-omega-institute/trureturing/issues/29247; no declared_validated status is asserted.
+Assume every base row b(i,sigma) is nonzero on the finite family. Put U(b,sigma,i)=Normal(T)(BlockRows(Lift(b),sigma,i)), and let Rows(b,k,sigma) be the family U(b,sigma,k) BlockRows(Lift(b),sigma,i)-U(b,sigma,i) BlockRows(Lift(b),sigma,k), indexed by the actual subtype of blocks i different from k. Cut(b,sigma) is span_K of all block rows for sigma intersected with ker(Normal(T)). The theorem returns every U(b,sigma,i) nonzero. The same independent tuple T is used in every block and every embedding. Inspecting block i in a zero linear combination of Rows isolates its coefficient; U(b,sigma,k) and a selected coordinate of b(i,sigma) are nonzero, giving linear independence. The original span_common_rows_eq_cut is reused for spanning; omitting its zero distinguished row preserves that span. Thus these exact h-1 displayed rows form a basis of Cut(b,sigma).
+
+BaseCost(b,P) denotes the sum over nonempty parts A0 of P of [(sum over i of dim_F blockSpan(b,A0,i))-1]. Scalar inclusion preserves each finite row-span dimension: a base-field basis remains independent by Mathlib's linearIndependent_algebraMap_comp_iff, and its lifted span equals the lifted original row span. Consequently these are the original q_i(A0) of (31.5), before adjoining T. The same theorem combines the explicit basis with one attaining partition and every-partition upper bound for the total common-row span, which includes only an extra zero row for each sigma. Its GP input is proved internally by the preceding symbolic theorem.
+
+For the exact embedding application take this theorem's F to be the normal-closure field K_0, I to be the full type Hom_{F_0}(D,K_0), s to be its universe, J(i)=Fin(n_i+1), so the source dimension m_i=n_i+1, and b=ActualWindowCommonKernel.embeddingRows(id,X,x), where x is the actual F_0-basis of each normalized window X_i and x(i,0)=1. Applying an embedding to that first entry gives b(i,sigma,0)=1, discharging every row-nonvanishing premise. The distinguished block is the source's first block; the coordinate family is z(i,j), and K is K_0(z). This application, including basis and the original K_0-valued q_i costs, is checked transiently without retaining a bind-only specialization. A singleton block has an empty displayed basis and zero cut; an empty s has the empty partition. Empty coordinate blocks with an active nonzero row cannot satisfy the premise. No lower bound on h or distinctness of the subspaces is needed. The later intermediate-field identifications, Galois invariance/descent, original polynomial map and original-F simultaneous attainment remain separate. Four-slot Reg registration remains unfinished under https://github.com/the-omega-institute/trureturing/issues/29247; no declared_validated status is asserted.
 
 ## References
 
