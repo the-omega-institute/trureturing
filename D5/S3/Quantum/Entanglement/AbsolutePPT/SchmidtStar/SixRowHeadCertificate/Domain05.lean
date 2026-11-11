@@ -129,7 +129,7 @@ private theorem node70 (z k h : ℝ)
   · exact node71 z k h hz hZ hk hm hh hH hg
   · exact node72 z k h hz hZ (le_of_not_ge hm) hK hh hH hg
 
-theorem node68 (z k h : ℝ)
+private theorem node68 (z k h : ℝ)
     (hz : (9 / 16) ≤ z) (hZ : z ≤ (3 / 4))
     (hk : 0 ≤ k) (hK : k ≤ (1 / 2))
     (hh : (3 / 8) ≤ h) (hH : h ≤ (3 / 4))
@@ -576,7 +576,7 @@ private theorem node7 (z k h : ℝ)
   · exact node8 z k h hz hm hk hK hh hH hg
   · exact node67 z k h (le_of_not_ge hm) hZ hk hK hh hH hg
 
-private theorem node6 (z k h : ℝ)
+theorem node6 (z k h : ℝ)
     (hz : (9 / 16) ≤ z) (hZ : z ≤ (3 / 4))
     (hk : 0 ≤ k) (hK : k ≤ (1 / 2))
     (hh : 0 ≤ h) (hH : h ≤ (3 / 4))
