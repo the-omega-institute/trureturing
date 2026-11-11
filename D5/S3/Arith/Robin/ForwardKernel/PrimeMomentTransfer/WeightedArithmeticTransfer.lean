@@ -70,11 +70,11 @@ private lemma tuplePolynomial_mem {k : ℕ} (hk : k ≤ 4) (d : Fin k → ℕ)
   exact Finset.pow_subset_pow_right (by simp [coefficientPool])
     ((Finset.card_image_le).trans (by simpa using hk)) hp
 
-private lemma finite_polynomial_correlation (SS : Finset ℕ → ℝ) (β : ℝ)
-    (hSS : SS ∅ = 1) (hMS : MeanSquareHL4 SS β) (M ε : ℝ) (hM : 1 ≤ M) (hε : 0 < ε)
+private lemma finite_polynomial_correlation {q : ℕ} (SS : Finset ℕ → ℝ) (β : ℝ)
+    (hSS : SS ∅ = 1) (hMS : MeanSquareHL q SS β) (M ε : ℝ) (hM : 1 ≤ M) (hε : 0 < ε)
     (P : Finset (Polynomial ℝ)) :
     ∃ C : ℝ, 0 ≤ C ∧ ∃ m : ℕ, ∀ᶠ N : ℝ in atTop,
-      2 ≤ N ∧ ∀ p ∈ P, ∀ k : ℕ, k ≤ 4 → ∀ K : ℕ,
+      2 ≤ N ∧ ∀ p ∈ P, ∀ k : ℕ, k ≤ min 4 q → ∀ K : ℕ,
         1 ≤ K → (K : ℝ) ≤ M * N ^ β →
         ∀ T : Finset (Fin k → ℕ),
         T ⊆ Fintype.piFinset (fun _ => Finset.Ioc 0 K) →
@@ -138,12 +138,12 @@ theorem formal_weight_integrable (SS : Finset ℕ → ℝ) (N H B : ℝ)
       (polynomial_weight_integrable N hN B w hw (tuplePolynomial d J)).const_mul
         (center SS J))))
 
-private lemma reduced_correlation_transfer (SS : Finset ℕ → ℝ) (β : ℝ)
-    (hSS : SS ∅ = 1) (hMS : MeanSquareHL4 SS β) (M ε : ℝ) (hM : 1 ≤ M) (hε : 0 < ε) :
+private lemma reduced_correlation_transfer {q : ℕ} (SS : Finset ℕ → ℝ) (β : ℝ)
+    (hSS : SS ∅ = 1) (hMS : MeanSquareHL q SS β) (M ε : ℝ) (hM : 1 ≤ M) (hε : 0 < ε) :
     ∃ C : ℝ, 0 ≤ C ∧ ∃ m : ℕ, ∀ᶠ N : ℝ in atTop,
       2 ≤ N ∧ ∀ H : ℝ, 1 ≤ H → H ≤ N ^ β →
         ∀ B : ℝ, ∀ w : ℝ → ℝ, BVBound w B →
-        ∀ k : ℕ, k ≤ 4 → ∀ a b : Fin k → ℝ, admissible M a b →
+        ∀ k : ℕ, k ≤ min 4 q → ∀ a b : Fin k → ℝ, admissible M a b →
           |(∑ n ∈ Finset.Ioc ⌊N⌋₊ ⌊2 * N⌋₊, w ((n : ℝ) / N) *
               ∑ d ∈ Fintype.piFinset (fun i => points H (a i) (b i)),
                 reducedAt (Real.log n) n d) -
@@ -158,6 +158,7 @@ private lemma reduced_correlation_transfer (SS : Finset ℕ → ℝ) (β : ℝ)
   have hL : 0 ≤ Real.log N := Real.log_nonneg (by linarith [hN.1])
   refine ⟨hN.1, ?_⟩
   intro H hH hHN B w hw k hk a b hab
+  have hk4 : k ≤ 4 := (Nat.le_min.mp hk).1
   have hB : 0 ≤ B := hw.2.2.1
   let T := Fintype.piFinset (fun i => points H (a i) (b i))
   let K := ⌊M * H⌋₊
@@ -197,7 +198,7 @@ private lemma reduced_correlation_transfer (SS : Finset ℕ → ℝ) (β : ℝ)
     · intro p _ hp
       simp [Ne.symm hp]
     · intro hnot
-      exact (hnot (tuplePolynomial_mem hk d J)).elim
+      exact (hnot (tuplePolynomial_mem hk4 d J)).elim
   have hphi (x : ℝ) : w (x / N) * Phi SS H (Real.log x) a b =
       ∑ p ∈ coefficientFamily, c p * (w (x / N) * p.eval (Real.log x)) := by
     dsimp [c]
@@ -216,7 +217,7 @@ private lemma reduced_correlation_transfer (SS : Finset ℕ → ℝ) (β : ℝ)
     · intro p _ hp
       simp [Ne.symm hp]
     · intro hnot
-      exact (hnot (tuplePolynomial_mem hk d J)).elim
+      exact (hnot (tuplePolynomial_mem hk4 d J)).elim
   change |(∑ n ∈ Finset.Ioc ⌊N⌋₊ ⌊2 * N⌋₊, w ((n : ℝ) / N) *
       ∑ d ∈ T, reducedAt (Real.log n) n d) -
     (∫ x in N..2 * N, w (x / N) * Phi SS H (Real.log x) a b)| ≤ _
@@ -241,12 +242,12 @@ private lemma reduced_correlation_transfer (SS : Finset ℕ → ℝ) (β : ℝ)
         _ ≤ _ := by rw [mul_pow]; gcongr
     _ = _ := by ring
 
-private lemma reduced_transfer_power_error (SS : Finset ℕ → ℝ) (β : ℝ)
-    (hSS : SS ∅ = 1) (hMS : MeanSquareHL4 SS β) (M ε : ℝ) (hM : 1 ≤ M) (hε : 0 < ε) :
+private lemma reduced_transfer_power_error {q : ℕ} (SS : Finset ℕ → ℝ) (β : ℝ)
+    (hSS : SS ∅ = 1) (hMS : MeanSquareHL q SS β) (M ε : ℝ) (hM : 1 ≤ M) (hε : 0 < ε) :
     ∃ C : ℝ, 0 ≤ C ∧ ∀ᶠ N : ℝ in atTop,
       2 ≤ N ∧ ∀ H : ℝ, 1 ≤ H → H ≤ N ^ β →
         ∀ B : ℝ, ∀ w : ℝ → ℝ, BVBound w B →
-        ∀ k : ℕ, k ≤ 4 → ∀ a b : Fin k → ℝ, admissible M a b →
+        ∀ k : ℕ, k ≤ min 4 q → ∀ a b : Fin k → ℝ, admissible M a b →
           |(∑ n ∈ Finset.Ioc ⌊N⌋₊ ⌊2 * N⌋₊, w ((n : ℝ) / N) *
               ∑ d ∈ Fintype.piFinset (fun i => points H (a i) (b i)),
                 reducedAt (Real.log n) n d) -
@@ -284,17 +285,17 @@ private lemma reduced_transfer_power_error (SS : Finset ℕ → ℝ) (β : ℝ)
           rw [← Real.rpow_add hN0,
             show (1 / 2 + ε / 2) + ε / 2 = (1 / 2 + ε : ℝ) by ring]
 
-/-- Under the mean-square four-point correlation hypothesis, the BV weighted arithmetic cubic
+/-- Under the mean-square correlation hypothesis through order q, the BV weighted arithmetic second, cubic
 and fourth moments differ from their quadratic formal integrals by the uniform square-root
 error, for every integer length in the prescribed power band. -/
-theorem arithmetic_transfer (SS : Finset ℕ → ℝ) (α β : ℝ)
+theorem arithmetic_transfer {q : ℕ} (SS : Finset ℕ → ℝ) (α β : ℝ)
     (hα : 0 < α) (_hαβ : α < β) (hβ : β < 1)
-    (hSS : SS ∅ = 1) (_hSS1 : ∀ d, SS {d} = 1) (hMS : MeanSquareHL4 SS β)
+    (hSS : SS ∅ = 1) (_hSS1 : ∀ d, SS {d} = 1) (hMS : MeanSquareHL q SS β)
     (M : ℝ) (hM : 1 ≤ M) (ε : ℝ) (hε : 0 < ε) :
     ∃ C : ℝ, 0 ≤ C ∧ ∀ᶠ N : ℝ in atTop,
       ∀ H : ℕ, N ^ α ≤ (H : ℝ) → (H : ℝ) ≤ N ^ β →
       ∀ B : ℝ, ∀ w : ℝ → ℝ, BVBound w B →
-      ∀ k : ℕ, (k = 3 ∨ k = 4) →
+      ∀ k : ℕ, (k = 2 ∨ k = 3 ∨ k = 4) ∧ k ≤ q →
       ∀ a b : Fin k → ℝ, admissible M a b →
         |discreteRaw N H a b w -
           (∫ x in N..2 * N, w (x / N) * Phi SS H (Real.log x) a b)| ≤
@@ -318,7 +319,7 @@ theorem arithmetic_transfer (SS : Finset ℕ → ℝ) (α β : ℝ)
   intro H hlo hhi B w hw k hk a b hab
   have hH1 : (1 : ℝ) ≤ H := (Real.one_le_rpow hN1 hα.le).trans hlo
   have hH : 1 ≤ H := by exact_mod_cast hH1
-  have hk4 : k ≤ 4 := by rcases hk with rfl | rfl <;> omega
+  have hk4 : k ≤ 4 := by rcases hk.1 with rfl | rfl | rfl <;> omega
   have hMH : M * (H : ℝ) ≤ N := by
     calc
       _ ≤ M * N ^ β := mul_le_mul_of_nonneg_left hhi (by linarith)
@@ -341,8 +342,8 @@ theorem arithmetic_transfer (SS : Finset ℕ → ℝ) (α β : ℝ)
         exact (pow_le_pow_right₀ hL (by omega : k - 1 ≤ 5)).trans hlog5
       _ ≤ Real.sqrt N * ((H : ℝ) ^ k * N ^ ε) := le_mul_of_one_le_left (by positivity) hsqrt
       _ = _ := by rw [← hpow]; ring
-  have hc := hcollision N hred.1 H hH hMH B w hw k hk a b hab
-  have hr := hred.2 H hH1 hhi B w hw k hk4 a b hab
+  have hc := hcollision N hred.1 H hH hMH B w hw k hk.1 a b hab
+  have hr := hred.2 H hH1 hhi B w hw k (Nat.le_min.mpr ⟨hk4, hk.2⟩) a b hab
   calc
     _ ≤ |discreteRaw N H a b w -
         (∑ n ∈ Finset.Ioc ⌊N⌋₊ ⌊2 * N⌋₊, w ((n : ℝ) / N) *

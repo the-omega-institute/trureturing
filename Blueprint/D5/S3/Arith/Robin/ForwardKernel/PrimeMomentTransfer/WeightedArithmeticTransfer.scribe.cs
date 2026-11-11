@@ -11,7 +11,7 @@ internal sealed class WeightedArithmeticTransferDocument : IScribeDocumentDefini
         H("BV weighted arithmetic transfer"),
         Blocks(
             Paragraph(Text(
-                "MeanSquareHL4 is the uniform mean-square correlation hypothesis on real cutoffs "
+                "MeanSquareHL(q,SS,beta) is the uniform mean-square correlation hypothesis on real cutoffs "
                 + "N<=y<=2N and injective positive shift tuples in [1,K], with 1<=K<=M N^beta. "
                 + "Chan, A note on primes in short intervals, International Journal of Number Theory 2 "
                 + "(2006), 105–110, is the single-interval mean-square precedent. The overlapping "
@@ -37,18 +37,18 @@ internal sealed class WeightedArithmeticTransferDocument : IScribeDocumentDefini
             Describe.Lean(
                 DescribeId.Create("arithmetic-transfer"),
                 DeclarationHandle.Create(Prefix + "arithmetic_transfer"),
-                H("Weighted cubic and fourth arithmetic moments"),
+                H("Weighted second, cubic and fourth arithmetic moments"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "Assume zero less than alpha less than beta less than one, the uniform "
-                        + "four-point mean-square hypothesis MeanSquareHL4, and singular-series values one "
+                        + "mean-square hypothesis through the natural order q, and singular-series values one "
                         + "on the empty set and on singletons. Fix M at least one and positive "
                         + "epsilon. There is a nonnegative C such that, for every sufficiently "
                         + "large real N, every integer H between N to alpha and N to beta, "
                         + "every supported BV weight w with supremum bound plus variation at most B, "
-                        + "and every three or four intervals in [0,M], the discrete weighted product "
+                        + "and every k intervals with k in {2,3,4} and k<=q in [0,M], the discrete weighted product "
                         + "of centred von Mangoldt interval sums differs from the integral of "
                         + "w(x/N) times Phi(log x) by at most C B N to the power one half plus "
                         + "epsilon times H to the number of intervals. C and the threshold for N "
