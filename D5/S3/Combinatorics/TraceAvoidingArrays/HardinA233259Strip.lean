@@ -7,7 +7,7 @@
    digest: Hardin's order-four recurrence for the literal four-row pair-exclusion arrays. -/
 /-
 admission_basis: open-problem-resolution (#28807; Proved)
-escape_witness: columns_constant (common neighbour in the next column or, at the right edge, the previous column); Recurrence.recurrence uses the one-sided tables and Powers.power_polynomial
+escape_witness: none (bind-only; column constancy reuses HardinA233260Literal.columns_constant through row padding; the recurrence reuses HardinA233259PairTransferRecurrence.recurrence)
 Legal: proof_shape=bind-only; consumers=instDecidableLegal, a, legal_iff
 instDecidableLegal: proof_shape=bind-only; consumers=a
 a: proof_shape=bind-only; consumers=literal_card, a_sum, counting_bridge, finite_certificate, result
@@ -15,19 +15,19 @@ legal_iff: proof_shape=bind-only; consumers=literal_card
 literal_card: proof_shape=bind-only; consumers=a_sum
 proper_relabel: proof_shape=bind-only; consumers=L_card
 proper_two_labels: proof_shape=bind-only; consumers=used_two_or_three, L_card
-columns_constant: proof_shape=content; consumers=canon_two_eq
+columns_constant: proof_shape=bind-only; consumers=canon_two_eq
 alternating_proper: proof_shape=bind-only; consumers=canonical_two_card
 used_two_or_three: proof_shape=bind-only; consumers=weighted_count
-canon_two_eq: proof_shape=content; consumers=canonical_two_card
+canon_two_eq: proof_shape=bind-only; consumers=canonical_two_card
 CanonicalPatterns: proof_shape=bind-only; consumers=canonical_two_card, a_sum, L_card, weighted_count, counting_bridge
-canonical_two_card: proof_shape=content; consumers=weighted_count
+canonical_two_card: proof_shape=bind-only; consumers=weighted_count
 a_sum: proof_shape=bind-only; consumers=weighted_count
 L_card: proof_shape=bind-only; consumers=counting_bridge
-weighted_count: proof_shape=content; consumers=counting_bridge
-counting_bridge: proof_shape=content; consumers=scale_recurrence, Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259Strip.Bridge.family
-scale_recurrence: proof_shape=content; consumers=finite_certificate, result
-finite_certificate: proof_shape=content; consumers=result
-result: proof_shape=content; consumers=external-open-problem-resolution(#28807)
+weighted_count: proof_shape=bind-only; consumers=counting_bridge
+counting_bridge: proof_shape=bind-only; consumers=scale_recurrence, Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259Strip.Bridge.family
+scale_recurrence: proof_shape=bind-only; consumers=finite_certificate, result
+finite_certificate: proof_shape=bind-only; consumers=result
+result: proof_shape=bind-only; consumers=external-open-problem-resolution(#28807)
 -/
 import Mathlib.Data.Fintype.Card
 import Mathlib.SetTheory.Cardinal.Finite
@@ -38,6 +38,7 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferRecurrence
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177PairTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferCore
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233260Literal
 
 /-! Literal normalized colourings and their canonical pair-pattern count. -/
 set_option maxRecDepth 100000
@@ -101,33 +102,30 @@ private theorem proper_two_labels {n : ℕ} (hn : 2 ≤ n)
 private theorem columns_constant {n : ℕ} (hn : 2 ≤ n)
     (P : Fin 4 × Fin n → Fin 3) (hp : Proper P)
     (d : Fin 3) (hd : ∀ i, P i ≠ d) : ∀ j r, P (r, j) = P (0, j) := by
-  have finite_fact : ∀ a b c d : Fin 3,
-      a ≠ d → b ≠ d → c ≠ d → a ≠ c → b ≠ c → a = b := by decide +kernel
-  intro j
-  have adjacent (r : Fin 3) : P (r.castSucc, j) = P (r.succ, j) := by
-    by_cases hj : j.val + 1 < n
-    · let k : Fin n := ⟨j.val + 1, hj⟩
-      exact finite_fact _ _ (P (r.castSucc, k)) d (hd _) (hd _) (hd _)
-        (hp j hj r.castSucc r.castSucc (Or.inl rfl))
-        (hp j hj r.castSucc r.succ (Or.inr (by simp)))
-    · have hjpos : 0 < j.val := by have := j.isLt; omega
-      let k : Fin n := ⟨j.val - 1, by have := j.isLt; omega⟩
-      have hkn : k.val + 1 < n := by dsimp [k]; omega
-      have hkj : (⟨k.val + 1, hkn⟩ : Fin n) = j := by
-        apply Fin.ext
-        dsimp [k]
+  let row : Fin 5 → Fin 4 := fun r => ⟨min r.val 3, by omega⟩
+  let Q : Fin 5 × Fin n → Fin 3 := fun p => P (row p.1, p.2)
+  have hQ : HardinA233260Literal.Proper Q := by
+    intro j hj r s hrs
+    change P (row r, j) ≠ P (row s, ⟨j.val + 1, hj⟩)
+    apply hp j hj (row s) (row r)
+    by_cases h : row s = row r
+    · exact Or.inl h
+    · right
+      change min s.val 3 + 1 = min r.val 3
+      have hne : min s.val 3 ≠ min r.val 3 := fun e => h (Fin.ext e)
+      rcases hrs with hrs | hrs
+      · exact (h (congrArg row hrs.symm)).elim
+      · have hr := r.isLt
+        have hs := s.isLt
         omega
-      have h1 := hp k hkn r.succ r.succ (Or.inl rfl)
-      have h2 := hp k hkn r.castSucc r.succ (Or.inr (by simp))
-      rw [hkj] at h1 h2
-      exact finite_fact _ _ (P (r.succ, k)) d (hd _) (hd _) (hd _)
-        (Ne.symm h2) (Ne.symm h1)
-  intro r
-  fin_cases r
-  · rfl
-  · exact (adjacent 0).symm
-  · exact (adjacent 1).symm.trans (adjacent 0).symm
-  · exact (adjacent 2).symm.trans ((adjacent 1).symm.trans (adjacent 0).symm)
+  have hcol := HardinA233260Literal.columns_constant hn Q hQ d
+    (fun i => hd (row i.1, i.2))
+  intro j r
+  have h := hcol j r.castSucc
+  change P (row r.castSucc, j) = P (row 0, j) at h
+  rw [show row r.castSucc = r from Fin.ext (by dsimp [row]; omega),
+    show row 0 = 0 from rfl] at h
+  exact h
 
 private theorem alternating_proper (n : ℕ) (a b : Fin 3) (hab : a ≠ b) :
     Proper (alternating n a b) := by

@@ -33,9 +33,11 @@ internal sealed class HardinA233259StripDocument : IScribeDocumentDefinition
                 + "used pair to the smaller colour. A canonical pattern using k labels "
                 + "therefore has 2^(4*n-k) lifts. At width at least two a proper pattern "
                 + "uses two or three labels, and every relabelling orbit has six members. "
-                + "If one label is omitted, adjacent entries of a column must agree: "
-                + "a common neighbour in another column excludes both differing labels. "
-                + "Each column is then constant and the two labels alternate. The six "
+                + "Copying the fourth row to a fifth row preserves properness: the new "
+                + "antidiagonal bonds are horizontal bonds of the fourth row. The omitted "
+                + "label is unchanged, so the five-row column-constancy theorem "
+                + "HardinA233260Literal.columns_constant makes each original column constant. "
+                + "The two labels then alternate. The six "
                 + "such patterns have exactly one canonical member by the canonical two-label "
                 + "uniqueness theorem for the ladder, since constant columns satisfy its "
                 + "two-sided bonds. If C is the number "
@@ -58,8 +60,7 @@ internal sealed class HardinA233259StripDocument : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create(name.Replace("_", "-").ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(title + "."))), DescribeRole.Theorem,
-            new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233259"), ResolutionKind.Proved));
+            Blocks(Paragraph(Text(title + "."))), DescribeRole.Theorem);
 
     private static DocumentBlock Node(string name, string title, Formula formula, bool theorem,
         bool literature = false) =>
