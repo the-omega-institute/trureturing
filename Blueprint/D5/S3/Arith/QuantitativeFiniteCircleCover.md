@@ -4,7 +4,7 @@
 
 A finite block of a circle rotation meets every open interval of the specified length when the explicit small-denominator obstructions are absent.
 
-SOURCE-ONLY UNCOMPILED. This document and the Lean proof are candidates. No compilation, axiom report, route admission, or consensus is asserted. All occurrences of natural or integer variables inside real expressions use the canonical real casts. The ceiling is the integer ceiling Int.ceil, so H = ceil(4/w) is an integer. No irrationality hypothesis is imposed.
+This document records the finite-window theorem and its exact hypotheses. The source keeps the bounded integer block and explicit finite obstruction family. All occurrences of natural or integer variables inside real expressions use the canonical real casts. The ceiling is the integer ceiling Int.ceil, so H = ceil(4/w) is an integer. No irrationality hypothesis is imposed.
 
 **Theorem 1.1 (The fully quantified finite window theorem).**
 
