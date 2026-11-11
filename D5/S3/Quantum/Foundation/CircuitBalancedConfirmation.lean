@@ -419,9 +419,10 @@ private theorem least_implies_mixture {C : PointedCone ℝ A} {u : A →ₗ[ℝ]
     change sInf {r | ∃ f : A →ₗ[ℝ] ℝ, confirms C u p f ∧ f x = r} = e p x
     apply le_antisymm
     · exact csInf_le ⟨0, fun _ ⟨f, hf, hr⟩ => hr ▸ (hf.1 x hx).1⟩ ⟨e p, hconf p, rfl⟩
-    · apply le_csInf ⟨e p x, e p, hconf p, rfl⟩
-      rintro r ⟨f, hf, hr⟩
-      exact hr ▸ hleast p f hf x hx
+    · refine le_csInf (s := {r | ∃ f : A →ₗ[ℝ] ℝ, confirms C u p f ∧ f x = r}) ?_ ?_
+      · exact ⟨e p x, e p, hconf p, rfl⟩
+      · rintro r ⟨f, hf, hr⟩
+        exact hr ▸ hleast p f hf x hx
   intro p n q w hw _
   rw [hexact p _ (C.sum_mem (fun i _ => C.smul_mem (hw i) (pure_mem (q i)).1))]
   simp only [map_sum, map_smul, smul_eq_mul]
@@ -461,6 +462,24 @@ theorem full_mixture_iff_circuit_balance
     intro p q
     rw [he p q, he q p]
     exact hs q p
+
+-- Temporary specialization check; removed from the delivered mathematical surface.
+example :
+    fullMixture (PointedCone.positive ℝ ℝ) (LinearMap.id : ℝ →ₗ[ℝ] ℝ) ↔
+      ∀ p : pure (PointedCone.positive ℝ ℝ) (LinearMap.id : ℝ →ₗ[ℝ] ℝ),
+        balanced (pure (PointedCone.positive ℝ ℝ) (LinearMap.id : ℝ →ₗ[ℝ] ℝ))
+          (fun q => comparison (PointedCone.positive ℝ ℝ) LinearMap.id q p) := by
+  have hspan : Submodule.span ℝ ((PointedCone.positive ℝ ℝ : PointedCone ℝ ℝ) : Set ℝ) = ⊤ := by
+    apply top_unique
+    intro x _
+    have h1 : (1 : ℝ) ∈ Submodule.span ℝ
+        ((PointedCone.positive ℝ ℝ : PointedCone ℝ ℝ) : Set ℝ) :=
+      Submodule.subset_span (by change (0 : ℝ) ≤ 1; exact zero_le_one)
+    simpa only [smul_eq_mul, mul_one] using (Submodule.span ℝ
+      ((PointedCone.positive ℝ ℝ : PointedCone ℝ ℝ) : Set ℝ)).smul_mem x h1
+  exact (full_mixture_iff_circuit_balance (PointedCone.positive ℝ ℝ) LinearMap.id
+    (show IsClosed ((PointedCone.positive ℝ ℝ : PointedCone ℝ ℝ) : Set ℝ) from isClosed_Ici)
+    (fun x hx hne => lt_of_le_of_ne hx (Ne.symm hne)) hspan).1
 
 #print axioms circuit_balance_least_confirmation
 #print axioms full_mixture_iff_circuit_balance

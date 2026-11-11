@@ -2,9 +2,9 @@
 
 ## Abstract
 
-On the original finite dimensional real carrier, balance of every pure circuit constructs linear proper confirming effects and forces reciprocity, least confirmation on the whole cone and every finite pure mixture law, under an explicit pure conic generation hypothesis.
+On the original closed finite dimensional real cone with a strictly positive unit, full finite pure-mixture comparison, all-reference circuit balance and reciprocal whole-cone least confirmation are equivalent.
 
-Let A be a finite dimensional real vector space, C a cone closed under addition and nonnegative scaling, and u a real linear functional nonnegative on C. The real span of C is all of A. All effects below act on this same A. The result additionally assumes that C is exactly the nonnegative conic hull of all extreme points of its entire normalized base. This is a mathematical generation hypothesis, not a supplier of relation preservation, reciprocity or least confirmation.
+Let A be a finite dimensional real normed vector space, C a closed cone containing zero and closed under addition and nonnegative scaling, with real span all of A. The original linear unit u is strictly positive at every nonzero point of C. Strict positivity also excludes nonzero lines in C. The chosen compatible norm gives the usual finite dimensional topology on this same A; its numerical values enter no comparison or effect definition. All effects act on the original A. No pure-generation equality, finite pure-decomposition supplier, relation preservation, reciprocity or least confirmation is a premise. The theorem includes the zero carrier as well as every original nonzero carrier.
 
 **Definition 1.1 (The entire normalized base).**
 
@@ -90,7 +90,31 @@ Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.balanced`
 
 A scalar assignment v on P is balanced when, for every finite subset s and every circuit c on s, the sum of c(i)v(i) is zero. Applied at reference p, the assignment is v(q)=T_q(p); reciprocity is absent from this definition.
 
-**Theorem 1.8 (Reciprocal least confirmation and every finite mixture).**
+**Definition 1.8 (Every finite pure mixture).**
+
+Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.fullMixture`
+
+*Formalization.* `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.fullMixture` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Full S requires, for every pure reference p, every natural n, every list q indexed by Fin n of original pure points and every nonnegative real weight list summing to one, T_p(sum_i w_i q_i)=sum_i w_i T_{q_i}(p). Zero weights, unequal positive weights and repeated labels remain included. An empty normalized weight list is impossible, rather than excluded by a supplier.
+
+**Definition 1.9 (Reciprocal least confirming effects).**
+
+Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.reciprocalLeast`
+
+*Formalization.* `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.reciprocalLeast` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+There is a family of real linear effects e_p on A, one for each original pure p, with e_p proper and confirming p, e_p(x)<=f(x) for every x in the entire original cone and every original proper confirmer f of p, and e_p(q)=e_q(p) for every pair of pure points. Leastness is required on the whole cone, including nonnormalized positive vectors.
+
+**Theorem 1.10 (Constructing reciprocal least confirmation).**
 
 Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.circuit_balance_least_confirmation`
 
@@ -100,11 +124,27 @@ Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.circuit_ba
 
 *Commentary.*
 
-For every C and u satisfying nonnegativity of u on C, real spanning of C, and the exact equality C=cone(P), suppose q maps to T_q(p) is balanced for every pure reference p. Then there exists a family of real linear functionals e_p on the original A with all six properties: each e_p is proper and confirms p; e_p(q)=T_q(p) for every pure q; T_p(q)=T_q(p) for every pair of pure references; e_p(x)<=f(x) for every x in C and every original proper f confirming p; T_p(x)=e_p(x) for every x in C; and for every finite n, pure list q indexed by Fin n, and nonnegative real weights summing to one, T_p(sum_i w_i q_i)=sum_i w_i T_{q_i}(p). Zero weights, unequal positive weights and duplicate pure labels are all included. The construction also works with degenerate carriers; no inner product, matrix algebra or chosen second carrier occurs.
+For the original closed generating C and strictly positive u, all-reference circuit balance yields real linear effects e_p satisfying six conclusions: e_p is proper and confirms p; e_p(q)=T_q(p); T_p(q)=T_q(p); e_p is least among every original proper confirmer on all of C; T_p(x)=e_p(x) for every x in C; and full S holds for every finite pure list. The identity with the lower envelope is asserted only on C, not on signed vectors outside it.
 
-Choose real coordinates only to apply NonnegativeKernelCircuit.OrderedField.signConformalGlobalKernelCircuitDecomposition to each finite relation. Its summands are minimal signed relations within the original support, so circuit balance annihilates each summand and hence every relation. The existing linear quotient construction then descends the assignment to a functional on A. Bounds on pure points extend by nonnegative conic generation to the entire C, putting e_p inside the full proper confirming interval. Thus T_p(q)<=e_p(q)=T_q(p). Constructing e_q and exchanging the references supplies the opposite inequality. Reciprocity follows, and the same bounds show e_p is least on the entire original cone. Since it is itself a confirmer, the lower envelope equals it, and its linearity yields every finite mixture formula.
+The normalized base is closed. On the compact intersection of C with the unit sphere, the continuous unit has a positive minimum; rescaling bounds the norm of every normalized positive vector. The empty-base case is handled directly. Thus the base is compact and convex. Krein–Milman gives that it is the closed convex hull of all its extreme points. The span of those points is closed in finite dimensions, so contains the base; strict-unit rescaling and generatingness give their span equal to A. Closed linear halfspaces similarly extend pure nonnegativity to the base and then to all of C. This proves exactly the spanning and inequality-extension facts needed here without a finite decomposition premise.
 
-Application boundary for Quantum Origin V Lemmas 77.15 and Theorem 77.16. The support-contained signed decomposition is an existing result, directly reused here. The explicit equality C=cone(ext(base(C,u))) remains to be derived for the original nonzero finite dimensional closed pointed generating cone with a unit strictly positive away from zero. This module neither replaces those original hypotheses nor claims that equality from the name of a carrier. The converse from full S to circuit balance, the dimension bound on circuit size, and the at-least-two-points assertion for each sign remain separate obligations. Consequently the complete original equivalence and its original PRE, Jordan, reset, H13/C13 and static consumers are not established here. Mathematical effects and finite sums do not supply preparation programs, actual menus, histories or operations.
+In real coordinates, apply the existing support-contained circuit decomposition to each finite original relation. Balance annihilates every circuit summand, hence every relation, and the existing linear quotient construction descends q maps to T_q(p) to e_p on A. Pure bounds extend through the closed halfspaces, giving 0<=e_p<=u on C and e_p(p)=1. Since the full proper interval includes e_p, T_p(q)<=e_p(q)=T_q(p). Interchanging references supplies the reverse inequality. Pure domination against every confirmer then extends to all of C. Leastness and attainment identify T_p with e_p there, and linearity gives full S.
+
+**Theorem 1.11 (Full comparison is equivalent to circuit balance).**
+
+Lean statement: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.full_mixture_iff_circuit_balance`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.full_mixture_iff_circuit_balance` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For the same C and u, full S is equivalent to all-reference circuit balance. That balance is equivalent to its conjunction with pure reciprocity, and to reciprocal least confirming effects on the entire cone. These are the four conditions of Quantum Origin V Theorem 77.16, on the unchanged full state and full proper-effect carrier.
+
+For the converse, take any finite signed relation sum_i c_i q_i=0 on the original pure points. Applying u gives sum_i c_i=0. Write a_i=max(c_i,0) and b_i=max(-c_i,0); their masses and weighted original vectors agree. Add the same reference p with unit weight to both sides, and divide by the positive common mass 1+sum_i a_i. These are two nonnegative normalized pure preparations of exactly the same vector. Full S evaluates them equally. Cancelling the common reference contribution and common mass proves sum_i c_i T_{q_i}(p)=0, including the zero relation. Reindexing finite types by Fin n introduces no new preparation assumption. Conversely, reciprocal least effects attain the original infimum at every positive vector; their linearity and pure reciprocity give full S.
+
+The circuit-size and two-points-per-sign clauses of Lemma 77.15, the mixed-remainder equivalence of Theorem 77.19, and the EJA, PRE, reset, H13/C13 and static or operational consumers remain outside this result. The proof needs neither a finite Minkowski theorem nor an assumption supplying pure decompositions. Mathematical effects and mixtures do not supply actual preparation programs, menus, histories, references or operations.
 
 ## References
 
@@ -114,6 +154,9 @@ Application boundary for Quantum Origin V Lemmas 77.15 and Theorem 77.16. The su
 - Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.circuit_balance_least_confirmation`
 - Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.comparison`
 - Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.confirms`
+- Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.fullMixture`
+- Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.full_mixture_iff_circuit_balance`
 - Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.proper`
 - Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.pure`
+- Truth anchor: `D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.reciprocalLeast`
 - Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/NonnegativeKernelCircuit](../Entanglement/AbsolutePPT/NonnegativeKernelCircuit.md)
