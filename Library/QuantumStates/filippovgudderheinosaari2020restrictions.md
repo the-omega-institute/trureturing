@@ -14,11 +14,15 @@ triage: anchor
 # Original probability images and the complete comparison interface
 
 This is a literature application to the original preparation, test and process
-interface of [equation (80.14)](../../docs/develop/theory/QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_V.md#80-全框架缺陷的内在上包络与共同原映射修复).
+interface of the current [Theorem 81.8, equation (81.14)](../../docs/develop/theory/QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_V.md#81-对角几何的单个内在投影与完整量子候选),
+retaining the exact equivalent [equation (80.14)](../../docs/develop/theory/QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_V.md#80-全框架缺陷的内在上包络与共同原映射修复)
+correspondence. The simpler current entrance uses one fixed source-projection
+contraction and the unit-fixed mass witness on the same reconstructed models.
 The probability-span representation and convex-effect-subalgebra classification
 are existing mathematics. The application below supplies their parameter
 correspondence, a tetrahedron obstruction to recovering menus from the specified
 comparison table, and the descent conditions needed to retain original processes.
+The classification, projection/moment and mass results are reused directly.
 It is paper mathematics, without a new general theorem, novelty claim or Lean
 kernel certification.
 
@@ -239,7 +243,7 @@ Indeed $H(a)=a_1+a_2-a_3-a_4$ is at most one on every generator in (9),
 and therefore on its convex hull, but $H(h)=2$. Both summands are original
 tests, so (7) fails. Equivalently, the original mixed test $h/2$ cannot be
 doubled. These menus test only sufficiency of the specified pure-reference
-$T$ table, not sufficiency of the complete (80.14) candidate.
+$T$ table, not sufficiency of either complete (80.14) or (81.14) candidate.
 
 There are explicit original meter realizations. In the small realization
 start with four labelled binary meters $(e_i,u-e_i)$ and allow exactly finite
@@ -344,9 +348,11 @@ distinct even when their current effect images agree; an extension may not
 be fabricated by identifying those devices. If these contracts fail, this
 relational entrance does not certify the proposed original process model.
 
-## 5. One relational candidate, corresponding exactly to (80.14)
+## 5. The current (81.14) entrance and its exact (80.14) correspondence
 
-Define $\mathsf R_{80.14}$ on the supplied original labelled data as follows.
+First specify $\mathsf R_{80.14}$ on the supplied original labelled data;
+the equivalent current $\mathsf R_{81.14}$ below changes only its zero and
+mass interfaces, preserving every other condition.
 Use §§1–2 separately in $A,D,E$, impose (6) in each, and require §4 for the
 same supplied original $L,p$ and every supplied process/reference consumer.
 On the resulting full effect interval define, only for pure first endpoint,
@@ -513,15 +519,131 @@ including its reverse witness construction. The equivalence is relative to
 the declared original descent and process contracts; it does not turn an
 undecorated probability table into an original operational model.
 
+**Direct application of the current entrance.** On these very same canonical
+carriers, chosen faithful Jordan/trace structures and original $z=(L,p)$,
+apply Theorem 81.3 and Proposition 81.4. For each complete primitive frame
+$B$, set $\Pi_B=\sum_{e\in B}|e\rangle\langle e|$ and, with
+$n=\tau_A1_A$, use precisely the source objects
+
+$$
+\begin{aligned}
+P_0&=|1_A\rangle\langle1_A|/n,&\mathsf h_A&=P_0\otimes P_0,\\
+\mathscr H_A&=\operatorname{span}_{\mathbb R}\{\Pi_B\otimes\Pi_B:B\in\mathcal F(A)\},&
+\mathsf P_A&:\operatorname{End}(V_A\otimes_{\mathbb R}V_A)\to\mathscr H_A,\\
+v_A&=\mathsf P_A\mathsf h_A,&\mathcal T&=H_{\rm s}\widetilde F,\\
+\Gamma_z&=(\|U\|_2^2+\|G\|_2^2)\mathsf h_A
+-\tfrac12(J^*J\otimes P_0+P_0\otimes J^*J)-\mathcal T^*\mathcal T.
+\end{aligned}
+\tag{17a}
+$$
+
+Here $\mathsf P_A$ is the fixed Hilbert–Schmidt orthogonal projection,
+not a new input or physical operation. Reuse the source's unique invariant
+full-support probability $\nu_A$ on the diagonal-projection orbit and its
+moments $\mathsf C_A=\int\Pi\,d\nu_A$ and
+$\mathsf W_A=\int(\Pi\otimes\Pi)\,d\nu_A$. Proposition 81.4 gives
+$v_A\ne0$, $\mathsf W_A=v_A/\|v_A\|_{\rm HS}^2$ and
+
+$$
+\mathcal Q(z)=\frac{\langle\Gamma_z,v_A\rangle_{\rm HS}}{\|v_A\|_{\rm HS}^2}
+=\|U\|_2^2+\|G\|_2^2-\operatorname{Tr}(J^*J\mathsf C_A)
+-\operatorname{Tr}(\mathcal T^*\mathcal T\mathsf W_A),
+\qquad
+\langle\Gamma_z,v_A\rangle_{\rm HS}=0
+\ \Longleftrightarrow\ \mathcal Q=0
+\ \Longleftrightarrow\ \mathcal D=0
+\ \Longleftrightarrow\ D_J+D_H.
+\tag{17b}
+$$
+
+The last equivalences are Theorem 81.3 on the complete base already supplied
+above. $\mathcal Q$ is distinct from the trilinear map $Q$ in (16), and
+$\operatorname{Tr}$ is operator trace, not $\tau_X$. The second moment
+retains the **same frame twice**: it cannot in general be replaced by
+$\mathsf C_A\otimes\mathsf C_A$. Nor is $\mathsf W_A$ generally a
+projection. These formulas apply the existing Haar/projection results;
+they neither reprove them nor supply finite experimental readouts.
+
+For the mass interface, take exactly Definition 81.7's fixed mathematical
+witness $R_A(a)=u_A(a)1_A/n$. Theorem 81.8 supplies its positivity,
+mass preservation and full real fixed-functional space $\mathbb R u_A$.
+Replace the existential witness in (18) by the fixed identities
+
+$$
+\begin{aligned}
+\mathsf E_2:\quad m_2(a,b)&=\tfrac12[m_2(R_Aa,b)+m_2(a,R_Ab)],\\
+\mathsf E_3:\quad m_3(a,b,c)&=\tfrac13[m_3(R_Aa,b,c)+m_3(a,R_Ab,c)+m_3(a,b,R_Ac)]
+\end{aligned}
+\tag{18a}
+$$
+
+on all original positive inputs, including zero and unequal masses, with
+the same $m_2=u_DM$, $m_3=u_EQ$. These are (18) at
+$\Phi=R_A,t=1/2,s=2/3$; no local randomizer or joint extension is supplied.
+Keep the same original anchor $\mathrm A_0$. Define $\mathsf R_{81.14}$
+by these replacements alone. H13 is exactly clause 4, interpreted only
+after (17b) restores PRE, on the **same original** qualified state and its
+entire original output. In particular its block units and adjoints are not
+renormalized. Applying Theorem 81.8 directly now gives
+
+$$
+\boxed{\mathsf R_{81.14}\ \Longleftrightarrow\
+\bigl[\mathrm{PRE}_0^{\rm mix}+\langle\Gamma_z,v_A\rangle_{\rm HS}=0
++\mathsf E_2+\mathsf E_3+\mathrm A_0+\mathrm H13\bigr]}
+\ \Longleftrightarrow\ \mathrm{PRE}+C_{\rm joint}+\mathrm{C13}
+\ \Longleftrightarrow\ \mathsf R_{80.14}.
+\tag{19a}
+$$
+
+The bracket is exactly (81.14), the current complete entrance. Its forward
+direction first restores PRE, then uses both fixed mass laws and the anchor
+to calibrate $C_{\rm joint}$ before H13 yields C13. Conversely, the same
+original PRE+$C_{\rm joint}$ gives product masses by 79.6–79.7, so the
+unit-fixed $R_A$ satisfies (18a); 81.3 and the original direction theorem
+supply zero contraction and H13. Thus (19a) and (19) describe the same
+actual models after forgetting mathematical witnesses. This does not
+identify $R_A$ with a preassigned $\Phi$, or assert that either mass law
+follows from comparisons alone.
+
+For the reverse evaluation correspondence, extend the **full faithful
+transport** in (20) to the fixed source data as well. Each $\iota_X$ is
+an isometry for its transported canonical trace. Write
+$\mathscr I=\iota_A\otimes\iota_A$ and
+$\operatorname{Ad}_{\mathscr I}(Y)=\mathscr IY\mathscr I^{-1}$; then
+
+$$
+\begin{aligned}
+\Pi'_B&=\iota_A\Pi_B\iota_A^{-1},&
+\mathsf C'_A&=\iota_A\mathsf C_A\iota_A^{-1},&
+\mathsf W'_A&=\operatorname{Ad}_{\mathscr I}(\mathsf W_A),\\
+\mathsf P'_A&=\operatorname{Ad}_{\mathscr I}\mathsf P_A\operatorname{Ad}_{\mathscr I}^{-1},&
+v'_A&=\operatorname{Ad}_{\mathscr I}(v_A),&
+\Gamma'_{z'}&=\operatorname{Ad}_{\mathscr I}(\Gamma_z),\\
+R'_A\iota_A&=\iota_AR_A,&
+\langle\Gamma'_{z'},v'_A\rangle_{\rm HS}&=\langle\Gamma_z,v_A\rangle_{\rm HS}.&&
+\end{aligned}
+\tag{20a}
+$$
+
+The primed orbit and its probability are the corresponding pushforwards;
+the induced Hilbert–Schmidt isometry carries $\mathscr H_A$, its orthogonal
+projection and $\mathsf h_A$ as displayed. This is the precise parameter
+transport of 81.3–81.4, not an arbitrary cone relabelling. The transported
+unit and trace keep $n$, $R_A$, both masses and (18a) unchanged, just as
+(20) carries $\Phi$ and (18). Throughout, the same actual $L,p$ (with $p$
+twice), supplied reference, both spans, full-real $Z$, whole-cone positivity,
+anchor, H13 state and all process/source decorations are retained. No
+classification, Haar/projection or mass theorem is reproved.
+
 ## 6. Quantum correspondence, geometry and remaining conditions
 
-The consumers of §§79.8 and 80.5 retain their complete original premises.
+The consumers of Theorem 81.8, §§79.8 and 80.5 retain their complete original premises.
 Their correspondence is concise:
 
 | Quantum structure | Retained route and scope |
 | --- | --- |
 | Density states, full effects, Born pairing | Full effects, (15), the faithful conditional EJA bridge and the original two-interface classification give finite complex Hermitian direct sums, $\Pr(f\mid\rho)=\sum_i\operatorname{Tr}(f_i\rho_i)$, $\sum_i\operatorname{Tr}\rho_i=1$, $0\le f_i\le I_i$. Reciprocity alone does not select the complex field. |
-| Specified two- and three-copy tensors and readbacks | Both spans, full-real $Z$, zero envelope, both mass laws, original anchor and H13 give the same original tensors and partial traces of (79.17), including scalar sectors and all correlated or entangled directions. |
+| Specified two- and three-copy tensors and readbacks | Both spans, full-real $Z$, the fixed projection's zero contraction (equivalently the zero envelope), fixed $\mathsf E_2,\mathsf E_3$, original anchor and H13 give the same original tensors and partial traces of (79.17), including scalar sectors and all correlated or entangled directions. |
 | CP events, instruments and Lüders updates | The same actual event/branch/record, product extension, sufficient actual reference, full joint positivity, both budgets, complete-menu TP and update contracts remain required. |
 | Hamiltonian evolution | Requires the supplied continuous, time-homogeneous reversible $*$-automorphism group in the original physical time, clock and units; static comparisons supply no such group or $\hbar$. |
 
@@ -544,7 +666,8 @@ contracts. Outcome probability is the original output mass; condition on
 it only when strictly positive, retaining zero-branch records and permissions.
 Lüders additionally needs the same CP branch to have sharp effect $P$ and
 fix every normalized state certainly accepted by $P$. An effect does not
-determine its update. In particular, (18) for a specified $\Phi$ does not
+determine its update. Neither the mathematical $R_A$ in (18a) nor (18) for a
+specified $\Phi$ certifies supplied physical reset operations; (18) does not
 certify the positive joint extensions of (79.18); 79.9 supplies the original
 counterexample. Mathematical existence witnesses create no physical menus.
 
@@ -565,11 +688,16 @@ adds a mass coordinate to that same base. Bounded doubling concerns which
 cuts of the base are actually present as tests. The tetrahedron shows that
 identical least-confirmation numbers can conceal a missing cut. After full
 effects and the fixed-half bridge, (17) measures cross-overlaps of positive
-pieces in every complete frame: zero maximum is the existing all-frame
-Pythagorean saturation constraint. Endpoint reciprocity exchanges two
+pieces in every complete frame. The current (17b) instead contracts the
+same data against the fixed source projection: the existing nonnegative,
+full-support average vanishes exactly when every frame has zero overlap.
+Its moments preserve the common-frame correlation. The two mass laws use
+the unit-fixed $R_A$, followed by the original anchor and same-state H13;
+this is the simpler (81.14) entrance to the same complete model class.
+Endpoint reciprocity exchanges two
 arguments of a comparison; it differs from commuting successive physical
 instruments. This reduces externally supplied geometry and expression,
 without establishing fewer independent physical assumptions, least axioms,
 lower experimental cost or a physical quantum origin.
 
-可以把一个准备看成它面对所有原测试时给出的整张概率表，但原装置、菜单和记录仍然各自保留。只有这些原表本身允许实概率混合、形成有限维紧集合，才能从它们构造出这里的向量空间与带质量的正锥；取闭包不能替我们造出新准备。测试是否齐全还要另问：一个已有测试在所有原准备上的成功率都不超过一半时，是否有同一个原测试把这些数同时加倍？结合原混合与补测试，这恰好表达全效应可用性。四面体的两个菜单说明，纯参照对全部混态的最小确认数完全相同，仍能漏掉一个有界和。接回量子候选时，还须保留同一个读回用两次、原参考、全方向正性、每套完整框架的零重叠、两条总质量关系、原锚及同一原混态的方向条件；原过程还必须在保留输出质量的情况下尊重混合与等价关系。比较两端交换后数值相同，不等于两次仪器交换执行次序后状态相同。这些条件缩短了几何入口的写法，没有凭概率表生成仪器、来源、时钟或完整的物理量子起源。
+可以把一个准备看成它面对所有原测试时给出的整张概率表，但原装置、菜单和记录仍然各自保留。只有这些原表本身允许实概率混合、形成有限维紧集合，才能从它们构造出这里的向量空间与带质量的正锥；取闭包不能替我们造出新准备。测试是否齐全还要另问：一个已有测试在所有原准备上的成功率都不超过一半时，是否有同一个原测试把这些数同时加倍？结合原混合与补测试，这恰好表达全效应可用性。四面体的两个菜单说明，纯参照对全部混态的最小确认数完全相同，仍能漏掉一个有界和。接回当前的完整候选 81.14 时，仍保留同一个读回用两次、原参考、两张成、全实零关系与全方向正性；但不必再搜索最坏框架，而把原几何固定的一个源投影与同一原映射导出的量作收缩。已有定理保证它为零恰好等于每套完整框架都零重叠，所以 80.14 的精确对应仍然保留。两条总质量关系现在采用由原单位固定的同一个数学见证，不另选局部变化；再用原锚校准倍率，最后才检查同一原混态的方向条件及其整个原输出。原过程还必须在保留输出质量的情况下尊重混合与等价关系，来源、参考、全菜单、时钟等义务也都保留。比较两端交换后数值相同，不等于两次仪器交换执行次序后状态相同。这使同一模型类的入口更简洁，不据此声称独立物理假设更少，也没有凭概率表生成仪器、来源、时钟或完整的物理量子起源。
