@@ -334,7 +334,7 @@ private theorem action_linearMonomial (q : K →ₗ[F] K) (x : K) :
   rw [← heq]
   simp [linearMonomial_derivative, show (1:ℕ) ≠ 0 by omega, constantLinear, Polynomial.smul_eq_C_mul]
 
-private theorem faithful_action (q : K →ₗ[F] K) :
+theorem faithful_action (q : K →ₗ[F] K) :
     Function.Injective (originalRepresentation (p := p) q) := by
   intro x y h
   have hv := congrArg (fun A : Module.End F V => A linearMonomial) h
