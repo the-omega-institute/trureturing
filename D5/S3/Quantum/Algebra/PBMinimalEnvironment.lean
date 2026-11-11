@@ -473,7 +473,6 @@ def LabeledGramIdentification {m : ℕ} (D : Matrix (Fin m) (Fin m) ℂ)
     ∃ c : InnerProductSpace.Core ℂ (GramQuotient M₀ M₁ M₂),
       (∀ x y, c.inner (Q x) (Q y) = ⟪x, Γ.toEuclideanLin y⟫_ℂ) ∧
       letI := c.toNormedAddCommGroup
-      letI := InnerProductSpace.ofCore c.toPreInnerProductSpace
       ∃! U : GramQuotient M₀ M₁ M₂ ≃ₗᵢ[ℂ] ↥K,
         ∀ a b, (U (Q (labelPair a b)) : EuclideanSpace ℂ (Fin m)) = F a + G b
 
@@ -512,29 +511,29 @@ private theorem actual_labelled_gram {m : ℕ} {D : Matrix (Fin m) (Fin m) ℂ}
     rw [hU, hU, hJ, Matrix.toLpLin_mul_same, Matrix.toEuclideanLin_conjTranspose_eq_adjoint]
     exact (LinearMap.adjoint_inner_right J x (J y)).symm
   · letI := c.toNormedAddCommGroup
-    letI := InnerProductSpace.ofCore c.toPreInnerProductSpace
-    let u : GramQuotient M₀ M₁ M₂ ≃ₗᵢ[ℂ] ↥K :=
-      { U with norm_map' := (LinearMap.norm_map_iff_inner_map_map U.toLinearMap).mpr
-          (fun _ _ => rfl) }
+    have hn (x : GramQuotient M₀ M₁ M₂) : ‖U x‖ = ‖x‖ := by
+      change ‖U x‖ = Real.sqrt (RCLike.re ⟪U x, U x⟫_ℂ)
+      rw [inner_self_eq_norm_sq, Real.sqrt_sq_eq_abs, abs_norm]
+    let u : GramQuotient M₀ M₁ M₂ ≃ₗᵢ[ℂ] ↥K := { U with norm_map' := hn }
     refine ⟨u, ?_, ?_⟩
     · intro a b
       change (U (Q (labelPair a b)) : EuclideanSpace ℂ (Fin m)) = _
       rw [hU, fromCols_action]
       rfl
-    intro U' hu
-    apply LinearIsometryEquiv.ext
-    intro z
-    obtain ⟨x, rfl⟩ := Γ.toEuclideanLin.ker.mkQ_surjective z
-    have he : x = labelPair (WithLp.toLp 2 (fun i => x (Sum.inl i)))
-        (WithLp.toLp 2 (fun i => x (Sum.inr i))) := by
-      apply WithLp.ofLp_injective 2
-      funext i
-      cases i <;> rfl
-    apply Subtype.ext
-    change (U' (Q x) : EuclideanSpace ℂ (Fin m)) = (U (Q x) : EuclideanSpace ℂ (Fin m))
-    rw [hU, fromCols_action]
-    conv_lhs => rw [he]
-    exact hu _ _
+    · intro U' hu
+      apply LinearIsometryEquiv.ext
+      intro z
+      obtain ⟨x, rfl⟩ := Γ.toEuclideanLin.ker.mkQ_surjective z
+      have he : x = labelPair (WithLp.toLp 2 (fun i => x (Sum.inl i)))
+          (WithLp.toLp 2 (fun i => x (Sum.inr i))) := by
+        apply WithLp.ofLp_injective 2
+        funext i
+        cases i <;> rfl
+      apply Subtype.ext
+      change (U' (Q x) : EuclideanSpace ℂ (Fin m)) = (U (Q x) : EuclideanSpace ℂ (Fin m))
+      rw [hU, fromCols_action]
+      conv_lhs => rw [he]
+      exact hu _ _
 
 /-- Physical matrices on the original actor plus the new environment. -/
 def PhysicalCompatibility {m : ℕ} (D : Matrix (Fin m) (Fin m) ℂ)
