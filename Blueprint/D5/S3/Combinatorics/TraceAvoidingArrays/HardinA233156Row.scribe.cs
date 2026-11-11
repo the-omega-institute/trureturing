@@ -12,11 +12,11 @@ internal sealed class HardinA233156RowDocument : IScribeDocumentDefinition
         "The number of labelled 3-row arrays obeys the order-2 recurrence from OEIS A233156.",
         H("OEIS A233156"), Blocks(
             Node("U3",All("n",NatF(),Eq(C("U3",V("n")),FilterCard(N(3),V("n")))),"Every labelled function satisfying horizontal and antidiagonal sum exclusion is counted.",true),
-            Node("classes",Eq(C("classes"),Cast(Vec(Vec(Vec(N(0),N(1),N(1)),Vec(N(2),N(3),N(4)),Vec(N(2),N(4),N(3))),Vec(Vec(N(3),N(2),N(4)),Vec(N(1),N(0),N(1)),Vec(N(4),N(2),N(3))),Vec(Vec(N(3),N(4),N(2)),Vec(N(4),N(3),N(2)),Vec(N(1),N(1),N(0)))),ClassTableType(3,5))),"The table assigns a class to every column according to its equality pattern."),
+            Node("classes", Cast(C("classes"), Arr(FinF(N(3)), Arr(FinF(N(3)), Arr(FinF(N(3)), FinF(N(5)))))), "The fixed lookup table assigns a class in Fin 5 to each tuple of 3 colors according to its equality pattern."),
             Node("classify",All("r",RowF(N(3)),Eq(C("classify",V("r")),A(C("classes"),A(V("r"),N(0)), A(V("r"),N(1)), A(V("r"),N(2))))),"The coordinates select one of the 5 equality classes."),
-            Node("representatives",Eq(C("representatives"),Vec(Vec(N(0), N(0), N(0)), Vec(N(0), N(0), N(1)), Vec(N(0), N(1), N(0)), Vec(N(0), N(1), N(1)), Vec(N(0), N(1), N(2)))),"Each equality pattern has a representative using colors in order of first occurrence."),
-            Node("quotient",Eq(C("quotient"),Vec(Vec(N(2), N(2), N(2), N(2), N(0)), Vec(N(1), N(1), N(0), N(1), N(1)), Vec(N(1), N(1), N(0), N(0), N(0)), Vec(N(1), N(1), N(1), N(1), N(0)), Vec(N(0), N(0), N(0), N(1), N(1)))),"An entry counts compatible successor columns in the indicated equality class."),
-            Node("weights",Eq(C("weights"),Vec(N(3), N(6), N(6), N(6), N(6))),"The weights count all columns in each class, including constant columns."),
+            Node("representatives", Cast(C("representatives"), Arr(FinF(N(5)), RowF(N(3)))), "The fixed table selects one canonical 3-entry column for each of the 5 equality classes."),
+            Node("quotient", Cast(C("quotient"), C("Matrix", FinF(N(5)), FinF(N(5)), IntF())), "The fixed 5 by 5 integer table records compatible successor multiplicities between equality classes."),
+            Node("weights", Cast(C("weights"), Arr(FinF(N(5)), IntF())), "The fixed 5-entry integer vector records three labelled constant columns in the constant class and six labelled columns in every other equality class."),
             Node("finite_certificate",CertificateFormula(),"The three identities specify the quotient, the initial class counts and the finite relation among matrix powers.",theorem:true),
             Node("result",ResultFormula(),"Multiplication by every further matrix power extends the finite relation to all strip lengths in the displayed range.",theorem:true)), []));
     private static Formula MV(Formula n) => C("Matrix.mulVec",Pow(C("quotient"),n),Cast(N(1),Arr(FinF(N(5)),IntF())));

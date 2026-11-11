@@ -8,8 +8,8 @@
 
 /-
 admission_basis: open-problem-resolution (#29231; Proved)
-escape_witness: none
-Finite tables and arithmetic identities instantiate existing finite structures.
+escape_witness: none (finite equality-pattern normalization only)
+All declarations normalize finite equality tests, tables and logical packaging.
 U6: proof_shape=bind-only; consumers=HardinA233159Row.counting_bridge, HardinA233159Row.result
 classes: proof_shape=bind-only; consumers=classify
 classify: proof_shape=bind-only; consumers=class_invariant, class_representative, HardinA233159RowCertificate.successor_table, HardinA233159RowCertificate.class_codes

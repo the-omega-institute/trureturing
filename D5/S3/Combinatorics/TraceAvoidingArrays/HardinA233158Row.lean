@@ -8,8 +8,9 @@
 
 /-
 admission_basis: open-problem-resolution (#29231; Proved)
-escape_witness: none
-The equality-pattern tables and power identities normalize finite arithmetic.
+escape_witness: powers_table (expanded TransferMatrix.tabulatedPowers); counting_bridge (expanded count_transfer, TransferMatrix.cardMatrix and good_iff_local)
+TransferMatrix is unfrozen; its finite-index, continuation and local-word inductions
+remain inside the judgement boundary. Finite literal identities alone normalize arithmetic.
 U5: proof_shape=bind-only; consumers=counting_bridge, result
 classes: proof_shape=bind-only; consumers=classify
 classify: proof_shape=bind-only; consumers=class_invariant, class_representative, successor_table, initial_weights, finite_certificate
@@ -21,14 +22,14 @@ class_invariant: proof_shape=bind-only; consumers=row_counts
 class_representative: proof_shape=bind-only; consumers=row_counts
 successor_table: proof_shape=bind-only; consumers=representative_rows
 representative_rows: proof_shape=bind-only; consumers=row_counts
-row_counts: proof_shape=bind-only; consumers=finite_certificate
+row_counts: proof_shape=content; consumers=finite_certificate
 initial_weights: proof_shape=bind-only; consumers=finite_certificate
 W: proof_shape=bind-only; consumers=powers_table, vector_relation
-powers_table: proof_shape=bind-only; consumers=vector_relation
-vector_relation: proof_shape=bind-only; consumers=finite_certificate
-finite_certificate: proof_shape=bind-only; consumers=counting_bridge, result
-counting_bridge: proof_shape=bind-only; consumers=result
-result: proof_shape=bind-only; consumers=Reg.Recurrence.family
+powers_table: proof_shape=content; consumers=vector_relation
+vector_relation: proof_shape=content; consumers=finite_certificate
+finite_certificate: proof_shape=content; consumers=counting_bridge, result
+counting_bridge: proof_shape=content; consumers=result
+result: proof_shape=content; consumers=Reg.Recurrence.family
 -/
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155RowTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155ColumnTransfer
