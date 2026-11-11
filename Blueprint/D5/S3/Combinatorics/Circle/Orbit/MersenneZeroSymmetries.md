@@ -102,4 +102,4 @@ All exponents remain in scope. When n divides a, including a=0, g=n and ell=1: t
 - Truth anchor: `D5/S3/Combinatorics/Circle/Orbit/MersenneZeroSymmetries.zeroFamilyAut_eq_orbitAut`
 - Truth anchor: `D5/S3/Combinatorics/Circle/Orbit/MersenneZeroSymmetries.zeroFamilyEquiv`
 - Dependency: [D5/S3/Combinatorics/Circle/Orbit/MersenneDifferenceZeroSubsets](MersenneDifferenceZeroSubsets.md)
-- Dependency: [D5/S3/FiniteGroups/UniformPartitionAutomorphisms](../../../FiniteGroups/UniformPartitionAutomorphisms.md)
+- Dependency: [D5/S3/FiniteGroups/Partitions/UniformPartitionAutomorphisms](../../../FiniteGroups/Partitions/UniformPartitionAutomorphisms.md)
