@@ -108,7 +108,7 @@ end partitions_finite
 
 namespace count_positive
 abbrev signature : Signature where
-  Params := ℕ × ℕ
+  Params := Sigma (fun _ : ℕ => ℕ)
   State _ := ℕ
   Output _ _ := ℕ
   Role := Unit
@@ -124,7 +124,7 @@ def rejected : Realization signature := realize.{0,0,0,0,0} signature
 def sourceStatement : Prop := ∀ k ell n : ℕ, 2 ≤ ell → ell-1 ≤ k → 0 < count k ell n
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ k ell n : ℕ, 2 ≤ ell → ell-1 ≤ k → 0 < R.readout () (k,ell) n
+  Law R := ∀ k ell n : ℕ, 2 ≤ ell → ell-1 ≤ k → 0 < R.readout () ⟨k,ell⟩ n
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hh := h 3 4 0 (by norm_num) (by norm_num)
@@ -137,7 +137,7 @@ def registration : Registration arena sourceStatement where
     rfl, rejected_law⟩, fun e => nomatch e⟩
   dependence := by
     intro i
-    exact ⟨(5,4), repunit 0, repunit 1, count_varies⟩
+    exact ⟨⟨5,4⟩, repunit 0, repunit 1, count_varies⟩
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S1.Digit.CoonsAdjacentGrowthRefutation.count_positive)
