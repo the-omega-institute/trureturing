@@ -27,7 +27,6 @@
 -/
 
 import D5.S3.Combinatorics.SpectralGraph.LinWangCaiBroomSpectralRatio
-import Mathlib.Combinatorics.SimpleGraph.DegreeSum
 
 namespace D5.S3.Combinatorics.SpectralGraph.CazenaveRandicSpectralBound
 
