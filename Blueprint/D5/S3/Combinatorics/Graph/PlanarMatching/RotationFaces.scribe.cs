@@ -13,7 +13,7 @@ internal sealed class RotationFacesDocument : IScribeDocumentDefinition
         "Signed-Euler-two actual-dart rotations have exact binary facial boundaries, connected edge-selected cycle sides, regional Euler identities, actual matching restrictions and nice-cycle orientations.",
         H("Actual facial boundaries and cycle sides"),
         Blocks(
-            Paragraph(Text("Use the actual Rotation, complete facial orbits, boundary map and faceOpposition defined in RotationBoundary. Its face_cycle_exact theorem and face-odd construction supply the boundary and orientation inputs below. All cycles, complementary vertex sets, subgraphs and matching restrictions below belong to that same actual graph.")),
+            Paragraph(Text("Let V be an arbitrary finite vertex type with decidable equality, G a connected simple graph with decidable adjacency and a nonempty actual dart type, and R a Rotation of G. Assume the signed integer equation card(V) minus card(G.edgeSet) plus card(R.Face) equals two. Use the actual Rotation, complete facial orbits, boundary map and faceOpposition defined in RotationBoundary. Its face_cycle_exact theorem and face-odd construction supply the boundary and orientation inputs below. All cycles, complementary vertex sets, subgraphs and matching restrictions below belong to that same actual graph.")),
             Describe.Lean(DescribeId.Create("cycle-face-sides"),
                 DeclarationHandle.Create(Prefix + "cycle_face_sides"),
                 H("Actual cycle sides, edge-selected connected regions and matching restriction"),

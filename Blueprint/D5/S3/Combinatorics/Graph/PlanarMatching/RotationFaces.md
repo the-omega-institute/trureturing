@@ -4,27 +4,9 @@
 
 Signed-Euler-two actual-dart rotations have exact binary facial boundaries, connected edge-selected cycle sides, regional Euler identities, actual matching restrictions and nice-cycle orientations.
 
-Let V be an arbitrary finite vertex type with decidable equality, and G a connected simple graph on V with decidable adjacency and at least one actual dart. Rotation G consists of a permutation rho of G.Dart whose SameCycle classes are precisely the darts with a common first vertex. Reversal alpha sends a dart to its symm. The facial successor phi first reverses a dart and then applies rho. Face is the quotient by SameCycle phi, using integer powers and retaining every orbit, including singleton orbits. The edge type E is G.edgeSet, the subtype of actual unordered edges. No side, surface realization or parity property is included in Rotation.
+Let V be an arbitrary finite vertex type with decidable equality, G a connected simple graph with decidable adjacency and a nonempty actual dart type, and R a Rotation of G. Assume the signed integer equation card(V) minus card(G.edgeSet) plus card(R.Face) equals two. Use the actual Rotation, complete facial orbits, boundary map and faceOpposition defined in RotationBoundary. Its face_cycle_exact theorem and face-odd construction supply the boundary and orientation inputs below. All cycles, complementary vertex sets, subgraphs and matching restrictions below belong to that same actual graph.
 
-The boundary linear map B takes a face function x with values in ZMod 2 to the edge function whose value is the sum of the two facial shore values. Its definition chooses an actual representative dart of each unordered edge. Its evaluation theorem proves that the sum is independent of that choice. Every cardinality in the Euler hypothesis is cast to the integers before subtraction: card(V) minus card(E) plus card(Face) equals two.
-
-**Theorem 1.1 (The face boundary map is exact onto the actual cycle space).**
-
-Lean statement: `D5/S3/Combinatorics/Graph/PlanarMatching/RotationFaces.face_cycle_exact`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/PlanarMatching/RotationFaces.face_cycle_exact` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* David Cimasoni, Nicolai Reshetikhin (2007). *Dimers on surface graphs and spin structures. I*. DOI: [10.1007/s00220-007-0302-7](https://doi.org/10.1007/s00220-007-0302-7). URL: <https://arxiv.org/html/math-ph/0608070v2>.
-
-*Commentary.*
-
-For every finite V, G and Rotation satisfying the stated connectedness, actual-dart nonemptiness and signed integer Euler equation, three conclusions hold together. For every face function x and actual dart d, B(x) on the unordered edge of d is x(face d) plus x(face alpha(d)). For every x, B(x) is zero if and only if there exists c in ZMod 2 such that x is the constant function with value c. The linear range of B equals SimpleGraphCycleSpace.simpleCycleSpace G, the existing span of indicators of actual simple cycles.
-
-Zero boundary equates opposite shore values. Facial succession then equates values after a rotor step, and an actual graph walk propagates this equality between all faces. Reindexing a dart sum along phi proves that every facial boundary annihilates the vertex-to-edge differential. The existing finite_graph_cycle_space theorem identifies these relations with the existing cycle space. Rank-nullity, the one-dimensional constant kernel and the signed Euler equation establish equality of the two subspaces. Generic cycle rank and linear algebra are reused; geometric separation is not assumed.
-
-**Theorem 1.2 (Actual cycle sides, edge-selected connected regions and matching restriction).**
+**Theorem 1.1 (Actual cycle sides, edge-selected connected regions and matching restriction).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/PlanarMatching/RotationFaces.cycle_face_sides`
 
@@ -42,7 +24,7 @@ For every pair (S,b) equal to (I,1) or (J,0), an actual subgraph H of G exists. 
 
 Let M be any subgraph of the actual graph G induced on the vertices outside p.support, and suppose M is a perfect matching. For each S equal to I or J, M restricts to a perfect matching N of the further induced graph on the complement vertices whose original vertex lies in S. For all vertices v,w of that restriction, N.Adj v w if and only if M.Adj v.val w.val. Thus the restriction retains exactly the original matching edges. Both Nat.card I and Nat.card J are even, by the existing IsPerfectMatching.even_card theorem and the explicit vertex-subtype equivalence. No matching on a replacement carrier and no supplied interior parity is used.
 
-**Theorem 1.3 (Face-odd orientations are odd on actual nice even cycles).**
+**Theorem 1.2 (Face-odd orientations are odd on actual nice even cycles).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/PlanarMatching/RotationFaces.face_odd_nice_cycle_orientation`
 
@@ -65,7 +47,5 @@ The two facial subsets are x inverse-image of one and x inverse-image of zero; b
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/PlanarMatching/RotationFaces.cycle_face_sides`
-- Truth anchor: `D5/S3/Combinatorics/Graph/PlanarMatching/RotationFaces.face_cycle_exact`
 - Truth anchor: `D5/S3/Combinatorics/Graph/PlanarMatching/RotationFaces.face_odd_nice_cycle_orientation`
-- Dependency: [D5/S3/Combinatorics/Graph/Brooks/ColoringExtension](../Brooks/ColoringExtension.md)
-- Dependency: [D5/S3/Fourier/CharacterSelection/SimpleGraphCycleSpace](../../../Fourier/CharacterSelection/SimpleGraphCycleSpace.md)
+- Dependency: [D5/S3/Combinatorics/Graph/PlanarMatching/RotationBoundary](RotationBoundary.md)
