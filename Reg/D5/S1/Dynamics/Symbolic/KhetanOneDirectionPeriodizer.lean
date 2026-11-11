@@ -85,7 +85,7 @@ def recurrenceEvidence : Registration arena.{u}
       (h : Configuration R) (hh : FiniteRange h) (v : Lattice) (hv : v ≠ 0)
       (q : Polynomial R) (hq : q ≠ 0)
       (hann : coefficientAct (linePolynomial v q) h = 0), Periodic h) where
-  actual := actual
+  actual := realize signature (fun _ _ h => h) (fun e => Empty.elim e)
   bridge := Iff.rfl
   variation := ⟨@nonzero_line_annihilator_periodic.{u}, bad, bad_law⟩
   sensitivity := by
@@ -113,7 +113,7 @@ noncomputable def nonzero_line_annihilator_periodic_registration :
   realization := .source arena.{u} ⟨recurrenceEvidence.{u}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some actual
+  readout := some (realize signature.{u} (fun _ _ h => h) (fun e => Empty.elim e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
