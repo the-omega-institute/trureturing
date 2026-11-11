@@ -1,0 +1,57 @@
+**命题 25.9（同一参考对分支和相干门提升的联合约束）。**在假设 25.8 下，完整程序的成功且 $+$ 的未归一化联合概率为
+
+$$
+p(\mathrm{success},+)
+=\frac{w_A+\operatorname{Re}\omega_S(A^\dagger WA)}2.
+\tag{25.32}
+$$
+
+仅在 $w_A>0$ 时，条件概率为该式除以 $w_A$。取 $A=I$，则
+
+$$
+p_+(W)=\frac{1+\operatorname{Re}\omega_S(W)}2,
+\qquad p_+(I)=1,\qquad p_+(-I)=0.
+\tag{25.33}
+$$
+
+$I$ 与 $-I$ 的无控制目标通道相同，但在固定共同参考的受控程序中不同。这不构成对完整原核不可识别性的反例：命题 25.3 的完整数据已经区分其目标输出标签。
+
+证明。过滤成功后的目标与环境向量为 $(A\otimes I_E)|\Phi^+\rangle$，平方范数为 $w_A$；仍与 $|+\rangle_C$ 独立。再施 (25.31) 并取 $+$，未归一化向量为
+
+$$
+\frac12\bigl((I+W)A\otimes I_E\bigr)|\Phi^+\rangle.
+$$
+
+由 $W^\dagger W=I$，其平方范数为
+
+$$
+\frac14\omega_S\bigl(A^\dagger(2I+W+W^\dagger)A\bigr)
+=\frac12\bigl(w_A+\operatorname{Re}\omega_S(A^\dagger WA)\bigr).
+\tag{25.34}
+$$
+
+这复用标准受控干涉计算及[混合控制块的偏迹恒等式](../../../D5/S3/Quantum/Dynamics/PositivePauliClockOrder.lean)的同类迹配对，亦与预测波 §7 的跨记录相位边界一致。Cauchy–Schwarz 给
+$|\omega_S(A^\dagger WA)|\le w_A$，故联合权重属于 $[0,w_A]$；$w_A=0$ 时该式为零，不产生条件概率。取 $A=I$ 即得 (25.33)。目标通道只用 $WBW^\dagger$，整体负号相消，而受控门的负号相对于控制零支变成相对相位。
+
+这一全局／相对相位区别的文献先例见 Araújo、Feix、Costa、Brukner，*Quantum circuits cannot control unknown operations*，[原文](https://arxiv.org/html/1309.7976v2)。该文的未知黑箱电路前件不能排除本假设已供应的校准原生受控门；反之，无控制通道数据也不能自动供应 (25.31)。
+
+在忠实原来源中，$-e_0$ 是实际标签，并且
+
+$$
+K(e_0,-e_0)=4,\qquad K(e_0,e_0)=0.
+\tag{25.35}
+$$
+
+故完整原数据从未将两个标量提升识别为同一输出。式 (25.15)–(25.16) 的共同参考配对同样固定分支作用与相位，不能在保留这些数值时任意重相位。
+
+还有一个不依赖逐门相位校准的受限比较：固定实际门标签字母表，给每个标签重相位 $W_g\mapsto e^{i\theta_g}W_g$。若字 $w$ 中标签 $g$ 出现 $n_g(w)$ 次，则
+
+$$
+W_w\longmapsto e^{i\Theta(w)}W_w,\qquad
+\Theta(w)=\sum_g n_g(w)\theta_g,
+\tag{25.36}
+$$
+
+因标量位于中心。两字 $w,v$ 若每个标签次数都相等，则交叉参考值
+$\omega_S(W_v^\dagger W_w)$ 的重相位因子为一。这个逐标签平衡条件足以使中央相位抵消，即使门的次序不同；它不供应相干比较两字的装置。逆门若作为不同标签供应，就分别计数，除非另有相位绑定合同。无此平衡条件且无共同参考，普通概率或分别的同结果核不足以固定相干提升；若实际历史、跨历史／参考配对及终端分析器全部给定，其有限预测便由这些共同数据固定。证毕。
+

@@ -37,6 +37,8 @@ internal sealed class HardinA233177LadderDocument : IScribeDocumentDefinition
             Node("used_eq_card", "Used labels as a finite image", UsedEqCardFormula(), true),
             Node("omitted_label", "Two used labels omit a third", OmittedLabelFormula(), true),
             Node("alternating", "Two alternating constant columns", AlternatingFormula(), false),
+            Node("alternating_proper", "Alternation satisfies both directions of the diagonal bonds",
+                AlternatingProperFormula(), true),
             Node("alternating_used", "Alternation uses exactly two distinct labels",
                 AlternatingUsedFormula(), true),
             Node("alternating_canon", "Zero-one alternation is canonical",
@@ -155,6 +157,15 @@ internal sealed class HardinA233177LadderDocument : IScribeDocumentDefinition
         return All("n", Q("Nat"), All("P", Arrow(Cells(n), Fin(D(3))),
             All("h", Eq(Own("used", p), D(2)), Ex("d", Fin(D(3)),
                 All("i", Cells(n), Ne(App(p, V("i")), d))))));
+    }
+
+    private static Formula AlternatingProperFormula()
+    {
+        var n = V("n"); var a = V("a"); var b = V("b");
+        var proper = Call("D5.S3.Combinatorics.TraceAvoidingArrays."
+            + "HardinA233177PairTransfer.Proper", Parenthesized(Own("alternating", n, a, b)));
+        return All("n", Q("Nat"), All("a", Fin(D(3)), All("b", Fin(D(3)),
+            All("hab", Ne(a, b), proper))));
     }
 
     private static Formula AlternatingUsedFormula()
