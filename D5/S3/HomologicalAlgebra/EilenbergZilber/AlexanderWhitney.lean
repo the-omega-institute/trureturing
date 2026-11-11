@@ -126,7 +126,7 @@ def ιFront (p q : ℕ) : (⦋p⦌ : SimplexCategory) ⟶ ⦋p + q⦌ :=
 def ιBack (p q : ℕ) : (⦋q⦌ : SimplexCategory) ⟶ ⦋p + q⦌ :=
   SimplexCategory.mkHom ⟨fun j => ⟨p + j.1, by omega⟩, fun _ _ h => Nat.add_le_add_left h _⟩
 
-private lemma val_eqToHom_apply {x y : SimplexCategory} (h : x = y) (i : Fin (x.len + 1)) :
+lemma val_eqToHom_apply {x y : SimplexCategory} (h : x = y) (i : Fin (x.len + 1)) :
     ((eqToHom h).toOrderHom i : ℕ) = i := by
   subst h
   rfl

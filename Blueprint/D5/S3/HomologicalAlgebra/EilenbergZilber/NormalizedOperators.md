@@ -218,6 +218,30 @@ The structural norm class is closed under `prime`.
 
 In this notation, lemma IsNorm.prime {s q : ℕ} {M : DerivedOp s q} (h : IsNorm M) : IsNorm M.prime.
 
+**Theorem 1.16 (factor_through_σ).**
+
+Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/NormalizedOperators.factor_through_σ`
+
+*Proof.* Machine-checked in Lean as `D5/S3/HomologicalAlgebra/EilenbergZilber/NormalizedOperators.factor_through_σ` (`✓ std3`). ∎
+
+*Citation.* Jeffrey Li (2026). *Bisimplicial Eilenberg–Zilber equivalence and recursive normalized homotopy*. URL: <https://github.com/LeanPool/lean-pool/tree/8bbde3a6de815108d41922c9362ebbe38422663a/LeanPool/EilenbergZilber>.
+
+*Commentary.*
+
+For every n : Nat, Δ : SimplexCategory, a : Fin(n+1) and f : [n+1] → Δ, if f.toOrderHom a.castSucc = f.toOrderHom a.succ, then f = σ a ≫ δ a.castSucc ≫ f. The common adjacent value makes the codegeneracy factorization exact.
+
+**Theorem 1.17 (sigma_not_mono).**
+
+Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/NormalizedOperators.sigma_not_mono`
+
+*Proof.* Machine-checked in Lean as `D5/S3/HomologicalAlgebra/EilenbergZilber/NormalizedOperators.sigma_not_mono` (`✓ std3`). ∎
+
+*Citation.* Jeffrey Li (2026). *Bisimplicial Eilenberg–Zilber equivalence and recursive normalized homotopy*. URL: <https://github.com/LeanPool/lean-pool/tree/8bbde3a6de815108d41922c9362ebbe38422663a/LeanPool/EilenbergZilber>.
+
+*Commentary.*
+
+For every n : Nat and a : Fin(n+1), ¬ Mono (SimplexCategory.σ a). Its two distinct adjacent vertices have the same image.
+
 ## References
 
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/NormalizedOperators.IsNorm`
@@ -226,6 +250,7 @@ In this notation, lemma IsNorm.prime {s q : ℕ} {M : DerivedOp s q} (h : IsNorm
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/NormalizedOperators.diagPInfty`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/NormalizedOperators.ezComponent_inner_degeneracy_comp_PInfty`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/NormalizedOperators.ezComponent_outer_degeneracy_comp_PInfty`
+- Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/NormalizedOperators.factor_through_σ`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/NormalizedOperators.kill`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/NormalizedOperators.lastFace_comp_D0`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/NormalizedOperators.lastFace_comp_hPrime_comp_D0`
@@ -235,4 +260,5 @@ In this notation, lemma IsNorm.prime {s q : ℕ} {M : DerivedOp s q} (h : IsNorm
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/NormalizedOperators.prime_idOp`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/NormalizedOperators.prime_single_diag`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/NormalizedOperators.retractionNOne_inclusionNOne_shuffleMap_PInfty`
+- Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/NormalizedOperators.sigma_not_mono`
 - Dependency: [D5/S3/HomologicalAlgebra/EilenbergZilber/RecursiveOperators](RecursiveOperators.md)
