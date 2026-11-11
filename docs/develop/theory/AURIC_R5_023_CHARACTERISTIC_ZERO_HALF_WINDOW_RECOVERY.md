@@ -2465,3 +2465,217 @@ Napolitano–Polverino–Santonastaso–Zullo，[*Classifications and constructi
 结论止于完整原商支持的包含方向及整个实际中间域张成秩剖面的恢复；不声称恢复三维窗口的原标量轨道、全部点权或完整二元交维函数，不给有限查询、有效算法或噪声结论，也不判定最小反例规模。§§33–34 的序列损失与六维反例保留原范围；本定理不推出物理量子起源、$\mathbb Z$ 在 $\mathbb Q$ 中的丢番图定义或 $H10(\mathbb Q)$。
 
 ## 追加锚（本行以下为增补区）
+
+## 37. 四维窗口在实际三次域上的逐原标量秩二判据
+
+**定义 37.1（固定实际三次域与四维窗口）。** 固定特征零域 $F$、实际有限扩张 $D/F$ 及已经存在的实际中间域 $F\subseteq A\subseteq D$，$[A:F]=3$。对四维 $F$-子空间 $W\le_F D$，沿用 §§28–29、36 的记号
+
+$$
+d_W(r)=\dim_F(W\cap rW)\quad(r\in D^\times),\qquad
+AW=\operatorname{span}_A W\subseteq D,\qquad
+r_W(A)=\dim_A AW.
+\tag{37.1}
+$$
+
+所有标量与张成都使用原 $D$ 的乘法；不要求 $F(W/W)=D$，也不要求稳定子 $E_W=\{c\in D:cW\subseteq W\}$ 等于 $F$。
+
+**定理 37.2（一次原三次标量交叠判别秩二）。** 在定义 37.1 的条件下，$2\le r_W(A)\le\min\{4,[D:A]\}$，且对每个原 $a\in A\setminus F$，
+
+$$
+\boxed{\qquad d_W(a)\ge2\quad\Longleftrightarrow\quad r_W(A)=2.\qquad}
+\tag{37.2}
+$$
+
+因此秩二时每个这样的原标量都给交维至少二；秩三或四时每个这样的原标量都给交维至多一。
+
+证明。$[A:F]=3$ 为素数，故 $F(a)=A$，且 $1,a,a^2$ 是 $A/F$ 的基。$W$ 不可能容在一条只有三维的 $A$-直线上，而它的四个 $F$-基向量也张成 $AW$，所以秩具有所述上下界。若 $r_W(A)=2$，则 $\dim_F AW=6$；因 $W+aW\subseteq AW$，维数公式给出
+
+$$
+d_W(a)=8-\dim_F(W+aW)\ge8-6=2.
+\tag{37.3}
+$$
+
+反之，设 $d_W(a)\ge2$。乘以 $a$ 将 $U=W\cap a^{-1}W$ 同构地映到 $W\cap aW$，故可取 $F$-线性独立的 $u,v\in U$。于是 $u,au,v,av$ 都在 $W$ 中。
+
+若 $u,v$ 在 $A$ 上独立，则任何关系
+
+$$
+(c_0+c_1a)u+(c_2+c_3a)v=0\qquad(c_i\in F)
+$$
+
+先由 $A$-独立性，再由 $1,a$ 的 $F$-独立性，迫使所有 $c_i=0$。这四个向量因而是 $W$ 的 $F$-基，$AW=Au\oplus Av$，秩为二。
+
+若 $u,v$ 在 $A$ 上依赖，则二者都在同一条 $Au$ 中。令 $S=Fu+Fv$，有 $\dim_F S=2$ 及
+
+$$
+S+aS\subseteq W\cap Au,\qquad 2\le\dim_F(S+aS)\le3.
+$$
+
+若中间维数为二，则 $aS=S$，故 $F[a]S=AS=S$，这使二成为三的倍数，矛盾。因此 $S+aS=Au\subseteq W$。取 $w\in W\setminus Au$，则 $W=Au\oplus Fw$、$AW=Au\oplus Aw$，秩仍为二。这也包含交叠向量全部落在同一条 $A$-直线上的情形。
+
+若 $d_W(a)=4$，则 $aW=W$，同样会有 $AW=W$，与三不整除四矛盾；这里没有排除其它非平凡稳定子。环境的低次数也已包含：$[D:A]=1$ 时不存在四维 $W$；$[D:A]=2$ 时上述秩界迫使 $AW=D$、秩为二。全部论证在原 $D$ 内完成。$\square$
+
+**推论 37.3（完整同原标签函数排除秩二与高秩混同）。** 固定同一个特征零实际有限扩张 $D/F$。若四维窗口 $X,Z\le_F D$ 满足
+
+$$
+d_X(r)=d_Z(r)\quad\text{对全部原 }r\in D^\times\text{，包括交维为零的读数},
+\tag{37.4}
+$$
+
+则对每一个已经存在的实际三次中间域 $A\subseteq D$，
+
+$$
+r_X(A)=2\quad\Longleftrightarrow\quad r_Z(A)=2.
+\tag{37.5}
+$$
+
+证明。固定该实际 $A$，取任一原 $a\in A\setminus F$，将 (37.4) 代入两次 (37.2) 即得。因此同一个实际 $A$ 上不能出现一方秩二、另一方秩三或四；没有这样的实际域时，全称结论为空。这个推论未判定秩三与四能否由完整函数区分，该问题仍未解决；也未给出其它次数域上的秩分类。已给定实际 $A$ 及其中一个标签时的充分读数，不提供寻找或取得 $A$、该标签的算法。$\square$
+
+数学引文与推导范围。§§28–29 已给原交维、稳定子及实际域张成的接口，§§33–34 已区分最小值序列与完整逐标签函数；这些定义和维数工具在此直接复用。§§35–36 的恢复结论针对三维窗口，§34 的半维恢复结论也不涵盖任意环境次数下的 (37.2)。本节只接出四维窗口在固定实际三次域上的阈值及其逐标签推论。
+
+Napolitano–Polverino–Santonastaso–Zullo，[*Classifications and constructions of minimum size linear sets*，arXiv:2201.02003v1，Proposition 6.3](https://arxiv.org/html/2201.02003v1)，在 $k+2\le\dim_F D$ 下分类 $\dim_F(W+aW)=k+1$ 的一般域临界对。这里 $k=4$ 时对应 $d_W(a)=3$；取 $[F(a):F]=3$，其形状为一条完整 $A$-直线加一条 $F$-方向。Castello–Polverino–Zullo，[*Full weight spectrum one-orbit cyclic subspace codes*，arXiv:2405.19911v1，Definition 2.2、Theorem 5.2](https://arxiv.org/html/2405.19911v1)，分别给子域张成秩的有限域记号及上述临界对结果的引用。Bachoc–Serra–Zémor，[*Revisiting Kneser's theorem for field extensions*，arXiv:1510.01354v2，§2.3，Lemma 13 后的有限维说明](https://arxiv.org/html/1510.01354v2)，给有限维稳定子成域的成熟事实。临界形状、张成秩与稳定子事实均不另计新内容；所列临界对条目没有给出一般 $d_W(a)=2$ 时的反向蕴含。相对于这些指定原文与仓内 §§28–29、33–36，本节属于仓内推导的应用桥（repo-derived）：用两个原交叠方向补足该蕴含，再得到 (37.5)。标准维数公式与域塔不计新内容；外部精确重合及全球文献优先权未确定。
+
+白话说，固定一个确实存在的三次子域后，把窗口里的向量允许用该子域的数作系数，所需方向数只能是二、三或四。任选其中一个不属于底域的原数来倍乘窗口，只要交叠还有两个独立的底域方向，就能锁定这个数目为二：这两个方向若在子域上独立，它们及各自的倍乘已经填满四维窗口；若在子域上依赖，它们与倍乘会填满一条三维的子域直线，窗口只剩一个底域方向可补。反过来，两个子域方向总共只有六个底域维度，两份四维窗口放进去必共享至少两维。因此完整同标签答案相同的两个窗口，在这个实际三次域上不会一个秩二而另一个秩三或四；这没有回答三与四的区别，也没有替我们找到那个子域或可用的标签。
+
+## 追加锚（本行以下为增补区）
+
+## 38. 四维窗口在实际三次域上的秩三对四原标签分离
+
+**定义 38.1（固定实际域与完整交维函数）。** 设 $F$ 为特征零域，$D/F$ 为实际有限域扩张，$F\subseteq A\subseteq D$ 为已经存在的实际中间域，$[A:F]=3$。对四维 $F$-子空间 $W\le_F D$，沿用
+
+$$
+d_W(r)=\dim_F(W\cap rW)\quad(r\in D^\times),\qquad
+r_W(A)=\dim_A AW,\qquad AW=\operatorname{span}_A W\subseteq D.
+\tag{38.1}
+$$
+
+完整函数保留全部同一原标签及零读数。这里不要求 $F(W/W)=D$，也不预设稳定子 $E_W=\{c\in D:cW\subseteq W\}$ 等于 $F$。
+
+**定理 38.2（高秩分离及三次域条目的纤维不变性）。** 在定义 38.1 的条件下，若四维窗口 $X,Z\le_F D$ 满足 $r_X(A)=3$、$r_Z(A)=4$，则
+
+$$
+\boxed{\qquad \exists r\in D^\times:\quad d_X(r)>d_Z(r).\qquad}
+\tag{38.2}
+$$
+
+因此完整同原标签函数的一个纤维不能同时含有在同一个实际 $A$ 上秩三与秩四的窗口。结合定理 37.2，对任意四维窗口 $X,Z\le_F D$，
+
+$$
+\bigl[\ \forall r\in D^\times,\ d_X(r)=d_Z(r)\ \bigr]
+\quad\Longrightarrow\quad
+r_X(A)=r_Z(A)
+\quad\text{对每个实际三次中间域 }A\subseteq D.
+\tag{38.3}
+$$
+
+证明。先证明 (38.2)，不使用 §37。令 $N=[D:F]$。由 $r_Z(A)=4$ 得 $[D:A]\ge4$、$N\ge12$；低于十二的环境次数不能满足这两个秩前件。
+
+取 $X$ 的一个 $F$-基 $x_1,\ldots,x_4$。映射 $A^4\to AX$、$(c_i)\mapsto\sum c_ix_i$ 的核为一维 $A$-空间。选其非零向量 $\lambda=(\lambda_i)$，记 $s=\dim_F\langle\lambda_1,\ldots,\lambda_4\rangle_F$。若 $s=1$，除去一个共同非零 $A$ 因子就得到非零 $F$-关系，与基的独立性矛盾；故 $s=2$ 或三。
+
+当 $s=2$ 时，先缩放关系使其系数张成 $F+Fa$，其中 $a\in A\setminus F$；当 $s=3$ 时，系数张成整个 $A$，任选 $a\in A\setminus F$，则 $1,a,a^2$ 是其 $F$-基。将系数向量按这两组基展开，所得两个或三个 $F^4$ 向量线性独立；把它们补成 $F^4$ 的基并相应更换 $x_i$，便分别得到
+
+$$
+\begin{array}{ll}
+s=2:&\lambda=(1,a,0,0),\qquad x_1+ax_2=0,\\
+s=3:&\lambda=(1,a,a^2,0),\qquad x_1+ax_2+a^2x_3=0.
+\end{array}
+\tag{38.4}
+$$
+
+这是基变换与关系的缩放，没有更换原域、窗口或观察标签。
+
+复用 §§28–29、36 的可分分裂及限制块秩接口。取包含原 $D$ 的有限正规闭包 $K/F$，令 $\Omega=\operatorname{Hom}_F(D,K)$，并记
+
+$$
+S_\tau=\{\sigma\in\Omega:\sigma|_A=\tau\},\qquad
+B_X=(\sigma(x_j))_{\sigma,j},\qquad
+B_Z=(\sigma(z_j))_{\sigma,j},
+\tag{38.5}
+$$
+
+其中 $z_1,\ldots,z_4$ 是 $Z$ 的任意 $F$-基。三个 $S_\tau$ 是非空互不相交的原限制块。由 $D\otimes_{A,\tau}K\simeq K^{S_\tau}$ 扩底保维，每块的 $B_X$ 行秩为三，$B_Z$ 行秩为四；这不要求归一化窗口生成 $D$，也不要求行拟阵简单。令 $\iota:A\hookrightarrow K$ 为原包含嵌入，置
+
+$$
+h_\sigma=\sum_{j=1}^4\lambda_j\sigma(x_j).
+\tag{38.6}
+$$
+
+当 $\sigma\in S_\iota$ 时，$\sigma$ 固定全部 $\lambda_j$，故 $h_\sigma=0$。当 $s=2$ 且 $\sigma\notin S_\iota$ 时，由 (38.4) 得 $h_\sigma=(a-\sigma(a))\sigma(x_2)\ne0$；这里 $F(a)=A$，所以两种限制确实给不同的 $a$ 像。
+
+先处理 $s=3$ 且存在块外额外零点的情形。设 $\sigma\notin S_\iota$、$h_\sigma=0$。在原 $D[T]$ 中置
+
+$$
+P(T)=x_1+x_2T+x_3T^2=x_3(T-a)(T-b),\qquad
+b=-x_2/x_3-a\in D.
+\tag{38.7}
+$$
+
+因 $P(a)=0$，上述分解成立。对系数施加 $\sigma$ 后，$\sigma(P)(a)=h_\sigma=0$，而 $a\ne\sigma(a)$，所以 $\sigma(b)=a$。若 $p(T)=T^3-s_1T^2+s_2T-s_3\in F[T]$ 是 $a$ 的最小多项式，则 $\sigma(p(b))=p(a)=0$；嵌入的单射性给出 $p(b)=0$。若 $b\in A$，则 $x_1/x_3=ab$、$x_2/x_3=-(a+b)$ 都在 $A$ 中，使 $AX\subseteq Ax_3+Ax_4$，与秩三矛盾。因此 $b\notin A$，特别是 $b\ne a$。
+
+第三个根为 $c=s_1-a-b\in D$；可分性使三根互异。若 $c\in A$，又会有 $b\in A$，故 $c\notin A$。于是实际子域 $B=F(c)\subseteq D$ 为三次域，而 $c$ 在 $A$ 上满足 $p(T)/(T-a)$ 且不在 $A$ 中，给出 $[AB:A]=2$。由根与系数的关系，
+
+$$
+x_2/x_3=c-s_1,\qquad
+x_1/x_3=ab=c^2-s_1c+s_2,\qquad
+X=x_3B\oplus Fx_4.
+\tag{38.8}
+$$
+
+最后一个等式使用 $1,c,c^2$ 的 $F$-独立性及原 $x_i$ 的基性质。特别是 $r_X(A)=3$ 还保证 $x_4\notin x_3AB$。这一步取得的是原 $D$ 内的三次域；没有假定原 $A$ 正规，若 $A$ 正规则此额外零点情形已被 $b\notin A$ 排除。
+
+任取原 $\gamma\in B\setminus F$，则 $F(\gamma)=B$，而 $x_3B\subseteq X\cap\gamma X$。对任何四维窗口 $Y$，$d_Y(\gamma)=4$ 都会使 $\gamma Y=Y$，进而使 $Y$ 成为 $B$-空间，与三不整除四矛盾。因此 $d_X(\gamma)=3$、$d_Z(\gamma)\le3$。若 $d_Z(\gamma)=3$，就有 $\dim_F(Z+\gamma Z)=5$。直接应用 Napolitano–Polverino–Santonastaso–Zullo，[*Classifications and constructions of minimum size linear sets*，arXiv:2201.02003v1，Proposition 6.3](https://arxiv.org/html/2201.02003v1)：取其 $L=D$、$S=Z$、$T=\langle1,\gamma\rangle_F$、$k=4$、$t=[F(\gamma):F]=3$，且 $k+2=6\le N$。其第二分支的 $4=3\cdot1+1$ 给出 $Z=zB\oplus Fh$，其中 $z,h\in D^\times$、$hB\cap zB=\{0\}$。因而
+
+$$
+r_Z(A)\le\dim_A(zAB)+1=3,
+\tag{38.9}
+$$
+
+矛盾。故 $d_Z(\gamma)\le2$，取同一个原 $r=\gamma$ 即得 (38.2)。临界形状在此只作为已有定理使用。
+
+余下包括全部 $s=2$，以及 $s=3$ 无块外额外零点的情形；此时 $h_\sigma=0$ 恰当且仅当 $\sigma\in S_\iota$。取两组四元不定元 $t,y$，置 $u(t)=\sum t_jx_j$、$v(y)=\sum y_jx_j$。以 $D/F$ 的任一原基 $e_1,\ldots,e_N$ 记乘法坐标矩阵
+
+$$
+C(t,y)=[\ v(y)z_1\ \cdots\ v(y)z_4
+\mid -u(t)z_1\ \cdots\ -u(t)z_4\ ]
+\in\operatorname{Mat}_{N\times8}(F[t,y]).
+\tag{38.10}
+$$
+
+可逆分裂矩阵 $T=(\sigma(e_\ell))_{\sigma,\ell}$ 给出
+
+$$
+TC(t,y)=[\operatorname{diag}(B_Xy)B_Z
+\mid-\operatorname{diag}(B_Xt)B_Z].
+\tag{38.11}
+$$
+
+只在辅助域中取 $t=\lambda$、$y=(1,0,0,0)^{\mathsf T}$。在 $S_\iota$ 中选 $B_Z$ 的四行基 $I$，在任一其它限制块中选四行基 $J$。按先 $I$ 后 $J$ 排列，(38.11) 的这八行形成块三角子式，其行列式为
+
+$$
+\pm\det((B_Z)_I)\det((B_Z)_J)
+\prod_{\sigma\in I}\sigma(x_1)
+\prod_{\sigma\in J}h_\sigma\ne0.
+\tag{38.12}
+$$
+
+各因子非零分别由所选行基、$x_1\ne0$ 及无块外额外零点保证。故辅助取值处 $C$ 的秩为八，原坐标矩阵 (38.10) 必有一个非零八阶子式 $f\in F[t,y]$；这里用的是整个可逆矩阵 $T$ 保秩，不把分裂子式误认成同一个原子式。
+
+$F$ 无限，非零多项式 $f(t,y)t_1y_1$ 可在某组原 $t,y\in F^4$ 取非零值；这是 §§28–29 已用的无限域多项式返回。于是原 $u=u(t),v=v(y)\in X\setminus\{0\}$ 满足 $\dim_F(vZ+uZ)=8$。取原 $r=u/v\in D^\times$，有
+
+$$
+d_Z(r)=\dim_F(vZ\cap uZ)=0,\qquad
+u\in X\cap rX\setminus\{0\},\qquad d_X(r)\ge1.
+\tag{38.13}
+$$
+
+这也证明 (38.2)。辅助零坐标和 $K$ 参数仅证明原系数子式非零；最终见证是同一原 $D$ 中的 $u/v$，两窗口在它处直接比较。两种系数维数及有无额外零点已经穷尽。
+
+若两完整函数相等，(38.2) 排除同一实际 $A$ 上的秩三对四，交换窗口名也排除秩四对三。四维窗口的三次域张成秩只能为二、三或四；定理 37.2 已排除秩二与另外两种秩在同一纤维混同。故对每一个实际 $A$ 得 (38.3)；没有实际三次域时该全称结论为空。整个论证没有使用比值生成条件或平凡稳定子条件。$\square$
+
+数学引文与推导范围。§§28–29、36 的可分分裂、实际域限制块秩、原乘法矩阵及无限域子式工具在此直接复用；§§35–36 的承重恢复结论针对三维窗口，§34.3 则要求环境次数为窗口维数的两倍，均不提供这里环境次数至少十二的四维高秩分离。§37 的秩二阈值只用于 (38.3) 的最后拼接。上述 Proposition 6.3 的一般域临界对形状已有先例；Castello–Polverino–Zullo，[*Full weight spectrum one-orbit cyclic subspace codes*，arXiv:2405.19911v1，Definition 2.2、Theorem 5.2](https://arxiv.org/html/2405.19911v1)，分别给有限域子域张成秩记号及该一般域命题的引用。它们不提供本条的同原标签高秩分离接口。相对于所列原文条目及仓内既有结果，本节的仓内推导（repo-derived）差额是：唯一三次关系的块外零点强制原域内的共轭根与实际三次域形状，再以临界交维和无额外零点的原参数子式两支闭合 (38.2)。标准域论、临界形状及子式返回不另列为新成果；该连接的外部精确重合与全球文献优先权未核实。
+
+白话说，四个底域方向在三次子域下只需三个方向时，恰有一条子域系数的关系。把同一个实际域的嵌入按子域取值分成三组，这条关系会消掉其中一整组。如果它还消掉别组的某个位置，三次方程就迫使另两个共轭根也落在原域，窗口的三个方向因此正好拼成另一实际三次域的一条完整直线。取这个域里一个原数来倍乘，原窗口共享三维；秩四的竞争窗口若也共享三维，已有临界对定理便迫使它在原来的子域下至多秩三，矛盾。如果没有额外零点，两整组各选四条独立行便给出非零八阶行列式，再返回底域参数，取得一个原窗口确有交叠而竞争窗口交叠为零的同一原比例。因此全部同标签交维答案相同的窗口，对每一个已经存在的实际三次域都具有相同张成秩。
+
+结论只排除上述秩差造成的完整函数碰撞，并不恢复窗口本身或其原标量轨道。严格不等式只需一个方向；共轭根分支给出 $d_X(r)=3$、$d_Z(r)\le2$，没有排除 $d_Z(r)>0$，所以它不把正支持当作完整函数，也不声称正支持必能分离。不结算其它次数域上的任意四维剖面，不给有限查询、有效算法、噪声结论或物理量子、$\mathbb Z/\mathbb Q$、$H10(\mathbb Q)$ 的推论。
+
+## 追加锚（本行以下为增补区）

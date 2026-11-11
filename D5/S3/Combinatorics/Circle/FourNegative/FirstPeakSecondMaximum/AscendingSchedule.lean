@@ -19,9 +19,8 @@ open private D A B L M H Allocation allocate_dyadic gates
   from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.AscendingArithmetic
 open private bank terminal word bank_inventory bank_good bank_masses
   from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.AscendingSource
-open private size seed sourceMod base newBase charge chainLength chainStart nextBase nextNewBase
-  oldValue newValue source_signs negatives chain_values new_base_bounds source_totals
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open private seed sourceMod charge nextBase nextNewBase source_signs chain_values new_base_bounds source_totals from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size base newBase chainLength chainStart oldValue newValue negatives)
 open private native_masses
   from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
 open private inserted_perm from D5.S3.Combinatorics.Circle.FourNegative.EqualFirstThree.Physical
