@@ -34,11 +34,12 @@ internal sealed class MatharA157100FiveTermRecurrenceDocument : IScribeDocumentD
     }
 
     private static DocumentBlock Node(string name, string title, Formula body,
-        AssessedProvenance provenance, string prose, DescribeRole role) =>
+        AssessedProvenance provenance, string prose, DescribeRole role,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("a157100-" + (name == "A" ? "series" : name)),
             DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(Disp(body)), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The five-term recurrence for the Catalan transform A157100.",
@@ -79,5 +80,8 @@ internal sealed class MatharA157100FiveTermRecurrenceDocument : IScribeDocumentD
                 + "For every n ≥ 4 the forcing coefficient vanishes. The existing Euler coefficient "
                 + "identity and the four shifts yield exactly the five displayed terms. "
                 + "No Hankel-transform or Somos-4 assertion is part of this theorem.",
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a157100-five-term-recurrence"),
+                    ResolutionKind.Proved)))));
 }
