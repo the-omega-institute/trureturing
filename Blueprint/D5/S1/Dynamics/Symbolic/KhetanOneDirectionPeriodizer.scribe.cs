@@ -1,0 +1,43 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S1.Dynamics.Symbolic;
+
+internal sealed class KhetanOneDirectionPeriodizerDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Algebraic periodizer bridge for finite-alphabet lattice configurations.",
+        H("KhetanOneDirectionPeriodizer"),
+        Blocks(
+            Describe.Lean(
+                DescribeId.Create("exact-cover-product-differences"),
+                DeclarationHandle.Create("D5/S1/Dynamics/Symbolic/KhetanOneDirectionPeriodizer.exact_cover_product_differences"),
+                H("Exact-cover annihilator of the original configuration"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Positive-shift operators use the negative-exponent tile mask. Exact coverage makes that mask act as the constant one configuration. A lattice difference supplies a nonzero annihilator, and the pinned product-difference supplier acts directly on the original integer configuration."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("nonzero-line-annihilator-periodic"),
+                DeclarationHandle.Create("D5/S1/Dynamics/Symbolic/KhetanOneDirectionPeriodizer.nonzero_line_annihilator_periodic"),
+                H("From a line annihilator to a global period"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Every nonzero polynomial annihilator in a nonzero lattice direction yields a nonzero period of the original finite-range configuration. No periodic-line conclusion or nonzero constant coefficient is assumed. This is the terminal recurrence step, not the complete one-direction periodizer theorem."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("integer-periodizer-direction-split"),
+                DeclarationHandle.Create("D5/S1/Dynamics/Symbolic/KhetanOneDirectionPeriodizer.integer_periodizer_direction_split"),
+                H("Separate parallel and transverse difference factors"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For a primitive lattice direction, its integer Bezout coordinates express every parallel supplier direction as an integer multiple. Grouping all such factors gives a nonzero one-variable Laurent factor A and retains every transverse factor in B, with AB annihilating the original integer configuration after coefficient transport to any domain. In particular the complex coefficient action uses exactly the image of that original configuration. Parallel or repeated transverse factors remain permitted."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("localized-bezout-step"),
+                DeclarationHandle.Create("D5/S1/Dynamics/Symbolic/KhetanOneDirectionPeriodizer.localized_bezout_step"),
+                H("Use a cleared identity before acting on the configuration"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Primitivity constructs integral lattice Laurent coordinates, with the chosen direction in the coefficient ring. A finite monic factorization of B, whose factors remain irreducible over the coefficient fraction field and do not divide P in the original Laurent ring, proves localized coprimality. Denominator clearing constructs a nonzero horizontal coefficient rho. The resulting polynomial (z-1) A rho annihilates the original configuration, whose finite range gives a global period. No coprimality or nonzero eliminant is assumed in this step. Constructing the monic factors and proving their irreducibility and nondivisibility from the line-factor restriction, and hence the complete one-direction periodizer theorem, remain unproved."))),
+                DescribeRole.Theorem))));
+}
