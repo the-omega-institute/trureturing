@@ -2910,3 +2910,225 @@ Napolitano–Polverino–Santonastaso–Zullo，[*Classifications and constructi
 本定理的结论范围是同一有限扩张内的四维 $F$-窗口和原标签逐点支配。它不声称一般维数、非有限环境、有限查询算法、噪声稳定性、量子起源或 $\mathbb Z/\mathbb Q$、$H10(\mathbb Q)$ 的推论；反例只说明删去交维大小后会丢失刚性。
 
 ## 追加锚（本行以下为增补区）
+
+## 40. 低交维区的七次刚性与八次正交双胞胎
+
+**定义 40.1（非标量低交维）。** 对四维窗口 $W\le_F D$，只在非标量标签
+$$
+r\in D^\times\setminus F^\times
+$$
+上称 $d_W(r)$ 为非标量交维。这个排除不可省略：每个 $c\in F^\times$ 都满足 $cW=W$ 及 $d_W(c)=4$。称 $W$ 为低交维窗口，若
+$$
+d_W(r)\le2\qquad(r\in D^\times\setminus F^\times).
+\tag{40.1}
+$$
+
+**引理 40.2（迹正交补的交维公式）。** 设 $[D:F]=n$，$W\le_F D$ 的维数为 $k$，并以非退化结合配对
+$$
+\langle x,y\rangle=\operatorname{Tr}_{D/F}(xy)
+$$
+定义 $U=W^\perp$。则
+$$
+\boxed{d_W(r)=2k-n+d_U(r)}
+\qquad(r\in D^\times).
+\tag{40.2}
+$$
+
+**证明。** 由 $(rW)^\perp=r^{-1}U$，以及
+$$
+d_U(r^{-1})=d_U(r),
+$$
+有
+$$
+\begin{aligned}
+d_U(r^{-1})
+&=\dim_F(U\cap r^{-1}U)\\
+&=n-\dim_F(W+rW)\\
+&=n-2k+d_W(r).
+\end{aligned}
+$$
+整理即得 (40.2)。最后一个对称性由乘以 $r$ 在 $U\cap r^{-1}U$ 与 $rU\cap U$ 之间的同构给出。$\square$
+
+**引理 40.3（七次环境中的三维低秩商刚性）。** 设 $[D:F]=7$，且 $F$ 为特征零域。若 $U,V\le_F D$ 都是三维空间，并满足
+$$
+d_U(r)\le1\quad(r\in D^\times\setminus F^\times),
+\qquad Q(U)\subseteq Q(V),
+\tag{40.3}
+$$
+则存在 $\gamma\in D^\times$ 使
+$$
+V=\gamma U.
+\tag{40.4}
+$$
+
+**证明。** 先证
+$$
+6\le\dim_F(UV)\le7,
+\tag{40.5}
+$$
+其中 $UV$ 是所有 $uv$ 的 $F$-张成。若 $\dim_F(UV)\le5$，可在 $(UV)^\perp$ 中取线性无关的 $p,q$。则 $pU,qU\subseteq V^\perp$，而 $\dim_FV^\perp=4$，故
+$$
+\dim_F(pU\cap qU)\ge3+3-4=2.
+$$
+非零交向量给出 $d_U(q/p)\ge2$，且 $q/p\notin F^\times$，矛盾。于是只剩下维数六或七。
+
+设
+$$
+K=\ker(U\otimes_FV\longrightarrow D),\qquad
+u\otimes v\longmapsto uv.
+$$
+若 $\dim_F(UV)=7$，则 $\dim_FK=2$。对每个平面 $H=\ker\ell\subset U$，取独立的 $u,v\in H$。由 $Q(U)\subseteq Q(V)$，存在独立的 $c,d\in V$ 使 $u/v=c/d$，从而
+$$
+0\ne u\otimes d-v\otimes c\in K\cap(H\otimes_FV).
+\tag{40.6}
+$$
+因此每个收缩
+$$
+M(\ell):K\longrightarrow V,\qquad
+k\longmapsto(\ell\otimes1)k
+$$
+都有非零核。取 $K$ 的基，把它们看作 $A,B:U^*\to V$。它们的秩至少为二，否则相应张量为零或可分解张量。又 $A\ell,B\ell$ 对每个 $\ell$ 线性相关。一个初等事实是：若两个线性映射 $A,B:E\to V$ 满足这一点且 $\operatorname{rank}A\ge2$，则 $B=cA$；取两个使 $Ax,Ay$ 独立的向量，再比较 $x,y,x+y$ 即得。于是 $A,B$ 对应的两个张量相关，和 $\dim K=2$ 矛盾。因此
+$$
+\dim_F(UV)=6,\qquad\dim_FK=3.
+\tag{40.7}
+$$
+
+取 $K$ 的基，令 $M(x)$ 为其三个收缩列组成的 $3\times3$ 矩阵，$x\in U^*$。式 (40.6) 给出 $\det M(x)\equiv0$。其在 $F(x)$ 上的秩恰为二：秩至多一会使任意两列映射逐点相关，应用上面的初等事实后使 $K$ 维数至多一，或直接产生可分解张量。
+
+该矩阵没有非零的常值右核；否则 $K$ 中有一个张量被所有收缩消掉。它也没有非零的常值左核。事实上，若 $V_0$ 是相应的二维子空间，则 $K\subseteq U\otimes V_0$，而
+$$
+\dim_F(UV_0)=6-\dim_FK=3.
+$$
+对独立的 $v,w\in V_0$，这迫使 $vU=wU$，从而 $d_U(w/v)=3$，再次矛盾。
+
+因此 $\operatorname{adj}M$ 是非零秩一矩阵。把它在多项式唯一分解域中写成
+$$
+\operatorname{adj}M=h\,a(x)b(x)^{\mathsf T},
+\tag{40.8}
+$$
+其中 $a,b$ 是本原齐次向量。常值的 $a$ 或 $b$ 会分别给出常值右核或左核；由于 $\operatorname{adj}M$ 的总次数为二，故 $a,b$ 都是一次向量，$h$ 为常数。写 $a(x)=Lx$。矩阵 $L$ 不能有秩一：否则有常值右核；若秩二，经基变换可写成 $a(x)=(x_1,x_2,0)^{\mathsf T}$，而
+$$
+x_1\operatorname{col}_1(M)+x_2\operatorname{col}_2(M)=0
+$$
+会使第一或第二个核张量为零或可分解。故 $L$ 可逆，再作基变换得到
+$$
+M(x)x=0.
+\tag{40.9}
+$$
+
+设相应的 $U$ 基为 $u_1,u_2,u_3$。比较 (40.9) 的二次系数，可把 $K$ 的一组基写成
+$$
+\begin{aligned}
+k_1&=-u_2\otimes p-u_3\otimes q,\\
+k_2&=u_1\otimes p-u_3\otimes s,\\
+k_3&=u_1\otimes q+u_2\otimes s,
+\end{aligned}
+\qquad p,q,s\in V.
+\tag{40.10}
+$$
+其乘积为零，所以
+$$
+u_1p=u_3s,\qquad u_1q=-u_2s.
+$$
+必有 $s\ne0$，否则 $p=q=0$。于是
+$$
+p=\frac{s}{u_1}u_3,\qquad
+q=-\frac{s}{u_1}u_2,
+$$
+且 $s=(s/u_1)u_1$。故 $V$ 包含三维空间 $(s/u_1)U$，维数相同即得 (40.4)。$\square$
+
+**定理 40.4（低交维问题的四至七次边界）。** 设 $X,Z\le_F D$ 都是四维窗口，满足逐原标签支配
+$$
+d_X(r)\le d_Z(r)\qquad(r\in D^\times)
+\tag{40.11}
+$$
+及低交维条件 (40.1)。则在 $[D:F]\le7$ 时存在 $\gamma\in D^\times$ 使
+$$
+Z=\gamma X.
+\tag{40.12}
+$$
+
+**证明。** 次数四时四维窗口只能是 $D$ 本身。次数五时，两个四维窗口的迹正交补都是直线，因而互为标量倍；低交维窗口本身也不存在，因为维数公式给出每个非标量交维至少三。
+
+次数六时，令 $U=X^\perp$，则 $\dim_FU=2$。取独立的 $u,v\in U$，令 $r=u/v\notin F^\times$。由 $u\in U\cap rU$ 及 (40.2)，
+$$
+d_X(r)=2+d_U(r)\ge3,
+$$
+与 (40.1) 矛盾。因此低交维分支为空。
+
+次数七时，令 $U=X^\perp$、$V=Z^\perp$。由 (40.2) 及 $d_U(r)=d_U(r^{-1})$，
+$$
+d_X(r)=1+d_U(r),\qquad d_Z(r)=1+d_V(r).
+\tag{40.13}
+$$
+于是 $d_U\le d_V$，低交维给出 $d_U(r)\le1$；同时 $Q(U)\subseteq Q(V)$。引理 40.3 得 $V=\gamma U$，取迹正交补即得 $Z=\gamma^{-1}X$。$\square$
+
+**定理 40.5（八次扩张的最小正交双胞胎反例）。** 令
+$$
+F=\mathbb Q,\qquad D=\mathbb Q(\alpha),\qquad \alpha^8=2,
+$$
+并定义
+$$
+X=\langle1,\alpha,\alpha^3,\alpha^4\rangle_{\mathbb Q},
+\qquad
+Z=\langle\alpha,\alpha^2,\alpha^3,\alpha^6\rangle_{\mathbb Q}.
+\tag{40.14}
+$$
+则
+$$
+d_X(r)=d_Z(r)\le2\quad(r\in D^\times\setminus\mathbb Q^\times),
+\qquad
+Z\ne\gamma X\quad(\gamma\in D^\times).
+\tag{40.15}
+$$
+因此八次是 corrected low-overlap 问题出现反例的最小环境次数。
+
+**证明。** $T^8-2$ 的 Eisenstein 判别给出 $1,\alpha,\ldots,\alpha^7$ 的有理基。记
+$$
+S=\{0,1,3,4\},\qquad S^c=\{2,5,6,7\}.
+$$
+由
+$$
+\operatorname{Tr}_{D/\mathbb Q}(\alpha^j)=0
+\quad(1\le j\le7)
+$$
+及 $\operatorname{Tr}(\alpha^8)\ne0$，可直接核对
+$$
+Z=X^\perp.
+\tag{40.16}
+$$
+将 (40.2) 用于 $n=8,k=4$，得到
+$$
+d_X(r)=d_Z(r)\qquad(r\in D^\times).
+\tag{40.17}
+$$
+
+写 $r=\sum_{i=0}^7c_i\alpha^i$。把乘法后投影到
+$\operatorname{span}_{\mathbb Q}\{\alpha^2,\alpha^5,\alpha^6,\alpha^7\}$，相对于 $X$ 的基 $(1,\alpha,\alpha^3,\alpha^4)$，矩阵为
+$$
+M_r=
+\begin{pmatrix}
+c_2&c_1&2c_7&2c_6\\
+c_5&c_4&c_2&c_1\\
+c_6&c_5&c_3&c_2\\
+c_7&c_6&c_4&c_3
+\end{pmatrix},
+\tag{40.18}
+$$
+故 $d_X(r)=4-\operatorname{rank}M_r$。若 $d_X(r)\ge3$，所有二阶子式均为零。由行 $1,3$、列 $1,4$ 的子式得
+$$
+c_2^2=2c_6^2,
+$$
+故 $c_2=c_6=0$。此时行 $1,4$、列 $1,3$ 的子式给 $c_7=0$，行 $1,2$、列 $2,4$ 的子式给 $c_1=0$；再由行 $2,3$、列 $1,2$ 的子式得 $c_5=0$，由行 $2,4$、列 $2,3$ 及行 $3,4$、列 $3,4$ 依次得 $c_4=c_3=0$。所以 $r\in\mathbb Q^\times$，证明非标量时 $d_X(r)\le2$。结合 (40.17) 即得第一部分。
+
+若 $\gamma X=Z$，因 $1\in X$，有
+$$
+\gamma=a\alpha+b\alpha^2+c\alpha^3+d\alpha^6.
+$$
+条件 $\alpha\gamma\in Z$ 迫使 $c=d=0$；再由 $\alpha^3\gamma\in Z$ 迫使 $a=b=0$，与 $\gamma\ne0$ 矛盾。故 $Z$ 与 $X$ 不在同一标量轨道。$\square$
+
+**边界与范围。** 对次数六和七，维数公式还给出所有四维窗口的商支持都是 $D^\times$，所以只看 $Q(W)$ 在这些次数中完全没有区分力。七次刚性使用了完整的逐标签支配和低交维，而不是纯支持包含。八次反例的秩矩阵是本卷本轮的纸面构造；迹正交补和非退化配对沿用前卷工具。这里没有使用 Lean、CAS、数值实验或有限域枚举，不作全球优先权声明，也不把该结果外推为量子力学、$\mathbb Z\subset\mathbb Q$ 的丢番图定义或 Hilbert 第十问题结论。
+
+白话说：把“高交叠”排除后，四到六次其实没有可用的低交维窗口，七次仍能用正交补把问题降成三个方向的商关系，并证明两个窗口只能整体缩放。到了八次，四维空间和它的迹正交补各自只在非标量标签上重合至多两维，却对所有标签给出同一份交维表；这两个空间又不是整体乘数的关系。因此低交维本身不是最后的刚性来源，八维中的正交对偶是必须额外打破的隐藏关系。
+
+## 追加锚（本行以下为增补区）
