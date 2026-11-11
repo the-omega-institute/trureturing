@@ -213,7 +213,7 @@ theorem central_density_diagonal (n : ℕ) :
   ext p q
   by_cases hpq : p=q
   · subst q
-    by_cases hp : (finProdFinEquiv p : Fin (6*n)).val < centralIndex n <;>
+    by_cases hp : p.2.val + n*p.1.val < centralIndex n <;>
       simp [centralDensity, centralProjector, normalization, Matrix.diagonal_apply,
         Matrix.smul_apply, Matrix.add_apply, Matrix.one_apply, hp, div_eq_mul_inv] <;>
       push_cast <;> ring
