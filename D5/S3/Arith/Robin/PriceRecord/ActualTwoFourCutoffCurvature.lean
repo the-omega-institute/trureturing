@@ -224,7 +224,8 @@ theorem actual_two_four_curvature_tendsto :
     tendsto_nhdsWithin_iff.mpr ⟨hz, hzpos⟩
   have hlogquot : Tendsto (fun X : ℝ => log (1 + z X) / z X) atTop (𝓝 1) := by
     have hh := (hasDerivAt_log (by norm_num : (1 : ℝ) ≠ 0)).tendsto_slope_zero_right.comp hzright
-    simpa only [inv_one, log_one, sub_zero] using hh
+    simpa only [Function.comp_def, inv_one, log_one, sub_zero,
+      smul_eq_mul, div_eq_mul_inv, mul_comm] using hh
   have hlograte : Tendsto (fun X : ℝ => log X ^ 2 * log (1 + z X))
       atTop (𝓝 (log (2 : ℝ) ^ 2)) := by
     have hh := hlogquot.mul hscaledz
