@@ -26,7 +26,8 @@ transfer: proof_shape=bind-only; consumers=finite_certificate, w, distribution_s
 row_valid: proof_shape=bind-only; consumers=valid_next
 valid_next: proof_shape=bind-only; consumers=v_eq_w
 initial_valid: proof_shape=bind-only; consumers=a_eq_w
-firstCount: proof_shape=bind-only; consumers=initial_counts, a_eq_w
+firstCount: proof_shape=bind-only; consumers=initial_fibres, initial_counts, a_eq_w
+initial_fibres: proof_shape=bind-only; consumers=initial_counts
 classCount: proof_shape=bind-only; consumers=class_fibres, finite_certificate, v_eq_w
 class_fibres: proof_shape=bind-only; consumers=finite_certificate
 finite_certificate: proof_shape=content; consumers=v_eq_w
@@ -43,6 +44,7 @@ result: proof_shape=bind-only; consumers=terminal result (#29162)
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233126SquareStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233254TriangleStrip
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255PairTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255ShapeSymmetry
@@ -56,10 +58,10 @@ set_option Elab.async false
 open scoped BigOperators
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233172DiagonalStrip
 
-open HardinA233175PairStrip (Seen good finish)
+open HardinA233175PairStrip (Seen good finish allowed advance finish_fst finish_snd good_iff)
 open HardinA233251TriangleStrip
   (widthLegal widthV widthStep widthTotal width_counting_bridge colour_bond_iff)
-open HardinA233254TriangleStrip (Row rowLegal)
+open HardinA233254TriangleStrip (Row rowLegal sum_rows)
 open HardinA233255PairTransfer (Boundary)
 open HardinA233255ShapeSymmetry (proper)
 open HardinA233255LiteralBridge (rowFinish rowWeight scanner_fibres)
@@ -119,23 +121,48 @@ private def transfer (i k : Fin 11) : ℤ :=
     ![0, 0, 64, 64, 64, 128, 64, 192, 64, 192, 128],
     ![0, 0, 0, 128, 128, 256, 64, 256, 64, 256, 192]] i k
 
-set_option maxHeartbeats 0 in
-private theorem row_valid : ∀ (s : Seen) (c : Row), s.1 = true → rowLegal c → good s c →
-    Valid (finish s c) (labels c) := by
-  simp only [Fin.forall_fin_succ_pi, Fin.forall_fin_zero_pi]
-  decide +kernel
+private theorem row_valid (s : Seen) (c : Row) (hs : s.1 = true ∨ ∃ i, c i = 1)
+    (hc : rowLegal c ∧ good s c) : Valid (finish s c) (labels c) := by
+  refine ⟨(finish_fst s c).mpr hs, ?_, ?_⟩
+  · intro j
+    exact (colour_bond_iff _ _).mp (hc.1 j)
+  · intro ht j hp
+    have htwo : ∀ i, c i ≠ 2 := by
+      intro i hi
+      have hh := (finish_snd s c).mpr (Or.inr ⟨i, hi⟩)
+      simp [ht] at hh
+    have hstate : s.2 ≠ true := by
+      intro hi
+      have hh := (finish_snd s c).mpr (Or.inl hi)
+      simp [ht] at hh
+    have hthree : ∀ i, c i ≠ 3 := by
+      intro i hi
+      rcases ((good_iff s c).mp hc.2 i).2 hi with hh | ⟨r, _, hr⟩
+      · exact hstate hh
+      · exact htwo r hr
+    have hb : ∀ x : Fin 6, beta x = 2 ↔ x = 2 ∨ x = 3 := by decide +kernel
+    rcases (hb _).mp hp with hh | hh
+    · exact htwo _ hh
+    · exact hthree _ hh
 
 private theorem valid_next : ∀ s p, Valid s p → ∀ c : Row,
     rowLegal c ∧ compatible p c ∧ good s c → Valid (finish s c) (labels c) := by
   intro s p hp c hc
-  exact row_valid s c hp.1 hc.1 hc.2.2
+  exact row_valid s c (Or.inl hp.1) ⟨hc.1, hc.2.2⟩
 
-set_option maxHeartbeats 0 in
-private theorem initial_valid : ∀ c : Row,
-    c 0 = 0 ∧ rowLegal c ∧ good (false, false) c →
-      Valid (finish (false, false) c) (labels c) := by
-  simp only [Fin.forall_fin_succ_pi, Fin.forall_fin_zero_pi]
-  decide +kernel
+private theorem initial_valid (c : Row)
+    (hc : c 0 = 0 ∧ rowLegal c ∧ good (false, false) c) :
+    Valid (finish (false, false) c) (labels c) := by
+  have ht : ∀ y : Fin 6, ((0 : Fin 6) ≠ y ∧ y.val ≠ 5) →
+      allowed (advance (false, false) 0) y → y = 1 := by decide +kernel
+  have hb : (0 : Fin 6) ≠ c 1 ∧ (c 1).val ≠ 5 := by
+    have hh := hc.2.1 0
+    change c 0 ≠ c 1 ∧ (c 0).val + (c 1).val ≠ 5 at hh
+    simpa only [hc.1, Fin.val_zero, zero_add] using hh
+  have hg : allowed (advance (false, false) 0) (c 1) := by
+    have hh : allowed (advance (false, false) (c 0)) (c 1) := hc.2.2.2.1
+    simpa only [hc.1] using hh
+  exact row_valid (false, false) c (Or.inr ⟨1, ht _ hb hg⟩) hc.2
 
 private def firstCount (k : Fin 11) : ℤ :=
   ∑ c : Row, if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c ∧
@@ -172,11 +199,47 @@ private theorem finite_certificate : ∀ s p, Valid s p → ∀ k,
     intro s p hp k
     exact h k s p hp
   intro k
-  fin_cases k <;> simp only [class_fibres, Valid] <;> decide +kernel
+  fin_cases k <;> simp only [class_fibres, sum_rows, Valid,
+    Fin.forall_fin_succ_pi, Fin.forall_fin_zero_pi] <;> decide +kernel
+
+private theorem initial_fibres (k : Fin 11) :
+    firstCount k = ∑ q : Fin 5 → Fin 3, rowWeight (false, false) q *
+      if proper (Fin.cons 0 q) ∧ boundaryClass (rowFinish (false, false) q) (Fin.cons 0 q) = k
+      then 1 else 0 := by
+  unfold firstCount
+  rw [← (Fin.consEquiv (fun _ : Fin 6 => Fin 6)).sum_comp, Fintype.sum_prod_type]
+  change (∑ x : Fin 6, ∑ c : Fin 5 → Fin 6,
+    if x = 0 ∧ rowLegal (Fin.cons x c) ∧ good (false, false) (Fin.cons x c) ∧
+      boundaryClass (finish (false, false) (Fin.cons x c)) (labels (Fin.cons x c)) = k
+    then (1 : ℤ) else 0) = _
+  rw [Finset.sum_eq_single (0 : Fin 6)]
+  · have h := scanner_fibres 5 (false, false) (fun t q =>
+      if proper (Fin.cons 0 q) ∧ boundaryClass t (Fin.cons 0 q) = k then (1 : ℤ) else 0)
+    rw [← h]
+    apply Finset.sum_congr rfl
+    intro c _
+    have ha : allowed (false, false) (0 : Fin 6) := by decide +kernel
+    have hd : advance (false, false) (0 : Fin 6) = (false, false) := by decide +kernel
+    have hg : good (false, false) (Fin.cons (0 : Fin 6) c) ↔ good (false, false) c := by
+      change (allowed (false, false) 0 ∧ good (advance (false, false) 0) c) ↔ _
+      simp only [ha, hd, true_and]
+    have hf : finish (false, false) (Fin.cons (0 : Fin 6) c) = finish (false, false) c := by
+      change finish (advance (false, false) 0) c = _
+      rw [hd]
+    have hb : labels (Fin.cons (0 : Fin 6) c) = Fin.cons 0 (fun j => beta (c j)) :=
+      Fin.comp_cons beta 0 c
+    have hr : proper (labels (Fin.cons (0 : Fin 6) c)) ↔ rowLegal (Fin.cons 0 c) := by
+      simp only [proper, labels, rowLegal, colour_bond_iff]
+    rw [← hb, hr]
+    simp only [hg, hf, eq_self, true_and]
+    by_cases hc : good (false, false) c <;> simp [hc]
+  · intro x _ hx
+    simp [hx]
+  · simp
 
 set_option maxHeartbeats 0 in
-private theorem initial_counts : ∀ k, firstCount k = ![16, 8, 16, 16, 16, 16, 8, 16, 8, 16, 0] k
-      := by
+private theorem initial_counts : ∀ k, firstCount k = ![16, 8, 16, 16, 16, 16, 8, 16, 8, 16, 0] k := by
+  simp only [initial_fibres, HardinA233126SquareStrip.label_sum]
   decide +kernel
 
 private def w : ℕ → Fin 11 → ℤ
