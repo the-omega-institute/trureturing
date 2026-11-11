@@ -1,0 +1,8 @@
+**（四）先第一接口、后整个双份锥。** 对 $J$ 用（三）：$J$ 正，$J1=U>0$ 已在两表之前证明，故第一表恢复整个 $D_J$。此后才调用不使用 $D_H$、C13 的定理 65.3 [R]，得到
+$$
+F(a,b)=\alpha(a)\circ\beta(b),\quad\alpha=F(-,1),\quad\beta=F(1,-),\qquad
+\widetilde F\text{ 为满规范迹等距},\quad m=n^2, \tag{75.17}
+$$
+其中 $\alpha,\beta$ 是保单位 Jordan 嵌入，两个像的乘法算子在环境 $D$ 上交换。于是每个 $F(B_r\times B_t)$ 都是完整本原框架：交换幂等元之积是幂等元，等距性给其范数平方一、故迹一而本原；不同成员零配对，双重求和为 $F(1,1)=1_D$。
+令 $W$ 为这些产品成员的 Jordan 闭包。固定一边求和，$W$ 含所有选定的 $\alpha(e)=\sum_{f\in B_t}F(e,f)$ 和 $\beta(f)=\sum_{e\in B_r}F(e,f)$。源生成性及同态性给 $\alpha(A),\beta(A)\subseteq W$，故 $F(A,A)\subseteq W$；原第一实张成经可逆 $C_D^{-1}$ 给 $\operatorname{span}_{\mathbb R}F(A,A)=D$，所以 $W=D$。所选产品成员自身并不必线性张成 $D$。
+现在 $H_{\mathrm s}$ 在整个 $D_+$ 上正，$H_{\mathrm s}1=G>0$；对这些完整生成框架用（三），第二表恢复整个 $D_H$，包括全部纠缠正元。反向，$D_J$ 给第一表，65.3 给产品框架性质，$D_H$ 给第二表，证明 (75.10)。
