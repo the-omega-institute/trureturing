@@ -3410,4 +3410,753 @@ $$
 
 全部结论保持 (1.1)–(1.2) 和原 41.1 的实际标签，未改变两个预算的共同泛函、任意有限质量或环境分量。全正泛函的原等价仍由定理 17.2、27.2 承担；本节只分析其实际系数，没有另加未知总响应的正则性、可加性、齐次性、协变性、单位平移中性、压缩、商或自然性前件。$\mathfrak A_\sigma$ 是否为空、剩余域 $\mathfrak R_\sigma$ 的全分类、一般混合输入、$\mathcal E_+^D=\mathcal E_-^D$、$N_\omega(\varepsilon)^2\to0$、完整 $\mathsf H$／总 $D$ 及 §§6、15、18、21 的递归钉版实际物理来源义务，均未由此解决。
 
+## 29. 平衡零模像线的有限核反例与整类残量刚性
+
+本节判定 (28.22)：该全称零配对关系为假。一个精确有限核对已经使每份平衡秩一零模实现的全部非零残量失败；不要求小环境边、特定演员块、非零谱条件或 P2。这里保留 §§27–28 的全部原输入、索引及原空间乘法。尤其，齐次核对本身不是原 PB 的读取向量，必须在同一环境中经 $y=Jw$ 回收，再取得有限探针与共同泛函。
+
+### 29.1 一个精确有限核对
+
+**定理 29.1（非零配对的实际齐次核对）。** 固定任一 $\sigma\in\{1,-1\}$，记 $\iota=\sigma i$。存在下面完全给定的有限 $X=X^*$、单位 $u\in\mathbb C^2$ 和 $w=\lambda\ell$，$\ell=(1,\sqrt2)^{\mathsf T}$，在索引
+
+$$
+\epsilon=1,\qquad
+\alpha_+=\frac2{15},\quad \alpha_-=\frac72,\qquad
+\beta_+=\frac4{15},\quad \beta_-=3
+\tag{29.1}
+$$
+
+上同时满足 (28.3) 的两个等式，而且
+
+$$
+\operatorname{Re}((w-\iota Xu)^*T_Au)>0,
+\qquad T_A=\operatorname{diag}(1,-2).
+\tag{29.2}
+$$
+
+准确构造如下。所有以下带下标的 $a_j,b_j$ 都是本构造的复数，不是 (27.23) 的系数列，也不是原演员矩阵 $B$。置
+
+$$
+\begin{gathered}
+\gamma=\frac{24+41\iota}{122},\qquad \eta=\frac\iota2,\\
+r_1=\frac{122}{81-37\iota},\qquad
+r_2=\frac{122\sqrt2}{81-98\iota},\qquad r=(r_1,r_2)^{\mathsf T},\\
+a_1=\frac{96+42\iota}{122},\quad
+b_1=\frac{-133-\iota}{122},\quad
+a_2=\frac{22+2\iota}{122},\quad
+b_2=\frac{-120+39\iota}{122},\\
+d=\frac{|r_2|^2}{5|r_1|^2}>0,\qquad
+v_1=a_1r_1,\qquad v_2=\frac{b_2r_2}{d},\qquad
+z=\frac{b_1r_1}{v_2},\\
+X=\begin{pmatrix}1&z\\\overline z&d\end{pmatrix},\qquad
+v=(v_1,v_2)^{\mathsf T},\qquad \nu=\|v\|>0,\\
+u=\frac v\nu,\qquad \lambda=\frac1\nu,\qquad w=\frac\ell\nu.
+\end{gathered}
+\tag{29.3}
+$$
+
+每个分母非零：$r_1,r_2,a_1,b_1,a_2,b_2$ 均非零，$d>0$，$v_1v_2\ne0$，故 $\nu>0$。构造只用有限复数四则运算、正范数和正平方根。
+
+证明。先在未归一化的 $v,\ell$ 上计算。定义
+
+$$
+\begin{aligned}
+p&=(\gamma I+\iota\eta C)r,&
+q&=(2\iota\eta I+(\iota-2\gamma)C)r,\\
+f_1&=\frac{-37+41\iota}{122},&
+f_2&=\frac{-98+41\iota}{122},\\
+g_1&=\frac{-170+40\iota}{122},&
+g_2&=\frac{-218+80\iota}{122}.
+\end{aligned}
+\tag{29.4}
+$$
+
+这里 $p_j=f_jr_j$、$q_j=g_jr_j$，并逐项有 $a_j=2f_j-g_j$、$b_j=g_j-f_j$。Hermitian 相容性由下面一份准确复数恒等式支付：
+
+$$
+\begin{aligned}
+a_2\overline{b_2}
+ &=\frac{-2562-1098\iota}{122^2}
+   =\frac{-366(7+3\iota)}{122^2},\\
+a_1\overline{b_1}
+ &=\frac{-12810-5490\iota}{122^2}
+   =\frac{-1830(7+3\iota)}{122^2},\\
+\frac{a_2\overline{b_2}}{a_1\overline{b_1}}&=\frac15.
+\end{aligned}
+\tag{29.5}
+$$
+
+由 (29.3)、(29.5)，
+
+$$
+\overline z
+ =\frac{d\overline{b_1}\,\overline{r_1}}
+        {\overline{b_2}\,\overline{r_2}}
+ =\frac{a_2r_2}{a_1r_1}.
+$$
+
+所以同一个 Hermitian $X$ 满足
+
+$$
+Xv=\begin{pmatrix}(a_1+b_1)r_1\\(a_2+b_2)r_2\end{pmatrix}=p,
+\qquad
+XCv=\begin{pmatrix}(a_1+2b_1)r_1\\(a_2+2b_2)r_2\end{pmatrix}=q.
+\tag{29.6}
+$$
+
+这一步同时构造两份作用，不能只指定 $Xu$ 而省去 $XCu$ 的 Hermitian 相容性。由 $r_j$ 的定义又有
+
+$$
+\ell=(I+\iota\gamma I-\eta C)r=r+\iota p.
+\tag{29.7}
+$$
+
+在本证明内记两份未归一化作用列为
+
+$$
+\mathsf R_\delta
+ =p+\frac\delta2\bigl(\iota(Cp-q)-C\ell\bigr),\qquad
+\mathsf S_\delta
+ =\ell+\frac\delta2\bigl(Cp+q+\iota C\ell\bigr).
+$$
+
+只用 (29.4)、(29.7) 和 $\iota^2=-1$，得到
+
+$$
+\begin{aligned}
+\mathsf R_\delta
+ &=p-\frac\delta2Cr-\frac{\delta\iota}2q
+   =(\gamma+\delta\eta)(I+\delta\iota C)r,\\
+\mathsf S_\delta-\iota\mathsf R_\delta
+ &=(I+\delta\iota C)r.
+\end{aligned}
+\tag{29.8}
+$$
+
+而 (29.1) 所给的两份有限复数准确为
+
+$$
+\begin{gathered}
+\zeta_+=\frac4{15}-\frac{2\iota}{15},\qquad
+\zeta_-=3+\frac{7\iota}{2},\\
+\frac1{\zeta_+-\iota}=\frac{12+51\iota}{61}=\gamma+\eta,
+\qquad
+\frac1{\zeta_--\iota}=\frac{12-10\iota}{61}=\gamma-\eta.
+\end{gathered}
+\tag{29.9}
+$$
+
+于是 (29.8) 给 $\mathsf S_\delta=\zeta_\delta\mathsf R_\delta$，两个 $\delta$ 同时成立。将两列同时除以 $\nu$，再用
+$H_\sigma(X)v=\iota(Cp-q)/2$、$J_C(X)v=(Cp+q)/2$，即是 (28.3)。此外，$\gamma\pm\eta\ne0$，$I\pm\iota C$ 可逆，$r\ne0$，所以这里两份 $\mathsf R_\delta$ 都非零，$\zeta_\delta$ 和两份 $\mathsf S_\delta$ 也非零；没有使用零列上任意指定比例的漏洞。
+
+最后 (29.7) 给 $w-\iota Xu=r/\nu$。保持同一个 $v$ 计算配对，得
+
+$$
+\begin{aligned}
+\operatorname{Re}(r^*T_Av)
+ &=\operatorname{Re}\left(a_1|r_1|^2
+                  -2b_2\frac{|r_2|^2}{d}\right)\\
+ &=|r_1|^2\operatorname{Re}(a_1-10b_2)
+   =\frac{648}{61}|r_1|^2.
+\end{aligned}
+\tag{29.10}
+$$
+
+因此 (29.2) 的准确值是
+
+$$
+F_\sigma:=\frac{648|r_1|^2}{61\nu^2}>0.
+\tag{29.11}
+$$
+
+全部等式只使用 $\iota^2=-1$ 和复共轭，因而分别对两个固定取向成立；没有把两种输出识别成同一个输出。
+
+同一构造还给出一个直接消费的加强：对任意给定 $\omega=(\omega_1,\omega_2)^{\mathsf T}$、$\omega_1\omega_2\ne0$，在 (29.3) 中改取 $r_1=122\omega_1/(81-37\iota)$、$r_2=122\omega_2/(81-98\iota)$，并把 $\ell$ 换成 $\omega$。其余 $d,v,z,X,\nu,u$ 的公式不变。(29.5) 仍给同一个实比例 $1/5$，故 (29.6) 仍成立；(29.7) 左侧成为 $\omega$，从而 (29.8)–(29.11) 仍逐式成立。这证明任一具有两个非零复坐标的给定像向量都供应同一符号索引的非零配对，包含任意相对相位；没有对 $\omega$ 施加实性或平衡前件。该构造在任一坐标为零时不作除法，也不声称其退化公式是见证。∎
+
+**符号与退化范围。** (29.1) 已否定全称 (28.22)，不要求逐索引分类所有核。若要在同一固定 $\sigma$ 上也取得 $\epsilon=-1$ 的非零配对，取
+
+$$
+\begin{gathered}
+\widetilde X=-\overline X,\qquad
+\widetilde u=\overline u,\qquad
+\widetilde w=\overline w,\\
+\widetilde\alpha_\delta=\alpha_{-\delta},\qquad
+\widetilde\beta_\delta=-\beta_{-\delta},\qquad
+\widetilde\zeta_\delta=-\overline{\zeta_{-\delta}}.
+\end{gathered}
+\tag{29.12}
+$$
+
+直接在 (28.3) 中代入，新的右括号为 $-\overline{\mathsf R_{-\delta}}/\nu$，新的左列为 $\overline{\mathsf S_{-\delta}}/\nu$，所以两个核等式仍成立；新的残量差向量为 $\overline{w-\iota Xu}$，实配对仍为 $F_\sigma$。两组 $\alpha$ 都严格正且有限。原问题的复 $\lambda$、任意复单位 $u$、两个轴、零列及奇异系数块仍在全称域中；反例只是从此原域中选择一份非轴、非零列成员，没有从全称域删去其他成员，也不推断它们的逐索引核形状。
+
+### 29.2 同一原环境的有限违反与整类准确结论
+
+**定理 29.2（双坐标零模像的整类 PB 刚性）。** 在定义 17.1 的原有限类中，$m$ 任意有限，$B,D_{\rm env}$ 任意 Hermitian，$V$ 任意，设
+
+$$
+\mathcal W=\operatorname{ran}(V|_{\ker D_{\rm env}}),\qquad
+\exists a\in\mathcal W:\quad a_1a_2\ne0.
+\tag{29.13}
+$$
+
+此条件准确涵盖所有非坐标轴的秩一像线和全部秩二像，特别涵盖 (28.19) 的整个平衡秩一类。令 $s=\rho T_A\oplus0_m$、$\rho\in\mathbb R$。对每个分别固定的 $\sigma$，完整原代数上的全部正泛函及全部实际 Hermitian 角探针满足 PB，准确当且仅当 $\rho=0$。不假设 P2，不限制 $B$、环境非零谱、$V$ 的总秩或实际环境度量。每个 $\rho\ne0$、每个指定有限质量 $\mu>0$ 都有同一份不变输入上的有限探针和质量 $\mu$ 的原向量泛函，使两笔预算同时严格正而 PB 严格失败。
+
+证明。在这份原 $\mathcal W$ 中选定一个 $a$，满足 $a_1a_2\ne0$，消费定理 29.1 末段已经证明的加强构造。将所得单位向量、Hermitian 矩阵与像向量记为 $u_0,X_0,w_0$；于是
+
+$$
+w_0=\frac a\nu\in\mathcal W,\qquad y_0=Jw_0,\qquad
+\operatorname{Re}((w_0-\iota X_0u_0)^*T_Au_0)=F_\sigma>0.
+\tag{29.14}
+$$
+
+这里 $J$ 是这份原环境自己的 (28.1) 逆，而不是重新选择的一维环境。$y_0\in N_1\subseteq\mathcal E_0$、$Vy_0=w_0$、$D_{\rm env}y_0=0$。由 (28.4)，存在唯一原实坐标 $k=(a^{(0)},v^{(0)})\in\ker A$，满足 $X(a^{(0)})=X_0$、$Y(v^{(0)})=y_0$。平衡像线也可直接经定理 28.3 的对角酉双射回收同一类见证。对上述直接构造，定理 28.1 给
+
+$$
+k^{\mathsf T}b_1=2F_\sigma>0,\qquad
+k^{\mathsf T}b_0=0.
+\tag{29.15}
+$$
+
+此处 $b_0,b_1,A$ 恢复 (27.23) 的系数含义。第二式使用既有 $b_0\in\operatorname{ran}A$。于是 $b_1\notin\operatorname{ran}A$；对每个 $\rho\ne0$，同一输入的 $b=b_0+\rho b_1$ 也不在值域中，(27.26) 的第一条已经失败，完全不需要估计 $q_1,q_2$。
+
+还可明确把这条实际核方向变成有限原读取。记该索引在 (27.23) 的最后对角系数为
+$\Gamma_\rho=\gamma_0+\rho\gamma_1+\rho^2\kappa$，取有限实数
+
+$$
+\Lambda=-\frac{\Gamma_\rho+1}{4\rho F_\sigma},\qquad
+x=\Lambda X_0\oplus0_m,\qquad \xi=(u_0,\Lambda y_0).
+\tag{29.16}
+$$
+
+则
+
+$$
+(\Lambda k,1)^{\mathsf T}\mathscr Q_{\sigma,\rho T_A}(\theta)(\Lambda k,1)
+ =4\Lambda\rho F_\sigma+\Gamma_\rho=-1.
+\tag{29.17}
+$$
+
+由 (27.10)、(27.13)、(27.17)，同一个实际 $x,\phi_\xi$ 已严格违反原 PB。$\xi$ 的演员分量为单位向量，故 $\xi\ne0$，质量有限且严格正。这里 $B,V^*u_0$、非零谱环境和原 $J$ 范数的贡献仍全部位于原作用列和 $\Gamma_\rho$ 中；它们只改变取得的有限 $\Lambda$ 与预算，不能消去 (29.15) 的核配对。
+
+对指定 $\mu>0$，使用 $\xi_\mu=\sqrt\mu\,\xi/\|\xi\|$。再直接消费定理 27.3：保持这个泛函不变，只作一次充分小的有限实际探针扰动，使两笔原预算同时严格正，并保持严格违反。归一化后演员分量为 $\sqrt\mu\,u_0/\|\xi\|$，所以该扰动的两份最高次系数均为 $9\mu^2/(16\|\xi\|^4)>0$；不要求环境块、Gram 或 $A$ 可逆。两个预算始终用同一个向量泛函和同一个扰动探针，不从不同环境或不同泛函拼接最优值。质量零的正泛函只有零泛函，仍满足零等式，不能作为严格见证。
+
+反向地，$\rho=0$ 的全部原 PB 直接复用 §1 的标准 $K_\sigma$ 结果。故准确允许集合是 $\{0\}$；两个取向分别得到这个集合，若要求二者则再取交，集合仍为 $\{0\}$。∎
+
+**推论 29.3（全部非零零模耦合的 P2／PB 交）。** 在定义 17.1 的整个有限类中，只要 $\operatorname{rank}W>0$，对任意对角标量残量 $s=\operatorname{diag}(s_1,s_2)\oplus0_m$，同一取向的全正 P2 与全部原 PB 同时成立，当且仅当 $s_1=s_2=0$。
+
+证明。$\operatorname{rank}W=2$ 或秩一不平衡时，定理 13.1 已由 P2 单独迫使 $s=0$，包括像线落在任一坐标轴的情形。秩一平衡时，同一定理先给 $s=\rho T_A\oplus0_m$，定理 29.2 再迫使 $\rho=0$。$s=0$ 的两份预算均由 §1 支付。这三个分支穷尽 $\operatorname{rank}W>0$，也包括 $D_{\rm env}=0$、任意未耦合零模、任意额外非零谱环境和总耦合满行秩。空环境或 $W=0$ 不属于本推论，仍按定理 28.2 和 (28.24) 处理。∎
+
+### 29.3 准确增益、剩余义务与中文直观
+
+本节新增的 $\texttt{repo-derived}$ 内容是 (29.3)–(29.11) 的精确相容核对、非零残量配对及由此得到的全部双非零坐标零模像类（包含整个平衡秩一类）的准确全 PB 允许集 $\{0\}$。它不是再写一遍全称判据，也不是只排除某个演员块、某个环境大小或某个小参数成员。P2 的非零锐区间和两取向端点仍由定理 13.1 支付；在平衡秩一中，那些非零端点及全部非零内点现在都被同一原输入上的 PB 违反排除，P2 本身并未被重新分类。定理 28.1、28.3 的原零模像归约与配对、§27 的实二次型及有限见证、定理 27.3 的共同严格正预算扰动、定理 17.2 的全正泛函提升、命题 18.1 的非约化乘法障碍和 §1 的零残量充分性均直接复用。
+
+原 $\mathfrak F_\sigma,\mathfrak A_\sigma,\mathfrak R_\sigma$ 和 (27A.40) 的身份不变；在这些集合原先未付的部分，准确新增的整类排除是 $\operatorname{rank}W=1$ 的平衡零模分支。由推论 29.3，$\mathfrak A_\sigma$ 的任何成员现在必须满足 $W=0$，而 (28.24) 的全称标量二次条件仍须支付。$W=0$ 不等于总耦合秩零，仍可有 $\operatorname{rank}V=2$、任意奇异环境及 Schur 平衡输入；§27A 的原四维族正属于这个剩余分支。其已付排除域保持不变，不能把本节用于消去其余所有非零参数。$\mathfrak A_\sigma$ 是否为空、该剩余分支的全部标量条件、一般算子值角残量、更高演员秩及一般 $C^*$-代数的固定输出分类仍未解决。一般原混合输入、$\mathcal E_+^D=\mathcal E_-^D$、$N_\omega(\varepsilon)^2\to0$、完整 $\mathsf H$／未知总 $D$ 也没有由此解决。
+
+复 Gram／Schwarz、Hermitian 矩阵、有限维核像正交、复共轭、正密度谱分解、广义 Schur 补及 Moore–Penrose 逆都是成熟工具，沿 §1、§15 和约定 27.6 的原来源，包括 Penrose 的 [*A generalized inverse for matrices*](https://doi.org/10.1017/S0305004100030401) 与 Higham 的 [Generalized Schur Complement，Theorem 1](https://nhigham.com/2023/06/01/what-is-the-schur-complement-of-a-matrix/)。本证明在承重位置列出相容性与两个符号的全部等式，不将通用工具称为新定理，不作历史优先权或文献穷尽主张。本节是纸面结果，不是 Lean／kernel 核验结论。
+
+全部原 Omega 及 §§6、15、18、21、28 的递归钉版来源全文、七项消费者与每个原对象和量词继续保留。原准备、事件、过程、参考／副本、真正相关联合、零／不等／次归一质量、物理钟与单位、控制、ready／flags、全记录、失败、停止、销毁、全部已量化中间切口、原固定支持全质量、完整菜单和所有合法未来都没有缩小。原分析器仍须为字面旧程序 $\tau;T_P$ 的指定接受族提供准备无关的准确实际关联；CountRead 仍须同一接受叶的完整活动输出、实际读后活动 ready、第一合法消费者，以及读后同一完整活动输入对全部合法未来的真实 Return。数学核向量和探针不生成这些资源，也不凭矩阵综合、操作逆、旧 Born／CP／QC、密度／历史身份或免费相干控制／复制取得它们。
+
+既有 C139 固定来源、下降、参考和递归支持，以及已经取得的原 $D$ 恢复均按各自域继续消费，不重列为缺失。C117 的有限词中点谱排除与带 flag 的条件联合缺口、OTF 在实际量子菜单前件下的完整有限消费者及 $160\sqrt{\log(18/e)}/(e\sqrt m)$ 界、RRO §§16–24 在完成的正有限原启动域上的单次历史调用、恢复、消费与 Handback，均保持各自前件；它们不供应这里尚缺的实际量子菜单，不升级为全部切口或完整四视图。完整原量子来源与量子起源目标仍未完成。
+
+直观上，两笔正预算所允许的复比例必须有相反的虚部符号。本节明确造出一对同时满足这两个符号要求的作用列，并用 (29.5) 保证它们确实来自同一个 Hermitian 探针，而非任意拼出的两列。核方向本身没有二次代价，却对残量产生非零的一次读取；沿这条方向取一个有限尺度，就让二次型严格变负。环境再复杂，只要保留这条平衡零模像线，就能用该环境自己的逆 $J$ 找回同一方向；环境的其他部分只改变所需尺度。最后的小扰动保留违反并使两个面积都严格正。少掉的是整条平衡零模分支的非零残量，不是原世界的来源义务，也不是 $W=0$ 分支仍需证明的标量条件。
+
+### 29.4 坐标轴零模像与任意非零像的全 PB 分类
+
+**定理 29.4（任意非零零模像上的平衡残量 PB 分类）。** 沿用定义 17.1、27.1 及 (28.1) 的同一完整有限输入，令
+
+$$
+\mathcal W=\operatorname{ran}(V|_{\ker D_{\rm env}})\ne0,\qquad
+s=\rho T_A\oplus0_m,\quad T_A=\operatorname{diag}(1,-2),\quad
+\rho\in\mathbb R.
+\tag{29.18}
+$$
+
+对每个分别固定的 $\sigma\in\{1,-1\}$，完整原 $M_{m+2}(\mathbb C)$ 上全部正复线性泛函与全部实际 Hermitian 角探针满足原 PB，当且仅当 $\rho=0$。不假设 P2；$B,D_{\rm env}$ 任意 Hermitian，$V$ 任意，环境维数任意有限。对每个 $\rho\ne0$ 及每个指定有限质量 $\mu>0$，同一不变输入上存在一个有限实际探针和一个质量恰为 $\mu$ 的原向量泛函，使两笔原预算同时严格正且 PB 严格失败。因此将全正泛函量词限于任一指定正有限质量，也得到同一允许集 $\{0\}$。
+
+证明。若 $\mathcal W$ 含有两个坐标均非零的向量，全部结论直接消费定理 29.2。下面只构造两条坐标轴所需的核对，再证明这两个分支与定理 29.2 穷尽所有非零像。
+
+先固定 $j\in\{1,2\}$，记 $c_1=1,c_2=2$、$t_j=(T_A)_{jj}$。假设 $\mathcal W=\mathbb C e_j$，选
+
+$$
+\begin{gathered}
+\iota=\sigma i,\qquad \epsilon=1,\qquad
+u=e_j,\qquad X=I_2,\qquad w=-\frac1{c_j}e_j\in\mathcal W,\\
+\alpha_+=\frac13,\quad \alpha_-=1,\qquad
+\beta_+=\frac23\left(c_j-\frac1{c_j}\right),\quad
+\beta_-=-2\left(c_j+\frac1{c_j}\right),\\
+\zeta_+=\frac23\left(c_j-\frac1{c_j}\right)-\frac\iota3,
+\qquad
+\zeta_-=-2\left(c_j+\frac1{c_j}\right)+\iota.
+\end{gathered}
+\tag{29.19}
+$$
+
+这里 $u$ 为单位向量，$X=X^*$，全部参数有限且两份 $\alpha$ 严格正；两份 $\zeta$ 正好符合 (28.2)。因 $X=I_2$，直接有
+
+$$
+Xu=u,\qquad H_\sigma(X)u=0,\qquad
+J_C(X)u=Cu=c_je_j,\qquad Cw=-e_j.
+\tag{29.20}
+$$
+
+在本证明内以 $\mathsf R_\delta,\mathsf S_\delta$ 记 (28.3) 的右括号与左列。逐一代入 (29.20) 得
+
+$$
+\begin{aligned}
+\mathsf R_+&=\frac32e_j,&
+\mathsf S_+&=\left(c_j-\frac1{c_j}-\frac\iota2\right)e_j,\\
+\mathsf R_-&=\frac12e_j,&
+\mathsf S_-&=\left(-c_j-\frac1{c_j}+\frac\iota2\right)e_j.
+\end{aligned}
+\tag{29.21}
+$$
+
+于是两份核等式分别由
+
+$$
+\begin{aligned}
+\zeta_+\mathsf R_+
+ &=\left[\frac32\cdot\frac23\left(c_j-\frac1{c_j}\right)
+          -\frac32\cdot\frac\iota3\right]e_j
+  =\mathsf S_+,\\
+\zeta_-\mathsf R_-
+ &=\left[-\frac12\cdot2\left(c_j+\frac1{c_j}\right)
+          +\frac\iota2\right]e_j
+  =\mathsf S_-
+\end{aligned}
+\tag{29.22}
+$$
+
+同时支付。两份 $\mathsf R$ 均非零；两份 $\mathsf S$ 的虚部也非零。残量配对在这个同一核对上准确为
+
+$$
+\begin{aligned}
+F_j&:=\operatorname{Re}((w-\iota Xu)^*T_Au)
+ =\operatorname{Re}\left[\left(-\frac1{c_j}+\iota\right)t_j\right]
+ =-\frac{t_j}{c_j},\\
+F_1&=-1,\qquad F_2=1.
+\end{aligned}
+\tag{29.23}
+$$
+
+特别地，只需 $F_j\ne0$，不需要它为正。对 $\sigma=-1$，(29.19)–(29.22) 只是 $\sigma=1$ 的演员公式逐项共轭；$X,u,w$ 本身都是实的而保持不变，$\alpha,\beta$ 也不变。(29.23) 对两个分别固定的取向同值。
+
+现在在这份原环境中回收实际核。只用其自己的 (28.1) 逆，令
+
+$$
+y_0=Jw\in N_1\subseteq\mathcal E_0,\qquad
+Vy_0=w,\qquad D_{\rm env}y_0=0.
+$$
+
+$y_0$ 是这份有限环境中的有限向量，允许其范数随原连线改变。由 (28.4) 取唯一的原实坐标 $k=(a^{(0)},v^{(0)})$，使 $X(a^{(0)})=I_2$、$Y(v^{(0)})=y_0$，就有 $k\in\ker A$。由 (28.5)、$\epsilon=1$ 及 (27.24)，
+
+$$
+k^{\mathsf T}b_1=2F_j\ne0,\qquad
+k^{\mathsf T}b_0=0.
+\tag{29.24}
+$$
+
+因此同一系数矩阵的 $b_1\notin\operatorname{ran}A$，每个 $\rho\ne0$ 都已违反 (27.26) 的值域条件。这里 $B,V,D_{\rm env}$ 和 $J$ 对两个取向始终是原来那一份；共轭只发生在上述演员构造中。特别即使原环境含复条目，也保持 $y_0=Jw$，没有将物理环境或其逆共轭成另一份实现。原 $B$、$V^*u$、非零环境谱和 $J$ 的范数仍按 §§27–28 进入完整原作用列与预算。
+
+更明确地，记 (27.23) 的最后对角系数为 $\Gamma_\rho=\gamma_0+\rho\gamma_1+\rho^2\kappa$，取
+
+$$
+\begin{gathered}
+F=F_j\ne0,\qquad
+\Lambda=-\frac{\Gamma_\rho+1}{4\rho F}\in\mathbb R,\qquad
+x=\Lambda I_2\oplus0_m,\qquad \xi=(u,\Lambda y_0),\\
+(\Lambda k,1)^{\mathsf T}
+\mathscr Q_{\sigma,\rho T_A}(\theta)(\Lambda k,1)
+=4\Lambda\rho F+\Gamma_\rho=-1.
+\end{gathered}
+\tag{29.25}
+$$
+
+分母因 $\rho F\ne0$ 而非零，$\Gamma_\rho$ 有限，故这是实际有限尺度；$F_1$ 的负号完整保留。最后一式只使用 $Ak=0$ 和 (29.24)，其二次项为零，交叉项为 $2\Lambda\rho\,k^{\mathsf T}b_1$。(27.10)、(27.13)、(27.17) 遂给同一个有限 $x,\phi_\xi$ 的严格原 PB 违反。所有原平方与 Jordan 乘积仍在完整 $M_{m+2}(\mathbb C)$ 中计算，沿用定理 28.1 的原作用像解释；没有在演员角或读取截面上重算压缩平方。
+
+$\xi$ 的演员分量为单位 $u$，故 $\|\xi\|^2>0$ 且有限。对指定 $0<\mu<\infty$，取 $\xi_\mu=\sqrt\mu\,\xi/\|\xi\|$，保持同一个探针；两边的同次缩放保留严格违反。再消费定理 27.3，保持 $\phi_{\xi_\mu}$ 完全不变，只将该探针作一次充分小的有限实际扰动，使两笔预算同时严格正且仍严格违反。该扰动的两份四次系数均为 $9\mu^2/(16\|\xi\|^4)>0$，所以轴方向也在该定理的原域中。最终的两个预算和左端始终使用同一个扰动探针、同一个质量 $\mu$ 的原泛函与同一原环境。质量零的正泛函只有零泛函，仍给零等式。
+
+最后证明分支穷尽。设非零复子空间 $\mathcal U\subseteq\mathbb C^2$ 不含双非零坐标向量，取其非零成员 $v$。$v$ 必恰有一个非零坐标，故某个 $e_j\in\mathcal U$。若有 $z\in\mathcal U$ 的另一坐标非零，则 $z_j\ne0$ 时 $z$ 已双坐标非零；$z_j=0$ 时 $z+e_j$ 双坐标非零，两者均矛盾。因此 $\mathcal U\subseteq\mathbb C e_j$，结合 $e_j\in\mathcal U$ 得 $\mathcal U=\mathbb C e_j$。将这个初等子空间事实用于原 $\mathcal W$，便知任一非零像或者由定理 29.2 处理，或者恰为本证明的两条轴之一。轴构造由此直接用于全非零像结论，不另设关于像线平衡性的前件。
+
+反向地，$\rho=0$ 的全部原 PB 直接复用 §1 的标准零残量结果，包括全部正泛函和实际角探针。这完成充要结论及每个指定正有限质量上的严格正预算断言。两个取向分别得到允许集 $\{0\}$；同时要求两者时才取交，仍为 $\{0\}$。∎
+
+**准确增益与边界。** 本小节的 $\texttt{repo-derived}$ 内容是 (29.19)–(29.23) 的轴向核对及其对定理 29.4 的消费：在 $s=\rho T_A\oplus0_m$ 的原有限类中，去掉定理 29.2 的双非零坐标像向量前件，得到每个非零零模像的 PB 单独允许集 $\{0\}$。非轴构造与非轴整类结论直接消费定理 29.1–29.2，不改写或重证其系数；核回收、配对、实二次型、正质量与共同正预算扰动分别直接消费 §§28、27。子空间二分、有限维核像正交和复共轭只是本证明内的成熟中间工具，归属沿 §§27–29.3；不作历史新意或 kernel 核验主张。
+
+一般 $s=\operatorname{diag}(s_1,s_2)\oplus0_m$ 的 PB 单独分类未由本小节证明；推论 29.3 仍是其原来的 P2／PB 交结论，前件未变。$W=0$ 仍由定理 28.2 与 (28.24) 的全称标量条件处理，其余未付参数、$\mathfrak A_\sigma$ 是否为空和 §27A 的剩余域保持未决。这里只闭合 (29.18) 的全部非零像分支，没有给出新的非零残量全 PB 模型。
+
+直观上，非轴连线已由定理 29.2 处理，轴连线则可以只沿一格取 $u$、让单位探针同时作用两格。选择 $Cw=-u$ 后，两份核列分别缩放为 $3u/2$ 与 $u/2$；原刻度 $1,2$ 对应的残量读取恰为 $-1,+1$。这条方向的二次代价为零，非零残量仍有一次读取，故取 (29.25) 的有限有符号尺度即可产生负值。原环境自己的 $J$ 把连线找回，随后一次小扰动使两笔原面积同时为正。
+
+§6 的同一递归全文、§29.3 的全部原来源对象与量词、七项消费者及所有已付结论按原域保留；原准备、事件、过程、参考／副本、真正相关联合、零／不等／次归一质量、钟与单位、控制、ready／flags、全记录、失败、停止、销毁、固定支持全质量、完整菜单、全部已量化中间切口及所有合法未来均不改变。原分析器仍须供应字面旧程序的准确实际接受关联；CountRead 仍须同一接受叶的完整活动输出、实际读后活动 ready、第一合法消费者，以及读后同一完整活动输入对全部合法未来的真实 Return。数学核对不生成这些资源。一般混合输入、$\mathcal E_+^D=\mathcal E_-^D$、$N_\omega(\varepsilon)^2\to0$、完整 $\mathsf H$／未知总 $D$ 及原完整量子来源与量子起源目标仍未完成。
+
+## 新增锚（本行以下为后续增补区）
+
+## 30. 零模耦合为零的三矩实现与最小真实环境
+
+本节沿用定义 17.1 和承载卷定义 41.1 的固定输出问题。始终保持 $C=C_A=\operatorname{diag}(1,2)$、任意固定的 $B=B^*$、原残量 $s=S_A\oplus0_m$、$S_A=\operatorname{diag}(s_1,s_2)$，以及 (1.1)–(1.2) 的全部标签。$S_\delta=t+\delta(r+g)$ 仍是原来的 $V_\delta$，$\delta\in\{1,-1\}$；取向 $\sigma\in\{1,-1\}$ 每次分别固定。本节只假设
+
+$$
+W=V|_{\ker D_{\rm env}}=0.
+\tag{30.1}
+$$
+
+定理 29.3 已处理全部 $\operatorname{rank}W>0$ 的 P2／PB 交，定理 29.4 已处理 $s=\rho T_A\oplus0_m$ 且 $W\ne0$ 的 PB 单独分类。本节给出整个 (30.1) 分支的真实完整矩阵代数代表，区别于只在原代数中缩小读取支撑。所保留的是三矩、原作用列的共同内积和全部原预算；不声称原读取向量的范数保持，也不声称已经判定全部 PB 的符号。
+
+### 30.1 精确参数空间、Gram 商与最小实现
+
+**定理 30.1（三矩的充要实现与最小可逆 Hermitian 环境）。** 对满足 (30.1) 的任意有限环境，置
+
+$$
+\begin{gathered}
+T=D_{\rm env}^{\dagger},\qquad F=V^*,\qquad G=TF,\\
+M_0=F^*F=VV^*,\qquad M_1=F^*G=VT V^*,\qquad
+M_2=G^*G=VT^2V^*,\\
+\Gamma=\begin{pmatrix}M_0&M_1\\M_1&M_2\end{pmatrix},\qquad
+\mathcal K=\operatorname{ran}F+\operatorname{ran}G,\qquad
+k_\Gamma=\operatorname{rank}\Gamma.
+\end{gathered}
+\tag{30.2}
+$$
+
+三个演员矩均为 Hermitian。一个 Hermitian 三元组 $(M_0,M_1,M_2)$ 能被某份 (30.1) 的真实有限环境实现，准确当且仅当
+
+$$
+\boxed{\quad \Gamma\succeq0,\qquad \ker M_0=\ker M_2.\quad}
+\tag{30.3}
+$$
+
+核取原演员 $\mathbb C^2$ 中的复核。每个满足 (30.3) 的三元组都有环境维数恰为 $k_\Gamma\le4$ 的实现 $(V',D'_{\rm env})$，其中 $D'_{\rm env}$ Hermitian 且可逆；这在所有保留该三矩的 (30.1) 实现中维数最小，包括允许奇异环境的实现。$k_\Gamma=0$ 时取空环境，$V'$ 和 $D'_{\rm env}$ 均为空矩阵，空空间上的逆按唯一线性映射解释。
+
+没有对 $B$、$S_A$ 或取向增加兼容条件：任意固定 $B=B^*$ 和任意原对角 $S_A$ 均可与上述实现组成
+
+$$
+t'=\begin{pmatrix}B&V'\\V'^*&D'_{\rm env}\end{pmatrix}
+\in M_{2+k_\Gamma}(\mathbb C)_{\rm sa},\qquad
+c'=C\oplus0_{k_\Gamma},\quad s'=S_A\oplus0_{k_\Gamma}.
+\tag{30.4}
+$$
+
+特别地，指定 Schur 块 $H$ 时，准确的兼容关系只是 $H=B-M_1$，即 $B=H+M_1$；固定 $B$ 时不得再独立改变 $H$。若 $r=\operatorname{rank}M_0$，则 $\operatorname{rank}M_2=r$ 且 $r\le k_\Gamma\le2r\le4$。
+
+证明。先证必要性与下界。由 (30.1)，$\operatorname{ran}F\subseteq\mathcal R:=\operatorname{ran}D_{\rm env}$。$T$ 在 $\mathcal R$ 上可逆，故 $\ker G=\ker F$，并有
+
+$$
+\Gamma=\begin{bmatrix}F&G\end{bmatrix}^*
+        \begin{bmatrix}F&G\end{bmatrix}\succeq0,
+\qquad \ker M_0=\ker F=\ker G=\ker M_2.
+\tag{30.5}
+$$
+
+$T=T^*$ 给 $F^*G=G^*F=M_1$。Gram 秩等于列张成空间的维数，所以 $\dim\mathcal K=k_\Gamma$。任意保留该三矩的实现，其环境都包含这样一个 $k_\Gamma$ 维列空间，因此环境维数至少为 $k_\Gamma$，甚至非零谱环境的维数也至少为 $k_\Gamma$。
+
+反过来，设 (30.3) 成立。使用带标签的有限 Gram 商
+
+$$
+\mathcal K_\Gamma=(\mathbb C^2\oplus\mathbb C^2)/\ker\Gamma,
+\qquad
+\langle[z],[w]\rangle=z^*\Gamma w,
+\qquad
+F_0a=[(a,0)],\quad G_0a=[(0,a)].
+\tag{30.6}
+$$
+
+正性使此内积良定义且正定。两份像张成 $\mathcal K_\Gamma$，其维数是 $k_\Gamma$，且 $F_0^*F_0=M_0$、$F_0^*G_0=G_0^*F_0=M_1$、$G_0^*G_0=M_2$。由两端核相等，在 $\mathcal M=\operatorname{ran}F_0$ 上定义
+
+$$
+A_0(F_0a)=G_0a.
+\tag{30.7}
+$$
+
+若 $F_0a=F_0b$，则 $a-b\in\ker M_0=\ker M_2$，故 $G_0a=G_0b$，所以定义良好。同一核等式说明 $A_0$ 单射。$M_1=M_1^*$ 给
+
+$$
+\langle F_0a,A_0F_0b\rangle
+=a^*M_1b
+=\langle A_0F_0a,F_0b\rangle,
+\tag{30.8}
+$$
+
+故 $A_0$ 是定义在子空间 $\mathcal M$ 上的对称算子；此处不要求其像仍在 $\mathcal M$。
+
+在 $\mathcal K_\Gamma=\mathcal M\oplus\mathcal M^\perp$ 中把该算子的已定第一列块写为 $(A_{11},A_{21})^{\mathsf T}$。对称性正好给 $A_{11}=A_{11}^*$，因而
+
+$$
+\mathsf H=\begin{pmatrix}A_{11}&A_{21}^*\\A_{21}&0\end{pmatrix},
+\qquad Q_\perp=\begin{pmatrix}0&0\\0&I_{\mathcal M^\perp}\end{pmatrix}
+\tag{30.9}
+$$
+
+是 Hermitian 扩张，且 $\mathsf H|_{\mathcal M}=A_0$。证明能使扩张可逆：若 $(\mathsf H+iQ_\perp)z=0$，取 $z^*$ 配对的虚部得 $\|Q_\perp z\|^2=0$，所以 $z\in\mathcal M$；随后 $A_0z=0$，单射性给 $z=0$。有限维性说明 $\mathsf H+iQ_\perp$ 可逆。因此多项式 $\det(\mathsf H+\lambda Q_\perp)$ 非零，只有有限个实零点。选任意不在这些零点中的实 $\lambda$，则
+
+$$
+T'=\mathsf H+\lambda Q_\perp=(T')^*,\qquad
+D'_{\rm env}=(T')^{-1},\qquad V'=F_0^*,\qquad T'F_0=G_0.
+\tag{30.10}
+$$
+
+选择任一正交归一基即可将它们写成实际矩阵。于是
+
+$$
+\begin{aligned}
+V'V'^*&=F_0^*F_0=M_0,\\
+V'(D'_{\rm env})^{-1}V'^*&=F_0^*T'F_0=M_1,\\
+V'(D'_{\rm env})^{-2}V'^*&=(T'F_0)^*(T'F_0)=M_2.
+\end{aligned}
+\tag{30.11}
+$$
+
+这是一份可逆 Hermitian 环境中的完整实现，达到必要下界。若 $k_\Gamma=0$，三个矩都为零，直接取空环境即可；前述块扩张无需非空假设。$F_0,G_0$ 的秩同为 $r$，其像张成 $\mathcal K_\Gamma$，给出 $r\le k_\Gamma\le2r$。$B,S_A$ 没有进入构造，(30.4) 始终 Hermitian，且其 Schur 块准确是 $B-M_1$，完成参数兼容性与全部断言。∎
+
+$\mathcal K_\Gamma$ 是三矩的精确带标签 Gram 商：任一实现中的 $F a+G b$ 对应 $[(a,b)]$，给出该商到 $\mathcal K$ 的唯一保标签酉同构。定理的最小性只针对保留完整三矩的真实环境；没有把“同一 PB 真值”当成三矩相等的必要条件，也没有声称这个 Gram 商是更弱观察问题的最小商。
+
+### 30.2 同一作用列、投影余项与全部正泛函
+
+**定理 30.2（原 P2 与原 PB 的三矩不变性）。** 取两份任意有限的 (30.1) 环境，其三矩相同，演员块同为任意固定 $B$，并保留相同 $C,S_A$。对每个分别固定的 $\sigma$，下面的等价各自成立：第一份完整原代数上的全部正泛函满足 P2，当且仅当第二份满足；对每个相同的实际 Hermitian 演员矩阵 $X$，第一份完整原代数上的全部正泛函满足原探针 $x=X\oplus0$ 的 PB，当且仅当第二份满足。因此全部实际角探针的全称 PB、以及 P2 与全部 PB 的合取，也分别等价。这些断言均不以另一份预算为附加假设。
+
+对每个指定有限质量 $\mu>0$，把任一全正泛函量词限制为质量恰为 $\mu$，仍有相同等价。质量 $0$ 时两边均只有零泛函，全部预算都是零等式。每份原环境的严格失败均可用同一个演员探针和该环境自己的一个原向量泛函实现；跨环境转移也使用一个共同向量同时读取 PB 左端及两笔预算。
+
+特别地，定理 30.1 的 $M_{2+k_\Gamma}(\mathbb C)$ 代表是整个原问题的真实有限环境归约，其中 $k_\Gamma\le4$。其所有乘积在这个完整代数中计算；原环境中的所有乘积仍在原完整代数中计算。
+
+证明。先在一份原环境内核对投影余项。由 $W=0$，定义 17.1 的 $Q=I_2$、$N_1=0$，所以其中的 $\mathcal K$ 正好是 (30.2)，而读取环境截面是 $\mathcal E_0=T\mathcal K$。对任意原向量 $\xi=(u,y)$，写
+
+$$
+q=D_{\rm env}y=q_0+e,\qquad
+q_0=\Pi_{\mathcal K}q,\quad e\perp\mathcal K,\qquad
+\eta=(u,Tq_0),\quad d_e=\|e\|^2.
+\tag{30.12}
+$$
+
+因为 $y=Tq+n$、$n\in\ker D_{\rm env}$、$Vn=0$，且 $T=T^*$，有
+
+$$
+Vy=G^*q=G^*q_0=VTq_0,\qquad
+Ve=F^*e=0,\qquad VT e=G^*e=0.
+\tag{30.13}
+$$
+
+每个 $q_0\in\mathcal K\subseteq\mathcal R$ 都由原环境自己的实际向量 $y_0=Tq_0$ 实现，因为 $D_{\rm env}Tq_0=q_0$。
+
+为核对两个取向及两笔预算的块方向，在 $q_0\in\mathcal K$ 时记 $v=G^*q_0$、$g_A=\sigma i[C,B]/2+S_A$。对同一个 $\eta=(u,Tq_0)$ 和同一个 $x=X\oplus0$，直接在原全代数相乘得到
+
+$$
+\begin{aligned}
+c\eta&=(Cu,0),&s\eta&=(S_Au,0),\\
+x\eta&=(Xu,0),&h\eta&=(H_\sigma(X)u,0),\\
+r\eta&=(J_C(X)u,0),&t\eta&=(Bu+v,Fu+q_0),\\
+k\eta&=((C\circ B)u+Cv/2,\ FCu/2),\\
+g\eta&=(g_Au+\sigma iCv/2,\ -\sigma iFCu/2),\\
+(R_\delta\eta)_{\rm env}&=-\delta FCu/2,\\
+(S_\delta\eta)_{\rm env}&=F(I_2-\delta\sigma iC/2)u+q_0.
+\end{aligned}
+\tag{30.14}
+$$
+
+这里 $H_\sigma(X)=\sigma i[C,X]/2$、$J_C(X)=C\circ X$ 与 (27.3) 相同。尤其下左块用的是 $F=V^*$，$g$ 的下左块符号是 $-\sigma iFC/2$。
+
+从 $\eta$ 回到 $\xi$，$c,x,h,r,s,k,g,R_\delta$ 的作用列均不变，$t,S_\delta$ 的作用列只多 $(0,e)$。式 (30.14) 中各环境列属于 $\mathcal K$，故它们与 $e$ 正交。此外
+
+$$
+\phi_\eta(g)=u^*g_Au+2\operatorname{Re}\bigl(\sigma i\,u^*Cv/2\bigr)
+=\phi_\xi(g).
+\tag{30.15}
+$$
+
+这项期望用原块乘法验证，不由作用列等距擅自推断读取向量等距。由原 Jordan 乘积的实内积公式及 (17.13)，同一 $\eta,e$ 同时给出
+
+$$
+\begin{gathered}
+\phi_\xi(c^2)=\phi_\eta(c^2),\qquad
+\phi_\xi(c\circ t)=\phi_\eta(c\circ t),\qquad
+\phi_\xi(t^2)=\phi_\eta(t^2)+d_e,\\
+\phi_\xi(L)=\phi_\eta(L),\qquad
+\phi_\xi(R_\delta^2)=\phi_\eta(R_\delta^2),\qquad
+\phi_\xi(R_\delta\circ S_\delta)=\phi_\eta(R_\delta\circ S_\delta),\\
+\phi_\xi(S_\delta^2)=\phi_\eta(S_\delta^2)+d_e,\\
+B_{\phi_\xi}(c,t)=B_{\phi_\eta}(c,t)+d_e\|Cu\|^2,\\
+B_{\phi_\xi}(R_\delta,S_\delta)
+=B_{\phi_\eta}(R_\delta,S_\delta)+d_e\|R_\delta\eta\|^2.
+\end{gathered}
+\tag{30.16}
+$$
+
+$L$ 的第二项中，$(r+g)\eta$ 的环境列为 $-\sigma iFCu/2$，与 $e$ 正交；第一项没有变化。这也直接核对了 $L$ 的等式。以上正是定理 17.2 在 $W=0$ 的原乘法恒等式，余项非负且对两笔预算相同，没有分别优化两个根。
+
+现在比较两份环境，以下标 $j=1,2$ 区分它们。三矩相同给出唯一酉映射
+
+$$
+U:\mathcal K_1\longrightarrow\mathcal K_2,\qquad
+U(F_1a+G_1b)=F_2a+G_2b,
+\qquad UF_1=F_2,\quad UG_1=G_2.
+\tag{30.17}
+$$
+
+良定义、等距和满射均由 (30.5) 的相同 Gram 矩阵及两份像的张成性给出。对任意 $u\in\mathbb C^2$、$q\in\mathcal K_1$，比较两份实际原向量
+
+$$
+\eta_1=(u,T_1q),\qquad \eta_2=(u,T_2Uq).
+\tag{30.18}
+$$
+
+有 $G_2^*Uq=G_1^*q$。将 (30.14) 逐列代入，$c,x,h,r,s,t,k,g,R_\delta,S_\delta$ 的每个第一份作用列，经 $I_2\oplus U$ 恰变成第二份作用列；$I_2\oplus U$ 作用在这些输出所属的 $\mathbb C^2\oplus\mathcal K_1$ 上。这保留全部列内积。结合 (30.15)，便得到两份向量泛函的同一 P2 全部读数，以及同一 PB 的左端和两笔预算，逐项完全相等。
+
+对每份环境，(30.16) 说明截面上的预算成立就推出所有原向量上的预算，反向只是限制向量；若原向量严格失败，将它投到 (30.12) 的同一截面后，左端不变、右端不增，仍严格失败。再由 (30.18) 得到另一份环境中的实际严格失败。任何这类违反所用的 $X$ 都保持不变，两个预算与左端用同一个原向量泛函；并非把独立优化的见证拼合起来。
+
+最后直接消费定理 17.2 的全正泛函提升。有限矩阵代数中的任意正泛函都有完整原空间谱分解 $\phi=\sum_j\phi_{\xi_j}$。P2 的正二表对泛函相加；PB 使用 (17.15) 的二阶 Gram 行列式根超可加性，再按 (17.16) 对同一个 $L,R_\pm,S_\pm$ 求和。这证明所有原向量与全部正泛函之间的等价，并不删掉环境密度块。其逆否命题还说明：一个混合正泛函在固定 $X$ 上的严格失败，必有同一个 $X$ 上的某个原向量严格失败。
+
+质量无需由 (30.18) 保持。对每个 $a>0$，P2 的两边在 $a\phi$ 下同乘 $a^2$，PB 的两边同乘 $a$。故任意非零见证可在自己的原环境中乘以正数，达到每个指定的 $\mu>0$；其探针保持不变，严格性保持，已经严格为正的预算也保持严格正。质量为零的正泛函只有零泛函，单独给出零等式。因而全称成立性和严格失败的上述转移均逐指定正质量成立，但未声称逐读数恒等与质量相等可同时由一个等距向量映射实现。
+
+对定理 30.1 的代表，$\operatorname{ran}F_0+\operatorname{ran}G_0=\mathcal K_\Gamma$ 就是整个新环境，且 $T'$ 可逆，故其读取截面 $T'\mathcal K_\Gamma$ 也是整个新环境。这使代表的量词确实遍及完整 $M_{2+k_\Gamma}(\mathbb C)$。对任一原环境的回提是 (30.18) 的逆向构造 $y=T_jU^{-1}q'$，不是把小代数中的平方解释成原输入的压缩平方。命题 18.1 的反例和障碍因此完整保留。∎
+
+### 30.3 同一原有限索引上的全部标量系数
+
+**定理 30.3（三矩相等时 Schur 多项式逐索引恒等）。** 保持定理 30.2 的相同 $B$、$C$ 和三矩，令 $s=\rho T_A\oplus0$、$T_A=\operatorname{diag}(1,-2)$。按 (27.23)–(27.25) 在各自原环境中定义 $q_0^{(j)},q_1^{(j)},q_2^{(j)}$。对每个相同的原有限索引
+
+$$
+\theta=(u,\epsilon,\alpha_+,\alpha_-,\beta_+,\beta_-),\qquad
+\|u\|=1,\quad\epsilon=\pm1,\quad
+0<\alpha_\pm<\infty,\quad\beta_\pm\in\mathbb R,
+\tag{30.19}
+$$
+
+以及每个分别固定的 $\sigma$，有
+
+$$
+\boxed{\quad
+q_0^{(1)}(\theta)+\rho q_1^{(1)}(\theta)+\rho^2q_2^{(1)}(\theta)
+=q_0^{(2)}(\theta)+\rho q_1^{(2)}(\theta)+\rho^2q_2^{(2)}(\theta)
+\quad(\rho\in\mathbb R).\quad}
+\tag{30.20}
+$$
+
+所以三个系数各自相等。演员方向 $u$ 不变，四个有限变分参数和 $\epsilon$ 不变；包括 $u_1u_2=0$ 的演员轴、奇异 $A$、秩亏三矩和空环境。
+
+证明。在第 $j$ 份环境中，$\mathcal E_{0,j}=T_j\mathcal K_j$，$T_j|_{\mathcal K_j}$ 是到此截面的复线性双射。由 (30.17) 定义双射
+
+$$
+\Lambda:\mathcal E_{0,1}\longrightarrow\mathcal E_{0,2},
+\qquad \Lambda(T_1q)=T_2Uq.
+\tag{30.21}
+$$
+
+选取 (27.2) 所用的任意复正交归一基，令 $\Lambda_{\mathbb R}$ 为其实坐标矩阵。两份截面的维数同为 $k_\Gamma$。令
+
+$$
+\mathcal P=\operatorname{diag}(I_4,\Lambda_{\mathbb R},1),\qquad
+z_2=\mathcal Pz_1,\quad z_j=(a,v_j,\tau).
+\tag{30.22}
+$$
+
+这是系数变量的可逆实线性变换，保持四个原探针坐标和最后的 $\tau$；不是 (30.19) 的索引变换。
+
+核对齐次化的所有列，不仅核对 $\tau=1$ 的真实向量。若 $Y_1(v_1)=T_1q$、$Y_2(v_2)=T_2Uq$，则 (27.4) 的 $\mathcal T,\mathcal K,\mathcal G_s$ 分别为
+
+$$
+\begin{aligned}
+\mathcal T_jz_j
+ &=\bigl(\tau Bu+G_j^*q_j,\ \tau F_ju+q_j\bigr),\\
+\mathcal K_jz_j
+ &=\bigl(\tau(C\circ B)u+CG_j^*q_j/2,\ \tau F_jCu/2\bigr),\\
+\mathcal G_{s,j}z_j
+ &=\bigl(\tau(\sigma i[C,B]/2+\rho T_A)u
+                   +\sigma iCG_j^*q_j/2,\ -\sigma i\tau F_jCu/2\bigr),
+\end{aligned}
+\tag{30.23}
+$$
+
+其中 $q_1=q$、$q_2=Uq$；此处的 $q_j$ 是环境像，非 Schur 标量系数。其余 $\mathcal X,\mathcal H_\sigma,\mathcal J$ 只有相同的演员分量。由 (30.17)，所有这些输出在 $I_2\oplus U$ 下相等，因此 (27.5) 的 $\ell_s$ 和 (27.7) 的全部二次型对每个 $a,v_1,\tau,\rho$ 都相等：
+
+$$
+\mathscr Q^{(1)}_{\sigma,\rho T_A}(\theta)
+=\mathcal P^{\mathsf T}
+  \mathscr Q^{(2)}_{\sigma,\rho T_A}(\theta)\mathcal P.
+\tag{30.24}
+$$
+
+还须证明消元后的标量相等，不能对非正交的 $\Lambda_{\mathbb R}$ 套用伪逆的正交合同公式。按 (27.23) 写第 $j$ 份系数矩阵，令 $b_j(\rho)=b_{0,j}+\rho b_{1,j}$、$\gamma_j(\rho)=\gamma_{0,j}+\rho\gamma_{1,j}+\rho^2\kappa_j$。由 (27.24) 与整个 $W=0$ 分支的定理 28.2，对每个原 $\theta$ 都有
+
+$$
+A_j\succeq0,\qquad b_{0,j},b_{1,j}\in\operatorname{ran}A_j.
+\tag{30.25}
+$$
+
+所以对每个实 $\rho$，成熟的广义 Schur 配方给出实际达到的最小值
+
+$$
+\begin{aligned}
+\min_w\ (w,1)^{\mathsf T}\mathscr Q^{(j)}_{\sigma,\rho T_A}(\theta)(w,1)
+ &=\gamma_j(\rho)-b_j(\rho)^{\mathsf T}A_j^\dagger b_j(\rho)\\
+ &=q_0^{(j)}(\theta)+\rho q_1^{(j)}(\theta)+\rho^2q_2^{(j)}(\theta).
+\end{aligned}
+\tag{30.26}
+$$
+
+具体地，二次式等于右侧加
+$(w+A_j^\dagger b_j(\rho))^{\mathsf T}A_j(w+A_j^\dagger b_j(\rho))$；取 $w=-A_j^\dagger b_j(\rho)$ 达到最小值。式 (30.22) 在 $\tau=1$ 的两个全部 $w$ 空间之间是双射，故 (30.24) 使这两个最小值相等。得到 (30.20) 对所有实 $\rho$ 的恒等，再由实多项式恒等得到每个系数相等。证明只要求 (30.25)，不要求 $A_j$ 可逆；定理 28.2 的轴向一维核、空环境的核及所有奇异块因而都在范围内。∎
+
+这一恒等比“对全部索引的正性有同一真值”更强，但不提供任何未决系数的符号。它也说明三矩实现中选择不同的实 $\lambda$、不同 Gram 基或不同合法 Hermitian 扩张，不改变同一原索引处的整个标量 Schur 多项式。
+
+### 30.4 剩余分类的精确可实现参数域
+
+**推论 30.4（原 $W=0$ 非零残量问题的真实有限环境等价）。** 对任意固定 $B=B^*$，令 $\mathfrak M$ 为 (30.3) 的全部 Hermitian 三元组。对每个 $M=(M_0,M_1,M_2)\in\mathfrak M$ 定义
+
+$$
+H=B-M_1,\qquad \mathcal A=C^{-1/2}HC^{-1/2}.
+\tag{30.27}
+$$
+
+当 $\mathcal A_{11}\ne\mathcal A_{22}$ 或 $\mathcal A_{12}=0$ 时，P2 已迫使 $s=0$。其余情形准确为
+
+$$
+\mathcal A_{11}=\mathcal A_{22}=\alpha,\qquad
+\beta=|\mathcal A_{12}|>0,
+\tag{30.28}
+$$
+
+且 P2 的残量准确为 $s=\rho T_A\oplus0$。按定理 8.1 的有序谱基取 $U_0$，并定义
+
+$$
+\begin{gathered}
+U_0^*\mathcal A U_0=\operatorname{diag}(\alpha+\beta,\alpha-\beta),\qquad
+\omega=(U_0^*\operatorname{diag}(1,-1)U_0)_{12},\\
+Q_M=\left[U_0^*C^{-1/2}(I_2+M_2)C^{-1/2}U_0\right]^{-1}
+=\begin{pmatrix}d_1&h_0\\\overline h_0&d_2\end{pmatrix},\\
+R=\sqrt{d_1d_2},\quad \Delta=d_1d_2-|h_0|^2>0,\quad
+J=\operatorname{Im}(\overline h_0\omega),\\
+I_\sigma(B,M)=
+\left[-\frac{\beta\Delta}{R+\sigma J},\ \frac{\beta\Delta}{R-\sigma J}\right].
+\end{gathered}
+\tag{30.29}
+$$
+
+$Q_M>0$，两个分母均严格正。定义 $p_\sigma(B,M;\theta,\rho)$ 为定理 30.1 的任一最小真实代表在 (30.26) 中的多项式；定理 30.3 使它与实现及基的选择无关。
+
+于是，固定 $B$ 上原问题的非零残量可行性，准确等价于下列可实现三矩问题：是否存在 $M\in\mathfrak M$ 和实 $\rho$ 满足
+
+$$
+\boxed{\quad
+\text{(30.28)},\qquad
+0\ne\rho\in I_\sigma(B,M),\qquad
+p_\sigma(B,M;\theta,\rho)\ge0
+\quad\text{对 (30.19) 的每个原有限索引 }\theta.\quad}
+\tag{30.30}
+$$
+
+同样，某份原 $W=0$ 输入是否属于 P2 与全部 PB 的交，逐份准确由其自己的三矩及 (30.30) 判定，另加始终可行的 $s=0$。若两个取向都要求成立，则用同一 $B,M,\rho$ 分别施加两套全称标量条件，P2 区间取 $I_+(B,M)\cap I_-(B,M)$。这里没有把取向依赖删除。
+
+证明。任意原 $W=0$ 环境的三矩都在 $\mathfrak M$ 中，由定理 30.1 有一份维数 $k_\Gamma$ 的可逆真实代表。定理 30.2 分别转移全部原 P2 与全部原 PB，定理 30.3 在相同 $\theta$ 上转移每个系数。因此可在这份真实代表上直接复用定理 8.1、13.1 的完整 P2 分类：Schur 矩阵只用 $B-M_1$，而原度量中的 $VD_{\rm env}^{\dagger2}V^*$ 正好是 $M_2$，给出 (30.27)–(30.29)。这些是已付的 P2 结果，不是新的 P2 区间证明。
+
+在整个 $W=0$ 分支，定理 28.2 已自动支付全部值域条件，所以定理 27.4 的 PB 充要条件只剩每个原 $\theta$ 上的 (30.26) 非负；定理 30.3 正好给出 (30.30) 的逐输入表达式。反向地，任何 (30.30) 的三矩先由定理 30.1 实现为实际完整 $M_{2+k_\Gamma}(\mathbb C)$ 中的 $t'$；刚才两份充要条件便使这一真实输入满足全部原 P2 和全部原 PB，具有同一个非零 $\rho$。因此不是用可能无法实现的 Gram 松弛替代原问题，也不是只证明一个必要条件或一个充分估计。
+
+若 (30.30) 的某个标量测试失败，定理 27.2 在同一原输入中给出一个有限实际 Hermitian 角探针和一个共同原向量泛函；定理 27.3 可使该泛函的两笔预算同时严格正，仍严格违反 PB。定理 30.2 的实际截面回提把代表上的违反带回每一份具有同三矩的原环境。若同时要求 P2，则它由同一三矩的 (30.29) 保留。正有限质量与零质量按定理 30.2 处理，两个取向分别应用整个论证。∎
+
+式 (30.30) 仍对全部单位演员方向、两个绝对值符号和全部四个有限变分参数量化；$k_\Gamma\le4$ 只界定真实环境维数，不把这个连续索引族变成有限清单。$q_0\ge0$ 与 $b_1\in\operatorname{ran}A$ 仍是既有结论；$q_1,q_2$ 及整个多项式的全索引符号未由三矩实现决定。特别地，本节既未排除整个 $W=0$ Schur 平衡非零区间，也未提供任何固定实际非零 $\rho$ 的全 PB 模型。(30.30) 是否有解，连同 $\mathfrak A_\sigma$ 是否为空及 §27A 的未付参数，仍为未决；其等价的真实完整矩阵代数现在可限为 $M_{2+k_\Gamma}(\mathbb C)$、$0\le k_\Gamma\le4$。
+
+### 30.5 成熟归属、原问题边界与直观
+
+有限正 Gram 矩阵的商空间实现、Hermitian 部分算子的对称块扩张、正交分解、有限维谱分解、行列式多项式及广义 Schur 配方都是成熟线性代数工具。Gram 与 Hermitian 矩阵的一般背景可参见 Horn–Johnson，*Matrix Analysis*，第二版，关于 Hermitian 矩阵和正定／半正定矩阵的章节；(30.6)–(30.11) 已完整证明这里需要的商实现、核兼容性和可逆扩张，不把本节的特定三矩充要条件归给该书。投影／最小范数背景沿约定 18.2 所引 Argyriou–Micchelli–Pontil；只使用已展示的有限维正交分解。谱 Moore–Penrose 逆沿 §15 所引 Penrose 的 [*A generalized inverse for matrices*](https://doi.org/10.1017/S0305004100030401)；含值域条件的广义 Schur 判别沿 §27.6 所引 Higham 的 [Generalized Schur Complement，Theorem 1](https://nhigham.com/2023/06/01/what-is-the-schur-complement-of-a-matrix/)。原正泛函、Gram／Schwarz 和行列式根提升的归属仍是 §§1、17–18 的原来源。本节不作历史优先权、文献穷尽或外部开放问题已解的主张。
+
+本节的 $\texttt{repo-derived}$ 内容是：(30.3) 的完整可实现参数空间及达到 $\operatorname{rank}\Gamma$ 的可逆真实环境，(30.14)–(30.18) 对所有原探针、共同作用列与全部正泛函的同一输入转移，以及 (30.20) 在相同原有限索引上的整个 Schur 多项式恒等。定理 17.2 的原读取截面和正泛函提升、命题 18.1 的压缩乘法障碍、定理 8.1、13.1 的 P2 分类、§§27–28 的系数与自动值域，以及 §29 的全部 $W\ne0$ 结论均为直接复用。这里是纸面数学定理，不是 Lean／kernel 核验结论。
+
+直观上，两束列 $V^*a$ 与 $D_{\rm env}^\dagger V^*a$ 的共同长度和夹角形成完整三矩 Gram 图。读取环境先按这张图去掉只增加预算的正交余项；随后在这张图自己的空间中，给“第一束列送到第二束列”的对称规则补上一个可逆 Hermitian 环境。这是另造真实输入，不是把旧 $t$ 压扁后重新相乘。原向量在两份环境中的长度可以不同，但作用列的全部内积相同，因而同一个探针、左端及两笔预算共同转移。三矩没有消除剩余多项式的符号问题，只把它准确放进不超过四维的真实环境中。
+
+所有结论只涉及已知 $t$ 的环境块，不向未知总响应 $D$ 增加正则性、可加性、齐次性、可测性、协变性、单位平移中性、压缩、商下降、双对偶延拓或自然性前件。没有新增实际准备或评价标签，也没有以某个较强完整 $\mathsf H$ 分类替代原固定输出前件。§6 的同一递归钉版实际物理来源、§29.3–29.4 保留的原对象和全部量词均保持：原准备、事件、过程、参考／副本、真正相关联合、零／不等／次归一质量、钟与单位、控制、ready／flags、全记录、失败、停止、销毁、固定支持全质量、完整菜单、全部已量化中间切口及所有合法未来均不改变。原分析器的字面旧程序接受关联、CountRead 的同一接受叶完整活动输出、实际读后活动 ready、第一合法消费者，以及读后同一完整活动输入对全部合法未来的真实 Return，仍须由原来源供应。一般混合输入、共同实现 $\mathcal E_+^D=\mathcal E_-^D$、稳定性 $N_\omega(\varepsilon)^2\to0$、完整 $\mathsf H$／未知总 $D$ 及完整量子来源与量子起源目标，均未由此完成。
+
 ## 新增锚（本行以下为后续增补区）

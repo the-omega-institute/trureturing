@@ -1,0 +1,122 @@
+**推论 14.5（相对于既有成对证书的严格有限增益）。** 固定任一 (13.4) 的元组。比较类仍是：原始 $R$ 只准备一次，场源与任意有限混合辅助在固定 $n$ 时对全部 $h$ 具有同一初始律；一个与 $n,h$ 无关的有限因果控制器及同一个解码器在定义 13.1 的全体场与方向上成功。除至多 $L$ 次总自旋槽及一次强制终端交换外，操作在 $R$ 上均为恒等；允许处理全部非 $R$ 输出、适应性经典与量子记忆以及探针回用。始终用 (13.10) 的同一实际 $R K$ 输出及其实际 $K$ 边缘定义返回误差，并置 $\overline\delta=\sup_{n,h}\Delta_{n,h}$。全部原生 $H,E$、原始 $b,Y$、实际复制、分支、记忆和终端输出保持在 $K$ 中。
+
+这里的整数 $T$ 专指每条运行分支上全部实际 $R$ 接触数的统一上界，不指假设 12.2 的网络符号。每次总自旋槽算一次；终端交换也算一次，故本元组统一可取
+$$
+T=L+1=M+1=10N+1<m:=2j=D-1.
+$$
+控制器若少用获取槽，按其实际调用计数，再加这个强制终端接触；用 $L+1$ 作为共同上界不把未执行的槽算成执行。下述支撑修正对任意足够覆盖实际接触数的整数 $0\le T<m$ 成立，包含本族的统一上界。
+
+固定同一个允许的 $n$ 及满足
+$\|D_{h_0}(n)-D_{h_1}(n)\|_\infty>2\epsilon$ 的一对方向。令其夹角为 $\theta$，并先取 $0<\theta<\pi$，定义
+$$
+u=\cos^2\frac\theta2,\qquad
+s=|\langle j,h_0|j,h_1\rangle|=u^{m/2},\qquad
+\nu=\sqrt{1-s^2},\qquad a=1-2\beta=q=\frac{49}{50}.
+$$
+把已有解码输出按是否落入 $D_{h_0}(n)$ 的闭 $\epsilon$ 球分组，得到同一个实际记录效果，在两端概率分别至少 $1-\beta$ 和至多 $\beta$。固定 $n$ 后只吸收共同的非 $R$ 来源和辅助，完整运行就是一个 $h$ 无关的 CPTP 映射 $\Lambda_n:R\to R K$，包含终端交换。收缩性因而给出必需的二元获取可行域
+$$
+0<a\le D(\tau_{h_0},\tau_{h_1})=\nu.
+$$
+若 $a>\nu$，该对已排除获取，不是可行任务上的返回证书。以下公式及其包络估计实际上对全部 $0<a\le\nu$ 成立；应用本任务时固定取 $a=q$，不改变其成功要求。
+
+在这个可行域上，既有直接混合输出证书为
+$$
+C(s,a)=\frac{\sqrt{\nu^2+s^2a^2}-\nu}{2}.
+\tag{14.25}
+$$
+有限接触支撑参数的完整定义是
+$$
+\eta_T(u)=\sum_{k=T+1}^{m}\binom mk u^{m-k}(1-u)^k,\qquad
+\kappa_T(u)=\frac{\eta_T(u)}{1-u^m}=\frac{\eta_T(u)}{1-s^2}.
+\tag{14.25a}
+$$
+因为 $0<u<1$、$0\le T<m$，并且从 $k=1$ 到 $m$ 的全和为 $1-u^m$，有 $0<\kappa_T\le1$。相应既有二元生存及支撑证书为
+$$
+S_T(s,a)=\frac{b(s,a)}{1-\kappa_T(u)/2},\quad
+b(s,a)=\frac{1-\sqrt{1-s^2\nu^2(1-\gamma)^2}}2,\quad
+\gamma=\sqrt{1-a^2/\nu^2}.
+\tag{14.26}
+$$
+它们的结论是 $\overline\delta\ge C(s,a)$、$\overline\delta\ge S_T(s,a)\ge b(s,a)$，均约束上述同一运行的实际输出。它们不是一个均匀合法优化器。若 $\theta=\pi$，取 $u=s=0,\nu=1,\kappa_T=1$，三份证书均为零，照样纳入比较；$\theta=0$ 不可能给出分离目标。若在其它元组上 $T\ge m$，空尾和取零，支撑修正退为 $S_T=b$，不再声称严格修正。本族无此情形。
+
+**证明。** 先说明两份证书与实际合同的对应，以固定比较对象。对同一 $\Lambda_n$ 的两端输出写 $\Omega_i,\omega_i$，令 $P_i=\tau_{h_i}\otimes\omega_i$、$\Delta_i=D(\Omega_i,P_i)$。上述二元效果在 $\omega_0,\omega_1$ 上的概率记为 $p_0,p_1$，则 $p_0-p_1\ge a$。对任意 $x,y\ge0$，两维秩一计算给
+$$
+\|x\tau_{h_0}-y\tau_{h_1}\|_1
+=\sqrt{\nu^2(x+y)^2+s^2(x-y)^2}.
+$$
+对 $P_0,P_1$ 的 $K$ 因子作该二元测量，仅作为数学比较，两个正交结果块的这个范数之和由二维三角不等式给出
+$D(P_0,P_1)\ge\sqrt{\nu^2+s^2(p_0-p_1)^2}$。
+又 $D(\Omega_0,\Omega_1)\le\nu$，所以
+$\Delta_0+\Delta_1\ge\sqrt{\nu^2+s^2a^2}-\nu$，得到 (14.25)。这是自足的共同通道计算，不使用输出纯度。
+
+式 (14.26) 的 $b$ 精确复用 Buscemi–Sacchi 的 *Information-Disturbance Tradeoff in Quantum State Discrimination*，[修正版本原文](https://arxiv.org/html/quant-ph/0610196v2) 的式 (1)–(3)、(15)、(21)–(25)：两个等先验纯输入、任意返回同一二维信号的二元 CP 仪器，以平均成功率和平均生存失真为指标。对应取该文 $\sin(2\alpha)=s$、$\cos(2\alpha)=\nu$、$t=a/\nu$，则其 $P_t=(1+a)/2$、$\gamma=\sqrt{1-t^2}$，最小平均生存失真即这里的 $b(s,a)$。该函数在 $0\le a\le\nu$ 上非减，故成功率至少 $(1+a)/2$ 时也得到同一必要下界。这里只复用这个二元定理，不声称其最优仪器能由原始槽实现，也不将该生存指标直接等同于实际乘积返回。
+
+为说明支撑因子及指标转换，置 $\psi_i=|j,h_i\rangle$，选相位使 $\langle\psi_0,\psi_1\rangle=s$，并令
+$$
+W_t(h)=\operatorname{span}\{|j,j-k\rangle_h:0\le k\le\min(t,m)\},\quad
+\mathcal S=\operatorname{span}\{\psi_0,\psi_1\},\quad
+v_i=\frac{\psi_{1-i}-s\psi_i}{\nu}.
+$$
+初始 $R$ 支撑在 $W_0(h)$。式 (13.5) 的两个投影在 $J$ 中仿射，而 $J_h,J_\pm$ 每次至多改变一个降低数；它们把 $W_t(h)$ 送入 $W_{t+1}(h)$，对任意联合探针、记忆和相干指针仍成立。所有非 $R$ Kraus 操作保持这个支撑。$J\cdot\sigma$ 的两个本征值为 $j,-(j+1)$，故 (13.9) 是 $\Pi_+,\Pi_-$ 的标量线性组合，同样只增加一个支撑步。对完整有限因果树归纳，包含混合辅助、适应反馈和回用探针，实际参考边缘 $\rho_i=\operatorname{Tr}_K\Omega_i$ 因而支撑在 $W_T(h_i)$。这也说明为何终端接触不能漏计。
+
+相干对称张量展开在降低数 $k$ 上的平方系数为
+$\binom mk u^{m-k}(1-u)^k$。因此
+$\|P_{W_T(h_i)^\perp}v_i\|^2=\kappa_T$。
+令 $\ell_i=1-\langle\psi_i|\rho_i|\psi_i\rangle$、
+$q_i=\operatorname{Tr}(P_{\mathcal S^\perp}\rho_i)$。
+在 $W_T(h_i)\cap\psi_i^\perp$ 上，
+$P_{\mathcal S^\perp}$ 的压缩为
+$I-|P_{W_T(h_i)}v_i\rangle\langle P_{W_T(h_i)}v_i|$，
+其下界为 $\kappa_T I$，而与 $\psi_i$ 的交叉项为零，故
+$q_i\ge\kappa_T\ell_i$，对任意混合 $\rho_i$ 成立。
+
+在数学比较中保留同一个二元记录，并对返回信号使用
+$$
+\Phi(X)=P_{\mathcal S}XP_{\mathcal S}
++\operatorname{Tr}(P_{\mathcal S^\perp}X)\frac{P_{\mathcal S}}2.
+$$
+它是保迹 CP 压缩，保持两个输入和记录概率，把返回失真改为
+$\ell'_i=\ell_i-q_i/2$。限制输入到 $\mathcal S$ 后恰是上述二元来源的仪器域。因此
+$$
+b(s,a)\le\frac{\ell'_0+\ell'_1}{2}
+\le(1-\kappa_T/2)\frac{\ell_0+\ell_1}{2}
+\le(1-\kappa_T/2)\max_i\Delta_i
+\le(1-\kappa_T/2)\overline\delta.
+$$
+这里 $\ell_i\le\Delta_i$ 来自实际 $R K$ 上的效果
+$(I-\tau_{h_i})\otimes I_K$。这证明 (14.26) 的精确支撑证书。分组、偏迹与 $\Phi$ 都只是必要界的比较操作，不是给控制器增加未知方向、直接 $R$ 控制或删除实际输出的许可；没有把 Kraus 指标或初始纯化加入实际端口。
+
+现在对这些证书取整个原始分离对包络。具体地，$\mathcal E_{\rm pair}$ 是所有允许的同场分离对、固定 $a=q$、以及适用于其接触上界 $T\le L+1$ 的上述 $C,b,S_T$ 数值的上确界；没有可用对时上确界取零。即使允许全部整数 $0\le T\le L+1$ 并把二元数值域扩大到全部 $0<a\le\nu$，下面的共同上界仍成立，所以没有以缩小比较域取得增益。每个目标坐标是 $h$ 的线性函数，其行范数不超过 $G/2=1/2$；于是
+$$
+2\epsilon<\|D_{h_0}(n)-D_{h_1}(n)\|_\infty
+\le\frac12\|h_0-h_1\|=\sin\frac\theta2.
+$$
+因 $2\epsilon=1/8$，相干重叠满足
+$$
+s^2=\cos^{4j}\frac\theta2<
+\left(\frac{63}{64}\right)^m.
+\tag{14.27}
+$$
+在全部二元可行域，$\sqrt{\nu^2+s^2a^2}\le1$，所以
+$C\le(1-\nu)/2=s^2/[2(1+\nu)]\le s^2/2$。
+又置 $y=s^2\nu^2(1-\gamma)^2\le s^2$，则
+$b=y/[2(1+\sqrt{1-y})]\le s^2/2$。
+结合 $0<\kappa_T\le1$ 得
+$S_T\le2b\le s^2$。
+因此 $\mathcal E_{\rm pair}\le(63/64)^m$，包括正交对的零值及所有相应原始接触证书。
+
+另一方面，(14.12) 的同场反向对 $\pm e_2$ 的目标距离为一。对任意在整个原始任务上成功的控制器，(14.23) 在这个固定场上的全方向返回上确界成立，因而也约束 $\overline\delta$。由 $a=q$、$m\ge1$ 及 $\pi<4$，
+$$
+\overline\delta\ge\frac{q^2}{(1+\pi\sqrt m)^2}
+>\frac{q^2}{25m}>\frac9{250m}.
+\tag{14.28}
+$$
+二项式展开 $(64/63)^m=(1+1/63)^m$ 给
+$$
+\left(\frac{63}{64}\right)^m
+\le\frac{2\cdot63^2}{m(m-1)}
+<\frac9{250m}\quad\text{当 }m-1>220500.
+\tag{14.29}
+$$
+而 (13.4) 给 $m\ge8{,}000{,}000N^2-1$，同时保证 $L+1<m$ 和这个严格阈值。因此在整个给定的获取可行族上，(14.28) 严格高于上述整个成对证书包络；这些元组的非空均匀获取可行性由定理 13.1 的同一有限协议给出。这个比较只说明全球约化-CPTP 必要关系相对于明确给定的已付证书有严格有限增益，不说明全体成熟定理、最优系数、饱和协议或资源支配关系。$\square$
+
