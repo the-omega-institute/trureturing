@@ -23,5 +23,21 @@ internal sealed class KhetanOneDirectionPeriodizerDocument : IScribeDocumentDefi
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Every nonzero polynomial annihilator in a nonzero lattice direction yields a nonzero period of the original finite-range configuration. No periodic-line conclusion or nonzero constant coefficient is assumed. This is the terminal recurrence step, not the complete one-direction periodizer theorem."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("integer-periodizer-direction-split"),
+                DeclarationHandle.Create("D5/S1/Dynamics/Symbolic/KhetanOneDirectionPeriodizer.integer_periodizer_direction_split"),
+                H("Separate parallel and transverse difference factors"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For a primitive lattice direction, its integer Bezout coordinates express every parallel supplier direction as an integer multiple. Grouping all such factors gives a nonzero one-variable Laurent factor A and retains every transverse factor in B, with AB annihilating the original configuration. Parallel or repeated transverse factors remain permitted."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("localized-bezout-step"),
+                DeclarationHandle.Create("D5/S1/Dynamics/Symbolic/KhetanOneDirectionPeriodizer.localized_bezout_step"),
+                H("Use a cleared identity before acting on the configuration"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Given lattice Laurent coordinates and localized coprimality of P and B, the denominator theorem constructs a nonzero horizontal coefficient rho. The resulting polynomial (z-1) A rho annihilates the original configuration, whose finite range gives a global period. Localized coprimality is an intermediate premise. Its derivation from the absence of transverse line factors, and hence the complete one-direction periodizer theorem, remain unproved."))),
                 DescribeRole.Theorem))));
 }

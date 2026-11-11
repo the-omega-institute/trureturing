@@ -302,4 +302,30 @@ theorem integer_periodizer_direction_split
     exact hprod heq.symm
   · rwa [heq]
 
+/-- Once the algebraic localized Bezout premise has been proved, clearing
+denominators supplies a nonzero eliminant before any configuration action.
+This is an intermediate elimination step; the line-factor hypothesis does
+not occur here and its implication to `hcop` is a separate obligation. -/
+theorem localized_bezout_step [IsDomain R]
+    (h : Configuration R) (hh : FiniteRange h) (u : Lattice) (hu : u ≠ 0)
+    (P B : AddMonoidAlgebra R Lattice) (A : LaurentPolynomial R) (hA : A ≠ 0)
+    (c : R) (hP : coefficientAct P h = fun _ => c)
+    (hAB : coefficientAct (lineLaurent u A * B) h = 0)
+    (coordinates : AddMonoidAlgebra R Lattice ≃+*
+      AddMonoidAlgebra (LaurentPolynomial R) ℤ)
+    (hcoordinates : ∀ F : LaurentPolynomial R,
+      coordinates (lineLaurent u F) = AddMonoidAlgebra.single 0 F)
+    (hcop : IsCoprime
+      (AddMonoidAlgebra.mapRingHom ℤ
+        (algebraMap (LaurentPolynomial R) (FractionRing (LaurentPolynomial R))) (coordinates P))
+      (AddMonoidAlgebra.mapRingHom ℤ
+        (algebraMap (LaurentPolynomial R) (FractionRing (LaurentPolynomial R))) (coordinates B))) :
+    Periodic h := by
+  obtain ⟨ρ, hρ, α, β, hbezout⟩ := KhetanLaurentElimination.clear_laurent_bezout
+    (coordinates P) (coordinates B) hcop
+  apply cleared_bezout_periodic h hh u hu P B (coordinates.symm α) (coordinates.symm β)
+    A ρ hA hρ c hP hAB
+  apply coordinates.injective
+  simpa only [hcoordinates, map_add, map_mul, RingEquiv.apply_symm_apply] using hbezout
+
 end D5.S1.Dynamics.Symbolic.KhetanOneDirectionPeriodizer
