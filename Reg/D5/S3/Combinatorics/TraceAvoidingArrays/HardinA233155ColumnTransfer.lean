@@ -15,7 +15,7 @@ noncomputable section
 set_option maxRecDepth 100000
 
 namespace Quotient
-abbrev Coordinates := Σ k : ℕ, Σ q : ℕ, (Row k → Fin q) × Row k
+abbrev Coordinates := Σ k : ℕ, Σ q : ℕ, Σ _ : Row k → Fin q, Row k
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Coordinates
     (fun p => Fin p.2.1) (fun _ => ℤ)
