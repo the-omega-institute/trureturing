@@ -8,9 +8,9 @@
 
 /-
 admission_basis: open-problem-resolution (#29231; Proved)
-escape_witness: successor_sum (structural list induction); grid_good (expanded TransferMatrix.good_iff_local); count_transfer (expanded TransferMatrix.cardMatrix and cont_matrix)
-TransferMatrix is unfrozen and its proof bodies remain inside the judgement boundary.
-The list and continuation inductions supply content on the live counting path.
+escape_witness: grid_good (expanded TransferMatrix.good_iff_local); count_transfer
+(expanded TransferMatrix.cardMatrix). TransferMatrix is unfrozen and its inductions remain
+inside the judgement boundary; successor_sum and quotient_rows are bind-only.
 columnCompatible: proof_shape=bind-only; consumers=successorClasses, count_transfer
 instDecidableColumnCompatible: proof_shape=bind-only; consumers=successorClasses
 relabel: proof_shape=bind-only; consumers=compatible_relabel, quotient_rows
@@ -19,8 +19,8 @@ twist: proof_shape=bind-only; consumers=compatible_relabel, quotient_rows
 bond_relabel: proof_shape=bind-only; consumers=compatible_relabel
 compatible_relabel: proof_shape=bind-only; consumers=quotient_rows
 successorClasses: proof_shape=bind-only; consumers=successor_sum, quotient_rows
-successor_sum: proof_shape=content; consumers=quotient_rows
-quotient_rows: proof_shape=content; consumers=HardinA233156Row.row_counts, HardinA233157Row.row_counts, HardinA233158Row.row_counts, HardinA233159RowCertificate.row_counts
+successor_sum: proof_shape=bind-only; consumers=quotient_rows
+quotient_rows: proof_shape=bind-only; consumers=HardinA233156Row.row_counts, HardinA233157Row.row_counts, HardinA233158Row.row_counts, HardinA233159RowCertificate.row_counts
 grid_good: proof_shape=content; consumers=count_transfer
 count_transfer: proof_shape=content; consumers=HardinA233156Row.counting_bridge, HardinA233157Row.counting_bridge, HardinA233158Row.counting_bridge, HardinA233159Row.counting_bridge
 -/

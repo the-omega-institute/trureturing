@@ -8,16 +8,17 @@
 
 /-
 admission_basis: open-problem-resolution (#29231; Proved)
-escape_witness: row_counts (expanded quotient_rows and successor_sum); mulVec_successors (structural list induction)
-The generic quotient proof and sparse-action induction remain on the live certificate path.
+escape_witness: none (bind-only: the quotient and sparse-action identities follow from
+pinned List and Finset sum identities; consumed on the live certificate path of
+HardinA233159Row.result).
 successor_table: proof_shape=bind-only; consumers=representative_rows
 representative_rows: proof_shape=bind-only; consumers=row_counts, mulVec_successors
-row_counts: proof_shape=content; consumers=quotient_certificate
+row_counts: proof_shape=bind-only; consumers=quotient_certificate
 classCodes: proof_shape=bind-only; consumers=class_codes, initial_weights
 class_codes: proof_shape=bind-only; consumers=initial_weights
 initial_weights: proof_shape=bind-only; consumers=quotient_certificate
-mulVec_successors: proof_shape=content; consumers=quotient_certificate
-quotient_certificate: proof_shape=content; consumers=HardinA233159Row.finite_certificate, HardinA233159Row.powers_table
+mulVec_successors: proof_shape=bind-only; consumers=quotient_certificate
+quotient_certificate: proof_shape=bind-only; consumers=HardinA233159Row.finite_certificate, HardinA233159Row.powers_table
 -/
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155RowTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155ColumnTransfer
