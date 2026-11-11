@@ -20,5 +20,5 @@ internal sealed class OddPrimeJetRadicalDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("odd-prime-jet-radical-joint-pow"),
                 DeclarationHandle.Create(Prefix + "radical_pow_eq_bot"), H("Joint ideal-power nilpotence"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The entire ideal power J^p is zero. For each r, every element of J^r annihilates the kernel of D^r. To advance this assertion, write a generator of J^(r+1) as XY with X in J and Y in J^r. If D^(r+1)v=0, then D(Yv)=Y(Dv)=0, so Yv is constant and X annihilates it. Ideal closure extends the assertion to sums. Finally D^p=0 on the original polynomial carrier."))), DescribeRole.Theorem)))));
+                Blocks(Paragraph(Text("The entire ideal power J^p is zero. For each r, every element of J^r annihilates the kernel of D^r. To advance this assertion, write a generator of J^(r+1) as XY with X in J and Y in J^r. If D^(r+1)v=0, then D(Yv)=Y(Dv)=0, so Yv is constant and X annihilates it. Ideal closure extends the assertion to sums. Finally D^p=0 on the original polynomial carrier."))), DescribeRole.Theorem))));
 }
