@@ -1,0 +1,23 @@
+**定义 27.1（三维窗口、比值域与观察）。** 固定特征为零的域 $F$ 及有限域扩张 $L/F$。窗口是原 $L$ 中满足 $\dim_F W=3$ 的 $F$-线性子空间。所有乘积、商与标量作用均使用原 $L$ 的乘法。对原标签 $r,s\in L^\times$，记
+
+$$
+\begin{aligned}
+J_W(r,s)&=\dim_F(W\cap rW\cap sW),\\
+d_W(r)&=J_W(r,1)=\dim_F(W\cap rW),\\
+D_W&=F\bigl(\{u/v:u,v\in W,\ v\ne0\}\bigr)\subseteq L,\\
+E_W&=\{a\in L:aW\subseteq W\},\\
+\delta_W&=\min\{d_W(r):r\in L^\times,\ d_W(r)>0\}.
+\end{aligned}
+\tag{27.1}
+$$
+
+最小值因 $d_W(1)=3$ 而存在。对任一满足 $d_W(r_0)=\delta_W$ 的原标签，定义
+
+$$
+T_{W,r_0}=\{0\}\cup
+\{s^{-1}:s\in L^\times,\ J_W(r_0,s)>0\}.
+\tag{27.2}
+$$
+
+观察输入只有固定原域上的完整函数 $J_W$；$D_W,E_W$ 是由 $W$ 定义的证明对象，(27.2) 则只使用指定行的正支持。竞争窗口始终是同一个原 $L$ 内的三维 $F$-子空间；等价关系只允许 $V=xW$、$x\in L^\times$，不重标原标签。
+

@@ -1,0 +1,85 @@
+**定理 29.2（中间域最优值及首个超出端点的维数）。** 对定义 29.1 的每个窗口，
+
+$$
+\boxed{\displaystyle
+\delta=\max_{F\subseteq A\subseteq D}\bigl(a(A)-2t(A)\bigr).
+}
+\tag{29.2}
+$$
+
+每个中间域项都下界所有正交叠；存在原 $p,q\in W\setminus\{0\}$ 使 $d_W(p/q)=\delta$。特别地，$1\le m\le6$ 时，
+
+$$
+\delta=\max\{e,\,2m-N\}.
+\tag{29.3}
+$$
+
+$m=7$ 时有精确判据
+
+$$
+\boxed{\displaystyle
+\delta>\max\{e,\,14-N\}
+\quad\Longleftrightarrow\quad
+N\ge16\quad\text{且存在 } F\subseteq A\subseteq D
+\text{ 使 } [A:F]=4,\ \dim_F AW=8 .
+}
+\tag{29.4}
+$$
+
+在 (29.4) 的两端成立时，$e=1$ 且 $\delta=2$；否则 $\delta=\max\{e,14-N\}$。次数条件不保证给定的 $D/F$ 有四次中间域；右端要求原域中确实有满足张成条件的那个域。
+
+**证明。** 先在原域中统一处理所有标签。按 (28.7)，$d_W(r)>0$ 当且仅当 $r=p/q$ 为两个非零窗口元素的原比值；特别是 $D$ 外的原标签交叠皆为零。任取 $w_0\in W\setminus\{0\}$，置 $U=w_0^{-1}W$。和 §28 一样，$1\in U\subseteq D$，$F(U)=D$，而 $d_U=d_W$、$E_U=E$、$\dim_F AU=\dim_F AW$。稳定子成域用 Bachoc–Serra–Zémor [arXiv:1510.01354v2，§2.3，Lemma 13 后的有限维说明](https://arxiv.org/pdf/1510.01354v2)：非零稳定元素在 $W$ 上给出单射，有限维使它满射，故逆元也稳定。由 $a w_0/w_0=a$ 对 $a\in E$ 得 $E\subseteq D$；$W$ 的 $E$-线性及域塔分别给出 $e\mid m$ 和 $e\mid N$。还有 $DW=w_0D$，因为 $1\in U\subseteq D$。这里既不把 $D$ 预设为 $L$，也不把 $E$ 预设为 $F$。
+
+若 $d_W(r)>0$，则 $AW\cap rAW$ 是含非零向量的 $A$-空间，故 $\dim_F(AW\cap rAW)\ge a(A)$。由 $W+rW\subseteq AW+rAW$ 得
+
+$$
+d_W(r)=2m-\dim_F(W+rW)
+\ \ge\ 2m-\dim_F(AW+rAW)
+\ \ge\ a(A)-2t(A).
+\tag{29.5}
+$$
+
+$A=E$ 时 $t(E)=0$，$A=D$ 时 $t(D)=N-m$，确得两个端点下界。此下界的维数机制见下文 Castello–Polverino–Zullo 的式 (13)。
+
+为证明一个中间域项给出准确值，使用 §§26、28 的分裂与原系数矩阵接口。取 $D/F$ 的有限正规闭包 $K/F$，包含原 $D$；$G=\operatorname{Gal}(K/F)$ 在 $\Omega=\operatorname{Hom}_F(D,K)$ 上按左复合传递作用，$|\Omega|=N$。取 $U$ 的 $F$-基 $u_1=1,u_2,\ldots,u_m$，记 $b_\sigma=(\sigma(u_1),\ldots,\sigma(u_m))$，$\rho(S)=\dim_K\langle b_\sigma:\sigma\in S\rangle_K$。特征零保证可分分裂 $D\otimes_F K\simeq K^\Omega$，故 $\rho(\Omega)=m$。各行首坐标为一；若两行成比例，则两嵌入在 $U$ 上相同，因 $F(U)=D$ 而是同一嵌入。因而 $P_\sigma=K(b_\sigma,0)\oplus K(0,b_\sigma)$ 是一族不同的二维子空间，非空子族 $S$ 的张成维数为 $2\rho(S)$。
+
+取独立的 $m$ 元不定元组 $X,Y$。在 $K(X,Y)$ 上，法向量为 $(X,-Y)$ 的超平面切每个 $P_\sigma$，所得直线的行向量为 $((b_\sigma\cdot Y)b_\sigma,(b_\sigma\cdot X)b_\sigma)$，即 (28.15) 的二因子接口。它们的秩为
+
+$$
+R=\min_{\mathcal P}\ \sum_{S\in\mathcal P}(2\rho(S)-1),
+\tag{29.6}
+$$
+
+其中 $\mathcal P$ 遍历 $\Omega$ 的非空块分拆。这里直接使用 Raz–Wigderson [arXiv:1901.09423v1，式 (3)、Definition 5.1、Theorems 5.2、7.1](https://arxiv.org/pdf/1901.09423v1) 的 Lovász 超平面公式：有限非零子空间族在特征零的 $K$ 上，两个独立参数组给出整个超平面参数空间的泛法向量，故满足 Definition 5.1 的一般位置条件。每块的代价是它所含子空间的总张成维数减一。
+
+由同一原文 Definition 2.1、Corollary 3.2，达到 (29.6) 且块数最少的分拆 $\mathcal P_*$ 唯一。对 $g\in G$，$g(b_\sigma)=b_{g\sigma}$，故 $\rho(gS)=\rho(S)$；于是 $g\mathcal P_*=\mathcal P_*$。现在把这个不变分拆接到原中间域。令 $S_0$ 为包含原包含嵌入 $\iota:D\hookrightarrow K$ 的块，$H=\{g\in G:gS_0=S_0\}$。任何固定 $\iota$ 的 $g$ 都保持 $S_0$，故 $\operatorname{Gal}(K/D)\subseteq H$。反过来，任一 $\sigma\in S_0$ 可写成 $g\iota$；此时 $gS_0$ 和 $S_0$ 同含 $\sigma$，从而 $g\in H$。由 Galois 对应，
+
+$$
+A=K^H,\qquad F\subseteq A\subseteq D,\qquad
+S_0=\{g\iota:g\in H\}=\operatorname{Hom}_A(D,K).
+\tag{29.7}
+$$
+
+最后一个等式中，$A$ 在 $K$ 内按原包含嵌入，固定 $A$ 的嵌入可延拓到 $K$ 的自同构。其余块是 $S_0$ 的 $G$-平移，故块数是 $[G:H]=[A:F]$，且各块秩相等。
+
+为计算该秩，对 $D/A$ 使用同一个分裂 $D\otimes_A K\simeq K^{S_0}$。矩阵 $(\sigma(u_j))_{\sigma\in S_0,j}$ 的列空间正是 $AU\otimes_A K$ 的像：$u_j$ 张成 $AU$，每个 $\sigma$ 在 $A$ 上都是包含嵌入，扩底后 $A$ 系数成为 $K$ 系数。由扩底保持包含及行列秩相等，$\rho(S_0)=\dim_A AU$。写 $a=[A:F]$、$k=\dim_A AU$，则
+
+$$
+R=a(2k-1),\qquad
+2m-R=a-2(ak-m)=a(A)-2t(A).
+\tag{29.8}
+$$
+
+因此最优分拆给出的值来自原 $D$ 内的实际中间域及同一窗口的张成，不是用可整除次数代替域。
+
+为取得原标签，记 $u(X)=\sum_j X_j u_j$、$v(Y)=\sum_j Y_j u_j$。以任一 $D/F$ 基记下各列 $v(Y)u_j$ 和 $u(X)u_j$ 的原乘法矩阵。其系数在 $F[X,Y]$；左乘可逆的嵌入矩阵就得到 (29.6) 所用的行矩阵。因此原矩阵有非零 $R$ 阶子式 $f\in F[X,Y]$，且更高阶子式恒零。按 §26 的无限域子式返回，$fX_1Y_1$ 在某个 $x,y\in F^m$ 非零。取 $u=u(x),v=v(y)$，均为原 $U$ 中的非零向量，有 $\dim_F(vU+uU)=R$。乘 $v^{-1}$ 接回原比值，得 $d_U(u/v)=2m-R$，为正是因为 $uv\in vU\cap uU$ 非零。令 $p=w_0u$、$q=w_0v$，则 $p/q=u/v$ 且 $d_W(p/q)=2m-R$。这与 (29.5)、(29.8) 合起来证明 (29.2) 和原域可达性。
+
+接下来设某个 $m$ 发生 $\delta>\max\{e,2m-N\}$，取 (29.2) 的取等中间域 $A$，仍写 $a=[A:F]$、$k=\dim_A AU$，并令 $t=ak-m$。若 $t=0$，则 $AW=W$，$A\subseteq E$，该项至多 $e$；故 $t\ge1$。若 $k=1$，则 $1\in U$ 使 $AU=A$，由 $F(U)=D$ 得 $A=D$，该项是 $2m-N$；故 $k\ge2$。严格超过 $e\ge1$ 给出 $a-2t\ge2$。从而
+
+$$
+m=ak-t\ \ge\ 2a-t\ \ge\ 3t+4\ \ge\ 7 .
+\tag{29.9}
+$$
+
+这证明 (29.3)，包括非平凡稳定子及真比值子域。若 $m=7$，(29.9) 处处取等，强制 $t=1$、$a=4$、$k=2$，于是 $\dim_F AW=8$、$\delta=2$、$e=1$。又因 $2>14-N$，有 $N>12$；$4\mid N$ 便给出 $N\ge16$。反之，若右端的实际中间域存在，$t(A)=1$，由 (29.5) 每个正交叠至少为二。因 $e\mid7$，若 $e\ne1$ 则 $W=w_0E$，进而 $D=E$、$N=7$，与 $N\ge16$ 矛盾。所以 $e=1$，且 $14-N\le-2$，二严格超过端点。已经证明的取等分析随即给出 $\delta=2$。$\square$
+
