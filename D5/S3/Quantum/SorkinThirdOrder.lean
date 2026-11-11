@@ -16,7 +16,7 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Quantum.SorkinThirdOrder
 
-variable {α R : Type*} [CommRing R] [StarRing R]
+variable {α R : Type*} [DecidableEq α] [CommRing R] [StarRing R]
 
 /-- The quadratic weight of a finite branch family over a commutative star ring. -/
 def amplitudeWeight (v : α → R) (A : Finset α) : R :=
