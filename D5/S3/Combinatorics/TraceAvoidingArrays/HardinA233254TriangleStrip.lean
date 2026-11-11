@@ -303,7 +303,7 @@ def firstCount (b : Bool) : ℤ :=
 def firstMoment (i : Fin 4) : ℤ :=
   ∑ c : Row, if c 0 = 0 ∧ rowLegal c ∧ good (false, false) c ∧
     (finish (false, false) c).2 = true then moment (pairs c) i else 0
-private theorem sum_rows {m : ℕ} (f : (Fin 6 → Fin m) → ℤ) : (∑ c, f c) =
+theorem sum_rows {m : ℕ} (f : (Fin 6 → Fin m) → ℤ) : (∑ c, f c) =
     ∑ a : Fin m, ∑ b : Fin m, ∑ c : Fin m, ∑ d : Fin m, ∑ e : Fin m,
       ∑ g : Fin m, f ![a, b, c, d, e, g] := by
   simp_rw [← (Fin.consEquiv (fun _ : Fin 6 => Fin m)).sum_comp,
