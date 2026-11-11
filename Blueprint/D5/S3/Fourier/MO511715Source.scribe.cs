@@ -16,7 +16,10 @@ internal sealed class MO511715SourceDocument : IScribeDocumentDefinition
                 + "https://mathoverflow.net/questions/511715/bound-of-series, licensed CC BY-SA 4.0. "
                 + "Its scalar field and vector norm are not specified. Here the vector norm is Euclidean, "
                 + "and both real and complex cutoffs are included. Constants may depend on the individually "
-                + "fixed cutoff. These conventions do not assert the author's unspecified intent.")),
+                + "fixed cutoff. The question does not give a full cutoff quantifier prefix, scalar types "
+                + "or signs for C and delta, or a definition of R_+. The claim below uses finite C>=0, "
+                + "delta>0, and nonnegative time, including the explicitly requested zero endpoint. "
+                + "These disclosed conventions do not resolve the author's unspecified intent.")),
             Paragraph(Text(
                 "Write Z for the lattice of five integer coordinates and E for Euclidean five-space. "
                 + "The map embed casts coordinates from Z into E. Set frequency(k)=norm(2*pi*embed(k)). "
