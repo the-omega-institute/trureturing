@@ -218,10 +218,6 @@ theorem time_integral_ge (L A B h : ℝ) (hL : 0 ≤ L) (hA : 0 ≤ A) (hB : 0 �
       linarith
     _ ≤ timeIntegral 1 L A B := timeIntegral_lower L A B h hL hA hB hh hhsmall
 
-private lemma embed_add (a b : Lattice) : embed (a + b) = embed a + embed b := by
-  ext i
-  simp [embed]
-
 private lemma embed_sub (a b : Lattice) : embed (a - b) = embed a - embed b := by
   ext i
   simp [embed]

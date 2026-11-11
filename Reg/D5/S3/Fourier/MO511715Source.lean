@@ -9,7 +9,7 @@ set_option autoImplicit false
 noncomputable section
 open _root_.D5.S3.Fourier.MO511715Source
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open LeanInformationAudit Classical
+open LeanInformationAudit
 
 namespace Reg.D5.S3.Fourier.MO511715Source
 
@@ -40,7 +40,6 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 1 / 4, 1 / 2, ?_⟩
-  have hp := Real.exp_pos (-1)
   dsimp [actual, realize]
   norm_num
 
@@ -75,7 +74,8 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "fn", "arg"]
       stateBinder := 3
       functionOperand := false
       stateOperand := none
@@ -170,39 +170,42 @@ universe u
 
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Unit
-    (fun _ => Set (Lattice × Lattice)) (fun _ => Bool)
+    (fun _ => (Lattice × Lattice) → ℝ) (fun _ => Set (Lattice × Lattice))
 
 def actual : Realization signature :=
-  realize signature (fun _ _ s => decide s.Finite) (fun e => nomatch e)
+  realize signature (fun _ _ f => Function.support f) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => false) (fun e => nomatch e)
+  realize signature (fun _ _ _ => Set.univ) (fun e => nomatch e)
 
 def arena : Arena where
   signature := signature
   Law R := ∀ {F : Type u} [NormedAddCommGroup F] (ζ : Space → F),
     HasCompactSupport ζ → ∀ (ε : ℝ), 0 < ε →
-      R.readout () () (Function.support (fun m : Lattice × Lattice =>
-        cutoffWeight ζ ε m.1 m.2)) = true
+      (R.readout () () (fun m : Lattice × Lattice =>
+        cutoffWeight ζ ε m.1 m.2)).Finite
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
   have hh := h (fun _ : Space => (0 : PUnit.{u + 1}))
     (by simp [HasCompactSupport])
     1 (by norm_num)
-  exact Bool.noConfusion hh
+  exact Set.infinite_univ hh
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(), ∅, Set.univ, ?_⟩
-  simp [actual, realize, Set.infinite_univ]
+  refine ⟨(), (fun _ => 0), (fun _ => 1), ?_⟩
+  simp only [actual, realize]
+  intro he
+  have hm : (0, 0) ∈ Function.support (fun _ : Lattice × Lattice => (1 : ℝ)) := by
+    simp [Function.mem_support]
+  rw [← he] at hm
+  exact hm rfl
 
 def family : Registration arena.{u} (type_of% @cutoff_finite_support.{u}) where
   actual := actual
-  bridge := by simp only [arena, actual, realize, decide_eq_true_eq]
-  variation := ⟨by
-    intro F inst ζ hs ε hε
-    exact decide_eq_true (cutoff_finite_support ζ hs ε hε), rejected, rejected_law⟩
+  bridge := Iff.rfl
+  variation := ⟨cutoff_finite_support, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := dependence
@@ -230,11 +233,11 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body"]
+      path := #["body", "body", "body", "body", "body", "body", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
-      booleanPredicate := true }] }
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
