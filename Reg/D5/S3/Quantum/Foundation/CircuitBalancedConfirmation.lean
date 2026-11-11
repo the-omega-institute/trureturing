@@ -17,8 +17,8 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 structure Inputs where
   A : Type u
-  [add : AddCommGroup A]
-  [space : Module ℝ A]
+  [add : NormedAddCommGroup A]
+  [space : NormedSpace ℝ A]
   [finite : FiniteDimensional ℝ A]
   cone : PointedCone ℝ A
   unit : A →ₗ[ℝ] ℝ
@@ -45,8 +45,8 @@ abbrev arena : Arena where
     let C := P.cone
     let u := P.unit
     let T := fun p x => O.readout () P (p, x)
-    (∀ x ∈ C, 0 ≤ u x) →
-    C = PointedCone.hull ℝ (pure C u) →
+    IsClosed (C : Set P.A) →
+    (∀ x ∈ C, x ≠ 0 → 0 < u x) →
     Submodule.span ℝ (C : Set P.A) = ⊤ →
     (∀ p : pure C u, balanced (pure C u) (fun q => T q p)) →
     ∃ e : pure C u → (P.A →ₗ[ℝ] ℝ),
@@ -70,5 +70,40 @@ theorem source_bridge : sourceScope.{u} ↔ arena.{u}.Law actual.{u} := by
 
 theorem actual_positive : arena.{u}.Law actual.{u} :=
   source_bridge.mp (@circuit_balance_least_confirmation.{u})
+
+abbrev equivalenceArena : Arena where
+  signature := signature.{u}
+  Law O := ∀ P : Inputs.{u},
+    let C := P.cone
+    let u := P.unit
+    let T := fun p x => O.readout () P (p, x)
+    IsClosed (C : Set P.A) →
+    (∀ x ∈ C, x ≠ 0 → 0 < u x) →
+    Submodule.span ℝ (C : Set P.A) = ⊤ →
+    ((∀ (p : pure C u) (n : ℕ) (q : Fin n → pure C u) (w : Fin n → ℝ),
+      (∀ i, 0 ≤ w i) → (∑ i, w i) = 1 →
+      T p (∑ i, w i • (q i : P.A)) = ∑ i, w i * T (q i) p) ↔
+      ∀ p : pure C u, balanced (pure C u) (fun q => T q p)) ∧
+    ((∀ p : pure C u, balanced (pure C u) (fun q => T q p)) ↔
+      (∀ p q : pure C u, T p q = T q p) ∧
+      (∀ p : pure C u, balanced (pure C u) (fun q => T q p))) ∧
+    ((∀ p : pure C u, balanced (pure C u) (fun q => T q p)) ↔
+      ∃ e : pure C u → (P.A →ₗ[ℝ] ℝ),
+        (∀ p : pure C u, confirms C u p (e p)) ∧
+        (∀ (p : pure C u) f, confirms C u p f → ∀ x ∈ C, e p x ≤ f x) ∧
+        (∀ p q : pure C u, e p q = e q p))
+
+abbrev equivalenceSourceScope : Prop := type_of% (@full_mixture_iff_circuit_balance.{u})
+
+theorem equivalence_source_bridge :
+    equivalenceSourceScope.{u} ↔ equivalenceArena.{u}.Law actual.{u} := by
+  constructor
+  · intro h P
+    exact @h P.A P.add P.space P.finite P.cone P.unit
+  · intro h A add space finite C u
+    exact h (@Inputs.mk A add space finite C u)
+
+theorem equivalence_actual_positive : equivalenceArena.{u}.Law actual.{u} :=
+  equivalence_source_bridge.mp (@full_mixture_iff_circuit_balance.{u})
 
 end Reg.D5.S3.Quantum.Foundation.CircuitBalancedConfirmation
