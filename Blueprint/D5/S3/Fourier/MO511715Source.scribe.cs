@@ -55,6 +55,53 @@ internal sealed class MO511715SourceDocument : IScribeDocumentDefinition
                 + "volume is h cubed. On this same subregion, 1-alpha<=h and "
                 + "1+alpha-2*v<=3*h. Thus the total decay exponent is at most one. Continuity supplies "
                 + "integrability on every interval, and nonnegativity permits restriction of each integral.",
+                DescribeRole.Theorem),
+            Item("finite-cutoff-support", "cutoff_finite_support", "Finite support at every positive scale",
+                FiniteSupportFormula(),
+                "Compact support gives a radius R outside which the cutoff vanishes. A nonzero weight "
+                + "forces both Euclidean difference vectors to have norm less than R/e. Each integer "
+                + "coordinate is bounded by that norm, so the two vectors belong to finite coordinate "
+                + "boxes. The inverse map (a,b) to (a+b,b) gives a finite set of original ordered indices. "
+                + "Every source sum is therefore summable at positive scale, without a convergence assumption.",
+                DescribeRole.Theorem),
+            Paragraph(Text(
+                "Let e be the first coordinate unit. The selected mask is one precisely when k+l=e "
+                + "and the two inclusive source support inequalities hold; it is zero otherwise. "
+                + "At the actual source arguments, k+l=n. Thus every output except e vanishes, "
+                + "and delta at e is exactly phi at e. This is one fixed mask for every scale and cutoff.")),
+            Paragraph(Text(
+                "The box B(N) consists of all integer vectors with N<=a(i)<2*N in each of the five "
+                + "coordinates. It has exactly N to the fifth power elements. Its ordered pair block "
+                + "has N to the tenth power elements. Write D=2*pi, eta=1/(20000*D^4), "
+                + "kappa=D^2*exp(-1)*eta^3 and c=kappa/16. Both constants are strictly positive.")),
+            Item("kernel-block-lower", "kernel_block_lower", "The actual kernel on a lattice block",
+                KernelLowerFormula(),
+                "For a,b in B(N), their norms are at most 5*N. The norm of a+b is between 4*N and "
+                + "9*N, while the norm of e-a-b is between N and 10*N. The triangle inequalities "
+                + "also give both original support comparisons, so the selected mask equals one. "
+                + "Take h=eta/N^4 in the time-integral bound. The decay budget is at most "
+                + "(10^4+6*5^4)/20000=11/16. Multiplying by the actual frequency-squared prefactor "
+                + "gives kappa/N^10. No hypothesized kernel estimate is used.", DescribeRole.Theorem),
+            Item("dyadic-growth", "phi_dyadic_growth", "Simultaneous cutoff control across disjoint blocks",
+                GrowthFormula(),
+                "Continuity and normalization give a radius 0<rho<=1 on whose closed ball the cutoff "
+                + "modulus is at least one half, for either scalar field. At scale rho/(5*2^J), "
+                + "both cutoff factors obey this bound simultaneously on every B(2^j) with j<=J. "
+                + "Their squared product is at least 1/16. The half-open dyadic boxes are pairwise "
+                + "disjoint, and the exact ordered-index bijection preserves their disjointness. "
+                + "Each block contributes at least c; nonnegative omitted terms give c*(J+1).",
+                DescribeRole.Theorem),
+            Item("result", "result", "Negation of the complete conventional source claim",
+                F.Seq(F.Neg, F.Sp, Id("claim")),
+                "Fix the same cutoff and the selected mask, with time one and output e. Set the "
+                + "reference scale to rho/5. Every comparison scale rho/(5*2^J) is positive, "
+                + "and its distance from the reference scale is at most one. For any proposed "
+                + "nonnegative C and positive exponent, the right side is at most C. The fixed "
+                + "reference value is finite, while c*(J+1) is unbounded. This contradicts the estimate. "
+                + "The argument applies to every fixed continuous normalized compact cutoff in either "
+                + "scalar field. A standard smooth bump supplies an admissible real cutoff for the "
+                + "literal conjunction claim. The mathematical conclusion uses the stated Euclidean "
+                + "and scalar conventions and makes no assertion about additional unstated mask structure.",
                 DescribeRole.Theorem))));
 
     private static DocumentBlock Item(string id, string declaration, string title, Formula formula,
@@ -84,7 +131,7 @@ internal sealed class MO511715SourceDocument : IScribeDocumentDefinition
     private static Formula Add(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
-    private static Formula Pow(Formula a, int n) => new Formula.Power(a, F.D(n));
+    private static Formula Pow(Formula a, byte n) => new Formula.Power(a, F.D(n));
     private static Formula Fn(Formula a, Formula b) => F.Seq(a, F.Sp, F.To, F.Sp, b);
     private static Formula Integral(string variable, Formula a, Formula b, Formula body) =>
         F.Seq(F.Int, F.Underscore, F.Grp(a), F.Caret, F.Grp(b), F.Sp, body,
@@ -172,5 +219,39 @@ internal sealed class MO511715SourceDocument : IScribeDocumentDefinition
         return All("L", R, All("A", R, All("B", R, All("h", R,
             Imp(conditions, Le(Mul(Call("exp", Sub(F.D(0), F.D(1))), Pow(h, 3)),
                 Call("timeIntegral", F.D(1), l, a, b)))))));
+    }
+
+    private static Formula FiniteSupportFormula()
+    {
+        Formula f = Id("F"), z = Id("z"), e = Id("e");
+        Formula weight = F.Seq(F.Open, Id("a"), F.Comma, Id("b"), F.Close,
+            F.Sp, F.Mapsto, F.Sp, Call("cutoffWeight", z, e, Id("a"), Id("b")));
+        return All("F", Call("NormedAddCommGroup"), All("z", Fn(E, f), All("e", R,
+            Imp(And(Call("HasCompactSupport", z), Lt(F.D(0), e)),
+                Call("Finite", Call("support", weight))))));
+    }
+
+    private static Formula KernelLowerFormula()
+    {
+        Formula n = Id("N"), a = Id("a"), b = Id("b");
+        Formula hypotheses = And(Le(F.D(1), n), And(
+            new Formula.Relation(a, FormulaRelationOperator.MemberOf, Call("B", n)),
+            new Formula.Relation(b, FormulaRelationOperator.MemberOf, Call("B", n))));
+        return All("N", F.Seq(F.Mathbb, F.Grp(Id("N"))), All("a", Z, All("b", Z,
+            Imp(hypotheses, Le(new Formula.Fraction(Id("kappa"), new Formula.Power(n, F.D(1, 0))),
+                Call("kernel", Id("selectedMask"), F.D(1), Id("e"), Add(a, b), b))))));
+    }
+
+    private static Formula GrowthFormula()
+    {
+        Formula f = Id("F"), z = Id("z"), r = Id("r"), j = Id("J");
+        Formula hypotheses = And(Call("ContinuousAt", z, F.D(0)),
+            And(Eq(Call("z", F.D(0)), F.D(1)), Call("HasCompactSupport", z)));
+        Formula scale = new Formula.Fraction(r, Mul(F.D(5), new Formula.Power(F.D(2), j)));
+        Formula conclusion = Exists("r", R, And(Lt(F.D(0), r), And(Le(r, F.D(1)),
+            All("J", F.Seq(F.Mathbb, F.Grp(Id("N"))),
+                Le(Mul(Id("c"), Add(j, F.D(1))),
+                    Call("phi", z, Id("selectedMask"), scale, F.D(1), Id("e")))))));
+        return All("F", Call("RCLike"), All("z", Fn(E, f), Imp(hypotheses, conclusion)));
     }
 }

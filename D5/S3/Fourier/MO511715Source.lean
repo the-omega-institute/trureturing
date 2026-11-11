@@ -10,13 +10,19 @@ import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Analysis.Calculus.BumpFunction.InnerProduct
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Analysis.Real.Pi.Bounds
 import Mathlib.Topology.Algebra.InfiniteSum.Real
 import Mathlib.Analysis.Normed.Group.Bounded
 import Mathlib.Data.Fintype.BigOperators
 import Mathlib.Tactic
 
+/-! # The exact five-dimensional Euclidean cutoff series
+
+The scalar conventions cover real and complex cutoffs. The mask has precisely the
+published range and support implication. No zero lattice mode is removed.
+-/
+
 set_option autoImplicit false
-set_option maxHeartbeats 800000
 
 open MeasureTheory Set
 open scoped BigOperators
@@ -292,9 +298,11 @@ private lemma selectedMask_vanish (n m : Lattice) (hn : n ≠ firstUnit) :
 
 private lemma phi_vanish {F : Type*} [NormedAddCommGroup F] (ζ : Space → F)
     (ε q : ℝ) (n : Lattice) (hn : n ≠ firstUnit) : phi ζ selectedMask ε q n = 0 := by
-  apply tsum_eq_zero
-  intro m
-  simp [kernel, selectedMask_vanish n m.1 hn]
+  unfold phi
+  calc
+    _ = ∑' _m : Lattice × Lattice, (0 : ℝ) := tsum_congr (fun m => by
+      simp [kernel, selectedMask_vanish n m.1 hn])
+    _ = 0 := tsum_zero
 
 private lemma delta_selected {F : Type*} [NormedAddCommGroup F] (ζ : Space → F)
     (ε r : ℝ) : delta ζ selectedMask ε r firstUnit = phi ζ selectedMask ε r firstUnit := by
@@ -321,6 +329,324 @@ private lemma phi_reindex {F : Type*} [NormedAddCommGroup F] (ζ : Space → F)
   have h := indexEquiv.tsum_eq (fun m : Lattice × Lattice =>
     kernel ψ q n m.1 m.2 * cutoffWeight ζ ε m.1 m.2)
   simpa [phi, cutoffWeight, indexEquiv] using h.symm
+
+def blockBox (N : ℕ) : Finset Lattice :=
+  Fintype.piFinset (fun _ : Fin 5 => Finset.Ico (N : ℤ) (2 * (N : ℤ)))
+
+private lemma blockBox_card (N : ℕ) : (blockBox N).card = N ^ 5 := by
+  simp [blockBox, Fintype.card_piFinset, Int.card_Ico,
+    show 2 * (N : ℤ) - N = N by ring]
+
+private lemma blockBox_coordinates (N : ℕ) (a : Lattice) (ha : a ∈ blockBox N) :
+    ∀ i, (N : ℝ) ≤ a i ∧ (a i : ℝ) ≤ 2 * (N : ℝ) := by
+  intro i
+  have hi := Finset.mem_Ico.mp (Fintype.mem_piFinset.mp ha i)
+  constructor
+  · exact_mod_cast hi.1
+  · exact_mod_cast hi.2.le
+
+private lemma length_sq (k : Lattice) : length k ^ 2 = ∑ i, (k i : ℝ) ^ 2 :=
+  EuclideanSpace.real_norm_sq_eq (embed k)
+
+private lemma box_norm_bounds (N : ℕ) (hN : 1 ≤ N) (a b : Lattice)
+    (ha : a ∈ blockBox N) (hb : b ∈ blockBox N) :
+    length a ≤ 5 * N ∧ length b ≤ 5 * N ∧
+      4 * N ≤ length (a + b) ∧ length (a + b) ≤ 9 * N := by
+  have hNr : (1 : ℝ) ≤ N := by exact_mod_cast hN
+  have hcoord := blockBox_coordinates N a ha
+  have hcoord' := blockBox_coordinates N b hb
+  have hs (v : Lattice) (hv : ∀ i, (N : ℝ) ≤ v i ∧ (v i : ℝ) ≤ 2 * N) :
+      length v ^ 2 ≤ 20 * (N : ℝ) ^ 2 := by
+    rw [length_sq]
+    calc
+      _ ≤ ∑ _i : Fin 5, 4 * (N : ℝ) ^ 2 := Finset.sum_le_sum (fun i _ => by
+        nlinarith [(hv i).1, (hv i).2])
+      _ = _ := by norm_num; ring
+  have hamax := hs a hcoord
+  have hbmax := hs b hcoord'
+  have hmmin : 20 * (N : ℝ) ^ 2 ≤ length (a + b) ^ 2 := by
+    rw [length_sq]
+    calc
+      _ = ∑ _i : Fin 5, 4 * (N : ℝ) ^ 2 := by norm_num; ring
+      _ ≤ _ := Finset.sum_le_sum (fun i _ => by
+        simp only [Pi.add_apply, Int.cast_add]
+        nlinarith [(hcoord i).1, (hcoord' i).1])
+  have hmmax : length (a + b) ^ 2 ≤ 80 * (N : ℝ) ^ 2 := by
+    rw [length_sq]
+    calc
+      _ ≤ ∑ _i : Fin 5, 16 * (N : ℝ) ^ 2 := Finset.sum_le_sum (fun i _ => by
+        simp only [Pi.add_apply, Int.cast_add]
+        nlinarith [(hcoord i).1, (hcoord i).2, (hcoord' i).1, (hcoord' i).2])
+      _ = _ := by norm_num; ring
+  have hn (v : Lattice) : 0 ≤ length v := norm_nonneg _
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · nlinarith [hn a]
+  · nlinarith [hn b]
+  · nlinarith [hn (a + b)]
+  · nlinarith [hn (a + b)]
+
+private lemma firstUnit_length : length firstUnit = 1 := by
+  have hs : length firstUnit ^ 2 = 1 := by
+    rw [length_sq]
+    norm_num [firstUnit, Fin.sum_univ_succ]
+  have hn : 0 ≤ length firstUnit := norm_nonneg _
+  nlinarith
+
+private lemma block_frequencies (N : ℕ) (hN : 1 ≤ N) (a b : Lattice)
+    (ha : a ∈ blockBox N) (hb : b ∈ blockBox N) :
+    selectedMask (firstUnit - (a + b)) (a + b) = 1 ∧
+      (N : ℝ) ≤ length (firstUnit - (a + b)) ∧
+      length (firstUnit - (a + b)) ≤ 10 * N ∧
+      length a ≤ 5 * N ∧ length b ≤ 5 * N := by
+  obtain ⟨ha', hb', hmmin, hmmax⟩ := box_norm_bounds N hN a b ha hb
+  have hNr : (1 : ℝ) ≤ N := by exact_mod_cast hN
+  have hkmax : length (firstUnit - (a + b)) ≤ 1 + length (a + b) := by
+    simpa only [length, embed_sub, show ‖embed firstUnit‖ = 1 from firstUnit_length]
+      using norm_sub_le (embed firstUnit) (embed (a + b))
+  have hm : length (a + b) ≤ 1 + length (firstUnit - (a + b)) := by
+    have hh := norm_sub_le (embed firstUnit) (embed (firstUnit - (a + b)))
+    rw [← embed_sub, sub_sub_cancel, ← length, ← length, firstUnit_length] at hh
+    exact hh
+  refine ⟨?_, by linarith, by linarith, ha', hb'⟩
+  unfold selectedMask
+  apply if_pos
+  refine ⟨by simp, ?_, ?_⟩ <;> linarith
+
+def eta : ℝ := 1 / (20000 * (2 * Real.pi) ^ 4)
+
+def kernelConstant : ℝ := (2 * Real.pi) ^ 2 * Real.exp (-1) * eta ^ 3
+
+private lemma eta_pos : 0 < eta := by unfold eta; positivity
+
+private lemma kernelConstant_pos : 0 < kernelConstant := by
+  unfold kernelConstant
+  exact mul_pos (mul_pos (pow_pos (by positivity) _) (Real.exp_pos _)) (pow_pos eta_pos _)
+
+/-- A source-kernel estimate on actual ten-dimensional lattice blocks. -/
+theorem kernel_block_lower (N : ℕ) (hN : 1 ≤ N) (a b : Lattice)
+    (ha : a ∈ blockBox N) (hb : b ∈ blockBox N) :
+    kernelConstant / (N : ℝ) ^ 10 ≤ kernel selectedMask 1 firstUnit (a + b) b := by
+  obtain ⟨hmask, hkmin, hkmax, hamax, hbmax⟩ := block_frequencies N hN a b ha hb
+  let D : ℝ := 2 * Real.pi
+  let h : ℝ := eta / (N : ℝ) ^ 4
+  have hNr : (1 : ℝ) ≤ N := by exact_mod_cast hN
+  have hNp : (0 : ℝ) < N := by linarith
+  have hD : 1 < D := by dsimp [D]; linarith [Real.pi_gt_three]
+  have hh : 0 < h := div_pos eta_pos (pow_pos hNp _)
+  have hhalf : h ≤ 1 / 2 := by
+    have hp : (1 : ℝ) ≤ (N : ℝ) ^ 4 := one_le_pow₀ hNr
+    have hDp : (1 : ℝ) ≤ D ^ 4 := one_le_pow₀ hD.le
+    dsimp [h, eta, D] at *
+    apply (div_le_iff₀ (by positivity : (0 : ℝ) < (N : ℝ) ^ 4)).mpr
+    apply (div_le_iff₀ (by positivity : (0 : ℝ) < 20000 * (2 * Real.pi) ^ 4)).mpr
+    nlinarith
+  have hrate (k : Lattice) (c : ℝ) (hc : 0 ≤ c) (hk : length k ≤ c * N) :
+      frequency k ^ 4 ≤ D ^ 4 * c ^ 4 * (N : ℝ) ^ 4 := by
+    have hlen : 0 ≤ length k := norm_nonneg _
+    rw [frequency_eq]
+    calc
+      _ ≤ (D * (c * (N : ℝ))) ^ 4 := by dsimp [D]; gcongr
+      _ = _ := by ring
+  have hk := hrate (firstUnit - (a + b)) 10 (by norm_num) hkmax
+  have ha' := hrate a 5 (by norm_num) hamax
+  have hb' := hrate b 5 (by norm_num) hbmax
+  have hbudget : (frequency (firstUnit - (a + b)) ^ 4 +
+      3 * frequency a ^ 4 + 3 * frequency b ^ 4) * h ≤ 1 := by
+    calc
+      _ ≤ (D ^ 4 * 10 ^ 4 * (N : ℝ) ^ 4 +
+          3 * (D ^ 4 * 5 ^ 4 * (N : ℝ) ^ 4) +
+          3 * (D ^ 4 * 5 ^ 4 * (N : ℝ) ^ 4)) * h := by gcongr
+      _ = 11 / 16 := by dsimp [h, eta, D]; field_simp; ring
+      _ ≤ 1 := by norm_num
+  have ht := time_integral_ge (frequency (firstUnit - (a + b)) ^ 4)
+    (frequency a ^ 4) (frequency b ^ 4) h (by positivity) (by positivity) (by positivity)
+    hh hhalf hbudget
+  have hpref : D ^ 2 * (N : ℝ) ^ 2 ≤ frequency (firstUnit - (a + b)) ^ 2 := by
+    rw [frequency_eq]
+    calc
+      _ = (D * (N : ℝ)) ^ 2 := by ring
+      _ ≤ _ := by dsimp [D]; gcongr
+  unfold kernel
+  rw [hmask, mul_one, add_sub_cancel_right]
+  calc
+    kernelConstant / (N : ℝ) ^ 10 = (D ^ 2 * (N : ℝ) ^ 2) *
+        (Real.exp (-1) * h ^ 3) := by dsimp [kernelConstant, h, D]; field_simp <;> ring
+    _ ≤ _ := mul_le_mul hpref ht (by positivity) (sq_nonneg _)
+
+private lemma cutoff_near_zero {F : Type*} [RCLike F] (ζ : Space → F)
+    (hc : ContinuousAt ζ 0) (hz : ζ 0 = 1) :
+    ∃ ρ : ℝ, 0 < ρ ∧ ρ ≤ 1 ∧ ∀ x : Space, ‖x‖ ≤ ρ → (1 / 2 : ℝ) ≤ ‖ζ x‖ := by
+  obtain ⟨s, hs, hζ⟩ := Metric.continuousAt_iff.mp hc (1 / 2) (by norm_num)
+  refine ⟨min 1 (s / 2), lt_min zero_lt_one (by linarith), min_le_left _ _, ?_⟩
+  intro x hx
+  have hd : dist x 0 < s := by
+    rw [dist_zero_right]
+    exact lt_of_le_of_lt (hx.trans (min_le_right _ _)) (by linarith)
+  have he := hζ hd
+  rw [hz] at he
+  have ht := norm_sub_norm_le (1 : F) (ζ x)
+  rw [norm_one, ← dist_eq_norm, dist_comm] at ht
+  linarith
+
+private lemma dyadic_boxes_disjoint (i j : ℕ) (hij : i ≠ j) :
+    Disjoint (blockBox (2 ^ i)) (blockBox (2 ^ j)) := by
+  apply Finset.disjoint_left.mpr
+  intro a ha hb
+  have hai := Finset.mem_Ico.mp (Fintype.mem_piFinset.mp ha (0 : Fin 5))
+  have haj := Finset.mem_Ico.mp (Fintype.mem_piFinset.mp hb (0 : Fin 5))
+  rcases lt_or_gt_of_ne hij with h | h
+  · have hp : 2 * 2 ^ i ≤ (2 : ℕ) ^ j := by
+      calc
+        _ = 2 ^ (i + 1) := by rw [pow_succ]; omega
+        _ ≤ _ := Nat.pow_le_pow_right (by decide) h
+    have hp' : 2 * ((2 ^ i : ℕ) : ℤ) ≤ ((2 ^ j : ℕ) : ℤ) := by exact_mod_cast hp
+    omega
+  · have hp : 2 * 2 ^ j ≤ (2 : ℕ) ^ i := by
+      calc
+        _ = 2 ^ (j + 1) := by rw [pow_succ]; omega
+        _ ≤ _ := Nat.pow_le_pow_right (by decide) h
+    have hp' : 2 * ((2 ^ j : ℕ) : ℤ) ≤ ((2 ^ i : ℕ) : ℤ) := by exact_mod_cast hp
+    omega
+
+private def pairBlock (j : ℕ) : Finset (Lattice × Lattice) :=
+  blockBox (2 ^ j) ×ˢ blockBox (2 ^ j)
+
+private lemma pairBlock_disjoint (i j : ℕ) (hij : i ≠ j) :
+    Disjoint (pairBlock i) (pairBlock j) := by
+  apply Finset.disjoint_left.mpr
+  intro p hp hq
+  exact Finset.disjoint_left.mp (dyadic_boxes_disjoint i j hij)
+    (Finset.mem_product.mp hp).1 (Finset.mem_product.mp hq).1
+
+def blockConstant : ℝ := kernelConstant / 16
+
+private lemma blockConstant_pos : 0 < blockConstant := div_pos kernelConstant_pos (by norm_num)
+
+private def reindexedTerm {F : Type*} [NormedAddCommGroup F] (ζ : Space → F)
+    (ε : ℝ) (p : Lattice × Lattice) : ℝ :=
+  kernel selectedMask 1 firstUnit (p.1 + p.2) p.2 *
+    (‖ζ (ε • embed p.1)‖ ^ 2 * ‖ζ (ε • embed p.2)‖ ^ 2)
+
+private lemma block_mass_lower {F : Type*} [RCLike F] (ζ : Space → F) (ρ : ℝ)
+    (hρ : 0 < ρ) (hζ : ∀ x : Space, ‖x‖ ≤ ρ → (1 / 2 : ℝ) ≤ ‖ζ x‖)
+    (J j : ℕ) (hj : j ≤ J) :
+    blockConstant ≤ ∑ p ∈ pairBlock j, reindexedTerm ζ (ρ / (5 * (2 : ℝ) ^ J)) p := by
+  let N := 2 ^ j
+  have hN : 1 ≤ N := Nat.one_le_pow _ _ (by decide)
+  have hNp : (0 : ℝ) < N := by exact_mod_cast (lt_of_lt_of_le Nat.zero_lt_one hN)
+  have hpow : (N : ℝ) ≤ (2 : ℝ) ^ J := by
+    exact_mod_cast Nat.pow_le_pow_right (by decide : 1 ≤ (2 : ℕ)) hj
+  have hε : 0 < ρ / (5 * (2 : ℝ) ^ J) := by positivity
+  have hweight (a : Lattice) (ha : a ∈ blockBox N) :
+      (1 / 2 : ℝ) ≤ ‖ζ ((ρ / (5 * (2 : ℝ) ^ J)) • embed a)‖ := by
+    apply hζ
+    rw [norm_smul, Real.norm_eq_abs, abs_of_pos hε]
+    have hbound := (box_norm_bounds N hN a a ha ha).1
+    calc
+      ρ / (5 * (2 : ℝ) ^ J) * ‖embed a‖ ≤
+          ρ / (5 * (2 : ℝ) ^ J) * (5 * (N : ℝ)) :=
+        mul_le_mul_of_nonneg_left hbound hε.le
+      _ ≤ ρ / (5 * (2 : ℝ) ^ J) * (5 * (2 : ℝ) ^ J) := by gcongr
+      _ = ρ := div_mul_cancel₀ _ (by positivity)
+  have hterm (p : Lattice × Lattice) (hp : p ∈ pairBlock j) :
+      blockConstant / (N : ℝ) ^ 10 ≤ reindexedTerm ζ (ρ / (5 * (2 : ℝ) ^ J)) p := by
+    obtain ⟨ha, hb⟩ := Finset.mem_product.mp hp
+    have hk := kernel_block_lower N hN p.1 p.2 ha hb
+    have hwa := hweight p.1 ha
+    have hwb := hweight p.2 hb
+    have hw : (1 / 16 : ℝ) ≤ ‖ζ ((ρ / (5 * (2 : ℝ) ^ J)) • embed p.1)‖ ^ 2 *
+        ‖ζ ((ρ / (5 * (2 : ℝ) ^ J)) • embed p.2)‖ ^ 2 := by
+      have ha' : (1 / 4 : ℝ) ≤ ‖ζ ((ρ / (5 * (2 : ℝ) ^ J)) • embed p.1)‖ ^ 2 := by nlinarith
+      have hb' : (1 / 4 : ℝ) ≤ ‖ζ ((ρ / (5 * (2 : ℝ) ^ J)) • embed p.2)‖ ^ 2 := by nlinarith
+      nlinarith [mul_le_mul ha' hb' (by norm_num) (sq_nonneg _)]
+    calc
+      blockConstant / (N : ℝ) ^ 10 = (kernelConstant / (N : ℝ) ^ 10) * (1 / 16) := by
+        dsimp [blockConstant]; ring
+      _ ≤ _ := mul_le_mul hk hw (by norm_num)
+        (le_trans (div_nonneg kernelConstant_pos.le (by positivity)) hk)
+  calc
+    blockConstant = (pairBlock j).card * (blockConstant / (N : ℝ) ^ 10) := by
+      rw [show (pairBlock j).card = N ^ 10 by
+        simp [pairBlock, Finset.card_product, blockBox_card, N, ← pow_add]]
+      push_cast
+      field_simp
+    _ = ∑ _p ∈ pairBlock j, blockConstant / (N : ℝ) ^ 10 := by simp
+    _ ≤ _ := Finset.sum_le_sum hterm
+
+/-- Joint cutoff control and disjoint actual blocks force linear growth in the number of scales. -/
+theorem phi_dyadic_growth {F : Type*} [RCLike F] (ζ : Space → F)
+    (hc : ContinuousAt ζ 0) (hz : ζ 0 = 1) (hs : HasCompactSupport ζ) :
+    ∃ ρ : ℝ, 0 < ρ ∧ ρ ≤ 1 ∧ ∀ J : ℕ,
+      blockConstant * (J + 1) ≤ phi ζ selectedMask (ρ / (5 * (2 : ℝ) ^ J)) 1 firstUnit := by
+  classical
+  obtain ⟨ρ, hρ, hρ1, hζ⟩ := cutoff_near_zero ζ hc hz
+  refine ⟨ρ, hρ, hρ1, ?_⟩
+  intro J
+  let S := (Finset.range (J + 1)).biUnion pairBlock
+  have hsum : Summable (reindexedTerm ζ (ρ / (5 * (2 : ℝ) ^ J))) := by
+    unfold reindexedTerm
+    have ht := (indexEquiv.summable_iff).mpr
+      (source_summable ζ hs selectedMask (ρ / (5 * (2 : ℝ) ^ J)) 1 (by positivity) firstUnit)
+    simpa [cutoffWeight, indexEquiv, Function.comp_def] using ht
+  have hn (p : Lattice × Lattice) : 0 ≤ reindexedTerm ζ (ρ / (5 * (2 : ℝ) ^ J)) p := by
+    simpa [reindexedTerm, cutoffWeight, indexEquiv] using
+      source_term_nonneg ζ selectedMask selectedMask_legal (ρ / (5 * (2 : ℝ) ^ J)) 1
+        (by norm_num) firstUnit (indexEquiv p)
+  rw [phi_reindex]
+  change blockConstant * (J + 1) ≤ ∑' p, reindexedTerm ζ (ρ / (5 * (2 : ℝ) ^ J)) p
+  calc
+    blockConstant * (J + 1) = ∑ _j ∈ Finset.range (J + 1), blockConstant := by simp; ring
+    _ ≤ ∑ j ∈ Finset.range (J + 1), ∑ p ∈ pairBlock j,
+        reindexedTerm ζ (ρ / (5 * (2 : ℝ) ^ J)) p :=
+      Finset.sum_le_sum (fun j hj => block_mass_lower ζ ρ hρ hζ J j
+        (Nat.le_of_lt_succ (Finset.mem_range.mp hj)))
+    _ = ∑ p ∈ S, reindexedTerm ζ (ρ / (5 * (2 : ℝ) ^ J)) p :=
+      (Finset.sum_biUnion (fun i _ j _ hij => pairBlock_disjoint i j hij)).symm
+    _ ≤ _ := hsum.sum_le_tsum S (fun p _ => hn p)
+
+private lemma uniform_estimate_fails {F : Type*} [RCLike F] (ζ : Space → F)
+    (hc : ContinuousAt ζ 0) (hz : ζ 0 = 1) (hs : HasCompactSupport ζ) :
+    ¬ UniformEstimate ζ := by
+  obtain ⟨ρ, hρ, hρ1, hgrowth⟩ := phi_dyadic_growth ζ hc hz hs
+  rintro ⟨C, hC, δ, hδ, hbound⟩
+  let M := phi ζ selectedMask (ρ / 5) 1 firstUnit
+  obtain ⟨J, hJ⟩ := exists_nat_gt ((M + C) / blockConstant)
+  have hJ' : M + C < blockConstant * (J + 1) := by
+    have ht := (div_lt_iff₀ blockConstant_pos).mp hJ
+    nlinarith [blockConstant_pos]
+  let ε := ρ / (5 * (2 : ℝ) ^ J)
+  have hε : 0 < ε := by dsimp [ε]; positivity
+  have hεref : 0 < ρ / 5 := by positivity
+  have heps : ε ≤ ρ / 5 := by
+    dsimp [ε]
+    apply (div_le_div_iff₀ (by positivity) (by norm_num : (0 : ℝ) < 5)).mpr
+    have hp : (1 : ℝ) ≤ (2 : ℝ) ^ J := one_le_pow₀ (by norm_num)
+    nlinarith
+  have hgap : |ρ / 5 - ε| ≤ 1 := by
+    rw [abs_of_nonneg (sub_nonneg.mpr heps)]
+    linarith
+  have hb := hbound selectedMask selectedMask_legal 1 (by norm_num) firstUnit
+    ε (ρ / 5) hε hεref
+  rw [delta_selected, delta_selected] at hb
+  have hrpow : |ρ / 5 - ε| ^ δ ≤ (1 : ℝ) :=
+    Real.rpow_le_one (abs_nonneg _) hgap hδ.le
+  have hupper : phi ζ selectedMask ε 1 firstUnit ≤ M + C := by
+    have hrhs : C * |ρ / 5 - ε| ^ δ ≤ C := by nlinarith
+    have ha := neg_le_abs (M - phi ζ selectedMask ε 1 firstUnit)
+    dsimp [M] at *
+    linarith
+  have hlower := hgrowth J
+  change blockConstant * (J + 1) ≤ phi ζ selectedMask ε 1 firstUnit at hlower
+  linarith
+
+/-- The literal complete source estimate, including both scalar readings, is false. -/
+theorem result : ¬ claim := by
+  intro h
+  let f : ContDiffBump (0 : Space) := ⟨1, 2, by norm_num, by norm_num⟩
+  have hz : f (0 : Space) = 1 := f.one_of_mem_closedBall (by simp [f])
+  have hs : SmoothCutoff (f : Space → ℝ) := ⟨f.contDiff, f.hasCompactSupport, hz⟩
+  exact uniform_estimate_fails f hs.1.continuous.continuousAt hz f.hasCompactSupport
+    (h.1 f hs)
 
 end
 end D5.S3.Fourier.MO511715Source
