@@ -99,7 +99,7 @@ def registration : Registration arena.{u} (type_of% (@rooted_interlacing.{u})) w
 def registration_contract : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@rooted_interlacing.{u}) (Realization signature.{u}) Unit Unit where
   unitName :=
-    `D5.S3.Combinatorics.PerfectMatchings.InvolutionEvenCycles.rooted_interlacing
+    `D5.S3.Combinatorics.PerfectMatchings.InvolutionEvenCycles.rooted_interlacing.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionEvenCycles.Interlacing.registration
   realizationSource := none
   generated := false
@@ -160,7 +160,7 @@ def registration : Registration arena.{u} (type_of% (@rooted_reconstruction.{u})
 def registration_contract : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@rooted_reconstruction.{u}) (Realization signature.{u}) Unit Unit where
   unitName :=
-    `D5.S3.Combinatorics.PerfectMatchings.InvolutionEvenCycles.rooted_reconstruction
+    `D5.S3.Combinatorics.PerfectMatchings.InvolutionEvenCycles.rooted_reconstruction.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionEvenCycles.Reconstruction.registration
   realizationSource := none
   generated := false
