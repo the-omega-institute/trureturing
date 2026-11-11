@@ -44,7 +44,7 @@ internal sealed class DottieInverseSeriesDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Analytic/PowerSeries/DottieInverseSeries.arcsine"),
                 H("The formal rational arcsine series"),
                 StatementSource.FromAuthor(Disp(Seq(F.Id("S"), Sp, Eq, Sp,
-                    Call("mk", Call("alpha"))))),
+                    Call("mk", F.Id("alpha"))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("S denotes PowerSeries.mk alpha over the rationals. Its coefficient in degree zero is zero."))),
                 DescribeRole.Definition),

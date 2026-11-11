@@ -18,7 +18,7 @@ The coefficient sequence alpha takes values in the rationals. Its even coefficie
 
 **Definition 1.2 (The formal rational arcsine series).**
 
-$$S = \operatorname{mk}\left(\operatorname{alpha}\left(\right)\right)$$
+$$S = \operatorname{mk}\left(alpha\right)$$
 
 *Formalization.* `D5/S3/Analytic/PowerSeries/DottieInverseSeries.arcsine` (`✓ std3`).
 
