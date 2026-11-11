@@ -2,8 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/FiniteGroups/GroupAlgebra/OddPrimeJetPrincipalSplitting
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.GroupTheory.GroupExtension.Basic,
-     mathlib/module/Mathlib.GroupTheory.SemidirectProduct]
+   anchors: [mathlib/module/Mathlib.GroupTheory.GroupExtension.Basic, mathlib/module/Mathlib.GroupTheory.SemidirectProduct]
    utility: none
    digest: Actual principal-unit complement and scalar-label split of the odd-prime jet group. -/
 import D5.S3.FiniteGroups.GroupAlgebra.OddPrimeJetRadicalGroup
