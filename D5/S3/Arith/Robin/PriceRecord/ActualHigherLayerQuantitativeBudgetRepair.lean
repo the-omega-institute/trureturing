@@ -207,7 +207,7 @@ theorem moving_interval_marginals {j : ℕ} (hj : 3 ≤ j) {ρ priceLambda q : �
   rw [hroot] at hlog
   have hlogs : -2 / (j : ℝ) ≤ log (beta j q) - log priceLambda := by
     rw [log_div hLambda.ne' (beta_pos hq2 (by omega)).ne'] at hlog
-    linarith
+    linarith only [hlog, hmul]
   have hexp := exp_le_exp.mpr hlogs
   have hlow : exp (-2 / (j : ℝ)) * priceLambda ≤ beta j q := by
     rw [exp_sub, exp_log (beta_pos hq2 (by omega)), exp_log hLambda] at hexp
@@ -217,7 +217,8 @@ theorem moving_interval_marginals {j : ℕ} (hj : 3 ≤ j) {ρ priceLambda q : �
     exact beta_strictAntiOn (show 2 ≤ j by omega) hρ hq2 hq
   have hlin := add_one_le_exp (-2 / (j : ℝ))
   have hm := mul_le_mul_of_nonneg_right hlin hLambda.le
-  exact ⟨hlow, hstrict, sub_pos.mpr hstrict, by nlinarith⟩
+  have hbeta : (1 - 2 / (j : ℝ)) * priceLambda ≤ beta j q := hm.trans hlow
+  exact ⟨hlow, hstrict, sub_pos.mpr hstrict, by nlinarith only [hbeta]⟩
 
 /-- No asymptotic or root supplier: these are consequences of the literal root
 and elementary index inequalities, uniformly in j. -/
@@ -327,7 +328,7 @@ private theorem sqrt_le_pnt_model {c : ℝ} (hc : 0 < c) :
     exp (log t * (1 / 2 : ℝ)) ≤ exp (log t - c * log t ^ (1 / 10 : ℝ)) :=
       exp_le_exp.mpr (by linarith)
     _ = t * exp (-c * log t ^ (1 / 10 : ℝ)) := by
-      rw [exp_sub, exp_neg, exp_log ht0]
+      rw [exp_log ht0, div_eq_mul_inv, ← exp_neg]
       ring
 
 /-- One weakened exponential theta estimate, derived directly from the actual
@@ -372,7 +373,7 @@ theorem quantitative_theta_error : ∃ c1 A Y0 : ℝ,
       calc
         _ = |(Chebyshev.psi t - t) + -(Chebyshev.psi t - Chebyshev.theta t)| := by
           congr 1; ring
-        _ ≤ |Chebyshev.psi t - t| + |-(Chebyshev.psi t - Chebyshev.theta t)| := abs_add _ _
+        _ ≤ |Chebyshev.psi t - t| + |-(Chebyshev.psi t - Chebyshev.theta t)| := abs_add_le _ _
         _ = _ := by rw [abs_neg]
     nlinarith [mul_pos ht0 (exp_pos (-c1 * log t ^ (1 / 10 : ℝ)))]
   obtain ⟨T, hT⟩ := eventually_atTop.mp hall
@@ -407,7 +408,7 @@ theorem root_pnt_suppression {c1 A0 L y : ℝ} (hc : 0 < c1)
   have hexp : exp (-c1 * y ^ (1 / 10 : ℝ)) ≤ exp (-(6 * log L)) :=
     exp_le_exp.mpr (by nlinarith)
   have heq : exp (-(6 * log L)) = 1 / L ^ 6 := by
-    rw [exp_neg, ← log_pow, exp_log (pow_pos (by linarith : 0 < L) 6)]
+    rw [exp_neg, Real.exp_nat_mul, exp_log (by linarith : 0 < L)]
     rfl
   exact hexp.trans_eq heq
 
@@ -462,8 +463,9 @@ private theorem endpoint_theta_mass {c A L ρ : ℝ} {j : ℕ}
     have hh := hlo.trans (mul_le_mul_of_nonneg_left hdecay (mul_nonneg hA hρ0.le))
     simpa only [div_eq_mul_inv, one_mul, mul_assoc] using hh
   have herr : A * b / L ^ 6 + A * ρ / L ^ 6 ≤ 3 * A * ρ / L ^ 6 := by
+    rw [← add_div]
     apply (div_le_div_iff_of_pos_right (pow_pos hL 6)).mpr
-    nlinarith
+    nlinarith [hb3]
   have hsmallρ := mul_le_mul_of_nonneg_left hsmall hρ0.le
   have hwidth : b - ρ = ρ / (j : ℝ) ^ 2 := by dsimp [b]; ring
   have hneed : ρ / (2 * (j : ℝ) ^ 2) ≤
@@ -474,7 +476,13 @@ private theorem endpoint_theta_mass {c A L ρ : ℝ} {j : ℕ}
     rw [he] at hsmallρ
     have he2 : ρ / (j : ℝ) ^ 2 = 2 * (ρ / (2 * (j : ℝ) ^ 2)) := by ring
     rw [he2] at hwidth
-    nlinarith
+    calc
+      _ ≤ (b - ρ) - (A * b / L ^ 6 + A * ρ / L ^ 6) := by
+        linarith only [hwidth, herr, hsmallρ]
+      _ ≤ (b - ρ) + (Chebyshev.theta b - b) -
+          (Chebyshev.theta ρ - ρ) := by
+        linarith only [hh, hl]
+      _ = Chebyshev.theta b - Chebyshev.theta ρ := by ring
   exact hneed
 
 private theorem prime_interval_sum {ρ b : ℝ} (hρ : 0 ≤ ρ) (hρb : ρ ≤ b) :
@@ -704,7 +712,7 @@ theorem growing_layer_cost_conversion {X A0 : ℝ} (hX : 1 < X)
     (div_le_iff₀ (by positivity : 0 < 2 * (A0 * log (log X)) ^ 10)).mp hhalf
   apply (div_le_div_iff₀ (mul_pos (by linarith : 0 < X) hj)
     (mul_pos (by linarith : 0 < X) hL)).mpr
-  rw [mul_pow] at hprod
+  rw [mul_pow] at hprod ⊢
   have hh := mul_le_mul_of_nonneg_left hprod (show 0 ≤ 6 * X by positivity)
   nlinarith
 
@@ -751,6 +759,7 @@ private theorem tenth_scale_large {A0 l : ℝ} (hA : 1 ≤ A0) (hl : 2 ≤ l) :
   norm_num at hm
   constructor <;> nlinarith
 
+set_option maxHeartbeats 800000 in
 private theorem eventual_growing_roster : ∃ A0 : ℝ, 1 ≤ A0 ∧
     ∀ᶠ X : ℝ in atTop, 14 ≤ X ∧ 0 < log (log X) ∧
       6 ≤ log X / (A0 * log (log X)) ^ 10 ∧
@@ -776,7 +785,7 @@ private theorem eventual_growing_roster : ∃ A0 : ℝ, 1 ≤ A0 ∧
       (by norm_num : (0 : ℝ) < 1)).tendsto_div_nhds_zero).comp tendsto_log_atTop
     simp only [rpow_natCast, rpow_one, Function.comp_def] at h
     have hh : Tendsto (fun X : ℝ => A0 ^ 10 * (log (log X) ^ 10 / log X)) atTop (𝓝 0) := by
-      simpa only [mul_zero] using h.const_mul (A0 ^ 10)
+      simpa only [Real.rpow_natCast, mul_zero] using h.const_mul (A0 ^ 10)
     apply hh.congr'
     filter_upwards [] with X
     rw [mul_pow]
