@@ -1,0 +1,157 @@
+/- GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233155ColumnTransfer
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/HardinA233155ColumnTransfer
+   mirror-E: none(waiver:external-open-problem-resolution)
+   anchors: []
+   utility: none
+   digest: Column quotients count literal three-state strips of every positive length. -/
+
+/-
+admission_basis: open-problem-resolution (#29231; Proved)
+escape_witness: none
+All transports instantiate existing finite sums, equivalences and transfer counting.
+No finite computation is an independent escape witness.
+columnCompatible: proof_shape=bind-only; consumers=successorClasses, count_transfer
+instDecidableColumnCompatible: proof_shape=bind-only; consumers=successorClasses
+relabel: proof_shape=bind-only; consumers=compatible_relabel, quotient_rows
+complement: proof_shape=bind-only; consumers=twist
+twist: proof_shape=bind-only; consumers=compatible_relabel, quotient_rows
+bond_relabel: proof_shape=bind-only; consumers=compatible_relabel
+compatible_relabel: proof_shape=bind-only; consumers=quotient_rows
+successorClasses: proof_shape=bind-only; consumers=successor_sum, quotient_rows
+successor_sum: proof_shape=bind-only; consumers=quotient_rows
+quotient_rows: proof_shape=bind-only; consumers=HardinA233156Row.finite_certificate
+grid_good: proof_shape=bind-only; consumers=count_transfer
+count_transfer: proof_shape=bind-only; consumers=HardinA233156Row.counting_bridge
+-/
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155RowTransfer
+import D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix
+import Mathlib.Tactic
+
+namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155ColumnTransfer
+open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155RowTransfer
+open D5.S3.Combinatorics.TraceAvoidingArrays
+open scoped BigOperators
+
+def columnCompatible {k : ℕ} (r s : Row k) : Prop :=
+  (∀ i, (r i).val + (s i).val ≠ 2) ∧
+  (∀ (i : Fin k) (h : i.val + 1 < k),
+    (s i).val + (r ⟨i.val + 1, h⟩).val ≠ 2)
+private instance instDecidableColumnCompatible {k : ℕ} (r s : Row k) :
+    Decidable (columnCompatible r s) := inferInstanceAs (Decidable (_ ∧ _))
+
+def relabel {k : ℕ} (e : Equiv.Perm (Fin 3)) : Row k ≃ Row k :=
+  Equiv.arrowCongr (Equiv.refl _) e
+private def complement : Equiv.Perm (Fin 3) where
+  toFun := ![2, 1, 0]
+  invFun := ![2, 1, 0]
+  left_inv := by decide +kernel
+  right_inv := by decide +kernel
+private def twist (e : Equiv.Perm (Fin 3)) : Equiv.Perm (Fin 3) :=
+  complement.trans (e.trans complement)
+private theorem bond_relabel : ∀ (e : Equiv.Perm (Fin 3)) (x y : Fin 3),
+    (e x).val + (twist e y).val ≠ 2 ↔ x.val + y.val ≠ 2 := by decide +kernel
+private theorem compatible_relabel {k : ℕ} (e : Equiv.Perm (Fin 3)) (r s : Row k) :
+    columnCompatible (relabel e r) (relabel (twist e) s) ↔ columnCompatible r s := by
+  simp only [columnCompatible, relabel, Equiv.arrowCongr_apply, Equiv.refl_symm,
+    Equiv.refl_apply, bond_relabel, Nat.add_comm (twist e _).val]
+  simp only [bond_relabel, Nat.add_comm]
+
+def successorClasses {k q : ℕ} (cls : Row k → Fin q) (r : Row k) : List (Fin q) :=
+  (((List.finRange (3 ^ k)).filter (fun c => decide (columnCompatible r (decode k c)))).map
+    (fun c => cls (decode k c)))
+private theorem successor_sum {k q : ℕ} (cls : Row k → Fin q) (r : Row k) (s : Fin q) :
+    (∑ c : Row k, if columnCompatible r c ∧ cls c = s then (1 : ℤ) else 0) =
+      ((successorClasses cls r).map (fun j => if j = s then (1 : ℤ) else 0)).sum := by
+  rw [← (finFunctionFinEquiv (m := 3) (n := k)).symm.sum_comp]
+  change (∑ c : Fin (3 ^ k), if columnCompatible r (decode k c) ∧
+    cls (decode k c) = s then (1 : ℤ) else 0) = _
+  rw [← List.sum_ofFn, List.ofFn_eq_map]
+  unfold successorClasses
+  generalize List.finRange (3 ^ k) = l
+  induction l with
+  | nil => rfl
+  | cons c cs ih =>
+    by_cases h : columnCompatible r (decode k c) <;> simp [h, ih]
+
+theorem quotient_rows (k q : ℕ) (cls : Row k → Fin q) (rep : Fin q → Row k)
+    (Q : Matrix (Fin q) (Fin q) ℤ)
+    (hcls : ∀ (e : Equiv.Perm (Fin 3)) r, cls (relabel e r) = cls r)
+    (hrep : ∀ r, ∃ e : Equiv.Perm (Fin 3), relabel e r = rep (cls r))
+    (htable : ∀ i s, ((successorClasses cls (rep i)).map
+      (fun j => if j = s then (1 : ℤ) else 0)).sum = Q i s)
+    (r : Row k) (s : Fin q) :
+    (∑ c : Row k, if columnCompatible r c ∧ cls c = s then (1 : ℤ) else 0) =
+      Q (cls r) s := by
+  obtain ⟨e, he⟩ := hrep r
+  calc
+    _ = ∑ c : Row k, if columnCompatible (relabel e r) (relabel (twist e) c) ∧
+        cls (relabel (twist e) c) = s then (1 : ℤ) else 0 := by
+      simp only [compatible_relabel, hcls]
+    _ = ∑ c : Row k, if columnCompatible (rep (cls r)) c ∧ cls c = s
+        then (1 : ℤ) else 0 := by
+      rw [he]
+      exact (relabel (twist e)).sum_comp _
+    _ = _ := (successor_sum cls _ s).trans (htable _ _)
+
+private theorem grid_good (k n : ℕ) (f : Fin k × Fin (n + 2) → Fin 3) :
+    Legal f ↔ TransferMatrix.good columnCompatible (fun _ _ _ => True)
+      (List.ofFn (fun j i => f (i, j))) := by
+  rw [TransferMatrix.good_iff_local]
+  simp only [List.length_ofFn, implies_true, and_true]
+  have get (i : ℕ) (hi : i < n + 2) :
+      (List.ofFn (fun j r => f (r, j))).getD i default = fun r => f (r, ⟨i, hi⟩) := by
+    rw [List.getD_eq_getElem _ _ (by simp only [List.length_ofFn]; omega), List.getElem_ofFn]
+  constructor
+  · intro h j hj
+    rw [get _ (by omega), get _ hj]
+    exact ⟨fun i => h.1 i ⟨j, by omega⟩ hj,
+      fun i hi => h.2 i hi ⟨j, by omega⟩ hj⟩
+  · intro h
+    constructor
+    · intro i j hj
+      have hh := h j.val hj
+      rw [get _ (by omega), get _ hj] at hh
+      exact hh.1 i
+    · intro i hi j hj
+      have hh := h j.val hj
+      rw [get _ (by omega), get _ hj] at hh
+      exact hh.2 i hi
+
+theorem count_transfer (k q : ℕ) (cls : Row k → Fin q)
+    (Q : Matrix (Fin q) (Fin q) ℤ) (w : Fin q → ℤ)
+    (hQ : ∀ r s, (∑ c : Row k, if columnCompatible r c ∧ cls c = s
+      then (1 : ℤ) else 0) = Q (cls r) s)
+    (hw : ∀ s, (∑ r : Row k, if cls r = s then (1 : ℤ) else 0) = w s)
+    (n : ℕ) :
+    (T (n + 2) k : ℤ) = dotProduct w ((Q ^ (n + 1)).mulVec (1 : Fin q → ℤ)) := by
+  classical
+  let v : Fin q → ℤ := fun s => ∑ t, w t * Q t s
+  have hv : ∀ s, (∑ a : Row k, ∑ b : Row k,
+      if columnCompatible a b ∧ cls b = s then (1 : ℤ) else 0) = v s := by
+    intro s
+    simp_rw [hQ]
+    change (∑ a : Row k, Q (cls a) s) = ∑ t, w t * Q t s
+    simp_rw [← hw, Finset.sum_mul]
+    rw [Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro a _
+    simp
+  let e : (Fin k × Fin (n + 2) → Fin 3) ≃ (Fin (n + 2) → Row k) :=
+    (Equiv.arrowCongr (Equiv.prodComm _ _) (Equiv.refl _)).trans (Equiv.curry _ _ _)
+  have hc : T (n + 2) k = Nat.card {g : Fin (n + 2) → Row k //
+      TransferMatrix.good columnCompatible (fun _ _ _ => True) (List.ofFn g)} := by
+    rw [T, ← Fintype.card_subtype, ← Nat.card_eq_fintype_card]
+    exact Nat.card_congr (Equiv.subtypeEquiv e (fun f => grid_good k n f))
+  have hm := @TransferMatrix.cardMatrix (Row k) (Fin q) inferInstance inferInstance
+    inferInstance columnCompatible (fun _ _ _ => True) (fun _ b => cls b) Q v
+    (by intro a b _ s; simpa only [true_and] using hQ b s)
+    (by intro s; exact hv s) n
+  rw [hc, hm, pow_succ', ← Matrix.mulVec_mulVec]
+  change (∑ s, (∑ t, w t * Q t s) * ((Q ^ n).mulVec 1) s) =
+    ∑ t, w t * (∑ s, Q t s * ((Q ^ n).mulVec 1) s)
+  simp_rw [Finset.sum_mul, Finset.mul_sum]
+  rw [Finset.sum_comm]
+  simp only [mul_assoc]
+
+end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155ColumnTransfer
