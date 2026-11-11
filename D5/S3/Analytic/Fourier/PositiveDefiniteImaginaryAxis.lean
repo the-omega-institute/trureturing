@@ -229,7 +229,7 @@ private lemma even_taylor_nonneg {f : ℝ → ℂ}
   have hh := ge_of_tendsto hlim hnonneg
   exact nonneg_of_mul_nonneg_left hh (by positivity : (0 : ℝ) < (2 * k).factorial)
 
-private lemma real_taylor_data {F : ℂ → ℂ} (hF : AnalyticAt ℂ F 0)
+lemma real_taylor_data {F : ℂ → ℂ} (hF : AnalyticAt ℂ F 0)
     (hreal : ∀ᶠ x : ℝ in 𝓝 0, (F x).im = 0) :
     AnalyticAt ℝ (fun x : ℝ => (F x).re) 0 ∧
     ∀ n, (iteratedDeriv n F 0 / (n.factorial : ℂ)).im = 0 ∧

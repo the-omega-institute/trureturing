@@ -23,12 +23,12 @@ set_option autoImplicit false
 def correlationError (SS : Finset ℕ → ℝ) (y : ℝ) (D : Finset ℕ) : ℝ :=
   (∑ n ∈ Finset.Ioc 0 ⌊y⌋₊, ∏ d ∈ D, ArithmeticFunction.vonMangoldt (n + d)) - y * SS D
 
-/-- Uniform mean-square errors for one to four distinct positive shifts. Only real cutoffs
+/-- Uniform mean-square errors for one to q distinct positive shifts. Only real cutoffs
 in the closed dyadic interval are required. -/
-def MeanSquareHL4 (SS : Finset ℕ → ℝ) (β : ℝ) : Prop :=
+def MeanSquareHL (q : ℕ) (SS : Finset ℕ → ℝ) (β : ℝ) : Prop :=
   ∀ ε : ℝ, 0 < ε → ∀ M : ℝ, 1 ≤ M →
     ∃ C : ℝ, 0 < C ∧ ∃ N₀ : ℝ, ∀ N : ℝ, N₀ ≤ N →
-      ∀ r : ℕ, 1 ≤ r → r ≤ 4 → ∀ K : ℕ, 1 ≤ K → (K : ℝ) ≤ M * N ^ β →
+      ∀ r : ℕ, 1 ≤ r → r ≤ q → ∀ K : ℕ, 1 ≤ K → (K : ℝ) ≤ M * N ^ β →
         ∀ y : ℝ, N ≤ y → y ≤ 2 * N →
           (∑ d ∈ (Fintype.piFinset (fun _ : Fin r => Finset.Ioc 0 K)).filter
               Function.Injective,
@@ -36,6 +36,9 @@ def MeanSquareHL4 (SS : Finset ℕ → ℝ) (β : ℝ) : Prop :=
                 ∏ i, ArithmeticFunction.vonMangoldt (n + d i)) -
                 y * SS (Finset.univ.image d)| ^ 2) ≤
             C * N ^ (1 + 2 * ε) * (K : ℝ) ^ r
+
+/-- The four-point instance of the order-indexed mean-square hypothesis. -/
+abbrev MeanSquareHL4 (SS : Finset ℕ → ℝ) (β : ℝ) : Prop := MeanSquareHL 4 SS β
 
 private lemma ordered_error_eq (SS : Finset ℕ → ℝ) (y : ℝ) {r : ℕ}
     (d : Fin r → ℕ) (hd : Function.Injective d) :
@@ -72,10 +75,10 @@ private lemma powersetCard_subset_tuple_image (S : Finset ℕ) (r : ℕ) :
 
 /-- Cauchy–Schwarz converts the mean-square hypothesis into a total absolute error over
 all unordered shift sets of a fixed size. The constant is uniform in the box and the cutoff. -/
-theorem meanSquare_correlation_l1 (SS : Finset ℕ → ℝ) (β : ℝ)
-    (hMS : MeanSquareHL4 SS β) (M ε : ℝ) (hM : 1 ≤ M) (hε : 0 < ε) :
+theorem meanSquare_correlation_l1 {q : ℕ} (SS : Finset ℕ → ℝ) (β : ℝ)
+    (hMS : MeanSquareHL q SS β) (M ε : ℝ) (hM : 1 ≤ M) (hε : 0 < ε) :
     ∃ A : ℝ, 0 ≤ A ∧ ∀ᶠ N : ℝ in atTop,
-      2 ≤ N ∧ ∀ r : ℕ, 1 ≤ r → r ≤ 4 →
+      2 ≤ N ∧ ∀ r : ℕ, 1 ≤ r → r ≤ q →
         ∀ K : ℕ, 1 ≤ K → (K : ℝ) ≤ M * N ^ β →
           ∀ y : ℝ, N ≤ y → y ≤ 2 * N →
             (∑ D ∈ (Finset.Ioc 0 K).powersetCard r, |correlationError SS y D|) ≤

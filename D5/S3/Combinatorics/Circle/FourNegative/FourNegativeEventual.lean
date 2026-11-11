@@ -19,9 +19,8 @@ namespace D5.S3.Combinatorics.Circle.FourNegative.FourNegativeEventual
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open scoped BigOperators
 
-open private mask_labels mask_labels_bound mask_labels_mem mask_complement
-  mask_labels_disjoint mask_labels_sum
-  from D5.S3.Combinatorics.Circle.ThreeBitSource
+open private mask_labels mask_labels_bound mask_labels_mem mask_labels_disjoint mask_labels_sum from D5.S3.Combinatorics.Circle.ThreeBitSource
+open D5.S3.Combinatorics.Circle.ThreeBitSource (mask_complement)
 
 private theorem centered_shift (N X Y : ℤ) (e i : ℕ)
     (hN : 0 < N) (hodd : N % 2 = 1)

@@ -1,0 +1,52 @@
+**引理 17.2（固定通道及相关块的三个收缩）。** 式 (17.1) 是对任意相关输入适用的 CPTP 通道。仅在证明坐标中取 $h=z$，令
+$$
+\chi=|\uparrow\downarrow\rangle_{BA},\quad
+\psi=|\uparrow\uparrow\rangle_{BA},\quad
+\rho_v=(I+v\cdot\sigma)/2,\quad
+a=(v_x-i v_y)/2,
+$$
+$$
+A_0=\Phi(|\chi\rangle\langle\chi|\otimes\rho_v),\qquad
+B_0=\Phi(|\chi\rangle\langle\psi|\otimes\rho_v).
+$$
+则
+$$
+(A_0)_{\uparrow\uparrow}=(A_0)_{\downarrow\downarrow}=\frac12,\quad
+(A_0)_{\uparrow\downarrow}=-c_ta,\quad
+(B_0)_{\uparrow\uparrow}=-\frac{c_ta}{2},\quad
+(B_0)_{\downarrow\downarrow}=\frac{c_ta}{2},\quad
+\operatorname{Tr}B_0=0,\quad \|B_0\|_1<1.
+\tag{17.2}
+$$
+
+**证明。** 每个 Pauli 点积的范数至多三，每个叉积分量中的四项范数各至多一，故
+$$
+\|O_i\|\le4r_t+2|s_t|,\qquad
+\sum_i\|O_i\|\le12r_t+6|s_t|
+\le6t^2+6t=\frac{195}{2048}<1.
+\tag{17.3}
+$$
+输出因子在前的非归一 Choi 矩阵为
+$$
+C_\Phi=\frac{I_2\otimes I_8+\sum_i\sigma_i\otimes O_i^{\mathsf T}}2
+\ge\frac{1-195/2048}{2}I_{16}>0,\qquad
+\operatorname{Tr}_{\rm out}C_\Phi=I_8.
+\tag{17.4}
+$$
+由 OTF001 定理 7.2 的 Choi–Kraus 对应及有限酉延拓，$\Phi$ 是固定有限 CPTP 节点；张量附上固定态给出 $\widehat\Phi$。这仅复用标准有限 CP 理论，不赋予直接作用于 $R$ 的恢复操作，也不把证明用延拓宣布为实际返回实现。
+
+在 $|\chi\rangle\langle\chi|\otimes\rho_v$ 上，三个 Pauli 收缩分别为 $h,-h,v$。代入 $O_i$ 得输出 Bloch 向量
+$$
+-r_t[v-(h\cdot v)h]+s_t(h\times v),
+\tag{17.5}
+$$
+从而得到 $A_0$ 的三个矩阵元。对 $|\chi\rangle\langle\psi|\otimes\rho_v$，$A$ 腿的 Pauli 收缩为 $q=(1,-i,0)$，其迹为零，故
+$$
+\operatorname{Tr}[O_z(|\chi\rangle\langle\psi|\otimes\rho_v)]
+=-\frac{r_t}{2}q\cdot v-\frac{s_t}{2}(q\times v)_z
+=-c_ta.
+\tag{17.6}
+$$
+这里 $q\cdot v=2a$、$(q\times v)_z=i q\cdot v$。输出迹为零即给两份相反的对角元。又 $\||\chi\rangle\langle\psi|\otimes\rho_v\|_1=1$，由 (17.1) 和迹范数三角不等式，
+$\|B_0\|_1\le\sum_i\|O_i\|<1$。点积和叉积使 $O$ 在同时定向旋转下为向量，因此通道协变；$h=z$ 只是证明的共同坐标变换，没有实施未知方向旋转。$\square$
+

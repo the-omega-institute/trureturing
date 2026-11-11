@@ -14,6 +14,8 @@ open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233254TriangleStrip (
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
+open scoped BigOperators
+
 noncomputable section
 
 attribute [local instance 2000] Pi.instFintype
@@ -174,6 +176,243 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 #print axioms audit
 
 end FiniteCertificate
+
+namespace LabelSum
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature ((Fin 5 → Fin 3) → ℤ)
+    (fun _ => Fin 5 → Fin 3) (fun _ => ℤ)
+
+def actual : Realization signature :=
+  realize signature (fun _ g q => g q) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ g q => g q + 1) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ g : (Fin 5 → Fin 3) → ℤ,
+    (∑ q, R.readout () g q) = ∑ a : Fin 3, ∑ b : Fin 3, ∑ c : Fin 3, ∑ d : Fin 3, ∑ e : Fin 3,
+      g ![a, b, c, d, e]
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hb := h (fun _ => 0)
+  simpa [rejected, realize] using hb
+
+def family : Registration arena (type_of% @label_sum) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨label_sum, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    refine ⟨(fun q => ((q 0).val : ℤ)), (fun _ => 0), (fun _ => 1), ?_⟩
+    change (0 : ℤ) ≠ 1
+    decide
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@label_sum) (Realization signature) Type Unit where
+  unitName := `Reg.A233126LabelSum.auditUnit
+  realizationName := ``family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ g q => g q) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233126SquareStrip
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "fn", "arg", "arg", "body", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms audit
+
+end LabelSum
+
+namespace InitialValid
+
+open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233253TriangleStrip (Row rowLegal)
+open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip (good finish)
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Row (fun _ => Fin 5 → Fin 3) (fun _ => Bool)
+
+def actual : Realization signature :=
+  realize signature (fun _ c p =>
+    @decide (Valid (finish (false, false) c) p) (by unfold Valid; infer_instance))
+    (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => false) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ c : Row, c 0 = 0 ∧ rowLegal c ∧ good (false, false) c →
+    R.readout () c (labels c) = true
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hb := h ![0, 1, 0, 1, 0] (by decide +kernel)
+  change false = true at hb
+  cases hb
+
+def family : Registration arena (type_of% @initial_valid) where
+  actual := actual
+  bridge := by simp [arena, actual, realize]
+  variation := ⟨by simpa [arena, actual, realize] using initial_valid,
+    rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    refine ⟨![0, 1, 0, 1, 0], (fun _ => 0), ![0, 1, 0, 1, 0], ?_⟩
+    have ht : Valid (finish (false, false) ![0, 1, 0, 1, 0]) ![0, 1, 0, 1, 0] := by
+      unfold Valid
+      decide +kernel
+    have hf : ¬ Valid (finish (false, false) ![0, 1, 0, 1, 0])
+        (fun _ : Fin 5 => (0 : Fin 3)) := by
+      unfold Valid
+      decide +kernel
+    simp [actual, realize, ht, hf]
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@initial_valid) (Realization signature) Type Unit where
+  unitName := `Reg.A233126InitialValid.auditUnit
+  realizationName := ``family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ c p =>
+    @decide (Valid (finish (false, false) c) p) (by unfold Valid; infer_instance))
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233126SquareStrip
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := true }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end InitialValid
+
+namespace RowValid
+
+open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233253TriangleStrip (Row rowLegal)
+open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip (Seen good finish)
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature (Σ _ : Seen, Row) (fun _ => Fin 5 → Fin 3) (fun _ => Bool)
+
+def actual : Realization signature :=
+  realize signature (fun _ sc p =>
+    @decide (Valid (finish sc.1 sc.2) p) (by unfold Valid; infer_instance))
+    (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => false) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ s : Seen, ∀ c : Row, s.1 = true → rowLegal c → good s c →
+    R.readout () ⟨s, c⟩ (labels c) = true
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hb := h (true, false) ![0, 1, 0, 1, 0]
+    (by rfl) (by decide +kernel) (by decide +kernel)
+  change false = true at hb
+  cases hb
+
+def family : Registration arena (type_of% @row_valid) where
+  actual := actual
+  bridge := by simp [arena, actual, realize]
+  variation := ⟨by simpa [arena, actual, realize] using row_valid,
+    rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := by
+    intro i
+    refine ⟨⟨(true, false), ![0, 1, 0, 1, 0]⟩, (fun _ => 0), ![0, 1, 0, 1, 0], ?_⟩
+    have ht : Valid (finish (true, false) ![0, 1, 0, 1, 0]) ![0, 1, 0, 1, 0] := by
+      unfold Valid
+      decide +kernel
+    have hf : ¬ Valid (finish (true, false) ![0, 1, 0, 1, 0])
+        (fun _ : Fin 5 => (0 : Fin 3)) := by
+      unfold Valid
+      decide +kernel
+    simp [actual, realize, ht, hf]
+
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@row_valid) (Realization signature) Type Unit where
+  unitName := `Reg.A233126RowValid.auditUnit
+  realizationName := ``family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ sc p =>
+    @decide (Valid (finish sc.1 sc.2) p) (by unfold Valid; infer_instance))
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233126SquareStrip
+    definition := none
+    coordinates := #[0, 1]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := true }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end RowValid
+
 
 end
 
