@@ -1,7 +1,7 @@
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Algebra.StateApproximation;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Algebra.StateApproximation.TauCeti.Analysis.CStarAlgebra.ContinuousFunctionalCalculus;
 
 internal sealed class StateApproximationS3QuantumAlgebraStateApproximationTauCetiAnalysisCStarAlgebraContinuousFunctionalCalculusKaplanskyDocument : IScribeDocumentDefinition
 {
