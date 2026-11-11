@@ -6,8 +6,14 @@
    utility: none
    digest: The original two-coordinate PB contact equations control both signed sources. -/
 
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Tactic
+module
+
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.Tactic
+
+/-! Quantitative nonvanishing on the original actual actor contact. -/
+
+@[expose] public section
 
 noncomputable section
 set_option autoImplicit false
@@ -86,13 +92,13 @@ private theorem mass (h r x y : ℝ) (u p q a : Vec) (η : ℂ)
   have hy : y ≠ 0 := by
     intro hz
     have hi := H.imaginary
-    simp [hz] at hi
+    norm_num [hz] at hi
   have he := congrArg Complex.im H.mixed
   rw [H.graph, graph_pairing, pairing_swap] at he
   simp [spectral, Complex.mul_im, H.first_real] at he
   apply Complex.ext
   · simp only [Complex.ofReal_re]
-    rw [neg_div]
+    rw [← neg_div]
     apply (eq_div_iff hy).mpr
     linarith
   · simpa using H.first_real
@@ -116,11 +122,26 @@ private theorem source_columns (h r x y : ℝ) (u p q a : Vec) (η : ℂ)
   have h1 := H.source 1
   rw [H.actor] at h0 h1
   simp [actorColumn, hMap, cMap, sourceVector] at h0 h1
+  have hd0 : (1 : ℂ) - spectral x y ≠ 0 := denominator_ne 1 x y hy
+  have hd1 : (2 : ℂ) - spectral x y ≠ 0 := denominator_ne 2 x y hy
+  have hp0 : (1 - spectral x y) * p 0 =
+      -Complex.I * ((2 - spectral x y / 2) * u 0 + h * u 1 +
+        η * ((Real.sqrt 2)⁻¹ : ℝ)) := by
+    linear_combination (norm := ring_nf) -Complex.I * h0
+    simp [Complex.I_sq]
+  have hp1 : (2 - spectral x y) * p 1 =
+      -Complex.I * ((8 - 4 * spectral x y) * u 1 + 2 * h * u 0 + 2 * η * r) := by
+    linear_combination (norm := ring_nf) -2 * Complex.I * h1
+    simp [Complex.I_sq]
   constructor
-  · field_simp [denominator_ne 1 x y hy]
-    linear_combination -Complex.I * h0
-  · field_simp [denominator_ne 2 x y hy]
-    linear_combination -2 * Complex.I * h1
+  · apply mul_left_cancel₀ hd0
+    rw [hp0]
+    field_simp [hd0]
+    ring
+  · apply mul_left_cancel₀ hd1
+    rw [hp1]
+    field_simp [hd1]
+    ring
 
 private theorem source_balance (h r x y : ℝ) (u p q a : Vec) (η : ℂ)
     (H : Contact h r x y u p q a η) (hy : y ≠ 0) :
@@ -135,7 +156,10 @@ private theorem source_balance (h r x y : ℝ) (u p q a : Vec) (η : ℂ)
         Complex.mul_re, Complex.mul_im] <;> ring
   rw [mass h r x y u p q a η H] at he
   dsimp [numerator]
-  linear_combination Complex.I * he
+  push_cast at he ⊢
+  linear_combination (norm := ring_nf) -Complex.I * he
+  simp [Complex.I_sq]
+  ring
 
 private theorem resolvent_norm (j x y : ℝ) (hy : y ≠ 0) :
     |y| * ‖((j : ℂ) - spectral x y)⁻¹‖ ≤ 1 := by
@@ -155,6 +179,12 @@ private theorem resolvent_imaginary (j x y : ℝ) :
   rw [← mul_div_assoc]
   exact div_nonneg (mul_self_nonneg y) (Complex.normSq_nonneg _)
 
+private theorem imaginary_lower (y : ℝ) (z : ℂ) : -(|y| * ‖z‖) ≤ y * z.im := by
+  have ha := neg_abs_le (y * z.im)
+  rw [abs_mul] at ha
+  have hb := mul_le_mul_of_nonneg_left (Complex.abs_im_le_norm z) (abs_nonneg y)
+  linarith
+
 private theorem cross_bound (h x y : ℝ) (u : Vec) (hy : y ≠ 0) :
     -(3 * |h| * (‖u 0‖ * ‖u 1‖)) ≤
       y * (h * (1 - spectral x y)⁻¹ * (star (u 0) * u 1) +
@@ -162,23 +192,27 @@ private theorem cross_bound (h x y : ℝ) (u : Vec) (hy : y ≠ 0) :
   have hb (j : ℝ) (z : ℂ) :
       |y| * ‖(h : ℂ) * ((j : ℂ) - spectral x y)⁻¹ * z‖ ≤ |h| * ‖z‖ := by
     rw [norm_mul, norm_mul, Complex.norm_real, Real.norm_eq_abs]
-    nlinarith [resolvent_norm j x y hy, norm_nonneg z, abs_nonneg h]
-  have h0 := hb 1 (star (u 0) * u 1)
-  have h1 := hb 2 (star (u 1) * u 0)
-  simp only [norm_mul, norm_star] at h0 h1
-  have hi0 := Complex.abs_im_le_norm
-    ((h : ℂ) * (1 - spectral x y)⁻¹ * (star (u 0) * u 1))
-  have hi1 := Complex.abs_im_le_norm
-    ((h : ℂ) * (2 - spectral x y)⁻¹ * (star (u 1) * u 0))
-  have ha0 := neg_abs_le (y *
-    ((h : ℂ) * (1 - spectral x y)⁻¹ * (star (u 0) * u 1)).im)
-  have ha1 := neg_abs_le (y *
-    ((h : ℂ) * (2 - spectral x y)⁻¹ * (star (u 1) * u 0)).im)
-  rw [abs_mul] at ha0 ha1
-  have hh0 := mul_le_mul_of_nonneg_left hi0 (abs_nonneg y)
-  have hh1 := mul_le_mul_of_nonneg_left hi1 (abs_nonneg y)
-  simp only [Complex.add_im, Complex.mul_im, Complex.ofReal_re,
-    Complex.ofReal_im, zero_mul, add_zero] at *
+    calc
+      _ = (|y| * ‖((j : ℂ) - spectral x y)⁻¹‖) * (|h| * ‖z‖) := by ring
+      _ ≤ 1 * (|h| * ‖z‖) := mul_le_mul_of_nonneg_right
+        (resolvent_norm j x y hy) (mul_nonneg (abs_nonneg h) (norm_nonneg z))
+      _ = _ := one_mul _
+  let z0 := (h : ℂ) * (1 - spectral x y)⁻¹ * (star (u 0) * u 1)
+  let z1 := (h : ℂ) * (2 - spectral x y)⁻¹ * (star (u 1) * u 0)
+  have h0 : |y| * ‖z0‖ ≤ |h| * (‖u 0‖ * ‖u 1‖) := by
+    simpa only [z0, norm_mul, norm_star, Complex.ofReal_one] using hb 1 (star (u 0) * u 1)
+  have h1 : |y| * ‖z1‖ ≤ |h| * (‖u 1‖ * ‖u 0‖) := by
+    simpa only [z1, norm_mul, norm_star, Complex.ofReal_ofNat] using hb 2 (star (u 1) * u 0)
+  have hi0 := imaginary_lower y z0
+  have hi1 := imaginary_lower y z1
+  have he : (h : ℂ) * (1 - spectral x y)⁻¹ * (star (u 0) * u 1) +
+      2 * h * (2 - spectral x y)⁻¹ * (star (u 1) * u 0) = z0 + 2 * z1 := by
+    dsimp [z0, z1]
+    ring
+  rw [he]
+  have him : (z0 + 2 * z1).im = z0.im + 2 * z1.im := by
+    simp [Complex.mul_im]
+  rw [him]
   nlinarith
 
 private theorem numerator_lower (h r x y : ℝ) (u p q a : Vec) (η : ℂ)
@@ -198,13 +232,16 @@ private theorem numerator_lower (h r x y : ℝ) (u p q a : Vec) (η : ℂ)
       beta h u + (3 / 2) * ‖u 0‖ ^ 2 * y * ((1 - spectral x y)⁻¹).im +
       y * ((h : ℂ) * (1 - spectral x y)⁻¹ * (star (u 0) * u 1) +
         2 * h * (2 - spectral x y)⁻¹ * (star (u 1) * u 0)).im := by
-    simp [numerator, residual, Complex.mul_im]
+    norm_num [numerator, residual, Complex.mul_im, ← Complex.ofReal_pow]
     field_simp [hy]
     ring
   rw [hn]
-  dsimp [beta]
+  have hr' : 0 ≤ y * ((1 - spectral x y)⁻¹).im := by
+    simpa only [Complex.ofReal_one] using hr
+  have hz' := mul_le_mul_of_nonneg_left hz (show 0 ≤ 6 * |h| by positivity)
+  unfold beta
   nlinarith [sq_nonneg ‖u 0‖, H.unit, abs_nonneg h,
-    mul_nonneg (sq_nonneg ‖u 0‖) hr]
+    mul_nonneg (sq_nonneg ‖u 0‖) hr']
 
 private theorem readout_upper (h r x y : ℝ) (u p q a : Vec) (η : ℂ)
     (H : Contact h r x y u p q a η) (hy : y ≠ 0) :
@@ -227,7 +264,7 @@ private theorem readout_upper (h r x y : ℝ) (u p q a : Vec) (η : ℂ)
     norm_num
     have hR := mul_le_mul_of_nonneg_right (resolvent_norm 2 x y hy)
       (show 0 ≤ 2 * ‖u 1‖ by positivity)
-    nlinarith
+    simpa [norm_inv, mul_comm, mul_left_comm, mul_assoc] using hR
   have hc : ‖u 0‖ / Real.sqrt 2 + 2 * ‖u 1‖ ≤ 3 / Real.sqrt 2 := by
     apply (le_div_iff₀ hs).mpr
     have hsa : (Real.sqrt 2) ^ 2 * ‖u 0‖ ^ 2 = 2 * ‖u 0‖ ^ 2 :=
@@ -235,15 +272,15 @@ private theorem readout_upper (h r x y : ℝ) (u p q a : Vec) (η : ℂ)
     have hsb : (Real.sqrt 2) ^ 2 * ‖u 1‖ ^ 2 = 2 * ‖u 1‖ ^ 2 :=
       congrArg (fun t : ℝ => t * ‖u 1‖ ^ 2) hs2
     have he : (‖u 0‖ / Real.sqrt 2 + 2 * ‖u 1‖) * Real.sqrt 2 =
-        ‖u 0‖ + 2 * Real.sqrt 2 * ‖u 1‖ := by field_simp; ring
+        ‖u 0‖ + 2 * Real.sqrt 2 * ‖u 1‖ := by field_simp
     rw [he]
     nlinarith [sq_nonneg (2 * Real.sqrt 2 * ‖u 0‖ - ‖u 1‖), H.unit,
       norm_nonneg (u 0), norm_nonneg (u 1)]
   have ht := mul_le_mul_of_nonneg_left
     (norm_add_le (star (u 0) * (1 - spectral x y)⁻¹ * ((Real.sqrt 2)⁻¹ : ℝ))
       (star (u 1) * (2 - spectral x y)⁻¹ * (2 * r))) (abs_nonneg y)
-  dsimp [sourceReadout]
-  linarith
+  rw [mul_add] at ht
+  exact ht.trans ((add_le_add h0 h1).trans hc)
 
 /-- Quantitative nonvanishing for every original contact, both fixed source signs,
 both signs of the imaginary parameter, and both actor axes. -/
@@ -254,7 +291,7 @@ theorem original_contact_nonvanishing (h r x y : ℝ) (u p q a : Vec) (η : ℂ)
   have hy : y ≠ 0 := by
     intro hz
     have hi := H.imaginary
-    simp [hz] at hi
+    norm_num [hz] at hi
   have hs : 0 < Real.sqrt 2 := Real.sqrt_pos.mpr (by norm_num)
   have hl := numerator_lower h r x y u p q a η H hy
   have hu := readout_upper h r x y u p q a η H hy
@@ -271,10 +308,17 @@ theorem original_contact_nonvanishing (h r x y : ℝ) (u p q a : Vec) (η : ℂ)
     have hzN : numerator h x y u = 0 := by simpa [hz] using hb.symm
     simp [hzN] at hl
     linarith
-  rw [← hb, norm_mul] at hn
+  have heN : ‖numerator h x y u‖ = ‖η‖ * ‖sourceReadout r x y u‖ := by
+    rw [← hb, norm_mul]
+  rw [heN] at hn
   have huη := mul_le_mul_of_nonneg_left hu (norm_nonneg η)
   have hc : 3 + 9 * ‖u 1‖ ^ 2 - 3 * |h| ≤ (‖η‖ * 3) / Real.sqrt 2 := by
-    nlinarith
+    calc
+      _ ≤ -y * (numerator h x y u).im := hl
+      _ ≤ |y| * (‖η‖ * ‖sourceReadout r x y u‖) := hn
+      _ = ‖η‖ * (|y| * ‖sourceReadout r x y u‖) := by ring
+      _ ≤ ‖η‖ * (3 / Real.sqrt 2) := huη
+      _ = _ := by ring
   have he := (le_div_iff₀ hs).mp hc
   refine ⟨hd, ?_, ?_⟩
   · nlinarith
