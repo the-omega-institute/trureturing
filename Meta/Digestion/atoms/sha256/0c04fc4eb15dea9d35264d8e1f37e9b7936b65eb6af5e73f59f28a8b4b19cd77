@@ -1,0 +1,28 @@
+**定义 39.1（原标签上的标记插入）。**取定义 38.1 的全部前件：$M$ 是带真实双侧单位 $1$ 的任意 magma，$U:M\to M$ 任意，$H$ 是任意维复 Hilbert 空间，$\omega=\exp(2\pi i/3)$，且 $F:M\to H$ 满足
+
+$$
+F1=0,\qquad F(a\cdot b)=Fa+Fb,\qquad F(Ua)=\omega Fa.
+\tag{39.1}
+$$
+
+处处有限的实函数 $D:M^2\to\mathbb R$ 对全部 $a,b,u,v\in M$ 满足
+
+$$
+\begin{aligned}
+D(b,a)&=-D(a,b),& |D(a,b)|&\le\|Fa-Fb\|^2,\\
+\sum_{k=0}^2D\bigl(a\cdot(U^ku),b\cdot(U^kv)\bigr)
+&=3D(a,b)+3D(u,v).
+\end{aligned}
+\tag{39.2}
+$$
+
+对整数 $j\ge0$，置 $p_j=U^j1$、$P_j(a)=a\cdot p_j$；两个第三标记规则分别为
+
+$$
+D(P_3(a),b)=D(a,b),\qquad D(a,P_3(b))=D(a,b)
+\qquad(a,b\in M).
+\tag{39.3}
+$$
+
+所有变量取实际标签，保留原有次序、二叉括号、单位标签与重复标签。不假设乘法结合、$U$ 保乘法或满射、$F$ 单射，亦不假设 $D$ 沿 $F$ 的纤维下降。$P_3$ 由 $U^31$ 定义，不将它等同于 $P_1$ 的三次复合。Hilbert 背景和纯相位规则 (39.1) 是假设；三相指数的个数不限制 $H$ 的维数。
+

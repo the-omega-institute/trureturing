@@ -1,0 +1,25 @@
+For the proof only, condition the stationary comparison law $Q$ on
+its first $n$ labels all lying in $D=\{0,1,B\}$, an event of
+probability $S_n>0$. Denote its length-$H$ continuation law by
+$C_n^H$. Directly from the same no-3 events,
+
+$$
+\begin{aligned}
+C_n^H(T_3>j)&=\frac{S_{n+j}}{S_n}\quad(0\le j\le H),\\
+C_{n_i}^H(E_i)
+ &=\frac{S_{n_i+L_i}-S_{n_i+U_i}}{S_{n_i}}>1-2\theta.
+\end{aligned}
+\tag{13.6}
+$$
+
+This calculation neither asserts that the labels form a renewal
+process nor conditions on a complete word. The latter distinction
+is removed by the finite exact decomposition
+
+$$
+C_{n_i}^H
+ =\sum_{w\in D^{n_i}}\frac{q(w)}{S_{n_i}}Q_w^H,
+\qquad \sum_{w\in D^{n_i}}q(w)=S_{n_i}.
+\tag{13.7}
+$$
+

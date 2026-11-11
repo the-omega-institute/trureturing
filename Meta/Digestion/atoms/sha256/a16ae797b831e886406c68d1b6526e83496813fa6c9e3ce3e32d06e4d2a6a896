@@ -1,0 +1,106 @@
+**Theorem 4.1 (unbounded original cut rank even after a common finite
+suffix).** Fix any integers $k\ge0$ and $N\ge1$. For $0\le i,j<N$
+and $\ell\ge0$, use the actual words
+
+$$
+u_i^{(\ell)}=B^{\ell+N-1-i}3B^{i+k},\qquad
+v_j=B^{j+k+1}3B^{N-1-j}.
+\tag{4.1}
+$$
+
+Every history has length $t=\ell+N+k$ and ends in the same $k$
+labels $B$; every future has length $N+k+1$. Put
+$J_{\ell,N,k}(i,j)=p(u_i^{(\ell)}v_j)$ and
+$G_{N,k}(i,j)=\langle P^{i+k}g,P^{j+k}g\rangle_m$. Then
+
+$$
+4^\ell J_{\ell,N,k}
+ \longrightarrow c^2 4^{-(2N+2k-1)}G_{N,k}
+\quad\text{entrywise as }\ell\longrightarrow\infty.
+\tag{4.2}
+$$
+
+The limit is positive definite. There exists a finite
+$\ell_0=\ell_0(a,\eta,d,N,k)$ such that for every
+$\ell\ge\ell_0$,
+
+$$
+\det J_{\ell,N,k}>0,\qquad
+\operatorname{rank}\bigl[R_{u_i^{(\ell)}}(v_j)\bigr]_{i,j<N}=N.
+\tag{4.3}
+$$
+
+Consequently the original law has no uniformly finite-dimensional
+clock-assisted linear boundary, no clock-assisted HMM with a
+uniformly finite hidden set, and no uniformly finite-cardinality
+deterministic exact predictive memory with a supplied clock. It is
+not an order-$k$ observed Markov law for any finite $k$, even with
+arbitrary clock-dependent transition rules.
+
+*Proof.* Use $q(w)=\int F_w\,dm$ from [RRO, Definition 8.1] only as
+a comparison coefficient. The original word recursion gives the
+exact bridge, for every fixed word $w$,
+
+$$
+4^\ell p(B^\ell w)=\langle P^\ell g,F_w\rangle_m,
+\qquad
+\bigl|4^\ell p(B^\ell w)-q(w)\bigr|
+ \le\|P^\ell g-1\|_2\longrightarrow0.
+\tag{4.4}
+$$
+
+Here $0\le F_w\le1$, $m(G)=1$, and the strong limit is precisely
+[RRO, (8.9)] with $\int g\,dm=1$. Its supplied hypotheses are
+$K\ge0$, self-adjointness and $\ker K=\mathbb C1$; no spectral
+gap or uniform convergence rate is needed.
+
+For nonnegative integers $a,s,b$, invariance of $m$, (3.2), and
+$F_{wB^b}=4^{-b}F_w$ give
+
+$$
+q(B^a3B^s3B^b)
+ =c^2 4^{-(a+s+b)}\langle g_d,P^{s+1}g_d\rangle_m.
+\tag{4.5}
+$$
+
+The terminal identity follows first for $w=\varepsilon$ from
+$P1=1$, and then for all $w$ by (1.3). In (4.5), set
+$a=N-1-i$, $s=i+j+2k+1$, $b=N-1-j$. Then
+$a+s+b=2N+2k-1$ and
+
+$$
+\langle g_d,P^{i+j+2k+2}g_d\rangle_m
+ =\langle P^{i+k}g,P^{j+k}g\rangle_m.
+\tag{4.6}
+$$
+
+Equations (4.4)--(4.6) prove (4.2). In the actual word the two
+specified $3$ reads occur at indices $\ell+N-1-i$ and
+$\ell+N+2k+j+1$, hence at the original physical times
+$(\ell+N+1-i)d$ and $(\ell+N+2k+j+3)d$. Their gap is exactly
+$(i+j+2k+2)d$, as in (4.6).
+
+The family $P^kg,\ldots,P^{k+N-1}g$ is independent by the same
+supplied no-polynomial-relation result (or Lemma 169.1 at source time
+$(k+2)d$). Thus $G_{N,k}$ is positive definite. Continuity of the
+finite determinant makes $\det(4^\ell J_{\ell,N,k})$ positive for
+every sufficiently large finite $\ell$. Since its scaling factor is
+$4^{\ell N}>0$, the original determinant is positive as well.
+The finite-$\ell$ matrix need not be symmetric; no positive-definiteness
+claim is made about it. Dividing row $i$ by the positive
+$p(u_i^{(\ell)})$ proves the normalized rank assertion.
+
+At this common cut a boundary satisfying (1.6) factors the displayed
+block through $r_t$ coordinates. Choosing $N=r+1$ excludes a uniform
+bound $r$. For an inhomogeneous HMM these coordinates are the
+unnormalized hidden-state probabilities after the prefix, and the
+columns are the future word laws from each state at that same clock.
+For a deterministic predictor with $r$ states the rows factor through
+$p(u)\mathbf1_{\{s(u)=s\}}$ and the $r$ future profiles at that clock.
+Both factorizations obey the same rank bound.
+
+Finally an order-$k$ law at a known clock makes all future profiles
+equal for histories with the same last $k$ labels, by iterating its
+one-step rule. The histories in (4.1) share that suffix. Taking $N=2$
+in (4.3) contradicts equality of their future profiles. $\square$
+

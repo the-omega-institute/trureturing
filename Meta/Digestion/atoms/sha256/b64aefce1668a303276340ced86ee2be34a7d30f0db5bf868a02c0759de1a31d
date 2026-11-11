@@ -1,0 +1,63 @@
+**Theorem 10.2 (contact-to-one-gap dependence bound).** Under Definitions 9.1 and 10.1, every original source for which the earned inequalities $0<l\le\tau$ and (10.4) hold satisfies
+
+$$
+\beta_d\le b^+(A^-,s^+).
+\tag{10.6}
+$$
+
+*Proof.* Work first in the coefficient-one reference source. Let $\sigma=\tau_e$ be the contact time with the original endpoint. The contact identity [CONTACT, (116.14)], used with the full non-Friedrichs process exactly as in (9.7), gives
+
+$$
+\int_G\mathbb E_x\!\left[1-\exp\!\left(-\frac{2\sigma}{l}\right)\right]m_{\rm ref}(dx)
+ =1-d^{\rm ref}_{2/l}.
+\tag{10.7}
+$$
+
+On $\{\sigma>l/2\}$, the integrand on the left is at least $1-e^{-1}$. Hence
+
+$$
+\int_G\mathbb P_x(\sigma>l/2)m_{\rm ref}(dx)
+ \le \frac{1-d^{\rm ref}_{2/l}}{1-e^{-1}}
+ <2(1-d^{\rm ref}_{2/l})
+ \le2(1-A^-).
+\tag{10.8}
+$$
+
+Fix $x$. Split the transition law at time $\tau$ according to $\{\sigma>l/2\}$ and $\{\sigma\le l/2\}$. The first subprobability has mass $r_x=\mathbb P_x(\sigma>l/2)$, and its distance from the subprobability $r_xm_{\rm ref}$ is at most $r_x$. On the second event, the strong Markov property gives a mixture, over contact times $s\le l/2$, of the source-start laws
+
+$$
+g^{\rm ref}_{\tau-s}m_{\rm ref},
+\qquad \tau-s\ge l/2.
+\tag{10.9}
+$$
+
+For every $t\ge l/2$, the raw density relation (10.3), $\|h_{\rm ref}\|_{L^2(\mu_{\rm ref})}=1$, and Cauchy--Schwarz give
+
+$$
+\begin{aligned}
+\operatorname{TV}(g^{\rm ref}_tm_{\rm ref},m_{\rm ref})
+ &=\frac12\int |v^{\rm ref}_t-h_{\rm ref}|h_{\rm ref}\,d\mu_{\rm ref}\\
+ &\le\frac12\|v^{\rm ref}_t-h_{\rm ref}\|_{L^2(\mu_{\rm ref})}.
+\end{aligned}
+\tag{10.10}
+$$
+
+The source semigroup identity $g_{t+s}^{\rm ref}=T_s^{\rm ref}g_t^{\rm ref}$ and $T_s^{\rm ref}1=1$ show, for $t\ge l/2$,
+
+$$
+\|v^{\rm ref}_t-h_{\rm ref}\|_{L^2(\mu_{\rm ref})}
+\le \|v^{\rm ref}_{l/2}-h_{\rm ref}\|_{L^2(\mu_{\rm ref})}
+\le s^+.
+\tag{10.11}
+$$
+
+Thus the hit subprobability differs from its equal-mass copy of $m_{\rm ref}$ by at most $s^+/2$. Adding the two subprobability comparisons gives, for every $x$,
+
+$$
+\operatorname{TV}\bigl(P^{\rm ref}_\tau(x,\cdot),m_{\rm ref}\bigr)
+\le r_x+\frac{s^+}{2}.
+\tag{10.12}
+$$
+
+Integrate (10.12), use (10.8), and then use (10.2) and the scaling correspondence. This is (10.6). The contact time is used only as a proof stopping time; no label, point sensor, reset, source delay or physical Return is introduced. $\square$
+

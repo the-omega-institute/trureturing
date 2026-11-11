@@ -1,0 +1,57 @@
+**定义 41.1（全部实际探针的固定输出预算）。** 设 $A$ 为含单位复 $C^*$-代数，$P$ 为实际投影，$C=PAP$。取非零正交投影 $p,q\le P$，并置
+
+$$
+S=p+q,\qquad c=p+2q,\qquad
+K_\sigma(u,v)=\frac{\sigma i}{2}[u,v],\qquad \sigma\in\{1,-1\}.
+\tag{41.1}
+$$
+
+这里的 $S$ 是谱支撑投影，不替换原对称响应或物理来源谓词的同名字母。取实际自伴 $t\in A$ 及一般自伴块余量
+
+$$
+s=s_p+s_q,\qquad s_p=s_p^*\in pAp,\quad s_q=s_q^*\in qAq,
+\qquad g=K_\sigma(c,t)+s.
+\tag{41.2}
+$$
+
+不要求 $p\sim q$，也不要求 $s_p,s_q$ 为标量。对任一实际 $x=x^*\in C$，准确沿用 §33.1 的标签
+
+$$
+\begin{gathered}
+h=K_\sigma(c,x),\qquad r=c\circ x,\qquad k=c\circ t,\\
+R_+=x+h-k,\qquad R_-=x-h+k,\\
+S_+=t+r+g,\qquad S_-=t-r-g,\\
+L=-2x\circ(h-k)-2t\circ(r+g).
+\end{gathered}
+\tag{41.3}
+$$
+
+对每个数学正泛函 $\phi$，令
+
+$$
+B_\phi(U,V)=\phi(U^2)\phi(V^2)-\phi(U\circ V)^2\ge0
+\qquad(U=U^*,\ V=V^*).
+\tag{41.4}
+$$
+
+非负性是已知乘法所给实半内积 $\phi(U\circ V)$ 的 Cauchy–Schwarz 不等式。所有数学正泛函均在量词内，包括零泛函和任意非负质量，且不要求正常性；没有质量归一。固定二表条件为 §33.1 的同一个
+
+$$
+\mathsf{P2}(c,t;g):\qquad
+\phi(g)^2\le B_\phi(c,t)\qquad(\phi\ge0).
+\tag{41.5}
+$$
+
+给定探针 $x$ 的显式 PB 预算为
+
+$$
+|\phi(L)|\le
+\sqrt{B_\phi(R_+,S_+)}+\sqrt{B_\phi(R_-,S_-)}
+\qquad(\phi\ge0).
+\tag{41.6}
+$$
+
+“全部探针类”要求 (41.5) 及每个实际 $x\in C_{\rm sa}$ 的 (41.6)。这个类只携带 $c,t,g$、已知乘法及上述标量不等式；不携带任何响应映射、任何已知外值或以 $t$ 为演员的 PB。对实际完整 $\mathsf H_A(D)$ 数据，若整个实际 $C$ 已按 (28.3) 同号分类，取 $g=D(c,t)$，则 AH43.1 的同表数学正读取给 (41.5)，原 $\operatorname{PB}(c;x,t)$ 和两份实际外层 P2 给 (41.6)。正读取由原评价准确决定锥支付，如 (28.9) 前的二表二次型所示；它不增添原物理评价标签或准备。
+
+定义 33.1 只保留了 $x=Te+\alpha n$ 与 $x=Tj+\alpha n$ 两个大伴轴族。本节的全部探针类在探针量词上另有要求；下述依赖 $s_p,s_q$ 的探针不保证属于那两个轴族，不能把 §33 的两族预算直接当成对任意 $x$ 的现成假设。本节也不使用其近相反谱前件、范数上界或稳定性模数。
+

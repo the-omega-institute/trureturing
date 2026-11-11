@@ -86,6 +86,14 @@ internal sealed class FormalIntervalMomentBoundsDocument : IScribeDocumentDefini
                 Blocks(Paragraph(Text(
                     "If M is nonnegative, a and c are nonnegative, and b is at most M, the nonnegative overlap length max(0,min(b,d)-max(a,c)) is at most M."))),
                 DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("formal-interval-second-bound"),
+                DeclarationHandle.Create(Prefix + "formal_interval_second_bound"),
+                H("Uniform second formal values"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For positive alpha, beta below one, M at least one, singular-series values one on empty sets and singletons, and the interval correlation input, there is a nonnegative C such that eventually |Phi(SS,H,s,a,b,a,b)| is at most C H log N for every N^alpha<=H<=N^beta, log N<=s<=log N+log 2 and 0<=a<=b<=M. The estimate uses the second correlation bound and the diagonal overlap count."))),
+                DescribeRole.Theorem),
             Paragraph(Text(
                 "The finite signed-cube realization identifies Phi with the formal coefficient moment. "
                 + "Products of interval indicators are again interval indicators, including when their intersection is empty. "

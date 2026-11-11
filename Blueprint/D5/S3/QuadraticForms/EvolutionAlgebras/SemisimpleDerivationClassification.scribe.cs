@@ -14,6 +14,14 @@ internal sealed class SemisimpleDerivationClassificationDocument : IScribeDocume
         H("Semisimple derivation algebras are sums of orthogonal algebras"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("radical-transfer-equivalence"),
+                DeclarationHandle.Create(Prefix + "trivialRadical_of_equiv"),
+                H("Transfer of trivial radical through a Lie equivalence"),
+                StatementSource.FromAuthor(Disp(TransferFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For arbitrary Lie algebras L and N over a field, a Lie equivalence L to N transfers trivial actual solvable radical from L to N. This is the original canonical proof made public for the actual orthogonal dimension-four split; the existing semisimple classification and all its hypotheses retain their meanings."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("diagonalzero"),
                 DeclarationHandle.Create(Prefix + "diagonal_zero"),
                 H("Zero diagonal coefficients"),
@@ -53,6 +61,15 @@ internal sealed class SemisimpleDerivationClassificationDocument : IScribeDocume
                     ProblemSlugRef.Create("kaygorodov-martin-gonzalez-viruel-2026-evolution-algebra-derivations-conjecture-5"),
                     ResolutionKind.Proved)))));
 
+    private static Formula TransferFormula() => All(X("k"), Type,
+        Instance(Call("Field", X("k")),
+        All(X("L"), Type, Instance(Call("LieRing", X("L")),
+        Instance(Call("LieAlgebra", X("k"), X("L")),
+        All(X("N"), Type, Instance(Call("LieRing", X("N")),
+        Instance(Call("LieAlgebra", X("k"), X("N")),
+        Instance(Apply(Qualified("LieAlgebra", "HasTrivialRadical"), X("k"), X("L")),
+        All(X("e"), LieEquivalence(X("L"), X("N")),
+            Apply(Qualified("LieAlgebra", "HasTrivialRadical"), X("k"), X("N"))))))))))));
     private static Formula OrthogonalParameters(Formula body) => All(X("k"), Type,
         Instance(Call("Field", X("k")), Instance(Call("CharZero", X("k")),
         All(X("n"), Type, Instance(Call("Fintype", X("n")), Instance(Call("DecidableEq", X("n")),

@@ -1,0 +1,2 @@
+**推论 496.5（一、二阶接口由 (490.2) 推出）。** (a) $(\mathrm M_2)$ 成立，$M_2(s,t)=c_2\kappa\min(s,t)=\frac{2^\kappa-1}{\log2}\min(s,t)$。
+

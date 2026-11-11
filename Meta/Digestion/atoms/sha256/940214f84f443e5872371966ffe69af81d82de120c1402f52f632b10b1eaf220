@@ -1,0 +1,20 @@
+**引理 43.2（有限支撑实际原像域）。** 固定表示 $\pi$ 及有限秩正交投影 $P\in B(H)$，令
+
+$$
+T_P=\{a\in E:\pi a=P\pi(a)P\}.
+\tag{43.3}
+$$
+
+$T_P$ 是对同一旧 $D$ 闭合的实Jordan子代数，且 $\rho_P:T_P\to B(PH)_{\rm sa}$、$a\mapsto\pi(a)|_{PH}$ 是Jordan同态。若 $K(H)\subset\pi(A)$，则 $\rho_P$ 满射。
+
+证明。对实际 $a,b\in T_P$，P2在系数 $(1,\pm i)$ 上给
+
+$$
+-\tfrac12((\pi a)^2+(\pi b)^2)
+\le\pi D(a,b)\le
+\tfrac12((\pi a)^2+(\pi b)^2)\le MP
+\tag{43.4}
+$$
+
+的双侧支配，其中 $M=(\|\pi a\|^2+\|\pi b\|^2)/2$。若 $-MP\le d\le MP$，两个正算子 $MP\pm d$ 在 $P^\perp H$ 上的二次型为零，正平方根使它们都消去该子空间，故 $d=PdP$；这同时排除了交叉块。Jordan闭合及同态性来自原乘法。若含有全部紧算子，每个有限角矩阵属于 $\pi(A)$；任选提升再取自伴部即给精确自伴提升。因此可选实际 $e\in T_P$ 满足 $\pi e=P$，不要求 $e^2=e$。∎
+

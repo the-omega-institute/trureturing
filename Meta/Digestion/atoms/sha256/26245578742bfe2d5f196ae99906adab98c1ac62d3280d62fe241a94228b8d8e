@@ -1,0 +1,46 @@
+**Proposition 7.4 (an earned rational dynamic guard).** For a fixed
+deterministic branch, let positive rationals $c_-,l$ satisfy
+$c_-\le c$, $l\le\tau$, and set $M_0=1/(4c_-)$. For an integer $L\ge1$
+compute a rational enclosure
+
+$$
+ 0<D_L^-\le D_{2L}(l)
+        =d^{\mathrm{ref}}_{1/(2Ll)}.
+ \tag{7.12}
+$$
+
+For positive rational $\epsilon,\delta_0$, the wholly rational
+test
+
+$$
+ M_0\frac{1-D_L^-}{D_L^-}
+ <\left[\frac{\epsilon\delta_0}
+                    {(r+1)4^{H+r}}\right]^2
+ \tag{7.13}
+$$
+
+implies that the second failure bound in (6.14) is at most
+$\delta_0$. For every fixed positive $c_-,l,H,r,\epsilon,\delta_0$
+the reference computation finds finite $L$ and precision for which
+(7.12)--(7.13) pass.
+
+*Proof.* The original exact calibration gives
+
+$$
+ \|g_d\|_\infty=\frac1{4c}-1\le M_0,\qquad
+ \Theta(1/(2Ld))\le\frac{1-D_L^-}{D_L^-}.
+ \tag{7.14}
+$$
+
+The second inequality follows from the original-domain scaling
+and (7.2), since $(1-x)/x$ decreases for $x>0$. Substitution in
+(6.14) proves sufficiency. For termination, $D_{2L}(l)\to1$;
+the reference algorithm supplies arbitrarily close lower
+enclosures. Enumerating $L$ and refining the enclosures therefore
+crosses the strictly positive right side of (7.13) at finite
+values. Each reference call and rational test is finite; fair
+finite-precision interleaving avoids an unresolved equality
+blocking the search. This proves finite success, without a
+numerical name of an original parameter or an exact-law query.
+$\square$
+

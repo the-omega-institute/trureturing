@@ -11,6 +11,7 @@ admission_basis: open-problem-resolution (#28505; Proved)
 escape_witness: none; every declaration is bind-only. The all-height reduction v_eq_w
 instantiates Function.Semiconj.iterate_right at the boundary-class map after the
 finite one-step premises (scanner fibres, row_counts, valid_next) are normalized.
+label_sum is the public reindexing identity for sums over four-column label rows.
 Direct frozen dependencies (declaration statement_ids):
 D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip.Seen
 statement_id: sha256:db13d94501d24f27e6e69604bb633af95ff3309c5698815c44e12d2e52739fce
@@ -111,7 +112,7 @@ def rowLegal (c : Row) : Prop :=
 def bonds (c d : Row) : Prop :=
   ∀ j : Fin 4, c j ≠ d j ∧ (c j).val + (d j).val ≠ 5
 
-private instance decidableRowLegal (c : Row) : Decidable (rowLegal c) :=
+instance decidableRowLegal (c : Row) : Decidable (rowLegal c) :=
   inferInstanceAs (Decidable (∀ _, _ ∧ _))
 private instance decidableBonds (c d : Row) : Decidable (bonds c d) :=
   inferInstanceAs (Decidable (∀ _, _ ∧ _))
@@ -178,7 +179,7 @@ private theorem class_fibres (s : Seen) (p : Fin 4 → Fin 3) (k : Fin 4) :
       boundaryClass (finish s c) (labels c) = k then 1 else 0) else 0
   by_cases hg : good s c <;> simp [hg]
 
-private theorem label_sum (g : (Fin 4 → Fin 3) → ℤ) :
+theorem label_sum (g : (Fin 4 → Fin 3) → ℤ) :
     (∑ q, g q) = ∑ a : Fin 3, ∑ b : Fin 3, ∑ c : Fin 3, ∑ d : Fin 3,
       g ![a, b, c, d] := by
   let e : (Fin 4 → Fin 3) ≃ Fin 3 × Fin 3 × Fin 3 × Fin 3 :=

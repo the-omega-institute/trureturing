@@ -1,0 +1,34 @@
+**定义 20.1（给定仿射总几何的普遍事件断言）。**沿用定义 1.1 的实际签名：$M$ 是带真实双侧单位 $1$ 的任意 magma，$U:M\to M$ 任意；不要求结合、交换、逆元、消去、拓扑或商下降。固定 $\omega=\exp(2\pi i/3)$。给定复 Hilbert 空间 $H$、映射 $F:M\to H$ 和任意漂移 $t\in H$，满足
+
+$$
+\begin{gathered}
+F1=0,\qquad F(a\cdot b)=Fa+Fb,\qquad F(Ua)=\omega Fa+t,\\
+H=\overline{\operatorname{span}_{\mathbb C}F(M)},\qquad
+K(a,b)=\|Fa-Fb\|^2.
+\end{gathered}
+\tag{20.1}
+$$
+
+实际给定的完整有限测试用有限索引集 $J$ 及核族 $(d_j)_{j\in J}$ 表示；各 $d_j:M^2\to[0,\infty)$ 处处有限，对全部有序原标签及所示括号满足
+
+$$
+\sum_{k=0}^2d_j(a\cdot U^ku,b\cdot U^kv)
+=3d_j(a,b)+3d_j(u,v),\qquad
+\sum_{j\in J}d_j(a,b)=K(a,b).
+\tag{20.2}
+$$
+
+因此 $0\le d_j\le K$，各事件零对角，但不预设事件对称、负型、第三标记返回或 Hilbert 表示。两个索引即使给出同一函数也仍是两个事件标签。
+
+记 $\mathsf{Eff}$ 为以下普遍断言：对每个满足 (20.1) 的 $(M,1,\cdot,U,H,F,t)$ 及每个满足 (20.2) 的完整带索引有限测试，在这个给定总核的同一个最小复空间 $H$ 上存在唯一复正收缩 $(E_j)_{j\in J}$，使
+
+$$
+0\le E_j\le I_H,\qquad
+\sum_{j\in J}E_j=I_H,\qquad
+d_j(a,b)=\langle Fa-Fb,E_j(Fa-Fb)\rangle
+\quad(a,b\in M).
+\tag{20.3}
+$$
+
+这里的普遍量词指满足所列公理的全部数学模型及其给定测试；它不宣称任意新构造的数学测试在物理中可用。总 Hilbert 几何是本问题的输入，不是由本节推导的量子起源。
+

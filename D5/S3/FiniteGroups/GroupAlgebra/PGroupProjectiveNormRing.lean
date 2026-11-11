@@ -55,7 +55,7 @@ variable [CommRing R] [Group P] [AddCommGroup V] [Module R V]
 variable [AddCommGroup W] [Module R W]
 
 -- T_g(f)(h) = f(h*g), and T_g T_a = T_(g*a), also for nonabelian P.
-private def rightTranslate : Representation R P (P → W) where
+def rightTranslate : Representation R P (P → W) where
   toFun g :=
     { toFun := fun f h => f (h * g)
       map_add' := fun _ _ => rfl
@@ -158,7 +158,7 @@ private theorem rightTranslate_free [Finite P] [Module.Free R W] :
 
 variable [Fintype P]
 
-private def orbitSum (ρ : Representation R P V) (L : W →ₗ[R] V) :
+def orbitSum (ρ : Representation R P V) (L : W →ₗ[R] V) :
     Representation.IntertwiningMap (rightTranslate (R := R) (P := P) (W := W)) ρ where
   toLinearMap :=
     { toFun := fun f => ∑ g : P, ρ g (L (f g⁻¹))
@@ -456,7 +456,7 @@ private theorem rightTranslate_projective [Finite P] [Module.Projective R W] :
 
 -- Restriction of scalars is justified by an actual free coefficient module
 -- and restricted split maps, rather than an assumed preservation instance.
-private theorem coefficient_projective_of_projective (ρ : Representation R P V)
+theorem coefficient_projective_of_projective (ρ : Representation R P V)
     [Module.Projective R[P] ρ.asModule] : Module.Projective R V := by
   classical
   obtain ⟨i, hi⟩ :=
@@ -491,13 +491,14 @@ private def normToInvariants (ρ : Representation R P V) : V →ₗ[R] ρ.invari
   map_add' x y := Subtype.ext (ρ.norm.map_add x y)
   map_smul' r x := Subtype.ext (ρ.norm.map_smul r x)
 
--- Projectivity over the group algebra splits the actual orbit-cover map.
--- Evaluating the equivariant section at 1 gives an ordinary R-linear norm section.
--- This statement itself needs no p-group or characteristic hypothesis.
-private theorem norm_section_of_projective (ρ : Representation R P V)
+-- The orbit-cover section is shared by the invariant norm argument below
+-- and the unrestricted endomorphism conjugation-trace criterion.
+-- Only the finite group, not p-nilpotence or module finiteness, is needed.
+theorem orbit_section_of_projective (ρ : Representation R P V)
     [Module.Projective R[P] ρ.asModule] :
-    ∃ L : ρ.invariants →ₗ[R] V,
-      ∀ w : ρ.invariants, ρ.norm (L w) = (w : V) := by
+    ∃ S : Representation.IntertwiningMap ρ
+        (rightTranslate (R := R) (P := P) (W := V)),
+      ∀ v : V, orbitSum ρ (LinearMap.id : V →ₗ[R] V) (S v) = v := by
   classical
   let τ := rightTranslate (R := R) (P := P) (W := V)
   let q := orbitSum ρ (LinearMap.id : V →ₗ[R] V)
@@ -515,6 +516,19 @@ private theorem norm_section_of_projective (ρ : Representation R P V)
     have hv := congrArg ρ.asModuleEquiv
       (LinearMap.congr_fun hs (ρ.asModuleEquiv.symm v))
     exact hv
+  exact ⟨S, hqS⟩
+
+-- Projectivity over the group algebra splits the actual orbit-cover map.
+-- Evaluating the equivariant section at 1 gives an ordinary R-linear norm section.
+-- This statement itself needs no p-group or characteristic hypothesis.
+private theorem norm_section_of_projective (ρ : Representation R P V)
+    [Module.Projective R[P] ρ.asModule] :
+    ∃ L : ρ.invariants →ₗ[R] V,
+      ∀ w : ρ.invariants, ρ.norm (L w) = (w : V) := by
+  classical
+  let τ := rightTranslate (R := R) (P := P) (W := V)
+  let q := orbitSum ρ (LinearMap.id : V →ₗ[R] V)
+  obtain ⟨S, hqS⟩ := orbit_section_of_projective ρ
   let L : ρ.invariants →ₗ[R] V :=
     { toFun := fun w => S (w : V) 1
       map_add' := by

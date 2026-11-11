@@ -1,0 +1,28 @@
+### 15.6 Exact missing coordinate and the limit of the conclusion
+
+The residual formula gives
+
+$$
+Q(w_{0,1})-U_0W(\beta)=-\frac{97339}{388125000},
+$$
+
+and therefore
+
+$$
+\mathcal R_B(Q)(\beta)-W(\beta)
+=-\frac{97339}{246148875}\ne0.
+$$
+
+Hence
+
+$$
+\operatorname{TV}(\mathcal R_B(Q),W)
+\ge\frac{97339}{246148875}>0.
+$$
+
+The constant beta-coordinate test in (11.7) already fails. Since both directional marginals are point masses, the only coupling with these marginals is the displayed point mass; changing the coupling cannot repair this coordinate. The pair is therefore not a compatible pair of Chapter 11 and cannot be installed as an observer.
+
+This is a failure of the selected event-output bridge, even though the pair has full endpoint-box membership, all complete tails, both exact event means, both actual event residual equations, the complete $A$ residual equation, and every supported complete-configuration loss. It is not a no-go theorem for the full degree-at-most-two word/tail vector class: the full residual equations of (11.7) remain required, and no global vector separator, zero-level compatible pair, finite exact attainer, evaluated unrestricted gap, or fixed-resource optimum is asserted. The distinction between raw-coordinate polynomial degree at most two and the normalized-residual square extension remains as stated in Section 15.1.
+
+The realization theorem of Chapter 11 applies only after all complete-coordinate barycentre equations hold for common unweighted marginals. Thus its regeneration, rational approximation, finite atomicity, and all-shape infimum conclusions are not invoked for this pair. The original prior, source, paid histories, records, completion, Stop, zero and unit emissions, and possible noncompletion remain exactly those of the standing hypotheses. $\square$
+

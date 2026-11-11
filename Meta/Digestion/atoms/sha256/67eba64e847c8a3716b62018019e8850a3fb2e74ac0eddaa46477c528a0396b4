@@ -1,0 +1,45 @@
+**定理 10.4（完整区间对象中的一个实际失败探针）。** 取本卷 $n=3$ 的 $M=C([0,1],M_3(\mathbb C))$，使用(9.33)的含单位忠实常值嵌入 $\iota$。对定理10.2的任意固定参数、符号和所造探针，令
+
+$$
+\widetilde P=\iota(P),\quad \widetilde c=\iota(c),\quad
+\widetilde t=\iota(t),\quad \widetilde g=\iota(g),\quad
+x_I=\iota(x)\in(\widetilde PM\widetilde P)_{\rm sa}.
+\tag{10.38}
+$$
+
+则 $x_I$ 是实际非零连续角截面。任取 $\tau_*\in[0,1]$，实际点值映射给数学正泛函
+
+$$
+\Psi=\phi_\xi\circ\operatorname{ev}_{\tau_*},\qquad
+\Psi(u)=\phi_\xi(1_\star)=\|u\|^2+|z|^2>0.
+\tag{10.39}
+$$
+
+在(10.2)的同一完整公式下，其全部标签满足
+
+$$
+\begin{gathered}
+\widetilde h=K_\sigma(\widetilde c,x_I)=\iota(h),\quad
+\widetilde r=\widetilde c\circ x_I=\iota(r),\quad
+\widetilde k=\widetilde c\circ\widetilde t=\iota(k),\quad
+\widetilde g=\iota(g),\\
+\widetilde R_\pm=\iota(R_\pm),\quad
+\widetilde S_\pm=\iota(S_\pm),\quad
+\widetilde L_{x_I}=\iota(L_x),\\
+B_\Psi(\widetilde R_\pm,\widetilde S_\pm)
+=B_{\phi_\xi}(R_\pm,S_\pm),\quad
+\Psi(\widetilde L_{x_I})=\phi_\xi(L_x).
+\end{gathered}
+\tag{10.40}
+$$
+
+因此该实际截面及同一质量正读取严格违反完整的探针预算，差额仍大于 $8|\lambda\rho|$。对定理10.3的相同常值数据，全部正 $\Psi'$ 的 P2 和原 $x_I=0$ 统一余量同时成立，却由(10.38)–(10.40)的一份非零常值截面排除全探针预算。
+
+**证明。** $\iota$ 保乘法、伴随、复线性和单位，故平方、Jordan 乘法、交换子、反交换子及每一个标签逐字运输。忠实性给 $x_I\ne0$，角关系由 $PxP=x$ 运输。点值是含单位正映射且 $\operatorname{ev}_{\tau_*}\iota=\operatorname{id}$，所以(10.39)–(10.40)连同完整质量准确成立。严格违反由(10.3)直接代入，不缩减第三坐标或质量。
+
+对全部正 $\Psi'$ 的零探针正余量，使用(9.35)的 $\phi=\Psi'\circ\iota$，其单位质量恰为 $\Psi'(u)$；定理9.2已支付的混合读取结论直接适用。这里的正泛函拉回与点值复合都是已知数学映射，不给未知 $D$ 增加任何自然性。
+
+若所提常值数据实际作为定义1.2的完整 $\mathsf H_I(D)$ 实现，且实际供应该角内的同号旧值 $D(\widetilde c,x_I)=K_\sigma(\widetilde c,x_I)$ 以及输出 $D(\widetilde c,\widetilde t)=\widetilde g$，则 $\mathsf F$ §41.1 的必要性接线把原 $\operatorname{PB}(\widetilde c;x_I,\widetilde t)$ 与两份实际外层 P2 送到上述预算，产生矛盾。原评价准确决定锥所给数学正读取不要求把 $\Psi$ 宣告为实际准备。因此这些输出和角接口不能共同成为完整实现。前文3.1、5.2仍保留自身全部全 H／总响应前件；本证明不通过假定 $D$ 与 $\iota$、点值或压缩交换来取得矛盾。
+
+一份实际非零常值截面已否定全探针全称，不需检验所有非常值截面。本定理没有验证它们的预算，也没有构造任何未知总 $D$。∎
+

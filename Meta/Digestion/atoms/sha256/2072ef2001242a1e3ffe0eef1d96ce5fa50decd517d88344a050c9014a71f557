@@ -1,0 +1,3 @@
+**约定 C-59.5（外部消元的数学接口）。** 外部路径的未归一化四格响应、局部五律及其推导见同主题[续卷第 60–66 章](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS_CONTINUATION.md)。续卷中的 $\lambda_i$、$\mathcal Z$、$p^{(i)}$、$\Delta_i$ 和 $Q_i$ 均为定义 C-59.2、C-59.4 的同一对象。所需接口保留外部的两个共同端点，而非两个独立边缘；它将给出中心活动的概率比、外部对数四角项及跨窗口校准残差三种不同读数。
+
+

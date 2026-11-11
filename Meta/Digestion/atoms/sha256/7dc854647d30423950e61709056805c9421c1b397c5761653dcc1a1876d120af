@@ -1,0 +1,19 @@
+**定理 5.1（一般 JB 理想对同一旧值的吸收）。** 对任一闭 Jordan 理想 $I\lhd X$，仅原 P2 已给
+
+$$
+D(E,E\cap I)\subset E\cap I,\qquad
+D(E\cap I,E)\subset E\cap I.
+\tag{5.1}
+$$
+
+这里没有要求 $I\subset E$ 或 $I$ 本质，也没有给输入纤维不变。
+
+证明。消费静态重构卷 71.1 的同一正二表吸收机制，在这里用实 JB 商而非已给 C* 种子坐标。设 $b\in E\cap I,a\in E$，$q_I:X\to X/I$ 是仅针对已知 Jordan 结构的商。Hanche-Olsen–Størmer Theorem 3.4.2 给 $X/I$ 的 JB 结构。[129.1](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md#129-读取同一二表的数学正泛函) 使它的任意正泛函 $\phi$ 拉回原 $E$ 后读取同一个 P2；由于 $q_I(b^2)=0$，零对角预算给
+
+$$
+\phi(q_I(D(a,b)))=0.
+\tag{5.2}
+$$
+
+JB 商的正泛函分离元素，故 $q_I(D(a,b))=0$，即原输出属于 $I$；它本来就属于 $E$。原反对称性给另一槽。$I=X$ 或零商时断言直接成立。$q_I$ 在这里只检验每个实际输出是否落在理想中；没有出现 $D(q_Ia,q_Ib)$，也没有比较两个不同原输入的旧输出。∎
+

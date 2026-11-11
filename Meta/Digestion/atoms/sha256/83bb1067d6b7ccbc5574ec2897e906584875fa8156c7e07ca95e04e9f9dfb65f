@@ -1,0 +1,17 @@
+**Definition 11.1 (the same source and the single-read relation).** Retain
+Assumption 1.1 and Definitions 1.2, 6.1, 9.1 and 10.1 in full. Thus the original
+$G=H^1\times\mathbb R$, unit source, normalized $h$, complex endpoint
+$A=\rho C$, full operator/form domains and source trace, conservative
+$e$-start, lead-in $2d$, gap $d$, four strictly positive emissions,
+original masses and fresh nondisturbing read noises are unchanged.
+The stationary law $Q=Q_\emptyset^\infty$ is only the mathematical
+comparison of (9.1). No stationary preparation is made.
+
+For $A\subseteq\mathcal L$ put $f_A=\sum_{y\in A}f_y$.
+Call $A$ neutral when $f_A$ is constant as an $m$-class. A deterministic
+single-read recoding $\gamma:\mathcal L\to\mathcal A$ has finite
+discrete image and is neutral when every inverse image of an output
+event is neutral. This is a relation between the original emission
+kernel and a recoding, not a new observation port. Put
+$B(y)=\mathbf1_{\{y=B\}}$.
+

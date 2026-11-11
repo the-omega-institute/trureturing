@@ -36,6 +36,10 @@ internal sealed class HardinA233254TriangleStripDocument : IScribeDocumentDefini
                 "The five labels record complementary pairs at column indices 1 through 5."),
             Def("horizontal", "rowLegal", "Horizontal exclusions", RowFormula(),
                 "The conjunction excludes equality and a natural-number sum of five."),
+            Def("decidablerowlegal", "instDecidableRowLegal", "Deciding horizontal exclusions",
+                DecidableRowLegalFormula(),
+                "The defining lambda uses inferInstanceAs for the finite conjunction of "
+                + "the two horizontal exclusions."),
             Def("pairs", "pairs", "Boundary labels", PairsFormula(),
                 "The lambda retains the ordered five-column boundary."),
             Def("compatible", "compatible", "Antidiagonal exclusions", CompatibleFormula(),
@@ -73,6 +77,8 @@ internal sealed class HardinA233254TriangleStripDocument : IScribeDocumentDefini
                 "The scanner starts with both flags false and the first colour fixed to zero."),
             Def("firstmoment", "firstMoment", "First-row weighted count", FirstMomentFormula(),
                 "Only fully seen first rows contribute the chosen boundary moment."),
+            Thm("sumrows", "sum_rows", "Summing six-cell functions", SumRowsFormula(),
+                "The sum over functions equals the six iterated sums of their coordinates."),
             Thm("certificate", "finite_certificate", "One-row transfer counts",
                 CertificateFormula(),
                 "Write r, t, u for moments one, two and three. A fully seen boundary has "
@@ -117,6 +123,17 @@ internal sealed class HardinA233254TriangleStripDocument : IScribeDocumentDefini
             new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233254"),
                 ResolutionKind.Proved));
 
+    private static Formula SumRowsFormula()
+    {
+        var m = V("m"); var f = V("f");
+        var fm = Call("Fin", m);
+        Formula rhs = App(f, Vector(V("a"), V("b"), V("c"), V("d"), V("e"), V("g")));
+        foreach (var n in new[] { "g", "e", "d", "c", "b", "a" })
+            rhs = SumOver(n, fm, rhs);
+        return All("m", Q("Nat"), All("f", Arrow(Arrow(Fin(6), fm), Q("Int")),
+            Eq(SumOver("c", Arrow(Fin(6), fm), App(f, V("c"))), rhs)));
+    }
+
     private static Formula RowFormula()
     {
         var c = V("c"); var j = V("j");
@@ -124,6 +141,16 @@ internal sealed class HardinA233254TriangleStripDocument : IScribeDocumentDefini
         var y = App(c, Call("Fin.succ", j));
         return All("c", N("Row"), Eq(CallLocal("rowLegal", c), All("j", Fin(5),
             And(Ne(x, y), Ne(Add(Val(x), Val(y)), Num(5))))));
+    }
+    private static Formula DecidableRowLegalFormula()
+    {
+        var c = V("c"); var j = V("j");
+        var x = App(c, Call("Fin.castSucc", j));
+        var y = App(c, Call("Fin.succ", j));
+        var body = All("j", Fin(5), And(Ne(x, y), Ne(Add(Val(x), Val(y)), Num(5))));
+        return Eq(Typed(N("instDecidableRowLegal"), Call("DecidablePred", N("rowLegal"))),
+            Parenthesized(Fn("c", N("Row"),
+                Call("inferInstanceAs", Parenthesized(Call("Decidable", Parenthesized(body)))))));
     }
     private static Formula PairsFormula() => All("c", N("Row"),
         Eq(CallLocal("pairs", V("c")), Fn("j", Fin(5),

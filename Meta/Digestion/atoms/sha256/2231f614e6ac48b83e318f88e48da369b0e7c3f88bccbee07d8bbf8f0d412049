@@ -1,0 +1,68 @@
+**构造 5.3（PREP、SELECT、投影和内层 QSVT）。** 这里及第 6 节使用 Gilyén–Su–Low–Wiebe，[《Quantum singular value transformation and beyond》精确 v1 源](https://arxiv.org/src/1806.01838v1) 的 `BlockHam.tex` Definition 15、Theorem 17、Corollary 18 和 Lemma 19。已知结果作为 (5.3) 构造的工具使用。
+
+实区间上的 Taylor 积分余项给
+
+$$
+|e^{irx}-p_n(x)|\le\frac{r^{N+1}}{(N+1)!}\le\epsilon_{\rm in},
+\qquad r=|\xi_n|\le6e^{-3/2},\quad |x|\le1.
+\tag{5.9}
+$$
+
+故 $|p_n|\le1+\epsilon_{\rm in}$。其实部为实偶多项式、虚部为实奇多项式，另外两个实虚奇偶分量为零。由 (5.5)–(5.6)，对
+
+$$
+\frac{g_{\operatorname{Re}p_n}}{1+\epsilon_{\rm in}},\qquad
+\frac{g_{\operatorname{Im}p_n}}{1+\epsilon_{\rm in}}
+\tag{5.10}
+$$
+
+分别应用实多项式 QSVT。二者在整个 $[-1,1]$ 上范数不超过一，实性、次数和所需奇偶性满足 Theorem 17、Corollary 18。输入输出投影取
+$P_B=I_R\otimes|00\rangle\langle00|$，作用于探针及仿射选择位。等权两支选择器在虚支施加相位 $i$，再反准备，得到块
+
+$$
+\frac{g_{p_n}(B_{\mathfrak a_n})}{2(1+\epsilon_{\rm in})}.
+\tag{5.11}
+$$
+
+这个因子二支付复数及奇偶选择的全部归一化。两个标量字合计至多 $2(N+2)$ 次 $B$ 编码调用。
+
+对全部频率相干选择同一个查询序列。已知非参考探针准备
+$\sum_n|n\rangle\langle n|\otimes U_{\mathfrak a_n}$ 围住共享的 $Q_D$ 访问，多项式相位按频率选择。Lemma 19 供应这种多相位字，不引入 $F_{\rm count}$ 倍的反射次数。若奇序列需要受控标量字，则相应访问也作付费受控访问。
+
+PREP 将频率口准备为
+
+$$
+\sum_{n\in\mathcal F}\sqrt{\frac{\|a_n\|_2}{\widehat\alpha}}\,|n\rangle.
+\tag{5.12}
+$$
+
+按频率在空白 $L,K_{\rm work}$ 上准备 $v_n$，施行 (5.11) 的标量 SELECT 字，最后仅反准备频率口。这定义 $U_e$。其投影为
+
+$$
+\begin{aligned}
+\Pi&=I_R\otimes|0_{\rm frequency},0_{\rm labels},0_{\rm flags}\rangle
+\langle0_{\rm frequency},0_{\rm labels},0_{\rm flags}|,\\
+\widetilde\Pi&=I_{R,L,K_{\rm work}}\otimes|0_{\rm frequency},0_{\rm flags}\rangle
+\langle0_{\rm frequency},0_{\rm flags}|.
+\end{aligned}
+\tag{5.13}
+$$
+
+投影、相位、选择和准备全部只作用于非 $R$ 系统。由 (5.11)–(5.12)，矩形块正是 (5.3) 中的 $\widehat A/\beta$。
+
+令 $V_c$ 为相干态分辨的等距、$M_f$ 为向量值乘法算子，则
+$A_{\rm stack}=(V_c^\dagger\otimes I)M_fV_c$，所以向量 Toeplitz 映射为压缩收缩。联合使用 Fourier 尾、表舍入和 (5.9)，
+
+$$
+\|\widehat A-A_{\rm stack}\|
+\le\frac1{1000t}+\frac1{10000t}+\widehat\alpha\epsilon_{\rm in}
+=\frac3{2500t}.
+\tag{5.14}
+$$
+
+目标仍是定义 3.3 同一个有限 $f$ 的极等距 $W$。
+
+所有相位表按 Corollary 18 的构造性实多项式相位分解确定，采用固定根及分支排序；交替字恰取 Definition 15，实多项式包装取 Corollary 18 的 $+\Phi$、$-\Phi$ 字的 Hadamard 共轭直和。内部实偶和虚奇多项式分别使用它，外层也使用同一规定。不合成谱投影。
+
+每个逆都是有限逻辑字的逆序伴随。其中已知非参考准备及其逆是已知矩阵；每个 $Q_D$ 或受控 $Q_D$ 的逆字母由一个新的第 7 节前向原生字供应，使用新记录，不使用 $V^\dagger$，也不倒转已经存在的原生记录。这完成定理 5.2 的逻辑块证明。$\square$
+

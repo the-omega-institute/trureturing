@@ -1,0 +1,59 @@
+## 1. The joint relation and its original-source consequence
+
+The results below have ordinary mathematical proofs. No Lean verification, frozen status or CI result is asserted.
+
+Two particular finite complete-word events, one at each original phase, jointly determine every regular emission on a fixed acquired circulation. Their individual readouts do not have this property. Proposed arrays admit one common regular completion exactly when the unique projected feedback solution also satisfies the unprojected equations. The joint inverse is uniform in the finite numbers of configurations and requires no native residual, conserved emission, reversibility or irreducibility hypothesis. Its consequence for the original unrestricted observer class is that semantic variation cannot be hidden entirely outside these two event readouts.
+
+Put
+
+$$
+a=\frac13,\qquad b=\frac25,\qquad
+\rho_p=\frac{1116529}{22781250},\qquad
+\rho_\beta=\frac{239}{6750}.
+$$
+
+Use the complete raw words and original full-record renderer defined in Section 2. Define
+
+$$
+E_p=\{w_{0,1},w_{1,1},w_{2,1}\},\qquad
+E_\beta=\{\beta,\alpha w_{0,1}\},
+$$
+
+$$
+C=\frac{11758471}{22781250},\qquad
+H=\frac{5261}{6750},\qquad c=1-H=\frac{1489}{6750}.
+\tag{1.1}
+$$
+
+These events, endpoint radii and midpoint values are supplied by [ST] and [PAID, Section 12]. They are not newly chosen minimax targets.
+
+For an original observer $M$, write
+
+$$
+e(M)=\max\{R_{\mathrm{conf},p}(M)-\rho_p,
+                 R_{\mathrm{conf},\beta}(M)-\rho_\beta\}.
+\tag{1.2}
+$$
+
+Fix the original seed-1, marker-100 held-record fibre reached by
+
+$$
+S=\beta\alpha\mid\beta\beta\alpha\alpha.
+\tag{1.3}
+$$
+
+Pull each configuration's complete law back through its current full-record renderer. Let $\mathcal Z_s^*(M)$ be the union of configurations reachable with positive probability after a positive finite actual history on this fibre, at phase $s$. Define the two event ranges
+
+$$
+\mathcal O_p(M)=\sup_{z,z'\in\mathcal Z_p^*(M)}
+ |D_z(E_p)-D_{z'}(E_p)|,
+$$
+
+$$
+\mathcal O_\beta(M)=\sup_{z,z'\in\mathcal Z_\beta^*(M)}
+ |D_z(E_\beta)-D_{z'}(E_\beta)|.
+\tag{1.4}
+$$
+
+The configurations in a comparison need not coexist after one history. The events are interpreted in each configuration's own current-record chart. These are semantic readouts of finite law descriptions, not new actual observations or runtime ports.
+

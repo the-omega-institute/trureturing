@@ -1,0 +1,24 @@
+**定理 32.3（同一原表的分类）。** 设 $I$ 为 $A$ 中交换子生成的闭双边理想，$U=\operatorname{Prim}(I)$，按理想的标准开嵌入视为 $\operatorname{Prim}(A)$ 的非交换部分。若 $I\ne0$，则
+
+$$
+\boxed{\quad
+\mathsf H_A(D)
+\ \Longleftrightarrow
+\exists!Q\in Z(M(I)):\quad
+Q=Q^*,\ Q^2=1_{M(I)},\quad
+D(a,b)=Q\,\frac i2[a,b]\quad(a,b\in E).
+\quad}
+\tag{32.5}
+$$
+
+右式的乘子只作用于属于 $I$ 的交换子，输出属于原 $A_{\rm sa}$。等价地，$Q$ 对应 $U$ 上唯一连续二值取向 $\sigma:U\to\{\pm1\}$。不要求该取向延拓到整个 $\operatorname{Prim}(A)$，也不要求 $Q\in Z(A)$。若 $I=0$，分类为唯一 $D=0$，取向为唯一空函数。
+
+特别地，对每个不可约 $\pi:A\to M_n(\mathbb C)$，当 $n\ge2$ 时存在一个输入无关的 $\sigma_\pi$，使全部实际原输入满足
+
+$$
+\pi D(a,b)=\sigma_\pi\frac i2[\pi a,\pi b].
+\tag{32.6}
+$$
+
+这就是本任务的FM结论；它不列入任何新增假设。$n=1$ 时全部实际旧输出像为零。证明见33–39。
+

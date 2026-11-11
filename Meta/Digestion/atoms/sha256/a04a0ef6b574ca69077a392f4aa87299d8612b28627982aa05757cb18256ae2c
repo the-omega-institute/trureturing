@@ -1,0 +1,50 @@
+**定义 12.2（本增补的完整原域）。** 固定非空紧 Hausdorff 空间 $X$、整数 $n\ge3$ 和局部平凡复 $*$-代数丛 $\mathfrak B\to X$，纤维为 $M_n(\mathbb C)$，过渡为连续的保单位复 $*$-同构。取全部连续截面
+
+$$
+M=\Gamma(X,\mathfrak B),\quad E=M_{\rm sa},\quad
+u=1,\quad S(a,b)=a\circ b=(ab+ba)/2,
+\quad C=\{a\in E:a(x)\ge0\ (x\in X)\},
+\quad N(a)=\sup_x\|a(x)\|.
+\tag{12.1}
+$$
+
+原正实线性评价族 $\mathcal P$ 分离 $E$，并准确决定 $C$：
+
+$$
+a\in C\iff \alpha(a)\ge0\ (\alpha\in\mathcal P),\qquad
+[\alpha(a)=0\ (\alpha\in\mathcal P)]\Longrightarrow a=0.
+\tag{12.2}
+$$
+
+全部原质量 $m_\alpha=\alpha(u)$，包括零、不等、次归一及非正常评价，均保留。$D:E^2\to E$ 是同一给定总映射。完整原关系准确采用 OP1.1、80.1 和 SQ51.1：A1/P2 是对全部实际 $a,b$、两种次序和全部原评价的 Hermitian 二表
+
+$$
+\begin{pmatrix}
+\alpha(a^2)&\alpha(a\circ b)-i\alpha D(a,b)\\
+\alpha(b\circ a)-i\alpha D(b,a)&\alpha(b^2)
+\end{pmatrix}\succeq0.
+\tag{12.3}
+$$
+
+A2 是全部相加三表 $(a+b,a,b)$ 及全部排列的实部在整个 $\mathbb R^3$ 上半正定，指定相加向量 $(1,-1,-1)$ 及相应排列准确给零。A3 保留 $u^2=u$ 和同一固定有理 $0<\vartheta\le1$ 上全部 $0\le e\le\vartheta u\Rightarrow e^2\le e$。不预给复三表。
+
+对全部实际 $h,a,b\in E$，定义的始终是同一个旧映射的实际标签
+
+$$
+v=D(h,a)-h\circ b,\quad w=h\circ a+D(h,b),\quad
+r_\pm=a\pm v,\quad s_\pm=b\pm w.
+$$
+
+完整 PB 要求
+
+$$
+\alpha(r_+^2+s_+^2+2D(r_+,s_+))
+=\alpha(r_-^2+s_-^2+2D(r_-,s_-))
+\quad(\alpha\in\mathcal P).
+\tag{12.4}
+$$
+
+零、重复、任意幅度、背景、缩放、平移和嵌套调用均在量词内。不输入 $D$ 的可加、齐次、输入连续、可测、协变、局部性、商下降或完成延拓。
+
+这是一条明确指定完整截面域的新条件分支，不把承载卷1.1的原最小投影族及有限原子分离当作前件，也不宣称二者等价。图内的纤维秩一投影不等于 $U_p(E)=\mathbb Rp$ 的原最小投影；一般 bump 乘投影甚至不是幂等元。完整性及允许全部连续截面将在每一步真实构造中使用，不能把结论移给任意稠密原子域。
+

@@ -238,7 +238,49 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.stateEnergies`
 
 stateEnergies(D,v) is the finite image under E_D of the support of carrierCoeffEquiv(D,v). No homogeneity or positivity is assumed.
 
-**Theorem 1.20 (Finite reconstruction of every actual state).**
+**Theorem 1.20 (Projection fixes its homogeneous grade).**
+
+Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.gradeProjection_eq_self_of_mem_grade`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeEnergyGrading.gradeProjection_eq_self_of_mem_grade` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Bojko Bakalov and Victor G. Kac (2004). *Twisted Modules over Lattice Vertex Algebras*. DOI: [10.1142/9789812702562_0001](https://doi.org/10.1142/9789812702562_0001). URL: <https://arxiv.org/abs/math/0402315v1>.
+
+*Commentary.*
+
+For every D, integer n and v in grade(D,n), gradeProjection(D,n,v)=v. This existing supplier proof is reused by the full actual Zhu quotient and energy consumers.
+
+**Theorem 1.21 (Projection kills a different homogeneous grade).**
+
+Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.gradeProjection_zero_of_mem_grade_ne`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeEnergyGrading.gradeProjection_zero_of_mem_grade_ne` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Bojko Bakalov and Victor G. Kac (2004). *Twisted Modules over Lattice Vertex Algebras*. DOI: [10.1142/9789812702562_0001](https://doi.org/10.1142/9789812702562_0001). URL: <https://arxiv.org/abs/math/0402315v1>.
+
+*Commentary.*
+
+For every D, integers n and m with m!=n, and v in grade(D,m), gradeProjection(D,n,v)=0. The existing proof is exposed at this common supplier without duplication.
+
+**Theorem 1.22 (Positive Gram matrix gives nonnegative state energies).**
+
+Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.stateEnergies_nonneg`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeEnergyGrading.stateEnergies_nonneg` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Bojko Bakalov and Victor G. Kac (2004). *Twisted Modules over Lattice Vertex Algebras*. DOI: [10.1142/9789812702562_0001](https://doi.org/10.1142/9789812702562_0001). URL: <https://arxiv.org/abs/math/0402315v1>.
+
+*Commentary.*
+
+Under hD, every integer E in stateEnergies(D,v) satisfies 0<=E, for any original state v. This reused proof supplies natural energy induction; it asserts no new mathematical-content claim.
+
+**Theorem 1.23 (Finite reconstruction of every actual state).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.sum_gradeProjections`
 
@@ -250,7 +292,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.sum_gradeProjections`
 
 sum over n in stateEnergies(D,v) of gradeProjection(D,n,v) equals v. This proves a finite nonhomogeneous decomposition on the actual carrier, without hD.
 
-**Theorem 1.21 (Independence against all other grades).**
+**Theorem 1.24 (Independence against all other grades).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.grades_independent`
 
@@ -262,7 +304,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.grades_independent`
 
 The family grade(D) is iSup-independent: each grade meets the supremum of all the other grades trivially. This is stronger than only pairwise disjointness.
 
-**Theorem 1.22 (All grades span the actual carrier).**
+**Theorem 1.25 (All grades span the actual carrier).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.grades_iSup`
 
@@ -274,7 +316,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.grades_iSup`
 
 The supremum over all integer grades is top, by finite projection reconstruction for arbitrary actual states.
 
-**Theorem 1.23 (Genuine actual internal direct sum).**
+**Theorem 1.26 (Genuine actual internal direct sum).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.grades_internal`
 
@@ -286,7 +328,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.grades_internal`
 
 DirectSum.IsInternal(grade(D)) holds: the canonical sum of subtype inclusions from the integer-indexed direct sum is bijective. No hD is needed for internality.
 
-**Definition 1.24 (Constructed canonical decomposition equivalence).**
+**Definition 1.27 (Constructed canonical decomposition equivalence).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.carrierEnergyDecomposition`
 
@@ -297,6 +339,8 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeEnergyGrading.carrierEnergyDecomposi
 *Commentary.*
 
 Carrier(D) ~= direct sum over n:Z of grade(D,n) as C-linear spaces. This equivalence is the inverse of the canonical sum of actual subtype inclusions, using the proved internality.
+
+Four-slot escape registration for the exposed projection and nonnegative-support helpers, if selected by the public-declaration delta, remains unfinished under https://github.com/the-omega-institute/trureturing/issues/28685. No declared_validated status is claimed.
 
 Bakalov-Kac, Twisted Modules over Lattice Vertex Algebras, arXiv math/0402315v1 (19 February 2004): section 4.1, printed/PDF page 8, equations (4.3)-(4.5), gives the charge/Fock carrier; page 9, Theorem 4.1 and (4.16), gives the dual-basis conformal vector; page 4, Definition 2.2 and (2.23)-(2.24), gives the conformal grading convention. These are construction and convention locators, not proofs of the new coercivity and counting results.
 
@@ -319,7 +363,9 @@ This unit supplies the actual lattice carrier with a positive finite energy grad
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeEnergyGrading.gradeCoeffEquiv`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeEnergyGrading.gradeProjection`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeEnergyGrading.gradeProjection_coeff`
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeEnergyGrading.gradeProjection_eq_self_of_mem_grade`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeEnergyGrading.gradeProjection_mem`
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeEnergyGrading.gradeProjection_zero_of_mem_grade_ne`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeEnergyGrading.grade_eq_span`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeEnergyGrading.grade_finiteDimensional`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeEnergyGrading.grade_zero`
@@ -331,6 +377,7 @@ This unit supplies the actual lattice carrier with a positive finite energy grad
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeEnergyGrading.rank_zero_carrier`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeEnergyGrading.rank_zero_label`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeEnergyGrading.stateEnergies`
+- Truth anchor: `D5/S3/VertexAlgebra/LatticeEnergyGrading.stateEnergies_nonneg`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeEnergyGrading.sum_gradeProjections`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeEnergyGrading.vacuumGradeEquiv`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeEnergyGrading.vacuum_nonzero`

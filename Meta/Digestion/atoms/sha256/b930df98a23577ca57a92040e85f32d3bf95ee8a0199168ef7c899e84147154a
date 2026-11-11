@@ -1,0 +1,35 @@
+**定理 2.1（从原有限理想到环境简单对偶理想）。** 有 $J=\overline{\mathcal A}$，故 (1.3) 等价于 $E\cap\operatorname{ann}_X(J)=0$。每颗 $p\in\mathscr P$ 是 $X$ 的一维投影，即 $U_pX=\mathbb Rp$。$J$ 是简单对偶 JB 代数的 $c_0$ 直和；其各简单分量是 $X$ 的闭 Jordan 理想，并由某颗原 $p$ 生成。对这样的分量 $I$，有
+
+$$
+\overline{E\cap I}^{\|\cdot\|}=I,\qquad
+U_kX=U_kI\quad(k^2=k\in I).
+\tag{2.1}
+$$
+
+第二式不声称 $k$ 是原标签；当另外 $k\in E$ 时才调用原角定理。
+
+证明。$\mathcal A$ 是含 $\mathscr P$ 的最小代数 Jordan 理想。其闭包在每个 $L_a$、$a\in E$ 下不变；再对已知连续 Jordan 乘法以原元逼近 $x\in X$，它也在 $L_x$ 下不变。因此它恰好是 $J$。固定 $x$ 的 $L_x$ 连续，故湮灭 $\mathcal A$ 等价于湮灭 $J$，给所述等价。此处所有极限只涉及已知 Jordan 乘法。
+
+$U_p$ 连续，$E$ 稠密而 $\mathbb Rp$ 闭，故 $U_pX=\mathbb Rp$。用 Bunce 的记号，令 $C(X)$ 为 $X$ 中全部一维投影的闭实线性包。[*On compact action in JB-algebras*，Theorem 3(b)(iii)、Lemma 4，页 356–357](https://doi.org/10.1017/S0013091500004429) 给：$C(X)$ 是 $X$ 的闭 Jordan 理想，是对偶 JB 代数，且
+
+$$
+C(X)=\mathop{\bigoplus}\limits_{\gamma\in\Gamma}^{c_0} A_\gamma
+\tag{2.2}
+$$
+
+为简单对偶分量直和。该文 Theorem 3(b)(ii) 还给每个分量元素的范数收敛正交一维投影谱展开。这些是关于 $C(X)$ 的成熟结构，未把任意 $X$ 宣布为对偶代数。这里“对偶 JB”采用 Bunce 页 355 的遗传子代数双湮灭子定义，不指 Banach 对偶空间，不能据此认作 JBW 代数；3.1 中的类型 I JW 包络才具有所需 JBW 结构。
+
+须核对每个 $A_\gamma$ 对环境 $X$ 仍是理想。取 $y\in A_\gamma$、$x\in X$，则 $w=x\circ y\in C(X)$。若 $\nu\ne\gamma$，对 $A_\nu$ 的任意一维投影 $e$，有 $e\circ y=0$，即 $y\in X_0(e)$。Peirce 乘法规则使 $x\circ y$ 没有 $X_2(e)$ 分量，故 $U_ew=0$。若 $w_\nu\ne0$，对它使用上述正交一维投影谱展开，可找到一个非零谱系数及对应 $e$，使 $U_ew_\nu\ne0$，矛盾。因此 $w$ 只有 $\gamma$ 分量，$A_\gamma\lhd X$。
+
+$p\in C(X)$ 的非零坐标只能有一个：若有两个，将其中一个坐标 $p_\gamma$ 单独视作 $C(X)\subset X$ 的元素，则 $U_pp_\gamma=p_\gamma$ 不在 $\mathbb Rp$。所以 $p$ 位于唯一一个 $A_\gamma$。简单性使 $p$ 在 $C(X)$ 中生成整个 $A_\gamma$；环境理想性又使它在 $X$ 中恰好生成该分量。因此 $J$ 正是被 $\mathscr P$ 命中的分量的 $c_0$ 和，记它们为 $I_\lambda$。此步未选择数域。
+
+固定其中一颗 $p\in I_\lambda\cap\mathscr P$。它生成的闭环境理想是下列实线性包的闭包：
+
+$$
+\operatorname{span}_{\mathbb R}
+\{L_{x_1}\cdots L_{x_n}p:n\ge0,\ x_j\in X\}.
+\tag{2.3}
+$$
+
+因为这个闭包恰好是含 $p$ 且在全部 $L_x$ 下不变的最小闭子空间。逐个以原 $E$ 元素逼近有限多个 $x_j$，连续 Jordan 乘法使 (2.3) 的每个生成元都可由 $E\cap I_\lambda$ 中的元素范数逼近。这证明第一式 (2.1)，不是一般稠密子空间与任意理想交集的无条件断言。最后，理想性给 $U_kX\subset I$，且 $U_k$ 是其像上的恒等投影，所以 $U_kX=U_kI$。∎
+

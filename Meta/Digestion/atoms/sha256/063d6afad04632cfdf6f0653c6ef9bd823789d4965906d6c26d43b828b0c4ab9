@@ -1,0 +1,4 @@
+## 8. 有限可逆环境的 Schur 谱分类
+
+**§§8–12 的来源读法。** 下文 PB34、PB42、PB22 均指[《AURIC：全 PB 多项式运输与实根刚性》](AURIC_FULL_PB_POLYNOMIAL_TRANSPORT_AND_REAL_ROOT_RIGIDITY.md)在提交 `21e6dcd4cad211827c9df24646da9ff8fd2fd154` 的对应节；“运输卷 §10”指[《AURIC 区间原响应与移动投影的全域运输》](AURIC_INTERVAL_ORIGINAL_RESPONSE_AND_VARIABLE_PROJECTION_TRANSPORT.md)在同一提交的 §10。§§1–7 对提交 `0fd6b8d8b80330b90beecbc012c9b7eb9a57f765` 的引用、字节 SHA-256 及原有含义保持不变。
+

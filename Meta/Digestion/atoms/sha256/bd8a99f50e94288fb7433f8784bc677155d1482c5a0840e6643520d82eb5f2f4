@@ -1,0 +1,101 @@
+**定理 45.2（实际共同代入支付的三周期与正性三角）。**对定义 45.1 的全部参数，有
+
+$$
+\begin{aligned}
+L_m(n)+L_m(n-1)+L_m(n-2)&=3D_m,\\
+L_m(n+3)&=L_m(n),\\
+\frac{L_m(0)+L_m(1)+L_m(2)}3&=D_m,\\
+0\le L_m(n)&\le3D_m.
+\end{aligned}
+\tag{45.5}
+$$
+
+令 $\zeta=\exp(2\pi i/3)$，定义有限 Fourier 系数
+
+$$
+\Gamma_m=\frac13\sum_{r=0}^2\zeta^{-r}L_m(r).
+\tag{45.6}
+$$
+
+则对全部 $n\in\mathbb Z$ 有
+
+$$
+L_m(n)=D_m+2\operatorname{Re}(\zeta^n\Gamma_m).
+\tag{45.7}
+$$
+
+若 $D_m>0$，则
+
+$$
+\frac{\Gamma_m}{D_m}\in\operatorname{conv}\{1,\zeta,\zeta^2\},
+\qquad |\Gamma_m|\le D_m.
+\tag{45.8}
+$$
+
+若 $D_m=0$，三个 $L_m(r)$ 与 $\Gamma_m$ 都为零，不作除法。
+
+**证明。**先核对实际集合与共同核。$A$ 保单位、乘法且与 $V$ 交换，所以 $K$ 是含幺 $V$-子 magma，包含整个 $E$。若 $u\in S$，则对每个 $j\in\mathbb Z$，
+
+$$
+V(A^ju)=A^jVu=A^{j+1}u,\qquad
+V(Vu)=V(Au)=A(Vu).
+\tag{45.9}
+$$
+
+故 $S$ 对 $A,A^{-1},V$ 稳定，且 $V^ku=A^ku$ 对全部 $k\ge0$ 成立。特别，所有 $x_i,y_i$ 都在 $S$。不由此断言 $e\in S$ 或 $S$ 对 $\star$ 封闭。
+
+对整数 $m$，把原式 (45.1) 用于同一模型的实际四元组 $(A^ma,b,A^mu,v)$。因为
+
+$$
+A^m(a\star V^ku)=(A^ma)\star V^k(A^mu),
+\tag{45.10}
+$$
+
+恰得推论 44.3 的完整关系及同步等距
+
+$$
+\begin{aligned}
+\sum_{k=0}^2F_m(a\star V^ku,b\star V^kv)
+&=3F_m(a,b)+3F_m(u,v),\\
+F_m(A^js,A^jt)&=F_m(s,t)\quad(j\in\mathbb Z).
+\end{aligned}
+\tag{45.11}
+$$
+
+第一式对任意 $a,b,u,v\in N$ 成立；第二式是 $d(A^{m+j}s,A^jt)=d(A^ms,t)$。每个 $F_m$ 有限且非负，$F_0=d$ 零对角；$m\ne0$ 时不保证 $F_m$ 零对角。
+
+现对 (45.11) 的第一式代入单个实际四元组 $(A^na,A^nb,u,v)$。对其第 $k$ 项，仅因 $u,v\in S$ 才可用 $V^ku=A^ku,V^kv=A^kv$。保留原乘积括号，得到
+
+$$
+\begin{aligned}
+&F_m((A^na)\star V^ku,(A^nb)\star V^kv)\\
+&\quad=F_m\bigl(A^k((A^{n-k}a)\star u),
+                   A^k((A^{n-k}b)\star v)\bigr)\\
+&\quad=F_m((A^{n-k}a)\star u,(A^{n-k}b)\star v)
+=L_m(n-k).
+\end{aligned}
+\tag{45.12}
+$$
+
+右端背景项由同步 $A$ 等距变为 $F_m(a,b)$，所以三项之和正是 $3D_m$。相减 $n$ 与 $n-1$ 的两个等式，得 $L_m(n)=L_m(n-3)$；取 $n=2$ 得三项平均式。到这里没有使用有界性，也没有逆向迭代 $V$；所有负指数只属于实际自同构 $A$。
+
+每个 $L_m(n)$ 都是实际非负 $d$ 值，故三个非负数之和为 $3D_m$ 给出单项上下界。由 (45.6) 及三个 $L_m(r)$ 为实数，
+
+$$
+D_m+\zeta^n\Gamma_m+\zeta^{-n}\overline{\Gamma_m}
+=\frac13\sum_{r=0}^2L_m(r)
+\bigl[1+\zeta^{n-r}+\zeta^{r-n}\bigr]=L_m(n).
+$$
+
+末步因方括号在 $r\equiv n\pmod3$ 时为 $3$，其余为零，再用三周期性。这是三个实数的有限 Fourier 反演，得到 (45.7)。若 $D_m>0$，则
+
+$$
+\frac{\Gamma_m}{D_m}
+=\sum_{r=0}^2\frac{L_m(r)}{3D_m}\zeta^{-r},\qquad
+\frac{L_m(r)}{3D_m}\ge0,\qquad
+\sum_{r=0}^2\frac{L_m(r)}{3D_m}=1.
+\tag{45.13}
+$$
+
+三个根的次序不影响其凸包，三角不等式给模长界。若 $D_m=0$，非负三项之和为零，逐项及其 Fourier 系数皆零。这里的正性只是三个实际费用的非负性，不是 Toeplitz 核正定性，也没有给整数 $m$ 上的调和方程。证毕。
+

@@ -1,0 +1,105 @@
+**定理 30.1（三矩的充要实现与最小可逆 Hermitian 环境）。** 对满足 (30.1) 的任意有限环境，置
+
+$$
+\begin{gathered}
+T=D_{\rm env}^{\dagger},\qquad F=V^*,\qquad G=TF,\\
+M_0=F^*F=VV^*,\qquad M_1=F^*G=VT V^*,\qquad
+M_2=G^*G=VT^2V^*,\\
+\Gamma=\begin{pmatrix}M_0&M_1\\M_1&M_2\end{pmatrix},\qquad
+\mathcal K=\operatorname{ran}F+\operatorname{ran}G,\qquad
+k_\Gamma=\operatorname{rank}\Gamma.
+\end{gathered}
+\tag{30.2}
+$$
+
+三个演员矩均为 Hermitian。一个 Hermitian 三元组 $(M_0,M_1,M_2)$ 能被某份 (30.1) 的真实有限环境实现，准确当且仅当
+
+$$
+\boxed{\quad \Gamma\succeq0,\qquad \ker M_0=\ker M_2.\quad}
+\tag{30.3}
+$$
+
+核取原演员 $\mathbb C^2$ 中的复核。每个满足 (30.3) 的三元组都有环境维数恰为 $k_\Gamma\le4$ 的实现 $(V',D'_{\rm env})$，其中 $D'_{\rm env}$ Hermitian 且可逆；这在所有保留该三矩的 (30.1) 实现中维数最小，包括允许奇异环境的实现。$k_\Gamma=0$ 时取空环境，$V'$ 和 $D'_{\rm env}$ 均为空矩阵，空空间上的逆按唯一线性映射解释。
+
+没有对 $B$、$S_A$ 或取向增加兼容条件：任意固定 $B=B^*$ 和任意原对角 $S_A$ 均可与上述实现组成
+
+$$
+t'=\begin{pmatrix}B&V'\\V'^*&D'_{\rm env}\end{pmatrix}
+\in M_{2+k_\Gamma}(\mathbb C)_{\rm sa},\qquad
+c'=C\oplus0_{k_\Gamma},\quad s'=S_A\oplus0_{k_\Gamma}.
+\tag{30.4}
+$$
+
+特别地，指定 Schur 块 $H$ 时，准确的兼容关系只是 $H=B-M_1$，即 $B=H+M_1$；固定 $B$ 时不得再独立改变 $H$。若 $r=\operatorname{rank}M_0$，则 $\operatorname{rank}M_2=r$ 且 $r\le k_\Gamma\le2r\le4$。
+
+证明。先证必要性与下界。由 (30.1)，$\operatorname{ran}F\subseteq\mathcal R:=\operatorname{ran}D_{\rm env}$。$T$ 在 $\mathcal R$ 上可逆，故 $\ker G=\ker F$，并有
+
+$$
+\Gamma=\begin{bmatrix}F&G\end{bmatrix}^*
+        \begin{bmatrix}F&G\end{bmatrix}\succeq0,
+\qquad \ker M_0=\ker F=\ker G=\ker M_2.
+\tag{30.5}
+$$
+
+$T=T^*$ 给 $F^*G=G^*F=M_1$。Gram 秩等于列张成空间的维数，所以 $\dim\mathcal K=k_\Gamma$。任意保留该三矩的实现，其环境都包含这样一个 $k_\Gamma$ 维列空间，因此环境维数至少为 $k_\Gamma$，甚至非零谱环境的维数也至少为 $k_\Gamma$。
+
+反过来，设 (30.3) 成立。使用带标签的有限 Gram 商
+
+$$
+\mathcal K_\Gamma=(\mathbb C^2\oplus\mathbb C^2)/\ker\Gamma,
+\qquad
+\langle[z],[w]\rangle=z^*\Gamma w,
+\qquad
+F_0a=[(a,0)],\quad G_0a=[(0,a)].
+\tag{30.6}
+$$
+
+正性使此内积良定义且正定。两份像张成 $\mathcal K_\Gamma$，其维数是 $k_\Gamma$，且 $F_0^*F_0=M_0$、$F_0^*G_0=G_0^*F_0=M_1$、$G_0^*G_0=M_2$。由两端核相等，在 $\mathcal M=\operatorname{ran}F_0$ 上定义
+
+$$
+A_0(F_0a)=G_0a.
+\tag{30.7}
+$$
+
+若 $F_0a=F_0b$，则 $a-b\in\ker M_0=\ker M_2$，故 $G_0a=G_0b$，所以定义良好。同一核等式说明 $A_0$ 单射。$M_1=M_1^*$ 给
+
+$$
+\langle F_0a,A_0F_0b\rangle
+=a^*M_1b
+=\langle A_0F_0a,F_0b\rangle,
+\tag{30.8}
+$$
+
+故 $A_0$ 是定义在子空间 $\mathcal M$ 上的对称算子；此处不要求其像仍在 $\mathcal M$。
+
+在 $\mathcal K_\Gamma=\mathcal M\oplus\mathcal M^\perp$ 中把该算子的已定第一列块写为 $(A_{11},A_{21})^{\mathsf T}$。对称性正好给 $A_{11}=A_{11}^*$，因而
+
+$$
+\mathsf H=\begin{pmatrix}A_{11}&A_{21}^*\\A_{21}&0\end{pmatrix},
+\qquad Q_\perp=\begin{pmatrix}0&0\\0&I_{\mathcal M^\perp}\end{pmatrix}
+\tag{30.9}
+$$
+
+是 Hermitian 扩张，且 $\mathsf H|_{\mathcal M}=A_0$。证明能使扩张可逆：若 $(\mathsf H+iQ_\perp)z=0$，取 $z^*$ 配对的虚部得 $\|Q_\perp z\|^2=0$，所以 $z\in\mathcal M$；随后 $A_0z=0$，单射性给 $z=0$。有限维性说明 $\mathsf H+iQ_\perp$ 可逆。因此多项式 $\det(\mathsf H+\lambda Q_\perp)$ 非零，只有有限个实零点。选任意不在这些零点中的实 $\lambda$，则
+
+$$
+T'=\mathsf H+\lambda Q_\perp=(T')^*,\qquad
+D'_{\rm env}=(T')^{-1},\qquad V'=F_0^*,\qquad T'F_0=G_0.
+\tag{30.10}
+$$
+
+选择任一正交归一基即可将它们写成实际矩阵。于是
+
+$$
+\begin{aligned}
+V'V'^*&=F_0^*F_0=M_0,\\
+V'(D'_{\rm env})^{-1}V'^*&=F_0^*T'F_0=M_1,\\
+V'(D'_{\rm env})^{-2}V'^*&=(T'F_0)^*(T'F_0)=M_2.
+\end{aligned}
+\tag{30.11}
+$$
+
+这是一份可逆 Hermitian 环境中的完整实现，达到必要下界。若 $k_\Gamma=0$，三个矩都为零，直接取空环境即可；前述块扩张无需非空假设。$F_0,G_0$ 的秩同为 $r$，其像张成 $\mathcal K_\Gamma$，给出 $r\le k_\Gamma\le2r$。$B,S_A$ 没有进入构造，(30.4) 始终 Hermitian，且其 Schur 块准确是 $B-M_1$，完成参数兼容性与全部断言。∎
+
+$\mathcal K_\Gamma$ 是三矩的精确带标签 Gram 商：任一实现中的 $F a+G b$ 对应 $[(a,b)]$，给出该商到 $\mathcal K$ 的唯一保标签酉同构。定理的最小性只针对保留完整三矩的真实环境；没有把“同一 PB 真值”当成三矩相等的必要条件，也没有声称这个 Gram 商是更弱观察问题的最小商。
+

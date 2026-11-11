@@ -320,7 +320,7 @@ private theorem coefficient_bounds (t : I) (x : P.Space) :
     (mul_le_mul_of_nonneg_right (lateTime_bounds t).2 (P.collar_bounds x).1).trans
       (by simpa using (P.collar_bounds x).2)⟩
 
-private theorem cone_segment (x : P.Space) (hx : x ∈ P.coneSet) (a : ℝ)
+theorem cone_segment (x : P.Space) (hx : x ∈ P.coneSet) (a : ℝ)
     (ha : 0 ≤ a) (ha' : a ≤ 1) :
     (fun v => (1 - a) * x.val v + a * P.apexPoint.val v) ∈ realization P.cone := by
   obtain ⟨f, hf, hx⟩ := (realization_mem_iff P.cone x.val).1 hx

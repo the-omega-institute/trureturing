@@ -1,0 +1,283 @@
+**Theorem 9.2 (contact envelope and one complete-future event for all
+later actual cuts).** For every source and deterministic $S,k$ of
+Definition 9.1, every $M\ge\|g_d\|_\infty$ and every $\epsilon>0$,
+let $d_\lambda$ be the original defect of [DPCR, Definition 9.1]
+and put
+
+$$
+\eta_k=M\left[
+ \frac{1-d_{1/(kd)}}{1-\exp(-1)}
+ +\frac12\sqrt{
+       \frac{1-d_{1/[2(k-1)d]}}{d_{1/[2(k-1)d]}}}\right].
+\tag{9.3}
+$$
+
+Then $T<\infty$ almost surely and
+
+$$
+\mathbb E_e\operatorname{TV}(\pi_{Y_{<T}}m,m)\le\eta_k,
+\tag{9.4}
+$$
+
+where $\operatorname{TV}(\pi m,m)=\tfrac12\int|\pi-1|\,dm$.
+On the full product sigma algebra of (9.1),
+
+$$
+\mathbb P_e\left\{
+ \sup_{j\ge0}\operatorname{TV}
+       (R_{T+j}^\infty,Q_{W_j}^\infty)>\epsilon\right\}
+ \le\min\{1,2\eta_k/\epsilon\}.
+\tag{9.5}
+$$
+
+On the complement of the failure event in (9.5),
+$\operatorname{TV}({\bf R}_{T+j}^H,Q_{W_j}^H)\le\epsilon$
+holds for every integer $j\ge0$ and every finite $H\ge1$ simultaneously.
+This is an unconditional event in the original law, not a bound
+conditional on each reached history, gate index, calibration
+output or selected branch.
+
+*Proof.* First obtain an original-clock transition estimate using
+the actual contact law. Since $g_d$ is a nonnegative probability
+density, $\|g_d\|_\infty\ge1$. Thus $u=g_d-1$ has mean zero and
+$\|u\|_\infty\le M$. For every $t\ge kd$, propagation and
+$L^2$ contraction, followed by [DPCR, Theorem 9.2, (9.3)], give
+
+$$
+\begin{aligned}
+\operatorname{TV}(g_t m,m)
+ &\le\frac12\|g_t-1\|_2
+ \le\frac12\|P_{(k-1)d}u\|_2\\
+ &=\frac12\sqrt{\langle u,P_{2(k-1)d}u\rangle_m}\\
+ &\le\frac M2\sqrt{\Theta(1/[2(k-1)d])}
+ =:\gamma_k .
+\end{aligned}
+\tag{9.6}
+$$
+
+The offset is $k-1$, because the positive-time density used at the
+start of this estimate is $g_d$. No zero-time density or numerical
+physical time name is assumed.
+
+For legitimate starting points $x$ put
+$a_k(x)=\mathbb P_x(\tau_e>kd)=P_{kd}^01(x)$, using the killed
+transition version of [CONTACT, (116.9)] and any Borel extension
+on the exceptional null set. The hitting transform and its integral in
+[CONTACT, (116.9), (116.14)] imply
+
+$$
+\begin{aligned}
+(1-\exp(-1))\int a_k\,dm
+ &\le\int_G\mathbb E_x[1-\exp(-\tau_e/(kd))]m(dx)\\
+ &=1-d_{1/(kd)}.
+\end{aligned}
+\tag{9.7}
+$$
+
+For this inequality $\exp(-\infty)=0$; it also follows directly
+on $\{\tau_e>kd\}$. The integral identity is precisely
+$\int b_\lambda\,dm=d_\lambda$, with the original clock and
+the full source trace. It is not the contact transform of a
+different process with a similar differential expression.
+
+At time $2kd$, split the transition from $x$ into
+$\{\tau_e>kd\}$ and $\{\tau_e\le kd\}$. The first piece has mass
+$a_k(x)$. By the strong Markov property, the second is a mixture
+of source-start laws $g_{2kd-s}m$, $0\le s\le kd$.
+Every such remaining time is at least $kd$ and satisfies (9.6).
+Subtract the corresponding masses of $m$ from both pieces.
+The first signed piece has TV at most $a_k(x)$; the second has
+TV at most $\gamma_k(1-a_k(x))$. Therefore, for every probability
+density $\pi$ relative to $m$,
+
+$$
+\begin{aligned}
+\operatorname{TV}(P_{2kd}(x,\cdot),m)&\le a_k(x)+\gamma_k
+                   \quad(x\notin\mathcal N),\\
+\operatorname{TV}((P_{2kd}\pi)m,m)
+ &\le \langle\pi,a_k\rangle_m+\gamma_k .
+\end{aligned}
+\tag{9.8}
+$$
+
+Symmetry identifies the propagated measure's density with
+$P_{2kd}\pi$. The mixtures are Borel transition mixtures of the
+properly associated process. TV can be taken over a countable
+generating algebra of the standard Borel state space $G$, so its
+kernel supremum is measurable. No observation of $\tau_e$ is
+made. All posterior densities are absolutely continuous with
+respect to $m$ and hence avoid $\mathcal N$.
+
+We next average at the actual first successful block. Let
+$b_L=4^{-L}$, $L=2k$, and
+$E_{i-1}=\bigcap_{h<i}C_h^c$. For a prefix $u$ of length $U_i$
+satisfying $E_{i-1}$, (2.5) gives exactly
+
+$$
+p(uB^L)=b_Lp(u),\qquad
+\pi_{uB^L}=P^L\pi_u=P_{2kd}\pi_u .
+\tag{9.9}
+$$
+
+These are full-history posteriors; the failed blocks and every
+other preceding label remain in $u$. Theorem 2.1 identifies
+$\langle\pi_{Y_{<U_i}},a_k\rangle_m$ with
+$\mathbb E_e[a_k(X_{U_i})\mid\mathscr F_{U_i}]$.
+Summing (9.8)--(9.9) over these prefixes yields
+
+$$
+\begin{aligned}
+\mathbb E_e\operatorname{TV}(\pi_{Y_{<T}}m,m)
+ &\le\sum_{i\ge1}b_L
+       \mathbb E_e[\mathbf1_{E_{i-1}}a_k(X_{U_i})]
+       +\gamma_k .
+\end{aligned}
+\tag{9.10}
+$$
+
+Here Proposition 6.6 supplies $J<\infty$ almost surely, so the
+weights multiplying the constant $\gamma_k$ sum to one.
+Conditional on the entire hidden path, each disjoint all-$B$
+block has probability $b_L$, and their indicators are independent.
+Thus the sum in (9.10) is
+
+$$
+\begin{aligned}
+&\sum_{i\ge1}b_L(1-b_L)^{i-1}
+       \int g_{(U_i+2)d}(x)a_k(x)m(dx)\\
+&\hspace{2em}\le M\int a_k\,dm ,
+\end{aligned}
+\tag{9.11}
+$$
+
+because $\|g_{(U_i+2)d}\|_\infty\le\|g_d\|_\infty\le M$
+and the geometric weights sum to one. Nonnegativity justifies the
+countable sums. Equations (9.6)--(9.7) now prove (9.4).
+Only the contact-tail integral in (9.11) uses this density bound;
+$\gamma_k$ was integrated against probability measures in (9.8).
+Consequently (9.3) has a single factor $M$, not a second density
+factor multiplying its square-root term. No individual posterior
+$\pi_u$ has been bounded by $M$.
+
+For completeness, the passage to all later cuts uses a finite
+measure on the entire future space, rather than a horizon-by-horizon
+union bound. Fix one possible stopped history $u=Y_{<T}$. Put
+$A=R_u^\infty$, $B=Q_\emptyset^\infty$ and
+$e(u)=\operatorname{TV}(A,B)$. The common kernel in (9.1) contracts
+TV on the full product sigma algebra, giving
+
+$$
+e(u)\le\operatorname{TV}(\pi_u m,m).
+\tag{9.12}
+$$
+
+Let $\nu=|A-B|$ be the Jordan total-variation measure of the signed
+measure $A-B$, so $\nu(\Omega)=2e(u)$. For a word $w$ of length
+$j$, write $a_w=A([w])>0$, $b_w=B([w])>0$, and define the
+conditional tail probabilities
+
+$$
+A_w(E)=A([w]\cap\theta^{-j}E)/a_w,\qquad
+B_w(E)=B([w]\cap\theta^{-j}E)/b_w .
+\tag{9.13}
+$$
+
+The map taking a sequence in $[w]$ to its tail is a measurable
+bijection with measurable inverse (prefixing by $w$). Restrict
+$A-B$ to $[w]$, normalize first by $a_w$, and then correct the
+$B$ normalization from $a_w$ to $b_w$. The triangle inequality
+for the total mass of a signed measure's variation gives
+
+$$
+\begin{aligned}
+2\operatorname{TV}(A_w,B_w)
+ &\le\frac{\nu([w])+|b_w-a_w|}{a_w}
+ \le\frac{2\nu([w])}{a_w}.
+\end{aligned}
+\tag{9.14}
+$$
+
+The factor two on the left is valid because the two normalized
+conditional measures have equal mass one. This derivation
+does not assume absolute continuity between their infinite
+future laws.
+
+Under $A$, let $\omega_{<j}$ be the first $j$ future labels and set
+
+$$
+N_j(\omega)=\frac{\nu([\omega_{<j}])}
+                       {A([\omega_{<j}])},\qquad N_0=2e(u).
+\tag{9.15}
+$$
+
+This is a finite nonnegative martingale for the increasing
+finite-prefix sigma algebras. Indeed, on $[w]$ its conditional
+next-step expectation is
+
+$$
+\sum_{y\in\mathcal L}
+ \frac{a_{wy}}{a_w}\frac{\nu([wy])}{a_{wy}}
+ =\frac{\nu([w])}{a_w}.
+\tag{9.16}
+$$
+
+All denominators are positive and the child cylinders partition
+$[w]$. No Radon--Nikodym derivative on $\mathscr Y$ is needed:
+the ratios in (9.15) are only at finite positive cylinders.
+In particular positivity of cylinders is not being used to infer
+absolute continuity of full product measures, which does not
+follow from that positivity alone.
+
+Ville's nonnegative-martingale maximal inequality, as stated by
+Howard--Ramdas--McAuliffe--Sekhon in *Exponential line-crossing
+inequalities* [VILLE, §2.3, Lemma 1, (18)][VILLE], and (9.14) imply
+
+$$
+A\left\{\sup_{j\ge0}
+  \operatorname{TV}(A_{\omega_{<j}},B_{\omega_{<j}})
+       >\epsilon\right\}
+ \le\min\{1,2e(u)/\epsilon\}.
+\tag{9.17}
+$$
+
+This use of Ville can also be obtained by stopping $N_j$ at its
+first crossing of $\epsilon$ up to a finite index $n$:
+nonnegativity and bounded stopping give crossing probability at
+most $N_0/\epsilon$; increasing $n$ covers all $j$. The martingale
+and its variation measure are mathematical proof objects, not
+supplied numerical services.
+
+The event in (9.17) is measurable on the full product. For any two
+probabilities on $\Omega$, their event-TV is the supremum of their
+finite-prefix TVs. This is the finite-alphabet specialization of
+[THREAD, total_variation_eq_iSup_level][THREAD]: take levels
+$\mathcal L^n$, truncation bonding maps and one thread.
+The measurable identification with $\Omega$ preserves the product
+sigma algebra. Equivalently, finite cylinder unions approximate
+every product-measurable event in the sum of the two finite
+measures. Thus every TV in (9.17) is a countable supremum of
+finite sums of cylinder probabilities. The supremum over $j$
+is countable too. There is no extension to a larger sigma algebra
+or inference from convergence on each individual cylinder alone.
+
+Given $\mathscr F_T$, the conditional law of the actual future is
+$A=R_u^\infty$, and after its actual prefix $w=W_j$ its tail law
+$A_w$ is precisely $R_{uw}^\infty=R_{T+j}^\infty$.
+The comparison conditional is $B_w=Q_w^\infty$. The gate value
+is already determined by $u$ and adds no future conditioning.
+The countably many stopped histories therefore allow (9.17)
+to be averaged in the original law. Using (9.12) and (9.4),
+
+$$
+\mathbb P_e\left\{\sup_{j\ge0}
+ \operatorname{TV}(R_{T+j}^\infty,Q_{W_j}^\infty)>\epsilon\right\}
+ \le\frac2\epsilon\,\mathbb E_e e(Y_{<T})
+ \le\frac{2\eta_k}{\epsilon}.
+\tag{9.18}
+$$
+
+The bound by one gives (9.5). Projection contracts TV and proves
+the simultaneous assertion for every finite $H$. In particular
+neither $H$ nor an advance expiry $r$ appears in this event.
+$\square$
+

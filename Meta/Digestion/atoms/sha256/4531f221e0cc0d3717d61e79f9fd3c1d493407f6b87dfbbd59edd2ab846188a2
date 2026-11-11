@@ -1,0 +1,24 @@
+**实际最终边缘。** 场采样及算术只作用于非参考系统，不能增加自身边缘返回。令 $\omega^{\rm old}_{n,h}$ 为它们完成后的实际 $RM$ 态，$M$ 包含全部旧获取、访问、编译、场和解码口。由 (9.1)，
+
+$$
+D_{\rm tr}\bigl(\omega^{\rm old}_{n,h},
+\tau_h\otimes\operatorname{Tr}_R\omega^{\rm old}_{n,h}\bigr)
+\le\delta_{\rm acq}.
+\tag{10.11}
+$$
+
+对两边施行同一后缀。它不读取 $M$，公共通道收缩此差至多 $\delta_{\rm acq}$。在乘积输入上，OTF004 定理 17.3 对所有 $h$ 和
+$v=n(+d e_x)$ 给全部后缀口的自身边缘返回小于 $80/D$。将比较边缘换成实际最终 $K$ 边缘，由偏迹收缩性再付一次 $\delta_{\rm acq}$，所以
+
+$$
+\begin{aligned}
+\mathcal R_h(\Omega_{n,h})
+&\le2\delta_{\rm acq}+80/D\\
+&\le\frac{2\cdot768^2(C_{\rm return}+3C_{\rm fail})+5}{t}
+=\frac{C_{\rm final}}t,
+\end{aligned}
+\tag{10.12}
+$$
+
+其中 $80t/D\le80e^2<1$。两次 $\delta_{\rm acq}$ 都属于同一实际旧态的比较，最终使用的是自己的完整实际边缘，未换用单独可达的最优边缘。
+

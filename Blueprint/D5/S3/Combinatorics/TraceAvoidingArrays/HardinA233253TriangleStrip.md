@@ -48,7 +48,21 @@ $$\forall c: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\o
 
 The conjunction excludes equality and a natural-number sum of five.
 
-**Definition 1.4 (Boundary labels).**
+**Definition 1.4 (Deciding horizontal exclusions).**
+
+$$\forall c: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{Row}, ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{instDecidableRowLegal}\left(c\right): \operatorname{Decidable}\left((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{rowLegal}\left(c\right))\right)) = \operatorname{inferInstanceAs}\left((\operatorname{Decidable}\left((\forall j: \operatorname{Fin}\left(4\right), ((c\left(\operatorname{Fin}.\operatorname{castSucc}\left(j\right)\right) \neq c\left(\operatorname{Fin}.\operatorname{succ}\left(j\right)\right)) \land (\operatorname{Fin}.\operatorname{val}\left(c\left(\operatorname{Fin}.\operatorname{castSucc}\left(j\right)\right)\right) + \operatorname{Fin}.\operatorname{val}\left(c\left(\operatorname{Fin}.\operatorname{succ}\left(j\right)\right)\right) \neq 5)))\right))\right))$$
+
+*Formalization.* `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233253TriangleStrip.instDecidableRowLegal` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* R. H. Hardin; Colin Barker; OEIS Foundation Inc. (2013). *OEIS A233253: six-colour complementary-pair exclusion on a five-column strip*. URL: <https://oeis.org/A233253>.
+
+*Commentary.*
+
+The horizontal predicate has a finite decision procedure.
+
+**Definition 1.5 (Boundary labels).**
 
 $$\forall c: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{Row}, (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{pairs}\left(c\right) = \lambda j: \operatorname{Fin}\left(4\right) \mapsto (\operatorname{D5}.\operatorname{S3}.\operatorname{Observer}.\operatorname{Separation}.\operatorname{BooleanRankThreeK4}.\operatorname{beta}\left(c\left(\operatorname{Fin}.\operatorname{succ}\left(j\right)\right)\right)))$$
 
@@ -62,7 +76,7 @@ $$\forall c: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\o
 
 The lambda retains the ordered four-column boundary.
 
-**Definition 1.5 (Antidiagonal exclusions).**
+**Definition 1.6 (Antidiagonal exclusions).**
 
 $$\forall p: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{Boundary}, (\forall c: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{Row}, (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{compatible}\left(p, c\right) = \forall j: \operatorname{Fin}\left(4\right), (p\left(j\right) \neq \operatorname{D5}.\operatorname{S3}.\operatorname{Observer}.\operatorname{Separation}.\operatorname{BooleanRankThreeK4}.\operatorname{beta}\left(c\left(\operatorname{Fin}.\operatorname{castSucc}\left(j\right)\right)\right))))$$
 
@@ -76,7 +90,7 @@ $$\forall p: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\o
 
 Each old boundary label excludes the corresponding next-row label.
 
-**Definition 1.6 (The literal finite count).**
+**Definition 1.7 (The literal finite count).**
 
 $$\forall n: \operatorname{Nat}, (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{a}\left(n\right) = \operatorname{Finset}.\operatorname{card}\left(\operatorname{Finset}.\operatorname{filter}\left(\lambda A: ((\operatorname{Fin}\left(n\right)) \times (\operatorname{Fin}\left(5\right))) \to (\operatorname{Fin}\left(6\right)) \mapsto ((\exists i: \operatorname{Fin}\left(n\right), ((\operatorname{Fin}.\operatorname{val}\left(i\right) = 0) \land (A\left((i, (0: \operatorname{Fin}\left(5\right)))\right) = (0: \operatorname{Fin}\left(6\right))))) \land ((\forall i: \operatorname{Fin}\left(n\right), (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{rowLegal}\left(\lambda j: \operatorname{Fin}\left(5\right) \mapsto (A\left((i, j)\right))\right))) \land ((\forall i: \operatorname{Fin}\left(n\right), (\forall h: \operatorname{Fin}.\operatorname{val}\left(i\right) + 1 < n, (\forall j: \operatorname{Fin}\left(4\right), ((A\left((i, \operatorname{Fin}.\operatorname{succ}\left(j\right))\right) \neq A\left((\operatorname{Fin}.\operatorname{mk}\left(\operatorname{Fin}.\operatorname{val}\left(i\right) + 1, h\right), \operatorname{Fin}.\operatorname{castSucc}\left(j\right))\right)) \land (\operatorname{Fin}.\operatorname{val}\left(A\left((i, \operatorname{Fin}.\operatorname{succ}\left(j\right))\right)\right) + \operatorname{Fin}.\operatorname{val}\left(A\left((\operatorname{Fin}.\operatorname{mk}\left(\operatorname{Fin}.\operatorname{val}\left(i\right) + 1, h\right), \operatorname{Fin}.\operatorname{castSucc}\left(j\right))\right)\right) \neq 5))))) \land (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233251TriangleStrip}.\operatorname{widthNormal}\left((false, false), \lambda i: \operatorname{Fin}\left(n\right) \mapsto (\lambda j: \operatorname{Fin}\left(5\right) \mapsto (A\left((i, j)\right)))\right))))), \operatorname{Finset}.\operatorname{univ}\left(\right)\right)\right))$$
 
@@ -88,7 +102,7 @@ $$\forall n: \operatorname{Nat}, (\operatorname{D5}.\operatorname{S3}.\operatorn
 
 The filter ranges over every array function. The existential first-cell condition is false when n is zero. The final predicate is the original row-major scanner predicate at both false flags.
 
-**Definition 1.7 (Reachable boundaries).**
+**Definition 1.8 (Reachable boundaries).**
 
 $$\forall s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{Seen}, (\forall p: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{Boundary}, (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{Valid}\left(s, p\right) = ((\operatorname{Prod}.\operatorname{fst}\left(s\right) = true) \land ((\forall j: \operatorname{Fin}\left(3\right), (p\left(\operatorname{Fin}.\operatorname{castSucc}\left(j\right)\right) \neq p\left(\operatorname{Fin}.\operatorname{succ}\left(j\right)\right))) \land ((\operatorname{Prod}.\operatorname{snd}\left(s\right) = false) \implies (\forall j: \operatorname{Fin}\left(4\right), (p\left(j\right) \neq (2: \operatorname{Fin}\left(3\right)))))))))$$
 
@@ -102,7 +116,7 @@ $$\forall s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\o
 
 The first flag is true. Adjacent boundary labels differ. If colour two has not occurred, none of the boundary labels is its pair label two.
 
-**Definition 1.8 (A boundary statistic).**
+**Definition 1.9 (A boundary statistic).**
 
 $$\forall p: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{Boundary}, (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{rank}\left(p\right) = (\operatorname{if} (p\left((0: \operatorname{Fin}\left(4\right))\right) = p\left((2: \operatorname{Fin}\left(4\right))\right)) \operatorname{then} (\operatorname{if} (p\left((1: \operatorname{Fin}\left(4\right))\right) = p\left((3: \operatorname{Fin}\left(4\right))\right)) \operatorname{then} (3: \operatorname{Int}) \operatorname{else} (2: \operatorname{Int})) \operatorname{else} (\operatorname{if} (p\left((1: \operatorname{Fin}\left(4\right))\right) = p\left((3: \operatorname{Fin}\left(4\right))\right)) \operatorname{then} (2: \operatorname{Int}) \operatorname{else} (0: \operatorname{Int}))))$$
 
@@ -116,7 +130,7 @@ $$\forall p: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\o
 
 The shapes ABAB, ABAC, ABCA and ABCB have ranks 3, 2, 0 and 2.
 
-**Definition 1.9 (Unweighted row counts).**
+**Definition 1.10 (Unweighted row counts).**
 
 $$\forall s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{Seen}, (\forall p: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{Boundary}, (\forall b: \operatorname{Bool}, (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{classCount}\left(s, p, b\right) = \sum_{c: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{Row}} ((\operatorname{if} ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{rowLegal}\left(c\right)) \land ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{compatible}\left(p, c\right)) \land ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{good}\left(s, c\right)) \land (\operatorname{Prod}.\operatorname{snd}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{finish}\left(s, c\right)\right) = b)))) \operatorname{then} (1: \operatorname{Int}) \operatorname{else} (0: \operatorname{Int}))))))$$
 
@@ -130,7 +144,7 @@ $$\forall s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\o
 
 The final second flag distinguishes the two seen-colour sectors.
 
-**Definition 1.10 (Weighted row counts).**
+**Definition 1.11 (Weighted row counts).**
 
 $$\forall s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{Seen}, (\forall p: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{Boundary}, (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{rankCount}\left(s, p\right) = \sum_{c: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{Row}} ((\operatorname{if} ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{rowLegal}\left(c\right)) \land ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{compatible}\left(p, c\right)) \land ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{good}\left(s, c\right)) \land (\operatorname{Prod}.\operatorname{snd}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{finish}\left(s, c\right)\right) = true)))) \operatorname{then} \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{rank}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{pairs}\left(c\right)\right) \operatorname{else} (0: \operatorname{Int})))))$$
 
@@ -144,7 +158,7 @@ $$\forall s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\o
 
 The weight is the rank of the new boundary in the fully seen sector.
 
-**Definition 1.11 (First-row counts).**
+**Definition 1.12 (First-row counts).**
 
 $$\forall b: \operatorname{Bool}, (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{firstCount}\left(b\right) = \sum_{c: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{Row}} ((\operatorname{if} ((c\left((0: \operatorname{Fin}\left(5\right))\right) = (0: \operatorname{Fin}\left(6\right))) \land ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{rowLegal}\left(c\right)) \land ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{good}\left((false, false), c\right)) \land (\operatorname{Prod}.\operatorname{snd}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{finish}\left((false, false), c\right)\right) = b)))) \operatorname{then} (1: \operatorname{Int}) \operatorname{else} (0: \operatorname{Int}))))$$
 
@@ -158,7 +172,7 @@ $$\forall b: \operatorname{Bool}, (\operatorname{D5}.\operatorname{S3}.\operator
 
 The scanner starts with both flags false and the first colour fixed to zero.
 
-**Definition 1.12 (First-row weighted count).**
+**Definition 1.13 (First-row weighted count).**
 
 $$\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{firstRank} = \sum_{c: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{Row}} ((\operatorname{if} ((c\left((0: \operatorname{Fin}\left(5\right))\right) = (0: \operatorname{Fin}\left(6\right))) \land ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{rowLegal}\left(c\right)) \land ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{good}\left((false, false), c\right)) \land (\operatorname{Prod}.\operatorname{snd}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{finish}\left((false, false), c\right)\right) = true)))) \operatorname{then} \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{rank}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{pairs}\left(c\right)\right) \operatorname{else} (0: \operatorname{Int})))$$
 
@@ -172,7 +186,7 @@ $$\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname
 
 Only fully seen first rows contribute their boundary rank.
 
-**Theorem 1.13 (One-row transfer counts).**
+**Theorem 1.14 (One-row transfer counts).**
 
 $$(\forall s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233175PairStrip}.\operatorname{Seen}, (\forall p: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{Boundary}, ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{Valid}\left(s, p\right)) \implies ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{classCount}\left(s, p, true\right) = (\operatorname{if} (\operatorname{Prod}.\operatorname{snd}\left(s\right)) \operatorname{then} (320: \operatorname{Int}) + (64: \operatorname{Int}) \cdot \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{rank}\left(p\right) \operatorname{else} (240: \operatorname{Int}))) \land ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{classCount}\left(s, p, false\right) = (\operatorname{if} (\operatorname{Prod}.\operatorname{snd}\left(s\right)) \operatorname{then} (0: \operatorname{Int}) \operatorname{else} (32: \operatorname{Int}))) \land (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{rankCount}\left(s, p\right) = (\operatorname{if} (\operatorname{Prod}.\operatorname{snd}\left(s\right)) \operatorname{then} (512: \operatorname{Int}) + (160: \operatorname{Int}) \cdot \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{rank}\left(p\right) \operatorname{else} (448: \operatorname{Int})))))))) \land ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{firstCount}\left(true\right) = (28: \operatorname{Int})) \land ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{firstCount}\left(false\right) = (8: \operatorname{Int})) \land (\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{firstRank} = (44: \operatorname{Int}))))$$
 
@@ -186,7 +200,7 @@ $$(\forall s: \operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\
 
 At a fully seen boundary of rank r, the row count is 320+64r and the rank sum is 512+160r. From the other sector, 32 rows stay there, 240 enter the fully seen sector and their rank sum is 448. The initial counts are eight and 28, with fully seen rank sum 44.
 
-**Theorem 1.14 (Barker's identity).**
+**Theorem 1.15 (Barker's identity).**
 
 $$(\left(1 - 32 \cdot \operatorname{PowerSeries}.\operatorname{X}\right) \cdot \left(1 - 480 \cdot \operatorname{PowerSeries}.\operatorname{X} + 18432 \cdot (\operatorname{PowerSeries}.\operatorname{X})^{2}\right) \cdot \operatorname{PowerSeries}.\operatorname{mk}\left(\lambda n: \operatorname{Nat} \mapsto ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233253TriangleStrip}.\operatorname{a}\left(n\right): \operatorname{Int}))\right): \operatorname{PowerSeries}\left(\operatorname{Int}\right)) = 4 \cdot \operatorname{PowerSeries}.\operatorname{X} \cdot \left(9 - 1120 \cdot \operatorname{PowerSeries}.\operatorname{X} + 30720 \cdot (\operatorname{PowerSeries}.\operatorname{X})^{2}\right)$$
 
@@ -215,6 +229,7 @@ The continuations from length zero have form F without colour two, and U+rZ in t
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233253TriangleStrip.finite_certificate`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233253TriangleStrip.firstCount`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233253TriangleStrip.firstRank`
+- Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233253TriangleStrip.instDecidableRowLegal`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233253TriangleStrip.pairs`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233253TriangleStrip.rank`
 - Truth anchor: `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233253TriangleStrip.rankCount`

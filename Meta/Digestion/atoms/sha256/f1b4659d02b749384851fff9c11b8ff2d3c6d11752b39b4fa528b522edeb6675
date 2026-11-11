@@ -1,0 +1,28 @@
+**命题 3.1（旁观者分块在全 PB 图中仍不可达）。** 在原多项式卷 §10 的 $n=4$ 原模型中，令
+
+$$
+a=t\sigma_x\otimes I_2,\quad b=t\sigma_y\otimes I_2,\quad
+\widetilde a=t\sigma_x\otimes\sigma_z,\quad
+\widetilde b=t\sigma_y\otimes\sigma_z.
+\tag{3.1}
+$$
+
+则 $(\widetilde a,\widetilde b)\notin\operatorname{Comp}_{\mathcal H_4}(a,b)$。
+
+证明。这里 $Z_0=\sigma_x\otimes I_2+\mathrm i\sigma_y\otimes I_2\ne0$，故定理 1.2 给出的分量只是
+
+$$
+\bigl(t(c\sigma_x-s\sigma_y)\otimes I_2,
+t(s\sigma_x+c\sigma_y)\otimes I_2\bigr),\quad c^2+s^2=1.
+$$
+
+若 (3.1) 的目标属于其中一项，则第一坐标要求
+$\sigma_x\otimes\sigma_z=(c\sigma_x-s\sigma_y)\otimes I_2$，与原多项式卷命题 10.1 所用的部分迹和 Pauli 线性无关性矛盾。这里的图已经允许任意非通勤演员和非零内层全 PB 边，所以该分离比原多项式卷命题 10.1 的通勤图分离更强。另一方面，显式模型仍有
+
+$$
+D_*(a,b)=D_*(\widetilde a,\widetilde b)=-t^2\sigma_z\otimes I_2.
+\tag{3.2}
+$$
+
+因此它不是旧 $D$ 值不同的反例，也不是 PB、可加性或完整量子来源的不可能性定理。∎
+

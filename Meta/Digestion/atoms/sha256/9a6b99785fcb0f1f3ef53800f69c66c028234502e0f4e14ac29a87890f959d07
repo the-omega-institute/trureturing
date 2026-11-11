@@ -1,0 +1,4 @@
+**命题 C-28.9.1（计数与增广 Euler 读出）。** Z<sub>N</sub>(1)=F<sub>N+2</sub>；Z<sub>N</sub>(−1) 是偶选择数减奇选择数。N≥1 时 χ̃(K<sub>N</sub>)=−Z<sub>N</sub>(−1)。设 z<sub>N</sub>=Z<sub>N</sub>(−1)，则 z₀=1、z₁=0，z<sub>N+2</sub>=z<sub>N+1</sub>−z<sub>N</sub>，z<sub>N+3</sub>=−z<sub>N</sub>。
+
+**证明。** 前两式逐项代入。非空 r 元面维数 r−1，故 χ̃=−1+∑<sub>r≥1</sub>(−1)<sup>r−1</sup>a<sub>N,r</sub>=−Z<sub>N</sub>(−1)。递推代 t=−1 后连续两步给 z<sub>N+3</sub>=−z<sub>N</sub>。这与 C-28.8.2 的球面及可缩型相符，但 Euler 数单独不确定同伦型。N=0 仅在增广链约定下记 χ̃=−1，与空面求和一致，不把空模式质量删除。证毕。
+

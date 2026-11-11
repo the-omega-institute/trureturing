@@ -281,7 +281,7 @@ private theorem log_power_small {α : Type*} {l : Filter α} {P : α → ℝ}
   simpa only [Real.rpow_natCast, Function.comp_def] using
     ((isLittleO_log_rpow_rpow_atTop (n : ℝ) hr).tendsto_div_nhds_zero.comp hP)
 
-private theorem record_layer_ratio {α : Type*} {l : Filter α}
+theorem record_layer_ratio {α : Type*} {l : Filter α}
     (m : α → ℕ) (lambda : α → ℝ) (hm : ∀ x, 2 ≤ m x)
     (hlambda : ∀ x, 0 < lambda x)
     (hrecord : ∀ x n, 0 < n → n < m x →
@@ -442,7 +442,7 @@ private theorem third_mass_negligible {α : Type*} {l : Filter α}
 
 /-- Same-integer E=Q2+o(sqrt(P)/log(P)), with the actual Q2 coefficient.
 In particular, the X/P conclusion is relative: it does not bound X-P by sqrt(P). -/
-private theorem record_mass_limits {α : Type*} {l : Filter α}
+theorem record_mass_limits {α : Type*} {l : Filter α}
     (m : α → ℕ) (lambda : α → ℝ) (hm : ∀ x, 2 ≤ m x)
     (hlambda : ∀ x, 0 < lambda x)
     (hrecord : ∀ x n, 0 < n → n < m x →
@@ -723,7 +723,7 @@ theorem price_record_full_arithmetic_correction_second_order
 
 /-- Finite envelope for the actual log integer. Used only to convert a uniform
 P-threshold into a uniform X-threshold; this does not assume P and X are close. -/
-private theorem record_log_envelope {m : ℕ} (hm : 2 ≤ m) {lambda : ℝ}
+theorem record_log_envelope {m : ℕ} (hm : 2 ≤ m) {lambda : ℝ}
     (hlambda : 0 < lambda)
     (hrecord : ∀ n : ℕ, 0 < n → n < m →
       goldenResourceObjective lambda n < goldenResourceObjective lambda m) :
@@ -862,6 +862,50 @@ theorem arbitrarily_large_price_records (T : ℝ) :
   have hmem : p ∈ m.primeFactors := Nat.mem_primeFactors.mpr ⟨hp, hpd, hm0⟩
   exact hTP.trans_le (by exact_mod_cast (le_sup (f := id) hmem))
 
--- The canonical supplier is consumed only through its public endpoint; this module is
--- a candidate until the native compiler and scoped report provide current evidence.
+/-- Only the Q2 coefficient needed by the complete residual proof. This helper is
+consumed by ActualRecordHigherLayerResidual.actual_record_critical_residual.
+The inverse/square-root rate and second-coefficient calculus are the original
+private suppliers above; no standalone own-log module is introduced. -/
+theorem record_second_own_clock_limit {α : Type*} {l : Filter α}
+    (m : α → ℕ) (lambda : α → ℝ) (hm : ∀ x, 2 ≤ m x)
+    (hlambda : ∀ x, 0 < lambda x)
+    (hrecord : ∀ x n, 0 < n → n < m x →
+      goldenResourceObjective (lambda x) n < goldenResourceObjective (lambda x) (m x))
+    (hP : Tendsto (fun x => (largestPrime (m x) : ℝ)) l atTop) :
+    Tendsto (fun x => Real.log (Real.log (m x : ℝ)) *
+      ((layerPrime (m x) 2 : ℝ) / Real.sqrt (Real.log (m x : ℝ)) - Real.sqrt 2))
+      l (𝓝 (-Real.log 2 / Real.sqrt 2)) := by
+  let P : α → ℝ := fun x => largestPrime (m x)
+  let X : α → ℝ := fun x => Real.log (m x : ℝ)
+  let Q : α → ℝ := fun x => layerPrime (m x) 2
+  let a : ℝ := Real.sqrt 2
+  have ha : 0 < a := Real.sqrt_pos.mpr (by norm_num)
+  have ha2 : a ^ 2 = 2 := Real.sq_sqrt (by norm_num)
+  have hLP : Tendsto (fun x => Real.log (P x)) l atTop := Real.tendsto_log_atTop.comp hP
+  have hXu := (record_mass_limits m lambda hm hlambda hrecord hP).2.2
+  obtain ⟨hX, hlogs, _⟩ := relative_clocks hP hXu
+  have hsqrtUnit : UnitRate l (fun x => Real.log (P x))
+      (fun x => Real.sqrt (P x) / Real.sqrt (X x)) := by
+    apply unit_congr (unit_sqrt (unit_inv hXu))
+    filter_upwards [hP.eventually_gt_atTop 0] with x hp
+    simp only [inv_div]
+    exact Real.sqrt_div hp.le (X x)
+  have hsecond := (second_layer_limits m lambda hm hlambda hrecord hP).2.2.2
+  have htransport := second_mul_unit hLP hsecond hsqrtUnit
+  have hout := hlogs.1.mul htransport
+  simp only [one_mul] at hout
+  have hb : -a * Real.log 2 / 2 = -Real.log 2 / a := by
+    field_simp [ha.ne']
+    nlinarith [congrArg (fun z : ℝ => Real.log 2 * z) ha2]
+  change Tendsto _ l (𝓝 (-a * Real.log 2 / 2)) at hout
+  rw [hb] at hout
+  apply hout.congr'
+  filter_upwards [hP.eventually_gt_atTop 1, hX.eventually_gt_atTop 0] with x hp hx
+  have hp0 : 0 < P x := by linarith
+  change (Real.log (X x) / Real.log (P x)) * (Real.log (P x) *
+    (Q x / Real.sqrt (P x) * (Real.sqrt (P x) / Real.sqrt (X x)) - a)) =
+    Real.log (X x) * (Q x / Real.sqrt (X x) - a)
+  have hlogP : Real.log (P x) ≠ 0 := (Real.log_pos hp).ne'
+  field_simp [hlogP, (Real.sqrt_pos.mpr hp0).ne'] <;> ring
+
 end D5.S3.Arith.Robin.PriceRecord.FullArithmeticCorrectionSecondOrder

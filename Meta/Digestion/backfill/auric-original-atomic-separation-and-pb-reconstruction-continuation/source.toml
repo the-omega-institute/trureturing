@@ -1,0 +1,5 @@
+source_id = "auric-original-atomic-separation-and-pb-reconstruction-continuation"
+path = "docs/develop/theory/AURIC_ORIGINAL_ATOMIC_SEPARATION_AND_PB_RECONSTRUCTION_CONTINUATION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

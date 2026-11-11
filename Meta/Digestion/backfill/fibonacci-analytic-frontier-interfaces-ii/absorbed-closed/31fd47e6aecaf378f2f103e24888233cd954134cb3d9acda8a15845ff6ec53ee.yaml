@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:31fd47e6aecaf378f2f103e24888233cd954134cb3d9acda8a15845ff6ec53ee
+  normalized_sha256: sha256:31fd47e6aecaf378f2f103e24888233cd954134cb3d9acda8a15845ff6ec53ee
+cas_ref: sha256:31fd47e6aecaf378f2f103e24888233cd954134cb3d9acda8a15845ff6ec53ee
+coverage_gids:
+  - gid: D5/S3/Arith/Robin/ForwardKernel/CommonBandCovariance.common_band_covariance_bound
+    target_statement_id: sha256:cd75f4c04f22910221c4df4635d82061b911322ffb74431a366e6071a906137a
+receipts:
+  unresolved_subitems: []

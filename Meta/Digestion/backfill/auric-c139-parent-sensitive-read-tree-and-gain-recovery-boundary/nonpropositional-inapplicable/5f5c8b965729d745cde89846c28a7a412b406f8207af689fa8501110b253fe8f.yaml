@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5f5c8b965729d745cde89846c28a7a412b406f8207af689fa8501110b253fe8f
+  normalized_sha256: sha256:5f5c8b965729d745cde89846c28a7a412b406f8207af689fa8501110b253fe8f
+cas_ref: sha256:5f5c8b965729d745cde89846c28a7a412b406f8207af689fa8501110b253fe8f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Specifies the candidate Gram-state factorization and the preservation and typing requirements for a proposed borrow-release extension. It does not assert that an extension or an original activity return exists; the counterexample is in Theorem 18.2.
+    previous_atom_id: da040e1bcf9636cd96891d71a32cb2ae7c986f67ee57ce79fbdf92e2b6e1375c
+    next_atom_id: 029f1cd766a2e0d7af6c01cb94f3fd3818c20bda6cbdc5f73398f459078e8b54

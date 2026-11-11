@@ -49,6 +49,9 @@ internal sealed class HardinA233124SquareStripDocument : IScribeDocumentDefiniti
             Def("valid", "Valid", "Reachable boundaries", ValidFormula(),
                 "Colour one has occurred, adjacent boundary labels differ, and before "
                 + "colour two occurs every label differs from two."),
+            Def("decidable-valid", "instDecidableValid", "Deciding reachable boundaries",
+                DecidableValidFormula(),
+                "The defining expression infers decidability for the conjunction defining Valid."),
             Def("boundaryclass", "boundaryClass", "The three boundary classes", ClassFormula(),
                 "Class zero has not seen colour two. Classes one and two have seen it; "
                 + "their endpoint labels are respectively equal and different."),
@@ -133,6 +136,20 @@ internal sealed class HardinA233124SquareStripDocument : IScribeDocumentDefiniti
         var p = V("p"); var c = V("c"); var j = V("j");
         return All("p", Labels(), All("c", Row(), Eq(Call("compatible", p, c),
             All("j", Fin(3), Ne(At(p, j), At(Q(PairMap), At(c, j)))))));
+    }
+    private static Formula DecidableValidFormula()
+    {
+        var s = V("s"); var p = V("p"); var j = V("j");
+        var body = And(Eq(Proj(s, 1), Q("Bool.true")),
+            And(Ne(At(p, Index(0)), At(p, Index(1))),
+                And(Ne(At(p, Index(1)), At(p, Index(2))),
+                    Imp(Eq(Proj(s, 2), Q("Bool.false")),
+                        All("j", Fin(3), Ne(At(p, j), Index(2)))))));
+        return All("s", Seen(), All("p", Labels(),
+            Eq(Cast(Call("instDecidableValid", s, p),
+                    At(Q("Decidable"), Parenthesized(Call("Valid", s, p)))),
+                At(Q("inferInstanceAs"),
+                    Parenthesized(At(Q("Decidable"), Parenthesized(body)))))));
     }
     private static Formula ValidFormula()
     {

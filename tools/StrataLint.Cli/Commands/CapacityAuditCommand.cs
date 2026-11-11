@@ -28,45 +28,11 @@ internal sealed class ProductionCapacityAuditFileAccess : ICapacityAuditFileAcce
     {
     }
 
-    public IReadOnlyList<CapacityAuditIndexEntry> Enumerate(string repositoryRoot)
-    {
-        var result = BoundedProcessRunner.Run(
-            "git",
-            ["ls-files", "--stage", "-z"],
-            repositoryRoot,
-            TimeSpan.FromSeconds(120),
-            MaximumMetadataBytes);
-        if (result.ExitCode != 0)
-        {
-            throw new InvalidOperationException(ProcessError(result, "git ls-files --stage failed"));
-        }
-
-        var entries = new Dictionary<string, CapacityAuditIndexEntry>(StringComparer.Ordinal);
-        foreach (var encodedEntry in SplitNul(result.StandardOutput))
-        {
-            var tab = Array.IndexOf(encodedEntry, (byte)'\t');
-            if (tab <= 0)
-            {
-                throw new InvalidOperationException("git index emitted invalid metadata");
-            }
-
-            var metadata = StrictUtf8.GetString(encodedEntry.AsSpan(0, tab)).Split(' ');
-            var relativePath = StrictUtf8.GetString(encodedEntry.AsSpan(tab + 1));
-            if (metadata.Length != 3
-                || metadata[2] != "0"
-                || !entries.TryAdd(
-                    relativePath,
-                    new CapacityAuditIndexEntry(relativePath, metadata[1])))
-            {
-                throw new InvalidOperationException(
-                    $"unmerged or duplicate repository entry: {relativePath}");
-            }
-        }
-
-        return entries.Values
-            .OrderBy(static entry => entry.RelativePath, StringComparer.Ordinal)
+    public IReadOnlyList<CapacityAuditIndexEntry> Enumerate(string repositoryRoot) =>
+        GitIndexRepositoryFiles.Read(repositoryRoot)
+            .OrderBy(static entry => entry.Key, StringComparer.Ordinal)
+            .Select(static entry => new CapacityAuditIndexEntry(entry.Key, entry.Value.ObjectId))
             .ToArray();
-    }
 
     public IReadOnlyList<(string RelativePath, string Text)> ReadFiles(
         string repositoryRoot,
@@ -222,23 +188,6 @@ internal sealed class ProductionCapacityAuditFileAccess : ICapacityAuditFileAcce
             ? error
             : fallback;
 
-    private static IEnumerable<byte[]> SplitNul(byte[] bytes)
-    {
-        var start = 0;
-        for (var index = 0; index <= bytes.Length; index++)
-        {
-            if (index != bytes.Length && bytes[index] != 0)
-            {
-                continue;
-            }
-
-            if (index > start)
-            {
-                yield return bytes[start..index];
-            }
-            start = index + 1;
-        }
-    }
 }
 
 internal static class CapacityAuditCommand

@@ -42,6 +42,18 @@ internal sealed class BargmannImaginaryMaximizersDocument : IScribeDocumentDefin
             Node("bargmann", "Ordered trace of pure states", BargmannFormula(),
                 "Zhang and Xie, Definition 3.1, p. 9: “The so-called nth-order Bargmann invariant for such n-tuple Ψ = (ρ₁, …, ρₙ) is defined as Δₙ(Ψ) := Tr(ρ₁ ⋯ ρₙ).” Section 2, p. 4: “Unit vector |ψ⟩ in ℂ^d will be called wave functions and its ranked-one projector ψ ≡ |ψ⟩⟨ψ| will be called pure state.” Here d = 2 and each ρ is the displayed outer product of its amplitude vector with its conjugate.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Describe.Lean(
+                DescribeId.Create("bargmann-path-product"),
+                DeclarationHandle.Create(Module + "bargmann_path_product"),
+                H("The overlap product of an ordered rank-one chain"),
+                StatementSource.FromAuthor(BargmannPathProductFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For every natural n and every tuple Ψ of n + 1 arbitrary vectors in ℂ², the trace of their ordered outer-product chain is the product of the n consecutive inner products, followed by the closing inner product from the last vector to the first. The inner product convention is ⟨u, v⟩ = star u dotProduct v. No normalization or nonzero premise is imposed; an outer product may therefore be zero. For n = 0, the empty consecutive product is one and the closing factor is ⟨Ψ₀, Ψ₀⟩, the trace of the single outer product.")),
+                    Paragraph(Text("For an ideal finite polarizer cascade, let vⱼ = v(αⱼ) = (cos αⱼ, sin αⱼ), embedded from ℝ² into ℂ², and Pⱼ = vⱼvⱼ†, for j = 0, …, m. These vectors are unit vectors. Starting from the prepared state P₀, the branch that passes every subsequent filter has Kₘ = Pₘ⋯P₁ and unnormalized state Xₘ = KₘP₀Kₘ† = Pₘ⋯P₁P₀P₁⋯Pₘ. Its weight is Tr(Xₘ). Apply bargmann_path_product with n = 2m to the ordered vector tuple (vₘ, …, v₁, v₀, v₁, …, vₘ). Each consecutive overlap is paired with its complex conjugate, while the closing overlap is ⟨vₘ, vₘ⟩ = 1. Thus Tr(Xₘ) = ∏ⱼ₌₁ᵐ |⟨vⱼ, vⱼ₋₁⟩|² = ∏ⱼ₌₁ᵐ cos²(αⱼ − αⱼ₋₁). This is the trace of one ordered success branch; it requires no independence assumption on successive outcomes.")),
+                    Paragraph(Text("For N intermediate filters between horizontal and vertical polarization, put m = N + 1 > 0 and αⱼ = jπ/(2m). The finite all-through weight relative to the prepared horizontal input is [cos²(π/(2m))]ᵐ = [cos²(π/(2(N + 1)))]ᴺ⁺¹. N = 0 gives zero and N = 1 gives 1/4. For unpolarized input I/2, retaining the initial horizontal preparation contributes a separate factor 1/2 to the weight relative to that input.")),
+                    Paragraph(Text("The finite cascade application uses ideal rank-one projections. Scalar strict increase with N and convergence to one are separate classical analysis results, outside the Lean statement of bargmann_path_product. No conclusion about general noisy filters or absorbing media follows from this identity."))),
+                DescribeRole.Theorem),
             Node("tau", "The maximal imaginary value", TauFormula(),
                 "Zhang and Xie, Corollary 5.5, p. 25, Eq. (5.15): “τₙ := cosⁿ(π/n) secⁿ⁻¹(π/[2(n−1)]).” The reciprocal cosine power expresses the secant power; the classification below concerns n ≥ 3.",
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
@@ -99,6 +111,17 @@ internal sealed class BargmannImaginaryMaximizersDocument : IScribeDocumentDefin
         return Disp(All(n, Naturals(), All(Psi, Arrow(Fin(n), Vectors()),
             Equal(Call("bargmann", Psi), Call("Matrix.trace", Call("List.prod",
                 Call("List.ofFn", LambdaOf(j, Fin(n), Call("Matrix.vecMulVec", v, Call("star", v))))))))));
+    }
+
+    private static Formula BargmannPathProductFormula()
+    {
+        Formula n = X("n"), j = X("j");
+        Formula Inner(Formula u, Formula v) => Call("dotProduct", Call("star", u), v);
+        Formula consecutive = Seq(new Formula.Subscript(Prod, Seq(j, Sp, Colon, Sp, Fin(n))), Sp,
+            Parenthesized(Inner(At(Psi, Call("Fin.castSucc", j)), At(Psi, Call("Fin.succ", j)))));
+        Formula closing = Inner(At(Psi, Call("Fin.last", n)), At(Psi, D(0)));
+        return Disp(All(n, Naturals(), All(Psi, Arrow(Fin(Add(n, D(1))), Vectors()),
+            Equal(Call("bargmann", Psi), Multiply(Parenthesized(consecutive), Parenthesized(closing))))));
     }
 
     private static Formula TauFormula()

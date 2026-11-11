@@ -1,0 +1,46 @@
+**定义 38.1（纯相位支配残差类）。**令 $M$ 为任意带真实双侧单位 $1$ 的 magma，$U:M\to M$ 任意，$H$ 为复 Hilbert 空间，$\omega=\exp(2\pi i/3)$。给定映射 $F:M\to H$，要求
+
+$$
+F1=0,\qquad F(a\cdot b)=Fa+Fb,\qquad F(Ua)=\omega Fa.
+\tag{38.1}
+$$
+
+残差是处处有限的实函数 $D:M^2\to\mathbb R$，满足反对称性与全域支配
+
+$$
+D(b,a)=-D(a,b),\qquad |D(a,b)|\le\|Fa-Fb\|^2,
+\tag{38.2}
+$$
+
+并对全部 $a,b,u,v\in M$ 满足完整四变量关系
+
+$$
+\sum_{k=0}^2D(a\cdot U^ku,b\cdot U^kv)=3D(a,b)+3D(u,v).
+\tag{R_D}
+$$
+
+另记 $p_3=U^31$、$P_3a=a\cdot p_3$，分别要求全部 $a,b\in M$ 上的两条恒等式
+
+$$
+D(P_3a,b)=D(a,b),
+\tag{38.3L}
+$$
+
+$$
+D(a,P_3b)=D(a,b).
+\tag{38.3R}
+$$
+
+这里保留一切次序、括号、单位标签与重复标签；不要求原乘法结合、$U$ 保乘法、$F$ 忠实或 $D$ 沿 $F$ 的纤维下降，也不添加群、拓扑或物理操作。对称 Hilbert 几何与纯相位规则 (38.1)、两条第三标记规则是此残差类的输入。
+
+复用[有限正性桥 §12](AURIC_C133_UNANCHORED_MARKER_FINITE_POSITIVITY_BRIDGE.md#12-自由有单位项上的归一化反模型归约)的自由含幺项，将其两个生成元与一元构造子改记为 $x,y,U$，所得项集记为 $T$。除双侧单位约简外不加恒等式；特别 $U1$、$U^31$ 与 $1$ 是不同项。固定标准 $\mathbb C^2$ 中的正交单位向量 $e_1,e_2$，递归定义
+
+$$
+f1=0,\quad fx=e_1,\quad fy=e_2,\quad
+f(s\cdot t)=fs+ft,\quad f(Us)=\omega fs,\quad
+K_0(s,t)=\|fs-ft\|^2.
+\tag{38.4}
+$$
+
+单位规则与 $f1=0$ 相容。固定模型残差指 $(M,H,F)=(T,\mathbb C^2,f)$ 上满足 (38.2)、$(R_D)$、(38.3L) 和 (38.3R) 的 $d$；所有等式仍在原项上解释。
+

@@ -13,6 +13,7 @@ internal sealed class TransferMatrixDocument : IScribeDocumentDefinition
         H("Counting locally constrained finite words"), Blocks(
             Node("tailGood", "Admissible continuations", TailFormula(), "After two specified rows, each new row must satisfy the pair test with its predecessor and the triple test with both preceding rows.", DescribeRole.Definition),
             Node("good", "Locally admissible words", GoodFormula(), "The empty word and every one-row word are admissible. Longer words satisfy the first pair test and all continuation tests.", DescribeRole.Definition),
+            Node("good_iff_local", "Admissibility is a local condition", LocalFormula(), "A word is admissible exactly when every two consecutive entries pass the pair test and every three consecutive entries pass the triple test; entries are read with a default value outside the word, which the length bounds never reach.", DescribeRole.Theorem),
             Node("pairOK", "Horizontal trace tests", PairFormula(), "For two rows, traces at adjacent block columns differ.", DescribeRole.Definition),
             Node("tripleOK", "Vertical trace tests", TripleFormula(), "For three rows, traces at corresponding block columns in the two neighboring row pairs differ.", DescribeRole.Definition),
             Node("arrayOK", "All neighboring tests", ArrayFormula(), "The finite indexed array satisfies every horizontal and vertical neighboring-trace inequality.", DescribeRole.Definition),
@@ -21,7 +22,7 @@ internal sealed class TransferMatrixDocument : IScribeDocumentDefinition
             Node("scalarRelationShift", "Transporting a vector relation", ShiftFormula(), "Multiplication by a further matrix power and an initial row vector transports a polynomial relation to every later scalar count.", DescribeRole.Theorem),
             Node("tabulatedPowers", "Successive vectors are matrix powers", TableFormula(), "A finite table starting at the constant-one vector and satisfying each matrix-vector step agrees with the corresponding powers throughout its domain.", DescribeRole.Theorem)), []));
 
-    private static DocumentBlock Node(string declaration, string title, Formula formula, string prose, DescribeRole role) => Describe.Lean(DescribeId.Create("hardin-transfer-" + declaration.ToLowerInvariant()), DeclarationHandle.Create(Prefix + declaration), H(title), StatementSource.FromAuthor(formula), AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
+    private static DocumentBlock Node(string declaration, string title, Formula formula, string prose, DescribeRole role) => Describe.Lean(DescribeId.Create("hardin-transfer-" + declaration.ToLowerInvariant().Replace("_", "-")), DeclarationHandle.Create(Prefix + declaration), H(title), StatementSource.FromAuthor(formula), AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
     private static Formula R() => V("R");
     private static Formula S() => V("S");
     private static Formula PropF() => Op("Prop");
@@ -51,6 +52,15 @@ internal sealed class TransferMatrixDocument : IScribeDocumentDefinition
     }
     private static Formula TraceBind(Formula body) => All("R",Op("Type"),All("J",Op("Type"),All("K",Op("Type"),All("tr",Arr(R(),Arr(R(),Arr(V("J"),V("K")))),body))));
     private static Formula AdjBind(Formula body) => All("adj",Arr(V("J"),Arr(V("J"),PropF())),body);
+    private static Formula LocalFormula()
+    {
+        var xs=V("xs");var i=V("i");
+        Formula At(Formula k) => App(Qualified("List","getD"),xs,k,Op("default"));
+        Formula Below(int d) => Seq(PlusF(i,Num(d)),Sp,F.Lt,Sp,App(Qualified("List","length"),xs));
+        var pairs=All("i",NatF(),Imp(Below(1),App(P(),At(i),At(PlusF(i,Num(1))))));
+        var triples=All("i",NatF(),Imp(Below(2),App(Q(),At(i),At(PlusF(i,Num(1))),At(PlusF(i,Num(2))))));
+        return Disp(PQ(Seq(OpenBracket,Call("Inhabited",R()),CloseBracket,Sp,All("xs",ListR(),IffF(G("good",P(),Q(),xs),AndF(pairs,triples))))));
+    }
     private static Formula PairFormula()
     {
         var a=V("a");var b=V("b");var j=V("j");var k=V("k");var tr=V("tr");var adj=V("adj");

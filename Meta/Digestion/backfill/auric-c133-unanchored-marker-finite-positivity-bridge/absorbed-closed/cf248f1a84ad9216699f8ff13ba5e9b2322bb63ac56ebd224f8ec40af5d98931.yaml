@@ -1,0 +1,29 @@
+fingerprints:
+  raw_sha256: sha256:cf248f1a84ad9216699f8ff13ba5e9b2322bb63ac56ebd224f8ec40af5d98931
+  normalized_sha256: sha256:cf248f1a84ad9216699f8ff13ba5e9b2322bb63ac56ebd224f8ec40af5d98931
+cas_ref: sha256:cf248f1a84ad9216699f8ff13ba5e9b2322bb63ac56ebd224f8ec40af5d98931
+coverage_gids:
+  - gid: D5/S3/QuadraticForms/ThreeWayPositiveKernel.three_way_hilbert_characterization
+    target_statement_id: sha256:ee8b63c146894fc576e993bc680edf5d02be69d9a5e5ea9c5fca29fe24626743
+  - gid: D5/S3/Quantum/Completion/RawAnchoredFourierQuotient.anchoredSpan_quotient
+    target_statement_id: sha256:ecfe32bb1bb3ea863eb2ca8d7bfab7bf75d68f45b2f1942b36a59bdfcf5d5ab0
+  - gid: D5/S3/Quantum/Completion/RawAnchoredFourierQuotient.bounded_phase_recursion_vanishes
+    target_statement_id: sha256:185c437bfe0d30cd42e97ff35daa478f754d9f6dce5a85a1fbe669eec86c23aa
+  - gid: D5/S3/Quantum/Completion/RawAnchoredFourierQuotient.defect_mem_W
+    target_statement_id: sha256:02ece3bad781294292a12e0ff73c849a7163e6b936a9f0362a39d7f1861f0d3c
+  - gid: D5/S3/Quantum/Completion/RawAnchoredFourierQuotient.gamma_mul
+    target_statement_id: sha256:b52e58e4d9029d81620454f24f7759e881e7a40e9e91f360c852c921164d1af2
+  - gid: D5/S3/Quantum/Completion/RawAnchoredFourierQuotient.gamma_one
+    target_statement_id: sha256:00222d3e03384764e0a10c80d902dfff24230b7c3597337cd0be089cf34690fe
+  - gid: D5/S3/Quantum/Completion/RawAnchoredFourierQuotient.quotientForm_beta
+    target_statement_id: sha256:6c55d789ddfe6d318196a30f5571e4bee267d49406ae020faaf3960028686001
+  - gid: D5/S3/Quantum/Completion/RawAnchoredFourierQuotient.quotient_joint_nondegenerate
+    target_statement_id: sha256:28a881fa59334106d1628e6cc457c7516a3cf86f4f9caddb54681cf98830e737
+  - gid: D5/S3/Quantum/Completion/RawAnchoredFourierQuotient.single_one_radical
+    target_statement_id: sha256:b6d0c20a6c39c4cf822f4d1c5588eda3eea82dbe84d6fbeb35d2492917f8c21d
+  - gid: D5/S3/Quantum/Completion/RawUnanchoredReplication.single
+    target_statement_id: sha256:4a09744a4c033fe16b4bd176eb4e0b1b6a3b4ff9be8e7913da95a0496846511c
+  - gid: D5/S3/Quantum/Completion/RawUnanchoredReplication.sync_iter
+    target_statement_id: sha256:30976c6d40b14d5d07ac2a748da23f40cc3c3d3c66267bd05df9ea057990c539
+receipts:
+  unresolved_subitems: []

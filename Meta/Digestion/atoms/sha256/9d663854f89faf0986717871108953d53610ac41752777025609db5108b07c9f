@@ -1,0 +1,30 @@
+**引理 43.2（正确角上的矩形恢复）。** 设 $e,f$ 为 $C^*$-代数中的投影，$a=a^*\in eAe$、$U\in eAf$、$\kappa>0$。若每个 $eAe$ 的状态均满足 $|\omega(a)|^2\le\kappa\omega(UU^*)$，则
+$$
+\|aU\|\ge\frac{\|a\|^2}{\sqrt\kappa}.
+\tag{43.10}
+$$
+**证明。** 令 $m=\|a\|$；$m=0$ 时直接成立。否则取固定 $\epsilon_0\in\{1,-1\}$ 及角状态 $\omega_n$，使 $\omega_n(a)\to\epsilon_0m$。由 $-me\le a\le me$，
+$$
+(a-\epsilon_0me)^2\le2m(me-\epsilon_0a),\qquad
+\delta_n:=\|(\pi_n(a)-\epsilon_0m)\xi_n\|\longrightarrow0
+$$
+对其 GNS 循环单位向量成立。正确角元素是 $C_0=UU^*\in eAe$；假设给 $\liminf_n\omega_n(C_0)\ge m^2/\kappa$。$C_0$ 固定且有界，故
+$$
+|\omega_n(aC_0a)-m^2\omega_n(C_0)|\le2m\|C_0\|\delta_n\longrightarrow0,
+\qquad \liminf_n\omega_n(aC_0a)\ge m^4/\kappa.
+$$
+由 $aC_0a=(aU)(aU)^*$ 及 $C^*$-恒等式，$\|aU\|^2=\|aC_0a\|\ge m^4/\kappa$。不要求 $U$ 为方块、单射、满射、可逆或有闭值域。∎
+
+续证定理。对 $pAp$ 或 $qAq$ 的任意状态，分别用 $\phi(a)=\omega(pap)$ 或 $\omega(qaq)$ 读取精确 P2。两者的 $\phi(c\circ t)=0$；其 $\phi(c^2)$ 分别为 $1,4$，$\phi(t^2)$ 分别为 $\omega(TT^*),\omega(T^*T)$，$\phi(g)$ 分别为 $\omega(s_p),\omega(s_q)$。因此
+$$
+|\omega(s_p)|^2\le\omega(TT^*),\qquad
+|\omega(s_q)|^2\le4\omega(T^*T).
+\tag{43.11}
+$$
+第二角的因子必须是 $4$，来自 $c^2q=4q$。引理分别取 $(a,U,\kappa)=(s_p,T,1)$、$(s_q,T^*,4)$，给
+$$
+\|s_p\|^2\le\|s_pT\|\le\eta/2,\qquad
+\|s_q\|^2\le2\|s_qT^*\|=2\|Ts_q\|\le\sqrt{10}\,\eta/2.
+$$
+正交角满足 $\|s_p+s_q\|=\max\{\|s_p\|,\|s_q\|\}$，从而得到 (43.5)，也包括 $\eta=0$。引理已涵盖零通道；状态范数和 GNS 极限都只涉及每份数据中固定、已知的 $C^*$ 元素，不涉及未知 $D$ 的输入正则性或极限。∎
+

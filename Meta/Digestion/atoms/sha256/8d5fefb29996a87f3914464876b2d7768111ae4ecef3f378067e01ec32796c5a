@@ -1,0 +1,22 @@
+(ii) 存在常数 $C$，使对所有充分大的 $X$，
+
+$$
+\sup_{0\le s\le1}\int_X^{2X}D_{sx^\theta}(x)^2\,dx\le C\,Xh_0\log X .
+$$
+
+证明。(i) 由恒等式 $D_u(x)=D_{h+u}(x)-D_h(x+u)$，
+
+$$
+\int_X^{2X}D_u^2\le2\int_X^{2X}D_{h+u}^2+2\int_{X+u}^{2X+u}D_h^2\le2V(3X,h+u)+2V(3X,h).
+$$
+
+对 $v\in[h,2h]$ 一致地有 $v/(3X)^\alpha\ge c3^{-\alpha}X^{\theta-\alpha}\to\infty$、$v/(3X)^\beta\le2c3^{-\beta}X^{\theta-\beta}\to0$，且 $\log(3X/v)=\log(X/h)+O(1)$；故 (490.2) 的同一个 $X$ 门槛对全部 $u\in[0,h]$ 适用，两项都 $\ll Xh\log(X/h)$。
+
+(ii) 令 $L_s(x)=sx^\theta$、$\phi_s(x)=x+L_s(x)$。在 $[X,2X]$ 上 $0\le L_s\le2^\theta h_0<2h_0$、$\phi_s'(x)=1+s\theta x^{\theta-1}\ge1$，且对充分大的 $X$，$\phi_s([X,2X])\subset[X,3X]$，门槛与 $s$ 无关。对每个 $v\in[3h_0,4h_0]$，有恒等式 $D_{L_s(x)}(x)=D_v(x)-D_{v-L_s(x)}(\phi_s(x))$，且 $v-L_s(x)\in[h_0,4h_0]$。平方后对 $v\in[3h_0,4h_0]$ 取平均，再对 $x$ 积分。第一部分至多 $\frac2{h_0}\int_{3h_0}^{4h_0}V(3X,v)\,dv\ll Xh_0\log X$。第二部分中，内层令 $w=v-L_s(x)$ 并把积分区间放大到 $[h_0,4h_0]$（被积函数非负），再由 Tonelli 及换元 $y=\phi_s(x)$（逆映射导数不超过 $1$）：
+
+$$
+\int_X^{2X}\!\!\int_{3h_0}^{4h_0}D_{v-L_s(x)}(\phi_s(x))^2\,dv\,dx\le\int_{h_0}^{4h_0}\!\!\int_X^{3X}D_w(y)^2\,dy\,dw\le\int_{h_0}^{4h_0}V(3X,w)\,dw\ll Xh_0^2\log X .
+$$
+
+除以 $h_0$ 即得 (ii)。证毕。
+

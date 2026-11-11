@@ -1,0 +1,66 @@
+**定理 22.2（首退出的精确滤波与原始标签加权方向信号）。** 写
+
+$$
+\eta_+=1,\quad\eta_-=-1,\quad
+ a_+=\frac{D+1}{2D},\quad a_-=\frac{D-1}{2D},\quad
+ c=\cos g,\quad s=\sin g,\quad J_k=J\cdot k.
+$$
+
+在 $S_1,b$ 块内、指针读出前，未归一化的 $RT$ 态准确为
+
+$$
+M_b(\tau_h\otimes|+x\rangle\langle+x|)M_b^\dagger,
+\qquad M_b=a_bcI_R\otimes I_T-i\eta_b\frac{s}{D}J_k\otimes Z_T.
+\tag{22.2}
+$$
+
+旧 $BA$ 因子为原 singlet。再读出 $Y_T$ 后，$S_1,b,y$ 的未归一化参考态及概率为
+
+$$
+\begin{aligned}
+\xi_{b,y}(h)&=\frac12
+ \left(a_bcI_R+\eta_by\frac{s}{D}J_k\right)\tau_h
+ \left(a_bcI_R+\eta_by\frac{s}{D}J_k\right),\\
+p_{b,y}(h)&=\frac12\left[
+ a_b^2c^2+\frac{s^2}{D^2}\left(j^2u^2+\frac j2(1-u^2)\right)
+ +2\eta_by\frac{a_bcsj}{D}u\right],\qquad u=h\cdot k.
+\end{aligned}
+\tag{22.3}
+$$
+
+完成后的同一实际块准确为 $\mathsf C_v(\xi_{b,y}(h))$，张量附上旧 singlet、测后 $Y_T$ 本征态及相应原始标签和实际副本。等价地，实际全输出在 $R,K_c,S_1,b,y$ 上的边缘，其 $S_1$ 部分为
+
+$$
+\sum_{b,y}|S_1,b,y\rangle\langle S_1,b,y|
+ \otimes\mathsf C_v(\xi_{b,y}(h)).
+\tag{22.4}
+$$
+
+这是未归一化的块等式，不是条件选支。把其余所有历史的统计量定义为零，则同一个实际有界读数
+
+$$
+O=\mathbf1_{S_1}\eta_b y\in[-1,1],\qquad
+\mathbb E_{n,h}O=A_g(h\cdot k),\qquad
+A_g=\frac jD\sin(2g)
+\tag{22.5}
+$$
+
+对全部允许 $n,h$ 精确成立。只加权原始数据就得到此信号，不需要原始 $b$ 控制的有符号脉冲。
+
+**证明。** 由 (13.5)，$\Pi_b=a_bI+\eta_bJ\cdot\sigma_B/D$。singlet 的 $B$ 边缘为 $I_2/2$，故
+
+$$
+\langle s_0|\sigma_{B,i}|s_0\rangle=0,\qquad
+\langle s_0|(k\cdot\sigma_B)\sigma_{B,i}|s_0\rangle=k_i.
+$$
+
+把 $U_g=cI-is(k\cdot\sigma_B)Z_T$ 代入 $\langle s_0|U_g\Pi_b|s_0\rangle$ 即得 (22.2)。先退相干 $H$ 不影响这个逐原始标签计算。取 $Z_T$ 基，$|y\rangle=(|0\rangle+iy|1\rangle)/\sqrt2$，于是
+
+$$
+\langle y|M_b|+x\rangle
+ =\frac{1-iy}{2}\left(a_bcI_R+\eta_by\frac{s}{D}J_k\right).
+$$
+
+其标量模平方是 $1/2$。相干自旋满足
+$\langle J_k\rangle=ju$、$\langle J_k^2\rangle=j^2u^2+j(1-u^2)/2$：在 $h=z$ 的证明坐标，$J_ze=je$、$J_ke=ju e+\sqrt m(k_x+ik_y)f/2$，$e=|j,j\rangle$、$f=|j,j-1\rangle$；取范数即得，随后共同旋转回任意 $h$。这证明 (22.3)。后缀忽略旧口，故线性性给出 (22.4)。对 (22.3) 乘 $\eta_by$ 并求和，二次项消失，$a_++a_-=1$ 给出 $2csju/D$，即 (22.5)。读数在 $S_1$ 之外取零，没有丢弃任何运行；不再接触旧指针和首退出块的后续操作不能改变其概率。$\square$
+

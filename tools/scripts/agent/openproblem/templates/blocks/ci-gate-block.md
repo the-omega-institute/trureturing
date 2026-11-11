@@ -7,11 +7,7 @@ The local full gate builds a whole-library Lean report (35–45 GB, one producer
   - Report `open` only for a diagnostic outside those fixes.
 - The PR body's Verification section states the gate as current data: the required check `required` at the delivered head, with its run id and conclusion, and the `current` job's conclusion. It names any Observe diagnostics the job printed for this lane's paths (SL-022 on `.scribe.cs`, SL-031 DTR, SL-008 `FROZEN_PIN_CHANGE`) as non-blocking, and says that no local full gate was run because CI's `current` job runs the same checks.
 
-**Bounded `current` job and the PR cache seed (binding).**
-- The required `current` job of `ci-current.yml` has a 30-minute limit. When a delivery adds or changes enough modules, the job ends `cancelled` and its log shows `::error title=Lean cache seed required::` or `LEAN_REPORT_CACHE_MISMATCH`.
-- That is a missing PR seed, not a defect of the delivery. Handle it as follows:
-  1. `gh pr edit <PR> --add-label lean-cache-produce`.
-  2. Wait for the `lean-cache-publish.yml` run triggered by that label (`gh run list --workflow lean-cache-publish.yml --branch <branch>`) to complete with `success`.
-  3. Run `gh run rerun <the cancelled CI run id> --failed`.
-  4. Wait with `make pr-watch` again on the same head.
-- Push no empty commit for this, and never report the cancelled run as a content failure.
+**PR cache recovery (binding; CLAUDE.md §8.3).**
+- Diagnose the failing job from its actual log before choosing recovery. Cancellation, shutdown signals, `LEAN_REPORT_CACHE_MISMATCH`, a cache miss or exhausted compute allowance alone establishes neither a missing PR seed nor a content failure.
+- Follow CLAUDE.md §8.3: fetch fresh `origin/dev` and check the PR head's ancestry first; if it lacks that baseline, preserve the original changes and follow the new-PR recovery there. Select `lean-cache-produce` only when the current build inputs, compatible seeds and actual diagnostic establish the need for independent long production.
+- Reuse a successful producer or wait for an in-flight producer matching the exact PR/head/target. Follow §8.3's production, artifact-identity and adoption checks before retrying a failed CI run on the current head. Do not blind rerun or push an empty commit; cache production does not replace required checks.

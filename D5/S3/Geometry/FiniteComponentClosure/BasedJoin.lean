@@ -26,7 +26,6 @@ open private
   from D5.S3.Geometry.FiniteComponentClosure.Transport
 
 open private
-  vertexComplex
   bouquetVertex_face
   bouquetPath
   glueLeft

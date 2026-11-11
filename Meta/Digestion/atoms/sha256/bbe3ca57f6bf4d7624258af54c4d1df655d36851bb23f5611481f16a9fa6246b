@@ -1,0 +1,28 @@
+**定义 35.1（三个有向比较族的条件）。**沿用定义 31.1 的原始签名：$M$ 是有真实双侧单位 $1$ 的任意 magma，$U:M\to M$ 任意，$c:M^2\to[0,\infty)$ 处处有限且 $c(x,x)=0$。完整 (R) 对全部 $a,b,u,v$ 要求
+
+$$
+\sum_{k=0}^2c\bigl(a\cdot(U^ku),b\cdot(U^kv)\bigr)=3c(a,b)+3c(u,v).
+\tag{35.1}
+$$
+
+置 $p_j=U^j1$、$q(a)=c(a,1)$、$r(a)=c(1,a)$、$x_+=\max\{x,0\}$，并定义
+
+$$
+\begin{aligned}
+B(a,z)&=q(a)+r(a)+q(z)+r(z),\\
+\Delta_1(a,z)&=|c(a\cdot p_1,z)-c(a,z)|+|c(z,a\cdot p_1)-c(z,a)|,\\
+\Xi(a,z)&=\Delta_1(a,z)+[c(a,z)-c(a\cdot p_3,z)]_+.
+\end{aligned}
+\tag{35.2}
+$$
+
+条件 $\mathrm S_{13}^{-}$ 为
+
+$$
+\forall\varepsilon>0\ \exists C_\varepsilon\in[0,\infty)\ \forall a,z\in M:\qquad
+\Xi(a,z)\le\varepsilon B(a,z)+C_\varepsilon.
+\tag{S13-}
+$$
+
+$C_\varepsilon$ 有限且独立于标签；零预算也在量词内。这里只比较第一标记在两个端点的插入，以及第三标记在第一端点造成的下降；不假定第二标记的任一方向、第三标记的上升缺陷或反向端点读数。没有增列原始代数律、对称性、度量、$U$ 满射性、$U1=1$、未见正性或物理操作。
+

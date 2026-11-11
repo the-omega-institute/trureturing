@@ -1,0 +1,99 @@
+**引理 19.3（保群的有限矩阵零漂移实现）。**给定定义 19.1 的一个模型和有限标签集 $A\subseteq G$，存在可数真群 $S$、总映射 $U_*$ 及处处有限、对称、非负、零对角的核 $c_\infty$，满足完整 (19.1)，并有真实单位 $1_S$ 使
+
+$$
+c_\infty(U_*1_S,1_S)=0,\qquad
+c_\infty(x_a,x_b)=c(a,b)\quad(a,b\in A),
+\tag{19.10}
+$$
+
+其中 $x_a\in S$ 是指定的来源。$S$ 的群律、逆元和 $U_*$ 的总性在取极限前已经成立；$a\mapsto x_a$ 不被宣称为保乘法或保标记的映射。
+
+**证明。**沿用[续卷 W 定理 9.2–9.3](AURIC_C133_UNANCHORED_MARKER_BOUNDED_ORBITS_CONTINUATION_W.md#9-精确保留比较矩阵的右梳复制)的实际右梳。令 $\Sigma_N=\{0,1,2\}^N$，$G_N=G^{\Sigma_N}$ 逐坐标取真群运算，$U_N$ 逐坐标作用，真实单位为常数组 $\mathbf1$，并置
+
+$$
+c_N(X,Y)=\frac1{N3^N}\sum_{\sigma\in\Sigma_N}c(X_\sigma,Y_\sigma).
+\tag{19.11}
+$$
+
+对 $\sigma=(\sigma_1,\ldots,\sigma_N)$，右梳 $H_N^\sigma(a;1)$ 严格按 W 定义的括号递推；记
+
+$$
+\Gamma_N(a)(\sigma)=H_N^\sigma(a;1).
+$$
+
+W 的精确右梳恒等式给
+
+$$
+c_N(\Gamma_N(a),\Gamma_N(b))=c(a,b),
+\tag{19.12}
+$$
+
+且以
+
+$$
+\Omega=q(p_1)+q(p_2)+r(p_1)+r(p_2),\qquad q(g)=c(g,1),\quad r(g)=c(1,g)
+$$
+
+记单位轨道预算，有
+
+$$
+c_N(\Gamma_N(1),\mathbf1)+c_N(\mathbf1,\Gamma_N(1))\le\frac{\Omega}{N},\qquad
+c_N(\mathbf p_j,\mathbf1)+c_N(\mathbf1,\mathbf p_j)\le\frac{\Omega}{N}.
+\tag{19.13}
+$$
+
+这里逐坐标求和仍给 $G_N$ 上的完整 (19.1)；(19.12) 只保持比较矩阵，从不把 $\Gamma_N$ 当作同态。
+
+现在取直积群 $P=\prod_{N\ge1}G_N$，逐坐标定义 $U_*$，并令 $x_a=(\Gamma_N(a))_{N\ge1}\in P$。从这些 $x_a$ 出发，递归令 $S_0$ 为其生成子群，$S_{n+1}$ 为由 $S_n\cup U_*(S_n)$ 生成的子群，置
+
+$$
+S=\bigcup_{n\ge0}S_n.
+$$
+
+每个 $S_n$ 可数，故 $S$ 是可数真子群，含真实单位并对 $U_*$ 封闭。重要的是，这个群载体的逆元和结合律是每个坐标中已经成立的对象等式。
+
+对 $S$ 中由有限个 $x_a$、单位、乘法、逆元和 $U_*$ 写出的表达式 $e$，先由 (19.6)、对称性和 (19.13) 递归给出与 $N$ 无关的有限预算。例如可取
+
+$$
+B(1)=0,\qquad B(x_a)=3q(a)+3\Omega,\qquad
+B(e^{-1})=B(e),
+\tag{19.14}
+$$
+
+以及
+
+$$
+B(ef)=3(B(e)+B(f)),\qquad B(U_*e)=3B(e)+3\Omega.
+\tag{19.15}
+$$
+
+数组模型中每个表达式的 $q_N$ 不超过其预算，而
+
+$$
+c_N(e_N,f_N)\le3\bigl(B(e)+B(f)\bigr).
+\tag{19.16}
+$$
+
+逆元预算使用 $q_N(e_N^{-1})=q_N(e_N)$；标记节点使用同步等距和第一个单位轨道项；乘法节点使用 (19.6)。这些估计只涉及实际有限项，不引入度量或三角前件。
+
+枚举 $S$ 的全部有序对，依次对标量序列
+
+$$
+c_N\bigl(\pi_Ns,\pi_Nt\bigr)
+$$
+
+取收敛子列，再取一个共同的对角子列 $N_\ell\to\infty$；这里 $\pi_N$ 是第 $N$ 个坐标投影。这一步只复用[续卷 W 定理 23.2](AURIC_C133_UNANCHORED_MARKER_BOUNDED_ORBITS_CONTINUATION_W.md#23-任意有限比较矩阵的零漂移实现)的逐项对角方法；其自由含幺 magma 载体在本节被实际直积群 $S$ 替换，不能把 W 的载体直接称为真群。由 (19.16)，每个极限有限，定义
+
+$$
+c_\infty(s,t)=\lim_{\ell\to\infty}c_{N_\ell}(\pi_{N_\ell}s,\pi_{N_\ell}t).
+\tag{19.17}
+$$
+
+非负性、对称性和零对角通过有限标量极限保留。对任意固定 $a,b,u,v\in S$，投影保留乘法、逆元、单位和 $U_*$；同一个对角子列中左侧三个核值及右侧两个核值同时收敛，所以完整 (19.1) 也保留。由 (19.13)，
+
+$$
+c_\infty(U_*1_S,1_S)=\lim_{\ell\to\infty}\frac{q(p_1)}{N_\ell}=0.
+$$
+
+而 (19.12) 给出 (19.10) 的比较矩阵保留。故这是处处定义的总真群模型，而非有限窗口或相互独立的边界序列。证毕。
+

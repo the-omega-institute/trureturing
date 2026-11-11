@@ -1,0 +1,28 @@
+**假设 C-29.1（标签、全律量词与另供的比较）。** 沿用 C-1.2、C-2.1–C-2.3 的同一单窗来源，写
+
+$$
+\begin{array}{c|ccccc}
+s&O&L&T&R&J\\\hline
+\text{原标签}&0&1&2&3&13\\
+v(s)=(x(s),y(s),z(s))&(0,0,0)&(1,0,0)&(0,0,1)&(0,1,0)&(1,1,0)
+\end{array}
+$$
+
+其中 $xz=yz=0$。经典更新是从这个五元素集到它自身的一个固定列随机矩阵 $P$；全输入保持指对每个概率律 $p$ 同时有 $\mathbb E_{Pp}f=\mathbb E_pf$，$f=x,y,z$。它比指定两个律有相同均值多一个对更新及全部输入的量词。具体地，既有纤维的
+
+$$
+p_+=(\delta_O+\delta_J)/2,\qquad p_-=(\delta_L+\delta_R)/2
+$$
+
+均有 $(X,Y,Z)=(1/2,1/2,0)$，而 $\kappa=\mathbb E[xy]$ 分别为 $1/2,0$。这就是 C-2.2 的底面方向；完整五律反解复用 [LocalChoice §3](FIB_ATOM_LOCAL_CHOICE_GEOMETRY.md)，全律随机核的期望条件复用 C-28.11.5。
+
+量子部分另供 $\mathcal H_\Sigma=\mathbb C^5$、正交标签基、$\widehat f=\sum_s f(s)|s\rangle\langle s|$ 及同域 CPTP 通道 $\mathcal N$。全输入保持在此指对每个密度态 $\rho$ 有 $\operatorname{tr}(\widehat f\mathcal N(\rho))=\operatorname{tr}(\widehat f\rho)$。三个占位算子彼此交换。另供的合法翻转比较图为
+
+$$
+E=\{OL,LJ,JR,RO,OT\}.
+$$
+
+只有明确供给共同相位参照、成对输入 $|+_{st}\rangle=(|s\rangle+|t\rangle)/\sqrt2$ 和读出 $X_{st}=|s\rangle\langle t|+|t\rangle\langle s|$ 时，才允许下面的相干检查。图的邻接本身不供给这些仪器；[LocalChoice 定义 9.3](FIB_ATOM_LOCAL_CHOICE_GEOMETRY.md) 的来源探针与实际守卫亦按它自己的校准和菜单使用。
+
+本章保持相同五个输入、输出标签。泄漏、拒绝、额外终止标签或环境再接入须另立联合合同，不能隐去后继续套用同域结论。共同记录内积共轭线性于第一槽，使用 SecondOrder 定义 109.1 的通道约定 $\Gamma_{st}=\langle e_t|e_s\rangle$；故 $\Gamma=\overline{G_{\mathrm{rec}}}$，区别见 C-27.1.2。环境记录是数学实现，不是已授予的可读端口。
+
