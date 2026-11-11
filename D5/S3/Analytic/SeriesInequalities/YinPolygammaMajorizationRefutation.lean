@@ -18,8 +18,8 @@ Direct frozen dependencies:
     statement_id: sha256:565b9b70d03155f061b4fe949164aa173255e7ceac42365730d8420ff3c7616a
   D5/S3/Geometry/AlphaGeometry/PositiveSimplexGeometryAndMixing.prefixSum
     statement_id: sha256:93ca1f1520e0d21d918273555bd2933d31f2a7bfe3a4b3c132e8c154b2ffdc8b
-The public result is the designated refutation result (`basis=refutes`) and is
-exempt from four-slot escape registration (CLAUDE.md §3.9).
+Escape audit unfinished: result is an audit target under utility: none;
+https://github.com/the-omega-institute/trureturing/issues/29215
 The source definitions are retained; sorting and weak majorization use their
 existing owners directly. Implementation-only moment abbreviations are expanded.
 All declarations describe arbitrary-parameter functions, limits or inequalities;
