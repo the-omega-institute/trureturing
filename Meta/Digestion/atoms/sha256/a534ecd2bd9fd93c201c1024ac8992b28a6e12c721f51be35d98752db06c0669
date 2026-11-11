@@ -1,0 +1,28 @@
+**定义 12.1（相干方向程序与固定仪器）。** 令 $j\in\frac12\mathbb Z_{>0}$，$d=2j+1$，取参考空间 $R=\operatorname{Sym}^{2j}(\mathbb C^2)$ 及每次输入空间 $S=\mathbb C^2$。对 $n\in S^2$，记 $|n,+\rangle$ 为 $n\cdot\sigma$ 的正本征单位向量，定义
+
+$$
+|j,n\rangle=|n,+\rangle^{\otimes 2j},\qquad
+\tau_n=|j,n\rangle\langle j,n|,\qquad
+P_{n,b}=\frac{I+b\,n\cdot\sigma}{2}\quad(b=\pm).
+$$
+
+向量的整体相位不影响上述态。$\sigma=(\sigma_x,\sigma_y,\sigma_z)$ 为 Pauli 矩阵，$J=(J_x,J_y,J_z)$ 为 $R$ 上的无量纲自旋 $j$ 生成元。令 $\Pi_\pm$ 为 $R\otimes S$ 的总自旋 $j\pm\frac12$ 子空间的正交投影。每一槽使用同一仪器
+
+$$
+\mathcal A(X)=\sum_{b=\pm}\Pi_bX\Pi_b\otimes|b\rangle\langle b|_H.
+\tag{12.1}
+$$
+
+其输出保留 $R,S$ 及具有固定正负标签的经典记录 $H$。比较仪器为
+
+$$
+\mathcal B_n(X)=
+\sum_{b=\pm}(I_R\otimes P_{n,b})X(I_R\otimes P_{n,b})
+\otimes|b\rangle\langle b|_H.
+\tag{12.2}
+$$
+
+这里明确采用有限复 Hilbert 张量复合、密度算子、Born 规则及完全正仪器语义。$R$ 的表示、$\tau_n$ 的准备以及 (12.1) 的耦合是指定模型输入。自旋相干程序的对称张量表示复用 OTF002 定义 11.1；(12.1) 是 Bartlett–Rudolph–Spekkens–Turner 的方向参考模型中的总角动量 Lüders 仪器，参见其第 III 节及附录 B，式 (39)–(41)，[作者全文](https://arxiv.org/html/quant-ph/0602069v2)，[DOI](https://doi.org/10.1088/1367-2630/8/4/058)。
+
+<a id="otf004-finite-direction-reuse-contract"></a>
+

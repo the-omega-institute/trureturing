@@ -1,0 +1,67 @@
+**Definition 13.5 (retrospective acquisition and the full resource bill).**
+For a reached packet of length $N$ and $n$ overlapping windows,
+the indexed acquisition uses exactly $n+N-1$ original labels,
+$Y_0$ through $Y_{n+N-2}$, with final read at $(n+N)d$.
+Its literal full histogram has $4^N$ counters of
+$\lceil\log_2(n+1)\rceil$ bits each, a $2N$-bit word buffer,
+and its window, address and loop registers. Initializing that
+histogram pays $4^N$ field writes; processing its windows pays
+$n$ counter increments, plus buffer updates, index work and
+record accesses at their actual bit widths. These quantities
+are not bounded independently of the requested packing.
+
+For a returned tuple, the rational row arrays have $K4^H$ entries;
+the retained interval endpoints, generated errors and probability
+guards require their own backing. Each row entry and its interval
+in (13.20) pays its exact rational divisions, endpoint comparisons,
+sums and bit widths. Enumerating full histories and windows pays
+every reached candidate, comparison and failed test. The chosen
+words themselves cost $2Kt$ bits if copied literally; windows,
+cut/horizon integers, packet identifiers and refinements are also
+retained finite data. A reference or shared representation can
+replace a literal copy only with its actual accepted backing and
+access contract. Choosing the reference is not a memory-free
+operation.
+
+Startup, all reached packet-size searches, fixed-reference calls,
+precision queries and replies, rational lower defect names,
+refinements and unsuccessful tests keep their charges. In the
+bit model of [OWGR, Definition 21.1], reference work, reference
+peak space and retained names/replies remain separate
+$C_{\rm cap},M_{\rm cap},B_{\rm cap}$ coordinates. Ordinary
+arithmetic is charged at actual integer/rational widths, not as
+unit-cost operations on exact real source parameters. A fair
+enumeration stores its indices and control state explicitly.
+
+Nested packets may rescan one retained initial archive. Through
+any actual completed acquisition cut $C$, that archive has $C$
+labels and exactly $2C$ payload bits in the inherited coding,
+plus its lengths, addresses, handles, acquisition/control state,
+references, rows and scratch. Physical reads shared by several
+packets are counted once; each rescan and distinct retained copy
+is counted separately. Peak storage counts all simultaneously
+live backing once and adds every distinct buffer or copy.
+Total work adds all reached scans, counter work, numerical work
+and certificate arithmetic, as in [OWGR, §21] and Definition 8.3.
+
+If labels continue arriving during any reference computation,
+enumeration, refinement, copying or serialization, they remain
+original labels with their fixed $d$ gaps. Every such arrival,
+capture/write, queued label, index update, retained payload and
+subsequent rescan adds to the actual bill through $C$. An overrun
+of $J$ labels adds $J$ reads and $2J$ payload bits before its
+addresses, buffer/control and work costs. Previously acquired
+rows, source references and lawful menus remain available at
+their original costs. The certificate can use its declared
+earlier finite record even when $C$ is later.
+
+Sourcewise finite indexed attainment in Theorem 13.4 supplies
+neither a processor/capture rate relative to $d$ nor a bound on
+those additional arrivals. It installs no lossless capture
+service, bounded queue, completion/catch-up theorem, accepted
+pointer output or atomic serialization. Physical implementation
+must supply each such service in its original legal domain.
+Definitions 9.5 and 11.7 retain the obligations to assimilate
+the whole growing suffix, acquire a row for the actual target,
+generate its accumulated error and complete lawful output.
+

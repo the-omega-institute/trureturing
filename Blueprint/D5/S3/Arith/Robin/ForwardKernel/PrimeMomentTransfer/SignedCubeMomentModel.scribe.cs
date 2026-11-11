@@ -10,11 +10,12 @@ internal sealed class SignedCubeMomentModelDocument : IScribeDocumentDefinition
         "Signed Boolean moments realize centered singular series and their cubic and fourth identities.",
         H("Signed Boolean-cube moments"),
         Blocks(
+            Describe.Lean(DescribeId.Create("center-finite-image"), DeclarationHandle.Create(Prefix + "centerFinite_image"), H("Centering commutes with injective transport"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The finite subset centering transform commutes with transporting all subsets along an injective map."))), DescribeRole.Theorem),
             Paragraph(Text(
                 "Let the coordinates on finite subsets B be Y(d,B)=s*1[d in B]-1. "
                 + "Boolean incidence-algebra Mobius inversion prescribes the uncentered "
                 + "moments C(D)/s^|D|. Its inverse-zeta identity gives the required signed "
-                + "functional, with no positivity assertion. The resulting formal values "
+                + "functional, with no positivity assertion. The commutative-ring centred product expansion applies directly in the algebra of cube functions to identify square-free moments. The resulting formal values "
                 + "supply the coefficient identities used in interval moment bounds.")),
             Describe.Lean(
                 DescribeId.Create("formal-second-moment-eq"),

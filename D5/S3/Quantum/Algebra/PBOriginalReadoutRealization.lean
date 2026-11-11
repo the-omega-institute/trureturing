@@ -33,7 +33,7 @@ open D5.S3.QuantumStates.GNSCompatibleStateExtension
 variable {A : Type*} [CStarAlgebra A] [PartialOrder A] [StarOrderedRing A]
 
 /-- One ambient state retains a specified proper central character. -/
-private theorem ambient_state_extension (C : StarSubalgebra ℂ A)
+theorem ambient_state_extension (C : StarSubalgebra ℂ A)
     [IsClosed (C : Set A)] (χ : C →⋆ₐ[ℂ] ℂ) :
     ∃ φ : A →ₚ[ℂ] ℂ, φ 1 = 1 ∧ ∀ c : C, φ c = χ c := by
   letI : Nontrivial C := χ.toAlgHom.toRingHom.domain_nontrivial
@@ -90,7 +90,7 @@ private theorem quadratic_read (J : E →ₗ[ℝ] E →ₗ[ℝ] E) (D : E → E 
 
 /-- Exact original cone positivity transfers the whole Hermitian two-table to
 any mathematical positive functional, including the zero functional. -/
-private theorem positive_table_transfer {P : Type*}
+theorem positive_table_transfer {P : Type*}
     (J : E →ₗ[ℝ] E →ₗ[ℝ] E) (D : E → E → E)
     (C : Set E) (p : P → E →ₗ[ℝ] ℝ)
     (hexact : ∀ a, a ∈ C ↔ ∀ q, 0 ≤ p q a)
@@ -315,12 +315,12 @@ def cyclicOrbit (φ : A →ₚ[ℂ] ℂ) (B : StarSubalgebra ℂ A) : B →ₗ[�
 def cyclicSpace (φ : A →ₚ[ℂ] ℂ) (B : StarSubalgebra ℂ A) : Submodule ℂ φ.GNS :=
   (cyclicOrbit φ B).range.topologicalClosure
 
-private theorem cyclic_unit_mem (φ : A →ₚ[ℂ] ℂ) (B : StarSubalgebra ℂ A) :
+theorem cyclic_unit_mem (φ : A →ₚ[ℂ] ℂ) (B : StarSubalgebra ℂ A) :
     cyclicVector φ ∈ cyclicSpace φ B := by
   apply Submodule.le_topologicalClosure
   exact ⟨1, by simp [cyclicOrbit]⟩
 
-private theorem cyclic_invariant (φ : A →ₚ[ℂ] ℂ) (B : StarSubalgebra ℂ A)
+theorem cyclic_invariant (φ : A →ₚ[ℂ] ℂ) (B : StarSubalgebra ℂ A)
     (b : B) (v : cyclicSpace φ B) :
     φ.gnsStarAlgHom b (v : φ.GNS) ∈ cyclicSpace φ B := by
   apply closure_minimal (s := ((cyclicOrbit φ B).range : Set φ.GNS)) ?_
@@ -337,7 +337,7 @@ private theorem orbit_inner (φ : A →ₚ[ℂ] ℂ) (hφ : φ 1 = 1) (a b : A) 
     ← ContinuousLinearMap.star_eq_adjoint, ← map_star]
   simpa [map_mul, mul_apply_eq_comp] using (normalized_gns φ hφ).2.1 (star a*b)
 
-private theorem central_on_cyclic (φ : A →ₚ[ℂ] ℂ) (hφ : φ 1 = 1)
+theorem central_on_cyclic (φ : A →ₚ[ℂ] ℂ) (hφ : φ 1 = 1)
     (B C : StarSubalgebra ℂ A)
     (χ : C →⋆ₐ[ℂ] ℂ) (hretain : ∀ c : C, φ c = χ c)
     (hcentral : ∀ (c : C) (b : B), (c : A) * b = b * c)

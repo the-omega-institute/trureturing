@@ -1,0 +1,41 @@
+**命题 101.2（复用 SF91.2–91.4并核对中央参数）。** 对全部 $Z\in M$，有
+
+$$
+\begin{gathered}
+\mathfrak F(C_aZ)=\mathfrak F(Z),\qquad
+C_a=(1+Ja)(1-Ja)^{-1}\quad(a\in\mathcal I_{\rm fs,sa}),\\
+\mathfrak F(UZ)=\mathfrak F(Z)\quad
+\left(U\in\mathcal U_{\rm fs}:=
+\{1-p+u:p\in\mathcal F_\tau,\ u\in\mathcal U(pMp)\}\right),\\
+\mathfrak F(\mathcal T Z)=-\mathfrak F(Z),\qquad \mathcal T Z=JZ^*.
+\end{gathered}
+\tag{101.2}
+$$
+
+证明及复用核对。SF91的实际输入在此是同一完整 $E$、100.5的完整有限首行及99.12的 $J=iQ$。在 $\operatorname{PB}(a,b,d)$ 中，100.5同时识别两个内值；100.4给 $v+Jw=JaZ$。两份实际外层正是 $(1\pm Ja)Z$ 的101.1坐标。与已知 $K$ 的 PB 相减，得到
+
+$$
+\mathfrak F((1+Ja)Z)=\mathfrak F((1-Ja)Z).
+\tag{101.3}
+$$
+
+$1-Ja$ 可逆，因为 $(1-Ja)^*(1-Ja)=1+a^2$。对任意目标 $W$ 重选真正原输入 $Z_0=(1-Ja)^{-1}W$，101.3给 Cayley 等式；没有把逆元或任何系数从未知函数中提出。这里只需 $J$ 中央，不需 $J$ 是标量。
+
+对 $U=1-p+u$，在 $pMp$ 内取有界 Borel 辐角 $L=L^*$、$\|L\|\le\pi$、$u=e^{iL}$，在补角置零。令
+
+$$
+H=QL,\qquad a=\tan(H/4).
+\tag{101.4}
+$$
+
+$Q$ 中央使 $H=H^*$、$H=pHp$、$\|H\|\le\pi$，且 $e^{JH}=U$。$a$ 迹有限支撑且有界；中央 $J$ 的两个谱分支上的标量函数身份共同给
+
+$$
+C_a=e^{JH/2},\qquad U=C_a^2.
+\tag{101.5}
+$$
+
+有限两次 Cayley 等式即给全部 $\mathcal U_{\rm fs}$ 作用。$-1$ 谱也包含在内；$\tan$ 仅用于 $[-\pi/4,\pi/4]$。不使用可能无界的 $\tan(H/2)$、反射归一化、稠密群或未知响应的极限。
+
+最后，$\mathcal T(b+Jd)=d+Jb$，故原反对称性直接给第三式。它不要求分别奇性、$\mathfrak F(JZ)=\mathfrak F(Z)$ 或 $\mathfrak F(Z^*)=-\mathfrak F(Z)$。SF91的这一重索引、实际 Cayley、bounded $H/4$ 两步和方向交换均按上述准确参数复用；不另立第二套完整运输。∎
+

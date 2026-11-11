@@ -1,0 +1,24 @@
+**定义 10.1（原有理四坐标解码器）。** 每个 $l>0$ 的中心 $c_l$ 三坐标各按 OTF004 引理 26.8 舍入到误差至多 $a=e/64$ 的有理数，得到 $\widehat h(l)$；无效码及 $l=0$ 取零。保留全部原始 $l$、实际副本及旧两坐标解码器，不将其替换为二元最优检验。
+
+场采样恰取 OTF004 式 (19.4)、(26.25) 的部分：在
+$0,+u_e e_x,-u_e e_x,+u_e e_y,-u_e e_y$ 每个点，对三个固定 Pauli 轴各取 $\ell_e$ 个样本。保留全部 $15\ell_e$ 枚场令牌、测后态、原始结果、实际副本和 15 个经验均值。置
+
+$$
+\widehat n_0=\widehat n(0),\qquad
+\widehat v_a=\frac{\widehat n(+u_e e_a)-\widehat n(-u_e e_a)}{2u_e},
+\quad a=x,y,
+\tag{10.1}
+$$
+
+并精确计算、输出
+
+$$
+\widehat D=\left(
+\frac{\widehat h\cdot[\widehat n_0\times\widehat v_x]}2,
+\frac{\widehat h\cdot[\widehat n_0\times\widehat v_y]}4,
+0,\frac{\widehat h\cdot\widehat v_y}2\right).
+\tag{10.2}
+$$
+
+所有估计及 $u_e$ 都有理，故这是 OTF004 式 (26.26) 的同一个有限精确有理四坐标解码器，不另添舍入误差。全部均值、两个差分向量、原记录及实际算术工作输出均保留。
+

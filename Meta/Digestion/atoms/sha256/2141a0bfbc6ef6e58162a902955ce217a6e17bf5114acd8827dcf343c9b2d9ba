@@ -1,0 +1,24 @@
+### 17.5 第五步：小 qubit 态保留复标量差
+
+若 $|f|,|g|\le s/2$ 且 $J$ 充分大，则
+
+$$
+D_{\rm tr}(|v_f\rangle\langle v_f|,|v_g\rangle\langle v_g|)
+\ge\tfrac12|f-g|.
+\tag{17.25}
+$$
+
+事实上，$|v_f\rangle\langle v_f|$ 的左下非对角条目为 $iM(f)$，其中
+
+$$
+M(f)=f\frac{\sin(2|f|)}{2|f|}.
+\tag{17.26}
+$$
+
+将 $M$ 看作实二维径向映射，其切向和径向微分特征值分别是 $\sin(2r)/(2r)$ 和 $\cos(2r)$，在 $r\le1/10$ 上均至少 $1/2$。沿连接 $f,g$ 的线段积分，强单调性及 Cauchy–Schwarz 给 $|M(f)-M(g)|\ge|f-g|/2$。两 qubit 态的迹距离至少为其非对角条目之差的绝对值，故得 (17.25)。保留标签的正交性遂给
+
+$$
+D_{\rm tr}(\nu_h,\nu_g)\ge\frac1{2N}\sum_{w\in W_J}|f_w(h)-f_w(g)|.
+\tag{17.27}
+$$
+

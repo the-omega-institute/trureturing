@@ -1,0 +1,10 @@
+**推论 53.3（谱表述）。** 非零 $\mathfrak c$ 上，$Q$ 等价于 $\operatorname{Prim}\mathfrak c$ 上连续二值函数。可用Forger–Paulino arXiv:1307.4458v1、Theorem 2的Dauns–Hofmann接口
+
+$$
+C_b(\operatorname{Prim}\mathfrak c)\cong Z(M(\mathfrak c)),
+\qquad \Phi(f)z-f(P)z\in P.
+\tag{53.4}
+$$
+
+这里 $C_b$ 指有界连续函数。该谱改写不是53.2构造所必需；不要求 $Q\in Z(A)$ 或符号越过交换边界延拓。
+

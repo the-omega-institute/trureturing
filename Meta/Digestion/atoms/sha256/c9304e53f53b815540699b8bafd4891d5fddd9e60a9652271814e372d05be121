@@ -1,0 +1,34 @@
+**命题 68.1（第三标签 $u$ 检出的准确残差）。** 保留67.2的同一 $(A_t,X_t)$ 及 $H_t$，把第三标签从零换成 $u$。内值 $D(A_t,u)=0$ 由65.2支付，67.1也因 $[A_t,C_0]=0$ 给零。新外层准确为
+
+$$
+\rho_\pm=X_t\pm H_t\mp A_t,\qquad \sigma_\pm=u\pm C_t'.
+\tag{68.1}
+$$
+
+若这些新外层继续按67.1赋值，则其 PB 残差（左端减右端）为 $2\eta_tV\ne0$，范数为 $2\eta_t>2$。
+
+证明。51.3及两实际内值给68.1；65.1的右端是 $-2X_t\circ(H_t-A_t)-2u\circ C_t'=-2X_t\circ H_t=0$。仅对明定的双线性公式67.1展开，有
+
+$$
+\begin{aligned}
+&\widehat D_{C_0}(\rho_+,\sigma_+)-\widehat D_{C_0}(\rho_-,\sigma_-)\\
+&\quad=2\widehat D_{C_0}(X_t,C_t')+2\widehat D_{C_0}(H_t-A_t,u)
+=2\eta_tV,
+\end{aligned}
+\tag{68.2}
+$$
+
+其中 $\widehat D_{C_0}(X_t,C_t')=0$、$\widehat D_{C_0}(A_t,u)=0$、$\widehat D_{C_0}(H_t,u)=\eta_tV$。最后一式来自 $[L,C_0]=-2iV$。∎
+
+对真正原 $D$，两次 PB 共用 $H=D(a,b)$ 及 $C'=a\circ b$，由 $D(a,0)=D(a,u)=0$ 得实际共同关系
+
+$$
+\begin{aligned}
+&D(b+H-a,u+C')-D(b-H+a,u-C')\\
+&\qquad=D(b+H,C')-D(b-H,-C')=-2b\circ H.
+\end{aligned}
+\tag{68.3}
+$$
+
+这是 OP31.2母关系在第三标签 $0,u$ 的直接消费；OP31–34的单位子族边界仍保留。68.2只否定67.1这一指定延续，未排除保持四行的所有可能延续，也未证明两次 PB 或全部单位第三标签足以迫使内误差为零。OP3允许的其他多项式第三标签仍须各自保留实际外层，不能用同像标准标签替换旧值。
+

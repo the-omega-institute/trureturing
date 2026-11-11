@@ -1,0 +1,8 @@
+**引理 489.2（固定长度的协方差）。** 固定 $1\le a<b\le2$、$c>0$，令 $h=cX^{4/5}$、$\ell_X=\log(X/h)$。对固定 $s,t\in[0,1]$，
+
+$$
+\frac1{Xh\ell_X}\int_{aX}^{bX}D_{sh}(x)D_{th}(x)\,dx\longrightarrow(b-a)\min(s,t).
+$$
+
+证明。对固定的正倍数 $q$ 与 $k=qh$，所需端点均为 $Y=dX+O(h)$（$d\in[1,2]$），故 $k/Y^{3/4}\asymp X^{1/20}\to\infty$、$k/Y^{7/8}\asymp X^{-3/40}\to0$，$k$ 最终落在 (489.2) 的范围内，且每个端点处的误差 $o(Yk\log(Y/k))$ 都是 $o(Xh\ell_X)$。对固定 $s>0$，$\int_{aX}^{bX}D_{sh}^2=V(bX,sh)-V(aX,sh)=(b-a)Xsh\ell_X+o(Xh\ell_X)$，因为固定倍数的 $X^{4/5}$ 最终落在 (489.2) 的范围内，且 $\log(aX/(sh))=\ell_X+O(1)$。设 $s>t>0$。由恒等式 $D_{sh}(x)-D_{th}(x)=D_{(s-t)h}(x+th)$，$\int_{aX}^{bX}(D_{sh}-D_{th})^2=V(bX+th,(s-t)h)-V(aX+th,(s-t)h)=(b-a)X(s-t)h\ell_X+o(Xh\ell_X)$。极化恒等式 $2D_{sh}D_{th}=D_{sh}^2+D_{th}^2-(D_{sh}-D_{th})^2$ 给出极限 $\frac{b-a}2(s+t-|s-t|)=(b-a)\min(s,t)$。$s=t$ 或 $st=0$ 的情形直接成立。证毕。
+
