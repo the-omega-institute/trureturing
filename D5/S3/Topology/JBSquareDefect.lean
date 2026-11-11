@@ -4,14 +4,15 @@
    mirror-E: none(waiver:registration-template-not-established)
    anchors: [mathlib/module/Mathlib.Algebra.Jordan.Basic]
    utility: none
-   digest: Spectral square defects force multiplicativity from a spanning set of preserved idempotents. -/
+   digest: Spectral square defects force multiplicativity from spanning idempotents. -/
 
 module
 
 public import D5.S3.Topology.JBComplexification
 public import Mathlib.LinearAlgebra.Span.Basic
 
-/-! The square-defect step uses the actual six JB laws and finite spectral resolutions.+It does not supply the spectral resolution, support normalization or a PRE interface. -/
+/-! The square-defect step uses the actual six JB laws and finite spectral resolutions.
+It does not supply the spectral resolution, support normalization or a PRE interface. -/
 
 @[expose] public section
 noncomputable section
@@ -74,10 +75,20 @@ theorem square_defect_of_spectral (A : Data Y T v)
   have hsum : ∑ i, quadratic T (r i • v - b) (z i) =
       Φ (S a a) - T b b := by
     have hright (x : Y) : T x v = x := (A.symm x v).trans (A.unit_mul x)
-    simp only [quadratic, map_sub, map_smul, LinearMap.sub_apply,
-      LinearMap.smul_apply, A.unit_mul, hright]
-    simp only [smul_sub, smul_smul, Finset.sum_sub_distrib,
-      ← map_sum, ← map_smul, ← Finset.smul_sum, hz, hrz, hrrz]
+    have hquad (i : Fin n) : quadratic T (r i • v - b) (z i) =
+        (r i * r i) • z i - (2 : ℝ) • (r i • T b (z i)) +
+          quadratic T b (z i) := by
+      simp only [quadratic, map_sub, map_smul, LinearMap.sub_apply,
+        LinearMap.smul_apply, A.unit_mul, hright]
+      module
+    have hcross : ∑ i, r i • T b (z i) = T b b := by
+      simpa only [map_sum, map_smul] using congrArg (T b) hrz
+    have hp : ∑ i, quadratic T b (z i) = T b b := by
+      simp only [quadratic, Finset.sum_sub_distrib, ← Finset.smul_sum, ← map_sum,
+        hz, hright]
+      module
+    simp only [hquad, Finset.sum_add_distrib, Finset.sum_sub_distrib,
+      ← Finset.smul_sum, hrrz, hcross, hp]
     module
   rw [← hsum]
   apply sum_squares A
@@ -87,6 +98,7 @@ theorem square_defect_of_spectral (A : Data Y T v)
   obtain ⟨q, hq⟩ := quadratic_preserves_squares A (r i • v - b) w
   exact ⟨q, by simpa only [hw, z] using hq.symm⟩
 
+omit [CompleteSpace Y] in
 private theorem zero_defect_cross (A : Data Y T v)
     (hsymm : ∀ x y, S x y = S y x) (Φ : X →ₗ[ℝ] Y)
     (hdef : ∀ a, ∃ z, T z z = Φ (S a a) - T (Φ a) (Φ a))
