@@ -66,7 +66,14 @@ private def direction (y : α → SymbolicField F α) :
 
 private theorem direction_coordinate (y : α → SymbolicField F α) (j : α) :
     direction y (coordinate j) = y j := by
-  dsimp [direction, coordinate, LinearMap.compDer]
+  letI : Algebra.FormallyEtale (MvPolynomial α F) (SymbolicField F α) :=
+    Algebra.FormallyEtale.of_isLocalization (nonZeroDivisors (MvPolynomial α F))
+  change (MvPolynomial.mkDerivation F y).liftKaehlerDifferential.liftBaseChange
+    (SymbolicField F α)
+    ((KaehlerDifferential.tensorKaehlerEquivOfFormallyEtale F (MvPolynomial α F)
+      (SymbolicField F α)).symm
+        (KaehlerDifferential.D F (SymbolicField F α)
+          (algebraMap (MvPolynomial α F) (SymbolicField F α) (MvPolynomial.X j)))) = y j
   rw [KaehlerDifferential.tensorKaehlerEquivOfFormallyEtale_symm_D_algebraMap]
   simp
 
@@ -82,7 +89,7 @@ private theorem differentiate_smul (d : Derivation F (SymbolicField F α) (Symbo
     (c : SymbolicField F α) (v : α → SymbolicField F α) :
     differentiate d (c • v) = d c • v + c • differentiate d v := by
   ext j
-  simpa [differentiate, smul_eq_mul, add_comm] using d.leibniz c (v j)
+  simpa [differentiate, smul_eq_mul, add_comm, mul_comm] using d.leibniz c (v j)
 
 private theorem differentiate_extend (d : Derivation F (SymbolicField F α) (SymbolicField F α))
     (V : Submodule F (α → F)) {v : α → SymbolicField F α} (hv : v ∈ extend V) :
@@ -95,7 +102,10 @@ private theorem differentiate_extend (d : Derivation F (SymbolicField F α) (Sym
         exact d.map_algebraMap _
       rw [hz]
       exact (extend V).zero_mem
-  | zero => simpa [differentiate] using (extend V).zero_mem
+  | zero =>
+      have hz : differentiate d 0 = 0 := by ext j; exact map_zero d
+      rw [hz]
+      exact (extend V).zero_mem
   | add v w hv hw ihv ihw =>
       rw [differentiate_add]
       exact (extend V).add_mem ihv ihw
@@ -138,7 +148,9 @@ private theorem stable_sup {K E : Type*} [Field K] [AddCommGroup E] [Module K E]
   intro x hx
   obtain ⟨u, hu, w, hw, rfl⟩ := Submodule.mem_sup.mp hx
   rw [hadd]
-  exact (U ⊔ W).add_mem (le_sup_left (hU u hu)) (le_sup_right (hW w hw))
+  exact (U ⊔ W).add_mem
+    ((show U ≤ U ⊔ W from le_sup_left) (hU u hu))
+    ((show W ≤ U ⊔ W from le_sup_right) (hW w hw))
 
 private theorem stable_finset_sup {K E η : Type*} [Field K] [AddCommGroup E] [Module K E]
     (D : E → E) (hzero : D 0 = 0) (hadd : ∀ x y, D (x + y) = D x + D y)
@@ -196,6 +208,120 @@ theorem symbolic_general_position [CharZero F] (V : ι → Submodule F (α → F
       LinearMap.mem_ker.mp (hker hdw), zero_add] at hd
     exact hd.symm
 
+private theorem generalPosition_comap {K E E' η : Type*} [Field K]
+    [AddCommGroup E] [Module K E] [AddCommGroup E'] [Module K E']
+    (e : E ≃ₗ[K] E') (V : η → Submodule K E') (φ : E' →ₗ[K] K)
+    (s : Finset η) (h : InGeneralPosition V φ s) :
+    InGeneralPosition (fun i => (V i).comap e.toLinearMap) (φ.comp e.toLinearMap) s := by
+  let L := (Submodule.orderIsoMapComap e).symm
+  have hker : L (LinearMap.ker φ) = LinearMap.ker (φ.comp e.toLinearMap) := rfl
+  have hspan (A : Finset η) : L (familySpan V A) =
+      familySpan (fun i => (V i).comap e.toLinearMap) A := map_finset_sup L A V
+  have hcut (A : Finset η) : L (cutSpan V φ A) =
+      cutSpan (fun i => (V i).comap e.toLinearMap) (φ.comp e.toLinearMap) A := by
+    simp only [cutSpan, map_finset_sup, map_inf, hker]
+    rfl
+  constructor
+  · intro i hi hle
+    apply h.1 i hi
+    have hh : L (V i) ≤ L (LinearMap.ker φ) := hle
+    exact L.symm.monotone hh
+  · intro A hA B hB C hC hle
+    have hh : L ((cutSpan V φ A ⊔ familySpan V B) ⊓
+        (cutSpan V φ A ⊔ familySpan V C)) ≤ L (LinearMap.ker φ) := by
+      simpa only [map_inf, map_sup, hcut, hspan, hker] using hle
+    have heq := congrArg L (h.2 A hA B hB C hC (L.symm.monotone hh))
+    simpa only [map_inf, map_sup, hcut, hspan] using heq
+
+private theorem extend_span_range {η : Type*} (v : η → α → F) :
+    extend (Submodule.span F (Set.range v)) =
+      Submodule.span (SymbolicField F α) (Set.range fun i => constantVector (v i)) := by
+  let c : (α → F) →ₗ[F] (α → SymbolicField F α) :=
+    { toFun := constantVector
+      map_add' := by intro x y; ext j; exact map_add _ _ _
+      map_smul' := by intro a x; ext j; simp [constantVector, Algebra.smul_def] }
+  change Submodule.span _ (c '' (Submodule.span F (Set.range v) : Set (α → F))) = _
+  rw [← Submodule.map_coe, Submodule.map_span, Set.image_range,
+    Submodule.span_span_of_tower]
+  rfl
+
+section Blocks
+
+variable {β : Type*} {κ : β → Type*} [Fintype β] [∀ i, Fintype (κ i)]
+
+/-- The same base-field rows, before and after adjoining the one common tuple. -/
+def liftRows (b : ∀ i, ι → κ i → F) : ∀ i, ι → κ i → SymbolicField F (Σ i, κ i) :=
+  fun i σ j => algebraMap F _ (b i σ j)
+
+/-- The common-constraint partition rank with the symbolic GP antecedent
+discharged. The rows are arbitrary constant rows, so in particular may be the
+actual embedding rows over the normal closure, before adjoining the variables. -/
+theorem symbolic_block_common_rows_partition_rank [CharZero F]
+    (b : ∀ i, ι → κ i → F) (k : β) (s : Finset ι)
+    (hk : ∀ σ ∈ s, b k σ ≠ 0) :
+    ∃ P : Finpartition s,
+      Module.finrank (SymbolicField F (Σ i, κ i))
+        (commonRowSpan (blockRows (liftRows b)) (coefficientNormal coordinate) k s) =
+        ∑ B ∈ P.parts,
+          ((∑ i, Module.finrank (SymbolicField F (Σ i, κ i)) (blockSpan (liftRows b) B i)) - 1) ∧
+      ∀ Q : Finpartition s, Module.finrank (SymbolicField F (Σ i, κ i))
+        (commonRowSpan (blockRows (liftRows b)) (coefficientNormal coordinate) k s) ≤
+        ∑ B ∈ Q.parts,
+          ((∑ i, Module.finrank (SymbolicField F (Σ i, κ i)) (blockSpan (liftRows b) B i)) - 1) := by
+  classical
+  let K := SymbolicField F (Σ i, κ i)
+  let e : ((i : β) → κ i → K) ≃ₗ[K] ((a : Σ i, κ i) → K) :=
+    (LinearEquiv.piCurry K (fun _ _ => K)).symm
+  let e₀ : ((i : β) → κ i → F) ≃ₗ[F] ((a : Σ i, κ i) → F) :=
+    (LinearEquiv.piCurry F (fun _ _ => F)).symm
+  let V : ι → Submodule F ((a : Σ i, κ i) → F) :=
+    fun σ => Submodule.span F (Set.range fun i => e₀ (blockRows b σ i))
+  have hgen (σ : ι) (i : β) :
+      constantVector (e₀ (blockRows b σ i)) = e (blockRows (liftRows b) σ i) := by
+    ext ⟨j, l⟩
+    by_cases hji : j = i
+    · subst j
+      simp [constantVector, e, e₀, blockRows, liftRows]
+    · simp [constantVector, e, e₀, blockRows, liftRows, Pi.single_eq_of_ne hji]
+  have hV (σ : ι) (hσ : σ ∈ s) : V σ ≠ ⊥ := by
+    intro hbot
+    have hv : e₀ (blockRows b σ k) ∈ V σ :=
+      Submodule.subset_span (Set.mem_range_self k)
+    rw [hbot] at hv
+    have heq : blockRows b σ k = 0 := e₀.injective (by simpa using hv)
+    apply hk σ hσ
+    have heqk := congrFun heq k
+    simpa [blockRows] using heqk
+  have hext (σ : ι) : extend (V σ) =
+      (Submodule.span K (Set.range (blockRows (liftRows b) σ))).map e.toLinearMap := by
+    rw [show V σ = Submodule.span F (Set.range fun i => e₀ (blockRows b σ i)) from rfl,
+      extend_span_range, Submodule.map_span, Set.image_range]
+    congr 1
+    exact congrArg Set.range (funext (hgen σ))
+  have hnormal : symbolicNormal.comp e.toLinearMap = coefficientNormal
+      (coordinate (F := F) (α := Σ i, κ i)) := by
+    ext v
+    exact Finset.sum_congr rfl (fun a _ => mul_comm _ _)
+  have hgp := generalPosition_comap e (fun σ => extend (V σ)) symbolicNormal s
+    (symbolic_general_position V s hV)
+  have hfamily (σ : ι) : (extend (V σ)).comap e.toLinearMap =
+      Submodule.span K (Set.range (blockRows (liftRows b) σ)) := by
+    rw [hext, Submodule.comap_map_eq_of_injective e.injective]
+  simp only [hfamily, hnormal] at hgp
+  apply block_common_rows_partition_rank (liftRows b) (coefficientNormal coordinate) k s _ hgp
+  intro σ hσ
+  have hne : e₀ (blockRows b σ k) ≠ 0 := by
+    intro hz
+    have heq : blockRows b σ k = 0 := e₀.injective (by simpa using hz)
+    exact hk σ hσ (by simpa [blockRows] using congrFun heq k)
+  have hn := normal_constant_ne_zero hne
+  rw [hgen] at hn
+  change (symbolicNormal.comp e.toLinearMap) (blockRows (liftRows b) σ k) ≠ 0 at hn
+  rwa [hnormal] at hn
+
+end Blocks
+
 #print axioms symbolic_general_position
+#print axioms symbolic_block_common_rows_partition_rank
 
 end D5.S3.Factorization.Galois.SymbolicHyperplaneGeneralPosition
