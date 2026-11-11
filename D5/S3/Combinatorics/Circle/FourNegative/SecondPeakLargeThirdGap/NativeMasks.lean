@@ -13,7 +13,7 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakLargeThirdGap
 open D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers
-open private mask_complement from D5.S3.Combinatorics.Circle.ThreeBitSource
+open D5.S3.Combinatorics.Circle.ThreeBitSource (mask_complement)
 open scoped BigOperators
 
 /-- All three masks are genuine native bit subsets, rather than capacities alone. -/

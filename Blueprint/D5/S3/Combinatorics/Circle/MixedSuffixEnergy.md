@@ -32,4 +32,4 @@ The universal availability gap remains: no theorem here forces such an eligible 
 
 - Truth anchor: `D5/S3/Combinatorics/Circle/MixedSuffixEnergy.mixed_suffix_energy_exchange`
 - Dependency: [D5/S3/Combinatorics/Circle/ExpandingSourcePath](ExpandingSourcePath.md)
-- Dependency: [D5/S3/Combinatorics/Circle/ZeroSumSubsets](ZeroSumSubsets.md)
+- Dependency: [D5/S3/Combinatorics/Circle/Orbit/ZeroSumSubsets](Orbit/ZeroSumSubsets.md)
