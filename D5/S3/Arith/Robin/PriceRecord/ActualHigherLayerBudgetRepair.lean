@@ -210,7 +210,8 @@ private theorem candidate_roster {η τ : ℝ} (hη : 0 < η)
       dsimp [L, referencePrice]
       rw [log_pow]
       simp only [mul_inv_rev, mul_pow, inv_pow]
-      field_simp [ht0.ne', ha.ne', hb.ne', (log_pos ht).ne', hJ0.ne', hblog.ne']
+      have htb_log : 0 < log (t * b) := log_pos (mul_pos ht0 hb)
+      field_simp [ht0.ne', ha.ne', hb.ne', (log_pos ht).ne', hJ0.ne', hblog.ne', htb_log.ne']
       <;> ring
     have hupper : (a * t)⁻¹ ^ J =
         referencePrice (t ^ J) * log (a * t) * U t := by
@@ -249,7 +250,6 @@ private theorem candidate_roster {η τ : ℝ} (hη : 0 < η)
         (show 0 < a * t by linarith) hap.le
       have hprev := gain_lower_window (fun q i hq hi => golden_layer_gain_lower hq hi)
         hpp (by omega : 1 ≤ J - 1) le_rfl hat hap.le hpb
-      simp only [id_eq] at hlow hup hprev
       change _ ≤ goldenLayerMarginal p J * log p at hlow
       change goldenLayerMarginal p J * log p ≤ _ at hup
       change _ ≤ goldenLayerMarginal p (J - 1) * log p at hprev
@@ -512,7 +512,11 @@ theorem actual_higher_layer_budget_repair :
   · rw [hlogk]; exact hmass0
   · rw [hlogk]; exact hAd
   · exact add_nonneg hR0 (mul_nonneg hLambda.le (by rw [hslack]; exact hremain0))
-  · linarith
+  · calc
+      _ ≤ η / (2 * X) + η / (2 * X) := add_le_add hRsmall hslackSmall
+      _ = η / X := by
+        field_simp [hX0.ne']
+        ring
   · intro p hp
     exact ⟨(hA p hp).1, (hA p hp).2.1, (hexp p (hAS hp)).1, (hexp p (hAS hp)).2⟩
 
