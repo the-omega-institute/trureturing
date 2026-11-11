@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Topology;
 internal sealed class JBSquareDefectDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Square-preserving unital maps into a complete real six-law JB algebra are multiplicative when they preserve idempotence on a real spanning set, provided the original source product has finite spectral resolutions.",
+        "Unital maps positive on squares into a complete real six-law JB algebra are multiplicative when they preserve idempotence on a real spanning set, provided the original source product has finite spectral resolutions.",
         H("Square defects and spanning idempotents"),
         Blocks(
             Paragraph(Text("The source X is a real module with a specified symmetric bilinear product S and specified unit u. The target Y is a complete real normed space with the specified product T, unit v and the genuine six JB laws Data(Y,T,v). The same real linear map Phi sends u to v and sends every source square to an actual square in Y. No associative, special, complex-matrix or completely positive representation is used.")),

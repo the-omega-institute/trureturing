@@ -1,0 +1,74 @@
+import D5.S3.Quantum.Foundation.CircuitBalancedConfirmation
+import LeanInformationAuditInterface.Contract.Registration
+import Reg.Support.DependentFamily
+
+/-! Exact source-family reconstruction for the original cone, unit and comparison.
+Whole-family variation, sensitivity, observational dependence and source-coordinate
+selection remain unsupplied. No complete four-slot registration is asserted. -/
+
+noncomputable section
+universe u
+open scoped BigOperators
+
+namespace Reg.D5.S3.Quantum.Foundation.CircuitBalancedConfirmation
+
+open _root_.D5.S3.Quantum.Foundation.CircuitBalancedConfirmation
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+
+structure Inputs where
+  A : Type u
+  [add : AddCommGroup A]
+  [space : Module ℝ A]
+  [finite : FiniteDimensional ℝ A]
+  cone : PointedCone ℝ A
+  unit : A →ₗ[ℝ] ℝ
+
+attribute [instance] Inputs.add Inputs.space Inputs.finite
+
+abbrev signature : Signature where
+  Params := Inputs.{u}
+  State P := P.A × P.A
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u} :=
+  realize signature (fun _ P x => comparison P.cone P.unit x.1 x.2)
+    (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law O := ∀ P : Inputs.{u},
+    let C := P.cone
+    let u := P.unit
+    let T := fun p x => O.readout () P (p, x)
+    (∀ x ∈ C, 0 ≤ u x) →
+    C = PointedCone.hull ℝ (pure C u) →
+    Submodule.span ℝ (C : Set P.A) = ⊤ →
+    (∀ p : pure C u, balanced (pure C u) (fun q => T q p)) →
+    ∃ e : pure C u → (P.A →ₗ[ℝ] ℝ),
+      (∀ p : pure C u, confirms C u p (e p)) ∧
+      (∀ p q : pure C u, e p q = T q p) ∧
+      (∀ p q : pure C u, T p q = T q p) ∧
+      (∀ (p : pure C u) f, confirms C u p f → ∀ x ∈ C, e p x ≤ f x) ∧
+      (∀ (p : pure C u) x, x ∈ C → T p x = e p x) ∧
+      (∀ (p : pure C u) (n : ℕ) (q : Fin n → pure C u) (w : Fin n → ℝ),
+        (∀ i, 0 ≤ w i) → (∑ i, w i) = 1 →
+        T p (∑ i, w i • (q i : P.A)) = ∑ i, w i * T (q i) p)
+
+abbrev sourceScope : Prop := type_of% (@circuit_balance_least_confirmation.{u})
+
+theorem source_bridge : sourceScope.{u} ↔ arena.{u}.Law actual.{u} := by
+  constructor
+  · intro h P
+    exact @h P.A P.add P.space P.finite P.cone P.unit
+  · intro h A add space finite C u
+    exact h (@Inputs.mk A add space finite C u)
+
+theorem actual_positive : arena.{u}.Law actual.{u} :=
+  source_bridge.mp (@circuit_balance_least_confirmation.{u})
+
+end Reg.D5.S3.Quantum.Foundation.CircuitBalancedConfirmation
