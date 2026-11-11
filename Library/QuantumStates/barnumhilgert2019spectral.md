@@ -92,6 +92,14 @@ a new classification theorem or a reduction in the number of logically
 independent assumptions of the original full package: S was already
 redundant there. This note does not formalize the classification in Lean.
 
+There is also a [comparison-based route](mullerududec2012selfduality.md#reciprocal-least-confirmation-and-the-spectrality-bridge):
+on this same full-effect carrier, S implies signed Sp by positive-dual
+peeling and a shift in one completed frame. Thus S together with all-frame
+strong symmetry gives the same classified package. The S-to-Sp bridge is
+a paper derivation whose positive-dual generation step has a separate
+formal theorem; it does not derive the required strong symmetry from
+endpoint reciprocity.
+
 ## Complete conditional reconstruction and its remaining contracts
 
 A short single-system candidate can therefore be stated as follows:
@@ -160,3 +168,526 @@ all-frame reversible conditions, and the relevant composition and process
 contracts, from fewer relational conditions. A symmetric function
 $p(a,b)=p(b,a)$ by itself specifies none of these. The source theorem
 settles their conditional geometry, not that remaining derivation.
+
+## Local comparison and composite frames
+
+Source metadata (citation-only; the derivations below retain their stated attribution and proof boundaries):
+
+- **bibkey**: barnumwilce2012localtomography
+- **authors**: H. Barnum and A. Wilce
+- **year**: 2012
+- **title**: Local tomography and the Jordan structure of quantum theory
+- **doi**: 10.48550/arXiv.1202.4513
+- **url**: https://arxiv.org/abs/1202.4513v2
+- **claim**: The trace form of a non-signaling composite of Jordan models factors when the composite is itself a Jordan model.
+- **strata_touched**: []
+- **license**: citation-only
+- **triage**: anchor
+
+[Barnum–Wilce, arXiv:1202.4513v2](https://arxiv.org/abs/1202.4513v2),
+Lemma 8, gives trace-form factorization for non-signaling composites of
+Jordan models. The source's Section 2.3 defines a Jordan model by requiring
+each basic outcome to be a primitive idempotent and each test to be a
+Jordan frame. Definition 6 requires products of local tests to be tests
+of the composite. Merely specifying a Jordan cone and permitting all
+proper effects does not supply that distinguished-test requirement.
+Definition 7 gives local tomography. The reference to Lemma 6(b) in the
+proof of Lemma 8 points to the unital-outcome criterion stated as
+Lemma 5(b) in this version.
+
+The argument below supplies a premise bridge for the project's
+[least-confirmation comparison](mullerududec2012selfduality.md#reciprocal-least-confirmation-and-the-spectrality-bridge). It proves
+the needed completeness of product frames from the stated full-effect
+composite contract. It does not assume that product effects are primitive,
+that product frames are complete, or that rank multiplies. This is a
+paper derivation, not a Lean-verified theorem or a historical-priority
+claim. The product-frame and factorization arguments need the preceding
+self-dual frame geometry from S. The classification sections separately
+use the later Jordan representation.
+
+### Ordered carriers and the shared composite contract
+
+For each of the three systems $A,B,D$, use the nonzero finite-dimensional
+real ordered carrier of Definition 26.1 of the
+[quantum-origin volume](../../docs/develop/theory/QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES.md).
+Write $C_X$ for its closed pointed generating cone, $u_X$ for its strictly
+positive normalization, $K_X$ for its compact normalized base and $P_X$
+for its pure states. All effects in $[0,u_X]$ are allowed. Assume S on
+each system: every pure $p$ has a least proper confirming effect $e_p$,
+and $e_p(q)=e_q(p)$ for pure $p,q$.
+
+The earlier paper bridge supplies a positive definite self-dualizing
+form $B_X$ with $e_p=B_X(p,\cdot)$ and
+$u_X=B_X(U_X,\cdot)$. A complete frame is a finite pure family satisfying
+
+$$
+B_X(p_i,p_j)=\delta_{ij},\qquad \sum_i p_i=U_X.
+$$
+
+Every orthogonal pure family extends to a complete frame. In particular,
+every pure state belongs to one. Every complete frame has cardinality
+$r_X=u_X(U_X)$, because all its members are normalized. Pure states span
+$X$. Any orthogonal pure family satisfies $\sum_i p_i\le U_X$ by
+self-duality and the corresponding proper-effect bound.
+
+Supply bilinear products of states and of functionals, both denoted by
+$\otimes$ with their domains understood:
+
+$$
+A\times B\longrightarrow D,\qquad
+A^*\times B^*\longrightarrow D^*.
+$$
+
+Both products are positive on their positive cones. They obey, for all
+vectors and functionals,
+
+$$
+(f\otimes g)(a\otimes b)=f(a)g(b),\qquad
+u_D=u_A\otimes u_B.
+\tag{1}
+$$
+
+Finally require local tomography: product functionals separate $D$.
+These products describe one joint realization, including its marginals
+and conditional states. No assumption on reversible physical processes
+or on an instrument menu is made.
+
+The pairing in (1) makes the induced map $A\otimes_{\mathbb R}B\to D$
+injective: dual bases on the two local vector spaces separate every
+tensor. Product functionals span a space of dimension at most
+$\dim A\dim B$; local tomography says that this span is all of $D^*$.
+Consequently
+
+$$
+\dim D=\dim A\dim B,
+\qquad
+D=\operatorname{span}\{p\otimes q:p\in P_A,q\in P_B\}.
+\tag{2}
+$$
+
+This establishes the state-spanning clause as well as the dimension
+identity. It does not identify the positive cone of $D$ with the cone
+generated by product states.
+
+### A pure marginal fixes every conditional state
+
+For a normalized joint state $\omega$, define its marginals by
+$f(\omega_A)=(f\otimes u_B)(\omega)$ and the analogous formula for
+$\omega_B$. Positivity, (1) and finite-dimensional duality put these
+marginals in $K_A$ and $K_B$.
+
+Suppose $\omega_A=p$ is pure. For every proper effect $g$ of $B$, define
+the unnormalized conditional state $a_g$ by
+
+$$
+f(a_g)=(f\otimes g)(\omega).
+$$
+
+Positive products imply $0\le a_g\le p$. The ray through a pure state
+is extreme, so $a_g=\lambda_g p$. Applying $u_A$ identifies
+$\lambda_g=g(\omega_B)$. Thus
+
+$$
+(f\otimes g)(\omega)=f(p)g(\omega_B).
+$$
+
+Proper effects span the local dual spaces; hence local tomography and
+(1) give $\omega=p\otimes\omega_B$.
+
+In particular $p\otimes q$ is pure when both $p$ and $q$ are pure.
+Indeed, in any nontrivial convex decomposition of $p\otimes q$, purity
+of both marginals forces every component to have marginals $p,q$.
+The preceding result forces every component to equal $p\otimes q$.
+This part uses the composite contract and local convex geometry, not S.
+
+### Product frames have no remaining direction
+
+Choose complete local frames $(p_i)$ and $(q_j)$ and write
+
+$$
+P_{ij}=p_i\otimes q_j,\qquad h_{ij}=e_{p_i}\otimes e_{q_j}.
+$$
+
+Each $P_{ij}$ is pure. Positive bilinearity and (1) give
+$h_{ij}\ge0$, $\sum_{ij}h_{ij}=u_D$ and
+$h_{ij}(P_{kl})=\delta_{ik}\delta_{jl}$. Thus $h_{ij}$ is a proper
+effect confirming $P_{ij}$, and global leastness gives
+
+$$
+e_{P_{ij}}\le h_{ij}.
+\tag{3}
+$$
+
+Evaluation at the other product-frame states shows that the $P_{ij}$
+are mutually $B_D$-orthogonal. Set
+
+$$
+V=U_A\otimes U_B=\sum_{ij}P_{ij},\qquad W=U_D-V.
+$$
+
+The orthogonal-family bound gives $W\in C_D$. Bilinearity makes $V$
+independent of the chosen complete local frames. Given any pure $p,q$,
+choose complete local frames containing them. In that product frame,
+orthogonality gives
+
+$$
+B_D(W,p\otimes q)
+=u_D(p\otimes q)-B_D(V,p\otimes q)=1-1=0.
+$$
+
+By the spanning statement (2) and nondegeneracy of $B_D$, $W=0$.
+Thus every product of complete local frames is a complete global frame:
+
+$$
+U_D=U_A\otimes U_B,\qquad r_D=r_A r_B.
+\tag{4}
+$$
+
+For the cardinality equality, either count its pure members or apply
+$u_D$ to the vector identity and use (1). The missing-complement argument
+is essential: a single product frame only gives $r_D\ge r_A r_B$.
+It is the same residual $W$ for every choice of local frames, and its
+orthogonality to all product pure states, that gives equality.
+
+### Least comparisons factor without an extra product axiom
+
+For a fixed pair of local frames, the positive differences in (3) sum to
+
+$$
+\sum_{ij}(h_{ij}-e_{P_{ij}})
+=u_D-B_D(V,\cdot)=0.
+$$
+
+Pointedness of the positive dual cone forces each difference to be zero.
+Choosing frames through arbitrary pure $p,q$ therefore gives
+
+$$
+e_{p\otimes q}=e_p\otimes e_q.
+\tag{5}
+$$
+
+Consequently, for pure $p,q,r,s$,
+
+$$
+T_{p\otimes q}(r\otimes s)=T_p(r)T_q(s).
+\tag{6}
+$$
+
+Here $T$ is the full-effect least-confirmation infimum, with its first
+argument pure. This equality is derived within the composite contract;
+it has not been added as an independent comparison law. Pure-state
+spanning and bilinearity extend it to
+
+$$
+B_D(a\otimes b,c\otimes d)=B_A(a,c)B_B(b,d)
+\quad(a,c\in A,\ b,d\in B).
+\tag{7}
+$$
+
+Equations (4)–(7) recover the product-frame and factorization properties
+needed to connect to the cited Jordan-model result, without presupposing
+primitive product effects. The exact implication from S and the stated
+full-effect contract is the premise bridge supplied here; it is not
+attributed verbatim to the source's Lemma 8.
+
+### Connected comparisons and composite simplicity
+
+Give the pure states of a system the undirected graph with an edge
+between distinct $p,q$ when $B_X(p,q)>0$. “Connected” means that any two
+vertices can be joined by a finite edge path; orthogonal states may still
+have zero direct comparison.
+
+The graph components span mutually orthogonal nonzero subspaces, so
+there are finitely many components. Pure-state decomposition of every
+positive vector shows that $C_X$ is the direct sum of the cones generated
+by those components. Each summand equals the intersection of $C_X$ with
+its component subspace and hence is closed. Conversely, a nontrivial
+direct-sum decomposition of $C_X$ separates its pure rays into different
+graph components: a least confirming effect for a state in one summand
+can be chosen to vanish on every other summand, so its least effect
+vanishes there. Thus graph connectedness is equivalent to
+indecomposability of the ordered cone. For a Euclidean Jordan cone this
+is equivalently simplicity of the Jordan algebra.
+
+If the two local graphs are connected, (6) connects any two product
+pure states: first follow a path in the first factor with the second
+fixed, then a path in the second with the first fixed. A fixed pure
+state has self-comparison one, so every step remains an edge. If a pure
+state of $D$ lay outside this component, it would be orthogonal to every
+product pure state. Equation (2) and nondegeneracy would force it to be
+zero, contradicting normalization. The composite graph is therefore
+connected as well. In the Jordan representation, local simplicity thus
+implies composite simplicity under this contract; it need not be assumed
+separately.
+
+### Conditional complex selection and its remaining inputs
+
+If the single-system S-to-Jordan paper bridge is used, suppose further
+that the local comparison graph of $A$ is connected and $r_A=n\ge2$.
+The state/effect product contract and local tomography for its
+self-composite $D$ remain explicit inputs, and S holds on $D$ as well.
+The preceding argument makes both Jordan systems simple.
+Equations (2) and (4) provide the rank and
+dimension equalities used in Theorem 29.2 of the quantum-origin volume.
+The classification step is also supplied directly by
+[van de Wetering, arXiv:1803.11139v3](https://arxiv.org/abs/1803.11139v3),
+Proposition 40: a simple Euclidean Jordan algebra whose rank and dimension
+both square in a simple composite is of complex matrix type. That
+proposition's rank/dimension hypotheses are the inputs used here; its
+Theorem 3 has an additional sequential-product compatibility contract,
+which is not assumed as a physical process contract in this note.
+The Jordan dimension comparison in that theorem therefore selects
+
+$$
+A\simeq\operatorname{Herm}_n(\mathbb C),\qquad
+D\simeq\operatorname{Herm}_{n^2}(\mathbb C).
+$$
+
+For clarity, real matrices have dimension $n(n+1)/2$, whose square is
+less than the minimum simple rank-$n^2$ dimension for $n\ge2$.
+Quaternionic matrices have dimension $n(2n-1)$, whose square exceeds the
+maximum simple rank-$n^2$ dimension. For a rank-two spin factor the local
+dimension $m$ must satisfy $m^2\in\{10,16,28\}$, so $m=4$, the complex
+qubit. The Albert case would require a simple rank-nine algebra of
+dimension $27^2$, whereas the available dimensions are $45,81,153$.
+For complex matrices, the dimension $n^4$ selects the complex composite
+among the three rank-$n^2$ matrix types. These are applications of the
+known finite-dimensional Jordan classification and the volume's existing
+dimension argument.
+
+For the single-sector conclusion in this section, connectedness of the
+local comparison graph remains an input. Neither that condition,
+existence of the compatible composite nor local tomography has been
+derived from endpoint symmetry. The comparison argument removes the
+separate rank-multiplication and composite-simplicity assumptions; the
+S-to-Jordan route also avoids supplying an independent strongly symmetric
+reversible group for this state-space argument. These consequences
+supply neither physical instruments, complete positivity, a clock nor a
+Hamiltonian, and do not establish uniqueness of the product embedding.
+The whole reconstruction remains a paper route pending its missing
+formal bridges.
+
+In ordinary words: independently chosen local reference states give
+mutually distinguishable joint reference states. Their unused positive
+complement of the unit is the same for every choice of complete local
+reference lists. That complement would escape every possible choice of
+local reference, so local tomography forces it to vanish. The product
+lists therefore form complete joint frames, and their comparisons
+multiply without adding another axiom. A complete frame supplies every
+outcome of one reference measurement; it need not linearly span the
+whole state space.
+
+### Sector composites without a connectedness input
+
+Use the same carrier, S, positive state/effect products, pairing and unit
+identities, and local tomography as above. In this section also use the
+conditional S-to-Jordan paper bridge, with its trace normalization. No
+connectedness or simplicity is supplied for either factor or for $D$.
+
+Distribution of Jordan composites over direct sums is an established
+result: [Barnum–Graydon–Wilce, arXiv:1606.09331v3](https://arxiv.org/abs/1606.09331v3),
+Propositions 4.8–4.9 and Corollary 4.10, treat it for their dynamical EJA
+composites. Their Definition 4.1 also requires a dynamical composite and
+adjoint compatibility, so it cannot be applied to the present static
+contract without a bridge. The following frame argument supplies the
+algebraic identities and sector restrictions needed here. It does not
+claim the source's physical process contract or historical priority.
+
+Write $x\circ y$ for the derived Jordan product, and $L_x(y)=x\circ y$.
+Define the local embeddings
+
+$$
+j_A(a)=a\otimes U_B,\qquad j_B(b)=U_A\otimes b.
+$$
+
+For local spectral expansions $a=\sum_i\lambda_i p_i$ and
+$b=\sum_j\mu_jq_j$ in complete frames, the already derived complete
+product frame gives
+
+$$
+j_A(a)=\sum_{ij}\lambda_iP_{ij},\qquad
+j_B(b)=\sum_{ij}\mu_jP_{ij}.
+$$
+
+Squaring in this Jordan frame gives $j_A(a)^2=j_A(a^2)$; polarization
+proves that $j_A$ is a unital Jordan homomorphism. The same holds for
+$j_B$. Two elements diagonal in one Jordan frame have commuting
+multiplication operators: on each Peirce subspace both act by scalars.
+Multiplying the displayed expansions therefore gives
+
+$$
+[L_{j_A(a)},L_{j_B(b)}]=0,\qquad
+j_A(a)\circ j_B(b)=a\otimes b.
+\tag{8}
+$$
+
+For arbitrary $a,c\in A$ and $d\in B$, use that operator commutation and
+the homomorphism property to obtain
+
+$$
+\begin{aligned}
+(a\otimes U_B)\circ(c\otimes d)
+&=j_A(a)\circ\bigl(j_A(c)\circ j_B(d)\bigr)\\
+&=j_B(d)\circ\bigl(j_A(a)\circ j_A(c)\bigr)\\
+&=(a\circ c)\otimes d.
+\end{aligned}
+\tag{9}
+$$
+
+There is an analogous identity for the other factor. Thus the mixed
+Jordan identities come from complete product frames; no local physical
+filter or reversible-process extension has been assumed.
+
+Decompose the local Jordan systems into their simple ideals, equivalently
+their comparison-graph components:
+
+$$
+A=\bigoplus_i A_i,\qquad B=\bigoplus_j B_j.
+$$
+
+Let $c_i$ and $d_j$ be their respective central unit projections.
+Equation (9), together with product-state spanning, identifies
+
+$$
+L_{j_A(c_i)}=L_{c_i}\otimes\mathrm{id}_B.
+$$
+
+The right side is an idempotent linear projection with eigenvalues zero
+and one. Since $j_A(c_i)$ is a Jordan idempotent, its Peirce
+$1/2$-subspace is therefore zero. The Peirce multiplication rules then
+make its zero and one spaces complementary ideals: $j_A(c_i)$ is central
+in $D$. Likewise each $j_B(d_j)$ is central.
+
+The products $z_{ij}=j_A(c_i)\circ j_B(d_j)=c_i\otimes d_j$ are
+nonzero mutually orthogonal central projections summing to $U_D$.
+Their multiplication operators act on product vectors as
+
+$$
+L_{z_{ij}}(a\otimes b)=(c_i\circ a)\otimes(d_j\circ b).
+$$
+
+The vector-space tensor isomorphism (2) consequently gives the exact
+ideal decomposition
+
+$$
+D=\bigoplus_{i,j}D_{ij},\qquad
+D_{ij}=\operatorname{span}(A_i\otimes B_j),\qquad
+\dim D_{ij}=\dim A_i\dim B_j.
+\tag{10}
+$$
+
+The units are $z_{ij}$. This is a direct sum of ordered cones as well as
+vector spaces, not merely a list of mutually orthogonal product states.
+
+Each restricted pair $A_i,B_j\to D_{ij}$ inherits the entire static
+contract. To see the effect side explicitly, extend a functional on a
+local ideal by zero on all other local ideals, take its given product,
+and restrict the resulting functional to $D_{ij}$. Positivity survives
+extension and restriction. The pairing identity survives as well; the
+product of the two restricted normalizations equals $u_D|_{D_{ij}}$,
+as is checked on the spanning product vectors. Restrictions of all
+original product effects are products of the corresponding local
+restrictions, so they separate $D_{ij}$. Thus local tomography is
+inherited, rather than separately postulated on the smaller systems.
+
+All three restricted systems are Jordan ideals with their original
+trace normalization and full effect intervals; hence they satisfy the
+same least-confirmation condition S. Their pure states and comparison
+forms agree with the restrictions of the original ones. The graphs of
+$A_i$ and $B_j$ are connected. Equation (6) connects all their product
+pure states inside $D_{ij}$, and these states span that ideal by (10).
+The preceding connectedness argument therefore makes $D_{ij}$ simple.
+Applying the already proved rank rule to this restricted composite gives
+
+$$
+r(D_{ij})=r(A_i)r(B_j).
+\tag{11}
+$$
+
+### Complex sectors from a single self-composite
+
+Now take $B=A$, with the same one self-composite as in the stated
+contract. For each $i$, the inherited pair
+$A_i,A_i\to D_{ii}$ is a locally tomographic self-composite of simple
+Jordan systems. If $r(A_i)=n_i\ge2$, the preceding single-sector
+dimension argument applies to this actual restricted realization and
+gives $A_i\simeq\operatorname{Herm}_{n_i}(\mathbb C)$. If $n_i=1$,
+every pure state is its one-member complete frame, so the sector is the
+single positive ray $\operatorname{Herm}_1(\mathbb C)$.
+
+Consequently, without a connectedness assumption,
+
+$$
+\boxed{
+A\simeq\bigoplus_i\operatorname{Herm}_{n_i}(\mathbb C),\qquad
+D\simeq\bigoplus_{i,j}\operatorname{Herm}_{n_i n_j}(\mathbb C).
+}
+\tag{12}
+$$
+
+For the second assertion, each $D_{ij}$ is simple, has rank
+$k=n_i n_j$ by (11) and dimension $k^2$ by (10). For $k\ge3$ the known
+simple Jordan dimensions select the complex matrix type, including
+exclusion of the rank-three Albert case. For $k=2$ the dimension-four
+spin factor is the complex qubit; $k=1$ is the positive ray. No new
+classification theorem is claimed.
+
+In these ordered representations a normalized state is a tuple of
+positive semidefinite matrices $(\rho_i)$ with
+$\sum_i\operatorname{Tr}\rho_i=1$. A binary effect is a tuple
+$0\le E_i\le I_{n_i}$, with probability
+
+$$
+\Pr(E\mid\rho)=\sum_i\operatorname{Tr}(E_i\rho_i).
+\tag{13}
+$$
+
+Pure states are rank-one projectors in one sector; their comparison
+vanishes across sectors and is $\operatorname{Tr}(pq)$ within a sector.
+Thus one-dimensional sectors give classical probabilities, while each
+irreducible rank-two sector has the three-dimensional Bloch-ball
+geometry. Equation (12) describes the algebra and cone types; it does
+not classify every product embedding in fixed local coordinates.
+
+Connectedness has been removed from the premises for complex sector
+type. The earlier connected case remains exactly the one-sector case;
+absence of superselection sectors has not been derived. For an explicit
+nonclassical example with more than one sector, take
+$A=\operatorname{Herm}_2(\mathbb C)\oplus\operatorname{Herm}_2(\mathbb C)$
+and let $D$ be four copies of $\operatorname{Herm}_4(\mathbb C)$, with
+the usual blockwise product and full effects. This has positive paired
+state/effect products, the unit identity, local tomography and S on both
+systems; its local graph has two components. Its dimensions are $8,64$
+and its ranks are $4,16$. Thus the static contract permits distinct
+classical sector labels even when each sector is quantum.
+
+The complete candidate for this classification keeps the finite ordered
+full-effect carrier and defines
+$T_p(x)=\inf\{f(x):0\le f\le u,\ f(p)=1\}$ with pure first endpoint.
+On both $A$ and its actual self-composite $D$, require
+
+$$
+T_p\!\left(\sum_\ell\alpha_\ell q_\ell\right)
+=\sum_\ell\alpha_\ell T_{q_\ell}(p)
+\quad\left(p,q_\ell\text{ pure},\quad
+\alpha_\ell\ge0,\quad\sum_\ell\alpha_\ell=1\right)
+\tag{14}
+$$
+
+for every finite preparation. The state and effect products must both
+be positive and bilinear, obey (1), and have product effects separating
+$D$. These remain independent model inputs. With the conditional
+single-system bridges, (12)–(13) are the paper consequences; no
+connectedness, specified qubit, physical reversible group, independent
+rank rule or independent comparison-factorization rule is added.
+The entire route remains unformalized beyond the previously identified
+positive-dual-generation theorem, and supplies no physical instrument
+menu or chosen dynamics.
+
+In ordinary words: comparisons can first separate the system into blocks
+that never overlap. Applying the same comparison rule to an independent
+pair constrains each pair of blocks. Every irreducible block is then of
+complex quantum type; single-point blocks are ordinary classical
+alternatives. Requiring only one block is a further question. The
+comparison rule, positive compatible products and local tomography remain
+visible inputs throughout.
