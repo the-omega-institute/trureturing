@@ -28,6 +28,7 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155RowTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.TransferMatrix
 import Mathlib.Tactic
 
+/-! Horizontal and antidiagonal bonds connect successive unrestricted columns. -/
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155ColumnTransfer
 open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155RowTransfer
 open D5.S3.Combinatorics.TraceAvoidingArrays
@@ -53,9 +54,10 @@ private theorem bond_relabel : ∀ (e : Equiv.Perm (Fin 3)) (x y : Fin 3),
     (e x).val + (twist e y).val ≠ 2 ↔ x.val + y.val ≠ 2 := by decide +kernel
 private theorem compatible_relabel {k : ℕ} (e : Equiv.Perm (Fin 3)) (r s : Row k) :
     columnCompatible (relabel e r) (relabel (twist e) s) ↔ columnCompatible r s := by
-  simp only [columnCompatible, relabel, Equiv.arrowCongr_apply, Equiv.refl_symm,
-    Equiv.refl_apply, bond_relabel, Nat.add_comm (twist e _).val]
-  simp only [bond_relabel, Nat.add_comm]
+  change columnCompatible (fun i => e (r i)) (fun i => twist e (s i)) ↔ _
+  simp only [columnCompatible, Nat.add_comm (twist e _).val, bond_relabel]
+  simp only [Nat.add_comm]
+
 
 def successorClasses {k q : ℕ} (cls : Row k → Fin q) (r : Row k) : List (Fin q) :=
   (((List.finRange (3 ^ k)).filter (fun c => decide (columnCompatible r (decode k c)))).map
@@ -91,7 +93,8 @@ theorem quotient_rows (k q : ℕ) (cls : Row k → Fin q) (rep : Fin q → Row k
     _ = ∑ c : Row k, if columnCompatible (rep (cls r)) c ∧ cls c = s
         then (1 : ℤ) else 0 := by
       rw [he]
-      exact (relabel (twist e)).sum_comp _
+      exact (relabel (twist e)).sum_comp (fun c : Row k =>
+        if columnCompatible (rep (cls r)) c ∧ cls c = s then (1 : ℤ) else 0)
     _ = _ := (successor_sum cls _ s).trans (htable _ _)
 
 private theorem grid_good (k n : ℕ) (f : Fin k × Fin (n + 2) → Fin 3) :
@@ -146,7 +149,14 @@ theorem count_transfer (k q : ℕ) (cls : Row k → Fin q)
   have hm := @TransferMatrix.cardMatrix (Row k) (Fin q) inferInstance inferInstance
     inferInstance columnCompatible (fun _ _ _ => True) (fun _ b => cls b) Q v
     (by intro a b _ s; simpa only [true_and] using hQ b s)
-    (by intro s; exact hv s) n
+    (by
+      intro s
+      apply Eq.trans ?_ (hv s)
+      apply Finset.sum_congr rfl
+      intro a _
+      apply Finset.sum_congr rfl
+      intro b _
+      by_cases h : columnCompatible a b ∧ cls b = s <;> simp [h]) n
   rw [hc, hm, pow_succ', ← Matrix.mulVec_mulVec]
   change (∑ s, (∑ t, w t * Q t s) * ((Q ^ n).mulVec 1) s) =
     ∑ t, w t * (∑ s, Q t s * ((Q ^ n).mulVec 1) s)
