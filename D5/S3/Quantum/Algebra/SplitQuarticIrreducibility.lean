@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Sparse homogeneous multiaffine quartics cannot factor across a variable cut. -/
+   digest: Fewer-than-twenty-zero squarefree quartics are irreducible by a structural exchange-pair bound; the Fin 8 specialization only normalizes choose 6 3 = 20 and does not enumerate cuts or factor shapes. -/
 
 module
 
@@ -79,14 +79,150 @@ private lemma vars_nonempty_of_nonunit {F : MvPolynomial (Fin 8) k}
   rw [he]
   exact (isUnit_iff_ne_zero.mpr hc).map C
 
-/-- For labels on opposite sides of a cut, the twenty triples of remaining
-labels give disjoint exchange pairs. A fixed intersection size excludes at
-least one member of every pair. -/
+/-- In a finite carrier, opposite labels pair every `(k - 1)`-set avoiding them
+with the two `k`-sets obtained by exchanging the distinguished label. -/
+private lemma card_insert_of_not_mem {α : Type*} [DecidableEq α] {s : Finset α} {a : α}
+    (ha : a ∉ s) : (insert a s).card = s.card + 1 := by
+  have h := Finset.card_erase_add_one (s := insert a s) (a := a) (by simp)
+  rw [Finset.erase_insert ha] at h
+  omega
+
+/-- The exchange map is the substantive consumed helper: it is uniform in the
+finite label carrier and proves the cut bound by an injective pairing. -/
+private lemma exchange_bound {α : Type*} [Fintype α] [DecidableEq α]
+    (H : Finset α) (u v : α) (k d : ℕ)
+    (hu : u ∈ H) (hv : v ∉ H) (huv : u ≠ v) (hk : 0 < k) :
+    (((Finset.univ.erase u).erase v).powersetCard (k - 1)).card ≤
+      (((Finset.univ : Finset α).powersetCard k).filter
+        (fun I => (I ∩ H).card ≠ d)).card := by
+  let carrier : Finset α := (Finset.univ.erase u).erase v
+  let pairs : Finset (Finset α) := carrier.powersetCard (k - 1)
+  let pick : Finset α → Finset α := fun T =>
+    if ((insert u T) ∩ H).card ≠ d then insert u T else insert v T
+  have hpick_mem (T : Finset α) (hT : T ∈ pairs) :
+      pick T ∈ ((Finset.univ : Finset α).powersetCard k).filter
+        (fun I => (I ∩ H).card ≠ d) := by
+    have hTsub : T ⊆ carrier := (mem_powersetCard.mp hT).1
+    have hTcard : T.card = k - 1 := (mem_powersetCard.mp hT).2
+    have hut : u ∉ T := by
+      intro h
+      simpa [carrier] using hTsub h
+    have hvt : v ∉ T := by
+      intro h
+      simpa [carrier] using hTsub h
+    have hAu : (insert u T).card = k := by
+      rw [card_insert_of_not_mem hut, hTcard]
+      omega
+    have hAv : (insert v T).card = k := by
+      rw [card_insert_of_not_mem hvt, hTcard]
+      omega
+    have hAu_sub : insert u T ⊆ (Finset.univ : Finset α) := by simp
+    have hAv_sub : insert v T ⊆ (Finset.univ : Finset α) := by simp
+    have hIntU : (insert u T) ∩ H = insert u (T ∩ H) :=
+      Finset.insert_inter_of_mem hu
+    have hIntV : (insert v T) ∩ H = T ∩ H := by
+      ext x
+      simp only [mem_inter, mem_insert]
+      constructor
+      · rintro ⟨rfl | hx, hxh⟩
+        · exact (hv hxh).elim
+        · exact ⟨hx, hxh⟩
+      · rintro ⟨hx, hxh⟩
+        exact ⟨Or.inr hx, hxh⟩
+    have hcardU : ((insert u T) ∩ H).card = (T ∩ H).card + 1 := by
+      rw [hIntU, card_insert_of_not_mem]
+      intro hmem
+      exact hut (mem_of_mem_inter_left hmem)
+    have hcardV : ((insert v T) ∩ H).card = (T ∩ H).card := by rw [hIntV]
+    by_cases hbad : ((insert u T) ∩ H).card ≠ d
+    · rw [show pick T = insert u T by simp [pick, hbad]]
+      exact mem_filter.mpr ⟨mem_powersetCard.mpr ⟨hAu_sub, hAu⟩, hbad⟩
+    · rw [show pick T = insert v T by simp [pick, hbad]]
+      refine mem_filter.mpr ⟨mem_powersetCard.mpr ⟨hAv_sub, hAv⟩, ?_⟩
+      intro heq
+      apply hbad
+      have hdiff : ((insert u T) ∩ H).card = ((insert v T) ∩ H).card + 1 := by
+        rw [hcardU, hcardV]
+      omega
+  have hpick_inj : Set.InjOn pick (pairs : Set (Finset α)) := by
+    intro T hT T' hT' heq
+    have hTsub : T ⊆ carrier := (mem_powersetCard.mp hT).1
+    have hT'sub : T' ⊆ carrier := (mem_powersetCard.mp hT').1
+    have hut : u ∉ T := by
+      intro h
+      simpa [carrier] using hTsub h
+    have hvt : v ∉ T := by
+      intro h
+      simpa [carrier] using hTsub h
+    have huT' : u ∉ T' := by
+      intro h
+      simpa [carrier] using hT'sub h
+    have hvT' : v ∉ T' := by
+      intro h
+      simpa [carrier] using hT'sub h
+    by_cases hbad : ((insert u T) ∩ H).card ≠ d
+    · by_cases hbad' : ((insert u T') ∩ H).card ≠ d
+      · have hEq : insert u T = insert u T' := by
+          simpa only [pick, if_pos hbad, if_pos hbad'] using heq
+        have hErase := congrArg (fun S => S.erase u) hEq
+        simpa [Finset.erase_insert hut, Finset.erase_insert huT'] using hErase
+      · have hEq : insert u T = insert v T' := by
+          simpa only [pick, if_pos hbad, if_neg hbad'] using heq
+        have hmem : u ∈ insert v T' := hEq ▸ (by simp)
+        have hfalse : False := by simpa [huT', huv] using hmem
+        exact hfalse.elim
+    · by_cases hbad' : ((insert u T') ∩ H).card ≠ d
+      · have hEq : insert v T = insert u T' := by
+          simpa only [pick, if_neg hbad, if_pos hbad'] using heq
+        have hmem : u ∈ insert v T := hEq ▸ (by simp)
+        have hfalse : False := by simpa [hut, huv] using hmem
+        exact hfalse.elim
+      · have hEq : insert v T = insert v T' := by
+          simpa only [pick, if_neg hbad, if_neg hbad'] using heq
+        have hErase := congrArg (fun S => S.erase v) hEq
+        simpa [Finset.erase_insert hvt, Finset.erase_insert hvT'] using hErase
+  have himage : (Finset.image pick pairs).card = pairs.card := by
+    exact Finset.card_image_iff.mpr hpick_inj
+  apply le_trans ?_ (card_le_card (show Finset.image pick pairs ⊆ _ from by
+    intro I hI
+    obtain ⟨T, hT, rfl⟩ := mem_image.mp hI
+    exact hpick_mem T hT))
+  rw [← himage]
+
+/-- The original threshold is the `Fin 8`, `k = 4` specialization of
+`exchange_bound`; its only arithmetic step is `Nat.choose 6 3 = 20`. -/
 private lemma cut_count :
     ∀ H : Finset (Fin 8), H.Nonempty → H ≠ univ → ∀ d : Fin 5,
       20 ≤ (((univ : Finset (Fin 8)).powersetCard 4).filter
         (fun I => (I ∩ H).card ≠ d.val)).card := by
-  decide +kernel
+  intro H hH hHne d
+  obtain ⟨u, hu⟩ := hH
+  have hUnivNot : ¬ (univ : Finset (Fin 8)) ⊆ H := by
+    intro hs
+    apply hHne
+    exact Finset.Subset.antisymm (by simp) hs
+  obtain ⟨v, _, hv⟩ := Finset.not_subset.mp hUnivNot
+  have huv : u ≠ v := by
+    intro h
+    subst v
+    exact hv hu
+  have hb := exchange_bound H u v 4 d.val hu hv huv (by norm_num)
+  have hcard : (((univ : Finset (Fin 8)).erase u).erase v).card = 6 := by
+    have hu_univ : u ∈ (univ : Finset (Fin 8)) := by simp
+    have hv_erase : v ∈ (univ : Finset (Fin 8)).erase u := by simp [Ne.symm huv]
+    calc
+      (((univ : Finset (Fin 8)).erase u).erase v).card =
+          ((univ : Finset (Fin 8)).erase u).card - 1 :=
+        Finset.card_erase_of_mem hv_erase
+      _ = (univ : Finset (Fin 8)).card - 1 - 1 := by
+        rw [Finset.card_erase_of_mem hu_univ]
+      _ = 6 := by norm_num
+  have hpairs : ((((univ : Finset (Fin 8)).erase u).erase v).powersetCard (4 - 1)).card = 20 := by
+    rw [card_powersetCard, hcard]
+    norm_num [Nat.choose]
+  rw [show 4 - 1 = 3 by norm_num, hpairs] at hb
+  exact hb
+
 
 /-- A homogeneous multiaffine quartic in eight variables with fewer than twenty
 zero squarefree quartic coefficients is irreducible over its coefficient field. -/
