@@ -9,7 +9,9 @@
 import D5.S3.Quantum.Entanglement.AbsolutePPT.NonnegativeKernelCircuit
 import Mathlib.LinearAlgebra.Isomorphisms
 import Mathlib.LinearAlgebra.Finsupp.LinearCombination
-import Mathlib.Analysis.Convex.Extreme
+import Mathlib.Analysis.Convex.KreinMilman
+import Mathlib.Analysis.Normed.Module.FiniteDimension
+import Mathlib.Analysis.Normed.Group.Bounded
 import Mathlib.Algebra.Order.Archimedean.Real.Basic
 import Mathlib.Basic.NNReal.Defs
 
@@ -35,7 +37,8 @@ namespace D5.S3.Quantum.Foundation.CircuitBalancedConfirmation
 
 open D5.S3.Quantum.Entanglement.AbsolutePPT.NonnegativeKernelCircuit.OrderedField
 
-variable {A : Type*} [AddCommGroup A] [Module ℝ A] [FiniteDimensional ℝ A]
+variable {A : Type*} [NormedAddCommGroup A] [NormedSpace ℝ A]
+  [FiniteDimensional ℝ A]
 
 /-- The entire normalized base of the specified original cone and unit. -/
 def base (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ) : Set A :=
@@ -130,32 +133,102 @@ private theorem pure_mem {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
     (p : pure C u) : (p : A) ∈ C ∧ u p = 1 :=
   p.property.1
 
+private theorem base_convex (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ) :
+    Convex ℝ (base C u) := by
+  intro x hx y hy a b ha hb hab
+  refine ⟨C.add_mem (C.smul_mem ha hx.1) (C.smul_mem hb hy.1), ?_⟩
+  simpa only [map_add, map_smul, smul_eq_mul, hx.2, hy.2, mul_one] using hab
+
+private theorem normalized_mem {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
+    (hu : ∀ x ∈ C, x ≠ 0 → 0 < u x) {x : A} (hx : x ∈ C) (hne : x ≠ 0) :
+    (u x)⁻¹ • x ∈ base C u := by
+  refine ⟨C.smul_mem (inv_nonneg.mpr (hu x hx hne).le) hx, ?_⟩
+  simp [map_smul, (hu x hx hne).ne']
+
+private theorem base_compact {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
+    (hclosed : IsClosed (C : Set A))
+    (hu : ∀ x ∈ C, x ≠ 0 → 0 < u x) : IsCompact (base C u) := by
+  have hK : IsClosed (base C u) :=
+    hclosed.inter (isClosed_eq u.continuous_of_finiteDimensional continuous_const)
+  rcases (base C u).eq_empty_or_nonempty with hempty | ⟨x, hx⟩
+  · rw [hempty]
+    exact isCompact_empty
+  have hne (z : A) (hz : z ∈ base C u) : z ≠ 0 := by
+    intro he
+    simpa [he] using hz.2
+  have hsphere (z : A) (hz : z ∈ C) (hz0 : z ≠ 0) :
+      ‖z‖⁻¹ • z ∈ ({y | y ∈ C ∧ ‖y‖ = 1} : Set A) := by
+    refine ⟨C.smul_mem (inv_nonneg.mpr (norm_nonneg z)) hz, ?_⟩
+    simp [norm_smul, Real.norm_eq_abs, abs_of_nonneg (inv_nonneg.mpr (norm_nonneg z)),
+      norm_ne_zero_iff.mpr hz0]
+  have hS : IsCompact ({y | y ∈ C ∧ ‖y‖ = 1} : Set A) := by
+    simpa [Metric.sphere, dist_zero_right] using (isCompact_sphere (0 : A) 1).inter_left hclosed
+  obtain ⟨y, hy, hmin⟩ := hS.exists_isMinOn
+    ⟨‖x‖⁻¹ • x, hsphere x hx.1 (hne x hx)⟩ u.continuous_of_finiteDimensional.continuousOn
+  have hy0 : y ≠ 0 := by
+    intro he
+    simpa [he] using hy.2
+  have hm : 0 < u y := hu y hy.1 hy0
+  apply Metric.isCompact_iff_isClosed_bounded.mpr
+  refine ⟨hK, isBounded_iff_forall_norm_le.mpr ⟨(u y)⁻¹, ?_⟩⟩
+  intro z hz
+  have hz0 : 0 < ‖z‖ := norm_pos_iff.mpr (hne z hz)
+  have hh := hmin (hsphere z hz.1 (hne z hz))
+  have hmz : u y ≤ 1 / ‖z‖ := by
+    simpa [map_smul, hz.2, one_div] using hh
+  have hh' := (le_div_iff₀ hz0).mp hmz
+  exact (le_div_iff₀ hm).mpr (by simpa [mul_comm] using hh')
+
+private theorem nonneg_on_cone {C : PointedCone ℝ A} {u f : A →ₗ[ℝ] ℝ}
+    (hK : IsCompact (base C u))
+    (hu : ∀ x ∈ C, x ≠ 0 → 0 < u x)
+    (hf : ∀ p : pure C u, 0 ≤ f p) : ∀ x ∈ C, 0 ≤ f x := by
+  have hbase : ∀ x ∈ base C u, 0 ≤ f x := by
+    have hsub : convexHull ℝ (pure C u) ⊆ {x | 0 ≤ f x} :=
+      convexHull_min (fun x hx => hf ⟨x, hx⟩)
+        ((convex_Ici (0 : ℝ)).linear_preimage f)
+    have hcl : IsClosed {x : A | 0 ≤ f x} :=
+      isClosed_le continuous_const f.continuous_of_finiteDimensional
+    have hh := closure_minimal hsub hcl
+    rw [show closure (convexHull ℝ (pure C u)) = base C u from
+      closure_convexHull_extremePoints hK (base_convex C u)] at hh
+    exact hh
+  intro x hx
+  by_cases hx0 : x = 0
+  · simp [hx0]
+  have hh := hbase _ (normalized_mem hu hx hx0)
+  have hux := hu x hx hx0
+  simpa only [map_smul, smul_eq_mul, mul_nonneg_iff_of_pos_left (inv_pos.mpr hux)] using hh
+
 private theorem cone_bound {C : PointedCone ℝ A} {u f : A →ₗ[ℝ] ℝ}
-    (hgen : C = PointedCone.hull ℝ (pure C u))
+    (hK : IsCompact (base C u))
+    (hu : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hf : ∀ p : pure C u, 0 ≤ f p ∧ f p ≤ 1) : proper C u f := by
   intro x hx
-  rw [hgen] at hx
-  change x ∈ Submodule.span ℝ≥0 (pure C u) at hx
-  induction hx using Submodule.span_induction with
-  | mem x hx => simpa only [(pure_mem ⟨x, hx⟩).2] using hf ⟨x, hx⟩
-  | zero => simp
-  | add x y _ _ hx hy =>
-    simpa only [map_add] using And.intro (add_nonneg hx.1 hy.1) (add_le_add hx.2 hy.2)
-  | smul r x _ hx =>
-    simpa only [NNReal.smul_def, map_smul, smul_eq_mul] using
-      And.intro (mul_nonneg r.coe_nonneg hx.1) (mul_le_mul_of_nonneg_left hx.2 r.coe_nonneg)
+  refine ⟨nonneg_on_cone hK hu (fun p => (hf p).1) x hx, ?_⟩
+  have hh := nonneg_on_cone (f := u - f) hK hu (fun p => ?_) x hx
+  · simpa only [LinearMap.sub_apply, sub_nonneg] using hh
+  · simpa only [LinearMap.sub_apply, (pure_mem p).2, sub_nonneg] using (hf p).2
 
-omit [FiniteDimensional ℝ A] in
 private theorem pure_span {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
-    (hgen : C = PointedCone.hull ℝ (pure C u))
+    (hK : IsCompact (base C u))
+    (hu : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hspan : Submodule.span ℝ (C : Set A) = ⊤) :
     Submodule.span ℝ (pure C u) = ⊤ := by
+  have hsub : base C u ⊆ Submodule.span ℝ (pure C u) := by
+    have hh := closure_minimal
+      (convexHull_min (Submodule.subset_span : pure C u ⊆ Submodule.span ℝ (pure C u))
+        (Submodule.convex _))
+      (Submodule.closed_of_finiteDimensional (Submodule.span ℝ (pure C u)))
+    rwa [closure_convexHull_extremePoints hK (base_convex C u)] at hh
   apply top_unique
   rw [← hspan]
   apply Submodule.span_le.mpr
   intro x hx
-  rw [hgen] at hx
-  exact PointedCone.hull_le_span ℝ (pure C u) hx
+  by_cases hx0 : x = 0
+  · exact hx0 ▸ Submodule.zero_mem _
+  have hh := (Submodule.span ℝ (pure C u)).smul_mem (u x) (hsub (normalized_mem hu hx hx0))
+  simpa only [smul_smul, mul_inv_cancel₀ (hu x hx hx0).ne', one_smul] using hh
 
 private theorem comparison_bounds {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
     (hu : ∀ x ∈ C, 0 ≤ u x) (p q : pure C u) :
@@ -178,8 +251,8 @@ private theorem comparison_bounds {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ
 the original carrier. Pure conic generation is an explicit application hypothesis. -/
 theorem circuit_balance_least_confirmation
     (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
-    (hu : ∀ x ∈ C, 0 ≤ u x)
-    (hgen : C = PointedCone.hull ℝ (pure C u))
+    (hclosed : IsClosed (C : Set A))
+    (hstrict : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hspan : Submodule.span ℝ (C : Set A) = ⊤)
     (hb : ∀ p : pure C u, balanced (pure C u) (fun q => comparison C u q p)) :
     ∃ e : pure C u → (A →ₗ[ℝ] ℝ),
@@ -193,10 +266,16 @@ theorem circuit_balance_least_confirmation
         comparison C u p (∑ i, w i • (q i : A)) =
           ∑ i, w i * comparison C u (q i) p) := by
   classical
-  have hext (p : pure C u) := descends (hb p) (pure_span hgen hspan)
+  have hu : ∀ x ∈ C, 0 ≤ u x := by
+    intro x hx
+    by_cases hx0 : x = 0
+    · simp [hx0]
+    · exact (hstrict x hx hx0).le
+  have hK := base_compact hclosed hstrict
+  have hext (p : pure C u) := descends (hb p) (pure_span hK hstrict hspan)
   choose e he using hext
   have hconf (p : pure C u) : confirms C u p (e p) := by
-    refine ⟨cone_bound hgen (fun q => ?_), ?_⟩
+    refine ⟨cone_bound hK hstrict (fun q => ?_), ?_⟩
     · rw [he p q]
       exact ⟨(comparison_bounds hu q p).1, (comparison_bounds hu q p).2.1⟩
     · rw [he p p]
@@ -218,17 +297,7 @@ theorem circuit_balance_least_confirmation
         · exact ⟨f, hf, rfl⟩
       simpa only [LinearMap.sub_apply, he p q, hsym p q, sub_nonneg] using ht
     intro x hx
-    rw [hgen] at hx
-    change x ∈ Submodule.span ℝ≥0 (pure C u) at hx
-    have hh : 0 ≤ (f - e p) x := by
-      induction hx using Submodule.span_induction with
-      | mem q hq => exact hnon ⟨q, hq⟩
-      | zero => simp
-      | add x y _ _ hx hy =>
-        rw [map_add]
-        exact add_nonneg hx hy
-      | smul r x _ hx => simpa [NNReal.smul_def] using mul_nonneg r.coe_nonneg hx
-    exact sub_nonneg.mp hh
+    exact sub_nonneg.mp (nonneg_on_cone hK hstrict hnon x hx)
   have hexact (p : pure C u) (x : A) (hx : x ∈ C) :
       comparison C u p x = e p x := by
     change sInf {r | ∃ f : A →ₗ[ℝ] ℝ, confirms C u p f ∧ f x = r} = e p x
