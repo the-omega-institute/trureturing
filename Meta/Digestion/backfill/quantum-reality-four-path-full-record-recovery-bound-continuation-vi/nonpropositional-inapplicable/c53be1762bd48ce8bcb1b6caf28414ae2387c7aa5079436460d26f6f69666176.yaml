@@ -5,3 +5,7 @@ cas_ref: sha256:c53be1762bd48ce8bcb1b6caf28414ae2387c7aa5079436460d26f6f69666176
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: Volume-level continuation prose is not an independent proposition; its theorem atom remains separately tracked as residual-open.
+    previous_atom_id: null
+    next_atom_id: 5e80eb27f247f3f09a117a2dd0261302715131db6cd34a7ac7a97413f871856a
