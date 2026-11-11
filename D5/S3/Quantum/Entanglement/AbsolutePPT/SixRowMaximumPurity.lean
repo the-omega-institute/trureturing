@@ -42,6 +42,24 @@ def CentralOptimal (n : ℕ) : Prop :=
 def EventualCentralFrom (k : ℕ) : Prop :=
   ∀ n : ℕ, 6 ≤ n → k ≤ n → CentralOptimal n
 
+/-- The central spectrum attains the actual maximum and is the unique ordered maximizer. -/
+def UniqueCentralOptimal (n : ℕ) : Prop :=
+  let rho : Matrix (Fin 6 × Fin n) (Fin 6 × Fin n) ℂ :=
+    diagonal (fun p => (centralSpectrum n (finProdFinEquiv p) : ℂ))
+  CentralOptimal n ∧
+    (Antitone (centralSpectrum n) ∧ (∀ i, 0 ≤ centralSpectrum n i) ∧
+      (∑ i, centralSpectrum n i = 1) ∧ (∑ i, (centralSpectrum n i)^2 = theta n) ∧
+      rho.PosSemidef ∧ rho.trace = 1 ∧ APPT rho ∧
+      (rho * rho).trace.re = theta n) ∧
+    (∀ (e : (Fin 6 × Fin n) ≃ Fin (6*n)) (l : Fin (6*n) → ℝ),
+      Antitone l → (∀ i, 0 ≤ l i) → (∑ i, l i = 1) →
+      APPT (diagonal (fun p => (l (e p) : ℂ))) →
+      (∑ i, (l i)^2 = theta n) → l = centralSpectrum n)
+
+/-- Tran's eventual unique central-spectrum maximality condition for six rows. -/
+def EventualUniqueCentralFrom (k : ℕ) : Prop :=
+  ∀ n : ℕ, 6 ≤ n → k ≤ n → UniqueCentralOptimal n
+
 theorem central_optimal (n : ℕ) (hn : 23 ≤ n) : CentralOptimal n := by
   constructor
   · intro rho hpos htrace happt
@@ -77,6 +95,11 @@ theorem central_spectrum_attainment (n : ℕ) (hn : 23 ≤ n) :
   refine ⟨hspec.1, hspec.2.1, hspec.2.2.1, hspec.2.2.2, ?_⟩
   simpa only [hdiag] using (SixRowAttainment.central_attainment n hn).2
 
+theorem unique_central_optimal (n : ℕ) (hn : 23 ≤ n) : UniqueCentralOptimal n := by
+  refine ⟨central_optimal n hn, central_spectrum_attainment n hn, ?_⟩
+  intro e l ho hl hs happt hpur
+  exact (ordered_spectrum_upper_and_equality n hn e l ho hl hs happt).2.mp hpur
+
 /-- Necessity uses an actual six-by-twenty-two APPT density beating theta(22). -/
 theorem eventual_central_iff (k : ℕ) : EventualCentralFrom k ↔ 23 ≤ k := by
   constructor
@@ -96,21 +119,37 @@ theorem eventual_threshold_is_least : IsLeast {k : ℕ | EventualCentralFrom k} 
   intro k hk
   exact (eventual_central_iff k).1 hk
 
-/-- The least eventual central-maximum threshold, independently of uniqueness. -/
+theorem eventual_unique_central_iff (k : ℕ) : EventualUniqueCentralFrom k ↔ 23 ≤ k := by
+  constructor
+  · intro hk
+    apply (eventual_central_iff k).1
+    intro n hn hkn
+    exact (hk n hn hkn).1
+  · intro hk n _hn hkn
+    exact unique_central_optimal n (le_trans hk hkn)
+
+theorem eventual_unique_threshold_is_least :
+    IsLeast {k : ℕ | EventualUniqueCentralFrom k} 23 := by
+  refine ⟨(eventual_unique_central_iff 23).2 le_rfl, ?_⟩
+  intro k hk
+  exact (eventual_unique_central_iff k).1 hk
+
+/-- The least eventual threshold for the central spectrum to be the unique maximizer. -/
 noncomputable def n0 : ℕ := by
   classical
-  exact Nat.find (show ∃ k : ℕ, EventualCentralFrom k from
-    ⟨23, (eventual_central_iff 23).2 le_rfl⟩)
+  exact Nat.find (show ∃ k : ℕ, EventualUniqueCentralFrom k from
+    ⟨23, (eventual_unique_central_iff 23).2 le_rfl⟩)
 
 theorem n0_eq : n0 = 23 := by
   classical
   unfold n0
   apply Nat.le_antisymm
-  · exact Nat.find_min' _ ((eventual_central_iff 23).2 le_rfl)
-  · exact (eventual_central_iff _).1 (Nat.find_spec _)
+  · exact Nat.find_min' _ ((eventual_unique_central_iff 23).2 le_rfl)
+  · exact (eventual_unique_central_iff _).1 (Nat.find_spec _)
 
 /-- Full actual maximum and attainment, original ordered equality, exact parity
-value and least eventual threshold. No maximum below 23 is asserted. -/
+value and least eventual threshold for unique central-spectrum maximality.
+No maximum below 23 is asserted. -/
 theorem result :
     (∀ n : ℕ, 23 ≤ n → CentralOptimal n) ∧
     (∀ (n : ℕ) (hn : 23 ≤ n)
@@ -121,8 +160,11 @@ theorem result :
         ((∑ i, (l i)^2 = theta n) ↔ l = centralSpectrum n)) ∧
     (∀ n : ℕ, theta n = if n%2 = 0 then 6/(35*(n : ℝ))
       else 6*(35*(n : ℝ)+2)/(35*(n : ℝ)+1)^2) ∧
-    IsLeast {k : ℕ | EventualCentralFrom k} 23 ∧ n0 = 23 := by
+    IsLeast {k : ℕ | EventualCentralFrom k} 23 ∧ n0 = 23 ∧
+    (∀ n : ℕ, 23 ≤ n → UniqueCentralOptimal n) ∧
+    IsLeast {k : ℕ | EventualUniqueCentralFrom k} 23 := by
   exact ⟨central_optimal, ordered_spectrum_upper_and_equality,
-    fun _ => rfl, eventual_threshold_is_least, n0_eq⟩
+    fun _ => rfl, eventual_threshold_is_least, n0_eq,
+    unique_central_optimal, eventual_unique_threshold_is_least⟩
 
 end D5.S3.Quantum.Entanglement.AbsolutePPT.SixRowMaximumPurity
