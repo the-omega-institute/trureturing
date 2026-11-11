@@ -207,7 +207,11 @@ theorem moving_interval_marginals {j : ℕ} (hj : 3 ≤ j) {ρ priceLambda q : �
   rw [hroot] at hlog
   have hlogs : -2 / (j : ℝ) ≤ log (beta j q) - log priceLambda := by
     rw [log_div hLambda.ne' (beta_pos hq2 (by omega)).ne'] at hlog
-    linarith only [hlog, hmul]
+    have hneg : -(2 * (j : ℝ) * log (q / ρ)) ≤
+        log (beta j q) - log priceLambda := by linarith only [hlog]
+    have hneg' : -2 / (j : ℝ) ≤ -(2 * (j : ℝ) * log (q / ρ)) := by
+      linarith only [hmul]
+    exact hneg'.trans hneg
   have hexp := exp_le_exp.mpr hlogs
   have hlow : exp (-2 / (j : ℝ)) * priceLambda ≤ beta j q := by
     rw [exp_sub, exp_log (beta_pos hq2 (by omega)), exp_log hLambda] at hexp
@@ -217,7 +221,8 @@ theorem moving_interval_marginals {j : ℕ} (hj : 3 ≤ j) {ρ priceLambda q : �
     exact beta_strictAntiOn (show 2 ≤ j by omega) hρ hq2 hq
   have hlin := add_one_le_exp (-2 / (j : ℝ))
   have hm := mul_le_mul_of_nonneg_right hlin hLambda.le
-  have hbeta : (1 - 2 / (j : ℝ)) * priceLambda ≤ beta j q := hm.trans hlow
+  have hbeta : (1 - 2 / (j : ℝ)) * priceLambda ≤ beta j q := by
+    convert hm.trans hlow using 1 <;> ring
   exact ⟨hlow, hstrict, sub_pos.mpr hstrict, by nlinarith only [hbeta]⟩
 
 /-- No asymptotic or root supplier: these are consequences of the literal root
@@ -328,7 +333,7 @@ private theorem sqrt_le_pnt_model {c : ℝ} (hc : 0 < c) :
     exp (log t * (1 / 2 : ℝ)) ≤ exp (log t - c * log t ^ (1 / 10 : ℝ)) :=
       exp_le_exp.mpr (by linarith)
     _ = t * exp (-c * log t ^ (1 / 10 : ℝ)) := by
-      rw [exp_log ht0, div_eq_mul_inv, ← exp_neg]
+      rw [exp_sub, exp_log ht0, div_eq_mul_inv, ← exp_neg]
       ring
 
 /-- One weakened exponential theta estimate, derived directly from the actual
@@ -408,7 +413,10 @@ theorem root_pnt_suppression {c1 A0 L y : ℝ} (hc : 0 < c1)
   have hexp : exp (-c1 * y ^ (1 / 10 : ℝ)) ≤ exp (-(6 * log L)) :=
     exp_le_exp.mpr (by nlinarith)
   have heq : exp (-(6 * log L)) = 1 / L ^ 6 := by
-    rw [exp_neg, Real.exp_nat_mul, exp_log (by linarith : 0 < L)]
+    have hpow : exp (6 * log L) = L ^ 6 := by
+      change exp (((6 : ℕ) : ℝ) * log L) = L ^ 6
+      rw [Real.exp_nat_mul, exp_log (by linarith : 0 < L)]
+    rw [exp_neg, hpow]
     rfl
   exact hexp.trans_eq heq
 
@@ -476,9 +484,16 @@ private theorem endpoint_theta_mass {c A L ρ : ℝ} {j : ℕ}
     rw [he] at hsmallρ
     have he2 : ρ / (j : ℝ) ^ 2 = 2 * (ρ / (2 * (j : ℝ) ^ 2)) := by ring
     rw [he2] at hwidth
+    have herr' : A * b / L ^ 6 + A * ρ / L ^ 6 ≤
+        ρ * (3 * A / L ^ 6) := by
+      calc
+        _ ≤ 3 * A * ρ / L ^ 6 := herr
+        _ = ρ * (3 * A / L ^ 6) := by ring
+    have hErrTarget : A * b / L ^ 6 + A * ρ / L ^ 6 ≤
+        ρ / (2 * (j : ℝ) ^ 2) := herr'.trans hsmallρ
     calc
       _ ≤ (b - ρ) - (A * b / L ^ 6 + A * ρ / L ^ 6) := by
-        linarith only [hwidth, herr, hsmallρ]
+        linarith only [hwidth, hErrTarget]
       _ ≤ (b - ρ) + (Chebyshev.theta b - b) -
           (Chebyshev.theta ρ - ρ) := by
         linarith only [hh, hl]
@@ -759,7 +774,7 @@ private theorem tenth_scale_large {A0 l : ℝ} (hA : 1 ≤ A0) (hl : 2 ≤ l) :
   norm_num at hm
   constructor <;> nlinarith
 
-set_option maxHeartbeats 800000 in
+set_option maxHeartbeats 4000000 in
 private theorem eventual_growing_roster : ∃ A0 : ℝ, 1 ≤ A0 ∧
     ∀ᶠ X : ℝ in atTop, 14 ≤ X ∧ 0 < log (log X) ∧
       6 ≤ log X / (A0 * log (log X)) ^ 10 ∧
@@ -784,8 +799,10 @@ private theorem eventual_growing_roster : ∃ A0 : ℝ, 1 ≤ A0 ∧
     have h := ((isLittleO_log_rpow_rpow_atTop (10 : ℝ)
       (by norm_num : (0 : ℝ) < 1)).tendsto_div_nhds_zero).comp tendsto_log_atTop
     simp only [rpow_natCast, rpow_one, Function.comp_def] at h
+    have hpow (x : ℝ) : x ^ (10 : ℝ) = x ^ (10 : ℕ) := by
+      convert Real.rpow_natCast x 10 using 1 <;> norm_num
     have hh : Tendsto (fun X : ℝ => A0 ^ 10 * (log (log X) ^ 10 / log X)) atTop (𝓝 0) := by
-      simpa only [Real.rpow_natCast, mul_zero] using h.const_mul (A0 ^ 10)
+      simpa only [hpow, mul_zero] using h.const_mul (A0 ^ 10)
     apply hh.congr'
     filter_upwards [] with X
     rw [mul_pow]
