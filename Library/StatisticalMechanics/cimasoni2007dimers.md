@@ -26,8 +26,10 @@ and all integer-power face orbits. Its face-boundary exactness and
 off-cycle separation are combinatorial ingredients for this literature
 route. Their statements do not assert geometric realization of a rotation
 system, a topological disk theorem, a Pfaffian identity, or complexity bounds.
-The existence and nice-cycle orientation endpoint requires additional
-regional Euler and directed-boundary arguments.
+The signed regional Euler identities and directed-boundary correspondence
+feed the face-odd orientation and nice-even-cycle endpoint on that same
+actual graph. The complement matching restricts through the proved
+no-cross-edge result, rather than supplying interior parity as a premise.
 
 ## Verified locator
 
