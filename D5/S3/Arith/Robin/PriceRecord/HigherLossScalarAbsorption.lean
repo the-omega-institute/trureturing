@@ -166,12 +166,4 @@ theorem scalar_absorption {X E R : ℝ} (hX : 1 < X) (hE : 0 ≤ E) (hR0 : 0 ≤
   have hm2 := mul_le_mul_of_nonneg_right hlast (show 0 ≤ 1 / X by positivity)
   nlinarith only [hb, hm1, hm2]
 
-theorem log_rounding_eventually : ∀ᶠ X : ℝ in atTop, log X ^ 2 ≤ sqrt X := by
-  have hsmall : Tendsto (fun X : ℝ => log X ^ 2 / sqrt X) atTop (𝓝 0) := by
-    simpa only [rpow_two, ← sqrt_eq_rpow] using
-      (isLittleO_log_rpow_rpow_atTop (2 : ℝ)
-        (by norm_num : (0 : ℝ) < 1 / 2)).tendsto_div_nhds_zero
-  filter_upwards [eventually_gt_atTop (0 : ℝ),
-    hsmall.eventually (eventually_lt_nhds (by norm_num : (0 : ℝ) < 1))] with X hX hx
-  exact ((div_lt_one (sqrt_pos.mpr hX)).mp hx).le
 end D5.S3.Arith.Robin.PriceRecord.HigherLossScalarAbsorption

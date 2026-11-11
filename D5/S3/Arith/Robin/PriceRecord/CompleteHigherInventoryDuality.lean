@@ -65,10 +65,6 @@ theorem higherMass_eq_coordinate_sum (n : ℕ) :
   simp only [sum_const, Nat.card_Icc, nsmul_eq_mul]
   congr 1
 
-theorem higherMass_nonneg (n : ℕ) : 0 ≤ higherMass n :=
-  sum_nonneg fun _ hp => mul_nonneg (Nat.cast_nonneg _)
-    (Nat.prime_of_mem_primeFactors hp).log_pos.le
-
 theorem canonical_mem {η : ℝ} (hη : 0 < η) {p j : ℕ} :
     (p, j) ∈ coordinates (strictInteger η) ↔
       p.Prime ∧ 2 ≤ j ∧ η < goldenLayerMarginal p j := by

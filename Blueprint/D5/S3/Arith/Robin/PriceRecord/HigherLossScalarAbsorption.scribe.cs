@@ -22,13 +22,6 @@ internal sealed class HigherLossScalarAbsorptionDocument : IScribeDocumentDefini
                 H("scalar absorption"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Complete Lean statement: theorem scalar_absorption {X E R : ℝ} (hX : 1 < X) (hE : 0 ≤ E) (hR0 : 0 ≤ R) (hsmall : a * ((E + 5 * sqrt X) / X) ≤ 1 / 4) (hlog : log X ^ 2 ≤ sqrt X) (hR : R ≤ a * (E + 5 * sqrt X) / X ^ (5 / 4 : ℝ) * sqrt R + a * ((E + 5 * sqrt X) / X) * R + d * (E + 5 * sqrt X) * log X / X ^ 2 + 2 / X) : R ≤ finalConstant * (E ^ 2 / X ^ (5 / 2 : ℝ) + 1 / X)"))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("higherlossscalarabsorption-log-rounding-eventually"),
-                DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/HigherLossScalarAbsorption.log_rounding_eventually"),
-                H("log rounding eventually"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Complete Lean statement: theorem log_rounding_eventually : ∀ᶠ X : ℝ in atTop, log X ^ 2 ≤ sqrt X"))),
                 DescribeRole.Theorem)
         )));
 }

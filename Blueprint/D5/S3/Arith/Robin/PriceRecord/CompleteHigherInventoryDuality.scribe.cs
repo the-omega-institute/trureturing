@@ -31,13 +31,6 @@ internal sealed class CompleteHigherInventoryDualityDocument : IScribeDocumentDe
                 Blocks(Paragraph(Text("Complete Lean statement: theorem higherMass_eq_coordinate_sum (n : ℕ) : higherMass n = ∑ c ∈ coordinates n, log (c.1 : ℝ)"))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("completehigherinventoryduality-highermass-nonneg"),
-                DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/CompleteHigherInventoryDuality.higherMass_nonneg"),
-                H("higherMass nonneg"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Complete Lean statement: theorem higherMass_nonneg (n : ℕ) : 0 ≤ higherMass n"))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("completehigherinventoryduality-canonical-mem"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/CompleteHigherInventoryDuality.canonical_mem"),
                 H("canonical mem"),
