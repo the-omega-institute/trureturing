@@ -70,7 +70,10 @@ internal sealed class YinPolygammaMajorizationRefutationDocument : IScribeDocume
     private static DocumentBlock Entry(string id, string declaration, string title, Formula formula,
         AssessedProvenance provenance, string prose, DescribeRole role) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
-            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), role,
+            declaration == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("yin-polygamma-majorization-refutation"),
+                ResolutionKind.Refuted) : null);
 
     private static Formula V(string name) => FormulaDsl.Id(name);
     private static Formula N => Seq(Mathbb, Grp(V("N")));

@@ -70,6 +70,10 @@ $$\neg (\forall p \in \mathbb{N},\; (0 < p) \Rightarrow (\forall k \in \mathbb{R
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/SeriesInequalities/YinPolygammaMajorizationRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/yin-polygamma-majorization-refutation` (refuted) by `D5/S3/Analytic/SeriesInequalities/YinPolygammaMajorizationRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"yin-polygamma-majorization-refutation","declaration_gid":"D5/S3/Analytic/SeriesInequalities/YinPolygammaMajorizationRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Li Yin (2022). *Monotonic properties for ratio of the generalized (p,k)-polygamma functions*. DOI: [10.7153/jmi-2022-16-62](https://doi.org/10.7153/jmi-2022-16-62). URL: <https://files.ele-math.com/articles/jmi-16-62.pdf>.
