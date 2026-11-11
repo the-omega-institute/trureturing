@@ -35,9 +35,9 @@ internal sealed class RealThreePathFiniteQueryBoundaryDocument : IScribeDocument
             Equal(q,Call("perturbedReadout",s,e)),
             Member(D(0),s),
             All("r",Call("Recipe"),Implies(Member(r,m),Seq(Call("readPoints",r),Sp,Subseteq,Sp,s))),
-            Call("ContDiff",Real,V("infinity"),q),
+            Call("ContDiff",Real,Infty,q),
             All("z",Complex,Seq(D(0),Sp,Le,Sp,Call("q",z))),
-            All("z",Complex,Implies(Seq(z,Sp,Ne,Sp,D(0)),Seq(D(0),Sp,Lt,Sp,Call("q",z)))),
+            All("z",Complex,Implies(Seq(z,Sp,Neq,Sp,D(0)),Seq(D(0),Sp,Lt,Sp,Call("q",z)))),
             Equal(Call("q",D(0)),D(0)),
             All("z",Complex,Equal(Call("q",Mul(V("omega"),z)),Call("q",z))),
             All("z",Complex,Equal(Call("q",Seq(Minus,z)),Call("q",z))),
@@ -45,14 +45,14 @@ internal sealed class RealThreePathFiniteQueryBoundaryDocument : IScribeDocument
             All("r",Call("Recipe"),Implies(Member(r,m),Call("Passes",q,r))),
             Seq(Neg,Call("Balance",V("U"),q)));
         return All("M",Call("Finset",Call("Recipe")),All("epsilon",Real,
-            Implies(hypotheses,Seq(V("S"),Sp,Eq,Sp,Call("phaseClosure",Call("biUnion",m,V("readPoints"))),
-                Semicolon,Sp,ExistsF("q",Arrow(Complex,Real),conclusion)))));
+            Implies(hypotheses,Seq(V("let"),Sp,V("S"),Sp,Eq,Sp,Call("phaseClosure",Call("biUnion",m,V("readPoints"))),
+                Semi,Sp,ExistsF("q",Arrow(Complex,Real),conclusion)))));
     }
 
     private static Formula Definitions()
     {
         var z=V("z"); var a=V("a"); var p=Call("P",z);
-        return Seq(Equal(p,Seq(Prod,Subscript(Seq(a,InMacro,V("S"))),Call("NormSq",Sub(z,a)))),
+        return Seq(Equal(p,Seq(Prod,Underscore,Grp(Seq(a,InMacro,V("S"))),Call("NormSq",Sub(z,a)))),
             Comma,Sp,Equal(Call("q",z),Add(Call("NormSq",z),Mul(V("epsilon"),Pow(p,D(2))))));
     }
 
@@ -71,7 +71,7 @@ internal sealed class RealThreePathFiniteQueryBoundaryDocument : IScribeDocument
     private static Formula Add(Formula a,Formula b)=>Seq(a,Sp,Plus,Sp,b);
     private static Formula Sub(Formula a,Formula b)=>Seq(a,Sp,Minus,Sp,b);
     private static Formula Mul(Formula a,Formula b)=>Multiply(a,b);
-    private static Formula Pow(Formula a,Formula b)=>Seq(Paren(a),Superscript(b));
+    private static Formula Pow(Formula a,Formula b)=>Seq(Paren(a),Caret,Grp(b));
     private static Formula Paren(Formula a)=>Seq(Open,a,Close);
     private static Formula Arrow(Formula a,Formula b)=>Paren(Seq(a,Sp,To,Sp,b));
     private static Formula Member(Formula a,Formula b)=>Seq(a,Sp,InMacro,Sp,b);
