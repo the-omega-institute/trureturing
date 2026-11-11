@@ -58,7 +58,8 @@ internal sealed class HardinA233259StripDocument : IScribeDocumentDefinition
         Describe.Lean(DescribeId.Create(name.Replace("_", "-").ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(title + "."))), DescribeRole.Theorem);
+            Blocks(Paragraph(Text(title + "."))), DescribeRole.Theorem,
+            new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233259"), ResolutionKind.Proved));
 
     private static DocumentBlock Node(string name, string title, Formula formula, bool theorem,
         bool literature = false) =>
