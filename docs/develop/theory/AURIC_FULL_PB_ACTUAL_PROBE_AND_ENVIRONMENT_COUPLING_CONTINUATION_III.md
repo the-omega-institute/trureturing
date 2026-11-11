@@ -1987,378 +1987,461 @@ $$
 
 ## 追加锚（本行以下为增补区）
 
-## 56. 实际秩二三重接触的全邻域价格包络
+## 56. 实际系数的三重接触符号证书与低值极小候选排除
 
-**约定 56.1（本节的完整接触与实际来源）。** 固定一个取向 $i$、一个原来源
-$r\in\{+1,-1\}$，并令 $g=rh$。以下“接触”始终指原问题的完整接触：
-取
+**定义 56.1（正虚部层的实际清分母多项式）。** 使用 (46.5) 的实际
+$F,G$ 和 (46.7) 的 $P,\mathcal R_0$，限定
+
 $$
-\tau=\sqrt t\,e^{i\theta},\qquad
-u_r=\frac{(1,r\tau)^{\mathsf T}}{\sqrt{1+t}},\qquad
-a_r=(1/\sqrt2,r)^{\mathsf T},
-$$
-使用 (46.2) 的实际 $a_{\rm act},p_{\rm gr},q_{\rm gr}$ 和 $B_h=H_h+C$，并同时要求
-$$
-u_r^*p_{\rm gr}\in\mathbb R,\qquad
-(Cu_r)^*q_{\rm gr}\in\mathbb R,\qquad
-u_r^*q_{\rm gr}=p_{\rm gr}^*Cu_r .
+0<x<1,\qquad Y=y^2>1,\qquad y=\sqrt Y>0,\qquad t>1/4.
 \tag{56.1}
 $$
-这里最后一式是一个复等式，因而 (56.1) 连同范数条件给出全部四个实图条件；来源方程仍是
+
+置 $d=1-x$、$e=2-x$、$L=e(x+1)=2+xd$、$q=4t-1>0$，并记
+
 $$
-a_{\rm act}-H_hu_r+\ell C^2u_r/2=\eta a_r .
+E=(Y+x^2)(Y+d^2),\qquad
+H=Y(x-4)^2+(5Y+6d^2)^2.
 \tag{56.2}
 $$
-相位图由定理 48.1 给出，故 $\theta=\Theta(x,y,t,g)$，而
+
+以下六个多项式均由实际 $F,G$ 定义式取系数得到：
+
 $$
-\eta=\frac{\sqrt2\,[F(t)+gL_1(\tau)]}{\sqrt{1+t}},\qquad
-y[3(4t-1)-g\operatorname{Re}\tau]>0.
+\begin{aligned}
+R_F&=x^2-7x+3-12dt,&
+A_F&=3+2x-12dt,& B_F&=3xd^2(1+4t),\\
+R_G&=4(x^2-8x+3)t-3(x+1),&
+A_G&=4(5x-3)t+3(x+1),& B_G&=-3xL(1+4t).
+\end{aligned}
 \tag{56.3}
 $$
-在本节的低值正区域 $0<x<1,y>1$ 内，$\epsilon=-1$、$A=y$，两笔原预算的权重
-$\alpha_d=A-d\epsilon=y+d$ 均严格为正。置
+
+具体地，$i(1-\ell)=y+id$、$i(1-\ell/2)=(y+ie)/2$，故
+
 $$
-\zeta=\operatorname{Re}((a_{\rm act}-ip_{\rm gr})^*T_Au_r),\qquad
-J_k=\frac{2A}{A^2-1}|\eta|^2+4\epsilon k\zeta,
-\qquad k>0,
-$$
-并只在不利过滤 $\epsilon\zeta<0$ 下比较；原有限 PB 的两笔预算仍按这个同一正 $k$
-和全部正有限质量的原定义检验。每个这样的接触由
-$$
-X=[p_{\rm gr}\ q_{\rm gr}]\,[u_r\ Cu_r]^{-1}
+\begin{aligned}
+\operatorname{Re}F
+ &=y\alpha_0-d\kappa_0-2+x/2=\frac{R_F}{2x},\\
+\operatorname{Im}F
+ &=y(\kappa_0+1/2)+d\alpha_0
+ =-\frac{A_FY+B_F}{2xy},\\
+\operatorname{Re}G
+ &=y\chi_0/2+e\kappa_0/2-2et=\frac{R_G}{2x},\\
+\operatorname{Im}G
+ &=y(2t-\kappa_0/2)+e\chi_0/2
+ =\frac{A_GY+B_G}{4xy}.
+\end{aligned}
 \tag{56.4}
 $$
-恢复为有限 Hermitian 矩阵；另一取向由同源复共轭运输，保持 $r$、$h$、预算和比值。
-因此本节从一开始就保留同一个 $a_r$、全部四实图条件、不利过滤和有限 Hermitian 实现，
-而没有把标量根当作脱离原来源的接触。
 
-令 $\widehat{\mathcal R}(z,g)$ 表示将该相位图代入 (46.6) 后的实际价格，
-其中 $z=(x,y,t)$，并令
+因此下式是与原 $P$ 的恒等式，而非另选的多项式模型：
+
 $$
-\widehat{\mathcal R}(c,0)=\mathcal R_0(c),\qquad
-p=\widehat{\mathcal R}(z,g)-\mathcal R_0(c),\qquad
-q=(x-x_0,y-y_0).
+\begin{aligned}
+N(x,Y,t)&:=16x^2Y P(x,\sqrt Y,t)\\
+ &=8t\bigl[(A_FY+B_F)^2+YR_F^2\bigr]
+       -\bigl[(A_GY+B_G)^2+4YR_G^2\bigr]\\
+ &=A_2Y^2+A_1Y+A_0,\\
+A_2&=8tA_F^2-A_G^2,\\
+A_1&=8t(2A_FB_F+R_F^2)-2A_GB_G-4R_G^2,\\
+A_0&=9x^2(1+4t)^2(8td^4-L^2).
+\end{aligned}
 \tag{56.5}
 $$
 
-**定义 56.2（秩二三重数据与实际 $M$）。** 设 $c=(x_0,y_0,t_0)$ 是正区域中的实际完整
-零阶接触，满足
+$N$ 的多项式表达允许在任意实 $Y$ 上作代数求值；原接触对应仅在
+(56.1) 中使用。特别地，$y=-\sqrt Y$ 不属于这里的 $t>1/4$ 不利层，
+因为原过滤是 $y(4t-1)>0$。记
+$\widetilde{\mathcal R}_0(x,Y,t)=\mathcal R_0(x,\sqrt Y,t)$ 和
+$\nu=\partial_t\widetilde{\mathcal R}_0$；此偏导与固定 $x,y$ 的原偏导相同。
+
+**定理 56.2（实际三重子系统的严格符号）。** 在 (56.1) 中，若
+
 $$
-P(c)=0,\quad \nabla P(c)=0,\quad P_{tt}(c)=0,\quad
-P_{xt}(c)=P_{yt}(c)=0.
+N=N_Y=N_t=N_{tt}=N_{Yt}=0,
 \tag{56.6}
 $$
-置
+
+则
+
 $$
-B=D^2_{x,y}P(c),\quad
-a=\frac{P_{ttt}(c)}6=2|f_1(x_0,y_0)|^2>0,\quad
-\nu=\partial_t\mathcal R_0(c)\ne0,
+A_2<0,\qquad N_{YY}=2A_2<0,\qquad \nu<0.
 \tag{56.7}
 $$
-并假设某个 $\sigma\in\{+1,-1\}$ 满足
+
+尤其该子系统没有 $A_2=0$ 的例外分支。若再有 $N_x=N_{xt}=0$，
+令 $\mathsf H=D^2_{x,y,t}P$ 为对应原接触的完整 Hessian。
+当 $\mathsf H$ 半定时，它非零、半负定、秩为一或二；以
+$\sigma\mathsf H\succeq0$ 定义其符号时，必有 $\sigma=-1$ 和 $\sigma\nu>0$。
+
+**证明。** 先看 $N$ 关于 $t$ 的首项及常数项。由 (56.3)–(56.5)，它们分别为
+
 $$
-\sigma B\succ0,\qquad \sigma\nu<0.
+\begin{aligned}
+a_3&=1152d^2\bigl[Y+(Y-xd)^2\bigr]
+    =1152d^2(Y+x^2)(Y+d^2)>0,\\
+a_0&=-9(x+1)^2\bigl[4Y+(Y-xe)^2\bigr]
+    =-9(x+1)^2(Y+x^2)(Y+e^2).
+\end{aligned}
 \tag{56.8}
 $$
-记
+
+$N=N_t=N_{tt}=0$ 及 $a_3>0$ 给关于哑变量 $T$ 的精确等式
+$N(x,Y,T)=a_3(T-t)^3$。比较常数项并约去 $Y+x^2>0$，得
+
 $$
-L=H_g(c,0),\quad
-b=\nabla_{x,y}\mathcal R_0(c),\quad
-d=\frac12\nabla_{x,y}P_{tt}(c),\quad
-M=H_{tg}(c,0).
+128d^2t^3(Y+d^2)=(x+1)^2(Y+e^2),
+\qquad
+\frac{8td^4}{L^2}
+ =\frac1{16t^2}\frac{d^2(Y+e^2)}{e^2(Y+d^2)}<1.
 \tag{56.9}
 $$
-这些量都是实际 $F,G,L_1,L_2$ 的系数。特别地，沿零阶根图
+
+右端两个正因子均严格小于一：第一项由 $t>1/4$，第二项由
+$e^2(Y+d^2)-d^2(Y+e^2)=(e^2-d^2)Y>0$。
+于是 $A_0<0$。另一方面，$N=N_Y=0$ 对关于 $Y$ 的二次式给
+$A_0=A_2Y^2$，因此 $A_2<0$，并得 (56.7) 的前两项；此处未除以 $A_2$。
+
+为判定价格导数，(46.9) 或 (56.4) 在 $t=1/4$ 处给
+
 $$
-\tau_0=\overline{\frac{G(t_0)}{\sqrt2F(t_0)}},\qquad
-\dot\tau_0=
-\overline{\frac{g_1F(t_0)-G(t_0)f_1}{\sqrt2F(t_0)^2}},
+F(1/4)=\frac{x-4}{2}-i\frac{5Y+6d^2}{2\sqrt Y},\qquad
+|f_1|^2=\frac{36d^2E}{x^2Y}.
 \tag{56.10}
 $$
-且
+
+代入 $F=F(1/4)+(q/4)f_1$ 和正虚部层的实际价格
+
 $$
-\begin{aligned}
-\dot E_1={}&\sqrt2L_1(\dot\tau_0)\overline{\tau_0}
- +\sqrt2L_1(\tau_0)\overline{\dot\tau_0}-L_2(\dot\tau_0),\\
-M={}&2\operatorname{Re}\!
- \left(\overline{g_1}E_1(\tau_0)+\overline{G(t_0)}\,\dot E_1\right).
-\end{aligned}
+\widetilde{\mathcal R}_0
+ =\frac{\sqrt Y\,|F|^2}{3(Y-1)q}
 \tag{56.11}
 $$
-Indeed $H_g(z,0)=2\operatorname{Re}(\overline{G(t)}E_1(\tau(t)))$. At
-$P=P_t=0$, the phase-chart equation and the derivative of $H(z,0)=P(z)$ give both real and
-imaginary $G$-pairings of $E_{0,t}$ equal to zero, so its $t$-derivative is precisely the
-root-normalization derivative in (56.10); the phase derivative in $g$ drops out of the real pairing
-used for $H_g$, as in the proof of (48.3). Differentiating then gives (56.11). No generic normal form
-is being substituted for the actual $F,G$.
 
-**定理 56.3（所有附近完整接触的实际最低价格）。** 在定义 56.2 的假设下，存在固定邻域
-$U$ of $c$、固定 $\varepsilon>0$，以及 $g\mapsto z_*(g)\in U$，使每个
-$|g|<\varepsilon$ 的完整接触 $z\in U$ 满足
+再对 $t$ 求导，中间交叉项消去，得到
+
 $$
-\widehat{\mathcal R}(z,g)\ge
-m_c(g):=\widehat{\mathcal R}(z_*(g),g),
+\nu=\frac{9d^2Eq^2-x^2H}
+ {3x^2\sqrt Y\,(Y-1)q^2}.
 \tag{56.12}
 $$
-且等号当且仅当 $z=z_*(g)$。因此 $m_c(g)$ 是一个在同一固定邻域内达到的唯一局部最小值，
-结论同时量化了 $x,y,t$ 的移动。
 
-若 $L\ne0$，令
+分母严格为正。以下分两段证明分子严格为负。
+
+先取 $1/5\le x<1$。写
+
 $$
-s=\operatorname{cbrt}\!\left(-\frac{Lg}{a}\right),\qquad
-w=b-\frac{\nu}{3a}d,\qquad
-U=\frac{3a}{\nu}B^{-1}w,
+N\left(x,Y,\frac{Q+1}{4}\right)
+ =18d^2E Q^3+c_2Q^2+c_1Q+c_0^{\sharp}.
 \tag{56.13}
 $$
-并令
+
+在三重根 $Q=q$ 处比较一次项，得 $c_1=54d^2Eq^2$。
+为了直接核对该系数，置
+
 $$
-T=\frac{M}{3L}-\frac{U^{\mathsf T}BU}{6a}
-       -\frac{d^{\mathsf T}U}{3a}.
-\tag{56.14}
+U=5Y+6d^2,\qquad V=Y-xd,\qquad m=x^2-8x+3.
 $$
-则
+
+由 (56.3)，在 $t=(Q+1)/4$ 时四个平方中的因子分别为
+
 $$
 \begin{aligned}
-(x_*(g)-x_0,y_*(g)-y_0)&=s^2U+O(|s|^3),\\
-t_*(g)-t_0&=s+s^2T+O(|s|^3),\\
-m_c(g)&=\mathcal R_0(c)+\nu s+C\,s^2+O(|s|^3),
+A_FY+B_F&=xU-3dVQ,& R_F&=x(x-4)-3dQ,\\
+A_GY+B_G&=x(8Y-6L)+[(5x-3)Y-3xL]Q,&
+R_G&=x(x-11)+mQ.
 \end{aligned}
+$$
+
+因而
+
+$$
+\begin{aligned}
+c_1={}&2x^2H-12xd[UV+Y(x-4)]\\
+ &-2x(8Y-6L)[(5x-3)Y-3xL]-8xY(x-11)m\\
+={}&2x\bigl[3(5x-2)Y^2
+ +(69x^3-142x^2-90x+84)Y
+ +18x(4d^4-L^2)\bigr].
+\end{aligned}
+\tag{56.14}
+$$
+
+再以
+
+$$
+\begin{aligned}
+J(x)&=42-159x+121x^2-57x^3,\\
+S&=-3(10x+1)Y^2+J(x)Y-9x(2d^4+L^2)
+\end{aligned}
+$$
+
+整理 (56.14)，即有 $c_1-6x^2H=4xS$。结合
+$c_1=54d^2Eq^2$ 与 (56.12)，得到
+
+$$
+\nu=\frac{2S}{9x\sqrt Y\,(Y-1)q^2}.
 \tag{56.15}
 $$
-其中
+
+这里
+
 $$
-C=\frac{\mathcal R_{0,tt}(c)}2+\frac{\nu M}{3L}
-       +\frac{3a}{2\nu}\,w^{\mathsf T}B^{-1}w.
+J'(x)=-38-121(x-1)^2-50x^2<0,\qquad
+J(1/5)=1823/125<15.
+$$
+
+又 $3(10x+1)\ge9$、$L=2+xd>2$，从而
+$9x(2d^4+L^2)>36/5$。由于 $Y>1$，
+
+$$
+S<-9Y^2+15Y-36/5
+ =-9(Y-1)^2-3(Y-1)-6/5<0.
 \tag{56.16}
 $$
-由 (56.8)，最后一项非正；它严格为负当且仅当 $w\ne0$.
 
-若 $L=0$，定义 $p_*(g)$ 为下述一维约化零点中从价格区间左端开始遇到的第一个边界零点。
-则可取同一个 $U,\varepsilon$ 使
+这证明了第一段的 $\nu<0$。
+
+再取 $0<x<1/5$。在移位坐标中
+
 $$
-|p_*(g)|\le C_0|g|^{1/2},\qquad
-|(x_*(g)-x_0,y_*(g)-y_0)|\le C_1|g|.
+A_F=5x-3dq,\qquad A_G=8x+(5x-3)q,\qquad
+A_2=2(q+1)A_F^2-A_G^2<0.
+$$
+
+所以 $A_G^2>A_F^2$。而 $A_G-A_F=x(2q+3)>0$，故
+$A_G+A_F=13x-(6-8x)q>0$，给出
+
+$$
+0<q<\frac{13x}{6-8x}<3x.
 \tag{56.17}
 $$
-(56.17) 不断言约化方程的其它零点不存在或唯一。
 
-**证明。** 先用 $\nu\ne0$ 对实际价格方程应用有限维隐函数定理，以
-$(q,p,g)$ 为变量得到唯一的 $t=T(q,p,g)$，其中
+最后一个不等式使用 $x<1/5<5/24$，且分母为正。
+为利用 $N_t=N_{Yt}=0$，只在多项式意义下定义
+$\mathcal T(t)=N(x,-x^2,t)$。由 (56.5)，有
+
 $$
-T(q,p,g)-t_0
-=\frac p\nu-\frac{b^{\mathsf T}q}{\nu}
--\frac{\mathcal R_{0,tt}(c)}{2\nu^3}p^2
-+O(\|q\|^2+|p|\,\|q\|+|p|^3+|g|).
+\begin{gathered}
+\mathcal T(t)=32x^2t(4dC_0t-V_0),\\
+C_0=11x^2-48x+9,\qquad V_0=7x^3-26x^2-3x+18,\\
+\frac{\mathcal T_t}{32x^2}
+ =-x(29x^2-144x+111)+2dC_0q.
+\end{gathered}
 \tag{56.18}
 $$
-这里使用的是 Lebl, *Basic Analysis I & II*, §8.5.1, Theorem 8.5.6
-所述的“偏导矩阵可逆即有唯一局部图”这一有限维结论；该文献只提供隐函数工具，
-不提供本模型的系数或接触结论。置
+
+例如令 $s=4t$，代入 $Y=-x^2$ 后，$F$ 对应的平方差是
+$4x^2(-x+3ds)(x^2-8x+3)$，$G$ 对应的平方差是
+$8x^2s(x-1)(x-3)[8xs+6(x+1)]$；将前者乘以 $2s$ 再减去后者，
+即为 (56.18)。这没有引入 $Y=-x^2$ 的实际接触。
+在本区间，
+
 $$
-\Phi(q,p,g)=H(q,T(q,p,g),g).
+dC_0=9-x(57-59x+11x^2)<9,\qquad
+29x^2-144x+111>411/5.
 $$
-由 (56.6)、(56.18) 及 $P_{xt}=P_{yt}=0$，有
+
+结合 (56.17)，得
+
 $$
-\Phi_q(0,0,0)=0,\quad
-\Phi_{qq}(0,0,0)=B,\quad
-\Phi_{qp}(0,0,0)=0,\quad
-\Phi_{pp}(0,0,0)=0,\quad
-\Phi_{ppp}(0,0,0)=\frac{6a}{\nu^3},
+\frac{\mathcal T_t}{32x^2}<-\frac{411}{5}x+54x<0.
 \tag{56.19}
 $$
-并且
+
+固定当前 $x,t$，$N_t$ 是其第二个自变量的至多二次多项式。
+$N_t=N_{Yt}=0$ 因而给关于哑变量 $Z$ 的恒等式
+
 $$
-\Phi(q,p,g)=\frac12q^{\mathsf T}Bq+\frac a{\nu^3}p^3+Lg+
-O(\|q\|^3+\|q\|^2|p|+\|q\|p^2+|p|^4+|g|(\|q\|+|p|)+g^2).
+N_t(x,Z,t)=A_{2,t}(Z-Y)^2.
 \tag{56.20}
 $$
 
-因为 $B$ 可逆，继续对 $\Phi_q=0$ 应用同一隐函数定理，得到唯一光滑
-$q=Q(p,g)$，且 $Q(0,0)=0$、$Q_p(0,0)=0$。令
-$\Psi(p,g)=\Phi(Q(p,g),p,g)$。对 $q-Q$ 作带参数的二阶积分展开，得到精确恒等式
+在 $Z=-x^2$ 求值，得到
+$\mathcal T_t=A_{2,t}(Y+x^2)^2$，所以 $A_{2,t}<0$，亦即 $A_{2,q}<0$。
+由实际 $A_F,A_G$ 展开，
+
 $$
-\Phi(q,p,g)=\Psi(p,g)
-+\frac12(q-Q(p,g))^{\mathsf T}\mathcal B(q,p,g)(q-Q(p,g)),
+\begin{aligned}
+A_{2,q}
+ &=54d^2q^2+2(53x^2-66x+9)q+6x(5x-2),\\
+A_{2,q}\left(\frac{5x}{3d}\right)
+ &=\frac{2x}{3d}(27-42x-5x^2)>0.
+\end{aligned}
 \tag{56.21}
 $$
-其中在缩小 $U$ 后 $\sigma\mathcal B(q,p,g)\succ0$ 一致成立。故每个完整接触必满足
+
+第一行作为 $q$ 的二次式首项正、常数项负，恰有一个正零点。
+故 $q>0$、$A_{2,q}(q)<0$ 及第二行的严格正号一起给出
+
 $$
-\sigma\Psi(p,g)\le0,
+q<\frac{5x}{3d}.
 \tag{56.22}
 $$
-而当价格达到集合 $\{p:\sigma\Psi(p,g)\le0\}$ 的左端点时，(56.21) 强制
-$q=Q(p,g)$。这给出 (56.12) 及等号的唯一性；它是对所有附近接触的下界，不是选定一条分支的上界。
 
-当 $L\ne0$ 时，(56.20) 的实缩放 $p=|g|^{1/3}v$ 在有界 $v$ 上趋于
-$(a/\nu^3)v^3+L\,\operatorname{sgn}(g)$。该极限的唯一零点是简单零点，
-所以充分小 $g$ 的左端点零点唯一，并满足
-$p_*=\nu s+O(s^2)$。在端点同时有 $\Phi_q=0$ 和 $\Phi=0$。
-写
+最后，直接相减有
+
 $$
-q=s^2U+O(|s|^3),\qquad t-t_0=s+s^2T+O(|s|^3),\qquad
-g=-\frac aL s^3.
-$$
-将实际 Taylor 展开逐阶代入，$s^2$ 阶的横向方程为
-$$
-BU+d-\frac{3a}{\nu}b=0,
+H-25E
+ =Y(51-78x+11x^2)+d^2(36d^2-25x^2)>0,
 \tag{56.23}
 $$
-这正给出 (56.13)。$s^4$ 阶的标量方程为
+
+因为 $51-78x+11x^2>51-78/5>0$，且
+$36d^2-25x^2=(6-11x)(6-x)>0$。
+(56.22)–(56.23) 给
+$9d^2Eq^2<25x^2E<x^2H$。由 (56.12) 得第二段的 $\nu<0$，
+从而完成 (56.7)。
+
+现在再加 $N_x=N_{xt}=0$，即考察七方程
+
 $$
-\frac12U^{\mathsf T}BU+3aT-\frac{aM}{L}+d^{\mathsf T}U=0,
+N=N_x=N_Y=N_t=N_{tt}=N_{xt}=N_{Yt}=0.
 \tag{56.24}
 $$
-给出 (56.14)。最后由价格恒等式
+
+设 $\phi(x,Y,t)=(x,\sqrt Y,t)$，
+$D\phi=\operatorname{diag}(1,1/(2\sqrt Y),1)$。
+$N=16x^2Y(P\circ\phi)$ 且 $P=\nabla P=0$，故完整 Hessian 满足
+
 $$
-p=\nu(t-t_0)+b^{\mathsf T}q+\frac12\mathcal R_{0,tt}(c)(t-t_0)^2+O(|s|^3)
+D^2_{x,Y,t}N
+ =16x^2Y(D\phi)^{\mathsf T}\mathsf H(D\phi).
 \tag{56.25}
 $$
-得到 (56.15)–(56.16)。特别地，
-$$
-b^{\mathsf T}U-\frac{\nu}{3a}d^{\mathsf T}U
- =w^{\mathsf T}U=\frac{3a}{\nu}w^{\mathsf T}B^{-1}w,
-$$
-而 (56.8) 说明该修正项的符号。
 
-当 $L=0$ 时，(56.20) 给出
+因子为正，坐标变换可逆，故符号和秩均保留。
+(56.24) 使左侧的 $t$ 行、列为零，而 $N_{YY}<0$。
+若该 Hessian 半定，它只能非零半负定，秩为一或二。
+原 $\mathsf H$ 亦然，故 $\sigma=-1$、$\nu<0$、$\sigma\nu>0$。
+没有使用秩二假设，也没有遗留零 Hessian 分支。∎
+
+**推论 56.3（原完整低值极小集及小参数聚点均无三重根）。**
+在零阶 $b_0$ 低值层，任一真三重根完整接触都不是局部极小点，
+并属于定理 55.1 的 $\mathcal E_0$。
+因此对每个这样的接触 $c$，有同一固定来源、同一取向的竞争接触
+$d_c(h)$、邻域 $U_c$ 及 $\delta_c,h_c>0$，使
+
 $$
-\Psi(p,g)=\frac a{\nu^3}p^3+
-O(p^4+|pg|+g^2).
+\mathscr R(q)\ge\mathscr R(d_c(h))+\delta_c
+\quad (|h|<h_c,\ q\in U_c\text{ 为完整不利接触}).
 \tag{56.26}
 $$
-取充分大的固定 $K$，在 $p=K|g|^{1/2}$ 处首项的符号使
-$\sigma\Psi<0$，而在 $p=-K|g|^{1/2}$ 处使 $\sigma\Psi>0$；
-这是因为 $\sigma a/\nu^3<0$，且 $K^3|g|^{3/2}$ 支配
-$K|g|^{3/2}+|g|^2$。介值定理给出左端点零点。
-反之，若零点满足 $|p|>K|g|^{1/2}$，(56.26) 的首项严格支配余项，
-与零点等式矛盾，故第一式成立。由 $Q(0,0)=Q_p(0,0)=0$ 的光滑性，
-$$
-Q(p,g)=O(p^2+|g|),
-$$
-从而得到第二式。约化函数可能还有其它零点；(56.21) 仍保证第一零点给出所有完整接触的最低价格。∎
 
-## 57. 在完整零阶全局极小集假设下的两来源消费
+任意紧的三重接触子集可取共同邻域、共同正差及共同参数半径；
+两个来源、两个取向也可同时取共同值。
+整个零阶全局极小集中的点，以及推论 55.2 中任意真实小参数全局极小列的聚点，
+均只剩简单根和恰二重根。
+剩余恰二重根必满足
 
-**假设 57.1（整个零阶极小集的显式范围）。** 对两个固定来源和两个取向，令
-$\mathcal M_0$ 表示**全部**零阶完整不利全局极小接触的整体相位商，而不是选出的子集。
-假设
 $$
-\mathcal M_0=\Gamma\sqcup\Sigma
-\tag{57.1}
+P=P_x=P_y=P_t=0,\qquad P_{tt}\ne0,\qquad
+\nu\ne0,\qquad \mathsf H\ne0\text{ 半定},\qquad
+\nu\mathsf H\preceq0,\qquad P_{tt}\nu<0.
+\tag{56.27}
 $$
-是一个紧集的互不相交分解，其中：
 
-1. $\Gamma$ 是紧的正则部分，所有点满足 $\nabla P\ne0$；
-2. $\Sigma$ 是有限集，所有点都是定义 56.2 的秩二三重点，且 $L_i\ne0$；
-3. 除 $\Gamma\cup\Sigma$ 外没有零阶全局极小接触；不把秩一 Hessian、零 Hessian 三重点或其它奇异点放入本假设；
-4. 每个 $\sigma_i\in\Sigma$ 使用其实际固定来源 $a_r$、全部图条件、过滤和有限 Hermitian 重构，且其价格邻域由定理 56.3 的严格局部最低性控制。
+全局极小集中的简单根仍满足定理 53.2 的 $P_t>0$；
+不把小参数聚点认作零阶全局极小点，也不将 (53.3) 根图扩张到这些聚点。
 
-这里的有限性、正则性和 $L_i\ne0$ 都是消费者的完整假设，不是本节从现有模型推出的事实。
+**证明。** 定理 52.2 将此低值层置于 (56.1)。若三重根是完整正则接触，
+定理 47.2 给严格局部下降，且它属于定理 55.1 的第一类。
+若是真奇点而 $\mathsf H$ 不定，则定理 51.1 给严格局部下降，
+属于第二类。余下仅有半定 Hessian，包括待排除的零 Hessian。
+三重性给 $P_{tt}=0$，半定性强制 $\mathsf H e_t=0$，
+从而 $P_{xt}=P_{yt}=0$。结合 $P=\nabla P=0$ 及正因子变换，
+正好得到 (56.24)。定理 56.2 于是给
+$\mathsf H\ne0$、$\sigma=-1$、$\nu<0$，即 $\sigma\nu>0$。
+定理 54.1 的实际尖点下降适用，且其更便宜接触为 $P_t>0$ 的简单根；
+该三重接触属于定理 55.1 的第四类。零 Hessian 已由 (56.25)、$N_{YY}<0$ 排除。
+这覆盖全部三重根，没有从七方程推出其自身无解。
 
-**定理 57.2（条件阈值连续、先定位再取全局包络）。** 在假设 57.1 下，令
-$K_+(h)$、$K_-(h)$ 是原定义中两个固定来源的完整阈值。则
+上述下降均在原完整接触域中使用。具体地，沿零阶下降曲线的点
+$(x,Y,t)$ 取 $y=\sqrt Y>1$、$\ell=x+i\sqrt Y$，然后由 (46.8) 恢复
+
 $$
-\lim_{h\downarrow0}K_+(h)=\lim_{h\downarrow0}K_-(h)=K_0.
-\tag{57.2}
+\tau=\overline{\frac{G(t)}{\sqrt2F(t)}},\qquad
+n=\sqrt{1+t},\qquad
+u_r=\frac{(1,r\tau)^{\mathsf T}}n,\qquad
+\eta=\frac{\sqrt2F(t)}n.
+\tag{56.28}
 $$
-更强地，对任意整体相位商中的开邻域 $N\supset\mathcal M_0$，存在 $h_N>0$，使
-$0<h<h_N$ 时两个来源、两个取向的每个全局极小接触都落在 $N$ 内。
 
-**证明。** 对 $\Gamma$ 的每个点，$\nabla P\ne0$ 允许用一个非零偏导和定理 48.1 的相位图作实际接触的局部持续，价格变化为 $O(|g|)$。对有限的 $\Sigma$，定理 56.3 给出双侧
-$O(|g|^{1/3})$ 的实际接触上界。有限子覆盖于是给
-$\limsup_{g\to0}K_+(g)\le K_0$；反射给出另一个来源的同样上界。
-反向不等式来自前卷定理 41.4 的联合紧性：任取实现或逼近下确界的接触序列，
-取收敛子列并使用 $\mathcal R_g\to\mathcal R_0$，极限是 $\mathcal M_0$，
-故 $\liminf\ge K_0$。这先证明 (57.2)。
+这里 $u_r$ 是演员，$\nu$ 始终是价格导数。
+前卷定理 43.3 保证 $F,G\ne0$、$|\tau|^2=t$。
+在前卷定理 43.2 的重构中，零阶可见列可写为
 
-现在固定 $N$。共同低值紧集的闭补集 $C_N$ 与 $\mathcal M_0$ 不交，
-所以连续的 $\mathcal R_0$ 在 $C_N$ 上有严格间隙
-$\eta_N=\min_{C_N}\mathcal R_0-K_0>0$。联合紧性和 (57.2) 给出小 $h$ 时的统一
-$\mathcal R_{rh}$ 偏差小于 $\eta_N/3$，而 $K_r(h)<K_0+\eta_N/3$。
-故全局极小接触不能在 $C_N$，即全部落入 $N$。这一步在任何局部展开被用于全局最小值之前完成。∎
-
-**推论 57.3（非零耦合奇异项的条件二阶包络）。** 在假设 57.1 下，对
-$\sigma_i\in\Sigma$ 置
-$$
-\alpha_i=\nu_i\operatorname{cbrt}\!\left(-\frac{L_i}{a_i}\right),\qquad
-\beta_i=C_i\operatorname{cbrt}\!\left(-\frac{L_i}{a_i}\right)^2.
-\tag{57.3}
-$$
-若 $\Gamma\ne\varnothing$，另加入一个标签 ${\rm reg}$，并规定
-$\alpha_{\rm reg}=\beta_{\rm reg}=0$；它只记录正则部分的 $O(h)$ 分支。
-令
 $$
 \begin{gathered}
-A_{\min}=\min_i\alpha_i,\qquad A_{\max}=\max_i\alpha_i,\\
-B_{\min}=\min\{\beta_i:\alpha_i=A_{\min}\},\qquad
-B_{\max}=\min\{\beta_i:\alpha_i=A_{\max}\}.
+\mathbf p=\frac1n\left(\alpha_0+i\kappa_0,
+          \frac{r(\chi_0-i\kappa_0)}{\overline\tau}\right)^{\mathsf T},\\
+\mathbf q=(\ell I_2+2C^{-1})\mathbf p+iB_0Cu_r,\qquad
+ a_{\rm act}=i(I_2-\ell C^{-1})\mathbf p,\\
+u_r^*\mathbf p\in\mathbb R,\qquad
+(Cu_r)^*\mathbf q\in\mathbb R,\qquad
+u_r^*\mathbf q=\mathbf p^*Cu_r,\\
+a_{\rm act}-H_0u_r+\ell C^2u_r/2=\eta(1/\sqrt2,r)^{\mathsf T}.
 \end{gathered}
-\tag{57.4}
+\tag{56.29}
 $$
-则
-$$
-K_+(h)-K_-(h)
-=(A_{\min}+A_{\max})h^{1/3}
- +(B_{\min}-B_{\max})h^{2/3}+O(h).
-\tag{57.5}
-$$
-若第一系数为零，第二系数才是下一阶比较量；若两者都为零，(57.5) 不给出符号。
 
-**证明。** 定理 57.2 先把所有全局极小接触限制到 $\Gamma$ 与有限个
-$\Sigma$ 的局部邻域。每个 $\sigma_i$ 由 (56.15) 给出
-$$
-K_0+\alpha_i h^{1/3}+\beta_i h^{2/3}+O(h)
-$$
-的来源 $+$ 局部候选；源反射把同一点在来源 $-$ 的参数变为 $-h$，
-因此系数变为 $-\alpha_i,\beta_i$。正则部分的统一局部持续只产生
-$K_0+O(h)$，正是 (57.4) 的零系数标签。有限个奇异候选和紧正则余部取最小，
-先按 $h^{1/3}$ 再按 $h^{2/3}$ 取系数，得到
-$$
-K_+(h)=K_0+A_{\min}h^{1/3}+B_{\min}h^{2/3}+O(h),
-$$
-$$
-K_-(h)=K_0-A_{\max}h^{1/3}+B_{\max}h^{2/3}+O(h),
-$$
-从而 (57.5)。证明只在假设 57.1 的整个极小集上进行，没有把单支接触上界冒充
-另一来源的全域下界。
+两项实性加一个复等式正是四个实图条件，最后一行保留两个实际来源坐标。
+以 $j=\pm1$ 标记两笔原预算，它们的接触参数是
+$\epsilon=-1$、$\alpha_j=\sqrt Y+j>0$、$\beta_j=jx$。
+而 $\det[u_r,Cu_r]=r\tau/(1+t)\ne0$，所以
 
-**约定 57.4（回到原有限 PB 比较）。** (57.5) 只是完整接触阈值的条件展开。若某个附加条件
-使其给出严格阈值次序，转回原有限 PB 时仍须对同一个正 $h$、同一个正 $k$，
-以及同一个充分大但有限的 $\lambda$，同时保留完整 P2、两个固定来源、两个取向、
-全部有限 Hermitian 探针 $X=X^*$，以及完整 $M_5(\mathbb C)$ 正复线性泛函，
-包括环境块和混合块。所需共同参数交至少包括
 $$
-0<h<\min(h_{\rm coer},h_{\rm pos}),\qquad
-h\le10^{-3},\qquad
-h^2\lambda^4>3k^2(\lambda^2+3/2),
-\tag{57.6}
+X=[\mathbf p,\mathbf q][u_r,Cu_r]^{-1}
+\tag{56.30}
 $$
-并与本节各局部半径取交；$\lambda$ 仍是有限值。反射关系
-$K_-(h)=K_+(-h)$ 改变参数符号，不能单独给出同一个正 $h$ 下的排序。
-本节不声称 (57.1) 在实际模型中成立，也不声称任何 $A_{\min}+A_{\max}$ 或
-$B_{\min}-B_{\max}$ 的符号证书已经存在；有限接触的达到仍不等于有限 PB 变分达到。
 
-## 58. 本批的来源、边界与核验
+在每一点有限，且由四实图条件为 Hermitian。
+这些是实际完整接触的恢复，不以自由 $t$ 直线或形式切锥代替可行曲线。
 
-**文献表态。** Lebl 的 *Basic Analysis I & II*, §8.5.1, Theorem 8.5.6 明确给出
-偏导矩阵可逆时的有限维隐函数图及其导数公式；本批在 (56.18)、(56.21) 只使用这一工具。
-Feehan, arXiv:1803.11319v6, Theorem 4 与 Remark 1.10 讨论带参数的 splitting/Morse 引理，
-其适用范围比本批需要的二维正定横向 Taylor 完成更宽；本批没有把该文献的更强结论当作
-模型结论。Rockafellar, *Lagrange Multipliers and Optimality* (1993), pp. 4–5 的线性独立
-约束说明局部坐标化后局部极小点满足乘子驻定条件；本批以 (56.21) 的直接横向完成取代
-抽象乘子步骤。上述文献只作成熟工具的适用性说明，实际 $F,G,H,\widehat{\mathcal R}$、
-系数和来源重构均由本卷及前卷给出。
+再直接应用定理 55.1：在更便宜的正则竞争点持续到 $g=rh$，
+用前卷定理 43.2 的 $\alpha_0+g\alpha_1,\chi_0+g\chi_1,\kappa_0+g\kappa_1$
+及 $E_g=0$ 恢复全部数据。源幅度此时为
+$\sqrt2(F+gL_1)/\sqrt{1+t}$，不利过滤为
+$y[3(4t-1)-g\operatorname{Re}\tau]>0$。
+小参数下开条件及两笔预算接触参数的正性保持，有限 Hermitian 重构保持，
+故 (56.26) 是同一来源完整域中的真实竞争值不等式。
+这里的持续点来自更便宜的正则点，不假设被排除的三重接触本身持续。
+隐函数工具沿定理 54.1、55.1 使用通常 $C^1$ 形式，参见
+Jiří Lebl，*Basic Analysis I & II*，
+[Theorem 8.5.6](https://www.jirka.org/ra/html/sec_svinvfuncthm.html#thm_implicit)；
+非零因变量导数分别是 (54.12) 及正则竞争点的非零偏导。
+一般隐函数定理不是这里新增的数学命题。
 
-**产地。** (56.12) 的全接触下界、(56.13)–(56.16) 的实际横向修正、(56.17) 的
-$L=0$ 控制，以及 (57.2)–(57.5) 的条件消费均为 repo-derived。它们依赖
-III48 的相位消元、III52–55 的低值定位与竞争排除、前卷 43.2 的实际来源恢复，
-没有新增任意 rank-one 或零 Hessian 的结论。
+另一取向由前卷 (39.32) 的同源共轭双射运输，保持相对于取向的 $x,y$ 和来源 $r$。
+两来源各自取 $g=rh$，没有用来源反射把正 $h$ 换成负 $h$ 来比较。
+有限多个来源和取向取参数半径及正差的最小值，紧子集再用定理 55.1 的有限覆盖结论。
 
-**本批不主张的。** 本批没有证明实际模型存在秩二三重极小点，没有证明 $L$、$w$、
-$C$ 或 (57.5) 的任一符号非零；没有把假设 57.1 当作已满足，也没有覆盖秩一 Hessian、
-零 Hessian 三重根或其它未分类奇异点。没有由反射关系推出同正 $h$ 的阈值排序，
-没有把完整接触的局部达到说成有限 PB 变分达到、物理取得或阈值等号结论。正文为数学结果
-与边界陈述，不承载 Lean、数值枚举、实验或账本状态。
+最后，零阶全局极小集由定理 54.1 已只剩简单根和半定真奇重根；
+推论 55.2 对小参数聚点给同样的剩余分类并保留零 Hessian 三重根。
+本推论排除了两者中的全部三重根。
+其余重根在真三次域中必恰为二重根，故 $P_{tt}\ne0$，
+并由定理 54.1、推论 55.2 得到 (56.27)。∎
 
+**约定 56.4（符号排除的范围与完整比较）。** 定理 56.2 的对象是实际
+$F,G,P$ 的清分母式；它给 (56.6) 上的符号关系，不断言 (56.24) 的七方程相互矛盾。
+推论 56.3 从原低值极小和聚点候选中删去三重根；
+恰二重真奇点 (56.27) 的存在性及其进一步排除仍未确定。
+整个零阶极小集的正则性、完整阈值在零处的连续性，以及
+同一正 $h$ 下 $K_+(h),K_-(h)$ 的相等或严格排序，均不由本节决定。
+自由价格斜率 $\nu$ 不代替完整受约束来源响应，
+也不把单支上界当作另一来源的全局下界。
+
+原问题继续取同一正 $h,k$、$\rho=k/\lambda^2$ 及同一个充分大有限 $\lambda$，
+满足 (55.4) 的共同完整 P2 参数交，并与实际调用的局部半径取交。
+全部有限 Hermitian 探针、完整 $M_5(\mathbb C)$ 的正复线性泛函
+（含环境和混合块）、同一实际输入上的两笔原预算、两个实际来源和两个取向均保持。
+只有完整阈值分别受控后，才可在其间选同一个 $k$ 并使用前卷定理 41.5 的严格有限桥梁；
+本节不作这种阈值排序，也不决定阈值等号的有限阶段符号、有限 PB 变分达到或物理取得。
+
+本节实际系数的符号证书及其对完整候选集的排除为 `repo-derived`；
+相位消元、三重持续、固定纤维展开及下降与邻域竞争结论分别复用
+§§48、53–55，不作为新增命题重复归属。
+一般多项式系数比较、半定二次型、坐标变换的 Hessian 合同及隐函数定理仅为中间工具，
+不作全球原创性主张。
 
 ## 追加锚（本行以下为增补区）
