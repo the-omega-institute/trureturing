@@ -210,7 +210,7 @@ private theorem candidate_roster {η τ : ℝ} (hη : 0 < η)
       dsimp [L, referencePrice]
       rw [log_pow]
       simp only [mul_inv_rev, mul_pow, inv_pow]
-      have htb_log : 0 < log (t * b) := log_pos (mul_pos ht0 hb)
+      have htb_log : 0 < log (t * b) := by simpa [mul_comm] using hblog
       field_simp [ht0.ne', ha.ne', hb.ne', (log_pos ht).ne', hJ0.ne', hblog.ne', htb_log.ne']
       <;> ring
     have hupper : (a * t)⁻¹ ^ J =
