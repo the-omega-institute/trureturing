@@ -86,8 +86,7 @@ The first sentence asks for a broader description of pairs with isomorphic
 commuting graphs and remains outside this conclusion. No minimal-order,
 uniqueness, full-centre classification or classification of isoclinism
 classes is asserted. Other results of the article are not changed.
-Independent source-fidelity, judgement-form and final reviews, canonical
-freezing and repository delivery remain separate requirements.
+Final independent review, ordinary required checks and merge remain pending.
 
 ## ASSUMED-UNVERIFIED
 
