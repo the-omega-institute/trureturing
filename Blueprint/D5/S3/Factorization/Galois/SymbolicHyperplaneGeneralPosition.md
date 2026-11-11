@@ -38,10 +38,45 @@ $$\forall F \in Type*,\; \forall I \in Type*,\; \forall B \in Type*,\; \forall J
 
 Flatten the dependent coordinate blocks and take V(sigma) to be the F-span of their block-supported base rows. The nonzero distinguished row makes V(sigma) nonzero. Scalar extension commutes with these spans. The preceding general-position theorem applies to this constant arrangement, and the linear equivalence between flat and block coordinates transports its complete predicate. The distinguished symbolic coefficient is nonzero by the same coordinate-derivation argument. Feeding these two proved facts into ActualWindowCommonKernel.block_common_rows_partition_rank gives an attaining partition and every-partition upper bound. This is a live use of exact symbolic general position in the common-constraint application, with no GP antecedent in the displayed statement.
 
-For the actual embedding application of R5, take F here to be the normal-closure field K_0 of the excerpt and b(i,sigma,j)=sigma(x(i,j)), before adjoining the common parameter tuple. This substitution produces the actual rows of (31.6) and the partition formula in terms of their scalar-extended block-span dimensions. The theorem does not identify those dimensions with degrees of intermediate fields, prove distinctness or completeness of the embedding family, establish independence of the h-1 original common rows, identify the rank of the original-F polynomial map, prove Galois descent or uniqueness of a fewest-block optimum, or return an original-F simultaneous attaining tuple. Those remain separate obligations of the source. The associated atom includes the row-basis assertion, so this result alone does not close it. Four-slot Reg registration remains unfinished under https://github.com/the-omega-institute/trureturing/issues/29247; no declared_validated status is asserted.
+For the actual embedding application of R5, take F here to be the normal-closure field K_0 of the excerpt and b(i,sigma,j)=sigma(x(i,j)), before adjoining the common parameter tuple. This substitution produces the actual rows of (31.6) and the partition formula in terms of their scalar-extended block-span dimensions. The theorem does not identify those dimensions with degrees of intermediate fields, prove distinctness or completeness of the embedding family, establish independence of the h-1 original common rows, identify the rank of the original-F polynomial map, prove Galois descent or uniqueness of a fewest-block optimum, or return an original-F simultaneous attaining tuple. Those remain separate obligations of the source. The following theorem supplies the missing row-basis assertion. Four-slot Reg registration remains unfinished under https://github.com/the-omega-institute/trureturing/issues/29247; no declared_validated status is asserted.
+
+
+**Theorem 1.3 (The displayed rows are the exact common-cut basis and attain the partition rank).**
+
+For every finite block type $B$, finite coordinate types $J(i)$, characteristic-zero field $F$, base array $b(i,\sigma,j)$, distinguished $k\in B$, and finite $s\subseteq I$, assume
+$b(i,\sigma)\ne0$ for every $i\in B$ and $\sigma\in s$. Put
+$K=\operatorname{Frac}(F[T(a):a\in\sum_iJ(i)])$ and use the same independent tuple $T$ in every row. Then there is a partition $P$ of $s$ such that, for each $\sigma\in s$, the family
+
+$$
+\left\{
+U_{k,\sigma}\,\widetilde b_{i,\sigma}-U_{i,\sigma}\,\widetilde b_{k,\sigma}: i\in B,\ i\ne k
+\right\}
+$$
+
+is linearly independent and spans exactly
+
+$$
+\left\langle\widetilde b_{i,\sigma}:i\in B\right\rangle_K
+\cap\ker\!\left(\sum_aT(a)(-)\right).
+$$
+Moreover the total span of all displayed rows satisfies
+
+$$
+\operatorname{rank}=\min_{Q\in\operatorname{Finpartition}(s)}
+\sum_{A\in Q}\left(\sum_i q_i(A)-1\right),
+$$
+
+with equality at $P$. The distinguished row is zero, so the basis contains exactly $|B|-1$ rows. No general-position antecedent, quotient basis, Galois descent, or original-field specialization is assumed.
+
+*Proof.* Machine-checked in Lean as `D5/S3/Factorization/Galois/SymbolicHyperplaneGeneralPosition.symbolic_block_common_rows_basis_partition_rank` (`✓ std3`). ∎
+
+*Commentary.*
+
+The symbolic normal gives every $U_{i,\sigma}\ne0$ from the nonzero constant row and the independent coordinate variables. In a linear relation among the displayed rows, inspection of the $i$th original block isolates the coefficient of the $i$th row, proving independence. The existing common-row span identity removes the zero distinguished row and identifies the span with the one common kernel cut. The preceding no-GP partition theorem supplies the same attaining partition and the universal partition bound. For normalized embedding bases with first entry one, the nonzero-row premise is immediate. This theorem closes the exact basis clause of (31.6) while leaving the later intermediate-field, descent, and original-$F$ specialization steps outside its statement. Four-slot Reg registration remains unfinished under https://github.com/the-omega-institute/trureturing/issues/29247; no declared_validated status is asserted.
 
 ## References
 
+- Truth anchor: `D5/S3/Factorization/Galois/SymbolicHyperplaneGeneralPosition.symbolic_block_common_rows_basis_partition_rank`
 - Truth anchor: `D5/S3/Factorization/Galois/SymbolicHyperplaneGeneralPosition.symbolic_block_common_rows_partition_rank`
 - Truth anchor: `D5/S3/Factorization/Galois/SymbolicHyperplaneGeneralPosition.symbolic_general_position`
 - Dependency: [D5/S3/Factorization/Galois/ActualWindowCommonKernel](ActualWindowCommonKernel.md)

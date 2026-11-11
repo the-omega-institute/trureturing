@@ -328,9 +328,164 @@ theorem symbolic_block_common_rows_partition_rank [CharZero F]
   change (symbolicNormal.comp e.toLinearMap) (blockRows (liftRows b) σ k) ≠ 0 at hn
   rwa [hnormal] at hn
 
+private theorem block_common_rows_linearIndependent
+    {K : Type*} {β ι : Type*} [Field K]
+    {κ : β → Type*} [Fintype β] [∀ i, Fintype (κ i)]
+    (b : ∀ i, ι → κ i → K)
+    (φ : ((i : β) → κ i → K) →ₗ[K] K) (k : β) (σ : ι)
+    (hu : φ (blockRows b σ k) ≠ 0)
+    (hb : ∀ i, b i σ ≠ 0) :
+    LinearIndependent K (fun i : {i : β // i ≠ k} =>
+      φ (blockRows b σ k) • blockRows b σ (i : β) -
+        φ (blockRows b σ (i : β)) • blockRows b σ k) := by
+  classical
+  rw [Fintype.linearIndependent_iff]
+  intro c hc i
+  obtain ⟨j, hj⟩ := Function.ne_iff.mp (hb i)
+  have hv := congrFun hc i.1
+  have hsum := congrFun hv j
+  simp only [Finset.sum_apply, Pi.smul_apply, Pi.sub_apply] at hsum
+  have hzero : ∀ x : {i // i ≠ k}, x ≠ i →
+      c x • (φ (blockRows b σ k) • blockRows b σ (↑x) (↑i) j -
+        φ (blockRows b σ (↑x)) • blockRows b σ k (↑i) j) = 0 := by
+    intro x hxi
+    have hix : (i : β) ≠ (x : β) := by
+      intro heq
+      exact hxi (Subtype.ext heq.symm)
+    simp [blockRows, Pi.single_eq_of_ne hix, Pi.single_eq_of_ne i.property]
+  have hsum_single := Finset.sum_eq_single (s := Finset.univ) i
+    (fun x _ hxi => hzero x hxi) (by simp)
+  rw [hsum_single] at hsum
+  simp [blockRows, Pi.single_eq_same, Pi.single_eq_of_ne i.property,
+    smul_eq_mul] at hsum
+  rcases hsum with hci | hu0 | hj0
+  · exact hci
+  · exact False.elim (hu (by simpa [blockRows] using hu0))
+  · exact False.elim (hj (by simpa using hj0))
+
+private theorem block_common_rows_span_basis
+    {K : Type*} {β ι : Type*} [Field K]
+    {κ : β → Type*} [Fintype β] [∀ i, Fintype (κ i)]
+    (b : ∀ i, ι → κ i → K)
+    (φ : ((i : β) → κ i → K) →ₗ[K] K) (k : β) (σ : ι)
+    (hu : φ (blockRows b σ k) ≠ 0) :
+    Submodule.span K (Set.range (fun i : {i : β // i ≠ k} =>
+      φ (blockRows b σ k) • blockRows b σ (i : β) -
+        φ (blockRows b σ (i : β)) • blockRows b σ k)) =
+      Submodule.span K (Set.range (blockRows b σ)) ⊓ LinearMap.ker φ := by
+  have hall := span_common_rows_eq_cut (blockRows b σ) φ k hu
+  have hsub : Submodule.span K (Set.range (fun i : {i : β // i ≠ k} =>
+      φ (blockRows b σ k) • blockRows b σ (i : β) -
+        φ (blockRows b σ (i : β)) • blockRows b σ k)) =
+      Submodule.span K (Set.range (fun i : β =>
+      φ (blockRows b σ k) • blockRows b σ i -
+        φ (blockRows b σ i) • blockRows b σ k)) := by
+    apply le_antisymm
+    · apply Submodule.span_le.mpr
+      rintro _ ⟨i, rfl⟩
+      exact Submodule.subset_span ⟨(i : β), rfl⟩
+    · apply Submodule.span_le.mpr
+      rintro _ ⟨i, rfl⟩
+      by_cases hik : i = k
+      · subst i
+        simp
+      · exact Submodule.subset_span ⟨⟨i, hik⟩, rfl⟩
+  rw [hsub, hall]
+
+open Classical in
+/-- The full symbolic (31.6)--(31.7) assertion: for one common independent
+coefficient tuple, the displayed non-distinguished rows are a basis of each
+scalar-extended block space cut by the same hyperplane, and their total span
+has the attained minimum partition rank. -/
+theorem symbolic_block_common_rows_basis_partition_rank [CharZero F]
+    (b : ∀ i, ι → κ i → F) (k : β) (s : Finset ι)
+    (hrows : ∀ σ ∈ s, ∀ i, b i σ ≠ 0) :
+    ∃ P : Finpartition s,
+      (∀ σ ∈ s,
+        LinearIndependent (SymbolicField F (Σ i, κ i))
+          (fun i : {i // i ≠ k} =>
+            coefficientNormal (coordinate (F := F) (α := Σ i, κ i)) (blockRows (liftRows b) σ k) •
+                blockRows (liftRows b) σ (i : β) -
+              coefficientNormal (coordinate (F := F) (α := Σ i, κ i)) (blockRows (liftRows b) σ (i : β)) •
+                blockRows (liftRows b) σ k) ∧
+        Submodule.span (SymbolicField F (Σ i, κ i))
+            (Set.range (fun i : {i // i ≠ k} =>
+              coefficientNormal (coordinate (F := F) (α := Σ i, κ i)) (blockRows (liftRows b) σ k) •
+                  blockRows (liftRows b) σ (i : β) -
+                coefficientNormal (coordinate (F := F) (α := Σ i, κ i)) (blockRows (liftRows b) σ (i : β)) •
+                  blockRows (liftRows b) σ k)) =
+          Submodule.span (SymbolicField F (Σ i, κ i))
+            (Set.range (blockRows (liftRows b) σ)) ⊓
+            LinearMap.ker (coefficientNormal (coordinate (F := F) (α := Σ i, κ i)))) ∧
+      Module.finrank (SymbolicField F (Σ i, κ i))
+          (commonRowSpan (blockRows (liftRows b)) (coefficientNormal (coordinate (F := F) (α := Σ i, κ i))) k s) =
+        ∑ B ∈ P.parts,
+          ((∑ i, Module.finrank (SymbolicField F (Σ i, κ i))
+              (blockSpan (liftRows b) B i)) - 1) ∧
+      ∀ Q : Finpartition s,
+        Module.finrank (SymbolicField F (Σ i, κ i))
+            (commonRowSpan (blockRows (liftRows b)) (coefficientNormal (coordinate (F := F) (α := Σ i, κ i))) k s) ≤
+          ∑ B ∈ Q.parts,
+            ((∑ i, Module.finrank (SymbolicField F (Σ i, κ i))
+                (blockSpan (liftRows b) B i)) - 1) := by
+  classical
+  let K := SymbolicField F (Σ i, κ i)
+  let e : ((i : β) → κ i → K) ≃ₗ[K] ((a : Σ i, κ i) → K) :=
+    (LinearEquiv.piCurry K (fun _ _ => K)).symm
+  let e₀ : ((i : β) → κ i → F) ≃ₗ[F] ((a : Σ i, κ i) → F) :=
+    (LinearEquiv.piCurry F (fun _ _ => F)).symm
+  have hgen (σ : ι) (i : β) :
+      constantVector (e₀ (blockRows b σ i)) =
+        e (blockRows (liftRows b) σ i) := by
+    ext ⟨j, l⟩
+    by_cases hji : j = i
+    · subst j
+      simp [constantVector, e, e₀, blockRows, liftRows, Sigma.uncurry]
+    · simp [constantVector, e, e₀, blockRows, liftRows, Sigma.uncurry,
+        Pi.single_eq_of_ne hji]
+  have hnormal : symbolicNormal.comp e.toLinearMap =
+      coefficientNormal (coordinate (F := F) (α := Σ i, κ i)) := by
+    ext v
+    exact Finset.sum_congr rfl (fun a _ => mul_comm _ _)
+  have hUi : ∀ σ ∈ s, ∀ i,
+      coefficientNormal (coordinate (F := F) (α := Σ i, κ i)) (blockRows (liftRows b) σ i) ≠ 0 := by
+    intro σ hσ i
+    have hbase : e₀ (blockRows b σ i) ≠ 0 := by
+      intro hz
+      apply hrows σ hσ i
+      apply funext
+      intro j
+      have hzero : blockRows b σ i = 0 := e₀.injective (by simpa using hz)
+      have hj := congrFun (congrFun hzero i) j
+      simpa [blockRows] using hj
+    have hn := normal_constant_ne_zero hbase
+    rw [hgen] at hn
+    change (symbolicNormal.comp e.toLinearMap)
+        (blockRows (liftRows b) σ i) ≠ 0 at hn
+    rwa [hnormal] at hn
+  obtain ⟨P, hP, hbound⟩ := symbolic_block_common_rows_partition_rank b k s
+    (fun σ hσ => hrows σ hσ k)
+  refine ⟨P, ?_, hP, hbound⟩
+  intro σ hσ
+  have hbaseRows : ∀ i, liftRows b i σ ≠ 0 := by
+    intro i hz
+    apply hrows σ hσ i
+    apply funext
+    intro j
+    have hj := congrFun hz j
+    simpa [liftRows] using hj
+  refine ⟨?_, ?_⟩
+  · exact block_common_rows_linearIndependent (liftRows b)
+      (coefficientNormal (coordinate (F := F) (α := Σ i, κ i))) k σ
+      (hUi σ hσ k) hbaseRows
+  · exact block_common_rows_span_basis (liftRows b)
+      (coefficientNormal (coordinate (F := F) (α := Σ i, κ i))) k σ
+      (hUi σ hσ k)
+
 end Blocks
 
 #print axioms symbolic_general_position
 #print axioms symbolic_block_common_rows_partition_rank
+#print axioms symbolic_block_common_rows_basis_partition_rank
 
 end D5.S3.Factorization.Galois.SymbolicHyperplaneGeneralPosition

@@ -359,7 +359,7 @@ def commonRowSpan {β : Type*} (b : ι → β → E) (φ : E →ₗ[K] K)
 private def cutProjection (φ : E →ₗ[K] K) (v : E) : E →ₗ[K] E :=
   φ v • LinearMap.id - φ.smulRight v
 
-private theorem span_common_rows_eq_cut {β : Type*} (b : β → E)
+theorem span_common_rows_eq_cut {β : Type*} (b : β → E)
     (φ : E →ₗ[K] K) (k : β) (hk : φ (b k) ≠ 0) :
     Submodule.span K (Set.range fun i => φ (b k) • b i - φ (b i) • b k) =
       Submodule.span K (Set.range b) ⊓ LinearMap.ker φ := by
