@@ -299,7 +299,7 @@ theorem endpoint_tail_gt_inv_sixteen_mul_largest {q : ℝ} (hq : 0 < q) {N : ℕ
     _ < layerTail N p := first_layer_gt_inv_sq hp hband.2
     _ ≤ tail N := hsingle
 
-private theorem theta_sub_eq_prime_band_sum {A B : ℝ} (hAB : A ≤ B) :
+theorem theta_sub_eq_prime_band_sum {A B : ℝ} (hAB : A ≤ B) :
     Chebyshev.theta B - Chebyshev.theta A =
       ∑ p ∈ Nat.primesLE ⌊B⌋₊ \ Nat.primesLE ⌊A⌋₊, Real.log (p : ℝ) := by
   classical

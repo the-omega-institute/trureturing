@@ -1,0 +1,54 @@
+### 11.1 The fixed task and the complete-law domain
+
+Throughout this chapter the source, installed prior, complete future, configuration-risk order and COMPLETE convention are exactly those of Section 2. In particular, $K$ is sampled once before the first paid Read, $\mu(1),\mu(2)>0$, and every supported depth remains a target. The original $C_0$, both accepted seeds, paid equal-pair rejections, full records, write-before-latch, permissions, fourth completion and matching Stop are retained. There is no prescribed hard marginalized-defect or total-resource budget. The finite tables used below belong to the regular stationary class $\mathfrak S_\mu$ of [PAID, Corollary 2.3]. Abstract finite stochastic rules and finitely represented exact samplers remain distinct notions.
+
+Write $\Omega_p,\Omega_\beta$ for the two complete raw carriers of Section 2, and $\infty_p,\infty_\beta$ for their infinite noncompletion outcomes. Prefixing a suspended future by beta maps $\Omega_\beta$ bijectively onto $\Omega_p\setminus\{\alpha\}$; prefixing a p future by alpha maps $\Omega_p$ bijectively onto $\Omega_\beta\setminus\{\beta\}$. These maps also send the corresponding infinite outcomes to the infinite outcomes. On a current record fibre they include exactly the next original operation block, through $I_c$.
+
+Put $\lambda=4/15$ and, for $j\ge0$, define the complete tail sets
+
+$$
+T_p(j)=\{w_{n,i}:n\ge j,\ i\in\{0,1\}\}\cup\{\infty_p\},
+$$
+
+$$
+T_\beta(j)=\{\alpha w_{n,i}:n\ge j,\ i\in\{0,1\}\}\cup\{\infty_\beta\}.
+\tag{11.1}
+$$
+
+The suspended completing word beta is outside $T_\beta(0)$. Define
+
+$$
+\mathcal K_p=\{Q\in\mathcal P(\Omega_p):
+ a\le Q(\alpha)\le b,\quad Q(T_p(j))\le\lambda^j\ (j\ge0)\},
+$$
+
+$$
+\mathcal K_\beta=\{W\in\mathcal P(\Omega_\beta):
+ a\le1-W(\beta)\le b,\quad W(T_\beta(j))\le b\lambda^j\ (j\ge0)\}.
+\tag{11.2}
+$$
+
+Here $\mathcal P$ means normalized probability laws, not subprobability vectors. Both spaces carry complete-law TV. Set
+
+$$
+u(Q)=Q(\alpha),\qquad U(Q)=1-u(Q),\qquad v(W)=1-W(\beta).
+$$
+
+For $Q\in\mathcal K_p$ and $W\in\mathcal K_\beta$, define the normalized residuals
+
+$$
+\mathcal R_B(Q)(E)=\frac{Q(\beta E)}{U(Q)},\qquad
+\mathcal R_A(W)(E)=\frac{W(\alpha E)}{v(W)}.
+\tag{11.3}
+$$
+
+The first residual is a probability law on $\Omega_\beta$, the second on $\Omega_p$. Neither is required to belong to the opposite $\mathcal K$ for an arbitrary descriptor. Their denominators satisfy $U\ge3/5$ and $v\ge1/3$. In particular the identities
+
+$$
+Q=u(Q)\delta_\alpha+U(Q)\beta\mathcal R_B(Q),\qquad
+W=(1-v(W))\delta_\beta+v(W)\alpha\mathcal R_A(W)
+\tag{11.4}
+$$
+
+hold on the entire carriers, including the infinite outcomes.
+

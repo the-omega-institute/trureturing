@@ -55,7 +55,13 @@ internal sealed class AnticoherenceSpinCovarianceDocument : IScribeDocumentDefin
                 "The weight of a word is the natural-number sum of its bit values. Updating site k changes that weight by the new bit minus the old bit. "
                     + "Separate the sites at which x k is zero from those at which it is one. There are n minus the weight sites of the first kind and weight sites of the second kind. "
                     + "The two possible replacement bits yield the four displayed matrix entries and Dicke coefficients. "
-                    + "Subtraction in the weight-minus-one argument is natural-number subtraction; the multiplicities are cast to complex scalars."))));
+                    + "Subtraction in the weight-minus-one argument is natural-number subtraction; the multiplicities are cast to complex scalars. "
+                    + "For n at least one, put D = n + 1 and j = n/2, and use Jplus, Jx, Jy and Jz from PrecessionSpinOneSeparableBound. "
+                    + "The Dicke index r counts ones, Jz has eigenvalue j minus r, Jplus has its nonzero entry at row i and column r with i + 1 = r, and Jy is (Jplus minus its adjoint)/(2i). "
+                    + "Apply the site sum to the three Pauli matrices. The binomial recurrence choose(n,w+1)(w+1) = choose(n,w)(n-w), positivity of the supported binomial coefficients and multiplication of square roots convert the two transition multiplicities into the standard ladder coefficients. "
+                    + "The absent transitions at weights zero and n vanish. Thus, for every axis a, collectiveSpin n a times dickeIsometry n equals dickeIsometry n times the corresponding standard J matrix. "
+                    + "The original dicke_isometry, tensor_preserves_symmetric and spin_action_unitary statements in AnticoherenceTraceDistanceRefutation, together with collective_tensor_rotation, then give spinAction n u times J_a times the adjoint of spinAction n u equal to the sum of r(a,c) times J_c, using the same Pauli coefficient matrix r for every special unitary qubit matrix u. "
+                    + "These are coordinate and representation identities. Native instrument outputs, the replacement channel and physical access to controls require their own interface identifications."))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role = DescribeRole.Theorem) =>

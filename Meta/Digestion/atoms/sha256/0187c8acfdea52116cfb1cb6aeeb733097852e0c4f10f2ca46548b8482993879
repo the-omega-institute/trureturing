@@ -1,0 +1,79 @@
+### 9.1 Schur 行、正性与圆参数
+
+在 $A_{11}=A_{22}=\alpha$、$\beta>0$ 时，$Z$ 与 $A-\alpha I$ 反交换。故
+
+$$
+U^*ZU=\begin{pmatrix}0&\omega\\\overline\omega&0\end{pmatrix},\qquad |\omega|=1,
+\tag{9.1}
+$$
+
+而 (8.4) 的两个零对角条件给出且仅给出
+
+$$
+S_0=\rho Z,\qquad \operatorname{diag}(s_1,s_2)=\operatorname{diag}(c_1\rho,-c_2\rho).
+\tag{9.2}
+$$
+
+令 $w=x+i\sigma y$，并为本节另定义重参数化铅笔
+
+$$
+\mathcal F(w):=F_{\operatorname{Re}(w)+i\sigma\operatorname{Im}(w)}
+=(t-wc)^*(t-wc)+2\sigma\operatorname{Im}(w)s.
+$$
+
+参数变换 $w\mapsto\operatorname{Re}(w)+i\sigma\operatorname{Im}(w)$ 对每个 $\sigma\in\{1,-1\}$ 都是复平面的双射，所以本卷引理 2.1 的固定 P2 等价性在两个取向都完整保留。下文 $w$ 遍取全部非实数。Schur 消元给出 $X(w)=t-wc$ 可逆，且其前两行为
+
+$$
+C^{-1/2}U(\Lambda-wI)^{-1}G,\qquad
+G=U^*C^{-1/2}\begin{bmatrix}I_2&-VD^{-1}\end{bmatrix}.
+\tag{9.3}
+$$
+
+$G$ 满行秩二：右边的方括号含有 $I_2$，左边的两个因子可逆。因此 $Q=(GG^*)^{-1}$ 正定，$\Delta>0$。
+
+把 $\mathcal F(w)$ 对 $X(w)^{-1}$ 作合同变换，并将 $\ker G$ 与 $G^*$ 的最小范数截面分开，得到
+
+$$
+\mathcal F(w)\ge0\quad\Longleftrightarrow\quad Q+M(w)\ge0,
+\tag{9.4}
+$$
+
+其中 $M(w)$ 的对角为零，而
+
+$$
+M_{12}(w)=\sigma\rho\,\omega\,k(w),\qquad
+k(w)=\frac{2\operatorname{Im}w}{(\alpha+\beta-\overline w)(\alpha-\beta-w)}.
+\tag{9.5}
+$$
+
+(9.4) 的“当且仅当”是精确的：给定 $u=Gz$，$z^*z$ 的最小值是 $u^*Qu$；沿 $\ker G$ 的分量只增加范数。因此二维正性恰好是
+
+$$
+|h+\sigma\rho\,\omega\,k(w)|\le R.
+\tag{9.6}
+$$
+
+直接倒数可得
+
+$$
+\frac1{k(w)}=\frac{(\operatorname{Re}w-\alpha)^2+(\operatorname{Im}w)^2-\beta^2}{2\operatorname{Im}w}-i\beta.
+\tag{9.7}
+$$
+
+取 $\operatorname{Re}w=\alpha$，正的 $\operatorname{Im}w$ 使 (9.7) 的实部遍历 $\mathbb R$；所以所有非实 $w$ 的 $k(w)$ 恰好遍历
+
+$$
+\left|k-\frac{i}{2\beta}\right|=\frac1{2\beta},\qquad k\ne0.
+\tag{9.8}
+$$
+
+闭包补上 $k=0$，而 $|h|<R$ 已自动满足该点。圆上的最大值给出
+
+$$
+\sup_{(9.8)}|h+\sigma\rho\omega k|
+=\left|h+\frac{i\sigma\rho\omega}{2\beta}\right|+\frac{|\rho|}{2\beta},
+\tag{9.9}
+$$
+
+这正是 (8.2)。当 $w$ 为实数时，$\mathcal F(w)=(t-wc)^2\ge0$，包括两个实根；这一步直接使用自伴平方，不需要逆矩阵。整个论证没有把实根处的不可逆性替换成未知响应的极限。
+
