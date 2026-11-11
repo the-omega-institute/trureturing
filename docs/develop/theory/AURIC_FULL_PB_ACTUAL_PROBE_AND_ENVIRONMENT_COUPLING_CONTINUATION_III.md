@@ -2543,3 +2543,344 @@ Jiří Lebl，*Basic Analysis I & II*，
 前卷的根分支与包络结论在这里按其已有陈述调用。
 
 ## 追加锚（本行以下为增补区）
+
+## 57. 实际低代价分离与完整响应的严格内部权重
+
+**定义 57.1（同一实际接触的两笔标量代价）。** 沿用 (46.5)–(46.8)
+及定理 56.3 的整个零阶极小集 $\mathcal M_0$，置
+
+$$
+\begin{gathered}
+\Omega=\{(x,y,s):0<x<1,\ y>1,\ s>0\},\qquad d=1-x,\\
+s=\kappa_0+3=\frac{6d(t-1/4)}x,\qquad
+t=\frac14+\frac{xs}{6d},\qquad
+c_{\rm cost}=\frac{yd}{2xs(y^2-1)},\\
+a=s+\frac{4-x}{2},\qquad
+b=\left(s-\frac52\right)y-\frac{d(3d+xs)}y,\qquad
+W=a^2+b^2,\\
+F=-a+ib,\qquad
+G=-\frac{2-\ell}{4}
+ \left[8+\frac{2s(5x-3)}{3d}
+       +\frac{2i(x+1)(3d+xs)}{dy}\right],\qquad \ell=x+iy,\\
+U=c_{\rm cost}W,\qquad
+V=\frac{c_{\rm cost}|G|^2}{2t},\qquad
+\widehat P=2tW-|G|^2=\frac{2t}{c_{\rm cost}}(U-V).
+\end{gathered}
+\tag{57.1}
+$$
+
+这里 $c_{\rm cost}$ 是正实标量，与原矩阵 $C=\operatorname{diag}(1,2)$
+不同；$U,V$ 也不表示原演员列或可见列。
+这些式子由原 $\kappa_0,F,G,\mathcal R_0$ 代入得到：
+$\widehat P(x,y,s)=P(x,y,t(x,s))$，$U=\mathcal R_0(x,y,t(x,s))$，
+而 $V$ 是 (52.5) 所用第二种代价在接触面外的同一代数表达式。
+$U=V$ 恰为实际零阶接触条件；面外的两笔代价不另作来源实现。
+记坐标映射为 $\iota(x,y,t)=(x,y,6d(t-1/4)/x)$。
+它将整个 $\mathcal M_0$ 连续地送入 $\Omega$；下文在
+$\mathcal M_0$ 上使用新坐标函数时均指沿 $\iota$ 拉回。
+偏导 $\partial_x,\partial_s$ 在新坐标中分别固定 $y,s$ 和 $x,y$；
+原 $P_t,\nu=\partial_t\mathcal R_0$ 始终固定原 $x,y$。
+
+**定理 57.2（实际低代价层的严格分离及全域极小极大式）。**
+令 $K_0=K_+(0)=K_-(0)$。在整个 $\Omega$ 中有
+
+$$
+\begin{gathered}
+U\le K_0\quad\Longrightarrow\quad
+H:=8+\frac{2s(5x-3)}{3d}>0\quad\hbox{且}\quad V_s<0,\\
+U=K_0\quad\Longrightarrow\quad V\ge K_0,\qquad
+U<K_0\quad\Longrightarrow\quad V>K_0,\\
+\min_{\Omega}\max(U,V)=K_0,\qquad
+\operatorname*{argmin}_{\Omega}\max(U,V)
+=\{U=V=K_0\}=\iota(\mathcal M_0).
+\end{gathered}
+\tag{57.2}
+$$
+
+最后一个等式包括全部全局极小接触，不选择某个根或局部分支。
+
+**证明。** 先固定 $y,s$。由 (57.1)，
+
+$$
+\begin{gathered}
+m:=b_x=\frac{(2x-1)s+6d}{y},\qquad a_x=-\frac12,\qquad
+\frac{(c_{\rm cost})_x}{c_{\rm cost}}=-\frac1{xd},\\
+U_x=-\frac{c_{\rm cost}}{xd}N_{\rm cost},\\
+N_{\rm cost}=W+xd\,a-2xd\,b m
+=a^2-(xdm)^2+(b-xdm)^2+xd\,a>0.
+\end{gathered}
+\tag{57.3}
+$$
+
+严格性只需 $xd\le1/4$、$|2x-1|<1$、$d<1$、$y>1$ 所给的
+$|xdm|<s/4+3/2<a$。所以 $U_x<0$。
+当 $x\downarrow0$，$W\ge a^2$ 保持正下界而 $c_{\rm cost}\to\infty$；
+当 $x\uparrow1$，$W$ 有限而 $c_{\rm cost}\to0$。
+故对每个 $K>0$，同一条射线上恰有一个点 $x=X(K,y,s)$ 使 $U=K$。
+
+每个 $\widehat P=0$ 的点都有 $t>1/4$，并由 (46.8) 及前卷定理 43.2
+重构原来源的完整不利接触，其原代价为 $U$。
+因此 $x>X(K_0,y,s)$ 上不可能有 $\widehat P=0$，否则产生代价低于 $K_0$
+的实际接触。另一方面，固定同一 $y,s$ 令 $x\uparrow1$，直接由 (57.1) 得
+
+$$
+d^2(2tW)\longrightarrow0,\qquad
+dG\longrightarrow-(1-iy)s\left(\frac13+\frac{i}{y}\right)\ne0.
+\tag{57.4}
+$$
+
+所以 $\widehat P$ 在该射线的右端为负；连续性与无零点性使它在
+$x>X(K_0,y,s)$ 上处处为负。在 $x=X(K_0,y,s)$ 上于是
+$\widehat P\le0$，由 (57.1) 得 $V\ge K_0$。
+这里的 $x$ 导数和右端极限均固定 $y,s$，没有用固定 $t$ 导数替代。
+
+现在证明低代价层的实际括号严格正。若 $H\le0$，则
+$12d+s(5x-3)\le0$，即 $(5s-12)d\ge2s$。
+因 $d<1$，必有
+
+$$
+s>4,\qquad \frac d x\ge\frac{2s}{3(s-4)}.
+\tag{57.5}
+$$
+
+置 $p=s-5/2>0$、$h_{\rm aux}=d(3d+xs)$。
+由 $h_{\rm aux}\le3+s/4$ 和 $a\ge s+3/2$，得到
+
+$$
+\begin{aligned}
+a^2-2p h_{\rm aux}
+&\ge \frac{s^2}{2}-\frac{7s}{4}+\frac{69}{4}
+=16+\frac{(2s-5)(s-1)}4>16,\\
+W&=a^2+p^2y^2-2p h_{\rm aux}+\frac{h_{\rm aux}^2}{y^2}
+>16+p^2y^2\ge8py,\\
+U&>\frac{4dp}{xs}
+\ge\frac{8(s-5/2)}{3(s-4)}>\frac83.
+\end{aligned}
+\tag{57.6}
+$$
+
+第二行的非严格不等式是 $(py-4)^2\ge0$；第三行还使用
+$y^2/(y^2-1)>1$。前卷定理 41.4 给 $K_0\le85/72<8/3$，
+故 $U\le K_0$ 时 $H\le0$ 不可能，且排除覆盖整个该子水平集。
+
+为得到第二代价的方向，固定 $x,y$，置
+
+$$
+\begin{gathered}
+\chi=\frac1{4t-1}=\frac{3d}{2xs},\qquad
+A=8\chi+5-\frac3x=\chi H,\qquad
+j=\frac{3(x+1)}y,\\
+\gamma=\frac{y[(2-x)^2+y^2]}{24(y^2-1)}>0,\qquad
+V=\gamma\frac{A^2+j^2(1+2\chi)^2}{1+\chi}.
+\end{gathered}
+\tag{57.7}
+$$
+
+复用 (56.18) 的微分平方因式，或直接对末式微分，有
+
+$$
+\frac{(1+\chi)^2}{\gamma}V_\chi
+=A\left(11+\frac3x+8\chi\right)
+ +j^2(1+2\chi)(3+2\chi)>0\qquad(U\le K_0).
+\tag{57.8}
+$$
+
+这里 $A=\chi H>0$，且 $\chi_s=-\chi/s<0$，所以 $V_s<0$。
+使用的是面外也成立的微分因式；(56.17)、(56.19) 将其认作价格导数的
+步骤仍只在它们原定的 $N=N_q=0$ 条件下适用。
+
+任取 $U(x,y,s_0)<K_0$。固定此 $x,y$ 增加 $s$ 时，
+$U\ge yd\,s/[2x(y^2-1)]\to\infty$。
+所以存在第一个 $s_*>s_0$ 使 $U(x,y,s_*)=K_0$，在
+$[s_0,s_*)$ 内始终 $U<K_0$；这里不假设 $U$ 关于 $s$ 全域单调。
+沿这段区间 $V_s<0$，且已证的边界不等式给
+
+$$
+V(x,y,s_0)>V(x,y,s_*)\ge K_0.
+\tag{57.9}
+$$
+
+于是 $U<K_0$、$U=K_0$、$U>K_0$ 三种情形给
+$\max(U,V)\ge K_0$，等号恰在 $U=V=K_0$ 成立。
+等号点由实际重构属于 $\iota(\mathcal M_0)$；反之，定理 56.3 的每个
+全局极小接触都在 $\Omega$ 内并满足 $U=V=K_0$。
+该集合非空，故下确界确实取到。这是同一实际模型的全域分离证明，
+没有交换极小与极大，也没有使用凸对偶充分性。∎
+
+**定理 57.3（整个极小集的严格内部权重与原完整响应）。**
+在整个 $\mathcal M_0$ 上，令
+
+$$
+\begin{gathered}
+\mu=\frac{\nu}{P_t},\qquad
+\theta=\frac{2t\mu}{c_{\rm cost}},\qquad
+Q=Q_{\rm orig}=2\operatorname{Re}(\overline G E_1),\\
+Z_0=3(4t-1),\qquad v=\operatorname{Re}\tau,\\
+\mathcal S=c_{\rm cost}
+ \left[2\operatorname{Re}(\overline F L_1)+\frac{Wv}{Z_0}\right],\qquad
+\mathcal D=\mathcal S-\mu Q,\\
+e_F=\frac{\mathcal S}{K_0},\qquad
+e_G=e_F-\frac{Q}{2tW},\qquad
+\Phi=\frac{\mathcal D}{K_0}.
+\end{gathered}
+\tag{57.10}
+$$
+
+$L_1,E_1$ 使用 (46.5) 的原定义，$\tau$ 使用 (46.8) 的唯一实际相位；
+$\mathcal S,\mathcal D$ 正是前卷 (43.13)、(43.15) 的直接与完整响应。
+本节 $\theta$ 表示响应权重，不表示 (46.4) 的相位角。
+则每一点均满足
+
+$$
+\begin{gathered}
+B:=\widehat P_x<0,\qquad \mu>0,\qquad \nu>0,\qquad
+U_s>0>V_s,\\
+\theta=\frac{U_s}{U_s-V_s}\in(0,1),\qquad
+\Phi=(1-\theta)e_F+\theta e_G.
+\end{gathered}
+\tag{57.11}
+$$
+
+存在只在该整个极小集上断言的共同内部余量
+
+$$
+\delta=\min_{\mathcal M_0}\min(\theta,1-\theta)>0.
+\tag{57.12}
+$$
+
+因而在同一个 $\mathcal M_0$ 上置
+
+$$
+\begin{gathered}
+l_\delta=\min(e_F,e_G)+\delta|e_F-e_G|,\qquad
+u_\delta=\max(e_F,e_G)-\delta|e_F-e_G|,\\
+l_\delta\le\Phi\le u_\delta,\\
+\min_{\mathcal M_0}l_\delta+\max_{\mathcal M_0}l_\delta
+\le\min_{\mathcal M_0}\Phi+\max_{\mathcal M_0}\Phi
+\le\min_{\mathcal M_0}u_\delta+\max_{\mathcal M_0}u_\delta.
+\end{gathered}
+\tag{57.13}
+$$
+
+这些极值均取到；$Q=0$ 的点有 $e_F=e_G$，允许点值上下界相等。
+
+**证明。** 定理 56.3 给每个全局极小接触 $P_t>0$，从而
+
+$$
+\widehat P_s=P_t\frac{x}{6d}>0.
+\tag{57.14}
+$$
+
+可将局部约束写成 $s=s(x,y)$；局部最小值的一阶必要条件给
+$\nabla U=\mu\nabla\widehat P$。具体地，将沿该图的两个代价导数置零，
+得 $U_x=U_s\widehat P_x/\widehat P_s$、
+$U_y=U_s\widehat P_y/\widehat P_s$，所以乘子为
+
+$$
+\mu=\frac{U_s}{\widehat P_s}
+=\frac{\nu\,x/(6d)}{P_t\,x/(6d)}=\frac\nu{P_t}.
+\tag{57.15}
+$$
+
+这里局部图只使用通常隐函数定理，未要求极小点孤立或二阶充分性。
+在基点固定 $y,s$，(57.3) 给 $U_x<0$；向右稍移即 $U<K_0$，
+前述无零点论证给 $\widehat P<0$。
+基点 $\widehat P=0$，故其右导数 $B\le0$。
+但 $U_x=\mu B<0$ 使 $B\ne0$，所以 $B<0$、$\mu>0$。
+再由 (57.14)–(57.15)，得到 $U_s>0$ 及 $\nu=\mu P_t>0$。
+这些符号属于简单的全局极小点；定理 56.2 的 $\nu<0$ 属于不同的
+奇异驻点系统 $P=P_y=P_t=0$，两者没有共同适用点。
+
+在接触面上，对 (57.1) 微分时 $U-V=0$ 消去因子导数，故
+
+$$
+\nabla\widehat P=\frac{2t}{c_{\rm cost}}(\nabla U-\nabla V),\qquad
+U_s=\theta(U_s-V_s).
+\tag{57.16}
+$$
+
+定理 57.2 给 $V_s<0$，结合 $U_s>0$ 即得 (57.11) 的严格内部权重。
+它在整个非空紧集 $\mathcal M_0$ 上连续，所以 (57.12) 成立；
+这个统一余量不向整个 $\Omega$ 外推。
+
+最后直接消费原完整响应，使用 $K_0=c_{\rm cost}W$，有
+
+$$
+(1-\theta)e_F+\theta e_G
+=\frac{\mathcal S}{K_0}-\frac{\theta Q}{2tW}
+=\frac{\mathcal S-\mu Q}{K_0}
+=\Phi.
+\tag{57.17}
+$$
+
+因此所用 $Q$ 是原固定 $t$ 方程的强制根运动项，没有引入非零 $g$ 的
+新极小极大图，也没有以自由斜率 $\nu$ 代替完整响应。
+对每一点，$\delta\le\theta\le1-\delta$ 和两实数凸组合的初等不等式
+给 (57.13) 的点值界；分别取最小值、最大值再相加便得极值和界。
+$\mathcal S,Q,t,W,\theta$ 连续且分母非零，所以全部极值存在。
+这里保留所有点变权重与归一化因子；正性本身不允许从极值和中约去
+非恒定分母。凸组合代数仅为完整响应的消费者，不另提供符号判定。∎
+
+**约定 57.4（原来源实现、配对系数与适用边界）。**
+定理 57.2 的每个等号点按旧的实际重构恢复
+
+$$
+\begin{gathered}
+\tau=\overline{\frac{G}{\sqrt2F}},\qquad |\tau|^2=t>\frac14,\qquad
+u_r=\frac{(1,r\tau)^{\mathsf T}}{\sqrt{1+t}},\\
+\mathbf d_{\rm src}=(F,rG/\overline\tau)^{\mathsf T}
+=\sqrt2F\,a_r,\qquad a_r=(1/\sqrt2,r)^{\mathsf T}.
+\end{gathered}
+\tag{57.18}
+$$
+
+因 $a>0$，$F\ne0$；接触方程又给 $G\ne0$。
+前卷定理 43.2 同时恢复两个来源坐标及 (56.29) 的四个实图条件，
+由 $X=[p_{\rm vis}\ q_{\rm vis}][u_r\ Cu_r]^{-1}$ 得有限 Hermitian 探针。
+另一取向只按前卷 (39.32) 同源运输，保持 $r$ 及适配坐标；
+来源反射改变 $h$ 符号，仍不提供同一正 $h$ 的来源次序。
+
+将定理 56.3 已有的完整包络写成当前归一化形式，置
+
+$$
+S_{\rm pair}=\min_{\mathcal M_0}\Phi+\max_{\mathcal M_0}\Phi,
+\qquad
+K_+(h)-K_-(h)=hK_0S_{\rm pair}+o(h),\qquad h\downarrow0.
+\tag{57.19}
+$$
+
+$S_{\rm pair}$ 的符号及是否为零仍未确定，(57.13) 两端的符号也未确定。
+若它非零，(57.19) 才对充分小的正 $h$ 给同号的严格阈值次序；
+若它为零，一阶响应不足，需要整个值函数的高阶及分支切换分析。
+这里没有取得分离两阈值的同一正 $k$，也没有求出 $K_0$ 的精确值或证明
+极小点唯一。实际奇异极小点的排除、移动 $(x,y)$ 的局部约束控制及完整值比较
+各有不同作用：前者已由 §56 支付简单性，中者在 (57.15) 中给全极小集乘子，
+而 (57.19) 的全极小集极值和符号仍是完整比较的缺口。
+
+零阶全域式 (57.2) 不断言非零 $g=rh$ 的极小极大恒等式或有限参数 PB。
+原有限问题仍取两个固定 $a_r$、同一对正 $h,k$，保持 (56.32) 的全部参数交，
+并选同一个充分大有限 $\lambda$ 满足
+
+$$
+\rho=\frac{k}{\lambda^2},\qquad
+h^2\lambda^4>3k^2(\lambda^2+3/2).
+\tag{57.20}
+$$
+
+前卷定理 41.5 的严格阈值桥梁才将各来源的 $k<K_r(h)$ 或 $k>K_r(h)$
+送回最终原 PB 成功或严格失败；共同完整 P2、两笔预算及两个取向均保留。
+其中探针遍取所有有限 Hermitian $X$ 的 $X\oplus0_3$，
+正复线性泛函遍取整个 $M_5(\mathbb C)$，包括环境和混合块。
+有限个来源及取向的截止取共同最大值；阈值等号处的有限阶段符号仍未决定。
+一个来源的分支上界不替代另一来源的全域下界。
+
+实际括号的低代价排除 (57.5)–(57.6)、面外残量的定向、第二代价的严格单调性，
+及其全域极小极大与完整响应消费者属于本模型的 `repo-derived` 推导，
+不作全球原创性主张。坐标表达复用 (46.5)–(46.8)、定理 47.2 与 (52.5)，
+微分平方因式复用 (56.18)，全极小集、简单性及完整包络复用定义 53.1、
+定理 56.3 和前卷定理 43.5、44.6。
+局部图所用的一般隐函数定理见 Jiří Lebl，*Basic Analysis I & II*，
+[§8.5.1，Theorem 8.5.6](https://www.jirka.org/ra/html/sec_svinvfuncthm.html#thm_implicit)；
+有限维紧性、局部一阶必要条件及凸组合不等式只作为上述实际推导的中间工具。
+
+## 追加锚（本行以下为增补区）
