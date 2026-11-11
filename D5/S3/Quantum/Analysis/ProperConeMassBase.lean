@@ -6,7 +6,7 @@
    utility: none
    digest: The entire normalized base of a generating proper cone is compact and spans. -/
 
-import D5.S3.Quantum.Analysis.CompactConvexFixedState
+import Mathlib
 
 /-! # Entire normalized bases of real proper cones -/
 

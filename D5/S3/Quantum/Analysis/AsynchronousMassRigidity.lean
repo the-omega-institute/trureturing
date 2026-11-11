@@ -6,7 +6,18 @@
    utility: none
    digest: Strictly positive asynchronous invariance forces multilinear mass factorization. -/
 
-import D5.S3.Quantum.Analysis.CompactConvexFixedState
+/- proof_shape: exists_fixed_mem: bind-only; consumers: maximum_at_fixed_tuple,
+   multilinear_mass_factorization.
+   proof_shape: fixed_eq_mass_smul: bind-only; consumer: maximum_at_fixed_tuple.
+   consumed_helper: eq_zero_of_spanning_cube; consumer: multilinear_mass_factorization;
+   not an escape witness.
+   admission_basis: escape-witness
+   escape_witness: maximum_at_fixed_tuple constructs invariant maximizing sections and
+   replaces every slot by the same normalized fixed vector without changing the maximum.
+   The consumed fixed-point and fixed-dual adapters supply no escape witness. -/
+
+import Mathlib
+import D5.S3.Geometry.FixedPoint.MarkovKakutani
 
 /-! # Asynchronous maximum principle for multilinear masses -/
 
@@ -17,6 +28,66 @@ open scoped BigOperators
 
 variable {A : Type*} [NormedAddCommGroup A] [NormedSpace ℝ A]
   [FiniteDimensional ℝ A]
+/-- The frozen Markov–Kakutani theorem, applied to a singleton family, supplies a fixed
+point in each nonempty compact convex invariant set. This consumed adapter is bind-only. -/
+theorem exists_fixed_mem (Phi : A →ₗ[ℝ] A) {B : Set A}
+    (hB : IsCompact B) (hne : B.Nonempty) (hconv : Convex ℝ B)
+    (hinv : MapsTo Phi B B) : ∃ x ∈ B, Phi x = x := by
+  let T : A →ᴬ[ℝ] A := Phi.toContinuousLinearMap.toContinuousAffineMap
+  obtain ⟨x, hx, hfixed⟩ :=
+    D5.S3.Geometry.FixedPoint.MarkovKakutani.exists_common_fixed_point
+      hne hB hconv (fun _ : Unit => T) (fun _ => hinv) (fun _ _ _ => rfl)
+  exact ⟨x, hx, hfixed ()⟩
+
+/-- The full real fixed-dual hypothesis determines every fixed vector from its original mass.
+No interior condition on the normalized fixed vector is used. -/
+theorem fixed_eq_mass_smul (Phi : A →ₗ[ℝ] A) (u : Module.Dual ℝ A)
+    (hmass : u.comp Phi = u)
+    (hdual : ∀ f : Module.Dual ℝ A, f.comp Phi = f → ∃ c : ℝ, f = c • u)
+    {sigma : A} (hsigma : Phi sigma = sigma) (hu : u sigma = 1)
+    {x : A} (hx : Phi x = x) : x = u x • sigma := by
+  classical
+  let T := Phi - LinearMap.id
+  have hdualDim : Module.finrank ℝ (LinearMap.ker T.dualMap) ≤ 1 := by
+    let v : LinearMap.ker T.dualMap := ⟨u, by
+      apply LinearMap.ext
+      intro a
+      change u (Phi a - a) = 0
+      simp only [map_sub]
+      exact sub_eq_zero.mpr (congrArg (fun f : Module.Dual ℝ A => f a) hmass)⟩
+    exact finrank_le_one v (by
+      intro f
+      have hf : (f : Module.Dual ℝ A).comp Phi = f := by
+        ext a
+        have hz := congrArg (fun g : Module.Dual ℝ A => g a) f.property
+        change (f : Module.Dual ℝ A) (Phi a - a) = 0 at hz
+        simpa only [map_sub, sub_eq_zero, LinearMap.comp_apply] using hz
+      obtain ⟨c, hc⟩ := hdual f hf
+      exact ⟨c, Subtype.ext hc.symm⟩)
+  have hdim : Module.finrank ℝ (LinearMap.ker T) ≤ 1 := by
+    have h₁ := T.finrank_range_add_finrank_ker
+    have h₂ := T.dualMap.finrank_range_add_finrank_ker
+    rw [LinearMap.finrank_range_dualMap_eq_finrank_range, Subspace.dual_finrank_eq] at h₂
+    omega
+  have hs0 : sigma ≠ 0 := by
+    intro hz
+    simpa [hz] using hu
+  have hline : Submodule.span ℝ {sigma} ≤ LinearMap.ker T := by
+    rw [Submodule.span_singleton_le_iff_mem]
+    change Phi sigma - sigma = 0
+    exact sub_eq_zero.mpr hsigma
+  have heq : Submodule.span ℝ {sigma} = LinearMap.ker T :=
+    Submodule.eq_of_le_of_finrank_le hline (by
+      simpa only [finrank_span_singleton hs0] using hdim)
+  have hxmem : x ∈ Submodule.span ℝ {sigma} := by
+    rw [heq]
+    change Phi x - x = 0
+    exact sub_eq_zero.mpr hx
+  obtain ⟨c, hc⟩ := Submodule.mem_span_singleton.mp hxmem
+  have hcMass : u x = c := by rw [← hc, map_smul, hu, smul_eq_mul, mul_one]
+  simpa only [hcMass] using hc.symm
+
+
 variable {ι : Type*} [Fintype ι] [DecidableEq ι]
 
 private theorem continuous_multilinear
@@ -114,10 +185,10 @@ private theorem maximum_at_fixed_tuple (Phi : A →ₗ[ℝ] A) (u : Module.Dual 
         ((harmonic c hc).symm.trans hcx) i
       simpa [f, c, Function.update_idem] using heq
     obtain ⟨x, hx, hxfixed⟩ :=
-      CompactConvexFixedState.exists_fixed_mem Phi hB ⟨b i, hbB⟩ hBconv hBinv
+      exists_fixed_mem Phi hB ⟨b i, hbB⟩ hBconv hBinv
     have heq : x = sigma := by
       simpa only [hnorm x hx.1, one_smul] using
-        CompactConvexFixedState.fixed_eq_mass_smul Phi u hmass hdual
+        fixed_eq_mass_smul Phi u hmass hdual
           hfixed (hnorm sigma hsigma) hxfixed
     simpa [heq, f] using hx.2
   have hfinite : ∀ S : Finset ι,
@@ -220,7 +291,7 @@ theorem multilinear_mass_factorization (Phi : A →ₗ[ℝ] A) (u : Module.Dual 
     ∃ c : ℝ, ∀ a : ι → A, F a = c * ∏ i, u (a i) := by
   classical
   obtain ⟨sigma, hsigma, hfixed⟩ :=
-    CompactConvexFixedState.exists_fixed_mem Phi hK hne hconv hinv
+    exists_fixed_mem Phi hK hne hconv hinv
   let c := F (fun _ => sigma)
   let P : MultilinearMap ℝ (fun _ : ι => A) ℝ :=
     (MultilinearMap.mkPiAlgebra ℝ ι ℝ).compLinearMap (fun _ => u)
