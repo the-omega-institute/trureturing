@@ -472,7 +472,8 @@ def LabeledGramIdentification {m : ℕ} (D : Matrix (Fin m) (Fin m) ℂ)
   finrank ℂ (GramQuotient M₀ M₁ M₂) = Γ.rank ∧
     ∃ c : InnerProductSpace.Core ℂ (GramQuotient M₀ M₁ M₂),
       (∀ x y, c.inner (Q x) (Q y) = ⟪x, Γ.toEuclideanLin y⟫_ℂ) ∧
-      letI := c.toNormedAddCommGroup
+      letI : SeminormedAddCommGroup (GramQuotient M₀ M₁ M₂) :=
+        c.toNormedAddCommGroup.toSeminormedAddCommGroup
       ∃! U : GramQuotient M₀ M₁ M₂ ≃ₗᵢ[ℂ] ↥K,
         ∀ a b, (U (Q (labelPair a b)) : EuclideanSpace ℂ (Fin m)) = F a + G b
 
@@ -510,7 +511,8 @@ private theorem actual_labelled_gram {m : ℕ} {D : Matrix (Fin m) (Fin m) ℂ}
       ⟪x, Γ.toEuclideanLin y⟫_ℂ
     rw [hU, hU, hJ, Matrix.toLpLin_mul_same, Matrix.toEuclideanLin_conjTranspose_eq_adjoint]
     exact (LinearMap.adjoint_inner_right J x (J y)).symm
-  · letI := c.toNormedAddCommGroup
+  · letI : SeminormedAddCommGroup (GramQuotient M₀ M₁ M₂) :=
+      c.toNormedAddCommGroup.toSeminormedAddCommGroup
     have hn (x : GramQuotient M₀ M₁ M₂) : ‖U x‖ = ‖x‖ := by
       change ‖U x‖ = Real.sqrt (RCLike.re ⟪U x, U x⟫_ℂ)
       rw [inner_self_eq_norm_sq, Real.sqrt_sq_eq_abs, abs_norm]
