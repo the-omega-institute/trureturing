@@ -4,7 +4,7 @@
 
 Finite higher-layer budget repair at every positive original record price.
 
-One repo-prior-exposed source attempt, with no consensus claim. The D5 source target has a current scoped Lean build; its Reg mirror remains unvalidated for kernel checking, source binding and official acceptance. No Scribe or Reg acceptance, source binding, official acceptance, RH conclusion or literature novelty is asserted. The completed ordinary proof is fallible input. The completed Budget and prefix owners retain their exact definitions and proof bodies. This source does not consume the active log-sharp coercivity or any energy consequence. Only the two actually consumed existing helpers receive unapplied visibility patches.
+One repo-prior-exposed source attempt, with no consensus claim. The D5 source target has a current scoped Lean build; its retained Reg source compiles; lawful enrollment and source binding remain incomplete. No Scribe or Reg acceptance, source binding, official acceptance, RH conclusion or literature novelty is asserted. The completed ordinary proof is fallible input. The completed Budget and prefix owners retain their exact definitions and proof bodies. This source does not consume the active log-sharp coercivity or any energy consequence. Only actually consumed existing helpers are exposed, preserving their mathematical types and proof bodies.
 
 **Theorem 1.1 (Repair an actual integer, uniformly before every Budget).**
 

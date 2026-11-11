@@ -4,7 +4,9 @@
 
 PaidPrefixDeletionReserve
 
-The D5 source target has a current scoped Lean build. Reg mirrors remain unvalidated for kernel/axiom closure, lawful enrollment, source binding and official/RH acceptance; no novelty or consensus claim is asserted. Ordinary Pro reasoning is fallible input. The final uniform paid-prefix repair, its uniform original-price consumer, and the optional elementary-energy consumer remain unfinished. The finite components must not be presented as those final theorems. Existing owners are imported with exact unapplied consumed-helper patches. Each public target has a faithful full-telescope typed Reg attempt; rejected lawful families, whole-family variation, sensitivity, observational dependence and exact source binding remain missing.
+The d=1 endpoint specializes the new all-d power construction and has no D5 proof consumer. The live 2/4 repair uses budget_prefix_deletion_reserve_power at d=2; expanding the endpoint reaches that new construction, so short specialization syntax alone is not a bind-only classification.
+
+The D5 source target has a current scoped Lean build. Retained Reg sources compile with standard axiom closure; lawful enrollment and source binding remain incomplete; no novelty or consensus claim is asserted. Ordinary Pro reasoning is fallible input. These components feed the separate actual two/four paid-prefix repair. The uniform original-price and optional elementary-energy endgoals remain open. Existing owners are imported with visibility-only consumed-helper exposures. Each public target has a faithful full-telescope typed Reg attempt; rejected lawful families, whole-family variation, sensitivity, observational dependence and exact source binding remain missing.
 
 **Theorem 1.1 (budget prefix deletion reserve).**
 

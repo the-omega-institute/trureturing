@@ -4,7 +4,7 @@
 
 ActualTwoFourPaidPrefixRepair
 
-The D5 source target and its exact mathematical candidate bodies compile under the scoped Lean check. RegUNVALIDATED remains for lawful registration, source binding, variation, official acceptance and axiom-bound audit; no RH conclusion is asserted. Ordinary Pro input is fallible. The exact original-record/arbitrary-original-price/energy endgoals belong to other owners.
+The D5 source target and its exact mathematical candidate bodies compile under the scoped Lean check. The retained Reg source compiles with standard axiom closure; lawful registration, source binding and variation remain incomplete; no RH conclusion is asserted. Ordinary Pro input is fallible. The exact original-record/arbitrary-original-price/energy endgoals belong to other owners.
 
 **Theorem 1.1 (actual_two_four_paid_prefix_repair).**
 

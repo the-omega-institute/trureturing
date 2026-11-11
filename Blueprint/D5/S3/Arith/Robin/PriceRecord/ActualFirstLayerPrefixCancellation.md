@@ -4,7 +4,7 @@
 
 Finite complete first-layer cancellation and actual-record budget comparison.
 
-These anchors describe a D5 source target with a current scoped Lean build. Its Reg mirror remains unvalidated for kernel checking, source binding, variation and official acceptance remains incomplete. The loss, raw margin, optimizer layer count and unrestricted actual defect are reused from the canonical library. The companion patch only exposes original consumed helpers. No second loss, margin, optimizer or root definition is introduced. The mathematical mechanism is elementary; no literature novelty is claimed.
+These anchors describe a D5 source target with a current scoped Lean build. Its retained Reg source compiles; the escape audit remains incomplete for lawful enrollment, source binding and variation. The loss, raw margin, optimizer layer count and unrestricted actual defect are reused from the canonical library. The companion patch only exposes original consumed helpers. No second loss, margin, optimizer or root definition is introduced. The mathematical mechanism is elementary; no literature novelty is claimed.
 
 **Theorem 1.1 (Cancel the optimizer term on the complete common support).**
 
@@ -16,7 +16,7 @@ Lean statement: `D5/S3/Arith/Robin/PriceRecord/ActualFirstLayerPrefixCancellatio
 
 *Commentary.*
 
-Candidate statement: X>4, m,k>=2, m.primeFactors=primesLE(P), k.primeFactors=primesLE(Q), and the real casts of P,Q,r lie in [X/2,2X]. The root equation is the existing firstLayerPrice(r)=referencePrice(X), equivalently log(1+1/r)-log(r)/(X log(X))=0 on this interval. Then |C1(X,k)-C1(X,m)| <= 6 max(|P-r|,|Q-r|) |theta(P)-theta(Q)| / (X^2 log(X/2)). Here C1 is exactly ActualRecordHigherLayerResidual.completeFirstLayerLoss.
+Statement: X>4, arbitrary natural m,k with m.primeFactors=primesLE(P), k.primeFactors=primesLE(Q), and the real casts of P,Q,r lie in [X/2,2X]. The root equation is the existing firstLayerPrice(r)=referencePrice(X), equivalently log(1+1/r)-log(r)/(X log(X))=0 on this interval. Then |C1(X,k)-C1(X,m)| <= 6 max(|P-r|,|Q-r|) |theta(P)-theta(Q)| / (X^2 log(X/2)). Here C1 is exactly ActualRecordHigherLayerResidual.completeFirstLayerLoss.
 
 Each complete sum extends to lossPrimes(X,m) union lossPrimes(X,k). An original helper puts every positive first margin in optimizer support, so every added coordinate has exactly zero loss. Exact prime-factor prefixes turn first occupancy into p<=P or p<=Q. The identical max(rawMargin,0) terms cancel coordinate by coordinate. If P<=Q, the oriented difference is exactly minus the raw-margin sum over the existing block(P,Q)=(P,Q] primes. The reverse ordering swaps the two original integers.
 

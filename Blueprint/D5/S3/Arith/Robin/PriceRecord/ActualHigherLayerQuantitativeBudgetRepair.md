@@ -4,7 +4,9 @@
 
 Growing higher-layer quantitative budget repair.
 
-Single repo-prior-exposed source attempt. The D5 source target has a current scoped Lean build; typed Reg mirrors remain unvalidated for kernel/official acceptance, source binding and variation/sensitivity. This does not assert a consensus result or literature novelty. Existing Budget/prefix/fixed arithmetic owners are reused without copying. The three-helper patch is unapplied. Every typed Reg law reproduces its full telescope with a literal readout; enrollment, current source binding and variation/sensitivity evidence remain unvalidated.
+The uniform package uses the canonical HigherLayerInsertionRegret.slope_upper, whose log_drop_upper also supplies moving_interval_marginals. The package has no D5 proof consumer; after expanding co-delivered helpers it still reaches the new beta and slope estimates, so it is not classified bind-only merely as a conjunction.
+
+Single repo-prior-exposed source attempt. The D5 source target has a current scoped Lean build; the retained typed Reg sources compile with standard axiom closure; lawful enrollment, source binding and variation/sensitivity remain incomplete. This does not assert a consensus result or literature novelty. Existing Budget/prefix/fixed arithmetic owners are reused without copying. The consumed existing helpers are exposed with their original mathematical types and proof bodies. Every typed Reg law reproduces its full telescope with a literal readout; enrollment, current source binding and variation/sensitivity evidence remain unvalidated.
 
 **Theorem 1.1 (uniform_beta_and_slope).**
 
@@ -249,5 +251,5 @@ Exact source telescope (D5-compiled): ∀ {X μ : ℝ} {m k : ℕ}     (hm : 2 �
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/ActualHigherLayerQuantitativeBudgetRepair.uniform_beta_and_slope`
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/ActualHigherLayerQuantitativeBudgetRepair.uniform_root_geometry`
 - Dependency: [D5/S3/Arith/Robin/PriceRecord/ActualHigherLayerBudgetRepair](ActualHigherLayerBudgetRepair.md)
-- Dependency: [D5/S3/Arith/Robin/PriceRecord/HigherLayerLogSlope](HigherLayerLogSlope.md)
+- Dependency: [D5/S3/Arith/Robin/PriceRecord/HigherLayerInsertionRegret](HigherLayerInsertionRegret.md)
 - Dependency: [D5/S3/Arith/Robin/PriceRecord/QuantitativePrimeAbel](QuantitativePrimeAbel.md)

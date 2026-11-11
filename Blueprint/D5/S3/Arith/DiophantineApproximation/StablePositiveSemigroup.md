@@ -4,13 +4,13 @@
 
 StablePositiveSemigroup
 
-The D5 and Reg source targets compile under the scoped Lean checks. The Reg escape audit remains unvalidated for kernel/axiom closure, lawful enrollment, source binding and official/RH acceptance; no novelty or consensus claim is asserted. Ordinary Pro reasoning is fallible input. The final uniform paid-prefix repair, its uniform original-price consumer, and the optional elementary-energy consumer remain unfinished. The finite components must not be presented as those final theorems. Existing owners are imported with exact unapplied consumed-helper patches. Each public target has a faithful full-telescope typed Reg attempt; rejected lawful families, whole-family variation, sensitivity, observational dependence and exact source binding remain missing.
+The D5 and Reg source targets compile under the scoped Lean checks. The retained Reg sources compile with standard axiom closure; the escape audit remains incomplete for lawful enrollment and source binding; no novelty or consensus claim is asserted. Ordinary Pro reasoning is fallible input. These components feed the separate actual two/four paid-prefix repair. The uniform original-price and optional elementary-energy endgoals remain open. Existing owners are imported with visibility-only consumed-helper exposures. Each public target has a faithful full-telescope typed Reg attempt; rejected lawful families, whole-family variation, sensitivity, observational dependence and exact source binding remain missing.
 
 **Theorem 1.1 (stable positive mesh).**
 
-Lean statement: `D5/S3/Diophantine/StablePositiveSemigroup.stable_positive_mesh`
+Lean statement: `D5/S3/Arith/DiophantineApproximation/StablePositiveSemigroup.stable_positive_mesh`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Diophantine/StablePositiveSemigroup.stable_positive_mesh` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/DiophantineApproximation/StablePositiveSemigroup.stable_positive_mesh` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -20,4 +20,4 @@ Complete candidate Lean telescope: theorem stable_positive_mesh {α γ : ℝ →
 
 ## References
 
-- Truth anchor: `D5/S3/Diophantine/StablePositiveSemigroup.stable_positive_mesh`
+- Truth anchor: `D5/S3/Arith/DiophantineApproximation/StablePositiveSemigroup.stable_positive_mesh`

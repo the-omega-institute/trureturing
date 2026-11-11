@@ -4,7 +4,7 @@
 
 FixedLayerRootAsymptotic
 
-The module supplies fixed-layer asymptotic and shrinking-roster components. These components do not establish the final uniform paid-prefix repair, its uniform original-price consumer or an elementary-energy consumer. RegUNVALIDATED under issue 28966: faithful full-telescope typed Reg attempts are present; lawful families, whole-family variation, sensitivity, observational dependence and exact source binding remain unfinished.
+The module supplies fixed-layer asymptotic and shrinking-roster components. These components do not establish the final uniform paid-prefix repair, its uniform original-price consumer or an elementary-energy consumer. Reg audit incomplete: faithful full-telescope typed Reg attempts are present; lawful families, whole-family variation, sensitivity, observational dependence and exact source binding remain unfinished.
 
 **Theorem 1.1 (fixed layer root offset tendsto).**
 

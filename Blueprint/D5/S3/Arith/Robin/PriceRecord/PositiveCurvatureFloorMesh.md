@@ -4,7 +4,7 @@
 
 PositiveCurvatureFloorMesh
 
-The statements below concern the finite floor mesh and actual two/four cutoff curvature. They do not establish the complete paid-prefix repair or Robin inequality. RegUNVALIDATED: lawful registration, variation and source binding remain unfinished under issue 28966.
+The statements below concern the finite floor mesh and actual two/four cutoff curvature. They do not establish the complete paid-prefix repair or Robin inequality. RegUNVALIDATED: lawful registration, variation and source binding remain unfinished.
 
 **Theorem 1.1 (positive_curvature_floor_mesh).**
 

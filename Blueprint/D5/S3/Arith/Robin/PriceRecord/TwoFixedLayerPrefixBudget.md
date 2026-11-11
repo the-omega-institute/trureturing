@@ -4,7 +4,9 @@
 
 TwoFixedLayerPrefixBudget
 
-The D5 and Reg source targets compile under the scoped Lean checks. The Reg escape audit remains unvalidated for kernel/axiom closure, lawful enrollment, source binding and official/RH acceptance; no novelty or consensus claim is asserted. Ordinary Pro reasoning is fallible input. The final uniform paid-prefix repair, its uniform original-price consumer, and the optional elementary-energy consumer remain unfinished. The finite components must not be presented as those final theorems. Existing owners are imported with exact unapplied consumed-helper patches. Each public target has a faithful full-telescope typed Reg attempt; rejected lawful families, whole-family variation, sensitivity, observational dependence and exact source binding remain missing.
+The 2/3 ledger specializes the new arbitrary-layer construction and has no D5 proof consumer. The live 2/4 repair uses two_roster_integer_ledger_at_layers at 2,4. The seeded 2/3 coefficient endpoint and finite paid comparison remain separate substantive results.
+
+The D5 and Reg source targets compile under the scoped Lean checks. The retained Reg sources compile with standard axiom closure; the escape audit remains incomplete for lawful enrollment and source binding; no novelty or consensus claim is asserted. Ordinary Pro reasoning is fallible input. These components feed the separate actual two/four paid-prefix repair. The uniform original-price and optional elementary-energy endgoals remain open. Existing owners are imported with visibility-only consumed-helper exposures. Each public target has a faithful full-telescope typed Reg attempt; rejected lawful families, whole-family variation, sensitivity, observational dependence and exact source binding remain missing.
 
 **Theorem 1.1 (seeded two layer coefficients).**
 
@@ -112,10 +114,10 @@ D5 compiled / RegUNVALIDATED. Exact full candidate statement: theorem two_roster
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/TwoFixedLayerPrefixBudget.seeded_two_layer_coefficients`
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/TwoFixedLayerPrefixBudget.two_roster_integer_ledger`
 - Truth anchor: `D5/S3/Arith/Robin/PriceRecord/TwoFixedLayerPrefixBudget.two_roster_integer_ledger_at_layers`
+- Dependency: [D5/S3/Arith/DiophantineApproximation/StablePositiveSemigroup](../../DiophantineApproximation/StablePositiveSemigroup.md)
 - Dependency: [D5/S3/Arith/Robin/PriceRecord/ActualHigherLayerBudgetRepair](ActualHigherLayerBudgetRepair.md)
 - Dependency: [D5/S3/Arith/Robin/PriceRecord/FixedLayerRootAsymptotic](FixedLayerRootAsymptotic.md)
 - Dependency: [D5/S3/Arith/Robin/PriceRecord/FixedLayerShrinkingPrimeRoster](FixedLayerShrinkingPrimeRoster.md)
 - Dependency: [D5/S3/Arith/Robin/PriceRecord/HigherLayerInsertionRegret](HigherLayerInsertionRegret.md)
 - Dependency: [D5/S3/Arith/Robin/PriceRecord/PaidPrefixDeletionReserve](PaidPrefixDeletionReserve.md)
 - Dependency: [D5/S3/Constants/Irrationality/LogPrimeRatioIrrationality](../../../Constants/Irrationality/LogPrimeRatioIrrationality.md)
-- Dependency: [D5/S3/Diophantine/StablePositiveSemigroup](../../../Diophantine/StablePositiveSemigroup.md)
