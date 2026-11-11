@@ -177,14 +177,16 @@ def transfer (i k : Fin 7) : ℤ :=
     ![0, 32, 64, 32, 96, 32, 32], ![0, 0, 64, 0, 64, 64, 0],
     ![0, 64, 64, 64, 64, 0, 64]] i k
 
+/-- Horizontal legality and the scanner suffice for boundary validity. -/
+theorem row_valid : ∀ (s : Seen) (c : Row), s.1 = true → rowLegal c → good s c →
+    Valid (finish s c) (labels c) := by
+  simp only [Fin.forall_fin_succ_pi, Fin.forall_fin_zero_pi]
+  decide +kernel
+
 private theorem valid_next : ∀ s p, Valid s p → ∀ c : Row,
     rowLegal c ∧ compatible p c ∧ good s c → Valid (finish s c) (labels c) := by
-  have hv : ∀ (s : Seen) (c : Row), s.1 = true → rowLegal c → good s c →
-      Valid (finish s c) (labels c) := by
-    simp only [Fin.forall_fin_succ_pi, Fin.forall_fin_zero_pi]
-    decide +kernel
   intro s p hp c hc
-  exact hv s c hp.1 hc.1 hc.2.2
+  exact row_valid s c hp.1 hc.1 hc.2.2
 
 def classCount (s : Seen) (p : Boundary) (k : Fin 7) : ℤ :=
   ∑ c : Row, if rowLegal c ∧ compatible p c ∧ good s c ∧
