@@ -1,0 +1,16 @@
+**符号与退化范围。** (29.1) 已否定全称 (28.22)，不要求逐索引分类所有核。若要在同一固定 $\sigma$ 上也取得 $\epsilon=-1$ 的非零配对，取
+
+$$
+\begin{gathered}
+\widetilde X=-\overline X,\qquad
+\widetilde u=\overline u,\qquad
+\widetilde w=\overline w,\\
+\widetilde\alpha_\delta=\alpha_{-\delta},\qquad
+\widetilde\beta_\delta=-\beta_{-\delta},\qquad
+\widetilde\zeta_\delta=-\overline{\zeta_{-\delta}}.
+\end{gathered}
+\tag{29.12}
+$$
+
+直接在 (28.3) 中代入，新的右括号为 $-\overline{\mathsf R_{-\delta}}/\nu$，新的左列为 $\overline{\mathsf S_{-\delta}}/\nu$，所以两个核等式仍成立；新的残量差向量为 $\overline{w-\iota Xu}$，实配对仍为 $F_\sigma$。两组 $\alpha$ 都严格正且有限。原问题的复 $\lambda$、任意复单位 $u$、两个轴、零列及奇异系数块仍在全称域中；反例只是从此原域中选择一份非轴、非零列成员，没有从全称域删去其他成员，也不推断它们的逐索引核形状。
+
