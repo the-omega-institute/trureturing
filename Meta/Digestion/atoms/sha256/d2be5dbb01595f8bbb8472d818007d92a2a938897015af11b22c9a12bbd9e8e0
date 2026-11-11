@@ -1,0 +1,151 @@
+**Theorem 4.1 (paired finite-readout observability and stability).** Fix $B,A,\pi,\tau$ satisfying (3.1). For two regular emission assignments $(u,v),(u',v')$ on these same kernels, let $(f,h),(f',h')$ be their event-readout arrays and $(Q,W),(Q',W')$ their complete generated laws. Put
+
+$$
+\delta_f=\|f-f'\|_\pi,\qquad
+\delta_h=\|h-h'\|_\tau.
+$$
+
+Then
+
+$$
+\|u-u'\|_\pi+\frac43\|v-v'\|_\tau
+\le14\delta_f+38\delta_h.
+\tag{4.2}
+$$
+
+Consequently the paired readout arrays uniquely determine all emissions and both complete laws, and
+
+$$
+\pi\operatorname{TV}(Q,Q')\le20\delta_f+52\delta_h,
+\qquad
+\tau\operatorname{TV}(W,W')\le20\delta_f+52\delta_h.
+\tag{4.3}
+$$
+
+For actual readout data $(F,J)=(f,h)$, iteration of $\Pi\Psi_{F,J}$ from any point of $\mathcal C$ converges to $(1-u,v)$. After $n$ iterations its emission error in (3.8) is at most
+
+$$
+\frac7{45}\left(\frac9{10}\right)^n,
+\tag{4.4}
+$$
+
+and either weighted complete-law TV error is at most
+
+$$
+\frac7{33}\left(\frac9{10}\right)^n.
+\tag{4.5}
+$$
+
+These are analysis and offline reconstruction statements. They do not provide a new source query, runtime posterior port or resource-preserving observer replacement.
+
+**Proof of the emission inverse.** For two inputs write $d_U=\|U-U'\|_\pi$ and $d_v=\|v-v'\|_\tau$. Let
+
+$$
+T(U,v)=BVA[\operatorname{diag}(U)B(v+J-1)].
+$$
+
+Split its difference by first changing the outer $V$, then $U$, then the inner $v$. Bounds (3.9), $U\le2/3$, $v\le b$ and $J\le h_+$ give
+
+$$
+\|T(U,v)-T(U',v')\|_\pi
+\le b(b+h_+-1)d_U+\frac23(2b+h_+-1)d_v.
+\tag{4.6}
+$$
+
+For example the outer-$V$ term is bounded by $(2/3)(b+h_+-1)d_v$; the inner-$v$ term is bounded by $(2/3)b d_v$. This explicitly keeps both appearances of the same emission in the feedback equation.
+
+Using $|1/s-1/t|=|s-t|/(st)$ and the positive denominator bounds in (4.1), one obtains
+
+$$
+\begin{pmatrix}
+\|\Psi^U(U,v)-\Psi^U(U',v')\|_\pi\\
+\|\Psi^v(U,v)-\Psi^v(U',v')\|_\tau
+\end{pmatrix}
+\le
+\begin{pmatrix}
+\alpha&\beta\\ \gamma&\gamma
+\end{pmatrix}
+\begin{pmatrix}d_U\\d_v\end{pmatrix},
+\tag{4.7}
+$$
+
+where valid exact bounds are
+
+$$
+\alpha=\frac{1745800}{18915363}<\frac1{10},\qquad
+\beta=\frac{24983000}{56746089}<\frac9{20},\qquad
+\gamma=\frac{1728}{3125}<\frac{14}{25}.
+$$
+
+To verify them, $M_f/h_-^2=752500/700569$. Multiplying this by the two coefficients in (4.6) gives $\alpha,\beta$. In the second map, $1-J\le1-h_-=32/125$, and
+
+$$
+\|\operatorname{diag}(U)B(1-v)
+ -\operatorname{diag}(U')B(1-v')\|_\pi
+\le\frac23(d_U+d_v).
+$$
+
+Its reciprocal-denominator factor is $(32/125)/(5/9)^2$; multiplication by $2/3$ gives $\gamma$.
+
+In the norm (3.8), the coarse matrix in (4.7) has operator norm at most
+
+$$
+\max\left\{\frac1{10}+\frac43\frac{14}{25},
+             \frac34\frac9{20}+\frac{14}{25}\right\}
+=\frac{359}{400}<\frac9{10}.
+\tag{4.8}
+$$
+
+Projection $\Pi$ is nonexpansive in this norm, so the projected map has the same bound.
+
+Now freeze the second assignment's actual readouts $(f',h')$ in (4.1). The first assignment is a fixed point for its own $(f,h)$ by Lemma 3.1. Its first denominator changes by
+
+$$
+B(h-h')+BVA[\operatorname{diag}(U)B(h-h')],
+$$
+
+whose norm is at most $(19/15)\delta_h$. Changing its numerator changes the norm by at most $\delta_f/h_-$. Since
+
+$$
+\frac1{h_-}=\frac{125}{93}<\frac75,
+\qquad \frac{M_f}{h_-^2}\frac{19}{15}<\frac75,
+$$
+
+the residual in the first map is at most $(7/5)(\delta_f+\delta_h)$. In the second map its exact residual is $(h'-h)/(1-Ag)$, of norm at most $(9/5)\delta_h$. Therefore
+
+$$
+\|(U,v)-\Psi_{f',h'}(U,v)\|_*
+\le\frac75\delta_f+\frac{19}{5}\delta_h.
+\tag{4.9}
+$$
+
+The second assignment is a fixed point of $\Psi_{f',h'}$. Compare the two inputs using (4.8) and (4.9), bring the $(9/10)$ term to the left, and multiply by ten. This proves (4.2), since $|U-U'|=|u-u'|$.
+
+**Proof of the complete-law bounds.** Couple emissions maximally while the two generators have the same configuration. After a matched letter use identical randomness for the same acquired update row. From the stationary p row, the surviving p subrow after $j$ returns is bounded by $\lambda^j\pi$, and its suspended subrow by $(2/3)\lambda^j\tau$. The mismatch hazards are $|u-u'|$ and $|v-v'|$. Summing them gives
+
+$$
+D_p:=\pi\operatorname{TV}(Q,Q')
+\le\frac{15}{11}d_U+\frac{10}{11}d_v.
+\tag{4.10}
+$$
+
+Starting at suspension gives a first hazard $d_v$ and a matched-alpha p subrow at most $(2/5)\pi$, hence
+
+$$
+D_\beta:=\tau\operatorname{TV}(W,W')
+\le\frac6{11}d_U+\frac{15}{11}d_v.
+\tag{4.11}
+$$
+
+These couplings include every return, the infinite outcome and all deterministic original event blocks. Almost-sure completion follows from (3.3); no finite terminal projection is substituted for a full law. Each bound is at most $(15/11)(d_U+d_v)$, which (4.2) bounds by $(210/11)\delta_f+(570/11)\delta_h$. These coefficients are at most $20,52$, proving (4.3).
+
+**Proof of reconstruction.** The closed finite-dimensional cube is complete in (3.8). The projected map is a contraction by (4.8). Its iterates are Cauchy: the sum of successive increments is bounded by a geometric series. Their limit is a fixed point by continuity, and two fixed points would have distance at most $(9/10)$ of that same distance, so are equal. Actual data have the fixed point $(1-u,v)$ by Lemma 3.1. The cube diameter in (3.8) is
+
+$$
+\left(\frac23-\frac35\right)+\frac43\left(\frac25-\frac13\right)=\frac7{45}.
+$$
+
+Contraction gives (4.4). Applying (4.10)–(4.11) to the iterated and actual emissions gives (4.5). For data outside the actual readout image the projected map still has a fixed point, but that point need not reproduce the supplied data; existence of a projected fixed point is not a realization certificate. $\square$
+
+The mature contraction principle and maximal coupling are tools in this proof. The new relation is the exact simultaneous elimination (3.6)–(3.7) and its all-shape inverse: two short stopped-event arrays suffice for every regular emission and the complete same-update future law on these acquired kernels. A generic rank or static moment inverse does not establish these feedback identities.
+

@@ -1,0 +1,38 @@
+# 正交时间场论 OTF-004：内生观察、注意控制与余弦反馈
+
+> 理论参考输入：本稿为用户提供的研究正文，包含普通数学证明，未作本候选的 Lean/kernel 认证。
+
+OTF RESEARCH SERIES / 004 / VERSION 1.0
+
+正交时间场论
+
+内生观察、注意控制与余弦反馈
+
+仪器选择、记录互补、Zeno 动力学及实复不动点
+
+Endogenous Observation and Attention Control\
+Measurement Records and Cosine Feedback
+
+**本轮核心** 把注意定义为整体内部的操作设置与反馈。 同一联合态可以经不同内部读口给出路径信息或条件干涉； 物理耦合、坐标选择、记录条件化和单次结果保持分型。 余弦不动点是指定反馈律的平衡，而单次量子读数与均值反馈具有不同极限。
+
+$$
+\mathcal D^2+\mathcal V^2=1,\qquad
+ \left(Pe^{-\mathrm iHt/(N\hbar)}P\right)^N
+ \longrightarrow e^{-\mathrm iPHPt/\hbar}P.
+$$
+
+$$
+F_s(x)=s\cos x,\quad x_s=s\alpha,\quad \alpha=\cos\alpha,
+ \qquad
+ \mathbb E e_{n+1}^2
+ \leq \sin^2(1)\,\mathbb E e_n^2+\frac1{N_n}.
+$$
+
+**范围** 有限维仪器与每个指定有限协议的内生实现； 理想连续反馈及无限次监测的极限另列条件。 本文不将主观专注直接设为物理定律， 不由复根自动指定能级、反粒子、质量或时间箭头。
+
+2026 年 11 月 8 日 / Asia–Singapore
+
+项目固定于默认分支 dev 的 `6ca7b7300b84a13660977b193b024ca63d92ab06`。
+
+承接 OTF-001–003；普通数学证明与限定来源核读，未运行新的 Lean 构建。
+

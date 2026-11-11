@@ -1,0 +1,75 @@
+**定理 14.1（带实际完整输出的相干等距返回律）。** 令 $U:R\otimes P\to R\otimes K$ 是一个与 $h$ 无关的等距，且右端就是实际完整返回口；令 $\sigma$ 是任意有限维混合辅助态。写
+$$
+\Omega_h=U(\tau_h\otimes\sigma)U^\dagger,\quad
+\omega_h=\operatorname{Tr}_R\Omega_h,\quad
+\overline\delta=\sup_hD(\Omega_h,\tau_h\otimes\omega_h).
+\tag{14.1}
+$$
+则每个反向对满足
+$$
+D(\omega_h,\omega_{-h})
+\le(1+2\pi\sqrt{2j})\,\overline\delta.
+\tag{14.2}
+$$
+若一个固定解码器在两个目标球上的错误均不超过 $\beta<1/2$，且两球由同一输出记录区分，则
+$$
+\overline\delta\ge\frac{1-2\beta}{1+2\pi\sqrt{2j}}.
+\tag{14.3}
+$$
+
+**证明。** 令 $e_h=|j,h\rangle$，把算子 $U(e_h\otimes I_P)$ 写成
+$$
+U(e_h\otimes I_P)=e_h\otimes F_h+B_h,\qquad
+(\langle e_h|\otimes I)B_h=0.
+\tag{14.4}
+$$
+等距性给出 $F_h^\dagger F_h+B_h^\dagger B_h=I_P$。置 $p_h=\operatorname{Tr}(B_h\sigma B_h^\dagger)$。由效果 $I-\tau_h$ 对 $\Omega_h$ 的测量及迹距离的变分表示，$p_h\le\overline\delta$。把 $X=\Omega_h$ 与 $\tau_h\otimes\omega_h$ 的差按 $R$ 上 $\tau_h$ 的对角、非对角块分解；用 $2\tau_h-I$ 的共轭取出非对角块，得到
+$$
+\|F_h\sigma B_h^\dagger\|_1\le\overline\delta.
+\tag{14.5}
+$$
+于是
+$$
+\|B_h\sigma\|_1
+\le\|F_h\sigma B_h^\dagger\|_1+
+\|B_h\sigma B_h^\dagger\|_1
+\le2\overline\delta .
+\tag{14.6}
+$$
+令 $m=2j$，在相干坐标
+$$
+e(z)=(1+|z|^2)^{-m/2}(|0\rangle+z|1\rangle)^{\otimes m}
+\tag{14.7}
+$$
+上，把 $F(z)$ 看作 $F_h$ 的算子值函数。相干切向量计算给出
+$$
+\|\partial_{\bar z}(F(z)\sigma)\|_1
+\le\frac{2\overline\delta\sqrt m}{1+|z|^2}.
+\tag{14.8}
+$$
+对 (14.8) 逐矩阵元使用 Cauchy–Pompeiu 公式，或在有限维迹类上直接使用同一积分，得到
+$$
+\|(F_0-F_\infty)\sigma\|_1\le2\pi\sqrt m\,\overline\delta.
+\tag{14.9}
+$$
+这里的积分常数来自
+$\frac1\pi\int_{\mathbb C}[(1+|z|^2)|z|]^{-1}d^2z=\pi$；任一反向对可先用固定旋转送到 $0,\infty$。
+
+偏迹消去 $R$ 上的交叉项，故
+$$
+\omega_h=F_h\sigma F_h^\dagger+
+\operatorname{Tr}_R(B_h\sigma B_h^\dagger).
+\tag{14.10}
+$$
+$F_h$ 是收缩，展开第一项并用 (14.9)，再加上两个正余项的迹，得到
+$$
+D(\omega_h,\omega_{-h})
+\le2\pi\sqrt m\,\overline\delta+
+\frac{p_h+p_{-h}}2
+\le(1+2\pi\sqrt m)\overline\delta.
+\tag{14.11}
+$$
+固定解码器把两个分离目标球的输出事件分成一项在两端概率分别至少 $1-\beta$ 和至多 $\beta$，所以其可访问记录的迹距离至少 $1-2\beta$；嵌入 $K$ 后仍由收缩性成立。代入 (14.11) 即得 (14.2)–(14.3)。$\square$
+
+定理 14.1 的载荷假设是“等距”以及“等距的右端是实际完整返回口”。把一个约化 CP 通道写成 Stinespring 等距、再把证明环境当作返回口，并不能满足这些假设。定理 13.1 的 $\mathcal C$ 只有约化的实际输出 $S,H,E$；若一个物理噪声实现保留额外环境，则返回误差必须对扩大的实际 $K$ 重新估计。
+

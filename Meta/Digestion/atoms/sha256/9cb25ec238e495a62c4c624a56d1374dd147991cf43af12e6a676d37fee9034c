@@ -1,0 +1,33 @@
+### 27A.4 完整配方与一般开排除域
+
+将 (27A.23)–(27A.24) 代入 (27A.12) 的连续延拓，环境平方贡献为
+
+$$
+\frac18\left|\varepsilon(1-5i/2)\right|^2
++\frac{17}{8}\left|\varepsilon(25/17+13i/34)\right|^2
+=\frac{29}{32}\varepsilon^2+\frac{157}{32}\varepsilon^2
+=\frac{93}{16}\varepsilon^2.
+$$
+
+因此
+
+$$
+\begin{aligned}
+F_0:=\lim_{\delta\downarrow0}F_\delta
+&=\frac{|z_+|^2}{8}+\frac{|z_-|^2}{136}
+  +\rho^2+12\rho\tau+\frac{93}{16}\varepsilon^2\\
+&=\frac94d^2+\frac{81}{4}d\tau-\frac32d\rho
+ +\frac{845}{16}\tau^2+\frac{15}{4}\rho\tau
+ +\frac{29}{16}\rho^2+\frac{93}{16}\varepsilon^2\\
+&=\frac94\left(d+\frac92\tau-\frac{\rho}{3}\right)^2
+ +\frac{116\tau^2+168\rho\tau+25\rho^2}{16}
+ +\frac{93}{16}\varepsilon^2\\
+&=\frac94\left(d+\frac92\tau-\frac{\rho}{3}\right)^2
+ +\frac{29}{4}\left(\tau+\frac{21\rho}{29}\right)^2
+ +\frac{2697\varepsilon^2-1039\rho^2}{464}.
+\end{aligned}
+\tag{27A.25}
+$$
+
+(27A.4) 的 $\tau,d$ 使两个实平方精确为零。若 (27A.5) 成立，$F_0<0$。对每份固定有限的 $\rho\ne0,\varepsilon>0$，(27A.20) 在零点的两个分母分别为 $1/4$、$1/4-i$，(27A.21) 的虚部也非零。于是 (27A.22) 后的剩余坐标、权重及 (27A.24) 都连续延拓到零点。存在 $\delta_*>0$，使所有 $0<\delta<\delta_*$ 的分母和虚部符号合法且 $F_\delta<0$。由 (27A.13) 得实际严格违反。这是非一致的有限正 $\delta$ 存在证明；$\delta=0$ 和无限探针都不是实际见证。
+

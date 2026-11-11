@@ -1,0 +1,84 @@
+**定理 25.6（获取阶段的完整自身边缘返回）。** 对同一个有限仪器 (25.15)，令 $\omega_h=\Psi(\tau_h)$。则
+
+$$
+ \sup_hD_{\rm tr}\!\left(\omega_h,
+                   \tau_h\otimes\operatorname{Tr}_R\omega_h\right)
+ \le\frac{C_{\rm return}}\lambda.
+ \tag{25.20}
+$$
+
+证明。固定任意 $h$，仅在证明中选择以 $h$ 为北极的旋转相干坐标，记 $e_h=e_0$，第一降低向量为 $e_1$。这不是实施一个依赖未知 $h$ 的门。有限向量的 Taylor 展开为
+
+$$
+ f(z)=f(0)+zf_z(0)+\bar zf_{\bar z}(0)+r(z),\qquad
+ \|r(z)\|\le\frac{A+B+2}{s^2}|z|^2.
+ \tag{25.21}
+$$
+
+在 $|z|\le1$ 用 (25.10) 的二阶实导数界；在 $|z|\ge1$ 用
+$\|f(z)\|,\|f(0)\|\le1$、$\|Df(0)\|\le A/s$ 和 $s<1$，同样得到这个全局界。无穷远点为面积零集。
+
+由二项式展开及角积分，以下矩精确成立：
+
+$$
+\begin{gathered}
+ T_m(1)e_0=e_0,\qquad T_m(z)e_0=0,\qquad
+ T_m(\bar z)e_0=\frac{e_1}{\sqrt m},\\
+ D\int |z|^2|\langle e_z,e_0\rangle|\,d\mu(z)
+ =\frac{4(m+1)}{m(m+2)}\le\frac4m.
+\end{gathered}
+\tag{25.22}
+$$
+
+例如第三式仅保留基指标一，径向积分为
+$D\sqrt m\int_0^\infty u(1+u)^{-m-2}du=1/\sqrt m$；末式为
+$D\int_0^\infty u(1+u)^{-m/2-2}du$。这些积分在这里的 $m>2$ 都绝对收敛。
+
+将 (25.21) 代入同一 $T_m$，Minkowski 不等式和末矩给所有 $l,k$ 的堆叠估计
+
+$$
+\begin{aligned}
+ A_{lk}e_h&=f_{lk}(h)e_h+
+                \frac{\partial_{\bar z}f_{lk}(h)}{\sqrt m}e_1+r_{lk,h},\\
+ \left(\sum_{lk}\|r_{lk,h}\|^2\right)^{1/2}&\le\frac{R_0}\lambda=:r\le1.
+\end{aligned}
+\tag{25.23}
+$$
+
+记实际成功向量为 $v_{lk}=A_{lk}e_h$，删去余项后的向量为 $w_{lk}$。$\sum\|v_{lk}\|^2\le1$，且堆叠向量之差范数至多 $r$，故各实际 $l$ 块之和与相应领先块之和的迹范数差至多
+$(2+r)r\le3R_0/\lambda$。这来自
+$\|vv^\dagger-ww^\dagger\|_1\le(\|v\|+\|w\|)\|v-w\|$
+以及对 $l,k$ 的 Cauchy–Schwarz，不合并不同实际 $l$ 的相干项。
+
+在第 $l$ 个领先块中置
+
+$$
+ q_l=\sum_k|f_{lk}|^2,\qquad
+ a_l=\sum_k|\partial_{\bar z}f_{lk}|^2,\qquad
+ b_l=\sum_k\overline{f_{lk}}\,\partial_{\bar z}f_{lk}.
+ \tag{25.24}
+$$
+
+该块恰为
+$q_l\tau_h+(a_l/m)\tau_1+(b_l/\sqrt m)|e_1\rangle\langle e_h|+\text{h.c.}$，
+其中 $\tau_1=|e_1\rangle\langle e_1|$，h.c. 只补交叉项。其自身 $l$ 边缘权重为 $q_l+a_l/m$。与该权重乘 $\tau_h$ 的迹距离为
+$\sqrt{(a_l/m)^2+|b_l|^2/m}\le a_l/m+|b_l|/\sqrt m$。
+逐块求和并用 (25.10) 得
+
+$$
+ \sum_l\left(\frac{a_l}m+\frac{|b_l|}{\sqrt m}\right)
+ \le\frac{A^2}\lambda+\frac\eta{\sqrt m}
+ \le\frac{A^2+1}\lambda.
+ \tag{25.25}
+$$
+
+从领先成功态换回实际成功态，一次付半迹范数差，换回其自身实际成功边缘再付同样的半迹范数差，合计至多 $3R_0/\lambda$。失败块与同迹乘积块的迹距离至多其概率，按 (25.19) 至多 $C_{\rm fail}/\lambda$。因此完整距离至多
+
+$$
+ \frac{3R_0+A^2+1+C_{\rm fail}}\lambda
+ =\frac{C_{\rm return}}\lambda.
+ \tag{25.26}
+$$
+
+这一步使用同一个通道的实际边缘；没有用参考泄漏或边缘不保真度替代完整返回。交叉项的小量来自每个实际 $l$ 内的零流及其有限近似，而非在彼此可区分的输出之间求消。$\square$
+

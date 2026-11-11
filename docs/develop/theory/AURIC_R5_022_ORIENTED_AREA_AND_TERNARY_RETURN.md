@@ -3998,3 +3998,1003 @@ $$
 若接回本卷 §13 的三维入口，仍须满足原 P+K 的全部假设，并由该节得到同一完整四次域及指定投影；在 $L=K$、$\dim_FW=3$ 时，这里的维数只是 $(m,j,c)=(3,1,0)$。高次域中的十二维碰撞不改变该入口的三维结论，也不给出 Born 规则、复数域、物理三维或全部量子起源的推导。
 
 ## 追加锚（本行以下为增补区）
+
+## 21　固定实际见证与规范余项的全部提升及标量恢复
+
+**定义 21.1（保留实际位置的商读数）。** 仍固定定义 20.1 的同一个实际 $L,K,H$，即 $\operatorname{char}F=2$、$L^2\subseteq F$、$[L:F]<\infty$、$[K:F]=4$、$\dim_FH=3$，不要求 $1\in H$。给定待实现的实际 $F$-子空间 $C\subseteq T\le L$，置
+
+$$
+\begin{gathered}
+D=KT,\qquad A=HT,\qquad V=L/D,\qquad
+\pi:L\longrightarrow V,\qquad Q\le_F V,\\
+B=\pi^{-1}(Q),\qquad R=D/A,\qquad
+c=\dim_F C,\quad t=\dim_F(T/C),\quad q=\dim_F Q.
+\end{gathered}
+\tag{21.1}
+$$
+
+$V$ 是规范的 $K$-向量空间；这里只使用 $h(y+D)=hy+D$ 的 $K$-作用，不赋予 $V$ 完整的 $L$-乘法。对它的实际 $F$-子空间 $Q$，定义商共同见证
+
+$$
+(Q:_V H)=\{v\in V:hv\in Q\text{ 对每个 }h\in H\}.
+\tag{21.2}
+$$
+
+所要分类的实际提升纤维为
+
+$$
+\mathscr F(T,C,Q)=
+\{W\le_F L:(W:H)=T,\ (W:K)=C,\ \pi(W)=Q\}.
+\tag{21.3}
+$$
+
+若给定 $C\not\subseteq T$，相应纤维为空。对实际窗口，定理 20.2 已给出 $W\cap D=A$；所以限制映射 $W/A\to V$ 单射，$Q=\pi(W)$ 正是 $W/HT$ 在 $L/KT$ 中的规范像。观察保留的是这些实际子空间，而非它们的抽象同构类或维数。$\dim_FW$ 将由读数决定，不必另外指定。
+
+**定理 21.2（实际可实现条件及无遗漏的提升纤维）。** 定义 21.1 的数据可由实际窗口实现，当且仅当以下三项同时成立：$C$ 是 $K$-子空间；自然乘法映射
+
+$$
+\mu:K\otimes_F(T/C)\longrightarrow D/C,
+\qquad k\otimes(x+C)\longmapsto kx+C
+$$
+
+是同构；商中没有非零共同见证，即 $(Q:_V H)=0$。这里第二项只在第一项成立时使用，张量积中的 $T/C$ 按 $F$-空间理解。
+
+满足这些条件时，所有满足 $W\cap D=A$ 及 $\pi(W)=Q$ 的普通线性提升都属于 $\mathscr F(T,C,Q)$，没有需要另行剔除的提升。这个纤维规范地对应于下列短正合列的全部 $F$-线性截面：
+
+$$
+0\longrightarrow R\longrightarrow B/A
+ \xrightarrow{\bar\pi}Q\longrightarrow0.
+\tag{21.4}
+$$
+
+因而它是 $\operatorname{Hom}_F(Q,R)$ 的仿射挠子，仿射维数为 $tq$，且每个窗口满足
+
+$$
+\begin{aligned}
+\dim_F R&=t,\\
+\dim_F W&=c+3t+q,\\
+\dim_F B&=c+4t+q\le [L:F].
+\end{aligned}
+\tag{21.5}
+$$
+
+全部陈述包括 $T=C$、$Q=0$、$C=0$ 及零空间的情形，参数只取实际 $F$-点。
+
+证明。实际窗口的 $C$ 为 $K$-空间、$\mu$ 为同构及 $W\cap D=A$，均直接复用定理 20.2，不重新证明其结构桥。先仅假定待实现的数据满足前两项，分析它们的全部普通线性提升。
+
+取 $T/C$ 的 $F$-基 $t_1+C,\ldots,t_t+C$。乘法同构给出实际直和
+
+$$
+\begin{aligned}
+T&=C\oplus\bigoplus_{i=1}^t Ft_i,\\
+D&=C\oplus\bigoplus_{i=1}^t Kt_i,\\
+A&=C\oplus\bigoplus_{i=1}^t Ht_i.
+\end{aligned}
+\tag{21.6}
+$$
+
+最后一式使用 $HC=C$：$H$ 含非零元素，而 $C$ 对 $K$ 稳定。$C=0$ 或 $t=0$ 时，空直和按通常约定处理。
+
+这里 $\{k\in K:kH\subseteq H\}=F$。确实，若 $k\notin F$ 稳定 $H$，则 $k^2\in F$ 使 $F(k)/F$ 为二次扩张，而 $H$ 是 $F(k)$-向量空间，与 $\dim_FH=3$ 矛盾；反向包含显然。这个奇维稳定子事实是成熟输入，亦与 Gulde–Stroppel，[*Stabilizers of Subspaces under Similitudes of the Klein Quadric, and Automorphisms of Heisenberg Algebras*，arXiv:1012.0502v1，Theorem 2.10(b)–(e)](https://arxiv.org/pdf/1012.0502v1) 的特征二相似稳定子域结论一致。
+
+在 (21.6) 中逐坐标应用上述事实，得到原 $L$ 中的等式
+
+$$
+(A:H)=T,\qquad (A:K)=C,\qquad (T:H)=C.
+\tag{21.7}
+$$
+
+为说明这些等式也排除了窗外向量，若 $xH\subseteq D$，任取 $0\ne h_0\in H$，即有 $x=h_0^{-1}(h_0x)\in D$。于是在第一式中，各坐标条件为 $k_iH\subseteq H$，故 $k_i\in F$；第二式要求 $k_iK\subseteq H$，迫使 $k_i=0$；第三式要求 $k_iH\subseteq F$，同样迫使 $k_i=0$，因为非零 $k_i$ 的乘法不能把三维 $H$ 放进一维 $F$。$C$ 中的坐标均满足相应条件。此论证没有使用 $1\in H$。
+
+把原乘法限制到这些实际子空间，得到 $F$-线性映射
+
+$$
+\beta:D/T\longrightarrow\operatorname{Hom}_F(H,R),
+\qquad
+\beta(d+T)(h)=hd+A.
+\tag{21.8}
+$$
+
+由 $(A:H)=T$，它定义良好且单射；由 (21.6)，两边维数同为 $3t$，所以它是同构。这一步把普通截面的自由度接回实际 $H$-见证：每一份从 $H$ 到缺失方向 $D/A$ 的线性误差，恰能由原 $D$ 中的乘法修正。
+
+普通短正合列 (21.4) 总有 $F$-线性截面。对其中任意截面 $\sigma:Q\to B/A$，取 $W/A=\sigma(Q)$ 的原像，就得到 $W\cap D=A$、$\pi(W)=Q$；反之，每个这样的 $W$ 唯一给出这个截面。这只是标准 Grassmann 图坐标的线性代数，参见 [Stacks，§27.22，Tag 089R，Lemma 27.22.1 的仿射开图](https://stacks.math.columbia.edu/tag/089R)，不将截面参数化本身作为新的分类。
+
+对每个这样的普通提升，原共同见证实际上满足短正合列
+
+$$
+0\longrightarrow T\longrightarrow(W:H)
+ \xrightarrow{\pi}(Q:_V H)\longrightarrow0.
+\tag{21.9}
+$$
+
+中间映射的像包含于右侧，核由 $W\cap D=A$ 及 (21.7) 恰为 $T$。满射性需要使用 (21.8)，不能单凭商中的包含关系断言。具体地，取 $v\in(Q:_V H)$，任取原提升 $y\in L$、$\pi(y)=v$。对每个 $h\in H$，$hy\in B$，且
+
+$$
+e(h)=\sigma(hv)-(hy+A)\in R
+$$
+
+给出 $F$-线性映射 $e:H\to R$。由 $\beta$ 满射，可取 $d\in D$ 使 $hd+A=e(h)$ 对全部 $h\in H$ 成立。因此
+
+$$
+h(y+d)+A=\sigma(hv)\in W/A,
+$$
+
+从而 $y+d\in(W:H)$，且 $\pi(y+d)=v$。这证明 (21.9)，也证明商见证的提升使用同一个原向量 $d$ 同时修正全部 $h$，而非分别为每个方向选取不相容的提升。
+
+若 $(Q:_V H)\ne0$，(21.9) 使每个普通提升都产生位于 $D$ 外的额外共同见证，故没有一个能满足 $(W:H)=T$。这证明第三项的必要性。若 $(Q:_V H)=0$，同一正合列给出全部提升的 $(W:H)=T$。对其稳定部分，$C\subseteq W$ 且 $C$ 为 $K$-空间，故 $C\subseteq(W:K)$；反过来，$H\subseteq K$ 使 $(W:K)\subseteq T\subseteq D$，于是 $xK\subseteq W\cap D=A$，由 (21.7) 得 $x\in C$。因此全部提升的 core 都恰为 $C$，充分性与无遗漏性得证。
+
+任意两个截面的差唯一落在 $R$ 中，给出 $\operatorname{Hom}_F(Q,R)$ 对截面的自由且传递的加法作用。指定一个截面才会选出仿射坐标的零点；未指定时只有挠子。由 (21.6) 及 (21.4) 立即得到 (21.5)，也证明 $m=\dim_FW$ 已由读数确定。$\square$
+
+**定理 21.3（全部实际标量的纤维作用与恢复充要判据）。** 假定定理 21.2 的可实现条件成立，定义实际子域
+
+$$
+E=\{x\in L:xT\subseteq T,\ xB\subseteq B\}.
+\tag{21.10}
+$$
+
+恰好 $E^\times$ 是能够把纤维中某个窗口送到该纤维中窗口的实际 $L^\times$ 标量的集合；它作用于整个纤维。选择任意 $F$-线性截面 $\sigma$，将窗口记为
+
+$$
+W_\phi/A=(\sigma+\phi)(Q),
+\qquad \phi\in\operatorname{Hom}_F(Q,R).
+\tag{21.11}
+$$
+
+对 $x\in E^\times$，令 $a_x$、$b_x$ 分别是原乘法在 $R$、$Q$ 上诱导的作用，并置
+
+$$
+c_x=m_x\sigma-\sigma b_x:Q\longrightarrow R,
+$$
+
+其中 $m_x$ 是乘法在 $B/A$ 上诱导的作用。完整实际轨道作用为
+
+$$
+x\cdot\phi=(a_x\phi+c_x)b_x^{-1}.
+\tag{21.12}
+$$
+
+因此，对任意两份实际 $F$-坐标，准确的两点判据为
+
+$$
+W_\phi\sim_{L^\times}W_\psi
+\quad\Longleftrightarrow\quad
+\exists x\in E^\times:\ \psi b_x=a_x\phi+c_x.
+\tag{21.13}
+$$
+
+可选择 $E$-线性截面，使所有 $c_x=0$。在这种坐标中，整个纤维决定唯一 $L^\times$ 标量轨道，当且仅当
+
+$$
+\boxed{\ t\,\dim_FQ=tq=0.\ }
+\tag{21.14}
+$$
+
+此时纤维还只含一个实际窗口。$tq>0$ 时必有不相似的提升，但不由此宣称一般纤维的全部不同坐标两两不相似；其完整判据仍为 (21.13)。
+
+证明。稳定子成域是标准事实，在这里可直接应用于 (21.10)：它包含 $F$，对加法、乘法封闭；若 $0\ne x\in E$，则 $x^{-1}=x/x^2$，且 $x^2\in F^\times$，故 $x^{-1}$ 也保持 $T,B$。因此 $E$ 是原 $L$ 内的实际中间域，非零元素对这两个空间的包含均为等号。即使 $T=0$ 或 $B=0$，此论证仍成立。
+
+原乘法可交换，故 $xT=T$ 还给出 $xD=D$、$xA=A$；由 $(T:H)=C$，同时有 $xC=C$。于是 $xB=B$ 诱导的商作用恰保持 $Q$。这些作用只来自已经保持相应子空间的 $x$，没有把任意 $L$ 标量强行作用到 $L/D$ 上。
+
+若 $xW=W'$ 且二者在同一纤维，实际见证的标量协变性给出 $xT=T$。又有 $B=W+D=W'+D$，所以 $xB=B$，即 $x\in E^\times$。反之，$x\in E^\times$ 保持 $T,C$ 及 $Q$，故把任意一份纤维中的窗口送到同一纤维。这证明可用标量群的准确性，未扩大为一般 $K$-线性变换群。
+
+在坐标 (21.11) 中，逐元素计算
+
+$$
+m_x\bigl(\sigma(v)+\phi(v)\bigr)
+=\sigma(b_xv)+c_x(v)+a_x\phi(v).
+$$
+
+令新的商坐标为 $b_xv$，即得 (21.12)，故 (21.13) 同时必要且充分。换截面只会作仿射换坐标，并不改变原窗口或此轨道关系。
+
+$A,D,B$ 均是 $E$-子空间，所以 (21.4) 是有限维 $E$-空间的短正合列。应用普通向量空间分裂，取一个 $E$-线性截面 $\sigma$，便有 $m_x\sigma=\sigma b_x$，故 $c_x=0$ 对每个 $x\in E^\times$ 成立。这里的分裂只是选坐标，不是原读数附带的一份规范补空间；它使用 $E$-作用。$A$ 一般不是 $K$-子空间，不能因为 $D$ 对 $K$ 稳定就把 $D/A$ 当作 $K$-向量空间。
+
+关键是由这份分裂得到的实际 $W_0$ 被全部 $E^\times$ 固定。如果 $tq>0$，则 $\operatorname{Hom}_F(Q,R)$ 中存在非零 $\phi$，而 $W_\phi\ne W_0$。若存在任何原 $L^\times$ 标量把二者相连，刚证明的标量必要性迫使它在 $E^\times$ 内；但这个群的每个元素都固定 $W_0$，矛盾。因此同一读数至少有两个实际标量轨道。
+
+若 $tq=0$，则 $R=0$ 或 $Q=0$，截面集合只有一个元素，所以连实际窗口也唯一。更具体地，$t=0$ 时 $T=C$、$D=A=C$，唯一窗口为 $B=\pi^{-1}(Q)$；$Q=0$ 时唯一窗口为 $A=HT$。这也包括两者同时成立的情形。证明没有借助有限域计数、代数闭包中的点或一般轨道正规形。$\square$
+
+**定理 21.4（全部最小窗口纤维与其实际标量分离）。** 固定任意上述实际 $L,K,H$，取
+
+$$
+0\ne\tau\in L,\qquad v\in L\setminus K\tau,
+\qquad z\in K\setminus H.
+$$
+
+则全部参数 $s\in F$ 给出的窗口
+
+$$
+W_s=H\tau\oplus F(v+s z\tau)
+\tag{21.15}
+$$
+
+维数均为四，并且它们恰好组成同一实际读数的完整纤维：
+
+$$
+\begin{gathered}
+T=F\tau,\qquad C=0,\qquad D=K\tau,\qquad
+Q=F(v+K\tau)\le L/K\tau,\\
+\mathscr F(F\tau,0,F(v+K\tau))=\{W_s:s\in F\}.
+\end{gathered}
+\tag{21.16}
+$$
+
+参数 $s$ 无重复，且
+
+$$
+W_s\sim_{L^\times}W_{s'}\quad\Longleftrightarrow\quad s=s'.
+\tag{21.17}
+$$
+
+反过来，任何非空、不能由读数恢复标量轨道的四维窗口纤维，都有 (21.16) 的形式，因而在选择 $v,z$ 后由 (21.15) 完整列出。该结论保留任意原 $H$，包括不含 $1$ 的情形。
+
+证明。取 $T=F\tau$、$C=0$，自然乘法 $K\otimes_FF\tau\to K\tau$ 是同构。对 $V=L/K\tau$ 中任意非零 $y$，$h\mapsto hy$ 在 $H$ 上单射，因为 $V$ 是 $K$-空间，每个非零 $h\in K$ 的作用可逆；故 $Hy$ 为三维，不可能包含于一维 $Q$。这证明 $(Q:_V H)=0$。由定理 21.2，全部普通提升都确实保持 (21.16) 中的见证及 core。
+
+$K/H$ 由 $z+H$ 张成。选择 $Q$ 的生成元 $v+K\tau$ 后，它的一切提升模去 $H\tau$ 唯一为 $v+s z\tau+H\tau$，所以 (21.15) 给出整个纤维。若两份窗口相同，它们在 $Q$ 的这一个指定生成元上有相同提升模 $H\tau$，于是 $(s-s')z\in H$，即 $s=s'$。
+
+若 $xW_s=W_{s'}$，实际共同见证给出 $xF\tau=F\tau$，所以 $x\in F^\times$。但 $F^\times$ 固定每个 $F$-子空间 $W_s$，故两窗口必须相同，得到 (21.17)。这里两两分离由实际见证直线支付，不由仿射坐标不同直接推出。
+
+对于反向完整性，四维窗口的非恢复纤维由定理 21.3 满足 $t,q\ge1$。式 (21.5) 给 $4=c+3t+q$，所以只能是 $c=0$、$t=q=1$。于是 $T=F\tau$、$Q=F(v+K\tau)$，其中 $\tau\ne0$、$v\notin K\tau$；取任意 $z\notin H$，已证明的完整参数化即适用。$\square$
+
+**定理 21.5（本观察的准确首界与低范围恢复）。** 对实际读数 $(T,C,Q)$ 的标量恢复失败，窗口维数和环境次数的准确最小值分别为
+
+$$
+m_{\min}=4,\qquad n_{\min}=8.
+\tag{21.18}
+$$
+
+两界可在同一实际扩张内同时达到。若 $\dim_FW\le3$，或 $[L:F]\le4$，则这个观察甚至唯一决定实际窗口；恢复公式是定理 21.3 的 $W=\pi^{-1}(Q)$ 或 $W=HT$。
+
+证明。这里的下界须由本观察自身给出。若某个实际读数不能恢复标量轨道，由 (21.14) 有 $t,q\ge1$。因此 (21.5) 给出
+
+$$
+m=c+3t+q\ge4,\qquad
+n\ge c+4t+q\ge5.
+\tag{21.19}
+$$
+
+又因实际 $K\subseteq L$ 且 $[K:F]=4$，$n$ 是四的倍数，所以 $n\ge8$。这两个必要下界没有使用 §18 的线性像失真界，也没有把 §19 的完整来源观察换成本观察。
+
+为同时达到两界，直接复用 (18.18)–(18.20) 的八次域及其基，仅将旧变量 $(a,b,c)$ 换成 $(u,a,b)$。等价地，可将 $a,b,u$ 取为在 $\mathbb F_2$ 上代数独立的变量，写为
+
+$$
+\begin{gathered}
+L=\mathbb F_2(a,b,u),\qquad
+F=\mathbb F_2(a^2,b^2,u^2),\qquad K=F(a,b),\\
+H=F1+Fa+Fb,\qquad \tau=1,\qquad v=u,\qquad z=ab.
+\end{gathered}
+\tag{21.20}
+$$
+
+原八维基保证 $[L:F]=8$、$[K:F]=4$、$u\notin K$、$ab\notin H$。由定理 21.4，整个实际族
+
+$$
+W_s=F1+Fa+Fb+F(u+sab),\qquad s\in F,
+\tag{21.21}
+$$
+
+具有同一 $T=F$、$C=0$ 及同一实际 $Q=F(u+K)\le L/K$，且不同参数两两不相似。取 $s=0,1$ 即同时达到 (21.18)；这两个端点正是定理 18.7 经上述合法变量对应后的旧窗口，不作为新的端点反例或新的八次域构造。
+
+低范围结论由 (21.19) 的逆否命题及 (21.14) 得到：其中必有 $t=0$ 或 $q=0$，故实际窗口唯一。特别地，$L=K$ 时全部窗口都在此恢复范围内；$W=0$ 给出 $T=C=0,Q=0$，$W=L$ 给出 $T=C=L,Q=0$，也均符合公式。对于任意给定的八次实际扩张和四次子域，只需任选 $v\notin K\tau$，定理 21.4 就给出完整的最小纤维，不限于有理函数表示 (21.20)。$\square$
+
+**定义 21.6（实际观察、等价关系与数学白话）。** 这份观察先记住全部“能把三个指定方向同时送入窗口”的原向量，它们组成实际的 $T$；再记住窗口已完整保留的最大 $K$-空间 $C$。在 $KT$ 中，窗口已被这些读数强制为 $HT$，不是任意选取的三维片段。随后观察还保留窗口离开 $KT$ 后在原商空间中占据的实际位置 $Q$。它忘掉的是：每个商方向回到原空间时，沿 $KT/HT$ 偏移了多少。这个偏移必须同时线性地处理整个 $Q$，所以丢失的自由度是从 $Q$ 到 $KT/HT$ 的一整份线性映射。
+
+商中没有共同见证时，原空间中每个共同见证的投影都只能是零；再由 (21.7)，它恰落在原 $T$ 中。反过来，(21.8)–(21.9) 证明：如果商中存在非零共同见证，它在全部 $H$ 方向上的误差总能由同一个原向量修正，所以任何普通提升都会长出额外见证。因此“商中无见证”同时必要且充分，全部合格提升还自动保留原 core。这正是普通 Grassmann 图坐标之外所需的实际实现桥。
+
+窗口是否相同、是否能由原域中的一个非零数整体相乘得到，以及是否能由一般线性变换得到，是三个不同的判断。最小纤维把这一区别写得完全具体。当 $[L:F]=8$ 时，$\tau,v$ 是原 $L$ 的 $K$-基，且对任意 $s,s'\in F$，映射
+
+$$
+\Psi_{s,s'}(k\tau+\ell v)
+=k\tau+\ell v+\ell(s'-s)z\tau,
+\qquad k,\ell\in K,
+\tag{21.22}
+$$
+
+是可逆的 $K$-线性剪切，固定 $K\tau$ 中的每个点，在 $L/K\tau$ 上诱导恒等，并把 $W_s$ 送到 $W_{s'}$。但 $s\ne s'$ 时它不可能是原 $L^\times$ 的乘法：乘法若固定非零 $\tau$，该标量只能为 $1$，而此剪切并非恒等。故扩大到 $K$-线性等价会把整个最小族合并，不能把这种合并当成实际标量恢复。一般纤维的可用标量域则由 (21.10) 指定，并须按 (21.13) 比较；仿射图中的两个不同点本身不是一般情形下的不相似证明。
+
+标准图坐标与普通向量空间分裂分别提供截面和坐标选择；稳定子成域及奇维稳定子没有在这里取得新的名称。Frobenius 乘法配对与饱和的成熟输入见 Bachoc–Serra–Zémor，[*Revisiting Kneser's theorem for field extensions*，arXiv:1510.01354v2，§§2.2–2.3](https://arxiv.org/pdf/1510.01354v2)；$HH=K$ 所用的乘积张成见 Eliahou–Lecouvey，[*On linear versions of some addition theorems*，arXiv:0802.3523v1，Proposition 6.5](https://arxiv.org/pdf/0802.3523v1)，该命题只要求有限交换域扩张及两维数之和大于总次数，没有可分性前件。这些内容及 $K\otimes_F(T/C)\cong KT/C$、$W\cap KT=HT$、两项维数公式均按 §20 直接复用。
+
+四次纯不可分域本身也已有明确先例：Kussin，[*Parameter curves for the regular representations of tame bimodules*，arXiv:0712.3274v3，§2、Theorem 6.1(iii)、Examples 6.3(1)](https://arxiv.org/pdf/0712.3274v3) 使用四次无本原元的域扩张及相应 species。把一个窗口的包含映射写成 $F^m\to K^r$ 时，通常表示同构允许源端 $F$-线性换基和目标端 $K$-线性换基；后者已包含 (21.22)。这种表示等价与本节的原 $L^\times$ 群不同，不能从其参数曲线直接替代固定实际 $T,C,Q$ 的标量问题。Gulde–Stroppel 前引文 Theorem 2.10(b)–(e) 明确给出特征二的稳定子域结构，§6.10 还处理四次纯不可分情形及其指定外积商上的轨道；稳定子域或四次域不是这里的新输入，其外积商的作用也不直接等同于 (21.4) 的提升纤维作用。
+
+Bartoli–Csajbók–Marino–Trombetti，[*Evasive subspaces*，arXiv:2005.08401v2，Definition 1.1](https://arxiv.org/pdf/2005.08401v2)，及 Marino–Neri–Trombetti，[*Evasive subspaces, generalized rank weights and near MRD codes*，arXiv:2204.11791v1，§§1–3](https://arxiv.org/pdf/2204.11791v1)，研究的是有限域扩张下的子空间交叠及其编码对应。这里 $K/F$ 为非平凡指数一扩张；若 $F$ 有限，则 $K$ 也有限且平方映射为双射，$K^2\subseteq F$ 将迫使 $K\subseteq F$，与四次条件矛盾。因此不能直接借用那些有限域的可达性或极值分类。
+
+相对于这些成熟输入，本节推导的关系是固定实际数据的充要可实现条件、(21.9) 的实际共同见证提升、由原乘法确定的完整纤维标量作用，以及 (21.14) 与本观察自身准确首界的连接。不据这些来源范围主张历史首次性。§18 的旧端点与八次域继续作为已有实例使用；§19 的完整来源恢复也保持原范围。尤其由 (19.11) 与 (21.17)，最小族的不同参数具有不同的完整 $\operatorname{Src}$，不能声称它们保留相同完整来源；它们保留的是本节的固定 $T,C,Q$。
+
+白话说，即使把共同见证的原位置、完整稳定部分和窗口在商中的位置都留下，原空间中仍可有不同的接回方式。若接回时没有缺失方向，或商中根本没有待接回的方向，窗口就被唯一确定；两者同时存在时，丢失的信息不能全部由原域的整体缩放消去。这个结论讨论的是指定纯不可分域中的实际子空间，不赋予商一个未定义的乘法，也不把抽象坐标变化当成原物理操作。若连接本卷的量子入口，仍须另有原 P+K、指定投影及其余前件；本节没有从这些窗口读数推出 Born 规则、复数域、物理三维、可实施门或全部量子起源。
+
+## 追加锚（本行以下为增补区）
+
+## 22　同一实际域中的余项维数与窗口充要谱
+
+**定义 22.1（零共同见证与实际次数）。** 设 $\operatorname{char}F=2$、$K^2\subseteq F$、$[K:F]=4$，固定任意三维 $F$-子空间 $H\le K$，不要求 $1\in H$。对有限维实际 $K$-向量空间 $E$ 及 $Q\le_F E$，记
+
+$$
+Z_H^E(Q)=\{v\in E:hv\in Q\text{ 对每个 }h\in H\}.
+\tag{22.1}
+$$
+
+这里 $hv$ 只用给定的同一 $K$-模作用。接回定义 20.1 时，仍固定原来的实际 $L,K,H$，并记 $N=[L:K]$、$n=[L:F]=4N$。$N$ 是这份实际扩张的次数，不是可任意另选的正整数。
+
+**定理 22.2（原窗口的完整整数谱及其位置条件）。** 对每份固定实际 $L,K,H$，存在窗口 $W\le_F L$ 使
+
+$$
+\dim_FW=m,\qquad \dim_F(W:H)=j,\qquad \dim_F(W:K)=c
+$$
+
+当且仅当存在非负整数 $r,t,q$ 满足
+
+$$
+\boxed{
+\begin{gathered}
+c=4r,\qquad j=4r+t,\qquad m=4r+3t+q,\\
+r+t\le N,\qquad
+0\le q\le\left\lfloor\frac{8(N-r-t)}3\right\rfloor.
+\end{gathered}}
+\tag{22.2}
+$$
+
+更精确地，若预先固定实际 $F$-子空间 $C\subseteq T\le L$，则它们能作为某个窗口的 $(W:K)$、$(W:H)$，当且仅当 $C$ 是 $K$-子空间，且定理 21.2 的自然乘法映射
+
+$$
+K\otimes_F(T/C)\longrightarrow KT/C
+\tag{22.3}
+$$
+
+是同构。这些条件成立时，令 $r=\dim_KC$、$t=\dim_F(T/C)$、$d=N-r-t$；保持这两个实际子空间不变的全部窗口维数恰为
+
+$$
+m=4r+3t+q,\qquad 0\le q\le\left\lfloor\frac{8d}3\right\rfloor.
+\tag{22.4}
+$$
+
+若还固定实际 $Q\le_F L/KT$，则须进一步满足 $Z_H^{L/KT}(Q)=0$，且 $m=4r+3t+\dim_FQ$；仅有 $0\le\dim_FQ\le\lfloor8d/3\rfloor$ 不够。这里直接使用定理 21.2 的全部提升结论，不另作提升纤维或标量轨道分类。
+
+证明。先将所需 evasive 输入落实到给定实际域与指定 $H$。有限域中，Bartoli–Csajbók–Marino–Trombetti，[*Evasive subspaces*，arXiv:2005.08401v2，Definition 1.1、Theorem 2.11、Proposition 4.5、Corollary 4.9 及 §5 的 $n=4$ 情形](https://arxiv.org/pdf/2005.08401v2)，已给出相应交叠性质、直和、上界及低维极大空间。其 Corollary 4.9 代入扩张次数 $n=4$、环境维数 $r=d$、$h=1,k=2$，上界就是 $8d/3$；Proposition 4.5 代入 $r=2,n=4,k=2$ 给五维块，§5 给三维环境中的八维块，一维环境的二维块是定义中的直接情形。取子空间的遗传性也已在该文 Definition 1.1 后明确指出。这些维数与操作不作为新的承重结论。
+
+任意域的框架亦已有 Neri–Zullo，[*Rank-metric codes over arbitrary fields: Bounds and constructions*，Art Discrete Appl. Math. 9，P2.09，DOI 10.26493/2590-9770.1852.9ca，Definition 2.15、Theorems 2.13、2.19](https://adam-journal.eu/index.php/ADAM/article/download/1852/1710)。其扩张域 $L$、底域 $K$ 在这里分别对应我们的 $K,F$，扩张次数 $m=4$；不能把其 Example 2.18 的循环 Galois 自同构直接搬到本设定。以下只给成熟配对与单校验构造在这个实际域中的参数对应和共同乘法核对，不另建一般域框架。
+
+取 $F$-线性泛函 $\rho:K\to F$，使 $\ker\rho=H$。由 §20 使用的 Frobenius 乘法配对，$a\mapsto(k\mapsto\rho(ak))$ 将 $K$ 同构到其 $F$-线性对偶。因此每个三维子空间 $J\le_F K$ 都是某个 $aH$，$a\in K^\times$：若 $J=\ker\sigma$，写 $\sigma(k)=\rho(bk)$，即有 $J=b^{-1}H$。对任意 $K$-模 $E$，这给出准确对应
+
+$$
+Z_H^E(Q)=0
+\quad\Longleftrightarrow\quad
+\dim_F(Q\cap Kx)\le2\quad(0\ne x\in E).
+\tag{22.5}
+$$
+
+确实，非零见证 $v$ 给出三维 $Hv\subseteq Q\cap Kv$；反之，若交叠维数至少三，在系数空间中取三维 $J$ 使 $Jx\subseteq Q$，再写 $J=aH$，便得非零见证 $ax$。使用的是同一个实际 $H$ 的标量倍，并未改变域或乘法。式 (22.5) 是 $(1,2)$-evasive 的交叠性质；这里不要求 $Q$ 张成整个 $E$，也包括 $Q=0$ 和一维 $K$-环境，不将它们硬套到要求张成且 $h<k$ 的 system 定义。
+
+设 $d=\dim_KE$、$q=\dim_FQ$。若 $Z_H^E(Q)=0$，则原乘法给出的 $F$-线性映射
+
+$$
+E\longrightarrow\operatorname{Hom}_F(H,E/Q),
+\qquad v\longmapsto\bigl(h\mapsto hv+Q\bigr)
+\tag{22.6}
+$$
+
+单射，因为其核正是 (22.1)。所以 $4d\le3(4d-q)$，即 $q\le\lfloor8d/3\rfloor$。这个维数论证保留原域全部点，无有限域计数前件。
+
+为核对充分性，在 $K^s$ 中取 $s=1,2,3$，并选 $a_1,\ldots,a_s\in K$ 使 $1,a_1,\ldots,a_s$ 在 $F$ 上独立。记标准 $K$-基为 $e_1,\ldots,e_s$，置
+
+$$
+\begin{aligned}
+u_s&=\sum_{i=1}^s a_i e_i,\qquad
+R_s=Fe_1+\cdots+Fe_s+Fu_s,\\
+B_s(x,y)&=\rho\left(\sum_{i=1}^s x_i y_i\right),\qquad
+Q_s=R_s^{\perp_{B_s}}.
+\end{aligned}
+\tag{22.7}
+$$
+
+$B_s$ 是 §20 同一成熟乘法配对的逐坐标使用，非退化且满足 $B_s(hx,y)=B_s(x,hy)$。$R_s$ 的指定 $s+1$ 个向量在 $F$ 上独立：任何含非零 $u_s$ 系数的关系都会迫使每个 $a_i\in F$。所以
+
+$$
+\dim_FR_s=s+1,\qquad \dim_FQ_s=4s-(s+1)=3s-1.
+\tag{22.8}
+$$
+
+这也就是普通单校验秩码的坐标形式。矩阵 $G_s=[I_s\mid(a_1,\ldots,a_s)^{\mathsf T}]$ 生成长度 $s+1$、$K$-维数 $s$、最小 $F$-秩距离 $2$ 的码，校验行为 $(-a_1,\ldots,-a_s,1)$。若码字有秩一，可将其写成 $\xi(f_1,\ldots,f_s,f_0)$，其中 $\xi\ne0$、$f_i\in F$；校验式给 $f_0=\sum a_i f_i$，由独立性迫使全部 $f_i=0$。只取一个非零输入坐标则得到秩恰为二的码字。因此 Neri–Zullo Theorem 2.13 的参数正是 $n=s+1,k=s,m=4$，关联 system 为 $R_s$。这是成熟秩码的实际构造，不声称产生新的码族。
+
+还须核对它与指定 $H$ 的共同关系。考虑
+
+$$
+K/F\longrightarrow\operatorname{Hom}_F(H,F),
+\qquad a+F\longmapsto\bigl(h\mapsto\rho(ah)\bigr).
+\tag{22.9}
+$$
+
+该映射定义良好，因为 $\rho(H)=0$。非退化乘法配对下 $H$ 的正交补为一维，且包含 $F1$，所以从 $K$ 出发的限制映射 $a\mapsto\rho(a\,\cdot)|_H$ 的核恰为 $F1$。因此商映射 (22.9) 单射；两边维数同为三，它是同构。由 $a_1+F,\ldots,a_s+F$ 独立，映射
+
+$$
+\gamma_s:H\longrightarrow F^s,
+\qquad h\longmapsto\bigl(\rho(a_1h),\ldots,\rho(a_sh)\bigr)
+\tag{22.10}
+$$
+
+满射：其对偶映射把标准对偶基送到 (22.9) 下的这 $s$ 个独立泛函，因而单射。
+
+令 $A_s=He_1\oplus\cdots\oplus He_s$。$K^s/A_s$ 由逐坐标的 $\rho$ 同构到 $F^s$，而 $Hu_s$ 在这个商中的像正是 $\gamma_s(H)$。因此
+
+$$
+HR_s=A_s+Hu_s=K^s,\qquad
+Z_H^{K^s}(Q_s)=(HR_s)^{\perp_{B_s}}=0.
+\tag{22.11}
+$$
+
+第二式逐元素来自 $B_s(hv,r)=B_s(v,hr)$。在 (22.10) 中一次选择同一个 $h$，就同时指定了全部 $s$ 个商坐标；不是先分别取各坐标的原像再假设它们相容。这证明 (22.7) 的二维、五维、八维块在每份实际 $K,H$ 中都可用，包括 $1\notin H$。其中八维块直接复用命题 20.3 的配对—联合乘积形式，(22.9) 给出任意 $H$ 所需的坐标对应。
+
+对任意 $d$，写 $d=3a+b$，$a\ge0$、$b\in\{0,1,2\}$。在给定 $E$ 的一份实际 $K$-基上，取 $a$ 个三维 $K$-块，若 $b>0$ 再取一个 $b$ 维块；把各块的 $Q_3$、$Q_b$ 作直和。由于 $H$ 的作用保持这些 $K$-直和分量，共同见证逐投影也作直和，所以所得 $Q_{\max}$ 满足
+
+$$
+Z_H^E(Q_{\max})=0,\qquad
+\dim_FQ_{\max}=
+\begin{cases}
+8a,&b=0,\\
+8a+2,&b=1,\\
+8a+5,&b=2
+\end{cases}
+=\left\lfloor\frac{8d}3\right\rfloor.
+\tag{22.12}
+$$
+
+这正是前引有限域 Theorem 2.11 的直和性质在当前原乘法中的直接使用。取 $Q_{\max}$ 的任意一份 $F$-基，其初始片段张成嵌套旗标；每个子空间 $Q$ 都有 $Z_H^E(Q)\subseteq Z_H^E(Q_{\max})=0$。所以在同一个实际 $E,K,H$ 中，所有整数均实现，得到所需的精确输入
+
+$$
+\{\dim_FQ:Q\le_F E,\ Z_H^E(Q)=0\}
+=\{0,1,\ldots,\lfloor8d/3\rfloor\}.
+\tag{22.13}
+$$
+
+$d=0$ 时取空直和与零空间，上下两边都只有零。这一结论只需要实际 $K$-模；没有要求 $E$ 本身为域。
+
+现在接回原窗口。对任意实际 $W$，定理 20.2 与定理 21.2 已给出 $C=(W:K)$、$T=(W:H)$ 的乘法同构、$W\cap KT=HT$ 及商余项 $Q=\pi(W)\le L/KT$ 的零共同见证条件。令 $r=\dim_KC$、$t=\dim_F(T/C)$，直接引用其维数公式，有
+
+$$
+\dim_KKT=r+t,\qquad
+\dim_K(L/KT)=N-r-t,
+\qquad m=4r+3t+\dim_FQ.
+\tag{22.14}
+$$
+
+把 (22.13) 应用于实际 $K$-模 $L/KT$，便得到 (22.2) 的全部必要条件。这一步使用 §21 已证的商见证提升必要性，未把商中的包含关系当作其替代证明。
+
+反之，给定满足 (22.2) 的整数，在原 $L$ 中选一份 $K$-基，取其中 $r$ 个方向的 $K$-张成为 $C$，另取 $t$ 个基向量 $v_i$，令
+
+$$
+T=C\oplus\bigoplus_{i=1}^t Fv_i,
+\qquad D=KT=C\oplus\bigoplus_{i=1}^t Kv_i.
+\tag{22.15}
+$$
+
+乘法同构 (22.3) 由这些实际基向量保证。余下基向量给出实际 $K$-补空间 $U$，$L=D\oplus U$、$\dim_KU=N-r-t$。按 (22.13) 在 $U$ 中选择所需维数 $q$ 的 $Q_0$，其商像 $Q\le L/D$ 仍无共同见证。定理 21.2 即保证实际窗口
+
+$$
+W=C\oplus\bigoplus_{i=1}^t Hv_i\oplus Q_0
+\tag{22.16}
+$$
+
+具有恰好的 $T,C$，并有 (22.2) 的 $m,j,c$。所有分量都在同一个原 $L$ 内，$H$ 和乘法从未更换。这证明存在性的充分方向。
+
+若固定实际 $T,C$，其相容性正由定理 21.2 的前两项决定。条件成立后，(22.14) 自动给 $r+t\le N$；在实际商空间中用 (22.13) 选 $Q$，再引用同一定理的普通线性提升，即实现 (22.4) 的每个 $m$。特别取 $Q=0$ 就得到一个窗口，所以这里没有额外的存在性条件。若还固定 $Q$，则直接保留定理 21.2 的第三项及维数式，得到陈述中的准确判据；没有把 $Q$ 的位置条件消成一个整数。
+
+这两个量词区别有实际反例。若 $N\ge2$，在原 $L$ 中取 $K$-独立的 $x,y$ 及 $a\in K\setminus F$。$C=0$、$T_-=Fx+Fax$ 的维数数据 $r=0,t=2,q=0$ 满足 (22.2)，但 $KT_-=Kx$，故 (22.3) 不可能是同构：其定义域的 $K$-维数为二，值域的 $K$-维数为一。因此没有窗口实现这个实际 $T_-$。同样维数的 $T_+=Fx+Fy$ 则相容，$W=Hx\oplus Hy$ 给出 $m=6,j=2,c=0$。这证明只固定整数允许选择位置，固定实际 $T$ 后必须检验位置。
+
+同理，若相容 $T,C$ 的商空间 $V=L/KT$ 有 $K$-维数 $d\ge2$，取 $0\ne v\in V$，则 $Q_-=Hv$ 为三维，且 $3\le\lfloor8d/3\rfloor$，但 $v\in Z_H^V(Q_-)$。它不能作为保持这份实际 $T,C$ 的余项。另一方面，(22.13) 在同一个 $V$ 中给出三维 $Q_+$，满足 $Z_H^V(Q_+)=0$，所以它能够提升。维数相同不替代零共同见证性质。
+
+边界亦由同一谱支付。$r+t=N$ 时只有 $q=0$；$W=0$ 对应 $r=t=q=0$，$W=L$ 对应 $r=N,t=q=0$。$N=1$ 时，所得窗口读数正是 §20 已给出的 $m=0,1,2$ 时 $j=c=0$、$m=3$ 时 $(j,c)=(1,0)$、$m=4$ 时 $(j,c)=(4,4)$。若实际 $N=2$，旧必要界允许的 $(m,j,c)=(6,0,0)$ 被 (22.2) 排除，因为此时 $d=2$ 而 $q=6>5$；旧界不能代替充分谱。
+
+最后，$L^2\subseteq F$ 使每次添入一个尚不在当前中间域的元素，其次数均为二；有限扩张因而给 $[L:F]$、$N=[L:K]$ 为二的幂。本证明对每份已经给定的实际 $L$ 使用其 $N$，并未构造任意整数 $N$ 的指数一域。若 $F$ 有限，$K$ 也有限且平方映射满射，$K^2\subseteq F$ 将迫使 $K=F$，所以非平凡四次设定没有有限底域实例。以上充分性不用有限域 Frobenius 自同构、域迹、泛点或扩域。$\square$
+
+**定义 22.3（谱、来源与白话释义）。** 原窗口的维数预算分成三部分：完整 $K$-稳定部分每个 $K$ 方向占四维；模去它后的每个独立共同见证迫使窗口再保留一个三维 $H$ 片；余下商空间可以容纳一些不产生额外共同见证的方向。前两部分正是 §20 的结构；§21 保证第三部分有没有非零共同见证，准确控制提升后会不会长出新的见证。式 (22.13) 说明第三部分的容量恰为其 $K$-维数的 $8/3$ 向下取整，而且每个更小整数都能取到。因此 (22.2) 把旧结构与实际余项容量接成了双向可实现条件。
+
+这里“同一实际”意味着先固定 $F,K,H,L$，然后在它们内部选择窗口。把存在量词中的实际 $T,C$ 也固定下来，就必须要求它们真由原乘法组成 (22.3)，只有维数相等不能保证这一点；再固定 $Q$，还必须逐向量保留 (22.1) 的零条件。式 (22.10) 解释了可达性为何是共同的：三个输出方向来自同一个输入 $h$ 的三个独立线性读数，故能同时填满缺失的商坐标。块的直和与取子空间均在这份原 $K$-模内进行，所有维数的旗标使用原域实际 $F$ 点。
+
+前引有限域来源的 $2/5/8$ 维块、$8d/3$ 界、直和及遗传性均保留其成熟输入身份。Marino–Neri–Trombetti，[*Evasive subspaces, generalized rank weights and near MRD codes*，arXiv:2204.11791v1，Theorem 3.3](https://arxiv.org/pdf/2204.11791v1)，已给有限域的秩权—交叠对应；Neri–Zullo 前引文 Theorems 2.13、2.19 则给任意有限次域扩张的对应，其 §4.2 还明确区分一般域与循环 Galois 构造。Giannoni，[*Evasive subspaces, minimal rank-metric codes and subspace designs via auxiliary fields*，arXiv:2611.08627v1，Theorem 1.1、引言与 Remark 6.3](https://arxiv.org/pdf/2611.08627v1)，明确将 $h=1<k$ 的结论列为已知或初等；这里的有限域参数是 $n=4,h=1,k=2$，不从其充分大维数定理冒领任意实际纯不可分域或全部余数类。
+
+本条承接的是原窗口 $(m,j,c)$ 的完整充要谱、指定 $H$ 的共同满射与 §21 实际商提升的连接，以及固定位置和只固定整数的量词差异；没有把一般域框架、成熟单校验码或已有配对另立为新理论。四次纯不可分域、奇维稳定子及 species 的来源继续按 §21 的 Gulde–Stroppel、Kussin 对应使用。不主张全球首次性或一般全部标量轨道分类；本谱也不推出 Born 规则、物理三维、复数域或全部量子起源。
+
+## 追加锚（本行以下为增补区）
+
+## 23　四次实际域塔上线性结构的任意特征适用范围
+
+**推论 23.1（§§20–22 的范围及来源边界）。** 固定交换域的有限次扩张塔 $F\subset K\subseteq L$，$[L:F]<\infty$、$[K:F]=4$，令 $N=[L:K]$、$n=4N$，固定任意三维 $F$-子空间 $H\le K$。不要求 $1\in H$，不要求可分、正规、循环、特征二或平方落在 $F$。以下沿用 (20.1)、(21.1)–(21.3)、(22.1) 的子空间公式，均在这份实际域塔与原乘法中解释；不改变旧条目的前件，也不把原商空间赋予新的域乘法。
+
+（一）对每个实际窗口 $W\le_F L$，$T=(W:H)$、$C=(W:K)$ 满足 $C$ 为 $W$ 中最大的 $K$-子空间及 $(T:H)=C$，且
+
+$$
+\begin{gathered}
+K\otimes_F(T/C)\xrightarrow[\ k\otimes(x+C)\mapsto kx+C\ ]{\ \sim\ }KT/C,\\
+W\cap KT=HT,\\
+c=\dim_F C=4r,\quad t=\dim_F(T/C),\quad j=\dim_FT=4r+t,\\
+\dim_FKT=4r+4t,\quad\dim_FHT=4r+3t,\\
+4r+3t\le m=\dim_FW,\quad 4r+4t\le n,\quad m+t\le n.
+\end{gathered}
+\tag{23.1}
+$$
+
+因而 $m\le11$ 或 $n<16$ 时仍有 $c=4\lfloor j/4\rfloor$；后一范围现在包括 $n=12$。
+
+（二）预先给定实际 $C\subseteq T\le_F L$，置 $D=KT$、$A=HT$、$V=L/D$、$\pi:L\to V$。再固定实际 $Q\le_F V$，令 $B=\pi^{-1}(Q)$、$R=D/A$、$q=\dim_FQ$。存在具有这份 $(T,C,Q)$ 的窗口，当且仅当
+
+$$
+C\text{ 是 }K\text{-子空间},\qquad
+K\otimes_F(T/C)\longrightarrow D/C\text{ 是乘法同构},\qquad
+Z_H^V(Q)=(Q:_V H)=0.
+\tag{23.2}
+$$
+
+第二项在第一项成立后解释为 $K$-线性映射。给定 $C\not\subseteq T$ 时纤维为空。前两项成立时令 $r=\dim_KC$、$t=\dim_F(T/C)$。满足 (23.2) 时，全部普通提升 $W\cap D=A$、$\pi(W)=Q$ 恰为全部合格窗口；它们是
+
+$$
+0\longrightarrow R\longrightarrow B/A\longrightarrow Q\longrightarrow0
+\tag{23.3}
+$$
+
+的 $F$-线性截面，组成 $\operatorname{Hom}_F(Q,R)$ 的仿射挠子，$\dim_FR=t$、$\dim_FW=4r+3t+q$、$\dim_FB=4r+4t+q$。仅满足前两项时，每个普通提升仍有准确的共同见证正合列
+
+$$
+0\longrightarrow T\longrightarrow(W:H)\xrightarrow{\pi}Z_H^V(Q)\longrightarrow0.
+\tag{23.4}
+$$
+
+因此第三项是全部普通提升保留 $T$ 的充要条件。
+
+（三）对非空纤维，原域内的
+
+$$
+E=\{x\in L:xT\subseteq T,\ xB\subseteq B\}
+\tag{23.5}
+$$
+
+是实际中间域；恰好 $E^\times$ 是能将纤维中某个窗口乘到该纤维的全部 $L^\times$ 标量。选截面 $\sigma$，以 $W_\phi/A=(\sigma+\phi)(Q)$ 记窗口。对 $x\in E^\times$，以 $a_x,b_x,m_x$ 记原乘法在 $R,Q,B/A$ 上的作用，令 $c_x=m_x\sigma-\sigma b_x$，则
+
+$$
+x\cdot\phi=(a_x\phi+c_x)b_x^{-1},\qquad
+W_\phi\sim_{L^\times}W_\psi
+\ \Longleftrightarrow\ 
+\exists x\in E^\times:\ \psi b_x=a_x\phi+c_x.
+\tag{23.6}
+$$
+
+可取 $E$-线性截面使全部 $c_x=0$。固定实际 $(T,C,Q)$ 的纤维只含一个标量轨道，当且仅当 $tq=0$；此时实际窗口也唯一：$t=0$ 时为 $B$，$q=0$ 时为 $HT$。当 $tq>0$，至少有两个轨道；一般不宣称不同仿射坐标两两不相似。
+
+（四）对任何给定的有限维实际 $K$-模 $M$，$d=\dim_KM$，余项容量仍准确为
+
+$$
+\{\dim_FQ:Q\le_FM,\ Z_H^M(Q)=0\}
+=\{0,1,\ldots,\lfloor8d/3\rfloor\}.
+\tag{23.7}
+$$
+
+故在固定的实际 $L,K,H$ 中，存在维数读数 $(m,j,c)$ 的窗口，当且仅当有非负整数 $r,t,q$ 满足
+
+$$
+\boxed{\quad c=4r,\quad j=4r+t,\quad m=4r+3t+q,\quad
+r+t\le N,\quad 0\le q\le\lfloor8(N-r-t)/3\rfloor.\quad}
+\tag{23.8}
+$$
+
+若固定实际 $T,C$，须且只须 (23.2) 的前两项；相容时，令 $d=N-r-t$，保持它们的窗口维数恰为 $4r+3t+q$、$0\le q\le\lfloor8d/3\rfloor$。再固定实际 $Q$ 时，须保留第三项，不能以容量不等式替代。这里 $N$ 始终是原 $L/K$ 的实际次数，无二幂限制；不声称任意给定 $K/F$ 都有任意次数的上层域扩张。
+
+（五）两种观察的首界分别保持如下：同一实际 $L,K,H$ 中，$(m,j)$ 不能决定 $c$ 的最小窗口维数和环境次数为 $(12,16)$；固定实际 $(T,C,Q)$ 不能决定窗口标量轨道的相应首界为 $(4,8)$。更具体地，前一种碰撞在每份 $N\ge4$ 的塔中存在，$N<4$ 时不存在；后一种在每份 $N\ge2$ 的塔中存在，$N=1$ 时不存在。后一种的所有四维非恢复纤维，仍恰为
+
+$$
+\begin{gathered}
+W_s=H\tau\oplus F\cdot(v+s z\tau),\quad s\in F,\quad
+0\ne\tau\in L,\quad v\notin K\tau,\quad z\in K\setminus H,\\
+T=F\tau,\quad C=0,\quad Q=F\cdot(v+K\tau),\qquad
+W_s\sim_{L^\times}W_{s'}\ \Longleftrightarrow\ s=s'.
+\end{gathered}
+\tag{23.9}
+$$
+
+这些首界也可在特征零达到，且有 $N=3$、$1\notin H$ 的实际实例。
+
+（六）上述范围扩张限于指定 $H$ 的共同乘法、普通提升和窗口谱。旧全域公式 $\kappa(u\wedge v)=uv+F$ 存在为交替线性映射，当且仅当 $L^2\subseteq F$；在这里的非平凡塔中，它还强制 $\operatorname{char}F=2$。实际二次子域的可见性及其标量不变性可保留；§18 的记录—二次来源绑定与 §19 的完整来源恢复不能随本推论同步扩张。
+
+证明。先在原 $K$ 中取非零 $F$-线性泛函 $\rho$，$\ker\rho=H$。所用成熟输入是 Eliahou–Lecouvey，[arXiv:0802.3523v1，Proposition 6.5](https://arxiv.org/pdf/0802.3523v1) 的有限交换域乘积张成，以及 Bachoc–Serra–Zémor，[arXiv:1510.01354v2，§2.2](https://arxiv.org/pdf/1510.01354v2) 的非退化乘法配对 $\rho(ab)$。前者代入 $H,H\le K$，由 $3+3>4$ 得 $HH=K$；后者不以域迹或可分性为前件。于是结合律给
+
+$$
+((W:H):H)=(W:HH)=(W:K)=C.
+\tag{23.10}
+$$
+
+先补足两处旧证明中的平方用法。有限维子空间 $U$ 若满足 $xU\subseteq U$、$x\ne0$，则原乘法在 $U$ 上单射，故 $xU=U$、$x^{-1}U=U$；$U=0$ 也成立。保持给定子空间的标量集合含 $F$，对和、积封闭；上述逆元性质使它成为原 $L$ 内的子域，亦可取若干这种集合的交。这正是 Bachoc–Serra–Zémor 的 Corollary 14 前有限维稳定子说明；不将该推论对饱和类的对偶等式套给任意子空间。特别对
+
+$$
+S_H=\{k\in K:kH\subseteq H\}
+$$
+
+有 $[S_H:F]\mid[K:F]=4$，且 $H$ 是 $S_H$-空间给 $[S_H:F]\mid3$，故 $S_H=F$。这替代旧证明中“$k\notin F$ 则 $F(k)/F$ 二次”的论证，也替代 (21.10) 后的 $x^{-1}=x/x^2$；两者均不再需要平方条件。
+
+现在核对结构，而非仅将旧前件删去。$C$ 是 $W$ 中最大 $K$-空间，$C\subseteq T$、$HC=C$。取 $z\in K$ 使 $\rho(z)=1$，令 $p:L\to L/W$。对 $x\in T$，由 $k-\rho(k)z\in H$ 得
+
+$$
+p(kx)=\rho(k)p(zx),\qquad k\in K.
+\tag{23.11}
+$$
+
+映射 $T/C\to L/W$、$x+C\mapsto p(zx)$ 单射：若像为零，(23.11) 给 $Kx\subseteq W$。取 $T/C$ 的 $F$-基 $t_i+C$，则 $p(zt_i)$ 独立。若 $\sum k_it_i\in C$，将它乘以每个 $s\in K$ 再用 (23.11)，得到每个 $i$ 的 $\rho(sk_i)=0$ 对全部 $s$ 成立；配对非退化给 $k_i=0$。所以在原 $L$ 中
+
+$$
+KT=C\oplus\bigoplus_{i=1}^t Kt_i,\qquad
+W\cap KT=C\oplus\bigoplus_{i=1}^t Ht_i=HT.
+\tag{23.12}
+$$
+
+第二式由 $p(c_0+\sum k_it_i)=\sum\rho(k_i)p(zt_i)$ 得到。两份直和证明乘法同构与 (23.1)；$\dim_F(W+KT)=m+t$ 给最后一界。$m\le11$ 迫使 $t\le3$；$n<16$ 时 $t\le N\le3$。将 $j=4r+t$ 除以四即得恢复式。所有运算均未要求 $1\in H$；任选 $h_0\in H\setminus\{0\}$ 时，同时缩放 $(H,W)\mapsto(h_0^{-1}H,h_0^{-1}W)$ 也保持 $T,C,m,j,c$，但这里不必改变原 $H$。
+
+对预先给定的 $C,T$，假定 (23.2) 前两项，仍有 (23.12) 中 $D=C\oplus\bigoplus Kt_i$、$A=C\oplus\bigoplus Ht_i$。用刚证的 $S_H=F$ 逐坐标得
+
+$$
+(A:H)=T,\qquad (A:K)=C,\qquad (T:H)=C.
+\tag{23.13}
+$$
+
+这些等式也排除 $D$ 外的向量：$xH\subseteq D$ 蕴涵 $x=h_0^{-1}(h_0x)\in D$，因为 $D$ 为 $K$-空间。对最后一式，非零系数不能将三维 $H$ 乘进一维 $F$。因此原乘法诱导
+
+$$
+\beta:D/T\longrightarrow\operatorname{Hom}_F(H,R),\qquad
+\beta(d+T)(h)=hd+A
+\tag{23.14}
+$$
+
+为单射；两边维数同为 $3t$，故它为同构。这是全部共同方向能由同一个原向量修正的步骤。
+
+普通 $F$-线性截面存在，且其图与 $W\cap D=A$、$\pi(W)=Q$ 的窗口双向唯一对应，这是 (23.3) 的普通线性代数，也对应 [Stacks，Tag 089R，Lemma 27.22.1](https://stacks.math.columbia.edu/tag/089R) 的 Grassmann 仿射图。对任一截面 $\sigma$，(23.4) 中映射的核由 (23.13) 恰为 $T$。为证满射，取 $v\in Z_H^V(Q)$ 及原提升 $y\in L$；则
+
+$$
+e(h)=\sigma(hv)-(hy+A)\in R,\qquad h\in H,
+$$
+
+是一份 $F$-线性映射。由 (23.14) 取一个 $d\in D$，同时满足 $hd+A=e(h)$ 对全部 $h$；于是 $h(y+d)+A=\sigma(hv)$，即 $y+d\in(W:H)$。这证明完整正合列，包括其必要方向。$Z_H^V(Q)=0$ 时 $(W:H)=T$；又 $C\subseteq(W:K)\subseteq T\subseteq D$，用 $W\cap D=A$ 及 (23.13) 得 $(W:K)=C$。反之，实际窗口的前两项来自 (23.12)，第三项由 (23.4) 强制。截面之差为 $\operatorname{Hom}_F(Q,R)$，故挠子与维数公式全部成立。
+
+有限维逆元论证同时证明 (23.5) 的 $E$ 为子域。若 $xW=W'$ 且二者在同一纤维，原乘法的交换性给 $xT=T$，继而 $xD=D$，由 $B=W+D=W'+D$ 得 $xB=B$。故 $x\in E^\times$。反之，$x\in E^\times$ 保持 $T,D,A$，由 $C=(T:H)$ 保持 $C$，并在 $B/D$ 中保持 $Q$，所以作用于整个纤维。特别这里没有让任意 $L$ 标量作用于未被它保持的商 $L/D$。在截面坐标中计算
+
+$$
+m_x(\sigma(v)+\phi(v))
+=\sigma(b_xv)+c_x(v)+a_x\phi(v)
+$$
+
+即得 (23.6) 的两个方向。$A,D,B$ 是 $E$-空间，故 (23.3) 在 $E$ 上分裂；取 $E$-线性 $\sigma$ 即令 $c_x=0$。其零图 $W_0$ 被每个 $E^\times$ 标量固定。$tq>0$ 时，原 $F$ 上存在非零 $\phi$，图 $W_\phi\ne W_0$；若有原 $L^\times$ 标量相连，它须在 $E^\times$ 中，矛盾。$tq=0$ 时截面唯一，给出所述恢复公式。这里 $R$ 使用 $E$-结构；通常 $A$ 不为 $K$-空间，不能把 $R$ 当作 $K$-空间。
+
+为将余项容量接回任意特征，保留 §22 的成熟构造，仅核对它对原 $H$ 的适用性。乘法配对将 $K$ 同构到其 $F$-对偶，所以每个三维 $J\le_FK$ 都有 $J=aH$、$a\in K^\times$。因此
+
+$$
+Z_H^M(Q)=0\quad\Longleftrightarrow\quad
+\dim_F(Q\cap Kx)\le2\quad(0\ne x\in M).
+\tag{23.15}
+$$
+
+非零见证给出 $Hv$；反向在三维交叠中取 $Jx$，写 $J=aH$ 即得见证 $ax$。这是任意域上的 $(1,2)$ 交叠条件；零空间及不张成 $M$ 的子空间也包括在内。映射 $M\to\operatorname{Hom}_F(H,M/Q)$、$v\mapsto(h\mapsto hv+Q)$ 的核为 $Z_H^M(Q)$，故零核给 $4d\le3(4d-q)$，即 (23.7) 的上界。
+
+充分性使用 §22 的二维、五维、八维块。对 $s=1,2,3$，选 $1,a_1,\ldots,a_s\in K$ 在 $F$ 上独立，在一份实际 $K^s$ 坐标中置
+
+$$
+R_s=\operatorname{span}_F\{e_1,\ldots,e_s,\sum a_ie_i\},\quad
+B_s(x,y)=\rho(\sum x_iy_i),\quad Q_s=R_s^{\perp_{B_s}}.
+\tag{23.16}
+$$
+
+这仍是单校验矩阵 $[I_s\mid(a_1,\ldots,a_s)^{\mathsf T}]$ 的成熟列空间构造。其 $s+1$ 个指定向量独立：若 $\sum f_ie_i+f_0\sum a_ie_i=0$，$f_i\in F$，$f_0\ne0$ 将迫使所有 $a_i\in F$，矛盾；$f_0=0$ 又迫使所有 $f_i=0$。所以 $\dim_FR_s=s+1$；逐坐标的非退化配对给 $\dim_FQ_s=3s-1$。其与原 $H$ 的共同关系由
+
+$$
+K/F\xrightarrow{\ \sim\ }\operatorname{Hom}_F(H,F),\qquad
+ a+F\longmapsto(h\mapsto\rho(ah))
+\tag{23.17}
+$$
+
+承担：$H$ 在乘法配对下的正交补恰为 $F1$，所以此映射的核已恰被模去，两边维数同为三。$a_i+F$ 独立使 $h\mapsto(\rho(a_1h),\ldots,\rho(a_sh))$ 满射到 $F^s$。令 $A_s=\bigoplus He_i$，则同一个 $h$ 对 $h\sum a_ie_i+A_s$ 给出上述全部商坐标，故
+
+$$
+HR_s=K^s,\qquad Z_H^{K^s}(Q_s)=(HR_s)^{\perp_{B_s}}=0.
+\tag{23.18}
+$$
+
+没有使用 $a_i^2\in F$ 或有限域的 Frobenius 自同构。写 $d=3u+b$、$b\in\{0,1,2\}$，在实际 $M$ 的 $K$-基上用 $u$ 个三维块及一个 $b$ 维余块，得到零共同见证的直和，维数为 $8u$、$8u+2$ 或 $8u+5$，恰为 $\lfloor8d/3\rfloor$。取其一份 $F$-基的初始片段得到所有更小维数；零共同见证由子空间包含关系遗传。$d=0$ 时取空直和。这证明 (23.7) 的全部充分方向，使用的点均为原 $F$ 点。
+
+对任意原窗口，(23.1)–(23.4) 给出商 $L/KT$ 的 $K$-维数 $d=N-r-t$ 及 $m=4r+3t+q$，将 (23.7) 代入即得 (23.8) 的必要性。反向在原 $L$ 的一份 $K$-基中取 $r$ 个完整方向为 $C$，另取 $t$ 个基向量 $t_i$，令 $T=C\oplus\bigoplus Ft_i$；余下实际 $K$-补空间 $U$ 的维数为 $d$。在 $U$ 中按 (23.7) 选所需维数的 $Q_0$，则
+
+$$
+W=C\oplus\bigoplus Ht_i\oplus Q_0
+\tag{23.19}
+$$
+
+由 (23.2) 恰有指定读数。固定实际 $C,T$ 时，在实际商 $L/KT$ 中同样选择 $Q$ 并提升即可；取 $Q=0$ 已保证存在一个窗口。固定实际 $Q$ 时则必须保留零共同见证条件。这给出三个不同量词层次的充分性。
+
+位置不能消成整数。若 $N\ge2$，取原 $K$-独立的 $x,y\in L$ 及 $a\in K\setminus F$，$C=0$、$T_-=Fx+Fax$ 虽具有 (23.8) 允许的 $r=0,t=2,q=0$，但 $KT_-=Kx$ 的 $K$-维数仅一，乘法映射不可能为同构；$T_+=Fx+Fy$ 则由 $W=Hx\oplus Hy$ 实现。对相容 $T,C$ 的实际商 $V$，若 $\dim_KV=d\ge2$，取 $v\ne0$，$Q_-=Hv$ 的维数三在容量内，却有见证 $v$，不可提升为这份读数；(23.7) 在同一 $V$ 中给出三维零见证的 $Q_+$，可以提升。这两个比较都保持原域和实际乘法。
+
+对相容数据，全部退化边界由同一论证覆盖：$T=C$ 时 $D=A=C$；$Q=0$ 时窗口恰为 $A$；$r+t=N$ 时只能有 $q=0$；$W=0$ 对应 $r=t=q=0$，$W=L$ 对应 $r=N,t=q=0$。$N=1$ 时 $m=0,1,2$ 的窗口有 $j=c=0$，$m=3$ 时 $(j,c)=(1,0)$，$m=4$ 时 $(j,c)=(4,4)$。$N=2$ 时 $(m,j,c)=(6,0,0)$ 仍不可能，因为 $q=6>\lfloor16/3\rfloor=5$。这些边界不依赖底域是否有限。
+
+现证两种首界。若同一 $(m,j)$ 对应 $c<c'$，则 $c'-c\ge4$、$j\ge c'$，故稳定部分较小的窗口有 $t=j-c\ge4$；(23.1) 给 $m\ge12,n\ge16$。在任何 $N\ge4$ 的实际塔内，取 $K$-独立的 $e_1,e_2,e_3,e_4$，令
+
+$$
+W_0=\bigoplus_{i=1}^4 He_i,\qquad
+W_1=Ke_1\oplus Q_3,
+\quad Q_3\le Ke_2\oplus Ke_3\oplus Ke_4
+\text{ 如 (23.16)}.
+\tag{23.20}
+$$
+
+$S_H=F$ 及 $Z_H(Q_3)=0$ 给两窗口的 $(m,j,c)$ 分别为 $(12,4,0)$、$(12,4,4)$；共同见证不可能落在该四维 $K$-子空间外，因为可用 $h_0^{-1}$。这证明第一首界，并将旧特殊实例的联合乘积计算接成每份实际 $K,H$ 均适用的形式。
+
+对第二种，非恢复恰有 $t,q\ge1$，所以 $m=4r+3t+q\ge4$、$n\ge4r+4t+q\ge5$；由 $4\mid n$ 得 $n\ge8$。给定 (23.9) 的 $\tau,v,z$，$T=F\tau,C=0$ 满足乘法同构；商中任何非零向量的 $H$ 倍为三维，不能落入一维 $Q$，故 $Z_H(Q)=0$。$K/H$ 的基 $z+H$ 使全部截面恰按 $s\in F$ 列出。若 $xW_s=W_{s'}$，共同见证给 $xF\tau=F\tau$，所以 $x\in F^\times$，它固定每个 $F$-子空间；再比较指定商生成元的提升，得 $(s-s')z\in H$，即 $s=s'$。反向四维非恢复纤维满足 $4=4r+3t+q$、$t,q\ge1$，只能 $r=0,t=q=1$，所以全由 (23.9) 给出。$N\ge2$ 时所需 $v$ 总在原域内存在；$N=1$ 时不存在。若 $N=2$，保持 $K\tau$ 和商不动的 $K$-线性剪切仍可将不同 $s$ 互移，但乘法若固定 $\tau\ne0$ 就只能为恒等，故不能用该剪切替代原标量群。
+
+明确的特征零对应如下。在实代数数中取正根 $a=2^{1/4}$，对 $N\in\{2,3,4\}$ 取 $\theta_N=2^{1/(4N)}$，固定
+
+$$
+F=\mathbb Q,\quad K=\mathbb Q(a),\quad
+L_N=\mathbb Q(\theta_N),\quad a=\theta_N^N,\quad
+H=\mathbb Qa+\mathbb Qa^2+\mathbb Qa^3.
+\tag{23.21}
+$$
+
+$X^4-2$、$X^{4N}-2$ 在素数 $2$ 处 Eisenstein，故 $[K:F]=4$、$[L_N:F]=4N$、$[L_N:K]=N$；$1,a,a^2,a^3$ 为实际 $F$-基，所以 $1\notin H$。对 $N=2,3$，取 $\tau=1,v=\theta_N,z=1$，得到实际四维窗口
+
+$$
+W_s=H\oplus\mathbb Q\cdot(\theta_N+s),\qquad s\in\mathbb Q.
+\tag{23.22}
+$$
+
+它们共同的实际读数为 $T=\mathbb Q,C=0,Q=\mathbb Q\cdot(\theta_N+K)$，不同参数不能由任何 $L_N^\times$ 标量相连。$N=2$ 达到 $(4,8)$；$N=3$ 给出非二幂实际次数。对 $N=4$，用 $e_i=\theta_4^{i-1}$ 及取常数系数的 $\rho:K\to\mathbb Q$ 构造 (23.20)；(23.16) 可取 $a_1=a,a_2=a^2,a_3=a^3$。此时三个共同读数为 $2$ 倍的反序系数，(23.18) 确实满射，遂在同一十六次特征零域中达到 $(12,16)$。
+
+最后检验来源边界。对任意域，双线性公式 $uv+F$ 下降到 $\Lambda_F^2L$ 的充要条件是对角恒零，即每个 $u^2\in F$。若此条件成立且 $\operatorname{char}F\ne2$，由 $(u+1)^2-u^2-1=2u\in F$ 得所有 $u\in F$，与四次子域矛盾。因此旧全域 $\kappa$ 的平方与特征限制确有承重；本推论的线性结构没有沿用这个交替性。
+
+所有失败可在 (23.21) 的同一 $L_3$ 中看见。$a^2\notin\mathbb Q$，所以对角输出 $a^2+\mathbb Q$ 非零。独立输入 $u=a,v=a^{-1}$ 却有 $uv=1$，因而记录为零，而 $F(u/v)=\mathbb Q(a^2)\ne\mathbb Q=F(uv)$；取 $u=1,v=a$ 的比值域又是四次而非二次。令 $U_a=\mathbb Q+\mathbb Qa$，则 $U_a\cap aU_a=\mathbb Qa$，不对 $\mathbb Q(a)$ 稳定，故不能把 (18.8) 用到任意非标量 $h=a$。
+
+若只保留实际二次标签，定义 $\operatorname{Src}_2(W)=\{J\subseteq L:[J:F]=2,\ \exists v\in L^\times:vJ\subseteq W\}$，则 $\operatorname{Src}_2(xW)=\operatorname{Src}_2(W)$ 在任意特征仍由乘 $x$ 给出。对每个真正二次的 $J=F(h)$，$J$ 可见仍等价于 $W\cap hW\ne0$：确实，写 $h^2=bh+c$、$b,c\in F$，若 $x=hy\in W\cap hW$、$y\in W$，则 $hx=bx+cy\in W$ 且 $hx\in hW$，故该交对 $J$ 稳定，非零交即含一条 $J$ 直线；反向可见的 $vJ$ 本身包含于这个交。失去的是所有独立对都来自二次域，以及这种标签集合的旧恢复能力。
+
+具体地，在同一 $L_3$ 中，$U_a$ 与 $U_\theta=\mathbb Q+\mathbb Q\theta_3$ 的维数均为二，且 $\operatorname{Src}_2(U_a)=\operatorname{Src}_2(U_\theta)=\varnothing$。若有 $vJ\subseteq U$，两者维数均二迫使相等；又 $1\in U=vJ$ 使 $v\in J$，于是 $U=J$ 为二次域，矛盾于 $a$ 的次数四或 $\theta_3$ 的次数十二。即使逐字保留 (18.2) 而允许任意 $F(h)$，维数二仍只容得下二次域，故两者的该集合也同为空。它们却不标量相似：比值集合 $R(xU)=R(U)$，而 $F(R(U_a))=\mathbb Q(a)$、$F(R(U_\theta))=L_3$，次数不同。故旧 (19.5) 的比值并集、来源生成域等式及已知维数下的恢复，均不能由 (23.1)–(23.8) 推出。若仅删除平方条件而保留特征二，$F=\mathbb F_2(t)$、$K=L=F(\alpha)$、$\alpha^4=t$ 也满足本条前件（取 $H=F+F\alpha+F\alpha^2$）；$X^4-t$ 在 $\mathbb F_2[t]$ 对 $t$ Eisenstein，而 $\alpha^2\notin F$，故同样不存在旧 $\kappa$。
+
+成熟文献的覆盖范围保持明确。上引 Eliahou–Lecouvey 与 Bachoc–Serra–Zémor 覆盖普通乘积张成、配对、饱和定义和有限维稳定子；Stacks 覆盖普通图坐标。Neri–Zullo，[DOI 10.26493/2590-9770.1852.9ca](https://adam-journal.eu/index.php/ADAM/article/download/1852/1710)，Definitions 2.11、2.15，Theorems 2.13、2.19，已给任意有限次域扩张的 system、秩码与 evasive 对应；其扩张域、底域在这里分别是 $K,F$，扩张次数为四。(23.16) 的码参数为长度 $s+1$、$K$-维数 $s$、最小 $F$-秩二，其列空间为 $R_s$：校验行为 $(-a_1,\ldots,-a_s,1)$；秩一的非零码字若写成 $\xi(f_1,\ldots,f_s,f_0)$，$f_i\in F$，校验式将给 $f_0=\sum a_if_i$，与 $1,a_i$ 独立矛盾；仅取一个非零输入坐标则得到秩二。Definition 2.11 要求张成，Definition 2.15 还要求交叠指标小于环境维数，故没有用它们排除本条的零空间、一维环境或非张成余项。其 Example 2.18 使用循环 Galois 生成元；§4.2 讨论这种构造的范围，不能代替 (23.17)–(23.18) 对指定实际 $H$ 的联合核对。
+
+Bartoli–Csajbók–Marino–Trombetti，[arXiv:2005.08401v2](https://arxiv.org/pdf/2005.08401v2)，Definition 1.1、Theorem 2.11、Proposition 4.5、Corollary 4.9、§5 的 $n=4$ 情形，覆盖有限域的交叠、直和、$2/5/8$ 块及 $8d/3$ 界；Marino–Neri–Trombetti，[arXiv:2204.11791v1，Theorem 3.3](https://arxiv.org/pdf/2204.11791v1)，覆盖有限域秩权对应；Giannoni，[arXiv:2611.08627v1，Theorem 1.1 前后及 Remark 6.3](https://arxiv.org/pdf/2611.08627v1)，明确将 $h=1<k$ 的情形列作已知或初等。本条不将这些块、数字或对应另立为新结果；增补的是它们与原窗口实际位置、全部共同提升及原 $L^\times$ 恢复条件的任意特征连接。有限底域在本条允许，旧 $K^2\subseteq F$ 排除非平凡有限底域的论证不再适用。
+
+Gulde–Stroppel，[arXiv:1012.0502v1，Theorem 2.10(b)–(e)、§6.10](https://arxiv.org/pdf/1012.0502v1)，的特征二二次形式相似群及指定外积商作用，和 Kussin，[arXiv:0712.3274v3，Theorem 6.1(iii)、Examples 6.3](https://arxiv.org/pdf/0712.3274v3)，的无本原元四次域及 species 曲线结论，各有自身前件；本条不用它们推出任意特征的形式相似群、外积来源或曲线结论。表示同构允许的目标端 $K$-线性换基也始终区别于 (23.6) 的原域乘法。上述原始文献的这些结果并未给出固定实际 $(T,C,Q)$ 的整套原标量恢复判据；本条是对 §§20–22 的范围推论，不附历史首次性断言。$\square$
+
+直观地说，四次域中的三个方向占了除一槽以外的全部位置；乘法配对保证这个缺槽能检测其余三个独立系数。每个非稳定共同见证于是强迫窗口保留三维，并占用一个独立的四维 $K$ 方向；完整稳定方向占四维。余项能放多少，取决于是否把某个三维 $Hx$ 整块藏进去，其容量是 (23.7)。位置读数还会漏掉每个商方向接回缺槽的偏移；同一个向量能联合修正三个方向，却不表示不同偏移都能被一个域标量消掉。这一机制只依赖实际四次乘法和有限维性；“两次相乘的记录就是二次来源”另需平方关系，不能混用。特征零例子只给出所列有限扩张中的实际子空间与标量结论，不推出 $\mathbb Z$ 在 $\mathbb Q$ 中的丢番图定义、$H10(\mathbb Q)$、Born 规则、复数域或完整量子起源。
+
+## 追加锚（本行以下为增补区）
+
+## 24　同一有理数八次域中的二元观察碰撞与共同见证分离
+
+**定义 24.1（原域内带比例标签的观察）。** 固定实数中的正根 $\theta=2^{1/8}$ 及实际域 $L=\mathbb Q(\theta)$，始终使用原域乘法。窗口是 $L$ 的四维 $\mathbb Q$-子空间，所比较的等价关系恰为
+
+$$
+W'\sim W\quad\Longleftrightarrow\quad
+W'=xW\text{，其中 }x\in L^\times.
+\tag{24.1}
+$$
+
+对窗口 $W$ 定义
+
+$$
+\begin{aligned}
+R(W)&=\{u/v:u,v\in W,\ v\ne0\}\subseteq L,\\
+d_W(r)&=\dim_{\mathbb Q}(W\cap rW),\qquad r\in L^\times,\\
+J_W(r,s)&=\dim_{\mathbb Q}(W\cap rW\cap sW),
+\qquad (r,s)\in(L^\times)^2.
+\end{aligned}
+\tag{24.2}
+$$
+
+$R(W)$ 包含 $0$。二元观察是保留原比例标签的整份函数 $r\mapsto d_W(r)$，不是只记各维数出现几次。$J_W(r,s)$ 要求同一个 $z\in L$ 同时满足 $z,z/r,z/s\in W$；其非零性要求这样的 $z\ne0$，不允许为两个比例各选一个不相关的 $z$。全部标签和标量均取原 $L$，不重标比例、不扩域，也不用一般线性等价替代 (24.1)。
+
+**命题 24.2（四维成对反例及指定三重交叠）。** 在定义 24.1 的同一实际域中取
+
+$$
+U=\operatorname{span}_{\mathbb Q}\{1,\theta,\theta^3,\theta^4\},\qquad
+V=\operatorname{span}_{\mathbb Q}\{1,\theta,\theta^2,\theta^5\}.
+\tag{24.3}
+$$
+
+两者均为四维，且
+
+$$
+\begin{gathered}
+d_U(r)=d_V(r)\quad\text{对每个 }r\in L^\times,\qquad R(U)=R(V),\\
+V\ne xU\quad\text{对每个 }x\in L^\times,\\
+U\cap\theta U\cap\theta^3U=\mathbb Q\theta^4,\qquad
+V\cap\theta V\cap\theta^3V=0.
+\end{gathered}
+\tag{24.4}
+$$
+
+所以完整二元观察，甚至与 $R(W)$ 一同给出，也不能在原域全部四维窗口上恢复 (24.1) 的轨道；而 $J_U(\theta,\theta^3)=1$、$J_V(\theta,\theta^3)=0$ 分开这一对轨道。
+
+证明。$X^8-2$ 在素数 $2$ 处 Eisenstein，故 $[L:\mathbb Q]=8$，且
+
+$$
+1,\theta,\theta^2,\ldots,\theta^7
+\tag{24.5}
+$$
+
+是原域的一组 $\mathbb Q$-基。这同时证明 (24.3) 的两个实际维数。令 $\lambda:L\to\mathbb Q$ 取 (24.5) 中的 $\theta^7$ 系数，记 $B(a,b)=\lambda(ab)$。所用非退化乘法配对是成熟输入，见 Bachoc–Serra–Zémor，[*Revisiting Kneser's theorem for field extensions*，arXiv:1510.01354v2，§2.2，式 (2)](https://arxiv.org/pdf/1510.01354v2)。在此实际基上，
+
+$$
+B(\theta^i,\theta^j)=
+\begin{cases}1&i+j=7,\\0&i+j\ne7,\end{cases}
+\qquad 0\le i,j\le7.
+\tag{24.6}
+$$
+
+确实 $i+j\le14$，达到八时用 $\theta^8=2$ 约去，只留下至多六次项。因此矩阵为反对角单位矩阵；消去与 $1,\theta,\theta^3,\theta^4$ 的配对，恰消去次数 $7,6,4,3$ 的系数，给出原域中的准确对应 $U^\perp=V$。
+
+现在固定任意 $r\in L^\times$，不限制其在 (24.5) 中的系数。乘法自伴随及普通正交补恒等式给
+
+$$
+\begin{aligned}
+(U+rU)^\perp&=V\cap r^{-1}V,\\
+d_U(r)&=8-\dim_{\mathbb Q}(U+rU)
+=\dim_{\mathbb Q}(V\cap r^{-1}V)
+=d_V(r).
+\end{aligned}
+\tag{24.7}
+$$
+
+最后一步是乘以同一个 $r$，将 $V\cap r^{-1}V$ 同构到 $rV\cap V$。这是半维对偶的既有维数推导在 (24.3) 上的直接应用，不是一条新的一般对偶定理。对每个非零 $r$，条件 $r=u/v$、$u,v\in W\setminus\{0\}$ 恰等价于 $0\ne u=rv\in W\cap rW$。因此
+
+$$
+R(W)=\{0\}\cup\{r\in L^\times:d_W(r)>0\},
+\qquad W\in\{U,V\},
+\tag{24.8}
+$$
+
+从而得到包含零的实际集合等式 $R(U)=R(V)$。这一步不涉及有限域计数或距离直方图。
+
+为排除全部原域标量，假设 $xU=V$。因 $1,\theta,\theta^3\in U$，有 $x,\theta x,\theta^3x\in V$。先由 $x\in V$ 唯一写成
+
+$$
+x=a_0+a_1\theta+a_2\theta^2+a_5\theta^5,
+\qquad a_0,a_1,a_2,a_5\in\mathbb Q.
+$$
+
+比较 $\theta x\in V$ 在 (24.5) 中的 $\theta^3,\theta^6$ 系数，得 $a_2=a_5=0$；再比较 $\theta^3x=a_0\theta^3+a_1\theta^4\in V$，得 $a_0=a_1=0$。于是 $x=0$，与 $x\in L^\times$ 矛盾。这里直接约束任意 $x$ 的全部可能系数，没有把标量限制为单项式。
+
+最后仍用同一实际基，$\theta^3V=\operatorname{span}_{\mathbb Q}\{1,\theta^3,\theta^4,\theta^5\}$，其中常数项来自 $\theta^8=2$。逐项相交得到
+
+$$
+\begin{aligned}
+U\cap\theta U&=\operatorname{span}_{\mathbb Q}\{\theta,\theta^4\},&
+U\cap\theta^3U&=\operatorname{span}_{\mathbb Q}\{\theta^3,\theta^4\},\\
+V\cap\theta V&=\operatorname{span}_{\mathbb Q}\{\theta,\theta^2\},&
+V\cap\theta^3V&=\operatorname{span}_{\mathbb Q}\{1,\theta^5\}.
+\end{aligned}
+\tag{24.9}
+$$
+
+第一行的两个平面交于 $\mathbb Q\theta^4$，第二行的两个平面交于零。这证明 (24.4) 的最后两式。对任意 $x\in L^\times$，乘以 $x$ 将 $W\cap rW\cap sW$ 同构到 $xW\cap r(xW)\cap s(xW)$；二元交叠也如此，且比值中的 $x$ 可约去。因此 $R,d,J$ 均保留 (24.1) 的轨道，指定 $J$ 的差异确实分开这两个轨道。$\square$
+
+文献与实际差额。Gluesing-Luerssen–Lehmann，[*Distance Distributions of Cyclic Orbit Codes*，arXiv:1912.05522v1，Definition 3.1(4)、Proposition 3.2](https://arxiv.org/pdf/1912.05522v1)，已在 $\mathbb F_{q^n}/\mathbb F_q$ 中把分式支持与非零标量交叠相联。其分式取非零分子、分母，并在底域非零标量下射影化，轨道由 $\mathbb F_{q^n}^\times$ 作用；这里 (24.8) 使用原 $L$ 内逐字相等的分式并补上零。Castello–Gluesing-Luerssen–Polverino–Zullo，[*Quasi-optimal cyclic orbit codes*，DOI 10.1007/s10623-025-01751-4，式 (4)、(5)、Proposition 4.1](https://doi.org/10.1007/s10623-025-01751-4)，已将 $U\times U$ 的射影线点权写成 $\dim(U\cap\alpha U)=\dim(U\cap\alpha^{-1}U)$，并逐每个 $\alpha\in\mathbb F_{q^n}^\times$ 给出标量乘法与迹正交补的对应。这比只有距离分布的陈述更精确；本条不把这一机制算作新增，也不将其有限域计数结论用于 $\mathbb Q$。
+
+§20 所引 Ueoka–Nagi–Akari–Sui，[*Weak Vishik Equivalence and Linear 2-Basis Blindness for Totally Singular Quadratic Forms*，Zenodo 21758447，Lemma 4.1、Theorem 4.2](https://zenodo.org/records/21758447)，已经给出乘法配对及半维正交补对所有非零标量的交叠维数相等。其全文二次型语境为特征二、$k=K^2$；(24.7) 只复用不依赖该特征的维数推导，不搬用添平方根的二次型解释。其 Lemma 6.1 的不相似对是 $K=\mathbb F_2(s,t,u,v)$、$k=K^2$ 中的两个八维值空间，排除的是全部 $K^\times$ 标量；Proposition 6.5 用实际四次中间域 $k(t,su)$ 的乘积张成维数分离它们。它没有给出 (24.3) 的有理数八次域四维对，或 (24.9) 的指定三重交叠。Bachoc–Serra–Zémor 的上述配对适用于任意域扩张，不要求可分性；它提供 (24.7) 所需的乘法自伴随性，不提供这对窗口的选取与非相似性。
+
+相对于这些指定原文及本卷 §§18–23，本条新增的数学内容限于 (24.3) 这一个实际成对反例：原 $\mathbb Q(2^{1/8})$ 中全部比例标签上的相同二元观察、全部原域标量下的不相似，以及 (24.9) 的共同见证分离。半维对偶、乘法配对、分式支持与普通基论证只作中间工具；不主张它们的新颖性，也不据这些来源范围主张全球首次。§19 的恢复结论带有特征二及平方条件，§23 的位置观察则固定 $H$ 并保留实际 $T,C,Q$；它们都没有断言定义 24.1 的二元函数足以恢复这里的四维窗口。
+
+白话说，二元读数逐个比例回答“窗口与它的这次倍乘共享几维”，甚至让每个原比例都保留名字。这对窗口对每一道这样的提问给出相同数字，可用的全部比值也相同；但一个原域数无法把整个窗口一起搬成另一个。丢掉的是不同提问之间的见证如何重合：在 $U$ 中，$z=\theta^4$ 同时以 $z/\theta=\theta^3$、$z/\theta^3=\theta$ 留在窗口内；在 $V$ 中，(24.9) 的两个二元见证平面各自仍有二维，却没有共同非零向量。$J$ 保留的是同一个原向量同时通过两次比例要求的关系，恰好切开二元观察中容纳这两个轨道的同一纤维。
+
+这里的分离仅针对这一对四维窗口。它既没有证明全部函数 $(r,s)\mapsto J_W(r,s)$ 能恢复原域全部四维窗口，也没有给出三维窗口在完整二元观察下的恢复或反例，更未证明三重观察是全局恢复所需的最小阶数。这些恢复命题在本条均未解决。本条的“同源”只指固定同一实际域及其乘法中的代数实现；它没有从代数入射推出 Born 规则、复 Hilbert 空间、量子测量公理、实际可取得的控制、$\mathbb Z$ 在 $\mathbb Q$ 中的丢番图定义或 $H10(\mathbb Q)$。这些结论各需另给相应的概率、内积、操作或算术桥梁。
+
+## 追加锚（本行以下为增补区）
+
+## 25　原有理数八次域中全部四维窗口的三重观察恢复
+
+**定义 25.1（稳定子与最小正行）。** 沿用定义 24.1 的实际 $L=\mathbb Q(\theta)$、$\theta=2^{1/8}>0$、四维窗口及逐标签函数 $d_W,J_W$，记
+
+$$
+E_W=\{a\in L:aW\subseteq W\},\qquad e_W=\dim_{\mathbb Q}E_W,\qquad
+\delta_W=\min\{d_W(r):r\in L^\times,\ d_W(r)>0\}.
+\tag{25.1}
+$$
+
+因 $d_W(1)=4$，此最小值存在。称满足 $d_W(r_0)=\delta_W$ 的原标签 $r_0$ 为最小正行的标签；对该标签仅由观察定义
+
+$$
+T_{J_W,r_0}=\{0\}\cup\{s^{-1}:s\in L^\times,\ J_W(r_0,s)>0\}.
+\tag{25.2}
+$$
+
+**定理 25.2（全部窗口的恢复与单行支持分离）。** 对定义 24.1 的每一个四维窗口 $W$，$E_W$ 是 $L$ 的子域，且
+
+$$
+\delta_W=e_W\in\{1,2,4\}.
+\tag{25.3}
+$$
+
+任取最小正行标签 $r_0$ 及证明中任一 $0\ne z\in W\cap r_0W$，则 $W\cap r_0W=E_Wz$，并有原域内的等式
+
+$$
+T_{J_W,r_0}=z^{-1}W.
+\tag{25.4}
+$$
+
+特别地，对任意另一个四维窗口 $V\subseteq L$，即使未假设 $r_0$ 对 $V$ 也是最小正行，仍有
+
+$$
+\bigl[\ \forall s\in L^\times,\ J_V(r_0,s)>0\ \Longleftrightarrow\ J_W(r_0,s)>0\ \bigr]
+\quad\Longleftrightarrow\quad \exists x\in L^\times,\ V=xW.
+\tag{25.5}
+$$
+
+因此，对所有这样的 $W,V$，
+
+$$
+\bigl[\ \forall(r,s)\in(L^\times)^2,\ J_V(r,s)=J_W(r,s)\ \bigr]
+\quad\Longleftrightarrow\quad \exists x\in L^\times,\ V=xW.
+\tag{25.6}
+$$
+
+证明。以下固定任意实际 $W$，缩写 $E,e,\delta$。先消费有限维稳定子的通常事实：$E$ 包含 $\mathbb Q$ 且对加法、减法、乘法封闭；若 $0\ne a\in E$，则乘以 $a$ 在有限维 $W$ 上单射，故 $aW=W$，从而 $a^{-1}W=W$。所以 $E$ 成域，$W$ 是 $E$-向量空间，$e\mid4$；又因乘法交换，$W\cap rW$ 对每个 $r$ 都是 $E$-线性的。因此每个正交叠维数均为 $e$ 的正倍数，$\delta\ge e$。此处所用稳定子事实见 Bachoc–Serra–Zémor，[arXiv:1510.01354v2，§3，Lemma 13 后的有限维说明](https://arxiv.org/pdf/1510.01354v2)。若 $\delta=1$，已得 $e=1$。以下设 $\delta\ge2$，证明反向不等式。
+
+使用 (24.5) 的基将 $L$ 写成 $\mathbb Q^8$。取列空间为 $W$ 的秩四矩阵 $B\in M_{8,4}(\mathbb Q)$，并取秩四矩阵 $H\in M_{4,8}(\mathbb Q)$ 使 $\ker H=\operatorname{im}B$。令 $M_a$ 是原域乘以 $a$ 的 $8\times8$ 矩阵。乘法表由 $\theta^8=2$ 给出整数结构常数，$M_a$ 对 $a$ 的八个坐标线性。将 $4\times4$ 矩阵的条目排成十六个坐标，得到一个 $16\times8$ 有理矩阵 $A$，其线性映射为
+
+$$
+a\longmapsto HM_aB,\qquad \ker_{\mathbb Q}A=E,\qquad
+\operatorname{rank}_{\mathbb Q}A=8-e.
+\tag{25.7}
+$$
+
+选取 $B,H$ 各一个非零四阶子式和 $A$ 的一个非零 $(8-e)$ 阶子式。取正偶数 $D$，使它被所选子式分子的每个素因子及 $B,H,A$ 全部条目分母的每个素因子整除。置 $R=\mathbb Z[1/D]$。于是这些矩阵定义于 $R$；对每个 $p\nmid D$，所选子式保持非零，而 $A$ 的全部更大子式恒为零，故约化后的 $B_p,H_p,A_p$ 的秩分别仍为 $4,4,8-e$。又 $HB=0$ 保持为 $H_pB_p=0$，所以 $\ker H_p=\operatorname{im}B_p$。这里只用了有限多个分母和子式。
+
+还须把所有正交叠的下界传给有限域的全部新参数。令 $X,Y$ 为各有四个坐标的独立变量，令 $u=BX,v=BY$，并在 $R[X,Y]$ 上组成
+
+$$
+N(X,Y)=[\,M_vB\mid M_uB\,].
+\tag{25.8}
+$$
+
+对所有非零有理向量 $X,Y$，$u,v\in W\setminus\{0\}$，且 $u\in W\cap(u/v)W$，故
+
+$$
+\operatorname{rank}N(X,Y)=\dim_{\mathbb Q}(vW+uW)
+=8-d_W(u/v)\le8-\delta.
+\tag{25.9}
+$$
+
+每个 $(8-\delta+1)$ 阶子式因此在 $(\mathbb Q^\times)^8$ 上恒零。逐变量使用一元非零多项式只有有限个根，得这些子式全是零多项式；它们在 $R$ 中的系数也全为零。因此对每个 $p\nmid D$，(25.8) 的约化在全部 $X,Y\in\mathbb F_p^4$ 上均有秩至多 $8-\delta$。恒等式对有限域的全部新参数与比值同时成立，无须为无限多个比例标签逐个排除素数。
+
+现在为这个有限的坏素集选择使约化仍为域的素数。令 $P$ 为 $D$ 的所有奇素因子的乘积，空积取一。数 $4P^2+1$ 的每个素因子 $\ell$ 均不整除 $2P$，且 $-1$ 是模 $\ell$ 的平方，故 $\ell\equiv1\pmod4$；又 $4P^2+1\equiv5\pmod8$，其素因子中至少一个 $p\equiv5\pmod8$。此 $p\nmid D$，所以在任意上述有限坏素集外均可选到所需素数。
+
+对该 $p$，二次互反律的补充公式给出 $2$ 在 $\mathbb F_p$ 中非平方。因 $p-1$ 的二部分为四，$2$ 的乘法阶的二部分恰为四。若 $\alpha^8=2$ 是代数闭包中的任一根，则 $\operatorname{ord}(\alpha^8)=\operatorname{ord}(\alpha)/\gcd(\operatorname{ord}(\alpha),8)$，故 $\operatorname{ord}(\alpha)$ 的二部分恰为三十二。另一方面，$p\equiv5\pmod8$ 蕴含 $p^4\equiv17\pmod{32}$、$p^8\equiv1\pmod{32}$，所以 $p$ 模三十二的乘法阶为八。设 $f=[\mathbb F_p(\alpha):\mathbb F_p]$，则 $32\mid p^f-1$ 强迫 $8\mid f$；而 $\alpha$ 满足八次多项式，故 $f\le8$。于是 $f=8$，$T^8-2$ 在 $\mathbb F_p[T]$ 中不可约，
+
+$$
+K_p=\mathbb F_p[T]/(T^8-2)\cong\mathbb F_{p^8}.
+\tag{25.10}
+$$
+
+在此域中令 $W_p=\operatorname{im}B_p$，则 $\dim_{\mathbb F_p}W_p=4$。由于原乘法矩阵的条目按同一整数乘法表约化，(25.7) 的约化恰为 $a\mapsto H_pM_aB_p$，其核恰是原约化窗口的整个稳定子
+
+$$
+E_p=\{a\in K_p:aW_p\subseteq W_p\},\qquad
+\dim_{\mathbb F_p}E_p=8-\operatorname{rank}A_p=e.
+\tag{25.11}
+$$
+
+任意 $r\in K_p^\times$ 若 $W_p\cap rW_p\ne0$，可取 $0\ne u\in W_p\cap rW_p$ 并置 $v=r^{-1}u\in W_p\setminus\{0\}$，从而 $r=u/v$。写 $u=B_pX,v=B_pY$，由 (25.8)–(25.9) 的多项式约化及域内乘法可逆，得到 $\dim_{\mathbb F_p}(W_p\cap rW_p)\ge\delta$。因此没有遗漏任何有限域中的新正交叠标签。
+
+取实际子空间 $U_p=W_p\times W_p\subseteq K_p^2$，其 $\mathbb F_p$-维数为八，且张成 $K_p^2$。在 $\mathrm{PG}(1,p^8)$ 中，$U_p$ 定义的线性集的两个坐标轴点权均为四；其余点 $K_p(a,b)$（$ab\ne0$）的点权，借 $t\mapsto ta$，恰为 $\dim_{\mathbb F_p}(W_p\cap(a/b)W_p)$。所以最小正点权 $w$ 满足 $w\ge\delta\ge2$。应用 Csajbók–Marino–Pepe，[arXiv:2306.07488v2，Theorem 1](https://arxiv.org/pdf/2306.07488v2)，参数精确为 $q=p,n=8,r=2,a=1$，rank $an=8$，得到 $w\mid8$ 且原 $U_p$ 本身对 $\mathbb F_{p^w}$ 线性。于是对任意 $c\in\mathbb F_{p^w}$ 及 $x\in W_p$，$c(x,0)\in U_p$，即 $cx\in W_p$；故 $\mathbb F_{p^w}\subseteq E_p$。结合 (25.11)，
+
+$$
+e\ge w\ge\delta\ge e,
+\tag{25.12}
+$$
+
+从而 $\delta=e$，证明 (25.3)。此处 Theorem 1 没有 $q\ge n$ 前件；带有该前件、允许改用另一子空间定义同一点集的 Theorem 2 未被使用。也无需保存原域的最小交叠见证或预先证明约化最小值恰为 $\delta$。
+
+回到原 $L$。由 $W\cap r_0W$ 对 $E$ 线性及其 $\mathbb Q$-维数为 $e$，任取其中的 $z\ne0$ 即得 $W\cap r_0W=Ez$。对每个原 $s\in L^\times$，$Ez\cap sW\ne0$ 等价于存在 $c\in E^\times$ 使 $cz/s\in W$；因 $W$ 对 $E$ 及其逆元封闭，这又等价于 $z/s\in W$。因此
+
+$$
+J_W(r_0,s)>0\ \Longleftrightarrow\ z/s\in W,\qquad
+\{0\}\cup\{s^{-1}:J_W(r_0,s)>0\}=z^{-1}W,
+\tag{25.13}
+$$
+
+证明 (25.4)。$z$ 只在证明中选择；(25.2) 的输入没有获得它或实际交空间，且输出集合、取逆及缩放均留在原 $L$。
+
+为证 (25.5) 的充分性，设两行支持相等。由 $J_W(r_0,1)>0$，得 $V\cap r_0V\ne0$，取其中任一 $y\ne0$。对任意 $v\in V\setminus\{0\}$，令 $s=y/v$，则 $y\in V\cap r_0V\cap sV$，故 $J_V(r_0,s)>0$；支持相等和 (25.13) 给出 $v/y=s^{-1}\in z^{-1}W$。连同零，得到 $y^{-1}V\subseteq z^{-1}W$；两者都是四维 $\mathbb Q$-子空间，故相等，$V=(y/z)W$，其中 $y/z\in L^\times$。此包含—等维论证没有要求 $V\cap r_0V$ 最小。反之，乘以同一个 $x\in L^\times$ 同构全部 $W\cap rW\cap sW$ 与 $xW\cap r(xW)\cap s(xW)$，所以标量相似保持整份 $J$，也保持指定行支持。最后，整份 $J$ 给出 $d_W(r)=J_W(r,1)$，因而给出 $\delta$ 及最小正行标签的集合；两份 $J$ 相等时可取同一个 $r_0$，由 (25.5) 得 (25.6)。$\square$
+
+文献对应与实质差额。Gluesing-Luerssen–Lehmann，[*Distance Distributions of Cyclic Orbit Codes*，arXiv:1912.05522v1，Definition 2.1、Definition 3.1(4)、Proposition 3.2](https://arxiv.org/pdf/1912.05522v1)，已给有限域稳定子子域、分式支持与非零交叠的对应；Bachoc–Serra–Zémor 的上述原文给普通域扩张中的有限维稳定子事实。CMP 的上述 Theorem 1 已承担有限域最小正权的全部线性结论；标准子式、有限域乘法阶和一条域直线的支持取逆也仅在本证明中消费，不另立为新基础。本条的仓内推导（repo-derived）内容是 (25.7)–(25.12) 在固定实际有理数八次域上连接全部四维窗口的迁回论证，以及由此得到的 (25.3)–(25.6) 全量词恢复。所列原文给出的成熟机制和 §24 的一对窗口分离均未包含这一整体结论；本条不据此作全球首次性断言。
+
+白话说，最窄的非零共享部分恰好是一条稳定子域直线。沿它固定第一道比例要求后，第二道要求能否通过，已足以把窗口的所有元素逐一列成某个共同缩放后的集合；隐藏向量只解释这个共同缩放，无须交给观察者。证明中迁到有限域时，两道关口分别控制“稳定子有没有偷偷增维”和“新出现的比例有没有漏检”：前者由完整线性核保持秩解决，后者由对所有参数恒真的子式解决。恢复任意竞争窗口时，只需它在该行有一个共同非零向量，所得包含再由四维等维性变成相等。
+
+这里成立的是整份无限、无噪声、逐标签精确读数的集合论可识别性，没有给出有限查询、有效找到最小正行、最小有限标签菜单、噪声鲁棒性或实际取得方法。结论限于定义 24.1 的原 $L$ 与四维窗口，不扩大为任意域任意维数的 $\delta=e$、三维二元恢复或最小观察阶数；也不推出 Born 规则、复 Hilbert 空间、测量、张量或控制公理，以及 $\mathbb Z$ 在 $\mathbb Q$ 中的丢番图定义或 $H10(\mathbb Q)$。
+
+## 追加锚（本行以下为增补区）
