@@ -4,8 +4,9 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.NumberTheory.DiophantineApproximation.Basic, mathlib/module/Mathlib.Algebra.Order.Round, mathlib/module/Mathlib.Tactic]
    utility: none
-   digest: A bounded integer block meets every open interval of width w after excluding the explicit small-denominator obstructions.
+   digest: A bounded integer block meets every open interval of width w after excluding the explicit small-denominator obstructions. -/
 
+/-
 The finite-cover argument is from the completed Pro research input
 non-dyadic-actual-price-power-followup.answer.txt, finite-circle lemma (28).
 The implementation below uses the pinned Mathlib Dirichlet theorem directly.
