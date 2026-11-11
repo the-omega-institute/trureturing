@@ -28,7 +28,7 @@ internal sealed class PBFixedOutputGramDocument : IScribeDocumentDefinition
                 "The first real identity gives Re inner(nu,g xi)=-Re inner(eta,V xi). The constructed companion gives Re inner(eta,g xi)=Re inner(nu,V xi). The complex inner product is conjugate-linear in its first entry. Since inner(nu,z)=iota inner(eta,z), the two real readings determine the real and imaginary parts of inner(eta,g xi)=iota inner(eta,V xi), for either orientation. This is a pointwise full-space identity under the displayed representation and spectral hypotheses. The concrete M4 representation, positive-functional transfer, zero-d branch, homogeneous extension and complete-row reconstruction are additional obligations."))));
 
     private static DocumentBlock D(string name, string title, Formula formula, string text,
-        DescribeRole role, params string[] more) => Describe.Lean(DescribeId.Create(name),
+        DescribeRole role, params string[] more) => Describe.Lean(DescribeId.Create(name.Replace('_','-').ToLowerInvariant()),
         DeclarationHandle.Create("D5/S3/Quantum/Algebra/PBFixedOutputGram."+name), H(title),
         StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
         Blocks(new[]{Paragraph(Text(text))}.Concat(more.Select(s=>Paragraph(Text(s)))).ToArray()), role);

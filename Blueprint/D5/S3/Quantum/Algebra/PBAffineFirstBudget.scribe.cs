@@ -55,7 +55,7 @@ internal sealed class PBAffineFirstBudgetDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem))));
 
     private static DocumentBlock Helper(string name, string title, Formula formula, string prose, DescribeRole role) =>
-        Describe.Lean(DescribeId.Create(name),DeclarationHandle.Create("D5/S3/Quantum/Algebra/PBAffineFirstBudget."+name),
+        Describe.Lean(DescribeId.Create(name.Replace('_','-').ToLowerInvariant()),DeclarationHandle.Create("D5/S3/Quantum/Algebra/PBAffineFirstBudget."+name),
             H(title),StatementSource.FromAuthor(Disp(formula)),AssessedProvenance.FromRepo(),Blocks(Paragraph(Text(prose))),role);
     private static Formula RealHilbert(Formula body) => All("H",I("Type"),Seq(
         OpenBracket,C("NormedAddCommGroup",I("H")),CloseBracket,
