@@ -12,7 +12,7 @@ internal sealed class HardinA233152ColumnDocument : IScribeDocumentDefinition
         "The literal 5-column count obeys a recurrence determined by its finite row quotient.",
         H("OEIS A233152"), Blocks(
             Node("T5",All("n",NatF(),Eq(C("T5",V("n")),FilterCard(N(5),V("n")))),"Every labelled function satisfying the two bond conditions is counted.",true),
-            Node("classify",All("r",RowF(N(5)),Eq(C("classify",V("r")),Seq(V("classes"),OpenBracket,Val(C("finFunctionFinEquiv",V("r"))),CloseBracket,Op("!")))),"The finite code table assigns the successor class of a row."),
+            Node("classify",All("r",RowF(N(5)),Eq(C("classify",V("r")),Seq(V("classes"),OpenBracket,Val(C("finFunctionFinEquiv",V("r"))),CloseBracket,Bang))),"The finite code table assigns the successor class of a row."),
             Node("quotient",Eq(C("quotient"),Vec(Vec(N(5), N(8), N(3)), Vec(N(4), N(7), N(3)), Vec(N(2), N(5), N(3)))),"The quotient entry counts legal compatible successors in each class."),
             Node("weights",Eq(C("weights"),Vec(N(12), N(24), N(12))),"The weights count legal rows in each class."),
             Node("finite_certificate",CertificateFormula(),"The three finite identities give the successor counts, initial class multiplicities and a polynomial relation among quotient powers.",theorem:true),
@@ -30,8 +30,16 @@ internal sealed class HardinA233152ColumnDocument : IScribeDocumentDefinition
     }
 
     private static Formula V(string name) => F.Id(name);
-    private static Formula Op(string name) => Seq(Operatorname, Grp(V(name)));
-    private static Formula C(string name, params Formula[] args) => new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
+    private static Formula Op(string name) => Seq(Operatorname, Grp(Name(name)));
+    private static Formula Name(string name) => Seq(name.Split('.').SelectMany((part,i) =>
+        i == 0 ? new[]{Atom(part)} : new[]{Dot,Atom(part)}).ToArray());
+    private static Formula Atom(string part) {
+        var words=part.Split('_');
+        return words.Length == 1 ? V(part) : new Formula.Subscript(V(words[0]),
+            Seq(words.Skip(1).Select(V).ToArray()));
+    }
+
+    private static Formula C(string name, params Formula[] args) => new Formula.Apply(Name(name), [.. args]);
     private static Formula A(Formula fn, params Formula[] args) => new Formula.Apply(fn, [.. args]);
     private static Formula P(Formula f) => Parenthesized(f);
     private static Formula Parenthesized(Formula f) => Seq(Open, f, Close);
@@ -62,6 +70,6 @@ internal sealed class HardinA233152ColumnDocument : IScribeDocumentDefinition
     private static Formula Sum(string v, Formula ty, Formula f) => Seq(new Formula.Subscript(F.Sum, P(Seq(V(v), Colon, Sp, ty))), Sp, f);
     private static Formula Ite(Formula p, Formula a, Formula b) => Seq(Op("if"), Sp, p, Sp, Op("then"), Sp, a, Sp, Op("else"), Sp, b);
     private static Formula FilterCard(Formula k, Formula n) => C("Finset.card", C("Finset.filter", Lam("f", Grid(k,n), C("Legal",V("f"))), Op("Finset.univ")));
-    private static Formula Vec(params Formula[] xs) => Seq(Op("!"), OpenBracket, Join(xs), CloseBracket);
+    private static Formula Vec(params Formula[] xs) => Seq(Bang, OpenBracket, Join(xs), CloseBracket);
     private static Formula Join(Formula[] xs) => Seq(xs.SelectMany((x,i) => i == 0 ? new[]{x} : new[]{Comma,Sp,x}).ToArray());
 }

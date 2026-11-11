@@ -51,7 +51,11 @@ private theorem row_counts : ∀ r : Row 7, rowLegal r → ∀ s : Fin 16,
   have hs := row_sum 7 (fun c => if compatible r c ∧ classify c = s then (1 : ℤ) else 0)
   simp only [← ite_and] at hs
   rw [hs, codes_table]
-  exact row_counts_code (finFunctionFinEquiv r) (by simpa [decode] using hr) s
+  have he : decode 7 (finFunctionFinEquiv r) = r :=
+    Equiv.symm_apply_apply finFunctionFinEquiv r
+  have hc := row_counts_code (finFunctionFinEquiv r) (by rw [he]; exact hr) s
+  rw [he] at hc
+  exact hc
 
 private theorem initial_weights : ∀ s : Fin 16,
     (∑ c : Row 7, if rowLegal c ∧ classify c = s then (1 : ℤ) else 0) = weights s := by
@@ -75,11 +79,6 @@ private theorem vector_relation :
     (quotient ^ (1+4)).mulVec (1 : Fin 16 → ℤ) =
       ∑ j : Fin 4, (![-810, 972, -351, 42] : Fin 4 → ℤ) j •
         (quotient ^ (1+j.val)).mulVec (1 : Fin 16 → ℤ) := by
-  have h0 := powers_table (1 : Fin 6)
-  have h1 := powers_table (2 : Fin 6)
-  have h2 := powers_table (3 : Fin 6)
-  have h3 := powers_table (4 : Fin 6)
-  have h4 := powers_table (5 : Fin 6)
   have hp : (quotient ^ (1+4)).mulVec (1 : Fin 16 → ℤ) = W 5 := powers_table 5
   rw [hp]
   have hc : (∑ j : Fin 4, (![-810, 972, -351, 42] : Fin 4 → ℤ) j •
@@ -115,13 +114,29 @@ private theorem initial_relation : (T7 5 : ℤ) =
       972 * (T7 (2) : ℤ) - 810 * (T7 (1) : ℤ) := by
   have h1 : (T7 1 : ℤ) = 192 := by exact_mod_cast first_count
   have h2 := counting_bridge 0
-  rw [powers_table (1 : Fin 6)] at h2
+  change (T7 2 : ℤ) = dotProduct weights
+    ((quotient^1).mulVec (1 : Fin 16 → ℤ)) at h2
+  have hp2 := powers_table (1 : Fin 6)
+  change (quotient ^ 1).mulVec (1 : Fin 16 → ℤ) = W 1 at hp2
+  rw [hp2] at h2
   have h3 := counting_bridge 1
-  rw [powers_table (2 : Fin 6)] at h3
+  change (T7 3 : ℤ) = dotProduct weights
+    ((quotient^2).mulVec (1 : Fin 16 → ℤ)) at h3
+  have hp3 := powers_table (2 : Fin 6)
+  change (quotient ^ 2).mulVec (1 : Fin 16 → ℤ) = W 2 at hp3
+  rw [hp3] at h3
   have h4 := counting_bridge 2
-  rw [powers_table (3 : Fin 6)] at h4
+  change (T7 4 : ℤ) = dotProduct weights
+    ((quotient^3).mulVec (1 : Fin 16 → ℤ)) at h4
+  have hp4 := powers_table (3 : Fin 6)
+  change (quotient ^ 3).mulVec (1 : Fin 16 → ℤ) = W 3 at hp4
+  rw [hp4] at h4
   have h5 := counting_bridge 3
-  rw [powers_table (4 : Fin 6)] at h5
+  change (T7 5 : ℤ) = dotProduct weights
+    ((quotient^4).mulVec (1 : Fin 16 → ℤ)) at h5
+  have hp5 := powers_table (4 : Fin 6)
+  change (quotient ^ 4).mulVec (1 : Fin 16 → ℤ) = W 4 at hp5
+  rw [hp5] at h5
   norm_num [W, weights, dotProduct, Fin.sum_univ_succ] at *
   omega
 
@@ -135,12 +150,13 @@ theorem result (n : ℕ) : (T7 (n+5) : ℤ) =
       (![-810, 972, -351, 42] : Fin 4 → ℤ) finite_certificate.2.2 n
     have hb (j : ℕ) : dotProduct weights
         ((quotient ^ (n+1+j)).mulVec (1 : Fin 16 → ℤ)) = (T7 (n+j+2) : ℤ) := by
-      convert (counting_bridge (n+j)).symm using 1 <;> congr 2 <;> omega
-    rw [hb] at h
-    simp only [Fin.sum_univ_succ, Fin.val_zero, Fin.val_succ,
-      Matrix.cons_val_zero, Matrix.cons_val_succ, Fin.elim0] at h
-    simp only [Finset.sum_empty, add_zero] at h
-    simp only [hb] at h
-    convert h using 1 <;> ring_nf at * <;> omega
+      rw [show n+1+j = n+j+1 by omega]
+      exact (counting_bridge (n+j)).symm
+    simp_rw [hb] at h
+    norm_num only [Fin.sum_univ_succ, Fin.val_zero, Fin.val_succ,
+      Matrix.cons_val_zero, Matrix.cons_val_succ, Finset.sum_empty,
+      add_zero, Nat.add_assoc] at h
+    simp only [Nat.succ_eq_add_one, Nat.add_assoc]
+    linarith
 
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233154Column

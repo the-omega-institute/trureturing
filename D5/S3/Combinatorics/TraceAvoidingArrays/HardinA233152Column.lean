@@ -51,7 +51,11 @@ private theorem row_counts : ∀ r : Row 5, rowLegal r → ∀ s : Fin 3,
   have hs := row_sum 5 (fun c => if compatible r c ∧ classify c = s then (1 : ℤ) else 0)
   simp only [← ite_and] at hs
   rw [hs, codes_table]
-  exact row_counts_code (finFunctionFinEquiv r) (by simpa [decode] using hr) s
+  have he : decode 5 (finFunctionFinEquiv r) = r :=
+    Equiv.symm_apply_apply finFunctionFinEquiv r
+  have hc := row_counts_code (finFunctionFinEquiv r) (by rw [he]; exact hr) s
+  rw [he] at hc
+  exact hc
 
 private theorem initial_weights : ∀ s : Fin 3,
     (∑ c : Row 5, if rowLegal c ∧ classify c = s then (1 : ℤ) else 0) = weights s := by
@@ -75,9 +79,6 @@ private theorem vector_relation :
     (quotient ^ (1+2)).mulVec (1 : Fin 3 → ℤ) =
       ∑ j : Fin 2, (![-18, 15] : Fin 2 → ℤ) j •
         (quotient ^ (1+j.val)).mulVec (1 : Fin 3 → ℤ) := by
-  have h0 := powers_table (1 : Fin 4)
-  have h1 := powers_table (2 : Fin 4)
-  have h2 := powers_table (3 : Fin 4)
   have hp : (quotient ^ (1+2)).mulVec (1 : Fin 3 → ℤ) = W 3 := powers_table 3
   rw [hp]
   have hc : (∑ j : Fin 2, (![-18, 15] : Fin 2 → ℤ) j •
@@ -112,9 +113,17 @@ private theorem initial_relation : (T5 3 : ℤ) =
     15 * (T5 (2) : ℤ) - 18 * (T5 (1) : ℤ) := by
   have h1 : (T5 1 : ℤ) = 48 := by exact_mod_cast first_count
   have h2 := counting_bridge 0
-  rw [powers_table (1 : Fin 4)] at h2
+  change (T5 2 : ℤ) = dotProduct weights
+    ((quotient^1).mulVec (1 : Fin 3 → ℤ)) at h2
+  have hp2 := powers_table (1 : Fin 4)
+  change (quotient ^ 1).mulVec (1 : Fin 3 → ℤ) = W 1 at hp2
+  rw [hp2] at h2
   have h3 := counting_bridge 1
-  rw [powers_table (2 : Fin 4)] at h3
+  change (T5 3 : ℤ) = dotProduct weights
+    ((quotient^2).mulVec (1 : Fin 3 → ℤ)) at h3
+  have hp3 := powers_table (2 : Fin 4)
+  change (quotient ^ 2).mulVec (1 : Fin 3 → ℤ) = W 2 at hp3
+  rw [hp3] at h3
   norm_num [W, weights, dotProduct, Fin.sum_univ_succ] at *
   omega
 
@@ -127,12 +136,13 @@ theorem result (n : ℕ) : (T5 (n+3) : ℤ) =
       (![-18, 15] : Fin 2 → ℤ) finite_certificate.2.2 n
     have hb (j : ℕ) : dotProduct weights
         ((quotient ^ (n+1+j)).mulVec (1 : Fin 3 → ℤ)) = (T5 (n+j+2) : ℤ) := by
-      convert (counting_bridge (n+j)).symm using 1 <;> congr 2 <;> omega
-    rw [hb] at h
-    simp only [Fin.sum_univ_succ, Fin.val_zero, Fin.val_succ,
-      Matrix.cons_val_zero, Matrix.cons_val_succ, Fin.elim0] at h
-    simp only [Finset.sum_empty, add_zero] at h
-    simp only [hb] at h
-    convert h using 1 <;> ring_nf at * <;> omega
+      rw [show n+1+j = n+j+1 by omega]
+      exact (counting_bridge (n+j)).symm
+    simp_rw [hb] at h
+    norm_num only [Fin.sum_univ_succ, Fin.val_zero, Fin.val_succ,
+      Matrix.cons_val_zero, Matrix.cons_val_succ, Finset.sum_empty,
+      add_zero, Nat.add_assoc] at h
+    simp only [Nat.succ_eq_add_one, Nat.add_assoc]
+    linarith
 
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233152Column

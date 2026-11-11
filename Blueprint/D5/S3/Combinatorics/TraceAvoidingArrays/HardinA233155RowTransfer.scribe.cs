@@ -42,8 +42,16 @@ internal sealed class HardinA233155RowTransferDocument : IScribeDocumentDefiniti
     private static Formula TransferFormula() => K(All("q",NatF(),All("cls",Arr(RowF(V("k")),FinF(V("q"))),All("Q",C("Matrix",FinF(V("q")),FinF(V("q")),IntF()),All("w",Arr(FinF(V("q")),IntF()),Imp(HQ(),Imp(HW(),All("n",NatF(),Eq(Cast(C("T",V("k"),PlusF(V("n"),N(2))),IntF()),C("dotProduct",V("w"),C("Matrix.mulVec",Pow(V("Q"),PlusF(V("n"),N(1))),Cast(N(1),Arr(FinF(V("q")),IntF()))))))))))))));
 
     private static Formula V(string name) => F.Id(name);
-    private static Formula Op(string name) => Seq(Operatorname, Grp(V(name)));
-    private static Formula C(string name, params Formula[] args) => new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
+    private static Formula Op(string name) => Seq(Operatorname, Grp(Name(name)));
+    private static Formula Name(string name) => Seq(name.Split('.').SelectMany((part,i) =>
+        i == 0 ? new[]{Atom(part)} : new[]{Dot,Atom(part)}).ToArray());
+    private static Formula Atom(string part) {
+        var words=part.Split('_');
+        return words.Length == 1 ? V(part) : new Formula.Subscript(V(words[0]),
+            Seq(words.Skip(1).Select(V).ToArray()));
+    }
+
+    private static Formula C(string name, params Formula[] args) => new Formula.Apply(Name(name), [.. args]);
     private static Formula A(Formula fn, params Formula[] args) => new Formula.Apply(fn, [.. args]);
     private static Formula P(Formula f) => Parenthesized(f);
     private static Formula Parenthesized(Formula f) => Seq(Open, f, Close);
@@ -74,6 +82,6 @@ internal sealed class HardinA233155RowTransferDocument : IScribeDocumentDefiniti
     private static Formula Sum(string v, Formula ty, Formula f) => Seq(new Formula.Subscript(F.Sum, P(Seq(V(v), Colon, Sp, ty))), Sp, f);
     private static Formula Ite(Formula p, Formula a, Formula b) => Seq(Op("if"), Sp, p, Sp, Op("then"), Sp, a, Sp, Op("else"), Sp, b);
     private static Formula FilterCard(Formula k, Formula n) => C("Finset.card", C("Finset.filter", Lam("f", Grid(k,n), C("Legal",V("f"))), Op("Finset.univ")));
-    private static Formula Vec(params Formula[] xs) => Seq(Op("!"), OpenBracket, Join(xs), CloseBracket);
+    private static Formula Vec(params Formula[] xs) => Seq(Bang, OpenBracket, Join(xs), CloseBracket);
     private static Formula Join(Formula[] xs) => Seq(xs.SelectMany((x,i) => i == 0 ? new[]{x} : new[]{Comma,Sp,x}).ToArray());
 }
