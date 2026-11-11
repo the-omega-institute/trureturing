@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Actual compressed signed modes preserve the intrinsic rational energy with the Schur shift.
+LatticeCosetCompressedEnergy
 
 D is the original LatticeData, e is an arbitrary natural external rank, B : Matrix (Fin D.rank) (Fin e) Int is arbitrary, and C : Matrix (Fin e) (Fin e) Int has the explicit proofs hC : forall i j, C i j = C j i and hCe : forall i, Even (C i i). Both ranks may be zero. The sole positivity assumption in the theorem is hD : (gramReal D).PosDef on the ORIGINAL Gram form. The ambient block E = ambient D e B C hC hCe may be indefinite or degenerate. Its combinatorial energy and literal all-state field are used without an ambient inverse or a conformal-operator premise.
 

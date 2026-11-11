@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Finite scalar polynomials for the literal compressed H and Psi under restricted-dual tests.
+LatticeCosetScalarNumerator
 
 D is the original LatticeData, e : Nat is arbitrary, B : Matrix (Fin D.rank) (Fin e) Int is arbitrary, and C : Matrix (Fin e) (Fin e) Int comes with hC : forall i j, C i j = C j i and hCe : forall i, Even (C i i). Original and external rank zero are included. hD : (gramReal D).PosDef concerns only the ORIGINAL Gram form; there is no positivity or inverse requirement on the ambient block. Set I = compressed D B C hC hCe, S = schur D B C with its complete C term, and G[a](h) = rationalGrade D (moduleShift D B a) h. The original fields, states and half-diagonal cocycle are retained.
 
