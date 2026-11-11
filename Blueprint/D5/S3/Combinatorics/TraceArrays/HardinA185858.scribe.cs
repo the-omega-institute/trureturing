@@ -34,15 +34,17 @@ internal sealed class HardinA185858Document : IScribeDocumentDefinition
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Proof of both formulas", Disp(ClaimBody()),
                 "A cyclic shift in each column separates the n diagonal triples from six free binary cells. A prescribed trace word s therefore has 64 times the product of choose(3, val(s i)) arrays. The triple sums 0, 1, 2, 3 have multiplicities 1, 3, 3, 1. Splitting a word at its first triple gives four extension equations. Their weighted total satisfies the recurrence with coefficients 4 and 9, and its normalized first two terms are 4 and 22. Coefficient comparison proves the series identity. The two real numbers 2 − sqrt(13) and 2 + sqrt(13) satisfy r² = 4r + 9, so the radical expression has the same recurrence and initial values. Uniqueness of solutions to a linear recurrence proves the second formula for every positive index.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin185858"), ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string id, string title, Formula formula,
-        string prose, string declaration, DescribeRole role, AssessedProvenance provenance) =>
+        string prose, string declaration, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolutionClaim = null) =>
         Describe.Lean(DescribeId.Create("hardin185858-" + id),
             DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolutionClaim);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Qualified(string owner, string name) => Seq(Named(owner), Dot, Named(name));

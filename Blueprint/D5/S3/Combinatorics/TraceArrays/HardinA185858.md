@@ -82,6 +82,10 @@ $$(generatingSeries = (2 \cdot \operatorname{PowerSeries}.\operatorname{X} \cdot
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceArrays/HardinA185858.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin185858` (proved) by `D5/S3/Combinatorics/TraceArrays/HardinA185858.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin185858","declaration_gid":"D5/S3/Combinatorics/TraceArrays/HardinA185858.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin and Colin Barker (2018). *OEIS A185858: binary arrays with unequal neighboring three-by-three subblock traces*. URL: <https://oeis.org/A185858>.
