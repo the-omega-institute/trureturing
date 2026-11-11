@@ -36,7 +36,7 @@ internal sealed class RotationFacesDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "Zero boundary equates opposite shore values. Facial succession then equates values after a rotor step, and an actual graph walk propagates this equality between all faces. "
                         + "Reindexing a dart sum along phi proves that every facial boundary annihilates the vertex-to-edge differential. "
-                        + "The frozen finite_graph_cycle_space theorem identifies these relations with the existing cycle space. "
+                        + "The existing finite_graph_cycle_space theorem identifies these relations with the existing cycle space. "
                         + "Rank-nullity, the one-dimensional constant kernel and the signed Euler equation establish equality of the two subspaces. "
                         + "Generic cycle rank and linear algebra are reused; geometric separation is not assumed."))),
                 DescribeRole.Theorem),
