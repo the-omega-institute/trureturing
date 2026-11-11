@@ -58,14 +58,16 @@ internal sealed class SteiningerYurkevichOctahedronScalarRefutationDocument : IS
                 + "The first scalar value exceeds (3√2/4) times the second by more than 9/1250. "
                 + "All projection scalar values lie between zero and nine, so the supremum and "
                 + "infimum are finite and the displayed inequality fails. The Nieuwland-number "
-                + "theorem is a separate assertion.", false, DescribeRole.Theorem))));
+                + "theorem is a separate assertion.", false, DescribeRole.Theorem, new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("op-sy2609oct"), ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        bool literature, DescribeRole role = DescribeRole.Definition) => Describe.Lean(
+        bool literature, DescribeRole role = DescribeRole.Definition,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("sy-octahedron-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolution);
 
     private static Formula RealType => Seq(Mathbb, Grp(F.Id("R")));
     private static Formula FinType(byte n) => Call("Fin", D(n));

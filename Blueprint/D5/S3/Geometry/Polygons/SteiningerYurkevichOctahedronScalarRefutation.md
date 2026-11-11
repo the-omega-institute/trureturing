@@ -106,6 +106,10 @@ $$\neg (\operatorname{sSup}\left(projectionValues\right) \le \frac{3 \cdot \oper
 
 *Proof.* Machine-checked in Lean as `D5/S3/Geometry/Polygons/SteiningerYurkevichOctahedronScalarRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/op-sy2609oct` (refuted) by `D5/S3/Geometry/Polygons/SteiningerYurkevichOctahedronScalarRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"op-sy2609oct","declaration_gid":"D5/S3/Geometry/Polygons/SteiningerYurkevichOctahedronScalarRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Jakob Steininger and Sergey Yurkevich (2026). *The Nieuwland number of the Octahedron*. DOI: [10.48550/arXiv.2609.10788](https://doi.org/10.48550/arXiv.2609.10788). URL: <https://arxiv.org/abs/2609.10788v1>.
