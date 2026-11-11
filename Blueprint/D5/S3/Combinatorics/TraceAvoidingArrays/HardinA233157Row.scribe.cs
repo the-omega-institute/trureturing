@@ -36,11 +36,10 @@ internal sealed class HardinA233157RowDocument : IScribeDocumentDefinition
         i == 0 ? new[]{Atom(part)} : new[]{Dot,Atom(part)}).ToArray());
     private static Formula Atom(string part) {
         var words=part.Split('_');
-        if (words.Length == 1 && part.Any(char.IsDigit)) {
-            var letters = new string(part.TakeWhile(char.IsLetter).ToArray());
-            var digits = new string(part.SkipWhile(char.IsLetter).ToArray());
-            return new Formula.Subscript(V(letters), N(int.Parse(digits)));
-        }
+        if (part == "U3") return new Formula.Subscript(V("U"),N(3));
+        if (part == "U4") return new Formula.Subscript(V("U"),N(4));
+        if (part == "U5") return new Formula.Subscript(V("U"),N(5));
+        if (part == "U6") return new Formula.Subscript(V("U"),N(6));
         return words.Length == 1 ? V(part) : new Formula.Subscript(V(words[0]),
             Seq(words.Skip(1).Select(V).ToArray()));
     }
@@ -53,7 +52,6 @@ internal sealed class HardinA233157RowDocument : IScribeDocumentDefinition
     private static Formula Lam(string name, Formula type, Formula body) => P(Seq(LambdaLower, Sp, V(name), Colon, Sp, type, Sp, Mapsto, Sp, P(body)));
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula And(Formula a, Formula b) => new Formula.Logic(P(a), FormulaLogicOperator.And, P(b));
-    private static Formula Imp(Formula a, Formula b) => new Formula.Logic(P(a), FormulaLogicOperator.Implies, P(b));
     private static Formula Arr(Formula a, Formula b) => new Formula.TypeArrow(a, b);
     private static Formula PlusF(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
@@ -73,8 +71,4 @@ internal sealed class HardinA233157RowDocument : IScribeDocumentDefinition
     private static Formula FilterCard(Formula k, Formula n) => C("Finset.card", C("Finset.filter", Lam("f", Grid(k,n), C("Legal",V("f"))), Op("Finset.univ")));
     private static Formula Vec(params Formula[] xs) => Seq(Bang, OpenBracket, Join(xs), CloseBracket);
     private static Formula Join(Formula[] xs) => Seq(xs.SelectMany((x,i) => i == 0 ? new[]{x} : new[]{Comma,Sp,x}).ToArray());
-    private static Formula Ne(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
-    private static Formula LtF(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
-    private static Formula At(Formula f, Formula i, Formula j) => A(f, P(Seq(i, Comma, Sp, j)));
-    private static Formula Next(Formula i) => Seq(Langle, Sp, PlusF(Val(i),N(1)), Comma, Sp, V("h"), Rangle);
 }

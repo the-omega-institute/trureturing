@@ -42,39 +42,61 @@ open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155ColumnTransfer
 open D5.S3.Combinatorics.TraceAvoidingArrays
 open scoped BigOperators
 set_option maxRecDepth 100000
-set_option maxHeartbeats 10000000
 
 def U4 (n : ℕ) : ℕ :=
   (Finset.univ.filter (fun f : Fin 4 × Fin n → Fin 3 => Legal f)).card
 
 def classes : Fin 3 → Fin 3 → Fin 3 → Fin 3 → Fin 14 :=
-  ![![![![0, 1, 1], ![2, 3, 4], ![2, 4, 3]], ![![5, 6, 7], ![8, 9, 10], ![11, 12, 13]], ![![5, 7, 6], ![11, 13, 12], ![8, 10, 9]]], ![![![9, 8, 10], ![6, 5, 7], ![12, 11, 13]], ![![3, 2, 4], ![1, 0, 1], ![4, 2, 3]], ![![13, 11, 12], ![7, 5, 6], ![10, 8, 9]]], ![![![9, 10, 8], ![12, 13, 11], ![6, 7, 5]], ![![13, 12, 11], ![10, 9, 8], ![7, 6, 5]], ![![3, 4, 2], ![4, 3, 2], ![1, 1, 0]]]]
+  ![![![![0, 1, 1], ![2, 3, 4], ![2, 4, 3]], ![![5, 6, 7], ![8, 9, 10], ![11, 12, 13]], ![![5, 7,
+    6], ![11, 13, 12], ![8, 10, 9]]], ![![![9, 8, 10], ![6, 5, 7], ![12, 11, 13]], ![![3, 2, 4],
+    ![1, 0, 1], ![4, 2, 3]], ![![13, 11, 12], ![7, 5, 6], ![10, 8, 9]]], ![![![9, 10, 8], ![12, 13,
+    11], ![6, 7, 5]], ![![13, 12, 11], ![10, 9, 8], ![7, 6, 5]], ![![3, 4, 2], ![4, 3, 2], ![1, 1,
+    0]]]]
 def classify (r : Row 4) : Fin 14 := classes (r 0) (r 1) (r 2) (r 3)
 def representatives : Fin 14 → Row 4 :=
-  ![![0, 0, 0, 0], ![0, 0, 0, 1], ![0, 0, 1, 0], ![0, 0, 1, 1], ![0, 0, 1, 2], ![0, 1, 0, 0], ![0, 1, 0, 1], ![0, 1, 0, 2], ![0, 1, 1, 0], ![0, 1, 1, 1], ![0, 1, 1, 2], ![0, 1, 2, 0], ![0, 1, 2, 1], ![0, 1, 2, 2]]
+  ![![0, 0, 0, 0], ![0, 0, 0, 1], ![0, 0, 1, 0], ![0, 0, 1, 1], ![0, 0, 1, 2], ![0, 1, 0, 0], ![0,
+    1, 0, 1], ![0, 1, 0, 2], ![0, 1, 1, 0], ![0, 1, 1, 1], ![0, 1, 1, 2], ![0, 1, 2, 0], ![0, 1, 2,
+    1], ![0, 1, 2, 2]]
 def quotient : Matrix (Fin 14) (Fin 14) ℤ :=
-  ![![2, 2, 2, 2, 0, 2, 2, 0, 2, 2, 0, 0, 0, 0], ![1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0], ![1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0], ![1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1], ![0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1], ![1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], ![1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], ![0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], ![1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0], ![1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0], ![0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0], ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1], ![0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0], ![0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1]]
+  ![![2, 2, 2, 2, 0, 2, 2, 0, 2, 2, 0, 0, 0, 0], ![1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0], ![1,
+    1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0], ![1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1], ![0, 0, 0,
+    1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1], ![1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], ![1, 1, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0], ![0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], ![1, 1, 0, 0, 0, 1, 0,
+    1, 0, 0, 0, 0, 0, 0], ![1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0], ![0, 0, 0, 1, 1, 0, 0, 0, 0,
+    1, 1, 0, 0, 0], ![0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1], ![0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0,
+    0, 0, 0], ![0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1]]
 def weights : Fin 14 → ℤ := ![3, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6]
 private def successors : Fin 14 → List (Fin 14) :=
-  ![[0, 9, 5, 3, 2, 6, 8, 1, 1, 8, 6, 2, 3, 5, 9, 0], [0, 9, 5, 3, 1, 10, 7, 4], [0, 9, 1, 8], [0, 9, 2, 12, 1, 10, 3, 13], [4, 11, 3, 13], [0, 2, 1, 3], [0, 1], [3, 4], [0, 5, 1, 7], [0, 5, 2, 8, 1, 6, 3, 9], [4, 10, 3, 9], [11, 13], [8, 9], [13, 10, 12, 9]]
+  ![[0, 9, 5, 3, 2, 6, 8, 1, 1, 8, 6, 2, 3, 5, 9, 0], [0, 9, 5, 3, 1, 10, 7, 4], [0, 9, 1, 8], [0,
+    9, 2, 12, 1, 10, 3, 13], [4, 11, 3, 13], [0, 2, 1, 3], [0, 1], [3, 4], [0, 5, 1, 7], [0, 5, 2,
+    8, 1, 6, 3, 9], [4, 10, 3, 9], [11, 13], [8, 9], [13, 10, 12, 9]]
 
+set_option maxHeartbeats 10000000 in
 private theorem class_invariant : ∀ (e : Equiv.Perm (Fin 3)) (r : Row 4),
     classify (relabel e r) = classify r := by decide +kernel
+set_option maxHeartbeats 10000000 in
 private theorem class_representative : ∀ r : Row 4, ∃ e : Equiv.Perm (Fin 3),
     relabel e r = representatives (classify r) := by decide +kernel
+set_option maxHeartbeats 10000000 in
 private theorem successor_table : ∀ i : Fin 14,
     successorClasses classify (representatives i) = successors i := by decide +kernel
+set_option maxHeartbeats 10000000 in
 private theorem representative_rows : ∀ i s : Fin 14,
     ((successorClasses classify (representatives i)).map
       (fun j => if j = s then (1 : ℤ) else 0)).sum = quotient i s := by
-  have ht : ∀ i s : Fin 14, ((successors i).map
-      (fun j => if j = s then (1 : ℤ) else 0)).sum = quotient i s := by decide +kernel
-  simpa only [successor_table] using ht
+  have ht : List.ofFn (fun i : Fin 14 => List.ofFn (fun s : Fin 14 =>
+      ((successors i).map (fun j => if j = s then (1 : ℤ) else 0)).sum)) =
+      List.ofFn (fun i : Fin 14 => List.ofFn (fun s : Fin 14 => quotient i s)) := rfl
+  intro i s
+  rw [successor_table]
+  exact congrFun (List.ofFn_inj.mp (congrFun (List.ofFn_inj.mp ht) i)) s
+set_option maxHeartbeats 10000000 in
 private theorem row_counts : ∀ r : Row 4, ∀ s : Fin 14,
     (∑ c : Row 4, if columnCompatible r c ∧ classify c = s then (1 : ℤ) else 0) =
       quotient (classify r) s :=
   quotient_rows 4 14 classify representatives quotient class_invariant
     class_representative representative_rows
+set_option maxHeartbeats 10000000 in
 private theorem initial_weights : ∀ s : Fin 14,
     (∑ c : Row 4, if classify c = s then (1 : ℤ) else 0) = weights s := by
   intro s
@@ -83,13 +105,21 @@ private theorem initial_weights : ∀ s : Fin 14,
   revert s
   decide +kernel
 private def W : Fin 8 → Fin 14 → ℤ :=
-  ![![1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], ![16, 8, 4, 8, 4, 4, 2, 2, 4, 8, 4, 2, 2, 4], ![108, 54, 36, 54, 18, 36, 24, 12, 30, 54, 24, 6, 12, 18], ![792, 360, 246, 360, 96, 252, 162, 72, 210, 396, 150, 24, 84, 108], ![5556, 2478, 1758, 2496, 588, 1758, 1152, 456, 1476, 2778, 1002, 132, 606, 738], ![38904, 17112, 12288, 17412, 3954, 12288, 8034, 3084, 10248, 19452, 6864, 870, 4254, 5124], ![271476, 119070, 85716, 121410, 27360, 85716, 56016, 21366, 71388, 135738, 47682, 5994, 29700, 35694], ![1893060, 829818, 597672, 846486, 190458, 597672, 390546, 148770, 497628, 946530, 332190, 41688, 207126, 248814]]
+  ![![1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], ![16, 8, 4, 8, 4, 4, 2, 2, 4, 8, 4, 2, 2, 4],
+    ![108, 54, 36, 54, 18, 36, 24, 12, 30, 54, 24, 6, 12, 18], ![792, 360, 246, 360, 96, 252, 162,
+    72, 210, 396, 150, 24, 84, 108], ![5556, 2478, 1758, 2496, 588, 1758, 1152, 456, 1476, 2778,
+    1002, 132, 606, 738], ![38904, 17112, 12288, 17412, 3954, 12288, 8034, 3084, 10248, 19452, 6864,
+    870, 4254, 5124], ![271476, 119070, 85716, 121410, 27360, 85716, 56016, 21366, 71388, 135738,
+    47682, 5994, 29700, 35694], ![1893060, 829818, 597672, 846486, 190458, 597672, 390546, 148770,
+    497628, 946530, 332190, 41688, 207126, 248814]]
+set_option maxHeartbeats 10000000 in
 private theorem powers_table : ∀ j : Fin 8,
     (quotient ^ j.val).mulVec (1 : Fin 14 → ℤ) = W j := by
   apply TransferMatrix.tabulatedPowers
   · exact List.ofFn_inj.mp rfl
   · intro j
     fin_cases j <;> exact List.ofFn_inj.mp rfl
+set_option maxHeartbeats 10000000 in
 private theorem vector_relation :
     (quotient ^ (4 + 3)).mulVec (1 : Fin 14 → ℤ) =
       ∑ j : Fin 3, (![6, -15, 9] : Fin 3 → ℤ) j •
@@ -100,6 +130,7 @@ private theorem vector_relation :
   simp_rw [hh]
   exact List.ofFn_inj.mp (by decide +kernel)
 
+set_option maxHeartbeats 10000000 in
 theorem finite_certificate :
     (∀ r : Row 4, ∀ s : Fin 14,
       (∑ c : Row 4, if columnCompatible r c ∧ classify c = s then (1 : ℤ) else 0) =
@@ -110,12 +141,14 @@ theorem finite_certificate :
         (quotient ^ (4 + j.val)).mulVec (1 : Fin 14 → ℤ) :=
   ⟨row_counts, initial_weights, vector_relation⟩
 
+set_option maxHeartbeats 10000000 in
 private theorem counting_bridge (n : ℕ) :
     (U4 (n + 2) : ℤ) = dotProduct weights
       ((quotient ^ (n + 1)).mulVec (1 : Fin 14 → ℤ)) :=
   count_transfer 4 14 classify quotient weights
     finite_certificate.1 finite_certificate.2.1 n
 
+set_option maxHeartbeats 10000000 in
 theorem result (n : ℕ) : (U4 (n + 8) : ℤ) =
     9 * (U4 (n + 7) : ℤ) - 15 * (U4 (n + 6) : ℤ) + 6 * (U4 (n + 5) : ℤ) := by
   have h := TransferMatrix.scalarRelationShift quotient weights 3 4
@@ -129,6 +162,6 @@ theorem result (n : ℕ) : (U4 (n + 8) : ℤ) =
   norm_num only [Fin.sum_univ_succ, Fin.val_zero, Fin.val_succ,
     Matrix.cons_val_zero, Matrix.cons_val_succ, Finset.sum_empty,
     add_zero, Nat.add_assoc] at h
-  first | linarith only [h] | (simp only [Nat.add_assoc]; linarith only [h])
+  linarith only [h]
 
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233157Row

@@ -42,13 +42,13 @@ open D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155ColumnTransfer
 open D5.S3.Combinatorics.TraceAvoidingArrays
 open scoped BigOperators
 set_option maxRecDepth 100000
-set_option maxHeartbeats 10000000
 
 def U3 (n : ℕ) : ℕ :=
   (Finset.univ.filter (fun f : Fin 3 × Fin n → Fin 3 => Legal f)).card
 
 def classes : Fin 3 → Fin 3 → Fin 3 → Fin 5 :=
-  ![![![0, 1, 1], ![2, 3, 4], ![2, 4, 3]], ![![3, 2, 4], ![1, 0, 1], ![4, 2, 3]], ![![3, 4, 2], ![4, 3, 2], ![1, 1, 0]]]
+  ![![![0, 1, 1], ![2, 3, 4], ![2, 4, 3]], ![![3, 2, 4], ![1, 0, 1], ![4, 2, 3]], ![![3, 4, 2], ![4,
+    3, 2], ![1, 1, 0]]]
 def classify (r : Row 3) : Fin 5 := classes (r 0) (r 1) (r 2)
 def representatives : Fin 5 → Row 3 :=
   ![![0, 0, 0], ![0, 0, 1], ![0, 1, 0], ![0, 1, 1], ![0, 1, 2]]
@@ -58,23 +58,32 @@ def weights : Fin 5 → ℤ := ![3, 6, 6, 6, 6]
 private def successors : Fin 5 → List (Fin 5) :=
   ![[0, 3, 2, 1, 1, 2, 3, 0], [0, 3, 1, 4], [0, 1], [0, 2, 1, 3], [4, 3]]
 
+set_option maxHeartbeats 10000000 in
 private theorem class_invariant : ∀ (e : Equiv.Perm (Fin 3)) (r : Row 3),
     classify (relabel e r) = classify r := by decide +kernel
+set_option maxHeartbeats 10000000 in
 private theorem class_representative : ∀ r : Row 3, ∃ e : Equiv.Perm (Fin 3),
     relabel e r = representatives (classify r) := by decide +kernel
+set_option maxHeartbeats 10000000 in
 private theorem successor_table : ∀ i : Fin 5,
     successorClasses classify (representatives i) = successors i := by decide +kernel
+set_option maxHeartbeats 10000000 in
 private theorem representative_rows : ∀ i s : Fin 5,
     ((successorClasses classify (representatives i)).map
       (fun j => if j = s then (1 : ℤ) else 0)).sum = quotient i s := by
-  have ht : ∀ i s : Fin 5, ((successors i).map
-      (fun j => if j = s then (1 : ℤ) else 0)).sum = quotient i s := by decide +kernel
-  simpa only [successor_table] using ht
+  have ht : List.ofFn (fun i : Fin 5 => List.ofFn (fun s : Fin 5 =>
+      ((successors i).map (fun j => if j = s then (1 : ℤ) else 0)).sum)) =
+      List.ofFn (fun i : Fin 5 => List.ofFn (fun s : Fin 5 => quotient i s)) := rfl
+  intro i s
+  rw [successor_table]
+  exact congrFun (List.ofFn_inj.mp (congrFun (List.ofFn_inj.mp ht) i)) s
+set_option maxHeartbeats 10000000 in
 private theorem row_counts : ∀ r : Row 3, ∀ s : Fin 5,
     (∑ c : Row 3, if columnCompatible r c ∧ classify c = s then (1 : ℤ) else 0) =
       quotient (classify r) s :=
   quotient_rows 3 5 classify representatives quotient class_invariant
     class_representative representative_rows
+set_option maxHeartbeats 10000000 in
 private theorem initial_weights : ∀ s : Fin 5,
     (∑ c : Row 3, if classify c = s then (1 : ℤ) else 0) = weights s := by
   intro s
@@ -83,13 +92,16 @@ private theorem initial_weights : ∀ s : Fin 5,
   revert s
   decide +kernel
 private def W : Fin 5 → Fin 5 → ℤ :=
-  ![![1, 1, 1, 1, 1], ![8, 4, 2, 4, 2], ![36, 18, 12, 18, 6], ![168, 78, 54, 84, 24], ![768, 354, 246, 384, 108]]
+  ![![1, 1, 1, 1, 1], ![8, 4, 2, 4, 2], ![36, 18, 12, 18, 6], ![168, 78, 54, 84, 24], ![768, 354,
+    246, 384, 108]]
+set_option maxHeartbeats 10000000 in
 private theorem powers_table : ∀ j : Fin 5,
     (quotient ^ j.val).mulVec (1 : Fin 5 → ℤ) = W j := by
   apply TransferMatrix.tabulatedPowers
   · exact List.ofFn_inj.mp rfl
   · intro j
     fin_cases j <;> exact List.ofFn_inj.mp rfl
+set_option maxHeartbeats 10000000 in
 private theorem vector_relation :
     (quotient ^ (2 + 2)).mulVec (1 : Fin 5 → ℤ) =
       ∑ j : Fin 2, (![-2, 5] : Fin 2 → ℤ) j •
@@ -100,6 +112,7 @@ private theorem vector_relation :
   simp_rw [hh]
   exact List.ofFn_inj.mp (by decide +kernel)
 
+set_option maxHeartbeats 10000000 in
 theorem finite_certificate :
     (∀ r : Row 3, ∀ s : Fin 5,
       (∑ c : Row 3, if columnCompatible r c ∧ classify c = s then (1 : ℤ) else 0) =
@@ -110,12 +123,14 @@ theorem finite_certificate :
         (quotient ^ (2 + j.val)).mulVec (1 : Fin 5 → ℤ) :=
   ⟨row_counts, initial_weights, vector_relation⟩
 
+set_option maxHeartbeats 10000000 in
 private theorem counting_bridge (n : ℕ) :
     (U3 (n + 2) : ℤ) = dotProduct weights
       ((quotient ^ (n + 1)).mulVec (1 : Fin 5 → ℤ)) :=
   count_transfer 3 5 classify quotient weights
     finite_certificate.1 finite_certificate.2.1 n
 
+set_option maxHeartbeats 10000000 in
 theorem result (n : ℕ) : (U3 (n + 5) : ℤ) =
     5 * (U3 (n + 4) : ℤ) - 2 * (U3 (n + 3) : ℤ) := by
   have h := TransferMatrix.scalarRelationShift quotient weights 2 2
@@ -129,6 +144,6 @@ theorem result (n : ℕ) : (U3 (n + 5) : ℤ) =
   norm_num only [Fin.sum_univ_succ, Fin.val_zero, Fin.val_succ,
     Matrix.cons_val_zero, Matrix.cons_val_succ, Finset.sum_empty,
     add_zero, Nat.add_assoc] at h
-  first | linarith only [h] | (simp only [Nat.add_assoc]; linarith only [h])
+  linarith only [h]
 
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233156Row

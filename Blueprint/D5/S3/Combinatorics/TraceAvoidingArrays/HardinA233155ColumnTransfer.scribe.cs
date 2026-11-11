@@ -12,10 +12,23 @@ internal sealed class HardinA233155ColumnTransferDocument : IScribeDocumentDefin
         "Unrestricted columns retain the literal horizontal and antidiagonal bonds.",
         H("Three-state column transfer"), Blocks(
             Node("columnCompatible",CompatibleFormula(),"Every horizontal and antidiagonal bond between the two columns excludes sum two."),
-            Node("relabel",All("k",NatF(),All("e",PermF(),Eq(C("relabel",V("e")),C("Equiv.arrowCongr",C("Equiv.refl",FinF(V("k"))),V("e")))))),"A color permutation acts pointwise on a column."),
-            Node("successorClasses",KQ(All("cls",Arr(RowF(V("k")),FinF(V("q"))),All("r",RowF(V("k")),Eq(C("successorClasses",V("cls"),V("r")),C("List.map",Lam("c",FinF(Pow(N(3),V("k"))),A(V("cls"),C("decode",V("k"),V("c")))),C("List.filter",Lam("c",FinF(Pow(N(3),V("k"))),C("decide",C("columnCompatible",V("r"),C("decode",V("k"),V("c"))))),C("List.finRange",Pow(N(3),V("k"))))))))),"The list records each compatible successor's class in base-three code order."),
+            Node("relabel",RelabelFormula(),"A color permutation acts pointwise on a column."),
+            Node("successorClasses",SuccessorsFormula(),"The list records each compatible successor class in base-three code order."),
             Node("quotient_rows",QuotientFormula(),"Permutation-invariant equality classes and their representative successor lists determine all quotient entries.",true),
             Node("count_transfer",TransferFormula(),"Currying along columns identifies literal arrays with constrained words. The quotient and its initial multiplicities count every length at least two.",true)), []));
+    private static Formula RelabelFormula() {
+        var body=Eq(C("relabel",V("e")),C("Equiv.arrowCongr",C("Equiv.refl",FinF(V("k"))),V("e")));
+        return All("k",NatF(),All("e",PermF(),body));
+    }
+    private static Formula SuccessorsFormula() {
+        var codeType=FinF(Pow(N(3),V("k")));
+        var column=C("decode",V("k"),V("c"));
+        var list=C("List.finRange",Pow(N(3),V("k")));
+        var predicate=Lam("c",codeType,C("decide",C("columnCompatible",V("r"),column)));
+        var filtered=C("List.filter",predicate,list);
+        var mapped=C("List.map",Lam("c",codeType,A(V("cls"),column)),filtered);
+        return KQ(All("cls",Arr(RowF(V("k")),FinF(V("q"))),All("r",RowF(V("k")),Eq(C("successorClasses",V("cls"),V("r")),mapped))));
+    }
     private static Formula PermF() => C("Equiv.Perm",FinF(N(3)));
     private static Formula KQ(Formula f) => All("k",NatF(),All("q",NatF(),f));
     private static Formula CompatibleFormula() {
@@ -31,11 +44,11 @@ internal sealed class HardinA233155ColumnTransferDocument : IScribeDocumentDefin
         var invariant=All("e",PermF(),All("r",RowF(V("k")),Eq(A(V("cls"),C("relabel",V("e"),V("r"))),A(V("cls"),V("r")))));
         var representative=All("r",RowF(V("k")),new Formula.Bind(FormulaQuantifier.Exists,FormulaIdentifier.Create("e"),PermF(),Eq(C("relabel",V("e"),V("r")),A(V("rep"),A(V("cls"),V("r"))))));
         var table=All("i",FinF(V("q")),All("s",FinF(V("q")),Eq(C("List.sum",C("List.map",Lam("j",FinF(V("q")),Ite(Eq(V("j"),V("s")),Cast(N(1),IntF()),N(0))),C("successorClasses",V("cls"),A(V("rep"),V("i"))))),A(V("Q"),V("i"),V("s")))));
-        return KQ(All("cls",Arr(RowF(V("k")),FinF(V("q"))),All("rep",Arr(FinF(V("q")),RowF(V("k"))),All("Q",C("Matrix",FinF(V("q")),FinF(V("q")),IntF()),Imp(invariant,Imp(representative,Imp(table,HQ()))))))));
+        return KQ(All("cls",Arr(RowF(V("k")),FinF(V("q"))),All("rep",Arr(FinF(V("q")),RowF(V("k"))),All("Q",C("Matrix",FinF(V("q")),FinF(V("q")),IntF()),Imp(invariant,Imp(representative,Imp(table,HQ())))))));
     }
     private static Formula TransferFormula() {
         var conclusion=All("n",NatF(),Eq(Cast(C("T",PlusF(V("n"),N(2)),V("k")),IntF()),C("dotProduct",V("w"),C("Matrix.mulVec",Pow(V("Q"),PlusF(V("n"),N(1))),Cast(N(1),Arr(FinF(V("q")),IntF()))))));
-        return KQ(All("cls",Arr(RowF(V("k")),FinF(V("q"))),All("Q",C("Matrix",FinF(V("q")),FinF(V("q")),IntF()),All("w",Arr(FinF(V("q")),IntF()),Imp(HQ(),Imp(HW(),conclusion)))))));
+        return KQ(All("cls",Arr(RowF(V("k")),FinF(V("q"))),All("Q",C("Matrix",FinF(V("q")),FinF(V("q")),IntF()),All("w",Arr(FinF(V("q")),IntF()),Imp(HQ(),Imp(HW(),conclusion))))));
     }
     private static Formula V(string name) => F.Id(name);
     private static Formula Op(string name) => Seq(Operatorname, Grp(Name(name)));
@@ -43,11 +56,10 @@ internal sealed class HardinA233155ColumnTransferDocument : IScribeDocumentDefin
         i == 0 ? new[]{Atom(part)} : new[]{Dot,Atom(part)}).ToArray());
     private static Formula Atom(string part) {
         var words=part.Split('_');
-        if (words.Length == 1 && part.Any(char.IsDigit)) {
-            var letters = new string(part.TakeWhile(char.IsLetter).ToArray());
-            var digits = new string(part.SkipWhile(char.IsLetter).ToArray());
-            return new Formula.Subscript(V(letters), N(int.Parse(digits)));
-        }
+        if (part == "U3") return new Formula.Subscript(V("U"),N(3));
+        if (part == "U4") return new Formula.Subscript(V("U"),N(4));
+        if (part == "U5") return new Formula.Subscript(V("U"),N(5));
+        if (part == "U6") return new Formula.Subscript(V("U"),N(6));
         return words.Length == 1 ? V(part) : new Formula.Subscript(V(words[0]),
             Seq(words.Skip(1).Select(V).ToArray()));
     }
@@ -63,25 +75,17 @@ internal sealed class HardinA233155ColumnTransferDocument : IScribeDocumentDefin
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(P(a), FormulaLogicOperator.Implies, P(b));
     private static Formula Arr(Formula a, Formula b) => new Formula.TypeArrow(a, b);
     private static Formula PlusF(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
-    private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
-    private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
     private static Formula Pow(Formula a, Formula b) => new Formula.Power(P(a), b);
     private static Formula N(int n) => n < 0 ? Seq(Minus, N(-n)) : D(n.ToString(System.Globalization.CultureInfo.InvariantCulture).Select(c => (byte)(c - '0')).ToArray());
     private static Formula FinF(Formula n) => C("Fin", n);
-    private static Formula ClassTableType(int width, int q) { Formula t = FinF(N(q)); for (int i = 0; i < width; ++i) t = Arr(FinF(N(3)), t); return t; }
     private static Formula NatF() => Op("Nat");
     private static Formula IntF() => Op("Int");
     private static Formula Cast(Formula x, Formula t) => P(Seq(x, Colon, Sp, t));
     private static Formula Val(Formula x) => C("Fin.val", x);
     private static Formula RowF(Formula k) => C("Row", k);
-    private static Formula Grid(Formula k, Formula n) => Arr(P(Seq(FinF(k), Sp, Times, Sp, FinF(n))), FinF(N(3)));
     private static Formula Sum(string v, Formula ty, Formula f) => Seq(new Formula.Subscript(F.Sum, P(Seq(V(v), Colon, Sp, ty))), Sp, f);
     private static Formula Ite(Formula p, Formula a, Formula b) => Seq(Op("if"), Sp, p, Sp, Op("then"), Sp, a, Sp, Op("else"), Sp, b);
-    private static Formula FilterCard(Formula k, Formula n) => C("Finset.card", C("Finset.filter", Lam("f", Grid(k,n), C("Legal",V("f"))), Op("Finset.univ")));
-    private static Formula Vec(params Formula[] xs) => Seq(Bang, OpenBracket, Join(xs), CloseBracket);
-    private static Formula Join(Formula[] xs) => Seq(xs.SelectMany((x,i) => i == 0 ? new[]{x} : new[]{Comma,Sp,x}).ToArray());
     private static Formula Ne(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
     private static Formula LtF(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
-    private static Formula At(Formula f, Formula i, Formula j) => A(f, P(Seq(i, Comma, Sp, j)));
     private static Formula Next(Formula i) => Seq(Langle, Sp, PlusF(Val(i),N(1)), Comma, Sp, V("h"), Rangle);
 }
