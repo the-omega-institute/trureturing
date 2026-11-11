@@ -1,0 +1,16 @@
+**定义 28.1（四维窗口与固定原标签）。** 固定特征为零的域 $F$ 及有限域扩张 $L/F$。窗口是原 $L$ 中任意满足 $\dim_F W=4$ 的 $F$-线性子空间。全部乘积、商与标量作用均使用这个 $L$ 的原乘法。对原标签 $r,s\in L^\times$，定义
+
+$$
+\begin{aligned}
+J_W(r,s)&=\dim_F(W\cap rW\cap sW),\\
+d_W(r)&=J_W(r,1)=\dim_F(W\cap rW),\\
+D_W&=F\bigl(\{u/v:u,v\in W,\ v\ne0\}\bigr)\subseteq L,\\
+E_W&=\{a\in L:aW\subseteq W\},\\
+N&=[D_W:F],\qquad e=[E_W:F],\\
+\delta_W&=\min\{d_W(r):r\in L^\times,\ d_W(r)>0\}.
+\end{aligned}
+\tag{28.1}
+$$
+
+稳定子 $E_W$ 成域的通常事实亦在下述证明中核对；最小值因 $d_W(1)=4$ 而存在。观察输入只有全部原标签上的函数 $J_W$，不附送 $D_W,E_W$、窗口基或共同非零向量。竞争窗口始终为同一原 $L$ 中的四维 $F$-子空间；等价关系仅为 $V=xW$、$x\in L^\times$，不允许重标、半线性或一般线性替换。
+
