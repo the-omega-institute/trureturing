@@ -231,6 +231,7 @@ private theorem cut_parts_supIndep
       have hcutA : cutSpan V φ A = q.sup (cutSpan V φ) := by
         dsimp [A, cutSpan]
         rw [Finset.sup_biUnion]
+        rfl
       have hAT : cutSpan V φ A ≤ cutSpan V φ s := Finset.sup_mono hAs
       have hcross : (cutSpan V φ A ⊔ familySpan V C) ⊓
           (cutSpan V φ A ⊔ familySpan V B) ≤ LinearMap.ker φ :=
@@ -247,7 +248,8 @@ private theorem cut_parts_supIndep
           exact sup_le ((cutSpan_le_span V φ C).trans le_sup_right) le_sup_left
         exact hle hxq
       have hxR : x ∈ cutSpan V φ A ⊔ familySpan V B :=
-        le_sup_right ((cutSpan_le_span V φ B) hxB)
+        (le_sup_right : familySpan V B ≤ cutSpan V φ A ⊔ familySpan V B)
+          ((cutSpan_le_span V φ B) hxB)
       have hxA : x ∈ q.sup (cutSpan V φ) := by
         rw [← hcutA, ← hmiddle]
         exact ⟨hxL, hxR⟩
@@ -283,7 +285,9 @@ private theorem exists_tight_partition [FiniteDimensional K E]
   intro gp
   by_cases hs : s = ∅
   · subst s
-    exact ⟨Finpartition.empty (Finset ι), by simp [cutSpan]⟩
+    refine ⟨Finpartition.empty (Finset ι), ?_⟩
+    change finrank K (cutSpan V φ ∅) = 0
+    rw [cutSpan, Finset.sup_empty, finrank_bot]
   by_cases hall : ∀ i ∈ s, ∀ j ∈ s,
       cutSpan V φ s ⊔ V i = cutSpan V φ s ⊔ V j
   · obtain ⟨i, hi⟩ := Finset.nonempty_iff_ne_empty.mpr hs
@@ -308,7 +312,9 @@ private theorem exists_tight_partition [FiniteDimensional K E]
       have hsame : ∀ j ∈ s, cutSpan V φ s ⊔ V i = cutSpan V φ s ⊔ V j := by
         intro j hj
         have hjB : j ∈ B := hBs.symm ▸ hj
-        exact (Finset.mem_filter.mp (hBi ▸ hjB)).2
+        have hjfilter : j ∈ s.filter
+            (fun l => cutSpan V φ s ⊔ V i = cutSpan V φ s ⊔ V l) := hBi ▸ hjB
+        exact (Finset.mem_filter.mp hjfilter).2
       exact hall fun j hj k hk => (hsame j hj).symm.trans (hsame k hk)
     have hrec : ∀ B ∈ P.parts, ∃ Q : Finpartition B,
         finrank K (cutSpan V φ B) =
@@ -573,6 +579,10 @@ theorem embedding_common_kernel_rigidity [Fintype ι]
   classical
   let b := embeddingRows emb X x
   let A := commonConstraintMatrix b (coefficientNormal z) k
+  change LinearMap.ker A.mulVecLin = K ∙ z ↔
+    ∀ P : Finpartition (Finset.univ : Finset ι),
+      (∑ i, Fintype.card (κ i)) - 1 ≤
+        ∑ B ∈ P.parts, ((∑ i, finrank K (blockSpan b B i)) - 1)
   obtain ⟨P, hP, hbound⟩ := block_common_rows_partition_rank b (coefficientNormal z)
     k Finset.univ (fun σ _ => hk σ) gp
   have hrank : A.rank = finrank K (commonRowSpan (blockRows b)
