@@ -2629,3 +2629,271 @@ derivation, with no Lean/kernel, novelty, priority or full-origin claim.
 几何、Born 概率、普通张量积及同一三份系统上的换标签。这只给出静态统计
 结构，内部归一化态不等于可用物理参考设备，也不推出测量时间交换、动力学
 或更高份一致性，更不声称这些保留条件彼此独立且数目最少。
+
+## Readback from unit insertion
+
+The primitive $r$ and its separately supplied positivity and TP can also
+be deleted from (53)–(55). The following repo-derived paper deduction
+uses the existing [binary marginal theorem](#positive-marginals-recover-the-joint-effect-contract)
+(15)–(18) twice, with its exact hypotheses checked below. It derives the
+unit identity as well as the readback normalization; it adds no
+homogeneity axiom and repeats no classification.
+
+### Complete reduced comparison candidate
+
+Start with the actual nonzero finite-dimensional real ordered carriers
+$X=A,D,E$, closed pointed generating cones, strictly positive
+normalizations $u_X$, compact full state bases
+$K_X=\{x\ge0:u_X(x)=1\}$ and full dual effects $[0,u_X]$.
+Use the least comparison
+$T_p(x)=\inf\{f(x):0\le f\le u_X,\ f(p)=1\}$ and retain exactly the
+finite-mixture S law (49) on **each actual full carrier**: every pure
+reference $p$, every finite pure family $(q_\ell)$ and every probability
+weight family satisfy
+$T_p(\sum_\ell w_\ell q_\ell)=\sum_\ell w_\ell T_{q_\ell}(p)$.
+Separately retain the normalization-preserving
+[S-to-canonical-trace-Jordan paper bridge](mullerududec2012selfduality.md#complete-conditional-candidate-and-its-scope)
+on each carrier, including canonical primitive-trace-one normalization
+and full effects. Endpoint reciprocity alone replaces neither S nor
+this conditional bridge. Only **after** the bridge supplies units and
+trace pairings make the definitions below.
+
+Thus $A,D,E$ are actual nonzero finite canonical-trace EJAs, with their
+entire square cones, all positive trace-one states, all effects
+$[0,1_X]$ and $\langle x,y\rangle_X=\tau_X(x\circ y)$.
+Every primitive idempotent in every sector has trace one; arbitrary
+sector rescalings are excluded. The only primitive maps are real-bilinear
+$L:D\times A\to E$ and real-linear $p_{13},p_{23}:E\to D$.
+Require global positivity of $L$ on **all** $D_+\times A_+$, including
+entangled $d$, and of both $p_{13},p_{23}$ on **all** $E_+$.
+Supply TP **only** for $p_{13}$: $\tau_Dp_{13}=\tau_E$.
+Define $\omega_0,M_0,Q_0$ internally **exactly as in (53)**, and set
+
+$$
+J:A\to D,\qquad J(a):=M_0(a,1_A),\qquad r_0:=J^*:D\to A.
+\tag{56}
+$$
+
+Retain the two real spans (54), and require, for **all real**
+$a,b,c\in A$,
+
+$$
+\begin{aligned}
+r_0M_0(a,b)&=\tau_A(b)a,\\
+p_{13}Q_0(a,b,c)&=\tau_A(b)M_0(a,c),\\
+p_{23}Q_0(a,b,c)&=\tau_A(a)M_0(b,c).
+\end{aligned}
+\tag{57}
+$$
+
+These are the complete retained conditions. In particular neither
+positivity nor TP of $r_0$, nor $M_0(1_A,1_A)=1_D$, is an independent
+condition. The unit in $J$ is **unnormalized**. Using
+$1_A/\tau_A(1_A)$ there would divide $r_0$ by
+$\tau_A(1_A)=\operatorname{rank}A$ and change the first law.
+No second singleton, $p_{12}$, joint effect, right carrier,
+reassociation, spectator permutation, CP or temporal exchange is primitive.
+
+### The unit identity follows from the retained conditions
+
+Write $M=M_0$, $r=r_0$ and $U=M(1_A,1_A)\ge0$.
+The composition (53) makes $M$ bilinear and positive, hence $J$ positive.
+Self-duality gives, for every $a\ge0,z\ge0$,
+$\langle a,rz\rangle_A=\langle J(a),z\rangle_D\ge0$;
+thus $r$ is globally positive. Also $r^*1_A=J(1_A)=U$, so
+$\tau_A(rz)=\langle U,z\rangle_D$ for every real $z$.
+In particular TP of $r$ is equivalent to $U=1_D$. This already gives
+the baseline reduction with an explicit unit condition; the next
+argument proves that condition redundant.
+
+Put $c_0=1_A/\tau_A(1_A)$ and define the auxiliary positive map
+$s=r\,p_{23}L(\cdot,c_0):D\to A$. The third and first laws in
+(57), in that order, give
+
+$$
+sM(a,b)=\tau_A(a)rM(b,c_0)=\tau_A(a)b,\qquad
+r^*1_A=U=s^*1_A.
+\tag{58}
+$$
+
+For the last equality, on every real product $M(a,b)$ both
+$\langle s^*1_A,M(a,b)\rangle_D$ and
+$\langle U,M(a,b)\rangle_D=\tau_A(rM(a,b))$ equal
+$\tau_A(a)\tau_A(b)$; the $D$ span proves equality on $D$.
+At this point neither $r$ nor $s$ has been assumed or shown TP.
+
+The vector $U$ is interior to $D_+$. For $a,b\ge0$, choose
+$a\le\lambda1_A$, $b\le\mu1_A$. Positive bilinearity gives
+$0\le M(a,b)\le\lambda\mu U$. Any $h\ge0$ orthogonal to $U$
+therefore annihilates every positive product, then every real product
+by cone generation, and then $D$ by its span; hence $h=0$.
+If $U$ had a zero spectral eigenvalue, a nonzero primitive idempotent
+in that spectral space would be such an $h$. Thus all its eigenvalues
+are strictly positive, including in every direct-sum sector.
+
+Use the standard EJA quadratic representation, with its precise formula
+
+$$
+\ell_x(y)=x\circ y,\qquad P_x=2\ell_x^2-\ell_{x^2},\qquad
+C=P_{\sqrt U},\qquad C^{-1}=P_{U^{-1/2}}.
+\tag{59}
+$$
+
+[van de Wetering, arXiv:1912.01903v1, Proposition 2.21](https://arxiv.org/html/1912.01903v1#S2.counter21)
+states positivity of quadratic representations on JB-algebras;
+Proposition 2.25 includes all EJAs. The introduction prints the formula
+used in (59). The HTML Definition 2.16 displays an inconsistent extra
+factor $2$ before $\ell_{x^2}$, incompatible with its adjacent
+$P_1=\mathrm{id}$ identity; that display is not used. Source use here
+is a bounded primary read of these statements and the introduction,
+not an independent verification of the cited theorems.
+Associativity of the trace form makes $\ell_x$ self-adjoint, hence
+$C$ and the displayed inverse self-adjoint. In a primitive frame
+diagonalizing $U$ with eigenvalues $u_i>0$, spectral Peirce calculus
+makes $C$ act by $u_i$ on diagonal spaces and $\sqrt{u_i u_j}$ on
+off-diagonal spaces. The reciprocal coefficients verify the inverse,
+and give $C^{-1}U=1_D$, $CU=U^2$. Both maps are positive by the cited
+quadratic-representation fact. This works for exceptional and direct-sum
+EJAs, without a matrix embedding.
+
+Now set
+
+$$
+\widehat M=CM,\qquad \widehat R=rC^{-1},\qquad
+\widehat S=sC^{-1}.
+\tag{60}
+$$
+
+Here $\widehat M$ is positive bilinear and spans the same actual $D$,
+since $C$ is invertible. Both marginals are globally positive, and
+$\widehat R\widehat M(a,b)=\tau_A(b)a$,
+$\widehat S\widehat M(a,b)=\tau_A(a)b$ for all real $a,b$.
+Their adjoints send $1_A$ to $C^{-1}U=1_D$ by (58) and
+self-adjointness, so **both are TP for the original canonical trace**.
+These are exactly all hypotheses (15), with the two local carriers both
+$A$ and the unchanged canonical-trace carrier $D$.
+Apply the binary marginal theorem to this **normalized auxiliary data**:
+it gives $\widehat M(1_A,1_A)=1_D$. The left side is $CU=U^2$.
+Since $U\ge0$, spectral calculus gives $U=1_D$ from $U^2=1_D$.
+Consequently $r_0$ is TP as well as globally positive.
+The binary theorem was not applied to unnormalized $(M,r,s)$.
+
+This unit argument needs neither TP of $p_{13}$, its crossing law nor
+the $E$ span beyond the positive definition of $M_0$; those conditions
+remain in the complete ternary candidate. It proves one normalization
+redundancy, not independence or a minimum number of remaining axioms.
+The map $C$ is an auxiliary mathematical construction, not a new
+primitive or an operationally available physical filter.
+
+### Exact equivalence and the retained quantum correspondence
+
+**Unique-extension equivalence.** On the same actual carriers and
+retained $L,p_{13},p_{23}$, forgetting $r$ from (53)–(55) and adjoining
+$r=r_0$ from (56) are strictly mutually inverse.
+One direction is now immediate: the reduced model has positive TP
+$r_0$ and precisely the old spans and all-real laws.
+
+For the converse, start with an old positive-TP $r$ model, writing
+$M=M_0$, $Q=Q_0$. Its first law and TP of $r$ give
+$\tau_DM(a,b)=\tau_A(a)\tau_A(b)$. TP of $p_{13}$ and its crossing
+law give $\tau_EQ(a,b,c)=\tau_A(a)\tau_A(b)\tau_A(c)$.
+The $p_{23}$ law gives the same value for $\tau_Dp_{23}Q$.
+The two spans make the $Q$-products span $E$, proving $p_{23}$ TP.
+Expanding $d$ in $M$-products also gives
+$\tau_EL(d,c)=\tau_D(d)\tau_A(c)$ for all real $d,c$.
+Thus $K=L(\cdot,c_0)$ is positive TP, and
+$r_2=r\,p_{23}K$ is globally positive TP with
+$r_2M(a,b)=\tau_A(a)b$.
+The positive bilinear $M$ spans $D$; both $r,r_2$ are globally positive
+canonical-TP and satisfy both all-real marginal laws. Apply exactly
+(15)–(18) to **these old data**. With $\alpha=r^*$, $\beta=r_2^*$,
+it gives unital Jordan embeddings and
+$M(a,b)=\alpha(a)\circ\beta(b)$. Therefore
+
+$$
+J(a)=M(a,1_A)=\alpha(a)=r^*(a),\qquad
+r=J^*=r_0,\qquad U=1_D.
+\tag{61}
+$$
+
+All reduced laws follow with this same $r_0$; nothing else in the
+retained data changes in either direction. Any real-linear extension
+satisfying the first law agrees on every $M_0$-product, hence on $D$
+by spanning, so the extension is unique. This is a data reduction and
+a proved unit redundancy within the named paper interfaces, without
+an axiom-independence claim. For every local effect $f$ and real $z$,
+$\langle f,r_0z\rangle_A=\langle M_0(f,1_A),z\rangle_D$:
+readback is fixed by insertion and the comparison-derived trace geometry,
+while the first law remains a substantive constraint.
+
+After this equivalence, reuse (51) and the
+[three-map theorem](#three-primitive-maps-and-the-forced-missing-pair-view)
+with its stated upstream paper inputs. It supplies $p_{23}$ TP,
+$F_d(a,b)=\tau_D(d)M_0(a,b)$ for all real $d,a,b$, and the unique
+globally positive TP $p_{12}=[L(\cdot,1_A)]^*$ satisfying
+$p_{12}L(d,c)=\tau_A(c)d$. This adjoint also uses **unnormalized**
+$1_A$, with no rank divisor. Its existing representation (29)–(30)
+gives fixed trace-preserving Jordan order coordinates on the same actual
+carriers, for a finite nonempty sector set and $n_i\ge1$:
+$A\simeq\bigoplus_i\operatorname{Herm}_{n_i}(\mathbb C)$,
+$D\simeq\bigoplus_{i,j}\operatorname{Herm}_{n_in_j}(\mathbb C)$ and
+$E\simeq\bigoplus_{i,j,k}\operatorname{Herm}_{n_in_jn_k}(\mathbb C)$.
+They simultaneously make $M_0,L$ block tensor preparations and readbacks
+block partial traces, including $L(d,c)$ for all real or entangled $d$.
+The existing [quantum correspondence](#complete-finite-comparison-candidate-and-quantum-correspondence)
+gives full PSD block states with $\sum_i\operatorname{Tr}\rho_i=1$,
+full effects $0\le F_i\le I$, Born probabilities
+$\sum_i\operatorname{Tr}(F_i\rho_i)$ and pure components
+$\mathbb{CP}^{n_i-1}$; comparison is $\operatorname{Tr}(pq)$ within
+a sector and zero between sectors. Scalar/classical sectors stay;
+one qubit sector gives the Bloch ball, and selecting one sector needs
+a separate connectedness/no-superselection condition.
+The existing [right-preparation and label construction](#construct-the-other-bracket-and-all-three-label-changes)
+chooses $E_R=E$, identity reassociation and positive TP $S_3$ label
+automorphisms **after** this deduction; none is a premise of either
+binary-theorem application. No second classification is used.
+
+The [blurred classical control](#three-omitted-condition-boundaries)
+still has, exactly,
+
+$$
+P=\begin{pmatrix}3/4&1/4\\1/4&3/4\end{pmatrix},\quad
+M_0(a,b)=Pa\otimes Pb,\quad J(a)=Pa\otimes1_A,\quad
+r_0=P^{\mathsf T}\operatorname{Tr}_2=P\operatorname{Tr}_2,
+\qquad P^2=\begin{pmatrix}5/8&3/8\\3/8&5/8\end{pmatrix}\ne I.
+\tag{62}
+$$
+
+Here $P1_A=1_A$ and $\tau_A(Pb)=\tau_A(b)$, so
+$r_0M_0(a,b)=\tau_A(b)P^2a$. The new **first law** excludes it:
+at $a=b=e_0$ the result is $(5/8,3/8)$ instead of $e_0$.
+Although this $r_0$ is positive TP and $U=1_D$, it fails that law.
+The old law instead forces $P^{-1}\operatorname{Tr}_2$, still nonpositive
+since it sends $e_0\otimes e_0$ to $(3/2,-1/2)$.
+Thus defining the adjoint does not license simply discarding old
+readback positivity while leaving the old law unchanged.
+
+Endpoint comparison exchange, tensor-label exchange and a chosen bracket
+change are distinct from temporal measurement exchange; they supply no
+common classical joint outcomes for arbitrary incompatible measurements.
+Real spanning implies neither separability nor pair-state tomography;
+the cited [GHZ pair-marginal boundary](#construct-the-other-bracket-and-all-three-label-changes)
+still applies. The [operation application](../Quantum/watrous2018theory.md#one-actual-self-reference-for-finite-sector-operations)
+keeps its separate CP/reference-extension and instrument conditions.
+This is static paper structure: neither $\omega_0$ nor $C$ supplies a
+physical device, an available reference or its cost. No dynamics, clock,
+Hamiltonian, $\hbar$, identification of an independent right carrier,
+infinite-dimensional extension, fourfold or unbounded coherence follows.
+These conditional paper deductions are not Lean/kernel truth,
+novelty, priority, full-origin or full-goal claims.
+
+完整候选是：对实际非零有限单份、双份、三份全态与全效应系统分别保留有限混合
+比较规则及保归一化的比较到规范迹 Jordan 几何条件桥；桥后只给全正锥上为正的
+$L,p_{13},p_{23}$，只预设 $p_{13}$ 保迹，按 (53) 内部定义 $\omega_0,M_0,Q_0$，
+保留两个实张成条件，并要求用未归一化单位定义的 $r_0=[M_0(\cdot,1_A)]^*$ 满足
+(57) 的三条全部实向量恒等式。自对偶性给出 $r_0$ 正性；二次表示归一化后应用
+既有二元边缘纸面定理，推出 $M_0(1_A,1_A)=1_D$ 及 $r_0$ 保迹，与旧模型唯一
+互相恢复。再条件性复用三映射定理，得到含经典扇区的复量子几何、Born 概率、
+张量准备和同一三份系统的换标签与可选换括号；选单扇区仍需额外条件。这是静态
+结构的数据减少，不声称剩余公理独立或最少，不把数学归一化当作可用物理滤波器，
+不推出不相容测量的共同经典联合结果、时间交换、动力学或四份及更高一致性。

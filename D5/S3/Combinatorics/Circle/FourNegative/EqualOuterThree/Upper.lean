@@ -23,10 +23,9 @@ open private UpperBounds chart_s_ge_three chart_s_two_large chart_corner
   from D5.S3.Combinatorics.Circle.FourNegative.EqualOuterThree.UpperArithmetic
 open private source_table
   from D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.SourceTable
-open private base newBase sourceMod new_base_bounds
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
-open private insertAt
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
+open private sourceMod new_base_bounds from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (base newBase)
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (insertAt)
 open private insertAt_add
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
 open private Gates four_strip
