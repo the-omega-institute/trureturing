@@ -336,7 +336,7 @@ open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233253TriangleStrip (
 open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233175PairStrip (Seen good finish)
 
 abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature (Seen × Row) (fun _ => Fin 5 → Fin 3) (fun _ => Bool)
+  _root_.Reg.Support.SingleDependentReadout.signature (Σ _ : Seen, Row) (fun _ => Fin 5 → Fin 3) (fun _ => Bool)
 
 def actual : Realization signature :=
   realize signature (fun _ sc p =>
@@ -349,7 +349,7 @@ def rejected : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ s : Seen, ∀ c : Row, s.1 = true → rowLegal c → good s c →
-    R.readout () (s, c) (labels c) = true
+    R.readout () ⟨s, c⟩ (labels c) = true
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -367,7 +367,7 @@ def family : Registration arena (type_of% @row_valid) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
-    refine ⟨((true, false), ![0, 1, 0, 1, 0]), (fun _ => 0), ![0, 1, 0, 1, 0], ?_⟩
+    refine ⟨⟨(true, false), ![0, 1, 0, 1, 0]⟩, (fun _ => 0), ![0, 1, 0, 1, 0], ?_⟩
     have ht : Valid (finish (true, false) ![0, 1, 0, 1, 0]) ![0, 1, 0, 1, 0] := by
       unfold Valid
       decide +kernel
