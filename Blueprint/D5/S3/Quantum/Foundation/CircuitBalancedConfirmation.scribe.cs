@@ -33,7 +33,7 @@ internal sealed class CircuitBalancedConfirmationDocument : IScribeDocumentDefin
                 DeclarationHandle.Create("D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.comparison"),
                 H("The original comparison lower envelope"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(), Blocks(
-                    Paragraph(Text("The value T_p(x) is the real infimum of f(x) over all original proper effects f confirming p. On C this set of readings is nonempty and bounded below by zero. The theorem proves that its infimum is attained by the constructed effect; it does not assume attainment."))), DescribeRole.Definition),
+                    Paragraph(Text("For a pure reference p, the value T_p(x) is the real infimum of f(x) over all original proper effects f confirming p. For each x in C this set of readings is nonempty and bounded below by zero. The theorem proves that its infimum is attained by the constructed effect; it does not assume attainment."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("minimal-relations"),
                 DeclarationHandle.Create("D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.circuit"),
                 H("Actual minimal signed relations"), StatementSource.WithoutFormula(),
