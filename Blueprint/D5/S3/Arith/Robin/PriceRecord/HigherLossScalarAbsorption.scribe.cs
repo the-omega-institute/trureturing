@@ -8,7 +8,7 @@ internal sealed class HigherLossScalarAbsorptionDocument : IScribeDocumentDefini
         "Exact sharp scalar reduction and two Young bounds.",
         H("Exact sharp scalar reduction and two Young bounds"),
         Blocks(
-            Paragraph(Text("Assume the stated finite budget, V<=T, W<=Delta+delta, delta<=2log X, the logarithm comparison, and the coercivity estimate for Delta. Then R<=a T sqrt(R)/X^(5/4)+a(T/X)R+dTlog X/X^2+2/X, with a=12000 and d=24000. Absorption uses T=E+5sqrt X and the hypothesis aT/X<=1/4. The square (sqrt R/2-aT/X^(5/4))^2 absorbs the square-root term. A second Young square absorbs Tlog X/X^2. The log-squared rounding term is <=1/X eventually, proved through a standard logarithmic little-o limit. q=2a^2+d and finalConstant=52q+d+4 give the exact E^2/X^(5/2)+1/X rate.")),
+            Paragraph(Text("Assume the stated finite budget, V<=T, W<=Delta+delta, delta<=2log X, the logarithm comparison, and the coercivity estimate for Delta. Then R<=a T sqrt(R)/X^(5/4)+a(T/X)R+dTlog X/X^2+2/X, with a=12000 and d=24000. Absorption uses T=E+5sqrt X and the hypothesis aT/X<=1/4. The square (sqrt R/2-aT/X^(5/4))^2 absorbs the square-root term. A second Young square absorbs Tlog X/X^2. The bound log^2 X<=sqrt X is the hlog hypothesis of scalar_absorption; it can be supplied eventually by an upstream logarithmic little-o result and is not proved by this declaration. q=2a^2+d and finalConstant=52q+d+4 give the exact E^2/X^(5/2)+1/X rate.")),
             Describe.Lean(
                 DescribeId.Create("higherlossscalarabsorption-scalar-budget-reduction"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/HigherLossScalarAbsorption.scalar_budget_reduction"),

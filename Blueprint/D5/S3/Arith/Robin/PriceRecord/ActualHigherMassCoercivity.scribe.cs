@@ -28,7 +28,7 @@ internal sealed class ActualHigherMassCoercivityDocument : IScribeDocumentDefini
                 DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualHigherMassCoercivity.actual_complete_higher_mass_coercivity"),
                 H("actual complete higher mass coercivity"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Complete Lean statement: theorem actual_complete_higher_mass_coercivity {X : ℝ} (hX : exp 2 ≤ X) (n : ℕ) (hn : 1 ≤ n) : let R := actualDefect X n - completeFirstLayerLoss X n 0 ≤ R ∧ |higherMass n - higherMass (strictInteger (referencePrice X))| ≤ 1000 * (X ^ (3 / 4 : ℝ) * log X * sqrt R + X * log X * R + log X ^ 2)"))),
+                Blocks(Paragraph(Text("Complete Lean statement: theorem actual_complete_higher_mass_coercivity {X : ℝ} (hX : exp 2 ≤ X) (n : ℕ) (hn : 1 ≤ n) : let R := actualDefect X n - completeFirstLayerLoss X n; 0 ≤ R ∧ |higherMass n - higherMass (strictInteger (referencePrice X))| ≤ 1000 * (X ^ (3 / 4 : ℝ) * log X * sqrt R + X * log X * R + log X ^ 2)"))),
                 DescribeRole.Theorem)
         )));
 }
