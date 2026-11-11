@@ -1,0 +1,331 @@
+**定理 26.2（特征零半维窗口的全量词恢复）。** 对定义 26.1 中任意实际 $F,L,m,W$，$E_W$ 是包含 $F$ 的子域。记 $e=[E_W:F]$，则 $e\mid m$，并且
+
+$$
+\delta_W=e.
+\tag{26.3}
+$$
+
+更具体地，存在原 $W$ 中的非零元素 $u,v$，满足
+
+$$
+W\cap (u/v)W=E_Wu.
+\tag{26.4}
+$$
+
+任取最小正行标签 $r_0$ 及任一 $0\ne z\in W\cap r_0W$，都有
+
+$$
+W\cap r_0W=E_Wz,\qquad T_{W,r_0}=z^{-1}W.
+\tag{26.5}
+$$
+
+对原 $L$ 中每个满足 $\dim_F V=m$ 的竞争窗口 $V$，即使不假设 $r_0$ 对 $V$ 也是最小正行，仍有
+
+$$
+\begin{aligned}
+&\bigl[\ \forall s\in L^\times,\quad
+J_V(r_0,s)>0\ \Longleftrightarrow\ J_W(r_0,s)>0\ \bigr]\\
+&\hspace{35mm}\Longleftrightarrow\quad
+\exists x\in L^\times,\quad V=xW.
+\end{aligned}
+\tag{26.6}
+$$
+
+因此完整的原标签三重观察恰好恢复原非零标量轨道：
+
+$$
+\bigl[\ \forall(r,s)\in(L^\times)^2,\quad J_V(r,s)=J_W(r,s)\ \bigr]
+\quad\Longleftrightarrow\quad
+\exists x\in L^\times,\quad V=xW.
+\tag{26.7}
+$$
+
+证明。先证明 (26.3)–(26.4)，再消费前卷 §25 的支持恢复机制。辅助域与辅助向量只用于证明存在性，最终的见证及 (26.2) 的集合都在原 $L$ 中。
+
+先缩写 $E=E_W$。有限维乘法稳定子的通常事实给出 $E$ 成域：它包含 $F$，对加法、减法、乘法封闭；若 $0\ne a\in E$，则乘以 $a$ 在有限维 $W$ 上单射，故 $aW=W$，从而 $a^{-1}W=W$。这里消费的事实见 Bachoc–Serra–Zémor，[*Revisiting Kneser's Theorem for Field Extensions*，arXiv:1510.01354v2，§2.3，Lemma 13 后的有限维说明](https://arxiv.org/pdf/1510.01354v2)。于是 $W$ 为 $E$-向量空间。设
+
+$$
+k=\dim_E W=m/e,\qquad N=[L:E]=2k.
+\tag{26.8}
+$$
+
+每个 $W\cap rW$ 都是 $E$-线性的，因为原乘法交换。因此每个正的 $d_W(r)$ 均为 $e$ 的正倍数，已经有 $\delta_W\ge e$。若 $k=1$，任取 $u=v\in W\setminus\{0\}$，便有 $W=Eu$，直接得到 (26.3)–(26.4)。以下设 $k\ge2$。
+
+在辅助底域 $E$ 上，$W$ 的乘法稳定子恰为 $E$ 本身。为严格控制分裂时是否产生新稳定方向，考虑有限维 $E$-线性映射
+
+$$
+\begin{aligned}
+\Phi:L&\longrightarrow\operatorname{Hom}_E(W,L/W),\\
+a&\longmapsto\bigl(w\longmapsto aw+W\bigr).
+\end{aligned}
+\tag{26.9}
+$$
+
+其核恰为 $E$。对任意扩域 $K/E$，取基后 $\Phi$ 是一个 $E$ 上的有限矩阵；非零子式在扩域后仍非零，矩阵秩不变。等价地，向量空间扩底保持这条核的正合性，所以
+
+$$
+\ker(\Phi\otimes_E K)=(\ker\Phi)\otimes_E K=E\otimes_E K.
+\tag{26.10}
+$$
+
+这里同时使用有限维下的自然同构
+
+$$
+\operatorname{Hom}_E(W,L/W)\otimes_E K
+\simeq
+\operatorname{Hom}_K(W\otimes_E K,(L/W)\otimes_E K)
+$$
+
+以及 $(L/W)\otimes_E K\simeq(L\otimes_E K)/(W\otimes_E K)$。因此 (26.10) 控制的是整个乘法稳定子核，包含所有扩底后可能出现的线性组合，而非仅控制原来逐个列出的稳定元素。
+
+特征零使 $L/E$ 可分。取其有限正规闭包 $K/E$，令
+
+$$
+\Omega=\operatorname{Hom}_E(L,K),\qquad |\Omega|=N.
+$$
+
+分裂同构是 $K$-代数同构
+
+$$
+\begin{aligned}
+\iota:L\otimes_E K&\overset{\sim}{\longrightarrow}K^\Omega,\\
+a\otimes c&\longmapsto(c\sigma(a))_{\sigma\in\Omega}.
+\end{aligned}
+\tag{26.11}
+$$
+
+这就是可分扩张的标准分裂：取 $L/E$ 的本原元后，其最小多项式在 $K$ 中分成 $N$ 个互异一次因子，中国剩余同构给出 (26.11)。乘法在右边逐坐标进行。
+
+置 $U=\iota(W\otimes_E K)$。将 (26.10) 通过 (26.11) 传递，得到精确的对角稳定代数等式
+
+$$
+\{c\in K^\Omega:\operatorname{diag}(c)U\subseteq U\}
+=K\boldsymbol 1,\qquad
+\boldsymbol 1=(1)_{\sigma\in\Omega}.
+\tag{26.12}
+$$
+
+原因是 $E\otimes_E K$ 在 (26.11) 下恰为公共标量的对角线。至此非平凡的原稳定子已通过改用 $E$ 完整计入，并没有被假设为 $F$；分裂后也没有遗失额外稳定方向。
+
+取原 $W$ 的一个 $E$-基 $w_1,\ldots,w_k$。以
+
+$$
+B=(\sigma(w_j))_{\sigma\in\Omega,\ 1\le j\le k},\qquad
+b_\sigma=(\sigma(w_1),\ldots,\sigma(w_k))\in K^k
+\tag{26.13}
+$$
+
+表示 $U$ 的列空间。$B$ 的列秩为 $k$，各行都非零：例如 $w_1\ne0$，任何域嵌入均满足 $\sigma(w_1)\ne0$。定义行拟阵 $M$ 的秩函数
+
+$$
+\rho(S)=\dim_K\operatorname{span}_K\{b_\sigma:\sigma\in S\},
+\qquad S\subseteq\Omega.
+\tag{26.14}
+$$
+
+它无环，且 $\rho(\Omega)=k$。
+
+先核对该拟阵连通。若不连通，就存在非空真子集 $S\subsetneq\Omega$ 及 $S^c=\Omega\setminus S$，满足
+
+$$
+\rho(S)+\rho(S^c)=k.
+$$
+
+这里使用线性拟阵直和的通常判据。坐标限制映射
+
+$$
+U\longrightarrow \pi_S U\oplus\pi_{S^c}U
+$$
+
+是单射，右边维数为 $\rho(S)+\rho(S^c)=k=\dim_K U$，故它满射。这说明将 $U$ 的一个向量在 $S^c$ 上置零后，结果仍属于 $U$。于是非平凡坐标投影 $\operatorname{diag}(\boldsymbol 1_S)$ 稳定 $U$，与 (26.12) 矛盾，因为 $\boldsymbol 1_S$ 不是公共标量。因此 $M$ 连通。这一步把“唯一对角稳定方向”实质地转换成了拟阵连通性。
+
+再核对严格秩界。$G=\operatorname{Gal}(K/E)$ 在 $\Omega$ 上传递作用。对 $g\in G$，
+
+$$
+g(b_\sigma)=b_{g\circ\sigma}.
+$$
+
+域自同构保持一个矩阵的零与非零子式，因此
+
+$$
+\rho(gS)=\rho(S)\qquad(S\subseteq\Omega).
+\tag{26.15}
+$$
+
+这验证的是同一个 $W$ 所给行拟阵的对称性，不是假设 $W$ 在嵌入之间一般位置。对 $M$ 的全部基赋予均匀概率测度 $\mu$。基的集合非空且有限，$\mu$ 对每个基都严格为正；(26.15) 及传递性使 $\mu\{A:\sigma\in A\}$ 与 $\sigma$ 无关。每个基有 $k$ 个元素，故这些边缘概率均为 $k/N=1/2$。
+
+此时直接应用 Devriendt–Mulas，[*Uniform density in matroids, matrices and graphs*，arXiv:2306.15267v3，Theorem 2.10 的 (3)$\Rightarrow$(2)](https://arxiv.org/pdf/2306.15267v3)：全支撑的等边缘基测度给出均匀密度，且凡不是连通分量之并的子集都满足严格密度不等式。由于刚才已经证明 $M$ 连通，每个非空真子集均不可能是连通分量的并。因此
+
+$$
+\frac{|S|}{\rho(S)}<\frac{N}{k}=2,
+\qquad \varnothing\ne S\subsetneq\Omega,
+$$
+
+即
+
+$$
+2\rho(S)\ge |S|+1
+\qquad(\varnothing\ne S\subsetneq\Omega).
+\tag{26.16}
+$$
+
+这里完整使用了正测度的全支撑条件及连通性；仅有非严格的均匀密度不足以推出 (26.16)。该成熟密度定理只在本推导内部消费，不另作新的密度基础。
+
+现在把 (26.16) 接到一刀超平面。对每个 $\sigma\in\Omega$，在 $K^k\oplus K^k$ 中取二维子空间
+
+$$
+A_\sigma=K(b_\sigma,0)\oplus K(0,b_\sigma).
+\tag{26.17}
+$$
+
+各 $A_\sigma$ 非零，且对任意 $S\subseteq\Omega$，
+
+$$
+\dim_K\sum_{\sigma\in S}A_\sigma=2\rho(S).
+\tag{26.18}
+$$
+
+由 (26.16)，$k\ge2$ 时两条不同行不可能成比例：若成比例，则它们构成的二元真子集秩一，违反 (26.16)。所以这里各 $A_\sigma$ 也互异，可以直接作为通常的有限子空间族使用。
+
+引入在 $K$ 上代数独立的 $2k$ 个参数
+
+$$
+X=(X_1,\ldots,X_k),\qquad Y=(Y_1,\ldots,Y_k),\qquad
+K'=K(X_1,\ldots,X_k,Y_1,\ldots,Y_k),
+$$
+
+并在扩底后的 $K'^{\,k}\oplus K'^{\,k}$ 中令
+
+$$
+H_{X,Y}=\{(a,b):X\cdot a-Y\cdot b=0\}.
+\tag{26.19}
+$$
+
+法向量 $(X,-Y)$ 的坐标代数独立，故这是整个超平面参数空间的泛点，不是某个额外受限的超平面族。Raz–Wigderson，[*Subspace arrangements, graph rigidity and derandomization through submodular optimization*，arXiv:1901.09423v1，Definition 5.1、Theorems 7.1、5.2 及 §2 式 (3)](https://arxiv.org/pdf/1901.09423v1)，在特征零下给出：此泛超平面对固定有限族 $\{A_\sigma\}$ 满足 Definition 5.1 的一般位置前件，且
+
+$$
+\dim_{K'}\operatorname{span}_{K'}\{(A_\sigma\otimes_K K')\cap H_{X,Y}:\sigma\in\Omega\}
+=\min_{\mathcal P}\sum_{S\in\mathcal P}(2\rho(S)-1),
+\tag{26.20}
+$$
+
+其中 $\mathcal P$ 遍历 $\Omega$ 的非空块分拆。(26.18) 保证式中恰是该定理的子族跨度维数；(26.20) 是“各自切过后共同张成”的维数，不是先共同张成再切的无条件替换。
+
+单块分拆的代价为 $2k-1=N-1$。任何至少两块的分拆中，每一块都是非空真子集，(26.16) 给出
+
+$$
+\sum_{S\in\mathcal P}(2\rho(S)-1)
+\ge\sum_{S\in\mathcal P}|S|=N.
+$$
+
+所以 (26.20) 的最小值恰为 $N-1$，且只有单块分拆能达到它。这里排除过密真子集所需的严格性，正是由稳定子核、连通性与 Galois 对称性共同提供的。
+
+为把该维数解释为原乘法的一个矩阵秩，记
+
+$$
+u(X)=\sum_{j=1}^kX_jw_j,\qquad
+v(Y)=\sum_{j=1}^kY_jw_j.
+\tag{26.21}
+$$
+
+在分裂坐标下，这两个形式向量的 $\sigma$ 坐标分别是 $b_\sigma\cdot X$ 与 $b_\sigma\cdot Y$，均为非零多项式。于是 (26.17)–(26.19) 直接给出
+
+$$
+(A_\sigma\otimes_K K')\cap H_{X,Y}
+=K'\bigl((b_\sigma\cdot Y)b_\sigma,
+             (b_\sigma\cdot X)b_\sigma\bigr).
+\tag{26.22}
+$$
+
+确实，$(\lambda b_\sigma,\eta b_\sigma)$ 属于该超平面，当且仅当 $\lambda(b_\sigma\cdot X)=\eta(b_\sigma\cdot Y)$；两系数均非零，故解空间就是 (26.22) 的一条线。这些行共同构成矩阵
+
+$$
+\mathcal B(X,Y)=
+\left[\operatorname{diag}(BY)B\ \middle|\ \operatorname{diag}(BX)B\right],
+\qquad \operatorname{rank}_{K'}\mathcal B(X,Y)=N-1.
+\tag{26.23}
+$$
+
+这是 Antolini–Dewar–Tanigawa，[*Dilworth truncations and Hadamard products of linear spaces*，arXiv:2508.04798v1，§3.2 式 (7)–(9)](https://arxiv.org/pdf/2508.04798v1) 的二因子行与超平面对应在本对象上的代入；两个因子使用独立参数 $X,Y$。其复数域上的二因子公式，以及 Bernstein [arXiv:2003.10529v4，Theorem 3.1](https://arxiv.org/pdf/2003.10529v4)，已在 [《QUANTUM-REALITY》定理 410.1](QUANTUM-REALITY.md) 中消费。这里没有把复数域结论直接移植到任意 $F$，也没有新增一般 Hadamard 公式；任意特征零辅助域上的 (26.20) 由上述 Raz–Wigderson 原定理承担，而 (26.22) 是同一个原乘法矩阵的具体接口。
+
+最后实质地返回原域。固定 $L$ 的一个 $E$-基 $\ell_1,\ldots,\ell_N$，在此基下以
+
+$$
+\mathcal C(X,Y)=
+\left[
+v(Y)w_1\ \cdots\ v(Y)w_k\ \middle|\ u(X)w_1\ \cdots\ u(X)w_k
+\right]
+\in\operatorname{Mat}_{N\times 2k}(E[X,Y])
+\tag{26.24}
+$$
+
+表示各列的坐标。系数确实在 $E$ 中，因为这只是原 $L/E$ 的乘法在固定 $E$-基下的结构常数。矩阵
+
+$$
+D=(\sigma(\ell_i))_{\sigma\in\Omega,\ 1\le i\le N}
+\in\operatorname{GL}_N(K)
+$$
+
+由 (26.11) 可逆，且逐列应用嵌入给出
+
+$$
+D\mathcal C(X,Y)=\mathcal B(X,Y).
+\tag{26.25}
+$$
+
+所以 (26.23) 蕴含 $\mathcal C$ 的某个 $(N-1)$ 阶子式 $f(X,Y)\in E[X,Y]$ 是非零多项式。这不是仅在 $K$ 上定义的存在条件：它是原乘法矩阵本身的一个原 $E$ 系数子式。
+
+域 $E$ 无限，故存在 $x,y\in E^k$ 使
+
+$$
+f(x,y)x_1y_1\ne0.
+\tag{26.26}
+$$
+
+这里所用多项式事实不需任何代数闭性：非零多元多项式在无限域上有非零值。其证明按变量数归纳，将多项式视为最后一个变量的一元多项式；先令某个非零系数在其余变量上非零，再避开最后变量的有限多个根即可。由于 $E[X,Y]$ 是整环，$fX_1Y_1$ 非零，故该事实确实适用于 (26.26)。
+
+置 $u=u(x),v=v(y)$。由 $x_1y_1\ne0$ 及 $w_j$ 的 $E$-线性无关性，$u,v\in W\setminus\{0\}$。这些都是原 $L$ 中的元素。矩阵 $\mathcal C(x,y)$ 的列空间为 $vW+uW$，且 (26.26) 使其 $E$-维数至少为 $N-1$。另一方面，原乘法给出公共非零元素 $uv\in uW\cap vW$，而 $uW,vW$ 各为 $k$ 维，故
+
+$$
+\dim_E(uW+vW)\le2k-1=N-1.
+$$
+
+于是两边相等，并且
+
+$$
+\dim_E(uW\cap vW)=1,\qquad uW\cap vW=Euv.
+\tag{26.27}
+$$
+
+乘以原 $v^{-1}$ 得到 (26.4)。它给出 $d_W(u/v)=e$，与先前的 $\delta_W\ge e$ 合起来证明 (26.3)。返回的是 $E$ 中的参数及原 $W$ 中的 $u,v$，从而也是原 $F,L,W$ 的合法见证；未把扩域参数或嵌入位置当作原域解。
+
+以下直接消费前卷定理 25.2 证明中的支持取逆及包含—等维机制，其所需参数在这里为 $F,L,W,E,e,m$，不依赖前卷的特殊八次域。由 (26.3)，任意最小正行满足 $W\cap r_0W=Ez$。对于每个原 $s\in L^\times$，
+
+$$
+\begin{aligned}
+J_W(r_0,s)>0
+&\Longleftrightarrow Ez\cap sW\ne\{0\}\\
+&\Longleftrightarrow \exists c\in E^\times,\quad cz/s\in W\\
+&\Longleftrightarrow z/s\in W.
+\end{aligned}
+\tag{26.28}
+$$
+
+最后一步只用 $W$ 的 $E$-线性及 $c^{-1}\in E$。将原标签 $s$ 取逆即得到 (26.5) 的第二式；$z$ 并未成为 (26.2) 的额外输入。
+
+为明确核对所有竞争窗口，设 (26.6) 左边成立。由 $J_W(r_0,1)>0$ 得 $V\cap r_0V\ne\{0\}$，在证明中任取其中的 $y\ne0$。对任意 $v'\in V\setminus\{0\}$，原标签 $s=y/v'$ 满足 $y\in V\cap r_0V\cap sV$，故支持相等与 (26.28) 给出
+
+$$
+v'/y=s^{-1}\in z^{-1}W.
+$$
+
+于是 $y^{-1}V\subseteq z^{-1}W$。两边都是 $m$ 维 $F$-子空间，故相等，$V=(y/z)W$。这里既未使用 $V$ 的最小正行，也未假设 $E_V=E$。反方向由原乘法的交换性立即给出：乘以 $x\in L^\times$ 同构每一个 $W\cap rW\cap sW$ 与 $xW\cap r(xW)\cap s(xW)$，所以保持完整 $J$，尤其保持该行正支持。这证明 (26.6)。最后 $d_W(r)=J_W(r,1)$，完整 $J$ 因而决定最小正值及其标签集合；若两份完整 $J$ 相同，可为 $W$ 选任一这样的 $r_0$ 并应用 (26.6)，得到 (26.7)。$\square$
+
+本定理的文献对应与实质范围。有限维稳定子成域、可分扩张的分裂、严格均匀密度及一般超平面的分拆秩公式均为上述成熟工具；支持取逆与包含—等维恢复机制已由前卷 §25 给出，这些机制不作为新增基础。Csajbók–Marino–Pepe，[*On the maximum field of linearity of linear sets*，arXiv:2306.07488v2，Theorem 1](https://arxiv.org/pdf/2306.07488v2)，承担有限域最大秩线性集的最小正权结论；该定理的底域为有限域，不能直接代入本定理的任意特征零 $F$。Bachoc–Serra–Zémor 的 Theorems 2–3 控制普通乘积张成 $ST$ 的维数与其稳定子，也没有直接给出这里两个可变原乘法像 $uW,vW$ 的最小交叠。
+
+相对于这些指定原文、前卷 §25 及《QUANTUM-REALITY》§§409–410，本定理的仓内推导（repo-derived）差额是 (26.9)–(26.27) 的同一对象桥梁：完整稳定子核扩底，Galois 传递行拟阵的连通与严格秩前件，以及原 $E$ 系数非零子式的原域返回。它将固定有理数八次域的全窗口结论扩大到全部特征零有限扩张的实际半维窗口，包括 $E_W\ne F$ 的分支；不需要选取特殊良素数，不将所列来源范围内的未覆盖解释为全球首次性。
+
+白话说，先把窗口天然容许的标量全部算进底域，分裂后就只剩“所有坐标一起缩放”这一种稳定方向。若某一批坐标能独立保存窗口，便会产生一个额外稳定投影，因此这种分块被排除；Galois 对称性再保证每批真子坐标都付得起严格秩代价。一般超平面的一刀因而恰好只留下必然的共同一线。最后用原乘法矩阵的一个非零子式在无限原域中取值，将这条线真正带回原窗口。最小行的正支持只负责把它写成某个共同缩放后的集合，隐藏向量从未交给观察者。
+
+本定理讨论完整、无限、无噪声、逐原标签精确读数的集合论可识别性。(26.2) 没有附送稳定子基、嵌入坐标、公共向量或扩域标量；(26.4) 的存在性也不是有限查询或有效寻找最小正行的算法。定理不提供有限标签菜单、噪声鲁棒性或实际取得成本；其量词限于特征零及半维条件，不扩大为任意特征、非半维、三维二元恢复或最小观察阶数，也不推出量子概率、复 Hilbert 空间、测量与控制公理，以及 $\mathbb Z$ 在 $\mathbb Q$ 中的丢番图定义或 $H10(\mathbb Q)$。
+
