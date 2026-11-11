@@ -98,7 +98,10 @@ private theorem good_iff (k n : ℕ) (f : Fin (n+2) → Row k) :
         exact hp.1
       · have hp := h n (by omega)
         rw [get n (by omega), get (n+1) (by omega)] at hp
-        have he : i = (⟨n+1, by omega⟩ : Fin (n+2)) := Fin.ext (by omega)
+        have he : i = (⟨n+1, by omega⟩ : Fin (n+2)) := by
+          apply Fin.ext
+          change i.val = n+1
+          omega
         simpa only [he] using hp.2.1
     · intro i hi
       have hp := h i.val hi
@@ -147,15 +150,16 @@ theorem count_transfer (k q : ℕ) (cls : Row k → Fin q)
     rw [hb]
     congr 1
     exact Nat.card_congr (Equiv.subtypeEquiv (Equiv.refl _) (fun f => (good_iff k n f).symm))
-  rw [hcard, TransferMatrix.cardMatrix (S := Fin q) pair (fun _ _ _ => True)
-    (fun _ b => cls b) Q v ht hv n]
+  have hm := @TransferMatrix.cardMatrix (Row k) (Fin q) inferInstance inferInstance
+    inferInstance pair (fun _ _ _ => True) (fun _ b => cls b) Q v
+    (by intro a b hab s; simpa only [true_and] using ht a b hab s)
+    (by intro s; exact hv s) n
+  rw [hcard, hm]
   rw [pow_succ', ← Matrix.mulVec_mulVec]
-  simp only [v, dotProduct, Matrix.mulVec, Finset.sum_mul, Finset.mul_sum]
+  change (∑ s, (∑ t, w t * Q t s) * ((Q^n).mulVec 1) s) =
+    ∑ t, w t * (∑ s, Q t s * ((Q^n).mulVec 1) s)
+  simp_rw [Finset.sum_mul, Finset.mul_sum]
   rw [Finset.sum_comm]
-  apply Finset.sum_congr rfl
-  intro t _
-  apply Finset.sum_congr rfl
-  intro s _
-  ring
+  simp only [mul_assoc]
 
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155RowTransfer
