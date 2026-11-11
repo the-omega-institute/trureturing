@@ -44,7 +44,7 @@ private theorem shell_sum {X : ℝ} (hX : 0 ≤ X) (Q : ℕ) (hQ : X / 2 ≤ (Q 
     exact hpn (Nat.mem_primesLE.mpr
       ⟨(Nat.le_floor_iff (by positivity : (0 : ℝ) ≤ X / 2)).mpr hn, hprime⟩)
   · rw [Chebyshev.theta_eq_sum_primesLE_log, Chebyshev.theta_eq_sum_primesLE]
-    exact sum_sdiff hsub
+    exact eq_sub_iff_add_eq.mpr (sum_sdiff hsub (f := fun p : ℕ => log (p : ℝ)))
 
 /-- For every prescribed O(log X) count, choose an actual retained prime
 strictly above X/2 and delete EXACTLY M largest prefix primes. All constants
@@ -69,9 +69,12 @@ theorem budget_prefix_deletion_reserve_power (d : ℕ) :
     have h := hθ.div_const 2
     apply h.congr'
     filter_upwards [eventually_gt_atTop (0 : ℝ)] with X hX
-    field_simp; ring
+    change (Chebyshev.theta (X / 2) / (X / 2)) / 2 = Chebyshev.theta (X / 2) / X
+    calc
+      _ = Chebyshev.theta (X / 2) / ((X / 2) * 2) := div_div _ _ _
+      _ = _ := by congr 1; ring
   have hsqrt : Tendsto (fun X : ℝ => sqrt X / X) atTop (𝓝 0) := by
-    simpa only [sqrt_div_self] using tendsto_inv_atTop_zero.comp tendsto_sqrt_atTop
+    simpa only [sqrt_div_self, Function.comp_def] using tendsto_inv_atTop_zero.comp tendsto_sqrt_atTop
   have hlog : Tendsto (fun X : ℝ => log X ^ (d + 1) / X) atTop (𝓝 0) := by
     simpa only [rpow_natCast, rpow_one] using
       (isLittleO_log_rpow_rpow_atTop (d + 1 : ℕ) (by norm_num : (0 : ℝ) < 1)).tendsto_div_nhds_zero
@@ -170,7 +173,8 @@ theorem budget_prefix_deletion_reserve_power (d : ℕ) :
     exact hpn (Nat.mem_primesLE.mpr ⟨hn, hprime⟩)
   have hDsum : Chebyshev.theta (b.Q : ℝ) - Chebyshev.theta (Q : ℝ) = ∑ p ∈ D, log p := by
     rw [hD, Chebyshev.theta_eq_sum_primesLE_log, Chebyshev.theta_eq_sum_primesLE_log]
-    exact (sum_sdiff (Nat.primesLE_mono hQle)).symm
+    exact sub_eq_iff_eq_add.mpr (sum_sdiff (Nat.primesLE_mono hQle)
+      (f := fun p : ℕ => log (p : ℝ))).symm
   refine ⟨Q, D, hQprime, hQlo, hQle, hD, hDcard, hDmem, hDsum, ?_⟩
   calc
     _ ≤ ∑ _p ∈ D, log (2 * X) := by
@@ -215,7 +219,8 @@ theorem finite_prefix_deletion_cost {X : ℝ} (hX : 4 < X)
   have hmass : (∑ p ∈ D, log p) =
       Chebyshev.theta (b.Q : ℝ) - Chebyshev.theta (Q : ℝ) := by
     rw [hD, Chebyshev.theta_eq_sum_primesLE_log, Chebyshev.theta_eq_sum_primesLE_log]
-    exact sum_sdiff (Nat.primesLE_mono hQb)
+    exact eq_sub_iff_add_eq.mpr (sum_sdiff (Nat.primesLE_mono hQb)
+      (f := fun p : ℕ => log (p : ℝ)))
   have hsum0 : 0 ≤ ∑ p ∈ D, log p := by
     apply sum_nonneg
     intro p hp

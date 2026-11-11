@@ -170,15 +170,14 @@ private theorem log_beta_drop_upper {j : ℕ} (hj : 2 ≤ j) {u v : ℝ}
   have hd (t : ℝ) (ht : 2 ≤ t) :
       HasDerivAt f ((2 * (j : ℝ) - logarithmicSlope j t) / t) t := by
     convert (log_beta_hasDerivAt ht (show 1 ≤ j by omega)).add
-      ((hasDerivAt_log (by linarith : t ≠ 0)).const_mul (2 * (j : ℝ))) using 1 <;>
-      dsimp only [f] <;> ring
+      ((hasDerivAt_log (by linarith : t ≠ 0)).const_mul (2 * (j : ℝ))) using 1 <;> ring
   have hmono : MonotoneOn f (Set.Ici 2) := by
     apply monotoneOn_of_hasDerivWithinAt_nonneg (convex_Ici 2)
     · intro t ht; exact (hd t ht).continuousAt.continuousWithinAt
     · intro t ht; exact (hd t (interior_subset ht)).hasDerivWithinAt
     · intro t ht
       exact div_nonneg (sub_nonneg.mpr (slope_upper (interior_subset ht) hj))
-        (by have := interior_subset ht; linarith)
+        (by have ht2 : 2 ≤ t := interior_subset ht; linarith)
   have h := hmono hu (hu.trans huv) huv
   dsimp only [f] at h
   rw [log_div (by linarith : v ≠ 0) (by linarith : u ≠ 0),

@@ -33,6 +33,7 @@ open D5.S3.Arith.Robin.PriceRecord.FixedLayerRigidity
 open D5.S3.Arith.Robin.PriceRecord.ActualRecordHigherLayerResidual
 open D5.S3.Arith.Robin.PriceRecord.ActualFirstLayerPrefixCancellation
 open D5.S3.Arith.Robin.PriceRecord.ActualRecordAllLogBudgetRemainder
+open D5.S3.Arith.Robin.PriceRecord.ActualBalancedCutoff
 open D5.S3.Arith.Robin.PrimeValuation5040Bridge (primeBlock_factorization)
 open D5.S3.Factorization.PrimePowers.FiniteCrtJoin (primePowerProduct)
 
@@ -45,17 +46,10 @@ private theorem log_scale_ratio {c : ℝ} (hc : 0 < c) :
   apply hi.congr'
   filter_upwards [eventually_gt_atTop (1 : ℝ),
     (tendsto_id.const_mul_atTop hc).eventually_gt_atTop 1] with t ht hct
-  have hsum : log c + log t ≠ 0 := by
-    rw [← log_mul hc.ne' (by linarith : t ≠ 0)]
-    exact (log_pos hct).ne'
-  have hden : 1 + log c / log t ≠ 0 := by
-    intro he
-    have hh : (1 + log c / log t) * log t = log c + log t := by
-      field_simp [(log_pos ht).ne'] <;> ring
-    rw [he, zero_mul] at hh
-    exact hsum hh.symm
-  rw [log_mul hc.ne' (by linarith : t ≠ 0)]
-  field_simp [(log_pos ht).ne', hsum, hden] <;> ring
+  change (1 + log c / log t)⁻¹ = log t / log (c * t)
+  have he : 1 + log c / log t = (log c + log t) / log t := by
+    field_simp [(log_pos ht).ne'] <;> ring
+  rw [he, inv_div, log_mul hc.ne' (by linarith : t ≠ 0)]
 
 private theorem log_scale_over_log {c : ℝ} (hc : 0 < c) :
     Tendsto (fun t : ℝ => log (c * t) / log t) atTop (𝓝 1) := by
@@ -151,7 +145,7 @@ private theorem candidate_roster {η τ : ℝ} (hη : 0 < η)
   have hinv : Tendsto (fun t : ℝ => (a * t)⁻¹) atTop (𝓝 0) :=
     (tendsto_id.const_mul_atTop ha).inv_tendsto_atTop
   have hL : Tendsto L atTop (𝓝 ((J : ℝ) / b ^ J)) := by
-    simpa [L] using (((tendsto_const_nhds.sub hinv).mul_const
+    simpa [L] using ((((tendsto_const_nhds : Tendsto (fun _ : ℝ => (1 : ℝ)) atTop (𝓝 1)).sub hinv).mul_const
       ((J : ℝ) / b ^ J)).mul (log_scale_ratio hb))
   have hlogupper : Tendsto (fun t : ℝ => log (b * t) / log (t ^ J))
       atTop (𝓝 (1 / (J : ℝ))) := by
@@ -202,6 +196,8 @@ private theorem candidate_roster {η τ : ℝ} (hη : 0 < η)
       hlogfull.eventually (eventually_gt_nhds (by norm_num : (0 : ℝ) < 2)),
       hsize.eventually (eventually_lt_nhds (by norm_num : (0 : ℝ) < 1 / 2))]
       with t ht htY hat hbt hUt hLt hlogt hfullt hsizet
+    change 1 < a * t at hat
+    change 1 / (1 - τ) < b * t at hbt
     obtain ⟨S, hcard, hS⟩ := hY t htY
     have ht0 : 0 < t := by linarith
     have hX1 : 1 < t ^ J := one_lt_pow₀ ht (by omega)
@@ -212,13 +208,15 @@ private theorem candidate_roster {η τ : ℝ} (hη : 0 < η)
     have hbase : (1 - (a * t)⁻¹) * (b * t)⁻¹ ^ J =
         referencePrice (t ^ J) * log (b * t) * L t := by
       dsimp [L, referencePrice]
-      rw [log_pow, mul_pow, inv_pow]
+      rw [log_pow]
+      simp only [mul_inv_rev, mul_pow, inv_pow]
       field_simp [ht0.ne', ha.ne', hb.ne', (log_pos ht).ne', hJ0.ne', hblog.ne']
       <;> ring
     have hupper : (a * t)⁻¹ ^ J =
         referencePrice (t ^ J) * log (a * t) * U t := by
       dsimp [U, referencePrice]
-      rw [log_pow, mul_pow, inv_pow]
+      rw [log_pow]
+      simp only [mul_inv_rev, mul_pow, inv_pow]
       field_simp [ht0.ne', ha.ne', (log_pos ht).ne', hJ0.ne', halog.ne']
       <;> ring
     have hprevious : (1 - (a * t)⁻¹) * (b * t)⁻¹ ^ (J - 1) =
@@ -251,6 +249,7 @@ private theorem candidate_roster {η τ : ℝ} (hη : 0 < η)
         (show 0 < a * t by linarith) hap.le
       have hprev := gain_lower_window (fun q i hq hi => golden_layer_gain_lower hq hi)
         hpp (by omega : 1 ≤ J - 1) le_rfl hat hap.le hpb
+      simp only [id_eq] at hlow hup hprev
       change _ ≤ goldenLayerMarginal p J * log p at hlow
       change goldenLayerMarginal p J * log p ≤ _ at hup
       change _ ≤ goldenLayerMarginal p (J - 1) * log p at hprev
@@ -494,7 +493,8 @@ theorem actual_higher_layer_budget_repair :
       _ ≤ τ * referencePrice X * b.δ := hRupper
       _ ≤ τ * referencePrice X * (2 * log X) :=
         mul_le_mul_of_nonneg_left hδbound (mul_nonneg hτ.le hLambda.le)
-      _ = 2 * τ / X := by unfold referencePrice
+      _ = 2 * τ / X := by
+        unfold referencePrice
         field_simp [hX0.ne', hlog.ne'] <;> ring
       _ ≤ η / (2 * X) := by
         apply (div_le_div_iff₀ hX0 (by positivity : 0 < 2 * X)).mpr
@@ -503,7 +503,8 @@ theorem actual_higher_layer_budget_repair :
     have hh : X - log (k : ℝ) ≤ (η / 2) * log X := by rw [hslack]; exact hremain.le
     calc
       _ ≤ referencePrice X * ((η / 2) * log X) := mul_le_mul_of_nonneg_left hh hLambda.le
-      _ = _ := by unfold referencePrice
+      _ = _ := by
+        unfold referencePrice
         field_simp [hX0.ne', hlog.ne'] <;> ring
   refine ⟨k, hk2, hkprefix, ?_, ?_, ?_, ?_, ?_, J, A, hJ, ?_, rfl,
     hlogk, hkf, hcost⟩

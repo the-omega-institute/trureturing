@@ -40,6 +40,7 @@ open D5.S3.Arith.Robin.PriceRecord.ActualRecordHigherLayerResidual
 open D5.S3.Arith.Robin.PriceRecord.ActualRecordAllLogBudgetRemainder
 open D5.S3.Arith.Robin.PriceRecord.ActualFirstLayerPrefixCancellation
 open D5.S3.Arith.Robin.PriceRecord.ActualHigherLayerBudgetRepair
+open D5.S3.Arith.Robin.PriceRecord.ActualBalancedCutoff (firstLayerPrice)
 
 /-- The seed turns even zero original slack into a large target. Coefficients
 use the ACTUAL root offsets; b has a fixed finite bound, a+b is O(log X).

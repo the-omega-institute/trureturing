@@ -555,7 +555,7 @@ theorem actual_two_four_paid_prefix_repair :
       have ht : eD = (∑ p ∈ T, log p) - (A + B : ℝ) * log X := by
         dsimp [eD]
         rw [sum_sub_distrib, sum_const, nsmul_eq_mul, hTcard]
-      change (∑ p ∈ T, log p) = _ at hs
+      change (∑ p ∈ T, log p) + (∑ p ∈ Ds, log p) = ∑ p ∈ D, log p at hs
       linarith only [hs, ht]
     have hθbudget : b.h + Chebyshev.theta (b.Q : ℝ) + b.δ = X := by
       have hlb : log (b.k : ℝ) = b.h + Chebyshev.theta (b.Q : ℝ) := by
