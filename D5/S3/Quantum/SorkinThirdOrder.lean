@@ -20,7 +20,7 @@ variable {α R : Type*} [DecidableEq α] [CommRing R] [StarRing R]
 
 /-- The quadratic weight of a finite branch family over a commutative star ring. -/
 def amplitudeWeight (v : α → R) (A : Finset α) : R :=
-  (∑ a in A, v a) * star (∑ a in A, v a)
+  (Finset.sum A v) * starRingEnd R (Finset.sum A v)
 
 /-- Quadratic branch weights have no third-order inclusion-exclusion term. -/
 theorem sorkin_third_order_cancellation (v : α → R) (A B C : Finset α)
@@ -30,7 +30,7 @@ theorem sorkin_third_order_cancellation (v : α → R) (A B C : Finset α)
         amplitudeWeight v A + amplitudeWeight v B + amplitudeWeight v C = 0 := by
   have hABC : Disjoint (A ∪ B) C := Finset.disjoint_union_left.mpr ⟨hAC, hBC⟩
   simp only [amplitudeWeight, Finset.sum_union hABC, Finset.sum_union hAB,
-    Finset.sum_union hAC, Finset.sum_union hBC, star_add]
+    Finset.sum_union hAC, Finset.sum_union hBC, map_add]
   ring
 
 end D5.S3.Quantum.SorkinThirdOrder
