@@ -14,6 +14,8 @@ import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Data.EReal.Basic
 import Mathlib.Tactic
 
+/-! # Equal adjacent bounded-digit growth at radix four -/
+
 namespace D5.S1.Digit.CoonsAdjacentGrowthRefutation
 
 open scoped BigOperators
@@ -46,6 +48,7 @@ private lemma window_succ (ell m : ℕ) (u : ℕ → ℕ) :
     window ell (m + 1) u = u 0 + ell * window ell m (fun i => u (i + 1)) := by
   simp only [window, Finset.sum_range_succ', pow_zero, mul_one, pow_succ,
     Finset.mul_sum]
+  rw [add_comm]
   congr 1
   apply Finset.sum_congr rfl
   intro i hi
@@ -173,7 +176,8 @@ theorem count_upper (k m n : ℕ) (hk : k ≤ 6) (hn : n < 4 ^ (m + 1)) :
         a.property.2, b.property.2]
     have htop (c : Partitions k 4 n) : c.val m / 4 = 0 := by
       have ht := term_le_weight 4 c.val m
-      rw [c.property.2, pow_succ] at hn ht ⊢
+      rw [c.property.2] at ht
+      rw [pow_succ] at hn
       have hp : 0 < 4 ^ m := by positivity
       have : c.val m < 4 := by nlinarith
       omega
@@ -204,6 +208,110 @@ private lemma count_square_le (k n : ℕ) (hk : k ≤ 6) (hn : 1 ≤ n) :
     (count k 4 n) ^ 2 ≤ (2 ^ Nat.log 4 n) ^ 2 := Nat.pow_le_pow_left hu 2
     _ = 4 ^ Nat.log 4 n := hp
     _ ≤ n := hl
+
+/-- A repunit with `m+1` digits. -/
+def repunit (m : ℕ) : ℕ := ∑ i ∈ Finset.range (m+1), 4 ^ i
+
+private lemma repunit_bounds (m : ℕ) :
+    4 ^ m ≤ repunit m ∧ repunit m < 4 ^ (m+1) := by
+  induction m with
+  | zero => norm_num [repunit]
+  | succ m ih =>
+    have hr : repunit (m+1) = repunit m + 4^(m+1) := by
+      simp [repunit, Finset.sum_range_succ]
+    rw [hr]
+    constructor
+    · omega
+    · rw [pow_succ]
+      have : 0 < 4^(m+1) := by positivity
+      omega
+
+private def carries {m : ℕ} (v : Fin m → Fin 2) (i : ℕ) : ℕ :=
+  if hi : 0 < i ∧ i ≤ m then (v ⟨i-1, by omega⟩).val else 0
+
+private lemma carries_le {m : ℕ} (v : Fin m → Fin 2) (i : ℕ) : carries v i ≤ 1 := by
+  unfold carries
+  split_ifs
+  · exact Nat.le_of_lt_succ (v _).isLt
+  · omega
+
+private lemma carries_zero {m : ℕ} (v : Fin m → Fin 2) : carries v 0 = 0 := by
+  simp [carries]
+
+private lemma carries_end {m : ℕ} (v : Fin m → Fin 2) : carries v (m+1) = 0 := by
+  simp [carries]
+
+private def carryDigit {m : ℕ} (v : Fin m → Fin 2) (i : ℕ) : ℕ :=
+  1 + 4 * carries v (i+1) - carries v i
+
+private lemma carryDigit_balance {m : ℕ} (v : Fin m → Fin 2) (i : ℕ) :
+    carryDigit v i + carries v i = 1 + 4 * carries v (i+1) := by
+  have := carries_le v i
+  unfold carryDigit
+  omega
+
+private lemma carryDigit_le {m : ℕ} (v : Fin m → Fin 2) (i : ℕ) : carryDigit v i ≤ 5 := by
+  have := carries_le v (i+1)
+  unfold carryDigit
+  omega
+
+private lemma carry_weight {m : ℕ} (v : Fin m → Fin 2) :
+    weight 4 (pack (m+1) (carryDigit v)) = repunit m := by
+  rw [weight_pack]
+  have hbal : window 4 (m+1) (carryDigit v) + window 4 (m+1) (carries v) =
+      repunit m + 4 * window 4 (m+1) (fun i => carries v (i+1)) := by
+    simp only [window, repunit, ← Finset.sum_add_distrib, Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro i hi
+    have h := carryDigit_balance v i
+    nlinarith
+  have htail : window 4 (m+1) (fun i => carries v (i+1)) =
+      window 4 m (fun i => carries v (i+1)) := by
+    simp [window, Finset.sum_range_succ, carries_end]
+  rw [window_succ, carries_zero, zero_add, htail] at hbal
+  omega
+
+private def carryPartition (k m : ℕ) (hk : 5 ≤ k) (v : Fin m → Fin 2) :
+    Partitions k 4 (repunit m) :=
+  ⟨pack (m+1) (carryDigit v), (by
+    intro i
+    rw [pack_apply]
+    split_ifs
+    · exact (carryDigit_le v i).trans hk
+    · omega), carry_weight v⟩
+
+private lemma carryPartition_injective (k m : ℕ) (hk : 5 ≤ k) :
+    Function.Injective (carryPartition k m hk) := by
+  intro u v huv
+  have hd : ∀ i, i < m+1 → carryDigit u i = carryDigit v i := by
+    intro i hi
+    have h := congrArg (fun a : Partitions k 4 (repunit m) => a.val i) huv
+    simpa [carryPartition, pack_apply, hi] using h
+  have hc : ∀ i, i ≤ m+1 → carries u i = carries v i := by
+    intro i
+    induction i with
+    | zero => simp [carries_zero]
+    | succ i ih =>
+      intro hi
+      have h0 := ih (by omega)
+      have h1 := hd i (by omega)
+      have h2 := carryDigit_balance u i
+      have h3 := carryDigit_balance v i
+      omega
+  funext i
+  apply Fin.ext
+  have h := hc (i.val+1) (by omega)
+  simpa [carries, show 0 < i.val+1 ∧ i.val+1 ≤ m by omega] using h
+
+/-- All binary interior carry choices are distinct actual finite-support partitions. -/
+theorem count_repunit (k m : ℕ) (hk : 5 ≤ k) (hk' : k ≤ 6) :
+    count k 4 (repunit m) = 2 ^ m := by
+  apply Nat.le_antisymm
+  · exact count_upper k m (repunit m) hk' (repunit_bounds m).2
+  · letI := partitions_finite k 4 (repunit m) (by norm_num)
+    have h := Nat.card_le_card_of_injective (carryPartition k m hk)
+      (carryPartition_injective k m hk)
+    simpa [Nat.card_fun, count] using h
 
 end
 
