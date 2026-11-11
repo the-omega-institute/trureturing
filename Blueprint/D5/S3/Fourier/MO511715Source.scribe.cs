@@ -26,10 +26,11 @@ internal sealed class MO511715SourceDocument : IScribeDocumentDefinition
                 + "The legal masks take values in [0,1], and a nonzero value at (k,l) implies "
                 + "(9/64)*norm(k)<=norm(l)<=(64/9)*norm(k). Both support boundaries are inclusive.")),
             Item("time-integral", "timeIntegral", "The original time integral", TimeFormula(),
-                "The two inner intervals are independent, so their Cartesian product is the full square. "
-                + "For nonnegative time, the interval integrals agree with Lebesgue integration on the "
-                + "displayed closed intervals; changing endpoints has measure zero. No ordering between "
-                + "the inner variables is imposed.", DescribeRole.Definition),
+                "The source definition integrates directly over the complete closed square with product "
+                + "Lebesgue measure. Its exponential is continuous and integrable on that compact set. "
+                + "Fubini's theorem and the zero measure of interval endpoints give the displayed iterated "
+                + "form for nonnegative time. No ordering between the inner variables is imposed.",
+                DescribeRole.Definition),
             Item("kernel", "kernel", "The source kernel", KernelFormula(),
                 "All Fourier factors are retained: the prefactor is the squared frequency and each "
                 + "decay rate is the fourth power of its own frequency. The definition divides by no mode.",
@@ -151,7 +152,7 @@ internal sealed class MO511715SourceDocument : IScribeDocumentDefinition
             Mul(Call("exp", Sub(F.D(0), Mul(l, Sub(q, t)))),
                 Integral("v", F.D(0), t, Integral("w", F.D(0), t, Call("exp", exponent)))));
         return All("q", R, All("L", R, All("A", R, All("B", R,
-            Eq(Call("timeIntegral", q, l, a, b), body)))));
+            Imp(Le(F.D(0), q), Eq(Call("timeIntegral", q, l, a, b), body))))));
     }
 
     private static Formula KernelFormula()

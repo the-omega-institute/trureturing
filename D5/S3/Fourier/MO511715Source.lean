@@ -9,6 +9,7 @@
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Analysis.Calculus.BumpFunction.InnerProduct
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+import Mathlib.MeasureTheory.Integral.Prod
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Analysis.Real.Pi.Bounds
 import Mathlib.Topology.Algebra.InfiniteSum.Real
@@ -46,11 +47,11 @@ def LegalMask (ψ : Lattice → Lattice → ℝ) : Prop :=
   ∀ k l, ψ k l ≠ 0 → (9 / 64 : ℝ) * length k ≤ length l ∧
     length l ≤ (64 / 9 : ℝ) * length k
 
-/-- The original full square is written as two independent interval integrals. -/
+/-- The source uses the complete closed square with its product Lebesgue measure. -/
 def timeIntegral (q L A B : ℝ) : ℝ :=
   ∫ α in (0 : ℝ)..q, Real.exp (-L * (q - α)) *
-    ∫ v₁ in (0 : ℝ)..α, ∫ v₂ in (0 : ℝ)..α,
-      Real.exp (-A * (q + α - 2 * v₁) - B * (q + α - 2 * v₂))
+    ∫ v : ℝ × ℝ in Icc (0 : ℝ) α ×ˢ Icc (0 : ℝ) α,
+      Real.exp (-A * (q + α - 2 * v.1) - B * (q + α - 2 * v.2))
 
 def kernel (ψ : Lattice → Lattice → ℝ) (q : ℝ) (n m₁ m₂ : Lattice) : ℝ :=
   frequency (n - m₁) ^ 2 * ψ (n - m₁) m₁ *
@@ -98,6 +99,32 @@ def indexEquiv : (Lattice × Lattice) ≃ (Lattice × Lattice) where
   left_inv p := by ext i <;> simp
   right_inv p := by ext i <;> simp
 
+private lemma square_integral_eq_iterated (q A B α : ℝ) (hα : 0 ≤ α) :
+    (∫ v : ℝ × ℝ in Icc (0 : ℝ) α ×ˢ Icc (0 : ℝ) α,
+      Real.exp (-A * (q + α - 2 * v.1) - B * (q + α - 2 * v.2))) =
+    ∫ v₁ in (0 : ℝ)..α, ∫ v₂ in (0 : ℝ)..α,
+      Real.exp (-A * (q + α - 2 * v₁) - B * (q + α - 2 * v₂)) := by
+  have hc : Continuous (fun v : ℝ × ℝ =>
+      Real.exp (-A * (q + α - 2 * v.1) - B * (q + α - 2 * v.2))) := by fun_prop
+  have hi : IntegrableOn (fun v : ℝ × ℝ =>
+      Real.exp (-A * (q + α - 2 * v.1) - B * (q + α - 2 * v.2)))
+      (Icc (0 : ℝ) α ×ˢ Icc (0 : ℝ) α) ((volume : Measure ℝ).prod volume) := by
+    rw [← Measure.volume_eq_prod]
+    exact hc.continuousOn.integrableOn_compact (isCompact_Icc.prod isCompact_Icc)
+  rw [Measure.volume_eq_prod, setIntegral_prod _ hi]
+  simp_rw [integral_Icc_eq_integral_Ioc, ← intervalIntegral.integral_of_le hα]
+
+private lemma timeIntegral_eq_iterated (q L A B : ℝ) (hq : 0 ≤ q) :
+    timeIntegral q L A B =
+    ∫ α in (0 : ℝ)..q, Real.exp (-L * (q - α)) *
+      ∫ v₁ in (0 : ℝ)..α, ∫ v₂ in (0 : ℝ)..α,
+        Real.exp (-A * (q + α - 2 * v₁) - B * (q + α - 2 * v₂)) := by
+  apply intervalIntegral.integral_congr
+  intro α hα
+  rw [uIcc_of_le hq] at hα
+  dsimp only
+  rw [square_integral_eq_iterated q A B α hα.1]
+
 private lemma inner_factor (q A B α : ℝ) :
     (∫ v₁ in (0 : ℝ)..α, ∫ v₂ in (0 : ℝ)..α,
       Real.exp (-A * (q + α - 2 * v₁) - B * (q + α - 2 * v₂))) =
@@ -139,6 +166,7 @@ private lemma inner_nonneg (q A B α : ℝ) (hα : 0 ≤ α) :
 
 private lemma timeIntegral_nonneg (q L A B : ℝ) (hq : 0 ≤ q) :
     0 ≤ timeIntegral q L A B := by
+  rw [timeIntegral_eq_iterated q L A B hq]
   apply intervalIntegral.integral_nonneg hq
   intro α hα
   exact mul_nonneg (Real.exp_pos _).le (inner_nonneg q A B α hα.1)
@@ -160,6 +188,7 @@ private lemma integral_lower_subinterval (f : ℝ → ℝ) (hf : Continuous f)
 private lemma timeIntegral_lower (L A B h : ℝ) (hL : 0 ≤ L) (hA : 0 ≤ A)
     (hB : 0 ≤ B) (hh : 0 < h) (hhsmall : h ≤ 1 / 2) :
     Real.exp (-(L + 3 * A + 3 * B) * h) * h ^ 3 ≤ timeIntegral 1 L A B := by
+  rw [timeIntegral_eq_iterated 1 L A B (by norm_num)]
   let E := Real.exp (-(3 * A + 3 * B) * h)
   have hinner (α : ℝ) (hα : α ∈ Icc (1 - h) 1) :
       h ^ 2 * E ≤ ∫ v₁ in (0 : ℝ)..α, ∫ v₂ in (0 : ℝ)..α,
@@ -199,7 +228,6 @@ private lemma timeIntegral_lower (L A B h : ℝ) (hL : 0 ≤ L) (hA : 0 ≤ A)
         Real.exp_add]
       dsimp [E]
       ring
-    · rfl
   · intro α hα
     apply mul_le_mul
     · apply Real.exp_le_exp.mpr
