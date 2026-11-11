@@ -13,8 +13,7 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.ThirdPeakEqualSecond
 open D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers
-open private size negatives chainLength chainStart
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size negatives chainLength chainStart)
 
 private def full (a b c : ℕ) (r : Fin 4) : ℕ := 2^(chainLength a b c b r-1)-1
 private def stock (a b c : ℕ) (r : Fin 4) (mask : ℕ) : List ℕ :=
