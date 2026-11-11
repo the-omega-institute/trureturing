@@ -1557,7 +1557,7 @@ $$
 
 $$
 \begin{gathered}
-\operatorname{span}_{\mathbb R}M(A,A)=D,qquad
+\operatorname{span}_{\mathbb R}M(A,A)=D,\qquad
 \operatorname{span}_{\mathbb R}L(D,A)=E,\\
 a,b\in A_+, \langle a,b\rangle_A=0
  \Longrightarrow \langle Ja,Jb\rangle_D=0\quad(D_J),\\
@@ -1576,12 +1576,12 @@ $$
 
 $$
 \begin{aligned}
-&C_D=P_{\sqrt U},quad F=C_D^{-1}M,quad
-\alpha=F(-,1_A),quad\beta=F(1_A,-),\\
-&G=H1_D,quad C_G=P_{\sqrt G},quad
-N=C_G^{-1}L,quad\eta=N(-,1_A),quad\zeta=N(1_D,-),\\
-&C_E=C_GP_{\sqrt{\eta(U)}},quad
-Q_0(a,b,c)=N(F(a,b),c),quad p_0=C_D^{-1}pC_E.
+&C_D=P_{\sqrt U},\quad F=C_D^{-1}M,\quad
+\alpha=F(-,1_A),\quad\beta=F(1_A,-),\\
+&G=H1_D,\quad C_G=P_{\sqrt G},\quad
+N=C_G^{-1}L,\quad\eta=N(-,1_A),\quad\zeta=N(1_D,-),\\
+&C_E=C_GP_{\sqrt{\eta(U)}},\quad
+Q_0(a,b,c)=N(F(a,b),c),\quad p_0=C_D^{-1}pC_E.
 \end{aligned}
 \tag{66.7}
 $$
@@ -1597,13 +1597,13 @@ $U$ 与 $\alpha(A)$、$G$ 与 $\eta(D)$ 算子交换。$C_D,C_E$ 是自伴随全
 
 $$
 \begin{gathered}
-m=n^2,quad\operatorname{rank}E=n^3,quad
-s=\beta^*C_D^{-1}\ge0,quad V=U^{-1},quad\tau_DV=n^2,\\
-w=s\omega>0,quad\tau_Aw=1,quad
-sM(a,b)=\tau_A(a)b,quad K(a)=M(w,a),\\
-\mathcal B(d,c)=M(sd,c),quad B_1=Js,quad
+m=n^2,\quad\operatorname{rank}E=n^3,\quad
+s=\beta^*C_D^{-1}\ge0,\quad V=U^{-1},\quad\tau_DV=n^2,\\
+w=s\omega>0,\quad\tau_Aw=1,\quad
+sM(a,b)=\tau_A(a)b,\quad K(a)=M(w,a),\\
+\mathcal B(d,c)=M(sd,c),\quad B_1=Js,\quad
 pQ(a,b,c)=\tau_A(a)M(b,c),\\
-M=C_DF,quad L(d,c)=C_EN(C_D^{-1}d,c),quad Q=C_EQ_0,\\
+M=C_DF,\quad L(d,c)=C_EN(C_D^{-1}d,c),\quad Q=C_EQ_0,\\
 p=C_Dp_0C_E^{-1},\qquad
 p_0Q_0(a,b,c)=\tau_A(a)F(b,c).
 \end{gathered}
@@ -1628,7 +1628,7 @@ $$
 $$
 A=\bigoplus_i H_{n_i}(\mathbb C),\qquad
 D=\bigoplus_{i,j}H_{n_in_j}(\mathbb C),\qquad
-E=\bigoplus_{i,j,k}H_{n_in_jn_k}(\mathbb C),qquad
+E=\bigoplus_{i,j,k}H_{n_in_jn_k}(\mathbb C),\qquad
 n=\sum_i n_i.
 \tag{66.9}
 $$
@@ -1862,7 +1862,7 @@ $$
 $r=P_{1-q}r\le P_{1-q}1=1-q$，即 $e\ge q$。取 $e=q$ 达到下界，故
 
 $$
-T_q(x)=\langle q,x\rangle,qquad
+T_q(x)=\langle q,x\rangle,\qquad
 T_q\left(\sum_\ell v_\ell q_\ell\right)
  =\sum_\ell v_\ell\langle q,q_\ell\rangle
  =\sum_\ell v_\ell T_{q_\ell}(q).
@@ -1876,8 +1876,8 @@ $$
 **推论 66.8（C13 之前的原始 Born 几何）。** 每个原载体的全部态、效应和实际概率已为
 
 $$
-\rho_\lambda\ge0,quad\sum_\lambda\operatorname{Tr}\rho_\lambda=1,qquad
-0\le e_\lambda\le I_\lambda,qquad
+\rho_\lambda\ge0,\quad\sum_\lambda\operatorname{Tr}\rho_\lambda=1,\qquad
+0\le e_\lambda\le I_\lambda,\qquad
 \Pr(e\mid\rho)=\sum_\lambda\operatorname{Tr}(e_\lambda\rho_\lambda).
 \tag{66.27}
 $$
@@ -1885,6 +1885,16 @@ $$
 $A$ 的块标签为 $i$，$D$ 为全部 $(i,j)$，$E$ 为全部 $(i,j,k)$。$A$ 的纯态空间为 $\coprod_i\mathbb{CP}^{n_i-1}$，同区比较为 $|\langle\psi,\phi\rangle|^2$，异区为零。$D,E$ 的全部纠缠正态都保留。
 
 证明。(66.3) 忠实对应原态基与原全效应，后续只用了保迹 Jordan 坐标，故 (66.9) 给出 (66.27)。$C_D,C_E$ 则是另一种操作：它们用来分解原始映射，一般不保迹，不能将其像当作原总迹一基，亦不因序可逆就取得物理可用性或成本结论。原始权重 $u,g$ 因此不能借“归一化”名称消去。
+
+全标量情形可明确写为 $A=\mathbb R^r$、$D=\mathbb R^{r^2}$、$E=\mathbb R^{r^3}$，$u_{ij},g_{ijk}>0$、$\sum_{i,j}u_{ij}^{-1}=r^2$，并有
+
+$$
+M(a,b)_{ij}=a_i u_{ij}b_j,\qquad
+L(d,c)_{ijk}=d_{ij}g_{ijk}c_k,\qquad
+(pz)_{jk}=u_{jk}\sum_i\frac{z_{ijk}}{u_{ij}g_{ijk}}.
+$$
+
+此时方向不可见，C13 自动成立；但权重仍可使原始映射不保单位或不保迹。一般矩阵情形中，$`J^*J`$ 在 $A_i$ 上乘以 $\sum_j\operatorname{Tr}(u_{ij}^2)$，$`H^*H`$ 在 $D_{ij}$ 上乘以 $\sum_k\operatorname{Tr}(g_{ijk}^2)$。所以 $D_J,D_H$ 的零比较保持不等同于固定这些系数的范数校准。
 
 例如辅助系统确实满足
 
@@ -1924,7 +1934,7 @@ $$
 
 $$
 \boxed{\delta_{ijk}=\varepsilon_{ik}
- \quad\text{当 }n_i,n_k\ge2,quad\text{对每个 }j\text{，包括 }n_j=1.}
+ \quad\text{当 }n_i,n_k\ge2,\quad\text{对每个 }j\text{，包括 }n_j=1.}
 \tag{66.30}
 $$
 
@@ -1965,7 +1975,7 @@ $$
 t_i,&n_i\ge2,\\
 \varepsilon_{ij}\oplus t_j,&n_i=1, n_j\ge2,\\
 0,&n_i=n_j=1,
-\end{cases}qquad
+\end{cases}\qquad
 r_{ijk}=\begin{cases}
 \ell_{ij},&n_in_j\ge2,\\
 \delta_{ijk}\oplus t_k,&n_i=n_j=1, n_k\ge2,\\
@@ -2007,7 +2017,7 @@ $u'_{ij}=u_{ij}^{T^{\ell_{ij}}}$、$g'_{ijk}=g_{ijk}^{T^{r_{ijk}}}$，仍严格�
 **命题 66.11（全锥正保迹读回仍不能推出 C13）。** 取单扇区
 
 $$
-A=H_2(\mathbb C),\quad D=H_4(\mathbb C),\quad E=H_8(\mathbb C),qquad
+A=H_2(\mathbb C),\quad D=H_4(\mathbb C),\quad E=H_8(\mathbb C),\qquad
 u=g=I_2,\quad\varepsilon=1,\quad\delta=0,
 $$
 
@@ -2018,7 +2028,7 @@ L(d,c)=d\otimes c,\qquad p(z)=(\operatorname{Tr}_1z)^T,
 \tag{66.37}
 $$
 
-其中 $T$ 是保留的两腿合成的 $4\times4$ 块的整体转置。它满足定义 66.1 的所有条件，乃至 $U=1_D$、$G=1_E$、原 $p$ 保迹及 $J^*J=2\operatorname{id}_A$、$H^*H=2\operatorname{id}_D$，但 C13 失败。
+其中 $T$ 是保留的两腿合成的 $4\times4$ 块的整体转置。它满足定义 66.1 的所有条件，乃至 $U=1_D$、$G=1_E$、原 $p$ 保迹及 $`J^*J=2\operatorname{id}_A`$、$`H^*H=2\operatorname{id}_D`$，但 C13 失败。
 
 证明。逆迹平衡为 $2\operatorname{Tr}I_2=4$，方向平衡为 $0=1\oplus1$。直接使用同一个 $p$ 得
 
