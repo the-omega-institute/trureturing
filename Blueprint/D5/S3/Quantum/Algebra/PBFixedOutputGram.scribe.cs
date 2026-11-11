@@ -22,7 +22,10 @@ internal sealed class PBFixedOutputGramDocument : IScribeDocumentDefinition
                 "Let a=mu+lambda, V=a J(n,t)-J(n,k) and Z=t+a k. Assume the original scalar PB for every unit vector reading on the full space and every probe T e+alpha n. The known support relation J(n,V)=V makes the V diagonal readings vanish on the zero and two eigenspaces of n. The relation J(n,j)=j gives the same fact for j. Both signs of nonzero lambda and d are retained.", DescribeRole.Theorem,
                 "First expand the original PB at T e+alpha n. The affine Gram shift and the leading-coefficient estimate from PBAffineFirstBudget give 2 abs(phi(lambda T j+V)) at most the sum of the square roots of Bphi(n,Z+g-lambda T e-a lambda T j) and Bphi(n,Z-g+lambda T e-a lambda T j). The expansion remains valid when a leading budget vanishes.",
                 "For unit xi, symmetry of n makes xi orthogonal to eta. Put b=1/sqrt(1+epsilon squared). The vector b(xi+epsilon eta) is unit. Its reading of lambda T j+V is exactly 2 epsilon b squared times lambda T d+inner(eta,op(V)xi). Its Gram determinant against n is exactly 4 epsilon squared b to the fourth times the squared norm of the real perpendicular projection of op(W)xi+epsilon op(W)eta. The square-root factor is exactly 2 epsilon/(1+epsilon squared). Cancel that common positive factor before taking epsilon down to zero with T fixed. The projected j term vanishes and the projected e term is d nu. Thus 2 abs(lambda T d+A) is at most norm(zplus-lambda T d nu)+norm(zminus+lambda T d nu), with A=inner(eta,op(V)xi) and zplus,zminus the projected readings of Z+g,Z-g.",
-                "The existing two-ended norm estimate now yields 2 A=inner(nu,zminus)-inner(nu,zplus). Orthogonality removes the projection and the common Z cancels, giving inner(nu,op(g)xi)=-A. All vector and operator expressions remain on the full H, including complementary environment components. This theorem supplies one real axis identity; a concrete four-dimensional diagonal-residual conclusion additionally requires both companion axes, complex polarization, the full-row reconstruction and their matrix specialization."))));
+                "The existing two-ended norm estimate now yields 2 A=inner(nu,zminus)-inner(nu,zplus). Orthogonality removes the projection and the common Z cancels, giving inner(nu,op(g)xi)=-A. All vector and operator expressions remain on the full H, including complementary environment components. The companion-axis theorem combines two such identities. A concrete four-dimensional diagonal-residual conclusion additionally requires complex polarization, the full-row reconstruction and their matrix specialization."),
+            D("fixed_output_two_axis_identity", "The two-axis complex identity", TwoAxisStatement(),
+                "Use the same scalar PB for both probe families T e+alpha n and T j+alpha n. The additional known relations are kappa(j)=-lambda e, rho(j)=mu j and J(n,e)=e. The second spectral pair is constructed as (eprime,jprime,n)=(j,-e,n), keeping the same mu and lambda. Its vectors are etaprime=-nu and nuprime=eta, where nu=-iota eta and iota is either i or -i. Both vectors remain in the two eigenspace of n.", DescribeRole.Theorem,
+                "The first real identity gives Re inner(nu,g xi)=-Re inner(eta,V xi). The constructed companion gives Re inner(eta,g xi)=Re inner(nu,V xi). The complex inner product is conjugate-linear in its first entry. Since inner(nu,z)=iota inner(eta,z), the two real readings determine the real and imaginary parts of inner(eta,g xi)=iota inner(eta,V xi), for either orientation. This is a pointwise full-space identity under the displayed representation and spectral hypotheses. The concrete M4 representation, positive-functional transfer, zero-d branch, homogeneous extension and complete-row reconstruction are additional obligations."))));
 
     private static DocumentBlock D(string name, string title, Formula formula, string text,
         DescribeRole role, params string[] more) => Describe.Lean(DescribeId.Create(name),
@@ -101,6 +104,27 @@ internal sealed class PBFixedOutputGramDocument : IScribeDocumentDefinition
                 C("comp",C("op",R,I("b")),C("op",R,I("a"))))))))))));
     private static Formula ReadingStatement() => Base(RealH(All("R",C("VectorModel",Hh,J),All("v",Hh,All("a",E,
         Eq(Reading(I("v"),I("a")),Inn(I("v"),Op(I("a"),I("v")))))))));
+    private static Formula TwoAxisStatement()
+    {
+        var probe=Add(Sm(I("tau"),Eaxis),Sm(I("alpha"),Na));
+        var second=Add(Sm(I("tau"),Jaxis),Sm(I("alpha"),Na));
+        var pb=All("v",Hh,Imp(Eq(Norm(I("v")),N(1)),All("tau",Rl,All("alpha",Rl,And(
+            C("scalarPB",J,K,Q,T,B,G,probe,C("vectorReading",R,I("v"))),
+            C("scalarPB",J,K,Q,T,B,G,second,C("vectorReading",R,I("v"))))))));
+        var io=I("iota"); var nu=Sm(Neg(io),Eta);
+        var orient=new Formula.Logic(Eq(io,I("i")),FormulaLogicOperator.Or,Eq(io,Neg(I("i"))));
+        var conditions=Conj(All("a",E,All("b",E,Eq(Jj(I("a"),I("b")),Jj(I("b"),I("a"))))),
+            Eq(App(K,Jaxis),Sm(Neg(Lam),Eaxis)),Eq(App(Q,Jaxis),Sm(Mu,Jaxis)),Eq(Jj(Na,Eaxis),Eaxis),
+            pb,orient,Nonzero(Delta),Nonzero(Lam),Eq(Norm(Xi),N(1)),Eq(Norm(Eta),N(1)),
+            Eq(Op(Na,Xi),N(0)),Eq(Op(Na,Eta),Sm(N(2),Eta)),Eq(Op(Na,nu),Sm(N(2),nu)),
+            Eq(Op(Jaxis,Xi),Sm(Delta,Eta)),Eq(Op(Eaxis,Xi),Sm(Delta,nu)),Eq(Jj(Na,V),V));
+        var result=Eq(C("complexInner",Eta,Op(G,Xi)),Mul(io,C("complexInner",Eta,Op(V,Xi))));
+        var complex=Seq(Mathbb,Grp(I("C")));
+        var body=Rows(All("F",C("SpectralPair",J,K,Q),All("R",C("VectorModel",C("realUnderlying",Hh),J),Labels(
+            All("iota",complex,All("xi",Hh,All("eta",Hh,All("d",Rl,Imp(conditions,result)))))))));
+        return Base(All("H",I("Type"),Seq(OpenBracket,C("NormedAddCommGroup",Hh),CloseBracket,
+            OpenBracket,C("InnerProductSpace",complex,Hh),CloseBracket,body)));
+    }
     private static Formula AnchorStatement()
     {
         var probe=Add(Sm(I("tau"),Eaxis),Sm(I("alpha"),Na));
