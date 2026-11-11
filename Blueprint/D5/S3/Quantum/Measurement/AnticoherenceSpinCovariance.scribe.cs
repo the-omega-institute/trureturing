@@ -47,7 +47,11 @@ internal sealed class AnticoherenceSpinCovarianceDocument : IScribeDocumentDefin
             Node("partialTrace_isometries", "Partial trace through a product embedding", PartialTraceIsometries(),
                 "Conjugate z by the Kronecker product of v and w, where w adjoint times w is the identity. "
                     + "In the partial trace over the second factor, the sum of a w coefficient times the conjugate of another is a Kronecker delta. "
-                    + "Contracting that delta leaves v times the partial trace of z times v adjoint. No isometry hypothesis on v is needed."),
+                    + "Contracting that delta leaves v times the partial trace of z times v adjoint. No isometry hypothesis on v is needed. "
+                    + "For the old-port application OTF008 (20.13), let Z be any finite retained spectator, including R, E and prior memory, and index the old ports by ((z,s),h), with plus encoded as h = 0 and minus as h = 1. The input X is any matrix on these ports; no product assumption between Z and S,H is needed. "
+                    + "Append independent G in I/2 and F in the zero basis state, copy H to F by the controlled bit flip, then exchange S,G on the minus label. In the GF partial trace the h = k = 0 block is X((z,s),0; (w,t),0), the h = k = 1 block is delta(s,t) times one half of sum_b X((z,b),1; (w,b),1), and the unequal-label blocks vanish. "
+                    + "Expanding the original five Kraus operators L_plus = I_S tensor |0><0|_H and L_ab = (|a><b|_S/sqrt(2)) tensor |1><1|_H gives exactly these same entries. The first equality follows from the two explicit permutation matrices; the second contracts the spectator identities and uses (sqrt(2)) squared = 2. Thus Tr_GF of this full output equals the original C(X), with identity action on Z. "
+                    + "This supplies the old-port reduction used by OTF008 (20.14). G and F remain actual retained outputs. The equality alone neither estimates their full-output return nor supplies the q-slot trace-distance comparison."),
             Node("dickeCoefficient", "Dicke coefficient at a given weight", DickeCoefficient(),
                 "For natural numbers n, w and r, this coefficient is zero unless the word weight w equals r. "
                     + "When they agree it is the reciprocal complex inclusion of the square root of the real cast of Nat.choose n r.", DescribeRole.Definition),
