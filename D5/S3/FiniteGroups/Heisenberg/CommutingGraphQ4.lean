@@ -47,6 +47,7 @@ private theorem dual_derived_killed (g : sourceDerived (dualGroup p).Carrier) : 
   apply Subtype.ext
   change (g.val ^ p : HeisenbergGroup (PrimeDual p)) = 1
   rw [HeisenbergGroup.pow_eq]
+  change _ = (⟨0, 0, 0⟩ : HeisenbergGroup (PrimeDual p))
   ext <;> simp [hxy.1, hxy.2]
 
 private def squareDerivedOne : sourceDerived (squareGroup p).Carrier :=
@@ -55,6 +56,7 @@ private def squareDerivedOne : sourceDerived (squareGroup p).Carrier :=
 private theorem square_derived_not_killed : (squareDerivedOne p) ^ p ≠ 1 := by
   intro h
   have hz := congrArg (fun a : sourceDerived (squareGroup p).Carrier => a.val.z) h
+  change ((squareDerivedOne p).val ^ p).z = (0 : PrimeSquare p) at hz
   have hp : (p : PrimeSquare p) ≠ 0 := by
     rw [ne_eq, ZMod.natCast_eq_zero_iff]
     exact Nat.not_dvd_of_pos_of_lt (Fact.out : p.Prime).pos (by

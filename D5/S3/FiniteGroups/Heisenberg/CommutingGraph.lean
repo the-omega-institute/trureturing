@@ -68,7 +68,13 @@ private theorem heisenberg_commutes (a b : HeisenbergGroup A) :
     change a.z + b.z + a.x * b.y = b.z + a.z + b.x * a.y at hz
     simpa only [add_comm b.z a.z, add_right_inj] using hz
   · intro h
-    ext <;> simp [h, add_comm]
+    ext
+    · change a.x + b.x = b.x + a.x
+      exact add_comm _ _
+    · change a.y + b.y = b.y + a.y
+      exact add_comm _ _
+    · change a.z + b.z + a.x * b.y = b.z + a.z + b.x * a.y
+      rw [h, add_comm a.z b.z]
 
 private def baseCentral (A : Type*) : HeisenbergGroup A ≃ (A × A) × A where
   toFun a := ((a.x, a.y), a.z)

@@ -63,24 +63,51 @@ instance : One (HeisenbergGroup R) := ⟨⟨0, 0, 0⟩⟩
 instance : Inv (HeisenbergGroup R) := ⟨fun a => ⟨-a.x, -a.y, -a.z + a.x * a.y⟩⟩
 
 instance : Group (HeisenbergGroup R) where
-  mul_assoc a b c := by ext <;> dsimp <;> simp only [add_mul, mul_add] <;> abel
-  one_mul a := by ext <;> simp
-  mul_one a := by ext <;> simp
-  inv_mul_cancel a := by ext <;> simp
+  mul_assoc a b c := by
+    ext
+    · change (a.x + b.x) + c.x = a.x + (b.x + c.x)
+      exact add_assoc _ _ _
+    · change (a.y + b.y) + c.y = a.y + (b.y + c.y)
+      exact add_assoc _ _ _
+    · change (a.z + b.z + a.x * b.y) + c.z + (a.x + b.x) * c.y =
+        a.z + (b.z + c.z + b.x * c.y) + a.x * (b.y + c.y)
+      noncomm_ring
+  one_mul a := by
+    change (⟨0 + a.x, 0 + a.y, 0 + a.z + 0 * a.y⟩ : HeisenbergGroup R) = a
+    ext <;> simp
+  mul_one a := by
+    change (⟨a.x + 0, a.y + 0, a.z + 0 + a.x * 0⟩ : HeisenbergGroup R) = a
+    ext <;> simp
+  inv_mul_cancel a := by
+    change (⟨-a.x + a.x, -a.y + a.y,
+      (-a.z + a.x * a.y) + a.z + (-a.x) * a.y⟩ : HeisenbergGroup R) = ⟨0, 0, 0⟩
+    ext <;> simp [neg_mul]
 
 /-- **The commutator formula**: `⁅(x, y, z), (x', y', z')⁆ = (0, 0, x * y' - x' * y)`. -/
 theorem commutatorElement_eq (a b : HeisenbergGroup R) :
     ⁅a, b⁆ = ⟨0, 0, a.x * b.y - b.x * a.y⟩ := by
-  ext <;> simp [commutatorElement_def, add_mul]
-  abel
+  ext
+  · change ((a.x + b.x) + -a.x) + -b.x = 0
+    abel
+  · change ((a.y + b.y) + -a.y) + -b.y = 0
+    abel
+  · change ((a.z + b.z + a.x * b.y) + (-a.z + a.x * a.y) +
+        (a.x + b.x) * (-a.y)) + (-b.z + b.x * b.y) +
+        ((a.x + b.x) + -a.x) * (-b.y) = a.x * b.y - b.x * a.y
+    noncomm_ring
 
 /-- **The power formula**: `(x, y, z) ^ n = (n • x, n • y, n • z + (n choose 2) • (x * y))`. -/
 theorem pow_eq (a : HeisenbergGroup R) (n : ℕ) :
     a ^ n = ⟨n • a.x, n • a.y, n • a.z + n.choose 2 • (a.x * a.y)⟩ := by
   induction n with
-  | zero => ext <;> simp
+  | zero =>
+    change (⟨0, 0, 0⟩ : HeisenbergGroup R) = _
+    ext <;> simp
   | succ n ih =>
     rw [pow_succ, ih, Nat.choose_succ_succ' n 1, Nat.choose_one_right]
+    change (⟨n • a.x + a.x, n • a.y + a.y,
+      (n • a.z + n.choose 2 • (a.x * a.y)) + a.z + (n • a.x) * a.y⟩ :
+      HeisenbergGroup R) = _
     ext <;> simp [add_smul, nsmul_eq_mul, mul_assoc]
     abel
 
@@ -89,10 +116,12 @@ def zAxis : Subgroup (HeisenbergGroup R) where
   carrier := {a | a.x = 0 ∧ a.y = 0}
   mul_mem' := by
     rintro a b ⟨hax, hay⟩ ⟨hbx, hby⟩
+    change a.x + b.x = 0 ∧ a.y + b.y = 0
     simp [hax, hay, hbx, hby]
-  one_mem' := by simp
+  one_mem' := ⟨rfl, rfl⟩
   inv_mem' := by
     rintro a ⟨hax, hay⟩
+    change -a.x = 0 ∧ -a.y = 0
     simp [hax, hay]
 
 @[simp]
