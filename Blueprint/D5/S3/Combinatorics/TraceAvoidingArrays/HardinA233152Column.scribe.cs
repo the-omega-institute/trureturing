@@ -46,8 +46,6 @@ internal sealed class HardinA233152ColumnDocument : IScribeDocumentDefinition
     private static Formula All(string name, Formula type, Formula body) => new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
     private static Formula Lam(string name, Formula type, Formula body) => P(Seq(LambdaLower, Sp, V(name), Colon, Sp, type, Sp, Mapsto, Sp, P(body)));
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
-    private static Formula Ne(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
-    private static Formula LtF(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
     private static Formula And(Formula a, Formula b) => new Formula.Logic(P(a), FormulaLogicOperator.And, P(b));
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(P(a), FormulaLogicOperator.Implies, P(b));
     private static Formula Arr(Formula a, Formula b) => new Formula.TypeArrow(a, b);
@@ -59,14 +57,10 @@ internal sealed class HardinA233152ColumnDocument : IScribeDocumentDefinition
     private static Formula FinF(Formula n) => C("Fin", n);
     private static Formula NatF() => Op("Nat");
     private static Formula IntF() => Op("Int");
-    private static Formula PropF() => Op("Prop");
     private static Formula Cast(Formula x, Formula t) => P(Seq(x, Colon, Sp, t));
     private static Formula Val(Formula x) => C("Fin.val", x);
     private static Formula RowF(Formula k) => C("Row", k);
     private static Formula Grid(Formula k, Formula n) => Arr(Seq(FinF(n), Sp, Times, Sp, FinF(k)), FinF(N(3)));
-    private static Formula At(Formula f, Formula i, Formula j) => A(f, P(Seq(i, Comma, Sp, j)));
-    private static Formula RowAt(Formula f, Formula i, Formula k) => Lam("j", FinF(k), At(f, i, V("j")));
-    private static Formula Next(Formula j) => Seq(Langle, PlusF(Val(j), N(1)), Comma, Sp, V("h"), Rangle);
     private static Formula Sum(string v, Formula ty, Formula f) => Seq(new Formula.Subscript(F.Sum, P(Seq(V(v), Colon, Sp, ty))), Sp, f);
     private static Formula Ite(Formula p, Formula a, Formula b) => Seq(Op("if"), Sp, p, Sp, Op("then"), Sp, a, Sp, Op("else"), Sp, b);
     private static Formula FilterCard(Formula k, Formula n) => C("Finset.card", C("Finset.filter", Lam("f", Grid(k,n), C("Legal",V("f"))), Op("Finset.univ")));

@@ -31,7 +31,14 @@ internal sealed class HardinA233155RowTransferDocument : IScribeDocumentDefiniti
     }
     private static Formula LegalFormula() => K(All("n",NatF(),All("f",Grid(V("k"),V("n")),Eq(C("Legal",V("f")),RowConditions(V("k"),V("n"),V("f"),true)))));
     private static Formula CodesFormula() => K(Eq(C("legalCodes",V("k")),C("List.filter",Lam("c",FinF(Pow(N(3),V("k"))),C("decide",C("rowLegal",C("decode",V("k"),V("c"))))),C("List.finRange",Pow(N(3),V("k"))))));
-    private static Formula RowSumFormula() => K(All("F",Arr(RowF(V("k")),IntF()),Eq(Sum("r",RowF(V("k")),Ite(C("rowLegal",V("r")),A(V("F"),V("r")),N(0))),C("List.sum",C("List.map",Lam("c",FinF(Pow(N(3),V("k"))),A(V("F"),C("decode",V("k"),V("c")))),C("legalCodes",V("k"))))))));
+    private static Formula RowSumFormula() {
+        var k=V("k"); var f=V("F");
+        var lhs=Sum("r",RowF(k),Ite(C("rowLegal",V("r")),A(f,V("r")),N(0)));
+        var rhs=C("List.sum",C("List.map",
+            Lam("c",FinF(Pow(N(3),k)),A(f,C("decode",k,V("c")))),C("legalCodes",k)));
+        return K(All("F",Arr(RowF(k),IntF()),Eq(lhs,rhs)));
+    }
+
     private static Formula SequenceFormula() {
         var k=V("k"); var n=PlusF(V("n"),N(1));
         var subtype=Seq(OpenBrace,V("r"),Colon,Sp,Arr(FinF(n),RowF(k)),Sp,Mid,Sp,RowConditions(k,n,V("r"),false),CloseBrace);
@@ -39,7 +46,16 @@ internal sealed class HardinA233155RowTransferDocument : IScribeDocumentDefiniti
     }
     private static Formula HQ() => All("r",RowF(V("k")),Imp(C("rowLegal",V("r")),All("s",FinF(V("q")),Eq(Sum("c",RowF(V("k")),Ite(And(C("rowLegal",V("c")),And(C("compatible",V("r"),V("c")),Eq(A(V("cls"),V("c")),V("s")))),Cast(N(1),IntF()),N(0))),A(V("Q"),A(V("cls"),V("r")),V("s"))))));
     private static Formula HW() => All("s",FinF(V("q")),Eq(Sum("r",RowF(V("k")),Ite(And(C("rowLegal",V("r")),Eq(A(V("cls"),V("r")),V("s"))),Cast(N(1),IntF()),N(0))),A(V("w"),V("s"))));
-    private static Formula TransferFormula() => K(All("q",NatF(),All("cls",Arr(RowF(V("k")),FinF(V("q"))),All("Q",C("Matrix",FinF(V("q")),FinF(V("q")),IntF()),All("w",Arr(FinF(V("q")),IntF()),Imp(HQ(),Imp(HW(),All("n",NatF(),Eq(Cast(C("T",V("k"),PlusF(V("n"),N(2))),IntF()),C("dotProduct",V("w"),C("Matrix.mulVec",Pow(V("Q"),PlusF(V("n"),N(1))),Cast(N(1),Arr(FinF(V("q")),IntF()))))))))))))));
+    private static Formula TransferFormula() {
+        var q=V("q"); var k=V("k"); var n=V("n");
+        var scalar=C("dotProduct",V("w"),C("Matrix.mulVec",Pow(V("Q"),PlusF(n,N(1))),
+            Cast(N(1),Arr(FinF(q),IntF()))));
+        var conclusion=All("n",NatF(),Eq(Cast(C("T",k,PlusF(n,N(2))),IntF()),scalar));
+        var conditional=Imp(HQ(),Imp(HW(),conclusion));
+        return K(All("q",NatF(),All("cls",Arr(RowF(k),FinF(q)),
+            All("Q",C("Matrix",FinF(q),FinF(q),IntF()),
+            All("w",Arr(FinF(q),IntF()),conditional)))));
+    }
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Op(string name) => Seq(Operatorname, Grp(Name(name)));
@@ -64,14 +80,11 @@ internal sealed class HardinA233155RowTransferDocument : IScribeDocumentDefiniti
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(P(a), FormulaLogicOperator.Implies, P(b));
     private static Formula Arr(Formula a, Formula b) => new Formula.TypeArrow(a, b);
     private static Formula PlusF(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Add, b);
-    private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
-    private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
     private static Formula Pow(Formula a, Formula b) => new Formula.Power(P(a), b);
     private static Formula N(int n) => n < 0 ? Seq(Minus, N(-n)) : D(n.ToString(System.Globalization.CultureInfo.InvariantCulture).Select(c => (byte)(c - '0')).ToArray());
     private static Formula FinF(Formula n) => C("Fin", n);
     private static Formula NatF() => Op("Nat");
     private static Formula IntF() => Op("Int");
-    private static Formula PropF() => Op("Prop");
     private static Formula Cast(Formula x, Formula t) => P(Seq(x, Colon, Sp, t));
     private static Formula Val(Formula x) => C("Fin.val", x);
     private static Formula RowF(Formula k) => C("Row", k);
@@ -82,6 +95,4 @@ internal sealed class HardinA233155RowTransferDocument : IScribeDocumentDefiniti
     private static Formula Sum(string v, Formula ty, Formula f) => Seq(new Formula.Subscript(F.Sum, P(Seq(V(v), Colon, Sp, ty))), Sp, f);
     private static Formula Ite(Formula p, Formula a, Formula b) => Seq(Op("if"), Sp, p, Sp, Op("then"), Sp, a, Sp, Op("else"), Sp, b);
     private static Formula FilterCard(Formula k, Formula n) => C("Finset.card", C("Finset.filter", Lam("f", Grid(k,n), C("Legal",V("f"))), Op("Finset.univ")));
-    private static Formula Vec(params Formula[] xs) => Seq(Bang, OpenBracket, Join(xs), CloseBracket);
-    private static Formula Join(Formula[] xs) => Seq(xs.SelectMany((x,i) => i == 0 ? new[]{x} : new[]{Comma,Sp,x}).ToArray());
 }

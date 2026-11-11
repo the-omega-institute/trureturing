@@ -1,5 +1,6 @@
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233154Column
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155RowTransfer
+import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233154Rows
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
 
@@ -8,6 +9,7 @@ namespace Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233154Column
 open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233154Column
 open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155RowTransfer
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233154Rows
 open LeanInformationAudit
 open scoped BigOperators
 noncomputable section

@@ -15,10 +15,10 @@ All declarations have proof_shape=bind-only and are consumed by the three column
 Row: proof_shape=bind-only; consumers=rowLegal, compatible, decidableRowLegal, decidableCompatible, decode, row_sum, row_sequence_bridge, pair, good_iff, count_transfer
 rowLegal: proof_shape=bind-only; consumers=decidableRowLegal, Legal, legalCodes, row_sum, row_sequence_bridge, pair, good_iff, count_transfer
 compatible: proof_shape=bind-only; consumers=decidableCompatible, Legal, row_sequence_bridge, pair, good_iff, count_transfer
-decidableRowLegal: proof_shape=bind-only; consumers=typeclass consumers
-decidableCompatible: proof_shape=bind-only; consumers=typeclass consumers
+decidableRowLegal: proof_shape=bind-only; consumers=legalCodes, decidableLegal
+decidableCompatible: proof_shape=bind-only; consumers=decidableLegal
 Legal: proof_shape=bind-only; consumers=decidableLegal, T
-decidableLegal: proof_shape=bind-only; consumers=typeclass consumers
+decidableLegal: proof_shape=bind-only; consumers=T
 T: proof_shape=bind-only; consumers=row_sequence_bridge, count_transfer
 decode: proof_shape=bind-only; consumers=legalCodes, row_sum
 legalCodes: proof_shape=bind-only; consumers=row_sum

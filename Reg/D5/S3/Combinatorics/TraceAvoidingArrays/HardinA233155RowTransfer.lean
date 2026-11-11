@@ -5,7 +5,6 @@ import LeanInformationAuditInterface.Contract.Registration
 /-! Exact readout laws preserve the complete telescopes of the strip identities. -/
 namespace Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155RowTransfer
 open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155RowTransfer
-open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155RowTransfer
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 open scoped BigOperators
