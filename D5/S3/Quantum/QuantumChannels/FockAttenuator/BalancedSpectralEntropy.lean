@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/QuantumChannels/FockAttenuator/BalancedSpectralEntropy
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/QuantumChannels/FockAttenuator/BalancedSpectralEntropy
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
@@ -7,6 +7,11 @@
    digest: Exact density-to-reference operator correspondence, the extended spectral half-cap floor, and a half-projection entropy criterion. -/
 /-
 admission_basis: escape-witness
+This mixed Fock application module owns densityReference, the odd-occupation
+attenuator entropy bounds and the Fock density half-projection criterion.
+Its instance classification includes these physical channel dependencies;
+spectral_entropy_lower_of_half still quantifies over every complete complex
+Hilbert space and is consumed by balanced_odd_spectral_entropy_lower.
 spectral_entropy_lower_of_half uses the actual complete spectral resolution,
 trace-one eigenvalue sum and ENNReal termwise comparison. The densityReference
 adapter contains exactly the original density operator; no entropy identity
