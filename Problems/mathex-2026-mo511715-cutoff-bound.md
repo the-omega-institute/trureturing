@@ -81,31 +81,33 @@ changes the question.
 
 ## Gap
 
-The conventional assertion has the retained negation `result`. Its admission
-as a resolution of the externally published question remains conditional under
-CLAUDE §3.2. `proof_shape: bind-only` supplies no escape witness. The alternative
-`admission_basis: open-problem-resolution` requires the actual source,
-literature, tier, preregistration, necessary-surface and utility conditions.
+The conventional assertion has the retained negation `result`. Independent
+source review supports correspondence with the complete published question
+under the disclosed Euclidean real/complex readings and documentary Tier-1
+eligibility on the bounded literature record below. The source's omissions
+remain explicit; the supported correspondence does not certify unspecified
+authorial intent or a result for every possible norm. No unresolved material
+source-semantic prerequisite is identified for this conventional question.
 
-The precise unresolved source prerequisite is a final judgment that the
-literal published question is settled by the disclosed Euclidean real/complex
-interpretations despite its unspecified norm, typing and prefix. The supplied
-source/form judgment certifies those usual readings and the all-real
-obstruction; it expressly does not certify a first-freeze source-resolution
-decision. Removing sign restrictions and allowing cutoff-dependent constants
-does not determine the remaining ambiguity. The typed annotation admits only
-`Proved` or `Refuted`, with no conditional/source-ambiguous value. No
-`OpenProblemResolutionClaim` is attached while this source prerequisite and
-qualifying literature/tier eligibility remain uncertified. This is not a
-categorical rejection of the external-open-problem route.
+The Scribe attaches `OpenProblemResolutionClaim` with `ResolutionKind.Refuted`
+and `ProblemSlugRef.Create("mathex-2026-mo511715-cutoff-bound")` to the existing
+`D5/S3/Fourier/MO511715Source.result` Describe. It names this complete question,
+with no additional resolution members. `proof_shape: bind-only` supplies no
+escape witness; the host's `admission_basis: open-problem-resolution` uses
+CLAUDE §3.2's external-question route. This prerequisite judgment and typed
+annotation do not complete canonical admission. Selected canonical rendering,
+first-freeze/current, utility admission, final independent review, required CI
+and dev delivery remain outstanding, with the selected-consumer capability
+gap owned by [#29078](https://github.com/the-omega-institute/trureturing/issues/29078).
 
 ### Preregistration and bounded literature status
 
 The original [issue #29180](https://github.com/the-omega-institute/trureturing/issues/29180)
 contains the complete source and a Tier-1 proposal: an author-posed 2026
 analytic question with a proposed short route, rather than a finite-computation
-frontier or documented core problem. This is a proposal, not an established
-eligibility judgment. Its
+frontier or documented core problem. The documented rationale and named
+pre-probe checks support Tier-1 documentary eligibility under CLAUDE §3.6;
+this is a bounded prerequisite judgment. Its
 [pre-probe registration](https://github.com/the-omega-institute/trureturing/issues/29180#issuecomment-6790963738)
 identifies the unchanged complete conventional event, SHA-256
 `410a367b8a743883dfc12bdc9a4269e77d89dadd5646e3c22023747c16d44c8d`.
@@ -129,7 +131,9 @@ returned totalResults 0. A title query `ti:"Bound of series"` at
 2026-11-11T18:54:19Z returned 12 total results, only the first five returned;
 that query was not an exhaustive literature screen. Neither establishes
 worldwide openness, priority, or absence of an equivalent settlement without
-the source identifier. Literature-qualified eligibility remains unresolved.
+the source identifier. Documentary eligibility rests on the named bounded
+record, not a claim of exhaustive absence. An applicable prior settlement
+would defeat this route; none is identified in that record.
 
 ## Route
 
@@ -185,8 +189,9 @@ All 39 authored lemmas/theorems have `proof_shape: bind-only` under the
 accepted full-inlining source/form judgment. Each nonterminal helper has a
 live consumer in the result chain; `indexEquiv` is a consumed proof-bearing
 definition. These consumers organize the proof and supply no escape witness.
-The terminal `result` needs the conditional external-open-problem basis;
-compiled proofs and Reg bindings do not themselves grant it.
+The terminal `result` uses the external-open-problem basis with the supported
+source/documentary prerequisites and its typed `Refuted` annotation; compiled
+proofs and Reg bindings do not themselves grant canonical admission.
 
 Canonical selected emission, FileMap and ledger/freeze consumption require
 selection before discovery, the unresolved owner capability in
@@ -216,17 +221,20 @@ review or required-CI admission is asserted here.
    sufficiency of that structure nor failure for every structured mask is
    proved here. This candidate needs its own hypotheses, literature check
    and preregistration.
-5. **Unresolved source/admission boundary:** the published question retains
-   norm/scalar/prefix/$\mathbb R_+$ ambiguity. The conventional refutation
-   does not certify unspecified intent, literature-qualified openness,
-   external-open-problem admission or publication.
+5. **Supported prerequisites and unresolved admission boundary:** source
+   correspondence for the conventional Euclidean real/complex question and
+   bounded documentary eligibility are independently supported. The published
+   norm/scalar/prefix/$\mathbb R_+$ omissions remain disclosed; unspecified
+   intent and worldwide openness are not certified. Canonical admission,
+   final review and publication remain outstanding.
 
 ## ASSUMED-UNVERIFIED
 
-Original authorial conventions and absence of a prior settlement beyond the
-bounded readings are unverified. Tier-1 eligibility and literal published-
-question correspondence require their final source/admission judgment. No
-conditional annotation is represented as `Refuted`. The wall triage records
-these prerequisites, not a failure of the retained conventional proof.
-Rendered/current/freeze checks and publication remain pending the compatible
-owner capability and later review.
+Original authorial intent and absence of a prior settlement beyond the bounded
+readings are unverified and are not premises supplied by the prerequisite
+approval. The typed `Refuted` annotation concerns the complete question under
+its explicit conventional readings. The wall triage records outstanding
+canonical/final admission, not an undecided source/documentary prerequisite
+or a failure of the retained conventional proof. Rendered/current/freeze
+checks and publication remain pending the compatible owner capability and
+later review.

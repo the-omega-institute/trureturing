@@ -29,13 +29,14 @@ internal sealed class MO511715SourceDocument : IScribeDocumentDefinition
                 + "Preregistration is issue 29180, comment 6790963738. Its original complete event, "
                 + "deadline and resource account are unchanged. All 39 authored lemmas and theorems "
                 + "have proof_shape bind-only under full inlining; live-consumed helpers organize the "
-                + "proof and provide no escape witness. The terminal result's candidate admission_basis "
-                + "is open-problem-resolution, conditional on CLAUDE 3.2's actual prerequisites. "
-                + "The source/form judgment covers the disclosed usual Euclidean real/complex readings, "
-                + "not a final literal-source resolution or qualifying literature/tier decision. "
-                + "The remaining prerequisite is certification of that published-question correspondence "
-                + "with its retained ambiguities and literature-qualified eligibility. No typed "
-                + "OpenProblemResolutionClaim is asserted while those conditions remain unresolved.")),
+                + "proof and provide no escape witness. The terminal result's admission_basis is "
+                + "open-problem-resolution. Independent source review supports correspondence with the "
+                + "complete published question under the disclosed conventional Euclidean real/complex "
+                + "readings and the documented Tier-1 eligibility with bounded literature checking. "
+                + "The result carries the typed Refuted claim for that question and its existing dossier. "
+                + "This supports those prerequisites only: canonical rendering, first-freeze/current, "
+                + "final review, required CI and dev delivery remain outstanding. The selected-consumer "
+                + "capability gap is owner issue 29078. No global openness or priority is claimed.")),
             Paragraph(Text(
                 "Write Z for the lattice of five integer coordinates and E for Euclidean five-space. "
                 + "The map embed casts coordinates from Z into E. Set frequency(k)=norm(2*pi*embed(k)). "
@@ -130,15 +131,19 @@ internal sealed class MO511715SourceDocument : IScribeDocumentDefinition
                 + "for every such cutoff. A standard smooth real bump then negates the conjunction "
                 + "claim. Every smooth "
                 + "normalized compact cutoff in either scalar reading satisfies the stronger lemma's "
-                + "hypotheses. The source's unspecified norm, typing and authorial intent remain "
-                + "unresolved conventions; the conclusion does not assume additional mask structure.",
-                DescribeRole.Theorem))));
+                + "hypotheses. The source's unspecified norm and typing remain documentary omissions; "
+                + "this conventional reading certifies neither authorial intent nor an arbitrary-norm "
+                + "result, and assumes no additional mask structure.",
+                DescribeRole.Theorem, new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("mathex-2026-mo511715-cutoff-bound"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Item(string id, string declaration, string title, Formula formula,
-        string commentary, DescribeRole role) => Describe.Lean(
+        string commentary, DescribeRole role,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Module + declaration), H(title),
             StatementSource.FromAuthor(F.Disp(formula)), AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(commentary))), role);
+            Blocks(Paragraph(Text(commentary))), role, openProblemResolutionClaim: resolution);
 
     private static Formula R => F.Seq(F.Mathbb, F.Grp(F.Id("R")));
     private static Formula Z => new Formula.Power(F.Seq(F.Mathbb, F.Grp(F.Id("Z"))), F.D(5));
