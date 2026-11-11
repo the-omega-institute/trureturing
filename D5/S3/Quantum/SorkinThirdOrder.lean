@@ -6,6 +6,9 @@
    utility: none
    digest: The third-order inclusion-exclusion term vanishes for a quadratic amplitude weight. -/
 
+/- Escape audit unfinished under https://github.com/the-omega-institute/trureturing/issues/29342:
+   the polymorphic source registration needs a faithful dependent-family realization. -/
+
 import Mathlib
 
 set_option autoImplicit false
