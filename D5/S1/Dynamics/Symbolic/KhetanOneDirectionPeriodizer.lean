@@ -314,7 +314,8 @@ theorem integer_periodizer_direction_split [IsDomain R]
     have hm := coefficientAct_map (Int.castRingHom R)
       ((ds.map (fun v => (differenceFilter v : IntegerLaurent))).prod) h
     rw [hann] at hm
-    simpa [map_list_prod, List.map_map, differenceFilter] using hm
+    funext x
+    simpa [map_list_prod, List.map_map, differenceFilter, Function.comp_def] using congrFun hm x
 
 /-- The first coordinate is transverse to `u`; the second is its integral
 longitudinal coordinate. Primitivity makes this an actual lattice
@@ -369,7 +370,12 @@ private theorem primitive_laurent_coordinates_line (u : Lattice)
   | add F G hF hG => simp only [map_add, hF, hG, AddMonoidAlgebra.single_add]
   | single n c =>
     rw [line_laurent_single]
-    simp [primitiveLaurentCoordinates, primitive_coordinates_multiple]
+    change AddMonoidAlgebra.curryRingEquiv
+      (AddMonoidAlgebra.mapDomainRingEquiv R (primitiveCoordinates u hu)
+        (AddMonoidAlgebra.single (n • u) c)) =
+      AddMonoidAlgebra.single 0 (AddMonoidAlgebra.single n c)
+    rw [AddMonoidAlgebra.mapDomainRingEquiv_single, primitive_coordinates_multiple,
+      AddMonoidAlgebra.curryRingEquiv_single]
 
 /-- A monic transverse factorization and its irreducibility/nondivisibility
 properties produce the localized Bezout identity, then a nonzero eliminant,
@@ -394,13 +400,18 @@ theorem localized_bezout_step [IsDomain R]
   have hcoordinates := primitive_laurent_coordinates_line (R := R) u hu
   have hunz : u ≠ 0 := by
     intro hz
-    simpa [hz] using hu
+    have h := hu
+    rw [hz] at h
+    obtain ⟨a, b, hab⟩ := h
+    norm_num at hab
   obtain ⟨ρ, hρ, α, β, hbezout⟩ := KhetanLaurentElimination.clear_laurent_bezout_of_monic_factors
     (K := K) (coordinates P) (coordinates B)
     factors hB hmonic hirr hnot
   apply cleared_bezout_periodic h hh u hunz P B (coordinates.symm α) (coordinates.symm β)
     A ρ hA hρ c hP hAB
   apply coordinates.injective
-  simpa only [hcoordinates, map_add, map_mul, RingEquiv.apply_symm_apply] using hbezout
+  have hcoρ : coordinates (lineLaurent u ρ) = AddMonoidAlgebra.single 0 ρ := hcoordinates ρ
+  rw [hcoρ]
+  simpa only [map_add, map_mul, RingEquiv.apply_symm_apply] using hbezout
 
 end D5.S1.Dynamics.Symbolic.KhetanOneDirectionPeriodizer

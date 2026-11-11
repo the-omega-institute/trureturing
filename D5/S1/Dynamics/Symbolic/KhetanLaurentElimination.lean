@@ -86,6 +86,7 @@ theorem clear_laurent_bezout (P B : AddMonoidAlgebra R ℤ)
       rw [hab, mul_one, AddMonoidAlgebra.single_mul_single, zero_add]
     _ = _ := by ring
 
+omit [IsDomain R] in
 private theorem map_to_laurent {S : Type*} [CommRing S] (f : R →+* S)
     (p : Polynomial R) :
     AddMonoidAlgebra.mapRingHom ℤ f p.toLaurent = (p.map f).toLaurent := by
@@ -144,7 +145,7 @@ theorem clear_laurent_bezout_of_monic_factors
     clear hB
     revert hmonic hirr hnot
     induction factors with
-    | nil => intros; simp
+    | nil => intros; exact isCoprime_one_right
     | cons g gs ih =>
       intro hmonic hirr hnot
       rw [List.map_cons, List.prod_cons]

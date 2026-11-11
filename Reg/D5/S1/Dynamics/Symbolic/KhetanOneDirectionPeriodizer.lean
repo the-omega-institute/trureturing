@@ -1,6 +1,7 @@
 import D5.S1.Dynamics.Symbolic.KhetanOneDirectionPeriodizer
 import Reg.Support.DependentFamily
 import LeanInformationAuditInterface.Contract.Registration
+import Mathlib.Algebra.Ring.Hom.InjSurj
 
 open _root_.D5.S1.Dynamics.Symbolic.KhetanLaurent
 open _root_.D5.S1.Dynamics.Symbolic.KhetanLaurent.Algebra
@@ -41,6 +42,8 @@ abbrev arena : Arena where
 
 private theorem bad_law : ¬ arena.{u}.Law bad := by
   intro hb
+  letI : IsDomain (ULift.{u} ℤ) := Function.Injective.isDomain
+    (ULift.ringEquiv : ULift.{u} ℤ ≃+* ℤ) ULift.ringEquiv.injective
   have hp := @hb (ULift.{u} ℤ) inferInstance inferInstance
     0 (by simp [FiniteRange]) (1, 0) (by simp) 1 (by simp) (by simp)
   obtain ⟨v, hv, hperiod⟩ := hp
@@ -107,5 +110,7 @@ noncomputable def nonzero_line_annihilator_periodic_registration :
   continuation := .unknown
   familyRecord := none
   options := #[] }
+
+end
 
 end Reg.D5.S1.Dynamics.Symbolic.KhetanOneDirectionPeriodizer
