@@ -6,6 +6,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Fourier;
 internal sealed class MO511715SourceDocument : IScribeDocumentDefinition
 {
     private const string Module = "D5/S3/Fourier/MO511715Source.";
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/Fourier/mathex2026mo511715");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The exact Euclidean five-dimensional cutoff series and the failure of its uniform cutoff estimate.",
@@ -13,6 +15,7 @@ internal sealed class MO511715SourceDocument : IScribeDocumentDefinition
         Blocks(
             Paragraph(Text(
                 "The source is mathex, Bound of series, MathOverflow question 511715, revision 2, "
+                + "GUID A50CBAFD-9172-43CB-AD5D-4D59C3663AAC, "
                 + "https://mathoverflow.net/questions/511715/bound-of-series, licensed CC BY-SA 4.0. "
                 + "Its scalar field and vector norm are not specified. Here the vector norm is Euclidean, "
                 + "and both real and complex cutoffs are included. Constants may depend on the individually "
@@ -20,6 +23,19 @@ internal sealed class MO511715SourceDocument : IScribeDocumentDefinition
                 + "or signs for C and delta, or a definition of R_+. The claim below uses finite C>=0, "
                 + "delta>0, and nonnegative time, including the explicitly requested zero endpoint. "
                 + "These disclosed conventions do not resolve the author's unspecified intent.")),
+            Paragraph(Text(
+                "The complete source, conventional quantifier correspondence and bounded literature "
+                + "status are retained in Problems/mathex-2026-mo511715-cutoff-bound.md. "
+                + "Preregistration is issue 29180, comment 6790963738. Its original complete event, "
+                + "deadline and resource account are unchanged. All 39 authored lemmas and theorems "
+                + "have proof_shape bind-only under full inlining; live-consumed helpers organize the "
+                + "proof and provide no escape witness. The terminal result's candidate admission_basis "
+                + "is open-problem-resolution, conditional on CLAUDE 3.2's actual prerequisites. "
+                + "The source/form judgment covers the disclosed usual Euclidean real/complex readings, "
+                + "not a final literal-source resolution or qualifying literature/tier decision. "
+                + "The remaining prerequisite is certification of that published-question correspondence "
+                + "with its retained ambiguities and literature-qualified eligibility. No typed "
+                + "OpenProblemResolutionClaim is asserted while those conditions remain unresolved.")),
             Paragraph(Text(
                 "Write Z for the lattice of five integer coordinates and E for Euclidean five-space. "
                 + "The map embed casts coordinates from Z into E. Set frequency(k)=norm(2*pi*embed(k)). "
@@ -121,7 +137,7 @@ internal sealed class MO511715SourceDocument : IScribeDocumentDefinition
     private static DocumentBlock Item(string id, string declaration, string title, Formula formula,
         string commentary, DescribeRole role) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Module + declaration), H(title),
-            StatementSource.FromAuthor(F.Disp(formula)), AssessedProvenance.FromRepo(),
+            StatementSource.FromAuthor(F.Disp(formula)), AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(commentary))), role);
 
     private static Formula R => F.Seq(F.Mathbb, F.Grp(F.Id("R")));
