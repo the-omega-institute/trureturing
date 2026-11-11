@@ -46,7 +46,10 @@ internal sealed class CompletePseudoPickQuotientRefutationDocument : IScribeDocu
                         + "These cases cover every finite node list and every positive matrix size.")),
                     Paragraph(Text("The three source kernel vectors are dependent. Thus complete pseudo-Pick interpolation does not detect this three-point quotient obstruction. "
                         + "The infinite-rank family, a strictly positive-definite source, holomorphic kernels, and the separate implication to BLH are not asserted here."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("op-lmt2607q93"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(string id, string declaration, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Module + "." + declaration), H(title),

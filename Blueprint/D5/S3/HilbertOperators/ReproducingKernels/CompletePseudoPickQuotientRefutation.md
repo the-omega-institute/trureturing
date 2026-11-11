@@ -58,6 +58,10 @@ $$\neg \left(\forall \left(X: \operatorname{Type}\right), \left(\forall \left(k:
 
 *Proof.* Machine-checked in Lean as `D5/S3/HilbertOperators/ReproducingKernels/CompletePseudoPickQuotientRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/op-lmt2607q93` (refuted) by `D5/S3/HilbertOperators/ReproducingKernels/CompletePseudoPickQuotientRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"op-lmt2607q93","declaration_gid":"D5/S3/HilbertOperators/ReproducingKernels/CompletePseudoPickQuotientRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Shuaibing Luo, Scott McCullough and Georgios Tsikalas (2026). *Beurling Criteria for Reproducing Kernels*. URL: <https://arxiv.org/abs/2607.25088v2>.
