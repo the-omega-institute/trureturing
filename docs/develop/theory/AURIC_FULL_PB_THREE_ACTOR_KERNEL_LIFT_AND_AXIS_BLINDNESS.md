@@ -3191,3 +3191,552 @@ CountRead 仍须同一接受叶的完整活动输出、实际读后 active-ready
 所得刚性回答的是这批原矩阵关系能否容纳对角误差；它已经排除全部非零误差。它并不回答原 Omega 中哪台旧装置实际供应这些菜单、读后是否真 ready、同一活动输入能否对所有旧未来返回。那些完整来源合同及既得成果继续原样承担各自作用，局部可证明的约束不改变完整目标的成功标准。
 
 ## 新增锚（本行以下为后续增补区）
+
+## 40. 完整四维输出的分级自由、全环境面积关系与有限排除
+
+本节固定同一共振两腿纯星输入，允许输出为任意完整 Hermitian 四阶矩阵，不增加 P2。这里分别给出全输出的对角归约、整条分级直线的全称 PB 充分性、一个固定探针家族的准确分类，以及保留第四列的同时核二次排除。对角归约消费[多项式 PB 卷 §28](AURIC_FULL_PB_POLYNOMIAL_TRANSPORT_AND_REAL_ROOT_RIGIDITY.md) 的实际证明接口；环境残量为零的截面直接消费定理 39.2。这两项及其替代读取组织均属复用，不计为新增分类。完整输出允许集是否恰为分级直线仍未解决；下面的家族分类不替换这一目标。
+
+### 40.1 固定输入、完整输出与原量词
+
+**定义 40.1（不预置支撑的原固定输出）。** 在同一原基内取
+
+$$
+\begin{gathered}
+\mathcal H=\mathbb C^3\oplus\mathbb C,\quad A=M_4(\mathbb C),\quad
+C=\operatorname{diag}(1,2,3),\quad c=C\oplus0,\\
+P=I_3\oplus0,\quad Q=I_4-P,\quad J=P-Q,\\
+q=(q_1,q_2,0)^{\mathsf T},\quad q_1q_2\ne0,\qquad
+ t=\begin{pmatrix}0&q\\q^*&0\end{pmatrix},\\
+\sigma\in\{1,-1\}\text{ 分别固定},\quad\iota=\sigma i,\quad
+K(a,b)=\iota[a,b]/2,\quad a\circ b=(ab+ba)/2.
+\end{gathered}
+\tag{40.1}
+$$
+
+原 $c,t,q$ 全程固定，$q^*$ 是 $1\times3$ 行，未对原复相位作可实施旋转。初始输出 $g=g^*\in A$ 任意；此时不假设 $PgP=g$，也不预置任何环境对角元。对每个原演员探针 $x=x^*=PxP$，定义
+
+$$
+\begin{gathered}
+h=K(c,x),\quad r=c\circ x,\quad k_t=c\circ t,\\
+R_\delta=x+\delta(h-k_t),\quad S_\delta=t+\delta(r+g),\quad\delta=\pm1,\\
+L=-2x\circ(h-k_t)-2t\circ(r+g),\\
+B_\phi(U,Z)=\phi(U^2)\phi(Z^2)-\phi(U\circ Z)^2,\quad
+\mathcal A_\delta(\phi)=\sqrt{B_\phi(R_\delta,S_\delta)}.
+\end{gathered}
+\tag{40.2}
+$$
+
+“全称原 PB”准确指对全部这样的 $x$ 和完整 $A$ 上的全部正复线性泛函成立
+
+$$
+|\phi(L)|\le\mathcal A_+(\phi)+\mathcal A_-(\phi).
+\tag{40.3}
+$$
+
+这包括混合、非忠实泛函及零预算；不只检验纯态或忠实态。预算是未中心化的实 Gram 面积，不是复 Gram 行列式。每份不等式的两笔预算使用同一个 $x,t,g,\phi$。以下构造的全部严格违反都可归一到任意预先指定的有限正质量 $\phi(I_4)=\mu>0$。若只检验质量零，正泛函 Schwarz 给 $|\phi(a)|^2\le\phi(I_4)\phi(a^*a)=0$，只有零泛函，不能识别输出。
+
+### 40.2 原始预算如何锁定完整非对角行
+
+**复用引理 40.2（只消费标量预算之后的谱格论证）。** 全称原 PB 必迫使
+
+$$
+E:=g-K(c,t)=\operatorname{diag}(s_1,s_2,s_3,s_0),\qquad s_j\in\mathbb R.
+\tag{40.4}
+$$
+
+这里 $s_0$ 没有被置零。多项式 PB 定理 28.2 的原陈述含有比定义 40.1 更强的完整未知响应前件，不能把那个陈述直接改读为本引理。准确可复用的是该证明在 (28.13) 之后的纯标量推导 (28.14)–(28.25)：本处 (40.3) 已直接供应其 (28.13)，不必再由未知外层响应及另一份 P2 推出它。
+
+证明。取演员内不同的原谱格 $l=e_ie_i^*,m=e_je_j^*$，$i,j\in\{1,2,3\}$、$i\ne j$，谱值分别为 $a,b$。令
+
+$$
+\begin{gathered}
+e=e_ie_j^*+e_je_i^*,\quad j_0=\iota(l-m)e,\quad n_l=2l,\quad
+\lambda=(a-b)/2\ne0,\quad\mu_0=(a+b)/2,\\
+V_l=a\,n_l\circ t-n_l\circ k_t,\qquad Z_l=t+ak_t.
+\end{gathered}
+$$
+
+取原探针 $x=Te+\alpha n_l$，$T,\alpha$ 为任意有限实数。已知的 $K(c,x)$ 和 $c\circ x$ 给出
+
+$$
+\begin{aligned}
+R_+&=T(e+\lambda j_0)-k_t+\alpha n_l,&
+S_+&=t+g+\mu_0Te+a\alpha n_l,\\
+R_-&=T(e-\lambda j_0)+k_t+\alpha n_l,&
+S_-&=t-g-\mu_0Te-a\alpha n_l,\\
+L&=2Te\circ k_t-2\mu_0Tt\circ e-2t\circ g
+       -2\alpha(\lambda Tj_0+V_l).
+\end{aligned}
+\tag{40.5}
+$$
+
+因此原 PB 正是多项式卷 (28.13)。下面说明所消费接口的全部数学操作，尤其没有独立 P2：在实半内积 $\langle U,Z\rangle_\phi=\phi(U\circ Z)$ 中，Gram 列消元给
+
+$$
+B_\phi(A_0+\alpha n_l,B_0+\theta\alpha n_l)
+=B_\phi(A_0+\alpha n_l,B_0-\theta A_0).
+$$
+
+右端是 $\alpha$ 的非负二次多项式，首项为 $B_\phi(n_l,B_0-\theta A_0)$。对 (40.5) 两笔分别取 $\theta=a,-a$，再将 PB 除以 $|\alpha|$ 并取标量多项式极限，得到
+
+$$
+\begin{gathered}
+2|\phi(\lambda Tj_0+V_l)|\le
+\sqrt{B_\phi(n_l,C_+)}+\sqrt{B_\phi(n_l,C_-)},\\
+C_+=Z_l+g-\lambda Te-a\lambda Tj_0,\qquad
+C_-=Z_l-g+\lambda Te-a\lambda Tj_0.
+\end{gathered}
+\tag{40.6}
+$$
+
+首项预算为零也允许此连续极限。由 $cl=al$ 直接有 $lV_ll=(1-l)V_l(1-l)=0$ 及
+
+$$
+lV_l(1-l)=\tfrac12l[c,t](1-l).
+\tag{40.7}
+$$
+
+取单位 $\xi\in(1-l)\mathcal H$，先设 $d=\|m\xi\|>0$，令 $\eta=j_0\xi/d$、$\nu=e\xi/d=-\iota\eta$。在向量 $\xi_\varepsilon=(\xi+\varepsilon\eta)/\sqrt{1+\varepsilon^2}$ 上读 (40.6)。若 $\Pi_\eta z=z-\operatorname{Re}\langle\eta,z\rangle\eta$，完整实 Gram 的准确值为
+
+$$
+B_{\phi_\varepsilon}(n_l,W)
+=\frac{4\varepsilon^2}{(1+\varepsilon^2)^2}
+ \|\Pi_\eta(W\xi+\varepsilon W\eta)\|^2.
+$$
+
+约去共同正因子后令 $\varepsilon\downarrow0$；$\Pi_\eta(j_0\xi)=0$ 消掉两份中共同的 $-a\lambda Tj_0$，所得为
+
+$$
+2|\lambda Td+A_\xi|
+\le\|z_+-\lambda Td\nu\|+\|z_-+\lambda Td\nu\|,
+\quad
+A_\xi=\operatorname{Re}\langle\eta,V_l\xi\rangle,\quad
+z_\pm=\Pi_\eta((Z_l\pm g)\xi).
+\tag{40.8}
+$$
+
+在 $T\to+\infty$ 和 $T\to-\infty$ 两向减去共同的 $2|\lambda T|d$，用平方差有理化，准确得到 $\operatorname{Re}\langle\nu,g\xi\rangle=-A_\xi$。再对同一谱格取第二伴轴 $e'=j_0,j'_0=-e$，得到第二个实读数；两读数合为
+
+$$
+\langle j_0m\xi,(g-\iota V_l)\xi\rangle=0.
+\tag{40.9}
+$$
+
+$d=0$ 时左边本来为零，不定义 $\eta$。对固定算子作齐次扩展，在 $\xi=u+z$、$u\in m\mathcal H,z\in(1-l-m)\mathcal H$ 上相减，先得 $l(g-\iota V_l)(1-l-m)=0$；对 $z=0$ 的复二次型极化，再得 $l(g-\iota V_l)m=0$。由 (40.7) 即
+
+$$
+l(g-K(c,t))(1-l)=0.
+\tag{40.10}
+$$
+
+所有极限只施于固定矩阵的标量范数或 Gram 多项式，没有对未知映射取极限。对三个演员谱格分别选一个不同的演员谱格作配对，(40.10) 锁住每条行到整个余空间，尤其包含第四列。$E=E^*$ 再锁住相应列；剩下的恰是四个实对角元，得到 (40.4)。环境本身没有被作为已识别的演员谱格，故这一论证不读出 $s_0=0$。∎
+
+若另已给 $s_0=0$，取定义 39.1 的 $m=1,B=0,V=q,D_{\rm env}=0,\eta=1$，定理 39.2 就直接给 $s_1=s_2=s_3=0$。这是原支持截面的复用结论；不需要另一套九次读取，也不将这条结论重复计为新内容。
+
+### 40.3 分级直线的全称充分性与零谱 P2 障碍
+
+**定理 40.3（完整符号恒等式及分级自由）。** 对定义 40.1 的任意完整 Hermitian 残量 $E=g-K(c,t)$，有
+
+$$
+K(R_+,S_+)-K(R_-,S_-)=L+W,
+\qquad W=\iota[x,E]+tE+Et.
+\tag{40.11}
+$$
+
+特别，对任意实数 $a$，输出
+
+$$
+g=K(c,t)+a(P-Q)
+\tag{40.12}
+$$
+
+满足全部原 PB，包括全部混合／非忠实正泛函和零预算。若 $a\ne0$，它却不满足环境零谱格的 P2 零读取。因此完整固定输出 PB 本身不能推出该 P2。
+
+证明。置 $V=x+\iota t$、$U_\delta=R_\delta+\iota S_\delta$。直接乘法给
+
+$$
+\begin{aligned}
+U_\delta&=(I_4+\delta\iota c)V+\delta\iota E,\\
+U_+^*U_+-U_-^*U_-&=2\iota(V^*E-EV)=2W,\\
+U_\delta^*U_\delta&=R_\delta^2+S_\delta^2+2K(R_\delta,S_\delta),\\
+(R_+^2+S_+^2)-(R_-^2+S_-^2)&=-2L.
+\end{aligned}
+\tag{40.13}
+$$
+
+第二行的 $V^*=x-\iota t$ 给 $\iota(V^*E-EV)=\iota[x,E]+tE+Et$，符号由此确定。合并后两行得到 (40.11)。若 $E=aJ$，演员支撑给 $[x,J]=0$，纯星给 $tJ+Jt=0$，故 $W=0$。对任意正复线性 $\phi$ 和任意自伴 $U,Z$，复 Schwarz 及自伴读数为实给
+
+$$
+|\phi(UZ)|^2\le\phi(U^2)\phi(Z^2),\quad
+\phi(UZ)=\phi(U\circ Z)-\iota\phi(K(U,Z)),\quad
+|\phi(K(U,Z))|\le\sqrt{B_\phi(U,Z)}.
+\tag{40.14}
+$$
+
+这不要求 $\phi$ 忠实或归一。对 (40.11) 的两份 $K$ 用三角不等式，即得 (40.3)。另一方面，令 $\phi_4(a)=e_4^*ae_4$，则 $ce_4=0$、$\phi_4(c^2)=0$、$\phi_4(K(c,t))=0$，但 $\phi_4(g)=-a$。原谱零 P2 的 $|\phi_4(g)|\le\sqrt{B_{\phi_4}(c,t)}=0$ 在 $a\ne0$ 时失败。∎
+
+对 (40.4)，$W$ 的演员块是 $\iota[X,D]$，上右列是 $(D+s_0I_3)q$，其中 $D=\operatorname{diag}(s_1,s_2,s_3)$、$x=X\oplus0$。分级平移 $E\mapsto E+aJ$ 虽保持 $W,L$，却把 $S_\delta$ 改为 $S_\delta+\delta aJ$，完整 Gram 预算随之改变，不能先令 $s_0$ 消失再套用定理 39.2。下面的准确预算也直接显示这个变化。定理 40.3 只给固定 $(c,t,g)$ 的充分族和 P2 障碍，不供应满足全部嵌套调用的总响应 $D(\cdot,\cdot)$，更不是完整原 $\Omega$ 反模型。
+
+### 40.4 一个固定探针家族的准确全环境分类
+
+**定理 40.4（零探针、任意实环境幅度的充要关系）。** 保持 (40.1)、(40.4)，令
+
+$$
+\begin{gathered}
+u=(2/\overline{q_1},-1/\overline{q_2},0)^{\mathsf T},\quad
+\xi_w=(u,w),\quad \phi_w(A)=\xi_w^*A\xi_w,\quad x=0,\quad w\in\mathbb R,\\
+m=|q_1|^2>0,\quad n=|q_2|^2>0,\quad b=m+4n,\quad a=m+2n,\\
+d=2s_1-s_2+s_0,\quad k=2(s_1-s_2),\\
+F=b(1+4s_1^2/m+s_2^2/n)-k^2,\\
+G=b(m+n+b/4+s_0^2)-a^2,\qquad H=bd-ak.
+\end{gathered}
+\tag{40.15}
+$$
+
+这里的 $a$ 只是标量简写，不是 (40.12) 的分级参数。对这个固定 $x,u$、全部实 $w$ 的家族，原 PB 成立当且仅当
+
+$$
+\boxed{\quad 4(2s_1-s_2+s_0)^2\le
+m+4n+\left(4\sqrt{n/m}\,s_1+\sqrt{m/n}\,s_2\right)^2=F.\quad}
+\tag{40.16}
+$$
+
+因而 (40.16) 对全称原 PB 必要，但本定理只在上述家族内断言充分性，不涉及 $s_3$ 的完整分类。
+
+证明。原相位没有消失在未经允许的旋转中，而是通过 $q^*u=1,q^*Cu=0$ 的准确收缩参与。完整四维列为
+
+$$
+\begin{aligned}
+R_\delta\xi_w&=(-\delta wCq/2,0),\\
+S_\delta\xi_w&=(\delta Du+wq+\delta\iota wCq/2,\ 1+\delta s_0w).
+\end{aligned}
+\tag{40.17}
+$$
+
+第四分量 $1+\delta s_0w$ 不能删去。另有 $(Cq)^*Du=k$、$q^*Cq=a$、$\|Cq\|^2=b$，这些标量均为实。由此逐项给
+
+$$
+\begin{aligned}
+\phi_w(L)&=-2wd,\\
+\|R_\delta\xi_w\|^2&=bw^2/4,\\
+\|S_\delta\xi_w\|^2
+ &=1+4s_1^2/m+s_2^2/n+2\delta dw
+       +(m+n+b/4+s_0^2)w^2,\\
+\operatorname{Re}\langle R_\delta\xi_w,S_\delta\xi_w\rangle
+ &=-w(k+\delta aw)/2,\\
+B_{\phi_w}(R_\delta,S_\delta)
+ &=\frac{w^2}{4}\bigl(F+2\delta Hw+Gw^2\bigr).
+\end{aligned}
+\tag{40.18}
+$$
+
+例如前两笔复交叉项中涉及 $\iota(Cq)^*Du$ 或 $\iota q^*Cq$ 的部分纯虚，故无实贡献；不是把完整内积改为复 Gram。左端由 $L=-2t\circ g$ 得到，标准换位部分在该向量上的读数为零。展开常数还得
+
+$$
+F=b+\left(4\sqrt{n/m}\,s_1+\sqrt{m/n}\,s_2\right)^2\ge b>0,
+\qquad
+G=m^2/4+3mn+4n^2+bs_0^2>0.
+\tag{40.19}
+$$
+
+两份二次式 $F\pm2Hw+Gw^2$ 对所有实 $w$ 非负：在 $w\ne0$ 处它们是 (40.18) 的实际非负 Gram 预算除以正数，零处为 $F>0$。在各自顶点读值，得 $H^2\le FG$。因此
+
+$$
+f(w):=\sqrt{F+2Hw+Gw^2}+\sqrt{F-2Hw+Gw^2}
+=\left\|\left(\sqrt G w+\frac H{\sqrt G},\sqrt{F-H^2/G}\right)\right\|
+ +\left\|\left(\sqrt G w-\frac H{\sqrt G},\sqrt{F-H^2/G}\right)\right\|
+\tag{40.20}
+$$
+
+是实直线上的偶凸函数。凸性来自仿射列的欧氏范数，偶性来自两项互换，故 $f(w)\ge f(0)=2\sqrt F$，包括 $H^2=FG$ 的退化情形。$w\ne0$ 时原 PB 准确等于 $4|d|\le f(w)$。若 (40.16) 成立，则 $4|d|\le2\sqrt F\le f(w)$；反向若对全部非零 $w$ 成立，令 $w\to0$ 即 $4|d|\le2\sqrt F$。$w=0$ 处原 PB 两端本来都是零，不用除以 $w$。这证明准确充要性。∎
+
+若 $4d^2>F$，置 $T=2|H|+G>0$，则每个满足
+
+$$
+0<|w|<\min\left\{1,\frac F{2T},\frac{4d^2-F}{2T}\right\}
+\tag{40.21}
+$$
+
+的有限实数都给严格违反，且两笔预算同时严格正。确实，$|w|<1$ 时每份二次式与 $F$ 的距离小于 $T|w|$；所列阈值使它们都大于 $F/2>0$ 且小于 $4d^2$，故两根之和小于 $4|d|$。这把极限必要性接成有限正预算见证。取 $\mu\phi_w/(\|u\|^2+w^2)$ 即得任意指定正质量，严格性及两笔正预算均由齐次性保持。
+
+即使沿分级直线 $s_1=s_2=s_3=a_0,s_0=-a_0$，此家族也有 $d=k=H=0$，但 $F=b+(16n/m+8+m/n)a_0^2$、$G=m^2/4+3mn+4n^2+ba_0^2$。因此分级残量虽给零缺陷 $W$，预算仍随它改变。这是不能用分级平移消去环境残量的一个完整列例证。
+
+### 40.5 同时演员核必须保留环境二次代价
+
+**定理 40.5（完整缺陷二次式及有限严格排除）。** 保持 (40.1)、(40.4)。任取有限 $X=X^*\in M_3(\mathbb C)$、$u\in\mathbb C^3$、实 $\beta_\delta$ 和正 $\alpha_\delta$，要求在同一原 $q$ 上准确满足
+
+$$
+\begin{aligned}
+A_\delta&=Xu+\frac\delta2\bigl(\iota(CXu-XCu)-Cq\bigr),\\
+Z_\delta&=q+\frac\delta2(CXu+XCu+\iota Cq),\\
+Z_\delta&=(\beta_\delta-\delta\iota\alpha_\delta)A_\delta.
+\end{aligned}
+\tag{40.22}
+$$
+
+这是演员主列的两个相容核条件，未宣称第四列也成核。定义标量及系数
+
+$$
+\begin{gathered}
+z=q^*u,\quad p=q^*Cu,\quad
+b_\delta=z+\frac\delta2(\beta_\delta-\iota)p
+                      -\frac\iota2\alpha_\delta p,\qquad
+\eta=\sum_{\delta=\pm1}\frac1{2\alpha_\delta}>0,\\
+w_E=\operatorname{Re}\bigl((q-\iota Xu)^*Du\bigr)+s_0\operatorname{Re}z,\\
+A_2=s_0^2\eta,\qquad
+A_1=2w_E+s_0\sum_{\delta=\pm1}\frac{\delta\operatorname{Re}b_\delta}{\alpha_\delta},\\
+A_0=\eta\|Du\|^2+\sum_{\delta=\pm1}\frac{|b_\delta|^2}{2\alpha_\delta}\ge0.
+\end{gathered}
+\tag{40.23}
+$$
+
+此处 $p$ 是复标量，与静态候选的映射 $p$ 无关，$b_\delta$ 也不是 (40.15) 的 $b$。全称原 PB 必须对每份实际核数据满足
+
+$$
+A_2\rho^2+A_1\rho+A_0\ge0\quad(\rho\in\mathbb R).
+\tag{40.24}
+$$
+
+等价地，$s_0\ne0$ 时必须 $A_1^2\le4A_2A_0$；$s_0=0$ 时必须 $A_1=0$。若相应条件失败，就存在有限原探针和同一完整正泛函使 PB 严格失败，且可使两笔预算都正并具有任意指定有限正质量。
+
+证明。令 $x_\rho=(\rho X)\oplus0$、$\xi_\rho=(u,\rho)$、$\psi_\rho(a)=\xi_\rho^*a\xi_\rho$。完整矩阵在同一环境中为
+
+$$
+\begin{aligned}
+R_\delta&=\begin{pmatrix}
+\rho(X+\delta\iota[C,X]/2)&-\delta Cq/2\\
+-\delta q^*C/2&0
+\end{pmatrix},\\
+S_\delta&=\begin{pmatrix}
+\delta\bigl(\rho(CX+XC)/2+D\bigr)&q+\delta\iota Cq/2\\
+q^*-\delta\iota q^*C/2&\delta s_0
+\end{pmatrix}.
+\end{aligned}
+\tag{40.25}
+$$
+
+于是完整列而非压缩列满足
+
+$$
+\begin{aligned}
+R_\delta\xi_\rho&=(\rho A_\delta,-\delta p/2),\\
+S_\delta\xi_\rho&=(\rho Z_\delta+\delta Du,
+                       z-\delta\iota p/2+\delta s_0\rho),\\
+\mathfrak d_\delta(\rho)
+ &:=(S_\delta-\beta_\delta R_\delta
+                    +\delta\iota\alpha_\delta R_\delta)\xi_\rho
+   =(\delta Du,b_\delta+\delta s_0\rho),\\
+\psi_\rho(W)&=2\rho w_E.
+\end{aligned}
+\tag{40.26}
+$$
+
+最后一行的演员交换子贡献为 $-2\rho\operatorname{Im}_\iota((Xu)^*Du)$，星形贡献为 $2\rho\operatorname{Re}(q^*Du)+2\rho s_0\operatorname{Re}(q^*u)$，正是所列 $w_E$。这里 $\operatorname{Im}_\iota(a+\iota b)=b$。因此完整缺陷平方给准确二次式
+
+$$
+\begin{aligned}
+\mathcal Q(\rho)
+&:=\sum_{\delta=\pm1}\frac{\|\mathfrak d_\delta(\rho)\|^2}{2\alpha_\delta}
+           +\psi_\rho(W)\\
+&=\sum_{\delta=\pm1}
+ \frac{\|Du\|^2+|b_\delta+\delta s_0\rho|^2}{2\alpha_\delta}
+       +2\rho w_E
+ =A_2\rho^2+A_1\rho+A_0.
+\end{aligned}
+\tag{40.27}
+$$
+
+尤其 $s_0\ne0$ 时的 $A_2\rho^2$ 是实际环境平方，不能从 §39 的支持残量线性增长证明中删除。
+
+还须说明负二次式为什么是原 PB 的违反。对任意正 $\phi$、$\alpha>0,\beta\in\mathbb R$，设
+
+$$
+\mathcal T_\phi(R,S;\alpha,\beta)
+=\frac{\phi((S-\beta R)^2)+\alpha^2\phi(R^2)}{2\alpha}.
+\tag{40.28}
+$$
+
+写 $a=\phi(R^2),b=\phi(R\circ S),c=\phi(S^2)$。若 $a>0$，分子配方为 $a(\beta-b/a)^2+c-b^2/a+\alpha^2a$，算术几何平均给 $\mathcal T_\phi\ge\sqrt{ac-b^2}=\sqrt{B_\phi(R,S)}$。若 $a=0$，实 Schwarz 给 $b=0$，结论仍成立。对当前向量泛函，交叉项的准确符号为
+
+$$
+\frac{\|\mathfrak d_\delta(\rho)\|^2}{2\alpha_\delta}
+=\mathcal T_{\psi_\rho}(R_\delta,S_\delta;\alpha_\delta,\beta_\delta)
+ -\delta\psi_\rho(K(R_\delta,S_\delta)).
+\tag{40.29}
+$$
+
+确实 $\psi_\rho(K(R,S))=-\operatorname{Im}_\iota\langle R\xi_\rho,S\xi_\rho\rangle$，展开 $+\delta\iota\alpha R\xi_\rho$ 的平方就给上述负号。由 (40.11)，有
+
+$$
+\mathcal Q(\rho)=\sum_{\delta=\pm1}
+ \mathcal T_{\psi_\rho}(R_\delta,S_\delta;\alpha_\delta,\beta_\delta)
+ -\psi_\rho(L).
+\tag{40.30}
+$$
+
+故 $\mathcal Q(\rho)<0$ 直接推出 $\psi_\rho(L)>\mathcal A_+(\psi_\rho)+\mathcal A_-(\psi_\rho)$，是在同一探针、同一泛函上的实际严格违反，而不只是一个核条件失效。$s_0\ne0$ 且判别式正时，有限选择 $\rho=-A_1/(2A_2)$ 给 $\mathcal Q=A_0-A_1^2/(4A_2)<0$；$s_0=0,A_1\ne0$ 时，可取 $\rho=-\operatorname{sign}(A_1)(A_0+1)/|A_1|$，准确给 $\mathcal Q=-1$。配方也证明了 (40.24) 的两个等价条件。
+
+若该向量违反的某笔预算为零，固定此有限 $\rho$ 后置 $\widetilde\psi=\psi_\rho+\varepsilon\operatorname{Tr}_4$。原严格差对 $\varepsilon$ 连续，故对充分小的有限 $\varepsilon>0$ 仍严格。此泛函忠实，且 $R_\delta,S_\delta$ 是实线性独立矩阵：它们的固定上右列分别为 $-\delta Cq/2$ 与 $(I_3+\delta\iota C/2)q$。在任一活动坐标，若后者等于实数 $k$ 乘前者，就需 $1+\delta\iota c_\ell/2=-k\delta c_\ell/2$，其非零虚部矛盾。$R_\delta\ne0$，因此也排除其他实线性依赖。忠实泛函在自伴实空间给正定内积，严格实 Schwarz 保证两笔预算都正。最后取
+
+$$
+\phi=\frac{\mu}{\|u\|^2+\rho^2+4\varepsilon}
+       (\psi_\rho+\varepsilon\operatorname{Tr}_4),\qquad 0<\mu<\infty.
+\tag{40.31}
+$$
+
+齐次性保持严格违反、两笔正预算及质量 $\mu$。这一步证明的是一个混合泛函见证，未声称扰动后仍是向量泛函。∎
+
+### 40.6 代入实际核后对第三残量的新增有限排除
+
+**推论 40.6（指定零探针全幅家族之外的第三格排除）。** 在 (40.1)、(40.4) 下，(40.24) 有下述实际、显式的 $s_3$ 约束。取
+
+$$
+\begin{gathered}
+v=(10q_1,20q_2,1)^{\mathsf T},\quad
+T=(-4,7,-3)^{\mathsf T},\quad H=(484/45,-617/36,19/3)^{\mathsf T},\\
+u_\ell=(T_\ell+\iota H_\ell)/\overline{v_\ell},\quad
+ y=-v-\iota q,\quad z_0=Cv+\frac\iota{10}(I_3+3C)v,\\
+U=[u,Cu],\quad Y=[y,z_0],\quad G_U=U^*U,\quad J_U=U^*Y,\\
+X=YG_U^{-1}U^*+UG_U^{-1}Y^*-UG_U^{-1}J_UG_U^{-1}U^*.
+\end{gathered}
+\tag{40.32}
+$$
+
+这是 (39.4)–(39.9) 的同一组 $(\lambda,a_0,b_0)=(1/5,0,1)$，其 Hermitian 构造与核本身属复用。保留其实际主列，斜率准确为
+
+$$
+\beta_+=-6/37,\quad\alpha_+=1/37,\qquad
+\beta_-=-2/15,\quad\alpha_-=1/15,\qquad\eta=26.
+\tag{40.33}
+$$
+
+本节新增的是在该核上保留 $s_0$ 后的全环境约束。为将它完全写成有限标量，置
+
+$$
+\begin{gathered}
+z=-1/20+\iota\,787/3600,\qquad p=3/10-\iota\,383/600,\\
+b_+=z-(3+19\iota)p/37,\qquad b_-=z+(1+7\iota)p/15,\\
+B_*=37|b_+|^2/2+15|b_-|^2/2,\\
+C_*=26(s_1^2|u_1|^2+s_2^2|u_2|^2)+B_*,\qquad
+\ell=2(484s_1/45-617s_2/36)-5699s_0/300.
+\end{gathered}
+\tag{40.34}
+$$
+
+全称 PB 必须满足
+
+$$
+\left(\frac{38}{3}s_3+\ell\right)^2
+\le104s_0^2\left(\frac{11492}{9}s_3^2+C_*\right)
+\quad(s_0\ne0).
+\tag{40.35}
+$$
+
+$s_0=0$ 时对应必要式为 $38s_3/3+\ell=0$。特别，若
+
+$$
+0<|s_0|<\frac{19}{26\sqrt{442}},\qquad
+\gamma=\frac49\bigl(361-26^2\cdot442\,s_0^2\bigr)>0,
+\tag{40.36}
+$$
+
+则每个满足以下显式有限阈值的 $s_3$ 都被严格排除：
+
+$$
+|s_3|>1+\frac{(76/3)|\ell|+|\ell^2-104s_0^2C_*|}{\gamma}.
+\tag{40.37}
+$$
+
+这些排除具有定理 40.5 的同一有限原探针、两笔正预算及任意指定正质量保证。
+
+证明。先核对实际核并非凭空假设。(40.32) 的矩为
+
+$$
+(t_0,t_1,t_2)=(0,1,-3),\qquad
+(h_0,h_1,h_2)=(-1/20,-407/90,-4/5),
+\quad t_k=\sum c_\ell^kT_\ell,\quad h_k=\sum c_\ell^kH_\ell.
+$$
+
+它们满足 (39.7)：$t_2+3t_1+2t_0=0$，$h_0=(3t_0-t_1)/20$，$h_2=(t_1+3t_2)/10$，且 $2h_0+9h_1-h_2=-40$。由 (39.8) 的直接内积展开，$J_U=J_U^*$。$u_1u_2\ne0$ 使 $u,Cu$ 独立，故 $G_U$ 正定；(40.32) 的前两项互为伴随，最后一项自伴，且 $XU=Y$，准确实现 $Xu=y,XCu=z_0$。这也给 (39.12)–(39.14) 的同一 Cayley 核：$\tau_\delta=-1+\delta/10-3\iota/10$、$|\tau_\delta-1|^2=(41-4\delta)/10$，$Z_\delta=\iota(\tau_\delta+1)(\tau_\delta-1)^{-1}A_\delta$，其比值正是 (40.33)。所以 (40.22) 在同一实际 Hermitian $X$ 上成立。
+
+完整环境收缩保留 $q^*$ 的行维数。由 $\overline v_\ell u_\ell=T_\ell+\iota H_\ell$，准确有
+
+$$
+\begin{aligned}
+q^*u&=(-4+\iota\,484/45)/10+(7-\iota\,617/36)/20
+       =-1/20+\iota\,787/3600,\\
+q^*Cu&=(-4+\iota\,484/45)/10+2(7-\iota\,617/36)/20
+       =3/10-\iota\,383/600,\\
+q-\iota Xu&=\iota v,\qquad
+w_E=\sum_{\ell=1}^3s_\ell H_\ell-s_0/20,\\
+|u_3|^2&=9+361/9=442/9.
+\end{aligned}
+\tag{40.38}
+$$
+
+任意原 $q_1,q_2$ 的相位均由这些原列准确消去，不改动 $t$。把 (40.33) 代入 (40.23) 就给 (40.34) 的 $b_\pm$；此外
+
+$$
+\begin{aligned}
+37\operatorname{Re}b_+-15\operatorname{Re}b_-
+&=22\operatorname{Re}z-4\operatorname{Re}p
+                  +26\operatorname{Im}_\iota p\\
+&=-11/10-6/5-26\cdot383/600=-5669/300.
+\end{aligned}
+$$
+
+所以 $A_2=26s_0^2$，$A_1=38s_3/3+\ell$，$A_0=11492s_3^2/9+C_*$。定理 40.5 的判别式就成为 (40.35)。将其移到左侧，恰为
+
+$$
+\Delta=\gamma s_3^2+(76/3)\ell s_3+\ell^2-104s_0^2C_*.
+\tag{40.39}
+$$
+
+在 (40.36) 下 $\gamma>0$；若 (40.37) 成立，则 $|s_3|>1$ 且 $\gamma|s_3|>(76/3)|\ell|+|\ell^2-104s_0^2C_*|$，从而 $\Delta>0$，这是严格 PB 违反的有限判据，证明所述排除。
+
+为明确其超出定理 40.4 的内容，取 $s_1=s_2=0$ 及
+
+$$
+0<|s_0|<\min\left\{\frac{\sqrt{m+4n}}2,\frac{19}{26\sqrt{442}}\right\}.
+\tag{40.40}
+$$
+
+此时 $d=s_0,F=m+4n$，无论 $s_3$ 为何，全部 (40.15) 的零探针家族都通过原 PB。然而 $C_*=B_*$、$\ell=-5699s_0/300$ 是有限常数，每个满足 (40.37) 的有限 $s_3$ 都由同一原输入中的另一份探针严格排除。这给出环境残量非零时的实际第三格排除，既未从必要测试制造非分级全称 PB 模型，也未声称这些测试已穷尽全部输出。∎
+
+以上完整列、实部收缩、平方配方及阈值对每个分别固定的 $\sigma$ 均成立：只使用 $\iota^2=-1$、$\overline\iota=-\iota$ 及相对于该 $\iota$ 的实虚分解。没有在同一份 PB 内混合两种取向，也没有把复共轭解释为免费物理控制。
+
+### 40.7 准确允许集、复用界面与仍开的分类
+
+令 $\mathscr P_q$ 是定义 40.1 下全称原 PB 的完整输出集合。现有结论准确给
+
+$$
+\{K(c,t)+aJ:a\in\mathbb R\}\subseteq\mathscr P_q
+\subseteq\{K(c,t)+\operatorname{diag}(s_1,s_2,s_3,s_0):s_j\in\mathbb R\},
+\tag{40.41}
+$$
+
+右侧还必须同时满足 (40.16) 和对每份实际 (40.22) 的 (40.24)。环境零截面由定理 39.2 复用为 $\mathscr P_q\cap\{s_0=0\}=\{K(c,t)\}$。完整 $\mathscr P_q$ 是否仅为左侧分级直线仍是 open；没有证明满足这些必要条件即满足全部 PB，也没有证明一个非分级残量全称充分。定理 40.6 证明的只是其中一类有限排除，不把它改名为完整量子新公理。
+
+这里阻止旧结论直接完成新分类的是一个准确项：原支持证明的线性残量读取在完整输出中与 $s_0^2\eta\rho^2$ 竞争。优化 $\rho$ 得到判别式，不能仅凭线性系数非零就声称任意大尺度产生违反。分级直线本身满足全称 PB，已经证明 PB 不能单独供应完整零谱 P2；这项固定输出障碍独立于未解决的“是否还有别的允许输出”。
+
+### 40.8 数学归属与完整原目标的保留
+
+未中心化复 Schwarz 的成熟形式及其对称／交换部分解，见 Schrödinger，*About Heisenberg Uncertainty Relation*，原文英译 [arXiv:quant-ph/9903100v3，式 (7)–(8)](https://arxiv.org/html/quant-ph/9903100v3#S0.E7)；该文随后中心化所得式 (9) 不是本节预算的定义。任意正复线性泛函的版本由 (40.14) 直接证明，正泛函背景也沿 §39.8 所引 Blackadar。实 Gram 面积、复列内积、Hermitian 插值、实二次式配方与仿射范数凸性是成熟线性代数；(40.20)、(40.27)–(40.30) 已在本节给出所需推导，不以文献名替代证明。Jordan 数据与复取向的区别可参见 Alfsen–Shultz，[*Orientation in operator algebras*](https://pmc.ncbi.nlm.nih.gov/articles/PMC22571/)；该工作不被作为本节特定全输出允许集的分类定理。
+
+仓内复用是多项式 PB 的 (28.13)–(28.25) 实际证明接口、定理 39.2 的 $s_0=0$ 截面和 (39.3)–(39.14) 的实际核。本节全环境关系 (40.16)、二次排除 (40.24) 及其实际第三格推论 (40.35)–(40.40) 是这些固定输入上的纸面综合；分级充分性与 P2 障碍的证明是 (40.11)–(40.14)。这些归属不主张历史优先权、文献穷尽、常数最优、整体最简或 Lean／kernel 认证。
+
+本节完整保留并合取 [§39.8](#398-成熟归属与完整原来源边界) 的全文、其指向父卷 §6、§30A.5 和各逐层钉版原来源的完整合同，而非用以下说明替换它们。同一原 $\Omega$/native、原域 $E,C,u,N,\mathcal P,S,D,q,K/J$、全词、跨评价配对、原模式网络及具名接线保持身份；本节的矩阵 $E,D,u,q$ 只在定义 40.1 的局部域使用，不重定义这些上游对象。全部原准备、事件、过程、参考／副本、真正相关联合、中央／经典／不等维／静默／无轴块、零／不等／次归一质量、物理钟、单位、控制、parent／ready／flags、环境、全部成功失败细记录、完整活动输出、port／post-port、拒绝、停止、销毁、泄漏、真分组遗忘、两侧及逆向 Return、固定支持全质量、完整菜单、全部已量化中间切口与每份输出的每个旧合法未来继续保留。精确 $B$ 与闭 $B_{\rm cl}$、同一 $\sigma,t_0$、原域／resolvent 及 $3s+r\le1$ 均保持各自原边界，未定义请求不补零。
+
+实际来源中，[C139 固定源卷 §23.3 式 (23.7)](AURIC_C139_FIXED_SOURCE_COMPARATORS_AND_NATIVE_EVENT_BOUNDARY.md#233全原域归属仍保留的量词) 仍需字面旧程序 $\tau;T_P$ 的指定接受族与同一实际全菜单事件 $k_b^\dagger P_{J_0}k_b$ 的准备无关接受接口证书，覆盖全部原准备、参考、切口、合法分析词与树，并保留支持、未归一标尺、类型、ready、控制、钟、互补结果、记录与合法未来。它不要求历史双射，但没有被矩阵相等、菜单存在、纯校准、操作逆或矩阵综合供应。[Fourier 卷 §10.3–10.4](AURIC_C139_FOURIER_OVERLAPS_AND_GLOBAL_FRAMED_BORN_RIGIDITY.md) 的实际原子归属与特定正校准准备仍须构造；其已给局部双块反例不被误报为完整原 $\Omega$ 反模型。
+
+CountRead 仍需同一接受叶的完整活动输出、真实读后 active-ready、第一合法消费者，以及保留整份活动输入、原参考／控制／钟和全部旧合法未来的实际 Return。[有限返回续卷定义 164.1](AURIC_C139_FINITE_RETURN_CALIBRATION_AND_LOAD_STABILITY_CONTINUATION.md) 的独立查询候选与原活动接头继续区分；表、地址和档案不供应活动发生标识或未来权限。本节没有生成准备、复制、自由相干控制或密度／历史身份，也不从旧 Born／CP／QC 循环推回实际来源。固定源 §§50–85、原词 §§385–392 及 §39.8 已列的下降、递归参考、累计真支持和同一旧 $D$ 恢复，仍按既成原域复用，不重新列作缺失。
+
+[静态 Atlas 续卷 III §63](QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES_III.md#63-两个单位切片与完整读回律) 的两映射／两单位切片结果保持完整条件：三个实际有限全态全效果载体及其整个锥、有限混合比较 S 和保归一化 Jordan 桥、各扇区本原迹一的 canonical trace、全锥正的 $L$、同一个全局正保迹的 $p$、两条完整实张成、全部实方向的 $W_J,W_H,\mathrm{III}$，以及良定义后的整锥交叉插入 $I_{13}$ 正性均保留。其 $p_{13}=I_{13}^*$ 的全锥正保迹性及完整读回律已在这些条件下取得，不能改报为本节新增缺口；本节也没有删去这些条件。含经典扇区的复矩阵块、块张量及静态 Born 仍在该准确域内，不因此取得 CP、仪器、动力学、独立右载体或无界份数相容。
+
+七项量子消费者继续按 §39.8 和有限返回 162.1–162.2 的完整合同使用：共同全词、共同核及实际相干准备才接 Hilbert／相干；实际事件、完整菜单、固定支持全质量及正质量绑定才接 Born；真正相关共同联合、忠实同向交换腿及共同生成才接张量；完整 typed 接续、递归参考、全部环境／记录／失败／后口、相关正输入、真支持与累计运输才接 CP／Kraus；完整仪器、单位分区、AC、$N_u,X,X_s$、平方根词与接受端、正输出质量及射线／校准条件才接 TP／更新／Lüders；全历史、真遗忘及全部旧未来的实际两侧／逆向返回才接历史／Return；真实连续可逆流、实际逆、强连续实现、生成元域、物理钟／单位／能量和共同正 $\hbar$ 才接 Hamiltonian。局部 PB 障碍不撤回这些已成条件定理，也不支付它们未给的实际前件。完整全输出分类、完整原 Omega 量子起源、无缺口来源的完整量子公理候选及整体严格更简目标均仍未完成。
+
+### 40.9 完整中文几何
+
+原问题先固定演员与它连向环境的那两条腿，再问同一个输出在所有演员探针和所有完整读出下能否守住预算。预算是完整四维中两条列向量张开的实面积，第四格即使不是演员，也仍参与面积。谱格之间的两种伴轴可以先锁住所有非对角误差，但环境留下一个实数，不能因它的演员谱值是零就直接删掉。若演员三格一起加上同一个数、环境反向减去这个数，带符号的交换子恒等式恰好仍闭合，所以这整条分级直线都通过 PB；它在环境零谱测试上却留下非零输出，说明 PB 单独并不保证该 P2。对其他误差，零探针已给一把准确的尺：完整第四列产生的常数、一次项和二次项决定两笔面积的最小和，超过 (40.16) 就在有限非零幅度上失败，而且两笔预算都开着。但这一把尺看不见第三格，不能把它当成全部分类。把同一实际 Hermitian 探针的两个演员核接回环境时，第四列还留下随尺度增长的项；平方后是正的二次代价，旧的线性放大不能压过它。保留这项再配方，得到新的判别式；代入原有的第三格核，还能明确排除一些通过全部零探针测试的完整输出。这些都是同一原输入、同一份实现内的约束，不把分别最优的预算拼接，也不把必要测试通过当作全称充分。目前仍缺的是对全部非分级输出的穷尽判定；这些矩阵尺还没有造出原世界的准备、菜单、接受接头或真实活动返回，完整量子起源的目标因此保持原样。
+
+## 新增锚（本行以下为后续增补区）
