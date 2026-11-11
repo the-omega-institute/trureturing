@@ -1,12 +1,12 @@
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
-import D5.S3.Arith.QuantitativeFiniteCircleCover
+import D5.S3.Arith.DiophantineApproximation.QuantitativeFiniteCircleCover
 
 /-! Source-owner audit registration for the finite circle-cover theorem. -/
 
-namespace Reg.D5.S3.Arith.QuantitativeFiniteCircleCover
+namespace Reg.D5.S3.Arith.DiophantineApproximation.QuantitativeFiniteCircleCover
 
-open _root_.D5.S3.Arith.QuantitativeFiniteCircleCover
+open _root_.D5.S3.Arith.DiophantineApproximation.QuantitativeFiniteCircleCover
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
@@ -39,7 +39,7 @@ abbrev arena : Arena where
         R.readout () ⟨theta, t, w, N⟩ b
 
 abbrev sourceScope :=
-  type_of% (@_root_.D5.S3.Arith.QuantitativeFiniteCircleCover.quantitative_finite_circle_cover)
+  type_of% (@_root_.D5.S3.Arith.DiophantineApproximation.QuantitativeFiniteCircleCover.quantitative_finite_circle_cover)
 
 theorem source_bridge : sourceScope ↔ arena.Law actual := by
   constructor
@@ -103,7 +103,7 @@ def source_registration :
   actual := actual
   bridge := source_bridge
   variation := ⟨source_bridge.mp (by exact
-    @_root_.D5.S3.Arith.QuantitativeFiniteCircleCover.quantitative_finite_circle_cover),
+    @_root_.D5.S3.Arith.DiophantineApproximation.QuantitativeFiniteCircleCover.quantitative_finite_circle_cover),
     rejected, rejected_law⟩
   sensitivity := by
     constructor
@@ -131,10 +131,10 @@ def source_registration :
 
 noncomputable def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@_root_.D5.S3.Arith.QuantitativeFiniteCircleCover.quantitative_finite_circle_cover)
+      (@_root_.D5.S3.Arith.DiophantineApproximation.QuantitativeFiniteCircleCover.quantitative_finite_circle_cover)
       (Realization signature) Unit Unit := {
-  unitName := `D5.S3.Arith.QuantitativeFiniteCircleCover.quantitative_finite_circle_cover.__information_unit
-  realizationName := `Reg.D5.S3.Arith.QuantitativeFiniteCircleCover.source_registration
+  unitName := `D5.S3.Arith.DiophantineApproximation.QuantitativeFiniteCircleCover.quantitative_finite_circle_cover.__information_unit
+  realizationName := `Reg.D5.S3.Arith.DiophantineApproximation.QuantitativeFiniteCircleCover.source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -153,7 +153,7 @@ noncomputable def registration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Arith.QuantitativeFiniteCircleCover
+    owner := `D5.S3.Arith.DiophantineApproximation.QuantitativeFiniteCircleCover
     definition := none
     coordinates := #[0, 1, 2, 3]
     readouts := #[{
@@ -171,4 +171,4 @@ noncomputable def registration :
 #print axioms source_registration
 #print axioms registration
 
-end Reg.D5.S3.Arith.QuantitativeFiniteCircleCover
+end Reg.D5.S3.Arith.DiophantineApproximation.QuantitativeFiniteCircleCover

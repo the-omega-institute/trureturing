@@ -1,6 +1,6 @@
-/- GID: D5/S3/Arith/QuantitativeFiniteCircleCover
+/- GID: D5/S3/Arith/DiophantineApproximation/QuantitativeFiniteCircleCover
    generality: G
-   mirror-B: D5/B/S3/Arith/QuantitativeFiniteCircleCover
+   mirror-B: D5/B/S3/Arith/DiophantineApproximation/QuantitativeFiniteCircleCover
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.NumberTheory.DiophantineApproximation.Basic, mathlib/module/Mathlib.Algebra.Order.Round, mathlib/module/Mathlib.Tactic]
    utility: none
@@ -24,7 +24,7 @@ set_option relaxedAutoImplicit false
 /-! A bounded integer block meets every open interval of width `w` after the
 explicit small-denominator obstructions are excluded. -/
 
-namespace D5.S3.Arith.QuantitativeFiniteCircleCover
+namespace D5.S3.Arith.DiophantineApproximation.QuantitativeFiniteCircleCover
 
 /-- Bézout and integer remainder explicitly lift every grid residue to an index
 in the half-open block `0 ≤ k < q`. The integer lift has the sign required by
@@ -208,4 +208,4 @@ theorem quantitative_finite_circle_cover (theta t w : ℝ) (N : ℕ)
   obtain ⟨hlower, hupper⟩ := abs_lt.mp hcenter
   exact ⟨N + k, by omega, by omega, ell, by linarith, by linarith⟩
 
-end D5.S3.Arith.QuantitativeFiniteCircleCover
+end D5.S3.Arith.DiophantineApproximation.QuantitativeFiniteCircleCover

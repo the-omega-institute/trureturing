@@ -2,11 +2,11 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Arith;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.DiophantineApproximation;
 
 internal sealed class QuantitativeFiniteCircleCoverDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Arith/QuantitativeFiniteCircleCover.";
+    private const string Prefix = "D5/S3/Arith/DiophantineApproximation/QuantitativeFiniteCircleCover.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A finite block of a circle rotation meets every open interval of the specified length "
