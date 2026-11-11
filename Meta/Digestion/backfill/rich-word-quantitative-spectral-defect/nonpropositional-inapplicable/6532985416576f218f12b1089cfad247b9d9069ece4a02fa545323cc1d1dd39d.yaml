@@ -5,3 +5,7 @@ cas_ref: sha256:6532985416576f218f12b1089cfad247b9d9069ece4a02fa545323cc1d1dd39d
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  nonpropositional:
+    justification: Provenance and applicability explanation for the adjacent exact auxiliary results; no scalar estimate or full exponent proposition is discharged.
+    previous_atom_id: 8e4380ad975b7a1fbad1914d3a5dd28c307a388fc0dcf5b2c67d834fd217188d
+    next_atom_id: null
