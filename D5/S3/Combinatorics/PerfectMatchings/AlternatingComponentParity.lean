@@ -4,13 +4,13 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Data.Set.Card]
    utility: none
-   digest: Every component of two fixed-point-free matchings has even cardinality. -/
+   digest: Every component of two fixed-point-free matchings has cardinality twice one product orbit. -/
 
 import Mathlib.Data.Set.Card
 import Mathlib.Tactic
 import D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit
 
-/-! The §3.9 escape registration audit for the two public theorems remains
+/-! The §3.9 escape registration audit for the public theorem remains
 unfinished under https://github.com/the-omega-institute/trureturing/issues/29190.
 -/
 
@@ -57,14 +57,6 @@ theorem connected_ncard_eq_two_mul
     _ = 2 * A.ncard := by omega
     _ = 2 * (RotationOrbit (s * t) x).ncard := by rfl
 
-theorem connected_ncard_even
-    (s t : Perm X) (hs : Function.Involutive s) (ht : Function.Involutive t)
-    (hsl : ∀ x, s x ≠ x) (htr : ∀ x, t x ≠ x) (x : X) :
-    Even (Component s t x).ncard := by
-  rw [connected_ncard_eq_two_mul s t hs ht hsl htr x]
-  exact ⟨(RotationOrbit (s * t) x).ncard, by omega⟩
-
 #print axioms connected_ncard_eq_two_mul
-#print axioms connected_ncard_even
 
 end D5.S3.Combinatorics.PerfectMatchings.AlternatingComponentParity
