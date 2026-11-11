@@ -1,0 +1,36 @@
+**定理 37.2（一次原三次标量交叠判别秩二）。** 在定义 37.1 的条件下，$2\le r_W(A)\le\min\{4,[D:A]\}$，且对每个原 $a\in A\setminus F$，
+
+$$
+\boxed{\qquad d_W(a)\ge2\quad\Longleftrightarrow\quad r_W(A)=2.\qquad}
+\tag{37.2}
+$$
+
+因此秩二时每个这样的原标量都给交维至少二；秩三或四时每个这样的原标量都给交维至多一。
+
+证明。$[A:F]=3$ 为素数，故 $F(a)=A$，且 $1,a,a^2$ 是 $A/F$ 的基。$W$ 不可能容在一条只有三维的 $A$-直线上，而它的四个 $F$-基向量也张成 $AW$，所以秩具有所述上下界。若 $r_W(A)=2$，则 $\dim_F AW=6$；因 $W+aW\subseteq AW$，维数公式给出
+
+$$
+d_W(a)=8-\dim_F(W+aW)\ge8-6=2.
+\tag{37.3}
+$$
+
+反之，设 $d_W(a)\ge2$。乘以 $a$ 将 $U=W\cap a^{-1}W$ 同构地映到 $W\cap aW$，故可取 $F$-线性独立的 $u,v\in U$。于是 $u,au,v,av$ 都在 $W$ 中。
+
+若 $u,v$ 在 $A$ 上独立，则任何关系
+
+$$
+(c_0+c_1a)u+(c_2+c_3a)v=0\qquad(c_i\in F)
+$$
+
+先由 $A$-独立性，再由 $1,a$ 的 $F$-独立性，迫使所有 $c_i=0$。这四个向量因而是 $W$ 的 $F$-基，$AW=Au\oplus Av$，秩为二。
+
+若 $u,v$ 在 $A$ 上依赖，则二者都在同一条 $Au$ 中。令 $S=Fu+Fv$，有 $\dim_F S=2$ 及
+
+$$
+S+aS\subseteq W\cap Au,\qquad 2\le\dim_F(S+aS)\le3.
+$$
+
+若中间维数为二，则 $aS=S$，故 $F[a]S=AS=S$，这使二成为三的倍数，矛盾。因此 $S+aS=Au\subseteq W$。取 $w\in W\setminus Au$，则 $W=Au\oplus Fw$、$AW=Au\oplus Aw$，秩仍为二。这也包含交叠向量全部落在同一条 $A$-直线上的情形。
+
+若 $d_W(a)=4$，则 $aW=W$，同样会有 $AW=W$，与三不整除四矛盾；这里没有排除其它非平凡稳定子。环境的低次数也已包含：$[D:A]=1$ 时不存在四维 $W$；$[D:A]=2$ 时上述秩界迫使 $AW=D$、秩为二。全部论证在原 $D$ 内完成。$\square$
+
