@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:9b482c95829158513b4c2b505bd466a4ccfbfc54315b51369f32df61c52f5946
   normalized_sha256: sha256:9b482c95829158513b4c2b505bd466a4ccfbfc54315b51369f32df61c52f5946
 cas_ref: sha256:9b482c95829158513b4c2b505bd466a4ccfbfc54315b51369f32df61c52f5946
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Geometry/UltrametricConstantJoin.center_eq
+    target_statement_id: sha256:822a6c8bafcd4cca681a98ac062d1cf81ad1bc1e6c78e6b8525866eb65226755
 receipts:
   unresolved_subitems: []
