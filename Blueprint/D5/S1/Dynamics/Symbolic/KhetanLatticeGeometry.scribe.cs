@@ -143,7 +143,11 @@ internal sealed class KhetanLatticeGeometryDocument : IScribeDocumentDefinition
                         + "determinant or an integer coefficient of an actual point difference; "
                         + "this construction uses no virtual lattice intersection.")),
                     Paragraph(Text(
-                        "If both occupied key sets had cardinality three, all six fiber "
+                        "The general incidence suppliers are KhetanSectionCancellation.occupied_key_bounds, "
+                        + "nonzero_weight_incidence and complete_incidence_of_two. The cancellation "
+                        + "supplier in turn uses missing_column_weight_eq_zero, valid for arbitrary "
+                        + "finite objects, key types, complex weights and positive column degree d. "
+                        + "If both occupied key sets had cardinality three, all six fiber "
                         + "degrees would be two. Summing by columns gives twice the total of "
                         + "the three nonzero column weights; summing by rows gives zero. "
                         + "Thus the total column weight is zero. Any occupied row contains "
@@ -203,7 +207,10 @@ internal sealed class KhetanLatticeGeometryDocument : IScribeDocumentDefinition
                 DescribeId.Create("two-direction-orbit-closure-periodic"),
                 DeclarationHandle.Create(Owner + "two_direction_orbit_closure_periodic"),
                 H("One nonzero period fixes the whole given orbit closure"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/Dynamics/khetan2026nonconvex"),
+                    LibraryNoteRef.Create("D5/L/Dynamics/hervakari2023forced"),
+                    LibraryNoteRef.Create("D5/L/Dynamics/tanzhang2026periodictilings")),
                 Blocks(
                     Paragraph(Text(
                         "Every translate of the indicator of T has the same period t. "
@@ -214,7 +221,17 @@ internal sealed class KhetanLatticeGeometryDocument : IScribeDocumentDefinition
                         "This is the two-direction branch of the full six-cell question. "
                         + "A complete resolution also requires the line-factor-to-fiber "
                         + "cancellation supplier and the branch with at most one line-factor "
-                        + "direction. Neither is asserted by these geometric statements."))),
+                        + "direction. Neither is asserted by these geometric statements. "
+                        + "The primary question is Khetan, arXiv:2607.09830v2, Conjecture 2 "
+                        + "and §3.5, with integer difference span as in Definition 1.4. "
+                        + "Herva–Kari, arXiv:2301.05232v1, §3 Theorem 2, supplies the "
+                        + "general finitary integral periodizer statement relevant to the "
+                        + "other branch. Tan–Zhang, arXiv:2609.26576v1, Theorem 1.1, "
+                        + "already proves existence of some fully periodic six-cell complement, "
+                        + "without asserting that it belongs to the orbit closure of a given T. "
+                        + "These comparisons do not assert a complete accepted formal resolution "
+                        + "or establish literature priority."))),
                 DescribeRole.Theorem)),
-        [DocumentEdge.Dependency.Create(GidRef.Create("D5/S1/Dynamics/Symbolic/KhetanProductPeriodicity"))]));
+        [DocumentEdge.Dependency.Create(GidRef.Create("D5/S1/Dynamics/Symbolic/KhetanProductPeriodicity")),
+         DocumentEdge.Dependency.Create(GidRef.Create("D5/S1/Dynamics/Symbolic/KhetanSectionCancellation"))]));
 }
