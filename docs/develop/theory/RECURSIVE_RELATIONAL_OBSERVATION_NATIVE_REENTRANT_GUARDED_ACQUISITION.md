@@ -3680,3 +3680,609 @@ claims. The sustained four-expression objective
 retains these open obligations.
 
 ## 追加锚（本行以下为增补区）
+
+## 30. A seven-vertex cell without losing a track
+
+**Definition 30.1 (shape code for a raw cell).** Retain the source,
+prescribed boot supplies and entire executed-prefix domain
+$\mathcal D_{\mathrm H}$ of Definition25.1. Work under the same seven
+endpoint types and bounded atomic patch tariff of SSA3.1 and UAS1.2.
+A shape here is a rooted tree with independently optional ordered
+left and right children. An empty child is not a vertex. Let
+$\mathcal K_m$ be the ordered list of shapes with $m$ vertices:
+$\mathcal K_0$ is the singleton list of the empty shape. For $m>0$,
+list a new root with child shapes in
+$\mathcal K_j\times\mathcal K_{m-1-j}$ for $j=0,\ldots,m-1$, with
+left index first and right index second. Put $K_m=|\mathcal K_m|$.
+Distinct entries have distinct ordered support: the two children
+and the size of the left one recover the generating choices. Thus
+the classical Catalan recurrence gives
+
+$$
+K_0=1,\qquad K_m=\sum_{j=0}^{m-1}K_jK_{m-1-j},\qquad
+(K_0,\ldots,K_7)=(1,1,2,5,14,42,132,429).
+\tag{RH.9}
+$$
+
+For a native track vector $x=(x_1,\ldots,x_8)$ in the original track
+order of Definition25.2, use entry $\sum_{j=1}^8 2^{8-j}x_j$
+(zero-based) of $\mathcal K_7$. Denote its component by $K(x)$.
+The comparison decoder looks up the shape's rank and returns its
+eight digits, with leading zeros. Ranks $256$ through $428$ are
+unused. At a reached cell root this needs only the child component:
+a left-before-right traversal probes both child slots at each of
+seven vertices and uses $\mathsf P$ for each of the six returns,
+for $20$ probes. Each successful descent is the corresponding child
+probe; no probe of the component root's external parent or access
+slots is needed to recover $x$. The finite rule table uses the
+inspected pattern directly; this rank description does not add a
+run-time integer or an enumeration of trees during the row.
+
+There are three symbol tracks, three head/append/read tracks, one seal
+and one reserved track (PR57.D1). The decoder returns each coordinate
+even when its value is redundant on some reached states. For example,
+it does not read a head link to obtain a missing mark bit. A constructed
+blank, a constructed zero and an absent cell are distinct: the first
+two have their own raw track codes, and absence beyond the tape is
+indicated by the spine terminal. This is neither a quotient by
+validity of a byte nor an encoding just of the visible symbol.
+
+**Definition 30.2 (compact carrier).** In Definition25.3 replace
+only each 23-vertex cell component by $K(x)$. Keep $F_{75}$,
+all 74 ordered tape spines and their trailing terminals,
+$F_{q_{\mathrm H}}$ with exactly the same optional locations,
+and exactly the actual ordinary and two meter access lanes.
+At a native construction on $(p,k)$ create seven vertices with
+roles $0,\ldots,6$ in left-before-right preorder, role $0$
+being the native cell root. The numbers specify template roles,
+not vertex data. Keep these seven occurrences when the cell changes:
+the new shape places the same seven occurrences in its own preorder.
+The cell root keeps its attachment to the spine. Only this root
+may have an incoming head link. Its $\mathsf H_0,\mathsf H_1$
+are available for the same lanes as before; no access edge is used
+to encode a bit. The interior vertices have only child and parent
+incidences. The trailing terminal that becomes a spine node retains
+its occurrence as in UAS2.2.
+
+Call the resulting sole carrier of $W_{\mathrm H}(h)$
+$\Gamma_{\rm c}(W_{\mathrm H}(h))$. Its raw inverse $D_{\rm c}$
+uses the fixed socket paths and each right spine, applies the shape
+decoder to each left cell component, and decodes the optional bits
+exactly as in Definition25.3. It returns the 74 words and the
+finite catalog, with port, position and raw finite-location
+identities. It preserves the raw and active-role code coordinates
+even during installation. Access incidences on the actual image
+follow from the decoded marks, with distinct lane labels; they are
+neither lost in the inverse nor needed as an extra byte source.
+With the stated naming convention the decoded bytes reconstruct the
+same cell roots and auxiliary roles. Absolute construction-event
+provenance is a coordinate of the initialized occurrence relation.
+The inverse of a cut record is a finite mathematical traversal,
+whereas the 20-probe decoder is local once the cell root is reached.
+
+The ordinal-zero compact foundation has precisely the old outer
+and optional scaffold, the actually present primitive finite bits,
+the same empty ordinary words and the two meter boundary cells with
+their actual marks and links. It is charged under the same foundation
+rule as §29. The native boot still constructs the ordinary boundaries,
+installs and activates the code and slots, acquires the seed, and
+receives and checks the separate archive supply at their actual rows.
+There is no live shadow tape, prefetched source, extra input or
+endowed reached state.
+
+**Proposition 30.3 (sharp vertex bound for a uniform child-only byte code).**
+Consider codes required to recover every vector of $\{0,1\}^8$ from
+the ordered child component of one present cell root alone. The
+component must be a finite rooted tree with independently optional
+left/right children, no labels beyond child side, and no other
+source of byte data. Names, parent context, access links, surrounding
+cells, the port and phase cannot distinguish two equal component
+shapes. In this class the minimum worst-case number of vertices,
+including the root, is seven, even allowing variable sizes.
+
+**Proof.** Decoding forces an injection of 256 vectors into the
+admissible ordered shapes. With at most six vertices the total
+number of nonempty shapes is $1+2+5+14+42+132=196$.
+The seven-vertex code has a fixed-size injection with a local inverse
+by Definition30.1. This comparison does not assert that all 256
+vectors are reached at any one native site. An encoding exploiting
+reachable track restrictions, shared storage, extra labels or
+context-dependent decoding is a different class. No minimum is
+claimed for the scaffold, the complete actual carrier, or update
+cost even within this class. ∎
+
+## 31. Compact patches on the same initialized execution
+
+**Theorem 31.1 (two directions on every actual row).** There is a
+finite compact patch table $\Pi_{\rm c}$ under SSA3.1 with an
+initialized bijection between its executed native-labelled
+prefixes and $\mathcal D_{\mathrm H}$. At each cut their physical
+records are related by $\Gamma_{\rm c}$ and $D_{\rm c}$. Each
+prescribed next native action has the same domain and rights, and
+when executed the patch has the same native occurrence, ordered
+effects, typed outcome, release and complete decoded successor.
+There is no action at the absorbing halt. The result uses
+Definition25.1's fixed original source and code lineage; it does
+not need a successfully completed service at or after the cut.
+
+**Proof.** Take the native row/effect and operand cases of
+Theorem25.4, including its finite catalog patterns, active row
+decoder, bootstrap cases, owner guards, alias patterns and raw
+IN alternatives. Use its bounded walks through $F_{75}$ and
+the ordinary or lane-specific meter links. The route to each
+cell stops at its root. The neighbor walks
+$\mathsf P\mathsf R\mathsf L$ and $\mathsf P\mathsf P\mathsf L$
+and trailing-terminal walk $\mathsf P\mathsf R$ run outside
+the cell interior. They work with the same existence and
+boundary tests; in particular a missing neighbor does not turn
+into a blank. Before a port has an ordinary head, the native
+boundary constructor uses the fixed origin and its empty or
+one-cell spine to reach the append site. An existing marker
+named by a finite effect uses the original bounded current or
+preceding route. Routes, old endpoint probes and finite-location
+probes are the ones of (RH.7). A local complete cell inspection
+now gives the shape, the native byte and handles to its seven
+vertices in preorder. The handles live only within this patch.
+There is no inspection of unrelated cells or search along an
+unbounded spine to find a target. A finite
+word, descriptor, bank field, source address or replay record
+is still processed by its expanded native loop.
+
+Evaluate the very same native guards and finite local result
+as in Theorem25.4, including the common receipt after the core
+and ordered finite effects. Group all roles on the same
+pre-row cell by their reached root endpoint identity, with
+first occurrence as representative. Sharing a principal, a byte
+value or a role spelling is not an endpoint equality. Retain
+the source ordering within each combined update, and read an
+intermediate finite value when that order requires it. All
+old cells with a designated track assignment have been reached
+as core, neighbor, named marker or receipt roles. For each such
+cell let $y$ be its single final vector, copying the unassigned
+tracks from the old vector. Assign both child slots of its
+seven existing vertices and the $\mathsf P$ slot of each of
+the six nonroots to the reciprocal incidences for $K(y)$ on
+these handles. The old $j$th preorder occurrence is the new
+$j$th one; no path lookup through a partially rewired tree is
+used. This is 20 assignments, even on a designated write with
+no value change. A cell with no designated track assignment
+receives no such rewrite. The component root's external
+$\mathsf P$ and both head slots are separate from those 20.
+The append site's trailing terminal and the optional-bit
+sockets are outside all such cell components. A role that
+shares a vertex with a head effect does not thereby share
+an assigned slot: the cell rewrite uses child and nonroot
+parent slots, and head effects use the two access slot types
+for their lane.
+All assignments take effect within one SSA3.1 commit; any
+temporarily nonreciprocal edges are not cuts.
+
+For a newly constructed cell, expand the reached old trailing
+terminal, initializing all seven slots on each of seven
+preorder vertices and the new trailing terminal. The two old
+child slots of the former terminal are assigned as usual.
+Construct the cell with its final track shape and with empty
+access slots, then apply the separate head-link template
+where a link becomes incident to the new root. All these
+assignments belong to the same atomic commit. There is no
+additional cell rewrite for a birth. Keep the optional-location
+and head-link templates, including literal install writes and
+the active-version switch. The following cases explain why
+combining native effects before recoding is necessary.
+
+- An ordinary WR changes its designated symbol tracks at its
+  actual writable cell; EX changes the old R to blank with the
+  ordinary mark still there and builds a fresh unmarked R.
+  RD takes the original branch and latch effect. ML/MR change
+  the two existing marks and the corresponding link, using
+  the same checked neighbor. Any additional named marker
+  effect on one of these cells is applied in native order.
+- The core meter read or move sees the original pre-receipt
+  state. The receipt changes the old append R to the original
+  ordinary/F symbol and moves the append mark and link to the
+  fresh R. It retains the core's updated read mark. If the
+  old read and append marks are on the same cell, or a read
+  move targets the old append cell, the single final vector
+  includes both effects. Distinct lanes have distinct endpoint
+  slots even at a shared root, so neither update overwrites
+  the other lane. The original read move cannot use the new
+  receipt cell as a pre-row neighbor. The rule creates no
+  core write/extension authority on the meter.
+- BF, IN, OUT, TOK and CTL have their original finite
+  operands, effects and control. A raw IN updates the actual
+  latch and control and pays its receipt; the receiving data
+  cell is unchanged, even when already zero-filled. Between
+  that IN and its WR an intervening EX, if prescribed, is a
+  separate committed row with an actual blank. Only the WR
+  writes the bit into the receiving data symbol. The same
+  discipline keeps an uninstalled finite slot absent, uses
+  the correct active bootstrap when the raw store is partial,
+  and enables the installed row decoder only at the actual
+  completion edge. A shared physical finite location is
+  updated by native effect order on its single optional
+  socket, even if several roles name it. No whole-word
+  assignment, initialized latch value for an absent field or
+  additional source permission is introduced.
+
+The decoded next state is therefore precisely the full native
+post-row record. Recoding is internal to the previously
+admitted footprint, does not write any undesignated native
+coordinate, and has no extra public output or branch. Failed
+permission, boundary or row-enabledness checks enable no
+committed patch. Executed source rejection retains its typed
+effect and work, as does a typed negative lookup if reached.
+A physically admitted bit outside the task's
+legal Supply domain executes its actual IN; malformed-frame,
+controller-domain and guard-domain exits and local faults
+follow their specified paths if reached. An unavailable or
+unsealed block cannot be read as available simply because it
+has a local encoding. The last row includes its actual receipt,
+control, complete terminal successor and output type; the
+terminal record and its still-constructed cells are retained.
+
+For a literal table, enumerate the same finite tests and native
+cases in the order of Theorem25.4 and UAS2.3, substituting the
+shape test for each old cell-byte test in track-vector order.
+Attach the ordered traversal and the above endpoint lists
+and constructor templates, ordering distinct touched cells by
+first role, and component slots by preorder vertex and then
+SSA3.2 slot order. Keep native finite-location, construction
+and head effects in their respective template order, and use
+the native occurrence label plus the actual compact template
+roles. The table uses finite truth-table selection on the
+reached patterns, not a mutable byte cache or new compiler
+port. All lists are bounded by this fixed grammar, the finite
+catalog, the fixed outer routes and the seven-vertex traversal.
+No numerical occurrence ordinal or tape position is output
+by this bounded mechanism: these are names in the actual
+occurrence relation, with the original constructor/operand
+provenance. The table does not test a supplied history or
+whether a later delimiter will arrive.
+
+The local square now holds in both directions. For an enabled
+native action from $W$ to $W'$ the selected compact patch from
+$\Gamma_{\rm c}(W)$ reaches $\Gamma_{\rm c}(W')$. Conversely
+an enabled patch on that image decodes to the unique prescribed
+native row with exactly that guard and actual input (if any),
+and its decoded result is $W'$. Start with Definition30.2's
+charged foundation, whose inverse is the actual native
+ordinal-zero record. Induction on executed rows yields inverse
+prefix maps; the converse induction never needs to reconstruct
+a predecessor from the final byte alone. Both maps keep the
+actual site, raw bit and constructor origins even when some
+different occurrences have equal values. In particular all
+pending/terminal interpretations from Definition25.2 apply to
+the same complete records and occurrence fold. The argument
+stops at any executed cut, including before the next boot bit
+or runtime bit arrives. ∎
+
+## 32. Complete same-run prices
+
+**Theorem 32.1 (footprint, inspection and initialization savings).**
+Compare §25's unary incidence carrier and the compact carrier on
+the same native prefix of length $n$. Write $q=q_{\mathrm H}$,
+and at the cut use §29's $C,c,\ell$ for constructed tape cells,
+present finite bits and head links. For the compact carrier
+
+$$
+\begin{aligned}
+V_{\rm c}&=147+2q+c+8C,&
+L_{\rm c}&=74+q+\sum_{(p,k)}\lambda(K(x_{p,k})),\\
+E_{\rm child}&=V_{\rm c}-1,& E_{\rm access}&=\ell .
+\end{aligned}
+\tag{RH.10}
+$$
+
+Here $x_{p,k}$ runs over all actual cell vectors and $\lambda$
+counts vertices with neither child. Its occupied slot count
+is $2(V_{\rm c}-1+\ell)$ and its slot capacity is $7V_{\rm c}$.
+The footprint saves $16C$ vertices, $32C$ occupied slots and
+$112C$ slots of capacity, independent of rule bits.
+
+Use the same ordered routing, append-site, old-head and
+fresh-socket probe lists as (RH.7). On row $i$ let
+$m_i=|\mathcal D_i|$, with repetitions, and let $k_i$ be the
+number of distinct existing cells with a designated track
+assignment. Split (RH.8)'s $t_i$ into $f_i$ distinct designated
+existing finite-bit targets and $u_i$ distinct designated
+existing cell-track targets. Keep the same $e_i,s_i,r_i,a_i$
+for cell births, fresh finite bits, retargets and activations.
+The exact compact counts are
+
+$$
+\begin{aligned}
+p_{{\rm c},i}&=p_i-48m_i,\\
+v_{{\rm c},i}&=8e_i+s_i,\\
+w_{{\rm c},i}&=3f_i+20k_i+2e_i+2s_i+3r_i+2a_i+7v_{{\rm c},i}.
+\end{aligned}
+\tag{RH.11}
+$$
+
+The two alternatives have identical native bills (RH.5) and
+identical native initialized row counts. For the compact
+structural tariff, let $d_{\rm c}$ be the SSA3.2 unary/list
+description length of the table of Theorem31.1. Include the
+shape tests and final incidence templates in that description;
+no separate free lookup apparatus is used. With the same
+convention of one unit for the endowed finite mechanism,
+$\rho_{\rm c}=d_{\rm c}+1$. The compact structural bill and
+its exact difference from (RH.8) are
+
+$$
+\begin{aligned}
+\mathcal G_{\rm c}(n)
+ &= \rho_{\rm c}+1+8(163+2q+c_0)
+     +\sum_{i=1}^{n}(1+p_{{\rm c},i}+w_{{\rm c},i}+v_{{\rm c},i}),\\
+\mathcal G_{\mathrm H}(n)-\mathcal G_{\rm c}(n)
+ &= (\rho_{\mathrm H}-\rho_{\rm c})+256
+    +\sum_{i=1}^{n}(48m_i+3u_i-20k_i+128e_i).
+\end{aligned}
+\tag{RH.12}
+$$
+
+The fixed description difference has not been measured.
+On every executed row, probes save $48m_i$ and new-slot
+initializations save $112e_i$. The sum of all recurring
+charged structural units, including existing-slot
+reassignments, saves at least $31m_i+128e_i$ on that row.
+These savings compare the two stated stencils and do not
+depend on an assumed ordering of the fixed rule-description
+sizes.
+
+**Proof.** A word of $k$ cells has $k$ spine nodes, one
+trailing terminal and $7k$ cell vertices. Its terminals are
+the trailing terminal and the actual terminals of its cell
+components; they need not have constant count per cell.
+The optional subtree has $2q-1+c$ vertices and $q$ terminals.
+The outer scaffold adds 74 internal nodes. Reciprocation
+counts both ends of each edge, giving (RH.10). As in
+§29, $C_0=2$ and $C=2+A_{\rm phys}(h)+n$; even a halt row
+constructs its receipt cell. There is no second live meter.
+
+Each old ordered cell visit, even a repeated one, now uses
+20 rather than 68 probes after the same route. All other
+probes of (RH.7) remain, including both terminal-child
+tests and old head endpoint probes. Thus (RH.11) changes
+only the cell term of (RH.7). The traversal already supplies
+the local handles for recoding, so there is no second
+probe pass after assigning a child. A finite old-bit target
+uses three assignments. An existing touched cell uses 20,
+while all fresh vertices require initialization of their
+seven slots. There are also two assignments to the old
+socket on each append or fresh optional bit, three per
+retarget and two per activation. For an access endpoint
+on a new vertex, take its empty-slot initialization and
+its later head update as two designated assignments
+inside the same commit, the convention of (RH.8);
+initialization of reciprocal child edges uses the final
+child template. No newly linked head is observable in an
+intermediate state. Role aliasing changes neither the
+rule of counting repeated inspections nor the rule of
+assigning each combined old component once. The charge
+does not omit empty or unchanged assignments.
+
+The compact foundation saves 32 vertices and their
+224 slot initializations and takes the same one commitment.
+Subtract the row accounts: $16e_i$ fewer births,
+$112e_i$ fewer new-slot initializations, $48m_i$ fewer
+probes and $3u_i-20k_i$ fewer old cell assignments as a
+signed difference. This yields (RH.12).
+Each touched existing cell has at least one designated
+track target and at least one visit in $\mathcal D_i$, so
+$k_i\le u_i$ and $k_i\le m_i$. Hence
+$48m_i+3u_i-20k_i\ge48m_i-17k_i\ge31m_i$.
+Each executed row visits at least the old meter append
+cell and constructs at least its receipt successor, so
+$m_i,e_i\ge1$. In particular the recurring sum saves at
+least $159n$, although old cell assignments on their own
+need not decrease. Total structural savings on a given
+prefix are positive exactly when the foundation and row
+savings in (RH.12) exceed $\rho_{\rm c}-\rho_{\mathrm H}$.
+
+Theorem31.1 preserves every row of Theorem24.1's bill,
+including both code supplies, initialization, scratch,
+simulator and checker work, every output and return, and
+all dead material. The three native coordinates stay
+$(n,2n,S_0+b_{\rm ctl}(h)+8A_{\rm phys}(h)+8n)$.
+For a joint tariff use $2n+\mathcal G_{\rm c}(n)$ and
+$2n+\mathcal G_{\mathrm H}(n)$, and for substitution use
+the structural bills alone. In both cases (RH.12) is the
+same signed difference; the stored historical bill
+remains the original native bill at its selected cut.
+These are the alternative initialized representations
+with their endowed rule descriptions. A material loader,
+migration of an already installed unary carrier, or a
+finer physical device would require its own authorized
+operations and costs. None is a step of this comparison. ∎
+
+## 33. Four readings, with their existing native consumers
+
+**Definition 33.1 (independent compact readings).** At each actual
+compact prefix take these relations directly, before reconstruction:
+
+- $S_{\rm c}$ consists of the root-relative ordered child paths to
+  present vertices of the compact carrier.
+- $B_{\rm c}$ consists of the root-relative child paths to vertices
+  of that carrier with both child slots empty. The access slots
+  do not determine this boundary.
+- $T_{\rm c}$ is the chronological word of actual
+  $\Pi_{\rm c}$ patch occurrences, with their native labels
+  and compact local roles, not an elapsed count or installed
+  transcript.
+- $M_{\rm c}$ selects the actual cell words of13,69 and the meter,
+  in spine order and decoded by their local shape codes. It
+  selects the same present ownership/availability fields and
+  role bindings as Definition27.1 from their optional locations.
+  It selects the actual receiving latch and location only in
+  the named inlined phase after a variable IN and before its
+  matching WR, as in Definition27.1. In the other phases this
+  coordinate is empty. This is a direct finite control/latch
+  selection, with no historical image or acquired query as a
+  selection parameter.
+
+**Theorem 33.2 (recovery on the actual compact images).** Each
+reading of Definition33.1 separately determines the complete
+native prefix and its compact lift on $\mathcal D_{\mathrm H}$.
+The resulting conversions act between those four actual
+images, with the inverse, composition and typed partial-action
+laws of Corollary27.3. Their status is mathematical recovery;
+none adds a current read or printing operation to the graph.
+
+**Proof.** From $S_{\rm c}$, locate the fixed sockets, trace
+the right spines, and read the ordered shape of each left
+component. Its rank gives the raw eight tracks; the optional
+components give the finite locations, including absence.
+This is precisely $D_{\rm c}$ on the child data. The access
+links are uniquely recovered from the marks and fixed layout.
+From $B_{\rm c}$ first take prefix closure, which gives
+$S_{\rm c}$ by UAS3.2's finite descent argument used in §27:
+each present vertex has a terminal descendant, and every
+prefix of a terminal path is present. The reverse takes
+maximal paths. The argument applies also to unary nodes.
+
+From either spatial reading select $M_{\rm c}$ on the
+decoded state. By Theorem31.1 and the definitions, the direct
+compact memory and this selection agree with the old
+$M_{\mathrm H}$ for the same native cut. In particular
+the two meter foundation cells and one receipt per actual
+row give the same $n$; both variable input reservoirs have
+the same creation positions and write occurrences of
+Lemmas26.1–26.2, and the occupied latch is determined by
+the very same IN-before-WR phase and is still live then.
+Therefore use Theorem27.2's inverse for $M_{\mathrm H}$:
+fixed boot supplies, the actual deterministic native row,
+and the matching write post-count test before any backing
+lookup. These premises cover the raw loop and actual exits
+as well as the positive modes. A future delimiter, seal,
+available image or successful next call is not required.
+The local codec does not permit an observer to perform those
+possibly long scans for free. For $T_{\rm c}$ the inverse
+simply erases the compact template extension, with occurrence
+identity as in Theorem31.1.
+
+For each reading $U$, write $d_U$ for the native-prefix map
+just specified, and let $I_{\rm c}$ be the initialized lift of
+Theorem31.1. The inverse of $U$ on its actual image is
+$I_{\rm c}\circ d_U$. From $U$ to a different reading $V$ the
+map is $V\circ I_{\rm c}\circ d_U$. Erasure after lifting is identity on the
+native prefix; lifting after erasure is identity on the
+actual compact prefix. Applying each reading to its
+recovered prefix proves both inverse laws, and the composition
+and edge laws follow by Corollary27.3 on this initialized
+square. This uses the already supplied input recovery and
+transport, rather than making the four selections from a
+supplied transcript. ∎
+
+**Proposition 33.3 (literal return and the supplied original experiment).**
+The compact representation has exactly the native consumers
+already installed in $G_{\mathrm H}$. In the positive domain
+with the premises of Theorems21.3 and 22.3, the selected
+historical image, complete check, checked30 record, ACK and
+mailbox/invocation return, HandbackResume, original Stop
+and INITIAL result have the same literal content and origins
+after decoding. At the selected response fence of §28 the
+existing complete checked image denotes the earlier compact
+prefix; it does not return four separately produced readings.
+Proposition28.2's reverse leg remains valid on exactly its
+supplied inherited original non-IN Advance.
+
+**Proof.** Theorem31.1 applies to each of the original rows
+that forms or consumes those records, with the same current
+read/write/completion slots and tokens. The represented
+earlier rights in the image are still data, not current
+authority. The actual finite evaluation, sender/receiver
+copies and print of (RH.3), acquired check and sealed record
+on30 keep their specified types. The next entry and saved
+original material are the ones at the actual return, so
+the original suffix consumes them with its original
+table, loan, verifier and terminal consumer. Its successful
+$\mathrm{INITIAL}\text{-}q_1(\beta)=(0,B,1)$ and the final
+absorbing cut follow with the same premises. On actual
+failure paths Theorem31.1 instead keeps the specified
+exit and cleanup, without creating an original-success
+edge. The historical OUT and the terminal output remain
+different occurrences.
+
+Use Theorem28.1's checked native history and endpoint of
+the earlier response-fence cut: the initialized compact lift
+of that history ends at the encoding of that same endpoint,
+by Theorem31.1. It is the earlier part of this execution,
+not an alternate origin. For the original-$Q$ reverse leg
+take only Proposition28.2's unchanged original enabled
+non-IN row on that family, with the actual complete original
+joint successor. Its inverse uses the successor's actual
+13,25,29 and meter with the fixed boot and the completed
+and preserved original evidence proved there. Composing
+that existing inverse with the compact lift recovers the
+earlier compact cut. Conversely any reading recovers the
+native pre-row state by Theorem33.2, then the supplied
+original row gives that same response. No compact-only
+field is required in the original response. In particular
+there is no newly attributed original experiment at a
+changed return or at halt. ∎
+
+## 34. Attribution and remaining mathematical boundaries
+
+**Definition 34.1 (scope of the structural reduction).** The
+classical Catalan count is literature-attested; see
+[OEIS A000108](https://oeis.org/A000108) and the pinned mathlib
+recurrence in
+[Mathlib.Combinatorics.Enumerative.Catalan.Basic](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Combinatorics/Enumerative/Catalan/Basic.lean).
+The enumeration by left-size blocks and then child ranks
+uses the ordered shape method of
+[Transport Memory Completion](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md)
+(TM.4917). There it orders full bracketings by leaf count;
+here the count is of present child vertices, with an empty
+side permitted. Equivalently replacing every empty child by a
+formal leaf gives the full shape with $m+1$ leaves from the
+optional-child shape of $m$ vertices. These formal leaves
+are not carrier vertices. Succinct word-RAM tree representations
+(e.g. [Navarro–Sadakane](https://arxiv.org/abs/0905.0768v5))
+use a different storage and operation tariff. Neither tree
+enumeration nor word-RAM navigation is a native row simulation.
+
+The source-specific result is repo-derived: the shape code with
+stable local occurrences is plugged into the existing guards,
+spines and two-lane receipt mechanism and paid on the complete
+initialized $G_{\mathrm H}$ execution. Its consumer is the
+original prescribed row on that carrier, including every reached
+HistoricalImage and original terminal consumer row. The footprint
+comparison uses the actual unary carrier of §25, the native and
+structural tariffs of §§24 and 29 and the already proved recovery
+interfaces of §§26–28. The class bound counts local, self-contained
+codes for all raw track vectors. No literature-priority or fresh
+Lean verification claim is made. In particular the separate
+source parser, source shape/leaf-label equivalence and serial replay
+interfaces of Definition29.3 have their own domains; they are
+not used as a proof of endpoint updates or a current acquisition.
+A matrix or aggregate statistic from a different source gives
+no row or cost map for this carrier.
+
+The original $\alpha,\beta$ free ordered binary syntax and its
+native token parsing stay as in Proposition29.2. The shape of
+a compact cell is an incidence code for a raw byte; its
+$\mathsf P,\mathsf L,\mathsf R,\mathsf O_0,\mathsf O_1,
+\mathsf H_0,\mathsf H_1$ are endpoint types of the declared
+patch primitive, not source atoms or native opcodes. At an
+interior raw state the cell decode need not produce a valid
+source tree. UAS's $\mathcal C$ and $M_J$ and the installed
+$G_\circ$ of the paid view cycle keep their separate source,
+input and consumer domains.
+
+**Assumption 34.2 (interfaces needed for a wider claim).** An
+operational recovery statement beyond §33 would need current
+authorized acquisition at the requested cuts, with paid backing,
+addressing and a finite return even at the busy cuts in scope.
+Four independently acquired view outputs would need their own
+actual entry, consumer, checks, rights, release and complete
+cost, not just the four inverses on actual images. New-row
+original-$Q$ and the terminal task kernel still require genuine
+original experiment and successor interfaces. These are the
+unpaid parts of Open29.4. The comparison here also does not
+settle minimum relation structure or memory under reachability,
+shared encodings or different access and update classes. Other
+boots or controllers, progress without actual supply, physical
+time or energy, and an installed conversion from the unary
+apparatus are outside the result.
+
+## 追加锚（本行以下为增补区）

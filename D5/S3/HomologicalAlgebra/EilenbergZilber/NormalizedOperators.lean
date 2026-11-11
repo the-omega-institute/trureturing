@@ -132,7 +132,7 @@ annihilation of degenerate simplices. -/
 (i.e. it is "constant across the `a`-th step"), then it factors through the codegeneracy `σ a`:
 `f = σ a ≫ (δ a.castSucc ≫ f)`. The section `δ a.castSucc` undoes `σ a` away from the collapsed
 pair (`Fin.succAbove_predAbove`), and on the pair the hypothesis `hf` patches it. -/
-private lemma factor_through_σ {n : ℕ} {Δ' : SimplexCategory} (a : Fin (n + 1))
+lemma factor_through_σ {n : ℕ} {Δ' : SimplexCategory} (a : Fin (n + 1))
     (f : (⦋n + 1⦌ : SimplexCategory) ⟶ Δ')
     (hf : f.toOrderHom a.castSucc = f.toOrderHom a.succ) :
     f = SimplexCategory.σ a ≫ SimplexCategory.δ a.castSucc ≫ f := by
@@ -150,7 +150,7 @@ private lemma factor_through_σ {n : ℕ} {Δ' : SimplexCategory} (a : Fin (n + 
 
 /-- A codegeneracy `σ a` is never a monomorphism (it identifies the adjacent pair `a.castSucc`,
 `a.succ`). -/
-private lemma sigma_not_mono {n : ℕ} (a : Fin (n + 1)) : ¬ Mono (SimplexCategory.σ a) := by
+lemma sigma_not_mono {n : ℕ} (a : Fin (n + 1)) : ¬ Mono (SimplexCategory.σ a) := by
   rw [SimplexCategory.mono_iff_injective]
   intro hinj
   have key : a.castSucc = a.succ := by
