@@ -17,6 +17,12 @@ import Mathlib.RingTheory.Int.Basic
 import Mathlib.Algebra.Order.Round
 import Mathlib.Tactic
 
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+
+/-! A bounded integer block meets every open interval of width `w` after the
+explicit small-denominator obstructions are excluded. -/
+
 namespace D5.S3.Arith.QuantitativeFiniteCircleCover
 
 /-- Bézout and integer remainder explicitly lift every grid residue to an index
@@ -61,13 +67,13 @@ private theorem rational_grid_near (p : ℤ) (q : ℕ) (hq : 0 < q)
     calc
       ((k : ℝ) * ((p : ℝ) / (q : ℝ)) - (ell : ℝ)) * (q : ℝ) =
           (k : ℝ) * (p : ℝ) - (ell : ℝ) * (q : ℝ) := by
-            field_simp [hqR.ne'] <;> ring
+            field_simp [hqR.ne']
       _ = (r : ℝ) := hgridR
   have hround : |(q : ℝ) * x - (r : ℝ)| ≤ (1 : ℝ) / 2 :=
     abs_sub_round ((q : ℝ) * x)
   have hscale :
       ((r : ℝ) / (q : ℝ) - x) * (q : ℝ) = (r : ℝ) - (q : ℝ) * x := by
-    field_simp [hqR.ne'] <;> ring
+    field_simp [hqR.ne']
   have herr : |(r : ℝ) / (q : ℝ) - x| * (q : ℝ) ≤ (1 : ℝ) / 2 := by
     calc
       |(r : ℝ) / (q : ℝ) - x| * (q : ℝ) =
@@ -113,7 +119,7 @@ private theorem orbit_near_of_approx (theta x : ℝ) (N : ℕ) (hN : 0 < N)
       _ ≤ (r.den : ℝ) * (1 / (((N : ℝ) + 1) * (r.den : ℝ))) :=
         mul_le_mul_of_nonneg_left happrox hdenR.le
       _ = 1 / ((N : ℝ) + 1) := by
-        field_simp [hdenR.ne', hN1] <;> ring
+        field_simp [hdenR.ne', hN1]
       _ ≤ 1 / (N : ℝ) := hrecip
   refine ⟨k, hk, ell, ?_⟩
   calc
@@ -121,7 +127,7 @@ private theorem orbit_near_of_approx (theta x : ℝ) (N : ℕ) (hN : 0 < N)
         |((k : ℝ) * (r : ℝ) - (ell : ℝ) - x) +
           (k : ℝ) * (theta - (r : ℝ))| := by congr 1 <;> ring
     _ ≤ |(k : ℝ) * (r : ℝ) - (ell : ℝ) - x| +
-        |(k : ℝ) * (theta - (r : ℝ))| := abs_add _ _
+        |(k : ℝ) * (theta - (r : ℝ))| := abs_add_le _ _
     _ ≤ 1 / (2 * (r.den : ℝ)) + 1 / (N : ℝ) := add_le_add hgrid' herr
 
 /-- Quantitative finite circle cover for every real `theta`, including rational
@@ -154,13 +160,13 @@ theorem quantitative_finite_circle_cover (theta t w : ℝ) (N : ℕ)
           |(r.den : ℝ) * (theta - (r : ℝ))| := by
             congr 1
             rw [Rat.cast_def]
-            field_simp [hdenR.ne'] <;> ring
+            field_simp [hdenR.ne']
       _ = (r.den : ℝ) * |theta - (r : ℝ)| := by
         rw [abs_mul, abs_of_pos hdenR]
       _ ≤ (r.den : ℝ) * (1 / (((N : ℝ) + 1) * (r.den : ℝ))) :=
         mul_le_mul_of_nonneg_left happrox hdenR.le
       _ = 1 / ((N : ℝ) + 1) := by
-        field_simp [hdenR.ne', hN1] <;> ring
+        field_simp [hdenR.ne', hN1]
   have hdenH : ⌈(4 : ℝ) / w⌉ < (r.den : ℤ) := by
     by_contra hnot
     have hdle : (r.den : ℤ) ≤ ⌈(4 : ℝ) / w⌉ := le_of_not_gt hnot
