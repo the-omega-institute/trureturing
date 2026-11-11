@@ -77,8 +77,13 @@ The selected declarations keep their mathematical statements and proof
 bodies, up to the receiving identifier spellings and local definitional
 exposure in the face, degeneracy and flip calculations. The receiving
 namespace, imports and module boundaries differ;
-consumed private interfaces are exposed. Unused companion and frontal
-material and unused reflexive binding declarations are omitted.
+consumed private interfaces are exposed. The frontal simplex-map and
+operator norm closure from the author release are retained in
+`SpecialContractionShuffle` and `SpecialContraction`, with their source
+notices. The universal ordered-repeat and signed-shuffle cancellation,
+and the Moore-projector argument, establish the three side identities
+for the existing recursive normalized homotopy. Unused companion material
+and unused reflexive binding declarations are omitted.
 Canonical receiving spellings replace F₁/F₂, N₁/N₂ and M₁/M₂ fragments
 by FOne/FTwo, NOne/NTwo and MOne/MTwo, and totalMapHomotopy₂ by
 totalMapHomotopyTwo. Letter-level realize, prime and comp are
