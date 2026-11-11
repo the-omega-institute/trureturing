@@ -1517,11 +1517,12 @@ application](../Quantum/watrous2018theory.md#one-actual-self-reference-for-finit
 own reference-extension, instrument and physical-availability premises;
 none has been supplied by marginal positivity.
 
-In particular the positive trace-preserving marginals can contain
-transpose choices: $M(x,y)=x\otimes y^T$ has
+At the binary stage (15), before imposing (23), positive trace-preserving
+marginals can contain transpose choices: $M(x,y)=x\otimes y^T$ has
 $R_A=\operatorname{Tr}_B$, $R_B=T\operatorname{Tr}_A$. Thus no CP
 extension, or positivity of the product linearization on the entire
-entangled PSD cone in preassigned coordinates, is inferred. The
+entangled PSD cone in preassigned coordinates, is inferred from marginal
+positivity alone. The
 commutation in (16) concerns different-factor observables, not temporal
 measurement order. Higher-composite coherence beyond the specified
 actual triples, physical devices and instruments, a clock and a
