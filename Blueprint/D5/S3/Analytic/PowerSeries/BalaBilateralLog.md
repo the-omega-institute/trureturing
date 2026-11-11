@@ -102,8 +102,6 @@ Put c(n,m)=0 for m=0 and c(n,m)=(-a^n)^m*x^(n-m)*choose(n,m)/n otherwise. Its fi
 
 The fixed source comments in A292179 and A292178 pose one question. The paired entries do not represent two independent settlements. The cited source note gives the exact quotations, parameter interpretation and bounded literature limitations; no global novelty or priority claim is made.
 
-proof_shape: bind-only. The complete event and all 18 private theorem helpers are applications and normalization of pinned Mathlib results; each helper has an actual proof-path consumer. No escape witness is claimed. The proposed admission basis is open-problem-resolution for the one preregistered external problem in issue #29113. The Proved claim records the mathematical conclusion; independent admission review and integration remain separate.
-
 ## References
 
 - Truth anchor: `D5/S3/Analytic/PowerSeries/BalaBilateralLog.full_event`
