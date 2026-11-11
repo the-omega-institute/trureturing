@@ -93,6 +93,6 @@ internal sealed class SixRowConcentrationDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("sixrowconcentration-original-upper-and-equality"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowConcentration.original_upper_and_equality"),
                 H("original upper and equality"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For n >= 23, an arbitrary antitone nonnegative unit-mass spectrum with U > 0 and PhysicalScalarHyp of its exact original boundary moments has purity at most theta(n), with equality iff the entire vector is centralSpectrum(n). Original equality forces V > 0, r=2/5, H=D=a=q=0, and all noncentral middle gaps zero. The reverse follows from central_gap_zero. The literal APPT supplier of U positivity and physical moment constraints, actual APPT attainment, and the n=22 obstruction are separate obligations. This source is wholly uncompiled."))), DescribeRole.Theorem)
+                Blocks(Paragraph(Text("For n >= 23, an arbitrary antitone nonnegative unit-mass spectrum with U > 0 and PhysicalScalarHyp of its exact original boundary moments has purity at most theta(n), with equality iff the entire vector is centralSpectrum(n). Original equality forces V > 0, r=2/5, H=D=a=q=0, and all noncentral middle gaps zero. The reverse follows from central_gap_zero."))), DescribeRole.Theorem)
         )));
 }

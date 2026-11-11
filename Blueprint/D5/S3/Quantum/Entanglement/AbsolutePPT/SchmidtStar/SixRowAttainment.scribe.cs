@@ -5,7 +5,7 @@ internal sealed class SixRowAttainmentDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Actual central APPT attainment and the strict obstruction at n=22", H("SixRowAttainment"), Blocks(
-            Paragraph(Text("This wholly uncompiled preparation reuses the dimension-general contraction_appt and normalized_ray suppliers. Every helper serves the same full arbitrary-spectrum eventual central threshold problem. The construction supplies actual physical matrices and exact rational values; no universal upper bound, uniqueness, complete maximum below 23, independent novelty or kernel acceptance is claimed.")),
+            Paragraph(Text("The contraction theorem supplies a central APPT density at each dimension n >= 23. The normalized ray supplies the APPT density used to rule out n = 22.")),
             Describe.Lean(DescribeId.Create("sixrowattainment-centralprojector"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowAttainment.centralProjector"),
                 H("centralProjector"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

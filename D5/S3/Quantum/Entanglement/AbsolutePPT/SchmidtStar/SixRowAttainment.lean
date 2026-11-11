@@ -1,7 +1,7 @@
 /- GID: D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowAttainment
    generality: G
    mirror-B: D5/B/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowAttainment
-   mirror-E: none(waiver:source-only-preparation)
+   mirror-E: none(waiver:noncomputational)
    anchors: []
    utility: none
    digest: Actual central APPT densities in six rows and the strict n22 obstruction. -/
@@ -13,22 +13,9 @@ import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Tactic
 
 /-!
-WHOLLY UNCOMPILED SOURCE PREPARATION.
-These constructions are consumed by the same arbitrary-spectrum eventual
-threshold theorem. They assert no universal upper bound, uniqueness, complete
-maximum below 23, or independently solved open problem. Literal APPT is supplied
-by the dimension-general contraction_appt and normalized_ray theorems.
-
-The diagonal formula below is definitionally the existing
-SixRowConcentration.centralSpectrum after unfolding that definition. We avoid
-importing its entire proof closure solely for the piecewise function. A later
-consumer importing both modules can rewrite central_density_diagonal by
-`change ...` or `simpa only [SixRowConcentration.centralSpectrum]`.
-No relocation or edit of that peer source is required.
-
-utility: none rationale: no new certificate, finite solver or evaluation is
-introduced. The coordinate counting, matrix identities and parity arithmetic
-only normalize the actual densities needed by the full original result.
+A projector of rank `centralIndex n` yields the central APPT density via the
+contraction theorem. The normalized ray construction yields a separate APPT
+density at dimension 22 whose purity exceeds the central value.
 -/
 
 set_option autoImplicit false

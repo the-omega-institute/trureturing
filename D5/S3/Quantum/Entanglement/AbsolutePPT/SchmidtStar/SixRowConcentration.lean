@@ -14,14 +14,10 @@ set_option autoImplicit false
 set_option maxHeartbeats 2000000
 set_option maxRecDepth 4096
 
-/- UNCOMPILED SOURCE PREPARATION. PhysicalScalarHyp below concerns the
-actual original boundary data. Its literal APPT extraction is separate.
-No concentrated vector is assumed APPT, nor are its mass and the input
-mass identified. The endpoint consumers are original_upper_and_equality.
-Noncomputational utility: all statements quantify arbitrary real spectra;
-there is no certificate, enumeration, reflection or numerical solver here.
-The new content is the 15/21 transport and strict summand argument.
-The shared cone/step/telescope laws and all-n scalar supplier are reused.
+/-!
+The 15/21 boundary moments belong to the original spectrum. Concentration
+bounds its purity using auxiliary gap vectors with their own masses. The
+strict summand argument transfers equality back to every original entry.
 -/
 namespace D5.S3.Quantum.Entanglement.AbsolutePPT.SchmidtStar.SixRowConcentration
 open Finset

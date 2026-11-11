@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowAllNScalar
    mirror-E: none(waiver:noncomputational)
    anchors: []
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowConcentration.original_upper_and_equality; premises=D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowAllNScalar.concentrated_scalar
    digest: Exact parity propagation and odd integer plateau separation. -/
 import D5.S3.Quantum.Entanglement.AbsolutePPT.SchmidtStar.SixRowOuterScalar
 set_option autoImplicit false

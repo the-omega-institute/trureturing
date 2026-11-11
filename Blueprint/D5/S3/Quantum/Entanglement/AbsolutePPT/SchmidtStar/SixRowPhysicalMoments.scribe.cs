@@ -1,4 +1,3 @@
-// UNCOMPILED: both Scribe declarations are prepared for the fixed Lean source.
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 

@@ -1,7 +1,7 @@
 /- GID: D5/S3/Quantum/Entanglement/AbsolutePPT/SixRowMaximumPurity
    generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/AbsolutePPT/SixRowMaximumPurity
-   mirror-E: none(waiver:source-only-assembly)
+   mirror-E: none(waiver:noncomputational)
    anchors: []
    utility: none
    digest: Actual six-row APPT central maximum, ordered-spectrum equality and least eventual threshold. -/
@@ -12,13 +12,10 @@ import Mathlib.Data.Nat.Find
 import Mathlib.Order.Bounds.Basic
 
 /-!
-WHOLLY UNCOMPILED SOURCE PREPARATION, including the imported draft suppliers.
-CentralOptimal quantifies all actual complex PSD trace-one APPT matrices and
-requires actual attainment. Ordered-spectrum uniqueness is a separate result;
-it is not part of the eventual-threshold predicate and implies no unique matrix.
-This is the final consumer of the substantive six-row proof chain, not an
-independent wrapper delivery. No physical or scalar inequality is rederived.
-utility: none: symbolic assembly, with no certificate or new finite computation.
+CentralOptimal expresses the maximum over all complex PSD trace-one APPT
+matrices, including attainment. A separate theorem characterizes equality for
+the original ordered spectrum. The physical obstruction at dimension 22
+establishes that the eventual threshold is least.
 -/
 
 set_option autoImplicit false

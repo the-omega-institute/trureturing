@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowOuterPolynomial
    mirror-E: none(waiver:noncomputational)
    anchors: []
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowOuterScalar.cap_interval_strict; premises=D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowOuterPolynomial.p2_mid,D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowOuterPolynomial.p1_mid_cut
    digest: Fixed exact polynomial bounds for the six-row scalar proof. -/
 import D5.S3.Quantum.Entanglement.AbsolutePPT.SchmidtStar.SixRowMiddlePolynomial
 set_option autoImplicit false

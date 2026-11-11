@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowScalarData
    mirror-E: none(waiver:noncomputational)
    anchors: []
+   utility: none
    digest: Full physical moment hypotheses, positive concentrated mass, and exact all-n parity propagation. -/
 import D5.S3.Quantum.Entanglement.AbsolutePPT.SchmidtStar.SixRowMiddleScalar
 import D5.S3.Quantum.Entanglement.AbsolutePPT.FiveRowP2Scalar

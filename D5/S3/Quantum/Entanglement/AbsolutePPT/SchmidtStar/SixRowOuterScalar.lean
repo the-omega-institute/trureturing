@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowOuterScalar
    mirror-E: none(waiver:noncomputational)
    anchors: []
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowAllNScalar.concentrated_scalar; premises=D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowOuterScalar.n23_low_strict,D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowOuterScalar.n24_low_strict,D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowOuterScalar.base_strict
    digest: Strict outer scalar intervals with the retained low-r mass. -/
 import D5.S3.Quantum.Entanglement.AbsolutePPT.SchmidtStar.SixRowScalarData
 import D5.S3.Quantum.Entanglement.AbsolutePPT.SchmidtStar.SixRowOuterPolynomial

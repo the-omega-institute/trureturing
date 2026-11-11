@@ -1,7 +1,7 @@
 /- GID: D5/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowLiteralUpper
    generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/AbsolutePPT/SchmidtStar/SixRowLiteralUpper
-   mirror-E: none(waiver:source-only-assembly)
+   mirror-E: none(waiver:noncomputational)
    anchors: []
    utility: none
    digest: Literal six-row ordered purity and exact equality, and arbitrary density upper bound for n >= 23. -/
