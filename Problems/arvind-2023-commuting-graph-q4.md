@@ -67,6 +67,11 @@ isomorphism and negated source isoclinism. The Blueprint gives the exact
 statement and coefficient correspondence. The generic Heisenberg subset is
 attributed to Tau Ceti in the literature note and source header.
 
+The exact-event registration is retained in its Reg mirror. The remaining
+helper audit template boundaries are tracked in
+[issue 29185](https://github.com/the-omega-institute/trureturing/issues/29185);
+those audits are incomplete and do not substitute for independent review.
+
 ## Triage
 
 ### What the settlement shows

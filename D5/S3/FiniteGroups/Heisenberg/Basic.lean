@@ -48,8 +48,6 @@ def equivProd : HeisenbergGroup R ≃ R × R × R where
   toFun a := (a.x, a.y, a.z)
   invFun a := ⟨a.1, a.2.1, a.2.2⟩
 
-instance [Fintype R] : Fintype (HeisenbergGroup R) := Fintype.ofEquiv _ equivProd.symm
-
 instance [Finite R] : Finite (HeisenbergGroup R) := Finite.of_equiv _ equivProd.symm
 
 /-- The Heisenberg group over `R` has cardinality `(Nat.card R) ^ 3`; over `𝔽_p` its order is

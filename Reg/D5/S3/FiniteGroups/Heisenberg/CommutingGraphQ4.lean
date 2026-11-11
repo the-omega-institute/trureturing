@@ -2,7 +2,7 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.FiniteGroups.Heisenberg.CommutingGraphQ4
 import Reg.Support.DependentFamily
 
-/-! The complete existential witness predicate is the source observation. -/
+/-! A source cardinality observation retains the complete quantified assertion. -/
 
 namespace Reg.D5.S3.FiniteGroups.Heisenberg.CommutingGraphQ4
 
@@ -16,31 +16,33 @@ open LeanInformationAudit
 noncomputable section
 
 abbrev signature : Signature where
-  Params := ℕ × FiniteGroup
+  Params := Unit
   State _ := FiniteGroup
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Prop
+  Output _ _ := ℕ
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature := realize signature
-  (fun _ p H => Nat.card p.2.Carrier = p.1 ^ 6 ∧ Nat.card H.Carrier = p.1 ^ 6 ∧
-    Nonempty (commutingGraph p.2.Carrier ≃g commutingGraph H.Carrier) ∧
-    ¬ Isoclinic p.2.Carrier H.Carrier) (fun e => nomatch e)
+  (fun _ _ H => Nat.card H.Carrier) (fun e => nomatch e)
 
 def rejected : Realization signature := realize signature
-  (fun _ _ _ => False) (fun e => nomatch e)
+  (fun _ _ _ => 0) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ p : ℕ, p.Prime → ∃ G H : FiniteGroup, R.readout () (p,G) H
+  Law R := ∀ p : ℕ, p.Prime → ∃ G H : FiniteGroup,
+    Nat.card G.Carrier = p ^ 6 ∧ R.readout () () H = p ^ 6 ∧
+      Nonempty (commutingGraph G.Carrier ≃g commutingGraph H.Carrier) ∧
+      ¬ Isoclinic G.Carrier H.Carrier
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   obtain ⟨G,H,hh⟩ := h 2 (by norm_num)
-  exact hh
+  have hzero := hh.2.1
+  norm_num [rejected, realize] at hzero
 
 private def trivialGroup : FiniteGroup where
   Carrier := Unit
@@ -61,13 +63,10 @@ def family : Registration arena ExactEvent where
       exact nomatch e
   dependence := by
     intro i
-    obtain ⟨G,H,hgood⟩ := result 2 (by norm_num)
-    refine ⟨(2,G),H,trivialGroup,?_⟩
-    change (_ ∧ _ ∧ _ ∧ _) ≠ (_ ∧ _ ∧ _ ∧ _)
-    intro he
-    have hb := he.mp hgood
-    have hc := hb.2.1
-    norm_num [trivialGroup] at hc
+    let two : FiniteGroup := ⟨Multiplicative (ZMod 2), inferInstance, inferInstance⟩
+    refine ⟨(),trivialGroup,two,?_⟩
+    change Nat.card Unit ≠ Nat.card (Multiplicative (ZMod 2))
+    norm_num [Nat.card_eq_fintype_card]
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@result) (Realization signature) (Type 1) Unit where
@@ -83,22 +82,20 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature
-    (fun _ p H => Nat.card p.2.Carrier = p.1 ^ 6 ∧ Nat.card H.Carrier = p.1 ^ 6 ∧
-      Nonempty (commutingGraph p.2.Carrier ≃g commutingGraph H.Carrier) ∧
-      ¬ Isoclinic p.2.Carrier H.Carrier) (fun e => nomatch e))
+    (fun _ _ H => Nat.card H.Carrier) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some FiniteGroup
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.FiniteGroups.Heisenberg.CommutingGraphQ4
     definition := some {
       owner := `D5.S3.FiniteGroups.Heisenberg.CommutingGraphQ4
       name := `D5.S3.FiniteGroups.Heisenberg.CommutingGraphQ4.ExactEvent
       path := #[] }
-    coordinates := #[0,2]
+    coordinates := #[]
     readouts := #[{
-      path := #["body","body","arg","body","arg","body"]
+      path := #["body","body","arg","body","arg","body","arg","fn","arg","fn","arg"]
       stateBinder := 3
       functionOperand := false
       stateOperand := none
