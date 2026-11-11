@@ -9,8 +9,8 @@
 /-
 admission_basis: open-problem-resolution (#29162; Proved)
 escape_witness: finite_certificate establishes the eleven-class diagonal transfer.
-The all-height reduction is semiconjugacy iteration; distribution calculations
-only instantiate the transfer. These consumed helpers are bind-only.
+The all-height reduction consumes this witness. Distribution calculations only
+instantiate the transfer and are consumed bind-only helpers.
 labels: proof_shape=bind-only; consumers=bonds_iff, counting_bridge, row_valid, initial_valid, classCount, firstCount
 Valid: proof_shape=bind-only; consumers=row_valid, initial_valid, valid_next, finite_certificate, v_eq_w
 boundaryClass: proof_shape=bind-only; consumers=firstCount, classCount, finite_certificate, v_eq_w, a_eq_w
@@ -33,13 +33,13 @@ class_fibres: proof_shape=bind-only; consumers=finite_certificate
 finite_certificate: proof_shape=content; consumers=v_eq_w
 initial_counts: proof_shape=bind-only; consumers=a_eq_w
 w: proof_shape=bind-only; consumers=v_eq_w, a_eq_w, shifted_count
-v_eq_w: proof_shape=bind-only; consumers=a_eq_w
-a_eq_w: proof_shape=bind-only; consumers=shifted_count
+v_eq_w: proof_shape=content; consumers=a_eq_w
+a_eq_w: proof_shape=content; consumers=shifted_count
 distribution: proof_shape=bind-only; consumers=distribution_step, shifted_count, distribution_relation
 distribution_step: proof_shape=bind-only; consumers=shifted_count
-shifted_count: proof_shape=bind-only; consumers=result
+shifted_count: proof_shape=content; consumers=result
 distribution_relation: proof_shape=bind-only; consumers=result
-result: proof_shape=bind-only; consumers=terminal result (#29162)
+result: proof_shape=content; consumers=terminal result (#29162)
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
