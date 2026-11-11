@@ -27,7 +27,7 @@ internal sealed class BalaBilateralLogDocument : IScribeDocumentDefinition
     private static Formula M => Add(K, D(1));
 
     private static DocumentBlock Definition(string name, string title, Formula formula, string prose) =>
-        Describe.Lean(DescribeId.Create("bilateral-" + name), DeclarationHandle.Create(Prefix + name),
+        Describe.Lean(DescribeId.Create("bilateral-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 
