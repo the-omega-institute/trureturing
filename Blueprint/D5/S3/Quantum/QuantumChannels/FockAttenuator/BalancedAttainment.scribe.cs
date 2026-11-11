@@ -28,6 +28,6 @@ internal sealed class BalancedAttainmentDocument : IScribeDocumentDefinition
 
     private static DocumentBlock Node(string name, string title, string prose) => Describe.Lean(
         DescribeId.Create("fock-balanced-attainment-" + name.Replace('_', '-').ToLowerInvariant()),
-        DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromLean(),
+        DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
         AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
 }
