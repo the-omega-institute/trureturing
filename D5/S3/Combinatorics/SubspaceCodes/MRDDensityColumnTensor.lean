@@ -615,7 +615,7 @@ namespace D5.S3.Combinatorics.SubspaceCodes.MRDDensityColumnTensor.MRDDensityTen
 variable {K E D : Type*} [Field K]
   [AddCommGroup E] [Module K E] [FiniteDimensional K E]
   [AddCommGroup D] [Module K D] [FiniteDimensional K D]
-private theorem finrank_sup_le_sum {ι : Type*} [DecidableEq ι]
+theorem finrank_sup_le_sum {ι : Type*} [DecidableEq ι]
     (V : ι → Submodule K E) (s : Finset ι) :
     finrank K ↥(s.sup V) ≤ ∑ i ∈ s, finrank K ↥(V i) := by
   induction s using Finset.induction_on with

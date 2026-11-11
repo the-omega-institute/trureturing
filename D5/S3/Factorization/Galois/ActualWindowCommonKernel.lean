@@ -15,6 +15,7 @@ import Mathlib.LinearAlgebra.Finsupp.LinearCombination
 import Mathlib.Order.Partition.Finpartition
 import Mathlib.LinearAlgebra.Matrix.Rank
 import Mathlib.Tactic
+import D5.S3.Combinatorics.SubspaceCodes.MRDDensityColumnTensor
 
 /-!
 The declarations below develop the deterministic general-position implication in
@@ -78,17 +79,6 @@ private theorem cutSpan_sup_parts (V : ι → Submodule K E) (φ : E →ₗ[K] K
   · intro A B
     exact Finset.sup_union
   · exact Finset.sup_empty
-
-private theorem finrank_sup_le_sum [FiniteDimensional K E]
-    {α : Type*} (s : Finset α) (V : α → Submodule K E) :
-    finrank K (s.sup V : Submodule K E) ≤ ∑ i ∈ s, finrank K (V i) := by
-  classical
-  induction s using Finset.induction_on with
-  | empty => simp
-  | @insert i s hi ih =>
-      rw [Finset.sup_insert, Finset.sum_insert hi]
-      exact (Submodule.finrank_add_le_finrank_add_finrank _ _).trans
-        (Nat.add_le_add_left ih _)
 
 private theorem finrank_sup_of_supIndep [FiniteDimensional K E]
     {α : Type*} (s : Finset α) (V : α → Submodule K E) (h : s.SupIndep V) :
@@ -262,7 +252,8 @@ private theorem rank_le_partition_cost [FiniteDimensional K E]
       ∑ B ∈ P.parts, (finrank K (familySpan V B) - 1) := by
   classical
   rw [← cutSpan_sup_parts V φ P]
-  refine (finrank_sup_le_sum P.parts (cutSpan V φ)).trans ?_
+  refine (D5.S3.Combinatorics.SubspaceCodes.MRDDensityColumnTensor.MRDDensityTensor.finrank_sup_le_sum
+    (cutSpan V φ) P.parts).trans ?_
   apply Finset.sum_le_sum
   intro B hB
   obtain ⟨i, hi⟩ := P.nonempty_of_mem_parts hB
