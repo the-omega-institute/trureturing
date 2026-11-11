@@ -84,17 +84,17 @@ theorem log_price_ratio_le {s : ℝ} (hs : 0 < s) (hs2 : s ≤ 1 / 2) :
 
 /-- Movement for a relative price change. The clamped endpoint is included. -/
 theorem cutoff_movement {j : ℕ} (hj : 2 ≤ j) {«λ» s : ℝ}
-    (hλ : 0 < «λ») (hs : 0 < s) (hs2 : s ≤ 1 / 2) :
+    («hλ» : 0 < «λ») (hs : 0 < s) (hs2 : s ≤ 1 / 2) :
     cutoff j ((1 - s) * «λ») - cutoff j ((1 + s) * «λ») ≤
       9 * s * cutoff j ((1 - s) * «λ») / j := by
   let a := cutoff j ((1 + s) * «λ»)
   let b := cutoff j ((1 - s) * «λ»)
-  have hm : 0 < (1 - s) * «λ» := mul_pos (by linarith) hλ
-  have hp : 0 < (1 + s) * «λ» := mul_pos (by linarith) hλ
+  have hm : 0 < (1 - s) * «λ» := mul_pos (by linarith) «hλ»
+  have hp : 0 < (1 + s) * «λ» := mul_pos (by linarith) «hλ»
   have ha := cutoff_spec hj hp
   have hb := cutoff_spec hj hm
   have hab : a ≤ b := cutoff_antitone hj hm hp
-    (mul_le_mul_of_nonneg_right (by linarith) hλ.le)
+    (mul_le_mul_of_nonneg_right (by linarith) «hλ».le)
   have ha2 : 2 ≤ a := ha.1
   have hb2 : 2 ≤ b := hb.1
   have hj0 : (0 : ℝ) < j := by exact_mod_cast (show 0 < j by omega)
