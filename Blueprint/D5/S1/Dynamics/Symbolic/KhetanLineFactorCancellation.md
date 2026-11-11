@@ -38,7 +38,7 @@ Assume F has six points, its integer differences span ℤ², and T is the given 
 
 The conclusion gives one nonzero lattice vector t that is a period of every configuration in the shift orbit closure of the original indicator of T. This is the two-direction branch of the given-orbit-closure question in arXiv:2607.09830v2, §3.5. The existence or absence of line factors in other branches is a separate obligation; this result does not assert the full six-cell conjecture.
 
-The reused Laurent localization and evaluation APIs are in Mathlib's Algebra/Polynomial/Laurent.lean; zero-root removal is Polynomial.exists_eq_pow_rootMultiplicity_mul_and_not_dvd, and complex root existence is Complex.exists_root. These are reused at the pinned Mathlib revision 56a005855ea17e0b0958f73ec801ae140b0a1679. The existing action suppliers retain their software attribution in KhetanAnnihilator and Library/Dynamics/ho2026nivat.md. The construction here is a Laurent specialization bridge to the actual geometric consumer; no literature novelty is claimed for root extraction.
+The reused Laurent localization and evaluation APIs are in Mathlib's Algebra/Polynomial/Laurent.lean; zero-root removal is Polynomial.exists_eq_pow_rootMultiplicity_mul_and_not_dvd, and complex root existence is Complex.exists_root. These are reused at the pinned Mathlib revision 56a005855ea17e0b0958f73ec801ae140b0a1679. The existing action suppliers retain their software attribution in KhetanAnnihilator and Library/FiniteGeometry/ho2026nivat.md. The construction here is a Laurent specialization bridge to the actual geometric consumer; no literature novelty is claimed for root extraction.
 
 ## References
 

@@ -88,7 +88,7 @@ internal sealed class KhetanLineFactorCancellationDocument : IScribeDocumentDefi
                 + "root existence is Complex.exists_root. These are reused at the pinned "
                 + "Mathlib revision 56a005855ea17e0b0958f73ec801ae140b0a1679. The "
                 + "existing action suppliers retain their software attribution in "
-                + "KhetanAnnihilator and Library/Dynamics/ho2026nivat.md. The construction "
+                + "KhetanAnnihilator and Library/FiniteGeometry/ho2026nivat.md. The construction "
                 + "here is a Laurent specialization bridge to the actual geometric "
                 + "consumer; no literature novelty is claimed for root extraction."))),
         [DocumentEdge.Dependency.Create(GidRef.Create("D5/S1/Dynamics/Symbolic/KhetanOneDirectionPeriodizer")),

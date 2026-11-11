@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Dynamics.Symbolic;
 internal sealed class KhetanAnnihilatorDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Supplier =
-        LibraryNoteRef.Create("D5/L/Dynamics/ho2026nivat");
+        LibraryNoteRef.Create("D5/L/FiniteGeometry/ho2026nivat");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Algebraic periodizer bridge for finite-alphabet lattice configurations.",

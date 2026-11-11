@@ -52,7 +52,7 @@ the original configuration is periodic. This supplies the one-direction
 branch, without a six-cell or low-complexity hypothesis.
 
 The bounded comparisons are recorded in the corresponding three
-`Library/Dynamics/` notes. They establish neither exhaustive novelty nor
+`Library/FiniteGeometry/` notes. They establish neither exhaustive novelty nor
 priority. No pre-probe full-result preregistration issue was found in the
 bounded GitHub searches: the Khetan-title search found audit issue #29287
 only; the exact arXiv identifier and Nivat-title searches found none.

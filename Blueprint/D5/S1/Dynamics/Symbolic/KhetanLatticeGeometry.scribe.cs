@@ -208,9 +208,9 @@ internal sealed class KhetanLatticeGeometryDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Owner + "two_direction_orbit_closure_periodic"),
                 H("One nonzero period fixes the whole given orbit closure"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(
-                    LibraryNoteRef.Create("D5/L/Dynamics/khetan2026nonconvex"),
-                    LibraryNoteRef.Create("D5/L/Dynamics/hervakari2023forced"),
-                    LibraryNoteRef.Create("D5/L/Dynamics/tanzhang2026periodictilings")),
+                    LibraryNoteRef.Create("D5/L/FiniteGeometry/khetan2026nonconvex"),
+                    LibraryNoteRef.Create("D5/L/FiniteGeometry/hervakari2023forced"),
+                    LibraryNoteRef.Create("D5/L/FiniteGeometry/tanzhang2026periodictilings")),
                 Blocks(
                     Paragraph(Text(
                         "Every translate of the indicator of T has the same period t. "
