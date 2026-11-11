@@ -1,0 +1,25 @@
+**定义 36.1（带非零 $23$ 混合的原轴像输入）。** 在定义 32.1 的同一原空间 $\mathcal H=\mathbb C^3\oplus\mathbb C^m$、$m\ge1$ 任意有限、$c=\operatorname{diag}(1,2,3)\oplus0_m$ 中，限定
+
+$$
+\begin{gathered}
+B=\beta E_{11}+b(E_{23}+E_{32}),\qquad
+\beta,b\in\mathbb R,\quad b\ne0,\qquad V=e_1v,\\
+v\in M_{1,m}(\mathbb C),\qquad D_{\rm env}=D_{\rm env}^*,
+\qquad v(\ker D_{\rm env})\ne\{0\},\\
+t=\begin{pmatrix}B&V\\V^*&D_{\rm env}\end{pmatrix},\qquad
+S=\operatorname{diag}(s_1,s_2,s_3),\quad s_j\in\mathbb R,\qquad
+g=K_\sigma(c,t)+(S\oplus0_m).
+\end{gathered}
+\tag{36.1}
+$$
+
+这里 $\mathcal W=V(\ker D_{\rm env})=\mathbb C e_1$，每次分别固定 $\sigma=\pm1$、$\iota=\sigma i$。原环境、$v$ 的复条目和非零环境谱均不改变。$E=\operatorname{span}_{\mathbb C}(e_2,e_3)$ 对原 $c,t$ 约化，且
+
+$$
+c|_E=\begin{pmatrix}2&0\\0&3\end{pmatrix},\qquad
+t|_E=b\begin{pmatrix}0&1\\1&0\end{pmatrix}\ne0 .
+\tag{36.2}
+$$
+
+相反，$\operatorname{span}(e_1,e_2)\oplus\mathbb C^m$ 不被原 $t$ 保持，因为 $te_2=be_3$。定理 34.4 的 (34.16) 约化论证不适用于 (36.1)。下文的前两格读取直接在完整原空间中运输。
+

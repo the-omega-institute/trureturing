@@ -1,0 +1,112 @@
+**定理 35.3（原平面向整个空间的耦合控制）。** 保持定义 32.1 的任意有限 $m$、任意原 $B,V,D_{\rm env}$，只限定残量为 $S=\operatorname{diag}(0,0,s)$。原 $t$ 不必保持 $E=\operatorname{span}(e_2,e_3)$，$\mathcal W$ 不作隔离或秩假设。定义
+
+$$
+T=\|t|_E:E\longrightarrow\mathcal H\|
+ =\sup_{z\in E,\ \|z\|=1}\|tz\|,
+\qquad \mathcal H=\mathbb C^3\oplus\mathbb C^m .
+\tag{35.9}
+$$
+
+范数包含 $tz$ 在整个原 $\mathcal H$ 中的所有演员及环境输出，不能换成 $\|P_Et|_E\|$。对任一分别固定的 $\sigma$，若全部原探针、全部原正泛函满足 PB，或仅在任一指定有限质量 $\mu>0$ 上全称满足 PB，则必有
+
+$$
+\boxed{\qquad d_0s^2\le32|s|T+30T^2,
+\qquad d_0=(13-5\sqrt5)/16 .\qquad}
+\tag{35.10}
+$$
+
+若反向严格不等式 $d_0s^2>32|s|T+30T^2$ 成立，(35.1) 零延伸到同一原空间的 $x,v$ 和 $\phi_\mu(a)=\mu v^*av$ 就是指定质量的完整 PB 严格见证。$T=0$ 时，任意其余原环境和耦合都保留 (35.2) 的精确值，全部 PB 准确当且仅当 $s=0$。$T>0$ 时 (35.10) 只是必要条件，允许足够小的非零 $s$；它不证明任何这样的输入满足全部 PB，也不是一般非零 $\mathcal W$ 的分类或非零残量反模型。
+
+证明。全程沿原 $\mathcal H$ 计算，以单位 $v=(e_2+e_3)/\sqrt2$ 及同一 $x$ 作比较。仅在这份估计中，用上标 $(0)$ 表示把 $t$ 取为零后的代数比较列，保持 $c,x,sE_{33}$ 原值；实际待判输入始终是给定的原 $t$。记 $K=K_\sigma(c,t)$、$k=c\circ t$，则
+
+$$
+\begin{gathered}
+\|tv\|\le T,\qquad \|tcv\|\le3T,\qquad \|ctv\|\le3T,
+\qquad \|kv\|,\|Kv\|\le3T,\\
+(R_\delta-R_\delta^{(0)})v=-\delta kv,
+\qquad (S_\delta-S_\delta^{(0)})v=tv+\delta Kv,\\
+\|(R_\delta-R_\delta^{(0)})v\|\le3T,
+\qquad \|(S_\delta-S_\delta^{(0)})v\|\le4T .
+\end{gathered}
+\tag{35.11}
+$$
+
+这里 $cv\in E$、$\|c\|=3$，所以 $tcv$ 的估计也只使用同一个全输出 $T$，没有以环境块范数替代。由 (35.3) 的实际基准列，
+
+$$
+\begin{gathered}
+\|R_+^{(0)}v\|^2=5s^2/16,\qquad
+\|R_-^{(0)}v\|^2=41s^2/16,\\
+\|R_\delta^{(0)}v\|\le2|s|,\qquad
+\|S_\delta^{(0)}v\|=5|s|/4,
+\qquad \|xv\|^2=3s^2/8\le s^2 .
+\end{gathered}
+\tag{35.12}
+$$
+
+为控制平方根在零预算处也有效的误差，在原复空间的实化中选一组实标准正交基。对实坐标向量 $a,b$，把 $a\wedge_{\mathbb R}b$ 定义为所有 $i<j$ 的坐标 $a_i b_j-a_j b_i$。直接展开得
+
+$$
+\|a\wedge_{\mathbb R}b\|^2
+=\|a\|^2\|b\|^2-\langle a,b\rangle_{\mathbb R}^2,
+\qquad \|a\wedge_{\mathbb R}b\|\le\|a\|\|b\| .
+$$
+
+这是 PB 所用未中心化实 Gram 面积的坐标恒等式。双线性展开
+$(a+e)\wedge(b+f)-a\wedge b=a\wedge f+e\wedge b+e\wedge f$，再用欧氏范数的反三角与三角不等式，完整给出
+
+$$
+\left|\|(a+e)\wedge(b+f)\|-\|a\wedge b\|\right|
+\le\|a\|\|f\|+\|e\|\|b\|+\|e\|\|f\| .
+\tag{35.13}
+$$
+
+不需要除以面积或假设 Gram 非退化。将 (35.11)–(35.12) 代入，写
+$A_\delta=\sqrt{B_{\phi_v}(R_\delta,S_\delta)}$、
+$A_\delta^{(0)}=\sqrt{B_{\phi_v}(R_\delta^{(0)},S_\delta^{(0)})}$，得到每笔原面积的误差
+
+$$
+|A_\delta-A_\delta^{(0)}|
+\le\left(8+\frac{15}{4}\right)|s|T+12T^2
+=\frac{47}{4}|s|T+12T^2 .
+\tag{35.14}
+$$
+
+原左端的比较也在完整作用列上进行。令 $\ell_t=v^*Lv$，$\ell_0=9s^2/8$，展开原 Jordan 读数恰为
+
+$$
+\begin{aligned}
+\ell_t-\ell_0
+ &=2\operatorname{Re}((xv)^*kv)
+   -2\operatorname{Re}((tv)^*((r+sE_{33})v+Kv)),\\
+|\ell_t-\ell_0|
+ &\le6|s|T+\frac52|s|T+6T^2
+ =\frac{17}{2}|s|T+6T^2 .
+\end{aligned}
+\tag{35.15}
+$$
+
+其中 $\|(r+sE_{33})v\|=5|s|/4$ 来自 (35.3)。尤其没有丢掉 $t\circ g$ 或把 $t^2$ 换成演员压缩平方。由 $||\ell_t|-|\ell_0||\le|\ell_t-\ell_0|$，两种绝对值侧均受控制。以同一个 $\phi_\mu=\mu\phi_v$ 同时评价左端和两笔预算；左端与每笔平方根准确同乘 $\mu$，所以
+
+$$
+|\phi_\mu(L)|-\sum_\delta\sqrt{B_{\phi_\mu}(R_\delta,S_\delta)}
+\ge\mu\bigl[d_0s^2-32|s|T-30T^2\bigr].
+\tag{35.16}
+$$
+
+系数为 $17/2+2(47/4)=32$、$6+2(12)=30$。全称 PB 在这份同一泛函上应用即得 (35.10)，反向严格不等式则给见证；没有混用不同质量、不同泛函或不同环境的最优值。
+
+若 $T=0$，原 $t$ 湮灭整个 $E$；因 $cE\subseteq E$，$kv=Kv=tv=0$。所以所有原作用列及左端都与 (35.3) 的比较列逐项相等，(35.2) 的准确数值不受其余环境影响。非零 $s$ 因而被排除。零 $s$ 的充分性直接使用 (34.13) 的原算子恒等式；为明确其全正泛函范围，固定任意原正复线性泛函 $\phi$ 和自伴 $U,Z$，置 $a=\phi(U^2)$、$b=\phi(Z^2)$、$z=\phi(UZ)$。正性给 $a,b\ge0$，且对每个复 $\lambda$，
+$\phi((\lambda U+Z)^*(\lambda U+Z))=a|\lambda|^2+2\operatorname{Re}(\bar\lambda z)+b\ge0$。若 $a>0$，取 $\lambda=-z/a$ 得 $|z|^2\le ab$；若 $a=0$，变动 $\lambda$ 强制 $z=0$，结论亦然。正泛函保持伴随，故 $\phi(U\circ Z)=\operatorname{Re}z$、$\phi(K_\sigma(U,Z))=-\sigma\operatorname{Im}z$。于是
+
+$$
+|\operatorname{Im}z|^2\le ab-(\operatorname{Re}z)^2=B_\phi(U,Z),
+\qquad
+|\phi(L)|
+=\left| -\sigma\sum_{\delta=\pm1}\delta\operatorname{Im}\phi(R_\delta S_{\delta,0})\right|
+\le\sum_{\delta=\pm1}\sqrt{B_\phi(R_\delta,S_{\delta,0})} .
+\tag{35.17}
+$$
+
+这对任意原 $t$ 的零残量均成立，涵盖混合、奇异密度、零预算、两个绝对值侧及两个分别固定的 $\sigma$；没有只从向量态外推，也不需要混合行列式定理。$\phi(I)=0$ 时，以上二次式取 $U=I$、任意自伴 $Z$ 就给 $\phi(Z)=0$，再由复线性得 $\phi=0$，保留零质量等式；零质量本身不强制 (35.10)。∎
+

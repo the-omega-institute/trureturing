@@ -1,0 +1,56 @@
+**引理 38.1（残量接触恒等式）。** 令 $P=P_3$。在 (38.1) 的同一固定取向下恒有
+
+$$
+L=K(R_+,S_+)-K(R_-,S_-)-2K(X,sP)-2T\circ(sP).
+\tag{38.4}
+$$
+
+若某个非零 $u$ 满足
+
+$$
+R_+u=0,\qquad S_-u=\lambda Xu,\qquad \lambda\in\mathbb R,
+\tag{38.5}
+$$
+则两份面积都为零，并且令
+
+$$
+ v=\operatorname{Im}_{\iota}\bigl((Xu)^*Pu\bigr),\qquad
+ w=\operatorname{Re}\bigl((Tu)^*Pu\bigr),\qquad
+\operatorname{Im}_{\iota}(q)=\frac{q-\overline q}{2\iota},
+$$
+就有
+
+$$
+\psi_u(L)=-2s(w-v).
+\tag{38.6}
+$$
+
+证明。先把 $g$ 的残量去掉，写 $g_0=K(C_E,T)$、
+$A=h-k$、$B_0=r+g_0$。直接展开双线性换位得
+
+$$
+K(R_+,S_+)-K(R_-,S_-)=2K(X,B_0+sP)+2K(A,T).
+\tag{38.7}
+$$
+
+把 $h=K(C_E,X)$、$r=C_E\circ X$、$k=C_E\circ T$、
+$g_0=K(C_E,T)$ 代入右端，按乘积的次序展开；含 $C_EX T$、
+$TC_EX$、$XTC_E$、$C_ETX$ 的项分别成对抵消，剩余项正好是
+
+$$
+2K(X,B_0)+2K(A,T)
+ =-2X\circ A-2T\circ B_0.
+\tag{38.8}
+$$
+
+因此 (38.4) 成立。这是有限矩阵乘法恒等式，没有使用 PB 或压缩平方。
+若 (38.5) 成立，则 $R_-u=2Xu$；第一份 Gram 面积含有零列，第二份的两列是
+$2Xu$ 与实倍数 $\lambda Xu$，所以两者均为零。对任意自伴 $Y,Z$，
+$u^*K(Y,Z)u=-\operatorname{Im}_{\iota}((Yu)^*Zu)$；将 (38.5) 代回
+(38.4)，并用 $u^*(T\circ P)u=w$，即得 (38.6)。证毕。
+
+这里使用的是实际含残量的非齐次 $R_+$ 的一个向量核。通常
+$R_-u=2Xu\ne0$，也没有为两种符号同时构造残量去掉后的齐次列。因而这
+一步不取得 §33.2 所说的两份严格正斜率的同时齐次核，也不产生
+$F(E_{33})\ne0$ 的合法同时核分离；§33.2 的核盲区保持原义。
+

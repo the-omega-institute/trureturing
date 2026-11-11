@@ -1,0 +1,42 @@
+**定理 41.3（完整符号恒等式及分级自由）。** 对定义 41.1 的任意完整 Hermitian 残量 $E=g-K(c,t)$，有
+
+$$
+K(R_+,S_+)-K(R_-,S_-)=L+W,
+\qquad W=\iota[x,E]+tE+Et.
+\tag{41.11}
+$$
+
+特别，对任意实数 $a$，输出
+
+$$
+g=K(c,t)+a(P-Q)
+\tag{41.12}
+$$
+
+满足全部原 PB，包括全部混合／非忠实正泛函和零预算。若 $a\ne0$，它却不满足环境零谱格的 P2 零读取。因此完整固定输出 PB 本身不能推出该 P2。
+
+证明。置 $V=x+\iota t$、$U_\delta=R_\delta+\iota S_\delta$。直接乘法给
+
+$$
+\begin{aligned}
+U_\delta&=(I_4+\delta\iota c)V+\delta\iota E,\\
+U_+^*U_+-U_-^*U_-&=2\iota(V^*E-EV)=2W,\\
+U_\delta^*U_\delta&=R_\delta^2+S_\delta^2+2K(R_\delta,S_\delta),\\
+(R_+^2+S_+^2)-(R_-^2+S_-^2)&=-2L.
+\end{aligned}
+\tag{41.13}
+$$
+
+第二行的 $V^*=x-\iota t$ 给 $\iota(V^*E-EV)=\iota[x,E]+tE+Et$，符号由此确定。合并后两行得到 (41.11)。若 $E=aJ$，演员支撑给 $[x,J]=0$，纯星给 $tJ+Jt=0$，故 $W=0$。对任意正复线性 $\phi$ 和任意自伴 $U,Z$，复 Schwarz 及自伴读数为实给
+
+$$
+|\phi(UZ)|^2\le\phi(U^2)\phi(Z^2),\quad
+\phi(UZ)=\phi(U\circ Z)-\iota\phi(K(U,Z)),\quad
+|\phi(K(U,Z))|\le\sqrt{B_\phi(U,Z)}.
+\tag{41.14}
+$$
+
+这不要求 $\phi$ 忠实或归一。对 (41.11) 的两份 $K$ 用三角不等式，即得 (41.3)。另一方面，令 $\phi_4(a)=e_4^*ae_4$，则 $ce_4=0$、$\phi_4(c^2)=0$、$\phi_4(K(c,t))=0$，但 $\phi_4(g)=-a$。原谱零 P2 的 $|\phi_4(g)|\le\sqrt{B_{\phi_4}(c,t)}=0$ 在 $a\ne0$ 时失败。∎
+
+对 (41.4)，$W$ 的演员块是 $\iota[X,D]$，上右列是 $(D+s_0I_3)q$，其中 $D=\operatorname{diag}(s_1,s_2,s_3)$、$x=X\oplus0$。分级平移 $E\mapsto E+aJ$ 虽保持 $W,L$，却把 $S_\delta$ 改为 $S_\delta+\delta aJ$，完整 Gram 预算随之改变，不能先令 $s_0$ 消失再套用定理 39.2。下面的准确预算也直接显示这个变化。定理 41.3 只给固定 $(c,t,g)$ 的充分族和 P2 障碍，不供应满足全部嵌套调用的总响应 $D(\cdot,\cdot)$，更不是完整原 $\Omega$ 反模型。
+

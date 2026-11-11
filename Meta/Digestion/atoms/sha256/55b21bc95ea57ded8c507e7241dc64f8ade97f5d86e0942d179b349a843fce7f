@@ -1,0 +1,46 @@
+**引理 38.3（有限内部扰动）。** 保持定理 38.2 所得的同一个 $T,s,u$，对实数
+$\varepsilon$ 置 $X_\varepsilon=X+\varepsilon I_E$。则
+
+$$
+R_{\delta,\varepsilon}u=R_\delta u+\varepsilon u,\qquad
+S_{\delta,\varepsilon}u=S_\delta u+\delta\varepsilon C_Eu .
+\tag{38.30}
+$$
+
+每个未归一平方面积
+
+$$
+G_\delta(\varepsilon)=\|R_{\delta,\varepsilon}u\|^2
+ \|S_{\delta,\varepsilon}u\|^2
+ -\bigl(\operatorname{Re}((R_{\delta,\varepsilon}u)^*
+ S_{\delta,\varepsilon}u)\bigr)^2
+\tag{38.31}
+$$
+
+都是取值于 $[0,\infty)$ 的实系数多项式，且最高次项为
+
+$$
+\bigl(\|u\|^2\|C_Eu\|^2-(u^*C_Eu)^2\bigr)\varepsilon^4
+=|u_2|^2|u_3|^2\varepsilon^4 .
+\tag{38.32}
+$$
+
+证明。(38.30) 只用 $K(C_E,I_E)=0$、
+$C_E\circ(X+\varepsilon I_E)=r+\varepsilon C_E$。因此 (38.31) 是实多项式，
+非负性是两个实化列的 Gram 行列式。其四次系数由最高次列 $u$ 和
+$\delta C_Eu$ 给出；写 $a=|u_2|^2$、$b_0=|u_3|^2$，则
+
+$$
+(a+b_0)(4a+9b_0)-(2a+3b_0)^2=a b_0=|u_2|^2|u_3|^2>0.
+$$
+
+所以每个 $G_\delta$ 都不是零多项式，两个实根集合均为有限集。记
+$\Delta(\varepsilon)$ 为左端绝对值减去两笔平方根；作用列和 $L$ 关于
+$\varepsilon$ 连续，平方根在 $[0,\infty)$ 上连续，而定理 38.2 给出
+$\Delta(0)>0$。取一个只由连续性得到的非零邻域，使
+$\Delta(\varepsilon)>0$，再从其中避开两个有限根集和 $0$，即可选取有限的
+$\varepsilon\ne0$，使 $G_+(\varepsilon)>0$、$G_-(\varepsilon)>0$ 且仍严格违反 PB。
+这里没有给出统一的 $\varepsilon$ 或量化半径；每个见证只需一个这样的有限选择。
+对任意指定 $\mu>0$，用 (38.3) 乘以正因子即可使质量恰为 $\mu$，并保持
+两笔预算严格正和严格差额。∎
+

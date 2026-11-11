@@ -1,0 +1,106 @@
+**定理 36.3（第三格残量的固定探针严格见证）。** 在 (36.1) 中先取 $s_1=s_2=0$、$s_3=s$。对任意 $s\ne0$、任意指定有限 $\mu>0$ 和任一个分别固定的 $\sigma$，取下列原角探针与原完整代数泛函：
+
+$$
+\begin{gathered}
+ X|_E=b\begin{pmatrix}0&2+\iota\\2-\iota&0\end{pmatrix},
+ \qquad X|_{E^\perp}=0,\\
+ u=e_2+\frac{2-\iota}{8}e_3,\qquad \|u\|^2=\frac{69}{64},\qquad
+ \phi_\mu(a)=\frac{64\mu}{69}u^*au,\quad \phi_\mu(I)=\mu .
+\end{gathered}
+\tag{36.16}
+$$
+
+则同一个 $X,\phi_\mu$ 的完整数据准确为
+
+$$
+\begin{gathered}
+ \phi_\mu(L)=-\frac{32\mu sb}{69},\qquad
+ \sqrt{B_{\phi_\mu}(R_+,S_+)}=0,\qquad
+ \sqrt{B_{\phi_\mu}(R_-,S_-)}=\frac{10\sqrt5\,\mu|sb|}{69},\\
+ |\phi_\mu(L)|-\sum_\delta\sqrt{B_{\phi_\mu}(R_\delta,S_\delta)}
+ =\frac{32-10\sqrt5}{69}\,\mu|sb|>0 .
+\end{gathered}
+\tag{36.17}
+$$
+
+保持同一泛函，只作 $X_\varepsilon=X+\varepsilon P_E$，便存在 $\eta>0$，使每个 $0<|\varepsilon|<\eta$ 都严格违反原 PB，且两笔预算同时严格正。$X$ 本身不依赖 $s$；严格差额对 $|sb|$ 一次齐次。
+
+证明。所有计算都是原完整空间的作用列；(36.2) 的实际约化性保证这些列留在 $E$，没有用压缩平方代替原平方。记 $B_E=t|_E$、$C_E=c|_E$。原定义逐条给
+
+$$
+\begin{gathered}
+ h|_E=b\begin{pmatrix}0&1/2-\iota\\1/2+\iota&0\end{pmatrix},\qquad
+ k_t|_E=\tfrac52B_E,\qquad (X+h)|_E=k_t|_E,\\
+ r|_E=\tfrac52X|_E,\qquad
+ K_\sigma(c,t)|_E=b\begin{pmatrix}0&-\iota/2\\\iota/2&0\end{pmatrix},\\
+ (r+K_\sigma(c,t))|_E=B_E+2X|_E,\\
+ R_+|_E=0,\quad R_-|_E=2X|_E,\qquad
+ S_+|_E=2(B_E+X|_E)+sE_{33}|_E,\quad
+ S_-|_E=-2X|_E-sE_{33}|_E .
+\end{gathered}
+\tag{36.18}
+$$
+
+其中 $(1-\iota/2)(2+\iota)=5/2$ 核对了第一份消去。又
+
+$$
+ X^2|_E=5b^2I_E,\qquad B_E^2=b^2I_E,\qquad
+ B_E\circ X|_E=2b^2I_E,
+$$
+
+所以原左端算子在 $E$ 上为
+
+$$
+ L|_E=2X^2|_E-2B_E^2-4B_E\circ X|_E-2B_E\circ(sE_{33}|_E)
+ =-sb\begin{pmatrix}0&1\\1&0\end{pmatrix} .
+\tag{36.19}
+$$
+
+没有将 $t\circ(r+g)$ 丢掉；正是它的非零混合项留下 (36.19)。$u^*(E_{23}+E_{32})u=1/2$，故 $u^*Lu=-sb/2$，质量因子给 (36.17) 第一项。
+
+为核对预算，置
+
+$$
+ a=R_-u=\frac{5b}{4}e_2+2b(2-\iota)e_3,\qquad
+ z=E_{33}u=\frac{2-\iota}{8}e_3 .
+\tag{36.20}
+$$
+
+则 $S_-u=-a-sz$，且逐项内积为
+
+$$
+ \|a\|^2=\frac{345b^2}{16},\qquad
+ \|z\|^2=\frac5{64},\qquad
+ a^*z=\frac{5b}{4}\in\mathbb R,\qquad
+ \|a\|^2\|z\|^2-\bigl(\operatorname{Re}(a^*z)\bigr)^2
+ =\frac{125b^2}{1024} .
+\tag{36.21}
+$$
+
+PB 使用的是实化 Gram，不是以 $|a^*z|^2$ 替换实部平方的一般复 Gram；在 (36.21) 这一个内积恰为实数，两者数值相等。对任意自伴原 $U,Z$，原平方准确给
+
+$$
+ \phi_\mu(U^2)=\frac{64\mu}{69}\|Uu\|^2,\qquad
+ \phi_\mu(U\circ Z)=\frac{64\mu}{69}
+                    \operatorname{Re}((Uu)^*Zu) .
+\tag{36.22}
+$$
+
+加实倍数 $-a$ 不改变实面积，故第二笔面积为
+$(64\mu/69)|s|\sqrt{125b^2/1024}=10\sqrt5\mu|sb|/69$；预算本身为 $500\mu^2s^2b^2/4761>0$。第一笔由 $R_+u=0$ 准确为零。$32^2>100\cdot5$ 证明差额正；$s$ 与 $b$ 的两种符号均由绝对值保留，没有把负左侧误作违反。
+
+对实 $\varepsilon$，(36.18) 直接给
+
+$$
+\begin{aligned}
+ R_+(X_\varepsilon)u&=\varepsilon u,\\
+ S_+(X_\varepsilon)u&=2(B_E+X|_E)u+sE_{33}u+\varepsilon C_Eu,\\
+ \bigl(S_+(X_\varepsilon)u\bigr)_2&=b(7-\iota)/4+2\varepsilon .
+\end{aligned}
+\tag{36.23}
+$$
+
+$u_2=1$，而最后一项的通常虚部是 $-\sigma b/4\ne0$。所以 $S_+(X_\varepsilon)u$ 对每个实 $\varepsilon$ 都不是 $u$ 的实倍数；$\varepsilon\ne0$ 时第一笔实 Gram 严格正。第二笔预算在零为上述正数，原绝对值差额在零为 (36.17) 的正数；它们均连续。各取一个零邻域保持为零处值的一半以上，再取两邻域交，便有有限 $\eta>0$。因此每个 $0<|\varepsilon|<\eta$ 同时保留第二笔正性与严格违反，并由 (36.23) 支付第一笔正性。质量、环境与泛函均未改变。
+
+取向改变只改变上述演员构造中的 $\iota$，所有恒等式仍由 $\iota^2=-1$、$\bar\iota=-\iota$ 成立。$\beta,v,D_{\rm env}$ 在 $E^\perp$ 保持原值，无须共轭它们。两种取向各自得到同一实预算与绝对值差额。∎
+

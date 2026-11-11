@@ -1,0 +1,67 @@
+**引理 32.2（原离面行的准确提升）。** 置
+
+$$
+\Delta_d=a_+b_--a_-b_+
+=-2\bigl[\zeta_++\zeta_-+
+ \iota d(\zeta_+-\zeta_-)+2\iota\zeta_+\zeta_-\bigr].
+\tag{32.7}
+$$
+
+保持已定 $X^{ab}$、原 $u$、原 $w$ 和两份斜率不变，存在 Hermitian $X\in M_3(\mathbb C)$ 满足完整 (32.5)，准确当且仅当
+
+$$
+\Delta_d\ne0\qquad\text{或}\qquad w_j=0.
+\tag{32.8}
+$$
+
+$\Delta_d\ne0$ 时，两个离面作用值唯一，离面行由它们唯一确定，第三个对角元可任取实数。$\Delta_d=0$ 且 $w_j=0$ 时，可以取两个作用值均为零。$\Delta_d=0$ 且 $w_j\ne0$ 时，不存在这样的提升。
+
+证明。将 $\mathsf S_\delta-\zeta_\delta\mathsf R_\delta=0$ 的第 $j$ 行乘以 $2\delta$ 就得到 (32.6)。其行列式展开为 (32.7)，没有更换演员基。
+
+先检查奇异处是否可能还容纳非零 $w_j$。对任意单坐标解，置 $r_j=w_j-\iota p_j$，直接从原两列得
+
+$$
+\mathsf S_{\delta,j}-\iota\mathsf R_{\delta,j}
+=(1+\delta\iota d)r_j.
+\tag{32.9}
+$$
+
+$\zeta_+\ne\iota$，因为其相对于 $\iota$ 的虚部为 $-\alpha_+<0$。若 $\zeta_-=\iota$，则 $b_-=0$、$a_-=2(d+\iota)$；又 $b_+=1+\alpha_++\iota\beta_+\ne0$，故 $\Delta_d=-2(d+\iota)b_+\ne0$。这个允许的特殊斜率不产生奇异例外。
+
+其余情形定义
+
+$$
+\gamma_\delta=(\zeta_\delta-\iota)^{-1},\qquad
+\gamma=(\gamma_++\gamma_-)/2,\qquad
+\eta=(\gamma_+-\gamma_-)/2.
+$$
+
+由 (32.9)，全部单坐标解准确为
+
+$$
+\begin{aligned}
+p_j&=(\gamma+\iota\eta d)r_j,\\
+q_j&=\bigl(2\iota\eta+(\iota-2\gamma)d\bigr)r_j,\\
+w_j&=(1+\iota\gamma-\eta d)r_j.
+\end{aligned}
+\tag{32.10}
+$$
+
+确实，两份 $\mathsf R_{\delta,j}$ 等于
+$(\gamma+\delta\eta)(1+\delta\iota d)r_j$；相加给 $p_j$，相减及 $w_j=r_j+\iota p_j$ 给另两式。反过来代回就给两份核等式，故这不是只有必要性的参数式。
+
+若 $f=1+\iota\gamma-\eta d\ne0$，每个指定 $w_j$ 都有唯一 $r_j=w_j/f$ 及唯一 $p_j,q_j$，故系数矩阵可逆。若 $f=0$，每个解都满足 $w_j=0$，而任取非零 $r_j$ 时 $p_j=\iota r_j\ne0$，给出非零齐次解，故系数矩阵奇异。这证明 $\Delta_d=0$ 恰对应 $f=0$，并证明 (32.8) 的全部奇异分支。这里没有把奇异值域条件删掉。
+
+最后补出 Hermitian 矩阵。对于任一已取得的 $p_j,q_j$，取
+
+$$
+X_{ja}=\frac{B_0p_j-q_j}{(B_0-A_0)u_a},\qquad
+X_{jb}=\frac{q_j-A_0p_j}{(B_0-A_0)u_b},\qquad
+X_{aj}=\overline{X_{ja}},\quad X_{bj}=\overline{X_{jb}},\quad X_{jj}\in\mathbb R.
+\tag{32.11}
+$$
+
+两项分母均非零。这两行线性方程直接给 $(Xu)_j=p_j$、$(XCu)_j=q_j$。因为 $u_j=(Cu)_j=0$，补上的共轭条目不会改变 $a,b$ 两行的 $Xu,XCu$；已定平面块的 Hermitian 性与新增的共轭配对共同保证整个 $X=X^*$。所以这是同一完整三维探针的插值，不是重新指定两份彼此无关的作用列。∎
+
+这个引理不适用于仅有一个非零坐标的 $u$：此时 (32.11) 的两项插值数据不独立。它也不把 $w$ 的投影认作原 $\mathcal W$ 中的向量；输入始终是原 $w$，其第三分量出现在 (32.6) 的右端。
+

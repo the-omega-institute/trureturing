@@ -1,0 +1,15 @@
+**定义 34.1（同一非零零模像的四维族）。** 在原 $A=M_4(\mathbb C)$、原标准基 $e_1,e_2,e_3,e_4$ 中取
+
+$$
+\begin{gathered}
+c=\operatorname{diag}(1,2,3,0),\qquad
+P=\operatorname{diag}(1,1,1,0),\qquad t=E_{14}+E_{41},\\
+S=\operatorname{diag}(0,0,s)\in M_3(\mathbb C),\qquad S\oplus0=sE_{33},\\
+g=\frac\iota2(E_{14}-E_{41})+sE_{33},\qquad
+s\in\mathbb R,\quad\iota=\sigma i,\quad\sigma\in\{1,-1\}.
+\end{gathered}
+\tag{34.1}
+$$
+
+这里是 (33.25) 的同一 $m=1,B=D_{\rm env}=0,V=e_1$，所以 $\mathcal W=\mathbb C e_1\ne0$。$R_\delta,S_\delta,L,B_\phi$ 均严格取 (32.2)，不改变 $g$ 或任何环境条目。探针域仍为所有 $x=x^*=PxP$；构造一个特定探针只用于否定这个全称 PB。
+

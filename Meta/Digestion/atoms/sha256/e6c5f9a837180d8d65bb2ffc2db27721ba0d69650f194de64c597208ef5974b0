@@ -1,0 +1,158 @@
+**命题 36.2（被三残量分类消费的前两格刚性）。** 保持定义 32.1，允许 $B$ 为任意原 Hermitian 三维块，仅要求 $V=e_1v$、$v(\ker D_{\rm env})\ne\{0\}$，$D_{\rm env}$ 任意原有限 Hermitian 块。若全部原 PB 成立，或在任一指定有限正质量上全称成立，则必有 $s_1=s_2=0$。若 $(s_1,s_2)\ne(0,0)$，任意 $s_3$、任意指定 $\mu>0$ 都有同一原环境中的有限严格违反，并可使两笔预算同时严格正。此命题的活消费者是定理 36.4；它不分类任意 $B$ 下的第三格残量。
+
+证明。只消费父卷 (29.19)–(29.22)、(30A.11)–(30A.18) 中属于轴 $1$ 的两条读取，不使用轴 $2$ 的像向量。将其 $u,w$ 补第三坐标零，将 $X$ 补第三行、列零。第一条的完整参数为
+
+$$
+\begin{gathered}
+u^{(a)}=e_1,\qquad X^{(a)}=\operatorname{diag}(1,1,0),
+\qquad w^{(a)}=-e_1,\\
+(\alpha_+,\alpha_-)=(1/3,1),\qquad
+(\beta_+,\beta_-)=(0,-4),\qquad
+(\zeta_+,\zeta_-)=(-\iota/3,-4+\iota).
+\end{gathered}
+\tag{36.3}
+$$
+
+依 (32.5) 的齐次定义，它的三维作用列准确为
+
+$$
+\mathsf R_+=\tfrac32e_1,\quad
+\mathsf R_-=\tfrac12e_1,\quad
+\mathsf S_+=-\tfrac\iota2e_1,\quad
+\mathsf S_-=(-2+\tfrac\iota2)e_1,
+\qquad F_a(S)=-s_1 .
+\tag{36.4}
+$$
+
+两份比例 $\mathsf S_\delta=\zeta_\delta\mathsf R_\delta$ 逐项成立。第二条为父卷的混合轴 $1$ 读取：
+
+$$
+\begin{gathered}
+ u^{(m)}=\frac{(-8+10\iota,\ 5-4\iota,\ 0)^{\mathsf T}}{\sqrt{205}},\qquad
+ w^{(m)}=\frac{(1-\iota,0,0)^{\mathsf T}}{\sqrt{205}},\\
+ X^{(m)}=\begin{pmatrix}
+ 1&(55+3\iota)/41&0\\
+ (55-3\iota)/41&2&0\\0&0&0
+ \end{pmatrix},\\
+ (\alpha_+,\alpha_-)=(4/5,2/17),\qquad
+ (\beta_+,\beta_-)=(-3/5,-9/17),\\
+ (\zeta_+,\zeta_-)=\bigl((-3-4\iota)/5,\ (-9+2\iota)/17\bigr).
+\end{gathered}
+\tag{36.5}
+$$
+
+两份 $u$ 都是单位向量；第一份是轴向量，第二份的前两坐标均非零。运输不要求第一份也双非零。为逐列核对第二份，直接乘同一个 Hermitian $X^{(m)}$ 得
+
+$$
+\begin{aligned}
+\sqrt{205}\,X^{(m)}u^{(m)}&=(-1+5\iota,\ 6\iota,\ 0)^{\mathsf T},\\
+\sqrt{205}\,X^{(m)}Cu^{(m)}&=(6,\ 10-2\iota,\ 0)^{\mathsf T},\\
+\sqrt{205}\,(w^{(m)}-\iota X^{(m)}u^{(m)})&=(6,6,0)^{\mathsf T},\\
+\sqrt{205}\,\mathsf R_+&=(-4+2\iota,\ -7+\iota,\ 0)^{\mathsf T},\\
+\sqrt{205}\,\mathsf R_-&=(2+8\iota,\ 7+11\iota,\ 0)^{\mathsf T},\\
+\sqrt{205}\,\mathsf S_+&=(4+2\iota,\ 5+5\iota,\ 0)^{\mathsf T},\\
+\sqrt{205}\,\mathsf S_-&=(-2-4\iota,\ -5-5\iota,\ 0)^{\mathsf T}.
+\end{aligned}
+\tag{36.6}
+$$
+
+将 (36.5) 的两份 $\zeta$ 分别乘 (36.6) 的两份 $\mathsf R$ 就得到对应 $\mathsf S$。所有第三坐标都准确为零，因为这里的齐次列只使用 $C,X,u,w$，而不是删除了实际 $B$ 的输出。两份 $\alpha$ 都严格正且有限，虚部方向为 $-\delta\iota\alpha_\delta$。配对为
+
+$$
+F_m(S)=\operatorname{Re}((w^{(m)}-\iota X^{(m)}u^{(m)})^*Su^{(m)})
+=\frac{-48s_1+30s_2}{205} .
+\tag{36.7}
+$$
+
+因此 $(s_1,s_2)\ne(0,0)$ 时，(36.4)、(36.7) 至少一条非零；$s_3u_3=0$ 仅使这次配对不读取第三格。
+
+下面明确消费本卷 (32.21)–(32.28) 的三维原环境运输。取所选核对的 $F\ne0$，以定义 32.1 的同一原逆取 $y=Jw$，所以 $Vy=w$、$D_{\rm env}y=0$。对实 $q$ 令 $x_q=qX\oplus0_m$、$\xi_q=(u,qy)$。完整作用列为
+
+$$
+\begin{aligned}
+R_\delta(x_q)\xi_q
+ &=q(\mathsf R_\delta,0)
+   +\bigl(-\delta(C\circ B)u,-\delta V^*Cu/2\bigr),\\
+S_{\delta,0}(x_q)\xi_q
+ &=q(\mathsf S_\delta,0)
+   +\bigl((B+\delta\iota[C,B]/2)u,
+              V^*(I-\delta\iota C/2)u\bigr),\\
+S_{\delta,S}(x_q)\xi_q
+ &=S_{\delta,0}(x_q)\xi_q+\delta(Su,0),\qquad
+ t\xi_q=(Bu+qw,V^*u).
+\end{aligned}
+\tag{36.8}
+$$
+
+下标 $0$ 仅去掉残量，不改变实际 $t$。特别在 (36.1) 中，常数列包含
+
+$$
+(C\circ B)u=\beta u_1e_1+\tfrac{5b}{2}u_2e_3,\qquad
+(B+\delta K_\sigma(C,B))u
+=\beta u_1e_1+b(1+\delta\iota/2)u_2e_3 .
+\tag{36.9}
+$$
+
+混合读取的 $u_2\ne0$，这些实际第三格输出确实存在；它们与 $V^*u,V^*Cu$ 一同保留于下式常数项。
+
+写 $\ell_S(q)=\xi_q^*L(x_q)\xi_q$，用所选的正有限 $\alpha_\delta$、实 $\beta_\delta$ 定义
+
+$$
+Q_S(q)=\sum_{\delta=\pm1}\left[
+ \alpha_\delta\|R_\delta\xi_q\|^2+
+ \alpha_\delta^{-1}\|S_{\delta,S}\xi_q-\beta_\delta R_\delta\xi_q\|^2
+ \right]-2\ell_S(q).
+\tag{36.10}
+$$
+
+零残量的原换位恒等式及复平方配方正是 (32.23)：
+
+$$
+Q_0(q)=\sum_\delta\alpha_\delta^{-1}
+ \|S_{\delta,0}\xi_q-\zeta_\delta R_\delta\xi_q\|^2=Q_0(0).
+\tag{36.11}
+$$
+
+最后一个等号使用的是 (36.4)、(36.6) 的完整三维比例：各平方内的 $q$ 系数为零。再写 $M_\delta=S_{\delta,0}\xi_q-\beta_\delta R_\delta\xi_q$、$v_S=(Su,0)$，则
+
+$$
+\begin{aligned}
+Q_S-Q_0={}&2\sum_\delta\delta\alpha_\delta^{-1}
+ \operatorname{Re}(M_\delta^*v_S)
+ +(\alpha_+^{-1}+\alpha_-^{-1})\|v_S\|^2
+ +4\operatorname{Re}((t\xi_q)^*v_S),\\
+Q_S(q)={}&4q\operatorname{Re}((w-\iota Xu)^*Su)+\Gamma_S
+          =4qF+\Gamma_S,\qquad \Gamma_S=Q_S(0)\in\mathbb R .
+\end{aligned}
+\tag{36.12}
+$$
+
+线性系数来自 $M_\delta$ 的 $q$ 系数 $-\delta\iota\alpha_\delta(\mathsf R_\delta,0)$、$\mathsf R_++\mathsf R_-=2Xu$ 和 $t\xi_q$ 的 $q$ 系数 $(w,0)$。这同时验证符号；$\Gamma_S$ 按 (36.8) 的全输出计算，不丢弃 (36.9)。令
+
+$$
+\Lambda=-\frac{\Gamma_S+1}{4F},\qquad
+x=x_\Lambda,\quad \xi=\xi_\Lambda,\qquad
+Q_S(\Lambda)=-1 .
+\tag{36.13}
+$$
+
+所有数有限。对实化内积 $\langle a,z\rangle_{\mathbb R}=\operatorname{Re}(a^*z)$，面积不随 $z\mapsto z-\beta a$ 改变，且不超过 $\|a\|\|z-\beta a\|$。逐笔用算术几何平均，(36.10) 因而给
+
+$$
+\xi^*L\xi\ge\frac12+
+ \sum_\delta\sqrt{B_{\phi_\xi}(R_\delta,S_{\delta,S})},\qquad
+\phi_\xi(a)=\xi^*a\xi .
+\tag{36.14}
+$$
+
+这在正的左侧给严格违反，故也违反原绝对值形式。取 $\xi_\mu=\sqrt\mu\,\xi/\|\xi\|$，其中 $\|\xi\|^2=1+\Lambda^2\|Jw\|^2$，得到质量恰为 $\mu$、差额至少 $\mu/(2\|\xi\|^2)>0$ 的同一原向量泛函。
+
+最后保持该泛函，只将 $x$ 改成 $x+\lambda((E_{12}+E_{21})\oplus0_m)$。两笔预算均是非负实四次以下多项式，各自四次系数按 (32.28) 为
+
+$$
+\frac{9\mu^2}{16\|\xi\|^4}>0 .
+\tag{36.15}
+$$
+
+这一系数只要求单位 $u$ 支撑在前两格，不要求 $u_1u_2\ne0$，故也适用于 (36.3)。两份实零点集有限；原严格差额在零的某个开邻域内仍正，在其中避开这些零点与零选一个有限实 $\lambda$，两笔预算便同时严格正。两种 $\sigma$ 的核等式均只使用 $\iota^2=-1$ 与 $\bar\iota=-\iota$；原 $B,V,D_{\rm env},J$ 不共轭。于是任一非零前两格残量都不可能满足全称 PB，命题得证。∎
+

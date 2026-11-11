@@ -134,15 +134,14 @@ private theorem first_budget (J : E →ₗ[ℝ] E →ₗ[ℝ] E)
 private theorem vector_budget (J : E →ₗ[ℝ] E →ₗ[ℝ] E)
     (hs : ∀ a b, J a b = J b a) (κ ρ : E →ₗ[ℝ] E)
     (F : SpectralPair J κ ρ) (R : VectorModel (H := H) J) (t k g : E)
-    (hPB : ∀ (v : H) (T α : ℝ),
+    (hPB : ∀ (v : H), ‖v‖ = 1 → ∀ (T α : ℝ),
       scalarPB J κ ρ t k g (T • F.e+α • F.n) (vectorReading R v))
-    (ξ η ν : H) (d : ℝ) (hη : ‖η‖ = 1)
+    (ξ η ν : H) (d : ℝ) (hξ : ‖ξ‖ = 1) (hη : ‖η‖ = 1)
     (hnξ : R.op F.n ξ = 0) (hnη : R.op F.n η = (2 : ℝ) • η)
     (hjξ : R.op F.j ξ = d • η) (heξ : R.op F.e ξ = d • ν)
     (hην : ⟪η,ν⟫ = 0)
-    (hdiagξ : ⟪ξ,R.op ((F.μ+F.λ) • J F.n t-J F.n k) ξ⟫ = 0)
-    (hdiagη : ⟪η,R.op ((F.μ+F.λ) • J F.n t-J F.n k) η⟫ = 0)
-    (hjjξ : ⟪ξ,R.op F.j ξ⟫ = 0) (hjjη : ⟪η,R.op F.j η⟫ = 0)
+    (hnV : J F.n ((F.μ+F.λ) • J F.n t-J F.n k) =
+      (F.μ+F.λ) • J F.n t-J F.n k)
     (T : ℝ) :
     let V := (F.μ+F.λ) • J F.n t-J F.n k
     let Z := t+(F.μ+F.λ) • k
@@ -156,6 +155,17 @@ private theorem vector_budget (J : E →ₗ[ℝ] E →ₗ[ℝ] E)
   let Wp := Z+g-(F.λ*T) • F.e-(a*F.λ*T) • F.j
   let Wm := Z-g+(F.λ*T) • F.e-(a*F.λ*T) • F.j
   have hηη : ⟪η,η⟫ = 1 := by simp [hη]
+  have diag (b : E) (hb : J F.n b = b) :
+      ⟪ξ,R.op b ξ⟫ = 0 ∧ ⟪η,R.op b η⟫ = 0 := by
+    have hx := reading_jordan R F.n b ξ
+    have hy := reading_jordan R F.n b η
+    rw [hb, hnξ, inner_zero_left] at hx
+    rw [hb, hnη, inner_smul_left] at hy
+    change ⟪ξ,R.op b ξ⟫ = 0 at hx
+    change ⟪η,R.op b η⟫ = 2*⟪η,R.op b η⟫ at hy
+    exact ⟨hx, by linarith⟩
+  obtain ⟨hdiagξ,hdiagη⟩ := diag V hnV
+  obtain ⟨hjjξ,hjjη⟩ := diag F.j F.jordan_nj
   have exactGram (W : E) (ε : ℝ) :
       gram J (vectorReading R (ξ+ε • η)) F.n W =
         4*ε^2*‖P (R.op W ξ+ε • R.op W η)‖^2 := by
@@ -186,16 +196,42 @@ private theorem vector_budget (J : E →ₗ[ℝ] E →ₗ[ℝ] E)
       2 * |F.λ*T*d+⟪η,R.op V ξ⟫| ≤
         ‖P (R.op Wp ξ+ε • R.op Wp η)‖ +
         ‖P (R.op Wm ξ+ε • R.op Wm η)‖ := by
-    have hb := first_budget J hs κ ρ F t k g (vectorReading R (ξ+ε • η))
-      (hPB (ξ+ε • η)) T
-    change 2 * |vectorReading R (ξ+ε • η) ((F.λ*T) • F.j+V)| ≤ _ at hb
-    rw [exactRead, exactGram, exactGram] at hb
-    have sqr (z : H) : Real.sqrt (4*ε^2*‖z‖^2) = 2*ε*‖z‖ := by
-      rw [show 4*ε^2*‖z‖^2 = (2*ε*‖z‖)^2 by ring,
+    let b := (Real.sqrt (1+ε^2))⁻¹
+    have hroot : 0 < Real.sqrt (1+ε^2) := Real.sqrt_pos.2 (by positivity)
+    have hbpos : 0 < b := inv_pos.2 hroot
+    have hξη : ⟪ξ,η⟫ = 0 := by
+      have h := R.symmetric F.n ξ η
+      rw [hnξ, hnη, inner_zero_left, inner_smul_right] at h
+      linarith
+    have hnorm : ‖ξ+ε • η‖ = Real.sqrt (1+ε^2) := by
+      have hn : ‖ξ+ε • η‖^2 = 1+ε^2 := by
+        rw [norm_add_sq_real, inner_smul_right, hξη, norm_smul, hξ, hη,
+          Real.norm_eq_abs, mul_one, sq_abs]
+        ring
+      rw [← hn, Real.sqrt_sq (norm_nonneg _)]
+    have hunit : ‖b • (ξ+ε • η)‖ = 1 := by
+      rw [norm_smul, Real.norm_eq_abs, abs_of_pos hbpos, hnorm]
+      exact inv_mul_cancel₀ (ne_of_gt hroot)
+    have sr (z : H) (W : E) :
+        vectorReading R (b • z) W = b^2*vectorReading R z W := by
+      simp only [vectorReading, LinearMap.coe_mk, AddHom.coe_mk, map_smul,
+        inner_smul_left, inner_smul_right]
+      ring
+    have sg (W : E) : gram J (vectorReading R (b • (ξ+ε • η))) F.n W =
+        b^4 * gram J (vectorReading R (ξ+ε • η)) F.n W := by
+      simp only [gram, sr]
+      ring
+    have hb := first_budget J hs κ ρ F t k g
+      (vectorReading R (b • (ξ+ε • η))) (hPB _ hunit) T
+    change 2 * |vectorReading R (b • (ξ+ε • η)) ((F.λ*T) • F.j+V)| ≤ _ at hb
+    rw [sr, sg, sg, exactRead, exactGram, exactGram] at hb
+    have sqr (z : H) : Real.sqrt (b^4*(4*ε^2*‖z‖^2)) = 2*ε*b^2*‖z‖ := by
+      rw [show b^4*(4*ε^2*‖z‖^2) = (2*ε*b^2*‖z‖)^2 by ring,
         Real.sqrt_sq (by positivity)]
-    rw [sqr, sqr, abs_mul, abs_mul, abs_of_pos hε] at hb
+    rw [sqr, sqr, abs_mul, abs_mul, abs_mul, abs_of_pos hε,
+      abs_of_nonneg (sq_nonneg b)] at hb
     simp only [abs_of_nonneg (by norm_num : (0 : ℝ) ≤ 2)] at hb
-    apply le_of_mul_le_mul_left (a := 2*ε) (a0 := by positivity)
+    apply le_of_mul_le_mul_left (a := 2*ε*b^2) (a0 := by positivity)
     convert hb using 1 <;> ring
   have pp : P (R.op F.e ξ) = d • ν := by
     simp [P, realPerp, heξ, hην]
@@ -220,16 +256,15 @@ The vectors and operators act on the full representation, including its environm
 theorem fixed_output_anchor_identity (J : E →ₗ[ℝ] E →ₗ[ℝ] E)
     (hs : ∀ a b, J a b = J b a) (κ ρ : E →ₗ[ℝ] E)
     (F : SpectralPair J κ ρ) (R : VectorModel (H := H) J) (t k g : E)
-    (hPB : ∀ (v : H) (T α : ℝ),
+    (hPB : ∀ (v : H), ‖v‖ = 1 → ∀ (T α : ℝ),
       scalarPB J κ ρ t k g (T • F.e+α • F.n) (vectorReading R v))
     (ξ η ν : H) (d : ℝ) (hd : d ≠ 0) (hλ : F.λ ≠ 0)
-    (hη : ‖η‖ = 1) (hν : ‖ν‖ = 1)
+    (hξ : ‖ξ‖ = 1) (hη : ‖η‖ = 1) (hν : ‖ν‖ = 1)
     (hnξ : R.op F.n ξ = 0) (hnη : R.op F.n η = (2 : ℝ) • η)
     (hjξ : R.op F.j ξ = d • η) (heξ : R.op F.e ξ = d • ν)
     (hην : ⟪η,ν⟫ = 0)
-    (hdiagξ : ⟪ξ,R.op ((F.μ+F.λ) • J F.n t-J F.n k) ξ⟫ = 0)
-    (hdiagη : ⟪η,R.op ((F.μ+F.λ) • J F.n t-J F.n k) η⟫ = 0)
-    (hjjξ : ⟪ξ,R.op F.j ξ⟫ = 0) (hjjη : ⟪η,R.op F.j η⟫ = 0) :
+    (hnV : J F.n ((F.μ+F.λ) • J F.n t-J F.n k) =
+      (F.μ+F.λ) • J F.n t-J F.n k) :
     ⟪ν,R.op g ξ⟫ = -⟪η,R.op ((F.μ+F.λ) • J F.n t-J F.n k) ξ⟫ := by
   let V := (F.μ+F.λ) • J F.n t-J F.n k
   let Z := t+(F.μ+F.λ) • k
@@ -238,8 +273,8 @@ theorem fixed_output_anchor_identity (J : E →ₗ[ℝ] E →ₗ[ℝ] E)
     (mul_ne_zero hλ hd) ν (P (R.op (Z+g) ξ)) (P (R.op (Z-g) ξ)) hν
     (by
       intro T
-      have h := vector_budget J hs κ ρ F R t k g hPB ξ η ν d hη
-        hnξ hnη hjξ heξ hην hdiagξ hdiagη hjjξ hjjη T
+      have h := vector_budget J hs κ ρ F R t k g hPB ξ η ν d hξ hη
+        hnξ hnη hjξ heξ hην hnV T
       have heq : 2*|F.λ*d|*|T+⟪η,R.op V ξ⟫/(F.λ*d)| =
           2*|F.λ*T*d+⟪η,R.op V ξ⟫| := by
         rw [mul_assoc, ← abs_mul]
@@ -258,6 +293,69 @@ theorem fixed_output_anchor_identity (J : E →ₗ[ℝ] E →ₗ[ℝ] E)
   rw [heq, mul_div_cancel₀ _ (mul_ne_zero hλ hd)] at hb
   change ⟪ν,R.op g ξ⟫ = -⟪η,R.op V ξ⟫
   linarith
+
+section Complex
+
+variable {C : Type*} [NormedAddCommGroup C] [InnerProductSpace ℂ C]
+local instance : InnerProductSpace ℝ C := InnerProductSpace.complexToReal
+
+/-- The two companion axes of the same scalar PB identify the complex output reading.
+The orientation may be either sign of the imaginary unit. -/
+theorem fixed_output_two_axis_identity (J : E →ₗ[ℝ] E →ₗ[ℝ] E)
+    (hs : ∀ a b, J a b = J b a) (κ ρ : E →ₗ[ℝ] E)
+    (F : SpectralPair J κ ρ) (R : VectorModel (H := C) J) (t k g : E)
+    (hκj : κ F.j = (-F.λ) • F.e) (hρj : ρ F.j = F.μ • F.j)
+    (hne : J F.n F.e = F.e)
+    (hPB : ∀ (v : C), ‖v‖ = 1 → ∀ (T α : ℝ),
+      scalarPB J κ ρ t k g (T • F.e+α • F.n) (vectorReading R v) ∧
+      scalarPB J κ ρ t k g (T • F.j+α • F.n) (vectorReading R v))
+    (ι : ℂ) (hι : ι = Complex.I ∨ ι = -Complex.I)
+    (ξ η : C) (d : ℝ) (hd : d ≠ 0) (hλ : F.λ ≠ 0)
+    (hξ : ‖ξ‖ = 1) (hη : ‖η‖ = 1)
+    (hnξ : R.op F.n ξ = 0) (hnη : R.op F.n η = (2 : ℝ) • η)
+    (hnν : R.op F.n ((-ι) • η) = (2 : ℝ) • ((-ι) • η))
+    (hjξ : R.op F.j ξ = d • η) (heξ : R.op F.e ξ = d • ((-ι) • η))
+    (hnV : J F.n ((F.μ+F.λ) • J F.n t-J F.n k) =
+      (F.μ+F.λ) • J F.n t-J F.n k) :
+    inner ℂ η (R.op g ξ) =
+      ι * inner ℂ η (R.op ((F.μ+F.λ) • J F.n t-J F.n k) ξ) := by
+  let ν : C := (-ι) • η
+  have hν : ‖ν‖ = 1 := by rcases hι with rfl | rfl <;> simp [ν, norm_smul, hη]
+  have hην : inner ℝ η ν = 0 := by
+    change (inner ℂ η ν).re = 0
+    rcases hι with rfl | rfl <;> simp [ν, inner_smul_right, inner_self_im]
+  let F' : SpectralPair J κ ρ := {
+    e := F.j, j := -F.e, n := F.n, μ := F.μ, λ := F.λ
+    kappa_e := by simpa only [smul_neg, neg_smul] using hκj
+    kappa_n := F.kappa_n
+    rho_e := hρj
+    rho_n := F.rho_n
+    jordan_ej := by rw [map_neg, hs F.j F.e, F.jordan_ej, neg_zero]
+    jordan_nj := by rw [map_neg, hne] }
+  have hfirst := fixed_output_anchor_identity J hs κ ρ F R t k g
+    (fun v hv T α => (hPB v hv T α).1) ξ η ν d hd hλ hξ hη hν
+    hnξ hnη hjξ heξ hην hnV
+  have hsecond := fixed_output_anchor_identity J hs κ ρ F' R t k g
+    (fun v hv T α => (hPB v hv T α).2) ξ (-ν) η d hd hλ hξ
+    (by simpa using hν) hη hnξ
+    (by simpa only [map_neg, hnν, smul_neg] using congrArg Neg.neg hnν)
+    (by change R.op (-F.e) ξ = d • -ν; simp only [map_neg, LinearMap.neg_apply, heξ, smul_neg]; rfl)
+    hjξ (by rw [inner_neg_left, real_inner_comm, hην, neg_zero]) hnV
+  change inner ℝ ν (R.op g ξ) = -inner ℝ η (R.op ((F.μ+F.λ) • J F.n t-J F.n k) ξ) at hfirst
+  change inner ℝ η (R.op g ξ) = -inner ℝ (-ν) (R.op ((F.μ+F.λ) • J F.n t-J F.n k) ξ) at hsecond
+  rw [inner_neg_left, neg_neg] at hsecond
+  change (inner ℂ ν (R.op g ξ)).re = -(inner ℂ η (R.op ((F.μ+F.λ) • J F.n t-J F.n k) ξ)).re at hfirst
+  change (inner ℂ η (R.op g ξ)).re = (inner ℂ ν (R.op ((F.μ+F.λ) • J F.n t-J F.n k) ξ)).re at hsecond
+  rcases hι with rfl | rfl
+  all_goals
+    simp [ν, inner_smul_left, Complex.mul_re] at hfirst hsecond
+    apply Complex.ext
+    · simpa [Complex.mul_re] using hsecond
+    · simp [Complex.mul_im] <;> linarith
+
+#print axioms fixed_output_two_axis_identity
+
+end Complex
 
 #print axioms fixed_output_anchor_identity
 

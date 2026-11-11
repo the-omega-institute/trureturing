@@ -1,0 +1,74 @@
+### 32.3 同一原像上的显式秩一核族
+
+以下构造直接在三维中完成 Hermitian 插值，也明确避开引理 32.2 的奇异行列式。取同一个满足 (32.4) 的原 $\omega$。选两个坐标 $a,b$，其谱值记为 $A_0<B_0$，并选实数 $T>1$、$T\ne2$。令
+
+$$
+\begin{gathered}
+\kappa=-\iota T,\qquad
+p_j=\frac{2+\kappa c_j}{\iota(\kappa c_j-\kappa^2-2)}\,\omega_j
+\quad(j=1,2,3),\qquad X=pp^*,\\
+v_a=\frac{B_0-\kappa}{B_0-A_0},\qquad
+v_b=\frac{\kappa-A_0}{B_0-A_0},\\
+(u_0)_a=\frac{v_a}{\overline{p_a}},\qquad
+(u_0)_b=\frac{v_b}{\overline{p_b}},\qquad
+(u_0)_j=0\quad(j\notin\{a,b\}),\\
+\nu=\|u_0\|>0,\qquad u=u_0/\nu,\qquad w=\omega/\nu,\\
+\zeta_\delta=-\iota+\delta\kappa,\qquad
+\alpha_+=1+T,\quad\alpha_-=T-1,\quad\beta_+=\beta_-=0.
+\end{gathered}
+\tag{32.12}
+$$
+
+这里没有数值选根：$\kappa c_j-\kappa^2-2=T^2-2-\iota T c_j$，其虚部非零；$2+\kappa c_j=2-\iota T c_j$ 也非零。$p_a,p_b$ 因原 $\omega_a,\omega_b\ne0$ 而非零，$v_a,v_b$ 均非零，故 $u_a u_b\ne0$、$\nu>0$，所有量有限。$X=pp^*$ 明确 Hermitian。由
+
+$$
+v_a+v_b=1,\qquad A_0v_a+B_0v_b=\kappa
+$$
+
+直接得同一探针的两份作用
+
+$$
+p^*u_0=1,\qquad p^*Cu_0=\kappa,\qquad
+Xu_0=p,\qquad XCu_0=\kappa p .
+\tag{32.13}
+$$
+
+未选的坐标也保留 $p_j$ 的实际值，故离面行一般非零。
+
+验证两个比例。将 (32.5) 的两列同乘 $\nu$，用 (32.13) 得
+
+$$
+\begin{aligned}
+\nu\mathsf R_\delta
+ &=p+\frac\delta2\bigl(\iota(C-\kappa I)p-C\omega\bigr),\\
+\nu\mathsf S_\delta
+ &=\omega+\frac\delta2\bigl((C+\kappa I)p+\iota C\omega\bigr).
+\end{aligned}
+$$
+
+在 $\nu(\mathsf S_\delta-\zeta_\delta\mathsf R_\delta)$ 中，$\delta$ 的系数为
+
+$$
+\tfrac12((C+\kappa I)p+\iota C\omega)-\kappa p
++\tfrac\iota2\bigl(\iota(C-\kappa I)p-C\omega\bigr)=0;
+$$
+
+常数项为
+
+$$
+\tfrac12\bigl((2I+\kappa C)\omega+
+ \iota((\kappa^2+2)I-\kappa C)p\bigr)=0,
+\tag{32.14}
+$$
+
+最后一式逐坐标正是 (32.12) 对 $p_j$ 的定义。因此完整三行同时满足 (32.5)，不是只在所选二平面上成立。两份 $\alpha$ 严格正，斜率的虚部方向完全符合 (32.5)。引理 32.2 中这族斜率的离面行列式为
+
+$$
+\Delta_d=-4\iota(d\kappa-\kappa^2-2)
+=-4\iota(T^2-2-\iota Td)\ne0
+\quad(d\in\{1,2,3\}).
+\tag{32.15}
+$$
+
+这给出了精确的非奇异性，也解释了为何原 $\omega$ 的离面分量可以被实际探针接住。
+

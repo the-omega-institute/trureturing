@@ -1,0 +1,90 @@
+### 33.3 假设第三格读数非零时的准确 Hermitian 相容性
+
+以下设 $w\ne0$，并反设
+$n=\operatorname{Re}(\overline{v_3}u_3)\ne0$。记 $w=w_a e_a$，$a\in\{1,2\}$，$w_a\ne0$；此处指标 $a$ 同时等于谱值 $c_a$。由 $v_3\ne0$、$w_3=0$ 和 (33.6)，必有
+
+$$
+\eta=\frac{1+\iota\gamma}{3},\qquad
+D(d)=(1+\iota\gamma)(1-d/3).
+\tag{33.9}
+$$
+
+$w_a=D(a)v_a\ne0$ 强制 $\gamma\ne\iota$ 且 $v_a\ne0$。设 $b$ 是 $1,2$ 中不同于 $a$ 的另一格，则 $D(b)\ne0$，所以
+$v_b=p_b=q_b=0$；并未令 $u_b$ 为零。由 (33.6)，对 $d=a,3$ 写
+
+$$
+\begin{gathered}
+p_d=P_dv_d,\qquad q_d=Q_dv_d,\\
+P_d=(1-d/3)\gamma+\iota d/3,
+\qquad Q_d=-2(d+1/3)\gamma+\iota(d+2/3),\\
+P_3=\iota,\qquad Q_3=(-20\gamma+11\iota)/3.
+\end{gathered}
+\tag{33.10}
+$$
+
+若 $u_a=0$，则 $u^*p=\iota\overline{u_3}v_3\in\mathbb R$ 立即给 $n=0$。故反设下 $u_au_3\ne0$。置
+
+$$
+z_a=\overline{u_a}v_a,\qquad z_3=\overline{u_3}v_3,
+\qquad \operatorname{Re}z_3=n,
+\qquad A_d=3P_d-Q_d,\quad B_d=Q_d-aP_d.
+\tag{33.11}
+$$
+
+同一个 Hermitian $X$ 给出全部四个实相容条件
+
+$$
+u^*p\in\mathbb R,\qquad (Cu)^*q\in\mathbb R,
+\qquad u^*q=p^*Cu.
+\tag{33.12}
+$$
+
+这些条件仅含 $a,3$ 两格的输出，因为 $p_b=q_b=0$，即使 $u_b\ne0$ 亦然。其准确等价形式是
+
+$$
+\boxed{\quad
+A_a z_a\in\mathbb R,\qquad B_3z_3\in\mathbb R,
+\qquad B_a z_a=\overline{A_3z_3}.
+\quad}
+\tag{33.13}
+$$
+
+为核对等价性，令
+
+$$
+U_0=\begin{pmatrix}u_a&a u_a\\u_3&3u_3\end{pmatrix},\qquad
+Y_0=\begin{pmatrix}p_a&q_a\\p_3&q_3\end{pmatrix}.
+$$
+
+$\det U_0=(3-a)u_au_3\ne0$。式 (33.12) 正是 $U_0^*Y_0$ Hermitian，亦即下面的有效插值矩阵 Hermitian：
+
+$$
+Y_0U_0^{-1}
+=\frac1{3-a}
+\begin{pmatrix}
+ A_av_a/u_a&B_av_a/u_3\\
+ A_3v_3/u_a&B_3v_3/u_3
+\end{pmatrix}.
+\tag{33.14}
+$$
+
+取两个对角元的实性及两个非对角元的共轭关系，即得 (33.13)。式 (33.14) 不声称等于原 $X$ 的主子块，也没有压缩任何 PB 平方。
+
+这些也是指定 $Xu=p,XCu=q$ 的充分相容条件，而不只是必要读数。事实上令 $U=[u,Cu]$、$Y=[p,q]$，则
+
+$$
+G=U^*U,\qquad
+\det G=\sum_{j<k}(c_j-c_k)^2|u_j|^2|u_k|^2>0.
+$$
+
+若 (33.12) 成立，$U^*Y=Y^*U$，则显式矩阵
+
+$$
+\widetilde X
+=YG^{-1}U^*+UG^{-1}Y^*
+ -UG^{-1}(U^*Y)G^{-1}U^*
+\tag{33.15}
+$$
+
+满足 $\widetilde X=\widetilde X^*$ 及 $\widetilde XU=Y$：后式的第二、三项因 $Y^*U=U^*Y$ 恰好抵消。这交代了任意额外 $u_b$ 的完整插值，而非以平面内读取代替完整原问题。以下只消费其必要方向。
+

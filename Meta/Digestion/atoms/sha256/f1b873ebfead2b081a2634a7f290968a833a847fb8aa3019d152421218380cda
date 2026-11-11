@@ -1,0 +1,29 @@
+**定义 40.1（两条原环境连线的固定输出）。** 完整沿用定义 32.1、(32.2)–(32.3)，专门取原有序基 $(e_1,e_2,e_3,f_1,f_2)$ 中的
+
+$$
+\begin{gathered}
+\mathcal H=\mathbb C^3\oplus\mathbb C^2,\qquad A=M_5(\mathbb C),
+\qquad P=I_3\oplus0_2,\qquad c=\operatorname{diag}(1,2,3,0,0),\\
+t=\begin{pmatrix}B&V\\V^*&D_{\rm env}\end{pmatrix},\qquad
+B=B^*\in M_3(\mathbb C),\qquad
+V=[\kappa e_1,\gamma e_2],\qquad D_{\rm env}=\operatorname{diag}(0,d),\\
+\kappa,\gamma>0,\qquad d\in\mathbb R\setminus\{0\},\qquad
+\mathsf E_s=sE_{33}=\operatorname{diag}(0,0,s,0,0),\qquad s\in\mathbb R,\\
+\sigma\in\{1,-1\}\text{ 分别固定},\qquad \iota=\sigma i,\qquad
+K(a,b)=\frac{\iota}{2}[a,b],\qquad g=K(c,t)+\mathsf E_s .
+\end{gathered}
+\tag{40.1}
+$$
+
+所有 $R_\delta,S_\delta,L,B_\phi$ 仍由完整原乘积 (32.2) 定义，PB 仍为 (32.3)。这里 $s$ 是第三格的实残量系数，$E_{33}$ 是完整 $M_5$ 的原矩阵单位；不改动原来源合同中的域或响应符号。记
+
+$$
+a=(B_{12},B_{13}),\qquad C_E=\operatorname{diag}(2,3),\qquad
+T=\begin{pmatrix}b_0&z\\\overline z&e\end{pmatrix}
+ =(B_{jk})_{j,k\in\{2,3\}},\qquad
+b_0,e\in\mathbb R,\quad z\in\mathbb C .
+\tag{40.2}
+$$
+
+这里 $T$ 是原主子块，不要求 $\operatorname{span}(e_2,e_3)$ 对 $B$ 不变。二维 $R_{\delta,E},S_{\delta,E},L_E$ 只表示 (38.1) 中参数恰为 $C_E,T,X,sP_3$ 的比较式，$P_3=\operatorname{diag}(0,1)$。其与原空间的关系须由下述完整作用列支付。
+

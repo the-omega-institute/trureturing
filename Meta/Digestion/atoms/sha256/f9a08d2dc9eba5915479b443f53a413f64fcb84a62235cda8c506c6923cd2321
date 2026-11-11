@@ -1,0 +1,123 @@
+**定理 41.5（完整缺陷二次式及有限严格排除）。** 保持 (41.1)、(41.4)。任取有限 $X=X^*\in M_3(\mathbb C)$、$u\in\mathbb C^3$、实 $\beta_\delta$ 和正 $\alpha_\delta$，要求在同一原 $q$ 上准确满足
+
+$$
+\begin{aligned}
+A_\delta&=Xu+\frac\delta2\bigl(\iota(CXu-XCu)-Cq\bigr),\\
+Z_\delta&=q+\frac\delta2(CXu+XCu+\iota Cq),\\
+Z_\delta&=(\beta_\delta-\delta\iota\alpha_\delta)A_\delta.
+\end{aligned}
+\tag{41.22}
+$$
+
+这是演员主列的两个相容核条件，未宣称第四列也成核。定义标量及系数
+
+$$
+\begin{gathered}
+z=q^*u,\quad p=q^*Cu,\quad
+b_\delta=z+\frac\delta2(\beta_\delta-\iota)p
+                      -\frac\iota2\alpha_\delta p,\qquad
+\eta=\sum_{\delta=\pm1}\frac1{2\alpha_\delta}>0,\\
+w_E=\operatorname{Re}\bigl((q-\iota Xu)^*Du\bigr)+s_0\operatorname{Re}z,\\
+A_2=s_0^2\eta,\qquad
+A_1=2w_E+s_0\sum_{\delta=\pm1}\frac{\delta\operatorname{Re}b_\delta}{\alpha_\delta},\\
+A_0=\eta\|Du\|^2+\sum_{\delta=\pm1}\frac{|b_\delta|^2}{2\alpha_\delta}\ge0.
+\end{gathered}
+\tag{41.23}
+$$
+
+此处 $p$ 是复标量，与静态候选的映射 $p$ 无关，$b_\delta$ 也不是 (41.15) 的 $b$。全称原 PB 必须对每份实际核数据满足
+
+$$
+A_2\rho^2+A_1\rho+A_0\ge0\quad(\rho\in\mathbb R).
+\tag{41.24}
+$$
+
+等价地，$s_0\ne0$ 时必须 $A_1^2\le4A_2A_0$；$s_0=0$ 时必须 $A_1=0$。若相应条件失败，就存在有限原探针和同一完整正泛函使 PB 严格失败，且可使两笔预算都正并具有任意指定有限正质量。
+
+证明。令 $x_\rho=(\rho X)\oplus0$、$\xi_\rho=(u,\rho)$、$\psi_\rho(a)=\xi_\rho^*a\xi_\rho$。完整矩阵在同一环境中为
+
+$$
+\begin{aligned}
+R_\delta&=\begin{pmatrix}
+\rho(X+\delta\iota[C,X]/2)&-\delta Cq/2\\
+-\delta q^*C/2&0
+\end{pmatrix},\\
+S_\delta&=\begin{pmatrix}
+\delta\bigl(\rho(CX+XC)/2+D\bigr)&q+\delta\iota Cq/2\\
+q^*-\delta\iota q^*C/2&\delta s_0
+\end{pmatrix}.
+\end{aligned}
+\tag{41.25}
+$$
+
+于是完整列而非压缩列满足
+
+$$
+\begin{aligned}
+R_\delta\xi_\rho&=(\rho A_\delta,-\delta p/2),\\
+S_\delta\xi_\rho&=(\rho Z_\delta+\delta Du,
+                       z-\delta\iota p/2+\delta s_0\rho),\\
+\mathfrak d_\delta(\rho)
+ &:=(S_\delta-\beta_\delta R_\delta
+                    +\delta\iota\alpha_\delta R_\delta)\xi_\rho
+   =(\delta Du,b_\delta+\delta s_0\rho),\\
+\psi_\rho(W)&=2\rho w_E.
+\end{aligned}
+\tag{41.26}
+$$
+
+最后一行的演员交换子贡献为 $-2\rho\operatorname{Im}_\iota((Xu)^*Du)$，星形贡献为 $2\rho\operatorname{Re}(q^*Du)+2\rho s_0\operatorname{Re}(q^*u)$，正是所列 $w_E$。这里 $\operatorname{Im}_\iota(a+\iota b)=b$。因此完整缺陷平方给准确二次式
+
+$$
+\begin{aligned}
+\mathcal Q(\rho)
+&:=\sum_{\delta=\pm1}\frac{\|\mathfrak d_\delta(\rho)\|^2}{2\alpha_\delta}
+           +\psi_\rho(W)\\
+&=\sum_{\delta=\pm1}
+ \frac{\|Du\|^2+|b_\delta+\delta s_0\rho|^2}{2\alpha_\delta}
+       +2\rho w_E
+ =A_2\rho^2+A_1\rho+A_0.
+\end{aligned}
+\tag{41.27}
+$$
+
+尤其 $s_0\ne0$ 时的 $A_2\rho^2$ 是实际环境平方，不能从 §39 的支持残量线性增长证明中删除。
+
+还须说明负二次式为什么是原 PB 的违反。对任意正 $\phi$、$\alpha>0,\beta\in\mathbb R$，设
+
+$$
+\mathcal T_\phi(R,S;\alpha,\beta)
+=\frac{\phi((S-\beta R)^2)+\alpha^2\phi(R^2)}{2\alpha}.
+\tag{41.28}
+$$
+
+写 $a=\phi(R^2),b=\phi(R\circ S),c=\phi(S^2)$。若 $a>0$，分子配方为 $a(\beta-b/a)^2+c-b^2/a+\alpha^2a$，算术几何平均给 $\mathcal T_\phi\ge\sqrt{ac-b^2}=\sqrt{B_\phi(R,S)}$。若 $a=0$，实 Schwarz 给 $b=0$，结论仍成立。对当前向量泛函，交叉项的准确符号为
+
+$$
+\frac{\|\mathfrak d_\delta(\rho)\|^2}{2\alpha_\delta}
+=\mathcal T_{\psi_\rho}(R_\delta,S_\delta;\alpha_\delta,\beta_\delta)
+ -\delta\psi_\rho(K(R_\delta,S_\delta)).
+\tag{41.29}
+$$
+
+确实 $\psi_\rho(K(R,S))=-\operatorname{Im}_\iota\langle R\xi_\rho,S\xi_\rho\rangle$，展开 $+\delta\iota\alpha R\xi_\rho$ 的平方就给上述负号。由 (41.11)，有
+
+$$
+\mathcal Q(\rho)=\sum_{\delta=\pm1}
+ \mathcal T_{\psi_\rho}(R_\delta,S_\delta;\alpha_\delta,\beta_\delta)
+ -\psi_\rho(L).
+\tag{41.30}
+$$
+
+故 $\mathcal Q(\rho)<0$ 直接推出 $\psi_\rho(L)>\mathcal A_+(\psi_\rho)+\mathcal A_-(\psi_\rho)$，是在同一探针、同一泛函上的实际严格违反，而不只是一个核条件失效。$s_0\ne0$ 且判别式正时，有限选择 $\rho=-A_1/(2A_2)$ 给 $\mathcal Q=A_0-A_1^2/(4A_2)<0$；$s_0=0,A_1\ne0$ 时，可取 $\rho=-\operatorname{sign}(A_1)(A_0+1)/|A_1|$，准确给 $\mathcal Q=-1$。配方也证明了 (41.24) 的两个等价条件。
+
+若该向量违反的某笔预算为零，固定此有限 $\rho$ 后置 $\widetilde\psi=\psi_\rho+\varepsilon\operatorname{Tr}_4$。原严格差对 $\varepsilon$ 连续，故对充分小的有限 $\varepsilon>0$ 仍严格。此泛函忠实，且 $R_\delta,S_\delta$ 是实线性独立矩阵：它们的固定上右列分别为 $-\delta Cq/2$ 与 $(I_3+\delta\iota C/2)q$。在任一活动坐标，若后者等于实数 $k$ 乘前者，就需 $1+\delta\iota c_\ell/2=-k\delta c_\ell/2$，其非零虚部矛盾。$R_\delta\ne0$，因此也排除其他实线性依赖。忠实泛函在自伴实空间给正定内积，严格实 Schwarz 保证两笔预算都正。最后取
+
+$$
+\phi=\frac{\mu}{\|u\|^2+\rho^2+4\varepsilon}
+       (\psi_\rho+\varepsilon\operatorname{Tr}_4),\qquad 0<\mu<\infty.
+\tag{41.31}
+$$
+
+齐次性保持严格违反、两笔正预算及质量 $\mu$。这一步证明的是一个混合泛函见证，未声称扰动后仍是向量泛函。∎
+
