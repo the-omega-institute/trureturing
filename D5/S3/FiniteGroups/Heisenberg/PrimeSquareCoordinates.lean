@@ -24,7 +24,7 @@ def squareCode : PrimeSquare p ≃ ZMod p × ZMod p where
   invFun x := (x.1.val + p * x.2.val : ℕ)
   left_inv x := by
     have hd : x.val / p < p := (Nat.div_lt_iff_lt_mul (NeZero.pos p)).mpr (ZMod.val_lt x)
-    change (((x.val : ZMod p).val + p * (x.val / p : ZMod p).val : ℕ) : PrimeSquare p) = x
+    change (((x.val : ZMod p).val + p * ((x.val / p : ℕ) : ZMod p).val : ℕ) : PrimeSquare p) = x
     rw [ZMod.val_natCast, ZMod.val_natCast, Nat.mod_eq_of_lt hd, Nat.mod_add_div,
       ZMod.natCast_zmod_val]
   right_inv x := by
@@ -80,7 +80,7 @@ def squareCoordinates : ResidueCoordinates (PrimeSquare p) (ZMod p) where
       _ = (p : PrimeSquare p) * ((a.val * x.val) % p : ℕ) := square_mul_mod p _
       _ = (p : PrimeSquare p) * (a * (x.val : ZMod p)).val := by
         congr 1
-        rw [ZMod.val_mul, ZMod.val_natCast, Nat.mul_mod, Nat.mod_mod, ← Nat.mul_mod]
+        simp only [ZMod.val_mul, ZMod.val_natCast, Nat.mul_mod, Nat.mod_mod]
 
 def dualCoordinates : ResidueCoordinates (PrimeDual p) (ZMod p) where
   code := Equiv.refl _
