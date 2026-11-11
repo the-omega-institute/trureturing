@@ -1,0 +1,37 @@
+# All-state charged Jacobi for the actual compressed fields
+
+## Abstract
+
+LatticeCosetChargedJacobi
+
+Let D be the original finite-rank integral even lattice data, e an arbitrary finite external rank, B an arbitrary integral cross block, and C an arbitrary symmetric integral block with even diagonal. Both ranks include zero. The theorem assumes positive definiteness only of the ORIGINAL gramReal D. There is no positive-definiteness, nondegeneracy or inverse hypothesis on the ambient block. I denotes the existing compressed D B C hC hCe, with the original injection, projection, all-state field and lattice cocycle unchanged. S denotes the full schur D B C: its C contribution and inverse-original-Gram cross-block correction are both retained. All source and input states range over the entire original Carrier D, including arbitrary finite charge sums and oscillator polynomials.
+
+**Theorem 1.1 (charged_borcherds).**
+
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeCosetChargedJacobi.charged_borcherds`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeCosetChargedJacobi.charged_borcherds` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every such D,e,B,C,hC,hCe, every positive-definiteness proof hD for the original Gram form, every external charge a,b,c, every original u,v,w and every signed integer p,r,s, the actual iterate sum with weight choose(p+S(a,c),i) equals the first ordered product sum with weight (-1)^i choose(r+S(a,b),i), minus (-1)^r times the reverse ordered product sum with that same weight. The iterate modes are (r+i,p+s-i), the first product modes (p+r-i,s+i), and the reverse product modes (r+s-i,p+i). Each summation index i is natural; the modes and shifts remain integral with their displayed signs. These are actual compressed-field compositions in the three composable charge sectors. The statement is the algebraic coefficient identity on every original state, with the literal residue sign and original lattice cocycle conventions.
+
+The consumed proof chain first proves projection_oscillator_derivation and projection_translation on the full ambient carrier. Only the original inverse Gram is used to identify the projected translation with moduleL(-1). The symmetry helper schur_swap and the actual reverse_contraction enter source_mixed. Source skew symmetry, translation transport and the existing product contraction give choose(S(a,c),n) with NO extra (-1)^n. The consumed exact_source_probe then reconstructs the projected ambient iterate from the actual inner creation expansion; it does not posit an independently coherent family.
+
+The private binomial_convolution proves the necessary finite triangular interchange for an arbitrary complex module: the two nested sums weighted by z^i choose(x,i) and z^j choose(y,j) collapse to the sum weighted by z^k choose(x+y,k) on f(k). Its hypothesis is an actual vector tail cutoff. The joint support lies in i+j<N before finsum_curry or diagonal reindexing; the generalized binomial coefficients themselves need not truncate. Ring.add_choose_eq supplies Vandermonde. iterate_cutoff and product_cutoff obtain the required tails from compressed_high_modes before scalar multiplication. integer_choose identifies the existing integral-binomial convention. These helpers are consumed by charged_borcherds; the convolution is also reused by the weak-associativity module.
+
+Finally charged_borcherds applies the existing ordinary all-state ambient Borcherds identity to J(a,u), J(b,v), J(c,w), projects it by P(a+b+c), and identifies all three projected summand families. The source correction uses the convolution with z=1 and the two product corrections use z=-1. This finite convolution and projected all-state descent are the mathematical content; bookkeeping applications and cutoff helpers supply no separate novelty claim or artificial new endpoint.
+
+At a=0 the displayed Schur terms vanish. For C=0 the existing neutral supplier identifies the neutral compressed action with the ORIGINAL action in the appropriate B-labelled module. For the canonical rational reindexing at C=0, q_ab=-S(a,b) and K_ab(u)[m-q_ab]v=I_ab(u)[m]v, with raw rational q rather than q modulo integers. These are parameter correspondences in the exposition, not additional named application theorems.
+
+Source attribution: the supplied LatticeCosetChargedJacobi mathematical source, including its source-contraction attribution to LatticeCosetSourceSkewProbe.lean, SHA256 73fa8b8332d3fa5e57ebe74d853682c869cf39031724cdc088191c004e5a84ce. The imported LatticeCosetOperatorCorrection, LatticeDualCosetVirasoro, StateField.SkewSymmetry and LatticeAllStateJacobi remain the native suppliers. Classical lattice conventions are Bakalov--Kac, math/0402315v1, section 4.1; native residue and Sugawara sources retain their Scott Carnahan and Kalle Kytölä attributions. This document makes no claim of literature novelty, analytic sewing, an actual quotient F or exchange theorem, scalar polynomiality, categorical or physical realization, or string/AdS completion.
+
+## References
+
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeCosetChargedJacobi.charged_borcherds`
+- Dependency: [D5/S3/VertexAlgebra/LatticeAllStateJacobi](../LatticeAllStateJacobi.md)
+- Dependency: [D5/S3/VertexAlgebra/Sectors/LatticeCosetOperatorCorrection](LatticeCosetOperatorCorrection.md)
+- Dependency: [D5/S3/VertexAlgebra/Sectors/LatticeDualCosetVirasoro](LatticeDualCosetVirasoro.md)
+- Dependency: [D5/S3/VertexAlgebra/StateField/SkewSymmetry](../StateField/SkewSymmetry.md)
