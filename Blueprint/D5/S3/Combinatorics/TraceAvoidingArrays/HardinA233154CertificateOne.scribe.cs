@@ -13,7 +13,7 @@ internal sealed class HardinA233154CertificateOneDocument : IScribeDocumentDefin
         Blocks(Node("row_counts",Statement(),"Every legal source code in the block has the stated number of successors in each quotient class.",theorem:true)), []));
     private static Formula Statement() {
         var code=Seq(Langle, Sp,PlusF(Mul(N(3),Val(V("a"))),N(1)),Comma,Sp,Seq(Op("by"),Sp,Op("omega")),Rangle);
-        var row=C("decode",N(7),code);
+        var row=C("decode",N(7),P(Seq(code,Colon,Sp,FinF(N(2187)))));
         return All("a",FinF(N(729)),Imp(C("rowLegal",row),All("s",FinF(N(16)),
             Eq(C("classCount",row,V("s")),A(C("quotient"),C("classify",row),V("s"))))));
     }
@@ -27,7 +27,7 @@ internal sealed class HardinA233154CertificateOneDocument : IScribeDocumentDefin
             Seq(words.Skip(1).Select(V).ToArray()));
     }
 
-    private static Formula C(string name, params Formula[] args) => new Formula.Apply(Name(name), [.. args]);
+    private static Formula C(string name, params Formula[] args) => args.Length == 0 ? Name(name) : new Formula.Apply(Name(name), [.. args]);
     private static Formula A(Formula fn, params Formula[] args) => new Formula.Apply(fn, [.. args]);
     private static Formula P(Formula f) => Parenthesized(f);
     private static Formula Parenthesized(Formula f) => Seq(Open, f, Close);

@@ -35,7 +35,7 @@ internal sealed class HardinA233154ColumnDocument : IScribeDocumentDefinition
             Seq(words.Skip(1).Select(V).ToArray()));
     }
 
-    private static Formula C(string name, params Formula[] args) => new Formula.Apply(Name(name), [.. args]);
+    private static Formula C(string name, params Formula[] args) => args.Length == 0 ? Name(name) : new Formula.Apply(Name(name), [.. args]);
     private static Formula A(Formula fn, params Formula[] args) => new Formula.Apply(fn, [.. args]);
     private static Formula P(Formula f) => Parenthesized(f);
     private static Formula Parenthesized(Formula f) => Seq(Open, f, Close);
