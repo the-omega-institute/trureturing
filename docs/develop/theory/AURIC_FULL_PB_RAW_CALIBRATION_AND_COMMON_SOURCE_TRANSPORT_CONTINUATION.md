@@ -1306,7 +1306,7 @@ $$
 证明。先消去 $\ell$。取 $H$ 的一组正交特征基，选其中两个向量 $e_i,e_j$，并在其余两个特征向量张成的平面内任取单位 $k$。令 $E=\operatorname{span}(e_i,e_j,k)$，在这三个轴上给 $c$ 互异谱 $1,2,3$，记相应谱值 $\lambda_i,\lambda_j,\lambda_k$。令 $x$ 在这个演员基中对角。虽然 $k$ 不必是 $H$ 的特征向量，$e_i,e_j$ 仍是，故 (57.6) 的 $H$ 项在这两个轴的整列都为零，且
 
 $$
-h_i=\eta(c,x)+\ell(c)x_i-\ell(x)\lambda_i,qquad
+h_i=\eta(c,x)+\ell(c)x_i-\ell(x)\lambda_i,\qquad
 h_j=\eta(c,x)+\ell(c)x_j-\ell(x)\lambda_j.
 \tag{58.1}
 $$
