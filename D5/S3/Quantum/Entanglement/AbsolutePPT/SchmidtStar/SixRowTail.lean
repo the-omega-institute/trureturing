@@ -30,7 +30,7 @@ def tailCharge (d : Fin 21 → ℝ) (p : Fin 5 → ℝ)
 
 private theorem coefficient_nonneg (p : Fin 5 → ℝ)
     (hp : ∀ i, 0 ≤ p i) (B : BottomSlot 6) : 0 ≤ coefficient p B := by
-  have hz (i : Fin 6) : 0 ≤ Fin.cases (1 : ℝ) p i := by
+  have hz (i : Fin 6) : (0 : ℝ) ≤ Fin.cases (1 : ℝ) p i := by
     refine Fin.cases ?_ (fun j => ?_) i
     · norm_num
     · simpa only [Fin.cases_succ] using hp j
@@ -148,7 +148,7 @@ theorem six_coefficient_mass (p : Fin 5 → ℝ) (hp : ∀ i, 0 ≤ p i)
     linarith only [hh]
   have hwn : ∑ i, (w i)^2=1 := by
     change (∑ i, (p (τ i))^2)=1
-    exact (τ.sum_comp (fun i => (p i)^2)).trans hn
+    exact (Equiv.sum_comp τ (fun i => (p i)^2)).trans hn
   by_cases hL : 2 ≤ ∑ i, w i
   · apply mass_of_labels p (largeLabels τ) (largeLabels_injective τ)
     have he : (∑ i, coefficient p (largeLabels τ i))=1+∑ i, w i := by

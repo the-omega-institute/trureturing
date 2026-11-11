@@ -29,12 +29,15 @@ theorem quadratic_identity (U r : ℝ) (h : Fin 15 → ℝ) (d : Fin 21 → ℝ)
         (Fin.cases 1 p : Fin 6 → ℝ) =
       2*U*((∑ i : Fin 6, (Fin.cases 1 p i)^2)-
         SixRowHead.headValue (fun i => r+h i) p π-tailCharge d p σ) := by
+    have hv : (Fin.cases 1 p : Fin 6 → ℝ) = ![1, p 0, p 1, p 2, p 3, p 4] := by
+      funext i
+      fin_cases i <;> rfl
     simp only [K,SixRowHead.headValue,tailCharge,coefficient,dotProduct,mulVec,
-      Fintype.sum_sum_type,Sum.elim_inl,Sum.elim_inr]
+      Fintype.sum_sum_type,Sum.elim_inl,Sum.elim_inr,hv]
     simp_rw [← SixRowHead.edgeEquiv.sum_comp]
     norm_num [Fin.sum_univ_succ,SixRowHead.edgeEquiv,SixRowHead.edgeAt,edge]
     <;> ring
-  have hnorm : (∑ i : Fin 6, (Fin.cases 1 p i)^2)=2 := by
+  have hnorm : (∑ i : Fin 6, (Fin.cases (1 : ℝ) p i)^2)=(2 : ℝ) := by
     rw [Fin.sum_univ_succ]
     simp only [Fin.cases_zero,Fin.cases_succ,one_pow]
     rw [hn]
@@ -190,7 +193,6 @@ theorem literal_coupled (n : ℕ) (hn : 23 ≤ n)
     apply (div_le_div_iff_of_pos_right hu).mpr
     have ho := hl (show (⟨6*n-21+i.val,by omega⟩ : Fin (6*n)) ≤
       ⟨6*n-21+j.val,by omega⟩ by change 6*n-21+i.val ≤ 6*n-21+j.val; omega)
-    dsimp [d]
     linarith only [ho]
   have ht (i : Fin 15) : U*(1+r+h i)=l ⟨i.val,by omega⟩ := by
     dsimp [r,h]
