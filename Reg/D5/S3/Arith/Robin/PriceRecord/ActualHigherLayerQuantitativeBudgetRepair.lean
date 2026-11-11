@@ -31,47 +31,6 @@ open _root_.D5.S3.Arith.Robin.PriceRecord.HigherLayerLogSlope
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
-namespace uniform_beta_and_slope
-/- Four slots for D5.S3.Arith.Robin.PriceRecord.ActualHigherLayerQuantitativeBudgetRepair.uniform_beta_and_slope:
-   escapeFrom: the existing real beta(j,u), with the slope and other literal readouts held fixed; source occurrence remains unbound.
-   readout: literal typed realization; lawful template enrollment and exact
-     binder/readout/sourceSelection reconstruction are still missing.
-   realization: the full source telescope is Law below; actual_law and the
-     definitional source_bridge are uncompiled attempts. Whole-family
-     interventions and actual role/observational sensitivity remain unproved.
-   continuation: unknown, without a residual or exhaustion assertion. -/
-abbrev signature : Signature where
-  Params := ℕ
-  State _ := ℝ
-  Role := Unit
-  finiteRole := inferInstance
-  nonemptyRole := inferInstance
-  Output _ _ := ℝ
-  Anchor := Empty
-  finiteAnchor := inferInstance
-
-def actual : Realization signature :=
-  realize signature (fun _ j u => beta j u) (fun e => nomatch e)
-
-abbrev arena : Arena where
-  signature := signature
-  Law V :=
-    ∀ {j : ℕ} (hj : 2 ≤ j) {u : ℝ} (hu : 2 ≤ u),
-        1 / (2 * u ^ j * log u) ≤ (V.readout ()) j u ∧
-          (V.readout ()) j u ≤ 1 / (u ^ j * log u) ∧
-          0 < logarithmicSlope j u ∧ logarithmicSlope j u ≤ 2 * (j : ℝ) ∧
-          HasDerivAt (fun v => log ((V.readout ()) j v)) (-logarithmicSlope j u / u) u
-
-private theorem actual_law : arena.Law actual := by
-  exact @_root_.D5.S3.Arith.Robin.PriceRecord.ActualHigherLayerQuantitativeBudgetRepair.uniform_beta_and_slope
-
-private theorem source_bridge :
-    (type_of% (@_root_.D5.S3.Arith.Robin.PriceRecord.ActualHigherLayerQuantitativeBudgetRepair.uniform_beta_and_slope)) ↔ arena.Law actual := Iff.rfl
-
-#print axioms actual_law
-#print axioms source_bridge
-end uniform_beta_and_slope
-
 namespace adjacent_layer_strict
 /- Four slots for D5.S3.Arith.Robin.PriceRecord.ActualHigherLayerQuantitativeBudgetRepair.adjacent_layer_strict:
    escapeFrom: the existing real beta(j,u), with the slope and other literal readouts held fixed; source occurrence remains unbound.

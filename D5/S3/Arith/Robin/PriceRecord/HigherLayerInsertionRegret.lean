@@ -67,7 +67,7 @@ private theorem slope_upper {u : ℝ} (hu : 2 ≤ u) {j : ℕ} (hj : 2 ≤ j) :
   dsimp [logarithmicSlope]
   nlinarith only [hmul, hrec, hj2]
 
-private theorem log_drop_upper {j : ℕ} (hj : 2 ≤ j) {u v : ℝ}
+theorem log_drop_upper {j : ℕ} (hj : 2 ≤ j) {u v : ℝ}
     (hu : 2 ≤ u) (huv : u ≤ v) :
     log (beta j u / beta j v) ≤ (2 * j : ℝ) * log (v / u) := by
   let f := fun t : ℝ => log (beta j t) + (2 * j : ℝ) * log t
@@ -119,5 +119,6 @@ theorem insertion_regret {j p : ℕ} (hj : 2 ≤ j) (hp : p.Prime)
   rw [← beta_nat hp (by omega : 1 ≤ j)]
   exact ⟨sub_nonneg.mpr hanti, by nlinarith only [hlow, hlog, hwin]⟩
 
+#print axioms log_drop_upper
 #print axioms insertion_regret
 end D5.S3.Arith.Robin.PriceRecord.HigherLayerInsertionRegret

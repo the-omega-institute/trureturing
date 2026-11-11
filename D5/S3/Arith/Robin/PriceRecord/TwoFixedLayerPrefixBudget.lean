@@ -216,33 +216,6 @@ theorem two_roster_integer_ledger_at_layers {i j : ℕ} (hi : 2 ≤ i) (hj : 2 �
     rw [hkf, hkf₂, if_neg hp₂, if_neg hp₃, add_zero, add_zero]
     exact hbasehigher p hp l hl
 
-theorem two_roster_integer_ledger {X : ℝ} (hX : 4 < X) {Q : ℕ}
-    (hQ2 : 2 ≤ Q) (hQ : (Q : ℝ) ∈ Set.Icc (X / 2) (2 * X))
-    {r : ℝ} (hr : r ∈ Set.Icc (X / 2) (2 * X))
-    (hroot : firstLayerPrice r = referencePrice X)
-    (hsupport : ∀ p : ℕ, p.Prime →
-      2 ≤ (strictInteger (referencePrice X)).factorization p → p ≤ Q)
-    (A₂ A₃ : Finset ℕ) (hdis : Disjoint A₂ A₃)
-    (hA₂ : ∀ p ∈ A₂, p.Prime ∧ p ≤ Q ∧ optimalLayerCount (referencePrice X) p = 1)
-    (hA₃ : ∀ p ∈ A₃, p.Prime ∧ p ≤ Q ∧ optimalLayerCount (referencePrice X) p = 2) :
-    let n := strictInteger (referencePrice X)
-    let base := higherCore n * prefixInteger Q
-    let k := base * (∏ p ∈ A₂, p) * (∏ p ∈ A₃, p)
-    2 ≤ k ∧ k.primeFactors = Nat.primesLE Q ∧
-      (∀ p : ℕ, k.factorization p =
-        base.factorization p + (if p ∈ A₂ then 1 else 0) + (if p ∈ A₃ then 1 else 0)) ∧
-      log (k : ℝ) = log (higherCore n : ℝ) + Chebyshev.theta (Q : ℝ) +
-        (∑ p ∈ A₂, log p) + (∑ p ∈ A₃, log p) ∧
-      log (higherCore k : ℝ) = log (higherCore n : ℝ) +
-        (∑ p ∈ A₂, log p) + (∑ p ∈ A₃, log p) ∧
-      actualDefect X k - completeFirstLayerLoss X k =
-        (∑ p ∈ A₂, (referencePrice X - goldenLayerMarginal p 2) * log p) +
-        (∑ p ∈ A₃, (referencePrice X - goldenLayerMarginal p 3) * log p) ∧
-      (∀ p : ℕ, p.Prime → p ∉ A₂ ∪ A₃ → ∀ j : ℕ, 2 ≤ j →
-        (j ≤ k.factorization p ↔ j ≤ optimalLayerCount (referencePrice X) p)) := by
-  exact two_roster_integer_ledger_at_layers (by norm_num : 2 ≤ 2)
-    (by norm_num : 2 ≤ 3) hX hQ2 hQ hr hroot hsupport A₂ A₃ hdis hA₂ hA₃
-
 /-- Exact finite price transfer for ANY actual paid repair k. This is the
 finite algebraic implication, not an existence supplier for the final repair.
 The old delta is confined to the old theta identity. The price term contains
@@ -268,7 +241,7 @@ theorem finite_paid_prefix_comparison {η X μ : ℝ} (hX : 4 < X)
   obtain ⟨hb2, hbdef, hhdef, hh0, hh, hQ, hd0, hdlog, hds,
     hbudget, hpref, hr, hXr, hrX, hroot, hhigher⟩ := hb
   have hmprefix := (price_record_prime_structure hm hμ hrecord).2
-  have hcancel := complete_first_layer_prefix_cancellation hX hm hb2
+  have hcancel := complete_first_layer_prefix_cancellation hX
     hmprefix hpref hP hQ hr hroot
   have hlogb : log (b.k : ℝ) = b.h + Chebyshev.theta (b.Q : ℝ) := by
     rw [hbdef, Nat.cast_mul,
@@ -286,6 +259,5 @@ theorem finite_paid_prefix_comparison {η X μ : ℝ} (hX : 4 < X)
   nlinarith only [hcompare, hpaid, hfirst.trans hcancel, hchange]
 
 #print axioms seeded_two_layer_coefficients
-#print axioms two_roster_integer_ledger
 #print axioms finite_paid_prefix_comparison
 end D5.S3.Arith.Robin.PriceRecord.TwoFixedLayerPrefixBudget

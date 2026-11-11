@@ -58,7 +58,7 @@ def actual : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law V := ∀ {X r : ℝ} (hX : 4 < X)
-      {m k P Q : ℕ} (_hm : 2 ≤ m) (_hk : 2 ≤ k)
+      {m k P Q : ℕ}
       (hmprefix : m.primeFactors = Nat.primesLE P)
       (hkprefix : k.primeFactors = Nat.primesLE Q)
       (hP : (P : ℝ) ∈ Set.Icc (X / 2) (2 * X))

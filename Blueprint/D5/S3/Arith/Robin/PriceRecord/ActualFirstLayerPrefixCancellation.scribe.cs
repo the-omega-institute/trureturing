@@ -23,7 +23,7 @@ internal sealed class ActualFirstLayerPrefixCancellationDocument : IScribeDocume
                 H("Cancel the optimizer term on the complete common support"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Candidate statement: X>4, m,k>=2, m.primeFactors=primesLE(P), "
+                    "Statement: X>4, arbitrary natural m,k with m.primeFactors=primesLE(P), "
                     + "k.primeFactors=primesLE(Q), and the real casts of P,Q,r lie in [X/2,2X]. "
                     + "The root equation is the existing firstLayerPrice(r)=referencePrice(X), "
                     + "equivalently log(1+1/r)-log(r)/(X log(X))=0 on this interval. Then "

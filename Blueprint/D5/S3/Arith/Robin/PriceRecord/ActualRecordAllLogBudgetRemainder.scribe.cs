@@ -76,7 +76,7 @@ internal sealed class ActualRecordAllLogBudgetRemainderDocument : IScribeDocumen
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "Candidate statement: for each fixed real a>=0 and epsilon>0 there exists "
+                        "Candidate statement: for every fixed real a and epsilon>0 there exists "
                         + "X0>1 before every m>=2 and every original mu>0. If m is a literal strict "
                         + "goldenResourceObjective(mu,.) record against all positive predecessors "
                         + "and X=log(m)>=X0, then 0<=sqrt(X)*Real.rpow(log(X),a)*R<epsilon, "
@@ -85,7 +85,7 @@ internal sealed class ActualRecordAllLogBudgetRemainderDocument : IScribeDocumen
                         + "same original X. The threshold may depend on a and epsilon.")),
                     Paragraph(Text(
                         "At lambda_X=1/(X log(X)), take the library's actual strictInteger N. "
-                        + "Unfolding its canonical choice from optimal_layer_count_spec supplies "
+                        + "The canonical strictInteger_spec supplies "
                         + "minimal divisibility. A tied smaller positive optimizer would be "
                         + "divisible by N, so N is a literal strict predecessor record. The "
                         + "unconditional half_shift_cutoff and strict first-layer membership give "

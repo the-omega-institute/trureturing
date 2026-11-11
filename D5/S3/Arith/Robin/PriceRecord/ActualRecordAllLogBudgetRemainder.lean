@@ -169,10 +169,9 @@ theorem prefix_budget_integer {n Q : ℕ} (hQ : 2 ≤ Q)
       omega
 
 private theorem price_pos {X : ℝ} (hX : 1 < X) : 0 < referencePrice X :=
-  one_div_pos.mpr (mul_pos (by linarith) (log_pos hX))
+  ActualRecordHigherLayerResidual.reference_price_pos hX
 
-/- This is an actual consumer of the canonical choice's minimal divisibility,
-   not an invocation of the private strictInteger_spec. -/
+/- The canonical optimizer's minimal divisibility gives a strict predecessor record. -/
 private theorem canonical_record {X : ℝ} (hX : 12 < X) :
     2 ≤ strictInteger (referencePrice X) ∧
     (∀ n : ℕ, 0 < n → n < strictInteger (referencePrice X) →
@@ -182,11 +181,7 @@ private theorem canonical_record {X : ℝ} (hX : 12 < X) :
   let q := referencePrice X
   let N := strictInteger q
   have hq : 0 < q := price_pos (by linarith)
-  have hspec : 1 ≤ N ∧ (∀ p, N.factorization p = optimalLayerCount q p) ∧
-      IsGoldenResourceOptimal q N ∧
-      ∀ n, 1 ≤ n → IsGoldenResourceOptimal q n → N ∣ n := by
-    simpa only [N, strictInteger, dif_pos hq] using
-      Classical.choose_spec (optimal_layer_count_spec hq)
+  have hspec := strictInteger_spec hq
   obtain ⟨r, hr11, hXr, hrX, hroot, _⟩ := half_shift_cutoff hX
   have hroot' : firstLayerPrice r = q := by simpa [q, referencePrice,
     D5.S3.Arith.Robin.ActualTwoPriceDefect.price] using hroot
@@ -784,7 +779,7 @@ private theorem record_family_natural_rate {α : Type*} {l : Filter α}
     strict against all positive predecessors; both signs of complete losses
     and the original all-layer integer are retained. No RH premise occurs. -/
 theorem actual_record_all_real_log_residual :
-    ∀ a : ℝ, 0 ≤ a → ∀ ε : ℝ, 0 < ε →
+    ∀ a : ℝ, ∀ ε : ℝ, 0 < ε →
       ∃ X0 : ℝ, 1 < X0 ∧
         ∀ m : ℕ, 2 ≤ m → ∀ mu : ℝ, 0 < mu →
           (∀ k : ℕ, 0 < k → k < m →
@@ -795,7 +790,7 @@ theorem actual_record_all_real_log_residual :
             (actualDefect X m - completeFirstLayerLoss X m) ∧
           sqrt X * Real.rpow (log X) a *
             (actualDefect X m - completeFirstLayerLoss X m) < ε := by
-  intro a _ha ε hε
+  intro a ε hε
   classical
   obtain ⟨n, hn⟩ := exists_nat_gt a
   have han : a ≤ ((n + 1 : ℕ) : ℝ) := by push_cast; linarith

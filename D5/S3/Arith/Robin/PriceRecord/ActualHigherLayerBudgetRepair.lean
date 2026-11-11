@@ -340,7 +340,7 @@ theorem insert_roster_at_prefix {X : ℝ} (hX : 4 < X) {base Q : ℕ}
         (by exact_mod_cast hu.ne'), hlogu]
     ring
   have hfirst : completeFirstLayerLoss X k = completeFirstLayerLoss X base := by
-    have hc := complete_first_layer_prefix_cancellation hX hb2 hk2 hpref hkprefix
+    have hc := complete_first_layer_prefix_cancellation hX hpref hkprefix
       hQ hQ hr hroot
     simp only [sub_self, abs_zero, mul_zero, zero_div] at hc
     exact sub_eq_zero.mp (abs_nonpos_iff.mp hc)
@@ -567,7 +567,7 @@ private theorem repaired_comparison {η X μ : ℝ} (hη : 0 < η)
   have hcompare := (two_price_compare hm hk hμ hrecord hclock hslack).2
   have hmprefix := (price_record_prime_structure hm hμ hrecord).2
   have hcancel := complete_first_layer_prefix_cancellation (by linarith : 4 < X)
-    hm hk hmprefix hkprefix hP hQ hr hroot
+    hmprefix hkprefix hP hQ hr hroot
   have hlogb : log (b.k : ℝ) = b.h + Chebyshev.theta (b.Q : ℝ) := by
     rw [hbdef, Nat.cast_mul,
       log_mul (by exact_mod_cast (higher_core_pos (strictInteger (referencePrice X))).ne')

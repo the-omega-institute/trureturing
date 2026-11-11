@@ -184,17 +184,6 @@ theorem budget_prefix_deletion_reserve_power (d : ℕ) :
         ((by exact_mod_cast (hDmem p hp).2.2 : (p : ℝ) ≤ b.Q).trans hQ.2)
     _ = _ := by simp [hDcard]
 
-theorem budget_prefix_deletion_reserve :
-    ∀ C : ℝ, 0 < C → ∃ T : ℝ, 1 < T ∧
-      ∀ X : ℝ, T ≤ X → ∀ b : Budget, b.spec X →
-      ∀ M : ℕ, (M : ℝ) ≤ C * log X →
-        ∃ Q : ℕ, ∃ D : Finset ℕ, Q.Prime ∧ X / 2 < (Q : ℝ) ∧ Q ≤ b.Q ∧
-          D = Nat.primesLE b.Q \ Nat.primesLE Q ∧ D.card = M ∧
-          (∀ p ∈ D, p.Prime ∧ Q < p ∧ p ≤ b.Q) ∧
-          Chebyshev.theta (b.Q : ℝ) - Chebyshev.theta (Q : ℝ) = ∑ p ∈ D, log p ∧
-          (∑ p ∈ D, log p) ≤ (M : ℝ) * log (2 * X) := by
-  simpa only [pow_one] using budget_prefix_deletion_reserve_power 1
-
 /-- The actual complete first-layer price of shortening a prefix, together
 with the deletion-prime log localization used in the mesh error estimate.
 The deleted mass, not merely the number of deleted primes, is retained. -/
@@ -269,7 +258,7 @@ theorem finite_prefix_deletion_cost {X : ℝ} (hX : 4 < X)
     rw [sub_add_sub_cancel, abs_of_pos hXr] at ht
     linarith only [ht, hlocal f hfQ hfb, hrX]
   constructor
-  · have hcancel := complete_first_layer_prefix_cancellation hX hb2 hk
+  · have hcancel := complete_first_layer_prefix_cancellation hX
       hpref hkp hQold hQ hr hroot
     have hV : max (|(b.Q : ℝ) - b.r|) (|(Q : ℝ) - b.r|) ≤ A + 1 := by
       apply max_le
@@ -302,6 +291,5 @@ theorem finite_prefix_deletion_cost {X : ℝ} (hX : 4 < X)
       simpa only [norm_eq_abs] using hmv
     exact hh.trans (mul_le_mul_of_nonneg_left (hlocal f hfQ hfb) (by positivity))
 
-#print axioms budget_prefix_deletion_reserve
 #print axioms finite_prefix_deletion_cost
 end D5.S3.Arith.Robin.PriceRecord.PaidPrefixDeletionReserve

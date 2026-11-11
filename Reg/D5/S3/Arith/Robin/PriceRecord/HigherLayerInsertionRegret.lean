@@ -19,6 +19,37 @@ open _root_.D5.S3.Arith.Robin.PriceRecord.HigherLayerLogSlope
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
+namespace log_drop_upper
+/- Literal readout: beta at every occurrence in the complete telescope.
+This typed source bridge is incomplete audit evidence. -/
+abbrev signature : Signature where
+  Params := ℕ
+  State _ := ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ j u => beta j u) (fun e => nomatch e)
+
+abbrev arena : Arena where
+  signature := signature
+  Law V := ∀ {j : ℕ} (hj : 2 ≤ j) {u v : ℝ} (hu : 2 ≤ u) (huv : u ≤ v),
+    log ((V.readout ()) j u / (V.readout ()) j v) ≤ (2 * j : ℝ) * log (v / u)
+
+private theorem actual_law : arena.Law actual := by
+  exact @_root_.D5.S3.Arith.Robin.PriceRecord.HigherLayerInsertionRegret.log_drop_upper
+
+private theorem source_bridge :
+    (type_of% (@_root_.D5.S3.Arith.Robin.PriceRecord.HigherLayerInsertionRegret.log_drop_upper)) ↔ arena.Law actual := Iff.rfl
+
+#print axioms actual_law
+#print axioms source_bridge
+end log_drop_upper
+
 namespace insertion_regret
 /- Literal readout: goldenLayerMarginal; every selected occurrence in the FULL telescope
 is replaced below. Source SHA256 b3200f67a287c134e9aa0f296a1bd519931f12662cf65e141977cfaff07ed802.

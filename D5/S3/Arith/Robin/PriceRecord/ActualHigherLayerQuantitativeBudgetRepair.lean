@@ -6,7 +6,7 @@
    utility: none
    digest: Uniform moving-layer estimates and exact finite quantitative budget arithmetic. -/
 import D5.S3.Arith.Robin.PriceRecord.ActualHigherLayerBudgetRepair
-import D5.S3.Arith.Robin.PriceRecord.HigherLayerLogSlope
+import D5.S3.Arith.Robin.PriceRecord.HigherLayerInsertionRegret
 import D5.S3.Arith.Robin.PriceRecord.QuantitativePrimeAbel
 import Mathlib.Tactic
 
@@ -77,67 +77,6 @@ private theorem beta_uniform_bounds {u : ℝ} (hu : 2 ≤ u) {j : ℕ} (hj : 1 �
   refine ⟨?_, beta_le_inv_pow_log hu hj⟩
   simpa only [beta, gain, div_div] using hh
 
-private theorem weighted_sum_upper {u : ℝ} (hu : 0 ≤ u) (j : ℕ) :
-    u * powerSumDerivative j u ≤ (j : ℝ) * powerSum j u := by
-  calc
-    _ = ∑ k ∈ range j, ((k + 1 : ℕ) : ℝ) * u ^ (k + 1) := by
-      simp only [powerSumDerivative, mul_sum, pow_succ]
-      apply sum_congr rfl
-      intro k hk
-      push_cast
-      ring
-    _ ≤ ∑ k ∈ range j, (j : ℝ) * u ^ (k + 1) := by
-      apply sum_le_sum
-      intro k hk
-      apply mul_le_mul_of_nonneg_right _ (pow_nonneg hu _)
-      exact_mod_cast (show k + 1 ≤ j by have := mem_range.mp hk; omega)
-    _ = _ := by simp only [powerSum, mul_sum]
-
-private theorem slope_upper {u : ℝ} (hu : 2 ≤ u) {j : ℕ} (hj : 2 ≤ j) :
-    logarithmicSlope j u ≤ 2 * (j : ℝ) := by
-  have hu0 : 0 < u := by linarith
-  have hs := powerSum_pos hu0 (show 1 ≤ j by omega)
-  have hg := gain_pos hu0 (show 1 ≤ j by omega)
-  have hD : 0 ≤ powerSumDerivative j u := by
-    exact sum_nonneg fun k _ => mul_nonneg (by positivity) (pow_nonneg hu0.le k)
-  have hB : u * powerSumDerivative j u / powerSum j u ≤ (j : ℝ) :=
-    (div_le_iff₀ hs).mpr (weighted_sum_upper hu0.le j)
-  have hB0 : 0 ≤ u * powerSumDerivative j u / powerSum j u := by positivity
-  have hlog := (reciprocal_log_bounds hs).1.le
-  have hf : (1 / powerSum j u) /
-      ((1 + 1 / powerSum j u) * gain j u) ≤ 1 := by
-    apply (div_le_iff₀ (mul_pos (by positivity) hg)).mpr
-    have hm := mul_le_mul_of_nonneg_left hlog
-      (show 0 ≤ 1 + 1 / powerSum j u by positivity)
-    have he : (1 + 1 / powerSum j u) * (1 / (powerSum j u + 1)) =
-        1 / powerSum j u := by field_simp [hs.ne', (by linarith : powerSum j u + 1 ≠ 0)]
-    dsimp only [gain]
-    rw [he] at hm
-    simpa only [one_mul] using hm
-  have hprod := mul_le_mul_of_nonneg_left hf hB0
-  have hl2 : (1 / 2 : ℝ) < log 2 := by
-    have h := lt_log_one_add_of_pos (by norm_num : (0 : ℝ) < 1)
-    norm_num at h ⊢
-    linarith
-  have hl : (1 / 2 : ℝ) < log u := hl2.trans_le (log_le_log (by norm_num) hu)
-  have hinv : 1 / log u ≤ 2 := by
-    apply (div_le_iff₀ (by linarith : 0 < log u)).mpr
-    linarith
-  have hjr : (2 : ℝ) ≤ j := by exact_mod_cast hj
-  dsimp only [logarithmicSlope]
-  nlinarith
-
-/-- Uniform in the full natural index and the full real half-line. -/
-theorem uniform_beta_and_slope {j : ℕ} (hj : 2 ≤ j) {u : ℝ} (hu : 2 ≤ u) :
-    1 / (2 * u ^ j * log u) ≤ beta j u ∧
-      beta j u ≤ 1 / (u ^ j * log u) ∧
-      0 < logarithmicSlope j u ∧ logarithmicSlope j u ≤ 2 * (j : ℝ) ∧
-      HasDerivAt (fun v => log (beta j v)) (-logarithmicSlope j u / u) u := by
-  have hb := beta_uniform_bounds hu (show 1 ≤ j by omega)
-  have hj0 : (0 : ℝ) < j := by exact_mod_cast (show 0 < j by omega)
-  exact ⟨hb.1, hb.2, (div_pos hj0 (by norm_num)).trans_le (logarithmicSlope_ge hu hj),
-    slope_upper hu hj, log_beta_hasDerivAt hu (by omega)⟩
-
 /-- Strict adjacent separation. It includes j=2 and u=2. -/
 theorem adjacent_layer_strict {j : ℕ} (hj : 2 ≤ j) {u : ℝ} (hu : 2 ≤ u) :
     u * beta j u < beta (j - 1) u := by
@@ -163,27 +102,6 @@ theorem adjacent_layer_strict {j : ℕ} (hj : 2 ≤ j) {u : ℝ} (hu : 2 ≤ u) 
   have hgain : u * gain j u < gain (j - 1) u := hprod.trans hlow
   simpa only [beta, mul_div_assoc] using (div_lt_div_iff_of_pos_right hl).mpr hgain
 
-private theorem log_beta_drop_upper {j : ℕ} (hj : 2 ≤ j) {u v : ℝ}
-    (hu : 2 ≤ u) (huv : u ≤ v) :
-    log (beta j u / beta j v) ≤ 2 * (j : ℝ) * log (v / u) := by
-  let f : ℝ → ℝ := fun t => log (beta j t) + 2 * (j : ℝ) * log t
-  have hd (t : ℝ) (ht : 2 ≤ t) :
-      HasDerivAt f ((2 * (j : ℝ) - logarithmicSlope j t) / t) t := by
-    convert (log_beta_hasDerivAt ht (show 1 ≤ j by omega)).add
-      ((hasDerivAt_log (by linarith : t ≠ 0)).const_mul (2 * (j : ℝ))) using 1 <;> ring
-  have hmono : MonotoneOn f (Set.Ici 2) := by
-    apply monotoneOn_of_hasDerivWithinAt_nonneg (convex_Ici 2)
-    · intro t ht; exact (hd t ht).continuousAt.continuousWithinAt
-    · intro t ht; exact (hd t (interior_subset ht)).hasDerivWithinAt
-    · intro t ht
-      exact div_nonneg (sub_nonneg.mpr (slope_upper (interior_subset ht) hj))
-        (by have ht2 : 2 ≤ t := interior_subset ht; linarith)
-  have h := hmono hu (hu.trans huv) huv
-  dsimp only [f] at h
-  rw [log_div (by linarith : v ≠ 0) (by linarith : u ≠ 0),
-    log_div (beta_pos hu (by omega)).ne' (beta_pos (hu.trans huv) (by omega)).ne']
-  linarith
-
 /-- The exact moving-window ratio, without a fixed-index limit. The endpoint b
 is included and the root is excluded, even if either endpoint is prime. -/
 theorem moving_interval_marginals {j : ℕ} (hj : 3 ≤ j) {ρ priceLambda q : ℝ}
@@ -194,7 +112,7 @@ theorem moving_interval_marginals {j : ℕ} (hj : 3 ≤ j) {ρ priceLambda q : �
   have hj0 : (0 : ℝ) < j := by exact_mod_cast (show 0 < j by omega)
   have hρ0 : 0 < ρ := by linarith
   have hq2 : 2 ≤ q := hρ.trans hq.le
-  have hlog := log_beta_drop_upper (show 2 ≤ j by omega) hρ hq.le
+  have hlog := HigherLayerInsertionRegret.log_drop_upper (show 2 ≤ j by omega) hρ hq.le
   have hratio : q / ρ ≤ 1 + 1 / (j : ℝ) ^ 2 := (div_le_iff₀ hρ0).mpr (by nlinarith)
   have hlogratio : log (q / ρ) ≤ 1 / (j : ℝ) ^ 2 := by
     have h1 := log_le_log (div_pos (by linarith : 0 < q) hρ0) hratio
@@ -692,7 +610,7 @@ theorem original_price_exact_slack {X μ : ℝ} (hX : 14 ≤ X) {m k : ℕ}
     hbudget, hpref, hr, hXr, hrX, hroot, hhigher⟩
   have hmprefix := (price_record_prime_structure hm hμ hrecord).2
   have hcancel := complete_first_layer_prefix_cancellation (show 4 < X by linarith)
-    hm hk hmprefix hkprefix hP hQ hr hroot
+    hmprefix hkprefix hP hQ hr hroot
   have hlogb : log (b.k : ℝ) = b.h + Chebyshev.theta (b.Q : ℝ) := by
     rw [hbdef, Nat.cast_mul,
       log_mul (by exact_mod_cast (higher_core_pos (strictInteger (referencePrice X))).ne')
@@ -1089,7 +1007,6 @@ theorem actual_record_quantitative_repaired_prefix_residual :
     have hx := hB (log (n : ℝ)) ((le_max_left _ _).trans hlarge) x rfl
     simpa only [X, m, μ] using hx
 
-#print axioms uniform_beta_and_slope
 #print axioms adjacent_layer_strict
 #print axioms moving_interval_marginals
 #print axioms uniform_root_geometry

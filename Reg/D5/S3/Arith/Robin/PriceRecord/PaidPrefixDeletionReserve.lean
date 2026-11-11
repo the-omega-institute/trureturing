@@ -25,41 +25,6 @@ open _root_.D5.S3.Arith.Robin.PriceRecord.ActualRecordAllLogBudgetRemainder
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
-namespace budget_prefix_deletion_reserve
-/- Source readout: real-endpoint theta in the exact deletion ledger. RegUNVALIDATED. -/
-abbrev signature : Signature where
-  Params := Unit
-  State _ := ℝ
-  Role := Unit
-  finiteRole := inferInstance
-  nonemptyRole := inferInstance
-  Output _ _ := ℝ
-  Anchor := Empty
-  finiteAnchor := inferInstance
-
-def actual : Realization signature :=
-  realize signature (fun _ _ x => Chebyshev.theta x) (fun e => nomatch e)
-
-abbrev arena : Arena where
-  signature := signature
-  Law V := ∀ C : ℝ, 0 < C → ∃ T : ℝ, 1 < T ∧
-      ∀ X : ℝ, T ≤ X → ∀ b : Budget, b.spec X →
-      ∀ M : ℕ, (M : ℝ) ≤ C * log X →
-        ∃ Q : ℕ, ∃ D : Finset ℕ, Q.Prime ∧ X / 2 < (Q : ℝ) ∧ Q ≤ b.Q ∧
-          D = Nat.primesLE b.Q \ Nat.primesLE Q ∧ D.card = M ∧
-          (∀ p ∈ D, p.Prime ∧ Q < p ∧ p ≤ b.Q) ∧
-          (V.readout () ()) (b.Q : ℝ) - (V.readout () ()) (Q : ℝ) = ∑ p ∈ D, log p ∧
-          (∑ p ∈ D, log p) ≤ (M : ℝ) * log (2 * X)
-
-private theorem actual_law : arena.Law actual := by
-  exact @_root_.D5.S3.Arith.Robin.PriceRecord.PaidPrefixDeletionReserve.budget_prefix_deletion_reserve
-
-private theorem source_bridge :
-    (type_of% (@_root_.D5.S3.Arith.Robin.PriceRecord.PaidPrefixDeletionReserve.budget_prefix_deletion_reserve)) ↔ arena.Law actual := Iff.rfl
-
-#print axioms actual_law
-#print axioms source_bridge
-end budget_prefix_deletion_reserve
 
 namespace finite_prefix_deletion_cost
 /- Source readout: complete first-layer loss. RegUNVALIDATED. -/

@@ -262,7 +262,7 @@ private theorem ordered_prefix_bound {X r : ℝ} (hX : 4 < X)
 The endpoints are arbitrary natural prefix cutoffs, including equal cutoffs.
 The root uses the existing real first-layer price. -/
 theorem complete_first_layer_prefix_cancellation {X r : ℝ} (hX : 4 < X)
-    {m k P Q : ℕ} (_hm : 2 ≤ m) (_hk : 2 ≤ k)
+    {m k P Q : ℕ}
     (hmprefix : m.primeFactors = Nat.primesLE P)
     (hkprefix : k.primeFactors = Nat.primesLE Q)
     (hP : (P : ℝ) ∈ Set.Icc (X / 2) (2 * X))
@@ -375,7 +375,7 @@ theorem actual_record_prefix_budget_residual {X r δ mu : ℝ} {m k P Q : ℕ}
   have hcompare := record_budget_comparison (show 1 ≤ m by omega)
     (show 1 ≤ k by omega) hmu hrecord hclock hδ hbudget
   rw [hcandidate] at hcompare
-  have hcancel := complete_first_layer_prefix_cancellation hX hm hk hmprefix hkprefix
+  have hcancel := complete_first_layer_prefix_cancellation hX hmprefix hkprefix
     hP hQ hr hroot
   have habs := le_abs_self (completeFirstLayerLoss X k - completeFirstLayerLoss X m)
   constructor <;> linarith

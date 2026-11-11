@@ -50,7 +50,7 @@ private def uniformW (X : ℝ) : ℝ :=
   shellError X + 3 * sqrt X + 2000 * log X ^ 3 + 1
 
 private theorem price_positive {X : ℝ} (hX : 1 < X) : 0 < referencePrice X :=
-  one_div_pos.mpr (mul_pos (by linarith) (log_pos hX))
+  ActualRecordHigherLayerResidual.reference_price_pos hX
 
 private theorem log_two_le_one : log (2 : ℝ) ≤ 1 := by
   have hh := log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 2)
