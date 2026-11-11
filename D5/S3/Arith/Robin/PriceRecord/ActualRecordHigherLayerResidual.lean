@@ -4,20 +4,18 @@
    mirror-E: none(waiver:general-asymptotic-analysis)
    anchors: []
    utility: none
-   digest: Literal finite pressure-loss splitting and the compact second-layer raw margin. -/
+   digest: Complete finite actual higher-layer loss and compact second-layer tube bounds. -/
 
 import D5.S3.Arith.GoldenResource.ActualReserve.ActualReservePrimeMask
 import D5.S3.Arith.Robin.PriceRecord.FixedLayerRigidity
 import D5.S3.Arith.ExponentExchange.PriceRecordMissingLayer
 import D5.S3.Arith.Robin.PriceRecord.FullArithmeticCorrectionSecondOrder
 import D5.S3.Arith.Robin.ActualGlobalBracketing
-import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 import Mathlib.Tactic
 
 /-! The finite support below comes from the canonical unrestricted strict integer,
 without an extra restriction on the given integer or its prime exponents.
-The full uniform residual theorem is not declared here: the deterministic eventual
-conditions and uniform record/envelope assembly remain separate obligations. -/
+-/
 
 set_option maxHeartbeats 800000
 set_option autoImplicit false
@@ -42,8 +40,9 @@ open D5.S3.Arith.Robin.OriginalEndpointPrimeTail (largestPrime)
 open D5.S3.Arith.Robin.EulerLayerRootCorrection (strict_inventory_third_layer_mass)
 open D5.S3.Arith.ExponentExchange.PriceRecordMissingLayer (price_record_missing_layer)
 open D5.S3.Arith.Robin.PriceRecord.FullArithmeticCorrectionSecondOrder (record_third_mass_bound)
+open D5.S3.Arith.Robin.ActualPriceRecordPrimeStructure (price_record_prime_structure)
 
-private theorem reference_price_pos {X : ℝ} (hX : 1 < X) :
+theorem reference_price_pos {X : ℝ} (hX : 1 < X) :
     0 < referencePrice X :=
   one_div_pos.mpr (mul_pos (by linarith) (log_pos hX))
 
@@ -86,7 +85,7 @@ def completeSecondLayerLoss (X : ℝ) (n : ℕ) : ℝ :=
 def completeHigherLayerLoss (X : ℝ) (n : ℕ) : ℝ :=
   ∑ p ∈ lossPrimes X n, ∑ j ∈ Icc 3 (layerCutoff X n p), layerLoss X n p j
 
-private theorem layer_loss_nonneg (X : ℝ) (n p j : ℕ) :
+theorem layer_loss_nonneg (X : ℝ) (n p j : ℕ) :
     0 ≤ layerLoss X n p j := by
   unfold layerLoss
   split_ifs
@@ -775,7 +774,7 @@ private theorem second_loss_occupancy {X : ℝ} (hX : 1 < X) {n p : ℕ}
 /-- A finite, literal residual bound for the complete second layer. The analytic
 and theta premises are explicit finite tail conditions; they are not a pressure
 or defect hypothesis. Both endpoint losses vanish, even at prime endpoints.
-The still-unproved uniform full residual target is not weakened to this statement. -/
+The uniform complete residual theorem below consumes this finite bound. -/
 theorem finite_actual_second_layer_tube_bound {X δ : ℝ} {n : ℕ}
     (hX : 1 < X) (hn : 1 ≤ n) (hδ : 0 < δ) (hδ1 : δ ≤ 1)
     (hanti : ∀ p q : ℕ, p.Prime → q.Prime → p < q →
