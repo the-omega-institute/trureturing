@@ -14,13 +14,13 @@ internal sealed class FiniteSubcomplexCylinderDocument : IScribeDocumentDefiniti
            mirror-E: none(waiver:finite-subcomplex-cylinder)
            anchors: [mathlib/module/Mathlib.Topology.Compactness.Compact, mathlib/module/Mathlib.Topology.Piecewise]
            utility: none
-           digest: The original coordinate collar retracts the entire bottom-or-subcomplex cylinder and gives arbitrary-target homotopy extension. -/
+           digest: A coordinate collar retracts the entire bottom-or-subcomplex cylinder and gives arbitrary-target homotopy extension. -/
         """;
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(
         DefinitionDsl.GeneralHeader(
             "D5/S3/Geometry/FiniteSubcomplexCylinder",
-            "The original coordinate collar retracts the entire bottom-or-subcomplex cylinder and gives arbitrary-target homotopy extension.",
+            "A coordinate collar retracts the entire bottom-or-subcomplex cylinder and gives arbitrary-target homotopy extension.",
             "finite-subcomplex-cylinder",
             [Anchor.ParseCanonical("mathlib/module/Mathlib.Topology.Compactness.Compact"),
              Anchor.ParseCanonical("mathlib/module/Mathlib.Topology.Piecewise")]),
@@ -84,12 +84,12 @@ internal sealed class FiniteSubcomplexCylinderDocument : IScribeDocumentDefiniti
             Node("retraction", "retraction",
                 "D5.S3.Geometry.FiniteSubcomplexCylinder.retraction",
                 "A retraction for every finite inclusion",
-                "Given hLK : L ≤ K, split on whether L has an actual face. The inhabited-face branch uses nonemptyRetraction for the exact pair (K,L,hLK,hL). When L has no faces, send (x,t) directly to (x,0). This formula uses no minimum or chosen point of L. Empty labels, empty K, empty L and ghost labels are allowed. If L=K, the target is all of Space K × I and the fixedness theorem makes the retraction identity.",
+                "Given hLK : L ≤ K, split on whether L has an actual face. The inhabited-face branch uses the displayed lower and upper formulas at positive control and nonemptyRetraction at zero control, for the exact pair (K,L,hLK,hL). Their proved equalities transport the joint continuity of nonemptyRetraction to this same map. When L has no faces, send (x,t) directly to (x,0). This formula uses no minimum or chosen point of L. Empty labels, empty K, empty L and ghost labels are allowed. If L=K, the target is all of Space K × I and the fixedness theorem makes the retraction identity.",
                 "def retraction (hLK : L ≤ K) : C(Space K × I, Cylinder K L)", DescribeRole.Definition),
             Node("retraction-fixed", "retraction_fixed",
                 "D5.S3.Geometry.FiniteSubcomplexCylinder.retraction_fixed",
                 "The unrestricted retraction fixes its whole target",
-                "In the inhabited-face branch use nonemptyRetraction_fixed. In the no-faces branch, the side alternative is impossible because realization L is empty, and the bottom alternative is fixed by the bottom map. The exact equality is of the output value with the original pair, for every point satisfying either target condition.",
+                "In the inhabited-face branch use branchRetraction_eq and nonemptyRetraction_fixed. In the no-faces branch, the side alternative is impossible because realization L is empty, and the bottom alternative is fixed by the bottom map. The exact equality is of the output value with the original pair, for every point satisfying either target condition.",
                 "theorem retraction_fixed (hLK : L ≤ K) (z : Space K × I)\n    (hz : z.2 = 0 ∨ z.1.val ∈ realization L) : (retraction K L hLK z).val = z", DescribeRole.Theorem),
             Node("homotopy-extension", "homotopy_extension",
                 "D5.S3.Geometry.FiniteSubcomplexCylinder.homotopy_extension",
