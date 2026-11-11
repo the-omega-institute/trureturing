@@ -30,7 +30,7 @@ internal sealed class KhetanOneDirectionPeriodizerDocument : IScribeDocumentDefi
                 H("Separate parallel and transverse difference factors"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For a primitive lattice direction, its integer Bezout coordinates express every parallel supplier direction as an integer multiple. Grouping all such factors gives a nonzero one-variable Laurent factor A and retains every transverse factor in B, with AB annihilating the original configuration. Parallel or repeated transverse factors remain permitted."))),
+                Blocks(Paragraph(Text("For a primitive lattice direction, its integer Bezout coordinates express every parallel supplier direction as an integer multiple. Grouping all such factors gives a nonzero one-variable Laurent factor A and retains every transverse factor in B, with AB annihilating the original integer configuration after coefficient transport to any domain. In particular the complex coefficient action uses exactly the image of that original configuration. Parallel or repeated transverse factors remain permitted."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("localized-bezout-step"),
@@ -38,6 +38,6 @@ internal sealed class KhetanOneDirectionPeriodizerDocument : IScribeDocumentDefi
                 H("Use a cleared identity before acting on the configuration"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Primitivity constructs integral lattice Laurent coordinates, with the chosen direction in the coefficient ring. Given localized coprimality of P and B, the denominator theorem constructs a nonzero horizontal coefficient rho. The resulting polynomial (z-1) A rho annihilates the original configuration, whose finite range gives a global period. Localized coprimality is an intermediate premise. Its derivation from the absence of transverse line factors, and hence the complete one-direction periodizer theorem, remain unproved."))),
+                Blocks(Paragraph(Text("Primitivity constructs integral lattice Laurent coordinates, with the chosen direction in the coefficient ring. A finite monic factorization of B, whose factors remain irreducible over the coefficient fraction field and do not divide P in the original Laurent ring, proves localized coprimality. Denominator clearing constructs a nonzero horizontal coefficient rho. The resulting polynomial (z-1) A rho annihilates the original configuration, whose finite range gives a global period. No coprimality or nonzero eliminant is assumed in this step. Constructing the monic factors and proving their irreducibility and nondivisibility from the line-factor restriction, and hence the complete one-direction periodizer theorem, remain unproved."))),
                 DescribeRole.Theorem))));
 }

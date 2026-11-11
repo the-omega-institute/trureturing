@@ -371,30 +371,31 @@ private theorem primitive_laurent_coordinates_line (u : Lattice)
     rw [line_laurent_single]
     simp [primitiveLaurentCoordinates, primitive_coordinates_multiple]
 
-/-- Once the algebraic localized Bezout premise has been proved, clearing
-denominators supplies a nonzero eliminant before any configuration action.
-This is an intermediate elimination step; the line-factor hypothesis does
-not occur here and its implication to `hcop` is a separate obligation. -/
+/-- A monic transverse factorization and its irreducibility/nondivisibility
+properties produce the localized Bezout identity, then a nonzero eliminant,
+before any configuration action. Obtaining this factorization from the
+line-factor hypothesis is the remaining algebraic obligation. -/
 theorem localized_bezout_step [IsDomain R]
     (h : Configuration R) (hh : FiniteRange h) (u : Lattice) (hu : IsCoprime u.1 u.2)
     (P B : AddMonoidAlgebra R Lattice) (A : LaurentPolynomial R) (hA : A ≠ 0)
     (c : R) (hP : coefficientAct P h = fun _ => c)
     (hAB : coefficientAct (lineLaurent u A * B) h = 0)
-    (hcop : IsCoprime
-      (AddMonoidAlgebra.mapRingHom ℤ
-        (algebraMap (LaurentPolynomial R) (FractionRing (LaurentPolynomial R)))
-          (primitiveLaurentCoordinates u hu P))
-      (AddMonoidAlgebra.mapRingHom ℤ
-        (algebraMap (LaurentPolynomial R) (FractionRing (LaurentPolynomial R)))
-          (primitiveLaurentCoordinates u hu B))) :
+    (factors : List (Polynomial (LaurentPolynomial R)))
+    (hB : primitiveLaurentCoordinates u hu B ∣
+      (factors.map Polynomial.toLaurent).prod)
+    (hmonic : ∀ g ∈ factors, g.Monic)
+    (hirr : ∀ g ∈ factors, Irreducible
+      (g.map (algebraMap (LaurentPolynomial R) (FractionRing (LaurentPolynomial R)))))
+    (hnot : ∀ g ∈ factors, ¬g.toLaurent ∣ primitiveLaurentCoordinates u hu P) :
     Periodic h := by
   let coordinates := primitiveLaurentCoordinates (R := R) u hu
   have hcoordinates := primitive_laurent_coordinates_line (R := R) u hu
   have hunz : u ≠ 0 := by
     intro hz
     simpa [hz] using hu
-  obtain ⟨ρ, hρ, α, β, hbezout⟩ := KhetanLaurentElimination.clear_laurent_bezout
-    (coordinates P) (coordinates B) hcop
+  obtain ⟨ρ, hρ, α, β, hbezout⟩ := KhetanLaurentElimination.clear_laurent_bezout_of_monic_factors
+    (K := FractionRing (LaurentPolynomial R)) (coordinates P) (coordinates B)
+    factors hB hmonic hirr hnot
   apply cleared_bezout_periodic h hh u hunz P B (coordinates.symm α) (coordinates.symm β)
     A ρ hA hρ c hP hAB
   apply coordinates.injective
