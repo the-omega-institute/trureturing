@@ -192,6 +192,18 @@ The Alexander-Whitney chain map `FTwo(X) ⟶ FOne(X)`.
 
 In this notation, noncomputable def alexanderWhitney (X : BisimplicialObject C) : FTwo.obj X ⟶ FOne.obj X.
 
+**Theorem 1.14 (val_eqToHom_apply).**
+
+Lean statement: `D5/S3/HomologicalAlgebra/EilenbergZilber/AlexanderWhitney.val_eqToHom_apply`
+
+*Proof.* Machine-checked in Lean as `D5/S3/HomologicalAlgebra/EilenbergZilber/AlexanderWhitney.val_eqToHom_apply` (`✓ std3`). ∎
+
+*Citation.* Jeffrey Li (2026). *Bisimplicial Eilenberg–Zilber equivalence and recursive normalized homotopy*. URL: <https://github.com/LeanPool/lean-pool/tree/8bbde3a6de815108d41922c9362ebbe38422663a/LeanPool/EilenbergZilber>.
+
+*Commentary.*
+
+For every x,y : SimplexCategory, h : x = y and i : Fin(x.len+1), the natural-number value of (eqToHom h).toOrderHom i equals i. Equality transport changes the bound, preserving the vertex value.
+
 ## References
 
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/AlexanderWhitney.BisimplicialObject`
@@ -201,6 +213,7 @@ In this notation, noncomputable def alexanderWhitney (X : BisimplicialObject C) 
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/AlexanderWhitney.awComponent`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/AlexanderWhitney.diag`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/AlexanderWhitney.doubleComplex`
+- Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/AlexanderWhitney.val_eqToHom_apply`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/AlexanderWhitney.ιBack`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/AlexanderWhitney.ιBack_comp_δ_of_gt`
 - Truth anchor: `D5/S3/HomologicalAlgebra/EilenbergZilber/AlexanderWhitney.ιBack_comp_δ_of_le`

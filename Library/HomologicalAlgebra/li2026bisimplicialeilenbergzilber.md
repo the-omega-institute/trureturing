@@ -68,7 +68,7 @@ original repository.
 | --- | --- | --- |
 | `Bisimplicial.lean` | `67a7fd5fa793a64b708aeb1ef1b952961c7d904207e3dd24fe112e838d01b830` | `AlexanderWhitney`, `Bisimplicial` |
 | `BisimplicialNormalized.lean` | `b4607d30f502a09fbecf8055c31b00efaf9e747d5fcfa856c9770950feea2afe` | `BisimplicialNormalized` |
-| `BisimplicialDerivedOp.lean` | `2fb63012a45baa6bf820eb6aa5f021aa12c49b86a1fbf0be184a306bd2afcca4` | `DerivedOperators`, `NormalizedHomotopy`, `NormalizedOperators`, `RecursiveOperators` |
+| `BisimplicialDerivedOp.lean` | `2fb63012a45baa6bf820eb6aa5f021aa12c49b86a1fbf0be184a306bd2afcca4` | `DerivedOperators`, `NormalizedHomotopy`, `NormalizedOperators`, `RecursiveOperators`; frontal/norm closure in `SpecialContractionShuffle`, `SpecialContraction` |
 | `BisimplicialNormalizationComparison.lean` | `28f1d6abb8b8614abe7c402450acca6c23c2b1f7f170de34e5a4e26d27ec1a5e` | `NormalizationComparison` |
 | `Shuffle.lean` | `b0230b59a49c7921547afa79fd1d4c7ace20cb38dca64b5b8b19453f3e128b71` | `ShuffleBasic`, `ShuffleDiagonal`, `ShuffleInsertion`, `ShuffleRemoval`, `ShuffleSigns` |
 
