@@ -27,6 +27,7 @@ Recurrence.audit: proof_shape=bind-only; consumers=compiled-registration-reader
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferBase
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259PairTransferCore
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233259Strip
+import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
 

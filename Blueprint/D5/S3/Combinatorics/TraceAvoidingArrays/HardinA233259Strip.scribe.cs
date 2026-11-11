@@ -36,7 +36,9 @@ internal sealed class HardinA233259StripDocument : IScribeDocumentDefinition
                 + "If one label is omitted, adjacent entries of a column must agree: "
                 + "a common neighbour in another column excludes both differing labels. "
                 + "Each column is then constant and the two labels alternate. The six "
-                + "such patterns have exactly one canonical member. If C is the number "
+                + "such patterns have exactly one canonical member by the canonical two-label "
+                + "uniqueness theorem for the ladder, since constant columns satisfy its "
+                + "two-sided bonds. If C is the number "
                 + "of canonical proper patterns, L=6*C and a=2^(4*n-3)*(C+1). "
                 + "This gives the displayed bridge for every width at least two.")),
             Node("finite_certificate", "The first permitted recurrence instance",

@@ -15,9 +15,8 @@ legal_iff: proof_shape=bind-only; consumers=literal_card
 literal_card: proof_shape=bind-only; consumers=a_sum
 proper_relabel: proof_shape=bind-only; consumers=L_card
 proper_two_labels: proof_shape=bind-only; consumers=used_two_or_three, L_card
-columns_constant: proof_shape=content; consumers=two_label_classification
+columns_constant: proof_shape=content; consumers=canon_two_eq
 alternating_proper: proof_shape=bind-only; consumers=canonical_two_card
-two_label_classification: proof_shape=content; consumers=canon_two_eq
 used_two_or_three: proof_shape=bind-only; consumers=weighted_count
 canon_two_eq: proof_shape=content; consumers=canonical_two_card
 CanonicalPatterns: proof_shape=bind-only; consumers=canonical_two_card, a_sum, L_card, weighted_count, counting_bridge
@@ -30,6 +29,8 @@ scale_recurrence: proof_shape=content; consumers=finite_certificate, result
 finite_certificate: proof_shape=content; consumers=result
 result: proof_shape=content; consumers=external-open-problem-resolution(#28807)
 -/
+import Mathlib.Data.Fintype.Card
+import Mathlib.SetTheory.Cardinal.Finite
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
 import D5.S3.Observer.Separation.BooleanRankThreeK4
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
@@ -137,21 +138,6 @@ private theorem alternating_proper (n : ℕ) (a b : Fin 3) (hab : a ≠ b) :
     omega
   · omega
 
-private theorem two_label_classification {n : ℕ} (hn : 2 ≤ n)
-    (P : Fin 4 × Fin n → Fin 3) (hp : Proper P)
-    (d : Fin 3) (hd : ∀ i, P i ≠ d) :
-    ∃ a b : Fin 3, a ≠ b ∧ P = alternating n a b := by
-  let R : Fin 4 × Fin n → Fin 3 := fun p => P (0, p.2)
-  have hR : HardinA233177PairTransfer.Proper R := by
-    intro j hj r s _
-    exact hp j hj 0 0 (Or.inl rfl)
-  obtain ⟨a, b, hab, hRalt⟩ := HardinA233177Ladder.two_label_classification
-    hn R hR d (fun p => hd (0, p.2))
-  refine ⟨a, b, hab, ?_⟩
-  funext p
-  have h := congrFun hRalt ((0 : Fin 4), p.2)
-  exact (columns_constant hn P hp d hd p.2 p.1).trans h
-
 private theorem used_two_or_three {n : ℕ} (hn : 2 ≤ n)
     (P : Fin 4 × Fin n → Fin 3) (hp : Proper P) : used P = 2 ∨ used P = 3 := by
   obtain ⟨i, j, hij⟩ := proper_two_labels hn P hp
@@ -167,31 +153,12 @@ private theorem canon_two_eq {n : ℕ} (hn : 2 ≤ n)
     (P : Fin 4 × Fin n → Fin 3) (hp : Proper P) (hc : Canon P) (hu : used P = 2) :
     P = alternating n 0 1 := by
   obtain ⟨d, hd⟩ := omitted_label P hu
-  obtain ⟨a, b, hab, rfl⟩ := two_label_classification hn P hp d hd
-  have ha : a = 0 := by
-    by_contra ha
-    have hpos : (0 : Fin 3) < a := Fin.pos_iff_ne_zero.mpr ha
-    obtain ⟨q, hq, _⟩ := hc (0, ⟨0, by omega⟩) 0 hpos
-    change q.2.val + n * q.1.val < 0 at hq
-    omega
-  subst a
-  have hb : b = 1 := by
-    fin_cases b
-    · exact False.elim (hab rfl)
-    · rfl
-    · obtain ⟨q, hq, he⟩ := hc (0, ⟨1, by omega⟩) 1
-        (by change (1 : Fin 3) < 2; decide)
-      let z : Fin 4 × Fin n := (0, ⟨0, by omega⟩)
-      have hqz : q = z := by
-        apply finProdFinEquiv.injective
-        apply Fin.ext
-        change q.2.val + n * q.1.val = 0
-        change q.2.val + n * q.1.val < 1 at hq
-        omega
-      rw [hqz] at he
-      norm_num [z, alternating] at he
-  subst b
-  rfl
+  have hcol := columns_constant hn P hp d hd
+  have hproper : HardinA233177PairTransfer.Proper P := by
+    intro j hj r s _
+    rw [hcol j r, hcol ⟨j.val + 1, hj⟩ s]
+    exact hp j hj 0 0 (Or.inl rfl)
+  exact HardinA233177Ladder.canon_two_eq hn P hproper hc hu
 
 private abbrev CanonicalPatterns (n : ℕ) :=
   {P : Fin 4 × Fin n → Fin 3 // Proper P ∧ Canon P}
