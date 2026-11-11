@@ -1,0 +1,11 @@
+#### 结构约束 1.1：A1：整体与内部端口
+
+给定有限维复空间
+
+$$
+\mathcal H_\Omega=\mathcal H_S\otimes\mathcal H_C\otimes\mathcal H_R
+ \otimes\mathcal H_M\otimes\mathcal H_E.
+$$
+
+$S$ 是目标端口，$C$ 是控制程序，$R$ 是方向或相位参考， $M$ 是可访问记忆，$E$ 是其他未访问自由度。 这一分解描述访问关系，不在整体外另加观察者。 整体允许相关态，不默认程序与目标独立。
+

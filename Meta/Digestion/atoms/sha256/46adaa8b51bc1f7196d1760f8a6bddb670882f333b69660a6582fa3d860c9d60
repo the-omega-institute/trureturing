@@ -1,0 +1,46 @@
+**定理 24.5（同一完整输出上的有限复合及自身边缘返回）。** 在一个固定有限电路中，令 $s$ 次反射访问各用上述实现，精度为 $\eta_i$，最坏调用数为 $q_i$。每次访问都包括其全部新口 $Z_i$；旧的 $Z_1,\ldots,Z_{i-1}$、旧探针、纠缠和任意记忆属于该次访问的完整输入。其间的允许非 $R$ 操作、记录处理和反馈在实际与比较电路中相同，全部原始记录保持。比较电路只将第 $i$ 次访问换成精确 $Q_D$ 或 $C Q_D$，并在同一 $Z_i$ 准备该次的 $\sigma_{Z,i}$，不删去这些因子。若其余原生调用、前缀场重置的最坏上限分别为 $a,b$，则实际资源满足
+
+$$
+T_V\le a+\sum_{i=1}^s q_i,\qquad
+T_{\rm reset}\le b+1,\qquad T_R\le a+\sum_{i=1}^s q_i+1,
+\tag{24.16}
+$$
+
+其中加一是接回原控制器后使用新鲜、独立且此前未经改动的原场 $+d e_x$ 令牌；必须满足 (24.16) 的两项分别不超过 $L_e,Q_e$。规定的
+$U_{\rm term}=\exp[-idJ\cdot\sigma/m_e]$ 恰执行一次，不纳入 $T_V$，其量子输出及任何实际环境和记录仍在同一最终口 $K$。前缀不执行终端，也不另供应其逆。
+
+以 $\Omega_{n,h}$、$\widetilde\Omega_{n,h}$ 记两条完整电路在这个终端之后的态，连同全部 $Z_i$、停止标记和截止分支，则
+
+$$
+D_{\rm tr}(\Omega_{n,h},\widetilde\Omega_{n,h})
+ \le E:=\min\left\{1,\sum_{i=1}^s\eta_i\right\}.
+\tag{24.17}
+$$
+
+若比较电路相对于其自身实际口的返回证书是
+$D_{\rm tr}(\widetilde\Omega_{n,h},\tau_h\otimes
+ \operatorname{Tr}_R\widetilde\Omega_{n,h})\le\widetilde\delta_{n,h}$，则真实电路满足
+
+$$
+D_{\rm tr}(\Omega_{n,h},\tau_h\otimes
+                  \operatorname{Tr}_R\Omega_{n,h})
+ \le\min\{1,\widetilde\delta_{n,h}+2E\}.
+\tag{24.18}
+$$
+
+特别地，各次均取 (24.5) 且 $s q_e+a\le L_e$ 时，
+
+$$
+E\le\frac{s e}{D_eL_e}\le\frac{e}{D_e},\qquad
+\overline\delta_{\rm actual}
+ \le\min\left\{1,\overline{\widetilde\delta}
+                +\frac{2s e}{D_eL_e}\right\}
+ \le\min\left\{1,\overline{\widetilde\delta}+\frac{2e}{D_e}\right\}.
+\tag{24.19}
+$$
+
+证明。在每个访问处用 (24.4) 作一次通道替换，把此前全部实际输出纳入稳定化的记忆。逐次采用“已比较前缀、实际后缀”的 telescoping 展开，每项半 diamond 范数至多相应 $\eta_i$；包括条件记录处理和终端在内的公共 CPTP 后缀收缩迹距离。所有截止分支都在通道内求和，所以没有为获得 (24.17) 选取成功运行。反馈即使读取旧 $Z_i$，也在两电路使用相同映射；此时不能再把最终 $Z_i$ 宣称与逻辑系统独立，但 (24.17) 仍然成立。若逻辑电路不读取新记录，则比较输出精确带有 $\bigotimes_i\sigma_{Z,i}$ 的独立因子。
+
+(24.16) 对每一条分支按最坏槽数相加，实际少用的调用不算额外消耗。固定场令牌是纯态，因为 $n:U\to S^2$；这不把其它混合辅助改为纯态。最后，在 (24.18) 中先插入 $\widetilde\Omega_{n,h}$，再插入
+$\tau_h\otimes\operatorname{Tr}_R\widetilde\Omega_{n,h}$；第一项由 (24.17) 至多 $E$，最后一项由偏迹收缩性至多 $E$。目标中的边缘因此确为实际的 $\operatorname{Tr}_R\Omega_{n,h}$，没有用理想边缘替换它。所有界对 $n,h$ 一致，得 (24.19)。$\square$
+

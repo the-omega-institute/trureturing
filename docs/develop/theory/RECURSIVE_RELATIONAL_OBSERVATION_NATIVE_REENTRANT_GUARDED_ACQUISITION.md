@@ -2689,3 +2689,994 @@ The original terminal consumer is retained; this local finite construction
 does not settle the full four-expression recovery goal.
 
 ## 追加锚（本行以下为增补区）
+
+## 25. One incidence realization of the installed historical program
+
+**Definition 25.1 (common source and finite prefix domain).** Use exactly
+the native graph $G_{\mathrm H}$ of Definitions16.1–17.1, including its
+inlined callers, expanded $r_{\mathrm H}$ bank, actual finite slot
+layout, and the (RH.1) splice before the original restoration. Fix its
+one preparation occurrence $\xi$, initial $H_{\rm boot}=1$, canonical
+private packet for $\beta$, prior $\{\alpha,\beta\}$, original table24,
+configuration, waiting packet and proposal $(0,B,1)$. Fix the prescribed
+public boot inputs and the two supplied code objects of Definition17.1.
+Input to native installation is $E_{\mathrm H}$; input to the additional
+archive delivery is the pair $(\Delta_{\mathrm H},E_{\mathrm H})$.
+Neither the archival bytes nor an equality of code lengths enable a
+native row. At installation completion the native row decoder uses
+$E_{\mathrm H}$; at the acquired code check the serializer of the parsed
+$\Delta_{\mathrm H}$ must equal the acquired installation word. The
+bootstrap drives the partial installation up to its actual completion
+edge. The actual initial CAP bindings, source ingress and validation,
+seed acquisition, saved original material, code-copy call and bank
+construction still execute in their specified order.
+
+Let $\mathcal D_{\mathrm H}$ consist of finite **executed** prefixes from
+this irreducible entrance with those fixed boot supplies. A prefix can
+stop anywhere, including before a fixed boot bit has been supplied.
+After initialization follow the installed control, allowing either raw
+bit at each actual runtime IN. This includes the mode01/10 prefixes of
+Definition16.1 without requiring a later input or successful completion
+to exist at the cut. It also includes the retained mode00 raw loop, the
+mode11 exit, and the explicitly specified malformed-frame, controller
+domain and local fault paths, to their actual ends. A completed malformed
+frame keeps the CAP frame-fault successor, a returned legal nonmodifier
+keeps its actual returned record and controller-domain exit, and a
+decreasing or zero guard keeps its actual guard-domain exit. A runtime
+word whose delimiter has not arrived contributes only the bits consumed
+so far. Unexecuted attempts and idle waiting are not new primitive cuts.
+In particular, task admissibility is not the condition for membership
+of an executed raw bit in this physical domain.
+
+For completed positive runs, keep the hypotheses of Definition16.1
+and Theorem22.3. Neither the bigger prefix domain nor the
+incidence representation gives a success theorem for mode00, fault
+paths, uncompleted supply or divergent original local computations.
+No arbitrary boot bits, other preparation, altered prior, alternate
+resident code or extension beyond a specified exit are included. There
+is no uniform finite bound on an execution's length or on the first
+future delimiter. In a terminated run the cut after the last native
+row is included, with its actual terminal type.
+
+**Definition 25.2 (the raw record and its location map).** At a cut $h$
+let $W_{\mathrm H}(h)$ consist of all 74 physical words and the finite
+physical locations of this boot and program. Identify a tape cell by
+its original port $p$ and its position $k$ in that port's creation chain,
+including the actual boundary cells. Keep all eight tracks, including
+the raw blank, delimiter, seal and both meter marks. The meter is the
+one meter of PR57.D1, with its two foundation boundary cells, not a
+tape of primitive operands. Retain even unavailable, invalid, retired
+or partially initialized bytes.
+
+Use a catalog $J_{\mathrm H}$ of finite bit locations as follows. Take
+the primitive foundation fields, the boundary/bootstrap stage and cursor
+fields, the raw installed store and the active version/entry fields of
+Definition17.1, then the resident finite fields: actual PC/test/phase
+and role permutation, bank parity, latch subfields, port/availability
+slots, the original/RG2/handler/client invocation slots and the actual
+read/write/completion and mailbox slots. Include every finite location
+used by the installed variants, in their owning field and bit order;
+if a location occurs in several descriptions, take its first occurrence
+under its actual physical name. Separate physically distinct retained
+locations. Enumerating the literal bootstrap constructor targets and the
+finite declared row/effect operands in §§16–17 (with CAP/ARC's finite
+foundation layout) gives this finite catalog. A slot not yet constructed
+is absent. A written 0 is present. A control selector and its selected
+table are different coordinates: activation selects the installed code
+as specified in §17, without granting an extra write of all its bits.
+The raw and last active stores are decoded in their respective roles;
+if two roles refer to the same physical slot, this does not create a
+second physical slot. No time, address, bank word, dynamic table24,
+archive $\Delta_{\mathrm H}$ or image field is an added finite location
+by virtue of being interpreted as code or control. Those words remain
+on their actual tapes. There is no semantic transcript field in this
+catalog. Put $q_{\mathrm H}=|J_{\mathrm H}|$.
+
+The role map on ports0–63 is CAP2.2's, including source16 and its
+segmented $\phi_K$, the original channels, verifier and consumer. The
+map on64–73 is Definition16.3's. For example, 68's RCA placement
+descriptions, 29's CAP descriptors and 69's mixed staging/ingress
+symbols have different parsers; the record map preserves every byte and
+port, so it does not interpret a one-based CAP origin as a zero-based RCA
+placement. The fixed preparation/source binding is a parameter of the
+maps. Its dynamic encoded references are actual data. Actual successors
+and events have the meaning of AIF2.4–2.6 and Definitions20.1–20.2.
+Pending-event and terminal interpretations are obtained by the actual
+annotations and the represented words in their phase, not by assuming
+that a decoder can always exhibit a valid current tree. Where an
+interpretation uses an occurrence, it uses the actual occurrence fold;
+the raw record itself contains no independently supplied occurrence list.
+
+**Definition 25.3 (incidence storage and endowed rule basis).** Use
+[UAS](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GROWING_UNARY_STORAGE_ATLAS.md)
+Assumption1.2 and [SSA](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_STRUCTURAL_STORAGE_ATLAS.md)
+Assumption3.1's priced bounded atomic patches. Here is the explicit
+instance. The two representations are the native words/slots and the
+following sole incidence storage; the latter has no live shadow native
+tapes. Use UAS2.1's ordered balanced $F_{75}$ with sockets for ports
+0–73 and $F_{q_{\mathrm H}}$ at its last socket. At each bit socket,
+absence is a childless root, 0 has one left terminal child, and 1 one
+right terminal child. Each physical cell has $F_8$ with its eight present
+track sockets. A port word is the right spine of these cell components
+and the trailing terminal. Appending a cell expands the old trailing
+terminal in place. A cell root's occurrence is tied to $(p,k)$; auxiliary
+vertices have their fixed ordered template roles at that construction.
+Changing a bit switches its same child between the two sides; it does
+not allocate another child. The optional control locations are ordered
+by $J_{\mathrm H}$.
+
+A port origin has its ordinary head link whenever its actual ordinary
+mark exists. The meter uses distinct lanes for its read and append
+marks, even at a shared target. There are no other access links.
+Decoding traverses the fixed socket paths, the right spines and the
+track/optional sockets in their orders. The same ordered traversal in
+reverse constructs the child layer, and the decoded marks uniquely
+supply the access incidences. Write $\Gamma_{\mathrm H}$ for the
+encoding and $D_{\mathrm H}$ for this raw inverse, restricted to this
+layout with consistent head links. In particular $D_{\mathrm H}$ returns
+the raw installed and active-role coordinates, not a finished code
+table in place of an incomplete one. Nothing in the incidence storage
+changes port tokens or permits reading by following a path without the
+original guard.
+
+At ordinal zero construct the finite scaffold, empty ordinary port
+sockets, actual meter foundation and present primitive finite fields,
+including only the head links then present. This is the charged
+foundation of the new realization. Its fixed additional rule mechanism
+is endowed as in SSA3.1–3.2. The entire native boot then executes by the
+patches below, including ordinary boundary construction, every installed
+code/slot bit, each input and its write, all copies and the active-version
+switch. The patch table is a rule implementation of the finite native
+decoder and its bounded effects; it does not supply boot, code or
+source inputs to the object program. Ordinary RD/WR do not implement
+this atomic incidence primitive.
+
+**Theorem 25.4 (initialized native-row correspondence).** There is a
+finite, fixed patch table $\Pi_{\mathrm H}$ for Definition25.3. Starting
+from its charged foundation, its actual native-labelled occurrences
+and those of $G_{\mathrm H}$ on Definition25.1 correspond bijectively
+as rooted, labelled prefix graphs. In the correspondence, physical
+records are related by $\Gamma_{\mathrm H},D_{\mathrm H}$, and the
+label erasure preserves actual operands, guards, native outcomes,
+source/input and constructor provenance, complete joint successors,
+release and terminal observations. At each prescribed primitive the
+two realizations have the same enabledness and rights; no attempted
+illegal operation executes a patch.
+
+**Proof.** Construct the table in UAS2.3's order using the catalog
+$J_{\mathrm H}$, 74 port roles, both meter lanes and the installed
+finite opcode/effect grammar of Definitions16.2–17.1 and 20.1. Enumerate
+the absent/0/1 catalog patterns, raw finite store patterns, active
+selector/cursor, unique decoded native row, guard/operand byte patterns,
+actual endpoint alias partitions and both bits at a raw IN. Bootstrap
+variants use their literal fixed boundary/bit/advance/completion rules;
+a partial main store is never a row supplier. Once installed, the
+seven unary fields and ordered finite effects have their actual
+meaning by Lemma17.2. Range and owner tests are the native tests.
+Absent required locations are not supplied as zero. Out-of-range
+patterns or failing guards do not enable a new patch. This enumeration
+can include guard cases that are never reached; there is no raw
+incorrect-code replay theorem in this construction.
+
+The outer path to a port and its head link reaches a marked cell
+root. From there, next and previous use the UAS2.2 walks
+$\mathsf P\mathsf R\mathsf L$ and $\mathsf P\mathsf P\mathsf L$ when
+the native neighbor exists. The end terminal at the last cell uses
+$\mathsf P\mathsf R$. Before ordinary head activation, boot reaches
+the trailing terminal by the fixed path from the origin of an empty
+or one-cell tape. Finite effects may also name existing current/preceding markers on named
+ports; these use exactly the corresponding bounded walks. The finite
+catalog subtree and each cell subtree have bounded size. The only
+unbounded objects are spines and data in their cells; no row walks an
+unbounded part of one as a single patch. Dynamic table lookup, bank
+rebuilding, archive scans, simulation, channel placement/positioning,
+copying and checking are their expanded native loops, with one patch
+per executed native row. Hence a maximum over the listed patterns
+and role lists is a fixed finite probe, assignment and creation bound.
+
+For each enabled row, compute its core result and receipt with the
+actual effect order. RD reads the corresponding symbol and test
+branch. WR writes the same symbol tracks, using the actual writable
+cell and literal or latched value. ML/MR preserve the old and new
+marked cell identities, switch exactly the two head marks and retarget
+the link. EX writes blank at the old R, retains the head there and
+constructs the new unmarked R. BF uses the same finite truth table,
+IN consumes that actual bit into the named latch without writing the
+receiving data cell, and OUT releases the same permitted bit. TOK
+tests and updates its two named slots, even for two slots of one
+principal. CTL applies its finite ordered marker/slot/entry/test
+effects, including invocation, response commitment, seal and halt.
+Boundary variants create only their actual cell, and bit installation
+creates only its designated optional child if absent; the control
+cursor advances as prescribed. No effect's target is an unevaluated
+runtime word, nor is a semantic commitment an atomic unbounded write.
+
+Then replace the old meter append R by the designated ordinary or F
+receipt and append a fresh R. Retain the core's updated meter read
+mark. Combine aliases before assigning the final native tracks:
+if read/append/marker roles refer to one old cell, they contribute to
+one cell update in native effect order. Distinct access lanes still
+retain both heads. The assignment list contains all designated existing
+bits, including unchanged writes, then the cell/slot templates and
+link updates as in UAS2.2; no undesignated bit changes. No native
+data location is reclaimed by this graph, including on fault or
+deactivation. This exhausts the physical write cases; it does not
+depend on a valid source-tree decode, available descriptor, ready
+mailbox or completed bank. The tags for native enabledness and output
+are independent of the internal probes: a private bit has no public
+effect except through its original admitted row semantics.
+
+The local core and receipt argument gives, for each actual transition
+$W\xrightarrow{a/\lambda}W'$,
+a patch $\Gamma_{\mathrm H}(W)\xrightarrow{a/\widehat\lambda}
+\Gamma_{\mathrm H}(W')$ with the native part $\lambda$ of its occurrence
+label, and conversely by decoding the guard, row and resulting tracks.
+The additional label fields record the actual local template roles and
+endpoint updates, determined by that pre-state and action. A rule returns
+the bounded native outcome and its local roles; the absolute occurrence
+number and creation-chain positions name the events and vertices in
+the resulting relation. The patch does not print these names as
+unbounded numeric words. Keep original renumbered caller/site identity
+in the native part; equal payload or equal branches are not identical
+occurrences. The foundation decodes
+to the actual native ordinal-zero record. Apply the row square inductively
+from there, retaining the same source and constructor origins at each
+step. The source operations, partial records, emitted bits and
+interpreted pending/terminal fields therefore agree on this common
+execution. Every patch prefix erases to a native prefix, and starting
+at the same foundation, the rule and actual native action reconstruct
+that prefix's unique patches. These are inverse initialized maps; no
+pair of separately reached endpoints is used as a common source. ∎
+
+## 26. Retained input across the enlarged call graph
+
+**Lemma 26.1 (runtime input census for this installation).** Let $b_{\mathrm H}$
+be the prefix of the specified initialization ending just before the
+first `StartMode` IN. It is determined by the fixed boot, with no
+independently supplied state at that cut. Through $b_{\mathrm H}$ the
+input sites are the specified installation, original public bindings
+and unique private preparation, and the separate prescribed public
+archive-copy supply of Definition17.1. After $b_{\mathrm H}$ every
+executed IN belongs to exactly one of the following:
+
+| Inlined caller/site | Matching write destination |
+| --- | --- |
+| `StartMode`, two unrolled bit bodies | Fresh payload positions of 69 |
+| External `Select`, one choice bit | Fresh payload position of 69 |
+| `GuardIngress`, each bit of the independent unary word, including its zero | Fresh payload position of 69 |
+| CAP4.6 external raw graph at `RawDispatch` or at the resident mode00 entry, header, length and payload | Actual raw 13 block position |
+
+**Proof.** For boot, the installation and separately supplied archive
+pair use the fixed supplies in Definition17.1. CAP2.4's original public
+and private sites consume the prescribed original data, including the
+two original private packet bits10 from the single $\beta$ preparation.
+The stationary seed call is a reached service and delivery; it does not
+receive a second private packet. The new archive delivery after it reads
+producer21/17 and copies the paid sender block on route48, including
+both allocations and the actor copy/check/return. It does not repeat
+its original supply. All of `Initialize`'s acquisitions and the
+serializer comparison use the already supplied material; its bank
+constructors and parsers are ARC2–3 and RCA11–12 word/native expansions.
+
+For the resident portion, follow the actual control joins. The mode test
+leads to the retained raw loop, a domain exit, or the lift and `Entry`.
+The lift has four computed calls, with their returned states and no
+external frame IN. In external mode, choice0 reaches the raw frame body,
+and only a returned modifier reaches the guard reader. Choice1 reaches
+the finish branch. In internal mode the installed stage constructor
+either supplies the proposal by native construction or reaches finish;
+it has no choice or raw frame input. The guard test either exits or
+leads to planning and the computed Reserve, Raise and selected calls
+actually required by that branch. These calls use CAP4.6's automatic
+Append/copy constructors. The CAP service bodies, including original
+source generation, descriptor and counter preparation, record writing,
+row/dependency deliveries, authentic refusals, checks, ACK and
+source-token return, use constructed words. The retained mode00
+back-edge is to its next raw frame, not to an ARC outer gate.
+A malformed raw frame or out-of-domain returned tag takes its specified
+exit, without inventing a later input demand.
+
+The changed finish path requires a separate call check. `OwnedInput`
+performs bounded imports, scans and exports of existing material;
+its target and countdown are obtained from actual retained bindings.
+`InvokeHistory` transfers a slot and selects an entry. The parser and
+Step74 evaluator in `History` read 70 and bank words. In particular,
+when the evaluator *represents* a historical IN, it calls the evidence
+transducer, not a native IN. `DeliverImage` places, copies, seals and
+prints from its sender/channel fields, with no receive-from-environment
+row. `CheckImage` imports the received words and compares finite
+lists, including the checker replay's represented IN events. Its
+placement acquisition is an import from 69. Checked and fault
+exports and `ReturnHistory` use actual copy, seal and transfer edges.
+No new outer gate, history frame, external ordinal, ACK bit or input
+site on70–73 is invoked. The unchanged restore/loan/Stop suffix takes
+the copied original configuration, literal Stop table and retained
+prior and journal material; CAP8.1 and §§21–22 specify computed
+packet construction, original terminal verification and consumer,
+not another external request. The two token directions, partial
+loans and original halt do not add inputs. These are all continuations
+of the changed graph. The census uses the actual expanded caller
+kind even when a computed block equals a raw frame bit for bit. ∎
+
+**Lemma 26.2 (actual matching addresses and persistence).** For a
+variable IN with pre-count $j$ in Lemma26.1, its installed site and
+pre-IN head identify the matching address $(p,k)$ and its matching
+WR's post-count $w$ as follows.
+
+| Site | Native fragment beginning at IN | $p$ | $w$ |
+| --- | --- | --- | --- |
+| Raw header, raw length | IN; EX; WR, then the stated test/move if applicable | 13 | $j+3$ |
+| Raw payload after positive length test | IN; WR; MR(payload); MR(length) | 13 | $j+2$ |
+| Mode, external choice | IN; EX; WR; MR | 69 | $j+3$ |
+| Independent guard | IN; EX; WR; RD(test); MR | 69 | $j+3$ |
+
+At a cut of count $n$ with $j<n<w$, the actual input latch still contains
+this bit. At a cut $n\ge w$, the symbol at $(p,k)$ is this bit for the
+remainder of the execution in Definition25.1, even if its enclosing
+block is unfinished.
+
+**Proof.** In the append cases $k$ is the position of the existing R:
+EX turns it into the blank with the same mark and creates the *next*
+R. Thus even immediately after IN the address is defined, although it
+does not yet denote a written bit. In the raw payload case the current
+head is at the fresh zero-reserved payload position following the
+positive counter test. The placement and the write address do not
+depend on the not-yet-written bit. In each fragment the actual receiver
+latch is unchanged between IN and WR; a length/guard test occurs after
+WR, with its own latch. There can be at most one pending matching
+write for a consumed runtime bit, since no second IN occurs inside
+any pending interval.
+
+The global persistence claim requires more than the fragments. For13,
+CAP3.3/4.6 measure Base for each fresh block. Header and length INs each
+fill a distinct former R. The payload fill visits each actual reserved
+position once, in creation order, and its zeroing was before any of
+these payload INs. WR to status is at base plus length plus one, outside
+the payload. Every later raw or automatic constructor allocates fresh
+blocks at the then-current tail. Request parsing, producer field
+scans and dependency delivery read them; the twelve producer work
+roles exclude13. The source/maintenance and counter/row bodies use
+their own fixed roles. Tail(13/17) is head work. This accounts for
+later producer work in the retained raw loop as well as the RG
+caller. A malformed raw frame has no subsequent source write to its
+ingress block.
+
+For69, each mode/choice/guard receiver starts at its fresh measured
+tail. It constructs and fills only its own incoming payload and fresh
+separator/status positions, and final status updates are outside
+that payload. ARC4.3's Stage34/35 as relocated in §§16 and 19 perform
+fresh staging at the actual tail of69, including their delimiter
+and seal; no staging field is overlaid on a CAP ingress word.
+This use of RCA13.2 does not require the entire earlier stream to
+have the RCA delimiter grammar. Ordinary bank assignments, tree
+construction, arithmetic, validation, replay and serialization use
+64–68 and the declared public work roles. Other retained RG exports
+have their actual25/27/29 destinations. No original CAP helper uses
+69 as scratch.
+
+For the additional graph, the extra boot archive copy writes the
+original public sender/descriptor and route48 receiver material,
+not any runtime 13/69 payload. The larger bank has more fields,
+not more scratch ports. `OwnedInput`'s imports and measured export
+use64–69, the public pool, new70 and descriptor29; every69 write
+is the fresh Stage34/35 case. `History`'s reimport, word evaluation
+and output assembly use the same banks/scratch; its 13,69 and meter
+effects inside a represented state are writes to **bank data**.
+In §21 the new marker is literally Tail(69); Append(69,F); seal.
+The three subsequent placement copies append fresh staged fields
+on69; their preparations write scratch/descriptors, the two payload
+copies use71–73, and their completion records append on71.
+The backward field selection occurs in the imported word; the
+actual symbol import on69 reads and restores, without extending or
+rewriting it. The print loop and callback read their actual placed
+blocks. `CheckImage` compares bank data; its checked export writes
+fresh30/29 and a check-fault export uses71. All cleanup and return
+TOK/CTLs change only named availability/control/marker fields;
+they do not replace a received symbol. The original final restoration
+appends fresh25/27/29 material; the Stop/terminal route uses the
+original output, producer archives, verifier and receipt consumer
+ports. Neither writes any earlier13 or69 received symbol.
+
+Thus every actual later operation that can touch either selected
+port is accounted for: it reads or positions, changes a nonpayload
+mark, constructs at the tail or fills only its own fresh interval.
+This is preservation of the original receiving symbol and its
+creation identity, not of the head position or of all eight tracks
+on its cell. It holds also before a descriptor seal or immutable
+flag is available. In particular neither the mixed69 stream nor a
+partially initialized 13 interval is required to be a list of
+successfully parsed records. ∎
+
+## 27. Four expressions and their exact common finite domain
+
+**Definition 27.1 (independent readings).** On the incidence histories
+corresponding to $\mathcal D_{\mathrm H}$ define:
+
+- $S_{\mathrm H}$: the root-relative left/right paths to present
+  vertices in the child layer of the actual incidence storage.
+- $B_{\mathrm H}$: the root-relative paths ending at an actual
+  vertex whose two child slots are empty. Head links are not
+  child slots; the boundary is geometric, not a halt or a leaf
+  of the source operand.
+- $T_{\mathrm H}$: the chronological word of actual
+  $\Pi_{\mathrm H}$ patch occurrences at this entrance, with the
+  native labels and additional template roles of Theorem25.4.
+  A count, fence number or ordering of hypothetical continuations
+  is not this word. It is an occurrence relation, not a tape on
+  which the apparatus installs its history.
+- $M_{\mathrm H}$: select the actual port13 and port69 words and
+  the actual meter word, in their creation-chain order and with
+  their native tracks. Select the actual finite ownership/
+  availability fields governing these ports, with their role
+  binding. Also select the actual receiving latch's bit and
+  location **only** at a control substage between a runtime IN
+  of Lemma26.2 and its matching WR. At all other substages this
+  last coordinate is empty. The occupied substage is read from the
+  fixed finite inlined PC/phase case (after IN and, in append
+  cases, after EX); it is not an occurrence number supplied to the
+  observation. The literal latch for each case is given by its IN
+  row. This coordinate can be selected from the control/bit
+  incidences at that cut without a history accumulator.
+
+The source and code binding in these definitions is the fixed
+instance of Definition25.1. The memory is a joint mathematical
+selection on that instance: in particular 13 is producer material
+and the meter and the native latch are not new freely readable
+actor words. The rights fields describe the actual authorities;
+selection does not confer them. No raw or acquired history, query
+on70, image on71/73, checked record on30, whole-bank state, complete
+input word or supplied target numeral is part of $M_{\mathrm H}$.
+The bits of those omitted physical objects still exist where the
+actual graph constructed them and are included in its full record
+and bill. This selection is made independently of reconstruction.
+
+**Theorem 27.2 (input extraction and the four inverses).** Each of
+$S_{\mathrm H},B_{\mathrm H},T_{\mathrm H},M_{\mathrm H}$ separately
+determines the same full native history and its corresponding
+incidence prefix on $\mathcal D_{\mathrm H}$. Each inverse is a
+finite mathematical map on its actual image. The inverses recover
+every consumed input with its actual site, ordinal, receiver and
+later origin binding when present, and the full joint endpoint with
+its current rights, partial records, released values and bill.
+
+**Proof.** First use $M_{\mathrm H}$. Counting the meter's actual
+interior receipt cells gives $n$: its two foundation boundary cells
+and one new cell per executed row give length $n+2$ throughout,
+including the halt successor. This count is a mathematical finite
+traversal, not a native current meter read. Start from the fixed
+irreducible native foundation. Use the prescribed boot inputs at
+their actual rows, without executing any beyond $n$. In particular,
+before seed acquisition the fixed canonical preparation is an
+instance parameter; there is no backdated acquired copy. Native
+installation, the two public code objects' physical routes,
+activation and initialization are reconstructed by their own
+operations. There is no substitute reached-state snapshot.
+
+For a variable IN with represented pre-count $j<n$, read its
+literal caller/site and receiving head. Use Lemma26.2 to compute
+$p,k,w$ from that already reconstructed prefix. If $w\le n$,
+select the symbol at position $k$ in the selected final word on
+port $p$. If $w>n$, select the occupied latch coordinate. On the
+actual image Lemma26.2 proves this address lookup or latch selection
+supplies the correct bit. The inequality is tested before looking
+at the addressed symbol. A prefilled zero in a raw payload and
+a new blank on69 before WR therefore contribute no false input.
+No complete descriptor, downstream source response, guard
+export, future zero delimiter or finished image is consulted for
+this rule. The represented site determines which reservoir is
+used and interleaves the two physical streams. For example a guard
+read follows the actual proposal/return, even if a payload on13
+has identical bytes. It does not obtain its value from an encoded
+source fence. At a computed proposal or simulated historical input
+the *physical* graph takes ordinary native rows, not this rule.
+
+AIF4.4 and CAP7.4's counted determinacy argument now has its
+premises: one fixed original foundation and code lineage, a
+deterministic next native row on the represented pre-state and
+the actual bit at every reached IN. Concretely, if the reconstructed
+prefix agrees through $j$, it has that row's actual operand
+positions and guard. At an IN the demand rule returns the real bit;
+otherwise ARC6.2–6.3 and the effect cases in Theorem25.4 give the
+same next label and complete state. Induction through $n$ gives the
+actual prefix. Stop at $n$, including if it lies before a payload
+write, in installation or validation, in an incomplete argument
+on70, copy or checker on71–73, in a partial original loan or
+consumer, or at the terminal successor. No unbounded search for
+a successful next service is performed. Replay of a prefix inside
+the historical call executes its expanded native steps, including
+the work already done on its represented earlier prefix. It does
+not invoke its eventual result as a primitive. Every finite
+symbol/slot/list operation in the mathematical decoder acts on a
+finite record, and the outer iteration decreases a count bounded
+by the observed finite meter. This proves termination on the
+actual image, not a total recognizer for purported observations.
+
+Record each IN at the row where it occurs. The row, source and
+call-site version, actual ordinal, latch and designated destination
+give its occurrence identity. The reconstructed later records, if
+already constructed by the cut, give the actual CAP local status/
+origin, returned dependency and RG guard bindings. Partial and
+missing bindings keep their actual status. A repeated guard or
+payload is another occurrence and is never identified by value.
+This recovers the independent origination of the external choice,
+operand and guard, and the actual construction origin of a computed
+input that is not an external bit. The same induction recovers
+the original preparation, data and all later physical/interpreted
+coordinates of the full joint state.
+
+For $S_{\mathrm H}$, the root socket paths locate each port's spine
+and the finite catalog. A spine node has its left cell and right
+suffix; its terminal ends the word. At a track socket the occupied
+side gives its bit. At an optional socket the two empty slots give
+absence, and the occupied side gives its present value. Thus the
+support determines $W_{\mathrm H}$, including both meter marks and
+all finite fields needed for the memory selection. Its recovered
+marks give the access links of Definition25.3. For $B_{\mathrm H}$,
+each finite child path extends to a terminal by finite descent,
+so $S_{\mathrm H}=\operatorname{Pref}(B_{\mathrm H})$; conversely
+$B_{\mathrm H}$ consists exactly of maximal support paths. This
+is UAS3.2's inverse on the new actual socket layout. It works for
+a unary component and for an absent optional bit, and needs no
+source syntax validity. In either case select $M_{\mathrm H}$ from
+the decoded record and apply the proved extraction. For
+$T_{\mathrm H}$, erase the structural label extension using
+Theorem25.4. This directly gives the original executed history,
+without reconstructing it from an elapsed time or choosing among
+multiple sources.
+
+In the other direction the common initialized row square
+constructs the actual incidence prefix from its native history,
+and each of the four readings is then given by its own definition.
+This proves both inverse laws on each actual image. In particular
+two cuts have equal values in any one of the four expressions if
+and only if they have the same actual history. ∎
+
+**Corollary 27.3 (twelve conversions and partial action transport).**
+For each ordered pair of distinct expressions, decode the first to
+the common prefix and take the second reading of that prefix.
+These are twelve maps between actual images, with inverse and
+triangle laws. Each intertwines the native primitive edge with its
+own type, enabledness, complete outcome label, release and full
+successor, including the last actual halt edge.
+
+**Proof.** Write $d_V$ for Theorem27.2's inverse and $V$ for its
+forward reading. The maps $U\circ d_V$ compose because
+$d_U\circ U$ is identity on the actual prefix domain. For a
+prescribed action, use the native partial transition on the
+decoded prefix and then its actual successor reading. Theorem25.4
+gives the same result as the incidence patch and the same actual
+rights before and after it. Illegal or unauthorized attempts
+remain absent edges. An executed raw bit outside a task's input
+grammar has its physical successor; it is outside the lawful
+task Supply domain, not an illegal edge invented in its place.
+Executed guarded refusals, actual malformed-frame exits, local
+faults, and any paid lookup response already present in the
+original menu retain their own types. Concatenating the squares
+transports a finite prescribed path, keeping each intermediate
+joint state and each label. An original finite adaptive protocol
+that is actually admitted still branches only on its original
+public releases. This argument neither introduces new experiment
+names nor uses a private-state test to run such a protocol. At
+halt there is a terminal reading but no new action. ∎
+
+**Proposition 27.4 (one bit in a specific retained-backing fibre).**
+If the occupied input latch is dropped from Definition27.1, its
+remaining selection is insufficient at the first runtime mode
+IN. A binary distinction suffices and is necessary on the pair
+of immediate successors of that first IN, conditional on their
+common remaining selection.
+
+**Proof.** Take the two actual first mode bits0 and1 from the same
+$b_{\mathrm H}$, and stop immediately after IN. They can be
+continued by1 and0 respectively to modes01 and10, but no such
+continuation is used at these cuts. IN writes only the designated
+latch and its prescribed successor fields and appends the same
+ordinary receipt. No 13 or69 track and no selected right changes.
+The remaining selection is therefore equal while the consumed
+input and its live latch differ. Any supplementary observation
+recovering those two histories must distinguish the two values
+on that fibre. The occupied latch provides precisely that
+distinction. This comparison makes no claim about the minimum
+number of ports, structural vertices or total retained bits for
+other selections or runs. ∎
+
+## 28. The acquired target and the inherited original-task edge
+
+**Theorem 28.1 (the checked image denotes this very incidence cut).**
+For each completed positive run, let $`h_*`$ be the strict historical
+response-fence prefix actually selected in §18. After the existing
+successful delivery and check of §§20–22, the acquired (RH.3)
+denotes the incidence prefix corresponding to $`h_*`$. The four
+readings there are its independently defined readings of
+Definition27.1. In the incidence realization the existing image
+producer, receiver and checker perform their original operations and
+reach their original returns. No additional image or view output
+is required for this correspondence.
+
+**Proof.** The chosen origin in Definition18.1 is the complete
+acquired unified row and its actual response fence, not a timestamp
+supplied to the representation. By Theorem20.3 the nine-field
+image has the exact consumed input origins, native prefix $`h_*`$,
+endpoint and native bill. Theorem21.3 proves the actual delivery
+and check on the acquired local copy; it checks the earlier
+partially pending endpoint, including both actual code roles,
+not a cut after the later row delivery. From its checked history
+field and the fixed foundation, lift each native occurrence by
+Theorem25.4. By induction these are exactly the already executed
+patch occurrences of this realization up to the selected F, with
+the same source, creation identities, origin bytes and meter.
+Independently, encoding the checked physical endpoint gives the
+same final incidence record by that row square. Thus geometry
+comes from that record, occurrence time from those actual lifted
+occurrences, and the memory selection from the actual incidence
+coordinates at that earlier cut. Projecting back by $D_{\mathrm H}$
+and erasing the patch labels returns the checked endpoint and
+history. The selection of $`h_*`$, its existing owned input and
+its exact check are the ones in §§18–21; no assertion that an
+arbitrary image is authentic follows from having these maps.
+
+For the execution itself apply Theorem25.4 through the real
+Handback loan, 70 export, invocation, image work, 71–73
+copies/print, full check and30 seal, ACK and invocation return.
+The state on each side has the same actual current tokens and
+guards as in Lemma22.2, not the historical ones encoded in the
+image. Thus the original saved configuration and empty waiting
+word are restored by the actual fresh copies, with the original
+table and original workspace loan. Theorem22.3's literal Stop,
+terminal rows, snapshot, verifier, receipt, consumer and final
+ACK/return give the original INITIAL-$q_1(\beta)=(0,B,1)$ and
+halt in both realizations. The historical OUT has its different
+type and origin. At no point does the source occurrence change,
+even if the current tree differs from the original beta. A
+transported halted cut has no continuation or reentry. ∎
+
+**Proposition 28.2 (exact reverse leg on the selected original row).**
+On the family of selected $`h_*`$ in Theorem28.1, take only the
+unchanged, enabled original non-IN Advance of Proposition23.2.
+Its actual response, with the complete original joint successor
+coordinate of AIF2.6, determines $`h_*`$ and hence all four
+readings at $`h_*`$. Conversely each reading determines that
+response, and the incidence successor decodes to its actual
+successor under the original coordinate selection.
+
+**Proof.** For the forward direction from a reading, use
+Theorem27.2 to recover the actual pre-row state. The finite
+inlining map of Definition23.1 identifies the original
+prepared-fence counter/readout row in its CAP body, with unchanged
+guard, operands, response and original successor effect. Its
+native/incidence square preserves those coordinates. There is
+no Advance across the changed caller return in this argument.
+
+For the reverse direction let $y$ be the successor in the actual
+Advance response. The original joint coordinate contains 13,25,29
+and the meter, by AIF2.5 and SOURCECALL1.4, as used in (RG.11).
+The appended 69, image or bank coordinates are not needed.
+Obtain the absolute count from this actual successor meter.
+In the following finite replay to that count, the bootstrap and
+code parameters are those of this fixed $G_{\mathrm H}$; there
+is no identification with the ordinal of an old RG2 cut.
+
+At a raw IN the address rule of Lemma26.2 reads the actual bit
+from13 at the successor: all these raw calls have completed
+before the selected final response, so their matching WRs
+have already occurred. At mode/choice/guard IN use the following
+original state evidence in25/29. Compute the pre-mode descriptor
+bound from the fixed boot; parse the actual complete native29
+records and select immutable available25 exports by their full
+local references and types. This finite scan stops at any
+unfinished tail rather than treating it as a descriptor. In
+increasing descriptor order the initialized post-mode export
+gives the two mode bits. The first consequent `RawWait` matching
+the represented external choice's round and previous joined ends
+gives choice0. Every choice before this cut is of that kind;
+the actual finish choice is later, and the internal stages have
+no choice IN. Each guard is read from the complete `GuardAcquired`
+export with the represented round, proposal origin and preceding
+selected-final end, including the unary zero and its local
+binding. Equal payloads do not merge these origins.
+
+These are the same physical exports justified in Lemmas17.3
+and 19.3 for the changed layout: mode is exported before the
+lift, choice0 before raw ingress, and the guard before the
+corresponding computed calls. On the selected endpoint they
+are already written and sealed. The single inherited non-IN
+row of §23 is in the fence readout body, not an actor state
+writer or a new input. It preserves those payloads and their
+descriptors, so the scan in the successor finds exactly the
+required evidence. The retained 25/29 writer order and
+one-based local reference test are the ones described in
+Lemma12.2, but the supply and preservation here have been
+established on this particular $G_{\mathrm H}$ chart. This
+argument does not require that the selected final unified row
+is already delivered at the earlier endpoint. It does not
+use the later Handback or the acquired historical image as
+an extra argument. When $N=0$, the target is at the fourth
+lift call's response fence and this evidence needs only the
+mode, with no raw/choice/guard demand. For the internal target the three
+actual guards have their own proposal bindings.
+
+The IN demands are exhausted by Lemma26.1 and there is no IN
+in this last Advance. Counted replay with these bits and the
+fixed boot gives the exact successor prefix by the induction
+of Theorem27.2. Delete its last executed primitive to recover
+$`h_*`$. This is separation by one original experiment on the
+specified inherited row family, with its actual original
+response. It proves neither a new-row original-$Q$ domain nor
+separation by a terminal empty experiment. ∎
+
+## 29. Same-run price and the scope of the representation
+
+**Theorem 29.1 (exact incidence and native accounts).** Keep the
+native bill of (RH.5) on the common run of Theorem25.4. The
+incidence representation has the following separate exact bill
+under UAS's endpoint convention. At a cut write $C$ for all
+constructed tape cells (including the meter and every ordinary
+boundary), $c$ for the present finite catalog locations, and
+$\ell$ for the actual origin/head links. For $q=q_{\mathrm H}$,
+the vertex and terminal counts are
+
+$$
+V=147+2q+c+24C,\qquad L=74+q+8C.
+\tag{RH.6}
+$$
+
+There are $V-1$ child edges, $\ell$ access edges,
+$2(V-1+\ell)$ occupied slots and $7V$ slots of capacity.
+Define the exact row stencil as follows. Inspect the finite
+component from the root, then core cell roles and neighbors,
+ordered finite-effect marker roles and the old meter append cell
+in that order, including repeated roles. For each such role $x$
+use its prescribed bounded route $\pi_x$ and a full cell
+inspection. Visit the core then receipt append sites and probe
+both child slots of their trailing terminals. Probe old head
+endpoints used in the update in port/lane order, using the
+root routes through their old links where applicable. Visit
+fresh finite-bit sockets and probe both child slots. Let
+$\mathcal D_i,\mathcal A_i,\mathcal J_i,\mathcal Z_i$ be these
+cell, append, old-head-slot and fresh-socket lists for row $i$;
+each old-head walk includes its final slot probe. If $d_r$ is
+the root route length to the finite component, the row probe
+count is
+
+$$
+\begin{aligned}
+p_i={}&d_r+6q+3c_{i-1}-4
+ +\sum_{x\in\mathcal D_i}(|\pi_x|+68)
+ +\sum_{z\in\mathcal A_i}(|\pi_z|+2)\\
+ &+\sum_{u\in\mathcal J_i}|u|
+ +\sum_{z\in\mathcal Z_i}(|\pi_z|+2).
+\end{aligned}
+\tag{RH.7}
+$$
+
+Let $t_i$ count designated existing bit targets after combining
+aliases, $e_i$ constructed cells, $s_i$ newly present finite
+bits, $r_i$ head retargets and $a_i$ first activations. With
+$C_0=2$ and the actual $c_0$, the incurred structural units are
+
+$$
+\begin{aligned}
+v_i &= 24e_i+s_i,\\
+w_i &= 3t_i+2e_i+2s_i+3r_i+2a_i+7v_i,\\
+\mathcal G_{\mathrm H}(n)
+  &= \rho_{\mathrm H}+1+8V_0+\sum_{i=1}^{n}(1+p_i+w_i+v_i),
+  \qquad V_0=195+2q+c_0.
+\end{aligned}
+\tag{RH.8}
+$$
+
+The fixed rule description is part of $\rho_{\mathrm H}$: take $d_{\mathrm H}$ to be the
+length of the SSA3.2 unary/list encoding of $\Pi_{\mathrm H}$
+in the order of Theorem25.4. Under the convention of one
+unit per immutable rule bit and one for the endowed finite
+rule mechanism, $\rho_{\mathrm H}=d_{\mathrm H}+1$. The vector
+bill can report the rule bits, foundation and per-occurrence
+probe, assignment, birth and commitment counts separately. If
+the two tariffs are imposed jointly the fee is
+$2n+\mathcal G_{\mathrm H}(n)$; the substitution convention uses
+$\mathcal G_{\mathrm H}(n)$ alone. Neither is a physical energy or wall
+time law.
+
+**Proof.** The eight track components with their seven internal
+scaffold nodes have 23 vertices and eight terminals. A spine
+of $k$ cells thus has $24k+1$ vertices and $8k+1$ terminals.
+The finite component has $2q-1+c$ vertices and $q$ terminals.
+The outer scaffold adds 74 internal nodes. Summation proves
+(RH.6); each child edge or head link occupies two reciprocal
+slots. A traversal of a $v$-vertex component probes two child
+slots per vertex and one parent slot on each nonroot return,
+giving $3v-1$. This gives 68 per cell and $6q+3c-4$ for the
+finite component. Include the route to every ordered role,
+including alias repetitions. During boundary boot with no
+head on a port the append route uses the fixed origin
+scaffold and that port's empty or one-cell spine, not a
+nonexistent head link. Later the native last-cell mark
+and the fixed UAS terminal walk supply the route. Include
+the finite construction probes and old endpoint probes, then
+(RH.7) is exactly this chosen traversal. There is no assumed
+universal three-cell bound on a CTL's inspected roles.
+
+A written old bit assigns its two root slots and its child's
+parent, including unchanged designated bits. Each appended
+cell expands one trailing terminal with 24 births; a fresh
+finite bit creates one child. Each such constructor assigns
+two old child slots, and all seven slots of every new vertex
+are initialized. A retarget clears the old endpoint and
+assigns origin and new target; activation only assigns the
+latter two. Distinct meter lanes and combined native track
+effects give the stated disjoint counts. The carrier retains
+actual constructed heads; halt does not deallocate a tape or
+its head. The foundation creates every actual vertex and
+assigns all its slots, including empty slots and whichever
+head links actually exist at that cut, then commits once.
+The per-row summation is on this one common execution.
+A separate material loader for the patch rule mechanism
+would need its own paid installation and correspondence;
+none is presumed by the endowed mechanism convention.
+The actual native code and public archive inputs of
+Definition17.1, by contrast, are paid boot rows in this sum.
+
+Native tick, fee, opcode/purpose and construction counts
+remain those of Theorem24.1, by the one-row square. In
+particular $C=2+A_{\rm phys}(h)+n$; the sixteen native meter
+foundation bits are in $S_0$ in (RH.5), not a second set of
+receipts. Include all paid initialization, old and new banks,
+acquisitions, staging, simulator rows, output/copy/check
+work, fault work if executed, terminal route and dead
+material. The simulated historical receipt words are
+constructed data; they neither replace the current meter
+nor pay for any physical row. No extra publication of any
+of the four readings occurs. Equations (RH.6)–(RH.8)
+price the sole incidence storage and actual execution, not
+a free snapshot or an unpriced native converter. The mathematical
+image maps in §27 make no claim about the actual runtime,
+backing or permissions of a future installed converter. ∎
+
+**Proposition 29.2 (which representations are related).** The
+raw-record inverse and row correspondence in §25 are specific
+to $J_{\mathrm H}$ and the installation of Definition17.1.
+They give neither membership in UAS's original $\mathcal C$
+nor an embedding of this graph's history in the growing paid
+view cycle. The literal Fibonacci atomic source tree and
+the incidence child layer also have different types.
+
+**Proof.** UAS1.3–1.4 uses its own capture $L$, native $G$,
+activation sites and outer 00/01/1 grammar. Its original
+$M_J$ includes the actually retained outer/history ingress
+on70. Here 70 is a computed historical argument; variable
+actor ingress is on69. Matching source values or original
+port numbers preserves neither a supplied row at that site
+nor the associated finite control catalog. The
+[growing paid view cycle](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GROWING_PAID_VIEW_CYCLE.md)
+§§2, 6–9 has another boot $G_\circ$, its own retained
+70 fields and an installed consumer of its own single-view
+bodies. There is no occurrence of that consumer in (RH.1).
+The common part used here is the ordered unary cell/slot
+template and its bounded patch method, mapped by the
+literal eight track positions and the actual $G_{\mathrm H}$
+catalog as in §25. The old typed histories cannot be
+identified by that common template. The new image maps
+are between four images of this new instance. UAS's
+$\mathcal C$, $M_J$ and its twelve conversions are unchanged.
+In particular $\mathcal D_{\mathrm H}$ includes cuts before
+seed acquisition and new historical/checking rows, without
+claiming that they are original view-domain cuts.
+
+The source term is in the two-tag ordered free binary
+syntax of [Fibonacci Atomic Relation Generation](FIBONACCI_ATOMIC_RELATION_GENERATION.md)
+§§2–5,9. On a valid native source boundary its relation
+to the record is through CAP's actual private interval
+and segmented directory $\phi_K$. At the actual capacity $K$
+read its $2K-1$ successive two-bit tokens. The prefix
+parser uses 11 for a branch with the next two ordered
+subterms, 01 for $\alpha$ and 10 for $\beta$; 00 is
+padding only after the whole term ends. This is the
+physical token grammar of §19, not the public Boolean
+code of the source term. On the valid interval, induction
+on the term proves that the parser consumes exactly the
+nonpadding token prefix. Conversely emit the branch or leaf
+tokens in that order and pad to the recorded capacity $K$;
+this recovers the interval's word. The term by itself
+does not specify the directory or $K$. For the public
+Boolean code, the same tree emits 0 at a branch and
+11/10 at the two leaves; the leading bit determines the
+next case and recursive parsing uses the left remainder
+for the right child. Parsing to the common term, then
+serializing in the required grammar (using $K$ for the
+private one), relates the two word types. At $`h_*`$ this is precisely the
+represented source read/check of Definition21.2, which
+tests the actual $E(t_N)$; at an invalid interior packet
+no such tree read is required.
+
+For comparison, even the *child layer alone* is not
+generally a full binary term: a present track socket
+has one child. A separate literal syntax map can encode
+its four possible root cases by
+$\alpha$, $\langle\alpha,u\rangle$, $\langle\beta,v\rangle$,
+and $\langle\langle\alpha,\beta\rangle,\langle u,v\rangle\rangle$,
+where $u,v$ are the recursively encoded left/right children
+that exist. The four cases are disjoint by their root
+and left-subterm constructors. Invert on the image by
+those four tests and recursive descent, returning the
+actual child paths. This coding does not carry access
+links or fresh vertex names as extra atomic leaves:
+on this layout links follow from decoded marks, and
+construction provenance from the initialized occurrence
+map. It makes no extra source packet or paid view in
+the run. Neither a leaf count nor a composition pair
+implements either parser; for example
+$\langle\alpha,\beta\rangle$ and
+$\langle\beta,\alpha\rangle$ have equal composition and
+different literal paths. The supports and terminal paths
+of §27 preserve ordered positions rather than either
+such count. ∎
+
+**Definition 29.3 (source bounds of the result).** The
+counted replay principle is literature-attested by
+O'Callahan et al.,
+[*Engineering Record And Replay For Deployability: Extended Technical Report*](https://arxiv.org/pdf/1705.05937v1#page=2),
+§2.1: capture all nondeterminism inside the chosen
+boundary and inputs crossing it, and reexecute that
+computation. Its user/kernel boundary and treatment of
+asynchronous events supply neither of the actual
+13/69 write-footprint arguments here. The port-local
+incidence templates, prefix/terminal inverse and counted
+native replay used here are existing repository methods
+(SSA3–5, UAS2–4, AIF4.4, SOURCECALL3, CAP4.6 and
+7.2–7.4, ARC6.2–6.3, RCA12–13). The new conclusions are
+repo-derived: the initialized $G_{\mathrm H}$ patch
+correspondence, its actual all-prefix input discharge,
+the four image maps on that domain and their connection
+to the acquired image and selected original row.
+
+The corresponding existing Lean interfaces have distinct
+hypotheses. `AtomicPrefixParser.result` gives the literal
+Boolean code's parsing and decoding inverse, via its
+private fuel parser. `GenealogicalFiberTransport.sourceEquiv`
+retains shape and ordered leaf labels; its composition
+fibres do not supply the incidence inverse. The
+`NativeSerialMachine` replay statements concern their
+own reply-word relation, and the reached-prefix result
+has a reached terminating-run premise.
+`NativeSerialEffective.original_code_service_simulation`
+requires the supplied code and genuine-state equation
+of `OriginalCodeRealization`; its erased external trace
+does not install a 74-role boot. Its private evaluator
+and native-prefix helpers are for that same semantics.
+The `TypedFiniteViewKernel` theorem is for given typed
+partial paths with specified labels and readouts.
+The independent path semantics here are supplied by
+the row square; no plateau or identification with
+original $Q$ for new rows follows from the theorem.
+`PredictiveMemoryMinimalQuotient` requires both readout
+factorization and descended update for its declared
+system and predicts its own completed kernel. It
+supplies no storage lower bound, global minimum or
+authority to read. These are the limits also expressed
+in the respective owning Scribes; the source-model
+arguments above make no fresh compiled Lean claim.
+
+**Open 29.4 (remaining interface obligations).** This
+is mathematical mutual recovery on one specified
+finite-prefix domain under the native and incidence
+primitives. It supplies no current all-cut acquisition,
+cross-owner permission, paid independently printed
+$S_{\mathrm H},B_{\mathrm H},T_{\mathrm H},M_{\mathrm H}$
+API or live transport of an old $M_J$ body. The real
+historical output remains (RH.3). Busy-cut or alternate
+target selection and a fresh output protocol each
+require their own authorized backing, initialized entry,
+finite implementation, channel/return and costs.
+The unchanged original-$Q$ experiments on the new
+rows, and a full original-task kernel at terminal
+cuts, are not supplied by Proposition28.2. The
+restricted one-bit fibre comparison does not establish
+global minimum relation structure, footprint, port
+count or cost. Noncanonical boot/preparation/code,
+other controllers or schedulers, arbitrary raw code,
+indefinite progress, physical implementation and
+posthalt reentry are outside the proved positive
+claims. The sustained four-expression objective
+retains these open obligations.
+
+## 追加锚（本行以下为增补区）

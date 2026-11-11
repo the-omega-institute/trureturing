@@ -1,0 +1,49 @@
+**命题 24.4（原曲线上的槽数及误差成本）。** 定理 24.2 在整个 (19.1) 的精度域内有 $q_e\le L_e$，且沿正有理 $e\downarrow0$，
+
+$$
+\begin{aligned}
+N_e&=\Theta(e^{-4}\log(1/e)),\\
+D_e&=8{,}000{,}000N_e^2
+     =\Theta(e^{-8}\log^2(1/e)),\\
+L_e&=10N_e=\Theta(e^{-4}\log(1/e)),\\
+q_e&=\Theta(\log(1/e)).
+\end{aligned}
+\tag{24.12}
+$$
+
+但是，对固定 $\kappa>0$，若要求同一几何截止证书的误差至多
+$\eta'_e=\exp(-\kappa m_e e^2)$，其充分截止选择为
+
+$$
+q'_e=\left\lceil\frac{\kappa m_e e^2}{\log2}\right\rceil
+      =\Theta(m_e e^2),\qquad
+\frac{q'_e}{L_e}\longrightarrow+\infty .
+\tag{24.13}
+$$
+
+后式限制这一个证书在原预算内支付指数精度的能力，不是所有原生实现的成本下界。
+
+证明。由 (19.1)，$k_e\le10N_e/3$ 且
+$N_e\ge(3/10)2048e^{-2}\log(18/e)\ge1/e$。所以
+$9k_e/e\le30N_e/e\le30N_e^2<8{,}000{,}000N_e^2$；后者为整数，证明 $D_e$ 的精确等式。于是
+
+$$
+q_e=\left\lceil\log_2\frac{80{,}000{,}000N_e^3}{e}\right\rceil
+ \le27+4\lceil\log_2N_e\rceil
+ \le27+4N_e\le10N_e,
+\tag{24.14}
+$$
+
+最后一步使用 $N_e\ge N_*>5$。$\ell_e=\Theta(e^{-4}\log(1/e))$ 比 $k_e$ 和固定 $N_*$ 主导，给出 (24.12)。把 $2^{-q}$ 的充分误差证书设为 $\eta'_e$ 即得 (24.13) 的首式。更明确地，所选充分调用数满足
+
+$$
+\frac{q'_e}{L_e}
+ \ge\frac{\kappa}{\log2}
+    \left(800{,}000N_e e^2-\frac{e^2}{10N_e}\right),
+\qquad
+N_e e^2\ge\frac56\,32768e^{-2}\log(90/e)\longrightarrow+\infty.
+\tag{24.15}
+$$
+
+这是充分方案自身所需的截止参数的比较，不将一个上界方案变成原生最优成本下界。$\square$
+

@@ -1,0 +1,5 @@
+source_id = "otf-008-native-fourier-beta-acquisition-and-full-return"
+path = "docs/develop/theory/OTF_008_NATIVE_FOURIER_BETA_ACQUISITION_AND_FULL_RETURN.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []
