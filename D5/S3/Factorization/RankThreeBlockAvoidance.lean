@@ -255,7 +255,7 @@ private theorem ground_closure_equivariant
     · ext x
       simp [N]
     · intro I _
-      simpa only [Matroid.comap_indep_iff,
+      simpa only [N, Matroid.comap_indep_iff,
         (MulAction.injective g).injOn, Subtype.val_injective.injOn, and_true] using
         hauto g I
   have hc := congrArg (fun K : Matroid M.E => K.closure S) hmap
@@ -268,13 +268,13 @@ preserving a partition into rank-two blocks admits whole-original-block
 avoidance. `blocks` consists of sets of actual ground elements. `hpartition`
 is exactly unique membership, and `hstable` only says that each point-action
 image is again an original block; no action on block labels is supplied.
-Simplicity is expressed by independence of distinct ground pairs, and
+Simplicity is expressed by independence of every ground set of size at most two, and
 automorphisms by preservation of independence on the actual ground. -/
 theorem exists_original_block_disjoint_closure
     {α G : Type*} [Group G] (M : Matroid α) [Finite M.E]
     [MulAction G M.E] [MulAction.IsPretransitive G M.E]
     (hM : M.eRank = 3)
-    (hsimple : ∀ x y : M.E, x ≠ y → M.Indep {x.val, y.val})
+    (hsimple : ∀ S : Set M.E, S.encard ≤ 2 → M.Indep (Subtype.val '' S))
     (hauto : ∀ (g : G) (S : Set M.E),
       M.Indep (Subtype.val '' ((fun x => g • x) '' S)) ↔
         M.Indep (Subtype.val '' S))
@@ -288,10 +288,16 @@ theorem exists_original_block_disjoint_closure
   letI : Fintype M.E := Fintype.ofFinite M.E
   letI : MulAction G blocks := {
     smul := fun g B => ⟨(fun x => g • x) '' B.val, hstable g B⟩
-    one_smul := by intro B; apply Subtype.ext; simp
+    one_smul := by
+      intro B
+      apply Subtype.ext
+      change (fun x : M.E => (1 : G) • x) '' B.val = B.val
+      simp
     mul_smul := by
       intro g h B
       apply Subtype.ext
+      change (fun x : M.E => (g * h) • x) '' B.val =
+        (fun x : M.E => g • x) '' ((fun x : M.E => h • x) '' B.val)
       simp only [Set.image_image, mul_smul, Function.comp_def] }
   let owner : M.E → blocks := fun x => (hpartition x).choose
   have hown : ∀ x, x ∈ (owner x).val := fun x => (hpartition x).choose_spec.1
@@ -331,14 +337,17 @@ theorem exists_original_block_disjoint_closure
     by_contra hxy
     have hval : x.val ≠ y.val := fun h => hxy (Subtype.ext h)
     have hpair : M.eRk {x.val, y.val} = 2 := by
-      rw [(hsimple x y hxy).eRk_eq_encard, Set.encard_pair hval]
+      have hi : M.Indep {x.val, y.val} := by
+        simpa only [Set.image_pair] using hsimple {x, y}
+          (by rw [Set.encard_pair hxy])
+      rw [hi.eRk_eq_encard, Set.encard_pair hval]
     have hcl : ∀ D : blocks, x ∈ L D → y ∈ L D →
         M.closure {x.val, y.val} = M.closure (Subtype.val '' D.val) := by
       intro D hxD hyD
       have hsub : {x.val, y.val} ⊆ M.closure (Subtype.val '' D.val) := by
         exact Set.pair_subset ((hmem _ _).mp hxD) ((hmem _ _).mp hyD)
-      have he := (M.isRkFinite_of_finite (Set.toFinite {x.val, y.val})).
-        closure_eq_closure_of_subset_of_eRk_ge_eRk hsub
+      have he := Matroid.IsRkFinite.closure_eq_closure_of_subset_of_eRk_ge_eRk
+        (M.isRkFinite_of_finite (Set.toFinite {x.val, y.val})) hsub
           (by rw [M.eRk_closure_eq, hrank, hpair])
       simpa only [Matroid.closure_closure] using he
     have he := (hcl B hx hy).symm.trans (hcl C hxC hyC)

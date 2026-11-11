@@ -9,8 +9,8 @@ internal sealed class RankThreeBlockAvoidanceDocument : IScribeDocumentDefinitio
     private const string Prefix = "D5/S3/Factorization/RankThreeBlockAvoidance.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Transitive finite linear incidence partitions admit a whole block outside each closure.",
-        H("Whole-Block Avoidance in a Transitive Linear Incidence Geometry"),
+        "Transitive finite simple rank-three matroids admit whole-original-block avoidance.",
+        H("Whole-Block Avoidance for Transitive Rank-Three Matroids"),
         Blocks(
             Describe.Lean(
                 DescribeId.Create("incidence-count-contradiction"),
@@ -62,16 +62,59 @@ internal sealed class RankThreeBlockAvoidanceDocument : IScribeDocumentDefinitio
                         + "contradicts these equations. Multiple incidences at the same point are "
                         + "counted separately; distinct intersections need not be distinct points.")),
                     Paragraph(Text(
-                        "For a simple rank-three matroid with rank-two partition blocks, the intended "
-                        + "interpretation is L(i)=cl(B(i)). Applying this theorem requires proofs that "
-                        + "the matroid ground set and invariant partition induce the stated finite "
-                        + "actions and owner map, that automorphisms preserve these closures, that "
-                        + "simple rank-two closures satisfy the one-point intersection bound, that "
-                        + "rank three excludes a single common closure, and that rank-two blocks "
-                        + "have at least two points. Those matroid bridges are not proved here. "
-                        + "The conditional incidence theorem does not assert the full matroid "
-                        + "statement or the subsequent field-rank comparison."))),
+                        "The matroid theorem below supplies all these incidence hypotheses from "
+                        + "a simple rank-three matroid and its original invariant partition."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("original-matroid-block-avoidance"),
+                DeclarationHandle.Create(Prefix + "exists_original_block_disjoint_closure"),
+                H("Original rank-two matroid blocks avoid each closure"),
+                StatementSource.FromAuthor(MatroidFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "M is a matroid on an arbitrary ambient type A. Its actual ground subtype "
+                        + "P consists of the elements of M.E; only P is finite. The map v from P "
+                        + "to A is subtype inclusion. The group G, which may be infinite, acts "
+                        + "transitively on P. Simplicity means that every subset of P of cardinality "
+                        + "at most two has independent image under v. An automorphism means a "
+                        + "permutation preserving independence of every actual ground subset: "
+                        + "the displayed independence equivalence is precisely this condition. "
+                        + "The rank function is mathlib's extended natural rank, with eRank(M)=3.")),
+                    Paragraph(Text(
+                        "The collection blocks is a set of subsets of P, and B:blocks denotes "
+                        + "an original member of this collection. Write U(B) for its underlying "
+                        + "subset of P and V(B)=v[U(B)] for the corresponding original subset of A. "
+                        + "The partition hypothesis says each x in P belongs to exactly one B. "
+                        + "Invariance says only that g[U(B)] is again in blocks. Here actimage(g,S) "
+                        + "means the image of S under x mapped to g acting on x, and image(v,S) "
+                        + "is the ordinary set image. No label action, closed blocks, distinct "
+                        + "closures or incidence counts are assumed.")),
+                    Paragraph(Text(
+                        "Unique membership constructs the owner map. Set image under the point "
+                        + "action constructs the action on the original block subtype, and the "
+                        + "action laws follow from the point action laws. Membership in an owner "
+                        + "fiber is equivalent to membership in that original block. The label type "
+                        + "is finite because it is a subtype of the power set of finite P. "
+                        + "Rank two and the rank-cardinality bound give at least two points in "
+                        + "each owner fiber. Containment follows from the closure axiom. Pulling "
+                        + "M back along v gives a matroid on P; pulling it back again along any "
+                        + "group permutation gives the same matroid by independence preservation. "
+                        + "The comap closure identity therefore proves closure incidence equivariance.")),
+                    Paragraph(Text(
+                        "Two distinct ground points form an independent rank-two pair. If both "
+                        + "lie in a rank-two block closure, the finite equal-rank closure lemma "
+                        + "identifies that closure with the pair closure. Thus distinct assigned "
+                        + "closures share at most one point. If every assigned closure were equal, "
+                        + "the partition would put all of M.E in a single rank-two closure, "
+                        + "contradicting rank three. Applying the incidence theorem now supplies "
+                        + "an original owner fiber avoiding each closure. Translating the fiber "
+                        + "back by v gives the displayed disjointness for original C. Repeated "
+                        + "closures are retained throughout. Uniform block size is unnecessary "
+                        + "as an input: point transitivity transports any original block bijectively "
+                        + "to any other. The subsequent field-rank comparison is a separate result."))),
                 DescribeRole.Theorem))));
+
 
     private static Formula Nat() => Seq(Mathbb, Grp(F.Id("N")));
 
@@ -156,6 +199,39 @@ internal sealed class RankThreeBlockAvoidanceDocument : IScribeDocumentDefinitio
                 All("L", Seq(I, Sp, To, Sp, Call("Finset", P)),
                     Imp(Conj(size, containment, ownerEquiv, lineEquiv, separation, nonconstant),
                         conclusion))))))));
+    }
+
+    private static Formula MatroidFormula()
+    {
+        Formula A = F.Id("A"), G = F.Id("G"), M = F.Id("M");
+        Formula P = Call("Ground", M), blocks = Named("blocks");
+        Formula g = F.Id("g"), S = F.Id("S"), B = F.Id("B"), C = F.Id("C");
+        Formula x = F.Id("x");
+        Formula v = Named("v");
+        Formula U(Formula block) => Call("U", block);
+        Formula V(Formula block) => Call("image", v, U(block));
+        Formula Image(Formula set) => Call("image", v, set);
+        Formula GI(Formula set) => Call("actimage", g, set);
+        Formula Indep(Formula set) => Call("Indep", M, set);
+        Formula closure = Call("closure", M, V(B));
+        Formula simple = All("S", Call("Set", P), Imp(
+            Seq(Call("encard", S), Sp, Le, Sp, D(2)), Indep(Image(S))));
+        Formula automorphism = All("g", G, All("S", Call("Set", P),
+            Seq(Indep(Image(GI(S))), Sp, Iff, Sp, Indep(Image(S)))));
+        Formula unique = All("x", P, Ex("B", blocks, Conj(Mem(x, U(B)),
+            All("C", blocks, Imp(Mem(x, U(C)), Eqn(C, B))))));
+        Formula stable = All("g", G, All("B", blocks, Mem(GI(U(B)), blocks)));
+        Formula ranks = All("B", blocks, Eqn(Call("eRk", M, V(B)), D(2)));
+        Formula conclusion = All("B", blocks, Ex("C", blocks,
+            Call("Disjoint", V(C), closure)));
+        Formula classes = Seq(
+            Instance(Call("Finite", P)), Instance(Call("MulAction", G, P)),
+            Instance(Call("MulActionIsPretransitive", G, P)));
+        return Disp(All("A", Named("Type"), All("G", Named("Type"),
+            Seq(Instance(Call("Group", G)), All("M", Call("Matroid", A), Seq(classes,
+                All("blocks", Call("Set", Call("Set", P)),
+                    Imp(Conj(Eqn(Call("eRank", M), D(3)), simple, automorphism,
+                        unique, stable, ranks), conclusion))))))));
     }
 
 }
