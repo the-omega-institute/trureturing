@@ -1126,3 +1126,463 @@ $$
 母卷固定单个 $q$、任意独立 $g_4$ 的全称允许集分类仍未由此证明；本结果亦未给稳定性、最少帧数或无限维扩展。尚需证明的是定义 55.1 的同一旧源识别、实际准备／接受、全角与全标签供应、原标定和完整矩读取，而非重新证明已有条件矩阵律。以上为纸面条件数学，不宣称 Lean／kernel 认证、物理源已实现或完整量子起源已导出。
 
 ## 追加锚（本行以下为增补区）
+
+## 56. 同一未标定响应的全酉 PB 与两个整体方向
+
+**定义 56.1（未标定的完整四维接口）。** 取 $H_4=\operatorname{Herm}_4(\mathbb C)$，$a\circ b=(ab+ba)/2$，以及一个固定的、任意的实双线性交替映射 $D:H_4\times H_4\to H_4$。不商掉单位输入或中心输出。对每个 $U\in U(4)$，令
+
+$$
+\begin{gathered}
+c=U\operatorname{diag}(1,2,3,0)U^*,\qquad
+P=U\operatorname{diag}(1,1,1,0)U^*,\\
+x=x^*=PxP,\qquad
+q=(q_1,q_2,0)^{\mathsf T}\in\mathbb C^3,\quad q_1q_2\ne0,\\
+t=U\begin{pmatrix}0_{3\times3}&q\\q^*&0\end{pmatrix}U^*,\qquad
+h=D(c,x),\quad g=D(c,t),\quad r=c\circ x,\quad k=c\circ t,\\
+R_\delta=x+\delta(h-k),\qquad S_\delta=t+\delta(r+g),\qquad \delta\in\{1,-1\},\\
+L=-2x\circ(h-k)-2t\circ(r+g).
+\end{gathered}
+\tag{56.1}
+$$
+
+$h,g$ 必须来自同一个 $D$，没有预先标定任何一个标签。对完整 $M_4(\mathbb C)$ 上任意正复线性泛函 $\phi(A)=\operatorname{Tr}(sA)$，$s\ge0$、$0\le\operatorname{Tr}s<\infty$，定义
+
+$$
+B_\phi(A,B)=\phi(A^2)\phi(B^2)-\phi(A\circ B)^2,\qquad
+|\phi(L)|\le\sqrt{B_\phi(R_+,S_+)}+\sqrt{B_\phi(R_-,S_-)}.
+\tag{56.2}
+$$
+
+后一式称为本节的全称 raw PB：它遍及 (56.1) 的全部 $U,x,q$ 与全部上述 $\phi$。平方、乘积、输出和泛函都保留完整第四行列；两笔预算使用同一元组及同一泛函。正性保证两预算非负；非忠实、零质量及零预算均在域内。
+
+**定理 56.2（全部 1920 个系数的未标定充要分类）。** 定义 56.1 的全称 raw PB 当且仅当存在一个整体的 $\sigma\in\{-1,+1\}$，使
+
+$$
+D(a,b)=\sigma\,\frac{i}{2}[a,b]\qquad(a,b\in H_4).
+\tag{56.3}
+$$
+
+整体方向不随输入、角、演员或泛函变化。必要性不以单位零、酉协变、导子／序导子、P2、嵌套恒等式、闭合、已拟合响应族或演员标定为前提。这是所有 $U\in U(4)$ 的定理；§54 的标定 48 帧结论不作为这里未标定必要性的前提。以下 §§57–58 给出证明，包括全部输出分量与双向蕴含。
+
+## 57. 零预算的全核几何与完整系数正规形
+
+**引理 57.1（合法极限留下的全核压缩）。** 若 (56.2) 成立，记 $\Pi$ 为 $r=c\circ x$ 的完整核的正交投影，则
+
+$$
+\Pi\bigl(x\circ D(c,x)\bigr)\Pi=0
+\qquad\text{对每个 }U,x.
+\tag{57.1}
+$$
+
+证明。固定 $c,x$，在合法域内取 $q_1=q_2=\epsilon>0$ 并令 $\epsilon\downarrow0$。有限维实双线性使同一固定 $D$ 的 $g=D(c,t)\to0$，而 $h=D(c,x)$ 保持固定。各标签连续趋于
+
+$$
+R_\delta\to x+\delta h,\qquad S_\delta\to\delta r,\qquad L\to-2x\circ h.
+$$
+
+对任意 $v\in\ker r$ 使用允许的 $\phi_v(A)=v^*Av$。预算是把复向量空间视为实内积空间、内积取 $\operatorname{Re}\langle\ ,\ \rangle$ 后，$R_\delta v,S_\delta v$ 的 Gram 行列式。因 $rv=0$，两笔预算都趋于零；非负平方根连续，故 $v^*(x\circ h)v=0$。对整个复核作 Hermitian 极化，得 (57.1)。这里没有把有限的 $q=0$ 宣称为合法准备；核包含演员外的第四方向。∎
+
+**引理 57.2（共同三角的完整输出块）。** (57.1) 蕴含：对每个三维复子空间 $E\subset\mathbb C^4$、投影 $P_E$ 及所有 $a,b\in H_4$ 满足 $a=P_EaP_E,b=P_EbP_E$，
+
+$$
+P_ED(a,b)(I-P_E)=0.
+\tag{57.2}
+$$
+
+此时尚未令演员外的标量输出为零。
+
+证明。先固定 $E$ 中一个有序正交基和 $c|_E=\Lambda=\operatorname{diag}(1,2,3)$。取
+
+$$
+C_{ij}=\frac{2}{\lambda_i+\lambda_j},\quad
+X(u)=\operatorname{diag}(u)C\operatorname{diag}(\overline u),\quad
+r|_E=uu^*,\qquad u_1u_2u_3\ne0.
+\tag{57.3}
+$$
+
+$C$ 是 $\sqrt2e^{-\lambda_i s}$ 在 $L^2(0,\infty)$ 中的 Gram 矩阵，故正定；直接有
+
+$$
+\det C=\frac1{5400},\qquad C^{-1}\mathbf1=p=(6,-30,30)^{\mathsf T}.
+\tag{57.4}
+$$
+
+令 $e$ 为 $E^\perp$ 的单位向量，$F(u)=P_ED(c,X(u))e$。在 (57.1) 中保留 $E\cap u^\perp$ 与 $e$ 的交叉压缩，得 $X(u)F(u)\in\mathbb Cu$。$X(u)$ 在 $E$ 上可逆，所以
+
+$$
+\frac{\overline u_1F_1(u)}{p_1}
+=\frac{\overline u_2F_2(u)}{p_2}
+=\frac{\overline u_3F_3(u)}{p_3}.
+\tag{57.5}
+$$
+
+每个 $F_j$ 是关于 $u,\overline u$ 的双次数 $(1,1)$ 多项式。把 $u=s+it,\overline u=s-it$ 视作独立复变量的可逆线性替换，真实 $s,t$ 上的多项式恒等式即为独立变量环上的恒等式。故 (57.5) 的共同多项式双次数为 $(1,2)$，却同时被三个互素的 $\overline u_j$ 整除，只能为零。于是 $F=0$。由连续性延到坐标为零的 $u$；秩一 $uu^*$ 实张成 $\operatorname{Herm}(E)$，而 $X\mapsto c\circ X$ 在该空间可逆，故 $P_ED(c,x)e=0$ 对全部支持 $x$ 成立。
+
+在任一固定基中，$(1,2,3)$ 的排列实张成三个对角方向；再让基遍及各 Hermitian $a$ 的谱基，所有这样的 $c$ 实张成 $\operatorname{Herm}(E)$。双线性给 (57.2)。Hermitian 输出同时给反向交叉块为零。论证逐个实际 $D$ 进行，未使用 $D$ 的协变性。∎
+
+**引理 57.3（共同角条件的全实正规形）。** 任意实双线性交替 $D:H_4^2\to H_4$ 满足 (57.2)，当且仅当存在实交替二形式 $\eta$、实线性泛函 $\ell$ 和 Hermitian 矩阵 $H$，使
+
+$$
+D(a,b)=\eta(a,b)I_4+\ell(a)b-\ell(b)a
+       +\frac{i}{2}(aHb-bHa).
+\tag{57.6}
+$$
+
+参数空间维数为 $120+16+16=152$；这是共同角条件的分类，尚非 PB 的分类。
+
+证明。以下给出一个覆盖完整实系数空间的有限系数证明。按顺序取实基
+
+$$
+\mathcal B=(E_{11},E_{22},E_{33},E_{44},
+ X_{12},Y_{12},X_{13},Y_{13},X_{14},Y_{14},X_{23},Y_{23},X_{24},Y_{24},X_{34},Y_{34}),
+$$
+
+其中 $X_{ij}=E_{ij}+E_{ji},Y_{ij}=i(E_{ij}-E_{ji})$，$i<j$ 按字典序。写
+$D(\mathcal B_a,\mathcal B_b)=\sum_\gamma d_{ab,\gamma}\mathcal B_\gamma$，列顺序为 $0\le a<b<16$ 再 $0\le\gamma<16$，共有 $1920$ 个实未知数。
+
+定义一个有限的有理高斯角族。取 $U_0=I_4$，从 $s_0=173$ 连续递推
+
+$$
+s_{n+1}=(1664525s_n+1013904223)\bmod2^{32},\qquad z_n=(s_n\bmod5)-2,
+$$
+
+并对 $1\le j\le32$ 置
+
+$$
+v_j=(z_{8j-7},\ldots,z_{8j-4})^{\mathsf T}
++i(z_{8j-3},\ldots,z_{8j})^{\mathsf T},\quad
+ d_j=v_j^*v_j,\quad U_j=I_4-2v_jv_j^*/d_j.
+\tag{57.7}
+$$
+
+这些 $d_j$ 非零且在 $[7,26]$ 内，$U_j=U_j^*=U_j^{-1}$。令 $\mathcal A$ 为基 $\mathcal B$ 中支持前三格的九个成员，保持原序。对每个角、每个 $A<B\in\mathcal A$ 以及 $l=1,2,3$，取
+
+$$
+\operatorname{Re}(U_j^*D(U_jAU_j^*,U_jBU_j^*)U_j)_{l4}=0,
+\quad
+\operatorname{Im}(U_j^*D(U_jAU_j^*,U_jBU_j^*)U_j)_{l4}=0.
+\tag{57.8}
+$$
+
+行序依次为 $j$、演员输入对、$l$、实部／虚部。若 $\xi,\zeta$ 是这两个运输输入在 $\mathcal B$ 中的坐标，$\rho$ 是该行的实读出，则约束矩阵的该行该列准确为
+
+$$
+A_{(j,A,B,\rho),(ab,\gamma)}
+=(\xi_a\zeta_b-\xi_b\zeta_a)\rho(U_j^*\mathcal B_\gamma U_j).
+\tag{57.9}
+$$
+
+矩阵 $A$ 形状为 $7128\times1920$。再令 $T$ 的 $152$ 列为 (57.6) 中 $\eta$ 的 $120$ 个 elementary 二形式、$\ell$ 的 $16$ 个坐标泛函及 $H$ 的 $16$ 个基矩阵对应的输出系数。每个这种映射都满足所有共同角条件：前三项块对角，$aHb,bHa$ 的两侧支撑都在 $E$，故 $AT=0$。
+
+在素数 $p=1009$ 下，以 $i\mapsto469$ 计算有理高斯表达式，$469^2\equiv-1$；所有最终实坐标有理。令 $J$ 为 $\operatorname{RREF}(\overline A^{\mathsf T})$ 的主元列递增表，$K$ 为 $\operatorname{RREF}(\overline A_{J,:})$ 的主元列递增表。精确有限矩阵给
+
+$$
+|J|=|K|=1768,\qquad \det\overline A_{J,K}=551\pmod{1009}.
+\tag{57.10}
+$$
+
+同样，令 $J_T$ 为 $\operatorname{RREF}(\overline T^{\mathsf T})$ 的主元列递增表，则
+
+$$
+|J_T|=152,\qquad \det\overline T_{J_T,:}=556\pmod{1009}.
+\tag{57.11}
+$$
+
+两个逐行 uint16 小端约化矩阵的身份为
+
+| 矩阵 | SHA256 |
+| --- | --- |
+| $\overline A$ | `25564a59f91bfe091c4fedf3049c4be9bc99f97ca36f0fda0a8253247c1ec8be` |
+| $\overline T$ | `ffc38ef00c59f450bc4ac621d1b65bc4896a7871d1ce0fe1465161f885d78ac9` |
+
+有限参数表、主元表及数学数组见 [trureturing-experiments，commit `6d0281133e817e63ef8de3f2fbe647818c1f1cb5`，complex](https://github.com/the-omega-institute/trureturing-experiments/tree/6d0281133e817e63ef8de3f2fbe647818c1f1cb5/experiments/auric-uncalibrated-complex-real-pb/complex)。决定推理的是 (57.7)–(57.11) 的精确矩阵和非零子式，而非数组哈希。分母只含 $2$ 与各 $d_j$ 的因子，均不被 1009 整除，模约化为相应有理系数环的同态。因此 $\operatorname{rank}_{\mathbb R}A\ge1768$、$\operatorname{rank}_{\mathbb R}T=152$。结合 $AT=0$，有限核已恰为 $\operatorname{im}T$；全称共同角核夹在这个有限核与 $\operatorname{im}T$ 之间，故两者相等。该结论覆盖任意无理实系数，并未只检查有理 $D$。
+
+(57.6) 保留全部中心值和含单位的输入楔积。若把其交叉项在交替化前写成一般乘积形，正确的是 $aMb+bNa$，交替性才给 $N=-M$、Hermitian 性给 $M^*=-M$，即 $M=iH/2$；不能将第二项误写成 $bNb$。这里有限系数证明本身不需要借用任何额外的交换映射分类前提。上述 33 角只是正规形的系数证书，不是 33 份 PB 物理帧，也未证明 33 或旧 48 帧足以替代定义 56.1 的全酉量词。∎
+
+## 58. 正规形的逐项消元、有限严格见证与充分性
+
+**定理 58.1（全称 PB 将正规形压成两个方向）。** 在定义 56.1 下，(57.6) 与全称 PB 共同蕴含 (56.3)。
+
+证明。先消去 $\ell$。取 $H$ 的一组正交特征基，选其中两个向量 $e_i,e_j$，并在其余两个特征向量张成的平面内任取单位 $k$。令 $E=\operatorname{span}(e_i,e_j,k)$，在这三个轴上给 $c$ 互异谱 $1,2,3$，记相应谱值 $\lambda_i,\lambda_j,\lambda_k$。令 $x$ 在这个演员基中对角。虽然 $k$ 不必是 $H$ 的特征向量，$e_i,e_j$ 仍是，故 (57.6) 的 $H$ 项在这两个轴的整列都为零，且
+
+$$
+h_i=\eta(c,x)+\ell(c)x_i-\ell(x)\lambda_i,\qquad
+h_j=\eta(c,x)+\ell(c)x_j-\ell(x)\lambda_j.
+\tag{58.1}
+$$
+
+沿引理 57.1 的合法 $q\to0$，$R_\delta e_i,S_\delta e_i$ 均在同一实直线上，两笔极限预算为零，PB 给 $x_ih_i=0$。对 $x_i\ne0$ 得 $h_i=0$，再由线性／连续性扩到全部对角 $x$；$j$ 亦然。相减并置 $x=kk^*$，由 $\lambda_i\ne\lambda_j$ 得 $\ell(kk^*)=0$。所有特征坐标二平面内的秩一投影实张成 $H_4$，所以 $\ell=0$。
+
+再在任意三个 $H$ 特征向量上按序放置谱 $(1,2,3)$，令 $x=C$ 为 (57.3) 的实矩阵，$u=\mathbf1$，并记这三个 $H$ 特征值为 $h_1,h_2,h_3$、$d=\operatorname{diag}(h_1,2h_2,3h_3)$。直接展开得
+
+$$
+x\circ D(c,x)=\eta(c,x)C+\frac{i}{4}[d,C^2].
+\tag{58.2}
+$$
+
+对任意非零实 $y\perp\mathbf1$，实斜矩阵的二次型为零而 $y^{\mathsf T}Cy>0$；(57.1) 因而先给 $\eta(c,C)=0$。保留不同核向量之间的交叉项，继而有
+
+$$
+0=(e_1-e_2)^{\mathsf T}[d,C^2](e_1-e_3)
+=\frac4{15}(d_1-2d_2+d_3),
+\quad h_1-4h_2+3h_3=0.
+\tag{58.3}
+$$
+
+交换第一、第三个特征向量再作同一测试，得到 $h_3-4h_2+3h_1=0$，故三值全相等。任意三个特征向量均可使用，故 $H=\alpha I_4$，其中 $\alpha\in\mathbb R$ 为同一个常数。
+
+现 (57.6) 只剩 $D(a,b)=\eta(a,b)I_4+\alpha i[a,b]/2$。对每个角与 (57.3) 的全部非零坐标 $u$，$x=X(u)$ 在演员上正定，且
+
+$$
+x\circ\frac{i[c,x]}2=\frac{i}{4}[c,x^2]
+=\frac{i}{2}[r,x],\qquad \Pi[r,x]\Pi=0.
+\tag{58.4}
+$$
+
+取 $E\cap u^\perp$ 中非零向量，(57.1) 给 $\eta(c,X(u))=0$。稠密延拓到全部 $u$，再由秩一张成和 $x\mapsto c\circ x$ 可逆，得 $\eta(c,x)=0$ 对每个支持演员成立。按引理 57.2 的 $c$ 轨道张成，$\eta(a,b)=0$ 对所有共同三角内输入成立。任意两份秩一 Hermitian 投影可装入一个共同三角；秩一实张成与双线性遂使 $\eta=0$，包括全部标量／旁观输出。因此
+
+$$
+D(a,b)=\alpha\frac{i[a,b]}2\qquad(a,b\in H_4)
+\tag{58.5}
+$$
+
+已经由 PB 推出，而非预先限制了拟合族。
+
+最后用有限、合法的完整元组排除 $|\alpha|\ne1$。以下均取 $U=I$，$\phi_v(A)=v^*Av$，且两标签都由 (58.5) 给定。
+若 $|\alpha|>1$，置 $M=|\alpha|+1$、$x=0$、$q=(1,1)$、
+$v=(2iM-2,\,2-iM,\,0,\,0)^{\mathsf T}$。完整乘法给
+
+$$
+\phi_v(L)=2\alpha M,\qquad
+R_\delta v=-\delta e_4,\quad
+S_\delta v=i(M-\delta\alpha)e_4,\quad
+B_\delta=(M-\delta\alpha)^2.
+\tag{58.6}
+$$
+
+所以右侧为 $2M$，左侧为 $2|\alpha|M>2M$，严格失败。这里复向量的实 Gram 保留了同一复直线内的相位面积。
+
+若 $|\alpha|<1$，置 $\tau^2=(1-\alpha^2)/82>0$，$q=(1,\tau)$、$x=E_{11}/\tau^2$、$v=(\tau,0,0,1)^{\mathsf T}$。这是有限非零质量的合法元组，并且
+
+$$
+\begin{aligned}
+\phi_v(L)&=-1/\tau,\\
+R_\delta v&=(1/\tau-\delta/2,\,-\delta\tau,\,0,\,-\delta\tau/2)^{\mathsf T},\\
+S_\delta v&=(1+\delta/\tau+\delta i\alpha/2,\,
+\tau+\delta i\alpha\tau,\,0,\,\tau-\delta i\alpha\tau/2)^{\mathsf T}.
+\end{aligned}
+\tag{58.7}
+$$
+
+记 $B_\delta=B_{\phi_v}(R_\delta,S_\delta)$。两笔完整实 Gram 中，仅实坐标 $(1,4)$ 的子式就等于 $3/2$，故 $B_\delta\ge9/4$。完整展开给
+
+$$
+\begin{aligned}
+2(B_++B_-)\tau^2
+&=\alpha^2+(25+21\alpha^2/4)\tau^2
+ +(1+5\alpha^2/2)\tau^4+(1+25\alpha^2/4)\tau^6\\
+&\le\alpha^2+41\tau^2=(1+\alpha^2)/2<1.
+\end{aligned}
+\tag{58.8}
+$$
+
+不等式使用 $\tau^2<1$、$\alpha^2<1$。因 $(\sqrt{B_+}+\sqrt{B_-})^2\le2(B_++B_-)$，PB 再次严格失败。必要性遂只留下 $\alpha=\pm1$，同一个整体 $\sigma=\alpha$。∎
+
+**定理 58.2（两个方向的完整正泛函充分性）。** (56.3) 蕴含 (56.2)，不限制正质量、忠实性或预算是否为零。
+
+证明。记 $K_\sigma(a,b)=\sigma i[a,b]/2$，$Z_\delta=R_\delta+iS_\delta$。原标签直接给
+
+$$
+\begin{array}{lll}
+\sigma=+1:&Z_\delta=(I+\delta ic)(x+it),&
+Z_\delta^*Z_\delta=(x-it)(I+c^2)(x+it),\\
+\sigma=-1:&Z_\delta=(x+it)(I+\delta ic),&
+Z_\delta Z_\delta^*=(x+it)(I+c^2)(x-it).
+\end{array}
+\tag{58.9}
+$$
+
+右侧与 $\delta$ 无关。不能删掉这些伴随符号而宣称 $Z_\delta Z_\delta$ 不变。另一方面，直接由原定义
+
+$$
+(R_+^2+S_+^2)-(R_-^2+S_-^2)=-2L.
+$$
+
+把此式代入两种伴随乘积的差，均得到
+
+$$
+L=K_\sigma(R_+,S_+)-K_\sigma(R_-,S_-).
+\tag{58.10}
+$$
+
+对任意 Hermitian $A,B$，正复线性泛函给复 Gram 矩阵
+
+$$
+\begin{pmatrix}\phi(A^2)&\phi(AB)\\\phi(BA)&\phi(B^2)\end{pmatrix}\ge0,
+\quad \operatorname{Re}\phi(AB)=\phi(A\circ B),\quad
+|\phi(K_\sigma(A,B))|^2\le B_\phi(A,B).
+\tag{58.11}
+$$
+
+这是普通正泛函 Cauchy–Schwarz 的二维形式。对 (58.10) 用三角不等式即得 PB；未除以质量、Gram 或特征值，因而完整包含所有退化情形。结合 58.1，定理 56.2 得证。∎
+
+## 59. 实四维完整接口的全系数障碍
+
+**定义 59.1（域自然的实版本）。** 把定义 56.1 中的 $H_4,U(4),q\in\mathbb C^2,*$ 分别换成 $J=\operatorname{Sym}_4(\mathbb R),O(4),q\in\mathbb R^2,{}^{\mathsf T}$，仍要求 $q_1q_2\ne0$。一个固定的任意实双线性交替 $D:J^2\to J$ 同时给 $h=D(c,x),g=D(c,t)$，其余原 raw 标签逐字不变。泛函取完整实正泛函 $\phi(A)=\operatorname{Tr}(sA)$，$s\ge0$、任意有限非负质量。这里不额外假设单位零、协变、导子、序导子、P2、嵌套或闭合。
+
+**定理 59.2（全核条件只有零映射，原 PB 没有解）。** 在定义 59.1 的全部 $U,x$ 上，令 $\Pi$ 为完整 $\ker(c\circ x)$ 的投影，则
+
+$$
+\bigl[\ \Pi(x\circ D(c,x))\Pi=0\ \text{对全部 }U,x\ \bigr]
+\quad\Longleftrightarrow\quad D=0.
+\tag{59.1}
+$$
+
+但 $D=0$ 在一份有限合法元组上严格违反原 PB。因此定义 59.1 的全称 PB 解集为空。
+
+证明。引理 57.1 的合法 $q=(\epsilon,\epsilon)\to0$、Gram 连续性及实极化原样给出必要的全核条件，仍保留演员外核方向。以下直接在全部 $\binom{10}{2}10=450$ 个实系数上求其核。
+
+按顺序取
+
+$$
+\mathcal B_{\mathbb R}=(E_{11},E_{22},E_{33},E_{44},
+X_{12},X_{13},X_{14},X_{23},X_{24},X_{34}).
+\tag{59.2}
+$$
+
+若 $c_a,x_a$ 是在此基的实际坐标、$v\in\ker(c\circ x)$，则全核条件的一条必要标量等式为
+
+$$
+0=v^{\mathsf T}(x\circ D(c,x))v
+=\sum_{a<b,\gamma}(c_ax_b-c_bx_a)(xv)^{\mathsf T}\mathcal B_{\mathbb R,\gamma}v\ d_{ab,\gamma}.
+\tag{59.3}
+$$
+
+对角输出读出为 $(xv)_iv_i$，非对角输出读出为 $(xv)_iv_j+(xv)_jv_i$，没有另乘二或把坐标替换为迹坐标。
+
+有限矩阵使用以下实际有理角与演员。对非零整数四向量 $a,b$ 及每个坐标非零的整数三向量 $u$，令
+
+$$
+\begin{gathered}
+H(a)=I-2aa^{\mathsf T}/(a^{\mathsf T}a),\quad U=H(a)H(b),\quad
+\Lambda=\operatorname{diag}(1,2,3),\quad C_{ij}=2/(i+j+2)\ (0\le i,j<3),\\
+X=\operatorname{diagblock}(\operatorname{diag}(u)C\operatorname{diag}(u),0),\qquad
+x=UXU^{\mathsf T},\quad c=U\operatorname{diag}(1,2,3,0)U^{\mathsf T}.
+\end{gathered}
+\tag{59.4}
+$$
+
+$U\in O(4)$、$x=PxP$，且
+
+$$
+c\circ x=ww^{\mathsf T},\qquad w=U\begin{pmatrix}u\\0\end{pmatrix}.
+\tag{59.5}
+$$
+
+置 $w_1=(u_2,-u_1,0,0)^{\mathsf T}$、$w_2=(u_3,0,-u_1,0)^{\mathsf T}$，选核向量
+
+$$
+v=Uv_0,\qquad v_0\in\{w_1,w_2,w_1+w_2,w_1+e_4,w_2+e_4\}.
+\tag{59.6}
+$$
+
+后三种保留交叉极化，尤其含 $e_4$ 的两种没有删除完整输出的混合块。
+
+取 [trureturing-experiments，commit `6d0281133e817e63ef8de3f2fbe647818c1f1cb5`，real 的有限参数表](https://github.com/the-omega-institute/trureturing-experiments/blob/6d0281133e817e63ef8de3f2fbe647818c1f1cb5/experiments/auric-uncalibrated-complex-real-pb/real/kernel_certificate.json) 中 `tests` 的 90 个整数 $(a,b,u)$ 与 `selected_rows` 的 450 个零起始 $(test,selector)$，按给定顺序将 (59.3) 组成方阵 $A_{\mathbb R}$；列依次为 $a<b$ 的字典序与全部十个输出坐标。其约化矩阵逐行紧凑 JSON 的 SHA256 为 `1eb2e5adb48b060d5c67d8fdad589266034c6d67016f359a85841053f66804d2`。全部参数的有理重建满足 (59.4)–(59.6)，所有行分母均与素数 $1000003$ 互素，而且精确消元给
+
+$$
+\det\overline {A_{\mathbb R}}=123800\pmod{1000003}\ne0.
+\tag{59.7}
+$$
+
+该数同时由有限域矩阵消元和独立的逐元素标量消元得到。因模约化是这些分母局部化环上的同态，有理行列式非零，继而实行列式非零。于是 (59.3) 强迫全部 450 个系数为零，包括任意无理系数；反向 $D=0$ 显然满足 (59.1)。这是必要线性约束的有限单射证书，没有从有限 PB 样本外推全称 PB。
+
+实情形不能直接照搬 (57.5) 的复双次数消元：此时 $u_jF_j$ 是三次实多项式，同时被三个 $u_j$ 整除仍可留下 $\gamma u_1u_2u_3$。上述全系数方阵用多个实际角消去包括这一项在内的全部自由度；无需把实斜矩阵当作 Hermitian 矩阵对角化，也未预先删掉中心或标量输入。
+
+最后在实际合法元组
+
+$$
+U=I,\qquad q=(1,1/10),\qquad x=100E_{11},\qquad
+v=(1/10,0,0,1)^{\mathsf T},\qquad\phi_v(A)=v^{\mathsf T}Av
+\tag{59.8}
+$$
+
+上检验唯一候选 $D=0$。质量为 $101/100$，两腿均非零，完整乘法给
+
+$$
+\begin{aligned}
+\phi_v(L)&=-10,\\
+R_\delta v&=(10-\delta/2,-\delta/10,0,-\delta/20)^{\mathsf T},\\
+S_\delta v&=(1+10\delta,1/10,0,1/10)^{\mathsf T},\\
+(R_\delta v\wedge S_\delta v)_{12,14,24}
+&=(2+\delta/20,3/2,-\delta/200).
+\end{aligned}
+\tag{59.9}
+$$
+
+其余外积坐标为零。因此同一泛函、同一元组的两笔预算为
+
+$$
+B_+=258101/40000,\qquad B_-=242101/40000,\qquad
+\sqrt{B_+}+\sqrt{B_-}\le\frac{\sqrt{250101}}{100}<10=|\phi_v(L)|.
+\tag{59.10}
+$$
+
+最后一式因 $250101<1000000$ 严格成立。由此无一个 $D$ 满足全称实 PB。∎
+
+**定义 59.3（障碍的精确适用域）。** 定理 59.2 只排除完整 $\operatorname{Sym}_4(\mathbb R)$、全 $O(4)$、域自然实 $q$、完整实正泛函以及同一任意实双线性交替响应的 (56.1)–(56.2) 接口。它不排除全部实量子理论、带额外相位参考的实化、全部 EJA、低秩、无限维或不同输出合同。复空间的实化会改变载体、允许操作与相位参考，不能用它冒充定义 59.1 的同一四维模型。该无解结论也不是原共同来源全合同的反模型。
+
+## 60. 未标定分类的共同源消费者与保谱几何
+
+**定义 60.1（同一原响应与完整七矩的条件连接）。** 对每份固定的 (56.1) 未标定元组，仍取 §51 的七矩
+
+$$
+m_D(\phi)=\bigl(\phi(L),\phi(R_+^2),\phi(S_+^2),\phi(R_+\circ S_+),
+\phi(R_-^2),\phi(S_-^2),\phi(R_-\circ S_-)\bigr).
+\tag{60.1}
+$$
+
+这里 $h=D(c,x)$ 与 $g=D(c,t)$ 必须共同代入；不能沿用一个已标定 $h$ 的旧标签而只替换 $g$。若同一实际来源、同一完整忠实表示 $j$ 和同一旧 native $D$ 供应全部实际有向角、原合法 $q,x$、准备／效果及保留分支正泛函族 $\mathcal T_\Omega$，其原 PB 在同一分支的全部七矩上成立，并且逐元组有
+
+$$
+m_D((M_4(\mathbb C))_+^*)\subseteq
+\overline{\operatorname{cone}(m_D(\mathcal T_\Omega))},
+\tag{60.2}
+$$
+
+则 §51 的同元组闭凸锥运输直接给完整正泛函 PB，定理 56.2 因而识别两份标签中的同一个旧 $D$ 为 (56.3)。较强的全正泛函锥覆盖也是充分条件。七矩的两份 $2\times2$ 实 Gram 正矩阵、行列式平方根的连续性／正齐次／超可加性完全复用 §51；这一步不需要 $h$ 已标定，也不另立一般锥运输定理。对定义 59.1 的实接口，若实际源满足同样完整供应与实七矩覆盖，则会与 59.2 矛盾。
+
+覆盖只是充分的来源条件，不断言为 PB 的必要条件，不声称七坐标最少。非选择性和选择性读数仍准确为
+
+$$
+p(w,e)=\omega(U_w^*eU_w),\qquad
+\phi_{w,e}(A)=\omega(V_w^*\Pi_ej(A)\Pi_eV_w).
+\tag{60.3}
+$$
+
+不要求 $\omega$ 对每个门不变。全部矩须由同一分支忠实读取，不能拼接不同准备的边缘最优值；完整输出上的正性也不能用局部演员正性代替。数学 $q\to0$ 仅延拓不等式，矩阵酉门的存在仅属给定模型，均不创造原来源实际可用的准备、门字或选择。§52 的非迹混合轨道与七矩分离已说明线性信息完备、满支撑、共同根纯性及全局循环性本身不供应 (60.2)，此处直接复用其反控制及原边界。
+
+**定义 60.2（比较端的已付关系与尚缺的识别）。** [双侧正重置卷 V，§§74–75，固定版本 `5555e728`](https://github.com/the-omega-institute/trureturing/blob/5555e728b62ed8a7c5aea520bd396cf2c11b08d4/docs/develop/theory/QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_V.md) 的 75.4 在同一 $\mathrm{PRE}_0$ 数据上，将两层原全正交条件等价地换成 Jordan 生成的完整框架族上的两份有限正交表；至多三套完整生成框架足够。此处仍保留完整有限混合律 $S$ 及其条件 EJA 桥、$L,p$ 对整个实际锥的正性、两次同一 $p$、两条实张成及全部实方向 $Z$。原混态 H13 单独供应相对取向；75.6 的删除控制与 75.7 的正权重、原归一化和操作预算前件也都保留。
+
+上述三套是完整生成框架，不是三个标量测试或物理三空间；其有限零表不供应 (56.2) 的全部非线性 PB、(60.2) 的正测试覆盖、实际准备或旧 native $D$ 的身份。PRE 的双系统载体 $D_{\rm PRE}$ 不等于这里的响应映射 $D$，其规范参考 $\omega_{\rm PRE}=1_{D_{\rm PRE}}/m$ 不自动等于原物理整体态。若比较端及 PB 端确实由同一原源实现，仍须给出对象、原态、准备／效果、两份响应和完整输出的忠实对应，不能因共享“联合纯／局部混”或“共同态”的名称就识别它们。
+
+**定义 60.3（分类响应的保谱数学流）。** 在已给定的复矩阵模型中，56.2 的结论使每个固定 Hermitian $a$ 的线性算子 $D_a:b\mapsto D(a,b)$ 成为通常内导子，而不是把导子性加入 PB 前件。复用内导子指数的标准恒等式，得到
+
+$$
+e^{sD_a}(b)=e^{\sigma isa/2}\,b\,e^{-\sigma isa/2},\qquad s\in\mathbb R.
+\tag{60.4}
+$$
+
+因此这一数学可逆流保留 $b$ 的全部特征值、多项式谱不变量和算子谱；若对密度矩阵使用同一酉共轭，也保留其谱及由谱定义的熵。这给“信息保持”直觉一个精确的条件消费者：保留的是所述数学流的谱数据，不是所有原记录、全部实际过程或固定态的所有期望都不变。式 (60.4) 不把参数 $s$ 认作物理时间，不指定能量或 $\hbar$，不保证这些酉矩阵是实际合法门，也不要求 $\omega\circ\operatorname{Ad}_{U}=\omega$。在一般 Jordan 框架中由动力学对应恢复复乘积的标准接口仍有自己的序导子与括号前提，不能倒灌成此处未付的来源事实。
+
+**定义 60.4（推导的文献边界）。** §§56–59 的 `repo-derived` 承重内容是：同一未标定 $D$ 的全核压缩如何约束完整 1920 维复系数空间、再由原 PB 逐项消去 $\ell,\eta$ 和非标量 $H$、用有限严格元组固定整体强度，以及实接口全部 450 个系数的精确零核与有限无解见证。§§48–55 的标定响应、旁观补全、同一七矩运输与混合轨道分离按各自原条件复用，不计为新的未标定分类。Gram／Cauchy–Schwarz、Cauchy 矩阵、谱分解、极化、外幂、Householder 及模素数非零子式提升均是成熟中间工具；(60.4) 也是标准内导子结果，不另列新定理。
+
+相关原始文献的前提对应如下，均只作推导内的边界比较：Alaminos–Brešar–Extremera–Villena，[*On bilinear maps determined by rank one idempotents*，Theorem 2.2](https://users.fmf.uni-lj.si/bresar/documents/bilmapsid.pdf)，在全矩阵域假设对每对正交秩一幂等元响应为零，推出 $\Phi_1(ab)+\Phi_2(ba)$；这里由 PB 首先得到的是 (57.1)，不是该文的零乘积前提，故未据它跳过 57.2–58.1。de Seguins Pazzis，[*Range-compatible homomorphisms on spaces of symmetric or alternating matrices*，arXiv:1506.07203v2，Theorem 1.5、Corollary 1.6](https://arxiv.org/pdf/1506.07203v2)，对余维至多 $n-2$ 的对称矩阵子空间上满足 $F(A)\in\operatorname{im}A$ 的线性向量映射给固定向量的局部表示；本题首先出现的是 $XF(c,X)\in\operatorname{im}(c\circ X)$，对象与像空间不同，不能直接替代全核消元。
+
+Alfsen–Shultz，[*Orientation in operator algebras*，Theorem 1](https://pmc.ncbi.nlm.nih.gov/articles/PMC22571/)，[DOI 10.1073/pnas.95.12.6596](https://doi.org/10.1073/pnas.95.12.6596)，在含单位 JB 代数上使用线性指定的斜序导子、$\psi_a(a)=0$ 及 $[\psi_a,\psi_b]=-[L_a,L_b]$ 来刻画相容复乘积；这里从原 PB 推出给定矩阵模型中的内导子，没有假设那套动力学对应，也未从它推出实际物理时间。Barnum–Wilce，[*Local tomography and the Jordan structure of quantum theory*，arXiv:1202.4513v2，Proposition 1](https://arxiv.org/pdf/1202.4513v2)，要求可因子分解的齐性自对偶理论、每对系统在理论内有局部层析复合及一个 qubit；其复型分类不等于 59.2 的单个实四维 raw 接口障碍。上述有界原文比较未找到可直接按同一前提调用的本 raw PB 分类；这不构成穷尽文献或历史首创性主张。
+
+**开放问题 60.5（原目标仍需的来源桥）。** 在定义 55.1、§51 及其递归上游全部原合同内，尚须从原共同 $\Omega$ 的实际合法门字／保留分支识别两份标签中的同一个旧 native $D$，取得所需实际有向角、全部原合法 $q,x$、完整输出的七矩和足够正测试，并证明 (60.2) 或另一足够的忠实来源条件。模型内的实双线性前提不能替代原源双线性的取得；[C128 的原词标定与固定关系](AURIC_C128_ORIGINAL_WORD_CALIBRATION_AND_FIXED_RELATION.md) 中已付的双线性条件桥及其同一旧响应条件仍按全文保留。[RRO 原入口与实际 Plan／Return，§23](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ORIGINAL_INTERFACE_EXPOSURE_AND_RECOVERY.md#23-an-acquired-pending-operand-fibre-at-the-original-plan-entry) 及其[原始 acquired-input 资格](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ACQUIRED_INPUT_FRONTIER_AND_REPLAY.md) 若被用作上游，同样须保持实际取得、operative Plan 和 Return 的操作资格；较强 P2／嵌套前件不自动供应这里的量子矩阵接口。
+
+本问题完整保留同一旧 $\Omega,E,C,u,N,\mathcal P,S,D,q,K/J$、原准备与接受、参考／副本及真正相关联合，全部中央／经典／不等维／静默／无轴块，失败、零／不等／次归一质量、parent／ready／flags、全部切口与完整菜单／固定支持全质量、完整环境／活动输出与细记录、port／post-port、拒绝／停止／销毁／泄漏、真遗忘、全部历史及每份完整输出的每个旧合法未来、两侧／逆向 Return、原精确 $B$ 与闭 $B_{\rm cl}$、未定义请求、物理钟／控制／单位、同一 $\sigma,t_0$、固定域／resolvent 及 $3s+r\le1$。四维完整输出、五维第三格和物理三空间保持不同。Hilbert／复结构、Born、张量、过程／CP-Kraus／TP-更新-Lüders 及物理动力学的来源仍是原目标的真实义务；已有条件消费者只按其全文前件使用。本批是上述精确接口内的纸面数学，不宣称 Lean／kernel 认证、实际源已实现或完整量子起源已完成。
+
+## 追加锚（本行以下为增补区）
