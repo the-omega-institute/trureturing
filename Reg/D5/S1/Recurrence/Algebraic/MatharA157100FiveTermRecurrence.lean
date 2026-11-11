@@ -1,6 +1,7 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S1.Recurrence.Algebraic.MatharA157100FiveTermRecurrence
-import Reg.Support.SingleDependentReadout
+import Reg.Support.DependentFamily
+import Mathlib.Tactic.FinCases
 
 /-! Source-bound registration of the complete five-term recurrence. -/
 
@@ -11,28 +12,36 @@ open LeanInformationAudit PowerSeries
 
 noncomputable section
 
-abbrev signature : Signature :=
-  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℚ)
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℕ
+  Role := Fin 5
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℚ
+  Anchor := Empty
+  finiteAnchor := inferInstance
 
 def actual : Realization signature :=
   realize signature (fun _ _ n => a n) (fun e => nomatch e)
 
-def rejected : Realization signature :=
-  realize signature (fun _ _ n => if n = 4 then 1 else 0) (fun e => nomatch e)
+def changed (i : Fin 5) : Realization signature :=
+  realize signature (fun j _ n => if j = i then a n + 1 else a n) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ n : ℕ, 4 ≤ n →
-    ((n : ℚ) + 1) * R.readout () () n +
-      (-5 * (n : ℚ) + 1) * R.readout () () (n - 1) +
-      2 * (2 * (n : ℚ) - 1) * R.readout () () (n - 2) +
-      2 * (2 * (n : ℚ) - 7) * R.readout () () (n - 3) +
-      2 * (-2 * (n : ℚ) + 7) * R.readout () () (n - 4) = 0
+    ((n : ℚ) + 1) * R.readout 0 () n +
+      (-5 * (n : ℚ) + 1) * R.readout 1 () (n - 1) +
+      2 * (2 * (n : ℚ) - 1) * R.readout 2 () (n - 2) +
+      2 * (2 * (n : ℚ) - 7) * R.readout 3 () (n - 3) +
+      2 * (-2 * (n : ℚ) + 7) * R.readout 4 () (n - 4) = 0
 
-private theorem rejected_law : ¬ arena.Law rejected := by
+private theorem changed_law (i : Fin 5) : ¬ arena.Law (changed i) := by
   intro h
   have hh := h 4 (by decide)
-  norm_num [rejected, realize] at hh
+  have ha := result 4 (by decide)
+  fin_cases i <;> norm_num [changed, realize] at hh <;> norm_num at ha <;> linarith
 
 private theorem initial_coefficients : a 0 = 1 ∧ a 1 = 2 := by
   have ht : HasSubst (X * (1 - X ^ 2) : PowerSeries ℚ) := HasSubst.X'.mul_left
@@ -61,9 +70,18 @@ private theorem initial_coefficients : a 0 = 1 ∧ a 1 = 2 := by
 def family : Registration arena (type_of% result) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨result, rejected, rejected_law⟩
-  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
-    arena.Law actual rejected rejected_law
+  variation := ⟨result, changed 0, changed_law 0⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨changed i, ?_, ?_, changed_law i⟩
+      · intro j hj
+        funext p n
+        simp [changed, actual, realize, hj]
+      · funext e
+        exact nomatch e
+    · intro e
+      exact nomatch e
   dependence := by
     intro i
     refine ⟨(), 0, 1, ?_⟩
