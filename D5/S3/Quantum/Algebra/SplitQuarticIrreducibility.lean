@@ -79,6 +79,9 @@ private lemma vars_nonempty_of_nonunit {F : MvPolynomial (Fin 8) k}
   rw [he]
   exact (isUnit_iff_ne_zero.mpr hc).map C
 
+/-- For labels on opposite sides of a cut, the twenty triples of remaining
+labels give disjoint exchange pairs. A fixed intersection size excludes at
+least one member of every pair. -/
 private lemma cut_count :
     ∀ H : Finset (Fin 8), H.Nonempty → H ≠ univ → ∀ d : Fin 5,
       20 ≤ (((univ : Finset (Fin 8)).powersetCard 4).filter
