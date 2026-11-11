@@ -83,22 +83,26 @@ internal sealed class HardinA233172DiagonalStripDocument : IScribeDocumentDefini
     private static Formula Result()
     {
         var n = V("n");
-        Formula A(byte k) => Typed(Call(Root + "a", Add(n, Number(k))), Name("Int"));
-        var rhs = Mul(Number(1216), A(10));
-        rhs = Sub(rhs, Mul(Number(303104), A(9)));
-        rhs = Sub(rhs, Mul(Number(6553600), A(8)));
-        rhs = Add(rhs, Mul(Number(6056574976), A(7)));
-        rhs = Sub(rhs, Mul(Number(287762808832), A(6)));
-        rhs = Sub(rhs, Mul(Number(18622978195456), A(5)));
-        rhs = Add(rhs, Mul(Number(1482141674242048), A(4)));
-        rhs = Sub(rhs, Mul(Number(15199648742375424), A(3)));
-        rhs = Sub(rhs, Mul(Number(522417556774977536), A(2)));
-        rhs = Add(rhs, Mul(Number(5764607523034234880), A(1)));
+        Formula A(byte k) => Typed(Call(Root + "a", Add(n, Small(k))), Name("Int"));
+        var rhs = Mul(D(1, 2, 1, 6), A(10));
+        rhs = Sub(rhs, Mul(D(3, 0, 3, 1, 0, 4), A(9)));
+        rhs = Sub(rhs, Mul(D(6, 5, 5, 3, 6, 0, 0), A(8)));
+        rhs = Add(rhs, Mul(D(6, 0, 5, 6, 5, 7, 4, 9, 7, 6), A(7)));
+        rhs = Sub(rhs, Mul(D(2, 8, 7, 7, 6, 2, 8, 0, 8, 8, 3, 2), A(6)));
+        rhs = Sub(rhs, Mul(D(1, 8, 6, 2, 2, 9, 7, 8, 1, 9, 5, 4, 5, 6), A(5)));
+        rhs = Add(rhs, Mul(D(1, 4, 8, 2, 1, 4, 1, 6, 7, 4, 2, 4, 2, 0, 4, 8), A(4)));
+        rhs = Sub(rhs, Mul(D(1, 5, 1, 9, 9, 6, 4, 8, 7, 4, 2, 3, 7, 5, 4, 2, 4), A(3)));
+        rhs = Sub(rhs, Mul(D(5, 2, 2, 4, 1, 7, 5, 5, 6, 7, 7, 4, 9, 7, 7, 5, 3, 6), A(2)));
+        rhs = Add(rhs, Mul(D(5, 7, 6, 4, 6, 0, 7, 5, 2, 3, 0, 3, 4, 2, 3, 4, 8, 8, 0), A(1)));
         return All("n", Name("Nat"), Eq(A(11), rhs));
     }
 
-    private static Formula Number(long value) => D(value.ToString(
-        System.Globalization.CultureInfo.InvariantCulture).Select(c => (byte)(c - '0')).ToArray());
+    private static Formula Small(byte k) => k switch
+    {
+        10 => D(1, 0),
+        11 => D(1, 1),
+        _ => D(k)
+    };
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Name(string name) => Seq(name.Split('.').SelectMany((p, i) =>
@@ -115,11 +119,6 @@ internal sealed class HardinA233172DiagonalStripDocument : IScribeDocumentDefini
     private static Formula Arrow(Formula a, Formula b) => new Formula.TypeArrow(a, b);
     private static Formula Product(Formula a, Formula b) =>
         Seq(Parenthesized(a), Sp, Times, Sp, Parenthesized(b));
-    private static Formula Conditional(Formula test, Formula yes, Formula no) =>
-        Parenthesized(Seq(Name("if"), Sp, Parenthesized(test), Sp, Name("then"), Sp,
-            Parenthesized(yes), Sp, Name("else"), Sp, Parenthesized(no)));
-    private static Formula SumOver(string n, Formula type, Formula body) =>
-        Seq(Sum, Underscore, Grp(V(n), Colon, Sp, type), Sp, Parenthesized(body));
     private static Formula Eq(Formula a, Formula b) =>
         new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula Ne(Formula a, Formula b) =>

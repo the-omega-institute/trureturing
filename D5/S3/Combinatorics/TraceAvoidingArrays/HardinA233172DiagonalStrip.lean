@@ -63,8 +63,8 @@ open HardinA233251TriangleStrip
   (widthLegal widthV widthStep widthTotal width_counting_bridge colour_bond_iff)
 open HardinA233254TriangleStrip (Row rowLegal sum_rows)
 open HardinA233255PairTransfer (Boundary)
-open HardinA233255ShapeSymmetry (proper)
-open HardinA233255LiteralBridge (rowFinish rowWeight scanner_fibres)
+open HardinA233255ShapeSymmetry (proper full_row)
+open HardinA233255LiteralBridge (rowFinish rowWeight scanner_fibres labelWeight labelAdvance)
 open D5.S3.Observer.Separation.BooleanRankThreeK4 (beta)
 
 attribute [local instance 2000] HardinA233251TriangleStrip.widthInstDecidableGood
@@ -192,6 +192,7 @@ private theorem class_fibres (s : Seen) (p : Boundary) (k : Fin 11) :
   by_cases hg : good s c <;> simp [hg]
 
 set_option maxHeartbeats 0 in
+-- The certificate enumerates the finite scanner states and all labelled rows.
 private theorem finite_certificate : ∀ s p, Valid s p → ∀ k,
     classCount s p k = transfer (boundaryClass s p) k := by
   suffices h : ∀ k : Fin 11, ∀ s p, Valid s p →
@@ -199,9 +200,13 @@ private theorem finite_certificate : ∀ s p, Valid s p → ∀ k,
     intro s p hp k
     exact h k s p hp
   intro k
-  fin_cases k <;> simp only [class_fibres, sum_rows, Valid,
-    Fin.forall_fin_succ_pi, Fin.forall_fin_zero_pi,
-    mul_ite, mul_one, mul_zero] <;> decide +kernel
+  fin_cases k <;> rintro ⟨u, t⟩ <;> cases u <;> cases t <;>
+    simp only [class_fibres, (full_row 6 _).1, (full_row 6 _).2,
+      sum_rows, Fin.sum_univ_succ, Fin.sum_univ_zero,
+      mul_ite, mul_one, mul_zero] <;>
+    norm_num [Valid, proper, boundaryClass, rowFinish, rowWeight,
+      labelWeight, labelAdvance, Fin.forall_fin_succ_pi, Fin.forall_fin_zero_pi] <;>
+    decide +kernel
 
 private theorem initial_fibres (k : Fin 11) :
     firstCount k = ∑ q : Fin 5 → Fin 3, rowWeight (false, false) q *
@@ -231,15 +236,16 @@ private theorem initial_fibres (k : Fin 11) :
       Fin.comp_cons beta 0 c
     have hr : proper (labels (Fin.cons (0 : Fin 6) c)) ↔ rowLegal (Fin.cons 0 c) := by
       simp only [proper, labels, rowLegal, colour_bond_iff]
-    rw [← hb, hr]
-    simp only [hg, hf, eq_self, true_and]
+    simp only [← hb, hr, hg, hf, eq_self, true_and]
     by_cases hc : good (false, false) c <;> simp [hc]
   · intro x _ hx
     simp [hx]
   · simp
 
 set_option maxHeartbeats 0 in
-private theorem initial_counts : ∀ k, firstCount k = ![16, 8, 16, 16, 16, 16, 8, 16, 8, 16, 0] k := by
+-- This exact finite sum retains the scanner multiplicities of every first row.
+private theorem initial_counts : ∀ k,
+    firstCount k = ![16, 8, 16, 16, 16, 16, 8, 16, 8, 16, 0] k := by
   simp only [initial_fibres, HardinA233126SquareStrip.label_sum]
   decide +kernel
 
@@ -376,8 +382,7 @@ theorem result (n : ℕ) :
   change (a (n + 10) : ℤ) = _ at h9
   change (a (n + 11) : ℤ) = _ at h10
   rw [h10, h9, h8, h7, h6, h5, h4, h3, h2, h1, h0]
-  simp_rw [distribution_relation, sub_mul, add_mul]
-  simp only [sub_mul, add_mul, Finset.sum_add_distrib, Finset.sum_sub_distrib,
+  simp only [distribution_relation, sub_mul, add_mul, Finset.sum_add_distrib, Finset.sum_sub_distrib,
     mul_assoc, Finset.mul_sum]
 
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233172DiagonalStrip
