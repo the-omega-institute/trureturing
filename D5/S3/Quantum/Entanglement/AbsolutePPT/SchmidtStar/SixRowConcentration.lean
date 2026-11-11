@@ -108,7 +108,7 @@ theorem concentrated_boundary {N : ℕ} (l : Fin N → ℝ) (j : Fin N)
     · simp [step,show ¬k.val < i.val+1 by omega,show ¬k.val < j.val+1 by omega]
   have hsum : (∑ i ∈ middle N,spectralGap l i • step N (i.val+1)) k =
       middleMass (spectralGap l)*step N (j.val+1) k := by
-    simp only [sum_apply,Pi.smul_apply,smul_eq_mul,middleMass]
+    simp only [Finset.sum_apply,Pi.smul_apply,smul_eq_mul,middleMass]
     rw [sum_mul]
     exact sum_congr rfl (fun i hi => by rw [hstep i hi])
   have hv := congrFun hs k
@@ -123,7 +123,7 @@ theorem concentrated_nonnegative {N : ℕ} (l : Fin N → ℝ) (ho : Antitone l)
   have hm : 0 ≤ middleMass (spectralGap l) := sum_nonneg (fun i _ => hg i)
   intro k
   unfold concentrated frozen
-  simp only [Pi.add_apply,Pi.smul_apply,smul_eq_mul,sum_apply]
+  simp only [Pi.add_apply,Pi.smul_apply,smul_eq_mul,Finset.sum_apply]
   exact add_nonneg (sum_nonneg (fun i _ => mul_nonneg (hg i) (ht i k)))
     (mul_nonneg hm (ht j k))
 
@@ -131,7 +131,7 @@ private theorem middle_contribution {N : ℕ} (hN : 36 ≤ N) (l : Fin N → ℝ
     (k : Fin N) (hk : 15 ≤ k.val ∧ k.val < N-21) :
     (∑ i ∈ middle N,spectralGap l i • step N (i.val+1)) k=l k-U hN l := by
   classical
-  simp only [sum_apply,Pi.smul_apply,smul_eq_mul,middle,sum_filter]
+  simp only [Finset.sum_apply,Pi.smul_apply,smul_eq_mul,middle,sum_filter]
   have he (i : Fin N) :
       (if 14 ≤ i.val ∧ i.val < N-21 then
         spectralGap l i*step N (i.val+1) k else 0) =
@@ -299,7 +299,8 @@ theorem mixture_identity {N : ℕ} (g : Fin N → ℝ) (hV : 0 < middleMass g) :
       frozen g+∑ i ∈ middle N,g i • step N (i.val+1) := by
   simp only [concentrated,smul_add,smul_smul,sum_add_distrib]
   rw [← sum_smul,← sum_div]
-  simp only [← middleMass,div_self (ne_of_gt hV),one_smul,
+  rw [show (∑ i ∈ middle N, g i) = middleMass g from rfl]
+  simp only [div_self (ne_of_gt hV),one_smul,
     div_mul_cancel₀ _ (ne_of_gt hV)]
 
 private theorem zero_middle {N : ℕ} (g : Fin N → ℝ) (hg : ∀ i,0 ≤ g i)
@@ -365,7 +366,7 @@ private theorem active_square_equality {N : ℕ} (theta : ℝ) (ht : 0 ≤ theta
   have hmass : (∑ i ∈ middle N,t i*(∑ k,mu i k))=∑ k,l k := by
     calc
       _ = ∑ k,(∑ i ∈ middle N,t i • mu i) k := by
-        simp only [sum_apply,Pi.smul_apply,smul_eq_mul,mul_sum]
+        simp only [Finset.sum_apply,Pi.smul_apply,smul_eq_mul,mul_sum]
         rw [sum_comm]
       _ = _ := by rw [hid]
   have htriangle : ‖WithLp.toLp 2 l‖ ≤ ∑ i ∈ middle N,t i*‖WithLp.toLp 2 (mu i)‖ := by
