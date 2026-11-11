@@ -924,3 +924,157 @@ ball-shaped face. Those local parts fit into Jordan geometry. This is
 an explicit mathematical candidate with the displayed carrier and
 effect assumptions, not a claim that all physical measurement orders
 commute or that complex quantum dynamics has been reconstructed.
+
+## Appendix: unordered distinguishable-pair transitivity
+
+The preceding application uses the ordered-pair form of the
+Müller–Ududec bit-symmetry hypothesis.  The same self-duality conclusion
+already follows from the following weaker relation, while the least-effect
+condition remains a separate premise.
+
+Let $V$ be a nonzero finite-dimensional real ordered space with closed pointed
+generating cone $C$, strictly positive order unit $u$, compact base
+$K=C\cap\{u=1\}$, pure-state set $P=\operatorname{ext}K$, and the full
+proper-effect interval $[0,u]\subseteq C^*$.  Let $G$ be compact and act
+by $u$-preserving cone automorphisms.  Pure $p,q\in P$ are perfectly
+distinguishable when a proper effect has readings $1$ and $0$ on them.
+Assume that whenever $\{p,q\}$ and $\{p',q'\}$ are distinguishable pure
+pairs, some $g\in G$ maps one unordered set to the other.  Write
+$d=\operatorname{affdim}K$.
+
+### The local bridge to pure-state transitivity
+
+Assume first that $d\ge2$.  Every pure $p$ has a pure distinguishable
+partner.  Indeed, choose a nonconstant affine functional supporting $K$ at
+a face containing $p$, and choose a pure point in the opposite minimizing
+face.  After affine rescaling, that functional is a proper effect with
+readings $1$ and $0$ on the two points.  This uses only compact finite
+convex geometry; it does not assume that $P$ is connected.
+
+Fix one distinguishable edge $\{a,b\}$, and put
+$$
+ O_0=Ga,\qquad O_1=Gb.
+$$
+The partner property and unordered transitivity give
+$P=O_0\cup O_1$.  If the two orbits meet, $G$ is already transitive on
+$P$.  Suppose they are disjoint.  Every distinguishable edge then crosses
+from $O_0$ to $O_1$; this says nothing about arbitrary cross-orbit pairs.
+Let $W$ be the translation space of $\operatorname{aff}K$, and choose an
+origin $o\in\operatorname{aff}K$.  For nonzero $\ell\in W^*$, set
+$$
+ h_i(\ell)=\max_{x\in O_i}\ell(x-o),\qquad D(\ell)=h_0(\ell)-h_1(\ell).
+$$
+The maxima exist because the orbits are compact.
+
+The function $D$ never vanishes on the dual unit sphere.  If
+$h_0(\ell)=h_1(\ell)$, choose pure maximizers $p_i\in O_i$ and a pure
+global minimizer $r\in P$.  Since $\ell$ is nonzero and $K$ has full
+affine dimension in its affine hull, the maximum exceeds the minimum.
+Thus each $p_i,r$ has distinct endpoints and is a distinguishable pair,
+because the same affine functional attains its maximum and minimum there.
+Whichever orbit contains $r$, one of these edges has both endpoints in that
+orbit, contradicting the crossing property.  Since $d\ge2$, the sphere
+$S^{d-1}$ is connected, so the nonzero continuous function $D$ has one
+constant sign.  If $D>0$, support-function domination gives
+$\operatorname{conv}(O_1)\subseteq\operatorname{conv}(O_0)$; if $D<0$, the
+reverse inclusion holds.  Either inclusion is impossible: a point of $O_i$
+is extreme in $K$, while a point of one orbit lying in the convex hull of
+the other would have to equal one of its points.  Thus the disjoint case is
+impossible, and unordered transitivity implies ordinary pure transitivity.
+
+This is the only new geometric bridge.  In particular, it does not infer
+that every cross-orbit pair is distinguishable, and it does not use a
+connectedness assumption on the pure-state set.
+
+### Reusing the self-duality proof
+
+Haar-average a pure state over $G$ to obtain the invariant state $\mu$.
+Write $\widehat x=x-u(x)\mu$.  On $\ker u$, choose a $G$-invariant
+inner product $Q$, scaled so that
+$Q(\widehat p,\widehat p)=1$ for every pure $p$.  Put
+$$
+ c=\min_{x,y\in K}Q(\widehat x,\widehat y).
+$$
+Bilinearity lets a minimizer be chosen pure in both variables.  The original
+Müller–Ududec argument gives $c<0$, and for each pure $p$ defines
+$$
+ E_p(x)=\frac{Q(\widehat p,\widehat x)-c\,u(x)}{1-c}.
+$$
+The bounds $c\le Q(\widehat x,\widehat y)\le1$ show that $E_p$ is a proper
+effect and $E_p(p)=1$.  If $Q(\widehat p,\widehat q)=c$, it confirms $p$
+and has zero reading at $q$.  The strict inequality $c<0$ can also be seen directly:
+if $c=0$, the proper effect $E_p$ would vanish on the Haar average of
+its own orbit, while being nonnegative on that orbit and equal to one at
+$p$.
+
+A minimizing pure pair is distinguishable.  Unordered transitivity and
+$G$-invariance of $Q$ therefore transport its scalar value $c$ to every
+distinguishable pure pair, without choosing an orientation.  If arbitrary
+states $x,y$ are distinguishable, decompose them into pure states.  The
+proper effect witnessing $x,y$ has constant $1$ on every pure summand of
+$x$ and constant $0$ on every pure summand of $y$.  Every cross pair is
+therefore distinguishable, and ordinary bilinearity gives
+$Q(\widehat x,\widehat y)=c$.
+
+The remainder of the cited proof is unchanged.  For an exposed ray
+$\mathbb R_+E\subseteq C^*$, choose an exposing $x\in C$, normalize $E$
+so its maximum on $K$ is one, and choose a pure maximizer $p$ on the face
+where $E$ is one.  That face is distinguishable from $x/u(x)$, hence
+$E_p(x)=0$; exposedness makes $E_p$ a positive multiple of $E$.
+Straszewicz density then represents every extremal dual ray in this way.
+Define
+$$
+ B(x,y)=\frac{Q(\widehat x,\widehat y)-c\,u(x)u(y)}{1-c}.
+$$
+This is a normalized, $G$-invariant positive-definite bilinear form and
+$E_p=B(p,\mathord\cdot)$.  Every extremal ray of $C^*$ consequently lies
+in $C$ under the $B$-identification, while every pure ray of $C$ gives a
+positive functional $B(p,\mathord\cdot)$.  Since the two cones are generated
+by their extremal rays, $C=C^*$.  This is precisely the original exposed-ray
+and Straszewicz completion, applied after the local bridge to pure-state transitivity
+rather than by assuming ordered bit symmetry at the outset.
+
+### Least effects remain independent
+
+Suppose, separately, that every pure $p$ has a least proper confirming
+effect $e_p$.  Since $E_p$ confirms $p$, leastness gives
+$e_p\le E_p=B(p,\mathord\cdot)$.  Self-duality writes
+$e_p=B(v,\mathord\cdot)$ with $v\in C$; put $r=p-v\in C$.  Then
+$$
+ 0=B(p,r)=B(v,r)+B(r,r),
+$$
+and both terms are nonnegative, so positive definiteness gives $r=0$.
+Thus $e_p=B(p,\mathord\cdot)$.  Because pure states span $V$, this also
+gives uniqueness, the intrinsic comparison $T_p=e_p$, reciprocity, and the
+full finite preparation comparison $S$ already used in this note.  The
+known odd-regular-polygon examples already show that bit symmetry does not
+supply least proper confirmation; the square obstruction above separately
+records failure of mixture consistency.
+
+### Exceptional dimensions and controls
+
+For $d=0$, $C$ is a single ray, $K=\{p\}$, and $B(ap,bp)=ab$.  For $d=1$, write
+$K=[p,q]$.  In the cone coordinates,
+$$
+ B(\alpha p+\beta q,\gamma p+\delta q)=\alpha\gamma+\beta\delta,
+$$
+and the least effects are the two coordinate functionals.  The group need
+not exchange the endpoints: even the trivial group satisfies unordered
+transitivity on the sole unordered pair, and the displayed $B$ is invariant
+under every endpoint permutation.
+
+The weakening of the chosen-group condition is strict.  For the classical
+three-state simplex, let $G=C_3$ act by cyclically permuting the vertices.
+All distinct pure pairs are distinguishable and form one unordered orbit.
+The ordered pairs split into the two cyclic orientations, so $G$ is not
+ordered-pair-transitive and contains no endpoint swap.  The least effects are
+the coordinate effects and $B$ is their reciprocal dot product.
+
+The result is an elementary extension of the attributed Müller–Ududec proof,
+not a new classification.  The self-duality result retains finite
+dimensionality, the full proper-effect interval, and compactness, and uses
+unordered symmetry without leastness.  The additional intrinsic identification
+$T_p=e_p$ separately retains leastness.  The result does not select complex
+quantum theory, composites, dynamics, measurement-sequence commutativity, or
+physical availability of every mathematical automorphism.  It is a paper
+argument and makes no formal-verification claim.
