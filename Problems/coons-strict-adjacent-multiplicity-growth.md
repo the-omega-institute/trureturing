@@ -194,6 +194,60 @@ The typed `Refuted` annotation refers to this dossier's unchanged slug.
 This description does not certify canonical admission, publication or a
 solution-count credit, and asserts no irreducibility or historical priority.
 
+### What the settlement shows
+
+Public GIDs below have prefix `D5/S1/Digit/CoonsAdjacentGrowthRefutation.`;
+private lemmas are identified by their names in the retained source.
+“proved” refers to the retained compiled declarations, not a new verification
+or an admission decision.
+
+- **Proved (`result`, `exponent_eq_half`): failure of strictness.** At the
+  admissible pair $\ell=4,k=5$, both $A(5,4)$ and $A(6,4)$ equal $1/2$.
+  Inclusion of the old digit functions when the bound increases does not
+  force strict growth of the exponent. The failure is in that strictness
+  requirement, with the actual source counts and the same radix on both
+  sides; it requires no failure of finiteness or positivity.
+- **Proved (`count_upper`): surviving uniform upper bound.** For all natural
+  $k,m,n$ with $k\leq6$ and $n<4^{m+1}$, $b_{k,4}(n)\leq2^m$.
+  The quotient record $\lfloor a(i)/4\rfloor$ for $i<m$ has only binary
+  entries, and the weighted sum recovers the actual function from this
+  record. In particular, permitting digit six does not enlarge this bound.
+  The retained private `count_square_le` gives $b_{k,4}(n)^2\leq n$ for
+  $k\leq6,n\geq1$; `readout_bounds` gives
+  $0\leq\log b_{k,4}(n)/\log n\leq1/2$ for $5\leq k\leq6,n\geq2$.
+- **Proved (`count_repunit`): a shared family attains the count bound.** For
+  every natural $m$ and $5\leq k\leq6$, $b_{k,4}(R_m)=2^m$.
+  The distinct binary-carry choices use only digits $0,1,4,5$, so they are
+  already allowed at bound five. Together with the upper injection this
+  explains why the additional allowed digit need not raise the upper
+  exponent. These are counts of functions, including a vanishing top digit.
+- **Proved (`tail_supremum`, `exponent_eq_half`): the sharp surviving
+  asymptotic statement.** For $5\leq k\leq6$ and every natural $N\geq2$,
+  the EReal supremum over all natural $n\geq N$ is $1/2$, and the infimum
+  over all such $N$ is $A(k,4)=1/2$. The repunit lower witnesses lie in every
+  tail; the all-input upper bound controls the rest of each tail. Thus the
+  non-strict comparison at this adjacent pair survives as equality, without
+  replacing the event by a subsequence or block maximum.
+- **Open in the retained evidence: broader or restricted comparisons.**
+  These declarations establish neither the universal weakening
+  $A(k,\ell)\leq A(k+1,\ell)$ for all $\ell\geq2,k\geq\ell-1$, nor strict
+  comparison for all admissible pairs other than $(4,5)$. Point-count
+  inclusion remains the motivation for the weakening; no general
+  exponent-monotonicity theorem or sufficient extra hypothesis for
+  strictness is delivered here. These are limits of this settlement, not
+  assertions of global openness or additional research targets.
+- **Open here: effects beyond the exact source question.** The source's
+  Section 2 results on smoothness, minimum growth and monotonicity are
+  different assertions; this refutation neither refutes them nor re-verifies
+  their proofs. Any conclusion requiring the universal strict comparison
+  loses that comparison as a justified premise; no replacement argument for
+  such a conclusion is supplied. Section 3's separate “What about the limit
+  inferiors?” is not answered by an upper-exponent equality. Its preceding
+  CW2 first-linear-maximal-growth question is also outside this event: the
+  two bounds at radix four do not determine the first linear threshold for
+  all radices. No liminf value, general threshold or new assessment of the
+  source's other proofs is claimed.
+
 ## ASSUMED-UNVERIFIED
 
 Literature completeness and the Calkin–Wilf 2009 version identity remain
