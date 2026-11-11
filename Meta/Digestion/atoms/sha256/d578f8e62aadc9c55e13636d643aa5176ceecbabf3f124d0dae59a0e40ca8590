@@ -1,0 +1,80 @@
+**命题 30.4（同一十八次原域中的两支及全部原标签）。** 取实正根 $\eta^{18}=2$，令
+
+$$
+\begin{aligned}
+F&=\mathbb Q,&L&=\mathbb Q(\eta),&\alpha&=\eta^2,&t&=\alpha^3,\\
+A&=\mathbb Q(t),&D&=\mathbb Q(\alpha),&
+H&=\langle1,t\rangle_{\mathbb Q},&Z&=A\oplus\alpha A,\\
+W&=\eta A,&V&=A\oplus\alpha H,&
+W'&=\eta H,&V'&=Z.
+\end{aligned}
+\tag{30.21}
+$$
+
+这是同一个原 $L/F$ 内的实际构造，$[L:F]=18$、$[D:F]=9$、$[A:F]=3$、$[D:A]=3$、$D\subsetneq L$。$(W,V)$ 的维数为 $(3,5)$、个别稳定子为 $(A,\mathbb Q)$、个别比值域为 $(A,D)$；$(W',V')$ 的相应数据为 $(2,6)$、$(\mathbb Q,A)$、$(A,D)$。两对的合成比值域都是 $D$、共同稳定子都是 $\mathbb Q$、最小正交维都是二。
+
+对于每个原 $r\in L^\times$，令 $s=\eta/r$。第一对的完整原标签公式为
+
+$$
+d_{W,V}(r)=
+\begin{cases}
+0,&s\notin Z,\\
+3,&s\in A^\times,\\
+2,&s\in Z\setminus A.
+\end{cases}
+\tag{30.22}
+$$
+
+更准确地，当 $s=c+\alpha d\in Z\setminus A$、$c,d\in A$、$d\ne0$ 时，$W\cap rV=\eta d^{-1}H$；当 $s\in A^\times$ 时，该交为 $\eta A$。特别地，
+
+$$
+r=\eta/\alpha=1/\eta\notin D,\qquad
+W\cap rV=\eta H.
+\tag{30.23}
+$$
+
+第二对的完整公式为
+
+$$
+W'\cap rV'=
+\begin{cases}
+\{0\},&s\notin Z,\\
+\eta H,&s\in Z\setminus\{0\}.
+\end{cases}
+\tag{30.24}
+$$
+
+所以第二对所有正原标签的交维均为二。两对的全部正原标签集合都恰为 $\{\eta/s:s\in Z\setminus\{0\}\}$，且其中每一个都在 $D$ 外。
+
+证明。$x^{18}-2$、$x^9-2$、$x^3-2$ 都在素数二处满足 Eisenstein 判据，分别给出 $L,D,A$ 的次数。原包含关系 $A\subseteq D\subseteq L$ 及域塔给出 $[D:A]=3$、$[L:D]=2$，所以 $\eta\notin D$，且 $1,\alpha,\alpha^2$ 在 $A$ 上独立。由此 $Z$ 是六维直和，$V$ 是五维直和；$W,W'$ 分别为三维、二维。$H$ 含 $1,t$，所以 $F(H)=A$，且其稳定子 $E_H\subseteq A$ 的次数整除二和三，故为 $\mathbb Q$。$A$ 自身的稳定子为 $A$；整体乘 $\eta$ 不改稳定子，故 $E_W=A$、$E_{W'}=\mathbb Q$。
+
+按定理 30.3 证明中 $Z$ 的稳定子计算，$E_Z=A$。若 $cV\subseteq V$，则 $cAV\subseteq AV$，而 $AV=Z$，故 $c\in A$。此时 $cV\subseteq V$ 又要求 $cH\subseteq H$，因此 $c\in\mathbb Q$。于是 $E_V=\mathbb Q$、$E_{V'}=A$。所有稳定子都在原 $L$ 中计算，没有只在 $D$ 中检验而漏掉原环境元素。
+
+两小窗口的比值域分别为 $F(A/A)=A$ 和 $F(H/H)=A$，因子 $\eta$ 在比值中消去。$V,V'$ 都含 $1$ 和 $\alpha$，且都包含于 $D$，所以其比值域恰为 $D$。合成比值域因而确为九次真子域 $D$。用 $w_0=\eta$、$v_0=1$ 作独立归一化，第一对成为 $(A,A\oplus\alpha H)$，第二对成为 $(H,Z)$，两种 (30.16) 均在同一原域内实现。此处归一化标签是 $\rho=r/\eta=1/s$。
+
+为逐原标签证明 (30.22)，对任意原 $r\ne0$ 有精确等式
+
+$$
+W\cap rV=\eta\{a\in A:sa\in A\oplus\alpha H\}.
+\tag{30.25}
+$$
+
+若右侧有非零 $a$，则 $s=a^{-1}(sa)\in AV=Z$；因此 $s\notin Z$ 时交为零，包括 $s\notin D$ 的所有情形。若 $s=c+\alpha d\in Z\setminus\{0\}$，则
+
+$$
+sa=ca+\alpha da\in A\oplus\alpha H
+\quad\Longleftrightarrow\quad da\in H.
+\tag{30.26}
+$$
+
+这里直和性保证条件等价。$d=0$ 时 $s\in A^\times$，任意 $a\in A$ 都满足；$d\ne0$ 时允许的 $a$ 恰为 $d^{-1}H$，维数二。代入 $s=\alpha$ 即得 (30.23) 的交空间；若 $1/\eta\in D$，取逆会给出 $\eta\in D$，与次数矛盾。这证明第一对所有原标签的公式与域外取等见证。
+
+第二对同样满足
+
+$$
+W'\cap rZ=\eta\{h\in H:sh\in Z\}.
+\tag{30.27}
+$$
+
+若有非零 $h$，则 $h\in A^\times$、$s=h^{-1}(sh)\in Z$。反之，若 $s\in Z\setminus\{0\}$，$Z$ 的 $A$-线性使 $sH\subseteq Z$，故整个 $H$ 都满足。这证明 (30.24)。两对全部正标签都有 $s\in Z\setminus\{0\}\subseteq D^\times$；若其中某个 $r=\eta/s$ 也在 $D$，则 $\eta=rs\in D$，矛盾。因而正原标签在这两个例子中全部位于 $D$ 外，尽管归一化后的每个正标签都在 $D$ 内。$\square$
+

@@ -1,0 +1,30 @@
+**命题 33.3（原有理六次域中的准确反恢复见证）。** 取 $\alpha$ 为 $x^6-2$ 的正实根，在同一个原域中令
+
+$$
+F=\mathbb Q,\quad L=D=\mathbb Q(\alpha),\quad
+A=\mathbb Q(\alpha^3),\quad
+W=\langle1,\alpha,\alpha^3\rangle_{\mathbb Q},\quad
+V=\langle1,\alpha,\alpha^2\rangle_{\mathbb Q}.
+\tag{33.7}
+$$
+
+两者共同的 $(m,N,e)$ 为 $(3,6,1)$，原稳定子都是 $\mathbb Q$，全部序列均为 $(3,1,1,\ldots)$，但 $t_W(A)=1$、$t_V(A)=3$。取一列 $r_i=\alpha$、另一列 $s_i=\alpha^2$（$i\ge2$），则准确的嵌套前缀为
+
+$$
+I_1^W=W,\quad I_j^W=\mathbb Q\alpha\ (j\ge2),\qquad
+I_1^V=V,\quad I_j^V=\mathbb Q\alpha^2\ (j\ge2).
+\tag{33.8}
+$$
+
+原标签 $\beta=\alpha^3\in A\setminus\mathbb Q$ 则给
+
+$$
+W\cap\beta W=\langle1,\beta\rangle_{\mathbb Q}=A,
+\qquad V\cap\beta V=\{0\}.
+\tag{33.9}
+$$
+
+证明。$x^6-2$ 及 $x^2-2$ 在素数二处满足 Eisenstein 判据，故 $[L:\mathbb Q]=6$、$[A:\mathbb Q]=2$。原 $1,\alpha,\ldots,\alpha^5$ 为有理基，$W,V$ 均三维且都含 $1,\alpha$，所以两比值域同为 $L$。定理 33.2 给两稳定子均为 $\mathbb Q$。用 $L/A$ 的基 $1,\alpha,\alpha^2$，有 $AW=A\oplus A\alpha$、$AV=L$，故两个损失分别为 $4-3=1$ 和 $6-3=3$。
+
+在原有理幂基中，$\alpha W=\langle\alpha,\alpha^2,\alpha^4\rangle_{\mathbb Q}$，与 $W$ 只共用 $\alpha$ 方向；$\alpha^2V=\langle\alpha^2,\alpha^3,\alpha^4\rangle_{\mathbb Q}$，与 $V$ 只共用 $\alpha^2$ 方向。重复各自标签得到 (33.8)；共同原向量分别是 $\alpha$、$\alpha^2$，在每一份缩放窗口中的原像都是 $1$。对任意其他原正元组，交维仍至少为一；它们与 (33.8) 的取等共同证明全部阶数的最小值。最后 $\beta W=\langle\beta,\alpha^4,2\rangle_{\mathbb Q}$、$\beta V=\langle\alpha^3,\alpha^4,\alpha^5\rangle_{\mathbb Q}$，直接给出 (33.9)。$\square$
+

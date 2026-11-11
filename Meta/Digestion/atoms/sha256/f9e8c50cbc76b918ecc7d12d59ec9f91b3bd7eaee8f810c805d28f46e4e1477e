@@ -1,0 +1,45 @@
+**定义 30.1（两窗口、独立归一化与原标签）。** 设 $F$ 为特征零域，$L/F$ 为有限扩张，$W,V\le_F L$ 非零，$m=\dim_F W$、$n=\dim_F V$。乘除和张成始终使用这个原 $L$ 的运算。记
+
+$$
+\begin{aligned}
+D_W&=F(W/W),&D_V&=F(V/V),&D&=F(W/W,V/V),&N&=[D:F],\\
+E_W&=\{c\in L:cW\subseteq W\},&
+E_V&=\{c\in L:cV\subseteq V\},&E&=E_W\cap E_V,&e&=[E:F],\\
+d_{W,V}(r)&=\dim_F(W\cap rV)\quad(r\in L^\times),&&&
+\delta&=\min\{d_{W,V}(r):r\in L^\times,\ d_{W,V}(r)>0\}.
+\end{aligned}
+\tag{30.1}
+$$
+
+这里 $W/W$、$V/V$ 的分母只取非零元素；$D$ 是两个实际比值域在 $L$ 内的合成域。最小值存在，因为任取 $p\in W\setminus\{0\}$、$q\in V\setminus\{0\}$，都有 $p\in W\cap(p/q)V$。对每个实际中间域 $F\subseteq A\subseteq D$，定义
+
+$$
+\begin{aligned}
+AW&=\operatorname{span}_A W\subseteq L,&AV&=\operatorname{span}_A V\subseteq L,\\
+a(A)&=[A:F],&t_W(A)&=\dim_F AW-m,&t_V(A)&=\dim_F AV-n,\\
+\Lambda(A)&=a(A)-t_W(A)-t_V(A).
+\end{aligned}
+\tag{30.2}
+$$
+
+独立选取原 $w_0\in W\setminus\{0\}$、$v_0\in V\setminus\{0\}$ 后，置 $X=w_0^{-1}W$、$Y=v_0^{-1}V$。于是 $1\in X\cap Y$、$X,Y\subseteq D$、$F(X,Y)=D$，而原标签 $r$ 的归一化标签为
+
+$$
+\rho=(v_0/w_0)r,\qquad
+W\cap rV=w_0(X\cap\rho Y).
+\tag{30.3}
+$$
+
+因此独立缩放保持最小正值和两个个别稳定子，改变的却是标签与原标量的对应。对于原 $L$ 中的每个 $r\ne0$，
+
+$$
+\begin{aligned}
+d_{W,V}(r)>0
+&\Longleftrightarrow r=p/q\text{，其中 }p\in W\setminus\{0\},\ q\in V\setminus\{0\}\\
+&\Longleftrightarrow \rho=x/y\text{，其中 }x\in X\setminus\{0\},\ y\in Y\setminus\{0\}.
+\end{aligned}
+\tag{30.4}
+$$
+
+正交叠迫使 $\rho\in D^\times$，并不迫使 $r\in D$。所有正原标签位于 $(w_0/v_0)D^\times$；这个陪集之外的原标签交维全为零。$D\subsetneq L$ 仍在定义范围内。
+

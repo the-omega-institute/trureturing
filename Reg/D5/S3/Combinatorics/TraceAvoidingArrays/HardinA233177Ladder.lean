@@ -1,4 +1,5 @@
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder
+import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
 
@@ -787,6 +788,69 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   familyRecord := none
   options := #[]
 end AlternatingProper
+
+namespace CanonTwo
+abbrev signature := LabelReadout.signature
+abbrev actual := LabelReadout.actual
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => 2) (fun e => nomatch e)
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {n : ℕ} (hn : 2 ≤ n) (P : Fin 4 × Fin n → Fin 3)
+    (hp : Proper P) (hc : Canon P) (hu : R.readout () n P = 2),
+    P = alternating n 0 1
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  let P : Fin 4 × Fin 2 → Fin 3 :=
+    fun p => if p.2.val = 0 then (if p.1.val = 3 then 2 else 0) else 1
+  have hp : Proper P := by unfold Proper P; decide +kernel
+  have hc : Canon P := by
+    unfold Canon _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.Canonical
+    decide +kernel
+  have he := h (n := 2) (by decide) P hp hc rfl
+  have hh := congrFun he ((3 : Fin 4), (0 : Fin 2))
+  norm_num [P, alternating] at hh
+def family : Registration arena (type_of% @canon_two_eq) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@canon_two_eq, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := LabelReadout.dependence
+def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    (@canon_two_eq) (Realization signature) Type Unit where
+  unitName :=
+    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder.CanonTwo.auditUnit
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder.CanonTwo.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ P => used P) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "domain", "fn", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+end CanonTwo
 
 end
 end Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Ladder

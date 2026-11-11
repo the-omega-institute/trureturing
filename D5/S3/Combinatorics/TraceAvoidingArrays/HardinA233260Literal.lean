@@ -112,7 +112,7 @@ private theorem proper_two_labels {n : ℕ} (hn : 2 ≤ n)
   exact ⟨(0, ⟨0, by omega⟩), (0, ⟨1, by omega⟩),
     hp ⟨0, by omega⟩ (by change 0 + 1 < n; omega) 0 0 (by decide)⟩
 
-private theorem columns_constant {n : ℕ} (hn : 2 ≤ n)
+theorem columns_constant {n : ℕ} (hn : 2 ≤ n)
     (P : Fin 5 × Fin n → Fin 3) (hp : Proper P)
     (d : Fin 3) (hd : ∀ i, P i ≠ d) : ∀ j r, P (r, j) = P (0, j) := by
   have finite_fact : ∀ a b c d : Fin 3,
