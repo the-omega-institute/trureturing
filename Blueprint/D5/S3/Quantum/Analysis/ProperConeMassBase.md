@@ -34,4 +34,3 @@ A proper cone here is Mathlib closed cone data; strict positivity on every nonze
 
 - Truth anchor: `D5/S3/Quantum/Analysis/ProperConeMassBase.base`
 - Truth anchor: `D5/S3/Quantum/Analysis/ProperConeMassBase.entire_base_geometry`
-- Dependency: [D5/S3/Quantum/Analysis/CompactConvexFixedState](CompactConvexFixedState.md)
