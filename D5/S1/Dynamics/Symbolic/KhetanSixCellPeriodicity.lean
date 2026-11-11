@@ -74,6 +74,8 @@ open D5.S1.Dynamics.Symbolic.KhetanOneDirectionPeriodizer
 open D5.S1.Dynamics.Symbolic.KhetanDirectionalCoprimality
 open D5.S1.Dynamics.Symbolic.KhetanLatticeGeometry
 
+local notation "Lattice" => D5.S1.Dynamics.Symbolic.KhetanLaurent.Lattice
+
 private def exponentScaling (g : ℕ) : ℤ →+ ℤ where
   toFun n := (g : ℤ) * n
   map_zero' := mul_zero _
@@ -313,7 +315,9 @@ theorem six_cell_exact_cover_periodic
       (integer_indicator_cover F T hcover) u (Int.isCoprime_iff_gcd_eq_one.mpr hu) hline
     have hnat : ∀ x, indicator T (x + t) = indicator T x := by
       intro x
-      exact Int.natCast_inj.mp (hp x)
+      have hi := hp x
+      change (indicator T (x + t) : ℤ) = (indicator T x : ℤ) at hi
+      exact_mod_cast hi
     have hprop : Period T t := predicate_period_of_indicator_period T t hnat
     exact ⟨t, ht, hprop, common_period_on_closure T t hprop⟩
   · have hnot (u : Lattice) (hu : Primitive u) : ¬ OnlyLineDirection P u := by

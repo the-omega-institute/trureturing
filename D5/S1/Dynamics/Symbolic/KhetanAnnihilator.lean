@@ -102,22 +102,6 @@ def difference {A : Type*} [AddCommGroup A] (h : Lattice)
   funext z
   simp [shift]
 
-/-- Composition of the shift operators from Section 1.1. -/
-theorem shift_add {A : Type*} (h t : Lattice) (c : Configuration A) :
-    shift (h + t) c = shift h (shift t c) := by
-  funext z
-  simp [shift, add_assoc]
-
-/-- Shift operators commute, as used throughout Section 1.1. -/
-theorem shift_comm {A : Type*} (h t : Lattice) (c : Configuration A) :
-    shift h (shift t c) = shift t (shift h c) := by
-  rw [← shift_add, ← shift_add, add_comm h t]
-
-/-- The pointwise period condition is equivalent to `Tʰc = c` (Section 1.1). -/
-theorem isPeriod_iff_shift_eq {A : Type*} (c : Configuration A) (h : Lattice) :
-    IsPeriod c h ↔ shift h c = c := by
-  exact ⟨fun hc => funext hc, fun hc => congrFun hc⟩
-
 /-- The zero vector fixes every configuration (Section 1.1). -/
 theorem IsPeriod.zero {A : Type*} (c : Configuration A) : IsPeriod c 0 := by
   intro z
@@ -157,20 +141,6 @@ theorem IsPeriod.zsmul {A : Type*} {c : Configuration A} {h : Lattice}
     rw [neg_zsmul, natCast_zsmul]
     exact (hh.nsmul (n + 1)).neg
 
-/-- A configuration and any translate have the same periods (Section 1.1). -/
-theorem isPeriod_shift_iff {A : Type*} (c : Configuration A) (h t : Lattice) :
-    IsPeriod (shift t c) h ↔ IsPeriod c h := by
-  constructor
-  · intro hp z
-    simpa [shift, add_assoc, add_left_comm, add_comm] using hp (z - t)
-  · intro hp z
-    simpa [shift, add_assoc, add_left_comm, add_comm] using hp (z + t)
-
-/-- Periodicity is invariant under translation (Section 1.1). -/
-theorem periodic_shift_iff {A : Type*} (c : Configuration A) (t : Lattice) :
-    Periodic (shift t c) ↔ Periodic c := by
-  simp only [Periodic, isPeriod_shift_iff]
-
 /-- Applying a function to a finite alphabet preserves finite range (Section 1.1). -/
 theorem FiniteRange.map {A B : Type*} {c : Configuration A}
     (hc : FiniteRange c) (f : A → B) : FiniteRange (f ∘ c) := by
@@ -182,10 +152,6 @@ theorem FiniteRange.shift {A : Type*} {c : Configuration A}
   apply hc.subset
   rintro _ ⟨z, rfl⟩
   exact ⟨z + h, rfl⟩
-
-/-- A configuration over a finite alphabet has finite range (Section 1.1). -/
-theorem finiteRange_of_finite {A : Type*} [Finite A] (c : Configuration A) :
-    FiniteRange c := Set.toFinite _
 
 /-- Injective alphabet labels preserve each period vector (Section 1.1). -/
 theorem isPeriod_map_iff {A B : Type*} (c : Configuration A) {f : A → B}
@@ -202,20 +168,6 @@ theorem periodic_map_iff {A B : Type*} (c : Configuration A) {f : A → B}
 @[simp] theorem difference_apply {A : Type*} [AddCommGroup A]
     (h : Lattice) (c : Configuration A) (z) :
     difference h c z = c (z + h) - c z := rfl
-
-/-- Vanishing of `Δₕc` is exactly the period condition (Section 1.1). -/
-theorem difference_eq_zero_iff {A : Type*} [AddCommGroup A]
-    (h : Lattice) (c : Configuration A) : difference h c = 0 ↔ IsPeriod c h := by
-  simp only [funext_iff, difference_apply, Pi.zero_apply, sub_eq_zero, IsPeriod]
-
-/-- Difference operators commute (Section 1.1). -/
-theorem difference_comm {A : Type*} [AddCommGroup A]
-    (h t : Lattice) (c : Configuration A) :
-    difference h (difference t c) = difference t (difference h c) := by
-  funext z
-  simp only [difference_apply]
-  rw [show z + h + t = z + t + h by abel]
-  abel
 
 end D5.S1.Dynamics.Symbolic.KhetanLaurent
 
@@ -298,23 +250,9 @@ theorem act_sub (f g : Laurent) (c : Configuration ℚ) :
     act (f - g) c = act f c - act g c := by
   simp [act]
 
-/-- Section 1.1 (Notation): negating a filter negates its output. -/
-theorem act_neg (f : Laurent) (c : Configuration ℚ) : act (-f) c = -act f c := by
-  simp [act]
-
 /-- Section 1.1 (Notation): every Laurent filter annihilates the zero configuration. -/
 @[simp] theorem act_config_zero (f : Laurent) : act f 0 = 0 := by
   exact map_zero (actionHom f)
-
-/-- Section 1.1 (Notation): each Laurent operator preserves sums of configurations. -/
-theorem act_config_add (f : Laurent) (c d : Configuration ℚ) :
-    act f (c + d) = act f c + act f d := by
-  exact map_add (actionHom f) c d
-
-/-- Section 1.1 (Notation): each Laurent operator preserves differences of configurations. -/
-theorem act_config_sub (f : Laurent) (c d : Configuration ℚ) :
-    act f (c - d) = act f c - act f d := by
-  exact map_sub (actionHom f) c d
 
 /-- Section 1.1 (Notation): each Laurent operator commutes with rational scaling of the
 configuration. -/
@@ -348,25 +286,6 @@ noncomputable def monomial (h : Lattice) : Laurent := AddMonoidAlgebra.single h 
     monomial h ^ q = monomial (q • h) := by
   simp [monomial, AddMonoidAlgebra.single_pow]
 
-/-- Section 1.1 (Notation): every lattice monomial is a unit, with inverse at the negated exponent. -/
-theorem monomial_isUnit (h : Lattice) : IsUnit (monomial h) := by
-  exact ⟨⟨monomial h, monomial (-h), by simp, by simp⟩, rfl⟩
-
-/-- Section 1.1 (Notation): a lattice monomial has a nonzero coefficient and is nonzero. -/
-theorem monomial_ne_zero (h : Lattice) : monomial h ≠ 0 :=
-  (monomial_isUnit h).ne_zero
-
-/-- Section 1.1 (Notation): distinct lattice exponents give distinct monomials. -/
-theorem monomial_injective : Function.Injective monomial :=
-  AddMonoidAlgebra.single_left_injective one_ne_zero
-
-/-- Section 1.1 (Notation): a nonzero direction gives a nonzero difference polynomial. -/
-theorem monomial_sub_one_ne_zero {h : Lattice} (hh : h ≠ 0) :
-    monomial h - 1 ≠ 0 := by
-  intro heq
-  have h : monomial h = monomial 0 := by simpa using sub_eq_zero.mp heq
-  exact hh (monomial_injective h)
-
 /-- Section 1.1 (Notation): a lattice monomial acts by its forward shift. -/
 @[simp] theorem act_monomial (h : Lattice) (c : Configuration ℚ) :
     act (monomial h) c = shift h c := by simp [monomial]
@@ -376,16 +295,6 @@ direction `h`. -/
 theorem act_difference (h : Lattice) (c : Configuration ℚ) :
     act (monomial h - 1) c = difference h c := by
   simp [act_sub, difference]
-
-/-- Section 1.1 (Notation): every Laurent operator commutes with lattice translations. -/
-theorem act_shift (f : Laurent) (h : Lattice) (c : Configuration ℚ) :
-    act f (shift h c) = shift h (act f c) := by
-  rw [← act_monomial, ← act_mul, mul_comm, act_mul, act_monomial]
-
-/-- Section 1.1 (Notation): every Laurent operator commutes with lattice differences. -/
-theorem act_difference_comm (f : Laurent) (h : Lattice) (c : Configuration ℚ) :
-    act f (difference h c) = difference h (act f c) := by
-  simp [difference, act_config_sub, act_shift]
 
 /-- Section 1.1 (Notation): a constant rational configuration has finite range. -/
 theorem finiteRange_const (a : ℚ) : FiniteRange (fun _ : Lattice => a) := by
@@ -429,11 +338,6 @@ Laurent coefficient. -/
 @[simp] theorem lineEval_C (v : Lattice) (a : ℚ) :
     lineEval v (Polynomial.C a) = AddMonoidAlgebra.single 0 a := by
   simp [lineEval]
-
-/-- Section 1.1 (Notation): substitution along a lattice direction preserves polynomial
-divisibility. -/
-theorem lineEval_dvd (v : Lattice) {f g : Polynomial ℚ} (h : f ∣ g) :
-    lineEval v f ∣ lineEval v g := map_dvd (lineEval v) h
 
 /-- Section 1.1 (Notation): a power of the polynomial variable evaluates to a scaled lattice
 exponent. -/

@@ -90,27 +90,6 @@ theorem exact_cover_mask_act (F : Finset Lattice) (h : Configuration ℤ) (x : L
   rw [exactCoverMask, coefficientAct_finset_sum]
   simp [Finset.sum_apply, shift, sub_eq_add_neg]
 
-theorem exact_cover_mask_ne_zero (F : Finset Lattice) (hF : F.Nonempty) :
-    exactCoverMask F ≠ 0 := by
-  intro hz
-  have h := congrFun (congrArg (fun P : IntegerLaurent =>
-    coefficientAct P (fun _ => (1 : ℤ))) hz) (0 : Lattice)
-  rw [exact_cover_mask_act] at h
-  simp at h
-  exact hF.ne_empty h
-
-theorem exact_cover_product_differences (F : Finset Lattice) (hF : F.Nonempty)
-    (h : Configuration ℤ) (hh : FiniteRange h)
-    (hcover : ∀ x, ∑ f ∈ F, h (x - f) = 1) :
-    ∃ directions : List Lattice,
-      directions ≠ [] ∧ (∀ u ∈ directions, u ≠ 0) ∧
-      (directions.map (fun u => (differenceFilter u : IntegerLaurent))).prod ≠ 0 ∧
-      coefficientAct (directions.map (fun u => (differenceFilter u : IntegerLaurent))).prod h = 0 := by
-  apply integer_periodizer_product_differences h hh (exactCoverMask F)
-    (exact_cover_mask_ne_zero F hF) 1
-  funext x
-  rw [exact_cover_mask_act, hcover]
-
 noncomputable def linePolynomial (u : Lattice) :
     Polynomial R →+* AddMonoidAlgebra R Lattice :=
   Polynomial.eval₂RingHom (algebraMap R _) (AddMonoidAlgebra.single u 1)
@@ -345,73 +324,11 @@ noncomputable def primitiveCoordinates (u : Lattice) (hu : IsCoprime u.1 u.2) :
         linear_combination z.2 * hab
     map_add' := by intro x y; ext <;> dsimp <;> ring }
 
-private theorem primitive_coordinates_multiple (u : Lattice) (hu : IsCoprime u.1 u.2)
-    (n : ℤ) : primitiveCoordinates u hu (n • u) = (0, n) := by
-  dsimp [primitiveCoordinates]
-  have hab := Classical.choose_spec (Classical.choose_spec hu)
-  apply Prod.ext
-  · dsimp
-    ring
-  · change _ = n
-    linear_combination n * hab
-
 /-- Iterated Laurent coordinates place the `u`-variable in the coefficient
 ring and the transverse variable in the outer Laurent ring. -/
 noncomputable def primitiveLaurentCoordinates (u : Lattice) (hu : IsCoprime u.1 u.2) :
     AddMonoidAlgebra R Lattice ≃+* AddMonoidAlgebra (LaurentPolynomial R) ℤ :=
   (AddMonoidAlgebra.mapDomainRingEquiv R (primitiveCoordinates u hu)).trans
     AddMonoidAlgebra.curryRingEquiv
-
-private theorem primitive_laurent_coordinates_line (u : Lattice)
-    (hu : IsCoprime u.1 u.2) (F : LaurentPolynomial R) :
-    primitiveLaurentCoordinates u hu (lineLaurent u F) = AddMonoidAlgebra.single 0 F := by
-  induction F using AddMonoidAlgebra.induction_linear with
-  | zero => simp
-  | add F G hF hG => simp only [map_add, hF, hG, AddMonoidAlgebra.single_add]
-  | single n c =>
-    rw [line_laurent_single]
-    change AddMonoidAlgebra.curryRingEquiv
-      (AddMonoidAlgebra.mapDomainRingEquiv R (primitiveCoordinates u hu)
-        (AddMonoidAlgebra.single (n • u) c)) =
-      AddMonoidAlgebra.single 0 (AddMonoidAlgebra.single n c)
-    rw [AddMonoidAlgebra.mapDomainRingEquiv_single, primitive_coordinates_multiple,
-      AddMonoidAlgebra.curryRingEquiv_single]
-
-/-- A monic transverse factorization and its irreducibility/nondivisibility
-properties produce the localized Bezout identity, then a nonzero eliminant,
-before any configuration action. Obtaining this factorization from the
-line-factor hypothesis is the remaining algebraic obligation. -/
-theorem localized_bezout_step [IsDomain R]
-    {K : Type*} [Field K] [Algebra (LaurentPolynomial R) K]
-    [IsFractionRing (LaurentPolynomial R) K]
-    (h : Configuration R) (hh : FiniteRange h) (u : Lattice) (hu : IsCoprime u.1 u.2)
-    (P B : AddMonoidAlgebra R Lattice) (A : LaurentPolynomial R) (hA : A ≠ 0)
-    (c : R) (hP : coefficientAct P h = fun _ => c)
-    (hAB : coefficientAct (lineLaurent u A * B) h = 0)
-    (factors : List (Polynomial (LaurentPolynomial R)))
-    (hB : primitiveLaurentCoordinates u hu B ∣
-      (factors.map Polynomial.toLaurent).prod)
-    (hmonic : ∀ g ∈ factors, g.Monic)
-    (hirr : ∀ g ∈ factors, Irreducible
-      (g.map (algebraMap (LaurentPolynomial R) K)))
-    (hnot : ∀ g ∈ factors, ¬g.toLaurent ∣ primitiveLaurentCoordinates u hu P) :
-    Periodic h := by
-  let coordinates := primitiveLaurentCoordinates (R := R) u hu
-  have hcoordinates := primitive_laurent_coordinates_line (R := R) u hu
-  have hunz : u ≠ 0 := by
-    intro hz
-    have h := hu
-    rw [hz] at h
-    obtain ⟨a, b, hab⟩ := h
-    norm_num at hab
-  obtain ⟨ρ, hρ, α, β, hbezout⟩ := KhetanLaurentElimination.clear_laurent_bezout_of_monic_factors
-    (K := K) (coordinates P) (coordinates B)
-    factors hB hmonic hirr hnot
-  apply cleared_bezout_periodic h hh u hunz P B (coordinates.symm α) (coordinates.symm β)
-    A ρ hA hρ c hP hAB
-  apply coordinates.injective
-  have hcoρ : coordinates (lineLaurent u ρ) = AddMonoidAlgebra.single 0 ρ := hcoordinates ρ
-  rw [hcoρ]
-  simpa only [map_add, map_mul, RingEquiv.apply_symm_apply] using hbezout
 
 end D5.S1.Dynamics.Symbolic.KhetanOneDirectionPeriodizer

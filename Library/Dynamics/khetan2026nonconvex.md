@@ -49,15 +49,25 @@ Its `two_direction_orbit_closure_periodic` theorem establishes the
 conditional two-direction branch, in fact with a period common to the whole
 given orbit closure. Its exposition is
 `Blueprint/D5/S1/Dynamics/Symbolic/KhetanLatticeGeometry.scribe.cs`.
-`KhetanSectionCancellation.lean` supplies the general incidence argument
-consumed there; the affine lattice realization is proved in the geometry,
-not assumed from a finite incidence table.
+The geometry contains the consumed private incidence argument on arbitrary
+finite objects and key types. Its missing-column cancellation lemma allows
+arbitrary positive column degree and arbitrary complex weights. The affine
+lattice realization is proved from actual points, without a finite incidence
+table.
 
-The intended complete consumer is
+The complete consumer
 `D5/S1/Dynamics/Symbolic/KhetanSixCellPeriodicity.lean`, with its matching
-Blueprint Scribe. A source-level assembly or an ordinary manuscript does
-not by itself establish Lean verification or official acceptance of that
-complete statement. This note makes no full-resolution claim.
+Blueprint Scribe, is checked by scoped Lean compilation. For every six-point
+full-integer-span F and every given ExactCover F T, it proves that T has a
+nonzero period shared by every point of its original indicator orbit closure.
+Its only axiom dependencies are Classical.choice, Quot.sound and propext.
+This is compiler evidence for the stronger given-T statement; independent
+admission review, canonical freezing and required CI acceptance are separate.
+The public escape registrations remain incomplete under issue #29287.
+No pre-probe full-result preregistration issue was found in the bounded GitHub
+searches by Khetan title, exact arXiv identifier and Nivat title: the title
+search found the audit issue #29287 only. This does not establish priority
+and supplies no open-problem-resolution admission exception.
 
 Tan–Zhang's periodic-complement existence theorem, recorded in
 [tanzhang2026periodictilings.md](tanzhang2026periodictilings.md), already

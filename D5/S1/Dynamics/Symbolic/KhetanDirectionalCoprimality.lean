@@ -58,12 +58,12 @@ private noncomputable def scalar : ℂ →+* LaurentPolynomial K :=
 private noncomputable def monomial (s k : ℤ) : LaurentPolynomial K :=
   AddMonoidAlgebra.single s (algebraMap D K (LaurentPolynomial.T k))
 
-private noncomputable def binomial (s k : ℤ) (λ : ℂ) : LaurentPolynomial D :=
+private noncomputable def binomial (s k : ℤ) (ξ : ℂ) : LaurentPolynomial D :=
   AddMonoidAlgebra.single s (LaurentPolynomial.T k) -
-    LaurentPolynomial.C (LaurentPolynomial.C λ)
+    LaurentPolynomial.C (LaurentPolynomial.C ξ)
 
-private noncomputable def monicBinomial (m : ℕ) (k : ℤ) (λ : ℂ) : Polynomial D :=
-  Polynomial.X ^ m - Polynomial.C (LaurentPolynomial.C λ * LaurentPolynomial.T (-k))
+private noncomputable def monicBinomial (m : ℕ) (k : ℤ) (ξ : ℂ) : Polynomial D :=
+  Polynomial.X ^ m - Polynomial.C (LaurentPolynomial.C ξ * LaurentPolynomial.T (-k))
 
 private theorem coordinates_single (u : Lattice) (hu : IsCoprime u.1 u.2)
     (v : Lattice) (a : ℂ) :
@@ -83,10 +83,10 @@ private theorem coordinates_fst (u : Lattice) (hu : IsCoprime u.1 u.2)
   rfl
 
 private theorem coordinates_line_binomial (u : Lattice) (hu : IsCoprime u.1 u.2)
-    (s k : ℤ) (λ : ℂ) :
+    (s k : ℤ) (ξ : ℂ) :
     primitiveLaurentCoordinates u hu
       (lineLaurent ((primitiveCoordinates u hu).symm (s, k))
-        (LaurentPolynomial.T 1 - LaurentPolynomial.C λ)) = binomial s k λ := by
+        (LaurentPolynomial.T 1 - LaurentPolynomial.C ξ)) = binomial s k ξ := by
   rw [map_sub, map_sub, show LaurentPolynomial.T (1 : ℤ) =
     AddMonoidAlgebra.single (1 : ℤ) (1 : ℂ) from rfl, line_laurent_single,
     one_zsmul]
@@ -94,13 +94,14 @@ private theorem coordinates_line_binomial (u : Lattice) (hu : IsCoprime u.1 u.2)
       (AddMonoidAlgebra.single ((primitiveCoordinates u hu).symm (s, k)) 1) -
     primitiveLaurentCoordinates u hu
       (lineLaurent ((primitiveCoordinates u hu).symm (s, k))
-        (AddMonoidAlgebra.single 0 λ)) = _
+        (AddMonoidAlgebra.single 0 ξ)) = _
   rw [line_laurent_single, zero_zsmul, coordinates_single, coordinates_single]
-  simp [binomial, LaurentPolynomial.T, LaurentPolynomial.C]
+  simp only [AddEquiv.apply_symm_apply, map_zero]
+  rfl
 
-private theorem monic_binomial_laurent (m : ℕ) (k : ℤ) (λ : ℂ) :
-    (monicBinomial m k λ).toLaurent =
-      LaurentPolynomial.C (LaurentPolynomial.T (-k)) * binomial m k λ := by
+private theorem monic_binomial_laurent (m : ℕ) (k : ℤ) (ξ : ℂ) :
+    (monicBinomial m k ξ).toLaurent =
+      LaurentPolynomial.C (LaurentPolynomial.T (-k)) * binomial m k ξ := by
   simp only [monicBinomial, map_sub, Polynomial.toLaurent_X_pow,
     Polynomial.toLaurent_C, binomial, mul_sub, ← map_mul]
   congr 1
@@ -111,18 +112,20 @@ private theorem monic_binomial_laurent (m : ℕ) (k : ℤ) (λ : ℂ) :
   · congr 1
     exact mul_comm _ _
 
-private theorem line_binomial_ne_zero (λ : ℂ) :
-    (LaurentPolynomial.T 1 - LaurentPolynomial.C λ : D) ≠ 0 := by
+private theorem line_binomial_ne_zero (ξ : ℂ) :
+    (LaurentPolynomial.T 1 - LaurentPolynomial.C ξ : D) ≠ 0 := by
   intro hz
-  have h := congrArg (fun F : D => F.coeff 1) hz
-  simp [LaurentPolynomial.T, LaurentPolynomial.C] at h
+  have he : AddMonoidAlgebra.single (1 : ℤ) (1 : ℂ) =
+      AddMonoidAlgebra.single 0 ξ := sub_eq_zero.mp hz
+  have h := congrArg (fun F : D => F.coeff 1) he
+  norm_num [AddMonoidAlgebra.coeff_single_apply] at h
 
-private theorem line_binomial_not_isUnit (λ : ℂ) (hλ : λ ≠ 0) :
-    ¬ IsUnit (LaurentPolynomial.T 1 - LaurentPolynomial.C λ : D) := by
+private theorem line_binomial_not_isUnit (ξ : ℂ) (hξ : ξ ≠ 0) :
+    ¬ IsUnit (LaurentPolynomial.T 1 - LaurentPolynomial.C ξ : D) := by
   intro hunit
-  have h := hunit.map (LaurentPolynomial.eval₂ (RingHom.id ℂ) (Units.mk0 λ hλ))
-  have hz : LaurentPolynomial.eval₂ (RingHom.id ℂ) (Units.mk0 λ hλ)
-      (LaurentPolynomial.T 1 - LaurentPolynomial.C λ) = 0 := by
+  have h := hunit.map (LaurentPolynomial.eval₂ (RingHom.id ℂ) (Units.mk0 ξ hξ))
+  have hz : LaurentPolynomial.eval₂ (RingHom.id ℂ) (Units.mk0 ξ hξ)
+      (LaurentPolynomial.T 1 - LaurentPolynomial.C ξ) = 0 := by
     simp [LaurentPolynomial.eval₂_T, LaurentPolynomial.eval₂_C]
   rw [hz] at h
   exact not_isUnit_zero h
@@ -133,7 +136,7 @@ private theorem map_toLaurent (p : Polynomial D) :
   induction p using Polynomial.induction_on' with
   | add p q hp hq => simp only [map_add, hp, hq, Polynomial.map_add]
   | monomial n a =>
-    simpa only [Polynomial.toLaurent_C_mul_T, Polynomial.map_monomial,
+    simpa only [localizeCoefficients, Polynomial.toLaurent_C_mul_T, Polynomial.map_monomial,
       ← LaurentPolynomial.single_eq_C_mul_T] using
       (AddMonoidAlgebra.mapRingHom_single (algebraMap D K) (n : ℤ) a)
 
@@ -141,23 +144,23 @@ private theorem map_toLaurent (p : Polynomial D) :
 line factor. The conclusion is divisibility in the original lattice ring. -/
 private theorem line_divisor_of_monic_binomial_dvd
     (P : AddMonoidAlgebra ℂ Lattice) (u : Lattice) (hu : IsCoprime u.1 u.2)
-    (m : ℕ) (hm : 0 < m) (k : ℤ) (λ : ℂ)
+    (m : ℕ) (hm : 0 < m) (k : ℤ) (ξ : ℂ)
     (n : ℕ) (p : Polynomial D)
     (hp : p.toLaurent = primitiveLaurentCoordinates u hu P * LaurentPolynomial.T n)
-    (hdiv : (monicBinomial m k λ).map (algebraMap D K) ∣ p.map (algebraMap D K)) :
+    (hdiv : (monicBinomial m k ξ).map (algebraMap D K) ∣ p.map (algebraMap D K)) :
     lineLaurent ((primitiveCoordinates u hu).symm ((m : ℤ), k))
-      (LaurentPolynomial.T 1 - LaurentPolynomial.C λ) ∣ P := by
-  have hd : monicBinomial m k λ ∣ p :=
+      (LaurentPolynomial.T 1 - LaurentPolynomial.C ξ) ∣ P := by
+  have hd : monicBinomial m k ξ ∣ p :=
     (Polynomial.map_dvd_map (algebraMap D K) (IsFractionRing.injective D K)
       (Polynomial.monic_X_pow_sub_C _ (Nat.ne_of_gt hm))).mp hdiv
-  have hbq : binomial m k λ ∣ (monicBinomial m k λ).toLaurent := by
+  have hbq : binomial m k ξ ∣ (monicBinomial m k ξ).toLaurent := by
     rw [monic_binomial_laurent, mul_comm]
     exact dvd_mul_right _ _
-  have hbp : binomial m k λ ∣
+  have hbp : binomial m k ξ ∣
       primitiveLaurentCoordinates u hu P * LaurentPolynomial.T n := by
     rw [← hp]
     exact hbq.trans (map_dvd Polynomial.toLaurent hd)
-  have hb : binomial m k λ ∣ primitiveLaurentCoordinates u hu P := by
+  have hb : binomial m k ξ ∣ primitiveLaurentCoordinates u hu P := by
     have h := hbp.mul_right (LaurentPolynomial.T (-(n : ℤ)))
     simpa only [mul_assoc, ← LaurentPolynomial.T_add, add_neg_cancel,
       LaurentPolynomial.T_zero, mul_one] using h
@@ -192,9 +195,9 @@ private theorem to_rational_injective : Function.Injective toRational := by
 private noncomputable def fractionToRational : K →+* RatFunc ℂ :=
   IsFractionRing.lift to_rational_injective
 
-private theorem rational_monomial_degree (λ : ℂ) (hλ : λ ≠ 0) (k : ℤ) :
-    (RatFunc.C λ * RatFunc.X ^ k).intDegree = k := by
-  have hC : RatFunc.C λ ≠ 0 := (map_ne_zero RatFunc.C).mpr hλ
+private theorem rational_monomial_degree (ξ : ℂ) (hξ : ξ ≠ 0) (k : ℤ) :
+    (RatFunc.C ξ * RatFunc.X ^ k).intDegree = k := by
+  have hC : RatFunc.C ξ ≠ 0 := (map_ne_zero RatFunc.C).mpr hξ
   have hpow (n : ℕ) : ((RatFunc.X : RatFunc ℂ) ^ n).intDegree = n := by
     induction n with
     | zero => simp
@@ -206,22 +209,24 @@ private theorem rational_monomial_degree (λ : ℂ) (hλ : λ ≠ 0) (k : ℤ) :
     zero_add]
   cases k with
   | ofNat n => simpa using hpow n
-  | negSucc n => simp [zpow_negSucc, RatFunc.intDegree_inv, hpow]
+  | negSucc n =>
+    simp [zpow_negSucc, RatFunc.intDegree_inv, hpow]
+    omega
 
 private theorem monic_binomial_irreducible (m : ℕ) (hm : 0 < m) (k : ℤ)
-    (hcop : Int.gcd (m : ℤ) k = 1) (λ : ℂ) (hλ : λ ≠ 0) :
-    Irreducible ((monicBinomial m k λ).map (algebraMap D K)) := by
-  let q := (monicBinomial m k λ).map (algebraMap D K)
+    (hcop : Int.gcd (m : ℤ) k = 1) (ξ : ℂ) (hξ : ξ ≠ 0) :
+    Irreducible ((monicBinomial m k ξ).map (algebraMap D K)) := by
+  let q := (monicBinomial m k ξ).map (algebraMap D K)
   have hmap : q.map fractionToRational =
-      Polynomial.X ^ m - Polynomial.C (RatFunc.C λ * RatFunc.X ^ (-k)) := by
+      Polynomial.X ^ m - Polynomial.C (RatFunc.C ξ * RatFunc.X ^ (-k)) := by
     simp [q, monicBinomial, fractionToRational, toRational,
       LaurentPolynomial.eval₂_T, LaurentPolynomial.eval₂_C,
       Units.val_zpow_eq_zpow_val]
-  have ha : RatFunc.C λ * RatFunc.X ^ (-k) ≠ 0 :=
-    mul_ne_zero ((map_ne_zero RatFunc.C).mpr hλ) (zpow_ne_zero _ RatFunc.X_ne_zero)
+  have ha : RatFunc.C ξ * RatFunc.X ^ (-k) ≠ 0 :=
+    mul_ne_zero ((map_ne_zero RatFunc.C).mpr hξ) (zpow_ne_zero _ RatFunc.X_ne_zero)
   have hdegree : Int.gcd (m : ℤ)
-      (RatFunc.C λ * RatFunc.X ^ (-k)).intDegree = 1 := by
-    rw [rational_monomial_degree λ hλ (-k), ← Int.isCoprime_iff_gcd_eq_one]
+      (RatFunc.C ξ * RatFunc.X ^ (-k)).intDegree = 1 := by
+    rw [rational_monomial_degree ξ hξ (-k), ← Int.isCoprime_iff_gcd_eq_one]
     exact (Int.isCoprime_iff_gcd_eq_one.mpr hcop).neg_right
   apply Polynomial.Monic.irreducible_of_irreducible_map fractionToRational q
     ((Polynomial.monic_X_pow_sub_C _ (Nat.ne_of_gt hm)).map (algebraMap D K))
@@ -229,10 +234,14 @@ private theorem monic_binomial_irreducible (m : ℕ) (hm : 0 < m) (k : ℤ)
   exact KhetanBinomialIrreducibility.X_pow_sub_C_irreducible_of_intDegree_coprime
     _ ha m hm hdegree
 
-private theorem localize_binomial (s k : ℤ) (λ : ℂ) :
-    localizeCoefficients (binomial s k λ) = monomial s k - scalar λ := by
-  simp only [binomial, map_sub, localizeCoefficients, scalar, monomial,
-    RingHom.comp_apply, AddMonoidAlgebra.mapRingHom_single] <;> rfl
+private theorem localize_binomial (s k : ℤ) (ξ : ℂ) :
+    localizeCoefficients (binomial s k ξ) = monomial s k - scalar ξ := by
+  change (AddMonoidAlgebra.mapRingHom ℤ (algebraMap D K))
+    (AddMonoidAlgebra.single s (LaurentPolynomial.T k) -
+      AddMonoidAlgebra.single 0 (LaurentPolynomial.C ξ)) = _
+  rw [map_sub, AddMonoidAlgebra.mapRingHom_single,
+    AddMonoidAlgebra.mapRingHom_single]
+  rfl
 
 /-- The geometric exclusion supplies the missing coprimality for every
 primitive binomial of positive transverse exponent. Neither irreducibility
@@ -240,11 +249,11 @@ nor coprimality is a premise. -/
 private theorem positive_primitive_binomial_coprime
     (P : AddMonoidAlgebra ℂ Lattice) (u : Lattice) (hu : IsCoprime u.1 u.2)
     (hline : OnlyLineDirection P u) (m : ℕ) (hm : 0 < m) (k : ℤ)
-    (hcop : Int.gcd (m : ℤ) k = 1) (λ : ℂ) (hλ : λ ≠ 0) :
-    IsCoprime (localized u hu P) (monomial m k - scalar λ) := by
+    (hcop : Int.gcd (m : ℤ) k = 1) (ξ : ℂ) (hξ : ξ ≠ 0) :
+    IsCoprime (localized u hu P) (monomial m k - scalar ξ) := by
   obtain ⟨n, p, hp⟩ := LaurentPolynomial.exists_T_pow
     (primitiveLaurentCoordinates u hu P)
-  have hnot : ¬ (monicBinomial m k λ).map (algebraMap D K) ∣
+  have hnot : ¬ (monicBinomial m k ξ).map (algebraMap D K) ∣
       p.map (algebraMap D K) := by
     intro hdiv
     let v := (primitiveCoordinates u hu).symm ((m : ℤ), k)
@@ -253,15 +262,15 @@ private theorem positive_primitive_binomial_coprime
       have he := congrArg (fun z => (primitiveCoordinates u hu z).1) hz
       have hmz : (m : ℤ) = 0 := by simpa [v] using he
       exact (Nat.ne_of_gt hm) (Int.natCast_eq_zero.mp hmz)
-    have hd := line_divisor_of_monic_binomial_dvd P u hu m hm k λ n p hp hdiv
-    have hpar := hline v (LaurentPolynomial.T 1 - LaurentPolynomial.C λ) hv
-      (line_binomial_ne_zero λ) (line_binomial_not_isUnit λ hλ) hd
+    have hd := line_divisor_of_monic_binomial_dvd P u hu m hm k ξ n p hp hdiv
+    have hpar := hline v (LaurentPolynomial.T 1 - LaurentPolynomial.C ξ) hv
+      (line_binomial_ne_zero ξ) (line_binomial_not_isUnit ξ hξ) hd
     have hfst : (primitiveCoordinates u hu v).1 = (m : ℤ) := by simp [v]
     rw [coordinates_fst, hpar] at hfst
     exact (Nat.ne_of_gt hm) (Int.natCast_eq_zero.mp hfst.symm)
   have hpoly : IsCoprime (p.map (algebraMap D K))
-      ((monicBinomial m k λ).map (algebraMap D K)) :=
-    ((monic_binomial_irreducible m hm k hcop λ hλ).coprime_iff_not_dvd.mpr hnot).symm
+      ((monicBinomial m k ξ).map (algebraMap D K)) :=
+    ((monic_binomial_irreducible m hm k hcop ξ hξ).coprime_iff_not_dvd.mpr hnot).symm
   have h := hpoly.map Polynomial.toLaurent
   rw [← map_toLaurent, hp, map_mul, ← map_toLaurent,
     monic_binomial_laurent, map_mul, localize_binomial] at h
@@ -308,12 +317,12 @@ private theorem positive_coordinate_difference_coprime
   have hmk : Int.gcd (m : ℤ) k₀ = 1 := by simpa only [hmcast] using hprimitive
   let f : Polynomial ℂ := Polynomial.X ^ d - 1
   have hfmonic : f.Monic := Polynomial.monic_X_pow_sub_one (Nat.ne_of_gt hg)
-  have hf : f = (f.roots.map (fun λ => Polynomial.X - Polynomial.C λ)).prod :=
+  have hf : f = (f.roots.map (fun ξ => Polynomial.X - Polynomial.C ξ)).prod :=
     (IsAlgClosed.splits f).eq_prod_roots_of_monic hfmonic
   let ev : Polynomial ℂ →+* LaurentPolynomial K :=
     Polynomial.eval₂RingHom scalar (monomial m k₀)
   have hfactor : monomial s k - (1 : LaurentPolynomial K) =
-      (f.roots.map (fun λ => monomial m k₀ - scalar λ)).prod := by
+      (f.roots.map (fun ξ => monomial m k₀ - scalar ξ)).prod := by
     have he := congrArg ev hf
     rw [map_multiset_prod] at he
     have hsd : (d : ℤ) * (m : ℤ) = s := by rw [hmcast, mul_comm]; exact hs₀.symm
@@ -321,26 +330,26 @@ private theorem positive_coordinate_difference_coprime
     simpa only [ev, f, Polynomial.coe_eval₂RingHom, Polynomial.eval₂_sub,
       Polynomial.eval₂_pow, Polynomial.eval₂_X, Polynomial.eval₂_one,
       Multiset.map_map, Function.comp_def, Polynomial.eval₂_C, monomial_pow, hsd, hkd] using he
-  have hroot (λ : ℂ) (hλ : λ ∈ f.roots) : λ ≠ 0 := by
+  have hroot (ξ : ℂ) (hξ : ξ ∈ f.roots) : ξ ≠ 0 := by
     intro hz
-    have he := Polynomial.isRoot_of_mem_roots hλ
-    simp [Polynomial.IsRoot, f, hz, Nat.ne_of_gt hg] at he
+    have he := Polynomial.isRoot_of_mem_roots hξ
+    simp [Polynomial.IsRoot, f, hz, show d ≠ 0 from Nat.ne_of_gt hg] at he
   rw [hfactor]
-  have hall : ∀ λ ∈ f.roots,
-      IsCoprime (localized u hu P) (monomial m k₀ - scalar λ) := by
-    intro λ hλ
-    exact positive_primitive_binomial_coprime P u hu hline m hm k₀ hmk λ (hroot λ hλ)
+  have hall : ∀ ξ ∈ f.roots,
+      IsCoprime (localized u hu P) (monomial m k₀ - scalar ξ) := by
+    intro ξ hξ
+    exact positive_primitive_binomial_coprime P u hu hline m hm k₀ hmk ξ (hroot ξ hξ)
   have hprod : ∀ roots : Multiset ℂ,
-      (∀ λ ∈ roots, IsCoprime (localized u hu P) (monomial m k₀ - scalar λ)) →
+      (∀ ξ ∈ roots, IsCoprime (localized u hu P) (monomial m k₀ - scalar ξ)) →
         IsCoprime (localized u hu P)
-          (roots.map (fun λ => monomial m k₀ - scalar λ)).prod := by
+          (roots.map (fun ξ => monomial m k₀ - scalar ξ)).prod := by
     intro roots
     induction roots using Multiset.induction_on with
     | empty => intro _; simpa using (isCoprime_one_right (x := localized u hu P))
-    | cons λ roots ih =>
+    | cons ξ roots ih =>
       intro hr
       simp only [Multiset.map_cons, Multiset.prod_cons]
-      exact (hr λ (Multiset.mem_cons_self _ _)).mul_right
+      exact (hr ξ (Multiset.mem_cons_self _ _)).mul_right
         (ih (fun μ hμ => hr μ (Multiset.mem_cons_of_mem hμ)))
   exact hprod _ hall
 
@@ -359,8 +368,12 @@ theorem transverse_difference_coprime
   let k := (primitiveCoordinates u hu v).2
   have hs : s ≠ 0 := by simpa only [s, coordinates_fst] using hv
   have he : localized u hu (differenceFilter v) = monomial s k - 1 := by
-    simp only [localized, RingHom.comp_apply, differenceFilter, map_sub, map_one,
-      coordinates_single, localizeCoefficients, AddMonoidAlgebra.mapRingHom_single] <;> rfl
+    change localizeCoefficients (primitiveLaurentCoordinates u hu
+      (AddMonoidAlgebra.single v 1 - 1)) = _
+    rw [map_sub, map_one, coordinates_single]
+    simp only [localizeCoefficients, map_sub, map_one,
+      AddMonoidAlgebra.mapRingHom_single]
+    rfl
   change IsCoprime (localized u hu P) (localized u hu (differenceFilter v))
   rw [he]
   rcases lt_or_gt_of_ne hs with hneg | hpos
@@ -426,11 +439,15 @@ theorem one_direction_periodic
       change primitiveLaurentCoordinates u hu (lineLaurent u
         (AddMonoidAlgebra.single n a)) = _
       rw [line_laurent_single, coordinates_single]
-      simp [map_zsmul, hcu]
+      have hcoord : primitiveCoordinates u hu (n • u) = (0, n) := by
+        rw [map_zsmul, hcu]
+        simp
+      simp only [hcoord, Prod.fst, Prod.snd]
   have hunz : u ≠ 0 := by
     intro hz
     have he := hcu
-    simp [hz] at he
+    have he' := congrArg Prod.snd he
+    simp [hz] at he'
   obtain ⟨ρ, hρ, α, β, hbezout⟩ := KhetanLaurentElimination.clear_laurent_bezout
     (K := K) (coordinates P) (coordinates B)
     (transverse_product_coprime P u hu hline transverse ht)

@@ -177,10 +177,10 @@ private lemma weighted_mask_coefficient (ρ : R →+* ℂ) (F : Finset Lattice)
         (-det u p) =
       ∑ q ∈ fiber F u p, (root : ℂ) ^ (-fiberCoordinate u q) := by
   classical
-  simp [exactCoverMask, map_sum, AddMonoidAlgebra.mapRingHom_single,
-    weighted_projection_single, AddMonoidAlgebra.coeff_sum, Finset.sum_apply,
-    AddMonoidAlgebra.coeff_single_apply, determinant_neg, coordinate_neg,
-    fiber, Finset.sum_filter]
+  simp only [exactCoverMask, map_sum, AddMonoidAlgebra.mapRingHom_single,
+    weighted_projection_single, map_one, one_mul, AddMonoidAlgebra.coeff_sum,
+    Finsupp.finsetSum_apply, AddMonoidAlgebra.coeff_single_apply, determinant_neg,
+    coordinate_neg, fiber, Finset.sum_filter, neg_inj]
 
 /-- An actual nonzero nonunit Laurent line divisor of the negative tile mask
 supplies the inverse of one of its nonzero complex roots as the geometric root.

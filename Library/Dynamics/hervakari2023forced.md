@@ -56,13 +56,16 @@ The one-direction consumer is
 `integer_one_direction_periodizer_periodic`, with its matching Blueprint
 Scribe. The exact-cover mask periodizes the given integral zero-one
 indicator because its action is the constant one configuration.
-The intended complete consumer is `KhetanSixCellPeriodicity.lean`.
-These references identify the mathematical supplier and intended use;
-they do not certify completion of the whole imported formal proof.
+The complete consumer is `KhetanSixCellPeriodicity.lean`. Scoped Lean
+compilation checks the one-direction supplier and the complete given-T
+statement with only Classical.choice, Quot.sound and propext. This does not
+claim completed escape registration, independent admission or official
+acceptance.
 
 `Blueprint/D5/S1/Dynamics/Symbolic/KhetanLatticeGeometry.scribe.cs`
 identifies this as the other branch of the six-cell argument. The geometry's
 two-direction theorem instead uses actual fiber cancellation and the
-general incidence proof in `KhetanSectionCancellation.lean`. The software
+general incidence proof retained as consumed private helpers in
+`KhetanLatticeGeometry.lean`. The software
 attribution for the reused product-difference and finite-state suppliers
 remains in [ho2026nivat.md](ho2026nivat.md).

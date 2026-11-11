@@ -47,12 +47,15 @@ $T$ under two-direction cancellation. Its
 `two_direction_orbit_closure_periodic` theorem gives a common period on
 the actual orbit closure. The comparison is explained in
 `Blueprint/D5/S1/Dynamics/Symbolic/KhetanLatticeGeometry.scribe.cs`.
-The intended full consumer `KhetanSixCellPeriodicity.lean` has the same
-given-tiling requirement as Khetan's pinned six-cell question, recorded in
+The scoped-compiled full consumer `KhetanSixCellPeriodicity.lean` proves
+a nonzero period of every given T, common to its whole orbit closure. Its
+assumptions are exactly cardinality six, full integer difference span and
+exact coverage. It thus retains the same given-tiling requirement as Khetan's pinned six-cell question, recorded in
 [khetan2026nonconvex.md](khetan2026nonconvex.md).
 
 The existence conclusion of Theorem 1.1 alone supplies no missing
 orbit-closure bridge. This bounded comparison of the pinned statements is
 not an exhaustive originality search and establishes no priority claim.
-Neither it nor an ordinary manuscript review certifies full Lean or official
-acceptance of the complete six-cell consumer.
+The bounded literature comparison is separate from the scoped Lean
+verification; neither establishes official acceptance or completed
+escape registration of the complete six-cell consumer.

@@ -124,12 +124,12 @@ internal sealed class KhetanSixCellPeriodicityDocument : IScribeDocumentDefiniti
                 + "retains the full MIT notice for Boon Suan Ho; existing action and recurrence "
                 + "attribution remains with their owning modules and Library/Dynamics/ho2026nivat.md.")),
             Paragraph(Text(
-                "This deliverable is source only. The new module, the exact final telescope, "
-                + "its imported source candidates, the accepted axiom closure and Scribe "
-                + "acceptance have not been established by compilation here. In particular, "
-                + "the full Khetan question is not reported as formally completed from these "
-                + "source bytes. The finite-enumeration ARCH-1 delivery and issue 29287 are "
-                + "not repaired or discharged by this source assembly."))),
+                "The Lean source and exact final telescope compile in the scoped target "
+                + "build with the standard axiom closure Classical.choice, Quot.sound and "
+                + "propext; the report is restricted to the selected targets and their imports. "
+                + "This is compiler evidence for the source and Scribe only, not independent "
+                + "review, official acceptance or a completed registration. The finite-enumeration "
+                + "ARCH-1 delivery and issue 29287 are not repaired or discharged here."))),
         [DocumentEdge.Dependency.Create(GidRef.Create("D5/S1/Dynamics/Symbolic/KhetanDirectionalCoprimality")),
          DocumentEdge.Dependency.Create(GidRef.Create("D5/S1/Dynamics/Symbolic/KhetanLineFactorCancellation"))]));
 }

@@ -143,7 +143,7 @@ internal sealed class KhetanLatticeGeometryDocument : IScribeDocumentDefinition
                         + "determinant or an integer coefficient of an actual point difference; "
                         + "this construction uses no virtual lattice intersection.")),
                     Paragraph(Text(
-                        "The general incidence suppliers are KhetanSectionCancellation.occupied_key_bounds, "
+                        "The private incidence suppliers in this geometry module are occupied_key_bounds, "
                         + "nonzero_weight_incidence and complete_incidence_of_two. The cancellation "
                         + "supplier in turn uses missing_column_weight_eq_zero, valid for arbitrary "
                         + "finite objects, key types, complex weights and positive column degree d. "
@@ -232,6 +232,5 @@ internal sealed class KhetanLatticeGeometryDocument : IScribeDocumentDefinition
                         + "These comparisons do not assert a complete accepted formal resolution "
                         + "or establish literature priority."))),
                 DescribeRole.Theorem)),
-        [DocumentEdge.Dependency.Create(GidRef.Create("D5/S1/Dynamics/Symbolic/KhetanProductPeriodicity")),
-         DocumentEdge.Dependency.Create(GidRef.Create("D5/S1/Dynamics/Symbolic/KhetanSectionCancellation"))]));
+        [DocumentEdge.Dependency.Create(GidRef.Create("D5/S1/Dynamics/Symbolic/KhetanProductPeriodicity"))]));
 }

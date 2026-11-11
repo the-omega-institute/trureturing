@@ -9,14 +9,6 @@ internal sealed class KhetanOneDirectionPeriodizerDocument : IScribeDocumentDefi
         H("KhetanOneDirectionPeriodizer"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("exact-cover-product-differences"),
-                DeclarationHandle.Create("D5/S1/Dynamics/Symbolic/KhetanOneDirectionPeriodizer.exact_cover_product_differences"),
-                H("Exact-cover annihilator of the original configuration"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Positive-shift operators use the negative-exponent tile mask. Exact coverage makes that mask act as the constant one configuration. A lattice difference supplies a nonzero annihilator, and the pinned product-difference supplier acts directly on the original integer configuration."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("nonzero-line-annihilator-periodic"),
                 DeclarationHandle.Create("D5/S1/Dynamics/Symbolic/KhetanOneDirectionPeriodizer.nonzero_line_annihilator_periodic"),
                 H("From a line annihilator to a global period"),
@@ -33,11 +25,11 @@ internal sealed class KhetanOneDirectionPeriodizerDocument : IScribeDocumentDefi
                 Blocks(Paragraph(Text("For a primitive lattice direction, its integer Bezout coordinates express every parallel supplier direction as an integer multiple. Grouping all such factors gives a nonzero one-variable Laurent factor A and retains every transverse factor in B, with AB annihilating the original integer configuration after coefficient transport to any domain. In particular the complex coefficient action uses exactly the image of that original configuration. Parallel or repeated transverse factors remain permitted."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("localized-bezout-step"),
-                DeclarationHandle.Create("D5/S1/Dynamics/Symbolic/KhetanOneDirectionPeriodizer.localized_bezout_step"),
-                H("Use a cleared identity before acting on the configuration"),
+                DescribeId.Create("cleared-bezout-periodic"),
+                DeclarationHandle.Create("D5/S1/Dynamics/Symbolic/KhetanOneDirectionPeriodizer.cleared_bezout_periodic"),
+                H("Obtain a global period from the cleared identity"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Primitivity constructs integral lattice Laurent coordinates, with the chosen direction in the coefficient ring. A finite monic factorization of B, whose factors remain irreducible over the coefficient fraction field and do not divide P in the original Laurent ring, proves localized coprimality. Denominator clearing constructs a nonzero horizontal coefficient rho. The resulting polynomial (z-1) A rho annihilates the original configuration, whose finite range gives a global period. No coprimality or nonzero eliminant is assumed in this step. Constructing the monic factors and proving their irreducibility and nondivisibility from the line-factor restriction, and hence the complete one-direction periodizer theorem, remain unproved."))),
+                Blocks(Paragraph(Text("For a nonzero lattice direction u, let P act as a constant on the given finite-range configuration, and let lineLaurent u A times B annihilate it. A cleared Laurent identity with nonzero one-variable coefficient rho and nonzero A makes (z-1) A rho a nonzero line annihilator, so the recurrence theorem gives a global period of that same configuration. KhetanDirectionalCoprimality.one_direction_periodic supplies the identity using transverse_product_coprime and KhetanLaurentElimination.clear_laurent_bezout. Rational functions do not act on the configuration."))),
                 DescribeRole.Theorem))));
 }
