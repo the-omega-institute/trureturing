@@ -1,5 +1,5 @@
 /- GID: D5/S3/StatisticalMechanics/BoseSelectionFixedBathConstruction
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/StatisticalMechanics/BoseSelectionFixedBathConstruction
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
@@ -10,6 +10,8 @@
 Scientific construction: Haobo Ma and Wenlin Zhang, CC BY 4.0.
 Model: Schnell–Ketzmerick–Eckardt (2018); signed Pfaffian method: Knebel et al. (2015).
 The original asymmetry, selection predicate and Pfaffian proofs are reused.
+The construction uses the particular cubic exponent and five-mode certificates;
+it does not assert the corresponding construction for arbitrary exponents or support sizes.
 -/
 
 import D5.S3.StatisticalMechanics.BoseSelectionCubicTwoBathRefutation

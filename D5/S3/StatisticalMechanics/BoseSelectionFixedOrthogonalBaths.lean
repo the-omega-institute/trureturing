@@ -1,5 +1,5 @@
 /- GID: D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
@@ -8,6 +8,9 @@
 
 import D5.S3.StatisticalMechanics.BoseSelectionFixedBathConstruction
 import D5.S3.SpectralTopology.HermitianEigenvaluePerturbation
+
+/- The open sets concern the particular two-coordinate-bath cubic five-mode
+construction. Exponent persistence is local at its strict cubic certificates. -/
 
 namespace D5.S3.StatisticalMechanics.BoseSelectionFixedOrthogonalBaths
 
@@ -206,6 +209,37 @@ theorem continuous_increasingSpectrum_real (i : Fin n) :
   change Continuous (fun H => increasingSpectrum (complexify H).property i) at h
   simpa only [he] using h
 
+private theorem continuous_increasingSpectrum_of_equiv
+    {𝕜' : Type*} [RCLike 𝕜'] (f : 𝕜 ≃+* 𝕜') (hf : Continuous f)
+    (hstar : ∀ z, f (star z) = star (f z))
+    (hreal : ∀ r : ℝ, f (RCLike.ofReal r) = RCLike.ofReal r)
+    (hc : ∀ i, Continuous (fun H : HermitianSpace 𝕜' n => increasingSpectrum H.property i))
+    (i : Fin n) :
+    Continuous (fun H : HermitianSpace 𝕜 n => increasingSpectrum H.property i) := by
+  let φ : HermitianSpace 𝕜 n → HermitianSpace 𝕜' n := fun H =>
+    ⟨H.val.map f.toRingHom, by
+      apply IsHermitian.ext
+      intro r s
+      change star (f (H.val s r)) = f (H.val r s)
+      rw [← hstar, IsHermitian.ext_iff.mp H.property r s]⟩
+  have hφ : Continuous φ := by
+    apply Continuous.subtype_mk
+    exact continuous_matrix fun r s => hf.comp (continuous_subtype_val.matrix_elem r s)
+  have he (H : HermitianSpace 𝕜 n) :
+      increasingSpectrum (φ H).property = increasingSpectrum H.property := by
+    let e := increasingSpectrum H.property
+    obtain ⟨U, hU⟩ := exists_increasing_diagonalization H.property
+    have hchar : H.val.charpoly = ∏ j, (Polynomial.X - Polynomial.C (RCLike.ofReal (e j) : 𝕜)) := by
+      rw [hU]
+      exact spectralMatrix_charpoly U e
+    apply increasingSpectrum_of_charpoly _ e (increasingSpectrum_monotone H.property)
+    change (H.val.map f.toRingHom).charpoly = _
+    rw [Matrix.charpoly_map, hchar, Polynomial.map_prod]
+    simp only [Polynomial.map_sub, Polynomial.map_X, Polynomial.map_C, RingEquiv.coe_toRingHom, hreal]
+  have h := (hc i).comp hφ
+  change Continuous (fun H => increasingSpectrum (φ H).property i) at h
+  simpa only [he] using h
+
 private theorem continuous_lagrangeProjector {X : Type*} [TopologicalSpace X]
     {H : X → Matrix (Fin n) (Fin n) 𝕜} {e : X → Fin n → ℝ}
     (hH : Continuous H) (he : ∀ i, Continuous (fun x => e x i))
@@ -359,8 +393,7 @@ private theorem strictFiveCertificate_open {X : Type*} [TopologicalSpace X]
 /-- Open persistence in the actual Hermitian matrix space at the cubic exponent. On the
 whole open set the two fixed coordinate baths select the first five ordered levels,
 and the normalized occupation is unique and its selected block has rank four. -/
-theorem exists_open_fixedBathHamiltonians (hn : 5 ≤ n)
-    (hc : ∀ i, Continuous (fun H : HermitianSpace 𝕜 n => increasingSpectrum H.property i)) :
+theorem exists_open_fixedBathHamiltonians (hn : 5 ≤ n) :
     ∃ O : Set (HermitianSpace 𝕜 n), IsOpen O ∧ O.Nonempty ∧
       ∀ H ∈ O, StrictMono (increasingSpectrum H.property) ∧
         ∃ w : Fin n → ℝ, (∑ i, w i) = 1 ∧
@@ -368,6 +401,16 @@ theorem exists_open_fixedBathHamiltonians (hn : 5 ≤ n)
           ((matrixRates hn 3 H).submatrix (fiveEmbedding hn) (fiveEmbedding hn)).rank = 4 ∧
           ∀ s v, IsSelected (matrixRates hn 3 H) s v → (∑ i, v i) = 1 →
             s = firstFive hn ∧ v = w := by
+  have hc : ∀ i, Continuous (fun H : HermitianSpace 𝕜 n => increasingSpectrum H.property i) := by
+    rcases RCLike.I_eq_zero_or_im_I_eq_one (K := 𝕜) with h | h
+    · exact continuous_increasingSpectrum_of_equiv (RCLike.realRingEquiv h)
+        (RCLike.realLinearIsometryEquiv h).continuous
+        (by intro z; simp [RCLike.realRingEquiv, RCLike.star_def])
+        (by intro r; simp [RCLike.realRingEquiv]) continuous_increasingSpectrum_real
+    · exact continuous_increasingSpectrum_of_equiv (RCLike.complexRingEquiv h)
+        (RCLike.complexLinearIsometryEquiv h).continuous
+        (by intro z; simp [RCLike.complexRingEquiv, RCLike.star_def])
+        (by intro r; simp [RCLike.complexRingEquiv]) continuous_increasingSpectrum_complex
   let V : Set (simpleDomain 𝕜 n) :=
     {H | StrictFiveCertificate (matrixRates hn 3 H.val) (fiveEmbedding hn)}
   have hV : IsOpen V := strictFiveCertificate_open
