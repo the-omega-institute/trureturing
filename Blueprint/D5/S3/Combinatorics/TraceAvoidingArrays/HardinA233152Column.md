@@ -92,6 +92,10 @@ $$\forall n \in \operatorname{Nat},\; (T5\left(n + 3\right): \operatorname{Int})
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233152Column.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hardin233152` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233152Column.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin233152","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233152Column.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. H. Hardin; OEIS Foundation Inc. (2013). *OEIS A233152: three-state horizontal and antidiagonal sum exclusion*. URL: <https://oeis.org/A233152>.

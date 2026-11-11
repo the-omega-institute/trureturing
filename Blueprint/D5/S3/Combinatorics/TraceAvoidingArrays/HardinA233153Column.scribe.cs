@@ -7,7 +7,9 @@ internal sealed class HardinA233153ColumnDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233153Column.";
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Automata/hardin2013a233153");
     private static DocumentBlock Node(string declaration, Formula formula, string prose, bool count = false, bool theorem = false) =>
-        Describe.Lean(DescribeId.Create("a233153-" + declaration.ToLowerInvariant().Replace("_", "-")), DeclarationHandle.Create(Prefix + declaration), H(declaration), StatementSource.FromAuthor(Disp(formula)), count ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), theorem ? DescribeRole.Theorem : DescribeRole.Definition);
+        declaration == "result"
+            ? Describe.Lean(DescribeId.Create("a233153-" + declaration.ToLowerInvariant().Replace("_", "-")), DeclarationHandle.Create(Prefix + declaration), H(declaration), StatementSource.FromAuthor(Disp(formula)), count ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem, new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233153"), ResolutionKind.Proved))
+            : Describe.Lean(DescribeId.Create("a233153-" + declaration.ToLowerInvariant().Replace("_", "-")), DeclarationHandle.Create(Prefix + declaration), H(declaration), StatementSource.FromAuthor(Disp(formula)), count ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), theorem ? DescribeRole.Theorem : DescribeRole.Definition);
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The literal 6-column count obeys a recurrence determined by its finite row quotient.",
         H("OEIS A233153"), Blocks(
