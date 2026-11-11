@@ -4950,3 +4950,388 @@ $$
 一旦某把尺读出非零误差，就沿这条合法方向取一个有限尺度。标准部分的二次代价在两份比例关系上相消，误差却留下带符号的一次项，于是同一个原环境向量给严格违反；最后只轻微改探针，便让两笔面积都为正。环境再复杂也只改变所需有限尺度和质量归一化，不需要把环境换小。这里省去的是三格都有原支撑这批输入中额外的固定 P2 前件。原连线缺一格时仍需新的横向读取；原装置能否执行指定菜单、读后是否真的 ready、完整活动输入能否对所有合法未来返回，更仍是原世界必须供应的关系。
 
 ## 新增锚（本行以下为后续增补区）
+
+## 32. 原轴零模像上的全称核盲区与完整 PB 分类的必要路线
+
+### 32.1 原类型、有限合法核对与结论
+
+保持定义 31.1 的同一完整原输入、(31.2) 的全部乘积和原 PB (31.3)，特别
+$C=\operatorname{diag}(1,2,3)$，$B,D_{\rm env}$ 任意 Hermitian，$V$ 任意，$\mathcal W=V(\ker D_{\rm env})$。以下分别固定一个 $\sigma\in\{1,-1\}$，置 $\iota=\sigma i$。不假设 P2，也不改环境或把原平方换成演员压缩平方。
+
+**定义 32.1（完整有限合法同时核对）。** 取单位 $u\in\mathbb C^3$、$X=X^*\in M_3(\mathbb C)$、实际 $w\in\mathcal W$，记
+
+$$
+\begin{gathered}
+p=Xu,\qquad q=XCu,\qquad v=w-\iota p,\\
+\mathsf R_\delta=p+\frac\delta2\bigl(\iota(Cp-q)-Cw\bigr),\qquad
+\mathsf S_\delta=w+\frac\delta2\bigl(Cp+q+\iota Cw\bigr),\\
+\zeta_\delta=\beta_\delta-\delta\iota\alpha_\delta,
+\qquad 0<\alpha_\delta<\infty,\quad\beta_\delta\in\mathbb R,\\
+\mathsf S_\delta=\zeta_\delta\mathsf R_\delta\quad(\delta=+1,-1),
+\qquad F(S)=\operatorname{Re}(v^*Su).
+\end{gathered}
+\tag{32.1}
+$$
+
+两份比例均须在全部三坐标成立。这是 (31.5) 的完整核关系，不是分别投影后的关系；$X$ 必须同时实现 $Xu$ 与 $XCu$。
+
+**定理 32.2（两条原轴像对第三格的全称核盲区）。** 若 $\mathcal W=\mathbb C e_1$ 或 $\mathcal W=\mathbb C e_2$，则对每一个 (32.1) 的完整有限合法同时核对，均有
+
+$$
+\boxed{\quad
+F(E_{33})=\operatorname{Re}(\overline{v_3}u_3)
+=\operatorname{Re}\bigl(\overline{(w-\iota Xu)_3}u_3\bigr)=0.
+\quad}
+\tag{32.2}
+$$
+
+$u$ 可以有任意额外坐标支撑，$w=0$、$v=0$、特殊斜率 $\zeta_-=\iota$ 和所有退化对角插值系数均在量词内。结论对两个 $\sigma$ 分别成立。它反驳的是“每个非零实际像都能用这些完整合法核读取分离全部对角残量”的全称主张；没有断言 $S=E_{33}$ 或任一非零倍数满足全部原 PB。
+
+### 32.2 逆斜率参数、全部坐标分支与零向量
+
+从 (32.1) 直接相减，得到与 (31.9) 相同的完整向量恒等式
+
+$$
+\mathsf S_\delta-\iota\mathsf R_\delta
+=(I+\delta\iota C)v.
+\tag{32.3}
+$$
+
+合法性保证 $\zeta_+\ne\iota$。若 $\zeta_-=\iota$，则 $(I-\iota C)v=0$。其三个对角元 $1-\iota c_j$ 全部非零，故 $v=0$，已得 (32.2)。这一分支的全部作用列还满足
+
+$$
+p=-\iota w,\qquad \mathsf R_+=0,\qquad q=-2w.
+\tag{32.4}
+$$
+
+其中 $\mathsf R_+=0$ 来自 $\zeta_+\ne\iota$ 及 (32.3)，再代回 $\mathsf R_+$ 就给最后一式；没有对 $\zeta_--\iota$ 作除法。
+
+其余情形置
+
+$$
+\gamma_\delta=(\zeta_\delta-\iota)^{-1},\qquad
+\gamma=(\gamma_++\gamma_-)/2,\qquad
+\eta=(\gamma_+-\gamma_-)/2,
+\qquad D(d)=1+\iota\gamma-\eta d.
+\tag{32.5}
+$$
+
+每个 $\gamma_\delta$ 有限且非零，故
+$\gamma^2-\eta^2=\gamma_+\gamma_-\ne0$。由
+$\mathsf R_\delta=(\gamma+\delta\eta)(I+\delta\iota C)v$
+的和、差，准确得到
+
+$$
+\boxed{
+\begin{aligned}
+p&=(\gamma I+\iota\eta C)v,\\
+q&=\bigl(2\iota\eta I+(\iota-2\gamma)C\bigr)v,\\
+w&=\bigl((1+\iota\gamma)I-\eta C\bigr)v.
+\end{aligned}}
+\tag{32.6}
+$$
+
+反代亦给两份完整核等式，所以它们是准确参数式。具体地，对任一谱值 $d$，(31.6) 的行列式在这些参数下为
+
+$$
+\Delta_d=-\frac{4\iota D(d)}{\gamma^2-\eta^2}.
+\tag{32.7}
+$$
+
+因此 $D(d)\ne0$ 时 $v_j=w_j/D(d)$ 唯一；$D(d)=0,w_j\ne0$ 时无解；$D(d)=w_j=0$ 时 $v_j$ 可任取，随后由 (32.6) 决定 $p_j,q_j$。后两种分支不使用 $D(d)^{-1}$。这也是 (31.8)–(31.10) 的同一退化分类。
+
+先处理 $w=0$。若 $D$ 在两个不同谱值上同时为零，则 $\eta=0$、$\gamma=\iota$，从而 $\gamma_+=\gamma_-=\iota$、$\zeta_+=\zeta_-=0$，违反严格正的 $\alpha_\pm$。故 $v$ 至多支撑在一格；$v=0$ 时已完成证明。否则 $p=\iota v$，而 $X=X^*$ 给 $u^*p\in\mathbb R$。若唯一非零格为 $j$，则
+
+$$
+0=\operatorname{Im}_\iota(u^*p)
+=\operatorname{Re}(\overline{u_j}v_j).
+\tag{32.8}
+$$
+
+这里 $\operatorname{Im}_\iota(A+\iota B)=B$，$A,B\in\mathbb R$。若 $j=3$，(32.8) 即为所求；若 $j\ne3$，则 $v_3=0$。这包括常数 $D$ 无零点时的 $v=0$ 分支。
+
+### 32.3 假设第三格读数非零时的准确 Hermitian 相容性
+
+以下设 $w\ne0$，并反设
+$n=\operatorname{Re}(\overline{v_3}u_3)\ne0$。记 $w=w_a e_a$，$a\in\{1,2\}$，$w_a\ne0$；此处指标 $a$ 同时等于谱值 $c_a$。由 $v_3\ne0$、$w_3=0$ 和 (32.6)，必有
+
+$$
+\eta=\frac{1+\iota\gamma}{3},\qquad
+D(d)=(1+\iota\gamma)(1-d/3).
+\tag{32.9}
+$$
+
+$w_a=D(a)v_a\ne0$ 强制 $\gamma\ne\iota$ 且 $v_a\ne0$。设 $b$ 是 $1,2$ 中不同于 $a$ 的另一格，则 $D(b)\ne0$，所以
+$v_b=p_b=q_b=0$；并未令 $u_b$ 为零。由 (32.6)，对 $d=a,3$ 写
+
+$$
+\begin{gathered}
+p_d=P_dv_d,\qquad q_d=Q_dv_d,\\
+P_d=(1-d/3)\gamma+\iota d/3,
+\qquad Q_d=-2(d+1/3)\gamma+\iota(d+2/3),\\
+P_3=\iota,\qquad Q_3=(-20\gamma+11\iota)/3.
+\end{gathered}
+\tag{32.10}
+$$
+
+若 $u_a=0$，则 $u^*p=\iota\overline{u_3}v_3\in\mathbb R$ 立即给 $n=0$。故反设下 $u_au_3\ne0$。置
+
+$$
+z_a=\overline{u_a}v_a,\qquad z_3=\overline{u_3}v_3,
+\qquad \operatorname{Re}z_3=n,
+\qquad A_d=3P_d-Q_d,\quad B_d=Q_d-aP_d.
+\tag{32.11}
+$$
+
+同一个 Hermitian $X$ 给出全部四个实相容条件
+
+$$
+u^*p\in\mathbb R,\qquad (Cu)^*q\in\mathbb R,
+\qquad u^*q=p^*Cu.
+\tag{32.12}
+$$
+
+这些条件仅含 $a,3$ 两格的输出，因为 $p_b=q_b=0$，即使 $u_b\ne0$ 亦然。其准确等价形式是
+
+$$
+\boxed{\quad
+A_a z_a\in\mathbb R,\qquad B_3z_3\in\mathbb R,
+\qquad B_a z_a=\overline{A_3z_3}.
+\quad}
+\tag{32.13}
+$$
+
+为核对等价性，令
+
+$$
+U_0=\begin{pmatrix}u_a&a u_a\\u_3&3u_3\end{pmatrix},\qquad
+Y_0=\begin{pmatrix}p_a&q_a\\p_3&q_3\end{pmatrix}.
+$$
+
+$\det U_0=(3-a)u_au_3\ne0$。式 (32.12) 正是 $U_0^*Y_0$ Hermitian，亦即下面的有效插值矩阵 Hermitian：
+
+$$
+Y_0U_0^{-1}
+=\frac1{3-a}
+\begin{pmatrix}
+ A_av_a/u_a&B_av_a/u_3\\
+ A_3v_3/u_a&B_3v_3/u_3
+\end{pmatrix}.
+\tag{32.14}
+$$
+
+取两个对角元的实性及两个非对角元的共轭关系，即得 (32.13)。式 (32.14) 不声称等于原 $X$ 的主子块，也没有压缩任何 PB 平方。
+
+这些也是指定 $Xu=p,XCu=q$ 的充分相容条件，而不只是必要读数。事实上令 $U=[u,Cu]$、$Y=[p,q]$，则
+
+$$
+G=U^*U,\qquad
+\det G=\sum_{j<k}(c_j-c_k)^2|u_j|^2|u_k|^2>0.
+$$
+
+若 (32.12) 成立，$U^*Y=Y^*U$，则显式矩阵
+
+$$
+\widetilde X
+=YG^{-1}U^*+UG^{-1}Y^*
+ -UG^{-1}(U^*Y)G^{-1}U^*
+\tag{32.15}
+$$
+
+满足 $\widetilde X=\widetilde X^*$ 及 $\widetilde XU=Y$：后式的第二、三项因 $Y^*U=U^*Y$ 恰好抵消。这交代了任意额外 $u_b$ 的完整插值，而非以平面内读取代替完整原问题。以下只消费其必要方向。
+
+### 32.4 $\operatorname{Re}\gamma\ne0$：完整乘积与负平方
+
+写 $\gamma=x+\iota y$，$x,y\in\mathbb R$。由 (32.10)–(32.11) 直接得到全部插值系数
+
+$$
+\begin{aligned}
+A_a&=((3a+11)\gamma-2\iota)/3,&
+A_3&=(20\gamma-2\iota)/3,\\
+B_a&=((a^2-9a-2)\gamma+(-a^2+3a+2)\iota)/3,&
+B_3&=(-20\gamma+(11-3a)\iota)/3.
+\end{aligned}
+\tag{32.16}
+$$
+
+先设 $x\ne0$。$a=1$ 时四个 $\gamma$ 系数依次为 $14,20,-10,-20$，$a=2$ 时为 $17,20,-16,-20$，均非零。因此 $A_a,A_3,B_a,B_3$ 均非零。又 $z_a,z_3$ 非零，所以
+$\tau_a=A_az_a$、$\tau_3=B_3z_3$ 是非零实数。式 (32.13) 的最后一式给出准确等式
+
+$$
+\frac{A_a\overline{B_a}}{A_3\overline{B_3}}
+=\frac{\tau_a}{\tau_3}\frac{|B_a|^2}{|A_3|^2}
+\in\mathbb R.
+\tag{32.17}
+$$
+
+全部分母在本分支已证非零。令 $r_\gamma=x^2+y^2$，$N_a=A_a\overline{B_a}$、$M_a=A_3\overline{B_3}$；$M_a$ 的 $B_3$ 仍使用同一个 $a$。逐项乘法给
+
+$$
+\begin{aligned}
+N_1&=\frac{-140r_\gamma+76y-8}{9}-4\iota x,&
+M_1&=\frac{-400r_\gamma+200y-16}{9}-\frac{40}{3}\iota x,\\
+N_2&=\frac{-272r_\gamma+100y-8}{9}-4\iota x,&
+M_2&=\frac{-400r_\gamma+140y-10}{9}-\frac{20}{3}\iota x.
+\end{aligned}
+\tag{32.18}
+$$
+
+例如 $N_1=(14\gamma-2\iota)(-10\overline\gamma-4\iota)/9$，实部为
+$(-140(x^2+y^2)+76y-8)/9$，相对于 $\iota$ 的虚部为 $-4x$；其余三式由 (32.16) 同样直接相乘得到。
+
+由 (32.17)，$N_a=\rho_aM_a$，$\rho_a\in\mathbb R$。比较 (32.18) 的虚部并用 $x\ne0$，强制
+$\rho_1=3/10$、$\rho_2=3/5$。但完整差值是
+
+$$
+\begin{aligned}
+N_1-\frac3{10}M_1
+ &=\frac{-20(x^2+y^2)+16y-16/5}{9}
+ =-\frac{20}{9}\left(x^2+\left(y-\frac25\right)^2\right),\\
+N_2-\frac35M_2
+ &=\frac{-32(x^2+y^2)+16y-2}{9}
+ =-\frac{32}{9}\left(x^2+\left(y-\frac14\right)^2\right).
+\end{aligned}
+\tag{32.19}
+$$
+
+两者在 $x\ne0$ 时均严格负，不可能等于零。故反设 $n\ne0$ 不能发生在本分支。
+
+### 32.5 纯虚 $\gamma$ 与全部退化对角系数
+
+剩下 $\gamma=\iota y$，$y\in\mathbb R$。不能在此沿用 (32.17)，因为某些对角系数会为零。写
+
+$$
+\begin{gathered}
+P_a=\iota P,\qquad Q_a=\iota Q,\qquad Q_3=\iota R,\\
+P=\frac{(3-a)y+a}{3},\qquad
+Q=\frac{3a+2-2(3a+1)y}{3},\qquad
+R=\frac{11-20y}{3},\\
+z_a=\ell+\iota h,\qquad z_3=n+\iota k,
+\qquad \ell,h,n,k\in\mathbb R.
+\end{gathered}
+\tag{32.20}
+$$
+
+式 (32.12) 的完整四个实条件准确变为
+
+$$
+\begin{aligned}
+P\ell+n&=0,\\
+aQ\ell+3Rn&=0,\\
+(Q+aP)\ell+(R+3)n&=0,\\
+(Q-aP)h+(R-3)k&=0.
+\end{aligned}
+\tag{32.21}
+$$
+
+第三、四式分别来自复等式 $u^*q=p^*Cu$ 的两个实分量；不能只保留某个表中比值。若 $P=0$ 或 $\ell=0$，第一式已给 $n=0$。反设 $n\ne0$ 下，$P\ell\ne0$，前面三式给
+
+$$
+n=-P\ell,\qquad aQ=3RP,\qquad Q=(R+3-a)P,
+\qquad (3-a)(a-R)P=0.
+\tag{32.22}
+$$
+
+因 $3-a>0$，必有 $R=a$、$Q=3P$，从而 $y=(11-3a)/20$。这两种候选的全部关键值为
+
+$$
+\begin{aligned}
+a=1:\quad &y=\frac25,\quad \eta=\frac15,\quad
+P=\frac35,\quad Q=\frac35,\quad R=1,\\
+&A_a=\frac65\iota,\quad A_3=2\iota,\quad B_a=B_3=0;\\[2mm]
+a=2:\quad &y=\frac14,\quad \eta=\frac14,\quad
+P=\frac34,\quad Q=\frac32,\quad R=2,\\
+&A_a=\frac34\iota,\quad A_3=\iota,\quad B_a=B_3=0.
+\end{aligned}
+\tag{32.23}
+$$
+
+两种候选都违反 (32.22) 的 $Q=3P$：差值 $Q-3P$ 分别为 $-6/5$、$-3/4$。亦可直接使用无除法的 (32.13)：$B_a=0$、$A_3\ne0$ 强制 $z_3=0$，再次与 $n\ne0$ 矛盾。这明确处理了零对角插值系数，而非从非零分支取未经证明的极限。
+
+斜率合法性还给同一候选的独立排除。两份逆斜率及恢复值准确为
+
+$$
+\begin{aligned}
+a=1:\quad &\gamma+\eta=(1+2\iota)/5,
+&&\gamma-\eta=(-1+2\iota)/5,\\
+&\zeta_+=\iota+(\gamma+\eta)^{-1}=1-\iota,
+&&\zeta_-=\iota+(\gamma-\eta)^{-1}=-1-\iota;\\[1mm]
+a=2:\quad &\gamma+\eta=(1+\iota)/4,
+&&\gamma-\eta=(-1+\iota)/4,\\
+&\zeta_+=\iota+(\gamma+\eta)^{-1}=2-\iota,
+&&\zeta_-=\iota+(\gamma-\eta)^{-1}=-2-\iota.
+\end{aligned}
+\tag{32.24}
+$$
+
+这里四个被求逆的数均非零，但两种 $\zeta_-$ 都要求 $\alpha_-=-1$，与合法性矛盾。主证明在 (32.23) 已完成，并不依赖将这些候选误当作实际 Hermitian 核对。结合特殊斜率、$w=0$、$v=0$、任意额外支撑与 $x\ne0$ 分支，定理 32.2 得证。全部计算只用 $\iota^2=-1$ 和 $\overline\iota=-\iota$，故无需共轭替换原输入就分别覆盖两个取向。∎
+
+### 32.6 原非零零模像的具体恒常核方向与未决 Schur 余量
+
+定理 32.2 给出新的路线排除：对这两条原轴像，$S=sE_{33}$、$s\ne0$ 不可能由任何 (32.1) 的有限合法同时核对取得非零 $F(S)$。因此，原三演员整类分类必须处理这些输入的非核方向及完整残余 Schur 正性；“再寻找对所有非零像都成立的完整核分离”在这些轴像上已被定理否定。这不妨碍别的真实 PB 违反机制，也没有反驳定理 31.3 的三格支撑子类结果。§31.6 对一般缺失坐标情形保留的两条路线，在这里已排除完整核分离这一条。
+
+一个保持 $\mathcal W\ne0$ 的实际原族是
+
+$$
+m=1,\qquad B=0,\qquad D_{\rm env}=0,\qquad
+V=e_1,\qquad S=sE_{33},\quad s\in\mathbb R.
+\tag{32.25}
+$$
+
+它的完整代数是原 $M_4(\mathbb C)$，$\mathcal W=\mathbb C e_1$，并非旧 $W=0$ 分支。对其任一 (32.1) 核对，取原 $y=Jw$，沿 $x_\lambda=\lambda X\oplus0$、$\xi_\lambda=(u,\lambda y)$ 定义同一完整原 $Q_S(\lambda)$，准确按 (31.22) 保留两笔代价及 $-2\phi_{\xi_\lambda}(L)$。式 (31.21)–(31.24) 的推导只用完整核关系，对这些核对仍成立，故
+
+$$
+Q_{sE_{33}}(\lambda)=4\lambda F(sE_{33})+\Gamma_s=\Gamma_s.
+\tag{32.26}
+$$
+
+常数可直接求出。在 $\lambda=0$、$\xi_0=(u,0)$，原完整作用列为
+
+$$
+R_\delta(0)\xi_0=(0,-\delta u_1/2),\qquad
+S_{\delta,S}(0)\xi_0
+=\bigl(\delta s u_3e_3,(1-\delta\iota/2)u_1\bigr).
+\tag{32.27}
+$$
+
+零残量配方 (31.23) 在此给出环境平方；新增演员列与它正交，且
+$\operatorname{Re}((t\xi_0)^*(Su,0))=0$。因此完整常数准确为
+
+$$
+\boxed{\quad
+\Gamma_s=(\alpha_+^{-1}+\alpha_-^{-1})s^2|u_3|^2
++|u_1|^2\sum_{\delta=\pm1}\alpha_\delta^{-1}
+ \left|1+\frac\delta2(\zeta_\delta-\iota)\right|^2
+\ge0.
+\quad}
+\tag{32.28}
+$$
+
+式 (32.26)–(32.28) 只判定这些核方向上的同一带符号代价，不是 (32.25) 的全部 PB 证明。非核探针、任意原环境向量、全部正泛函以及 PB 绝对值的两侧仍须同时满足。
+
+确切地，任何完整实系数消元所得的二次式
+$z^{\mathsf T}Az+2b^{\mathsf T}z+\Gamma$ 对所有 $z$ 非负，要求
+
+$$
+A\succeq0,\qquad b\in\operatorname{ran}A,\qquad
+\Gamma-b^{\mathsf T}A^\dagger b\ge0.
+\tag{32.29}
+$$
+
+核方向先强制 $b\perp\ker A$；即使这一像条件另已完全证明，仍须第三式，因为配方为
+$(z+A^\dagger b)^{\mathsf T}A(z+A^\dagger b)+\Gamma-b^{\mathsf T}A^\dagger b$。
+定理 32.2 不支付其余系数，也没有把某一部分核方向的零读取说成全部像条件。这里未证明任何非零 $s$ 在 (32.25) 上满足全部原 PB，也未给出排除其每个非零 $s$ 的非核严格见证；原“所有非零 $\mathcal W$ 的 PB 单独刚性”保持未决。
+
+### 32.7 中文意义、原来源与成果边界
+
+核关系要求同一探针对两个输入方向产生两对复比例，两笔正预算又要求比例的虚部方向相反。原连线只落在第一格或第二格时，若还想在第三格读出非零残量，完整三行方程会先把所有可能输出压到这条轴与第三格。读取方向可以另有支撑，但同一个 Hermitian 探针的四个实相容条件不会因此减少。复参数有非零实部时，相容性留下严格负平方；纯虚时，零对角系数必须直接处理，剩下的候选也互相矛盾。第三格残量因此被这一整类合法核读取共同漏掉。这是对方法能力的准确否定，不是说残量已经通过全部物理预算。
+
+与三格支撑情形相比，研究路线在这里发生实质区别：三格实际像可以由 §31 的四条核读取排除非零残量；这两条原轴像不能照搬，必须检验非核代价和完整 Schur 余量，才能决定非零残量究竟被 PB 排除还是确实存在全 PB 模型。$B=D_{\rm env}=0,V=e_1$ 的例子只把这种差别具体化，没有把原全称目标改成一个已完成的小目标。
+
+Hermitian 插值、复 Gram 配方与广义 Schur 的成熟背景沿 §31.6 的已有来源；本节具体轴像等式与障碍是仓内手推综合结果，不主张文献穷尽、历史新颖性、Lean／kernel 核验、完整量子公理、全局最小性或完整量子起源完成。
+
+完整原 Omega、同一递归钉版来源和七项消费者仍逐字沿 [§6](#6-完整原问题与七项物理合同的精确身份)、[§30A.5](#30a5-准确的前件删除来源与完整目标)、§31.6 保留；链接不以本段摘要替代原合同。全部原准备、事件、过程、参考／副本、真正相关联合、零／不等／次归一质量、钟与单位、控制、parent／ready／flags、完整记录、失败、拒绝、停止、销毁、泄漏、真遗忘、两侧及逆向 Return、固定支持全质量、完整菜单、全部已量化中间切口与所有合法未来均不缩小。C139 固定来源 §§50–73 的下降、参考、递归支持等既得结果，C128 §§385–392 的同一原 $D$ 恢复，以及有限返回卷 §§162、164 的完整根候选、七项合同和原活动接头边界，继续按已付域使用，不重列为缺失。
+
+原分析器仍须为字面旧程序 $\tau;T_P$ 的指定接受族，在原全部准备、切口、参考／副本、合法分析词和树、原坐标、固定支持全质量及完整菜单上供应准备无关的实际接受关联，保持原支持与未归一标尺；C139 §23.3 的 (23.7) 实际证书未由本节取得。CountRead 仍须同一接受叶的完整活动输出、实际读后 active-ready、第一合法消费者，以及读后同一完整活动输入对所有合法未来的真实 Return；有限返回卷 §164.1 的原活动接头与全参考／控制／钟／旧未来对应未由数学插值生成。复 Hilbert／相干、Born／全菜单、实际张量联合、typed CP／Kraus、完整仪器／TP／更新／Lüders、全部历史／Return、Hamiltonian／物理钟／共同正作用量七项消费者仍只在各自完整原来源合同成立时使用。没有准备生成、矩阵综合到实际菜单的推断、旧 Born／CP／QC 循环、密度／历史身份替代或免费相干控制／复制。
+
+## 新增锚（本行以下为后续增补区）
