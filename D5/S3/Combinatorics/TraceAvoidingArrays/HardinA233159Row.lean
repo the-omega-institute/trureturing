@@ -10,10 +10,10 @@
 admission_basis: open-problem-resolution (#29231; Proved)
 escape_witness: none
 Finite tables and arithmetic identities instantiate existing finite structures.
-W: proof_shape=bind-only; consumers=result
-powers_table: proof_shape=bind-only; consumers=result
-vector_relation: proof_shape=bind-only; consumers=result
-finite_certificate: proof_shape=bind-only; consumers=result
+W: proof_shape=bind-only; consumers=powers_table, vector_relation
+powers_table: proof_shape=bind-only; consumers=vector_relation
+vector_relation: proof_shape=bind-only; consumers=finite_certificate
+finite_certificate: proof_shape=bind-only; consumers=counting_bridge, result
 counting_bridge: proof_shape=bind-only; consumers=result
 result: proof_shape=bind-only; consumers=Reg.Recurrence.family
 -/
