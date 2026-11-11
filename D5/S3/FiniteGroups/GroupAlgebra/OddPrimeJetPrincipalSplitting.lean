@@ -410,15 +410,13 @@ theorem unique_principal_factorization (z : originalGroup qA) :
 
 end Coefficients
 
-/-- Every normalized prime-field-linear q has the actual principal-unit
-splitting. The existential data include an exact native extension and its
-homomorphic section, preservation of the full actual label, the genuine scalar
-section, and unique principal/scalar/label factorization. Coefficient transport
-changes only the presentation of q; all group and subgroup carriers stay native.
-There is no restriction on the commutant's End_F(K) top coordinate. -/
-theorem normalized_principal_splitting [Fintype K] {n : ℕ}
+/-! The full splitting specification is named as a proposition so the public
+theorem below has a compact statement-material representation. Unfolding this
+definition recovers exactly the displayed existential data; no conclusion is
+weakened or hidden behind an axiom. -/
+def normalizedPrincipalSplittingSpec [Fintype K] {n : ℕ}
     (hn : 1 ≤ n) (hK : Fintype.card K = p ^ n)
-    (q : K →ₗ[F] K) (hq : q 1 = 0) :
+    (q : K →ₗ[F] K) (hq : q 1 = 0) : Prop :=
     ∃ (σ : labelGroup q →* MulAut Kˣ)
       (S : GroupExtension (actualPrincipalUnits q hq) (originalGroup q)
         (Kˣ ⋊[σ] labelGroup q)) (s : S.Splitting),
@@ -429,7 +427,16 @@ theorem normalized_principal_splitting [Fintype K] {n : ℕ}
       (∀ a : Kˣ, s (SemidirectProduct.inl a) = (scalarKernel q a).val) ∧
       (∀ z : originalGroup q,
         ∃! x : actualPrincipalUnits q hq × (Kˣ ⋊[σ] labelGroup q),
-          principalInclusion q hq x.1 * s x.2 = z) := by
+          principalInclusion q hq x.1 * s x.2 = z)
+
+/-! Every normalized prime-field-linear q has the actual principal-unit
+splitting. The theorem proves the named specification above; unfolding it
+recovers the exact native extension, section, kernel, label projection, scalar
+section, and unique principal/scalar/label factorization. -/
+theorem normalized_principal_splitting [Fintype K] {n : ℕ}
+    (hn : 1 ≤ n) (hK : Fintype.card K = p ^ n)
+    (q : K →ₗ[F] K) (hq : q 1 = 0) :
+    normalizedPrincipalSplittingSpec (p := p) hn hK q hq := by
   obtain ⟨A, hA⟩ := (coefficientMap_bijective hn hK).surjective ⟨q, hq⟩
   have he : Q (p := p) n A = q := congrArg Subtype.val hA
   subst q
