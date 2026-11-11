@@ -201,11 +201,16 @@ private theorem finite_certificate : ∀ s p, Valid s p → ∀ k,
     exact h k s p hp
   intro k
   fin_cases k <;> rintro ⟨u, t⟩ <;> cases u <;> cases t <;>
-    simp only [class_fibres, (full_row 6 _).1, (full_row 6 _).2,
-      sum_rows, Fin.sum_univ_succ, Fin.sum_univ_zero,
-      mul_ite, mul_one, mul_zero] <;>
-    norm_num [Valid, proper, boundaryClass, rowFinish, rowWeight,
-      labelWeight, labelAdvance, Fin.forall_fin_succ_pi, Fin.forall_fin_zero_pi] <;>
+    simp only [Valid, Bool.false_eq_true, Bool.true_eq_false, eq_self,
+      false_and, true_and, and_true, false_implies, true_implies] <;>
+    simp (config := { failIfUnchanged := false }) only
+      [class_fibres, (full_row 6 _).1, (full_row 6 _).2,
+      sum_rows, mul_ite, mul_one, mul_zero] <;>
+    norm_num (config := { maxSteps := 1000000, failIfUnchanged := false })
+      [proper, boundaryClass, rowFinish, rowWeight, labelWeight, labelAdvance,
+        Fin.sum_univ_succ, Fin.sum_univ_zero] <;>
+    simp (config := { failIfUnchanged := false }) only
+      [Fin.forall_fin_succ_pi, Fin.forall_fin_zero_pi] <;>
     decide +kernel
 
 private theorem initial_fibres (k : Fin 11) :
@@ -382,7 +387,7 @@ theorem result (n : ℕ) :
   change (a (n + 10) : ℤ) = _ at h9
   change (a (n + 11) : ℤ) = _ at h10
   rw [h10, h9, h8, h7, h6, h5, h4, h3, h2, h1, h0]
-  simp only [distribution_relation, sub_mul, add_mul, Finset.sum_add_distrib, Finset.sum_sub_distrib,
-    mul_assoc, Finset.mul_sum]
+  simp only [distribution_relation, sub_mul, add_mul, Finset.sum_add_distrib,
+    Finset.sum_sub_distrib, mul_assoc, Finset.mul_sum]
 
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233172DiagonalStrip
