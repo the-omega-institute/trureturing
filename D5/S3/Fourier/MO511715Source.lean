@@ -628,42 +628,57 @@ theorem phi_dyadic_growth {F : Type} [RCLike F] (ζ : Space → F)
       (Finset.sum_biUnion (fun i _ j _ hij => pairBlock_disjoint i j hij)).symm
     _ ≤ _ := hsum.sum_le_tsum S (fun p _ => hn p)
 
-private lemma uniform_estimate_fails {F : Type} [RCLike F] (ζ : Space → F)
-    (hc : ContinuousAt ζ 0) (hz : ζ 0 = 1) (hs : HasCompactSupport ζ) :
-    ¬ UniformEstimate ζ := by
+/-- The same fixed cutoff and mask violate every finite-real constant/exponent pair.
+The positive comparison scales are distinct, the reference scale is two, and time is one. -/
+private lemma source_estimate_failure {F : Type} [RCLike F] (ζ : Space → F)
+    (hc : ContinuousAt ζ 0) (hz : ζ 0 = 1) (hs : HasCompactSupport ζ) (C δ : ℝ) :
+    LegalMask selectedMask ∧ ∃ ε₁ ε₂ : ℝ,
+      0 < ε₁ ∧ 0 < ε₂ ∧ ε₁ < ε₂ ∧ ε₂ = 2 ∧
+        C * |ε₂ - ε₁| ^ δ <
+          |delta ζ selectedMask ε₂ 1 firstUnit - delta ζ selectedMask ε₁ 1 firstUnit| := by
   obtain ⟨ρ, hρ, hρ1, hgrowth⟩ := phi_dyadic_growth ζ hc hz hs
-  rintro ⟨C, hC, δ, hδ, hbound⟩
-  let M := phi ζ selectedMask (ρ / 5) 1 firstUnit
-  obtain ⟨J, hJ⟩ := exists_nat_gt ((M + C) / blockConstant)
-  have hJ' : M + C < blockConstant * (J + 1) := by
+  let M := phi ζ selectedMask 2 1 firstUnit
+  let H : ℝ := max 1 ((2 : ℝ) ^ δ)
+  obtain ⟨J, hJ⟩ := exists_nat_gt ((M + max C 0 * H) / blockConstant)
+  have hJ' : M + max C 0 * H < blockConstant * (J + 1) := by
     have ht := (div_lt_iff₀ blockConstant_pos).mp hJ
     nlinarith [blockConstant_pos]
   let ε := ρ / (5 * (2 : ℝ) ^ J)
   have hε : 0 < ε := by dsimp [ε]; positivity
-  have hεref : 0 < ρ / 5 := by positivity
   have heps : ε ≤ ρ / 5 := by
     dsimp [ε]
     apply (div_le_div_iff₀ (by positivity) (by norm_num : (0 : ℝ) < 5)).mpr
     have hp : (1 : ℝ) ≤ (2 : ℝ) ^ J := one_le_pow₀ (by norm_num)
     nlinarith
-  have hgap : |ρ / 5 - ε| ≤ 1 := by
-    rw [abs_of_nonneg (sub_nonneg.mpr heps)]
-    linarith
-  have hb := hbound selectedMask selectedMask_legal 1 (by norm_num) firstUnit
-    ε (ρ / 5) hε hεref
-  rw [delta_selected, delta_selected] at hb
-  have hrpow : |ρ / 5 - ε| ^ δ ≤ (1 : ℝ) :=
-    Real.rpow_le_one (abs_nonneg _) hgap hδ.le
-  have hupper : phi ζ selectedMask ε 1 firstUnit ≤ M + C := by
-    have hrhs : C * |ρ / 5 - ε| ^ δ ≤ C := by nlinarith
-    have ha := neg_le_abs (M - phi ζ selectedMask ε 1 firstUnit)
-    dsimp [M] at *
-    linarith
+  have heps1 : ε < 1 := by linarith
+  have hgap_eq : |2 - ε| = 2 - ε := abs_of_nonneg (by linarith)
+  have hgap_lower : 1 ≤ |2 - ε| := by rw [hgap_eq]; linarith
+  have hgap_upper : |2 - ε| ≤ 2 := by rw [hgap_eq]; linarith
+  have hrpow : |2 - ε| ^ δ ≤ H := by
+    rcases le_total 0 δ with hδ | hδ
+    · exact (Real.rpow_le_rpow (abs_nonneg _) hgap_upper hδ).trans (le_max_right _ _)
+    · exact (Real.rpow_le_one_of_one_le_of_nonpos hgap_lower hδ).trans (le_max_left _ _)
+  have hrhs : C * |2 - ε| ^ δ ≤ max C 0 * H :=
+    mul_le_mul (le_max_left C 0) hrpow (Real.rpow_nonneg (abs_nonneg _) δ)
+      (le_max_right C 0)
   have hlower := hgrowth J
   change blockConstant * (J + 1) ≤ phi ζ selectedMask ε 1 firstUnit at hlower
+  refine ⟨selectedMask_legal, ε, 2, hε, by norm_num, by linarith, rfl, ?_⟩
+  rw [delta_selected, delta_selected]
+  have ha := neg_le_abs (M - phi ζ selectedMask ε 1 firstUnit)
+  change C * |2 - ε| ^ δ < |M - phi ζ selectedMask ε 1 firstUnit|
   linarith
 
-/-- The literal complete source estimate, including both scalar readings, is false. -/
+private lemma uniform_estimate_fails {F : Type} [RCLike F] (ζ : Space → F)
+    (hc : ContinuousAt ζ 0) (hz : ζ 0 = 1) (hs : HasCompactSupport ζ) :
+    ¬ UniformEstimate ζ := by
+  rintro ⟨C, _, δ, _, hbound⟩
+  obtain ⟨hlegal, ε₁, ε₂, hε₁, hε₂, _, _, hfailure⟩ :=
+    source_estimate_failure ζ hc hz hs C δ
+  exact (not_lt_of_ge (hbound selectedMask hlegal 1 (by norm_num) firstUnit
+    ε₁ ε₂ hε₁ hε₂)) hfailure
+
+/-- The unchanged conventional claim is false, via the all-real source obstruction. -/
 theorem result : ¬ claim := by
   intro h
   let f : ContDiffBump (0 : Space) := ⟨1, 2, by norm_num, by norm_num⟩

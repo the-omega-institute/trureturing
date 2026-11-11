@@ -97,15 +97,25 @@ internal sealed class MO511715SourceDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem),
             Item("result", "result", "Negation of the complete conventional source claim",
                 F.Seq(F.Neg, F.Sp, Id("claim")),
-                "Fix the same cutoff and the selected mask, with time one and output e. Set the "
-                + "reference scale to rho/5. Every comparison scale rho/(5*2^J) is positive, "
-                + "and its distance from the reference scale is at most one. For any proposed "
-                + "nonnegative C and positive exponent, the right side is at most C. The fixed "
-                + "reference value is finite, while c*(J+1) is unbounded. This contradicts the estimate. "
-                + "The argument applies to every fixed continuous normalized compact cutoff in either "
-                + "scalar field. A standard smooth bump supplies an admissible real cutoff for the "
-                + "literal conjunction claim. The mathematical conclusion uses the stated Euclidean "
-                + "and scalar conventions and makes no assertion about additional unstated mask structure.",
+                "The consumed private lemma source_estimate_failure proves the stronger obstruction "
+                + "for every individually fixed continuous-at-zero normalized compact cutoff over "
+                + "either the real or complex scalars, and every pair of finite real numbers C and delta, "
+                + "without sign restrictions. Keep that same cutoff and the same legal selected mask "
+                + "on both sides, with time one and output e. The reference scale is two; the comparison "
+                + "scale epsilon=rho/(5*2^J) satisfies 0<epsilon<=rho/5<=1/5. Thus both scales are "
+                + "strictly positive and distinct, and 1<=abs(2-epsilon)<=2. For every real delta, "
+                + "abs(2-epsilon)^delta<=H=max(1,2^delta): monotonicity in the base gives the bound "
+                + "when delta>=0, and a base at least one gives a bound of one when delta<=0. "
+                + "Consequently C*abs(2-epsilon)^delta<=max(C,0)*H. The fixed reference value "
+                + "M=phi(2,1,e) is finite. Choose J so that c*(J+1)>M+max(C,0)*H. The growth bound "
+                + "then makes the actual absolute delta difference strictly larger than the proposed "
+                + "right side. This includes zero and negative exponents and constants. "
+                + "The private uniform_estimate_fails consumes these witnesses to refute the unchanged "
+                + "nonnegative-C, positive-exponent convention; result consumes that refutation with "
+                + "a standard smooth real bump to negate the literal conjunction claim. Every smooth "
+                + "normalized compact cutoff in either scalar reading satisfies the stronger lemma's "
+                + "hypotheses. The source's unspecified norm, typing and authorial intent remain "
+                + "unresolved conventions; the conclusion does not assume additional mask structure.",
                 DescribeRole.Theorem))));
 
     private static DocumentBlock Item(string id, string declaration, string title, Formula formula,
