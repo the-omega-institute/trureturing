@@ -11,6 +11,7 @@ import Mathlib.RingTheory.PowerSeries.Binomial
 import Mathlib.RingTheory.PowerSeries.Substitution
 import Mathlib.Tactic
 import D5.S1.Recurrence.Invariants.CompositionalIterateCongruence
+import D5.S1.Recurrence.Residue.CompositionalSquareDyadicDenominators
 
 namespace D5.S1.Recurrence.BalaTrinomialCoefficientIdentity
 open PowerSeries
@@ -41,17 +42,8 @@ private theorem geometric_power (k : ℕ) :
 private theorem finite_substitution (f : PowerSeries ℚ) (n : ℕ) :
     coeff n (f.subst (mobius (1 : ℚ))) =
       ∑ j ∈ Finset.range (n + 1), coeff j f * coeff n (mobius (1 : ℚ) ^ j) := by
-  rw [coeff_subst' (.of_constantCoeff_zero' (mobius_zero (1 : ℚ)))]
-  simp only [smul_eq_mul]
-  apply finsum_eq_sum_of_support_subset
-  intro j hj
-  apply Finset.mem_range.mpr
-  by_contra h
-  have hz : coeff n (mobius (1 : ℚ) ^ j) = 0 := by
-    apply coeff_of_lt_order
-    exact (show (n : ENat) < (j : ENat) by exact_mod_cast (show n < j by omega)).trans_le
-      (le_order_pow_of_constantCoeff_eq_zero j (mobius_zero (1 : ℚ)))
-  exact hj (by simp [hz])
+  exact D5.S1.Recurrence.Residue.CompositionalSquareDyadicDenominators.coeff_subst_sum
+    (mobius_zero (1 : ℚ)) f n
 
 private theorem finite_product_substitution (f q : PowerSeries ℚ) (n : ℕ) :
     coeff n (q * f.subst (mobius (1 : ℚ))) =
