@@ -8,7 +8,7 @@ The balanced one-photon all-density spectral minimum and attainment by every coh
 
 The channel is the original attenuator (1/2) balanced (pointMassEnvironment 1), on the complete Attenuator.DensityOperator domain. Its native extended spectral entropy has attained minimum ENNReal.ofReal(Real.log 2), and every coherentDensity alpha attains it for every complex alpha. The comparison input rho is an arbitrary actual density, with no support, rank, energy or entropy restriction.
 
-This is the balanced pure-one-photon case relevant to Conjecture 1 in Van Herstraeten, Guha and Cerf, arXiv:2312.15623v2, Section IV.1. The paper already gives the vacuum output spectrum (1/2,1/2) and describes additional candidate minimizers in this case. These native proofs acknowledge both the original problem source and He's prior written result. No uniqueness of coherent minimizers, odd-n>1 attainment, full all-occupation/all-transmissivity resolution, or equivalence to the separate basis-infimum entropy API is claimed. 
+This is the balanced pure-one-photon case relevant to Conjecture 1 in Van Herstraeten, Guha and Cerf, arXiv:2312.15623v2, Section IV.1. The paper already gives the vacuum output spectrum (1/2,1/2) and describes additional candidate minimizers in this case. These native proofs acknowledge both the original problem source and He's prior written result. No uniqueness of coherent minimizers, odd-n>1 attainment, full all-occupation/all-transmissivity resolution, or equivalence to the separate basis-infimum entropy API is claimed.
 
 **Theorem 1.1 (The density and pure-input channels agree).**
 
