@@ -1078,3 +1078,151 @@ $T_p=e_p$ separately retains leastness.  The result does not select complex
 quantum theory, composites, dynamics, measurement-sequence commutativity, or
 physical availability of every mathematical automorphism.  It is a paper
 argument and makes no formal-verification claim.
+
+## Appendix: a fixed-half pure–mixed entrance to S
+
+Use the same nonzero finite-dimensional real ordered carrier $(A,C,u)$, entire compact base $K$, pure set
+$P=\operatorname{ext}K$, and full effect interval $[0,u]$ as above. The reused results are in
+[the quantum-origin volume, Chapters 77–79](../../docs/develop/theory/QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_V.md).
+Definition 77.1 and Proposition 77.2 give the nonempty compact sets $F_p=\{f\in[0,u]:f(p)=1\}$ and attained
+comparisons $T_p(x)=\min_{f\in F_p}f(x)$, with $T_p(p)=1$ and $K=\operatorname{conv}P$. No closedness of $P$,
+exposedness of its points, or actual preparation procedure is assumed. Here S is exactly (17), equivalently
+reciprocal **least** proper confirmation, in the dual-cone order on the entire $C$.
+
+**Definition (fixed-half law).** Require just
+
+$$
+\mathrm B_{1/2}:\qquad
+T_p\!\left(\frac{q+x}{2}\right)
+ =\frac{T_q(p)+T_p(x)}2
+ \qquad(p,q\in P,\ x\in K).
+\tag{FH1}
+$$
+
+The remainder $x$ ranges over the original entire base, including mixed states. The fixed half concerns this
+comparison law alone.
+
+**Theorem (same-carrier equivalence).** On this carrier,
+$\mathrm B_{1/2}\Longleftrightarrow S\Longleftrightarrow\mathrm B_{\rm mix}$ of Definition 77.18, including every
+real $t\in[0,1]$ in its last law. Neither reciprocity nor a least confirming effect is an extra premise.
+
+**Proof.** In (FH1) put $x=q$. Then $2T_p(q)=T_q(p)+T_p(q)$, so $T_p(q)=T_q(p)$ for all pure endpoints. Fix $p$ and
+any nonempty finite list $q_1,\ldots,q_n\in P$. Form
+
+$$
+y_1=q_1,\qquad y_{j+1}=\frac{q_{j+1}+y_j}{2},\qquad
+w^{(1)}_1=1,\quad
+w^{(j+1)}_i=\tfrac12w^{(j)}_i\ (i\le j),\quad
+w^{(j+1)}_{j+1}=\tfrac12.
+\tag{FH2}
+$$
+
+Every $y_j$ is an original state. These weights are strictly positive and sum to one. Induction using (FH1) and the
+just-derived reciprocity gives $y_n=\sum_iw^{(n)}_iq_i$ and $T_p(y_n)=\sum_iw^{(n)}_iT_{q_i}(p)$. Apply Lemma 77.11
+directly: this positive-support equality gives
+
+$$
+\bigcap_{i=1}^n A_{pq_i}\ne\varnothing,\qquad
+A_{pq}=\{f\in F_p:f(q)=T_p(q)\}.
+\tag{FH3}
+$$
+
+The same lemma now gives (17) for every real probability vector on that support, not just dyadic weights. Its
+zero-weight and repeated-label clauses restore those cases; $n=1$ is the reciprocity already obtained. Thus S holds.
+For completeness, (FH3) for every finite support and compactness of $F_p$ give $e_p\in\bigcap_{q\in P}A_{pq}$. Each
+$A_{pq}$ is closed in $F_p$; the indexing set $P$ need not be closed. For every $f\in F_p$, $e_p(q)\le f(q)$ on $P$,
+hence on $C=\operatorname{cone}P$ by linearity. Thus $e_p$ is least, rather than merely minimal, and $T_p=e_p$ on
+$K$. If $K$ is a singleton, $F_p=\{u\}$ and all these statements hold directly.
+
+Conversely, assume S and take a finite pure decomposition $x=\sum_i v_i r_i$, supplied by Proposition 77.2. Apply
+(17) to $x$ and to $tq+(1-t)x$, using the weights $t,(1-t)v_i$. For every real $0\le t\le1$,
+
+$$
+T_p(tq+(1-t)x)
+ =tT_q(p)+(1-t)\sum_i v_iT_{r_i}(p)
+ =tT_q(p)+(1-t)T_p(x).
+\tag{FH4}
+$$
+
+This includes $t=0,1$ and gives $\mathrm B_{\rm mix}$, whose $t=1/2$ instance is (FH1). No limiting argument or
+closure of pure states is used. ∎
+
+**Binary-tree geometry.** (FH2) is a finite binary tree: each new node joins one pure leaf to the entire previously
+formed mixed subtree. Every leaf has positive weight at the root. Lemma 77.11 says that the root equality selects
+one effect on the common intersection of all its minimizing faces $A_{pq_i}$ in the same $F_p$. Reweighting moves
+within the convex hull of these leaves while that one effect remains minimizing. Compactness joins the finite
+intersections into a single least effect for the whole base. This is a statement about one common effect, not
+independently chosen optimizers or an asserted order-independence of measurement updates.
+
+**Control (the mixed remainder is essential).** Reuse the $q=3$ strip of equation (77.7) and Theorem 77.7, with its
+entire proper-effect interval. All pure binary preparations satisfy $S_2$. Nevertheless, for $p=r_1$, $q=c_3$,
+$x=(c_1+c_2)/2$, the exact values are
+
+$$
+T_{c_3}(r_1)=T_{r_1}(x)=0,\qquad
+T_{r_1}\!\left(\frac{c_3+x}{2}\right)
+ =\min\{\tfrac14,\tfrac14,\tfrac12\}=\tfrac14.
+\tag{FH5}
+$$
+
+Thus the two sides of (FH1) are $1/4$ and $0$. This midpoint is not the uniform column center; the latter has
+reading $1/3$. Restricting $x$ to a pure state would miss this failure. The existing finite-arity, free-sum and
+circuit results of Chapter 77 retain their original scope.
+
+### Substitution into the complete normalized candidate
+
+**Definition (fixed-half candidate).** Take exactly Definition 79.14, replacing only its comparison entry,
+separately for each $X=A,D,E$, by $(\mathrm B_{1/2})_X$ on the same $(X,C_X,u_X,K_X,P_X,[0,u_X])$. Keep every other
+predicate and witness of Definitions 79.1–79.2 and 79.14:
+
+- The original real bilinear $L:D\times A\to E$ and real linear $p:E\to D$ both remain positive on their entire
+  original cones, including entangled inputs. After the comparison bridge, $u_X=\tau_X$ and $\omega=1_D/\tau_D1_D$.
+  Retain $K(a)=pL(\omega,a)$, $M(a,b)=pL(K(a),b)$, $Q(a,b,c)=L(M(a,b),c)$, $J(a)=M(a,1_A)$, $H(d)=L(d,1_A)$,
+  $B_1=pH$: the same actual $p$ is used twice. Both real spans $\operatorname{span}_{\mathbb R}M(A,A)=D$ and
+  $\operatorname{span}_{\mathbb R}L(D,A)=E$, and full-real $Z:B_1M(a,b)=u_A(a)Jb$ for all $a,b\in A$, remain.
+- Retain $D_J:a,b\in C_A,\ \langle a,b\rangle_A=0\Rightarrow Ja\perp Jb$ and
+  $D_H:d,d'\in C_D,\ \langle d,d'\rangle_D=0\Rightarrow Hd\perp Hd'$. Alternatively retain exactly 79.14's
+  $\mathsf{JG}_3$ generating complete frames and both same-frame zero tables for $J$ and $HF$, with $U=M(1_A,1_A)$
+  and $F=P_{U^{-1/2}}M$. The optional single defect is exactly Theorem 78.4, displayed equation (78.5), with
+  $H_{\mathrm s}=H$ and its original generating-frame parameters; its quantitative extra hypotheses are not part of
+  the exact candidate.
+- Fix the original $t,s\in(0,1)$, unrelated to the comparison half. Retain $\Phi(C_A)\subseteq C_A$, $u_A\Phi=u_A$,
+  and $\{f\in A^*:f\Phi=f\}=\mathbb R u_A$ over all real functionals. With the original $m_2=u_DM$ and $m_3=u_EQ$,
+  retain **both** mass identities
+
+  $$
+  \begin{aligned}
+  m_2(a,b)&=t\,m_2(\Phi a,b)+(1-t)m_2(a,\Phi b),\\
+  m_3(a,b,c)&=st\,m_3(\Phi a,b,c)+s(1-t)m_3(a,\Phi b,c)
+   +(1-s)m_3(a,b,\Phi c)
+  \end{aligned}
+  \tag{FH6}
+  $$
+
+  for all original positive $a,b,c$, including zero and unequal masses, and the original anchor
+  $u_EL(\omega,1_A/n)=1$, $n=\tau_A1_A$.
+- Retain the exact NB or H13 predicate of 79.14: the same qualified original total-trace-one state and the entire
+  positive output under its original $I^{\rm raw}=\widetilde T_{\rm raw}\widetilde M^{-1}$,
+  $T_{\rm raw}(a,c)=L(Ja,c)$. Active means both endpoint ranks are at least two. NB retains strictly positive block
+  mass, conditional joint purity and intrinsically mixed margins. H13 retains a strictly negative direction in at
+  least one of $\alpha_{ik}\alpha_{ik}^*x-x$, $\beta_{ik}\beta_{ik}^*x-x$ for $x=\pi_{ik}\rho$, with
+  $\alpha_{ik}=F(-,c_k)|_{A_i}$, $\beta_{ik}=F(c_i,-)|_{A_k}$, original trace adjoints and unnormalized units. It
+  imposes no purity or fixed Schmidt spectrum. Inactive blocks remain arbitrary positive components including zero;
+  an empty active set gives the entire state base. The qualified state is not replaced or selected by its output.
+
+**Corollary (identity of actual model classes).** After forgetting just the mathematical witnesses, this candidate
+has exactly the actual model class of Theorem 79.15, under the identity correspondence on $(A,D,E,C_X,u_X,L,p)$ and
+the same original $\omega$. **Proof.** Apply the theorem above in each original $X$ to recover S before the
+least-effect/Jordan geometry bridge or any normalization consumer. All remaining predicates are exactly 79.14, so
+Theorem 79.15 applies with the same $t,s,\Phi$, zero/direction witnesses and scalar anchor. Conversely S gives (FH1)
+on those same carriers; nothing else is changed. ∎
+
+The resulting Born pairing, specified two- and three-copy tensors and unique readbacks are precisely (79.17),
+(79.27). Every process/source prerequisite in §79.8 remains: the same actual event, branch and record,
+product-extension law, sufficient actual reference and full joint-cone positivity for CP/Kraus; both budgets (79.28)
+and the same complete menu's total TP; positive-mass conditioning, zero-branch records, sequential and
+coarse-graining contracts; sharp neutrality for Lüders; and the supplied continuous time-homogeneous reversible
+$*$-automorphism group, original clock and units for Hamiltonian evolution. No higher-copy or alternative bracketing
+source compatibility is supplied by this substitution.
+
+两两比较的端点互换，只说两个纯态的比较数相同，不等于两次测量交换次序后仍有同一状态更新。这里的对半关系还要求：一端是纯态，另一端可以是原系统中任意已有混态，比较整个混合所得的数必须与先分别比较再平均一致。把有限多个纯态接成二叉树，每个叶子都占正份额，根节点的等式就要求同一个确认效应同时在所有叶子上取到最小值；因此改变成任意实概率权重仍成立。三条带例子说明，只检查两个纯态会漏掉这个共同要求。这个入口删除的是定义 77.18 对混合比例的全量词，全部状态、效应、混合余项以及第 79 章的质量、方向和来源条件仍完整保留；它没有把数学混合或数学见证变成实际可调用的准备与操作。
