@@ -6,7 +6,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Factorization.Galois;
 
 internal sealed class ActualWindowCommonKernelDocument : IScribeDocumentDefinition
 {
-    private const string HyperplanePrefix = "D5/S3/Factorization/Galois/ActualWindowCommonKernel.HyperplaneRank.";
+    private const string HyperplanePrefix = "D5/S3/Factorization/Galois/ActualWindowCommonKernel.";
     private static readonly LibraryNoteRef HyperplaneSource =
         LibraryNoteRef.Create("D5/L/Factorization/razwigderson2019subspace");
 
@@ -112,7 +112,6 @@ internal sealed class ActualWindowCommonKernelDocument : IScribeDocumentDefiniti
 
     private static Formula I(string name) => F.Id(name);
     private static Formula Ty() => Seq(I("Type"), Star);
-    private static Formula Q(string a, string b) => Seq(Operatorname, Grp(I(a)), Dot, Operatorname, Grp(I(b)));
     private static Formula App(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
     private static Formula Rel(Formula a, FormulaRelationOperator op, Formula b) => new Formula.Relation(a, op, b);
     private static Formula Eq(Formula a, Formula b) => Rel(a, FormulaRelationOperator.Equal, b);
