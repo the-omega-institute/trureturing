@@ -163,8 +163,14 @@ theorem fixed_layer_shrinking_prime_roster_power {j : ℕ} (hj : 2 ≤ j)
     have hwidth : (z X - y X) * log X ^ w = y X := by
       dsimp [z, κ]
       field_simp [(log_pos hX).ne'] <;> ring
-    field_simp [hyX.ne', hzX.ne', (log_pos hX).ne']
-    nlinarith only [hwidth]
+    have hcancel :
+        (Chebyshev.theta (z X) - z X) / (z X / log X ^ w) * (z X / y X) =
+          (Chebyshev.theta (z X) - z X) / (y X / log X ^ w) := by
+      rw [div_div_eq_mul_div, div_mul_div_cancel₀ hzX.ne', div_div_eq_mul_div]
+    have hone : (1 : ℝ) = (z X - y X) / (y X / log X ^ w) := by
+      rw [div_div_eq_mul_div, hwidth, div_self hyX.ne']
+    rw [hcancel, hone, ← add_div, ← sub_div]
+    congr 1 <;> ring
   have hsmall : Tendsto (fun X : ℝ => log X ^ (w + d + 1) / y X) atTop (𝓝 0) := by
     have hl := (isLittleO_log_rpow_rpow_atTop (w + d + 1 : ℕ)
       (inv_pos.mpr hj0)).tendsto_div_nhds_zero
