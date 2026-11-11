@@ -19,7 +19,7 @@ namespace D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer
 noncomputable section
 set_option autoImplicit false
 
-private lemma forced_tuple_card_le {ι α : Type*} [Fintype ι] [DecidableEq ι]
+lemma forced_tuple_card_le {ι α : Type*} [Fintype ι] [DecidableEq ι]
     [DecidableEq α] (S : Finset α) (R : Finset ι) (v : ι → α) :
     ((Fintype.piFinset (fun _ : ι => S)).filter
       (fun d => ∀ i ∈ R, d i = v i)).card ≤ S.card ^ (Fintype.card ι - R.card) := by
@@ -114,12 +114,12 @@ theorem tuple_range_superset_card_le {ι α : Type*} [Fintype ι] [DecidableEq �
 
 /-- Summing an error over every subset of a tuple range costs only the number of unused
 coordinates. The estimate is valid for every subfamily of the box, hence for interval boxes. -/
-theorem sum_tuple_subsets_le (k : ℕ) (hk : k ≤ 4) (S : Finset ℕ)
+theorem sum_tuple_subsets_le (k : ℕ) (S : Finset ℕ)
     (T : Finset (Fin k → ℕ))
     (hT : T ⊆ Fintype.piFinset (fun _ : Fin k => S))
     (e : Finset ℕ → ℝ) (he : ∀ R, 0 ≤ e R) :
     (∑ d ∈ T, ∑ R ∈ (Finset.univ.image d).powerset, e R) ≤
-      256 * ∑ r ∈ Finset.range (k + 1), (S.card : ℝ) ^ (k - r) *
+      (k : ℝ) ^ k * ∑ r ∈ Finset.range (k + 1), (S.card : ℝ) ^ (k - r) *
         ∑ R ∈ S.powersetCard r, e R := by
   classical
   have hsize (d : Fin k → ℕ) : (Finset.univ.image d).card ≤ k := by
@@ -150,7 +150,7 @@ theorem sum_tuple_subsets_le (k : ℕ) (hk : k ≤ 4) (S : Finset ℕ)
   have hc (r : ℕ) (hr : r ∈ Finset.range (k + 1)) (R : Finset ℕ)
       (hR : R ∈ S.powersetCard r) :
       ((T.filter (fun d => R ⊆ Finset.univ.image d)).card : ℝ) ≤
-        256 * (S.card : ℝ) ^ (k - r) := by
+        (k : ℝ) ^ k * (S.card : ℝ) ^ (k - r) := by
     have hsub : T.filter (fun d => R ⊆ Finset.univ.image d) ⊆
         (Fintype.piFinset (fun _ : Fin k => S)).filter
           (fun d => R ⊆ Finset.univ.image d) := Finset.filter_subset_filter _ hT
@@ -158,12 +158,12 @@ theorem sum_tuple_subsets_le (k : ℕ) (hk : k ≤ 4) (S : Finset ℕ)
       (tuple_range_superset_card_le (ι := Fin k) S R)
     have hRr := (Finset.mem_powersetCard.mp hR).2
     simp only [Fintype.card_fin, hRr] at h
-    have hp : k ^ r ≤ 256 := by
+    have hp : k ^ r ≤ k ^ k := by
       have hrk : r ≤ k := by have := Finset.mem_range.mp hr; omega
-      calc
-        _ ≤ 4 ^ r := Nat.pow_le_pow_left hk _
-        _ ≤ 4 ^ 4 := Nat.pow_le_pow_right (by omega) (hrk.trans hk)
-        _ = 256 := by norm_num
+      by_cases hk : k = 0
+      · have hr0 : r = 0 := by omega
+        simp [hk, hr0]
+      · exact Nat.pow_le_pow_right (by omega) hrk
     exact_mod_cast h.trans (Nat.mul_le_mul_right _ hp)
   simp_rw [hsplit]
   rw [Finset.sum_comm]
@@ -183,7 +183,7 @@ theorem sum_tuple_subsets_le (k : ℕ) (hk : k ≤ 4) (S : Finset ℕ)
           rw [← Finset.sum_filter]
           simp
     _ ≤ ∑ r ∈ Finset.range (k + 1), ∑ R ∈ S.powersetCard r,
-        (256 * (S.card : ℝ) ^ (k - r)) * e R := by
+        ((k : ℝ) ^ k * (S.card : ℝ) ^ (k - r)) * e R := by
       apply Finset.sum_le_sum
       intro r hr
       exact Finset.sum_le_sum (fun R hR => mul_le_mul_of_nonneg_right (hc r hr R hR) (he R))
