@@ -1,0 +1,4 @@
+**定义 18.1（待检验的原态与借用扩展域）。** 对16.1的六张实际表，候选表示把表 $y$ 的活动态指定为 $\rho_y=(Fy)(Fy)^*$，把实际三分混合指定为这些态的仿射平均，并要求同一个原完整 CountRead 在同一个输入类型上由该态单独决定各原记录质量。原制备字、原表或彩票标签若仍作为额外可用控制输入进入读口，就不属于这个“由该态单独决定”的域；它们不能一面参与地址产生，一面在共同态判定中被删去。
+
+原历史合同仍取固定源卷65.1–65.2及(65.20)、[三标签卷9.2–9.4](AURIC_C128_THREE_LABEL_POSITIVITY_AND_ORIGINAL_RELATION_RIGIDITY.md)、[中心平方卷合同47.12](AURIC_ZERO_DIMENSIONAL_CENTER_SQUARE_ORBIT_RECONSTRUCTION.md)。特别是实际旧读取为 $\mathrm{CountRead}:A_{\rm ready}[h]\to\coprod_r B_r[h_r]$，而不是预设带活动输出的记录器。若提出名为 $\operatorname{BorrowReleaseCountRead}$ 的扩展，须另给旧历史嵌入 $e$、投影 $p$ 及 $p\circ e=\mathrm{id}$，在每个旧完整历史、原联合参考／副本、全部结果及零情况上保持旧未归一律、钟读数和旧合法未来。它的新增活动端若不是原 $B_r$，必须明确另名；从它到原 $B_r$ 的遗忘投影不提供反向的 $B_r\to A_{\rm ready}[h_r]$。同一 $o$、父标签、活动所有权、借出与释放、完整 $\Delta$ 表和耗时都须由真实操作承担。
+

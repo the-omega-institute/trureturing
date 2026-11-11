@@ -1,0 +1,141 @@
+**定理 42.2（平衡星形的有限刚性）。** 对定义 42.1 的每个 $\sigma,\rho$，以下三项等价：$\rho=0$；$\mathsf{P2}$ 及每个 $x\in C_{\rm sa}$ 的 $\mathsf{PB}_x$ 对全部数学正泛函成立；仅 $\mathsf{PB}_0$ 对全部数学正泛函成立。第三项排除非零 $\rho$ 的证明不使用 P2。
+
+具体地，置以下标准复内积下的正交单位向量及实数：
+
+$$
+u=\frac13(2\sqrt2,-1,0)^{\mathsf T},\quad e=\frac13(1,2\sqrt2,0)^{\mathsf T},\quad f=(0,0,1)^{\mathsf T},\quad \theta=\frac83\rho,
+\tag{42.5}
+$$
+
+$$
+\begin{aligned}
+D_\rho&=\frac{2+12\rho^2}{9},& E_\rho&=\frac{2+4\rho^2}{9},\\
+A_\rho&=3\sqrt{D_\rho+\theta^2E_\rho},&
+\Lambda_\rho&=\sqrt2\left(1+\frac{64\rho^2}{9}\right),\\
+M_\rho&=3\left(\sqrt3+\frac32+2|\rho|\right)(1+\theta^2),&
+\delta_\rho&=\Lambda_\rho-A_\rho.
+\end{aligned}
+\tag{42.6}
+$$
+
+若 $\rho\ne0$，则 $\delta_\rho>0$。取同一个原零探针及有限正读取
+
+$$
+x=0,\quad \varepsilon=\varepsilon_\rho=\frac{\delta_\rho}{2M_\rho}>0,\quad
+\eta=i\sigma e+\theta f,\quad \xi=u+\varepsilon\eta,\quad \phi_\xi(a)=\xi^*a\xi,\quad \phi_\xi(1)=1+\varepsilon^2(1+\theta^2).
+\tag{42.7}
+$$
+
+则原预算的实际违反量满足
+
+$$
+|\phi_\xi(L)|-\sqrt{B_{\phi_\xi}(R_+,S_+)}-\sqrt{B_{\phi_\xi}(R_-,S_-)}\ge\frac{\delta_\rho^2}{4M_\rho}>0.
+\tag{42.8}
+$$
+
+**证明。** 先给完整有限余项所需的初等面积估计。将 $\mathbb C^3$ 看成内积为 $\operatorname{Re}(a^*b)$ 的实 Hilbert 空间，定义
+
+$$
+\mathcal A(a,b)=\sqrt{\|a\|^2\|b\|^2-\operatorname{Re}(a^*b)^2}.
+\tag{42.9}
+$$
+
+$a\ne0$ 时，设 $\Pi_a$ 是到实正交补 $a^\perp$ 的投影，则 $\mathcal A(a,b)=\|a\|\|\Pi_ab\|$。投影的三角不等式及收缩性给
+
+$$
+\mathcal A(a,b+q d)\le\mathcal A(a,b)+q\|a\|\|d\|\quad(q\ge0).
+\tag{42.10}
+$$
+
+$a=0$ 时两边相应面积均为零，故仍成立。对自伴 $U,V$，直接由 $\phi_\xi(U^2)=\|U\xi\|^2$、$\phi_\xi(U\circ V)=\operatorname{Re}((U\xi)^*V\xi)$ 得 $\sqrt{B_{\phi_\xi}(U,V)}=\mathcal A(U\xi,V\xi)$，无需除以任何 Gram 对角或质量。
+
+取 $x=0$，则 $h=r=0$，完整标签为 $R_+=-k$、$R_-=k$、$S_\pm=t\pm g$、$L=-(tg+gt)$。在前两维与第三维的原分块中，写
+
+$$
+v=\binom1{\sqrt2},\quad w=\binom{1/2}{\sqrt2},\quad s_0=\rho\operatorname{diag}(1,-2),\qquad
+t=\begin{pmatrix}0&v\\v^*&0\end{pmatrix},\quad k=\begin{pmatrix}0&w\\w^*&0\end{pmatrix},\quad g=\begin{pmatrix}s_0&i\sigma w\\-i\sigma w^*&0\end{pmatrix}.
+\tag{42.11}
+$$
+
+由 (42.5)，$w=(3/2)e$，逐项相乘给
+
+$$
+ku=0,\quad ke=\frac32f,\quad kf=\frac32e,\quad tu=\frac{\sqrt2}{3}f,\quad gu=su=\frac{2\rho}{3}u+\frac{2\sqrt2\rho}{3}e.
+\tag{42.12}
+$$
+
+原 $L$ 的角块为 $i\sigma(vw^*-wv^*)$，环境列为 $-s_0v$，环境对角为零。因此在完整正交基 $(u,e,f)$ 下，全部系数为
+
+$$
+L=\begin{pmatrix}
+0&i\sigma\sqrt2/2&-4\sqrt2\rho/3\\
+-i\sigma\sqrt2/2&0&7\rho/3\\
+-4\sqrt2\rho/3&7\rho/3&0
+\end{pmatrix}.
+\tag{42.13}
+$$
+
+确实，$v$ 在 $(u,e)$ 下为 $(\sqrt2/3,5/3)$，$w$ 为 $(0,3/2)$，而 $-s_0v$ 的两坐标是 $-4\sqrt2\rho/3,7\rho/3$。由此 $u^*Lu=\eta^*L\eta=0$；后一等式使用 $\eta$ 的 $e$ 坐标纯虚、$f$ 坐标实及 $L_{ef}$ 实。于是对任意有限 $\varepsilon>0$，准确有
+
+$$
+2\operatorname{Re}(\eta^*Lu)=-\sqrt2-\frac{8\sqrt2\rho\theta}{3}=-\Lambda_\rho,\qquad |\phi_{u+\varepsilon\eta}(L)|=\varepsilon\Lambda_\rho.
+\tag{42.14}
+$$
+
+再令
+
+$$
+a_0=k\eta=\frac32(\theta e+i\sigma f),\quad
+b_\pm=(t\pm g)u=\frac{\sqrt2}{3}f\ \pm\left(\frac{2\rho}{3}u+\frac{2\sqrt2\rho}{3}e\right),\quad d_\pm=(t\pm g)\eta.
+\tag{42.15}
+$$
+
+正交性给 $\|b_\pm\|^2=D_\rho$、$\|a_0\|^2=(9/4)(1+\theta^2)$、$\operatorname{Re}(a_0^*b_\pm)=\pm\sqrt2\rho\theta$。故
+
+$$
+\mathcal A(a_0,b_\pm)^2=\frac94\left(D_\rho+\theta^2E_\rho\right),\qquad \mathcal A(a_0,b_+)+\mathcal A(a_0,b_-)=A_\rho,
+\tag{42.16}
+$$
+
+其中 $E_\rho=D_\rho-8\rho^2/9$。由 $ku=0$ 和面积的齐次性，两笔真实预算之和准确等于
+
+$$
+\varepsilon\mathcal A(a_0,b_++\varepsilon d_+)+\varepsilon\mathcal A(a_0,b_-+\varepsilon d_-)
+\le\varepsilon A_\rho+\varepsilon^2\|a_0\|(\|d_+\|+\|d_-\|).
+\tag{42.17}
+$$
+
+此式保留全部环境项。由星形块平方得 $\|t\|=\|v\|=\sqrt3$、$\|K_\sigma(c,t)\|=\|w\|=3/2$，且 $\|s\|=2|\rho|$，所以
+
+$$
+\|d_+\|+\|d_-\|\le2(\|t\|+\|g\|)\|\eta\|
+\le2\left(\sqrt3+\frac32+2|\rho|\right)\sqrt{1+\theta^2}.
+\tag{42.18}
+$$
+
+乘以 $\|a_0\|=(3/2)\sqrt{1+\theta^2}$，(42.17) 即不超过 $\varepsilon A_\rho+\varepsilon^2M_\rho$。严格差额来自完整多项式恒等式
+
+$$
+A_\rho^2=\frac{18+236\rho^2+256\rho^4}{9},\qquad \Lambda_\rho^2-A_\rho^2=\frac{20}{9}\rho^2+\frac{5888}{81}\rho^4.
+\tag{42.19}
+$$
+
+两根量均正，故非零 $\rho$ 给 $\delta_\rho>0$，且 $M_\rho>0$。选择 (42.7) 的有限 $\varepsilon$，由 (42.14)、(42.17)–(42.19) 得违反量至少为 $\varepsilon\delta_\rho-\varepsilon^2M_\rho=\delta_\rho^2/(4M_\rho)>0$。这证明第三项蕴涵第一项，没有用 P2、除以 $\rho$ 或通道，也没有对未知响应取极限。
+
+反向证明保留全部探针。$\rho=0$ 时 $g=K_\sigma(c,t)$。任意正泛函的复 Cauchy–Schwarz 与 $UV=U\circ V-i\sigma K_\sigma(U,V)$ 给
+
+$$
+|\phi(K_\sigma(U,V))|^2\le B_\phi(U,V)\qquad(U=U^*,\ V=V^*).
+\tag{42.20}
+$$
+
+取 $U=c,V=t$ 得 P2。对任意原 $x\in C_{\rm sa}$，记 $a=h-k$、$b=r+g$、$Z=x+i\sigma t$。直接展开，或取已付 (39.7) 的演员为 $c$，得到
+
+$$
+a+i\sigma b=i\sigma cZ,\qquad R_\pm+i\sigma S_\pm=(1\pm i\sigma c)Z,\qquad
+(R_\pm+i\sigma S_\pm)^*(R_\pm+i\sigma S_\pm)=Z^*(1+c^2)Z.
+\tag{42.21}
+$$
+
+左端为 $R_\pm^2+S_\pm^2+2K_\sigma(R_\pm,S_\pm)$，两个平方和之差是 $4x\circ a+4t\circ b=-2L$。相减即 $K_\sigma(R_+,S_+)-K_\sigma(R_-,S_-)=L$；施以 $\phi$、三角不等式及 (42.20)，得每个 $x$ 的原 PB。全部零质量和退化情形包含在 Cauchy–Schwarz 内；这里的交换子只是已知乘法中的比较量，不是假定未知外响应。第二项蕴涵第三项由 $x=0$ 的包含关系，等价性得证。∎
+

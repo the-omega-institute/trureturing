@@ -3265,7 +3265,7 @@ principle is the established intermediate of D'Alessandro,
 [*On Quantum State Observability and Measurement*, §2, Theorem 1](https://arxiv.org/html/quant-ph/0307127v1),
 also recorded in the Library notes
 [Fibonacci observable completion](../../../Library/Quantum/fibonacci2009quantumobservable2003.md)
-and [native control](../../../Library/QuantumChannels/numatayamanouchi2022nativecontrol.md).
+and [native control](../../../Library/FiniteGroups/numatayamanouchi2022nativecontrol.md).
 The actual positive-word conjugation density used here is V Theorem
 95.1. Neither that general principle nor the implementation-dependence
 background of Abbott et al.,

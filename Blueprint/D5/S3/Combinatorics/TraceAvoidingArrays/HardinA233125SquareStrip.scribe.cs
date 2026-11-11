@@ -31,6 +31,9 @@ internal sealed class HardinA233125SquareStripDocument : IScribeDocumentDefiniti
                 "A row contains four individual colours."),
             Entry("horizontal", "rowLegal", "Horizontal bonds", Horizontal(),
                 "Fin.castSucc and Fin.succ select consecutive columns."),
+            Entry("decidable-horizontal", "decidableRowLegal", "Deciding horizontal bonds",
+                DecidableHorizontal(),
+                "The defining expression is inferInstanceAs for the displayed universally quantified conjunction."),
             Entry("vertical", "bonds", "Vertical bonds", Vertical(),
                 "Only equal columns in consecutive rows are joined. Diagonals are free."),
             Entry("count", "a", "The literal filtered finite count", Count(),
@@ -56,6 +59,14 @@ internal sealed class HardinA233125SquareStripDocument : IScribeDocumentDefiniti
                 "The sum is over all 6^4 individual colour rows with the original scanner."),
             Entry("firstcount", "firstCount", "First-row class distribution", FirstCount(),
                 "The first colour is fixed to zero and both initial scanner flags are false."),
+            Describe.Lean(DescribeId.Create("label-sum"),
+                DeclarationHandle.Create(Gid + "label_sum"), H("Summing over label rows"),
+                StatementSource.FromAuthor(Disp(LabelSum())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "The sum over all four-column label rows equals four nested sums "
+                    + "over the three labels, for every integer-valued function."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("certificate"),
                 DeclarationHandle.Create(Gid + "finite_certificate"), H("Single-row certificate"),
                 StatementSource.FromAuthor(Disp(Certificate())),
@@ -90,6 +101,27 @@ internal sealed class HardinA233125SquareStripDocument : IScribeDocumentDefiniti
             literature ? AssessedProvenance.FromLiterature(Source)
                 : AssessedProvenance.FromRepo(Source),
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
+
+    private static Formula LabelSum()
+    {
+        var g = V("g"); var q = V("q");
+        var summand = At(g, Parenthesized(Vector(V("a"), V("b"), V("c"), V("d"))));
+        var nested = SumOver("a", Fin(3), SumOver("b", Fin(3),
+            SumOver("c", Fin(3), SumOver("d", Fin(3), summand))));
+        return All("g", Arrow(Parenthesized(PairRow()), Name("Int")),
+            Eq(SumOver("q", PairRow(), At(g, q)), nested));
+    }
+
+    private static Formula DecidableHorizontal()
+    {
+        var c = V("c"); var j = V("j");
+        var x = At(c, Call("Fin.castSucc", j));
+        var y = At(c, Call("Fin.succ", j));
+        var body = All("j", Fin(3), And(Ne(x, y), Ne(Add(Val(x), Val(y)), D(5))));
+        return All("c", Name(Root + "Row"),
+            Eq(Typed(Call(Root + "decidableRowLegal", c), Call("Decidable", Parenthesized(Call(Root + "rowLegal", c)))),
+                Call("inferInstanceAs", Parenthesized(Call("Decidable", Parenthesized(body))))));
+    }
 
     private static Formula Horizontal()
     {

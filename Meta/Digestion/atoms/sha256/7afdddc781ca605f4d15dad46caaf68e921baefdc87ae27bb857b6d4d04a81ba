@@ -1,0 +1,110 @@
+**定理 24.2（有限原生受控反射的完整通道）。** 对任意整数 $q\ge1$，存在一个只用至多 $q$ 次 forward $V$、零次场重置的有限前缀 $\mathsf G_q$，以及正算子 $\sigma_{s,q},\sigma_{f,q}$，满足
+
+$$
+\begin{aligned}
+\mathsf G_q(X)
+ &=U XU^\dagger\otimes\sigma_{s,q}
+   +W U XU^\dagger W^\dagger\otimes\sigma_{f,q},\\
+U&=C Q_D\otimes I_M,\qquad W=Q_D\otimes I_{cM},\\
+\operatorname{Tr}\sigma_{s,q}&=1-2^{-q},\qquad
+\operatorname{Tr}\sigma_{f,q}=2^{-q},\qquad
+\sigma_{Z,q}=\sigma_{s,q}+\sigma_{f,q}\in\mathsf D(Z).
+\end{aligned}
+\tag{24.3}
+$$
+
+两个算子的支撑由保留的成功/截止标记分开，且均与每个输入、实际 $n,h$ 无关。新辅助准备均为已知有限态，不接入任何混合输入的纯化；同一 $S$ 在重试中回用。完整输出满足精确等式
+
+$$
+\frac12\left\|\mathsf G_q-
+       \bigl(X\mapsto UXU^\dagger\otimes\sigma_{Z,q}\bigr)
+       \right\|_\diamond=2^{-q}.
+\tag{24.4}
+$$
+
+这里的范数仍稳定于任意额外参考；因而 (24.3)–(24.4) 覆盖任意混合联合输入、控制位叠加和与 $M$ 的纠缠。取
+
+$$
+\eta_e=\frac{e}{D_eL_e},\qquad
+q_e=\left\lceil\log_2\frac{D_eL_e}{e}\right\rceil
+\tag{24.5}
+$$
+
+即得所述半 diamond 误差至多 $\eta_e$，绝对调用常数可取 $C_0=1$。此为前缀，不在其中调用规定终端；接回原控制器时终端仍须恰执行一次。
+
+证明。先固定两个标签的已知基
+
+$$
+|x_X\rangle=\frac{|+\rangle+(-1)^x|-\rangle}{\sqrt2},
+\qquad x\in\{0,1\}.
+$$
+
+第一槽后只在 $cH$ 上施行
+
+$$
+F_{cH}=|0\rangle\langle0|_c\otimes I_H
+       +|1\rangle\langle1|_c\otimes Z_H,
+\qquad Z_H=|+\rangle\langle+|-|-\rangle\langle-|.
+\tag{24.6}
+$$
+
+它不是 controlled-$V$，也不作用于 $R$。随后测量 $H,E$ 的上述 $X$ 基。具体选择输出原始结果 $B$ 和读出副本 $F$ 的非 $R$ 仪器，其四个完整结果算子为
+
+$$
+L_{xy}=P_{xy}\otimes|xy\rangle_B\otimes|xy\rangle_F,
+\qquad P_{xy}=|x_Xy_X\rangle\langle x_Xy_X|,
+\qquad\sum_{x,y}L_{xy}^\dagger L_{xy}=I_{HE}.
+$$
+
+这里 $B,F$ 均由已知空白寄存器开始，$F$ 是确实制造并输出的读出/复制系统；完整节点为 $Y\mapsto\sum_{xy}L_{xy}YL_{xy}^\dagger$，测后 $H,E$、$B,F$ 都保留。它是允许的有限 CP 仪器的具体选择，没有另行声明的实际输出。给定 $(x,y)$ 后，$H,E$ 恰在 $|x_Xy_X\rangle$，$B,F$ 恰在相应基态；进一步的记录复制、奇偶计算及计数只用这些基态作控制，故其保留输出也仅取决于读数。于是条件新辅助态独立于原输入是这个秩一投影及复制的后果，并非预先供应的 clean instrument 假设。该 CP 节点的代数 Kraus 指标不是另一个实际系统。若选用另一个读出实现且有额外实际输出，必须将它们加入完整口重证；不能把包含额外 $b$ 副本的读出冒充这个仪器。
+
+将 (24.1)、(24.6) 与这两个投影相乘，得到在整个 $RSc$ 上的矩阵恒等式
+
+$$
+\begin{aligned}
+K^{(c)}_{xy}
+ &:=(\langle x_Xy_X|\otimes I_{RSc})F_{cH}V\\
+ &=\frac12\left(\Pi_+\otimes I_c+
+          (-1)^{x+y}\Pi_-\otimes Z_c\right)
+  =\frac12(Q_D^{p}\otimes I_c)C Q_D,\qquad
+p=x\mathbin\oplus y .
+\end{aligned}
+\tag{24.7}
+$$
+
+特别地，每个结果的效果都是 $I/4$。该等式包括 $|0\rangle\langle1|_c$ 交叉块，不能只用控制位的经典混合证明它。$\Pi_\pm$ 是互补正交投影，故 $Q_D=Q_D^\dagger=Q_D^{-1}$；在 (24.7) 中 $Q_D$ 与 $C Q_D$ 交换。若 $p=0$，已取得所需门；若 $p=1$，只有一个已知的额外 $Q_D$ 待校正。这里没有把这个额外门当作免费操作。
+
+校正每次再调用同一个 forward $V$，不再施行 (24.6)，并作同一完整 $X$ 读出。此时
+
+$$
+K^{(u)}_{xy}=\frac12\left(\Pi_++(-1)^{x+y}\Pi_-\right)
+           =\frac12 Q_D^{p}.
+\tag{24.8}
+$$
+
+若 $p=0$，残留的 $Q_D$ 不变，继续；若 $p=1$，$Q_D^2=I$ 消掉残留，立即停止。第一次成功之后不再调用 $V$。共调用 $q$ 次仍未成功则停止并标记截止，保留那条分支。每个后续槽都由已经产生的经典 $(x,y)$ 决定是否执行；没有量子相干的“调用/不调用”门、$V^\dagger$、直接 $R$ 门、后选择或无限等待。
+
+完整历史 $w=((x_1,y_1),\ldots,(x_r,y_r))$ 的长度 $r\le q$，满足以下二者之一：第一奇偶为零，或第一奇偶为一、其后先有若干零而在首次一处停止；截止历史则第一奇偶为一、其后直到 $q$ 都为零。由 (24.7)–(24.8)，每条成功历史的作用算子是 $2^{-r}U$，每条截止历史是 $2^{-q}WU$。因此对包括 $M$ 在内的每个输入，历史概率分别为 $4^{-r}$、$4^{-q}$，没有依赖输入的归一化。
+
+以 $\zeta_w$ 表示该历史的全部新实际输出态，包含所有测后 $H,E$、原始 $(x_i,y_i)$ 和实际副本、读出输出、保留工作空间、调用计数、停止及截止标记。每条历史上的这些系统仅由已知输入和有限的非 $R$ 记录处理制成，故 $\zeta_w$ 固定且不含输入信息。为比较同一输出空间，可以预留 $q$ 组有限空白寄存器，未调用槽保持空白并带未使用标记；这不执行额外原生槽，也不擦除实际输出。定义
+
+$$
+\sigma_{s,q}=\sum_{w\ {\rm success}}4^{-|w|}\zeta_w,
+\qquad
+\sigma_{f,q}=\sum_{w\ {\rm cutoff}}4^{-q}\zeta_w.
+\tag{24.9}
+$$
+
+长度 $r$ 的成功历史总权重为 $2^{-r}$，截止历史总权重为 $2^{-q}$，给出 (24.3)。这同时证明了所有计数、路由、原始读数和 cutoff 分支上的独立性，而非只证明成功分支的条件门。混合辅助若用于制造指针，直接进入 $\zeta_w$，不为它们引入可访问的纯化。
+
+从 (24.3) 减去比较通道，差恰为
+
+$$
+\bigl(\operatorname{Ad}_{WU}-\operatorname{Ad}_U\bigr)(X)
+       \otimes\sigma_{f,q}.
+\tag{24.10}
+$$
+
+任意两通道的 diamond 距离至多二，张量一个正算子按其迹缩放范数，故半范数至多 $2^{-q}$。反向，取 $c=0$，在 $\Pi_\pm$ 的各一个单位向量 $u_\pm$ 上准备
+$\psi=(u_++u_-)/\sqrt2$。两投影的秩均非零，因为 $j>0$。$U\psi=\psi$，而 $W\psi=(u_+-u_-)/\sqrt2$ 与它正交；(24.10) 的半迹范数恰为 $\operatorname{Tr}\sigma_{f,q}$。这证明 (24.4)，没有取走任何实际记录。矩阵恒等式及稳定通道范数已证明所有混合与纠缠情形，不需要初态纯化。$\square$
+

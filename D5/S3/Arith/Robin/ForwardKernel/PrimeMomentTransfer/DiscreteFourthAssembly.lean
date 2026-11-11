@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Normalized discrete fourth moments converge uniformly on polynomial length bands. -/
+   digest: Mean-square prime correlations: Normalized discrete fourth moments converge uniformly on polynomial length bands. -/
 
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.DiscreteMomentAsymptotics
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.NormalizedFormalIntegrals
@@ -90,7 +90,7 @@ private theorem p_fourth_normalized_estimate
 theorem eventual_discrete_fourth (SS : Finset ℕ → ℝ) (α β M : ℝ)
     (hα : 0 < α) (hαβ : α < β) (hβ : β < 1 / 4)
     (hSS : SS ∅ = 1) (hSS1 : ∀ d, SS {d} = 1)
-    (hHL : HL4 SS β) (hcor : IntervalCorrelations SS) (hM : 1 ≤ M)
+    (hMS : MeanSquareHL4 SS β) (hcor : IntervalCorrelations SS) (hM : 1 ≤ M)
     (δ : ℝ) (hδ : 0 < δ) :
     ∀ᶠ N : ℝ in atTop,
       ∀ H : ℕ, N ^ α ≤ (H : ℝ) → (H : ℝ) ≤ N ^ β →
@@ -100,7 +100,7 @@ theorem eventual_discrete_fourth (SS : Finset ℕ → ℝ) (α β M : ℝ)
   have hβ1 : β < 1 := by linarith
   obtain ⟨ε, hε, hεβ⟩ := transfer_epsilon_exists β hβ
   obtain ⟨⟨C₁, hC₁, htransfer⟩, ⟨C₂, hC₂, η, hη, hanti, hlim, hformal⟩⟩ :=
-    discrete_moment_asymptotic_inputs SS α β hα hαβ hβ1 hSS hSS1 hHL hcor M hM ε hε
+    discrete_moment_asymptotic_inputs SS α β hα hαβ hβ1 hSS hSS1 hMS hcor M hM ε hε
   let K := C₁ + C₂ + 9 * M ^ 2 * Real.log 2
   have hK : 0 ≤ K := by dsimp [K]; positivity
   let t := δ / (3 * (K + 1))
@@ -130,7 +130,7 @@ theorem eventual_discrete_fourth (SS : Finset ℕ → ℝ) (α β M : ℝ)
     exact (hformal H (Real.log x) hHlo hHhi hlower hupper).2 a b hab
   have hb := p_fourth_normalized_estimate SS N H M B C₁ C₂ (η H) ε w a b
     hgeom.1 hH1 hHN (by linarith) hC₁ hC₂ (hη H) hw hab
-    (htransfer H hHlo hHhi B w hw 4 (Or.inr rfl) a b hab) hf
+    (htransfer H hHlo hHhi B w hw 4 ⟨Or.inr (Or.inr rfl), le_rfl⟩ a b hab) hf
   have hB : 0 ≤ B := hw.2.2.1
   calc
     _ ≤ K * B * (η H + 1 / Real.log N +
