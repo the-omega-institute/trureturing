@@ -91,7 +91,7 @@ private theorem top_scalar_power (T : K →ₗ[F] K) (a : K) (r : ℕ) :
       LinearMap.restrictScalars_apply, restricted_derivative_pow_local,
       scalarMap_apply, map_smul, hz, smul_zero, map_zero, LinearMap.zero_apply]
 
-private theorem top_top (T U : K →ₗ[F] K) :
+theorem top_top (T U : K →ₗ[F] K) :
     topMap (p := p) T * topMap U = 0 := by
   apply LinearMap.ext
   intro v
@@ -100,7 +100,7 @@ private theorem top_top (T U : K →ₗ[F] K) :
   rw [derivative_pow_constant (p - 1) (by have hp : 2 < p := Fact.out; omega)]
   simp
 
-private theorem topMap_add (T U : K →ₗ[F] K) :
+theorem topMap_add (T U : K →ₗ[F] K) :
     topMap (p := p) (T + U) = topMap T + topMap U := by
   apply LinearMap.ext
   intro v

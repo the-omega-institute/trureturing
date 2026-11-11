@@ -650,7 +650,7 @@ private theorem derivative_commutes_end_pow (X : V →ₗ[F] V)
       simp only [pow_succ', Module.End.mul_apply]
       rw [ih, hD]
 
-private theorem nilpotent_of_constants_zero (X : V →ₗ[F] V)
+theorem nilpotent_of_constants_zero (X : V →ₗ[F] V)
     (hD : ∀ v, X (D v) = D (X v))
     (hc : ∀ z, X (constantLinear z) = 0) : X ^ p = 0 := by
   have hkill : ∀ n (v : V), (D ^ n) v = 0 → (X ^ n) v = 0 := by
@@ -679,7 +679,7 @@ theorem derivative_pow_constant (n : ℕ) (hn : 0 < n) (z : K) :
 
 def leadingIndex : Fin p := ⟨p - 1, by have hp : 2 < p := Fact.out; omega⟩
 
-private theorem toeplitzDegree_constant (c : Fin p → K) (T : K →ₗ[F] K) (z : K) :
+theorem toeplitzDegree_constant (c : Fin p → K) (T : K →ₗ[F] K) (z : K) :
     toeplitzDegree (p := p) c T (constantLinear z) =
       constantLinear (c (leadingIndex (p := p)) * z) := by
   classical
