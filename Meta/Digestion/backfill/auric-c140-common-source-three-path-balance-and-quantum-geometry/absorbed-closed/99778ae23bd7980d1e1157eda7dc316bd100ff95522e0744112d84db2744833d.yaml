@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:99778ae23bd7980d1e1157eda7dc316bd100ff95522e0744112d84db2744833d
   normalized_sha256: sha256:99778ae23bd7980d1e1157eda7dc316bd100ff95522e0744112d84db2744833d
 cas_ref: sha256:99778ae23bd7980d1e1157eda7dc316bd100ff95522e0744112d84db2744833d
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/QuadraticForms/RealThreePathFiniteQueryBoundary.finite_query_boundary
+    target_statement_id: sha256:9cde2a0f729545e30cfc048689288bf87b46c9accba0655a158c5dd637beaa8c
 receipts:
   unresolved_subitems: []
