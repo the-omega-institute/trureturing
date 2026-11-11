@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:f2da00ebf5532719a61595142c1f2241697b05c010ec4f76057c2779539a2b38
   normalized_sha256: sha256:f2da00ebf5532719a61595142c1f2241697b05c010ec4f76057c2779539a2b38
 cas_ref: sha256:f2da00ebf5532719a61595142c1f2241697b05c010ec4f76057c2779539a2b38
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Algebra/OriginalOcticSplitDeterminant.original_split_determinant_irreducible
+    target_statement_id: sha256:8f6fb712e32fec319fc66a9d7775944f484e0b0ecb0cba13fd3c27aee885d328
 receipts:
   unresolved_subitems: []
