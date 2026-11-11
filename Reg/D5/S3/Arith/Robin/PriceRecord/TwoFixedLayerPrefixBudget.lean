@@ -17,7 +17,7 @@ namespace Reg.D5.S3.Arith.Robin.PriceRecord.TwoFixedLayerPrefixBudget
 open Real Filter Finset
 open scoped Topology BigOperators
 open _root_.D5.S3.Constants.Irrationality.LogPrimeRatioIrrationality
-open _root_.D5.S3.Diophantine.StablePositiveSemigroup
+open _root_.D5.S3.Arith.DiophantineApproximation.StablePositiveSemigroup
 open _root_.D5.S3.Arith.GoldenResourceOptimalInteger
 open _root_.D5.S3.Arith.GoldenResource.GoldenResourceOptimalLayerCount
 open _root_.D5.S3.Arith.GoldenResource.ActualReserve.HarmonicReference
@@ -328,7 +328,7 @@ namespace Reg.D5.S3.Arith.Robin.PriceRecord.TwoFixedLayerPrefixBudget.CurvatureC
 open Real Filter Finset
 open scoped Topology BigOperators
 open _root_.D5.S3.Constants.Irrationality.LogPrimeRatioIrrationality
-open _root_.D5.S3.Diophantine.StablePositiveSemigroup
+open _root_.D5.S3.Arith.DiophantineApproximation.StablePositiveSemigroup
 open _root_.D5.S3.Arith.GoldenResourceOptimalInteger
 open _root_.D5.S3.Arith.GoldenResource.GoldenResourceOptimalLayerCount
 open _root_.D5.S3.Arith.GoldenResource.ActualReserve.HarmonicReference

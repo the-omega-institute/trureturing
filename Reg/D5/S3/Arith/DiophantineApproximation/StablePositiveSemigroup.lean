@@ -1,4 +1,4 @@
-import D5.S3.Diophantine.StablePositiveSemigroup
+import D5.S3.Arith.DiophantineApproximation.StablePositiveSemigroup
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
@@ -13,7 +13,7 @@ For EVERY target below:
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
-namespace Reg.D5.S3.Diophantine.StablePositiveSemigroup
+namespace Reg.D5.S3.Arith.DiophantineApproximation.StablePositiveSemigroup
 open Set Finset Filter Real
 open scoped Topology
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -47,13 +47,13 @@ abbrev arena : Arena where
           (a : ℝ) * V.readout () α X + (b : ℝ) * γ X ≤ Δ - ε / 4
 
 private theorem actual_law : arena.Law actual := by
-  exact @_root_.D5.S3.Diophantine.StablePositiveSemigroup.stable_positive_mesh
+  exact @_root_.D5.S3.Arith.DiophantineApproximation.StablePositiveSemigroup.stable_positive_mesh
 
 private theorem source_bridge :
-    (type_of% (@_root_.D5.S3.Diophantine.StablePositiveSemigroup.stable_positive_mesh)) ↔ arena.Law actual := Iff.rfl
+    (type_of% (@_root_.D5.S3.Arith.DiophantineApproximation.StablePositiveSemigroup.stable_positive_mesh)) ↔ arena.Law actual := Iff.rfl
 
 #print axioms actual_law
 #print axioms source_bridge
 end stable_positive_mesh
 
-end Reg.D5.S3.Diophantine.StablePositiveSemigroup
+end Reg.D5.S3.Arith.DiophantineApproximation.StablePositiveSemigroup

@@ -1,6 +1,6 @@
-/- GID: D5/S3/Diophantine/StablePositiveSemigroup
+/- GID: D5/S3/Arith/DiophantineApproximation/StablePositiveSemigroup
    generality: G
-   mirror-B: D5/B/S3/Diophantine/StablePositiveSemigroup
+   mirror-B: D5/B/S3/Arith/DiophantineApproximation/StablePositiveSemigroup
    mirror-E: none(waiver:compactness-and-finite-approximation)
    anchors: [mathlib/module/Mathlib.Topology.Instances.AddCircle.DenseSubgroup]
    utility: none
@@ -14,7 +14,7 @@ import Mathlib.Tactic
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
-namespace D5.S3.Diophantine.StablePositiveSemigroup
+namespace D5.S3.Arith.DiophantineApproximation.StablePositiveSemigroup
 open Set Finset Filter Real
 open scoped Topology
 
@@ -192,4 +192,4 @@ theorem stable_positive_mesh {α γ : ℝ → ℝ} {α₀ γ₀ : ℝ}
   · simpa only [hucast, hvcast] using hup
 
 #print axioms stable_positive_mesh
-end D5.S3.Diophantine.StablePositiveSemigroup
+end D5.S3.Arith.DiophantineApproximation.StablePositiveSemigroup

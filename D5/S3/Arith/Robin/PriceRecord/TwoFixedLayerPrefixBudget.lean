@@ -6,7 +6,7 @@
    utility: none
    digest: Seeded actual-root coefficients and the exact finite paid-prefix price transfer. -/
 import D5.S3.Constants.Irrationality.LogPrimeRatioIrrationality
-import D5.S3.Diophantine.StablePositiveSemigroup
+import D5.S3.Arith.DiophantineApproximation.StablePositiveSemigroup
 import D5.S3.Arith.Robin.PriceRecord.FixedLayerRootAsymptotic
 import D5.S3.Arith.Robin.PriceRecord.FixedLayerShrinkingPrimeRoster
 import D5.S3.Arith.Robin.PriceRecord.HigherLayerInsertionRegret
@@ -26,7 +26,7 @@ namespace D5.S3.Arith.Robin.PriceRecord.TwoFixedLayerPrefixBudget
 open Real Filter Finset
 open scoped Topology BigOperators
 open D5.S3.Constants.Irrationality.LogPrimeRatioIrrationality
-open D5.S3.Diophantine.StablePositiveSemigroup
+open D5.S3.Arith.DiophantineApproximation.StablePositiveSemigroup
 open D5.S3.Arith.GoldenResourceOptimalInteger
 open D5.S3.Arith.GoldenResource.GoldenResourceOptimalLayerCount
 open D5.S3.Arith.GoldenResource.ActualReserve.HarmonicReference
