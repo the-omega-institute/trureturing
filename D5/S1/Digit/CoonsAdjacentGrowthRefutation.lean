@@ -122,9 +122,25 @@ private lemma window_digits (ell : ℕ) (l : List ℕ) :
     rw [List.length_cons, window_succ]
     simpa [Nat.ofDigits_cons] using congrArg (fun x => d + ell * x) ih
 
+private lemma count_zero (k ell : ℕ) (hell : 2 ≤ ell) : count k ell 0 = 1 := by
+  apply Nat.card_eq_one_iff_exists.mpr
+  refine ⟨⟨0, (by simp), (by simp [weight])⟩, ?_⟩
+  intro a
+  apply Subtype.ext
+  apply Finsupp.ext
+  intro i
+  have h := term_le_weight ell a.val i
+  rw [a.property.2] at h
+  have hp : 0 < ell ^ i := by positivity
+  simpa using (show a.val i = 0 by nlinarith)
+
 /-- Ordinary radix digits give positivity for the entire quantified parameter range. -/
 theorem count_positive (k ell n : ℕ) (hell : 2 ≤ ell) (hk : ell - 1 ≤ k) :
     0 < count k ell n := by
+  by_cases hn : n = 0
+  · subst n
+    rw [count_zero k ell hell]
+    norm_num
   let l := Nat.digits ell n
   let a := pack l.length (fun i => l[i]?.getD 0)
   have ha : ∀ i, a i ≤ k := by
@@ -264,11 +280,15 @@ private lemma carry_weight {m : ℕ} (v : Fin m → Fin 2) :
     apply Finset.sum_congr rfl
     intro i hi
     have h := carryDigit_balance v i
-    nlinarith
+    calc
+      carryDigit v i * 4^i + carries v i * 4^i =
+          (carryDigit v i + carries v i) * 4^i := by ring
+      _ = (1 + 4*carries v (i+1)) * 4^i := by rw [h]
+      _ = 4^i + 4*(carries v (i+1)*4^i) := by ring
   have htail : window 4 (m+1) (fun i => carries v (i+1)) =
       window 4 m (fun i => carries v (i+1)) := by
     simp [window, Finset.sum_range_succ, carries_end]
-  rw [window_succ, carries_zero, zero_add, htail] at hbal
+  rw [window_succ 4 m (carries v), carries_zero, zero_add, htail] at hbal
   omega
 
 private def carryPartition (k m : ℕ) (hk : 5 ≤ k) (v : Fin m → Fin 2) :
@@ -312,6 +332,96 @@ theorem count_repunit (k m : ℕ) (hk : 5 ≤ k) (hk' : k ≤ 6) :
     have h := Nat.card_le_card_of_injective (carryPartition k m hk)
       (carryPartition_injective k m hk)
     simpa [Nat.card_fun, count] using h
+
+private lemma log_four : Real.log 4 = 2 * Real.log 2 := by
+  have h := Real.log_pow (2 : ℝ) 2
+  norm_num at h ⊢
+  exact h
+
+private lemma readout_bounds (k n : ℕ) (hk : 5 ≤ k) (hk' : k ≤ 6) (hn : 2 ≤ n) :
+    0 ≤ readout k 4 n ∧ readout k 4 n ≤ (1/2 : ℝ) := by
+  have hb := count_positive k 4 n (by norm_num) (by omega)
+  have hln : 0 < Real.log (n : ℝ) := Real.log_pos (by exact_mod_cast hn)
+  have hs : (count k 4 n : ℝ)^2 ≤ (n : ℝ) := by
+    exact_mod_cast count_square_le k n hk' (by omega)
+  have hl := Real.log_le_log (by positivity : 0 < (count k 4 n : ℝ)^2) hs
+  rw [Real.log_pow] at hl
+  constructor
+  · exact div_nonneg (Real.log_natCast_nonneg _) hln.le
+  · apply (div_le_iff₀ hln).mpr
+    norm_num at hl ⊢
+    linarith
+
+private lemma readout_repunit_lower (k m : ℕ) (hk : 5 ≤ k) (hk' : k ≤ 6)
+    (hm : 1 ≤ m) : (m : ℝ) / (2 * (m+1)) ≤ readout k 4 (repunit m) := by
+  have hpow : 4 ≤ 4 ^ m := by
+    simpa using (Nat.pow_le_pow_right (by norm_num : 1 ≤ 4) hm)
+  have hn : 2 ≤ repunit m := by have := (repunit_bounds m).1; omega
+  have hnpos : 0 < (repunit m : ℝ) := by positivity
+  have hln : 0 < Real.log (repunit m : ℝ) := Real.log_pos (by exact_mod_cast hn)
+  have hlog2 : 0 < Real.log (2 : ℝ) := Real.log_pos (by norm_num)
+  have hp : (repunit m : ℝ) ≤ (4 : ℝ) ^ (m+1) := by
+    exact_mod_cast (repunit_bounds m).2.le
+  have hlog := Real.log_le_log hnpos hp
+  rw [Real.log_pow, log_four] at hlog
+  unfold readout
+  rw [count_repunit k m hk hk', Nat.cast_pow, Real.log_pow]
+  apply (div_le_div_iff₀ (by positivity : 0 < (2 : ℝ) * (m+1)) hln).mpr
+  norm_num at hlog ⊢
+  nlinarith
+
+/-- Every natural tail has exactly this extended-real supremum. -/
+theorem tail_supremum (k N : ℕ) (hk : 5 ≤ k) (hk' : k ≤ 6) (hN : 2 ≤ N) :
+    (⨆ (n : ℕ) (_ : N ≤ n), (readout k 4 n : EReal)) = ((1/2 : ℝ) : EReal) := by
+  apply le_antisymm
+  · apply iSup_le
+    intro n
+    apply iSup_le
+    intro hn
+    exact EReal.coe_le_coe (readout_bounds k n hk hk' (by omega)).2
+  · apply le_of_not_gt
+    intro hlt
+    obtain ⟨r, hsr, hrh⟩ := EReal.lt_iff_exists_real_btwn.mp hlt
+    have hr : r < (1/2 : ℝ) := EReal.coe_lt_coe_iff.mp hrh
+    have hd : 0 < 1 - 2*r := by linarith
+    obtain ⟨m, hm⟩ := exists_nat_gt (max (N : ℝ) (2*r / (1-2*r)))
+    have hmN : N < m := by exact_mod_cast (lt_of_le_of_lt (le_max_left _ _) hm)
+    have hmr : 2*r / (1-2*r) < (m : ℝ) := lt_of_le_of_lt (le_max_right _ _) hm
+    have hfrac : r < (m : ℝ) / (2 * (m+1)) := by
+      have hmul := (div_lt_iff₀ hd).mp hmr
+      apply (lt_div_iff₀ (by positivity : 0 < (2 : ℝ) * (m+1))).mpr
+      nlinarith
+    have hm1 : 1 ≤ m := by omega
+    have hmn : m < 4^m := Nat.lt_pow_self (by norm_num)
+    have htail : N ≤ repunit m := by have := (repunit_bounds m).1; omega
+    have hlow := readout_repunit_lower k m hk hk' hm1
+    have hval : (r : EReal) < (readout k 4 (repunit m) : EReal) :=
+      EReal.coe_lt_coe (hfrac.trans_le hlow)
+    have hsup : (readout k 4 (repunit m) : EReal) ≤
+        ⨆ (n : ℕ) (_ : N ≤ n), (readout k 4 n : EReal) :=
+      le_iSup_of_le (repunit m) (le_iSup_of_le htail le_rfl)
+    exact (not_lt_of_ge hsup) (hsr.trans hval)
+
+/-- The ordinary extended-real all-input exponent, including its finiteness bridge. -/
+theorem exponent_eq_half (k : ℕ) (hk : 5 ≤ k) (hk' : k ≤ 6) :
+    exponent k 4 = ((1/2 : ℝ) : EReal) := by
+  unfold exponent
+  apply le_antisymm
+  · exact iInf_le_of_le 2 (iInf_le_of_le (by norm_num : 2 ≤ 2)
+      (le_of_eq (tail_supremum k 2 hk hk' (by norm_num))))
+  · apply le_iInf
+    intro N
+    apply le_iInf
+    intro hN
+    exact le_of_eq (tail_supremum k N hk hk' hN).symm
+
+/-- Literal negation of the complete same-radix strict adjacent-multiplicity event. -/
+theorem result : Not claim := by
+  intro h
+  have hbad := h 4 (by norm_num) 5 (by norm_num)
+  rw [exponent_eq_half 5 (by norm_num) (by norm_num),
+    exponent_eq_half 6 (by norm_num) (by norm_num)] at hbad
+  exact (lt_irrefl _ hbad)
 
 end
 
