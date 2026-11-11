@@ -2,7 +2,7 @@
    generality: G
    mirror-B: none(waiver:consumed-symbolic-support)
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.Data.Int.Basic]
+   anchors: []
    utility: none
    digest: Abstract bounded-mask and dyadic interval criteria for the reversed two-bank construction. -/
 import Mathlib
