@@ -12,10 +12,10 @@ internal sealed class KhetanProductPeriodicityDocument : IScribeDocumentDefiniti
         Blocks(
             Paragraph(Text(
                 "This module isolates the two-dimensional bridge for a product tile "
-                + "{0,1} × {0,b,c}. The one-dimensional theorem "
-                + "three_point_tiling_residue is an explicit hypothesis of the bridge: it is "
-                + "the unresolved Newman/Fourier input and is not proved or hidden here. "
-                + "Given that input, the exact-cover window forces adjacent columns to be "
+                + "{0,1} × {0,b,c}, with distinct offsets and gcd(b,c)=1. The classical "
+                + "prime-three shift argument proves that every one-dimensional exact-cover "
+                + "complement is a single residue class modulo three. This classification "
+                + "is proved inside the module. The exact-cover window forces adjacent columns to be "
                 + "disjoint and to form a residue-labelled XOR partition, after which the "
                 + "existing three_residue_column_dichotomy supplies the horizontal/vertical "
                 + "period alternative.")),
@@ -38,8 +38,9 @@ internal sealed class KhetanProductPeriodicityDocument : IScribeDocumentDefiniti
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "oneDWindowCount(S,b,c,y) sums the indicators of S at the three translated "
-                    + "sites y, y-b, and y-c. The separate three_point_tiling_residue input "
-                    + "consumes the assertion that this count is exactly one at every y."))),
+                    + "sites y, y-b, and y-c. When this count is one at every integer and "
+                    + "the offsets are primitive, the module proves that S is one residue "
+                    + "class modulo three."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("product-window-count"),
@@ -61,17 +62,24 @@ internal sealed class KhetanProductPeriodicityDocument : IScribeDocumentDefiniti
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "Assume b and c are nonzero, distinct, and coprime. Supply explicitly "
-                        + "the one-dimensional theorem three_point_tiling_residue for every "
-                        + "predicate S satisfying the three-point window count. If every "
+                        "Assume b and c are nonzero, distinct, and coprime. If every "
                         + "two-column product window has count one, the theorem derives "
-                        + "disjoint adjacent columns and a residue/XOR partition.")),
+                        + "disjoint adjacent columns and proves a residue/XOR partition.")),
+                    Paragraph(Text(
+                        "For each adjacent-column union, the indicator f satisfies "
+                        + "f(y)+f(y-b)+f(y-c)=1. Combining this equation at six shifted sites "
+                        + "with weights 1,2,2,1,2,1 yields a cubic identity modulo three. "
+                        + "Its three diagonal terms are zero-one values, so they are equal; "
+                        + "this gives periods 3b and 3c. Bézout gives period three, and summing "
+                        + "the cover equation over the three residue classes shows that "
+                        + "exactly one class is occupied.")),
                     Paragraph(Text(
                         "The conclusion is exactly the existing residue dichotomy: either "
                         + "T(x+2,y) ↔ T(x,y) for all x,y, or T(x,y+3) ↔ T(x,y) for all x,y. "
-                        + "This is a conditional product branch, not a resolution of the full "
-                        + "six-cell orbit-closure problem; the one-dimensional rigidity and "
-                        + "orbit-closure extraction remain separate obligations."))),
+                        + "This proves the product branch on the infinite lattice from exact "
+                        + "coverage alone. It does not resolve the full six-cell orbit-closure "
+                        + "problem: the periodizer and affine-coordinate reduction for an "
+                        + "arbitrary full-span six-point tile remain separate obligations."))),
                 DescribeRole.Theorem)),
         [DocumentEdge.Dependency.Create(GidRef.Create("D5/S1/Dynamics/Symbolic/KhetanSixCellResidue"))]));
 }
