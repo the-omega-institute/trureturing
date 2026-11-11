@@ -187,13 +187,13 @@ def rejected : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (m : ℕ) (f : (Fin 6 → Fin m) → ℤ), R.readout () m f =
+  Law R := ∀ {m : ℕ} (f : (Fin 6 → Fin m) → ℤ), R.readout () m f =
     ∑ a : Fin m, ∑ b : Fin m, ∑ c : Fin m, ∑ d : Fin m, ∑ e : Fin m,
       ∑ g : Fin m, f ![a, b, c, d, e, g]
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hb := h 0 (fun _ => 0)
+  have hb := h (m := 0) (fun _ => 0)
   change (∑ _ : Fin 6 → Fin 0, (0 : ℤ)) + 1 = _ at hb
   simp at hb
 
