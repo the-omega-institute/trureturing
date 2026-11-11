@@ -46,7 +46,7 @@ theorem X_pow_sub_C_irreducible_of_intDegree_coprime
     rw [Polynomial.isUnit_iff_degree_eq_zero, degree_X_pow_sub_C hm, Nat.cast_eq_zero]
     exact Nat.ne_of_gt hm
   obtain ⟨g, hg, hgf⟩ := WfDvdMonoid.exists_irreducible_factor hunit hf
-  letI : Fact (Irreducible g) := ⟨hg⟩
+  have : Fact (Irreducible g) := ⟨hg⟩
   have hroot : (AdjoinRoot.root g) ^ m = algebraMap (RatFunc k) (AdjoinRoot g) a := by
     have h := eval₂_eq_zero_of_dvd_of_eval₂_eq_zero _ _ hgf (AdjoinRoot.eval₂_root g)
     rw [eval₂_sub, eval₂_pow, eval₂_C, eval₂_X, sub_eq_zero] at h
@@ -54,7 +54,9 @@ theorem X_pow_sub_C_irreducible_of_intDegree_coprime
   have hroot_ne : AdjoinRoot.root g ≠ 0 := by
     intro hz
     rw [hz, zero_pow (Nat.ne_of_gt hm)] at hroot
-    exact ha ((algebraMap (RatFunc k) (AdjoinRoot g)).injective hroot.symm)
+    apply ha
+    apply (algebraMap (RatFunc k) (AdjoinRoot g)).injective
+    simpa only [map_zero] using hroot.symm
   have hnorm : (Algebra.norm (RatFunc k) (AdjoinRoot.root g)) ^ m = a ^ g.natDegree := by
     rw [← map_pow, hroot, Algebra.norm_algebraMap,
       (powerBasis hg.ne_zero).finrank, powerBasis_dim hg.ne_zero]
@@ -90,5 +92,8 @@ theorem X_pow_sub_C_irreducible_of_intDegree_coprime
   have hdeq : g.natDegree = m := hdle.antisymm (Nat.le_of_dvd hdpos hdvd)
   exact (associated_of_dvd_of_natDegree_le hgf hf
     (hdeq.trans natDegree_X_pow_sub_C.symm).ge).irreducible hg
+
+#check @X_pow_sub_C_irreducible_of_intDegree_coprime
+#print axioms X_pow_sub_C_irreducible_of_intDegree_coprime
 
 end D5.S1.Dynamics.Symbolic.KhetanBinomialIrreducibility
