@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Algebra;
 internal sealed class PBFixedOutputGramDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A scalar fixed-output PB family forces a transverse output identity. The representation has no total-response or separate P2 hypothesis.",
+        "A scalar fixed-output PB family forces a transverse output identity. The representation has no total-response or separate P2 hypothesis. The four-slot escape audit remains unfinished at https://github.com/the-omega-institute/trureturing/issues/29240; no validated registration or full diagonal-residual conclusion is asserted.",
         H("Fixed-output scalar PB and full vector Gram budgets"),
         Blocks(
             D("scalarPB", "The original scalar budget", ScalarStatement(),
@@ -45,7 +45,6 @@ internal sealed class PBFixedOutputGramDocument : IScribeDocumentDefinition
     private static Formula Mul(Formula a, Formula b) => Multiply(a,b);
     private static Formula Sm(Formula a, Formula b) => C("smul",a,b);
     private static Formula Neg(Formula a) => new Formula.Negate(a);
-    private static Formula Sq(Formula a) => C("pow",a,N(2));
     private static Formula Abs(Formula a) => C("abs",a);
     private static Formula Norm(Formula a) => C("norm",a);
     private static Formula Conj(params Formula[] xs) => xs.Aggregate(And);
