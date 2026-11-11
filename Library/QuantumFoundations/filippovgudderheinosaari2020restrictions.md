@@ -373,10 +373,10 @@ T^X_\xi\!\left(\frac{\eta+x}{2}\right)
 \tag{15}
 $$
 
-Reuse the [fixed-half same-carrier theorem](mullerududec2012selfduality.md#appendix-a-fixed-half-puremixed-entrance-to-s)
+Reuse the [fixed-half same-carrier theorem](../QuantumStates/mullerududec2012selfduality.md#appendix-a-fixed-half-puremixed-entrance-to-s)
 without reproving it: (15) is equivalent to full $S$ and to the arbitrary
 real-weight mixed-remainder law. Use it **after** (8). Keep the full
-[conditional EJA bridge](mullerududec2012selfduality.md#least-confirmation-forces-face-filter-purity)
+[conditional EJA bridge](../QuantumStates/mullerududec2012selfduality.md#least-confirmation-forces-face-filter-purity)
 of Definitions 75.1, 78.1 and 79.1: positive-dual generation, faithful
 state/effect pairing, common frames, signed spectrality, face projections,
 projectivity, purity of filters, and the attributed Barnum–Müller–Ududec
