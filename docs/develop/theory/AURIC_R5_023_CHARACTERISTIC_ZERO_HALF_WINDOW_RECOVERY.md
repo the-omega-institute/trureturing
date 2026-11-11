@@ -2538,3 +2538,597 @@ Napolitano–Polverino–Santonastaso–Zullo，[*Classifications and constructi
 白话说，固定一个确实存在的三次子域后，把窗口里的向量允许用该子域的数作系数，所需方向数只能是二、三或四。任选其中一个不属于底域的原数来倍乘窗口，只要交叠还有两个独立的底域方向，就能锁定这个数目为二：这两个方向若在子域上独立，它们及各自的倍乘已经填满四维窗口；若在子域上依赖，它们与倍乘会填满一条三维的子域直线，窗口只剩一个底域方向可补。反过来，两个子域方向总共只有六个底域维度，两份四维窗口放进去必共享至少两维。因此完整同标签答案相同的两个窗口，在这个实际三次域上不会一个秩二而另一个秩三或四；这没有回答三与四的区别，也没有替我们找到那个子域或可用的标签。
 
 ## 追加锚（本行以下为增补区）
+
+## 38. 四维窗口在实际三次域上的秩三对四原标签分离
+
+**定义 38.1（固定实际域与完整交维函数）。** 设 $F$ 为特征零域，$D/F$ 为实际有限域扩张，$F\subseteq A\subseteq D$ 为已经存在的实际中间域，$[A:F]=3$。对四维 $F$-子空间 $W\le_F D$，沿用
+
+$$
+d_W(r)=\dim_F(W\cap rW)\quad(r\in D^\times),\qquad
+r_W(A)=\dim_A AW,\qquad AW=\operatorname{span}_A W\subseteq D.
+\tag{38.1}
+$$
+
+完整函数保留全部同一原标签及零读数。这里不要求 $F(W/W)=D$，也不预设稳定子 $E_W=\{c\in D:cW\subseteq W\}$ 等于 $F$。
+
+**定理 38.2（高秩分离及三次域条目的纤维不变性）。** 在定义 38.1 的条件下，若四维窗口 $X,Z\le_F D$ 满足 $r_X(A)=3$、$r_Z(A)=4$，则
+
+$$
+\boxed{\qquad \exists r\in D^\times:\quad d_X(r)>d_Z(r).\qquad}
+\tag{38.2}
+$$
+
+因此完整同原标签函数的一个纤维不能同时含有在同一个实际 $A$ 上秩三与秩四的窗口。结合定理 37.2，对任意四维窗口 $X,Z\le_F D$，
+
+$$
+\bigl[\ \forall r\in D^\times,\ d_X(r)=d_Z(r)\ \bigr]
+\quad\Longrightarrow\quad
+r_X(A)=r_Z(A)
+\quad\text{对每个实际三次中间域 }A\subseteq D.
+\tag{38.3}
+$$
+
+证明。先证明 (38.2)，不使用 §37。令 $N=[D:F]$。由 $r_Z(A)=4$ 得 $[D:A]\ge4$、$N\ge12$；低于十二的环境次数不能满足这两个秩前件。
+
+取 $X$ 的一个 $F$-基 $x_1,\ldots,x_4$。映射 $A^4\to AX$、$(c_i)\mapsto\sum c_ix_i$ 的核为一维 $A$-空间。选其非零向量 $\lambda=(\lambda_i)$，记 $s=\dim_F\langle\lambda_1,\ldots,\lambda_4\rangle_F$。若 $s=1$，除去一个共同非零 $A$ 因子就得到非零 $F$-关系，与基的独立性矛盾；故 $s=2$ 或三。
+
+当 $s=2$ 时，先缩放关系使其系数张成 $F+Fa$，其中 $a\in A\setminus F$；当 $s=3$ 时，系数张成整个 $A$，任选 $a\in A\setminus F$，则 $1,a,a^2$ 是其 $F$-基。将系数向量按这两组基展开，所得两个或三个 $F^4$ 向量线性独立；把它们补成 $F^4$ 的基并相应更换 $x_i$，便分别得到
+
+$$
+\begin{array}{ll}
+s=2:&\lambda=(1,a,0,0),\qquad x_1+ax_2=0,\\
+s=3:&\lambda=(1,a,a^2,0),\qquad x_1+ax_2+a^2x_3=0.
+\end{array}
+\tag{38.4}
+$$
+
+这是基变换与关系的缩放，没有更换原域、窗口或观察标签。
+
+复用 §§28–29、36 的可分分裂及限制块秩接口。取包含原 $D$ 的有限正规闭包 $K/F$，令 $\Omega=\operatorname{Hom}_F(D,K)$，并记
+
+$$
+S_\tau=\{\sigma\in\Omega:\sigma|_A=\tau\},\qquad
+B_X=(\sigma(x_j))_{\sigma,j},\qquad
+B_Z=(\sigma(z_j))_{\sigma,j},
+\tag{38.5}
+$$
+
+其中 $z_1,\ldots,z_4$ 是 $Z$ 的任意 $F$-基。三个 $S_\tau$ 是非空互不相交的原限制块。由 $D\otimes_{A,\tau}K\simeq K^{S_\tau}$ 扩底保维，每块的 $B_X$ 行秩为三，$B_Z$ 行秩为四；这不要求归一化窗口生成 $D$，也不要求行拟阵简单。令 $\iota:A\hookrightarrow K$ 为原包含嵌入，置
+
+$$
+h_\sigma=\sum_{j=1}^4\lambda_j\sigma(x_j).
+\tag{38.6}
+$$
+
+当 $\sigma\in S_\iota$ 时，$\sigma$ 固定全部 $\lambda_j$，故 $h_\sigma=0$。当 $s=2$ 且 $\sigma\notin S_\iota$ 时，由 (38.4) 得 $h_\sigma=(a-\sigma(a))\sigma(x_2)\ne0$；这里 $F(a)=A$，所以两种限制确实给不同的 $a$ 像。
+
+先处理 $s=3$ 且存在块外额外零点的情形。设 $\sigma\notin S_\iota$、$h_\sigma=0$。在原 $D[T]$ 中置
+
+$$
+P(T)=x_1+x_2T+x_3T^2=x_3(T-a)(T-b),\qquad
+b=-x_2/x_3-a\in D.
+\tag{38.7}
+$$
+
+因 $P(a)=0$，上述分解成立。对系数施加 $\sigma$ 后，$\sigma(P)(a)=h_\sigma=0$，而 $a\ne\sigma(a)$，所以 $\sigma(b)=a$。若 $p(T)=T^3-s_1T^2+s_2T-s_3\in F[T]$ 是 $a$ 的最小多项式，则 $\sigma(p(b))=p(a)=0$；嵌入的单射性给出 $p(b)=0$。若 $b\in A$，则 $x_1/x_3=ab$、$x_2/x_3=-(a+b)$ 都在 $A$ 中，使 $AX\subseteq Ax_3+Ax_4$，与秩三矛盾。因此 $b\notin A$，特别是 $b\ne a$。
+
+第三个根为 $c=s_1-a-b\in D$；可分性使三根互异。若 $c\in A$，又会有 $b\in A$，故 $c\notin A$。于是实际子域 $B=F(c)\subseteq D$ 为三次域，而 $c$ 在 $A$ 上满足 $p(T)/(T-a)$ 且不在 $A$ 中，给出 $[AB:A]=2$。由根与系数的关系，
+
+$$
+x_2/x_3=c-s_1,\qquad
+x_1/x_3=ab=c^2-s_1c+s_2,\qquad
+X=x_3B\oplus Fx_4.
+\tag{38.8}
+$$
+
+最后一个等式使用 $1,c,c^2$ 的 $F$-独立性及原 $x_i$ 的基性质。特别是 $r_X(A)=3$ 还保证 $x_4\notin x_3AB$。这一步取得的是原 $D$ 内的三次域；没有假定原 $A$ 正规，若 $A$ 正规则此额外零点情形已被 $b\notin A$ 排除。
+
+任取原 $\gamma\in B\setminus F$，则 $F(\gamma)=B$，而 $x_3B\subseteq X\cap\gamma X$。对任何四维窗口 $Y$，$d_Y(\gamma)=4$ 都会使 $\gamma Y=Y$，进而使 $Y$ 成为 $B$-空间，与三不整除四矛盾。因此 $d_X(\gamma)=3$、$d_Z(\gamma)\le3$。若 $d_Z(\gamma)=3$，就有 $\dim_F(Z+\gamma Z)=5$。直接应用 Napolitano–Polverino–Santonastaso–Zullo，[*Classifications and constructions of minimum size linear sets*，arXiv:2201.02003v1，Proposition 6.3](https://arxiv.org/html/2201.02003v1)：取其 $L=D$、$S=Z$、$T=\langle1,\gamma\rangle_F$、$k=4$、$t=[F(\gamma):F]=3$，且 $k+2=6\le N$。其第二分支的 $4=3\cdot1+1$ 给出 $Z=zB\oplus Fh$，其中 $z,h\in D^\times$、$hB\cap zB=\{0\}$。因而
+
+$$
+r_Z(A)\le\dim_A(zAB)+1=3,
+\tag{38.9}
+$$
+
+矛盾。故 $d_Z(\gamma)\le2$，取同一个原 $r=\gamma$ 即得 (38.2)。临界形状在此只作为已有定理使用。
+
+余下包括全部 $s=2$，以及 $s=3$ 无块外额外零点的情形；此时 $h_\sigma=0$ 恰当且仅当 $\sigma\in S_\iota$。取两组四元不定元 $t,y$，置 $u(t)=\sum t_jx_j$、$v(y)=\sum y_jx_j$。以 $D/F$ 的任一原基 $e_1,\ldots,e_N$ 记乘法坐标矩阵
+
+$$
+C(t,y)=[\ v(y)z_1\ \cdots\ v(y)z_4
+\mid -u(t)z_1\ \cdots\ -u(t)z_4\ ]
+\in\operatorname{Mat}_{N\times8}(F[t,y]).
+\tag{38.10}
+$$
+
+可逆分裂矩阵 $T=(\sigma(e_\ell))_{\sigma,\ell}$ 给出
+
+$$
+TC(t,y)=[\operatorname{diag}(B_Xy)B_Z
+\mid-\operatorname{diag}(B_Xt)B_Z].
+\tag{38.11}
+$$
+
+只在辅助域中取 $t=\lambda$、$y=(1,0,0,0)^{\mathsf T}$。在 $S_\iota$ 中选 $B_Z$ 的四行基 $I$，在任一其它限制块中选四行基 $J$。按先 $I$ 后 $J$ 排列，(38.11) 的这八行形成块三角子式，其行列式为
+
+$$
+\pm\det((B_Z)_I)\det((B_Z)_J)
+\prod_{\sigma\in I}\sigma(x_1)
+\prod_{\sigma\in J}h_\sigma\ne0.
+\tag{38.12}
+$$
+
+各因子非零分别由所选行基、$x_1\ne0$ 及无块外额外零点保证。故辅助取值处 $C$ 的秩为八，原坐标矩阵 (38.10) 必有一个非零八阶子式 $f\in F[t,y]$；这里用的是整个可逆矩阵 $T$ 保秩，不把分裂子式误认成同一个原子式。
+
+$F$ 无限，非零多项式 $f(t,y)t_1y_1$ 可在某组原 $t,y\in F^4$ 取非零值；这是 §§28–29 已用的无限域多项式返回。于是原 $u=u(t),v=v(y)\in X\setminus\{0\}$ 满足 $\dim_F(vZ+uZ)=8$。取原 $r=u/v\in D^\times$，有
+
+$$
+d_Z(r)=\dim_F(vZ\cap uZ)=0,\qquad
+u\in X\cap rX\setminus\{0\},\qquad d_X(r)\ge1.
+\tag{38.13}
+$$
+
+这也证明 (38.2)。辅助零坐标和 $K$ 参数仅证明原系数子式非零；最终见证是同一原 $D$ 中的 $u/v$，两窗口在它处直接比较。两种系数维数及有无额外零点已经穷尽。
+
+若两完整函数相等，(38.2) 排除同一实际 $A$ 上的秩三对四，交换窗口名也排除秩四对三。四维窗口的三次域张成秩只能为二、三或四；定理 37.2 已排除秩二与另外两种秩在同一纤维混同。故对每一个实际 $A$ 得 (38.3)；没有实际三次域时该全称结论为空。整个论证没有使用比值生成条件或平凡稳定子条件。$\square$
+
+数学引文与推导范围。§§28–29、36 的可分分裂、实际域限制块秩、原乘法矩阵及无限域子式工具在此直接复用；§§35–36 的承重恢复结论针对三维窗口，§34.3 则要求环境次数为窗口维数的两倍，均不提供这里环境次数至少十二的四维高秩分离。§37 的秩二阈值只用于 (38.3) 的最后拼接。上述 Proposition 6.3 的一般域临界对形状已有先例；Castello–Polverino–Zullo，[*Full weight spectrum one-orbit cyclic subspace codes*，arXiv:2405.19911v1，Definition 2.2、Theorem 5.2](https://arxiv.org/html/2405.19911v1)，分别给有限域子域张成秩记号及该一般域命题的引用。它们不提供本条的同原标签高秩分离接口。相对于所列原文条目及仓内既有结果，本节的仓内推导（repo-derived）差额是：唯一三次关系的块外零点强制原域内的共轭根与实际三次域形状，再以临界交维和无额外零点的原参数子式两支闭合 (38.2)。标准域论、临界形状及子式返回不另列为新成果；该连接的外部精确重合与全球文献优先权未核实。
+
+白话说，四个底域方向在三次子域下只需三个方向时，恰有一条子域系数的关系。把同一个实际域的嵌入按子域取值分成三组，这条关系会消掉其中一整组。如果它还消掉别组的某个位置，三次方程就迫使另两个共轭根也落在原域，窗口的三个方向因此正好拼成另一实际三次域的一条完整直线。取这个域里一个原数来倍乘，原窗口共享三维；秩四的竞争窗口若也共享三维，已有临界对定理便迫使它在原来的子域下至多秩三，矛盾。如果没有额外零点，两整组各选四条独立行便给出非零八阶行列式，再返回底域参数，取得一个原窗口确有交叠而竞争窗口交叠为零的同一原比例。因此全部同标签交维答案相同的窗口，对每一个已经存在的实际三次域都具有相同张成秩。
+
+结论只排除上述秩差造成的完整函数碰撞，并不恢复窗口本身或其原标量轨道。严格不等式只需一个方向；共轭根分支给出 $d_X(r)=3$、$d_Z(r)\le2$，没有排除 $d_Z(r)>0$，所以它不把正支持当作完整函数，也不声称正支持必能分离。不结算其它次数域上的任意四维剖面，不给有限查询、有效算法、噪声结论或物理量子、$\mathbb Z/\mathbb Q$、$H10(\mathbb Q)$ 的推论。
+
+## 追加锚（本行以下为增补区）
+
+## 39. 单侧交维支配下的四维窗口标量刚性
+
+**定义 39.1（原商支持与交维函数）。** 设 $F$ 为特征零域，$D/F$ 为有限扩张。对非零有限维 $F$-子空间 $W\le_F D$，定义
+
+$$
+ d_W(r)=\dim_F(W\cap rW)\quad(r\in D^\times),
+ \qquad
+ Q(W)=\left\{\frac uv:u,v\in W\setminus\{0\}\right\}\subseteq D^\times .
+\tag{39.1}
+$$
+
+这里的商和标签都在同一个原域 $D$ 内。于是
+
+$$
+ r\in Q(W)\quad\Longleftrightarrow\quad d_W(r)>0.
+\tag{39.2}
+$$
+
+若 $E(W)=\{c\in D:cW\subseteq W\}$，则 $E(W)$ 是含 $F$ 的子域，且
+
+$$
+ [E(W):F]\mid \dim_F W.
+\tag{39.3}
+$$
+
+事实上，$cW\subseteq W$ 且 $c\ne0$ 时，乘法在有限维空间 $W$ 上单射，故 $cW=W$，再得 $c^{-1}W=W$。此外，对任意 $\gamma\in D^\times$，
+
+$$
+ d_{\gamma W}(r)=d_W(r),\qquad Q(\gamma W)=Q(W).
+\tag{39.4}
+$$
+
+**定理 39.2（单侧支配刚性）。** 设 $X,Z\le_F D$ 且
+
+$$
+ \dim_F X=\dim_F Z=4,
+ \qquad d_X(r)\le d_Z(r)\quad\text{对全部 }r\in D^\times .
+\tag{39.5}
+$$
+
+若存在 $\mu\in D\setminus F$ 使 $d_X(\mu)\ge3$，则存在 $\gamma\in D^\times$ 使
+
+$$
+ \boxed{Z=\gamma X}.
+\tag{39.6}
+$$
+
+因此实际上 $d_X(r)=d_Z(r)$ 对每一个原标签 $r$ 都成立。定理只使用同一 $D$ 内的逐标签交维支配；它不把商支持包含单独提升为完整交维支配。
+
+**引理 39.3（四维窗口的高交叠形状）。** 设 $\mu\in D\setminus F$，$W\le_F D$ 且 $\dim_F W=4$；令 $K=F(\mu)$、$t=[K:F]$。
+
+1. 若 $d_W(\mu)=4$，则 $W$ 是 $K$-空间，因而 $t\in\{2,4\}$。
+2. 若 $d_W(\mu)=3$，则只有两种形状：
+
+$$
+\begin{array}{ll}
+ t\ge5:& W=w\langle1,\mu,\mu^2,\mu^3\rangle_F,\\[2pt]
+ t=3:& W=wK\oplus Fb,qquad b\notin wK,
+\end{array}
+\tag{39.7}
+$$
+
+其中 $w\in D^\times$。特别地，$t=2,4$ 时交维恰为三不可能。
+
+**证明。** 若 $d_W(\mu)=4$，则 $\mu W=W$，所以 $W$ 是 $K=F[\mu]$-空间，$t$ 必须整除四；因 $\mu\notin F$，得到 $t=2$ 或 $4$。
+
+以下设 $d_W(\mu)=3$。置
+
+$$
+ W_i=\{w\in W:\mu^jw\in W\text{ 对 }0\le j\le i\}.
+$$
+
+则 $W_0=W$。乘以 $\mu$ 将 $W\cap\mu^{-1}W$ 同构地送到 $\mu W\cap W$，所以 $\dim_F W_1=d_W(\mu)=3$。对 $i\ge1$，映射
+$W_{i-1}\to W/W_1$、$w\mapsto\mu^{i-1}w+W_1$ 的核为 $W_i$，所以每次下降至多一维；从而
+
+$$
+ \dim_F W_2\ge2,\qquad \dim_F W_3\ge1.
+\tag{39.8}
+$$
+
+若 $t\ge4$，取 $0\ne w\in W_3$。因为 $1,\mu,\mu^2,\mu^3$ 在 $F$ 上独立，四个向量 $w,\mu w,\mu^2w,\mu^3w$ 构成 $W$ 的基，得到第一种形状。$t=4$ 时它等于 $wK$，于是 $\mu W=W$，与交维三矛盾，故只能有 $t\ge5$。
+
+若 $t=2$，$W_1$ 在乘以 $\mu$ 下稳定：$\mu^2$ 是 $1,\mu$ 的 $F$-线性组合。因此 $W_1$ 是 $K$-空间，三维不可能。若 $t=3$，同理 $W_2$ 在乘以 $\mu$ 下稳定。由 (39.8) 及 $W_2\subseteq W_1$，其维数介于二和三之间，又必须是三的倍数，故 $\dim_F W_2=3$。于是 $W_2=wK$，补上一条 $F$-方向即得第二种形状。证毕。
+
+**引理 39.4（同一三次子域的两标签支持刚性）。** 设 $F\subsetneq K\subseteq D$，$[K:F]=3$，并令
+
+$$
+ U=K\oplus Fa,qquad V=K\oplus Fb,qquad a,b\notin K.
+\tag{39.9}
+$$
+固定 $\kappa_0\in K\setminus F$。若
+
+$$
+ a\in Q(V),\qquad a+\kappa_0\in Q(V),
+\tag{39.10}
+$$
+则存在 $\lambda\in K^\times$ 使 $V=\lambda U$。特别地，$Q(U)\subseteq Q(V)$ 足以推出这一结论。
+
+**证明。** 由 $a\in Q(V)$，可写成
+
+$$
+ a=\frac{u+sb}{v+tb},qquad u,v\in K,\quad s,t\in F,\quad v+tb\ne0.
+\tag{39.11}
+$$
+若 $t=0$，则 $s\ne0$，否则 $a\in K$。于是
+
+$$
+ b=\frac vs a-\frac us,qquad
+ V=\frac vs(K+Fa)=\frac vs\,U.
+\tag{39.12}
+$$
+
+若 $t\ne0$，置 $c=s/t\in F$、$A=a-c$。则 $A\notin K$，并且由 (39.11)
+
+$$
+ b=h+\frac gA,qquad h=-\frac vt\in K,\quad g=\frac{u-cv}{t}\in K^\times.
+\tag{39.13}
+$$
+
+故
+
+$$
+ U=K+FA,qquad g^{-1}V=K+FA^{-1}.
+\tag{39.14}
+$$
+
+第二个原标签仍然是 $a+\kappa_0=A+\kappa$，其中 $\kappa=\kappa_0+c\in K\setminus F$。由其属于 $Q(V)=Q(g^{-1}V)$，存在 $p,q\in K$、$e,f\in F$ 使
+
+$$
+ A+\kappa=\frac{p+eA^{-1}}{q+fA^{-1}}=\frac{pA+e}{qA+f},qquad qA+f\ne0.
+\tag{39.15}
+$$
+
+交叉相乘得到
+
+$$
+ qA^2+(q\kappa+f-p)A+(f\kappa-e)=0.
+\tag{39.16}
+$$
+
+若 $1,A,A^2$ 在 $K$ 上独立，则 $q=0$、$p=f$、$f\kappa=e$。分母条件给 $f\ne0$，遂有 $\kappa=e/f\in F$，矛盾。因此 $A$ 在 $K$ 上的次数为二；写成
+
+$$
+ A^2+\rho A+\sigma=0,qquad \rho,\sigma\in K,\quad \sigma\ne0.
+\tag{39.17}
+$$
+于是 $A^{-1}=-\sigma^{-1}A-\rho/\sigma$，从 (39.14) 得
+
+$$
+ V=g(K+FA^{-1})=-\frac g\sigma(K+FA)=-\frac g\sigma U.
+\tag{39.18}
+$$
+证毕。
+
+**定理 39.2 的证明。** 由 (39.5) 先得
+
+$$
+ Q(X)\subseteq Q(Z).
+\tag{39.19}
+$$
+固定一个 $\mu$ 使 $d_X(\mu)\ge3$，置 $K=F(\mu)$、$t=[K:F]$。
+
+若 $d_X(\mu)=4$，则 (39.5) 及维数上界给 $d_Z(\mu)=4$。引理 39.3 说明 $X,Z$ 都是 $K$-空间，且 $t=2$ 或 $4$。当 $t=4$ 时二者都是一维 $K$-空间，立即互为标量倍。设 $t=2$，取 $X$ 的 $K$-基 $x,y$，令 $\nu=y/x\notin K$。则 $\nu\in Q(X)\subseteq Q(Z)$，故存在 $0\ne z\in Z$ 使 $z\nu\in Z$。由于 $Z$ 是 $K$-空间，$z(K+K\nu)\subseteq Z$；$1,\nu$ 的 $K$-独立性使左边的 $K$-维数为二，故 $Z=z(K+K\nu)=(z/x)X$。
+
+若 $d_X(\mu)=3$，则 $d_Z(\mu)\ge3$。引理 39.3 排除了 $t=2,4$。同时 $d_Z(\mu)=4$ 不可能：那会使 $Z$ 成为 $K$-空间，要求 $t\mid4$，而此处 $t=3$ 或 $t\ge5$。所以 $d_Z(\mu)=3$。
+
+当 $t\ge5$ 时，引理 39.3 给出
+
+$$
+ X=x\langle1,\mu,\mu^2,\mu^3\rangle_F,qquad
+ Z=z\langle1,\mu,\mu^2,\mu^3\rangle_F,
+$$
+故 $Z=(z/x)X$。当 $t=3$ 时，引理 39.3 给出
+
+$$
+ X=x(K+Fa),qquad Z=z(K+Fb),qquad a,b\notin K.
+$$
+由 (39.4) 可分别缩放两端并保持 (39.19)，得到 $Q(K+Fa)\subseteq Q(K+Fb)$。引理 39.4 应用于 $a$ 及 $a+\kappa_0$（这两个元素都属于 $Q(K+Fa)$），得到 $K+Fb=\lambda(K+Fa)$，从而 $Z=(z\lambda/x)X$。所有情形均已覆盖。最后使用 (39.4) 得到逐标签等式 $d_Z=d_X$。证毕。
+
+**边界 39.5（环境次数四、五以及稳定子）。** 若 $[D:F]=4$，四维窗口只能是 $D$ 本身，故所有四维窗口相同。若 $[D:F]=5$，任意四维窗口 $W$ 与 $rW$ 的交维至少为三；对 $r\notin F$，有 $F(r)=D$，而交维四会使 $W$ 成为 $D$-空间，矛盾。因此交维三，且引理 39.3 对任意 $\mu\notin F$ 给出
+
+$$
+ W=w\langle1,\mu,\mu^2,\mu^3\rangle_F.
+\tag{39.20}
+$$
+所以次数五中全部四维窗口互为标量倍。若 $E(W)\ne F$，(39.3) 给出 $[E(W):F]\in\{2,4\}$。一般地，$E(W)$ 也保持 $W\cap rW$，故其次数同时整除四维窗口和交维；交维恰三时由 $\gcd(4,3)=1$ 得 $E(W)=F$。在更高环境次数中，非平凡稳定子可能与交维二同时出现，但不影响定理 39.2；交维四的稳定子分支已在定理的第一种情形中处理。
+
+**反例 39.6（纯支持包含的最小环境边界）。** 仅知道一端具有三次子域加一条方向的形状，并把 $Q(X)\subseteq Q(Z)$ 作为唯一比较，不能推出标量等价。取
+
+$$
+ F=\mathbb Q,qquad D=\mathbb Q(\alpha),\quad \alpha^6=2,qquad K=\mathbb Q(\alpha^2),
+$$
+
+由 $T^6-2$ 及 $T^3-2$ 的 Eisenstein 判别法，$[D:F]=6$、$[K:F]=3$。令
+
+$$
+ X=K+\mathbb Q\alpha=\langle1,\alpha,\alpha^2,\alpha^4\rangle_{\mathbb Q},qquad
+ Z=\langle1,\alpha,\alpha^2,\alpha^3\rangle_{\mathbb Q}.
+\tag{39.21}
+$$
+
+对每个 $r\in D^\times$，维数公式给出
+$\dim_F(X\cap rX),\dim_F(Z\cap rZ)\ge4+4-6=2$，所以
+
+$$
+ Q(X)=Q(Z)=D^\times.
+\tag{39.22}
+$$
+
+但由 $1,\alpha,\ldots,\alpha^5$ 的 $F$-独立性和 $\alpha^6=2$，有
+
+$$
+\begin{array}{c|cc}
+ r&d_X(r)&d_Z(r)\\
+\hline
+ \alpha&2&3\\
+ \alpha^2&3&2
+\end{array}
+\tag{39.23}
+$$
+
+具体地，$X\cap\alpha X=\operatorname{span}_F\{\alpha,\alpha^2\}$、$Z\cap\alpha Z=\operatorname{span}_F\{\alpha,\alpha^2,\alpha^3\}$，而 $X\cap\alpha^2X=\operatorname{span}_F\{1,\alpha^2,\alpha^4\}$、$Z\cap\alpha^2Z=\operatorname{span}_F\{\alpha^2,\alpha^3\}$。次数小于四时不存在四维窗口；环境次数四、五已由边界 39.5 排除，故次数六是这种纯支持失败的最小环境次数。
+
+Napolitano–Polverino–Santonastaso–Zullo，[*Classifications and constructions of minimum size linear sets*，arXiv:2201.02003v1，Proposition 6.3](https://arxiv.org/html/2201.02003v1)，给出一般域版本的临界对分类：若 $T=\langle1,\mu\rangle_F$、$\mu\in L\setminus F$ 在 $F$ 上代数、$k=\dim_F S$、$k+2\le [L:F]$ 且 $\dim_F\langle ST\rangle_F=k+1$，令 $K=F(\mu)$、$t=[K:F]$，则 $t>k$ 时 $S$ 是 $\mu$ 的 $k$ 项幂链标量倍；$t\le k-1$ 时写 $k=t\ell+m$、$0<m<t$，有 $S=\bar S\oplus b\langle1,\mu,\ldots,\mu^{m-1}\rangle_F$，其中 $\bar S$ 是 $K$-空间且与 $bK$ 直和。本节的引理 39.3 直接证明所需四维特例，并与该命题的两种形状相合；本卷的分式支持引理及逐原标签拼接是该引用之外的应用推导。该引用不承担本定理的全球优先权，也不把特征零环境改成有限域或自动产生可计算恢复算法。
+
+白话说，四维窗口如果被同一个原数平移后仍重合三维，窗口的形状已经很窄：要么是四项连续幂，要么是一个完整三次子域再加一条底域方向。前一种形状两个窗口只有整体缩放的差别。后一种形状里，第一个窗口的两条原商标签被第二个窗口支持，就把第二个附加方向写成一个分式；如果分母真的含有附加方向，那么第二条标签会迫使这个分式中的新量满足二次关系，倒数重新变成同一条仿射方向，仍然只剩整体缩放。若只看“有没有某个商”，而不看每个标签的交维大小，六次扩张中的两个四维窗口可以拥有完全相同的支持，却在 $\alpha$ 与 $\alpha^2$ 处给出相反的交维大小；所以支持是入口，逐标签交维才是刚性所需的关系。
+
+本定理的结论范围是同一有限扩张内的四维 $F$-窗口和原标签逐点支配。它不声称一般维数、非有限环境、有限查询算法、噪声稳定性、量子起源或 $\mathbb Z/\mathbb Q$、$H10(\mathbb Q)$ 的推论；反例只说明删去交维大小后会丢失刚性。
+
+## 追加锚（本行以下为增补区）
+
+## 40. 低交维区的七次刚性与八次正交双胞胎
+
+**定义 40.1（非标量低交维）。** 对四维窗口 $W\le_F D$，只在非标量标签
+$$
+r\in D^\times\setminus F^\times
+$$
+上称 $d_W(r)$ 为非标量交维。这个排除不可省略：每个 $c\in F^\times$ 都满足 $cW=W$ 及 $d_W(c)=4$。称 $W$ 为低交维窗口，若
+$$
+d_W(r)\le2\qquad(r\in D^\times\setminus F^\times).
+\tag{40.1}
+$$
+
+**引理 40.2（迹正交补的交维公式）。** 设 $[D:F]=n$，$W\le_F D$ 的维数为 $k$，并以非退化结合配对
+$$
+\langle x,y\rangle=\operatorname{Tr}_{D/F}(xy)
+$$
+定义 $U=W^\perp$。则
+$$
+\boxed{d_W(r)=2k-n+d_U(r)}
+\qquad(r\in D^\times).
+\tag{40.2}
+$$
+
+**证明。** 由 $(rW)^\perp=r^{-1}U$，以及
+$$
+d_U(r^{-1})=d_U(r),
+$$
+有
+$$
+\begin{aligned}
+d_U(r^{-1})
+&=\dim_F(U\cap r^{-1}U)\\
+&=n-\dim_F(W+rW)\\
+&=n-2k+d_W(r).
+\end{aligned}
+$$
+整理即得 (40.2)。最后一个对称性由乘以 $r$ 在 $U\cap r^{-1}U$ 与 $rU\cap U$ 之间的同构给出。$\square$
+
+**引理 40.3（七次环境中的三维低秩商刚性）。** 设 $[D:F]=7$，且 $F$ 为特征零域。若 $U,V\le_F D$ 都是三维空间，并满足
+$$
+d_U(r)\le1\quad(r\in D^\times\setminus F^\times),
+\qquad Q(U)\subseteq Q(V),
+\tag{40.3}
+$$
+则存在 $\gamma\in D^\times$ 使
+$$
+V=\gamma U.
+\tag{40.4}
+$$
+
+**证明。** 先证
+$$
+6\le\dim_F(UV)\le7,
+\tag{40.5}
+$$
+其中 $UV$ 是所有 $uv$ 的 $F$-张成。若 $\dim_F(UV)\le5$，可在 $(UV)^\perp$ 中取线性无关的 $p,q$。则 $pU,qU\subseteq V^\perp$，而 $\dim_FV^\perp=4$，故
+$$
+\dim_F(pU\cap qU)\ge3+3-4=2.
+$$
+非零交向量给出 $d_U(q/p)\ge2$，且 $q/p\notin F^\times$，矛盾。于是只剩下维数六或七。
+
+设
+$$
+K=\ker(U\otimes_FV\longrightarrow D),\qquad
+u\otimes v\longmapsto uv.
+$$
+若 $\dim_F(UV)=7$，则 $\dim_FK=2$。对每个平面 $H=\ker\ell\subset U$，取独立的 $u,v\in H$。由 $Q(U)\subseteq Q(V)$，存在独立的 $c,d\in V$ 使 $u/v=c/d$，从而
+$$
+0\ne u\otimes d-v\otimes c\in K\cap(H\otimes_FV).
+\tag{40.6}
+$$
+因此每个收缩
+$$
+M(\ell):K\longrightarrow V,\qquad
+k\longmapsto(\ell\otimes1)k
+$$
+都有非零核。取 $K$ 的基，把它们看作 $A,B:U^*\to V$。它们的秩至少为二，否则相应张量为零或可分解张量。又 $A\ell,B\ell$ 对每个 $\ell$ 线性相关。一个初等事实是：若两个线性映射 $A,B:E\to V$ 满足这一点且 $\operatorname{rank}A\ge2$，则 $B=cA$；取两个使 $Ax,Ay$ 独立的向量，再比较 $x,y,x+y$ 即得。于是 $A,B$ 对应的两个张量相关，和 $\dim K=2$ 矛盾。因此
+$$
+\dim_F(UV)=6,\qquad\dim_FK=3.
+\tag{40.7}
+$$
+
+取 $K$ 的基，令 $M(x)$ 为其三个收缩列组成的 $3\times3$ 矩阵，$x\in U^*$。式 (40.6) 给出 $\det M(x)\equiv0$。其在 $F(x)$ 上的秩恰为二：秩至多一会使任意两列映射逐点相关，应用上面的初等事实后使 $K$ 维数至多一，或直接产生可分解张量。
+
+该矩阵没有非零的常值右核；否则 $K$ 中有一个张量被所有收缩消掉。它也没有非零的常值左核。事实上，若 $V_0$ 是相应的二维子空间，则 $K\subseteq U\otimes V_0$，而
+$$
+\dim_F(UV_0)=6-\dim_FK=3.
+$$
+对独立的 $v,w\in V_0$，这迫使 $vU=wU$，从而 $d_U(w/v)=3$，再次矛盾。
+
+因此 $\operatorname{adj}M$ 是非零秩一矩阵。把它在多项式唯一分解域中写成
+$$
+\operatorname{adj}M=h\,a(x)b(x)^{\mathsf T},
+\tag{40.8}
+$$
+其中 $a,b$ 是本原齐次向量。常值的 $a$ 或 $b$ 会分别给出常值右核或左核；由于 $\operatorname{adj}M$ 的总次数为二，故 $a,b$ 都是一次向量，$h$ 为常数。写 $a(x)=Lx$。矩阵 $L$ 不能有秩一：否则有常值右核；若秩二，经基变换可写成 $a(x)=(x_1,x_2,0)^{\mathsf T}$，而
+$$
+x_1\operatorname{col}_1(M)+x_2\operatorname{col}_2(M)=0
+$$
+会使第一或第二个核张量为零或可分解。故 $L$ 可逆，再作基变换得到
+$$
+M(x)x=0.
+\tag{40.9}
+$$
+
+设相应的 $U$ 基为 $u_1,u_2,u_3$。比较 (40.9) 的二次系数，可把 $K$ 的一组基写成
+$$
+\begin{aligned}
+k_1&=-u_2\otimes p-u_3\otimes q,\\
+k_2&=u_1\otimes p-u_3\otimes s,\\
+k_3&=u_1\otimes q+u_2\otimes s,
+\end{aligned}
+\qquad p,q,s\in V.
+\tag{40.10}
+$$
+其乘积为零，所以
+$$
+u_1p=u_3s,\qquad u_1q=-u_2s.
+$$
+必有 $s\ne0$，否则 $p=q=0$。于是
+$$
+p=\frac{s}{u_1}u_3,\qquad
+q=-\frac{s}{u_1}u_2,
+$$
+且 $s=(s/u_1)u_1$。故 $V$ 包含三维空间 $(s/u_1)U$，维数相同即得 (40.4)。$\square$
+
+**定理 40.4（低交维问题的四至七次边界）。** 设 $X,Z\le_F D$ 都是四维窗口，满足逐原标签支配
+$$
+d_X(r)\le d_Z(r)\qquad(r\in D^\times)
+\tag{40.11}
+$$
+及低交维条件 (40.1)。则在 $[D:F]\le7$ 时存在 $\gamma\in D^\times$ 使
+$$
+Z=\gamma X.
+\tag{40.12}
+$$
+
+**证明。** 次数四时四维窗口只能是 $D$ 本身。次数五时，两个四维窗口的迹正交补都是直线，因而互为标量倍；低交维窗口本身也不存在，因为维数公式给出每个非标量交维至少三。
+
+次数六时，令 $U=X^\perp$，则 $\dim_FU=2$。取独立的 $u,v\in U$，令 $r=u/v\notin F^\times$。由 $u\in U\cap rU$ 及 (40.2)，
+$$
+d_X(r)=2+d_U(r)\ge3,
+$$
+与 (40.1) 矛盾。因此低交维分支为空。
+
+次数七时，令 $U=X^\perp$、$V=Z^\perp$。由 (40.2) 及 $d_U(r)=d_U(r^{-1})$，
+$$
+d_X(r)=1+d_U(r),\qquad d_Z(r)=1+d_V(r).
+\tag{40.13}
+$$
+于是 $d_U\le d_V$，低交维给出 $d_U(r)\le1$；同时 $Q(U)\subseteq Q(V)$。引理 40.3 得 $V=\gamma U$，取迹正交补即得 $Z=\gamma^{-1}X$。$\square$
+
+**定理 40.5（八次扩张的最小正交双胞胎反例）。** 令
+$$
+F=\mathbb Q,\qquad D=\mathbb Q(\alpha),\qquad \alpha^8=2,
+$$
+并定义
+$$
+X=\langle1,\alpha,\alpha^3,\alpha^4\rangle_{\mathbb Q},
+\qquad
+Z=\langle\alpha,\alpha^2,\alpha^3,\alpha^6\rangle_{\mathbb Q}.
+\tag{40.14}
+$$
+则
+$$
+d_X(r)=d_Z(r)\le2\quad(r\in D^\times\setminus\mathbb Q^\times),
+\qquad
+Z\ne\gamma X\quad(\gamma\in D^\times).
+\tag{40.15}
+$$
+因此八次是 corrected low-overlap 问题出现反例的最小环境次数。
+
+**证明。** $T^8-2$ 的 Eisenstein 判别给出 $1,\alpha,\ldots,\alpha^7$ 的有理基。记
+$$
+S=\{0,1,3,4\},\qquad S^c=\{2,5,6,7\}.
+$$
+由
+$$
+\operatorname{Tr}_{D/\mathbb Q}(\alpha^j)=0
+\quad(1\le j\le7)
+$$
+及 $\operatorname{Tr}(\alpha^8)\ne0$，可直接核对
+$$
+Z=X^\perp.
+\tag{40.16}
+$$
+将 (40.2) 用于 $n=8,k=4$，得到
+$$
+d_X(r)=d_Z(r)\qquad(r\in D^\times).
+\tag{40.17}
+$$
+
+写 $r=\sum_{i=0}^7c_i\alpha^i$。把乘法后投影到
+$\operatorname{span}_{\mathbb Q}\{\alpha^2,\alpha^5,\alpha^6,\alpha^7\}$，相对于 $X$ 的基 $(1,\alpha,\alpha^3,\alpha^4)$，矩阵为
+$$
+M_r=
+\begin{pmatrix}
+c_2&c_1&2c_7&2c_6\\
+c_5&c_4&c_2&c_1\\
+c_6&c_5&c_3&c_2\\
+c_7&c_6&c_4&c_3
+\end{pmatrix},
+\tag{40.18}
+$$
+故 $d_X(r)=4-\operatorname{rank}M_r$。若 $d_X(r)\ge3$，所有二阶子式均为零。由行 $1,3$、列 $1,4$ 的子式得
+$$
+c_2^2=2c_6^2,
+$$
+故 $c_2=c_6=0$。此时行 $1,4$、列 $1,3$ 的子式给 $c_7=0$，行 $1,2$、列 $2,4$ 的子式给 $c_1=0$；再由行 $2,3$、列 $1,2$ 的子式得 $c_5=0$，由行 $2,4$、列 $2,3$ 及行 $3,4$、列 $3,4$ 依次得 $c_4=c_3=0$。所以 $r\in\mathbb Q^\times$，证明非标量时 $d_X(r)\le2$。结合 (40.17) 即得第一部分。
+
+若 $\gamma X=Z$，因 $1\in X$，有
+$$
+\gamma=a\alpha+b\alpha^2+c\alpha^3+d\alpha^6.
+$$
+条件 $\alpha\gamma\in Z$ 迫使 $c=d=0$；再由 $\alpha^3\gamma\in Z$ 迫使 $a=b=0$，与 $\gamma\ne0$ 矛盾。故 $Z$ 与 $X$ 不在同一标量轨道。$\square$
+
+**边界与范围。** 对次数六和七，维数公式还给出所有四维窗口的商支持都是 $D^\times$，所以只看 $Q(W)$ 在这些次数中完全没有区分力。七次刚性使用了完整的逐标签支配和低交维，而不是纯支持包含。八次反例的秩矩阵是本卷本轮的纸面构造；迹正交补和非退化配对沿用前卷工具。这里没有使用 Lean、CAS、数值实验或有限域枚举，不作全球优先权声明，也不把该结果外推为量子力学、$\mathbb Z\subset\mathbb Q$ 的丢番图定义或 Hilbert 第十问题结论。
+
+白话说：把“高交叠”排除后，四到六次其实没有可用的低交维窗口，七次仍能用正交补把问题降成三个方向的商关系，并证明两个窗口只能整体缩放。到了八次，四维空间和它的迹正交补各自只在非标量标签上重合至多两维，却对所有标签给出同一份交维表；这两个空间又不是整体乘数的关系。因此低交维本身不是最后的刚性来源，八维中的正交对偶是必须额外打破的隐藏关系。
+
+## 追加锚（本行以下为增补区）
