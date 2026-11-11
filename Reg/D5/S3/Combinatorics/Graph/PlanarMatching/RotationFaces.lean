@@ -78,7 +78,11 @@ def sideLaw (L : Realization signature.{u}) : Prop :=
         ∃ H : p.G.Subgraph,
           H.verts = {v | v ∈ q.support ∨ v ∈ S} ∧
           (∀ d : p.G.Dart, H.Adj d.fst d.snd ↔
-            d.edge ∈ q.edges ∨ (x (p.R.face d) = b ∧ x (p.R.face d.symm) = b)) ∧ H.Connected) ∧
+            d.edge ∈ q.edges ∨ (x (p.R.face d) = b ∧ x (p.R.face d.symm) = b)) ∧ H.Connected ∧
+          (Nat.card H.verts : ℤ) - (Nat.card H.coe.edgeSet : ℤ) +
+            (Nat.card {f | x f = b} : ℤ) = 1 ∧
+          (Nat.card S : ℤ) - ((H.edgeSet \ q.toSubgraph.edgeSet).ncard : ℤ) +
+            (Nat.card {f | x f = b} : ℤ) = 1) ∧
       (∀ M : (p.G.induce {v | v ∉ q.support}).Subgraph, M.IsPerfectMatching →
         (∀ S ∈ ({I, J} : Set (Set p.V)),
           ∃ N : ((p.G.induce {v | v ∉ q.support}).induce {v | v.val ∈ S}).Subgraph,
