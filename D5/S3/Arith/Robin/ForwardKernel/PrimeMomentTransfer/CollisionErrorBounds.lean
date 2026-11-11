@@ -8,6 +8,8 @@
 
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.QuadraticCollisionReduction
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.PrimePowerExceptions
+import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.TupleSubsetMultiplicity
+import D5.S3.PrimeGaps.GreedyResidues
 
 /-! Sparse exceptions and logarithmic replacement in mixed interval moments. -/
 
@@ -32,129 +34,132 @@ private lemma repeatedSum_injective {k : ℕ} (d : Fin k → ℕ)
   have hf : Finset.univ.filter (fun j => d j = d i) = {i} := by ext j; simp [hd.eq_iff]
   simp [mult, hf] at hm
 
-private lemma repeatedSum_pattern_le {r k : ℕ} (P : Finset ℕ) (q : ℕ → ℝ)
-    (hq : ∀ e, 0 ≤ q e) (p : Fin k → Fin r) (x : Fin r → P)
-    (hx : Function.Injective x) :
-    repeatedSum (fun i => (x (p i)).val) q ≤ ∑ i, q (x i).val := by
-  have hv : Function.Injective (fun i => (x i).val) := Subtype.val_injective.comp hx
-  rw [← Finset.sum_image hv.injOn]
-  apply Finset.sum_le_sum_of_subset_of_nonneg
-  · intro e he
-    obtain ⟨i, _, rfl⟩ := Finset.mem_image.mp (Finset.mem_filter.mp he).1
-    exact Finset.mem_image.mpr ⟨p i, Finset.mem_univ _, rfl⟩
-  · intro e _ _; exact hq e
+private lemma repeated_tuple_card_le (P : Finset ℕ) (k e : ℕ) :
+    ((Fintype.piFinset (fun _ : Fin k => P)).filter (fun d => 2 ≤ mult d e)).card ≤
+      k ^ 2 * P.card ^ (k - 2) := by
+  classical
+  let T := Fintype.piFinset (fun _ : Fin k => P)
+  by_cases hk : k < 2
+  · have hz : T.filter (fun d => 2 ≤ mult d e) = ∅ := by
+      apply Finset.eq_empty_iff_forall_notMem.mpr
+      intro d hd
+      have hm := (Finset.mem_filter.mp hd).2
+      have hle : mult d e ≤ k := by
+        simpa [mult] using (Finset.card_filter_le (Finset.univ : Finset (Fin k))
+          (fun i => d i = e))
+      omega
+    simp [hz, T] at *
+  have hk2 : 2 ≤ k := by omega
+  by_cases he : e ∈ P
+  swap
+  · have hz : T.filter (fun d => 2 ≤ mult d e) = ∅ := by
+      apply Finset.eq_empty_iff_forall_notMem.mpr
+      intro d hd
+      obtain ⟨hd, hm⟩ := Finset.mem_filter.mp hd
+      have hpos : 0 < (Finset.univ.filter (fun i => d i = e)).card := by
+        change 2 ≤ (Finset.univ.filter (fun i => d i = e)).card at hm
+        omega
+      obtain ⟨i, hi⟩ := Finset.card_pos.mp hpos
+      exact he ((Finset.mem_filter.mp hi).2 ▸ Fintype.mem_piFinset.mp hd i)
+    change (T.filter _).card ≤ _
+    rw [hz]
+    exact Nat.zero_le _
+  have hP : (0 : ℝ) < P.card := by exact_mod_cast Finset.card_pos.mpr ⟨e, he⟩
+  have hP0 : (P.card : ℝ) ≠ 0 := ne_of_gt hP
+  have hcollision (d : Fin k → ℕ) :
+      (∃ i j, i ≠ j ∧ d i = e ∧ d j = e) ↔ 2 ≤ mult d e := by
+    have htwo : 2 ≤ mult d e ↔
+        1 < (Finset.univ.filter (fun i => d i = e)).card := by simp only [mult]; omega
+    rw [htwo, Finset.one_lt_card]
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and]
+    constructor
+    · rintro ⟨i, j, hij, hi, hj⟩
+      exact ⟨i, hi, j, hj, hij⟩
+    · rintro ⟨i, hi, j, hj, hij⟩
+      exact ⟨i, j, hij, hi, hj⟩
+  let S := (Finset.univ : Finset (Fin k → ↥P)).filter
+    (fun r => 2 ≤ mult (fun i => (r i).val) e)
+  have hcard : S.card = (T.filter (fun d => 2 ≤ mult d e)).card := by
+    apply Finset.card_nbij (fun r i => (r i).val)
+    · intro r hr
+      exact Finset.mem_filter.mpr ⟨Fintype.mem_piFinset.mpr (fun i => (r i).property),
+        (Finset.mem_filter.mp hr).2⟩
+    · intro r hr s hs hrs
+      funext i
+      exact Subtype.ext (congrFun hrs i)
+    · intro d hd
+      refine ⟨fun i => ⟨d i, Fintype.mem_piFinset.mp (Finset.mem_filter.mp hd).1 i⟩,
+        Finset.mem_filter.mpr ⟨Finset.mem_univ _, (Finset.mem_filter.mp hd).2⟩, rfl⟩
+  have hmass : (∑ x : ↥P, (1 / (P.card : ℝ)) *
+      if x.val = e then 1 else 0) = 1 / (P.card : ℝ) := by
+    rw [Finset.sum_eq_single (⟨e, he⟩ : ↥P)]
+    · simp
+    · intro x hx hxe
+      have hx : x.val ≠ e := fun hx => hxe (Subtype.ext hx)
+      simp [hx]
+    · simp
+  have hbound := LongGapsBetweenPrimes.product_collision_bound
+    (α := Unit) (Ω := ↥P) (fun _ => 1 / (P.card : ℝ))
+    (fun _ => by positivity) (by simp [hP0]) (fun _ x => x.val = e) k
+  have hnormalized : (S.card : ℝ) / (P.card : ℝ) ^ k ≤
+      (k : ℝ) ^ 2 / (P.card : ℝ) ^ 2 := by
+    simp only [Fintype.sum_unique, hmass] at hbound
+    simp only [Finset.prod_const, Finset.card_univ, Fintype.card_fin,
+      exists_const, hcollision] at hbound
+    rw [← Finset.mul_sum, Finset.sum_boole] at hbound
+    simpa [S, one_div_pow, div_eq_mul_inv, mul_comm] using hbound
+  have hpow : (P.card : ℝ) ^ k = (P.card : ℝ) ^ (k - 2) * (P.card : ℝ) ^ 2 := by
+    rw [← pow_add, Nat.sub_add_cancel hk2]
+  have hreal : (S.card : ℝ) ≤ (k : ℝ) ^ 2 * (P.card : ℝ) ^ (k - 2) := by
+    apply (div_le_iff₀ (pow_pos hP k)).mp at hnormalized
+    rw [hpow] at hnormalized
+    convert hnormalized using 1 <;> field_simp <;> ring
+  rw [hcard] at hreal
+  exact_mod_cast hreal
 
-private lemma pattern_repeated_bound {k r : ℕ} (P : Finset ℕ) (q : ℕ → ℝ)
-    (hq : ∀ e, 0 ≤ q e) (p : Fin k → Fin r) :
-    (∑ x : Fin r → P with Function.Injective x,
-      repeatedSum (fun i => (x (p i)).val) q) ≤
-      (r : ℝ) * (P.card : ℝ) ^ (r - 1) * ∑ e ∈ P, q e := by
+private lemma sum_repeated_bound (P : Finset ℕ)
+    (q : ℕ → ℝ) (hq : ∀ e, 0 ≤ q e) (k : ℕ) :
+    (∑ d ∈ Fintype.piFinset (fun _ : Fin k => P), repeatedSum d q) ≤
+      (if k = 1 then 0 else (k : ℝ) ^ 2) * (P.card : ℝ) ^ (k - 2) * ∑ e ∈ P, q e := by
+  classical
+  by_cases hk : k = 1
+  · subst k
+    simp only [ite_true, zero_mul]
+    apply le_of_eq
+    apply Finset.sum_eq_zero
+    intro d hd
+    exact repeatedSum_injective d (fun i j _ => Subsingleton.elim _ _) q
+  simp only [ite_eq_right hk]
+  let T := Fintype.piFinset (fun _ : Fin k => P)
+  have hrep (d : Fin k → ℕ) (hd : d ∈ T) :
+      repeatedSum d q = ∑ e ∈ P, if 2 ≤ mult d e then q e else 0 := by
+    have heq : (Finset.univ.image d).filter (fun e => 2 ≤ mult d e) =
+        P.filter (fun e => 2 ≤ mult d e) := by
+      ext e
+      simp only [Finset.mem_filter]
+      constructor
+      · rintro ⟨he, hm⟩
+        obtain ⟨i, _, rfl⟩ := Finset.mem_image.mp he
+        exact ⟨Fintype.mem_piFinset.mp hd i, hm⟩
+      · rintro ⟨he, hm⟩
+        have hpos : 0 < (Finset.univ.filter (fun i => d i = e)).card := by
+          simpa [mult] using (show 0 < mult d e by omega)
+        obtain ⟨i, hi⟩ := Finset.card_pos.mp hpos
+        exact ⟨Finset.mem_image.mpr ⟨i, Finset.mem_univ _, (Finset.mem_filter.mp hi).2⟩, hm⟩
+    unfold repeatedSum
+    rw [heq, Finset.sum_filter]
   calc
-    _ ≤ ∑ x : Fin r → P with Function.Injective x, ∑ i, q (x i).val :=
-      Finset.sum_le_sum (fun x hx => repeatedSum_pattern_le P q hq p x (Finset.mem_filter.mp hx).2)
-    _ ≤ ∑ x : Fin r → P, ∑ i, q (x i).val :=
-      Finset.sum_le_sum_of_subset_of_nonneg (Finset.filter_subset _ _) (fun x _ _ =>
-        Finset.sum_nonneg (fun i _ => hq _))
-    _ = _ := by
-      rw [Finset.sum_comm]
-      have hsum (i : Fin r) : (∑ x : Fin r → P, q (x i).val) =
-          (P.card : ℝ) ^ (r - 1) * ∑ e ∈ P, q e := by
-        have h := Fintype.sum_piFinset_apply (fun e : P => q e.val) Finset.univ i
-        rw [Fintype.piFinset_univ] at h
-        simpa only [Finset.univ_eq_attach, Fintype.card_coe, Finset.card_univ,
-          Fintype.card_fin, nsmul_eq_mul, Nat.cast_pow, Finset.sum_attach,
-          Finset.card_attach] using h
-      simp_rw [hsum]
-      simp [mul_assoc]
-
-private lemma sum_repeated_bound (P : Finset ℕ) (hP : 1 ≤ P.card)
-    (q : ℕ → ℝ) (hq : ∀ e, 0 ≤ q e) (k : ℕ) (hk : k = 2 ∨ k = 3 ∨ k = 4) :
-    (∑ d : Fin k → P, repeatedSum (fun i => (d i).val) q) ≤
-      33 * (P.card : ℝ) ^ (k - 2) * ∑ e ∈ P, q e := by
-  have hP' : (1 : ℝ) ≤ P.card := by exact_mod_cast hP
-  have hQ : 0 ≤ ∑ e ∈ P, q e := Finset.sum_nonneg (fun e _ => hq e)
-  rcases hk with rfl | rfl | rfl
-  · have heq (d : Fin 2 → P) :
-        repeatedSum (fun i => (d i).val) q =
-          if d 0 = d 1 then q (d 0).val else 0 := by
-      by_cases he : d 0 = d 1
-      · have hd : (fun i : Fin 2 => (d i).val) = fun _ => (d 0).val := by
-          funext i
-          fin_cases i
-          · rfl
-          · exact congrArg Subtype.val he.symm
-        rw [if_pos he, hd]
-        unfold repeatedSum
-        rw [Finset.image_const Finset.univ_nonempty]
-        have hm : mult (fun _ : Fin 2 => (d 0).val) (d 0).val = 2 := by
-          simp [mult]
-        rw [Finset.filter_singleton, hm]
-        norm_num
-      · have hv : (d 0).val ≠ (d 1).val := fun h => he (Subtype.ext h)
-        rw [if_neg he]
-        apply repeatedSum_injective
-        intro i j hij
-        fin_cases i <;> fin_cases j <;> simp_all
-    simp_rw [heq]
-    have hsum : (∑ d : Fin 2 → P, if d 0 = d 1 then q (d 0).val else 0) =
-        ∑ e ∈ P, q e := by
-      rw [← Equiv.sum_comp (finTwoArrowEquiv P).symm]
-      simp [Fintype.sum_prod_type, Finset.sum_attach]
-    rw [hsum]
-    norm_num
-    nlinarith
-  · have hzero : patternSum3 (r := 3) ![0,1,2]
-        (fun d : Fin 3 → P => repeatedSum (fun i => (d i).val) q) = 0 := by
-      apply Finset.sum_eq_zero
-      intro x hx
-      apply repeatedSum_injective
-      have hi := Subtype.val_injective.comp (Finset.mem_filter.mp hx).2
-      convert hi using 1
-      funext i; fin_cases i <;> rfl
-    rw [sum_fin_three_eq_pattern_sums, hzero]
-    calc
-      _ ≤ 0 + (2 * (P.card : ℝ) ^ 1 * ∑ e ∈ P, q e) +
-          (2 * (P.card : ℝ) ^ 1 * ∑ e ∈ P, q e) +
-          (2 * (P.card : ℝ) ^ 1 * ∑ e ∈ P, q e) +
-          (1 * (P.card : ℝ) ^ 0 * ∑ e ∈ P, q e) := by
-        gcongr <;> first
-        | exact pattern_repeated_bound (k := 3) (r := 2) P q hq _
-        | simpa [patternSum3, Function.comp_def] using
-            (pattern_repeated_bound (k := 3) (r := 1) P q hq ![0,0,0])
-      _ ≤ _ := by norm_num; nlinarith
-  · have hzero : patternSum (r := 4) ![0,1,2,3]
-        (fun d : Fin 4 → P => repeatedSum (fun i => (d i).val) q) = 0 := by
-      apply Finset.sum_eq_zero
-      intro x hx
-      apply repeatedSum_injective
-      have hi := Subtype.val_injective.comp (Finset.mem_filter.mp hx).2
-      convert hi using 1
-      funext i; fin_cases i <;> rfl
-    rw [sum_fin_four_eq_pattern_sums, hzero]
-    calc
-      _ ≤ 0 + (3 * (P.card : ℝ) ^ 2 * ∑ e ∈ P, q e) +
-          (3 * (P.card : ℝ) ^ 2 * ∑ e ∈ P, q e) +
-          (3 * (P.card : ℝ) ^ 2 * ∑ e ∈ P, q e) +
-          (3 * (P.card : ℝ) ^ 2 * ∑ e ∈ P, q e) +
-          (3 * (P.card : ℝ) ^ 2 * ∑ e ∈ P, q e) +
-          (3 * (P.card : ℝ) ^ 2 * ∑ e ∈ P, q e) +
-          (2 * (P.card : ℝ) ^ 1 * ∑ e ∈ P, q e) +
-          (2 * (P.card : ℝ) ^ 1 * ∑ e ∈ P, q e) +
-          (2 * (P.card : ℝ) ^ 1 * ∑ e ∈ P, q e) +
-          (2 * (P.card : ℝ) ^ 1 * ∑ e ∈ P, q e) +
-          (2 * (P.card : ℝ) ^ 1 * ∑ e ∈ P, q e) +
-          (2 * (P.card : ℝ) ^ 1 * ∑ e ∈ P, q e) +
-          (2 * (P.card : ℝ) ^ 1 * ∑ e ∈ P, q e) +
-          (1 * (P.card : ℝ) ^ 0 * ∑ e ∈ P, q e) := by
-        gcongr <;> first
-        | exact pattern_repeated_bound (k := 4) (r := 3) P q hq _
-        | exact pattern_repeated_bound (k := 4) (r := 2) P q hq _
-        | simpa [patternSum, Function.comp_def] using
-            (pattern_repeated_bound (k := 4) (r := 1) P q hq ![0,0,0,0])
-      _ ≤ _ := by
-        norm_num
-        have hP2 : (P.card : ℝ) ≤ (P.card : ℝ) ^ 2 := by nlinarith
-        nlinarith
+    _ = ∑ d ∈ T, ∑ e ∈ P, if 2 ≤ mult d e then q e else 0 :=
+      Finset.sum_congr rfl hrep
+    _ = ∑ e ∈ P, ∑ d ∈ T, if 2 ≤ mult d e then q e else 0 := Finset.sum_comm
+    _ = ∑ e ∈ P, (((T.filter (fun d => 2 ≤ mult d e)).card : ℕ) : ℝ) * q e := by
+      simp_rw [← Finset.sum_filter, Finset.sum_const, nsmul_eq_mul]
+    _ ≤ ∑ e ∈ P, ((k : ℝ) ^ 2 * (P.card : ℝ) ^ (k - 2)) * q e := by
+      apply Finset.sum_le_sum
+      intro e he
+      apply mul_le_mul_of_nonneg_right _ (hq e)
+      exact_mod_cast repeated_tuple_card_le P k e
+    _ = _ := by rw [Finset.mul_sum]
 
 private lemma arithmetic_size_bounds (N H M : ℝ) (n e : ℕ)
     (hN : 2 ≤ N) (hH : 0 ≤ H) (hM : 0 ≤ M)
@@ -237,10 +242,10 @@ private lemma shifted_exception_count (N : ℝ) (hN : 2 ≤ N)
       push_cast
       linarith) (by intro n hn m hm h; exact Nat.add_right_cancel h)
 
-private lemma interval_error_le_defects {k : ℕ} (hk : k = 2 ∨ k = 3 ∨ k = 4)
+private lemma interval_error_le_defects {k : ℕ}
     (N H T B : ℝ) (hT : 1 ≤ T) (a b : Fin k → ℝ) (w : ℝ → ℝ)
     (hw : ∀ t, |w t| ≤ B) (hB : 0 ≤ B)
-    (P : Finset ℕ) (hP : 1 ≤ P.card) (hpoints : ∀ i, points H (a i) (b i) ⊆ P)
+    (P : Finset ℕ) (hpoints : ∀ i, points H (a i) (b i) ⊆ P)
     (q : ℕ → ℕ → ℝ) (hq : ∀ n e, 0 ≤ q n e)
     (hlocal : ∀ n ∈ Finset.Ioc ⌊N⌋₊ ⌊2 * N⌋₊,
       |Real.log n - 2| ≤ T ∧ |Real.log n - 1| ≤ T ∧
@@ -252,7 +257,7 @@ private lemma interval_error_le_defects {k : ℕ} (hk : k = 2 ∨ k = 3 ∨ k = 
       (∑ n ∈ Finset.Ioc ⌊N⌋₊ ⌊2 * N⌋₊, w ((n : ℝ) / N) *
         ∑ d ∈ Fintype.piFinset (fun i => points H (a i) (b i)),
           reducedAt (Real.log n) n d)| ≤
-      B * (8 * T) ^ (k - 2) * 33 * (P.card : ℝ) ^ (k - 2) *
+      B * (8 * T) ^ (k - 2) * (if k = 1 then 0 else (k : ℝ) ^ 2) * (P.card : ℝ) ^ (k - 2) *
         ∑ n ∈ Finset.Ioc ⌊N⌋₊ ⌊2 * N⌋₊, ∑ e ∈ P, q n e := by
   classical
   let A := Fintype.piFinset (fun i => points H (a i) (b i))
@@ -261,23 +266,16 @@ private lemma interval_error_le_defects {k : ℕ} (hk : k = 2 ∨ k = 3 ∨ k = 
     intro d hd
     exact Fintype.mem_piFinset.mpr (fun i => hpoints i (Fintype.mem_piFinset.mp hd i))
   have hcount (n : ℕ) : (∑ d ∈ A, repeatedSum d (q n)) ≤
-      33 * (P.card : ℝ) ^ (k - 2) * ∑ e ∈ P, q n e := by
+      (if k = 1 then 0 else (k : ℝ) ^ 2) * (P.card : ℝ) ^ (k - 2) * ∑ e ∈ P, q n e := by
     calc
       _ ≤ ∑ d ∈ U, repeatedSum d (q n) :=
         Finset.sum_le_sum_of_subset_of_nonneg hAU (fun d _ _ => repeatedSum_nonneg d _ (hq n))
-      _ = ∑ d : Fin k → P, repeatedSum (fun i => (d i).val) (q n) := by
-        symm
-        apply Finset.sum_bij (fun d _ i => (d i).val)
-        · intro d hd; exact Fintype.mem_piFinset.mpr (fun i => (d i).property)
-        · intro d hd d' hd' hh; funext i; exact Subtype.ext (congrFun hh i)
-        · intro d hd
-          exact ⟨fun i => ⟨d i, Fintype.mem_piFinset.mp hd i⟩, Finset.mem_univ _, rfl⟩
-        · intro d hd; rfl
-      _ ≤ _ := sum_repeated_bound P hP (q n) (hq n) k hk
+      _ ≤ _ := sum_repeated_bound P (q n) (hq n) k
   have hinner (n : ℕ) (hn : n ∈ Finset.Ioc ⌊N⌋₊ ⌊2 * N⌋₊) :
       |∑ d ∈ A, ((∏ i, (ArithmeticFunction.vonMangoldt (n + d i) - 1)) -
           reducedAt (Real.log n) n d)| ≤
-        (8 * T) ^ (k - 2) * (33 * (P.card : ℝ) ^ (k - 2) * ∑ e ∈ P, q n e) := by
+        (8 * T) ^ (k - 2) * ((if k = 1 then 0 else (k : ℝ) ^ 2) *
+          (P.card : ℝ) ^ (k - 2) * ∑ e ∈ P, q n e) := by
     obtain ⟨ha, hb, hy, hδ⟩ := hlocal n hn
     calc
       _ ≤ ∑ d ∈ A, |(∏ i, (ArithmeticFunction.vonMangoldt (n + d i) - 1)) -
@@ -289,7 +287,7 @@ private lemma interval_error_le_defects {k : ℕ} (hk : k = 2 ∨ k = 3 ∨ k = 
           rintro e he
           obtain ⟨i, _, rfl⟩ := Finset.mem_image.mp he
           exact hpoints i (Fintype.mem_piFinset.mp hd i)
-        exact (product_reducedAt_error_bound (by rcases hk with rfl | rfl | rfl <;> omega)
+        exact (product_reducedAt_error_bound
           _ T hT ha hb n d (fun e he => hy e (hD he))).trans
             (mul_le_mul_of_nonneg_left
               (Finset.sum_le_sum (fun e he => hδ e (hD (Finset.mem_filter.mp he).1)))
@@ -315,7 +313,8 @@ private lemma interval_error_le_defects {k : ℕ} (hk : k = 2 ∨ k = 3 ∨ k = 
         |w ((n : ℝ) / N) * ∑ d ∈ A, ((∏ i, (ArithmeticFunction.vonMangoldt (n + d i) - 1)) -
           reducedAt (Real.log n) n d)| := Finset.abs_sum_le_sum_abs _ _
     _ ≤ ∑ n ∈ Finset.Ioc ⌊N⌋₊ ⌊2 * N⌋₊,
-        B * ((8 * T) ^ (k - 2) * (33 * (P.card : ℝ) ^ (k - 2) * ∑ e ∈ P, q n e)) := by
+        B * ((8 * T) ^ (k - 2) * ((if k = 1 then 0 else (k : ℝ) ^ 2) *
+          (P.card : ℝ) ^ (k - 2) * ∑ e ∈ P, q n e)) := by
       apply Finset.sum_le_sum
       intro n hn
       rw [abs_mul]
@@ -324,11 +323,11 @@ private lemma interval_error_le_defects {k : ℕ} (hk : k = 2 ∨ k = 3 ∨ k = 
 
 /-- Replacing repeated shifted von Mangoldt factors by their quadratic reduction at log n
 has a uniform error with one fewer free shift in the prime-power exception term. -/
-theorem collision_error_bound (M : ℝ) (hM : 1 ≤ M) :
+theorem collision_error_bound (qmax : ℕ) (M : ℝ) (hM : 1 ≤ M) :
     ∃ C : ℝ, 0 ≤ C ∧
       ∀ N : ℝ, 2 ≤ N → ∀ H : ℕ, 1 ≤ H → M * (H : ℝ) ≤ N →
       ∀ B : ℝ, ∀ w : ℝ → ℝ, BVBound w B →
-      ∀ k : ℕ, (k = 2 ∨ k = 3 ∨ k = 4) → ∀ a b : Fin k → ℝ, admissible M a b →
+      ∀ k : ℕ, 1 ≤ k → k ≤ qmax → ∀ a b : Fin k → ℝ, admissible M a b →
         |discreteRaw N H a b w -
           (∑ n ∈ Finset.Ioc ⌊N⌋₊ ⌊2 * N⌋₊, w ((n : ℝ) / N) *
             ∑ d ∈ Fintype.piFinset (fun i => points H (a i) (b i)),
@@ -337,9 +336,9 @@ theorem collision_error_bound (M : ℝ) (hM : 1 ≤ M) :
             (H : ℝ) ^ k * (Real.log N) ^ (k - 1)) := by
   classical
   obtain ⟨C₀, hC₀, hcount⟩ := proper_prime_power_count_le_sqrt
-  let K := 33 * 1024 * M ^ 3
+  let K := (qmax : ℝ) ^ 2 * 32 ^ qmax * M ^ qmax
   refine ⟨K * (192 * C₀ + 6 * M), by dsimp [K]; positivity, ?_⟩
-  intro N hN H hH hMH B w hw k hk a b hab
+  intro N hN H hH hMH B w hw k hk1 hkmax a b hab
   obtain ⟨_, _, hB, U, hU, hwU, hUB⟩ := hw
   have hwB (t : ℝ) : |w t| ≤ B := (hwU t).trans (by
     have := ENNReal.toReal_nonneg (a := eVariationOn w Set.univ)
@@ -352,9 +351,6 @@ theorem collision_error_bound (M : ℝ) (hM : 1 ≤ M) :
     (by linarith [Real.log_two_gt_d9] : (1 / 2 : ℝ) ≤ Real.log 2).trans
       (Real.log_le_log (by norm_num) hN)
   let P : Finset ℕ := Finset.Ioc 0 ⌊M * (H : ℝ)⌋₊
-  have hP : 1 ≤ P.card := by
-    simp only [P, Nat.card_Ioc, Nat.sub_zero]
-    exact (Nat.one_le_floor_iff _).mpr (by nlinarith)
   have hPc : (P.card : ℝ) ≤ M * H := by
     simp only [P, Nat.card_Ioc, Nat.sub_zero]
     exact Nat.floor_le (by positivity)
@@ -410,8 +406,8 @@ theorem collision_error_bound (M : ℝ) (hM : 1 ≤ M) :
             _ = _ := by field_simp; ring
         nlinarith
       _ = _ := by simp; ring
-  have hstart := interval_error_le_defects hk N H (4 * Real.log N) B (by linarith)
-    a b w hwB hB P hP hpoints q hq (by
+  have hstart := interval_error_le_defects N H (4 * Real.log N) B (by linarith)
+    a b w hwB hB P hpoints q hq (by
       intro n hn
       obtain ⟨hn1, hn2⟩ := hnbounds n hn
       have hbds (e : ℕ) (he : e ∈ P) :=
@@ -420,13 +416,27 @@ theorem collision_error_bound (M : ℝ) (hM : 1 ≤ M) :
         (by simp only [Nat.cast_zero]; positivity) hMH
       exact ⟨hb0.2.1, hb0.2.2.1, fun e he => (hbds e he).2.2.2.1,
         fun e he => (hbds e he).2.2.2.2⟩)
-  have hk2 : 2 ≤ k := by rcases hk with rfl | rfl | rfl <;> omega
-  have hcoef : 33 * 32 ^ (k - 2) * M ^ (k - 1) ≤ K := by
+  by_cases hk2 : 2 ≤ k
+  swap
+  · have hk : k = 1 := by omega
+    have hz : |discreteRaw N H a b w -
+        (∑ n ∈ Finset.Ioc ⌊N⌋₊ ⌊2 * N⌋₊, w ((n : ℝ) / N) *
+          ∑ d ∈ Fintype.piFinset (fun i => points H (a i) (b i)),
+            reducedAt (Real.log n) n d)| ≤ 0 := by
+      simpa only [ite_eq_left hk, mul_zero, zero_mul] using hstart
+    exact hz.trans (by dsimp [K]; positivity)
+  have hkn1 : k ≠ 1 := by omega
+  simp only [ite_eq_right hkn1] at hstart
+  have hcoef : (k : ℝ) ^ 2 * 32 ^ (k - 2) * M ^ (k - 1) ≤ K := by
     apply mul_le_mul
-    · rcases hk with rfl | rfl | rfl <;> norm_num
-    · exact pow_le_pow_right₀ hM (by rcases hk with rfl | rfl | rfl <;> omega)
+    · apply mul_le_mul
+      · exact pow_le_pow_left₀ (by positivity) (by exact_mod_cast hkmax) 2
+      · exact pow_le_pow_right₀ (by norm_num : (1 : ℝ) ≤ 32) (by omega)
+      · positivity
+      · positivity
+    · exact pow_le_pow_right₀ hM (by omega)
     · positivity
-    · norm_num
+    · positivity
   have hlog : (Real.log N) ^ k ≤ 2 * (Real.log N) ^ (k + 1) := by
     rw [pow_succ]
     nlinarith [pow_nonneg (by linarith : 0 ≤ Real.log N) k]
@@ -435,19 +445,40 @@ theorem collision_error_bound (M : ℝ) (hM : 1 ≤ M) :
   have hA : 0 ≤ A := by dsimp [A]; positivity
   have hD : 0 ≤ D := by dsimp [D]; positivity
   calc
-    _ ≤ B * (8 * (4 * Real.log N)) ^ (k - 2) * 33 * (P.card : ℝ) ^ (k - 2) *
+    _ ≤ B * (8 * (4 * Real.log N)) ^ (k - 2) * (k : ℝ) ^ 2 * (P.card : ℝ) ^ (k - 2) *
         ((P.card : ℝ) * (96 * C₀ * Real.sqrt N * (Real.log N) ^ 2 +
           6 * M * H * Real.log N)) :=
       hstart.trans (mul_le_mul_of_nonneg_left htotal (by positivity))
-    _ = B * 33 * (32 * Real.log N) ^ (k - 2) * (P.card : ℝ) ^ (k - 1) *
+    _ = B * (k : ℝ) ^ 2 * (32 * Real.log N) ^ (k - 2) * (P.card : ℝ) ^ (k - 1) *
         (96 * C₀ * Real.sqrt N * (Real.log N) ^ 2 + 6 * M * H * Real.log N) := by
-      rcases hk with rfl | rfl | rfl <;> norm_num <;> ring
-    _ ≤ B * 33 * (32 * Real.log N) ^ (k - 2) * (M * H) ^ (k - 1) *
+      have hp : (P.card : ℝ) ^ (k - 2) * P.card = (P.card : ℝ) ^ (k - 1) := by
+        rw [← pow_succ, show k - 2 + 1 = k - 1 by omega]
+      rw [show 8 * (4 * Real.log N) = 32 * Real.log N by ring]
+      calc
+        _ = B * (k : ℝ) ^ 2 * (32 * Real.log N) ^ (k - 2) *
+            ((P.card : ℝ) ^ (k - 2) * P.card) *
+              (96 * C₀ * Real.sqrt N * (Real.log N) ^ 2 + 6 * M * H * Real.log N) := by ring
+        _ = _ := by rw [hp]
+    _ ≤ B * (k : ℝ) ^ 2 * (32 * Real.log N) ^ (k - 2) * (M * H) ^ (k - 1) *
         (96 * C₀ * Real.sqrt N * (Real.log N) ^ 2 + 6 * M * H * Real.log N) := by
       gcongr
-    _ = B * (33 * 32 ^ (k - 2) * M ^ (k - 1)) *
+    _ = B * ((k : ℝ) ^ 2 * 32 ^ (k - 2) * M ^ (k - 1)) *
         (96 * C₀ * Real.sqrt N * (H : ℝ) ^ (k - 1) * (Real.log N) ^ k + 6 * M * D) := by
-      rcases hk with rfl | rfl | rfl <;> dsimp [D] <;> norm_num <;> ring
+      dsimp [D]
+      rw [mul_pow, mul_pow]
+      have hklog : (Real.log N) ^ (k - 2) * (Real.log N) ^ 2 = (Real.log N) ^ k := by
+        rw [← pow_add, show k - 2 + 2 = k by omega]
+      have hklog1 : (Real.log N) ^ (k - 2) * Real.log N = (Real.log N) ^ (k - 1) := by
+        rw [← pow_succ, show k - 2 + 1 = k - 1 by omega]
+      have hkH : (H : ℝ) ^ (k - 1) * H = (H : ℝ) ^ k := by
+        rw [← pow_succ, show k - 1 + 1 = k by omega]
+      calc
+        _ = B * ((k : ℝ) ^ 2 * 32 ^ (k - 2) * M ^ (k - 1)) *
+            (96 * C₀ * Real.sqrt N * (H : ℝ) ^ (k - 1) *
+              ((Real.log N) ^ (k - 2) * (Real.log N) ^ 2) +
+                6 * M * ((H : ℝ) ^ (k - 1) * H) *
+                  ((Real.log N) ^ (k - 2) * Real.log N)) := by ring
+        _ = _ := by rw [hklog, hklog1, hkH]; ring
     _ ≤ B * K * (192 * C₀ * A + 6 * M * D) := by
       apply mul_le_mul
       · exact mul_le_mul_of_nonneg_left hcoef hB
