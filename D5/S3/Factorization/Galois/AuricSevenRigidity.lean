@@ -2,8 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Factorization/Galois/AuricSevenRigidity
    mirror-E: none(waiver:algebraically-proved)
-   anchors: [mathlib/module/Mathlib.Algebra.Algebra.Operations,
-     mathlib/module/Mathlib.LinearAlgebra.Dimension.Constructions]
+   anchors: [mathlib/module/Mathlib.Algebra.Algebra.Operations, mathlib/module/Mathlib.LinearAlgebra.Dimension.Constructions]
    utility: none
    digest: The zero-product tensor endpoint forces homothety of the two actual field spans. -/
 
