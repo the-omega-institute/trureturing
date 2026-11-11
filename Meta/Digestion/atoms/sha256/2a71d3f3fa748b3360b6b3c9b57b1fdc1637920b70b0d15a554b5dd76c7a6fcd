@@ -1,0 +1,10 @@
+**定义 38.1（固定实际域与完整交维函数）。** 设 $F$ 为特征零域，$D/F$ 为实际有限域扩张，$F\subseteq A\subseteq D$ 为已经存在的实际中间域，$[A:F]=3$。对四维 $F$-子空间 $W\le_F D$，沿用
+
+$$
+d_W(r)=\dim_F(W\cap rW)\quad(r\in D^\times),\qquad
+r_W(A)=\dim_A AW,\qquad AW=\operatorname{span}_A W\subseteq D.
+\tag{38.1}
+$$
+
+完整函数保留全部同一原标签及零读数。这里不要求 $F(W/W)=D$，也不预设稳定子 $E_W=\{c\in D:cW\subseteq W\}$ 等于 $F$。
+

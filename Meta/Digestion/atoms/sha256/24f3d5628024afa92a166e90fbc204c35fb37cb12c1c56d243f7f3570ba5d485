@@ -1,0 +1,38 @@
+**定义 41.1（原支持、分裂坐标与既有前件）。** 固定正实根 $\alpha=2^{1/8}$、原域 $D=\mathbb Q(\alpha)$，以及式 (40.14) 的 $X,Z$。对四维有理窗口 $W\le_{\mathbb Q}D$，记
+
+$$
+Q_W=\{u/v:u,v\in W,\ v\ne0\},\qquad
+\mathscr F_Q(X)=\{W:\dim_{\mathbb Q}W=4,\ Q_W=Q_X\}.
+\tag{41.1}
+$$
+
+$Q_W$ 包含零；等式逐个保留原 $D$ 元素。取 $\zeta=e^{\pi i/4}$、$K=D(\zeta)$ 及代数闭包 $k\supseteq K$，将嵌入编号为
+
+$$
+\sigma_i(\alpha)=\alpha\zeta^i,\qquad i\in E=\mathbb Z/8\mathbb Z.
+$$
+
+选 $W$ 的有理基 $w_1,\ldots,w_4$，定义
+
+$$
+B_W=(\sigma_i(w_j))_{i\in E,\,1\le j\le4},\quad
+p_I(W)=\det(B_W)_I\quad(|I|=4),\quad
+\mathcal N(W)=\{I\subset E:|I|=4,\ p_I(W)=0\}.
+\tag{41.2}
+$$
+
+行按 $0,\ldots,7$ 排序。$\mathcal N(W)$ 是固定嵌入标签的行拟阵非基集合，不因更换有理基而变。令
+
+$$
+\begin{aligned}
+\mathcal A&=\{\{t,t+1,t+2,t+5\}:t\in E\},\\
+\mathcal C&=\{\{t,t+1,t+3,t+4\}:t\in E\},\\
+\mathcal B&=\{\{0,2,4,6\},\{1,3,5,7\}\}.
+\end{aligned}
+\tag{41.3}
+$$
+
+这些集合中的加法均模八；$\mathcal C=\{I^c:I\in\mathcal A\}$，$\mathcal B$ 在取补下不变。
+
+这里沿用的扩张均为特征零有限域扩张；定理 40.4 也在此前件下使用。式 (40.2) 的迹对偶恒等式是 §34 式 (34.7) 及其所引来源的重述。取前卷 [《原有向面积与三重返回》命题 24.2](AURIC_R5_022_ORIENTED_AREA_AND_TERNARY_RETURN.md) 的 $\theta=\alpha$，则其 $U=X$、$\alpha V=Z$；成对反例及其三重分离均是既有输入。以下要限制的是同一原支持的全部窗口，不重新断言这对窗口的发现。
+
