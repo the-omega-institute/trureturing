@@ -24,13 +24,13 @@ intersection clause of Raz--Wigderson, Definition 5.1, including empty families.
 
 noncomputable section
 
-open scoped Classical TensorProduct
+open scoped TensorProduct
 
 namespace D5.S3.Factorization.Galois.SymbolicHyperplaneGeneralPosition
 
 open ActualWindowCommonKernel.HyperplaneRank
 
-variable {F α ι : Type*} [Field F] [Fintype α]
+variable {F α ι : Type*} [Field F]
 
 /-- The rational function field with one independent variable per coordinate. -/
 abbrev SymbolicField (F α : Type*) [Field F] := FractionRing (MvPolynomial α F)
@@ -48,10 +48,11 @@ def extend (V : Submodule F (α → F)) : Submodule (SymbolicField F α) (α →
   Submodule.span _ (constantVector '' (V : Set (α → F)))
 
 /-- One common normal, with all coordinates independently indeterminate. -/
-def symbolicNormal : (α → SymbolicField F α) →ₗ[SymbolicField F α] SymbolicField F α where
+def symbolicNormal [Fintype α] :
+    (α → SymbolicField F α) →ₗ[SymbolicField F α] SymbolicField F α where
   toFun v := ∑ j, coordinate j * v j
   map_add' v w := by simp [mul_add, Finset.sum_add_distrib]
-  map_smul' c v := by simp [Finset.mul_sum, mul_left_comm, mul_assoc]
+  map_smul' c v := by simp [Finset.mul_sum, mul_left_comm]
 
 private def direction (y : α → SymbolicField F α) :
     Derivation F (SymbolicField F α) (SymbolicField F α) := by
@@ -66,7 +67,7 @@ private def direction (y : α → SymbolicField F α) :
 
 private theorem direction_coordinate (y : α → SymbolicField F α) (j : α) :
     direction y (coordinate j) = y j := by
-  letI : Algebra.FormallyEtale (MvPolynomial α F) (SymbolicField F α) :=
+  let : Algebra.FormallyEtale (MvPolynomial α F) (SymbolicField F α) :=
     Algebra.FormallyEtale.of_isLocalization (nonZeroDivisors (MvPolynomial α F))
   change (MvPolynomial.mkDerivation F y).liftKaehlerDifferential.liftBaseChange
     (SymbolicField F α)
@@ -81,7 +82,8 @@ private def differentiate (d : Derivation F (SymbolicField F α) (SymbolicField 
     (v : α → SymbolicField F α) : α → SymbolicField F α := fun j => d (v j)
 
 private theorem differentiate_add (d : Derivation F (SymbolicField F α) (SymbolicField F α))
-    (v w : α → SymbolicField F α) : differentiate d (v + w) = differentiate d v + differentiate d w := by
+    (v w : α → SymbolicField F α) :
+    differentiate d (v + w) = differentiate d v + differentiate d w := by
   ext j
   exact map_add d _ _
 
@@ -89,7 +91,7 @@ private theorem differentiate_smul (d : Derivation F (SymbolicField F α) (Symbo
     (c : SymbolicField F α) (v : α → SymbolicField F α) :
     differentiate d (c • v) = d c • v + c • differentiate d v := by
   ext j
-  simpa [differentiate, smul_eq_mul, add_comm, mul_comm] using d.leibniz c (v j)
+  simp [differentiate, smul_eq_mul, add_comm, mul_comm]
 
 private theorem differentiate_extend (d : Derivation F (SymbolicField F α) (SymbolicField F α))
     (V : Submodule F (α → F)) {v : α → SymbolicField F α} (hv : v ∈ extend V) :
@@ -113,7 +115,9 @@ private theorem differentiate_extend (d : Derivation F (SymbolicField F α) (Sym
       rw [differentiate_smul]
       exact (extend V).add_mem ((extend V).smul_mem _ hv) ((extend V).smul_mem _ ih)
 
-private theorem differentiate_normal (ψ : (α → SymbolicField F α) →ₗ[SymbolicField F α]
+open Classical in
+private theorem differentiate_normal [Fintype α]
+    (ψ : (α → SymbolicField F α) →ₗ[SymbolicField F α]
     SymbolicField F α) (v : α → SymbolicField F α) :
     direction (fun j => ψ (Pi.single j 1)) (symbolicNormal v) =
       symbolicNormal (differentiate (direction (fun j => ψ (Pi.single j 1))) v) + ψ v := by
@@ -128,7 +132,7 @@ private theorem differentiate_normal (ψ : (α → SymbolicField F α) →ₗ[Sy
     ext k; simp [Pi.single_apply]]
   simp
 
-private theorem normal_constant_ne_zero {v : α → F} (hv : v ≠ 0) :
+private theorem normal_constant_ne_zero [Fintype α] {v : α → F} (hv : v ≠ 0) :
     symbolicNormal (constantVector v) ≠ 0 := by
   classical
   intro hz
@@ -137,8 +141,7 @@ private theorem normal_constant_ne_zero {v : α → F} (hv : v ≠ 0) :
   have h := congrArg (direction (Pi.single j (1 : SymbolicField F α))) hz
   simp only [symbolicNormal, LinearMap.coe_mk, AddHom.coe_mk, map_sum,
     Derivation.leibniz, direction_coordinate, constantVector, Derivation.map_algebraMap,
-    smul_eq_mul, mul_zero, zero_add, map_zero, Pi.single_apply, Finset.sum_ite_eq',
-    Finset.mem_univ, if_true, one_mul] at h
+    smul_eq_mul, mul_zero, zero_add, map_zero, Pi.single_apply] at h
   exact (algebraMap F (SymbolicField F α)).injective (by simpa using h)
 
 private theorem stable_sup {K E : Type*} [Field K] [AddCommGroup E] [Module K E]
@@ -167,7 +170,7 @@ private theorem stable_finset_sup {K E η : Type*} [Field K] [AddCommGroup E] [M
 /-- The exact two-clause general-position predicate for the scalar extensions
 of nonzero constant subspaces. A, B and C may be empty, overlap, and contain
 indices representing equal subspaces. No genericity antecedent is assumed. -/
-theorem symbolic_general_position [CharZero F] (V : ι → Submodule F (α → F))
+theorem symbolic_general_position [Fintype α] [CharZero F] (V : ι → Submodule F (α → F))
     (s : Finset ι) (hV : ∀ i ∈ s, V i ≠ ⊥) :
     InGeneralPosition (fun i => extend (V i)) symbolicNormal s := by
   classical
@@ -219,18 +222,21 @@ private theorem generalPosition_comap {K E E' η : Type*} [Field K]
       familySpan (fun i => (V i).comap e.toLinearMap) A := map_finset_sup L A V
   have hcut (A : Finset η) : L (cutSpan V φ A) =
       cutSpan (fun i => (V i).comap e.toLinearMap) (φ.comp e.toLinearMap) A := by
-    simp only [cutSpan, map_finset_sup, map_inf, hker]
+    simp only [cutSpan, map_finset_sup]
     rfl
   constructor
   · intro i hi hle
     apply h.1 i hi
     have hh : L (V i) ≤ L (LinearMap.ker φ) := hle
-    exact L.symm.monotone hh
+    simpa only [L.symm_apply_apply] using L.symm.monotone hh
   · intro A hA B hB C hC hle
     have hh : L ((cutSpan V φ A ⊔ familySpan V B) ⊓
         (cutSpan V φ A ⊔ familySpan V C)) ≤ L (LinearMap.ker φ) := by
       simpa only [map_inf, map_sup, hcut, hspan, hker] using hle
-    have heq := congrArg L (h.2 A hA B hB C hC (L.symm.monotone hh))
+    have hbase : (cutSpan V φ A ⊔ familySpan V B) ⊓
+        (cutSpan V φ A ⊔ familySpan V C) ≤ LinearMap.ker φ := by
+      simpa only [L.symm_apply_apply] using L.symm.monotone hh
+    have heq := congrArg L (h.2 A hA B hB C hC hbase)
     simpa only [map_inf, map_sup, hcut, hspan] using heq
 
 private theorem extend_span_range {η : Type*} (v : η → α → F) :
@@ -241,7 +247,7 @@ private theorem extend_span_range {η : Type*} (v : η → α → F) :
       map_add' := by intro x y; ext j; exact map_add _ _ _
       map_smul' := by intro a x; ext j; simp [constantVector, Algebra.smul_def] }
   change Submodule.span _ (c '' (Submodule.span F (Set.range v) : Set (α → F))) = _
-  rw [← Submodule.map_coe, Submodule.map_span, Set.image_range,
+  rw [← Submodule.map_coe, Submodule.map_span, ← Set.range_comp,
     Submodule.span_span_of_tower]
   rfl
 
@@ -253,6 +259,7 @@ variable {β : Type*} {κ : β → Type*} [Fintype β] [∀ i, Fintype (κ i)]
 def liftRows (b : ∀ i, ι → κ i → F) : ∀ i, ι → κ i → SymbolicField F (Σ i, κ i) :=
   fun i σ j => algebraMap F _ (b i σ j)
 
+open Classical in
 /-- The common-constraint partition rank with the symbolic GP antecedent
 discharged. The rows are arbitrary constant rows, so in particular may be the
 actual embedding rows over the normal closure, before adjoining the variables. -/
@@ -267,7 +274,8 @@ theorem symbolic_block_common_rows_partition_rank [CharZero F]
       ∀ Q : Finpartition s, Module.finrank (SymbolicField F (Σ i, κ i))
         (commonRowSpan (blockRows (liftRows b)) (coefficientNormal coordinate) k s) ≤
         ∑ B ∈ Q.parts,
-          ((∑ i, Module.finrank (SymbolicField F (Σ i, κ i)) (blockSpan (liftRows b) B i)) - 1) := by
+          ((∑ i, Module.finrank (SymbolicField F (Σ i, κ i))
+            (blockSpan (liftRows b) B i)) - 1) := by
   classical
   let K := SymbolicField F (Σ i, κ i)
   let e : ((i : β) → κ i → K) ≃ₗ[K] ((a : Σ i, κ i) → K) :=
@@ -281,8 +289,9 @@ theorem symbolic_block_common_rows_partition_rank [CharZero F]
     ext ⟨j, l⟩
     by_cases hji : j = i
     · subst j
-      simp [constantVector, e, e₀, blockRows, liftRows]
-    · simp [constantVector, e, e₀, blockRows, liftRows, Pi.single_eq_of_ne hji]
+      simp [constantVector, e, e₀, blockRows, liftRows, Sigma.uncurry]
+    · simp [constantVector, e, e₀, blockRows, Sigma.uncurry,
+        Pi.single_eq_of_ne hji]
   have hV (σ : ι) (hσ : σ ∈ s) : V σ ≠ ⊥ := by
     intro hbot
     have hv : e₀ (blockRows b σ k) ∈ V σ :=
@@ -295,7 +304,7 @@ theorem symbolic_block_common_rows_partition_rank [CharZero F]
   have hext (σ : ι) : extend (V σ) =
       (Submodule.span K (Set.range (blockRows (liftRows b) σ))).map e.toLinearMap := by
     rw [show V σ = Submodule.span F (Set.range fun i => e₀ (blockRows b σ i)) from rfl,
-      extend_span_range, Submodule.map_span, Set.image_range]
+      extend_span_range, Submodule.map_span, ← Set.range_comp]
     congr 1
     exact congrArg Set.range (funext (hgen σ))
   have hnormal : symbolicNormal.comp e.toLinearMap = coefficientNormal
