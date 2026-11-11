@@ -40,22 +40,22 @@ The forward direction extracts the mass and balance identities from the original
 
 The theorem does not assert sourceReadout nonvanishing, a projective phase quotient, the complete finite-environment threshold, an attaining contact, the strict descent theorem, or transport to the opposite imaginary orientation. Those claims remain outside this declaration.
 
-**Theorem 1.3 (A complete reduction for every original contact).**
+**Theorem 1.3 (The full contact characterization).**
 
-$$\forall h \in \mathbb{R},\; \forall r \in \mathbb{R},\; \forall x \in \mathbb{R},\; \forall y \in \mathbb{R},\; \forall u \in Vec,\; \forall p \in Vec,\; \forall q \in Vec,\; \forall a \in Vec,\; \forall eta \in \mathbb{C},\; \operatorname{Contact}\left(h, r, x, y, u, p, q, a, eta\right) \Rightarrow \left(p = \operatorname{pFormula}\left(h, x, y, r, u, eta\right) \land \left(\operatorname{sourceReadout}\left(r, x, y, u\right) \ne 0 \land \left(\operatorname{reducedMass}\left(h, y, u, \operatorname{pFormula}\left(h, x, y, r, u, eta\right)\right) \land \left(\operatorname{reducedReal}\left(h, x, y, u, \operatorname{pFormula}\left(h, x, y, r, u, eta\right)\right) \land \left(\operatorname{reducedImag}\left(h, x, y, u, \operatorname{pFormula}\left(h, x, y, r, u, eta\right)\right) \land eta \cdot \operatorname{sourceReadout}\left(r, x, y, u\right) = \operatorname{numerator}\left(h, x, y, u\right)\right)\right)\right)\right)\right)$$
+$$\forall h \in \mathbb{R},\; \forall r \in \mathbb{R},\; \forall x \in \mathbb{R},\; \forall y \in \mathbb{R},\; \forall u \in Vec,\; \forall p \in Vec,\; \forall q \in Vec,\; \forall a \in Vec,\; \forall eta \in \mathbb{C},\; \left(r = 1 \lor r = -1\right) \Rightarrow \left(\operatorname{abs}\left(h\right) < 1 \Rightarrow \left(1 < \operatorname{abs}\left(y\right) \Rightarrow \left(\operatorname{pow}\left(\operatorname{norm}\left(\operatorname{apply}\left(u, 0\right)\right), 2\right) + \operatorname{pow}\left(\operatorname{norm}\left(\operatorname{apply}\left(u, 1\right)\right), 2\right) = 1 \Rightarrow \left(\operatorname{Contact}\left(h, r, x, y, u, p, q, a, eta\right) \Leftrightarrow \left(p = \operatorname{pFormula}\left(h, x, y, r, u, eta\right) \land \left(q = \operatorname{qFormula}\left(h, x, y, u, \operatorname{pFormula}\left(h, x, y, r, u, eta\right)\right) \land \left(a = \operatorname{aFormula}\left(x, y, \operatorname{pFormula}\left(h, x, y, r, u, eta\right)\right) \land \left(\operatorname{sourceReadout}\left(r, x, y, u\right) \ne 0 \land \left(\operatorname{reducedMass}\left(h, y, u, \operatorname{pFormula}\left(h, x, y, r, u, eta\right)\right) \land \left(\operatorname{reducedReal}\left(h, x, y, u, \operatorname{pFormula}\left(h, x, y, r, u, eta\right)\right) \land \left(\operatorname{reducedImag}\left(h, x, y, u, \operatorname{pFormula}\left(h, x, y, r, u, eta\right)\right) \land eta \cdot \operatorname{sourceReadout}\left(r, x, y, u\right) = \operatorname{numerator}\left(h, x, y, u\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/PBSourceContactNonvanishing.contact_reduction` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/PBSourceContactNonvanishing.contact_characterization` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-For every original Contact instance, this theorem applies the exact four-real reduction and the explicit source-column inversion. It returns the pFormula identity, the nonvanishing source readout supplied by the quantitative bound, all three reduced clauses and the source balance.
+For fixed source signs, small h, nonzero imaginary parameter and a unit vector, an arbitrary Contact tuple is equivalent to the explicit pFormula, qFormula and aFormula fields together with sourceReadout nonvanishing, the three reduced clauses and the source balance.
 
-The proof rewrites the original graph and actor fields into qFormula and aFormula, applies the exact equivalence, and combines it with the source-bound nonvanishing result. The finite environment, phase quotient and remaining continuation claims are not inferred.
+The forward direction uses the source-column inversion, the exact four-real reduction and the quantitative nonvanishing theorem. The reverse direction applies contact_iff_reduced after the three field equalities. The finite environment, phase quotient and remaining continuation claims are not inferred.
 
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Algebra/PBSourceContactNonvanishing.contact_characterization`
 - Truth anchor: `D5/S3/Quantum/Algebra/PBSourceContactNonvanishing.contact_iff_reduced`
-- Truth anchor: `D5/S3/Quantum/Algebra/PBSourceContactNonvanishing.contact_reduction`
 - Truth anchor: `D5/S3/Quantum/Algebra/PBSourceContactNonvanishing.original_contact_nonvanishing`

@@ -28,13 +28,13 @@ internal sealed class PBSourceContactNonvanishingDocument : IScribeDocumentDefin
                     Paragraph(Text("The forward direction extracts the mass and balance identities from the original contact and takes the real and imaginary parts of the two graph equations. The reverse direction reconstructs the Contact fields with the displayed formulas; the source coordinates are verified by the two nonzero resolvent denominators, and the remaining graph conditions follow exactly from the reduced clauses. This is a fixed-coordinate equivalence with both axes retained.")),
                     Paragraph(Text("The theorem does not assert sourceReadout nonvanishing, a projective phase quotient, the complete finite-environment threshold, an attaining contact, the strict descent theorem, or transport to the opposite imaginary orientation. Those claims remain outside this declaration."))),
                 DescribeRole.Theorem),
-            Describe.Lean(DescribeId.Create("contact-reduction"),
-                DeclarationHandle.Create("D5/S3/Quantum/Algebra/PBSourceContactNonvanishing.contact_reduction"),
-                H("A complete reduction for every original contact"),
-                StatementSource.FromAuthor(Disp(ReductionConsumerStatement())), AssessedProvenance.FromRepo(),
+            Describe.Lean(DescribeId.Create("contact-characterization"),
+                DeclarationHandle.Create("D5/S3/Quantum/Algebra/PBSourceContactNonvanishing.contact_characterization"),
+                H("The full contact characterization"),
+                StatementSource.FromAuthor(Disp(CharacterizationStatement())), AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("For every original Contact instance, this theorem applies the exact four-real reduction and the explicit source-column inversion. It returns the pFormula identity, the nonvanishing source readout supplied by the quantitative bound, all three reduced clauses and the source balance.")),
-                    Paragraph(Text("The proof rewrites the original graph and actor fields into qFormula and aFormula, applies the exact equivalence, and combines it with the source-bound nonvanishing result. The finite environment, phase quotient and remaining continuation claims are not inferred."))),
+                    Paragraph(Text("For fixed source signs, small h, nonzero imaginary parameter and a unit vector, an arbitrary Contact tuple is equivalent to the explicit pFormula, qFormula and aFormula fields together with sourceReadout nonvanishing, the three reduced clauses and the source balance.")),
+                    Paragraph(Text("The forward direction uses the source-column inversion, the exact four-real reduction and the quantitative nonvanishing theorem. The reverse direction applies contact_iff_reduced after the three field equalities. The finite environment, phase quotient and remaining continuation claims are not inferred."))),
                 DescribeRole.Theorem))));
     private static Formula I(string s) => F.Id(s);
     private static Formula C(string s, params Formula[] xs) => Call(s, xs);
@@ -95,22 +95,30 @@ internal sealed class PBSourceContactNonvanishingDocument : IScribeDocumentDefin
         foreach (var s in new[] { "y", "x", "r", "h" }) body = All(s, reals, body);
         return body;
     }
-    private static Formula ReductionConsumerStatement()
+    private static Formula CharacterizationStatement()
     {
         var reals = Seq(Mathbb, Grp(I("R")));
         var complexes = Seq(Mathbb, Grp(I("C")));
         var h = I("h"); var r = I("r"); var x = I("x"); var y = I("y");
         var u = I("u"); var p0 = I("p"); var q0 = I("q"); var a0 = I("a"); var eta = I("eta");
         var p = C("pFormula", h, x, y, r, u, eta);
+        var q = C("qFormula", h, x, y, u, p);
+        var a = C("aFormula", x, y, p);
         var contact = C("Contact", h, r, x, y, u, p0, q0, a0, eta);
         var output = And(Eq(p0, p),
-            And(Ne(C("sourceReadout", r, x, y, u), N(0)),
-                And(C("reducedMass", h, y, u, p),
-                    And(C("reducedReal", h, x, y, u, p),
-                        And(C("reducedImag", h, x, y, u, p),
-                            Eq(Multiply(eta, C("sourceReadout", r, x, y, u)),
-                                C("numerator", h, x, y, u)))))));
-        Formula body = Imp(contact, output);
+            And(Eq(q0, q),
+                And(Eq(a0, a),
+                    And(Ne(C("sourceReadout", r, x, y, u), N(0)),
+                        And(C("reducedMass", h, y, u, p),
+                            And(C("reducedReal", h, x, y, u, p),
+                                And(C("reducedImag", h, x, y, u, p),
+                                    Eq(Multiply(eta, C("sourceReadout", r, x, y, u)),
+                                        C("numerator", h, x, y, u)))))))));
+        Formula body = new Formula.Logic(contact, FormulaLogicOperator.Iff, output);
+        body = Imp(Eq(AddF(Sq(Norm(Apply(u, N(0)))), Sq(Norm(Apply(u, N(1))))), N(1)), body);
+        body = Imp(LtRel(N(1), Abs(y)), body);
+        body = Imp(LtRel(Abs(h), N(1)), body);
+        body = Imp(Or(Eq(r, N(1)), Eq(r, Negate(N(1)))), body);
         body = All("eta", complexes, body);
         foreach (var s in new[] { "a", "q", "p", "u" }) body = All(s, I("Vec"), body);
         foreach (var s in new[] { "y", "x", "r", "h" }) body = All(s, reals, body);

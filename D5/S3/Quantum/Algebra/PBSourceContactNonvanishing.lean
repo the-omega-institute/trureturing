@@ -508,7 +508,7 @@ theorem contact_iff_reduced (h r x y : ℝ) (u : Vec) (η : ℂ)
         simp [spectral, Complex.mul_re, Complex.mul_im, mul_div_cancel₀ _ hy0]
         ring
 
-theorem contact_reduction (h r x y : ℝ) (u p q a : Vec) (η : ℂ)
+private theorem contact_reduction (h r x y : ℝ) (u p q a : Vec) (η : ℂ)
     (H : Contact h r x y u p q a η) :
     p = pFormula h x y r u η ∧
       sourceReadout r x y u ≠ 0 ∧
@@ -537,5 +537,33 @@ theorem contact_reduction (h r x y : ℝ) (u p q a : Vec) (η : ℂ)
   have hred := (contact_iff_reduced h r x y u η hr hh hy' hu).mp H'
   have hD := (original_contact_nonvanishing h r x y u p q a η H).1
   exact ⟨hp, hD, hred.1, hred.2.1, hred.2.2.1, hred.2.2.2⟩
+
+theorem contact_characterization (h r x y : ℝ) (u p q a : Vec) (η : ℂ)
+    (hr : r = 1 ∨ r = -1) (hh : |h| < 1) (hy : 1 < |y|)
+    (hu : ‖u 0‖ ^ 2 + ‖u 1‖ ^ 2 = 1) :
+    Contact h r x y u p q a η ↔
+      p = pFormula h x y r u η ∧
+      q = qFormula h x y u (pFormula h x y r u η) ∧
+      a = aFormula x y (pFormula h x y r u η) ∧
+      sourceReadout r x y u ≠ 0 ∧
+      reducedMass h y u (pFormula h x y r u η) ∧
+      reducedReal h x y u (pFormula h x y r u η) ∧
+      reducedImag h x y u (pFormula h x y r u η) ∧
+      η * sourceReadout r x y u = numerator h x y u := by
+  constructor
+  · intro H
+    have hred := contact_reduction h r x y u p q a η H
+    have hq : q = qFormula h x y u (pFormula h x y r u η) := by
+      simpa [qFormula, hred.1] using H.graph
+    have ha : a = aFormula x y (pFormula h x y r u η) := by
+      simpa [aFormula, hred.1] using H.actor
+    exact ⟨hred.1, hq, ha, hred.2.1, hred.2.2.1, hred.2.2.2.1,
+      hred.2.2.2.2.1, hred.2.2.2.2.2⟩
+  · rintro ⟨hp, hq, ha, _hD, hmass, hreal, himag, hbal⟩
+    subst p
+    subst q
+    subst a
+    exact (contact_iff_reduced h r x y u η hr hh hy hu).mpr
+      ⟨hmass, hreal, himag, hbal⟩
 
 end D5.S3.Quantum.Algebra.PBSourceContactNonvanishing
