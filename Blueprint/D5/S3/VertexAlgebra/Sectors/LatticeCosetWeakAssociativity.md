@@ -1,0 +1,149 @@
+# Actual charged weak associativity and ordinary shared numerator
+
+## Abstract
+
+LatticeCosetWeakAssociativity
+
+The lattice-dependent declarations retain arbitrary original finite-rank integral even D, arbitrary external rank e including zero, arbitrary integral B, and symmetric integral C with even diagonal, including singular or indefinite ambient blocks. Both ranks may be zero. Positive definiteness is assumed only for the ORIGINAL gramReal D in the two theorems. No ambient inverse or positivity is imposed. I is the unchanged compressed D B C hC hCe and S is the full schur D B C, including C and the original inverse-Gram correction. External a,b,c and original u,v,w are arbitrary; the latter range over all original finite charge and oscillator states. No uniform outer-field cutoff over intermediate oscillator states is assumed.
+
+**Definition 1.1 (coordinateChange).**
+
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeCosetWeakAssociativity.coordinateChange`
+
+*Formalization.* `D5/S3/VertexAlgebra/Sectors/LatticeCosetWeakAssociativity.coordinateChange` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every type V with AddCommGroup V and Module C V, every complex z and ordinary coefficient array F : Nat -> Nat -> V, coordinateChange z is the complex linear map for t=x+z*y. Its (d,e) coefficient is the finite sum over j<e+1 of z^j choose(d+j,j) times F(d+j,e-j). The consumed finite_triangle and choose_triangle establish coordinate_add; coordinate_zero then gives coordinate_inverse for the shears 1 and -1. No ring structure on V, fractional ordinary exponent or analytic substitution is required.
+
+**Definition 1.2 (extend).**
+
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeCosetWeakAssociativity.extend`
+
+*Formalization.* `D5/S3/VertexAlgebra/Sectors/LatticeCosetWeakAssociativity.extend` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every V with Zero V, extend F at signed integers d,e is F(d.toNat,e.toNat) when BOTH coordinates are nonnegative, and zero otherwise. The consumed extended_coordinate proves compatibility with the positive ordinary shear even for a negative first coordinate, using vanishing natural binomials at the boundary. This boundary is retained in the reconstruction kernels.
+
+**Definition 1.3 (productCoefficient).**
+
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeCosetWeakAssociativity.productCoefficient`
+
+*Formalization.* `D5/S3/VertexAlgebra/Sectors/LatticeCosetWeakAssociativity.productCoefficient` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For all lattice parameters, charges, complete original states and integers m,n, this is the actual product I a (b+c) u m (I b c v n w). Its inner product tail is supplied by the actual compressed field, with no arbitrary product family as a premise.
+
+**Definition 1.4 (iterateCoefficient).**
+
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeCosetWeakAssociativity.iterateCoefficient`
+
+*Formalization.* `D5/S3/VertexAlgebra/Sectors/LatticeCosetWeakAssociativity.iterateCoefficient` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For the same full scope this is the actual iterate I (a+b) c (I a b u m v) n w. Its intermediate state is the actual inner compressed mode. It is not a separately prescribed coherent iterate.
+
+**Definition 1.5 (productShift).**
+
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeCosetWeakAssociativity.productShift`
+
+*Formalization.* `D5/S3/VertexAlgebra/Sectors/LatticeCosetWeakAssociativity.productShift` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For signed integers N,r,s this is the finsum over natural i of (-1)^i choose(r+S(a,b),i) times productCoefficient at (N+r-i,s+i). It records the product shear x=t+y expanded in y/t, with the original full Schur shifts. productShift_range reduces the sum using the actual b,c,v,w tail.
+
+**Definition 1.6 (iterateShift).**
+
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeCosetWeakAssociativity.iterateShift`
+
+*Formalization.* `D5/S3/VertexAlgebra/Sectors/LatticeCosetWeakAssociativity.iterateShift` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For signed integers N,r,s this is the finsum over natural i of choose(N+S(a,c),i) times iterateCoefficient at (r+i,N+s-i). It records the iterate multiplier expanded in t/y. Given an actual a,c,u,w cutoff N, the consumed shifted_equal applies charged_borcherds at p=N and kills the reverse term. This application is a consumed helper, not the module's independent mathematical increment.
+
+The three signed integer cutoffs R,M,N satisfy the original separate tails: I a b u m v=0 for every m>=R, I b c v n w=0 for every n>=M, and I a c u p w=0 for every p>=N. Every integer cutoff satisfying its tail is allowed, including negative cutoffs. shifted_rectangular uses equality with the iterate for r>=R and the product tail for s>=M, proving that the common shifted array vanishes when R<=r OR M<=s. This is support in a shifted quadrant, with no finite-degree or scalar-polynomial conclusion. Statewise cutoffs are supplied by compressed_high_modes; no uniform cutoff over intermediate states is added.
+
+**Definition 1.7 (numerator).**
+
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeCosetWeakAssociativity.numerator`
+
+*Formalization.* `D5/S3/VertexAlgebra/Sectors/LatticeCosetWeakAssociativity.numerator` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every signed R,M,N and natural d,e, H(d,e) is the actual finite product sum over i<e+1, with coefficient (-1)^i choose(R-1-d+S(a,b),i), at product modes (N+R-1-d-i,M-1-e+i). It is an ordinary two-variable Carrier D-valued power series. With the three tail hypotheses, productShift_eq_extend and iterateShift_eq_extend identify BOTH shifted arrays with extend H at (R-1-r,M-1-s). The rectangular-support argument proves the identification also outside the ordinary quadrant.
+
+**Definition 1.8 (sharedNumerator).**
+
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeCosetWeakAssociativity.sharedNumerator`
+
+*Formalization.* `D5/S3/VertexAlgebra/Sectors/LatticeCosetWeakAssociativity.sharedNumerator` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Psi is the actual ordinary shear coordinateChange(-1) H, namely H(x-y,y). numerator_coordinates proves coordinateChange(1) Psi=H by the derived finite inverse. Its coefficient arrays remain on Nat x Nat with values in the actual original Carrier D; they are not scalar polynomials or equalities between incompatible iterated-Hahn domains.
+
+**Theorem 1.9 (recover_iterate).**
+
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeCosetWeakAssociativity.recover_iterate`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeCosetWeakAssociativity.recover_iterate` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For all original lattice parameters, hD, external a,b,c, complete original u,v,w, signed cutoffs R,M,N satisfying ALL THREE original tail hypotheses, and every signed m,n, the actual iterate coefficient equals the finite sum over j<(R-m).toNat of choose(-S(a,c)-N,j) times extend H at (R-1-m-j,N+M-1-n+j). The PLUS j in the second coordinate is retained, and either coordinate may be negative before zero extension. The range is empty when m>=R. iterate_inverse reuses the supplied binomial_convolution with exponents -(N+S(a,c)) and N+S(a,c), and establishes the actual inverse rather than assuming the reconstruction identity.
+
+The product inverse is also proved on the actual field. finite_triangle bounds the joint indices before interchange; falling_inverse consumes Ring.choose_smul_choose and add_pow. product_inverse and recover_product recover the product from H with range j<(M-n).toNat and coefficient choose(m-N+S(a,b),j). coordinate_kernel, including its negative-first-coordinate check and choose_reflection, then transports this formula to Psi, giving product_from_shared with coefficient (-1)^j choose(-S(a,b)-R,j). The named helpers are consumed by the displayed endpoints and their live proof chains; no independent wrapper is added as an escape witness.
+
+**Theorem 1.10 (actual_shared_numerator).**
+
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeCosetWeakAssociativity.actual_shared_numerator`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeCosetWeakAssociativity.actual_shared_numerator` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Under the FULL original telescope and ALL THREE signed tail hypotheses, the theorem proves five clauses together: (1) for every signed r,s, both productShift and iterateShift equal extend H at (R-1-r,M-1-s); (2) for every natural d,e, H(d,e) is the finite sum of choose(d+j,j) times Psi(d+j,e-j) over j<e+1; (3) for every signed m,n, the actual product is recovered from Psi with range j<(M-n).toNat, weight (-1)^j choose(-S(a,b)-R,j), and coordinates (N+R-1-m+j,M-1-n-j); (4) for every signed m,n, the actual iterate is recovered from coordinateChange(1) Psi with range j<(R-m).toNat, weight choose(-S(a,c)-N,j), and coordinates (R-1-m-j,N+M-1-n+j); (5) there exists a UNIQUE ordinary F : Nat -> Nat -> Carrier D whose zero extension reconstructs every productShift at (R-1-r,M-1-s). The witness in clause (5) is H=numerator, and uniqueness is proved by evaluating all its natural coordinates. This local bound variable F is an ordinary coefficient array, not a quotient associator or exchange scalar.
+
+For exponent bookkeeping put alpha=-S(a,b), beta=-S(a,c), gamma=-S(b,c). The common shifted numerator is t^(alpha-R)y^(gamma-M)H(t,y). The product reconstruction represents x^(beta-N)y^(gamma-M) iota_(x,y)(x-y)^(alpha-R)Psi(x,y); the iterate reconstruction represents t^(alpha-R)y^(gamma-M) iota_(y,t)(t+y)^(beta-N)Psi(t+y,y). The product shear expands in y/t, whereas the iterate multiplier expands in t/y. Only after rectangular support are their coefficient arrays identified in the common shifted quadrant. At C=0 the canonical Hahn correspondence uses raw rational q=-Schur and K_ab(u)[m-q_ab]v=I_ab(u)[m]v. None of this asserts equality in incompatible Hahn domains.
+
+Source attribution: the supplied LatticeCosetWeakAssociativity mathematical source and its unchanged LatticeCosetChargedJacobi convolution supplier. Bakalov--Kac, Generalized vertex algebras, math/0602072, Theorem 3.5, Corollary 3.5 (23), and section 3.6 (27), are the source's classical references. The prerequisite's math/0402315v1 section 4.1 conventions and native Scott Carnahan residue and Kalle Kytölä Sugawara attributions remain unchanged. The Scribe and Reg interfaces supply no missing mathematical proof. No literature novelty, analytic sewing, actual quotient F or exchange theorem, scalar polynomiality, categorical or physical realization, or string/AdS completion is claimed.
+
+## References
+
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeCosetWeakAssociativity.actual_shared_numerator`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeCosetWeakAssociativity.coordinateChange`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeCosetWeakAssociativity.extend`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeCosetWeakAssociativity.iterateCoefficient`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeCosetWeakAssociativity.iterateShift`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeCosetWeakAssociativity.numerator`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeCosetWeakAssociativity.productCoefficient`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeCosetWeakAssociativity.productShift`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeCosetWeakAssociativity.recover_iterate`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeCosetWeakAssociativity.sharedNumerator`
+- Dependency: [D5/S3/VertexAlgebra/Sectors/LatticeCosetChargedJacobi](LatticeCosetChargedJacobi.md)
