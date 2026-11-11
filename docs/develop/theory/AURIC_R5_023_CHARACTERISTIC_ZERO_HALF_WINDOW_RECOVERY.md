@@ -1964,3 +1964,177 @@ Castello–Polverino–Zullo，[*Full weight spectrum one-orbit cyclic subspace 
 白话说，把每一阶最少还能相交多少个方向全部列出，仍会丢掉窗口在某个实际子域下需要补几个方向的信息。六次域里的三维窗口已经发生这种损失：两种窗口都能在第二份加入时只剩一线，此后重复它便永远只剩这一线；但二次域补齐一个窗口只添一维，补齐另一个却添三维。这个尺度没有其他域条目可以分离它们，而且二次域若存在便只有一个。保留该域中任一非底域的实际标签，交维二与零就能重新显出差异。完整标签关系因此保留了被全部最小值汇总删掉的信息。
 
 ## 追加锚（本行以下为增补区）
+
+## 34. 完整原标签二元函数的实际域剖面损失与半维尖锐边界
+
+**定义 34.1（完整二元函数的剖面逆问题）。** 固定特征零域 $F$ 及实际有限扩张 $D/F$，$[D:F]=2m$。对每个 $m$ 维窗口 $X\le_F D$，沿用 $d_X(r)=\dim_F(X\cap rX)$、$J_X(r,s)=\dim_F(X\cap rX\cap sX)$、$D_X=F(X/X)$、$E_X=\{c\in D:cX\subseteq X\}$，以及 (33.1) 在每个实际中间域 $F\subseteq A\subseteq D$ 上的 $t_X(A)=\dim_F AX-m$。比较的是全部原 $r\in D^\times$ 上的函数 $d_X$，包含零交读数，不重标标签。记 $X^\perp$ 为乘法迹配对 $\operatorname{Tr}_{D/F}(xy)$ 的正交补。第 $j$ 阶最小正共同交维 $\delta_j(X)$ 仍允许重复原标签，且第一份窗口的标签为 $1$。
+
+**定理 34.2（十二次原数域中的完整二元同读数与实际三次域分离）。** 取正实根 $\alpha^{12}=2$，在同一个原域中置
+
+$$
+\begin{aligned}
+F&=\mathbb Q,&D&=\mathbb Q(\alpha),&A&=\mathbb Q(\alpha^4),\\
+P&=\langle1,\alpha,\alpha^2,\alpha^3,\alpha^4,\alpha^8\rangle_{\mathbb Q}
+=A\oplus\mathbb Q\alpha\oplus\mathbb Q\alpha^2\oplus\mathbb Q\alpha^3,\\
+Q_0&=\langle\alpha,\alpha^2,\alpha^3,\alpha^5,\alpha^6,\alpha^7\rangle_{\mathbb Q}.
+\end{aligned}
+\tag{34.1}
+$$
+
+则 $[D:F]=12$、$[A:F]=3$，且
+
+$$
+\begin{gathered}
+Q_0=P^\perp,\qquad D_P=D_{Q_0}=D,\qquad E_P=E_{Q_0}=\mathbb Q,\\
+(m,N,e)=(6,12,1),\qquad
+ d_P(r)=d_{Q_0}(r)\quad\text{对每个原 }r\in D^\times,\qquad P/P=Q_0/Q_0.
+\end{gathered}
+\tag{34.2}
+$$
+
+实际域剖面却满足
+
+$$
+\begin{aligned}
+AP&=D,&AQ_0&=A\alpha\oplus A\alpha^2\oplus A\alpha^3,
+&t_P(A)&=6,&t_{Q_0}(A)&=3,\\
+BP&=BQ_0=D&&\text{对每个实际 }B\subseteq D\text{， }[B:\mathbb Q]=4,
+&t_P(B)&=6,&t_{Q_0}(B)&=6.
+\end{aligned}
+\tag{34.3}
+$$
+
+这里四次域确实存在，例如 $\mathbb Q(\alpha^3)$；第二行量化全部实际四次域。
+
+同一个原标签及其准确交空间为
+
+$$
+ r_* =\frac{\alpha^8}{1+\alpha^3},\qquad
+ P\cap r_*P=\mathbb Q\alpha^8,\qquad
+ Q_0\cap r_*Q_0=\mathbb Q\cdot(\alpha^3-\alpha^6).
+\tag{34.4}
+$$
+
+对两个窗口共用一列 $r_1=1$、$r_i=r_*$（$i\ge2$），记 $I_j^X=\bigcap_{i=1}^j r_iX$。则
+
+$$
+\begin{aligned}
+I_1^P&=P,&I_j^P&=\mathbb Q\alpha^8&&(j\ge2),\\
+I_1^{Q_0}&=Q_0,&I_j^{Q_0}&=\mathbb Q\cdot(\alpha^3-\alpha^6)&&(j\ge2),\\
+\delta_1(P)&=\delta_1(Q_0)=6,&
+\delta_j(P)&=\delta_j(Q_0)=1&&(j\ge2).
+\end{aligned}
+\tag{34.5}
+$$
+
+而指定的同原三元标签给出
+
+$$
+\begin{aligned}
+P\cap\alpha P\cap\alpha^2P
+ &=\langle\alpha^2,\alpha^3,\alpha^4\rangle_{\mathbb Q},\\
+Q_0\cap\alpha Q_0\cap\alpha^2Q_0
+ &=\langle\alpha^3,\alpha^7\rangle_{\mathbb Q}.
+\end{aligned}
+\tag{34.6}
+$$
+
+特别地 $J_P(\alpha,\alpha^2)=3$、$J_{Q_0}(\alpha,\alpha^2)=2$，且不存在原 $x\in D^\times$ 使 $Q_0=xP$。
+
+证明。$x^{12}-2$、$x^3-2$、$x^4-2$ 均在素数二处 Eisenstein，分别给出 $D$、$A$、$\mathbb Q(\alpha^3)$ 的实际次数。原幂基 $1,\alpha,\ldots,\alpha^{11}$ 线性独立，故两个窗口均为六维。$D_P$ 含原比值 $\alpha/1$，$D_{Q_0}$ 含原比值 $\alpha^2/\alpha$，所以两比值域均为 $D$。
+
+先直接复用成熟乘法对偶机制，不将其另立为新定理。Bachoc–Serra–Zémor，[*Revisiting Kneser's theorem for field extensions*，arXiv:1510.01354v2，§2.2，式 (2)](https://arxiv.org/pdf/1510.01354v2)，给出非零泛函 $\lambda$ 所诱导的非退化结合配对 $\lambda(xy)$；Ueoka–Nagi–Akari–Sui，[*Weak Vishik Equivalence and Linear 2-Basis Blindness for Totally Singular Quadratic Forms*，Zenodo 21758447，Lemma 4.1、Theorem 4.2](https://zenodo.org/records/21758447)，已经证明任意有限域扩张中的半维正交补具有相同全部标量交维。对定义 34.1，$\lambda=\operatorname{Tr}_{D/F}$ 非零，因为 $\lambda(1)=2m\ne0$。对任意半维 $X$、$Y=X^\perp$ 及任意原 $r\ne0$，其维数推导正是
+
+$$
+\begin{aligned}
+(X+rX)^\perp&=Y\cap r^{-1}Y,\\
+d_X(r)&=2m-\dim_F(X+rX)
+=\dim_F(Y\cap r^{-1}Y)
+=\dim_F(Y\cap rY)=d_Y(r).
+\end{aligned}
+\tag{34.7}
+$$
+
+末一步由乘以同一个 $r$ 给出，故最终是同原标签 $r$ 的相等。推导没有正交叠前件，包含全部零读数。
+
+在 (34.1) 的原幂基上，乘以 $\alpha^k$（$1\le k\le11$）没有对角项，故 $\operatorname{Tr}(\alpha^k)=0$，而 $\operatorname{Tr}(1)=12$、$\operatorname{Tr}(\alpha^{12})=24$。对 $0\le i,j\le11$，配对 $\operatorname{Tr}(\alpha^{i+j})$ 仅在 $i+j=0$ 或 $12$ 时非零；较高次用 $\alpha^{12}=2$ 降幂即可。于是 $z=\sum_{i=0}^{11}c_i\alpha^i$ 与 $P$ 正交恰好要求
+
+$$
+c_0=c_{11}=c_{10}=c_9=c_8=c_4=0.
+\tag{34.8}
+$$
+
+剩下的六个方向正是 $Q_0$，从而 $Q_0=P^\perp$，(34.7) 给出全部原标签的二元相等。对任何窗口 $X$，$X/X=\{0\}\cup\{r\in D^\times:d_X(r)>0\}$，因为非零交向量恰写成 $u=rv$、$u,v\in X\setminus\{0\}$。这也证明 (34.2) 的实际比值集合等式，包括零。
+
+下面独立核对实际域的干扰。由 $[D:A]=4$，$1,\alpha,\alpha^2,\alpha^3$ 是 $A$-基；因此 $AP=D$，而 $AQ_0$ 恰为 (34.3) 的三个直和方向，维数为九。对任意已经存在的实际四次域 $B\subseteq D$，合成域 $BA\subseteq D$ 的次数同时被三和四整除，故只能为十二，即 $BA=D$。因 $A\subseteq P$，有 $BP\supseteq BA=D$。另一方面 $[D:B]=3$ 且 $B(\alpha)=D$，所以 $1,\alpha,\alpha^2$ 在 $B$ 上构成基；$Q_0$ 包含 $\alpha,\alpha^2,\alpha^3$，故 $BQ_0\supseteq\alpha(B+B\alpha+B\alpha^2)=D$。这证明全部四次域的饱和，而没有从次数整除假造子域，也不需要列举这些域。剖面数值由减去六得到。
+
+为证明 (34.4)，令 $v=1+\alpha^3$。对 $x\in P$，条件 $x\in r_*P$ 等价于 $vx\in\alpha^8P$，而
+
+$$
+\alpha^8P=\langle1,\alpha^4,\alpha^8,\alpha^9,\alpha^{10},\alpha^{11}\rangle_{\mathbb Q}.
+$$
+
+写 $x=c_0+c_1\alpha+c_2\alpha^2+c_3\alpha^3+c_4\alpha^4+c_8\alpha^8$。比较 $vx$ 的 $\alpha,\alpha^2,\alpha^6,\alpha^7,\alpha^3$ 系数，依次强制 $c_1=c_2=c_3=c_4=c_0=0$；$c_8$ 任意，且 $v\alpha^8=\alpha^8+\alpha^{11}$ 确属目标空间。因此第一条交空间准确成立。
+
+对 $x\in Q_0$，同样要求 $vx\in\alpha^8Q_0=\langle\alpha,\alpha^2,\alpha^3,\alpha^9,\alpha^{10},\alpha^{11}\rangle_{\mathbb Q}$。写 $x=b_1\alpha+b_2\alpha^2+b_3\alpha^3+b_5\alpha^5+b_6\alpha^6+b_7\alpha^7$，比较 $vx$ 的 $\alpha^4,\alpha^8,\alpha^7,\alpha^5,\alpha^6$ 系数，所得全部约束恰为
+
+$$
+b_1=b_5=b_7=b_2=0,\qquad b_6=-b_3.
+\tag{34.9}
+$$
+
+故第二条交空间也准确成立。两个非零生成元在同一份原窗口中的缩放前像分别为
+
+$$
+\frac{\alpha^8}{r_*}=1+\alpha^3\in P,\qquad
+\frac{\alpha^3-\alpha^6}{r_*}=\tfrac12\alpha^7-\alpha\in Q_0.
+\tag{34.10}
+$$
+
+因此重复同一个 $r_*$ 保持各自同一个原非零向量，得到 (34.5) 的全部前缀；任意正共同交维至少为一，故这些前缀同时达到全部正最小值。若 $c\in E_X$、$X=P$ 或 $Q_0$，交换乘法使 $c$ 稳定 $X\cap r_*X$；该交是一条非零有理直线，故 $c\in\mathbb Q$。反向包含显然，于是两稳定子均为 $\mathbb Q$，共同参数全部得证。
+
+最后，在原幂基上逐方向相交，有
+
+$$
+\begin{aligned}
+P\cap\alpha P&=\langle\alpha,\alpha^2,\alpha^3,\alpha^4\rangle_{\mathbb Q},&
+P\cap\alpha^2P&=\langle\alpha^2,\alpha^3,\alpha^4\rangle_{\mathbb Q},\\
+Q_0\cap\alpha Q_0&=\langle\alpha^2,\alpha^3,\alpha^6,\alpha^7\rangle_{\mathbb Q},&
+Q_0\cap\alpha^2Q_0&=\langle\alpha^3,\alpha^5,\alpha^7\rangle_{\mathbb Q}.
+\end{aligned}
+\tag{34.11}
+$$
+
+每行两空间再相交即为 (34.6)。原标量整体缩放保持每个 $J_X(r,s)$；也保持每个 $\dim_F AX$，因为 $A(xX)=x(AX)$。所以三元读数差异或 (34.3) 的剖面差异都独立排除 $Q_0=xP$。$\square$
+
+**定理 34.3（任意半维窗口对的尖锐剖面恢复边界）。** 对任意特征零实际有限扩张 $D/F$，$[D:F]=2m$、$m\le5$，以及任意两个 $m$ 维窗口 $X,Y\le_F D$，若 $d_X(r)=d_Y(r)$ 对全部原 $r\in D^\times$ 成立，则 $t_X(A)=t_Y(A)$ 对每个实际中间域 $F\subseteq A\subseteq D$ 成立。这里不要求 $Y=X^\perp$，也不要求 $D_X=D_Y=D$。定理 34.2 因而使 $(m,[D:F])=(6,12)$ 成为整个半维类中完整二元函数不能恢复实际域剖面的首个规模，特别也是半维迹对偶家族内的首个规模。
+
+证明。$E_X=\{0\}\cup\{r\in D^\times:d_X(r)=m\}$，因为等维空间的交维为 $m$ 恰好表示 $rX=X$；因此 $E_X=E_Y$。若实际 $A/F$ 为二次，任取原 $\gamma\in A\setminus F$，有 $A=F+F\gamma$，从而
+
+$$
+AX=X+\gamma X,\qquad t_X(A)=m-d_X(\gamma).
+\tag{34.12}
+$$
+
+故全部实际二次域的条目均由原标签函数决定。
+
+若实际 $[D:A]=2$，则 $[A:F]=m$，$AX$ 的 $A$-维数只能为一或二。它等于一时，$X$ 与包含它的那条 $A$-直线同为 $m$ 维，故两者相等，即 $AX=X$、$A\subseteq E_X$；反之 $A\subseteq E_X$ 显然给出此情形。否则 $AX=D$。因此
+
+$$
+t_X(A)=
+\begin{cases}
+0,&A\subseteq E_X,\\
+m,&A\not\subseteq E_X.
+\end{cases}
+\tag{34.13}
+$$
+
+这些条目同样由 $d_X$ 决定。对 $2m\in\{2,4,6,8,10\}$，域塔表明每个实际非平凡真中间域的次数要么为二，要么为 $m$；后者正是指数二的情形。端点恒为 $t_X(F)=0$、$t_X(D)=m$。这就穷尽全部实际域，证明对任意窗口对的恢复；没有用次数列表断言任何子域存在。定理 34.2 在半维六的实际域中给出反例，故边界尖锐。
+
+这一结论的范围区别于 §33：那里全部最小值序列已在 $(3,6)$ 丢失剖面，但 (33.5) 的同一实际二次标签会区分完整二元函数。本条恢复的是剖面，不是窗口轨道；前卷 [R5_022 命题 24.2](AURIC_R5_022_ORIENTED_AREA_AND_TERNARY_RETURN.md) 已有 $(4,8)$ 的完整原标签二元碰撞及指定三元分离。Zenodo 21758447 的 Lemma 6.1、Proposition 6.5 更已有特征二实际十六次扩张中的八维对偶对，以及实际四次域 $k(t,su)$ 上的张成秩四与三；故“对偶二元碰撞仍丢失域剖面”这一机制也不是新增。
+
+有限域线性集与轨道码中的相关不变量同样直接复用：Castello–Polverino–Zullo，[*Full weight spectrum one-orbit cyclic subspace codes*，arXiv:2405.19911v1，Definition 2.2、Remark 3.2](https://arxiv.org/html/2405.19911v1)，已分别定义子域张成秩 $\delta_a(X)=\dim_{\mathbb F_{q^a}}\mathbb F_{q^a}X$ 并说明迹正交补保持子域线性；此处的数值对应为 $t_X(\mathbb F_{q^a})=a\delta_a(X)-m$。本节相对于这些指定原文及仓内结果的推导差额（repo-derived）仅是特征零十二次原域中的 (34.1)–(34.6) 精确联合实现，以及 (34.12)–(34.13) 导出的整个半维类尖锐边界；不将已知配对、二元碰撞、域剖面盲性或最小值汇总再列为新机制。这里没有确定全球文献优先权，也没有解决任意 $N$ 下完整二元函数丢失剖面的最小窗口维数；尤其更高次数中的三维情形仍未由本条结算。$\square$
+
+白话说，即使每个原比例都有名字，并且把所有零读数一并保留，逐次问“与这份倍乘窗口共享几维”仍会漏掉一个实际子域同时补齐窗口时需要多少方向。这对六维窗口的全部二元答案相同，同一个固定比例还能让两者从第二份起永远只剩一线；但实际三次域补齐一个要添六维，补齐另一个只添三维。同一个原向量同时通过 $\alpha$、$\alpha^2$ 两次要求时，剩下三维与二维，便切开这个二元观察纤维。Grimm–Baake，[*Homometric Point Sets and Inverse Problems*，arXiv:0808.0094v1，§§2、2.1](https://arxiv.org/pdf/0808.0094v1)，讨论完整差向量重数及 $\operatorname{vol}(K\cap(x+K))$ 仍不能唯一恢复集合；那是对这种信息损失的类比，这里没有把平移体积自相关与乘法交维建立为同一个数学问题。
+
+## 追加锚（本行以下为增补区）
