@@ -24,6 +24,38 @@ This is the quantitative nonvanishing clause of the original actual-contact redu
 
 The source-bound four-slot registration remains unfinished at https://github.com/the-omega-institute/trureturing/issues/29263. The required original-contact witness, whole-family variation and exact source occurrence ties have not been supplied; the mathematical Lean proof does not establish registration completion.
 
+**Theorem 1.2 (Exact four-real reduction for the fixed source contact).**
+
+$$\forall h \in \mathbb{R},\; \forall r \in \mathbb{R},\; \forall x \in \mathbb{R},\; \forall y \in \mathbb{R},\; \forall u \in Vec,\; \forall eta \in \mathbb{C},\; \left(r = 1 \lor r = -1\right) \Rightarrow \left(\operatorname{abs}\left(h\right) < 1 \Rightarrow \left(1 < \operatorname{abs}\left(y\right) \Rightarrow \left(\operatorname{pow}\left(\operatorname{norm}\left(\operatorname{apply}\left(u, 0\right)\right), 2\right) + \operatorname{pow}\left(\operatorname{norm}\left(\operatorname{apply}\left(u, 1\right)\right), 2\right) = 1 \Rightarrow \left(\operatorname{Contact}\left(h, r, x, y, u, \operatorname{pFormula}\left(h, x, y, r, u, eta\right), \operatorname{qFormula}\left(h, x, y, u, \operatorname{pFormula}\left(h, x, y, r, u, eta\right)\right), \operatorname{aFormula}\left(x, y, \operatorname{pFormula}\left(h, x, y, r, u, eta\right)\right), eta\right) \Leftrightarrow \left(\operatorname{reducedMass}\left(h, y, u, \operatorname{pFormula}\left(h, x, y, r, u, eta\right)\right) \land \left(\operatorname{reducedReal}\left(h, x, y, u, \operatorname{pFormula}\left(h, x, y, r, u, eta\right)\right) \land \left(\operatorname{reducedImag}\left(h, x, y, u, \operatorname{pFormula}\left(h, x, y, r, u, eta\right)\right) \land eta \cdot \operatorname{sourceReadout}\left(r, x, y, u\right) = \operatorname{numerator}\left(h, x, y, u\right)\right)\right)\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/PBSourceContactNonvanishing.contact_iff_reduced` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For real h,r,x,y, a unit two-coordinate vector u and a complex amplitude eta, the displayed pFormula determines the two actor coordinates, while qFormula and aFormula retain the literal graph and actor equations. Under r equal to 1 or -1, abs(h)<1, abs(y)>1 and the unit equation, the complete Contact predicate is equivalent to the four reduced clauses: the complex mass equation, the real mixed equation, the imaginary second-graph equation and the source balance eta times sourceReadout equals numerator.
+
+The forward direction extracts the mass and balance identities from the original contact and takes the real and imaginary parts of the two graph equations. The reverse direction reconstructs the Contact fields with the displayed formulas; the source coordinates are verified by the two nonzero resolvent denominators, and the remaining graph conditions follow exactly from the reduced clauses. This is a fixed-coordinate equivalence with both axes retained.
+
+The theorem does not assert sourceReadout nonvanishing, a projective phase quotient, the complete finite-environment threshold, an attaining contact, the strict descent theorem, or transport to the opposite imaginary orientation. Those claims remain outside this declaration.
+
+**Theorem 1.3 (A complete reduction for every original contact).**
+
+$$\forall h \in \mathbb{R},\; \forall r \in \mathbb{R},\; \forall x \in \mathbb{R},\; \forall y \in \mathbb{R},\; \forall u \in Vec,\; \forall p \in Vec,\; \forall q \in Vec,\; \forall a \in Vec,\; \forall eta \in \mathbb{C},\; \operatorname{Contact}\left(h, r, x, y, u, p, q, a, eta\right) \Rightarrow \left(p = \operatorname{pFormula}\left(h, x, y, r, u, eta\right) \land \left(\operatorname{sourceReadout}\left(r, x, y, u\right) \ne 0 \land \left(\operatorname{reducedMass}\left(h, y, u, \operatorname{pFormula}\left(h, x, y, r, u, eta\right)\right) \land \left(\operatorname{reducedReal}\left(h, x, y, u, \operatorname{pFormula}\left(h, x, y, r, u, eta\right)\right) \land \left(\operatorname{reducedImag}\left(h, x, y, u, \operatorname{pFormula}\left(h, x, y, r, u, eta\right)\right) \land eta \cdot \operatorname{sourceReadout}\left(r, x, y, u\right) = \operatorname{numerator}\left(h, x, y, u\right)\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/PBSourceContactNonvanishing.contact_reduction` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every original Contact instance, this theorem applies the exact four-real reduction and the explicit source-column inversion. It returns the pFormula identity, the nonvanishing source readout supplied by the quantitative bound, all three reduced clauses and the source balance.
+
+The proof rewrites the original graph and actor fields into qFormula and aFormula, applies the exact equivalence, and combines it with the source-bound nonvanishing result. The finite environment, phase quotient and remaining continuation claims are not inferred.
+
 ## References
 
+- Truth anchor: `D5/S3/Quantum/Algebra/PBSourceContactNonvanishing.contact_iff_reduced`
+- Truth anchor: `D5/S3/Quantum/Algebra/PBSourceContactNonvanishing.contact_reduction`
 - Truth anchor: `D5/S3/Quantum/Algebra/PBSourceContactNonvanishing.original_contact_nonvanishing`

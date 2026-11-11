@@ -327,4 +327,215 @@ theorem original_contact_nonvanishing (h r x y : ℝ) (u p q a : Vec) (η : ℂ)
       nlinarith
     nlinarith
 
+def pFormula (h x y : ℝ) (r : ℝ) (u : Vec) (η : ℂ) : Vec := ![
+  -Complex.I * ((1 / 2 : ℂ) * u 0 +
+    (1 - spectral x y)⁻¹ * ((3 / 2 : ℂ) * u 0 + h * u 1) +
+    η * (1 - spectral x y)⁻¹ * ((Real.sqrt 2)⁻¹ : ℝ)),
+  -Complex.I * (4 * u 1 +
+    (2 - spectral x y)⁻¹ * (2 * h * u 0) +
+    η * (2 - spectral x y)⁻¹ * (2 * r))]
+
+def qFormula (h x y : ℝ) (u p : Vec) : Vec := graphColumn h x y u p
+
+def aFormula (x y : ℝ) (p : Vec) : Vec := actorColumn x y p
+
+def reducedMass (h y : ℝ) (u p : Vec) : Prop :=
+  pairing u p = (-(beta h u / y) : ℝ)
+
+def reducedReal (h x y : ℝ) (u p : Vec) : Prop :=
+  2 * (pairing u (cMap p)).re + (x + 3) * beta h u / y +
+      h * (star (u 0) * u 1).im = 0
+
+def reducedImag (h x y : ℝ) (u p : Vec) : Prop :=
+  (spectral x y * pairing u (cMap p)).im +
+      (3 * ‖u 0‖ ^ 2 + 24 * ‖u 1‖ ^ 2 +
+        4 * h * (star (u 0) * u 1).re) = 0
+
+private theorem cMap_graph_pairing (h x y : ℝ) (u p : Vec) :
+    pairing (cMap u) (graphColumn h x y u p) =
+      spectral x y * pairing u (cMap p) + 2 * pairing u p +
+        Complex.I * ((3 * ‖u 0‖ ^ 2 + 24 * ‖u 1‖ ^ 2 +
+          4 * h * (star (u 0) * u 1).re : ℝ) : ℂ) := by
+  apply Complex.ext <;>
+    simp [pairing, graphColumn, cMap, Complex.sq_norm,
+      Complex.normSq_apply, Complex.mul_re, Complex.mul_im] <;> ring
+
+private theorem pFormula_eq_source_columns (h r x y : ℝ) (u p q a : Vec) (η : ℂ)
+    (H : Contact h r x y u p q a η) (hy : y ≠ 0) :
+    p = pFormula h x y r u η := by
+  obtain ⟨h0, h1⟩ := source_columns h r x y u p q a η H hy
+  funext j
+  fin_cases j
+  · simpa [pFormula] using h0
+  · simpa [pFormula] using h1
+
+private theorem source_of_pFormula (h r x y : ℝ) (u : Vec) (η : ℂ)
+    (hy : y ≠ 0) :
+    ∀ j, (aFormula x y (pFormula h x y r u η)) j - hMap h u j +
+      spectral x y / 2 * cMap (cMap u) j = η * sourceVector r j := by
+  intro j
+  fin_cases j
+  · have hp : (1 - spectral x y) * pFormula h x y r u η 0 =
+        -Complex.I * ((2 - spectral x y / 2) * u 0 + h * u 1 +
+          η * ((Real.sqrt 2)⁻¹ : ℝ)) := by
+      change (1 - spectral x y) * (-Complex.I *
+        ((1 / 2 : ℂ) * u 0 + (1 - spectral x y)⁻¹ *
+          ((3 / 2 : ℂ) * u 0 + h * u 1) + η *
+          (1 - spectral x y)⁻¹ * ((Real.sqrt 2)⁻¹ : ℝ))) = _
+      have hi : (1 - spectral x y) * (1 - spectral x y)⁻¹ = (1 : ℂ) :=
+        mul_inv_cancel₀ (denominator_ne 1 x y hy)
+      calc
+        _ = -Complex.I * ((1 - spectral x y) * ((1 / 2 : ℂ) * u 0) +
+            ((1 - spectral x y) * (1 - spectral x y)⁻¹) *
+              ((3 / 2 : ℂ) * u 0 + h * u 1) +
+            η * ((1 - spectral x y) * (1 - spectral x y)⁻¹) *
+              ((Real.sqrt 2)⁻¹ : ℝ)) := by ring
+        _ = _ := by rw [hi]; ring
+    simp [aFormula, actorColumn, hMap, cMap, sourceVector, Complex.I_sq]
+    linear_combination (norm := ring_nf) Complex.I * hp
+    rw [Complex.I_sq]
+    push_cast
+    ring
+  · have hp : (2 - spectral x y) * pFormula h x y r u η 1 =
+        -Complex.I * ((8 - 4 * spectral x y) * u 1 +
+          2 * h * u 0 + 2 * η * r) := by
+      change (2 - spectral x y) * (-Complex.I *
+        (4 * u 1 + (2 - spectral x y)⁻¹ * (2 * h * u 0) +
+          η * (2 - spectral x y)⁻¹ * (2 * r))) = _
+      have hi : (2 - spectral x y) * (2 - spectral x y)⁻¹ = (1 : ℂ) :=
+        mul_inv_cancel₀ (denominator_ne 2 x y hy)
+      calc
+        _ = -Complex.I * ((2 - spectral x y) * (4 * u 1) +
+            ((2 - spectral x y) * (2 - spectral x y)⁻¹) *
+              (2 * h * u 0) + η * ((2 - spectral x y) *
+              (2 - spectral x y)⁻¹) * (2 * r)) := by ring
+        _ = _ := by rw [hi]; ring
+    simp [aFormula, actorColumn, hMap, cMap, sourceVector, Complex.I_sq]
+    linear_combination (norm := ring_nf) (Complex.I / 2) * hp
+    rw [Complex.I_sq]
+    ring
+
+theorem contact_iff_reduced (h r x y : ℝ) (u : Vec) (η : ℂ)
+    (hr : r = 1 ∨ r = -1) (hh : |h| < 1) (hy : 1 < |y|)
+    (hu : ‖u 0‖ ^ 2 + ‖u 1‖ ^ 2 = 1) :
+    Contact h r x y u (pFormula h x y r u η)
+      (qFormula h x y u (pFormula h x y r u η))
+      (aFormula x y (pFormula h x y r u η)) η ↔
+      reducedMass h y u (pFormula h x y r u η) ∧
+      reducedReal h x y u (pFormula h x y r u η) ∧
+      reducedImag h x y u (pFormula h x y r u η) ∧
+      η * sourceReadout r x y u = numerator h x y u := by
+  constructor
+  · intro H
+    have hmass := mass h r x y u (pFormula h x y r u η)
+      (qFormula h x y u (pFormula h x y r u η))
+      (aFormula x y (pFormula h x y r u η)) η H
+    have hbal := source_balance h r x y u (pFormula h x y r u η)
+      (qFormula h x y u (pFormula h x y r u η))
+      (aFormula x y (pFormula h x y r u η)) η H
+      (by
+        intro hz
+        have hi := H.imaginary
+        rw [hz] at hi
+        norm_num at hi)
+    have hm := congrArg Complex.re H.mixed
+    rw [H.graph, graph_pairing, pairing_swap u (pFormula h x y r u η)] at hm
+    have hs := H.second_real
+    rw [H.graph, cMap_graph_pairing] at hs
+    refine ⟨hmass, ?_, ?_, hbal⟩
+    · simp [spectral, Complex.mul_re, Complex.mul_im, hmass] at hm
+      have hswap :
+          (pairing (pFormula h x y r u η) (cMap u)).re =
+            (pairing u (cMap (pFormula h x y r u η))).re := by
+        rw [pairing_swap]
+        simp
+      simp [reducedReal, Complex.mul_im]
+      linear_combination (norm := ring_nf) -hm
+    · simp [reducedImag, Complex.mul_re, Complex.mul_im, H.first_real] at hs
+      push_cast at hs
+      norm_num [pow_two, Complex.mul_re, Complex.mul_im] at hs
+      simpa [reducedImag, pow_two, Complex.mul_re, Complex.mul_im, H.first_real] using hs
+  · rintro ⟨hmass, hreal, himag, hbal⟩
+    change pairing u (pFormula h x y r u η) = ↑(-(beta h u / y)) at hmass
+    refine {
+      source_sign := hr
+      small := hh
+      imaginary := hy
+      unit := hu
+      first_real := ?_
+      second_real := ?_
+      mixed := ?_
+      graph := rfl
+      actor := rfl
+      source := source_of_pFormula h r x y u η (by
+        intro hz
+        have hi := hy
+        rw [hz] at hi
+        norm_num at hi) }
+    · have hi := congrArg Complex.im hmass
+      simpa using hi
+    · change (pairing (cMap u)
+        (graphColumn h x y u (pFormula h x y r u η))).im = 0
+      rw [cMap_graph_pairing]
+      have hi : (spectral x y *
+          pairing u (cMap (pFormula h x y r u η))).im +
+          (3 * ‖u 0‖ ^ 2 + 24 * ‖u 1‖ ^ 2 +
+            4 * h * (star (u 0) * u 1).re) = 0 := by
+        simpa [reducedImag] using himag
+      have hpim : (pairing u (pFormula h x y r u η)).im = 0 := by
+        have hi' := congrArg Complex.im hmass
+        simpa using hi'
+      norm_num [pow_two, Complex.mul_re, Complex.mul_im] at hi
+      simpa [pow_two, Complex.mul_re, Complex.mul_im, hpim] using hi
+    · change pairing u (graphColumn h x y u (pFormula h x y r u η)) =
+        pairing (pFormula h x y r u η) (cMap u)
+      rw [graph_pairing, pairing_swap u (pFormula h x y r u η)]
+      have hmass' : pairing u (pFormula h x y r u η) =
+          (-(beta h u / y) : ℂ) := by exact_mod_cast hmass
+      have hswap :
+          (pairing (pFormula h x y r u η) (cMap u)).re =
+            (pairing u (cMap (pFormula h x y r u η))).re := by
+        rw [pairing_swap]
+        simp
+      rw [hmass']
+      apply Complex.ext
+      · simp [spectral, Complex.mul_re, Complex.mul_im]
+        simp [reducedReal, Complex.mul_im] at hreal
+        linear_combination (norm := ring_nf) -hreal
+      · have hy0 : y ≠ 0 := by
+          intro hz
+          norm_num [hz] at hy
+        simp [spectral, Complex.mul_re, Complex.mul_im, mul_div_cancel₀ _ hy0]
+        ring
+
+theorem contact_reduction (h r x y : ℝ) (u p q a : Vec) (η : ℂ)
+    (H : Contact h r x y u p q a η) :
+    p = pFormula h x y r u η ∧
+      sourceReadout r x y u ≠ 0 ∧
+      reducedMass h y u (pFormula h x y r u η) ∧
+      reducedReal h x y u (pFormula h x y r u η) ∧
+      reducedImag h x y u (pFormula h x y r u η) ∧
+      η * sourceReadout r x y u = numerator h x y u := by
+  have hy : y ≠ 0 := by
+    intro hz
+    have hi := H.imaginary
+    rw [hz] at hi
+    norm_num at hi
+  have hp := pFormula_eq_source_columns h r x y u p q a η H hy
+  have hq : q = qFormula h x y u (pFormula h x y r u η) := by
+    simpa [qFormula, hp] using H.graph
+  have ha : a = aFormula x y (pFormula h x y r u η) := by
+    simpa [aFormula, hp] using H.actor
+  have H' : Contact h r x y u (pFormula h x y r u η)
+      (qFormula h x y u (pFormula h x y r u η))
+      (aFormula x y (pFormula h x y r u η)) η := by
+    simpa [hp, hq, ha] using H
+  have hr := H.source_sign
+  have hh := H.small
+  have hy' := H.imaginary
+  have hu := H.unit
+  have hred := (contact_iff_reduced h r x y u η hr hh hy' hu).mp H'
+  have hD := (original_contact_nonvanishing h r x y u p q a η H).1
+  exact ⟨hp, hD, hred.1, hred.2.1, hred.2.2.1, hred.2.2.2⟩
+
 end D5.S3.Quantum.Algebra.PBSourceContactNonvanishing
