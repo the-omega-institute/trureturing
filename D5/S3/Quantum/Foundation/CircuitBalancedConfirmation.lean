@@ -125,6 +125,7 @@ private theorem descends {P : Set A} {v : P → ℝ} (hv : balanced P v)
   have he := Q.equivOfSurjective_apply hsur hker (m := Finsupp.single p 1)
   simpa [Q, V, e] using he
 
+omit [FiniteDimensional ℝ A] in
 private theorem pure_mem {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
     (p : pure C u) : (p : A) ∈ C ∧ u p = 1 :=
   p.property.1
@@ -144,6 +145,7 @@ private theorem cone_bound {C : PointedCone ℝ A} {u f : A →ₗ[ℝ] ℝ}
     simpa only [NNReal.smul_def, map_smul, smul_eq_mul] using
       And.intro (mul_nonneg r.coe_nonneg hx.1) (mul_le_mul_of_nonneg_left hx.2 r.coe_nonneg)
 
+omit [FiniteDimensional ℝ A] in
 private theorem pure_span {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
     (hgen : C = PointedCone.hull ℝ (pure C u))
     (hspan : Submodule.span ℝ (C : Set A) = ⊤) :
@@ -223,7 +225,7 @@ theorem circuit_balance_least_confirmation
       | mem q hq => exact hnon ⟨q, hq⟩
       | zero => simp
       | add x y _ _ hx hy =>
-        change 0 ≤ (f - e p) x + (f - e p) y
+        rw [map_add]
         exact add_nonneg hx hy
       | smul r x _ hx => simpa [NNReal.smul_def] using mul_nonneg r.coe_nonneg hx
     exact sub_nonneg.mp hh
