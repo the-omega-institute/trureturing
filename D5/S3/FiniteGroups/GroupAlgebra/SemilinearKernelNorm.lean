@@ -2,9 +2,9 @@
    generality: G
    mirror-B: D5/B/S3/FiniteGroups/GroupAlgebra/SemilinearKernelNorm
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.RepresentationTheory.Coinvariants, mathlib/module/Mathlib.LinearAlgebra.LinearIndependent.Basic]
+   anchors: [mathlib/module/Mathlib.RepresentationTheory.Coinvariants]
    utility: none
-   digest: Conjugation trace one inverts the native norm; a semilinear action needs only nonzero kernel order to construct its inverse scalar. -/
+   digest: Trace one inverts the native norm; nonzero kernel order supplies a semilinear scalar. -/
 
 import Mathlib.RepresentationTheory.Coinvariants
 import Mathlib.RepresentationTheory.Invariants
@@ -16,6 +16,14 @@ import Mathlib.Algebra.Ring.Aut
 import Mathlib.GroupTheory.Coset.Basic
 import Mathlib.LinearAlgebra.LinearIndependent.Basic
 import Mathlib.SetTheory.Cardinal.Finite
+
+/-!
+The unnormalized norm on native R-coinvariants is inverted by a conjugation-trace-one
+endomorphism. For a genuinely semilinear action, Dedekind independence on the finite
+image and the kernel-fiber cardinality construct a trace-one scalar without dividing
+by the image order. No coefficient-projectivity or dimension hypothesis is used.
+This is the classical trace-one mechanism, not a literature novelty claim.
+-/
 
 set_option autoImplicit false
 
@@ -32,7 +40,7 @@ variable {R : Type uR} {G : Type uG} {V : Type uV}
   (ρ : Representation R G V)
 
 /-- The canonical unnormalized norm on the native coinvariants `V / Coinvariants.ker ρ`. -/
-def coinvariantsNorm : ρ.Coinvariants →ₗ[R] ρ.invariants :=
+noncomputable def coinvariantsNorm : ρ.Coinvariants →ₗ[R] ρ.invariants :=
   Coinvariants.lift ρ
     (LinearMap.codRestrict ρ.invariants ρ.norm fun v =>
       (mem_invariants ρ _).2 fun g => self_norm_apply ρ g v) fun g => by
@@ -105,6 +113,7 @@ def scalarTraceEnd (c : K) : Module.End R V :=
 @[simp] theorem scalarTraceEnd_apply (c : K) (v : V) :
     scalarTraceEnd (R := R) c v = c • v := rfl
 
+include hρ in
 theorem scalar_conjugation_trace_one (c : K) (hc : (∑ g : G, γ g c) = 1) :
     (∑ g : G, (ρ g).comp
       ((scalarTraceEnd (R := R) (V := V) c).comp (ρ g⁻¹))) = LinearMap.id := by
@@ -210,11 +219,16 @@ theorem semilinear_sum_eq_kernel_mul_imageTrace (b : K) :
       rw [← Finset.mul_sum]
       rfl
 
-/-- Full arbitrary-action scalar existence. Choose b with nonzero image trace s and take
-`c = b / (|ker γ| * s)`. Only the kernel order is required to be nonzero in K. -/
-theorem exists_semilinearScalarTraceOne_of_kernelOrder
-    (hker : (Nat.card γ.ker : K) ≠ 0) : ∃ c : K, (∑ g : G, γ g c) = 1 := by
+/-- The sharp scalar criterion for an arbitrary action. Choose b with nonzero image
+trace s and take `c = b / (|ker γ| * s)`. The image order need not be invertible. -/
+theorem exists_semilinearScalarTraceOne_iff :
+    (∃ c : K, (∑ g : G, γ g c) = 1) ↔ (Nat.card γ.ker : K) ≠ 0 := by
   classical
+  constructor
+  · rintro ⟨c, hc⟩ hker
+    rw [semilinear_sum_eq_kernel_mul_imageTrace γ c, hker, zero_mul] at hc
+    exact zero_ne_one hc
+  intro hker
   obtain ⟨b, hb⟩ := exists_semilinearImageTrace_ne_zero γ
   have hfixed (g : G) : γ g (semilinearImageTrace γ b) = semilinearImageTrace γ b :=
     semilinearImageTrace_fixed γ (γ.rangeRestrict g) b
@@ -247,7 +261,7 @@ theorem exists_semilinearKernelNormEquiv
       (∀ v : V, (e (Coinvariants.mk ρ v) : V) = ρ.norm v) ∧
       (∀ w : ρ.invariants, e.symm w = Coinvariants.mk ρ (c • (w : V))) := by
   classical
-  obtain ⟨c, hc⟩ := exists_semilinearScalarTraceOne_of_kernelOrder γ hker
+  obtain ⟨c, hc⟩ := (exists_semilinearScalarTraceOne_iff γ).mpr hker
   refine ⟨c, semilinearScalarNormEquiv ρ γ hρ c hc, hc, ?_, ?_⟩
   · intro v
     exact semilinearScalarNormEquiv_mk ρ γ hρ c hc v
