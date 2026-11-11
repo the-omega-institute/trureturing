@@ -166,14 +166,19 @@ theorem actual_higher_mass_response {X s : ℝ} (hX : exp 2 ≤ X)
     have hn : 0 ≤ 9 * s := by positivity
     rw [← mul_sum] at hh
     have he : (∑ j ∈ J, cutoff j ηm / j) ≤ 37 * sqrt X := by rwa [hηm]
-    exact hh.trans ((mul_le_mul_of_nonneg_left he hn).trans_eq (by ring))
+    have hscaled := mul_le_mul_of_nonneg_left he hn
+    calc
+      (∑ j ∈ J, cutoff j ηm - cutoff j ηp) ≤
+          9 * s * (∑ j ∈ J, cutoff j ηm / j) := hh
+      _ ≤ 9 * s * (37 * sqrt X) := hscaled
+      _ = 333 * s * sqrt X := by ring
   have hsum : (∑ j ∈ J, (cutoff j ηm - cutoff j ηp + 1) * log X) ≤
       333 * s * sqrt X * log X + 6 * log X ^ 2 := by
     rw [← sum_mul, sum_add_distrib]
     simp only [sum_const, nsmul_eq_mul, mul_one]
     have hh := add_le_add hmoveSum hcardJ
     have hm := mul_le_mul_of_nonneg_right hh hL0.le
-    convert hm using 1 <;> ring
+    convert hm using 1 <;> simp_rw [sum_sub_distrib] <;> ring
   rw [hmass]
   refine ⟨sum_nonneg (fun c hc => ?_), ?_⟩
   · exact (hC c.1 c.2 hc).1.log_pos.le
