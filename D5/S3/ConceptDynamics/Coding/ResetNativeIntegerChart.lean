@@ -813,7 +813,7 @@ private theorem binary_unit (u : BinaryRingˣ) :
     · have h : (1 : ZMod 2) + 1 = 1 := by simpa only [h0, ht] using hs
       exact ((by decide : (1 : ZMod 2) + 1 ≠ 1) h).elim
 
-private theorem gaussian_unit (u : GaussianIntˣ) :
+theorem gaussian_unit (u : GaussianIntˣ) :
     (u : GaussianInt) = 1 ∨ (u : GaussianInt) = Zsqrtd.sqrtd ∨
       (u : GaussianInt) = -1 ∨ (u : GaussianInt) = -Zsqrtd.sqrtd := by
   have hn : (u : GaussianInt).re ^ 2 + (u : GaussianInt).im ^ 2 = 1 := by

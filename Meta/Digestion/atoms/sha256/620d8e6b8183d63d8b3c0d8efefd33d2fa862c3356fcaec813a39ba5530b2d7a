@@ -1,0 +1,14 @@
+#### 命题 8.5：复零点没有自动的能谱含义
+
+若 $H=H^\dagger$，$H\psi=\lambda\psi$ 且 $\psi\ne0$， 则 $\lambda\in\mathbb R$。
+
+**证明。**
+
+$\lambda=\langle\psi,H\psi\rangle/\left\|\psi\right\|^2$， 而 Hermitian 算子的该二次型为实数。
+
+$\square$
+
+因此把上述非实根直接命名为能量本征值是不成立的。 若要建立复共振解释，需要另给开放系统或非自伴有效算符、 边界条件、量纲标定和可观测响应； 若要以实函数 $E(z_n)$ 编码能量，也须解释为何选择该函数。 求根与谱建模是两个独立的理论步骤。
+
+<a id="section-9"></a>
+
