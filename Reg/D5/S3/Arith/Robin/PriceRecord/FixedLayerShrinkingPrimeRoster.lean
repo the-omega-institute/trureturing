@@ -13,53 +13,6 @@ For EVERY target below:
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
-namespace Reg.D5.S3.Arith.Robin.PriceRecord.FixedLayerShrinkingPrimeRoster
-open Real Filter Finset
-open scoped Topology BigOperators
-open _root_.D5.S3.Arith.GoldenResource.ActualReserve.HarmonicReference
-open _root_.D5.S3.Arith.Robin.PriceRecord.HigherLayerClampedCutoff
-open _root_.D5.S3.Arith.Robin.PriceRecord.FixedLayerRootAsymptotic
-open _root_.D5.S3.Arith.Robin.PriceRecord.QuantitativePrimeAbel
-open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open LeanInformationAudit
-
-namespace fixed_layer_shrinking_prime_roster
-/- Source readout: natural prime predicate in the full shrinking-roster telescope. RegUNVALIDATED. -/
-abbrev signature : Signature where
-  Params := Unit
-  State _ := ℕ
-  Role := Unit
-  finiteRole := inferInstance
-  nonemptyRole := inferInstance
-  Output _ _ := Prop
-  Anchor := Empty
-  finiteAnchor := inferInstance
-
-def actual : Realization signature :=
-  realize signature (fun _ _ p => p.Prime) (fun e => nomatch e)
-
-abbrev arena : Arena where
-  signature := signature
-  Law V := ∀ {j : ℕ} (hj : 2 ≤ j),
-    ∀ C : ℝ, 0 < C → ∃ T : ℝ, 1 < T ∧ ∀ X : ℝ, T ≤ X →
-      ∃ S : Finset ℕ,
-        C * log X ≤ (S.card : ℝ) ∧
-        (∀ p ∈ S, V.readout () () p ∧ cutoff j (referencePrice X) < (p : ℝ) ∧
-          (p : ℝ) ≤ cutoff j (referencePrice X) * (1 + 1 / log X ^ 4)) ∧
-        cutoff j (referencePrice X) / (2 * log X ^ 4) ≤
-          ∑ p ∈ S, log p
-
-private theorem actual_law : arena.Law actual := by
-  exact @_root_.D5.S3.Arith.Robin.PriceRecord.FixedLayerShrinkingPrimeRoster.fixed_layer_shrinking_prime_roster
-
-private theorem source_bridge :
-    (type_of% (@_root_.D5.S3.Arith.Robin.PriceRecord.FixedLayerShrinkingPrimeRoster.fixed_layer_shrinking_prime_roster)) ↔ arena.Law actual := Iff.rfl
-
-#print axioms actual_law
-#print axioms source_bridge
-end fixed_layer_shrinking_prime_roster
-
-end Reg.D5.S3.Arith.Robin.PriceRecord.FixedLayerShrinkingPrimeRoster
 
 /- SOURCE ONLY. RegUNVALIDATED / UNCOMPILED_UNACCEPTED.
 These are full-telescope typed ATTEMPTS, not registrations or validation.

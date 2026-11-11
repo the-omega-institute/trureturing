@@ -225,15 +225,5 @@ theorem fixed_layer_shrinking_prime_roster_power {j : ℕ} (hj : 2 ≤ j)
     simpa only [pow_succ, mul_assoc] using hh.le
   · exact hS
 
-theorem fixed_layer_shrinking_prime_roster {j : ℕ} (hj : 2 ≤ j) :
-    ∀ C : ℝ, 0 < C → ∃ T : ℝ, 1 < T ∧ ∀ X : ℝ, T ≤ X →
-      ∃ S : Finset ℕ,
-        C * log X ≤ (S.card : ℝ) ∧
-        (∀ p ∈ S, p.Prime ∧ cutoff j (referencePrice X) < (p : ℝ) ∧
-          (p : ℝ) ≤ cutoff j (referencePrice X) * (1 + 1 / log X ^ 4)) ∧
-        cutoff j (referencePrice X) / (2 * log X ^ 4) ≤
-          ∑ p ∈ S, log p := by
-  simpa only [pow_one] using fixed_layer_shrinking_prime_roster_power hj 4 1 (by norm_num)
-
-#print axioms fixed_layer_shrinking_prime_roster
+#print axioms fixed_layer_shrinking_prime_roster_power
 end D5.S3.Arith.Robin.PriceRecord.FixedLayerShrinkingPrimeRoster
