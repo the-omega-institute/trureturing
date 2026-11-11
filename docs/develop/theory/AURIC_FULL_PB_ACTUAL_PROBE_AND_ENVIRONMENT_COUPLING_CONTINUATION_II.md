@@ -3692,3 +3692,1236 @@ $$
 完整来源阈值的等值或严格不等值、非轴接触的全称代价下界、临界零值的有限 $\lambda$ 次阶符号，以及同一完整 P2 内一份来源全部 PB 成功而另一份失败的比较仍未解决。下确界相等不证明取到性，不给最优完整阈值，也不提供任一来源的全称成功证书。
 
 ## 追加锚（本行以下为增补区）
+
+
+## 41. 全接触的保源约化、共同正性与联合紧性
+
+**约定 41.1（原域、参数与引用）。** 本节至 §43 是一条普通纸面数学推导，数学归属为 `repo-derived`；不赋予形式化或物理实现状态。原实际来源、全部探针、完整正泛函及两笔预算沿用 [§37](#37-单位演员归一的全部原探针接触闭包极限定理)、[§39](#39-全接触矩消元无界条带排除与增广轴扇区的完整分类)。特别地，固定来源始终是
+
+$$
+a_r=(1/\sqrt2,r)^{\mathsf T},\qquad r\in\{+1,-1\},
+$$
+
+$C,H_h,B_h,T_A$ 取 (39.1)，完整实际环境取 (38.1)。接触域精确取 (39.4)，包括增广轴点。先固定取向 $\iota=i$，写
+
+$$
+\ell=x+iy,\qquad A=|y|>1,\qquad \epsilon=-\operatorname{sgn}y.
+$$
+
+两个 $y$ 符号均保留；另一取向由 (39.32) 运输。原量始终为
+
+$$
+\zeta=\operatorname{Re}((a_{\rm act}-ip)^*T_Au),\qquad
+J_k=\frac{2A}{A^2-1}|\eta|^2+4\epsilon k\zeta.
+\tag{41.1}
+$$
+
+不利接触指 $\epsilon\zeta<0$，等价于 $y\zeta>0$。其比值及完整正残量阈值为
+
+$$
+\mathscr R=\frac{A|\eta|^2}{2(A^2-1)|\zeta|},\qquad
+K_r(h)=\inf_{\epsilon\zeta<0}\mathscr R.
+\tag{41.2}
+$$
+
+$\mathscr R$ 也可用于任意 $\zeta\ne0$ 的接触，但此时不自动是正残量失效阈值。同源的取向等价与正负残量阈值等价直接引用命题 39.7。
+
+本节的接触代数允许实 $|h|\le10^{-3}$，并在需要时放宽至 $|h|<1$。有限原 PB 的桥梁另需强制估计：记 $h_{\rm coer}>0$ 为使 §37.1 所引用的 §32、(35.16) 估计对当前两来源成立的一个共同充分半径，并缩小它使 $H_h\succ0$。凡使用有限 PB 后果，均要求
+
+$$
+0<h<h_{\rm coer},\qquad h\le10^{-3}.
+\tag{41.3}
+$$
+
+这里没有确定 $h_{\rm coer}$ 的数值；$10^{-3}$ 只是以下接触估计的半径。
+
+### 41.1 不消失的源读数与四实参数约化
+
+**定理 41.2（全域保源约化及定量非消失）。** 对 $|h|<1$，置
+
+$$
+\begin{gathered}
+s=|u_1|^2,\quad t=|u_2|^2,\quad
+\overline{u_1}u_2=v+id,\quad s+t=1,\quad |v+id|\le1/2,\\
+\beta=3s+12t+3hv,\qquad \gamma=3s+24t+4hv,\qquad
+m=u^*p,\quad n=u^*Cp.
+\end{gathered}
+\tag{41.4}
+$$
+
+引理 39.2 的四个实图条件，在两条演员接触等式下，等价于
+
+$$
+m=-\frac{\beta}{y},\qquad
+2\operatorname{Re}n+\frac{(x+3)\beta}{y}+hd=0,\qquad
+\operatorname{Im}(\ell n)+\gamma=0.
+\tag{41.5}
+$$
+
+这里第一式为复数等式，包含 $\operatorname{Im}m=0$，故共计四个实条件。沿用 (39.10) 的消元，
+
+$$
+\zeta=-3s+12t-hv=u^*Z_hu,\qquad
+Z_h=\begin{pmatrix}-3&-h/2\\-h/2&12\end{pmatrix}.
+\tag{41.6}
+$$
+
+定义新的源读数
+
+$$
+\begin{gathered}
+R_\ell=(C-\ell I_2)^{-1},\qquad
+\mathsf E_h=CH_h-C^4/2=\begin{pmatrix}3/2&h\\2h&0\end{pmatrix},\\
+c_3=s+8t,\qquad D_r=u^*R_\ell Ca_r,\\
+N=-c_3/2-u^*R_\ell\mathsf E_hu-i\beta/y.
+\end{gathered}
+\tag{41.7}
+$$
+
+每个接触满足
+
+$$
+\begin{gathered}
+p=-i\left[(C^3/2+R_\ell\mathsf E_h)u+\eta R_\ell Ca_r\right],\qquad
+\eta D_r=N,\\
+-y\operatorname{Im}N\ge3+9t-3|h|>0,\\
+D_r\ne0,\qquad
+|\eta|\ge\sqrt2(1+3t-|h|)\ge\sqrt2(1-|h|)>0.
+\end{gathered}
+\tag{41.8}
+$$
+
+反之，任取 $\ell=x+iy$、$|y|>1$ 和 $[u]\in\mathbb {CP}^1$ 的单位代表，若 $D_r\ne0$，令 $\eta=N/D_r$，按 (41.8) 定义 $p$，再按 (39.4) 定义 $q,a_{\rm act}$。这些数据是完整接触，当且仅当 (41.5) 的后两条实方程成立。这是四个实参数、两个实方程的精确约化，未除以 $x,u_1,u_2$。
+
+证明。(41.5) 只是 (39.9) 的等价写法，(41.6) 直接取 (39.10)，这里不另立矩消元结论。为核对四个实条件的计数，$2C^{-1}=3I_2-C$ 给
+
+$$
+u^*q=(\ell+3)m-n+i(\beta+ihd),\qquad
+(Cu)^*q=\ell n+2m+i\gamma.
+$$
+
+要求 $m$ 实、第一式等于 $\overline n$、第二式实，即得 (41.5)，且每一步可逆。
+
+来源方程左乘 $C$，再用
+
+$$
+CH_h-\ell C^3/2=(C-\ell I_2)C^3/2+\mathsf E_h,
+$$
+
+即可解出 (41.8) 的 $p$。所有逆矩阵存在，因为 $y\ne0$。将 $u^*p=-\beta/y$ 代回，恰得 $\eta D_r=N$。
+
+令 $R_j=(j-\ell)^{-1}$。有
+
+$$
+u^*R_\ell\mathsf E_hu=\tfrac32R_1s+hR_1(v+id)+2hR_2(v-id),
+\qquad |yR_j|\le1,\quad y\operatorname{Im}R_1\ge0.
+$$
+
+故
+
+$$
+\begin{aligned}
+-y\operatorname{Im}N
+ &=\beta+y\operatorname{Im}(u^*R_\ell\mathsf E_hu)\\
+ &\ge3s+12t-6|h||u_1u_2|\\
+ &\ge3+9t-3|h|>0.
+\end{aligned}
+$$
+
+又 $A|D_r|\le\|Ca_r\|=3/\sqrt2$，因而 $A|\eta||D_r|=A|N|\ge3+9t-3|h|$ 给出幅度下界及 $D_r\ne0$。反向构造中，$\eta D_r=N$ 精确强制第一条复等式 $m=-\beta/y$；剩下两条就是尚待满足的全部图条件。来源等式已由逆式成立，因此必要性与充分性均得证。
+
+同时将 $u,p,q,a_{\rm act},\eta$ 乘以单位复数，保持来源向量 $a_r$ 固定，全部方程和比值不变；$N$ 不变，$D_r$ 乘该相位的共轭。因此 $[u]$ 是精确的相位商。该约化含两轴及 $x=0$；有限 Hermitian 实现与轴核条件仍按引理 37.2、(39.22) 区分。∎
+
+### 41.2 共同的严格正区间
+
+**定理 41.3（两来源的全接触正性）。** 对所有实 $|h|\le10^{-3}$、两个来源及两个取向，任一 $\zeta\ne0$ 的接触均有 $\mathscr R>1/40$。因此
+
+$$
+0<k\le1/40\quad\Longrightarrow\quad J_k(c)>0
+\quad\text{对每个完整接触 }c.
+\tag{41.9}
+$$
+
+证明。记 $q_h=|h|$、$L=|\ell|$。由 (41.6)，
+
+$$
+|\zeta|\le12+q_h/2<13,\qquad
+\zeta<0\ \Longrightarrow\ |\zeta|\le3+q_h/2.
+$$
+
+当 $L>2$，$\|R_\ell\|\le(L-2)^{-1}$、$\|\mathsf E_h\|\le3/2+2q_h$。取 $\eta D_r=N$ 的实部，使用 $|D_r|\le(3/\sqrt2)/(L-2)$，得到
+
+$$
+\frac3{\sqrt2}|\eta|
+\ge\frac{c_3}{2}(L-2)-(3/2+2q_h).
+\tag{41.10}
+$$
+
+特别在右边为正时，$|\eta|\ge(L-5-4q_h)/(3\sqrt2)$。由于 $A\le L$，任何 $\zeta\ne0$ 的接触都满足
+
+$$
+\mathscr R>\frac{|\eta|^2}{2L|\zeta|}.
+\tag{41.11}
+$$
+
+若 $\zeta<0$，有 $|\zeta|<31/10$、$|\eta|^2>199/100$。当 $L\le11$，(41.11) 给 $\mathscr R>199/6820>1/40$。当 $L\ge11$，(41.10) 给 $|\eta|^2>(L-51/10)^2/18$，故
+
+$$
+\mathscr R>
+\frac{(L-51/10)^2}{36(31/10)L}
+\ge\frac{3481}{122760}>\frac1{40}.
+\tag{41.12}
+$$
+
+最后的单调性来自 $\frac{d}{dL}[(L-a)^2/L]=1-a^2/L^2>0$，$L>a$。
+
+若 $\zeta>0$，(41.6) 强制 $t>1/5-q_h/30$。于是 $c_3>239/100$，(41.8) 还给 $|\eta|^2>5$；同时 $|\zeta|<121/10$。当 $L\le8$，有 $\mathscr R>25/968>1/40$。当 $L\ge8$，(41.10) 给
+
+$$
+|\eta|^2>\frac{(239L-780)^2}{180000},\qquad
+\mathscr R>
+\frac{(239L-780)^2}{360000(121/10)L}
+\ge\frac{1281424}{34848000}>\frac1{40}.
+\tag{41.13}
+$$
+
+此处仍用同一单调性，起点 $8>780/239$。两个符号穷尽 $\zeta\ne0$。不利接触有 $J_k=4|\zeta|(\mathscr R-k)>0$；其余接触包括 $\zeta=0$，由 $\eta\ne0$ 使 (41.1) 严格正。另一取向由命题 39.7 保留此结论。∎
+
+### 41.3 无界条带与联合低子水平集
+
+**定理 41.4（扩大的条带排除与联合紧性）。** 对 $|h|\le10^{-3}$、$r=\pm1$，若接触满足 $|x|\le1/100$、$\zeta\ne0$，则 $\mathscr R>6/5$。所有不利接触的低子水平集
+
+$$
+\mathcal L=\{(h,r,c): |h|\le10^{-3},\ c\in\mathcal C_i(a_r;h),
+\epsilon\zeta<0,\ \mathscr R\le6/5\}
+\tag{41.14}
+$$
+
+在完整可见变量及 $h,r,\epsilon$ 的乘积拓扑中紧，且每个固定 $h,r$ 的纤维非空。其中一致成立
+
+$$
+\begin{gathered}
+A>103/100,\quad |\ell|<600,\quad |x|>1/100,\quad
+|\eta|<140,\quad |\zeta|>1/1000,\\
+\|p\|<426,\qquad |D_r|>1/30000,
+\end{gathered}
+\tag{41.15}
+$$
+
+$q,a_{\rm act}$ 也一致有界。于是每个 $|h|\le10^{-3}$ 都有
+
+$$
+K_r(h)=\min_{c\in\mathcal L_{h,r}}\mathscr R,
+\qquad \frac1{40}<K_r(h)\le\frac{85}{72}<\frac65.
+\tag{41.16}
+$$
+
+这里首先是增广接触域上的达到性。
+
+证明。以下全用 $q_h=|h|$，所以包含 $h=0$ 及负 $h$。写
+
+$$
+\overline{u_1}p_1=\alpha+ib,\qquad
+\overline{u_2}p_2=\chi-ib.
+$$
+
+由 (39.10) 或 (41.5)，有不除以 $x$ 的恒等式
+
+$$
+\zeta=x\beta+2xb+yhd.
+\tag{41.17}
+$$
+
+另将需求 $\eta a_r=i(I_2-\ell C^{-1})p-H_hu+\ell C^2u/2$ 分别左乘 $u^*$、$(Cu)^*$。用 (41.5) 消去 $m,n$ 后，得到
+
+$$
+\begin{aligned}
+\operatorname{Re}(\eta u^*a_r)
+ &=\tfrac{x}{2}(s+4t)-5(s+2t)-\tfrac92hv,\\
+2\operatorname{Im}(\eta(Cu)^*a_r)
+ &=y(s+8t)-\frac{(3-x)\beta}{y}+hd.
+\end{aligned}
+\tag{41.18}
+$$
+
+第一式可直接由 $u^*C^{-1}p=(3m-n)/2$ 及 $\operatorname{Im}(\ell n)=-\gamma$ 得到；第二式用 $(Cu)^*C^{-1}p=m$、$2\operatorname{Re}n=-(x+3)\beta/y-hd$ 得到，故保留了原来源的两个读数。
+
+设 $|x|\le1/100$，$e=|\eta|$。第一读数给
+
+$$
+-\operatorname{Re}(\eta u^*a_r)
+\ge5-2/100-9/4000>49/10>4\sqrt{3/2},
+$$
+
+因 $\|a_r\|=\sqrt{3/2}$，故 $e>4$。第二读数、$s+8t\ge1$ 和 $0<\beta<13$ 给
+
+$$
+A\le3\sqrt2\,e+\frac{(301/100)13}{A}+1/2000.
+$$
+
+当 $A\ge7$，后两项小于 $6$，故 $A<(17/4)e+6<6e$；当 $A<7$，由 $e>4$ 也有 $A<6e$。来源逆式给 $\|p\|<4+(2+3e)/A$，而 $2|b|\le\|p\|$。由 (41.17)，
+
+$$
+|\zeta|<\frac1{100}\left(17+\frac{2+3e}{A}\right)+\frac A{2000}.
+$$
+
+若同时 $\mathscr R\le6/5$，则 $e^2<(12/5)A|\zeta|$，从而
+
+$$
+\begin{aligned}
+e^2
+ &<\frac{12}{500}(17A+2+3e)+\frac{12}{10000}A^2\\
+ &<\frac{12}{500}(105e+2)+\frac{216}{5000}e^2\\
+ &<\left(\frac{63}{100}+\frac3{1000}+\frac{216}{5000}\right)e^2
+ =\frac{3381}{5000}e^2<e^2.
+\end{aligned}
+$$
+
+矛盾。这证明整个无界条带的排除，没有预设 $A$ 或列有界。
+
+再设任一接触有 $\mathscr R\le6/5$。若 $L\ge600$，(41.10)–(41.11) 给
+
+$$
+\mathscr R>\frac{(L-6)^2}{468L}
+\ge\frac{594^2}{468\cdot600}>\frac65,
+$$
+
+矛盾，故 $L<600$。由幅度下界及 $|\zeta|<13$，
+
+$$
+\mathscr R>\frac{A(1-q_h)^2}{13(A^2-1)}.
+$$
+
+右边在 $A>1$ 递减；在 $A=103/100$、$q_h=1/1000$ 仍大于 $6/5$，故 $A>103/100$。同一子水平条件给
+
+$$
+\begin{aligned}
+e^2&\le\frac{12}{5}\frac{A^2-1}{A}|\zeta|
+ <\frac{12}{5}\,600\cdot13<140^2,\\
+|\zeta|&\ge\frac{5Ae^2}{12(A^2-1)}
+ >\frac{(999/1000)^2}{720}>\frac1{1000}.
+\end{aligned}
+$$
+
+(41.8) 给 $\|p\|<4+(2+3e)/A<426$。原 $q,a_{\rm act}$ 的定义以有界 $\ell,u,p$ 一致界住它们。又
+
+$$
+|D_r|=|N|/e\ge\frac{3(1-q_h)}{Ae}
+>\frac{3(999/1000)}{600\cdot140}>\frac1{30000}.
+$$
+
+这证明全部所列界，条带排除另给 $|x|>1/100$。
+
+非空性直接引用定理 39.4 的第二轴 $y=4$ 接触：其 $\zeta=12$、$|\eta|^2=425/4$，比值 $85/72$，为不利接触；轴公式对实 $h$ 的代数不变。没有重新把轴值当作完整最优值。
+
+所有变量现已一致有界。任何收敛序列的极限保留原图、演员及来源等式；$A\ge103/100>1$、$|\zeta|\ge1/1000>0$，且 $y\zeta>0$ 的符号不会在极限丢失。比值连续，保留 $\mathscr R\le6/5$。所以 $\mathcal L$ 闭而有界，因而紧；这也说明严格定义域边界没有破坏闭性。每个纤维内的最小值存在，其外比值大于 $6/5$，而纤维内已有 $85/72$，故它就是全域下确界。定理 41.3 在取到的点上严格大于 $1/40$，给出 (41.16)。没有从增广紧性推断整个有限实际接触集闭合。∎
+
+### 41.4 完整原 PB 与 P2 的同参数后果
+
+**定理 41.5（共同成功区间及严格阈值桥梁）。** 固定同一对正数 $h,k$，满足 (41.3)。若 $0<k\le1/40$，则两来源在两取向上，对所有充分大的有限 $\lambda$ 均满足全部原 PB，并且同一个 $\rho=k/\lambda^2$ 严格位于共同完整 P2 区间内。更一般地，对任一固定来源，$0<k<K_r(h)$ 给最终全部 PB 成功，$k>K_r(h)$ 给最终严格 PB 失败；失败可由两笔严格正预算及任意指定有限质量 $\mu>0$ 的同一原正泛函见证。
+
+证明。定理 41.3 使每个完整接触的 $J_k>0$，推论 37.9 及 §37.6 的谱和提升给全部原 PB。这里探针仍遍取每个有限 $X=X^*$，泛函仍遍取完整 $M_5(\mathbb C)$ 上全部正复线性泛函，包括环境和混合块；不对预算、参数比值或演员质量另加限制。对一般 $k<K_r(h)$，不利接触满足 $J_k=4|\zeta|(\mathscr R-k)>0$，其余由 $\eta\ne0$ 给严格正，故用同一桥梁。对 $k>K_r(h)$，存在负接触，定理 37.6、推论 37.7 给所述有限原失败、正预算及质量归一。
+
+共同完整 P2 直接引用 (39.7)，其来源为[前卷 §30 的 (30.29)](AURIC_FULL_PB_ACTUAL_PROBE_AND_ENVIRONMENT_COUPLING_CONTINUATION.md#30-零模耦合为零的三矩实现与最小真实环境)：
+
+$$
+\rho=k/\lambda^2,\qquad
+h^2\lambda^4>3k^2(\lambda^2+3/2).
+\tag{41.19}
+$$
+
+固定同一正 $h,k$ 后该不等式最终成立。将有限个来源及取向的截止与 P2 截止取最大值，即得共同有限截止。接触估计的 $h\le10^{-3}$ 未支付强制估计条件；(41.3) 在这里始终保留。阈值等号处不应用严格充分性。∎
+
+## 42. 固定来源的精确下降与全部极小接触的有界实际性
+
+### 42.1 保持两来源坐标的下降分支
+
+**定理 42.1（严格轴间隙及统一实际达到）。** 存在共同常数
+
+$$
+0<h_0\le10^{-3},\qquad \gamma_0>0,\qquad c_0>0,\qquad M_0<\infty,
+$$
+
+使对每个实 $|h|\le h_0$、$r=\pm1$ 及两个取向，均有
+
+$$
+K_r(h)\le K_{\rm ax}-\gamma_0.
+\tag{42.1}
+$$
+
+每个不利接触若 $\mathscr R\le K_{\rm ax}-\gamma_0$，则 $|u_1u_2|\ge c_0$。特别地，每个全局极小接触都有唯一有限 Hermitian 实现
+
+$$
+X=[p,q][u,Cu]^{-1}=X^*,\qquad \|X\|\le M_0.
+\tag{42.2}
+$$
+
+实际有限 Hermitian 接触阈值与增广阈值相同，且两者均取到。这是接触阈值达到性。
+
+证明。$K_{\rm ax}$ 及其唯一第二轴极小尺度 $A_*>1$ 直接取定理 39.5，故 $K_{\rm ax}<85/72<6/5$；完整轴分类仍取定理 39.4。以下构造在固定 $A>1$ 下给出轴外严格下降。
+
+令
+
+$$
+\ell=1+\delta+iA,\qquad u=(\omega,c),\qquad
+c=\sqrt{1-|\omega|^2}>0,
+\tag{42.3}
+$$
+
+其中 $\delta$ 实、$\omega$ 复，均在零附近。沿用 (41.4) 的 $\beta,d$ 和 (41.6) 的 $\zeta$，并令 $x=1+\delta$。由命题 39.6 的唯一列重构，置
+
+$$
+\begin{gathered}
+\alpha=\frac{(x-1)\beta/A+hd}{2},\qquad
+\chi=-\frac{(x+1)\beta/A+hd}{2},\\
+b=\frac{\zeta-x\beta-Ahd}{2x},\qquad
+p_2=(\chi-ib)/c.
+\end{gathered}
+\tag{42.4}
+$$
+
+先用来源第二坐标固定幅度，再用第一坐标固定 $p_1$：
+
+$$
+\begin{aligned}
+\eta&=r\left[i(1-\ell/2)p_2-(4-2\ell)c-h\omega\right],\\
+p_1&=\frac{\eta/\sqrt2+(2-\ell/2)\omega+hc}{i(1-\ell)}.
+\end{aligned}
+\tag{42.5}
+$$
+
+这精确强制两个来源坐标为 $\eta/\sqrt2,\eta r$，只剩一个复方程
+
+$$
+\Psi_r(h,\delta,\omega):=\overline\omega p_1-(\alpha+ib)=0.
+\tag{42.6}
+$$
+
+因为 $\overline u_2p_2=\chi-ib$ 已成立，(42.6) 精确给回全部四实图条件。$q,a_{\rm act}$ 按原定义重建。
+
+当 $\delta=\omega=0$ 时，$\beta=\zeta=12$、$\alpha=b=0$、$\chi=-12/A$，且
+
+$$
+\eta=r g_A,\qquad g_A=-8+i(2A-6/A),\qquad
+p_1=(h+rg_A/\sqrt2)/A.
+$$
+
+故对所有小 $h$ 均有 $\Psi_r(h,0,0)=0$。在 $h=0$，对 $\omega=\omega_R+i\omega_I$ 求导，实 Jacobian 为
+
+$$
+\begin{pmatrix}\operatorname{Re}P_r&\operatorname{Im}P_r\\
+\operatorname{Im}P_r&-\operatorname{Re}P_r\end{pmatrix},\qquad
+P_r=\frac{rg_A}{\sqrt2 A},\qquad
+\det=-\frac{|g_A|^2}{2A^2}<0.
+\tag{42.7}
+$$
+
+这里 $\beta,\zeta$ 在 $h=\omega=0$ 的 $\omega$ 导数为零，所以 (42.7) 来自 $\overline\omega P_r$，没有遗漏图约束的导数。实解析隐函数定理给精确分支 $\omega_r(h,\delta)$，并由局部唯一性有 $\omega_r(h,0)=0$。在 $h=\delta=0$，
+
+$$
+\overline{\omega_\delta}P_r=6/A-6i\ne0.
+$$
+
+因而缩小共同邻域后，$\omega_r(h,\delta)/\delta$ 连续且非零，所有非零小 $\delta$ 的接触均非轴。这里两来源只有两个，可取共同邻域。
+
+在基点，沿此精确分支有
+
+$$
+\beta_\delta=\zeta_\delta=0,\quad
+\alpha_\delta=6/A,\quad\chi_\delta=-6/A,\quad b_\delta=-6,
+$$
+
+因此 $(p_2)_\delta=-6/A+6i$，由 (42.5) 得
+
+$$
+(\eta r)_\delta=-4+i(3A+3/A).
+$$
+
+由于 $A$ 固定，代入原比值得
+
+$$
+\left.\partial_\delta\mathscr R_r\right|_{h=\delta=0}
+=D(A):=\frac{3A^4+10A^2-9}{6A(A^2-1)}>0.
+\tag{42.8}
+$$
+
+分子在 $A^2>1$ 上递增且在 $A=1$ 为 $4$，故正性覆盖全部 $A>1$，不是数值猜测。现在取 $A=A_*$。轴值对所有 $h,r$ 都是 $K_{\rm ax}$。分支的 $\zeta$ 仍为正，$y=A_*>1$，故附近比值均属不利接触。
+
+由解析性，选共同闭矩形 $|h|\le h_0$、$\delta_0\le\delta\le0$，其中 $\delta_0<0$、$h_0>0$，使 $\partial_\delta\mathscr R_r\ge D(A_*)/2$；同时保持所有上述分母非零、$c>0$ 及非轴性质。于是
+
+$$
+\mathscr R_r(h,\delta_0)
+\le K_{\rm ax}+\delta_0 D(A_*)/2
+=K_{\rm ax}-\gamma_0,\qquad
+\gamma_0=-\delta_0D(A_*)/2>0.
+\tag{42.9}
+$$
+
+这给的是固定来源方程上的真实有限下降，并由导数在矩形上的下界控制了余项。它直接证明 (42.1)。
+
+### 42.2 从下降到全部极小点的统一界
+
+将 $h_0$ 缩至不超过 $10^{-3}$。定理 41.4 的联合紧集内，取 $|h|\le h_0$、$\mathscr R\le K_{\rm ax}-\gamma_0$ 的闭子集。由 (42.9) 其每个 $h,r$ 纤维非空。定理 39.5 的全部轴值至少为 $K_{\rm ax}$；其轴公式对这些实 $h$ 不变，所以该联合闭子集不含任一轴。连续函数 $|u_1u_2|$ 在其上取得共同正下界 $c_0$。
+
+定理 41.4 已保证每个全局极小值取到，且 (42.1) 使所有极小接触都在这个闭子集内。非轴可见列重构及其 Hermitian 性直接沿用引理 37.2、(39.30)，而现在还有统一范数估计。若 $V=[u,Cu]$，则
+
+$$
+\det V=u_1u_2,\qquad
+\|V^{-1}\|\le\frac{\|V\|_{\rm F}}{|u_1u_2|}
+\le\frac{\sqrt5}{c_0}.
+$$
+
+结合联合紧性给出的 $p,q$ 一致界，得到共同 $M_0$ 及 (42.2)。实际接触域是增广域的子集，又包含每个增广极小点，所以其比值下确界相同并且实际取到。另一取向由 (39.32) 共轭运输，范数界不变。∎
+
+[§40 的精确同源接触稠密性](#40-两个固定实来源的精确有限接触稠密性) 已经比较了实际与增广下确界，但允许矩阵发散；定理 42.1 的新增结论是全部全局极小接触同时非轴并有共同有界实际矩阵。它不主张有限 $\lambda$ 原 PB 变分问题有极小探针。同时使用达到性与有限桥梁时，参数交是 $0<h\le h_0$、$h<h_{\rm coer}$、固定 $k>0$，并按定理 41.5 的严格阈值条件取满足 (41.19) 的充分大有限 $\lambda$。
+
+## 43. 完整非轴接触的三次方程与有条件的全极小集微扰
+
+### 43.1 源对齐坐标中的精确方程
+
+**定义 43.1（源对齐图及标量函数）。** 以下仍固定取向 $i$，$\ell=x+iy$，$x\ne0$、$|y|>1$。固定整体相位后，将非轴演员写成
+
+$$
+U=(1,r\tau)^{\mathsf T},\qquad
+\tau=v+id\ne0,\qquad t=|\tau|^2>0,\qquad
+u=U/n,\quad n=\sqrt{1+t},\quad g=rh.
+\tag{43.1}
+$$
+
+此处 $t$ 是非轴坐标的模平方，代替 §41 中的第二演员质量记号。$g$ 只作源对齐后的参数，原来源仍是 $a_r=(1/\sqrt2,r)^{\mathsf T}$。置
+
+$$
+\begin{gathered}
+\beta_0=3+12t,\qquad Z_0=-3+12t,\\
+\alpha_0=\frac{(x-1)\beta_0}{2y},\qquad
+\chi_0=-\frac{(x+1)\beta_0}{2y},\qquad
+\kappa_0=\frac{Z_0-x\beta_0}{2x},\\
+F(t)=i(1-\ell)(\alpha_0+i\kappa_0)-(2-\ell/2)=f_0+f_1t,\\
+G(t)=i(1-\ell/2)(\chi_0-i\kappa_0)-(4-2\ell)t=g_0+g_1t.
+\end{gathered}
+\tag{43.2}
+$$
+
+$f_j,g_j$ 是固定 $\ell$ 的复系数，$g_j$ 不表示参数 $g$。再置
+
+$$
+\begin{gathered}
+\alpha_1=\tfrac12[3(x-1)v/y+d],\qquad
+\chi_1=-\tfrac12[3(x+1)v/y+d],\\
+\kappa_1=\frac{-(1+3x)v-yd}{2x},\\
+L_1(\tau)=i(1-\ell)(\alpha_1+i\kappa_1)-\tau,\\
+L_2(\tau)=i(1-\ell/2)(\chi_1-i\kappa_1)-\overline\tau,\\
+E_0(\tau)=\sqrt2F(t)\overline\tau-G(t),\qquad
+E_1(\tau)=\sqrt2L_1(\tau)\overline\tau-L_2(\tau),\\
+E_g(\tau)=E_0(\tau)+gE_1(\tau).
+\end{gathered}
+\tag{43.3}
+$$
+
+所有函数还依赖固定或变化的 $x,y$；$E_g=E_0+rhE_1$ 是精确等式。
+
+**定理 43.2（全部四实图条件与两来源坐标的等价方程）。** 对 $|h|<1$，(43.1) 图中的完整接触与 $E_{rh}(\tau)=0$ 一一对应，差别仅为整体相位。其源幅度及不利比值为
+
+$$
+\widehat\eta=\sqrt2(F+gL_1),\qquad \eta=\widehat\eta/n,
+\qquad
+\mathcal R_g=\frac{A|F+gL_1|^2}{(A^2-1)|Z_0-gv|},
+\tag{43.4}
+$$
+
+不利过滤条件精确为 $y(Z_0-gv)>0$。所有这些接触均有 $\eta\ne0$ 且有有限 Hermitian 实现。
+
+证明。为保持归一化清晰，将可见列先写成 $P=np$、$Q=nq$、$A_{\rm act}=na_{\rm act}$。对一般未归一演员 $U$，设
+
+$$
+\begin{gathered}
+\beta=3|U_1|^2+12|U_2|^2+3h\operatorname{Re}(\overline U_1U_2),\\
+Z=-3|U_1|^2+12|U_2|^2-h\operatorname{Re}(\overline U_1U_2),\qquad
+d_U=\operatorname{Im}(\overline U_1U_2).
+\end{gathered}
+$$
+
+命题 39.6 的重构等价地说，全部四个实图条件是
+
+$$
+\begin{gathered}
+\overline U_1P_1=\alpha+i\kappa,\qquad
+\overline U_2P_2=\chi-i\kappa,\\
+\alpha=\frac{(x-1)\beta/y+hd_U}{2},\qquad
+\chi=-\frac{(x+1)\beta/y+hd_U}{2},\qquad
+\kappa=\frac{Z-x\beta-yhd_U}{2x}.
+\end{gathered}
+\tag{43.5}
+$$
+
+这里没有舍弃交叉条件的实部或虚部：$m=U^*P=-\beta/y$，$\operatorname{Re}(U^*CP)=-[(x+3)\beta/y+hd_U]/2$，$\operatorname{Im}(\ell U^*CP)=-\gamma$，其中 $\gamma=3|U_1|^2+24|U_2|^2+4h\operatorname{Re}(\overline U_1U_2)$，正是 (41.5) 的齐次版本。
+
+代入 $U=(1,r\tau)$，得到
+
+$$
+\beta=\beta_0+3gv,\qquad Z=Z_0-gv,\qquad hd_U=gd,
+$$
+
+故 $\alpha=\alpha_0+g\alpha_1$、$\chi=\chi_0+g\chi_1$、$\kappa=\kappa_0+g\kappa_1$。据 (43.5) 取
+
+$$
+P=\left(\alpha+i\kappa,\ \frac{r(\chi-i\kappa)}{\overline\tau}\right)^{\mathsf T},\quad
+Q=(\ell I_2+2C^{-1})P+iB_hCU,\quad
+A_{\rm act}=i(I_2-\ell C^{-1})P.
+$$
+
+所有图条件和两演员接触已成立。把实际来源需求记为
+
+$$
+\mathbf D=A_{\rm act}-H_hU+\ell C^2U/2.
+$$
+
+其两个坐标分别满足
+
+$$
+D_1=F+gL_1,\qquad
+r\overline\tau D_2=G+gL_2.
+\tag{43.6}
+$$
+
+第一来源坐标 $D_1=\widehat\eta/\sqrt2$ 固定了 $\widehat\eta$。第二来源坐标 $D_2=r\widehat\eta$ 因 $\tau\ne0$ 等价于
+
+$$
+G+gL_2=\sqrt2(F+gL_1)\overline\tau,
+$$
+
+即 $E_g=0$。除以 $n$ 恢复原归一接触；逆过程唯一给回全部数据，故是必要且充分的精确方程。定理 41.2 的齐次非消失估计给 $\eta\ne0$，非轴有限 Hermitian 重构沿用 (39.30)。最后
+
+$$
+\zeta=(Z_0-gv)/(1+t),\qquad
+|\eta|^2=2|F+gL_1|^2/(1+t),
+$$
+
+代入原比值及 $y\zeta>0$ 即得 (43.4) 及过滤条件。两个实际来源坐标始终都在等价链中。∎
+
+### 43.2 零阶接触的穷尽三次枚举
+
+**定理 43.3（固定 $\ell$ 的非零实三次多项式）。** 对每个固定 $x\ne0$、$|y|>1$，定义
+
+$$
+\begin{aligned}
+P(t)&=2t|F(t)|^2-|G(t)|^2\\
+ &=2|f_1|^2t^3+
+ [4\operatorname{Re}(f_0\overline f_1)-|g_1|^2]t^2\\
+ &\quad+[2|f_0|^2-2\operatorname{Re}(g_0\overline g_1)]t-|g_0|^2.
+\end{aligned}
+\tag{43.7}
+$$
+
+它是非零、实系数、次数至多三的多项式。$h=0$ 时，所有非轴接触精确由每个正根 $t$ 及唯一源对齐相位
+
+$$
+\tau=\overline{\frac{G(t)}{\sqrt2F(t)}}
+\tag{43.8}
+$$
+
+给出。每个正根都有 $F(t)G(t)\ne0$；重根也全部保留。正残量不利接触须另保留
+
+$$
+y(4t-1)>0,\qquad
+\mathcal R_0(x,y,t)=\frac{A|F(t)|^2}{3(A^2-1)|4t-1|}.
+\tag{43.9}
+$$
+
+证明。在 $g=0$，完整接触等式是 $\sqrt2F(t)\overline\tau=G(t)$。取模平方给 $P(t)=0$。若正根上 $F=0$，则 $G=0$；任取模为 $\sqrt t$ 的 $\tau$ 都满足 $E_0=0$，由定理 43.2 重构的需求却为零，与定理 41.2 的非消失估计矛盾。故 $F\ne0$，模平方等式和 $t>0$ 又给 $G\ne0$。于是 (43.8) 唯一，其模平方正好为 $t$，并满足完整复等式。此论证不要求 $P'(t)\ne0$，故不丢弃任何正重根。反向每个接触已给一个正根，枚举穷尽。
+
+展开两个仿射函数的模平方给 (43.7)。由 (43.2) 的实部直接得到
+
+$$
+\operatorname{Re}f_1=\frac{6(x-1)}x,\qquad
+\operatorname{Re}g_0=-\frac{3(x+1)}{2x}.
+\tag{43.10}
+$$
+
+两者不可能同时为零。因此若 $f_1\ne0$，最高次系数 $2|f_1|^2$ 非零；若 $f_1=0$，则 $g_0\ne0$，常数项非零。$P$ 永不恒等为零，每个固定 $\ell$ 至多有三个不同正根。最后 $Z_0=3(4t-1)$，(43.4) 给过滤条件与原比值。若 $t=1/4$，仍是可能的接触根，但 $\zeta=0$，不进入不利比值枚举。此处固定来源后的演员是 $(1,r\tau)$，没有改成另一个归一来源。∎
+
+### 43.3 精确源奇平衡与全部极小点的统一坐标控制
+
+**定理 43.4（完整约束的源奇恒等式）。** 每个 (43.3) 图中的精确接触都满足
+
+$$
+P(t)+2rh\operatorname{Re}(\overline{G(t)}E_1(\tau))
+=h^2|E_1(\tau)|^2.
+\tag{43.11}
+$$
+
+存在共同 $0<h_*\le h_0$、$C_*<\infty$，使对所有 $|h|\le h_*$、两来源的每一个全局极小接触，可选唯一整体相位规范 $u_1>0$，落入 (43.1) 图，且
+
+$$
+0\le P(t)+2rh\operatorname{Re}(\overline G E_1)\le C_*h^2.
+\tag{43.12}
+$$
+
+这些接触的 $x,y,\tau$ 处于共同紧集，$|x|$、$|y|-1$、$|\tau|$ 均有共同正下界，$|\tau|$ 有共同上界，且 $|Z_0|$ 有共同正下界。这些结论不要求唯一极小点、单根或非零源奇系数。
+
+证明。$E_g=0$ 等价于 $\sqrt2F\overline\tau=G-gE_1$。取模平方并减去 $|G|^2$，得到
+
+$$
+P(t)=-2g\operatorname{Re}(\overline GE_1)+g^2|E_1|^2,
+$$
+
+即 (43.11)，符号及非负二次余项均为精确等式。
+
+取 $h_*\le h_0$。定理 42.1 的低子水平集包含每个全局极小接触，并使 $|u_1u_2|\ge c_0$。因为 $|u_j|\le1$，两个 $|u_j|$ 各自至少为 $c_0$，所以 $\tau=ru_2/u_1$ 在共同闭环带内，整体相位规范合法。定理 41.4 另给 $|x|>1/100$、$|y|>103/100$ 及全部变量上界。故该图覆盖所有小 $|h|$ 全局极小点，未选择某一个根或某一 $y$ 符号。
+
+也可直接看见实部不能退化的原因：(41.17) 中 $\beta,b,y$ 在此联合紧集有界，$|\zeta|\ge1/1000$；项 $yhd$ 的绝对值至多 $|yh|/2$。缩小 $h_*$ 使该项小于 $1/2000$，便由 $\zeta=x(\beta+2b)+yhd$ 得 $|x|$ 的共同正下界。这与已证明的条带排除相容，不假设 $x\ne0$ 来证明自身。
+
+(43.2)–(43.3) 的所有分母因此远离零，$E_1$ 在共同紧图上有界，给 (43.12)。又
+
+$$
+|Z_0-gv|=(1+t)|\zeta|\ge1/1000.
+$$
+
+$|v|$ 一致有界，进一步缩小 $h_*$ 使 $|gv|\le1/2000$，便有 $|Z_0|\ge1/2000$。再缩小一次使 $|gv/Z_0|\le1/2$。所有缩小均取两来源共同值。
+
+在这个图上，原值函数还具有一致展开
+
+$$
+\mathcal R_g=\mathcal R_0+g\mathcal S+O(h^2),\qquad
+\mathcal S=\frac{A}{(A^2-1)|Z_0|}
+\left[2\operatorname{Re}(\overline F L_1)+\frac{|F|^2v}{Z_0}\right].
+\tag{43.13}
+$$
+
+这是在实际移动坐标处的展开：用 $|Z_0-gv|=|Z_0|(1-gv/Z_0)$，再用
+
+$$
+(1-a)^{-1}=1+a+\frac{a^2}{1-a},\qquad |a|\le1/2,
+$$
+
+与 $|F+gL_1|^2=|F|^2+2g\operatorname{Re}(\overline F L_1)+g^2|L_1|^2$ 即得一致二次余项。$\mathcal S$ 本身还没有计入可行根的移动。∎
+
+### 43.4 强制根运动与全极小集的条件包络
+
+**定理 43.5（简单根条件下的完整阈值一阶公式）。** 在 $h=0$ 的接触上写 $\tau=\sqrt t\,e^{i\theta}$。$E_0$ 的实 Jacobian 以 $(t,\theta)$ 为列变量时，行列式精确为
+
+$$
+\det D_{(t,\theta)}(\operatorname{Re}E_0,\operatorname{Im}E_0)
+=-\tfrac12P'(t).
+\tag{43.14}
+$$
+
+若 $P'(t)\ne0$，固定 $\ell$ 的实解析延续对参数 $g$ 有
+
+$$
+\left.\frac{dt}{dg}\right|_0
+=-\frac{2\operatorname{Re}(\overline GE_1)}{P'(t)},\qquad
+\mathcal D=\mathcal S-
+\frac{2\operatorname{Re}(\overline GE_1)}{P'(t)}\,\partial_t\mathcal R_0.
+\tag{43.15}
+$$
+
+$\mathcal D$ 是完整受约束值的导数；$\partial_t$ 固定 $x,y$。令 $\mathcal M$ 为源对齐、整体相位商后的整个 $h=0$ 全局极小接触集，两个 $y$ 符号均包括在内。作如下明确的附加假设：
+
+$$
+P'(t)\ne0\qquad\text{对每个 }(x,y,t,\theta)\in\mathcal M.
+\tag{43.16}
+$$
+
+则当 $h\downarrow0$，
+
+$$
+K_+(h)-K_-(h)
+=h\left(\min_{\mathcal M}\mathcal D+\max_{\mathcal M}\mathcal D\right)+o(h).
+\tag{43.17}
+$$
+
+(43.16) 尚未为当前问题证成；(43.17) 的系数也未确定符号或是否为零。
+
+证明。在零阶根上，$G=\sqrt2F\overline\tau$，所以
+
+$$
+\partial_\theta E_0=-iG,\qquad
+\partial_tE_0=\sqrt2(F'+F/(2t))\overline\tau-G'.
+$$
+
+实 Jacobian 的行列式是
+
+$$
+\begin{aligned}
+\operatorname{Im}(\overline{\partial_tE_0}\,\partial_\theta E_0)
+ &=-\operatorname{Re}(\overline{\partial_tE_0}G)\\
+ &=-\left[2t\operatorname{Re}(\overline{F'}F)+|F|^2
+             -\operatorname{Re}(\overline{G'}G)\right]
+ =-P'(t)/2.
+\end{aligned}
+$$
+
+这也精确标出特殊集 $P=P'=0$，没有把它从三次枚举中删除。若 $P'\ne0$，实解析隐函数定理以 $x,y,g$ 为外参数，给唯一局部 $t,\theta$ 分支；$y(Z_0-gv)>0$ 是开条件，在不利基点附近保留。对 (43.11) 关于 $g$ 在零处求导，二次右边导数为零，立即给 (43.15) 的根运动。零阶值 $\mathcal R_0$ 不依赖 $\theta$，所以将 (43.13) 沿分支求导，得恰为 $\mathcal D$，包括强制根运动项。
+
+源反射令 $S=\operatorname{diag}(1,-1)$。由 $SH_hS=H_{-h}$、$SB_hS=B_{-h}$、$Sa_r=a_{-r}$，将 $u,p,q,a_{\rm act}$ 同时左乘 $S$，其余参数不变，给保持 $A,|\eta|,\zeta,\mathscr R$ 及不利条件的双射。因此
+
+$$
+K_r(h)=K_{-r}(-h).
+\tag{43.18}
+$$
+
+设 $\mathcal K(g)=K_+(g)$，则 $K_-(h)=\mathcal K(-h)$；源对齐图中的方程和值函数只依赖 $g$。这个反射改变 $h$ 的符号，并不比较同一正 $h$ 的两个阈值。
+
+在假设 (43.16) 下，$\mathcal M$ 非空且紧：非空及全部极小点的存在由定理 42.1 给出，联合紧性和相位商保证紧性。连续函数 $|P'|$ 在它上面有正下界。有限个隐函数图因而覆盖 $\mathcal M$，每个图都以 $x,y$ 为自由参数、$g$ 为微扰参数；缩小邻域后所有值展开有一致 $o(|g|)$ 余项。$\mathcal D$ 连续，故在整个 $\mathcal M$ 上取到最小值和最大值。
+
+延续任一 $\mathcal M$ 成员即给 $\mathcal K(g)\le\mathcal K(0)+O(|g|)$。另一方面，对任何 $g_j\to0$ 的全局极小接触列，联合紧性给收敛子列；其极限是零阶完整接触，比值极限不超过 $\mathcal K(0)$，又不能小于零阶下确界，故属于 $\mathcal M$。因此全部小 $g$ 极小点到 $\mathcal M$ 的距离趋于零，并最终落在上述有限图内。
+
+对每个实际移动极小点，沿它所在的图将 $g$ 置零、保持其 $x,y$，得到零阶完整不利接触 $c^0_g$，其值至少为 $\mathcal K(0)$。这些零阶对应点也趋于 $\mathcal M$。局部值展开给
+
+$$
+\mathcal K(g)=\mathcal R_0(c^0_g)+g\mathcal D(c^0_g)+o(|g|),
+$$
+
+余项一致；所以对 $g>0$，下界为 $\mathcal K(0)+g\min_{\mathcal M}\mathcal D+o(g)$，对 $g<0$，下界为 $\mathcal K(0)+g\max_{\mathcal M}\mathcal D+o(|g|)$。上界分别由延续取得 $\min\mathcal D$、$\max\mathcal D$ 的成员给出。于是
+
+$$
+\begin{aligned}
+\mathcal K(g)&=\mathcal K(0)+g\min_{\mathcal M}\mathcal D+o(g),&&g\downarrow0,\\
+\mathcal K(g)&=\mathcal K(0)+g\max_{\mathcal M}\mathcal D+o(|g|),&&g\uparrow0.
+\end{aligned}
+\tag{43.19}
+$$
+
+两式相减并用 (43.18) 得 (43.17)。此证明不要求唯一极小点或二次增长，却必须在整个零阶极小集上有 (43.16)。∎
+
+### 43.5 数学来源与尚未解决的比较
+
+本链的数学来源为《full-contact-positive-side-answer》的全接触约化、非消失、共同正性与紧性推导，《supported-B-only》的定理 1 及其 (1)–(22)、源反射式 (60)，以及《supported-C-artifact》的完整图方程、三次枚举与条件微扰推导。这里保留它们的承重条件并给出普通证明；文献状态为 `repo-derived`，不作全球原创性主张。既有矩消元、完整轴分类、非轴重构、同源取向对称性、全部正泛函 PB/P2 桥梁与精确接触稠密性，分别直接引用引理 39.2、定理 39.4–39.5、命题 39.6–39.7、§37 及定理 40.2。实解析隐函数定理的成熟工具出处沿 §40.4 所引 Krantz–Parks；有限维紧性、Cauchy–Schwarz 及算子范数估计用其通常形式。
+
+仍需在整个零阶三次根轨迹
+
+$$
+P(x,y,t)=0,\qquad x\ne0,\quad |y|>1,\quad t>0,\quad y(4t-1)>0
+$$
+
+上确定全局最小值和全部极小根；固定 $\ell$ 至多三根并未完成这个连续参数的全局问题。对简单根上的内部极小候选，必要条件还包括
+
+$$
+(\partial_x\mathcal R_0)P_t-(\partial_t\mathcal R_0)P_x=0,\qquad
+(\partial_y\mathcal R_0)P_t-(\partial_t\mathcal R_0)P_y=0.
+$$
+
+它们由 $P=0$ 上 $t_x=-P_x/P_t$、$t_y=-P_y/P_t$ 及受约束值的一阶必要条件得到；不声称该系统已解、解孤立或穷尽重根。特殊集 $P=P_t=0$ 必须另行保留，尤其不能排除它含有全局极小点；若有这样的点，定理 43.5 的全极小集假设不成立，需要分析其完整奇异分支与单侧持续性。
+
+即使 (43.16) 成立，还须计算包含强制根运动的 $\min\mathcal D+\max\mathcal D$；若为零，一阶式不能决定来源差异。单独的 $\operatorname{Re}(\overline GE_1)$ 或 $\mathcal S$ 的符号均不能替代完整系数。$K_+(h)=K_-(h)$ 或同一固定正 $h$ 下的严格排序、同一正 $h,k$ 且共同完整 P2 内的一成一败比较，仍未解决。
+
+由定理 41.4、42.1，$k=K_r(h)$ 时有实际接触使 $J_k=0$；这仍只给零领先值。临界有限 $\lambda$ 的次阶符号、有限 PB 变分取到性及物理实现均不由接触达到性推出。有限原结论始终保留 (41.3)、(41.19) 的参数交，并使用全部原探针与完整正泛函范围。
+
+## 追加锚（本行以下为增补区）
+
+## 44. 两异常系数切片、完整正则性与多重根包络
+
+本节继续使用 §§39–43 的固定实际来源
+$a_r=(1/\sqrt2,r)^{\mathsf T}$、全部原探针、完整正泛函、两笔预算、两取向及共同完整 P2 参数交。所有接触仍由定理 43.2 的四实图条件和两个来源坐标重构；本节只细化零阶多项式的异常系数、完整约束的正则性以及其条件微扰包络。
+
+### 44.1 两个系数零集
+
+**引理 44.1（首项和常数项的精确零集）。** 令 $q=y^2>1$。在定理 43.3 的固定 $\ell=x+iy$ 图中，
+
+$$
+\begin{aligned}
+f_1&=\frac{6(x-1)}x\left[1-i\frac{q+x^2-x}{y}\right],\\
+g_0&=-\frac{3(x+1)}{2x}\left[1-i\frac{q+x^2-2x}{2y}\right].
+\end{aligned}
+\tag{44.1}
+$$
+
+因此 $f_1=0$ 当且仅当 $x=1$，而 $g_0=0$ 当且仅当 $x=-1$。在 $x=1$ 上 $P$ 恰为二次式；在 $x=-1$ 上 $P$ 仍为三次式但有根 $t=0$。
+
+**证明。** 由 (43.2)，
+$\partial_t\alpha_0=6(x-1)/y$ 和 $\partial_t\kappa_0=-6(x-1)/x$。代入 $F=i(1-\ell)(\alpha_0+i\kappa_0)-(2-\ell/2)$，并用
+$i(1-\ell)\overline\ell=y-i(q+x^2-x)$，得到第一式。对 $t=0$，$\chi_0=-3(x+1)/(2y)$、$\kappa_0=-3(x+1)/(2x)$；代入 $G=i(1-\ell/2)(\chi_0-i\kappa_0)-(4-2\ell)t$，得到第二式。两方括号的实部都是 $1$，而 $x\ne0$，故零集恰如所述。又 $2|f_1|^2$ 是 $P$ 的三次首项，$-|g_0|^2$ 是常数项，所以两条结论同时成立。∎
+
+### 44.2 降阶线 $x=1$ 的全部正根
+
+**定理 44.2（降阶线的判别式、正根和代价）。** 固定 $x=1$，置 $q=y^2>1$、$M_+=(q+1)(q+9)$、$B_+=13q^2-39q-36$。则
+
+$$
+\begin{aligned}
+F(t)&=-\frac{3+5iy}{2},\\
+G(t)&=-3-8t+i\frac{3(q-1)+4(q-3)t}{2y},\\
+4qP(t)&=-16M_+t^2+2B_+t-9(q+1)^2.
+\end{aligned}
+\tag{44.2}
+$$
+
+令
+
+$$
+H_+(q)=25q^3-2742q^2-3735q-1224.
+\tag{44.3}
+$$
+
+则
+
+$$
+B_+^2-144(q+1)^3(q+9)=qH_+(q).
+\tag{44.4}
+$$
+
+$H_+$ 恰有一个正根 $q_+$，且 $100<q_+<120$。当 $1<q<q_+$ 时没有正根；当 $q=q_+$ 时只有一个不同正根
+
+$$
+t_+=\frac{B_+}{16M_+},
+\tag{44.5}
+$$
+
+且其重数为二；当 $q>q_+$ 时有两个不同正根
+
+$$
+t_{\pm}=\frac{B_+\pm\sqrt{qH_+(q)}}{16M_+}.
+\tag{44.6}
+$$
+
+所有这些正根都满足
+
+$$
+\frac14<t<\frac{13}{8}.
+\tag{44.7}
+$$
+
+所以它们只有在 $y>0$ 时通过不利过滤。每个不利根的零阶代价满足
+
+$$
+\mathcal R_0(1,y,t)
+=\frac{\sqrt q(9+25q)}{12(q-1)(4t-1)}>\frac{125}{33}>\frac65.
+\tag{44.8}
+$$
+
+**证明。** 将 $x=1$ 代入 (43.2) 得到 (44.2)。二次判别式为
+$H_+(q)/(4q)$，而 (44.4) 是直接展开后的恒等式。函数
+
+$$
+\frac{H_+(q)}{q^2}=25q-2742-\frac{3735}{q}-\frac{1224}{q^2}
+$$
+
+在 $q>0$ 上严格递增；并且
+$H_+(100)=-2794724<0$、$H_+(120)=3265776>0$，故正根唯一且落在所给区间。对 $q\ge q_+>100$，$B_+>0$，二次式的根的和与积均为正，故两个根均为正。又
+
+$$
+B_+-4M_+=9q^2-79q-72>0,
+$$
+
+所以顶点 $B_+/(16M_+)>1/4$。由于 $P(1/4)=-(7q^2+95q+72)/(8q)<0$，两根都在 $1/4$ 的右侧。根的和为 $B_+/(8M_+)<13/8$，得到 (44.7)。最后 $4t-1<11/2$，且 $q>100$，所以
+
+$$
+\mathcal R_0>\frac{25q^{3/2}}{66(q-1)}>\frac{125}{33}.
+$$
+
+当 $q=q_+$ 时取 $\ell=1+i\sqrt{q_+}$、$t=t_+$，由 (43.8) 唯一恢复 $\tau$，再由定理 43.2 恢复 $P,Q,a_{\rm act}$ 和两个实际来源坐标。这是完整四实图条件下的合法正双根；但二次式没有另一不同有限正根。它只反驳无条件的固定 $\ell$ 换根断言，不反驳低代价全局极小集的受限问题。∎
+
+### 44.3 常数项零线 $x=-1$ 的三次分类
+
+**定理 44.3（零常数项线的全部正根与统一代价排除）。** 固定 $x=-1$，置 $q=y^2>1$、$M_-=(q+1)(q+4)$、$B_-=11q^2+75q-72$、$C_-=q^2+97q+144$。则
+
+$$
+\begin{aligned}
+F(t)&=-\frac{11}{2}+12t+i\left(\frac{q-12}{2y}-\frac{12(q+2)}y t\right),\\
+G(t)&=(-24+8iy)t,\\
+P(t)&=\frac{t}{2q}Q(t),\\
+Q(t)&=576M_-t^2-16B_-t+C_-.
+\end{aligned}
+\tag{44.9}
+$$
+
+令
+
+$$
+H_-(q)=28q^3+183q^2-414q-5193.
+\tag{44.10}
+$$
+
+则
+
+$$
+B_-^2-9M_-C_-=4qH_-(q).
+\tag{44.11}
+$$
+
+$H_-$ 恰有一个正根 $q_-$，且 $4<q_-<5$。当 $1<q<q_-$ 时 $Q$ 无实根；当 $q=q_-$ 时 $Q$ 有唯一不同正根
+
+$$
+t_-^{\rm dbl}=\frac{B_-}{72M_-},
+\tag{44.12}
+$$
+
+且其重数为二；当 $q>q_-$ 时 $Q$ 有两个不同正根
+
+$$
+t_\pm=\frac{B_-\pm2\sqrt{qH_-(q)}}{72M_-}.
+\tag{44.13}
+$$
+
+所有正根 $t\ne1/4$ 的代价都满足
+
+$$
+\mathcal R_0(-1,y,t)>\frac65.
+\tag{44.14}
+$$
+
+特别地，取 $y=-\sqrt{q_-}$ 和 (44.12)，则 $0<t_-^{\rm dbl}<1/4$，它是一个真正三次的唯一不同正根；$t=0$ 是被非轴图排除的根，且该双根通过不利过滤。
+
+**证明。** 代入 $x=-1$ 直接得到 (44.9)。判别式恒等式为 (44.11)。函数
+
+$$
+\frac{H_-(q)}q=28q^2+183q-414-\frac{5193}{q}
+$$
+
+在 $q>0$ 上严格递增，且 $H_-(4)=-2129<0$、$H_-(5)=812>0$，故正根唯一。对 $q\ge q_->4$，$B_->0$，根的和与积为正，因而 (44.13) 的两个根均为正。并且
+
+$$
+18M_--B_-=7q^2+15q+144>0,
+$$
+
+所以 (44.12) 严格小于 $1/4$。
+
+若 $t>1/4$，由 $P(t)=0$ 得 $|F(t)|^2=32(q+9)t$，故
+
+$$
+\mathcal R_0(-1,y,t)
+=\frac{32\sqrt q(q+9)t}{3(q-1)(4t-1)}
+>\frac{8\sqrt q(q+9)}{3(q-1)}>\frac83.
+\tag{44.15}
+$$
+
+若 $0<t<1/4$，由 $Q(t)=0$ 得
+$C_-=16B_-t-576M_-t^2<16B_-t$，从而
+
+$$
+\mathcal R_0(-1,y,t)>L(q):=\frac{2\sqrt q(q+9)C_-}{3(q-1)B_-}.
+\tag{44.16}
+$$
+
+写 $z=\sqrt q>1$。交叉相乘后 $L(q)>6/5$ 等价于 $S(z)>0$，其中
+
+$$
+\begin{aligned}
+S(z)&=5z(z^2+9)(z^4+97z^2+144)\\
+&\quad-9(z^2-1)(11z^4+75z^2-72)\\
+&=5z^5(z-10)^2+z^6+30z^3\left(z-\frac{48}{5}\right)^2\\
+&\quad+\frac{11601}{5}z^3+1323z^2+6480z-648.
+\end{aligned}
+\tag{44.17}
+$$
+
+最后一行在 $z>1$ 上严格为正，故 (44.14) 成立。这里 $t=1/4$ 的 $\zeta$ 为零，不属于不利代价。双根处 $G=(-24+8iy)t_-^{\rm dbl}\ne0$，而 $P=0$ 又给 $F\ne0$，所以 (43.8) 和定理 43.2 确实恢复完整接触。由于 $P=tQ/(2q)$，该点没有另一不同正根；这修正了把“首项非零”误当作“常数项严格负”的推理。∎
+
+### 44.4 低代价极小集远离两个异常切片
+
+**定理 44.4（统一分离与剩余三次域）。** 存在 $0<\bar h\le h_0$、$\delta>0$ 和 $b_*>0$，使对 $r=\pm1$、两个取向以及所有 $|h|\le\bar h$ 的完整不利接触，只要
+
+$$
+\mathcal R\le K_{\rm ax}-\gamma_0,
+\tag{44.18}
+$$
+
+就有
+
+$$
+|x-1|\ge\delta,\qquad |x+1|\ge\delta,\qquad
+|f_1|\ge b_*,\qquad |g_0|\ge b_*.
+\tag{44.19}
+$$
+
+特别地，定理 42.1 的全部零阶全局极小点满足 (44.19)。在这些点上 $P$ 是真正三次，首项 $2|f_1|^2$ 为正、常数项 $-|g_0|^2$ 为负。若此 $P$ 有正的二重根 $t_0$，则
+
+$$
+P(t)=2|f_1|^2(t-t_0)^2(t-s),\qquad s>0;
+\tag{44.20}
+$$
+
+若为三重根，则 $s=t_0$。这只保证另一根的正性，不保证其不利过滤或代价严格更低。
+
+**证明。** 定理 41.4 的低子水平集在共同变量、来源和取向上紧，且定理 42.1 给出的全局极小值均落入其中。若不存在统一的第一条分离，可取 $h_n\to0$ 的接触列并令 $x_n\to1$；紧性给出零阶极限，其代价不超过 $6/5$，但定理 44.2 给出的整个 $x=1$ 非轴切片不利代价大于 $125/33$，矛盾。令 $x_n\to-1$ 同理与定理 44.3 的 $6/5$ 严格下界矛盾。故得到某个 $\delta>0$。在定理 41.4 的统一界 $|x|<600$ 下，(44.1) 给出
+
+$$
+|f_1|\ge\frac{|x-1|}{100},\qquad
+|g_0|\ge\frac{|x+1|}{400};
+$$
+
+减小 $b_*$ 即得 (44.19)。于是 $f_1g_0\ne0$，多项式的次数和常数项符号如述。对正二重根作因式分解并比较常数项，得到
+$-|g_0|^2=-2|f_1|^2t_0^2s$，故 $s>0$。三重根是同一因式分解的 $s=t_0$ 情形，没有被排除。∎
+
+### 44.5 根投影正则性与完整接触正则性
+
+令 $z=(x,y,t)$、$\tau=\sqrt t\,e^{i\theta}$，并在零阶接触处定义
+
+$$
+C_0(z,\theta)=\bigl(\operatorname{Re}E_0(\tau),\operatorname{Im}E_0(\tau)\bigr)\in\mathbb R^2.
+\tag{44.21}
+$$
+
+**定理 44.5（完整 Jacobian 的精确判据）。** 在任一零阶非轴接触处，
+
+$$
+\operatorname{rank}D_{(x,y,t,\theta)}C_0=2
+\quad\Longleftrightarrow\quad
+\nabla_{x,y,t}P\ne0.
+\tag{44.22}
+$$
+
+所以 $P_t=0$ 只表示以 $t$ 为投影坐标的根轨迹奇异；只要 $P_x$ 或 $P_y$ 非零，完整四实接触约束仍然正则。
+
+**证明。** 定理 43.3 给出 $G\ne0$，而在接触上
+
+$$
+\partial_\theta E_0=-iG\ne0.
+\tag{44.23}
+$$
+
+对 $j=x,y,t$ 直接微分 $P=2t|F|^2-|G|^2$，并使用 $G=\sqrt2F\overline\tau$，得到
+
+$$
+P_j=2\operatorname{Re}\bigl(\overline G\,\partial_jE_0\bigr).
+\tag{44.24}
+$$
+
+对 $j=t$，$\partial_t\overline\tau=\overline\tau/(2t)$ 产生的附加项正好给出 $2|F|^2$，故 (44.24) 仍成立；这是不能把 $t$ 当作常数的关键。令 $w_\theta=\partial_\theta E_0=-iG$，则
+
+$$
+P_j=2\operatorname{Im}\bigl(\overline{w_\theta}\,\partial_jE_0\bigr).
+\tag{44.25}
+$$
+
+右侧是 $\partial_jE_0$ 在 $w_\theta$ 的实正交方向上的坐标。由于 $w_\theta\ne0$，四个实列向量的秩为一，当且仅当三个 $z$ 列都与 $w_\theta$ 实平行；由 (44.25) 这又当且仅当 $P_x=P_y=P_t=0$。秩只能为一或二，故 (44.22) 成立。∎
+
+### 44.6 完整约束下的全极小集一阶包络
+
+令
+
+$$
+\mathcal C_g(z,\theta)=\bigl(\operatorname{Re}E_g(\sqrt t e^{i\theta}),
+\operatorname{Im}E_g(\sqrt t e^{i\theta})\bigr),
+$$
+
+令 $\mathcal R_g(z,\theta)$ 表示 (43.4) 的原比值，且令 $\mathcal M$ 为 $g=0$ 的整个不利零阶全局极小集（两个 $y$ 符号均包含）。
+
+**定理 44.6（完整正则条件下的双侧全局包络）。** 假设对每个 $c\in\mathcal M$，
+
+$$
+\operatorname{rank}D_{(z,\theta)}\mathcal C_0(c)=2.
+\tag{44.26}
+$$
+
+由于 $c$ 是严格过滤条件下约束流形上的全局极小点，约束一阶必要条件给出唯一的 $\lambda(c)=(\lambda_1,\lambda_2)\in\mathbb R^2$，满足
+
+$$
+D_{(z,\theta)}\mathcal C_0(c)^{\mathsf T}\lambda(c)
+=\nabla_{(z,\theta)}\mathcal R_0(c).
+\tag{44.27}
+$$
+
+唯一性来自 (44.26) 的满行秩。
+
+定义
+
+$$
+\Phi(c)=\partial_g\mathcal R_g(c)|_{g=0}
+-\lambda_1(c)\operatorname{Re}E_1(c)
+-\lambda_2(c)\operatorname{Im}E_1(c).
+\tag{44.28}
+$$
+
+则 $\lambda$ 和 $\Phi$ 在 $\mathcal M$ 上连续，并且
+
+$$
+\begin{aligned}
+K_+(h)&=K_+(0)+h\min_{c\in\mathcal M}\Phi(c)+o(h),&&h\downarrow0,\\
+K_+(g)&=K_+(0)+g\max_{c\in\mathcal M}\Phi(c)+o(|g|),&&g\uparrow0.
+\end{aligned}
+\tag{44.29}
+$$
+
+特别地，由既有源反射 (43.18)，
+
+$$
+K_+(h)-K_-(h)
+=h\left(\min_{c\in\mathcal M}\Phi(c)+\max_{c\in\mathcal M}\Phi(c)\right)+o(h),
+\qquad h\downarrow0.
+\tag{44.30}
+$$
+
+在 (43.13) 的记号下，$\partial_g\mathcal R_g|_0=\mathcal S$，所以 (44.28) 是包含全部强制根运动的完整系数。由 (44.31)，$\Phi(c)$ 等于通过 $c$ 的可行延续的点值导数，乘子修正可以为零；(44.29)–(44.30) 的全局包络依赖整个 $\mathcal M$ 上的 $\Phi$，不能由单独的 $\mathcal S$ 或任选一根的导数替代。
+
+**证明。** 由 (44.26)，每个 $c\in\mathcal M$ 有一个隐函数坐标图：在保留两个自由坐标的同时，用两个接触坐标解出 $\mathcal C_g=0$。沿任一这样的可行曲线 $w(g)$ 有
+
+$$
+D_w\mathcal C_0(c)w'(0)+\partial_g\mathcal C_g(c)|_0=0.
+$$
+
+(44.27) 因而给出
+
+$$
+\frac d{dg}\mathcal R_g(w(g))\bigg|_{0}
+=\partial_g\mathcal R_g|_0+\nabla\mathcal R_0\cdot w'(0)
+=\Phi(c).
+\tag{44.31}
+$$
+
+秩条件、紧性和连续性使 $\mathcal M$ 有限个这样的图覆盖，并使 (44.31) 的一阶余项一致。每个图给出相应的可行延续，故正 $g$ 的上界由 $\min_{\mathcal M}\Phi$ 给出，负 $g$ 的上界由 $\max_{\mathcal M}\Phi$ 给出。反过来，取任意 $g_n\to0$ 的全局极小接触列；定理 41.4 的联合紧性给出收敛子列，其极限属于 $\mathcal M$。把移动点投回 $g=0$ 的同一图，零阶值不低于 $K_+(0)$，而 (44.31) 给出统一下界。上下界相合，得到 (44.29)。最后用 (43.18) 把 $K_-(h)$ 写成 $K_+(-h)$，即得 (44.30)。此证明只要求完整接触秩条件，不要求 $P_t\ne0$、根简单、极小点唯一或二次增长。∎
+
+### 44.7 合法下降、固定参数凸性与真正剩余的奇异系统
+
+在一个固定的 $\ell=x+iy$ 和不利符号扇区内，令
+
+$$
+C_y=\frac{|y|}{3(y^2-1)},\qquad \sigma=\operatorname{sgn}(y),\qquad z_t=4t-1,
+$$
+
+并置 $B=F(1/4)$、$w=|f_1|^2/16$、$c_B=|B|^2$。则在 $\sigma z_t>0$ 时有精确恒等式
+
+$$
+\mathcal R_0
+=C_y\sigma\left[wz_t+\frac12\operatorname{Re}(\overline Bf_1)+\frac{c_B}{z_t}\right],
+\qquad
+\partial_t\mathcal R_0=4C_y\sigma\left(w-\frac{c_B}{z_t^2}\right).
+\tag{44.32}
+$$
+
+若 $Bf_1\ne0$，则第二导数为 $32C_y\sigma c_B/z_t^3>0$。因此固定 $\ell$ 的每个内部临界点是该不利扇区中固定参数值的唯一全局极小点；这不能推出另一合法根存在，也不能推出另一根的值更低。
+
+**命题 44.7（重根的实际下降判据）。** 若零阶不利接触满足
+
+$$
+P=P_t=0,\qquad (P_x,P_y)\ne(0,0),\qquad \partial_t\mathcal R_0\ne0,
+\tag{44.33}
+$$
+
+则存在保持两个实际来源坐标、四实图条件和不利过滤的精确接触曲线，使 $\mathcal R_0$ 严格下降。因此任何重根全局极小点必须满足
+
+$$
+\nabla P=0,
+\quad\text{或}\quad
+(P_x,P_y)\ne(0,0),\ \partial_t\mathcal R_0=0.
+\tag{44.34}
+$$
+
+在第二种情形，受约束一阶必要条件还给出
+
+$$
+P=0,\quad P_t=0,\quad \partial_t\mathcal R_0=0,\quad
+(\partial_x\mathcal R_0)P_y-(\partial_y\mathcal R_0)P_x=0.
+\tag{44.35}
+$$
+
+**证明。** 若 $P_x\ne0$，由隐函数定理在保持 $y$ 不变时解出 $x=x(t)$；若 $P_y\ne0$，交换 $x,y$。在基点 $x'(t)=-P_t/P_x=0$（或 $-P_t/P_y=0$），故曲线上的值导数就是 $\partial_t\mathcal R_0$。取 $t$ 的相反方向即可得到严格下降；所有不利条件是开条件，相位由 (43.8) 唯一连续恢复。第二种情形若为局部极小，完整梯度条件 $\nabla\mathcal R_0=\mu\nabla P$ 给出 (44.35)。∎
+
+真正尚未支付的完整约束奇异集合是
+
+$$
+P=P_x=P_y=P_t=0.
+\tag{44.36}
+$$
+
+(44.36) 与三重根或普通重根并不等价：$P_t=0$ 而 $P_x\ne0$ 的点由定理 44.5 仍是完整正则接触；反之，(44.36) 才需要奇异分层和单侧持续性分析。定理 44.4 保留低代价真三次域中的三重根可能性，定理 44.6 则把来源比较准确缩到 (44.26) 或 (44.36) 的两种分支。
+
+## 45. 数学来源、适用条件与未解边界
+
+引理 44.1、定理 44.2–44.6 以及命题 44.7 是基于 §§39–43 的模型特定推导（`repo-derived`）。所用的成熟工具是二次判别式与根的符号、实解析隐函数定理、紧集一致展开、等式约束的一阶必要条件和有限维正性分解。式 (44.17) 是给 $x=-1$ 切片的显式正性证书，式 (44.22) 是原复接触方程的完整实 Jacobian 判据，式 (44.28) 是完整来源约束下的条件包络系数。
+
+模型条件仍包括轴、两取向、两来源坐标、完整正泛函、两笔预算和共同完整 P2 参数交。尚未证明 (44.26) 在整个 $\mathcal M$ 上成立，尚未排除 (44.36)，尚未确定 (44.30) 的符号或同一正 $h$ 下的严格来源排序。$x=1$ 与 $x=-1$ 的反例只否定无条件的固定参数换根命题；定理 44.4 只把它们从足够小参数的低子水平全局极小集中排除，不能替代一般 $x\ne\pm1$ 的重根分析。
+
+同一正 $h,k$、共同完整 P2 内一成一败的比较，以及阈值等号的有限 $\lambda$ 次阶符号、有限 PB 变分达到性和物理取得，均仍未解决。所有有限 PB 结论继续受 (41.3)、(41.19) 及原全部探针和正泛函量词约束；接触达到性不能推出有限 PB 变分达到性或物理取得，源反射也不能替代同一正 $h$ 下的来源排序。
+
+## 追加锚（本行以下为增补区）
