@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Analysis.AsynchronousMassRigidity
 import D5.S3.Quantum.Analysis.ProperConeMassBase
+import D5.S3.Quantum.Dynamics.BaseNormContraction
 
 /-! # The same original readout and the two actual mass tensors -/
 
@@ -50,12 +51,6 @@ private def massThree (uE : Module.Dual ℝ E) :
     (by intro a i x y; fin_cases i <;> simp [Q, M, K, map_add, LinearMap.add_apply])
     (by intro a i r x; fin_cases i <;>
       simp [Q, M, K, map_smul, LinearMap.smul_apply, smul_eq_mul])
-
-private theorem mass_nonneg (C : ProperCone ℝ D) (u : Module.Dual ℝ D)
-    (hu : ∀ x ∈ C, x ≠ 0 → 0 < u x) {x : D} (hx : x ∈ C) : 0 ≤ u x := by
-  by_cases hz : x = 0
-  · simp [hz]
-  · exact (hu x hx hz).le
 
 /-- Real spanning of the actual M and L implies real spanning of the actual Q=L(M,-).
 No claim of generation of the positive joint cone by positive products is made. -/
@@ -156,13 +151,12 @@ theorem original_mass_factorization [Nontrivial A] [Nontrivial D] [Nontrivial E]
   have hMpos : data.M sigma sigma ∈ CD :=
     hppos _ (hLpos _ (hppos _ (hLpos _ homega _ hsigma.1)) _ hsigma.1)
   have hlNonneg : 0 ≤ lambda := by
-    simpa [hmTwo, hsigmaMass] using mass_nonneg CD uD hposD hMpos
+    simpa [hmTwo, hsigmaMass] using
+      Dynamics.BaseNormContraction.functional_nonneg_on_cone CD.toConvexCone uD hposD hMpos
   have hkNonneg : 0 ≤ kappa := by
     have hQpos : data.Q sigma sigma sigma ∈ CE := hLpos _ hMpos _ hsigma.1
-    have heNonneg : 0 ≤ uE (data.Q sigma sigma sigma) := by
-      by_cases hz : data.Q sigma sigma sigma = 0
-      · simp [hz]
-      · exact (hposE _ hQpos hz).le
+    have heNonneg : 0 ≤ uE (data.Q sigma sigma sigma) :=
+      Dynamics.BaseNormContraction.functional_nonneg_on_cone CE.toConvexCone uE hposE hQpos
     simpa [hmThree, hsigmaMass] using heNonneg
   have huDne : uD ≠ 0 := by
     obtain ⟨⟨d, hd⟩, _⟩ := ProperConeMassBase.entire_base_geometry CD uD hgenD hposD

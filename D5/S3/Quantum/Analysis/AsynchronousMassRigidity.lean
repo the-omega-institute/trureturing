@@ -9,8 +9,8 @@
 /- proof_shape: exists_fixed_mem: bind-only; consumers: maximum_at_fixed_tuple,
    multilinear_mass_factorization.
    proof_shape: fixed_eq_mass_smul: bind-only; consumer: maximum_at_fixed_tuple.
-   consumed_helper: eq_zero_of_spanning_cube; consumer: multilinear_mass_factorization;
-   not an escape witness.
+   proof_shape: eq_zero_of_spanning_cube: bind-only; consumer: multilinear_mass_factorization;
+   directly reuses MultilinearMap.ext_of_span_eq_top; not an escape witness.
    admission_basis: escape-witness
    escape_witness: maximum_at_fixed_tuple constructs invariant maximizing sections and
    replaces every slot by the same normalized fixed vector without changing the maximum.
@@ -252,29 +252,10 @@ private theorem constant_on_normalized_cube (Phi : A →ₗ[ℝ] A) (u : Module.
 private theorem eq_zero_of_spanning_cube {K : Set A} (hspan : Submodule.span ℝ K = ⊤)
     (G : MultilinearMap ℝ (fun _ : ι => A) ℝ)
     (hzero : ∀ a, (∀ i, a i ∈ K) → G a = 0) : G = 0 := by
-  classical
-  have hfinite : ∀ S : Finset ι, ∀ a : ι → A, (∀ i, i ∉ S → a i ∈ K) → G a = 0 := by
-    intro S
-    induction S using Finset.induction_on with
-    | empty => intro a ha; exact hzero a (fun i => ha i (by simp))
-    | @insert i S hi ih =>
-      intro a ha
-      have hall : ∀ x ∈ Submodule.span ℝ K, G (Function.update a i x) = 0 := by
-        intro x hx
-        induction hx using Submodule.span_induction with
-        | mem x hx =>
-          apply ih
-          intro j hj
-          by_cases hji : j = i
-          · subst j; simpa using hx
-          · simp only [Function.update_of_ne hji]
-            exact ha j (by simp [hji, hj])
-        | zero => simp
-        | add x y hx hy hx0 hy0 => simp [G.map_update_add, hx0, hy0]
-        | smul c x hx hx0 => simp [G.map_update_smul, hx0]
-      simpa using hall (a i) (by rw [hspan]; trivial)
-  ext a
-  exact hfinite Finset.univ a (by simp)
+  apply MultilinearMap.ext_of_span_eq_top (g := fun {i : ι} (x : K) => (x : A))
+    (fun _ => by simpa only [Subtype.range_coe_subtype, Set.setOf_mem_eq] using hspan)
+  intro a
+  exact hzero (fun i => a i) (fun i => (a i).property)
 
 /-- The normalized-cube identity extends to all real inputs, using the span of the entire
 state base; no tensor cone, copies, mixing, or interior stationary state is assumed. -/

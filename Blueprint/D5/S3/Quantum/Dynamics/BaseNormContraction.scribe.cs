@@ -43,6 +43,33 @@ internal sealed class BaseNormContractionDocument : IScribeDocumentDefinition
             H("Base Norm Contraction"),
             Blocks(
                 Describe.Lean(
+                    DescribeId.Create("functional-nonneg-on-cone"),
+                    DeclarationHandle.Create(
+                        "D5/S3/Quantum/Dynamics/BaseNormContraction.functional_nonneg_on_cone"),
+                    H("Strict positivity implies nonnegativity on the whole cone"),
+                    StatementSource.FromAuthor(Disp(Seq(
+                        Forall, Sp, vectorSpace, Comma, Sp, cone, Comma, Sp,
+                        functional, Comma, Sp, vector, Comma, RowBreak, Grp(),
+                        Call("AddCommGroup", vectorSpace), Sp, Land, Sp,
+                        Call("Module", Call("Real"), vectorSpace), Sp, Land, Sp,
+                        Call("ConvexCone", cone, vectorSpace), Sp, Land, Sp,
+                        Call("RealLinearFunctional", functional, vectorSpace), Sp, Land, Sp,
+                        Call("StrictlyPositive", functional, cone), Sp, Land, Sp,
+                        vector, Sp, InMacro, Sp, cone, Sp, Rightarrow, Sp,
+                        D(0), Sp, Leq, Sp, Call("Eval", functional, vector), Dot))),
+                    AssessedProvenance.FromRepo(),
+                    Blocks(Paragraph(Text(
+                        "For any additive commutative group V with a real module structure, "
+                            + "any real convex cone C and any real-linear functional u strictly "
+                            + "positive on every nonzero element of C, u is nonnegative at every "
+                            + "element of C, including zero. No norm, dimension, closedness or "
+                            + "generating hypothesis is used. This is the original consumed lemma: "
+                            + "cone_decomposition_costs_bddBelow uses it in the base-norm proof, "
+                            + "and OriginalMassCalibration.original_mass_factorization applies "
+                            + "it to both actual mass tensors. Public visibility adds no "
+                            + "mathematical content."))),
+                    DescribeRole.Theorem),
+                Describe.Lean(
                     DescribeId.Create(
                         "positive-normalization-preserving-dynamics-contract-base-norm"),
                     DeclarationHandle.Create(
