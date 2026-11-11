@@ -15,74 +15,172 @@ escape_witness: none.
 admission_basis: open-problem-resolution (#25502; Refuted).
 Direct frozen dependencies: none.
 The public result is the designated refutation result (`basis=refutes`) and is exempt from four-slot escape registration (CLAUDE.md §3.9).
-The source predicates retain their stated expressions; row flattening uses Function.uncurry.
+The source predicates retain their stated expressions; row flattening uses Function.uncurry, retractions use Function.update, and compression uses Matrix.kronecker.
 
 Per-declaration classification (all escape_witness values are none):
-pickMatrix: proof_shape: bind-only; consumers: CompletePseudoPick, pick_gram_decomposition, datum_contractive, retracted_multiplier; Direct frozen dependencies: none.
-IsContractiveMultiplier: proof_shape: bind-only; consumers: CompletePseudoPick, constant_multiplier, retracted_multiplier; Direct frozen dependencies: none.
-CompletePseudoPick: proof_shape: bind-only; consumers: claim; Direct frozen dependencies: none.
-claim: proof_shape: bind-only; consumers: conditional_refutation, result; Direct frozen dependencies: none.
-coreX: proof_shape: bind-only; consumers: k0, ell0, coreX_star, ell0_pos, k0_nonvanishing, quotient_entries, retractQuotient_factor_0, retractQuotient_factor_1, retractQuotient_factor_2, source_relations, data_consistent, full_data_constant, datum_contractive; Direct frozen dependencies: none.
-k0: proof_shape: bind-only; consumers: k0_decomposition, k0_nonvanishing, quotient_entries, conditional_refutation, retractQuotient, retractQuotient_factor_0, retractQuotient_factor_1, retractQuotient_factor_2, pick_gram_decomposition, datum_contractive, retracted_multiplier; Direct frozen dependencies: none.
-ell0: proof_shape: bind-only; consumers: ell0_decomposition, quotient_entries, conditional_refutation, retractQuotient, retractQuotient_factor_0, retractQuotient_factor_1, retractQuotient_factor_2, constant_multiplier, retracted_multiplier; Direct frozen dependencies: none.
-coreX_star: proof_shape: bind-only; consumers: k0_decomposition, pick_gram_decomposition; Direct frozen dependencies: none.
-k0_decomposition: proof_shape: bind-only; consumers: k0_pos; Direct frozen dependencies: none.
-k0_pos: proof_shape: bind-only; consumers: conditional_refutation; Direct frozen dependencies: none.
-ell0_decomposition: proof_shape: bind-only; consumers: ell0_pos; Direct frozen dependencies: none.
-ell0_pos: proof_shape: bind-only; consumers: conditional_refutation, constant_multiplier; Direct frozen dependencies: none.
-k0_nonvanishing: proof_shape: bind-only; consumers: conditional_refutation, datum_contractive, retracted_multiplier; Direct frozen dependencies: none.
-quotient_entries: proof_shape: bind-only; consumers: quotient_form; Direct frozen dependencies: none.
-quotient_form: proof_shape: bind-only; consumers: quotient_not_pos; Direct frozen dependencies: none.
-quotient_not_pos: proof_shape: bind-only; consumers: conditional_refutation; Direct frozen dependencies: none.
-conditional_refutation: proof_shape: bind-only; consumers: result; Direct frozen dependencies: none.
-retract: proof_shape: bind-only; consumers: retractQuotient, retractQuotient_factor_0, retractQuotient_factor_1, retractQuotient_factor_2, retract_ne, retract_fixed, counterfamily_complete; Direct frozen dependencies: none.
-retractQuotient: proof_shape: bind-only; consumers: retractQuotient_factor_0, retractQuotient_factor_1, retractQuotient_factor_2, retracted_multiplier; Direct frozen dependencies: none.
-qL0: proof_shape: bind-only; consumers: retractQuotient_factor_0; Direct frozen dependencies: none.
-qD0: proof_shape: bind-only; consumers: retractQuotient_factor_0, retractQuotient_pos_0; Direct frozen dependencies: none.
-retractQuotient_factor_0: proof_shape: bind-only; consumers: retractQuotient_pos_0; Direct frozen dependencies: none.
-retractQuotient_pos_0: proof_shape: bind-only; consumers: retractQuotient_pos; Direct frozen dependencies: none.
-qL1: proof_shape: bind-only; consumers: retractQuotient_factor_1; Direct frozen dependencies: none.
-qD1: proof_shape: bind-only; consumers: retractQuotient_factor_1, retractQuotient_pos_1; Direct frozen dependencies: none.
-retractQuotient_factor_1: proof_shape: bind-only; consumers: retractQuotient_pos_1; Direct frozen dependencies: none.
-retractQuotient_pos_1: proof_shape: bind-only; consumers: retractQuotient_pos; Direct frozen dependencies: none.
-qL2: proof_shape: bind-only; consumers: retractQuotient_factor_2; Direct frozen dependencies: none.
-qD2: proof_shape: bind-only; consumers: retractQuotient_factor_2, retractQuotient_pos_2; Direct frozen dependencies: none.
-retractQuotient_factor_2: proof_shape: bind-only; consumers: retractQuotient_pos_2; Direct frozen dependencies: none.
-retractQuotient_pos_2: proof_shape: bind-only; consumers: retractQuotient_pos; Direct frozen dependencies: none.
-retractQuotient_pos: proof_shape: bind-only; consumers: retracted_multiplier; Direct frozen dependencies: none.
-negative_gram_sum_zero: proof_shape: bind-only; consumers: gram_compression_zero; Direct frozen dependencies: none.
-gram_compression_zero: proof_shape: bind-only; consumers: source_relations; Direct frozen dependencies: none.
-weightedRows: proof_shape: bind-only; consumers: weightedRows_gram, compression_weightedRows, source_relations; Direct frozen dependencies: none.
-relationCompression: proof_shape: bind-only; consumers: compression_dataRows, source_relations; Direct frozen dependencies: none.
-dataRows_gram: proof_shape: bind-only; consumers: pick_gram_decomposition; Direct frozen dependencies: none.
-weightedRows_gram: proof_shape: bind-only; consumers: pick_gram_decomposition; Direct frozen dependencies: none.
-compression_dataRows: proof_shape: bind-only; consumers: compression_weightedRows, source_relations; Direct frozen dependencies: none.
-compression_weightedRows: proof_shape: bind-only; consumers: source_relations; Direct frozen dependencies: none.
-pick_gram_decomposition: proof_shape: bind-only; consumers: source_relations; Direct frozen dependencies: none.
-source_relations: proof_shape: bind-only; consumers: data_consistent, full_data_constant; Direct frozen dependencies: none.
-pick_submatrix: proof_shape: bind-only; consumers: data_consistent, counterfamily_complete; Direct frozen dependencies: none.
-data_consistent: proof_shape: bind-only; consumers: counterfamily_complete; Direct frozen dependencies: none.
-full_data_constant: proof_shape: bind-only; consumers: counterfamily_complete; Direct frozen dependencies: none.
-datum_contractive: proof_shape: bind-only; consumers: counterfamily_complete; Direct frozen dependencies: none.
-constant_multiplier: proof_shape: bind-only; consumers: counterfamily_complete; Direct frozen dependencies: none.
-retract_ne: proof_shape: bind-only; consumers: counterfamily_complete; Direct frozen dependencies: none.
-retract_fixed: proof_shape: bind-only; consumers: counterfamily_complete; Direct frozen dependencies: none.
-retracted_multiplier: proof_shape: bind-only; consumers: counterfamily_complete; Direct frozen dependencies: none.
-counterfamily_complete: proof_shape: bind-only; consumers: result; Direct frozen dependencies: none.
-result: proof_shape: bind-only; consumers: none; Direct frozen dependencies: none.
+pickMatrix: proof_shape: bind-only.
+consumers: CompletePseudoPick, pick_gram_decomposition, source_relations, pick_submatrix,
+data_consistent, full_data_constant, datum_contractive, retracted_multiplier.
+Direct frozen dependencies: none.
+IsContractiveMultiplier: proof_shape: bind-only.
+consumers: CompletePseudoPick, constant_multiplier, retracted_multiplier.
+Direct frozen dependencies: none.
+CompletePseudoPick: proof_shape: bind-only.
+consumers: claim, conditional_refutation, counterfamily_complete.
+Direct frozen dependencies: none.
+claim: proof_shape: bind-only.
+consumers: conditional_refutation, result.
+Direct frozen dependencies: none.
+coreX: proof_shape: bind-only.
+consumers: k0, ell0, coreX_star, k0_decomposition, ell0_decomposition, ell0_pos,
+k0_nonvanishing, quotient_entries, retractQuotient_factor_0, retractQuotient_factor_1,
+retractQuotient_factor_2, pick_gram_decomposition, source_relations, data_consistent,
+full_data_constant, datum_contractive.
+Direct frozen dependencies: none.
+k0: proof_shape: bind-only.
+consumers: k0_decomposition, k0_pos, k0_nonvanishing, quotient_entries, quotient_form,
+quotient_not_pos, conditional_refutation, retractQuotient, retractQuotient_factor_0,
+retractQuotient_factor_1, retractQuotient_factor_2, pick_gram_decomposition, source_relations,
+pick_submatrix, data_consistent, full_data_constant, datum_contractive, retracted_multiplier,
+counterfamily_complete.
+Direct frozen dependencies: none.
+ell0: proof_shape: bind-only.
+consumers: ell0_decomposition, ell0_pos, quotient_entries, quotient_form, quotient_not_pos,
+conditional_refutation, retractQuotient, retractQuotient_factor_0, retractQuotient_factor_1,
+retractQuotient_factor_2, constant_multiplier, retracted_multiplier, counterfamily_complete.
+Direct frozen dependencies: none.
+coreX_star: proof_shape: bind-only.
+consumers: k0_decomposition, pick_gram_decomposition.
+Direct frozen dependencies: none.
+k0_decomposition: proof_shape: bind-only.
+consumers: k0_pos.
+Direct frozen dependencies: none.
+k0_pos: proof_shape: bind-only.
+consumers: conditional_refutation.
+Direct frozen dependencies: none.
+ell0_decomposition: proof_shape: bind-only.
+consumers: ell0_pos.
+Direct frozen dependencies: none.
+ell0_pos: proof_shape: bind-only.
+consumers: conditional_refutation, constant_multiplier.
+Direct frozen dependencies: none.
+k0_nonvanishing: proof_shape: bind-only.
+consumers: conditional_refutation, datum_contractive, retracted_multiplier.
+Direct frozen dependencies: none.
+quotient_entries: proof_shape: bind-only.
+consumers: quotient_form.
+Direct frozen dependencies: none.
+quotient_form: proof_shape: bind-only.
+consumers: quotient_not_pos.
+Direct frozen dependencies: none.
+quotient_not_pos: proof_shape: bind-only.
+consumers: conditional_refutation.
+Direct frozen dependencies: none.
+conditional_refutation: proof_shape: bind-only.
+consumers: result.
+Direct frozen dependencies: none.
+retractQuotient: proof_shape: bind-only.
+consumers: retractQuotient_factor_0, retractQuotient_pos_0, retractQuotient_factor_1,
+retractQuotient_pos_1, retractQuotient_factor_2, retractQuotient_pos_2, retractQuotient_pos,
+retracted_multiplier.
+Direct frozen dependencies: none.
+qL0: proof_shape: bind-only.
+consumers: retractQuotient_factor_0.
+Direct frozen dependencies: none.
+qD0: proof_shape: bind-only.
+consumers: retractQuotient_factor_0, retractQuotient_pos_0.
+Direct frozen dependencies: none.
+retractQuotient_factor_0: proof_shape: bind-only.
+consumers: retractQuotient_pos_0.
+Direct frozen dependencies: none.
+retractQuotient_pos_0: proof_shape: bind-only.
+consumers: retractQuotient_pos.
+Direct frozen dependencies: none.
+qL1: proof_shape: bind-only.
+consumers: retractQuotient_factor_1.
+Direct frozen dependencies: none.
+qD1: proof_shape: bind-only.
+consumers: retractQuotient_factor_1, retractQuotient_pos_1.
+Direct frozen dependencies: none.
+retractQuotient_factor_1: proof_shape: bind-only.
+consumers: retractQuotient_pos_1.
+Direct frozen dependencies: none.
+retractQuotient_pos_1: proof_shape: bind-only.
+consumers: retractQuotient_pos.
+Direct frozen dependencies: none.
+qL2: proof_shape: bind-only.
+consumers: retractQuotient_factor_2.
+Direct frozen dependencies: none.
+qD2: proof_shape: bind-only.
+consumers: retractQuotient_factor_2, retractQuotient_pos_2.
+Direct frozen dependencies: none.
+retractQuotient_factor_2: proof_shape: bind-only.
+consumers: retractQuotient_pos_2.
+Direct frozen dependencies: none.
+retractQuotient_pos_2: proof_shape: bind-only.
+consumers: retractQuotient_pos.
+Direct frozen dependencies: none.
+retractQuotient_pos: proof_shape: bind-only.
+consumers: retracted_multiplier.
+Direct frozen dependencies: none.
+negative_gram_sum_zero: proof_shape: bind-only.
+consumers: gram_compression_zero.
+Direct frozen dependencies: none.
+gram_compression_zero: proof_shape: bind-only.
+consumers: source_relations.
+Direct frozen dependencies: none.
+dataRows_gram: proof_shape: bind-only.
+consumers: weightedRows_gram, pick_gram_decomposition.
+Direct frozen dependencies: none.
+weightedRows_gram: proof_shape: bind-only.
+consumers: pick_gram_decomposition.
+Direct frozen dependencies: none.
+compression_dataRows: proof_shape: bind-only.
+consumers: compression_weightedRows, source_relations.
+Direct frozen dependencies: none.
+compression_weightedRows: proof_shape: bind-only.
+consumers: source_relations.
+Direct frozen dependencies: none.
+pick_gram_decomposition: proof_shape: bind-only.
+consumers: source_relations.
+Direct frozen dependencies: none.
+source_relations: proof_shape: bind-only.
+consumers: data_consistent, full_data_constant.
+Direct frozen dependencies: none.
+pick_submatrix: proof_shape: bind-only.
+consumers: data_consistent, counterfamily_complete.
+Direct frozen dependencies: none.
+data_consistent: proof_shape: bind-only.
+consumers: counterfamily_complete.
+Direct frozen dependencies: none.
+full_data_constant: proof_shape: bind-only.
+consumers: counterfamily_complete.
+Direct frozen dependencies: none.
+datum_contractive: proof_shape: bind-only.
+consumers: counterfamily_complete.
+Direct frozen dependencies: none.
+constant_multiplier: proof_shape: bind-only.
+consumers: counterfamily_complete.
+Direct frozen dependencies: none.
+retract_ne: proof_shape: bind-only.
+consumers: counterfamily_complete.
+Direct frozen dependencies: none.
+retract_fixed: proof_shape: bind-only.
+consumers: counterfamily_complete.
+Direct frozen dependencies: none.
+retracted_multiplier: proof_shape: bind-only.
+consumers: counterfamily_complete.
+Direct frozen dependencies: none.
+counterfamily_complete: proof_shape: bind-only.
+consumers: result.
+Direct frozen dependencies: none.
+result: proof_shape: bind-only.
+consumers: none.
+Direct frozen dependencies: none.
 -/
 
-import Mathlib.Analysis.Complex.Order
-import Mathlib.LinearAlgebra.Matrix.PosDef
+
 import Mathlib.Analysis.Matrix.Order
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Choose
-import Mathlib.Tactic.FieldSimp
-import Lean.Elab.Tactic.Omega
 
 /-! Binding conventions for Luo, McCullough and Tsikalas, Question 9.3.
 Matrix.PosSemidef is the existing Mathlib owner for Hermitian kernels with nonnegative
@@ -184,11 +282,8 @@ private theorem conditional_refutation (hcp : CompletePseudoPick k0 ell0) : ¬ c
   exact quotient_not_pos (hc (Fin 3) k0 ell0 k0_pos ell0_pos k0_nonvanishing hcp)
 
 
-private noncomputable def retract (a x : Fin 3) : Fin 3 :=
-  if x = a then (if a = 0 then 1 else 0) else x
-
 private noncomputable def retractQuotient (a : Fin 3) : Matrix (Fin 3) (Fin 3) ℂ :=
-  fun i j => ell0 i j / k0 (retract a i) (retract a j)
+  fun i j => ell0 i j / k0 ((Function.update id a (if a = 0 then 1 else 0) i)) ((Function.update id a (if a = 0 then 1 else 0) j))
 
 private noncomputable def qL0 : Matrix (Fin 3) (Fin 3) ℂ := !![1, 0, 0; (100/101), 1, 0; (200/303), (1/153), 1]
 private noncomputable def qD0 : Fin 3 → ℂ := ![(101/200), (51/101), (358/459)]
@@ -197,7 +292,7 @@ private lemma retractQuotient_factor_0 : retractQuotient 0 =
     qL0 * Matrix.diagonal qD0 * qL0.conjTranspose := by
   ext i j
   fin_cases i <;> fin_cases j <;>
-    norm_num [retractQuotient, retract, ell0, k0, coreX, qL0, qD0,
+    norm_num [retractQuotient, Function.update, ell0, k0, coreX, qL0, qD0,
       Matrix.mul_apply, Matrix.vecMul, dotProduct, Matrix.diagonal_apply,
       Matrix.conjTranspose_apply, Fin.sum_univ_succ, map_ofNat]
 
@@ -215,7 +310,7 @@ private lemma retractQuotient_factor_1 : retractQuotient 1 =
     qL1 * Matrix.diagonal qD1 * qL1.conjTranspose := by
   ext i j
   fin_cases i <;> fin_cases j <;>
-    norm_num [retractQuotient, retract, ell0, k0, coreX, qL1, qD1,
+    norm_num [retractQuotient, Function.update, ell0, k0, coreX, qL1, qD1,
       Matrix.mul_apply, Matrix.vecMul, dotProduct, Matrix.diagonal_apply,
       Matrix.conjTranspose_apply, Fin.sum_univ_succ, map_ofNat]
 
@@ -233,7 +328,7 @@ private lemma retractQuotient_factor_2 : retractQuotient 2 =
     qL2 * Matrix.diagonal qD2 * qL2.conjTranspose := by
   ext i j
   fin_cases i <;> fin_cases j <;>
-    norm_num [retractQuotient, retract, ell0, k0, coreX, qL2, qD2,
+    norm_num [retractQuotient, Function.update, ell0, k0, coreX, qL2, qD2,
       Matrix.mul_apply, Matrix.vecMul, dotProduct, Matrix.diagonal_apply,
       Matrix.conjTranspose_apply, Fin.sum_univ_succ, map_ofNat]
 
@@ -282,46 +377,38 @@ private lemma gram_compression_zero {N : Type} [Fintype N] {m r : ℕ}
   rw [heq] at hc
   exact negative_gram_sum_zero _ _ hc
 
-private noncomputable def weightedRows {n m : ℕ} (x : Fin n → ℂ)
-    (W : Fin n → Matrix (Fin m) (Fin m) ℂ) : Matrix (Fin n × Fin m) (Fin m) ℂ :=
-  Function.uncurry (fun i => x i • W i)
-
-private noncomputable def relationCompression {n m : ℕ} (t : Fin n → ℂ) :
-    Matrix (Fin m) (Fin n × Fin m) ℂ := fun a p => t p.1 * (1 : Matrix (Fin m) (Fin m) ℂ) a p.2
-
 private lemma dataRows_gram {n m : ℕ} (W : Fin n → Matrix (Fin m) (Fin m) ℂ)
     (p q : Fin n × Fin m) :
-    (Function.uncurry W * (Function.uncurry W)ᴴ) p q = (W p.1 * (W q.1)ᴴ) p.2 q.2 :=
+    ((Matrix.of (Function.uncurry W)) * ((Matrix.of (Function.uncurry W)))ᴴ) p q = (W p.1 * (W q.1)ᴴ) p.2 q.2 :=
   Complex.ext rfl rfl
 
 private lemma weightedRows_gram {n m : ℕ} (x : Fin n → ℂ)
     (W : Fin n → Matrix (Fin m) (Fin m) ℂ) (p q : Fin n × Fin m) :
-    (weightedRows x W * (weightedRows x W)ᴴ) p q =
+    ((Matrix.of (Function.uncurry (fun i => x i • W i))) * ((Matrix.of (Function.uncurry (fun i => x i • W i))))ᴴ) p q =
       x p.1 * star (x q.1) * (W p.1 * (W q.1)ᴴ) p.2 q.2 := by
-  simp only [Matrix.mul_apply, weightedRows, Function.uncurry, Matrix.smul_apply, smul_eq_mul,
-    Matrix.conjTranspose_apply, star_mul]
-  rw [Finset.mul_sum]
-  apply Finset.sum_congr rfl
-  intro b hb
+  rw [dataRows_gram]
+  simp only [Matrix.conjTranspose_smul, Matrix.smul_mul, Matrix.mul_smul,
+    Matrix.smul_apply, smul_eq_mul]
   ring
 
 private lemma compression_dataRows {n m : ℕ} (t : Fin n → ℂ)
     (W : Fin n → Matrix (Fin m) (Fin m) ℂ) :
-    relationCompression t * Function.uncurry W = ∑ i, t i • W i := by
+    ((Matrix.kronecker (Matrix.replicateRow (Fin 1) t) (1 : Matrix (Fin m) (Fin m) ℂ)).submatrix (fun a => (0, a)) id) * (Matrix.of (Function.uncurry W)) = ∑ i, t i • W i := by
   ext a b
-  simp only [Matrix.mul_apply, relationCompression, Function.uncurry, Fintype.sum_prod_type,
+  simp only [Matrix.mul_apply, Matrix.submatrix_apply, id_eq, Matrix.kronecker_apply, Matrix.replicateRow, Matrix.of_apply, Function.uncurry, Fintype.sum_prod_type,
     Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul]
   apply Finset.sum_congr rfl
   intro i hi
+  change (∑ c : Fin m, t i * (1 : Matrix (Fin m) (Fin m) ℂ) a c * W i c b) =
+    t i * W i a b
   simp only [mul_assoc, ← Finset.mul_sum]
   change t i * ((1 : Matrix (Fin m) (Fin m) ℂ) * W i) a b = _
   rw [Matrix.one_mul]
 
 private lemma compression_weightedRows {n m : ℕ} (t x : Fin n → ℂ)
     (W : Fin n → Matrix (Fin m) (Fin m) ℂ) :
-    relationCompression t * weightedRows x W = ∑ i, (t i * x i) • W i := by
-  have hrows : weightedRows x W = Function.uncurry (fun i => x i • W i) := rfl
-  rw [hrows, compression_dataRows]
+    ((Matrix.kronecker (Matrix.replicateRow (Fin 1) t) (1 : Matrix (Fin m) (Fin m) ℂ)).submatrix (fun a => (0, a)) id) * (Matrix.of (Function.uncurry (fun i => x i • W i))) = ∑ i, (t i * x i) • W i := by
+  rw [compression_dataRows]
   apply Finset.sum_congr rfl
   intro i hi
   rw [smul_smul]
@@ -329,14 +416,15 @@ private lemma compression_weightedRows {n m : ℕ} (t x : Fin n → ℂ)
 private lemma pick_gram_decomposition {n m : ℕ} (z : Fin n → Fin 3)
     (W : Fin n → Matrix (Fin m) (Fin m) ℂ) :
     pickMatrix k0 z W =
-      Function.uncurry (fun _ : Fin n => (1 : Matrix (Fin m) (Fin m) ℂ)) *
-        (Function.uncurry (fun _ : Fin n => (1 : Matrix (Fin m) (Fin m) ℂ)))ᴴ +
-      weightedRows (fun i => coreX (z i)) (fun _ => (1 : Matrix (Fin m) (Fin m) ℂ)) *
-        (weightedRows (fun i => coreX (z i)) (fun _ => (1 : Matrix (Fin m) (Fin m) ℂ)))ᴴ -
-      (Function.uncurry W * (Function.uncurry W)ᴴ +
-        weightedRows (fun i => coreX (z i)) W * (weightedRows (fun i => coreX (z i)) W)ᴴ) := by
+      (Matrix.of (Function.uncurry (fun _ : Fin n => (1 : Matrix (Fin m) (Fin m) ℂ)))) *
+        ((Matrix.of (Function.uncurry (fun _ : Fin n => (1 : Matrix (Fin m) (Fin m) ℂ)))))ᴴ +
+      (Matrix.of (Function.uncurry (fun i : Fin n => coreX (z i) • (1 : Matrix (Fin m) (Fin m) ℂ)))) *
+        ((Matrix.of (Function.uncurry (fun i : Fin n => coreX (z i) • (1 : Matrix (Fin m) (Fin m) ℂ)))))ᴴ -
+      ((Matrix.of (Function.uncurry W)) * ((Matrix.of (Function.uncurry W)))ᴴ +
+        (Matrix.of (Function.uncurry (fun i => coreX (z i) • W i))) * ((Matrix.of (Function.uncurry (fun i => coreX (z i) • W i))))ᴴ) := by
   ext p q
-  simp only [Matrix.sub_apply, Matrix.add_apply, dataRows_gram, weightedRows_gram,
+  simp only [Matrix.sub_apply, Matrix.add_apply, weightedRows_gram]
+  simp only [dataRows_gram, Matrix.sub_apply,
     Matrix.conjTranspose_one, Matrix.one_mul, coreX_star, pickMatrix, k0]
   ring
 
@@ -346,15 +434,14 @@ private lemma source_relations {n m : ℕ} (z : Fin n → Fin 3)
     (hp : (pickMatrix k0 z W).PosSemidef) :
     (∑ i, t i • W i) = 0 ∧ (∑ i, (t i * coreX (z i)) • W i) = 0 := by
   rw [pick_gram_decomposition] at hp
-  have hE : relationCompression (m := m) t *
-      Function.uncurry (fun _ : Fin n => (1 : Matrix (Fin m) (Fin m) ℂ)) = 0 := by
+  have hE : ((Matrix.kronecker (Matrix.replicateRow (Fin 1) t) (1 : Matrix (Fin m) (Fin m) ℂ)).submatrix (fun a => (0, a)) id) *
+      (Matrix.of (Function.uncurry (fun _ : Fin n => (1 : Matrix (Fin m) (Fin m) ℂ)))) = 0 := by
     rw [compression_dataRows, ← Finset.sum_smul, ht, zero_smul]
-  have hF : relationCompression (m := m) t *
-      weightedRows (fun i => coreX (z i))
-        (fun _ : Fin n => (1 : Matrix (Fin m) (Fin m) ℂ)) = 0 := by
+  have hF : ((Matrix.kronecker (Matrix.replicateRow (Fin 1) t) (1 : Matrix (Fin m) (Fin m) ℂ)).submatrix (fun a => (0, a)) id) *
+      (Matrix.of (Function.uncurry (fun i : Fin n => coreX (z i) • (1 : Matrix (Fin m) (Fin m) ℂ)))) = 0 := by
     rw [compression_weightedRows, ← Finset.sum_smul, htx, zero_smul]
-  have h := gram_compression_zero _ _ _ _ (relationCompression t) hp hE hF
-  simpa only [compression_dataRows, compression_weightedRows] using h
+  have h := gram_compression_zero _ _ _ _ (((Matrix.kronecker (Matrix.replicateRow (Fin 1) t) (1 : Matrix (Fin m) (Fin m) ℂ)).submatrix (fun a => (0, a)) id)) hp hE hF
+  simpa only [compression_dataRows, smul_smul] using h
 
 private lemma pick_submatrix {n m r : ℕ} (z : Fin n → Fin 3)
     (W : Fin n → Matrix (Fin m) (Fin m) ℂ) (e : Fin r → Fin n)
@@ -424,16 +511,16 @@ private lemma constant_multiplier {m : ℕ} (U : Matrix (Fin m) (Fin m) ℂ)
   rw [heq]
   exact ell0_pos.kronecker hU
 
-private lemma retract_ne (a x : Fin 3) : retract a x ≠ a := by
-  fin_cases a <;> fin_cases x <;> norm_num [retract]
+private lemma retract_ne (a x : Fin 3) : (Function.update id a (if a = 0 then 1 else 0) x) ≠ a := by
+  fin_cases a <;> fin_cases x <;> norm_num [Function.update]
 
-private lemma retract_fixed (a x : Fin 3) (hx : x ≠ a) : retract a x = x := by
-  simp only [retract, hx, ite_false]
+private lemma retract_fixed (a x : Fin 3) (hx : x ≠ a) : (Function.update id a (if a = 0 then 1 else 0) x) = x := by
+  simp [hx]
 
 private lemma retracted_multiplier {n m : ℕ} (z : Fin n → Fin 3)
     (W : Fin n → Matrix (Fin m) (Fin m) ℂ)
     (hp : (pickMatrix k0 z W).PosSemidef) (a : Fin 3) (e : Fin 3 → Fin n)
-    (he : ∀ x, z (e x) = retract a x) :
+    (he : ∀ x, z (e x) = (Function.update id a (if a = 0 then 1 else 0) x)) :
     IsContractiveMultiplier ell0 m (fun x => W (e x)) := by
   have hP := hp.submatrix (fun p : Fin 3 × Fin m => (e p.1, p.2))
   have hQ := (retractQuotient_pos a).submatrix (fun p : Fin 3 × Fin m => p.1)
@@ -481,7 +568,7 @@ private theorem counterfamily_complete : CompletePseudoPick k0 ell0 := by
       have h2 := ha i0
       have h3 := ha j
       omega
-    choose e he using (fun x => hcovered (retract a x) (retract_ne a x))
+    choose e he using (fun x => hcovered ((Function.update id a (if a = 0 then 1 else 0) x)) (retract_ne a x))
     refine ⟨fun x => W (e x), retracted_multiplier z W hp a e he, ?_⟩
     intro i
     apply data_consistent z W hp
