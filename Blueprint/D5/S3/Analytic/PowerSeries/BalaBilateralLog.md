@@ -80,6 +80,10 @@ Lean statement: `D5/S3/Analytic/PowerSeries/BalaBilateralLog.full_event`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/PowerSeries/BalaBilateralLog.full_event` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bala-a292179-a292178-bilateral-logarithm` (proved) by `D5/S3/Analytic/PowerSeries/BalaBilateralLog.full_event`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bala-a292179-a292178-bilateral-logarithm","declaration_gid":"D5/S3/Analytic/PowerSeries/BalaBilateralLog.full_event","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Peter Bala (2025). *The bilateral logarithm conjecture in OEIS A292179 and A292178*. URL: <https://oeis.org/A292179>.
@@ -97,6 +101,8 @@ For each fixed complex x in its unit disk, positive(x,0,k)=x^(k+1)/(k+1) and neg
 Put c(n,m)=0 for m=0 and c(n,m)=(-a^n)^m*x^(n-m)*choose(n,m)/n otherwise. Its finite row of norms is bounded by (norm(x)+norm(a)^n)^n. Choose rho=(1+norm(x))/2<1; eventually norm(a)^n<rho-norm(x), so this row majorant is dominated by rho^n. This proves joint absolute summability before any change of order. The finite binomial theorem gives the row sum ((x-a^n)^n-x^n)/n. The negative-binomial HasSum supplier at x*a^(k+1), whose norm is less than one, gives the column sum -q_(k+1). Absolute Fubini cancellation leaves sum x^n/n, identified by Complex.hasSum_taylorSeries_neg_log. The raw bridges use nonzero ordinary powers. Uniqueness uses the nontrivial punctured neighborhood filter at zero.
 
 The fixed source comments in A292179 and A292178 pose one question. The paired entries do not represent two independent settlements. The cited source note gives the exact quotations, parameter interpretation and bounded literature limitations; no global novelty or priority claim is made.
+
+proof_shape: bind-only. The complete event and all 18 private theorem helpers are applications and normalization of pinned Mathlib results; each helper has an actual proof-path consumer. No escape witness is claimed. The proposed admission basis is open-problem-resolution for the one preregistered external problem in issue #29113. The Proved claim records the mathematical conclusion; independent admission review and integration remain separate.
 
 ## References
 
