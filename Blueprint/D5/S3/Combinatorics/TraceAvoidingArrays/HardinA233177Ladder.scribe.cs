@@ -221,7 +221,7 @@ internal sealed class HardinA233177LadderDocument : IScribeDocumentDefinition
             All("P", Arrow(Cells(n), Fin(D(3))), All("hp", proper,
                 All("hc", Own("Canon", p), All("hu", Eq(Own("used", p), D(2)),
                     Eq(p, Own("alternating", n, Typed(D(0), Fin(D(3))),
-                        Typed(D(1), Fin(D(3))))))))));
+                        Typed(D(1), Fin(D(3)))))))))));
     }
 
     private static Formula RecurrenceFormula(Formula? n)
