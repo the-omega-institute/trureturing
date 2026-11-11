@@ -3,6 +3,8 @@ import D5.S1.Digit.CoonsAdjacentGrowthRefutation
 import Reg.Support.DependentFamily
 import Reg.Support.SourceSelection
 
+/-! Source-bound audits of the original Coons counting statements. -/
+
 open D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open D5.S1.Digit.CoonsAdjacentGrowthRefutation
 open LeanInformationAudit
@@ -79,7 +81,7 @@ def registration : Registration arena sourceStatement where
     change Finite PUnit ≠ Finite ℕ
     intro h
     have hn : Finite ℕ := Eq.mp h inferInstance
-    exact not_finite ℕ hn
+    exact @not_finite ℕ inferInstance hn
 
 def audit : Contract.Registration
     (@_root_.D5.S1.Digit.CoonsAdjacentGrowthRefutation.partitions_finite)
@@ -98,7 +100,8 @@ def audit : Contract.Registration
   sourceSelection := some {
     owner := `D5.S1.Digit.CoonsAdjacentGrowthRefutation, definition := none,
     coordinates := #[],
-    readouts := #[{ path := #["body", "body", "body", "body", "fn"], stateBinder := 0,
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn"], stateBinder := 0,
       functionOperand := true, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none, options := #[] }
 end partitions_finite
@@ -153,7 +156,8 @@ def audit : Contract.Registration
   sourceSelection := some {
     owner := `D5.S1.Digit.CoonsAdjacentGrowthRefutation, definition := none,
     coordinates := #[0, 1],
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "arg"], stateBinder := 2,
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "arg"], stateBinder := 2,
       functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none, options := #[] }
 end count_positive
@@ -208,7 +212,8 @@ def audit : Contract.Registration
   sourceSelection := some {
     owner := `D5.S1.Digit.CoonsAdjacentGrowthRefutation, definition := none,
     coordinates := #[0],
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "fn", "arg"], stateBinder := 2,
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "arg"], stateBinder := 2,
       functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none, options := #[] }
 end count_upper
@@ -263,7 +268,8 @@ def audit : Contract.Registration
   sourceSelection := some {
     owner := `D5.S1.Digit.CoonsAdjacentGrowthRefutation, definition := none,
     coordinates := #[0],
-    readouts := #[{ path := #["body", "body", "body", "body", "arg", "fn", "arg"], stateBinder := 1,
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "arg"], stateBinder := 1,
       functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none, options := #[] }
 end count_repunit
@@ -290,7 +296,11 @@ abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hh := h 5 2 (by norm_num) (by norm_num) (by norm_num)
-  norm_num [rejected, realize] at hh
+  change (⨆ (n : ℕ) (_ : 2 ≤ n), (0 : EReal)) = ((1/2 : ℝ) : EReal) at hh
+  have hz : (⨆ (n : ℕ) (_ : 2 ≤ n), (0 : EReal)) ≤ 0 :=
+    iSup_le (fun _ => iSup_le (fun _ => le_rfl))
+  rw [hh] at hz
+  exact not_le_of_gt (EReal.coe_lt_coe (by norm_num : (0 : ℝ) < 1/2)) hz
 def registration : Registration arena sourceStatement where
   actual := actual
   bridge := Iff.rfl
@@ -318,7 +328,8 @@ def audit : Contract.Registration
   sourceSelection := some {
     owner := `D5.S1.Digit.CoonsAdjacentGrowthRefutation, definition := none,
     coordinates := #[0],
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "arg", "fn", "arg", "arg", "body", "arg", "body", "arg"], stateBinder := 5,
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "arg", "arg", "body", "arg", "body", "arg"], stateBinder := 5,
       functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none, options := #[] }
 end tail_supremum
@@ -345,7 +356,8 @@ abbrev arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hh := h 5 (by norm_num) (by norm_num)
-  norm_num [rejected, realize] at hh
+  change (0 : EReal) = ((1/2 : ℝ) : EReal) at hh
+  exact ne_of_lt (EReal.coe_lt_coe (by norm_num : (0 : ℝ) < 1/2)) hh
 def registration : Registration arena sourceStatement where
   actual := actual
   bridge := Iff.rfl
@@ -360,7 +372,7 @@ def registration : Registration arena sourceStatement where
     intro h
     have hh := exponent_zero_le
     rw [h] at hh
-    norm_num at hh
+    exact not_le_of_gt (EReal.coe_lt_coe (by norm_num : (0 : ℝ) < 1/2)) hh
 
 def audit : Contract.Registration
     (@_root_.D5.S1.Digit.CoonsAdjacentGrowthRefutation.exponent_eq_half)
@@ -379,7 +391,8 @@ def audit : Contract.Registration
   sourceSelection := some {
     owner := `D5.S1.Digit.CoonsAdjacentGrowthRefutation, definition := none,
     coordinates := #[],
-    readouts := #[{ path := #["body", "body", "body", "arg", "fn", "arg"], stateBinder := 0,
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg"], stateBinder := 0,
       functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none, options := #[] }
 end exponent_eq_half
