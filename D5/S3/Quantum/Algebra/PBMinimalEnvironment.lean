@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Algebra/PBMinimalEnvironment
    mirror-E: none(waiver:universal-hilbert-theorem)
-   anchors: [mathlib/module/Mathlib.Analysis.InnerProductSpace.Adjoint]
+   anchors: [mathlib/module/Mathlib.Analysis.InnerProductSpace.SingularValues]
    utility: none
    digest: Three actor moments determine a minimal environment. -/
 
