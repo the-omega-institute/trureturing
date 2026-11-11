@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/PerfectMatchings/InvolutionEvenCycles
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.GroupTheory.Perm.Cycle.Factors]
+   anchors: [mathlib/module/Mathlib.GroupTheory.Perm.Cycle.Basic]
    utility: none
    digest: Rooted interlacing of ordered perfect matchings and even permutation cycles. -/
 
