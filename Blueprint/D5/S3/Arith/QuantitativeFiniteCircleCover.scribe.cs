@@ -1,4 +1,3 @@
-// SOURCE-ONLY UNCOMPILED. Proposed Scribe source; no emit or admission was run.
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
@@ -15,8 +14,8 @@ internal sealed class QuantitativeFiniteCircleCoverDocument : IScribeDocumentDef
         H("Quantitative finite circle cover"),
         Blocks(
             Paragraph(Text(
-                "SOURCE-ONLY UNCOMPILED. This document and the Lean proof are candidates. "
-                + "No compilation, axiom report, route admission, or consensus is asserted. "
+                "This document records the finite-window theorem and its exact hypotheses. "
+                + "The source keeps the bounded integer block and explicit finite obstruction family. "
                 + "All occurrences of natural or integer variables inside real expressions "
                 + "use the canonical real casts. The ceiling is the integer ceiling Int.ceil, "
                 + "so H = ceil(4/w) is an integer. No irrationality hypothesis is imposed.")),
