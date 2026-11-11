@@ -46,7 +46,7 @@ $$\forall (n: \operatorname{Nat}), ((2 \le n) \Rightarrow ((48) \cdot ((\operato
 
 The canonical-form counting bridge.
 
-The beta-label identifies the pairs {0,5}, {1,4}, {2,3}; the side is an independent Boolean choice. Normalization introduces pair labels in first-appearance order and fixes the first side of each used pair to the smaller colour. A canonical pattern using k labels therefore has 2^(4*n-k) lifts. At width at least two a proper pattern uses two or three labels, and every relabelling orbit has six members. If one label is omitted, adjacent entries of a column must agree: a common neighbour in another column excludes both differing labels. Each column is then constant and the two labels alternate. The six such patterns have exactly one canonical member by the canonical two-label uniqueness theorem for the ladder, since constant columns satisfy its two-sided bonds. If C is the number of canonical proper patterns, L=6*C and a=2^(4*n-3)*(C+1). This gives the displayed bridge for every width at least two.
+The beta-label identifies the pairs {0,5}, {1,4}, {2,3}; the side is an independent Boolean choice. Normalization introduces pair labels in first-appearance order and fixes the first side of each used pair to the smaller colour. A canonical pattern using k labels therefore has 2^(4*n-k) lifts. At width at least two a proper pattern uses two or three labels, and every relabelling orbit has six members. Copying the fourth row to a fifth row preserves properness: the new antidiagonal bonds are horizontal bonds of the fourth row. The omitted label is unchanged, so the five-row column-constancy theorem HardinA233260Literal.columns_constant makes each original column constant. The two labels then alternate. The six such patterns have exactly one canonical member by the canonical two-label uniqueness theorem for the ladder, since constant columns satisfy its two-sided bonds. If C is the number of canonical proper patterns, L=6*C and a=2^(4*n-3)*(C+1). This gives the displayed bridge for every width at least two.
 
 **Theorem 1.4 (The first permitted recurrence instance).**
 
@@ -67,10 +67,6 @@ The first permitted recurrence instance.
 $$\forall (n: \operatorname{Nat}), ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233259Strip}.\operatorname{a}\left((n) + (9)\right): \operatorname{Int}) = ((((160) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233259Strip}.\operatorname{a}\left((n) + (8)\right): \operatorname{Int}))) - ((6144) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233259Strip}.\operatorname{a}\left((n) + (7)\right): \operatorname{Int})))) + ((86016) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233259Strip}.\operatorname{a}\left((n) + (6)\right): \operatorname{Int})))) - ((393216) \cdot ((\operatorname{D5}.\operatorname{S3}.\operatorname{Combinatorics}.\operatorname{TraceAvoidingArrays}.\operatorname{HardinA233259Strip}.\operatorname{a}\left((n) + (5)\right): \operatorname{Int}))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259Strip.result` (`✓ std3`). ∎
-
-*Resolves.* `Problems/hardin233259` (proved) by `D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259Strip.result`.
-
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hardin233259","declaration_gid":"D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259Strip.result","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 
@@ -95,4 +91,5 @@ The pair-pattern transfer has fourteen column classes. Its degree-four tail poly
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233251TriangleStrip](HardinA233251TriangleStrip.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferCore](HardinA233259PairTransferCore.md)
 - Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233259PairTransferRecurrence](HardinA233259PairTransferRecurrence.md)
+- Dependency: [D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233260Literal](HardinA233260Literal.md)
 - Dependency: [D5/S3/Observer/Separation/BooleanRankThreeK4](../../Observer/Separation/BooleanRankThreeK4.md)
