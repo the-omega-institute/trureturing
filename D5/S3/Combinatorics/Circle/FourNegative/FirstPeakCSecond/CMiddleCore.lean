@@ -18,12 +18,9 @@ namespace D5.S3.Combinatorics.Circle.FourNegative.FirstPeakCSecond.CMiddle
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open MaxPlusTwo.Chambers
 open scoped BigOperators
-open private size seed sourceMod base newBase charge chainLength chainStart
-  nextBase nextNewBase oldValue newValue negatives actual_values chain_values
-  new_base_bounds source_signs source_totals
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
-open private blocksWord insertAt
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
+open private seed sourceMod charge nextBase nextNewBase actual_values chain_values new_base_bounds source_signs source_totals from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size base newBase chainLength chainStart oldValue newValue negatives)
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (blocksWord insertAt)
 open private packetChecks strip_iff_packetChecks
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Packets
 open private strip_append_iff

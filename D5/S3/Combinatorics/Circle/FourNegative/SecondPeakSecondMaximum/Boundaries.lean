@@ -18,13 +18,12 @@ open private Values values
   Values.A Values.B Values.L Values.K Values.SU Values.SV Values.SW
   Values.D Values.Dp Values.E Values.F Values.J broadTerminals
   from D5.S3.Combinatorics.Circle.FourNegative.SecondPeakSecondMaximum.BroadData
-open private size sourceMod base newBase charge oldValue newValue negatives chainLength chainStart
-  nextBase nextNewBase weightedMask packet_masses chain_values new_base_bounds
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open private sourceMod charge nextBase nextNewBase chain_values new_base_bounds from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (size base newBase oldValue newValue negatives chainLength chainStart weightedMask packet_masses)
 open private oldMass newMass from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
-open private DataCertificate DataCertificate.mk orderedPackets finiteChecks finiteEarChecks
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Certificate
-open private blocksWord from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
+open private DataCertificate DataCertificate.mk finiteChecks finiteEarChecks from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Certificate
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (orderedPackets)
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (blocksWord)
 open private native_masses
   from D5.S3.Combinatorics.Circle.FourNegative.FirstPeakSecondMaximum.Native
 open private range_mass

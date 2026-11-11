@@ -18,13 +18,12 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualOuter
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open D5.S3.Combinatorics.Circle.FourNegative.MaxPlusTwo.Chambers
-open private size seed sourceMod base newBase charge oldValue newValue chainLength chainStart
+open PacketNormalForm (size base newBase oldValue newValue chainLength chainStart insertAt blocksWord)
+open private seed sourceMod charge
   nextBase nextNewBase chain_values new_base_bounds source_totals actual_values
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
 open private actual_nat_joint_iff
   from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
-open private insertAt blocksWord
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Structure
 open private mask full terminal full_split sub_split chain_inventory mask_mass mask_positive
   complement_mass split_mass terminal_double terminal_nonpositive source_odd native_balance
   full_double four_checks fresh_total

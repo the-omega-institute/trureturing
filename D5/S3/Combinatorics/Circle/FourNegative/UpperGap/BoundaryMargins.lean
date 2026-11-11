@@ -11,8 +11,8 @@ import Mathlib.Tactic.Qify
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.FourNegative.UpperGap
-open private base newBase charge
-  from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open private charge from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (base newBase)
 open private standardMargins
   from D5.S3.Combinatorics.Circle.FourNegative.UpperGap.BoundaryPackets
 open private rising_endpoints swapped_endpoints tied_ac_endpoints all_equal_endpoints

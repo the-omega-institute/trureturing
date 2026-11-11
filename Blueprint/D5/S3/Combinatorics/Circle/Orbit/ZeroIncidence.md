@@ -40,5 +40,5 @@ For any four-bit odd-k corollary, the representative must satisfy 0≤t<N and ha
 
 - Truth anchor: `D5/S3/Combinatorics/Circle/Orbit/ZeroIncidence.actualSource_orbit_zero_balanced`
 - Truth anchor: `D5/S3/Combinatorics/Circle/Orbit/ZeroIncidence.all_equal_of_adjacent`
+- Dependency: [D5/S3/Combinatorics/Circle/Orbit/ZeroSumSubsets](ZeroSumSubsets.md)
 - Dependency: [D5/S3/Combinatorics/Circle/SourceWidth](../SourceWidth.md)
-- Dependency: [D5/S3/Combinatorics/Circle/ZeroSumSubsets](../ZeroSumSubsets.md)
