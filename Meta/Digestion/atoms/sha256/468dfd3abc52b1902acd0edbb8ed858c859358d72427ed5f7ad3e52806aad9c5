@@ -1,0 +1,88 @@
+**引理 40.3（七次环境中的三维低秩商刚性）。** 设 $[D:F]=7$，且 $F$ 为特征零域。若 $U,V\le_F D$ 都是三维空间，并满足
+$$
+d_U(r)\le1\quad(r\in D^\times\setminus F^\times),
+\qquad Q(U)\subseteq Q(V),
+\tag{40.3}
+$$
+则存在 $\gamma\in D^\times$ 使
+$$
+V=\gamma U.
+\tag{40.4}
+$$
+
+**证明。** 先证
+$$
+6\le\dim_F(UV)\le7,
+\tag{40.5}
+$$
+其中 $UV$ 是所有 $uv$ 的 $F$-张成。若 $\dim_F(UV)\le5$，可在 $(UV)^\perp$ 中取线性无关的 $p,q$。则 $pU,qU\subseteq V^\perp$，而 $\dim_FV^\perp=4$，故
+$$
+\dim_F(pU\cap qU)\ge3+3-4=2.
+$$
+非零交向量给出 $d_U(q/p)\ge2$，且 $q/p\notin F^\times$，矛盾。于是只剩下维数六或七。
+
+设
+$$
+K=\ker(U\otimes_FV\longrightarrow D),\qquad
+u\otimes v\longmapsto uv.
+$$
+若 $\dim_F(UV)=7$，则 $\dim_FK=2$。对每个平面 $H=\ker\ell\subset U$，取独立的 $u,v\in H$。由 $Q(U)\subseteq Q(V)$，存在独立的 $c,d\in V$ 使 $u/v=c/d$，从而
+$$
+0\ne u\otimes d-v\otimes c\in K\cap(H\otimes_FV).
+\tag{40.6}
+$$
+因此每个收缩
+$$
+M(\ell):K\longrightarrow V,\qquad
+k\longmapsto(\ell\otimes1)k
+$$
+都有非零核。取 $K$ 的基，把它们看作 $A,B:U^*\to V$。它们的秩至少为二，否则相应张量为零或可分解张量。又 $A\ell,B\ell$ 对每个 $\ell$ 线性相关。一个初等事实是：若两个线性映射 $A,B:E\to V$ 满足这一点且 $\operatorname{rank}A\ge2$，则 $B=cA$；取两个使 $Ax,Ay$ 独立的向量，再比较 $x,y,x+y$ 即得。于是 $A,B$ 对应的两个张量相关，和 $\dim K=2$ 矛盾。因此
+$$
+\dim_F(UV)=6,\qquad\dim_FK=3.
+\tag{40.7}
+$$
+
+取 $K$ 的基，令 $M(x)$ 为其三个收缩列组成的 $3\times3$ 矩阵，$x\in U^*$。式 (40.6) 给出 $\det M(x)\equiv0$。其在 $F(x)$ 上的秩恰为二：秩至多一会使任意两列映射逐点相关，应用上面的初等事实后使 $K$ 维数至多一，或直接产生可分解张量。
+
+该矩阵没有非零的常值右核；否则 $K$ 中有一个张量被所有收缩消掉。它也没有非零的常值左核。事实上，若 $V_0$ 是相应的二维子空间，则 $K\subseteq U\otimes V_0$，而
+$$
+\dim_F(UV_0)=6-\dim_FK=3.
+$$
+对独立的 $v,w\in V_0$，这迫使 $vU=wU$，从而 $d_U(w/v)=3$，再次矛盾。
+
+因此 $\operatorname{adj}M$ 是非零秩一矩阵。把它在多项式唯一分解域中写成
+$$
+\operatorname{adj}M=h\,a(x)b(x)^{\mathsf T},
+\tag{40.8}
+$$
+其中 $a,b$ 是本原齐次向量。常值的 $a$ 或 $b$ 会分别给出常值右核或左核；由于 $\operatorname{adj}M$ 的总次数为二，故 $a,b$ 都是一次向量，$h$ 为常数。写 $a(x)=Lx$。矩阵 $L$ 不能有秩一：否则有常值右核；若秩二，经基变换可写成 $a(x)=(x_1,x_2,0)^{\mathsf T}$，而
+$$
+x_1\operatorname{col}_1(M)+x_2\operatorname{col}_2(M)=0
+$$
+会使第一或第二个核张量为零或可分解。故 $L$ 可逆，再作基变换得到
+$$
+M(x)x=0.
+\tag{40.9}
+$$
+
+设相应的 $U$ 基为 $u_1,u_2,u_3$。比较 (40.9) 的二次系数，可把 $K$ 的一组基写成
+$$
+\begin{aligned}
+k_1&=-u_2\otimes p-u_3\otimes q,\\
+k_2&=u_1\otimes p-u_3\otimes s,\\
+k_3&=u_1\otimes q+u_2\otimes s,
+\end{aligned}
+\qquad p,q,s\in V.
+\tag{40.10}
+$$
+其乘积为零，所以
+$$
+u_1p=u_3s,\qquad u_1q=-u_2s.
+$$
+必有 $s\ne0$，否则 $p=q=0$。于是
+$$
+p=\frac{s}{u_1}u_3,\qquad
+q=-\frac{s}{u_1}u_2,
+$$
+且 $s=(s/u_1)u_1$。故 $V$ 包含三维空间 $(s/u_1)U$，维数相同即得 (40.4)。$\square$
+
