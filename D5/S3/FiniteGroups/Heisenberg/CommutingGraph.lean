@@ -65,7 +65,8 @@ private theorem heisenberg_commutes (a b : HeisenbergGroup A) :
   constructor
   · intro h
     have hz := congrArg HeisenbergGroup.z h
-    simpa only [HeisenbergGroup.mul_z, add_comm b.z a.z, add_right_inj] using hz
+    change a.z + b.z + a.x * b.y = b.z + a.z + b.x * a.y at hz
+    simpa only [add_comm b.z a.z, add_right_inj] using hz
   · intro h
     ext <;> simp [h, add_comm]
 

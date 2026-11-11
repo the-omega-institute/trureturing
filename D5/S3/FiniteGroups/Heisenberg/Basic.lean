@@ -62,18 +62,8 @@ instance : Mul (HeisenbergGroup R) := ⟨fun a b => ⟨a.x + b.x, a.y + b.y, a.z
 instance : One (HeisenbergGroup R) := ⟨⟨0, 0, 0⟩⟩
 instance : Inv (HeisenbergGroup R) := ⟨fun a => ⟨-a.x, -a.y, -a.z + a.x * a.y⟩⟩
 
-@[simp] theorem mul_x (a b : HeisenbergGroup R) : (a * b).x = a.x + b.x := rfl
-@[simp] theorem mul_y (a b : HeisenbergGroup R) : (a * b).y = a.y + b.y := rfl
-@[simp] theorem mul_z (a b : HeisenbergGroup R) : (a * b).z = a.z + b.z + a.x * b.y := rfl
-@[simp] theorem one_x : (1 : HeisenbergGroup R).x = 0 := rfl
-@[simp] theorem one_y : (1 : HeisenbergGroup R).y = 0 := rfl
-@[simp] theorem one_z : (1 : HeisenbergGroup R).z = 0 := rfl
-@[simp] theorem inv_x (a : HeisenbergGroup R) : a⁻¹.x = -a.x := rfl
-@[simp] theorem inv_y (a : HeisenbergGroup R) : a⁻¹.y = -a.y := rfl
-@[simp] theorem inv_z (a : HeisenbergGroup R) : a⁻¹.z = -a.z + a.x * a.y := rfl
-
 instance : Group (HeisenbergGroup R) where
-  mul_assoc a b c := by ext <;> simp only [mul_x, mul_y, mul_z, add_mul, mul_add] <;> abel
+  mul_assoc a b c := by ext <;> dsimp <;> simp only [add_mul, mul_add] <;> abel
   one_mul a := by ext <;> simp
   mul_one a := by ext <;> simp
   inv_mul_cancel a := by ext <;> simp
