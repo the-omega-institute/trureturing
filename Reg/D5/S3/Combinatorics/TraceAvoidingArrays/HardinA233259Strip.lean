@@ -106,18 +106,21 @@ end Bridge
 
 namespace Base
 abbrev signature : Signature.{0, 0, 0, 0, 0} :=
-  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℤ)
-def actual : Realization signature := realize signature (fun _ _ n => (a n : ℤ)) (fun e => nomatch e)
-def rejected : Realization signature := realize signature (fun _ _ n => (a n : ℤ) + 1) (fun e => nomatch e)
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℕ) (fun _ => ℕ)
+def actual : Realization signature := realize signature (fun _ _ n => a n) (fun e => nomatch e)
+def rejected : Realization signature := realize signature (fun _ _ n => a n + 1) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law R := R.readout () () 9 = 160 * R.readout () () 8 - 6144 * R.readout () () 7 +
-      86016 * R.readout () () 6 - 393216 * R.readout () () 5
+  Law R := (R.readout () () 9 : ℤ) = 160 * (R.readout () () 8 : ℤ) -
+      6144 * (R.readout () () 7 : ℤ) + 86016 * (R.readout () () 6 : ℤ) -
+        393216 * (R.readout () () 5 : ℤ)
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have ha := finite_certificate
-  change (a 9 : ℤ) + 1 = 160 * ((a 8 : ℤ) + 1) - 6144 * ((a 7 : ℤ) + 1) +
-      86016 * ((a 6 : ℤ) + 1) - 393216 * ((a 5 : ℤ) + 1) at h
+  change ((a 9 + 1 : ℕ) : ℤ) = 160 * ((a 8 + 1 : ℕ) : ℤ) -
+      6144 * ((a 7 + 1 : ℕ) : ℤ) + 86016 * ((a 6 + 1 : ℕ) : ℤ) -
+        393216 * ((a 5 + 1 : ℕ) : ℤ) at h
+  simp only [Nat.cast_add, Nat.cast_one] at h
   linarith only [ha, h]
 private theorem actual_dependence : actual.readout () () 2 ≠ actual.readout () () 3 := by
   have h2 := counting_bridge (n := 2) (by decide)
@@ -126,7 +129,9 @@ private theorem actual_dependence : actual.readout () () 2 ≠ actual.readout ()
   have l3 : (L 3 : ℤ) = 2592 := initial_values 1
   rw [l2] at h2
   rw [l3] at h3
-  change (a 2 : ℤ) ≠ (a 3 : ℤ)
+  change a 2 ≠ a 3
+  intro he
+  have hz : (a 2 : ℤ) = (a 3 : ℤ) := congrArg (fun k : ℕ => (k : ℤ)) he
   omega
 def family : Registration arena (type_of% @finite_certificate) where
   actual := actual
@@ -147,7 +152,7 @@ def audit : Contract.Registration.{0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ n => (a n : ℤ)) (fun e => nomatch e))
+  readout := some (realize signature (fun _ _ n => a n) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -157,10 +162,10 @@ def audit : Contract.Registration.{0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["fn", "arg"]
+      path := #["fn", "arg", "arg"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := some #["arg", "arg"]
+      stateOperand := some #["arg"]
       booleanPredicate := false
     }] }
   continuation := .unknown
