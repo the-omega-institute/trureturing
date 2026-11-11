@@ -260,13 +260,13 @@ private lemma carries_end {m : ℕ} (v : Fin m → Fin 2) : carries v (m+1) = 0 
 private def carryDigit {m : ℕ} (v : Fin m → Fin 2) (i : ℕ) : ℕ :=
   1 + 4 * carries v (i+1) - carries v i
 
-private lemma carryDigit_balance {m : ℕ} (v : Fin m → Fin 2) (i : ℕ) :
+private lemma carry_digit_balance {m : ℕ} (v : Fin m → Fin 2) (i : ℕ) :
     carryDigit v i + carries v i = 1 + 4 * carries v (i+1) := by
   have := carries_le v i
   unfold carryDigit
   omega
 
-private lemma carryDigit_le {m : ℕ} (v : Fin m → Fin 2) (i : ℕ) : carryDigit v i ≤ 5 := by
+private lemma carry_digit_le {m : ℕ} (v : Fin m → Fin 2) (i : ℕ) : carryDigit v i ≤ 5 := by
   have := carries_le v (i+1)
   unfold carryDigit
   omega
@@ -279,7 +279,7 @@ private lemma carry_weight {m : ℕ} (v : Fin m → Fin 2) :
     simp only [window, repunit, ← Finset.sum_add_distrib, Finset.mul_sum]
     apply Finset.sum_congr rfl
     intro i hi
-    have h := carryDigit_balance v i
+    have h := carry_digit_balance v i
     calc
       carryDigit v i * 4^i + carries v i * 4^i =
           (carryDigit v i + carries v i) * 4^i := by ring
@@ -297,10 +297,10 @@ private def carryPartition (k m : ℕ) (hk : 5 ≤ k) (v : Fin m → Fin 2) :
     intro i
     rw [pack_apply]
     split_ifs
-    · exact (carryDigit_le v i).trans hk
+    · exact (carry_digit_le v i).trans hk
     · omega), carry_weight v⟩
 
-private lemma carryPartition_injective (k m : ℕ) (hk : 5 ≤ k) :
+private lemma carry_partition_injective (k m : ℕ) (hk : 5 ≤ k) :
     Function.Injective (carryPartition k m hk) := by
   intro u v huv
   have hd : ∀ i, i < m+1 → carryDigit u i = carryDigit v i := by
@@ -315,8 +315,8 @@ private lemma carryPartition_injective (k m : ℕ) (hk : 5 ≤ k) :
       intro hi
       have h0 := ih (by omega)
       have h1 := hd i (by omega)
-      have h2 := carryDigit_balance u i
-      have h3 := carryDigit_balance v i
+      have h2 := carry_digit_balance u i
+      have h3 := carry_digit_balance v i
       omega
   funext i
   apply Fin.ext
@@ -330,7 +330,7 @@ theorem count_repunit (k m : ℕ) (hk : 5 ≤ k) (hk' : k ≤ 6) :
   · exact count_upper k m (repunit m) hk' (repunit_bounds m).2
   · letI := partitions_finite k 4 (repunit m) (by norm_num)
     have h := Nat.card_le_card_of_injective (carryPartition k m hk)
-      (carryPartition_injective k m hk)
+      (carry_partition_injective k m hk)
     simpa [Nat.card_fun, count] using h
 
 private lemma log_four : Real.log 4 = 2 * Real.log 2 := by
