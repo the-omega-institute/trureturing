@@ -83,7 +83,7 @@ def registration : Registration arena sourceStatement where
     have hn : Finite ℕ := Eq.mp h inferInstance
     exact @not_finite ℕ inferInstance hn
 
-def audit : Contract.Registration
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S1.Digit.CoonsAdjacentGrowthRefutation.partitions_finite)
     (type_of% (realize.{0,1,0,0,0} signature (fun _ _ s => Finite s) (fun e => nomatch e))) Unit Unit := {
   unitName := `D5.S1.Digit.CoonsAdjacentGrowthRefutation.partitions_finite.__information_unit,
@@ -139,7 +139,7 @@ def registration : Registration arena sourceStatement where
     intro i
     exact ⟨(5,4), repunit 0, repunit 1, count_varies⟩
 
-def audit : Contract.Registration
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S1.Digit.CoonsAdjacentGrowthRefutation.count_positive)
     (type_of% (realize.{0,0,0,0,0} signature (fun _ p n => count p.1 p.2 n) (fun e => nomatch e))) Unit Unit := {
   unitName := `D5.S1.Digit.CoonsAdjacentGrowthRefutation.count_positive.__information_unit,
@@ -195,7 +195,7 @@ def registration : Registration arena sourceStatement where
     intro i
     exact ⟨5, repunit 0, repunit 1, count_varies⟩
 
-def audit : Contract.Registration
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S1.Digit.CoonsAdjacentGrowthRefutation.count_upper)
     (type_of% (realize.{0,0,0,0,0} signature (fun _ k n => count k 4 n) (fun e => nomatch e))) Unit Unit := {
   unitName := `D5.S1.Digit.CoonsAdjacentGrowthRefutation.count_upper.__information_unit,
@@ -251,7 +251,7 @@ def registration : Registration arena sourceStatement where
     intro i
     exact ⟨5, 0, 1, count_varies⟩
 
-def audit : Contract.Registration
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S1.Digit.CoonsAdjacentGrowthRefutation.count_repunit)
     (type_of% (realize.{0,0,0,0,0} signature (fun _ k m => count k 4 (repunit m)) (fun e => nomatch e))) Unit Unit := {
   unitName := `D5.S1.Digit.CoonsAdjacentGrowthRefutation.count_repunit.__information_unit,
@@ -311,7 +311,7 @@ def registration : Registration arena sourceStatement where
     intro i
     exact ⟨5, 1, repunit 1, readout_varies⟩
 
-def audit : Contract.Registration
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S1.Digit.CoonsAdjacentGrowthRefutation.tail_supremum)
     (type_of% (realize.{0,0,0,0,0} signature (fun _ k n => readout k 4 n) (fun e => nomatch e))) Unit Unit := {
   unitName := `D5.S1.Digit.CoonsAdjacentGrowthRefutation.tail_supremum.__information_unit,
@@ -374,7 +374,7 @@ def registration : Registration arena sourceStatement where
     rw [h] at hh
     exact not_le_of_gt (EReal.coe_lt_coe (by norm_num : (0 : ℝ) < 1/2)) hh
 
-def audit : Contract.Registration
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S1.Digit.CoonsAdjacentGrowthRefutation.exponent_eq_half)
     (type_of% (realize.{0,0,0,0,0} signature (fun _ _ k => exponent k 4) (fun e => nomatch e))) Unit Unit := {
   unitName := `D5.S1.Digit.CoonsAdjacentGrowthRefutation.exponent_eq_half.__information_unit,
