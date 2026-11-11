@@ -24,19 +24,11 @@ internal sealed class MO511715SourceDocument : IScribeDocumentDefinition
                 + "delta>0, and nonnegative time, including the explicitly requested zero endpoint. "
                 + "These disclosed conventions do not resolve the author's unspecified intent.")),
             Paragraph(Text(
-                "The complete source, conventional quantifier correspondence and bounded literature "
-                + "status are retained in Problems/mathex-2026-mo511715-cutoff-bound.md. "
-                + "Preregistration is issue 29180, comment 6790963738. Its original complete event, "
-                + "deadline and resource account are unchanged. All 39 authored lemmas and theorems "
-                + "have proof_shape bind-only under full inlining; live-consumed helpers organize the "
-                + "proof and provide no escape witness. The terminal result's admission_basis is "
-                + "open-problem-resolution. Independent source review supports correspondence with the "
-                + "complete published question under the disclosed conventional Euclidean real/complex "
-                + "readings and the documented Tier-1 eligibility with bounded literature checking. "
-                + "The result carries the typed Refuted claim for that question and its existing dossier. "
-                + "This supports those prerequisites only: canonical rendering, first-freeze/current, "
-                + "final review, required CI and dev delivery remain outstanding. The selected-consumer "
-                + "capability gap is owner issue 29078. No global openness or priority is claimed.")),
+                "The complete published question and its correspondence with the conventional "
+                + "Euclidean real and complex readings are recorded in "
+                + "Problems/mathex-2026-mo511715-cutoff-bound.md. Under these readings, the result "
+                + "below negates the uniform cutoff estimate for the complete series. The obstruction "
+                + "uses one legal mask and the same fixed cutoff throughout.")),
             Paragraph(Text(
                 "Write Z for the lattice of five integer coordinates and E for Euclidean five-space. "
                 + "The map embed casts coordinates from Z into E. Set frequency(k)=norm(2*pi*embed(k)). "
