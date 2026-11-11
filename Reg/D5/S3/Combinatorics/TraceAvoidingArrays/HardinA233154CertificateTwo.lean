@@ -1,6 +1,7 @@
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233154CertificateTwo
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155RowTransfer
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233154Rows
+import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
 

@@ -1,5 +1,6 @@
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233153Column
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155RowTransfer
+import D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
 
