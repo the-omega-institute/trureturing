@@ -17,7 +17,7 @@ import Mathlib.Algebra.Polynomial.Roots
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-open scoped InnerProductSpace Matrix MatrixOrder Polynomial
+open scoped InnerProductSpace Matrix MatrixOrder ComplexOrder Polynomial
 open Module (finrank)
 
 namespace D5.S3.Quantum.Algebra.PBMinimalEnvironment
@@ -39,7 +39,8 @@ private theorem exists_real_det_ne_zero_of_complex {E : Type*}
     rw [RingHom.map_det]
     congr 1
     ext i j
-    simp [RingHom.mapMatrix_apply, hM, qM, mul_comm]
+    simp [RingHom.mapMatrix_apply, hM, qM]
+    exact mul_comm _ _
   have hn : p ≠ 0 := by
     intro he
     exact h (by simpa [he] using (hp Complex.I).symm)
@@ -188,8 +189,8 @@ private theorem gram_blocks {n : Type*} [Fintype n]
 
 private theorem rank_euclidean {n m : Type*} [Fintype n] [Fintype m] [DecidableEq n]
     (A : Matrix m n ℂ) : A.rank = finrank ℂ A.toEuclideanLin.range := by
-  exact A.rank_eq_finrank_range_toLin (EuclideanSpace.basisFun n ℂ).toBasis
-    (EuclideanSpace.basisFun m ℂ).toBasis
+  exact A.rank_eq_finrank_range_toLin (EuclideanSpace.basisFun m ℂ).toBasis
+    (EuclideanSpace.basisFun n ℂ).toBasis
 
 private theorem fromCols_action {n : Type*} [Fintype n]
     (F G : Matrix n Actor ℂ) (x : EuclideanSpace ℂ (Actor ⊕ Actor)) :
@@ -312,19 +313,26 @@ private theorem exists_minimal_matrices (M₀ M₁ M₂ : Matrix Actor Actor ℂ
   have hK : K = F.toEuclideanLin.range ⊔ G.toEuclideanLin.range := by
     rw [← fromCols_range, hcat]
   let f : EuclideanSpace ℂ Actor →ₗ[ℂ] K :=
-    F.toEuclideanLin.codRestrict K fun x => hK.symm ▸ le_sup_left (show F.toEuclideanLin x ∈ F.toEuclideanLin.range from ⟨x, rfl⟩)
+    F.toEuclideanLin.codRestrict K fun x => by
+      rw [hK]
+      exact Submodule.mem_sup_left ⟨x, rfl⟩
   let g : EuclideanSpace ℂ Actor →ₗ[ℂ] K :=
-    G.toEuclideanLin.codRestrict K fun x => hK.symm ▸ le_sup_right (show G.toEuclideanLin x ∈ G.toEuclideanLin.range from ⟨x, rfl⟩)
+    G.toEuclideanLin.codRestrict K fun x => by
+      rw [hK]
+      exact Submodule.mem_sup_right ⟨x, rfl⟩
   have hfgker : f.ker = g.ker := by
     rw [LinearMap.ker_codRestrict, LinearMap.ker_codRestrict,
       ← gram_ker_euclidean F, ← gram_ker_euclidean G, hFF, hGG, hk]
   let A : f.range →ₗ[ℂ] K :=
     (f.ker.liftQ g hfgker.le).comp f.quotKerEquivRange.symm.toLinearMap
   have hA (x : EuclideanSpace ℂ Actor) : A (f.rangeRestrict x) = g x := by
-    simp [A, LinearMap.quotKerEquivRange_symm_apply_image]
+    change f.ker.liftQ g hfgker.le (f.quotKerEquivRange.symm ⟨f x, ⟨x, rfl⟩⟩) = g x
+    exact congrArg (f.ker.liftQ g hfgker.le)
+      (LinearMap.quotKerEquivRange_symm_apply_image (f := f) x (LinearMap.mem_range_self f x))
   have hAi : Function.Injective A := by
-    apply (LinearMap.ker_eq_bot.mp (Submodule.ker_liftQ_eq_bot' _ _ _ hfgker)).comp
-    exact f.quotKerEquivRange.symm.injective
+    have hiLift : Function.Injective (f.ker.liftQ g hfgker.le) :=
+      LinearMap.ker_eq_bot.mp (Submodule.ker_liftQ_eq_bot f.ker g hfgker.le hfgker.ge)
+    exact hiLift.comp f.quotKerEquivRange.symm.injective
   have hgram : f.adjoint.comp g = M₁.toEuclideanLin := by
     rw [← hFG, Matrix.toLpLin_mul_same, Matrix.toEuclideanLin_conjTranspose_eq_adjoint]
     ext x
@@ -343,7 +351,8 @@ private theorem exists_minimal_matrices (M₀ M₁ M₂ : Matrix Actor Actor ℂ
       _ = _ := f.adjoint_inner_right _ _
   obtain ⟨T, hT, hTi, hTf⟩ := exists_symmetric_bijective_extension f.range A hAi hAs
   have hTfg : T.comp f = g := by
-    ext x
+    apply LinearMap.ext
+    intro x
     exact (hTf (f.rangeRestrict x)).trans (hA x)
   let e := LinearEquiv.ofBijective T hTi
   have hk' : finrank ℂ K = Γ.rank := by rw [hR, rank_conjTranspose_mul_self, rank_euclidean]
@@ -382,7 +391,7 @@ private theorem exists_minimal_matrices (M₀ M₁ M₂ : Matrix Actor Actor ℂ
       LinearMap.toMatrix a.toBasis a.toBasis M.toEuclideanLin = M := by
     rw [Matrix.toEuclideanLin_eq_toLin_orthonormal]
     exact LinearEquiv.apply_symm_apply _ _
-  refine ⟨D, V, isUnit_iff_exists_inv.mpr ⟨J, hdj, hjd⟩, hDH, ?_, ?_, ?_, ?_⟩
+  refine ⟨D, V, isUnit_iff_exists_inv.mpr ⟨J, hdj⟩, hDH, ?_, ?_, ?_, ?_⟩
   · rw [LinearMap.ker_eq_bot.mpr hdi]
     exact bot_le
   · rw [hV, ← LinearMap.toMatrix_comp, hgram₀, hm]
@@ -393,5 +402,209 @@ private theorem exists_minimal_matrices (M₀ M₁ M₂ : Matrix Actor Actor ℂ
     rw [hdag, hV, Matrix.mul_assoc, Matrix.mul_assoc J, ← LinearMap.toMatrix_comp, hTfg,
       ← LinearMap.toMatrix_comp, ← LinearMap.toMatrix_comp, ← LinearMap.comp_assoc,
       ← he, hgram₂, hm]
+
+
+private theorem actual_constraints {m : ℕ} {D : Matrix (Fin m) (Fin m) ℂ}
+    {V : Matrix Actor (Fin m) ℂ} {M₀ M₁ M₂ : Matrix Actor Actor ℂ}
+    (h : Realizes D V M₀ M₁ M₂) :
+    let Γ := momentGram M₀ M₁ M₂
+    Γ.PosSemidef ∧ M₀.toEuclideanLin.ker = M₂.toEuclideanLin.ker ∧
+      Γ.rank ≤ D.rank ∧ D.rank ≤ m ∧ M₂.rank = M₀.rank ∧
+      M₀.rank ≤ Γ.rank ∧ Γ.rank ≤ 2 * M₀.rank ∧ 2 * M₀.rank ≤ 4 := by
+  let Γ := momentGram M₀ M₁ M₂
+  let F := Vᴴ
+  let G := envDagger D * F
+  obtain ⟨hg, hk, hle, h₀, h₂⟩ := actual_factor h
+  change Γ = (fromCols F G)ᴴ * fromCols F G at hg
+  change F.toEuclideanLin.ker = G.toEuclideanLin.ker at hk
+  have hk' : M₀.toEuclideanLin.ker = M₂.toEuclideanLin.ker := by
+    rw [h₀, h₂, gram_ker_euclidean, gram_ker_euclidean, hk]
+  have hγ : Γ.rank = finrank ℂ (F.toEuclideanLin.range ⊔ G.toEuclideanLin.range : Submodule _ _) := by
+    rw [hg, rank_conjTranspose_mul_self, rank_euclidean, fromCols_range]
+  have hr : M₂.rank = M₀.rank := by
+    have hf := F.toEuclideanLin.finrank_range_add_finrank_ker
+    have hg' := G.toEuclideanLin.finrank_range_add_finrank_ker
+    change finrank ℂ F.toEuclideanLin.range + finrank ℂ F.toEuclideanLin.ker = _ at hf
+    change finrank ℂ G.toEuclideanLin.range + finrank ℂ G.toEuclideanLin.ker = _ at hg'
+    rw [hk] at hf
+    rw [h₀, h₂, rank_conjTranspose_mul_self, rank_conjTranspose_mul_self,
+      rank_euclidean, rank_euclidean]
+    change finrank ℂ G.toEuclideanLin.range = finrank ℂ F.toEuclideanLin.range
+    omega
+  change Γ.PosSemidef ∧ _ ∧ Γ.rank ≤ D.rank ∧ _
+  refine ⟨?_, hk', ?_, D.rank_le_width, hr, ?_, ?_, ?_⟩
+  · rw [hg]
+    exact posSemidef_conjTranspose_mul_self _
+  · rw [hg, rank_conjTranspose_mul_self, rank_euclidean, rank_euclidean]
+    exact Submodule.finrank_mono hle
+  · rw [hγ, h₀, rank_conjTranspose_mul_self, rank_euclidean]
+    exact Submodule.finrank_mono le_sup_left
+  · have hh := Submodule.finrank_add_le_finrank_add_finrank
+      F.toEuclideanLin.range G.toEuclideanLin.range
+    have hr₀ : finrank ℂ F.toEuclideanLin.range = M₀.rank := by
+      rw [h₀, rank_conjTranspose_mul_self, rank_euclidean]
+    have hr₂ : finrank ℂ G.toEuclideanLin.range = M₂.rank := by
+      rw [h₂, rank_conjTranspose_mul_self, rank_euclidean]
+    rw [hr₀, hr₂, hr] at hh
+    rw [hγ]
+    omega
+  · have hh : M₀.rank ≤ 2 := M₀.rank_le_width
+    omega
+
+/-- Pair of original actor columns, with the first and second copies kept distinct. -/
+def labelPair (a b : EuclideanSpace ℂ Actor) : EuclideanSpace ℂ (Actor ⊕ Actor) :=
+  WithLp.toLp 2 (Sum.elim (fun i => a i) (fun i => b i))
+
+/-- The algebraic quotient by the original block Gram kernel. Its metric is specified
+on representatives in LabeledGramIdentification. -/
+abbrev GramQuotient (M₀ M₁ M₂ : Matrix Actor Actor ℂ) :=
+  EuclideanSpace ℂ (Actor ⊕ Actor) ⧸ (momentGram M₀ M₁ M₂).toEuclideanLin.ker
+
+/-- The exact labelled Gram identification for an actual realization. The unique linear
+equivalence preserves the form prescribed by the block Gram matrix on all representatives. -/
+def LabeledGramIdentification {m : ℕ} (D : Matrix (Fin m) (Fin m) ℂ)
+    (V : Matrix Actor (Fin m) ℂ) (M₀ M₁ M₂ : Matrix Actor Actor ℂ) : Prop :=
+  let Γ := momentGram M₀ M₁ M₂
+  let Q := Γ.toEuclideanLin.ker.mkQ
+  let F := Vᴴ.toEuclideanLin
+  let G := (envDagger D * Vᴴ).toEuclideanLin
+  let K := F.range ⊔ G.range
+  finrank ℂ (GramQuotient M₀ M₁ M₂) = Γ.rank ∧
+    ∃ c : InnerProductSpace.Core ℂ (GramQuotient M₀ M₁ M₂),
+      (∀ x y, c.inner (Q x) (Q y) = ⟪x, Γ.toEuclideanLin y⟫_ℂ) ∧
+      letI := c.toNormedAddCommGroup
+      letI := InnerProductSpace.ofCore c.toPreInnerProductSpace
+      ∃! U : GramQuotient M₀ M₁ M₂ ≃ₗᵢ[ℂ] ↥K,
+        ∀ a b, (U (Q (labelPair a b)) : EuclideanSpace ℂ (Fin m)) = F a + G b
+
+private theorem actual_labelled_gram {m : ℕ} {D : Matrix (Fin m) (Fin m) ℂ}
+    {V : Matrix Actor (Fin m) ℂ} {M₀ M₁ M₂ : Matrix Actor Actor ℂ}
+    (h : Realizes D V M₀ M₁ M₂) : LabeledGramIdentification D V M₀ M₁ M₂ := by
+  classical
+  let Γ := momentGram M₀ M₁ M₂
+  let F := Vᴴ
+  let G := envDagger D * F
+  let J := (fromCols F G).toEuclideanLin
+  let Q := Γ.toEuclideanLin.ker.mkQ
+  let K := F.toEuclideanLin.range ⊔ G.toEuclideanLin.range
+  have hJ : Γ = (fromCols F G)ᴴ * fromCols F G := (actual_factor h).1
+  have hk : Γ.toEuclideanLin.ker = J.ker := by rw [hJ, gram_ker_euclidean]
+  have hr : J.range = K := fromCols_range F G
+  let U : GramQuotient M₀ M₁ M₂ ≃ₗ[ℂ] ↥K :=
+    ((Submodule.quotEquivOfEq _ _ hk).trans J.quotKerEquivRange).trans
+      (LinearEquiv.ofEq _ _ hr)
+  have hU (x : EuclideanSpace ℂ (Actor ⊕ Actor)) :
+      (U (Q x) : EuclideanSpace ℂ (Fin m)) = J x := by
+    simp [U, Q, Submodule.mkQ_apply, LinearMap.quotKerEquivRange_apply_mk]
+  have hspan : finrank ℂ K = Γ.rank := by
+    rw [hJ, rank_conjTranspose_mul_self, rank_euclidean, ← hr]
+  let c : InnerProductSpace.Core ℂ (GramQuotient M₀ M₁ M₂) :=
+    { inner := fun x y => ⟪U x, U y⟫_ℂ
+      conj_inner_symm := fun _ _ => inner_conj_symm _ _
+      re_inner_nonneg := fun _ => inner_self_nonneg
+      add_left := fun x y z => by rw [map_add, inner_add_left]
+      smul_left := fun x y r => by rw [map_smul, inner_smul_left]
+      definite := fun x hx => U.injective ((inner_self_eq_zero.mp hx).trans (map_zero U).symm) }
+  refine ⟨U.finrank_eq.trans hspan, c, ?_, ?_⟩
+  · intro x y
+    change ⟪(U (Q x) : EuclideanSpace ℂ (Fin m)), (U (Q y) : EuclideanSpace ℂ (Fin m))⟫_ℂ =
+      ⟪x, Γ.toEuclideanLin y⟫_ℂ
+    rw [hU, hU, hJ, Matrix.toLpLin_mul_same, Matrix.toEuclideanLin_conjTranspose_eq_adjoint]
+    exact (LinearMap.adjoint_inner_right J x (J y)).symm
+  · letI := c.toNormedAddCommGroup
+    letI := InnerProductSpace.ofCore c.toPreInnerProductSpace
+    let u : GramQuotient M₀ M₁ M₂ ≃ₗᵢ[ℂ] ↥K :=
+      { U with norm_map' := (LinearMap.norm_map_iff_inner_map_map U.toLinearMap).mpr
+          (fun _ _ => rfl) }
+    refine ⟨u, ?_, ?_⟩
+    · intro a b
+      change (U (Q (labelPair a b)) : EuclideanSpace ℂ (Fin m)) = _
+      rw [hU, fromCols_action]
+      rfl
+    intro U' hu
+    apply LinearIsometryEquiv.ext
+    intro z
+    obtain ⟨x, rfl⟩ := Γ.toEuclideanLin.ker.mkQ_surjective z
+    have he : x = labelPair (WithLp.toLp 2 (fun i => x (Sum.inl i)))
+        (WithLp.toLp 2 (fun i => x (Sum.inr i))) := by
+      apply WithLp.ofLp_injective 2
+      funext i
+      cases i <;> rfl
+    apply Subtype.ext
+    change (U' (Q x) : EuclideanSpace ℂ (Fin m)) = (U (Q x) : EuclideanSpace ℂ (Fin m))
+    rw [hU, fromCols_action]
+    conv_lhs => rw [he]
+    exact hu _ _
+
+/-- Physical matrices on the original actor plus the new environment. -/
+def PhysicalCompatibility {m : ℕ} (D : Matrix (Fin m) (Fin m) ℂ)
+    (V : Matrix Actor (Fin m) ℂ) (M₁ : Matrix Actor Actor ℂ) : Prop :=
+  ∀ (B H : Matrix Actor Actor ℂ) (s₁ s₂ σ : ℝ),
+    B.IsHermitian → (σ = 1 ∨ σ = -1) →
+    let t := fromBlocks B V Vᴴ D
+    let c := fromBlocks (diagonal (fun i : Actor => if i = 0 then (1 : ℂ) else 2))
+      (0 : Matrix Actor (Fin m) ℂ) 0 0
+    let s := fromBlocks (diagonal (fun i : Actor => if i = 0 then (s₁ : ℂ) else s₂))
+      (0 : Matrix Actor (Fin m) ℂ) 0 0
+    let g := (((σ : ℂ) * Complex.I) / 2) • (c * t - t * c) + s
+    t.IsHermitian ∧ c.IsHermitian ∧ s.IsHermitian ∧ g.IsHermitian ∧
+      (H = B - (V * envDagger D * Vᴴ) ↔ H = B - M₁)
+
+private theorem physical_of_realizes {m : ℕ} {D : Matrix (Fin m) (Fin m) ℂ}
+    {V : Matrix Actor (Fin m) ℂ} {M₀ M₁ M₂ : Matrix Actor Actor ℂ}
+    (h : Realizes D V M₀ M₁ M₂) : PhysicalCompatibility D V M₁ := by
+  intro B H s₁ s₂ σ hB _
+  dsimp only
+  have ht : (fromBlocks B V Vᴴ D).IsHermitian := hB.fromBlocks rfl h.hermitian
+  have hDiag (x y : ℝ) : (diagonal (fun i : Actor => if i = 0 then (x : ℂ) else y)).IsHermitian := by
+    rw [isHermitian_diagonal_iff]
+    intro i
+    split <;> simp [IsSelfAdjoint]
+  have hC : (diagonal (fun i : Actor => if i = 0 then (1 : ℂ) else 2)).IsHermitian := by
+    simpa using hDiag 1 2
+  have hc : (fromBlocks (diagonal (fun i : Actor => if i = 0 then (1 : ℂ) else 2))
+      (0 : Matrix Actor (Fin m) ℂ) 0 0).IsHermitian :=
+    hC.fromBlocks conjTranspose_zero isHermitian_zero
+  have hs : (fromBlocks (diagonal (fun i : Actor => if i = 0 then (s₁ : ℂ) else s₂))
+      (0 : Matrix Actor (Fin m) ℂ) 0 0).IsHermitian :=
+    (hDiag _ _).fromBlocks conjTranspose_zero isHermitian_zero
+  refine ⟨ht, hc, hs, ?_, ?_⟩
+  · have hσ : star ((((σ : ℂ) * Complex.I) / 2)) = -(((σ : ℂ) * Complex.I) / 2) := by
+      simp [mul_neg, neg_div]
+    rw [Matrix.IsHermitian, conjTranspose_add, conjTranspose_smul, conjTranspose_sub,
+      conjTranspose_mul, conjTranspose_mul, ht.eq, hc.eq, hs.eq, hσ]
+    congr 1
+    rw [neg_smul, ← smul_neg, neg_sub]
+  · rw [h.first]
+
+/-- PB 30.1: exact feasibility, a smallest invertible actual environment, the sharp
+rank bounds and labelled Gram quotient, and physical block compatibility. -/
+theorem pb_three_moment_minimal_realization (M₀ M₁ M₂ : Matrix Actor Actor ℂ)
+    (_h₀ : M₀.IsHermitian) (h₁ : M₁.IsHermitian) (_h₂ : M₂.IsHermitian) :
+    let Γ := momentGram M₀ M₁ M₂
+    let r := M₀.rank
+    let k := Γ.rank
+    ((∃ (m : ℕ) (D : Matrix (Fin m) (Fin m) ℂ) (V : Matrix Actor (Fin m) ℂ),
+        Realizes D V M₀ M₁ M₂) ↔
+      Γ.PosSemidef ∧ M₀.toEuclideanLin.ker = M₂.toEuclideanLin.ker) ∧
+    ((Γ.PosSemidef ∧ M₀.toEuclideanLin.ker = M₂.toEuclideanLin.ker) →
+      (∃ (D : Matrix (Fin k) (Fin k) ℂ) (V : Matrix Actor (Fin k) ℂ),
+        IsUnit D ∧ Realizes D V M₀ M₁ M₂ ∧ PhysicalCompatibility D V M₁) ∧
+      M₂.rank = r ∧ r ≤ k ∧ k ≤ 2 * r ∧ 2 * r ≤ 4) ∧
+    (∀ (m : ℕ) (D : Matrix (Fin m) (Fin m) ℂ) (V : Matrix Actor (Fin m) ℂ),
+      Realizes D V M₀ M₁ M₂ →
+        k ≤ D.rank ∧ D.rank ≤ m ∧ LabeledGramIdentification D V M₀ M₁ M₂) := by
+  dsimp only
+  refine ⟨⟨?_, ?_⟩, ?_, ?_⟩
+  · rintro ⟨m, D, V, h⟩
+    exact ⟨(actual_constraints h).1, (actual_constraints h).2.1⟩
+  · rintro ⟨hp, hk⟩
+    obtain ⟨D, V, -, h⟩ := exists_minimal_matrices M₀ M₁ M₂ h₁ hp hk
+    exact ⟨_, D, V, h⟩
+  · rintro ⟨hp, hk⟩
+    obtain ⟨D, V, hu, h⟩ := exists_minimal_matrices M₀ M₁ M₂ h₁ hp hk
+    exact ⟨⟨D, V, hu, h, physical_of_realizes h⟩, (actual_constraints h).2.2.2.2⟩
+  · intro m D V h
+    exact ⟨(actual_constraints h).2.2.1, (actual_constraints h).2.2.2.1, actual_labelled_gram h⟩
 
 end D5.S3.Quantum.Algebra.PBMinimalEnvironment
