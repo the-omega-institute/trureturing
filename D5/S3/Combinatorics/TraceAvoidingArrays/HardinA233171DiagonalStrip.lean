@@ -1,14 +1,17 @@
 /- GID: D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233171DiagonalStrip
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/TraceAvoidingArrays/HardinA233171DiagonalStrip
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233171DiagonalStrip.result; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233171DiagonalStrip.finite_certificate
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233171DiagonalStrip.result; premises=D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233171DiagonalStrip.finite_certificate,D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233171DiagonalStrip.distribution_step,D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233171DiagonalStrip.distribution_relation
    digest: Hardin's seven-term recurrence for literal normalized five-column diagonal strips. -/
 
 /-
 admission_basis: open-problem-resolution (#29002; Proved)
-escape_witness: none; external open-problem resolution
+escape_witness: finite_certificate proves this graph's seven-class transfer;
+distribution_step proves the successive first-row distribution products;
+distribution_relation proves their order-seven integer relation. These facts
+are consumed by the all-height reduction and result, not supplied by frozen owners.
 bonds: proof_shape=bind-only; consumers=decidableBonds, a, bonds_iff, counting_bridge
 decidableBonds: proof_shape=bind-only; consumers=a, counting_bridge
 a: proof_shape=bind-only; consumers=counting_bridge, result
@@ -21,15 +24,15 @@ transfer: proof_shape=bind-only; consumers=finite_certificate, w, distribution_s
 valid_next: proof_shape=bind-only; consumers=v_eq_w
 classCount: proof_shape=bind-only; consumers=class_fibres, finite_certificate, v_eq_w
 class_fibres: proof_shape=bind-only; consumers=finite_certificate
-finite_certificate: proof_shape=bind-only; consumers=v_eq_w
+finite_certificate: proof_shape=content; consumers=v_eq_w; escape_witness=finite_certificate
 w: proof_shape=bind-only; consumers=v_eq_w, a_eq_w, shifted_count
-v_eq_w: proof_shape=bind-only; consumers=a_eq_w
-a_eq_w: proof_shape=bind-only; consumers=shifted_count
+v_eq_w: proof_shape=content; consumers=a_eq_w; escape_witness=finite_certificate
+a_eq_w: proof_shape=content; consumers=shifted_count; escape_witness=finite_certificate
 distribution: proof_shape=bind-only; consumers=distribution_step, shifted_count, distribution_relation
-distribution_step: proof_shape=bind-only; consumers=shifted_count
-shifted_count: proof_shape=bind-only; consumers=result
-distribution_relation: proof_shape=bind-only; consumers=result
-result: proof_shape=bind-only; consumers=terminal result
+distribution_step: proof_shape=content; consumers=shifted_count; escape_witness=distribution_step
+shifted_count: proof_shape=content; consumers=result; escape_witness=finite_certificate, distribution_step
+distribution_relation: proof_shape=content; consumers=result; escape_witness=distribution_relation
+result: proof_shape=content; consumers=terminal result; escape_witness=finite_certificate, distribution_relation
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
@@ -96,12 +99,8 @@ def transfer (i k : Fin 7) : ℤ :=
 
 private theorem valid_next : ∀ s p, Valid s p → ∀ c : Row,
     rowLegal c ∧ compatible p c ∧ good s c → Valid (finish s c) (labels c) := by
-  have hv : ∀ (s : Seen) (c : Row), s.1 = true → rowLegal c → good s c →
-      Valid (finish s c) (labels c) := by
-    simp only [Fin.forall_fin_succ_pi, Fin.forall_fin_zero_pi]
-    decide +kernel
   intro s p hp c hc
-  exact hv s c hp.1 hc.1 hc.2.2
+  exact HardinA233126SquareStrip.row_valid s c hp.1 hc.1 hc.2.2
 
 def classCount (s : Seen) (p : Boundary) (k : Fin 7) : ℤ :=
   ∑ c : Row, if rowLegal c ∧ compatible p c ∧ good s c ∧

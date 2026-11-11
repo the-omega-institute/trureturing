@@ -53,11 +53,16 @@ internal sealed class HardinA233171DiagonalStripDocument : IScribeDocumentDefini
                 H("Hardin's recurrence for every height at least eight"),
                 StatementSource.FromAuthor(Disp(Result())), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("The width-independent literal counting bridge and exact "
-                    + "scanner fibres give the displayed class transfer. The private finite "
-                    + "certificate is used in the induction identifying all continuations with "
-                    + "powers of this transfer. The reused first-row distribution is "
+                    + "scanner fibres give the displayed class transfer. The owner's "
+                    + "compatibility-free row_valid supplies boundary validity. The private "
+                    + "finite_certificate proves the diagonal graph's class transfer and is "
+                    + "used in the induction identifying all continuations with powers of this "
+                    + "transfer. The reused first-row distribution is "
                     + "(8,0,8,4,8,4,4). Its eighth Krylov row is the stated integer linear "
-                    + "combination of its first seven rows. Multiplying this identity by every "
+                    + "combination of its first seven rows. The numerical premises are "
+                    + "finite_certificate, distribution_step for consecutive row products, "
+                    + "and distribution_relation for this integer relation; all feed result. "
+                    + "Multiplying this identity by every "
                     + "continuation vector proves the recurrence for all n+8. Thus the "
                     + "literal count, defined independently of the recurrence, satisfies the "
                     + "displayed order-seven relation."))), DescribeRole.Theorem))));
