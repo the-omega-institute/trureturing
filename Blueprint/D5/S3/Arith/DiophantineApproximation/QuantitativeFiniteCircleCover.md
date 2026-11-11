@@ -10,7 +10,7 @@ This document records the finite-window theorem and its exact hypotheses. The so
 
 $$\forall theta \in \mathbb{R},\; \forall t \in \mathbb{R},\; \forall w \in \mathbb{R},\; \forall N \in \mathbb{N},\; (0 < w) \Rightarrow ((\frac{4}{w} \le N) \Rightarrow ((\forall h \in \mathbb{Z},\; \forall a \in \mathbb{Z},\; (1 \le h) \Rightarrow ((h \le \operatorname{ceil}\left(\frac{4}{w}\right)) \Rightarrow (\frac{1}{N} < \left|h \cdot theta - a\right|))) \Rightarrow (\exists b \in \mathbb{N},\; (N \le b) \land ((b \le 2 \cdot N) \land (\exists ell \in \mathbb{Z},\; (t < b \cdot theta - ell) \land (b \cdot theta - ell < t + w))))))$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/QuantitativeFiniteCircleCover.quantitative_finite_circle_cover` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/DiophantineApproximation/QuantitativeFiniteCircleCover.quantitative_finite_circle_cover` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -26,4 +26,4 @@ Research attribution: the completed Pro input non-dyadic-actual-price-power-foll
 
 ## References
 
-- Truth anchor: `D5/S3/Arith/QuantitativeFiniteCircleCover.quantitative_finite_circle_cover`
+- Truth anchor: `D5/S3/Arith/DiophantineApproximation/QuantitativeFiniteCircleCover.quantitative_finite_circle_cover`
