@@ -5,7 +5,7 @@ year: 2019
 title: Subspace arrangements, graph rigidity and derandomization through submodular optimization
 doi: null
 url: https://arxiv.org/abs/1901.09423v1
-claim: The span of cuts of a finite subspace family by a hyperplane in general position has dimension equal to the minimum partition sum of uncut block dimensions minus one.
+claim: The cut span has dimension equal to the minimum partition sum of uncut block dimensions minus one; in characteristic zero, independent symbolic normal coordinates satisfy general position for scalar-extended constant subspaces.
 strata_touched:
   - D5/S3/Factorization/Galois/ActualWindowCommonKernel
   - D5/S3/Factorization/Galois/SymbolicHyperplaneGeneralPosition
@@ -27,7 +27,9 @@ Definition 5.1 specifies general position; its footnote permits the empty
 middle family in condition (ii). Theorem 5.2 gives the partition-rank formula.
 Lemma 5.3 and the following induction construct an attaining partition.
 Theorem 7.1 separately proves genericity in characteristic zero or sufficiently
-large positive characteristic. Definition 2.1 and Corollary 3.2 concern the
+large positive characteristic. Its proof passes to the rational function
+field; Claim 7.2 states the symbolic intersection alternative used here.
+Definition 2.1 and Corollary 3.2 concern the
 unique minimizing partition with the fewest blocks.
 
 ## Application and boundary
