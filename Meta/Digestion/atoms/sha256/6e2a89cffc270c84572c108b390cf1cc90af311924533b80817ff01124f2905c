@@ -1,0 +1,12 @@
+**边界 20.4（原全文来源、既有结果域与未付目标）。** 定理 20.3 是以原实际量子菜单供应为前件的有限消费者应用；这些菜单的物理供应仍标为 `ASSUMED-UNVERIFIED`。完整物理来源保持 [OTF004 定义 19.1](OTF_004_ENDOGENOUS_OBSERVATION_ATTENTION_CONTROL_AND_COSINE_FEEDBACK.md)、本卷定义 1.1、[PB 实际探针与环境耦合续卷 §6](AURIC_FULL_PB_ACTUAL_PROBE_AND_ENVIRONMENT_COUPLING_CONTINUATION.md) 及 [PB 两角正证书续卷定义 49.1、边界 49.2](AURIC_FULL_PB_TWO_CORNER_POSITIVE_CERTIFICATE_CONTINUATION.md) 的完整合同与全部逐层固定上游，不以七项摘要或另造来源谓词替代其全文。
+
+来源身份按 `deb96eeabf0e2411c95c872ca8232c766ce7dd60` 的上述四份正文解释：OTF004 的 blob 为 `316045b4f10114cb1cb207c0f50dc6285b2b8f51`，本卷 §§1–19 为 `55dbc6ce3410ba3cc1aa4bf8f43c31e81ea603f9`，PB 实际探针续卷为 `d9e05528552f6b39c04cea6e97542acab6265114`，PB 两角续卷为 `3d833411c88065cf06a00372069f17738d01db86`。这些身份引用完整保留内部递归钉版，不用外层读取提交压平内层 SQ、AH、SF、PB 身份。原 $\mathcal C_{47}^{\rm pin}(\Omega;S,D)$ 中 $S,D$ 仍是原 Jordan 来源响应，其中 $S(a,b)=a\circ b$；它们不被自旋维数 $D=D_e$ 替换。
+
+同一原 $\Omega$ 最终仍须共同供应全部七项完整合同：实际复 Hilbert／相干准备；原态、效果、Born、完整菜单及全部质量分支；真正相关联合、复合与张量；typed CP 及整台递归参考；完整仪器、TP、条件更新与 Lüders；全部合法历史、CountRead、真遗忘及真实全未来 Return；实际动力学、物理钟、能量和共同正 $\hbar$。每项均连同所引原对象、量词、准备、切口、记录、拒绝、停止、销毁、泄漏、全部输出和每个合法未来保留在同一原实现上，不分别换源。该说明与全文共同保留，不缩短全文。条件量子输出 $\Omega_{n,h}$ 的有限电路不生产这个原物理来源 $\Omega$，也不生产实际相干准备、菜单／Born 绑定、全部质量、共同相关复合、整台参考规则、完整仪器、全未来 Return、物理钟或共同作用量；不从搜索未命中推出来源不存在。
+
+本节不合成 $Q_D$、受控 $Q_D$ 或 Fourier 字母，直接使用互异新鲜探针，故不抵触 §19 的固定同探针、仅历史处理局部障碍。该局部门障碍不是原所有消费者的必要门条件。既有 CP、部分保留、重置、rotation 及 §§18–19 结果各保留自身精确适用域：§§1–11 的声明 CP 实际口不被默认为本节完整等距口；§§12–15 的部分保留条件不自动处理其他实际环境；§16 的重置必要阶及匹配阶保持；§17 无条件 rotation 反例仍不成为原成功控制器反例；§18 的完整成功等距及共同二值置信前件保持。
+
+尤其，§18 的已有成功完整等距下界 $1/(512e\sqrt m)$ 与 (20.12) 相容。本节仅给出一个带 $\sqrt{\log(18/e)}$ 差距的完整消费者证书；一致无对数的 $O(1/(e\sqrt{m_e}))$ 匹配上界，以及 $e$ 无关常数 $C$ 的同一运行一致 $p_R\le C/(m_e e^2)$ 构造仍未证。本节不重提 §18 前件下已排除的完整等距 $O(1/(m_e e^2))$ 自身边缘目标，不主张最优性、新增全局下界或物理来源不存在。精确式 (20.29)–(20.30) 是人口／泄漏等式；(20.31)、$B_e$ 及 (20.12) 都是上界，不能改读成精确迹距离。
+
+[C139 父代敏感读树续卷 §§10–15](AURIC_C139_PARENT_SENSITIVE_READ_TREE_AND_GAIN_RECOVERY_BOUNDARY.md) 的保留 occurrence、可读系数与条件平坦地址服务，在其明确扩充的 $P$ 来源内给出条件 CountRead 与同载体 Return；[C139 有限返回校准续卷 §164](AURIC_C139_FINITE_RETURN_CALIBRATION_AND_LOAD_STABILITY_CONTINUATION.md) 仍区分该来源与原 $B_r$、原钟及全未来接口，尚无这份识别。[E4 阈值卷 §17](FIB_ENTROPY_HARMONIC_RENEWAL_STATE_THRESHOLD.md) 从完整确定坐标矩形与精确有效行得到条件实际运行结论，不是量子原语来源，也不消除其完整 E4 桥梁。二者均不是定理 20.3 的前提；不以扩充 $P$、E4、R5、MPS 或其他 DEV 成果替换原来源或供应本节量子菜单。
+

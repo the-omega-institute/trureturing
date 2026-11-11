@@ -33,11 +33,11 @@ universe u
 variable {p : ℕ} [Fact p.Prime]
 variable {K : Type u} [Field K] [Fintype K] [Algebra (ZMod p) K]
 
-private def frobLinear (j : ℕ) : K →ₗ[ZMod p] K :=
+def frobLinear (j : ℕ) : K →ₗ[ZMod p] K :=
   (FiniteField.frobeniusAlgHom (ZMod p) K ^ j).toLinearMap
 
 omit [Fintype K] in
-private theorem frobLinear_apply (j : ℕ) (x : K) :
+theorem frobLinear_apply (j : ℕ) (x : K) :
     frobLinear (p := p) j x = x ^ p ^ j := by
   change (FiniteField.frobeniusAlgHom (ZMod p) K ^ j) x = _
   rw [AlgHom.coe_pow, FiniteField.coe_frobeniusAlgHom, pow_iterate, ZMod.card]
@@ -62,7 +62,7 @@ private theorem power_coefficients_zero {n : ℕ}
     hji (Fin.ext (Nat.pow_right_injective hp.two_le h).symm)) (by simp), ite_eq_left rfl] at hc
   exact hc
 
-private theorem linearized_coordinates {n : ℕ} (hn : 1 ≤ n)
+theorem linearized_coordinates {n : ℕ} (hn : 1 ≤ n)
     (hK : Fintype.card K = p ^ n) (q : K →ₗ[ZMod p] K) :
     ∃! a : Fin n → K, ∀ x, q x = ∑ i, a i * x ^ p ^ (i : ℕ) := by
   have hp : p.Prime := Fact.out
