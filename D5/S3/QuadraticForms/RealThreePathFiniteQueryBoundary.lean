@@ -182,7 +182,8 @@ private theorem not_balance (S : Finset ℂ) (hzero : 0 ∈ S) {ε : ℝ} (hε :
     simp [rayFactor_degree, Nat.mul_comm]
   have hdeg : (C ((perturbedReadout S ε 1 - 1) / ε) * X ^ 2).natDegree ≤ 2 := by
     calc
-      _ ≤ (C ((perturbedReadout S ε 1 - 1) / ε) : ℝ[X]).natDegree + (X ^ 2 : ℝ[X]).natDegree := natDegree_mul_le
+      _ ≤ (C ((perturbedReadout S ε 1 - 1) / ε) : ℝ[X]).natDegree +
+        (X ^ 2 : ℝ[X]).natDegree := natDegree_mul_le
       _ = 2 := by simp
   rw [← heq, natDegree_pow, hdR] at hdeg
   have hcard : 0 < S.card := Finset.card_pos.mpr ⟨0, hzero⟩
@@ -233,10 +234,14 @@ theorem finite_query_boundary (menu : Finset (ℂ × ℂ × ℝ)) (ε : ℝ) (h�
     have h := standard_balance r.1 r.2.1 r.2.2
     change Passes Complex.normSq r at h
     unfold Passes at h ⊢
-    have hv : ∀ a ∈ readPoints r, perturbedReadout S ε a = Complex.normSq a := hvalues
     dsimp only
-    simp only [Complex.normSq_zero, sub_zero] at h
-    simpa only [hv _ (by simp only [readPoints, Finset.mem_insert, Finset.mem_singleton]; tauto),
-      hq0, sub_zero] using h
+    simp only [hq0, sub_zero]
+    rw [hvalues (r.1 + r.2.2 • r.2.1) (by simp [readPoints]),
+      hvalues (r.1 + r.2.2 • (omega * r.2.1)) (by simp [readPoints]),
+      hvalues (r.2.2 • (omega * r.1) + r.2.1) (by simp [readPoints]),
+      hvalues r.1 (by simp [readPoints]), hvalues r.2.1 (by simp [readPoints]),
+      hvalues (r.2.2 • r.1) (by simp [readPoints]),
+      hvalues (r.2.2 • r.2.1) (by simp [readPoints])]
+    simpa only [Complex.normSq_zero, sub_zero] using h
 
 end D5.S3.QuadraticForms.RealThreePathFiniteQueryBoundary
