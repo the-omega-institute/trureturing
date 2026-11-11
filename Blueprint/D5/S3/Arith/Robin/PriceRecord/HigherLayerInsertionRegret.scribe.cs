@@ -8,7 +8,7 @@ internal sealed class HigherLayerInsertionRegretDocument : IScribeDocumentDefini
         "HigherLayerInsertionRegret",
         H("D5 source compiled; RegUNVALIDATED"),
         Blocks(
-            Paragraph(Text("The D5 source target has a current scoped Lean build. The Reg mirror remains unvalidated for compiler/kernel audit, lawful registration, source occurrence binding and official/RH acceptance; no literature novelty or consensus claim is made. Every public declaration below has a faithful full-telescope typed Reg attempt. The terminal elementary coercivity snapshot and completed D5 producers retain their attribution; no proof escapes or external target suppliers are introduced.")),
+            Paragraph(Text("The D5 source target has a current scoped Lean build. The retained Reg source compiles; the escape audit remains incomplete for lawful registration, source occurrence binding and official/RH acceptance; no literature novelty or consensus claim is made. Every public declaration below has a faithful full-telescope typed Reg attempt. The terminal elementary coercivity snapshot and completed D5 producers retain their attribution; no proof escapes or external target suppliers are introduced.")),
             Describe.Lean(
                 DescribeId.Create("higherlayerinsertionregret-slope-upper"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/HigherLayerInsertionRegret.slope_upper"),

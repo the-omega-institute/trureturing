@@ -10,14 +10,14 @@ internal sealed class ActualRecordAllLogBudgetRemainderDocument : IScribeDocumen
         Blocks(
             Paragraph(Text(
                 "This document anchors a D5 source target with a current scoped Lean build. The attempted Reg mirror was not retained after its source_bridge mismatch and sorryAx report; "
-                + "the exact candidate is preserved in the runner packet under issue 28966. "
+                + "No lawful four-slot registration is claimed for this source. "
                 + "Its finite prefix-cancellation dependency retains its original "
                 + "source attribution. "
                 + "The completed source has been reconciled with current canonical source under Lean 4.35 "
                 + "and Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679. The critical file retains "
                 + "namespace ActualRecordHigherLayerResidual; its exact prime-escape proof is exposed "
-                + "by an unapplied patch and imported here. Only actual cross-module budget helpers "
-                + "are made public. All mathematical statements and proof bodies are unchanged. "
+                + "with its original mathematical type and body and imported here. Only actual cross-module budget helpers "
+                + "are made public. The logarithmic residual statement covers every real exponent. "
                 + "No new registration or validated status is asserted.")),
             Describe.Lean(
                 DescribeId.Create("source-exposure-original-record-bounds"),

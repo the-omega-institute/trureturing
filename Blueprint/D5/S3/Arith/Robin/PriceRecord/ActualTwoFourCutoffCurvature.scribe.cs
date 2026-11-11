@@ -4,7 +4,7 @@ internal sealed class ActualTwoFourCutoffCurvatureDocument : IScribeDocumentDefi
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "ActualTwoFourCutoffCurvature", H("D5 source compiled; RegUNVALIDATED"),
-        Blocks(Paragraph(Text("The statements below concern the finite floor mesh and actual two/four cutoff curvature. They do not establish the complete paid-prefix repair or Robin inequality. RegUNVALIDATED: lawful registration, variation and source binding remain unfinished under issue 28966.")),
+        Blocks(Paragraph(Text("The statements below concern the finite floor mesh and actual two/four cutoff curvature. They do not establish the complete paid-prefix repair or Robin inequality. RegUNVALIDATED: lawful registration, variation and source binding remain unfinished.")),
             Describe.Lean(
                 DescribeId.Create("actual-two-four-normalized-gain-bounds"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualTwoFourCutoffCurvature.normalized_gain_bounds"),

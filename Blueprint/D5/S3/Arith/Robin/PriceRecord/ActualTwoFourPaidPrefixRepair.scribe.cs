@@ -4,7 +4,7 @@ internal sealed class ActualTwoFourPaidPrefixRepairDocument : IScribeDocumentDef
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "ActualTwoFourPaidPrefixRepair", H("D5 source compiled; RegUNVALIDATED"),
-        Blocks(Paragraph(Text("The D5 source target and its exact mathematical candidate bodies compile under the scoped Lean check. RegUNVALIDATED remains for lawful registration, source binding, variation, official acceptance and axiom-bound audit; no RH conclusion is asserted. Ordinary Pro input is fallible. The exact original-record/arbitrary-original-price/energy endgoals belong to other owners.")),
+        Blocks(Paragraph(Text("The D5 source target and its exact mathematical candidate bodies compile under the scoped Lean check. The retained Reg source compiles with standard axiom closure; lawful registration, source binding and variation remain incomplete; no RH conclusion is asserted. Ordinary Pro input is fallible. The exact original-record/arbitrary-original-price/energy endgoals belong to other owners.")),
             Describe.Lean(
                 DescribeId.Create("actual-two-four-actual-two-four-paid-prefix-repair"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualTwoFourPaidPrefixRepair.actual_two_four_paid_prefix_repair"),

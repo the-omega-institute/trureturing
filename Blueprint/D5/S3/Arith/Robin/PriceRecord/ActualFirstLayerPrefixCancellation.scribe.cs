@@ -9,9 +9,8 @@ internal sealed class ActualFirstLayerPrefixCancellationDocument : IScribeDocume
         H("D5 source compiled; RegUNVALIDATED"),
         Blocks(
             Paragraph(Text(
-                "These anchors describe a D5 source target with a current scoped Lean build. Its Reg mirror remains unvalidated for kernel checking, "
-                + "source binding, variation and official acceptance "
-                + "remains incomplete. The loss, raw margin, optimizer layer count and "
+                "These anchors describe a D5 source target with a current scoped Lean build. Its retained Reg source compiles; the escape audit remains incomplete for lawful enrollment, "
+                + "source binding and variation. The loss, raw margin, optimizer layer count and "
                 + "unrestricted actual defect are reused from the canonical library. The companion "
                 + "patch only exposes original consumed helpers. No second loss, margin, optimizer "
                 + "or root definition is introduced. The mathematical mechanism is elementary; "

@@ -9,13 +9,13 @@ internal sealed class ActualHigherLayerBudgetRepairDocument : IScribeDocumentDef
         H("D5 source compiled; RegUNVALIDATED"),
         Blocks(
             Paragraph(Text(
-                "One repo-prior-exposed source attempt, with no consensus claim. The D5 source target has a current scoped Lean build; its Reg mirror remains unvalidated for kernel checking, source binding and official acceptance. "
+                "One repo-prior-exposed source attempt, with no consensus claim. The D5 source target has a current scoped Lean build; its retained Reg source compiles; lawful enrollment and source binding remain incomplete. "
                 + "No Scribe or Reg acceptance, source binding, "
                 + "official acceptance, RH conclusion or literature novelty is asserted. "
                 + "The completed ordinary proof is fallible input. The completed Budget and "
                 + "prefix owners retain their exact definitions and proof bodies. This source "
                 + "does not consume the active log-sharp coercivity or any energy consequence. "
-                + "Only the two actually consumed existing helpers receive unapplied visibility patches.")),
+                + "Only actually consumed existing helpers are exposed, preserving their mathematical types and proof bodies.")),
             Describe.Lean(
                 DescribeId.Create("actual-fixed-layer-finite-budget-repair"),
                 DeclarationHandle.Create(
