@@ -83,13 +83,16 @@ private theorem pairing_swap (u p : Vec) :
 private theorem mass (h r x y : ℝ) (u p q a : Vec) (η : ℂ)
     (H : Contact h r x y u p q a η) :
     pairing u p = (-(beta h u / y) : ℝ) := by
-  have hy : y ≠ 0 := by intro hz; simp [hz] at H
+  have hy : y ≠ 0 := by
+    intro hz
+    have hi := H.imaginary
+    simp [hz] at hi
   have he := congrArg Complex.im H.mixed
   rw [H.graph, graph_pairing, pairing_swap] at he
   simp [spectral, Complex.mul_im, H.first_real] at he
   apply Complex.ext
   · simp only [Complex.ofReal_re]
-    apply (eq_neg_iff_add_eq_zero).mpr
+    rw [neg_div]
     apply (eq_div_iff hy).mpr
     linarith
   · simpa using H.first_real
@@ -112,8 +115,7 @@ private theorem source_columns (h r x y : ℝ) (u p q a : Vec) (η : ℂ)
   have h0 := H.source 0
   have h1 := H.source 1
   rw [H.actor] at h0 h1
-  simp only [actorColumn, hMap, cMap, sourceVector, Matrix.cons_val_zero,
-    Matrix.cons_val_one, Matrix.head_cons, Matrix.head_fin_const] at h0 h1
+  simp [actorColumn, hMap, cMap, sourceVector] at h0 h1
   constructor
   · field_simp [denominator_ne 1 x y hy]
     linear_combination -Complex.I * h0
@@ -197,11 +199,88 @@ private theorem numerator_lower (h r x y : ℝ) (u p q a : Vec) (η : ℂ)
       y * ((h : ℂ) * (1 - spectral x y)⁻¹ * (star (u 0) * u 1) +
         2 * h * (2 - spectral x y)⁻¹ * (star (u 1) * u 0)).im := by
     simp [numerator, residual, Complex.mul_im]
-    field_simp
+    field_simp [hy]
     ring
   rw [hn]
   dsimp [beta]
   nlinarith [sq_nonneg ‖u 0‖, H.unit, abs_nonneg h,
     mul_nonneg (sq_nonneg ‖u 0‖) hr]
+
+private theorem readout_upper (h r x y : ℝ) (u p q a : Vec) (η : ℂ)
+    (H : Contact h r x y u p q a η) (hy : y ≠ 0) :
+    |y| * ‖sourceReadout r x y u‖ ≤ 3 / Real.sqrt 2 := by
+  have hs : 0 < Real.sqrt 2 := Real.sqrt_pos.mpr (by norm_num)
+  have hs2 : (Real.sqrt 2) ^ 2 = 2 := Real.sq_sqrt (by norm_num)
+  have hr : |r| = 1 := by
+    rcases H.source_sign with hr | hr <;> rw [hr] <;> norm_num
+  have h0 : |y| * ‖star (u 0) * (1 - spectral x y)⁻¹ *
+      ((Real.sqrt 2)⁻¹ : ℝ)‖ ≤ ‖u 0‖ / Real.sqrt 2 := by
+    simp only [norm_mul, norm_star, Complex.norm_real, Real.norm_eq_abs,
+      abs_inv, abs_of_pos hs]
+    have hR := mul_le_mul_of_nonneg_right (resolvent_norm 1 x y hy)
+      (mul_nonneg (norm_nonneg (u 0)) (inv_nonneg.mpr hs.le))
+    simpa [div_eq_mul_inv, mul_comm, mul_left_comm, mul_assoc] using hR
+  have h1 : |y| * ‖star (u 1) * (2 - spectral x y)⁻¹ * (2 * r)‖ ≤
+      2 * ‖u 1‖ := by
+    simp only [norm_mul, norm_star, Complex.norm_real, Real.norm_eq_abs,
+      abs_mul, hr]
+    norm_num
+    have hR := mul_le_mul_of_nonneg_right (resolvent_norm 2 x y hy)
+      (show 0 ≤ 2 * ‖u 1‖ by positivity)
+    nlinarith
+  have hc : ‖u 0‖ / Real.sqrt 2 + 2 * ‖u 1‖ ≤ 3 / Real.sqrt 2 := by
+    apply (le_div_iff₀ hs).mpr
+    have hsa : (Real.sqrt 2) ^ 2 * ‖u 0‖ ^ 2 = 2 * ‖u 0‖ ^ 2 :=
+      congrArg (fun t : ℝ => t * ‖u 0‖ ^ 2) hs2
+    have hsb : (Real.sqrt 2) ^ 2 * ‖u 1‖ ^ 2 = 2 * ‖u 1‖ ^ 2 :=
+      congrArg (fun t : ℝ => t * ‖u 1‖ ^ 2) hs2
+    have he : (‖u 0‖ / Real.sqrt 2 + 2 * ‖u 1‖) * Real.sqrt 2 =
+        ‖u 0‖ + 2 * Real.sqrt 2 * ‖u 1‖ := by field_simp; ring
+    rw [he]
+    nlinarith [sq_nonneg (2 * Real.sqrt 2 * ‖u 0‖ - ‖u 1‖), H.unit,
+      norm_nonneg (u 0), norm_nonneg (u 1)]
+  have ht := mul_le_mul_of_nonneg_left
+    (norm_add_le (star (u 0) * (1 - spectral x y)⁻¹ * ((Real.sqrt 2)⁻¹ : ℝ))
+      (star (u 1) * (2 - spectral x y)⁻¹ * (2 * r))) (abs_nonneg y)
+  dsimp [sourceReadout]
+  linarith
+
+/-- Quantitative nonvanishing for every original contact, both fixed source signs,
+both signs of the imaginary parameter, and both actor axes. -/
+theorem original_contact_nonvanishing (h r x y : ℝ) (u p q a : Vec) (η : ℂ)
+    (H : Contact h r x y u p q a η) :
+    sourceReadout r x y u ≠ 0 ∧
+      Real.sqrt 2 * (1 + 3 * ‖u 1‖ ^ 2 - |h|) ≤ ‖η‖ ∧ 0 < ‖η‖ := by
+  have hy : y ≠ 0 := by
+    intro hz
+    have hi := H.imaginary
+    simp [hz] at hi
+  have hs : 0 < Real.sqrt 2 := Real.sqrt_pos.mpr (by norm_num)
+  have hl := numerator_lower h r x y u p q a η H hy
+  have hu := readout_upper h r x y u p q a η H hy
+  have hb := source_balance h r x y u p q a η H hy
+  have hn : -y * (numerator h x y u).im ≤ |y| * ‖numerator h x y u‖ := by
+    have ha := neg_le_abs (y * (numerator h x y u).im)
+    rw [abs_mul] at ha
+    nlinarith [mul_le_mul_of_nonneg_left
+      (Complex.abs_im_le_norm (numerator h x y u)) (abs_nonneg y)]
+  have hp : 0 < 3 + 9 * ‖u 1‖ ^ 2 - 3 * |h| := by
+    nlinarith [H.small, sq_nonneg ‖u 1‖]
+  have hd : sourceReadout r x y u ≠ 0 := by
+    intro hz
+    have hzN : numerator h x y u = 0 := by simpa [hz] using hb.symm
+    simp [hzN] at hl
+    linarith
+  rw [← hb, norm_mul] at hn
+  have huη := mul_le_mul_of_nonneg_left hu (norm_nonneg η)
+  have hc : 3 + 9 * ‖u 1‖ ^ 2 - 3 * |h| ≤ (‖η‖ * 3) / Real.sqrt 2 := by
+    nlinarith
+  have he := (le_div_iff₀ hs).mp hc
+  refine ⟨hd, ?_, ?_⟩
+  · nlinarith
+  · have hp' : 0 < Real.sqrt 2 * (1 + 3 * ‖u 1‖ ^ 2 - |h|) := by
+      apply mul_pos hs
+      nlinarith
+    nlinarith
 
 end D5.S3.Quantum.Algebra.PBSourceContactNonvanishing
