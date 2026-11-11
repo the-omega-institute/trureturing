@@ -291,7 +291,7 @@ theorem alternating_canon {n : ℕ} (hn : 0 < n) :
     have hj : 0 < p.2.val := by omega
     omega
 
-private theorem canon_two_eq {n : ℕ} (hn : 2 ≤ n)
+theorem canon_two_eq {n : ℕ} (hn : 2 ≤ n)
     (P : Fin 4 × Fin n → Fin 3) (hp : Proper P) (hc : Canon P) (hu : used P = 2) :
     P = alternating n 0 1 := by
   obtain ⟨d, hd⟩ := omitted_label P hu
