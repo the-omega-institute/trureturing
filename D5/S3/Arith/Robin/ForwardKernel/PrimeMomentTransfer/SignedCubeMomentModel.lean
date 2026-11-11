@@ -6,6 +6,7 @@
    utility: none
    digest: Signed cubes realize centred singular-series moments and cubic and fourth identities. -/
 
+import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.CentredProductExpansion
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.QuadraticFourthDefect
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.ArithmeticTransferDefs
 
@@ -92,13 +93,8 @@ private theorem signedCubeFunctional_squarefree (C : Finset ι → ℝ) (s : ℝ
   have he : (∏ d ∈ D, cubeY s d) =
       ∑ J ∈ D.powerset, (-1 : ℝ) ^ (D.card - J.card) •
         (∏ d ∈ J, (cubeY s d + 1)) := by
-    conv_lhs => arg 2; ext d; rw [show cubeY s d = (cubeY s d + 1) + (-1) by ring]
-    rw [Finset.prod_add]
-    apply Finset.sum_congr rfl
-    intro J hJ
-    rw [Finset.prod_const, Finset.card_sdiff_of_subset (Finset.mem_powerset.mp hJ),
-      Algebra.smul_def, map_pow, map_neg, map_one]
-    ring
+    simpa only [add_sub_cancel_right, Algebra.smul_def, map_pow, map_neg, map_one] using
+      (prod_sub_one_expansion D (fun d => cubeY s d + 1))
   rw [he, map_sum]
   unfold centerFinite
   apply Finset.sum_congr rfl

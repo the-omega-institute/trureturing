@@ -1,0 +1,13 @@
+#### 定义 10.3：注意菜单下的响应等价
+
+设 $\mathcal A$ 为允许的有限适应性协议及其末端读出菜单， 每个输出历史 $h$ 对应效应 $G_h$。 被比较的 $\rho,\sigma$ 位于同一个完整输入端口： 未固定的程序、参考和记忆初态必须包括在内， 不能在它们与 $S$ 相关时只保留 $S$ 的边缘。 定义
+
+$$
+\rho\sim_{\mathcal A}\sigma
+ \quad\Longleftrightarrow\quad
+ \operatorname{tr}(\rho G_h)=\operatorname{tr}(\sigma G_h)
+ \ \text{对所有允许的 }h.
+$$
+
+其等价类称为该注意合同下的响应纤维。 这一定义关乎可区分性，未把任一等价类直接等同于客观基本粒子。
+

@@ -1,0 +1,11 @@
+## 9　计算注意力：保留可证明的桥梁
+
+Transformer 的 scaled dot-product attention 为
+
+$$
+A(Q,K)=\operatorname{softmax}\!\left(\frac{QK^\top}{\sqrt{d_k}}\right),
+ \qquad Y=A(Q,K)V .
+$$
+
+softmax 按行作用。原论文将其输出定义为 value 向量的加权和； 输出词元概率还需要后续的线性映射与 softmax， 多头机制也并不要求一次只保留一个方向[\[5\]](#ref-vaswani)。
+

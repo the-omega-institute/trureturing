@@ -1,0 +1,20 @@
+**定理 8.2（单位轨道根性归约）。**在定义 1.1 与完整关系 (R) 下，
+
+$$
+\mathrm{UC}\ \Longleftrightarrow\ \mathrm{BR}
+\ \Longleftrightarrow\ \mathrm N_5
+\ \Longleftrightarrow\ \mathrm N_{\rm fin}
+\ \Longleftrightarrow\ \text{存在满足 (1.2) 的仿射复 Hilbert 表示}.
+\tag{8.3}
+$$
+
+其中 $\mathrm{UC}$ 也等价于
+
+$$
+H_c(a,p_j;z)=H_{c^{\mathsf T}}(a,p_j;z)=0
+\qquad(a,z\in M,\ j=1,2).
+\tag{8.4}
+$$
+
+**证明。**$\mathrm{BR}\Rightarrow\mathrm{UC}$ 是定义 2.2 在 $u=p_1,p_2$ 的特化。(8.4) 与 (8.1) 的等价由定理 8.3 的读数恒等式给出。反向 $\mathrm{UC}\Rightarrow\mathrm{BR}$ 的证明依次为定理 8.3 的合法相位下降、第 9 节的仿射字符分解、第 10 节的成对历史与完整核下降，以及第 11 节在既有群上结论处的应用。其余等价直接使用定理 1.3。这里没有从 (R) 单独断言 (8.1)。
+

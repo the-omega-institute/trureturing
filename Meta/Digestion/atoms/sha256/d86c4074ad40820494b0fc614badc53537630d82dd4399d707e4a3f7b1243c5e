@@ -1,0 +1,69 @@
+**定理 7.1（未预付商下降的双侧有限相位不变性）。** 对 $Z=a+ib\in\mathcal E$ 定义有界自伴分量残差
+
+$$
+\mathfrak F_\lambda(Z)=
+\rho_\lambda D(a,b)-K_{\varepsilon_\lambda}(T(Z)_{\rm Re},T(Z)_{\rm Im}).
+\tag{7.1}
+$$
+
+此定义的自变量是实际原标签对；不假定残差能下降到 $T(Z)$ 的函数。令 $\mathcal U_0$ 为某个有限 $L\subset H_0$ 之外恒等的全部酉算子。则对所有原 $Z$ 和 $U,V\in\mathcal U_0$，
+
+$$
+\mathfrak F_\lambda(\mathscr L_U\mathscr R_V Z)
+=\mathfrak F_\lambda(Z).
+\tag{7.2}
+$$
+
+证明。消费 [172.1](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md#172-现有相位传播的同原域接回)／静态重构卷 64.1 的相位相减机制，支付这里不能由单分量坐标自动提供的实际标签等式。取原 $h=te_f$。5.3 识别任意原 $x,y$ 上的两个内层旧值 $D(h,x),D(h,y)$，且这两值和 $h\circ x,h\circ y$ 全在 $E\cap I$。所以原 PB 的实虚增量不仅具有已知坐标，还分别等于那些坐标在 $I$ 中的唯一原提升。
+
+写 $P=P_f$。按符号令 $\mathscr M_A=\mathscr L_A$（$\varepsilon=-1$）或 $\mathscr M_A=\mathscr R_A$（$\varepsilon=+1$）。由 5.3 的原理想等式和 (6.3)，对 $Z=a+ib$ 有实际标签等式
+
+$$
+\mathscr M_{1\pm itP}Z
+=\bigl(a\pm D(h,a)\mp h\circ b\bigr)
++i\bigl(b\pm h\circ a\pm D(h,b)\bigr).
+$$
+
+右端正是原 ([128.6](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md#128-同一二元关系的完整候选与实际角)) 取三输入 $(h,a,b)$ 的两份外层调用。证明此等式时，先逐项识别属于 $I$ 的增量，再加回完全相同的原 $a,b$；没有从两个总标签的相同 $\rho$ 坐标反推其相等。标准比较映射满足同一个算子 PB：$\varepsilon=-1$ 时 $Q_K= T(Z)^*T(Z)$，$\varepsilon=+1$ 时 $Q_K=T(Z)T(Z)^*$。将原 PB 经 $\rho_\lambda$ 读取，再减去这个已知比较恒等式，得到
+
+$$
+\begin{cases}
+\mathfrak F_\lambda(\mathscr L_{1+itP}Z)
+=\mathfrak F_\lambda(\mathscr L_{1-itP}Z),&\varepsilon=-1,\\
+\mathfrak F_\lambda(\mathscr R_{1+itP}Z)
+=\mathfrak F_\lambda(\mathscr R_{1-itP}Z),&\varepsilon=+1.
+\end{cases}
+\tag{7.3}
+$$
+
+没有展开未知外层 $D$，也没有以相同分量输入替换原调用。
+
+置 $A_t=(1-itP)^{-1}=1+((1-it)^{-1}-1)P$。负号情形把 (7.3) 用于实际 $Z_0=\mathscr L_{A_t}Z$，正号情形用于 $Z_0=\mathscr R_{A_t}Z$。(6.4) 给实际标签恒等式
+
+$$
+\mathscr L_{1-itP}Z_0=Z
+\quad\text{或}\quad
+\mathscr R_{1-itP}Z_0=Z,
+\tag{7.4}
+$$
+
+并给另一个端点是 Cayley 相位的实际提升，相位为
+
+$$
+U_{f,t}=1+\left(\frac{1+it}{1-it}-1\right)P_f.
+\tag{7.5}
+$$
+
+(7.4) 是修正项在原理想中准确相消的结果，不是 $T$ 单射的结果。若原 $Z$ 含非零的 $\ker T$ 部分，它在两个端点和所有中间标签中一直保留。
+
+有限实 $t$ 给除 $-1$ 外的每个秩一相位；$-1=i\cdot i$ 用两次 $t=1$ 的实际变换得到。对有限 $L\subset H_0$ 用有限酉谱定理，每个 $U\in\mathcal U_0$ 是有限个这类相位的乘积。每个中间标签由 6.1 留在原域，5.3 在其两个实输入上仍适用，故负号给所有左不变性，正号给所有右不变性。没有以稠密相位加未知连续性补全圆周。
+
+最后，原反对称性给
+
+$$
+\mathfrak F_\lambda(\tau Z)=-\mathfrak F_\lambda(Z).
+\tag{7.6}
+$$
+
+用实际标签恒等式 (6.6)，从已得的一侧不变性推得另一侧，再逐次作用即为 (7.2)。因此本运输不经过 $E/(E\cap\ker\rho_\lambda)$ 上的旧映射；原商相容性尚未被使用。∎
+

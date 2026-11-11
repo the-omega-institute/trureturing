@@ -34,7 +34,7 @@ theorem sqrt_rate (α δ : ℝ) (hα : 0 < α) (hδ : 0 < δ) :
     (Real.rpow_pos_of_pos hNpos α) hH)).trans hsmall
 
 theorem arithmetic_rate_three (β ε δ : ℝ) (hβ : 0 < β) (_hε : 0 < ε)
-    (hεβ : ε < 1 / 2 - 2 * β) (hδ : 0 < δ) :
+    (hεβ : ε < 1 / 2 - (3 / 2) * β) (hδ : 0 < δ) :
     ∀ᶠ N : ℝ in atTop, ∀ H : ℝ, 1 ≤ H → H ≤ N ^ β →
       N ^ (-1 / 2 + ε) * H ^ (3 / 2 : ℝ) * (Real.log N) ^ (-3 / 2 : ℝ) ≤ δ := by
   have hdecay : 0 < 1 / 2 - ε - β * (3 / 2) := by linarith
@@ -98,7 +98,7 @@ theorem antitone_modulus_rate (η : ℝ → ℝ) (α δ : ℝ) (hα : 0 < α) (h
   have hηH : η H ≤ η (N ^ α) := hanti hN (hN.trans hH) hH
   exact ⟨hηH, hηH.trans hsmall⟩
 
-theorem cell_rate (β δ : ℝ) (k : ℕ) (_hβ0 : 0 ≤ β) (hβ : β < 1 / 4)
+theorem cell_rate (β δ : ℝ) (k : ℕ) (_hβ0 : 0 ≤ β) (hβ : β < 1 / 2)
     (hk : k ≤ 4) (hδ : 0 < δ) :
     ∀ᶠ N : ℝ in atTop, ∀ H : ℝ, 1 ≤ H → H ≤ N ^ β →
       (H * Real.log N) ^ ((k : ℝ) / 2) / N ≤ δ := by

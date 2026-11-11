@@ -255,7 +255,7 @@ variable [PartialOrder A] [StarOrderedRing A]
 `w` unitary, where `|z| = √(z⋆ z)` (`CFC.abs z`). The square `|z| |z| = z⋆ z` is invertible, hence
 so is `|z|`; `w = z |z|⁻¹` has `w⋆ w = |z|⁻¹ z⋆ z |z|⁻¹ = 1`, and `w` is invertible, so also
 `w w⋆ = 1`. -/
-private lemma exists_mem_unitary_eq_mul_cfcAbs {z : A} (hz : IsUnit z) :
+lemma exists_mem_unitary_eq_mul_cfcAbs {z : A} (hz : IsUnit z) :
     ∃ w ∈ unitary A, z = w * CFC.abs z := by
   have hsa : IsSelfAdjoint (CFC.abs z) := (CFC.abs_nonneg z).isSelfAdjoint
   obtain ⟨c, hc⟩ : IsUnit (CFC.abs z) :=

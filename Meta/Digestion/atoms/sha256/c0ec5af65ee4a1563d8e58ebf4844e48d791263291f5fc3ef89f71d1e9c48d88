@@ -1,0 +1,30 @@
+**推论 15.1（同一族中一阶返回的充要条件）。** 沿任意允许的二进精度序列 $e\to0$ 和任意公共有理透射率序列 $\eta_e\in[0,1]$，对定义 12.1 的同一族、同一原成功解码器和同一规定后缀，
+
+$$
+\sup_{n,h}\Delta_{\eta_e}(n,h)=O(1/t_e)
+\quad\Longleftrightarrow\quad
+\eta_et_e\text{ 有界}.
+\tag{15.1}
+$$
+
+必要性更强：沿任意选定的原始允许 $n_e,h_e$ 序列，只要
+$\Delta_{\eta_e}(n_e,h_e)=O(1/t_e)$，就已有 $\eta_et_e$ 有界。若 $\eta_et_e\to\infty$，则对全部原始 $n,h$ 一致有
+
+$$
+\Delta_{\eta_e}(n,h)=\Theta\!\left(\sqrt{\eta_e/t_e}\right).
+\tag{15.2}
+$$
+
+证明。若 $\eta_et_e\le M$，(14.2) 给
+$t_e\Delta_{\eta_e}(n,h)\le C_{\rm part}(1+\sqrt M)$。反之，若沿某个允许 $n_e,h_e$ 序列有 $t_e\Delta_{\eta_e}(n_e,h_e)\le M$，同一逐点下界给
+
+$$
+192\sqrt{\eta_et_e}\le M+C_{\rm part},\qquad
+\eta_et_e\le\left(\frac{M+C_{\rm part}}{192}\right)^2.
+\tag{15.3}
+$$
+
+渐近 $O$ 界只要求尾部，有限前缀的 $t_e$ 和 $\eta_e$ 也有限，故等价成立。若 $\eta_et_e\to\infty$，将 (14.2) 除以 $\sqrt{\eta_e/t_e}$，则下界余项为
+$C_{\rm part}/\sqrt{\eta_et_e}\to0$，上界为
+$C_{\rm part}(1+1/\sqrt{\eta_et_e})$。特别地，其一致下极限至少为 $192$，给 (15.2)。这为命题 11.1 的保留/约化接口比较提供指定部分保留模型中的完整量化关系；原成功概率、资源和全部自身边缘仍属同一运行。$\square$
+

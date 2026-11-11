@@ -1,0 +1,23 @@
+**定义 17.1（原始任务内的固定补偿器）。** 固定定义 13.1 的任一元组：$N\ge N_*=8{,}388{,}608{,}000$，$M=L=10N$，$Q=18N+1$，$D=2j+1\ge8{,}000{,}000N^2$。仍取 $d=1/64$、$\tau_0=1$、$t=d\tau_0=1/64$、$r=1/4$、$B_{\rm field}=2$、$G=1$、$\epsilon=1/16$、$\beta=1/100$。场 $n:U\to S^2$ 在包含两条完整闭 $r$ 轴段的开集上为 $C^2$、秩二，并满足 (13.2) 的全部导数界。每次场重置独立供应 $\rho_n(z)=(I+n(z)\cdot\sigma)/2$。唯一初始未知方向资源仍为 $R=\operatorname{Sym}^{2j}(\mathbb C^2)$ 上的 $\tau_h$；固定 $n$ 后，全部非参考来源的完整律对所有 $h$ 相同。目标仍是初始方向的 (13.3)，访问仍限于至多 $L$ 个 (13.6) 原生槽、一次 (13.9) 强制终端交换，其余操作在 $R$ 上为恒等。
+
+采用定义 13.1、假设 12.2 允许的有限因果非 $R$ 处理，以及定义 16.1 的实际约化节点语义。写 $\mathcal E(X)=\operatorname{Tr}(X)I_2/2$，所有被替换的 qubit 仍留在实际口。对三枚非参考 qubit $B,A,F$，置
+$$
+\begin{aligned}
+r_t&=1-\cos t,\qquad s_t=\sin t,\qquad c_t=r_t+i s_t=1-e^{-it},\\
+O_i&=-r_t\left[\sigma_{F,i}
++\frac{\sigma_{B,i}(\sigma_A\cdot\sigma_F)
++\sigma_{A,i}(\sigma_B\cdot\sigma_F)}2\right]
++\frac{s_t}{2}\bigl[(\sigma_B-\sigma_A)\times\sigma_F\bigr]_i
+\quad(i=x,y,z),\\
+\Phi(X)&=\frac{\operatorname{Tr}(X)I_2+
+                 \sum_i\operatorname{Tr}(O_iX)\sigma_i}{2},\\
+\widehat\Phi(X)&=\frac{I_B}{2}\otimes\Phi(X)_A\otimes\frac{I_F}{2}.
+\end{aligned}
+\tag{17.1}
+$$
+不同 qubit 的算子乘积隐含张量积，点积、叉积使用同一固定定向标架。这是一个固定矩阵通道的定义，不含实际 $n,h,D$ 的程序参数。
+
+补偿后缀 $\mathsf S$ 依次如下。准备固定 singlet $|\psi^-\rangle_{BA}=(|\uparrow\downarrow\rangle-|\downarrow\uparrow\rangle)/\sqrt2$，将 $B$ 送入第一个原生槽；对 $H$ 在原始标签基退相干，保留 $H,E$ 和原始符号，仅在负标签上交换 $B,A$。在 $+d e_x$ 独立重置一枚场令牌 $F$，对 $BAF$ 施行 $\widehat\Phi$；将输出 $A$ 送入第二个原生槽，对其 $H$ 作同样退相干，完整保留两组原生记录及其实际副本。随后对 $B,A,F$ 各施行 $\mathcal E$，保留这三枚输出。最后在 $+d e_x$ 另取一枚未经改动的独立纯场令牌 $S_t$，执行规定的 $U_{\rm term}=\exp[-itJ\cdot\sigma/(D-1)]$，再对同一 $S_t$ 施行 $\mathcal E$ 并保留它。没有条件选支或新增校正读数。
+
+记 $Z$ 为两个补偿槽的原始成对标签 $H,E$ 及全部确定性符号副本；$\pi_Z$ 是四个合法历史的均匀比较态，未要求实际标签均匀。固定程序、路由和步进寄存器一并保留；若它们复制标签，归入 $Z$。以 $\sigma_0$ 记三枚替换量子输出和其余固定工作输出的联合固定态；不另外准备工作寄存器的直接实现中，$\sigma_0=(I_2/2)^{\otimes3}$。终端后置 $\sigma_1=\sigma_0\otimes I_{S_t}/2$。这里指定的约化节点没有另行声明的实际环境输出。另一实现若产生额外实际噪声、指针或工作输出，必须纳入 $K$ 并重证完整口界；形式 Kraus 指标及证明用扩张不自动增加实际口，实际存在的输出也不能以此删去。有限复合、CP 仪器和自旋程序仍分别采用 OTF001 假设 2.5–2.7、定理 7.2 与 OTF002 定义 11.1；非 $R$ 处理的许可来自原访问合同，不来自 OTF003 第 11 节所区分的生成代数闭包。
+

@@ -1,0 +1,29 @@
+**Theorem 13.5 (exact one-sided shape cutoff for a finite prior).** Under the finite-support hypothesis of Corollary 13.4, for each integer $N\ge1$ let
+
+$$
+\mathfrak C_N^p=\{(\Gamma_B,\Gamma_A)\in\mathfrak C:
+                         |\operatorname{supp}\nu_p|\le N\},\qquad
+D_{N,s}=N^2+2N+s-1.
+$$
+
+Then the following are attained minima, with $e(M)$ as in Theorem 11.5:
+
+$$
+\min_{\mathfrak C_N^p}\mathcal J
+ =\min_{\substack{M\in\mathfrak S_\mu\\
+                   |X|\le N,\ |Y|\le D_{N,s}}}e(M).
+\tag{13.16}
+$$
+
+The symmetric equality bounds $|Y|\le N$ and $|X|\le D_{N,s}$.
+
+If $j_c=0$ but there is no finite abstract original attainer, every zero-level compatible pair has infinite support at both marginals. In any regular stationary sequence with $e(M_n)\to0$, both numbers of distinct phase complete laws tend to infinity.
+
+**Proof.** The set of probability measures on $\mathcal K_p$ with at most $N$ atoms is the continuous image of the compact set $\Delta_N\times\mathcal K_p^N$ under $(t,Q)\mapsto\sum_i t_i\delta_{Q_i}$. Zero weights and repeated atoms are allowed in this parametrization. It is therefore weakly compact and closed. Marginal projection is continuous, so $\mathfrak C_N^p$ is a closed compact subdomain of $\mathfrak C$. It is nonempty by the singleton construction in Lemma 11.3. For finite $S$, $\mathcal J$ is the maximum of finitely many continuous loss integrals, so it has a minimum on this subdomain.
+
+Apply Theorem 13.2 to a minimizer with its actual number $n\le N$ of positive distinct p atoms, listing all $s$ suspended target losses. It preserves the whole objective and produces at most $n^2+2n+s-1\le D_{N,s}$ suspended labels and $n$ p labels. Proposition 13.3 identifies its original excess with this objective. Conversely (11.24) maps each table on the right to a pair in $\mathfrak C_N^p$ with identical excess. This proves (13.16) and realizes its right minimum.
+
+Equivalently, the finite table domain on the right admits a compact padded representation with $N,D_{N,s}$ labels, nonnegative rows, stochastic kernels, emissions in $[a,b]$ and closed balances. Complete laws and losses vary continuously there: every finite completed-word coordinate is polynomial in the parameters, and the common geometric survival bound controls the whole TV tail uniformly. Removing zero-weight labels changes no positive-label generated law or loss; nonnegative balances preclude transitions from a positive label into a zero-weight label. This recovers the stipulated positive-row tables and explains attainment without assuming that the positive-row parameter domain itself is closed.
+
+The first nonattainment assertion follows from Corollary 13.4 in either direction. For the sequence assertion, if one phase's distinct-law count did not tend to infinity, a subsequence would have that count bounded by some $N$. Embed its tables in $\mathfrak C$ by (11.24), take a compact subsequence, and use the closed at-most-$N$ marginal condition. Lower semicontinuity and nonnegativity of $\mathcal J$ make the limiting pair zero-level. Corollary 13.4 would give a finite abstract attainer, a contradiction. The proof works for either phase. These conclusions use absence of an abstract attainer; absence only of an effective attainer is insufficient. $\square$
+

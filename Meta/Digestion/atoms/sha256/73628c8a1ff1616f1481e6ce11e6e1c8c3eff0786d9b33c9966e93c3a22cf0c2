@@ -1,0 +1,34 @@
+**定理 14.1（全部原场上的定量返回关系）。** 取原 (2.2)–(2.3) 的 $A,B_*$，并置
+
+$$
+c=192,\qquad C_{\rm part}=2\cdot768^2(A^2+B_*+2)+2,
+\qquad r_1=r_0.
+\tag{14.1}
+$$
+
+对每个整数 $r\ge r_1$、$e=2^{-r}$、每个公共有理 $\eta\in[0,1]$、每个定义 1.1 的原始允许场 $n$ 和每个 $h\in S^2$，定义 12.1 的同一个有限控制器在声明的有限 CP 实际端口下满足
+
+$$
+\max\left\{0,192\sqrt{\frac\eta t}-\frac{C_{\rm part}}t\right\}
+\le\Delta_\eta(n,h)
+\le C_{\rm part}\left(\frac1t+\sqrt{\frac\eta t}\right).
+\tag{14.2}
+$$
+
+同一无条件运行还满足原四坐标成功和最坏资源界
+
+$$
+\begin{gathered}
+\Pr[\|\widehat D-D_h(n)\|_\infty>e]\le2e/3,\\
+T_V\le\nu_eq_e+2\le L_e,\qquad
+T_{\rm reset}=15\ell_e+2\le Q_e,\qquad T_R\le\nu_eq_e+3,\\
+q_e=\lceil\log_2(D_eL_e/e)\rceil,\qquad
+\nu_e\le C_\nu e^{-3}\log(2t/e),\qquad \nu_eq_e\le L_e-2.
+\end{gathered}
+\tag{14.3}
+$$
+
+所有分支恰执行一次原规定终端，使用在 $+d e_x$ 独立重置、此前未经改动的场令牌。全部原始记录、实际副本、编译残余和新旧量子口均保留；任意原合同允许的混合旁观辅助保持原独立条件，不供应其纯化。公共程序不依赖实际 $n,h$，且对每个有理 $\eta$ 有有限存储。
+
+证明。以下分别给出改变节点之前的准入、共同领先态、完整后缀的上下界及同一运行的成功和资源。
+

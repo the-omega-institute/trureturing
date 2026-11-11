@@ -1,0 +1,38 @@
+**Theorem 11.2 (the maximal deterministic single-read neutral quotient).**
+For every original finite $a,\eta,d>0$ and every permitted Borel repair,
+the neutral subsets are exactly
+
+$$
+\varnothing,\qquad\{B\},\qquad\{0,1,3\},\qquad\mathcal L.
+\tag{11.1}
+$$
+
+Consequently a deterministic single-read recoding is neutral if and
+only if $\gamma=\psi\circ B$ for some map $\psi$ on $\{0,1\}$.
+In this precise order of deterministic single-read recodings, $B$ is
+maximal, up to relabelling. Constant recodings are included.
+
+*Proof.* Reuse the nonconstancy of $g_t$ at every positive time proved
+in [OWGR, Theorem 5.3, proof of (5.8)–(5.11)]; no new nonconstancy
+assertion is needed. Since $c>0$ and $[b]=g_d$, $f_3$ is nonconstant.
+The actual emission identities (1.2) give
+
+$$
+f_A=\frac{\mathbf1_{\{B\in A\}}}{4}
+ +\frac38\bigl(\mathbf1_{\{0\in A\}}+\mathbf1_{\{1\in A\}}\bigr)
+ +\left[\mathbf1_{\{3\in A\}}
+ -\frac{\mathbf1_{\{0\in A\}}+\mathbf1_{\{1\in A\}}}{2}\right]f_3.
+\tag{11.2}
+$$
+
+Thus neutrality is equivalent to vanishing of the bracket. If $3$
+is absent, both $0,1$ must be absent; if $3$ is present, both must
+be present. Membership of $B$ is free. This proves (11.1).
+Every fibre of a neutral recoding belongs to (11.1), so $0,1,3$
+must have one common image. This gives $\psi$; the converse follows
+from the same four subsets. These statements concern $m$-classes,
+not pointwise values at a repaired null set. All actual sampled epochs
+are positive and absolutely continuous with respect to $m$; the
+stationary epochs have law $m$. A countable union of their null
+exceptions is null. No emission at time zero is substituted. $\square$
+
