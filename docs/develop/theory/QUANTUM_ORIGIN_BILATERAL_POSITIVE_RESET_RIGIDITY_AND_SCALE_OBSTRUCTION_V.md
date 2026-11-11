@@ -916,3 +916,152 @@ Born 分支概率为原输出迹，只有正概率才除以该迹定义条件态
 [F] H. Barnum、J. Hilgert，[*Strongly symmetric spectral convex bodies are Jordan algebra state spaces*，1904.03753v1，§4 Definition 4.1、Theorem 4.2](https://arxiv.org/abs/1904.03753v1)：完整本原谱框架与按不同谱值合并的谱幂等元；其定位 Faraut–Korányi, *Analysis on Symmetric Cones* (1994), III.1.1、III.1.3。本章只用有限 EJA 谱工具，不以强对称分类替换 [S]。矩阵单位归纳 (75.19)—(75.20) 属于复矩阵中的直接 Jordan 乘法计算。
 
 ## 追加锚（本行以下为增补区）
+
+## 76. 同标框架的同步提升与生成性不可由两点表代替
+
+本章第 65—72 章仍指第四卷，第 73—75 章指本卷。一般 EJA 的支撑归一化与 Jordan 闭包沿定理 75.4 的证明使用；本章把两层有限关系限制到同标产品框架，给出同一实际模型类的完整候选，并在整个原接口上分离有限两点读数、生成性与全域保零。
+
+### 76.1 同一原系统与同标零关系
+
+**定义 76.1（保留的基底与生成族）。** $\mathrm{PRE}_0$ 精确取定义 75.1：每个 $X=A,D,E$ 保留非零有限维实空间、闭尖生成锥、非零正元上严格正的 $u_X$、整个紧态基 $K_X$、全部效应 $[0,u_X]$、纯态 $P_X=\operatorname{ext}K_X$，以及只以纯态为第一端点的比较和全部有限混合律
+$$
+T^X_\xi(x)=\inf\{f(x):0\le f\le u_X,\ f(\xi)=1\},\qquad
+T^X_\xi\!\left(\sum_\ell v_\ell\eta_\ell\right)=\sum_\ell v_\ell T^X_{\eta_\ell}(\xi). \tag{76.1}
+$$
+量词遍及每个纯 $\xi$、每个有限纯态族和每组概率权重。保留 75.1 与其 [S] 引用的完整一般 EJA 条件桥，包括正对偶生成、忠实配对、共同框架、面投影、项目性和滤波纯性；纯端点互反不替代该混合律。在忠实坐标中，原态与效应区间均完整保留，比较为规范迹配对；仍允许一般 EJA、Albert、直和和秩一因子，尚未取得复型。
+令 $n=\tau_A1_A$、$m=\tau_D1_D$，唯一供应的映射与参考仍是全锥正的实双线性 $L:D\times A\to E$、全锥正的实线性 $p:E\to D$ 及 $\omega=1_D/m$。内部量由同一个实际 $p$ 定义：
+$$
+\begin{aligned}
+K(a)&=pL(\omega,a),& M(a,b)&=pL(K(a),b),& J(a)&=M(a,1_A),\\
+H_{\mathrm s}(d)&=L(d,1_A),&B_1&=pH_{\mathrm s},&U&=M(1_A,1_A),\quad G=H_{\mathrm s}1_D.
+\end{aligned} \tag{76.2}
+$$
+保留 $\operatorname{span}_{\mathbb R}M(A,A)=D$、$\operatorname{span}_{\mathbb R}L(D,A)=E$ 及全实 $Z:B_1M(a,b)=\tau_A(a)Jb$。正性覆盖第一输入的全部纠缠正元和全部原输出锥；两次读回、原参考、原迹和原 $L,p$ 不变。定义 75.2 已仅由这些前件证明 $U,G>0$，因此可先于零表定义 $F=P_{U^{-1/2}}M$。
+取同一原比较几何中的完整本原框架族 $\mathfrak B=(B_r)_{r=1}^s$；$\mathsf{JG}_3$ 表示存在 $1\le s\le3$ 的这种族，其全部成员的最小实 Jordan 子代数为整个 $A$。允许重复框架，不要求这些成员线性张满；存在见证不供应独立制备、读回、自然选择或物理装置。第一表保持 (75.5)，第二表只取同标配对：
+$$
+\mathsf J_{\mathfrak B}:\quad \langle Je,Je'\rangle_D=0\quad(e\ne e'\in B_r), \tag{76.3}
+$$
+$$
+\mathsf H^{\mathrm{diag}}_{\mathfrak B}:\quad
+\langle H_{\mathrm s}F(e,f),H_{\mathrm s}F(e',f')\rangle_E=0
+\quad((e,f)\ne(e',f')\in B_r\times B_r). \tag{76.4}
+$$
+两式量化所有 $r$，不要求 $r\ne t$ 的 $B_r\times B_t$ 列表，也不要求不同框架间本来非正交的原子零比较。$F(B_r\times B_r)$ 的完整本原框架性质是下述证明的结论。
+
+**定义 76.2（保留原混态方向条件）。** 两表恢复 PRE 后，完全按定义 75.3 读取 H13。写 $A=\bigoplus_iA_i$ 的中心单位为 $c_i$、秩为 $n_i$，$D_{ik}=\operatorname{span}_{\mathbb R}F(A_i,A_k)$ 的中心投影为 $\pi_{ik}$，并令
+$$
+\alpha_{ik}=F(-,c_k)|_{A_i},\quad\beta_{ik}=F(c_i,-)|_{A_k},\quad
+\mathcal Q=\{(i,k):n_i,n_k\ge2\},\qquad
+\mathcal H(F)=\{\rho\in K_D:\ \forall(i,k)\in\mathcal Q,
+\ \alpha_{ik}\alpha_{ik}^*x-x\not\succeq0\ \text{或}\ \beta_{ik}\beta_{ik}^*x-x\not\succeq0,\ x=\pi_{ik}\rho\}. \tag{76.5}
+$$
+伴随取原规范迹内积；每个活跃块至少一差有严格负方向，不要求两差都不正或负定。非活跃块任取正元含零，只受同一原总迹一约束；$\mathcal Q$ 空时资格为整个 $K_D$。这里的边缘铺回使用未经维数归一化的单位，不要求纯态、固定 Schmidt 谱或逐块条件化。
+以原 $\widetilde M$ 和 $T_{\rm raw}(a,c)=L(Ja,c)$ 定义
+$$
+I^{\rm raw}=\widetilde T_{\rm raw}\widetilde M^{-1},\qquad
+\mathrm H13:\ \exists\rho\in\mathcal H(F),\ I^{\rm raw}\rho\in E_+,\qquad
+\mathrm{C13}:\ I^{\rm raw}(D_+)\subseteq E_+. \tag{76.6}
+$$
+检测同一个原 $\rho$ 的整个原输出，不以滤波后的态、固定效应、总迹或校准后的输出替代。这个分阶段定义不把尚未恢复 PRE 的对象自动视作具有其结构。
+
+### 76.2 同标提升的完整等价与计数
+
+**定理 76.3（只需同标产品框架）。** 在定义 76.1 的同一实际数据上，对任意有限 Jordan 生成完整框架族，
+$$
+\mathsf J_{\mathfrak B}+\mathsf H^{\mathrm{diag}}_{\mathfrak B}\quad\Longleftrightarrow\quad D_J+D_H. \tag{76.7}
+$$
+其中 $D_J,D_H$ 分别保持全部 $A_+$、$D_+$ 上的正交正元对。特别地，遗忘框架见证后，
+$$
+\boxed{\mathrm{PRE}_0+\mathsf{JG}_3+\mathsf J_{\mathfrak B}+\mathsf H^{\mathrm{diag}}_{\mathfrak B}+\mathrm H13}
+\quad\Longleftrightarrow\quad\mathrm{PRE}+\mathrm{C13}. \tag{76.8}
+$$
+删去两边的 H13、C13 仍为同实际模型类的等价。两张表分别不超过
+$$
+s\binom n2\le3\binom n2,\qquad s\binom{n^2}2\le3\binom{n^2}2. \tag{76.9}
+$$
+
+**证明。** 第一步仅在一般 EJA 中应用 75.4（三）的生成框架工具于 $J$。其前件是全锥正性、$J1=U>0$ 和第一表，因此取得整个 $D_J$，未使用复型、第二表或 H13。该工具的证明同时使用零平方缺陷域和权重算子交换域的 Jordan 闭包；两者的前件与 Albert、重谱、直和、零像范围完整保留。
+第二步才用不依赖 $D_H$/C13 的第四卷定理 65.3，取得保单位 Jordan 嵌入 $\alpha=F(-,1)$、$\beta=F(1,-)$，其像的乘法算子在 $D$ 中交换，且
+$$
+F(a,b)=\alpha(a)\circ\beta(b),\qquad \widetilde F\text{ 是满规范迹等距},\quad m=n^2. \tag{76.10}
+$$
+所以 $\mathsf C_r=F(B_r\times B_r)$ 是完整本原框架：交换幂等元之积幂等，等距性给每个像范数平方一、迹一，故本原；不同成员正交，双重求和为单位。
+令 $W$ 为全部 $\mathsf C_r$ 成员的 Jordan 闭包。对每个 $e\in B_r$，仅在同一 $r$ 中求行和与列和就得
+$$
+\alpha(e)=\sum_{f\in B_r}F(e,f)\in W,\qquad
+\beta(e)=\sum_{f\in B_r}F(f,e)\in W. \tag{76.11}
+$$
+因此源生成性和同态性分别给 $\alpha(A),\beta(A)\subseteq W$。$W$ 闭 Jordan 乘积，遂含全部 $F(A,A)$；第一条实张成经可逆 $P_{U^{-1/2}}$ 给 $\operatorname{span}_{\mathbb R}F(A,A)=D$，所以 $W=D$。这里不声称有限所选产品成员本身线性张满。不同框架的交叉产品没有参与此生成证明。
+第三步对全锥正的 $H_{\mathrm s}$ 使用同一个工具：$H_{\mathrm s}1=G>0$，而这些同标产品框架已经 Jordan 生成整个 $D$；第二表遂恢复整个 $D_H$，包括纠缠正元。反向，$D_J$ 给第一表和 (76.10)，$D_H$ 给第二表，证明 (76.7)。
+从旧 PRE 出发，第四卷 66.3 先给复 Hermitian 直和；75.4（五）在这个已取得的环境中构造至多三套完整生成框架，包含 qubit 的三个 Pauli 框架、较高秩的非实三角加实尾谱框架及保中心的直和合并。因此前向无需预选复数，逆向不循环使用新候选；也得删去 H13/C13 的等价。恢复 PRE 后，75.4（六）所引 72.7—72.8 保证资格非空及每个合格原态的全输出正性等价 C13，给 (76.8)。最后每套局部框架有 $n$ 个成员，同标产品框架有 $n^2$ 个成员，数各自无序不同成员对即得 (76.9)。证毕。
+
+相对 (75.6) 的 $s^2$ 套产品框架，本定理只保留 $s$ 套；统一上界由 $9\binom{n^2}2$ 降至 $3\binom{n^2}2$。这是同实际模型类内的关系冗余删除，不是三个实验，不保证每套都不可再删，也不证明最少公理。局部三框架的统一尖锐性仍只在 75.4 的完整框架/Jordan 生成签名内成立。
+
+### 76.3 相同十二原子两点表的不同生成闭包
+
+**命题 76.4（生成性不是所选两点表的后处理）。** 在同一个 $A=H_4(\mathbb C)$ 中，令 $X,Y,Z$ 为 Pauli 矩阵、$I=I_2$，省略张量符号。对 $s,t\in\{\pm1\}$ 定义
+$$
+\begin{aligned}
+E_{st}&=(I_4+sZI+tIZ+stZZ)/4,&F_{st}&=(I_4+sXI+tIX+stXX)/4,\\
+G^{\mathrm r}_{st}&=(I_4+sXZ+tZX+stYY)/4,&G^{\mathrm c}_{st}&=(I_4+sYI+tIY+stYY)/4.
+\end{aligned} \tag{76.12}
+$$
+两个有标签框架三元组 $(E,F,G^{\mathrm r})$ 与 $(E,F,G^{\mathrm c})$ 的全部十二原子两点表 $\operatorname{Tr}(pq)$ 完全相同：同框架为 Kronecker delta，异框架恒为 $1/4$。前者 Jordan 闭包为 $H_4(\mathbb R)$，实维数十；后者闭包为 $H_4(\mathbb C)$，实维数十六。
+
+**证明。** 每套使用两个可交换自伴随对合 $A_0,B_0$，而 $A_0,B_0,A_0B_0$ 均迹零。因此 $(I_4+sA_0)(I_4+tB_0)/4$ 是四个和为单位的正交迹一投影，故完整本原。第三套用 $(XZ)(ZX)=(-iY)(iY)=YY$。Pauli 张量迹正交；每个三元组中，各套使用的三个非单位 Pauli 张量集合不相交，故跨套配对只剩 $\operatorname{Tr}I_4/16=1/4$。
+把 $E$ 记为对角投影 $e_j$；$F_{++}=q=\mathbf1\mathbf1^*/4$。对 $j\ne k$，$4e_j\circ(e_k\circ q)=(E_{jk}+E_{kj})/4$。所以 $E,F$ 生成全部实对称矩阵单位，又都实，闭包恰为 $H_4(\mathbb R)$。$G^{\mathrm r}$ 也实，因为 $YY$ 实，加入它不扩大闭包。
+另一方面，$\sum_{s,t}sG^{\mathrm c}_{st}=YI$，其一个非零虚 Peirce 分量给 $I_{13}=iE_{13}-iE_{31}$，差一个非零实因子。已有全部 $R_{jk}=E_{jk}+E_{kj}$；三个不同指标的矩阵单位乘法给
+$$
+2R_{12}\circ I_{13}=I_{23},\quad 2R_{23}\circ I_{13}=I_{12},\qquad
+2I_{jk}\circ R_{k\ell}=I_{j\ell},\quad 2R_{jk}\circ I_{j\ell}=I_{k\ell}\quad(j<k<\ell). \tag{76.13}
+$$
+先得前三点的全部虚边，再经第四点得 $I_{14},I_{24},I_{34}$，与全部实边、对角元组成 $H_4(\mathbb C)$ 的实基。证毕。
+
+该命题比较同一环境内的两个框架见证，不是两个完整 PRE 模型。它分离的是生成见证的充分性；不反驳保留生成性时的定理 76.3，也不反驳全部原态上的 $S$。相同有限两点表的任何后处理都无法分开这两个见证；需要原空间内 Jordan 乘积及其闭包所保留的关系。
+
+### 76.4 全原接口中的删生成性反模型
+
+**命题 76.5（完整插入正性不能补回遗漏的生成性）。** 固定 $0<\lambda<1$，取完整标准矩阵态、效应、迹和比较，并令
+$$
+A=H_4(\mathbb C),\quad D=H_{16}(\mathbb C),\quad E=H_{64}(\mathbb C),\qquad
+T_\lambda a=\frac{1+\lambda}{2}a+\frac{1-\lambda}{2}a^T,\quad
+L_\lambda(d,a)=d\otimes T_\lambda a,\quad p=\operatorname{Tr}_1,\quad\omega=I_{16}/16. \tag{76.14}
+$$
+这里 $p$ 始终为同一个四维首腿偏迹。上述数据满足整个 $\mathrm{PRE}_0$、完整 $D_H$ 和完整 C13；对 $(E,F,G^{\mathrm r})$ 两张有限零表均成立，所选原子及其 $J,F,H_{\mathrm s}F$ 像与 $T=\mathrm{id}$ 的标准模型逐项相同，但 $D_J$ 失败。
+
+**证明。** $T_\lambda$ 为恒等与转置的凸组合，所以全锥正、保单位、保迹且对迹配对自伴随。它在实对称部分恒等，在纯虚反对称 Hermitian 部分乘 $\lambda$，故实线性可逆，不要求逆正。$L_\lambda$ 因而对全部 $d\in D_+,a\in A_+$ 正，包括纠缠的 $d$；$p$ 在整个 $E_+$ 上正。标准全态效应满足 (76.1)。原参考经同一个 $p$ 两次直接给
+$$
+\begin{aligned}
+K(a)&=I_4/4\otimes T_\lambda a,&M(a,b)&=T_\lambda a\otimes T_\lambda b,&J(a)&=T_\lambda a\otimes I_4,\\
+H_{\mathrm s}(d)&=d\otimes I_4,&U&=I_{16},&G&=I_{64},\quad F=M.
+\end{aligned} \tag{76.15}
+$$
+$T_\lambda$ 可逆给两条实张成，且全部实输入上
+$$
+B_1M(a,b)=\operatorname{Tr}(T_\lambda a)\,T_\lambda b\otimes I_4=\operatorname{Tr}(a)Jb. \tag{76.16}
+$$
+$H_{\mathrm s}$ 保持整个 $D_+$ 上的正交，给完整 $D_H$。三套实框架的每个成员被 $T_\lambda$ 固定，因此 $Je=e\otimes I_4$、$F(e,f)=e\otimes f$、$H_{\mathrm s}F(e,f)=e\otimes f\otimes I_4$。全部所列读数与标准模型相同，两表成立，甚至所有 $B_r\times B_t$ 的旧第二表也成立。
+在标准实张量识别下，$\widetilde M=T_\lambda\otimes T_\lambda$ 可逆，而 $T_{\rm raw}(a,c)=T_\lambda a\otimes I_4\otimes T_\lambda c$。因此逆映射消去两端的 $T_\lambda$，$I^{\rm raw}$ 在整个 $D$ 上恰为通常的中间插单位映射，是 $d\mapsto d\otimes I_4$ 的腿置换；它保整个正锥，给完整 C13，所有原输入的插入输出都与标准模型相同。此处可逆性由显式公式给出，未借尚未取得的 65.3。
+最后在前两维角取 $p_\pm=(I_2\pm Y)/2$，其余两维补零。这两个本原投影正交，但
+$$
+\operatorname{Tr}(T_\lambda p_+T_\lambda p_-)=\frac{1-\lambda^2}{2},\qquad
+\langle Jp_+,Jp_-\rangle_D=2(1-\lambda^2)>0. \tag{76.17}
+$$
+所以 $D_J$ 失败，且失败来自同一个原 $p$、原参考和整个原正锥。证毕。
+
+本例只是否定“删去生成性仍能恢复 $D_J$”：指定的 $(E,F,G^{\mathrm r})$ 不生成 $A$。$A=H_4(\mathbb C)$ 本身仍存在其他至多三套生成框架，但它们不能同时通过第一表，否则 75.4（三）会推出与 (76.17) 矛盾的 $D_J$。完整 C13 不表示已经恢复 PRE。若将 (76.5) 的单块边缘公式明确延拓到本例，令 $\alpha(a)=T_\lambda a\otimes I$、$\beta(a)=I\otimes T_\lambda a$，则四维归一 Bell 投影 $\rho_\Omega$ 的两边缘均为 $I_4/4$，两种铺回差都为 $I_{16}/4-\rho_\Omega$，在 Bell 方向为 $-3/4$；其原插入输出仍正。这只是该单块公式延拓的通过，不是定义 76.2 的前序结构已经成立，也不能据以替代生成性。
+
+### 76.5 量子公理对应、几何与完整白话
+
+**推论 76.6（同标候选的消费者与范围）。** 在 (76.8) 的全部前件下，75.7 的原消费者完整保留：完整 $S$ 与组合桥给复 Hermitian 直和、全密度态与全效应、$\Pr(f\mid\rho)=\sum_\lambda\operatorname{Tr}(f_\lambda\rho_\lambda)$，以及单份纯态几何 $\bigsqcup_i\mathbb{CP}^{n_i-1}$；H13 选定相对方向后才可同时取普通二份、三份辅助张量。正滤波权重 $u,g$、唯一逆迹平衡及原参考仍按原式保留，不由有限零表自动成为标准归一化。
+若另满足 73.2、73.10—73.16 的两个原接口双侧正重置补全与一次原总迹锚 $\mathrm A_0$，才得原 $u=g=I$、标准张量准备与偏迹。有限 CP 仪器仍须 69.1—69.11／75.7 的固定旁观者族、局部和原联合两预算；弱共同重置可同时补全两预算当且仅当权重输入行一致。事件的 CP 来源、足够大实际参考、锐效应和确定接受态逐点不变所需的 Lüders 前件、连续时间齐次可逆 $*$ 自同构群所需的 Hamiltonian 前件均不从本章静态零表取得。
+
+**证明与入口边界。** 定理 76.3 先恢复同一 PRE+C13，遂可直接代入 75.7，原量词与尺度均不变。最新 Library [L] 的无序可区分纯对传递性结果提供另一条有条件入口：在完整有限维态效应和紧保序群下先得自对偶，另加每个纯态存在最小确认效应才识别内在比较并得完整 $S$。该群条件不自动给最小性，也不提供复型或组合；它只是充分入口，不是本章对 $S$ 的无条件替换或同模型类缩减。第四卷 72.16 的自然有限选态障碍及 75.6 的全锥正性、权重交换控制仍有效；本章并未给出无参照自然选框架。四份以上组合、无限维一致性、完整原来源与全部过程合同仍不由这些有限维关系供应。∎
+
+**直观白话。** 先保留所有状态、所有测试、随机制备的完整比较规则，以及一个准备和同一个读回连续用两次的原系统。局部只选至多三套能生成全部空间的互斥方向；每套经过第一接口后仍互斥。提升到双份时，两边只使用同一套方向，不再把三套左右交叉成九套。一张同标方格的行和留下左边缘，列和留下右边缘；三张方格已经同时带回两边全部生成方向，它们的乘积再铺满整个双份空间，所以只检查三张方格也能锁住整个纠缠锥的零关系。随后仍用同一个原混态的边缘盖不住联合块、整个原插入输出为正，排除错误相对转置方向。为什么不能只看几张两点概率表？两套十二方向表可以逐项相同，却一套永远留在实矩阵平面，另一套生成全部复方向；转置平均还能把没看见的虚方向缩短，使所有已选表和完整插入都通过，却破坏遗漏方向的互斥。因而保留下来的关键是这些方向之间反复组合的关系，而不只是方向两两之间已经列出的数字。
+
+本章简洁几何是同一局部 Jordan 生成族的同步产品提升；它没有预先在一般 EJA 中指定复相位图。Pauli 张量、互补框架、Peirce 提取、正映射和矩阵单位运算是成熟工具；本章只在其上给同原接口的约束删除及明确反模型，不作工具原创、全球优先权、最少量子公理、物理实现或形式核验声明。
+
+**数学来源。** [V] [本卷第 73—75 章，固定文本 5555e728](https://github.com/the-omega-institute/trureturing/blob/5555e728b62ed8a7c5aea520bd396cf2c11b08d4/docs/develop/theory/QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_V.md)：定义 75.1—75.3、定理 75.4 的一般 EJA 闭包和三框架存在、75.6 的控制、75.7 的消费者与其中明确归属的成熟来源；本章新同标生成论证为 (76.11)，不把旧闭包重算为新内容。[R] [第四卷，同固定文本](https://github.com/the-omega-institute/trureturing/blob/5555e728b62ed8a7c5aea520bd396cf2c11b08d4/docs/develop/theory/QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES_IV.md)：65.3 第一接口不依赖 $D_H$/C13；66 的分类和方向、69 的操作前件、72.7—72.8 的原混态逐成员检测及 72.16 的自然选择障碍，各按原范围使用。[L] [Library 完整比较桥及“Appendix: unordered distinguishable-pair transitivity”，同固定文本](https://github.com/the-omega-institute/trureturing/blob/5555e728b62ed8a7c5aea520bd396cf2c11b08d4/Library/QuantumStates/mullerududec2012selfduality.md)：无序对称到自对偶的原文证明、最小确认效应的独立前件及其低维例外；不以该附录替代 [V] 中完整一般 EJA 桥。
+
+## 追加锚（本行以下为增补区）
