@@ -93,7 +93,4 @@ theorem X_pow_sub_C_irreducible_of_intDegree_coprime
   exact (associated_of_dvd_of_natDegree_le hgf hf
     (hdeq.trans natDegree_X_pow_sub_C.symm).ge).irreducible hg
 
-#check @X_pow_sub_C_irreducible_of_intDegree_coprime
-#print axioms X_pow_sub_C_irreducible_of_intDegree_coprime
-
 end D5.S1.Dynamics.Symbolic.KhetanBinomialIrreducibility
