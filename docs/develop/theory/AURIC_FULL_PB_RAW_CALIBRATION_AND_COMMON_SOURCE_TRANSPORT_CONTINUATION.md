@@ -2096,3 +2096,363 @@ $$
 60.5、65.4 及其递归上游的全部原对象、状态、操作、记录、每份完整输出的每个旧合法未来和两侧／逆向 Return 合同逐项合取保留；没有缩小全菜单、中间切口、参考／副本、真正相关组成、零／不等／次归一质量、失败、端口或物理单位范围。来源 §61 已消费静态 Born 与实际过程充分性，故本应用不能循环称为这些前件的推导。Hilbert／复结构、Born、真正相关张量组成、合法过程与 CP-Kraus／TP-更新-Lüders、原物理时间／动力学／能量单位及 $\hbar$ 的来源义务仍各按原范围承担。数学 $D_4=\sigma K$ 后的保谱流只按 60.3 的条件使用，不把其参数认作物理时间。原七地址前缀足以提供这里所需的数学响应方向，不代表旧 $D$ 与实际完整 PB 已经取得，也不结算完整量子起源。
 
 ## 追加锚（本行以下为增补区）
+
+## 68. 完整环境 PB 强制约化而保留补空间响应
+
+**定义 68.1（固定输入角的环境 raw 接口）。** 固定有限 $N\ge4$、等距嵌入 $Q:\mathbb C^4\to\mathbb C^N$，以及一份实双线性交替映射 $F:H_4\times H_4\to H_N$，其中 $H_n=\operatorname{Herm}_n(\mathbb C)$。置
+
+$$
+e=QQ^*,\qquad V=\operatorname{ran}Q,\qquad W=V^\perp,\qquad
+\iota(A)=QAQ^*.
+\tag{68.1}
+$$
+
+对定义 56.1 的每份原四维元组 $(U,x_4,q)$，以其 $c_4,t_4$ 定义完整环境标签
+
+$$
+\begin{gathered}
+c=\iota(c_4),\quad x=\iota(x_4),\quad t=\iota(t_4),\quad
+h=F(c_4,x_4),\quad g=F(c_4,t_4),\\
+r=c\circ x,\quad k=c\circ t,\quad
+R_\delta=x+\delta(h-k),\quad S_\delta=t+\delta(r+g),\\
+L=-2x\circ(h-k)-2t\circ(r+g),\qquad \delta\in\{1,-1\}.
+\end{gathered}
+\tag{68.2}
+$$
+
+这里 $U\in U(4)$、$x_4=P_4x_4P_4$ 及 $q=(q_1,q_2,0)^{\mathsf T}$、$q_1q_2\ne0$ 的域逐字取自 (56.1)。$h,g$ 始终来自这一份 $F$，不预先标定其中之一。环境 raw PB 指
+
+$$
+|\phi(L)|\le\sqrt{B_\phi(R_+,S_+)}+\sqrt{B_\phi(R_-,S_-)},\qquad
+B_\phi(A,B)=\phi(A^2)\phi(B^2)-\phi(A\circ B)^2,
+\tag{68.3}
+$$
+
+遍及这些全部元组及全部 $\phi(Z)=\operatorname{Tr}(sZ)$、$s\ge0$、$\operatorname{Tr}s<\infty$。一切平方、Jordan 乘积及评价均在完整 $M_N$ 中形成；没有假设 $F$ 的输出落在 $eM_Ne$，也没有假设 $e$ 约化输出。零质量、非忠实泛函及零预算均保留。
+
+**引理 68.2（环境列的核消元与全输入约化）。** 若定义 68.1 的环境 raw PB 成立，则对 $r=c\circ x$ 的完整环境核投影 $\Pi_r$ 有
+
+$$
+\Pi_r(x\circ h)\Pi_r=0.
+\tag{68.4}
+$$
+
+此外，对每个三维 $E_4\subset\mathbb C^4$、$E=QE_4\subset V$、全部支持于 $E_4$ 的 $A,B\in H_4$ 及每个环境向量 $z\in E^\perp$，都有
+
+$$
+P_EF(A,B)z=0.
+\tag{68.5}
+$$
+
+从而对全部 $A,B\in H_4$，
+
+$$
+eF(A,B)(1-e)=0=(1-e)F(A,B)e.
+\tag{68.6}
+$$
+
+证明。固定 $U,x_4$，只沿合法 $q=(2^{-n},2^{-n},0)$、$n\ge1$ 取极限。有限维双线性给 $t,k,g\to0$，$h$ 固定，故
+
+$$
+R_\delta\to x+\delta h,\quad S_\delta\to\delta r,\quad
+L\to-2x\circ h.
+$$
+
+对任意 $v\in\ker r\subset\mathbb C^N$，两预算分别是 $R_\delta v,S_\delta v$ 在实内积 $\operatorname{Re}\langle\ ,\ \rangle$ 下的 Gram 行列式；因为 $rv=0$，两行列式及其非负平方根都趋零。PB 给 $v^*(x\circ h)v=0$；完整复核上的 Hermitian 极化给 (68.4)。这复用 57.1 的极限机制，但核及输出均在 $N$ 维，未调用一个改换了值域的 57.1。
+
+以下显式证明环境列版本，不能将 $H_4$ 值域的 57.2 直接套在 $H_N$。固定 $E_4$ 的有序正交基，并将它补成 $U\in U(4)$，使 $c_4=U\operatorname{diag}(1,2,3,0)U^*$。在演员坐标中置
+
+$$
+\begin{gathered}
+\lambda=(1,2,3),\quad C_{ij}=\frac{2}{\lambda_i+\lambda_j},\quad
+X(u)=\operatorname{diag}(u)C\operatorname{diag}(\overline u),\\
+x_4(u)=U(X(u)\oplus0)U^*,\quad
+c_4\circ x_4(u)=U(uu^*\oplus0)U^*,\quad u_1u_2u_3\ne0.
+\end{gathered}
+\tag{68.7}
+$$
+
+$C$ 是函数 $\sqrt2e^{-\lambda_i s}$ 在 $L^2(0,\infty)$ 中的正定 Gram 矩阵。复用 (57.4) 的准确恒等式
+
+$$
+\det C=1/5400,\qquad C^{-1}\mathbf1=p=(6,-30,30)^{\mathsf T}.
+\tag{68.8}
+$$
+
+固定任意 $z\in E^\perp$，以演员基写 $y(u)=P_EF(c_4,x_4(u))z$。在 (68.4) 中取 $E\cap(QU(u,0)^{\mathsf T})^\perp$ 与 $z$ 的交叉项。由于 $xz=0$，该项准确给
+
+$$
+X(u)y(u)\in\mathbb Cu,\qquad
+\frac{\overline u_1y_1(u)}{p_1}
+=\frac{\overline u_2y_2(u)}{p_2}
+=\frac{\overline u_3y_3(u)}{p_3}.
+\tag{68.9}
+$$
+
+每个 $y_j$ 是 $u,\overline u$ 的双次数 $(1,1)$ 多项式，因为 $F$ 实线性于第二槽。写 $u=s+it$、$\overline u=s-it$，由实开集上的恒等式及这项可逆复线性换元，(68.9) 成为独立变量 $u_j,\overline u_j$ 的多项式恒等式。共同多项式双次数为 $(1,2)$，且同时被三个互素变量 $\overline u_1,\overline u_2,\overline u_3$ 整除；其反全纯总次数只有二，故只能为零。于是 $y=0$。此论证对每个固定环境 $z$ 分别成立，不以单列代替全部列。
+
+连续性覆盖零坐标 $u$。秩一 $uu^*$ 实张成 $\operatorname{Herm}(E_4)$，而 $X\mapsto c_4\circ X$ 在该演员空间可逆，故上述 $x_4(u)$ 实张成所有支持 $x_4$。在固定谱基中，$(1,2,3)$ 的排列之差张成无迹对角方向，排列之和给单位方向；再遍历谱基，所有这种 $c_4$ 实张成支持于 $E_4$ 的 Hermitian 空间。双线性给 (68.5)，没有假设 $F$ 酉协变。
+
+现固定 $z\in W$ 和秩一投影 $A,B\in H_4$。两输入像的张成维数至多二，可以选择两个含它们的三维空间 $E_{4,1},E_{4,2}$，使 $E_{4,1}+E_{4,2}=\mathbb C^4$。由 (68.5)，向量 $eF(A,B)z$ 同时正交于 $QE_{4,1}$ 和 $QE_{4,2}$，所以为零。秩一投影在两输入槽各自实张成 $H_4$，实双线性给全部输入的第一项 (68.6)；Hermitian 输出给另一项。$N=4$ 时 $W=0$，最后一步为空条件。∎
+
+**定理 68.3（环境 raw PB 的准确解集）。** 定义 68.1 的环境 raw PB 当且仅当存在同一个 $\sigma\in\{-1,+1\}$ 及一个任意的实双线性交替 Hermitian 值映射 $T$，使
+
+$$
+\begin{gathered}
+F(A,B)=Q\left(\sigma\frac{i}{2}[A,B]\right)Q^*+T(A,B),\\
+T(A,B)=(1-e)T(A,B)(1-e)\qquad(A,B\in H_4).
+\end{gathered}
+\tag{68.10}
+$$
+
+$\sigma$ 在这个固定的完整 $H_4$ 输入域上只有一个，不随元组、演员或正泛函改变。$T$ 的任意性仅相对于 (68.2) 的 raw 家族，不宣称每个 $T$ 都能扩成满足其他原来源定律的完整旧响应。
+
+证明。必要性先用 68.2，后定义 $D_4(A,B)=Q^*F(A,B)Q$。它是一份固定的 $H_4$ 值实双线性交替映射。对每个完整正 $\phi_4$，取环境正泛函 $\phi(Z)=\phi_4(Q^*ZQ)$。由于交叉块已经为零，此时才有准确等式
+
+$$
+Q^*R_\delta^2Q=(Q^*R_\delta Q)^2,\quad
+Q^*S_\delta^2Q=(Q^*S_\delta Q)^2,\quad
+Q^*(R_\delta\circ S_\delta)Q
+=(Q^*R_\delta Q)\circ(Q^*S_\delta Q).
+\tag{68.11}
+$$
+
+因此 $D_4$ 满足恰好定义 56.1 的完整四维 raw PB。既有定理 56.2 在其本来值域内给 $D_4=\sigma i[\ ,\ ]/2$；取 $T=(1-e)F(1-e)$ 即得 (68.10)。没有重新交付 56.2 或其 1920 系数分类。
+
+反向设 (68.10) 成立。相对于 $V\oplus W$，记角内原标签为 $R_{4,\delta},S_{4,\delta},L_4$，并记 $T_h=T(c_4,x_4)$、$T_g=T(c_4,t_4)$。完整标签准确为
+
+$$
+R_\delta=R_{4,\delta}\oplus\delta T_h,\qquad
+S_\delta=S_{4,\delta}\oplus\delta T_g,\qquad L=L_4\oplus0.
+\tag{68.12}
+$$
+
+对任意环境正 $\phi$，令 $\phi_4,\phi_W$ 为两个对角块的正限制；密度的非对角块在这些分块标签上不贡献读数。两份完整实 Gram 矩阵满足
+
+$$
+G_\delta(\phi)=G_{4,\delta}(\phi_4)+
+\begin{pmatrix}
+\phi_W(T_h^2)&\phi_W(T_h\circ T_g)\\
+\phi_W(T_h\circ T_g)&\phi_W(T_g^2)
+\end{pmatrix}.
+\tag{68.13}
+$$
+
+后项正半定，且不依赖 $\delta$。§51 的二维正 Gram 行列式根超可加性给
+$\sqrt{\det G_\delta(\phi)}\ge\sqrt{\det G_{4,\delta}(\phi_4)}$；左端 PB 读数仍是 $\phi_4(L_4)$。既有 58.2 的充分方向遂给 (68.3)。奇异 Gram、零质量与零预算从未被除掉。∎
+
+**命题 68.4（演员核混合射线与旧角检测足够）。** 固定 $W$ 的一个正交单位基 $z_1,\ldots,z_{N-4}$。以下两族环境纯泛函测试已经足以推出 (68.10)：
+
+第一族取每个 (68.7) 的 $U,u$、每个演员向量 $b\in E\cap(QU(u,0)^{\mathsf T})^\perp$、每个 $z_j$、每个 $\lambda\in\{1,-1,i,-i\}$，在全部整数 $n\ge1$ 的合法 $q=(2^{-n},2^{-n},0)$ 上要求 (68.3)，所用射线为
+
+$$
+v=b+\lambda z_j,\qquad \phi_v(Z)=v^*Zv.
+\tag{68.14}
+$$
+
+第二族取既有 64.1 的全部三族角检测，将各测试向量 $v_4$ 换成 $Qv_4$，但仍用 (68.2) 的实际 $F$ 形成完整环境标签和平方。两族的 $h,g$ 均为同一份 $F$。
+
+证明。对第一族每个固定 $U,u,b,z_j,\lambda$ 先令 $n\to\infty$。这些 $v$ 都在完整 $\ker r$，故与 68.2 第一段相同的极限给 $v^*(x\circ h)v=0$。又因 $xz_j=0$，有 $z_j^*(x\circ h)z_j=0$。四相位等式中，$\lambda=1,-1$ 的差杀掉实交叉项，$\lambda=i,-i$ 的差杀掉虚交叉项，因而
+
+$$
+b^*(x\circ h)z_j=0\quad\text{对全部上述 }b.
+\tag{68.15}
+$$
+
+于是 $X(u)P_EF(c_4,x_4(u))z_j\in\mathbb Cu$。68.2 已逐步给出的 (68.9) 多项式消元、两个输入槽的实张成及秩一输入／三维空间步骤，对每个 $z_j$ 分别适用，得到 (68.6)。这一步不需要任意两条补空间基方向的叠加测试。
+
+有了约化，第二族的完整七读数才准确等于 $D_4=Q^*FQ$ 的角读数；64.1 在其原四维范围内给同一个 $D_4=\sigma K$。随后 68.3 的充分方向供应其余全部环境 PB。∎
+
+该充分族严格削减全环境全元组测试要求：附加的读出射线只在各个 $V\oplus\mathbb Cz_j$ 中，且还受演员核、四相位及指定小 $q$ 的限制；角内只用 64.1 的检测。五维的是读出子空间，不是把输出或平方截成五维。$N=4$ 时第一族为空，结论退回既有角检测。这里不主张最小性、有限程序套件、具体原字表、统一字长、精度或资源界；演员、$u,b$ 及各计数极限的量词仍保留。将其用于原前缀时，必须先对每个固定非零 $q$ 取得同一完整七向量的 PB，再取本命题或 64.1 内部的极限。
+
+**命题 68.5（非零补输出与角内漏测的两个准确控制）。** 当 $N\ge5$ 时，约化不蕴含完整响应角闭合；即使保留完整平方，仅有角内正测试也不蕴含约化。
+
+证明。取单位 $z\in W$，以 $\epsilon_1,\ldots,\epsilon_4$ 表示输入标准基，记
+
+$$
+\eta(A,B)=A_{11}B_{22}-A_{22}B_{11},\qquad
+T(A,B)=\eta(A,B)|z\rangle\langle z|.
+\tag{68.16}
+$$
+
+这是实双线性交替的非零 Hermitian 补值映射。由 68.3，$F=\iota(K)+T$ 满足全部环境 raw PB，但
+$F(E_{11},E_{22})=|z\rangle\langle z|\ne0$，其角压缩为零。故 (68.6) 不推出 (67.3) 的完整输出等式，也不推出完整响应闭合条件 `ActualMatrixCorner.response_closed`。约化只杀掉交叉块，未杀掉补空间对角块。
+
+第二个控制令 $a_1=Q\epsilon_1$，$H=|a_1\rangle\langle z|+|z\rangle\langle a_1|$，并取同一个固定映射
+
+$$
+F_{\rm leak}(A,B)=\iota(K(A,B))+\eta(A,B)H.
+\tag{68.17}
+$$
+
+它有非零交叉块。令 $S$ 是任意含 $V$ 且正交于 $z$ 的读出子空间。对每个支持于 $S$ 的正密度 $s$，完整 $L$ 的读数等于标准角交换子的读数。记 $a=\eta(c_4,x_4)$、$b=\eta(c_4,t_4)$，则使用完整平方的两份 Gram 矩阵分别是标准角 Gram 加上
+
+$$
+\langle a_1,sa_1\rangle
+\begin{pmatrix}a^2&ab\\ab&b^2\end{pmatrix}\ge0.
+\tag{68.18}
+$$
+
+因此全部这类正测试的原 PB 仍成立；这不是以压缩平方掩盖泄漏，而是出射列确实增加了非负预算。
+
+在五维空间 $V\oplus\mathbb Cz$ 中按基 $(Q\epsilon_1,\ldots,Q\epsilon_4,z)$，取
+
+$$
+\begin{gathered}
+U=I_4,\quad c_4=\operatorname{diag}(1,2,3,0),\quad
+x_4=C\oplus0,\quad q=(\varepsilon,\varepsilon,0),\quad\varepsilon=1/10,\\
+v=Q\epsilon_1-Q\epsilon_2+z.
+\end{gathered}
+\tag{68.19}
+$$
+
+这里 $C$ 是 (68.7) 的 $3\times3$ 矩阵，原两腿均非零。完整乘法给
+
+$$
+\begin{gathered}
+\eta(c_4,x_4)=-3/2,\quad\eta(c_4,t_4)=0,\quad rv=tv=0,\quad
+S_\delta v=\delta i\varepsilon Q\epsilon_4/2,\\
+v^*Lv=1,\quad\operatorname{Re}\langle R_\delta v,S_\delta v\rangle=0,\quad
+\|R_\delta v\|^2=893/180-\delta+\varepsilon^2/4<9.
+\end{gathered}
+\tag{68.20}
+$$
+
+于是两预算平方根之和是
+$\varepsilon(\|R_+v\|+\|R_-v\|)/2<3/10$，严格小于左侧的一。这是一个有限合法矩阵元组对 (68.17) 的环境反控制。
+
+在定义 66.1 的 $89$ 维来源中，可将 $S$ 取为 $J(H\otimes|0\rangle)$，其维数为 $13$；从其 $76$ 维外补空间选择 $z$。原七地址 ready 轨道全部留在 $S$，所以单靠这些矩阵测试不能排除 (68.17)；这里与所选秩四角的 $85$ 维完整补空间不同，后者还包括 $S$ 内的九个方向。十一地址的环境射线密度能在纯矩阵响应意义下逼近 (68.19) 的严格失败射线，但其原 PB 资格另需 69.3 的条件。以上两控制仅针对指定 raw 矩阵测试范围，不是满足全部原 P2、嵌套、接受、历史或 Return 合同的原来源模型，更不是原量子起源的无解定理。∎
+
+## 69. 原十一地址对环境约化的条件应用
+
+**假设 69.1（同一旧响应的全输出采用）。** 保留 60.5、65.4 的全部原合同及定义 66.1 的同一 $89$ 维来源、同一 $Q$ 和 $e_0=QQ^*$。本节另使用 [C128 原词卷 (319.1)、(319.4) 及 §320 的非标定来源部分](AURIC_C128_ORIGINAL_WORD_CALIBRATION_AND_FIXED_RELATION.md#319-同一原有向关系的字面端点标定问题)：在同一个原读前切口，已经供应含幺、保原响应的实线性 Jordan 同构
+
+$$
+\theta:\mathcal A_{\rm old}\longrightarrow H_{89},\qquad
+\alpha_a(X)=\langle\chi_a,\theta(X)\chi_a\rangle,\quad
+\chi_a=K_ae_{\rm r},\quad a\in\mathsf W_{11}.
+\tag{69.1}
+$$
+
+原字、全部旧终端、零标签及失败的坐标就是该来源的原坐标。$\theta$ 对原对象的完整输出忠实，保持原 Jordan 乘积、平方及其正评价；不以角压缩或仅同响应商代替它。native XI 定义 1.1–1.4、假设 6.1、推论 6.2 所需静态 Born 评价、实际因果过程及真实细档案充分性均继续作为前件。
+
+定义同切口原标签嵌入及完整矩阵响应
+
+$$
+\kappa(A)=\theta^{-1}(QAQ^*),\qquad
+F(A,B)=\theta\!\left(D_{\rm old}(\kappa(A),\kappa(B))\right).
+\tag{69.2}
+$$
+
+同一份预先固定的旧 $D_{\rm old}$ 在全部 $\kappa(H_4)$ 输入上须已取得实双线性和交替性，故 $F:H_4^2\to H_{89}$ 是定义 68.1 的一个固定映射。$\kappa(I_4)$ 的像为 $e_0$，不替换原整体单位。这些是假设，不从已有矩阵门名称或事件张成推出；本节不假设 (67.3) 的整输出角闭合，也不使用或假设 C128 的 $\mathsf{Cal}$ 等式 (319.5)。
+
+**命题 69.2（固定完整效果框架与未限定的正响应锥）。** 在 69.1 的采用及其原词评价前件内，存在独立于 PB 元组、$F$ 和前缀 $a$ 的 $7921=89^2$ 个实际旧终端效果 $E_\ell$，实线性张成 $H_{89}$。对每份固定元组的全部七个完整环境标签，可以由同一原前缀的这组未来响应作有符号线性重构。此外，全部十一地址 ready 前缀在矩阵响应层满足
+
+$$
+\overline{\operatorname{cone}\{\chi_a\chi_a^*:a\in\mathsf W_{11}\}}
+=(H_{89})_+.
+\tag{69.3}
+$$
+
+证明。直接消费 C128 §320 证明中已经给出的 native III (144.12)、II (121.7) 全十一地址密度；其 Jones 对应取 $(k,r,n)=(2,5,12)$、图 $[6,6]$ 的全部 $89$ 张可容许表，不从七地址扇区外推。Freedman–Larsen–Wang，[*The two-eigenvalue problem and density of Jones representation of braid groups*，Theorem 0.1](https://arxiv.org/html/math/0103200v1) 的所需条件是 $r\ge5$、$r\ne6,10$、$n\ge3$，此参数满足；原规范的共同有限阶相位及原十阶逆字按上述来源消去，得到原门在 $PU(89)$ 的密度。这里只消费既有全载体对应，没有执行闭包门。
+
+令 $N_B=\sum_{w:b_1(w)=1}N_w$ 为 C128 (319.2) 的同一个非零非单位原终端分组。§320 的非 $D$ 张成步骤允许从实际有限共轭中选取一个实基
+
+$$
+E_\ell=K_{f_\ell}^*N_BK_{f_\ell},\quad f_\ell\in\mathsf W_{11},\quad
+1\le\ell\le7921.
+\tag{69.4}
+$$
+
+没有使用该节随后用 $\mathsf{Cal}$ 识别 $D$ 的推论。对任意完整 Hermitian 标签 $Z$，唯一实系数 $b_\ell(Z)$ 给
+
+$$
+Z=\sum_{\ell=1}^{7921}b_\ell(Z)E_\ell,\qquad
+\Phi_a(Z):=\langle\chi_a,Z\chi_a\rangle
+=\sum_{\ell=1}^{7921}b_\ell(Z)\Pr_{\mathsf T(af_\ell)}(B).
+\tag{69.5}
+$$
+
+$af_\ell$ 全部是旧终端读取之前的十一地址词，次序仍为 $K_{af}=K_fK_a$；不是七地址读后的控制，也没有将地址 $7,\ldots,10$ 加入原读后菜单。各请求在未来选择以前共享同一实际前缀，按原过程充分性实现；不要求不相容未来在同次运行中同时读取。
+
+把 $Z$ 分别取成 (68.2) 的
+
+$$
+(L,R_+^2,S_+^2,R_+\circ S_+,R_-^2,S_-^2,R_-\circ S_-)
+\tag{69.6}
+$$
+
+即可重构同一个 $\Phi_a$ 的完整七向量，含两份实际响应的所有补空间分量；平方先在 $89$ 维形成。这里的有限效果框架沿 §51 所引 D’Ariano–Perinotti–Sacchi，[*Informationally complete measurements and group representation*，§2 式 (5)、(8)](https://arxiv.org/html/quant-ph/0310013v1) 的成熟线性接口复用。系数可有符号，只是响应重构；$7921$ 个实方向不是 $7921$ 个纯准备的正锥覆盖，也不取得输入 $\kappa(c_4),\kappa(x_4),\kappa(t_4)$、有向操作、实际过滤器或 PB 本身。
+
+另一方面，对每个单位 $\psi\in\mathbb C^{89}$，原 ready 的全十一地址射影密度给实际有限字 $a_n$ 和比较相位 $\lambda_n$，使 $\|\lambda_n\chi_{a_n}-\psi\|\to0$。于是对每个固定完整 $Z$，
+
+$$
+|\Phi_{a_n}(Z)-\psi^*Z\psi|
+\le2\|Z\|\,\|\lambda_n\chi_{a_n}-\psi\|\longrightarrow0.
+\tag{69.7}
+$$
+
+成熟谱分解将每个正密度写成至多 $89$ 项非负秩一和，给 (69.3)；对固定 (69.6) 线性连续地取七向量，给其响应锥覆盖。这与 (69.5) 的有限有符号框架是不同的结论，不安装随机准备，不给统一字长或认证效率。此处尚未把全部前缀声明为合格 PB 前缀。∎
+
+**假设 69.3（同分支 PB 资格与所需目标覆盖）。** 对命题 68.4 的每份固定合法元组 $\mathfrak t$，另供应实际合格前缀族 $\mathsf A_{\mathfrak t}\subseteq\mathsf W_{11}$。原操作数必须在 69.1 的同一切口实际取得，并逐标签对应 $\kappa(c_4),\kappa(x_4),\kappa(t_4)$；原 $h,g$ 分别是同一个旧 $D_{\rm old}$ 在这两对原输入上的完整输出。用原 Jordan 平方、乘积形成的七个原标签，经 $\theta$ 准确成为 (69.6)，不预先压缩未知响应。
+
+对每个所用前缀，全部七项及 (69.5) 的未来响应实际合法，来自同一原准备、共同保留分支、接受和质量；原 PB 在这份七向量上成立。若采用的 PB 分支与 (69.1) 的未归一评价之间有接受因子，则七项必须共同乘一个严格正有限数 $\beta_{\mathfrak t,a}$。记原完整七向量为 $m^{\rm old}_{\mathfrak t,a}$，要求
+
+$$
+m^{\rm old}_{\mathfrak t,a}
+=\beta_{\mathfrak t,a}\,m_{\mathfrak t,F}(\Phi_a),\qquad
+0<\beta_{\mathfrak t,a}<\infty.
+\tag{69.8}
+$$
+
+七项不各自条件化，两预算不换分支；全部失败、零分支、细记录及质量留在原来源。零分支不能当成正覆盖见证，但未被删除。没有额外接受因子时取 $\beta_{\mathfrak t,a}=1$。
+
+令 $\mathcal V_{\mathfrak t}$ 为 68.4 在这份元组所需的环境测试向量；可以只要求充分的逐元组目标七向量覆盖
+
+$$
+\{m_{\mathfrak t,F}(\phi_v):v\in\mathcal V_{\mathfrak t}\}
+\subseteq\overline{\operatorname{cone}
+ \{\beta_{\mathfrak t,a}^{-1}m^{\rm old}_{\mathfrak t,a}:
+ a\in\mathsf A_{\mathfrak t}\}}.
+\tag{69.9}
+$$
+
+一个较强而直观的充分来源条件是，对每个非零 $v\in\mathcal V_{\mathfrak t}$，
+
+$$
+\inf_{a\in\mathsf A_{\mathfrak t},\ |\lambda|=1}
+\left\|\lambda\chi_a-\frac{v}{\|v\|}\right\|=0.
+\tag{69.10}
+$$
+
+若全部十一地址前缀都具备上述同元组实际资格，69.2 的密度供应 (69.10)；若只使用合格子族，须在该子族内另证 (69.9) 或 (69.10)。无条件轨道密度与有限响应重构都不蕴含这一资格。这些条件也不要求整个 $89$ 维正锥由合格前缀覆盖，只要求 68.4 所需目标。
+
+**推论 69.4（同一原响应的约化与保留余项）。** 在 69.1 与 69.3 的全部条件下，同一旧 $D_{\rm old}$ 在原 $\kappa(H_4)$ 输入上满足
+
+$$
+\begin{gathered}
+D_{\rm old}(\kappa(A),\kappa(B))
+=\kappa\!\left(\sigma\frac{i}{2}[A,B]\right)+\tau(A,B),\\
+\theta(\tau(A,B))=(1-e_0)\theta(\tau(A,B))(1-e_0),\qquad
+\kappa(I_4)\circ_{\rm old}\tau(A,B)=0,
+\end{gathered}
+\tag{69.11}
+$$
+
+其中 $\tau$ 是实际原输出之差给出的同一份实双线性交替映射，$\sigma\in\{-1,+1\}$ 是这个固定输入域的一个整体方向。结论没有把旧 $D_{\rm old}$ 替换为角压缩，也没有断言 $\tau=0$。
+
+证明。先对每个固定合法 $q$、固定元组和固定 $F$ 使用 (69.8)。PB 左端与每个预算平方根同乘 $\beta_{\mathfrak t,a}$，故可按齐次性在数学上消去此严格正有限共同因子；这不是原条件化操作。§51 的两份正 Gram、行列式根连续性及超可加性，将原 PB 运输到 (69.9) 的同元组闭正锥，得到每个目标 $\phi_v$ 的完整环境 PB。若使用 (69.10)，则先用 (69.7) 逼近归一目标，再乘 $\|v\|^2$，得到同一结论。
+
+在每个有限非零 $q$ 的目标 PB 已取得以后，才使用 68.4 第一族的小 $q$ 极限及其第二族中 64.1 的核极限、下强度序列极限。不交换前缀极限与 $q\to0$，不要求同一前缀在所有参数上统一逼近，也不把 $q=0$ 或无限字当作合法程序。68.4 因而先证明 $e_0$ 约化全部实际 $F(A,B)$，后由角检测给全局 $\sigma$。68.3 给出 (68.10)。
+
+定义原余项为旧输出减去 (69.11) 的第一项，$\theta$ 的实线性使其像就是 $T$；其补空间支撑及 $\theta$ 的 Jordan 忠实性给最后两个等式。补空间输出全数保留。原其他合法未来门无需保持 $e_0$，可以继续读取或混合这些分量；此约化只属于所述固定输入响应族，不是中心性、超选择规则或整个原系统的分解。∎
+
+**定义 69.5（条件几何、复用范围与完整原目标）。** §§68–69 的新增关系为：同一未标定 $H_4$ 输入响应的完整环境零预算，在每个三维演员上消去全部环境交叉列，再经秩一输入的三维扩展使一个固定秩四投影约化全部输出；余下角内律消费既有 56.2 或 64.1，补空间对角响应则由完整 Gram 加法明确保留。69.4 将这一关系条件地用于定义 66.1 的原 $Q$。该源特定环境增量为 `repo-derived`；Gram、极化、Cauchy 矩阵、谱分解、有限框架及 FLW 密度按 §§51、60 和 69.2 所引成熟来源作中间工具，不另立已知一般定理，不主张穷尽文献或全球优先权。
+
+这里的几何不是物理三空间：演员维数为三，固定输入角维数为四；其原 $89$ 维完整补空间为 $85$，七地址 ready 支撑及其外补空间则分别为 $13$ 与 $76$。未知原操作数的取得、同切口标签、同一个旧 $h/g$、完整原平方、共同接受质量、原 PB 和合格目标锥仍是 69.1、69.3 的前件。相比整输出角闭合，本结论保留自由补输出，却增加了相应环境测试与评价要求；没有完整物理前提包的净减少结论。
+
+60.5、65.4 及其递归上游合同在此逐项合取，不改其全文：同一旧 $\Omega,E,C,u,N,\mathcal P,S,D,q,K/J$，原准备与接受、参考／副本及真正相关联合，全部中央／经典／不等维／静默／无轴块，零／不等／次归一质量、parent／ready／flags，全部切口、完整菜单与固定支持全质量，完整环境／活动输出、成功失败细记录、port／post-port、拒绝／停止／销毁／泄漏与真遗忘，全部历史、每份完整输出的每个旧合法未来，两侧及逆向 Return，原精确 $B$ 与闭 $B_{\rm cl}$ 及未定义请求，物理钟／控制／单位、同一 $\sigma,t_0$、固定域／resolvent 及 $3s+r\le1$。较强全 P2、嵌套 exact-$D$、整输出角闭合及原全对象消费者仍各有自己的前件，不作为这里已付的事实。
+
+Hilbert／复结构、Born、真正相关组成、合法 instruments／CP-Kraus／TP-更新-Lüders、全历史 Return、物理时间／动力学、能量单位与 $\hbar$ 均未从本节导出；其中复载体、Born 及原过程评价已在入口被假设。68.10 中补映射的数学自由不授权改动实际旧 $D$，69.11 中原 $\tau$ 也未被删掉。本节为纸面条件结果，不作 Lean／kernel 认证，不结算完整唯一 $\Omega$ 的量子起源目标。
+
+## 追加锚（本行以下为增补区）
