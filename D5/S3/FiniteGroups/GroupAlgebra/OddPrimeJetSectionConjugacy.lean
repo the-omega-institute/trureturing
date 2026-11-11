@@ -6,15 +6,16 @@
    utility: none
    digest: Weighted semilinear averaging for the section-conjugacy obstruction. -/
 import Mathlib.Algebra.Algebra.Operations
+import Mathlib.Algebra.Module.BigOperators
 
+/-! A finite weighted trace-one element kills the first obstruction to
+splitting conjugacy, without dividing by the order of the acting group. -/
 set_option autoImplicit false
 noncomputable section
 open scoped BigOperators
 
 namespace D5.S3.FiniteGroups.GroupAlgebra.OddPrimeJetSectionConjugacy
 
-/-! A finite weighted trace-one element kills the first obstruction to
-splitting conjugacy, without dividing by the order of the acting group. -/
 theorem weighted_semilinear_cocycle_coboundary
     {Γ K W : Type*} [Group Γ] [Fintype Γ] [Field K]
     [AddCommGroup W] [Module K W]
@@ -31,7 +32,11 @@ theorem weighted_semilinear_cocycle_coboundary
   have hdiff (h : Γ) : ρ g (f h) = f (g * h) - f g := by
     rw [eq_sub_iff_add_eq]
     rw [add_comm, hcocycle]
-  have hsum (u : Γ → W) :
+  have hsumW (u : Γ → W) :
+      (∑ h : Γ, u (g * h)) = ∑ h : Γ, u h := by
+    exact Fintype.sum_equiv (Equiv.mulLeft g)
+      (fun h => u (g * h)) u (fun _ => rfl)
+  have hsumK (u : Γ → K) :
       (∑ h : Γ, u (g * h)) = ∑ h : Γ, u h := by
     exact Fintype.sum_equiv (Equiv.mulLeft g)
       (fun h => u (g * h)) u (fun _ => rfl)
@@ -45,7 +50,7 @@ theorem weighted_semilinear_cocycle_coboundary
     rw [Finset.sum_sub_distrib, ← Finset.sum_smul]
   have hρ' : ρ g b = b - f g := by
     rw [hρ]
-    rw [hsum (fun h => σ h θ • f h), hsum (fun h => σ h θ)]
+    rw [hsumW (fun h => σ h θ • f h), hsumK (fun h => σ h θ)]
     simp [b, hθ]
   rw [hρ']
   abel
