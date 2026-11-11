@@ -58,8 +58,7 @@ theorem source_bridge : sourceScope.{u} ↔ arena.{u}.Law actual.{u} := by
   · intro h P
     exact h P.model
   · intro h X normed space finite S unit A
-    exact h { X := X, normed := normed, space := space, finite := finite,
-      S := S, unit := unit, model := A }
+    exact h (@Inputs.mk X normed space finite S unit A)
 
 theorem actual_positive : arena.{u}.Law actual.{u} :=
   source_bridge.mp (@finite_spectral_resolutions.{u})
