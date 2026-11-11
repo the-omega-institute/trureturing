@@ -4078,3 +4078,466 @@ The only inputs beyond the displayed definitions are the original-grid residual 
 **定义 61.2（Result boundary）。** Theorem 61.1 closes the original four-dimensional quadratic-margin estimate at the explicit finite threshold $A_0=2A_\dagger$ inherited from Definition 53.1. It does not assert the estimate for every $A>2$, remove the dependence on the previously fixed finite-menu constants, or supply a physical implementation of the table. The former residual atom obligation (57.15) is consumed by the upper-margin closure (53.21) together with complement-before-extraction; the source's dimension-$d\ge4$ unrestricted finite-menu counterfamily remains a separate statement.
 
 ## 追加锚（本行以下为增补区）
+
+## 62. 两个原始映射、内部插入与严格恢复
+
+**定义 62.1（比较入口与条件性接口）。** 对每个实际载体 $X=A,D,E$，先取非零有限维实有序空间、闭尖生成锥 $X_+$、严格正的归一化泛函 $u_X$、紧的全态基底 $K_X=\{x\in X_+:u_X(x)=1\}$ 和全部对偶效应 $[0,u_X]$。记纯态集合为 $P_X$，对 $x\in K_X$ 定义最小确认读数，并在每个载体上保留有限混合律 S：
+
+$$
+\begin{aligned}
+T_\xi(x)&=\inf\{f(x):0\le f\le u_X,\ f(\xi)=1\},\\
+T_\xi\!\left(\sum_\ell w_\ell\eta_\ell\right)
+ &=\sum_\ell w_\ell T_{\eta_\ell}(\xi)
+\quad\left(\xi,\eta_\ell\in P_X,\quad w_\ell\ge0,\quad\sum_\ell w_\ell=1\right).
+\end{aligned}
+\tag{62.1}
+$$
+
+第二式量化于每个有限纯态族及每个概率权重族。另行保留 [Müller–Ududec 条目「Complete conditional candidate and its scope」](../../../Library/QuantumStates/mullerududec2012selfduality.md#complete-conditional-candidate-and-its-scope) 中保归一化的 S 到标准迹 Jordan 几何的纸面桥，应用于三个实际全载体。只有该桥之后，才使用下面的 Jordan 单位、标准迹和迹伴随。单点混合给出的端点互反不能替代有限混合律，也不能替代这条条件桥。
+
+下述推导复用 [Library 条目中的仓内推导「Positive marginals recover the joint-effect contract」](../../../Library/QuantumStates/barnumhilgert2019spectral.md#positive-marginals-recover-the-joint-effect-contract) 的二元边缘纸面接口 (15)–(18)：标准迹 EJA 间的正双线性且实张成的准备，若有两条在整个联合正锥上正且标准保迹的边缘，并满足两条全部实向量的普通乘积丢弃律，则准备保单位，其实张量线性化为满迹内积等距同构。两次使用前均须满足这组完整前提。最终几何只在严格恢复之后复用同条目「Three primitive maps and the forced missing pair view」的既有表示结论，不重新分类。
+
+**定义 62.2（二映射的前置条件）。** 在定义 62.1 的桥后，$A,D,E$ 是实际非零有限维实 Euclidean Jordan 代数，取整个平方锥、全部正迹一态、全部效应区间 $[0,1_X]$，以及
+
+$$
+\langle x,y\rangle_X=\tau_X(x\circ y),\qquad
+n=\tau_A(1_A)>0,\qquad e=\frac{1_A}{n},\qquad
+\omega=\frac{1_D}{\tau_D(1_D)}.
+\tag{62.2}
+$$
+
+每个直和扇区的每个本原幂等元的标准迹均为一，不另作扇区迹缩放。实张量积只取乘积迹内积，尚不预设张量正锥或正重括号映射。仅给两个原始映射：实双线性 $L:D\times A\to E$ 与实线性 $p:E\to D$，满足
+
+$$
+L(D_+,A_+)\subseteq E_+,\qquad p(E_+)\subseteq D_+,
+\qquad \tau_Dp=\tau_E.
+\tag{62.3}
+$$
+
+这里 $L$ 的正性覆盖每个 $d\in D_+$，包括纠缠 $d$；$p$ 的正性覆盖整个 $E_+$。依次定义
+
+$$
+\begin{aligned}
+B(d,c)&=pL(d,c),& B&:D\times A\to D,\\
+M(a,b)&=B(B(\omega,a),b),& M&:A\times A\to D,\\
+Q(a,b,c)&=L(M(a,b),c),& Q&:A^3\to E,\\
+J(a)&=M(a,1_A),& r&=J^*:D\to A,\\
+H(d)&=L(d,1_A),& h&=H^*:E\to D.
+\end{aligned}
+\tag{62.4}
+$$
+
+$M$ 的两次读回都用同一个 $p$；$J,H$ 插入的都是未归一化单位 $1_A$。保留两条实际实张成条件
+
+$$
+\operatorname{span}_{\mathbb R}\{M(a,b):a,b\in A\}=D,\qquad
+\operatorname{span}_{\mathbb R}\{L(d,c):d\in D,c\in A\}=E,
+\tag{62.5}
+$$
+
+以及三条全部实向量恒等式：
+
+$$
+\begin{aligned}
+\mathrm{(I)}\quad&rM(a,b)=\tau_A(b)a &&(a,b\in A),\\
+\mathrm{(II)}\quad&hL(d,c)=\tau_A(c)d &&(d\in D,c\in A),\\
+\mathrm{(III)}\quad&pQ(a,b,c)=\tau_A(a)M(b,c) &&(a,b,c\in A).
+\end{aligned}
+\tag{62.6}
+$$
+
+这些量词包括有符号和迹零向量。此阶段不另给 $r,h$ 的正性或保迹性，不给 $M,L$ 的单位律，不给任何张量等距性。实张成也不表示每个联合正态都是乘积态的凸组合。
+
+**定理 62.3（插入之前的归一化与等距性）。** 定义 62.2 的前置条件及定义 62.1 的二元接口推出 $M,J,r$ 正，且有正保迹的 $s:D\to A$ 满足第二边缘律。更确切地，
+
+$$
+\begin{gathered}
+M(1_A,1_A)=1_D,\qquad L(1_D,1_A)=1_E,\\
+rM(a,b)=\tau_A(b)a,\qquad sM(a,b)=\tau_A(a)b,\\
+\tau_Ar=\tau_D=\tau_As,\qquad
+\tau_Dh=\tau_E,\qquad t:=sp\text{ 正且保迹},\\
+hL(d,c)=\tau_A(c)d,\qquad tL(d,c)=\tau_D(d)c.
+\end{gathered}
+\tag{62.7}
+$$
+
+$h$ 也在整个 $E_+$ 上正。线性化
+
+$$
+\begin{aligned}
+\mathcal M &: A\otimes_{\mathbb R}A\longrightarrow D,
+ &\mathcal M(a\otimes b)&=M(a,b),\\
+\mathcal L &: D\otimes_{\mathbb R}A\longrightarrow E,
+ &\mathcal L(d\otimes c)&=L(d,c),\\
+\mathcal Q&=\mathcal L(\mathcal M\otimes\mathrm{id}_A)
+ &: (A\otimes_{\mathbb R}A)\otimes_{\mathbb R}A&\longrightarrow E
+\end{aligned}
+\tag{62.8}
+$$
+
+均为满迹内积等距同构。此结论不使用任何插入正性。
+
+**证明。** 正双线性与正映射的复合使 $B,M,J$ 正；平方锥自对偶使 $r=J^*$ 正。置 $U=M(1_A,1_A)\ge0$，定义正映射
+
+$$
+s=r\,pL(\mathord\cdot,e):D\to A.
+\tag{62.9}
+$$
+
+由 (III) 再用 (I)，对全部实 $a,b$ 有
+
+$$
+sM(a,b)=\tau_A(a)rM(b,e)=\tau_A(a)b,
+\qquad r^*1_A=U=s^*1_A.
+\tag{62.10}
+$$
+
+最后的伴随等式尚非保迹断言：$r^*1_A=J(1_A)=U$，而在每个 $M(a,b)$ 上，$s^*1_A$ 与 $U$ 的配对都等于 $\tau_A(a)\tau_A(b)$，再由 (62.5) 的 $D$ 张成得到相等。
+
+$U$ 在 $D_+$ 内部。对 $a,b\ge0$，取 $a\le\lambda1_A$、$b\le\mu1_A$，正双线性给出 $0\le M(a,b)\le\lambda\mu U$。若 $z\ge0$ 且 $\langle z,U\rangle_D=0$，则 $z$ 消去全部正乘积；锥生成性使它消去全部实乘积，实张成遂使 $z=0$。若 $U$ 的某个谱值为零，该谱空间的非零本原幂等元就给出这样的 $z$。故每个扇区的谱值都严格为正。
+
+采用上述 Library 条目「Readback from unit insertion」(58)–(60) 中的二次表示归一化，写成
+
+$$
+\ell_x(y)=x\circ y,\qquad P_x=2\ell_x^2-\ell_{x^2},\qquad
+C=P_{\sqrt U},\qquad C^{-1}=P_{U^{-1/2}}.
+\tag{62.11}
+$$
+
+这里使用的标准二次表示正性由 [van de Wetering, Proposition 2.21 及包含 EJA 的 Proposition 2.25](https://arxiv.org/html/1912.01903v1#S2.counter21) 承担；公式采用该文引言中的 $P_x$ 公式。其余所需关系可直接由 Peirce 分解核对：对角化 $U$ 的本原框架中，设谱值为 $u_i>0$，则 $C$ 在对角空间上系数为 $u_i$，在非对角 Peirce 空间上系数为 $\sqrt{u_i u_j}$；显示的逆取对应倒数。迹形式结合性使 $\ell_x$ 自伴随，因而两者自伴随。它们均正，且
+
+$$
+C^{-1}U=1_D,\qquad CU=U^2.
+\tag{62.12}
+$$
+
+这同时覆盖例外 EJA 与直和，不需要矩阵嵌入。置
+
+$$
+\widehat M=CM,\qquad \widehat R=rC^{-1},\qquad
+\widehat S=sC^{-1}.
+\tag{62.13}
+$$
+
+逐项检查第一次二元接口：$\widehat M$ 正双线性，因 $C$ 可逆仍实张成 $D$；两条边缘在整个 $D_+$ 上正；(62.10) 给出全部实向量的两条乘积丢弃律。再由自伴随性及 (62.12)，
+
+$$
+\widehat R^*1_A=\widehat S^*1_A=C^{-1}U=1_D.
+\tag{62.14}
+$$
+
+故两条边缘都对未改动的标准迹保迹。现在才将 Library (15)–(18) 应用于 $(\widehat M,\widehat R,\widehat S)$。其单位结论给出 $1_D=\widehat M(1_A,1_A)=CU=U^2$。$U\ge0$ 的谱值于是全为一，故 $U=1_D$、$C=\mathrm{id}_D$。同一次二元结论遂给出原 $M$ 的单位律及 $\mathcal M$ 的满等距性，$r,s$ 也已正且保迹。特别地，
+
+$$
+\tau_DM(a,b)=\tau_A(a)\tau_A(b),\qquad
+\langle M(a,b),M(x,y)\rangle_D
+ =\langle a,x\rangle_A\langle b,y\rangle_A.
+\tag{62.15}
+$$
+
+接着 $t=sp:E\to A$ 正且保迹，这里使用原始 $p$ 的已给保迹性。由 (III) 与 (62.10)，
+
+$$
+\begin{aligned}
+tL(M(a,b),c)
+ &=\tau_A(a)sM(b,c)\\
+ &=\tau_A(a)\tau_A(b)c
+ =\tau_D(M(a,b))c.
+\end{aligned}
+\tag{62.16}
+$$
+
+$M$ 的实张成将它扩展为所有实 $d,c$ 的 $tL(d,c)=\tau_D(d)c$。$H=L(\mathord\cdot,1_A)$ 正，自对偶性给出 $h=H^*$ 正。由 (II) 及刚证的 $t$ 律，对所有实 $d,c$，
+
+$$
+\begin{aligned}
+\langle h^*1_D,L(d,c)\rangle_E
+ &=\tau_A(c)\tau_D(d)\\
+ &=\langle t^*1_A,L(d,c)\rangle_E.
+\end{aligned}
+\tag{62.17}
+$$
+
+$L$ 的实张成及 $t$ 保迹给出 $h^*1_D=t^*1_A=1_E$，故 $h$ 保迹，且 $H(1_D)=L(1_D,1_A)=1_E$。
+
+逐项检查第二次二元接口：两局部载体为标准迹 $D,A$，准备 $L$ 在整个 $D_+\times A_+$ 上正且实张成 $E$；两条边缘 $h:E\to D$、$t:E\to A$ 在整个 $E_+$ 上正且标准保迹；两条全部实向量的普通丢弃律正是 (II) 和 (62.16) 的线性扩展。现在应用同一 (15)–(18)，得到 $\mathcal L$ 满等距。与 $\mathcal M$ 复合即得 (62.8) 的 $\mathcal Q$。这只是指定实张量空间间的恒等式，没有预设独立右载体或正重括号映射。$\square$
+
+**定义 62.4（已定型的插入及保留的整锥条件）。** 先用定理 62.3 得到可逆 $\mathcal M$，再定义双线性 $T$、其线性化 $\mathcal T$ 和线性插入 $I_{13}$：
+
+$$
+\begin{aligned}
+T(a,c)&=L(M(a,1_A),c),& T&:A\times A\to E,\\
+\mathcal T(a\otimes c)&=T(a,c),&\mathcal T&:A\otimes_{\mathbb R}A\to E,\\
+I_{13}&=\mathcal T\mathcal M^{-1},&I_{13}&:D\to E.
+\end{aligned}
+\tag{62.18}
+$$
+
+因此 $I_{13}M(a,c)=Q(a,1_A,c)$ 在整个 $D$ 上给出唯一良定义的线性映射。这里使用的逆属于 $\mathcal M$；不能把定义域为 $D\otimes A$ 的 $\mathcal L$ 直接当成三份 $A$ 的映射来复合。完整二映射条件在此前置阶段之上，明确再要求一条几何条件：
+
+$$
+I_{13}(D_+)\subseteq E_+\quad\text{对整个实际正锥成立}.
+\tag{62.19}
+$$
+
+随后才定义 $p_{13}:=I_{13}^*:E\to D$，并记 $p_{23}=p$。条件 (62.19) 保留了原来交叉读回的整锥正性内容；正乘积上的正性不能替代它，给它改名也没有删去它。
+
+**定理 62.5（同载体、同映射上的严格唯一扩张）。** 定义 62.1–62.4 的完整条件，与 Library「Readback from unit insertion」的 (53)、(56)、(57) 条件严格唯一扩张等价。该旧条件保留原始 $L,p_{13},p_{23}$，以混合式内部定义准备；本节只保留相同实际 $L,p=p_{23}$，以两次相同 $p$ 内部定义准备。互忘与互补保持实际载体及这两个映射逐个不变，并逐点恢复旧 $p_{13}$ 和两种内部 $M$。具体地，新条件推出
+
+$$
+\begin{gathered}
+p_{13}\text{ 在整个 }E_+\text{ 上正},\qquad \tau_Dp_{13}=\tau_E,\\
+p_{13}Q(a,b,c)=\tau_A(b)M(a,c),\\
+M(a,b)=pL\bigl(p_{13}L(\omega,a),b\bigr)
+\quad(a,b,c\in A).
+\end{gathered}
+\tag{62.20}
+$$
+
+**证明。** 先从完整二映射条件出发。定理 62.3 已在没有 (62.19) 时建立定义 62.4 的良定义性和单位律，故
+
+$$
+I_{13}(1_D)=L(M(1_A,1_A),1_A)=1_E.
+\tag{62.21}
+$$
+
+此时使用 (62.19) 及自对偶性得到 $p_{13}=I_{13}^*$ 在整个 $E_+$ 上正。对所有实 $z\in E$，
+
+$$
+\tau_D(p_{13}z)=\langle I_{13}1_D,z\rangle_E=\tau_E(z),
+\tag{62.22}
+$$
+
+故 $p_{13}$ 保迹。由 $\mathcal Q$ 的等距性，对全部实 $x,y,a,b,c\in A$，
+
+$$
+\begin{aligned}
+\langle M(x,y),p_{13}Q(a,b,c)\rangle_D
+ &=\langle Q(x,1_A,y),Q(a,b,c)\rangle_E\\
+ &=\langle x,a\rangle_A\tau_A(b)\langle y,c\rangle_A\\
+ &=\langle M(x,y),\tau_A(b)M(a,c)\rangle_D.
+\end{aligned}
+\tag{62.23}
+$$
+
+$M$ 实张成给出 (62.20) 的交叉律，另一条交叉律已是 (III)。
+
+还必须恢复原来的混合内部定义。先由两条交叉律及 $M$ 实张成，将它们线性扩展到所有实 $d\in D,c\in A$：
+
+$$
+p_{13}L(d,c)=M(rd,c),\qquad
+pL(d,c)=M(sd,c).
+\tag{62.24}
+$$
+
+例如第一式在 $d=M(a,b)$ 上两边均为 $\tau_A(b)M(a,c)$，第二式两边均为 $\tau_A(a)M(b,c)$，所以线性扩展合法。这也正是 Library (52) 的全向量形状。由 $M$ 单位律、(I) 及 (62.15)，$r1_D=n1_A$、$\tau_D(1_D)=n^2$，从而
+
+$$
+r\omega=e,\qquad
+sM(r\omega,a)=\tau_A(e)a=a.
+\tag{62.25}
+$$
+
+现在用 (62.24) 得到
+
+$$
+\begin{aligned}
+pL\bigl(p_{13}L(\omega,a),b\bigr)
+ &=pL(M(r\omega,a),b)\\
+ &=M(sM(r\omega,a),b)=M(a,b).
+\end{aligned}
+\tag{62.26}
+$$
+
+这没有在证明混合定义相等之前调用依赖该定义的旧条件。至此旧条件的全部前提已逐项成立：$L$ 全域正且张成，两个旧交叉读回全锥正，$p_{13}$ 保迹，(53) 的内部准备与当前 $M$ 相同，$J,r,Q$ 因而相同，两条实张成和 (57) 的三条全部实向量律也相同。于是可以复用旧唯一扩张及表示定理。
+
+反向从旧 (53)、(56)、(57) 条件出发，以 $\bar M,\bar Q,\bar r$ 表示其混合定义的映射，保留相同 $L,p=p_{23}$。此时旧「Readback from unit insertion」的归一化结论及其到「Three primitive maps and the forced missing pair view」的等价已适用；「One preparation determines the binary preparation」(51)–(52) 提供全向量扩展；(40)、(48) 提供缺失丢弃。精确取用的结论是：$p$ 保迹，$\bar M$ 保单位，$\bar{\mathcal M},\bar{\mathcal L},\bar{\mathcal Q}$ 满迹等距，且
+
+$$
+\begin{gathered}
+\bar s=\bar r\,pL(\mathord\cdot,e)\text{ 正且保迹},\\
+\bar s\bar M(a,b)=\tau_A(a)b,\qquad
+pL(d,c)=\bar M(\bar s d,c)\quad(d\in D,c\in A),\\
+h=H^*\text{ 是旧 }p_{12},\qquad hL(d,c)=\tau_A(c)d.
+\end{gathered}
+\tag{62.27}
+$$
+
+这些纸面接口的前提正是当前完整旧条件，不把乘积上的断言冒充全向量断言。由 (62.27)，对每个实 $d,a,b$，
+
+$$
+\begin{aligned}
+pL\bigl(pL(d,a),b\bigr)
+ &=pL\bigl(\bar M(\bar s d,a),b\bigr)\\
+ &=\bar M\bigl(\bar s\bar M(\bar s d,a),b\bigr)\\
+ &=\tau_A(\bar s d)\bar M(a,b)
+ =\tau_D(d)\bar M(a,b).
+\end{aligned}
+\tag{62.28}
+$$
+
+取 $d=\omega$，便得二映射内部的 $M=\bar M$。因此 $J,r,Q$ 分别等于旧 $\bar J,\bar r,\bar Q$；两条实张成、(I)、(III) 直接保留，(II) 则是 (62.27) 中旧派生 $p_{12}$ 的律。前置条件已经全部成立，故依 (62.18) 定义新的 $I_{13}$。
+
+还需证明它确为旧 $p_{13}$ 的伴随，而非另一个同名插入。用旧交叉律和旧 $\bar{\mathcal M}$ 等距性，对所有实 $a,c,x,y,z\in A$，
+
+$$
+\begin{aligned}
+\langle p_{13}^*\bar M(a,c),\bar Q(x,y,z)\rangle_E
+ &=\langle\bar M(a,c),p_{13}\bar Q(x,y,z)\rangle_D\\
+ &=\tau_A(y)\langle a,x\rangle_A\langle c,z\rangle_A\\
+ &=\langle\bar Q(a,1_A,c),\bar Q(x,y,z)\rangle_E\\
+ &=\langle I_{13}\bar M(a,c),\bar Q(x,y,z)\rangle_E.
+\end{aligned}
+\tag{62.29}
+$$
+
+倒数第二步用旧 $\bar{\mathcal Q}$ 的等距性。$\bar Q$ 乘积实张成 $E$，故两向量相等；$\bar M$ 乘积实张成 $D$，故整个 $D$ 上 $I_{13}=p_{13}^*$。旧 $p_{13}$ 全锥正，自对偶性于是给出恰好 (62.19)。
+
+从二映射条件补入 $p_{13}=I_{13}^*$ 再忘去它，保留的实际 $L,p$ 不变；从旧条件忘去 $p_{13}$ 再补入，由 (62.29) 得回原 $p_{13}$，由 (62.28) 得回原 $M$。若另一个实线性读回满足相同旧交叉律，它在每个张成的 $Q(a,b,c)$ 上都与 $p_{13}$ 相同，因而在 $E$ 上唯一。这是同一实际对象上的严格逆关系，不只是选取矩阵坐标后的同构类对应。$\square$
+
+此处减少的是原始映射数据。旧派生 $p_{12}$ 的丢弃律被显式保留为 (II)，幸存的 $p$ 被直接要求保迹，旧 $p_{13}$ 的全锥正性转为 (62.19)。$r,h$ 的正性与保迹、两个单位律及等距性则已推导。没有由此得到全部剩余条件相互独立或公理数最小的结论。
+
+**定理 62.6（整锥插入正性不能由前置阶段删除）。** 对每个整数 $n\ge2$，存在满足定义 62.1–62.2 和定理 62.3 全部结论，却违反 (62.19) 的矩阵实例。
+
+**证明。** 取标准迹和整个正半定锥上的
+
+$$
+A=\operatorname{Herm}_n(\mathbb C),\qquad
+D=\operatorname{Herm}_{n^2}(\mathbb C),\qquad
+E=\operatorname{Herm}_{n^3}(\mathbb C).
+\tag{62.30}
+$$
+
+所有转置在固定矩阵基中进行。$T_D$ 表示剩余两个因子的全转置，$\operatorname{Tr}_j$ 表示丢掉所标因子的普通部分迹。令
+
+$$
+L(d,c)=d\otimes c^{\mathsf T},\qquad
+p=T_D\operatorname{Tr}_1:E\to D.
+\tag{62.31}
+$$
+
+$L$ 对全部 $d,c\ge0$ 正，包括纠缠 $d$，因为转置保持单个矩阵正性，两个正矩阵的张量积正。部分迹全域正且保迹，剩余双份的全转置也是正保迹序自同构，所以 $p$ 对整个 $E_+$ 正且保迹。转置可逆，Hermitian 简单张量实张成全部 Hermitian 矩阵空间，所以所需两条张成均成立。全效应矩阵载体上对 $x\in K_X$ 的比较是 $T_\xi(x)=\operatorname{Tr}(\xi x)$，故满足有限混合 S 和已指定 Jordan 条件桥。
+
+由原始定义直接计算，对全部实 Hermitian 输入，
+
+$$
+\begin{aligned}
+B(d,c)&=(\operatorname{Tr}_1d)^{\mathsf T}\otimes c,\\
+\omega&=I_{n^2}/n^2,\qquad B(\omega,a)=(I_n/n)\otimes a,\\
+M(a,b)&=B(B(\omega,a),b)=a^{\mathsf T}\otimes b,\\
+Q(a,b,c)&=a^{\mathsf T}\otimes b\otimes c^{\mathsf T}.
+\end{aligned}
+\tag{62.32}
+$$
+
+两个单位均保留，两个准备的迹张量等距性也可由转置保持迹配对直接验证。$J(a)=a^{\mathsf T}\otimes I_n$、$H(d)=d\otimes I_n$，故其指定伴随为 $r=T\operatorname{Tr}_2$、$h=\operatorname{Tr}_3$。于是
+
+$$
+\begin{aligned}
+rM(a,b)&=\operatorname{Tr}(b)a,\\
+hL(d,c)&=\operatorname{Tr}(c^{\mathsf T})d=\operatorname{Tr}(c)d,\\
+pQ(a,b,c)&=\operatorname{Tr}(a)(b^{\mathsf T}\otimes c)
+ =\operatorname{Tr}(a)M(b,c).
+\end{aligned}
+\tag{62.33}
+$$
+
+这逐项验证所有实输入的 (I)–(III)，而非只在正乘积上验证。
+
+由 (62.18) 的唯一线性定义，插入满足
+
+$$
+I_{13}(a^{\mathsf T}\otimes c)
+ =a^{\mathsf T}\otimes I_n\otimes c^{\mathsf T}.
+\tag{62.34}
+$$
+
+因此它先对 $D$ 的第二个因子作部分转置，再把两个标签置于第一、第三位置并插入中间的未归一化单位。它保单位，而且在每个准备的正乘积上正，却不在整个 $D_+$ 上正。令
+
+$$
+|\Omega\rangle=\frac1{\sqrt n}\sum_{j=0}^{n-1}|j,j\rangle,
+\qquad \rho=|\Omega\rangle\langle\Omega|\ge0,
+\qquad (\mathrm{id}\otimes T)\rho=\frac Fn,
+\tag{62.35}
+$$
+
+其中 $F|i,j\rangle=|j,i\rangle$。把中间单位插入，得到 $I_{13}(\rho)=F_{13}/n$；这里 $F_{13}$ 交换第一、第三因子且在中间因子上为恒等。对任意中间基向量 $|k\rangle$，
+
+$$
+v_k=\frac{|0,k,1\rangle-|1,k,0\rangle}{\sqrt2},\qquad
+I_{13}(\rho)v_k=-\frac1n v_k.
+\tag{62.36}
+$$
+
+所以 (62.19) 失败，$n=2$ 时负本征值恰为 $-1/2$。此控制例证明这个二映射表示必须保留该整锥条件，不能用乘积正性替代；它没有证明每个其他条件独立。原始条件只要求全域正性，不能另加完全正性来排除此例，再称已从原条件推出结论。$\square$
+
+**定理 62.7（条件性复量子几何与同一三份载体）。** 在定义 62.1–62.4 的完整条件下，复用定理 62.5 所接回的既有三映射纸面表示，得到同一实际 $A,D,E$ 上固定的保迹 Jordan 序坐标：存在有限非空指标集 $\Lambda$ 和整数 $n_i\ge1$，使
+
+$$
+\begin{aligned}
+A&\simeq\bigoplus_{i\in\Lambda}\operatorname{Herm}_{n_i}(\mathbb C),\\
+D&\simeq\bigoplus_{i,j\in\Lambda}\operatorname{Herm}_{n_in_j}(\mathbb C),\\
+E&\simeq\bigoplus_{i,j,k\in\Lambda}\operatorname{Herm}_{n_in_jn_k}(\mathbb C).
+\end{aligned}
+\tag{62.37}
+$$
+
+记这些坐标同构为 $\theta_A,\theta_D,\theta_E$。在同时选定的这些坐标中，准备是普通分块张量，读回是分块部分迹：
+
+$$
+\begin{aligned}
+M(a,b)_{ij}&=a_i\otimes b_j,&
+L(d,c)_{ijk}&=d_{ij}\otimes c_k,\\
+(r d)_i&=\sum_j\operatorname{Tr}_2d_{ij},&
+(h z)_{ij}&=\sum_k\operatorname{Tr}_3z_{ijk},\\
+(p z)_{jk}&=\sum_i\operatorname{Tr}_1z_{ijk},&
+(p_{13}z)_{ik}&=\sum_j\operatorname{Tr}_2z_{ijk}.
+\end{aligned}
+\tag{62.38}
+$$
+
+$L$ 的坐标公式包括整个实际 $D$ 上的实向量及纠缠正向量。局部态、效应与 Born 读数为
+
+$$
+\rho_i\ge0,\quad\sum_i\operatorname{Tr}\rho_i=1,
+\qquad 0\le F_i\le I_{n_i},\qquad
+\Pr(F\mid\rho)=\sum_i\operatorname{Tr}(F_i\rho_i).
+\tag{62.39}
+$$
+
+纯态分支是 $\mathbb{CP}^{n_i-1}$，同扇区比较为 $\operatorname{Tr}(\xi\eta)=|\langle\psi,\phi\rangle|^2$，异扇区比较为零；$n_i=2$ 的态基底是 Bloch 球，$n_i=1$ 的标量扇区仍在。单扇区非经典选择需要另外的条件。
+
+**证明。** 定理 62.5 已在不改变实际 $L,p$ 的前提下建立旧条件的全部前提。故直接应用 Library「Three primitive maps and the forced missing pair view」到「One actual triple and three positive pair views」的表示 (29)–(30)，得到 (62.37)–(62.38)；同条目「Complete finite comparison candidate and quantum correspondence」给出 (62.39) 及纯态、比较和扇区解释。这里没有新的分类步骤。
+
+只在该结果之后，依 Library「Construct the other bracket and all three-label changes」(36)，在同一个 $E$ 上选择右准备
+
+$$
+\mu_R(a,d)=\theta_E^{-1}\bigl(\theta_A(a)\otimes\theta_D(d)\bigr),
+\qquad \mu_R(a,M(b,c))=Q(a,b,c).
+\tag{62.40}
+$$
+
+它对全部 $A_+\times D_+$ 正且实张成。同一实三张量空间的两种括号按典范向量空间结合识别后，左右嵌套线性化均为 $\mathcal Q$，所以所选重括号在 $E$ 上为恒等。又可定义
+
+$$
+P_\sigma=\mathcal Q\,\tau_\sigma\,\mathcal Q^{-1},\qquad
+P_\sigma P_\pi=P_{\sigma\pi}\quad(\sigma,\pi\in S_3),
+\tag{62.41}
+$$
+
+其中 $\tau_\sigma$ 为三个 $A$ 标签的普通置换。在 (62.37) 坐标中，它们是扇区及矩阵因子的普通置换，故为保迹序自同构。它们是所得表示上的构造，不是此前另给的独立右载体或旁观置换条件。
+
+上述实乘积张成不等于两两边缘层析。既有三量子比特实例的
+
+$$
+|G_\pm\rangle=\frac{|000\rangle\pm|111\rangle}{\sqrt2}
+\tag{62.42}
+$$
+
+给出两个不同的正迹一态，但三个两两约化态都相同，均为对应基中的 $\tfrac12(|00\rangle\langle00|+|11\rangle\langle11|)$。故读回映射的唯一性不意味着任意三份态可从三条两两边缘唯一恢复。$\square$
+
+**定义 62.8（完整条件与解释范围）。** 这个候选只给两个原始映射 $L,p$，但完整保留三个实际非零有限全态、全效应载体上的有限混合比较律 S、保归一化的标准迹 Jordan 条件桥、每扇区本原迹一、$L$ 在全部 $D_+\times A_+$ 上正、$p$ 在全部 $E_+$ 上正且保迹、两次同一个 $p$ 定义的 $M$ 与 $L$ 的两条实张成、(I)–(III) 的全部实向量律，以及在等距性建立之后良定义的 $I_{13}$ 对整个 $D_+$ 的正性。在这些条件及明确引用的二元、三映射纸面接口下，单位、所需边缘保迹和张量等距性可推导，$I_{13}^*$ 严格且唯一恢复旧 $p_{13}$，两种内部准备逐点相同，继而得到含经典扇区的复量子几何、Born 概率、普通分块张量与同一三份载体上的标签及括号交换；Bell 部分转置例说明保留的整锥条件不能删除，减少原始数据并不表示得到独立或最少的公理。
+
+端点比较的双方互换、标签置换和括号交换，均不等于测量时间顺序互换，也不产生任意不相容测量的共同经典联合结果律。这里的结论范围是有限、静态、全域有序几何及其条件性表示；没有从 $\omega$、辅助 $C$ 或插入映射推出物理准备、滤波、参考装置的可用性或成本。完全正性、仪器、态更新、动力学、时钟、Hamiltonian、$\hbar$、无限维延拓以及四份或无界份数的一致性均不在所证结论内。定理 62.3 与 62.5 的严格表示是本仓对已指明接口的综合推导；二元接口、既有三映射表示和标准二次表示事实各保留其原有数学引文范围，不据此主张文献优先性。
+
+## 追加锚（本行以下为增补区）
