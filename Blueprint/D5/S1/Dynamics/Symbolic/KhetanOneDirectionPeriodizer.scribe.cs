@@ -38,6 +38,6 @@ internal sealed class KhetanOneDirectionPeriodizerDocument : IScribeDocumentDefi
                 H("Use a cleared identity before acting on the configuration"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Given lattice Laurent coordinates and localized coprimality of P and B, the denominator theorem constructs a nonzero horizontal coefficient rho. The resulting polynomial (z-1) A rho annihilates the original configuration, whose finite range gives a global period. Localized coprimality is an intermediate premise. Its derivation from the absence of transverse line factors, and hence the complete one-direction periodizer theorem, remain unproved."))),
+                Blocks(Paragraph(Text("Primitivity constructs integral lattice Laurent coordinates, with the chosen direction in the coefficient ring. Given localized coprimality of P and B, the denominator theorem constructs a nonzero horizontal coefficient rho. The resulting polynomial (z-1) A rho annihilates the original configuration, whose finite range gives a global period. Localized coprimality is an intermediate premise. Its derivation from the absence of transverse line factors, and hence the complete one-direction periodizer theorem, remain unproved."))),
                 DescribeRole.Theorem))));
 }

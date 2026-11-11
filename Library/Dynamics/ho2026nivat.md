@@ -15,6 +15,12 @@ triage: anchor
 
 # Pinned product-difference and finite-state suppliers
 
+## Verified locator
+
+https://github.com/boonsuan/nivat/tree/4e3614024227acd273c3e8ab41df92c2709e5ab0
+
+## Reused statements
+
 Revision `4e3614024227acd273c3e8ab41df92c2709e5ab0` supplies
 `Nivat.Algebra.exists_integer_product_differences` and
 `Nivat.Algebra.exists_product_differences_of_annihilator` in
