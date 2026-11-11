@@ -109,7 +109,9 @@ private theorem literal_family_psd (n : ℕ) (hn : 6 ≤ n)
   have hbi (B : BottomSlot 6) :
       assignedBottomIndex hpool σ' B=⟨6*n-21+(σ B).val,by omega⟩ := by
     apply Fin.ext
-    simp [assignedBottomIndex,bottomIndex,σ',Equiv.trans_apply,hb]
+    simp [assignedBottomIndex,bottomIndex,σ',Equiv.trans_apply]
+    change 6*n - b 6 = 6*n - 21
+    rw [hb]
   have hid : K (fun E => U*(1+r+h (π E))) (fun B => U*(1-d (σ B)))=
       assignedK hpool l π' σ' := by
     unfold assignedK

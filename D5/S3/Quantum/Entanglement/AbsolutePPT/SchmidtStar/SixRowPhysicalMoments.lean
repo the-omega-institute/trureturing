@@ -8,10 +8,8 @@
 import D5.S3.Quantum.Entanglement.AbsolutePPT.FiveRowP2Physical
 import D5.S3.Quantum.Entanglement.AbsolutePPT.SchmidtStar.UniformSchmidtHeadCap
 
-/-! UNCOMPILED SOURCE PREPARATION, 2026-11-11.
-The only physical premise is literal APPT of the supplied diagonal. No
-head-box, tail-cap, variance, coupling or purity bound is an input.
-The same-vector SixRowTail coupling is deliberately a separate supplier.
+/-! The literal APPT diagonal supplies the boundary moments. The head and tail
+charges at a common vector are supplied separately by SixRowCoupling.
 -/
 set_option autoImplicit false
 open Matrix Finset
@@ -101,7 +99,9 @@ private theorem literal_pool_psd (n : ℕ) (hn : 6 ≤ n)
       l (assignedBottomIndex hp σ' B) := by
     have hi : assignedBottomIndex hp σ' B = ⟨6*n-21+(σ B).val, by omega⟩ := by
       apply Fin.ext
-      simp [assignedBottomIndex, bottomIndex, σ', Equiv.trans_apply, six_bottom_card]
+      simp [assignedBottomIndex, bottomIndex, σ', Equiv.trans_apply]
+      change 6*n - b 6 = 6*n - 21
+      rw [six_bottom_card]
     rw [hi]
     dsimp [tails]
     ring
@@ -467,6 +467,7 @@ theorem literal_moments (n : ℕ) (hn : 23 ≤ n)
   have hvm := literal_variance_moment (by norm_num : 2 ≤ 6) (by rfl : 6 ≤ 6)
     (by omega : 6 ≤ n) e l hl happt
   dsimp only [momentRHS] at hvm
+  norm_num only [Nat.cast_ofNat, show (6 : ℝ) + 1 = 7 by norm_num] at hvm
   change momentLHS hp l ≤ 4*((∑ k : Fin (b 6), l (bottomIndex hp k))-
     (∑ k : Fin (a 6), l (topIndex hp k)))*
       min ((∑ k : Fin (b 6), l (bottomIndex hp k))/7)
