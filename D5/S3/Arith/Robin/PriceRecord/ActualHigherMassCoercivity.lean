@@ -71,7 +71,7 @@ theorem actual_dual_estimate {X s : ℝ} (hX : exp 2 ≤ X) {n : ℕ} (hn : 1 �
     rfl
   have hid := literal_loss_identity hX1 hn S hprime (union_subset hbS hnS)
   have hd := finite_dual_abs S coordinateGain coordinateWeight i
-    (lam := lam) (t := t)
+    («λ» := lam) (t := t)
     (fun c hc => (hprime c hc).1.log_pos.le) ht
   change |(∑ c ∈ S, if i c then coordinateWeight c else 0) - strictMass S lam| ≤
     (potential S lam - (∑ c ∈ S, if i c then coordinateGain c else 0) +
@@ -112,7 +112,8 @@ theorem balance_response {Δ R q L : ℝ} (hR : 0 ≤ R) (hq : 0 < q) (hL : 0 < 
         dsimp [s]
         nlinarith
       have hh := hbound s hs hs2
-      simp [hzero] at hh
+      rw [hzero] at hh
+      simp only [zero_mul, zero_div, zero_add] at hh
       dsimp [ε] at hsε
       have hA : 0 < s * q * L := by positivity
       nlinarith
