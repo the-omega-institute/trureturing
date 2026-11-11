@@ -129,8 +129,9 @@ internal sealed class KhetanSixCellPeriodicityDocument : IScribeDocumentDefiniti
                 + "propext; the report is restricted to the selected targets and their imports. "
                 + "Public escape registrations remain incomplete under issue 29287. The preserved "
                 + "OneDirectionPeriodizer mirror compiles, but its native registration assessment "
-                + "is declared_unresolved. Independent admission review, canonical freezing and "
-                + "required CI acceptance remain outstanding. No priority claim is made."))),
+                + "is declared_unresolved. The nine proof modules have canonical frozen state pins. "
+                + "Independent admission review and required CI acceptance remain outstanding. "
+                + "No priority claim is made."))),
         [DocumentEdge.Dependency.Create(GidRef.Create("D5/S1/Dynamics/Symbolic/KhetanDirectionalCoprimality")),
          DocumentEdge.Dependency.Create(GidRef.Create("D5/S1/Dynamics/Symbolic/KhetanLineFactorCancellation"))]));
 }

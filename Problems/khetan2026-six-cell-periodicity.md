@@ -135,8 +135,9 @@ Canonical Blueprint Scribes describe the nine proof modules. Substantial
 reuse of Boon Suan Ho's `boonsuan/nivat` at
 `4e3614024227acd273c3e8ab41df92c2709e5ab0` retains its MIT notice in the
 owning Lean sources and its Library attribution. This compiler evidence
-does not certify independent admission review, canonical freeze or
-required CI acceptance. Public escape registrations remain incomplete under issue #29287. The
+does not certify independent admission review or required CI acceptance.
+The nine proof modules have canonical frozen state pins. Public escape
+registrations remain incomplete under issue #29287. The
 existing OneDirectionPeriodizer mirror compiles; its native registration
 assessment is `declared_unresolved`, with IE-C050 at
 `source.descriptor_actual` (`unclassified_form`).
