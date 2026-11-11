@@ -4,7 +4,7 @@
    mirror-E: none(waiver:registration-template-not-established)
    anchors: [mathlib/module/Mathlib.LinearAlgebra.Lagrange]
    utility: none
-   digest: Finite-dimensional six-law real JB algebras supply spectral resolutions on their original carrier. -/
+   digest: Finite JB spectral resolutions on the original carrier. -/
 
 module
 
@@ -13,6 +13,8 @@ public import Mathlib.LinearAlgebra.Lagrange
 public import Mathlib.FieldTheory.Minpoly.Finite
 public import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
 public import Mathlib.Analysis.Normed.Module.FiniteDimension
+
+/-! Spectral idempotents in the actual generated algebra, transported to the JB carrier. -/
 
 @[expose] public section
 noncomputable section
@@ -36,7 +38,10 @@ private def realCharacter (φ : WeakDual.characterSpace ℂ (Complexification R)
   map_add' r s := by simp
   map_mul' r s := by
     apply Complex.ofReal_injective
-    simp only [real_character_value, Complex.ofReal_mul, QuadraticAlgebra.C_mul, map_mul]
+    change (((φ (QuadraticAlgebra.C (r * s))).re : ℝ) : ℂ) =
+      (((φ (QuadraticAlgebra.C r)).re * (φ (QuadraticAlgebra.C s)).re : ℝ) : ℂ)
+    rw [real_character_value, Complex.ofReal_mul, real_character_value,
+      real_character_value, QuadraticAlgebra.C_mul, map_mul]
   commutes' t := by
     change (φ (QuadraticAlgebra.C (algebraMap ℝ R t))).re = t
     rw [Algebra.algebraMap_eq_smul_one, real_character_scalar, Complex.ofReal_re]
@@ -62,11 +67,11 @@ private theorem commutative_spectral [FiniteDimensional ℝ R] (a : R) :
       ∑ i, r i • e i = a ∧ ∑ i, (r i * r i) • e i = a * a := by
   classical
   by_cases hR : Subsingleton R
-  · letI := hR
+  · haveI := hR
     refine ⟨0, Fin.elim0, Fin.elim0, ?_, ?_, ?_, ?_⟩
     · intro i; exact Fin.elim0 i
     all_goals exact Subsingleton.elim _ _
-  letI : Nontrivial R := not_subsingleton_iff_nontrivial.mp hR
+  haveI : Nontrivial R := not_subsingleton_iff_nontrivial.mp hR
   let p := minpoly ℝ a
   have hp : p ≠ 0 := minpoly.ne_zero (Algebra.IsIntegral.isIntegral a)
   let roots := p.roots.toFinset
@@ -76,7 +81,8 @@ private theorem commutative_spectral [FiniteDimensional ℝ R] (a : R) :
     apply Multiset.mem_toFinset.mpr
     apply (Polynomial.mem_roots hp).mpr
     change Polynomial.eval (realCharacter φ a) p = 0
-    rw [← Polynomial.aeval_def, Polynomial.aeval_algHom_apply]
+    change Polynomial.aeval (realCharacter φ a) p = 0
+    rw [Polynomial.aeval_algHom_apply]
     simp only [p, minpoly.aeval, map_zero]
   have heval (φ : WeakDual.characterSpace ℂ (Complexification R)) (i : roots) :
       realCharacter φ (e i) = if i.val = realCharacter φ a then 1 else 0 := by
@@ -86,7 +92,7 @@ private theorem commutative_spectral [FiniteDimensional ℝ R] (a : R) :
     split_ifs with hi
     · rw [← hi]
       exact Lagrange.eval_basis_self (fun _ _ _ _ h => h) i.property
-    · exact Lagrange.eval_basis_of_ne hi (hroot φ)
+    · exact Lagrange.eval_basis_of_ne (v := id) hi (hroot φ)
   have hid (i : roots) : e i * e i = e i := by
     apply character_ext
     intro φ
@@ -128,8 +134,8 @@ private theorem commutative_spectral [FiniteDimensional ℝ R] (a : R) :
           intro j _
           by_cases hji : j = i
           · subst j
-            simp [smul_mul_smul_comm, hid]
-          · simp [smul_mul_smul_comm, horth i j (Ne.symm hji), hji]
+            simp [hid, smul_smul]
+          · simp [horth i j (Ne.symm hji), hji]
         _ = _ := by simp
     simp only [hterm]
   let b : Fin (Fintype.card roots) ≃ roots := (Fintype.equivFin roots).symm
@@ -147,10 +153,10 @@ variable {X : Type*} [NormedAddCommGroup X] [NormedSpace ℝ X]
 /-- Actual spectral resolutions from the six JB laws and finite dimensionality,
 with the original product, unit and norm and no supplied spectral data. -/
 theorem finite_spectral_resolutions (A : Data X S u) : HasFiniteSpectralResolutions S u := by
-  letI : CompleteSpace X := FiniteDimensional.complete ℝ X
+  haveI : CompleteSpace X := FiniteDimensional.complete ℝ X
   intro a
   let R := Generated A a
-  letI : FiniteDimensional ℝ R :=
+  haveI : FiniteDimensional ℝ R :=
     inferInstanceAs (FiniteDimensional ℝ ↥(generated S u a))
   have ha : a ∈ generated S u a := by
     have h : npow S u a 1 ∈ generated S u a :=
@@ -162,9 +168,12 @@ theorem finite_spectral_resolutions (A : Data X S u) : HasFiniteSpectralResoluti
   refine ⟨n, fun i => inc (e i), r, ?_, ?_, ?_, ?_⟩
   · intro i
     exact congrArg inc (hid i)
-  · simpa only [map_sum] using congrArg inc hunit
-  · simpa only [map_sum, map_smul] using congrArg inc hlin
-  · simpa only [map_sum, map_smul] using congrArg inc hsq
+  · change (∑ i, inc (e i)) = inc (1 : R)
+    simpa only [map_sum] using congrArg inc hunit
+  · change (∑ i, r i • inc (e i)) = inc ar
+    simpa only [map_sum, map_smul] using congrArg inc hlin
+  · change (∑ i, (r i * r i) • inc (e i)) = inc (ar * ar)
+    simpa only [map_sum, map_smul] using congrArg inc hsq
 
 #print axioms finite_spectral_resolutions
 
