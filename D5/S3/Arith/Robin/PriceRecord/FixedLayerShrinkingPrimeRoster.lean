@@ -42,7 +42,7 @@ theorem root_ratio {j : ℕ} (hj : 2 ≤ j) :
     rw [log_div (by linarith : cutoff j (referencePrice X) ≠ 0)
       (rpow_pos_of_pos (by linarith : 0 < X) _).ne',
       log_rpow (by linarith : 0 < X)]
-    field_simp; ring
+    field_simp <;> ring
   rw [he, exp_log (div_pos (by linarith) (rpow_pos_of_pos (by linarith) _))]
 
 theorem root_atTop {j : ℕ} (hj : 2 ≤ j) :
@@ -83,7 +83,7 @@ private theorem moving_theta_error (w : ℕ) {y : ℝ → ℝ} {c : ℝ}
   apply h.congr'
   filter_upwards [eventually_gt_atTop (1 : ℝ), hy.eventually_gt_atTop 1] with X hX hyX
   dsimp only [Function.comp_def, Pi.mul_apply, Pi.div_apply]
-  simp only [pow_add]
+  simp only [pow_add, div_pow]
   field_simp [(log_pos hX).ne', (log_pos hyX).ne', (by linarith : y X ≠ 0)]
   <;> ring
 
@@ -147,21 +147,24 @@ theorem fixed_layer_shrinking_prime_roster_power {j : ℕ} (hj : 2 ≤ j)
   have hey := moving_theta_error w hy (inv_pos.mpr hj0) hlogy
   have hez := moving_theta_error w hz (inv_pos.mpr hj0) hlogz
   have hzy : Tendsto (fun X : ℝ => z X / y X) atTop (𝓝 1) := by
-    have h := tendsto_const_nhds.add hk
+    have h := (tendsto_const_nhds (x := (1 : ℝ))).add hk
     simp only [add_zero] at h
     apply h.congr'
     filter_upwards [hy.eventually_gt_atTop 0] with X hX
     dsimp [z]
-    field_simp; ring
+    field_simp <;> ring
   have hmass : Tendsto (fun X : ℝ => (Chebyshev.theta (z X) - Chebyshev.theta (y X)) /
       (y X / log X ^ w)) atTop (𝓝 1) := by
-    have h := (tendsto_const_nhds.add (hez.mul hzy)).sub hey
+    have h := ((tendsto_const_nhds (x := (1 : ℝ))).add (hez.mul hzy)).sub hey
     simp only [zero_mul, add_zero, sub_zero] at h
     apply h.congr'
     filter_upwards [eventually_gt_atTop (1 : ℝ), hy.eventually_gt_atTop 0,
       hz.eventually_gt_atTop 0] with X hX hyX hzX
-    dsimp [z, κ]
-    field_simp [hyX.ne', hzX.ne', (log_pos hX).ne'] <;> ring
+    have hwidth : (z X - y X) * log X ^ w = y X := by
+      dsimp [z, κ]
+      field_simp [(log_pos hX).ne'] <;> ring
+    field_simp [hyX.ne', hzX.ne', (log_pos hX).ne']
+    nlinarith only [hwidth]
   have hsmall : Tendsto (fun X : ℝ => log X ^ (w + d + 1) / y X) atTop (𝓝 0) := by
     have hl := (isLittleO_log_rpow_rpow_atTop (w + d + 1 : ℕ)
       (inv_pos.mpr hj0)).tendsto_div_nhds_zero
