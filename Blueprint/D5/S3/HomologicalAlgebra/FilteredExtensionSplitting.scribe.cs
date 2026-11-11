@@ -62,7 +62,7 @@ internal sealed class FilteredExtensionSplittingDocument : IScribeDocumentDefini
             b(Seq(g, Cdot, Sp, h)), Plus, b(g));
         Formula body = All("g", V("G"), All("h", V("G"), identity));
         body = Imp(C("Coc", r, f), body);
-        body = All("f", Seq(Open, V("G"), Times, V("G"), Close, To, Sp, V("V")), body);
+        body = All("f", Seq(Open, V("G"), Times, Sp, V("G"), Close, To, Sp, V("V")), body);
         body = Imp(Seq(C("Trace", r, t), Eq, D(1)), body);
         body = All("t", C("End", V("R"), V("V")), body);
         body = All("rho", C("Representation", V("R"), V("G"), V("V")), body);

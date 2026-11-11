@@ -63,7 +63,7 @@ internal sealed class FilteredTwoCocycleDocument : IScribeDocumentDefinition
     {
         Formula grade = All("k", V("Nat"), Imp(Seq(V("k"), Lt, V("n")),
             C("Htwo", C("Grade", V("F"), V("k")))));
-        Formula result = All("f", Seq(Open, V("G"), Times, V("G"), Close, To, Sp, V("M")),
+        Formula result = All("f", Seq(Open, V("G"), Times, Sp, V("G"), Close, To, Sp, V("M")),
             Imp(C("Coc", V("r"), V("f")), C("Bound", V("r"), V("f"))));
         result = Imp(grade, result);
         result = Imp(Seq(C("F", V("n")), Eq, C("top")), result);

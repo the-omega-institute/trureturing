@@ -13,7 +13,7 @@ license: citation-only
 triage: anchor
 ---
 
-# Extension automorphisms and first cohomology
+# Group extensions and low-degree cohomology
 
 Section 2, pp. 1–2, constructs the factor set of an arbitrary set-theoretic section, without normalizing its value at the identity. Associativity gives the two-cocycle equation, and replacing the section by a kernel-valued one-cochain changes the factor set by its coboundary. The zero cohomology class is represented by the semidirect product for the prescribed action. Thus vanishing of every two-cocycle class supplies a homomorphic section of every extension inducing that action. The native construction uses the inverse of the multiplicative primitive to correct the section, preserving the coboundary sign.
 
