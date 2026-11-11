@@ -27,7 +27,6 @@ def rejected : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (M₀ M₁ M₂ : Matrix Actor Actor ℂ),
-    M₀.IsHermitian → M₁.IsHermitian → M₂.IsHermitian →
     let Γ := momentGram M₀ M₁ M₂
     let r := R.readout () () M₀
     let k := Γ.rank
@@ -40,15 +39,15 @@ abbrev arena : Arena where
       M₂.rank = r ∧ r ≤ k ∧ k ≤ 2 * r ∧ 2 * r ≤ 4) ∧
     (∀ (m : ℕ) (D : Matrix (Fin m) (Fin m) ℂ) (V : Matrix Actor (Fin m) ℂ),
       Realizes D V M₀ M₁ M₂ →
+        M₀.IsHermitian ∧ M₁.IsHermitian ∧ M₂.IsHermitian ∧
         k ≤ D.rank ∧ D.rank ≤ m ∧ LabeledGramIdentification D V M₀ M₁ M₂)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hz := Matrix.isHermitian_zero (n := Actor) (α := ℂ)
   have hp : (momentGram 0 0 0).PosSemidef := by
     simpa [momentGram, Matrix.fromBlocks_zero] using
       (Matrix.PosSemidef.zero : (0 : Matrix (Actor ⊕ Actor) (Actor ⊕ Actor) ℂ).PosSemidef)
-  have hh := ((h 0 0 0 hz hz hz).2.1 ⟨hp, rfl⟩).2.1
+  have hh := ((h 0 0 0).2.1 ⟨hp, rfl⟩).2.1
   have hbad : (0 : Matrix Actor Actor ℂ).rank = 1 := hh
   simp at hbad
 
@@ -91,7 +90,7 @@ def registration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "value"]
+      path := #["body", "body", "body", "body", "value"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]

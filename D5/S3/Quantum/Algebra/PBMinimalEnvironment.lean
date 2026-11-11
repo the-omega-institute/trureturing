@@ -578,10 +578,10 @@ private theorem physical_of_realizes {m : ℕ} {D : Matrix (Fin m) (Fin m) ℂ}
     rw [neg_smul, ← smul_neg, neg_sub]
   · rw [h.first]
 
-/-- PB 30.1: exact feasibility, a smallest invertible actual environment, the sharp
-rank bounds and labelled Gram quotient, and physical block compatibility. -/
-theorem pb_three_moment_minimal_realization (M₀ M₁ M₂ : Matrix Actor Actor ℂ)
-    (_h₀ : M₀.IsHermitian) (h₁ : M₁.IsHermitian) (_h₂ : M₂.IsHermitian) :
+/-- PB 30.1: automatic Hermitian moments, exact feasibility, a smallest invertible
+actual environment, the sharp rank bounds and labelled Gram quotient, and physical
+block compatibility. -/
+theorem pb_three_moment_minimal_realization (M₀ M₁ M₂ : Matrix Actor Actor ℂ) :
     let Γ := momentGram M₀ M₁ M₂
     let r := M₀.rank
     let k := Γ.rank
@@ -594,18 +594,25 @@ theorem pb_three_moment_minimal_realization (M₀ M₁ M₂ : Matrix Actor Actor
       M₂.rank = r ∧ r ≤ k ∧ k ≤ 2 * r ∧ 2 * r ≤ 4) ∧
     (∀ (m : ℕ) (D : Matrix (Fin m) (Fin m) ℂ) (V : Matrix Actor (Fin m) ℂ),
       Realizes D V M₀ M₁ M₂ →
+        M₀.IsHermitian ∧ M₁.IsHermitian ∧ M₂.IsHermitian ∧
         k ≤ D.rank ∧ D.rank ≤ m ∧ LabeledGramIdentification D V M₀ M₁ M₂) := by
   dsimp only
+  have hHermitian (hp : (momentGram M₀ M₁ M₂).PosSemidef) :
+      M₀.IsHermitian ∧ M₁.IsHermitian ∧ M₂.IsHermitian := by
+    have hh := isHermitian_fromBlocks_iff.mp hp.isHermitian
+    exact ⟨hh.1, hh.2.1, hh.2.2.2⟩
   refine ⟨⟨?_, ?_⟩, ?_, ?_⟩
   · rintro ⟨m, D, V, h⟩
     exact ⟨(actual_constraints h).1, (actual_constraints h).2.1⟩
   · rintro ⟨hp, hk⟩
-    obtain ⟨D, V, -, h⟩ := exists_minimal_matrices M₀ M₁ M₂ h₁ hp hk
+    obtain ⟨D, V, -, h⟩ := exists_minimal_matrices M₀ M₁ M₂ (hHermitian hp).2.1 hp hk
     exact ⟨_, D, V, h⟩
   · rintro ⟨hp, hk⟩
-    obtain ⟨D, V, hu, h⟩ := exists_minimal_matrices M₀ M₁ M₂ h₁ hp hk
+    obtain ⟨D, V, hu, h⟩ := exists_minimal_matrices M₀ M₁ M₂ (hHermitian hp).2.1 hp hk
     exact ⟨⟨D, V, hu, h, physical_of_realizes h⟩, (actual_constraints h).2.2.2.2⟩
   · intro m D V h
-    exact ⟨(actual_constraints h).2.2.1, (actual_constraints h).2.2.2.1, actual_labelled_gram h⟩
+    obtain ⟨h₀, h₁, h₂⟩ := hHermitian (actual_constraints h).1
+    exact ⟨h₀, h₁, h₂, (actual_constraints h).2.2.1,
+      (actual_constraints h).2.2.2.1, actual_labelled_gram h⟩
 
 end D5.S3.Quantum.Algebra.PBMinimalEnvironment

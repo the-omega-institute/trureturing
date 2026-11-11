@@ -15,14 +15,15 @@ internal sealed class PBMinimalEnvironmentDocument : IScribeDocumentDefinition
             StatementSource.FromAuthor(Statement()),
             AssessedProvenance.FromRepo(),
             Blocks(
-                Paragraph(Text("Fix three Hermitian complex two by two matrices M0, M1 and M2. " +
+                Paragraph(Text("Fix three complex two by two matrices M0, M1 and M2. " +
                     "The four by four block Gram matrix Gamma has block rows (M0,M1) and (M1,M2). " +
                     "Write r for rank M0 and k for rank Gamma. The actor coordinates remain the two " +
                     "original complex coordinates. For any natural number m, an actual realization " +
                     "uses a Hermitian m by m matrix D and a two by m coupling V, with ker D contained " +
                     "in ker V. The inverse used in the moments is the actual Moore–Penrose inverse " +
                     "D dagger, including for singular D. The three equalities are M0=V V*, " +
-                    "M1=V D dagger V*, and M2=V (D dagger)^2 V*. All kernels are complex.")),
+                    "M1=V D dagger V*, and M2=V (D dagger)^2 V*. Every actual realization " +
+                    "automatically makes all three moments Hermitian. All kernels are complex.")),
                 Paragraph(Text("An actual realization exists exactly when Gamma is positive " +
                     "semidefinite and the kernels of M0 and M2 coincide. Under these conditions an " +
                     "actual realization exists with D invertible on exactly k coordinates. In " +
@@ -85,12 +86,12 @@ internal sealed class PBMinimalEnvironmentDocument : IScribeDocumentDefinition
         var ranks = And(Equal(Rank(m2), r),
             And(Rel(r, k), And(Rel(k, Multiply(Num(2), r)), Rel(Multiply(Num(2), r), Num(4)))));
         var lower = All("m", Id("Nat"), All("D", Dims(m), All("V", Coupling(m), Imp(Realizes(),
-            And(Rel(k, Rank(d)), And(Rel(Rank(d), m), Call("LabeledGramIdentification", d, v, m0, m1, m2)))))));
+            And(And(Call("IsHermitian", m0), And(Call("IsHermitian", m1), Call("IsHermitian", m2))),
+                And(Rel(k, Rank(d)), And(Rel(Rank(d), m), Call("LabeledGramIdentification", d, v, m0, m1, m2))))))));
         var laws = And(new Formula.Logic(arbitrary, FormulaLogicOperator.Iff, admissible),
             And(Imp(admissible, And(witness, ranks)), lower));
         var indices = Imp(And(Equal(r, Rank(m0)), Equal(k, Rank(gamma))), laws);
-        var hermitian = And(Call("IsHermitian", m0), And(Call("IsHermitian", m1), Call("IsHermitian", m2)));
         return All("M0", actorMatrix, All("M1", actorMatrix, All("M2", actorMatrix,
-            Imp(hermitian, All("r", Id("Nat"), All("k", Id("Nat"), indices))))));
+            All("r", Id("Nat"), All("k", Id("Nat"), indices)))));
     }
 }
