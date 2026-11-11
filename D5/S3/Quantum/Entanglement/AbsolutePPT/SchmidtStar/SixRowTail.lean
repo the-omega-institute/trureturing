@@ -30,8 +30,10 @@ def tailCharge (d : Fin 21 → ℝ) (p : Fin 5 → ℝ)
 
 private theorem coefficient_nonneg (p : Fin 5 → ℝ)
     (hp : ∀ i, 0 ≤ p i) (B : BottomSlot 6) : 0 ≤ coefficient p B := by
-  have hz : ∀ i : Fin 6, 0 ≤ Fin.cases 1 p i :=
-    fun i => Fin.cases (by norm_num) hp i
+  have hz (i : Fin 6) : 0 ≤ Fin.cases (1 : ℝ) p i := by
+    refine Fin.cases ?_ (fun j => ?_) i
+    · norm_num
+    · simpa only [Fin.cases_succ] using hp j
   rcases B with i | e
   · exact sq_nonneg _
   · exact mul_nonneg (hz e.val.1) (hz e.val.2)
@@ -69,8 +71,11 @@ private def smallLabels (τ : Equiv.Perm (Fin 5)) : Fin 6 → BottomSlot 6 :=
 private theorem smallLabels_injective (τ : Equiv.Perm (Fin 5)) :
     Function.Injective (smallLabels τ) := by
   intro i j hij
-  fin_cases i <;> fin_cases j <;>
-    simp_all [smallLabels,centre_inj,Equiv.apply_eq_iff_eq]
+  fin_cases i <;> fin_cases j <;> simp_all [smallLabels, centre_inj]
+  all_goals
+    have h := congrArg Fin.val hij
+    simp only [Fin.val_zero, Fin.val_succ] at h
+    omega
 
 private theorem mass_of_labels (p : Fin 5 → ℝ) (f : Fin 6 → BottomSlot 6)
     (hf : Function.Injective f) (hm : 3 ≤ ∑ i, coefficient p (f i)) :
@@ -143,8 +148,7 @@ theorem six_coefficient_mass (p : Fin 5 → ℝ) (hp : ∀ i, 0 ≤ p i)
     linarith only [hh]
   have hwn : ∑ i, (w i)^2=1 := by
     change (∑ i, (p (τ i))^2)=1
-    rw [Equiv.sum_comp]
-    exact hn
+    exact (τ.sum_comp (fun i => (p i)^2)).trans hn
   by_cases hL : 2 ≤ ∑ i, w i
   · apply mass_of_labels p (largeLabels τ) (largeLabels_injective τ)
     have he : (∑ i, coefficient p (largeLabels τ i))=1+∑ i, w i := by
