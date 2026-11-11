@@ -31,6 +31,8 @@ public import Mathlib.Tactic.Module
 public import Mathlib.Tactic.Linarith
 public import Mathlib.Tactic.Ring
 
+/-! Complete finite spectra from genuine EJA laws, via a licensed algebraic spectral proof. -/
+
 @[expose] public section
 noncomputable section
 set_option autoImplicit false
@@ -60,7 +62,6 @@ private theorem jpow_succ' (x : J) (n : ℕ) : jpow x (n + 1) = jpow x n * x := 
 private def CommuteAt (x : J) (m : ℕ) : Prop := ∀ w : J, x * (jpow x m * w) = jpow x m * (x * w)
 
 omit [IsCommJordan J] in
-
 private theorem jpow_mul_jpow_of_commuteAt {x : J} {m : ℕ} (h : CommuteAt x m) (n : ℕ) :
     jpow x m * jpow x n = jpow x (m + n + 1) := by
   induction n with
@@ -86,7 +87,6 @@ omit [IsCommJordan J] [Module ℝ J] in
 private theorem cm_self (x : J) (i : ℕ) (w : J) : cm x i i w = 0 := by simp [cm]
 
 omit [IsCommJordan J] [Module ℝ J] in
-
 private theorem commuteAt_of_cm {x : J} {i : ℕ} (h : ∀ w, cm x 0 i w = 0) : CommuteAt x i := by
   intro w
   have hw := h w
@@ -143,8 +143,11 @@ private theorem cm_eq_zero (x : J) (N : ℕ) : ∀ i j : ℕ, i + j ≤ N → �
           have h2 : (N + 2) • c = -c := by rw [← hlast, hneg]
           rw [show N + 3 = (N + 2) + 1 from rfl, succ_nsmul, h2]
           exact neg_add_cancel c
-        rw [key i (by omega) j (by omega), nsmul_eq_zero_iff' (n := N + 3) (by omega) hzero,
-          smul_zero]
+        have hc0 : c = 0 := by
+          have hr : ((N + 3 : ℕ) : ℝ) • c = 0 := by
+            simpa only [Nat.cast_smul_eq_nsmul] using hzero
+          exact (smul_eq_zero.mp hr).resolve_left (by positivity)
+        rw [key i (by omega) j (by omega), hc0, smul_zero]
 
 private theorem commuteAt_all (x : J) (m : ℕ) : CommuteAt x m :=
   commuteAt_of_cm (fun w => cm_eq_zero x m 0 m (by omega) w)
@@ -154,7 +157,7 @@ private theorem jpow_mul_jpow (x : J) (m n : ℕ) : jpow x m * jpow x n = jpow x
 
 end Albert
 
-private class IsFormallyReal (J : Type*) [Mul J] [AddCommMonoid J] : Prop where
+class IsFormallyReal (J : Type*) [Mul J] [AddCommMonoid J] : Prop where
   
   eq_zero_of_sum_mul_self : ∀ {ι : Type} (s : Finset ι) (f : ι → J),
     ∑ i ∈ s, f i * f i = 0 → ∀ i ∈ s, f i = 0
@@ -175,7 +178,6 @@ variable {J : Type*} [NonUnitalNonAssocCommRing J] [IsCommJordan J] [Module ℝ 
   [IsFormallyReal J]
 
 omit [IsFormallyReal J] in
-
 private theorem jpow_eq_zero_of_le {x : J} {n : ℕ} (h : jpow x n = 0) {m : ℕ} (hm : n ≤ m) :
     jpow x m = 0 := by
   rcases Nat.eq_or_lt_of_le hm with rfl | hlt
@@ -228,6 +230,7 @@ namespace IsOrthIdemFamily
 
 variable {p : ι → J}
 
+omit [Fintype ι] [DecidableEq ι] in
 private theorem sum_idem (hp : IsOrthIdemFamily p) (s : Finset ι) :
     (∑ i ∈ s, p i) * (∑ i ∈ s, p i) = ∑ i ∈ s, p i := by
   rw [Finset.sum_mul_sum]
@@ -271,7 +274,6 @@ omit [IsCommJordan J] [IsScalarTower ℝ J J] in
   rw [← C_1, ← monomial_zero_left, jeval_monomial, one_smul, jpow_zero]
 
 omit [IsCommJordan J] in
-
 private theorem jeval_X_mul (x : J) (p : Polynomial ℝ) : jeval x (X * p) = x * jeval x p := by
   induction p using Polynomial.induction_on' with
   | add p q hp hq => rw [mul_add, map_add, map_add, hp, hq, mul_add]
@@ -330,7 +332,6 @@ omit [IsCommJordan J] in
 private theorem mem_jann {x : J} {p : Polynomial ℝ} : p ∈ jann x ↔ jeval x p = 0 := Iff.rfl
 
 omit [IsCommJordan J] in
-
 private theorem exists_annihilator_generator [Module.Finite ℝ J] (x : J) :
     ∃ m : Polynomial ℝ, m ≠ 0 ∧ ∀ f, jeval x f = 0 ↔ m ∣ f := by
   obtain ⟨n, c, ⟨i₀, hi₀⟩, hsum⟩ := exists_jpow_relation x
@@ -402,7 +403,6 @@ variable {J : Type*} [NonUnitalNonAssocCommRing J] [IsCommJordan J] [Module ℝ 
   [IsScalarTower ℝ J J] [IsFormallyReal J]
 
 open Complex in
-
 private theorem annihilator_aeval_ne_zero_of_im_ne_zero {x : J} {m : Polynomial ℝ}
     (hm : ∀ f, jeval x f = 0 ↔ m ∣ f) (hsq : Squarefree m) (h0 : m.coeff 0 ≠ 0)
     {z : ℂ} (hz : z.im ≠ 0) : aeval z m ≠ 0 := by
@@ -519,7 +519,6 @@ private theorem exists_split_annihilator (x : J) :
       _ = m * v := by rw [← mul_assoc, ← hW]
 
 omit [IsCommJordan J] [IsFormallyReal J] [Module.Finite ℝ J] in
-
 private theorem jeval_eq_zero_of_eval_eq_zero {x : J} {S : Finset ℝ} (h0S : (0 : ℝ) ∉ S)
     (hA : jeval x (∏ a ∈ S, (X - C a)) = 0) {p f : Polynomial ℝ} (hpf : X * p = f)
     (hf : ∀ ν ∈ insert (0 : ℝ) S, f.eval ν = 0) : jeval x p = 0 := by
@@ -677,7 +676,8 @@ theorem finite_spectral_resolution (A : Data X S u) (a : X) :
   by_cases hu : u = 0
   · have allzero (x : X) : x = 0 := by
       rw [← A.unit_mul x, hu, S.map_zero, LinearMap.zero_apply]
-    refine ⟨0, Fin.elim0, Fin.elim0, Fin.elim0, ?_, ?_, ?_, ?_, fun _ => rfl⟩
+    refine ⟨0, Fin.elim0, Fin.elim0, ?_, ?_, ?_, ?_, ?_, fun _ => rfl⟩
+    · intro i; exact Fin.elim0 i
     · intro i; exact Fin.elim0 i
     · simpa using hu.symm
     · simpa using (allzero a).symm
@@ -690,14 +690,14 @@ theorem finite_spectral_resolution (A : Data X S u) (a : X) :
       zero_mul := fun x => congrArg (fun f : X →ₗ[ℝ] X => f x) S.map_zero
       mul_zero := fun x => (S x).map_zero
       mul_comm := A.symm }
-  letI : IsCommJordan X := ⟨A.jordan⟩
-  letI : IsScalarTower ℝ X X := ⟨fun r x y => by
+  haveI : IsCommJordan X := ⟨A.jordan⟩
+  haveI : IsScalarTower ℝ X X := ⟨fun r x y => by
     change S (r • x) y = r • S x y
-    simp only [map_smul, LinearMap.smul_apply, RingHom.id_apply]⟩
+    simp only [map_smul, LinearMap.smul_apply]⟩
   have hinner (x y : X) : inner ℝ (x * y) u = inner ℝ x y := by
     change inner ℝ (S x y) u = _
     rw [A.inner_assoc, A.symm x u, A.unit_mul, real_inner_comm]
-  letI : IsFormallyReal X := by
+  haveI : IsFormallyReal X := by
     refine ⟨fun {ι} s f hsum i hi => ?_⟩
     have hz : (∑ j ∈ s, inner ℝ (f j) (f j)) = 0 := by
       have h0 : inner ℝ (∑ j ∈ s, f j * f j) u = 0 := by rw [hsum, inner_zero_left]

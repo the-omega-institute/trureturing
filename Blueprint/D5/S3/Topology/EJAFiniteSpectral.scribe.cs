@@ -8,6 +8,12 @@ internal sealed class EJAFiniteSpectralDocument : IScribeDocumentDefinition
         "Every element of a general finite real Euclidean Jordan algebra has a complete finite spectral resolution on its original carrier, using its given positive definite associative inner product and no JB norm assumption.",
         H("Finite spectra in a general real Euclidean Jordan algebra"),
         Blocks(
+            Describe.Lean(DescribeId.Create("formal-reality"),
+                DeclarationHandle.Create("D5/S3/Topology/EJAFiniteSpectral.IsFormallyReal"),
+                H("The auxiliary formal-reality predicate"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("Formal reality means that a vanishing finite sum of Jordan squares has every underlying element zero. This auxiliary property is derived from the given positive definite associative inner product and unit inside the spectral proof. It is not a premise of the public EJA spectral theorem."))),
+                DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("genuine-eja-data"),
                 DeclarationHandle.Create("D5/S3/Topology/EJAFiniteSpectral.Data"),
                 H("The original Euclidean Jordan data"), StatementSource.WithoutFormula(),
