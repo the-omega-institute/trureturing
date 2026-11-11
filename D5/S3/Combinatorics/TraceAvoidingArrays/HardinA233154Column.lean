@@ -12,7 +12,7 @@ escape_witness: none
 Finite row tables normalize the row quotient; their helpers are bind-only.
 codes_table: proof_shape=bind-only; consumers=row_counts, initial_weights
 row_counts_code: proof_shape=bind-only; consumers=row_counts
-row_counts: proof_shape=bind-only; consumers=row_counts_code, finite_certificate
+row_counts: proof_shape=bind-only; consumers=finite_certificate
 initial_weights: proof_shape=bind-only; consumers=finite_certificate
 W: proof_shape=bind-only; consumers=powers_table, vector_relation, initial_relation
 powers_table: proof_shape=bind-only; consumers=vector_relation, initial_relation

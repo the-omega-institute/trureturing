@@ -14,6 +14,8 @@ open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233154Rows
 open LeanInformationAudit
 open scoped BigOperators
 noncomputable section
+set_option maxRecDepth 100000
+set_option maxHeartbeats 10000000
 
 namespace Block
 abbrev signature : Signature :=
@@ -34,7 +36,8 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have ha := row_counts 1 hr 0
   change actual.readout () 1 0 + 1 = _ at hb
   change actual.readout () 1 0 = _ at ha
-  omega
+  have hc := hb.trans ha.symm
+  exact (by omega : ∀ z : ℤ, z + 1 ≠ z) _ hc
 def family : Registration arena (type_of% @row_counts) where
   actual := actual
   bridge := Iff.rfl
@@ -51,7 +54,8 @@ def family : Registration arena (type_of% @row_counts) where
     change actual.readout () 1 0 = _ at h0
     change actual.readout () 1 2 = _ at h1
     rw [h0, h1]
-    decide +kernel
+    change (1 : ℤ) ≠ 2
+    omega
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@row_counts) (Realization signature) Type Unit where
@@ -66,7 +70,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ a s => classCount (decode 7 (⟨3*a.val+2, by omega⟩ : Fin 2187)) s) (fun e => nomatch e))
+  readout := some actual
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -85,4 +89,5 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   familyRecord := none
   options := #[]
 end Block
+end
 end Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233154CertificateTwo

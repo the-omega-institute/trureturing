@@ -10,6 +10,8 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 open scoped BigOperators
 noncomputable section
+set_option maxRecDepth 100000
+set_option maxHeartbeats 10000000
 
 namespace RowSum
 abbrev signature : Signature :=
@@ -52,7 +54,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (by classical; exact realize signature (fun _ k F => ∑ r : Row k, if rowLegal r then F r else 0) (fun e => nomatch e))
+  readout := some actual
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -90,7 +92,8 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have hb := h 0 0
   have ha := row_sequence_bridge 0 0
   change T 0 1 + 1 = _ at hb
-  omega
+  have hc : T 0 1 + 1 = T 0 1 := hb.trans ha.symm
+  exact Nat.succ_ne_self _ hc
 def family : Registration arena (type_of% @row_sequence_bridge) where
   actual := actual
   bridge := Iff.rfl
@@ -116,7 +119,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ k n => T k (n+1)) (fun e => nomatch e))
+  readout := some actual
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -163,7 +166,8 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have hb := h 0 1 (fun _ => 0) (fun _ _ => 1) (fun _ => 1) hQ hw 0
   have ha := count_transfer 0 1 (fun _ => 0) (fun _ _ => 1) (fun _ => 1) hQ hw 0
   change (T 0 2 : ℤ) + 1 = _ at hb
-  omega
+  have hc : (T 0 2 : ℤ) + 1 = (T 0 2 : ℤ) := hb.trans ha.symm
+  exact (by omega : ∀ z : ℤ, z + 1 ≠ z) _ hc
 def family : Registration arena (type_of% @count_transfer) where
   actual := actual
   bridge := Iff.rfl
@@ -175,7 +179,6 @@ def family : Registration arena (type_of% @count_transfer) where
     refine ⟨1, 0, 1, ?_⟩
     change (T 1 2 : ℤ) ≠ (T 1 3 : ℤ)
     norm_cast
-    decide +kernel
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@count_transfer) (Realization signature) Type Unit where
@@ -190,7 +193,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ k n => (T k (n+2) : ℤ)) (fun e => nomatch e))
+  readout := some actual
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -209,4 +212,5 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   familyRecord := none
   options := #[]
 end Transfer
+end
 end Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233155RowTransfer

@@ -14,6 +14,8 @@ open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233154Rows
 open LeanInformationAudit
 open scoped BigOperators
 noncomputable section
+set_option maxRecDepth 100000
+set_option maxHeartbeats 10000000
 attribute [local irreducible] T7
 namespace Certificate
 abbrev signature : Signature :=
@@ -42,7 +44,8 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have ha := finite_certificate.1 (fun _ => 0) hr 0
   change actual.readout () (fun _ => 0) 0 + 1 = _ at hb
   change actual.readout () (fun _ => 0) 0 = _ at ha
-  omega
+  have hc := hb.trans ha.symm
+  exact (by omega : ∀ z : ℤ, z + 1 ≠ z) _ hc
 def family : Registration arena (type_of% @finite_certificate) where
   actual := actual
   bridge := Iff.rfl
@@ -58,7 +61,8 @@ def family : Registration arena (type_of% @finite_certificate) where
     change actual.readout () (fun _ => 0) 0 = _ at h0
     change actual.readout () (fun _ => 0) 2 = _ at h1
     rw [h0, h1]
-    decide +kernel
+    change (5 : ℤ) ≠ 3
+    omega
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@finite_certificate) (Realization signature) Type Unit where
@@ -73,7 +77,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (by classical; exact realize signature (fun _ r s => ∑ c : Row 7, if rowLegal c ∧ compatible r c ∧ classify c = s then (1 : ℤ) else 0) (fun e => nomatch e))
+  readout := some actual
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -128,7 +132,11 @@ def family : Registration arena (type_of% @result) where
       finite_certificate.1 finite_certificate.2.1 0
     change (T7 1 : ℤ) ≠ (T7 2 : ℤ)
     change (T7 2 : ℤ) = _ at h2
-    norm_num [quotient, weights, Matrix.mulVec, dotProduct, Fin.sum_univ_succ] at h2
+    have hv : dotProduct weights
+        ((quotient ^ 1).mulVec (1 : Fin 16 → ℤ)) = 5832 := by decide +kernel
+    change (T7 2 : ℤ) = dotProduct weights
+      ((quotient ^ 1).mulVec (1 : Fin 16 → ℤ)) at h2
+    rw [hv] at h2
     exact_mod_cast (by omega : T7 1 ≠ T7 2)
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
@@ -144,7 +152,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ _ n => (T7 n : ℤ)) (fun e => nomatch e))
+  readout := some actual
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -163,4 +171,5 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   familyRecord := none
   options := #[]
 end Recurrence
+end
 end Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233154Column

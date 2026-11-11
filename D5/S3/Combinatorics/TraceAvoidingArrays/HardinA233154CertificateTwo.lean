@@ -26,6 +26,7 @@ theorem row_counts : ∀ a : Fin 729,
     rowLegal (decode 7 (⟨3*a.val + 2, by omega⟩ : Fin 2187)) → ∀ s : Fin 16,
     classCount (decode 7 (⟨3*a.val + 2, by omega⟩ : Fin 2187)) s =
       quotient (classify (decode 7 (⟨3*a.val + 2, by omega⟩ : Fin 2187))) s := by
-  decide +kernel
+  intro a
+  fin_cases a <;> decide +kernel
 
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233154CertificateTwo
