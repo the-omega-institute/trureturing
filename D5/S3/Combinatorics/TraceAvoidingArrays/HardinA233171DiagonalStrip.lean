@@ -8,10 +8,10 @@
 
 /-
 admission_basis: open-problem-resolution (#29002; Proved)
-escape_witness: finite_certificate proves this graph's seven-class transfer;
-distribution_step proves the successive first-row distribution products;
-distribution_relation proves their order-seven integer relation. These facts
-are consumed by the all-height reduction and result, not supplied by frozen owners.
+escape_witness: finite_certificate proves this graph's seven-class transfer,
+consumed by the all-height reduction and result and not supplied by frozen owners.
+distribution_step and distribution_relation are consumed bind-only helpers
+(finite computations on the transfer and the reused first-row distribution).
 bonds: proof_shape=bind-only; consumers=decidableBonds, a, bonds_iff, counting_bridge
 decidableBonds: proof_shape=bind-only; consumers=a, counting_bridge
 a: proof_shape=bind-only; consumers=counting_bridge, result
@@ -29,10 +29,10 @@ w: proof_shape=bind-only; consumers=v_eq_w, a_eq_w, shifted_count
 v_eq_w: proof_shape=content; consumers=a_eq_w; escape_witness=finite_certificate
 a_eq_w: proof_shape=content; consumers=shifted_count; escape_witness=finite_certificate
 distribution: proof_shape=bind-only; consumers=distribution_step, shifted_count, distribution_relation
-distribution_step: proof_shape=content; consumers=shifted_count; escape_witness=distribution_step
-shifted_count: proof_shape=content; consumers=result; escape_witness=finite_certificate, distribution_step
-distribution_relation: proof_shape=content; consumers=result; escape_witness=distribution_relation
-result: proof_shape=content; consumers=terminal result; escape_witness=finite_certificate, distribution_relation
+distribution_step: proof_shape=bind-only; consumers=shifted_count
+shifted_count: proof_shape=content; consumers=result; escape_witness=finite_certificate
+distribution_relation: proof_shape=bind-only; consumers=result
+result: proof_shape=content; consumers=terminal result; escape_witness=finite_certificate
 -/
 
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233251TriangleStrip
