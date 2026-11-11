@@ -73,7 +73,5 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   familyRecord := none
   options := #[]
 
-#print axioms audit
-
 end
 end Reg.D5.S1.Recurrence.BalaTrinomialCoefficientIdentity

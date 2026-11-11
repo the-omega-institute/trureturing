@@ -2,18 +2,19 @@
    generality: G
    mirror-B: D5/B/S1/Recurrence/BalaTrinomialCoefficientIdentity
    mirror-E: none(waiver:unbounded-symbolic-identity)
-   anchors: []
+   anchors: [mathlib/module/Mathlib.RingTheory.PowerSeries.Binomial, mathlib/module/Mathlib.RingTheory.PowerSeries.Inverse, mathlib/module/Mathlib.RingTheory.PowerSeries.Substitution, mathlib/module/Mathlib.RingTheory.PowerSeries.WellKnown, mathlib/module/Mathlib.Tactic]
    utility: none
    digest: A rational coefficient identity with an inclusive finite binomial sum. -/
 
 import Mathlib.RingTheory.PowerSeries.Inverse
 import Mathlib.RingTheory.PowerSeries.Binomial
 import Mathlib.RingTheory.PowerSeries.Substitution
-import Mathlib.RingTheory.PowerSeries.Derivative
 import Mathlib.Tactic
+import D5.S1.Recurrence.Invariants.CompositionalIterateCongruence
 
 namespace D5.S1.Recurrence.BalaTrinomialCoefficientIdentity
 open PowerSeries
+open D5.S1.Recurrence.Invariants.CompositionalIterateCongruence (mobius mobius_zero)
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -23,49 +24,54 @@ def source (n : ℕ) : PowerSeries ℚ :=
   (1 + X + X ^ 2) ^ (3 * n) * ((1 + X) ^ (2 * n))⁻¹
 
 private def geometric : PowerSeries ℚ := (invOneSubPow ℚ 1).val
-private def argument : PowerSeries ℚ := X * geometric
+
+private theorem mobius_one_eq_geometric : mobius (1 : ℚ) = X * geometric := by
+  rw [mobius, rescale_one, RingHom.id_apply]
+  have h : (mk 1 : PowerSeries ℚ) = geometric := by
+    rw [geometric, invOneSubPow_val_succ_eq_mk_add_choose]
+    ext i
+    simp
+  rw [h]
 
 private theorem geometric_power (k : ℕ) :
     geometric ^ k = (invOneSubPow ℚ k).val := by
   rw [geometric, invOneSubPow_eq_inv_one_sub_pow, invOneSubPow_eq_inv_one_sub_pow]
   simp
 
-private theorem argument_zero : constantCoeff argument = 0 := by simp [argument]
-
 private theorem finite_substitution (f : PowerSeries ℚ) (n : ℕ) :
-    coeff n (f.subst argument) =
-      ∑ j ∈ Finset.range (n + 1), coeff j f * coeff n (argument ^ j) := by
-  rw [coeff_subst' (.of_constantCoeff_zero' argument_zero)]
+    coeff n (f.subst (mobius (1 : ℚ))) =
+      ∑ j ∈ Finset.range (n + 1), coeff j f * coeff n (mobius (1 : ℚ) ^ j) := by
+  rw [coeff_subst' (.of_constantCoeff_zero' (mobius_zero (1 : ℚ)))]
   simp only [smul_eq_mul]
   apply finsum_eq_sum_of_support_subset
   intro j hj
   apply Finset.mem_range.mpr
   by_contra h
-  have hz : coeff n (argument ^ j) = 0 := by
+  have hz : coeff n (mobius (1 : ℚ) ^ j) = 0 := by
     apply coeff_of_lt_order
     exact (show (n : ENat) < (j : ENat) by exact_mod_cast (show n < j by omega)).trans_le
-      (le_order_pow_of_constantCoeff_eq_zero j argument_zero)
+      (le_order_pow_of_constantCoeff_eq_zero j (mobius_zero (1 : ℚ)))
   exact hj (by simp [hz])
 
 private theorem finite_product_substitution (f q : PowerSeries ℚ) (n : ℕ) :
-    coeff n (q * f.subst argument) =
-      ∑ j ∈ Finset.range (n + 1), coeff j f * coeff n (q * argument ^ j) := by
+    coeff n (q * f.subst (mobius (1 : ℚ))) =
+      ∑ j ∈ Finset.range (n + 1), coeff j f * coeff n (q * mobius (1 : ℚ) ^ j) := by
   rw [coeff_mul, Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk]
   simp_rw [finite_substitution]
   have extend (i : ℕ) (hi : i ∈ Finset.range (n+1)) :
-      (∑ j ∈ Finset.range (n-i+1), coeff j f * coeff (n-i) (argument^j)) =
-        ∑ j ∈ Finset.range (n+1), coeff j f * coeff (n-i) (argument^j) := by
+      (∑ j ∈ Finset.range (n-i+1), coeff j f * coeff (n-i) (mobius (1 : ℚ) ^ j)) =
+        ∑ j ∈ Finset.range (n+1), coeff j f * coeff (n-i) (mobius (1 : ℚ) ^ j) := by
     apply Finset.sum_subset (Finset.range_mono (by omega))
     intro j hj hji
-    have hz : coeff (n-i) (argument^j) = 0 := by
+    have hz : coeff (n-i) (mobius (1 : ℚ) ^ j) = 0 := by
       apply coeff_of_lt_order
       exact (show ((n-i : ℕ) : ENat) < (j : ENat) by
         exact_mod_cast (show n-i < j by simpa using hji)).trans_le
-        (le_order_pow_of_constantCoeff_eq_zero j argument_zero)
+        (le_order_pow_of_constantCoeff_eq_zero j (mobius_zero (1 : ℚ)))
     simp [hz]
   calc
     _ = ∑ i ∈ Finset.range (n+1), coeff i q *
-        ∑ j ∈ Finset.range (n+1), coeff j f * coeff (n-i) (argument^j) := by
+        ∑ j ∈ Finset.range (n+1), coeff j f * coeff (n-i) (mobius (1 : ℚ) ^ j) := by
       apply Finset.sum_congr rfl
       intro i hi
       rw [extend i hi]
@@ -80,11 +86,11 @@ private theorem finite_product_substitution (f q : PowerSeries ℚ) (n : ℕ) :
   ring
 
 private theorem mobius_coefficient (f : PowerSeries ℚ) (n : ℕ) (hn : 0 < n) :
-    coeff n ((1-X)^(n-1) * f.subst argument) = coeff n f := by
+    coeff n ((1-X)^(n-1) * f.subst (mobius (1 : ℚ))) = coeff n f := by
   classical
   rw [finite_product_substitution]
   rw [Finset.sum_eq_single n]
-  · rw [argument, mul_pow]
+  · rw [mobius_one_eq_geometric, mul_pow]
     rw [show (1-X : PowerSeries ℚ)^(n-1) * (X^n * geometric^n) =
       X^n * ((1-X)^(n-1) * geometric^n) by ring]
     simp [coeff_X_pow_mul', geometric, invOneSubPow_val_succ_eq_mk_add_choose]
@@ -95,9 +101,9 @@ private theorem mobius_coefficient (f : PowerSeries ℚ) (n : ℕ) (hn : 0 < n) 
       rw [geometric_power]
       nth_rw 1 [he]
       rw [one_sub_pow_add_mul_invOneSubPow_val_eq_one_sub_pow]
-    have ht : (1-X : PowerSeries ℚ)^(n-1) * argument^j =
+    have ht : (1-X : PowerSeries ℚ)^(n-1) * mobius (1 : ℚ) ^ j =
         X^j * (1-X)^(n-1-j) := by
-      rw [argument, mul_pow]
+      rw [mobius_one_eq_geometric, mul_pow]
       calc
         _ = X^j * ((1-X)^(n-1) * geometric^j) := by ring
         _ = _ := by rw [hp]
@@ -126,32 +132,31 @@ private theorem cancel_powers (a b : ℕ) :
   rw [pow_add, ← mul_assoc, ← mul_pow, geometric_cancel, one_pow, one_mul]
 
 private theorem source_transform (n : ℕ) (hn : 0 < n) :
-    (1-X : PowerSeries ℚ)^(n-1) * (source n).subst argument =
+    (1-X : PowerSeries ℚ)^(n-1) * (source n).subst (mobius (1 : ℚ)) =
       (1 + X^2 * geometric)^(3*n) * geometric := by
-  let hs : HasSubst argument := .of_constantCoeff_zero' argument_zero
-  have hone : (1 : PowerSeries ℚ).subst argument = 1 := by
+  let hs : HasSubst (mobius (1 : ℚ)) := .of_constantCoeff_zero' (mobius_zero (1 : ℚ))
+  have hone : (1 : PowerSeries ℚ).subst (mobius (1 : ℚ)) = 1 := by
     rw [← coe_substAlgHom hs, map_one]
-  have ha : (1 + argument : PowerSeries ℚ) = geometric := by
+  have ha : 1 + mobius (1 : ℚ) = geometric := by
     have h := geometric_cancel
-    dsimp [argument]
+    rw [mobius_one_eq_geometric]
     linear_combination -h
-  have ht : (1 + argument + argument^2 : PowerSeries ℚ) =
+  have ht : 1 + mobius (1 : ℚ) + mobius (1 : ℚ) ^ 2 =
       (1 + X^2 * geometric) * geometric := by
-    rw [ha]
-    dsimp [argument]
+    rw [ha, mobius_one_eq_geometric]
     ring
-  have hsden : (((1+X : PowerSeries ℚ)^(2*n))⁻¹).subst argument = (1-X)^(2*n) := by
+  have hsden : (((1+X : PowerSeries ℚ)^(2*n))⁻¹).subst (mobius (1 : ℚ)) = (1-X)^(2*n) := by
     have h := congrArg (substAlgHom hs)
       (PowerSeries.mul_inv_cancel ((1+X : PowerSeries ℚ)^(2*n)) (by simp))
-    have h' : geometric^(2*n) * (((1+X : PowerSeries ℚ)^(2*n))⁻¹).subst argument = 1 := by
+    have h' : geometric^(2*n) * (((1+X : PowerSeries ℚ)^(2*n))⁻¹).subst (mobius (1 : ℚ)) = 1 := by
       simpa only [coe_substAlgHom, subst_mul hs, subst_pow hs, subst_add hs,
         subst_X hs, hone, ha] using h
     have hc : (1-X : PowerSeries ℚ)^(2*n) * geometric^(2*n) = 1 := by
       rw [← mul_pow, geometric_cancel, one_pow]
     calc
-      _ = 1 * (((1+X : PowerSeries ℚ)^(2*n))⁻¹).subst argument := by simp
+      _ = 1 * (((1+X : PowerSeries ℚ)^(2*n))⁻¹).subst (mobius (1 : ℚ)) := by simp
       _ = ((1-X)^(2*n) * geometric^(2*n)) *
-          (((1+X : PowerSeries ℚ)^(2*n))⁻¹).subst argument := by rw [hc]
+          (((1+X : PowerSeries ℚ)^(2*n))⁻¹).subst (mobius (1 : ℚ)) := by rw [hc]
       _ = _ := by rw [mul_assoc, h', mul_one]
   rw [source, subst_mul hs, subst_pow hs, subst_add hs, subst_add hs,
     subst_pow hs, subst_X hs, hone, ht, hsden, mul_pow]
@@ -212,8 +217,6 @@ theorem result (n : ℕ) :
       positive_coefficient]
     push_cast
     rfl
-
-#print axioms result
 
 end
 end D5.S1.Recurrence.BalaTrinomialCoefficientIdentity
