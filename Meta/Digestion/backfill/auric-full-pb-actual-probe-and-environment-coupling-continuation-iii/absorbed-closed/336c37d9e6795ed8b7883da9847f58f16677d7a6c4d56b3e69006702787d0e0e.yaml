@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:336c37d9e6795ed8b7883da9847f58f16677d7a6c4d56b3e69006702787d0e0e
   normalized_sha256: sha256:336c37d9e6795ed8b7883da9847f58f16677d7a6c4d56b3e69006702787d0e0e
 cas_ref: sha256:336c37d9e6795ed8b7883da9847f58f16677d7a6c4d56b3e69006702787d0e0e
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Algebra/AuricContactCoefficient.lemma_46_3
+    target_statement_id: sha256:80c5c27da9f30d7cc43031d43e2441946a44b7129f2bf2041fad332eea86d202
 receipts:
   unresolved_subitems: []
