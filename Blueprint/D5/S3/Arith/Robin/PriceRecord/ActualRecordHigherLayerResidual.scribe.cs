@@ -5,23 +5,9 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin.PriceRecord;
 internal sealed class ActualRecordHigherLayerResidualDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Complete actual prime-layer loss and the residual beyond the first layer.",
-        H("The literal residual, its finite estimates, and the remaining source obligation"),
+        "Complete finite actual prime-layer loss and second-layer tube bounds.",
+        H("Complete finite loss estimates"),
         Blocks(
-            Paragraph(Text(
-                "Three finite estimates give the literal higher-layer loss bound, a quantitative compact "
-                + "second-margin expansion, and the complete second-layer tube bound. The full uniform "
-                + "residual theorem is not declared: the uniform threshold and limiting-envelope assembly "
-                + "remain separate proof obligations. The ordinary deduction below describes the required "
-                + "assembly and its suppliers; it does not assert that this assembly is a Lean theorem.")),
-            Paragraph(Text(
-                "Exact target, retained without weakening: for every epsilon>0 there exists X0>1, chosen "
-                + "before every natural m>=2 and every real mu>0, such that if the ORIGINAL objective at mu "
-                + "strictly exceeds its value at EVERY natural 0<k<m and X=log(m)>=X0, then "
-                + "0<=sqrt(X)*log(X)^3*(actualDefect(X,m)-completeFirstLayerLoss(X,m))<epsilon. "
-                + "Here referencePrice(X)=1/(X log(X)) defines the pressure clock. The original arbitrary mu "
-                + "is never identified with that price. No defect bound, RH, prime short-window premise, "
-                + "support cap, or exponent cap is an assumption.")),
             Paragraph(Text("Exact finite objects and completeness")),
             Paragraph(Text(
                 "Use the library's actualPressure=sup of goldenResourceObjective(referencePrice(X),n) "
@@ -143,66 +129,6 @@ internal sealed class ActualRecordHigherLayerResidualDocument : IScribeDocumentD
                         + "in W and lower endpoint excluded from W both have zero loss; no singleton "
                         + "correction is hidden. Finally the literal finite decomposition rewrites "
                         + "C2 as actualDefect-C1-D3."))),
-                DescribeRole.Theorem),
-            Paragraph(Text("Ordinary full uniform deduction and the exact missing Lean assembly")),
-            Paragraph(Text(
-                "Choose epsilon>0 and delta=min(1,sqrt(a*epsilon/36)) FIRST. Then "
-                + "9delta^2/a<=epsilon/4. Consume the first conjunct of the FULL proposed "
-                + "ActualRecordOwnLogSecondLayer.actual_record_own_log_second_layer at error delta; "
-                + "do not introduce a named projection. It supplies |L*(Q2/r-a)-s0|<delta uniformly "
-                + "before m and mu, hence A<Q2<B. This own-log module and its three original owner "
-                + "visibility changes are UNCOMPILED_UNACCEPTED dependencies of the full deduction. "
-                + "They are not dependencies of the three finite theorems in the present Lean file, "
-                + "and the original private rate calculus is not duplicated.")),
-            Paragraph(Text(
-                "For fixed delta the deterministic endpoints have A/r,B/r->a and "
-                + "log(A)/L,log(B)/L->1/2. Eventually r<A and B<=2a*r, and the explicit compact "
-                + "remainder is <=delta/(2a). Apply the existing global theta_error_log_power(1) "
-                + "with eta=delta/(8a). At BOTH endpoints separately, y/log(y)<=4a*r/L eventually, "
-                + "so |theta(y)-y|<=delta*r/(2L). This derives precisely the finite tube hypotheses "
-                + "from the global PNT. There is no short-prime assumption and no uniformity in a "
-                + "simultaneously shrinking delta(X).")),
-            Paragraph(Text(
-                "For the higher estimate choose R=(X L/log(2))^(1/3). The existing same-integer "
-                + "record_mass_limits gives X/P->1 uniformly, and record_log_envelope gives "
-                + "X<=P log(4P^2), so X->infinity forces P->infinity before arbitrary prices. "
-                + "FixedLayerRigidity at j=3 gives Q3^3/P->3; eventually X/2<=P<=2X, Q3<=2X^(1/3), "
-                + "L>=2, log(4P^2)<=4L, M3<=8X^(1/3)L, R>=1 and R<P. The finite higher theorem "
-                + "therefore yields r L^3 D3 <= "
-                + "4/(log(2)^(1/3))*X^(-1/6)*L^(10/3)+8X^(-1/6)*L^3. "
-                + "Both terms tend to zero by the existing log-power versus positive-real-power "
-                + "asymptotic. This sharper envelope counts the whole missing tail once per prime; "
-                + "the Pro pair-count logarithmic factor is unnecessary.")),
-            Paragraph(Text(
-                "Take a deterministic threshold making that higher envelope <epsilon/2 and intersect "
-                + "it with the finitely many fixed-delta analytic tails, the own-log Q2 tail and the "
-                + "uniform record-regime tail. The maximum is one X0>1 BEFORE m and mu. The complete "
-                + "finite identity then gives 0<=r L^3*(actualDefect-C1)=r L^3*C2+r L^3*D3 "
-                + "<epsilon/4+epsilon/2<epsilon. A subtype of ALL literal record pairs filtered by "
-                + "comap(log(m),atTop) expresses the same quantifiers without a fixed-price or "
-                + "subsequence restriction. A bottom filter would only make a tail statement vacuous; "
-                + "existing arbitrarily_large_price_records and P<=m in fact provide own-X "
-                + "nonvacuity by taking P>=exp(T).")),
-            Paragraph(Text(
-                "EXACT SOURCE GAP: the present Lean file does not yet prove the deterministic eventual "
-                + "remainder and two-endpoint theta conditions, does not yet form the record subtype "
-                + "and prove its P-regime and normalized higher-envelope limit, and does not yet "
-                + "perform the fixed-delta epsilon/max-threshold assembly. Thus the full literal target "
-                + "has an ordinary proof from the stated suppliers and finite estimates, but "
-                + "does not have a complete Lean proof in this module. Four-slot source-bound audits are "
-                + "separate obligations: a source-law bridge alone does not establish whole-family "
-                + "variation, sensitivity, actual observational dependence or a current producer binding.")),
-            Paragraph(Text("5040 application and first-layer boundary")),
-            Paragraph(Text(
-                "Once the record theorem is actually proved, its 5040 application uses only the existing "
-                + "uniform_actual_least_crossing_price_record and uniform_actual_height_escape, with "
-                + "Tepsilon=max(Trecord,Tescape(X0)) chosen before eta,T,m. The former gives a positive "
-                + "original price and the strict objective comparison with EVERY positive predecessor; "
-                + "the latter and divisor_log_le_log give log(m)>X0. No named binding wrapper is needed. "
-                + "This is conditional on being an actual least crossing and constructs none. It "
-                + "asserts no Robin sign or RH conclusion. First-layer boundedness "
-                + "sqrt(X)*log(X)^3*C1=O(1) remains explicitly OPEN even if full residual isolation "
-                + "is later accepted. Neither the finite estimates nor the ordinary Pro argument "
-                + "changes that boundary."))
+                DescribeRole.Theorem)
         )));
 }

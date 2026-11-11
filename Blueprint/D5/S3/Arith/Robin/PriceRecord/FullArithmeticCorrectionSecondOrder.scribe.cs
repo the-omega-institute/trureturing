@@ -15,6 +15,42 @@ internal sealed class FullArithmeticCorrectionSecondOrderDocument : IScribeDocum
                 + "CompleteTailSecondOrder supplies its public price_record_complete_tail_second_order endpoint. "
                 + "The additional clock term follows from the exact mass identity and finite remainder bound below.")),
             Describe.Lean(
+                DescribeId.Create("price-record-existing-fixed-layer-filter-ratio"),
+                DeclarationHandle.Create(
+                    "D5/S3/Arith/Robin/PriceRecord/FullArithmeticCorrectionSecondOrder.record_layer_ratio"),
+                H("Original fixed-layer limit, exposed for a live consumer"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The unchanged original proof retains any index type and filter, m>=2, arbitrary positive prices and the full literal strict predecessor record at each index. With P->infinity it gives Qj^j/P->j for each fixed j>=2. The residual higher-envelope proof consumes j=3. This is visibility-only reuse, not new mathematics."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("price-record-existing-mass-filter-rates"),
+                DeclarationHandle.Create(
+                    "D5/S3/Arith/Robin/PriceRecord/FullArithmeticCorrectionSecondOrder.record_mass_limits"),
+                H("Original same-integer relative clock rate"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The unchanged owner proof gives both same-integer E/sqrt(P) coefficients and X/P=1+o(1/log(P)), with X=log(m). The last conjunction uses the existing private reducible UnitRate; its calculus remains private. higher_layer_negligible consumes X/P->1. No bound X-P=O(sqrt(P)) follows."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("price-record-existing-finite-log-envelope"),
+                DeclarationHandle.Create(
+                    "D5/S3/Arith/Robin/PriceRecord/FullArithmeticCorrectionSecondOrder.record_log_envelope"),
+                H("Original finite envelope forces P escape"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The unchanged finite proof gives X<=P*log(4P^2) for m>=2 at every positive original price with the full strict predecessor comparison. record_prime_escape consumes this exact bound to convert own-X escape into P escape uniformly over prices."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("price-record-consumed-own-clock-q2-coefficient"),
+                DeclarationHandle.Create(
+                    "D5/S3/Arith/Robin/PriceRecord/FullArithmeticCorrectionSecondOrder.record_second_own_clock_limit"),
+                H("Only the needed Q2 coefficient in the existing owner context"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For any filter of literal original record pairs with P->infinity, log(X)*(Q2/sqrt(X)-sqrt(2))->-log(2)/sqrt(2). Apply unit_sqrt(unit_inv(record_mass_limits.2.2)), multiply Q2/sqrt(P) with second_mul_unit, and transport the logarithmic ratio with relative_clocks. All four are the original private calculus. In the critical residual proof this limit places the second-layer coefficient in a fixed tube on the record's own clock, uniformly over the original prices."))),
+                DescribeRole.Theorem),
+            Paragraph(Text(
+                "The newly visible suppliers and consumed own-clock helper still require complete "
+                + "source-bound four-slot audits; the exact remaining evidence is tracked in "
+                + "https://github.com/the-omega-institute/trureturing/issues/28966.")),
+            Describe.Lean(
                 DescribeId.Create("price-record-same-integer-log-mass"),
                 DeclarationHandle.Create(
                     "D5/S3/Arith/Robin/PriceRecord/FullArithmeticCorrectionSecondOrder.record_log_mass"),
