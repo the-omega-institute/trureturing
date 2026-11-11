@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Algebra/AuricContactCoefficient
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=algebraic-identity; basis=consumer=D5/S3/Quantum/Algebra/AuricContactCoefficient.lemma_46_3
+   utility: none
    digest: Explicit coefficient identities at the cost-centre t=1/4 in the Auric contact model. -/
 
 module
