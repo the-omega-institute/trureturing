@@ -68,7 +68,8 @@ theorem central_spectrum_attainment (n : ℕ) (hn : 23 ≤ n) :
       (rho * rho).trace.re = theta n := by
   have hspec : Antitone (centralSpectrum n) ∧ (∀ i, 0 ≤ centralSpectrum n i) ∧
       (∑ i, centralSpectrum n i = 1) ∧ ∑ i, (centralSpectrum n i)^2 = theta n := by
-    simpa only [centralSpectrum] using (SixRowAttainment.central_spectrum_data n hn)
+    unfold centralSpectrum
+    exact SixRowAttainment.central_spectrum_data n hn
   have hdiag : SixRowAttainment.centralDensity n =
       diagonal (fun p : Fin 6 × Fin n =>
         (centralSpectrum n (finProdFinEquiv p) : ℂ)) := by

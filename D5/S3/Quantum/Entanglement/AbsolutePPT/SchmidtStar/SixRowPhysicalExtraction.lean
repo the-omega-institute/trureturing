@@ -63,9 +63,7 @@ theorem literal_physical (n : ℕ) (hn : 23 ≤ n)
     rw [← hCap]
     exact hm.head_box
   let s := SixRowMiddlePolynomial.slack r H D
-  have hSlack : s = 6-15*r-H-D := by
-    dsimp only [s, SixRowMiddlePolynomial.slack]
-    ring
+  have hSlack : s = 6-15*r-H-D := rfl
   have hMass : 0 ≤ s := by
     rw [hSlack]
     exact hm.mass
