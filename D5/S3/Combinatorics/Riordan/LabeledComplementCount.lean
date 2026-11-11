@@ -21,16 +21,16 @@ The parity expressions use the disclosed products 10 * 8^(k-1) and 3 * 8^k.
 Coefficients lie in ZMod 2; truncations use AdjoinRoot of a power of Polynomial.X.
 first_vector_card: proof_shape: bind-only; consumers: classified_card.
 classified_card: proof_shape: bind-only; consumers: doubled_classified_card.
-classR_zero: proof_shape: bind-only; consumers: class_complement, classToUnitParams.
-classS_zero: proof_shape: bind-only; consumers: class_complement, classToUnitParams.
-class_pair_injective: proof_shape: content; escape_witness: class_pair_injective; consumers: classToUnitParams_injective.
+classR_zero: proof_shape: bind-only; consumers: classToUnitParams, class_complement.
+classS_zero: proof_shape: bind-only; consumers: classToUnitParams, class_complement.
+class_pair_injective: proof_shape: content; escape_witness: D5.S3.Combinatorics.Riordan.LabeledComplementCount.class_pair_injective; consumers: classToUnitParams_injective.
 class_complement: proof_shape: content; escape_witness: D5.S3.Combinatorics.Riordan.LabeledComplementAlgebra.image_square_annihilator; consumers: classToUnitParams.
-classToUnitParams_injective: proof_shape: content; escape_witness: class_pair_injective; consumers: count_all.
-classToUnitParams_surjective: proof_shape: content; escape_witness: classToUnitParams_surjective; consumers: count_all.
+classToUnitParams_injective: proof_shape: content; escape_witness: D5.S3.Combinatorics.Riordan.LabeledComplementCount.class_pair_injective; consumers: count_all.
+classToUnitParams_surjective: proof_shape: content; escape_witness: D5.S3.Combinatorics.Riordan.LabeledComplementCount.classToUnitParams_surjective; consumers: count_all.
 doubled_classified_card: proof_shape: bind-only; consumers: count_all.
-count_all: proof_shape: content; escape_witness: classToUnitParams_surjective; consumers: count_sum.
-count_sum: proof_shape: content; escape_witness: classToUnitParams_surjective; consumers: result.
-result: proof_shape: content; escape_witness: classToUnitParams_surjective; consumers: settling conclusion.
+count_all: proof_shape: content; escape_witness: D5.S3.Combinatorics.Riordan.LabeledComplementCount.classToUnitParams_surjective; consumers: count_sum.
+count_sum: proof_shape: content; escape_witness: D5.S3.Combinatorics.Riordan.LabeledComplementCount.classToUnitParams_surjective; consumers: result.
+result: proof_shape: content; escape_witness: D5.S3.Combinatorics.Riordan.LabeledComplementCount.classToUnitParams_surjective; consumers: settling conclusion.
 -/
 
 import D5.S1.Recurrence.SquareRows.SquareExponentDyadicSupport

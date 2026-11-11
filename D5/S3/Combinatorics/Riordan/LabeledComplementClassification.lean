@@ -14,20 +14,20 @@ Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issu
 The labels i : Fin n represent the source labels i.val + 1.
 The parity expressions use the disclosed products 10 * 8^(k-1) and 3 * 8^k.
 Coefficients lie in ZMod 2; truncations use AdjoinRoot of a power of Polynomial.X.
-riordan_adj_lower: proof_shape: bind-only; consumers: graph_eq_iff_columns, graph_complement_iff_columns, unitParametersToGraph, unitParametersToGraph_surjective.
-column_coeff_zero: proof_shape: bind-only; consumers: graph_eq_iff_columns, graph_complement_iff_columns.
-graph_eq_iff_columns: proof_shape: content; escape_witness: graph_eq_iff_columns; consumers: unitParametersToGraph_injective, unitParametersToGraph_surjective, canonicalGraph_eq, classToUnitParams_surjective.
+riordan_adj_lower: proof_shape: bind-only; consumers: graph_complement_iff_columns, graph_eq_iff_columns, unitParametersToGraph, unitParametersToGraph_surjective.
+column_coeff_zero: proof_shape: bind-only; consumers: graph_complement_iff_columns, graph_eq_iff_columns.
+graph_eq_iff_columns: proof_shape: content; escape_witness: D5.S3.Combinatorics.Riordan.LabeledComplementClassification.graph_eq_iff_columns; consumers: canonicalGraph_eq, unitParametersToGraph_injective, D5.S3.Combinatorics.Riordan.LabeledComplementCount.classToUnitParams_surjective.
 column_equation_coeff: proof_shape: bind-only; consumers: graph_complement_iff_columns.
-graph_complement_iff_columns: proof_shape: content; escape_witness: graph_complement_iff_columns; consumers: graph_complement_criterion.
-unitParametersToGraph_injective: proof_shape: content; escape_witness: unitParametersToGraph_injective; consumers: count_all.
-unitParametersToGraph_surjective: proof_shape: content; escape_witness: unitParametersToGraph_surjective; consumers: count_all.
-graph_complement_criterion: proof_shape: content; escape_witness: graph_complement_iff_columns; consumers: graph_complement_factor_criterion, class_complement, classToUnitParams_surjective.
-graph_complement_factor_criterion: proof_shape: content; escape_witness: D5.S3.Combinatorics.Riordan.LabeledComplementAlgebra.image_square_annihilator; consumers: class_complement, classToUnitParams_surjective.
-canonical_constant_truncateMap: proof_shape: bind-only; consumers: classToUnitParams, classToUnitParams_surjective.
-canonicalSeries_zero: proof_shape: bind-only; consumers: classToUnitParams_surjective.
-canonicalGraph_eq: proof_shape: content; escape_witness: graph_eq_iff_columns; consumers: classToUnitParams.
-first_degree_factor: proof_shape: bind-only; consumers: class_complement, classToUnitParams_surjective.
-seriesOfVector_coeff: proof_shape: bind-only; consumers: class_complement, classToUnitParams.
+graph_complement_iff_columns: proof_shape: content; escape_witness: D5.S3.Combinatorics.Riordan.LabeledComplementClassification.graph_complement_iff_columns; consumers: graph_complement_criterion.
+unitParametersToGraph_injective: proof_shape: content; escape_witness: D5.S3.Combinatorics.Riordan.LabeledComplementClassification.unitParametersToGraph_injective; consumers: D5.S3.Combinatorics.Riordan.LabeledComplementCount.count_all.
+unitParametersToGraph_surjective: proof_shape: content; escape_witness: D5.S3.Combinatorics.Riordan.LabeledComplementClassification.unitParametersToGraph_surjective; consumers: D5.S3.Combinatorics.Riordan.LabeledComplementCount.count_all.
+graph_complement_criterion: proof_shape: content; escape_witness: D5.S3.Combinatorics.Riordan.LabeledComplementClassification.graph_complement_iff_columns; consumers: graph_complement_factor_criterion, D5.S3.Combinatorics.Riordan.LabeledComplementCount.classToUnitParams_surjective, D5.S3.Combinatorics.Riordan.LabeledComplementCount.class_complement.
+graph_complement_factor_criterion: proof_shape: content; escape_witness: D5.S3.Combinatorics.Riordan.LabeledComplementAlgebra.image_square_annihilator; consumers: D5.S3.Combinatorics.Riordan.LabeledComplementCount.classToUnitParams_surjective, D5.S3.Combinatorics.Riordan.LabeledComplementCount.class_complement.
+canonical_constant_truncateMap: proof_shape: bind-only; consumers: canonicalGraph_eq, unitParametersToGraph_surjective, D5.S3.Combinatorics.Riordan.LabeledComplementCount.classToUnitParams, D5.S3.Combinatorics.Riordan.LabeledComplementCount.classToUnitParams_surjective.
+canonicalSeries_zero: proof_shape: bind-only; consumers: D5.S3.Combinatorics.Riordan.LabeledComplementCount.classToUnitParams_surjective, D5.S3.Combinatorics.Riordan.LabeledComplementCount.class_complement.
+canonicalGraph_eq: proof_shape: content; escape_witness: D5.S3.Combinatorics.Riordan.LabeledComplementClassification.graph_eq_iff_columns; consumers: unitParametersToGraph_surjective, D5.S3.Combinatorics.Riordan.LabeledComplementCount.classToUnitParams.
+first_degree_factor: proof_shape: bind-only; consumers: D5.S3.Combinatorics.Riordan.LabeledComplementCount.classToUnitParams_surjective, D5.S3.Combinatorics.Riordan.LabeledComplementCount.class_complement.
+seriesOfVector_coeff: proof_shape: bind-only; consumers: D5.S3.Combinatorics.Riordan.LabeledComplementCount.classToUnitParams, D5.S3.Combinatorics.Riordan.LabeledComplementCount.class_complement.
 -/
 
 import D5.S3.Combinatorics.Riordan.LabeledComplementAlgebra
