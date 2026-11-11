@@ -133,7 +133,7 @@ private theorem rayleigh_le_second {n : ℕ} (A : Matrix (Fin (n+2)) (Fin (n+2))
         have hne : i.val ≠ 0 := by
           exact Fin.val_ne_zero_iff.mpr hi
         omega
-      exact hi' 
+      exact hi'
   rw [← mul_sum, hn, ← he] at hh
   simpa only [y, EuclideanSpace.inner_eq_star_dotProduct, Matrix.toLpLin_apply,
     WithLp.ofLp_toLp, star_trivial, dotProduct_comm] using hh

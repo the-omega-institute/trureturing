@@ -46,6 +46,10 @@ $$\forall n \in \mathrm{Nat},\; \forall G \in \operatorname{SimpleGraph}\left(\o
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/CazenaveRandicSpectralBound.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/op-cazenave2611c4` (proved) by `D5/S3/Combinatorics/SpectralGraph/CazenaveRandicSpectralBound.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"op-cazenave2611c4","declaration_gid":"D5/S3/Combinatorics/SpectralGraph/CazenaveRandicSpectralBound.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Tristan Cazenave (2026). *Lemmas and Conjectures in Spectral Graph Theory*. URL: <https://arxiv.org/abs/2611.03879v1>.

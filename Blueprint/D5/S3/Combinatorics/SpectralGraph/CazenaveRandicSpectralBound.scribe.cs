@@ -26,13 +26,17 @@ internal sealed class CazenaveRandicSpectralBoundDocument : IScribeDocumentDefin
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "result", "The spectral inequality", ClaimBody(),
                 "Choose u of maximum degree Δ and v of largest degree among the remaining vertices; write r = √Δ and d = degree(v). Connectedness gives Δ ≥ d ≥ 1. Edge charging gives r ≤ randic G. The positive vector taking value r at u and value one elsewhere satisfies A h ≤ (r + d − 1) h, so adjEig G 0 ≤ r + d − 1. A nonzero vector supported on u and v and orthogonal to the first Laplacian eigenvector has Rayleigh quotient at least d − 1. Expansion in the decreasing orthonormal spectral basis bounds that quotient above by lapEig G 1. The three estimates on this same graph give the displayed inequality.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("op-cazenave2611c4"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string id, string name, string title, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("cazenave-randic-" + id), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula C(string name) => new Formula.NamedConstant(FormulaIdentifier.Create(name));
