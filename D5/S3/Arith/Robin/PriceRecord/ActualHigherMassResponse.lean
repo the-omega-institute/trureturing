@@ -145,7 +145,8 @@ theorem actual_higher_mass_response {X s : ℝ} (hX : exp 2 ≤ X)
       have hr := rpow_le_rpow_of_exponent_le (show 1 ≤ X by linarith) he
       rw [← sqrt_eq_rpow] at hr
       have hsqrt : 2 * sqrt X ≤ X := by
-        have htwo : 2 ≤ sqrt X := (le_sqrt (by norm_num) hX0.le).mpr (by simpa using hX4)
+        have htwo : 2 ≤ sqrt X := (le_sqrt (by norm_num) hX0.le).mpr (by
+          convert hX4 using 1 <;> norm_num)
         have hh := mul_le_mul_of_nonneg_right htwo (sqrt_nonneg X)
         rwa [← pow_two, sq_sqrt hX0.le] at hh
       exact hh.2.2.2.le.trans (hb.trans ((mul_le_mul_of_nonneg_left hr (by norm_num)).trans hsqrt))
@@ -161,14 +162,14 @@ theorem actual_higher_mass_response {X s : ℝ} (hX : exp 2 ≤ X)
       cutoff j ηm - cutoff j ηp ≤ 9 * s * (cutoff j ηm / j) := by
     simpa [ηm, ηp, div_eq_mul_inv, mul_assoc] using
       cutoff_movement (hJ j hj).1 hlam hs hs2
-  have hmoveSum : (∑ j ∈ J, cutoff j ηm - cutoff j ηp) ≤ 333 * s * sqrt X := by
+  have hmoveSum : (∑ j ∈ J, (cutoff j ηm - cutoff j ηp)) ≤ 333 * s * sqrt X := by
     have hh := sum_le_sum hmovement
     have hn : 0 ≤ 9 * s := by positivity
     rw [← mul_sum] at hh
     have he : (∑ j ∈ J, cutoff j ηm / j) ≤ 37 * sqrt X := by rwa [hηm]
     have hscaled := mul_le_mul_of_nonneg_left he hn
     calc
-      (∑ j ∈ J, cutoff j ηm - cutoff j ηp) ≤
+      (∑ j ∈ J, (cutoff j ηm - cutoff j ηp)) ≤
           9 * s * (∑ j ∈ J, cutoff j ηm / j) := hh
       _ ≤ 9 * s * (37 * sqrt X) := hscaled
       _ = 333 * s * sqrt X := by ring
@@ -178,7 +179,7 @@ theorem actual_higher_mass_response {X s : ℝ} (hX : exp 2 ≤ X)
     simp only [sum_const, nsmul_eq_mul, mul_one]
     have hh := add_le_add hmoveSum hcardJ
     have hm := mul_le_mul_of_nonneg_right hh hL0.le
-    convert hm using 1 <;> simp_rw [sum_sub_distrib] <;> ring
+    convert hm using 1 <;> (try rw [sum_sub_distrib]) <;> ring
   rw [hmass]
   refine ⟨sum_nonneg (fun c hc => ?_), ?_⟩
   · exact (hC c.1 c.2 hc).1.log_pos.le
