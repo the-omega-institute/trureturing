@@ -341,6 +341,7 @@ open _root_.D5.S3.Arith.Robin.PriceRecord.ActualRecordHigherLayerResidual
 open _root_.D5.S3.Arith.Robin.PriceRecord.ActualRecordAllLogBudgetRemainder
 open _root_.D5.S3.Arith.Robin.PriceRecord.ActualFirstLayerPrefixCancellation
 open _root_.D5.S3.Arith.Robin.PriceRecord.ActualHigherLayerBudgetRepair
+open _root_.D5.S3.Arith.Robin.PriceRecord.ActualBalancedCutoff (firstLayerPrice)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
