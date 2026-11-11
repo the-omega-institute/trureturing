@@ -40,7 +40,12 @@ theorem discrete_moment_asymptotic_inputs {q : ℕ} (SS : Finset ℕ → ℝ) (�
           |Phi SS H s a b-H^2*(s-Real.log H)^2*W4 a b| ≤
             C*(η H*H^2*(Real.log N)^2+H^2*Real.log N))) := by
   constructor
-  · exact arithmetic_transfer SS α β hα hαβ hβ hSS hSS1 hMS M hM ε hε
+  · obtain ⟨C, hC, htransfer⟩ := arithmetic_transfer SS α β hα hαβ hβ hSS hSS1 hMS M hM ε hε
+    refine ⟨C, hC, ?_⟩
+    filter_upwards [htransfer] with N hN
+    intro H hlo hhi B w hw k hk a b hab
+    exact hN H hlo hhi B w hw k
+      ⟨by rcases hk.1 with rfl | rfl | rfl <;> omega, hk.2⟩ a b hab
   · exact formal_interval_moment_bounds SS α β hα hαβ hβ hSS hSS1 hcor M hM
 
 end
