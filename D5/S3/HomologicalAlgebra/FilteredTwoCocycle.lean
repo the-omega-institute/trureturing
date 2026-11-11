@@ -12,9 +12,11 @@ import Mathlib.Tactic.Abel
 import Mathlib.Tactic.Choose
 
 /-!
-Integration checkpoint pending the actual group-extension splitting consumer
-and final admission. Native raw predicates use precisely the supplied
-representation as their SMul instance. No coefficient section is assumed.
+Native raw predicates use precisely the supplied representation as their SMul
+instance. Pointwise lifting through actual equivariant exact sequences yields
+primitives along finite stable filtrations. FilteredExtensionSplitting applies
+these primitives to the factor cocycle of a native group extension. No
+coefficient section is assumed.
 -/
 
 set_option autoImplicit false
@@ -75,7 +77,7 @@ end Maps
 
 /-- Pointwise lifting through an actual equivariant short exact sequence.
 The carrier universes of `A`, `B`, and `C` are independent. -/
-theorem allTwoCocyclesAreCoboundaries_of_shortExact
+theorem all_two_cocycles_are_coboundaries_of_short_exact
     {A : Type uA} {B : Type uB} {C : Type uC}
     [AddCommGroup A] [Module R A] [AddCommGroup B] [Module R B]
     [AddCommGroup C] [Module R C]
@@ -171,7 +173,7 @@ def filtrationGrade (F : ℕ → Subrepresentation ρ) (k : ℕ) :
 
 /-- Graded primitives produce a primitive for each actual ambient cocycle.
 This uses no splitting of the filtration and no global trace-one witness. -/
-theorem isCoboundary₂_of_finite_stable_filtration
+theorem is_coboundary_two_of_finite_stable_filtration
     (F : ℕ → Subrepresentation ρ) (hF : Monotone F) (n : ℕ)
     (hbot : F 0 = ⊥) (htop : F n = ⊤)
     (hgrade : ∀ k < n, AllTwoCocyclesAreCoboundaries (filtrationGrade F k))
@@ -219,7 +221,7 @@ theorem isCoboundary₂_of_finite_stable_filtration
           exact Subtype.ext rfl
       have hexact : LinearMap.range i.toLinearMap = LinearMap.ker q.toLinearMap :=
         hrange.trans (Submodule.ker_mkQ (filtrationStep F k).toSubmodule).symm
-      exact allTwoCocyclesAreCoboundaries_of_shortExact i q hi hq hexact
+      exact all_two_cocycles_are_coboundaries_of_short_exact i q hi hq hexact
         (ih (Nat.le_of_succ_le hk)) (hgrade k (Nat.lt_of_succ_le hk))
   let ft : G × G → (F n).toSubmodule := fun p =>
     ⟨f p, by change f p ∈ F n; rw [htop]; trivial⟩

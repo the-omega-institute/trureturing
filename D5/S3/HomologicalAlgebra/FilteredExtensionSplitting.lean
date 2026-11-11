@@ -9,27 +9,18 @@
 import D5.S3.HomologicalAlgebra.FilteredTwoCocycle
 import Mathlib.GroupTheory.GroupExtension.Basic
 import Mathlib.RepresentationTheory.Basic
-import Mathlib.Tactic
+import Mathlib.Tactic.Abel
+import Mathlib.Tactic.Group
 
 /-!
-UNCOMPILED source-preparation candidate. No admission or compiler evidence is
-claimed for this file. The imported exact-sequence / finite-filtration proof is
-the preserved FilteredTwoCocycle source at project commit
-722fc280c27613300e3432b2f8ebd6d378f8851e (SHA-256
-ce3a15b91589f261d6e04c274ab0e051b273107db0188c6beb620554ba61c895).
+The explicit trace-one primitive uses native raw cocycles with precisely the
+supplied representation. The contraction has orientation f = d₁ b; the native
+coboundary adapter reverses it to d₁ b = f.
 
-The explicit contraction and extension construction originate in the preserved
-ConjugationTraceSplitting candidate (SHA-256
-ae0203241fcebd3a6fdc8ebd5aca838da80984938d10eaf66fe2615850952aaf).
-Here the contraction uses native raw predicates with exactly the supplied
-representation. Its original formula and equality f = d₁ b are retained; the
-native coboundary adapter reverses that equality to d₁ b = f.
-
-Factor extraction, the factor identity and section correction occur only once,
-in extension_splitting_of_allTwoCocyclesAreCoboundaries. The filtration consumer
-works for arbitrary groups. The finite-group corollary uses separate witnesses
-on the actual native successive quotients, without constructing or assuming an
-ambient trace-one witness.
+Factor extraction, the factor identity and section correction are shared by the
+filtration and trace constructions. The filtration construction works for any
+group. For a finite group, separate trace-one witnesses on the actual native
+successive quotients give a homomorphic section of the original extension.
 -/
 
 set_option autoImplicit false
@@ -43,7 +34,7 @@ namespace D5.S3.HomologicalAlgebra.FilteredExtensionSplitting
 
 universe uR uV uG uU uE
 
-/-- The original explicit finite trace-one primitive. -/
+/-- An explicit finite trace-one primitive. -/
 noncomputable def traceOnePrimitive
     {R : Type uR} {V : Type uV} {G : Type uG}
     [CommRing R] [AddCommGroup V] [Module R V]
@@ -52,9 +43,9 @@ noncomputable def traceOnePrimitive
     (f : G × G → V) (g : G) : V :=
   ∑ x : G, rho x (t (f (x⁻¹, g)))
 
-/-- The contraction identity, with the original orientation `f = d₁ b`.
+/-- The contraction identity, with orientation `f = d₁ b`.
 The native raw cocycle predicate is evaluated using precisely `rho`. -/
-theorem traceOnePrimitive_spec
+theorem trace_one_primitive_spec
     {R : Type uR} {V : Type uV} {G : Type uG}
     [CommRing R] [AddCommGroup V] [Module R V]
     [Group G] [Fintype G]
@@ -126,7 +117,7 @@ theorem traceOnePrimitive_spec
 
 /-- The trace-one contraction supplies the native H²-triviality premise.
 `IsCoboundary₂` requires `d₁ b = f`, hence the explicit symmetry below. -/
-theorem allTwoCocyclesAreCoboundaries_of_trace_one
+theorem all_two_cocycles_are_coboundaries_of_trace_one
     {R : Type uR} {V : Type uV} {G : Type uG}
     [CommRing R] [AddCommGroup V] [Module R V]
     [Group G] [Fintype G]
@@ -137,7 +128,7 @@ theorem allTwoCocyclesAreCoboundaries_of_trace_one
   intro f hf
   refine ⟨traceOnePrimitive rho t f, ?_⟩
   intro g h
-  exact (traceOnePrimitive_spec rho t htrace f hf g h).symm
+  exact (trace_one_primitive_spec rho t htrace f hf g h).symm
 
 /-- The actual integral representation of the prescribed action on `Additive U`. -/
 def phiRepresentation
@@ -146,7 +137,7 @@ def phiRepresentation
   letI : MulDistribMulAction G U := MulDistribMulAction.compHom U phi
   Representation.ofMulDistribMulAction G U
 
-private theorem phiRepresentation_apply
+private theorem phi_representation_apply
     {U : Type uU} {G : Type uG} [CommGroup U] [Group G]
     (phi : G →* MulAut U) (g : G) (u : Additive U) :
     phiRepresentation phi g u = Additive.ofMul (phi g (Additive.toMul u)) := by
@@ -157,7 +148,7 @@ There is no finite-group, trace-one, coefficient-section or splitting premise.
 The kernel, extension and quotient group have independent universes.
 The conclusion is propositional because native `S.Splitting` is a structure;
 the consumers below choose an actual splitting from this proof. -/
-theorem extension_splitting_of_allTwoCocyclesAreCoboundaries
+theorem extension_splitting_of_all_two_cocycles_are_coboundaries
     {U : Type uU} {E : Type uE} {G : Type uG}
     [CommGroup U] [Group E] [Group G]
     (S : GroupExtension U E G) (phi : G →* MulAut U)
@@ -221,7 +212,7 @@ theorem extension_splitting_of_allTwoCocyclesAreCoboundaries
       phiRepresentation phi g (f (h, k)) + f (g, h * k)
     apply Additive.ext
     have he := (mul_comm (c (g * h) k) (c g h)).trans (hcoc g h k)
-    simpa only [f, toMul_add, phiRepresentation_apply, toMul_ofMul] using he
+    simpa only [f, toMul_add, phi_representation_apply, toMul_ofMul] using he
   obtain ⟨b, hb⟩ := hH2 f hf
   let beta : G → U := fun g => Additive.toMul (b g)
   have hbmul (g h : G) :
@@ -230,7 +221,7 @@ theorem extension_splitting_of_allTwoCocyclesAreCoboundaries
     change Additive.toMul
         (phiRepresentation phi g (b h) - b (g * h) + b g) =
       Additive.toMul (f (g, h)) at he
-    simpa only [f, beta, toMul_add, toMul_sub, phiRepresentation_apply,
+    simpa only [f, beta, toMul_add, toMul_sub, phi_representation_apply,
       toMul_ofMul, div_eq_mul_inv] using he.symm
   let delta : G → U := fun g => (beta g)⁻¹
   have hdelta_factor (g h : G) :
@@ -291,11 +282,11 @@ noncomputable def extension_splitting_of_finite_stable_filtration
     (hgrade : ∀ k < n, AllTwoCocyclesAreCoboundaries (filtrationGrade F k)) :
     S.Splitting := by
   apply Classical.choice
-  apply extension_splitting_of_allTwoCocyclesAreCoboundaries S phi hcompat
+  apply extension_splitting_of_all_two_cocycles_are_coboundaries S phi hcompat
   intro f hf
-  exact isCoboundary₂_of_finite_stable_filtration F hF n hbot htop hgrade f hf
+  exact is_coboundary_two_of_finite_stable_filtration F hF n hbot htop hgrade f hf
 
-/-- The original trace-one extension application, using the generic correction. -/
+/-- The trace-one extension application, using the generic correction. -/
 noncomputable def extension_splitting_of_trace_one
     {U : Type uU} {E : Type uE} {G : Type uG}
     [CommGroup U] [Group E] [Group G] [Fintype G]
@@ -307,8 +298,8 @@ noncomputable def extension_splitting_of_trace_one
       phiRepresentation phi g * t * phiRepresentation phi g⁻¹ = 1) :
     S.Splitting := by
   exact Classical.choice
-    (extension_splitting_of_allTwoCocyclesAreCoboundaries S phi hcompat
-      (allTwoCocyclesAreCoboundaries_of_trace_one (phiRepresentation phi) t htrace))
+    (extension_splitting_of_all_two_cocycles_are_coboundaries S phi hcompat
+      (all_two_cocycles_are_coboundaries_of_trace_one (phiRepresentation phi) t htrace))
 
 /-- Independent trace-one witnesses on the actual native grades split the extension.
 No trace-one endomorphism on `Additive U` is assumed or produced. -/
@@ -328,6 +319,6 @@ noncomputable def extension_splitting_of_finite_stable_filtration_grade_trace_on
   apply extension_splitting_of_finite_stable_filtration S phi hcompat F hF n hbot htop
   intro k hk
   obtain ⟨t, ht⟩ := hgradeTrace k hk
-  exact allTwoCocyclesAreCoboundaries_of_trace_one (filtrationGrade F k) t ht
+  exact all_two_cocycles_are_coboundaries_of_trace_one (filtrationGrade F k) t ht
 
 end D5.S3.HomologicalAlgebra.FilteredExtensionSplitting

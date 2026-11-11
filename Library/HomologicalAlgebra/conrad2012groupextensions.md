@@ -5,14 +5,17 @@ year: 2012
 title: Math 210B. Group cohomology and group extensions
 doi: null
 url: https://virtualmath1.stanford.edu/~conrad/210BPage/handouts/gpext.pdf
-claim: "For an arbitrary extension with abelian kernel and its induced action, H1 acts simply transitively on endpoint-fixing automorphisms modulo conjugation by kernel elements."
+claim: "For a prescribed action on an abelian kernel, H2 classifies group extensions with the zero class represented by the semidirect product; H1 acts simply transitively on endpoint-fixing automorphisms modulo conjugation by kernel elements."
 strata_touched:
   - D5/S3/HomologicalAlgebra/AbelianExtensionH1
+  - D5/S3/HomologicalAlgebra/FilteredExtensionSplitting
 license: citation-only
 triage: anchor
 ---
 
 # Extension automorphisms and first cohomology
+
+Section 2, pp. 1–2, constructs the factor set of an arbitrary set-theoretic section, without normalizing its value at the identity. Associativity gives the two-cocycle equation, and replacing the section by a kernel-valued one-cochain changes the factor set by its coboundary. The zero cohomology class is represented by the semidirect product for the prescribed action. Thus vanishing of every two-cocycle class supplies a homomorphic section of every extension inducing that action. The native construction uses the inverse of the multiplicative primitive to correct the section, preserving the coboundary sign.
 
 Section 2.1, pp. 2–3, defines automorphisms fixing both endpoints, their equivalence modulo kernel conjugations, and the cocycle twist action. It states simple transitivity, assigning its verification to HW10. No splitting or trivial-action hypothesis is imposed. The year denotes the PDF creation metadata rather than a claimed first publication.
 
@@ -21,4 +24,4 @@ The corresponding Lean construction uses the given extension, descends its actua
 ## Verified locator
 
 - URL: https://virtualmath1.stanford.edu/~conrad/210BPage/handouts/gpext.pdf
-- Locator: Section 2.1, pp. 2–3.
+- Locator: Section 2, pp. 1–2, and Section 2.1, pp. 2–3.
