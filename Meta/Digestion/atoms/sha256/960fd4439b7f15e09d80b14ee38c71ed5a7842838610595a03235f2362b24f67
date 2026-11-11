@@ -1,0 +1,111 @@
+**定理 36.3（原商包含反向支配全部实际域上的张成秩）。** 设 $X,Z\le_F D$ 均为三维 $F$-子空间，且 $F(Q_X)=D$。则
+
+$$
+\boxed{\quad
+Q_X\subseteq Q_Z
+\quad\Longrightarrow\quad
+r_Z(A)\le r_X(A)
+\quad\text{对每个实际 }F\subseteq A\subseteq D.
+\quad}
+\tag{36.4}
+$$
+
+这里不限制 $N$、$[A:F]$ 或 $[D:A]$，不假定 $D/F$ 或 $A/F$ 正规。
+
+证明。支持包含先给出 $D=F(Q_X)\subseteq F(Q_Z)\subseteq D$，故 $Z$ 也生成同一比值域。分别选原 $x_0\in X\setminus\{0\}$、$z_0\in Z\setminus\{0\}$，置 $U=x_0^{-1}X$、$V=z_0^{-1}Z$。沿用 §§26–29 的归一化，两个原支持及各自所有 $A$-张成秩都不变，且 $1\in U,V\subseteq D$、$F(U)=F(V)=D$：归一化窗口包含一，因而包含在自己的商支持中，而全部商又属于它生成的域。
+
+取包含原 $D$ 的有限正规闭包 $K/F$，置 $\Omega=\operatorname{Hom}_F(D,K)$、$G=\operatorname{Gal}(K/F)$。分别取 $U,V$ 的原 $F$-基 $u_1=1,u_2,u_3$ 与 $v_1=1,v_2,v_3$。记
+
+$$
+B_X=(\sigma(u_j))_{\sigma,j},\qquad
+B_Z=(\sigma(v_j))_{\sigma,j},\qquad
+\rho_W(S)=\operatorname{rank}_K(B_W)_S\quad(W=X,Z).
+\tag{36.5}
+$$
+
+特征零保证可分分裂 $D\otimes_F K\simeq K^\Omega$。它将 $U\otimes_F K$、$V\otimes_F K$ 单射到右边，所以两个矩阵都为列秩三。每行首坐标为一，故无零行；两行若成比例便相等，对应嵌入遂在归一化窗口上相同，由生成域条件在整个 $D$ 上相同。因此两个行拟阵均为有限简单秩三拟阵。
+
+每个 $F$-嵌入 $D\to K$ 可延拓为 $K/F$ 自同构，所以 $G$ 在 $\Omega$ 上传递。对任一 $g\in G$，逐项作用给出
+
+$$
+g\bigl((\sigma(u_j))_j\bigr)=((g\circ\sigma)(u_j))_j,
+\qquad \rho_W(gS)=\rho_W(S).
+\tag{36.6}
+$$
+
+这是半线性行置换；域自同构保持子式的零与非零，故确实保持行拟阵。没有要求置换作用二重传递、基传递或具有任何额外的置换秩。
+
+固定一个实际 $A$。对每个 $\tau\in\operatorname{Hom}_F(A,K)$，令 $S_\tau=\{\sigma:\sigma|_A=\tau\}$。可分性及嵌入延拓使这些集合构成 $G$ 保持的分拆，恰有 $[A:F]$ 个块，各含 $[D:A]$ 个元素。对原包含嵌入 $\iota:A\hookrightarrow K$，分裂 $D\otimes_A K\simeq K^{S_\iota}$ 将 $AU\otimes_A K$ 的像识别为 $u_1,u_2,u_3$ 的嵌入列张成；$V$ 同理。扩底保维及行列秩相等，再由 (36.6) 传至其余块，给出
+
+$$
+\rho_X(S_\tau)=r_X(A),\qquad
+\rho_Z(S_\tau)=r_Z(A)\qquad\text{对每个 }\tau.
+\tag{36.7}
+$$
+
+这正是 (29.7)–(29.8) 的实际域限制块接口，未从次数整除制造子域。端点为 $r_W(F)=3$、$r_W(D)=1$。若 $r_W(A)=1$，归一化后 $1\in U$（或 $V$）使其 $A$-张成为 $A$，故生成域条件迫使 $A=D$。因此真中间域 $F\subsetneq A\subsetneq D$ 上，两边秩都在 $\{2,3\}$ 内，并且不超过 $[D:A]$；特别是 $[D:A]=2$ 时两边均为二。$N\ge3$；$N=3,5$ 无真中间域，$N=4$ 的真中间域若存在则满足 $[D:A]=2$，所以这些小次数已由上述分支处理。
+
+余下只须排除同一个实际 $A$ 上 $r_X(A)=2$、$r_Z(A)=3$。此时每个限制块在 $X$ 的行拟阵中秩二，在 $Z$ 的行拟阵中秩三，因而块大小至少为三、块数至少为二，特别是 $N\ge6$。
+
+先把原支持包含转成原参数上的必要方程。任取 $D/F$ 的原基 $e_1,\ldots,e_N$；以此基的坐标列记原乘法矩阵
+
+$$
+\begin{aligned}
+u(\alpha)&=\sum_{j=1}^3\alpha_j u_j,\qquad
+u(\beta)=\sum_{j=1}^3\beta_j u_j,\\
+L(\alpha,\beta)&=
+[\,u(\beta)v_1\ \ u(\beta)v_2\ \ u(\beta)v_3
+\mid -u(\alpha)v_1\ \ -u(\alpha)v_2\ \ -u(\alpha)v_3\,]
+\in\operatorname{Mat}_{N\times6}(F[\alpha,\beta]).
+\end{aligned}
+\tag{36.8}
+$$
+
+对每个原 $\alpha\in F^3$、$\beta\in F^3\setminus\{0\}$，基的独立性保证 $u(\beta)\ne0$。由 $u(\alpha)/u(\beta)\in Q_U=Q_X\subseteq Q_Z=Q_V$，存在原 $p,q\in V$、$q\ne0$，使 $u(\beta)p-u(\alpha)q=0$。将 $p,q$ 在 $v_j$ 中展开，就得到 $L(\alpha,\beta)$ 的一个非零 $F$-核向量，其后三个系数不全为零。因此每个六阶子式在这些原参数上都为零。
+
+矩阵恰有六列，故任一六阶子式使用全部列，是 $F[\alpha,\beta]$ 中关于两组参数分别齐次三次的多项式。特征零使 $F$ 无限；多项式若在 $(F^\times)^6$ 上恒零，逐变量使用一元多项式的根数界，再对系数归纳，便是零多项式。上段包含全部这些参数，故所有六阶子式都是恒零多项式。于是对任意辅助 $\alpha,\beta\in K^3$ 仍有
+
+$$
+\operatorname{rank}_K L(\alpha,\beta)\le5.
+\tag{36.9}
+$$
+
+这里延拓的是已经在原 $F$ 参数上证明的多项式恒等式，没有将扩底后的商支持当作额外输入。
+
+分裂同构的矩阵 $T=(\sigma(e_\ell))_{\sigma,\ell}$ 在 $K$ 上可逆。左乘整个原矩阵得到
+
+$$
+TL(\alpha,\beta)=
+[\,\operatorname{diag}(B_X\beta)B_Z
+\mid-\operatorname{diag}(B_X\alpha)B_Z\,].
+\tag{36.10}
+$$
+
+左乘 $T$ 保持整个矩阵的秩，所以 (36.9) 保证 (36.10) 的每个六阶子式也为零；不需要将某个指定原子式误认作同一个分裂子式。特别地，取 $\beta=(1,0,0)^{\mathsf T}$，有 $B_X\beta=\boldsymbol1$。记 $q=B_X\alpha$，所得矩阵为 $[\,B_Z\mid-\operatorname{diag}(q)B_Z\,]$，其六阶子式关于 $q$ 齐次三次，每项恰从后三列取得三个 $q$ 因子。这些只作为必要方程，未宣称它们完整刻画原商支持或商像闭包。
+
+现在固定一个原限制块 $B=S_\tau$。由 (36.7) 及引理 36.2，存在另一个完整原限制块 $C$，使 $C\cap\operatorname{cl}_X(B)=\varnothing$。在 $X$ 的行拟阵中，$B$ 秩二；取它的行张成的一个非零公共核向量 $\alpha\in K^3$。该公共核为一维；在行向量空间中，求值映射 $h\mapsto h\alpha$ 的二维核正是 $B$ 的行张成，故其零行集合恰为闭包。因此
+
+$$
+q_\sigma=(B_X\alpha)_\sigma=0\quad(\sigma\in B),
+\qquad q_\sigma\ne0\quad(\sigma\in C).
+\tag{36.11}
+$$
+
+闭包可含其他块的部分或全部元素；这里只使用 $C$ 完全避开它，不要求闭包恰等于 $B$，也不要求不同块闭包互不相交。
+
+在 $Z$ 的行拟阵中，$B,C$ 都为秩三，故可分别选三行基 $I\subseteq B$、$J\subseteq C$。六行互异。按先 $I$ 后 $J$ 排列，(36.10) 在这些行及全部六列上的子式是块三角行列式，满足
+
+$$
+\det\begin{pmatrix}
+(B_Z)_I&0\\
+(B_Z)_J&-\operatorname{diag}(q_J)(B_Z)_J
+\end{pmatrix}
+=\pm\det((B_Z)_I)\det((B_Z)_J)\prod_{\sigma\in J}q_\sigma
+\ne0.
+\tag{36.12}
+$$
+
+最后的不等式由两组三行基及 (36.11) 保证，与 (36.9)–(36.10) 矛盾。因此 $r_X(A)=2$ 时 $r_Z(A)$ 不能为三；连同端点及其余秩分支，得到 (36.4)。$A$ 从始至终是任取的原实际中间域，所以结论同时覆盖整个逐域剖面。
+
+向量 $\alpha$ 与零坐标向量 $q$ 只在 $K$ 中用于恒等式反证；没有从它们返回原 $F$ 参数的要求，也没有把带零嵌入坐标的非零 $q$ 冒作非零原域元素的嵌入像。证明未使用正交补、线性第二因子或任何扩底观察。$\square$
+
