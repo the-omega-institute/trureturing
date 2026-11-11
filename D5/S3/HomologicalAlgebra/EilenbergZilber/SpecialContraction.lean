@@ -6,7 +6,20 @@
    utility: none
    digest: Structural cancellation for the recursive normalized Eilenberg–Mac Lane homotopy. -/
 
+/-
+Copyright (c) 2026 Jeffrey Li. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Jeffrey Li
+
+The frontal and norm algebra declarations below are from
+LeanPool/EilenbergZilber/BisimplicialDerivedOp.lean, author release
+fd0147a1ffe4f3c14c247574e148893d7cdf8cf6 (LeanPool PR 588).
+The legal chain is recorded in Library/HomologicalAlgebra/li2026bisimplicialeilenbergzilber.md.
+Retire the transplanted closure when the pinned upstream library supplies equivalent declarations.
+-/
+
 import D5.S3.HomologicalAlgebra.EilenbergZilber.BisimplicialNormalized
+import D5.S3.HomologicalAlgebra.EilenbergZilber.SpecialContractionShuffle
 
 /-! # Special contractions of the bisimplicial Eilenberg–Zilber homotopy -/
 
@@ -19,581 +32,351 @@ open scoped Simplicial
 namespace D5.S3.HomologicalAlgebra.EilenbergZilber
 namespace BisimplicialObject
 
-/-- An adjacent pair identified by a simplex map. -/
-private def Repeats {n : ℕ} {a : SimplexCategory} (f : (⦋n⦌ : SimplexCategory) ⟶ a)
-    (i : Fin n) : Prop :=
-  f.toOrderHom i.castSucc = f.toOrderHom i.succ
+/-- An operator is **frontal** (EM) if every letter in its support is frontal in both variables.
+This is the property of **derived (primed) operators** — `primeHom` fixes `0`, so any `M.prime` is
+frontal in this strong sense (`prime_frontal`). It is what the homotopy identity (2.3) consumes
+(via `prime_comp_D0_of_frontal`). -/
+private def DerivedOp.Frontal {s q : ℕ} (M : DerivedOp s q) : Prop :=
+  ∀ l ∈ M.support, IsFrontalHom l.fst ∧ IsFrontalHom l.snd
 
-private lemma Repeats.comp {n : ℕ} {a b : SimplexCategory}
-    {f : (⦋n⦌ : SimplexCategory) ⟶ a} {i : Fin n} (h : Repeats f i) (g : a ⟶ b) :
-    Repeats (f ≫ g) i := by
-  exact congrArg g.toOrderHom h
+/-- The derived operator preserves frontality (EM: `M'` is always frontal, since `primeHom` fixes
+`0`). -/
+private lemma prime_frontal {s q : ℕ} (M : DerivedOp s q) : (M.prime).Frontal := by
+  intro l hl
+  have hl' := Finsupp.mapDomain_support hl
+  rw [Finset.mem_image] at hl'
+  obtain ⟨l', _, rfl⟩ := hl'
+  exact ⟨primeHom_frontal _, primeHom_frontal _⟩
 
-private lemma hLetter_fst_val (n : ℕ) (r : Fin (n + 1)) (ν : Shuffle r.val (n - r.val))
-    (i : Fin (n + 1)) :
-    ((hLetter n r ν).fst.toOrderHom i : ℕ) =
-      (ν.1 (i.cast (by have := r.isLt; omega))).1.val := by
-  simp only [hLetter, SimplexCategory.comp_toOrderHom, OrderHom.comp_coe,
-    Function.comp_apply, val_eqToHom_apply]
-  change (ν.1 _).1.val = (ν.1 _).1.val
-  congr 2
-  apply congrArg (fun j => ν.1 j)
-  exact Fin.ext (val_eqToHom_apply _ _)
+/-- **Frontal ⟹ priming commutes with `D₀`** (EM, from Lemma I.3.3: `(β')^* D₀ = D₀ β^*`).
+For a frontal operator, `M' ∘ D₀ = D₀ ∘ M`. -/
+private lemma prime_comp_D0_of_frontal {s q : ℕ} (M : DerivedOp s q) (hM : M.Frontal) :
+    (M.prime).comp (D0op s) = (D0op q).comp M := by
+  induction M using Finsupp.induction with
+  | zero => simp [DerivedOp.prime, DerivedOp.comp]
+  | single_add l c f hlf hc ih =>
+    have hl := hM l (by
+      rw [Finsupp.mem_support_iff, Finsupp.add_apply, Finsupp.single_eq_same,
+        Finsupp.notMem_support_iff.mp hlf, add_zero]
+      exact hc)
+    have hf : DerivedOp.Frontal f := fun l' hl' => hM l' (by
+      rw [Finsupp.mem_support_iff, Finsupp.add_apply,
+        Finsupp.single_eq_of_ne (by rintro rfl; exact hlf hl'), zero_add,
+        ← Finsupp.mem_support_iff]
+      exact hl')
+    rw [prime_add, DerivedOp.add_comp, DerivedOp.comp_add_right, ih hf]
+    congr 1
+    rw [DerivedOp.prime, Finsupp.mapDomain_single, D0op, D0op,
+      DerivedOp.single_comp_single, DerivedOp.single_comp_single, one_mul, mul_one]
+    congr 1
+    simp only [OpLetter.compLetter, OpLetter.primeLetter, primeHom_comp_degenZero l.fst hl.1,
+      primeHom_comp_degenZero l.snd hl.2]
 
-private lemma hLetter_snd_val (n : ℕ) (r : Fin (n + 1)) (ν : Shuffle r.val (n - r.val))
-    (i : Fin (n + 1)) :
-    ((hLetter n r ν).snd.toOrderHom i : ℕ) =
-      r.val + (ν.1 (i.cast (by have := r.isLt; omega))).2.val := by
-  simp only [hLetter, SimplexCategory.comp_toOrderHom, OrderHom.comp_coe,
-    Function.comp_apply, val_eqToHom_apply]
-  change r.val + (ν.1 _).2.val = r.val + (ν.1 _).2.val
-  congr 3
-  apply congrArg (fun j => ν.1 j)
-  exact Fin.ext (val_eqToHom_apply _ _)
+/-- Composition of frontal `SimplexCategory` maps is frontal (`0 ↦ 0 ↦ 0`). -/
+private lemma IsFrontalHom.comp {a b c : ℕ} {f : (⦋a⦌ : SimplexCategory) ⟶ ⦋b⦌}
+    {g : (⦋b⦌ : SimplexCategory) ⟶ ⦋c⦌} (hf : IsFrontalHom f) (hg : IsFrontalHom g) :
+    IsFrontalHom (f ≫ g) := by
+  simp only [IsFrontalHom, SimplexCategory.comp_toOrderHom, OrderHom.comp_coe,
+    Function.comp_apply] at *
+  rw [hf, hg]
 
-/-- A repeat before the split in the first input coordinate, or at or after the
-split in the second, forces a common repeat in this shuffle summand. -/
-private lemma hLetter_common_repeat {n : ℕ} {a b : SimplexCategory}
-    (f : (⦋n⦌ : SimplexCategory) ⟶ a) (g : (⦋n⦌ : SimplexCategory) ⟶ b)
-    (r : Fin (n + 1)) (ν : Shuffle r.val (n - r.val))
-    (h : (∃ j : Fin n, j.val < r.val ∧ Repeats f j) ∨
-         (∃ k : Fin n, r.val ≤ k.val ∧ Repeats g k)) :
-    ∃ i : Fin n, Repeats ((hLetter n r ν).fst ≫ f) i ∧
-      Repeats ((hLetter n r ν).snd ≫ g) i := by
-  have hr := r.isLt
-  rcases h with ⟨j, hj, hfj⟩ | ⟨k, hk, hgk⟩
-  · obtain ⟨i, hi₀, hi₁, hi₂⟩ := Shuffle.exists_fst_step ν j.val (by omega)
-    let t : Fin n := i.cast (by omega)
-    have hc : t.castSucc.cast (by omega) = i.castSucc := Fin.ext rfl
-    have hs : t.succ.cast (by omega) = i.succ := Fin.ext rfl
-    have e₀ : (hLetter n r ν).fst.toOrderHom t.castSucc = j.castSucc := by
-      apply Fin.ext
-      rw [hLetter_fst_val, hc]
-      exact hi₀
-    have e₁ : (hLetter n r ν).fst.toOrderHom t.succ = j.succ := by
-      apply Fin.ext
-      rw [hLetter_fst_val, hs]
-      exact hi₁
-    have e₂ : Repeats (hLetter n r ν).snd t := by
-      apply Fin.ext
-      rw [hLetter_snd_val, hLetter_snd_val, hc, hs, hi₂]
-    refine ⟨t, ?_, e₂.comp g⟩
-    change f.toOrderHom ((hLetter n r ν).fst.toOrderHom t.castSucc) =
-      f.toOrderHom ((hLetter n r ν).fst.toOrderHom t.succ)
-    rw [e₀, e₁]
-    exact hfj
-  · have hk' := k.isLt
-    obtain ⟨i, hi₀, hi₁, hi₂⟩ := Shuffle.exists_snd_step ν (k.val - r.val) (by omega)
-    let t : Fin n := i.cast (by omega)
-    have hc : t.castSucc.cast (by omega) = i.castSucc := Fin.ext rfl
-    have hs : t.succ.cast (by omega) = i.succ := Fin.ext rfl
-    have e₀ : (hLetter n r ν).snd.toOrderHom t.castSucc = k.castSucc := by
-      apply Fin.ext
-      rw [hLetter_snd_val, hc, hi₀]
-      change r.val + (k.val - r.val) = k.val
-      omega
-    have e₁ : (hLetter n r ν).snd.toOrderHom t.succ = k.succ := by
-      apply Fin.ext
-      rw [hLetter_snd_val, hs, hi₁]
-      change r.val + (k.val - r.val + 1) = k.val + 1
-      omega
-    have e₂ : Repeats (hLetter n r ν).fst t := by
-      apply Fin.ext
-      rw [hLetter_fst_val, hLetter_fst_val, hc, hs, hi₂]
-    refine ⟨t, e₂.comp f, ?_⟩
-    change g.toOrderHom ((hLetter n r ν).snd.toOrderHom t.castSucc) =
-      g.toOrderHom ((hLetter n r ν).snd.toOrderHom t.succ)
-    rw [e₀, e₁]
-    exact hgk
+/-- The zero operator is (vacuously) frontal. -/
+private lemma DerivedOp.Frontal.zero {s q : ℕ} : (0 : DerivedOp s q).Frontal := by
+  intro l hl
+  simp only [Finsupp.support_zero, Finset.notMem_empty] at hl
 
-private lemma isNorm_single_of_repeat {s n : ℕ} (l : OpLetter s n) (c : ℤ)
-    (i : Fin n) (hf : Repeats l.fst i) (hg : Repeats l.snd i) :
-    IsNorm (Finsupp.single l c) := by
-  cases n with
-  | zero => exact i.elim0
-  | succ n =>
-    let k : OpLetter s n :=
-      ⟨SimplexCategory.δ i.castSucc ≫ l.fst, SimplexCategory.δ i.castSucc ≫ l.snd⟩
-    have e :
-        (⟨SimplexCategory.σ i, SimplexCategory.σ i⟩ : OpLetter n (n + 1)).compLetter k = l := by
-      cases l
-      simp only [OpLetter.compLetter, k, OpLetter.mk.injEq]
-      exact ⟨(factor_through_σ i _ hf).symm, (factor_through_σ i _ hg).symm⟩
-    have hn := IsNorm.diagDegen (SimplexCategory.σ i) (sigma_not_mono i) (Finsupp.single k c)
-    rwa [DerivedOp.single_comp_single, e, mul_one] at hn
+/-- A single frontal letter gives a frontal operator. -/
+private lemma DerivedOp.Frontal.single {s q : ℕ} (l : OpLetter s q) (c : ℤ)
+    (hl : IsFrontalHom l.fst ∧ IsFrontalHom l.snd) :
+    DerivedOp.Frontal (Finsupp.single l c) := by
+  intro l' hl'
+  rw [Finset.mem_singleton.mp (Finsupp.support_single_subset hl')]
+  exact hl
 
-private lemma isNorm_sum {s n : ℕ} {ι : Type*} (t : Finset ι) (f : ι → DerivedOp s n)
-    (h : ∀ i ∈ t, IsNorm (f i)) : IsNorm (∑ i ∈ t, f i) := by
-  classical
-  induction t using Finset.induction_on with
-  | empty => simpa only [Finset.sum_empty] using IsNorm.zero
-  | @insert a t ha ih =>
-    rw [Finset.sum_insert ha]
-    exact (h a (Finset.mem_insert_self a t)).add
-      (ih (fun i hi => h i (Finset.mem_insert_of_mem hi)))
+/-- Frontality is preserved by negation (same support). -/
+private lemma DerivedOp.Frontal.neg {s q : ℕ} {M : DerivedOp s q} (hM : M.Frontal) : (-M).Frontal :=
+  fun l hl => hM l (by simpa using hl)
 
-/-- For an ordered pair of separate repeats, every split meets at least one
-repeat, hence every term of the composite has a diagonal degeneracy. -/
-private lemma hOp_comp_ordered_repeat {s n : ℕ} (l : OpLetter s n) (c : ℤ)
-    (j k : Fin n) (hjk : j ≤ k) (hf : Repeats l.fst j) (hg : Repeats l.snd k) :
-    IsNorm ((hOp n).comp (Finsupp.single l c)) := by
-  let comp : DerivedOp n n →+ DerivedOp s n :=
-    { toFun M := M.comp (Finsupp.single l c)
-      map_zero' := DerivedOp.zero_comp _
-      map_add' M N := DerivedOp.add_comp M N _ }
-  change IsNorm (comp (hOp n))
-  rw [hOp, map_sum]
-  refine isNorm_sum _ _ fun r _ => ?_
-  rw [map_sum]
-  refine isNorm_sum _ _ fun ν _ => ?_
-  change IsNorm (DerivedOp.comp (Finsupp.single (hLetter n r ν) ν.sign) (Finsupp.single l c))
-  rw [DerivedOp.single_comp_single]
-  have H := hLetter_common_repeat l.fst l.snd r ν
-  have h : (∃ i : Fin n, i.val < r.val ∧ Repeats l.fst i) ∨
-      (∃ i : Fin n, r.val ≤ i.val ∧ Repeats l.snd i) := by
-    by_cases hj : j.val < r.val
-    · exact Or.inl ⟨j, hj, hf⟩
-    · exact Or.inr ⟨k, by have : j.val ≤ k.val := hjk; omega, hg⟩
-  obtain ⟨i, hi, hi'⟩ := H h
-  exact isNorm_single_of_repeat _ _ i hi hi'
+/-- Frontality is preserved by addition (support ⊆ union). -/
+private lemma DerivedOp.Frontal.add {s q : ℕ} {M N : DerivedOp s q} (hM : M.Frontal)
+    (hN : N.Frontal) :
+    (M + N).Frontal := by
+  intro l hl
+  rcases Finset.mem_union.mp (Finsupp.support_add hl) with h | h
+  · exact hM l h
+  · exact hN l h
 
+/-- Frontality is preserved by right composition with a single frontal letter. -/
+private lemma DerivedOp.Frontal.comp_single {s q r : ℕ} {M : DerivedOp q r} (hM : M.Frontal)
+    (l₁ : OpLetter s q) (c₁ : ℤ) (hl₁ : IsFrontalHom l₁.fst ∧ IsFrontalHom l₁.snd) :
+    (M.comp (Finsupp.single l₁ c₁)).Frontal := by
+  induction M using Finsupp.induction with
+  | zero =>
+      rw [show DerivedOp.comp (0 : DerivedOp q r) (Finsupp.single l₁ c₁) = 0 from by
+        simp [DerivedOp.comp]]
+      exact DerivedOp.Frontal.zero
+  | single_add l₂ c₂ g hlg hc₂ ih =>
+      have hl₂ := hM l₂ (by
+        rw [Finsupp.mem_support_iff, Finsupp.add_apply, Finsupp.single_eq_same,
+          Finsupp.notMem_support_iff.mp hlg, add_zero]
+        exact hc₂)
+      have hg : DerivedOp.Frontal g := fun l' hl' => hM l' (by
+        rw [Finsupp.mem_support_iff, Finsupp.add_apply,
+          Finsupp.single_eq_of_ne (by rintro rfl; exact hlg hl'), zero_add,
+          ← Finsupp.mem_support_iff]
+        exact hl')
+      rw [DerivedOp.add_comp, DerivedOp.single_comp_single]
+      exact (DerivedOp.Frontal.single (l₂.compLetter l₁) (c₁ * c₂)
+        ⟨hl₂.1.comp hl₁.1, hl₂.2.comp hl₁.2⟩).add (ih hg)
 
-/-- A shuffle with no offending step at the split must pass through the
-horizontal-then-vertical corner, and that corner determines the entire path. -/
-private lemma shuffle_split_repeat_or_corner {p q : ℕ} (μ : Shuffle p q)
-    (r : Fin (p + q + 1)) :
-    (∃ j : Fin (p + q), j.val < r.val ∧ Repeats (shuffleFstHom μ) j) ∨
-    (∃ k : Fin (p + q), r.val ≤ k.val ∧ Repeats (shuffleSndHom μ) k) ∨
-    (r.val = p ∧ μ = Shuffle.trivialShuffle p q) := by
-  by_cases hy : (μ.1 r).2.val = 0
-  · by_cases hx : (μ.1 r).1.val = p
-    · right
-      right
-      have hr : r.val = p := by have := μ.coordSum_eq r; omega
-      refine ⟨hr, ?_⟩
-      apply Subtype.ext
-      apply OrderHom.ext
-      funext i
-      have hs := μ.coordSum_eq i
-      rw [Shuffle.trivialShuffle_apply]
-      apply Prod.ext <;> apply Fin.ext
-      · change (μ.1 i).1.val = min i.val p
-        rcases le_total i r with hir | hri
-        · have h := (μ.1.monotone hir).2
-          change (μ.1 i).2.val ≤ (μ.1 r).2.val at h
-          change i.val ≤ r.val at hir
-          omega
-        · have h := (μ.1.monotone hri).1
-          change (μ.1 r).1.val ≤ (μ.1 i).1.val at h
-          change r.val ≤ i.val at hri
-          have := (μ.1 i).1.isLt
-          omega
-      · change (μ.1 i).2.val = i.val - p
-        rcases le_total i r with hir | hri
-        · have h := (μ.1.monotone hir).2
-          change (μ.1 i).2.val ≤ (μ.1 r).2.val at h
-          change i.val ≤ r.val at hir
-          omega
-        · have h := (μ.1.monotone hri).1
-          change (μ.1 r).1.val ≤ (μ.1 i).1.val at h
-          change r.val ≤ i.val at hri
-          have := (μ.1 i).1.isLt
-          omega
-    · right
-      left
-      obtain ⟨k, hk, hk', hs⟩ := μ.exists_fst_step (μ.1 r).1.val
-        (by have := (μ.1 r).1.isLt; omega)
-      refine ⟨k, ?_, hs⟩
-      by_contra! h
-      have hm := (μ.1.monotone (show k.succ ≤ r by
-        change k.val + 1 ≤ r.val; omega)).1
-      change (μ.1 k.succ).1.val ≤ (μ.1 r).1.val at hm
-      omega
-  · left
-    obtain ⟨j, hj, hj', hs⟩ := μ.exists_snd_step ((μ.1 r).2.val - 1)
-      (by have := (μ.1 r).2.isLt; omega)
-    refine ⟨j, ?_, hs⟩
-    by_contra! h
-    have hm := (μ.1.monotone (show r ≤ j.castSucc by
-      change r.val ≤ j.val; exact h)).2
-    change (μ.1 r).2.val ≤ (μ.1 j.castSucc).2.val at hm
-    omega
+/-- `Φ` is frontal: `Φ₀ = 0` is vacuously frontal; the step `Φ_{q+1} = −Φ'_q + h'_{q+1} D₀` is a
+sum of a primed operator (frontal by `prime_frontal`, no induction hypothesis needed) and a primed
+operator composed with the frontal degeneracy `D₀ = ⟨σ₀,σ₀⟩`. -/
+private lemma phiOp_frontal (q : ℕ) : (phiOp q).Frontal := by
+  cases q with
+  | zero => exact DerivedOp.Frontal.zero
+  | succ q =>
+      have hσ : IsFrontalHom (SimplexCategory.σ (0 : Fin (q + 1 + 1))) := by
+        simp [IsFrontalHom, SimplexCategory.σ, Fin.predAbove]
+      rw [phiOp, D0op]
+      exact ((prime_frontal _).neg).add ((prime_frontal _).comp_single _ 1 ⟨hσ, hσ⟩)
 
-/-- The letter of a shuffle has possibly unequal input degrees. -/
-private abbrev RectLetter (p q n : ℕ) :=
-  ((⦋n⦌ : SimplexCategory) ⟶ ⦋p⦌) × ((⦋n⦌ : SimplexCategory) ⟶ ⦋q⦌)
+/-- A `subtraction` convenience: `IsNorm M → IsNorm N → IsNorm (M - N)`. -/
+private lemma IsNorm.sub {s q : ℕ} {M N : DerivedOp s q} (hM : IsNorm M) (hN : IsNorm N) :
+    IsNorm (M - N) := by rw [sub_eq_add_neg]; exact hM.add hN.neg
 
-private def rectShuffleLetter {p q : ℕ} (μ : Shuffle p q) : RectLetter p q (p + q) :=
-  ⟨shuffleFstHom μ, shuffleSndHom μ⟩
+/-- A norm absorbs arbitrary right composition (the degeneracy stays on the output side). -/
+private lemma IsNorm.comp_right {s s' q : ℕ} {M : DerivedOp s q} (hM : IsNorm M)
+    (N : DerivedOp s' s) :
+    IsNorm (M.comp N) := by
+  induction hM generalizing s' with
+  | zero => rw [DerivedOp.zero_comp]; exact IsNorm.zero
+  | add _ _ ihM ihN => rw [DerivedOp.add_comp]; exact (ihM N).add (ihN N)
+  | neg _ ihM => rw [DerivedOp.neg_comp]; exact (ihM N).neg
+  | diagDegen θ hθ N₀ => rw [DerivedOp.comp_assoc]; exact IsNorm.diagDegen θ hθ _
 
-private abbrev RectOp (p q n : ℕ) := RectLetter p q n →₀ ℤ
+private noncomputable def diagOp (n : ℕ) (i : Fin (n + 1)) : DerivedOp n (n + 1) :=
+  Finsupp.single (diagLetter i) 1
 
-private def rectCompLetter {p q n m : ℕ} (l : OpLetter n m) (a : RectLetter p q n) :
-    RectLetter p q m :=
-  ⟨l.fst ≫ a.1, l.snd ≫ a.2⟩
+private lemma prime_diagOp (n : ℕ) (i : Fin (n + 1)) :
+    (diagOp n i).prime = diagOp (n + 1) i.succ := by
+  simp only [diagOp, DerivedOp.prime, Finsupp.mapDomain_single, diagLetter,
+    OpLetter.primeLetter, primeHom_σ]
 
-private def RectNorm {p q n : ℕ} (N : RectOp p q n) : Prop :=
-  ∀ a ∈ N.support, ∃ i : Fin n, Repeats a.1 i ∧ Repeats a.2 i
+private lemma D0_comp_diagOp (n : ℕ) (i : Fin (n + 1)) :
+    (D0op (n + 1)).comp (diagOp n i) = (diagOp n i).prime.comp (D0op n) := by
+  rw [prime_diagOp, D0op, D0op, diagOp, diagOp, DerivedOp.single_comp_single,
+    DerivedOp.single_comp_single]
+  have hs := SimplexCategory.σ_comp_σ (Fin.zero_le i)
+  have hz : (0 : Fin (n + 1)).castSucc = 0 := Fin.ext rfl
+  rw [hz] at hs
+  simp only [diagLetter, OpLetter.compLetter, hs]
 
-private lemma RectNorm.single {p q n : ℕ} (a : RectLetter p q n) (c : ℤ)
-    (h : ∃ i : Fin n, Repeats a.1 i ∧ Repeats a.2 i) :
-    RectNorm (Finsupp.single a c) := by
-  intro b hb
-  rwa [Finset.mem_singleton.mp (Finsupp.support_single_subset hb)]
+private lemma hOp_diagOp_isNorm (n : ℕ) (i : Fin (n + 1)) :
+    IsNorm ((hOp (n + 1)).comp (diagOp n i)) :=
+  hOp_comp_ordered_repeat (diagLetter i) 1 i i le_rfl (repeats_sigma n i) (repeats_sigma n i)
 
-private lemma RectNorm.sum {ι : Type*} {p q n : ℕ} (t : Finset ι) (f : ι → RectOp p q n)
-    (h : ∀ i ∈ t, RectNorm (f i)) : RectNorm (∑ i ∈ t, f i) := by
-  classical
-  induction t using Finset.induction_on with
-  | empty => simp [RectNorm]
-  | @insert a t ha ih =>
-    rw [Finset.sum_insert ha]
-    intro b hb
-    rcases Finset.mem_union.mp (Finsupp.support_add hb) with hb' | hb'
-    · exact h a (Finset.mem_insert_self a t) b hb'
-    · exact ih (fun i hi => h i (Finset.mem_insert_of_mem hi)) b hb'
+private lemma phiOp_diagOp_isNorm (n : ℕ) (i : Fin (n + 1)) :
+    IsNorm ((phiOp (n + 1)).comp (diagOp n i)) := by
+  have expand (n : ℕ) (i : Fin (n + 1)) :
+      (phiOp (n + 1)).comp (diagOp n i) =
+        -((phiOp n).prime.comp (diagOp n i)) +
+          (((hOp (n + 1)).comp (diagOp n i)).prime).comp (D0op n) := by
+    rw [phiOp, DerivedOp.add_comp, DerivedOp.neg_comp, DerivedOp.comp_assoc,
+      D0_comp_diagOp, ← DerivedOp.comp_assoc, ← prime_comp]
+  have first (n : ℕ) : IsNorm ((phiOp n).prime.comp (diagOp n 0)) := by
+    change IsNorm ((phiOp n).prime.comp (D0op n))
+    rw [prime_comp_D0_of_frontal _ (phiOp_frontal n)]
+    exact IsNorm.diagDegen _ (sigma_not_mono 0) _
+  induction n with
+  | zero =>
+    rw [show i = 0 from Fin.ext (by have := i.isLt; omega), expand]
+    exact (first 0).neg.add ((hOp_diagOp_isNorm 0 0).prime.comp_right _)
+  | succ n ih =>
+    rw [expand]
+    refine IsNorm.add ?_ ((hOp_diagOp_isNorm (n + 1) i).prime.comp_right _)
+    refine IsNorm.neg ?_
+    refine Fin.cases (first (n + 1)) (fun j => ?_) i
+    rw [← prime_diagOp, ← prime_comp]
+    exact (ih j).prime
 
-private noncomputable def rectComp {p q n m : ℕ} (M : DerivedOp n m) (N : RectOp p q n) :
-    RectOp p q m :=
-  N.sum fun a c => M.sum fun l d => Finsupp.single (rectCompLetter l a) (c * d)
+/-- Every monotone map from a longer simplex to a shorter one identifies an
+adjacent pair, since otherwise strict monotonicity would give an injection. -/
+private lemma exists_repeat_succ {n : ℕ} (f : (⦋n + 1⦌ : SimplexCategory) ⟶ ⦋n⦌) :
+    ∃ i : Fin (n + 1), Repeats f i := by
+  by_contra! h
+  have hinj : Function.Injective f.toOrderHom :=
+    (Fin.strictMono_iff_lt_succ.mpr fun i =>
+      lt_of_le_of_ne (f.toOrderHom.monotone (Fin.castSucc_le_succ i)) (h i)).injective
+  simpa only [SimplexCategory.len_mk, Fintype.card_fin, Nat.add_le_add_iff_right,
+    Nat.not_succ_le_self] using Fintype.card_le_of_injective _ hinj
 
-private noncomputable def rectCompRight {p q n m : ℕ} (M : DerivedOp n m) :
-    RectOp p q n →+ RectOp p q m where
-  toFun := rectComp M
-  map_zero' := by simp [rectComp]
-  map_add' A B := by
-    simp only [rectComp]
-    apply Finsupp.sum_add_index'
-    · intro a; simp
-    · intro a c d; simp only [add_mul, Finsupp.single_add]; rw [Finsupp.sum_add]
+private def OrderedRepeats {s n : ℕ} (l : OpLetter s n) : Prop :=
+  ∃ j k : Fin n, j ≤ k ∧ Repeats l.fst j ∧ Repeats l.snd k
 
-private noncomputable def rectCompLeft {p q n m : ℕ} (N : RectOp p q n) :
-    DerivedOp n m →+ RectOp p q m where
-  toFun M := rectComp M N
-  map_zero' := by simp [rectComp]
-  map_add' A B := by
-    simp only [rectComp]
-    rw [← Finsupp.sum_add]
-    apply Finsupp.sum_congr
-    intro a _
-    apply Finsupp.sum_add_index'
-    · intro l; simp
-    · intro l c d; simp only [mul_add, Finsupp.single_add]
+private lemma phiOp_ordered_repeats (n : ℕ) :
+    ∀ l ∈ (phiOp n).support, OrderedRepeats l := by
+  induction n with
+  | zero => simp [phiOp]
+  | succ n ih =>
+    intro l hl
+    rw [phiOp] at hl
+    rcases Finset.mem_union.mp (Finsupp.support_add hl) with h | h
+    · rw [Finsupp.support_neg] at h
+      obtain ⟨a, ha, rfl⟩ := Finset.mem_image.mp (Finsupp.mapDomain_support h)
+      obtain ⟨j, k, hjk, hf, hg⟩ := ih a ha
+      exact ⟨j.succ, k.succ, Fin.succ_le_succ_iff.mpr hjk, hf.prime, hg.prime⟩
+    · rw [D0op, DerivedOp.comp_single_right] at h
+      simp only [one_mul] at h
+      change l ∈ (Finsupp.mapDomain (fun a => a.compLetter (diagLetter 0))
+        ((hOp (n + 1)).prime)).support at h
+      obtain ⟨a, ha, rfl⟩ := Finset.mem_image.mp (Finsupp.mapDomain_support h)
+      obtain ⟨b, hb, rfl⟩ := Finset.mem_image.mp (Finsupp.mapDomain_support ha)
+      have hf : Repeats ((b.primeLetter.compLetter (diagLetter 0)).fst) 0 := by
+        change Repeats (primeHom b.fst ≫ SimplexCategory.σ 0) 0
+        rw [primeHom_comp_degenZero b.fst (hOp_horizontal_frontal _ b hb)]
+        exact (repeats_sigma (n + 1) 0).comp b.fst
+      obtain ⟨k, hk⟩ := exists_repeat_succ ((b.primeLetter.compLetter (diagLetter 0)).snd)
+      exact ⟨0, k, Fin.zero_le _, hf, hk⟩
 
-private lemma rectComp_single {p q n m : ℕ} (a : RectLetter p q n) (l : OpLetter n m)
-    (c d : ℤ) :
-    rectComp (Finsupp.single l d) (Finsupp.single a c) =
-      Finsupp.single (rectCompLetter l a) (c * d) := by
-  simp [rectComp, Finsupp.sum_single_index]
+private lemma hOp_comp_phiOp_isNorm (n : ℕ) : IsNorm ((hOp (n + 1)).comp (phiOp n)) := by
+  have h (M : DerivedOp n (n + 1)) (hM : ∀ l ∈ M.support, OrderedRepeats l) :
+      IsNorm ((hOp (n + 1)).comp M) := by
+    induction M using Finsupp.induction with
+    | zero => simpa [DerivedOp.comp] using (IsNorm.zero : IsNorm (0 : DerivedOp n (n + 1)))
+    | single_add l c M hl hc ih =>
+      have H : (Finsupp.single l c + M).support = insert l M.support := by
+        rw [Finsupp.support_add_eq]
+        · rw [Finsupp.support_single l hc, Finset.singleton_union]
+        · simpa [Finsupp.support_single l hc] using hl
+      rw [H] at hM
+      obtain ⟨j, k, hjk, hj, hk⟩ := hM l (Finset.mem_insert_self _ _)
+      rw [DerivedOp.comp_add_right]
+      exact (hOp_comp_ordered_repeat l c j k hjk hj hk).add
+        (ih (fun a ha => hM a (Finset.mem_insert_of_mem ha)))
+  exact h _ (phiOp_ordered_repeats n)
 
-private noncomputable def rectShuffle (p q : ℕ) : RectOp p q (p + q) :=
-  ∑ μ : Shuffle p q, Finsupp.single (rectShuffleLetter μ) μ.sign
-
-
-private lemma shuffle_cast_snd {p q q' : ℕ} (e : q = q') (ν : Shuffle p q)
-    (i : Fin (p + q + 1)) :
-    let ν' := cast (congrArg (Shuffle p) e) ν
-    let i' := i.cast (by rw [e])
-    (ν'.1 i').1.val = (ν.1 i).1.val ∧ (ν'.1 i').2.val = (ν.1 i).2.val ∧
-      ν'.sign = ν.sign := by
-  subst q'
-  exact ⟨rfl, rfl, rfl⟩
-
-private lemma rectCompLetter_corner {p q : ℕ} (ν : Shuffle p q) :
-    rectCompLetter (hLetter (p + q) ⟨p, by omega⟩
-        (cast (congrArg (Shuffle p) (show q = p + q - p by omega)) ν))
-        (rectShuffleLetter (Shuffle.trivialShuffle p q)) = rectShuffleLetter ν := by
-  apply Prod.ext <;> apply SimplexCategory.Hom.ext <;> apply OrderHom.ext <;> funext i <;>
-    apply Fin.ext
-  · simp only [rectCompLetter, SimplexCategory.comp_toOrderHom, OrderHom.comp_coe,
-      Function.comp_apply]
-    change min ((hLetter _ _ _).fst.toOrderHom i : ℕ) p = (ν.1 i).1.val
-    rw [hLetter_fst_val, (shuffle_cast_snd (show q = p + q - p by omega) ν i).1]
-    exact min_eq_left (Nat.le_of_lt_succ (ν.1 i).1.isLt)
-  · simp only [rectCompLetter, SimplexCategory.comp_toOrderHom, OrderHom.comp_coe,
-      Function.comp_apply]
-    change ((hLetter _ _ _).snd.toOrderHom i : ℕ) - p = (ν.1 i).2.val
-    rw [hLetter_snd_val, (shuffle_cast_snd (show q = p + q - p by omega) ν i).2.1]
-    exact Nat.add_sub_cancel_left p (ν.1 i).2.val
-
-/-- In the signed shuffle sum, only the staircase at the matching split can
-contribute a letter without a common plateau. Its contribution is the original
-signed shuffle sum, with coefficient one from the staircase. -/
-private lemma rectComp_hOp_shuffle_sub (p q : ℕ) :
-    RectNorm (rectComp (hOp (p + q)) (rectShuffle p q) - rectShuffle p q) := by
-  classical
-  let t := Shuffle.trivialShuffle p q
-  let r₀ : Fin (p + q + 1) := ⟨p, by omega⟩
-  let f := fun (μ : Shuffle p q) (r : Fin (p + q + 1)) (ν : Shuffle r.val (p + q - r.val)) =>
-    Finsupp.single (rectCompLetter (hLetter (p + q) r ν) (rectShuffleLetter μ))
-      (μ.sign * ν.sign)
-  let g := fun (μ : Shuffle p q) (r : Fin (p + q + 1)) => ∑ ν, f μ r ν
-  have expand : rectComp (hOp (p + q)) (rectShuffle p q) = ∑ μ, ∑ r, g μ r := by
-    change rectCompRight (hOp (p + q)) (∑ μ, Finsupp.single (rectShuffleLetter μ) μ.sign) = _
-    rw [map_sum]
-    apply Finset.sum_congr rfl
-    intro μ _
-    change rectCompLeft (Finsupp.single (rectShuffleLetter μ) μ.sign) (hOp (p + q)) = _
-    rw [hOp, map_sum]
-    apply Finset.sum_congr rfl
-    intro r _
-    rw [map_sum]
-    exact Finset.sum_congr rfl fun ν _ => rectComp_single _ _ _ _
-  have residue (μ : Shuffle p q) (r : Fin (p + q + 1)) (hne : μ ≠ t ∨ r ≠ r₀) :
-      RectNorm (g μ r) := by
-    refine RectNorm.sum _ _ fun ν _ => RectNorm.single _ _ ?_
-    rcases shuffle_split_repeat_or_corner μ r with h | h | ⟨hr, hm⟩
-    · exact hLetter_common_repeat _ _ r ν (Or.inl h)
-    · exact hLetter_common_repeat _ _ r ν (Or.inr h)
-    · exact False.elim (hne.elim (fun h => h hm) (fun h => h (Fin.ext hr)))
-  have good : g t r₀ = rectShuffle p q := by
-    let e : Shuffle p q ≃ Shuffle p (p + q - p) :=
-      Equiv.cast (congrArg (Shuffle p) (by omega))
-    refine (Fintype.sum_equiv e _ _ ?_).symm
-    intro ν
-    have hsign := (shuffle_cast_snd (show q = p + q - p by omega) ν 0).2.2
-    change Finsupp.single (rectShuffleLetter ν) ν.sign = f t r₀ (e ν)
-    unfold f
-    change _ = Finsupp.single
-      (rectCompLetter (hLetter (p + q) ⟨p, by omega⟩
-        (cast (congrArg (Shuffle p) (by omega : q = p + q - p)) ν)) (rectShuffleLetter t))
-      (t.sign * (cast (congrArg (Shuffle p) (by omega : q = p + q - p)) ν).sign)
-    rw [rectCompLetter_corner, hsign, Shuffle.sign_trivialShuffle, one_mul]
-  rw [expand, ← Finset.sum_erase_add _ _ (Finset.mem_univ t),
-    ← Finset.sum_erase_add _ _ (Finset.mem_univ r₀), good, ← add_assoc, add_sub_cancel_right]
-  intro a ha
-  rcases Finset.mem_union.mp (Finsupp.support_add ha) with ha' | ha'
-  · exact RectNorm.sum _ _ (fun μ hμ => RectNorm.sum _ _
-      fun r _ => residue μ r (Or.inl (Finset.ne_of_mem_erase hμ))) a ha'
-  · exact RectNorm.sum _ _ (fun r hr => residue t r (Or.inr (Finset.ne_of_mem_erase hr))) a ha'
-
-
-private lemma primeHom_succ {s n : ℕ} (f : (⦋n⦌ : SimplexCategory) ⟶ ⦋s⦌)
-    (i : Fin (n + 1)) : (primeHom f).toOrderHom i.succ = (f.toOrderHom i).succ := by
-  apply Fin.ext
-  have h : (f.toOrderHom i).val + 1 ≤ s + 1 := Fin.isLt _
-  simp [primeHom, Nat.min_eq_left h]
-
-private def rectShuffleLetterAt {p q n : ℕ} (e : n = p + q) (μ : Shuffle p q) :
-    RectLetter p q n :=
-  ⟨eqToHom (congrArg SimplexCategory.mk e) ≫ shuffleFstHom μ,
-    eqToHom (congrArg SimplexCategory.mk e) ≫ shuffleSndHom μ⟩
-
-private lemma rectShuffleLetterAt_self {p q : ℕ} (μ : Shuffle p q) :
-    rectShuffleLetterAt rfl μ = rectShuffleLetter μ := by
-  simp [rectShuffleLetterAt, rectShuffleLetter]
-
-private noncomputable def rectShuffleAt {p q n : ℕ} (e : n = p + q) : RectOp p q n :=
-  ∑ μ : Shuffle p q, Finsupp.single (rectShuffleLetterAt e μ) μ.sign
-
-private def leftPrefix {p q n : ℕ} (a : RectLetter p q n) : RectLetter (p + 1) q (n + 1) :=
-  ⟨primeHom a.1, primeHom a.2 ≫ SimplexCategory.σ 0⟩
-
-private def rightPrefix {p q n : ℕ} (a : RectLetter p q n) : RectLetter p (q + 1) (n + 1) :=
-  ⟨primeHom a.1 ≫ SimplexCategory.σ 0, primeHom a.2⟩
-
-private lemma insertLeftIndex_zero {p q : ℕ} (ν : Shuffle p q) :
-    ν.insertLeftIndex 0 = 0 := by
-  apply Fin.ext
-  simp [Shuffle.insertLeftIndex]
-
-private lemma insertRightIndex_zero {p q : ℕ} (ν : Shuffle p q) :
-    ν.insertRightIndex 0 = 0 := by
-  apply Fin.ext
-  simp [Shuffle.insertRightIndex]
-
-private lemma first_left_sign {p q : ℕ} (ν : Shuffle p q) :
-    (ν.insertLeftStep 0).sign = ν.sign := by
-  simpa [insertLeftIndex_zero] using Shuffle.sign_insertLeftStep ν 0
-
-private lemma first_right_sign {p q : ℕ} (ν : Shuffle p q) :
-    (ν.insertRightStep 0).sign = (-1 : ℤ)^p * ν.sign := by
-  simpa [insertRightIndex_zero] using Shuffle.sign_insertRightStep ν 0
-
-private lemma first_left_letter {p q n : ℕ} (e : n = p + q)
-    (E : n + 1 = (p + 1) + q) (ν : Shuffle p q) :
-    rectShuffleLetterAt E (ν.insertLeftStep 0) = leftPrefix (rectShuffleLetterAt e ν) := by
-  apply Prod.ext <;> apply SimplexCategory.Hom.ext <;> apply OrderHom.ext <;> funext i <;>
-    refine Fin.cases ?_ (fun j => ?_) i
-  · apply Fin.ext
-    simp [rectShuffleLetterAt, leftPrefix, primeHom, shuffleFstHom,
-      SimplexCategory.comp_toOrderHom, SimplexCategory.eqToHom_toOrderHom, Shuffle.apply_zero]
-  · apply Fin.ext
-    simp only [rectShuffleLetterAt, leftPrefix, primeHom_succ, SimplexCategory.comp_toOrderHom,
-      OrderHom.comp_coe, Function.comp_apply, shuffleFstHom, SimplexCategory.Hom.toOrderHom_mk,
-      OrderHom.fst_coe, SimplexCategory.eqToHom_toOrderHom, Fin.castOrderIso_apply,
-      OrderEmbedding.toOrderHom_coe, OrderIso.coe_toOrderEmbedding, Fin.val_succ]
-    change (Shuffle.insertLeftStepFun ν 0 _).1.val = _
-    simp [Shuffle.insertLeftStepFun, insertLeftIndex_zero]
-    rfl
-  · apply Fin.ext
-    simp [rectShuffleLetterAt, leftPrefix, primeHom, shuffleSndHom, SimplexCategory.σ,
-      SimplexCategory.comp_toOrderHom, SimplexCategory.eqToHom_toOrderHom, Shuffle.apply_zero]
-  · simp only [rectShuffleLetterAt, leftPrefix, primeHom_succ, SimplexCategory.comp_toOrderHom,
-      OrderHom.comp_coe, Function.comp_apply, shuffleSndHom, SimplexCategory.Hom.toOrderHom_mk,
-      OrderHom.snd_coe, SimplexCategory.eqToHom_toOrderHom, Fin.castOrderIso_apply,
-      OrderEmbedding.toOrderHom_coe, OrderIso.coe_toOrderEmbedding]
-    change (Shuffle.insertLeftStepFun ν 0 _).2 = (0 : Fin (q + 1)).predAbove (Fin.succ _)
-    rw [Fin.predAbove_zero_succ]
-    simp [Shuffle.insertLeftStepFun, insertLeftIndex_zero]
-    rfl
-
-private lemma first_right_letter {p q n : ℕ} (e : n = p + q)
-    (E : n + 1 = p + (q + 1)) (ν : Shuffle p q) :
-    rectShuffleLetterAt E (ν.insertRightStep 0) = rightPrefix (rectShuffleLetterAt e ν) := by
-  apply Prod.ext <;> apply SimplexCategory.Hom.ext <;> apply OrderHom.ext <;> funext i <;>
-    refine Fin.cases ?_ (fun j => ?_) i
-  · apply Fin.ext
-    simp [rectShuffleLetterAt, rightPrefix, primeHom, shuffleFstHom, SimplexCategory.σ,
-      SimplexCategory.comp_toOrderHom, SimplexCategory.eqToHom_toOrderHom, Shuffle.apply_zero]
-  · simp only [rectShuffleLetterAt, rightPrefix, primeHom_succ, SimplexCategory.comp_toOrderHom,
-      OrderHom.comp_coe, Function.comp_apply, shuffleFstHom, SimplexCategory.Hom.toOrderHom_mk,
-      OrderHom.fst_coe, SimplexCategory.eqToHom_toOrderHom, Fin.castOrderIso_apply,
-      OrderEmbedding.toOrderHom_coe, OrderIso.coe_toOrderEmbedding]
-    change (Shuffle.insertRightStepFun ν 0 _).1 = (0 : Fin (p + 1)).predAbove (Fin.succ _)
-    rw [Fin.predAbove_zero_succ]
-    simp [Shuffle.insertRightStepFun, insertRightIndex_zero]
-    rfl
-  · apply Fin.ext
-    simp [rectShuffleLetterAt, rightPrefix, primeHom, shuffleSndHom,
-      SimplexCategory.comp_toOrderHom, SimplexCategory.eqToHom_toOrderHom, Shuffle.apply_zero]
-  · apply Fin.ext
-    simp only [rectShuffleLetterAt, rightPrefix, primeHom_succ, SimplexCategory.comp_toOrderHom,
-      OrderHom.comp_coe, Function.comp_apply, shuffleSndHom, SimplexCategory.Hom.toOrderHom_mk,
-      OrderHom.snd_coe, SimplexCategory.eqToHom_toOrderHom, Fin.castOrderIso_apply,
-      OrderEmbedding.toOrderHom_coe, OrderIso.coe_toOrderEmbedding, Fin.val_succ]
-    change (Shuffle.insertRightStepFun ν 0 _).2.val = _
-    simp [Shuffle.insertRightStepFun, insertRightIndex_zero]
-    rfl
-
-private lemma firstLeft_nonDiag {p q : ℕ} (μ : Shuffle (p + 1) q)
-    (h : μ.isLeftStep 0) : ∃ ν : Shuffle p q, ν.insertLeftStep 0 = μ := by
-  let r : Fin (p + q + 2) := 0
-  have hV : μ.isLeftVertex (r.cast (by omega)) := by
-    constructor
-    · intro k hk
-      have he := congrArg Fin.val hk
-      change k.val + 1 = 0 at he
-      omega
-    · intro k hk
-      have e : k = 0 := Fin.ext (congrArg (fun x => x.val) hk)
-      simpa only [e] using h
-  refine ⟨μ.removeLeft r hV, ?_⟩
-  have H := Shuffle.insertLeft_removeLeft hV
-  simpa [r, Shuffle.apply_zero] using H
-
-private lemma firstRight_nonDiag {p q : ℕ} (μ : Shuffle p (q + 1))
-    (h : ¬ μ.isLeftStep 0) : ∃ ν : Shuffle p q, ν.insertRightStep 0 = μ := by
-  have h' : μ.swap.isLeftStep 0 := by
-    rw [Shuffle.isLeftStep, Shuffle.swap_apply_fst, Shuffle.swap_apply_fst]
-    have hiff := μ.shuffle_fst_lt_iff_not_snd_lt 0
-    simp only [Shuffle.isLeftStep] at h
-    have e₀ : (Fin.cast (by omega) ((0 : Fin (q + 1 + p)).castSucc) : Fin (p + (q + 1) + 1)) =
-        (0 : Fin (p + (q + 1))).castSucc := Fin.ext rfl
-    have e₁ : (Fin.cast (by omega) ((0 : Fin (q + 1 + p)).succ) : Fin (p + (q + 1) + 1)) =
-        (0 : Fin (p + (q + 1))).succ := Fin.ext rfl
-    rw [e₀, e₁]
-    by_contra hn
-    exact h (hiff.mpr hn)
-  obtain ⟨ν, hν⟩ := firstLeft_nonDiag μ.swap h'
-  refine ⟨ν.swap, (Shuffle.swapEquiv _ _).injective ?_⟩
-  change (ν.swap.insertRightStep 0).swap = μ.swap
-  rwa [Shuffle.insertRightStep_eq_swap, Shuffle.swap_swap]
-
-private lemma firstLeft_isLeft {p q : ℕ} (ν : Shuffle p q) :
-    (ν.insertLeftStep 0).isLeftStep 0 := by
-  simpa [insertLeftIndex_zero] using
-    Shuffle.insertLeftStep_isLeftStep_at ν 0 (by rw [insertLeftIndex_zero]; simp)
-
-private lemma firstRight_isRight {p q : ℕ} (ν : Shuffle p q) :
-    ¬ (ν.insertRightStep 0).isLeftStep 0 := by
-  simpa [insertRightIndex_zero] using Shuffle.insertRightStep_not_isLeftType ν 0
-
-private noncomputable def shuffleFirstEquiv (p q : ℕ) :
-    Sum (Shuffle p (q + 1)) (Shuffle (p + 1) q) ≃ Shuffle (p + 1) (q + 1) :=
-  Equiv.ofBijective (Sum.elim (fun ν => ν.insertLeftStep 0) (fun ν => ν.insertRightStep 0)) (by
-    constructor
-    · intro a b h
-      cases a with
-      | inl a =>
-        cases b with
-        | inl b =>
-          exact congrArg Sum.inl (Shuffle.insertLeftStep_injective 0 0 a b h
-            (by simp [insertLeftIndex_zero])).2
-        | inr b =>
-          change a.insertLeftStep 0 = b.insertRightStep 0 at h
-          exact False.elim (firstRight_isRight b (h ▸ firstLeft_isLeft a))
-      | inr a =>
-        cases b with
-        | inl b =>
-          change a.insertRightStep 0 = b.insertLeftStep 0 at h
-          exact False.elim (firstRight_isRight a (h.symm ▸ firstLeft_isLeft b))
-        | inr b =>
-          exact congrArg Sum.inr (Shuffle.insertRightStep_injective 0 0 a b h
-            (by simp [insertRightIndex_zero])).2
-    · intro μ
-      by_cases h : μ.isLeftStep 0
-      · obtain ⟨ν, hν⟩ := firstLeft_nonDiag μ h
-        exact ⟨Sum.inl ν, hν⟩
-      · obtain ⟨ν, hν⟩ := firstRight_nonDiag μ h
-        exact ⟨Sum.inr ν, hν⟩)
-
-/-- The signed first-step split, with signs inherited from the actual insertion
-identities. The two axes have just their one available first step. -/
-private lemma rectShuffleAt_first {p q n : ℕ} (e : n + 1 = (p + 1) + (q + 1)) :
-    rectShuffleAt e =
-      Finsupp.mapDomain leftPrefix (rectShuffleAt (show n = p + (q + 1) by omega)) +
-        ((-1 : ℤ) ^ (p + 1)) •
-          Finsupp.mapDomain rightPrefix (rectShuffleAt (show n = (p + 1) + q by omega)) := by
-  classical
-  rw [rectShuffleAt, ← (shuffleFirstEquiv p q).sum_comp, Fintype.sum_sum_type]
-  simp only [rectShuffleAt, Finsupp.mapDomain_finsetSum, Finsupp.mapDomain_single,
-    Finset.smul_sum, Finsupp.smul_single', smul_eq_mul]
+private lemma phiOp_square_step (n : ℕ) :
+    (phiOp (n + 2)).comp (phiOp (n + 1)) =
+      ((phiOp (n + 1)).comp (phiOp n)).prime -
+        (((phiOp (n + 1)).comp (hOp (n + 1))).prime).comp (D0op (n + 1)) +
+        (((hOp (n + 2)).comp (phiOp (n + 1))).prime).comp (D0op (n + 1)) := by
+  conv_lhs => rw [phiOp]
+  rw [DerivedOp.add_comp, DerivedOp.neg_comp, DerivedOp.comp_assoc,
+    ← prime_comp_D0_of_frontal _ (phiOp_frontal (n + 1)),
+    ← DerivedOp.comp_assoc, ← prime_comp]
   congr 1
-  · apply Finset.sum_congr rfl
-    intro ν _
-    change Finsupp.single (rectShuffleLetterAt e (ν.insertLeftStep 0))
-      (ν.insertLeftStep 0).sign = _
-    rw [first_left_letter, first_left_sign]
-  · apply Finset.sum_congr rfl
-    intro ν _
-    change Finsupp.single (rectShuffleLetterAt e (ν.insertRightStep 0))
-      (ν.insertRightStep 0).sign = _
-    rw [first_right_letter, first_right_sign]
+  conv_lhs => arg 1; arg 2; rw [phiOp]
+  rw [DerivedOp.comp_add_right, DerivedOp.comp_neg, ← DerivedOp.comp_assoc, ← prime_comp,
+    ← prime_comp, neg_add, neg_neg, sub_eq_add_neg]
 
-private lemma rectShuffleAt_first_left_axis {p n : ℕ} (e : n + 1 = (p + 1) + 0) :
-    rectShuffleAt e =
-      Finsupp.mapDomain leftPrefix (rectShuffleAt (show n = p + 0 by omega)) := by
-  classical
-  let e₀ : Shuffle p 0 ≃ Shuffle (p + 1) 0 :=
-    Equiv.ofBijective (fun ν => ν.insertLeftStep 0) (by
-      constructor
-      · intro a b _; exact Subsingleton.elim a b
-      · intro a; exact ⟨default, Subsingleton.elim _ a⟩)
-  rw [rectShuffleAt, ← e₀.sum_comp]
-  simp only [rectShuffleAt, Finsupp.mapDomain_finsetSum, Finsupp.mapDomain_single]
-  apply Finset.sum_congr rfl
-  intro ν _
-  change Finsupp.single (rectShuffleLetterAt e (ν.insertLeftStep 0))
-    (ν.insertLeftStep 0).sign = _
-  rw [first_left_letter, first_left_sign]
+private lemma phiOp_square_isNorm (n : ℕ) : IsNorm ((phiOp (n + 1)).comp (phiOp n)) := by
+  induction n with
+  | zero => simpa [phiOp, DerivedOp.comp] using (IsNorm.zero : IsNorm (0 : DerivedOp 0 2))
+  | succ n ih =>
+    rw [phiOp_square_step]
+    exact (ih.prime.sub ((phiOp_comp_hOp_isNorm (n + 1)).prime.comp_right _)).add
+      ((hOp_comp_phiOp_isNorm (n + 1)).prime.comp_right _)
 
-private lemma rectShuffleAt_first_right_axis {q n : ℕ} (e : n + 1 = 0 + (q + 1)) :
-    rectShuffleAt e =
-      Finsupp.mapDomain rightPrefix (rectShuffleAt (show n = 0 + q by omega)) := by
-  classical
-  let e₀ : Shuffle 0 q ≃ Shuffle 0 (q + 1) :=
-    Equiv.ofBijective (fun ν => ν.insertRightStep 0) (by
-      constructor
-      · intro a b _; exact Subsingleton.elim a b
-      · intro a; exact ⟨default, Subsingleton.elim _ a⟩)
-  rw [rectShuffleAt, ← e₀.sum_comp]
-  simp only [rectShuffleAt, Finsupp.mapDomain_finsetSum, Finsupp.mapDomain_single]
-  apply Finset.sum_congr rfl
-  intro ν _
-  change Finsupp.single (rectShuffleLetterAt e (ν.insertRightStep 0))
-    (ν.insertRightStep 0).sign = _
-  rw [first_right_letter, first_right_sign, pow_zero, one_mul]
+
+universe u v
+
+variable {C : Type u} [Category.{v} C] [Abelian C]
+
+private lemma realize_diagOp (X : BisimplicialObject C) (n : ℕ) (i : Fin (n + 1)) :
+    (diagOp n i).realize X = (diag.obj X).σ i := by
+  rw [diagOp, realize_single, one_smul, OpLetter.realizeLetter, SimplicialObject.σ, diag_obj_map]
+  exact (X.map (SimplexCategory.σ i).op).naturality (SimplexCategory.σ i).op
+
+private lemma vanishes_of_diagOp (X : BisimplicialObject C) {n m : ℕ}
+    (M : DerivedOp (n + 1) m) (h : ∀ i : Fin (n + 1), IsNorm (M.comp (diagOp n i))) :
+    DegeneraciesVanish (X := diag.obj X) (M.realize X ≫ (retractionNTwo X).f m) := by
+  intro i
+  have h' := (h i).kill X
+  rwa [realize_comp, Category.assoc, realize_diagOp] at h'
+
+private lemma absorb_projector (X : BisimplicialObject C) {n m : ℕ}
+    (M : DerivedOp n m)
+    (h : DegeneraciesVanish (X := diag.obj X) (M.realize X ≫ (retractionNTwo X).f m)) :
+    (retractionNTwo X).f n ≫ (inclusionNTwo X).f n ≫
+      M.realize X ≫ (retractionNTwo X).f m = M.realize X ≫ (retractionNTwo X).f m := by
+  have hp := congrArg (fun f => f.f n)
+    (PInftyToNormalizedMooreComplex_comp_inclusionOfMooreComplexMap (diag.obj X))
+  change ((retractionNTwo X ≫ inclusionNTwo X).f n) = (PInfty (X := diag.obj X)).f n at hp
+  rw [HomologicalComplex.comp_f] at hp
+  rw [← Category.assoc ((retractionNTwo X).f n), hp]
+  have hq := (degeneraciesVanish_iff_QInfty_f_comp _).mp h
+  have key := congrArg (fun f => f ≫ M.realize X ≫ (retractionNTwo X).f m)
+    (PInfty_f_add_QInfty_f (X := diag.obj X) n)
+  rwa [Preadditive.add_comp, hq, add_zero, Category.id_comp] at key
+
+private lemma absorb_phi (X : BisimplicialObject C) (n : ℕ) :
+    (retractionNTwo X).f n ≫ (inclusionNTwo X).f n ≫
+      (phiOp n).realize X ≫ (retractionNTwo X).f (n + 1) =
+      (phiOp n).realize X ≫ (retractionNTwo X).f (n + 1) := by
+  apply absorb_projector
+  cases n with
+  | zero => trivial
+  | succ n => exact vanishes_of_diagOp X _ (phiOp_diagOp_isNorm n)
+
+private lemma absorb_h (X : BisimplicialObject C) (n : ℕ) :
+    (retractionNTwo X).f n ≫ (inclusionNTwo X).f n ≫
+      (hOp n).realize X ≫ (retractionNTwo X).f n =
+      (hOp n).realize X ≫ (retractionNTwo X).f n := by
+  apply absorb_projector
+  cases n with
+  | zero => trivial
+  | succ n => exact vanishes_of_diagOp X _ (hOp_diagOp_isNorm n)
+
+private lemma phiHomNorm_step (X : BisimplicialObject C) (n : ℕ) :
+    phiHomNorm X n (n + 1) = (inclusionNTwo X).f n ≫
+      (phiOp n).realize X ≫ (retractionNTwo X).f (n + 1) := by
+  rw [phiHomNorm, dif_pos rfl, eqToHom_refl, Category.id_comp]
+
+private lemma normalizedAW_shuffle_f (X : BisimplicialObject C) (n : ℕ) :
+    (normalizedAlexanderWhitney X ≫ normalizedShuffleMap X).f n =
+      (inclusionNTwo X).f n ≫ (hOp n).realize X ≫ (retractionNTwo X).f n := by
+  rw [normalizedAW_shuffle_eq, HomologicalComplex.comp_f, HomologicalComplex.comp_f, realize_hOp]
+
+/-- The recursive normalized Eilenberg–Mac Lane homotopy used in the
+bisimplicial Eilenberg–Zilber equivalence satisfies the three side conditions
+of a special contraction, in every degree. -/
+theorem normalized_special_contraction (X : BisimplicialObject C) (n : ℕ) :
+    (normalizedShuffleMap X).f n ≫ phiHomNorm X n (n + 1) = 0 ∧
+      phiHomNorm X n (n + 1) ≫ (normalizedAlexanderWhitney X).f (n + 1) = 0 ∧
+      phiHomNorm X n (n + 1) ≫ phiHomNorm X (n + 1) (n + 2) = 0 := by
+  let S := normalizedShuffleMap X
+  let A := normalizedAlexanderWhitney X
+  let K := A ≫ S
+  have side₁ : K.f n ≫ phiHomNorm X n (n + 1) = 0 := by
+    rw [show K.f n = (A ≫ S).f n from rfl, normalizedAW_shuffle_f, phiHomNorm_step]
+    simp only [Category.assoc, absorb_phi]
+    rw [← Category.assoc ((hOp n).realize X), ← realize_comp,
+      (phiOp_comp_hOp_isNorm n).kill X, comp_zero]
+  have side₂ : phiHomNorm X n (n + 1) ≫ K.f (n + 1) = 0 := by
+    rw [show K.f (n + 1) = (A ≫ S).f (n + 1) from rfl, normalizedAW_shuffle_f, phiHomNorm_step]
+    simp only [Category.assoc, absorb_h]
+    rw [← Category.assoc ((phiOp n).realize X), ← realize_comp,
+      (hOp_comp_phiOp_isNorm n).kill X, comp_zero]
+  have sa (k : ℕ) : S.f k ≫ A.f k = 𝟙 _ := by
+    simpa only [HomologicalComplex.comp_f, HomologicalComplex.id_f] using
+      congrArg (fun f => f.f k) (normalizedShuffle_alexanderWhitney X)
+  have sk : S.f n ≫ K.f n = S.f n := by
+    change S.f n ≫ (A ≫ S).f n = S.f n
+    rw [HomologicalComplex.comp_f, ← Category.assoc, sa, Category.id_comp]
+  have ka : K.f (n + 1) ≫ A.f (n + 1) = A.f (n + 1) := by
+    change (A ≫ S).f (n + 1) ≫ A.f (n + 1) = A.f (n + 1)
+    rw [HomologicalComplex.comp_f, Category.assoc, sa, Category.comp_id]
+  change S.f n ≫ phiHomNorm X n (n + 1) = 0 ∧
+    phiHomNorm X n (n + 1) ≫ A.f (n + 1) = 0 ∧
+    phiHomNorm X n (n + 1) ≫ phiHomNorm X (n + 1) (n + 2) = 0
+  refine ⟨?_, ?_, ?_⟩
+  · rw [← sk, Category.assoc, side₁, comp_zero]
+  · rw [← ka, ← Category.assoc, side₂, zero_comp]
+  · rw [phiHomNorm_step, phiHomNorm_step]
+    simp only [Category.assoc, absorb_phi]
+    rw [← Category.assoc ((phiOp n).realize X), ← realize_comp,
+      (phiOp_square_isNorm n).kill X, comp_zero]
 
 end BisimplicialObject
 end D5.S3.HomologicalAlgebra.EilenbergZilber
