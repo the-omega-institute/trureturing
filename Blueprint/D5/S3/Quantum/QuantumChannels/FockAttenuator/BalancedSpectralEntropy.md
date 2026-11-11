@@ -4,11 +4,11 @@
 
 The native extended spectral entropy inherits the physical half-cap floor.
 
-The balanced one-photon all-density spectral minimum and attainment by every coherent input are already proved in Zixuan He, The energy cost of optical noise, v1.0, DOI 10.5281/zenodo.23629201, Theorem 2 (PDF page 5) and Appendix A.2-A.3 (PDF pages 18-19). This attributed formalization preserves that physical result. No new literature resolution or priority for the odd-occupation application is claimed.
+The balanced one-photon all-density spectral minimum and attainment by every coherent input are already proved in `D5/L/QuantumStates/he2026energy`, Theorem 2 (PDF page 5) and Appendix A.2-A.3 (PDF pages 18-19). This attributed formalization preserves that physical result. No new literature resolution or priority for the odd-occupation application is claimed.
 
 Entropy means QuantumLogEnergy.spectralEntropy from TraceClass.SpectralEnergy: on its native complete eigenbasis it is the ENNReal sum of ENNReal.ofReal(-lambda*log(lambda)). The zero contribution is zero, the complete zero eigenspace is retained, and infinite entropy is allowed. Natural logarithms give nats. FockAttenuator.Entropy.vonNeumannEntropy is a separate basis-infimum API; no equality with that API is assumed or proved here.
 
-The physical operator correspondence is definitional: (densityReference rho).1.1 = rho.operator. The trace-class and trace proof fields are derived from the actual positive trace_one occupation sum. They add no hypothesis to the density domain. The spectral consequences are repo-derived from the native spectral suppliers; the paper is acknowledged for the physical question, not used as an assumed minimization theorem.
+The physical operator correspondence is definitional: (densityReference rho).1.1 = rho.operator. The trace-class and trace proof fields are derived from the actual positive trace_one occupation sum. They add no hypothesis to the density domain. The general spectral helpers and odd-occupation derivation are repo-derived from the native spectral suppliers; the exact one-photon floor is literature-attested. The proofs use no assumed minimization theorem.
 
 **Definition 1.1 (The density-to-reference adapter).**
 
@@ -58,9 +58,7 @@ Lean statement: `D5/S3/Quantum/QuantumChannels/FockAttenuator/BalancedSpectralEn
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/FockAttenuator/BalancedSpectralEntropy.balanced_one_photon_spectral_entropy_lower` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Zacharie Van Herstraeten; Saikat Guha; Nicolas J. Cerf (2024). *Classical capacity of quantum non-Gaussian attenuator and amplifier channels*. DOI: [10.1142/S0219749924400033](https://doi.org/10.1142/S0219749924400033). URL: <https://arxiv.org/abs/2312.15623v2>.
+*Citation.* Zixuan He (2026). *The energy cost of optical noise*. DOI: [10.5281/zenodo.23629201](https://doi.org/10.5281/zenodo.23629201).
 
 *Commentary.*
 

@@ -4,11 +4,11 @@
 
 Every coherent density attains the balanced one-photon spectral minimum over all densities.
 
-The balanced one-photon all-density spectral minimum and attainment by every coherent input are already proved in Zixuan He, The energy cost of optical noise, v1.0, DOI 10.5281/zenodo.23629201, Theorem 2 (PDF page 5) and Appendix A.2-A.3 (PDF pages 18-19). This attributed formalization preserves that physical result. No new literature resolution or priority for the odd-occupation application is claimed.
+The balanced one-photon all-density spectral minimum and attainment by every coherent input are already proved in `D5/L/QuantumStates/he2026energy`, Theorem 2 (PDF page 5) and Appendix A.2-A.3 (PDF pages 18-19). This attributed formalization preserves that physical result. No new literature resolution or priority for the odd-occupation application is claimed.
 
 The channel is the original attenuator (1/2) balanced (pointMassEnvironment 1), on the complete Attenuator.DensityOperator domain. Its native extended spectral entropy has attained minimum ENNReal.ofReal(Real.log 2), and every coherentDensity alpha attains it for every complex alpha. The comparison input rho is an arbitrary actual density, with no support, rank, energy or entropy restriction.
 
-This is the balanced pure-one-photon case relevant to Conjecture 1 in Van Herstraeten, Guha and Cerf, arXiv:2312.15623v2, Section IV.1. The paper already gives the vacuum output spectrum (1/2,1/2) and describes additional candidate minimizers in this case. These native proofs acknowledge both the original problem source and He's prior written result. No uniqueness of coherent minimizers, odd-n>1 attainment, full all-occupation/all-transmissivity resolution, or equivalence to the separate basis-infimum entropy API is claimed.
+This is the balanced pure-one-photon case relevant to Conjecture 1 in `D5/L/QuantumStates/vanherstraeten2024nongaussian`, Section IV.1. The paper already gives the vacuum output spectrum (1/2,1/2) and describes additional candidate minimizers in this case. These native proofs acknowledge both the original problem source and the prior written result. No uniqueness of coherent minimizers, odd-n>1 attainment, full all-occupation/all-transmissivity resolution, or equivalence to the separate basis-infimum entropy API is claimed.
 
 **Theorem 1.1 (The density and pure-input channels agree).**
 
@@ -30,9 +30,7 @@ Lean statement: `D5/S3/Quantum/QuantumChannels/FockAttenuator/BalancedAttainment
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/FockAttenuator/BalancedAttainment.balanced_one_photon_vacuum_entropy` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Zacharie Van Herstraeten; Saikat Guha; Nicolas J. Cerf (2024). *Classical capacity of quantum non-Gaussian attenuator and amplifier channels*. DOI: [10.1142/S0219749924400033](https://doi.org/10.1142/S0219749924400033). URL: <https://arxiv.org/abs/2312.15623v2>.
+*Citation.* Zixuan He (2026). *The energy cost of optical noise*. DOI: [10.5281/zenodo.23629201](https://doi.org/10.5281/zenodo.23629201).
 
 *Commentary.*
 
@@ -44,9 +42,7 @@ Lean statement: `D5/S3/Quantum/QuantumChannels/FockAttenuator/BalancedAttainment
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/FockAttenuator/BalancedAttainment.balanced_one_photon_coherent_entropy` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Zacharie Van Herstraeten; Saikat Guha; Nicolas J. Cerf (2024). *Classical capacity of quantum non-Gaussian attenuator and amplifier channels*. DOI: [10.1142/S0219749924400033](https://doi.org/10.1142/S0219749924400033). URL: <https://arxiv.org/abs/2312.15623v2>.
+*Citation.* Zixuan He (2026). *The energy cost of optical noise*. DOI: [10.5281/zenodo.23629201](https://doi.org/10.5281/zenodo.23629201).
 
 *Commentary.*
 
@@ -58,9 +54,7 @@ Lean statement: `D5/S3/Quantum/QuantumChannels/FockAttenuator/BalancedAttainment
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/FockAttenuator/BalancedAttainment.balanced_one_photon_vacuum_minimizes` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Zacharie Van Herstraeten; Saikat Guha; Nicolas J. Cerf (2024). *Classical capacity of quantum non-Gaussian attenuator and amplifier channels*. DOI: [10.1142/S0219749924400033](https://doi.org/10.1142/S0219749924400033). URL: <https://arxiv.org/abs/2312.15623v2>.
+*Citation.* Zixuan He (2026). *The energy cost of optical noise*. DOI: [10.5281/zenodo.23629201](https://doi.org/10.5281/zenodo.23629201).
 
 *Commentary.*
 
@@ -72,9 +66,7 @@ Lean statement: `D5/S3/Quantum/QuantumChannels/FockAttenuator/BalancedAttainment
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/FockAttenuator/BalancedAttainment.balanced_one_photon_coherent_minimizes` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Zacharie Van Herstraeten; Saikat Guha; Nicolas J. Cerf (2024). *Classical capacity of quantum non-Gaussian attenuator and amplifier channels*. DOI: [10.1142/S0219749924400033](https://doi.org/10.1142/S0219749924400033). URL: <https://arxiv.org/abs/2312.15623v2>.
+*Citation.* Zixuan He (2026). *The energy cost of optical noise*. DOI: [10.5281/zenodo.23629201](https://doi.org/10.5281/zenodo.23629201).
 
 *Commentary.*
 
