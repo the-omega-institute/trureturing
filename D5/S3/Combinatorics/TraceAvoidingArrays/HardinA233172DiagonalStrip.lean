@@ -200,7 +200,8 @@ private theorem finite_certificate : ∀ s p, Valid s p → ∀ k,
     exact h k s p hp
   intro k
   fin_cases k <;> simp only [class_fibres, sum_rows, Valid,
-    Fin.forall_fin_succ_pi, Fin.forall_fin_zero_pi] <;> decide +kernel
+    Fin.forall_fin_succ_pi, Fin.forall_fin_zero_pi,
+    mul_ite, mul_one, mul_zero] <;> decide +kernel
 
 private theorem initial_fibres (k : Fin 11) :
     firstCount k = ∑ q : Fin 5 → Fin 3, rowWeight (false, false) q *

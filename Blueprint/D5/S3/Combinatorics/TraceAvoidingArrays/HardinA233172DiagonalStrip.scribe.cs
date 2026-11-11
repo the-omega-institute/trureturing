@@ -84,8 +84,17 @@ internal sealed class HardinA233172DiagonalStripDocument : IScribeDocumentDefini
     {
         var n = V("n");
         Formula A(byte k) => Typed(Call(Root + "a", Add(n, Number(k))), Name("Int"));
-        return All("n", Name("Nat"), Eq(A(11),
-            Add(Sub(Sub(Add(Sub(Sub(Add(Sub(Sub(Mul(Number(1216), A(10)), Mul(Number(303104), A(9))), Mul(Number(6553600), A(8))), Mul(Number(6056574976), A(7))), Mul(Number(287762808832), A(6))), Mul(Number(18622978195456), A(5))), Mul(Number(1482141674242048), A(4))), Mul(Number(15199648742375424), A(3))), Mul(Number(522417556774977536), A(2))), Mul(Number(5764607523034234880), A(1))))));
+        var rhs = Mul(Number(1216), A(10));
+        rhs = Sub(rhs, Mul(Number(303104), A(9)));
+        rhs = Sub(rhs, Mul(Number(6553600), A(8)));
+        rhs = Add(rhs, Mul(Number(6056574976), A(7)));
+        rhs = Sub(rhs, Mul(Number(287762808832), A(6)));
+        rhs = Sub(rhs, Mul(Number(18622978195456), A(5)));
+        rhs = Add(rhs, Mul(Number(1482141674242048), A(4)));
+        rhs = Sub(rhs, Mul(Number(15199648742375424), A(3)));
+        rhs = Sub(rhs, Mul(Number(522417556774977536), A(2)));
+        rhs = Add(rhs, Mul(Number(5764607523034234880), A(1)));
+        return All("n", Name("Nat"), Eq(A(11), rhs));
     }
 
     private static Formula Number(long value) => D(value.ToString(
