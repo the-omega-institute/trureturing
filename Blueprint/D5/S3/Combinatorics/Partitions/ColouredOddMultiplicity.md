@@ -10,7 +10,19 @@ Conversely, every allocation at an odd part k contributes the corresponding expo
 
 The finite count is the coefficient of the weighted partition GenFun. At each positive odd part k, its local factor has coefficient multichoose(r,N/k) when k divides N and zero otherwise. Reindexing the positive part and positive multiplicity factors yields the formal product of (1-X^(2n+1))^(-r), including rank zero and degree zero.
 
-**Definition 1.1 (The partition into ones).**
+**Theorem 1.1 (Shared positive-multiplicity factor reconstruction).**
+
+Lean statement: `D5/S3/Combinatorics/Partitions/ColouredOddMultiplicity.local_factor_of_coeff`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Partitions/ColouredOddMultiplicity.local_factor_of_coeff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any commutative topological ring with separated topology, the prescribed divisibility-filtered coefficients reconstruct the local factor 1+sum over positive multiplicities. This extracts the original complex-factor proof in its owner; both the original odd-multiplicity product and the integer coloured Euler ledger now consume it.
+
+**Definition 1.2 (The partition into ones).**
 
 $$\forall N \in Nat,\; \operatorname{parts}\left(\operatorname{onesPartition}\left(N\right)\right) = \operatorname{replicate}\left(N, 1\right)$$
 
@@ -22,7 +34,7 @@ $$\forall N \in Nat,\; \operatorname{parts}\left(\operatorname{onesPartition}\le
 
 For every natural N, onesPartition N is the partition of N whose parts are N copies of one, including the empty partition at N = 0.
 
-**Theorem 1.2 (Independent finite partition count).**
+**Theorem 1.3 (Independent finite partition count).**
 
 Lean statement: `D5/S3/Combinatorics/Partitions/ColouredOddMultiplicity.card_colouredFiber`
 
@@ -37,5 +49,6 @@ For every colour count r and grade N, the cardinal of the weighted occupation fi
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Partitions/ColouredOddMultiplicity.card_colouredFiber`
+- Truth anchor: `D5/S3/Combinatorics/Partitions/ColouredOddMultiplicity.local_factor_of_coeff`
 - Truth anchor: `D5/S3/Combinatorics/Partitions/ColouredOddMultiplicity.onesPartition`
 - Dependency: [D5/S3/Combinatorics/Partitions/ColouredOddOccupation](ColouredOddOccupation.md)

@@ -1,0 +1,51 @@
+### 17.3 第三步：精确酉比较与完整自身边缘返回
+
+对复数 $f$，定义
+
+$$
+h_f=f|1\rangle\langle0|+\overline f|0\rangle\langle1|,\qquad
+v_f=e^{ih_f}|0\rangle,\qquad
+\psi_{w,h}=U_w(e_h\otimes|0\rangle),\qquad
+\epsilon_w(h)=\|\psi_{w,h}-e_h\otimes v_{f_w(h)}\|.
+\tag{17.16}
+$$
+
+在固定嵌入 $E_hv=e_h\otimes v$ 上，以 Duhamel 恒等式比较 $e^{iH_w}$ 和二维演化 $e^{ih_f}$。精确公式
+
+$$
+e^{iuh_f}|0\rangle
+=\cos(u|f|)|0\rangle
+ +i\sin(u|f|)\frac f{|f|}|1\rangle
+\tag{17.17}
+$$
+
+在 $f=0$ 处按连续意义取值。$|0\rangle$ 分量的嵌入残差为 $r_w$，$|1\rangle$ 分量为 $r'_w$，而 $\int_0^1|\sin(u|f|)|\,du\le|f|/2$，故
+
+$$
+\epsilon_w(h)\le r_w(h)+\frac{|f_w(h)|}{2}r'_w(h),\qquad
+E_J:=\sup_h\frac1N\sum_w\epsilon_w(h)
+\le\frac C{N\sqrt m}+\frac C{ms}.
+\tag{17.18}
+$$
+
+末步使用 (17.11)、(17.15) 和 $|f_w|\le s/2$。
+
+只作数学比较的态及真正实际态为
+
+$$
+\nu_h=\frac1N\bigoplus_w|v_{f_w(h)}\rangle\langle v_{f_w(h)}|,\qquad
+\Omega_h=\frac1N\bigoplus_w|\psi_{w,h}\rangle\langle\psi_{w,h}|.
+\tag{17.19}
+$$
+
+直和迹范数可加，纯态迹距离不超过向量距离，故
+
+$$
+D_{\rm tr}(\Omega_h,\tau_h\otimes\nu_h)\le E_J,\qquad
+D_{\rm tr}(\omega_h,\nu_h)\le E_J,\qquad
+\delta_J\le2E_J.
+\tag{17.20}
+$$
+
+第二式用偏迹收缩性，第三式用三角不等式。这一返回比较使用同一实际边缘 $\omega_h$，没有用 $\nu_h$ 替换定义 (17.3)。除在 $\omega_h$ 的定义中对 $R$ 取偏迹外，没有丢弃任何输出；$\nu_h$ 不是另行供应的实际态。
+

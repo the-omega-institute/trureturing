@@ -1,0 +1,43 @@
+### 16.5 原错误上限、二元判别及显式常数
+
+对完整实际态作任意二元读出，令
+$\alpha=\Pr(-\mid+)$、$\beta=\Pr(+\mid-)$、$p=(\alpha+\beta)/2$。数据处理和经典 Cauchy–Schwarz 给
+
+$$
+\begin{aligned}
+g_e^{q_{\rm reset}(e)}
+&\le F(\Omega_+,\Omega_-)\\
+&\le\sqrt{(1-\alpha)\beta}+\sqrt{\alpha(1-\beta)}\\
+&\le\sqrt{(\alpha+\beta)(2-\alpha-\beta)}
+=2\sqrt{p(1-p)}.
+\end{aligned}
+\tag{16.21}
+$$
+
+若 $p\le1/2$，解这个二次不等式即得 (16.6)；若 $p>1/2$，(16.6) 自动成立。§16.2 从原四坐标解码器取得的阈值检验满足 $p\le e<1/2$，所以
+
+$$
+g_e^{2q_{\rm reset}(e)}\le4p(1-p)\le4e(1-e).
+\tag{16.22}
+$$
+
+$0<g_e<1$，取对数得 (16.4) 中的比值下界，实际最坏次数是整数，故可取上整。这里使用的失败率上限仍为原来的 $e$。
+
+为核对统一常数，对 $0\le\theta\le1/2$，$\sin\theta\le\theta$ 及 $\cos\theta\ge1-\theta^2/2\ge1/2$ 给 $\tan\theta\le2\theta$；积分得到
+
+$$
+-\log\cos\theta\le\theta^2,\qquad
+-2\log\cos(32e^2)\le2048e^4.
+\tag{16.23}
+$$
+
+又因 $e\le1/100<1/16$，
+
+$$
+\log\frac1{4e(1-e)}\ge\log\frac1{4e}
+\ge\frac12\log\frac1e.
+\tag{16.24}
+$$
+
+分子、分母在全部窗口内均为正，合并 (16.23)–(16.24) 得 $c=1/4096$、$e_0=1/100$ 的 (16.4)，覆盖每个原正有理精度而非一个子列。$\square$
+

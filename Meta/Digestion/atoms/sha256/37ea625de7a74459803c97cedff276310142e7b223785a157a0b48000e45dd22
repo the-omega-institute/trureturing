@@ -1,0 +1,22 @@
+#### 定理 6.6：有限网格的误差管
+
+设 $Q_\epsilon:I\to I$ 取值于有限网格， 且 $|Q_\epsilon(y)-y|\le\epsilon$。 若 $x_0\in I$，$x_{n+1}=Q_\epsilon(F_s(x_n))$，则
+
+$$
+|x_n-s\alpha|
+ \le L^n|x_0-s\alpha|
+   +\epsilon\frac{1-L^n}{1-L},
+ \qquad
+ \limsup_n|x_n-s\alpha|\le\frac{\epsilon}{1-L}.
+$$
+
+有限网格上的确定性轨道最终周期化，但未必固定于一个网格点。
+
+**证明。**
+
+三角不等式给出 $|x_{n+1}-s\alpha|\le L|x_n-s\alpha|+\epsilon$。 递推求和即得界。有限状态的确定性轨道必重访某个状态； 此后由同一更新律重复其周期。
+
+$\square$
+
+<a id="section-7"></a>
+
