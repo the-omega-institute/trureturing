@@ -11,7 +11,7 @@ import Mathlib.RingTheory.PowerSeries.Binomial
 import Mathlib.RingTheory.PowerSeries.Substitution
 import Mathlib.Tactic
 import D5.S1.Recurrence.Invariants.CompositionalIterateCongruence
-import D5.S1.Recurrence.Residue.CompositionalSquareDyadicDenominators
+import D5.S1.Recurrence.Invariants.MatharA000159Recurrence
 
 namespace D5.S1.Recurrence.BalaTrinomialCoefficientIdentity
 open PowerSeries
@@ -39,48 +39,12 @@ private theorem geometric_power (k : ℕ) :
   rw [geometric, invOneSubPow_eq_inv_one_sub_pow, invOneSubPow_eq_inv_one_sub_pow]
   simp
 
-private theorem finite_substitution (f : PowerSeries ℚ) (n : ℕ) :
-    coeff n (f.subst (mobius (1 : ℚ))) =
-      ∑ j ∈ Finset.range (n + 1), coeff j f * coeff n (mobius (1 : ℚ) ^ j) := by
-  exact D5.S1.Recurrence.Residue.CompositionalSquareDyadicDenominators.coeff_subst_sum
-    (mobius_zero (1 : ℚ)) f n
-
-private theorem finite_product_substitution (f q : PowerSeries ℚ) (n : ℕ) :
-    coeff n (q * f.subst (mobius (1 : ℚ))) =
-      ∑ j ∈ Finset.range (n + 1), coeff j f * coeff n (q * mobius (1 : ℚ) ^ j) := by
-  rw [coeff_mul, Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk]
-  simp_rw [finite_substitution]
-  have extend (i : ℕ) (hi : i ∈ Finset.range (n+1)) :
-      (∑ j ∈ Finset.range (n-i+1), coeff j f * coeff (n-i) (mobius (1 : ℚ) ^ j)) =
-        ∑ j ∈ Finset.range (n+1), coeff j f * coeff (n-i) (mobius (1 : ℚ) ^ j) := by
-    apply Finset.sum_subset (Finset.range_mono (by omega))
-    intro j hj hji
-    have hz : coeff (n-i) (mobius (1 : ℚ) ^ j) = 0 := by
-      apply coeff_of_lt_order
-      exact (show ((n-i : ℕ) : ENat) < (j : ENat) by
-        exact_mod_cast (show n-i < j by simpa using hji)).trans_le
-        (le_order_pow_of_constantCoeff_eq_zero j (mobius_zero (1 : ℚ)))
-    simp [hz]
-  calc
-    _ = ∑ i ∈ Finset.range (n+1), coeff i q *
-        ∑ j ∈ Finset.range (n+1), coeff j f * coeff (n-i) (mobius (1 : ℚ) ^ j) := by
-      apply Finset.sum_congr rfl
-      intro i hi
-      rw [extend i hi]
-    _ = _ := ?_
-  simp_rw [Finset.mul_sum]
-  rw [Finset.sum_comm]
-  apply Finset.sum_congr rfl
-  intro j hj
-  rw [coeff_mul, Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk, Finset.mul_sum]
-  apply Finset.sum_congr rfl
-  intro i hi
-  ring
-
 private theorem mobius_coefficient (f : PowerSeries ℚ) (n : ℕ) (hn : 0 < n) :
     coeff n ((1-X)^(n-1) * f.subst (mobius (1 : ℚ))) = coeff n f := by
   classical
-  rw [finite_product_substitution]
+  rw [mobius_one_eq_geometric,
+    D5.S1.Recurrence.Invariants.MatharA000159Recurrence.prefactor_subst_coeff,
+    ← mobius_one_eq_geometric]
   rw [Finset.sum_eq_single n]
   · rw [mobius_one_eq_geometric, mul_pow]
     rw [show (1-X : PowerSeries ℚ)^(n-1) * (X^n * geometric^n) =
@@ -121,7 +85,8 @@ private theorem geometric_cancel : (1-X : PowerSeries ℚ) * geometric = 1 := by
 
 private theorem cancel_powers (a b : ℕ) :
     (1-X : PowerSeries ℚ)^a * geometric^(a+b) = geometric^b := by
-  rw [pow_add, ← mul_assoc, ← mul_pow, geometric_cancel, one_pow, one_mul]
+  simpa only [geometric_power, Nat.add_comm] using
+    (one_sub_pow_mul_invOneSubPow_val_add_eq_invOneSubPow_val ℚ b a)
 
 private theorem source_transform (n : ℕ) (hn : 0 < n) :
     (1-X : PowerSeries ℚ)^(n-1) * (source n).subst (mobius (1 : ℚ)) =

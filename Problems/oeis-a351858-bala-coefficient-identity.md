@@ -93,10 +93,13 @@ The Lean declaration
 identity for every natural index. Its `source` definition forms the formal
 quotient independently of the finite sum. The proof uses the existing
 frozen `mobius` and `mobius_zero` declarations from
-`D5/S1/Recurrence/Invariants/CompositionalIterateCongruence`, together with
-pinned Mathlib power-series, binomial, substitution and inverse results.
-The live coefficient-transport argument supplies the intermediate
-identity used by the source transform and finite coefficient calculation.
+`D5/S1/Recurrence/Invariants/CompositionalIterateCongruence` and the original
+`prefactor_subst_coeff` theorem from
+`D5/S1/Recurrence/Invariants/MatharA000159Recurrence`. The latter is applied
+over the rationals with prefactor $(1-X)^{n-1}$ and $W=(1-X)^{-1}$;
+the existing Möbius definition identifies its inner series $XW$.
+Pinned Mathlib coefficient, inverse, binomial and polynomial-degree
+results supply the remaining coefficient transport and finite sum.
 The corresponding Blueprint attaches a typed `Proved` resolution to this
 single result.
 
@@ -105,9 +108,12 @@ single result.
 Tier 1 external named OEIS conjecture. The admission basis is
 `open-problem-resolution`, with
 [the original exact-event preregistration](https://github.com/the-omega-institute/trureturing/issues/26252#issuecomment-6617121132).
-The result has proof shape `content`, through the live coefficient
-transport; its auxiliary declarations are consumed on the result's proof
-path. Utility is `none`. The resolution concerns the finite identity
+The result has proof shape `bind-only`: after inlining its auxiliary
+declarations, it applies the frozen prefactor substitution formula,
+coefficient and polynomial-degree bounds, and binomial and inverse-series
+formulas, with finite-sum, index and ring normalization. The auxiliary
+declarations are consumed on the result's proof path; no new content
+witness is asserted. Utility is `none`. The resolution concerns the finite identity
 alone and asserts no supercongruence or new general algorithm.
 
 ## ASSUMED-UNVERIFIED
