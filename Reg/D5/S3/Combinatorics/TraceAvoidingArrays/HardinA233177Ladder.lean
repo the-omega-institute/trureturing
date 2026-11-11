@@ -790,30 +790,33 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 end AlternatingProper
 
 namespace CanonTwo
-abbrev signature := AlternatingCanon.signature
-abbrev actual := AlternatingCanon.actual
+abbrev signature := LabelReadout.signature
+abbrev actual := LabelReadout.actual
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => true) (fun e => nomatch e)
+  realize signature (fun _ _ _ => 2) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ {n : ℕ} (hn : 2 ≤ n) (P : Fin 4 × Fin n → Fin 3)
-    (hp : Proper P) (hc : R.readout () n P = true) (hu : used P = 2),
+    (hp : Proper P) (hc : Canon P) (hu : R.readout () n P = 2),
     P = alternating n 0 1
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have he := h (n := 2) (by decide) (alternating 2 1 0)
-    (alternating_proper 2 1 0 (by decide)) rfl
-    (alternating_used (by decide) 1 0 (by decide))
-  have hh := congrFun he ((0 : Fin 4), (0 : Fin 2))
-  norm_num [alternating] at hh
+  let P : Fin 4 × Fin 2 → Fin 3 :=
+    fun p => if p.2.val = 0 then (if p.1.val = 3 then 2 else 0) else 1
+  have hp : Proper P := by unfold Proper P; decide +kernel
+  have hc : Canon P := by
+    unfold Canon _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.Canonical
+    decide +kernel
+  have he := h (n := 2) (by decide) P hp hc rfl
+  have hh := congrFun he ((3 : Fin 4), (0 : Fin 2))
+  norm_num [P, alternating] at hh
 def family : Registration arena (type_of% @canon_two_eq) where
   actual := actual
-  bridge := by simp [arena, actual, AlternatingCanon.actual, realize]
-  variation := ⟨by simpa [arena, actual, AlternatingCanon.actual, realize] using
-    @canon_two_eq, rejected, rejected_law⟩
+  bridge := Iff.rfl
+  variation := ⟨@canon_two_eq, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
-  dependence := AlternatingCanon.actual_dependence
+  dependence := LabelReadout.dependence
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@canon_two_eq) (Realization signature) Type Unit where
   unitName :=
@@ -829,7 +832,7 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature actual.readout actual.anchor)
+  readout := some (realize signature (fun _ _ P => used P) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -839,11 +842,11 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "body", "domain"]
-      stateBinder := 0
+      path := #["body", "body", "body", "body", "body", "domain", "fn", "arg"]
+      stateBinder := 2
       functionOperand := false
-      stateOperand := some #["arg"]
-      booleanPredicate := true }] }
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
