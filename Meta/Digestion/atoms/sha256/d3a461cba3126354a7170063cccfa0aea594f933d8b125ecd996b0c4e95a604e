@@ -1,0 +1,14 @@
+**定义 36.1（固定实际域上的支持与秩剖面）。** 设 $F$ 为特征零域，$D/F$ 为同一个实际有限域扩张，$N=[D:F]$。对三维 $F$-子空间 $W\le_F D$，记
+
+$$
+\begin{aligned}
+Q_W&=\{x/y:x,y\in W,\ y\ne0\}\subseteq D,\\
+r_W(A)&=\dim_A AW,\qquad AW=\operatorname{span}_A W\subseteq D,\\
+\mathcal R_W&:\{A:F\subseteq A\subseteq D\}\longrightarrow\{1,2,3\},
+\qquad A\longmapsto r_W(A).
+\end{aligned}
+\tag{36.1}
+$$
+
+定义域中的 $A$ 均为原 $D$ 中已经存在的实际中间域。$Q_W$ 包含零；支持的包含或相等都逐个固定原 $D$ 元素，剖面的比较也逐个固定原子域。输入只有完整原商支持，不附加点权、窗口基或扩底后的新观察。
+

@@ -1,0 +1,141 @@
+**命题 32.3（同原数域、同全部低阶最小值的首次分离及单列嵌套取等）。** 固定 $h\ge3$，简写 $M=M_h$、$N=N_h$、$a=h+2$、$q=h+3$。取正实根 $\alpha^N=2$，在同一个原数域中定义
+
+$$
+\begin{aligned}
+F&=\mathbb Q,&L&=\mathbb Q(\alpha),&
+\beta&=\alpha^h,&A&=\mathbb Q(\beta),\\
+B&=\ker\operatorname{Tr}_{A/\mathbb Q},&
+W&=B\oplus\bigoplus_{\ell=1}^{h-2}A\alpha^\ell,&
+V&=\langle1,\alpha,\ldots,\alpha^{M-1}\rangle_{\mathbb Q}.
+\end{aligned}
+\tag{32.17}
+$$
+
+两窗口都有 $(m,N,e)=(M,h(h+2),1)$、$D_W=D_V=L$。它们满足
+
+$$
+\begin{aligned}
+\delta_j(W)=\delta_j(V)&=N-jq&& (1\le j<h),\\
+\delta_h(W)&=2,&\delta_h(V)&=1,\\
+\delta_j(W)=\delta_j(V)&=1&& (j\ge h+1).
+\end{aligned}
+\tag{32.18}
+$$
+
+以下每个窗口只选一列标签，全部阶都使用该列的嵌套前缀。对 $W$，在原 $W$ 内取
+
+$$
+\begin{aligned}
+u_1&=\beta,\\
+u_i&=\beta^i+\alpha^{i-1}&& (2\le i\le h-1),\\
+u_h&=\beta^h+\alpha,\qquad
+u_{h+1}=\beta^{h+1}+\alpha,\\
+r_i&=\beta/u_i&& (2\le i\le h+1),\qquad
+r_i=r_{h+1}\quad(i\ge h+2).
+\end{aligned}
+\tag{32.19}
+$$
+
+记
+
+$$
+K_j=\langle1,\beta,\ldots,\beta^{a-j-1}\rangle_{\mathbb Q}
+\quad(1\le j\le h+1).
+\tag{32.20}
+$$
+
+则其准确交空间为
+
+$$
+I_j^W=
+\begin{cases}
+\displaystyle\beta\left(K_j\oplus\bigoplus_{\ell=1}^{h-j-1}A\alpha^\ell\right),
+ &1\le j\le h-1,\\
+\beta\langle1,\beta\rangle_{\mathbb Q},&j=h,\\
+\mathbb Q\beta,&j\ge h+1.
+\end{cases}
+\tag{32.21}
+$$
+
+空直和按零空间解释。对 $V$，取原标签 $s_i=\alpha^{v_i}$，其中
+
+$$
+v_1=0,\qquad v_i=(i-1)q\ (2\le i\le h-1),\qquad
+v_i=M-1\ (i\ge h).
+\tag{32.22}
+$$
+
+相应的准确交空间为
+
+$$
+I_j^V=
+\begin{cases}
+\langle\alpha^{(j-1)q},\alpha^{(j-1)q+1},\ldots,\alpha^{M-1}\rangle_{\mathbb Q},
+ &1\le j\le h-1,\\
+\mathbb Q\alpha^{M-1},&j\ge h.
+\end{cases}
+\tag{32.23}
+$$
+
+证明。$x^N-2$ 与 $x^a-2$ 均在素数二处满足 Eisenstein 判据，故 $[L:\mathbb Q]=N$、$[A:\mathbb Q]=a$、$[L:A]=h$，且 $1,\alpha,\ldots,\alpha^{h-1}$ 是 $L/A$ 的基。因为 $\beta^a=2$，在 $A$ 的幂基中，乘以 $\beta^d$（$1\le d\le a-1$）没有对角项；因此
+
+$$
+\operatorname{Tr}(1)=a,\qquad
+\operatorname{Tr}(\beta^d)=0\ (1\le d\le a-1),\qquad
+B=\langle\beta,\ldots,\beta^{a-1}\rangle_{\mathbb Q}.
+\tag{32.24}
+$$
+
+于是 $\dim_F W=(a-1)+(h-2)a=(h-1)a-1=M$，而 $AW=\bigoplus_{\ell=0}^{h-2}A\alpha^\ell$ 为 $M+1$ 维。$V$ 也为 $M$ 维。$W/W$ 含 $(\beta\alpha)/\alpha=\beta$ 及 $\alpha/\beta$，所以 $D_W=L$；$V/V$ 含 $\alpha/1$，所以 $D_V=L$。$E_W$ 的次数同时整除 $M$ 和 $M+1$，故 $E_W=\mathbb Q$。若 $cV\subseteq V$，由 $1\in V$ 写 $c=\sum_{d=0}^{M-1}c_d\alpha^d$。若最高非零正次为 $k$，则 $\alpha^{M-k}\in V$，但 $c\alpha^{M-k}$ 的最高次恰为 $M<N$，不发生降幂，故不在 $V$。所以 $c\in\mathbb Q$，即 $E_V=\mathbb Q$。
+
+先给出覆盖全部原正元组的下界。对 $W$，定理 32.2 已控制了每个实际中间域；更直接地，(32.3) 取 $C=A$ 给出 $d_j(r)\ge a-j$，原环境给出 $d_j(r)\ge N-jq$，正维数给出 $d_j(r)\ge1$。对 $V$，任意原正元组也有 $d_j(s)\ge\max\{1,N-jq\}$。因此 $W$ 在 $j<h$ 的下界是 $N-jq$、在 $j=h$ 的下界是二、在 $j\ge h+1$ 的下界是一；$V$ 在 $j<h$ 的下界是 $N-jq$、在 $j\ge h$ 的下界是一。下面用 (32.19)、(32.22) 的固定嵌套列同时达到它们，不拼接逐阶优化元组。
+
+(32.19) 中每个 $u_i$ 都在 $W\setminus\{0\}$：常数系数 $\beta^i$ 的次数在一至 $a-1$ 之间，故属于 $B$；其他项是允许的 $A\alpha^\ell$ 方向。$u_1=\beta$ 属于每个前缀交空间，因为 $r_iu_i=\beta$。将交空间中的元素统一写为 $\beta x$；其属于 $r_iW$ 当且仅当 $xu_i\in W$，其中也把 $i=1$ 的条件包括在内。
+
+在 $L/A$ 的固定幂基中写 $x=\sum_{\ell=0}^{h-1}x_\ell\alpha^\ell$，$x_\ell\in A$。属于 $W$ 的两个条件是 $\alpha^{h-1}$ 系数为零、常数系数的迹为零。对 $1\le j\le h-1$，前 $j$ 个 $xu_i$ 的第一类条件恰为
+
+$$
+\beta x_{h-1}=0,\qquad
+\beta^i x_{h-1}+x_{h-i}=0\quad(2\le i\le j).
+\tag{32.25}
+$$
+
+这些等价于 $x_{h-j}=\cdots=x_{h-1}=0$。确实，$x\alpha^{i-1}$ 的最高幂至多为 $2h-3$，只有原幂次 $h-1$ 能贡献到 $\alpha^{h-1}$，降幂不会再产生该方向。在这些条件下，剩余的 $x$ 只含零至 $h-j-1$ 次幂，故 $x\alpha^{i-1}$ 的最高次至多为 $h-2$；其常数项也为零。于是前 $j$ 个 $xu_i$ 的第二类条件精确成为
+
+$$
+\operatorname{Tr}_{A/\mathbb Q}(\beta^i x_0)=0
+\quad(1\le i\le j).
+\tag{32.26}
+$$
+
+若 $x_0=\sum_{d=0}^{a-1}z_d\beta^d$，则由 (32.24) 及 $\beta^a=2$，
+
+$$
+\operatorname{Tr}_{A/\mathbb Q}(\beta^i x_0)=2a\,z_{a-i}
+\qquad(1\le i\le a-1).
+\tag{32.27}
+$$
+
+因此 (32.26) 切出的正是 $K_j$，其余 $x_1,\ldots,x_{h-j-1}$ 任意。这证明 (32.21) 的第一行，维数为 $(h-j-1)a+(a-j)=N-jq$。当 $j=h-1$ 时，$x\in A$ 已被迫成立，且 $x\in\langle1,\beta,\beta^2\rangle_{\mathbb Q}$。接着 $u_h=\beta^h+\alpha$、$u_{h+1}=\beta^{h+1}+\alpha$ 的 $A$-系数条件自动成立，它们的迹条件依 (32.27) 依次消去 $z_2,z_1$，留下 $\langle1,\beta\rangle_{\mathbb Q}$ 及 $\mathbb Q$。重复最后标签不再改变交空间，得到 (32.21) 全部各行。
+
+对 $V$，以原 $\mathbb Q$-幂基 $\{\alpha^d:0\le d<N\}$ 为坐标。乘以 $\alpha^v$ 把方向指数模 $N$ 平移，越过 $N$ 只产生非零有理因子二，不改变方向。$V$ 缺少的方向是长度 $q$ 的区间 $[M,N-1]$。对 $2\le i\le h-1$，$s_iV$ 缺少的模 $N$ 区间恰为
+
+$$
+[(i-2)q,(i-1)q-1].
+\tag{32.28}
+$$
+
+这些区间彼此不交，且与 $V$ 自己缺少的尾区间不交。前 $j$ 个空间剩下的方向正是 $[(j-1)q,M-1]$，得到 (32.23) 的第一行；在 $j=h-1$ 时剩下 $M-3,M-2,M-1$ 三个方向。$s_h=\alpha^{M-1}$ 的缺失区间为 $[M-q-1,M-2]$，其中左端非负，且 $q\ge6$。它删去前两个剩余方向而保留 $M-1$，故得到第二行。所有前缀都含同一个非零原向量 $\alpha^{M-1}$；其在第 $i$ 份窗口中的原像为 $\alpha^{M-1-v_i}\in V\setminus\{0\}$。因此这也是一列原实现内的共同见证。比较全正元组下界与 (32.21)、(32.23)，便同时得到 (32.18)。
+
+这里相等的仅是最小值序列的前缀。例如同一原标签 $\beta$ 给出 $\dim_F(W\cap\beta W)=M-1$，因为 $B\cap\beta B$ 少一个 $B$ 方向，而各完整 $A\alpha^\ell$ 方向不变；$V\cap\beta V=\langle\alpha^h,\ldots,\alpha^{M-1}\rangle_{\mathbb Q}$ 则为 $M-h$ 维。故这对窗口并没有相同的完整逐标签二元函数。
+
+这些形状与公式的已知范围须分开。Napolitano–Polverino–Santonastaso–Zullo 的 [*Classifications and constructions of minimum size linear sets*，arXiv:2201.02003v1，Examples 6.2、6.4、Proposition 6.3](https://arxiv.org/pdf/2201.02003v1) 已给一般域中完整子域方向加截短幂方向、以及单幂窗口的临界对形状。其 Proposition 6.3 要求 $\mu\notin F$ 在 $F$ 上代数、$\dim_F L\ge\dim_F S+2$，并假设 $\dim_F(S+\mu S)=\dim_F S+1$。对本命题，$(S,\mu)=(W,\beta)$ 时 $W+\beta W=AW$，截短方向是 $B=\beta\langle1,\beta,\ldots,\beta^{a-2}\rangle_{\mathbb Q}$；$(S,\mu)=(V,\alpha)$ 时 $V+\alpha V=\langle1,\ldots,\alpha^M\rangle_{\mathbb Q}$。两者都有 $N-M=q\ge6$，满足该原文前件，故不把窗口形状本身列为新发现。
+
+De Beule–Demuys–Polverino–Zullo 的 [*Few-Weight Linear Sets and Divisibility of Rank-Metric Codes*，arXiv:2611.08044v1，Theorem 3.7](https://arxiv.org/pdf/2611.08044v1) 已有任意因子数的相应有限域整体公式，§31 已给逐点接口。精确地，在 $D=\mathbb F_{q_0^N}$、$U=X^j\subseteq D^j$、$\dim_{\mathbb F_{q_0}}X=m$ 下，其条件是 $j\ge2$、$q_0\ge N$、$jm\le(j-1)N$；最小正点权 $d>1$ 时，原文给实际子域 $\mathbb F_{q_0^c}$，使该子域张成仍定义同一线性集，具有相对该子域权一的点，且张成维数为 $jm+c-d$。这承担该范围内中间域最大值取等的先例；$d=1$ 时底域取等。本命题在原数域中的前缀取等直接由 (32.19)–(32.28) 证明，不将有限域保持点集的结论移用于数域。
+
+(32.3) 的特征零取等机制已经属于 §31 使用的成熟一刀切面方法：Raz–Wigderson [*Subspace arrangements, graph rigidity and derandomization through submodular optimization*，arXiv:1901.09423v1，Corollary 3.2、Definition 5.1、Theorems 5.2、7.1](https://arxiv.org/pdf/1901.09423v1) 给最少块分拆唯一性、一般位置切面秩及特征零泛性；Antolini–Dewar–Tanigawa [*Dilworth truncations and Hadamard products of linear spaces*，arXiv:2508.04798v1，§3.2，式 (7)–(9)](https://arxiv.org/pdf/2508.04798v1) 给二因子矩阵与切面的接口。这些不是本节新增的机制，也不蕴含不受限的多因子 Hadamard 秩猜想。本节相对于这些指定原文与 §§29–31 的仓内新增推导（repo-derived）是任意 $h\ge4$ 的首次前缀阈值 (32.11)、最小维数时的实际域充要结构及全部竞争域控制 (32.12)–(32.16)，以及同一原数域中同时达到完整序列的两列嵌套原标签。$h=3$ 使用既有三元结果；上述出处对应不宣称全球优先权。
+
+白话说，较低阶最小值确实能任意长时间掩盖中间域留下的额外交叠，但必须付出精确的窗口维数。每加入一份，环境端点先按固定速度下降；直到第 $h-1$ 份，两种窗口都最少剩三个方向。第 $h$ 份加入时，部分域窗口因同一个实际子域还必须留下两个方向，普通幂窗口只剩一个。两列标签从头到尾各自保持同一个共同非零向量，因此每一步都在同一个原实现内发生；这不是把不同阶各自存在的例子拼在一起。
+
+结论限于有限特征零扩张、实际中间域及原标签的精确共同交维与最小正值。它不把次数整除当成子域存在，不把最小值前缀相等当成完整低阶关系相等，也不给出有限查询、噪声、物理、量子或 $H10(\mathbb Q)$ 的结论。$\square$
+

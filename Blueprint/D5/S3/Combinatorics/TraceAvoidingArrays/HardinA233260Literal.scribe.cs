@@ -24,6 +24,8 @@ internal sealed class HardinA233260LiteralDocument : IScribeDocumentDefinition
             Node("a", "Literal finite count", CountFormula(), false, true),
             Node("Proper", "Proper pair-label pattern", ProperFormula(), false, false),
             Node("L", "Labelled three-colour count", LabelCountFormula(), false, false),
+            Node("columns_constant", "Omitting a label forces constant columns",
+                ColumnsConstantFormula(), true, false),
             Node("counting_bridge", "Exact complementary-pair count", BridgeFormula(), true, false),
             Paragraph(Text("The pair labels identify {0,5}, {1,4}, and {2,3}. "
                 + "Canonical first occurrences fix the pair names and the first side "
@@ -56,6 +58,18 @@ internal sealed class HardinA233260LiteralDocument : IScribeDocumentDefinition
             theorem ? DescribeRole.Theorem : DescribeRole.Definition,
             name == "result" ? new OpenProblemResolutionClaim(
                 ProblemSlugRef.Create("hardin233260"), ResolutionKind.Proved) : null);
+    private static Formula ColumnsConstantFormula()
+    {
+        var n = V("n"); var p = V("P"); var d = V("d");
+        var j = V("j"); var r = V("r"); var i = V("i");
+        var cells = Product(Fin(D(5)), Fin(n));
+        var omitted = All("i", cells, Ne(App(p, i), d));
+        var constant = All("j", Fin(n), All("r", Fin(D(5)),
+            Eq(App(p, Pair(r, j)), App(p, Pair(Typed(D(0), Fin(D(5))), j)))));
+        var pattern = All("P", Arrow(cells, Fin(D(3))), Imp(Own("Proper", p),
+            All("d", Fin(D(3)), Imp(omitted, constant))));
+        return All("n", Q("Nat"), Imp(Le(D(2), n), pattern));
+    }
     private static Formula BridgeFormula()
     {
         var n = V("n");
