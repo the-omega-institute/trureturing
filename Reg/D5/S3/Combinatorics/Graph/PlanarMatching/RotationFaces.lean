@@ -103,6 +103,41 @@ theorem side_bridge :
   · intro h V G R fV dV dG hc he hE a q hq
     exact h ⟨V,fV,dV,G,dG,R⟩ ⟨hc,he,hE⟩ a q hq
 
+def orientationSignature : Signature where
+  Params := Params.{u}
+  State p := p.G.Dart → ZMod 2
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := p.R.Face → ZMod 2
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def orientationActual : Realization orientationSignature :=
+  realize orientationSignature (fun _ p ε => p.R.faceOpposition ε) (fun e => nomatch e)
+
+def orientationLaw (L : Realization orientationSignature.{u}) : Prop :=
+  ∀ p, model p → Even (Fintype.card p.V) →
+    ∃ ε : p.G.Dart → ZMod 2,
+      (∀ d, ε d.symm = 1 + ε d) ∧ (∀ f, L.readout () p ε f = 1) ∧
+      ∀ (a : p.V) (q : p.G.Walk a a), q.IsCycle → Even q.length →
+        ∀ M : (p.G.induce {v | v ∉ q.support}).Subgraph, M.IsPerfectMatching →
+          (q.darts.map ε).sum = 1
+
+def orientationArena : Arena := ⟨orientationSignature,orientationLaw⟩
+
+theorem orientation_bridge :
+    (type_of% @Rotation.face_odd_nice_cycle_orientation.{u}) ↔
+      orientationArena.{u}.Law orientationActual.{u} := by
+  change _ ↔ orientationLaw orientationActual
+  constructor
+  · intro h p ⟨hc,he,hE⟩ hEven
+    exact @h p.V p.G p.R p.vertices p.vertexEq p.adjacency hc he hE hEven
+  · intro h V G R fV dV dG hc he hE hEven
+    exact h ⟨V,fV,dV,G,dG,R⟩ ⟨hc,he,hE⟩ hEven
+
+#print axioms orientation_bridge
+
 #print axioms face_bridge
 #print axioms side_bridge
 

@@ -4,12 +4,13 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Actual dart rotations, all facial orbits and their binary edge boundaries. -/
+   digest: Actual facial boundaries, signed cycle-side Euler identities and nice-cycle orientations. -/
 
 import D5.S3.Fourier.CharacterSelection.SimpleGraphCycleSpace
 import Mathlib.Combinatorics.SimpleGraph.Dart
 import Mathlib.GroupTheory.Perm.Cycle.Basic
 import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+import Mathlib.LinearAlgebra.Dual.Lemmas
 import D5.S3.Combinatorics.Graph.Brooks.ColoringExtension
 import Mathlib.Combinatorics.SimpleGraph.Matching
 
@@ -1033,5 +1034,243 @@ theorem cycle_face_sides [Fintype V] [DecidableEq V] [DecidableRel G.Adj]
 
 #print axioms cycle_face_sides
 
+/-- Opposition on one complete facial orbit, counting its actual darts. -/
+noncomputable def faceOpposition [Fintype V] [DecidableRel G.Adj]
+    (ε : G.Dart → ZMod 2) (f : R.Face) : ZMod 2 := by
+  classical
+  exact ∑ d, if R.face d = f then ε d else 0
+
+private theorem faceOpposition_total [Fintype V] [DecidableRel G.Adj]
+    (ε : G.Dart → ZMod 2) : (∑ f, R.faceOpposition ε f) = ∑ d, ε d := by
+  classical
+  unfold faceOpposition
+  rw [Finset.sum_comm]
+  simp
+
+private theorem exists_face_odd [Fintype V] [DecidableEq V] [DecidableRel G.Adj]
+    (hc : G.Connected) (he : Nonempty G.Dart)
+    (hEuler : (Fintype.card V : ℤ) - (Nat.card G.edgeSet : ℤ) + (Nat.card R.Face : ℤ) = 2)
+    (hEven : Even (Fintype.card V)) :
+    ∃ ε : G.Dart → ZMod 2, (∀ d, ε d.symm = 1 + ε d) ∧ ∀ f, R.faceOpposition ε f = 1 := by
+  classical
+  let ε₀ : G.Dart → ZMod 2 := fun d =>
+    if (Fintype.equivFin V d.fst).val < (Fintype.equivFin V d.snd).val then 0 else 1
+  have hε (d : G.Dart) : ε₀ d.symm = 1 + ε₀ d := by
+    have hne : (Fintype.equivFin V d.fst).val ≠ (Fintype.equivFin V d.snd).val := by
+      intro h
+      exact d.fst_ne_snd ((Fintype.equivFin V).injective (Fin.ext h))
+    change (if (Fintype.equivFin V d.snd).val < (Fintype.equivFin V d.fst).val then 0 else 1) =
+      1 + (if (Fintype.equivFin V d.fst).val < (Fintype.equivFin V d.snd).val then 0 else 1)
+    split_ifs <;> simp only [add_zero,ZModModule.add_self] <;> omega
+  have hsum : (∑ d, ε₀ d) = (Fintype.card G.edgeSet : ZMod 2) := by
+    rw [← sum_darts]
+    have hpair (d : G.Dart) : ε₀ d + ε₀ d.symm = 1 := by
+      rw [hε,← add_assoc,add_comm (ε₀ d) 1,add_assoc,ZModModule.add_self,add_zero]
+    simp_rw [hpair]
+    simp
+  let target : R.Face → ZMod 2 := fun f => 1 + R.faceOpposition ε₀ f
+  have ht : (∑ f, target f) = 0 := by
+    have hv : (Fintype.card V : ZMod 2) = 0 := by
+      obtain ⟨k,hk⟩ := hEven
+      rw [hk,Nat.cast_add,ZModModule.add_self]
+    have hz := congrArg (fun z : ℤ => (z : ZMod 2)) hEuler
+    simp only [Int.cast_add,Int.cast_sub,Int.cast_natCast] at hz
+    change (Fintype.card V : ZMod 2) - (Nat.card G.edgeSet : ZMod 2) +
+      (Nat.card R.Face : ZMod 2) = 0 at hz
+    simp only [Nat.card_eq_fintype_card,hv,zero_sub,ZModModule.neg_eq_self] at hz
+    simpa only [target,Finset.sum_add_distrib,Finset.sum_const,Finset.card_univ,
+      nsmul_eq_mul,mul_one,R.faceOpposition_total,hsum,add_comm] using hz
+  let L : (R.Face → ZMod 2) →ₗ[ZMod 2] ZMod 2 := {
+    toFun := fun x => ∑ f, x f * target f
+    map_add' := by intros; simp only [Pi.add_apply,add_mul,Finset.sum_add_distrib]
+    map_smul' := by intros; simp only [Pi.smul_apply,smul_eq_mul,RingHom.id_apply,mul_assoc,Finset.mul_sum] }
+  have hL : L ∈ (LinearMap.ker R.boundary).dualAnnihilator := by
+    rw [Submodule.mem_dualAnnihilator]
+    intro x hx
+    obtain ⟨c,rfl⟩ := ((R.face_cycle_exact hc he hEuler).2.1 x).mp hx
+    change (∑ f, c * target f) = 0
+    rw [← Finset.mul_sum,ht,mul_zero]
+  rw [← LinearMap.range_dualMap_eq_dualAnnihilator_ker] at hL
+  obtain ⟨T,hT⟩ := hL
+  let y : G.edgeSet → ZMod 2 := fun e => T (Pi.single e 1)
+  have hcoord (z : G.edgeSet → ZMod 2) : T z = ∑ e, z e * y e := by
+    calc
+      T z = T (∑ e, Pi.single e (z e)) := congrArg T (LinearMap.sum_single_apply (fun _ : G.edgeSet => ZMod 2) z).symm
+      _ = ∑ e, T (Pi.single e (z e)) := map_sum T _ _
+      _ = ∑ e, z e * y e := by
+        apply Finset.sum_congr rfl
+        intro e _
+        have hh : Pi.single e (z e) = z e • (Pi.single e (1 : ZMod 2) : G.edgeSet → ZMod 2) := by
+          rw [← Pi.single_smul]
+          simp
+        rw [hh,map_smul]
+        rfl
+  have htrans (f : R.Face) :
+      (∑ d : G.Dart, if R.face d = f then y ⟨d.edge,d.edge_mem⟩ else 0) = target f := by
+    have hh := congrArg (fun l : Module.Dual (ZMod 2) (R.Face → ZMod 2) => l (Pi.single f 1)) hT
+    change T (R.boundary (Pi.single f 1)) = L (Pi.single f 1) at hh
+    have hLf : L (Pi.single f 1) = target f := by simp [L,Pi.single_apply]
+    rw [hLf,hcoord] at hh
+    rw [← hh,← sum_darts]
+    apply Finset.sum_congr rfl
+    intro e _
+    have heq : (⟨(edgeRep G e).val.edge,(edgeRep G e).val.edge_mem⟩ : G.edgeSet) = e :=
+      Subtype.ext (edgeRep G e).property
+    have heq' : (⟨(edgeRep G e).val.symm.edge,(edgeRep G e).val.symm.edge_mem⟩ : G.edgeSet) = e := by
+      simpa only [Dart.edge_symm] using heq
+    rw [heq,heq']
+    change (if R.face (edgeRep G e).val = f then y e else 0) +
+      (if R.face (edgeRep G e).val.symm = f then y e else 0) =
+      (((Pi.single f (1 : ZMod 2) : R.Face → ZMod 2) (R.face (edgeRep G e).val)) +
+        (Pi.single f (1 : ZMod 2) : R.Face → ZMod 2) (R.face (edgeRep G e).val.symm)) * y e
+    simp only [Pi.single_apply]
+    split_ifs <;> ring
+  refine ⟨fun d => ε₀ d + y ⟨d.edge,d.edge_mem⟩,?_,?_⟩
+  · intro d
+    change ε₀ d.symm + y ⟨d.symm.edge,d.symm.edge_mem⟩ = 1 + (ε₀ d + y ⟨d.edge,d.edge_mem⟩)
+    rw [hε]
+    simp only [Dart.edge_symm]
+    ring
+  · intro f
+    change (∑ d, if R.face d = f then ε₀ d + y ⟨d.edge,d.edge_mem⟩ else 0) = 1
+    have hsplit (d : G.Dart) :
+        (if R.face d = f then ε₀ d + y ⟨d.edge,d.edge_mem⟩ else 0) =
+        (if R.face d = f then ε₀ d else 0) + (if R.face d = f then y ⟨d.edge,d.edge_mem⟩ else 0) := by
+      split_ifs <;> simp
+    simp_rw [hsplit]
+    rw [Finset.sum_add_distrib,htrans]
+    change R.faceOpposition ε₀ f + (1 + R.faceOpposition ε₀ f) = 1
+    rw [← add_assoc,add_comm (R.faceOpposition ε₀ f) 1,add_assoc,ZModModule.add_self,add_zero]
+
+
+private theorem region_opposition_sum [Fintype V] [DecidableEq V] [DecidableRel G.Adj]
+    {a : V} (p : G.Walk a a) (hp : p.IsCycle)
+    (x : R.Face → ZMod 2) (hx : R.boundary x = fun e : G.edgeSet => if e.val ∈ p.edges then 1 else 0)
+    (q : G.Walk a a) (hq : q = p ∨ q = p.reverse)
+    (hboundary : ∀ d : G.Dart, (x (R.face d) = 1 ∧ x (R.face d.symm) = 0) ↔ d ∈ q.darts)
+    (H : G.Subgraph)
+    (haH : ∀ d : G.Dart, H.Adj d.fst d.snd ↔ d.edge ∈ p.edges ∨ (x (R.face d) = 1 ∧ x (R.face d.symm) = 1))
+    (ε : G.Dart → ZMod 2) (hε : ∀ d, ε d.symm = 1 + ε d)
+    (hodd : ∀ f, R.faceOpposition ε f = 1) :
+    (q.darts.map ε).sum = (Nat.card {f | x f = 1} : ZMod 2) +
+      ((H.edgeSet \ p.toSubgraph.edgeSet).ncard : ZMod 2) := by
+  classical
+  let S := H.edgeSet \ p.toSubgraph.edgeSet
+  have hinter (d : G.Dart) : (x (R.face d) = 1 ∧ x (R.face d.symm) = 1) ↔ d.edge ∈ S := by
+    constructor
+    · intro hh
+      have hn : d.edge ∉ p.edges := by
+        intro hd
+        have hb := congrFun hx ⟨d.edge,d.edge_mem⟩
+        rw [R.boundary_dart,hh.1,hh.2,ZModModule.add_self,ite_eq_left hd] at hb
+        exact zero_ne_one hb
+      exact ⟨(haH d).mpr (Or.inr hh), fun ht => hn (p.mem_edges_toSubgraph.mp ht)⟩
+    · rintro ⟨hd,hn⟩
+      exact ((haH d).mp hd).resolve_left (fun ht => hn (p.mem_edges_toSubgraph.mpr ht))
+  have hi : (∑ d : G.Dart, if x (R.face d) = 1 ∧ x (R.face d.symm) = 1 then ε d else 0) =
+      (S.ncard : ZMod 2) := by
+    rw [← sum_darts]
+    have hterm (e : G.edgeSet) :
+        (if x (R.face (edgeRep G e).val) = 1 ∧ x (R.face (edgeRep G e).val.symm) = 1 then ε (edgeRep G e).val else 0) +
+        (if x (R.face (edgeRep G e).val.symm) = 1 ∧ x (R.face (edgeRep G e).val.symm.symm) = 1 then ε (edgeRep G e).val.symm else 0) =
+          if e.val ∈ S then 1 else 0 := by
+      have heq : (edgeRep G e).val.edge = e.val := (edgeRep G e).property
+      have hh : (x (R.face (edgeRep G e).val) = 1 ∧ x (R.face (edgeRep G e).val.symm) = 1) ↔ e.val ∈ S := by
+        simpa only [heq] using hinter (edgeRep G e).val
+      have hh' : (x (R.face (edgeRep G e).val.symm) = 1 ∧ x (R.face (edgeRep G e).val.symm.symm) = 1) ↔ e.val ∈ S := by
+        simpa only [Dart.symm_symm,and_comm] using hh
+      simp only [hh,hh']
+      split_ifs
+      · rw [hε,← add_assoc,add_comm (ε (edgeRep G e).val) 1,add_assoc,ZModModule.add_self,add_zero]
+      · exact add_zero 0
+    simp_rw [hterm]
+    let eqS : {e : G.edgeSet // e.val ∈ S} ≃ S := {
+      toFun := fun e => ⟨e.val.val,e.property⟩
+      invFun := fun e => ⟨⟨e.val,H.edgeSet_subset e.property.1⟩,e.property⟩
+      left_inv := fun _ => rfl
+      right_inv := fun _ => rfl }
+    have hcS : (Finset.univ.filter (fun e : G.edgeSet => e.val ∈ S)).card = S.ncard := by
+      calc
+        _ = Nat.card {e : G.edgeSet // e.val ∈ S} := by
+          simp only [Nat.card_eq_fintype_card,Fintype.card_subtype]
+        _ = _ := Nat.card_congr eqS
+    rw [Finset.sum_boole,hcS]
+  have hqcycle : q.IsCycle := by rcases hq with rfl | rfl; exact hp; exact hp.reverse
+  have hnd : q.darts.Nodup := by
+    apply List.Nodup.of_map Dart.edge
+    rw [← q.edges_eq_map_darts]
+    exact hqcycle.isTrail.edges_nodup
+  have hb : (∑ d : G.Dart, if x (R.face d) = 1 ∧ x (R.face d.symm) = 0 then ε d else 0) = (q.darts.map ε).sum := by
+    simp_rw [hboundary]
+    rw [← List.sum_toFinset ε hnd]
+    simp only [← List.mem_toFinset,← Finset.sum_filter]
+    congr 1
+    ext d
+    simp
+  have hsplit (d : G.Dart) : (if x (R.face d) = 1 then ε d else 0) =
+      (if x (R.face d) = 1 ∧ x (R.face d.symm) = 1 then ε d else 0) +
+      (if x (R.face d) = 1 ∧ x (R.face d.symm) = 0 then ε d else 0) := by
+    rcases binary_zero_or_one (x (R.face d)) with h | h <;>
+      rcases binary_zero_or_one (x (R.face d.symm)) with k | k <;> simp [h,k]
+  have hweight : (∑ f, x f * R.faceOpposition ε f) = ∑ d, x (R.face d) * ε d := by
+    simp only [faceOpposition,Finset.mul_sum,mul_ite,mul_zero]
+    rw [Finset.sum_comm]
+    simp
+  simp_rw [hodd,mul_one] at hweight
+  have hcount : (∑ f, x f) = (Nat.card {f | x f = 1} : ZMod 2) := by
+    have hh (f : R.Face) : x f = if x f = 1 then 1 else 0 := by
+      rcases binary_zero_or_one (x f) with h | h <;> simp [h]
+    conv_lhs => arg 2; ext f; rw [hh f]
+    simp [Nat.card_eq_fintype_card,Fintype.card_subtype]
+  rw [hcount] at hweight
+  have hxmul (d : G.Dart) : x (R.face d) * ε d = if x (R.face d) = 1 then ε d else 0 := by
+    rcases binary_zero_or_one (x (R.face d)) with h | h <;> simp [h]
+  simp_rw [hxmul,hsplit] at hweight
+  rw [Finset.sum_add_distrib,hi,hb] at hweight
+  calc
+    (q.darts.map ε).sum = (S.ncard : ZMod 2) + ((S.ncard : ZMod 2) + (q.darts.map ε).sum) := by
+      rw [← add_assoc,ZModModule.add_self,zero_add]
+    _ = (S.ncard : ZMod 2) + (Nat.card {f | x f = 1} : ZMod 2) := by rw [← hweight]
+    _ = _ := add_comm _ _
+
+
+/-- An even-order signed-Euler-two rotation admits an orientation that is odd on
+all faces and on every actual even cycle with perfectly matched complement. -/
+theorem face_odd_nice_cycle_orientation [Fintype V] [DecidableEq V] [DecidableRel G.Adj]
+    (hc : G.Connected) (he : Nonempty G.Dart)
+    (hEuler : (Fintype.card V : ℤ) - (Nat.card G.edgeSet : ℤ) + (Nat.card R.Face : ℤ) = 2)
+    (hEven : Even (Fintype.card V)) :
+    ∃ ε : G.Dart → ZMod 2,
+      (∀ d, ε d.symm = 1 + ε d) ∧ (∀ f, R.faceOpposition ε f = 1) ∧
+      ∀ (a : V) (p : G.Walk a a), p.IsCycle → Even p.length →
+        ∀ M : (G.induce {v | v ∉ p.support}).Subgraph, M.IsPerfectMatching →
+          (p.darts.map ε).sum = 1 := by
+  classical
+  obtain ⟨ε,hε,hodd⟩ := R.exists_face_odd hc he hEuler hEven
+  refine ⟨ε,hε,hodd,?_⟩
+  intro a p hp hlen M hM
+  obtain ⟨x,I,J,h1,h0,hx,⟨q,hq,hboundary⟩,hpart,hdis,hlabels,hnc,hregions,hmatch⟩ :=
+    R.cycle_face_sides hc he hEuler a p hp
+  obtain ⟨H,hvH,haH,hconn,hχ,hreg⟩ := hregions I 1 (Or.inl ⟨rfl,rfl⟩)
+  have hI : (Nat.card I : ZMod 2) = 0 := ((hmatch M hM).2.1).natCast_zmod_two
+  have hregmod := congrArg (fun z : ℤ => (z : ZMod 2)) hreg
+  simp only [Int.cast_add,Int.cast_sub,Int.cast_natCast] at hregmod
+  change (Nat.card I : ZMod 2) - ((H.edgeSet \ p.toSubgraph.edgeSet).ncard : ZMod 2) +
+    (Nat.card {f | x f = 1} : ZMod 2) = 1 at hregmod
+  rw [hI,zero_sub,ZModModule.neg_eq_self,add_comm] at hregmod
+  have hsumq := R.region_opposition_sum p hp x hx q hq (fun d => (hboundary d).1) H haH ε hε hodd
+  rw [hregmod] at hsumq
+  rcases hq with rfl | rfl
+  · exact hsumq
+  · have hrev : (p.reverse.darts.map ε).sum = (p.darts.map ε).sum := by
+      rw [Walk.darts_reverse,List.map_reverse,List.sum_reverse,List.map_map]
+      change (p.darts.map (fun d => ε d.symm)).sum = _
+      simp_rw [hε]
+      rw [List.sum_map_add]
+      simp only [List.map_const',List.sum_replicate,Walk.length_darts,nsmul_eq_mul,mul_one,
+        hlen.natCast_zmod_two,zero_add]
+    exact hrev ▸ hsumq
+
+#print axioms face_odd_nice_cycle_orientation
 end Rotation
 end D5.S3.Combinatorics.Graph.PlanarMatching
