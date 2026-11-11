@@ -1,0 +1,45 @@
+**定理 9.1（约化目标及实际获取的返回）。** 在同一有限族上，
+
+$$
+\begin{aligned}
+\mathcal R_h(\Phi_{{\rm red},e}(\tau_h))
+&\le\frac{C_{\rm return}+3C_{\rm fail}}\lambda,\\
+\mathcal R_h(\Gamma_e(\tau_h))
+&\le\delta_{\rm acq}:=
+\frac{C_{\rm return}+3C_{\rm fail}}\lambda+\frac2t,
+\qquad h\in S^2.
+\end{aligned}
+\tag{9.1}
+$$
+
+第二行使用包含全部访问记录的实际获取边缘。
+
+证明。置 $d_0=C_{\rm fail}/\lambda$。比较对象是 OTF004 式 (26.6) 的同一有限仪器
+
+$$
+\Psi_{\rm loc}(X)=\sum_{lk}A_{lk}XA_{lk}^\dagger\otimes|l\rangle\langle l|
++\sqrt{I-S_{\rm op}}X\sqrt{I-S_{\rm op}}\otimes|0\rangle\langle0|,
+\tag{9.2}
+$$
+
+扩充同一个 $J_l$ 解码/复制口及固定重置 $K_{\rm work}$ 输出。它的实际 $l=0$ 失败支保留。由 (3.10)，极等距与未归一堆叠在单位输入上的秩一成功输出迹范数差至多 $2d_0$；(9.2) 的失败块迹至多 $d_0$。施行共同约化和读出后，
+
+$$
+D_{\rm tr}\bigl(\Phi_{{\rm red},e}(\tau_h),
+\Psi_{\rm loc}(\tau_h)\otimes|0\rangle\langle0|_{K_{\rm work}}\bigr)
+\le3d_0/2,
+\tag{9.3}
+$$
+
+其中 (9.2) 已包括上述同一 $J_l$ 扩充。
+
+对同空间的两个归一态，三角不等式及偏迹收缩性给
+
+$$
+|\mathcal R_h(\omega)-\mathcal R_h(\omega')|
+\le2D_{\rm tr}(\omega,\omega').
+\tag{9.4}
+$$
+
+OTF004 定理 25.6 在内部尺度 $a$、原始 $m$ 上给同一个 $\Psi_{\rm loc}$ 的返回至多 $C_{\rm return}/\lambda$；结合 (9.3)–(9.4) 得第一行。固定编译及原生比较因子不改变此界。再以 (1.7) 的 $1/t$ 完整通道界和 (9.4) 得第二行。这里由同一个有限约化仪器和极范数扰动推得上界，保留的访问记录始终进入自身边缘。$\square$
+

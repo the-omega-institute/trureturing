@@ -1,0 +1,397 @@
+**定理 44.2（实际返回保全的平稳扩张）。**在约定 44.1 下任取两个实际标签 $a,b$，令
+
+$$
+T_0=c(Ga,b),\qquad \delta=c(Ga,b)-c(a,b).
+\tag{44.5}
+$$
+
+存在可数总模型 $(N,\star,e,V,d)$，满足约定 44.1 的全部原始前件和全部四变量 (R)，以及它的含幺 $V$-magma 自同构 $A$，满足
+
+$$
+A e=e,\qquad AV=VA,\qquad d(As,At)=d(s,t)
+\quad(s,t\in N).
+\tag{44.6}
+$$
+
+原实际 $E$ 保运算且单射地嵌入 $N$；其全部有向核值保持原值，$A$ 在它上面逐点固定，单位预算仍为 $B_0$。存在实际双向来源链 $(x_i)_{i\in\mathbb Z}$、$(y_i)_{i\in\mathbb Z}$，使
+
+$$
+\begin{aligned}
+Ax_i=Vx_i&=x_{i+1},& Ay_i=Vy_i&=y_{i+1},\\
+d(V^3x_0,y_0)-d(x_0,y_0)&=\delta,\\
+d(x_0\star V^3e,y_0)-d(x_0,y_0)&=\delta.
+\end{aligned}
+\tag{44.7}
+$$
+
+两个等式中的第三标记都来自模型自身的真实单位和实际运算。更一般地，以两个来源槽 $\lambda,\mu\in\{x,y\}$ 标记 $z_x=a,z_y=b$，并写 $x_i^x=x_i,x_i^y=y_i$，则
+
+$$
+d(x_i^\lambda,x_j^\mu)
+=c(U^{L+i}z_\lambda,U^{L+j}z_\mu)
+\quad\left(L\ge\max\{0,-i,-j\},\ L\in\mathbb Z\right).
+\tag{44.8}
+$$
+
+右端与所选 $L$ 无关，且此式包含两个有向次序和同一来源的比较。即使 $a=b$，或 $a,b$ 属于原 $E$，两个来源槽仍按下面的自由变量构造，不与单位常量合并。结论只在这两条来源链上给 $V=A$。
+
+**证明：自由扩张的正规形。**为每个实际 $h\in E$ 取一个常量 $\underline h$，不同实际元素取不同常量；另取两个新变量 $x,y$。构造正规项集合 $\mathcal T$：常量和 $x,y$ 是正规项；若 $s$ 非常量，则一元节点 $\langle\mathsf U,s\rangle$ 是正规项；若 $s,t$ 均不等于 $\underline1$，且不同时为常量，则有序二元节点 $\langle s,t\rangle$ 是正规项。节点保留次序与全部括号。实际总运算定义为
+
+$$
+\mathsf U s=
+\begin{cases}
+\underline{Uh},&s=\underline h,\\
+\langle\mathsf U,s\rangle,&s\text{ 非常量},
+\end{cases}
+\tag{44.9}
+$$
+
+以及
+
+$$
+s\odot t=
+\begin{cases}
+t,&s=\underline1,\\
+s,&t=\underline1,\\
+\underline{h\cdot l},&s=\underline h,\ t=\underline l,\\
+\langle s,t\rangle,&\text{其余情形}.
+\end{cases}
+\tag{44.10}
+$$
+
+前两种情形重叠时都给 $\underline1$，与常量乘法重叠时由原双侧单位律给同值。因此它们定义总运算，真实单位是 $1_{\mathcal T}=\underline1$。所有纯常量运算都在实际 $E$ 内求值；特别 $\mathsf U\underline1=\underline{p_1}$，不另加它等于单位的约简。
+
+任意原始语法树自底向上用 (44.9)–(44.10) 求出唯一正规项。该递归只求值纯常量子树并去掉真实单位因子；没有别的识别。常量部分的乘法与一元运算正是原 $E$ 的实际运算，故它忠实包含整个 $E$。对任何含幺一元 magma、任何保全部运算的 $E$ 映射及任意两个变量像，同一递归给唯一扩张同态。这是这里使用的自由含幺扩张性质。有限项来自可数常量和有限签名，故 $\mathcal T$ 可数。
+
+在 $\mathcal T$ 上定义代入同态
+
+$$
+\alpha\underline h=\underline h,\qquad
+\alpha x=\mathsf Ux,\qquad \alpha y=\mathsf Uy,
+\tag{44.11}
+$$
+
+并使它保持 $\odot$、$\mathsf U$ 和真实单位。常量运算求值与双侧单位约简在代入后都仍成立，因此自由性质保证它良定义。特别
+
+$$
+\alpha(s\odot t)=\alpha s\odot\alpha t,\qquad
+\alpha\mathsf U s=\mathsf U\alpha s.
+\tag{44.12}
+$$
+
+此处没有把原 $U$ 当成乘法同态：保乘法的是代入映射 $\alpha$。每个非常量正规项都含至少一个变量；(44.11) 不消去变量，归一化也不把含变量的子树变成常量。因此所有 $\alpha^j$ 都保留变量的出现，尤其 $\alpha^j x,\alpha^j y$ 从不成为 $E$ 常量。不需要假设或使用 $\alpha$ 单射。
+
+对每个整数 $n\ge0$，定义实际求值同态
+
+$$
+\begin{aligned}
+\operatorname{ev}_n(\underline h)&=h\quad(h\in E),\\
+\operatorname{ev}_n(x)&=U^na,\qquad
+\operatorname{ev}_n(y)=U^nb.
+\end{aligned}
+\tag{44.13}
+$$
+
+纯常量关系在原 $E$ 内成立，故这些确为整个含幺一元签名的同态。它们固定 $E$，且两个同态 $\operatorname{ev}_n\alpha$ 与 $\operatorname{ev}_{n+1}$ 在 $E,x,y$ 上相等，于是
+
+$$
+\operatorname{ev}_n(\alpha s)=\operatorname{ev}_{n+1}(s)
+\qquad(s\in\mathcal T).
+\tag{44.14}
+$$
+
+**证明：固定项预算与同一代数上的有限平均。**在同一个 $\mathcal T$ 上定义
+
+$$
+k_n(s,t)=c(\operatorname{ev}_n s,\operatorname{ev}_n t).
+\tag{44.15}
+$$
+
+每个 $k_n$ 都是处处有限、非负、零对角的总核。求值保单位、乘法和一元运算，故对所有 $s,t,u,v\in\mathcal T$ 有
+
+$$
+\sum_{k=0}^2 k_n(s\odot\mathsf U^ku,t\odot\mathsf U^kv)
+=3k_n(s,t)+3k_n(u,v).
+\tag{44.16}
+$$
+
+先为全部固定项支付与 $n$ 无关的预算。在上述正规形上递归定义
+
+$$
+\begin{aligned}
+B(\underline h)&=q(h)+r(h),\\
+B(x)&=9[q(a)+r(a)]+24B_0,\\
+B(y)&=9[q(b)+r(b)]+24B_0,\\
+B(\langle\mathsf U,s\rangle)&=9B(s)+24B_0,\\
+B(\langle s,t\rangle)&=3[B(s)+B(t)].
+\end{aligned}
+\tag{44.17}
+$$
+
+每项有限且非负，$B(\underline1)=0$。对正规项结构归纳证明
+
+$$
+q(\operatorname{ev}_n s)+r(\operatorname{ev}_n s)\le B(s)
+\qquad(n\ge0).
+\tag{44.18}
+$$
+
+常量的求值不依赖 $n$，故常量情形为等式。变量情形由 (44.3) 的最后一式，对 $a$ 或 $b$ 的任意 $n$ 直接得到。若正规项为一元节点，先对实际元素 $\operatorname{ev}_n s$ 使用同式的迭代次数 $1$，再用归纳假设，得到
+
+$$
+\begin{aligned}
+&q(U\operatorname{ev}_n s)+r(U\operatorname{ev}_n s)\\
+&\qquad\le9[q(\operatorname{ev}_n s)+r(\operatorname{ev}_n s)]+24B_0
+\le9B(s)+24B_0.
+\end{aligned}
+\tag{44.19}
+$$
+
+若正规项为二元节点，(44.4) 的两个有向估计相加给
+
+$$
+\begin{aligned}
+&q((\operatorname{ev}_n s)\cdot(\operatorname{ev}_n t))
++r((\operatorname{ev}_n s)\cdot(\operatorname{ev}_n t))\\
+&\qquad\le3[q(\operatorname{ev}_n s)+r(\operatorname{ev}_n s)
++q(\operatorname{ev}_n t)+r(\operatorname{ev}_n t)]\\
+&\qquad\le3[B(s)+B(t)].
+\end{aligned}
+\tag{44.20}
+$$
+
+这穷尽所有正规形。单位因子或纯常量运算已经按 (44.9)–(44.10) 归一，不能为它们再套一个未约简的节点定义。于是由 (44.3) 的单项比较界，对每个有序固定项对有
+
+$$
+0\le k_n(s,t)\le K(s,t):=3[B(s)+B(t)]<\infty.
+\tag{44.21}
+$$
+
+这里是逐项对的有限预算，不是整个项代数的一个共同数值上界。
+
+现在对任意整数 $N\ge1$ 取有限 Cesàro 平均
+
+$$
+C_N(s,t)=\frac1N\sum_{n=0}^{N-1}k_n(s,t).
+\tag{44.22}
+$$
+
+核 $C_N$ 仍定义在同一总代数 $\mathcal T$ 上，非负、零对角且不超过 $K(s,t)$。将 (44.16) 的 $N$ 个等式相加再除以 $N$，得到它的每条完整四变量 (R)。$N$ 是平均长度，不是载体的基数；这里没有声称 $\mathcal T$ 是有限集。
+
+由 (44.14)，$k_n(\alpha s,\alpha t)=k_{n+1}(s,t)$，所以逐项相消给精确有限等式
+
+$$
+\begin{aligned}
+C_N(\alpha s,\alpha t)-C_N(s,t)
+&=\frac{k_N(s,t)-k_0(s,t)}N,\\
+\left|C_N(\alpha s,\alpha t)-C_N(s,t)\right|
+&\le\frac{K(s,t)}N.
+\end{aligned}
+\tag{44.23}
+$$
+
+两个端点都在 $[0,K(s,t)]$ 中，故差值只需 $K(s,t)$，无需以 $2K(s,t)$ 替代。
+
+**证明：共同对角紧致性与实际返回计算。**枚举可数的全部有序项对 $(s_j,t_j)$。第一坐标序列位于紧实区间 $[0,K(s_1,t_1)]$，取一个收敛无限子列；在其中为第二坐标取收敛子列，依次进行。由嵌套无限指标集选择严格递增的对角指标 $N_\ell$，使第 $\ell$ 个指标属于前 $\ell$ 次所选子列。于是 $N_\ell\to\infty$，每个固定坐标都沿这同一子列收敛。定义
+
+$$
+d_0(s,t)=\lim_{\ell\to\infty} C_{N_\ell}(s,t).
+\tag{44.24}
+$$
+
+闭区间界给处处有限和非负性；$C_N(s,s)=0$ 给零对角。任意一条 (R) 只涉及有限个固定坐标，均沿同一个子列收敛，故 (44.16) 的平均式在极限仍成立。由 (44.23) 还得
+
+$$
+d_0(\alpha s,\alpha t)=d_0(s,t),\qquad
+q_{d_0}(s)+r_{d_0}(s)\le B(s).
+\tag{44.25}
+$$
+
+其中第二式是 (44.18) 平均后取极限。每对 $E$ 常量的 $k_n$ 从始至终为 $c(h,l)$，故
+
+$$
+d_0(\underline h,\underline l)=c(h,l)\qquad(h,l\in E).
+\tag{44.26}
+$$
+
+必须另行检查实际返回环境，不能仅凭原比较矩阵的保留推出它。同步 $U$ 等距先给全部 $n\ge0$ 的两条恒等式
+
+$$
+k_n(x,y)=c(a,b),\qquad
+k_n(\mathsf U^3x,y)=c(Ga,b)=T_0.
+\tag{44.27}
+$$
+
+在 $\mathcal T$ 内取真实第三单位标记
+
+$$
+p_{3,\mathcal T}=\mathsf U^31_{\mathcal T}=\underline{p_3},
+\qquad P_{\mathcal T}s=s\odot p_{3,\mathcal T}.
+\tag{44.28}
+$$
+
+因此 $\operatorname{ev}_n(P_{\mathcal T}x)=(U^na)\cdot p_3$。给定任意 $n\ge3$，唯一写成 $n=3m+r$，其中 $m\ge1$、$r\in\{0,1,2\}$，并置 $a'=U^ra,b'=U^rb$。用原引理 17.1 的 $c(Pz,Gw)=c(z,w)$，精确代入 $z=G^ma'$、$w=G^{m-1}b'$，得到
+
+$$
+\begin{aligned}
+k_n(P_{\mathcal T}x,y)
+&=c(PG^ma',G^mb')\\
+&=c(G^ma',G^{m-1}b')\\
+&=c(Ga',b')\\
+&=c(Ga,b)=T_0.
+\end{aligned}
+\tag{44.29}
+$$
+
+第二个等号才是实际混合等距；第三个等号同步消去 $m-1$ 个 $G$，第四个等号同步消去 $r$ 个 $U$。当 $m=1$ 时第三步消去零次，$G^{m-1}b'=b'$，不需要任何原像。特别 $n=3$ 取 $m=1,r=0$ 已被包含。没有把 $P$ 与 $U$ 交换，也没有将 $P$ 解释成三个 $P_1$ 的复合。
+
+为显示有限平均保留多少实际缺陷，定义三个真实比较的有限有号修正
+
+$$
+\begin{aligned}
+J&=\sum_{n=0}^2\bigl[c((U^na)\cdot p_3,U^nb)-T_0\bigr],\\
+D_N&=C_N(P_{\mathcal T}x,y)-C_N(x,y).
+\end{aligned}
+\tag{44.30}
+$$
+
+式 (44.27)–(44.29) 给每个整数 $N\ge3$ 的精确式
+
+$$
+D_N=\delta+\frac JN,\qquad
+|D_N-\delta|=\frac{|J|}N.
+\tag{44.31}
+$$
+
+当 $N=3$ 时，平均中没有任何 $n\ge3$ 的项；三个例外项本身的和正是 $3T_0+J$，所以同式仍给 $D_3=\delta+J/3$。当 $N=1,2$ 时，用截断和 $\sum_{n=0}^{N-1}[c((U^na)\cdot p_3,U^nb)-T_0]$ 代替 $J$ 即得相应精确式，不把尚未出现的项计入平均。
+
+所有符号和零值情形都可直接结算。若 $\delta\ne0$，则对
+
+$$
+N\ge3,\qquad N>\frac{|J|}{|\delta|}
+\tag{44.32}
+$$
+
+有 $|D_N|\ge|\delta|-|J|/N>0$，且 $D_N$ 与 $\delta$ 同号。若 $J=0$，对全部 $N\ge3$ 都有 $D_N=\delta$；若 $J$ 与非零 $\delta$ 同号，也对全部这些 $N$ 保留其符号。若 $J\delta<0$，唯一可能的相消长度是正数 $N=-J/\delta$，只有它为不小于 $3$ 的整数时才会在该平均族中发生；阈值相等不能代替 (44.32) 的严格不等式。若 $\delta=0$，则 $D_N=J/N$；$J=0$ 时恒为零，$J\ne0$ 时符号由 $J$ 决定而极限为零，不作任何除以 $\delta$ 的操作。$J$ 是三个原读数给定的有限有号数，未假定为零或以未知的统一来源预算代替。
+
+由同一 $N_\ell\to\infty$，(44.27) 和 (44.31) 给
+
+$$
+\begin{aligned}
+d_0(x,y)&=c(a,b),\\
+d_0(\mathsf U^3x,y)&=T_0,\\
+d_0(P_{\mathcal T}x,y)&=T_0.
+\end{aligned}
+\tag{44.33}
+$$
+
+同一个计算适用于任意两个来源槽的有向次序。另对任意 $h,l\ge0$ 及 $\lambda,\mu\in\{x,y\}$，同步等距给每个 $n$ 的恒等式
+
+$$
+\begin{aligned}
+k_n(\mathsf U^h\lambda,\mathsf U^l\mu)
+&=c(U^{n+h}z_\lambda,U^{n+l}z_\mu)\\
+&=c(U^hz_\lambda,U^lz_\mu).
+\end{aligned}
+\tag{44.34}
+$$
+
+故 $C_N$ 和 $d_0$ 也精确保留这些值。这同时包含原顺序和交换后的顺序，没有用对称性。
+
+**证明：按实际最终相等取代数直极限。**为将 $\alpha$ 变成可逆移位，取 $\mathcal T\times\mathbb N$ 上的关系
+
+$$
+(s,m)\sim(t,n)
+\quad\Longleftrightarrow\quad
+\exists L\ge m,n:\ \alpha^{L-m}s=\alpha^{L-n}t
+\text{ 在 }\mathcal T\text{ 中实际相等}.
+\tag{44.35}
+$$
+
+反身、对称直接成立。传递时将两个等式见证提升到不小于两者的共同层，利用 $\alpha$ 保相等，得到第三个等式见证，故这是等价关系。置 $N=(\mathcal T\times\mathbb N)/\!\sim$，记类为 $[s,m]$。它仍至多可数。
+
+若 $L\ge m,n$，记 $s_L=\alpha^{L-m}s$、$t_L=\alpha^{L-n}t$，定义
+
+$$
+\begin{aligned}
+[s,m]\star[t,n]&=[s_L\odot t_L,L],\\
+V[s,m]&=[\mathsf U s,m],\qquad e=[\underline1,0],\\
+d([s,m],[t,n])&=d_0(s_L,t_L).
+\end{aligned}
+\tag{44.36}
+$$
+
+先核对层数的选择。由 $L$ 提到 $L+h$ 时，两个输入都作用 $\alpha^h$。乘积输出也恰作用 $\alpha^h$，因为 $\alpha$ 保乘法，所以两输出在 (44.35) 中相等；核值由 (44.25) 反复同步等距保持。对 $V$，$\alpha^h\mathsf U=\mathsf U\alpha^h$，故提升前后也是同一个类。
+
+再核对代表元。若 $(s,m)\sim(s',m')$ 和 $(t,n)\sim(t',n')$，选一个共同层 $H$，不小于四个层数、原先选定的计算层数和两个最终相等的见证层。在 $H$ 层，每一对相应提升项实际相等。乘积和一元运算因此给实际相等的输出；相应 $d_0$ 坐标相同，而从原计算层到 $H$ 的核值保持已经证明。于是 (44.36) 的乘法、一元运算及核全部与代表元无关。这一论证不从 $\alpha s=\alpha t$ 倒推 $s=t$，所以没有使用 $\alpha$ 单射。
+
+$e$ 提升到任意层仍为真实 $\underline1$，故由 (44.10)，$e$ 是两侧单位。任意四个类可统一提升到同一层 $L$；它们的实际乘积和 $V^k$ 在该层分别由 $\odot$ 和 $\mathsf U^k$ 给出。因此 $d$ 的任一完整四变量 (R) 正是 $d_0$ 在该层四个提升项上的完整 (R)。有限性、非负性和零对角也由 (44.36) 逐项继承。这里仅按代数中的实际最终相等识别；绝未因某个核值为零而识别标签。
+
+典范映射
+
+$$
+\iota:\mathcal T\to N,\qquad \iota(s)=[s,0]
+\tag{44.37}
+$$
+
+保真实单位、乘法、一元运算，且 $d(\iota s,\iota t)=d_0(s,t)$。不要求它在全部 $\mathcal T$ 上单射。它在 $E$ 常量上却是单射：若 $[\underline h,0]=[\underline l,0]$，则 (44.35) 某个见证给 $\underline h=\underline l$，因为 $\alpha$ 固定所有常量；这恰意味着原实际 $h=l$。结合 (44.26)，整个实际 $E$ 的运算及有向核值均忠实保留。
+
+任意含变量的 $\alpha$ 迭代仍含变量，所以任意来源 $[x,0],[y,0]$ 都不等于 $E$ 常量；两变量的出现名称也被保留，故它们不相互合并。这不排除核在不同标签间为零。尤其当原 $a$ 或 $b$ 属于 $E$ 时，没有把新的来源变量认作相应常量。
+
+由于 $\iota$ 保全部运算，有真实等式
+
+$$
+V^3e=\iota(\underline{p_3}),\qquad
+\iota(x)\star V^3e=\iota(P_{\mathcal T}x),\qquad
+V^3\iota(x)=\iota(\mathsf U^3x).
+\tag{44.38}
+$$
+
+所以 (44.33) 的两个实际返回缺陷都在 $N$ 中保留，而非只保留某个未指定环境中的比较矩阵。对单位预算也有精确式
+
+$$
+\sum_{j=1}^2[d(V^je,e)+d(e,V^je)]
+=\sum_{j=1}^2[q(p_j)+r(p_j)]=B_0.
+\tag{44.39}
+$$
+
+**证明：自同构与双向来源的精确值。**定义
+
+$$
+A[s,m]=[\alpha s,m],\qquad Q[s,m]=[s,m+1].
+\tag{44.40}
+$$
+
+$A$ 良定义，因为可对 (44.35) 的见证等式再作用一次 $\alpha$；$Q$ 良定义，因为将见证层从 $L$ 提到 $L+1$，新代表的提升项仍与原见证相同。并有
+
+$$
+AQ[s,m]=QA[s,m]=[\alpha s,m+1]=[s,m].
+\tag{44.41}
+$$
+
+最后一个相等在共同层 $m+1$ 即有见证，故 $Q=A^{-1}$。在共同层应用 (44.12)，得 $A$ 保乘法、单位并与 $V$ 交换；由 (44.25) 又保核。于是它确为 (44.6) 的自同构，而非仅在核值上可逆的作用。对 $E$ 常量，$A[\underline h,0]=[\underline h,0]$，所以它逐点固定整个嵌入的 $E$。
+
+令
+
+$$
+x_0=\iota(x),\qquad y_0=\iota(y),\qquad
+x_i=A^ix_0,\qquad y_i=A^iy_0\quad(i\in\mathbb Z).
+\tag{44.42}
+$$
+
+由 (44.11) 和 (44.36)，有实际等式 $Vx_0=Ax_0$、$Vy_0=Ay_0$。$A$ 可逆且与 $V$ 交换，故对每个正、零、负整数 $i$ 都有 $Vx_i=x_{i+1}$、$Vy_i=y_{i+1}$。这些是双向来源的代数等式，不是从零费用推得的识别。
+
+给定 $i,j$，任取整数 $L\ge\max\{0,-i,-j\}$，利用 $A^L$ 的核等距以及非负下标处的 $A^h\iota(\lambda)=\iota(\mathsf U^h\lambda)$，得到
+
+$$
+\begin{aligned}
+d(x_i^\lambda,x_j^\mu)
+&=d(x_{L+i}^\lambda,x_{L+j}^\mu)\\
+&=d_0(\mathsf U^{L+i}\lambda,\mathsf U^{L+j}\mu)\\
+&=c(U^{L+i}z_\lambda,U^{L+j}z_\mu).
+\end{aligned}
+\tag{44.43}
+$$
+
+末步用 (44.34)。若再增大 $L$，右端只是在原模型同步多施加若干次 $U$，由等距保持，故 (44.8) 的独立性得证。取 $i=3,j=0,\lambda=x,\mu=y$，再结合 (44.33)、(44.38)，给 (44.7) 的全部缺陷等式。所有构造保可数性，定理得证。
+

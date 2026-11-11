@@ -1,0 +1,30 @@
+**Proposition 21.1 (motion does not determine prescribed-triple memory).** In the fixed complete-law fiber of [ACQUIRED-RETURN, Section 14], there are three lawful whole triples with
+
+$$
+V_u=V_Q=\frac4{135},
+$$
+
+but with prescribed-triple minima
+
+$$
+N(\Xi;c)=2,\qquad 3,\qquad 4.
+$$
+
+Moreover, the corresponding installations have the same complete configuration-risk expressions at every original fourth-phase history.
+**Proof.** The source theorem parameterizes every lawful triple by two block vectors $s^-,s^+$ and gives
+
+$$
+N(\Xi;c)=2+\mathbf 1_{\{s^-\ne C\}}+\mathbf 1_{\{s^+\ne C\}},
+$$
+
+while
+
+$$
+V_u=V_Q=\frac1{45}+\frac{s^-_1+s^+_1}{90},
+\qquad
+C=\left(\frac13,\frac13,\frac13\right).
+$$
+
+Taking $(s^-,s^+)=(C,C),(C,D),(D,D)$ with $D=(1/2,1/3,1/6)$ gives the same value $4/135$ and the three costs $2,3,4$. The source theorem also preserves the six p-law masses, the two suspended-law masses and the complete configuration-loss expressions under these installations. \(\square\)
+This is stronger than equality of a posterior target or a scalar risk: the complete generated laws and the two acquired edge flows are held fixed, while the prescribed three-stage successor relation changes.
+

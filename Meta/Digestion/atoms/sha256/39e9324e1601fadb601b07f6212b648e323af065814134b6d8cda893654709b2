@@ -1,0 +1,119 @@
+**Theorem 12.5 (genuine finite acquisition certifies the witnesses
+on one event).** Fix rational $0<\alpha<1$. The witnesses in
+Proposition 12.4 admit the following finite rational certificate using exactly the original
+finite-word suppliers of §7 and the paid retained-record setting
+of §8. Declare one common validity event $\mathcal A$ with
+$\mathbb P_e(\mathcal A)\ge1-\alpha$ by budgeting startup and all
+predeclared acquisition/refinement packets. On that event a fair
+finite search returns a prefix-free $\mathcal F$, its maximum
+length $N$, the acquired normalized rows needed for it, and strict
+rational tests proving (12.18) and $t<c$ whenever the requested
+thresholds have the declared rational margins below. A sourcewise
+finite successful certificate is meant; readiness at a future
+actual gate is a separate condition.
+
+Specifically, for real thresholds choose declared rational margins
+
+$$
+0<t_-<t<t_+<c,\qquad 0<\delta_0<\delta.
+\tag{12.19}
+$$
+
+For rational $t,\delta$ one can instead test $t<c$ directly and
+use any rational $0<t_-<t$, $0<\delta_0<\delta$.
+The numerical procedure takes rational margins as inputs, not
+an unnamed real or an exact $c$ oracle. For a packet at length
+$r+1$ write its error radius as $e_s\downarrow0$ and form
+$\ell_x,u_x$ by (7.8), with $t$ there replaced by $e_s$.
+At this finite stage collect all nonempty $w$ of length at most
+$r$ passing
+
+$$
+\ell_w>0,\qquad \frac{u_{w3}}{\ell_w}<t_-.
+\tag{12.20}
+$$
+
+Keep only the words with no proper prefix also in this collected
+set, obtaining $\mathcal F$. Accept a packet only if
+
+$$
+\ell_3>t_+,\qquad
+\sum_{w\in\mathcal F}\ell_w>1-\delta_0.
+\tag{12.21}
+$$
+
+These are all strict rational comparisons, with no test of a
+stationary law unavailable to the original menu. For a rational
+$t$ the first comparison may be $\ell_3>t$.
+
+*Proof.* Use Lemma 7.2 at $H=1$, $r$ as above. Its TV event
+simultaneously encloses all masses at length at most $r+1$,
+including $q(3)=c$. For every accepted $w$ it gives
+$Q_w^1(3)=q(w3)/q(w)\le u_{w3}/\ell_w<t_-<t$.
+Pruning preserves the cylinder union: every deleted word extends
+a retained accepted prefix, and finitely descending through
+proper prefixes reaches one. The retained cylinders are disjoint,
+so (12.21) proves their total true mass greater than
+$1-\delta_0>1-\delta$. The same event gives $c\ge\ell_3>t_+>t$.
+No statistical independence between these tests is used.
+
+If full rational rows are wanted, require the finite positive
+normalization guards of Proposition 7.3 and return
+$\widehat Q_w^1(y)=a(wy)/a(w)$ with its generated error and
+entry enclosures (7.9)–(7.11). The consistent acquired marginals
+make these rows exactly normalized. Any prescribed positive
+row-error tolerance is attainable by the same finite refinement;
+these rows and tests are on $\mathcal A$, rather than separate
+confidence events chosen after observing success.
+
+Here is why the stated certificate search succeeds on that event.
+Use Proposition 12.4 at threshold $t_-/2$ and mass error
+$\delta_0/2$ to choose, for this existence argument, one finite
+family with maximum length $r_0$. Refine packets at this fixed
+$r_0$. All its finitely many words eventually pass (12.20), since
+their true probabilities are positive and their true row entries
+are less than $t_-/2$. Hence the pruned set covers a cylinder
+union of mass greater than $1-\delta_0/2$. There are at most
+$\sum_{j=1}^{r_0}4^j$ retained words, and on the packet event
+$0\le q(w)-\ell_w\le2e_s$. Thus the sum of its lower endpoints
+exceeds $1-\delta_0$ once $e_s$ is sufficiently small, even if
+the particular accepted set changes with the refinement.
+Also $\ell_3\to c>t_+$, and all finitely many normalization
+and row-error guards eventually pass by Proposition 7.3.
+
+To justify this after source/data selection, give the original
+startup allowance $\alpha/2$. Predeclare its countably many
+rational clock branches $l_i$, $i\ge1$, all positive integer
+$r$, and all packet precision indices $s\ge1$. Give the packet
+$(i,r,s)$ allowance $\beta_{i,r,s}=(\alpha/2)2^{-i-r-s}$.
+For each valid deterministic branch, §7 generates its finite
+packet lengths and enclosures at radius $e_s=2^{-s}$. With
+$\mathcal E_{i,r,s}$ its Lemma 7.2 event, declare explicitly
+
+$$
+\mathcal A=\mathcal A_{\rm startup}\cap
+ \bigcap_{i:\,l_i\le\tau}\ \bigcap_{r,s\ge1}\mathcal E_{i,r,s},
+\qquad \mathbb P_e(\mathcal A)\ge1-\alpha.
+$$
+
+This is the intersection before choosing any packet or family,
+exactly as in Theorem 8.2. Only the selected valid branch is executed.
+A fair enumeration of $(r,s)$ reaches the successful finite pair
+above. Each reached packet uses a finite retained original prefix
+and finite reference work; the last reached pair is finite on
+$\mathcal A$. The declared family of rational margins can also
+be countable, with the same budgeting, if margins are selected
+from acquired data. Existence for arbitrary real $t,\delta$
+means the rational sandwiches (12.19), not a claim that arbitrary
+real inputs have been supplied as finite names.
+
+All actual labels, overlapping-window counters, failed tests,
+reference calls, precisions, divisions, pruning comparisons,
+row tables and copies remain charged as in Definitions 8.3 and
+[OWGR, Definition 21.1 and Proposition 21.2]. In particular the
+labels arriving during those operations remain part of the
+same chronological record. The finite certificate can be
+retrospective. It supplies no capture/write bandwidth, catch-up,
+whole-growing-suffix assimilation, readiness deadline or lawful
+output service. $\square$
+

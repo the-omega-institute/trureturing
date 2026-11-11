@@ -1,0 +1,27 @@
+**Lemma 5.2 (evaluated endpoint comparison).** The law $G_*$ satisfies
+
+$$
+\max_{r\in\{a,b\}}\operatorname{TV}(G_*,P_{p,r})
+>\rho_p+\frac1{25000}.
+\tag{5.5}
+$$
+
+**Proof.** The larger endpoint mass on $w_{3,1}$ is $q_*=1944/390625$. The function $Ct^3/S(t)$ is strictly increasing for $t>0$, since its derivative has numerator $Ct^2(3+2t+t^2)>0$. Direct rational arithmetic gives
+
+$$
+\frac{Ct_0^3}{S(t_0)}-q_*-\frac1{12500}
+=\frac{445572012107}{29326052531250000}>0.
+\tag{5.6}
+$$
+
+Thus $G_*(w_{3,1})>q_*+1/12500$. For any probability law $D$ on the complete carrier,
+
+$$
+\operatorname{TV}(D,P_{p,a})+\operatorname{TV}(D,P_{p,b})-2\rho_p
+=\sum_w\operatorname{dist}\bigl(D(w),
+ [P_{p,a}(w)\wedge P_{p,b}(w),P_{p,a}(w)\vee P_{p,b}(w)]\bigr).
+\tag{5.7}
+$$
+
+This is the supplied coordinate triangle identity [CLIP, equation (3.6)], obtained by applying $|x-y|+|x-z|-|y-z|=2\operatorname{dist}(x,[y\wedge z,y\vee z])$ to each coordinate. It includes the infinite atom. The $w_{3,1}$ contribution is greater than $1/12500$, proving (5.5). The singleton obstruction and endpoint-box mechanism are existing supplies [PAID, Section 12]; their numerical comparison is used here inside the new inverse bridge. $\square$
+

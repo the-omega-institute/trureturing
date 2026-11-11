@@ -242,7 +242,7 @@ private theorem terminal_increment_bound (Y v : ℝ) (hY : 2 ≤ Y)
         have hm := mul_le_mul_of_nonneg_left hhalf hv0
         nlinarith only [hm, hv0]
 
-private theorem sampling_prefix_estimate (k : ℕ) (hk : k = 2 ∨ k = 4)
+theorem sampling_prefix_estimate (k : ℕ) (hk : k = 2 ∨ k = 4)
     (A Y v : ℝ) (hA : 1 ≤ A) (hY : 2 ≤ Y) (hv : 1 ≤ v) (hvY : v ≤ Y)
     (hbound : discretePrimeMoment 4 ⌊Y⌋₊ ⌊v⌋₊ ≤ A * Y * v ^ 2 * Real.log Y ^ 2) :
     |continuousPrimeMoment k Y v -

@@ -17,6 +17,15 @@ internal sealed class SingleLengthMainTermsDocument : IScribeDocumentDefinition
                 + "Pointwise logarithm and power differences control rounding of the length; "
                 + "the integral on the terminal interval controls rounding of the cutoff.")),
             Describe.Lean(
+                DescribeId.Create("floor-log-difference"),
+                DeclarationHandle.Create(Prefix + "floor_log_difference"),
+                H("Logarithmic floor error"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For v at least one, the absolute difference between log v and the logarithm of its natural floor is at most the reciprocal of that floor."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("second-main-exact"),
                 DeclarationHandle.Create(Prefix + "second_main_exact"),
                 H("Second main exact"),

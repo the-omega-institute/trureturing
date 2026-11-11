@@ -1,0 +1,37 @@
+**证明定理 8.2 的 $\mathrm{UC}\Rightarrow\mathrm{BR}$。**第 8–10 节已取得加法群 $A$、其自同构 $\rho$、$I+\rho+\rho^2=0$，以及处处有限非负、零对角的完整有向核 $C$，满足 (10.12)。这正是本卷第 4 节共同平移不变性论证的群入口：该论证只使用这些群上条件，不再要求原始标签满足结合律或 $U1=1$。具体对应为第 4 节的群 $A$、算子 $R_0$、偏移 $t_k$ 和核 $C$ 分别取此处的 $A,\rho,\tau_k,C$。因此直接复用该节的下确界论证，得到共同平移不变性，并写成
+
+$$
+\begin{aligned}
+C(x,y)&=f(x-y),& f&:A\to[0,\infty),& f(0)&=0,\\
+f(\rho x)&=f(x),&&&
+\sum_{k=0}^2f(x+\rho^ky)&=3f(x)+3f(y).
+\end{aligned}
+\tag{11.1}
+$$
+
+这里相位不变性的前件也满足：引理 2.1 给原核同时标记等距，下降后即 $C(\rho x+\tau,\rho y+\tau)=C(x,y)$；共同平移不变性消去 $\tau$。
+
+随后直接应用《无结合律的双端三相比较：可见代数与复几何共同生成》[第 4 节](AURIC_C133_THREE_READ_CLOSURE_VISIBLE_COMPLEX_GEOMETRY_CONTINUATION_V.md#4-三相缺陷恒等式直接给出平方几何)式 (4.1) 之后的群上推导。其输入是交换加法群、满足 $I+\rho+\rho^2=0$ 的自同构、以及满足 (11.1) 的有限非负函数；这些输入已经逐一取得。该推导提供偶性、平行四边形律、对称双可加极化、有限 Gram 正性、实标量扩张、零空间商和 Hilbert 完成，因而有可加映射 $F_0:A\to H$，满足
+
+$$
+f(x)=\|F_0x\|^2,\qquad F_0(\rho x)=\omega F_0x.
+$$
+
+所用交换群极化结论的精确文献前件为：定义域 $G$ 是交换群，值群 $H_0$ 是交换群且每个 $h\in H_0$ 的方程 $2x=h$ 有唯一解，函数满足
+
+$$
+f(xy)+f(xy^{-1})=2f(x)+2f(y).
+\tag{11.2}
+$$
+
+这是 Peter de Place Friis、Henrik Stetkær，*On the quadratic functional equation on groups*，Publ. Math. Debrecen 69/1–2，65–93，[DOI 10.5486/pmd.2006.3270](https://doi.org/10.5486/pmd.2006.3270)，第 65–67 页 Theorem 1.2（归于 Aczél）的条件；亦见前述续卷对应 7.1 和本卷对应 7.3。此处 $G=(A,+)$ 已为交换群，$H_0=(\mathbb R,+)$ 满足唯一二可除性，(11.2) 为上述既有群上推导所得的平行四边形律，$xy^{-1}$ 对应 $x-y$。它没有被用于原始 magma，也不把非负性单独当作极化的前件。极化、Gram 与完成均沿用该既有推导。
+
+令 $F=F_0\gamma$。由 (9.6)、(10.12) 和 (11.1)，
+
+$$
+F1=0,\quad F(a\cdot b)=Fa+Fb,\quad
+F(Ua)=\omega Fa+F(p_1),\quad c(a,b)=\|Fa-Fb\|^2.
+$$
+
+所以取得定理 1.3 的第三项，即原来的仿射表示 (1.2)。定理 1.3 给 $\mathrm N_5$ 与 $\mathrm{BR}$，完成 $\mathrm{UC}\Rightarrow\mathrm{BR}$，从而完成 (8.3) 的证明。这里复用的群上极化为上述文献所载结论（literature-attested），其余群上二次函数、Gram 与完成步骤沿用所引第 4 节。本归约为本仓推导的条件命题（repo-derived）：单位轨道的完整双侧根性已足以推出全部乘法缺陷的根性，尤其包含带仿射偏移的成对历史传递；不主张文献优先权。
+

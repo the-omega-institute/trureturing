@@ -1,0 +1,72 @@
+### 27A.1 面积上界及原缺陷的准确符号
+
+在复 Hilbert 空间的实化中，对两列 $A,B$ 记
+
+$$
+\operatorname{Area}(A,B)
+=\sqrt{\|A\|^2\|B\|^2-\operatorname{Re}(A^*B)^2}.
+$$
+
+给定 $\lambda=\alpha+i\beta$、$\beta\ne0$，成熟的实 Cauchy–Schwarz 与 Young 不等式给
+
+$$
+\begin{aligned}
+\operatorname{Area}(A,B)
+&\le T_\lambda(A,B)
+:=\frac{\|B-\alpha A\|^2+\beta^2\|A\|^2}{2|\beta|}\\
+&=\frac{\|B-\lambda A\|^2}{2|\beta|}
+ +\operatorname{sgn}(\beta)\operatorname{Im}(A^*B).
+\end{aligned}
+\tag{27A.9}
+$$
+
+具体地，将 $B$ 换成 $B-\alpha A$ 不改面积，其平方不超过 $\|A\|^2\|B-\alpha A\|^2$；再用 $2|\beta|\|A\|\|B-\alpha A\|\le\beta^2\|A\|^2+\|B-\alpha A\|^2$。最后一等式由展开复范数得到，其中交叉项为 $-2\beta\operatorname{Im}(A^*B)$。这里使用面积上界；§22 的环境面积下界不用于推出 PB 违反。
+
+令 $g_0=K_1(c,t)$、$L_0=-2x\circ(h-k)-2t\circ(r+g_0)$。§1 的标准零残量恒等式直接给出
+
+$$
+\begin{aligned}
+M&:=K_1(R_+,S_+)-K_1(R_-,S_-)\\
+ &=L_0+K_1(R_+,s)+K_1(R_-,s)\\
+ &=L+2t\circ s+2K_1(x,s).
+\end{aligned}
+\tag{27A.10}
+$$
+
+第二行用的是当前 $S_+$ 增加 $s$、$S_-$ 增加 $-s$；第三行用 $R_++R_-=2x$。因为 $x=PxP$，(27A.1) 还给
+
+$$
+K_1(x,s)=3\rho K_1(c,x)=3\rho h.
+\tag{27A.11}
+$$
+
+若 $\operatorname{Im}\lambda_+<0$、$\operatorname{Im}\lambda_->0$，置
+
+$$
+E_\pm=S_\pm\xi-\lambda_\pm R_\pm\xi,\quad
+\beta_+=-\operatorname{Im}\lambda_+>0,\quad
+\beta_-=\operatorname{Im}\lambda_->0,\quad w_\pm=\frac1{2\beta_\pm}.
+$$
+
+对原自伴矩阵 $R,S$，准确有 $\phi_\xi(K_1(R,S))=-\operatorname{Im}((R\xi)^*S\xi)$。将 (27A.9) 的两种符号与 (27A.10) 合并，得到精确等式
+
+$$
+\begin{aligned}
+F_\delta
+&:=T_{\lambda_+}(R_+\xi,S_+\xi)
+  +T_{\lambda_-}(R_-\xi,S_-\xi)-\phi_\xi(L)\\
+&=w_+\|E_+\|^2+w_-\|E_-\|^2
+  +2\phi_\xi(t\circ s+K_1(x,s)).
+\end{aligned}
+\tag{27A.12}
+$$
+
+因此原差额满足
+
+$$
+\mathcal G_1(x,\phi_\xi)\ge -F_\delta.
+\tag{27A.13}
+$$
+
+这里同时用了 $|\phi_\xi(L)|\ge\phi_\xi(L)$ 和两笔面积各自的上界，没有将某个充分估计失败解释成违反。
+

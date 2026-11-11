@@ -99,7 +99,45 @@ internal sealed class CharacterPointCountDocument : IScribeDocumentDefinition
                         + "CubicFermatTrace transports that same character through a concrete complex embedding to obtain "
                         + "q + 1 - Tr(pi) for actual projective points over finite Eisenstein residue fields. "
                         + "The prime-period theory retains its rational-prime data; other finite-field extensions require a separate Jacobi normalization theorem."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem),
+            new DocumentBlock.Section(H("The split-prime trace on the congruent-number curve"), Blocks(
+                Paragraph(Text("Let p be prime with p congruent to 1 modulo 4, and let a and b be integers with "
+                    + "p=a²+b², a odd and b even. Over F=ZMod p use the Weierstrass coefficients (0,0,0,-1,0), "
+                    + "so the equation is y²=x³-x. Its discriminant is 64, a unit since p is odd. The actual "
+                    + "carrier W.toAffine.Point is equivalent to the option type of the affine solution fibers: "
+                    + "none is the unique point at infinity and each remaining point has coordinates x and y "
+                    + "with y²=x³-x. Write N for the cardinality of that carrier and T=p+1-N. For each x the "
+                    + "number of roots is 1+φ(x³-x), where φ is the quadratic character with φ(0)=0. Counting "
+                    + "the fibers and the one point at infinity gives T=-∑ₓ φ(x³-x) in the integers.")),
+                Paragraph(Text("Since 4 divides p-1, choose a complex character χ of order four using the "
+                    + "primitive fourth root i. Compare the two formulas for the cardinality of each square "
+                    + "fiber, using "),
+                    Ref(Prefix + "power_fiber_card_eq_one_add_character_sum"),
+                    Text(" at order two and Mathlib's quadratic root count. They identify χ² with the complex "
+                    + "image of φ at every field element. Also φ(-1)=1. Multiplicativity rewrites "
+                    + "φ(x³-x) as χ(x²)φ(x²-1). Reindex the finite sum by t=x² and insert its fiber "
+                    + "multiplicity 1+φ(t). Since φ(t-1)=φ(1-t) and χφ=χ⁻¹, the sum becomes "
+                    + "J(χ,φ)+J(χ⁻¹,φ). These are complex conjugates because φ is its own inverse.")),
+                Paragraph(Text("The quartic Jacobi congruence gives J=J(χ,φ)=-1+z(i-1)² with z in the image "
+                    + "of the Gaussian integers. For z=r+si the Gaussian lift j of J has coordinates "
+                    + "(-1+2s,-2r), so the real coordinate is odd and the imaginary coordinate even. "
+                    + "The three characters χ, φ, and χφ are nontrivial; "),
+                    Ref(Prefix + "norm_jacobiSum"),
+                    Text(" gives |J|=√p, hence the Gaussian norm of j is p. The trace is T=-2 Re(J).")),
+                Paragraph(Text("Write w=a+bi. The norm identities give j times its conjugate equal to w "
+                    + "times its conjugate, both equal to p. A Gaussian integer of norm p is irreducible "
+                    + "by multiplicativity of the norm and reflection of units, and hence prime in the "
+                    + "Gaussian Euclidean domain. Thus j divides w or its conjugate, and the divisible "
+                    + "factor is associated to j. By "),
+                    Ref("D5/S3/ConceptDynamics/Coding/ResetNativeIntegerChart.gaussian_unit"),
+                    Text(", the unit relating them is one of 1,i,-1,-i. The units ±i would make the "
+                    + "real coordinate even, contrary to the oddness of a, so |Re(J)|=|a|. This gives "
+                    + "|T|=2|a|. For c=T/(2√p), positivity of √p and p=a²+b² now give "
+                    + "|c|=|a|/√p=|a|/√(a²+b²) in the reals.")),
+                Paragraph(Text("This is Gauss's classical split-prime calculation. It applies to every "
+                    + "prime and representation with the stated congruence and parity, without choosing "
+                    + "a sign for the trace. The calculation gives no inert-prime formula, general Hasse "
+                    + "bound, or Sato–Tate distribution.")))))));
 
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. arguments]);

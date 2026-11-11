@@ -1,0 +1,30 @@
+**定义 1.2（完整原条件 $\mathsf H_I(D)$）。** 对每个实际 $a,b\in E$、每份原评价以及两种次序，保留 A1/P2 的 Hermitian 二表
+
+$$
+\begin{pmatrix}
+\gamma(a^2)&\gamma(a\circ b)-i\gamma D(a,b)\\
+\gamma(b\circ a)-i\gamma D(b,a)&\gamma(b^2)
+\end{pmatrix}\succeq0.
+\tag{1.3}
+$$
+
+A2 保留每个实际相加三表 $(a+b,a,b)$ 及全部排列的实部在整个 $\mathbb R^3$ 上半正定，并要求原顺序的 $(1,-1,-1)$ 及对应排列给零平方。A3 保留 $u^2=u$，以及同一个固定有理数 $0<\vartheta\le1$ 上全部 $0\le e\le\vartheta u\Rightarrow e^2\le e$。不把 A2 加强为假定一般复三表正性。
+
+对全部实际 $a,b,d\in E$，只用这份旧 $D$ 生成
+
+$$
+v=D(a,b)-a\circ d,\quad w=a\circ b+D(a,d),\qquad
+r_\pm=b\pm v,\quad s_\pm=d\pm w.
+\tag{1.4}
+$$
+
+完整 PB 要求每份原评价满足
+
+$$
+\gamma(r_+^2+s_+^2+2D(r_+,s_+))
+=\gamma(r_-^2+s_-^2+2D(r_-,s_-)).
+\tag{1.5}
+$$
+
+零、重复、任意幅度、平移、背景及嵌套输入全部量化；外层始终使用(1.4)实际生成的四份原标签。相同点值不授权替换其中任何一份标签。原评价分离使 PB 也是 $E$ 中的元素等式。
+

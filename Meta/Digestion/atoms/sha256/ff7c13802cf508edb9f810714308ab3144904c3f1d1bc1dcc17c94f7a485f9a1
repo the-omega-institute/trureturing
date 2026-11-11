@@ -1,0 +1,136 @@
+**定理 13.1（同一运行的约化 CP 获取—返回证书）。** 在定义 13.1–13.2 的接口下，令
+$$
+\kappa_D=\frac{2D-1}{2D^2},\qquad
+e_{\rm CP}=\min\{1,M\kappa_D\},\qquad
+\zeta=\min\left\{1,\frac{|d\tau _0|}{\sqrt{D-1}}\right\}.
+\tag{13.11}
+$$
+存在一个只使用上述十个场设置、同一个固定解码器和一个强制终端交换的协议，使得对所有允许的 $n,h$ 及所有 $t>0$，
+$$
+\Pr\!\left[\|\widehat D-D_h(n)\|_\infty>
+\frac{B_{\rm field}d}{4}+\frac{t}{d}\right]
+\le\min\{1,20e^{-Nt^2/32}+e_{\rm CP}\},
+\tag{13.12}
+$$
+且
+$$
+\sup_{n,h}\Delta_{n,h}
+\le\min\{1,2(e_{\rm CP}+\zeta)\}
+\le\min\left\{1,\frac{2M}{D}+2\zeta\right\}.
+\tag{13.13}
+$$
+这些估计的证明只使用 $|t|\le d$ 上的轴向二阶导数界和五个采样点。因此同一协议与估计也适用于仅在包含两条闭 $d$ 轴段的开集上满足对应 $C^2$、秩二及导数条件的场；定义 13.1 的原始任务仍保留完整半径 $r$ 的域及其全部承诺。这只是一个可达证书；它没有声称最优性、匹配的下界、资源支配关系或任何历史新颖性。
+
+**证明。** 先在 $h=z$ 的坐标计算。令 $e=|j,j\rangle$、$f=|j,j-1\rangle$、$m=D-1$，并把 $S$ 的标准基记为 $\uparrow,\downarrow$。直接由 $J_z e=je$、$J_+e=0$、$J_-e=\sqrt{2j}\,f$ 得
+$$
+\begin{aligned}
+\Pi_+(e\otimes\uparrow)&=e\otimes\uparrow,\\
+\Pi_-(e\otimes\uparrow)&=0,\\
+\Pi_+(e\otimes\downarrow)&=\frac{e\otimes\downarrow+\sqrt m\,f\otimes\uparrow}{D},\\
+\Pi_-(e\otimes\downarrow)&=\frac{m\,e\otimes\downarrow-\sqrt m\,f\otimes\uparrow}{D}.
+\end{aligned}
+\tag{13.14}
+$$
+令 $\tau_e=|e\rangle\langle e|$、$\tau_f=|f\rangle\langle f|$、$|++\rangle=|+\rangle_H|+\rangle_E$、$|--\rangle=|-\rangle_H|-\rangle_E$。对一个独立 $I_S/2$ 探针，(13.5)–(13.8) 的完整 $R,S,H,E$ 输出等于
+$$
+\begin{aligned}
+\Omega_z^{(1)}
+={}&\left[
+\frac{|e\uparrow\rangle\langle e\uparrow|}{2}
++\frac{|e\downarrow+\sqrt m\,f\uparrow\rangle
+ \langle e\downarrow+\sqrt m\,f\uparrow|}{2D^2}
+\right]\otimes|++\rangle\langle++|\\
+&+\frac{m^2\tau_e+m\tau_f}{2D^2}
+ \otimes\frac{I_S}{2}\otimes|--\rangle\langle--|.
+\end{aligned}
+\tag{13.15}
+$$
+把同一个 $\mathcal C$ 施于理想 $z$-投影仪器，得到
+$$
+\xi_z=\frac{P_{z,+}}2\otimes|++\rangle\langle++|
++\frac{I_S}{4}\otimes|--\rangle\langle--|,
+\tag{13.16}
+$$
+故理想完整槽态为 $\tau_e\otimes\xi_z$。正负旗标块正交。正块差的迹为 $1/(2D)$；负块差为
+$$
+\frac{-(2D-1)\tau_e+(D-1)\tau_f}{2D^2}\otimes\frac{I_S}{2},
+\tag{13.17}
+$$
+其迹范数为 $(3D-2)/(2D^2)$。因此
+$$
+D(\Omega_z^{(1)},\tau_e\otimes\xi_z)
+=\frac12\left[\frac1{2D}+\frac{3D-2}{2D^2}\right]
+=\kappa_D.
+\tag{13.18}
+$$
+同时旋转 $\Pi_\pm$、$\tau_h$ 和 $P_{h,+}$，而 $\mathcal C$ 的负块是基无关的替换 $S\mapsto I_S/2$，所以 (13.18) 对每个 $h$ 相同。这一步只是在证明中换坐标，没有执行依赖 $h$ 的旋转。
+
+准备 $M$ 个独立 $I/2$ 探针，在每一槽后立即施行 (13.8)。用数学上的混合链把前 $k$ 槽替换成理想槽、其余保持实际槽。每个理想前缀都把 $R$ 留在 $\tau_h$，下一探针仍为 $I/2$；所有较早输出、记忆和旁观者可任意纠缠而不改变 (13.18) 的下一槽计算。共同后缀是全寄存器 CPTP 映射，故三角不等式和迹距离收缩性给出
+$$
+D(\Omega^{(M)}_{n,h},\tau_h\otimes\Xi_{n,h}^{\,i})
+\le\min\{1,M\kappa_D\}=e_{\rm CP}
+\tag{13.19}
+$$
+（右端超过一时取一）。这里没有在实际运行中重置 $R$，也没有把任意受扰动参考替换成 $\tau_h$；混合链只是完整态的比较。
+
+为得到场数据，对四个卫星 $z\in\{+d e_x,-d e_x,+d e_y,-d e_y\}$ 及 $s=\pm1$ 各取 $N$ 个中心—卫星对，在两个场输出上施行
+$$
+Q_s=\frac{I-i s\,\mathrm{SWAP}}{\sqrt2},
+\tag{13.20}
+$$
+保留两个输出而把第二个输出送入标量测试；在 $y$ 的两个卫星上另取各 $N$ 个直接令牌。中心令牌 $8N$ 个、$x$ 卫星每点 $2N$ 个、$y$ 卫星每点 $3N$ 个，共 $18N$ 个场重置，再加上 (13.9) 的一个令牌。若中心与卫星 Bloch 向量为 $a,b$，第二输出的 Bloch 向量为
+$$
+v_{z,s}=\frac{n(0)+n(z)+s\,n(0)\times n(z)}2.
+\tag{13.21}
+$$
+每个选定场输出和一枚 $S$ 探针做标量受控 SWAP：固定标量先取 $|0\rangle$，施行 $H$、受控 SWAP、$H$ 和固定 $Y$ 读出；读出指针及其复制环境均保留。保留所有原生 $b,H,E$ 以及两份部分 SWAP 输出。对每次槽定义
+$$
+X=4\,\mathbf1_{\{b=+\}}Y-1\in\{-5,-1,3\}.
+\tag{13.22}
+$$
+这不是选支或条件归一化。
+
+在理想比较实验中，$b$ 是公平且独立的，$b=+$ 时 $S=P_{h,+}$，$b=-$ 时 $S=I/2$。因而对 Bloch 向量 $v$，
+$$
+\mathbb E[X]=4\cdot\frac12\cdot
+\frac{1+h\cdot v}{2}-1=h\cdot v.
+\tag{13.23}
+$$
+令 $\overline X_{z,s}$ 为八个设置的均值，令 $\overline Z_{y,\pm}$ 为两个直接设置的均值，并令
+$$
+\begin{aligned}
+\widehat C_z&=\overline X_{z,+}-\overline X_{z,-},\\
+\widehat D={}&\left(
+\frac{\widehat C_{+d e_x}-\widehat C_{-d e_x}}{4d},
+\frac{\widehat C_{+d e_y}-\widehat C_{-d e_y}}{8d},
+0,
+\frac{\overline Z_{y,+}-\overline Z_{y,-}}{4d}
+\right).
+\end{aligned}
+\tag{13.24}
+$$
+每个均值只需保存两类计数；忽略某个寄存器参与算术不等于删除它。式 (13.24) 是固定的有限有理解码器。
+
+沿每条轴，中心差分的平均值是区间内一阶导数的平均值。由 (13.2) 积分得其偏差不超过 $B_{\rm field}d/2$；代入 (13.24) 后四个坐标的最大偏差不超过 $B_{\rm field}d/4$。在理想比较实验中，$X$ 的宽度为 $8$，中心化对数矩母函数满足 $\log\mathbb E e^{u(X-\mathbb EX)}\le8u^2$。取 $u=t/16$ 并用 Markov 不等式，每个均值的双侧尾概率不超过 $2e^{-Nt^2/32}$，十个设置并合给 $20e^{-Nt^2/32}$。由 (13.19)，同一个完整记录事件在实际运行和理想比较运行之间的概率差不超过 $e_{\rm CP}$，于是得到 (13.12)。注意这里没有假设实际槽之间独立。
+
+最后使用强制的终端令牌。理想 $\tau_h$ 子空间上，(13.9) 的生成元与 $I_R\otimes h\cdot\sigma/2$ 的差的范数不超过 $1/\sqrt{D-1}$；Duhamel 公式给出理想终端演化误差 $\zeta$。对 (13.19) 两个输入同时施行同一终端通道。实际最终 $\Omega_{n,h}$ 因而与某个 $\tau_h\otimes\omega^{\,i}_{n,h}$ 的距离不超过 $e_{\rm CP}+\zeta$；偏迹收缩给实际 $K$ 边缘 $\omega_{n,h}$ 与 $\omega^{\,i}_{n,h}$ 的同一距离上界。再用三角不等式比较 $\Omega_{n,h}$ 与 $\tau_h\otimes\omega_{n,h}$，得到
+$$
+\Delta_{n,h}\le 2(e_{\rm CP}+\zeta).
+\tag{13.25}
+$$
+所有终端量子输出和环境都仍在 $K$ 中。因为 $\kappa_D<1/D$，(13.13) 随即成立。$\square$
+
+取 $t=\eta$ 时，
+$$
+\frac{B_{\rm field}d}{4}+\frac{\eta}{d}
+=\frac1{128}+\frac1{32}=\frac5{128}<\frac1{16},
+\tag{13.26}
+$$
+且 $N\eta^2\ge2000$、$D\ge8{,}000{,}000N^2$，并有 $D-1>4{,}000{,}000N^2$。式 (13.12) 中 $20e^{-N\eta^2/32}\le20e^{-125/2}<1/1000$，而 $e_{\rm CP}<M/D\le1/(800000N)$，所以失败概率严格小于 $1/100$；(13.13) 仍给出统一的有限返回上界。这些估计包括 $D=8{,}000{,}000N^2$ 的端点。特别地，取
+$$
+N=N_*,\quad D=8{,}000{,}000N_*^2,\quad
+j=(D-1)/2,\quad L=10N_*,\quad Q=18N_*+1
+\tag{13.27}
+$$
+并保留其余参数，得到一个明确非空、有限且获取可行的原始元组。该协议没有声称原生场源、门、校准、噪声汇或物理时钟由这些数学接口自动实现；它们是条件模型前提。
+

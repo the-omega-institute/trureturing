@@ -1,0 +1,31 @@
+**命题 C-27.3.2（同一匹配骨架的加权递推和参数表达）。** 一般加权路径满足
+
+<div>
+𝐷<sub>𝑚</sub>=𝐷<sub>𝑚-1</sub>-|𝑔<sub>𝑚-1</sub>|<sup>2</sup>𝐷<sub>𝑚-2</sub>  (𝑚≥2).
+</div>
+
+均匀模长 <span>𝑟<sub>𝑔</sub>≥0</span> 时，
+
+<div>
+𝐷<sub>𝑚</sub>(𝑟<sub>𝑔</sub>)=𝑃<sub>𝑚</sub>(-𝑟<sub>𝑔</sub><sup>2</sup>),  𝑃<sub>𝑚</sub>(1)= Fib <sub>𝑚+1</sub>.
+</div>
+
+对 <span>𝑟<sub>𝑔</sub>&gt;0</span>，使用第二类 Chebyshev 多项式的标准中间结果 [^GL-D]，
+
+<div>
+𝐷<sub>𝑚</sub>(𝑟<sub>𝑔</sub>)=𝑟<sub>𝑔</sub><sup>𝑚</sup>𝑈<sub>𝑚</sub>(((1)/(2𝑟<sub>𝑔</sub>))).
+</div>
+
+其各参数域为
+
+<div>
+𝑟<sub>𝑔</sub>&gt;((1)/(2)):  𝐷<sub>𝑚</sub>=𝑟<sub>𝑔</sub><sup>𝑚</sup>(( sin ((𝑚+1)θ))/( sin θ)),   cos θ=((1)/(2𝑟<sub>𝑔</sub>)), 0&lt;θ&lt;((π)/(2));<br>
+0&lt;𝑟<sub>𝑔</sub>&lt;((1)/(2)):  𝐷<sub>𝑚</sub>=𝑟<sub>𝑔</sub><sup>𝑚</sup>(( sinh ((𝑚+1)η))/( sinh η)),   cosh η=((1)/(2𝑟<sub>𝑔</sub>)), η&gt;0;<br>
+𝑟<sub>𝑔</sub>=((1)/(2)):  𝐷<sub>𝑚</sub>=((𝑚+1)/(2<sup>𝑚</sup>));<br>
+𝑟<sub>𝑔</sub>=0:  𝐷<sub>𝑚</sub>=1.
+</div>
+
+**证明。** 路径置换已在命题 C-27.2.2 中分类。末记录指标固定时，留下前 <span>𝑚-1</span> 个记录；它若不固定，只能与前一记录交换，贡献 <span>-|𝑔<sub>𝑚-1</sub>|<sup>2</sup></span> 并留下前 <span>𝑚-2</span> 个记录。这两类互斥且穷尽，证明加权递推。同一末边选择的分解在形式权重 <span>𝑡</span> 下给 <span>𝑃<sub>𝑚</sub></span>；在 <span>𝑡=1</span> 时初值为一、一，故按 Fibonacci 递推归纳得到 <span> Fib <sub>𝑚+1</sub></span>。均匀负权重的同初值递推证明 <span>𝐷<sub>𝑚</sub>=𝑃<sub>𝑚</sub>(-𝑟<sub>𝑔</sub><sup>2</sup>)</span>。
+
+经典 <span>𝑈<sub>0</sub>=1,𝑈<sub>1</sub>=2𝑥,𝑈<sub>𝑚</sub>=2𝑥𝑈<sub>𝑚-1</sub>-𝑈<sub>𝑚-2</sub></span> 使 <span>𝑟<sub>𝑔</sub><sup>𝑚</sup>𝑈<sub>𝑚</sub>(1/(2𝑟<sub>𝑔</sub>))</span> 满足同一初值和递推，证明 Chebyshev 表达。DLMF 18.5.2 的 <span>𝑈<sub>𝑚</sub>( cos θ)= sin ((𝑚+1)θ)/ sin θ</span> 给正弦式；令 <span>θ=𝑖η</span>，或直接用双曲加法与同初值递推，给双曲式。<span>𝑈<sub>𝑚</sub>(1)=𝑚+1</span> 由其递推归纳给临界式。<span>𝑟<sub>𝑔</sub>=0</span> 时矩阵为 <span>𝐼<sub>𝑚</sub></span>，直接给一，不使用含 <span>1/𝑟<sub>𝑔</sub></span> 的表达。<span>□</span>
+

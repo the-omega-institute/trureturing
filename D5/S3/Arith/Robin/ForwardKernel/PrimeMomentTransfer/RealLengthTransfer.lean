@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Exact endpoint rescaling extends uniform mixed moment asymptotics to real lengths. -/
+   digest: Mean-square prime correlations: Exact endpoint rescaling extends uniform mixed moment asymptotics to real lengths. -/
 
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.ContinuousIntegerMoments
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.RealLengthRescaling
@@ -27,15 +27,15 @@ private theorem p_fourth_main_cancel (N H K : ℝ) (a b : Fin 4 → ℝ)
 
 /-- Cubic mixed moments vanish uniformly for all real lengths in the band. -/
 theorem real_third :
-∀ (SS : Finset ℕ → ℝ) (α β M : ℝ), 0 < α → α < β → β < 1/4 →
-  SS ∅ = 1 → (∀ d, SS {d} = 1) → HL4 SS β → IntervalCorrelations SS → 1 ≤ M →
+∀ (SS : Finset ℕ → ℝ) (α β M : ℝ), 0 < α → α < β → β < 1/3 →
+  SS ∅ = 1 → (∀ d, SS {d} = 1) → MeanSquareHL 3 SS β → IntervalCorrelations SS → 1 ≤ M →
   ∀ δ : ℝ, 0 < δ → ∀ᶠ N : ℝ in atTop,
     ∀ H : ℝ, N^α ≤ H → H ≤ N^β →
     ∀ B (w : ℝ → ℝ), BVBound w B → ∀ a b : Fin 3 → ℝ, admissible M a b →
       |weightedMoment N H a b w| ≤ B*δ := by
-  intro SS α β M hα hαβ hβ hSS hSS1 hHL hcor hM δ hδ
+  intro SS α β M hα hαβ hβ hSS hSS1 hMS hcor hM δ hδ
   filter_upwards [integer_third SS (α / 2) β (2 * M)
-      (half_pos hα) (by linarith) hβ hSS hSS1 hHL hcor (by linarith) δ hδ,
+      (half_pos hα) (by linarith) hβ hSS hSS1 hMS hcor (by linarith) δ hδ,
     floor_range α β hα hαβ (by linarith),
     eventually_ge_atTop (2 : ℝ)] with N hint hfloor hN
   intro H hlo hhi B w hw a b hab
@@ -63,17 +63,17 @@ theorem real_third :
 /-- Real-length fourth mixed moments converge uniformly to their overlap pairing. -/
 theorem real_fourth :
 ∀ (SS : Finset ℕ → ℝ) (α β M : ℝ), 0 < α → α < β → β < 1/4 →
-  SS ∅ = 1 → (∀ d, SS {d} = 1) → HL4 SS β → IntervalCorrelations SS → 1 ≤ M →
+  SS ∅ = 1 → (∀ d, SS {d} = 1) → MeanSquareHL4 SS β → IntervalCorrelations SS → 1 ≤ M →
   ∀ δ : ℝ, 0 < δ → ∀ᶠ N : ℝ in atTop,
     ∀ H : ℝ, N^α ≤ H → H ≤ N^β →
     ∀ B (w : ℝ → ℝ), BVBound w B → ∀ a b : Fin 4 → ℝ, admissible M a b →
       |weightedMoment N H a b w-
         (∫ t in (1:ℝ)..2, w t)*(kappa N H)^2*W4 a b| ≤ B*δ := by
-  intro SS α β M hα hαβ hβ hSS hSS1 hHL hcor hM δ hδ
+  intro SS α β M hα hαβ hβ hSS hSS1 hMS hcor hM δ hδ
   let t := δ / (2 * (3 * M ^ 2 + 1))
   have ht : 0 < t := by dsimp [t]; positivity
   filter_upwards [integer_fourth SS (α / 2) β (2 * M)
-      (half_pos hα) (by linarith) hβ hSS hSS1 hHL hcor (by linarith) (δ / 2) (half_pos hδ),
+      (half_pos hα) (by linarith) hβ hSS hSS1 hMS hcor (by linarith) (δ / 2) (half_pos hδ),
     floor_range α β hα hαβ (by linarith),
     floor_variance_rate α β t hα hαβ (by linarith) ht,
     eventually_ge_atTop (2 : ℝ)] with N hint hfloor hvar hN

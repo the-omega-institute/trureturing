@@ -1,0 +1,53 @@
+**定义 C-8.4（右列消息坐标）。** 对非负核
+$`H=\begin{pmatrix}A&B\\C&D\end{pmatrix}`$，取非零非负右消息 ℎ，且 $`h_0\gt 0`$，令 $`t=h_1/h_0\ge0`$。在 $`A+Bt\gt 0`$ 时，左消息 𝐻ℎ 的一／零比例是
+
+
+<table><tbody><tr><td>
+
+```math
+T_H(t)=\frac{C+Dt}{A+Bt},\qquad
+T_H'(t)=\frac{\det H}{(A+Bt)^2}.
+```
+
+</td></tr></tbody></table>
+
+
+**证明。** $`Hh=h_0(A+Bt,C+Dt)^{𝖳}`$；商求导的分子为
+𝐷(𝐴+𝐵𝑡)-𝐵(𝐶+𝐷𝑡)=𝐴𝐷-𝐵𝐶。□
+
+纯代数导数只需分母非零；概率消息比例须分母正。若 $`h_0=0`$，直接计算 𝐻ℎ，不套有限 𝑡 坐标；若返回零分量为零，有限比值也未定义。此响应是外端权的收缩比例，不是默认随机转移或额外因果实验。
+
+对单位排斥，
+
+
+<table><tbody><tr><td>
+
+```math
+T_{Q_{\mathrm{ex}}}(t)=\frac1{1+t},\quad
+\varphi=\frac{1+\sqrt5}{2},\quad
+t_*=\varphi^{-1},\quad
+T_{Q_{\mathrm{ex}}}'(t_*)=-\varphi^{-2}.
+```
+
+</td></tr></tbody></table>
+
+
+固定点方程为 $`t^2+t-1=0`$，唯一正根 $`\varphi^{-1}`$，且 $`1+t_*=\varphi`$。消息复合满足 $`T_{H_1H_2}=T_{H_1}\circ T_{H_2}`$，在同一固定点用链式法则得到
+
+
+<table><tbody><tr><td>
+
+```math
+
+(T_{Q_{\mathrm{ex}}^3})'(t_*)=-\varphi^{-6},
+\qquad
+(T_{W_3})'(t_*)=(T_{Q_{\mathrm{ex}}^2})'(t_*)
+=+\varphi^{-4}.
+```
+
+</td></tr></tbody></table>
+
+
+三次 $`Q_{\mathrm{ex}}`$ 是三位置外接缝核；三位置实际端点 $`W_3`$ 只有两条边。负号与局部偏差换边、倍率与局部衰减来自此固定点计算。它不提供所有 𝑡≥0 的统一严格一步收缩，因为
+$`|T_{Q_{\mathrm{ex}}}'(0)|=1`$；也不提供任意非单位活动链的黄金速率。
+

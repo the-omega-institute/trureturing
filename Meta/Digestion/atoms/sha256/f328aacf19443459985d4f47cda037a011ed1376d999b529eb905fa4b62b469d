@@ -1,0 +1,34 @@
+**定义 20.3（自由两来源仿射候选类）。**令 $T_2$ 为由不同符号 $1,x,y$、一元构造子 $U$ 和有序二元构造子生成的自由真含幺 $U$-magma，只施加双侧单位律。采用 §12 的单位约简正规项：$1,x,y,Us$ 均为正规项，两个非单位正规项的有序二元节点也是正规项；乘积中的单位因子先约简，其他括号与次序全部保留。特别，$U1$、$U^31$ 和 $1$ 是不同原项。$T_2$ 可数且无限。
+
+在 $\mathbb C^3$ 的标准正交基 $e_1,e_2,e_3$ 中定义
+
+$$
+\begin{gathered}
+\psi(1)=0,\quad \psi(x)=e_1,\quad \psi(y)=e_2,\\
+\psi(s\cdot z)=\psi(s)+\psi(z),\qquad
+\psi(Us)=\omega\psi(s)+e_3,\\
+\kappa(s,z)=\|\psi(s)-\psi(z)\|^2.
+\end{gathered}
+\tag{20.8}
+$$
+
+单位约简与这些递归相容。总漂移实际为 $e_3$，最小总空间是 $\mathbb C^3$，因为 $\psi(U1)=e_3$。
+
+令 $\mathcal A$ 为全部函数 $q:T_2^2\to\mathbb R$ 的以下类：对每个有序项对有 $0\le q(s,z)\le\kappa(s,z)$，对全部有序项四元组有完整原关系
+
+$$
+\sum_{k=0}^2q(a\cdot U^ku,b\cdot U^kv)
+=3q(a,b)+3q(u,v).
+\tag{20.9}
+$$
+
+不加对称、负型、返回、表示或纤维下降。零对角由支配自动成立。固定
+
+$$
+P=x\cdot(U^31),\qquad
+\Delta(q)=q(P,y)-q(x,y).
+\tag{20.10}
+$$
+
+$P$ 不与 $x$ 合并；$\psi(P)=\psi(x)=e_1$，故 $\kappa(P,y)=\kappa(x,y)=2$。
+

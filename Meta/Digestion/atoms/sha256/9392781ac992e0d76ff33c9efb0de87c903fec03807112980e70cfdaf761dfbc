@@ -1,0 +1,45 @@
+#### 定理 5.1：固定子空间的芝诺极限与误差
+
+设 $H=H^\dagger$ 为有限维 Hamiltonian，$\hbar>0$， $P$ 为正交投影，$Q=I-P$，$t\in\mathbb R$。令
+
+$$
+A_N=\left(Pe^{-\mathrm iHt/(N\hbar)}P\right)^N .
+$$
+
+则
+
+$$
+A_N\longrightarrow e^{-\mathrm iPHPt/\hbar}P,
+$$
+
+且
+
+$$
+\boxed{\;
+ \left\|A_N-e^{-\mathrm iPHPt/\hbar}P\right\|
+ \le\frac{t^2}{2N\hbar^2}
+ \left(\left\|H\right\|^2+\left\|PHP\right\|^2\right)
+ \le\frac{t^2\left\|H\right\|^2}{N\hbar^2}.
+ \;}
+$$
+
+**证明。**
+
+令 $\delta=t/N$，$A=Pe^{-\mathrm iH\delta/\hbar}P$， $B=e^{-\mathrm iPHP\delta/\hbar}P$。两者均为收缩算子。 对任意 Hermitian $K$，积分余项及酉性给出
+
+$$
+\left\|e^{-\mathrm iK\delta/\hbar}-I+\mathrm iK\delta/\hbar\right\|
+ \le\frac{\delta^2\left\|K\right\|^2}{2\hbar^2}.
+$$
+
+$A$ 与 $B$ 的零阶、一阶项均为 $P-\mathrm iPHP\delta/\hbar$， 故单步误差至多为定理右端的 $1/N$ 倍。 使用不要求对易的恒等式
+
+$$
+A^N-B^N
+ =\sum_{k=0}^{N-1}A^{N-1-k}(A-B)B^k
+$$
+
+及收缩性，得到 $N$ 倍单步误差界。 由于 $B^N=e^{-\mathrm iPHPt/\hbar}P$，结论成立。
+
+$\square$
+

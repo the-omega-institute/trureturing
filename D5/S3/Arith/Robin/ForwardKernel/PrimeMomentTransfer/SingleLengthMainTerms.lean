@@ -17,7 +17,7 @@ open D5.S3.Arith.Robin.ForwardKernel.FourthTransfer.FourthMomentAsymptotic
 noncomputable section
 set_option autoImplicit false
 
-private theorem floor_log_difference (v : ℝ) (hv : 1 ≤ v) :
+theorem floor_log_difference (v : ℝ) (hv : 1 ≤ v) :
     |Real.log v - Real.log (⌊v⌋₊ : ℝ)| ≤ 1 / (⌊v⌋₊ : ℝ) := by
   have hK : (1 : ℝ) ≤ (⌊v⌋₊ : ℝ) := by
     have hnat : (1 : ℕ) ≤ ⌊v⌋₊ := Nat.le_floor (by simpa using hv)

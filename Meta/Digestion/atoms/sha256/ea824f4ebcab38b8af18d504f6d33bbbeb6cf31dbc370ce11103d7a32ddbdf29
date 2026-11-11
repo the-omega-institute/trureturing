@@ -1,0 +1,18 @@
+**定义 C-59.2（正乘积活动来源）。** 固定整数 $n\ge5$，顶点集 $V=\mathbb Z/n\mathbb Z$，边为 $\{j,j+1\}$。定义
+
+$$
+\mathcal B_n=\{b\in\{0,1\}^{V}:b_jb_{j+1}=0\text{ 对所有 }j\},
+\qquad \lambda_j>0.
+$$
+
+完整来源律另行规定为
+
+$$
+\omega_\lambda(b)=\prod_{j\in V}\lambda_j^{b_j},\qquad
+\mathcal Z=\sum_{b\in\mathcal B_n}\omega_\lambda(b),\qquad
+\mathbb P_\lambda(B=b)=\frac{\omega_\lambda(b)}{\mathcal Z}.
+\tag{C59.1}
+$$
+
+在 $\mathcal B_n$ 外概率为零。空配置权一，所以 $\mathcal Z>0$；每个合法配置都有正概率。相邻排斥只规定支持，乘积权是额外的来源假设。总占位 $\sum_jB_j$ 不固定，也不作关于这个总数的条件化。所有概率均来自这一份共同律，不分别拼接不同来源的窗口。
+

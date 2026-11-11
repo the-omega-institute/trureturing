@@ -1,0 +1,17 @@
+**完整白话 41.3。** 原问题是一张已经给定的比较表：把同一个世界里的两件实际对象送进去，它返回一个有方向的答案。二维窗口里的答案已经认得，但大对象会同时投影到许多不同大小的窗口；只在其中一个窗口选好矩阵，不能保证原来那件对象真的被接住，也不能保证同一次配平在别的窗口合法。这里使用有限层次：先处理最大的窗口，再往下处理。当前层的一名局部演员可以精确提升成原世界中的一个对象。这个对象在更小窗口看不见，在当前层是所需的一条射线，在更大窗口可能拖着任意尾部。尾部没有被剪掉：更大窗口的整张旧表已经在上一层认回，正好用来支付它。
+
+方向也不能随意拼。选一对在当前层确实落在二维角里的实际对象，看它们自己的同一份旧输出；更大层已经认得这份输出。输出等于正交换子或负交换子的两个零集，就会把相反方向隔成真正的谱开集。于是方向只需放在当前层及以上那个理想的中央乘子里，无须越过交换边界。这个乘子只乘交换子等已经属于理想的东西，原对象本身不需要被搬到一个更大的域。
+
+真正运输时，先在原代数内写出两份明确的逆标签，使配平的负端点逐字等于当前原输入。然后才检查它们的两条内行：更小层为零，当前层先由两条正交射线约束，再由箭头对齐认回，更大层由已经取得的旧表公式支付。所有窗口同时通过后，才调用那一次原PB。每个前缀都保持这个次序，不能只凭某一点的矩阵相等换掉旧答案。当前层中，最多有限多个这样的相位把同一原输入送到它自己的点上正终点；终点自己的虚标签为零，正预算使终点自己的旧响应为零，旧值再沿原配平传回。有限最高阶让这个过程最终走完整个代数，线性、局部性和同一个结合乘法都是随后得到的结论。
+
+最后的几何只有非交换谱上的两种方向。若一条边界已经完全交换，交换子在那里消失，两边方向可以不同而实际输出仍连续；强求符号穿过这条边界会删掉真实合法模型。若边界仍能看见非零交换子，同一输出就会约束两边方向相容。这个简化解决的是同一原比较表的数学识别。它仍不制造准备设备、相关联合、完整菜单、整台过程的每个未来、读后活动输出、真实返回或物理时间；这些必须按完整来源合同在原世界逐项取得。
+
+[SH-AH]: https://github.com/the-omega-institute/trureturing/blob/2addd6f369b7387226c2b0cc984623dd3efe40a1/docs/develop/theory/AURIC_ORIGINAL_ATOMIC_SEPARATION_AND_PB_RECONSTRUCTION_CONTINUATION.md
+[SH-OP]: https://github.com/the-omega-institute/trureturing/blob/2addd6f369b7387226c2b0cc984623dd3efe40a1/docs/develop/theory/AURIC_ORIGINAL_POLYNOMIAL_ZERO_RESPONSES_AND_CAYLEY_DOMAIN_BOUNDARIES.md
+[SH-SQ]: https://github.com/the-omega-institute/trureturing/blob/2addd6f369b7387226c2b0cc984623dd3efe40a1/docs/develop/theory/AURIC_ZERO_DIMENSIONAL_CENTER_SQUARE_ORBIT_RECONSTRUCTION.md
+[SH-AQ]: https://github.com/the-omega-institute/trureturing/blob/2addd6f369b7387226c2b0cc984623dd3efe40a1/docs/develop/theory/AURIC_C128_ARBITRARY_DIMENSIONAL_STATIC_QUANTUM_RECONSTRUCTION.md
+[SH-CO]: https://github.com/the-omega-institute/trureturing/blob/2addd6f369b7387226c2b0cc984623dd3efe40a1/docs/develop/theory/AURIC_FIB_COMPARISON_ORDER_AND_POSITIVITY_BOUNDARIES_CONTINUATION.md
+[SH-N3]: https://github.com/the-omega-institute/trureturing/blob/bc937d93159bedf6c321837e0f498bc4261bafe7/docs/develop/theory/AURIC_ORIGINAL_ATOMIC_SEPARATION_AND_PB_RECONSTRUCTION_CONTINUATION.md
+[SH-TV]: https://arxiv.org/pdf/2101.04522v2
+[SH-DH]: https://arxiv.org/pdf/1307.4458v1
+

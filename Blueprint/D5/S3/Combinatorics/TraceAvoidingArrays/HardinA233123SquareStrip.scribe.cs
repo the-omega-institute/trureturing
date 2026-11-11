@@ -35,6 +35,8 @@ internal sealed class HardinA233123SquareStripDocument : IScribeDocumentDefiniti
                 + "All sums range over the displayed finite type.")),
             Def("rowlegal", "rowLegal", "The horizontal bond", RowLegalFormula(),
                 "There is exactly one horizontal bond in a two-column row."),
+            Def("decidable-rowlegal", "instDecidableRowLegal", "Deciding the horizontal bond", DecidableRowLegalFormula(),
+                "The defining expression is inferInstanceAs for the displayed conjunction."),
             Def("bonds", "bonds", "The two vertical bonds", BondsFormula(),
                 "The same column index is used in both consecutive rows."),
             Def("count", "a", "The literal filtered count", CountFormula(),
@@ -93,6 +95,16 @@ internal sealed class HardinA233123SquareStripDocument : IScribeDocumentDefiniti
             Blocks(Paragraph(Text(prose))), DescribeRole.Theorem,
             new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233123"),
                 ResolutionKind.Proved));
+
+    private static Formula DecidableRowLegalFormula()
+    {
+        var c = V("c");
+        var x = App(c, Index(0)); var y = App(c, Index(1));
+        return All("c", Col(), Eq(
+            Typed(Self("instDecidableRowLegal", c), Call("Decidable", Parenthesized(Self("rowLegal", c)))),
+            Call("inferInstanceAs", Parenthesized(Call("Decidable",
+                Parenthesized(And(Ne(x, y), Ne(Add(Val(x), Val(y)), D(5)))))))));
+    }
 
     private static Formula RowLegalFormula()
     {

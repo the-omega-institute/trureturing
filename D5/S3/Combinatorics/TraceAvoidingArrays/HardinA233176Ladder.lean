@@ -242,7 +242,7 @@ def Legal {n : ℕ} (A : Fin 3 × Fin n → Fin 6) : Prop :=
       (r.val ≤ s.val + 1 ∧ s.val ≤ r.val + 1) →
       A (r, j) ≠ A (s, ⟨j.val + 1, h⟩) ∧
         (A (r, j)).val + (A (s, ⟨j.val + 1, h⟩)).val ≠ 5) ∧ normal A
-private instance instDecidableNormal {n : ℕ} (A : Fin 3 × Fin n → Fin 6) :
+instance instDecidableNormal {n : ℕ} (A : Fin 3 × Fin n → Fin 6) :
     Decidable (normal A) :=
   inferInstanceAs (Decidable (∀ _, (_ → _) ∧ (_ → _)))
 private instance instDecidableLegal {n : ℕ} (A : Fin 3 × Fin n → Fin 6) :

@@ -1,0 +1,35 @@
+**命题 C-18.5（全部合法四角比一仍有支撑纠缠）。** 真实另供正平方根纯态 $`|\Psi_*\rangle=\sum\sqrt{p^*_{ij}}|i,j\rangle`$。对正质量组，取
+
+
+```math
+|R_k\rangle=\sum_{i\in R_k}\sqrt{\mu_i/\mu(R_k)}|i\rangle,
+\quad |C_k\rangle=\sum_{j\in C_k}\sqrt{\nu_j/\nu(C_k)}|j\rangle.
+```
+
+
+删除零组后有
+
+
+```math
+|\Psi_*\rangle=\sqrt c|R_0C_0\rangle+\sqrt b|R_0C_1\rangle+
+\sqrt a|R_1C_0\rangle,
+\quad A_* =\begin{pmatrix}\sqrt c&\sqrt b\\\sqrt a&0\end{pmatrix},
+```
+
+
+其 Schmidt 概率（零项删除）为
+
+
+<table><tbody><tr><td>
+
+```math
+\lambda_\pm=(1\pm\sqrt{1-4ab})/2.
+```
+
+</td></tr></tbody></table>
+
+
+秩二恰 $`ab\gt 0`$；完整边缘全正且 $`a+b\lt 1`$ 时，所有合法 $`\chi_{ij}=1`$。均匀边缘谱 4/5,1/5。
+
+**证明。** 各组正交，三合法块内平方根振幅分别因子化，逐格对回 §16 的 $`p^*`$，质量 𝑐,𝑏,𝑎。$`\mathrm{tr}A_*A_*^\dagger=1`$，$`\det A_*A_*^\dagger=ab`$，解特征方程给式；𝑎𝑏≤1/4 由 𝑎+𝑏≤1。𝑎=0 或 𝑏=0 删除零组后秩一；𝑎=1,𝑏=0 和对称端点也是秩一。饱和 $`c=0,a,b\gt 0`$ 仍秩二，但 00 锚为零，不能继续声称十二个 𝜒 都定义。内部概率四角比一、振幅全正给 𝜒=1，禁止块本身阻止乘積；四角只描述合法支撑内额外偏好。经典对角混合 $`\sum p^*_{ij}|i\rangle\langle i|\otimes|j\rangle\langle j|`$ 显然可分。纯态需要真实联合相干制备，不从原生禁止格自动获得物理纠缠。□
+

@@ -1,0 +1,115 @@
+**定理 23.2（共同群尾巴与独立零尾巴都不改变原比较）。**在定义 23.1 下，对全部原 $a,b\in M$ 和 $g\in G$，有
+
+$$
+d(a\cdot g,b\cdot g)=d(a,b).
+\tag{23.4}
+$$
+
+将定理 21.3 精确用于限制 $G,U|_G,d|_{G^2}$，记所得最小表示为 $F_G:G\to H_G$，漂移为 $t_G=F_G(Ue)$，并令 $Z=\ker F_G$。则在全部原标签上有两个端点的独立不变性：
+
+$$
+d(a\cdot z,b\cdot w)=d(a,b)
+\qquad(a,b\in M,\ z,w\in Z).
+\tag{23.5}
+$$
+
+特别 $p_3\in Z$，所以两个普遍第三标记返回成立：
+
+$$
+d(P_3a,b)=d(a,b),\qquad d(a,P_3b)=d(a,b)
+\qquad(a,b\in M).
+\tag{23.6}
+$$
+
+**证明。**第一步固定任意原 $a,b\in M$，只在实际群尾巴上定义
+
+$$
+h(x)=d(a\cdot x,b\cdot x),\qquad
+m=\inf_{x\in G}h(x),\qquad 0\le m\le h(e)<\infty.
+$$
+
+对任意 $x,u\in G$，将 (23.1) 用于实际背景 $a\cdot x,b\cdot x$ 和增量 $u,u$。由于 $U^ju\in G$，(23.2) 精确给出
+
+$$
+\sum_{j=0}^2h(x\cdot U^ju)=3h(x).
+\tag{23.7}
+$$
+
+给定目标 $y\in G$，对每个 $x\in G$ 取实际增量 $u=x^{-1}\cdot y$。第零项是 $h(y)$，另外两项至少为 $m$，故
+
+$$
+0\le h(y)-m\le3\bigl(h(x)-m\bigr).
+\tag{23.8}
+$$
+
+对 $x$ 取下确界，得 $h(y)=m$；取 $y=e$ 得 $m=d(a,b)$。这证明 (23.4)，不要求下确界取到，也不要求 $h$ 有统一上界。
+
+第二步只在 $G$ 内复用定理 21.3。继承群、$U$-稳定、有限非负零对角及完整限制关系已逐项满足其前件，因此
+
+$$
+\begin{gathered}
+F_G(gh)=F_Gg+F_Gh,\qquad F_G(Ug)=\omega F_Gg+t_G,\\
+d(g,h)=\|F_Gg-F_Gh\|^2\quad(g,h\in G),\qquad
+\omega=\exp(2\pi i/3).
+\end{gathered}
+\tag{23.9}
+$$
+
+于是 $Z$ 是 $G$ 的正规子群，$d(u,v)=0$ 对全部 $u,v\in Z$ 成立。这里只取得群内表示，没有把它预先延到 $M$。定义归一化的实际群标签
+
+$$
+T_ju=(U^ju)\cdot p_j^{-1}\quad(j=0,1,2).
+$$
+
+仿射递推给 $F_G(U^ju)=\omega^jF_Gu+\sum_{r=0}^{j-1}\omega^rt_G$，空和为零，故
+
+$$
+F_G(T_ju)=\omega^jF_Gu,\qquad T_j(Z)\subseteq Z,\qquad
+F_G(p_3)=(1+\omega+\omega^2)t_G=0.
+\tag{23.10}
+$$
+
+这里不需要 $U(Z)\subseteq Z$；非零漂移恰由实际 $p_j^{-1}$ 消去。
+
+仍固定任意原 $a,b\in M$，现在在两份独立零尾巴上定义
+
+$$
+k(z,w)=d(a\cdot z,b\cdot w),\qquad
+\mu=\inf_{(z,w)\in Z^2}k(z,w),\qquad
+0\le\mu\le k(e,e)<\infty.
+$$
+
+对 $z,w,u,v\in Z$，将 (23.1) 用于背景 $a\cdot z,b\cdot w$ 和增量 $u,v$。每个第 $j$ 项先由 (23.4) 同时右乘 $p_j^{-1}$，再只用 (23.2) 与 $G$ 内结合律，得到
+
+$$
+\begin{aligned}
+&d\bigl((a\cdot z)\cdot U^ju,(b\cdot w)\cdot U^jv\bigr)\\
+&\quad=d\bigl(((a\cdot z)\cdot U^ju)\cdot p_j^{-1},
+                 ((b\cdot w)\cdot U^jv)\cdot p_j^{-1}\bigr)\\
+&\quad=d\bigl(a\cdot(z\cdot T_ju),b\cdot(w\cdot T_jv)\bigr)
+=k(z\cdot T_ju,w\cdot T_jv).
+\end{aligned}
+$$
+
+由 $d(u,v)=0$，完整关系因此成为
+
+$$
+\sum_{j=0}^2k(z\cdot T_ju,w\cdot T_jv)=3k(z,w).
+\tag{23.11}
+$$
+
+给定任意目标 $(z_0,w_0)\in Z^2$，对每个 $(z,w)\in Z^2$ 取实际群增量
+
+$$
+u=z^{-1}\cdot z_0,\qquad v=w^{-1}\cdot w_0.
+$$
+
+因 $T_0u=u$、$T_0v=v$，(23.11) 的第零项是 $k(z_0,w_0)$；其余参数仍在 $Z^2$，所以
+
+$$
+0\le k(z_0,w_0)-\mu\le3\bigl(k(z,w)-\mu\bigr).
+\tag{23.12}
+$$
+
+对 $(z,w)$ 取下确界，得 $k(z_0,w_0)=\mu$。再取目标 $(e,e)$，得 $\mu=d(a,b)$，即 (23.5)。由 (23.10) 的 $p_3\in Z$，分别取 $(z,w)=(p_3,e),(e,p_3)$，便是 (23.6)。整个证明既没有使用原 $a,b$ 的逆元，也没有交换比较端点；零费用到完整行列不变的桥梁是 (23.11)–(23.12)，而非对零距离的预先识别。证毕。
+

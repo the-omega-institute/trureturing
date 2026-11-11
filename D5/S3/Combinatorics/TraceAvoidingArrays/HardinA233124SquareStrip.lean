@@ -11,6 +11,7 @@ admission_basis: open-problem-resolution (#28306; Proved)
 escape_witness: none; every declaration is bind-only. The all-height reduction v_eq_w
 instantiates Function.Semiconj.iterate_right at the boundary-class map after the
 finite one-step premises (scanner fibres, row_counts, valid_next) are normalized.
+instDecidableValid is the public decidability instance for Valid.
 Direct frozen dependency:
 D5/S3/Combinatorics/TraceAvoidingArrays/HardinA233175PairStrip.Seen
 (statement_id sha256:db13d94501d24f27e6e69604bb633af95ff3309c5698815c44e12d2e52739fce).
@@ -155,7 +156,7 @@ private theorem counting_bridge (n : ℕ) : (a (n + 1) : ℤ) = total (v n) :=
 def Valid (s : Seen) (p : Fin 3 → Fin 3) : Prop :=
   s.1 = true ∧ p 0 ≠ p 1 ∧ p 1 ≠ p 2 ∧ (s.2 = false → ∀ j, p j ≠ 2)
 
-private instance instDecidableValid (s : Seen) (p : Fin 3 → Fin 3) : Decidable (Valid s p) :=
+instance instDecidableValid (s : Seen) (p : Fin 3 → Fin 3) : Decidable (Valid s p) :=
   inferInstanceAs (Decidable (_ ∧ _ ∧ _ ∧ (_ → ∀ _, _)))
 
 def boundaryClass (s : Seen) (p : Fin 3 → Fin 3) : Fin 3 :=

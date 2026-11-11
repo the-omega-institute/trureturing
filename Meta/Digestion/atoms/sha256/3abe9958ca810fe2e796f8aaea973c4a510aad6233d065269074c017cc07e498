@@ -1,0 +1,86 @@
+**Proposition 12.4 (separately full-risk-feasible, nonnative marginals with no common flow).** Let
+
+$$
+M_p=\frac{P_{p,a}+P_{p,b}}2,\qquad
+M_\beta=\frac{P_{\beta,a}+P_{\beta,b}}2,\qquad
+\varepsilon=\frac1{10000},
+$$
+
+$$
+Q_\pm=M_p\pm\varepsilon(\delta_\alpha-\delta_{\beta\beta}),\qquad
+W_\pm=M_\beta\pm\varepsilon(\delta_\beta-\delta_{\alpha\alpha}),
+$$
+
+$$
+\nu_p=\frac{\delta_{Q_+}+\delta_{Q_-}}2,\qquad
+\nu_\beta=\frac{\delta_{W_+}+\delta_{W_-}}2.
+\tag{12.11}
+$$
+
+These are candidate descriptor marginals, not an observer. They belong to the original regular law spaces, satisfy every complete endpoint coordinate box in (11.29), have the full endpoint-midpoint barycentres and hence both event midpoint means in (11.30), and obey
+
+$$
+\int\operatorname{TV}(D,P_{s,r_k})\,d\nu_s(D)\le\rho_s
+\quad\text{for every supported }k\text{ and }s\in\{p,\beta\}.
+\tag{12.12}
+$$
+
+Nevertheless no compatible pair has these marginals. None of the four descriptors is a Borel mixture of native laws $P_{s,r}$ with $r\in[a,b]$. The respective native-law and native-successor-residual hypotheses of [NATIVE-MIXTURE](https://github.com/the-omega-institute/trureturing/blob/28ad453e41abaed367803049823da3f69c1fd328/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_MIXTURE_RECURRENCE_OBSTRUCTION.md) and [NATIVE-ACQUIRED](https://github.com/the-omega-institute/trureturing/blob/28ad453e41abaed367803049823da3f69c1fd328/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ACQUIRED_RESIDUAL_OBSTRUCTION.md) are not premises of this proposition.
+
+**Proof.** The changed p coordinates have half endpoint widths $1/30,19/450$; the changed suspended coordinates have half widths $1/30,11/450$. All exceed $\varepsilon$. Thus all four descriptors are nonnegative normalized laws inside the full endpoint boxes; all other coordinates are midpoint coordinates, including the zero infinite coordinates.
+
+Write $h(r)=r(1-r)$. For $j\ge1$ their p tail masses are $(h(a)^j+h(b)^j)/2\le(6/25)^j\le\lambda^j$, and their suspended tail masses are $(a h(a)^j+b h(b)^j)/2\le b\lambda^j$. At $j=0$ the p mass is one; the suspended alpha-cylinder masses are $11/30\mp\varepsilon\le b$. The immediate emission bounds also hold. This verifies membership in exactly (11.2), without completion conditioning.
+
+Their full barycentres are $M_p,M_\beta$. Within an endpoint coordinate box, the two endpoint TV distances are affine functions of the descriptor coordinates. Averaging (12.11) therefore makes both endpoint configuration losses exactly $\rho_s$. This proves (12.12) for $k=1,2$ while keeping TV inside the descriptor average.
+
+For a complete-tail bound uniform over every nonendpoint depth, put $c=3/8$, $d=5/13$. All original parameters $r_k$ with $k\ge3$ lie in $[c,d]$ [ST, Section 3.1]. Set
+
+$$
+F_p=\{w_{j,i}:0\le j<4,\ i\in\{0,1\}\},\qquad
+F_\beta=\{\beta\}\cup\alpha F_p,
+$$
+
+$$
+H_p(r)=h(r)^4,\qquad H_\beta(r)=r h(r)^4.
+$$
+
+For $c\le r\le d$, every coordinate $P_{s,r}(\omega)$ with $\omega\in F_s$ is monotone. Indeed the p coordinates are $r^{j+1}(1-r)^j$ and $r^j(1-r)^{j+2}$; their derivative signs are respectively $(j+1)-(2j+1)r$ and $j-(2j+2)r$. The alpha-prefixed suspended signs are $(j+2)-(2j+2)r$ and $(j+1)-(2j+3)r$, and its standalone beta decreases. For $0\le j<4$, none changes sign in $[c,d]$. Also $H_s(r)\le H_s(d)$. Consequently complete-law TV satisfies
+
+$$
+\operatorname{TV}(M_s,P_{s,r})\le B_s:=
+\frac12\sum_{\omega\in F_s}
+ \max\{|M_s(\omega)-P_{s,c}(\omega)|,
+       |M_s(\omega)-P_{s,d}(\omega)|\}
++\frac12\left(\frac{H_s(a)+H_s(b)}2+H_s(d)\right).
+\tag{12.13}
+$$
+
+The last term bounds both whole tail masses, including the infinite outcome. Substitution of the native masses [ST, (2.2)–(2.3)] gives the exact bounds
+
+$$
+B_p=\frac{2068244698214078338643191}{70149855778976563200000000}<\frac3{100},
+\qquad
+B_\beta=\frac{3283743424817}{168920121093750}<\frac1{50}.
+\tag{12.14}
+$$
+
+Each perturbed law is at TV distance $\varepsilon$ from its midpoint. Hence each nonendpoint loss is at most $B_s+\varepsilon$, strictly less than $\rho_p=1116529/22781250$ or $\rho_\beta=239/6750$ at its respective phase. This proves (12.12) simultaneously for arbitrary finite or countable installed support. For any original actual history, countable TV convexity applies to its same-depth posterior mixture, and the supplied full-record isometry $I_{C_0(h)}$ retains the complete target and these bounds. This marginal feasibility supplies no dynamics, source reset or borrowed trajectory.
+
+The coordinates of (12.11) are (12.9), so $D_B=D_A=0$. But their immediate emissions give
+
+$$
+J_p=J_\beta=\frac1{900}-\varepsilon^2
+                  =\frac{999991}{900000000}>0.
+\tag{12.15}
+$$
+
+For any proposed shared flow, (12.7) would require $0\ge J_p+J_\beta$, a contradiction. Thus even the first necessary residual identity cannot be met. Equivalently, Theorem 12.2 would require native endpoint-atomic marginals different from (12.11). The four-moment identities have therefore separated an explicitly all-supported-risk-feasible pair, rather than supplied an unconsumed inequality.
+
+Finally suppose one $Q_\pm$ were $\int P_{p,r}\,d\kappa(r)$ for a Borel probability measure on $[a,b]$. Its unchanged marker-0 coordinates at $j=1,\ldots,5$ imply
+
+$$
+\int r h(r)(h(r)-h(a))^2(h(r)-h(b))^2\,d\kappa(r)=0.
+$$
+
+The integral is a linear combination of those five unchanged moment coordinates, so equals its value for the fair endpoint mixture, namely zero. Its integrand is nonnegative. Since $r h(r)>0$ and $h$ is strictly increasing on $[a,b]$, $\kappa$ is supported on $\{a,b\}$. Its unchanged $j=1$ coordinate, together with normalization, forces fair endpoint weights, contradicting the perturbed alpha mass. For $W_\pm$, the unchanged alpha-prefixed marker-0 coordinates give the same argument with $r^2h(r)$ in place of $rh(r)$; the unchanged $j=1$ coordinate fixes fair weights, contradicting the perturbed standalone beta mass. Thus this incompatibility is not an instance of an assumed native-individual-law restriction. $\square$
+

@@ -188,7 +188,31 @@ Lean statement: `D5/S3/Analytic/Zeta/CatalanPrimeOddMoment.LFunction_zero_ne_zer
 
 For every prime p and every nonprincipal odd complex Dirichlet character modulo p, its Dirichlet L-function at zero is nonzero.
 
-**Remark 1.16 (LFunction_zero_eq_neg_weighted_sum_of_hurwitz_zero).**
+**Remark 1.16 (LFunction_zero_eq_neg_weighted_sum_general).**
+
+Lean statement: `D5/S3/Analytic/Zeta/CatalanPrimeOddMoment.LFunction_zero_eq_neg_weighted_sum_general`
+
+*Formalization.* `D5/S3/Analytic/Zeta/CatalanPrimeOddMoment.LFunction_zero_eq_neg_weighted_sum_general` (`✓ std3`).
+
+*Citation.* Yao Xu (2026). *catalan-lean4: CharacterSpecialValue*. URL: <https://github.com/cadamcat/catalan-lean4/blob/3dc9375da48d13751fd291f3ee0fda8fa18be56d/Catalan/Stickelberger/CharacterSpecialValue.lean>.
+
+*Commentary.*
+
+The same proof gives the weighted-zero formula at every nonzero modulus other than one, for every nonprincipal character. The original prime interface is retained. The conductor-four-r signed Merca bridge is its live consumer; this extension retains the full Yao Xu/catalan-lean4 notices.
+
+**Remark 1.17 (LFunction_zero_eq_neg_weighted_sum_general_of_hurwitz_zero).**
+
+Lean statement: `D5/S3/Analytic/Zeta/CatalanPrimeOddMoment.LFunction_zero_eq_neg_weighted_sum_general_of_hurwitz_zero`
+
+*Formalization.* `D5/S3/Analytic/Zeta/CatalanPrimeOddMoment.LFunction_zero_eq_neg_weighted_sum_general_of_hurwitz_zero` (`✓ std3`).
+
+*Citation.* Yao Xu (2026). *catalan-lean4: CharacterSpecialValue*. URL: <https://github.com/cadamcat/catalan-lean4/blob/3dc9375da48d13751fd291f3ee0fda8fa18be56d/Catalan/Stickelberger/CharacterSpecialValue.lean>.
+
+*Commentary.*
+
+The weighted-zero reduction from the supplied Hurwitz-zero identity works for every nonzero modulus other than one. The unconditional general formula supplies the original proved Hurwitz identity.
+
+**Remark 1.18 (LFunction_zero_eq_neg_weighted_sum_of_hurwitz_zero).**
 
 Lean statement: `D5/S3/Analytic/Zeta/CatalanPrimeOddMoment.LFunction_zero_eq_neg_weighted_sum_of_hurwitz_zero`
 
@@ -200,7 +224,7 @@ Lean statement: `D5/S3/Analytic/Zeta/CatalanPrimeOddMoment.LFunction_zero_eq_neg
 
 Assuming hurwitzZeta(toUnitAddCircle(t),0) = 1/2-t for every real t strictly between zero and one, every prime p and every nonprincipal complex Dirichlet character modulo p satisfy the negative weighted representative-sum formula displayed above. Oddness is not required for this equality.
 
-**Remark 1.17 (tendsto_expZeta_one_partial_sums).**
+**Remark 1.19 (tendsto_expZeta_one_partial_sums).**
 
 Lean statement: `D5/S3/Analytic/Zeta/CatalanPrimeOddMoment.tendsto_expZeta_one_partial_sums`
 
@@ -212,7 +236,7 @@ Lean statement: `D5/S3/Analytic/Zeta/CatalanPrimeOddMoment.tendsto_expZeta_one_p
 
 For every real t strictly between zero and one, the partial sums of exp(2 pi I t n)/n tend to expZeta(toUnitAddCircle(t),1). This version supplies the proved uniform tail bound, so it has no tail-bound assumption.
 
-**Remark 1.18 (expZeta_one_eq_neg_log).**
+**Remark 1.20 (expZeta_one_eq_neg_log).**
 
 Lean statement: `D5/S3/Analytic/Zeta/CatalanPrimeOddMoment.expZeta_one_eq_neg_log`
 
@@ -224,7 +248,7 @@ Lean statement: `D5/S3/Analytic/Zeta/CatalanPrimeOddMoment.expZeta_one_eq_neg_lo
 
 For every real t strictly between zero and one, expZeta(toUnitAddCircle(t),1) equals -log(1-exp(2 pi I t)).
 
-**Remark 1.19 (sinZeta_one_eq_of_mem_Ioo).**
+**Remark 1.21 (sinZeta_one_eq_of_mem_Ioo).**
 
 Lean statement: `D5/S3/Analytic/Zeta/CatalanPrimeOddMoment.sinZeta_one_eq_of_mem_Ioo`
 
@@ -239,6 +263,8 @@ For every real t strictly between zero and one, sinZeta(toUnitAddCircle(t),1) eq
 ## References
 
 - Truth anchor: `D5/S3/Analytic/Zeta/CatalanPrimeOddMoment.LFunction_zero_eq_neg_weighted_sum`
+- Truth anchor: `D5/S3/Analytic/Zeta/CatalanPrimeOddMoment.LFunction_zero_eq_neg_weighted_sum_general`
+- Truth anchor: `D5/S3/Analytic/Zeta/CatalanPrimeOddMoment.LFunction_zero_eq_neg_weighted_sum_general_of_hurwitz_zero`
 - Truth anchor: `D5/S3/Analytic/Zeta/CatalanPrimeOddMoment.LFunction_zero_eq_neg_weighted_sum_of_hurwitz_zero`
 - Truth anchor: `D5/S3/Analytic/Zeta/CatalanPrimeOddMoment.LFunction_zero_ne_zero_of_prime_odd`
 - Truth anchor: `D5/S3/Analytic/Zeta/CatalanPrimeOddMoment.arg_one_sub_exp_two_pi`

@@ -1,0 +1,20 @@
+**推论 55.2（原Gram、R与保质量表示）。** 对任意有限实际输入 $a_1,\ldots,a_m$、复系数 $z_l$ 及原评价 $\gamma$，
+
+$$
+\sum_{k,l}\overline z_kz_l
+\{\gamma(a_k\circ a_l)-i\gamma D(a_k,a_l)\}
+=\gamma_{\mathbb C}(Z^*\star_Q Z)\ge0,
+\quad Z=\sum_l z_l a_l.
+\tag{55.3}
+$$
+
+且同一旧输出作为外层输入满足原R：
+
+$$
+(a\circ b)\circ c-D(D(a,b),c)
+=a\circ(b\circ c)-D(a,D(b,c)).
+\tag{55.4}
+$$
+
+证明。55.3是55.1的正平方展开，55.4是自伴三输入结合律的实部。于是准确取得AQ32.1–32.2、23.1、6.3与AH40.1已列静态消费者的入口；这里直接复用其GNS后端。每个原评价延成相同范数与正锥上的正复泛函，GNS向量满足 $\|\xi_\gamma\|^2=m_\gamma$、$\gamma(a)=\langle\xi_\gamma,\Pi(a)\xi_\gamma\rangle$。原评价分离且决定锥，直和表示忠实、保单位、等距并反映正性。零质量对应零向量；一般非正常评价没有被删去或换成正常态。数学表示像不必是全 $B(H)$，也不产生实际准备或菜单。∎
+

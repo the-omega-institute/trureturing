@@ -1,0 +1,31 @@
+**引理 2.1（正铅笔等价式）。** 条件 (1.1) 等价于对每个 $z=x+iy\in\mathbb C$ 都有
+
+$$
+F_z:=t^2-2x(c\circ t)+|z|^2c^2+2y g\ \ge 0.
+\tag{2.1}
+$$
+
+代入 $g=K_\sigma(c,t)+s$，再置
+
+$$
+X_{x,y}=t-(x+i\sigma y)c,
+$$
+
+可得精确分解
+
+$$
+F_{x+iy}=X_{x,y}^*X_{x,y}+2ys.
+\tag{2.2}
+$$
+
+**证明。** 对每个正泛函，(1.1) 正好是 Hermitian 二阶矩阵
+
+$$
+\begin{pmatrix}
+\phi(c^2)&\phi(c\circ t)-i\phi(g)\\
+\phi(c\circ t)+i\phi(g)&\phi(t^2)
+\end{pmatrix}
+$$
+
+的行列式非负。将列向量 $(-z,1)$ 代入，得到 $\phi(F_z)\ge0$。反向地，$\phi(F_z)\ge0$ 对全部 $z$ 给出第二分量非零的全部二次型；第二分量为零时由 $\phi(c^2)\ge0$ 支付，故该标量矩阵半正定。正泛函分离自伴正锥，遂得到 (2.1) 与 (1.1) 的等价性。直接展开 $X_{x,y}^*X_{x,y}$，其交叉项为 $-2x(c\circ t)+i\sigma y[c,t]$，而 $2yK_\sigma(c,t)=i\sigma y[c,t]$，即得 (2.2)。这里仅对全部标量 $z$ 检验 $F_z$，未声称对应的二阶算子矩阵为正，也没有二正性结论。∎
+

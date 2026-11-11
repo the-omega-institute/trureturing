@@ -1,0 +1,29 @@
+**定义 6.1（有界奇 erf 多项式及有限相位精度）。** 令
+
+$$
+\begin{aligned}
+\epsilon_s&=\frac1{10000t^2},&H_s&=\log(16/\epsilon_s),&
+\kappa&=\delta^{-1}\sqrt{H_s},\\
+\rho&=1+\delta/2,&M_s&=(16/\epsilon_s)^2,\\
+n_s&=\text{不小于 }\frac{\log(32M_s/(\epsilon_s\delta))}{\log\rho}
+\text{ 的最小奇整数}.
+\end{aligned}
+\tag{6.1}
+$$
+
+令 $E_{n_s}$ 为 $\operatorname{erf}(\kappa x)$ 的 $n_s$ 阶 Chebyshev 截断，并取
+
+$$
+P_s(x)=\frac{E_{n_s}(x)}{1+\epsilon_s/8}.
+\tag{6.2}
+$$
+
+全部内外相位均由构造 5.3 的确定分解给出。如果要求有限位描述，将相位舍入为 $2\pi$ 的二进有理倍数，使角误差至多
+
+$$
+\zeta=\frac1{10^8t n_s(N+2)}.
+\tag{6.3}
+$$
+
+取足够的 $p_\phi$ 使 $2\pi2^{-p_\phi}\le\zeta$ 即可。相位门出现数至多 $100n_s(N+2)$，故完整理想酉的变化至多 $1/(10^6t)$。系数、探针及选择准备具有显式已知有限代数矩阵。相位及这些准备的公共表保留于固定程序口。
+

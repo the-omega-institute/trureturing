@@ -1,0 +1,38 @@
+### 17.4 第四步：精确原曲线的余项控制与正返回缺陷
+
+由 (17.1) 的原样定义，
+
+$$
+\ell_{1/J}\ge32768J^4\log(90J),\qquad
+N_{1/J}\ge\tfrac56\ell_{1/J},\qquad
+D_{1/J}\ge8{,}000{,}000N_{1/J}^2.
+\tag{17.21}
+$$
+
+特别地 $m_J\ge8{,}000{,}000N_{1/J}^2-1\ge4{,}000{,}000N_{1/J}^2$，所以对 $J\ge2$，
+
+$$
+\sqrt{m_J}\ge J^4\log J\ge J^3,\qquad
+\frac J{m_J}\le\frac1{J^2\sqrt{m_J}}.
+\tag{17.22}
+$$
+
+这些只是精确取整定义的后果，不将 $m_J$ 换成渐近替代量。因 $N=(J+1)^2\ge J^2$，(17.18)–(17.22) 给
+
+$$
+\delta_J\le\frac{C_0}{J^2\sqrt{m_J}}.
+\tag{17.23}
+$$
+
+还须排除零分母。在 $h=w$ 的中心 Dicke 基中，$f_w$ 的径向角形式使 $A_w$ 为加权升移位，且
+
+$$
+A_we_0=a e_1,\qquad A_w^\dagger e_1=a e_0,\qquad
+0<a=(m+1)\sqrt m\int_0^\infty
+\frac{s^2u}{s^2+u}(1+u)^{-m-2}\,du\le s/2.
+\tag{17.24}
+$$
+
+积分严格为正，上界也由 $\|A_w\|\le s/2$ 得到。相应不变二维子空间上的实际 $w$ 分支输出为
+$\cos(a)e_0|0\rangle+i\sin(a)e_1|1\rangle$。完整混合输出中，效果 $(I_R-\tau_w)\otimes I_K$ 检出至少 $\sin^2(a)/N>0$ 的泄漏，而 $\tau_w\otimes\omega_w$ 的该效果概率为零。故 $\delta_J\ge\sin^2(a)/N>0$。
+

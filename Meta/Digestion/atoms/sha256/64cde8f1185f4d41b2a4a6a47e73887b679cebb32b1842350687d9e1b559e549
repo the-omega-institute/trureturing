@@ -1,0 +1,62 @@
+## 1. 固定接口与问题边界
+
+设 $A$ 是含幺复 $C^*$-代数，$P$ 是实际投影，$C=PAP$。取非零正交投影 $p,q\le P$，令
+
+$$
+S=p+q,\qquad c=p+2q,\qquad
+K_\sigma(u,v)=\frac{\sigma i}{2}[u,v],\qquad \sigma\in\{1,-1\}.
+$$
+
+给定任意 $t=t^*$ 及
+
+$$
+s=s_p+s_q,\qquad s_p=s_p^*\in pAp,\qquad s_q=s_q^*\in qAq,\qquad
+g=K_\sigma(c,t)+s.
+$$
+
+对正泛函 $\phi$ 写
+
+$$
+B_\phi(U,V)=\phi(U^2)\phi(V^2)-\phi(U\circ V)^2,
+\qquad U=U^*,\ V=V^*.
+$$
+
+这里及下文的 $\phi\ge0$ 遍取同一 $A$ 上全部数学正泛函，不要求归一、忠实或相对于某个表示正常；零、不等及次归一质量均保留。数学读取不增加原物理评价标签，零质量和零 Gram 读数均不作除法。
+
+固定输出二表是
+
+$$
+\phi(g)^2\le B_\phi(c,t)\qquad(\phi\ge0).
+\tag{1.1}
+$$
+
+对每个 $x=x^*\in C$，令
+
+$$
+\begin{gathered}
+h=K_\sigma(c,x),\qquad r=c\circ x,\qquad k=c\circ t,\\
+R_+=x+h-k,\qquad R_-=x-h+k,\\
+V_+=t+r+g,\qquad V_-=t-r-g,\\
+L=-2x\circ(h-k)-2t\circ(r+g).
+\end{gathered}
+$$
+
+全部实际探针预算为
+
+$$
+|\phi(L)|\le
+\sqrt{B_\phi(R_+,V_+)}+\sqrt{B_\phi(R_-,V_-)}
+\qquad(\phi\ge0, x\in C_{\rm sa}).
+\tag{1.2}
+$$
+
+本卷给出一个允许真实角外环境连线的显式子类：在该子类中只用 (1.1) 就得到 $s=0$。此时 (1.2) 的充分性完全由同一已知 $C^*$-代数上的标准全局比较映射 $K_\sigma$ 支付，具体如下。承载原卷在上述固定提交的定义 0.1、5.1 已引用静态重构卷定义 35.1、定理 35.2 的标准模型 PB；取 $\mathcal A_0=A$、$\kappa=\sigma=\pm1$，式 (35.2) 的 PB 缺陷为零，对每个实际 $c,x,t\in A_{\rm sa}$ 均成立。一旦 $g=K_\sigma(c,t)$，本节的 $h,r,k,R_\pm,V_\pm,L$ 就准确成为该标准模型同一次 PB 的标签，因而
+
+$$
+L=K_\sigma(R_+,V_+)-K_\sigma(R_-,V_-).
+$$
+
+对任意自伴 $U,V$ 和全部 $\phi\ge0$，通常正 Gram／Cauchy–Schwarz 给 $|\phi(UV)|^2\le\phi(U^2)\phi(V^2)$，而 $|\phi(UV)|^2=\phi(U\circ V)^2+\phi(K_\sigma(U,V))^2$，故 $|\phi(K_\sigma(U,V))|\le\sqrt{B_\phi(U,V)}$。对上式两项取三角不等式即得 (1.2)，对全部 $x\in A_{\rm sa}$ 成立，尤其覆盖实际 $C_{\rm sa}$；同一 Gram 计算也给标准输出的 (1.1)。这里没有识别未知 $D$ 的外值，也没有构造实际未知总 $D$。任意 $A,t$ 下的固定输出／全部探针充分性仍是 OPEN。
+
+承载原文在固定提交上的字节 SHA-256 为 12879459b2e413632516b20d928d27d0b3b8619ee2e1f89830b7d7ef7664da96。
+

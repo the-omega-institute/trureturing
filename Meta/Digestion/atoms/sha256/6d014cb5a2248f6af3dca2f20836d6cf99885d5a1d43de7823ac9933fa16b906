@@ -1,0 +1,10 @@
+## 5. What simultaneous calibrated readouts force
+
+The two readouts are jointly compared with their required endpoint midpoints. Define
+
+$$
+t_p=\|f-C\mathbf1\|_\pi,
+\qquad t_\beta=\|h-H\mathbf1\|_\tau.
+\tag{5.1}
+$$
+

@@ -352,6 +352,18 @@ def case(tool, variant=None):
                 assert text.count(audit) == 1, 'missing or repeated escape-audit block'
                 assert '"pending CI reading"; never write `declared_validated` without the CI reading.' in text
                 assert 'required CI `current` job: run `gh run view <run-id> --log --job <current-job-id>`' in text
+        if tool.stem in ('stageb_prep', 'rework_brief') or (tool.stem == 'fill_mirror_fixes' and variant == 'defaults'):
+            filename = ('rework-sample.md' if tool.stem == 'rework_brief'
+                        else 'impl-op-w1-sample.stageB.filled.md')
+            text = (root / 'scratch/briefs' / filename).read_text()
+            block = (TOOLS / 'templates/blocks/ci-gate-block.md').read_text()
+            assert text.count(block) == 1, 'missing or repeated CI gate guidance'
+            assert '**PR cache recovery ' in block, 'missing diagnosis-first cache policy'
+            recovery = block.split('**PR cache recovery ', 1)[1]
+            assert 'CLAUDE.md §8.3' in recovery, 'cache recovery must reference its policy owner'
+            assert 'gh pr edit' not in recovery, 'generic failures must not prescribe labelling'
+            assert '30-minute' not in recovery, 'cache recovery must not duplicate CI budgets'
+            assert 'That is a missing PR seed' not in text, 'generic failure classified as missing seed'
         if variant == 'defaults':
             print('BRIEF_DEFAULTS tool='+tool.name+' exit='+str(result.returncode))
         outputs=collect(root,before)

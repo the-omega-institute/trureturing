@@ -1,0 +1,13 @@
+#### 定义 4.1：路径与标记
+
+设整体内部包含
+
+$$
+|\Psi_\phi\rangle
+ =\sqrt p\,|0\rangle|m_0\rangle
+ +e^{\mathrm i\phi}\sqrt q\,|1\rangle|m_1\rangle,
+ \qquad p,q\ge0,\quad p+q=1,
+$$
+
+标记态归一，$\gamma=\langle m_1|m_0\rangle$。 路径可见度由扫描 $\phi$ 后的平衡比较定义； 路径判别度由允许访问的标记测量定义。
+

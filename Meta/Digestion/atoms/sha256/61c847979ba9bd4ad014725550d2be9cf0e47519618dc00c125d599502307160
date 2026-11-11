@@ -1,0 +1,38 @@
+**定理 27A.2（实际有限见证的扩大排除域）。** 对定义 27A.1 的同一输入，每个取向分别有下列结论。
+
+1. 若 $\rho\ne0$ 且
+
+   $$
+   2697\varepsilon^2<1039\rho^2,
+   \tag{27A.5}
+   $$
+
+   则存在 $\delta_*(\rho,\varepsilon)>0$，使每个 $0<\delta<\delta_*$ 的 (27A.4) 都满足 $\mathcal G_\sigma(x_\delta,\phi_{\sigma,\delta})>0$，两笔原预算均严格为正。这里不要求 P2。
+2. 在明确的统一有限域
+
+   $$
+   0<|\rho|\le\frac12,\qquad 0<\varepsilon\le\frac{|\rho|}{2},
+   \tag{27A.6}
+   $$
+
+   固定取 $\delta=10^{-6}$，有
+
+   $$
+   \boxed{\mathcal G_\sigma(x_\delta,\phi_{\sigma,\delta})>\frac{\rho^2}{2}.}
+   \tag{27A.7}
+   $$
+
+   这些输入同时属于已付的完整全正 P2 区间 (25.2)。
+
+任意给定有限质量 $\mu>0$ 均可由同一个探针和向量
+
+$$
+\xi_{\sigma,\delta,\mu}
+=\sqrt{\frac{\mu}{1+\delta^2|U_\sigma|^2}}\,\xi_{\sigma,\delta}
+\tag{27A.8}
+$$
+
+取得严格违反；在 (27A.6) 的统一选择下，其差额严格大于 $\mu\rho^2/[2(1+\delta^2|U_\sigma|^2)]$。零质量的正泛函仍满足零等式。这些是反驳全称 PB 的同一实际读取见证，不是任何非零成员的全称 PB 证书。
+
+证明。先固定 $\sigma=1$，写 $U=\tau(3+2i)$、$\xi=\xi_{1,\delta}$。以下暂不代入 $\tau,d$ 的具体值，以展示配方；四列计算使用 $aU=-3/4-i/2$，而 (27A.4) 的参数确实满足该等式。
+

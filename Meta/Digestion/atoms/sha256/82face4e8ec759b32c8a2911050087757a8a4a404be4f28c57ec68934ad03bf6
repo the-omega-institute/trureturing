@@ -1,0 +1,33 @@
+### 11.8 The zero face, mathematical correspondence and residual problem
+
+At $\mathcal J=0$, both endpoint configuration risks at each phase equal their separate radii. Integrate the coordinate triangle identity (5.7). Its nonnegative right-hand side has expectation zero, so, for almost every descriptor and every complete atom,
+
+$$
+P_{s,a}(\omega)\wedge P_{s,b}(\omega)
+ \le D(\omega)\le
+P_{s,a}(\omega)\vee P_{s,b}(\omega).
+\tag{11.29}
+$$
+
+The simultaneous almost-everywhere statement follows because the complete carrier is countable. Inside this coordinate box, the two endpoint distances are opposite signed differences on the endpoint-positive event. Their equality gives
+
+$$
+\int Q(E_p)\,d\nu_p(Q)=C,\qquad
+\int W(E_\beta)\,d\nu_\beta(W)=H.
+\tag{11.30}
+$$
+
+This is the supplied endpoint geometry of [CLIP, Theorem 6.2], now imposed on the same marginals as both residual equations. The coordinate boxes, event midpoint means and all supported interior losses must coexist with (11.7). Separately feasible phase marginals or two scalar calibrated reports need not have this simultaneous compatibility. When an atomic pair is realized, Section 4's inverse applies to its resulting fixed $B,A$ with its full indexed paired arrays; it does not identify the unknown kernels from (11.30).
+
+The new source-relative inference is the implication from a compatible, possibly nonatomic pair of complete-law flows to one finite same-update generator with both full configuration losses controlled, and hence the equality with the all-shape regular infimum and the finite-atomicity criterion. [PAID, Theorem 9.2] already aggregates a supplied finite observer's circulation and proves the emission-successor covariance bound. Equations (11.15)–(11.20) extend that argument to measures without assuming a finite observer to begin with. [PAID, Section 10] already gives error-corrected bounded-shape certificates; [CLIP, Section 6] already gives compact completeness at a fixed finite shape. Those conclusions, standard probability compactness, conditional barycentres, Jensen's inequality and finite cycle decomposition are reused tools, not additional claims of novelty.
+
+For a primary-literature comparison, Leskela and Vihola, *Conditional convex orders and measurable martingale couplings*, [arXiv:1404.0999v3](https://arxiv.org/html/1404.0999v3), Theorems 1.2–1.3, concern probability laws on $\mathbb R^d$ with finite first moments, or probability kernels from a measurable parameter space into $\mathbb R^d$ with that integrability at every parameter. Convex order is equivalent to a martingale coupling; Theorem 1.3 additionally supplies a measurable family of pointwise couplings. Finite completed-word probability projections and their normalized residual projections are bounded finite-dimensional vectors, so the singleton-parameter hypotheses hold for such projected distributions. This supplies mature finite-dimensional barycentric-coupling theory. It does not by itself condition on the entire original descriptor, lift a sequence of unrelated projected witnesses to two full-law flows with the same marginals, or regenerate a finite observer with configuration-before-TV losses. No convex-order converse or new Strassen theorem is needed in the direct proof above. The correspondence identifies a source-specific uncovered delta, without a global priority claim.
+
+The suppliers used here have their full original hypotheses: [ST, Section 2.1] supplies complete stopped laws and the injective full-record renderer; [PAID, Lemma 2.1.1] supplies finite original-domain product realization; [PAID, Lemma 14.1] supplies common paid-history rows and countable-prior domination; [CLIP, Theorems 3.1 and 4.2] supplies complete-law clipping and the $61/11$ comparison; [PAID, Lemma 2.2 and Corollary 2.3] supplies finite stationary replacement in the unrestricted risk scope. These constructions do not preserve a preassigned total-resource or hard-defect budget. No reversible-candidate formula is a premise.
+
+The self-calibration gained by (11.7) is calibration of common realization: the two phase distributions of complete predicted laws must have conditional residual barycentres carried by shared acquired marginals. It does not reveal $K$, install its posterior or evaluate the optimum. The paired-event inequality (1.5) remains a necessary restriction on finite constructions; [RETURN9, Theorem 9.3] remains an additional necessary restriction when the original installed prior supports a nonendpoint depth $k\ge3$. Their free event-range and acquired-return variation terms are not replaced by risk-only bounds.
+
+For the fixed original installed support, the remaining mathematical question is whether the full endpoint faces (11.29), midpoint means (11.30), all supported configuration-loss bounds and both conditional residual equations admit a zero-level pair. If they do, finite atomicity with the sampler conditions decides the stated finite boundary; a general zero-level pair supplies finite positive-tolerance approximants. If the compact minimum is strictly positive, (11.23) transfers that evaluated positivity to the original unrestricted class. No zero-level pair, finite atomic zero-level pair or evaluated positive value is supplied here. The zero-versus-positive original infimum, its numerical value, finite exact attainment and fixed-resource optima consequently remain unresolved in the general-prior problem. The supplied two-endpoint-prior attainer and the supplied strictly positive-excess rational witness retain exactly their original scopes.
+
+- **RETURN9:** [Acquired-return p-emission variation](https://github.com/the-omega-institute/trureturing/blob/47cbb149f0695bff742784a5cb367a6fd15147e6/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RETURN_P_EMISSION_VARIATION.md), Theorem 9.3.
+

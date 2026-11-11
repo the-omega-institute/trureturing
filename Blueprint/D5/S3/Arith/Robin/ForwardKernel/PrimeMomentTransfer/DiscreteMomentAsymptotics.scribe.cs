@@ -17,6 +17,6 @@ internal sealed class DiscreteMomentAsymptoticsDocument : IScribeDocumentDefinit
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Assume zero less than alpha less than beta less than one, normalized singular-series values on the empty set and singletons, the four-point Hardy–Littlewood bound and interval correlation estimates. For every fixed endpoint window and positive epsilon, weighted discrete cubic and fourth moments have a uniform arithmetic transfer error of size C B N to the power one half plus epsilon times H to the moment order. The formal cubic and fourth envelopes share a nonnegative modulus, antitone from two and tending to zero, uniformly for lengths in the prescribed power band and logarithms in the dyadic window."))),
+                    "Assume zero less than alpha less than beta less than one, normalized singular-series values on the empty set and singletons, the mean-square correlation bound through natural order q and interval correlation estimates. For every endpoint window M>=1 and positive epsilon, weighted discrete moments of orders k in {2,3,4} with k<=q have a uniform arithmetic transfer error of size C B N to the power one half plus epsilon times H to the moment order. The formal cubic and fourth envelopes share a nonnegative modulus, antitone from two and tending to zero, uniformly for lengths in the prescribed power band and logarithms in the dyadic window."))),
                 DescribeRole.Theorem))));
 }

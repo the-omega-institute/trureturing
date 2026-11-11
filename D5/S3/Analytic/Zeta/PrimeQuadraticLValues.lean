@@ -51,21 +51,16 @@ theorem primeCharacter_odd (p : ℕ) [Fact p.Prime] (hp : p % 4 = 3) :
 
 /-- A finite doubling argument gives the half-interval sum from the actual analytic L(0).
 This theorem uses no class-number parameter or class-number identity. -/
-theorem half_sum_eq_LFunction_zero (p : ℕ) [Fact p.Prime] (hp : p ≠ 2)
-    (χ : DirichletCharacter ℂ p) (hne : χ ≠ 1) (hquad : χ.IsQuadratic) :
+theorem half_sum_eq_LFunction_zero_of_ne_one (p : ℕ) [Fact p.Prime] (hp : p ≠ 2)
+    (χ : DirichletCharacter ℂ p) (hne : χ ≠ 1) :
     (∑ x : ZMod p, if x.val ≤ (p - 1) / 2 then χ x else 0) =
-      (2 - χ 2) * LFunction χ 0 := by
+      (2 - (χ 2)⁻¹) * LFunction χ 0 := by
   have hpodd : p % 2 = 1 :=
     Nat.odd_iff.mp ((Fact.out : p.Prime).odd_of_ne_two hp)
   have htwo : (2 : ZMod p) ≠ 0 :=
     Ring.two_ne_zero ((ZMod.ringChar_zmod_n p).substr hp)
   have hχtwo : χ 2 ≠ 0 :=
     MulChar.apply_ne_zero_iff.mpr (isUnit_iff_ne_zero.mpr htwo)
-  have hχsq : χ 2 ^ 2 = 1 := by
-    rcases hquad 2 with h | h | h
-    · exact (hχtwo h).elim
-    · rw [h]; norm_num
-    · rw [h]; norm_num
   let W : ℂ := ∑ x : ZMod p, (x.val : ℂ) * χ x
   let c : ℂ := ∑ x : ZMod p, if x.val ≤ (p - 1) / 2 then χ x else 0
   have hval (x : ZMod p) : ((2 * x).val : ℂ) =
@@ -94,17 +89,25 @@ theorem half_sum_eq_LFunction_zero (p : ℕ) [Fact p.Prime] (hp : p ≠ 2)
       _ = χ 2 * (2 * W + p * c) := by
         simp only [← Finset.mul_sum, Finset.sum_add_distrib, Finset.sum_sub_distrib,
           htotal, mul_zero, sub_zero, W, c]
-  have hrelation : (p : ℂ) * c = (χ 2 - 2) * W := by
-    have h := congrArg (fun z : ℂ => χ 2 * z) hW
-    have hs : χ 2 * (χ 2 * (2 * W + p * c)) = 2 * W + p * c := by
-      rw [← mul_assoc, ← sq, hχsq, one_mul]
-    rw [hs] at h
+  have hrelation : (p : ℂ) * c = ((χ 2)⁻¹ - 2) * W := by
+    have h := congrArg (fun z : ℂ => (χ 2)⁻¹ * z) hW
+    rw [← mul_assoc, inv_mul_cancel₀ hχtwo, one_mul] at h
     linear_combination -h
   rw [CatalanPrimeOddMoment.LFunction_zero_eq_neg_weighted_sum p χ hne]
-  change c = (2 - χ 2) * (-W / (p : ℂ))
+  change c = (2 - (χ 2)⁻¹) * (-W / (p : ℂ))
   have hpne : (p : ℂ) ≠ 0 := Nat.cast_ne_zero.mpr (Fact.out : p.Prime).ne_zero
   apply mul_left_cancel₀ hpne
   rw [hrelation]
   field_simp [hpne] <;> ring
+
+/-- The established self-dual specialization retains its original interface. -/
+theorem half_sum_eq_LFunction_zero (p : ℕ) [Fact p.Prime] (hp : p ≠ 2)
+    (χ : DirichletCharacter ℂ p) (hne : χ ≠ 1) (hquad : χ.IsQuadratic) :
+    (∑ x : ZMod p, if x.val ≤ (p - 1) / 2 then χ x else 0) =
+      (2 - χ 2) * LFunction χ 0 := by
+  rw [half_sum_eq_LFunction_zero_of_ne_one p hp χ hne]
+  have hi : (χ 2)⁻¹ = χ 2 := by
+    rcases hquad 2 with h | h | h <;> simp [h]
+  rw [hi]
 
 end D5.S3.Analytic.Zeta.PrimeQuadraticLValues

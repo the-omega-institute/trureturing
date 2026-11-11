@@ -1,0 +1,18 @@
+**证明内零值 11.3（特征投影与正交乘积）。** 后面的证明消费以下两个直接后果，不另把有限秩先例重复计为新分类。若实际投影 $r\in A$ 满足 $ar=ra=\alpha r$，则
+
+$$
+D(a,tr)=D(tr,a)=0\quad(t\in\mathbb R).
+\tag{11.11}
+$$
+
+确实，$t\ne0$ 时 $a\circ(tr)=\alpha(tr)$，11.2 先使 $d=D(a,tr)=rdr$。对 $\xi\in r\mathcal H$，两输入分别作用为 $\alpha\xi,t\xi$，原 P2 的实 Gram 行列式为零，故 $\langle\xi,d\xi\rangle=0$。在 $r\mathcal H$ 内极化及 $d=rdr$ 给 $d=0$；$t=0$ 用零槽，反向用反对称性。无需 $r$ 具有 Hilbert 有限秩。
+
+若原自伴 $a,b$ 满足 $ab=ba=0$，则
+
+$$
+D(a,b)=0.
+\tag{11.12}
+$$
+
+这里 $a\circ b=0$，11.2 给 $g=s_bgs_b$。由 $ab=0$ 及 $a$ 的有界性，$a$ 消灭 $\overline{\operatorname{ran}b}=s_b\mathcal H$。在此空间内读取原 $(a,b)$ 的 P2，第一平方为零，故 $g$ 的二次型为零；极化及已有支撑给 $g=0$。这不是仅有 $a\circ b=0$ 时的零响应断言，反对易输入仍可有非零响应。
+

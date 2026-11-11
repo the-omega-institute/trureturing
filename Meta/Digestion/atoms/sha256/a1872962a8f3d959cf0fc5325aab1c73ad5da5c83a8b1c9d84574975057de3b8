@@ -1,0 +1,169 @@
+**Theorem 12.3 (full-prefix low predictions and actual-posterior
+low predictions in their own laws).** The following hold:
+
+$$
+\begin{aligned}
+\liminf_{j\to\infty}Q_{W_j}^1(3)&=0
+ &&Q\text{-almost surely},\\
+\liminf_{j\to\infty}Q_{W_j}^1(3)&=0
+ &&R_u\text{-almost surely},\\
+\liminf_{j\to\infty}R_{uW_j}^1(3)&=0
+ &&R_u\text{-almost surely}
+ \quad\text{for every fixed finite original }u.
+\end{aligned}
+\tag{12.11}
+$$
+
+All finite authentic histories, including $\varepsilon$, are
+included. On one conull event in each of these laws every threshold
+$0<t<c$ is crossed at a finite label index, and is crossed
+infinitely often. In particular each of the respective rows has
+TV distance strictly greater than $c-t$ from $Q_\emptyset^H$ at
+its selected low-prediction indices, for every $H\ge1$.
+The same statements hold for the continuation conditional on any
+finite original label-stopped history. They do not condition away
+an infinite stopping branch.
+
+*Proof.* First work in a two-sided stationary extension of $Q$,
+with shift $\theta$. Its finite-block laws are the stationary
+original laws, so Kolmogorov consistency gives such an extension.
+[DPCR, Theorem 8.2, (8.9)–(8.10)] proves mixing for separated
+finite cylinders. Shifting two finite two-sided cylinders to
+nonnegative indices proves the same limit there. Approximation
+by finite cylinders, with shift-invariant approximation error,
+extends mixing to its entire sigma algebra. Thus this two-sided
+extension is ergodic. This construction changes no actual source.
+
+Put
+
+$$
+h_k=\mathbb E_Q[\mathbf1_{\{Y_0=3\}}
+                    \mid Y_{-k},\ldots,Y_{-1}],\qquad
+h_\infty=\mathbb E_Q[\mathbf1_{\{Y_0=3\}}
+                    \mid\sigma(Y_i:i<0)].
+\tag{12.12}
+$$
+
+The upward conditional-expectation theorem gives
+$h_k\to h_\infty$ almost surely and in $L^1$.
+This is the mature martingale result of Durrett,
+[*Probability: Theory and Examples*, Theorem 4.6.8][UPWARD],
+with the increasing finite-past sigma fields and bounded variable
+$\mathbf1_{\{Y_0=3\}}$. For
+$E_n=\{Y_{-n},\ldots,Y_{-1}\ne3\}$, the tower property,
+stationarity, and (12.10) give
+
+$$
+Q(E_n)=S_n>0,\qquad
+\frac{\mathbb E_Q[h_\infty\mathbf1_{E_n}]}{S_n}
+ =1-S_{n+1}/S_n\longrightarrow0.
+\tag{12.13}
+$$
+
+For every $b>0$ it follows that $Q(h_\infty<b)>0$:
+otherwise $h_\infty\ge b$ almost surely and every conditional
+mean in (12.13) would be at least $b$.
+
+One must still return from the infinite past to the full forward
+prefix. Choose the versions in (12.12) supplied by the positive
+finite-cylinder ratios. Stationarity then gives exactly
+$Q_{W_j}^1(3)=h_j\circ\theta^j$ for $j\ge1$.
+Set $G_k=\sup_{j\ge k}|h_j-h_\infty|$. These measurable bounded
+functions decrease to zero almost surely. For each fixed $k$,
+Birkhoff's theorem and ergodicity give
+
+$$
+\limsup_{N\to\infty}\frac1N\sum_{j=1}^N
+ |h_j-h_\infty|\circ\theta^j
+ \le\mathbb E_QG_k.
+\tag{12.14}
+$$
+
+Indeed the finitely many $j<k$ have vanishing average and each
+remaining summand is at most $G_k\circ\theta^j$. Taking the
+countable intersection of these ergodic events and letting
+$k\to\infty$ proves that the average in (12.14) tends to zero.
+For any $t>0$, the indices with
+$h_\infty\circ\theta^j<t/2$ have asymptotic frequency
+$Q(h_\infty<t/2)>0$. Among them, those with
+$h_j\circ\theta^j\ge t$ have density zero by (12.14), since each
+would contribute more than $t/2$ to that average. Consequently
+$Q_{W_j}^1(3)<t$ at a positive lower frequency. A countable
+intersection over positive rational $t$ proves the first line of
+(12.11), simultaneously for all real positive thresholds. This
+also explains why (12.10) alone is not a full-history proof.
+Birkhoff is used only in its ordinary integrable-observable form,
+with precisely the stationary ergodicity supplied above.
+
+For the actual law fix a finite original $u$. Theorem 2.1 gives
+$0\le\pi_u\le M_u<\infty$, where one can take
+$M_u=\|g_{2d}\|_\infty/p(u)$. The same complete future kernel
+in (9.1) yields, on the full product sigma algebra,
+
+$$
+A:=R_u\ll Q,\qquad A(D)\le M_uQ(D),\qquad
+\operatorname{TV}(A,Q)\le
+ e(u):=\operatorname{TV}(\pi_um,m).
+\tag{12.15}
+$$
+
+These follow by integrating $\mathcal K(x,D)$ against the two
+initial densities. Absolute continuity of entire future laws,
+not merely positivity of each finite cylinder, transfers the
+first conull assertion to $A$. This proves the second line.
+
+Here is the separate martingale argument for the third line.
+Let $L=dA/dQ$, $\mathscr F_j=\sigma(Y_0,\ldots,Y_{j-1})$ and
+$L_j=\mathbb E_Q[L\mid\mathscr F_j]$. These sigma fields generate
+the complete output sigma algebra. Durrett's same theorem gives
+$L_j\to L$ almost surely and in $L^1$. For $j\ge k$,
+conditional Jensen and the triangle inequality give
+
+$$
+\begin{aligned}
+V_j&:=\mathbb E_Q[|L-L_j|\mid\mathscr F_j]\\
+ &\le2\mathbb E_Q[|L-L_k|\mid\mathscr F_j].
+\end{aligned}
+\tag{12.16}
+$$
+
+For fixed $k$ the last conditional expectation tends almost surely
+to $|L-L_k|$. Taking a countable intersection in $k$, then letting
+$k\to\infty$, proves $V_j\to0$ almost surely. Also $L>0$
+$A$-almost surely, since $A\{L=0\}=0$, and $L_j\to L$ there.
+On a prefix $w$ the conditional likelihood ratio is $L/L_j$.
+For any remaining-future event $D$ this gives
+
+$$
+\begin{aligned}
+|A(D\mid\mathscr F_j)-Q(D\mid\mathscr F_j)|
+ &\le V_j/L_j,\\
+\operatorname{TV}(R_{uW_j}^\infty,Q_{W_j}^\infty)
+ &\le V_j/L_j\longrightarrow0\quad A\text{-almost surely}.
+\end{aligned}
+\tag{12.17}
+$$
+
+The second inequality follows either by the conditional variation
+measure or by the countable finite-cylinder TV representation
+used in §9. All finite prefix probabilities are positive, so the
+conditional laws there are exactly the displayed $R$ and $Q$
+kernels. Projecting to the next-3 event and combining with the
+second line of (12.11) proves the third. This is an application
+of mature conditional-expectation merging, with its needed proof
+included; it does not rename $Q$ as an actual posterior and gives
+no effective merging rate.
+
+Finally, for a finite label-stopping time $T$, on
+$\{T=|u|,Y_{<T}=u\}$ the original conditional future is exactly
+$R_u$. Countably many such stopped words transfer the assertions
+on $\{T<\infty\}$. A pre-gate service state can be included under
+Definition 11.3's complete joint source-information and seed
+conditions; in particular its conditional output future remains
+$R_u$. Arbitrary extra source information is not covered.
+For either row at its own threshold
+crossing, the event that the first future label is $3$ has
+probability less than $t$, while $Q_\emptyset^H$ assigns it $c$.
+The defining supremum of event-TV proves the separation.
+$\square$
+

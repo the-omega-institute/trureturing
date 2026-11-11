@@ -1,0 +1,29 @@
+**推论 45.3（固定背景的单层精确平分与互素周期扩展）。**若 $a,b\in K$、$u,v\in S$，则对每个整数 $m$，
+
+$$
+\begin{aligned}
+F_m(a\star u,b\star v)&=d(a,b)+F_m(u,v),\\
+H_m(a\star u,b\star v)&=H_m(u,v).
+\end{aligned}
+\tag{45.14}
+$$
+
+特别，$H_3(a\star x_i,b\star y_j)=H_3(x_i,y_j)$ 对全部 $i,j\in\mathbb Z$ 成立。若有实际背景 $a_\ell,b_\ell\in K$、有限个权重 $\lambda_\ell\ge0$ 且 $\sum_\ell\lambda_\ell=1$，则对同一对 $u,v\in S$，
+
+$$
+\sum_\ell\lambda_\ell H_m(a_\ell\star u,b_\ell\star v)=H_m(u,v).
+\tag{45.15}
+$$
+
+更一般地，若某个正整数 $r$ 满足 $A^ra=a,A^rb=b$ 且 $\gcd(r,3)=1$，则
+
+$$
+F_m(a\star u,b\star v)=F_m(a,b)+F_m(u,v)
+\quad(m\in\mathbb Z,\ u,v\in S).
+\tag{45.16}
+$$
+
+**证明。**当 $a,b\in K$ 时，(45.4) 中的实际背景不依赖 $n$，故 $L_m$ 为常数。用 (45.5) 得其值 $D_m$，再用 $A^ma=a$ 得 $F_m(a,b)=d(a,b)$。减去 $m=0$ 的等式得到第二式，有限加权即得 (45.15)。在一般周期条件下，$L_m$ 在整个 $\mathbb Z$ 上同时有周期 $r$ 和 $3$。Bezout 等式使两周期生成周期 $1$，故仍为常数，其值由三项平均得 $D_m$。$3\mid r$ 时没有这个结论，命题 45.7 给出真正的三周期非恒定实例。
+
+(45.14)–(45.15) 的范围恰为显式单层乘积 $a\star u,b\star v$ 和这些实际比较的有限平均。内层乘积 $a\star u$ 未必在 $S$，因此这些式子不向 $c\star(a\star u)$ 延伸；任意 magma 中也不能重加括号以支付该前件。证毕。
+

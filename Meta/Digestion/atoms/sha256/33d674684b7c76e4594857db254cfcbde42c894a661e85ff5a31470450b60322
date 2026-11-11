@@ -1,0 +1,125 @@
+**定理 23.1（任意实际代表、任意连接及补角背景）。** 任取实际 $r,a\in E$ 和 $x_0\in X$。若
+
+$$
+r(x_0)=\mu p,\quad p=ee^*,\quad\|e\|=1,\quad
+p\,a(x_0)\,p=0,
+$$
+
+则 $D(r,a)(x_0)=K(r,a)(x_0)$。$\mu$、连接幅度和补角背景任意；$r,a$ 在其他点完全保留。
+
+证明。以下大写矩阵只表示所写实际标签在 $x_0$ 的像。记
+
+$$
+R=\mu p,\quad q=I-p,\quad A=H(z)+B,\quad H(v)=ve^*+ev^*,\quad
+z\perp e,\quad B=qBq=B^*,\quad \jmath=J(x_0)=iQ(x_0).
+$$
+
+在这个纤维内，$K(A_0,B_0)$ 表示已知矩阵 $\jmath[A_0,B_0]/2$。$\mu=0$ 用22.8的零槽。以下 $\mu\ne0$。对同一个实际输出用秩一零压缩，写
+
+$$
+d=D(r,a)(x_0)=\delta p+H(w),\qquad \delta\in\mathbb R,\quad w\perp e.
+\tag{23.1}
+$$
+
+先记录原 $\operatorname{PB}(a;r,0)$ 的准确四标签和元素式：
+
+$$
+(r-D(r,a),\ r\circ a),\qquad(r+D(r,a),\ -r\circ a),
+$$
+
+$$
+D(r-D(r,a),r\circ a)-D(r+D(r,a),-r\circ a)=2r\circ D(r,a).
+\tag{23.2}
+$$
+
+若 $z=0$，则 $(r\circ a)(x_0)=R\circ A=0$；两份实际外层的第二槽点像均为零，22.8使它们自己的旧输出点像为零。于是 $2R\circ d=2\mu\delta p+\mu H(w)=0$，从而 $d=0=K(R,A)$。
+
+设 $z\ne0$，令 $t=\|z\|$、$f=z/t$、$L=\operatorname{span}_{\mathbb C}\{e,f\}$，并取
+
+$$
+u_\epsilon=\frac{e-\epsilon\jmath f}{\sqrt2},\quad
+P_\epsilon=u_\epsilon u_\epsilon^*,\quad
+C_\epsilon=\epsilon\,2tP_\epsilon
+=\epsilon t(p+ff^*)+H(-\jmath z),\quad \epsilon=\pm1.
+\tag{23.3}
+$$
+
+这里 $P_+P_-=0$，$P_++P_-=p+ff^*$。用满点评价各选一份实际 $c_\epsilon\in E$，使 $c_\epsilon(x_0)=C_\epsilon$；例如局部常矩阵乘支撑紧含于图的实bump后延零。$R,C_\epsilon$ 共同支撑于二阶角 $L$，故接口22.4对这两份实际调用给
+
+$$
+D(r,c_\epsilon)(x_0)=K(R,C_\epsilon).
+$$
+
+只计算已知矩阵乘法，可得
+
+$$
+K(R,A)=H(-\jmath\mu z/2),\qquad
+R\circ C_\epsilon=\epsilon\mu t p+K(R,A),\qquad
+R\circ A+K(R,C_\epsilon)=0.
+\tag{23.4}
+$$
+
+最后一式来自 $R\circ A=\mu H(z)/2$ 和 $K(R,C_\epsilon)=-\mu H(z)/2$，对两种 $Q(x_0)$ 均成立。
+
+令同一个固定误差 $\Delta=d-K(R,A)$。对实际 $\operatorname{PB}(r;a,c_\epsilon)$，保留实际位移
+
+$$
+v_\epsilon=D(r,a)-r\circ c_\epsilon,\qquad
+w_\epsilon=r\circ a+D(r,c_\epsilon).
+$$
+
+只在指定点，它们读成
+
+$$
+v_\epsilon(x_0)=\Delta-\epsilon\mu t p,\qquad w_\epsilon(x_0)=0.
+\tag{23.5}
+$$
+
+不把原元素 $w_\epsilon$ 换成零。两份真实外层为 $(a\pm v_\epsilon,c_\epsilon\pm w_\epsilon)$，其第二槽点像同为秩一矩阵 $C_\epsilon$。置 $R_\epsilon=I-P_\epsilon$；22.8对各自旧输出给
+
+$$
+R_\epsilon D(a\pm v_\epsilon,c_\epsilon\pm w_\epsilon)(x_0)R_\epsilon=0.
+$$
+
+对PB元素式(22.4)压缩，$w_\epsilon(x_0)=0$，于是
+
+$$
+R_\epsilon\bigl(A\circ(\Delta-\epsilon\mu t p)\bigr)R_\epsilon=0.
+\tag{23.6}
+$$
+
+因 $pAp=0$，$A\circ p=H(z)/2$。直接读两条射线得 $u_\pm^*H(z)u_\pm=0$；$H(z)$ 又支撑于 $L$，故 $R_\epsilon(A\circ p)R_\epsilon=0$。因此同一个自伴矩阵 $T=A\circ\Delta$ 满足
+
+$$
+R_+TR_+=R_-TR_-=0.
+\tag{23.7}
+$$
+
+任取 $\xi\in L^\perp$，有 $R_\pm\xi=\xi$，故 $T\xi$ 同时属于 $\operatorname{ran}P_+$ 和 $\operatorname{ran}P_-$。两条射线正交，得到 $T\xi=0$。写
+
+$$
+\Delta=\delta p+H(\eta),\qquad \eta=w+\jmath\mu z/2.
+$$
+
+利用 $Ae=z$、$A\xi=B\xi$ 和 $\xi\perp e,z$，逐项乘法给
+
+$$
+qT\xi=\tfrac12z\eta^*\xi=\tfrac12z w^*\xi.
+\tag{23.8}
+$$
+
+这里 $q\Delta A\xi=0$，$qA\Delta\xi=z\eta^*\xi$，所以任意 $B$ 的贡献没有被假定为零，而是被这一次压缩消去。由 $z\ne0$ 得 $w^*\xi=0$；对全部 $\xi\in L^\perp$ 成立，再由 $w\perp e$ 得 $w\in\mathbb Cz$。
+
+现在才回到同一实际PB式(23.2)：两对外层点像 $(R-d,R\circ A)$、$(R+d,-R\circ A)$ 都共同支撑于 $L$。接口22.4识别它们各自的旧值，只对已识别的 $K$ 展开：
+
+$$
+\begin{aligned}
+2R\circ d
+&=K(R-d,R\circ A)-K(R+d,-R\circ A)\\
+&=2K(R,R\circ A)=2R\circ K(R,A).
+\end{aligned}
+\tag{23.9}
+$$
+
+最后一个恒等式由 $R^2=\mu R$ 得到。于是 $R\circ\Delta=\mu\delta p+\mu H(\eta)/2=0$，$\mu\ne0$ 给 $\delta=0,\eta=0$，即 $d=K(R,A)$。全程没有将未知 $D$ 拆和、缩放或更换代表。∎
+

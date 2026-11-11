@@ -1,0 +1,5 @@
+source_id = "auric-full-pb-actual-probe-and-environment-coupling-continuation"
+path = "docs/develop/theory/AURIC_FULL_PB_ACTUAL_PROBE_AND_ENVIRONMENT_COUPLING_CONTINUATION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

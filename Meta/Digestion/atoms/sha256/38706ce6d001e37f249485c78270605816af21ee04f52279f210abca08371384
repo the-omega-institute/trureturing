@@ -1,0 +1,2 @@
+**定义 C-28.2.1（共同读口）。** 对 A∈Σ<sub>N</sub>，定义 m<sub>A</sub>(I)=∏<sub>i∈A</sub>bᵢ(I)=1<sub>A⊆I</sub>，m<sub>∅</sub>=1。若 A 含相邻位置，同样的乘积恒零。给同一实概率律 p，定义 μ<sub>A</sub>=E<sub>p</sub>m<sub>A</sub>。一个含关系的模式与关系的期望属于不同类型。
+

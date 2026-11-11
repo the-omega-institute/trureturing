@@ -1,0 +1,11 @@
+**定义 42.3（所需理想与取向）。** 闭双边理想 $J\triangleleft A$ 称为本质的，若 $\operatorname{Ann}_A(J)=\{x:xJ=Jx=0\}=0$。连续迹取C*代数的通常定义，不要求含单位、可分、固定纤维维数或局部平凡紧算子丛。记
+
+$$
+\mathfrak c=\overline{\operatorname{Id}_A
+\{[a,b]:a,b\in E\}},\qquad
+K_\sigma(a,b)=\frac{\sigma i}{2}[a,b]\quad(\sigma=\pm1).
+\tag{42.6}
+$$
+
+$\operatorname{Id}_A$ 在本增补中始终表示生成的双边理想，横线表示范数闭包；$\mathfrak c$ 不是其他来源合同中的有限词理想。
+

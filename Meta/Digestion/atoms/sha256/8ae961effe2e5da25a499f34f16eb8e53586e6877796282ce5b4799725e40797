@@ -1,0 +1,22 @@
+**合同 7.1（复 Hilbert、可观察量与实际相干叠加）。** 本项完整采用 SF105.1第1项、SQ47.4及其全部上游。4.3给同一旧 $S-iD$ 的数学表示和全部有限 Gram；具名且可取得的原标签、native、指定跨评价配对、全部原程序各自的词身份、parent／ready、合法控制和实际相干准备仍须来源实际供应。原门序列及 $\sigma,t_0$ 不换身份。
+
+在共同全词网络的接口，仍取同一个复空间 $V_{\rm nat}$、第一槽共轭线性的半正定 Hermitian 型 $K_{\rm nat}$、全部原 $\xi_\gamma$ 及原总集合映射 $\mathsf J_a:V_{\rm nat}\to V_{\rm nat}$；对全部原 $a,b\in E$、$\gamma\in\mathcal P$、$z,w\in V_{\rm nat}$ 和正标签 $c\in C$，保持准确等式及不等式
+
+$$
+\begin{aligned}
+K_{\rm nat}(\xi_\gamma,\mathsf J_a\xi_\gamma)&=\gamma(a),\\
+K_{\rm nat}(\mathsf J_a z,\mathsf J_b w)
+&=K_{\rm nat}(z,\mathsf J_{a\circ b}w)
+-iK_{\rm nat}(z,\mathsf J_{D(a,b)}w),\\
+V_{\rm nat}&=\operatorname{span}_{\mathbb C}
+\{\mathsf J_{a_1}\cdots\mathsf J_{a_k}\xi_\gamma:
+ k\ge0,\ a_j\in E,\ \gamma\in\mathcal P\},\\
+K_{\rm nat}(\xi_\gamma,\xi_\gamma)&\le m_\gamma,\\
+K_{\rm nat}(\mathsf J_a\xi_\gamma,
+ \mathsf J_c(\mathsf J_a\xi_\gamma))&\ge0.
+\end{aligned}
+\tag{7.1}
+$$
+
+原总映射必须先实际复合，再取有限复线性包，空词及任意有限词长均包括。不能以逐评价独立 GNS 核替换这个共同核；不预给 $\mathsf J_a$ 线性、$\mathsf J_0=0$ 或 $\mathsf J_u=I$。在这些原消费者前件下沿原可见恢复取得共同复 Hilbert 叠加和可观察量。数学表示不制造任意向量准备、全 $B(H)$ 可取得像、实际采用该表示、复制或相干控制。
+

@@ -10,6 +10,11 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255LiteralBridge
 
 /-! The labelled transfer retains every individual-colour scanner fibre. -/
 
+/-
+decidableRowProper: proof_shape=bind-only; consumers=pairV, step_pair, literal_pair_bridge
+first_fibres: proof_shape=bind-only; consumers=literal_pair_bridge
+-/
+
 open scoped BigOperators
 namespace D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233255PairTransfer
 
@@ -32,7 +37,7 @@ def bonds (c d : Row) : Prop :=
 abbrev Legal {h : ℕ} (A : Fin h × Fin 7 → Fin 6) : Prop :=
   widthLegal rowLegal bonds A
 
-private instance decidableRowLegal (c : Row) : Decidable (rowLegal c) :=
+instance decidableRowLegal (c : Row) : Decidable (rowLegal c) :=
   inferInstanceAs (Decidable (∀ _, _ ∧ _))
 private instance decidableBonds (c d : Row) : Decidable (bonds c d) :=
   inferInstanceAs (Decidable (∀ _, _ ∧ _))
@@ -48,7 +53,7 @@ private instance decidableCompatible (p : Boundary) (c : Row) : Decidable (compa
 def rowProper (q : PairRow) : Prop := ∀ j : Fin 6, q j.castSucc ≠ q j.succ
 def labelCompatible (p : Boundary) (q : PairRow) : Prop := ∀ j : Fin 6, p j ≠ q j.castSucc
 def labelBoundary (q : PairRow) : Boundary := fun j => q j.succ
-private instance decidableRowProper (q : PairRow) : Decidable (rowProper q) :=
+instance decidableRowProper (q : PairRow) : Decidable (rowProper q) :=
   inferInstanceAs (Decidable (∀ _, _))
 private instance decidableLabelCompatible (p : Boundary) (q : PairRow) :
     Decidable (labelCompatible p q) := inferInstanceAs (Decidable (∀ _, _))
@@ -103,7 +108,7 @@ private theorem literal_colour_bridge (n : ℕ) :
   unfold widthTotal
   simp_rw [continuation_pair_bridge]
 
-private theorem first_fibres (H : Seen → PairRow → ℤ) :
+theorem first_fibres (H : Seen → PairRow → ℤ) :
     (∑ c : Row, if c 0 = 0 ∧ good (false, false) c then
       H (finish (false, false) c) (fun j => beta (c j)) else 0) =
     ∑ q : Fin 6 → Fin 3, rowWeight (false, false) q *

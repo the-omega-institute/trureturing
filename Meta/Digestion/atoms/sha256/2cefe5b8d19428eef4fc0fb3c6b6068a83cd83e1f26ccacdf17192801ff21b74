@@ -1,0 +1,92 @@
+**Corollary 16.3 (necessary mismatch floor at zero excess).** On the same compatible pair, $\mathcal J=0$ implies (16.16); the two energies are not optimized separately.
+
+**Proof.** Put
+
+$$
+m_p=\int u\,d\nu_p,
+\quad m_\beta=\int v\,d\nu_\beta,
+\quad t=m_p+m_\beta,
+$$
+
+$$
+q=\int Q(\beta\beta)\,d\nu_p,
+\qquad
+z=\int W(\alpha\alpha)\,d\nu_\beta.
+$$
+
+Testing the first residual equation with $1-u(Q)$ and the atom $\beta$, and the second with $v(W)$ and the atom $\alpha$, gives the exact identities
+
+$$
+q=\int(1-u)(1-v)\,d\Gamma_B,
+\qquad
+z=\int vu\,d\Gamma_A.
+\tag{16.11}
+$$
+
+For $x\in[a,b]$,
+
+$$
+x^2=(a+b)x-ab-(x-a)(b-x).
+$$
+
+Expanding $(u-v)^2$, using the common unweighted marginals in both directional flows, and then using (16.11), gives the supplied exact quartet identities
+
+$$
+D_B:=\frac{26}{15}-\frac{19}{15}t-2q
+   =J_p+J_\beta+M_B,
+\tag{16.12}
+$$
+
+$$
+D_A:=\frac{11}{15}t-\frac4{15}-2z
+   =J_p+J_\beta+M_A.
+\tag{16.13}
+$$
+
+Thus
+
+$$
+E:=D_A+D_B
+ =\frac{22}{15}-\frac8{15}t-2(q+z)
+ =2(J_p+J_\beta)+M_A+M_B
+ \ge M_A+M_B.
+\tag{16.14}
+$$
+
+Since
+
+$$
+\sqrt{M_B}+\sqrt{M_A}
+\le\sqrt{2(M_A+M_B)}
+\le\sqrt{2E},
+$$
+
+(16.10) also implies
+
+$$
+\frac{61}{11}\mathcal J
+ +\frac{19}{11}(2E)^{1/4}\ge g.
+\tag{16.15}
+$$
+
+At $\mathcal J=0$, apply $\sqrt{M_B}+\sqrt{M_A}\le\sqrt{2(M_A+M_B)}$ directly in (16.10). Since all terms are nonnegative, raising the resulting inequality $(2(M_A+M_B))^{1/4}\ge11g/19$ to the fourth power gives the explicit necessary floor
+
+$$
+\boxed{
+M_A+M_B\ge\kappa,
+\qquad
+\kappa=\frac12\left(\frac{11g}{19}\right)^4
+ =\frac12\left(\frac{11\eta}{7\,600\,000}\right)^4>0.}
+\tag{16.16}
+$$
+
+Equivalently, the exact rational value is
+
+$$
+\kappa=
+\frac{146132042055060050874608124299926801811521}
+{16793910307653031964936642766121613852796435821801424026489257812500000000000000000}.
+$$
+
+This is a joint same-pair necessity.  It does not lower-bound $\mathcal J$ by itself and does not imply that the two mismatch energies can be attained independently.  It also does not force the synchronized endpoint chord of the four-coordinate theorem. $\square$
+

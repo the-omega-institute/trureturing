@@ -1,0 +1,86 @@
+**定理 12.1（正确实际角中的单边识别）。** 设 $e,f\in A$ 为正交实际投影，$P=e+f,Q=1-P$。明确假定同一 $D$ 在整个实际 $PAP$ 上满足 (6.4)，记其普通符号为 $\sigma$，$\jmath=\sigma i$。取任意
+
+$$
+\alpha\in\mathbb R,\quad c=c^*\in QAQ,\quad x\in eAf,
+\qquad a=\alpha e+c,\quad b=x+x^*.
+\tag{12.1}
+$$
+
+则完整原响应准确为
+
+$$
+\boxed{D(a,b)=\frac{\jmath\alpha}{2}(x-x^*)
+=\frac{\jmath}{2}[a,b].}
+\tag{12.2}
+$$
+
+$c$ 任意自伴，不要求标量或有限谱；$x$ 不要求可逆、闭值域或在某个有限矩阵阶段。角分类的前件是整个 $PAP$，不是一份矩阵子代数。
+
+证明。固定 $g=D(a,b)$，置 $\lambda=\alpha/2$。实际乘法给 $ab=\alpha x,ba=\alpha x^*$，所以 $a\circ b=\lambda b$。定理 11.2 和 (11.11) 先支付
+
+$$
+g=PgP,\qquad g\ker b=0,\qquad D(a,e)=0.
+\tag{12.3}
+$$
+
+又因 $af=fa=0$，对 $f\mathcal H$ 内向量读取原 $(a,b)$ 的 P2，第一平方为零；极化给 $fgf=0$。这是固定输出的压缩等式。
+
+重新使用同一个实际 $\operatorname{PB}(a;b,0)$。其两份外调用仍准确是 (11.3)，现在 (12.3) 已保证四个外标签全部在 $PAP$ 中。此时才能代入角分类，得到
+
+$$
+\begin{aligned}
+L_+&=\frac{\jmath\lambda}{2}[g,b],\\
+L_-&=\frac{\jmath}{2}[b-g,-\lambda b]
+=\frac{\jmath\lambda}{2}[g,b].
+\end{aligned}
+\qquad b\circ g=0.
+\tag{12.4}
+$$
+
+接着取真正原三元组 $\operatorname{PB}(a;b,e)$。由 (12.3)，其实际内构造及全部外标签为
+
+$$
+\begin{gathered}
+v=g-\alpha e,\qquad w=\lambda b,\\
+(b+g-\alpha e,\ e+\lambda b),\qquad
+(b-g+\alpha e,\ e-\lambda b).
+\end{gathered}
+\tag{12.5}
+$$
+
+它们也全部在同一个已分类的 $PAP$ 中。只展开已知比较响应，外值之差为 $\jmath([b,w]+[v,e])=\jmath[g,e]$。原右端由 $b\circ e=b/2$ 和 (12.4) 给
+
+$$
+-2b\circ(g-\alpha e)-2e\circ(\lambda b)
+=\alpha b/2,
+\qquad \jmath[g,e]=\alpha b/2.
+\tag{12.6}
+$$
+
+令 $g_0=\jmath\alpha(x-x^*)/2,d=g-g_0$。$g_0$ 自伴且在 $PAP$ 中。因 $[x-x^*,e]=-b$、$\jmath^2=-1$，有 $\jmath[g_0,e]=\alpha b/2$；于是 $[d,e]=0$。又 $fg_0f=0=fgf$，故
+
+$$
+d=ede=d^*.
+\tag{12.7}
+$$
+
+由 $x^2=(x^*)^2=0$，直接相乘给 $b\circ g_0=0$。因此 $b\circ d=0$。在 $eAf$、$fAe$ 两块分别压缩，得到
+
+$$
+dx=0,\quad x^*d=0,\qquad db=bd=0.
+\tag{12.8}
+$$
+
+确实 $db=dx\in eAf,bd=x^*d\in fAe$，故它们不能在两块之间互相抵消。
+
+还须使用强于 $g=PgP$ 的核结论。若 $b\eta=0$，则
+
+$$
+xf\eta+x^*e\eta=0.
+\tag{12.9}
+$$
+
+两个加项分别在正交的 $e\mathcal H,f\mathcal H$ 内，故各为零，遂有 $g_0\eta=0$。结合 (12.3)，$d$ 也消灭 $\ker b$。另一方面，$bd=0$ 使 $\operatorname{ran}d\subseteq\ker b$，因而 $d^2=0$。自伴性及 C* 恒等式给 $\|d\|^2=\|d^2\|=0$，所以 $g=g_0$。
+
+证明没有除以 $\alpha$；$\alpha=0$ 已包含，也可直接用 $ab=ba=0$ 和 (11.12)。$x=0$、任一零投影及 $P=0$ 均由零槽处理。不存在对 $x$ 的逆、极分解、有限秩提升或未知 $D$ 的加法展开。∎
+

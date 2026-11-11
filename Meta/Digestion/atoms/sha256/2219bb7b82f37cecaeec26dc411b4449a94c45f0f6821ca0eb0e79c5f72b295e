@@ -1,0 +1,19 @@
+**unit-cost membership-check counts**, under the explicit maintenance
+condition that the previous residual is already maintained and $\delta$ is
+supplied: incremental membership checks cost
+$O(|\delta|\ell(\mathcal Q))$, precomputing menu intersections costs
+$O(m|\mathscr L|)$, and naive repeated-gain search costs
+$O(m^2|\mathscr L|)$. Rebuilding the residual from scratch replaces the
+incremental term by $O(|X^+|\ell(\mathcal Q))$, with the same unit-cost
+membership convention. If $\delta$ or the new threshold roles must instead
+be discovered by scanning the character universe $\widehat A$, add
+$O(|\widehat A|)$ role-enumeration work plus the cost of the threshold
+decisions themselves. These are offline/search or residual-maintenance
+counts only; they are not bounds on bit length, wall-clock time, memory, or
+physical cost. Empty residuals add no layer; an uncoverable residual is a
+typed failure of this certificate family.
+This is an **offline certificate-search and online maintenance** result for
+the fixed menu, prefix, Fourier basis and coefficients. It does not prove a
+global shortest stack, arbitrary protocol synthesis, a CPTP/LOSR statement,
+or a diamond-norm bound.
+

@@ -1,0 +1,31 @@
+**定理 71.2（完整角继承与分类）。** 若任意无限 UHF $A$ 上的同一原总映射满足完整 $\mathsf H_A(D)$，则每个 $p\in\mathcal P_{\rm even}$ 有唯一 $\sigma_p\in\{\pm1\}$，满足
+
+$$
+D(a,b)=\frac{\sigma_p i}{2}[a,b]
+\qquad(a,b\in(pAp)_{\rm sa}).
+\tag{71.2}
+$$
+
+证明。先准确使用 W119.2 的支撑定理，而非假定有限阶段子代数对 $D$ 闭合：对完整原角中的 $a,b$，
+
+$$
+-\|a\|\|b\|p\le D(a,b)\le\|a\|\|b\|p,
+\qquad D(a,b)\in(pAp)_{\rm sa}.
+\tag{71.3}
+$$
+
+W119.3 给同一角的单位 $p$、继承范数、准确锥与原评价限制 $\gamma_p$。每个原评价标签仍保留，角质量为 $m_\gamma^p=\gamma(p)$；不合并同值限制，不删除零限制，不除以角质量。角 A2、A3 保留同一个 $\vartheta$。
+
+W120.2 的完整 PB 逐值限制于该角：若 $h,a,b\in(pAp)_{\rm sa}$，(71.3)使两份内输出在角中，Jordan 运算及线性组合仍在角中，再由(71.3)使两份外输出在角中。于是同一角上的全部原 PB 成立，不需要全域 NN、J 或输入线性。
+
+取 $p\in A_n$ 且 $r_n=\operatorname{rank}_{A_n}(p)$ 为非零偶数。对 $m\ge n$，
+
+$$
+pA_mp\cong M_{r_nk_{m,n}}(\mathbb C),\qquad
+1_{pA_mp}=p,\qquad
+pAp=\overline{\bigcup_{m\ge n}pA_mp}^{\|\cdot\|}.
+\tag{71.4}
+$$
+
+密度只用 $x\mapsto pxp$ 对已知乘法的范数压缩。每个角阶段大小为偶数，故70.1适用于整个 $pAp$ 和刚继承的同一 $D_p$，给(71.2)。没有断言 $D$ 将 $pA_mp$ 的输入送回该有限矩阵阶段。∎
+

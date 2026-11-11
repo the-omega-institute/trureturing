@@ -1,0 +1,12 @@
+**定义 C-16.1（同一高到低双窗域）。** 第一个实际窗口 𝑖、第二个 𝑗 的守卫为 𝑥(𝑖)𝑦(𝑗)=0。令
+
+
+```math
+R_1=\{1,13\},\quad C_1=\{3,13\},\quad
+R_0=\Sigma\setminus R_1,\quad C_0=\Sigma\setminus C_1,
+\quad E=(\Sigma\times\Sigma)\setminus(R_1\times C_1).
+```
+
+
+𝐸 有二十一个合法格。联合律 $`p_{ij}\ge0`$ 归一化，其完整边缘 $`\mu_i,\nu_j`$ 各归一化，置 $`a=\sum_{R_1}\mu_i,b=\sum_{C_1}\nu_j,c=1-a-b`$。本章 𝑎,𝑏,𝑐 是接缝质量，区别于 §9 的复重叠。
+

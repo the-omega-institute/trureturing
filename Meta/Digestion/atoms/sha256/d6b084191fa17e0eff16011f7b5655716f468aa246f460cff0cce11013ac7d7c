@@ -1,0 +1,17 @@
+## 6. Returning to arbitrary original finite observers
+
+For the fibre (1.3), define centered same-history diagnostics
+
+$$
+\mathcal T_p(M)=\sup_{h\text{ p on the fibre}}
+ \sum_z\rho_h(z)|D_z(E_p)-C|,
+$$
+
+$$
+\mathcal T_\beta(M)=\sup_{h\text{ suspended on the fibre}}
+ \sum_z\rho_h(z)|D_z(E_\beta)-H|.
+\tag{6.1}
+$$
+
+These use the actual unweighted acquired configuration rows. They are not synthetic conditioning rows and impose no extra capability.
+

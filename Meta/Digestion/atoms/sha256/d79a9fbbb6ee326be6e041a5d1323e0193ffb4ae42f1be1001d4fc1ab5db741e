@@ -1,0 +1,89 @@
+**定理 77.2（维数无关的五步接口）。** 对每个 $U\in\mathcal U(A_n)$ 和每个原 $W\in A$，有
+
+$$
+F(UW)=F(W).
+\tag{77.2}
+$$
+
+而且可取至多五个 Cayley 演员、至多十个实际当前逆标签内行调用；每个演员 $r$ 满足 $\|r\|\le1$，这些界与 $d$ 无关。
+
+**证明。** 先在本证明内作有限矩阵分解。令
+
+$$
+\eta=\operatorname{Arg}(\det U)\in[-\pi,\pi],\qquad t=\eta/d,
+\qquad S=e^{-it}U\in SU(d).
+\tag{77.3}
+$$
+
+取 $S=V\operatorname{diag}(e^{i\theta_1},\ldots,e^{i\theta_d})V^*$，其中 $\theta_j\in[-\pi,\pi]$。因 $\det S=1$，$\sum_j\theta_j=2\pi k$；令
+
+$$
+\phi_1=\theta_1-2\pi k,\qquad \phi_j=\theta_j\ (j>1),
+\qquad x_0=x_d=0,\qquad x_j=\sum_{q=1}^j\phi_q\quad(1\le j<d).
+\tag{77.4}
+$$
+
+每个指数未变，而 $\sum_j\phi_j=0$ 正好给出末端 $x_d=0$。在有向环上，奇匹配为 $(1,2),(3,4),\ldots,(d-1,d)$，偶匹配为 $(2,3),(4,5),\ldots,(d-2,d-1),(d,1)$；最后一条边按所写反向。对有序边使用
+
+$$
+H(x)=\begin{pmatrix}0&e^{ix}\\e^{-ix}&0\end{pmatrix},\qquad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad H(x)J=\operatorname{diag}(e^{ix},e^{-ix}).
+\tag{77.5}
+$$
+
+沿两组匹配取直和 $H_o,J_o,H_e,J_e$，再置
+$G_1=V H_oV^*$、$G_2=V J_oV^*$、$G_3=V H_eV^*$、$G_4=V J_eV^*$。
+逐顶点读取 (77.5)：奇边贡献 $x_j$ 或 $-x_{j-1}$，偶边补上另一项，因而
+
+$$
+H_oJ_oH_eJ_e=\operatorname{diag}(e^{i\phi_1},\ldots,e^{i\phi_d}),\qquad
+S=G_1G_2G_3G_4.
+\tag{77.6}
+$$
+
+每个 $G_l$ 是同阶段自伴酉，正负重数均为 $m$。实际反交换伴轴由下式供应：
+
+$$
+Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\qquad
+Z^*=Z,\quad Z^2=I_2,\quad ZH(x)+H(x)Z=ZJ+JZ=0.
+$$
+
+沿奇、偶匹配的每条有序边分别取 $Z$ 的直和，得 $Z_o,Z_e$。置 $e_1=e_2=VZ_oV^*$、$e_3=e_4=VZ_eV^*$，则各 $e_l$ 都在同一有限阶段内，且 $e_l^*=e_l$、$e_l^2=1$、$G_le_l=-e_lG_l$，逐一支付68.1的真实框架前件。任意谱重数、重复角、$\theta_j=\pm\pi$ 以及未有界的 $\phi_j$ 都不改变 (77.6)。当 $d=2$ 时偶边是 $(2,1)$ 且 $x_2=0$，同样给出合法的四个因子及其伴轴。
+
+对 $l=1,\ldots,4$ 取 $r=\sigma G_l$。因 $jr=iG_l$，其 Cayley 因子为
+
+$$
+C_r=(1+jr)(1-jr)^{-1}=iG_l.
+\tag{77.7}
+$$
+
+标量相位另取 $r_0=\sigma\tan(t/2)1$，则
+$C_{r_0}=e^{it}1$ 且
+$\|r_0\|\le\tan(\pi/(2d))\le1$。按实际左乘次序置
+
+$$
+(r_1,r_2,r_3,r_4,r_5)=(\sigma G_4,\sigma G_3,\sigma G_2,\sigma G_1,r_0),
+\qquad T_0=W,\quad T_k=C_{r_k}T_{k-1}.
+\tag{77.8}
+$$
+
+于是 $T_4=(iG_1)(iG_2)(iG_3)(iG_4)W=SW$，而 $T_5=UW$。
+
+关键是每一步重新使用当前的原输入。对 $k=1,\ldots,5$，在原代数中计算
+
+$$
+(1-jr_k)^{-1}T_{k-1}=X_k+jY_k.
+\tag{77.9}
+$$
+
+四个反射步骤由68.1的整行（取 $R=\sigma$）给出
+$D(r_k,X_k)=K_\sigma(r_k,X_k)$ 与
+$D(r_k,Y_k)=K_\sigma(r_k,Y_k)$；第五步由全单位中心零行给出同两式。将这两份等式逐次代入48.2的实际 PB 接缝，即可直接应用48.2，得到
+
+$$
+F(T_k)=F(T_{k-1})\qquad(k=1,\ldots,5).
+\tag{77.10}
+$$
+
+这里 (77.9) 每次都重新计算，故共至多五次 Cayley、十份当前内行；没有把上一步的 $X,Y$ 当作下一步的标签。因 $r_k=r_k^*$ 且 $\|r_k\|\le1$，$\|(1-jr_k)^{-1}\|\le1$，所以 $\|T_k\|=\|W\|$ 且 $\|X_k\|,\|Y_k\|\le\|W\|$。结合 $T_5=UW$ 得 (77.2)。整个论证只调用68.1的全行和旧48.2的逐步 PB；没有调用70.1的全局分类作捷径。∎
+

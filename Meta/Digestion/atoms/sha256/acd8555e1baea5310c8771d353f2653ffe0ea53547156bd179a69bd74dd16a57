@@ -1,0 +1,33 @@
+**定义 3.1（一次截断、一次正求积）。** 置
+
+$$
+K_0=\lceil C^8\lambda s^{-4}\rceil,\qquad
+P=\lceil C^{16}\lambda s^{-60}\rceil,\qquad J=P^3.
+\tag{3.1}
+$$
+
+对 $i,j,k\in\{0,\ldots,P-1\}$，取
+
+$$
+\begin{aligned}
+A_i&=2\pi(i+1/2)/P,&B_j&=\pi(j+1/2)/P,&G_k&=4\pi(k+1/2)/P,\\
+g_{ijk}&=e^{-iA_i\sigma_z/2}e^{-iB_j\sigma_y/2}e^{-iG_k\sigma_z/2},\\
+w_{ijk}&=\frac{\cos(\pi j/P)-\cos(\pi(j+1)/P)}{2P^2}.
+\end{aligned}
+\tag{3.2}
+$$
+
+固定按字典序把三元指标编号为 $1\le l\le J$。权重正、和恰为一，是 Euler 单元的精确归一 Haar 质量。令
+
+$$
+\begin{aligned}
+Z_s&=s^2\int_{|w|<1}\frac{q(w)}{(1+s^2|w|^2)^2}\frac{dA(w)}\pi,\\
+f_{lk}(h)&=\frac{\sqrt{w_l}F_k(z(g_l^{-1}h)/s)}
+{\sqrt{Z_s}\sqrt{1+1/(100\lambda)}},\qquad 0\le k\le K_0,\\
+f_{0k}&=0,\qquad c_l=g_l e_z,\qquad d_f=(J+1)(K_0+1).
+\end{aligned}
+\tag{3.3}
+$$
+
+支撑外按光滑零延拓解释，$L$ 允许零标签。记 $f=(f_{lk})\in\mathbb C^{d_f}$，以 $P_K$ 表示序列的正交截断。
+

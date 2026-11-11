@@ -1,0 +1,42 @@
+**定理 5.2（一个原子在非本质分量内供应的原向量核）。** 固定一个非经典分量，暂记 $I,j,\rho,H$，并选原 $p\in I\cap\mathscr P$，使 $j(p)=ee^*$、$\|e\|=1$。置
+
+$$
+\begin{gathered}
+H_e(z)=ze^*+ez^*,\qquad
+V=\{z\in e^\perp:j^{-1}(H_e(z))\in E\cap I\},\qquad
+H_0=\mathbb Ce\oplus V.
+\tag{5.3}
+\end{gathered}
+$$
+
+则 $H_0$ 是稠密复线性子空间，全部 $\rho(a)$、$a\in E$ 保持 $H_0$。对有限维复 $L\subset H_0$，有真正原投影及全角
+
+$$
+e_L=j^{-1}(P_L)\in E\cap I,\qquad
+E\cap X_2(e_L)=X_2(e_L)=j^{-1}(B(L)_{\rm sa}).
+\tag{5.4}
+$$
+
+这些原有限角的同一旧 $D$ 具有一个共同符号 $\varepsilon\in\{-1,+1\}$。
+
+证明。这是 [169.2](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md#169-一个原有限角生成稠密不变向量核)、[170.2](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md#170-核内有限乘子取向与数学读取) 的原核构造所需接口的非本质版本；逐项核对它们在此成立的理由。若 $0\ne z\in V$，原元 $h=j^{-1}(H_e(z))$ 给
+
+$$
+k=h^2/\|z\|^2\in E\cap I,\qquad
+j(k)=ee^*+zz^*/\|z\|^2.
+\tag{5.5}
+$$
+
+由 (2.1)，$X_2(k)=I_2(k)$ 是真实有限复矩阵角。单位桥 [119.3](AURIC_ARBITRARY_DIMENSIONAL_SMALL_WINDOW_UNIT_BRIDGE.md#119-原二表的幂等角遗传与有限复-hermitian-几何) 的稠密性与有限维闭性使它全部原有，故 $H_e(iz)$ 也有原提升，$V$ 复线性。又 $j^{-1}(zz^*)=h^2-\|z\|^2p\in E$。式 ([169.3](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md#169-一个原有限角生成稠密不变向量核)) 的实线性组合现在在 $I$ 内给每个 $\xi\in H_0$ 的原提升 $j^{-1}(\xi\xi^*)$，有限 Gram–Schmidt 给 (5.4)。密度使用 (2.1)：对任意 $z\perp e$，以 $E\cap I$ 中的元逼近 $j^{-1}(H_e(z))$，施加半 Peirce 投影即给 $V$ 中趋向 $z$ 的向量。
+
+对任意原演员 $a$，记 $A=\rho(a)$、$\beta=\langle e,Ae\rangle$、$w=(1-ee^*)Ae$。真实原元
+
+$$
+2a\circ p-2\beta p\in E\cap I
+\tag{5.6}
+$$
+
+的 $j$ 坐标是 $H_e(w)$，所以 $w\in V$。再令原 $b=U_{u-p}a$，则 $\rho(b)=(1-ee^*)A(1-ee^*)$。对 $z\in V$，$b\circ j^{-1}(H_e(z))\in E\cap I$，其坐标是 $H_e(\rho(b)z)/2$。这正是 [169.2](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md#169-一个原有限角生成稠密不变向量核) 的保持性证明，给 $AH_0\subset H_0$；没有以 $\rho$ 在整个 $X$ 上的单射性作推理。
+
+(5.4) 的每个角均由 [119.2](AURIC_ARBITRARY_DIMENSIONAL_SMALL_WINDOW_UNIT_BRIDGE.md#119-原二表的幂等角遗传与有限复-hermitian-几何)–[119.3](AURIC_ARBITRARY_DIMENSIONAL_SMALL_WINDOW_UNIT_BRIDGE.md#119-原二表的幂等角遗传与有限复-hermitian-几何) 继承同一旧输出及原限制评价，完整 PB 的内外层调用都在原角。[143.1](AURIC_PB_TRIANGLE_ORIENTATION_AND_RANK_ONE_RESPONSE_CONTINUATION.md#143-有限原-jb-完成的完整旧关系分类) 给该角完整旧值识别。两个有限框架的和仍在 $H_0$，在共同角中比较非交换秩二子角即使所有符号一致；$\dim H\ge2$ 保证存在这样的原角和非零交换子，符号唯一。有限维 $H$ 时 $H_0=H$；无限维和不可分时只得到稠密的 $H_0$，未给环境全部有限秩标签。∎
+

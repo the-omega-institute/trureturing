@@ -1,0 +1,44 @@
+**Lemma 3.1 (joint nonlinear elimination).** The same acquired kernels and the same emissions obey
+
+$$
+f=\operatorname{diag}(U)
+ \left[Bh+BVA\bigl(\operatorname{diag}(U)B(v+h-1)\bigr)\right],
+\tag{3.6}
+$$
+
+$$
+v=\frac{1-h}{1-A[\operatorname{diag}(U)B(1-v)]}.
+\tag{3.7}
+$$
+
+Divisions are coordinatewise. Both denominators used in these identities are positive.
+
+**Proof.** From the second equation of (3.4), $VAg=v+h-1$. Hence
+
+$$
+Lg=\operatorname{diag}(U)B(v+h-1),
+\qquad g+Lg=\operatorname{diag}(U)Bh.
+$$
+
+Apply $L$ to the first displayed identity and add to the second to get (3.6). The other equation of (3.4) gives $1-h=v(1-Ag)$, proving (3.7). Since $Ag\le4/9$, its denominator is at least $5/9$. The bracket in (3.6) is at least $Bh\ge h_-$, because $v+h-1=VAg\ge0$. No emission-weighted transition is replaced by an unweighted acquired transition. $\square$
+
+For columns set
+
+$$
+\|q\|_\pi=\sum_x\pi_x|q_x|,\qquad
+\|r\|_\tau=\sum_y\tau_y|r_y|,
+\qquad \|(q,r)\|_* =\|q\|_\pi+\frac43\|r\|_\tau.
+\tag{3.8}
+$$
+
+The acquired-flow identities imply
+
+$$
+\|Br\|_\pi\le\|r\|_\tau,
+\qquad \|Aq\|_\tau\le\|q\|_\pi.
+\tag{3.9}
+$$
+
+These are weighted analysis norms on one actual circulation. For indexed law families,
+$\pi\operatorname{TV}(Q,Q')$ means $\sum_x\pi_x\operatorname{TV}(Q_x,Q'_x)$, and similarly for $\tau\operatorname{TV}(W,W')$. It is the average of individual configuration-law distances, not the TV distance between the two averaged laws.
+

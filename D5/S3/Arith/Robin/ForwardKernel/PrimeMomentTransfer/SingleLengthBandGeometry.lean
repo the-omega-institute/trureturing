@@ -19,27 +19,23 @@ namespace D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer
 noncomputable section
 set_option autoImplicit false
 
-private theorem floor_quarter_upper (β : ℝ) (hβ : β < 1 / 4) :
-    ∀ᶠ Y : ℝ in atTop, Y ^ β ≤ (⌊Y⌋₊ : ℝ) ^ (1 / 4 : ℝ) := by
-  have hsmall := (tendsto_rpow_neg_atTop (sub_pos.mpr hβ)).eventually_le_const
-    (Real.rpow_pos_of_pos (by norm_num : (0 : ℝ) < 2) (-1 / 4 : ℝ))
-  filter_upwards [hsmall, eventually_ge_atTop (1 : ℝ)] with Y hsmall hY
+/-- A strict exponent margin absorbs flooring the base of a nonnegative real power. -/
+theorem floor_power_upper (β q : ℝ) (hβq : β < q) (hq : 0 ≤ q) :
+    ∀ᶠ Y : ℝ in atTop, Y ^ β ≤ (⌊Y⌋₊ : ℝ) ^ q := by
+  have hs := (tendsto_rpow_neg_atTop (sub_pos.mpr hβq)).eventually_le_const
+    (Real.rpow_pos_of_pos (by norm_num : (0 : ℝ) < 2) (-q))
+  filter_upwards [hs, eventually_ge_atTop (1 : ℝ)] with Y hs hY
   have hY0 : 0 < Y := zero_lt_one.trans_le hY
-  have hfloor : Y / 2 ≤ (⌊Y⌋₊ : ℝ) := (Nat.div_two_lt_floor hY).le
   calc
-    Y ^ β = Y ^ (1 / 4 : ℝ) * Y ^ (-(1 / 4 - β)) := by
-      rw [← Real.rpow_add hY0]
-      congr 1
-      ring
-    _ ≤ Y ^ (1 / 4 : ℝ) * (2 : ℝ) ^ (-1 / 4 : ℝ) := by
-      gcongr
-    _ = (Y / 2) ^ (1 / 4 : ℝ) := by
+    Y ^ β = Y ^ q * Y ^ (-(q - β)) := by
+      rw [← Real.rpow_add hY0]; congr 1; ring
+    _ ≤ Y ^ q * (2 : ℝ) ^ (-q) := by gcongr
+    _ = (Y / 2) ^ q := by
       rw [Real.div_rpow hY0.le (by norm_num : (0 : ℝ) ≤ 2),
-        show (-1 / 4 : ℝ) = -(1 / 4 : ℝ) by ring,
         Real.rpow_neg (by norm_num : (0 : ℝ) ≤ 2)]
       rfl
-    _ ≤ (⌊Y⌋₊ : ℝ) ^ (1 / 4 : ℝ) :=
-      Real.rpow_le_rpow (by positivity) hfloor (by norm_num)
+    _ ≤ (⌊Y⌋₊ : ℝ) ^ q :=
+      Real.rpow_le_rpow (by positivity) (Nat.div_two_lt_floor hY).le hq
 
 /-- Both natural floors satisfy the uniform range for the single-length moment theorem. -/
 theorem band_geometry (α β : ℝ) (hα : 0 < α) (hαβ : α < β) (hβ : β < 1 / 4) :
@@ -54,7 +50,7 @@ theorem band_geometry (α β : ℝ) (hα : 0 < α) (hαβ : α < β) (hβ : β <
   have hβ0 : 0 ≤ β := (hα.trans hαβ).le
   have hlog := (isLittleO_log_rpow_atTop (half_pos hα)).tendsto_div_nhds_zero
   filter_upwards [floor_range α β hα hαβ hβ1,
-    range_geometry α β 1 hα hβ1 zero_lt_one, floor_quarter_upper β hβ,
+    range_geometry α β 1 hα hβ1 zero_lt_one, floor_power_upper β (1 / 4) hβ (by norm_num),
     hlog.eventually_le_const zero_lt_one, eventually_ge_atTop (2 : ℝ)]
     with Y hfloor hgeom hquarter hlog hY v hvα hvβ
   obtain ⟨hK, hKpow, hKhi, _, _⟩ := hfloor v hvα hvβ

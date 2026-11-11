@@ -95,7 +95,7 @@ def rowLegal (c : Col) : Prop :=
 def bonds (c d : Col) : Prop :=
   ∀ j : Fin 2, c j ≠ d j ∧ (c j).val + (d j).val ≠ 5
 
-private instance instDecidableRowLegal (c : Col) : Decidable (rowLegal c) :=
+instance instDecidableRowLegal (c : Col) : Decidable (rowLegal c) :=
   inferInstanceAs (Decidable (_ ∧ _))
 private instance instDecidableBonds (c d : Col) : Decidable (bonds c d) :=
   inferInstanceAs (Decidable (∀ _, _ ∧ _))

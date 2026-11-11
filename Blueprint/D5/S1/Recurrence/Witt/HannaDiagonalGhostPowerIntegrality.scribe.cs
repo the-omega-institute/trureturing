@@ -77,6 +77,31 @@ internal sealed class HannaDiagonalGhostPowerIntegralityDocument : IScribeDocume
                     + "The diagonal-power theorem and the bounded square-weight "
                     + "correction theorem use this necessary integrality condition.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+
+            Describe.Lean(DescribeId.Create("h3-eulerseries"),
+                DeclarationHandle.Create("D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.eulerSeries"), H("The coefficientwise stabilized integer Euler series"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("This is the existing integer Euler object built from finite prefixes of the primitive ledger, with b(i) attached to part size i+1. It is now public for actual coefficient consumers."))), DescribeRole.Definition),
+
+            Describe.Lean(DescribeId.Create("h3-euler-series-represents"),
+                DeclarationHandle.Create("D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.euler_series_represents"), H("Finite prefixes represent the integer series"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Every prefix through part size N agrees with the integer series through degree N. This is the original owner proof, publicly reused by the infinite product bridge."))), DescribeRole.Theorem),
+
+            Describe.Lean(DescribeId.Create("h3-hasprod-eulerseries"),
+                DeclarationHandle.Create("D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.hasProd_eulerSeries"), H("An actual infinite Euler product"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The orders of eulerFactor(i+1,b(i))-1 tend to infinity. Coefficientwise stabilization then identifies the topological infinite product with the existing integer Euler series. The coefficient ring has its standard discrete topology."))), DescribeRole.Theorem),
+
+            Describe.Lean(DescribeId.Create("h3-euler-series-exponential"),
+                DeclarationHandle.Create("D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.euler_series_exponential"), H("Euler series equal the literal formal exponential"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For any characteristic-zero field, agreement of all positive-index divisor ghosts identifies the mapped integer Euler series with the literal exponential. The bridge uses the existing Euler differential equation and coefficientwise differential uniqueness. Both the original Gauss-integrality proof and the corrected power family consume it."))), DescribeRole.Theorem),
+
+            Describe.Lean(DescribeId.Create("h3-gauss-exponential-integral"),
+                DeclarationHandle.Create("D5/S1/Recurrence/Witt/HannaDiagonalGhostPowerIntegrality.gauss_exponential_integral"), H("Gauss congruences yield actual integrality"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The original Mobius divisibility and Euler-ledger construction produce integer coefficients of the actual formal exponential. The proof now consumes the shared Euler-exponential bridge. No correction existence is assumed."))), DescribeRole.Theorem),
             Node("claim", "Hanna's second-comment conjecture",
                 Disp(Equal(V("claim"), Parenthesized(ClaimBody()))),
                 "OEIS A156216, internal revision #3, second comment (unpaginated): \""

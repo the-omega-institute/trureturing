@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Normalized discrete cubic moments vanish uniformly for bounded variation weights. -/
+   digest: Mean-square prime correlations: Normalized discrete cubic moments vanish uniformly for bounded variation weights. -/
 
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.DiscreteMomentAsymptotics
 import D5.S3.Arith.Robin.ForwardKernel.PrimeMomentTransfer.NormalizedFormalIntegrals
@@ -71,18 +71,20 @@ private theorem p_third_normalized_estimate
 /-- The normalized discrete cubic moment tends uniformly to zero over the length band. -/
 theorem eventual_discrete_third
     (SS : Finset ℕ → ℝ) (α β M : ℝ) (hα : 0 < α) (hαβ : α < β)
-    (hβ : β < 1 / 4) (hSS : SS ∅ = 1) (hSS1 : ∀ d, SS {d} = 1)
-    (hHL : HL4 SS β) (hcor : IntervalCorrelations SS) (hM : 1 ≤ M)
+    (hβ : β < 1 / 3) (hSS : SS ∅ = 1) (hSS1 : ∀ d, SS {d} = 1)
+    (hMS : MeanSquareHL 3 SS β) (hcor : IntervalCorrelations SS) (hM : 1 ≤ M)
     (δ : ℝ) (hδ : 0 < δ) :
     ∀ᶠ N : ℝ in atTop,
       ∀ H : ℕ, N ^ α ≤ (H : ℝ) → (H : ℝ) ≤ N ^ β →
       ∀ B (w : ℝ → ℝ), BVBound w B → ∀ a b : Fin 3 → ℝ, admissible M a b →
       |discreteRaw N H a b w / (N * ((H : ℝ) * Real.log N) ^ (3 / 2 : ℝ))| ≤
         B * δ := by
-  obtain ⟨ε, hε, hεβ⟩ := transfer_epsilon_exists β hβ
+  let ε : ℝ := (1 / 2 - (3 / 2) * β) / 2
+  have hε : 0 < ε := by dsimp [ε]; linarith
+  have hεβ : ε < 1 / 2 - (3 / 2) * β := by dsimp [ε]; linarith
   have hβ1 : β < 1 := by linarith
   obtain ⟨⟨C₁, hC₁, harith⟩, ⟨C₂, hC₂, η, hη, hanti, hlim, hformal⟩⟩ :=
-    discrete_moment_asymptotic_inputs SS α β hα hαβ hβ1 hSS hSS1 hHL hcor M hM ε hε
+    discrete_moment_asymptotic_inputs SS α β hα hαβ hβ1 hSS hSS1 hMS hcor M hM ε hε
   let t : ℝ := δ / (3 * (C₁ + C₂ + 1))
   have hC : 0 < C₁ + C₂ + 1 := by linarith
   have ht : 0 < t := div_pos hδ (mul_pos (by norm_num) hC)
@@ -113,7 +115,7 @@ theorem eventual_discrete_third
     exact (hformal H (Real.log x) hHlo hHhi hlo hhi).1 a b hab
   have he := p_third_normalized_estimate SS N H B C₁ C₂ (η H) ε w a b
     hN hH hC₁ hC₂ (hη H) hw
-    (hdiscrete H hHlo hHhi B w hw 3 (Or.inl rfl) a b hab) hf
+    (hdiscrete H hHlo hHhi B w hw 3 ⟨Or.inr (Or.inl rfl), le_rfl⟩ a b hab) hf
   have hsmall : η H + Real.sqrt (Real.log N / (H : ℝ)) +
       N ^ (-1 / 2 + ε) * (H : ℝ) ^ (3 / 2 : ℝ) *
         (Real.log N) ^ (-3 / 2 : ℝ) ≤ 3 * t := by
