@@ -60,7 +60,9 @@ internal sealed class HardinA233171DiagonalStripDocument : IScribeDocumentDefini
                     + "combination of its first seven rows. Multiplying this identity by every "
                     + "continuation vector proves the recurrence for all n+8. Thus the "
                     + "literal count, defined independently of the recurrence, satisfies the "
-                    + "displayed order-seven relation."))), DescribeRole.Theorem))));
+                    + "displayed order-seven relation."))), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hardin233171"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Entry(string id, string declaration, string title,
         Formula formula, string prose, bool literature = false) => Describe.Lean(
