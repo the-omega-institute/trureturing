@@ -389,26 +389,6 @@ theorem exists_open_fixedBathHamiltonians (hn : 5 ≤ n)
     refine ⟨H.property, ?_⟩
     exact StrictFiveCertificate.selected (asym_cubic_transpose _ _ _) hV'
 
-theorem exists_open_real_fixedBathHamiltonians (hn : 5 ≤ n) :
-    ∃ O : Set (HermitianSpace ℝ n), IsOpen O ∧ O.Nonempty ∧
-      ∀ H ∈ O, StrictMono (increasingSpectrum H.property) ∧
-        ∃ w : Fin n → ℝ, (∑ i, w i) = 1 ∧
-          IsSelected (matrixRates hn 3 H) (firstFive hn) w ∧
-          ((matrixRates hn 3 H).submatrix (fiveEmbedding hn) (fiveEmbedding hn)).rank = 4 ∧
-          ∀ s v, IsSelected (matrixRates hn 3 H) s v → (∑ i, v i) = 1 →
-            s = firstFive hn ∧ v = w :=
-  exists_open_fixedBathHamiltonians (𝕜 := ℝ) hn continuous_increasingSpectrum_real
-
-theorem exists_open_complex_fixedBathHamiltonians (hn : 5 ≤ n) :
-    ∃ O : Set (HermitianSpace ℂ n), IsOpen O ∧ O.Nonempty ∧
-      ∀ H ∈ O, StrictMono (increasingSpectrum H.property) ∧
-        ∃ w : Fin n → ℝ, (∑ i, w i) = 1 ∧
-          IsSelected (matrixRates hn 3 H) (firstFive hn) w ∧
-          ((matrixRates hn 3 H).submatrix (fiveEmbedding hn) (fiveEmbedding hn)).rank = 4 ∧
-          ∀ s v, IsSelected (matrixRates hn 3 H) s v → (∑ i, v i) = 1 →
-            s = firstFive hn ∧ v = w :=
-  exists_open_fixedBathHamiltonians (𝕜 := ℂ) hn continuous_increasingSpectrum_complex
-
 open D5.S3.Analytic.SeriesInequalities.StampachWaclawekExpansionRefutation (spow)
 
 private theorem asym_transpose (d : ℝ) (e F G : Fin n → ℝ) :

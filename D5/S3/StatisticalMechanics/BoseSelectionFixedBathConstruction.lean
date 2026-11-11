@@ -6,7 +6,7 @@
    utility: kind=numeric-reduction; basis=consumer=D5/S3/StatisticalMechanics/BoseSelectionFixedBathConstruction.exists_fixedBathHamiltonian; premises=D5/S3/StatisticalMechanics/BoseSelectionFixedBathConstruction.uniform_selected,D5/S3/StatisticalMechanics/BoseSelectionFixedBathConstruction.five_selected
    digest: Fixed orthogonal coordinate baths select five modes on open real and complex Hamiltonian sets in every dimension at least five. -/
 
-/-! Fixed-coordinate-bath Hamiltonian construction.
+/- Fixed-coordinate-bath Hamiltonian construction.
 Scientific construction: Haobo Ma and Wenlin Zhang, CC BY 4.0.
 Model: Schnell–Ketzmerick–Eckardt (2018); signed Pfaffian method: Knebel et al. (2015).
 The original asymmetry, selection predicate and Pfaffian proofs are reused.
