@@ -4287,618 +4287,102 @@ apparatus are outside the result.
 
 ## 追加锚（本行以下为增补区）
 
-## 35. The raw busy cuts covered by one actual Handback
+## 35. The finite G_V card and its initialized entry
 
-**Definition 35.1 (one installed extension).** Keep the original experiment
-of Definition16.1: the one canonical private beta preparation at the
-original source, initial $H_{\rm boot}=1$, original prior, table24, parked
-configuration/packet, proposal $(0,B,1)$, CAP owners, original request
-language, source services, both journals, channels48–51 and original
-terminal consumer. Denote the extension by $G_{\rm V}$. Its view service
-has positive domain mode01 with $N\ge1$ completed mixed rounds and actual
-finish supply, under precisely the ingress and original progress premises
-of Definition16.1. It selects all the cuts specified below, with no new
-runtime IN or caller numeral. It runs after the genuine historical Image
-check, before invocation return to RG2. In mode10 and mode01 with $N=0$,
-retain the historical check and return without a view service. Mode00,
-mode11 and the original frame, source, guard and controller domain paths
-keep their own edges. The executed prefix domain includes partial supply,
-actual refusals and local faults. The positive theorem concerns completed
-inputs and the original progress premises only.
+**Definition 35.1 (closed finite card).** Let `R_H` be the finite 74-port row list fixed by Definitions 16.2, 16.3 and 17.1, including every retained row's literal label, predecessor, successor, version, bank parity, guard, effect and operand tuple. Let `E_H = Install74(R_H)` be its prescribed bitwise installation image, and let `rho_H[p]` be the complete role record at each port `p = 0,...,73`. These are inherited finite suppliers, not choices made by this extension.
 
-Use Definitions16.2–17.1 with the following substitutions. Preserve the
-74 roles and all original and history/channel slots. The finite word
-register union adds the working and persistent fields of §§35–38,
-in a hygienic layout of size $r_{\rm V}$. Give every assignment that
-layout and initialize it by ARC2.3. Preserve the meaning of the original
-RG and CAP record codecs. The new view entries are static row labels
-within the ReturnHistory phase, not extra values of the old three-bit
-phase field. Use the same original-boot installation and
-initial archive-copy call, whose typed code payload now includes a third
-word $C$ after the two words $(\Delta_{\rm V},E_{\rm V})$. It is included
-in the complete acquired code payload in the binding and argument of
-§§17–21. Both copies of the code and the additional archive bits are
-supplied at the actual prescribed boot sites. As in §17, the native
-installation input is precisely $E_{\rm V}$; it is not enabled by the
-archive. The active store, raw store, archive and catalog are different
-coordinates.
+The new bank fields, in first occurrence order, are the following 28 fields:
 
-$C$ is the following finite **role description**, in a list of four
-Frames. The first field is the catalog of Definition25.2 in its stated
-order, with the native bit field and bit index of each slot in the
-physical codec. The second is the relocated input-site table of
-Lemmas11.3 and 26.2, with the three raw subkinds and their literal IN,
-receiving-latch, receiving-port, matching-WR and intervening-EX cases.
-The third is the list of the two edges entering the raw header setup of
-$F^{\rm RG}$ and leaving its successful idle CTL for RawReturned,
-respectively; include predecessor and successor control and version in
-each. The fourth is the literal original boot and caller annotations
-used by Definitions19.2 and 20.1–20.2, in their supplier order. Finite
-row and field indices in this description are wire unary; a finite case
-is a list of its literal operands. Include distinct raw and active
-locations once per physical name, as in Definition25.2. In particular
-there is no history word in $C$.
+| index | field | index | field |
+|---:|---|---:|---|
+| 0 | tableCursor | 14 | place71 |
+| 1 | tableLength | 15 | place72 |
+| 2 | k | 16 | place73 |
+| 3 | j | 17 | sweep |
+| 4 | w | 18 | prefix |
+| 5 | address | 19 | endpoint |
+| 6 | subkind | 20 | bill |
+| 7 | substage | 21 | decode |
+| 8 | INrow | 22 | success |
+| 9 | WRrow | 23 | successCursor |
+| 10 | expected | 24 | batch |
+| 11 | candidate | 25 | fault |
+| 12 | received | 26 | completion |
+| 13 | placeRecordCursor | 27 | kindCursor |
 
-Generate this description by marking the named constructors and inlined
-edges in the syntax *before* numbering rows, then replacing the marks by
-their numbered finite cases. The syntactic program contains parsers
-and finite traversals of $C$, with no literal copy of $C$ or of the
-relocated native row numbers. Compile the retained routines, including
-the original restore and terminal bodies, then the new routines below
-in definition order, then their fault bodies; use Definition16.2's
-intra-routine numbering, bank parity cases and finite-effect expansion.
-The order of a loop back edge is the actual test of that loop. Take
-$C$ from that compilation and its actual boot targets. Thus neither
-the register count nor the installed graph is defined by a fixed point
-involving the lengths of its code, catalog or patch table. In particular
-the shape and patch computations below take the catalog as a word
-argument.
+The entry marker is a static control label, not a bank field; `kindCursor` is the two-bit stage selector at index 27. The new indices are `r_H+0` through `r_H+27`; every old field keeps its index, so `r_V = r_H + 28`. ARC2.3 constructs the empty `r_V` bank before the first assignment.
 
-On the actual archive import require exact arity/exhaustion, the existing
-serializer equality for $(\Delta_{\rm V},E_{\rm V})$, and the catalog
-ranges, uniqueness and referenced row/edge operand, opcode and successor
-checks for $C$. The fixed bootstrap field cases supply the initial part
-of the catalog; the resident part is obtained from the finite named
-targets of the compiled effects and row operands. At replay, use this
-catalog to index the physical codec, not to alter the native meaning of
-a row. The identity of the role description with the installed graph
-follows from this *prescribed* common boot supply and construction;
-these range and shape checks alone do not authenticate arbitrary cards.
+A row record is the eight-tuple `(label, predecessor, successor, version, parity, guard, effect, operands)`. The new program `VProg` is the following closed finite list.
 
-**Lemma 35.2 (entrance, original rows and cover on the new run).** The
-above installation, archive acquisition, original initialization and
-rounds establish the real OwnedInput entrance and a successfully received
-and checked covering Image of the same $G_{\rm V}$ execution. The cover
-ends at the selected-final response fence $h_*$ of §18 on this execution.
+1. `V_ACK` has predecessor `RH_CHECK_OK`, successor `V_MAILBOX`, version 0, parity 0, guard `historicalHandlerSlot = 0`, `historicalClientSlot = 1` and `receiver73Complete = 1`, effect `ACK(73→71)` and `receiver73Complete := 0`, operands `(73,71,completion)`.
+2. `V_MAILBOX` has predecessor `V_ACK`, successor `V_ENTER_S`, version 0, parity 1, guard `mailboxHeld = 1`, effect `TOK(mailbox→idle)` and `mailboxHeld := 0`, operands `(72,mailbox)`.
+3. `V_ENTER_S` has predecessor `V_MAILBOX`, successor `V_TABLE`, version 0, parity 0, guard `historicalClientSlot = 1`, `mailboxIdle = 1`, `channelHeld = 0`, `poolOwner = A`, `checked = 1`, effect `CTL(V_TABLE)`, `tableCursor := 0`, `kindCursor := 00`, operands `(entry,tableCursor,kindCursor)`.
+4. `V_TABLE` has a false branch to `00_BEGIN` with guard `tableCursor < tableLength`, effect `kindCursor := 00; SweepTo(F_V)`, operands `(tableCursor,tableLength,sweep)`. Its true branch is `V_TABLE_DONE`, with guard `tableCursor = tableLength`, effect `CTL(V_BATCH)`, operands `(tableCursor,tableLength)`.
+5. For each literal kind `q` in the fixed order `00,01,10,11`, `VStage(q)` is exactly this nine-row list: `q_BEGIN → q_ENCODE → q_EXPORT → q_IMPORT → q_PARSE → q_DECODE → q_CHECK → q_ACK → q_NEXT`. `q_BEGIN` copies the current `b_k` into `expected`; `q_ENCODE` writes `Frame(RGV_VIEW1,b_k,q)` into `candidate`; `q_EXPORT` performs the measured export from staging 69 and the three placements on 71,72,73; `q_IMPORT` imports from 73 and checks receiver rights; `q_PARSE` checks the frame, kind and `b_k`; `q_DECODE` runs the body-specific decoder and the independent sweep check; `q_CHECK` compares the complete decoded prefix, endpoint, bill and present binding; `q_ACK` performs the actual ACK and mailbox-return TOK; `q_NEXT` advances to the next fixed kind, or returns to `V_TABLE` after `11`. Each row has version 0 and the operands are, respectively, `(k,expected,kindCursor)`, `(candidate,expected,kindCursor)`, `(69,71,72,73,place71,place72,place73)`, `(73,received,place73)`, `(received,expected,q)`, `(decode,prefix,endpoint,bill,sweep)`, `(decode,endpoint,bill,expected)`, `(71,72,73,success)`, `(kindCursor,tableCursor,successCursor)`. No row is selected from a runtime list.
+6. `V_BATCH_SCAN`, `V_BATCH_EXPORT`, `V_BATCH_IMPORT`, `V_BATCH_COMPARE` and `V_BATCH_RETURN` are five fixed rows in that order. Their operands are `(success,tableLength,30,29,batch)`. The return row has guard “the success list has exactly one record of each q at each table entry and the reimported `RGV_CHECKED1` equals the list and cover binding”, effect `TOK(historicalClientSlot→RG2Slot); CTL(HandbackResume)`, and the inherited pool/invocation cleanup on failure.
+7. The two bank-parity copies of these rows and the finite rows `V_FAULT_PRE`, `V_FAULT_CALLBACK`, and `V_FAULT_READBACK` use the same displayed operands and the inherited typed fault cleanup.
 
-**Proof.** Lemma17.2's boot correspondence uses the bitwise native
-installation and the separately acquired immutable code payload, not the
-old literal sizes. The new archive field is copied by the same measured
-CAP block writer, dependency descriptor, route48, payload check, ACK and
-loan return. Its prescribed word is the finite enumeration in
-Definition35.1, so its structural checks succeed. The empty-bank prelude
-takes $r_{\rm V}$ before any assignment. The proof of Lemma17.3 applies
-at each old word boundary: named old operations preserve their word
-values, other fields are copied in each rebuilt bank, the old source and
-receiver code has the same literal operands and roles, and each caller
-reaches its own continuation only after the actual original returns.
-No new word routine occurs in $F^{\rm RG}$ or in the guard receiver.
-Original state, packets, genuine executed refusals, labels (RG.6)–(RG.7),
-both rows and full ACKs therefore follow from §§4–9 at their reached
-entries. Descriptors, fences, scratch and complete records use the new
-run's actual positions and costs.
+Let `P_V` be the concatenation in the displayed order. Define the installed extension by the deterministic splice
 
-Instantiate §§18–21 with the acquired new code pair and card in the
-code payload. In the input-site transducer the extra boot bits are read
-from that very acquired payload at the archive supply cursor. No new
-runtime demand is reached in replay up to $h_*$. Step74 takes the new
-finite catalog and effect cases; all effects are those of
-Proposition16.4, including the new finite entries, with data work compiled
-to ordinary rows. Thus Lemma19.3 and Theorems20.3 and 21.3 apply with
-the new code, boot and bindings, using the genuine new $n_*$, argument
-on70 and new physical Image on71–73. The complete checker includes the
-actual final label/source check of Definition21.2(4). This proof supplies
-the *old* Image-value and checker relation at the new boot; it supplies
-no busy-cut callback by itself. The earlier run is part of this one
-execution from its own irreducible entrance. No cut is identified with
-a cut of the old installed $G_{\rm H}$ by a shared source name or ordinal. ∎
+`Delta_V = splice(R_H, RH_CHECK_OK → HandbackResume, P_V)`
 
-**Definition 35.3 (target table from the acquired cover).** Retain the
-successful CheckImage receiver import and the actual argument until the
-view service returns. Copy cursors over its checked history and input
-origin lists. Use the ordinal from the history cursor, starting at zero
-before the first row; check its upper bound $n_*$. Recognize a marked
-edge by the event's pre-row and the successor selected by its recorded
-branch in the acquired row description. On the marked entry edge in
-$C$ start an empty raw-episode list. While inside this episode,
-at every literal raw IN retain its occurrence, subkind, supplied event
-bit and actual matching address/WR identity. Merge the origin cursor by
-absolute IN ordinal and require exactly one agreeing origin item at
-each such raw IN. Match the code, caller and latch, not just the ordinal.
-For each raw item with pre-count $j$, receiving address $a$
-and write post-count $w$, emit a target for each $k=j+1,\ldots,w-1$
-in that order. Associate its after-IN or after-EX substage, the IN and
-WR row labels, and the destination $a$; no input value is included in
-this target tuple. Require the actual event at each named EX and WR in
-the intervening fixed raw fragment. This check consumes the corresponding
-one or two further history events using a copied cursor. The primary
-cursor continues in chronological order.
+where exactly the old successful edge is removed and the rows of `P_V` are inserted. Define `E_V = Install74(Delta_V)`. The splice and installer are finite list functions and do not depend on any runtime target, payload, round count or code length; there is no size/register fixed point.
 
-On the marked RawReturned edge close the episode, increment the completed
-episode count and replace the retained last complete list with this list.
-Retain both edge occurrences, including counts $e,d$ just after entry and
-exit. Reject unmatched, nested or open episodes and a count other than
-the completed round count in the checked HandbackPending. Take the last
-RawWait in the acquired state evidence for that round, with its complete
-state reference, actual previous ends and $m$. Resolve the raw event by
-that old $m$, complete previous unified and semantic origins and the
-literal raw phase as in Definition4.2, not by a value or descriptor
-ordinal. Require the consequent RawAcquired export for the same round
-and both new ends; resolve the actual joined raw response and the three
-complete sender references via the closed argument of §19. The raw
-row's source-start and response-commit counts must both be between $e$
-and $d$ and follow the last matching WR. At those indices check the
-actual F events and their source/event/phase bindings, not merely the
-inequalities. For bindings interpreted from prepared fields, run the
-counted Step74 traversal of the checked events to those indices and
-apply the fence check of Definition21.2(3) with the raw row's two
-kind tags and respective before/after directory counts (CAP6.1a).
-Read and check the real raw response, including its actual refusal
-label. Walk the three request
-intervals in header, length, payload order, pairing their positions
-with the episode's IN items (before duplicating the append substages).
-Require exact address, component, order, supplied bit versus actual
-acquired payload symbol, and exhaustion on both sides. Include zero
-length as an empty payload interval, without any inferred payload IN.
+The four frames of the archive card `C` are closed finite words:
 
-For a cut at $k$, let $b_k$ be the exact framed list of the following
-fields, in order: the layout tag $\mathtt{RGV\mbox{-}C7}$; $\xi$;
-complete acquired boot,
-seed, table and code origins; the current actual input70 reference;
-the checked Image receiver placement and completed-callback binding
-of Definition21.1; $\tau_*$; the last RawWait reference; both raw row
-origins and the three ordered complete request origins; $U(e),U(d)$;
-the target tuple $(U(k),U(j),U(w),a,\mathrm{kind},\mathrm{substage},
-\mathrm{INrow},\mathrm{WRrow})$. The paired-address codec is the wire
-port and creation-position pair. Ordinals are wire unary; subkind
-header/length/payload and substage IN/EX are fixed finite alternatives
-in that order. Keep the list of these bindings in increasing $k$.
-The binding contains complete typed *references*, not the corresponding
-dynamic payloads, a consumed-input word, another view or a historical
-state. A later reference may be checked against current acquired
-backing; it is not asserted present or available at $k$.
+* `RoleFrame` is `(rho_H[0],...,rho_H[73])` in ascending port order, with each complete owner, physical kind, bit field and bit index retained, followed by the literal row catalog `(label, predecessor, successor, version, parity, guard, effect, operands)` for every record of `P_V` in its displayed order. Thus the archive names both every physical role and every new row operand.
+* `InputFrame` is the three-record table `(H, RawDispatch.H.IN, latch 5, port 13, RawDispatch.H.WR, RawDispatch.H.EX)`, `(L, RawDispatch.L.IN, latch 5, port 13, RawDispatch.L.WR, RawDispatch.L.EX)`, `(P, RawDispatch.P.IN, latch 5, port 13, RawDispatch.P.WR, no EX)`. These are the literal constructor labels of Lemma 11.4, with their inherited row versions and caller tags; matching uses code, caller and latch as well as ordinal.
+* `EdgeFrame` is `(F_RG.header.setup, v_H, F_RG.header.IN, v_H)` and `(F_RG.idle.success, v_H, RawReturned, v_H)`, where each `v_H` is the inherited version in `R_H`.
+* `BootFrame` is the literal tuple `(xi, H_boot=1, prior={alpha,beta}, table24, config0, packet0, proposal=(0,B,1), mode01, N≥1, source16, channels48–51, suppliedSeed, suppliedCode)`, followed by the fixed original owner and caller annotations of Definitions 19.2 and 20.1.
 
-**Proposition 35.4 (exact coverage and a nonconstant input family).**
-This finite table binds exactly the raw after-IN-before-matching-WR cuts
-of the last completed raw request, including the after-EX substage for
-every header and length bit. For payload length $\ell$ it has
-$8+3\ell$ distinct cuts. All precede $h_*$ strictly. At each target the
-current historical receiver can derive the actual earlier complete cut,
-including the one occupied latch, the raw blank or reserved cell if
-present, and the absence of any later acquisition at that cut.
+Thus `C = (RoleFrame, InputFrame, EdgeFrame, BootFrame)` has fixed arity, fixed rows, fixed operands and fixed versions. The acquired typed code payload is exactly `(Delta_V,E_V,C)`. Native installation consumes `E_V`; the archive copy transports all three words and is checked by the serializer of `Delta_V`, exact arity/exhaustion, all 74 role records, all three input records, both edge records and the boot tuple. Both copies are supplied at the prescribed producer/actor boot sites before `StartMode`; only the installation completion edge enables the new rows. The active store, raw store, archive and card remain separate coordinates.
 
-**Proof.** In the reached mode01 path exactly one raw caller excursion
-per round traverses the marked edges. Its first edge follows that
-round's RawWait; its second occurs only after the original complete
-service, dependency delivery, row ACK and source return. Until that
-second edge no next round or other $F^{\rm RG}$ invocation can run.
-Lift, maintenance, selected-final and old Handback use their own
-different inlined edges. Lemma35.2 and §4 therefore identify the last
-closed excursion and its exact RawWait/RawAcquired and row pair; the
-raw before/after ends used by the reader name the same unique source
-event. CAP4.6 supplies the three actual complete blocks, whose bits
-were each received and written at the literal fragments of Lemma11.4.
-Consequently the position pairing succeeds without using identical
-values as origins. Empty payloads create no items. The length word
-has $\ell+1$ bits including its supplied zero. The two append cases
-give $2(3+\ell+1)$ distinct counts, and payload contributes $\ell$.
-No two pending intervals overlap. The count range includes the
-newly constructed blank after EX as a separate state. Even Rho has
-header $001$, so this family includes a supplied one as well as a
-zero independently of the guard. The finite table uses no future
-delimiter at the historical cut. The delimiter and the completed raw
-return belong to the present *covering evidence*.
+**Lemma 35.2 (initialized code, card and original cover).** The supplied boot finishes with the unique `r_V` bank, installed graph `Delta_V`, and an acquired copy of the same `(Delta_V,E_V,C)`. The retained rounds and successful `CheckImage` reach `RH_CHECK_OK` with its actual receiver completion right, historical-client invocation, idle/held mailbox state and full checked cover.
 
-The last raw excursion precedes its own guard and selected-final
-response, so every selected count is strictly below $n_*$. Traverse
-the checked received history from the original foundation with
-Step74 and the checked events' IN fields, stopping at each count in
-the table. The whole event comparisons already supplied by CheckImage
-give exactly the prefix and complete state there. The occupied latch
-follows the literal PC and Lemma26.2; the bit used when simulating the
-earlier IN does not come from the earlier unwritten cell. This
-derivation takes place at the later reached historical client.
-It is not a read granted by that earlier PC. ∎
+**Proof.** `VProg` is a finite list with every new operand, successor and version displayed above. The splice changes one inherited edge only, and the serializer/installer are inverse finite traversals, so the acquired words and native store agree after the measured CAP delivery and equality check. ARC2.3 constructs the empty bank before assignment and parity rebuilds copy all old fields. Lemmas 17.2–17.3 then apply to the retained source, inputs, refusals, rows and original continuation. The input frame is exactly the matching-write census of Lemma 11.4, and the edge frame is checked against the actual predecessor/successor rows. Definition 21.2 supplies the completed receiver, checked binding and callback rights. A different finite card fails either serializer equality, a role/input/edge field comparison, or the boot binding.
+
+**Definition 35.3 (target table from the acquired cover).** Keep the received history, input-origin cursor and actual argument through the view loop. Start the ordinal at zero and require its upper bound `n_*`. On the `F_RG.header.setup` edge start an empty episode. At every literal raw IN retain subkind, supplied bit, code/caller/latch, receiving address and matching-WR identity. Merge the origin cursor by absolute IN ordinal and require one agreeing origin item. For pre-count `j` and post-count `w`, emit every `k = j+1,...,w−1`, retaining address, subkind, IN/EX substage, IN row and WR row. Consume and check the intervening EX/WR events. Close only on `F_RG.idle.success`; reject unmatched, nested or open episodes.
+
+For the last completed episode require its count to equal the completed round count in `HandbackPending`. Retain both edge occurrences and counts `e,d`, the actual `RawWait` and `RawAcquired`, both row origins, three complete request origins, response/refusal label and both source/commit counts. Walk header, length and payload intervals in order with exact address, component, supplied-bit and exhaustion checks; a zero payload has an empty payload interval. For each emitted `k`, let `b_k` be the framed list `(RGV-C7, xi, complete boot/seed/table/code origins, input70 reference, Image callback binding, tau_*, RawWait reference, both raw origins, three request origins, U(e),U(d),U(k),U(j),U(w),address,subkind,substage,INrow,WRrow)`. Its entries are typed references to acquired backing, not a dynamic payload, previous Image or another view. Keep the list in increasing `k`.
+
+Mode10 and mode01 with `N=0` retain the historical check and immediate original return; mode00, mode11, malformed or partial supply, source refusals and local faults retain their inherited rows and cleanup. Only the completed positive mode01 branch with `N≥1` enables `P_V`.
+
+**Proposition 35.4 (exact finite coverage).** On the positive mode01 domain with payload length `ell`, the table contains exactly `8+3 ell` distinct cuts of the last completed request, including the after-EX header and length substages, all strictly before `h_*`, and no inferred payload input when `ell=0`.
+
+**Proof.** The episode is delimited by the two literal edges in `EdgeFrame`; Lemma 11.4 supplies every matching address and write count. The three intervals are disjoint and chronological. The two append cases contribute `2(3+ell+1)` after-IN/after-EX positions and the payload contributes `ell`, giving `8+3 ell`. Full origin and event comparisons keep occurrences distinct even when values coincide. The selected-final fence and original return occur after every emitted position, while the absorbing halt has no successor entry.
 
 ## 36. Four separate bodies and their finite consumers
 
-**Definition 36.1 (carrier and single-body grammar).** Use §§25 and
-30–31's compact incidence construction with the finite role catalog
-of Definition35.1, the 74 tape words and the actual effects of
-$G_{\rm V}$. Write $S,B,T,M$ for the respective readings of
-Definition33.1 on this instance. In particular $M$ selects the raw
-13 and 69 words, meter, relevant actual owner/availability locations
-and role binding, and only the phase-appropriate occupied latch
-coordinate; it contains neither a cover nor a query list. No archived
-word is reclassified as an independent history coordinate. All
-existing raw tracks, optional locations, child/parent slots and both
-meter lanes use the compact template rules with no change in their
-roles. The row-square proof of Theorem31.1 applies: its cell rewrite,
-boundary construction, head-alias, receipt and finite-effect cases
-exhaust these rows too. Only the finite catalog and case table are
-regenerated. No physical native shadow tape is needed in the incidence
-realization.
+**Definition 36.1 (four single-body payloads).** On `RoleFrame` and the 74-role execution of `G_V`, use the compact incidence construction of §§25 and 30–31. Let `S,B,T,M` be the four bodies of Definition 33.1. `M` contains the actual 13/69 words, meter, owner/availability locations, role binding and phase-appropriate latch only; it contains neither the cover nor a query list. Archived words retain their source coordinates. The boundary, support, occurrence and row-square constructors are regenerated with `RoleFrame` and `P_V`; no native shadow tape is added.
 
-Use [CYCLE](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_GROWING_PAID_VIEW_CYCLE.md)
-§§2–3's list/Frame, support-mask preorder and boundary-contour grammars
-on this compact ordered child tree. The traversal at a cell root now
-takes the fixed $K(x)$ component of Definition30.1, using its at-most
-seven preorder items; the port spine and all finite optional sockets
-retain their respective walkers. A boundary body is the contour of
-the maximal paths only; a support body is the mask word for the
-complete support only. Use the list of eleven-field occurrence records
-of CYCLE5.3 for $T$, with RG2 §31's compact templates instead of the
-unary cell template. Its roles and slots are in their template order
-and SSA slot order; in a repeated inspection retain each repetition.
-Initialize the constructor name map by foundation preorder; births are
-named by row count and that row's template birth order. A cell birth
-uses seven component roles in preorder and the new trailing terminal;
-rewiring a component preserves the same seven identities in preorder.
-Use the actual native labels and full field-9 event, not inferred
-events from the final meter. The sequence is one body, without an
-appended endpoint. Encode $M$ as a five-field tuple: three cell lists
-(13,69,meter, each item its eight literal bits in track order), the
-ordered selected optional locations and role binding of Definition33.1
-in the physical codec, and the optional occupied tuple (latch, port,
-creation position, one bit). Use CYCLE5.3's absent/present Frame
-convention; each selected location is recorded once, in catalog order,
-including absence. All codecs require exhaustion and reject wrong
-arity, range or tags.
+**Definition 36.2 (restricted decoder).** Given one received body and its kind, the decoder reads its own body, the fixed foundation, the framed binding and its own placement records. It checks the complete `b_k`, kind, unary count and joint endpoint. For `S,B,M` it uses the counted replay and matching-write rule of Lemma 26.2, selecting the supplied 13/69 word or occupied latch when `j<k<w`. For `T` it consumes one compact occurrence record per unary count mark, takes the IN bit from that record and applies Step74 with the literal rows of `P_V`. It re-encodes the same kind and requires joint exhaustion and equality with the complete as-of-`k` record. It never reads another body, the live raw store, a later origin annotation or a previous Image.
 
-Use the acyclic word traversals of CYCLE §§2–7 with these explicit
-substitutions. For the compact template fold keep the position-to-role
-map and traverse the endpoint incidences of the reconstructed
-finite tree by Nth/Find. The selected patch is the local case of
-§31: ordered routes/inspections with the twenty probes at a cell
-component, grouped final track vectors, finite bit and cell
-constructors, and head/receipt effects. Its lists are computed by
-following those local walks and enumerating their slots, not by
-looking up a full compiled patch table in the bank. In particular
-the component inspection uses $K(x)$ and its inverse on the 256
-literal patterns; optional socket paths use Half and TakeItems
-on the actual catalog. This replaces the unary cell operation in
-CYCLE5.2/5.4 while leaving the native-event checker unchanged.
+**Lemma 36.3 (body isolation).** Every authentic `b_k` has four terminating single-body decoders, each returning the same earlier complete cut, consumed inputs, origins, endpoint and bill.
 
-**Definition 36.2 (decoder isolation and checking).** Every decoder
-has arguments exactly (received body, $b_k$, PublicCode).
-PublicCode is the actual fixed acquired code/boot description, its
-role card and the fixed canonical beta/prior/table initialization
-data. There are no variable round bits, acquired raw payloads, cover
-words, cached decoded states or other view bodies among its arguments.
-Resolve no payload by a reference in $b_k$ within the decoder.
-Require the native replay count $k$, the marked opening edge at $e$,
-and the named occupied IN/EX substage, code, latch, pre-count, matching
-row and address. The future WR need not have executed; compare its
-identity from the prescribed row and address. Require the source and
-boot/code binding and raw caller reached by the decoded history. The
-current checks of §37 separately bind $d$, future rows/references
-and the cover. They do not feed the decoder any bits.
+**Proof.** Theorem 33.2 supplies the shape/support/boundary laws and the existing replay laws supply the 74-role state/event fold. The new work is finite data work before the target and adds no runtime IN or write to an old 13/69 payload. The three state bodies therefore use only their own received words and occupied-latch rule; `T` uses only its own occurrence records and the literal `VProg` rows. The independent sweep is compared only after decoding, so it is a consumer of the decoded result. Finite lists and unary counters exhaust together.
 
-For $S$, parse the mask tree and invert the full compact layout.
-For $B$, parse the boundary contour, take all prefixes, then perform
-the same layout inverse. In either case recover all cells and finite
-locations; derive the selected $M$ from this raw record. For $M$,
-use exactly the five received fields. In all three cases count the
-meter's receipts; require $k$ and replay from the fixed foundation.
-For each represented runtime IN compare the matching-write count
-to $k$ before selecting from the supplied 13 or 69 word; for a pending
-one use the occupied tuple. Use exactly Lemma26.2 and Theorem33.2's
-input rule with $C$'s relocated cases. No local reader of actual live
-13 or meter is called. Compare the complete derived raw record for
-$S/B$, and the complete reselected $M$ for the memory case. In all
-cases re-encode the same kind and compare the received body. For $T$
-parse and consume one record per unary count mark from the foundation,
-taking the IN bit only from that record; use Step74 and compare the
-entire compact record from the template fold of Definition36.1.
-Require joint exhaustion and the same bound-target tests. All four
-decoders reconstruct the complete prefix, consumed inputs and
-historically present origins, full joint endpoint and bill using the
-existing Step74/codec folds. A not-yet-written or not-yet-acquired
-field keeps that status. The actual later request/cover references
-are in the binding checked by the service, not materialized in the
-older endpoint.
+## 37. The explicit ACK/mailbox/TOK/CTL entry and original return
 
-**Lemma 36.3 (body-local recovery at every selected substage).** For
-an authentic $b_k$ and any one of the four bodies of its cut, the
-stated decoder terminates and returns the complete same earlier cut.
-This conclusion uses no other body or Image as a decoding input.
+**Definition 37.1 (patched ReturnHistory entry).** In `G_V`, the successful `RH_CHECK_OK` row does not use Definition 22.1's immediate `HandbackResume` successor. Its unique successor is `V_ACK`. At `V_ACK` the handler-to-client completion handoff has already installed `clientInvocation=1` and `receiver73Complete=1`. `V_ACK` consumes the actual receiver completion right with `ACK(73→71)` and leaves the historical-client invocation in its slot. `V_MAILBOX` then returns the actual mailbox-availability TOK, establishing `mailboxIdle=1` and `channelHeld=0`. Only then does `V_ENTER_S` test
 
-**Proof.** The shape and support/boundary laws of Theorem33.2 are
-independent of the size of the finite-location scaffold. Each raw
-runtime input still has the same matching fragment and persistent
-write. The added code archive supply is prescribed at boot and
-belongs to PublicCode. The new native work before $k$ makes no
-additional runtime IN and cannot overwrite old 13 or 69 input
-payloads. For the three state-derived bodies, the counted replay
-proof of Theorems27.2 and 33.2 therefore uses exactly the given
-port words and single pending latch when $j<k<w$. For $T$, the
-erasure and local row-square proofs supply each successive native
-event and its complete represented effect; checking the compact
-templates uses their actual constructor names, not an isomorphism
-modulo renaming. This is CYCLE7.2's separate-input decoder scheme
-with the stated matching-write rule and regenerated catalog. Each
-iteration consumes a finite list item, shape/path cursor or unary
-mark. On the authentic images the historical checks and re-encoding
-succeed. No assertion of origin authentication for arbitrary
-well-formed bodies follows from this inverse. ∎
+`historicalClientSlot=1 ∧ mailboxIdle=1 ∧ channelHeld=0 ∧ poolOwner=A ∧ checked=1`
 
-## 37. Actual repeated delivery before the original return
+and execute the literal CTL to `V_TABLE`. These three rows are the ReturnHistory-to-loop edge: predecessor, successor versions, source and destination slots, ACK, mailbox return, pool owner and CTL are all in `P_V`. No desired view is a guard and no token is borrowed from RG2. A failed guard takes the finite `V_FAULT_PRE` cleanup and cannot enter a view stage.
 
-**Definition 37.1 (installed receiver loop).** Split the successful
-ReturnHistory of Definition22.1 after the original checked30 seal and
-Image ACK/mailbox return, before the client-to-RG2 invocation return.
-Use the mode and completed-round field of the already checked argument
-to enter the following loop on the positive view branch. Keep the
-historic client invocation, actual pool and idle mailbox. Preserve the
-old checked block and its own lineage. Compute the finite table of
-Definition35.3. With a separate copy of the checked received history,
-sweep from the represented foundation to each successive $k$ by Step74,
-retaining the finite prefix/event fold and endpoint. Stop the sweep
-at each $k$ until its four deliveries finish. The raw store, phases,
-rights, partial records, latches and bill used to render each body are
-the represented values there, not the live values in this loop. The
-generator encodes each natural reading directly from that earlier cut;
-there is no chained conversion that needs a previously received view.
+**Definition 37.2 (paid four-stage loop and batch return).** `V_TABLE` runs the finite cursor/episode procedure of Definition 35.3. For each table item, `VStage(00)`, `VStage(01)`, `VStage(10)`, `VStage(11)` run in that fixed order. Each stage performs its own fresh export, three measured placement records, receiver import, placement parsing, body decode, complete equality and ACK/mailbox return. The callback reuses the client slot only after the prior channel has become idle; no candidate or first body is passed to the next stage. After `11_NEXT`, `V_TABLE` advances by the unary difference to the next larger `k`. `V_BATCH` scans the whole success list against a fresh table cursor, exports `RGV_CHECKED1` on 30, seals it with its CAP record on 29, closes 29, reimports the returned local reference and compares the complete list and cover binding. Only after that comparison does the final row execute `TOK(historicalClientSlot→RG2Slot)` and `CTL(HandbackResume)`.
 
-For each table item run, in order, the four static stages $S,B,T,M$.
-Their published words are exactly
-$[\mathtt{RGV\mbox{-}VIEW1},b_k,\mathrm{kind},\mathrm{body}]$,
-with kind $00,01,10,11$ respectively. All new text tags are ASCII
-octets, most significant bit first, in one Frame. Use separate fields
-for the sweep, expected bindings, current sender candidate and received
-decoder work. The following sequence defines each inlined stage.
+A first failure records its typed tag on 71, ACKs only deliveries that reached the callback, returns the mailbox, returns the historical invocation to RG2 and returns the twelve-word pool by the inherited reverse loan. It cannot write a source refusal, accepted batch or restart. Partial supply and withheld IN retain their actual unfinished prefix and bill. The loop has no external IN and no hidden read privilege.
 
-1. Encode the complete wrapper in the candidate field, TOK client to
-   handler and CTL to the
-   fixed publisher. Use Definition21.1 literally on the new payload:
-   measured sender export, fresh preceding F on69, each of the three
-   measured allocations/placement records, both complete positioned
-   copies and native completion records, receiver seal and full print.
-   There is no intervening assignment during protected native placement/
-   copy/print. Use fresh blocks every time. TOK handler to client and CTL
-   to that stage's own callback.
-2. Before any assignment position73 using its own latest placement.
-   Clear the candidate and decoder temporaries, F-import from actual73,
-   then acquire the three 69 placement records as in Definition21.1,
-   with no intervening 69 writer. Parse the complete wrapper, compare
-   kind and $b_k$ with the current expected binding, and require the
-   actual completed-channel callback and rights. The placement numbers
-   are parsed from this delivery, with their actual owner/port/length/
-   ordinal and setup flags. Current channel authority is established
-   by the real seals and TOKs; no projected right enters this test.
-3. Run Definition36.2 with its restricted arguments. Only after
-   decoding succeeds compare its result with the sweep's complete
-   same-run prefix/event fold and joint state at $k$, including all
-   receipts and the historical bill. The sweep rebuilds origins from
-   events and the state through $k$ only: it does not copy the later
-   acquired origin annotations of the cover into the prefix result.
-   For both operands use the canonical historical physical and event
-   codecs with the same as-of-$k$ origin convention. This equality is a
-   use of the decoded result, never a repair or an input to decoding.
-   Check the retained present binding against the checked cover,
-   closed request dependencies and current table entry. Record the
-   checked tuple $(b_k,\mathrm{kind},\text{three received placements})$
-   in the batch's success list, then execute the actual ACK and
-   mailbox return. No new publication starts before both.
-4. At the fourth return pop exactly one table item. Advance the
-   sweep to the next strictly larger $k$ by consuming the difference
-   of the unary counts; no replay or read beyond the checked cover is
-   needed. When the table is exhausted, go to the batch seal.
+**Theorem 37.3 (finite paid recovery and genuine original continuation).** Under the positive premises, all `4(8+3 ell)` body publications are separately received and checked, the batch is reimported, and the same historical-client invocation reaches the original `HandbackResume`. The original Stop/INITIAL consumer executes once, with output `(0,B,1)` and absorbing halt on the original source occurrence.
 
-The sweep and the four callback decoders use disjoint work fields;
-the cover can remain physically retained. No candidate field, first
-view, decoder cache or later acquired payload enters a decoder.
-Repeating the old same-principal channel is a sequence of actual
-transfers: the Image ACK and return leave the channel slots idle,
-and each stage starts from those same live availability conditions
-with newly measured heads and bases. Completion and the received
-placement authorize the specified read of this new interval.
-All old payloads, placement/
-completion records, printed data and receipts remain constructed.
-The finite routine cases are instantiated twice for bank parity,
-with loops only over finite copied words. Parsing, ordinal matching,
-grouping, tree/role traversal, comparisons, source fold and
-serialization use ARC2/RCA12.1 and CYCLE's list/cursor expansions;
-none is a new primitive.
+**Proof.** Lemma 35.2 supplies the completed Image callback and actual rights. Definition 37.1 proves the sole enabled loop entry, including every TOK/CTL guard. Induction over the literal kind order and finite target cursor applies the measured export/import and ACK return at each stage. Lemma 36.3 makes each decoded result equal to the independent sweep, so the current consumer uses all four bodies and their complete receipts. `V_BATCH` has joint exhaustion before its final TOK, so the only success successor is the inherited `HandbackResume`. Theorem 22.3 then applies to the preserved saved configuration, source, journals, terminal rows, verifier, consumer and halt. Fault and partial branches retain inherited cleanup and do not enter this conclusion.
 
-**Definition 37.2 (batch consumption and fault routing).** At table
-exhaustion compare the success list against a fresh cursor of the
-retained table: one item of each of the four kinds in order at
-each $b_k$, with no extras. Export a new CAP-format checked block
-on30 containing exactly the tag $\mathtt{RGV\mbox{-}CHECKED1}$, the
-original checked30 reference, cover placement binding and the whole
-success list. Use Definition22.1's measured writer and seal. With the
-pool still at $A$, close29 anew and resolve/reimport this very block
-by its returned local reference (port30/type case of the bounded
-local reader, with all actual owner, flag, length and status tests).
-Compare the complete reimported payload with those checked values
-before taking the old invocation return TOK and HandbackResume CTL.
-The current consumer thereby uses the results of all four independent
-checks, with a retained physical receipt. The old checked block,
-saved25/27, table24 and original terminal target are not rewritten.
-The new seal is neither a CAP source event nor a terminal receipt.
+## 38. Same-run tariff and remaining scope
 
-A first failing finite test in the new idle work (including batch
-readback) records its fault tag on71 by the measured RCA sender
-export alone, with the client invocation,
-returns that invocation to RG2 and returns the whole pool to the
-producer by the original reverse loan before the local fault exit.
-A callback failure retains the fault on71, ACKs that reached delivery
-once, returns the mailbox, then takes the same invocation/pool
-cleanup. New tags use Definition16.2's first-test numbering and
-the original typed fault tuple, with distinct tags at the new PCs.
-Before acquiring a mailbox the fault exit holds none; native channel
-setup/copy/print itself is the total positioned fragment on the
-complete finite candidate and stated held rights. Its absent-right
-attempts have no enabled row. The earlier history faults of §22 keep
-their own cleanup, and no new fault becomes a source refusal,
-accepted batch, original success or restart. Withheld IN and partial
-native work keep their actual cuts without promising a return.
+**Proposition 38.1 (complete symbolic cost).** For every actual prefix `z` of `G_V`, evaluate CAP7.1/ARC10.1's opcode/purpose recurrence on the actual predecessor state and remaining supply. Sum, in order, all boot and round work; both copies and checks of `(Delta_V,E_V,C)`; original acquisition and raw/guard/computed flights; Image construction/check; target-table cursor and sweep; every one of the `4(8+3 ell)` measured stage publications and callbacks; `V_BATCH`; and the inherited handback, Stop, terminal publication, verifier, consumer and halt. Count every row, token, descriptor, placement, copy, print, comparison, ACK, mailbox return, bank rebuild, fault cleanup and retained block at its actual occurrence. A represented historical row in a sweep or decoder is charged only for its physical expansion in the current run, not as a second source event. This is the complete same-run cost, including changed boot/card work and all publication/check/return work; no saving claim is made relative to another program.
 
-**Theorem 37.3 (complete paid recovery and original continuation).**
-Under Definition35.1's positive premises, every selected target
-receives four separate checked publications. The invoked program
-terminates after the real HandbackResume and the original Stop/
-INITIAL consumer, with original output $(0,B,1)$ and absorbing halt
-on the same source occurrence as its raw episodes. There are exactly
-$4(8+3\ell)$ additional view publications, in addition to the checked
-cover Image and the original output.
+**Proposition 38.2 (delayed relation and preserved boundary).** The new relation is a delayed, source-specific bridge from the authentic acquired cover to four independently received bodies for the finite last-raw target table. It preserves the original source, rights, refusals, faults, complete records, returns and terminal consumer. It does not provide a live busy-cut callback, an all-cut acquisition operation, a posthalt entry, a new original-Q leg, or a proof of global relation/memory minimality.
 
-**Proof.** Lemma35.2 supplies the actual Image seal/receiver read and
-full positive CheckImage with the original checked30 block. Its ACK
-and mailbox return leave the client slot and entire pool in hand.
-Proposition35.4 proves the binding table and increasing sweep counts
-without a guessed target or new input. On entry to each stage the
-client holds its slot and the mailbox is idle. The holder-to-handler
-TOK is enabled; the measured export and positioned channel induction
-of Theorem21.3 applies to this finite word. The receiver callback
-imports the physically received bits before any assignment can
-invalidate placement recency. The source word and received word have
-different locations and actual writer/reader roles. Lemma36.3 gives
-the recovered earlier cut using the one body; the independently
-retained sweep gives the same complete history and endpoint, so all
-current comparisons succeed. ACK and availability return restore
-the next stage's entrance conditions, with the actual current heads
-and new meter. Induction on four stages and then on the finite table
-establishes exactly the stated count, finite completion and the
-checked batch seal/readback. All loops terminate on their own
-finite work, without a bound uniform in $\ell$ or $N$.
-
-The new graph writes only its authorized banks/work, 68/69 staging
-and descriptors, 71–73 channel and fresh checked30/29 material.
-It neither consults nor changes the current private source, effective
-$H,K$, source token or either journal end. The only continuation
-after the final successful check uses the actual client-to-RG2
-invocation transfer and HandbackResume. The saved original reader's
-fresh closed scan sees the new descriptors but resolves the same
-original saved material by its complete origins. Lemma22.2's
-ownership and restoration premises therefore hold at the actual
-new entry. Theorem22.3's suffix uses the original fresh copies,
-role normalization, original-client invocation and loan, literal
-Stop, terminal semantic/unified rows and ACK, actual new snapshot,
-verifier, route51 and full INITIAL consumer checks and return before
-halt. These are executed on the true later meter and tape heads;
-their complete records and fence counts are the new run's own.
-No historical slot, branch or state is installed as the live
-continuation. No old return/terminal consumer is replaced by a
-decoded view. ∎
-
-## 38. Same-run tariff and scope of the operational relation
-
-**Proposition 38.1 (complete symbolic price).** At every executed
-prefix $z$ of $G_{\rm V}$, take the CAP7.1/ARC10.1 opcode/purpose
-recurrence and (RH.5) on its actual primitives. Let $V(F,x,I)$
-be that vector for a fragment $F$ entered at the complete state
-$x$ with actual remaining supply $I$. Start at the irreducible
-foundation. On a positive complete run the vector is the sequential
-sum of the following fragments, each evaluated at its *actual*
-predecessor's full successor and remaining supply:
-
-| Fragment | Included work |
-| --- | --- |
-| Boot and rounds | All boundary, raw/active control and finite bit work; the new empty bank; both code copies and extra role card supply, writer, archive loan/copies/check/import; original acquisition, lift, full raw/guard/computed flights and all rebuilt banks; finish and fresh Handback loan. |
-| Cover | Full §19 scans, imports, target/evidence/70 export and reimport, invocation, Steps, Image serialization and positioned publication, complete check, original checked30 seal, ACK and mailbox return. |
-| Table and sweep | Every history/origin cursor, episode, lookahead and CAP reference/field comparison, target serialization and accumulator assignment; each Step and exact endpoint/event/constructor fold of the sweep, with actual count subtraction and control tests. |
-| Four stages per target | Per kind all body walks and serialization, wrapper and token/entry work, measured Base/length and initialized allocations, all descriptors and staging, both copies/print, pre-bank Seek, import of body and placements, full decoding, canonicalization, complete value and current binding comparisons, checked-list updates, ACK and availability return. |
-| Batch and original end | All comparisons, measured 30/29 seal and closed readback, invocation return; original configuration/table/packet work and transfers, Stop, terminal rows and ACK, full snapshot/deliveries/verifier/receipt, original consumer, return and halt. |
-
-**Proof.** A primitive adds one actual receipt, one tick and two fee
-units, with all ordinary constructions and new control bits as in
-(RH.5). The vector adds the corresponding opcode/purpose unit and
-actually consumed typed IN if any. Every macro uses the finite
-expansions of Definitions16.2, 21.1, 35.1–37.2 and ARC10.2; branch
-and loop costs follow their actual successor, including all measured
-bank dry and real passes and immutable old versions. For a view
-wrapper of bit length $L$ the two tested copy bodies with handoffs
-have the supplier subtotal $12L+6$; the print loop has $5L+1$
-rows. Neither term includes setup, positioning, placement and
-completion records, remaining handoffs, import, checks or return.
-Those are all counted by the full recurrence. A represented row in
-the sweep or a decoder costs its full physical word expansion and
-does not add a second primitive to the represented earlier bill.
-A prefix that stops inside a fragment counts only its actually
-executed rows, including a taken fault cleanup. Retained material
-includes all code/role-card bytes, old banks, argument and checked
-cover, every sender/mailbox/receiver block and placement, the batch
-seal and the full original terminal material. No refund follows
-from dropping a cursor or returning a token. If using the compact
-carrier, also charge (RH.10)–(RH.12) with this run's catalog, full
-new finite patch description and actual per-row templates. This is
-a same-run price; it gives no numerical total saving relative to
-another boot, selector or output contract. The original pre-Stop
-source/maintenance call count is still (RG.10), with $N_{\rm raw}=N$:
-the view loop uses no source admission, event commitment or runtime
-IN. Its OUT and receipt counts belong to the new native run. ∎
-
-**Proposition 38.2 (domain and suppliers of the bridge).** The
-installed relation is delayed: at the actual post-Image check and
-return entrance it supplies received, independently decoded bodies
-for all the specified earlier busy cuts. It does not supply an
-immediate busy-cut acquisition operation.
-
-**Proof.** Every selected raw cut lies inside the genuine raw
-episode, before its matching WR; the entry and subsequent target
-sweep are strictly after its full return and the selected-final
-fence. The concrete caller and resource paths used in Theorem37.3
-require the actual completed HandbackPending, full actor loan and
-history/receiver slots. Neither the earlier raw continuation nor
-the original actor guard receive loop has an edge to these entries.
-Here busy denotes the inlined receiver substage with a matching
-write outstanding. The raw framing substage precedes the original
-service's admission TOK; the dispatcher holding the source token
-there is insufficient to enable a historical invocation.
-An original selected-final check or an encoded historical right
-cannot enable such an edge. The same proof gives no entry after
-the absorbing halt. Selection of a later covering history therefore
-has a different domain from authorization to act at the cut.
-
-The source-specific increment is the closed last-raw excursion
-binding, its complete finite target table, the four body/channel
-joins and the checked batch's real return to the parked original
-client. Sections 16–24 already supply the authenticated acquired
-argument, Image, complete checker and original suffix. Sections
-25–34 already supply the independent readings, compact row square
-and inverses. CYCLE §§2–10 supply the body-local algorithms and
-paid publication mechanism on their own $G_\circ$; its input70,
-strict Reserve selector, $M_J$, five-stage loop and final Ready
-are not source/control matches here. GENERAL §21's acquired
-bootstrap witness and original00 suffix likewise have separate
-hypotheses. AIF4.4 supplies counted deterministic replay, not the
-new callable join. NativeSerialMachine's reached-prefix replay,
-NativeSerialEffective's code-service simulation and
-NativeFullSourceProducer's original traversal, together with their
-own Blueprint statements, are narrower operational suppliers:
-their interfaces do not install this RG code, provide the 74-role
-channel rights or authorize the batch return. The finite-view and
-realized-image factorization results assume their actual readout/
-transition relations; they cannot supply these operations. C139's
-finite joint classification and OTF008's actual return concern
-their own sources and do not instantiate these bindings.
-
-The general record/replay principle is literature-attested by
-[O'Callahan et al., §2.1](https://arxiv.org/pdf/1705.05937v1#page=2),
-within its stated capture boundary. The same-run joins here are
-repo-derived; the Linux replay principle neither grants the live
-native permissions nor constructs the historical target family.
-These are proofs in the declared native and incidence models; they
-claim neither a fresh Lean verification nor a physical realization.
-The two source atoms $\alpha,\beta$, ordered composition, native
-row opcodes and incidence endpoint types keep their distinct
-roles. No new original-$Q$ leg is inferred on these busy or
-inserted rows; Proposition28.2 remains scoped to its inherited
-row. Live all-cut acquisition, the original terminal task kernel
-beyond the stated output and consumer, global relation/memory
-minimality and other sources or progress without actual supply
-remain outside the result. ∎
+**Proof.** The new source-specific elements are the closed card `C`, deterministic `Delta_V/E_V` boot binding, explicit `EdgeFrame`, target table, four body joins and patched ReturnHistory edge. Definitions 16–24 supply the original apparatus, cover, checker and terminal route; §§25–34 supply the four body grammars, replay and incidence consumers. The new rows run after the checked cover and before the original handback, so they cannot be identified with a live operation at an earlier busy cut. Historical permissions remain data; no view body grants native access. The broader continuous goal remains open beyond this finite repair.
 
 ## 追加锚（本行以下为增补区）
