@@ -7,6 +7,9 @@
    digest: Scalar PB yields full vector transverse identities. -/
 
 import D5.S3.Quantum.Algebra.PBAffineFirstBudget
+import Mathlib.Analysis.Matrix.Hermitian
+import Mathlib.Analysis.Matrix.PosDef
+import Mathlib.Analysis.InnerProductSpace.Positive
 
 /-! Scalar PB and transverse readings on a full Jordan representation. -/
 
@@ -57,6 +60,183 @@ def vectorReading {J : E →ₗ[ℝ] E →ₗ[ℝ] E}
   toFun a := ⟪v, R.op a v⟫
   map_add' a b := by simp [inner_add_right]
   map_smul' a b := by simp [inner_smul_right]
+
+/-! The concrete four-dimensional self-adjoint matrix carrier used by the
+fixed-output reconstruction.  The action is the literal matrix action on the
+whole four-dimensional space, so the fourth row and column remain present. -/
+
+private abbrev M4 := Matrix (Fin 4) (Fin 4) ℂ
+private abbrev M4E := selfAdjoint.submodule ℝ M4
+private abbrev M4H := EuclideanSpace ℂ (Fin 4)
+
+private def m4Herm (A : M4) (h : star A = A) : M4E := ⟨A, by
+  change star A = A
+  exact h⟩
+
+private def m4JordanVal (a b : M4E) : M4 :=
+  (1 / 2 : ℂ) • ((a : M4) * b + (b : M4) * a)
+
+private def m4Jordan (a b : M4E) : M4E := m4Herm (m4JordanVal a b) (by
+  have ha : star (a : M4) = (a : M4) := a.property
+  have hb : star (b : M4) = (b : M4) := b.property
+  simp [m4JordanVal, star_mul, ha, hb]
+  module)
+
+/-- The concrete Jordan product on the self-adjoint part of `M₄(ℂ)`. -/
+def m4J : M4E →ₗ[ℝ] M4E →ₗ[ℝ] M4E where
+  toFun a := {
+    toFun := fun b => m4Jordan a b
+    map_add' := by
+      intro b c
+      apply Subtype.ext
+      change m4JordanVal a (b + c) = m4JordanVal a b + m4JordanVal a c
+      simp [m4JordanVal, Matrix.mul_add, Matrix.add_mul]
+      module
+    map_smul' := by
+      intro r b
+      apply Subtype.ext
+      change m4JordanVal a (r • b) = r • m4JordanVal a b
+      simp [m4JordanVal, Matrix.mul_smul, Matrix.smul_mul]
+      module }
+  map_add' := by
+    intro a b
+    apply LinearMap.ext
+    intro c
+    apply Subtype.ext
+    change m4JordanVal (a + b) c = m4JordanVal a c + m4JordanVal b c
+    simp [m4JordanVal, Matrix.mul_add, Matrix.add_mul]
+    module
+  map_smul' := by
+    intro r a
+    apply LinearMap.ext
+    intro b
+    apply Subtype.ext
+    change m4JordanVal (r • a) b = r • m4JordanVal a b
+    simp [m4JordanVal, Matrix.mul_smul, Matrix.smul_mul]
+    module
+
+private def m4OpVal (a : M4E) : M4H →ₗ[ℂ] M4H :=
+  Matrix.toEuclideanLin (a : M4)
+
+private def m4Op : M4E →ₗ[ℝ] (M4H →ₗ[ℝ] M4H) where
+  toFun a := (m4OpVal a).restrictScalars ℝ
+  map_add' := by
+    intro a b
+    ext x i
+    simp [m4OpVal, Matrix.toEuclideanLin, Matrix.mulVec]
+  map_smul' := by
+    intro r a
+    ext x i
+    simp [m4OpVal, Matrix.toEuclideanLin, Matrix.smul_mulVec]
+
+/-- Literal `M₄(ℂ)` realization of the abstract vector model. -/
+def m4VectorModel : VectorModel (J := m4J) (H := M4H) where
+  op := m4Op
+  symmetric := by
+    intro a x y
+    change (inner ℂ (m4OpVal a x) y).re = (inner ℂ x (m4OpVal a y)).re
+    have ha : (a : M4).IsHermitian := by
+      change (a : M4).conjTranspose = (a : M4)
+      rw [← Matrix.star_eq_conjTranspose]
+      exact a.property
+    exact congrArg Complex.re ((Matrix.isSymmetric_toEuclideanLin_iff.mpr ha) x y)
+  jordan := by
+    intro a b
+    have hc : m4OpVal (m4Jordan a b) =
+        (1 / 2 : ℂ) • (m4OpVal a ∘ₗ m4OpVal b + m4OpVal b ∘ₗ m4OpVal a) := by
+      change Matrix.toLpLin 2 2 (m4JordanVal a b) = _
+      simp only [m4JordanVal, map_smul, map_add, Matrix.toEuclideanLin,
+        m4OpVal, LinearMap.add_apply]
+      rw [Matrix.toLpLin_mul, Matrix.toLpLin_mul]
+    change LinearMap.restrictScalars ℝ (m4OpVal (m4Jordan a b)) = _
+    rw [hc]
+    simp only [LinearMap.restrictScalars, LinearMap.smul_apply,
+      LinearMap.add_apply, LinearMap.comp_apply, Pi.smul_apply]
+    ext x i
+    simp [m4Op, m4OpVal]
+
+/-- The complete row reconstruction consumer.  Once the three actor rows have
+been obtained from the scalar-PB axes, Hermiticity supplies the matching
+columns and leaves precisely four real diagonal residuals. -/
+theorem m4_full_row_reconstruction (g k : M4)
+    (hg : g.IsHermitian) (hk : k.IsHermitian)
+    (hrow : ∀ i j : Fin 4, i ≠ j → g i j = k i j) :
+    ∃ s : Fin 4 → ℝ, g - k = Matrix.diagonal (fun i => (s i : ℂ)) := by
+  let s : Fin 4 → ℝ := fun i => (g i i - k i i).re
+  refine ⟨s, ?_⟩
+  ext i j
+  by_cases hij : i = j
+  · subst j
+    have hgd : ((g i i).re : ℂ) = g i i := hg.coe_re_apply_self i
+    have hkd : ((k i i).re : ℂ) = k i i := hk.coe_re_apply_self i
+    simp [s, Matrix.diagonal_apply, hgd, hkd, sub_eq_add_neg]
+  · simp [Matrix.diagonal_apply, hij, hrow i j hij]
+
+/-- The complex functional associated with a full-space vector state. -/
+def m4VectorFunctional (v : M4H) : M4 →ₗ[ℂ] ℂ where
+  toFun A := inner ℂ v (Matrix.toEuclideanLin A v)
+  map_add' A B := by
+    change inner ℂ v ((Matrix.toEuclideanLin (A + B)) v) = _
+    rw [map_add]
+    simp only [LinearMap.add_apply]
+    rw [inner_add_right]
+  map_smul' z A := by
+    change inner ℂ v ((Matrix.toEuclideanLin (z • A)) v) = _
+    rw [map_smul]
+    simp [inner_smul_right]
+
+/-- Restriction of a complex functional to the real self-adjoint carrier. -/
+def m4RealFunctional (φ : M4 →ₗ[ℂ] ℂ) : M4E →ₗ[ℝ] ℝ where
+  toFun A := (φ (A : M4)).re
+  map_add' A B := by simp [map_add]
+  map_smul' r A := by simp [map_smul, RCLike.smul_re]
+
+/-- The restricted vector state is exactly the existing vector reading. -/
+theorem m4RealFunctional_vector (v : M4H) (A : M4E) :
+    m4RealFunctional (m4VectorFunctional v) A =
+      vectorReading m4VectorModel v A := by
+  rfl
+
+/-- The full complex positive-semidefinite cone, stated without imposing an
+order on `ℂ`: Hermiticity and nonnegative quadratic forms. -/
+def m4PosSemidef (A : M4) : Prop :=
+  A.IsHermitian ∧ ∀ v : M4H, (0 : ℝ) ≤
+    (inner ℂ v (Matrix.toEuclideanLin A v)).re
+
+/-- Positivity on the full matrix cone, in the form needed by the original
+scalar PB quantifier. -/
+def m4Positive (φ : M4 →ₗ[ℂ] ℂ) : Prop :=
+  ∀ A : M4, m4PosSemidef A → (0 : ℝ) ≤ (φ A).re
+
+theorem m4VectorFunctional_positive (v : M4H) :
+    m4Positive (m4VectorFunctional v) := by
+  intro A hA
+  exact hA.2 v
+
+/-- Actor support is stated on the original four-by-four carrier; the fourth
+row and column are retained in the ambient positive functional. -/
+def m4ActorSupported (x : M4E) : Prop :=
+  ∀ i j : Fin 4, (i = 3 ∨ j = 3) → (x : M4) i j = 0
+
+/-- The original positive-functional scalar PB transfers to every full-space
+vector reading.  This is the exact bridge consumed by the spectral argument. -/
+theorem m4_positive_pb_transfer
+    {J : M4E →ₗ[ℝ] M4E →ₗ[ℝ] M4E} {κ ρ : M4E →ₗ[ℝ] M4E}
+    {t k g : M4E}
+    (hPB : ∀ (φ : M4 →ₗ[ℂ] ℂ), m4Positive φ →
+      ∀ x : M4E, m4ActorSupported x →
+        scalarPB (J := J) κ ρ t k g x (m4RealFunctional φ)) :
+    ∀ (v : M4H), ‖v‖ = 1 → ∀ x : M4E, m4ActorSupported x →
+      scalarPB (J := J) κ ρ t k g x (vectorReading m4VectorModel v) := by
+  intro v hv x hx
+  have h := hPB (m4VectorFunctional v) (m4VectorFunctional_positive v) x hx
+  have heq : m4RealFunctional (m4VectorFunctional v) =
+      vectorReading m4VectorModel v := by
+    ext A
+    exact m4RealFunctional_vector v A
+  rw [heq] at h
+  exact h
+
 
 private theorem reading_jordan {J : E →ₗ[ℝ] E →ₗ[ℝ] E}
     (R : VectorModel (H := H) J) (a b : E) (v : H) :

@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Algebra;
 internal sealed class PBFixedOutputGramDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A scalar fixed-output PB family forces a transverse output identity. The representation has no total-response or separate P2 hypothesis. The four-slot escape audit remains unfinished at https://github.com/the-omega-institute/trureturing/issues/29240; no validated registration or full diagonal-residual conclusion is asserted.",
+        "A scalar fixed-output PB family forces a transverse output identity. The representation has no total-response or separate P2 hypothesis. A concrete full M4 self-adjoint vector carrier, full-space positive vector-state transfer, and Hermitian row consumer are formalized; primitive spectral/support construction and the final raw-PB specialization remain open.",
         H("Fixed-output scalar PB and full vector Gram budgets"),
         Blocks(
             D("scalarPB", "The original scalar budget", ScalarStatement(),
@@ -18,6 +18,28 @@ internal sealed class PBFixedOutputGramDocument : IScribeDocumentDefinition
                 "The real-linear operator map represents each label by a symmetric operator and represents the Jordan product by the symmetrized composition. H is the whole representation space. No restriction to the actor subspace is built into it, and no P2 field occurs.", DescribeRole.Definition),
             D("vectorReading", "One common vector reading", ReadingStatement(),
                 "Every vector v of the full H defines a real-linear reading. Symmetry and the represented Jordan law give vectorReading(v,J(a,b))=inner(op(a)v,op(b)v). The corresponding determinant is therefore a real Gram determinant, including degenerate and zero values.", DescribeRole.Definition),
+            D("m4J", "The concrete M4 Jordan product", Eq(I("m4J"), C("M4JordanProduct")),
+                "The carrier is the real self-adjoint submodule of Matrix (Fin 4) (Fin 4) Complex, with literal symmetrized matrix multiplication.", DescribeRole.Definition),
+            D("m4VectorModel", "The concrete M4 vector model", Eq(I("m4VectorModel"), C("VectorModel", C("EuclideanSpace", I("Complex"), C("Fin", N(4))), I("m4J"))),
+                "The operator is literal matrix action on the entire four-dimensional Euclidean space; the environment coordinate remains in the representation.", DescribeRole.Theorem),
+            D("m4_full_row_reconstruction", "Hermitian full-row reconstruction", C("HermitianRowReconstruction", I("g"), I("k")),
+                "Agreement on every off-diagonal entry of two Hermitian four-by-four matrices leaves a diagonal residual with real entries.", DescribeRole.Theorem),
+            D("m4VectorFunctional", "A full-space vector functional", Eq(I("m4VectorFunctional"), C("VectorState", I("v"))),
+                "The complex-linear vector state is evaluated on the whole M4 carrier.", DescribeRole.Definition),
+            D("m4RealFunctional", "Real restriction of a complex functional", Eq(I("m4RealFunctional"), C("RealRestriction", I("phi"))),
+                "Restriction to the self-adjoint real carrier takes the real part.", DescribeRole.Definition),
+            D("m4RealFunctional_vector", "Vector restriction identity", C("RestrictionEqualsVectorReading", I("v"), I("A")),
+                "For vector states, the restriction is exactly the existing vectorReading.", DescribeRole.Theorem),
+            D("m4PosSemidef", "Full complex positive cone", Eq(I("m4PosSemidef"), C("HermitianQuadraticNonnegative")),
+                "Positive semidefiniteness is stated as Hermiticity plus nonnegative full-space quadratic forms, avoiding an order on Complex.", DescribeRole.Definition),
+            D("m4Positive", "Full matrix positivity predicate", Eq(I("m4Positive"), C("PositiveFunctionalOnM4")),
+                "The predicate quantifies over the complete positive cone.", DescribeRole.Definition),
+            D("m4VectorFunctional_positive", "Vector states are positive", C("m4Positive", C("m4VectorFunctional", I("v"))),
+                "The quadratic-form definition proves positivity of every full-space vector state.", DescribeRole.Theorem),
+            D("m4ActorSupported", "Original actor support", Eq(I("m4ActorSupported"), C("FourthRowAndColumnZero")),
+                "Actor-supported probes retain the original four-by-four carrier while forcing the fourth row and column to vanish.", DescribeRole.Definition),
+            D("m4_positive_pb_transfer", "Positive-functional PB to vector PB", C("PositivePBTransfer", I("hPB")),
+                "Applying the original scalar PB to a positive vector state supplies the full-space vector-reading hypothesis used by the Gram argument.", DescribeRole.Theorem),
             D("fixed_output_anchor_identity", "The scalar PB transverse identity", AnchorStatement(),
                 "Let a=mu+lambda, V=a J(n,t)-J(n,k) and Z=t+a k. Assume the original scalar PB for every unit vector reading on the full space and every probe T e+alpha n. The known support relation J(n,V)=V makes the V diagonal readings vanish on the zero and two eigenspaces of n. The relation J(n,j)=j gives the same fact for j. Both signs of nonzero lambda and d are retained.", DescribeRole.Theorem,
                 "First expand the original PB at T e+alpha n. The affine Gram shift and the leading-coefficient estimate from PBAffineFirstBudget give 2 abs(phi(lambda T j+V)) at most the sum of the square roots of Bphi(n,Z+g-lambda T e-a lambda T j) and Bphi(n,Z-g+lambda T e-a lambda T j). The expansion remains valid when a leading budget vanishes.",
@@ -25,7 +47,7 @@ internal sealed class PBFixedOutputGramDocument : IScribeDocumentDefinition
                 "The existing two-ended norm estimate now yields 2 A=inner(nu,zminus)-inner(nu,zplus). Orthogonality removes the projection and the common Z cancels, giving inner(nu,op(g)xi)=-A. All vector and operator expressions remain on the full H, including complementary environment components. The companion-axis theorem combines two such identities. A concrete four-dimensional diagonal-residual conclusion additionally requires complex polarization, the full-row reconstruction and their matrix specialization."),
             D("fixed_output_two_axis_identity", "The two-axis complex identity", TwoAxisStatement(),
                 "Use the same scalar PB for both probe families T e+alpha n and T j+alpha n. The additional known relations are kappa(j)=-lambda e, rho(j)=mu j and J(n,e)=e. The second spectral pair is constructed as (eprime,jprime,n)=(j,-e,n), keeping the same mu and lambda. Its vectors are etaprime=-nu and nuprime=eta, where nu=-iota eta and iota is either i or -i. Both vectors remain in the two eigenspace of n.", DescribeRole.Theorem,
-                "The first real identity gives Re inner(nu,g xi)=-Re inner(eta,V xi). The constructed companion gives Re inner(eta,g xi)=Re inner(nu,V xi). The complex inner product is conjugate-linear in its first entry. Since inner(nu,z)=iota inner(eta,z), the two real readings determine the real and imaginary parts of inner(eta,g xi)=iota inner(eta,V xi), for either orientation. This is a pointwise full-space identity under the displayed representation and spectral hypotheses. The concrete M4 representation, positive-functional transfer, zero-d branch, homogeneous extension and complete-row reconstruction are additional obligations."))));
+                "The first real identity gives Re inner(nu,g xi)=-Re inner(eta,V xi). The constructed companion gives Re inner(eta,g xi)=Re inner(nu,V xi). The complex inner product is conjugate-linear in its first entry. Since inner(nu,z)=iota inner(eta,z), the two real readings determine the real and imaginary parts of inner(eta,g xi)=iota inner(eta,V xi), for either orientation. This is a pointwise full-space identity under the displayed representation and spectral hypotheses. The concrete M4 carrier and positive-functional transfer are formalized separately. Primitive spectral/support construction, the zero-d branch, homogeneous extension and complete-row reconstruction remain additional obligations."))));
 
     private static DocumentBlock D(string name, string title, Formula formula, string text,
         DescribeRole role, params string[] more) => Describe.Lean(DescribeId.Create(name.Replace('_','-').ToLowerInvariant()),
