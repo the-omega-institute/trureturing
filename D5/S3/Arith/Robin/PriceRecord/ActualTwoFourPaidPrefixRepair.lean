@@ -414,28 +414,6 @@ theorem actual_two_four_paid_prefix_repair :
     have hL : 0 < log X := log_pos (by linarith)
     have hLambda := price_positive (by linarith : 1 < X)
     have hκ : 0 ≤ 1 / log X ^ 6 := by positivity
-    -- Supply is proved before the seed and before the adaptive coefficients.
-    have hsupply : ∃ S : Finset ℕ, 1000 * log X ^ 2 + 1 < (S.card : ℝ) ∧
-        ∀ p ∈ S, p.Prime ∧ X / 2 < (p : ℝ) ∧ p ≤ b.Q := by
-      let m : ℕ := ⌊1000 * log X ^ 2⌋₊ + 1
-      have hm : (m : ℝ) ≤ 2000 * log X ^ 2 := by
-        have hf := Nat.floor_le (by positivity : 0 ≤ 1000 * log X ^ 2)
-        dsimp [m]
-        push_cast
-        nlinarith only [hf, hL10]
-      obtain ⟨q, S, hqprime, hqlo, hqb, hS, hc, hSmem, _, _⟩ := hTD X hXD b hb m hm
-      have hqnot : q ∉ S := by rw [hS]; simp
-      refine ⟨insert q S, ?_, ?_⟩
-      · rw [card_insert_of_notMem hqnot, hc]
-        have hf := Nat.lt_floor_add_one (1000 * log X ^ 2)
-        dsimp [m]
-        push_cast
-        linarith only [hf]
-      · intro p hp
-        rcases mem_insert.mp hp with rfl | hp
-        · exact ⟨hqprime, hqlo, hqb⟩
-        · obtain ⟨hpp, hqp, hpb⟩ := hSmem p hp
-          exact ⟨hpp, hqlo.trans (by exact_mod_cast hqp), hpb⟩
     let s : ℕ := ⌈100 * log X⌉₊
     have hs : (s : ℝ) ≤ 1000 * log X ^ 2 := by
       have hh := Nat.ceil_lt_add_one (by positivity : 0 ≤ 100 * log X)
@@ -562,34 +540,12 @@ theorem actual_two_four_paid_prefix_repair :
         rw [hbdef, Nat.cast_mul, log_mul (by exact_mod_cast (higher_core_pos _).ne')
           (by exact_mod_cast (prefix_integer_pos _).ne'), prefix_integer_log, ← hhdef]
       linarith only [hlb, hbudget]
-    have hDeleted (p : ℕ) (hp : p ∈ D) : b.k.factorization p = 1 ∧
-        optimalLayerCount (referencePrice X) p ≤ 1 := by
-      obtain ⟨hprime, hQp, hpQ⟩ := hDmem p hp
-      have hpPref : p ∈ b.k.primeFactors := hpref.symm ▸ Nat.mem_primesLE.mpr ⟨hpQ, hprime⟩
-      have hfactL := (hprime.dvd_iff_one_le_factorization (by omega : b.k ≠ 0)).mp
-        (Nat.dvd_of_mem_primeFactors hpPref)
-      have hoptU : ¬2 ≤ optimalLayerCount (referencePrice X) p := by
-        intro hv
-        have hv' : 2 ≤ (strictInteger (referencePrice X)).factorization p := by
-          rwa [strictInteger_counts hLambda]
-        exact hQp.not_ge (hsupport p hprime hv')
-      have hf := hhigher p hprime 2 le_rfl
-      exact ⟨by omega, by omega⟩
     have hCsigned : completeFirstLayerLoss X k - completeFirstLayerLoss X b.k =
         ∑ p ∈ D, rawLayerMargin X p 1 := by
       have hs := ordered_prefix_difference (by linarith : 1 < X) hkp hpref hQb
       have hblock : block (Q : ℝ) b.Q = D := by rw [hD]; simp [block]
       rw [hblock] at hs
       linarith only [hs]
-    have hCsignedMarginal : completeFirstLayerLoss X k - completeFirstLayerLoss X b.k =
-        ∑ p ∈ D, log p * (goldenLayerMarginal p 1 - referencePrice X) := by
-      rw [hCsigned]
-      apply sum_congr rfl
-      intro p hp
-      have hprime := (hDmem p hp).1
-      rw [first_margin hprime, golden_layer_marginal_one_eq_log_one_add_inv hprime]
-      dsimp [referencePrice]
-      field_simp [hprime.log_pos.ne', hX0.ne', hL.ne'] <;> ring
     have hCprime (p : ℕ) (hp : p ∈ D) :
         |rawLayerMargin X p 1| ≤ (6 / X ^ 2) *
           (shellError X + b.h + b.δ + (M : ℝ) * log (2 * X) + 1) := by
@@ -664,12 +620,6 @@ theorem actual_two_four_paid_prefix_repair :
       linarith only [hmesh, heL]
     have hCscaled : |completeFirstLayerLoss X k - completeFirstLayerLoss X b.k| ≤
         referencePrice X / log X ^ 2 := by
-      have hden : 0 < X ^ 2 * (log X / 2) := by positivity
-      have hmassU : (M : ℝ) * log (2 * X) ≤ 2000 * log X ^ 3 := by
-        have hm := mul_le_mul_of_nonneg_right hM' (log_pos (by linarith : 1 < 2 * X)).le
-        have hl := mul_le_mul_of_nonneg_left (log_shell hX).2.2
-          (by positivity : 0 ≤ 1000 * log X ^ 2)
-        nlinarith only [hm, hl]
       have hbound : |completeFirstLayerLoss X k - completeFirstLayerLoss X b.k| ≤
           24000 * uniformW X * log X ^ 2 / X ^ 2 := by
         have hpointW (p : ℕ) (hp : p ∈ D) : |rawLayerMargin X p 1| ≤ (6 / X ^ 2) * uniformW X := by
