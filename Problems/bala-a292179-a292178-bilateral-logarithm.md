@@ -71,7 +71,7 @@ preregistered in #29113, distinct from an already recorded diagonal
 specialization. Its sole settling declaration is
 `D5/S3/Analytic/PowerSeries/BalaBilateralLog.full_event`.
 The owning Scribe attaches one `OpenProblemResolutionClaim(Proved)` to
-that declaration and this slug. The proposed admission basis is
+that declaration and this slug. The admission basis is
 `open-problem-resolution`; the unchanged module has `utility: none`.
 Mathematical truth, admission, integration and literature novelty are
 separate claims. The typed claim does not certify admission or delivery.
@@ -155,12 +155,15 @@ The mathematical evidence is `full_event` in
 [the D5 source](../D5/S3/Analytic/PowerSeries/BalaBilateralLog.lean), with
 [the source-bound Reg reconstruction](../Reg/D5/S3/Analytic/PowerSeries/BalaBilateralLog.lean)
 and [the owning Scribe](../Blueprint/D5/S3/Analytic/PowerSeries/BalaBilateralLog.scribe.cs).
-The existing scoped compiled statement identity is
+The compiled theorem statement identity is
 `sha256:cfa16b4f63ea3670ff516012c45819638398745620c257362a49a16d260c8285`;
 its accepted axiom closure is `Classical.choice`, `Quot.sound`, `propext`.
+The [canonical frozen module state](../Golden/Frozen/state/D5/S3/Analytic/PowerSeries/BalaBilateralLog.lean.json)
+has statement identity
+`sha256:a91c3224893d9bc66032f238309adae06a62c9e5e9db320c9e8614ae74066776`.
 The pinned toolchain is Lean v4.35.0 and Mathlib
 `56a005855ea17e0b0958f73ec801ae140b0a1679`.
-The Reg evidence reconstructs the entire nullary theorem, with its
+The `declared_validated` Reg evidence reconstructs the entire nullary theorem, with its
 quantifiers inside the proposition, and selects the original principal-log
 function operand. Its rejected constant readout fails at x=a=0;
 the actual logarithm readout is nonconstant on the complex state domain.
@@ -168,9 +171,9 @@ The continuation is unknown and asserts no undecidability conclusion.
 
 The [source note](../Library/AnalyticClosure/bala2025bilaterallog.md)
 owns the exact quotations and bounded supplier/literature scope.
-The [current mathematical result](https://github.com/the-omega-institute/trureturing/issues/29113#issuecomment-6787091681)
+The [mathematical settlement](https://github.com/the-omega-institute/trureturing/issues/29113#issuecomment-6787091681)
 and [unchanged-event terminal](https://github.com/the-omega-institute/trureturing/issues/29113#issuecomment-6787097841)
-distinguish the mathematical answer from the unresolved admission review.
+fix the original mathematical answer and account independently of publication.
 No numerical experiment substitutes for the kernel evidence.
 
 ## Triage
@@ -178,8 +181,10 @@ No numerical experiment substitutes for the kernel evidence.
 The full mathematical event is proved by the compiled declaration,
 including the real source series and separately defined regular extension.
 The paired OEIS entries count as one external source problem.
-The typed Proved claim and this dossier supply admission metadata;
-independent admission review, first freeze and integration remain pending.
+The declaration is canonically frozen under `open-problem-resolution`.
+The typed Proved claim and this dossier agree on that settling declaration.
+Independent prefreeze review is approved; the final independent review triplet,
+required CI and integration into dev remain pending.
 The result gives neither a value for the raw expression at zero nor an
 assertion outside the stated disks. It establishes no worldwide priority
 or exhaustive literature absence.

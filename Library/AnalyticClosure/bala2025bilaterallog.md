@@ -30,6 +30,14 @@ The fixed source for A292178 is revision 27, stored at
 These are two presentations of one question. The exact semantic event is
 registered at https://github.com/the-omega-institute/trureturing/issues/29113#issuecomment-6786264041.
 
+The complete result is frozen as
+[`D5/S3/Analytic/PowerSeries/BalaBilateralLog.full_event`](../../D5/S3/Analytic/PowerSeries/BalaBilateralLog.lean).
+Its theorem statement identity is
+`sha256:cfa16b4f63ea3670ff516012c45819638398745620c257362a49a16d260c8285`.
+The [canonical module state](../../Golden/Frozen/state/D5/S3/Analytic/PowerSeries/BalaBilateralLog.lean.json)
+has statement identity
+`sha256:a91c3224893d9bc66032f238309adae06a62c9e5e9db320c9e8614ae74066776`.
+
 ## Definition correspondence
 
 The real source is restricted to a!=0 because its negative powers require
