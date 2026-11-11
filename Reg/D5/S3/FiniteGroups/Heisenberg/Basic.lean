@@ -23,11 +23,13 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
+private def noAnchor : Empty → Unit → Type u := fun e => nomatch e
+
 def actual : Realization signature.{u} := realize signature
-  (fun _ _ R => Nat.card (HeisenbergGroup R)) (fun e => nomatch e)
+  (fun _ _ R => Nat.card (HeisenbergGroup R)) noAnchor.{u}
 
 def rejected : Realization signature.{u} := realize signature
-  (fun _ _ _ => 0) (fun e => nomatch e)
+  (fun _ _ _ => 0) noAnchor.{u}
 
 abbrev arena : Arena where
   signature := signature.{u}
@@ -68,7 +70,8 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some actual
+  readout := some (realize signature.{u}
+    (fun _ _ R => Nat.card (HeisenbergGroup R)) noAnchor.{u})
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
