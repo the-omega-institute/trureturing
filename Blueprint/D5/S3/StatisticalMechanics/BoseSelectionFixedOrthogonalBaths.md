@@ -166,7 +166,7 @@ Lean statement: `D5/S3/StatisticalMechanics/BoseSelectionFixedOrthogonalBaths.ex
 
 *Commentary.*
 
-For any RCLike field, n at least five and continuity of each increasing ordered eigenvalue on its Hermitian matrix space, there exists a nonempty open set of simple-spectrum matrices. Every member has a normalized first-five cubic selection, selected rank four and global normalized uniqueness allowing all competing supports. The exported conclusion leaves strict positivity of all bath weights throughout O unspecified. The continuity premise is explicitly discharged for the real and complex fields by the continuity theorems above. The real symmetric conclusion is the direct application exists_open_fixedBathHamiltonians (𝕜 := ℝ) hn continuous_increasingSpectrum_real; the complex Hermitian conclusion uses (𝕜 := ℂ) and continuous_increasingSpectrum_complex. Both retain arbitrary finite n at least five and every competing support.
+For any RCLike field and n at least five, there exists a nonempty open set of simple-spectrum matrices. Every member has a normalized first-five cubic selection, selected rank four and global normalized uniqueness allowing all competing supports. The exported conclusion leaves strict positivity of all bath weights throughout O unspecified. Ordered-spectrum continuity is supplied inside the proof: the canonical real or complex field equivalence transports the corresponding continuity theorem above, including at repeated eigenvalues. The real symmetric conclusion is the application exists_open_fixedBathHamiltonians (𝕜 := ℝ) hn; the full complex Hermitian conclusion uses (𝕜 := ℂ). Both retain arbitrary finite n at least five and every competing support.
 
 **Theorem 1.11 (fixedBath_local_exponent).**
 

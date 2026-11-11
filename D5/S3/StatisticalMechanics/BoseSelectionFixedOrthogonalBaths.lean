@@ -235,7 +235,9 @@ private theorem continuous_increasingSpectrum_of_equiv
     apply increasingSpectrum_of_charpoly _ e (increasingSpectrum_monotone H.property)
     change (H.val.map f.toRingHom).charpoly = _
     rw [Matrix.charpoly_map, hchar, Polynomial.map_prod]
-    simp only [Polynomial.map_sub, Polynomial.map_X, Polynomial.map_C, RingEquiv.coe_toRingHom, hreal]
+    simp only [Polynomial.map_sub, Polynomial.map_X, Polynomial.map_C]
+    exact Finset.prod_congr rfl (fun j _ =>
+      congrArg (fun z : 𝕜' => Polynomial.X - Polynomial.C z) (hreal (e j)))
   have h := (hc i).comp hφ
   change Continuous (fun H => increasingSpectrum (φ H).property i) at h
   simpa only [he] using h
