@@ -2,8 +2,6 @@ fingerprints:
   raw_sha256: sha256:3011e24675141452b8e780e5882e307ff080cc60860eb9dd3c53c2acc11e597f
   normalized_sha256: sha256:3011e24675141452b8e780e5882e307ff080cc60860eb9dd3c53c2acc11e597f
 cas_ref: sha256:3011e24675141452b8e780e5882e307ff080cc60860eb9dd3c53c2acc11e597f
-coverage_gids:
-  - gid: D5/S3/Factorization/RankThreeBlockAvoidance.incidence_count_contradiction
-    target_statement_id: sha256:1665cb98972b866d2b68f0218bd2be5fc1daea4c351bbb0ff2fcaf04034851de
+coverage_gids: []
 receipts:
   unresolved_subitems: []
