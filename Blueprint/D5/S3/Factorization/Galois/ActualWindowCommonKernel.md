@@ -61,3 +61,4 @@ For the source correspondence, take K=K_0(z) with K_0 the normal closure, emb th
 - Truth anchor: `D5/S3/Factorization/Galois/ActualWindowCommonKernel.block_common_rows_partition_rank`
 - Truth anchor: `D5/S3/Factorization/Galois/ActualWindowCommonKernel.embedding_common_kernel_rigidity`
 - Truth anchor: `D5/S3/Factorization/Galois/ActualWindowCommonKernel.hyperplane_partition_rank`
+- Dependency: [D5/S3/Combinatorics/SubspaceCodes/MRDDensityColumnTensor](../../Combinatorics/SubspaceCodes/MRDDensityColumnTensor.md)
