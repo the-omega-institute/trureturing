@@ -47,10 +47,11 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   obtain ⟨q, hq, hz, hreads, rest⟩ := h {((1 : ℂ), (0 : ℂ), (0 : ℝ))} 1 (by norm_num)
   have hh := hreads ((1 : ℂ), (0 : ℂ), (0 : ℝ)) (by simp)
     (show (1 : ℂ) ∈ readPoints ((1 : ℂ), (0 : ℂ), (0 : ℝ)) by simp [readPoints])
-  simpa [rejected, realize, phaseClosure, orbit] using hh
+  simp [rejected, realize, phaseClosure, orbit] at hh
 
 def evidence : Registration arena
-    (type_of% @_root_.D5.S3.QuadraticForms.RealThreePathFiniteQueryBoundary.finite_query_boundary) where
+    (type_of%
+      @_root_.D5.S3.QuadraticForms.RealThreePathFiniteQueryBoundary.finite_query_boundary) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@_root_.D5.S3.QuadraticForms.RealThreePathFiniteQueryBoundary.finite_query_boundary,
@@ -99,4 +100,5 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   familyRecord := none
   options := #[] }
 
+end
 end Reg.D5.S3.QuadraticForms.RealThreePathFiniteQueryBoundary
