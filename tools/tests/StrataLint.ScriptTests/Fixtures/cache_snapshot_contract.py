@@ -710,6 +710,23 @@ class SnapshotContracts(PublicationCases, CacheFixture, unittest.TestCase):
         self.assertTrue((self.root / ".lake/.stratalint-lean-cache-stamp.json").is_file())
         self.assertEqual(b"completed module", (self.root / ".lake/build/lib/lean/Module.olean").read_bytes())
 
+    def test_ordinary_seed_allows_resume_without_certifying_an_incomplete_report(self):
+        owner = self.resume_setup()
+        self.work(0, 0)
+        env = dict(self.env, STRATALINT_ACTIONS_CACHE_SEEDED="1", STRATALINT_REPORT_SUCCEEDED="false")
+        with mock.patch.dict(os.environ, env, clear=True), contextlib.redirect_stdout(io.StringIO()) as receipts:
+            spec = owner.resume_spec(self.root)
+            owner.resume_snapshot(self.root, spec)
+            owner.resume_restore(self.root, spec, spec["key"], "success")
+            self.assertTrue(owner.resume_verified(self.root))
+            self.assertEqual((False, "no-build-work", 0), owner.project_publication(self.root))
+            self.assertFalse(owner.actions_keys(self.root)["project_save_allowed"])
+            owner.snapshot(self.root, owner.actions_keys(self.root), ["project"])
+        self.assertIn('"complete": false', receipts.getvalue())
+        self.assertIn("project_ready=false", receipts.getvalue())
+        self.assertNotIn("STRATALINT_REPORT_SUCCEEDED=true", receipts.getvalue())
+        self.assertEqual(b"completed module", (self.root / ".lake/build/lib/lean/Module.olean").read_bytes())
+
     def test_incompatible_or_failed_resume_restore_discards_material_and_cannot_promote(self):
         for defect in ("foreign-key", "foreign-ref", "missing-marker", "transport-failed", "duplicate-marker"):
             with self.subTest(defect=defect):
