@@ -376,6 +376,8 @@ properties produce the localized Bezout identity, then a nonzero eliminant,
 before any configuration action. Obtaining this factorization from the
 line-factor hypothesis is the remaining algebraic obligation. -/
 theorem localized_bezout_step [IsDomain R]
+    {K : Type*} [Field K] [Algebra (LaurentPolynomial R) K]
+    [IsFractionRing (LaurentPolynomial R) K]
     (h : Configuration R) (hh : FiniteRange h) (u : Lattice) (hu : IsCoprime u.1 u.2)
     (P B : AddMonoidAlgebra R Lattice) (A : LaurentPolynomial R) (hA : A ≠ 0)
     (c : R) (hP : coefficientAct P h = fun _ => c)
@@ -385,7 +387,7 @@ theorem localized_bezout_step [IsDomain R]
       (factors.map Polynomial.toLaurent).prod)
     (hmonic : ∀ g ∈ factors, g.Monic)
     (hirr : ∀ g ∈ factors, Irreducible
-      (g.map (algebraMap (LaurentPolynomial R) (FractionRing (LaurentPolynomial R)))))
+      (g.map (algebraMap (LaurentPolynomial R) K)))
     (hnot : ∀ g ∈ factors, ¬g.toLaurent ∣ primitiveLaurentCoordinates u hu P) :
     Periodic h := by
   let coordinates := primitiveLaurentCoordinates (R := R) u hu
@@ -394,7 +396,7 @@ theorem localized_bezout_step [IsDomain R]
     intro hz
     simpa [hz] using hu
   obtain ⟨ρ, hρ, α, β, hbezout⟩ := KhetanLaurentElimination.clear_laurent_bezout_of_monic_factors
-    (K := FractionRing (LaurentPolynomial R)) (coordinates P) (coordinates B)
+    (K := K) (coordinates P) (coordinates B)
     factors hB hmonic hirr hnot
   apply cleared_bezout_periodic h hh u hunz P B (coordinates.symm α) (coordinates.symm β)
     A ρ hA hρ c hP hAB
