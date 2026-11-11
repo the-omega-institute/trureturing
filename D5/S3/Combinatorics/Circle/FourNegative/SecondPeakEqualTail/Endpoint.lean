@@ -26,8 +26,8 @@ open private scaledGates A B L K SU SV SW from
   D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualTail.Algebra
 open private physical_joint seamWindows oldSeams newSeams from
   D5.S3.Combinatorics.Circle.FourNegative.SecondPeakEqualTail.Physical
-open private oldValue newValue sourceMod size base newBase charge from
-  D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open private sourceMod charge from D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Source
+open D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm (oldValue newValue size base newBase)
 open private actual_nat_joint_iff from
   D5.S3.Combinatorics.Circle.FourNegative.PacketNormalForm.Endpoint
 open private strip_of_prefix from

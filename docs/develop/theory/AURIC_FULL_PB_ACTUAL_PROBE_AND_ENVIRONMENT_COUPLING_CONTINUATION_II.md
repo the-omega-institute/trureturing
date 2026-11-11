@@ -2826,3 +2826,869 @@ $$
 实 Gram 变分、正交最小范数及 Schur 补沿前卷 §§27、30、31 的成熟背景使用；本节的显式接触 (38.8)–(38.11) 与原来源代入 (38.12)–(38.29) 给出具体的纸面加强。结论只把 $809/480$ 作为这组恢复轴见证的充分最终排除界，不判等号，不给必要性、最优常数或全部 PB 分类。它没有给出较小 $k$ 的 PB 成功证书，也没有给出共同 P2 内一份来源全部 PB 成功、另一份失败的成对分离。这里每个违反均属于有限矩阵、有限实际探针与同一实际正泛函；不涉及物理实现结论。
 
 ## 追加锚（本行以下为增补区）
+
+## 39. 全接触矩消元、无界条带排除与增广轴扇区的完整分类
+
+本节在 (37.19) 的完整可见图闭包中工作，保留 §38 的两份实际来源及其共同完整 P2 区间。所得结果是全闭包上的残量矩恒等式、一个不限制虚参数大小的条带下界、全部增广轴接触的参数化与最小阈值，以及条带外非轴接触的唯一可见列重构。这些结果把同一完整 P2 内的两来源 PB 分离问题缩到一个明确的非轴比较；该比较仍未解决。
+
+### 39.1 原来源、接触约定与共同完整 P2
+
+用 $r\in\{+1,-1\}$ 标来源符号，用 $d\in\{+1,-1\}$ 标两笔原预算。固定
+
+$$
+\begin{gathered}
+C=\operatorname{diag}(1,2),\qquad T_A=\operatorname{diag}(1,-2),\qquad
+J_A=\begin{pmatrix}0&1\\1&0\end{pmatrix},\\
+a_r=(1/\sqrt2,r)^{\mathsf T},\qquad
+H=2C+hJ_A,\qquad B=H+C,\qquad \iota=\sigma i,\quad\sigma=\pm1.
+\end{gathered}
+\tag{39.1}
+$$
+
+除明确只谈代数恒等式的地方外，$h>0$ 始终固定在 §37.1 所要求的强制估计邻域中，因而 $H\succ0$，引理 37.4、定理 37.6 和推论 37.7、37.9 均可应用。条带定理另外要求 $h\le1/1000$；这项充分范围不改变其外的原问题。
+
+对每个有限 $\lambda>0$，$D_{r,\lambda},F,G_{r,\lambda},t_{r,\lambda}$ 精确取 (38.1) 的实际矩阵，仅将来源下标 $\tau$ 改记为 $r$；特别地，仍有
+
+$$
+\delta_\lambda=\lambda^{-3},\qquad
+G_{r,\lambda}=\begin{bmatrix}I_2\\\lambda a_r^*\end{bmatrix},\qquad
+\rho=\frac{k}{\lambda^2}.
+\tag{39.2}
+$$
+
+原 P2、PB、实际探针 $x=X\oplus0_3$ 和两笔预算准确取 (37.4)–(37.7)、(38.3)–(38.5) 的含义：$X=X^*$ 任意，正复线性泛函遍取完整 $M_5(\mathbb C)$，不删除环境或混合密度块。实际恒等式 (37.3)、(38.2) 给
+
+$$
+\begin{gathered}
+D_{r,\lambda}\succ0,\qquad D_{r,\lambda}G_{r,\lambda}=F,\qquad W=0,\\
+M_0=C^2,\qquad M_1=C,\qquad M_{2,r}=I_2+\lambda^2a_ra_r^*,\\
+\|a_r\|^2=3/2,\qquad
+\operatorname{spec}(M_{2,r})=\{1,1+(3/2)\lambda^2\}.
+\end{gathered}
+\tag{39.3}
+$$
+
+两份来源使用同一个 $\lambda$ 和同一个 $\rho$；不借重标度制造阈值差异。若改用 (37.54) 的共同全谱坐标，则两份来源的因子 $m=3/2$ 相同。
+
+**定义 39.1（本节的完整接触域）。** 写
+
+$$
+\ell=b+\iota t,\qquad b,t\in\mathbb R,\qquad
+A=|t|>1,\qquad \epsilon=-\operatorname{sign}(t).
+$$
+
+接触遍取 $u,p,q,a_{\rm act}\in\mathbb C^2$、$\eta\in\mathbb C$，其中 $\|u\|=1$，并要求
+
+$$
+\begin{gathered}
+u^*p\in\mathbb R,\qquad (Cu)^*q\in\mathbb R,\qquad u^*q=p^*Cu,\\
+a_{\rm act}=\iota(I_2-\ell C^{-1})p,\qquad
+q=(\ell I_2+2C^{-1})p+\iota BCu,\\
+\mathbf d_{\rm src}:=a_{\rm act}-Hu+\ell C^2u/2=\eta a_r.
+\end{gathered}
+\tag{39.4}
+$$
+
+这正是 (37.15)、(37.19)，包括两条演员轴；$A=-\epsilon\operatorname{Im}_\iota\ell$。向量 $\mathbf d_{\rm src}$ 专指来源需求，不用它的记号表示矩差。置
+
+$$
+\begin{gathered}
+v=a_{\rm act}-\iota p=-\iota\ell C^{-1}p,\qquad
+\zeta=\operatorname{Re}(v^*T_Au),\qquad s(A)=\frac{2A}{A^2-1},\\
+J_k=s(A)|\eta|^2+4\epsilon k\zeta,\qquad
+\mathcal R(c)=\frac{s(A)|\eta|^2}{4|\zeta|}\quad(\zeta\ne0).
+\end{gathered}
+\tag{39.5}
+$$
+
+比值 $\mathcal R$ 是无符号量。它在 $k>0$ 下只有对 $\epsilon\zeta<0$ 的接触才是失效阈值；$\epsilon\zeta>0$ 时一次项为正。由引理 37.4，所有这些接触均有 $\eta\ne0$。
+
+共同 P2 在这里仍是完整泛函判据的结果。具体地，令 $\beta=h/\sqrt2$、$U_0=2^{-1/2}\left(\begin{smallmatrix}1&1\\1&-1\end{smallmatrix}\right)$。由于 $U_0^*C^{-1/2}a_+=e_1$、$U_0^*C^{-1/2}a_-=e_2$，原钉版前卷 (30.29) 的逆坐标矩阵恰为
+
+$$
+\mathsf K_+=\begin{pmatrix}3/2+\lambda^2&1/2\\1/2&3/2\end{pmatrix},\qquad
+\mathsf K_-=\begin{pmatrix}3/2&1/2\\1/2&3/2+\lambda^2\end{pmatrix}.
+\tag{39.6}
+$$
+
+其共同行列式为 $\mathfrak d_\lambda=2+(3/2)\lambda^2$，逆矩阵的非对角元为实数。在 (30.29) 中，$\omega=1$、$J=0$、$\Delta=1/\mathfrak d_\lambda$、$R=T_\lambda/\mathfrak d_\lambda$，其中 $T_\lambda=\sqrt{(3/2)(3/2+\lambda^2)}$。因此两来源、两取向的完整原 P2 集合均为
+
+$$
+I_{r,\sigma}=\left[-\frac{\beta}{T_\lambda},\frac{\beta}{T_\lambda}\right].
+\qquad
+\frac{k}{\lambda^2}\in\operatorname{int}I_{r,\sigma}
+\quad\Longleftrightarrow\quad
+h^2\lambda^4>3k^2(\lambda^2+3/2).
+\tag{39.7}
+$$
+
+此处等价式适用于任意实 $k$；固定 $h>0,k$ 后最终成立。以上直接复用 (38.27)–(38.28) 及其完整 P2 来源，不用 $M_2$ 的谱或某一个向量测试代替它。
+
+### 39.2 包括两轴的全闭包矩消元
+
+**引理 39.2（残量配对的全闭包恒等式）。** 对每个 (39.4) 接触，定义实矩
+
+$$
+\begin{gathered}
+m_j=|u_j|^2,\qquad \overline{u_1}u_2=x+\iota y,\qquad
+m_1+m_2=1,\quad x^2+y^2=m_1m_2,\\
+\overline{u_1}p_1=P_1+\iota Z,\qquad
+\overline{u_2}p_2=P_2-\iota Z,\qquad
+S=P_1+P_2,\qquad \Delta_P=P_1-P_2,\\
+L=m_1+4m_2+hx,\qquad N=3m_1+24m_2+4hx.
+\end{gathered}
+\tag{39.8}
+$$
+
+同一个实数 $Z$ 存在，因为 $u^*p$ 为实数。则
+
+$$
+\boxed{\quad
+ tS=-3L,\qquad \Delta_P=hy-bS,\qquad
+ bZ=t(P_1+2P_2)+N.\quad}
+\tag{39.9}
+$$
+
+特别地，原残量配对准确消去可见列，成为
+
+$$
+\boxed{\quad
+\zeta=t\Delta_P+2bZ=3tS+2N
+      =-3m_1+12m_2-hx
+      =2bZ+3bL+thy.\quad}
+\tag{39.10}
+$$
+
+这些恒等式不要求 $b\ne0$ 或 $u_1u_2\ne0$。它们消去的是配对值中的列变量；哪些 $u,\ell$ 真正满足来源条件，仍受 (39.4) 限制。
+
+证明。由 $B=3C+hJ_A$ 直接有
+
+$$
+ u^*BCu=3m_1+12m_2+3hx+\iota hy=3L+\iota hy,
+ \qquad (Cu)^*BCu=N.
+$$
+
+对第二条演员接触等式分别左乘 $u^*$、$(Cu)^*$。第一式给
+
+$$
+\begin{aligned}
+u^*q
+ &=\ell S+2P_1+P_2+\iota Z+3\iota L-hy,\\
+p^*Cu&=P_1+2P_2+\iota Z.
+\end{aligned}
+$$
+
+比较实部与 $\iota$ 虚系数，即得 $\Delta_P=hy-bS$ 和 $tS=-3L$。第二式给
+
+$$
+(Cu)^*q=\ell(P_1+2P_2-\iota Z)+2S+\iota N.
+$$
+
+其虚系数为零，正是 $bZ=t(P_1+2P_2)+N$。
+
+最后，$C^{-1}T_A=\operatorname{diag}(1,-1)$，而
+$p^*C^{-1}T_Au=\Delta_P-2\iota Z$。所以
+
+$$
+\zeta=\operatorname{Re}\bigl(\iota\overline\ell
+          (\Delta_P-2\iota Z)\bigr)=t\Delta_P+2bZ.
+$$
+
+把 (39.9) 代入，先得 $3tS+2N=-9L+2N=-3m_1+12m_2-hx$；另用 $t\Delta_P=thy-tbS=thy+3bL$，得到最后一种表达。整个推导没有除以演员坐标，故同时覆盖增广轴点。∎
+
+### 39.3 不限制虚参数的整个条带下界
+
+**定理 39.3（全接触的无界条带排除）。** 在 §37 的上述 $h$ 邻域中再取
+
+$$
+0<h\le\frac1{1000},\qquad |b|\le\frac1{2000},\qquad A=|t|>1.
+\tag{39.11}
+$$
+
+对任一来源 $r=\pm1$、任一取向和相应合法符号的每个接触，若 $\zeta\ne0$，则
+
+$$
+\mathcal R(c)>\frac{50}{27}>\frac{809}{480}.
+\tag{39.12}
+$$
+
+包括 $\zeta=0$ 的全部此类接触，都在 $0\le k\le809/480$ 上满足 $J_k>0$。这里没有对 $A$ 设置上界。
+
+证明。只用第一条演员接触和来源需求，令
+
+$$
+E=H-C^3/2=\operatorname{diag}(3/2,0)+hJ_A,\qquad
+R=C(C-\ell I_2)^{-1}.
+$$
+
+由于 $|t|>1$，每个 $c_j-\ell$ 都非零，其中 $c_1=1,c_2=2$。求解 $\iota(I_2-\ell C^{-1})p=Hu-\ell C^2u/2+\eta a_r$，准确得到
+
+$$
+p=-\frac{\iota}{2}C^3u-\iota R(Eu+\eta a_r).
+\tag{39.13}
+$$
+
+所用分解是 $R(H-\ell C^2/2)=C^3/2+RE$。取 $u^*p$ 的虚系数为零，得
+
+$$
+\operatorname{Re}(\eta u^*Ra_r)
+ =-\frac12u^*C^3u-\operatorname{Re}(u^*REu).
+\tag{39.14}
+$$
+
+下文的向量范数为 Euclidean 范数，矩阵范数为其算子范数。对 $|b|\le1/2000$，
+
+$$
+\operatorname{Re}\frac{c_j}{c_j-b-\iota t}
+ =\frac{c_j(c_j-b)}{(c_j-b)^2+t^2}>0,\qquad
+\|R\|\le\frac2A.
+$$
+
+因此 $E$ 的对角部分对 $\operatorname{Re}(u^*REu)$ 的贡献非负，非对角部分则不小于 $-h\|R\|\|u\|\|J_Au\|\ge-2h/A$。又 $u^*C^3u/2\ge1/2$。由 (39.14)，其右侧严格为负，并有
+
+$$
+\begin{gathered}
+|\eta|\,|u^*Ra_r|\ge\frac12-\frac{2h}{A}\ge\frac12-2h,\\
+|u^*Ra_r|\le\|Ra_r\|\le\frac{\|Ca_r\|}{A}
+ =\frac{3}{\sqrt2 A},\\
+v_\eta:=\frac{|\eta|}{A}
+ \ge\frac{\sqrt2}{3}\left(\frac12-2h\right)
+ \ge\frac{83\sqrt2}{500}>\frac15.
+\end{gathered}
+\tag{39.15}
+$$
+
+这里 $\|Ca_r\|^2=1/2+4=9/2$ 对两个来源相同；最后的严格不等式等价于 $2\cdot83^2>100^2$。式 (39.15) 对所有 $A>1$ 有效，没有先把 $A$ 限在紧区间。
+
+同一精确列恒等式 (39.13) 还给
+
+$$
+\begin{aligned}
+\|p\|
+&\le\frac12\|C^3\|+\|R\|\|E\|
+        +|\eta|\,\|Ra_r\|\\
+&\le4+\frac{2(3/2+h)}{A}+\frac{3}{\sqrt2}v_\eta
+ \le7+2h+3v_\eta.
+\end{aligned}
+\tag{39.16}
+$$
+
+由 (39.8)，$|x|,|y|\le1/2$、$|L|\le4+h/2$，并且
+
+$$
+2|Z|\le|\overline{u_1}p_1|+|\overline{u_2}p_2|
+ \le\|u\|\|p\|=\|p\|.
+$$
+
+将这些界用于 (39.10) 的最后一式，得到
+
+$$
+\begin{aligned}
+|\zeta|
+&\le\frac{Ah}{2}+|b|\bigl(\|p\|+3|L|\bigr)\\
+&\le\frac{Ah}{2}+|b|\left(19+\frac72h+3v_\eta\right)\\
+&\le\frac{Ah}{2}+|b|(20+3v_\eta)\\
+&\le A\left[\frac h2+|b|(20+3v_\eta)\right].
+\end{aligned}
+\tag{39.17}
+$$
+
+倒数使用时，方括号严格正，因为 $h>0$。对 $\zeta\ne0$，由 $|\eta|=Av_\eta$ 得
+
+$$
+\mathcal R(c)
+ \ge\frac{A^2v_\eta^2}
+ {2(A^2-1)[h/2+|b|(20+3v_\eta)]}
+ >\frac{v_\eta^2}{2[h/2+|b|(20+3v_\eta)]}.
+\tag{39.18}
+$$
+
+为合法代入 $v_\eta>1/5$，置 $c_0=h/2+20|b|>0$、$d_0=3|b|\ge0$。函数 $v^2/(c_0+d_0v)$ 在 $v>0$ 上严格递增，因为其导数是 $v(2c_0+d_0v)/(c_0+d_0v)^2>0$。再对 $h,|b|$ 用各自上界，得
+
+$$
+\mathcal R(c)>
+\frac{1/25}{2[1/2000+(1/2000)(20+3/5)]}
+ =\frac{1/25}{2[1/2000+103/10000]}
+ =\frac{50}{27}.
+\tag{39.19}
+$$
+
+由于 $50\cdot480=24000>21843=809\cdot27$，(39.12) 成立。对任意合法 $\epsilon$ 及 $0\le k\le809/480$，
+$J_k\ge4|\zeta|(\mathcal R(c)-k)>0$。若 $\zeta=0$，不能用比值，但引理 37.4 给 $\eta\ne0$，故 $J_k=s(A)|\eta|^2>0$。这完成包括零配对分支的证明。∎
+
+该定理对一个完整无界条带给下界，而非从选定接触给阈值上界。它只排除条带内的接触作为所列 $k$ 范围的失效原因，不能把条带外未验的接触一起判为正。
+
+### 39.4 全部增广轴接触及实际轴子集
+
+**定理 39.4（两条增广轴的完整参数化）。** 固定 $j\in\{1,2\}$、$l\ne j$，写 $u=ze_j$、$|z|=1$。对每个 $t\in\mathbb R$、$|t|>1$，该轴上的全部 (39.4) 接触准确由下列公式给出：
+
+$$
+\begin{gathered}
+b=c_j-2/c_j=2c_j-3,\qquad \ell=b+\iota t,\qquad
+\epsilon=-\operatorname{sign}(t),\\
+p_j=-\frac{3c_j^2}{t}z,\qquad q_j=c_jp_j,\\
+\delta_j(t)=-5c_j+\frac{(2c_j-3)c_j^2}{2}
+       +\iota\left(\frac{tc_j^2}{2}-\frac6t\right),\qquad
+\eta=\frac{z\delta_j(t)}{(a_r)_j},\\
+p_l=\frac{hz+\eta(a_r)_l}{\iota(1-\ell/c_l)},\qquad
+q_l=(\ell+2/c_l)p_l+\iota h c_jz,\qquad
+a_{\rm act}=\iota(I_2-\ell C^{-1})p.
+\end{gathered}
+\tag{39.20}
+$$
+
+在两轴上分别有
+
+$$
+\begin{gathered}
+j=1:\quad b=-1,\quad
+\delta_1(t)=-11/2+\iota(t/2-6/t),\quad\zeta=-3,\\
+j=2:\quad b=1,\quad
+\delta_2(t)=-8+\iota(2t-6/t),\quad\zeta=12.
+\end{gathered}
+\tag{39.21}
+$$
+
+参数化包括每个来源符号和每个取向。所有分母非零：$t\ne0$、$(a_r)_j\ne0$，且 $1-\ell/c_l\ne0$ 由 $t\ne0$ 保证。
+
+证明。引理 37.2 在 $u=ze_j$ 上恰要求 $w=p_j/z\in\mathbb R$、$q_j=c_jp_j$，对 $p_l,q_l$ 不另加限制。接触的第 $j$ 个 $q$ 坐标成为
+
+$$
+(\ell+2/c_j-c_j)w+3\iota c_j^2=0.
+$$
+
+其虚系数给 $tw=-3c_j^2$，所以 $w\ne0$；实部遂给 $b=c_j-2/c_j$。在 $c_j=1,2$ 上，这正是 $b=2c_j-3$。第 $j$ 个需求坐标除以 $z$ 为
+
+$$
+\iota(1-\ell/c_j)w-2c_j+\ell c_j^2/2
+=-5c_j+bc_j^2/2+\iota(tc_j^2/2-6/t),
+$$
+
+给出 $\delta_j$ 和 $\eta$。在另一坐标，$u_l=0$、$(Hu)_l=hz$，需求等式准确给出 (39.20) 的 $p_l$；再用第二条演员接触给 $q_l$。这是必要性。
+
+反之，取任意所列 $t,z$ 并按公式定义。第 $j$ 个接触方程由上面的实、虚等式成立；两需求坐标分别为 $z\delta_j=\eta(a_r)_j$ 和 $\eta(a_r)_l$。$p_j/z$ 为实数且 $q_j=c_jp_j$，所以全部闭包条件成立；其余接触等式按定义成立。这证明充分性。最后把 $m_j=1$、$x=0$ 代入 (39.10)，得到两个 $\zeta$ 值。∎
+
+增广轴与实际轴仍须区分。对同一个有限实际 $X$，$Cu=c_ju$ 强制整列 $q=c_jp$；闭包只强制该等式的第 $j$ 个坐标。因此 (39.20) 给实际轴接触当且仅当
+
+$$
+q_l=c_jp_l
+\quad\Longleftrightarrow\quad
+\ell p_l+\iota h c_jz=0.
+\tag{39.22}
+$$
+
+这里用了 $2/c_l=c_j$。此条件也充分：取 $X_{jj}=p_j/z\in\mathbb R$、$X_{lj}=p_l/z$、$X_{jl}=\overline{X_{lj}}$，令 $X_{ll}$ 任意实数，便有 $Xu=p$、$XCu=q$。没有通过 (39.22) 的增广轴点依然由定理 37.6 恢复为实际趋轴探针；不能把它们删出接触比较，也不能称它们本身为有限实际轴探针。
+
+### 39.5 整个轴扇区的代价、唯一尺度极小值与公共排除界
+
+**定理 39.5（完整增广轴阈值）。** 在任一来源与取向下，(39.20) 的无符号比值分别为
+
+$$
+\mathcal R_1(A)=\frac{A^4+97A^2+144}{12A(A^2-1)},\qquad
+\mathcal R_2(A)=\frac{A^4+10A^2+9}{6A(A^2-1)},\qquad A>1.
+\tag{39.23}
+$$
+
+它们不依赖 $h,r,z$。对两个合法符号，各自准确的代价为
+
+$$
+J_k\big|_{e_1}=12[\mathcal R_1(A)-\epsilon k],\qquad
+J_k\big|_{e_2}=48[\mathcal R_2(A)+\epsilon k].
+\tag{39.24}
+$$
+
+令 $\xi>1$ 是多项式
+
+$$
+P(X)=X^3-13X^2-37X+9
+\tag{39.25}
+$$
+
+的唯一大于 $1$ 的根，则整个增广轴扇区对正残量的阈值为
+
+$$
+\boxed{\quad
+K_{\rm ax}=\min_{A>1}\mathcal R_2(A)
+ =\frac{\xi^2+10\xi+9}{6\sqrt\xi(\xi-1)}
+ <\frac{85}{72}<\frac32.\quad}
+\tag{39.26}
+$$
+
+唯一的极小尺度是第二轴上的 $A=\sqrt\xi$；轴相位 $z$ 仍可任取。对 $k\ge0$，第一轴的不利符号是 $\epsilon=+1,t=-A$，第二轴是不利符号 $\epsilon=-1,t=A$；相反符号的代价严格正。故 $0\le k<K_{\rm ax}$ 时全部轴接触严格正；$k=K_{\rm ax}$ 时全部轴接触非负，零值恰在第二轴不利符号与该极小尺度；$k>K_{\rm ax}$ 时已有严格负轴接触。这是轴扇区分类，不是完整接触域的最优值断言。
+
+证明。由 (39.20)–(39.21)，
+
+$$
+\begin{aligned}
+|\eta|^2\big|_{e_1}
+ &=2\left[\frac{121}{4}+(t/2-6/t)^2\right]
+ =\frac12\left(A^2+97+\frac{144}{A^2}\right),\\
+|\eta|^2\big|_{e_2}
+ &=64+(2t-6/t)^2
+ =4A^2+40+\frac{36}{A^2}.
+\end{aligned}
+$$
+
+将其代入 $s(A)|\eta|^2/(4|\zeta|)$ 就是 (39.23)；再用 $\zeta=-3,12$ 得 (39.24)。因此符号选择和正斜率分支也全部确定。
+
+第一轴在所有尺度都高于 $3/2$，因为
+
+$$
+\begin{aligned}
+&A^4+97A^2+144-18A(A^2-1)\\
+&\qquad=A^2(A-9)^2+16A^2+18A+144>0.
+\end{aligned}
+\tag{39.27}
+$$
+
+第二轴满足 $\mathcal R_2(4)=85/72<3/2$，所以整个轴扇区的最低值只能来自第二轴。为确定全部尺度而非仅选一个见证，直接求导：
+
+$$
+\mathcal R_2'(A)=
+\frac{A^6-13A^4-37A^2+9}{6(A^3-A)^2}
+=\frac{P(A^2)}{6(A^3-A)^2}.
+\tag{39.28}
+$$
+
+$P(1)=-40$，而 $P(X)\to+\infty$。其导数 $P'(X)=3X^2-26X-37$ 的两个根为 $(13\pm2\sqrt{70})/3$；一根为负，另一根 $X_0>1$。所以 $P$ 在 $(1,X_0)$ 严格递减，从负值出发；在 $(X_0,\infty)$ 严格递增到正无穷。由连续性，恰有一个根 $\xi>1$。又 $P(16)=185>0$，故 $\xi<16$。式 (39.28) 于是说明 $\mathcal R_2$ 在 $(1,\sqrt\xi)$ 严格递减，在 $(\sqrt\xi,\infty)$ 严格递增；其在 $A\downarrow1$ 与 $A\to\infty$ 两端都趋于正无穷。唯一全局极小尺度及公式 (39.26) 得证。由于 $\sqrt\xi<4$，极小值严格小于 $\mathcal R_2(4)=85/72$。结合第一轴的严格下界和 (39.24)，便得全部轴代价的符号分类。∎
+
+对负 $k$，(39.24) 同样给阈值 $K_{\rm ax}$，不利符号同时反转。在临界 $|k|=K_{\rm ax}$，这里仅得零领先代价；恢复定理没有判定其有限 $\lambda$ 次阶符号。
+
+### 39.6 非轴且实部非零时的唯一可见列与来源残余方程
+
+**命题 39.6（列重构的必要性与充分性）。** 给定任意 $\|u\|=1$、$u_1u_2\ne0$、$\ell=b+\iota t$，其中 $|t|>1,b\ne0$。从 $u$ 定义 (39.8) 的 $m_j,x,y,L,N$，然后依次置
+
+$$
+\begin{gathered}
+S=-\frac{3L}{t},\qquad
+\Delta_P=hy-bS,\qquad
+P_1=\frac{S+\Delta_P}{2},\qquad P_2=\frac{S-\Delta_P}{2},\\
+Z=\frac{-3(3+b)L-thy+2N}{2b},\\
+p_1=\frac{P_1+\iota Z}{\overline{u_1}},\qquad
+p_2=\frac{P_2-\iota Z}{\overline{u_2}},\\
+q=(\ell I_2+2C^{-1})p+\iota BCu,\qquad
+a_{\rm act}=\iota(I_2-\ell C^{-1})p,\\
+\mathbf d_{\rm src}=\iota(I_2-\ell C^{-1})p-Hu+\ell C^2u/2.
+\end{gathered}
+\tag{39.29}
+$$
+
+则这是一对满足可见图条件和两条演员接触等式的唯一列 $p,q$。它们来自唯一实际 Hermitian 矩阵
+
+$$
+X=[p\ q][u\ Cu]^{-1}.
+\tag{39.30}
+$$
+
+对于指定来源 $a_r$，剩余条件准确是单个复标量方程
+
+$$
+\boxed{\quad
+(\mathbf d_{\rm src})_2=r\sqrt2(\mathbf d_{\rm src})_1,\qquad
+\eta=\sqrt2(\mathbf d_{\rm src})_1.\quad}
+\tag{39.31}
+$$
+
+第一个等式等价于两个实方程，不因列消元而自动成立。满足它当且仅当 (39.29) 产生该来源的接触，此时 $\eta\ne0$，合法符号是 $\epsilon=-\operatorname{sign}(t)$。
+
+证明。$t\ne0$、$b\ne0$、$u_1u_2\ne0$ 逐一保证了 (39.29) 的所有除法合法。若一个接触存在，引理 39.2 先唯一确定 $S,\Delta_P,P_1,P_2$，再由
+
+$$
+\begin{aligned}
+2bZ
+ &=3tS-t\Delta_P+2N\\
+ &=3tS-thy+tbS+2N
+ =-3(3+b)L-thy+2N
+\end{aligned}
+$$
+
+唯一确定 $Z$，继而唯一确定 $p$ 和 $q$。这证明必要性及唯一性。
+
+反向地，按 (39.29) 定义后，$u^*p=S\in\mathbb R$。上面的 $Z$ 公式给回第三条 (39.9)，其余两条按定义成立。引理 39.2 证明中关于 $u^*q-p^*Cu$ 的实部、虚系数及 $(Cu)^*q$ 虚系数的计算均可逆，因此这三式正好给回全部 (39.4) 的图条件。非轴时 $[u\ Cu]$ 可逆；引理 37.2 于是给 (39.30) 的 Hermitian 性和两列的实际实现。两条演员接触由 $q,a_{\rm act}$ 的定义成立。
+
+最后，$\mathbf d_{\rm src}=\eta(1/\sqrt2,r)^{\mathsf T}$ 等价于 (39.31)，因为第一来源坐标 $1/\sqrt2$ 非零。若满足 (39.31) 却有 $\eta=0$，两个需求坐标都为零，与引理 37.4 在这些图条件和演员接触下的零需求排除矛盾。所以它准确给出来源条件，没有引入伪零需求解。∎
+
+列重构去掉了自由的 $p,q,X$，并未求解 (39.31)，也未给所有满足该方程的 $u,b,t$ 上的代价下界。定理 39.3 的作用是：在其 $h$ 范围及原定 $k$ 范围内，可能影响符号的接触不在 $|b|\le1/2000$，因而非轴部分可合法使用这里的 $1/b$ 公式。未满足条带定理的 $h$ 不因此排除 $b=0$。
+
+### 39.7 同一实来源的两种对称性
+
+**命题 39.7（取向等价与正负残量阈值等价）。** 对每个固定 $a_r,h$，两个取向的 (37.50) 阈值相同；同一取向的正、负残量阈值也相同。记其共同值为 $K_r(h)$。这些等价保持来源符号 $r$，不建立 $K_+(h)=K_-(h)$。
+
+证明。首先同时取复共轭，并将 $\iota$ 改为 $-\iota$：
+
+$$
+(\iota,u,p,q,\ell,a_{\rm act},\eta,\epsilon)
+\longmapsto
+(-\iota,\overline u,\overline p,\overline q,
+ \overline\ell,\overline{a_{\rm act}},\overline\eta,\epsilon).
+\tag{39.32}
+$$
+
+由于 $C,H,B,T_A,a_r$ 均为实矩阵或实向量，(39.4) 逐项共轭后仍为同一来源在另一取向的接触。$\operatorname{Im}_{-\iota}\overline\ell=\operatorname{Im}_\iota\ell=t$，故 $A,\epsilon$ 保留；$v$ 变为 $\overline v$，从而 $|\eta|,\zeta,J_k$ 全部保留。此双射给两取向的阈值等价。
+
+其次，固定 $\iota$，作
+
+$$
+(u,p,q,\ell,a_{\rm act},\eta,\epsilon)
+\longmapsto
+(\overline u,-\overline p,-\overline q,
+ \overline\ell,\overline{a_{\rm act}},\overline\eta,-\epsilon).
+\tag{39.33}
+$$
+
+图的两个实配对成为原实配对的负共轭，交叉等式两边也同取负共轭，所以图条件保留。第一演员等式满足
+$\iota(I_2-\overline\ell C^{-1})(-\overline p)=\overline{a_{\rm act}}$；第二演员等式满足
+$-\overline q=(\overline\ell I_2+2C^{-1})(-\overline p)+\iota BC\overline u$；需求等式是原式的共轭。$t$ 和 $\epsilon$ 同时反号，故 $A$ 保留，且 $v$ 再次变为 $\overline v$。因此 $|\eta|,\zeta$ 保留，但新的 $J_k$ 是原来的 $J_{-k}$。它在 (37.50) 的两个带方向接触集合之间给保持比值的双射，证明正负阈值相同。两种操作都没有将 $a_r$ 变为 $a_{-r}$；不能将同源对称性用作来源对之间的等价证明。∎
+
+### 39.8 原有限阶段后果与剩余的同完整 P2 比较
+
+**推论 39.8（公共更强排除与必要搜索范围）。** 对每个固定的 §37 合法 $h>0$、每个固定 $k>K_{\rm ax}$，(39.2) 的两个来源在两个取向都于所有充分大的有限 $\lambda$ 上严格违反原 PB，且同一个 $\rho=k/\lambda^2$ 严格处于它们共同完整 P2 区间内。每个失败都有同一实际探针与同一原正泛函承担的两笔严格正预算，且质量可任取指定有限 $\mu>0$。因此
+
+$$
+K_r(h)\le K_{\rm ax}<\frac{85}{72}<\frac{809}{480},\qquad r=\pm1.
+\tag{39.34}
+$$
+
+所以对于这对来源，固定正 $k$ 的最终 PB 成功／失败分离只能继续在
+
+$$
+0<k\le K_{\rm ax}
+\tag{39.35}
+$$
+
+寻找。这是必要搜索范围，不是成功区域。
+
+证明。固定 $k>K_{\rm ax}$，在任一来源及取向上取定理 39.4 的第二轴接触，令 $t=\sqrt\xi$、$\epsilon=-1$、任取 $|z|=1$。定理 39.5 给
+$J_k=48(K_{\rm ax}-k)<0$。如果该轴接触不满足 (39.22)，仍可直接应用定理 37.6 的趋轴恢复；若它已有实际轴实现，则用该定理的实际分支。因此推论 37.7 精确给 (39.2) 上最终的有限实际 PB 失败、两笔严格正预算及任意指定正有限质量。它不要求增广轴点本身有有限轴上实现。两个来源、两个取向只有有限种选择，可将各自有限截止取最大值。
+
+完整 P2 的严格内部身份由 (39.7) 给出，固定 $h,k$ 后再扩大有限截止即可。阈值上界亦可直接由第二轴极小接触代入 (37.50) 得到；$85/72<809/480$ 由交叉相乘成立。因此超过 $K_{\rm ax}$ 的每个固定正 $k$ 都使两来源最终失败，不能支持一成一败的目标。没有对随 $\lambda$ 变动的 $k$ 或临界等号给出额外结论。∎
+
+若再有 $0<h\le1/1000$，则对 (39.35) 的每个固定 $k$，定理 39.3 排除了整个 $|b|\le1/2000$ 条带。定理 39.5 已经完整结算轴扇区的领先代价。除显式保留的 $k=K_{\rm ax}$ 轴零值外，剩余的来源差异比较准确落在
+
+$$
+\begin{gathered}
+\|u\|=1,\qquad u_1u_2\ne0,\qquad
+|b|>1/2000,\qquad |t|>1,\qquad
+\epsilon=-\operatorname{sign}(t),\\
+(\mathbf d_{\rm src}(u,b,t;h))_2
+   =r\sqrt2(\mathbf d_{\rm src}(u,b,t;h))_1,
+\end{gathered}
+\tag{39.36}
+$$
+
+其中所有列和 $\eta$ 按 (39.29)–(39.31) 唯一恢复，$\zeta=-3|u_1|^2+12|u_2|^2-h\operatorname{Re}(\overline{u_1}u_2)$。没有对剩余的 $b,t$ 施加有界性假设。
+
+沿推论 37.9 的严格接触路线得到原目标中的分离，需要在同一固定 $h$ 和同一固定 $k$ 上，对某一来源的每个剩余接触证明 $J_k>0$，同时对另一来源给出 $J_k<0$ 的接触；前者与已处理扇区一起给全部原 PB 的最终成功，后者经推论 37.7 给最终失败。这是足够的严格判据；含零领先值时须另证有限阶段符号。对 $k<K_{\rm ax}$，轴接触已经逐点严格正；在 $k=K_{\rm ax}$，轴零值另有有限阶段次阶义务，不能直接用严格充分性。另一条可能路线是证明两个完整阈值相等；本节未建立这样的等式。只控制若干接触、只求出列、或只验证 (39.31) 的部分解，均不支付前述全称下界。
+
+原目标仍是同一完整 P2 允许参数上的全部 PB 成功／失败分离，而不是仅同谱、仅必要接触检验或仅充分失败。本节没有给任一来源的新全称成功证书，没有证明两来源阈值严格不等或相等，也没有证明这对来源的结构性不可能。原问题在 §37 合法而不满足 $h\le1/1000$ 的范围内保持原样；本节的数值条带排除不外推到那里。阈值等号和 $J_k=0$ 的有限 $\lambda$ 次阶符号仍未解决。
+
+### 39.9 数学引用与适用边界
+
+实际来源、完整原量词和原带符号代价取 (35.5)、(37.2)–(37.7)、(38.1)–(38.5)；可见图和零需求排除分别用引理 37.2、37.4；从增广接触到原有限探针、两笔正预算和任意正有限质量的桥梁为定理 37.6、推论 37.7。推论 37.9 的前提仍是每个接触严格正。共同完整 P2 的代入见[前卷 §30](AURIC_FULL_PB_ACTUAL_PROBE_AND_ENVIRONMENT_COUPLING_CONTINUATION.md#30-零模耦合为零的三矩实现与最小真实环境) 在钉版 `315e167044afd2593b851f6546a82470ca16d446` 的 (30.29) 及本卷 (38.27)–(38.28)，其判据保留必要性与充分性。
+
+(39.9)–(39.10) 的矩消元、定理 39.3 的无界条带估计、定理 39.4–39.5 的完整轴分类和命题 39.6 的非轴列重构使用基本 Hermitian 线性代数、Cauchy–Schwarz、算子范数、正定 Schur 补和一元微分。轴最优值只属于轴扇区，条带排除只在 (39.11) 的范围内成立；完整非轴来源比较与临界零值的有限阶段符号仍为未解问题。
+
+## 追加锚（本行以下为增补区）
+
+## 40. 两个固定实来源的精确有限接触稠密性
+
+本节区分两种恢复。定理 37.6 在同一实际来源上恢复趋于接触的有限原测试；这里则在每一步精确满足来源需求及两条演员接触等式，并精确保留可见 Hermitian 图条件。允许 $\ell,\eta$ 随恢复变化，来源 $a_r$、$h$、取向和绝对值符号均固定。有限矩阵 $X$ 不要求一致有界。
+
+### 40.1 接触域、拓扑与结论
+
+**定义 40.1（精确有限接触子集）。** 固定 $r\in\{+1,-1\}$、$0<h<2\sqrt2$ 和 $\iota\in\{i,-i\}$，取 (39.1) 的 $C,H,B,T_A,a_r$。令 $\mathcal C_\iota(a_r;h)$ 为 (39.4) 的全部接触，仍要求 $\|u\|=1$、$A=-\epsilon\operatorname{Im}_\iota\ell>1$；令
+
+$$
+\mathcal C^{\rm fin}_\iota(a_r;h)=
+\{c\in\mathcal C_\iota(a_r;h):\quad
+ p=Xu,\ q=XCu\ \text{对某个有限 }X=X^*\in M_2(\mathbb C)\}.
+\tag{40.1}
+$$
+
+拓扑为 $(u,p,q,a_{\rm act},\ell,\eta)$ 的通常有限维拓扑和 $\epsilon$ 的离散拓扑。代价 $J_k$ 仍取 (39.5)，$k\in\mathbb R$。本节的 $h$ 范围只保证原来源的 $H\succ0$，不要求 §37 的强制估计邻域；以下稠密性证明不使用引理 37.4 或定理 37.5。
+
+**定理 40.2（同来源、同符号的精确接触稠密性）。** 对定义 40.1 的每个固定来源、$h$ 和取向：
+
+1. 每个没有有限 Hermitian 实现的增广轴接触 $c_0$ 都是一条实解析曲线 $c(s)$ 的极限，其中 $c(0)=c_0$，且对所有充分小的非零实 $s$，$c(s)\in\mathcal C^{\rm fin}_\iota(a_r;h)$、$u_1(s)u_2(s)\ne0$。曲线上 $a_r,h,\epsilon,\iota$ 固定，全部 (39.4) 方程精确成立；$\ell(s),\eta(s)$ 及全部可见列趋于其指定值。
+2. 每个增广接触或已属于 $\mathcal C^{\rm fin}_\iota(a_r;h)$，或具有第 1 项的恢复。因此在接触域的相对拓扑中，
+
+   $$
+   \overline{\mathcal C^{\rm fin}_\iota(a_r;h)}^{\,\mathcal C_\iota(a_r;h)}
+    =\mathcal C_\iota(a_r;h),\qquad
+   \inf_{\mathcal C^{\rm fin}_\iota(a_r;h)}J_k
+    =\inf_{\mathcal C_\iota(a_r;h)}J_k
+    \quad(k\in\mathbb R).
+   \tag{40.2}
+   $$
+
+   下确界按扩展实数解释，空集下确界为 $+\infty$。
+3. 在第 1 项的恢复中，若 $j$ 是原轴、$l\ne j$、$d=c_l-c_j$，$c_1=1,c_2=2$，则可取参数使
+
+   $$
+   X_{ll}(s)=\frac1{ds}+O(1)\qquad(s\to0,\ s\ne0).
+   \tag{40.3}
+   $$
+
+   每个 $X(s)$ 有限而其范数无一致上界。已具有有限实现的退化轴点只需保持原接触；本定理不要求在这些点作非轴恢复。
+
+### 40.2 轴坐标、相位与退化分支
+
+先证 $\iota=i$。用 (39.4) 消去 $q,a_{\rm act}$，将来源方程写成两个复方程
+
+$$
+E=i(I_2-\ell C^{-1})p-Hu+\ell C^2u/2-\eta a_r=0,
+\qquad q=(\ell I_2+2C^{-1})p+iBCu.
+\tag{40.4}
+$$
+
+它们与 (37.15) 的四个实图条件共为八个实方程。若轴点为 $u=z_0e_j$、$|z_0|=1$，同时将 $u,p,q,a_{\rm act},\eta$ 乘以 $\overline{z_0}$，而保持 $\ell,\epsilon$，即可化为 $u=e_j$。此操作逐项保留来源方程、全部接触和 $J_k$，也保留实际矩阵 $X$；构造完成后乘回 $z_0$。因此只需在 $e_j$ 附近处理。
+
+固定 $l\ne j$，在轴附近取实解析坐标
+
+$$
+u_j=\sqrt{1-|z|^2},\qquad u_l=z,\qquad |z|<1.
+\tag{40.5}
+$$
+
+这里固定的是全局相位；$z$ 为横向复坐标。在基点用下标 $0$ 标记 $\ell_0,\eta_0$，并写
+
+$$
+p_j=x\in\mathbb R,\qquad q_j=c_jx,\qquad
+p_l=\pi,\qquad q_l=\chi,\qquad w=\chi-c_j\pi.
+\tag{40.6}
+$$
+
+这些轴图条件正是引理 37.2 的代数结论，不使用小 $h$ 估计。由 $q$ 的占据坐标公式，
+
+$$
+(\ell_0+2/c_j-c_j)x+3ic_j^2=0.
+\tag{40.7}
+$$
+
+故 $x\ne0$。写 $t_0=\operatorname{Im}\ell_0$，则
+
+$$
+\operatorname{Re}\ell_0=c_j-2/c_j,\qquad
+|t_0|>1,\qquad x=-3c_j^2/t_0,\qquad
+D_m:=i(1-\ell_0/c_m)\ne0\quad(m=j,l).
+\tag{40.8}
+$$
+
+最后一个非零性由 $t_0\ne0$ 得到，且 $a_j:=(a_r)_j\ne0$、$a_l:=(a_r)_l\ne0$。
+
+若 $w=0$，则 $q=c_jp$，直接取
+
+$$
+X_{jj}=x,\qquad X_{lj}=\pi,\qquad
+X_{jl}=\overline\pi,\qquad X_{ll}\in\mathbb R
+\tag{40.9}
+$$
+
+便有 $X=X^*$、$Xu=p$、$XCu=q$。反过来，在轴上 $Cu=c_ju$ 使任一实际矩阵都必须满足 $q=c_jp$，即 $w=0$。因此 $w=0$ 恰是已经实际的轴分支，以下只须恢复 $w\ne0$ 的点。
+
+### 40.3 固定实际来源后的完整导数
+
+将十个实未知量写成五个复变量 $(z,p_j,p_l,\ell,\eta)$。在基点的变化记为
+
+$$
+Z=\dot z,\qquad P=\dot p_j,\qquad T=\dot p_l,
+\qquad m=\dot\ell,\qquad n=\dot\eta.
+\tag{40.10}
+$$
+
+由于 $\sqrt{1-|z|^2}$ 在 $z=0$ 的导数为零，固定同一 $a_r,h$ 后，来源方程的导数精确是
+
+$$
+\begin{aligned}
+D_jP+(c_j^2/2-ix/c_j)m-hZ-a_jn&=0,\\
+D_lT-i\pi m/c_l+(\ell_0c_l^2/2-2c_l)Z-a_ln&=0.
+\end{aligned}
+\tag{40.11}
+$$
+
+对任意 $(Z,P,m)$，第一式因 $a_j\ne0$ 唯一确定 $n$；第二式因 $D_l\ne0$ 唯一确定 $T$。所以 $\dot E=0$ 的空间恰为六实维，以 $(Z,P,m)$ 为坐标。这一步使用了实际来源坐标，而没有把来源需求当成自由向量。
+
+记 $Q=\dot q_j$。由 (40.4) 的占据坐标得
+
+$$
+Q=(\ell_0+2/c_j)P+x m+ihc_lZ.
+\tag{40.12}
+$$
+
+四个实图方程的导数为
+
+$$
+\begin{gathered}
+\operatorname{Im}(P+\overline Z\pi)=0,\qquad
+\operatorname{Im}(c_jQ+c_l\overline Z\chi)=0,\\
+Q+\overline Z\chi-c_j\overline P-c_l\overline\pi Z=0.
+\end{gathered}
+\tag{40.13}
+$$
+
+最后一式为一个复方程。令 $d=c_l-c_j\ne0$。第一式给 $\operatorname{Im}P=\operatorname{Im}(Z\overline\pi)$，从而最后一式可逆地化为
+$Q-c_jP=d\overline\pi Z-\overline Zw$。将它代入第二式，该式的虚部变为 $-d\operatorname{Im}(Z\overline w)=0$。因此 (40.13) 准确等价于
+
+$$
+\begin{gathered}
+\operatorname{Im}P=\operatorname{Im}(Z\overline\pi),\qquad
+\operatorname{Im}(Z\overline w)=0,\\
+(\ell_0+2/c_j-c_j)P+x m
+ +(ihc_l-d\overline\pi)Z+\overline Zw=0.
+\end{gathered}
+\tag{40.14}
+$$
+
+若 $w\ne0$，第二个实条件恰要求 $Z=bw$、$b\in\mathbb R$。于是八方程导数的全部核向量唯一由 $(R,b)\in\mathbb R^2$ 给出：
+
+$$
+\begin{aligned}
+Z&=bw,\\
+P&=R+i\operatorname{Im}(Z\overline\pi),\\
+m&=-\bigl[(\ell_0+2/c_j-c_j)P
+ +(ihc_l-d\overline\pi)Z+\overline Zw\bigr]/x,\\
+n&=\bigl[D_jP+(c_j^2/2-ix/c_j)m-hZ\bigr]/a_j,\\
+T&=\bigl[i\pi m/c_l-(\ell_0c_l^2/2-2c_l)Z+a_ln\bigr]/D_l.
+\end{aligned}
+\tag{40.15}
+$$
+
+各步都有唯一逆解，故没有遗漏核向量。十实维定义域上的导数核恰为二维，因而八实方程的导数满秩八。取 $R=0,b=1$ 可得横向非零切向量 $\dot z=w$。
+
+若 $w=0$，(40.14) 的第二个实条件恒等消失，第一条件唯一确定 $\operatorname{Im}P$，最后的复条件因 $x\ne0$ 唯一确定 $m$；$Z\in\mathbb C$ 和 $\operatorname{Re}P\in\mathbb R$ 自由。再由 (40.11) 唯一确定 $n,T$，故核为三维，导数秩恰为七。这一退化正对应 (40.9) 的已经实际轴分支，不在其上错误使用满秩八。
+
+### 40.4 实解析隐函数定理与精确横向恢复
+
+现在固定 $w\ne0$ 的轴接触及其常数 $x,w$。在八个实方程外添加两个实方程
+
+$$
+\operatorname{Re}p_j=x,\qquad
+\frac{\operatorname{Re}(z\overline w)}{|w|^2}=s,
+\qquad s\in\mathbb R.
+\tag{40.16}
+$$
+
+在核 (40.15) 上，新增左边的导数分别为 $R$ 和 $b$。所以十方程对十未知量的导数核为零，确为可逆线性映射。方程的实、虚部及坐标 (40.5) 在基点邻域实解析；(40.8) 给出的非零分母都保持非零。有限维实解析隐函数定理于是给出对充分小实 $s$ 唯一的局部实解析解曲线，基点为指定接触，并有
+
+$$
+z(s)=s w+O(s^2).
+\tag{40.17}
+$$
+
+这证明实际来源条件在整条曲线上精确成立，而非只在导数或极限中成立。由于 $w\ne0$，对所有充分小 $s\ne0$ 有 $z(s)\ne0$；又 $u_j(s)>0$，所以两演员坐标都非零。由连续性，缩小参数区间后 $A(s)=-\epsilon\operatorname{Im}\ell(s)>1$，$\epsilon$ 保持原值。原有限变分参数可取
+
+$$
+\nu(s)=0,\qquad
+\alpha_d(s)=A(s)-d\epsilon>0,\qquad
+\beta_d(s)=d\operatorname{Re}\ell(s),\qquad d=\pm1.
+\tag{40.18}
+$$
+
+定义
+
+$$
+V(s)=[u(s)\ Cu(s)],\qquad W(s)=[p(s)\ q(s)],\qquad
+X(s)=W(s)V(s)^{-1}.
+\tag{40.19}
+$$
+
+非轴时 $\det V(s)=(c_2-c_1)u_1(s)u_2(s)\ne0$。图条件使 $V(s)^*W(s)$ 为 Hermitian，亦即 $V(s)^*X(s)V(s)$ 为 Hermitian；左右乘可逆矩阵得到 $X(s)=X(s)^*$。每个非零 $s$ 上它是有限矩阵，且精确给 $Xu=p$、$XCu=q$。
+
+此外，令 $w(s)=q_l(s)-c_jp_l(s)=w+O(s)$，逐列相减给出精确等式
+
+$$
+w(s)=(c_l-c_j)X_{ll}(s)u_l(s)=dX_{ll}(s)z(s).
+\tag{40.20}
+$$
+
+结合 (40.17) 即得 $X_{ll}(s)=1/(ds)+O(1)$。恢复任意原相位 $z_0$ 时，$w(s)$ 和 $u_l(s)$ 同乘 $z_0$，比值和矩阵 $X(s)$ 不变。因此相位不影响 (40.3)。
+
+所用实解析隐函数定理是成熟工具，参见 S. G. Krantz 与 H. R. Parks, *The Implicit Function Theorem: History, Theory, and Applications*（Birkhäuser）。这里的十变量方程、实际来源消元、满秩与横向切向量分别由 (40.4)–(40.16) 给出，不从抽象工具直接假定。
+
+### 40.5 全接触域的穷尽与下确界相等
+
+若一个接触满足 $u_1u_2\ne0$，直接用 (40.19) 即有唯一有限 Hermitian 实现。若在轴上，则 $w=0$ 时由 (40.9) 已经实际，$w\ne0$ 时由 (40.16)–(40.20) 精确恢复。这穷尽所有单位演员，并对每个固定 $\epsilon$ 给出稠密性。
+
+对固定实 $k$，$J_k$ 在每个合法接触点连续，因为 $A>1$。实际子集包含于增广域，故 $\inf_{\mathcal C}J_k\le\inf_{\mathcal C^{\rm fin}}J_k$；另一方面，对任一 $c\in\mathcal C$，或保持它，或取上述实际恢复曲线，均得 $\inf_{\mathcal C^{\rm fin}}J_k\le J_k(c)$。因此实际下确界是全部增广代价值的下界，给反向不等式。若增广下确界为 $-\infty$，则对每个实数 $M$ 都有接触 $c$ 使 $J_k(c)<M$，连续恢复给出同样满足 $J_k<M$ 的实际接触，故实际下确界也为 $-\infty$；若增广域为空，子集也为空，双方为 $+\infty$。这证明 (40.2) 的扩展实数等式，不需要下确界被取到。
+
+最后，$C,H,B,T_A,a_r$ 都为实矩阵或实向量，故 (39.32) 的复共轭将每个 $i$ 接触及其恢复曲线送到 $-i$ 接触及其恢复曲线。它保持 $A,\epsilon,J_k$，且将 $X(s)$ 送到有限 Hermitian 矩阵 $\overline{X(s)}$。实解析性、横向非零性和 (40.3) 均保留，完成定理 40.2 对两取向的证明。∎
+
+### 40.6 同一原来源上的有限环境与指定质量
+
+对任意一个精确有限接触，取其有限矩阵 $X$，并在任意固定有限 $\lambda>0$ 上使用 (38.1) 的同一来源 $D=D_{r,\lambda},F,G=G_{r,\lambda}$。令
+
+$$
+\begin{gathered}
+R_\lambda=(I_2+\lambda^2a_ra_r^*)^{-1},\qquad
+e=GR_\lambda\eta a_r,\\
+y=D^{-1}(e-\ell FCu/2-Fu),\qquad
+\xi=(u,y),\qquad x_{\rm probe}=X\oplus0_3.
+\end{gathered}
+\tag{40.21}
+$$
+
+由 (38.2) 的 $DG=F$、$G^*G=R_\lambda^{-1}$、$F^*G=C$ 和 $B-F^*D^{-1}F=H$，精确有
+
+$$
+\begin{aligned}
+Fu+Dy&=e-\ell FCu/2,\qquad G^*e=\eta a_r,\\
+Bu+F^*y&=Hu+\eta a_r-\ell C^2u/2=a_{\rm act}.
+\end{aligned}
+\tag{40.22}
+$$
+
+所以演员列和环境列来自同一原向量及同一实际来源，$D,F,G$ 没有被替换。$\|u\|=1$ 保证 $\xi\ne0$。任意指定有限质量 $\mu>0$ 可由
+
+$$
+\widehat\xi=\frac{\sqrt\mu}{\|\xi\|}\xi,\qquad
+\widehat\phi(M)=\widehat\xi^*M\widehat\xi,
+\qquad \widehat\phi(I_5)=\mu
+\tag{40.23}
+$$
+
+实现；原探针仍为 $x_{\rm probe}$，两笔原预算均使用这个同一泛函。这只是同一原域上的精确提升，并不赋予任意接触一个 PB 成功或失败结论。
+
+“精确接触”专指 (39.4)。有限 $\lambda$ 上的环境列 $e$ 一般不为零；即使演员接触成立，在 $\rho=k/\lambda^2$ 时仍保留原有限残量项。故这里既不把接触方程等同于全部有限阶段缺陷消失，也不把 (40.2) 等同于有限阶段 PB 变分的取到性。
+
+### 40.7 显式 $809/480$ 接触的横向非退化性
+
+**推论 40.3（两份显式轴接触的精确非轴恢复）。** 对每个固定 $0<h<2\sqrt2$，(38.8)–(38.11) 的两个来源接触及另一取向的共轭接触均满足定理 40.2 第 1 项。其基点具有 $A=9$、$\epsilon=1$、$|\eta|^2=809/9$，并且
+
+$$
+J_k=\frac{809}{40}-12k.
+\tag{40.24}
+$$
+
+证明。先在 $\iota=i$ 取 $j=1,l=2$，直接沿用 (38.8)–(38.11) 的原常数，记
+
+$$
+\begin{gathered}
+\ell_0=-1-9i,\qquad x=1/3,\qquad
+\eta_0=\sqrt2(-33-23i)/6,\qquad D_2=(-9+3i)/2,\\
+\pi=(h+r\eta_0)/D_2,\qquad
+\chi=(\ell_0+1)\pi+ih,\qquad
+w=\chi-\pi=\ell_0\pi+ih.
+\end{gathered}
+\tag{40.25}
+$$
+
+不改来源归一化，直接乘出
+
+$$
+D_2w=r\sqrt2\,(-87+160i)/3-(5+27i)h/2.
+\tag{40.26}
+$$
+
+若 $r=+1$，其实部为 $-29\sqrt2-5h/2<0$；若 $r=-1$，其虚部为 $-160\sqrt2/3-27h/2<0$。故对每个 $h>0$、每个来源都有 $w\ne0$，适用 (40.15)–(40.20)。再由 $s(9)=9/40$、$|\eta_0|^2=809/9$ 和 $\zeta=-3$ 得 (40.24)。复共轭给另一取向的同一结论。∎
+
+这里的恢复加强的是接触方程的精确性；它不把 $809/480$ 升格为最优完整阈值。§39 的更小公共轴阈值和本推论描述的是不同的数学性质。
+
+### 40.8 来源、工具与未解比较
+
+本节的接触与图条件来自 (37.15)、(37.19)、(39.4)，代价来自 (37.20)、(39.5)，原实际环境为 (38.1)–(38.2)，显式轴点为 (38.8)–(38.11)。实解析隐函数定理和可逆基下的 Hermitian 判据分别用于 (40.16)–(40.19)；实际来源导数的核、退化分支和横向恢复由 (40.11)–(40.20) 确定。
+
+(40.2) 解决这两个固定实来源在 $0<h<2\sqrt2$ 内的增广接触与精确有限接触下确界等价，不限制恢复矩阵的大小，也不保持 $\ell,\eta$ 固定。§37 的全原测试渐近判据仍只在其原强制估计邻域使用；§39 的无界条带排除另有 $h\le1/1000$ 的条件。稠密性不扩大这两个范围。
+
+完整来源阈值的等值或严格不等值、非轴接触的全称代价下界、临界零值的有限 $\lambda$ 次阶符号，以及同一完整 P2 内一份来源全部 PB 成功而另一份失败的比较仍未解决。下确界相等不证明取到性，不给最优完整阈值，也不提供任一来源的全称成功证书。
+
+## 追加锚（本行以下为增补区）
