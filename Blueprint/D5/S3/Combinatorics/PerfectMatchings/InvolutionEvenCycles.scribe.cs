@@ -8,11 +8,14 @@ internal sealed class InvolutionEvenCyclesDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/PerfectMatchings/InvolutionEvenCycles.";
 
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/Combinatorics/egecioglu1990pfaffian");
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Ordered perfect matchings correspond to actual even-cycle permutations by rooted interlacing.",
         H("Rooted Interlacing of Two Perfect Matchings"),
         Blocks(
-            Paragraph(Text("Let X be any finite linearly ordered type. The input uses the existing "
+            Paragraph(Text("In an arbitrary universe, let X be any finite linearly ordered type. Perm(X) denotes Equiv.Perm X. The input uses the existing "
                 + "D5.S3.Zeros.Convolution.PerfectMatchingCount.FixedPointFreeInvolution X: "
                 + "its elements are exactly permutations p satisfying p(p(x)) = x and p(x) ≠ x for all x. "
                 + "Connected(s,t,x,y) is the existing reflexive transitive closure of s-edges and t-edges. "
@@ -27,7 +30,7 @@ internal sealed class InvolutionEvenCyclesDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("rooted-interlacing"),
                 DeclarationHandle.Create(Prefix + "rooted_interlacing"),
                 H("Full Component Coverage and Ordered Recovery"),
-                StatementSource.FromAuthor(Interlacing()), AssessedProvenance.FromRepo(),
+                StatementSource.FromAuthor(Interlacing()), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("The actual component splits into two disjoint product orbits. "
                     + "Natural powers enumerate each finite full orbit. Interlacing their vertices as "
                     + "r^k(m), s(r^k(m)) covers the entire component, with no repeated orientation choice. "
@@ -46,7 +49,7 @@ internal sealed class InvolutionEvenCyclesDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("rooted-reconstruction"),
                 DeclarationHandle.Create(Prefix + "rooted_reconstruction"),
                 H("Reconstructing the Entire Original Permutation"),
-                StatementSource.FromAuthor(Reconstruction()), AssessedProvenance.FromRepo(),
+                StatementSource.FromAuthor(Reconstruction()), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("recover(q) has first mate q(x) at even rooted distance and q inverse(x) "
                     + "at odd rooted distance; the second mate uses the opposite choices. Both are "
                     + "fixed-point-free involutions. Their actual components equal the full q-cycles, "
@@ -56,7 +59,7 @@ internal sealed class InvolutionEvenCyclesDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("rooted-equivalence"),
                 DeclarationHandle.Create(Prefix + "equivalence"),
                 H("The Actual Equivalence"), StatementSource.FromAuthor(EquivalenceFormula()),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("The forward function is forward(s,t), with underlying permutation "
                     + "interlace(s,t). The inverse function is recover. The two preceding theorems supply "
                     + "the exact left and right inverse laws of this Equiv. No cardinality argument or "
@@ -88,7 +91,7 @@ internal sealed class InvolutionEvenCyclesDocument : IScribeDocumentDefinition
     private static Formula LessOrEqual(Formula a, Formula b) =>
         new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
     private static Formula X() => V("X");
-    private static Formula Perm() => Call("Equiv.Perm", X());
+    private static Formula Perm() => Call("Perm", X());
     private static Formula Matching() => Call("FixedPointFreeInvolution", X());
     private static Formula Pair(Formula a, Formula b) => Call("pair", a, b);
     private static Formula Val(Formula a) => Call("val", a);

@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Combinatorics.PerfectMatchings.InvolutionEvenCycles
 import Reg.Support.DependentFamily
 
+/-! Dependent-family evidence for the rooted interlacing and reconstruction laws. -/
+
 namespace Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionEvenCycles
 
 open _root_.D5.S3.Combinatorics.PerfectMatchings.InvolutionEvenCycles
@@ -96,7 +98,8 @@ def registration : Registration arena.{u} (type_of% (@rooted_interlacing.{u})) w
 
 def registration_contract : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@rooted_interlacing.{u}) (Realization signature.{u}) Unit Unit where
-  unitName := `D5.S3.Combinatorics.PerfectMatchings.InvolutionEvenCycles.rooted_interlacing
+  unitName :=
+    `D5.S3.Combinatorics.PerfectMatchings.InvolutionEvenCycles.rooted_interlacing
   realizationName := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionEvenCycles.Interlacing.registration
   realizationSource := none
   generated := false
@@ -156,7 +159,8 @@ def registration : Registration arena.{u} (type_of% (@rooted_reconstruction.{u})
 
 def registration_contract : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@rooted_reconstruction.{u}) (Realization signature.{u}) Unit Unit where
-  unitName := `D5.S3.Combinatorics.PerfectMatchings.InvolutionEvenCycles.rooted_reconstruction
+  unitName :=
+    `D5.S3.Combinatorics.PerfectMatchings.InvolutionEvenCycles.rooted_reconstruction
   realizationName := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionEvenCycles.Reconstruction.registration
   realizationSource := none
   generated := false
@@ -183,5 +187,7 @@ end Reconstruction
 
 #print axioms Interlacing.registration
 #print axioms Reconstruction.registration
+
+end
 
 end Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionEvenCycles
