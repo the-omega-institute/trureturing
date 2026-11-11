@@ -63,7 +63,7 @@ def catOdeAudit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (PowerSeries ℚ)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S1.Recurrence.A308815DFiniteRecurrence
     definition := none
