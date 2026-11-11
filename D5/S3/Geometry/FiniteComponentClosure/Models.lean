@@ -18,7 +18,6 @@ open private
   singleton_coordinates
   sphereVertex_face
   spherePath
-  nativeCylinder
   coordinateLinear
   coordinateLinear_at
   coordinateLinear_single

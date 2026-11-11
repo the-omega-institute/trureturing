@@ -9,3 +9,4 @@ The explicit cone-cover quotient and disjoint-join decompositions feed the based
 ## References
 
 - Dependency: [D5/S3/Geometry/FiniteComponentClosure/Models](Models.md)
+- Dependency: [D5/S3/Geometry/FiniteSubcomplexCylinder](../FiniteSubcomplexCylinder.md)
