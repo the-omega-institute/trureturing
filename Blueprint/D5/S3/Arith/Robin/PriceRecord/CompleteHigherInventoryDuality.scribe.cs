@@ -8,7 +8,7 @@ internal sealed class CompleteHigherInventoryDualityDocument : IScribeDocumentDe
         "All actual higher coordinates and exact complete loss.",
         H("All actual higher coordinates and exact complete loss"),
         Blocks(
-            Paragraph(Text("higherMass(n) is the sum over every actual prime factor of (v_p(n)-1 : Nat)*log(p). coordinates(n) contains exactly the prime pairs with 2<=j<=v_p(n), and its weight sum equals that mass. Canonical membership is reused from strict_layer_iff; equal prices are excluded. The literal completeSecondLayerLoss+completeHigherLayerLoss is converted to the union of all canonical and actual coordinates. The finite decomposition gives R=potential(lambda)-inventoryGain(n)+lambda*higherMass(n) on any finite superset of that union. Finite convex duality proves both signs using coordinatewise maximization and positive parts. This finite set never truncates n; even arbitrarily large actual negative-margin coordinates enter its actual inventory and loss.")),
+            Paragraph(Text("higherMass(n) is the sum over every actual prime factor of (v_p(n)-1 : Nat)*log(p). coordinates(n) contains exactly the prime pairs with 2<=j<=v_p(n), and its weight sum equals that mass. Canonical membership is reused from strict_layer_iff; equal prices are excluded. The literal completeSecondLayerLoss+completeHigherLayerLoss is converted to the union of all canonical and actual coordinates. The finite decomposition gives R=potential(«λ»bda)-inventoryGain(n)+«λ»bda*higherMass(n) on any finite superset of that union. Finite convex duality proves both signs using coordinatewise maximization and positive parts. This finite set never truncates n; even arbitrarily large actual negative-margin coordinates enter its actual inventory and loss.")),
             Describe.Lean(
                 DescribeId.Create("completehigherinventoryduality-mem-coordinates"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/CompleteHigherInventoryDuality.mem_coordinates"),
@@ -84,7 +84,7 @@ internal sealed class CompleteHigherInventoryDualityDocument : IScribeDocumentDe
                 DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/CompleteHigherInventoryDuality.finite_dual_abs"),
                 H("finite dual abs"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Complete Lean statement: theorem finite_dual_abs {ι : Type*} (S : Finset ι) (b w : ι → ℝ) (i : ι → Bool) (hw : ∀ c ∈ S, 0 ≤ w c) {lam t : ℝ} (ht : 0 < t) : let F := fun η => ∑ c ∈ S, max (b c - η * w c) 0 let h := fun η => ∑ c ∈ S, if 0 < b c - η * w c then w c else 0 let H := ∑ c ∈ S, if i c then w c else 0 let B := ∑ c ∈ S, if i c then b c else 0 let R := F lam - B + lam * H |H - h lam| ≤ R / t + h (lam - t) - h (lam + t)"))),
+                Blocks(Paragraph(Text("Complete Lean statement: theorem finite_dual_abs {ι : Type*} (S : Finset ι) (b w : ι → ℝ) (i : ι → Bool) (hw : ∀ c ∈ S, 0 ≤ w c) {«λ» t : ℝ} (ht : 0 < t) : let F := fun η => ∑ c ∈ S, max (b c - η * w c) 0 let h := fun η => ∑ c ∈ S, if 0 < b c - η * w c then w c else 0 let H := ∑ c ∈ S, if i c then w c else 0 let B := ∑ c ∈ S, if i c then b c else 0 let R := F «λ» - B + «λ» * H |H - h «λ»| ≤ R / t + h («λ» - t) - h («λ» + t)"))),
                 DescribeRole.Theorem)
         )));
 }
