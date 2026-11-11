@@ -15,13 +15,13 @@ internal sealed class CoonsAdjacentGrowthRefutationDocument : IScribeDocumentDef
                 "Source: Michael Coons, arXiv:2611.08109v1, Section 3, final strict "
                 + "adjacent-multiplicity logarithmic limsup question, with the count "
                 + "defined by the product in Section 2. The source is licensed CC BY 4.0. "
-                + "The formal event quantifies over every natural radix ell at least two "
+                + "The question quantifies over every natural radix ell at least two "
                 + "and every natural k at least ell minus one, including ell=2,k=1. "
                 + "It asks for strict growth from k to k+1 at the same radix. "
                 + "The introductory index typo is resolved by the Section 2 product. "
                 + "The separate liminf and first-linear-threshold questions are outside this statement. "
-                + "The preregistered event is issue 29338, comment 6806410093; "
-                + "this construction makes no literature-priority claim.")),
+                + "The source attribution identifies the question and its count convention; "
+                + "it does not establish historical priority for the counterexample.")),
             Node("weight", "Source weighted value", "weight",
                 "For ell in the natural numbers and a : Nat →₀ Nat, weight ell a is "
                 + "the sum over support(a) of a(i) times ell^i. All terms are natural numbers. "
@@ -56,7 +56,7 @@ internal sealed class CoonsAdjacentGrowthRefutationDocument : IScribeDocumentDef
                 "For every k ell n and hell : 2≤ell, Finite (Partitions k ell n). "
                 + "If n<ell^L, any nonzero coefficient at i≥L contributes at least ell^L, "
                 + "a contradiction. Restriction to Fin L is injective into Fin L → Fin(k+1). "
-                + "The implementation may take L=n+1. The private pack and weight_window "
+                + "One can take L=n+1. The pack and weight_window "
                 + "bridges prove that extension by zeros has exactly the original support sum.", DescribeRole.Theorem),
             Node("positive", "Ordinary radix representations are admitted", "count_positive",
                 "For every k ell n with 2≤ell and ell-1≤k, 0<count k ell n. "
