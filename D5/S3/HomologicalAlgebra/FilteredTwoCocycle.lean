@@ -11,7 +11,7 @@ import Mathlib.RepresentationTheory.Intertwining
 import Mathlib.Tactic.Abel
 import Mathlib.Tactic.Choose
 
-/-
+/-!
 Integration checkpoint pending the actual group-extension splitting consumer
 and final admission. Native raw predicates use precisely the supplied
 representation as their SMul instance. No coefficient section is assumed.
@@ -59,9 +59,9 @@ private theorem map_d₁ (t : IntertwiningMap ρA ρB) (b : G → A) (p : G × G
   simp only [d₁, map_add, map_sub, t.isIntertwining]
 
 private theorem map_isCocycle₂ (t : IntertwiningMap ρA ρB) (f : G × G → A) :
-    (letI : SMul G A := ⟨fun g x => ρA g x⟩
+    (letI : SMul G A := ⟨fun g x => ρA g x⟩;
       groupCohomology.IsCocycle₂ f) →
-    (letI : SMul G B := ⟨fun g x => ρB g x⟩
+    (letI : SMul G B := ⟨fun g x => ρB g x⟩;
       groupCohomology.IsCocycle₂ (fun p => t (f p))) := by
   intro hf g h j
   change t (f (g * h, j)) + t (f (g, h)) =
@@ -88,10 +88,12 @@ theorem allTwoCocyclesAreCoboundaries_of_shortExact
     (hC : AllTwoCocyclesAreCoboundaries ρC) :
     AllTwoCocyclesAreCoboundaries ρB := by
   classical
-  letI : SMul G A := ⟨fun g x => ρA g x⟩
-  letI : SMul G B := ⟨fun g x => ρB g x⟩
-  letI : SMul G C := ⟨fun g x => ρC g x⟩
+  let : SMul G A := ⟨fun g x => ρA g x⟩
+  let : SMul G B := ⟨fun g x => ρB g x⟩
+  let : SMul G C := ⟨fun g x => ρC g x⟩
   intro f hf
+  change ∀ g h j, f (g * h, j) + f (g, h) =
+    ρB g (f (h, j)) + f (g, h * j) at hf
   obtain ⟨c, hc⟩ := hC (fun p => q (f p)) (map_isCocycle₂ q f hf)
   -- Only a set-theoretic, pointwise lift of the one-cochain is chosen.
   choose b hb using fun g : G => hq (c g)
@@ -102,7 +104,8 @@ theorem allTwoCocyclesAreCoboundaries_of_shortExact
     have hbc : (fun g => q (b g)) = c := funext hb
     rw [hbc]
     change q (f p) - (ρC p.1 (c p.2) - c (p.1 * p.2) + c p.1) = 0
-    rw [hc p.1 p.2, sub_self]
+    have hc' : ρC p.1 (c p.2) - c (p.1 * p.2) + c p.1 = q (f p) := hc p.1 p.2
+    rw [hc', sub_self]
   have hlift (p : G × G) : ∃ x : A, i x = r p := by
     have hm : r p ∈ LinearMap.ker q.toLinearMap :=
       LinearMap.mem_ker.mpr (hrq p)
@@ -110,6 +113,8 @@ theorem allTwoCocyclesAreCoboundaries_of_shortExact
     exact hm
   choose a ha using hlift
   have hdb : groupCohomology.IsCocycle₂ (d₁ ρB b) := d₁_isCocycle₂ ρB b
+  change ∀ g h j, d₁ ρB b (g * h, j) + d₁ ρB b (g, h) =
+    ρB g (d₁ ρB b (h, j)) + d₁ ρB b (g, h * j) at hdb
   have hr : groupCohomology.IsCocycle₂ r := by
     intro g h j
     change (f (g * h, j) - d₁ ρB b (g * h, j)) +
@@ -129,7 +134,9 @@ theorem allTwoCocyclesAreCoboundaries_of_shortExact
     apply hi
     change i (a (g * h, j) + a (g, h)) =
       i (ρA g (a (h, j)) + a (g, h * j))
-    simpa only [map_add, i.isIntertwining, ha] using hr g h j
+    have hr' : r (g * h, j) + r (g, h) =
+        ρB g (r (h, j)) + r (g, h * j) := hr g h j
+    simpa only [map_add, i.isIntertwining, ha] using hr'
   obtain ⟨a0, ha0⟩ := hA a hac
   refine ⟨fun g => b g + i (a0 g), ?_⟩
   intro g h
@@ -172,7 +179,7 @@ theorem isCoboundary₂_of_finite_stable_filtration
     letI : SMul G M := ⟨fun g x => ρ g x⟩
     groupCohomology.IsCocycle₂ f → groupCohomology.IsCoboundary₂ f := by
   classical
-  letI : SMul G M := ⟨fun g x => ρ g x⟩
+  let : SMul G M := ⟨fun g x => ρ g x⟩
   intro hf
   have hpieces : ∀ k, k ≤ n → AllTwoCocyclesAreCoboundaries (F k).toRepresentation := by
     intro k
@@ -187,7 +194,7 @@ theorem isCoboundary₂_of_finite_stable_filtration
           change (z (g, h) : M) ∈ (⊥ : Subrepresentation ρ)
           rw [← hbot]
           exact (z (g, h)).property
-        exact Submodule.mem_bot.mp hm
+        exact (Submodule.mem_bot R).mp hm
       change (F 0).toRepresentation g 0 - 0 + 0 = z (g, h)
       rw [map_zero, sub_zero, add_zero, hz]
     | succ k ih =>
