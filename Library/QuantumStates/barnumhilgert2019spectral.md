@@ -691,3 +691,471 @@ complex quantum type; single-point blocks are ordinary classical
 alternatives. Requiring only one block is a further question. The
 comparison rule, positive compatible products and local tomography remain
 visible inputs throughout.
+
+## Actual two-factor products after complex-type selection
+
+Source metadata (citation-only):
+
+- **bibkey**: xuzhengfosner2015linear
+- **authors**: Jinli Xu, Baodong Zheng and Ajda Fošner
+- **year**: 2015
+- **title**: Linear maps preserving tensor products of rank-one Hermitian matrices
+- **journal**: Journal of the Australian Mathematical Society 98, 407–428
+- **doi**: 10.1017/S1446788714000603
+- **url**: https://doi.org/10.1017/S1446788714000603
+- **claim**: The unnumbered Main Theorem on page 409 classifies injective real-linear rank-one Hermitian product preservers; Proposition 2.1 on pages 410–411 supplies the one-factor boundary.
+- **license**: citation-only
+
+Xu, Zheng and Fošner, *Linear maps preserving tensor products of rank-one
+Hermitian matrices*, J. Aust. Math. Soc. 98, 407–428,
+DOI [10.1017/S1446788714000603](https://doi.org/10.1017/S1446788714000603),
+page 409, unnumbered Main Theorem, equations (1.1)–(1.2), classifies
+injective real-linear maps which send every rank-one Hermitian product
+to a rank-one Hermitian matrix. Output product separability is not assumed.
+The theorem permits a fixed invertible congruence, an overall sign, and
+independent fixed input transposes. For equal source and target sizes its
+zero-padding term vanishes. The following is an application of that
+published theorem; the classification is not a new result or a Lean theorem.
+Source use is citation-only.
+
+### The matrix carrier and exact product contract
+
+Assume complex matrix type and its dimensions have already been obtained:
+$A=H_n$, $B=H_m$, $D=H_{nm}$, where $H_k=\operatorname{Herm}_k(\mathbb C)$
+and $n,m\ge2$. Each uses its PSD cone, trace normalization and all effects
+$0\le f\le I$. These are explicit inputs to this application.
+Let $M:A\times B\to D$ be real bilinear and positive on positive product
+inputs. The retained product contract supplies a real bilinear
+$N:A\times B\to D$, positive on positive effect inputs, with exact pairing
+and effect unit
+
+$$
+\operatorname{Tr}(M(x,y)N(f,g))
+ =\operatorname{Tr}(xf)\operatorname{Tr}(yg),
+\qquad N(I,I)=I.
+$$
+
+The displayed pairing is required for all $x,f\in A$ and $y,g\in B$.
+For bilinear $M,N$, normalized states and proper effects span the
+respective real spaces, so pairing on those inputs suffices to check
+the full identity. If effect data are supplied only on proper-effect
+pairs, the trace-dual formula below gives their unique bilinear extension
+under the restricted pairing. The restriction alone does not determine
+preassigned values of a nonbilinear map outside that domain.
+No positivity of the linearization of $M$ on the entire entangled PSD
+cone is assumed.
+
+### Conditional normal-form theorem and proof
+
+There are one fixed unitary $U$ and fixed $\varepsilon,\eta\in\{0,1\}$ such that
+
+$$
+M(x,y)=U(x^{T^\varepsilon}\otimes y^{T^\eta})U^*,
+\qquad N(f,g)=U(f^{T^\varepsilon}\otimes g^{T^\eta})U^*.
+$$
+
+Identify the real tensor product $H_n\otimes_{\mathbb R}H_m$ with $H_{nm}$
+using Kronecker products only as vector-space coordinates. Write $\Phi$
+for the linearization of the given $M$. If $\Phi(z)=0$, the pairing implies
+$\operatorname{Tr}(z(f\otimes g))=0$ for all local effects. They span the
+whole tensor space, so $z=0$. Equal dimensions make $\Phi$ invertible.
+The same pairing therefore determines
+
+$$
+N(f,g)=(\Phi^\dagger)^{-1}(f\otimes g).
+$$
+
+For data on proper-effect pairs alone, the same injectivity argument
+uses only proper effects, and the formula agrees with the supplied
+values by testing against the spanning normalized product states.
+Thus it gives the claimed extension. With full-domain pairing the
+formula forces bilinearity even without a separate hypothesis.
+The unit identity also gives
+$\operatorname{Tr}M(x,y)=\operatorname{Tr}(x)\operatorname{Tr}(y)$.
+
+Choose complete local rank-one projection frames $(p_i)_{i=1}^n$ and
+$(q_j)_{j=1}^m$. The $nm$ matrices $\rho_{ij}=M(p_i,q_j)$ are density
+matrices. The effects $E_{ij}=N(p_i,q_j)$ form a POVM and satisfy
+$\operatorname{Tr}(\rho_{ij}E_{k\ell})=\delta_{ik}\delta_{j\ell}$.
+For PSD matrices $R,S$, zero trace pairing implies $RS=0$.
+Consequently $E_{ij}$ acts as identity on the support of $\rho_{ij}$
+and as zero on every other support. The supports are orthogonal. There
+are $nm$ nonzero supports in Hilbert dimension $nm$, so every support is
+one-dimensional and the supports exhaust the space. Thus $\rho_{ij}$ and
+$E_{ij}$ are the same complete rank-one projection frame. Every local pure
+pair can be extended to such local frames; hence every $M(p,q)$ is a
+normalized rank-one projection.
+
+Every nonzero rank-one Hermitian input is a nonzero real multiple of a
+rank-one projection. The Main Theorem now applies to $\Phi$, yielding
+
+$$
+M(x,y)=\lambda S(x^{T^\varepsilon}\otimes y^{T^\eta})S^*,
+\qquad \lambda\in\{-1,1\},\quad S\text{ invertible}.
+$$
+
+Positivity on pure products gives $\lambda=1$. Their trace normalization
+implies $\operatorname{Tr}((S^*S-I)(p^{T^\varepsilon}\otimes q^{T^\eta}))=0$
+for every pure pair. Product pure projections span $H_{nm}$, so
+$S^*S=I$. Put $U=S$. This proves the asserted form for $M$.
+This form is an isometry for the real trace inner product; hence
+$(\Phi^\dagger)^{-1}=\Phi$, proving the form for $N$ as well.
+
+Product-frame completeness, product purity, trace-form factorization,
+$M(I,I)=I$, product-state spanning and product-effect separation therefore
+need no separate assumptions in this already specified matrix setting.
+This does not remove the earlier operational bridges which were used to
+obtain complex matrix type and the dimension $nm$ in the first place.
+
+### Scalar-factor boundary
+
+If $n=1$ and $m\ge2$, write $M(\lambda,y)=\lambda L(y)$.
+Pairing makes $L$ invertible and fixes the effect map as
+$(L^\dagger)^{-1}$. Both maps are positive on the entire single-factor
+PSD cone. Self-duality then makes $L^{-1}$ positive too, so $L$ is an
+order isomorphism and carries extreme rays to extreme rays. Thus it
+preserves rank one, and pairing with the effect unit preserves trace.
+Proposition 2.1 of the same paper, pages 410–411, or its equal-size
+one-factor case, gives $L(y)=Uy^{T^\eta}U^*$ after trace normalization.
+The case $m=1$ is symmetric. If both sizes are one, bilinearity, pairing
+and the unit identity give ordinary scalar multiplication.
+A scalar factor has no intrinsic transpose bit. In this boundary case
+positivity on the whole single-factor cone was proved from the product
+contract; it was not assumed for a genuinely bipartite linearization.
+
+### The remaining three-copy condition is independent
+
+The allowed form $M(x,y)=x\otimes y^T$, $N=M$, satisfies this entire
+contract, although its linearization is partial transpose and is not
+positive on all entangled states. A Bell projection acquires eigenvalue
+$-1/2$ after partial transpose.
+
+Use this same rule for every pair of matrix sizes. A positive label swap
+is $\sigma(Z)=FZ^TF^*$, with $F$ the factor-flip unitary. Nevertheless,
+left and right three-factor products are respectively
+$x\otimes y^T\otimes z^T$ and $x\otimes y^T\otimes z$.
+The unique linear reassociation agreeing on all product preparations is
+$\operatorname{id}\otimes\operatorname{id}\otimes T$, which fails positivity
+on an entangled first/third-factor Bell state with a pure middle spectator.
+Positive two-copy label exchange therefore does not imply positive
+three-copy reassociation. An actual common three-system record set needs
+its own explicit compatibility condition. No instrument, complete
+positivity or time-evolution conclusion follows from this application.
+
+## One spectator swap and positive reassociation
+
+Fix one actual self-composite $(D,m,e)$ of $A$ and two actual composites
+$(E_L,\mu_L,e_L)$ of $(D,A)$ and $(E_R,\mu_R,e_R)$ of $(A,D)$.
+Both brackets reuse the same actual $D,m,e$ with fixed copy labels.
+For each $X\in\{A,D,E_L,E_R\}$, use a nonzero finite-dimensional real
+ordered carrier with closed pointed generating cone $C_X$, strictly
+positive normalization $u_X$, compact normalized convex base
+$K_X=\{x\in C_X:u_X(x)=1\}$, and all proper effects $[0,u_X]$ in its dual
+order. Impose S, defined below, on each of these four systems.
+
+For each actual composite $Z$ of $X,Y$, write $m_Z$ and $e_Z$ for its
+state and effect products, using the state spaces and their full real
+duals as the respective domains. Both products are bilinear and positive
+on pairs of positive inputs. Require exact pairing and the unit identity
+
+$$
+e_Z(f,g)(m_Z(x,y))=f(x)g(y),\qquad e_Z(u_X,u_Y)=u_Z
+$$
+
+for all state vectors and dual functionals, and local tomography:
+product effects separate the joint space. Equivalently their readings
+distinguish normalized joint states, since their span contains the
+joint unit. No positivity of a state-product linearization on
+arbitrary entangled PSD inputs in product coordinates is assumed.
+
+Use the existing single-system S-to-Jordan and product-frame/factorization
+bridges and the sector/rank/dimension bridge as conditional paper inputs.
+In particular these supply the sector labels and the complex type and
+sizes of the actual blocks:
+
+$$
+A=\bigoplus_iH_{n_i},\qquad D=\bigoplus_{i,j}H_{n_i n_j},
+\qquad E_L,E_R\simeq\bigoplus_{i,j,k}H_{n_i n_j n_k}.
+$$
+
+These identifications are ordered, trace-normalized representations.
+For each of the three actual products, the sector bridge places
+products of inputs from specified sectors in their corresponding
+joint sector.
+The matrix-product theorem then gives the fixed form of the actual
+product on a block with $n_i,n_j\ge2$:
+
+$$
+m_{ij}(a,b)=W_{ij}(a^{T^{\varepsilon_{ij}}}
+ \otimes b^{T^{\delta_{ij}}})W_{ij}^*,
+\qquad \kappa_{ij}=\varepsilon_{ij}\oplus\delta_{ij}.
+$$
+
+The relative bit is invariant under an output unitary or global transpose.
+An input of dimension one has no intrinsic transpose bit. Scalar blocks
+are treated separately below; they are not silently discarded.
+
+### The common-record condition
+
+Let $q_L(a,b,c)=\mu_L(m(a,b),c)$ and
+$q_R(a,b,c)=\mu_R(a,m(b,c))$. Pairing makes each two-factor
+linearization injective and local tomography gives the matching
+dimension. Thus the linearizations $J_L,J_R$ from
+$A^{\otimes_{\mathbb R}3}$ are isomorphisms.
+Define the unique maps
+
+$$
+\alpha=J_RJ_L^{-1},\qquad P_{12}=J_L\tau_{12}J_L^{-1},
+\quad \tau_{12}(a\otimes b\otimes c)=b\otimes a\otimes c.
+$$
+
+Require $\alpha$ to be an order isomorphism and $P_{12}$ to be positive.
+Since $P_{12}^2=\mathrm{id}$, its inverse is positive automatically.
+Product units and spanning imply both maps preserve normalization.
+For a normalized joint state, define its whole local record, indexed
+by all triples of proper local effects $f,g,h$, by
+
+$$
+\mathcal R_L(x)(f,g,h)=e_L(e(f,g),h)(x),\qquad
+\mathcal R_R(y)(f,g,h)=e_R(f,e(g,h))(y).
+$$
+
+Local tomography makes these record maps injective. Exact pairing and
+product spanning make the new condition equivalently
+
+$$
+\mathcal R_L(K_{E_L})=\mathcal R_R(K_{E_R}),\qquad
+\tau_{12}\mathcal R_L(K_{E_L})=\mathcal R_L(K_{E_L}),
+$$
+
+where $\tau_{12}$ interchanges the first two effect arguments. The two
+brackets give the same legal record set, and relabeling sends each legal
+record to a legal record that can have different entries. The one fixed
+map $P_{12}$ must act positively on the whole triple cone, including
+entangled states and every sector, also those with a scalar middle
+factor. This requirement concerns copy labels; it implies no commutation
+of measurements performed in time.
+
+### Partial-transpose lemma
+
+On $\bigotimes_{r=1}^\ell\mathbb C^{d_r}$ let $\Gamma_t$ transpose exactly
+those tensor factors with $t_r=1$. Then $\Gamma_t$ preserves the PSD cone
+if and only if $t_r$ is constant on all positions with $d_r\ge2$.
+If the bits are constant the map is identity or global transpose, with
+scalar factors irrelevant. Otherwise select two active positions with
+different bits, use their two-dimensional Bell projection, and put real
+rank-one projections in the remaining positions. Partial transpose has
+expectation $-1/2$ in the two-position antisymmetric vector. Thus it is
+not positive. This proof also covers unequal dimensions by restriction
+to two-dimensional subspaces.
+
+Consequently a product-label correspondence between two fixed twisted
+matrix-product representations is an order isomorphism precisely when
+their mask difference is constant on the active positions. In particular
+all active pairwise relative bits are unchanged. Unitary output changes
+and the usual factor-flip unitary do not change that criterion.
+
+### Three-copy orientation theorem
+
+Let $Q=\{i:n_i\ge2\}$. Under the stated common-record condition there are
+fixed bits $s_i$, $i\in Q$, such that
+
+$$
+\kappa_{ij}=s_i\oplus s_j\qquad(i,j\in Q).
+$$
+
+Moreover one fixed choice of ordered coordinates on each of $A,D,E_L,E_R$
+simultaneously makes the actual two- and three-factor products standard.
+
+**Proof.** Apply the matrix-product theorem to the two products of a
+triple block. The left product, after one output unitary, has a mask
+$(t_1,t_2,t_3)$. Its inner actual product forces
+$t_1\oplus t_2=\kappa_{ij}$. Positive reassociation and the lemma force
+$t_2\oplus t_3=\kappa_{jk}$. The same positive $P_{12}$ maps block
+$(i,j,k)$ to $(j,i,k)$. After reassociation there, its last two positions
+use the actual $D_{ik}$. The lemma therefore forces
+$t_1\oplus t_3=\kappa_{ik}$. For $i,j,k\in Q$ this proves
+
+$$
+\kappa_{ik}=\kappa_{ij}\oplus\kappa_{jk}.
+$$
+
+Repeated indices are allowed because the copies are independent.
+They give $\kappa_{ii}=0$ and $\kappa_{ij}=\kappa_{ji}$. Fix $r\in Q$
+and set $s_i=\kappa_{ri}$; the triangle identity gives the claimed form.
+If $Q$ is empty there is no orientation condition.
+
+For a general triple, adjacent active positions are controlled by the
+actual inner pair on the appropriate bracket. If only positions one and
+three are active, the positive swap followed by reassociation makes them
+adjacent, so their relative bit is controlled too. With zero or one active
+position there is no relative restriction. Thus every triple mask differs
+from $(s_i,s_j,s_k)$ by one common bit on all active positions.
+Choose arbitrary bits on scalar sectors.
+
+Put $\theta_A=\bigoplus_iT^{s_i}$. On each actual two-system block,
+remove $W_{ij}$ and, if needed, transpose the entire output block.
+The relative-bit identity gives one fixed order isomorphism $\theta_D$
+such that
+
+$$
+\theta_Dm(a,b)=\theta_A(a)\otimes\theta_A(b).
+$$
+
+Do the same with each triple block to choose one fixed $\theta_L$ for
+$E_L$, and set $\theta_R=\theta_L\alpha^{-1}$ for $E_R$. Then both
+triple products equal
+$\theta_A(a)\otimes\theta_A(b)\otimes\theta_A(c)$ in those coordinates.
+Spanning extends these identities to the outer products on arbitrary
+$d\in D$, including entangled states. Exact pairing determines the
+effect products as well. All choices are fixed on whole spaces, not
+selected separately for individual inputs. This proves the assertion.
+
+Every other label permutation now acts by the ordinary tensor-factor
+permutation and is positive. Its group identities and compatibility
+with reassociation also follow directly from its specified product
+action and product spanning. No separate full positive $S_3$ premise is
+needed. The $s_i$ are unique up to one common flip on $Q$; bits assigned
+to scalar sectors have no meaning. Usual changes of bases remain free.
+
+Conversely, if an actual two-product has this relative-bit form, use its
+fixed $\theta_A,\theta_D$ and standard blockwise threefold matrix cones
+to construct both outer products by pullback. Their effect products,
+pairing, units, positivity and local tomography hold, and common records
+satisfy reassociation and the swap. Thus existence of such compatible
+threefold extensions is equivalent to the relative-bit condition under
+the stated matrix/sector bridges. This does not identify an independently
+given fourfold or higher realization without its own compatibility
+contract.
+
+### Three boundary models for the added condition
+
+All blocks below use standard PSD cones, trace, full effects and S.
+Each product $(X,Y)\mapsto X^{T^a}\otimes Y^{T^b}$ uses the same mask
+on its effect product. Positivity on products, pairing, unit identities,
+normalization and local tomography therefore hold.
+
+First take $A=H_2$, $D=H_4$, $m(a,b)=a\otimes b^T$,
+$\mu_L(d,c)=d\otimes c$ and $\mu_R(a,d)=a\otimes d^T$.
+Both brackets give $a\otimes b^T\otimes c$, so reassociation is the
+identity order isomorphism. The two-system label swap is the positive
+map $d\mapsto Fd^TF^*$. Its uniquely specified spectator lift is
+$P_{12}(x)=F_{12}x^{T_{\{1,2\}}}F_{12}^*$.
+For $|G\rangle=(|000\rangle+|111\rangle)/\sqrt2$ and
+$|w\rangle=(|001\rangle-|110\rangle)/\sqrt2$, its expectation is
+$\langle w|P_{12}(|G\rangle\langle G|)|w\rangle=-1/2$.
+Thus positive reassociation and a positive two-system swap do not supply
+the positive spectator lift.
+
+Second take $A=H_2\oplus H_2\oplus H_2$, put $\kappa_{ij}=1$ for
+$i\ne j$ and $\kappa_{ii}=0$, and use
+$m_{ij}(a,b)=a\otimes b^{T^{\kappa_{ij}}}$.
+Let $\lambda_{ij}=1$ when $i>j$ and zero otherwise, and set
+
+$$
+\mu_{L,ij,k}(d,c)=d^{T^{\lambda_{ij}}}\otimes c,
+\qquad \mu_{R,i,jk}(a,d)=a\otimes d.
+$$
+
+Because $\lambda_{ji}=\lambda_{ij}\oplus\kappa_{ij}$, the global
+$P_{12}$ is just block exchange and the ordinary first-factor flip on
+each triple block; it is positive even on all entangled inputs.
+But reassociation has mask
+$(\lambda_{ij},\lambda_{ij}\oplus\kappa_{ij},\kappa_{jk})$.
+On block $123$ it is $(0,1,1)$, which sends the projection of
+$(|000\rangle+|110\rangle)/\sqrt2$ to a matrix with eigenvalue $-1/2$.
+Here $\kappa_{12}\oplus\kappa_{23}\oplus\kappa_{31}=1$.
+Thus one positive global spectator swap does not supply positive
+reassociation or eliminate odd sector triangles by itself.
+
+Finally let $A=H_{2,r}\oplus H_{2,k}\oplus\mathbb R_c$, with $r\ne k$,
+and let every two-system product be standard, so $\kappa=0$.
+Use standard threefold products except on block $(r,c,k)$, where the
+product is $q(a,\lambda,b)=\lambda a\otimes b^T$.
+On that block take $\mu_L(d,b)=d\otimes b^T$ and
+$\mu_R(a,d)=a\otimes d^T$; the brackets agree. Every block has positive
+reassociation. The swap is positive on all blocks whose third label is
+$r$, since neither those blocks nor their swapped targets are $(r,c,k)$.
+However the swap from $(r,c,k)$ to $(c,r,k)$ is a one-factor partial
+transpose and is not positive. Thus testing only one fixed nonclassical
+spectator sector does not standardize the entire actual triple,
+including quantum factors separated by a classical factor. The theorem
+requires the one fixed swap on the whole legal triple record set.
+
+In each failed correspondence, the trace adjoint in the displayed
+block coordinates transposes local factors and permutes labels as
+needed. It sends proper local product tests to proper local product
+tests, so every local product-test entry stays in $[0,1]$. Local
+tomography nevertheless makes the image matrix the unique candidate
+for the transported record.
+When it has a negative eigenvalue, the projection onto a corresponding
+eigenvector is a proper full joint effect whose evaluation on that
+matrix is negative. The record then has no legal joint state.
+
+### A complete finite comparison candidate
+
+On each of the four actual carriers $X=A,D,E_L,E_R$ above, let $P_X$
+be the pure states, the extreme points of $K_X$. For $p\in P_X$ and
+$x\in K_X$, use the full-effect least-confirmation comparison
+
+$$
+T_p(x)=\inf\{f(x):0\le f\le u_X,\ f(p)=1\}.
+$$
+
+Condition S requires, for every pure reference $p$, every finite
+family of pure states $q_1,\ldots,q_\ell$ with $\ell\ge1$, and every
+choice of preparation weights,
+
+$$
+T_p\!\left(\sum_{i=1}^{\ell} a_iq_i\right)
+=\sum_{i=1}^{\ell} a_iT_{q_i}(p),
+\qquad a_i\ge0,\quad\sum_{i=1}^{\ell}a_i=1.
+$$
+
+Together with these carriers and S, the candidate keeps the same actual
+$D,m,e$ in both brackets, the positive bilinear state and effect
+products, exact pairing, product unit identities and local tomography.
+It adds order-isomorphic reassociation and one positive full-domain
+spectator swap, equivalently the common-record condition above. With
+these inputs, the conditional single-system, product-frame/factorization
+and sector/rank/dimension paper bridges, and the cited matrix-preserver
+theorem, the finite state/effect geometry is a direct sum of complex
+PSD cones. In these coordinates, normalized states $(\rho_i)$ satisfy
+$\sum_i\operatorname{Tr}\rho_i=1$, and proper effects $(F_i)$ with
+$0\le F_i\le I$ have Born probabilities $\sum_i\operatorname{Tr}(F_i\rho_i)$.
+The actual two- and three-system products are simultaneously standard
+in fixed coordinates. The pure states in sector $i$ form the complex
+projective space $\mathbb{CP}^{n_i-1}$; comparison within a sector is
+$\operatorname{Tr}(pq)$ and across different sectors is zero. If the
+whole local pure-state graph with edges of strictly positive comparison
+is connected and
+nonclassical (rank at least two), this is the ordinary one-sector finite
+complex quantum case. The general classification allows superselection
+sectors.
+
+A singleton preparation gives endpoint reciprocity; the full finite
+condition also gives preparation consistency. Existence of the actual
+composites, the product contract and the common-record condition remain
+model inputs. This closes a product representation gap, without reducing
+the primitive physical assumptions. Independently supplied higher
+composites, infinite dimension, physical instruments and state updates,
+CP extensions of operations, a physical clock and Hamiltonian all
+remain outside the result. This is a conditional paper reconstruction;
+the existing positive-dual Lean theorem does not formalize these bridges,
+and no new kernel evidence or historical-priority claim is made.
+
+In ordinary words, fix a pure reference and compare another preparation
+by the lowest acceptance probability among all tests that accept the
+reference with certainty. For any finite random preparation of pure
+states, require that comparison to equal the weighted average obtained
+by reversing each pure comparison. Use the same rule for the local
+system and each actual composite. The two triple brackets must allow
+the same records, and swapping the first two labels must send each
+legal record to a legal record. With the product contract, both record
+conditions and the stated paper bridges, one choice of coordinates per
+sector fixes the relative mirror choices.
+An inconsistent triangle would send a legal entangled record to one
+with no legal joint state: its only candidate matrix gives a negative
+value on a full joint effect, even though local product-test entries
+remain valid probabilities. These are conditions on statistical
+descriptions and say nothing about exchanging measurements in time.
