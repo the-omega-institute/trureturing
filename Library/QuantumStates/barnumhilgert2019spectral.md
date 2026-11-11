@@ -2897,3 +2897,12 @@ $L,p_{13},p_{23}$，只预设 $p_{13}$ 保迹，按 (53) 内部定义 $\omega_0,
 张量准备和同一三份系统的换标签与可选换括号；选单扇区仍需额外条件。这是静态
 结构的数据减少，不声称剩余公理独立或最少，不把数学归一化当作可用物理滤波器，
 不推出不相容测量的共同经典联合结果、时间交换、动力学或四份及更高一致性。
+
+## Two primitive maps and the retained insertion condition
+
+[Quantum-origin Part III, section 62](../../docs/develop/theory/QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES_III.md#62-两个原始映射内部插入与严格恢复) gives the two-map presentation with I, W, III, the unit-slice proof of full II before the second binary interface, strict unique-extension equivalence to (53), (56), (57), and the classical-blur and Bell partial-transpose controls for W and the retained whole-cone insertion condition.
+
+## Two unit slices recover full readback
+
+[Quantum-origin Part III, section 63](../../docs/develop/theory/QUANTUM_ORIGIN_ENDOGENOUS_CUT_ATLAS_AND_DISCRETE_RECONSTRUCTION_BOUNDARIES_III.md#63-两个单位切片与完整读回律) replaces full I by its unit slice, derives tensor injectivity and full I through a positive dual preparation before using section 62, and retains whole-cone crossing positivity.
+The result keeps the canonical traces, both spans and the same globally positive TP map p, and reuses the strict same-data equivalence, controls, geometry and finite static scope without another classification.
