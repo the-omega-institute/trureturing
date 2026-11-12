@@ -64,10 +64,7 @@ internal sealed class BaseNormContractionDocument : IScribeDocumentDefinition
                             + "positive on every nonzero element of C, u is nonnegative at every "
                             + "element of C, including zero. No norm, dimension, closedness or "
                             + "generating hypothesis is used. In cone_decomposition_costs_bddBelow, "
-                            + "this nonnegativity bounds every cone-decomposition cost below by zero. "
-                            + "In OriginalMassCalibration.original_mass_factorization, applying "
-                            + "the same result to CD and CE gives nonnegative values for both "
-                            + "actual mass tensors."))),
+                            + "this nonnegativity bounds every cone-decomposition cost below by zero."))),
                     DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create(
