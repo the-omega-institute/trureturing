@@ -9,6 +9,7 @@ import D5.S3.Arith.Robin.PriceRecord.ActualBoundaryPriceLocalization
 import D5.S3.Arith.Robin.PriceRecord.HigherLayerClampedCutoff
 import D5.S3.Arith.Robin.PriceRecord.HigherLayerInsertionRegret
 
+/-! Finite one-sided localization without exact probe valuations. -/
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -134,5 +135,282 @@ private theorem upper_probe_exchange {m j : ℕ} {mu lambda e W r b : ℝ}
     have hf := hFirst p (hUF hp)
     rw [hf.2.1, zero_add, ← beta_nat hf.1 (by norm_num : 1 ≤ 1)]
     exact mul_le_mul_of_nonneg_right hf.2.2.2 (log_natCast_nonneg p)
+
+/- proof_shape: content
+admission_basis: escape-witness
+escape_witness: displaced_root_boundary_squeeze: two different strict
+predecessors of the same original record rule out both displaced probe pools.
+The finite pool conditions below are not an eventual count theorem. -/
+/-- Finite one-sided squeeze. All prices are tied to beta(1,largestPrime m),
+while both strict predecessors use the original positive mu. No equality of
+actual exponents or adjacent-layer geometry is assumed. -/
+theorem displaced_root_boundary_squeeze {m j : ℕ} {mu lambda rho rm rp a b e q W : ℝ}
+    (hm : 2 ≤ m) (hmu : 0 < mu) (hrecord : FullRecord m mu) (hj : 2 ≤ j)
+    (hLambda : lambda = beta 1 (largestPrime m : ℝ))
+    (hrho : 2 ≤ rho) (hroot : beta j rho = lambda)
+    (hrm : 2 ≤ rm) (hmrho : rm ≤ rho) (hrhop : rho ≤ rp)
+    (he : 0 ≤ e) (he1 : e ≤ 1) (hq : 0 ≤ q)
+    (FirstLo FirstHi Sm Sp : Finset ℕ)
+    (hFL : ∀ p ∈ FirstLo, p.Prime ∧ p ≤ largestPrime m ∧
+      log (p : ℝ) ≤ W ∧ |beta 1 (p : ℝ) - lambda| ≤ e * lambda)
+    (hFU : ∀ p ∈ FirstHi, p.Prime ∧ largestPrime m < p ∧
+      log (p : ℝ) ≤ W ∧ |beta 1 (p : ℝ) - lambda| ≤ e * lambda)
+    (hSm : ∀ p ∈ Sm, p.Prime ∧ a ≤ (p : ℝ) ∧ (p : ℝ) ≤ rm)
+    (hSp : ∀ p ∈ Sp, p.Prime ∧ rp ≤ (p : ℝ) ∧ (p : ℝ) ≤ b)
+    (hdisM : Disjoint FirstLo Sm) (hdisP : Disjoint Sp FirstHi)
+    (hNm : 0 < logMass Sm) (hNp : 0 < logMass Sp)
+    (hfullM : logMass Sm < logMass FirstLo) (hfullP : logMass Sp ≤ logMass FirstHi)
+    (hWM : W ≤ q * logMass Sm) (hWP : W ≤ q * logMass Sp)
+    (hsepM : e + q ≤ (j : ℝ) / 3 * log (rho / rm))
+    (hsepP : e + q ≤ (j : ℝ) / 6 * log (rp / rho))
+    (hsmallP : (j : ℝ) / 3 * log (rp / rho) ≤ 1) :
+    a ≤ (layerPrime m j : ℝ) ∧ (layerPrime m j : ℝ) < b := by
+  have hm0 : 0 < m := by omega
+  have hlam : 0 < lambda := hroot ▸ beta_pos hrho (by omega : 1 ≤ j)
+  obtain ⟨hanti, hsupport⟩ := price_record_prime_structure hm hmu hrecord
+  have hFirstLo : ∀ p ∈ FirstLo, p.Prime ∧ p ∣ m ∧
+      log (p : ℝ) ≤ W ∧ beta 1 (p : ℝ) ≤ (1 + e) * lambda := by
+    intro p hp
+    have hf := hFL p hp
+    have hmem : p ∈ m.primeFactors := by
+      rw [hsupport]
+      exact Nat.mem_primesLE.mpr ⟨hf.2.1, hf.1⟩
+    refine ⟨hf.1, Nat.dvd_of_mem_primeFactors hmem, hf.2.2.1, ?_⟩
+    have hh := (abs_le.mp hf.2.2.2).2
+    nlinarith only [hh]
+  have hFirstHi : ∀ p ∈ FirstHi, p.Prime ∧ m.factorization p = 0 ∧
+      log (p : ℝ) ≤ W ∧ (1 - e) * lambda ≤ beta 1 (p : ℝ) := by
+    intro p hp
+    have hf := hFU p hp
+    have hnot : ¬p ∣ m := by
+      intro hd
+      have hh : p ∈ m.primeFactors := hf.1.mem_primeFactors hd hm0.ne'
+      rw [hsupport] at hh
+      exact hf.2.1.not_ge (Nat.mem_primesLE.mp hh).1
+    refine ⟨hf.1, Nat.factorization_eq_zero_of_not_dvd hnot, hf.2.2.1, ?_⟩
+    have hh := (abs_le.mp hf.2.2.2).1
+    nlinarith only [hh]
+  constructor
+  · by_contra! hbad
+    obtain ⟨D, _, hND, hDN, hex⟩ := lower_probe_exchange hm0 hj hrecord
+      FirstLo Sm hFirstLo hSm hdisM hrm hNm.le hfullM hbad
+    have hgap : 0 < mu * (logMass D - logMass Sm) :=
+      mul_pos hmu (sub_pos.mpr hND)
+    have hcost : 0 ≤ (1 + e) * lambda := by positivity
+    have hD : logMass D ≤ (1 + q) * logMass Sm := by linarith
+    have hprod := mul_le_mul_of_nonneg_left hD hcost
+    have hbound : beta j rm / lambda < (1 + e) * (1 + q) := by
+      apply (div_lt_iff₀ hlam).mpr
+      have hh : beta j rm * logMass Sm <
+          ((1 + e) * (1 + q) * lambda) * logMass Sm := by
+        nlinarith only [hex, hgap, hprod]
+      exact (mul_lt_mul_iff_left₀ hNm).mp hh
+    have hlog := log_lt_log (div_pos (beta_pos hrm (by omega)) hlam) hbound
+    have hepos : 0 < 1 + e := by linarith
+    have hqpos : 0 < 1 + q := by linarith
+    rw [log_mul hepos.ne' hqpos.ne'] at hlog
+    have hlogE := log_le_sub_one_of_pos hepos
+    have hlogQ := log_le_sub_one_of_pos hqpos
+    have hslope := log_beta_drop hj hrm hmrho
+    rw [hroot] at hslope
+    linarith
+  · by_contra! hbad
+    obtain ⟨U, _, hUN, hNU, hex⟩ := upper_probe_exchange hm0 hj hrecord hanti
+      FirstHi Sp hFirstHi hSp hdisP (hrho.trans hrhop) hNp hfullP hbad
+    have hgap : 0 < mu * (logMass Sp - logMass U) :=
+      mul_pos hmu (sub_pos.mpr hUN)
+    have hcost : 0 ≤ (1 - e) * lambda := mul_nonneg (by linarith) hlam.le
+    have hU : (1 - q) * logMass Sp ≤ logMass U := by linarith
+    have hprod := mul_le_mul_of_nonneg_left hU hcost
+    have hratio : (1 - e) * (1 - q) < beta j rp / lambda := by
+      apply (lt_div_iff₀ hlam).mpr
+      have hh : ((1 - e) * (1 - q) * lambda) * logMass Sp <
+          beta j rp * logMass Sp := by
+        nlinarith only [hex, hgap, hprod]
+      exact (mul_lt_mul_iff_left₀ hNp).mp hh
+    have herr : 1 - beta j rp / lambda < e + q := by
+      nlinarith [mul_nonneg he hq]
+    have hbp := beta_pos (hrho.trans hrhop) (by omega : 1 ≤ j)
+    have hslope := log_beta_drop hj hrho hrhop
+    rw [hroot] at hslope
+    have hlog := log_le_sub_one_of_pos (div_pos hlam hbp)
+    have hmul : ((j : ℝ) / 3 * log (rp / rho)) * (beta j rp / lambda) ≤
+        1 - beta j rp / lambda := by
+      have h := mul_le_mul_of_nonneg_right (hslope.trans hlog)
+        (div_pos hbp hlam).le
+      have hid : (lambda / beta j rp - 1) * (beta j rp / lambda) =
+          1 - beta j rp / lambda := by field_simp
+      rwa [hid] at h
+    have hnonneg : 0 ≤ (j : ℝ) / 3 * log (rp / rho) := by
+      have hj0 : (0 : ℝ) ≤ j := Nat.cast_nonneg j
+      have hl : 0 ≤ log (rp / rho) := log_nonneg
+        ((one_le_div (by linarith : 0 < rho)).mpr hrhop)
+      positivity
+    have hhalf : (j : ℝ) / 6 * log (rp / rho) ≤ 1 - beta j rp / lambda := by
+      by_cases hz : 1 / 2 ≤ beta j rp / lambda
+      · nlinarith
+      · push Not at hz
+        linarith
+    linarith
+
+private theorem counted_probe_pools {K : ℕ} {C c X rm rp : ℝ}
+    (hcount : ∀ x : ℝ, X ≤ x →
+      c * x ^ bhpExponent / log x ≤
+        ((primesIn (x - C * x ^ bhpExponent) x).card : ℝ) ∧
+      c * x ^ bhpExponent / log x ≤
+        ((primesIn x (x + C * x ^ bhpExponent)).card : ℝ))
+    (hXm : X ≤ rm) (hXp : X ≤ rp)
+    (hcapM : (K : ℝ) ≤ c * rm ^ bhpExponent / log rm)
+    (hcapP : (K : ℝ) ≤ c * rp ^ bhpExponent / log rp) :
+    ∃ Sm Sp : Finset ℕ, Sm.card = K ∧ Sp.card = K ∧
+      (∀ p ∈ Sm, p.Prime ∧ rm - C * rm ^ bhpExponent ≤ (p : ℝ) ∧ (p : ℝ) ≤ rm) ∧
+      (∀ p ∈ Sp, p.Prime ∧ rp ≤ (p : ℝ) ∧ (p : ℝ) ≤ rp + C * rp ^ bhpExponent) := by
+  classical
+  have hM : K ≤ (primesIn (rm - C * rm ^ bhpExponent) rm).card := by
+    exact_mod_cast hcapM.trans (hcount rm hXm).1
+  have hP : K ≤ (primesIn rp (rp + C * rp ^ bhpExponent)).card := by
+    exact_mod_cast hcapP.trans (hcount rp hXp).2
+  obtain ⟨Sm, hm, hmc⟩ := exists_subset_card_eq hM
+  obtain ⟨Sp, hp, hpc⟩ := exists_subset_card_eq hP
+  exact ⟨Sm, Sp, hmc, hpc,
+    fun p h => (mem_filter.mp (hm h)).2,
+    fun p h => (mem_filter.mp (hp h)).2⟩
+
+private theorem logMass_bounds (S : Finset ℕ) {lo hi : ℝ}
+    (h : ∀ p ∈ S, lo ≤ log (p : ℝ) ∧ log (p : ℝ) ≤ hi) :
+    (S.card : ℝ) * lo ≤ logMass S ∧ logMass S ≤ (S.card : ℝ) * hi := by
+  constructor
+  · simpa [logMass] using sum_le_sum (s := S) (fun p hp => (h p hp).1)
+  · simpa [logMass] using sum_le_sum (s := S) (fun p hp => (h p hp).2)
+
+/-- Counted finite displaced-root squeeze. The native count law is used at
+three actual centers P, rm and rp. Its first upper CLOSED interval loses the
+endpoint P; the probe intervals retain their endpoints. Only explicit scalar
+conditions remain for the eventual moving-index threshold. -/
+theorem counted_displaced_root_boundary_squeeze {m j K : ℕ}
+    {mu C c X P rho rm rp e q Z : ℝ}
+    (hm : 2 ≤ m) (hmu : 0 < mu) (hrecord : FullRecord m mu) (hj : 2 ≤ j)
+    (hK : 1 ≤ K) (hPdef : P = (largestPrime m : ℝ)) (hP : 4 ≤ P)
+    (hC : 0 < C) (hX : 2 ≤ X)
+    (hcount : ∀ x : ℝ, X ≤ x →
+      c * x ^ bhpExponent / log x ≤
+        ((primesIn (x - C * x ^ bhpExponent) x).card : ℝ) ∧
+      c * x ^ bhpExponent / log x ≤
+        ((primesIn x (x + C * x ^ bhpExponent)).card : ℝ))
+    (hXP : X ≤ P) (hXm : X ≤ rm) (hXp : X ≤ rp)
+    (hcapP : (K : ℝ) + 1 ≤ c * P ^ bhpExponent / log P)
+    (hcapM : (K : ℝ) ≤ c * rm ^ bhpExponent / log rm)
+    (hcapR : (K : ℝ) ≤ c * rp ^ bhpExponent / log rp)
+    (hwidth : C * P ^ bhpExponent ≤ P / 2)
+    (hrho : 2 ≤ rho) (hroot : beta j rho = beta 1 P)
+    (hrm : 2 ≤ rm - C * rm ^ bhpExponent)
+    (hmrho : rm ≤ rho) (hrhop : rho ≤ rp)
+    (hprefix : rp + C * rp ^ bhpExponent < P - C * P ^ bhpExponent)
+    (he : 0 ≤ e) (he1 : e ≤ 1) (hq : 0 ≤ q)
+    (hprice : priceLip 1 (P / 2) * (C * P ^ bhpExponent) ≤ e * beta 1 P)
+    (hZ : 0 < Z) (hZM : Z ≤ log (rm - C * rm ^ bhpExponent))
+    (hZP : Z ≤ log rp) (hbudget : 2 * log P ≤ q * ((K : ℝ) * Z))
+    (hsepM : e + q ≤ (j : ℝ) / 3 * log (rho / rm))
+    (hsepP : e + q ≤ (j : ℝ) / 6 * log (rp / rho))
+    (hsmallP : (j : ℝ) / 3 * log (rp / rho) ≤ 1) :
+    rm - C * rm ^ bhpExponent ≤ (layerPrime m j : ℝ) ∧
+      (layerPrime m j : ℝ) < rp + C * rp ^ bhpExponent := by
+  classical
+  have hP0 : 0 < P := by linarith
+  have hv : 0 < C * P ^ bhpExponent := mul_pos hC (rpow_pos_of_pos hP0 _)
+  have hrm0 : 0 < rm := by linarith [hX.trans hXm]
+  have hwm : 0 < C * rm ^ bhpExponent := mul_pos hC (rpow_pos_of_pos hrm0 _)
+  have hrm2 : 2 ≤ rm := by linarith
+  have hrp2 : 2 ≤ rp := hrho.trans hrhop
+  have hwp : 0 < C * rp ^ bhpExponent :=
+    mul_pos hC (rpow_pos_of_pos (by linarith : 0 < rp) _)
+  have hhalf : 2 ≤ P / 2 := by linarith
+  have hleft : 0 < P - C * P ^ bhpExponent := by linarith
+  have hK0 : (0 : ℝ) < K := by exact_mod_cast (show 0 < K by omega)
+  have hKP : (largestPrime m : ℝ) = P := hPdef.symm
+  obtain ⟨FL, FU, hcFL, hcFU, hFL, hFU⟩ := counted_higher_pools
+    hcount (N := largestPrime m) (K := K) (by simpa [hKP] using hXP)
+    (by simpa [hKP] using hcapP)
+  simp only [hKP] at hFL hFU
+  obtain ⟨Sm, Sp, hcSm, hcSp, hSm, hSp⟩ := counted_probe_pools hcount hXm hXp hcapM hcapR
+  have hlogP : 0 < log P := log_pos (by linarith)
+  have hlog2 : log 2 ≤ log P := log_le_log (by norm_num) (by linarith)
+  have hlogUpper : log (P + C * P ^ bhpExponent) ≤ 2 * log P := by
+    have hh := log_le_log (by positivity : 0 < P + C * P ^ bhpExponent)
+      (show P + C * P ^ bhpExponent ≤ 2 * P by linarith)
+    rw [log_mul (by norm_num : (2 : ℝ) ≠ 0) hP0.ne'] at hh
+    linarith
+  have hBand : ∀ p : ℕ, P - C * P ^ bhpExponent ≤ (p : ℝ) →
+      (p : ℝ) ≤ P + C * P ^ bhpExponent →
+      log (p : ℝ) ≤ 2 * log P ∧ |beta 1 (p : ℝ) - beta 1 P| ≤ e * beta 1 P := by
+    intro p hlo hhi
+    have hphalf : P / 2 ≤ (p : ℝ) := by linarith
+    have hp0 : (0 : ℝ) < p := by linarith
+    refine ⟨(log_le_log hp0 hhi).trans hlogUpper, ?_⟩
+    have hdist : |(p : ℝ) - P| ≤ C * P ^ bhpExponent :=
+      abs_le.mpr ⟨by linarith, by linarith⟩
+    exact (price_variation (by norm_num : 1 ≤ 1) hhalf (by linarith : P / 2 ≤ P)
+      hphalf).trans ((mul_le_mul_of_nonneg_left hdist (priceLip_nonneg 1 hhalf)).trans hprice)
+  have hmBounds := logMass_bounds Sm (lo := Z) (hi := log rm) (by
+    intro p hp
+    have hh := hSm p hp
+    have hp0 : (0 : ℝ) < p := by exact_mod_cast hh.1.pos
+    exact ⟨hZM.trans (log_le_log (by linarith) hh.2.1), log_le_log hp0 hh.2.2⟩)
+  have hpBounds := logMass_bounds Sp (lo := Z) (hi := log (rp + C * rp ^ bhpExponent)) (by
+    intro p hp
+    have hh := hSp p hp
+    have hp0 : (0 : ℝ) < p := by exact_mod_cast hh.1.pos
+    exact ⟨hZP.trans (log_le_log (by linarith) hh.2.1), log_le_log hp0 hh.2.2⟩)
+  have hfL := (logMass_bounds FL (lo := log (P - C * P ^ bhpExponent))
+    (hi := 2 * log P) (by
+      intro p hp
+      have hh := hFL p hp
+      exact ⟨log_le_log hleft hh.2.1,
+        (hBand p hh.2.1 (by linarith [hh.2.2])).1⟩)).1
+  have hfU := (logMass_bounds FU (lo := log (P - C * P ^ bhpExponent))
+    (hi := 2 * log P) (by
+      intro p hp
+      have hh := hFU p hp
+      exact ⟨log_le_log hleft (by linarith [hh.2.1]),
+        (hBand p (by linarith [hh.2.1]) hh.2.2).1⟩)).1
+  rw [hcSm] at hmBounds
+  rw [hcSp] at hpBounds
+  rw [hcFL] at hfL
+  rw [hcFU] at hfU
+  have hfullM : logMass Sm < logMass FL := by
+    have hl := log_lt_log hrm0 (show rm < P - C * P ^ bhpExponent by linarith)
+    exact hmBounds.2.trans_lt ((mul_lt_mul_of_pos_left hl hK0).trans_le hfL)
+  have hfullP : logMass Sp ≤ logMass FU := by
+    have hl := log_lt_log (by linarith : 0 < rp + C * rp ^ bhpExponent) hprefix
+    exact hpBounds.2.trans ((mul_lt_mul_of_pos_left hl hK0).le.trans hfU)
+  apply displaced_root_boundary_squeeze hm hmu hrecord hj
+    (lambda := beta 1 P) (rho := rho) (rm := rm) (rp := rp)
+    (e := e) (q := q) (W := 2 * log P)
+    (by rw [hPdef]) hrho hroot hrm2 hmrho hrhop he he1 hq FL FU Sm Sp
+  · intro p hp
+    have hh := hFL p hp
+    have hple : p ≤ largestPrime m := by exact_mod_cast (hh.2.2.trans_eq hPdef)
+    exact ⟨hh.1, hple, hBand p hh.2.1 (by linarith [hh.2.2])⟩
+  · intro p hp
+    have hh := hFU p hp
+    have hplt : largestPrime m < p := by exact_mod_cast (hPdef ▸ hh.2.1)
+    exact ⟨hh.1, hplt, hBand p (by linarith [hh.2.1]) hh.2.2⟩
+  · exact hSm
+  · exact hSp
+  · apply disjoint_left.mpr
+    intro p hpL hpM
+    linarith [(hFL p hpL).2.1, (hSm p hpM).2.2]
+  · apply disjoint_left.mpr
+    intro p hpS hpU
+    linarith [(hSp p hpS).2.2, (hFU p hpU).2.1]
+  · exact (mul_pos hK0 hZ).trans_le hmBounds.1
+  · exact (mul_pos hK0 hZ).trans_le hpBounds.1
+  · exact hfullM
+  · exact hfullP
+  · exact hbudget.trans (mul_le_mul_of_nonneg_left hmBounds.1 hq)
+  · exact hbudget.trans (mul_le_mul_of_nonneg_left hpBounds.1 hq)
+  · exact hsepM
+  · exact hsepP
+  · exact hsmallP
 
 end D5.S3.Arith.Robin.PriceRecord.ActualMovingBoundaryLocalization
