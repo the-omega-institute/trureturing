@@ -6,7 +6,8 @@
    utility: none
    digest: Whole pure carriers and full frames in native rank one generated PSD sections. -/
 
-import D5.S3.Quantum.Foundation.SectionPositiveLift
+import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.HermitianMat.Inner
+import Mathlib.Tactic
 import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.HermitianMat.Proj
 import Mathlib.Analysis.Convex.Combination
 import Mathlib.Analysis.Convex.Extreme
@@ -15,11 +16,25 @@ import Mathlib.Analysis.Convex.Extreme
 
 noncomputable section
 open scoped Matrix ComplexOrder InnerProductSpace RealInnerProductSpace
-open D5.S3.Quantum.Foundation.SectionPositiveLift
 
 namespace D5.S3.Quantum.Foundation.SectionROGFrame
 
 variable {𝕜 ι : Type*} [RCLike 𝕜] [Fintype ι] [DecidableEq ι]
+
+/-- Native rank one PSD matrix, without normalizing or changing fields. -/
+def rankOne (v : ι → 𝕜) : HermitianMat ι 𝕜 :=
+  ⟨Matrix.vecMulVec v (star v), (Matrix.posSemidef_vecMulVec_self_star v).isHermitian⟩
+
+/-- The native outer product is positive semidefinite. -/
+lemma rankOne_nonneg (v : ι → 𝕜) : 0 ≤ rankOne v :=
+  HermitianMat.zero_le_iff.mpr (Matrix.posSemidef_vecMulVec_self_star v)
+
+/-- Trace pairing against a native outer product is its quadratic reading. -/
+lemma pair_rankOne (A : HermitianMat ι 𝕜) (v : ι → 𝕜) :
+    (⟪A, rankOne v⟫_ℝ : 𝕜) = star v ⬝ᵥ (A.mat *ᵥ v) := by
+  rw [HermitianMat.inner_eq_trace_rc]
+  change (A.mat * Matrix.vecMulVec v (star v)).trace = _
+  rw [Matrix.mul_vecMulVec, Matrix.trace_vecMulVec, dotProduct_comm]
 
 /-- The whole original normalized PSD base, embedded in the ambient real space. -/
 def base (L : Submodule ℝ (HermitianMat ι 𝕜)) : Set (HermitianMat ι 𝕜) :=
@@ -148,12 +163,12 @@ private lemma frame_sum (b : OrthonormalBasis ι 𝕜 (EuclideanSpace 𝕜 ι)) 
   apply HermitianMat.ext
   rw [HermitianMat.mat_finset_sum]
   change (∑ j, Matrix.vecMulVec (b j : ι → 𝕜) (star (b j : ι → 𝕜))) = 1
-  ext i j
-  have h := congrArg (fun x : EuclideanSpace 𝕜 ι => x i)
-    (b.sum_repr' (EuclideanSpace.single j 1))
-  simpa [rankOne, HermitianMat.mat_finset_sum, Matrix.vecMulVec_apply,
-    EuclideanSpace.inner_single_right, PiLp.smul_apply, PiLp.single_apply, Matrix.sum_apply,
-    Matrix.one_apply, mul_comm] using h
+  have h := congrArg
+    (fun T : EuclideanSpace 𝕜 ι →L[𝕜] EuclideanSpace 𝕜 ι =>
+      Matrix.toEuclideanLin.symm T.toLinearMap) b.sum_rankOne_eq_id
+  simpa only [ContinuousLinearMap.toLinearMap_sum, map_sum,
+    InnerProductSpace.symm_toEuclideanLin_rankOne, ContinuousLinearMap.coe_id,
+    Matrix.toLpLin_symm_id] using h
 
 set_option maxHeartbeats 1000000 in
 -- The maximal-family proof elaborates several dependent subspace bases and projectors.
