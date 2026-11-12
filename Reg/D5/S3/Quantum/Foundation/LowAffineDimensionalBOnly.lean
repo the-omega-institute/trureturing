@@ -123,7 +123,7 @@ abbrev oneDimensionalScope : Prop :=
     [FiniteDimensional ℝ V] (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ),
     IsClosed (C : Set V) →
     (∀ x ∈ C, x ≠ 0 → 0 < u x) →
-    Module.finrank ℝ (vectorSpan ℝ (base C u)) ≤ 1 → allAntipodes C u
+    Module.finrank ℝ (vectorSpan ℝ (base C u)) ≤ 1 → wholePairBalls C u → allAntipodes C u
 
 abbrev oneDimensionalArena : Arena where
   signature := signature.{u}
@@ -131,7 +131,7 @@ abbrev oneDimensionalArena : Arena where
     IsClosed (P.cone : Set P.V) →
     (∀ x ∈ P.cone, x ≠ 0 → 0 < P.unit x) →
     Module.finrank ℝ (vectorSpan ℝ (base P.cone P.unit)) ≤ 1 →
-      allAntipodes P.cone P.unit
+      wholePairBalls P.cone P.unit → allAntipodes P.cone P.unit
 
 theorem one_dimensional_source_bridge :
     oneDimensionalScope.{u} ↔ oneDimensionalArena.{u}.Law actual.{u} := by
@@ -143,7 +143,7 @@ theorem one_dimensional_source_bridge :
 
 theorem one_dimensional_actual_positive : oneDimensionalArena.{u}.Law actual.{u} :=
   one_dimensional_source_bridge.mp (by
-    intro V add space finite C u hc hu hd
-    exact affine_dimension_at_most_one_antipodes C u hc hu hd)
+    intro V add space finite C u hc hu hd hB
+    exact affine_dimension_at_most_one_antipodes C u hc hu hd hB)
 
 end Reg.D5.S3.Quantum.Foundation.LowAffineDimensionalBOnly

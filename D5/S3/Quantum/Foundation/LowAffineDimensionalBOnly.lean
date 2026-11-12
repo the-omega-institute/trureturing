@@ -234,11 +234,13 @@ theorem affine_dimension_at_most_one_antipodes
     (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ)
     (hclosed : IsClosed (C : Set V))
     (hstrict : ∀ x ∈ C, x ≠ 0 → 0 < u x)
-    (hdim : Module.finrank ℝ (vectorSpan ℝ (base C u)) ≤ 1) :
+    (hdim : Module.finrank ℝ (vectorSpan ℝ (base C u)) ≤ 1)
+    (hB : wholePairBalls C u) :
     allAntipodes C u := by
-  intro p q hpq b n hn ha
-  exact ball_chart_antipodal_effect C u hclosed hstrict b
-    (full_dimensional_chart_base b (hdim.trans b.dim_pos)) hn
+  apply allAntipodes_of_full_pair_balls C u hclosed hstrict
+  intro p q hpq
+  obtain ⟨b⟩ := hB p q hpq
+  exact ⟨b, full_dimensional_chart_base b (hdim.trans b.dim_pos)⟩
 
 private theorem small_pure_hull_face
     {C : PointedCone ℝ V} {u : V →ₗ[ℝ] ℝ}
