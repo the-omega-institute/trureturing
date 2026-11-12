@@ -2262,12 +2262,14 @@ $$
 n\ge5,\qquad 4\le r<n.
 $$
 
-No existence or nonexistence result is supplied for that remaining region.
+The arguments in this appendix supply no existence or nonexistence result
+for the displayed region. This is their coverage boundary; it does not
+assert that the entire region is unresolved in other research.
 The three-dimensional theorem in §4 has a different premise set: its
 paired residual replaces O and unique saturation by complement closure
 and menu leastness. Neither proof silently transfers the other's inputs.
 
-### 7. Return to the full candidate and the open boundary
+### 7. Return to the full candidate and the applicability boundary
 
 The minimum lemma supplies positive definiteness on the restricted menu's
 original vector space. It does not promote that menu to full effects,
@@ -2343,4 +2345,4 @@ bridges, frame machinery and Chapter 84 classification/consumer interfaces
 are reused at their stated scopes; no least-axiom count, experimental
 certificate or worldwide novelty conclusion is asserted.
 
-白话说，把所有原准备组成的整个凸集合连同质量一起保留，每个纯准备都选一个自认成功率为一的正测试；交换两个纯准备的比较端点，读数相同。再额外要求：原锥上任意正读数都能由这些测试作有限次非负叠加。后一项是 PD 的真正输入，并不是已经假设了欧氏内积，也不是说每个有界测试都在原菜单中。纯点的自读数和正交叉读数先保证每个非零正向量的平方严格为正；紧规范基上的最小点随后被推到内部，于是正负两个方向都能检验，配对才在整个空间上正定。这一步不再需要谱分解、O 或完整框架。三维多面时，另外保留补测试和菜单内真正的最小确认，便能把每个零读数面的两条边拼成三角形，不必再加 O 或唯一饱和。四维及秩至三的另一条证明则确实保留 O 来补全框架，保留唯一饱和来排除整体中心对称，再借用成熟的多面体引理。这里没有把这两套前件混在一起，也没有把曲面的 qubit 锥排除。若要接回第 84 章的完整量子候选，仍须原来的全态全效应、含任意原混态余项的固定对半关系、一般 EJA 桥、同一原读回和参考、二阶零关系、单位对质量、三质量、原锚及整个原输出的方向条件；实际事件、菜单、记录、来源和时钟也不能由比较数凭空产生。尚缺的是这些更强的结构与操作输入，以及高维剩余区域的证明，而不是给现有正定配对换一个量子名称。
+白话说，把所有原准备组成的整个凸集合连同质量一起保留，每个纯准备都选一个自认成功率为一的正测试；交换两个纯准备的比较端点，读数相同。再额外要求：原锥上任意正读数都能由这些测试作有限次非负叠加。后一项是 PD 的真正输入，并不是已经假设了欧氏内积，也不是说每个有界测试都在原菜单中。纯点的自读数和正交叉读数先保证每个非零正向量的平方严格为正；紧规范基上的最小点随后被推到内部，于是正负两个方向都能检验，配对才在整个空间上正定。这一步不再需要谱分解、O 或完整框架。三维多面时，另外保留补测试和菜单内真正的最小确认，便能把每个零读数面的两条边拼成三角形，不必再加 O 或唯一饱和。四维及秩至三的另一条证明则确实保留 O 来补全框架，保留唯一饱和来排除整体中心对称，再借用成熟的多面体引理。这里没有把这两套前件混在一起，也没有把曲面的 qubit 锥排除。若要接回第 84 章的完整量子候选，仍须原来的全态全效应、含任意原混态余项的固定对半关系、一般 EJA 桥、同一原读回和参考、二阶零关系、单位对质量、三质量、原锚及整个原输出的方向条件；实际事件、菜单、记录、来源和时钟也不能由比较数凭空产生。从本附录的比较几何接回完整量子结论，仍需这些更强的结构与操作输入，不能靠给现有正定配对换一个量子名称来补齐。上述高维参数区域超出本附录论证的覆盖范围；这不表示该区域在其他研究中全部未决。
