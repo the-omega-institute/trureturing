@@ -52,13 +52,16 @@ word for every N>=5. Its profile injection gives a_N<=b_N; exact normalization
 gives p_N<=b_N/24^N. `PaddedCompletion` constructs the actual injective boundary
 requests for two separated pieces and for closing one word, then applies the
 six-site involution. Integer targets are never truncated or quotient-counted.
+The actual padded word map recovers both input words and is injective on
+preference words; its buffer assignments are first-ranked when nonzero.
+Buffer offsets fulfill the requests, stay within range and isolate new singles.
 Old--old stability survives separated placement; the cyclic closure helpers
 preserve original request destinations and exclude old--old wrap edges.
 
 Exact remaining mathematics: complete the assignments and preference word on
 the whole concatenated interval, prove reciprocity and target injectivity for
-all old/new vertices, and prove every new or mixed edge nonblocking. Derive
-the word-pair injection and b_m*b_k<=b_(m+k+6). For closure, produce the actual
+all old/new vertices, and prove every new or mixed edge nonblocking. Upgrade the proved word
+injection to certified output and derive b_m*b_k<=b_(m+k+6). For closure, produce the actual
 source matching and prove cyclic stability, including the extra buffer--buffer
 wrap edges at m=1, then derive the profile injection b_m<=a_(m+6) for every
 m>=1. The requester/buffer involutions alone do not supply these conclusions.
