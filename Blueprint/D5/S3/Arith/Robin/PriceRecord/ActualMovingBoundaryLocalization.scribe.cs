@@ -15,7 +15,7 @@ internal sealed class ActualMovingBoundaryLocalizationDocument : IScribeDocument
                 DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualMovingBoundaryLocalization.displaced_root_boundary_squeeze"),
                 H("displaced_root_boundary_squeeze"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Two strict one-sided exchanges constrain the boundary without assuming exact probe valuations. Above Q_j the insertion marginal dominates beta_j; below Q_j the deletion marginal is dominated by beta_j. Strict greedy subsets preserve exact mass ties and the original signed term -mu*(positive mass gap). The lower and upper integrated slope bounds exclude the two probe pools separately."))),
+                Blocks(Paragraph(Text("Two strict one-sided exchanges constrain the boundary without assuming exact probe valuations. Above Q_j the insertion marginal dominates beta_j; below Q_j the deletion marginal is dominated by beta_j. Strict greedy subsets preserve exact mass ties and the original signed term -mu*(positive mass gap). The integrated lower logarithmic slope excludes the two probe pools separately."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("actual-moving-counted-displaced-root-boundary-squeeze"),
