@@ -98,6 +98,9 @@ native binding evidence are absent; no declared_validated status is claimed.
 The closure-count comparison also has a typed dependent-family mirror
 retaining its complete length quantifier and actual cardinality operands.
 Its native bindings remain absent. Other certificate, completion, stability,
-recovery and source-rank audit targets still need faithful mirrors. Canonical Markdown emission is unfinished because native
-statement material is unavailable. No freeze or publication PR is authorized
+recovery and source-rank audit targets still need faithful mirrors. Canonical Markdown emission is unfinished: the combined source selection lacks
+native statement material, while the author-formula-only selection reaches
+native report preparation and has no successful emission. Direct Reg checking
+with the Reg workspace stops at the missing temporary-root TheoremUnit import;
+there is no successful Reg compilation or native binding result. No freeze or publication PR is authorized
 before the separately assigned independent pre-freeze audit.

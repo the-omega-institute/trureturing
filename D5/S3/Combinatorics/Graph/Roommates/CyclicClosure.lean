@@ -96,11 +96,11 @@ def matching (hw : Certificate w d) : SourceModel.Matching (Fin (m + 1 + 5)) := 
     rw [e.symm_apply_apply]
     change e (joinPartner hw (joinPartner hw (e.symm i))) = i
     rw [hf, e.apply_symm_apply]
-  exact ⟨⟨g, g, hg, hg⟩, hg⟩
+  exact ⟨hg.toPerm g, hg⟩
 
 private theorem matching_apply_sum (hw : Certificate w d) (x : Fin m ⊕ Fin 6) :
     (matching hw).val ((@finSumFinEquiv m 6) x) = (@finSumFinEquiv m 6) (joinPartner hw x) := by
-  simp [matching]
+  simp [matching, Function.Involutive.toPerm]
 
 private theorem matching_old (hw : Certificate w d) (i : Fin m) :
     (matching hw).val (Fin.castAdd 6 i) = wrap (m + 1) (i.val + d i) := by

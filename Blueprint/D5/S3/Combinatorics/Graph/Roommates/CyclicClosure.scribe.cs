@@ -9,7 +9,7 @@ internal sealed class CyclicClosureDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Six-site cyclic closure for certified ranking words; the original same-q theorem remains separate.",
         H("Cyclic closure"), Blocks(
-            Paragraph(Text("A word w of length m has a signed assignment d and Certificate(w,d). The source cycle has m+6 labelled sites, hence supplier parameter n=m+1. The matching keeps every interior old pair and old single, fulfills each actual exterior request, and uses the existing six-site buffer involution for free sites. The profile retains all first m rankings and places every nonzero buffer partner first.")),
+            Paragraph(Text("A word w of length m has a signed assignment d and Certificate(w,d). The source cycle has m+6 labelled sites, hence supplier parameter n=m+1. Assignment(m) means Fin(m) to the integers. SuccessfulProfile(n) is the subtype of SourceModel.Profile(n) admitting an acceptable stable partial matching. The matching keeps every interior old pair and old single, fulfills each actual exterior request, and uses the existing six-site buffer involution for free sites. The profile retains all first m rankings and places every nonzero buffer partner first.")),
             Describe.Lean(DescribeId.Create("matching"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Graph/Roommates/CyclicClosure.matching"),
                 H("Actual involutive source matching"), StatementSource.FromAuthor(MatchingFormula()), AssessedProvenance.FromRepo(),
