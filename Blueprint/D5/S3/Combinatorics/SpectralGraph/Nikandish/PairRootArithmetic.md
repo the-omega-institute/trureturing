@@ -47,4 +47,4 @@ Every positive integer exponent and every integer root s>=2 are retained. The go
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/PairRootArithmetic.root_divides`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/PairRootArithmetic.root_division`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/PairRootArithmetic.root_valuation`
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/PairedIdealIntersectionDeterminants](PairedIdealIntersectionDeterminants.md)
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/PairedIdealIntersectionDeterminants](../PairedIdealIntersectionDeterminants.md)

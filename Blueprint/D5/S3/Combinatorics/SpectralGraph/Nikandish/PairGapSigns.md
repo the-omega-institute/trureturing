@@ -86,4 +86,4 @@ The full source positive polynomial is retained over all positive real a,b.
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/PairGapSigns.square_lower_negative`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/PairGapSigns.unequal_lower_negative`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/PairGapSigns.weighted_lower_negative`
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/PairedIdealIntersectionDeterminants](PairedIdealIntersectionDeterminants.md)
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/PairedIdealIntersectionDeterminants](../PairedIdealIntersectionDeterminants.md)

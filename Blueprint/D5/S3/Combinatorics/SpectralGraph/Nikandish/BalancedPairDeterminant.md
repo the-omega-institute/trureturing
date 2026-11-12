@@ -34,4 +34,4 @@ The determinant identity applies to every nonzero real tensor eigenvector; it is
 
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/BalancedPairDeterminant.eigenvalue_gt_three`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/BalancedPairDeterminant.shifted_positive`
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/PairedIdealIntersectionDeterminants](PairedIdealIntersectionDeterminants.md)
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/PairedIdealIntersectionDeterminants](../PairedIdealIntersectionDeterminants.md)

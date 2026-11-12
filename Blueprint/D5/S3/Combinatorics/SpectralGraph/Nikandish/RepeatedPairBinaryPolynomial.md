@@ -34,5 +34,5 @@ All even/even, even/odd, odd/even and odd/odd rows include full characteristic m
 
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/RepeatedPairBinaryPolynomial.binary_rows`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/RepeatedPairBinaryPolynomial.characteristic`
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/PairedIdealIntersectionDeterminants](PairedIdealIntersectionDeterminants.md)
 - Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/RepeatedPairModularTables](RepeatedPairModularTables.md)
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/PairedIdealIntersectionDeterminants](../PairedIdealIntersectionDeterminants.md)

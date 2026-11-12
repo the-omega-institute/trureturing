@@ -48,4 +48,4 @@ All natural a,b greater than zero are included without an ordering premise. The 
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/DoublePairSpectrum.low_eigenpair`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/DoublePairSpectrum.noninteger_eigenpair`
 - Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/DoublePairCubic](DoublePairCubic.md)
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/PairedIdealIntersectionLift](PairedIdealIntersectionLift.md)
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/PairedIdealIntersectionLift](../PairedIdealIntersectionLift.md)

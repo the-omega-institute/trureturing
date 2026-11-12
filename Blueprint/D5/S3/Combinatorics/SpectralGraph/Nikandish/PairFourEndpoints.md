@@ -34,4 +34,4 @@ Among all integer tails at least two, root three occurs exactly for tails two an
 
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/PairFourEndpoints.three_zero_iff`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/PairFourEndpoints.two_nonzero`
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/PairedIdealIntersectionDeterminants](PairedIdealIntersectionDeterminants.md)
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/PairedIdealIntersectionDeterminants](../PairedIdealIntersectionDeterminants.md)

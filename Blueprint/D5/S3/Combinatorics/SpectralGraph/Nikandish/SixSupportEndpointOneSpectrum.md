@@ -153,5 +153,5 @@ At a=2+sqrt(3) on that family a residual root equals a, so the strict real-domai
 - Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointOneArithmetic](SixSupportEndpointOneArithmetic.md)
 - Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportEndpointOneBound](SixSupportEndpointOneBound.md)
 - Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/SixSupportSpectralGap](SixSupportSpectralGap.md)
-- Dependency: [D5/S3/SpectralTopology/PointGapExactInertia](../../SpectralTopology/PointGapExactInertia.md)
-- Dependency: [D5/S3/Weil/ZetaLinear/PoleCapacityRankOne](../../Weil/ZetaLinear/PoleCapacityRankOne.md)
+- Dependency: [D5/S3/SpectralTopology/PointGapExactInertia](../../../SpectralTopology/PointGapExactInertia.md)
+- Dependency: [D5/S3/Weil/ZetaLinear/PoleCapacityRankOne](../../../Weil/ZetaLinear/PoleCapacityRankOne.md)

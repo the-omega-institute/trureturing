@@ -34,5 +34,5 @@ For every nonzero real eigenvector of the full K at positive real parameters, it
 
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/RepeatedPairProductTail.eigenvalue_gt_one`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/RepeatedPairProductTail.lower_energy`
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/PairedIdealIntersectionObstructions](PairedIdealIntersectionObstructions.md)
 - Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/RepeatedPairSupport](RepeatedPairSupport.md)
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/PairedIdealIntersectionObstructions](../PairedIdealIntersectionObstructions.md)

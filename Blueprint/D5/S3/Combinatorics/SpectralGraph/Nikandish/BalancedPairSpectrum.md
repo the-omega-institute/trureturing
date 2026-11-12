@@ -74,5 +74,5 @@ The exact minimum compares against every nonzero real eigenpair of the full weig
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/BalancedPairSpectrum.minimum_window`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/BalancedPairSpectrum.repeated_minimum_low`
 - Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/BalancedPairDeterminant](BalancedPairDeterminant.md)
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/PairedIdealIntersectionLift](PairedIdealIntersectionLift.md)
 - Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/PairedTensorMinimum](PairedTensorMinimum.md)
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/PairedIdealIntersectionLift](../PairedIdealIntersectionLift.md)

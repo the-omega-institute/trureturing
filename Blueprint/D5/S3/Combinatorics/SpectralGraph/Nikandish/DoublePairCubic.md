@@ -86,4 +86,4 @@ Every natural a at least two and b at least a avoids endpoint three, including t
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/DoublePairCubic.three_nonzero`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/DoublePairCubic.two_bracket`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/DoublePairCubic.two_nonzero`
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/PairedIdealIntersectionDeterminants](PairedIdealIntersectionDeterminants.md)
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/PairedIdealIntersectionDeterminants](../PairedIdealIntersectionDeterminants.md)

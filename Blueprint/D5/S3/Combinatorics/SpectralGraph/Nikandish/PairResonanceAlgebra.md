@@ -47,4 +47,4 @@ All coefficients are retained. The normalization supports the signed-offset loca
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/PairResonanceAlgebra.normalized_expansion`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/PairResonanceAlgebra.root_discriminant`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/PairResonanceAlgebra.tail_quadratic`
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/PairedIdealIntersectionDeterminants](PairedIdealIntersectionDeterminants.md)
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/PairedIdealIntersectionDeterminants](../PairedIdealIntersectionDeterminants.md)

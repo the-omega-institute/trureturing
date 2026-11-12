@@ -21,4 +21,4 @@ The actual full four-dimensional weighted tensor has a nonzero real minimum eige
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/PairedTensorMinimum.minimum`
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/PairedIdealIntersectionObstructions](PairedIdealIntersectionObstructions.md)
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/PairedIdealIntersectionObstructions](../PairedIdealIntersectionObstructions.md)

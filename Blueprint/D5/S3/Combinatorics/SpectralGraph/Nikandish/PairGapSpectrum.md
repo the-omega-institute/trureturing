@@ -113,4 +113,4 @@ Even r is explicitly required to exclude integers from the full unit interval. E
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/PairGapSpectrum.square_gap_eigenpair`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/PairGapSpectrum.weighted_gap_eigenpair`
 - Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/PairGapSigns](PairGapSigns.md)
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/PairedIdealIntersectionLift](PairedIdealIntersectionLift.md)
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/PairedIdealIntersectionLift](../PairedIdealIntersectionLift.md)

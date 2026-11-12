@@ -60,6 +60,6 @@ The entire positive natural (4,4,b,c) domain on arbitrary distinct prime coordin
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/PairFourSpectrum.exception_eigenpair`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/PairFourSpectrum.four_equal_obstruction`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/PairFourSpectrum.minimum_window`
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/FourPrimeIdealIntersectionObstructions](FourPrimeIdealIntersectionObstructions.md)
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/FourPrimeIdealIntersectionObstructions](../FourPrimeIdealIntersectionObstructions.md)
 - Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/PairFourEndpoints](PairFourEndpoints.md)
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/PairedIdealIntersectionLift](PairedIdealIntersectionLift.md)
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/PairedIdealIntersectionLift](../PairedIdealIntersectionLift.md)

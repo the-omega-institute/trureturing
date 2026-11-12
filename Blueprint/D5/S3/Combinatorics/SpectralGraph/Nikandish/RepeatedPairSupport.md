@@ -112,4 +112,4 @@ For every finite tail, distinct primes, positive natural exponents, and nonzero 
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/RepeatedPairSupport.paired_support_action`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/RepeatedPairSupport.sum_four`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/RepeatedPairSupport.weighted_symmetry`
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/IdealIntersectionObstructions](IdealIntersectionObstructions.md)
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/IdealIntersectionObstructions](../IdealIntersectionObstructions.md)

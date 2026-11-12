@@ -86,4 +86,4 @@ For every real a>0,b>=1 there is a cutoff tau strictly between b and 2b. At ever
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/PairTailArithmetic.leading_cutoff`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/PairTailArithmetic.positive_real_root`
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/PairTailArithmetic.positive_root_unique`
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/PairedIdealIntersectionDeterminants](PairedIdealIntersectionDeterminants.md)
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/PairedIdealIntersectionDeterminants](../PairedIdealIntersectionDeterminants.md)

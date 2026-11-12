@@ -62,4 +62,4 @@ For all positive a,b,c with b<c, actual integrality forces b<t<2b and a negative
 - Truth anchor: `D5/S3/Combinatorics/SpectralGraph/Nikandish/PairTailSpectrum.harmonic_eigenpair`
 - Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/PairGapSigns](PairGapSigns.md)
 - Dependency: [D5/S3/Combinatorics/SpectralGraph/Nikandish/PairTailArithmetic](PairTailArithmetic.md)
-- Dependency: [D5/S3/Combinatorics/SpectralGraph/PairedIdealIntersectionLift](PairedIdealIntersectionLift.md)
+- Dependency: [D5/S3/Combinatorics/SpectralGraph/PairedIdealIntersectionLift](../PairedIdealIntersectionLift.md)
