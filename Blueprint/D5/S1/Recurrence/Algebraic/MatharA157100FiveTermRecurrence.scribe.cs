@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Recurrence.Algebraic;
 internal sealed class MatharA157100FiveTermRecurrenceDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S1/Recurrence/Algebraic/MatharA157100FiveTermRecurrence.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Words/mathar2015a157100");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/RecurrenceAlgebraic/mathar2015a157100");
     private static Formula Q => Seq(Mathbb, Grp(F.Id("Q")));
     private static Formula Nat => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Par(Formula f) => Seq(Open, f, Close);

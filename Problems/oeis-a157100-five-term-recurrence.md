@@ -19,7 +19,7 @@ The FORMULA section of OEIS A157100, revision 14, states:
 
 The immutable source is
 https://raw.githubusercontent.com/oeis/oeisdata/57bbd254e161585873f56950ff19ba6dc4aeb66c/seq/A157/A157100.seq.
-Its locator and source identity are in `Library/Words/mathar2015a157100.md`.
+Its locator and source identity are in `Library/RecurrenceAlgebraic/mathar2015a157100.md`.
 
 Let $c(X)$ be the ordinary A000108 Catalan series, with its natural
 coefficients mapped canonically to $\mathbb Q$, and define
