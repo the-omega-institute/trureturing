@@ -280,6 +280,10 @@ $$\forall p q r : \mathbb{N}, (\operatorname{Prime}(p) \land \operatorname{Prime
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/ZeroDivisor/RatherProblemOne.rather_problem_one` (`✓ std3`). ∎
 
+*Resolves.* `Problems/rather-2026-zero-divisor-problem-one` (proved) by `D5/S3/Combinatorics/Graph/ZeroDivisor/RatherProblemOne.rather_problem_one`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"rather-2026-zero-divisor-problem-one","declaration_gid":"D5/S3/Combinatorics/Graph/ZeroDivisor/RatherProblemOne.rather_problem_one","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Bilal Ahmad Rather (2026). *Combinatorial and analytic aspects of independence polynomials of zero divisor graphs*. DOI: [10.48550/arXiv.2606.04789](https://doi.org/10.48550/arXiv.2606.04789). URL: <https://arxiv.org/abs/2606.04789v1>.
