@@ -1,0 +1,123 @@
+**Theorem 33.2 (full-class expected lower bounds).** Every policy in
+Definition 33.1 satisfying (33.2) for deterministic $0<\eta<\pi$
+obeys the following bounds, allowing infinite expectations. Put
+
+$$
+F_\eta=\left[(2\nu^2-4r|\lambda|\eta)\mathbb ES
+                         -4r^2\eta^2\right]_+.
+\tag{33.3}
+$$
+
+Then its actual executed-prefix resources satisfy
+
+$$
+\begin{aligned}
+\mathbb EV^a&\ge\frac{F_\eta}{8r\eta^2},&
+\mathbb EV^b&\ge\frac{F_\eta}{4r\eta^2},\\
+\mathbb EL&\ge\frac{\sqrt5 F_\eta}{8r\eta^2},&
+\mathbb EE&\ge\frac{5F_\eta^2}
+                         {64r^2\eta^4\mathbb ES}.
+\end{aligned}
+\tag{33.4}
+$$
+
+Here $0<\mathbb ES\le T$. These inequalities require no lifetime
+approximation and no special mesh or command shape. In fact they hold
+for every continuous adapted AC own-held pair with the same native tube
+and guard, a class containing all the finite issuers under consideration.
+For any family satisfying these hypotheses as $\eta\downarrow0$,
+
+$$
+\begin{aligned}
+\liminf_{\eta\downarrow0}\eta^2\mathbb EV^a_\eta
+ &\ge\nu^2\mathbb ES/(4r),\\
+\liminf_{\eta\downarrow0}\eta^2\mathbb EV^b_\eta
+ &\ge\nu^2\mathbb ES/(2r),\\
+\liminf_{\eta\downarrow0}\eta^2\mathbb EL_\eta
+ &\ge\sqrt5\nu^2\mathbb ES/(4r),\\
+\liminf_{\eta\downarrow0}\eta^4\mathbb EE_\eta
+ &\ge5\nu^4\mathbb ES/(16r^2).
+\end{aligned}
+\tag{33.5}
+$$
+
+Proof. The continuous-lift argument in Theorem 13.2 uses only the
+$2\pi$ periods, common initial lifts and the tube, so applies unchanged
+to (33.1). On the entire interval it gives
+$|a-W^1_{\cdot\wedge S}|\le\eta$,
+$|b-W^2_{\cdot\wedge S}|\le2\eta$, and
+$|c_0(b-W^2_{\cdot\wedge S})-(J-K_{\cdot\wedge S})/r|\le\eta$.
+This also proves the actual wrapped-to-unwrapped implication here; no
+extra unwrapped accuracy or winding convention is assumed.
+
+On $[0,S]$ abbreviate $A=W^1$, $B=W^2$, $e=a-A$, $f=b-B$,
+and define two residuals
+
+$$
+R_1=J-K-Af,\qquad R_2=J-K-af.
+\tag{33.6}
+$$
+
+The coefficients $rc_0-A=r/2-(k+A)$ and
+$rc_0-a=r/2-(k+a)$ have absolute value at most $r/2$:
+target and own held heights both lie in $[l,u]\subset(0,r/2)$.
+Consequently $|R_1|,|R_2|\le2r\eta$ on $[0,S]$.
+The ordinary controls have finite variation. The semimartingale product
+rule, with $[W^1,W^2]=[W^1,C]=[W^2,C]=0$, gives precisely
+
+$$
+\begin{aligned}
+dR_1&=e\,db-f\,dW^1-\nu\,dC-\lambda\,dt,\\
+dR_2&=-f\,da+e\,dW^2-\nu\,dC-\lambda\,dt.
+\end{aligned}
+\tag{33.7}
+$$
+
+All these identities are stopped at $S$. For example
+$d(Af)=A\,db-A\,dW^2+f\,dW^1$, because $[A,f]=0$;
+$d(af)=a\,db-a\,dW^2+f\,da$, because $a$ has finite variation.
+Thus neither central martingale was replaced by its variation, and the
+chronological product term has its original sign.
+
+The martingale parts in (33.7) have quadratic variations
+$2\int_0^{\cdot\wedge S}(f^2+\nu^2)dt$ and
+$2\int_0^{\cdot\wedge S}(e^2+\nu^2)dt$. Their integrands, and the
+residuals multiplying them in Itô's formula, are bounded. They therefore
+have square-integrable stopped stochastic integrals with expectation
+zero. If $v_b=\operatorname{TV}_{[0,S]}b$ has finite expectation,
+Itô's formula for $R_1^2$, followed by expectation, gives
+
+$$
+\begin{aligned}
+2\nu^2\mathbb ES
+&\le\mathbb ER_1(S)^2
+   +2\mathbb E\int_0^S|R_1e|\,|db|
+   +2|\lambda|\mathbb E\int_0^S|R_1|dt\\
+&\le4r^2\eta^2+4r\eta^2\mathbb Ev_b
+                         +4r|\lambda|\eta\mathbb ES.
+\end{aligned}
+\tag{33.8}
+$$
+
+If its expectation is infinite the resulting variation bound is already
+true. The same argument for $R_2$ uses
+$|R_2f|\le4r\eta^2$ and yields
+$2\nu^2\mathbb ES\le4r^2\eta^2+8r\eta^2\mathbb Ev_a
++4r|\lambda|\eta\mathbb ES$, where
+$v_a=\operatorname{TV}_{[0,S]}a$. Equivalently one may first stop
+when the relevant variation reaches an integer and then pass to the
+limit; bounded residuals and monotone variation give the same bounds.
+No expected energy assumption is needed for either application.
+
+Let $\ell_S=\int_0^S\sqrt{\dot a^2+\dot b^2}\,dt$ and
+$e_S=\int_0^S(\dot a^2+\dot b^2)dt$, using the own-held controls.
+Minkowski's inequality gives
+$\mathbb E\ell_S\ge\sqrt{(\mathbb Ev_a)^2+(\mathbb Ev_b)^2}$.
+Cauchy–Schwarz on probability times original time gives
+$(\mathbb E\ell_S)^2\le\mathbb ES\,\mathbb Ee_S$.
+These statements extend to infinite expectations by truncation. They
+prove (33.4), since $v_a,v_b,\ell_S,e_S$ do not exceed the corresponding
+actual total resources: after own death the controls hold, and all
+additional movement after target death is nonnegative cost. Finally
+$F_\eta\to2\nu^2\mathbb ES>0$ proves (33.5). $\square$
+
