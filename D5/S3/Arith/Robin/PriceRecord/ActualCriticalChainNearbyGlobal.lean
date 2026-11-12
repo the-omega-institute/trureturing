@@ -732,4 +732,3 @@ theorem actual_record_nearby_least_global_optimizer :
     exact htotal
 
 end D5.S3.Arith.Robin.PriceRecord.ActualCriticalChainNearbyGlobal
-
