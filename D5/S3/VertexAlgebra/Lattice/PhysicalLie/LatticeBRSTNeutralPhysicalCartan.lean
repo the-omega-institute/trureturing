@@ -461,6 +461,7 @@ private theorem basis_current_fixed (i : Fin D.rank) :
 
 private theorem cartanState_fixed (e : Fin D.rank → ℂ) :
     cartanState D e ∈ fixedMomentum D 0 := by
+  change (∑ i, e i • tensorBasis D (cartanLabel D i)) ∈ fixedMomentum D 0
   apply (fixedMomentum D 0).sum_mem
   intro i hi
   exact (fixedMomentum D 0).smul_mem _ (basis_current_fixed D i)
