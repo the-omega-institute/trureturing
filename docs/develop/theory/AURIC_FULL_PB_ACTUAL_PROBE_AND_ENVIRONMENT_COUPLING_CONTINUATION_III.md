@@ -4892,8 +4892,8 @@ $$
 及函数 $\kappa_{(r,h)}(\lambda)$，对所有 $\lambda\ge\Lambda_r(h)$ 有
 
 $$
-\mathcal A_{r,h,\lambda}=[0,\kappa_{(r,h)}(\lambda)],qquad
-0\le\kappa_{(r,h)}(\lambda)<b(h,\lambda),qquad
+\mathcal A_{r,h,\lambda}=[0,\kappa_{(r,h)}(\lambda)],\qquad
+0\le\kappa_{(r,h)}(\lambda)<b(h,\lambda),\qquad
 \kappa_{(r,h)}(\lambda)\longrightarrow K_r(h).
 $$
 
@@ -4903,7 +4903,7 @@ $F$ 按原来源、全部有限 Hermitian 测试、完整正复线性泛函、�
 
 **证明。** 取 $h_{\rm reg}$ 小于 §§37、41、50、56 的正半径、引理 62.1 的
 半径以及 $10^{-3}$。精确 P2 计算 (38.27)–(38.28) 将允许的 $k$ 域确定为
-$[0,b(h,\lambda))$。由 (35.4) 的共同小半径估计，$k=0$ 满足全部原 PB；当
+$[0,b(h,\lambda))$。由前卷定理 35.4 的共同小半径估计，$k=0$ 满足全部原 PB；当
 $b(h,\lambda)>2$ 时，引理 62.1 在 $k=2$ 给出失败。
 
 固定 $r,h,\lambda$，在该严格域内令 $S=\mathcal A_{r,h,\lambda}$。同一完整测试与
@@ -4912,7 +4912,7 @@ $b(h,\lambda)>2$ 时，引理 62.1 在 $k=2$ 给出失败。
 $\kappa<b(h,\lambda)$ 使 $S=[0,\kappa]$；相对闭性包含端点。此处不假设有限 PB
 变分下确界取到。
 
-最后使用 §§37、41 已有的固定 $k$ 严格侧结论。对每个 $q<K_r(h)$，充分大
+最后使用 §§37、41 已有的固定 $k$ 严格侧结论。对每个 $0\le q<K_r(h)$，充分大
 $\lambda$ 有 $q\in S$，故 $\liminf\kappa_{(r,h)}(\lambda)\ge q$。对每个
 $q>K_r(h)$，充分大 $\lambda$ 在 $q$ 处失败；向上持续性于是给出
 $\kappa_{(r,h)}(\lambda)\le q$。令 $q$ 从两侧趋于 $K_r(h)$ 即得收敛。对来源和取向
