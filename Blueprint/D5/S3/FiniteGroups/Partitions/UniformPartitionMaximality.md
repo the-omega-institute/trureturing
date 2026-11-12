@@ -10,7 +10,7 @@ The relation is equality of first coordinates on K times L. Aut is the full subg
 
 $$\forall K \in Typeu,\; \forall L \in Typev,\; [\operatorname{Finite}\left(K\right)] [\operatorname{Finite}\left(L\right)] [\operatorname{Nontrivial}\left(K\right)] [\operatorname{Nontrivial}\left(L\right)] \operatorname{IsCoatom}\left(\operatorname{Aut}\left(K, L\right)\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/UniformPartitionMaximality.isCoatom_aut` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/Partitions/UniformPartitionMaximality.isCoatom_aut` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -22,7 +22,7 @@ A same-block transposition lies in Aut. If a subgroup contains Aut and a permuta
 
 $$\forall K \in Typeu,\; \forall L \in Typev,\; [\operatorname{Finite}\left(K\right)] [\operatorname{Finite}\left(L\right)] \forall q \in \operatorname{Perm}\left(\operatorname{Product}\left(K, L\right)\right),\; \left(\neg q \in \operatorname{Aut}\left(K, L\right)\right) \Rightarrow \operatorname{closure}\left(\operatorname{union}\left(\operatorname{Set}\left(\operatorname{Aut}\left(K, L\right)\right), \left\{q\right\}\right)\right) = \operatorname{top}\left(\operatorname{Subgroup}\left(\operatorname{Perm}\left(\operatorname{Product}\left(K, L\right)\right)\right)\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/UniformPartitionMaximality.closure_aut_union_singleton` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/FiniteGroups/Partitions/UniformPartitionMaximality.closure_aut_union_singleton` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -34,6 +34,6 @@ For every n, a : Nat with n > 0, put g = gcd(n, a), ell = n/g and W = ZeroFamily
 
 ## References
 
-- Truth anchor: `D5/S3/FiniteGroups/UniformPartitionMaximality.closure_aut_union_singleton`
-- Truth anchor: `D5/S3/FiniteGroups/UniformPartitionMaximality.isCoatom_aut`
-- Dependency: [D5/S3/FiniteGroups/UniformPartitionAutomorphisms](UniformPartitionAutomorphisms.md)
+- Truth anchor: `D5/S3/FiniteGroups/Partitions/UniformPartitionMaximality.closure_aut_union_singleton`
+- Truth anchor: `D5/S3/FiniteGroups/Partitions/UniformPartitionMaximality.isCoatom_aut`
+- Dependency: [D5/S3/FiniteGroups/Partitions/UniformPartitionAutomorphisms](UniformPartitionAutomorphisms.md)
