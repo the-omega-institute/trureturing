@@ -31,6 +31,14 @@ internal sealed class BiasedCubeMixtureDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("For any finite family of bias values and weights, the distinct-index moment of order r is the weighted r-th bias moment divided by (sqrt(N)) to the power r, times the sum of coefficient products over injective index tuples. Both refutations apply this shared identity."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("distinct-bound"), DeclarationHandle.Create(Prefix + "mixture_distinct_bound"),
+                H("A bound for every order"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For positive N and any order r, if every coefficient has absolute value at most one, "
+                    + "the distinct-index mixture moment has absolute value at most the absolute r-th scalar bias moment "
+                    + "times (sqrt(N)) to the power r. There are at most N to the power r injective assignments, "
+                    + "and every coefficient product has absolute value at most one. The weights may be signed."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("parity"), DeclarationHandle.Create(Prefix + "odd_reduction"),
                 H("Odd-coordinate reduction"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Repeated sign factors cancel in pairs, leaving exactly the coordinates with odd multiplicity."))),

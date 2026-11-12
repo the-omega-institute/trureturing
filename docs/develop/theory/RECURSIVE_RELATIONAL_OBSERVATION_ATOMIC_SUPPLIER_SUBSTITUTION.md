@@ -3713,3 +3713,255 @@ RG原caller／Plan／Entry、AS writer／parser／STORE／row／settlement、CAP
 源码既有证明及其接口含义不能提升为这一个新组合的kernel验证。
 
 ## 追加锚（本行以下为增补区）
+
+## 41. 独立请求入口与真实ACK的当前捕获合同
+
+本节至第44节研究第40.3节尚缺的current acquisition的一种机制类障碍。
+第26–40节的ordinary family构造、原mode10范围、原source／consumer及费用合同均按原条件复用。
+记本节的安装为 $B$；它有自己的真实boot、description、identity和原始准备 $\xi$，
+不因端口名称、body相等或可编码性而与另一个安装认同。
+
+**定义 41.1（保持全目标的当前请求规格）。** 普通输入域仍是定义26.1的全部量词：
+安装先于每个有限 $N\ge0$、每个实际adaptive Rho／Left$(v)$／Right$(v)$序列、
+每个在原raw ingress真正收到的非空有限有序operand、独立收到的有限
+$1=g_0\le\cdots\le g_N$及finish；mode10仅保留定义26.3、命题37.1的准确域。
+返回Entry时的 $E(t_i)$、$h=K=w(t_i)$、真正Y及arena selected body关系沿用定义26.1，
+完整原service／refusal／records／AfterFinal／Entry／Park／Handback／Stop／INITIAL consumer沿用第33–37节。
+这个普通域不是只在若干测试输入上成立的合同。
+
+设 $e_B$ 是真正完成capture-support边界构造、代码／owner／slot安装、bank初始化之后的
+固定EnableCapture CTL，先于首个覆盖的J-FAMILY runtime过程。
+原private preparation、未取得seed／code及pre-enable范围仍分开。
+在 $e_B$之后、absorbing halt之前，要求覆盖每个实际到达的primitive boundary：
+Init、arena allocation／Build／old-frontier rho／navigation／ancestor maintenance、candidate observation、
+transport、F7／holder／occurrence association、Input22、variable-depth decoder、forest execution、
+settlement／receipt及Park，以及所有新增request／spill／logger／copy／decoder／ACK／return过程内部。
+这些过程及capture自身的内部都允许任意有限次数、任意有限深度的nested requests。
+域按实际过程和boundary给定，不按handler是否已经使能、对象是否完成或busy flag删减。
+
+请求在一个这样的cut提出时，须有使用其自身合法有限traffic的有限admission／acquisition路径，
+不能先执行所悬置的原pending action来取得入口，也不能等原过程未来完成。
+冻结目标是该请求在首次capture side effect之前的实际admission prefix；
+子请求必须接回那个partial parent的同一个owed action。
+即使该action已经使能，仍须先服务当前子请求，再把它作为同一个pending consumer返回并恰执行一次；
+若原action缺输入，则返回后仍等它自己的输入。
+请求traffic的实际发送、backing及其它副作用各在自己的真实prefix计入，不能被当成无状态的意图。
+
+目标数据含完整实际有限历史及raw joint endpoint $X$，包括定义37.3的全部Native／AA状态，
+当前PC／code／heads／latches、真实cell与allocator identities、source16及partial STORE、
+AA roots／parents／children／headers／共同ancestor tapes／unfinished reserve与append，
+tokens／invocation／partial loans、每条连接的endpoint／空满／位／backing／pending sender与receiver，
+status0 bank／partial descriptors、真实call／guard／receipt键、parser frames、分别冻结的INPUT界与演化的STACK界，
+未完成settlement／output／Park、所有已发生records和实际费用；不填入未来完成字段。
+四个独立取得的space／time／boundary／memory body须各自恢复同一目标，并有各自source解释；
+其中实际选中的received body须供应真实continuation的返回。
+RG27.1–27.3的四image数学按自己的原安装使用，不由四个codec名称自动取得本新图的对应。
+下文的否定结论在admission处成立，无需假定这些body已被构造。
+
+**定义 41.2（机制类 $\mathcal K$）。** $\mathcal K$ 由以下六项操作条件同时定义。
+
+1. $B$是先于未来输入、horizon和capture depth的有限description，含有限ports、literal Native／AA rows、
+   typed connections和实际grant／owner／slot初始化，并保持定义41.1的完整ordinary合同。
+   新边界以原one-cell EX构造，literal code／control／token bits逐位安装，bank／descriptor／status按原程序完成，
+   随后才有 $e_B$。允许任意有限数量的额外ports、rows、channels、grants、roots、finite control cases，
+   以及运行时任意增长的有限backed stacks／logs／versions。
+2. 新capture的消费／admission通过指定Native request ingress $\gamma$ 的真实input row发生，
+   后接实际安装的Native控制。AA可以back／forward请求，但不改这个Native executive的PC或替它执行rows；
+   没有能在它被阻塞时独立admit并完成该Native capture的executive。
+3. ingress保持typed且分开。每个capture有至少一个真实供应的ACK，由某个
+   $\alpha\ne\gamma$ 的literal Native $\mathrm{IN}_\alpha$ 接收；允许任意有限framing。
+   它不是wait-any或callback；child request不能冒充parent ACK，即使位值相同。
+4. primitive前后及capture内部可插入实际cooperative hooks，进行spill、log、head保存／恢复、token loan及有限分支。
+   但一旦到达literal $\mathrm{IN}_i$ row，下一个Native occurrence就是它。
+   外actor、queued request或到来的 $\gamma$ 位不改这个PC；没有外部PC rewrite，
+   也不把已到达的blocking row原子替换成polling row。
+5. 环境可以暂缓parent下一 $\alpha$ 位，同时在 $\gamma$ 提供完整child request，
+   并在实际到达其各自合法stage时供应child后续data／ACK；不要求先供应parent ACK。
+   这不要求两个不同origin的ACK同时占同一连接。parent ACK不在boot自动预供，也不由omniscient proxy替代。
+   每个执行的IN消费其自己的ingress上具有实际protocol origin的真正下一位。
+6. advertised domain包括每个新增handler的pre-$\mathrm{IN}_\alpha$ boundary；
+   child返回前保持parent的owed action。busy flag不能把该boundary移出all-cut任务。
+
+这里没有“ACK在接收前必为空”或“sender必须等receiver到行才OUT”的条件。
+真实sender允许提前执行OUT并填满连接；该执行和位属于 $X$ 及其历史。
+有限polling／word-copy／checkpoint wrappers配独立ACK入口属于此类；空间和log规模不固定为某个常数。
+in-band request／ACK multiplexer、已证明owner／suspension／return桥的独立capture executive、
+nonblocking availability接口、interrupt或外部PC改写不在本类。
+这些是比较类的限制，不是对一切合法增广的限制，也不是把整个研究目标改成只研究本类。
+
+## 42. 保持owed row时的控制不变量与缓冲位
+
+**引理 42.1（不执行owed IN时的固定row）。** 任取 $B\in\mathcal K$，
+任取一个真正到达的有限joint prefix $H$，其终态 $z$ 满足
+$\operatorname{PC}_N(z)=q$、$\operatorname{row}_B(q)=\mathrm{IN}_i$。
+对每个从 $z$ 出发的合法有限extension，只要该owed $\mathrm{IN}_i$ 不执行，
+Native PC始终为 $q$，没有该executive的其它Native occurrence，特别没有
+$\mathrm{IN}_\gamma$ admission，其中 $\gamma\ne i$。
+结论不要求 $i$ 连接为空，也不要求该IN当前disabled。
+
+证明。TMC PR57.D1／(PR57.03)把opcode、ingress和successor固定在当前literal row。
+在 $q$，该executive的首个可能Native occurrence只能是这一个 $\mathrm{IN}_i$；
+RD、WR、TOK、CTL或 $\mathrm{IN}_\gamma$ 不是从 $q$ 可选的另一条row。
+若一个extension含该executive的Native occurrence，取第一个；在它之前只有其它actor的occurrences，
+由定义41.2第2、4项，它们不改该PC，因此这第一个仍必须是 $\mathrm{IN}_i$，与保留owed action矛盾。
+等价地，逐个对其它actor的occurrence归纳，PC均保持 $q$。
+其它actor可以改自己的control、backing、meters或连接空满；这些变化不被断言为零。
+第2项要求Native admission经 $\gamma$ 的指定row，所以在此extension内也没有child admission。
+若 $i$ 位缺失，IN本来就不能执行；若位已存在，IN虽可能使能，保留owed action的extension仍不能取它。
+两种情况服从同一个首步论证。$\square$
+
+**命题 42.2（sender OUT保留的两种pre-IN状态）。** 在引理42.1的实际cut，
+下列两种真实状态都适用其结论，不能把它们的joint endpoint或bill认同。
+
+| 该cut的实际连接状态 | 必须保留的sender／receiver事实 | 不执行owed IN时的结论 |
+| --- | --- | --- |
+| 下一ACK位尚不可用 | 实际未完成的sender／input阶段、现有backing、控制及此前费用 | 无Native request admission |
+| genuine ACK位已由绑定sender OUT且连接满 | 该OUT occurrence及其origin、sender新control、buffer位／full标记及实际费用；receiver尚未执行这个IN | 同样无Native request admission |
+
+证明。定义26.2只要求sender在空连接OUT，随后receiver IN并完成规定backing才开放下一位；
+它不要求OUT紧邻IN。定义27.2将空满、latch、backing和subphase作为实际状态。
+故第二行可以是完全合法的已到达前缀。两行分别直接用引理42.1，不使用跨运行交换律。
+例如在允许sender OUT的同一prefix $G$后，真实 $G;\mathrm{OUT}_\alpha(b)$
+多出一次发送及其全部效果；把它改成 $G$不是保持完整joint prefix的操作。
+“receiver尚未消费”不推出“sender尚未发生”，也不取消sender的receipt／tariff。
+满连接的父路线可以按原IN继续；这里阻断的是先保持该IN而服务child的路径。$\square$
+
+## 43. 以实际parent历史取得的深度二障碍
+
+**定理 43.1（整个 $\mathcal K$ 的current reentrancy障碍）。** 对每个固定有限、
+future-independent的 $B\in\mathcal K$，即使授予它成功完成的实际paid enable prefix，
+它也不满足定义41.1的全cut／任意有限nesting／selected-body exact-return合同。
+具体地，或者一次覆盖域内的初始capture在自身合法有限traffic下已无所要求的有限完成，
+或者有一个真正到达的有限parent-handler prefix和一个child request，
+该child在保持parent同一个owed ACK receive时没有合法admission路径。
+后一见证只用parent和child两层；不需要无限执行或统一finite-resource／latency界。
+
+证明。固定任意这样的 $B$。由ordinary保留及enable范围，取其 $e_B$之后首个覆盖的
+Init／runtime entry的实际prefix。在该处提出parent capture，并按协议在各合法stage供应它自己的有限traffic。
+若所需finite completion不存在，第一种失败已经成立。
+否则取其中一个真实有限successful parent执行 $F$，含其实际boot及此前ordinary prefix。
+这一步只使用假设的capture成功；没有假设一个新的snapshot或busy-owner入口已经可构造。
+
+由定义41.2第3项，$F$中有真实接收该parent ACK的literal Native row。
+取第一个这样的接收occurrence，设其位置为 $r+1$、当前row编号为 $q$，
+$\operatorname{row}_B(q)=\mathrm{IN}_\alpha$，其中 $\alpha\ne\gamma$；令
+
+$$
+H_* = F\mathbin{\upharpoonright}r,\qquad
+z_* = \operatorname{exit}(H_*),\qquad
+\operatorname{PC}_N(z_*)=q.
+$$
+
+$H_*$ 是 $F$的真正前缀，故 $z_*$确实到达，且处于新增handler的pre-IN boundary。
+它在定义41.1及定义41.2第6项的域内。
+保留 $H_*$ 的所有实际operations、allocations、polls、bodies、copies、records和费用。
+尤其，若 $F$在此IN之前已有genuine ACK OUT，则该OUT仍在 $H_*$中，连接仍为其真实full状态，
+sender保留它已到达的control及backing；不删发送，不重排 $F$，不选择一个声称与它同态的缺ACK运行。
+若此cut的ACK尚不可用，也直接保留这个实际状态。后续论证不以空满作前提。
+
+现在在这个boundary提出child request；按定义41.2第5项提供它的完整frame，
+后续child data／ACK只在各自实际合法stage供应。
+“完整提供”不表示把整frame同时塞入一位连接，也不表示把child ACK提前放入parent的full连接。
+若offer／forward本身已发生其它actor的OUT或backing，取其真正连续extension并保留这些新效果，
+不把它的 $X$ 或bill与 $z_*$认同。引理42.1对所有这样的finite extensions仍成立。
+
+这个child的实际pending consumer是parent那一个尚未执行的 $\mathrm{IN}_\alpha$。
+定义41.1要求在不先执行它的条件下admit child，取得所要求的目标并返回同一个action。
+应用引理42.1，在保持该action的每条合法有限extension中Native仍在 $q$，
+不能到达 $\mathrm{IN}_\gamma$，所以没有所需admission。
+即使parent ACK已经full而IN使能，先消费它仍先执行了被要求保持的owed action；
+后来的capture不能当作这个pre-IN请求的exact continuation。
+正确的body、state backup或decoder也不能单独改变live PC。
+这给出第二种失败，并与假定的全cut合同矛盾。
+
+最后一次poll若在 $q$之前已答“继续”，$H_*$真实保留该poll；
+在其后提出的child不能追改这个answer，pre-IN cut也不因此离开域。
+任意有限额外polls、ports、logs、stacks及boot material均不改变引理42.1。
+整个证明固定任意 $B$后才从它自己的successful parent选前缀，没有针对未来depth安装代码，
+也没有要求每个ACK schedule都呈现空连接。
+普通外围可以选定义26.1允许的 $N=0$，保留原初始化及后来的finish意向；
+失败在finish之前的一个有限cut已经发生，不要求把不可能的child completion写成已完成ordinary run。
+因全规格量化所有有限ordinary schedules和所有有限nesting，存在这一个失败便足够。
+它没有把其它 $N$、operands、guards或mode10移出原目标。$\square$
+
+**推论 43.2（存储与表示不能替代这条控制边）。** 即使再给予 $B$在 $z_*$的完整正确state数据
+和四个各自正确的public decoders，定理43.1的admission障碍仍成立。
+因此该定理不声称 $X(z_*)$不可计算、不可编码，也不声称一切owner-cooperative增广均不可能。
+
+证明。引理42.1不限制state数据或decoder的数学信息量；它限制的是live executive的实际下一row。
+本类没有能独立完成该capture的executive，也没有改变该row的alternate edge。
+若通过构造这样的owned接口离开 $\mathcal K$，须另外证明其source／suspension／return关系；
+本推论既不提供该构造，也不排除它。$\square$
+
+## 44. 见证自己的记录、账与准确剩余范围
+
+**定义 44.1（实际见证的状态及费用）。** 定理43.1的见证为实际 $H_*$及其真实offer extensions，
+不是从另一个成功历史删除输入后得到的同一state。
+若 $H_*=z_0\xrightarrow{\kappa_1}\cdots\xrightarrow{\kappa_r}z_*$，则按定义38.1记
+
+$$
+C(H_*)=\sum_{j=0}^{r-1}\delta(\kappa_{j+1},z_j),\qquad
+P(H_*)=\max_{0\le j\le r}S(z_j),
+$$
+
+Native／AA tariffs各用自己的坐标。每个从 $z_*$真正发生的有限offer／forward片段 $\tau$满足
+
+$$
+C(H_*;\tau)=C(H_*)+C(\tau,z_*),\qquad
+P(H_*;\tau)=\max\{P(H_*),P(\tau,z_*)\}.
+$$
+
+所有段在其实际前态计费，不能从另一schedule借bill或从缓冲未消费推论sender免费。
+若 $n_N$是该真实prefix的Native原语数，则原receipts／ticks／fees仍是 $n_N,n_N,2n_N$，
+Native material仍按定义38.1的 $S_0+b_{control}+8A_{nonmeter}+8n_N$计算。
+包括真实support boot、negative polls、spills、copies、描述符／status、发送／接收和已做parent工作；
+sender OUT由该sender所属的Native或AA tariff计入。
+尚未执行的owed IN没有虚构receipt、tape write或费用；若它已有buffer位，该OUT及backing费用已在账内。
+AA实际allocation／grant／reference-bit／field／navigation／I-O／ACK／control及共享ancestor append全保留；
+AA22.1的root逐项 $V=1+P+2S$、$S$ headers及 $D$ routing appends仍只是located subcounts。
+
+raw joint endpoint保留定义41.1的所有partial fields，不要求一个tree／available bank／Ready／full token mask。
+尤其区分pre-IN与post-IN／pre-WR：后者的真实位已在occupied latch，owed action是WR，不能被写成缺输入。
+partial loans、unfinished AA append、status0对象、INPUT／STACK两界、先前capture body、
+outboxes／F7／holders／M／ACK／Done／receipt／saved continuations、实际code／control／tokens和meter均按其实际阶段保留。
+对parent尚未写出的Done或complete receipt不制造记录，也不从原terminal成功推论它们已存在。
+peak沿该同一history计算，按定义38.4包含全部同时retained材料；清scratch不退constructed capacity。
+这些是见证的完整账目接口，不是已执行例、完成capture费用数值、统一time界或资源优势。
+
+**定义 44.2（来源与复用边界）。** 本节至第44节所用primitive／channel／partial-state合同统一钉在
+`bbf699605ef7faf9f44d3251ef81f246daf4a5a6`，与本卷第26–40节各自引用的原结果按所声明接口衔接。
+
+| 原文定位 | 在本结论中承担的关系 |
+| --- | --- |
+| [TMC PR57.D1、(PR57.03)、PR57.L1](https://github.com/the-omega-institute/trureturing/blob/bbf699605ef7faf9f44d3251ef81f246daf4a5a6/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#L18069) | current literal row、ingress-specific IN、固定successor、逐primitive meter及未完成过程的规定next action；不添加interrupt／wait-any |
+| 本卷假设26.2、定义27.2、31.1、34.3、37.3、38.1／38.4 | sender可先OUT；真实空满／latch／backing；IN后WR与status0；ACK全接收；full joint state及same-run bill |
+| [LJA4.1](https://github.com/the-omega-institute/trureturing/blob/bbf699605ef7faf9f44d3251ef81f246daf4a5a6/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LITERAL_JOURNAL_ADAPTER.md#L243) | busy service仅其规定next primitive；原source token／row seal／delivery ACK与capture入口分开 |
+| [AA20.1–20.3](https://github.com/the-omega-institute/trureturing/blob/bbf699605ef7faf9f44d3251ef81f246daf4a5a6/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md#L1418)及本卷29.2 | 实际root／grants、pending latch、Reserve／edit／Maintain内无新input／query、真实祖先tapes；returned stationary field-read不自动成为busy-owner capture |
+| [IR25.2–25.3](https://github.com/the-omega-institute/trureturing/blob/bbf699605ef7faf9f44d3251ef81f246daf4a5a6/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_IMMUTABLE_INTERVAL_REGISTERS.md#L1790) | $J_{\rm IC102}$只在自己的hooked occurrences／owed rows和source mapping上给current capture；新增annex内部仍缺current reentry |
+| [RCA15.3](https://github.com/the-omega-institute/trureturing/blob/bbf699605ef7faf9f44d3251ef81f246daf4a5a6/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_RETROSPECTIVE_CUT_ACQUISITION.md#L2281) | 同一late-installed graph的canonical-frame历史cut，经finite completion后有later Cover／immutable取得／exact historical Call；不是当前pending action之前的admission |
+
+新增数学内容是引理42.1对buffer空满均成立的owed-row不变量，以及定理43.1对整个
+$\mathcal K$、从各自真实successful parent前缀得到的depth-two排除。
+没有重证原family、四image inverses、bank transport、AA lifecycle或historical replay，
+没有把source-interface census或四个codec名称当作新结果。
+文献归属为repo-derived的普通source-model推导；未作外部文献穷尽核查，不主张全球原创性。
+这不是新Lean／exact-S或axiom-closure核验、已执行graph或physical conformance证据。
+
+**定义 44.3（未缩减的全目标及剩余义务）。** 第36.4节的全部ordinary mode01 family完成、
+第37.1节的准确mode10及原Stop／INITIAL消费者仍各按原条件保留。
+本障碍只排除定义41.2的机制类，不交付正面的all-cut capture，
+也不以“只捕获poll行”“先完成parent ACK”“只在Entry请求”替代定义41.1。
+一般合法增广仍须为全部声明的family／capture interiors及每个有限nesting供应真实admission，
+保留Native／AA current authority和全部partial state，取得同一actual prefix的四个独立表达，
+以选中received body供应同一个pending consumer的exact continuation及原返回，并给同run记录与费用。
+独立receiver／executive、multiplexing或availability路线是否能满足这些条件仍须构造与证明。
+
+IR的declared compiler-cut current结果与RCA的finite-completion-conditional historical closure保持原source区分；
+后者已经供应的handler历史closure不被重列为空缺。
+定义40.3保留的GENERAL15.5／18.4、RG13.3原Q结果不被缩回单entry；
+其外的changed／new rows、broader mixed interiors及full terminal-task kernel仍未解决。
+任意internally generated independently guarded policies、all-seven direct schedules、非canonical／physical sources、
+实际无限运行、统一有限hardware／resources、total-resource advantage及global／Pareto最小性均未由本结果给出。
+最简关系结构及space／time／boundary／memory的实际互恢复全目标保持原范围，未完成。
+
+## 追加锚（本行以下为增补区）

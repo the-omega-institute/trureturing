@@ -6,8 +6,7 @@
    utility: none
    digest: The exact halving-partition count admits no finite integral decimation family. -/
 
-import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
-import Mathlib.Algebra.LinearRecurrence
+import D5.S1.Recurrence.BinaryDecimation
 
 /-! Exact source carriers and the unrestricted regularity question. -/
 
@@ -74,24 +73,24 @@ def ClosedFamily (a : ℕ → ℤ) : Prop :=
 def claim : Prop := ¬ MatrixFamily (fun n => (count n : ℤ))
 
 /-- The deterministic positive chain starting from a power of two. -/
-private def powerWord : ℕ → ℕ → List ℕ
+def powerWord : ℕ → ℕ → List ℕ
   | _, 0 => []
   | 0, l + 1 => 1 :: powerWord 0 l
   | m + 1, l + 1 => 2 ^ m :: powerWord m l
 
 /-- The first j rounded-up values, followed by the deterministic lower branch. -/
-private def oddWord : ℕ → ℕ → ℕ → List ℕ
+def oddWord : ℕ → ℕ → ℕ → List ℕ
   | _, _, 0 => []
   | 0, _, l + 1 => 1 :: powerWord 0 l
   | m + 1, 0, l + 1 => 2 ^ m :: powerWord m l
   | m + 1, j + 1, l + 1 => (2 ^ m + 1) :: oddWord m j l
 
-private theorem powerWord_length (m l : ℕ) : (powerWord m l).length = l := by
+theorem powerWord_length (m l : ℕ) : (powerWord m l).length = l := by
   induction l generalizing m with
   | zero => simp [powerWord]
   | succ l ih => cases m <;> simp [powerWord, ih]
 
-private theorem oddWord_length (m j l : ℕ) : (oddWord m j l).length = l := by
+theorem oddWord_length (m j l : ℕ) : (oddWord m j l).length = l := by
   induction l generalizing m j with
   | zero => simp [oddWord]
   | succ l ih => cases m <;> cases j <;> simp [oddWord, powerWord_length, ih]
@@ -144,7 +143,7 @@ private theorem power_follows (m : ℕ) (p : List ℕ)
         rw [he.1]
         exact (ih m hxs).mpr he.2
 
-private theorem odd_follows (m : ℕ) (p : List ℕ)
+theorem odd_follows (m : ℕ) (p : List ℕ)
     (hp : ∀ x ∈ p, 0 < x) :
     Follows (2 ^ m + 1) p ↔
       ∃ j, j ≤ m ∧ j ≤ p.length ∧ p = oddWord m j p.length := by
@@ -197,7 +196,7 @@ private theorem odd_follows (m : ℕ) (p : List ℕ)
           rw [he'.1]
           exact (ih m hxs).mpr ⟨j, by omega, by simpa using hjl, he'.2⟩
 
-private theorem powerWord_sum_short (m l : ℕ) (hl : l ≤ m) :
+theorem powerWord_sum_short (m l : ℕ) (hl : l ≤ m) :
     (powerWord m l).sum + 2 ^ (m - l) = 2 ^ m := by
   induction l generalizing m with
   | zero => simp [powerWord]
@@ -210,7 +209,7 @@ private theorem powerWord_sum_short (m l : ℕ) (hl : l ≤ m) :
       rw [pow_succ]
       omega
 
-private theorem powerWord_sum_long (m l : ℕ) (hl : m ≤ l) :
+theorem powerWord_sum_long (m l : ℕ) (hl : m ≤ l) :
     (powerWord m l).sum + 1 = 2 ^ m + (l - m) := by
   induction l generalizing m with
   | zero =>
@@ -229,7 +228,7 @@ private theorem powerWord_sum_long (m l : ℕ) (hl : m ≤ l) :
       rw [pow_succ]
       omega
 
-private theorem oddWord_sum (m j l : ℕ) (hjm : j ≤ m) (hjl : j ≤ l) :
+theorem oddWord_sum (m j l : ℕ) (hjm : j ≤ m) (hjl : j ≤ l) :
     (oddWord m j l).sum = (powerWord m l).sum + j := by
   induction l generalizing m j with
   | zero =>
@@ -252,7 +251,7 @@ private theorem oddWord_sum (m j l : ℕ) (hjm : j ≤ m) (hjl : j ≤ l) :
 
 /-- Every source list at a dyadic successor has one rounded-up prefix, and its
 length and prefix count satisfy the exact short/long total equations. -/
-private theorem dyadic_source_classification (m : ℕ) (p : SourceLists (2 ^ m + 1)) :
+theorem dyadic_source_classification (m : ℕ) (p : SourceLists (2 ^ m + 1)) :
     ∃ j, j ≤ m ∧ j ≤ p.1.length ∧ p.1 = oddWord m j p.1.length ∧
       (p.1.length ≤ m → j = 2 ^ (m - p.1.length) + 1) ∧
       (m ≤ p.1.length → j + (p.1.length - m) = 2) := by
@@ -302,7 +301,7 @@ private theorem oddWord_positive (m j l : ℕ) :
         rw [oddWord, List.forall_mem_cons]
         exact ⟨by positivity, ih m j⟩
 
-private theorem oddWord_prefix_injective (m l j k : ℕ)
+theorem oddWord_prefix_injective (m l j k : ℕ)
     (hjm : j ≤ m) (hjl : j ≤ l) (hkm : k ≤ m) (hkl : k ≤ l)
     (he : oddWord m j l = oddWord m k l) : j = k := by
   induction l generalizing m j k with
@@ -324,16 +323,16 @@ private theorem oddWord_prefix_injective (m l j k : ℕ)
           have := ih m j k (by omega) (by omega) (by omega) (by omega) he.2
           omega
 
-private abbrev Threshold (m : ℕ) :=
+abbrev Threshold (m : ℕ) :=
   {r : Fin (m + 1) // 1 ≤ r.val ∧ 2 ^ r.val + r.val + 1 ≤ m}
 
-private abbrev DyadicCode (m : ℕ) := Fin 3 ⊕ Threshold m
+abbrev DyadicCode (m : ℕ) := Fin 3 ⊕ Threshold m
 
-private def codeParams (m : ℕ) : DyadicCode m → ℕ × ℕ
+def codeParams (m : ℕ) : DyadicCode m → ℕ × ℕ
   | .inl i => if i = 0 then (m, 2) else if i = 1 then (m + 1, 1) else (m + 2, 0)
   | .inr r => (m - r.1.val, 2 ^ r.1.val + 1)
 
-private theorem code_bounds (m : ℕ) (hm : 2 ≤ m) (c : DyadicCode m) :
+theorem code_bounds (m : ℕ) (hm : 2 ≤ m) (c : DyadicCode m) :
     (codeParams m c).2 ≤ m ∧ (codeParams m c).2 ≤ (codeParams m c).1 := by
   rcases c with i | r
   · fin_cases i <;> simp [codeParams] <;> omega
@@ -364,7 +363,7 @@ private theorem code_total (m : ℕ) (hm : 2 ≤ m) (c : DyadicCode m) :
     rw [he] at hs
     omega
 
-private def codeSource (m : ℕ) (hm : 2 ≤ m) (c : DyadicCode m) :
+def codeSource (m : ℕ) (hm : 2 ≤ m) (c : DyadicCode m) :
     SourceLists (2 ^ m + 1) := by
   let l := (codeParams m c).1
   let j := (codeParams m c).2
@@ -395,7 +394,7 @@ private theorem codeParams_injective (m : ℕ) : Function.Injective (codeParams 
     subst s
     rfl
 
-private theorem codeSource_bijective (m : ℕ) (hm : 2 ≤ m) :
+theorem codeSource_bijective (m : ℕ) (hm : 2 ≤ m) :
     Function.Bijective (codeSource m hm) := by
   constructor
   · intro c d he
@@ -437,7 +436,7 @@ private theorem codeSource_bijective (m : ℕ) (hm : 2 ≤ m) :
     exact he.symm
 
 /-- The independent source count at every dyadic successor, including all tails of ones. -/
-private theorem dyadic_source_count (m : ℕ) (hm : 2 ≤ m) :
+theorem dyadic_source_count (m : ℕ) (hm : 2 ≤ m) :
     count (2 ^ m + 1) = 3 +
       Fintype.card {r : Fin (m + 1) // 1 ≤ r.val ∧ 2 ^ r.val + r.val + 1 ≤ m} := by
   have e := Equiv.ofBijective (codeSource m hm) (codeSource_bijective m hm)
@@ -445,12 +444,12 @@ private theorem dyadic_source_count (m : ℕ) (hm : 2 ≤ m) :
   rw [Nat.card_congr e.symm, Nat.card_eq_fintype_card]
   simp only [Fintype.card_sum, Fintype.card_fin]
 
-private theorem threshold_mono {r s : ℕ} (h : r ≤ s) :
+theorem threshold_mono {r s : ℕ} (h : r ≤ s) :
     2 ^ r + r + 1 ≤ 2 ^ s + s + 1 := by
   have hp : (2 : ℕ) ^ r ≤ 2 ^ s := pow_le_pow_right₀ (by decide) h
   omega
 
-private theorem dyadic_plateau (m r : ℕ) (hm : 2 ≤ m) (hr : 1 ≤ r)
+theorem dyadic_plateau (m r : ℕ) (hm : 2 ≤ m) (hr : 1 ≤ r)
     (hlo : 2 ^ r + r + 1 ≤ m) (hhi : m < 2 ^ (r + 1) + (r + 1) + 1) :
     count (2 ^ m + 1) = 3 + r := by
   rw [dyadic_source_count m hm]
@@ -485,67 +484,17 @@ private theorem dyadic_plateau (m r : ℕ) (hm : 2 ≤ m) (hr : 1 ≤ r)
   simp only [Fintype.card_fin] at hc
   exact congrArg (fun t => 3 + t) hc.symm
 
-private theorem dyadic_matrix_recurrence (a : ℕ → ℤ) (ha : MatrixFamily a) :
-    ∃ E : LinearRecurrence ℤ, 0 < E.order ∧
-      E.IsSolution (fun n => a (2 ^ (n + 2) + 1)) := by
-  classical
-  obtain ⟨d, hd, F, M0, M1, hf, he, ho⟩ := ha
-  let v (n : ℕ) := F (2 ^ (n + 1))
-  have hstep (n : ℕ) : v (n + 1) = M0.mulVec (v n) := by
-    dsimp [v]
-    rw [show 2 ^ (n + 1 + 1) = 2 * 2 ^ (n + 1) by rw [pow_succ]; omega]
-    exact he _
-  have hpower (i n : ℕ) : (M0 ^ i).mulVec (v n) = v (n + i) := by
-    induction i with
-    | zero => simp
-    | succ i ih =>
-      rw [pow_succ', ← Matrix.mulVec_mulVec, ih]
-      simpa only [Nat.add_assoc] using (hstep (n + i)).symm
-  have hread (n : ℕ) : (M1.mulVec (v n)) ⟨0, hd⟩ = a (2 ^ (n + 2) + 1) := by
-    rw [← ho]
-    change F (2 * 2 ^ (n + 1) + 1) ⟨0, hd⟩ = _
-    rw [hf]
-    congr 2
-    rw [show n + 2 = n + 1 + 1 by omega, pow_succ]
-    omega
-  let E : LinearRecurrence ℤ := ⟨d, fun i => -M0.charpoly.coeff i.val⟩
-  refine ⟨E, hd, ?_⟩
-  intro n
-  have hlead : M0.charpoly.coeff d = 1 := by
-    simpa [Matrix.charpoly_natDegree_eq_dim] using M0.charpoly_monic.coeff_natDegree
-  have hCH : (∑ i ∈ Finset.range d, M0.charpoly.coeff i • M0 ^ i) + M0 ^ d = 0 := by
-    have h := Matrix.aeval_self_charpoly M0
-    rw [Polynomial.aeval_eq_sum_range, Matrix.charpoly_natDegree_eq_dim,
-      Fintype.card_fin, Finset.sum_range_succ, hlead] at h
-    simpa only [one_smul] using h
-  have h := congrArg (fun M => (M1.mulVec (M.mulVec (v n))) ⟨0, hd⟩) hCH
-  simp only [Matrix.add_mulVec, Matrix.sum_mulVec, Matrix.smul_mulVec,
-    Matrix.zero_mulVec, Matrix.mulVec_add, Matrix.mulVec_sum, Matrix.mulVec_smul,
-    Matrix.mulVec_zero, Pi.add_apply, Finset.sum_apply, Pi.smul_apply, smul_eq_mul,
-    hpower, hread, Pi.zero_apply] at h
-  change a (2 ^ (n + d + 2) + 1) =
-    ∑ i : Fin d, -(M0.charpoly.coeff i.val) * a (2 ^ (n + i.val + 2) + 1)
-  rw [Fin.sum_univ_eq_sum_range (fun i => -M0.charpoly.coeff i * a (2 ^ (n + i + 2) + 1)) d]
-  simp only [neg_mul, Finset.sum_neg_distrib]
-  linarith
-
-private theorem source_nonregularity : claim := by
+/-- The actual list count is nonregular over every nonzero commutative ring.
+The contradiction uses a monic forward recurrence and never divides. -/
+theorem nonregularity_over (R : Type*) [CommRing R] [Nontrivial R] :
+    ¬ BinaryDecimation.MatrixFamily (fun n => (count n : R)) := by
   intro ha
-  obtain ⟨E, hd, hE⟩ := dyadic_matrix_recurrence (fun n => (count n : ℤ)) ha
-  let u (n : ℕ) : ℤ := (count (2 ^ (n + 2) + 1) : ℤ)
-  let c (n : ℕ) : ℤ := u (n + 1) - u n
+  obtain ⟨E, hd, hE⟩ := BinaryDecimation.dyadic_matrix_recurrence (fun n => (count n : R)) ha
+  let u (n : ℕ) : R := (count (2 ^ (n + 2) + 1) : R)
+  let c (n : ℕ) : R := u (n + 1) - u n
   have hc : E.IsSolution c := by
-    intro n
-    have h1 := hE (n + 1)
-    have h0 := hE n
-    dsimp [c, u]
-    change _ = ∑ i : Fin E.order, E.coeffs i *
-      ((count (2 ^ (n + i.val + 1 + 2) + 1) : ℤ) - (count (2 ^ (n + i.val + 2) + 1) : ℤ))
-    simp_rw [mul_sub]
-    rw [Finset.sum_sub_distrib]
-    change _ - _ = _
-    rw [show n + E.order + 1 + 2 = (n + 1) + E.order + 2 by omega]
-    simpa only [Nat.add_assoc, Nat.add_comm, Nat.add_left_comm] using congrArg₂ (· - ·) h1 h0
+    simpa only [c, one_mul] using
+      BinaryDecimation.shifted_sub_solution E u hE (1 : R)
   let r := E.order + 2
   have hr : 1 ≤ r := by dsimp [r]; omega
   have hpow : E.order ≤ 2 ^ r := by
@@ -566,7 +515,7 @@ private theorem source_nonregularity : claim := by
   have hshift : E.IsSolution (fun n => c (start + n)) := by
     intro n
     simpa only [Nat.add_assoc] using hc (start + n)
-  have hident : (fun n => c (start + n)) = (fun _ => (0 : ℤ)) := by
+  have hident : (fun n => c (start + n)) = (fun _ => (0 : R)) := by
     apply (E.eq_iff_eqOn_range_order _ _ hshift ?_).mpr
     · intro i hi
       exact hzero i (Finset.mem_range.mp hi)
@@ -595,7 +544,10 @@ private theorem source_nonregularity : claim := by
   have hz := congrFun hident (jump - start)
   have hidx : start + (jump - start) = jump := by omega
   rw [hidx, hnonzero] at hz
-  norm_num at hz
+  exact one_ne_zero hz
+
+private theorem source_nonregularity : claim := by
+  exact nonregularity_over ℤ
 
 /-- A literal arbitrary finite indexed family, with a distinguished member a.
 The indexing type is arbitrary; different indices may carry equal sequences. -/
@@ -607,60 +559,11 @@ def ArbitraryFamily (a : ℕ → ℤ) : Prop :=
       (∀ i n, b i (2 * n + 1) = ∑ j, c1 i j * b j n)
 
 private theorem closed_matrix_iff (a : ℕ → ℤ) : ClosedFamily a ↔ MatrixFamily a := by
-  constructor
-  · rintro ⟨d, hd, b, c0, c1, ha, h0, h1⟩
-    refine ⟨d, hd, fun n i => b i n, c0, c1, ha, ?_, ?_⟩
-    · intro n
-      funext i
-      exact h0 i n
-    · intro n
-      funext i
-      exact h1 i n
-  · rintro ⟨d, hd, F, M0, M1, ha, h0, h1⟩
-    refine ⟨d, hd, fun i n => F n i, M0, M1, ha, ?_, ?_⟩
-    · intro i n
-      exact congrFun (h0 n) i
-    · intro i n
-      exact congrFun (h1 n) i
+  exact BinaryDecimation.closed_matrix_iff a
 
 private theorem arbitrary_matrix_iff (a : ℕ → ℤ) :
     ArbitraryFamily a ↔ MatrixFamily a := by
-  classical
-  constructor
-  · rintro ⟨ι, hι, b, i0, c0, c1, ha, h0, h1⟩
-    let : Fintype ι := hι
-    let : Nonempty ι := ⟨i0⟩
-    have hd : 0 < Fintype.card ι := Fintype.card_pos
-    let z : Fin (Fintype.card ι) := ⟨0, hd⟩
-    let e : ι ≃ Fin (Fintype.card ι) :=
-      (Fintype.equivFin ι).trans (Equiv.swap ((Fintype.equivFin ι) i0) z)
-    have hei : e i0 = z := by simp [e]
-    have hez : e.symm z = i0 := by
-      apply e.injective
-      simp [hei]
-    refine ⟨Fintype.card ι, hd, fun n i => b (e.symm i) n,
-      (fun i j => c0 (e.symm i) (e.symm j)),
-      (fun i j => c1 (e.symm i) (e.symm j)), ?_, ?_, ?_⟩
-    · intro n
-      change b (e.symm z) n = a n
-      rw [hez]
-      exact ha n
-    · intro n
-      funext i
-      change b (e.symm i) (2 * n) = ∑ j, c0 (e.symm i) (e.symm j) * b (e.symm j) n
-      rw [h0]
-      exact (e.symm.sum_comp (fun j => c0 (e.symm i) j * b j n)).symm
-    · intro n
-      funext i
-      change b (e.symm i) (2 * n + 1) = ∑ j, c1 (e.symm i) (e.symm j) * b (e.symm j) n
-      rw [h1]
-      exact (e.symm.sum_comp (fun j => c1 (e.symm i) j * b j n)).symm
-  · rintro ⟨d, hd, F, M0, M1, ha, h0, h1⟩
-    refine ⟨Fin d, inferInstance, (fun i n => F n i), ⟨0, hd⟩, M0, M1, ha, ?_, ?_⟩
-    · intro i n
-      exact congrFun (h0 n) i
-    · intro i n
-      exact congrFun (h1 n) i
+  exact BinaryDecimation.arbitrary_matrix_iff a
 
 
 private theorem source_zero : count 0 = 1 := by
