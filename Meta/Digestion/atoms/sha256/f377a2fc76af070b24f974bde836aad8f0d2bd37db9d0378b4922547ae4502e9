@@ -1,0 +1,64 @@
+**定理 110.2（整个混合边界收缩到全部排除球心）。** 在原 $\mathsf W$ 下，
+每个 $x\in M$ 恰属于一个完整排除球的相对内部。以此定义 $\sigma(x)\in P$，则
+
+$$
+\begin{gathered}
+M=\coprod_{p\in P}\operatorname{ri}D_p,\qquad
+\sigma:M\longrightarrow P\text{ 连续},\qquad
+c:P\overset{\sim}{\longrightarrow}B\text{ 为同胚},\\
+\sigma c=\operatorname{id}_P,\qquad
+H:M\times[0,1]\longrightarrow M,\qquad
+H(x,t)=(1-t)x+t c_{\sigma(x)}.
+\end{gathered}
+\tag{VIII110.4}
+$$
+
+这里 $\coprod$ 只表示集合的不交分解，不宣称其拓扑是离散指标的不交和。
+$H$ 是 $M$ 到 $B$ 的强形变收缩；特别地 $M\simeq P$。
+
+证明。每个边界点都有一个经过它的支撑真面。
+若 $x$ 非纯，该面不能是纯单点，真面穷尽使它等于某张 $D_p$。
+闭欧氏球相对边界上的全部点都是这个球的极点，且面中极点仍为整个 $K$ 的极点，
+所以非纯 $x\in D_p$ 必在 $\operatorname{ri}D_p$。
+反向，$d_p\ge1$ 使每个球内点都位于球中两个不同点的开线段上，故不纯。
+不同 $D_p$ 不能共有非纯点，点球双射遂给唯一标签与所述分解。
+特别地每个 $c_p\in M$，$B\subset M$ 且 $M$ 非空。
+
+标签连续性须在原域证明。整个 $\mathcal E$ 紧，$P,K$ 也紧。
+评价映射连续，故
+
+$$
+\begin{aligned}
+\widetilde Z&=\{(p,x,f)\in P\times K\times\mathcal E:
+                         f(p)=1,\ f(x)=0\},\\
+Z&=\{(p,x)\in P\times K:x\in D_p\}
+\end{aligned}
+\tag{VIII110.5}
+$$
+
+分别是紧集与其紧投影。第二个等式确实成立，因为原 $F_p$ 紧，
+最低读数为零时有一张原效应达到零。因此 $Z$ 是闭关联集，
+这里没有把纯目标零关系或所选效应菜单当作整个关联集。
+
+若 $x_j\to x$ 于 $M$，任何子列的标签 $\sigma(x_j)$ 均有收敛子子列，设极限为 $p$。
+闭关联给 $x\in D_p$，非纯点的唯一标签迫 $p=\sigma(x)$。
+$P$ 紧且可度量，故整列标签收敛到 $\sigma(x)$，即 $\sigma$ 连续。
+由VII105.9，$c_p=(U(p)-p)/2$ 连续。
+若 $c_p=c_q$，这个共同混合点属于两球，唯一性迫 $D_p=D_q$，继而 $p=q$。
+所以连续 $c$ 是紧空间 $P$ 到Hausdorff空间 $B$ 的双射，必为同胚，
+且 $\sigma(c_p)=p$。
+
+$P$ 在 $S$ 中闭，所以 $M$ 在 $S$ 中开。
+公式中的两端都在同一球的相对内部，整条连接线段也在该相对内部。
+因此 $H$ 的每个值都在 $M$；由 $c\sigma$ 连续，$H$ 作为到 $V$ 的映射连续，
+于是作为到子空间 $M$ 的映射也连续。此外
+
+$$
+H(x,0)=x,\qquad H(x,1)=c_{\sigma(x)},\qquad
+H(c_p,t)=c_p.
+\tag{VIII110.6}
+$$
+
+这正是强形变收缩；再用 $B\cong P$ 即得同伦等价。
+证明没有选取随 $p$ 连续变化的球图，也没有要求不同 $d_p$ 相同。证毕。
+

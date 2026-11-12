@@ -248,7 +248,7 @@ private theorem facet_exclusion {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
     linarith [hh.2]
 
 omit [FiniteDimensional ℝ A] in
-private theorem exclusion_symmetric {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
+theorem exclusion_symmetric {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
     (p q : pure C u) : (q : A) ∈ exclusion C u p ↔ (p : A) ∈ exclusion C u q := by
   suffices ∀ p q : pure C u, (q : A) ∈ exclusion C u p →
       (p : A) ∈ exclusion C u q from ⟨this p q, this q p⟩
@@ -327,7 +327,7 @@ private theorem facet_slice_dimension {C : PointedCone ℝ A} {u : A →ₗ[ℝ]
   omega
 
 omit [FiniteDimensional ℝ A] in
-private theorem base_face_lift {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
+theorem base_face_lift {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
     (hstrict : ∀ x ∈ C, x ≠ 0 → 0 < u x) {S : Set A}
     (hconv : Convex ℝ S) (hext : IsExtreme ℝ (base C u) S) :
     ∃ F : PointedCone.Face C, base F.toPointedCone u = S := by

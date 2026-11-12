@@ -11,15 +11,6 @@ internal sealed class FifthOrderTopOnlyRefutationDocument : IScribeDocumentDefin
         H("Fifth-order top-only transfer fails"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("fifth-data"), DeclarationHandle.Create(Prefix + "FifthData"),
-                H("Finite algebraic moment data"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "A datum consists of a finite decidable index type, a commutative real algebra, "
-                    + "a real linear functional, an indexed algebra family, and four real parameters a,b,H,L. "
-                    + "Both underlying types are in universe zero; positivity is a hypothesis of the implication below."))),
-                DescribeRole.Definition),
-            Describe.Lean(
                 DescribeId.Create("claim"), DeclarationHandle.Create(Prefix + "claim"),
                 H("The proposed fifth-moment implication"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),

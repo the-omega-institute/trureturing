@@ -1,0 +1,18 @@
+**开放问题 105.14（弱入口的具体剩余长度桥）。** 以下蕴含均未在这里证明，也没有给同域反例：
+
+$$
+\mathsf W\ \Longrightarrow\ \mathrm G,
+\qquad \mathsf W+\mathrm G\ \Longrightarrow\ \mathrm{PL}_3,
+\qquad \mathsf W\ \Longrightarrow\ \mathrm{PL}_3.
+\tag{VII105.31}
+$$
+
+最后一项准确承接104.8；105.8已把它等价改写为原全三读数范数的全局长度律。
+第一项是共同中心的取得问题；即使取得，第二项仍需跨框架二元证明。
+在G下，内部二纯弦的同一缺口还可读作
+$\lambda_{\min}(p+q)>0$；由(VII105.22)，这恰等价于 $(p+q)/2\in\operatorname{ri}K$。
+任意两纯点有某种凸分解，不能推出其正交谱至多两项非零。
+105.2—105.5已经消除了唯一尺、全域least和数学projectivity的旧缺口，
+不再将它们列为待证；仍缺全纯互易及无条件滤波保纯。
+这里“未证”不表示形式不可判定性，也不表示已证否定。
+
