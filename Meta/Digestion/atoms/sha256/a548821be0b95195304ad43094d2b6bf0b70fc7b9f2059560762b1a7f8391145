@@ -1,0 +1,55 @@
+**同事件提升、纯探针及完整有限中央 CP 判据。** 对每个已经供应的同载体实际事件
+$e:A\to A$ 和每个实际分支，保留原实线性 $\Phi_e$ 的唯一复 HP 延拓，
+另供同一事件的实线性 $P_{E,e}$ 在**全部原实输入**上满足 PRE 第五卷 (82.22)/(85.30)：
+
+$$
+ P_{E,e}Q(a,b,c)=\alpha_{e,1}Q(\Phi_ea,b,c)
+       +\alpha_{e,2}Q(a,\Phi_eb,c)
+       +\alpha_{e,3}Q(a,b,\Phi_ec),\qquad
+ \alpha_{e,\ell}\ge0,\quad\sum_\ell\alpha_{e,\ell}=1.
+\tag{28.5}
+$$
+
+这里 $Q(a,b,c)$ 是原三份乘积接口，类型不同于 native 旧终端投影 $Q$。
+其全实张成才把 $P_{E,e}$ 唯一规定为同一 HP 映射的加权三腿提升。
+对每个输入块指定原 85.3 的归一纯探针 $\psi_i$，令
+$S_e=\{\ell:\alpha_{e,\ell}>0\}$，要求完整**复线性**核条件
+
+$$
+ \ker\left[(H_\ell)_{\ell\in S_e}\mapsto
+                     \sum_{\ell\in S_e}H_\ell^{(\ell)}\psi_i\right]
+ \subseteq
+ \ker\left[(H_\ell)_{\ell\in S_e}\mapsto\sum_{\ell\in S_e}H_\ell\right].
+\tag{28.6}
+$$
+
+单块中它等价于共同解码器 $C_iV_{\psi_i,\ell}=I$，按 85.4 解码完整输出得到 Choi 矩阵。
+在整个 $\mathcal A=\bigoplus_iM_{n_i}(\mathbb C)$ 上，必须用 85.11 的全中央探针
+
+$$
+ (\Xi_\psi)_{iii}=\beta_i|\psi_i\rangle\langle\psi_i|,
+ \qquad\beta_i=\frac{n_i}{\sum_jn_j}>0,
+ \qquad(\Xi_\psi)_{ijk}=0\quad\text{若不全相同}.
+\tag{28.7}
+$$
+
+85.12、85.16 给完整等价
+
+$$
+ P_{E,e}(\Xi_\psi)\ge0
+ \quad\Longleftrightarrow\quad\Phi_e\text{ CP}
+ \quad\Longleftrightarrow\quad P_{E,e}\text{ 在整个原三份正锥上正}.
+\tag{28.8}
+$$
+
+这包括所有不等维、标量及非对角中央转移：对角输出 $iii$ 经共同解码器给
+$\beta_iJ(\Phi_{e,ii})\ge0$；对任一活跃腿和 $j\ne i$，输出标签仅该腿改成 $j$ 的块独占来自种子 $iii$，
+其值是 $\beta_i\alpha_{e,\ell}V_{ji,\ell}J(\Phi_{e,ji})V_{ji,\ell}^*$。
+核条件给活跃腿满 Schmidt 秩，矩形 $V_{ji,\ell}$ 单射，左逆压缩遂检测全部转移 Choi 块。
+因此不能只取单个复块的证书代替全有限中央条件。
+测试种子的正权不加到原所有输入，零腿权无需核认证；原态的零与不等质量仍保留。
+探针的数学存在不提供实际准备、复制、独立单腿控制或环境记录。
+其它输入输出类型的事件，仍消费 69.1–69.11、79.8、82.5 的原 typed 实际参考、足够维数、每输入扇区正权、
+同事件乘积／递归参考延拓及其整个原联合正域条件，不把同载体判据无条件外推。
+已有完整原正输出的过程下降也保持 86/87 的已得域；不能为认证 HP 提升的正性而循环预付其全锥正性。
+

@@ -1,0 +1,17 @@
+**定义 6.3（相干二分量的三坐标球面）。** 固定单位
+$u\in\mathcal K_0$、$z\in\mathcal K_1$，在另一个数学
+$\mathbb {CP}^1$ 截面中写单位射线
+$[\alpha u+\beta z]$，$|\alpha|^2+|\beta|^2=1$。三个实坐标
+
+$$
+\mathbf r=(2\operatorname{Re}(\bar\alpha\beta),
+           2\operatorname{Im}(\bar\alpha\beta),
+           |\alpha|^2-|\beta|^2)
+\quad\text{满足}\quad \|\mathbf r\|_2=1.
+\tag{6.3}
+$$
+
+原 $t_0=(1+r_3)/2$。两个这样的射线满足
+$d=\|\mathbf r-\mathbf r'\|_2/2$，由秩一投影的内积公式直接得到。它是相干二元关系的一张三实坐标球面图；(6.1) 则同时展示条件终端读数如何改变。二者各有用途，都没有覆盖全部来源几何。若选 $u\in Q\mathcal K_0$、
+$z\in(I-Q)\mathcal K_1$，该球面内部的 D 非盲；若两者都在 $\ker Q$，整张球面内部对 D 都盲。这说明不能靠选一张方便的图省去原全域供应。
+

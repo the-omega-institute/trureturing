@@ -1,0 +1,77 @@
+**命题 16.2（每一次数的第三方向谐和见证）。** 取以 $e_-,e_+$ 为前两个基向量的正交单位坐标系，第三个基向量与二者正交；于是 $e_-$、$e_+$ 分别是 $z_1$、$z_2$ 坐标方向。在这些坐标
+$(z_1,z_2,z_3,\ldots,z_d)$ 中，令
+
+$$
+ h(z)=z_1^2\overline {z}_2^{\,2},\qquad
+ s(z)=|z_1|^2+|z_2|^2,\qquad
+ p_j(z)=h(z)s(z)^{j-2}\quad(j\ge2),
+$$
+
+并令
+
+$$
+ \Delta_{12}=\partial_{z_1}\partial_{\overline z_1}
+              +\partial_{z_2}\partial_{\overline z_2},
+ \qquad
+ \Delta=\sum_{r=1}^d\partial_{z_r}\partial_{\overline z_r}.
+$$
+
+定义
+
+$$
+ H_j(z)=\sum_{k=0}^{j-2}
+ \frac{(-1)^k|z_3|^{2k}}{(k!)^2}\,\Delta_{12}^{\,k}p_j(z).
+\tag{16.3}
+$$
+
+则 $H_j$ 是 $(j,j)$ 双齐次、全局相位不变且满足 $\Delta H_j=0$ 的多项式。其球面限制属于次数 $j$ 的复射影球谐不可约分量，并且
+
+$$
+ \nu(H_j)=2t(1-t)(1-\zeta^{-2})\ne0
+ \qquad(j\ge2).
+\tag{16.4}
+$$
+
+证明。$h$ 对 $\Delta_{12}$ 是调和的：第一项需要同时含 $z_1$ 与 $\overline z_1$，第二项需要同时含 $z_2$ 与 $\overline z_2$，二者都为零。乘积求导给出
+
+$$
+ \Delta_{12}(hs^m)=m(m+5)hs^{m-1}\quad(m\ge1),
+ \qquad\Delta_{12}h=0.
+$$
+
+其中径向项贡献 $m(m+1)$，$h$ 的两个 Euler 次数各为二，交叉项再贡献 $4m$。故反复作用于 $p_j=hs^{j-2}$ 后有
+
+$$
+ \Delta_{12}^{\,j-1}p_j=0.
+\tag{16.5}
+$$
+
+同时 $\partial_{z_3}\partial_{\overline z_3}|z_3|^{2k}=k^2|z_3|^{2k-2}$（$k\ge1$）。在 $\Delta H_j$ 中，对 $0\le k\le j-2$，第 $k$ 项的 $\Delta_{12}$ 部分是
+
+$$
+ A_k=\frac{(-1)^k|z_3|^{2k}}{(k!)^2}\Delta_{12}^{k+1}p_j,
+$$
+
+对 $0\le k\le j-3$，第 $k+1$ 项的 $z_3$-拉普拉斯部分是
+
+$$
+ B_{k+1}=\frac{(-1)^{k+1}(k+1)^2|z_3|^{2k}}{((k+1)!)^2}
+ \Delta_{12}^{k+1}p_j=-A_k.
+$$
+
+这些项逐对抵消。第零项的 $z_3$ 导数为零，末端 $A_{j-2}$ 由 $\Delta_{12}^{j-1}p_j=0$ 消失；$j=2$ 时也直接如此。因此 $\Delta H_j=0$。每个求和项的 $z$、$\overline z$ 次数分别为 $j,j$，第三方向只提供抵消链，不改变双次数。
+
+在四个锚点上 $z_3=0$、$s=1$，所以 $H_j(\psi_k)=h(\psi_k)=a^2b^2\zeta^{-2k}$。使用
+$\zeta^{10}=1$ 和 $\zeta^{12}=\zeta^2$ 得
+
+$$
+\begin{aligned}
+\nu(H_j)
+ &=a^2b^2(1+\zeta^{-10}-\zeta^{-2}-\zeta^{-12})\\
+ &=2a^2b^2(1-\zeta^{-2})
+ =2t(1-t)(1-\zeta^{-2}),
+\end{aligned}
+$$
+
+且最后一项不为零。$H_j$ 的双齐次性和全局相位不变性把它限制为 $\mathbb {CP}^{d-1}$ 上的球谐函数。证毕。
+

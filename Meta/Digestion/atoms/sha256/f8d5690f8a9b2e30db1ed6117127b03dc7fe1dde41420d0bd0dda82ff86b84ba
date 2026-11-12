@@ -1,0 +1,26 @@
+**定义 1.4（实际射线域及距离）。** 对非零 $u$ 令
+$P_u=uu^*/\|u\|^2$，并置
+
+$$
+X=\mathbb P(\mathcal K)=\mathbb {CP}^{88},\qquad
+X_{\mathrm{act}}=\{[\chi_a]:a\in\mathsf W_{11}\},\qquad
+d([u],[z])=\tfrac12\|P_u-P_z\|_1
+ =\|P_u-P_z\|_{\mathrm{op}}.
+\tag{1.5}
+$$
+
+单位代表上 $d=\sqrt{1-|\langle u,z\rangle|^2}$。这是 II132.3 与 III150.1 的原纯态射影距离；不以取得合同中的相位最小向量距离偷换它。后者在需要原误差预算时仍按原定义使用。
+
+在整个数学域上记 $t_i([u])=\operatorname{Tr}(M_iP_u)$；它在实际点等于已定义的 $t_i(a)$，在其它点只表示已知投影的几何数值，不预置记录概率。
+
+直接消费 III144.12：
+
+$$
+\overline{X_{\mathrm{act}}}=X.
+\tag{1.6}
+$$
+
+其来源是 II121.7 的全 $V_{12}^{\mathbf1}$ 射影密度。II 的路径／Young 表对应在此取
+$(k,r,n)=(2,5,12)$、$\lambda=[6,6]$、全部 $89$ 个表；[Freedman–Larsen–Wang][FLW] Theorem 0.1 的条件
+$r\ge5,\ r\ne6,10,\ n\ge3$ 在此成立，闭像包含相应特殊酉因子。原共同标量在射影像消去，逆调用由九次正向调用表示。这里只复用矩阵密度，不重新证明它，不把闭包目标变成实际准备、概率或权限。
+

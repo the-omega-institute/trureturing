@@ -1,0 +1,32 @@
+**命题 19.2（有限秩的非循环四次项）。** 令
+
+$$
+ q_4(P)=\bigl(\operatorname {Tr}(P_{\psi_0}P)\bigr)^2,
+ \qquad p_4(a)=q_4(P_{K_ae_0}).
+\tag{19.2}
+$$
+
+则 $q_4$ 的 profiles 来自 $\operatorname {Sym}^2(\mathbb C^d)$ 的有限矩阵系数，保留有限 predictive rank、统计 $\mathrm R_{10}$ 与 uniform ready-return；但在 native 四点上，取 $f=\epsilon$ 的精确 residual 为
+
+$$
+ p_4(\epsilon)+p_4(9^5)-p_4(9)-p_4(9^6)
+ =(5+\sqrt5)x^6>0.
+\tag{19.3}
+$$
+
+证明。置 $\theta=3\pi/5$、$t=x$、$c=t(1-t)=x^3$，并写
+
+$$
+ r_k=|\langle\psi_0,\psi_k\rangle|^2=A+B\cos(k\theta).
+$$
+
+直接展开 $r_0^2+r_5^2-r_1^2-r_6^2$ 得
+
+$$
+ 8c^2\sin^2\theta
+ =8x^6\sin^2(3\pi/5)
+ =(5+\sqrt5)x^6.
+$$
+
+这说明有限 profile、$\mathrm R_{10}$ 和 ready-return 不足以推出新 row relation。它是列出的 terminal 数学类中的有限反例，不是保留完整原 $\Omega$、旧校准、真实记录菜单和物理源合同的反模型。
+

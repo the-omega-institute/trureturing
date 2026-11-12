@@ -1,0 +1,15 @@
+**定义 2.1（逐点局部关系 L）。** 对原实际边缘要求
+
+$$
+\mathrm L:\quad
+\forall a\in\mathsf W_{11}\ \forall\epsilon>0\
+\exists\delta(a,\epsilon)>0\
+\forall b\in\mathsf W_{11}:\quad
+d([\chi_a],[\chi_b])<\delta(a,\epsilon)
+\ \Longrightarrow\
+|m_0(a)-m_0(b)|<\epsilon.
+\tag{2.1}
+$$
+
+$\delta$ 可依赖中心前缀 $a$ 和 $\epsilon$；没有对 $a$ 一致的模，没有量化可执行任意输入，也未预设 $X$ 上的记录函数。L 约束的是两个实际历史的几何邻近与记录边缘，单独不把两份完整档案等同。
+

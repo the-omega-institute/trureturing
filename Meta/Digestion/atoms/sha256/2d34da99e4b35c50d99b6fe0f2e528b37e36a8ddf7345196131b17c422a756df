@@ -1,0 +1,40 @@
+**命题 23.4（同一原字联合秩准确为 $15842$）。** (23.2) 的粗行及全部细标签的联合行，均在定义 22.1 的同一个原十一地址未来域计秩；它们满足
+
+$$
+r_A=89^2=7921,\qquad
+r_J=2\cdot89^2=15842.
+\tag{23.10}
+$$
+
+证明。粗秩直接复用 (22.5)／(17.9)，因为 $E_A=Q$ 非标量。为计算联合秩而不假定细标签下降，令 $Q_f=K_f^*QK_f$，对 $X,Z\in\operatorname{Herm}_{89}(\mathbb C)$ 定义有界实线性行映射
+
+$$
+\begin{aligned}
+\mathcal J(X,Z)(\star)&=\operatorname{Tr}X,\\
+\mathcal J(X,Z)(\ell_+,f)&=\tfrac12\operatorname{Tr}(Q_fX)
+                         +\eta\sigma(f)\operatorname{Tr}(Q_fZ),\\
+\mathcal J(X,Z)(\ell_-,f)&=\tfrac12\operatorname{Tr}(Q_fX)
+                         -\eta\sigma(f)\operatorname{Tr}(Q_fZ),\\
+\mathcal J(X,Z)(\ell_0,f)&=\operatorname{Tr}X-\operatorname{Tr}(Q_fX),
+\end{aligned}
+\tag{23.11}
+$$
+
+其余标签坐标为零。由 $\sigma(af)=\sigma(a)\sigma(f)$ 得
+
+$$
+z_a=\mathcal J(P_{\chi_a},\sigma(a)P_{\chi_a}),
+\tag{23.12}
+$$
+
+所以 $r_J\le2\cdot89^2$。
+
+反向，(23.3) 对每个实际 $a$ 已给两条实际特征对
+$(P_{\chi_a},\sigma(a)P_{\chi_a})$ 和
+$(P_{\chi_a},-\sigma(a)P_{\chi_a})$，分别来自 $a$ 与 $0a$。取其半和与半差，得到 $(P_{\chi_a},0)$ 和 $(0,\sigma(a)P_{\chi_a})$。原 ready 射线稠密，且有限维线性子空间闭，故所有实际 $P_{\chi_a}$ 实张成整个 Hermitian 空间。因此这些实际特征对实张成两个 Hermitian 空间的直和；不需要额外的奇偶类群密度假设，也不按编织关系的字母数计数。
+
+$\mathcal J$ 单射：若其值为零，两内部标签的和与差给
+$\operatorname{Tr}(Q_fX)=\operatorname{Tr}(Q_fZ)=0$ 对所有原 $f$ 成立。这里 $\eta>0$ 且每个 $\sigma(f)=\pm1$。原密度将这些等式延拓到整个酉共轭轨道。$Q$ 的非零迹使该轨道的 Haar 平均为非零标量 $I$，故 $\operatorname{Tr}X=\operatorname{Tr}Z=0$；再用 (17.9)／(9.14) 已有的非标量共轭轨道张成，得 $X=Z=0$。实际特征张满且 $\mathcal J$ 单射，遂给 $r_J\ge2\cdot89^2$，与上界相等。按 II78.2 的有限子矩阵秩约定，这是实际有限原字行列的实秩，不是仅数一个未被消费的参数空间。
+
+这项倍秩来自同一原射线之上的实际历史符号。它尚未下降到连续射线函数域，不能套用 II78–84 或 Galley–Masanes 的 spherical 分类来把它认作一个新高次射线分量。那些既有的函数／Hankel 秩识别、S-free 排除和四次秩跳变保持原范围，不在此重证。∎
+

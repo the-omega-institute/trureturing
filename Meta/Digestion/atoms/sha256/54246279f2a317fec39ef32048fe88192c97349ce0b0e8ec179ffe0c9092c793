@@ -1,0 +1,10 @@
+**命题 19.3（二能级平衡端点与 native 边界）。** 把射影二能级写成 Bloch 球 $r\in S^2$。在平衡 $t=1/2$ 时，$\psi_{k+5}$ 是 $\psi_k$ 的 Bloch 对跖点；任意
+
+$$
+ q(r)=\tfrac12+\varepsilon r_z^3,\qquad0<\varepsilon\le\tfrac12,
+$$
+
+都满足 $q(r)+q(-r)=1$，所以对所有旋转后的平衡四点都满足 (16.1)，但它不是 Born 二次效应。这里没有对 native 不平衡 $t=x$ 作失败断言。$t=0$ 或 $t=1$ 时关系退化为同一点的恒等式；若形式上令 $\zeta^2=1$，(16.4) 的见证也退化。旧 II90 的 all-contexts uniform noise bound 不被移植到这一单锚关系；本节不给新的 uniform noise bound。
+
+证明。$r_z^3$ 是奇函数，故对跖点相加为零；它含三次球谐分量，不能写成 $c+v\cdot r$。平衡点的对跖性正是这里使用的额外条件，native 的 $x\ne1/2$ 不具备它。其余退化说明直接来自 (16.4)。证毕。
+
