@@ -165,7 +165,7 @@ private theorem actual_quartic_error {j : ℕ} (hj : 2 ≤ j) :
     apply hh.trans
     have hh' := abs_add_le (log X ^ 4 * η j X)
       (-(log X ^ 4 * (F (log X) ((P (log j)).eval (1 / log X)) - log j)))
-    rw [abs_neg] at hh' 
+    rw [abs_neg] at hh'
     calc
       _ = |log X ^ 4 * (log j + η j X -
           F (log X) ((P (log j)).eval (1 / log X)))| := by
