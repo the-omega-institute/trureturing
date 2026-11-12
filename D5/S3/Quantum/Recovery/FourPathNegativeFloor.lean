@@ -47,7 +47,7 @@ private lemma constants :
   have hh : h^2=1/2 := by unfold h; rw [div_pow,r2]; norm_num
   have hrh : Real.sqrt 2=2*h := by
     unfold h
-    apply (eq_div_iff (by positivity : Real.sqrt (2:ℝ) ≠ 0)).mp
+    field_simp
     nlinarith only [r2]
   have cp : 0 < c := by unfold c; rw [Real.cos_pi_div_eight]; positivity
   have sp : 0 < s := by
@@ -70,7 +70,7 @@ private lemma constants :
   have cu : c < (231/250:ℝ) := by nlinarith only [cc,ru,cp]
   refine ⟨hl,hu,sl,su,cl,cu,hh,by nlinarith only [hh,ss,hrh],
     by nlinarith only [hh,cc,hrh],?_,?_,?_,?_,?_,?_⟩
-  · nlinarith only [mul_lt_mul su hu hp.le (by norm_num : (0:ℝ) < 3827/10000)]
+  · nlinarith only [mul_lt_mul su hu hp (by norm_num : (0:ℝ) ≤ 3827/10000)]
   · have ht : (h-s)^2 ≤ (3246/10000:ℝ)^2 :=
       (sq_le_sq₀ (by linarith : 0 ≤ h-s) (by norm_num)).mpr (by linarith)
     nlinarith only [ht]
@@ -86,6 +86,8 @@ private lemma constants :
 private lemma parameter_bounds (q : ℝ) (hq : 11/100 ≤ q) (hq' : q ≤ 23/200) :
     1 < L q ∧ 77/50 < (L q)^2 ∧ (L q)^2 < 311/200 ∧
     0 ≤ Real.sqrt ((1-q)*q) ∧ Real.sqrt ((1-q)*q) < 8/25 := by
+  have qn : 0 ≤ q := by linarith
+  have pn : 0 ≤ 1-q := by linarith
   have sq := Real.sq_sqrt (show 0 ≤ (1-q)*q by positivity)
   have sn := Real.sqrt_nonneg ((1-q)*q)
   dsimp [L]
@@ -110,6 +112,9 @@ private lemma original_radicals (q X Y : ℝ) (hq : 11/100 ≤ q) (hq' : q ≤ 2
   obtain ⟨l1,al,au,rest'⟩ := parameter_bounds q hq hq'
   obtain ⟨hX,hX1,hY,hY1,htri⟩ := ht
   have fp : 0 ≤ F (L q) X Y := Real.sqrt_nonneg _
+  have an : 0 ≤ (L q)^2-1 := by linarith
+  have ds : 0 ≤ h-s := by linarith
+  have xn : 0 ≤ 1-X := by linarith
   constructor
   · unfold R
     apply Real.sq_sqrt
@@ -208,7 +213,9 @@ private lemma low_width_cap (a u v b : ℝ) (hu : 0 < u) (huv : u ≤ v)
     nlinarith only [h₀,p₁,p₂,δ3]
   unfold W
   apply (div_le_iff₀ (sq_pos_of_pos hu)).mpr
-  nlinarith only [certificate,mul_le_mul_of_nonneg_left dcap (sq_nonneg (2-u))]
+  calc
+    B u*D a u ≤ B u*D (77/50) u := mul_le_mul_of_nonneg_left dcap (sq_nonneg _)
+    _ ≤ b*u^2 := by linarith only [certificate]
 
 /-- The full negative-row bound on every point of the original closed triangle. -/
 theorem negative_floor (q X Y : ℝ) (hq : 11/100 ≤ q) (hq' : q ≤ 23/200)
@@ -252,7 +259,7 @@ theorem negative_floor (q X Y : ℝ) (hq : 11/100 ≤ q) (hq' : q ≤ 23/200)
     nlinarith only [mul_nonneg (sub_nonneg.mpr hvu) (show 0 ≤ 4-u-v by linarith)]
   have result : (Gamma q X Y)^2 < (49359:ℝ)/40000 := by
     by_cases hu₀ : u ≤ 4/5
-    · apply row 0
+    · refine row 0 ?_ ?_
       · norm_num [FourPathFloorCertificate.segmentNonroot,N]
         dsimp [a] at ul ⊢
         nlinarith only [al,au,ul]
@@ -261,7 +268,7 @@ theorem negative_floor (q X Y : ℝ) (hq : 11/100 ≤ q) (hq' : q ≤ 23/200)
         norm_num [FourPathFloorCertificate.segmentRadical]
         linarith only [cap]
     by_cases hu₁ : u ≤ 9/10
-    · apply row 1
+    · refine row 1 ?_ ?_
       · norm_num [FourPathFloorCertificate.segmentNonroot,N]
         dsimp [a]
         nlinarith only [au,hu₀]
@@ -270,7 +277,7 @@ theorem negative_floor (q X Y : ℝ) (hq : 11/100 ≤ q) (hq' : q ≤ 23/200)
         norm_num [FourPathFloorCertificate.segmentRadical]
         linarith only [cap]
     by_cases hu₂ : u ≤ 1
-    · apply row 2
+    · refine row 2 ?_ ?_
       · norm_num [FourPathFloorCertificate.segmentNonroot,N]
         dsimp [a]
         nlinarith only [au,hu₁]
@@ -280,7 +287,7 @@ theorem negative_floor (q X Y : ℝ) (hq : 11/100 ≤ q) (hq' : q ≤ 23/200)
         linarith only [cap]
     have u1 : 1 < u := not_le.mp hu₂
     by_cases hu₃ : u ≤ 21/20
-    · apply row 3
+    · refine row 3 ?_ ?_
       · norm_num [FourPathFloorCertificate.segmentNonroot,N]
         dsimp [a]
         nlinarith only [au,u1]
@@ -305,7 +312,7 @@ theorem negative_floor (q X Y : ℝ) (hq : 11/100 ≤ q) (hq' : q ≤ 23/200)
         nlinarith only [au,hu₃]
       linarith only [support,root,nonroot]
     by_cases hu₅ : u ≤ 6/5
-    · apply row 4
+    · refine row 4 ?_ ?_
       · norm_num [FourPathFloorCertificate.segmentNonroot,N]
         dsimp [a]
         nlinarith only [au,hu₄]
@@ -313,14 +320,14 @@ theorem negative_floor (q X Y : ℝ) (hq : 11/100 ≤ q) (hq' : q ≤ 23/200)
         norm_num [FourPathFloorCertificate.segmentRadical]
         nlinarith only [cap]
     by_cases hu₆ : u ≤ 13/10
-    · apply row 5
+    · refine row 5 ?_ ?_
       · norm_num [FourPathFloorCertificate.segmentNonroot,N]
         dsimp [a]
         nlinarith only [au,hu₅]
       · have cap := (highB u1).trans (bcap (6/5) (by linarith))
         norm_num [FourPathFloorCertificate.segmentRadical]
         nlinarith only [cap]
-    · apply row 6
+    · refine row 6 ?_ ?_
       · norm_num [FourPathFloorCertificate.segmentNonroot,N]
         dsimp [a]
         nlinarith only [au,hu₆]
