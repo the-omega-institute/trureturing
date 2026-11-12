@@ -31,7 +31,7 @@ The frozen Fibonacci error-ratio module provides related golden-ratio asymptotic
 
 The source's revision 11 states the conjecture and formula without a proof. The bounded literature qualification is recorded in the source note and [issue 29484](https://github.com/the-omega-institute/trureturing/issues/29484). It does not establish worldwide priority or exhaustive continued openness.
 
-The exact event, probabilities and deadline remain those in the unchanged [strict preregistration](https://github.com/the-omega-institute/trureturing/issues/29484#issuecomment-6815772263). Its SHA-256 is `1269af126316d9a2139ab8615463502c63c0e66145f740ac03f4cf6aa0f887a7`. The probabilities 0.97 and 0.97 concern mathematical truth, and the actual model families remain unverified. `firstmath=UNMEASURED` because the earlier Pro mathematical advice was not measured. This dossier supplies no terminal scoring or replacement prediction.
+Preregistration: [issue 29484, comment 6815772263](https://github.com/the-omega-institute/trureturing/issues/29484#issuecomment-6815772263).
 
 ## Route
 
@@ -71,4 +71,4 @@ All auxiliary lemmas are private and used on the live path to the single public 
 
 ## ASSUMED-UNVERIFIED
 
-Worldwide literature completeness, priority, independent uptake and actual model-family diversity are unverified. The preserved first-mathematics timing is unmeasured. Independent pre-freeze approval is pending; no freeze or final event settlement is claimed by the implementation alone.
+Worldwide literature completeness, priority and independent uptake are unverified. Independent pre-freeze approval is pending; no freeze or final event settlement is claimed by the implementation alone.
