@@ -1,0 +1,50 @@
+**Proposition 7.2 (The supplied upper has exactly this interface).** Under the fixed source premises, U, Theorem 8.1, supplies positive constants $C_M^{\rm up},C_T^{\rm up},s_*$ and, for every $0<s<s_*$, one observer in $\mathfrak A_{M(s)}(e^{-s},\alpha)$ such that
+
+$$
+M(s)\le C_M^{\rm up}s^{-1},\qquad
+\max_i\mathbb E_{i,e^{-s}}T\le C_T^{\rm up}s^{-3}.
+\tag{7.6}
+$$
+
+In its notation a permissible choice is
+
+$$
+\begin{aligned}
+c&=\frac{a}{9\cdot2^{10}}>0,&
+\ell&=\log\frac{1-\alpha}{\alpha}>0,\\
+C_M^{\rm up}&=\frac{16\ell}{c}+5,&
+C_T^{\rm up}&=\frac{176\ell}{c^2}+\frac{44}{c}+7.
+\end{aligned}
+\tag{7.7}
+$$
+
+The radius $s_*$ depends only on the fixed source. These constants are independent of $s$.
+
+Proof by explicit supplier correspondence. U's Definitions 2.1–3.1 use exactly (2.1)–(2.9), including the stationary wait, positive iid zero counts, known common $q$, identical source-blind initialization, permitted immutable real probabilities and all six obligations. In particular its $a$ is the fixed positive degree-eight coefficient, and its source radius is independent of all selected machines.
+
+U sets
+
+$$
+u_i(q)=Z_i(q^2)/Z_i(q),\qquad
+\Delta(q)=u_1(q)-u_0(q),\qquad
+t=(u_0+u_1)/2,\qquad
+L=\lceil2\ell/\Delta(q)\rceil.
+\tag{7.8}
+$$
+
+Its supplied separation is $\Delta(e^{-s})=cs+O_H(s^2)>0$ sufficiently near the endpoint. These are immutable calibrations of the two promised models at the same known $q$, and are not measurements of the actual source or true-label advice.
+
+The complete table in U, Definition 4.2, has one first-tick waiting state, both emitted labels, and pairs $(j,h)$ with $-L<j<L$, $h\in\{0,1\}$. Its full count is $4L+1$. The waiting state pays every initial zero and the first tick. On a zero, a live survival flag survives with probability $q$, and a failed flag remains failed; no suffix is skipped. On a closing tick the current flag and a fresh midpoint coin select an upward, downward or holding score update. An interior successor rearms the flag within that transition; a boundary emits its label immediately. These are direct finite-state rows, with no online arithmetic workspace, uncounted clock, seed position or additional initialization microstates. Resetting a counted flag changes the observer, not the source.
+
+U, Lemma 5.1, proves the same-gap conditional survival probability $q^{K_r}$ and iid potential marks of law Bernoulli$(u_i(q))$. Its Theorems 6.2 and 7.1 separately establish both risks, both almost-sure stops and both finite paid means. In particular, if $N_{\rm up}$ counts its completed post-first-tick gaps, its actual paid cost and mean are
+
+$$
+T=1+\tau+\sum_{r=1}^{N_{\rm up}}(K_r+1),\qquad
+\mathbb E_iT=1+\beta_i+\mu_i\mathbb E_iN_{\rm up}.
+\tag{7.9}
+$$
+
+The inclusion of gap $r$ is determined before that gap begins. Its duration need not be independent of its own mark or stopping decision. Thus (7.9) uses the same actual history under its selected true label and pays the closing terminal tick. The table remains finite on every bit/coin history, including arbitrarily long initial and failed-survival zero runs. It does not require a deterministic paid cap.
+
+U, Theorem 8.1, now gives precisely (7.6)–(7.7) for this same table, simultaneously under both labels. No optional all-interior fallback or sum-four certificate from its Section 9 is needed here. This is application and resource verification of an existing upper theorem, not an additional upper construction or a reproof claimed as new content. $\square$
+
