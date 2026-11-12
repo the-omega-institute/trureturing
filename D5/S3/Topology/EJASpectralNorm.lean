@@ -49,10 +49,11 @@ private theorem two_lin1_apply (a b w : J) :
     (2 : ℕ) • (b * (a * a * w) - a * a * (b * w))
       + (4 : ℕ) • (a * (a * b * w) - a * b * (a * w)) = 0 := by
   have h := congrArg (fun f : AddMonoid.End J => f w) (two_lin1_raw a b)
-  with_reducible_and_instances
-    change (2 : ℕ) • (b * (a * a * w) - a * a * (b * w))
-      + (4 : ℕ) • (a * (a * b * w) - a * b * (a * w)) = 0 at h
-  exact h
+  simp only [Ring.lie_def] at h
+  rw (transparency := .default) [AddMonoidHom.add_apply,
+    AddMonoidHom.nsmul_apply, AddMonoidHom.nsmul_apply,
+    AddMonoidHom.sub_apply, AddMonoidHom.sub_apply] at h
+  with_unfolding_all exact h
 
 end Linearisation
 
