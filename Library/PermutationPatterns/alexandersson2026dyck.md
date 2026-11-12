@@ -14,6 +14,10 @@ triage: anchor
 
 # Alexandersson, Dyck-word Narayana statistics
 
+## Verified locator
+
+Source: https://github.com/PerAlexandersson/RealRooted/blob/27276f93bbaf6b46bce689bca110bbacab1bba6b/RealRooted/Mathlib/Combinatorics/Enumerative/DyckStatistics.lean
+
 The exact supplier is RealRooted commit 27276f93bbaf6b46bce689bca110bbacab1bba6b,
 `RealRooted/Mathlib/Combinatorics/Enumerative/DyckStatistics.lean`, SHA256
 0421ff0edbddb5c6616719282832e3cb1081be0cea91b1a29b19ddd6d2f6708b.

@@ -19,6 +19,12 @@ triage: anchor
 
 # Ma and Zhang, ordinary ascent sequences and literal vincular patterns
 
+## Verified locator
+
+Source return and reuse map: https://github.com/the-omega-institute/trureturing/issues/29483#issuecomment-6832487181
+
+Revision-3 source receipt: https://github.com/the-omega-institute/trureturing/issues/29483#issuecomment-6831314379
+
 Copyright 2026 Haobo Ma and Wenlin Zhang. The supplied manuscript is licensed under
 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Haobo Ma is affiliated with
 Chrono AI, Singapore. Wenlin Zhang is affiliated with the National University of
