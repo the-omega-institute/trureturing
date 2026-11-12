@@ -110,6 +110,10 @@ Lean statement: `D5/S3/StatisticalMechanics/HardCore/IrrationalIndependenceRoot.
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/HardCore/IrrationalIndependenceRoot.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/brown-cameron-2020-irrational-imaginary-independence-root` (proved) by `D5/S3/StatisticalMechanics/HardCore/IrrationalIndependenceRoot.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"brown-cameron-2020-irrational-imaginary-independence-root","declaration_gid":"D5/S3/StatisticalMechanics/HardCore/IrrationalIndependenceRoot.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* J. I. Brown and Ben Cameron (2020). *A note on purely imaginary independence roots*. DOI: [10.1016/j.disc.2020.112113](https://doi.org/10.1016/j.disc.2020.112113). URL: <https://arxiv.org/abs/2001.08881v2>.
