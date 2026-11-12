@@ -1,0 +1,24 @@
+**定义 80.1（完整原基底与全框架缺陷）。** $\mathrm{PRE}_0^{\rm mix}$ 完全取定义 78.1：每个 $X=A,D,E$ 非零有限维，使用整个紧态基、全部 proper 效应、纯态最小确认比较，及所有纯 $\xi,\eta$、所有原混态 $x$、$0\le t\le1$ 的混合余项二元律
+$$
+T^X_\xi(t\eta+(1-t)x)=tT^X_\eta(\xi)+(1-t)T^X_\xi(x).
+$$
+先按 77.19 恢复完整 $S$，再使用同一一般有限 EJA 条件桥，包括正对偶生成、忠实态效应对应、共同框架、面投影、项目性与滤波纯性。在其原规范迹坐标中，不预设复型、不可约性、结合性或三框架生成，允许直和、秩一和 Albert。
+唯一供应的接合与读回仍为全锥正实双线性 $L:D\times A\to E$ 和同一个全锥正实线性 $p:E\to D$；原参考 $\omega=1_D/\tau_D1_D$。全部内部量按原式
+$$
+\begin{aligned}
+K(a)&=pL(\omega,a),&M(a,b)&=pL(K(a),b),&J(a)&=M(a,1_A),\\
+H_{\mathrm s}(d)&=L(d,1_A),&B_1&=pH_{\mathrm s},&U&=M(1_A,1_A),\quad G=H_{\mathrm s}1_D,\quad F=P_{U^{-1/2}}M.
+\end{aligned} \tag{80.1}
+$$
+保留 $\operatorname{span}_{\mathbb R}M(A,A)=D$、$\operatorname{span}_{\mathbb R}L(D,A)=E$ 及全部实 $a,b$ 上的 $Z:B_1M(a,b)=\tau_A(a)Jb$。$L,p$ 的正性覆盖整个原锥和纠缠方向；同一个 $p$ 连续两次、原迹与原参考均不变。正性与两实张成先给 $U,G>0$，故零关系之前 $F$ 已正且 $F(1,1)=1_D$。
+令 $\mathcal F(A)$ 为原 $A$ 的全部完整本原 Jordan 框架；每个框架有 $n=\operatorname{rank}A$ 个成员。框架标签只用于求和。对 $B\in\mathcal F(A)$ 定义
+$$
+\begin{aligned}
+q_J(B)&=\|U\|_2^2-\sum_{e\in B}\|Je\|_2^2,\\
+q_H(B)&=\|G\|_2^2-\sum_{e,f\in B}\|H_{\mathrm s}F(e,f)\|_2^2,\\
+q(B)&=q_J(B)+q_H(B),\qquad
+\boxed{\mathcal D(L,p)=\max_{B\in\mathcal F(A)}q(B).}
+\end{aligned} \tag{80.2}
+$$
+这是 78.3 的单套同标方格缺陷在整个原框架几何上的上包络。既不指定外加框架，也不输入字典、生成系数或条件数；全框架量词本身没有被删除。
+

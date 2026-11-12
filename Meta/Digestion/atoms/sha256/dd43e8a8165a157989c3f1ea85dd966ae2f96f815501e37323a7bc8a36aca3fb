@@ -1,0 +1,21 @@
+**推论 85.13（全扇区的非最优近似修正）。** 在上述普通总迹坐标中若 $\mathcal K_{3,\alpha}(\Phi)(\Xi_\psi)\ge-\epsilon I_E$，选一腿 $\ell_*$ 满足 $\alpha_{\ell_*}\ge1/3$。令
+
+$$
+K_\psi=\max\left(
+\left\{\frac{\|C_i\|^2}{\beta_i}:i\in I\right\}
+\cup
+\left\{\frac1{\beta_i\alpha_{\ell_*}\lambda_{\min}(\rho_{i,\ell_*})}:
+ i\in I,\ \exists j\ne i\right\}\right),\qquad\delta=K_\psi\epsilon.
+\tag{85.27}
+$$
+
+没有非对角转移块时省去第二集合。则 $\Phi+\delta\Delta_A$ CP，其中 $\Delta_A(X)=u_A(X)1_A$。若 $\Phi$ TP，
+
+$$
+\widehat\Phi=\frac{\Phi+\delta\Delta_A}{1+n\delta}\text{ CPTP},\qquad
+\|\Phi-\widehat\Phi\|_\diamond\le2n\delta.
+\tag{85.28}
+$$
+
+**证明。** 对角块由 $C_i$ 压缩给 $J(\Phi_{ii})\ge-(\|C_i\|^2/\beta_i)\epsilon I$。非对角块用 (85.25) 的最小范数左逆，其范数平方为 $1/\lambda_{\min}(\rho_{i,\ell_*})$；压缩 (85.26) 给第二集合的下界。故所有 $J(\Phi_{ji})\ge-\delta I$。$\Delta_A$ 的各矩形 Choi 块恰为对应单位矩阵，相加即 CP。$u_A\Delta_A=nu_A$，所以分母恢复 TP。$\mathcal R=\Delta_A/n$ CPTP，$\Phi-\widehat\Phi=n\delta(\widehat\Phi-\mathcal R)$，按 (82.9) 的直和完全有界迹范数给结论。常数依赖已指定探针的条件数，未声称最优或与滤波条件数无关。证毕。
+

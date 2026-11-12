@@ -141,7 +141,7 @@ private theorem fixed_tube_eventually {δ : ℝ} (hδ : 0 < δ) :
     exact lt_mul_of_one_lt_right (sqrt_pos.mpr (by linarith : 0 < X)) hgeo
 
 /-- Bounded P bounds X for the original record, uniformly in its price. -/
-private theorem record_prime_escape {α : Type*} {l : Filter α}
+theorem record_prime_escape {α : Type*} {l : Filter α}
     (m : α → ℕ) (mu : α → ℝ) (hm : ∀ x, 2 ≤ m x) (hmu : ∀ x, 0 < mu x)
     (hrecord : ∀ x k, 0 < k → k < m x →
       goldenResourceObjective (mu x) k < goldenResourceObjective (mu x) (m x))
