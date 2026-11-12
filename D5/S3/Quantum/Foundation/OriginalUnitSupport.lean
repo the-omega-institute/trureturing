@@ -884,7 +884,7 @@ def OriginalEffectGeometry (C : PointedCone ℝ V) (u : V →ₗ[ℝ] ℝ) : Pro
         f x = sInf {r : ℝ | ∃ g, O g ∧ g p = 1 ∧ g x = r} ∧
         (x ∈ C → (f x = 0 ↔ ∃ g, O g ∧ g p = 1 ∧ g x = 0))
 
-private theorem original_effect_geometry
+private theorem original_effect_geometry [Nontrivial V]
     (C : PointedCone ℝ V) (hgen : Submodule.span ℝ (C : Set V) = ⊤)
     (u : V →ₗ[ℝ] ℝ) (hu : ∀ x ∈ C, x ≠ 0 → 0 < u x) :
     OriginalEffectGeometry C u := by
