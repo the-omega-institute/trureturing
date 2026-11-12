@@ -27,6 +27,10 @@ internal sealed class AbelianZeroSumPartitionDocument : IScribeDocumentDefinitio
                     + "exactly Nat.card(G) original labels has zero sum. Values may repeat, and the "
                     + "trivial group is included.")),
                     Paragraph(Text(
+                    "Here NatCard(G) is the order Nat.card(G) of G, card(t) is the number of labels "
+                    + "in t, and sum(t,a) is the sum of a(i) over i in t. Support means the chosen "
+                    + "finite label set s; it may contain labels whose value under a is zero.")),
+                    Paragraph(Text(
                     "The cyclic seed is Mathlib's ZMod.erdos_ginzburg_ziv. For a direct product, "
                     + "greedy extraction builds 2q minus 1 pairwise disjoint first-coordinate "
                     + "zero-sum blocks of size n in the exact unused support. Apply second-factor "
@@ -48,6 +52,9 @@ internal sealed class AbelianZeroSumPartitionDocument : IScribeDocumentDefinitio
                     + "indices have disjoint blocks, the union over all indices equals s, and every "
                     + "block has cardinality Nat.card(G) and sum zero. There is no cyclicity, "
                     + "distinct-value, nontriviality, extraction-certificate or Fintype(I) hypothesis.")),
+                    Paragraph(Text(
+                    "Fin m is the type of natural numbers j with j < m. The expression "
+                    + "biUnion(univ(Fin m),B) is the union of B(j) over all m indices j in Fin m.")),
                     Paragraph(Text(
                     "For m=0 the cardinality equation forces an empty support. For one block use "
                     + "the whole remaining support. With at least two blocks, the extraction theorem "
@@ -79,9 +86,11 @@ internal sealed class AbelianZeroSumPartitionDocument : IScribeDocumentDefinitio
     private static Formula Card(Formula s) => Call("card", s);
     private static Formula Sum(Formula s) => Call("sum", s, A);
     private static Formula Base(Formula body) =>
-        All("G", F.Id("Typeu"), All("group", Call("AddCommGroup", G),
-            All("finite", Call("Finite", G), All("I", F.Id("Typev"),
-                All("a", Arrow(I, G), All("s", Call("Finset", I), body))))));
+        All("G", F.Id("Typeu"), Seq(
+            OpenBracket, Call("AddCommGroup", G), CloseBracket, Sp,
+            OpenBracket, Call("Finite", G), CloseBracket, Sp,
+            All("I", F.Id("Typev"),
+                All("a", Arrow(I, G), All("s", Call("Finset", I), body)))));
 
     private static Formula Extraction()
     {

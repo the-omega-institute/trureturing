@@ -19,7 +19,10 @@ Israel, Section F: Mathematics and Physics*, **10F1** (1961).
 The [author-hosted primary article](https://users.renyi.hu/~p_erdos/1961-25.pdf)
 is cited without redistributing its PDF.
 
-The final paragraph states the extension from integers modulo n to every
+## Verified locator
+
+The final paragraph of the [primary article](https://users.renyi.hu/~p_erdos/1961-25.pdf)
+states the extension from integers modulo n to every
 abelian group of order n. In additive notation, among any 2n−1 entries one
 can select n entries summing to zero. Entries need not have distinct values.
 The Lean statement allows a larger finite support by retaining a subset
