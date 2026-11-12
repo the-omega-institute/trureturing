@@ -51,7 +51,7 @@ internal sealed class ActualBoundaryPriceLocalizationDocument : IScribeDocumentD
                 Blocks(Paragraph(Text("For every real P>=2, 1/(P*log(P))<=2*beta(1,P). The elementary logarithm lower bound controls the actual first marginal price, rather than replacing it by an asymptotic reference price."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("actualboundarypricelocalization-priceLip-half-bound"),
+                DescribeId.Create("actual-boundary-price-lip-half-bound"),
                 DeclarationHandle.Create("D5/S3/Arith/Robin/PriceRecord/ActualBoundaryPriceLocalization.priceLip_half_bound"),
                 H("A common logarithmic scale for the variation bound"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

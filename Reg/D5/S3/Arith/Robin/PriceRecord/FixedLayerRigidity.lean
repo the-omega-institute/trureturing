@@ -152,7 +152,6 @@ open scoped Topology BigOperators
 open _root_.D5.S3.Arith.GoldenResourceOptimalInteger
 open _root_.D5.S3.Arith.Robin.OriginalEndpointPrimeTail (largestPrime)
 open _root_.D5.S3.Arith.Robin.PriceRecord.FixedLayerRigidity
-open _root_.D5.S3.Arith.Robin.PriceRecord.HigherLayerLogSlope
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 namespace objective_exchange_delta

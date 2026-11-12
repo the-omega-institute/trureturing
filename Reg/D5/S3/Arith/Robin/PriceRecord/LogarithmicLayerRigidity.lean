@@ -294,12 +294,12 @@ end ThetaError
 end Reg.D5.S3.Arith.Robin.PriceRecord.LogarithmicLayerRigidity
 
 namespace Reg.D5.S3.Arith.Robin.PriceRecord.LogarithmicLayerRigidity.PublicExchangeLaws
+universe u
 open Real Filter Finset
 open scoped Topology BigOperators
 open _root_.D5.S3.Arith.GoldenResourceOptimalInteger
 open _root_.D5.S3.Arith.Robin.OriginalEndpointPrimeTail (largestPrime)
 open _root_.D5.S3.Arith.Robin.PriceRecord.FixedLayerRigidity
-open _root_.D5.S3.Arith.Robin.PriceRecord.HigherLayerLogSlope
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 namespace record_ratio_limit
@@ -318,7 +318,7 @@ def actual : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law V := ∀ {α : Type*} {l : Filter α}
+  Law V := ∀ {α : Type u} {l : Filter α}
     (m : α → ℕ) (lambda : α → ℝ) (hm : ∀ x, 2 ≤ m x)
     (hlambda : ∀ x, 0 < lambda x)
     (hrecord : ∀ x n, 0 < n → n < m x →
@@ -328,11 +328,11 @@ abbrev arena : Arena where
     Tendsto (fun x => ((V.readout ()) (m x) j : ℝ) ^ j / (largestPrime (m x) : ℝ))
       l (𝓝 (j : ℝ))
 
-private theorem actual_law : arena.Law actual := by
-  exact @_root_.D5.S3.Arith.Robin.PriceRecord.LogarithmicLayerRigidity.record_ratio_limit
+private theorem actual_law : arena.{u}.Law actual := by
+  exact @_root_.D5.S3.Arith.Robin.PriceRecord.LogarithmicLayerRigidity.record_ratio_limit.{u}
 
 private theorem source_bridge :
-    (type_of% (@_root_.D5.S3.Arith.Robin.PriceRecord.LogarithmicLayerRigidity.record_ratio_limit)) ↔ arena.Law actual := Iff.rfl
+    (type_of% (@_root_.D5.S3.Arith.Robin.PriceRecord.LogarithmicLayerRigidity.record_ratio_limit.{u})) ↔ arena.{u}.Law actual := Iff.rfl
 
 end record_ratio_limit
 
@@ -352,7 +352,7 @@ def actual : Realization signature :=
 
 abbrev arena : Arena where
   signature := signature
-  Law V := ∀ {α : Type*} {l : Filter α} (P Q : α → ℝ)
+  Law V := ∀ {α : Type u} {l : Filter α} (P Q : α → ℝ)
     (j : ℕ) (hj : 2 ≤ j) (hQnonneg : ∀ x, 0 ≤ Q x)
     (hP : Tendsto P l atTop)
     (hfirst : Tendsto (fun x => Q x ^ j / P x) l (𝓝 (j : ℝ))),
@@ -360,11 +360,11 @@ abbrev arena : Arena where
       Tendsto (fun x => (V.readout () ()) (Q x) / (V.readout () ()) (P x)) l (𝓝 (j : ℝ)⁻¹) ∧
       Tendsto (fun x => Q x / P x) l (𝓝 0)
 
-private theorem actual_law : arena.Law actual := by
-  exact @_root_.D5.S3.Arith.Robin.PriceRecord.LogarithmicLayerRigidity.coarse_scale_limits
+private theorem actual_law : arena.{u}.Law actual := by
+  exact @_root_.D5.S3.Arith.Robin.PriceRecord.LogarithmicLayerRigidity.coarse_scale_limits.{u}
 
 private theorem source_bridge :
-    (type_of% (@_root_.D5.S3.Arith.Robin.PriceRecord.LogarithmicLayerRigidity.coarse_scale_limits)) ↔ arena.Law actual := Iff.rfl
+    (type_of% (@_root_.D5.S3.Arith.Robin.PriceRecord.LogarithmicLayerRigidity.coarse_scale_limits.{u})) ↔ arena.{u}.Law actual := Iff.rfl
 
 end coarse_scale_limits
 
