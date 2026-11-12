@@ -1,0 +1,48 @@
+**定义 25.6（共同参考及其额外资源）。**将上述 $H=\mathbb C^2$ 作为目标系统 $S$ 的幅度空间。另给两个二维系统 $C,E$ 和两个二维记录 $R_1,R_2$，固定同一个全局纯参考
+
+$$
+\begin{gathered}
+\mathcal H=H_C\otimes H_S\otimes H_E\otimes H_{R_1}\otimes H_{R_2},\\
+|\Psi_0\rangle=|+\rangle_C\otimes|\Phi^+\rangle_{SE}
+                    \otimes|00\rangle_{R_1R_2},\\
+|+\rangle=(|0\rangle+|1\rangle)/\sqrt2,\qquad
+|\Phi^+\rangle=(|00\rangle+|11\rangle)/\sqrt2,\\
+\omega(X)=\langle\Psi_0|X|\Psi_0\rangle,\qquad
+\omega_S(B)=\omega(I_C\otimes B\otimes I_{ER_1R_2})
+             =\operatorname{Tr}(B)/2.
+\end{gathered}
+\tag{25.23}
+$$
+
+$\omega_S$ 忠实于 $M_2(\mathbb C)$，$\omega$ 不忠实于完整 $M_{32}(\mathbb C)$。全局纯参考、这些复合系统、独立 ready 控制、ready 记录、目标门 $X=|0\rangle\langle1|+|1\rangle\langle0|$、从 $S$ 到各记录的 CNOT 记录操作，以及所用的合法复合，均作为额外资源前件。它们不由原乘法和 $U$ 的项生成定理供应。
+
+对任意实际给定的全局分支算子 $D$，定义
+
+$$
+w_D=\omega(D^\dagger D)\ge0,\qquad
+\omega_D(B)=\frac{\omega(D^\dagger BD)}{w_D}\quad\text{仅当 }w_D>0.
+\tag{25.24}
+$$
+
+若 $D$ 是收缩，则 $w_D\le1$。称其为成功概率时，另要求实际给出带成功旗标的完整操作，失败结果也保留；单凭收缩矩阵的存在不授予这项实际权限。若 $w_D=0$，保留未归一化零分支，不定义条件泛函。
+
+对一个实际给定的目标收缩 $A$，其全局提升取其余因子上的单位，简记
+
+$$
+w_A=\omega_S(A^\dagger A),\qquad
+\omega_{S,A}(B)=\frac{\omega_S(A^\dagger BA)}{w_A}\quad(w_A>0).
+\tag{25.25}
+$$
+
+这些是同一个参考的标准过滤评价。$A=0$ 给 $w_A=0$；只有在本目标代数的忠实性下，才能由 $A\ne0$ 推出 $w_A>0$。对一般非忠实参考，非零算子也可有零权。例如 $D=|-\rangle\langle-|_C\otimes I$ 非零而 $D|\Psi_0\rangle=0$。任意有界 $B$ 在零权时满足 $\omega(D^\dagger BD)=0$，因为 $D|\Psi_0\rangle=0$；这不使分母成为正数。
+
+对实际给定的任意有限分支词 $K_h$，同样置
+
+$$
+p_h=\omega(K_h^\dagger K_h),\qquad
+\omega_h(B)=\frac{\omega(K_h^\dagger BK_h)}{p_h}\quad(p_h>0).
+\tag{25.26}
+$$
+
+词内的乘法是已给算子按实际时间次序的复合，独立于 (25.1) 的原二元聚合。完整有限分支树的归一化由预测波定理 7.2 的逐层守恒复用；其标准有限归纳不构造新的记录系统或任意长度程序权限。零历史始终保留未归一化零量，不除以零。
+

@@ -1,0 +1,29 @@
+**定义 75.1（$\mathrm{PRE}_0$）。** 采用定义 74.1 [P]，即定义 72.1 [R] 的 PRE 只删除 $D_J,D_H$。完整量词如下：对每个 $X=A,D,E$，取非零有限维实空间、闭尖生成锥 $C_X$、在非零正元上严格正的线性泛函 $u_X$、整个紧态基 $K_X=\{x\in C_X:u_X(x)=1\}$、全部效应 $[0,u_X]$ 及纯态集 $P_X=\operatorname{ext}K_X$。只在纯第一端点定义
+$$
+T^X_\xi(x)=\inf\{f(x):0\le f\le u_X,\ f(\xi)=1\},\qquad
+T^X_\xi\!\left(\sum_\ell v_\ell\eta_\ell\right)=\sum_\ell v_\ell T^X_{\eta_\ell}(\xi). \tag{75.1}
+$$
+第二式遍及每个纯 $\xi$、每个有限纯态族 $(\eta_\ell)$ 及每组概率权重 $(v_\ell)$。沿 65.1、66.1、72.1 及 [S] 完整复用 $S$ 到一般有限 Euclidean Jordan 代数（EJA）的条件纸面桥，包括正对偶剥离与生成、共同框架、忠实配对、面投影、项目性及滤波纯性的推导义务。纯端点互反不代替完整有限混合律；不另加独立 Jordan 公理，也不将整条桥归给前件较强的单个外文定理。
+其忠实坐标满足 $\tau_X\Phi_X=u_X$、$\Phi_XU_X=1_X$、$B_X(x,y)=\tau_X(\Phi_Xx\circ\Phi_Xy)$、$T^X_\xi(x)=B_X(\xi,x)$，双射整个原态基与原效应区间。以下在该坐标中书写，正锥为完整平方锥，$\tau_X$ 在每个简单因子的每个本原幂等元上为一；允许直和、秩一因子和 Albert 代数，尚未预选复型。
+记 $\langle x,y\rangle_X=\tau_X(x\circ y)$、$\ell_xy=x\circ y$、$P_x=2\ell_x^2-\ell_{x^2}$。正元的 $x\perp y$ 指零迹配对，等价于 $x\circ y=0$ 及支撑正交；$x>0$ 指正可逆内点。二次表示对任意实元保正且自伴随，可逆时 $P_x^{-1}=P_{x^{-1}}$。
+令 $n=\tau_A1_A$、$m=\tau_D1_D$。唯一供应的映射和参考为
+$$
+L:D\times A\to E\ \text{实双线性},\quad p:E\to D\ \text{实线性},\quad
+L(D_+,A_+)\subseteq E_+,\quad p(E_+)\subseteq D_+,\quad \omega=1_D/m. \tag{75.2}
+$$
+全部内部对象由此定义：
+$$
+\begin{aligned}
+\mathcal B(d,c)&=pL(d,c),&K(a)&=pL(\omega,a),&M(a,b)&=pL(K(a),b),\\
+J(a)&=M(a,1_A),&H_{\mathrm s}(d)&=L(d,1_A),&B_1&=pH_{\mathrm s},\\
+Q(a,b,c)&=L(M(a,b),c),&U&=M(1_A,1_A),&G&=H_{\mathrm s}1_D.
+\end{aligned} \tag{75.3}
+$$
+两次调用的是同一个实际 $p$，不得另供独立 $M$、更换 $\omega$ 或独立选择第二次读回。完整保留两条实张成及全实 $Z$：
+$$
+\operatorname{span}_{\mathbb R}M(A,A)=D,\qquad
+\operatorname{span}_{\mathbb R}L(D,A)=E,\qquad
+B_1M(a,b)=\tau_A(a)Jb\quad(a,b\in A). \tag{75.4}
+$$
+被删两条的原量词是 $a,b\in A_+,a\perp b\Rightarrow Ja\perp Jb$（$D_J$），以及 $d,d'\in D_+,d\perp d'\Rightarrow H_{\mathrm s}d\perp H_{\mathrm s}d'$（$D_H$）。$L,p$ 的正性仍覆盖整个实际锥，包括全部纠缠方向；实张成不表示正乘积生成正锥。原保单位、保迹、CP、校准及物理滤波均非此基底的输入。
+

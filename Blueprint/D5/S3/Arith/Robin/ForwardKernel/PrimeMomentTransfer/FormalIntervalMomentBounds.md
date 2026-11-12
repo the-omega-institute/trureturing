@@ -124,9 +124,21 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/FormalInter
 
 If M is nonnegative, a and c are nonnegative, and b is at most M, the nonnegative overlap length max(0,min(b,d)-max(a,c)) is at most M.
 
+**Theorem 1.11 (Uniform second formal values).**
+
+Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/FormalIntervalMomentBounds.formal_interval_second_bound`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/FormalIntervalMomentBounds.formal_interval_second_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For positive alpha, beta below one, M at least one, singular-series values one on empty sets and singletons, and the interval correlation input, there is a nonnegative C such that eventually |Phi(SS,H,s,a,b,a,b)| is at most C H log N for every N^alpha<=H<=N^beta, log N<=s<=log N+log 2 and 0<=a<=b<=M. The estimate uses the second correlation bound and the diagonal overlap count.
+
 The finite signed-cube realization identifies Phi with the formal coefficient moment. Products of interval indicators are again interval indicators, including when their intersection is empty. The number of lattice points in an overlap differs from H times its length by at most two. Consequently the second formal moment differs from H(s-log H) times the overlap length by O(H). The cubic identity and the full fourth pairing-defect identity then control every repeated-index term. On the polynomial length band, (log N)^2 is eventually at most H, so H(log N)^3 is at most H^2 log N. The fourth main term is the sum of the three products of overlap lengths, multiplied by H^2(s-log H)^2.
 
-**Theorem 1.11 (Uniform cubic and fourth formal values).**
+**Theorem 1.12 (Uniform cubic and fourth formal values).**
 
 Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/FormalIntervalMomentBounds.formal_interval_moment_bounds`
 
@@ -143,6 +155,7 @@ Let 0<alpha<beta<1, let the singular series equal one on the empty set and every
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/FormalIntervalMomentBounds.IsIntervalWeight`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/FormalIntervalMomentBounds.distinct_interval_weight_moment`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/FormalIntervalMomentBounds.formal_interval_moment_bounds`
+- Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/FormalIntervalMomentBounds.formal_interval_second_bound`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/FormalIntervalMomentBounds.geom_points_card_le`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/FormalIntervalMomentBounds.geom_product_error`
 - Truth anchor: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/FormalIntervalMomentBounds.index_interval_weight_bound`

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2ce48cf699b6503f4ee3ff53011a2bb34f9b9af87b570ffcab07fab8d717d8f0
+  normalized_sha256: sha256:2ce48cf699b6503f4ee3ff53011a2bb34f9b9af87b570ffcab07fab8d717d8f0
+cas_ref: sha256:2ce48cf699b6503f4ee3ff53011a2bb34f9b9af87b570ffcab07fab8d717d8f0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This entry specifies the five-Kraus controller, terminal contact, retained output interface and return metric. Its displayed qubit Kraus completeness is the pinned Matrix.vecMulVec_mul_vecMulVec and Fintype.sum_bool calculation; the canonical CPTP interpretation is supplied by D5/S3/Quantum/Foundation/FiniteKrausChannel.finite_kraus_quantum_channel. The remaining clauses are definitions and model premises, not a claim of covariance, repeated-slot accuracy, terminal error control or physical realization.
+    previous_atom_id: 5cfea20290903816dd6bb1b33e812f5d5086e487e34c8c7a740f7da4052d63b0
+    next_atom_id: 649908c5da42a3a4bcb9cde9fdb9b7a47fad3abd4dc182ab6478479d03061f15

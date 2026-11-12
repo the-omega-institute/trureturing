@@ -1,0 +1,51 @@
+**定义 18.1（精确原曲线、完整实际等距及共同效果）。** 对每个正有理数 $0<e\le1/100$，逐项使用 [OTF004 定义 19.1](OTF_004_ENDOGENOUS_OBSERVATION_ATTENTION_CONTROL_AND_COSINE_FEEDBACK.md) 及本卷 (1.1) 的原曲线，所有对数均为自然对数：
+
+$$
+\begin{aligned}
+k_e&=\left\lceil2048e^{-2}\log(18/e)\right\rceil,
+&\ell_e&=\left\lceil32768e^{-4}\log(90/e)\right\rceil,\\
+N_*&=8{,}388{,}608{,}000,
+&N_e&=\max\left\{N_*,\left\lceil\frac{3k_e+2}{10}\right\rceil,
+                    \left\lceil\frac{15\ell_e+1}{18}\right\rceil\right\},\\
+D_e&=\left\lceil\max\{8{,}000{,}000N_e^2,9k_e/e\}\right\rceil,
+&m_e&=D_e-1,\\
+L_e&=10N_e,
+&Q_e&=18N_e+1.
+\end{aligned}
+\tag{18.1}
+$$
+
+置 $m=m_e$、$R=\operatorname{Sym}^{m}(\mathbb C^2)$，$\tau_h$ 是方向 $h\in S^2$ 的归一自旋相干纯态。取任意有限维 Hilbert 空间 $P,K$，任意独立于 $h$ 的密度算子 $\sigma\in\mathcal D(P)$，以及独立于 $h$ 的等距
+
+$$
+U:R\otimes P\longrightarrow R\otimes K.
+\tag{18.2}
+$$
+
+右端必须是这个实现的整个实际输出。$\sigma$ 可以奇异，不限制秩、非零谱或辅助维数，不供应它的纯化。每个实际产生的非参考系统均在 $K$ 内；没有删除输出，也不把形式 Stinespring 环境或 Kraus 指标当作实际生成系统。定义
+
+$$
+\begin{aligned}
+\Omega_h&=U(\tau_h\otimes\sigma)U^\dagger,
+&\omega_h&=\operatorname{Tr}_R\Omega_h,\\
+\delta&=\sup_{h\in S^2}\frac12
+ \|\Omega_h-\tau_h\otimes\omega_h\|_1,
+&D_{\rm tr}(\rho,\eta)&=\tfrac12\|\rho-\eta\|_1.
+\end{aligned}
+\tag{18.3}
+$$
+
+上确界包括全部 $h$，包括下面两条置信带之间的方向；每个比较态使用该输出自身的实际边缘。二值置信度条件是：存在同一个独立于 $h$ 的效果 $0\le E\le I_K$，使
+
+$$
+\begin{aligned}
+\operatorname{Tr}(E\omega_h)&\ge1-e
+&&\text{对每个 }h_y\ge4e,\\
+\operatorname{Tr}(E\omega_h)&\le e
+&&\text{对每个 }h_y\le-4e.
+\end{aligned}
+\tag{18.4}
+$$
+
+这里的效果只是对同一输出的数学条件，没有给原控制器增加读出、参考旋转、逆操作或协变性假设。
+

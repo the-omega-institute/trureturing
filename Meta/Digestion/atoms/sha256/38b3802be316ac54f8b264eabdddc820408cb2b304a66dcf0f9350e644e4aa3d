@@ -1,0 +1,61 @@
+**例 23.5（树值可见、记录不删、漂移非零）。**令 $B=\mathbb Z[\omega]\subset\mathbb C$，$G_0=B\times\mathbb Z$ 取加法。令 $T$ 是三个叶标签 $x_0,x_1,x_2$ 上的自由含幺二元 magma：正规项是 $e_T$、三个叶子及两个非单位正规项的有序二元节点；乘法 $s*t$ 先约去单位因子，其余保留实际二元节点与括号。定义
+
+$$
+\begin{gathered}
+f(e_T)=0,\qquad f(x_r)=\omega^r\quad(r=0,1,2),\qquad
+f(s*t)=f(s)+f(t),\\
+\sigma(e_T)=e_T,\qquad \sigma(x_r)=x_{r+1\bmod3},\qquad
+\sigma(s*t)=\sigma(s)*\sigma(t).
+\end{gathered}
+$$
+
+结构递归给 $f(\sigma s)=\omega f(s)$，$\sigma^3s=s$。置
+
+$$
+\begin{aligned}
+M&=G_0\times T,\qquad e=((0,0),e_T),\\
+((g,n),s)\cdot((h,m),t)&=((g+h,n+m),s*t),\\
+U((g,n),s)&=((\omega g+1,n+1),\sigma s),\\
+d\bigl(((g,n),s),((h,m),t)\bigr)
+&=|g-h|^2+|f(s)-f(t)|^2,\\
+G&=G_0\times\{e_T\}\subset M.
+\end{aligned}
+\tag{23.16}
+$$
+
+这些定义在全部原标签上总定义。$e$ 是实际双侧单位；$G$ 的继承乘法是群加法，逆为 $((g,n),e_T)^{-1}=((-g,-n),e_T)$，且 $U(G)\subseteq G$。右乘 $((h,m),e_T)$ 只平移前两个坐标而保留树 $s$，所以 (23.2) 对每个原 $a\in M$ 成立。
+
+令
+
+$$
+F((g,n),s)=(g,f(s))\in\mathbb C^2,\qquad t_0=(1,0).
+$$
+
+直接由定义有 $Fe=0$、$F(ab)=Fa+Fb$、$F(Ua)=\omega Fa+t_0$ 和 $d(a,b)=\|Fa-Fb\|^2$。对任何原 $a,b,u,v$，置 $A=Fa-Fb$、$B'=Fu-Fv$，两个端点的同相漂移相消，给出完整手算恒等式
+
+$$
+\begin{aligned}
+\sum_{j=0}^2d(a\cdot U^ju,b\cdot U^jv)
+&=\sum_{j=0}^2\|A+\omega^jB'\|^2\\
+&=3\|A\|^2+3\|B'\|^2.
+\end{aligned}
+\tag{23.17}
+$$
+
+故全部有序原关系成立，值处处有限、非负、零对角。像中有 $(1,0)$ 和 $(0,1)$，最小总空间正是 $\mathbb C^2$，漂移 $t_0\ne0$。对 $\alpha_r=((0,0),x_r)$，有 $d(\alpha_0,e)=1$、$d(\alpha_0,\alpha_1)=3$：非单位树的可见值并未全被抹掉。
+
+原载体确实不是群。$(\alpha_0\cdot\alpha_1)\cdot\alpha_2$ 与 $\alpha_0\cdot(\alpha_1\cdot\alpha_2)$ 是不同的实际正规树，故全局结合律失败。叶数 $L(e_T)=0$、$L(x_r)=1$、$L(s*t)=L(s)+L(t)$ 为非负整数；若 $s\ne e_T$，则任意乘积含 $s$ 的树叶数为正，不可能等于 $e_T$。因此 $M\setminus G$ 的每个标签都没有左逆或右逆。
+
+同时
+
+$$
+p_1=((1,1),e_T),\qquad p_2=((1+\omega,2),e_T),\qquad
+p_3=((0,3),e_T)\ne e,\qquad
+U^3((g,n),s)=((g,n+3),s).
+\tag{23.18}
+$$
+
+所以 $U^3$ 在原载体上没有固定点；而 $(p_1\cdot p_1)\cdot p_1=((3,3),e_T)\ne p_3$。群内表示可取 $F_G((g,n),e_T)=g$，从而 $Z=\{((0,n),e_T):n\in\mathbb Z\}$，$p_3\in Z$。本比较满足两个普遍 $P_3$ 返回，却有 $d(p_1,e)=1$，没有把非零漂移改成零费用标记。
+
+树、整数和全部实际标签仍保留在 $M$；此 $d$ 看不见的记录并未因此删除。若另有原读数能区分这些记录，本例没有替那些读数证明 (23.1)，更没有断言全部合法观察都必须塌缩为 $F$。这只是充分结构严格弱于“整个 $M$ 是群”的数学见证，不是原 $\Omega$ 的物理供给器。
+

@@ -7,8 +7,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic;
 internal sealed class OriginalHalfBinomialIntegralDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The literal original half-binomial-square series equals its normalized elliptic sine integral.",
-        H("Original Half-Binomial Elliptic Integral"),
+        "Normalized central-binomial series give the elliptic sine integral and the closed-interval arcsine expansion.",
+        H("Original Half-Binomial Integrals and the Arcsine Expansion"),
         Blocks(
             Describe.Lean(
                 DescribeId.Create("original-half-binomial-normalized-coefficient"),
@@ -30,6 +30,35 @@ internal sealed class OriginalHalfBinomialIntegralDocument : IScribeDocumentDefi
                 Blocks(Paragraph(Text("For every natural n, Ring.multichoose (1/2 : Real) n "
                     + "equals b(n). This coefficient identity supplies the binomial power-series "
                     + "step in the integral representation."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("original-half-binomial-coefficient-nonnegative"),
+                DeclarationHandle.Create("D5/S3/Analytic/OriginalHalfBinomialIntegral.b_nonneg"),
+                H("Nonnegativity of every normalized coefficient"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural n, 0<=b(n). The central-binomial "
+                    + "coefficient is nonnegative and its denominator 4^n is positive."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("original-half-binomial-coefficient-upper-bound"),
+                DeclarationHandle.Create("D5/S3/Analytic/OriginalHalfBinomialIntegral.b_le_one"),
+                H("A uniform upper bound for the normalized coefficients"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural n, b(n)<=1. The central-binomial "
+                    + "bound centralBinom(n)<=4^n gives this estimate, including n=0."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("original-half-binomial-kernel-series"),
+                DeclarationHandle.Create("D5/S3/Analytic/OriginalHalfBinomialIntegral.binomial_hasSum"),
+                H("The square-root kernel as a binomial series"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every real u with 0<=u<1, the series with nth "
+                    + "term b(n)u^n has sum 1/sqrt(1-u). The parameter is the argument of "
+                    + "the binomial series; in the arcsine integral it is t^2, whereas in "
+                    + "the elliptic sine integral it is r*sin(theta)^2."))),
                 DescribeRole.Theorem),
             Describe.Lean(
             DescribeId.Create("original-half-binomial-elliptic-integral"),
@@ -62,5 +91,55 @@ internal sealed class OriginalHalfBinomialIntegralDocument : IScribeDocumentDefi
                     + "needed for complementary-period endpoint estimates; it does not "
                     + "establish the logarithmic constant, the nome, an original Gaussian "
                     + "realization, crossing, string theory or an AdS/CFT correspondence."))),
-            DescribeRole.Theorem))));
+            DescribeRole.Theorem),
+            new DocumentBlock.Section(H("An arcsine application on the closed interval"), Blocks(
+            Paragraph(Text("For every natural n define the rational coefficient "
+                + "c_n=choose(2n,n)/(4^n(2n+1)), and let a_n be its image in the reals. "
+                + "Since centralBinom(n)=choose(2n,n), a_n=b(n)/(2n+1). Thus "
+                + "0<=a_n<=1. For every real x with |x|<=1 the series with nth term "
+                + "a_n*x^(2n+1) has sum arcsin(x). Both x=1 and x=-1 are included; "
+                + "their sums are pi/2 and -pi/2, respectively.")),
+            Paragraph(Text("To obtain the endpoint as well as the interior, fix 0<=y<=1 "
+                + "and put K(t)=1/sqrt(1-t^2). The function arcsin is continuous on [0,y], "
+                + "and for 0<t<y its derivative is K(t)>=0. The interval-integrability "
+                + "theorem for a nonnegative derivative therefore makes K integrable "
+                + "on 0..y, including y=1. The fundamental theorem of calculus and "
+                + "arcsin(0)=0 give the integral of K on 0..y equal to arcsin(y). "
+                + "Neither theorem requests a derivative at the upper endpoint.")),
+            Paragraph(Text("Set F_n(t)=b(n)*t^(2n) and H(t)=sum_n F_n(t), where H is "
+                + "the total infinite-sum function. On 0<t<y the substitution u=t^2 "
+                + "satisfies 0<=u<1, so binomial_hasSum identifies the sum with K(t). "
+                + "Equality on this open interval transfers interval integrability "
+                + "from K to H. Each F_n is continuous and nonnegative, hence "
+                + "measurable with |F_n(t)|=F_n(t). Use F_n itself as the nth bound "
+                + "in the series dominated-convergence theorem. The bounds are "
+                + "summable almost everywhere on (0,y], their total H is integrable, "
+                + "and the same binomial series gives the required sum K almost "
+                + "everywhere. The only excluded upper endpoint is a null singleton. "
+                + "This verifies every premise of termwise integration without "
+                + "assuming a binomial-series value at t=1.")),
+            Paragraph(Text("Termwise integration gives the nth integral "
+                + "b(n)*y^(2n+1)/(2n+1)=a_n*y^(2n+1). Its total is the integral "
+                + "of K, hence arcsin(y). This also handles y=0, where the open "
+                + "interval is empty and every integrated term is zero. For x<0, "
+                + "apply the nonnegative result to -x, negate its HasSum, and use "
+                + "arcsin(-x)=-arcsin(x) and the odd exponents. This yields the "
+                + "same series on the whole closed interval [-1,1].")))),
+            new DocumentBlock.Section(H("Interior truncation and the function A"), Blocks(
+            Paragraph(Text("For all real x,q and natural N satisfying 0<=q<1 and "
+                + "|x|<=q, write S_N(x)=sum_{0<=n<N} a_n*x^(2n+1). Coefficient "
+                + "nonnegativity and a_n<=1 give |a_n*x^(2n+1)|<=q*(q^2)^n. "
+                + "The geometric-series remainder theorem with C=q and r=q^2 "
+                + "therefore gives |arcsin(x)-S_N(x)|<=q^(2N+1)/(1-q^2). "
+                + "The denominator is positive, and the power identity "
+                + "q*(q^2)^N=q^(2N+1) uses no division by q. Consequently the "
+                + "bound includes q=0 and N=0.")),
+            Paragraph(Text("Define A(x)=2*x+2*arcsin(x) and "
+                + "A_N(x)=2*x+2*S_N(x). For every |x|<=1, A(x) equals "
+                + "2*x+2*sum_n a_n*x^(2n+1). Under the interior assumptions "
+                + "0<=q<1 and |x|<=q, cancellation of the 2*x terms gives "
+                + "|A(x)-A_N(x)|<=2*q^(2N+1)/(1-q^2). These are classical "
+                + "arcsine-series consequences of the normalized binomial kernel. "
+                + "The endpoint convergence assertion supplies no endpoint "
+                + "truncation rate; the displayed error bounds require q<1.")))))));
 }

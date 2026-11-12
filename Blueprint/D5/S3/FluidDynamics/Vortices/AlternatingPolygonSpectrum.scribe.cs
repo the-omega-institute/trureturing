@@ -30,6 +30,24 @@ internal sealed class AlternatingPolygonSpectrumDocument : IScribeDocumentDefini
                     + "through the polygon in direction Pi.single q 1. It is the Cartesian Jacobian of the source's model; "
                     + "the source examines its linearization in polar coordinates (TeX lines 543–550).",
                 AssessedProvenance.FromLiterature(Source)),
+            Supplier("chord_sq", "The actual polygon distances",
+                "The canonical chord identity is exposed for collision-free parameter transport; its proof is reused unchanged.", DescribeRole.Theorem),
+            Supplier("chord_sq_ne_zero", "Collision-free polygon vertices",
+                "Every pair of distinct labels has nonzero squared distance. This is the domain certificate used by the differentiated Cartesian field.", DescribeRole.Theorem),
+            Supplier("equilibrium_all", "Equilibrium including the small polygons",
+                "The existing Cartesian reflection proof applies for every m at least one. The earlier m at least three supplier remains a consumer of this proof body.", DescribeRole.Theorem),
+            Supplier("rotation", "Radial and tangential coordinates",
+                "The columns at vertex j are (xj,yj) and (-yj,xj). The source note uses a uniformly rotated polygon, so this explicit Cartesian rotation fixes the correspondence.", DescribeRole.Definition),
+            Supplier("rotation_mul_transpose", "The coordinate rotation is orthogonal",
+                "The canonical proof uses xj squared plus yj squared equal to one. No presumed spectral decomposition is involved.", DescribeRole.Theorem),
+            Supplier("rotated_jacobian_all", "Actual block derivative for every even polygon",
+                "The existing derivative and rotation proof gives the off-diagonal blocks B and C for every m at least one, including the dipole and square.", DescribeRole.Theorem),
+            Supplier("nonzero_characteristic_value", "Schur determinant equality",
+                "The canonical Schur proof yields an equality of evaluations for each nonzero real argument, strengthening its earlier root-test consumer without repeating the determinant foundation.", DescribeRole.Theorem),
+            Supplier("charpoly_mode_product", "Complete characteristic polynomial",
+                "A polynomial equality follows because the Schur equality and canonical block-product spectrum agree at infinitely many nonzero real arguments. The identity therefore also includes zero.", DescribeRole.Theorem),
+            Supplier("complex_charpoly_mode_product", "The actual complexified characteristic polynomial",
+                "Map the polynomial identity through the real inclusion into the complex numbers. This concerns the characteristic polynomial of the actual Cartesian Jacobian, and includes every complex root; it does not by itself prove geometric multiplicities or Jordan structure.", DescribeRole.Theorem),
             Node("claim", "The distinct-real-pair conjecture", Equal(Local("claim"), Parenthesized(ClaimProposition())),
                 "Conjecture 4.4 asks for N/2−2 distinct pairs of real eigenvalues of the alternating N-gon (TeX lines 627–633). "
                     + "For N=2m and m≥3, this proposition asserts sign symmetry of every real characteristic root and "
@@ -42,6 +60,11 @@ internal sealed class AlternatingPolygonSpectrumDocument : IScribeDocumentDefini
                 openProblemResolutionClaim: new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("barry-kevrekidis-2013-alternating-vortex-polygon-spectrum"),
                     ResolutionKind.Proved)))));
+
+    private static DocumentBlock Supplier(string name, string title, string prose, DescribeRole role) =>
+        Describe.Lean(DescribeId.Create("alternating-polygon-spectrum-" + name.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
+            AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
 
     private static BlockSequence Proof() => Blocks(
         Paragraph(Text(
@@ -145,7 +168,7 @@ internal sealed class AlternatingPolygonSpectrumDocument : IScribeDocumentDefini
     }
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose, AssessedProvenance provenance) =>
-        Describe.Lean(DescribeId.Create("alternating-polygon-spectrum-" + name), DeclarationHandle.Create(Prefix + name),
+        Describe.Lean(DescribeId.Create("alternating-polygon-spectrum-" + name.Replace('_', '-').ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
             H(title), StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
     private static Formula Local(string name) => Qualified("D5", "S3", "FluidDynamics", "Vortices", "AlternatingPolygonSpectrum", name);
     private static Formula LocalCall(string name, params Formula[] args) => At(Local(name), args);

@@ -1,0 +1,148 @@
+**定理 21.2（任意预算内记忆续接不能消去前缀的线性泄漏）。** 对定义 21.1 的每个控制器、每个允许场 $n$ 和每个 $h\in S^2$，均有
+
+$$
+\boxed{\displaystyle
+\Delta_{n,h}\ge p_{\rm final}(n,h)\ge\frac{q}{8D_e}.}
+\tag{21.3}
+$$
+
+更精确地，令
+
+$$
+\lambda=\frac{\sqrt m}{D},\qquad
+\kappa_D=\frac{2D-1}{2D^2},\qquad
+\alpha=1-\kappa_D,\qquad \beta=\frac{m}{2D^2},\qquad
+\varepsilon_L=\lambda^2(\sqrt2 L+2)^2 .
+\tag{21.4}
+$$
+
+则同一实际态满足
+
+$$
+\begin{aligned}
+p_{\rm final}(n,h)
+&\ge\beta\sum_{s=1}^{q}\alpha^{s-1}
+ \left[1-\lambda^2\bigl(\sqrt2(L-s)+2\bigr)^2\right]\\
+&\ge(1-\varepsilon_L)\beta\sum_{s=1}^{q}\alpha^{s-1} .
+\end{aligned}
+\tag{21.5}
+$$
+
+$q=0$ 时两和为空，取值为零。
+
+**证明。** 固定同一个允许 $n,h$。仅在证明坐标中沿 $h$ 量子化，记 $e_h=|j_e,j_e\rangle_h$、$f_h=|j_e,j_e-1\rangle_h$，以及探针的 $\uparrow_h,\downarrow_h$。这不向控制器提供方向、旋转或新的操作。
+
+先对 (13.15) 作正半定分解，而不对实际联合态作参考偏迹。令 $\tau_f=|f_h\rangle\langle f_h|$，并定义非归一化的实际 $S,H,E$ 状态
+
+$$
+\begin{aligned}
+g_h={}&\frac12|\uparrow_h\rangle\langle\uparrow_h|
+                  \otimes|++\rangle\langle++|
+ +\frac{m^2}{2D^2}\frac{I_S}{2}\otimes|--\rangle\langle--|,\\
+\chi={}&\frac{I_S}{2}\otimes|--\rangle\langle--|,\\
+|v_h\rangle={}&e_h\otimes\downarrow_h+\sqrt m\,f_h\otimes\uparrow_h .
+\end{aligned}
+\tag{21.6}
+$$
+
+由完整一槽等式 (13.15)，输入 $\tau_h$ 与新鲜 $I/2$ 时，实际槽输出准确为
+
+$$
+\tau_h\otimes g_h
+ +\beta\tau_f\otimes\chi
+ +\frac{|v_h\rangle\langle v_h|}{2D^2}\otimes|++\rangle\langle++| .
+\tag{21.7}
+$$
+
+三个加项均为正半定；第一项的迹为
+$\operatorname{Tr}g_h=1/2+m^2/(2D^2)=\alpha$，第二项的迹为 $\beta$，第三项保留了其全部参考—探针相干项。这里没有把该相干项删去，也没有给 $\mathcal C$ 添加环境输出。
+
+若旧寄存器状态是任意 $\eta$，且与参考的联合态为 $\tau_h\otimes\eta$，新鲜性使 (21.7) 直接张量 $\eta$。槽后的任意非 $R$ 保迹处理仍把第一项变成 $\tau_h$ 与一个非归一化旧寄存器状态的乘积，其迹为 $\alpha\operatorname{Tr}\eta$。因此只对这个第一项逐槽继续分解，并把每槽第二项和第三项各交给其后的完整实际控制器，可得最终联合态的正分解
+
+$$
+\Omega_{n,h}=\Omega_{\rm rem}+\sum_{s=1}^{q}\Phi_s(Z_s),
+\qquad \Omega_{\rm rem}\ge0,
+\qquad Z_s\ge0,
+\qquad \operatorname{Tr}Z_s=\beta\alpha^{s-1} .
+\tag{21.8}
+$$
+
+其中 $Z_s$ 位于第 $s$ 槽及其立即 $\mathcal C$ 之后，其参考因子准确为 $\tau_f$；$\Phi_s$ 是从该处起、包含其余前缀、全部续接及终端的实际保迹因果通道。$\Omega_{\rm rem}$ 收集其它正项。式 (21.8) 只用线性、完全正和保迹性，对槽间依记录选择的操作也成立：控制和全部旧记忆都包含在通道输入内。各加项是数学上的正分解，无须对应可读取的分支，亦无须在最终 $K$ 中正交；未施行分支测量或后选择。
+
+下面统一限制一个正交参考分量的回流。对接触前后的全部寄存器分别延拓
+$P=\tau_h\otimes I$、$P^\perp=I-P$。由 (13.14) 的上移项及原生旗标的正交性，原生槽满足
+
+$$
+\|P V P^\perp\|=\sqrt2\lambda .
+\tag{21.9}
+$$
+
+具体地，只有参考 $f_h$ 的 $f_h\uparrow_h$ 分量可送回 $e_h\downarrow_h$；$\Pi_+,\Pi_-$ 的这两个系数分别为 $\lambda,-\lambda$，它们分别携带正交的 $|++\rangle,|--\rangle$，故平方范数相加为 $2\lambda^2$。其余参考本征矢没有到达 $e_h$ 的矩阵元；张量任意旁观者或记忆不改变此算子范数。由 (16.8)，规定终端在略去整体相位后为 $\Pi_++z\Pi_-$，$|z|=1$，故
+
+$$
+\|P U_{\rm term}P^\perp\|
+ =|1-z|\lambda\le2\lambda .
+\tag{21.10}
+$$
+
+任意非 $R$ CPTP 步骤可在证明中写成等距扩张 $W_i$；它满足 $P W_i=W_iP$，因而没有 $P^\perp$ 到 $P$ 的块。扩张指标只用于计算概率，最终取偏迹，不是控制器可用的输入、纯化或实际输出。对一般接触等距 $W_i$，在相邻空间插入 $P+P^\perp$ 并用等距及投影的收缩性，得
+
+$$
+\|P W_t\cdots W_1P^\perp\|
+ \le\|P W_{t-1}\cdots W_1P^\perp\|
+      +\|P W_tP^\perp\| .
+\tag{21.11}
+$$
+
+所以包含至多 $r$ 次原生 $V$ 和一次终端的任意这样的联合续接 $W$ 满足
+
+$$
+\|P W P^\perp\|\le(\sqrt2 r+2)\lambda .
+\tag{21.12}
+$$
+
+此论证允许在每次接触前由全部记忆选择或相干路由探针，因为这些操作都在非 $R$ 系统上。有限因果树的自适应停止可按调用序号补齐恒等空步，在证明扩张中保留其控制历史；一次“调用或空步”在相应正交控制块上分别为 $V$ 或恒等，其回流块范数仍至多 $\sqrt2\lambda$。规定终端的控制块均满足 (21.10)。故同一上限用于全部分支，不要求确定的实际调用次数或固定的记忆无关后缀。
+
+对任何支撑在 $P^\perp$ 的正算子 $Z$，扩张后再对形式环境取偏迹给
+
+$$
+\operatorname{Tr}[P\Phi(Z)]
+ =\operatorname{Tr}[(P W P^\perp)Z(P W P^\perp)^\dagger]
+ \le(\sqrt2 r+2)^2\lambda^2\operatorname{Tr}Z .
+\tag{21.13}
+$$
+
+它对任意参考—记忆相关输入成立；没有以参考边缘替代联合输入。
+
+在 (21.8) 的第 $s$ 项上，$Z_s$ 支撑在 $P^\perp$，且其后最多还有 $L-s$ 次原生调用及一个终端。由 (21.13) 和保迹性，该项最终的参考泄漏至少为
+
+$$
+\operatorname{Tr}[P^\perp\Phi_s(Z_s)]
+ \ge\beta\alpha^{s-1}
+ \left[1-\lambda^2\bigl(\sqrt2(L-s)+2\bigr)^2\right] .
+\tag{21.14}
+$$
+
+在正分解 (21.8) 中相加，$\Omega_{\rm rem}$ 对这个效果的贡献非负，遂得 (21.5)。其它分量中的相干补偿不能抵消这些正项的概率贡献。
+
+原曲线给 $N_e\ge1$、$D\ge4L$ 及 $D\ge3$。对 $q\ge1$，Bernoulli 不等式和 $\kappa_D\le1/D$ 给
+
+$$
+\alpha^{q-1}\ge1-\frac{q-1}{D}\ge\frac34,
+\qquad \beta=\frac{1-1/D}{2D}\ge\frac1{3D},
+\qquad \beta\sum_{s=1}^{q}\alpha^{s-1}\ge\frac{q}{4D} .
+\tag{21.15}
+$$
+
+又 $\sqrt2\le3/2$、$L=10N_e$，所以
+
+$$
+\varepsilon_L
+ \le\frac{(\sqrt2 L+2)^2}{D}
+ \le\frac{289N_e^2}{D}
+ \le\frac{289}{8{,}000{,}000}<\frac12 .
+\tag{21.16}
+$$
+
+由 (21.5)、(21.15)–(21.16) 得 $p_{\rm final}\ge q/(8D)$。$q=0$ 时此结论直接是概率非负。最后，效果 $(I_R-\tau_h)\otimes I_K$ 在比较态 $\tau_h\otimes\operatorname{Tr}_R\Omega_{n,h}$ 上的概率为零，迹距离的变分表述给 $\Delta_{n,h}\ge p_{\rm final}$。全程使用同一个实际 $\Omega_{n,h}$ 及其自身的实际 $K$ 边缘。$\square$
+

@@ -1,0 +1,55 @@
+**定理 5.2（该构造的精确矩形编码）。** 存在第 5.3 段指定的有限酉字 $U_e$ 及仅作用于非参考辅助口的输入输出投影 $\Pi,\widetilde\Pi$，使
+
+$$
+\widetilde\Pi U_e\Pi=\widehat A/\beta,\qquad
+\widehat A\psi=\sum_{n\in\mathcal F}g_{p_n}(B_{\mathfrak a_n})\psi\otimes a_n,
+\qquad\|\widehat A-A_{\rm stack}\|\le\frac3{2500t}.
+\tag{5.3}
+$$
+
+其所用 beta 多项式和全部归一化由以下证明确定。
+
+证明。只在证明中取轴 $\mathfrak a$ 的自旋基，$J_{\mathfrak a}$ 本征值为 $m/2-k$、$0\le k\le m$。对 $y=(1+\mathfrak a\cdot u)/2$，相干态分辨和方位积分使 $T_m(p(\mathfrak a\cdot u))$ 的非对角元为零，第 $k$ 个对角元为
+
+$$
+(m+1)\binom mk\int_0^1p(2y-1)y^{m-k}(1-y)^k\,dy.
+\tag{5.4}
+$$
+
+此处使用 [DLMF 5.12.E1](https://dlmf.nist.gov/5.12.E1) 的 beta 积分
+$B(a,b)=\Gamma(a)\Gamma(b)/\Gamma(a+b)$，实际参数 $m-k+1,k+1$ 都正，且
+$(m+1)\binom mk B(m-k+1,k+1)=1$。所以 (5.4) 是 $\operatorname{Beta}(m-k+1,k+1)$ 下的期望。若 $b_k=(m-2k)/(m+2)$，两参数恰为 $(m+2)(1+b_k)/2$、$(m+2)(1-b_k)/2$，从而
+
+$$
+T_m(p(\mathfrak a\cdot u))=g_p(B_{\mathfrak a}).
+\tag{5.5}
+$$
+
+具体地，若 $p(x)=\sum_jp_jx^j$，以 $(z)_v=z(z+1)\cdots(z+v-1)$、$(z)_0=1$ 记升阶乘，则
+
+$$
+g_p(b)=\sum_jp_j\sum_{v=0}^j\binom jv2^v(-1)^{j-v}
+\frac{\bigl((m+2)(1+b)/2\bigr)_v}{(m+2)_v}.
+\tag{5.6}
+$$
+
+因此 $\deg g_p\le\deg p$。在 $-1<b<1$ 上，这是正的归一期望，故
+$\|g_p\|_{[-1,1]}\le\|p\|_{[-1,1]}$。端点 $b\to1,-1$ 时 beta 分布分别弱收敛到 $y=1,0$ 的点质量；同一多项式公式给 $g_p(1)=p(1)$、$g_p(-1)=p(-1)$。代换 $y\mapsto1-y$ 证明保留实性及奇偶性。这里的全区间界包含端点。
+
+为付费供应 (5.2)，先沿已知轴 $\mathfrak a$ 准备探针，取 $p_D=D/(D+1)$，准备概率 $p_D,1-p_D$ 的选择位。第一支 SELECT $Q_D$，第二支 SELECT $-I$，再反准备选择位，其中
+
+$$
+Q_D=\Pi_+-\Pi_-=(I+2J\cdot\sigma_S)/D.
+\tag{5.7}
+$$
+
+探针和选择位零压缩恰为
+
+$$
+p_DA_{\mathfrak a}-(1-p_D)I
+=\frac{DA_{\mathfrak a}-I}{D+1}=B_{\mathfrak a}.
+\tag{5.8}
+$$
+
+线性组合系数绝对值和恰为一。该酉及其逆各需一个新的付费受控 $Q_D$；额外控制均在非参考位上计算。没有去掉 $I/D$ 的偏移，也没有直接供应 $J_{\mathfrak a}/j$。
+

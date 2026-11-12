@@ -38,7 +38,7 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/UniformRate
 
 *Commentary.*
 
-If beta and epsilon are positive and epsilon is less than one half minus twice beta, then N to the power minus one half plus epsilon, times H to the power three halves, times log(N) to the power minus three halves, tends to zero uniformly for real H between one and N to the power beta.
+If beta and epsilon are positive and epsilon is less than one half minus three halves times beta, then N to the power minus one half plus epsilon, times H to the power three halves, times log(N) to the power minus three halves, tends to zero uniformly for real H between one and N to the power beta.
 
 **Theorem 1.4 (The fourth arithmetic rate).**
 
@@ -86,7 +86,7 @@ Lean statement: `D5/S3/Arith/Robin/ForwardKernel/PrimeMomentTransfer/UniformRate
 
 *Commentary.*
 
-For nonnegative beta less than one quarter and every natural k at most four, (H log(N)) to the power k/2 divided by N tends to zero uniformly for real H between one and N to the power beta.
+For nonnegative beta less than one half and every natural k at most four, (H log(N)) to the power k/2 divided by N tends to zero uniformly for real H between one and N to the power beta.
 
 **Theorem 1.8 (The eventual length window).**
 

@@ -1,0 +1,51 @@
+**定理 46.2（偶数中心次数的精确传递与对偶封闭族）。** 设实际域塔 $F\subset E\subset D$ 满足 $n=[E:F]$ 为偶数、$[D:E]=5$。令 $C\le_F E$ 为 $n/2$ 维，$V\le_E E\oplus D$ 为三维，并沿用定义 45.1 的配对、可用性和 $W(C,V)$，仅将中心维数三改为 $n/2$。则 $W(C,V)$ 为 $5n/2$ 维。对原 $r\in D^\times$，仍以 (45.4) 定义 $T_r(U),\rho_r,R_r(U),\kappa_r(U)$，其中 $U=V$ 或 $V^\perp$，有
+
+$$
+d_{W(C,U)}(r)=n\kappa_r(U)+\dim_F(R_r(U)\cap C^2),
+\qquad
+\dim_F(R\cap C^2)=
+\begin{cases}
+0,&R=0,\\
+n,&R=E^2,\\
+n/2,&R=E(1,0)\ \text{或}\ E(0,1),\\
+d_C(u/v),&R=E(u,v),\ uv\ne0.
+\end{cases}
+\tag{46.2}
+$$
+
+特别地，若一个半维中心族 $\mathscr C$ 的所有成员具有相同的完整原标签 $d_C$，并且在原 $\operatorname{Tr}_{E/F}$ 正交补下封闭，则
+
+$$
+\{W(C,V),W(C,V^\perp):C\in\mathscr C\}
+\quad\text{具有相同的完整原标签交维函数，}
+\qquad
+W(C,V)^\perp=W(C^\perp,V^\perp).
+\tag{46.3}
+$$
+
+最后的正交补使用原 $\operatorname{Tr}_{D/F}$ 配对。
+
+证明。投影 $p_E:U\to E$ 的核为二维 $E$-空间；$p_D$ 将 $p_E^{-1}(C)$ 单射到窗口，故维数为 $2n+n/2$。(45.9) 的唯一提升同构和 (45.10) 的正合列不使用 $n=6$，核的 $F$-维数改为 $n\kappa_r(U)$ 即得第一式。像的 $E$-秩只能为零、一、二；全像时 $C^2$ 的维数为 $n$，两条轴各给 $n/2$。非轴线的参数集仍为 $u^{-1}C\cap v^{-1}C$，乘以 $u$ 将它同构到 $C\cap(u/v)C$，给出最后一行。因此全部秩层、$\kappa=0$、零像、轴线和非轴线上的零交维都保留在 (46.2) 中；不存在仅比较正支持的步骤。
+
+可分迹的非退化性和传递性沿用 (45.11)–(45.12)，也可在分裂后由坐标点积直接得到。对任意偶数次数 $N=[B:F]$ 的实际扩张及半维空间 $H\le_F B$，有 $(rH)^\perp=r^{-1}H^\perp$，从而
+
+$$
+\begin{aligned}
+d_{H^\perp}(r)
+&=N-\dim_F(H+r^{-1}H)
+=d_H(r^{-1})=d_H(r)\qquad(r\in B^\times).
+\end{aligned}
+\tag{46.4}
+$$
+
+末步由乘以 $r$ 给出交叠的同构。这是 §34、引理 40.2 已用的半维迹恒等式在一般偶数次数上的同一计算。对 $(a,x)\in V$、$(b,y)\in V^\perp$，(45.12) 仍给 $\operatorname{Tr}_{D/F}(xy)=-\operatorname{Tr}_{E/F}(ab)$。取 $a\in C,b\in C^\perp$，再比较两个半维空间，便得 (46.3) 的正交补等式。
+
+固定 $U=V$ 时，(46.2) 使 $d_{W(C,V)}$ 与 $C\in\mathscr C$ 的选择无关。相反叶选择之间使用
+
+$$
+W(C,V^\perp)=W(C^\perp,V)^\perp.
+\tag{46.5}
+$$
+
+由于 $C^\perp\in\mathscr C$，右边由固定叶传递和 (46.4) 连接到同一个函数。这一步需要旧族的对偶封闭性，不能单凭固定 $U$ 的公式比较两种叶。若容许标签零，两边另外都为零；不把零代入含 $r^{-1}$ 的证明。$\square$
+

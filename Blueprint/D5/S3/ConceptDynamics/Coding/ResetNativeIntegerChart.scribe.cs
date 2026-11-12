@@ -220,6 +220,16 @@ internal sealed class ResetNativeIntegerChartDocument : IScribeDocumentDefinitio
                         + "to the original native action. unitValue denotes the underlying ring element of a unit; the final "
                         + "power is the group power of the actual history shift. targetTimeUnit has value targetTime and literal "
                         + "inverse 1,tau,2,-i in residue order, and every target unit equals its bounded group power."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("gaussian-units"),
+                DeclarationHandle.Create(Prefix + "gaussian_unit"),
+                H("The four Gaussian integer units"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every unit u of the Gaussian integers, its underlying ring element "
+                    + "is one of 1, i, -1, or -i. The norm of a unit is one, so the squares of its two "
+                    + "integer coordinates sum to one. Exactly one coordinate is zero and the other is 1 or -1."))),
+                DescribeRole.Theorem),
             Paragraph(Text("Application to the full native action. Write N=DimensionGroup(resetMatrix q), "
                 + "Theta=resetTheta q, e=generator q hq and Phi=nativeIntEquiv q hq. The ring B is literally "
                 + "Int[X]/(F(q)); its polynomial scalar extension is fp:Int[X]->B, with x=fp(X). N has its "

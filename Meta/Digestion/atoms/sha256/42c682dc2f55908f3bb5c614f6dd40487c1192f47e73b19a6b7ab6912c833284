@@ -1,0 +1,10 @@
+由同一原文 Definition 2.1、Corollary 3.2，(31.7) 的最少块取等分拆唯一。$G$ 传递地作用于嵌入，并同时半线性地置换各窗口的行，所以保持各 $q_i$ 及该分拆。依 (29.7)、(30.11)，令 $S_0$ 为含原包含嵌入 $\iota$ 的块，$J_0=\{g\in G:gS_0=S_0\}$。固定 $\iota$ 的 $g$ 保持 $S_0$，所以 $\operatorname{Gal}(K/D)\subseteq J_0$。若 $\sigma=g\iota\in S_0$，则 $gS_0$ 与 $S_0$ 相交从而相等；反之 $g\in J_0$ 蕴含 $g\iota\in S_0$。因此 $A=K^{J_0}$ 是原 $D$ 中的实际中间域，$S_0=\operatorname{Hom}_A(D,K)$；其他块是它的平移，块数为 $[G:J_0]=[A:F]$。
+
+在 $S_0$ 上，$D\otimes_A K\simeq K^{S_0}$ 的分裂把 $(AX_i)\otimes_A K$ 的像张成在列 $(\sigma(x_{ij}))_{\sigma\in S_0}$ 上。这是因为原 $x_{ij}$ 张成 $AX_i$ 作为 $A$-空间，并且扩底保持其维数。因此 $q_i(S_0)=\dim_A AX_i$，每个平移块也有相同的各 $q_i$。代入 (31.7)，得
+
+$$
+R=[A:F]\left(\sum_i\dim_A AX_i-1\right),\qquad
+M-R=\Lambda_h(A).
+\tag{31.8}
+$$
+
