@@ -110,10 +110,10 @@ internal sealed class FubiniStudyRecordTimeDocument : IScribeDocumentDefinition
         Blocks(
             Paragraph(Text(
                 "The following is a classical application of the pinned operator and calculus "
-                + "library. It is separate from the frozen triangle, record-time and record-count "
-                + "statements: those statements assume endpoint displacement bounds and do not "
-                + "prove Hamiltonian dynamics. The Mandelstam–Tamm application below adds no "
-                + "new Lean declaration or theorem claim to that module.")),
+                + "library. The frozen triangle statement is geometric; the record-time and "
+                + "record-count statements additionally assume endpoint displacement bounds. "
+                + "None proves Hamiltonian dynamics. The Mandelstam–Tamm estimate below is "
+                + "an application, separate from those frozen statements.")),
             Paragraph(Text(
                 "Let E be an arbitrary finite-dimensional complex inner product space, with its "
                 + "normed additive group structure, A a continuous complex-linear endomorphism "
@@ -138,7 +138,7 @@ internal sealed class FubiniStudyRecordTimeDocument : IScribeDocumentDefinition
                 + "NormedSpace.exp_mem_unitary_of_mem_skewAdjoint make U(s) unitary for every "
                 + "real s. ContinuousLinearMap.norm_map_of_mem_unitary gives norm(v(s))=1 and "
                 + "norm(w(s))=c, where c=Delta/hbar. The identity "
-                + "IsSymmetric.coe_re_inner_self_apply supplies the real expectation; centering "
+                + "LinearMap.IsSymmetric.coe_re_inner_self_apply supplies the real expectation; centering "
                 + "gives inner(psi,G psi)=0. ContinuousLinearMap.inner_map_map_of_mem_unitary "
                 + "therefore gives inner(v(s),w(s))=0. The exponential derivative "
                 + "hasDerivAt_exp_smul_const, composed with continuous-linear evaluation at psi, "
@@ -216,39 +216,33 @@ internal sealed class FubiniStudyRecordTimeDocument : IScribeDocumentDefinition
     {
         Formula e = F.Id("E");
         Formula a = F.Id("A");
-        Formula psi = F.Id("psi");
-        Formula hbar = F.Id("hbar");
+        Formula psi = Seq(Mathrm, Grp(F.Id("psi")));
+        Formula hbar = Seq(Mathrm, Grp(F.Id("hbar")));
         Formula t = F.Id("t");
-        Formula real = Call("Real");
-        Formula complex = Call("Complex");
-        Formula mu = Call("Re", Call("inner", complex, psi, Call("apply", a, psi)));
-        Formula delta = Call("norm", Call("subtract", Call("apply", a, psi),
-            Call("scale", Call("ofReal", mu), psi)));
-        Formula coefficient = Call("divide", Call("multiply", Call("negative", Call("I")),
-            Call("ofReal", t)), Call("ofReal", hbar));
-        Formula evolved = Call("apply", Call("exp", Call("scale", coefficient, a)), psi);
-        Formula conclusion = Rel(Call("arccos", Call("norm", Call("inner", complex, psi, evolved))),
-            Le, Call("divide", Call("multiply", Call("abs", t), delta), hbar));
-        Formula assumptions = Rel(Rel(Call("IsSelfAdjoint", a), Land,
-            Rel(Call("norm", psi), Eq, D(1))), Land, Rel(D(0), Lt, hbar));
-        Formula body = Rel(assumptions, Implies, conclusion);
-        body = All("t", real, body);
-        body = All("hbar", real, body);
-        body = All("psi", e, body);
-        body = All("A", Call("ContinuousLinearMap", complex, e, e), body);
-        return Disp(All("E", Call("Type"), Seq(
-            OpenBracket, Call("NormedAddCommGroup", e), CloseBracket, Sp,
-            OpenBracket, Call("InnerProductSpace", complex, e), CloseBracket, Sp,
-            OpenBracket, Call("FiniteDimensional", complex, e), CloseBracket, Sp, body)));
+        Formula real = Seq(Mathbb, Grp(F.Id("R")));
+        Formula complex = Seq(Mathbb, Grp(F.Id("C")));
+        Formula applied = Seq(a, Sp, psi);
+        Formula mu = Seq(Re, Sp, Langle, psi, Comma, applied, Rangle);
+        Formula delta = Norm(Seq(applied, Minus, Open, mu, Close, Sp, psi));
+        Formula coefficient = Seq(Frac, Grp(Minus, F.Id("i"), Sp, t), Grp(hbar));
+        Formula evolved = Seq(Exp, Open, coefficient, Sp, a, Close, Sp, psi);
+        Formula overlap = Norm(Seq(Langle, psi, Comma, evolved, Rangle));
+        return Disp(new Formula.Aligned([
+            Seq(Amp, Forall, Sp, e, Colon, F.Id("Type"), Comma, Sp,
+                OpenBracket, Call("NormedAddCommGroup", e), CloseBracket, Sp,
+                OpenBracket, Call("InnerProductSpace", complex, e), CloseBracket, Sp,
+                OpenBracket, Call("FiniteDimensional", complex, e), CloseBracket, Comma),
+            Seq(Amp, Forall, Sp, a, Colon, Call("ContinuousLinearMap", complex, e, e), Comma, Sp,
+                Forall, Sp, psi, Colon, e, Comma, Sp,
+                Forall, Sp, hbar, Comma, t, Colon, real, Comma),
+            Seq(Amp, Call("IsSelfAdjoint", a), Sp, Land, Sp, Norm(psi), Eq, D(1), Sp,
+                Land, Sp, D(0), Lt, hbar, Sp, Implies),
+            Seq(Amp, Operatorname, Grp(F.Id("arccos")), Open, overlap, Close, Le,
+                Frac, Grp(Bar, t, Bar, Sp, delta), Grp(hbar))]));
     }
 
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
-    private static Formula All(string name, Formula type, Formula body) =>
-        Seq(Open, Forall, Sp, F.Id(name), Colon, Sp, type, Comma, Sp, body, Close);
-    private static Formula Rel(Formula left, Formula relation, Formula right) =>
-        Seq(Open, left, Sp, relation, Sp, right, Close);
-
     private static Formula Norm(Formula x) => Seq(Vert, Sp, x, Sp, Vert);
 
     private static Formula Angle(string x, string y) => Seq(
