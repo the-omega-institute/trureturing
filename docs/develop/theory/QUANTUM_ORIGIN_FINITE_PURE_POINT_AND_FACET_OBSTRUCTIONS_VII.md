@@ -402,3 +402,357 @@ $$
 最后，$p_0,p_2$ 不相邻，包含它们的最小面是整个七边形 $K$，不是整欧氏球，故 $\mathrm B$ 失败。其边 $[p_0,p_1]$ 又有 $p_1\notin D_{p_0}=Q_0$，所以面格虽有VII97.3的正交补，却不满足VII97.7的秩二正交模律。该实例只证明删去 $\mathrm B$ 时这两条捷径均失败，不给 $\mathrm B+\mathrm{Z0}$ 的接触反例；已有正五边形在其原前件下的边界也不由此改判。这里的原载体、全效应排除集与有理三环障碍的组合采用 `repo-derived` 归属；度量slack与self-polar实现判据归VII97.5所引原文，不主张历史优先权。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 98. 任意纯点集的失败端点与横向共同纤维维数障碍
+
+### 98.1 原全效应载体与整个二纯面的最小维数
+
+**定义 98.1（原仿射方向及球尺度）。** 本章的VI89.x、VI90.x指[第六卷](QUANTUM_ORIGIN_INTRINSIC_POLAR_QUOTIENT_AND_NONCOLLAPSE_VI.md)，V88.x指[第五卷](QUANTUM_ORIGIN_BILATERAL_POSITIVE_RESET_RIGIDITY_AND_SCALE_OBSTRUCTION_V.md)，VII96.x—98.x指本卷。采用VI89.1—89.2的非零有限维实 $V$、闭尖生成凸锥 $C$、严格正原单位 $u$、整个紧基 $K=C\cap\{u=1\}$、全部纯点 $P=\operatorname{ext}K$、整个原效应区间 $[0,u]_{C^*}$ 及全称 $\mathrm B$。不要求 $P$ 有限或闭，不附加ROG、PSD表示、谱性、全局内积或 $\mathrm{Z0}$。记
+
+$$
+E=\ker u=\operatorname{lin}(K-K),\qquad m=\dim E=\dim\operatorname{aff}K.
+\tag{VII98.1}
+$$
+
+生成性与 $K$ 的归一化给 $\operatorname{span}K=V$，故 $\operatorname{aff}K=\{u=1\}$，得到上述方向等式。$m=0$ 时 $K$ 是单点，$\mathrm A$ 的不同纯对量词为空；该分支不定义下列 $\delta$，其单点效应 $\alpha$ 由 $\alpha u$ 延拓。$m\ge1$ 时定义
+
+$$
+\delta=\min_{p,q\in P,\ p\ne q}\dim H(p,q),\qquad 1\le\delta\le m.
+\tag{VII98.2}
+$$
+
+非单点紧凸集至少有两个纯点；这些维数构成 $\{1,\ldots,m\}$ 的非空子集，所以最小值存在且由某一纯对达到。这不是在 $P\times P$ 上对连续函数取极值，不用 $P$ 的紧性。
+
+固定一个整个二纯最小面 $F$。由 $\mathrm B$ 选其内在球坐标
+
+$$
+F=c+B_F,\qquad W_F=\operatorname{lin}(F-F),\qquad
+B_F=\{v\in W_F:|v|_F\le1\},\qquad d=\dim F\ge\delta.
+\tag{VII98.3}
+$$
+
+$|\cdot|_F$ 只作用于 $W_F$，不延伸为 $E$ 上的指定内积。$\mathrm A(F)$ 指每个 $|n|_F=1$ 的原纯对径 $c+n,c-n$ 均能由同一张原 proper 效应分别取一和零；全部 $\mathrm A(F)$ 就是原 $\mathrm A$。
+
+本章直接复用VI90.9的原基范数及其达到性。若 $\gamma$ 是 $K-K$ 在 $E$ 上的Minkowski泛函，则原质量归一化给
+
+$$
+\gamma(z)=\frac12\|z\|_C
+ =\max_{e\in[0,u]}e(z)
+ =\min\{t\ge0:z=t(a-b),\ a,b\in K\},\qquad z\in E.
+\tag{VII98.4}
+$$
+
+$z=0$ 的最后一项按 $t=0$ 理解。系数 $1/2$ 来自 $u(z)=0$：最小正负锥分解的两侧质量相等；对偶式来自VI(90.17)的 $g=2e-u$。在同一个最优实现 $z=t(a-b)$、$t>0$ 上，取同一对偶极大点 $e$，有 $e(z)=t$，故
+
+$$
+e(a)=1,\qquad e(b)=0.
+\tag{VII98.5}
+$$
+
+成熟来源为 Lami–Palazuelos–Winter，*Ultimate data hiding in quantum mechanics and beyond*，[arXiv:1703.03392v2 §II.1 Definition 1—2、Lemma 3](https://arxiv.org/html/1703.03392v2#S2.SS1)。其原假设正是有限维实闭尖生成锥、$u\in\operatorname{int}C^*$ 及全效应；此处严格正性在有限维闭锥上给同一内部条件。这里不采用其双系统或受限测量前提，(VII98.4)—(VII98.5)是VI90.9接口的同单位使用，不另计为新基范数定理。
+
+### 98.2 任意失败对径的两个端点均混且在原面外
+
+**引理 98.2（失败端点不能纯化）。** 在定义VII98.1下，取 $F$ 中任意纯对径 $p,r$。任意实现
+
+$$
+p-r=t(a-b),\qquad a,b\in K,\qquad 0<t<1
+\tag{VII98.6}
+$$
+
+都满足 $a,b\notin F$ 且 $a,b\notin P$。这里不要求该实现最优。
+
+证明。由(VII98.6)有同一个点
+
+$$
+z=\frac{p+tb}{1+t}=\frac{r+ta}{1+t}.
+\tag{VII98.7}
+$$
+
+若 $a\in F$，右式给 $z\in F$，左式是 $p,b$ 的严格凸组合，面的性质遂给 $b\in F$。于是
+$2=|p-r|_F=t|a-b|_F\le2t<2$，矛盾。若 $b\in F$，交换两式得到相同矛盾。因此两端都在 $F$ 外；这里没有先假定 $z\in F$。
+
+若 $a$ 纯，则 $a\ne r$，因为 $r\in F$。令 $G=H(r,a)$，$\mathrm B$ 使 $G$ 为整个仿射球。(VII98.7)的右式在 $G$，左式及面性质给 $p,b\in G$。又因 $p,r$ 的中点是 $F$ 的相对内点，$H(p,r)=F$，所以 $F\subseteq G$，且 $F$ 是 $G$ 的面。严格凸球的非空真面只能是单点，而 $F$ 含不同的 $p,r$，故 $F=G$。这又使 $a,b\in F$，矛盾。交换 $p,r$ 与 $a,b$ 同样排除 $b$ 纯。证毕。
+
+这项结论只针对 $t<1$ 的局部对径捷径；任意方向的最优差分端点不受此量词覆盖。后续维数见证还需在同一个 $F$ 中重新选方向，不能把它归给起初指定的每个失败方向或它的全部最优实现。
+
+### 98.3 最大伸长与同差纤维的两层极点
+
+**定理 98.3（B-only横向维数障碍）。** 在定义VII98.1下，若 $\mathrm A(F)$ 失败，则存在同一原球 $F$ 中重新选出的失败对径 $p_*,r_*$、同一对最优原端点 $a,b$、同一张原效应 $e$，以及包含 $a,b$ 的各自最小面 $G_+,G_-$，使
+
+$$
+\begin{gathered}
+p_*-r_*=t_*(a-b),\qquad 0<t_*<1,\qquad
+\gamma(p_*-r_*)=t_*,\qquad e(a)=1,\quad e(b)=0,\\
+a\in\operatorname{ri}G_+,\qquad b\in\operatorname{ri}G_-,\qquad
+L_\pm=\operatorname{lin}(G_\pm-G_\pm),\\
+W_F\oplus L_+\oplus L_-\ \subseteq\ E,\qquad
+\delta\le\dim G_\pm,\qquad
+\dim G_++\dim G_-\le m-d.
+\end{gathered}
+\tag{VII98.8}
+$$
+
+同一 $e$ 在整个 $G_+$ 恒一、在整个 $G_-$ 恒零。特别是
+
+$$
+\mathrm A(F)\text{ 失败}\quad\Longrightarrow\quad m-d\ge2\delta.
+\tag{VII98.9}
+$$
+
+证明。令
+
+$$
+Q=(K-K)\cap W_F,\qquad R=\max_{w\in Q}|w|_F.
+\tag{VII98.10}
+$$
+
+$Q$ 是紧凸集，且含 $F-F=2B_F$。由VI90.9，原失败对径 $p,r$ 有最优(VII98.6)，故 $(p-r)/t\in Q$ 的长度为 $2/t>2$，于是 $R>2$。选一个达到 $R$ 的 $w$。平方欧氏范数严格凸：若 $w$ 是 $Q$ 中两个不同点的严格凸组合，则 $|w|_F^2$ 严格小于它们平方范数的加权和，后者至多为 $R^2$。所以 $w\in\operatorname{ext}Q$。
+
+取非空紧凸纤维及其一个极点
+
+$$
+M_w=\{(x,y)\in K\times K:x-y=w\},\qquad
+(a,b)\in\operatorname{ext}M_w.
+\tag{VII98.11}
+$$
+
+因 $w\in K-K$，有 $\gamma(w)\le1$。若 $\gamma(w)<1$，(VII98.4)的最优实现将给 $w=s(x-y)$、$s<1$；于是 $w/s\in Q$ 且 $|w/s|_F>R$，矛盾。因此 $\gamma(w)=1$，(VII98.11)的这一端点对就是最优实现。定义
+
+$$
+p_*=c+\frac wR,\qquad r_*=c-\frac wR,\qquad
+ t_*=\frac2R.
+\tag{VII98.12}
+$$
+
+这两个点是 $F$ 的纯对径，也是整个 $K$ 的纯点，并且
+$\gamma(p_*-r_*)=2/R=t_*<1$。由(VII98.4)—(VII98.5)取得同一张原 $e$ 饱和同一对 $a,b$。如果最初方向的最优系数为 $t$，还有 $t_*\le t$；这只说明重新选择的方向至少同样失败。VII98.2给所选 $a,b$ 均混且在 $F$ 外。
+
+现在使用有限维凸集的最小面相对内点性质：每一点处于其最小面的相对内部，故对每个 $v_+\in L_+$、$v_-\in L_-$，存在共同的充分小 $\varepsilon>0$，使
+
+$$
+a\pm\varepsilon v_+\in G_+\subseteq K,\qquad
+b\pm\varepsilon v_-\in G_-\subseteq K.
+\tag{VII98.13}
+$$
+
+这是成熟的面与相对内部工具（参见 Rockafellar，*Convex Analysis*，§18）；不要求 $G_\pm$ 暴露或紧。其有限维理由是：在包含给定点的面内，若该点不在相对内部，相对支撑便给一个含该点的更小真面，与最小性矛盾。相对内部正给每个方向所需的双向小扰动。
+
+设 $v_+-v_-\in W_F$。两组同步扰动的差都是 $Q$ 中的点，且
+
+$$
+w=\tfrac12\bigl(w+\varepsilon(v_+-v_-)\bigr)
+  +\tfrac12\bigl(w-\varepsilon(v_+-v_-)\bigr).
+\tag{VII98.14}
+$$
+
+第一层 $w\in\operatorname{ext}Q$ 迫使 $v_+-v_-=0$。此时两组端点仍在同一个 $M_w$；第二层 $(a,b)\in\operatorname{ext}M_w$ 又迫使 $v_+=v_-=0$。所以
+
+$$
+L_+\times L_-\longrightarrow E/W_F,\qquad
+(v_+,v_-)\longmapsto[v_+-v_-]
+\quad\text{是单射}.
+\tag{VII98.15}
+$$
+
+将 $v_-$ 换成 $-v_-$，即得(VII98.8)的直和及维数上界。第一层单独只消去差分移动，仍容许共同平移；第二层在第一层之后才消去共同平移，两层不可互代。这是原 $K\times K$ 上的直接扰动，不借PSD的秩界。
+
+还须得到两端的下界。整个紧凸 $K$ 的有限纯分解（有限维Minkowski定理，亦见 *Convex Analysis* §18）给 $a$ 为有限多个原纯点的正权凸组合，面性质使这些点全部在 $G_+$。因 $a$ 非纯，至少有两个不同的纯点 $s,t$ 出现。于是整个 $H(s,t)\subseteq G_+$，故 $\dim G_+\ge\dim H(s,t)\ge\delta$；$b$ 同理。这一步只用整个 $K$ 的分解，不对可能非闭的 $G_\pm$ 另用紧凸分解。
+
+最后，$K\cap\{e=1\}$ 与 $K\cap\{e=0\}$ 是分别包含 $a,b$ 的暴露面，所以包含它们的最小面 $G_+,G_-$。同一个 $e$ 遂在两面恒一和恒零。所有端点、方向、扰动及效应属于同一实现，证毕。
+
+### 98.4 严格维数域的原接触与全部局部效应延拓
+
+**推论 98.4（严格横向界）。** 在定义VII98.1下，若
+
+$$
+m-d<2\delta,
+\tag{VII98.16}
+$$
+
+则有
+
+$$
+(K-K)\cap W_F=F-F,\qquad \mathrm A(F),\qquad
+\operatorname{res}_F:[0,u]_{C^*}\twoheadrightarrow[0,1]_{\operatorname{aff}(F)}.
+\tag{VII98.17}
+$$
+
+特别地，$m\ge1$ 且 $m<3\delta$ 时全部 $\mathrm A$ 成立。不要求 $\mathrm{Z0}$ 或 $P$ 有限。
+
+证明。VII98.3排除失败，故有 $\mathrm A(F)$。为明确整个截面，始终有 $F-F=2B_F\subseteq Q$。若 $Q$ 含长度大于二的 $w$，则 $p=c+w/|w|_F$、$r=c-w/|w|_F$ 满足
+$p-r=(2/|w|_F)w$，由VI90.9得到同一 $F$ 中的失败对径，矛盾。因此 $Q=2B_F=F-F$。
+
+事实上该截面等式与 $\mathrm A(F)$ 等价：等式使每个直径差的 $\gamma$ 等于一，VI90.9给全域排除；反向刚由长于二的向量构造失败。这里精确复用原基范数接口，不以局部球距离冒充原基范数。VI90.8再给全部局部 proper 效应逐一延拓。具体地，若球坐标中的 $h(c+s)=\alpha+\ell(s)$ 满足 $0\le h\le1$，令 $r=\|\ell\|_{F,*}\le\min(\alpha,1-\alpha)$。$r>0$ 时写 $\ell(s)=r\langle n,s\rangle_F$，取 $\mathrm A(F)$ 给出的原 $e_n$，其球上限制必为 $(1+\langle n,s\rangle_F)/2$，故
+
+$$
+\widetilde h=(\alpha-r)u+2r e_n+(1-\alpha-r)0\in[0,u],
+\qquad \widetilde h|_F=h.
+\tag{VII98.18}
+$$
+
+$r=0$ 时用 $\alpha u$。这是 $\forall F\ \forall h\ \exists\widetilde h$，不供应共同正线性右逆、滤子或实际菜单。
+
+每个整个二纯球维数 $d\ge\delta$，所以 $m<3\delta$ 给 $m-d<2\delta$，逐面应用即得全部 $\mathrm A$。(VII98.16)只是充分条件；其失败不意味着 $\mathrm A(F)$ 失败。这里 $m-d$ 是原基内的仿射余维，与VI96的PSD环境实余维 $c$ 不同，不能互换。证毕。
+
+### 98.5 临界等号只归约为三个原球的接触义务
+
+**命题 98.5（临界三球归约及斜率边界）。** 若定义VII98.1中的 $F$ 失败且 $m-d=2\delta$，则VII98.3所选实现满足
+
+$$
+\dim G_+=\dim G_-=\delta,\qquad
+G_\pm\text{ 均为整个原二纯球},\qquad
+E=W_F\oplus W_{G_+}\oplus W_{G_-},
+\tag{VII98.19}
+$$
+
+$a,b$ 分别在这两个球的相对内部，同一原 $e$ 在 $G_+,G_-$ 恒一、恒零。这些结论仍只要求 $\mathrm B$；它们没有证明临界接触不等式 $|a-b|_F\le2$。
+
+证明。式(VII98.8)的上下界全取等号。其纯分解给某个整个 $H(s,t)\subseteq G_+$，维数至少 $\delta$，现在只能等于 $\dim G_+$。同维面不能真包含：其相对内部中的一点也是大面的相对内点，面性质遂迫使相等。因此 $G_+=H(s,t)$，是整个 $\delta$ 维球；$G_-$ 同理。直和维数为 $m$，故充满 $E$。相对内点与全脸饱和则来自VII98.3，不是额外的暴露性假设。
+
+写 $e(c+s)=\alpha+L(s)$，$s\in W_F$。球上的零一界给
+
+$$
+\sigma:=\|L\|_{F,*}\le\min(\alpha,1-\alpha)\le\tfrac12,
+\qquad L(a-b)=1,
+\qquad 1\le\sigma|a-b|_F\le\tfrac12|a-b|_F.
+\tag{VII98.20}
+$$
+
+所以它只给 $|a-b|_F\ge2$，方向恰与待证上界相反。即使 $\sigma=1/2$，也不反推 $|a-b|_F=2$；还须证明 $L(a-b)=\sigma|a-b|_F$ 的径向对齐。例如在欧氏二维空间，$L(x,y)=x/2$、$w=(2,1)$ 满足 $L(w)=1$、$\|L\|_*=1/2$，却有 $|w|=\sqrt5>2$。这个代数例子只否定该一步推理，不是满足整个 $\mathrm B+\mathrm{Z0}$ 的载体反例。
+
+在(VII98.19)下，固定两个仿射空间 $\operatorname{aff}G_\pm$ 后，条件 $a-b\in W_F$ 至多确定一对端点：两对解之差进入(VII98.15)的核。维数相等又使该商映射为线性同构，故仿射空间层面的解恰有一对，但它是否在两个球的相对内部、其差的长度是否不超过二，仍需另证。
+
+因此本章保留的临界问题是：在整个原 $\mathrm B+\mathrm{Z0}$ 载体中，对全部具有(VII98.19)、共同饱和效应以及相对内部横截端点的配置，是否总有 $|a-b|_F\le2$？若这个全称命题成立，才能把局部严格界扩为 $m-d\le2\delta$、全局扩为 $m\le3\delta$；若证明使用 $\mathrm{Z0}$，这两个等号版也必须保留 $\mathrm{Z0}$。相反，整个原 $\mathrm B+\mathrm{Z0}$ 模型中的一个此类 $|a-b|_F>2$ 实现，将由式(VII98.12)及同一 $e$ 给出VI89.12的真反例。仅有有限个纯分解项或三个球的抽取配置，不代付整个原模型的 $\mathrm B$、混态 $\mathrm{Z0}$。证毕。
+
+### 98.6 正维球形facet给整个原基的棱锥及全部A
+
+**定理 98.6（球形facet的全基加强）。** 在定义VII98.1及 $m\ge2$ 下，若 $K$ 有一个正维球形facet $F$，则存在唯一的 $s\in P\setminus F$，使
+
+$$
+K=\operatorname{conv}(F\cup\{s\}),\qquad
+P=\operatorname{ext}F\cup\{s\},\qquad \mathrm A.
+\tag{VII98.21}
+$$
+
+这里 $P$ 可无限，不要求 $\mathrm{Z0}$。正维球形面中任意两不同纯点的中点在其相对内部，故该面本身就是它们的整个最小面。VII98.4已由 $m-\dim F=1<2\delta$ 给 $\mathrm A(F)$；本条进一步给全部原基及其他二纯面的结构。
+
+证明。先在推导内使用标准支撑包含事实（有限维相对支撑定理，见 Rockafellar，*Convex Analysis*，§11、§18）：任意非空真面 $G$ 都包含于某个真暴露面，不要求 $G$ 自身暴露。具体地，取 $z\in\operatorname{ri}G$。若 $z\in\operatorname{ri}K$，则对任意 $y\in K$ 可沿 $z-y$ 小幅延长，面性质迫使 $y\in G$，与 $G$ 真矛盾。故 $z\in\operatorname{rbd}K$，相对支撑给在 $K$ 非负、在 $z$ 为零且在 $\operatorname{aff}K$ 非恒定的仿射 $h$。对任意 $y\in G$，相对内点性质给 $z+\varepsilon(z-y)\in G$；非负性和该严格凸组合迫使 $h(y)=0$。所以 $G\subseteq K\cap\{h=0\}\subsetneq K$。此论证也不要求 $G$ 闭。
+
+对facet $F$，包含它的这个真暴露面与 $F$ 同维，故等于 $F$。可取仿射坐标
+
+$$
+F=\{(x,0):x\in\mathbb R^{m-1},\ |x|\le1\},\qquad
+K\subseteq\{t\ge0\},\qquad K\cap\{t=0\}=F.
+\tag{VII98.22}
+$$
+
+整个 $K=\operatorname{conv}P$ 的有限纯分解及 $\dim K=m$ 保证存在外部纯点 $s=(a,b)$，$b>0$。对每个单位 $v\in\mathbb R^{m-1}$，$p_v=(v,0)$ 是原纯点。$\mathrm B$ 使 $G=H(p_v,s)$ 为球。若 $G=K$，则 $K$ 是维数 $m\ge2$ 的严格凸球，不可能有正维真面 $F$，故 $G$ 真。用上面的支撑包含事实，取在整个 $G$ 上取等号的真支撑
+
+$$
+w\cdot x+\eta t\le c_0\quad\text{于 }K,
+\qquad w\cdot v=c_0=w\cdot a+\eta b.
+\tag{VII98.23}
+$$
+
+$w=0$ 将使 $c_0=\eta=0$，与支撑非恒定矛盾。限制到整个底球得 $c_0=|w|>0$ 且 $w=|w|v$；除以正数 $|w|$，得到
+
+$$
+v\cdot x+\frac{1-v\cdot a}{b}\,t\le1.
+\tag{VII98.24}
+$$
+
+逐个单位 $v$ 取上确界，得
+
+$$
+\left|x-\frac tb a\right|\le1-\frac tb.
+\tag{VII98.25}
+$$
+
+设 $\theta=t/b$。由 $t\ge0$ 和右边非负知 $0\le\theta\le1$。$\theta<1$ 时，$y=(x-\theta a)/(1-\theta)$ 在单位底球，故 $(x,t)=(1-\theta)(y,0)+\theta s$；$\theta=1$ 时只有 $s$。凸性给反向包含，证明整个棱锥等式。中间高度的点均非纯，底部纯点恰为 $\operatorname{ext}F$，所以外部纯点也唯一。
+
+两个不同底球纯点的中点在 $\operatorname{ri}F$，故其整个最小面为 $F$；(VII98.24)在底球上的等号点只有 $p_v$，故在棱锥上的等号集恰为 $[p_v,s]$，其整个最小面正是这条边。这穷尽了全部不同原纯对。
+
+还可显式延拓原效应。对底球上任意 $h(x)=\alpha+q\cdot x\in[0,1]$ 和任意指定顶点值 $\zeta\in[0,1]$，令
+
+$$
+\widetilde h(x,t)=\alpha+q\cdot x+
+\frac{\zeta-\alpha-q\cdot a}{b}\,t.
+\tag{VII98.26}
+$$
+
+它在 $(1-\theta)(y,0)+\theta s$ 上等于 $(1-\theta)h(y)+\theta\zeta$，所以在整个 $K$ 上取值于 $[0,1]$。底球对径用 $h(x)=(1+n\cdot x)/2$ 区分，顶点边的两个端点用 $t/b$ 及其补区分，故全部 $\mathrm A$ 成立。这些仿射效应由 $\operatorname{aff}K=\{u=1\}$ 唯一齐次线性延伸到原 $V$；原 $C=\mathbb R_+K$ 上的零一界正给 $0\le\widetilde h\le u$。没有用局部球效应替代原全效应。证毕。
+
+### 98.7 不限制纯点总数的三维以内全分支
+
+**推论 98.7（低仿射维的B-only结论）。** 在VI89.1—89.2的原全效应域内，$m\le3$ 时 $\mathrm B\Rightarrow\mathrm A$，不要求 $P$ 有限或 $\mathrm{Z0}$。
+
+证明。$m=0$ 按VII98.1的单点约定；$m=1$ 时整个基是非退化闭线段，两个原重心坐标效应区分端点。对 $m=2,3$，若某个 $H(p,q)$ 维数为 $m$，它与 $K$ 同维，故等于 $K$；$\mathrm B$ 使整个基为球，标准球效应给全部 $\mathrm A$。若 $m=3$ 且某个 $H(p,q)$ 为二维，它是正维球形facet，应用VII98.6。
+
+剩下情形的每个二纯最小面均为一维球，即 $H(p,q)=[p,q]$；这些整段都是 $K$ 的面。若 $|P|\ge m+2$，从整个 $P$ 中取 $m+2$ 个不同纯点。有限维Radon划分给两个不交非空指标集及同一个点
+
+$$
+z=\sum_{i\in I}\lambda_i p_i=\sum_{j\in J}\mu_jp_j,\qquad
+\lambda_i,\mu_j>0,\qquad\sum_I\lambda_i=\sum_J\mu_j=1,
+\qquad |I|+|J|\le m+2\le5.
+\tag{VII98.27}
+$$
+
+这里的成熟Radon步骤可直接由这些点的仿射相关式得到：非零相关系数总和为零，正负两侧分别归一，零系数删去。因此较小一侧至多有两点。若只有一点，它被表示为其他不同纯点的凸组合，违反极端性；若有两点 $p,q$，则 $z\in(p,q)$，整段 $[p,q]$ 的面性质迫使另一侧所有正权纯点都在该段内，但 $P\cap[p,q]=\{p,q\}$，与指标不交矛盾。故 $|P|\le m+1$。整个 $K=\operatorname{conv}P$ 及维数又迫使恰有 $m+1$ 个仿射独立顶点，原基为单纯形，其原重心坐标效应给 $\mathrm A$。
+
+以上所有分支先从任意 $P$ 出发，只有最后一支才推出它有限。它不重做VII96的有限 $P$、$m\le5$ 或 $\nu\le8$ 结论，也不把这两个有限范围推广到无限 $P$。若 $\mathrm B+\neg\mathrm A$ 的整个载体存在，则必须 $m\ge4$，且不能有正维球形facet；高维其余载体仍不由本推论判定。证毕。
+
+### 98.8 保留混态Z0的完整旧消费者
+
+**定理 98.8（维数域内的同原数据几何替换）。** 完整保留VI89.7的原装饰元组 $\mathcal O$、共同合同 $\mathfrak S(\mathcal O)$ 及VI89.8—89.10的所有非几何条件。对选定的任意子集 $J\subseteq\{A,D,E\}$，只要求其中每个原载体 $X$ 满足下列已限定适用域之一：单点；$m_X\ge1$ 且 $m_X<3\delta_X$；$1\le m_X\le3$；或具有正维球形facet。则可把这些 $X$ 上的原 $\mathrm B_X+\mathrm{Boundary}_X$ 等价替换为
+
+$$
+\mathrm B_X+\mathrm{Z0}_X,
+\tag{VII98.28}
+$$
+
+其余 $X$ 的原几何条件不动。每个 $\mathrm{Z0}_X$ 的两被排除端点仍遍历全部原混态；不以纯纯零条件替代。所得完整包与VI(89.14)的全部既有完整包在这一固定适用域内同数据等价。
+
+证明。VII98.4、98.6、98.7及单点约定在所列域内由 $\mathrm B_X$ 给全部 $\mathrm A_X$。下一步准确使用的旧桥是
+
+$$
+\boxed{\mathrm{Z0}+\mathrm B+\mathrm A
+\quad\Longleftrightarrow\quad\mathrm B+\mathrm H
+\quad\Longleftrightarrow\quad S.}
+\tag{VII98.29}
+$$
+
+具体地，V88.3的完整混态 $\mathrm{Z0}$ 给每个原纯 $p$ 一个共同 proper 效应，其零集恰为 $D_p$。$\mathrm A$ 使所有经过 $p$ 的原球对径都在这个同一零集中，故有 $\mathrm H$；V88.4、V88.10及VI89.4再给完整 $S$、$\mathrm{Boundary}$ 和 $\mathrm Q$。反向，$S$ 给 $\mathrm B+\mathrm H$ 与全部 $\mathrm A$，其least效应又使 $D_p$ 是同一非负效应的零面，从而给全混态 $\mathrm{Z0}$。不能把(VII98.29)缩成裸 $\mathrm B+\mathrm A\Rightarrow S$。
+
+替换仅供应几何项；VI89.7的下列原数据与量词全部保留。原概率像 $K_X=\{k_\sigma\}$ 自身紧、非空、有限仿射维，单位为一，所有中点在原标签中实现，不先补闭包或凸包；原测试像自身闭、含零和单位、闭于中点、补及有界倍增，且每张表由同一个原测试对全部原准备实现。正带质量输出保留每个原中点实现（含重复标签），所有非负输入质量的原缩放仍含零、次归一及不等质量；其他过程和参考的下降仅在原已供应的全部联合输入域及闭尖输出锥上使用，不能以边缘或乘积输入代付全部相关联合。
+
+原实双线性 $L:D\times A\to E$、原实线性读回 $p:E\to D$、$\omega=1_D/m$ 及派生 $K,M,J,H,B_1,U,G,Q$ 仍按VI89.7和87.12的原定义，特别是 $K(a)=pL(\omega,a)$、$M(a,b)=pL(K(a),b)$ 使用同一个原 $p$ 两次。两实张成、全部实 $a,b$ 上的 $Z:B_1M(a,b)=\tau_A(a)Jb$、含秩一分支的完整(83.8)、原迹／伴随／二次表示／单位、VI(89.13)的全部两尺度等式、C2及整个 $G=1_E$ 逐项保留；总迹或一个标量锚不能代替整个输出条件。精确 PRE 之后的原 H13 仍消费同一原资格态、原 $I^{\rm raw}$ 和整个输出，保留所有活跃块、严格负方向、共享总迹一、零质量和空活跃集，不逐块换态或由输出反选资格。
+
+共同 $\mathfrak S$ 仍含准备和测试的设备／事件／来源绑定出现、全部菜单、过程和分支、实际参考、副本及相关联合、记录、权限、控制、钟及单位、ready／flags、失败／拒绝／停止／销毁／返回、所有质量、全部合法未来、旧固定支撑和每个中间切口，以及原实际混合服务。数学上的逐效应延拓不生成实际准备、测试、服务、资源或有限认证。于是VI89.8可直接按同一 $\mathcal O$ 应用，得到完整等价，证毕。
+
+**推论 98.9（逐消费者与原生来源的范围）。** 在VII98.8和每个旧消费者自身的完整前件下，VI89.9的消费者保持如下准确范围。
+
+| 旧消费者 | 仍需的原条件与所得范围 |
+| --- | --- |
+| 复型及Born | 一般EJA忠实桥与同一原精确两接口66.3；之后才得有限复Hermitian直和、整个密度基和全效应及 $\sum_i\operatorname{Tr}(f_i\rho_i)$，保留跨块零和不等中心质量。新维数条件不选择复型。 |
+| 指定二份／三份及读回 | 同一 $L,p$、两次原读回、两实张成、全实 $Z$、完整(83.8)、C2、整个 $G=1_E$ 与PRE后的同一原H13；才得原指定 $M,L,p,p_{13}$ 的张量／偏迹形式，覆盖全部相关及纠缠锥，不扩到另一括号、更高份数或无限维。 |
+| 指定CP事件及分支 | 同事件原实线性 $\Phi_e$、唯一复HP延拓及原 $P_{E,e}$，全实(87.21)、原非负腿权和全部复矩阵核包含条件，以及每输入块实际指定纯探针 $\psi_i$；保留零腿权、不等维、记录、ready、参考、副本、控制、钟和未来。HP提升全锥正性仍是被认证结论，不能预先假定。已有82.5完整递归参考路线按原类型直接复用。 |
+| Kraus及实际仪器 | 逐块CP后才有成熟矩形Kraus表示；实际分支、typed输入输出、真实参考、旁观者、全部菜单、记录、顺序接线、同族真粗粒化、共同重置输入行一致及87.23两预算均保留。完整实际菜单总TP才给完备和，次单位仅给TNI，不由矩阵表示生成环境或独立调用。 |
+| 条件态与Lüders | 原输入／分支质量、零分支和全部未来保持原域，只在正质量时归一；Lüders另需同一CP分支的锐投影效应、全部确定接受态逐点中性和原输出校准。同效应和同概率不决定更新。 |
+| 物理时间 | 原物理时间上的连续、齐次、可逆 $*$ 自同构群、实际逆、原钟、单位及动态来源；有限块Hamiltonian形式按该域取得，无限维正常性、生成元域和收敛仍须另付。 |
+
+证明。VII98.8只把几何输入还原为VI89.8的原完整包，表中结论逐项直接调用VI89.9，未删去任何消费者前件。对VI89.10的原生路线，也完整保留同一 $89$ 路径、$26+63$ 嵌入、原射影几何与密度、唯一ready、全部十一地址原有限字及terminal futures、原矩阵次序和资源合同。旧有限秩入口、无独立容量的全未来 $\mathrm R_{10}+\mathrm{UR}$ 与四前缀行关系入口、完整联合菜单入口，以及非恒定粗Born加全有符号关系／同秩的细化入口，均按各自原条件复用；数学完成点、full proper和共同POVM不自动有实际来源或仪器。
+
+[原生来源续卷VII](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_VII.md)第33—34章在其指定完整双列类上供应的 $\mathrm H_8,\mathrm H_3$ 联合闭包及支撑／十维压缩必要界亦直接复用，不重列为缺失。该卷第35章对(32.3)指定正候选的当前ready／代码校准与固定future破坏全未来ready回返同时成立；它不判定(32.4)的原全字精确细零蕴涵，也不否定整个指定双列类。新维数域没有供应这些来源律或把该必要界改成充分条件。
+
+若把完成行对象用于原 $A,D,E$，仍需该续卷VII20.2的 source-adoption map、87章全部原像和效应及共同来源合同。原1024细标签（含零、失败等原类型）、原粗归组、旧校准与支撑、全部历史和未来、实际参考与资源均按VI89.10保留；记录插入后的原七地址条件未来仍消费其完整原合同。同秩入口中已经导出的联合下降和回返无需重付，但不能把仅当前ready或固定future的后果替代全未来条件。本章不从几何增量生成复结构、原source、细Born、指定复合、CP、仪器、更新或时间。证毕。
+
+### 98.9 组合归属与尚存的原接触域
+
+**命题 98.10（严格障碍的适用边界）。** VII98.2—98.4的新增组合，是原 $\mathrm B$ 的失败端点限制与差集截面／共同纤维两层极点共同给出 $W_F\oplus L_+\oplus L_-$，再用整个 $K$ 的有限纯分解把两端维数各压到至少 $\delta$。VII98.5保留临界接触缺口；VII98.6—98.7是标准支撑、球严格凸性与Radon方法在相同原全效应问题中的几何加强；VII98.8—98.9仅在保留完整混态 $\mathrm{Z0}$ 和全部原数据后回接旧消费者。
+
+证明与归属。基范数、同一饱和效应和逐效应延拓归VI90.8—90.9及所引LPW；最小面、相对内部、紧凸分解、支撑与Radon划分是上述推导内明用的成熟凸几何步骤。新增资格不归一般维数计数本身，也不借PSD的Pataki秩定理。VI93—94的ROG分类、VI96—97的环境低余维／实低支撑结果、VII96的 $\nu\le8$ 与有限 $m\le5$ 排除及 $m=6$ 的 $n=f\ge27$、$\nu\ge20$ 必要界、VII97的有限面格与度量障碍均按原域复用，不重报为新增。上述原问题内的组合采用 `repo-derived` 归属，不主张全球原创、文献穷尽或一般开放状态认证。
+
+本章没有证明VII98.5的临界接触上界，因而没有给 $\mathrm B$ 下的 $m\le3\delta$ 一般等号版，也没有给整个 $P$ 任意有限时的单纯形结论。无限 $P$ 或高维剩余域中，若未落入本章充分条件，仍须证明全部VI90.10接触，或构造同时满足全称 $\mathrm B$、全混态 $\mathrm{Z0}$ 而失败 $\mathrm A/\mathrm H$ 的整个原载体。一般VI89.12及完整量子起源问题不由这些局部增量解决；有限纯分解见证也不把整个 $P$ 变成有限集。证毕。
+
+## 追加锚（本行以下为增补区）
