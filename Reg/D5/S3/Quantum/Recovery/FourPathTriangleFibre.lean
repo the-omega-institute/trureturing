@@ -97,7 +97,7 @@ abbrev arena : Arena where
 theorem rejected_law : ¬ arena.Law rejected := by
   intro hv
   have hv' := hv (6/5) 1 (1/4) (by norm_num) (by norm_num) (by norm_num [Triangle])
-  norm_num [T,W,B,D,rejected,realize] at hv' 
+  norm_num [T,W,B,D,rejected,realize] at hv'
 
 def source_registration : Registration arena
     (∀ (L X Y : ℝ), 1 < L → L^2 ≤ 2 → Triangle L X Y →
@@ -156,7 +156,7 @@ abbrev arena : Arena where
 theorem rejected_law : ¬ arena.Law rejected := by
   intro hv
   have hv' := hv (6/5) 1 (1/4) (by norm_num) (by norm_num) (by norm_num [Triangle])
-  norm_num [T,W,B,D,rejected,realize] at hv' 
+  norm_num [T,W,B,D,rejected,realize] at hv'
 
 def source_registration : Registration arena
     (∀ (L X Y : ℝ), 1 < L → L^2 ≤ 2 → Triangle L X Y →
