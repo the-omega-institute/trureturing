@@ -29,3 +29,8 @@ vanishes exactly. The construction and proof are repository work; the cited auth
 pose the question. This note makes no minimum-order, priority or exhaustive
 literature claim. Only the short question is quoted; no source implementation or
 proof is copied.
+
+## Verified locator
+
+- DOI: https://doi.org/10.1016/j.disc.2020.112113
+- Versioned source: https://arxiv.org/abs/2001.08881v2
