@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Native support compression and actual original-unit determinant maximizers. -/
+   digest: Native support compression constructs original-unit normalization and transports the entire original geometry. -/
 
 import Mathlib.Analysis.Matrix.PosDef
 import Mathlib.Analysis.Convex.Cone.Basic
@@ -877,8 +877,8 @@ theorem exists_original_unit_normalization
     have hk : 0 < k := by
       by_contra! hk
       have hk0 : k = 0 := Nat.eq_zero_of_le_zero hk
-      have hzero : ρ h = 0 := by
-        simpa only [hk0, Fin.sum_univ_zero] using heq
+      haveI : IsEmpty (Fin k) := by rw [hk0]; infer_instance
+      have hzero : ρ h = 0 := by simpa using heq
       exact hh0 (hρ (by simpa only [map_zero] using hzero))
     let j : Fin k := ⟨0, hk⟩
     have hy0 : y j ≠ 0 := by
@@ -887,10 +887,13 @@ theorem exists_original_unit_normalization
       simpa [hz] using hbad
     have hyp := hu (y j) (hy j).1 hy0
     have hscaled : y j = (u (y j) / (n : ℝ)) • h := by
-      rw [hscale (y j) (hy j).1 hy0, hscale h hh hh0, hmass, smul_smul]
-      congr 1
-      change u (y j) = u (y j) / (n : ℝ) * (n : ℝ)
-      field_simp [hnR.ne']
+      calc
+        y j = u (y j) • p := hscale (y j) (hy j).1 hy0
+        _ = (u (y j) / (n : ℝ) * (n : ℝ)) • p := by
+          congr 1
+          field_simp [hnR.ne']
+        _ = (u (y j) / (n : ℝ)) • h := by
+          rw [hscale h hh hh0, hmass, smul_smul]
     have hyPD : (σ (y j)).PosDef := by
       rw [hscaled, map_smul]
       exact hhPD.smul (div_pos hyp hnR)
@@ -980,13 +983,16 @@ theorem exists_original_unit_normalization
       · exact fun hF => hF.linear_image e.toLinearMap
       · intro hF
         have hp := hF.linear_preimage e.toLinearMap
+        change Convex ℝ (e ⁻¹' (e '' F)) at hp
         simpa only [e.injective.preimage_image] using hp
+    have hsegs (x y : V) : e '' openSegment ℝ x y = openSegment ℝ (e x) (e y) :=
+      image_openSegment ℝ e.toLinearMap.toAffineMap x y
     have hface (A B : Set V) : IsExtreme ℝ A B ↔ IsExtreme ℝ (e '' A) (e '' B) := by
       constructor
       · intro hF
         refine ⟨Set.image_mono hF.subset, ?_⟩
         rintro X ⟨x, hx, rfl⟩ Y ⟨y, hy, rfl⟩ Z ⟨z, hz, rfl⟩ hseg
-        rw [← image_openSegment ℝ e.toLinearMap.toAffineMap] at hseg
+        rw [← hsegs] at hseg
         have hseg' : z ∈ openSegment ℝ x y := e.injective.mem_set_image.mp hseg
         exact ⟨x, hF.left_mem_of_mem_openSegment hx hy hz hseg', rfl⟩
       · intro hF
@@ -995,7 +1001,7 @@ theorem exists_original_unit_normalization
           exact e.injective.mem_set_image.mp (hF.subset ⟨z, hz, rfl⟩)
         · intro x hx y hy z hz hseg
           have hs : e z ∈ openSegment ℝ (e x) (e y) := by
-            rw [← image_openSegment ℝ e.toLinearMap.toAffineMap]
+            rw [← hsegs]
             exact ⟨z, hseg, rfl⟩
           exact e.injective.mem_set_image.mp
             (hF.left_mem_of_mem_openSegment ⟨x, hx, rfl⟩ ⟨y, hy, rfl⟩ ⟨z, hz, rfl⟩ hs)

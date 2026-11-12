@@ -198,6 +198,14 @@ def arena : Arena where
           (1 : Matrix (Fin n) (Fin n) 𝕜) ∈ Ψ.range ∧
           Ψ '' {v : V | v ∈ C ∧ u v = 1} =
             {X | X ∈ Ψ.range ∧ X.PosSemidef ∧ X.trace = 1} ∧
+          (∀ x ∈ C,
+            (∃ (k : ℕ) (y : Fin k → V),
+              (∀ j, y j ∈ C ∧ (ρ (y j)).rank = 1) ∧ ρ x = ∑ j, ρ (y j)) ↔
+            (∃ (k : ℕ) (y : Fin k → V),
+              (∀ j, y j ∈ C ∧ (Ψ (y j)).rank = 1) ∧ Ψ x = ∑ j, Ψ (y j))) ∧
+          ((∃ p : V, {v : V | v ∈ C ∧ u v = 1} = {p}) →
+            (∀ x ∈ C, ∃ (k : ℕ) (y : Fin k → V),
+              (∀ j, y j ∈ C ∧ (ρ (y j)).rank = 1) ∧ ρ x = ∑ j, ρ (y j)) → n = 1) ∧
           (n = 1 →
             {v : V | v ∈ C ∧ u v = 1} = {h} ∧
             ({v : V | v ∈ C ∧ u v = 1}).extremePoints ℝ = {h} ∧
@@ -215,6 +223,12 @@ def arena : Arena where
             let N := fun g : Ψ.range →ₗ[ℝ] ℝ => ∀ X : Ψ.range,
               X.val.PosSemidef → 0 ≤ g X ∧ g X ≤ RCLike.re X.val.trace
             e '' K = Q ∧ e '' K.extremePoints ℝ = Q.extremePoints ℝ ∧
+            (∀ F : Set V, Convex ℝ F ↔ Convex ℝ (e '' F)) ∧
+            (∀ A B : Set V, IsExtreme ℝ A B ↔ IsExtreme ℝ (e '' A) (e '' B)) ∧
+            (∀ A S : Set V,
+              e '' {v | ∀ F : Set V, Convex ℝ F → IsExtreme ℝ A F → S ⊆ F → v ∈ F} =
+              {X | ∀ G : Set Ψ.range, Convex ℝ G → IsExtreme ℝ (e '' A) G →
+                e '' S ⊆ G → X ∈ G}) ∧
             (∀ f, O f ↔ N (d f)) ∧
             (∀ p, d '' {f | O f ∧ f p = 1} = {g | N g ∧ g (e p) = 1}) ∧
             (∀ p x,
