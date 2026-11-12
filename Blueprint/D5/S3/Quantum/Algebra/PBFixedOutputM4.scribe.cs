@@ -52,14 +52,15 @@ internal sealed class PBFixedOutputM4Document : IScribeDocumentDefinition
         var orient=new Formula.Logic(Eq(I("iota"),I("i")),FormulaLogicOperator.Or,Eq(I("iota"),Neg(I("i"))));
         var nonzero=Imp(Eq(Mul(I("q1"),I("q2")),N(0)),I("False"));
         var t=C("m4T",I("q1"),I("q2"));
-        var pb=All("phi",C("ComplexLinearFunctional",C("M4",complex)),Imp(C("m4Positive",I("phi")),
-            All("x",carrier,Imp(C("m4ActorSupported",I("x")),
-                C("scalarPB",I("m4J"),C("m4Kappa",I("m4C"),I("iota")),C("m4J",I("m4C")),
-                    t,C("m4J",I("m4C"),t),I("g"),I("x"),C("m4RealFunctional",I("phi"))))));
+        var budget=C("scalarPB",I("m4J"),C("m4Kappa",I("m4C"),I("iota")),C("m4J",I("m4C")),
+            t,C("m4J",I("m4C"),t),I("g"),I("x"),C("m4RealFunctional",I("phi")));
+        var probes=All("x",carrier,Imp(C("m4ActorSupported",I("x")),budget));
+        var pb=All("phi",C("ComplexLinearFunctional",C("M4",complex)),Imp(C("m4Positive",I("phi")),probes));
         var result=new Formula.Bind(FormulaQuantifier.Exists,FormulaIdentifier.Create("s"),C("Function",C("Fin",N(4)),real),
             Eq(Sub(I("g"),C("m4Kappa",I("m4C"),I("iota"),t)),C("diagonal",C("ofReal",I("s")))));
-        return All("q1",complex,All("q2",complex,Imp(nonzero,All("iota",complex,Imp(orient,
-            All("g",carrier,Imp(pb,result)))))));
+        var conclusion=All("g",carrier,Imp(pb,result));
+        var oriented=All("iota",complex,Imp(orient,conclusion));
+        return All("q1",complex,All("q2",complex,Imp(nonzero,oriented)));
     }
     private static Formula All(string s, Formula type, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll,FormulaIdentifier.Create(s),type,body);
@@ -73,4 +74,7 @@ internal sealed class PBFixedOutputM4Document : IScribeDocumentDefinition
     private static Formula C(string s, params Formula[] xs) => Call(s,xs);
     private static Formula N(int n) => Num(n);
     private static Formula Eq(Formula a, Formula b) => Equal(a,b);
+    private static Formula Sub(Formula a, Formula b) => Subtract(a,b);
+    private static Formula Mul(Formula a, Formula b) => Multiply(a,b);
+    private static Formula Neg(Formula a) => new Formula.Negate(a);
 }
