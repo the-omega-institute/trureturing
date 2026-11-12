@@ -280,4 +280,50 @@ theorem original_mass_calibration [Nontrivial A] [Nontrivial D] [Nontrivial E]
   exact ⟨kappa, hk, (by simpa only [hscale, one_mul] using hmTwo), hmThree, hp, hL, hpl⟩
 
 end OriginalData
+
+example : ∃ kappa : ℝ, 0 < kappa ∧
+    ∀ a b c : ℝ, a * b * c = kappa * a * b * c := by
+  let data : OriginalData (A := ℝ) (D := ℝ) (E := ℝ) :=
+    ⟨LinearMap.mul ℝ ℝ, LinearMap.id, 1⟩
+  let C := ProperCone.positive ℝ ℝ
+  let u : Module.Dual ℝ ℝ := LinearMap.id
+  have hg : Submodule.span ℝ (C : Set ℝ) = ⊤ := by
+    apply top_unique
+    intro x _
+    have h1 : (1 : ℝ) ∈ Submodule.span ℝ (C : Set ℝ) :=
+      Submodule.subset_span (by change 0 ≤ (1 : ℝ); norm_num)
+    simpa using (Submodule.span ℝ (C : Set ℝ)).smul_mem x h1
+  have hp : ∀ x ∈ C, x ≠ 0 → 0 < u x := by
+    intro x hx hn
+    exact lt_of_le_of_ne hx hn.symm
+  have hM : Submodule.span ℝ (Set.range fun ab : ℝ × ℝ => data.M ab.1 ab.2) = ⊤ := by
+    apply top_unique
+    intro x _
+    apply Submodule.subset_span
+    exact ⟨(1, x), by simp [OriginalData.M, OriginalData.K, data]⟩
+  have hL : Submodule.span ℝ (Set.range fun dc : ℝ × ℝ => data.L dc.1 dc.2) = ⊤ := by
+    apply top_unique
+    intro x _
+    exact Submodule.subset_span ⟨(1, x), by simp [data]⟩
+  have hdual : ∀ f : Module.Dual ℝ ℝ, f.comp LinearMap.id = f →
+      ∃ c : ℝ, f = c • u := by
+    intro f _
+    refine ⟨f 1, ?_⟩
+    ext x
+    have he := f.map_smul x (1 : ℝ)
+    simpa [u, smul_eq_mul, mul_comm] using he
+  obtain ⟨kappa, hk, _, h3, _, _, _⟩ := data.original_mass_calibration
+    C C C u u u hg hg hg hp hp hp
+    (by intro d hd a ha; exact mul_nonneg hd ha)
+    (by intro z hz; exact hz)
+    (by change 0 ≤ (1 : ℝ); norm_num) hM hL
+    LinearMap.id (by intro x hx; exact hx) rfl hdual
+    (1/2) (1/2) (by norm_num) (by norm_num) (by norm_num) (by norm_num)
+    (by intro a _ b _; simp [OriginalData.M, OriginalData.K, data, u]; ring)
+    (by intro a _ b _ c _; simp [OriginalData.Q, OriginalData.M, OriginalData.K, data, u]; ring)
+    rfl
+    (by intro a b c; simp [OriginalData.Q, OriginalData.M, OriginalData.K, data, u]; ring)
+  refine ⟨kappa, hk, ?_⟩
+  simpa [OriginalData.Q, OriginalData.M, OriginalData.K, data, u] using h3
+
 end D5.S3.Quantum.OriginalMassCalibration
