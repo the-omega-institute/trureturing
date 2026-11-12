@@ -54,7 +54,7 @@ $$(claim) \Leftrightarrow (\forall \alpha\in \mathbb{R}, (\operatorname{Irration
 
 *Commentary.*
 
-Question 1 on printed page 8 asks whether the page-one characterization extends below c=(3+sqrt(5))/2. The claim quantifies over every irrational real alpha in the full interval (1,c), every natural n>=1, and every positive natural x. It asserts the complete equivalence between native iterate-range membership and all fractional conditions. The internal split rho, the greatest real root of t^4-2t^3-t+1, is included even though the displayed union of open branches omits it. The bounded source reading does not decide whether its naturals include zero; positivity here is the registered interpretation, not a claimed source convention.
+Question 1 on printed page 8 asks whether the page-one characterization extends below c=(3+sqrt(5))/2. The claim quantifies over every irrational real alpha in the full interval (1,c), every natural n>=1, and every positive natural x. It asserts the complete equivalence between native iterate-range membership and all fractional conditions. The internal split rho, the greatest real root of t^4-2t^3-t+1, is included even though the displayed union of open branches omits it. The source's convention on including zero is unresolved; this definition uses positive naturals.
 
 **Theorem 1.5 (Literal negation of the extension).**
 
@@ -62,13 +62,17 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Beatty/IteratedBeattyRangeRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/khani-valizadeh-zarei-2026-iterated-beatty-extension` (refuted) by `D5/S3/Arith/Beatty/IteratedBeattyRangeRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"khani-valizadeh-zarei-2026-iterated-beatty-extension","declaration_gid":"D5/S3/Arith/Beatty/IteratedBeattyRangeRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Mohsen Khani, Ali N. Valizadeh and Afshin Zarei (2026). *A Note on Iterated Beatty Sequences*. URL: <https://arxiv.org/abs/2607.12817v1>.
 
 *Commentary.*
 
-Take alpha=sqrt(2), n=3, x=2 and the positive preimage k=2. Existing Mathlib theorems supply irrationality, 1<sqrt(2)<3/2<c and its exact square. The strict bounds 2<2sqrt(2)<3 give nativeBeatty(sqrt(2),2)=2. Function.iterate_fixed therefore gives actual third-iterate membership. The fractional parts at indices two and three are 0 and 1/sqrt(2). At i=3 the tested expression is 1/sqrt(2), strictly greater than 1-1/sqrt(2), because 2/sqrt(2)=sqrt(2)>1. Thus the required upper bound fails. The result has the literal Lean type Not claim and has no assumed test failure. Both the input and iterate witness are 2, so the same counterexample applies if the source's naturals also include zero. The polynomial defining rho has value -1 at 2 and 25 at 3; continuity gives a root in (2,3), so its greatest root exceeds 2. Consequently this witness is in the lower printed branch as well. The theorem originally restricted to alpha>c is not refuted. The proof shape is bind-only; admission is the named external open-problem resolution exception preregistered in issue #29668. Only the designated refutation result is a public theorem, so the section 3.9 refutation audit exemption applies.
+Take alpha=sqrt(2), n=3, x=2 and the positive preimage k=2. Existing Mathlib theorems supply irrationality, 1<sqrt(2)<3/2<c and its exact square. The strict bounds 2<2sqrt(2)<3 give nativeBeatty(sqrt(2),2)=2. Function.iterate_fixed therefore gives actual third-iterate membership. The fractional parts at indices two and three are 0 and 1/sqrt(2). At i=3 the tested expression is 1/sqrt(2), strictly greater than 1-1/sqrt(2), because 2/sqrt(2)=sqrt(2)>1. Thus the required upper bound fails. Both the input and iterate witness are 2, so the same counterexample applies if the source's naturals also include zero. The polynomial defining rho has value -1 at 2 and 25 at 3; continuity gives a root in (2,3), so its greatest root exceeds 2. Consequently this witness is in the lower printed branch as well. The theorem originally restricted to alpha>c is not refuted.
 
 ## References
 
