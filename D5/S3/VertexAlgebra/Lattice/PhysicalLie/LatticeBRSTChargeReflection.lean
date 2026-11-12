@@ -126,9 +126,7 @@ example (p : Charge D) (e : Index D →₀ ℕ) (S : Finset ℕ)
       (star a * (-1 : ℂ) ^ (occurrences D e).length) •
         (Finsupp.single (-p) (MvPolynomial.monomial e (1 : ℂ)) ⊗ₜ[ℂ] ket S) := by
   rw [map_smulₛₗ, conjugation_tmul_ket]
-  change star a •
-    (thetaLinear D (Finsupp.single p
-      (kappaOsc (MvPolynomial.monomial e (1 : ℂ)))) ⊗ₜ[ℂ] ket S) = _
+  simp only [matterC, LinearMap.coe_mk, AddHom.coe_mk, kappaCarrier_single]
   have hk : kappaOsc (MvPolynomial.monomial e 1 : Oscillator D) =
       MvPolynomial.monomial e 1 := by simp [kappaOsc]
   rw [hk, theta_single, sigma_monomial]
