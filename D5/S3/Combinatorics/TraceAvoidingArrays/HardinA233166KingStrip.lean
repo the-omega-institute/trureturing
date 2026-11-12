@@ -11,6 +11,7 @@ import Mathlib.RingTheory.PowerSeries.Inverse
 import Mathlib.Data.Fin.Init
 import Mathlib.Tactic.FinCases
 import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical
+import D5.S3.Combinatorics.Graph.Pressure.HardinBarkerA209721EdgeDifferences
 
 /-!
 The literal array count retains strict first-occurrence conditions and free
@@ -594,7 +595,7 @@ private theorem canonical_pattern_card4 {C : Type*} [Fintype C] [LinearOrder C]
       have hed : e = d := by
         ext b
         obtain ⟨i,rfl⟩ := huse Q.val Q.property.1 b
-        exact congrFun heq i
+        exact congrArg Fin.val (congrFun heq i)
       exact Prod.ext rfl hed
     · intro P
       obtain ⟨Q, ⟨hQ, e, he⟩, _⟩ := D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233177Canonical.canonical_exists_unique P.val
@@ -630,6 +631,7 @@ private theorem legal_word_iff {n : ℕ} (hn : 0 < n) (f : Fin (n*6) → Fin 8) 
       let q : Fin n × Fin 6 := finProdFinEquiv.symm p
       have he : finProdFinEquiv q = p := finProdFinEquiv.apply_symm_apply p
       have h := hf.2.2 q
+      dsimp only at h
       rw [he] at h
       have push (d : Fin 8) (h : ∃ r : Fin n × Fin 6,
           6*r.1.val+r.2.val < 6*q.1.val+q.2.val ∧ f (finProdFinEquiv r) = d) :
@@ -671,9 +673,9 @@ theorem literal_pair_count {n : ℕ} (hn : 2 ≤ n) :
   let A := {f : Fin (n*6) → Fin 8 // S (beta ∘ f) ∧ f ⟨0,by omega⟩ = 0 ∧ Normal8 f}
   let E : {f : Fin n × Fin 6 → Fin 8 // Legal f} ≃ A := {
     toFun := fun g => ⟨fun t => g.val (finProdFinEquiv.symm t),
-      (legal_word_iff (by omega) _).mp (by simpa only [Equiv.symm_apply_apply] using g.property)⟩
+      (legal_word_iff (n := n) (by omega) _).mp (by simpa only [Equiv.symm_apply_apply] using g.property)⟩
     invFun := fun f => ⟨fun p => f.val (finProdFinEquiv p),
-      (legal_word_iff (by omega) _).mpr f.property⟩
+      (legal_word_iff (n := n) (by omega) _).mpr f.property⟩
     left_inv := fun f => Subtype.ext (by funext p; simp only [Equiv.symm_apply_apply])
     right_inv := fun f => Subtype.ext (by funext p; simp only [Equiv.apply_symm_apply]) }
   have ha : a n = Nat.card A := by
@@ -706,5 +708,53 @@ theorem literal_pair_count {n : ℕ} (hn : 2 ≤ n) :
     right_inv := fun c => Subtype.ext (by funext p; simp only [Equiv.symm_apply_apply]) }
   rw [← Nat.card_congr EP, hperm,hfibre]
   ring
+
+
+open private count_histories from
+  D5.S3.Combinatorics.Graph.Pressure.HardinBarkerA209721EdgeDifferences
+
+private theorem xor_right_cancel : ∀ x d : Fin 4, x ^^^ (x ^^^ d) = d := by
+  decide +kernel
+
+private theorem xor_walk_count (T : Finset (Fin 4)) (m : ℕ) :
+    Nat.card {u : Fin (m+1) → Fin 4 // ∀ i : Fin m,
+      u i.castSucc ^^^ u i.succ ∈ T} = 4 * T.card^m := by
+  classical
+  have hdegree (x : Fin 4) :
+      (Finset.univ.filter (fun y : Fin 4 => x ^^^ y ∈ T)).card = T.card := by
+    apply Finset.card_bij (fun y _ => x ^^^ y)
+    · intro y hy
+      exact (Finset.mem_filter.mp hy).2
+    · intro y hy z hz he
+      exact (xor_cancel x y z).mp he
+    · intro d hd
+      refine ⟨x ^^^ d,?_,xor_right_cancel x d⟩
+      simp only [Finset.mem_filter,Finset.mem_univ,true_and,xor_right_cancel,hd]
+  have hs (k : ℕ) (x : Fin 4) :
+      T.card^(k+1) = ∑ y : Fin 4, if x ^^^ y ∈ T then T.card^k else 0 := by
+    rw [← Finset.sum_filter]
+    simp only [Finset.sum_const,smul_eq_mul,hdegree]
+    rw [pow_succ,Nat.mul_comm]
+  have h := count_histories (fun x y : Fin 4 => x ^^^ y ∈ T)
+    (fun k _ => T.card^k) (by simp) hs m
+  simpa only [Finset.sum_const,Finset.card_univ,Fintype.card_fin,smul_eq_mul] using h
+
+private def offsetOK (v : Fin 6 → Fin 4) : Prop :=
+  v 0 = 0 ∧ ∀ j : Fin 5, v j.castSucc ^^^ v j.succ ≠ 0
+
+private def offsetChoices (v : Fin 6 → Fin 4) : Finset (Fin 4) :=
+  choices (fun j => v j.castSucc ^^^ v j.succ)
+
+set_option maxRecDepth 100000 in
+set_option maxHeartbeats 0 in
+private theorem offset_certificate :
+    (∀ v : Fin 6 → Fin 4, offsetOK v → (offsetChoices v).card ≤ 2) ∧
+    ((Finset.univ.filter (fun v : Fin 6 → Fin 4 =>
+      offsetOK v ∧ (offsetChoices v).card = 0)).card = 150) ∧
+    ((Finset.univ.filter (fun v : Fin 6 → Fin 4 =>
+      offsetOK v ∧ (offsetChoices v).card = 1)).card = 90) ∧
+    ((Finset.univ.filter (fun v : Fin 6 → Fin 4 =>
+      offsetOK v ∧ (offsetChoices v).card = 2)).card = 3) := by
+  decide +kernel
 
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip
