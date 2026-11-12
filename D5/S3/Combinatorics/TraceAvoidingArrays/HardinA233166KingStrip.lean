@@ -176,7 +176,7 @@ private theorem proper_increments {n : ℕ} (hn : 0 < n)
 
 private theorem proper_exhausts {n : ℕ} (hn : 2 ≤ n)
     (c : Fin n × Fin 6 → Fin 4) (hc : Proper c) :
-    ∀ k : Fin 4, ∃ p, c p = k := by
+    ∀ k : Fin 4, ∃ p, p.1.val ≤ 1 ∧ c p = k := by
   have h := square_exhausts
     (c (⟨0,by omega⟩,0)) (c (⟨0,by omega⟩,1))
     (c (⟨1,by omega⟩,0)) (c (⟨1,by omega⟩,1))
@@ -197,10 +197,32 @@ private theorem proper_exhausts {n : ℕ} (hn : 2 ≤ n)
     (hpair (1,0) (1,1) (by decide))
   intro k
   rcases hfull k with h | h | h | h
-  · exact ⟨(⟨0,by omega⟩,0),h.symm⟩
-  · exact ⟨(⟨0,by omega⟩,1),h.symm⟩
-  · exact ⟨(⟨1,by omega⟩,0),h.symm⟩
-  · exact ⟨(⟨1,by omega⟩,1),h.symm⟩
+  · exact ⟨(⟨0,by omega⟩,0),by decide,h.symm⟩
+  · exact ⟨(⟨0,by omega⟩,1),by decide,h.symm⟩
+  · exact ⟨(⟨1,by omega⟩,0),by decide,h.symm⟩
+  · exact ⟨(⟨1,by omega⟩,1),by decide,h.symm⟩
+
+private theorem legal_seen {n : ℕ} (hn : 2 ≤ n)
+    (f : Fin n × Fin 6 → Fin 8) (hf : Legal f) :
+    ∀ d : Fin 3, ∃ p, p.1.val ≤ 1 ∧ (f p).val = d.val + 1 := by
+  obtain ⟨p,hp,hp3⟩ := proper_exhausts hn _ (legal_proper f hf) 3
+  have hβ : ∀ x : Fin 8, beta x = 3 → x = 3 ∨ x = 4 := by decide +kernel
+  obtain ⟨q,hq,hq3⟩ : ∃ q, q.1.val ≤ 1 ∧ f q = 3 := by
+    rcases hβ (f p) hp3 with h | h
+    · exact ⟨p,hp,h⟩
+    · obtain ⟨q,hq,hq3⟩ := (hf.2.2 p).2.2 h
+      refine ⟨q,?_,hq3⟩
+      have := p.2.isLt
+      omega
+  obtain ⟨q₁,hq₁,hq₁c⟩ := (hf.2.2 q).1 (Or.inr (Or.inl hq3))
+  obtain ⟨q₂,hq₂,hq₂c⟩ := (hf.2.2 q).2.1 (Or.inl hq3)
+  have hr₁ : q₁.1.val ≤ 1 := by have := q.2.isLt; omega
+  have hr₂ : q₂.1.val ≤ 1 := by have := q.2.isLt; omega
+  intro d
+  fin_cases d
+  · exact ⟨q₁,hr₁,by simp [hq₁c]⟩
+  · exact ⟨q₂,hr₂,by simp [hq₂c]⟩
+  · exact ⟨q,hq,by simp [hq3]⟩
 
 /-- The complete necessary zone data of a literal strip of height at least two. -/
 theorem pair_rectangle {n : ℕ} (hn : 2 ≤ n)
@@ -213,10 +235,12 @@ theorem pair_rectangle {n : ℕ} (hn : 2 ≤ n)
       c (⟨i,by omega⟩,0) ^^^ c (⟨i+1,hi⟩,0) ≠ 0 ∧
       ∀ j : Fin 5, c (z,j.castSucc) ^^^ c (z,j.succ) ≠
         c (⟨i,by omega⟩,0) ^^^ c (⟨i+1,hi⟩,0)) ∧
-    (∀ k : Fin 4, ∃ p, c p = k) := by
+    (∀ k : Fin 4, ∃ p, p.1.val ≤ 1 ∧ c p = k) ∧
+    (∀ d : Fin 3, ∃ p, p.1.val ≤ 1 ∧ (f p).val = d.val + 1) := by
   have hc := legal_proper f hf
   exact ⟨proper_rectangle (by omega) _ hc,
     (proper_increments (by omega) _ hc).1,
-    (proper_increments (by omega) _ hc).2, proper_exhausts hn _ hc⟩
+    (proper_increments (by omega) _ hc).2, proper_exhausts hn _ hc,
+    legal_seen hn f hf⟩
 
 end D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip

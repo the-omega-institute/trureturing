@@ -2,6 +2,8 @@ import D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip
 import Reg.Support.SingleDependentReadout
 import LeanInformationAuditInterface.Contract.Registration
 
+/-! Source-bound audit of the literal strip's necessary pair-colour zone data. -/
+
 namespace Reg.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip
 
 open _root_.D5.S3.Combinatorics.TraceAvoidingArrays.HardinA233166KingStrip
@@ -32,7 +34,8 @@ abbrev arena : Arena where
       c (⟨i,by omega⟩,0) ^^^ c (⟨i+1,hi⟩,0) ≠ 0 ∧
       ∀ j : Fin 5, c (z,j.castSucc) ^^^ c (z,j.succ) ≠
         c (⟨i,by omega⟩,0) ^^^ c (⟨i+1,hi⟩,0)) ∧
-    (∀ k : Fin 4, ∃ p, c p = k)
+    (∀ k : Fin 4, ∃ p, p.1.val ≤ 1 ∧ c p = k) ∧
+    (∀ d : Fin 3, ∃ p, p.1.val ≤ 1 ∧ (f p).val = d.val + 1)
 
 private def sample : Fin 2 × Fin 6 → Fin 8 := fun p =>
   (![![0,1,0,6,7,2],![3,5,4,2,4,6]] : Fin 2 → Fin 6 → Fin 8) p.1 p.2
@@ -49,7 +52,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 def family : Registration arena (type_of% @pair_rectangle) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨pair_rectangle, rejected, rejected_law⟩
+  variation := ⟨@pair_rectangle, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := by
@@ -57,8 +60,8 @@ def family : Registration arena (type_of% @pair_rectangle) where
     refine ⟨1, (fun _ => 0), (fun _ => 1), ?_⟩
     intro h
     have hh := congrFun h ((0 : Fin 1),(0 : Fin 6))
-    change beta 0 = beta 1 at hh
-    norm_num [beta] at hh
+    change (0 : Fin 4) = 1 at hh
+    exact (by decide : (0 : Fin 4) ≠ 1) hh
 
 def audit : Contract.Registration.{_, _, _, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     (@pair_rectangle) (Realization signature) Type Unit where

@@ -32,8 +32,8 @@ internal sealed class HardinA233166KingStripDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("rectangle"), DeclarationHandle.Create(Prefix + "pair_rectangle"),
                 H("Necessary zone data for every literal strip"), StatementSource.FromAuthor(Disp(RectangleFormula())),
                 AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text("Write c(i,j)=beta(f(i,j)), where beta identifies the complementary pairs {0,7}, {1,6}, {2,5}, {3,4}. The binary operation xor is bitwise exclusive-or on Fin 4. Every adjacent square has four distinct pair colours. The xor of its upper edge equals that of its lower edge, and likewise for its left and right edges. Induction along rows and columns gives the displayed reconstruction. Horizontal and vertical increments are nonzero, and every horizontal increment differs from every vertical increment because the antidiagonal cells are adjacent. The first square also contains all four pair colours. The zone correspondence is the algebraic rectangular form of Eppstein's published kinggraph construction. This statement concerns the original literal functions and does not replace their count with a labelled count."))),
-                DescribeRole.Theorem)))));
+                Blocks(Paragraph(Text("Write c(i,j)=beta(f(i,j)), where beta identifies the complementary pairs {0,7}, {1,6}, {2,5}, {3,4}. The binary operation xor is bitwise exclusive-or on Fin 4. Every adjacent square has four distinct pair colours. The xor of its upper edge equals that of its lower edge, and likewise for its left and right edges. Induction along rows and columns gives the displayed reconstruction. Horizontal and vertical increments are nonzero, and every horizontal increment differs from every vertical increment because the antidiagonal cells are adjacent. The first square also contains all four pair colours. Strict precedence then forces the literal colours one, two and three to have appeared within the first two rows. The zone correspondence is the algebraic rectangular form of Eppstein's published kinggraph construction. This statement concerns the original literal functions and does not replace their count with a labelled count."))),
+                DescribeRole.Theorem))));
 
     private static Formula LegalFormula()
     {
@@ -89,9 +89,10 @@ internal sealed class HardinA233166KingStripDocument : IScribeDocumentDefinition
         var reconstruction=All("i",Call("Fin",n),All("j",Fin(6),Eq(C(i,j),Call("xor",Call("xor",C(i,D(0)),C(D(0),D(0))),C(D(0),j)))));
         var horizontal=All("j",Fin(5),Ne(H(j),D(0)));
         var vertical=All("i",V("Nat"),Imp(Lt(Add(i,D(1)),n),And(Ne(T(i),D(0)),All("j",Fin(5),Ne(H(j),T(i))))));
-        var exhaustive=All("k",Fin(4),Ex("p",Product(Call("Fin",n),Fin(6)),Eq(Call("beta",App(f,p)),k)));
+        var exhaustive=All("k",Fin(4),Ex("p",Product(Call("Fin",n),Fin(6)),And(Le(Val(Call("Prod.fst",p)),D(1)),Eq(Call("beta",App(f,p)),k))));
+        var seen=All("d",Fin(3),Ex("p",Product(Call("Fin",n),Fin(6)),And(Le(Val(Call("Prod.fst",p)),D(1)),Eq(Val(App(f,p)),Add(Val(V("d")),D(1))))));
         return All("n",V("Nat"),Imp(Le(D(2),n),All("f",Arrow(Product(Call("Fin",n),Fin(6)),Fin(8)),
-            Imp(Call("Legal",f),And(reconstruction,And(horizontal,And(vertical,exhaustive)))))));
+            Imp(Call("Legal",f),And(reconstruction,And(horizontal,And(vertical,And(exhaustive,seen))))))));
     }
 
     private static Formula Iff(Formula a, Formula b) => Seq(Par(a),Sp,Longleftrightarrow,Sp,Par(b));
