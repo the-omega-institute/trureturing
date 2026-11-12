@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/Algebra/AuricActualOcticWindow
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/Algebra/AuricActualOcticWindow
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
@@ -59,7 +59,7 @@ private theorem obstruction_injective (W : Submodule F D) {a : D}
     simpa using hw0
   · exact bot_le
 
-private def obstructionEquiv [FiniteDimensional F D] (W : Submodule F D)
+def obstructionEquiv [FiniteDimensional F D] (W : Submodule F D)
     (hD : finrank F D = 8) (hW : finrank F W = 4) (a : D)
     (ha : a ∉ quotientSet W) : W ≃ₗ[F] D ⧸ W :=
   LinearEquiv.ofBijective (obstruction W a)
@@ -69,7 +69,7 @@ private def obstructionEquiv [FiniteDimensional F D] (W : Submodule F D)
         omega)).mp (obstruction_injective W ha)⟩
 
 /-- The original operator i_W A_W(a)⁻¹ π_W; no normalization of W is used. -/
-private def actualOperator [FiniteDimensional F D] (W : Submodule F D)
+def actualOperator [FiniteDimensional F D] (W : Submodule F D)
     (hD : finrank F D = 8) (hW : finrank F W = 4) (a : D)
     (ha : a ∉ quotientSet W) : D →ₗ[F] D :=
   W.subtype ∘ₗ (obstructionEquiv W hD hW a ha).symm.toLinearMap ∘ₗ W.mkQ
@@ -286,7 +286,7 @@ section CoordinateRanks
 
 variable {K Ω : Type*} [Field K] [Fintype Ω] [DecidableEq Ω]
 
-private def coordinateProject (S : Finset Ω) : (Ω → K) →ₗ[K] (Ω → K) where
+def coordinateProject (S : Finset Ω) : (Ω → K) →ₗ[K] (Ω → K) where
   toFun x i := if i ∈ S then x i else 0
   map_add' x y := by ext i; by_cases h : i ∈ S <;> simp [h]
   map_smul' c x := by ext i; by_cases h : i ∈ S <;> simp [h]
@@ -710,11 +710,15 @@ private theorem actual_row_rank_galois (W : Submodule F D) (g : K ≃ₐ[F] K)
         rwa [horb] at hh⟩
       left_inv := by intro x; apply Subtype.ext; ext σ; simp [galoisCoordinates]
       right_inv := by intro x; apply Subtype.ext; ext σ; simp [galoisCoordinates]
-      map_add' := by intro x y; apply Subtype.ext; exact map_add (galoisCoordinates K g) x y }
+      map_add' := by
+        intro x y
+        apply Subtype.ext
+        exact map_add (galoisCoordinates (D := D) K g)
+          (x : (D →ₐ[F] K) → K) (y : (D →ₐ[F] K) → K) }
   have hr := rank_eq_of_equiv_equiv (g : K → K) e g.bijective (by
     intro r x
     apply Subtype.ext
-    exact coordinates_smul K g r x)
+    exact coordinates_smul K g r (x : (D →ₐ[F] K) → K))
   exact (congrArg Cardinal.toNat hr).symm
 
 private theorem actual_strict_row_rank [Normal F K] (W : Submodule F D)
@@ -946,7 +950,7 @@ end CutRanks
 section ActualSplitOperator
 
 variable (K : Type*) [Field K] [Algebra F K]
-variable [FiniteDimensional F D] [Algebra.IsSeparable F D]
+variable [FiniteDimensional F D] [Algebra.IsSeparable F D] [FiniteDimensional F K]
 variable (hK : ∀ d : D, ((minpoly F d).map (algebraMap F K)).Splits)
 variable (W : Submodule F D) (hD : finrank F D = 8) (hW : finrank F W = 4)
 variable (a : D) (ha : a ∉ quotientSet W)
@@ -1039,7 +1043,8 @@ private theorem splitMatrix_rank :
 private theorem galoisCoordinates_single (g : K ≃ₐ[F] K) (τ : D →ₐ[F] K) :
     galoisCoordinates K g (Pi.single τ (1 : K)) = Pi.single (g • τ) (1 : K) := by
   ext σ
-  change g (Pi.single τ (1 : K) (g⁻¹ • σ)) = Pi.single (g • τ) (1 : K) σ
+  change g ((Pi.single τ (1 : K) : (D →ₐ[F] K) → K) (g⁻¹ • σ)) =
+    (Pi.single (g • τ) (1 : K) : (D →ₐ[F] K) → K) σ
   by_cases h : σ = g • τ
   · subst σ
     simp [Pi.single_apply]
@@ -1058,7 +1063,9 @@ private theorem splitMatrix_covariance (g : K ≃ₐ[F] K) (σ τ : D →ₐ[F] 
   rw [galoisCoordinates_single] at hh
   change (splitOperator K hK W hD hW a ha) (Pi.single (g • τ) 1) (g • σ) =
     g ((splitOperator K hK W hD hW a ha) (Pi.single τ 1) σ)
-  simpa only [galoisCoordinates, AddEquiv.coe_mk, inv_smul_smul] using hh
+  change (splitOperator K hK W hD hW a ha) (Pi.single (g • τ) 1) (g • σ) =
+    g ((splitOperator K hK W hD hW a ha) (Pi.single τ 1) (g⁻¹ • (g • σ))) at hh
+  simpa only [inv_smul_smul] using hh
 
 end ActualSplitOperator
 
@@ -1090,10 +1097,11 @@ private theorem actual_cut_free (W : Submodule F D)
 
 
 /-- The canonical splitting and all cut-free assertions concern the same actual W and n. -/
-private theorem general43_2_cut_free [Algebra D K] [IsScalarTower F D K]
+theorem general43_2_cut_free [Algebra D K] [IsScalarTower F D K]
     (W : Submodule F D) (hD : finrank F D = 8) (hW : finrank F W = 4)
     (hE : {c : D | ∀ w ∈ W, c * w ∈ W} = Set.range (algebraMap F D))
     (a : D) (ha : a ∉ quotientSet W) :
+    Function.Bijective (obstruction W a) ∧
     ∃ e : K ⊗[F] D ≃ₐ[K] ((D →ₐ[F] K) → K),
       (∀ (c : K) (d : D) (σ : D →ₐ[F] K), e (c ⊗ₜ[F] d) σ = c * σ d) ∧
       let U := (W.baseChange K).map e.toLinearMap
@@ -1108,7 +1116,7 @@ private theorem general43_2_cut_free [Algebra D K] [IsScalarTower F D K]
         2 ≤ (N.submatrix (fun i : S => (i : D →ₐ[F] K))
           (fun j : ↥(Sᶜ) => (j : D →ₐ[F] K))).rank ∨
         2 ≤ (N.submatrix (fun i : ↥(Sᶜ) => (i : D →ₐ[F] K))
-          (fun j : ↥(Sᶜᶜ) => (j : D →ₐ[F] K))).rank) := by
+          (fun j : S => (j : D →ₐ[F] K))).rank) := by
   have hsplit : ∀ d : D, ((minpoly F d).map (algebraMap F K)).Splits := by
     intro d
     have hh := Normal.splits (inferInstance : Normal F K) (algebraMap D K d)
@@ -1117,7 +1125,8 @@ private theorem general43_2_cut_free [Algebra D K] [IsScalarTower F D K]
     intro c hc
     rw [← hE]
     exact hc
-  refine ⟨splitEquiv F D K hsplit, (fun _ _ _ => rfl), ?_⟩
+  refine ⟨(obstructionEquiv W hD hW a ha).bijective, splitEquiv F D K hsplit,
+    (fun _ _ _ => rfl), ?_⟩
   change (splitOperator K hsplit W hD hW a ha).comp (splitOperator K hsplit W hD hW a ha) = 0 ∧
     (splitOperator K hsplit W hD hW a ha).range = splitWindow K hsplit W ∧
     (splitOperator K hsplit W hD hW a ha).ker = splitWindow K hsplit W ∧ _
@@ -1129,8 +1138,9 @@ private theorem general43_2_cut_free [Algebra D K] [IsScalarTower F D K]
     splitMatrix_covariance K hsplit W hD hW a ha,
     actual_strict_row_rank K hsplit W hD hW hscalar, ?_⟩
   intro S h2 h6
-  rw [crossRank_matrix, crossRank_matrix]
-  exact actual_cut_free K hsplit W hD hW hscalar a ha S h2 h6
+  have hh := actual_cut_free K hsplit W hD hW hscalar a ha S h2 h6
+  rw [← crossRank_matrix, ← crossRank_matrix] at hh
+  simpa only [Finset.compl_compl] using hh
 
 end ActualCutFree
 
