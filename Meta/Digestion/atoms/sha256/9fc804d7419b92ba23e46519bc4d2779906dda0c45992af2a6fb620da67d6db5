@@ -1,0 +1,18 @@
+**引理 87.7（直接复用凸效应子代数分类的完整条件包）。** 在引理 87.2 的原概率像背景中，
+
+$$
+\mathsf E_{1/2}
+\quad\Longleftrightarrow\quad\mathcal E_X=[0,u_X]_{C_X^*}
+\quad\Longleftrightarrow\quad
+\bigl[\mathcal E_X\text{ 实凸，含 }0,u_X\text{，有补及有界倍增}\bigr].
+\tag{87.10}
+$$
+
+右端是原附录 §2 的像级实混合入口；它不单靠实凸性推出闭性，而由**整个条件包**推出闭性。
+
+**证明。** $[0,u]$ 闭，且在原状态线性基上的各值处于 $[0,1]$，所以在有限维对偶中紧。闭的原 $\mathcal E\subseteq[0,u]$ 因而紧；中点迭代及闭性给同一 $\mathcal E$ 的实凸性。若 $f+g\le u$，先取原中点再倍增，得原有界和。凸性、零和补遂使 $\mathcal E$ 成为凸效应子代数。原坐标张满 $V^*$；任意泛函在紧 $K$ 上有界，经单位平移及缩放落入 $[0,u]$，故环境区间生成 $V^*$。准确适用 Filippov 等 [F87] Theorem 3，得 $\mathcal E=\operatorname{span}_{\mathbb R}\mathcal E\cap[0,u]=[0,u]$。
+
+其在本参数上的有限代数步骤也可直接按原附录使用：对 $h=\sum_jc_j f_j\in[0,u]$，取整数 $N\ge\max(1,\sum_j|c_j|)$。实凸性与零给
+$a=N^{-1}\sum_jc_j^+f_j,\ b=N^{-1}\sum_jc_j^-f_j\in\mathcal E$，
+$a-b=h/N$。因 $0\le b\le a\le u$，有界和 $(u-a)+b=u-h/N$ 的补是 $h/N$；再作 $N$ 次以内的有界加法得到 $h$。同一论证给右端推出全区间。反向全区间本身紧闭，显然满足两边的全部条件。证毕。
+
