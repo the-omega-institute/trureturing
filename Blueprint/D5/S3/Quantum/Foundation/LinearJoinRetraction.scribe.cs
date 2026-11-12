@@ -72,7 +72,8 @@ internal sealed class LinearJoinRetractionDocument : IScribeDocumentDefinition
         Formula side = And(support, And(C("ROG", ly), And(pure, And(pureLift,
             And(retract, And(onto, And(exact, And(attained, And(zero, g2)))))))));
         Formula statement = All("J", V("Type"), Seq(
-            C("Fintype", V("J")), Sp, C("DecidableEq", V("J")), Sp,
+            OpenBracket, C("Fintype", V("J")), CloseBracket, Sp,
+            OpenBracket, C("DecidableEq", V("J")), CloseBracket, Sp,
             All("L", C("Submodule", R, Hm), All("Y", C("Set", E), All("Z", C("Set", E),
             All("U", C("Submodule", R, E), All("W", C("Submodule", R, E),
             Imp(assumptions, All("b", V("Bool"), side)))))))));

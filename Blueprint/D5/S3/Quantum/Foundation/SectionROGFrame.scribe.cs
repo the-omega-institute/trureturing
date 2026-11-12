@@ -1,5 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Foundation;
 
@@ -58,15 +59,15 @@ internal sealed class SectionROGFrameDocument : IScribeDocumentDefinition
             Paragraph(Text("The full original frame and the positive-extension, finite-effect and geometry applications above preserve the normalized 96.1 clauses of QuantumVI Lemma 96.2. The application consequences reuse existing results; the new frame content is the complementary-projector maximality construction. The original arbitrary-unit support and determinant normalization from 93.2/94.2 remains an outside bridge. These results do not establish full Z0, classification, PRE, the separate QuantumVII facet theorem, or section 97 completion. The existing native Hermitian projector and orthonormal-basis results are reused; literature priority is not asserted.")))))));
 
     private static Formula TraceNormFormula() =>
-        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("F"), Id("Type"),
-        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("J"), Id("Type"),
-        Seq(OpenBracket, Call("RCLike", Id("F")), CloseBracket, Sp,
-            OpenBracket, Call("Fintype", Id("J")), CloseBracket, Sp,
-            OpenBracket, Call("DecidableEq", Id("J")), CloseBracket, Sp,
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("F"), F.Id("Type"),
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("J"), F.Id("Type"),
+        Seq(OpenBracket, Call("RCLike", F.Id("F")), CloseBracket, Sp,
+            OpenBracket, Call("Fintype", F.Id("J")), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq", F.Id("J")), CloseBracket, Sp,
             new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("v"),
-                Call("EuclideanSpace", Id("F"), Id("J")),
-                new Formula.Relation(Call("trace", Call("rankOne", Id("v"))),
-                    FormulaRelationOperator.Equal, Sup(Seq(Vert, Sp, Id("v"), Vert), D(2)))))));
+                Call("EuclideanSpace", F.Id("F"), F.Id("J")),
+                new Formula.Relation(Call("trace", Call("rankOne", F.Id("v"))),
+                    FormulaRelationOperator.Equal, new Formula.Power(Seq(Vert, Sp, F.Id("v"), Vert), D(2)))))));
 
     private static DocumentBlock.Describe Entry(string id, string declaration, string title, string text, DescribeRole role) =>
         Describe.Lean(DescribeId.Create(id),

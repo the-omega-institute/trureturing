@@ -6,12 +6,13 @@
    utility: none
    digest: Real rank one generated PSD sections localize to their supported sides and admit matrix congruence retractions along full projective overlaps. -/
 
-import D5.S3.Quantum.Foundation.WeightedRelationConfirmation
+import D5.S3.Quantum.Foundation.CircuitBalancedConfirmation
 import D5.S3.Quantum.Foundation.SectionROGFrame
 import D5.S3.Quantum.Information.StrongSubadditivity.Physlib.ForMathlib.HermitianMat.CFC.Basic
 import Mathlib.LinearAlgebra.Prod
 import Mathlib.LinearAlgebra.FiniteDimensional.Basic
 import Mathlib.Analysis.Normed.Operator.NormedSpace
+import Mathlib.Analysis.Normed.Module.FiniteDimension
 
 /-! Matrix congruences on full real ROG sections and their complete effect intervals. -/
 
@@ -26,9 +27,8 @@ variable {A : Type*} [NormedAddCommGroup A] [NormedSpace ℝ A]
 
 /-! ### The two sides of a linear join -/
 
-/-- A linear join with an explicit overlap projection on each side.  The two
-projections are the abstract form of the orthogonal maps π_S used in (97.7).
-The overlap equations make the glued maps independent of a chosen decomposition. -/
+/-- A linear join with an explicit overlap projection on the right side.
+The overlap equations make the glued map independent of a chosen decomposition. -/
 structure JoinData where
   leftSubspace : Submodule ℝ A
   rightSubspace : Submodule ℝ A
@@ -87,7 +87,7 @@ private theorem left_kernel_compatibility (J : JoinData (A := A)) :
   exact hsum
 
 /-- The left retraction (R_Y), obtained by gluing the identity on (U) to
-(pi_S:W	o S). -/
+(projection W → S). -/
 def leftRetraction (J : JoinData (A := A)) : A →ₗ[ℝ] J.leftSubspace :=
   J.sumMap.liftOfSurjective (sumMap_surjective J)
     ⟨LinearMap.id.coprod ((Submodule.inclusion J.hSU).comp J.piY),
@@ -521,7 +521,7 @@ private theorem proper_norm_bound
     HermitianMat.lt_smul_of_norm_lt (by simp [t])
   have hplus : t • I + X ∈ sectionCone L := by
     change 0 ≤ t • (1 : HermitianMat ι ℝ) + X.val
-    order
+    simpa only [sub_neg_eq_add] using (sub_nonneg.mpr hlo)
   have hminus : t • I - X ∈ sectionCone L := by
     change 0 ≤ t • (1 : HermitianMat ι ℝ) - X.val
     exact sub_nonneg.mpr hup
@@ -531,13 +531,25 @@ private theorem proper_norm_bound
   change 0 ≤ f (t • I - X) at h2
   simp only [map_add, map_sub, map_smul, smul_eq_mul] at h1 h2
   have hb := mul_le_mul_of_nonneg_left hfI (norm_nonneg X.val)
-  rw [Real.norm_eq_abs, abs_le]
-  constructor <;> change _ ≤ _ <;> dsimp [t] at * <;> nlinarith
+  calc
+    ‖f X‖ ≤ t * f I := by
+      rw [Real.norm_eq_abs, abs_le]
+      constructor <;> linarith only [h1, h2]
+    _ ≤ t * (Fintype.card ι : ℝ) := hb
+    _ = (Fintype.card ι : ℝ) * ‖X‖ := by
+      change ‖X.val‖ * _ = _ * ‖X.val‖
+      exact mul_comm _ _
 
 private theorem proper_compact
     (L : Submodule ℝ (HermitianMat ι ℝ)) (hI : (1 : HermitianMat ι ℝ) ∈ L) :
     IsCompact {f : StrongDual ℝ L |
       proper (sectionCone L) (traceUnit L) f.toLinearMap} := by
+  letI hspace : NormedSpace ℝ (StrongDual ℝ L) := ContinuousLinearMap.toNormedSpace
+  haveI hfinite : FiniteDimensional ℝ (StrongDual ℝ L) :=
+    ContinuousLinearMap.finiteDimensional
+  haveI : ProperSpace (StrongDual ℝ L) :=
+    @FiniteDimensional.proper ℝ inferInstance (StrongDual ℝ L)
+      (dualNormed L) hspace inferInstance hfinite
   have hclosed : IsClosed {f : StrongDual ℝ L |
       proper (sectionCone L) (traceUnit L) f.toLinearMap} := by
     simp only [proper, Set.ofPred_forall]

@@ -90,4 +90,66 @@ theorem source_bridge : sourceScope.{u} ↔ arena.{u}.Law actual.{u} := by
 theorem actual_positive : arena.{u}.Law actual.{u} :=
   source_bridge.mp (@RealJoin.real_join_retractions.{u})
 
+private theorem singleton_rog :
+    ROG (⊤ : Submodule ℝ (HermitianMat (Fin 1) ℝ)) := by
+  intro X _ hpos
+  have ha : 0 ≤ X (0 : Fin 1) (0 : Fin 1) :=
+    (HermitianMat.zero_le_iff.mp hpos).diag_nonneg
+  by_cases hz : X (0 : Fin 1) (0 : Fin 1) = 0
+  · refine ⟨0, fun i => Fin.elim0 i, fun i => Fin.elim0 i, ?_⟩
+    apply HermitianMat.ext
+    ext i j
+    have hi : i = (0 : Fin 1) := Subsingleton.elim _ _
+    have hj : j = (0 : Fin 1) := Subsingleton.elim _ _
+    subst i
+    subst j
+    simpa using hz
+  · let v : EuclideanSpace ℝ (Fin 1) :=
+      WithLp.toLp 2 (fun _ => Real.sqrt (X (0 : Fin 1) (0 : Fin 1)))
+    have hv : v ≠ 0 := by
+      intro h
+      have hh := congrArg (fun w : EuclideanSpace ℝ (Fin 1) => w (0 : Fin 1)) h
+      have hs : Real.sqrt (X (0 : Fin 1) (0 : Fin 1)) = 0 := by simpa [v] using hh
+      exact hz ((Real.sqrt_eq_zero ha).mp hs)
+    refine ⟨1, fun _ => v, fun _ => ⟨hv, Submodule.mem_top⟩, ?_⟩
+    apply HermitianMat.ext
+    ext i j
+    have hi : i = (0 : Fin 1) := Subsingleton.elim _ _
+    have hj : j = (0 : Fin 1) := Subsingleton.elim _ _
+    subst i
+    subst j
+    simp [rankOne, v, ← sq, Real.sq_sqrt ha]
+
+private def singletonJoin : RealJoin (Fin 1) where
+  L := ⊤
+  identity_mem := Submodule.mem_top
+  rog := singleton_rog
+  Y := {v | v ≠ 0}
+  Z := {v | v ≠ 0}
+  U := ⊤
+  W := ⊤
+  nonzero_Y := by simp
+  nonzero_Z := by simp
+  span_Y := by
+    apply top_unique
+    intro v _
+    by_cases hv : v = 0
+    · rw [hv]; exact Submodule.zero_mem _
+    · exact Submodule.subset_span hv
+  span_Z := by
+    apply top_unique
+    intro v _
+    by_cases hv : v = 0
+    · rw [hv]; exact Submodule.zero_mem _
+    · exact Submodule.subset_span hv
+  join := by simp
+  rays v hv := by simp [hv]
+  overlap := by ext v; simp
+
+/-- The full source domain includes the nonzero one dimensional real PSD section. -/
+theorem source_domain_inhabited : Nonempty (RealJoin (Fin 1)) := ⟨singletonJoin⟩
+
+example : singletonJoin.SideConclusion ∧ singletonJoin.swap.SideConclusion :=
+  RealJoin.real_join_retractions singletonJoin
+
 end Reg.D5.S3.Quantum.Foundation.LinearJoinRetraction
