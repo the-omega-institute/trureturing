@@ -336,6 +336,11 @@ theorem whole_facet_injection {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
     (hstrict : ∀ x ∈ C, x ≠ 0 → 0 < u x)
     (hgen : Submodule.span ℝ (C : Set A) = ⊤)
     (hdim : 2 ≤ Module.finrank ℝ A) (hZ : zeroGluing C u) :
+    (Module.finrank ℝ (affineSpan ℝ (base C u)).direction + 1 = Module.finrank ℝ A) ∧
+    (∀ F : PointedCone.Face C, (∃ x ∈ F, x ≠ (0 : A)) →
+      ((∃ G : facets C, G.1 = F) ↔
+        Module.finrank ℝ (affineSpan ℝ (base F.toPointedCone u)).direction + 2 =
+          Module.finrank ℝ A)) ∧
     (∀ F : facets C,
       Convex ℝ (base F.1.toPointedCone u) ∧
       IsExtreme ℝ (base C u) (base F.1.toPointedCone u) ∧
@@ -348,7 +353,27 @@ theorem whole_facet_injection {C : PointedCone ℝ A} {u : A →ₗ[ℝ] ℝ}
       Function.Injective v ∧ Nat.card (facets C) ≤ Nat.card (pure C u) ∧
         ∀ F G, (v G : A) ∈ F.1 ↔ (v F : A) ∈ G.1) := by
   classical
-  refine ⟨?_, facet_exclusion hclosed hstrict hgen hdim hZ, ?_⟩
+  have hCne : ∃ x ∈ C, x ≠ (0 : A) := by
+    by_contra! hn
+    have hs : Submodule.span ℝ (C : Set A) = ⊥ :=
+      le_antisymm (Submodule.span_le.mpr (fun x hx => by simp [hn x hx])) bot_le
+    have hf : Module.finrank ℝ (Submodule.span ℝ (C : Set A)) = 0 := by
+      rw [hs, finrank_bot]
+    rw [hgen, finrank_top] at hf
+    omega
+  have hbaseDim := normalized_face_dimension C u hstrict hCne
+  rw [hgen, finrank_top] at hbaseDim
+  refine ⟨hbaseDim, ?_, ?_, facet_exclusion hclosed hstrict hgen hdim hZ, ?_⟩
+  · intro F hne
+    have hf := normalized_face_dimension F.toPointedCone u
+      (fun x hx => hstrict x (F.isFaceOf.le hx)) hne
+    change Module.finrank ℝ (affineSpan ℝ (base F.toPointedCone u)).direction + 1 =
+      Module.finrank ℝ (Submodule.span ℝ (F : Set A)) at hf
+    constructor
+    · rintro ⟨G, rfl⟩
+      exact facet_slice_dimension hstrict hdim G
+    · intro hd
+      exact ⟨⟨F, by omega⟩, rfl⟩
   · intro F
     refine ⟨base_convex F.1.toPointedCone u, ?_, facet_slice_dimension hstrict hdim F⟩
     refine ⟨fun x hx => ⟨F.1.isFaceOf.le hx.1, hx.2⟩, ?_⟩
