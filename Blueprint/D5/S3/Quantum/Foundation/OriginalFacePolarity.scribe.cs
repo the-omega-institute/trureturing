@@ -56,7 +56,7 @@ internal sealed class OriginalFacePolarityDocument : IScribeDocumentDefinition
         Formula intersections = All("L", L, All("M", L, Imp(Ne(l, m),
             Ex("r", P, Eq(C("inter", Val(l), Val(m)), Singleton(Val(r)))))));
         Formula plane = Imp(C("thickExclusionBalls", V("C"), V("u")),
-            C("Nonempty", C("Configuration.ProjectivePlane", P, L)));
+            C("Nonempty", C("ProjectivePlane", P, L)));
         Formula full = And(C("Nonempty", P), Ex("e", C("Equiv", P, L), And(
             All("p", P, Eq(Val(App(e, p)), Dp(p))), intersections,
             All("p", P, NotIn(p, App(e, p))), incidence, endpoints, allFaces, boundaries, plane)));
