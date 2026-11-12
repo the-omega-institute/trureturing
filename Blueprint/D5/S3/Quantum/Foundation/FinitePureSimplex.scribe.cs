@@ -8,7 +8,7 @@ internal sealed class FinitePureSimplexDocument : IScribeDocumentDefinition
         "One-relation zero gluing on the entire original base.",
         H("One-relation zero gluing on the entire original base"),
         Blocks(
-            Paragraph(Text("Finiteness applies to the full set of extreme points of the original normalized base. The carrier, cone, unit, full proper interval and original infimum comparison are unchanged. No ball, antipodal, Jordan or matrix condition is imposed.")),
+            Paragraph(Text("Finiteness applies to the full set of extreme points of the original normalized base. The carrier, cone, unit, full proper interval and original infimum comparison are unchanged. The one-relation equivalence imposes no ball, antipodal, Jordan or matrix premise.")),
             Describe.Lean(DescribeId.Create("simplex"),
                 DeclarationHandle.Create("D5/S3/Quantum/Foundation/FinitePureSimplex.simplex"),
                 H("The entire base as a simplex"), StatementSource.WithoutFormula(),

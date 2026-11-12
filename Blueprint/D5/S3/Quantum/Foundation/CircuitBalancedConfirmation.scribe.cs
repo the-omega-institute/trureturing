@@ -71,7 +71,7 @@ internal sealed class CircuitBalancedConfirmationDocument : IScribeDocumentDefin
                 DeclarationHandle.Create("D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.descends"),
                 H("Descent of balanced assignments"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(), Blocks(
-                    Paragraph(Text("For every pure set P spanning A and every scalar assignment balanced on all its finite circuits, there exists an original real linear functional taking those assigned values on every p in P."))), DescribeRole.Theorem),
+                    Paragraph(Text("For every set P spanning A and every scalar assignment balanced on all its finite circuits, there exists an original real linear functional taking those assigned values on every p in P."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("pure-mem"),
                 DeclarationHandle.Create("D5/S3/Quantum/Foundation/CircuitBalancedConfirmation.pure_mem"),
                 H("Pure points are normalized positive vectors"), StatementSource.WithoutFormula(),
