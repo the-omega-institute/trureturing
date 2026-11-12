@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S0.Certificates.Polynomials;
+namespace StrataLint.Scribe.Blueprint.D5.S1.Depth.ContinuedFractions;
 
 internal sealed class KimStolarskyEventualPrefixRefutationDocument : IScribeDocumentDefinition
 {

@@ -8,13 +8,13 @@ Kim and Stolarsky, A Balanced Three-term Generalization of Nicomachus' Identity,
 
 **Theorem 1.1 (No common eventual threshold exists).**
 
-Lean statement: `D5/S0/Certificates/Polynomials/KimStolarskyEventualPrefixRefutation.result`
+Lean statement: `D5/S1/Depth/ContinuedFractions/KimStolarskyEventualPrefixRefutation.result`
 
-*Proof.* Machine-checked in Lean as `D5/S0/Certificates/Polynomials/KimStolarskyEventualPrefixRefutation.result` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S1/Depth/ContinuedFractions/KimStolarskyEventualPrefixRefutation.result` (`✓ std3`). ∎
 
-*Resolves.* `Problems/kim-stolarsky-eventual-three-prefix-conjecture` (refuted) by `D5/S0/Certificates/Polynomials/KimStolarskyEventualPrefixRefutation.result`.
+*Resolves.* `Problems/kim-stolarsky-eventual-three-prefix-conjecture` (refuted) by `D5/S1/Depth/ContinuedFractions/KimStolarskyEventualPrefixRefutation.result`.
 
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kim-stolarsky-eventual-three-prefix-conjecture","declaration_gid":"D5/S0/Certificates/Polynomials/KimStolarskyEventualPrefixRefutation.result","resolution_kind":"refuted"} -->
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kim-stolarsky-eventual-three-prefix-conjecture","declaration_gid":"D5/S1/Depth/ContinuedFractions/KimStolarskyEventualPrefixRefutation.result","resolution_kind":"refuted"} -->
 
 *Source.* Repository-derived.
 
@@ -30,5 +30,5 @@ For every proposed threshold N, the index 3N+2 lies beyond it and violates the R
 
 ## References
 
-- Truth anchor: `D5/S0/Certificates/Polynomials/KimStolarskyEventualPrefixRefutation.result`
-- Dependency: [D5/S1/Depth/ContinuedFractions/QuadraticImpliesPeriodic](../../../S1/Depth/ContinuedFractions/QuadraticImpliesPeriodic.md)
+- Truth anchor: `D5/S1/Depth/ContinuedFractions/KimStolarskyEventualPrefixRefutation.result`
+- Dependency: [D5/S1/Depth/ContinuedFractions/QuadraticImpliesPeriodic](QuadraticImpliesPeriodic.md)
