@@ -208,8 +208,14 @@ theorem result (G : Type) [Group G] [Fintype G]
   have ha : a ∉ Subgroup.center G := by
     intro h; exact hab (Subgroup.mem_center_iff.mp h b).symm
   letI : Nonempty (Vertex G) := ⟨⟨a, ha⟩⟩
-  have hn : (0 : ℝ) ≤ Fintype.card (Vertex G) :=
-    le_of_lt (by exact_mod_cast Fintype.card_pos (α := Vertex G))
+  have hzpos : (1 : ℝ) ≤ Fintype.card (Subgroup.center G) := by
+    exact_mod_cast Fintype.card_pos (α := Subgroup.center G)
+  have hnsmall : (3 : ℝ) ≤ Fintype.card (Vertex G) := by
+    have hd := twice_degree_bound G ⟨a, ha⟩
+    have hdnonneg : (0 : ℝ) ≤ (commutingGraph G).degree ⟨a, ha⟩ :=
+      Nat.cast_nonneg _
+    linarith
+  have hn : (0 : ℝ) ≤ Fintype.card (Vertex G) := by linarith
   have hz : (0 : ℝ) ≤ Fintype.card (Subgroup.center G) := Nat.cast_nonneg _
   have hs : 2 * ∑ x : Vertex G, ((commutingGraph G).degree x : ℝ) ≤
       (Fintype.card (Vertex G) : ℝ) *

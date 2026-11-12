@@ -39,9 +39,8 @@ internal sealed class NoncentralBoundDocument : IScribeDocumentDefinition
                         + "cardinalities. graphSpectrum records every real Hermitian eigenvalue with multiplicity and graphEnergy "
                         + "sums their absolute values with zero centering in this matrix kind.")),
                     Paragraph(Text("Write A for adjacency, D for the degree diagonal, N for the group order, z for the center "
-                        + "order and n=N-z. Entrywise counting gives C=A squared minus D. Jannat, Nath and Das, "
-                        + "arXiv:2402.15416v1, Remark 4.7 equation (6), already give energy at most 4m, equivalently "
-                        + "twice the sum of degrees. In an orthogonal eigenbasis of C, the absolute difference of the two "
+                        + "order and n=N-z. Entrywise counting gives C=A squared minus D. The general energy bound "
+                        + "is twice the sum of degrees. In an orthogonal eigenbasis of C, the absolute difference of the two "
                         + "nonnegative diagonal quadratic terms is at most their sum. Summing gives the sum of their traces. "
                         + "This argument requires no simultaneous diagonalization of A and D.")),
                     Paragraph(Text("For each noncentral x, its centralizer K is proper. The subgroup index is at least two, "
@@ -50,11 +49,9 @@ internal sealed class NoncentralBoundDocument : IScribeDocumentDefinition
                         + "is at most n-z-2. Summation gives energy at most n(n-z-2). The difference from the target "
                         + "is (n-2) squared plus nz, which is nonnegative. All subtractions in this estimate occur in "
                         + "the integers or reals after finite cardinality relations have been justified.")),
-                    Paragraph(Text("The source is Nath, Fasfous, Das and Shang, Symmetry 13(9),1651, Section 4, "
-                        + "printed page 11, Conjecture 2. The source's complete-graph formula applies for n at least two; "
-                        + "a noncentral centralizer contains the center and x, so the same index bound gives n at least z+2, "
-                        + "in particular at least three. This text follows the explicit zero-diagonal definition and C=A squared "
-                        + "minus D; this determines the energy despite the source's conflicting prose sentence about the diagonal."))),
+                    Paragraph(Text("The complete-graph benchmark applies for n at least two. A noncentral centralizer "
+                        + "contains the center and x, so the same index bound gives n at least z+2. "
+                        + "The center contains the identity, whence z is at least one and n is at least three."))),
                 DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] args)
@@ -77,8 +74,10 @@ internal sealed class NoncentralBoundDocument : IScribeDocumentDefinition
     private static Formula Imp(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
     private static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
+    private static Formula Instance(Formula type, Formula body) =>
+        Seq(OpenBracket, type, CloseBracket, body);
     private static Formula GroupArguments(Formula body) =>
-        All("G", Call("Type"), All("groupG", Call("Group", F.Id("G")), body));
+        All("G", Call("Type"), Instance(Call("Group", F.Id("G")), body));
     private static Formula Real(Formula a) => Seq(Open, a, Colon, Mathbb, Grp(F.Id("R")), Close);
     private static Formula Typed(Formula a, Formula type) => Seq(Open, a, Colon, type, Close);
     private static Formula Value(string name) => Call("Subtype.val", F.Id(name));
@@ -101,7 +100,7 @@ internal sealed class NoncentralBoundDocument : IScribeDocumentDefinition
         var n = Real(Call("Fintype.card", Call("Vertex", G)));
         var nonabelian = Exists("a", G, Exists("b", G,
             Ne(Mul(F.Id("a"), F.Id("b")), Mul(F.Id("b"), F.Id("a")))));
-        return Disp(GroupArguments(All("finiteG", Call("Fintype", G), Imp(nonabelian,
+        return Disp(GroupArguments(Instance(Call("Fintype", G), Imp(nonabelian,
             Le(Call("D5.S3.Combinatorics.Graph.SubgroupGenerating.CyclicExtensionRefutation.graphEnergy",
                     Call("commutingGraph", G),
                     Call("D5.S3.Combinatorics.Graph.SubgroupGenerating.CyclicExtensionRefutation.MatrixKind.commonNeighbour")),
