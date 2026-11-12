@@ -43,7 +43,7 @@ downstream. None is an assumption or a conclusion of this construction.
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency true
 set_option maxRecDepth 4096
 
 noncomputable section
@@ -90,12 +90,13 @@ private theorem conjugation_fixedMomentum (p : Charge D) (x : State D)
       obtain ⟨l, hl, rfl⟩ := hx
       change l.1.1 = p at hl
       rw [tensorBasis_apply, conjugation_tmul_ket]
+      simp only [matterC, LinearMap.coe_mk, AddHom.coe_mk,
+        SourceBPZ.OriginalMatterHermitian.kappaCarrier_single]
       change LatticeInvolution.thetaLinear D
-        (SourceBPZ.OriginalMatterHermitian.kappaCarrier
-          (Finsupp.single l.1.1 (MvPolynomial.monomial l.1.2 1))) ⊗ₜ[ℂ]
+        (Finsupp.single l.1.1 (SourceBPZ.OriginalMatterHermitian.kappaOsc
+          (MvPolynomial.monomial l.1.2 1))) ⊗ₜ[ℂ]
             D5.S3.Quantum.Fermionic.CountableOccupationFock.ket l.2 ∈ _
-      rw [SourceBPZ.OriginalMatterHermitian.kappaCarrier_single,
-        LatticeInvolution.theta_single]
+      rw [LatticeInvolution.theta_single]
       apply (mem_fixedMomentum_iff D (-p) _).mpr
       rintro ⟨⟨q, e⟩, S⟩ hq
       rw [coeff_tmul_original]
@@ -224,6 +225,7 @@ private theorem global_boundary_left
           statePairing D (chargeProject p (x : State D))
             (chargeProject q (y : State D)) := by
               simp only [map_sum, LinearMap.sum_apply]
+              rw [Finset.sum_comm]
     _ = 0 := by
       apply Finset.sum_eq_zero
       intro p hp
@@ -307,7 +309,8 @@ def physicalBilinearForm : LinearMap.BilinForm ℂ (physicalImage D H h26 hHG hG
             (r (a • y)) (a • r y) rfl hc
         _ = _ := map_smul (statePairing D (r x : State D)) a (r y : State D) }
   map_add' x z := by
-    ext y
+    apply LinearMap.ext
+    intro y
     let r := representative D H h26 hHG hGH
     have hc : cl (r (x + z)) = cl (r x + r z) := by
       rw [representative_class, map_add, representative_class, representative_class]
@@ -320,7 +323,8 @@ def physicalBilinearForm : LinearMap.BilinForm ℂ (physicalImage D H h26 hHG hG
           (r y) (r y) hc rfl
       _ = _ := by rw [Submodule.coe_add, map_add, LinearMap.add_apply]
   map_smul' a x := by
-    ext y
+    apply LinearMap.ext
+    intro y
     let r := representative D H h26 hHG hGH
     have hc : cl (r (a • x)) = cl (a • r x) := by
       rw [representative_class, map_smul, representative_class]
