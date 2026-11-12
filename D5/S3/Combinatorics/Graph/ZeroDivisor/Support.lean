@@ -479,5 +479,47 @@ theorem independencePolynomial_three_coordinates
 #print axioms prime_support_fiber_card
 #print axioms configurations_four_families
 
+example (p q r : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q) (hr : Nat.Prime r)
+    (hpq : p < q) (hqr : q < r) :
+    letI : NeZero (p * q * r) :=
+      ⟨Nat.mul_ne_zero (Nat.mul_ne_zero hp.ne_zero hq.ne_zero) hr.ne_zero⟩
+    independencePolynomial (graph (ZMod (p * q * r))) Finset.univ =
+      (1 + Polynomial.X) ^ ((p - 1) * (q - 1) + (p - 1) * (r - 1) + (q - 1) * (r - 1)) +
+      ((1 + Polynomial.X) ^ ((p - 1) + (p - 1) * (q - 1) + (p - 1) * (r - 1)) -
+        (1 + Polynomial.X) ^ ((p - 1) * (q - 1) + (p - 1) * (r - 1))) +
+      ((1 + Polynomial.X) ^ ((q - 1) + (p - 1) * (q - 1) + (q - 1) * (r - 1)) -
+        (1 + Polynomial.X) ^ ((p - 1) * (q - 1) + (q - 1) * (r - 1))) +
+      ((1 + Polynomial.X) ^ ((r - 1) + (p - 1) * (r - 1) + (q - 1) * (r - 1)) -
+        (1 + Polynomial.X) ^ ((p - 1) * (r - 1) + (q - 1) * (r - 1))) := by
+  let m : Fin 3 → ℕ := ![p, q, r]
+  letI : ∀ i, Fact (m i).Prime := fun i => by
+    fin_cases i
+    · exact ⟨hp⟩
+    · exact ⟨hq⟩
+    · exact ⟨hr⟩
+  letI : ∀ i, NeZero (m i) := fun i => ⟨(Fact.out : (m i).Prime).ne_zero⟩
+  letI : ∀ i, Fintype (ZMod (m i)) := fun i => inferInstance
+  letI : ∀ i, Nontrivial (ZMod (m i)) := fun i => inferInstance
+  letI : ∀ i, NoZeroDivisors (ZMod (m i)) := fun i => inferInstance
+  have hc : Pairwise (fun i j => Nat.Coprime (m i) (m j)) := by
+    intro i j hij
+    fin_cases i <;> fin_cases j <;> simp [m] at hij ⊢
+    · exact (Nat.coprime_primes hp hq).mpr (ne_of_lt hpq)
+    · exact (Nat.coprime_primes hp hr).mpr (ne_of_lt (hpq.trans hqr))
+    · exact (Nat.coprime_primes hq hp).mpr (ne_of_gt hpq)
+    · exact (Nat.coprime_primes hq hr).mpr (ne_of_lt hqr)
+    · exact (Nat.coprime_primes hr hp).mpr (ne_of_gt (hpq.trans hqr))
+    · exact (Nat.coprime_primes hr hq).mpr (ne_of_gt hqr)
+  have hmprod : (∏ i, m i) = p * q * r := by
+    simp [m, Fin.prod_univ_succ, Nat.mul_assoc, Nat.mul_comm, Nat.mul_left_comm]
+  have hprodne : (∏ i, m i) ≠ 0 := by
+    rw [hmprod]
+    exact Nat.mul_ne_zero (Nat.mul_ne_zero hp.ne_zero hq.ne_zero) hr.ne_zero
+  letI : NeZero (∏ i, m i) := ⟨hprodne⟩
+  letI : Fintype (ZMod (∏ i, m i)) := inferInstance
+  simpa [m, crt, hmprod, Fin.prod_univ_succ, Nat.mul_assoc, Nat.mul_comm, Nat.mul_left_comm] using
+    (independencePolynomial_three_coordinates
+      (R := ZMod (∏ i, m i)) (e := crt m hc))
+
 
 end D5.S3.Combinatorics.Graph.ZeroDivisor.Support
