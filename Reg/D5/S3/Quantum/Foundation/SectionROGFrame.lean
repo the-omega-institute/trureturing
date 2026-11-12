@@ -21,7 +21,7 @@ abbrev sourceScope : Prop := type_of% (@whole_pure_carrier.{u,v})
 
 def arena : Arena where
   signature := relationSignature.{max u v}
-  Law O := ∀ {𝕜 : Type u} {ι : Type v} [RCLike 𝕜] [Fintype ι] [DecidableEq ι] (L : Submodule ℝ (HermitianMat ι 𝕜)) (hrog : ROG L) ,
+  Law O := ∀ {𝕜 : Type u} {ι : Type v} [RCLike 𝕜] [Fintype ι] [DecidableEq ι] (L : Submodule ℝ (HermitianMat ι 𝕜)) (hrog : ROG L),
     O.readout () ⟨Set (HermitianMat ι 𝕜), Eq⟩ ((base L).extremePoints ℝ) (pureRanks L)
 
 theorem source_bridge : sourceScope.{u,v} ↔ arena.{u,v}.Law relationActual := Iff.rfl
@@ -40,7 +40,7 @@ def arena : Arena where
   Law O := ∀ {𝕜 : Type u} {ι : Type v} [RCLike 𝕜] [Fintype ι] [DecidableEq ι]
     (L : Submodule ℝ (HermitianMat ι 𝕜)) (hI : (1 : HermitianMat ι 𝕜) ∈ L)
     (hrog : ROG L) (v : EuclideanSpace 𝕜 ι) (hv : ‖v‖ = 1) (hvL : rankOne v ∈ L)
-    (i₀ : ι) ,
+    (i₀ : ι),
     ∃ b : OrthonormalBasis ι 𝕜 (EuclideanSpace 𝕜 ι), O.readout () ⟨EuclideanSpace 𝕜 ι, Eq⟩ (b i₀) v ∧
       (∀ j, rankOne (b j) ∈ L) ∧
       (∀ j, rankOne (b j) ∈ (base L).extremePoints ℝ) ∧

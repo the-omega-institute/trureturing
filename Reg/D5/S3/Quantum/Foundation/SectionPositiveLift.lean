@@ -35,7 +35,7 @@ abbrev sourceScope : Prop := type_of% (@rankOne_nonneg.{u,v})
 
 def arena : Arena where
   signature := relationSignature.{max u v}
-  Law O := ∀ {𝕜 : Type u} {ι : Type v} [RCLike 𝕜] [Fintype ι] (v : ι → 𝕜) , O.readout () ⟨HermitianMat ι 𝕜, (· ≤ ·)⟩ 0 (rankOne v)
+  Law O := ∀ {𝕜 : Type u} {ι : Type v} [RCLike 𝕜] [Fintype ι] [DecidableEq ι] (v : ι → 𝕜), O.readout () ⟨HermitianMat ι 𝕜, (· ≤ ·)⟩ 0 (rankOne v)
 
 theorem source_bridge : sourceScope.{u,v} ↔ arena.{u,v}.Law relationActual := Iff.rfl
 
@@ -50,7 +50,7 @@ abbrev sourceScope : Prop := type_of% (@pair_rankOne.{u,v})
 
 def arena : Arena where
   signature := relationSignature.{u}
-  Law O := ∀ {𝕜 : Type u} {ι : Type v} [RCLike 𝕜] [Fintype ι] (A : HermitianMat ι 𝕜) (v : ι → 𝕜) ,
+  Law O := ∀ {𝕜 : Type u} {ι : Type v} [RCLike 𝕜] [Fintype ι] [DecidableEq ι] (A : HermitianMat ι 𝕜) (v : ι → 𝕜),
     O.readout () ⟨𝕜, Eq⟩ (⟪A, rankOne v⟫_ℝ : 𝕜) (star v ⬝ᵥ (A.mat *ᵥ v))
 
 theorem source_bridge : sourceScope.{u,v} ↔ arena.{u,v}.Law relationActual := Iff.rfl
@@ -68,7 +68,7 @@ def arena : Arena where
   signature := relationSignature.{0}
   Law O := ∀ {𝕜 : Type u} {ι : Type v} [RCLike 𝕜] [Fintype ι] [DecidableEq ι]
     (L : Submodule ℝ (HermitianMat ι 𝕜)) (hI : (1 : HermitianMat ι 𝕜) ∈ L)
-    (f : L →ₗ[ℝ] ℝ) (hf : ∀ X : L, 0 ≤ (X : HermitianMat ι 𝕜) → 0 ≤ f X) ,
+    (f : L →ₗ[ℝ] ℝ) (hf : ∀ X : L, 0 ≤ (X : HermitianMat ι 𝕜) → 0 ≤ f X),
     ∃ E : HermitianMat ι 𝕜, 0 ≤ E ∧ ∀ X : L, O.readout () ⟨ℝ, Eq⟩ (f X) ⟪E, (X : HermitianMat ι 𝕜)⟫_ℝ
 
 theorem source_bridge : sourceScope.{u,v} ↔ arena.{u,v}.Law relationActual := Iff.rfl
@@ -85,7 +85,7 @@ abbrev sourceScope : Prop := type_of% (@rank_one_deflation.{u,v})
 def arena : Arena where
   signature := relationSignature.{max u v}
   Law O := ∀ {𝕜 : Type u} {ι : Type v} [RCLike 𝕜] [Fintype ι] [DecidableEq ι] (M : HermitianMat ι 𝕜) (hM : 0 ≤ M)
-    (v : ι → 𝕜) (hv : star v ⬝ᵥ (M.mat *ᵥ v) = 1) ,
+    (v : ι → 𝕜) (hv : star v ⬝ᵥ (M.mat *ᵥ v) = 1),
     O.readout () ⟨HermitianMat ι 𝕜, (· ≤ ·)⟩ 0 ((rankOne v).conj M.mat) ∧ 0 ≤ M - (rankOne v).conj M.mat
 
 theorem source_bridge : sourceScope.{u,v} ↔ arena.{u,v}.Law relationActual := Iff.rfl
@@ -105,7 +105,7 @@ def arena : Arena where
     (L : Submodule ℝ (HermitianMat ι 𝕜)) (hI : (1 : HermitianMat ι 𝕜) ∈ L)
     (v : ι → 𝕜) (hv : star v ⬝ᵥ v = 1) (hp : rankOne v ∈ L)
     (m : ℕ) (w : Fin m → (ι → 𝕜))
-    (hq : ∀ j, rankOne (w j) ∈ L) ,
+    (hq : ∀ j, rankOne (w j) ∈ L),
     (∃ f : L →ₗ[ℝ] ℝ, Proper f ∧ f ⟨rankOne v, hp⟩ = 1 ∧
       ∀ j, f ⟨rankOne (w j), hq j⟩ = 0) ↔
     ∃ M ∈ lifts L, ∀ j, O.readout () ⟨𝕜, Eq⟩ (star v ⬝ᵥ (M.mat *ᵥ w j)) 0
@@ -124,7 +124,7 @@ abbrev sourceScope : Prop := type_of% (@lift_geometry.{u,v})
 def arena : Arena where
   signature := relationSignature.{0}
   Law O := ∀ {𝕜 : Type u} {ι : Type v} [RCLike 𝕜] [Fintype ι] [DecidableEq ι]
-    (L : Submodule ℝ (HermitianMat ι 𝕜)) (hI : (1 : HermitianMat ι 𝕜) ∈ L) ,
+    (L : Submodule ℝ (HermitianMat ι 𝕜)) (hI : (1 : HermitianMat ι 𝕜) ∈ L),
     (lifts L).Nonempty ∧ IsCompact (lifts L) ∧ Convex ℝ (lifts L) ∧
     (∀ M ∈ lifts L, O.readout () ⟨ℝ, Eq⟩ M.trace (Fintype.card ι)) ∧
     (affineSpan ℝ (lifts L)).direction = Lᗮ ∧
