@@ -21,7 +21,9 @@ actual PSD section. Its consumer uses every proper linear effect on the
 section's own carrier. The cross pair and trace normalization are inputs to
 this predecessor; their extraction from the original arbitrary-unit ROG
 model, determinant normalization and optimal base-norm duality are not proved
-here. No completion of Proposition 93.3 or block classification is asserted.
+here. The original-carrier primal part of the optimization bridge is proved
+separately, retaining the original arbitrary unit and compact base. No
+completion of Proposition 93.3 or block classification is asserted.
 -/
 
 noncomputable section
@@ -299,6 +301,7 @@ open D5.S3.Quantum.Dynamics.BaseNormContraction
 variable {A : Type*} [NormedAddCommGroup A] [NormedSpace ℝ A]
   [FiniteDimensional ℝ A]
 
+omit [FiniteDimensional ℝ A] in
 private theorem mass_cap_compact (C : PointedCone ℝ A) (u : A →ₗ[ℝ] ℝ)
     (hK : IsCompact (base C u))
     (hu : ∀ a ∈ C, a ≠ 0 → 0 < u a) (R : ℝ) (hR : 0 ≤ R) :
@@ -358,10 +361,10 @@ theorem original_primal_attainment (C : PointedCone ℝ A) (u : A →ₗ[ℝ] �
   have hglobal (a b : A) (ha : a ∈ C) (hb : b ∈ C) (hz : z = a - b) :
       u XY.1 + u XY.2 ≤ u a + u b := by
     by_cases hcostR : u a + u b ≤ R
-    · apply hmin
+    · apply hmin (a := (a, b))
       exact ⟨⟨⟨ha, (le_add_of_nonneg_right (hnonneg _ hb)).trans hcostR⟩,
         ⟨hb, (le_add_of_nonneg_left (hnonneg _ ha)).trans hcostR⟩⟩, hz⟩
-    · exact hbound.trans (le_of_not_ge hcostR).le
+    · exact hbound.trans (le_of_not_ge hcostR)
   have hinf : u XY.1 + u XY.2 = baseNorm C.toConvexCone u z := by
     apply Eq.symm
     apply IsLeast.csInf_eq
